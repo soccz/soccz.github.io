@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarbonCast — CBAM Transition Risk Analysis Platform</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-green: #15803d;
+      --accent-red: #b91c1c;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 1rem; }
+    .hero-tagline { font-size: 0.88rem; color: var(--text-muted); font-style: italic; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-icon { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .card-stat { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--accent-red); margin-top: 0.8rem; display: block; }
+    .card-stat-label { font-size: 0.72rem; color: var(--text-muted); }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .layer-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .explainer-block {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 2rem; margin-bottom: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .explainer-block h3 { font-weight: 700; font-size: 1rem; margin-bottom: 0.8rem; }
+    .explainer-block p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .formula-box {
+      background: var(--bg-secondary); border-radius: 6px; padding: 1rem 1.3rem;
+      font-family: 'Noto Sans KR', monospace; font-size: 0.88rem; color: var(--text-primary);
+      margin: 1rem 0; overflow-x: auto;
+    }
+    .formula-src { font-size: 0.72rem; color: var(--text-muted); }
+
+    .timeline-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 0.5rem; margin-top: 1.5rem;
+    }
+    .timeline-item {
+      text-align: center; padding: 0.8rem 0.5rem; border-radius: 6px;
+      background: var(--bg-secondary); transition: transform 0.2s;
+    }
+    .timeline-item:hover { transform: translateY(-2px); }
+    .timeline-item.highlight { background: var(--accent-dim); border: 1px solid var(--accent); }
+    .timeline-year { font-weight: 700; font-size: 0.8rem; color: var(--text-primary); }
+    .timeline-rate { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 1rem; color: var(--accent); margin-top: 0.2rem; }
+    .timeline-note { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    thead { background: var(--bg-card); position: sticky; top: 0; }
+    th { padding: 0.85rem 1rem; text-align: left; font-weight: 500; color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+    tr { transition: background 0.15s; }
+    tr:hover { background: #f5f5f4; }
+    .cost-highlight { font-weight: 700; color: var(--accent-red); }
+
+    .verify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .verify-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .verify-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-green); }
+    .verify-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.3rem; }
+    .verify-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .module-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      transition: all 0.3s;
+    }
+    .module-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .module-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .module-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .module-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; }
+    .module-detail { font-size: 0.8rem; border-top: 1px solid var(--border); padding-top: 0.8rem; }
+    .module-detail dt { font-weight: 700; color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.78rem; }
+    .module-detail dt:first-child { margin-top: 0; }
+    .module-detail dd { margin-left: 0; color: var(--text-muted); font-size: 0.78rem; margin-top: 0.15rem; }
+
+    .dual-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; }
+    .flow-container {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .flow-container h3 { font-weight: 700; font-size: 0.95rem; margin-bottom: 1.2rem; }
+    .flow-list { display: flex; flex-direction: column; gap: 0; }
+    .flow-item { display: flex; gap: 1rem; padding: 0.8rem 0; }
+    .flow-item:not(:last-child) { border-bottom: 1px dashed var(--border); }
+    .flow-item-num {
+      font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 0.75rem;
+      width: 24px; height: 24px; border-radius: 50%; background: var(--bg-secondary);
+      color: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .flow-item h4 { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .flow-item p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .context-block {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); margin-bottom: 2.5rem;
+    }
+    .context-block h3 { font-weight: 700; font-size: 1rem; margin-bottom: 0.8rem; }
+    .context-block > p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; }
+    .asset-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.6rem; margin-top: 1rem; }
+    .asset-item {
+      display: flex; gap: 0.8rem; align-items: flex-start; padding: 0.8rem;
+      background: var(--bg-secondary); border-radius: 6px;
+    }
+    .asset-icon {
+      width: 28px; height: 28px; border-radius: 6px; background: var(--bg-card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700; color: var(--accent); flex-shrink: 0; border: 1px solid var(--border);
+    }
+    .asset-name { font-weight: 700; font-size: 0.8rem; display: block; }
+    .asset-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+    .roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .roadmap-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); position: relative;
+    }
+    .roadmap-card.current { border-color: var(--accent); border-width: 2px; }
+    .roadmap-phase { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 0.78rem; color: var(--accent); margin-bottom: 0.3rem; }
+    .roadmap-card h4 { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
+    .roadmap-time { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .roadmap-card > p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+
+    .ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .ref-block strong { font-size: 0.88rem; display: block; margin-bottom: 0.5rem; }
+    .ref-block ul { padding-left: 1rem; list-style: none; }
+    .ref-block li { font-size: 0.8rem; color: var(--text-secondary); padding: 0.2rem 0 0.2rem 0.8rem; position: relative; }
+    .ref-block li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      .dual-flow { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.5rem; }
+      .timeline-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#cbam">CBAM</a></li>
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#modules">Modules</a></li>
+      <li><a href="#dataflow">Pipeline</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#context">Context</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Hana Financial Group &middot; Youth Talent Project</span>
+    <h1>CarbonCast<br>CBAM Transition Risk<br>Analysis Platform</h1>
+    <p class="hero-sub">
+      AI 기반 탄소 배출 데이터 품질 스코어링, 블록체인 검증,<br>
+      CBAM 비용 시뮬레이션을 통합한 수출기업 및 금융기관 지원 플랫폼입니다.
+    </p>
+    <p class="hero-tagline">"AI estimates, Blockchain tracks, Finance connects."</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">87%</span><span class="hero-stat-label">CBAM 미대비 중소기업</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">2026</span><span class="hero-stat-label">EU CBAM 본격 시행</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">+30%</span><span class="hero-stat-label">EU 기본값 가산 페널티</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">통합 분석 레이어</span></div>
+    </div>
+    <a href="https://github.com/soccz/CBAM" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub Repository
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<!-- CBAM Background -->
+<section id="cbam"><div class="container fade-in">
+  <div class="section-label">Background</div>
+  <h2 class="section-title">What is CBAM?</h2>
+  <p class="section-desc">EU 탄소국경조정메커니즘(CBAM)은 철강, 시멘트, 알루미늄, 비료, 수소, 전력 등 EU로 수입되는 제품에 부과되는 탄소 관세입니다.</p>
+
+  <div class="explainer-block">
+    <h3>CBAM 작동 원리</h3>
+    <p>EU 수입자는 EU ETS 경매 가격에 연동된 CBAM 인증서를 구매해야 합니다. 비용은 EU와 수출국 간 탄소 가격 차이를 반영하며, 한국 기업은 EU 바이어의 가격 재조정을 통해 간접적으로 비용을 부담하게 됩니다.</p>
+    <div class="formula-box">
+      CBAM Cost = Export Volume &times; [Emission Factor &minus; Benchmark &times; (1 &minus; Phase-in Rate)] &times; EUA Price &times; FX Rate
+    </div>
+    <div class="formula-src">Source: EU Regulation 2023/956, Art. 7</div>
+
+    <h3 style="margin-top:1.5rem;">Phase-in Schedule (무상할당 단계적 폐지)</h3>
+    <div class="timeline-grid">
+      <div class="timeline-item highlight"><div class="timeline-year">2026</div><div class="timeline-rate">2.5%</div><div class="timeline-note">Start</div></div>
+      <div class="timeline-item"><div class="timeline-year">2027</div><div class="timeline-rate">5%</div></div>
+      <div class="timeline-item"><div class="timeline-year">2028</div><div class="timeline-rate">10%</div><div class="timeline-note">확대</div></div>
+      <div class="timeline-item"><div class="timeline-year">2029</div><div class="timeline-rate">22.5%</div></div>
+      <div class="timeline-item highlight"><div class="timeline-year">2030</div><div class="timeline-rate">48.5%</div><div class="timeline-note">급증</div></div>
+      <div class="timeline-item"><div class="timeline-year">2031</div><div class="timeline-rate">61%</div></div>
+      <div class="timeline-item"><div class="timeline-year">2032</div><div class="timeline-rate">73.5%</div></div>
+      <div class="timeline-item"><div class="timeline-year">2033</div><div class="timeline-rate">86%</div></div>
+      <div class="timeline-item highlight"><div class="timeline-year">2034</div><div class="timeline-rate">100%</div><div class="timeline-note">Full cost</div></div>
+    </div>
+    <div class="formula-src" style="margin-top:0.8rem;">Source: EU Regulation 2023/956, Annex IV</div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Problem -->
+<section id="problem"><div class="container fade-in">
+  <div class="section-label">The Problem</div>
+  <h2 class="section-title">Why This Matters</h2>
+  <p class="section-desc">검증된 배출 데이터 없이는 EU 기본값에 30% 가산 페널티가 적용되어, 실제 탄소 비용의 두 배 이상을 부담하게 됩니다.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">Data Gap</div>
+      <div class="card-title">데이터 공백</div>
+      <div class="card-text">한국 중소 수출기업의 87%가 배출량 산정 방법을 모르며, 54.9%는 CBAM 대응 계획이 전무합니다.</div>
+      <span class="card-stat">87%</span>
+      <span class="card-stat-label">배출량 산정법 미인지 (KIEP)</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">Cost Penalty</div>
+      <div class="card-title">비용 페널티</div>
+      <div class="card-text">실측 데이터 없이 EU 기본값 + 30% 가산 적용. 철강 기준 기본값 3.90 vs 실측 약 1.85 tCO2/t.</div>
+      <span class="card-stat">~220억원</span>
+      <span class="card-stat-label">철강 1만톤 수출 시 연간 초과 비용</span>
+    </div>
+    <div class="card">
+      <div class="card-icon">Banking Risk</div>
+      <div class="card-title">금융 리스크</div>
+      <div class="card-text">탄소 비용 미반영 PF대출의 과대 추정된 IRR. BOK 스트레스 테스트: 미대응 시 최대 45.7조원 잠재 손실.</div>
+      <span class="card-stat">3.8%p</span>
+      <span class="card-stat-label">은행 자기자본비율 하락 가능</span>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-top:2rem;">
+    <table>
+      <thead><tr><th>품목</th><th>EU 기본값 (+30%)</th><th>한국 실측 평균</th><th>Gap &times; &euro;75</th><th>초과 비용 / 1만톤 / 연</th></tr></thead>
+      <tbody>
+        <tr><td>철강 (반제품)</td><td>3.90 tCO2/t</td><td>~1.85 tCO2/t</td><td>&euro;154/t</td><td class="cost-highlight">~220억원</td></tr>
+        <tr><td>시멘트 (클링커)</td><td>1.13 tCO2/t</td><td>~0.80 tCO2/t</td><td>&euro;25/t</td><td class="cost-highlight">~36억원</td></tr>
+        <tr><td>알루미늄 (1차)</td><td>1.90 tCO2/t</td><td>~1.50 tCO2/t</td><td>&euro;30/t</td><td class="cost-highlight">~44억원</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:0.72rem; color:var(--text-muted); margin-top:0.5rem;">Sources: EU IR 2025/2621, S&P Global (2025); Korea averages from MOEN inventory, POSCO ESG Report</p>
+</div></section>
+<hr class="divider">
+
+<!-- Architecture -->
+<section id="architecture"><div class="container fade-in">
+  <div class="section-label">System Design</div>
+  <h2 class="section-title">Architecture</h2>
+  <p class="section-desc">CarbonCast는 ESG TradeGuard 플랫폼 내에서 3개 통합 레이어로 운영됩니다.</p>
+
+  <div class="card-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+    <div class="layer-card">
+      <div class="layer-num">Layer 1 &mdash; AI Engine</div>
+      <div class="layer-title">Emission Estimation + Industry Impact + Compliance</div>
+      <div class="layer-desc">분포 무관 배출계수 추정을 위한 Conformal Prediction, 산업 전반 CBAM 비용 전파 분석을 위한 Leontief I-O 모델 + GNN, 자동 규제 가이드를 위한 LLM 기반 RAG 에이전트.</div>
+      <div class="tags">
+        <span class="tag">LightGBM / XGBoost</span>
+        <span class="tag">MAPIE Conformal</span>
+        <span class="tag">Isolation Forest</span>
+        <span class="tag">PyTorch Geometric GNN</span>
+        <span class="tag">LLM + RAG</span>
+      </div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Layer 2 &mdash; Trust Layer</div>
+      <div class="layer-title">Blockchain Audit Trail + Digital Product Passport</div>
+      <div class="layer-desc">검증된 배출 데이터의 SHA-256 해시 기반 위변조 방지 기록. EU 2027 의무화에 앞서 공급망 탄소 추적을 위한 Digital Product Passport(DPP). 프라이버시 보호 크로스 컴퍼니 모델 학습을 위한 Federated Learning.</div>
+      <div class="tags">
+        <span class="tag">Ethereum Sepolia</span>
+        <span class="tag">Hyperledger Fabric</span>
+        <span class="tag">Web Crypto API</span>
+        <span class="tag">Federated Learning</span>
+      </div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Layer 3 &mdash; Financial Layer</div>
+      <div class="layer-title">Trade Finance Integration + Portfolio Analysis</div>
+      <div class="layer-desc">수출 서류 자동 HS코드 추출을 위한 READIT AI-OCR. PCAF 기준 포트폴리오 탄소 익스포저 분석. CBAM 비용이 EBITDA 및 이자보상비율에 미치는 영향을 반영한 신용평가 연동.</div>
+      <div class="tags">
+        <span class="tag">READIT OCR</span>
+        <span class="tag">PCAF Framework</span>
+        <span class="tag">DART Open API</span>
+        <span class="tag">NGFS Scenarios</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Modules -->
+<section id="modules"><div class="container fade-in">
+  <div class="section-label">Core Modules</div>
+  <h2 class="section-title">Key Components</h2>
+  <p class="section-desc">3개 운영 모듈이 배출 데이터 입력부터 검증된 비용 시뮬레이션까지 처리합니다.</p>
+
+  <div class="card-grid">
+    <div class="module-card">
+      <div class="module-num">01</div>
+      <div class="module-title">AI Quality Scoring</div>
+      <div class="module-desc">EU 공인 검증기관 심사 전 배출 데이터 신뢰도를 사전 검증합니다. 4개 기준에 대한 상세 체크 결과와 함께 0-100 품질 스코어를 출력합니다.</div>
+      <dl class="module-detail">
+        <dt>Scoring Criteria</dt>
+        <dd>배출계수 범위(50pt), 에너지 범위(20pt), 에너지-배출 일관성(20pt), 생산 규모(5pt)</dd>
+        <dt>Thresholds</dt>
+        <dd>80+: 신뢰 / 60-79: 검토 권고 / 60 미만: 재확인 필요</dd>
+        <dt>Training Data</dt>
+        <dd>K-ETS 레지스트리 (~800 시설)</dd>
+        <dt>Method</dt>
+        <dd>Isolation Forest + KDE 다변량 이상탐지</dd>
+      </dl>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">02</div>
+      <div class="module-title">Blockchain Verification</div>
+      <div class="module-desc">품질 검증된 배출 데이터의 불변 감사 추적을 생성합니다. 60점 이상 데이터만 블록체인에 기록됩니다. EU CBAM 레지스트리와 별도인 자체 감사 인프라입니다.</div>
+      <dl class="module-detail">
+        <dt>On-chain</dt>
+        <dd>SHA-256 해시, 블록 번호, 타임스탬프, 익명화 기업 ID, 품질 스코어</dd>
+        <dt>Off-chain</dt>
+        <dd>원본 전체 데이터 (하나금융 DB)</dd>
+        <dt>Prototype</dt>
+        <dd>Ethereum Sepolia 테스트넷</dd>
+        <dt>Production</dt>
+        <dd>Hyperledger Fabric (허가형)</dd>
+      </dl>
+    </div>
+
+    <div class="module-card">
+      <div class="module-num">03</div>
+      <div class="module-title">CBAM Cost Simulation</div>
+      <div class="module-desc">4개 NGFS 기후 시나리오 하에서 2026-2034년 CBAM 비용 경로를 산출합니다. EU 기본값 대비 실측 데이터의 절감 잠재력을 정량화합니다.</div>
+      <dl class="module-detail">
+        <dt>Scenarios</dt>
+        <dd>Net Zero 2050, Below 2C, Delayed Transition, Current Policies</dd>
+        <dt>Source</dt>
+        <dd>NGFS Phase V (2024.11, IIASA Explorer)</dd>
+        <dt>Phase-in</dt>
+        <dd>EU Regulation 2023/956 Annex IV schedule</dd>
+        <dt>Markup</dt>
+        <dd>+10% (2026), +20% (2027), +30% (2028+) per IR 2025/2621</dd>
+      </dl>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Data Flow -->
+<section id="dataflow"><div class="container fade-in">
+  <div class="section-label">Pipeline</div>
+  <h2 class="section-title">Data Flow</h2>
+  <p class="section-desc">두 가지 트랙이 서로 다른 유형의 기업에 대응합니다: 데이터 보유 기업과 배출 데이터 미보유 중소기업.</p>
+
+  <div class="dual-flow">
+    <div class="flow-container">
+      <h3 style="color:var(--accent);">Track A: 배출 데이터 보유 기업</h3>
+      <div class="flow-list">
+        <div class="flow-item"><div class="flow-item-num">1</div><div><h4>서류 업로드</h4><p>READIT OCR로 수출 서류 처리. HS코드, 수량, 목적지 자동 추출.</p></div></div>
+        <div class="flow-item"><div class="flow-item-num">2</div><div><h4>배출 데이터 입력</h4><p>기업이 배출계수, 공정 유형, 에너지 소비 데이터를 제공.</p></div></div>
+        <div class="flow-item"><div class="flow-item-num">3</div><div><h4>AI Quality Scoring</h4><p>4개 기준 분석과 함께 0-100 품질 스코어. EU 검증 전 사전 검증.</p></div></div>
+        <div class="flow-item"><div class="flow-item-num">4</div><div><h4>블록체인 기록</h4><p>60점 이상: SHA-256 해시 온체인 기록. 위변조 방지 감사 추적 생성.</p></div></div>
+        <div class="flow-item"><div class="flow-item-num">5</div><div><h4>비용 시뮬레이션</h4><p>실측 배출 데이터 기반 4개 NGFS 시나리오 하 2026-2034 CBAM 비용 경로.</p></div></div>
+      </div>
+    </div>
+
+    <div class="flow-container">
+      <h3 style="color:var(--text-secondary);">Track B: 배출 데이터 미보유 기업</h3>
+      <div class="flow-list">
+        <div class="flow-item"><div class="flow-item-num">1</div><div><h4>기본 정보만 입력</h4><p>산업 섹터와 수출 물량. 배출 데이터 불필요.</p></div></div>
+        <div class="flow-item"><div class="flow-item-num">2</div><div><h4>기본값 시뮬레이션</h4><p>EU 기본값 + 가산 페널티로 CBAM 비용 산출.</p></div></div>
+        <div class="flow-item"><div class="flow-item-num">3</div><div><h4>절감 잠재력</h4><p>"실측 데이터를 확보하면 연간 X억원을 절감할 수 있습니다."</p></div></div>
+        <div class="flow-item"><div class="flow-item-num">4</div><div><h4>측정 동기 부여</h4><p>정량화된 절감액이 기업의 배출 데이터 인프라 투자 유인을 생성.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Results -->
+<section id="results"><div class="container fade-in">
+  <div class="section-label">Prototype Results</div>
+  <h2 class="section-title">Performance</h2>
+  <p class="section-desc">합성 데이터(628개 기업) 기반 프로토타입 결과입니다. 상용 배포에는 하나금융 데이터 연동이 필요합니다.</p>
+
+  <div class="verify-grid">
+    <div class="verify-card">
+      <div class="verify-num">R&sup2; 0.778</div>
+      <div class="verify-label">배출 모델 정확도</div>
+      <div class="verify-sub">에너지 데이터 포함 시 MAPE 8.0%</div>
+    </div>
+    <div class="verify-card">
+      <div class="verify-num">MAE 3.15</div>
+      <div class="verify-label">EU ETS 가격 모델 (EUR)</div>
+      <div class="verify-sub">LightGBM Quantile, MAPE 4.4%</div>
+    </div>
+    <div class="verify-card">
+      <div class="verify-num">&ge;90%</div>
+      <div class="verify-label">Conformal Prediction Coverage</div>
+      <div class="verify-sub">분포 무관 보장</div>
+    </div>
+    <div class="verify-card">
+      <div class="verify-num">6,970억</div>
+      <div class="verify-label">잠재 절감액 (원)</div>
+      <div class="verify-sub">철강 8개사 vs EU 기본값</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Context -->
+<section id="context"><div class="container fade-in">
+  <div class="section-label">Project Context</div>
+  <h2 class="section-title">Hana Financial Group</h2>
+  <p class="section-desc">CarbonCast는 무역금융 데이터, AI 역량, ESG 인프라의 교차점에 위치한 하나금융그룹의 고유한 포지션을 활용합니다.</p>
+
+  <div class="context-block">
+    <h3>Why Hana Financial</h3>
+    <p>하나금융그룹은 수출 거래 데이터, 기업 재무 데이터, AI/ML 개발 역량이라는 CBAM 컴플라이언스 플랫폼의 3대 핵심 요소에 동시 접근 가능한 유일한 한국 금융기관입니다.</p>
+    <div class="asset-grid">
+      <div class="asset-item"><div class="asset-icon">R</div><div><span class="asset-name">READIT AI-OCR</span><span class="asset-sub">GS 인증 1등급, 연 ~8만건 처리</span></div></div>
+      <div class="asset-item"><div class="asset-icon">T</div><div><span class="asset-name">Trade Finance #1</span><span class="asset-sub">Global Finance 25년 연속 수상</span></div></div>
+      <div class="asset-item"><div class="asset-icon">A</div><div><span class="asset-name">융합기술연구소</span><span class="asset-sub">박사/석사 73명, 262건 연구 프로젝트</span></div></div>
+      <div class="asset-item"><div class="asset-icon">P</div><div><span class="asset-name">PCAF Framework</span><span class="asset-sub">국내 최초 KSSB 보고, 7개 범주 배출량</span></div></div>
+      <div class="asset-item"><div class="asset-icon">E</div><div><span class="asset-name">ESG 금융</span><span class="asset-sub">37조원 달성, MSCI AAA 등급</span></div></div>
+      <div class="asset-item"><div class="asset-icon">C</div><div><span class="asset-name">AI 신용평가</span><span class="asset-sub">국내 최초 AI 수출어음 시스템, 연 2.7만시간 절감</span></div></div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Noto Serif KR',serif; font-size:1.1rem; font-weight:700; margin-bottom:1rem;">Expansion Roadmap</h3>
+  <div class="roadmap-grid">
+    <div class="roadmap-card current">
+      <div class="roadmap-phase">Phase 1</div>
+      <h4>Prototype</h4>
+      <div class="roadmap-time">2주 (현재)</div>
+      <p>배출 추정 + CBAM 시나리오 시뮬레이션 + 재무 영향 + 산업 네트워크 시각화</p>
+    </div>
+    <div class="roadmap-card">
+      <div class="roadmap-phase">Phase 2</div>
+      <h4>Integration</h4>
+      <div class="roadmap-time">3-6개월</div>
+      <p>READIT OCR + K-ETS API + DART API + LLM 컴플라이언스 에이전트</p>
+    </div>
+    <div class="roadmap-card">
+      <div class="roadmap-phase">Phase 3</div>
+      <h4>Trust Infrastructure</h4>
+      <div class="roadmap-time">6-12개월</div>
+      <p>DPP 블록체인 + Federated Learning + 하류 제품 분석</p>
+    </div>
+    <div class="roadmap-card">
+      <div class="roadmap-phase">Phase 4</div>
+      <h4>Full Platform</h4>
+      <div class="roadmap-time">12개월+</div>
+      <p>Enterprise GNN + ESG 금융상품 연동 + 포트폴리오 스트레스 테스트</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- References -->
+<section id="references"><div class="container fade-in">
+  <div class="section-label">References</div>
+  <h2 class="section-title">Key Sources</h2>
+  <div class="ref-grid" style="margin-top:1.5rem;">
+    <div class="ref-block">
+      <strong>EU Regulations</strong>
+      <ul>
+        <li>EU Regulation 2023/956 (CBAM)</li>
+        <li>EU IR 2025/2621 (Default values)</li>
+        <li>EU IR 2025/2620 (Benchmarks)</li>
+        <li>ESPR 2024/1781 (Digital Product Passport)</li>
+      </ul>
+    </div>
+    <div class="ref-block">
+      <strong>Data Sources</strong>
+      <ul>
+        <li>NGFS Phase V Scenarios (2024.11)</li>
+        <li>K-ETS Registry (data.go.kr)</li>
+        <li>Bank of Korea I-O Tables</li>
+        <li>DART Open API (FSS)</li>
+      </ul>
+    </div>
+    <div class="ref-block">
+      <strong>Academic</strong>
+      <ul>
+        <li>Angelopoulos & Bates (2021) Conformal Prediction</li>
+        <li>Stanford AAAI 2025: GNN Supply Chains</li>
+        <li>FedCarbonNet (Springer, 2025)</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  CarbonCast &mdash; CBAM Transition Risk Analysis Platform<br>
+  Developed for the Hana Financial Group Youth Talent Development Project<br>
+  <a href="https://github.com/soccz/CBAM" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+</div></footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

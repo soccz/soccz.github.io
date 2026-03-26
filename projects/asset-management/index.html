@@ -1,471 +1,370 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>자산운용 학습서 — 비전공자를 위한 12단원 시리즈</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자산운용 학습서 — 비전공자를 위한 12단원 시리즈</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
 
-:root {
-  --bg: #faf7f2;
-  --bg-card: #ffffff;
-  --text: #2d2a26;
-  --text-secondary: #6b6560;
-  --accent: #c67b42;
-  --accent-light: #f0d9c4;
-  --accent-hover: #b06830;
-  --border: #e8e2da;
-  --shadow: 0 2px 12px rgba(45,42,38,0.06);
-  --shadow-hover: 0 4px 20px rgba(45,42,38,0.12);
-  --radius: 12px;
-}
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
 
-body {
-  font-family: 'Inter', 'Noto Sans KR', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.8;
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
 
-/* ── Header ── */
-.site-header {
-  text-align: center;
-  padding: 60px 24px 48px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-.site-header h1 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 12px;
-  letter-spacing: -0.02em;
-}
-.site-header .subtitle {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  font-weight: 400;
-  line-height: 1.7;
-}
-.site-header .divider {
-  width: 60px;
-  height: 3px;
-  background: var(--accent);
-  border-radius: 2px;
-  margin: 24px auto 0;
-}
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* ── TOC ── */
-.toc-container {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 24px 60px;
-}
-.toc-section-label {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-  margin-bottom: 20px;
-}
-.toc-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.toc-item {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 24px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  box-shadow: var(--shadow);
-}
-.toc-item:hover {
-  border-color: var(--accent-light);
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-1px);
-}
-.toc-item .ch-num {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--accent);
-  min-width: 36px;
-  text-align: center;
-  flex-shrink: 0;
-}
-.toc-item .ch-info {
-  flex: 1;
-  min-width: 0;
-}
-.toc-item .ch-title {
-  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-.toc-item .ch-desc {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-.toc-item .ch-arrow {
-  color: var(--accent);
-  font-size: 1.2rem;
-  flex-shrink: 0;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: all 0.2s ease;
-}
-.toc-item:hover .ch-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
 
-/* ── Chapter View ── */
-.chapter-view {
-  display: none;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 24px 80px;
-}
-.chapter-view.active { display: block; }
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
-.chapter-nav-top {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
-}
-.btn-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--accent);
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-.btn-back:hover {
-  border-color: var(--accent);
-  background: var(--accent-light);
-}
-.chapter-indicator {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
+    /* ── Section ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-/* ── Markdown Content ── */
-.chapter-content {
-  font-size: 1rem;
-  line-height: 1.9;
-  color: var(--text);
-}
-.chapter-content h1 {
-  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
-  font-size: 1.9rem;
-  font-weight: 700;
-  margin: 0 0 12px;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
-}
-.chapter-content h2 {
-  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
-  font-size: 1.45rem;
-  font-weight: 600;
-  margin: 48px 0 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--accent-light);
-  letter-spacing: -0.01em;
-}
-.chapter-content h3 {
-  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 36px 0 12px;
-  color: var(--accent-hover);
-}
-.chapter-content h4 {
-  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin: 28px 0 10px;
-}
-.chapter-content p { margin: 0 0 16px; }
-.chapter-content ul, .chapter-content ol {
-  margin: 0 0 16px;
-  padding-left: 24px;
-}
-.chapter-content li { margin-bottom: 6px; }
-.chapter-content strong { font-weight: 600; color: var(--text); }
-.chapter-content em { font-style: italic; }
+    /* ── Chapter Cards ── */
+    .chapter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem; }
+    .chapter-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      cursor: pointer; text-decoration: none; color: inherit; display: block;
+    }
+    .chapter-card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .chapter-card-num {
+      font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700;
+      color: var(--text-muted); margin-bottom: 0.6rem; line-height: 1;
+    }
+    .chapter-card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; line-height: 1.4; }
+    .chapter-card-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+    .chapter-card-arrow {
+      display: flex; align-items: center; gap: 0.3rem; margin-top: 1rem;
+      font-size: 0.78rem; color: var(--text-muted); transition: color 0.2s;
+    }
+    .chapter-card:hover .chapter-card-arrow { color: var(--accent); }
 
-.chapter-content blockquote {
-  border-left: 3px solid var(--accent);
-  background: rgba(198,123,66,0.06);
-  margin: 20px 0;
-  padding: 16px 20px;
-  border-radius: 0 8px 8px 0;
-  color: var(--text);
-}
-.chapter-content blockquote p:last-child { margin-bottom: 0; }
+    /* ── Reader Overlay ── */
+    .reader-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: var(--bg-primary); overflow-y: auto;
+    }
+    .reader-overlay.active { display: block; }
+    .reader-nav {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(250,250,249,0.9); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .reader-nav-inner {
+      max-width: 760px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 56px;
+    }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      padding: 0.4rem 1rem; cursor: pointer; transition: all 0.2s;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .btn-back:hover { border-color: var(--accent); color: var(--accent); }
+    .reader-indicator { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
 
-.chapter-content code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.88em;
-  background: rgba(45,42,38,0.06);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-.chapter-content pre {
-  background: #2d2a26;
-  color: #f0ece6;
-  padding: 20px;
-  border-radius: var(--radius);
-  overflow-x: auto;
-  margin: 20px 0;
-  font-size: 0.88rem;
-  line-height: 1.6;
-}
-.chapter-content pre code {
-  background: none;
-  padding: 0;
-  color: inherit;
-}
+    /* ── Reader Content ── */
+    .reader-body { max-width: 760px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+    .reader-loading {
+      text-align: center; padding: 6rem 2rem; color: var(--text-muted);
+    }
+    .spinner {
+      width: 28px; height: 28px; border: 2px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin 0.7s linear infinite; margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-.chapter-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 0.92rem;
-}
-.chapter-content th, .chapter-content td {
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  text-align: left;
-}
-.chapter-content th {
-  background: var(--accent-light);
-  font-weight: 600;
-  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
-  font-size: 0.85rem;
-}
-.chapter-content tr:nth-child(even) { background: rgba(45,42,38,0.02); }
+    /* ── Markdown Styles ── */
+    .md-content { font-size: 0.95rem; line-height: 1.9; color: var(--text-primary); }
+    .md-content h1 {
+      font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700;
+      margin: 0 0 1rem; line-height: 1.35; letter-spacing: -0.02em;
+    }
+    .md-content h2 {
+      font-family: 'Noto Serif KR', serif; font-size: 1.35rem; font-weight: 700;
+      margin: 3rem 0 1rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border); letter-spacing: -0.01em;
+    }
+    .md-content h3 {
+      font-weight: 700; font-size: 1.1rem; margin: 2.5rem 0 0.8rem;
+    }
+    .md-content h4 {
+      font-weight: 700; font-size: 1rem; margin: 2rem 0 0.6rem;
+    }
+    .md-content p { margin: 0 0 1rem; }
+    .md-content ul, .md-content ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+    .md-content li { margin-bottom: 0.4rem; }
+    .md-content strong { font-weight: 700; color: var(--text-primary); }
 
-.chapter-content hr {
-  border: none;
-  height: 1px;
-  background: var(--border);
-  margin: 36px 0;
-}
+    .md-content blockquote {
+      border-left: 3px solid var(--border-light); background: var(--bg-secondary);
+      margin: 1.5rem 0; padding: 1rem 1.5rem; border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    .md-content blockquote p:last-child { margin-bottom: 0; }
 
-.chapter-content img {
-  max-width: 100%;
-  border-radius: var(--radius);
-}
+    .md-content code {
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85em;
+      background: var(--accent-dim); padding: 0.15rem 0.4rem; border-radius: 3px;
+    }
+    .md-content pre {
+      background: #1c1917; color: #e7e5e4; padding: 1.2rem 1.5rem;
+      border-radius: 8px; overflow-x: auto; margin: 1.5rem 0;
+      font-size: 0.85rem; line-height: 1.6;
+    }
+    .md-content pre code { background: none; padding: 0; color: inherit; }
 
-/* KaTeX overrides */
-.chapter-content .katex-display {
-  margin: 20px 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 8px 0;
-}
+    .md-content table {
+      width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem;
+    }
+    .md-content th, .md-content td {
+      padding: 0.65rem 1rem; border: 1px solid var(--border); text-align: left;
+    }
+    .md-content th {
+      background: var(--bg-secondary); font-weight: 500; font-size: 0.78rem;
+      letter-spacing: 0.03em; color: var(--text-secondary);
+    }
+    .md-content tr:hover { background: var(--bg-secondary); }
 
-/* ── Bottom Nav ── */
-.chapter-nav-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  gap: 12px;
-  margin-top: 48px;
-  padding-top: 32px;
-  border-top: 1px solid var(--border);
-}
-.nav-btn {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 16px 20px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  text-align: left;
-  max-width: 48%;
-  font-family: inherit;
-}
-.nav-btn:hover {
-  border-color: var(--accent);
-  box-shadow: var(--shadow-hover);
-}
-.nav-btn.next { margin-left: auto; text-align: right; }
-.nav-btn .nav-label {
-  font-size: 0.78rem;
-  color: var(--accent);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-family: 'Space Grotesk', sans-serif;
-}
-.nav-btn .nav-title {
-  font-size: 0.92rem;
-  color: var(--text);
-  font-weight: 500;
-  line-height: 1.4;
-}
-.nav-btn:disabled {
-  opacity: 0.3;
-  cursor: default;
-  pointer-events: none;
-}
+    .md-content hr { border: none; height: 1px; background: var(--border); margin: 2.5rem 0; }
+    .md-content img { max-width: 100%; border-radius: 8px; }
 
-/* ── Loading ── */
-.loading {
-  text-align: center;
-  padding: 80px 24px;
-  color: var(--text-secondary);
-}
-.loading .spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 16px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+    /* KaTeX */
+    .md-content .katex-display { margin: 1.5rem 0; overflow-x: auto; overflow-y: hidden; padding: 0.5rem 0; }
 
-/* ── Footer ── */
-.site-footer {
-  text-align: center;
-  padding: 32px 24px;
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  border-top: 1px solid var(--border);
-  max-width: 720px;
-  margin: 0 auto;
-}
+    /* ── Bottom Nav ── */
+    .reader-bottom-nav {
+      display: flex; justify-content: space-between; align-items: stretch;
+      gap: 1rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .nav-btn {
+      display: flex; flex-direction: column; gap: 0.3rem;
+      padding: 1.2rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: left;
+      max-width: 48%; font-family: 'Noto Sans KR', sans-serif;
+    }
+    .nav-btn:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .nav-btn.next { margin-left: auto; text-align: right; }
+    .nav-btn .nav-label {
+      font-size: 0.68rem; color: var(--text-muted); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .nav-btn .nav-title { font-size: 0.88rem; color: var(--text-primary); font-weight: 500; line-height: 1.4; }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
-/* ── Responsive ── */
-@media (max-width: 600px) {
-  .site-header { padding: 40px 20px 32px; }
-  .toc-item { padding: 16px; gap: 14px; }
-  .toc-item .ch-num { font-size: 1.1rem; min-width: 28px; }
-  .toc-item .ch-title { font-size: 0.95rem; }
-  .toc-item .ch-desc { font-size: 0.82rem; }
-  .chapter-view { padding: 0 16px 60px; }
-  .chapter-content h1 { font-size: 1.5rem; }
-  .chapter-content h2 { font-size: 1.25rem; }
-  .chapter-nav-bottom { flex-direction: column; }
-  .nav-btn { max-width: 100%; }
-  .nav-btn.next { text-align: left; }
-}
+    /* ── Footer ── */
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
-/* ── Scroll to top ── */
-.scroll-top {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  width: 44px;
-  height: 44px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(198,123,66,0.35);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.scroll-top.visible { opacity: 1; pointer-events: auto; }
-.scroll-top:hover { background: var(--accent-hover); transform: translateY(-2px); }
-</style>
+    /* ── Scroll Top ── */
+    .scroll-top {
+      position: fixed; bottom: 2rem; right: 2rem; width: 40px; height: 40px;
+      background: var(--accent); color: #fafaf9; border: none; border-radius: 50%;
+      font-size: 1rem; cursor: pointer; opacity: 0; pointer-events: none;
+      transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .scroll-top.visible { opacity: 1; pointer-events: auto; }
+    .scroll-top:hover { transform: translateY(-2px); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .chapter-grid { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.5rem; }
+      .reader-body { padding: 2rem 1.5rem 4rem; }
+      .reader-bottom-nav { flex-direction: column; }
+      .nav-btn { max-width: 100%; }
+      .nav-btn.next { text-align: left; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 </head>
 <body>
 
-<header class="site-header" id="header">
-  <h1>자산운용 학습서</h1>
-  <p class="subtitle">비전공자를 위한 12단원 시리즈 &mdash; "왜?"가 끊기지 않는 체계적 학습</p>
-  <div class="divider"></div>
-</header>
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#chapters">Chapters</a></li>
+      <li><a href="https://github.com/soccz/asset-management-guide" target="_blank">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
 
-<main>
-  <!-- TOC -->
-  <section class="toc-container" id="toc">
-    <p class="toc-section-label">Table of Contents</p>
-    <ul class="toc-list" id="toc-list"></ul>
-  </section>
-
-  <!-- Chapter View -->
-  <section class="chapter-view" id="chapter-view">
-    <div class="chapter-nav-top">
-      <button class="btn-back" onclick="showToc()">&#8592; 목차</button>
-      <span class="chapter-indicator" id="chapter-indicator"></span>
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Asset Management &times; Education</span>
+    <h1>비전공자를 위한<br>자산운용 학습서</h1>
+    <p class="hero-sub">
+      "왜?"가 끊기지 않는 체계적 학습.<br>
+      포트폴리오 이론부터 팩터 모델, 모멘텀까지 12단원으로 구성된 시리즈입니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">12</span><span class="hero-stat-label">단원</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">9</span><span class="hero-stat-label">참고 논문</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">1</span><span class="hero-stat-label">교재</span></div>
     </div>
-    <div class="loading" id="loading">
+    <a href="https://github.com/soccz/asset-management-guide" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="chapters"><div class="container fade-in">
+  <div class="section-label">Chapters</div>
+  <h2 class="section-title">12단원 목차</h2>
+  <p class="section-desc">Andrew Ang의 <em>Asset Management</em> 교재와 관련 논문 9편을 기반으로, 포트폴리오 이론의 기초부터 팩터 투자까지 체계적으로 정리했습니다.</p>
+  <div class="chapter-grid" id="chapter-grid"></div>
+</div></section>
+<hr class="divider">
+
+<section><div class="container fade-in">
+  <div class="section-label">Structure</div>
+  <h2 class="section-title">학습 흐름</h2>
+  <p class="section-desc">각 단원은 이전 단원의 "왜?"에 답하며, 다음 단원의 질문을 유도하는 구조로 설계되었습니다.</p>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:1rem;">
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1.5rem; border-top:3px solid #78716c; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+      <div style="font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem;">Part 1 &mdash; 01~05</div>
+      <div style="font-weight:700; font-size:1rem; margin-bottom:0.6rem;">포트폴리오 구축</div>
+      <div style="font-size:0.85rem; color:var(--text-secondary); font-style:italic; padding-left:1rem; border-left:2px solid var(--border);">"주어진 자산으로 최적의 포트폴리오를 어떻게 만드는가?"</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1.5rem; border-top:3px solid #78716c; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+      <div style="font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem;">Part 2 &mdash; 06~10</div>
+      <div style="font-weight:700; font-size:1rem; margin-bottom:0.6rem;">자산가격결정과 팩터</div>
+      <div style="font-size:0.85rem; color:var(--text-secondary); font-style:italic; padding-left:1rem; border-left:2px solid var(--border);">"기대수익률은 왜 자산마다 다른가?"</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1.5rem; border-top:3px solid #78716c; box-shadow:0 1px 3px rgba(0,0,0,0.03);">
+      <div style="font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem;">Part 3 &mdash; 11~12</div>
+      <div style="font-weight:700; font-size:1rem; margin-bottom:0.6rem;">종합과 응용</div>
+      <div style="font-size:0.85rem; color:var(--text-secondary); font-style:italic; padding-left:1rem; border-left:2px solid var(--border);">"배운 것을 어떻게 연결하고 활용하는가?"</div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  자산운용 학습서 &mdash; 비전공자를 위한 12단원 시리즈<br>
+  교재: Andrew Ang, <em>Asset Management</em> &middot; 관련 논문 9편 기반<br>
+  <a href="https://github.com/soccz/asset-management-guide" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+</div></footer>
+
+<!-- Reader Overlay -->
+<div class="reader-overlay" id="reader">
+  <div class="reader-nav">
+    <div class="reader-nav-inner">
+      <button class="btn-back" id="btn-close">&larr; 목차로</button>
+      <span class="reader-indicator" id="reader-indicator"></span>
+    </div>
+  </div>
+  <div class="reader-body">
+    <div class="reader-loading" id="reader-loading">
       <div class="spinner"></div>
-      <p>단원을 불러오는 중...</p>
+      <p style="font-size:0.85rem;">단원을 불러오는 중...</p>
     </div>
-    <article class="chapter-content" id="chapter-content"></article>
-    <div class="chapter-nav-bottom" id="chapter-nav-bottom"></div>
-  </section>
-</main>
+    <article class="md-content" id="md-content"></article>
+    <div class="reader-bottom-nav" id="reader-bottom-nav"></div>
+  </div>
+</div>
 
-<footer class="site-footer">
-  교재: Andrew Ang, <em>Asset Management</em> &middot; 관련 논문 9편 기반
-</footer>
+<button class="scroll-top" id="scroll-top" onclick="scrollTarget().scrollTo({top:0,behavior:'smooth'})">&uarr;</button>
 
-<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
-
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script>
 const chapters = [
-  { num: '01', file: '01_자산운용이란.md', title: '자산운용이란? — 왜 포트폴리오인가', desc: '자산운용 정의, 포트폴리오, 수익률·분산·공분산, 분산투자' },
+  { num: '01', file: '01_자산운용이란.md', title: '자산운용이란? \u2014 왜 포트폴리오인가', desc: '자산운용 정의, 포트폴리오, 수익률\u00b7분산\u00b7공분산, 분산투자' },
   { num: '02', file: '02_평균분산투자와_효율적프론티어.md', title: '평균-분산 투자와 효율적 프론티어', desc: '최적화, 라그랑주, 효율적 프론티어, 공매도' },
-  { num: '03', file: '03_효용함수와_최적포트폴리오.md', title: '효용함수와 최적 포트폴리오', desc: '효용함수, 위험회피계수 γ, 무차별곡선, 접점 포트폴리오' },
+  { num: '03', file: '03_효용함수와_최적포트폴리오.md', title: '효용함수와 최적 포트폴리오', desc: '효용함수, 위험회피계수 \u03b3, 무차별곡선, 접점 포트폴리오' },
   { num: '04', file: '04_무위험자산_CAL_샤프비율.md', title: '무위험자산, 자본배분선(CAL), 샤프비율', desc: '무위험자산, CAL, 샤프비율, 2기금 분리, 레버리지' },
   { num: '05', file: '05_포트폴리오전략.md', title: '포트폴리오 전략', desc: '동일가중, 최소분산, 리스크패리티, 최대분산, 리밸런싱' },
   { num: '06', file: '06_할인과_SDF_자산가격결정.md', title: '할인과 확률할인인자(SDF)', desc: '할인, SDF, 리스크프리미엄, CAPM, 베타, 알파' },
   { num: '07', file: '07_팩터모델과_APT.md', title: '팩터모델과 APT', desc: '단일/다중팩터, SDF 등가성, APT, PCA, 이변량 정렬' },
-  { num: '08', file: '08_사이즈팩터_가치팩터_FF3.md', title: '사이즈 팩터·가치 팩터·FF3', desc: '가치 프리미엄, B/M, HML, Fama-French 3팩터 모형' },
-  { num: '09', file: '09_모멘텀팩터.md', title: '모멘텀 팩터 — 승자는 계속 이긴다', desc: '모멘텀 효과, WML, 산업 모멘텀, 1월 효과, 보편성' },
+  { num: '08', file: '08_사이즈팩터_가치팩터_FF3.md', title: '사이즈 팩터\u00b7가치 팩터\u00b7FF3', desc: '가치 프리미엄, B/M, HML, Fama-French 3팩터 모형' },
+  { num: '09', file: '09_모멘텀팩터.md', title: '모멘텀 팩터 \u2014 승자는 계속 이긴다', desc: '모멘텀 효과, WML, 산업 모멘텀, 1월 효과, 보편성' },
   { num: '10', file: '10_모멘텀크래시와_변동성스케일링.md', title: '모멘텀 크래시와 변동성 스케일링', desc: '모멘텀 크래시 메커니즘, 변동성 스케일링, 목표 변동성' },
   { num: '11', file: '11_논문리뷰종합.md', title: '논문 리뷰 종합', desc: '9편의 논문 요약, 단원 매핑, 논문 간 관계도' },
   { num: '12', file: '12_왜_이_모든것을_배우는가.md', title: '왜 이 모든 것을 배우는가', desc: '"왜?" 프레임워크, 사고방식, 추론 습관, 진로' },
@@ -475,24 +374,24 @@ const BASE_URL = 'https://raw.githubusercontent.com/soccz/asset-management-guide
 const cache = {};
 let currentIndex = -1;
 
-// ── Build TOC ──
-const tocList = document.getElementById('toc-list');
+// ── Build chapter cards ──
+const grid = document.getElementById('chapter-grid');
 chapters.forEach((ch, i) => {
-  const li = document.createElement('li');
-  li.className = 'toc-item';
-  li.onclick = () => loadChapter(i);
-  li.innerHTML = `
-    <span class="ch-num">${ch.num}</span>
-    <div class="ch-info">
-      <div class="ch-title">${ch.title}</div>
-      <div class="ch-desc">${ch.desc}</div>
-    </div>
-    <span class="ch-arrow">&#8594;</span>
+  const card = document.createElement('div');
+  card.className = 'chapter-card';
+  card.onclick = () => openChapter(i);
+  card.innerHTML = `
+    <div class="chapter-card-num">${ch.num}</div>
+    <div class="chapter-card-title">${ch.title}</div>
+    <div class="chapter-card-desc">${ch.desc}</div>
+    <div class="chapter-card-arrow">읽기 &rarr;</div>
   `;
-  tocList.appendChild(li);
+  grid.appendChild(card);
 });
 
-// ── Markdown Rendering ──
+// ── Markdown setup ──
+marked.setOptions({ breaks: false, gfm: true });
+
 function renderMath(el) {
   renderMathInElement(el, {
     delimiters: [
@@ -506,21 +405,22 @@ function renderMath(el) {
   });
 }
 
-marked.setOptions({
-  breaks: false,
-  gfm: true,
-});
+// ── Reader ──
+const reader = document.getElementById('reader');
+const mdContent = document.getElementById('md-content');
+const readerLoading = document.getElementById('reader-loading');
 
-async function loadChapter(index) {
+async function openChapter(index) {
   currentIndex = index;
   const ch = chapters[index];
 
-  document.getElementById('toc').style.display = 'none';
-  document.getElementById('chapter-view').classList.add('active');
-  document.getElementById('loading').style.display = 'block';
-  document.getElementById('chapter-content').innerHTML = '';
-  document.getElementById('chapter-indicator').textContent = `${ch.num} / 12`;
-  window.scrollTo({ top: 0 });
+  reader.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  reader.scrollTop = 0;
+  readerLoading.style.display = 'block';
+  mdContent.innerHTML = '';
+  document.getElementById('reader-indicator').textContent = `${ch.num} / 12`;
+  document.getElementById('reader-bottom-nav').innerHTML = '';
   updateUrl(index);
 
   let md;
@@ -533,28 +433,26 @@ async function loadChapter(index) {
       md = await res.text();
       cache[ch.file] = md;
     } catch (e) {
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('chapter-content').innerHTML =
-        `<p style="color:var(--accent)">단원을 불러올 수 없습니다. (${e.message})</p>`;
+      readerLoading.style.display = 'none';
+      mdContent.innerHTML = `<p style="color:var(--text-secondary)">단원을 불러올 수 없습니다. (${e.message})</p>`;
       buildBottomNav();
       return;
     }
   }
 
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('chapter-content').innerHTML = marked.parse(md);
-  renderMath(document.getElementById('chapter-content'));
+  readerLoading.style.display = 'none';
+  mdContent.innerHTML = marked.parse(md);
+  renderMath(mdContent);
   buildBottomNav();
 }
 
 function buildBottomNav() {
-  const nav = document.getElementById('chapter-nav-bottom');
+  const nav = document.getElementById('reader-bottom-nav');
   const prev = currentIndex > 0 ? chapters[currentIndex - 1] : null;
   const next = currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null;
-
   let html = '';
   if (prev) {
-    html += `<button class="nav-btn prev" onclick="loadChapter(${currentIndex - 1})">
+    html += `<button class="nav-btn prev" onclick="openChapter(${currentIndex - 1}); document.getElementById('reader').scrollTo({top:0})">
       <span class="nav-label">&larr; 이전</span>
       <span class="nav-title">${prev.num}. ${prev.title}</span>
     </button>`;
@@ -562,7 +460,7 @@ function buildBottomNav() {
     html += '<div></div>';
   }
   if (next) {
-    html += `<button class="nav-btn next" onclick="loadChapter(${currentIndex + 1})">
+    html += `<button class="nav-btn next" onclick="openChapter(${currentIndex + 1}); document.getElementById('reader').scrollTo({top:0})">
       <span class="nav-label">다음 &rarr;</span>
       <span class="nav-title">${next.num}. ${next.title}</span>
     </button>`;
@@ -570,41 +468,63 @@ function buildBottomNav() {
   nav.innerHTML = html;
 }
 
-function showToc() {
-  document.getElementById('toc').style.display = 'block';
-  document.getElementById('chapter-view').classList.remove('active');
+function closeReader() {
+  reader.classList.remove('active');
+  document.body.style.overflow = '';
   currentIndex = -1;
-  window.scrollTo({ top: 0 });
   history.pushState(null, '', window.location.pathname);
 }
 
-// ── URL Hash ──
+document.getElementById('btn-close').addEventListener('click', closeReader);
+
+// ── URL ──
 function updateUrl(index) {
   history.pushState({ chapter: index }, '', `?ch=${index + 1}`);
 }
 
 window.addEventListener('popstate', (e) => {
   if (e.state && typeof e.state.chapter === 'number') {
-    loadChapter(e.state.chapter);
+    openChapter(e.state.chapter);
   } else {
-    showToc();
+    closeReader();
   }
 });
 
-// Load from URL on page load
+// ── ESC to close ──
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && reader.classList.contains('active')) closeReader();
+});
+
+// ── Load from URL ──
 (function() {
   const params = new URLSearchParams(window.location.search);
   const ch = parseInt(params.get('ch'));
-  if (ch >= 1 && ch <= 12) {
-    loadChapter(ch - 1);
-  }
+  if (ch >= 1 && ch <= 12) openChapter(ch - 1);
 })();
 
-// ── Scroll to top button ──
+// ── Scroll ──
+function scrollTarget() {
+  return reader.classList.contains('active') ? reader : window;
+}
+
 const scrollBtn = document.getElementById('scroll-top');
+function checkScroll() {
+  const y = reader.classList.contains('active') ? reader.scrollTop : window.scrollY;
+  scrollBtn.classList.toggle('visible', y > 400);
+}
+window.addEventListener('scroll', checkScroll);
+reader.addEventListener('scroll', checkScroll);
+
+// ── Nav scroll ──
 window.addEventListener('scroll', () => {
-  scrollBtn.classList.toggle('visible', window.scrollY > 400);
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
 });
+
+// ── Fade in ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>

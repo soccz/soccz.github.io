@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tactical Factor Allocation — 멀티팩터 포트폴리오의 전술적 팩터 배분</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-red: #b91c1c;
+      --accent-green: #15803d;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 150px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .layer-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .factor-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin: 2rem 0; }
+    .factor-pill {
+      flex: 1; min-width: 100px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem 1rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.03); transition: all 0.3s;
+    }
+    .factor-pill:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .factor-name { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+    .factor-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; line-height: 1.4; }
+
+    .eq-block {
+      background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.3rem 1.8rem; margin: 1rem 0; font-size: 0.9rem; line-height: 2; text-align: center;
+    }
+    .eq-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; text-align: left; }
+    .var { font-style: italic; font-family: Georgia, 'Times New Roman', serif; }
+    .sub { font-size: 0.75em; vertical-align: sub; }
+
+    .info-box {
+      background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c;
+      border-radius: 0 8px 8px 0; padding: 1.3rem 1.8rem; margin: 2rem 0;
+    }
+    .info-box p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
+
+    .table-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-btn {
+      padding: 0.45rem 1rem; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 4px; color: var(--text-secondary); font-size: 0.78rem; cursor: pointer;
+      transition: all 0.2s; font-family: 'Noto Sans KR', sans-serif;
+    }
+    .filter-btn:hover { border-color: var(--border-light); color: var(--text-primary); }
+    .filter-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+    thead { background: var(--bg-card); position: sticky; top: 0; }
+    th { padding: 0.85rem 1rem; text-align: left; font-weight: 500; color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    th.num { text-align: right; }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tr { transition: background 0.15s; }
+    tr:hover { background: #f5f5f4; }
+    tr.highlight { background: rgba(21,128,61,0.04); }
+    tr.highlight td:first-child { color: var(--accent-green); font-weight: 700; }
+    .table-foot { margin-top: 0.8rem; font-size: 0.78rem; color: var(--text-muted); }
+    .pos { color: var(--accent-green); font-weight: 500; }
+    .neg { color: var(--accent-red); font-weight: 500; }
+
+    .decade-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 2rem; }
+    .decade-block h3 { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; }
+
+    .verify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .verify-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .verify-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+    .verify-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.3rem; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      .decade-grid { grid-template-columns: 1fr; }
+      .factor-grid { gap: 0.5rem; }
+      .factor-pill { min-width: 80px; padding: 0.8rem; }
+      .factor-name { font-size: 1rem; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#background">Background</a></li>
+      <li><a href="#factors">Factors</a></li>
+      <li><a href="#strategies">Strategies</a></li>
+      <li><a href="#implementation">Implementation</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#findings">Findings</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Factor Investing &times; Replication</span>
+    <h1>멀티팩터 포트폴리오의<br>전술적 팩터 배분</h1>
+    <p class="hero-sub">
+      Kim (2022, Applied Economics Letters)의 팩터 배분 전략을 재현하고,<br>
+      5개 팩터에 대한 EW, TSM, TFA 세 가지 전략의 성과를 비교 분석합니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">Long-Short 팩터</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">배분 전략</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">글로벌 리전</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">53</span><span class="hero-stat-label">분석 기간 (년)</span></div>
+    </div>
+    <a href="https://github.com/soccz/tactical-factor-allocation" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Replication Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="background"><div class="container fade-in">
+  <div class="section-label">Background</div>
+  <h2 class="section-title">논문의 배경</h2>
+  <p class="section-desc">Saejoon Kim의 2022년 논문은 팩터 투자의 실무적 질문에 답합니다. 잘 알려진 주식 팩터들이 주어졌을 때, 시간에 따라 자본을 어떻게 배분해야 하는가?</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">연구 초점</div><div class="card-text">새로운 자산 가격 모형을 제안하는 것이 아닌, 5개의 long-short 주식 팩터를 투자 가능한 빌딩 블록으로 취급하고 양(+)의 모멘텀을 보이는 팩터에 기울이는 전술적 배분 규칙을 설계합니다.</div></div>
+    <div class="card"><div class="card-title">데이터 소스</div><div class="card-text">Ken French Data Library에서 4개 글로벌 리전(US, Developed ex-US, Europe, APAC ex-Japan)의 일별 팩터 수익률을 사용합니다. 1960년대 후반부터 2020년 9월까지를 커버합니다.</div></div>
+    <div class="card"><div class="card-title">핵심 관점</div><div class="card-text">FF3/FF5 가격결정 이론의 확장이 아닙니다. Fama-French 스타일 팩터 수익률 위에서 작동하는 포트폴리오 배분 연구로, 리스크 프리미엄 추정이 아닌 가중치 규칙에 초점을 맞춥니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="factors"><div class="container fade-in">
+  <div class="section-label">Factors</div>
+  <h2 class="section-title">5개 팩터</h2>
+  <p class="section-desc">논문은 5개의 long-short 주식 팩터로 멀티팩터 포트폴리오를 구성합니다. 시장 팩터(Rm-Rf)는 의도적으로 제외되었습니다.</p>
+  <div class="factor-grid">
+    <div class="factor-pill"><div class="factor-name">SMB</div><div class="factor-desc">Small Minus Big<br>(Size)</div></div>
+    <div class="factor-pill"><div class="factor-name">HML</div><div class="factor-desc">High Minus Low<br>(Value)</div></div>
+    <div class="factor-pill"><div class="factor-name">RMW</div><div class="factor-desc">Robust Minus Weak<br>(Profitability)</div></div>
+    <div class="factor-pill"><div class="factor-name">CMA</div><div class="factor-desc">Conservative Minus Aggressive<br>(Investment)</div></div>
+    <div class="factor-pill"><div class="factor-name">WML</div><div class="factor-desc">Winners Minus Losers<br>(Momentum)</div></div>
+  </div>
+  <div class="info-box">
+    <p>시장 팩터를 제외한 이유는 연구 질문이 long-short 팩터 유니버스 내에서의 전술적 가중치 배분에 관한 것이지, 시장 노출에 관한 것이 아니기 때문입니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="strategies"><div class="container fade-in">
+  <div class="section-label">Strategies</div>
+  <h2 class="section-title">3가지 배분 전략</h2>
+  <p class="section-desc">동일한 5개 팩터에 대해 세 가지 서로 다른 가중치 규칙을 적용하여 성과를 비교합니다.</p>
+  <div class="card-grid">
+    <div class="layer-card">
+      <div class="layer-num">Strategy 1 &mdash; Baseline</div>
+      <div class="layer-title">EW (Equal-Weight)</div>
+      <div class="layer-desc">매 리밸런싱 시점에 5개 팩터에 각 20%씩 동일 배분합니다. 가장 단순한 전략적 기준선입니다.</div>
+      <div class="tags"><span class="tag">Static</span><span class="tag">w = 1/N = 0.2</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Strategy 2 &mdash; Binary Signal</div>
+      <div class="layer-title">TSM (Time-Series Momentum)</div>
+      <div class="layer-desc">과거 12개월 누적 수익률이 양(+)인 팩터만 보유하고, 선택된 팩터 간 동일 가중치를 부여합니다. 음(-)의 시그널 팩터는 제거합니다(숏 아님).</div>
+      <div class="tags"><span class="tag">Dynamic</span><span class="tag">Binary ON/OFF</span><span class="tag">12M Lookback</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Strategy 3 &mdash; Gradual Tilt</div>
+      <div class="layer-title">TFA (Tactical Factor Allocation)</div>
+      <div class="layer-desc">기본 가중치 1.0에서 시작하여 12개월 수익률이 양(+)인 팩터를 1.5로 오버웨이트한 후 정규화합니다. TSM보다 부드러운 기울기 조정입니다.</div>
+      <div class="tags"><span class="tag">Dynamic</span><span class="tag">Gradual Tilt</span><span class="tag">12M Lookback</span></div>
+    </div>
+  </div>
+
+  <div style="margin-top:2.5rem;">
+    <div class="section-label">Weight Formulas</div>
+    <div class="eq-block">
+      <div class="eq-label">EW</div>
+      <var class="var">w</var><sub class="sub"><var class="var">i</var></sub> = 1/<var class="var">N</var> = 0.2 for all <var class="var">i</var>
+    </div>
+    <div class="eq-block">
+      <div class="eq-label">TSM</div>
+      <var class="var">w</var><sub class="sub"><var class="var">i</var></sub> = 1/<var class="var">K</var> if <var class="var">r</var><sub class="sub"><var class="var">i</var>,12m</sub> &gt; 0, else 0
+      &nbsp;&nbsp;(<var class="var">K</var> = number of positive-signal factors)
+    </div>
+    <div class="eq-block">
+      <div class="eq-label">TFA</div>
+      <var class="var">w</var><sub class="sub"><var class="var">i</var></sub><sup>raw</sup> = 1.5 if <var class="var">r</var><sub class="sub"><var class="var">i</var>,12m</sub> &gt; 0, else 1.0
+      &nbsp;&rarr;&nbsp;
+      <var class="var">w</var><sub class="sub"><var class="var">i</var></sub> = <var class="var">w</var><sub class="sub"><var class="var">i</var></sub><sup>raw</sup> / &Sigma;<var class="var">w</var><sup>raw</sup>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="implementation"><div class="container fade-in">
+  <div class="section-label">Implementation</div>
+  <h2 class="section-title">구현 파이프라인</h2>
+  <p class="section-desc">Ken French Data Library에서 데이터를 다운로드하고, 분기별 리밸런싱과 변동성 스케일링을 거쳐 최종 성과를 산출합니다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">Download Data</div><div class="flow-desc">FF5 + Momentum<br>일별 팩터 수익률</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">Quarterly Calendar</div><div class="flow-desc">분기별<br>리밸런싱 일정</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">12-Month Signal</div><div class="flow-desc">과거 12개월<br>누적 수익률 계산</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">Compute Weights</div><div class="flow-desc">EW / TSM / TFA<br>가중치 산출</div></div>
+    <div class="flow-step"><div class="flow-num">05</div><div class="flow-title">Vol Scaling</div><div class="flow-desc">목표 변동성 10%<br>레버리지 조정</div></div>
+    <div class="flow-step"><div class="flow-num">06</div><div class="flow-title">Performance</div><div class="flow-desc">수익률, Sharpe<br>MDD 산출</div></div>
+  </div>
+
+  <div style="margin-top:2.5rem;">
+    <div class="section-label">Design Parameters</div>
+    <div class="card-grid" style="margin-top:1rem;">
+      <div class="card"><div class="card-title">Rebalancing: Quarterly</div><div class="card-text">매 분기말 가중치를 재산출합니다.</div></div>
+      <div class="card"><div class="card-title">Signal Window: 12 Months</div><div class="card-text">팩터 모멘텀 시그널 결정에 과거 12개월(252 거래일) 누적 수익률을 사용합니다.</div></div>
+      <div class="card"><div class="card-title">Volatility Target: 10%</div><div class="card-text">과거 6개월 일별 수익률을 사용하여 연환산 10% 변동성을 목표로 포트폴리오 레버리지를 조정합니다.</div></div>
+      <div class="card"><div class="card-title">Data: Ken French Library</div><div class="card-text">FF5 + Momentum의 일별 팩터 수익률, 4개 글로벌 리전 대상.</div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:2.5rem;">
+    <div class="section-label">Volatility Scaling Variants</div>
+    <p class="section-desc" style="margin-bottom:1.5rem;">논문은 6개월 변동성 윈도우를 명시하지만 업데이트 빈도를 완전히 상세화하지 않습니다. 두 가지 모드를 테스트했습니다.</p>
+    <div class="card-grid">
+      <div class="card"><div class="card-title">Quarterly Fixed</div><div class="card-text">리밸런싱 시점에 변동성을 추정하고, 분기 내내 레버리지를 고정합니다. 지연이 발생하지만 분기별 리밸런싱 주기와 일치합니다.</div></div>
+      <div class="card"><div class="card-title">Daily Rolling</div><div class="card-text">롤링 윈도우를 사용하여 매일 변동성을 재추정합니다. 변동성 급등에 빠르게 반응하여 더 나은 드로다운 제어를 제공합니다.</div></div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="results"><div class="container fade-in">
+  <div class="section-label">Results</div>
+  <h2 class="section-title">재현 결과</h2>
+  <p class="section-desc">3가지 전략의 성과 지표입니다 (6개월 변동성 윈도우, quarterly fixed scaling). 모든 수치는 연환산 기준입니다.</p>
+
+  <div class="table-controls">
+    <button class="filter-btn active" data-region="us">US (1967-2020)</button>
+    <button class="filter-btn" data-region="dev">Dev ex-US (1994-2020)</button>
+    <button class="filter-btn" data-region="eu">Europe (1992-2020)</button>
+    <button class="filter-btn" data-region="apac">APAC ex-JP (1992-2020)</button>
+  </div>
+  <div class="table-wrap">
+    <table id="resultsTable">
+      <thead><tr><th>Strategy</th><th class="num">Ann Ret</th><th class="num">Ann Vol</th><th class="num">Sharpe</th><th class="num">IR</th><th class="num">Kurtosis</th><th class="num">Skewness</th><th class="num">MDD</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="table-foot" id="resultsFoot"></div>
+
+  <div style="margin-top:4rem;">
+    <div class="section-label">TFA Weights by Decade</div>
+    <h2 class="section-title" style="margin-bottom:0.5rem;">연대별 TFA 팩터 가중치</h2>
+    <p class="section-desc">TFA가 시간에 따라 팩터 레짐 변화에 어떻게 적응하는지 보여줍니다. 0.20에 가까우면 EW와 유사, 높을수록 해당 팩터의 양(+)의 모멘텀 시그널이 지속된 것입니다.</p>
+    <div class="decade-grid">
+      <div class="decade-block">
+        <h3>US</h3>
+        <div class="table-wrap"><table><thead><tr><th>Decade</th><th class="num">SMB</th><th class="num">HML</th><th class="num">RMW</th><th class="num">CMA</th><th class="num">WML</th></tr></thead><tbody>
+          <tr><td>1960s</td><td class="num">0.193</td><td class="num">0.203</td><td class="num">0.169</td><td class="num">0.212</td><td class="num">0.223</td></tr>
+          <tr><td>1970s</td><td class="num">0.196</td><td class="num">0.202</td><td class="num">0.189</td><td class="num">0.207</td><td class="num">0.206</td></tr>
+          <tr><td>1980s</td><td class="num">0.181</td><td class="num">0.203</td><td class="num">0.209</td><td class="num">0.203</td><td class="num">0.204</td></tr>
+          <tr><td>1990s</td><td class="num">0.176</td><td class="num">0.190</td><td class="num">0.213</td><td class="num">0.196</td><td class="num">0.225</td></tr>
+          <tr><td>2000s</td><td class="num">0.211</td><td class="num">0.195</td><td class="num">0.205</td><td class="num">0.192</td><td class="num">0.198</td></tr>
+          <tr><td>2010s</td><td class="num">0.194</td><td class="num">0.189</td><td class="num">0.208</td><td class="num">0.192</td><td class="num">0.216</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="decade-block">
+        <h3>Developed ex-US</h3>
+        <div class="table-wrap"><table><thead><tr><th>Decade</th><th class="num">SMB</th><th class="num">HML</th><th class="num">RMW</th><th class="num">CMA</th><th class="num">WML</th></tr></thead><tbody>
+          <tr><td>1990s</td><td class="num">0.183</td><td class="num">0.190</td><td class="num">0.235</td><td class="num">0.175</td><td class="num">0.218</td></tr>
+          <tr><td>2000s</td><td class="num">0.189</td><td class="num">0.210</td><td class="num">0.202</td><td class="num">0.198</td><td class="num">0.202</td></tr>
+          <tr><td>2010s</td><td class="num">0.198</td><td class="num">0.179</td><td class="num">0.216</td><td class="num">0.190</td><td class="num">0.218</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="decade-block">
+        <h3>Europe</h3>
+        <div class="table-wrap"><table><thead><tr><th>Decade</th><th class="num">SMB</th><th class="num">HML</th><th class="num">RMW</th><th class="num">CMA</th><th class="num">WML</th></tr></thead><tbody>
+          <tr><td>1990s</td><td class="num">0.177</td><td class="num">0.200</td><td class="num">0.214</td><td class="num">0.183</td><td class="num">0.225</td></tr>
+          <tr><td>2000s</td><td class="num">0.193</td><td class="num">0.206</td><td class="num">0.197</td><td class="num">0.199</td><td class="num">0.206</td></tr>
+          <tr><td>2010s</td><td class="num">0.197</td><td class="num">0.184</td><td class="num">0.215</td><td class="num">0.180</td><td class="num">0.224</td></tr>
+        </tbody></table></div>
+      </div>
+      <div class="decade-block">
+        <h3>APAC ex-Japan</h3>
+        <div class="table-wrap"><table><thead><tr><th>Decade</th><th class="num">SMB</th><th class="num">HML</th><th class="num">RMW</th><th class="num">CMA</th><th class="num">WML</th></tr></thead><tbody>
+          <tr><td>1990s</td><td class="num">0.187</td><td class="num">0.211</td><td class="num">0.191</td><td class="num">0.200</td><td class="num">0.211</td></tr>
+          <tr><td>2000s</td><td class="num">0.184</td><td class="num">0.210</td><td class="num">0.193</td><td class="num">0.196</td><td class="num">0.218</td></tr>
+          <tr><td>2010s</td><td class="num">0.172</td><td class="num">0.198</td><td class="num">0.208</td><td class="num">0.207</td><td class="num">0.215</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+    <div class="table-foot">All results use 6-month (126 trading days) volatility window with quarterly-fixed scaling. Returns and volatilities are annualized (&times;252, &times;&radic;252). Sharpe ratio = Ann Ret / Ann Vol. Kurtosis is non-excess (normal = 3).</div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="findings"><div class="container fade-in">
+  <div class="section-label">Key Findings</div>
+  <h2 class="section-title">주요 발견</h2>
+  <p class="section-desc">4개 리전에 걸친 재현 결과에서 도출된 핵심 인사이트입니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">TFA가 Sharpe Ratio를 개선</div><div class="card-text">TFA는 4개 리전 모두에서 가장 높거나 거의 가장 높은 Sharpe Ratio를 달성하며, EW를 일관되게 상회합니다. 어떤 팩터도 완전히 제거하지 않으면서 양(+)의 최근 성과를 보인 팩터에 기울이는 방식으로 개선을 이끕니다.</div></div>
+    <div class="card"><div class="card-title">TSM은 EW를 하회할 수 있음</div><div class="card-text">US 샘플에서 TSM (SR: 0.91)은 EW (SR: 1.20)를 하회합니다. 음(-)의 시그널 팩터를 완전히 배제함으로써 TSM은 리스크를 집중시키고 더 높은 첨도와 더 심한 드로다운을 겪습니다.</div></div>
+    <div class="card"><div class="card-title">TFA가 MDD를 감소시킴</div><div class="card-text">국제 시장(Dev ex-US, Europe, APAC)에서 TFA는 3가지 전략 중 가장 낮은 최대 드로다운을 달성하며, 점진적 기울기 메커니즘을 통한 더 나은 테일 리스크 관리를 보여줍니다.</div></div>
+    <div class="card"><div class="card-title">WML과 RMW가 수익을 주도</div><div class="card-text">모든 리전에서 모멘텀(WML)과 수익성(RMW)이 가장 강한 개별 팩터입니다. TFA 연대별 가중치에서도 이 팩터들에 대한 지속적인 오버웨이트가 확인됩니다.</div></div>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <div class="verify-grid">
+      <div class="verify-card"><div class="verify-num">4/4</div><div class="verify-label">리전 최고/차선 Sharpe</div></div>
+      <div class="verify-card"><div class="verify-num">3/4</div><div class="verify-label">리전 최저 MDD</div></div>
+      <div class="verify-card"><div class="verify-num">1.22~1.44</div><div class="verify-label">TFA Sharpe 범위</div></div>
+      <div class="verify-card"><div class="verify-num">21.7~50.1%</div><div class="verify-label">TFA MDD 범위</div></div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="reference"><div class="container fade-in">
+  <div class="section-label">Reference</div>
+  <h2 class="section-title">참고 문헌</h2>
+  <div class="card-grid" style="margin-top:1.5rem;">
+    <div class="card"><div class="card-title">논문</div><div class="card-text">Kim, S. (2022). Tactical factor allocation for multifactor portfolios. <em>Applied Economics Letters</em>.</div></div>
+    <div class="card"><div class="card-title">데이터</div><div class="card-text">Kenneth R. French Data Library &mdash; Daily factor returns for FF5 + Momentum across four global regions.</div></div>
+  </div>
+  <div class="tech-grid" style="margin-top:2.5rem;">
+    <div class="tech-item"><div class="tech-cat">Data</div><ul class="tech-list"><li>Ken French Data Library</li><li>FF5 + WML (daily)</li><li>pandas / numpy</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Signal</div><ul class="tech-list"><li>12-month cumulative return</li><li>Quarterly rebalancing</li><li>Binary / gradual tilt</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Risk</div><ul class="tech-list"><li>6-month vol estimation</li><li>10% vol target scaling</li><li>Quarterly / daily variants</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Metrics</div><ul class="tech-list"><li>Sharpe / IR / MDD</li><li>Kurtosis / Skewness</li><li>Decade weight analysis</li></ul></div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  Tactical Factor Allocation &mdash; Kim (2022) Replication Study<br>
+  <a href="https://github.com/soccz/tactical-factor-allocation" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+</div></footer>
+
+<script>
+const data={
+  us:[
+    {s:"SMB",ret:"-0.7%",vol:"11.1%",sr:"-0.06",ir:"-0.34",kurt:"15.69",skew:"-0.73",mdd:"78.2%"},
+    {s:"HML",ret:"4.7%",vol:"11.4%",sr:"0.41",ir:"-0.08",kurt:"9.17",skew:"0.27",mdd:"67.4%"},
+    {s:"RMW",ret:"7.6%",vol:"10.8%",sr:"0.71",ir:"0.05",kurt:"6.66",skew:"0.23",mdd:"56.7%"},
+    {s:"CMA",ret:"6.9%",vol:"10.8%",sr:"0.63",ir:"0.02",kurt:"6.26",skew:"0.04",mdd:"49.8%"},
+    {s:"WML",ret:"14.4%",vol:"11.8%",sr:"1.23",ir:"0.39",kurt:"10.14",skew:"-0.64",mdd:"32.2%"},
+    {s:"EW",ret:"13.4%",vol:"11.2%",sr:"1.20",ir:"0.30",kurt:"7.85",skew:"-0.46",mdd:"49.2%"},
+    {s:"TSM",ret:"12.3%",vol:"13.5%",sr:"0.91",ir:"0.26",kurt:"64.31",skew:"-2.15",mdd:"57.0%"},
+    {s:"TFA",ret:"13.8%",vol:"11.3%",sr:"1.22",ir:"0.32",kurt:"8.86",skew:"-0.58",mdd:"50.1%",hl:true}
+  ],
+  dev:[
+    {s:"SMB",ret:"0.2%",vol:"11.1%",sr:"0.01",ir:"-0.18",kurt:"7.18",skew:"-0.39",mdd:"38.9%"},
+    {s:"HML",ret:"5.7%",vol:"11.1%",sr:"0.51",ir:"0.06",kurt:"5.66",skew:"0.09",mdd:"60.9%"},
+    {s:"RMW",ret:"12.6%",vol:"10.7%",sr:"1.18",ir:"0.40",kurt:"6.55",skew:"0.06",mdd:"27.2%"},
+    {s:"CMA",ret:"0.6%",vol:"11.0%",sr:"0.05",ir:"-0.19",kurt:"5.69",skew:"0.13",mdd:"62.5%"},
+    {s:"WML",ret:"16.9%",vol:"11.9%",sr:"1.41",ir:"0.59",kurt:"7.42",skew:"-0.55",mdd:"28.1%"},
+    {s:"EW",ret:"15.4%",vol:"11.6%",sr:"1.33",ir:"0.47",kurt:"8.81",skew:"-0.37",mdd:"31.9%"},
+    {s:"TSM",ret:"17.1%",vol:"12.4%",sr:"1.39",ir:"0.56",kurt:"10.89",skew:"-0.67",mdd:"31.2%"},
+    {s:"TFA",ret:"16.8%",vol:"11.7%",sr:"1.44",ir:"0.54",kurt:"8.04",skew:"-0.44",mdd:"23.0%",hl:true}
+  ],
+  eu:[
+    {s:"SMB",ret:"0.3%",vol:"11.1%",sr:"0.03",ir:"-0.22",kurt:"7.16",skew:"-0.40",mdd:"43.5%"},
+    {s:"HML",ret:"3.8%",vol:"11.2%",sr:"0.34",ir:"-0.12",kurt:"7.11",skew:"0.06",mdd:"67.2%"},
+    {s:"RMW",ret:"12.1%",vol:"10.9%",sr:"1.12",ir:"0.26",kurt:"8.93",skew:"0.18",mdd:"30.9%"},
+    {s:"CMA",ret:"-1.3%",vol:"11.0%",sr:"-0.12",ir:"-0.32",kurt:"5.79",skew:"0.16",mdd:"67.3%"},
+    {s:"WML",ret:"16.4%",vol:"12.0%",sr:"1.36",ir:"0.44",kurt:"8.54",skew:"-0.65",mdd:"28.8%"},
+    {s:"EW",ret:"14.7%",vol:"11.5%",sr:"1.28",ir:"0.33",kurt:"8.41",skew:"-0.53",mdd:"32.4%"},
+    {s:"TSM",ret:"17.8%",vol:"12.9%",sr:"1.37",ir:"0.47",kurt:"13.78",skew:"-0.79",mdd:"26.3%"},
+    {s:"TFA",ret:"16.7%",vol:"11.7%",sr:"1.43",ir:"0.41",kurt:"7.86",skew:"-0.53",mdd:"23.2%",hl:true}
+  ],
+  apac:[
+    {s:"SMB",ret:"-3.2%",vol:"10.9%",sr:"-0.29",ir:"-0.34",kurt:"7.09",skew:"-0.50",mdd:"72.0%"},
+    {s:"HML",ret:"7.0%",vol:"10.6%",sr:"0.66",ir:"0.09",kurt:"5.37",skew:"0.14",mdd:"32.6%"},
+    {s:"RMW",ret:"5.7%",vol:"10.7%",sr:"0.54",ir:"0.03",kurt:"5.72",skew:"-0.09",mdd:"28.1%"},
+    {s:"CMA",ret:"6.2%",vol:"10.8%",sr:"0.57",ir:"0.05",kurt:"6.73",skew:"0.27",mdd:"34.1%"},
+    {s:"WML",ret:"14.6%",vol:"11.7%",sr:"1.25",ir:"0.48",kurt:"11.59",skew:"-0.18",mdd:"33.5%"},
+    {s:"EW",ret:"15.3%",vol:"11.3%",sr:"1.36",ir:"0.42",kurt:"7.89",skew:"-0.38",mdd:"23.7%"},
+    {s:"TSM",ret:"14.6%",vol:"12.1%",sr:"1.21",ir:"0.42",kurt:"13.94",skew:"-0.56",mdd:"26.9%"},
+    {s:"TFA",ret:"15.9%",vol:"11.4%",sr:"1.39",ir:"0.45",kurt:"8.98",skew:"-0.41",mdd:"21.7%",hl:true}
+  ]
+};
+const labels={us:"US (1967 \u2013 2020)",dev:"Developed ex-US (1994 \u2013 2020)",eu:"Europe (1992 \u2013 2020)",apac:"APAC ex-Japan (1992 \u2013 2020)"};
+
+function renderResults(region){
+  const rows=data[region];
+  const tbody=document.querySelector('#resultsTable tbody');
+  tbody.innerHTML=rows.map(r=>{
+    const cls=r.hl?'class="highlight"':'';
+    return `<tr ${cls}><td>${r.s}</td><td class="num">${r.ret}</td><td class="num">${r.vol}</td><td class="num">${r.sr}</td><td class="num">${r.ir}</td><td class="num">${r.kurt}</td><td class="num">${r.skew}</td><td class="num">${r.mdd}</td></tr>`;
+  }).join('');
+  document.getElementById('resultsFoot').textContent=labels[region]+' \u2014 6-month vol window, quarterly-fixed scaling, annualized';
+}
+
+document.querySelectorAll('.filter-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    renderResults(b.dataset.region);
+  });
+});
+renderResults('us');
+
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
