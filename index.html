@@ -1306,7 +1306,8 @@ function renderPosts(catKey) {
     const url = `https://github.com/soccz/${r.name}`;
     const desc = r.description || DESCS[r.name] || '';
     const stars = r.stargazers_count || r.stargazerCount || 0;
-    return `<a class="post-card ${cat}-post fade-in" href="${hp || url}" target="_blank" rel="noopener" style="animation-delay:${i * 0.04}s">
+    const cardTarget = hp && !hp.startsWith('http') ? '' : 'target="_blank" rel="noopener"';
+    return `<a class="post-card ${cat}-post fade-in" href="${hp || url}" ${cardTarget} style="animation-delay:${i * 0.04}s">
       <div class="post-top">
         <span class="post-badge ${cat}">${CATEGORIES[cat]?.label || ''}</span>
         <span class="post-date">${fmtDate(r[dateKey])}</span>
