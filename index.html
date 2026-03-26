@@ -1092,26 +1092,19 @@
 
 <script>
 const CATEGORIES = {
-  finance: {
-    label: 'Finance & Trading',
-    desc: '팩터 분해, 시계열 예측, 크립토 시그널 — 시장을 숫자로 읽는 프로젝트',
-    color: 'finance',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 4 5-8"/></svg>`,
-    match: ['Chrono-Trader','Chrono-Trader-v2']
-  },
   research: {
-    label: 'Research & Paper',
+    label: 'Research',
     desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','CBAM','market-impact-analysis','boundarybench','fin-momentum','tactical-factor-allocation','asset-management-guide']
+    match: ['FF3','fin-momentum','tactical-factor-allocation','asset-management-guide']
   },
-  web: {
-    label: 'Web & App',
-    desc: '아이디어를 브라우저에 올리는 풀스택 프로젝트',
-    color: 'web',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10M12 17v4"/></svg>`,
-    match: ['MC_order','forjp']
+  project: {
+    label: 'Project',
+    desc: '직접 설계하고 만드는 진행형 프로젝트',
+    color: 'finance',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 4 5-8"/></svg>`,
+    match: ['CBAM','boundarybench','market-impact-analysis','Chrono-Trader','Chrono-Trader-v2','HIGAN']
   },
   data: {
     label: 'Data & ML',
@@ -1122,10 +1115,10 @@ const CATEGORIES = {
   },
   side: {
     label: 'Side Project',
-    desc: '재미로 만들고, 실험하고, 부숴보는 놀이터',
+    desc: '취미로 만들고, 실험하고, 부숴보는 놀이터',
     color: 'side',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
-    match: ['night-shift-escape','self_exercise','kaggle_test','HIGAN','young-and-home']
+    match: ['night-shift-escape','self_exercise','kaggle_test','young-and-home','MC_order','forjp']
   },
   note: {
     label: 'Notes & Daily',
