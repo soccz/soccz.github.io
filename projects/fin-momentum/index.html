@@ -564,6 +564,7 @@
   </div>
 
   <footer class="toc-footer">
+    <a href="/" rel="noopener">Home</a>
     <a href="https://github.com/soccz/fin-momentum" target="_blank" rel="noopener">GitHub &nearr;</a>
     <span class="toc-footer-count">10 chapters + 3 appendices</span>
   </footer>
@@ -638,7 +639,6 @@
   // marked config
   marked.setOptions({
     gfm: true, breaks: false,
-    headerIds: false, mangle: false,
   });
 
   function getIdx(id) { return CHAPTERS.findIndex(c => c.id === String(id)); }

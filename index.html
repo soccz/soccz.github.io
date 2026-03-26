@@ -497,11 +497,12 @@
       opacity: 0;
       transition: opacity 0.25s;
     }
-    .cat-card.finance-card::before { background: var(--finance); }
+    .cat-card.finance-card::before, .cat-card.project-card::before { background: var(--finance); }
     .cat-card.research-card::before { background: var(--research); }
     .cat-card.web-card::before { background: var(--web); }
     .cat-card.data-card::before { background: var(--data); }
     .cat-card.note-card::before { background: var(--note); }
+    .cat-card.side-card::before { background: var(--side); }
     .cat-card:hover {
       border-color: var(--border-hover);
       box-shadow: var(--shadow-lg);
@@ -693,11 +694,12 @@
       transform: translateX(2px);
     }
     .post-card:hover::before { opacity: 1; }
-    .post-card.finance-post::before { background: var(--finance); }
+    .post-card.finance-post::before, .post-card.project-post::before { background: var(--finance); }
     .post-card.research-post::before { background: var(--research); }
     .post-card.web-post::before { background: var(--web); }
     .post-card.data-post::before { background: var(--data); }
     .post-card.note-post::before { background: var(--note); }
+    .post-card.side-post::before { background: var(--side); }
 
     .post-top {
       display: flex;
@@ -714,7 +716,7 @@
       padding: 3px 9px;
       border-radius: 5px;
     }
-    .post-badge.finance { background: var(--finance-light); color: var(--finance); }
+    .post-badge.finance, .post-badge.project { background: var(--finance-light); color: var(--finance); }
     .post-badge.research { background: var(--research-light); color: var(--research); }
     .post-badge.web { background: var(--web-light); color: var(--web); }
     .post-badge.data { background: var(--data-light); color: var(--data); }
@@ -1186,17 +1188,18 @@ function renderFeatured() {
 
   document.getElementById('featuredTitle').textContent = latest.name;
   document.getElementById('featuredDesc').textContent = desc;
+  const catColor = CATEGORIES[cat]?.color || cat;
   document.getElementById('featuredBadge').textContent = CATEGORIES[cat]?.label || '';
   document.getElementById('featuredBadge').className = 'featured-badge';
-  document.getElementById('featuredBadge').style.background = `var(--${cat}-light)`;
-  document.getElementById('featuredBadge').style.color = `var(--${cat})`;
+  document.getElementById('featuredBadge').style.background = `var(--${catColor}-light)`;
+  document.getElementById('featuredBadge').style.color = `var(--${catColor})`;
   document.getElementById('featuredDate').textContent = fmtDate(dateKey);
 
   const PP = {
     'market-impact-analysis':'/projects/market-impact/','boundarybench':'/projects/boundarybench/',
     'asset-management-guide':'/projects/asset-management/','fin-momentum':'/projects/fin-momentum/',
     'tactical-factor-allocation':'/projects/tactical-factor-allocation/','CBAM':'/projects/cbam/',
-    'Chrono-Trader':'/projects/chrono-trader/','Chrono-Trader-v2':'/projects/chrono-trader-v2/',
+    'Chrono-Trader-v2':'/projects/chrono-trader-v2/',
     'fomc':'/projects/fomc/','bit_sector':'/projects/bit-sector/','bit_test':'/projects/bit-test/',
     'finance_semiconductor':'/projects/finance-semiconductor/','HIGAN':'/projects/higan/',
     'finance-note':'/projects/finance-note/','FF3':'/projects/ff3/','RCNN_test':'/projects/rcnn-test/',
@@ -1217,8 +1220,8 @@ function renderFeatured() {
   }
 
   const iconEl = section.querySelector('.featured-icon');
-  iconEl.style.background = `var(--${cat}-light)`;
-  iconEl.querySelector('svg').style.color = `var(--${cat})`;
+  iconEl.style.background = `var(--${catColor}-light)`;
+  iconEl.querySelector('svg').style.color = `var(--${catColor})`;
 
   section.style.display = 'block';
 }
@@ -1301,7 +1304,6 @@ function renderPosts(catKey) {
       'fin-momentum': '/projects/fin-momentum/',
       'tactical-factor-allocation': '/projects/tactical-factor-allocation/',
       'CBAM': '/projects/cbam/',
-      'Chrono-Trader': '/projects/chrono-trader/',
       'Chrono-Trader-v2': '/projects/chrono-trader-v2/',
       'fomc': '/projects/fomc/',
       'bit_sector': '/projects/bit-sector/',
@@ -1402,7 +1404,6 @@ requestAnimationFrame(() => {
   document.querySelectorAll('.fade-up').forEach((el, i) => {
     el.style.transitionDelay = (i * 0.1) + 's';
   });
-  initScrollObserver();
 });
 
 init();
