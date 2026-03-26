@@ -7,521 +7,436 @@
   <meta name="description" content="비전공자를 위한 자산운용 학습서. 포트폴리오 이론부터 팩터 모델까지 12단원으로 구성된 체계적 학습 가이드.">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
-      --bg-primary: #fafaf9;
-      --bg-secondary: #f5f5f4;
-      --bg-card: #ffffff;
+      --bg-toc: #fafaf9;
+      --bg-reader: #ffffff;
+      --bg-tint: #f5f5f4;
       --text-primary: #1c1917;
       --text-secondary: #57534e;
       --text-muted: #a8a29e;
       --accent: #44403c;
-      --accent-light: #78716c;
       --border: #e7e5e4;
       --border-light: #d6d3d1;
-      --reading-width: 740px;
-      --sidebar-width: 220px;
+      --code-bg: #292524;
+      --code-text: #e7e5e4;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Noto Sans KR', -apple-system, sans-serif;
-      background: var(--bg-primary);
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-toc);
       color: var(--text-primary);
-      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ═══════════════════════════════════════
-       Progress Bar
-       ═══════════════════════════════════════ */
+    /* ── Progress Bar ── */
     #progress-bar {
-      position: fixed; top: 0; left: 0; height: 3px; z-index: 1000;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
-      width: 0%; transition: width 0.1s linear;
-      display: none;
+      position: fixed; top: 0; left: 0; height: 2px; z-index: 9999;
+      background: var(--accent);
+      width: 0%; transition: width 80ms linear;
+      opacity: 0; pointer-events: none;
     }
+    #progress-bar.visible { opacity: 1; }
 
-    /* ═══════════════════════════════════════
-       Cover / Hero View
-       ═══════════════════════════════════════ */
-    #cover-view {
+    /* ══════════════════════════════════════
+       TOC VIEW
+       ══════════════════════════════════════ */
+    #toc-view {
       min-height: 100vh;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    #toc-view.hidden {
+      opacity: 0; pointer-events: none; position: absolute; transform: translateY(-20px);
     }
 
+    /* Hero */
     .hero {
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
-      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+      text-align: center; padding: 3rem 2rem;
     }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 25% 35%, rgba(68,64,60,0.04) 0%, transparent 55%),
-        radial-gradient(ellipse at 75% 65%, rgba(120,113,108,0.03) 0%, transparent 50%);
-    }
-    .hero-content { position: relative; max-width: 700px; }
+    .hero-inner { max-width: 600px; }
     .hero-label {
-      display: inline-block; font-size: 0.7rem; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--text-secondary);
-      border: 1px solid var(--border-light); padding: 0.4rem 1.4rem;
-      border-radius: 2px; margin-bottom: 2.5rem;
+      display: inline-block; font-size: 0.68rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 3rem;
     }
     .hero h1 {
       font-family: 'Noto Serif KR', serif;
-      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
-      font-weight: 700; line-height: 1.45;
-      letter-spacing: -0.03em; margin-bottom: 1.5rem;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700; line-height: 1.4;
+      letter-spacing: -0.03em; margin-bottom: 1rem;
     }
-    .hero-sub {
+    .hero-subtitle {
       font-size: 1rem; color: var(--text-secondary);
-      font-weight: 300; line-height: 1.9; margin-bottom: 2.5rem;
-      max-width: 560px; margin-left: auto; margin-right: auto;
+      font-weight: 300; line-height: 1.8; margin-bottom: 3.5rem;
     }
     .hero-meta {
-      display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
-      margin-bottom: 3rem;
+      display: flex; justify-content: center; gap: 3rem;
     }
     .hero-meta-item { text-align: center; }
     .hero-meta-num {
-      font-family: 'Noto Serif KR', serif; font-size: 2rem;
-      font-weight: 700; color: var(--accent); display: block; line-height: 1.2;
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2rem; font-weight: 700; color: var(--text-primary);
+      display: block; line-height: 1.2;
     }
-    .hero-meta-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; }
-    .hero-cta {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 2rem; border: 1px solid var(--accent);
-      color: var(--accent); text-decoration: none; font-size: 0.88rem;
-      font-weight: 500; border-radius: 4px; transition: all 0.25s;
-      cursor: pointer; background: none;
+    .hero-meta-label {
+      font-size: 0.72rem; color: var(--text-muted);
+      letter-spacing: 0.05em; margin-top: 0.25rem; display: block;
     }
-    .hero-cta:hover { background: var(--accent); color: #fff; }
     .scroll-hint {
       position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
       color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.12em;
-      animation: floaty 2.5s ease-in-out infinite;
+      animation: drift 2.5s ease-in-out infinite;
     }
-    @keyframes floaty { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(8px); } }
-
-    /* ═══════════════════════════════════════
-       Table of Contents Section
-       ═══════════════════════════════════════ */
-    .toc-section {
-      max-width: 860px; margin: 0 auto; padding: 5rem 2rem 6rem;
-    }
-    .toc-header {
-      text-align: center; margin-bottom: 4rem;
-    }
-    .toc-label {
-      font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--text-muted); margin-bottom: 0.8rem;
-    }
-    .toc-title {
-      font-family: 'Noto Serif KR', serif; font-size: 1.8rem;
-      font-weight: 700; letter-spacing: -0.02em;
-    }
-    .toc-divider {
-      border: none; height: 1px; margin: 0 auto 4rem;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      max-width: 200px;
+    @keyframes drift {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
     }
 
-    .toc-list { list-style: none; }
-    .toc-item {
+    /* Chapter List */
+    .chapter-list-section {
+      max-width: 640px; margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+    .part-group { margin-bottom: 3rem; }
+    .part-label {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
+    }
+    .chapter-item {
       display: flex; align-items: baseline; gap: 1.5rem;
-      padding: 1.2rem 1.5rem; border-radius: 6px;
-      cursor: pointer; transition: all 0.2s; text-decoration: none;
-      color: inherit; border: 1px solid transparent;
+      padding: 1rem 0; cursor: pointer;
+      transition: padding-left 0.2s ease, color 0.2s ease;
+      border-bottom: 1px solid transparent;
     }
-    .toc-item:hover {
-      background: var(--bg-card);
-      border-color: var(--border);
+    .chapter-item:hover {
+      padding-left: 0.5rem;
     }
-    .toc-item-num {
-      font-family: 'Noto Serif KR', serif; font-size: 1.3rem;
-      font-weight: 700; color: var(--text-muted);
-      min-width: 2.5rem; text-align: right; flex-shrink: 0;
+    .chapter-item:hover .chapter-title { color: var(--accent); }
+    .chapter-item:hover .chapter-num { color: var(--text-secondary); }
+    .chapter-num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--border-light);
+      min-width: 2.5rem; text-align: right;
+      transition: color 0.2s ease;
+      line-height: 1;
     }
-    .toc-item:hover .toc-item-num { color: var(--accent); }
-    .toc-item-body { flex: 1; }
-    .toc-item-title {
-      font-size: 1.05rem; font-weight: 500;
-      line-height: 1.5; margin-bottom: 0.25rem;
+    .chapter-info { flex: 1; }
+    .chapter-title {
+      font-size: 1rem; font-weight: 500;
+      color: var(--text-primary); line-height: 1.5;
+      transition: color 0.2s ease;
     }
-    .toc-item-desc {
+    .chapter-desc {
       font-size: 0.82rem; color: var(--text-muted);
-      line-height: 1.6;
+      margin-top: 0.2rem; line-height: 1.5;
     }
-    .toc-item-arrow {
-      color: var(--text-muted); font-size: 0.85rem;
-      opacity: 0; transition: opacity 0.2s, transform 0.2s;
-      flex-shrink: 0;
-    }
-    .toc-item:hover .toc-item-arrow { opacity: 1; transform: translateX(3px); }
 
-    /* Part dividers in TOC */
-    .toc-part {
-      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--accent-light); padding: 2rem 1.5rem 0.5rem;
+    /* TOC Footer */
+    .toc-footer {
+      max-width: 640px; margin: 0 auto;
+      padding: 2rem 2rem 4rem;
       border-top: 1px solid var(--border);
-      margin-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .toc-part:first-child { border-top: none; margin-top: 0; }
+    .toc-footer a {
+      font-size: 0.8rem; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .toc-footer a:hover { color: var(--accent); }
+    .toc-footer-count {
+      font-size: 0.75rem; color: var(--text-muted);
+    }
 
-    /* ═══════════════════════════════════════
-       Reader View
-       ═══════════════════════════════════════ */
+    /* ══════════════════════════════════════
+       READER VIEW
+       ══════════════════════════════════════ */
     #reader-view {
-      display: none;
+      display: none; background: var(--bg-reader);
       min-height: 100vh;
-      opacity: 0;
-      transition: opacity 0.3s ease;
     }
-    #reader-view.active {
-      display: block;
-      opacity: 1;
-    }
+    #reader-view.active { display: block; }
 
-    /* Reader top bar */
+    /* Top Bar */
     .reader-topbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(250,250,249,0.92); backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       height: 52px; display: flex; align-items: center;
       padding: 0 1.5rem;
     }
-    .reader-back {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      color: var(--text-secondary); text-decoration: none;
-      font-size: 0.82rem; cursor: pointer; background: none;
-      border: none; font-family: inherit; transition: color 0.2s;
-      padding: 0.3rem 0.6rem; border-radius: 4px;
+    .topbar-back {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-secondary); font-size: 1.1rem;
+      padding: 0.4rem; margin-right: 1rem;
+      transition: color 0.2s; display: flex; align-items: center;
     }
-    .reader-back:hover { color: var(--accent); background: rgba(68,64,60,0.05); }
-    .reader-topbar-title {
-      flex: 1; text-align: center;
-      font-size: 0.82rem; color: var(--text-muted);
+    .topbar-back:hover { color: var(--text-primary); }
+    .topbar-title {
+      flex: 1; font-size: 0.85rem; color: var(--text-secondary);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      padding: 0 1rem;
     }
-    .reader-topbar-chapter {
+    .topbar-chapter-num {
       font-size: 0.78rem; color: var(--text-muted);
+      margin-left: 1rem; white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .topbar-toc-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-secondary); font-size: 1.1rem;
+      padding: 0.4rem; margin-left: 0.8rem;
+      transition: color 0.2s; display: flex; align-items: center;
+    }
+    .topbar-toc-btn:hover { color: var(--text-primary); }
+
+    /* TOC Drawer */
+    .toc-drawer-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(28,25,23,0.3);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .toc-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    .toc-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 201;
+      width: 320px; max-width: 85vw;
+      background: var(--bg-toc); border-left: 1px solid var(--border);
+      transform: translateX(100%); transition: transform 0.3s ease;
+      overflow-y: auto; padding: 1.5rem;
+    }
+    .toc-drawer.open { transform: translateX(0); }
+    .toc-drawer-title {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
+    }
+    .toc-drawer-item {
+      display: flex; align-items: baseline; gap: 0.8rem;
+      padding: 0.6rem 0.5rem; cursor: pointer;
+      border-radius: 4px; transition: background 0.15s;
+      font-size: 0.88rem; color: var(--text-secondary);
+    }
+    .toc-drawer-item:hover { background: var(--bg-tint); }
+    .toc-drawer-item.active { color: var(--text-primary); font-weight: 500; background: var(--bg-tint); }
+    .toc-drawer-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; color: var(--text-muted);
+      min-width: 1.5rem; text-align: right;
     }
 
-    /* Reader layout */
-    .reader-layout {
-      display: flex; justify-content: center;
-      padding-top: 52px;
-      min-height: 100vh;
+    /* Reading Column */
+    .reader-column {
+      max-width: 680px; margin: 0 auto;
+      padding: 80px 2rem 4rem;
     }
 
-    /* Sidebar TOC */
-    .reader-sidebar {
-      position: fixed;
-      top: 52px;
-      left: max(0px, calc((100vw - var(--reading-width) - var(--sidebar-width) * 2 - 80px) / 2));
-      width: var(--sidebar-width);
-      height: calc(100vh - 52px);
-      overflow-y: auto;
-      padding: 2rem 1rem 2rem 0;
-      scrollbar-width: none;
-    }
-    .reader-sidebar::-webkit-scrollbar { display: none; }
-    .reader-sidebar-title {
-      font-size: 0.68rem; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--text-muted);
-      margin-bottom: 1rem; padding-left: 0.75rem;
-    }
-    .reader-sidebar a {
-      display: block; padding: 0.35rem 0.75rem;
-      font-size: 0.78rem; color: var(--text-muted);
-      text-decoration: none; line-height: 1.5;
-      border-left: 2px solid transparent;
-      border-radius: 0 3px 3px 0;
-      transition: all 0.15s;
-    }
-    .reader-sidebar a:hover { color: var(--text-secondary); }
-    .reader-sidebar a.active {
-      color: var(--accent); border-left-color: var(--accent);
-      background: rgba(68,64,60,0.04);
-    }
-    .reader-sidebar a.depth-3 { padding-left: 1.5rem; font-size: 0.74rem; }
+    /* ── Content Typography ── */
+    .reader-content { font-size: 16.5px; line-height: 2.0; color: var(--text-primary); }
 
-    /* Main reading column */
-    .reader-main {
-      width: 100%;
-      max-width: var(--reading-width);
-      padding: 3.5rem 2rem 6rem;
-    }
-
-    /* ═══════════════════════════════════════
-       Article Typography
-       ═══════════════════════════════════════ */
-    .article {
-      font-size: 17px;
-      line-height: 1.9;
-      color: var(--text-primary);
-      word-break: keep-all;
-      overflow-wrap: break-word;
-    }
-
-    .article h1 {
+    .reader-content h1 {
       font-family: 'Noto Serif KR', serif;
-      font-size: 1.95rem; font-weight: 700;
-      line-height: 1.4; letter-spacing: -0.025em;
-      margin: 0 0 2rem 0;
-      padding-bottom: 1.2rem;
-      border-bottom: 2px solid var(--border);
-    }
-    .article h2 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.45rem; font-weight: 700;
+      font-size: 2rem; font-weight: 700;
+      margin-top: 3rem; margin-bottom: 1rem;
       line-height: 1.4; letter-spacing: -0.02em;
-      margin: 3.5rem 0 1.2rem 0;
-      padding-bottom: 0.6rem;
+    }
+    .reader-content h1:first-child { margin-top: 0; }
+
+    .reader-content h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.5rem; font-weight: 600;
+      margin-top: 2.5rem; margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--border);
+      line-height: 1.4; letter-spacing: -0.01em;
     }
-    .article h3 {
+
+    .reader-content h3 {
+      font-family: 'Noto Sans KR', sans-serif;
       font-size: 1.15rem; font-weight: 700;
-      line-height: 1.45; letter-spacing: -0.01em;
-      margin: 2.5rem 0 0.8rem 0;
-      color: var(--accent);
+      margin-top: 2rem; margin-bottom: 0.8rem;
+      line-height: 1.5;
     }
-    .article h4 {
-      font-size: 1rem; font-weight: 700;
-      margin: 2rem 0 0.6rem 0;
+
+    .reader-content h4 {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      margin-top: 1.5rem; margin-bottom: 0.6rem;
       color: var(--text-secondary);
     }
 
-    .article p {
-      margin-bottom: 1.3rem;
+    .reader-content p {
+      margin-bottom: 1.2rem;
     }
 
-    .article a {
-      color: var(--accent);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: var(--border-light);
+    .reader-content strong {
+      font-weight: 700; color: #292524;
+    }
+
+    .reader-content a {
+      color: var(--accent); text-decoration: underline;
+      text-underline-offset: 3px; text-decoration-color: var(--border-light);
       transition: text-decoration-color 0.2s;
     }
-    .article a:hover {
-      text-decoration-color: var(--accent);
-    }
+    .reader-content a:hover { text-decoration-color: var(--accent); }
 
-    .article strong { font-weight: 700; }
-    .article em { font-style: italic; }
-
-    /* Blockquotes */
-    .article blockquote {
-      margin: 1.8rem 0;
+    .reader-content blockquote {
+      border-left: 3px solid var(--border-light);
       padding: 1rem 1.5rem;
-      border-left: 3px solid var(--accent);
-      background: rgba(68,64,60,0.025);
+      background: var(--bg-tint);
+      margin: 1.5rem 0;
+      font-style: italic; font-size: 15px;
+      line-height: 1.9;
       border-radius: 0 6px 6px 0;
-      color: var(--text-secondary);
-      font-size: 0.97rem;
-      line-height: 1.85;
     }
-    .article blockquote p:last-child { margin-bottom: 0; }
-    .article blockquote strong { color: var(--text-primary); }
+    .reader-content blockquote p { margin-bottom: 0.5rem; }
+    .reader-content blockquote p:last-child { margin-bottom: 0; }
 
-    /* Lists */
-    .article ul, .article ol {
-      margin: 1rem 0 1.5rem 1.2rem;
-    }
-    .article li {
-      margin-bottom: 0.45rem;
-      line-height: 1.85;
-    }
-    .article li > ul, .article li > ol {
-      margin-top: 0.3rem;
-      margin-bottom: 0.3rem;
-    }
-
-    /* Code blocks */
-    .article code {
-      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-      font-size: 0.88em;
-      background: rgba(68,64,60,0.06);
-      padding: 0.15em 0.4em;
-      border-radius: 3px;
-      color: var(--accent);
-    }
-    .article pre {
-      margin: 1.5rem 0;
-      padding: 1.3rem 1.5rem;
-      background: #292524;
-      color: #e7e5e4;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-size: 0.85rem;
-      line-height: 1.65;
+    .reader-content pre {
+      background: var(--code-bg); color: var(--code-text);
+      padding: 1.5rem; border-radius: 8px;
+      overflow-x: auto; margin: 1.5rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px; line-height: 1.7;
       -webkit-overflow-scrolling: touch;
     }
-    .article pre code {
-      background: none;
-      color: inherit;
-      padding: 0;
-      font-size: inherit;
-      border-radius: 0;
+    .reader-content pre code {
+      background: none; padding: 0; font-size: inherit;
+      color: inherit; border-radius: 0;
     }
 
-    /* Tables */
-    .article table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: 0.9rem;
-      line-height: 1.65;
+    .reader-content code {
+      background: var(--bg-tint);
+      padding: 2px 6px; border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14.5px; color: var(--accent);
     }
-    .article thead th {
-      background: var(--bg-secondary);
-      font-weight: 600;
-      text-align: left;
-      padding: 0.7rem 1rem;
+
+    .reader-content table {
+      width: 100%; border-collapse: collapse;
+      margin: 1.5rem 0; font-size: 15px;
+    }
+    .reader-content thead th {
+      background: var(--bg-tint);
+      font-weight: 500; text-align: left;
+      padding: 0.75rem 1rem;
       border-bottom: 2px solid var(--border);
-      white-space: nowrap;
+      font-size: 0.88rem;
     }
-    .article tbody td {
-      padding: 0.6rem 1rem;
+    .reader-content tbody td {
+      padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--border);
+      line-height: 1.7;
     }
-    .article tbody tr:hover { background: rgba(68,64,60,0.02); }
+    .reader-content tbody tr:last-child td { border-bottom: none; }
 
-    /* Images */
-    .article img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    .reader-content ul, .reader-content ol {
+      padding-left: 1.5rem; margin-bottom: 1.2rem;
+    }
+    .reader-content li {
+      margin-bottom: 0.5rem; line-height: 1.9;
+    }
+
+    .reader-content img {
+      max-width: 100%; border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       margin: 1.5rem 0;
     }
 
-    /* Horizontal rules */
-    .article hr {
-      border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), transparent);
-      margin: 3rem 0;
+    .reader-content hr {
+      border: none; height: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
     }
 
-    /* KaTeX overrides for readability */
-    .article .katex { font-size: 1.05em; }
-    .article .katex-display {
-      margin: 1.8rem 0;
-      padding: 1rem 0;
+    /* KaTeX */
+    .reader-content .katex-display {
+      margin: 1.5rem 0;
+      padding: 0.8rem 0;
       overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-    }
-    .article .katex-display > .katex {
-      font-size: 1.1em;
     }
 
-    /* ═══════════════════════════════════════
-       Chapter Navigation
-       ═══════════════════════════════════════ */
-    .chapter-nav {
-      display: flex; gap: 1rem;
-      margin-top: 4rem; padding-top: 2rem;
-      border-top: 1px solid var(--border);
+    /* ── Bottom Navigation ── */
+    .reader-nav-bottom {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-top: 4rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
     }
-    .chapter-nav-btn {
-      flex: 1; padding: 1.2rem 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      text-decoration: none; color: inherit;
-      cursor: pointer; transition: all 0.2s;
-      display: flex; flex-direction: column; gap: 0.3rem;
+    .reader-nav-card {
+      padding: 1.2rem 1.5rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      cursor: pointer; transition: all 0.2s ease;
+      background: var(--bg-reader);
     }
-    .chapter-nav-btn:hover {
-      border-color: var(--accent);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    .reader-nav-card:hover {
+      border-color: var(--border-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transform: translateY(-1px);
     }
-    .chapter-nav-btn.disabled {
-      opacity: 0.35; pointer-events: none;
-    }
-    .chapter-nav-label {
+    .reader-nav-card.prev { text-align: left; }
+    .reader-nav-card.next { text-align: right; }
+    .reader-nav-label {
       font-size: 0.72rem; color: var(--text-muted);
       letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 0.4rem;
     }
-    .chapter-nav-title {
+    .reader-nav-title {
       font-size: 0.92rem; font-weight: 500;
+      color: var(--text-primary); line-height: 1.5;
     }
-    .chapter-nav-btn.next { text-align: right; }
+    .reader-nav-card.empty {
+      visibility: hidden;
+    }
 
-    /* ═══════════════════════════════════════
-       Loading State
-       ═══════════════════════════════════════ */
-    .loading {
+    /* ── Loading ── */
+    .loading-indicator {
       display: flex; align-items: center; justify-content: center;
-      min-height: 60vh; color: var(--text-muted);
-      font-size: 0.9rem;
+      padding: 6rem 0; color: var(--text-muted);
+      font-size: 0.88rem;
     }
-    .loading-spinner {
-      width: 28px; height: 28px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      margin-right: 0.8rem;
+    .loading-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--text-muted); margin: 0 3px;
+      animation: pulse 1.2s ease-in-out infinite;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-dot:nth-child(2) { animation-delay: 0.15s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes pulse {
+      0%,100% { opacity: 0.3; } 50% { opacity: 1; }
+    }
 
-    /* ═══════════════════════════════════════
-       Responsive
-       ═══════════════════════════════════════ */
-    @media (max-width: 1100px) {
-      .reader-sidebar { display: none; }
-    }
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.6rem; }
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 1.8rem; }
       .hero-meta { gap: 2rem; }
-      .toc-section { padding: 3rem 1.5rem 4rem; }
-      .toc-item { padding: 1rem; gap: 1rem; }
-      .toc-item-num { font-size: 1.1rem; min-width: 2rem; }
-      .reader-main { padding: 2.5rem 1.2rem 4rem; }
-      .article { font-size: 16px; }
-      .article h1 { font-size: 1.55rem; }
-      .article h2 { font-size: 1.25rem; }
-      .chapter-nav { flex-direction: column; }
-      .chapter-nav-btn.next { text-align: left; }
+      .chapter-list-section { padding: 0 1.2rem 4rem; }
+      .chapter-num { font-size: 1.3rem; min-width: 2rem; }
+      .reader-column { padding: 72px 1.2rem 3rem; }
+      .reader-content h1 { font-size: 1.6rem; }
+      .reader-content h2 { font-size: 1.3rem; }
+      .reader-nav-bottom { grid-template-columns: 1fr; }
+      .toc-footer { flex-direction: column; gap: 0.8rem; text-align: center; }
     }
-
-    /* ═══════════════════════════════════════
-       Fade transitions
-       ═══════════════════════════════════════ */
-    .fade-in {
-      opacity: 0; transform: translateY(16px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
 
-<!-- Progress Bar -->
 <div id="progress-bar"></div>
 
-<!-- ═══════════════════════════════════════
-     COVER VIEW (Hero + TOC)
-     ═══════════════════════════════════════ -->
-<div id="cover-view">
-
-  <!-- Hero -->
+<!-- ══════════ TOC VIEW ══════════ -->
+<div id="toc-view">
   <section class="hero">
-    <div class="hero-content">
-      <span class="hero-label">Asset Management Guide</span>
-      <h1>비전공자를 위한<br>자산운용 학습서</h1>
-      <p class="hero-sub">
-        포트폴리오 이론의 기초부터 팩터 모델, 모멘텀 전략까지.<br>
-        "왜?"라는 질문이 끊기지 않는 12개의 단원으로 구성된 체계적 학습 가이드.
-      </p>
+    <div class="hero-inner">
+      <span class="hero-label">Study Guide</span>
+      <h1>자산운용 학습서</h1>
+      <p class="hero-subtitle">비전공자를 위한 12단원 시리즈<br>포트폴리오 이론에서 팩터 모델까지</p>
       <div class="hero-meta">
         <div class="hero-meta-item">
           <span class="hero-meta-num">12</span>
@@ -531,61 +446,149 @@
           <span class="hero-meta-num">9</span>
           <span class="hero-meta-label">Papers</span>
         </div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-num">7</span>
-          <span class="hero-meta-label">Lectures</span>
-        </div>
       </div>
-      <button class="hero-cta" onclick="document.getElementById('toc').scrollIntoView({behavior:'smooth'})">
-        목차 보기 &darr;
-      </button>
     </div>
     <div class="scroll-hint">SCROLL</div>
   </section>
 
-  <!-- Table of Contents -->
-  <section id="toc" class="toc-section">
-    <div class="toc-header fade-in">
-      <p class="toc-label">Table of Contents</p>
-      <h2 class="toc-title">목차</h2>
+  <div class="chapter-list-section" id="chapter-list">
+    <!-- Part 1 -->
+    <div class="part-group">
+      <div class="part-label">Part I &mdash; 포트폴리오 이론</div>
+      <div class="chapter-item" data-ch="1">
+        <span class="chapter-num">01</span>
+        <div class="chapter-info">
+          <div class="chapter-title">자산운용이란</div>
+          <div class="chapter-desc">왜 포트폴리오인가 &mdash; 분산투자의 출발</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="2">
+        <span class="chapter-num">02</span>
+        <div class="chapter-info">
+          <div class="chapter-title">평균-분산 투자와 효율적 프론티어</div>
+          <div class="chapter-desc">최적화, 라그랑주, 효율적 프론티어</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="3">
+        <span class="chapter-num">03</span>
+        <div class="chapter-info">
+          <div class="chapter-title">효용함수와 최적 포트폴리오</div>
+          <div class="chapter-desc">위험회피 계수, 무차별곡선, 접점 포트폴리오</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="4">
+        <span class="chapter-num">04</span>
+        <div class="chapter-info">
+          <div class="chapter-title">무위험자산, CAL, 샤프비율</div>
+          <div class="chapter-desc">CAL, 2기금 분리, 레버리지</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="5">
+        <span class="chapter-num">05</span>
+        <div class="chapter-info">
+          <div class="chapter-title">포트폴리오 전략</div>
+          <div class="chapter-desc">동일가중, 최소분산, 리스크패리티, 리밸런싱</div>
+        </div>
+      </div>
     </div>
-    <hr class="toc-divider">
-    <ul class="toc-list" id="toc-list"></ul>
-  </section>
 
+    <!-- Part 2 -->
+    <div class="part-group">
+      <div class="part-label">Part II &mdash; 자산가격결정</div>
+      <div class="chapter-item" data-ch="6">
+        <span class="chapter-num">06</span>
+        <div class="chapter-info">
+          <div class="chapter-title">할인과 SDF, 자산가격결정</div>
+          <div class="chapter-desc">SDF, 리스크프리미엄, CAPM, 베타</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="7">
+        <span class="chapter-num">07</span>
+        <div class="chapter-info">
+          <div class="chapter-title">팩터모델과 APT</div>
+          <div class="chapter-desc">다중팩터, SDF 등가성, APT, PCA</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 3 -->
+    <div class="part-group">
+      <div class="part-label">Part III &mdash; 팩터 투자</div>
+      <div class="chapter-item" data-ch="8">
+        <span class="chapter-num">08</span>
+        <div class="chapter-info">
+          <div class="chapter-title">사이즈팩터, 가치팩터, FF3</div>
+          <div class="chapter-desc">가치 프리미엄, B/M, HML, FF3 모형</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="9">
+        <span class="chapter-num">09</span>
+        <div class="chapter-info">
+          <div class="chapter-title">모멘텀 팩터</div>
+          <div class="chapter-desc">WML, 산업 모멘텀, 1월 효과, 보편성</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="10">
+        <span class="chapter-num">10</span>
+        <div class="chapter-info">
+          <div class="chapter-title">모멘텀 크래시와 변동성 스케일링</div>
+          <div class="chapter-desc">크래시 메커니즘, 목표 변동성 전략</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 4 -->
+    <div class="part-group">
+      <div class="part-label">Part IV &mdash; 종합</div>
+      <div class="chapter-item" data-ch="11">
+        <span class="chapter-num">11</span>
+        <div class="chapter-info">
+          <div class="chapter-title">논문 리뷰 종합</div>
+          <div class="chapter-desc">9편 논문 요약, 단원 매핑, 논문 간 관계</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="12">
+        <span class="chapter-num">12</span>
+        <div class="chapter-info">
+          <div class="chapter-title">왜 이 모든 것을 배우는가</div>
+          <div class="chapter-desc">5층 "왜?" 프레임워크와 사고방식</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="toc-footer">
+    <a href="https://github.com/soccz/asset-management-guide" target="_blank" rel="noopener">GitHub &nearr;</a>
+    <span class="toc-footer-count">12 chapters</span>
+  </footer>
 </div>
 
-<!-- ═══════════════════════════════════════
-     READER VIEW
-     ═══════════════════════════════════════ -->
+<!-- ══════════ READER VIEW ══════════ -->
 <div id="reader-view">
-  <!-- Top bar -->
   <div class="reader-topbar">
-    <button class="reader-back" onclick="closeReader()">
-      &larr; 목차
+    <button class="topbar-back" onclick="goToToc()" aria-label="Back to table of contents">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
     </button>
-    <span class="reader-topbar-title" id="reader-topbar-title"></span>
-    <span class="reader-topbar-chapter" id="reader-topbar-chapter"></span>
+    <span class="topbar-title" id="topbar-title"></span>
+    <span class="topbar-chapter-num" id="topbar-num"></span>
+    <button class="topbar-toc-btn" onclick="toggleDrawer()" aria-label="Open chapter list">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
   </div>
 
-  <div class="reader-layout">
-    <!-- Sidebar TOC -->
-    <nav class="reader-sidebar" id="reader-sidebar">
-      <p class="reader-sidebar-title">이 장의 목차</p>
-      <div id="sidebar-links"></div>
-    </nav>
+  <div class="toc-drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
+  <div class="toc-drawer" id="toc-drawer">
+    <div class="toc-drawer-title">Chapters</div>
+    <div id="drawer-list"></div>
+  </div>
 
-    <!-- Main reading column -->
-    <main class="reader-main">
-      <div id="reader-content" class="article"></div>
-      <div class="chapter-nav" id="chapter-nav"></div>
-    </main>
+  <div class="reader-column">
+    <div class="reader-content" id="reader-content"></div>
+    <div class="reader-nav-bottom" id="reader-nav"></div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     Scripts
-     ═══════════════════════════════════════ -->
+<!-- ══════════ SCRIPTS ══════════ -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -593,278 +596,184 @@
 (function() {
   'use strict';
 
-  // ── Chapter Data ──
-  const chapters = [
-    { num: 1,  file: '01_자산운용이란.md', title: '자산운용이란', desc: '자산운용 정의, 포트폴리오, 수익률·분산·공분산, 분산투자', part: 'Part I — 포트폴리오 이론' },
-    { num: 2,  file: '02_평균분산투자와_효율적프론티어.md', title: '평균-분산 투자와 효율적 프론티어', desc: '최적화, 라그랑주, 효율적 프론티어, 공매도' },
-    { num: 3,  file: '03_효용함수와_최적포트폴리오.md', title: '효용함수와 최적 포트폴리오', desc: '효용함수, 위험회피계수, 무차별곡선, 접점 포트폴리오' },
-    { num: 4,  file: '04_무위험자산_CAL_샤프비율.md', title: '무위험자산, CAL, 샤프비율', desc: '무위험자산, 자본배분선, 샤프비율, 2기금 분리, 레버리지' },
-    { num: 5,  file: '05_포트폴리오전략.md', title: '포트폴리오 전략', desc: '동일가중, 최소분산, 리스크패리티, 최대분산, 리밸런싱', part: 'Part II — 포트폴리오 전략' },
-    { num: 6,  file: '06_할인과_SDF_자산가격결정.md', title: '할인과 SDF, 자산가격결정', desc: '할인, 확률할인인자, 리스크프리미엄, CAPM, 저베타 이상현상', part: 'Part III — 자산가격결정' },
-    { num: 7,  file: '07_팩터모델과_APT.md', title: '팩터모델과 APT', desc: '단일/다중팩터, SDF 등가성, APT, PCA, 이변량 정렬' },
-    { num: 8,  file: '08_사이즈팩터_가치팩터_FF3.md', title: '사이즈팩터, 가치팩터, FF3', desc: '가치 프리미엄, HML 구성, Fama-French 3팩터 모형' },
-    { num: 9,  file: '09_모멘텀팩터.md', title: '모멘텀 팩터', desc: '모멘텀 효과, WML, 산업 모멘텀, 1월 효과', part: 'Part IV — 모멘텀과 실전' },
-    { num: 10, file: '10_모멘텀크래시와_변동성스케일링.md', title: '모멘텀 크래시와 변동성 스케일링', desc: '모멘텀 크래시 메커니즘, 변동성 스케일링, 목표 변동성' },
-    { num: 11, file: '11_논문리뷰종합.md', title: '논문 리뷰 종합', desc: '핵심 논문 9편 요약, 단원별 매핑, 논문 간 관계도' },
-    { num: 12, file: '12_왜_이_모든것을_배우는가.md', title: '왜 이 모든 것을 배우는가', desc: '"왜?" 프레임워크, 사고방식, 추론 습관, 진로', part: 'Part V — 마무리' },
+  const GITHUB_RAW = 'https://raw.githubusercontent.com/soccz/asset-management-guide/main/';
+  const CHAPTERS = [
+    { num: 1,  file: '01_자산운용이란.md',                     title: '자산운용이란' },
+    { num: 2,  file: '02_평균분산투자와_효율적프론티어.md',       title: '평균-분산 투자와 효율적 프론티어' },
+    { num: 3,  file: '03_효용함수와_최적포트폴리오.md',          title: '효용함수와 최적 포트폴리오' },
+    { num: 4,  file: '04_무위험자산_CAL_샤프비율.md',           title: '무위험자산, CAL, 샤프비율' },
+    { num: 5,  file: '05_포트폴리오전략.md',                    title: '포트폴리오 전략' },
+    { num: 6,  file: '06_할인과_SDF_자산가격결정.md',           title: '할인과 SDF, 자산가격결정' },
+    { num: 7,  file: '07_팩터모델과_APT.md',                   title: '팩터모델과 APT' },
+    { num: 8,  file: '08_사이즈팩터_가치팩터_FF3.md',           title: '사이즈팩터, 가치팩터, FF3' },
+    { num: 9,  file: '09_모멘텀팩터.md',                       title: '모멘텀 팩터' },
+    { num: 10, file: '10_모멘텀크래시와_변동성스케일링.md',      title: '모멘텀 크래시와 변동성 스케일링' },
+    { num: 11, file: '11_논문리뷰종합.md',                     title: '논문 리뷰 종합' },
+    { num: 12, file: '12_왜_이_모든것을_배우는가.md',           title: '왜 이 모든 것을 배우는가' },
   ];
 
-  const BASE_URL = 'https://raw.githubusercontent.com/soccz/asset-management-guide/main/';
   const cache = {};
-  let currentChapter = null;
+  let currentCh = null;
 
-  // ── Build TOC ──
-  function buildTOC() {
-    const list = document.getElementById('toc-list');
-    let html = '';
-    chapters.forEach((ch, i) => {
-      if (ch.part) {
-        html += `<li class="toc-part">${ch.part}</li>`;
-      }
-      html += `
-        <li>
-          <a class="toc-item fade-in" href="javascript:void(0)" onclick="openChapter(${ch.num})" style="transition-delay: ${i * 0.04}s">
-            <span class="toc-item-num">${String(ch.num).padStart(2, '0')}</span>
-            <div class="toc-item-body">
-              <div class="toc-item-title">${ch.title}</div>
-              <div class="toc-item-desc">${ch.desc}</div>
-            </div>
-            <span class="toc-item-arrow">&rarr;</span>
-          </a>
-        </li>`;
-    });
-    list.innerHTML = html;
-    // Trigger fade-in
-    requestAnimationFrame(() => {
-      document.querySelectorAll('.fade-in').forEach(el => {
-        const obs = new IntersectionObserver((entries) => {
-          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-        }, { threshold: 0.1 });
-        obs.observe(el);
-      });
-    });
-  }
+  // DOM
+  const tocView      = document.getElementById('toc-view');
+  const readerView   = document.getElementById('reader-view');
+  const readerContent = document.getElementById('reader-content');
+  const readerNav    = document.getElementById('reader-nav');
+  const progressBar  = document.getElementById('progress-bar');
+  const topbarTitle  = document.getElementById('topbar-title');
+  const topbarNum    = document.getElementById('topbar-num');
+  const drawerOverlay = document.getElementById('drawer-overlay');
+  const tocDrawer    = document.getElementById('toc-drawer');
+  const drawerList   = document.getElementById('drawer-list');
 
-  // ── Configure marked ──
+  // marked config
   marked.setOptions({
-    gfm: true,
-    breaks: false,
+    gfm: true, breaks: false,
+    headerIds: false, mangle: false,
   });
 
-  // Custom renderer for headings with IDs
-  const renderer = new marked.Renderer();
-  let headingCounter = 0;
-  renderer.heading = function(text, level, raw) {
-    // marked v14+ passes an object; handle both shapes
-    if (typeof text === 'object' && text !== null) {
-      raw   = text.raw   || text.text || '';
-      level = text.depth  || text.level || level;
-      text  = text.text  || '';
-    }
-    const id = 'heading-' + (headingCounter++);
-    return `<h${level} id="${id}">${text}</h${level}>`;
-  };
-  marked.use({ renderer: renderer });
-
-  // ── Fetch and render chapter ──
-  async function fetchChapter(num) {
-    const ch = chapters.find(c => c.num === num);
-    if (!ch) return null;
-    if (cache[num]) return cache[num];
-
-    const url = BASE_URL + encodeURIComponent(ch.file);
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-      cache[num] = text;
-      return text;
-    } catch (err) {
-      console.error('Fetch failed:', err);
-      return null;
-    }
+  // Build drawer
+  function buildDrawer() {
+    drawerList.innerHTML = CHAPTERS.map(ch =>
+      `<div class="toc-drawer-item" data-ch="${ch.num}">
+        <span class="toc-drawer-num">${String(ch.num).padStart(2,'0')}</span>
+        <span>${ch.title}</span>
+      </div>`
+    ).join('');
+    drawerList.addEventListener('click', e => {
+      const item = e.target.closest('.toc-drawer-item');
+      if (item) { openChapter(+item.dataset.ch); toggleDrawer(); }
+    });
   }
 
-  function renderMarkdown(md) {
-    headingCounter = 0;
-    return marked.parse(md);
+  function toggleDrawer() {
+    drawerOverlay.classList.toggle('open');
+    tocDrawer.classList.toggle('open');
   }
 
-  function renderMath(container) {
-    renderMathInElement(container, {
+  // Open chapter
+  async function openChapter(num) {
+    const ch = CHAPTERS.find(c => c.num === num);
+    if (!ch) return;
+    currentCh = num;
+
+    // UI transition
+    tocView.classList.add('hidden');
+    readerView.classList.add('active');
+    progressBar.classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
+    // Update topbar
+    topbarTitle.textContent = ch.title;
+    topbarNum.textContent = `${ch.num} / ${CHAPTERS.length}`;
+
+    // Update drawer active
+    drawerList.querySelectorAll('.toc-drawer-item').forEach(el => {
+      el.classList.toggle('active', +el.dataset.ch === num);
+    });
+
+    // URL
+    history.pushState({ ch: num }, '', `?ch=${num}`);
+
+    // Load content
+    if (cache[num]) {
+      renderContent(cache[num]);
+    } else {
+      readerContent.innerHTML = `<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
+      try {
+        const res = await fetch(GITHUB_RAW + encodeURIComponent(ch.file));
+        if (!res.ok) throw new Error(res.status);
+        const md = await res.text();
+        cache[num] = md;
+        if (currentCh === num) renderContent(md);
+      } catch(e) {
+        readerContent.innerHTML = `<p style="color:var(--text-muted);text-align:center;padding:4rem 0;">콘텐츠를 불러올 수 없습니다.</p>`;
+      }
+    }
+
+    // Bottom nav
+    renderNav(num);
+  }
+
+  function renderContent(md) {
+    readerContent.innerHTML = marked.parse(md);
+    // KaTeX
+    renderMathInElement(readerContent, {
       delimiters: [
         { left: '$$', right: '$$', display: true },
         { left: '$', right: '$', display: false },
-        { left: '\\(', right: '\\)', display: false },
         { left: '\\[', right: '\\]', display: true },
+        { left: '\\(', right: '\\)', display: false },
       ],
       throwOnError: false,
-      trust: true,
     });
   }
 
-  // ── Build sidebar TOC from headings ──
-  function buildSidebarTOC() {
-    const content = document.getElementById('reader-content');
-    const headings = content.querySelectorAll('h2, h3');
-    const sidebar = document.getElementById('sidebar-links');
-    let html = '';
-    headings.forEach(h => {
-      const depth = h.tagName === 'H3' ? 'depth-3' : '';
-      html += `<a href="#${h.id}" class="${depth}" data-target="${h.id}">${h.textContent}</a>`;
-    });
-    sidebar.innerHTML = html;
-
-    // Click handler
-    sidebar.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.getElementById(a.dataset.target);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
+  function renderNav(num) {
+    const prev = CHAPTERS.find(c => c.num === num - 1);
+    const next = CHAPTERS.find(c => c.num === num + 1);
+    readerNav.innerHTML = `
+      <div class="reader-nav-card prev ${prev ? '' : 'empty'}" ${prev ? `onclick="openChapter(${prev.num})"` : ''}>
+        ${prev ? `<div class="reader-nav-label">&#8592; Previous</div><div class="reader-nav-title">${String(prev.num).padStart(2,'0')}. ${prev.title}</div>` : ''}
+      </div>
+      <div class="reader-nav-card next ${next ? '' : 'empty'}" ${next ? `onclick="openChapter(${next.num})"` : ''}>
+        ${next ? `<div class="reader-nav-label">Next &#8594;</div><div class="reader-nav-title">${String(next.num).padStart(2,'0')}. ${next.title}</div>` : ''}
+      </div>
+    `;
   }
 
-  // ── Sidebar active state tracking ──
-  let sidebarObserver = null;
-  function setupSidebarTracking() {
-    if (sidebarObserver) sidebarObserver.disconnect();
-    const headings = document.querySelectorAll('#reader-content h2, #reader-content h3');
-    if (headings.length === 0) return;
-
-    sidebarObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          document.querySelectorAll('#sidebar-links a').forEach(a => a.classList.remove('active'));
-          const link = document.querySelector(`#sidebar-links a[data-target="${entry.target.id}"]`);
-          if (link) link.classList.add('active');
-        }
-      });
-    }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
-
-    headings.forEach(h => sidebarObserver.observe(h));
-  }
-
-  // ── Chapter navigation buttons ──
-  function buildChapterNav(num) {
-    const nav = document.getElementById('chapter-nav');
-    const prev = chapters.find(c => c.num === num - 1);
-    const next = chapters.find(c => c.num === num + 1);
-    nav.innerHTML = `
-      <a class="chapter-nav-btn ${prev ? '' : 'disabled'}" ${prev ? `href="javascript:void(0)" onclick="openChapter(${num - 1})"` : ''}>
-        <span class="chapter-nav-label">&larr; 이전</span>
-        <span class="chapter-nav-title">${prev ? prev.title : ''}</span>
-      </a>
-      <a class="chapter-nav-btn next ${next ? '' : 'disabled'}" ${next ? `href="javascript:void(0)" onclick="openChapter(${num + 1})"` : ''}>
-        <span class="chapter-nav-label">다음 &rarr;</span>
-        <span class="chapter-nav-title">${next ? next.title : ''}</span>
-      </a>`;
-  }
-
-  // ── Progress bar ──
-  function updateProgress() {
-    const bar = document.getElementById('progress-bar');
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (docHeight > 0) {
-      bar.style.width = (scrollTop / docHeight * 100) + '%';
-    }
-  }
-
-  // ── Open chapter ──
-  window.openChapter = async function(num) {
-    const ch = chapters.find(c => c.num === num);
-    if (!ch) return;
-
-    currentChapter = num;
-
-    // Show reader view
-    const coverView = document.getElementById('cover-view');
-    const readerView = document.getElementById('reader-view');
-    const progressBar = document.getElementById('progress-bar');
-    const content = document.getElementById('reader-content');
-
-    coverView.style.display = 'none';
-    readerView.style.display = 'block';
-    progressBar.style.display = 'block';
-    requestAnimationFrame(() => readerView.classList.add('active'));
-
-    // Update top bar
-    document.getElementById('reader-topbar-title').textContent = ch.title;
-    document.getElementById('reader-topbar-chapter').textContent = `${ch.num} / ${chapters.length}`;
-
-    // Show loading
-    content.innerHTML = '<div class="loading"><div class="loading-spinner"></div>로딩 중...</div>';
-    window.scrollTo(0, 0);
-
-    // Update URL
-    history.pushState({ ch: num }, '', `?ch=${num}`);
-    document.title = `${ch.title} — 자산운용 학습서`;
-
-    // Fetch and render
-    const md = await fetchChapter(num);
-    if (md === null) {
-      content.innerHTML = '<div class="loading">콘텐츠를 불러올 수 없습니다. 잠시 후 다시 시도해주세요.</div>';
-      return;
-    }
-
-    content.innerHTML = renderMarkdown(md);
-    renderMath(content);
-    buildSidebarTOC();
-    buildChapterNav(num);
-    setupSidebarTracking();
-    window.scrollTo(0, 0);
-  };
-
-  // ── Close reader ──
-  window.closeReader = function() {
-    const coverView = document.getElementById('cover-view');
-    const readerView = document.getElementById('reader-view');
-    const progressBar = document.getElementById('progress-bar');
-
+  // Back to TOC
+  window.goToToc = function() {
     readerView.classList.remove('active');
-    readerView.style.display = 'none';
-    coverView.style.display = 'block';
-    progressBar.style.display = 'none';
-
-    currentChapter = null;
-    history.pushState({}, '', window.location.pathname);
-    document.title = '자산운용 학습서 — 비전공자를 위한 12단원 시리즈';
-
-    // Scroll to TOC
-    requestAnimationFrame(() => {
-      document.getElementById('toc').scrollIntoView({ behavior: 'smooth' });
-    });
+    tocView.classList.remove('hidden');
+    progressBar.classList.remove('visible');
+    progressBar.style.width = '0%';
+    currentCh = null;
+    history.pushState(null, '', window.location.pathname);
   };
 
-  // ── Handle browser back/forward ──
-  window.addEventListener('popstate', (e) => {
-    if (e.state && e.state.ch) {
-      openChapter(e.state.ch);
-    } else {
-      closeReader();
+  // Make openChapter global for inline onclick
+  window.openChapter = openChapter;
+
+  // Reading progress
+  window.addEventListener('scroll', () => {
+    if (!readerView.classList.contains('active')) return;
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (!readerView.classList.contains('active')) return;
+    if (e.key === 'ArrowRight' && currentCh < CHAPTERS.length) openChapter(currentCh + 1);
+    if (e.key === 'ArrowLeft' && currentCh > 1) openChapter(currentCh - 1);
+    if (e.key === 'Escape') {
+      if (tocDrawer.classList.contains('open')) toggleDrawer();
+      else goToToc();
     }
   });
 
-  // ── Scroll listener for progress bar ──
-  window.addEventListener('scroll', () => {
-    if (currentChapter !== null) updateProgress();
-  }, { passive: true });
+  // Chapter item clicks
+  document.getElementById('chapter-list').addEventListener('click', e => {
+    const item = e.target.closest('.chapter-item');
+    if (item) openChapter(+item.dataset.ch);
+  });
 
-  // ── Init ──
-  buildTOC();
+  // Popstate
+  window.addEventListener('popstate', e => {
+    if (e.state && e.state.ch) openChapter(e.state.ch);
+    else goToToc();
+  });
 
-  // Check URL params
+  // Init
+  buildDrawer();
   const params = new URLSearchParams(window.location.search);
-  const chParam = parseInt(params.get('ch'));
-  if (chParam >= 1 && chParam <= 12) {
-    openChapter(chParam);
+  const initCh = params.get('ch');
+  if (initCh && +initCh >= 1 && +initCh <= CHAPTERS.length) {
+    openChapter(+initCh);
   }
-
 })();
 </script>
-
 </body>
 </html>
