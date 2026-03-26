@@ -770,7 +770,7 @@
       color: var(--text-muted);
     }
     .post-stars svg { width: 12px; height: 12px; }
-    .post-live {
+    .post-live-removed {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 10px;
       font-weight: 700;
@@ -1098,21 +1098,21 @@ const CATEGORIES = {
     desc: '한국 주식 팩터 모델, 암호화폐 AI 분석, 트레이딩 시스템 연구',
     color: 'finance',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 4 5-8"/></svg>`,
-    match: ['fin_final','enhanced-fin-gan-final','fin_gan_train','coin','Chrono-Trader','Chrono-Trader-v2','fomc','bit_sector','bit_test','finance_semiconductor','HIGAN','finance-note']
+    match: ['Chrono-Trader','Chrono-Trader-v2','fomc','bit_sector','bit_test','finance_semiconductor','HIGAN','finance-note']
   },
   research: {
     label: 'Research & Paper',
     desc: '논문 구현, 벤치마크, 정량 연구, 학술 프로젝트',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','CBAM','MAE','RCNN_test','market-impact-analysis','boundarybench','fin-momentum','tactical-factor-allocation','asset-management-guide']
+    match: ['FF3','CBAM','RCNN_test','market-impact-analysis','boundarybench','fin-momentum','tactical-factor-allocation','asset-management-guide']
   },
   web: {
     label: 'Web & App',
     desc: '웹 애플리케이션, 풀스택 프로젝트',
     color: 'web',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10M12 17v4"/></svg>`,
-    match: ['MC_order','forjp','Ptravel']
+    match: ['MC_order','forjp']
   },
   data: {
     label: 'Data & ML',
@@ -1126,7 +1126,7 @@ const CATEGORIES = {
     desc: '혼자 만들어보는 실험적 프로젝트, 게임, 연습',
     color: 'side',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
-    match: ['night-shift-escape','demo','self_exercise','kaggle_test']
+    match: ['night-shift-escape','self_exercise','kaggle_test']
   },
   note: {
     label: 'Notes & Daily',
@@ -1235,9 +1235,21 @@ function renderFeatured() {
   document.getElementById('featuredBadge').style.color = `var(--${cat})`;
   document.getElementById('featuredDate').textContent = fmtDate(dateKey);
 
-  let hp = latest.homepage || latest.homepageUrl;
-  if (latest.name === 'market-impact-analysis') hp = '/projects/market-impact/';
-  card.href = hp || `https://github.com/soccz/${latest.name}`;
+  const PP = {
+    'market-impact-analysis':'/projects/market-impact/','boundarybench':'/projects/boundarybench/',
+    'asset-management-guide':'/projects/asset-management/','fin-momentum':'/projects/fin-momentum/',
+    'tactical-factor-allocation':'/projects/tactical-factor-allocation/','CBAM':'/projects/cbam/',
+    'Chrono-Trader':'/projects/chrono-trader/','Chrono-Trader-v2':'/projects/chrono-trader-v2/',
+    'fomc':'/projects/fomc/','bit_sector':'/projects/bit-sector/','bit_test':'/projects/bit-test/',
+    'finance_semiconductor':'/projects/finance-semiconductor/','HIGAN':'/projects/higan/',
+    'finance-note':'/projects/finance-note/','FF3':'/projects/ff3/','RCNN_test':'/projects/rcnn-test/',
+    'MC_order':'/projects/mc-order/','forjp':'/projects/forjp/','naverAPI':'/projects/naverapi/',
+    'review_chatbot':'/projects/review-chatbot/','son_data':'/projects/son-data/',
+    'NeuroTraffic-DT':'/projects/neurotraffic-dt/','night-shift-escape':'/projects/night-shift-escape/',
+    'self_exercise':'/projects/self-exercise/','kaggle_test':'/projects/kaggle-test/',
+    'Daily-report':'/projects/daily-report/','young-and-home':'/projects/young-and-home/'
+  };
+  card.href = PP[latest.name] || `https://github.com/soccz/${latest.name}`;
 
   const iconEl = section.querySelector('.featured-icon');
   iconEl.style.background = `var(--${cat}-light)`;
@@ -1323,7 +1335,28 @@ function renderPosts(catKey) {
       'asset-management-guide': '/projects/asset-management/',
       'fin-momentum': '/projects/fin-momentum/',
       'tactical-factor-allocation': '/projects/tactical-factor-allocation/',
-      'CBAM': '/projects/cbam/'
+      'CBAM': '/projects/cbam/',
+      'Chrono-Trader': '/projects/chrono-trader/',
+      'Chrono-Trader-v2': '/projects/chrono-trader-v2/',
+      'fomc': '/projects/fomc/',
+      'bit_sector': '/projects/bit-sector/',
+      'bit_test': '/projects/bit-test/',
+      'finance_semiconductor': '/projects/finance-semiconductor/',
+      'HIGAN': '/projects/higan/',
+      'finance-note': '/projects/finance-note/',
+      'FF3': '/projects/ff3/',
+      'RCNN_test': '/projects/rcnn-test/',
+      'MC_order': '/projects/mc-order/',
+      'forjp': '/projects/forjp/',
+      'naverAPI': '/projects/naverapi/',
+      'review_chatbot': '/projects/review-chatbot/',
+      'son_data': '/projects/son-data/',
+      'NeuroTraffic-DT': '/projects/neurotraffic-dt/',
+      'night-shift-escape': '/projects/night-shift-escape/',
+      'self_exercise': '/projects/self-exercise/',
+      'kaggle_test': '/projects/kaggle-test/',
+      'Daily-report': '/projects/daily-report/',
+      'young-and-home': '/projects/young-and-home/'
     };
     const page = PROJECT_PAGES[r.name];
     const url = page || `https://github.com/soccz/${r.name}`;
@@ -1338,11 +1371,9 @@ function renderPosts(catKey) {
       <div class="post-title">${r.name}</div>
       <div class="post-desc">${desc}</div>
       <div class="post-meta">
-        ${lang ? `<span class="post-lang"><span class="lang-dot" style="background:${lc}"></span>${lang}</span>` : ''}
-        ${stars > 0 ? `<span class="post-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${stars}</span>` : ''}
-        ${page ? '<span class="post-live">PAGE</span>' : ''}
         <a class="post-gh" href="https://github.com/soccz/${r.name}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
         </a>
       </div>
     </a>`;

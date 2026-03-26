@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIGAN — GAN 기반 이미지 생성 및 잠재 공간 최적화</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#losses">Loss Functions</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#tech">Tech Stack</a></li>
+      <li><a href="#limitations">Limitations</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Generative AI &times; Image Synthesis</span>
+    <h1>HI-GAN<br>잠재 공간 최적화 기반 이미지 생성</h1>
+    <p class="hero-sub">
+      GAN이 생성하는 이미지와 입력 이미지를 동일하게 만들기 위한 Encoder를 구축하고,<br>
+      다중 손실 함수 기반의 경사하강법으로 잠재 공간을 최적화하는 프로젝트
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">손실 함수</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">GAN</span><span class="hero-stat-label">생성 모델</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">.npy</span><span class="hero-stat-label">잠재 벡터 출력</span></div>
+    </div>
+    <a href="https://github.com/soccz/HIGAN" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">프로젝트 개요</h2>
+  <p class="section-desc">GAN이 생성하는 이미지와 입력 이미지를 일치시키기 위한 Encoder를 구축하고, 다중 손실 함수를 기반으로 경사하강법을 통해 잠재 공간(latent space)을 최적화합니다. 최적 결과를 .npy 형태로 저장하여 HIGAN 코드에 활용할 수 있도록 설계되었습니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">GAN Encoder</div><div class="card-text">GAN이 생성하는 이미지와 입력 이미지를 동일하게 만들기 위한 Encoder를 설계하고 학습합니다.</div></div>
+    <div class="card"><div class="card-title">잠재 공간 최적화</div><div class="card-text">다중 손실 함수의 총합을 최소화하는 방향으로 경사하강법을 수행하여 최적의 잠재 벡터를 찾습니다.</div></div>
+    <div class="card"><div class="card-title">결과 저장</div><div class="card-text">손실 함수의 총합이 가장 작은 이미지를 저장하고 .npy 형태로 잠재 벡터를 출력하여 후속 활용이 가능합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="losses"><div class="container fade-in">
+  <div class="section-label">Loss Functions</div>
+  <h2 class="section-title">4가지 손실 함수</h2>
+  <p class="section-desc">생성된 이미지와 입력 이미지의 유사성을 다각도로 측정하는 복합 손실 함수 체계입니다.</p>
+  <div class="card-grid">
+    <div class="layer-card"><div class="layer-num">Loss 1</div><div class="layer-title">MSE 손실</div><div class="layer-q">픽셀 간의 차이를 L2 손실로 계산하여 색상과 밝기 차이를 보정합니다</div><div class="tags"><span class="tag">L2 Loss</span><span class="tag">Pixel-level</span></div></div>
+    <div class="layer-card"><div class="layer-num">Loss 2</div><div class="layer-title">Perceptual 손실</div><div class="layer-q">VGG16의 특징 맵 차이를 계산하여 구조, 모양, 패턴의 유사성을 보장합니다</div><div class="tags"><span class="tag">VGG16</span><span class="tag">Feature Map</span></div></div>
+    <div class="layer-card"><div class="layer-num">Loss 3</div><div class="layer-title">LPIPS 손실</div><div class="layer-q">사람의 시각적 유사성을 측정하여 시각적으로 자연스러운 이미지 생성을 유도합니다</div><div class="tags"><span class="tag">Perceptual Similarity</span><span class="tag">Human Vision</span></div></div>
+    <div class="layer-card"><div class="layer-num">Loss 4</div><div class="layer-title">TV 손실</div><div class="layer-q">매끄러운 이미지를 보장하여 경계선을 부드럽게 하고 노이즈를 제거합니다</div><div class="tags"><span class="tag">Total Variation</span><span class="tag">Smoothing</span></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="pipeline"><div class="container fade-in">
+  <div class="section-label">Pipeline</div>
+  <h2 class="section-title">처리 파이프라인</h2>
+  <p class="section-desc">입력 이미지로부터 잠재 벡터를 최적화하여 저장하기까지의 전체 워크플로우입니다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">입력 이미지</div><div class="flow-desc">Input image 로드<br>경로 설정</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">Encoder</div><div class="flow-desc">GAN Encoder<br>잠재 공간 매핑</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">최적화</div><div class="flow-desc">4가지 손실 함수<br>경사하강법</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">저장</div><div class="flow-desc">최소 loss 이미지<br>.npy 잠재 벡터</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="tech"><div class="container fade-in">
+  <div class="section-label">Tech Stack</div>
+  <h2 class="section-title">기술 스택</h2>
+  <p class="section-desc">Google Colab 환경에서 실행 가능하며, GAN 기반 이미지 생성에 필요한 기술 스택입니다.</p>
+  <div class="tech-grid">
+    <div class="tech-item">
+      <div class="tech-cat">Deep Learning</div>
+      <ul class="tech-list">
+        <li>GAN (Generative Adversarial Network)</li>
+        <li>VGG16 (Perceptual Loss)</li>
+        <li>LPIPS</li>
+      </ul>
+    </div>
+    <div class="tech-item">
+      <div class="tech-cat">Optimization</div>
+      <ul class="tech-list">
+        <li>Gradient Descent</li>
+        <li>Multi-Loss Optimization</li>
+        <li>Latent Space Search</li>
+      </ul>
+    </div>
+    <div class="tech-item">
+      <div class="tech-cat">Environment</div>
+      <ul class="tech-list">
+        <li>Google Colab</li>
+        <li>Python</li>
+        <li>NumPy (.npy output)</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="limitations"><div class="container fade-in">
+  <div class="section-label">Limitations</div>
+  <h2 class="section-title">한계점 및 향후 방향</h2>
+  <p class="section-desc">현재 시스템의 알려진 한계와 향후 개선 방향입니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">가구 배치/구도 유사성</div><div class="card-text">생성된 이미지의 가구 배치와 구도는 입력 이미지와 높은 유사성을 보이며, 공간 구조의 재현에는 성공적입니다.</div></div>
+    <div class="card"><div class="card-title">색상/정확도 한계</div><div class="card-text">색상이나 세부 정확도 측면에서 잠재 공간을 완전히 일치시키지 못하는 한계가 존재합니다. 잠재 공간의 표현력 한계로 인한 것입니다.</div></div>
+  </div>
+</div></section>
+
+<footer>
+  <p class="footer-text"><a href="/">soccz.</a> &mdash; HIGAN</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

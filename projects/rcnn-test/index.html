@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RCNN Test — Mask R-CNN 기반 패션 이미지 세그멘테이션 실험</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    .q-list { display: flex; flex-direction: column; gap: 0.8rem; counter-reset: q; }
+    .q-item {
+      counter-increment: q; display: flex; align-items: flex-start; gap: 1.2rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.3rem 1.8rem; transition: all 0.2s;
+    }
+    .q-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .q-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .q-num::before { content: counter(q); }
+    .q-content { flex: 1; }
+    .q-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 0.3rem; }
+    .q-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+    .q-tag { display: inline-block; font-size: 0.62rem; padding: 0.12rem 0.45rem; background: #f5f5f4; color: var(--text-muted); border-radius: 3px; border: 1px solid #e7e5e4; margin-left: 0.4rem; vertical-align: middle; }
+
+    .code-block {
+      background: #1c1917; border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0;
+      overflow-x: auto; border: 1px solid var(--border);
+    }
+    .code-block code {
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem;
+      color: #d6d3d1; line-height: 1.8; white-space: pre;
+    }
+    .code-comment { color: #78716c; }
+    .code-keyword { color: #a8a29e; }
+    .code-string { color: #d6d3d1; }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      .q-item { flex-direction: column; gap: 0.5rem; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#training">Training</a></li>
+      <li><a href="#notes">Notes</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Computer Vision &times; Instance Segmentation</span>
+    <h1>Mask R-CNN 기반<br>패션 이미지 세그멘테이션 실험</h1>
+    <p class="hero-sub">
+      Kaggle iMaterialist Fashion 2019 데이터셋을 활용하여<br>
+      Mask R-CNN 모델의 인스턴스 세그멘테이션 파이프라인을 구현하고,<br>
+      46개 패션 카테고리에 대한 객체 탐지 및 마스크 예측을 실험한 코드 리뷰입니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">46</span><span class="hero-stat-label">패션 카테고리</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">512</span><span class="hero-stat-label">입력 이미지 크기 (px)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">5-Fold</span><span class="hero-stat-label">교차 검증</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">ResNet50</span><span class="hero-stat-label">백본 네트워크</span></div>
+    </div>
+    <a href="https://github.com/soccz/RCNN_test" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      View Notebook
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">프로젝트 개요</h2>
+  <p class="section-desc">Matterport의 Mask R-CNN 구현체를 기반으로 패션 이미지에서 의류 아이템을 픽셀 단위로 분할하는 인스턴스 세그멘테이션 실험입니다. COCO 사전학습 가중치에서 출발하여 46개 패션 카테고리로 전이학습합니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">Instance Segmentation</div><div class="card-text">단순 객체 탐지(Bounding Box)를 넘어 각 객체의 픽셀 수준 마스크를 예측합니다. 하나의 이미지 안에 복수의 의류 아이템이 겹쳐 있어도 개별 인스턴스를 구분합니다.</div></div>
+    <div class="card"><div class="card-title">Transfer Learning</div><div class="card-text">COCO 데이터셋으로 사전학습된 가중치를 로드한 뒤, 분류/회귀 헤드를 패션 도메인에 맞게 재학습합니다. 헤드만 먼저 학습 후 전체 레이어를 미세조정하는 2단계 전략을 사용합니다.</div></div>
+    <div class="card"><div class="card-title">Multi-label Classification</div><div class="card-text">하나의 세그먼트가 복수의 속성을 가질 수 있는 멀티라벨 구조입니다. ClassId에서 기본 카테고리를 분리하여 46개 클래스 체계로 정리합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="pipeline"><div class="container fade-in">
+  <div class="section-label">Pipeline</div>
+  <h2 class="section-title">학습 파이프라인</h2>
+  <p class="section-desc">데이터 로드부터 모델 학습, 추론까지의 전체 흐름입니다. 각 단계에서 핵심적인 전처리와 설정을 포함합니다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">데이터 로드</div><div class="flow-desc">CSV 파싱<br>RLE 디코딩</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">전처리</div><div class="flow-desc">512&times;512 리사이즈<br>마스크 생성</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">데이터 증강</div><div class="flow-desc">좌우 반전 (50%)<br>imgaug 적용</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">모델 학습</div><div class="flow-desc">2단계 전이학습<br>heads &rarr; all layers</div></div>
+    <div class="flow-step"><div class="flow-num">05</div><div class="flow-title">추론</div><div class="flow-desc">마스크 예측<br>RLE 인코딩</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="architecture"><div class="container fade-in">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">모델 구조</h2>
+  <p class="section-desc">Mask R-CNN은 Faster R-CNN에 마스크 예측 브랜치를 추가한 구조입니다. 각 구성 요소의 역할과 설정을 정리합니다.</p>
+  <div class="card-grid">
+    <div class="layer-card"><div class="layer-num">Backbone</div><div class="layer-title">ResNet-50 + FPN</div><div class="layer-q">Feature Pyramid Network를 통해 다중 스케일 특성맵을 생성하여, 크기가 다양한 패션 아이템을 효과적으로 탐지합니다.</div><div class="tags"><span class="tag">ResNet50</span><span class="tag">FPN</span><span class="tag">Multi-scale</span></div></div>
+    <div class="layer-card"><div class="layer-num">Region Proposal</div><div class="layer-title">RPN (Region Proposal Network)</div><div class="layer-q">특성맵 위에서 앵커 박스를 기반으로 객체가 존재할 가능성이 높은 영역을 제안합니다. 제안된 영역은 RoI Align을 통해 고정 크기로 변환됩니다.</div><div class="tags"><span class="tag">Anchor Box</span><span class="tag">RoI Align</span><span class="tag">NMS</span></div></div>
+    <div class="layer-card"><div class="layer-num">Head</div><div class="layer-title">Classification + Mask Branch</div><div class="layer-q">각 RoI에 대해 클래스 분류, 바운딩 박스 회귀, 픽셀 마스크 예측을 병렬로 수행합니다. COCO 헤드를 제거하고 46+1 클래스로 재구성합니다.</div><div class="tags"><span class="tag">46 Classes</span><span class="tag">BBox Regression</span><span class="tag">Mask FCN</span></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="training"><div class="container fade-in">
+  <div class="section-label">Training</div>
+  <h2 class="section-title">학습 전략</h2>
+  <p class="section-desc">COCO 사전학습 가중치에서 출발하여 단계적으로 학습 범위를 확장하는 전략을 사용합니다.</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">Stage 1 &mdash; Heads Only</div>
+      <div class="card-text">
+        백본을 동결하고 분류/마스크 헤드만 학습합니다.<br>
+        Learning Rate: 2&times;10<sup>-4</sup><br>
+        Epochs: 2<br>
+        증강: 미적용
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Stage 2 &mdash; All Layers</div>
+      <div class="card-text">
+        전체 레이어를 미세조정합니다.<br>
+        Learning Rate: 1&times;10<sup>-4</sup><br>
+        Epochs: 6<br>
+        증강: 좌우 반전 (Fliplr 0.5)
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Stage 3 &mdash; Fine-tuning</div>
+      <div class="card-text">
+        낮은 학습률로 추가 미세조정합니다.<br>
+        Learning Rate: 5&times;10<sup>-5</sup><br>
+        Epochs: 8<br>
+        증강: 좌우 반전 (Fliplr 0.5)
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Noto Serif KR',serif; font-size:1.1rem; font-weight:700; margin: 3rem 0 1rem;">주요 하이퍼파라미터</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+    <div class="card" style="text-align:center; padding:1.3rem;">
+      <div style="font-family:'Noto Serif KR',serif; font-size:1.6rem; font-weight:700; color:#292524;">4</div>
+      <div style="font-size:0.78rem; color:var(--text-muted);">Images per GPU</div>
+    </div>
+    <div class="card" style="text-align:center; padding:1.3rem;">
+      <div style="font-family:'Noto Serif KR',serif; font-size:1.6rem; font-weight:700; color:#292524;">512</div>
+      <div style="font-size:0.78rem; color:var(--text-muted);">Image Size (px)</div>
+    </div>
+    <div class="card" style="text-align:center; padding:1.3rem;">
+      <div style="font-family:'Noto Serif KR',serif; font-size:1.6rem; font-weight:700; color:#292524;">5</div>
+      <div style="font-size:0.78rem; color:var(--text-muted);">K-Fold Splits</div>
+    </div>
+    <div class="card" style="text-align:center; padding:1.3rem;">
+      <div style="font-family:'Noto Serif KR',serif; font-size:1.6rem; font-weight:700; color:#292524;">1e-4</div>
+      <div style="font-size:0.78rem; color:var(--text-muted);">Base Learning Rate</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="notes"><div class="container fade-in">
+  <div class="section-label">Notes</div>
+  <h2 class="section-title">코드 리뷰 노트</h2>
+  <p class="section-desc">Kaggle CNN 관련 코드를 리뷰하며 정리한 참고 사항입니다. 코드에 일부 오류가 있으나 전체적인 파이프라인 이해를 위해 기록합니다.</p>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">COCO 가중치 전이학습 전략 <span class="q-tag">Transfer Learning</span></div><div class="q-desc">mrcnn_class_logits, mrcnn_bbox_fc, mrcnn_bbox, mrcnn_mask 레이어를 제외하고 가중치를 로드합니다. 도메인 특화 헤드만 새로 학습하는 표준적인 접근입니다.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">RLE 인코딩/디코딩 구현 <span class="q-tag">Data Processing</span></div><div class="q-desc">Run-Length Encoding으로 압축된 마스크 데이터를 2D 배열로 복원하고, 추론 결과를 다시 RLE로 인코딩하여 제출 형식에 맞춥니다.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">멀티라벨 세그먼트 처리 <span class="q-tag">Preprocessing</span></div><div class="q-desc">ClassId에 언더스코어(_)가 포함된 멀티라벨 데이터를 기본 카테고리와 속성으로 분리합니다. 기본 카테고리만 추출하여 46개 클래스 체계를 구성합니다.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">데이터 증강의 최소 적용 <span class="q-tag">Augmentation</span></div><div class="q-desc">imgaug의 Fliplr(0.5)만 적용하는 보수적인 증강 전략입니다. 패션 이미지의 좌우 대칭 특성을 활용하되 과도한 변형은 피합니다.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">추론 시 테스트 시간 증강 (TTA) <span class="q-tag">Inference</span></div><div class="q-desc">추론 단계에서 원본과 좌우 반전 이미지를 모두 예측한 뒤 결과를 병합하여 검출 성능을 향상시킵니다.</div></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="tech"><div class="container fade-in">
+  <div class="section-label">Stack</div>
+  <h2 class="section-title">사용 기술</h2>
+  <div class="tech-grid" style="margin-top:1.5rem;">
+    <div class="tech-item"><div class="tech-cat">Deep Learning</div><ul class="tech-list"><li>TensorFlow / Keras</li><li>Matterport Mask R-CNN</li><li>ResNet-50 Backbone</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Data Processing</div><ul class="tech-list"><li>OpenCV (cv2)</li><li>NumPy / Pandas</li><li>RLE Encode / Decode</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Augmentation</div><ul class="tech-list"><li>imgaug (Fliplr)</li><li>Test-Time Augmentation</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Evaluation</div><ul class="tech-list"><li>K-Fold Cross Validation</li><li>matplotlib 시각화</li><li>mrcnn.visualize</li></ul></div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  RCNN Test &mdash; Mask R-CNN 기반 패션 이미지 세그멘테이션 실험<br>
+  <a href="https://github.com/soccz/RCNN_test" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+</div></footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

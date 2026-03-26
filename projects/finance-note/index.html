@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>finance-note — 금융 학습 노트</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .q-list { display: flex; flex-direction: column; gap: 0.8rem; counter-reset: q; }
+    .q-item {
+      counter-increment: q; display: flex; align-items: flex-start; gap: 1.2rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.3rem 1.8rem; transition: all 0.2s;
+    }
+    .q-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .q-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .q-num::before { content: counter(q); }
+    .q-content { flex: 1; }
+    .q-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 0.3rem; }
+    .q-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .q-item { flex-direction: column; gap: 0.5rem; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#purpose">Purpose</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Finance &times; Study Notes</span>
+    <h1>금융 학습 노트</h1>
+    <p class="hero-sub">
+      금융 공학, 계량 경제학, 투자 이론 등<br>
+      금융 분야 전반에 걸친 학습 내용을 정리한 개인 아카이브
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">Fin</span><span class="hero-stat-label">금융 공학</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">Econ</span><span class="hero-stat-label">계량 경제학</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">Inv</span><span class="hero-stat-label">투자 이론</span></div>
+    </div>
+    <a href="https://github.com/soccz/finance-note" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">프로젝트 개요</h2>
+  <p class="section-desc">금융 분야의 핵심 개념과 이론을 학습하고 정리한 개인 노트 아카이브입니다. 프로젝트 수행 과정에서 필요한 금융 지식의 기초를 다지고, 실제 구현에 활용하기 위한 참고 자료로 구성되어 있습니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">금융 공학</div><div class="card-text">파생상품 가격 결정, 리스크 관리, 포트폴리오 최적화 등 금융 공학의 핵심 이론과 수학적 모델을 정리합니다.</div></div>
+    <div class="card"><div class="card-title">계량 경제학</div><div class="card-text">시계열 분석, 회귀 모델, 인과 추론 등 금융 데이터 분석에 필요한 통계적 방법론을 학습합니다.</div></div>
+    <div class="card"><div class="card-title">투자 이론</div><div class="card-text">자산 가격 결정 모델(CAPM, APT), 효율적 시장 가설, 행동 재무학 등 투자의 이론적 기반을 다룹니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="topics"><div class="container fade-in">
+  <div class="section-label">Topics</div>
+  <h2 class="section-title">학습 주제</h2>
+  <p class="section-desc">금융 프로젝트 수행에 필요한 핵심 학습 주제들입니다.</p>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">시계열 분석</div><div class="q-desc">ARIMA, GARCH, 단위근 검정, 공적분 등 금융 시계열 데이터의 특성을 이해하고 모델링하는 방법</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">포트폴리오 이론</div><div class="q-desc">Markowitz 평균-분산 최적화, 효율적 프론티어, 샤프 비율 등 포트폴리오 구성의 이론적 기반</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">리스크 관리</div><div class="q-desc">VaR, CVaR, 스트레스 테스트 등 금융 리스크 측정 및 관리 기법</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">머신러닝과 금융</div><div class="q-desc">금융 데이터에 머신러닝/딥러닝을 적용할 때의 특수한 고려사항과 기법</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">거시경제학 기초</div><div class="q-desc">금리, 환율, 인플레이션 등 거시경제 변수가 금융 시장에 미치는 영향의 이론적 이해</div></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="purpose"><div class="container fade-in">
+  <div class="section-label">Purpose</div>
+  <h2 class="section-title">활용 목적</h2>
+  <p class="section-desc">학습 노트가 실제 프로젝트에 기여하는 방식입니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">프로젝트 기초</div><div class="card-text">Chrono-Trader, AETHER, market-impact 등 금융 프로젝트 수행 시 필요한 이론적 기반을 제공합니다.</div></div>
+    <div class="card"><div class="card-title">개념 참조</div><div class="card-text">분석 과정에서 필요한 금융 개념과 수학적 도구를 빠르게 참조할 수 있는 레퍼런스 역할을 합니다.</div></div>
+    <div class="card"><div class="card-title">지식 축적</div><div class="card-text">지속적으로 학습한 내용을 체계적으로 정리하여 금융 도메인 지식을 축적하고 확장합니다.</div></div>
+  </div>
+</div></section>
+
+<footer>
+  <p class="footer-text"><a href="/">soccz.</a> &mdash; finance-note</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

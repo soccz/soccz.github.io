@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroTraffic-DT — 지능형 교통 관제 디지털 트윈</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-red: #b91c1c;
+      --accent-green: #15803d;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+
+    .verify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .verify-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .verify-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-green); }
+    .verify-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.3rem; }
+    .verify-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .verify-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 1.5rem 0; }
+    .verify-table th { background: #f5f5f4; padding: 0.7rem 1rem; text-align: left; font-weight: 500; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    .verify-table td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); }
+    .verify-table tr:hover { background: #fafaf9; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    .q-list { display: flex; flex-direction: column; gap: 0.8rem; counter-reset: q; }
+    .q-item {
+      counter-increment: q; display: flex; align-items: flex-start; gap: 1.2rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.3rem 1.8rem; transition: all 0.2s;
+    }
+    .q-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .q-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .q-num::before { content: counter(q); }
+    .q-content { flex: 1; }
+    .q-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 0.3rem; }
+    .q-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+    .q-tag { display: inline-block; font-size: 0.62rem; padding: 0.12rem 0.45rem; background: #f5f5f4; color: var(--text-muted); border-radius: 3px; border: 1px solid #e7e5e4; margin-left: 0.4rem; vertical-align: middle; }
+
+    .demo-container {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .demo-header {
+      background: #1c1917; padding: 0.8rem 1.2rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .demo-dot-r { background: #ef4444; }
+    .demo-dot-y { background: #eab308; }
+    .demo-dot-g { background: #22c55e; }
+    .demo-header-text { color: #a8a29e; font-size: 0.72rem; margin-left: 0.8rem; letter-spacing: 0.05em; }
+    .demo-body { padding: 2rem; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); min-height: 360px; position: relative; }
+    .demo-map {
+      background: linear-gradient(145deg, #e2e8f0 0%, #cbd5e1 40%, #94a3b8 100%);
+      border-radius: 8px; height: 240px; position: relative; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .demo-map::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(0deg, transparent 24%, rgba(148,163,184,0.15) 25%, rgba(148,163,184,0.15) 26%, transparent 27%, transparent 74%, rgba(148,163,184,0.15) 75%, rgba(148,163,184,0.15) 76%, transparent 77%),
+        linear-gradient(90deg, transparent 24%, rgba(148,163,184,0.15) 25%, rgba(148,163,184,0.15) 26%, transparent 27%, transparent 74%, rgba(148,163,184,0.15) 75%, rgba(148,163,184,0.15) 76%, transparent 77%);
+      background-size: 50px 50px;
+    }
+    .demo-map-label {
+      position: absolute; bottom: 12px; right: 12px;
+      background: rgba(255,255,255,0.9); padding: 0.4rem 0.8rem; border-radius: 4px;
+      font-size: 0.68rem; color: var(--text-secondary); border: 1px solid var(--border);
+    }
+    .demo-overlay {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      text-align: center; color: var(--text-muted);
+    }
+    .demo-overlay-icon { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.4; }
+    .demo-overlay-text { font-size: 0.78rem; letter-spacing: 0.05em; }
+    .demo-panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.2rem; }
+    .demo-panel {
+      background: white; border: 1px solid var(--border); border-radius: 6px; padding: 1rem;
+      text-align: center;
+    }
+    .demo-panel-value { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; }
+    .demo-panel-label { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .demo-panel-bar { height: 4px; border-radius: 2px; margin-top: 0.6rem; }
+
+    .demo-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .demo-feature {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.3rem; border-left: 3px solid #78716c;
+    }
+    .demo-feature-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.4rem; }
+    .demo-feature-text { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      .q-item { flex-direction: column; gap: 0.5rem; }
+      .demo-panels { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#ai-research">AI Research</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#future">Future</a></li>
+      <li><a href="#tech">Stack</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Digital Twin &times; Deep Learning</span>
+    <h1>지능형 교통 관제<br>디지털 트윈 플랫폼</h1>
+    <p class="hero-sub">
+      실시간 시뮬레이션과 Deep LSTM 기반 혼잡도 예측이 결합된<br>
+      거시적 교통 관제 시스템. 도시 전체의 교통 건전성을 진단하고 예측합니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">0.0078</span><span class="hero-stat-label">MSE (Deep LSTM)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">100K</span><span class="hero-stat-label">시뮬레이션 데이터</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">비교 모델</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">v3.0</span><span class="hero-stat-label">AI Research Edition</span></div>
+    </div>
+    <a href="https://github.com/soccz/NeuroTraffic-DT" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">프로젝트 개요</h2>
+  <p class="section-desc">단순한 교통 모니터링을 넘어, 도시 전체의 교통 건전성(System Health)을 진단하고 예측하는 거시적 관제 시스템입니다. 한국도로공사 VDS 데이터를 기반으로 학습된 AI가 서울 고속도로 네트워크 전체의 평균 속도를 1초 단위로 판단합니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">AI Neuro-Forecast</div><div class="card-text">3가지 모델(RNN, Shallow LSTM, Deep LSTM)의 예측 결과를 한 화면에서 실시간 비교합니다. 전체 네트워크의 평균 속도를 지표화하여 도시 전체의 마비(Gridlock) 여부를 즉각 판단합니다.</div></div>
+    <div class="card"><div class="card-title">Real-time Digital Twin</div><div class="card-text">100,000건의 빅데이터를 그대로 재생하는 Data Replay 모드와, 물리학 엔진(SyntheticEngine)을 통해 교통량 증가, 사고 발생 등의 변수를 실시간으로 조작하는 Live Simulation을 제공합니다.</div></div>
+    <div class="card"><div class="card-title">AI Control Center</div><div class="card-text">예측된 위험 상황(Critical Congestion) 감지 시, "갓길 개방(Open Shoulder Lane)" 등 구체적 대응책을 자동 제안하는 지능형 관제 시스템입니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="ai-research"><div class="container fade-in">
+  <div class="section-label">AI Research</div>
+  <h2 class="section-title">모델 비교 연구</h2>
+  <p class="section-desc">단순 구현이 아닌, 비교 연구(Comparative Study)를 통해 최적의 모델을 도출했습니다. 3가지 아키텍처를 동일 조건에서 학습하고 성능을 비교했습니다.</p>
+  <div class="verify-grid">
+    <div class="verify-card"><div class="verify-num" style="color:var(--text-muted);">0.0084</div><div class="verify-label">Basic RNN</div><div class="verify-sub">1 Layer, 32 Hidden &mdash; Baseline</div></div>
+    <div class="verify-card"><div class="verify-num" style="color:var(--text-secondary);">0.0081</div><div class="verify-label">Shallow LSTM</div><div class="verify-sub">1 Layer, 32 Hidden &mdash; Intermediate</div></div>
+    <div class="verify-card"><div class="verify-num">0.0078</div><div class="verify-label">Deep LSTM</div><div class="verify-sub">2 Layers, 64 Hidden &mdash; Best Model</div></div>
+  </div>
+  <table class="verify-table">
+    <thead><tr><th>Case</th><th>Model</th><th>Architecture</th><th>MSE (Loss)</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Case 1</td><td>Basic RNN</td><td>1 Layer, 32 Hidden</td><td>0.0084</td><td>Baseline</td></tr>
+      <tr><td>Case 2</td><td>Shallow LSTM</td><td>1 Layer, 32 Hidden</td><td>0.0081</td><td>Intermediate</td></tr>
+      <tr><td style="font-weight:700;">Case 3</td><td style="font-weight:700;">Deep LSTM</td><td style="font-weight:700;">2 Layers, 64 Hidden + Dropout(0.2)</td><td style="font-weight:700;color:var(--accent-green);">0.0078</td><td style="font-weight:700;color:var(--accent-green);">SOTA</td></tr>
+    </tbody>
+  </table>
+  <div class="card-grid" style="margin-top:2rem;">
+    <div class="layer-card"><div class="layer-num">Deep LSTM &mdash; 선정 근거</div><div class="layer-title">출퇴근 시간 패턴(Double Hump) 학습</div><div class="layer-q">"단층 모델(RNN, Shallow LSTM) 대비 복잡한 출퇴근 시간 패턴을 가장 정확하게 학습하여 최종 모델로 선정되었습니다."</div><div class="tags"><span class="tag">Deep LSTM</span><span class="tag">2 Layers</span><span class="tag">64 Hidden Units</span><span class="tag">Dropout 0.2</span><span class="tag">PyTorch</span></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="dashboard"><div class="container fade-in">
+  <div class="section-label">Dashboard</div>
+  <h2 class="section-title">운영 화면</h2>
+  <p class="section-desc">React 18 + TypeScript + Deck.gl로 구축된 교통 관제 대시보드입니다. 3D 지도 위에 실시간 교통 흐름과 AI 예측 결과를 동시에 시각화합니다.</p>
+  <div class="demo-container">
+    <div class="demo-header">
+      <span class="demo-dot demo-dot-r"></span>
+      <span class="demo-dot demo-dot-y"></span>
+      <span class="demo-dot demo-dot-g"></span>
+      <span class="demo-header-text">NeuroTraffic-DT &mdash; Traffic Control Dashboard v3.0</span>
+    </div>
+    <div class="demo-body">
+      <div class="demo-map">
+        <div class="demo-overlay">
+          <div class="demo-overlay-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          </div>
+          <div class="demo-overlay-text">Deck.gl 3D Map &mdash; CartoDB Positron Basemap<br>서울 고속도로 네트워크 실시간 시각화</div>
+        </div>
+        <div class="demo-map-label">CartoDB Positron &middot; Deck.gl</div>
+      </div>
+      <div class="demo-panels">
+        <div class="demo-panel">
+          <div class="demo-panel-value" style="color:var(--accent-green);">87.3</div>
+          <div class="demo-panel-label">System Health (km/h)</div>
+          <div class="demo-panel-bar" style="background: linear-gradient(90deg, var(--accent-green) 87%, var(--border) 87%);"></div>
+        </div>
+        <div class="demo-panel">
+          <div class="demo-panel-value" style="color:#a16207;">Level 2</div>
+          <div class="demo-panel-label">Congestion Level</div>
+          <div class="demo-panel-bar" style="background: linear-gradient(90deg, #eab308 40%, var(--border) 40%);"></div>
+        </div>
+        <div class="demo-panel">
+          <div class="demo-panel-value" style="color:var(--accent);">0.0078</div>
+          <div class="demo-panel-label">AI Prediction Loss</div>
+          <div class="demo-panel-bar" style="background: linear-gradient(90deg, var(--accent) 8%, var(--border) 8%);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="demo-features">
+    <div class="demo-feature"><div class="demo-feature-title">3D 지도 시각화</div><div class="demo-feature-text">Deck.gl 기반 3D 맵 위에 도로별 교통량, 평균 속도, 혼잡 구간을 색상과 높이로 실시간 렌더링합니다. CartoDB Positron 베이스맵 위에 교통 레이어를 오버레이합니다.</div></div>
+    <div class="demo-feature"><div class="demo-feature-title">실시간 AI 예측 비교</div><div class="demo-feature-text">RNN, Shallow LSTM, Deep LSTM 3개 모델의 예측값을 실시간 차트로 비교 표시합니다. 실측 데이터와 예측 사이의 오차율(Loss)을 시각적으로 검증할 수 있습니다.</div></div>
+    <div class="demo-feature"><div class="demo-feature-title">관제 자동 대응</div><div class="demo-feature-text">Critical Congestion 감지 시 "갓길 개방", "우회 경로 안내" 등 대응책을 자동 제안합니다. Data Replay 모드로 과거 혼잡 상황을 복기하고 대응 시나리오를 테스트합니다.</div></div>
+    <div class="demo-feature"><div class="demo-feature-title">Live Simulation</div><div class="demo-feature-text">SyntheticEngine을 통해 교통량 증가, 사고 발생 등 변수를 실시간으로 조작합니다. 100,000건 빅데이터 기반의 물리학 시뮬레이션으로 다양한 시나리오를 테스트할 수 있습니다.</div></div>
+  </div>
+  <div style="text-align:center; margin-top:2rem;">
+    <span style="display:inline-block; padding:0.6rem 1.4rem; border:1px dashed var(--border-light); border-radius:4px; font-size:0.82rem; color:var(--text-muted);">Live Demo &mdash; Coming Soon</span>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="future"><div class="container fade-in">
+  <div class="section-label">Future Work</div>
+  <h2 class="section-title">향후 연구 과제</h2>
+  <p class="section-desc">현재 모델은 전체 네트워크의 평균(Macroscopic)을 예측합니다. 다음 단계 연구로는 개별 도로(Microscopic) 단위의 초정밀 예측을 목표로 합니다.</p>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">Graph Neural Networks (GNN) <span class="q-tag">Spatial</span></div><div class="q-desc">도로망을 그래프(Graph) 형태로 모델링하여, 특정 구간의 정체가 인접 구간에 미치는 파급 효과(Spatial Dependency)를 학습합니다.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">Transformer (Traffic-BERT) <span class="q-tag">Temporal</span></div><div class="q-desc">시계열 데이터의 장기 의존성(Long-term Dependency) 학습 성능을 극대화하여, 더 먼 미래의 혼잡도를 정확히 예측합니다.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">Microscopic Prediction <span class="q-tag">Precision</span></div><div class="q-desc">전체 네트워크 평균이 아닌, 개별 도로 구간 단위의 초정밀 혼잡도 예측으로 확장합니다.</div></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="tech"><div class="container fade-in">
+  <div class="section-label">Stack</div>
+  <h2 class="section-title">기술 스택</h2>
+  <div class="tech-grid" style="margin-top:1.5rem;">
+    <div class="tech-item"><div class="tech-cat">Frontend</div><ul class="tech-list"><li>React 18 + TypeScript</li><li>Vite (Build Tool)</li><li>Deck.gl (3D Maps)</li><li>TailwindCSS</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">AI Core</div><ul class="tech-list"><li>PyTorch (Deep LSTM)</li><li>RNN / LSTM 비교 연구</li><li>Scikit-learn</li><li>Dropout Regularization</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Data</div><ul class="tech-list"><li>한국도로공사 VDS 데이터</li><li>100,000건 시뮬레이션 데이터</li><li>Pandas / NumPy</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Simulation</div><ul class="tech-list"><li>SyntheticEngine (물리 엔진)</li><li>Data Replay Mode</li><li>CartoDB Positron Basemap</li></ul></div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  NeuroTraffic-DT &mdash; 지능형 교통 관제 디지털 트윈 플랫폼<br>
+  <a href="https://github.com/soccz/NeuroTraffic-DT" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+</div></footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

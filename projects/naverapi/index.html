@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>naverAPI — 네이버 API 기반 뉴스 데이터 수집 및 NLP 분석</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-red: #b91c1c;
+      --accent-green: #15803d;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#analysis">Analysis</a></li>
+      <li><a href="#tech">Stack</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Data Collection &times; NLP</span>
+    <h1>네이버 API 기반<br>뉴스 데이터 수집 및 감성 분석</h1>
+    <p class="hero-sub">
+      네이버 검색 API와 CLOVA NLP API를 활용하여 뉴스 데이터를 수집하고,<br>
+      감성 분석과 키워드 기반 처리를 통해 비트코인 가격 방향을 예측하는 파이프라인입니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">NLP 분석 기법</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">네이버 API</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">예측 클래스</span></div>
+    </div>
+    <a href="https://github.com/soccz/naverAPI" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">프로젝트 구조</h2>
+  <p class="section-desc">AI DATA 공모전을 위해 네이버 API를 활용한 NLP 파이프라인을 구축했습니다. 뉴스 데이터 수집부터 감성 분석, 키워드 처리, BERT 활용까지 단계적으로 발전시킨 프로젝트입니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">뉴스 데이터 수집</div><div class="card-text">네이버 검색 API를 통해 뉴스 데이터를 JSON 형태로 수집합니다. description 필드의 요약 한계를 극복하기 위해 전체 텍스트 추출 로직을 추가했습니다.</div></div>
+    <div class="card"><div class="card-title">NLP 감성 분석</div><div class="card-text">네이버 CLOVA API의 감정 분석 기능과 요약 후 키워드 기반 처리, BERT 모델을 활용하여 뉴스 텍스트의 감성을 분류합니다.</div></div>
+    <div class="card"><div class="card-title">가격 방향 예측</div><div class="card-text">뉴스 감성 분석 결과에 가중치를 적용하여 비트코인 가격의 상승, 하락, 횡보 3가지 방향 중 하나를 예측하는 최종 결과를 도출합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="pipeline"><div class="container fade-in">
+  <div class="section-label">Pipeline</div>
+  <h2 class="section-title">데이터 처리 흐름</h2>
+  <p class="section-desc">뉴스 수집에서 최종 예측까지의 전체 파이프라인입니다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">뉴스 수집</div><div class="flow-desc">네이버 검색 API<br>news.py</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">전문 추출</div><div class="flow-desc">전체 텍스트 크롤링<br>news2.py</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">NLP 분석</div><div class="flow-desc">감성 분석 + BERT<br>API3.py</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">방향 예측</div><div class="flow-desc">가중치 기반<br>상승 / 하락 / 횡보</div></div>
+  </div>
+  <div class="card-grid">
+    <div class="layer-card"><div class="layer-num">Stage 1 &mdash; Collection</div><div class="layer-title">네이버 검색 API 데이터 수집</div><div class="layer-q">"검색 API의 description은 요약본이므로, 전체 기사 텍스트를 별도로 추출해야 한다."</div><div class="tags"><span class="tag">Naver Search API</span><span class="tag">JSON Parsing</span><span class="tag">Web Crawling</span></div></div>
+    <div class="layer-card"><div class="layer-num">Stage 2 &mdash; NLP Processing</div><div class="layer-title">3가지 NLP 기법 비교</div><div class="layer-q">"CLOVA 감성 분석, 요약 + 키워드 처리, BERT 중 어떤 기법이 가장 효과적인가?"</div><div class="tags"><span class="tag">CLOVA Sentiment</span><span class="tag">Keyword Extraction</span><span class="tag">BERT</span></div></div>
+    <div class="layer-card"><div class="layer-num">Stage 3 &mdash; Prediction</div><div class="layer-title">가중치 기반 최종 방향 도출</div><div class="layer-q">"3가지 분류 결과에 가중치를 적용하여 비트코인 가격 방향을 예측할 수 있는가?"</div><div class="tags"><span class="tag">Weighted Voting</span><span class="tag">3-Class Classification</span></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="analysis"><div class="container fade-in">
+  <div class="section-label">Analysis</div>
+  <h2 class="section-title">분석 접근 방식</h2>
+  <p class="section-desc">네이버 API만으로는 NLP 모델 활용에 한계가 있어, CLOVA NLP API와 BERT를 추가 도입하여 다각도 분석을 시도했습니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">CLOVA 감정 분석</div><div class="card-text">네이버 클라우드 플랫폼의 감정 분석 API를 활용하여 뉴스 텍스트의 긍정/부정/중립을 분류합니다.</div></div>
+    <div class="card"><div class="card-title">요약 + 키워드 기반</div><div class="card-text">뉴스 텍스트를 요약한 뒤 핵심 키워드를 추출하고, 키워드의 감성 사전 매칭으로 방향성을 판단합니다.</div></div>
+    <div class="card"><div class="card-title">BERT 활용</div><div class="card-text">사전 학습된 BERT 모델을 파인튜닝하여 뉴스 텍스트를 상승/하락/횡보로 분류하는 분류기를 구축합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="tech"><div class="container fade-in">
+  <div class="section-label">Stack</div>
+  <h2 class="section-title">기술 스택</h2>
+  <div class="tech-grid" style="margin-top:1.5rem;">
+    <div class="tech-item"><div class="tech-cat">Data Collection</div><ul class="tech-list"><li>Naver Search API (뉴스)</li><li>Naver CLOVA NLP API</li><li>Web Crawling (전문 추출)</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">NLP &amp; ML</div><ul class="tech-list"><li>감성 분석 (3-class)</li><li>키워드 추출 &amp; 분류</li><li>BERT Fine-tuning</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Prediction</div><ul class="tech-list"><li>가중 투표 앙상블</li><li>3-class (상승/하락/횡보)</li><li>비트코인 가격 방향 예측</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Language</div><ul class="tech-list"><li>Python</li><li>JSON Data Processing</li><li>pandas</li></ul></div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  naverAPI &mdash; 네이버 API 기반 뉴스 데이터 수집 및 NLP 분석<br>
+  <a href="https://github.com/soccz/naverAPI" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+</div></footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

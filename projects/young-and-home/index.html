@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Young &amp; Home — 청년 안심 주거 코디네이터</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-red: #b91c1c;
+      --accent-green: #15803d;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .agent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+    .agent-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .agent-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .agent-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .agent-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 160px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .arch-block {
+      background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c;
+      border-radius: 0 8px 8px 0; padding: 1.5rem 1.8rem; margin: 2rem 0;
+    }
+    .arch-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .arch-block p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
+
+    .verify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .verify-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .verify-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+    .verify-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.3rem; }
+    .verify-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#stack">Stack</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">AI Hackathon &times; Multi-Agent System</span>
+    <h1>청년 안심 주거 코디네이터</h1>
+    <p class="hero-sub">
+      집 구하기부터 계약, 그리고 혜택까지.<br>
+      5명의 AI 에이전트가 떠먹여주는 청년 주거 토탈 케어.<br>
+      2026 서강대 AI Winter Camp 해커톤 출품작.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">AI 에이전트</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">팀원</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">90%</span><span class="hero-stat-label">API 비용 절감</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">30x</span><span class="hero-stat-label">응답 속도 향상</span></div>
+    </div>
+    <a href="https://github.com/soccz/young-and-home" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">Information Asymmetry Zero</h2>
+  <p class="section-desc">부동산 지식이 없는 사회초년생도, AI와 함께라면 전문가처럼. 단순한 매물 검색을 넘어, 계약 안전 진단부터 집주인과의 협상, 숨겨진 금융 혜택까지 전 과정을 5명의 AI 에이전트가 코디네이팅합니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">실질 비용 계산</div><div class="card-text">"월세 50만원" 집이 내 조건(연소득, 자산, 나이)에서 정부 지원 대출과 보조금을 적용하면 "실질 월세 12만원"이 되는 마법을 보여줍니다.</div></div>
+    <div class="card"><div class="card-title">계약 안전 진단</div><div class="card-text">등기부등본 PDF를 업로드하면 소유자 일치 여부, 근저당 비율, 경매 위험도를 AI가 자동 분석합니다. 독소 조항도 탐지합니다.</div></div>
+    <div class="card"><div class="card-title">24시간 감시</div><div class="card-text">n8n + Notion 연동으로 관심 지역의 공고를 24시간 모니터링합니다. Slack 알림과 Notion 대시보드에 실시간 적재됩니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="agents"><div class="container fade-in">
+  <div class="section-label">Multi-Agent System</div>
+  <h2 class="section-title">5명의 AI 에이전트</h2>
+  <p class="section-desc">하나의 문제를 5명의 전문가가 동시에 바라봅니다. 단순한 LLM 래퍼가 아니라, 각기 다른 전문성을 가진 에이전트들이 LangGraph 위에서 협업하는 Multi-Agent System입니다.</p>
+  <div class="agent-grid">
+    <div class="agent-card">
+      <div class="agent-num">Agent 1 &mdash; Recommender</div>
+      <div class="agent-title">매물 추천 에이전트</div>
+      <div class="agent-desc">사용자의 예산, 통근 거리, 선호 조건을 분석하여 최적의 매물을 추천합니다. RAG 기반 검색으로 정확한 매칭을 수행합니다.</div>
+      <div class="tags"><span class="tag">RAG</span><span class="tag">벡터 검색</span><span class="tag">조건 매칭</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 2 &mdash; Safety Analyzer</div>
+      <div class="agent-title">안전 진단 에이전트</div>
+      <div class="agent-desc">등기부등본, 계약서를 분석하여 근저당 비율, 소유자 일치 여부, 경매 위험도를 자동 진단합니다. 특약 사항의 독소 조항도 탐지합니다.</div>
+      <div class="tags"><span class="tag">PDF 파싱</span><span class="tag">위험도 스코어링</span><span class="tag">독소 조항 탐지</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 3 &mdash; Negotiator</div>
+      <div class="agent-title">협상 보조 에이전트</div>
+      <div class="agent-desc">시세 데이터와 매물 조건을 기반으로 협상 전략을 제안합니다. 집주인과의 커뮤니케이션 템플릿도 생성합니다.</div>
+      <div class="tags"><span class="tag">시세 분석</span><span class="tag">협상 전략</span><span class="tag">템플릿 생성</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 4 &mdash; Financial Agent</div>
+      <div class="agent-title">금융 계산 에이전트</div>
+      <div class="agent-desc">사용자의 연소득, 자산, 나이를 분석하여 적용 가능한 정부 지원 대출(중기청, 청년버팀목)과 보조금을 자동 계산합니다.</div>
+      <div class="tags"><span class="tag">대출 시뮬레이션</span><span class="tag">전세 vs 월세</span><span class="tag">실질 비용</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-num">Agent 5 &mdash; Monitor</div>
+      <div class="agent-title">실시간 감시 에이전트</div>
+      <div class="agent-desc">n8n 워크플로우와 연동하여 관심 지역의 매물 공고와 뉴스를 24시간 감시합니다. SHA256 해시 기반 Smart Filter로 API 비용을 90% 절감합니다.</div>
+      <div class="tags"><span class="tag">n8n</span><span class="tag">Smart Hash Filter</span><span class="tag">Notion 적재</span></div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="architecture"><div class="container fade-in">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">Hybrid Agentic Workflow</h2>
+  <p class="section-desc">실시간성이 중요한 '감시'는 n8n이, 깊이 있는 '추론'은 Python Backend가 담당하는 이중 구조입니다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">User Input</div><div class="flow-desc">Streamlit UI<br>조건 입력</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">Agent Router</div><div class="flow-desc">LangGraph<br>에이전트 라우팅</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">Agent 처리</div><div class="flow-desc">5개 에이전트<br>병렬 실행</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">결과 통합</div><div class="flow-desc">리포트 생성<br>알림 발송</div></div>
+  </div>
+
+  <div class="arch-block">
+    <div class="arch-label">Smart Hash Filter</div>
+    <p>들어오는 모든 데이터의 SHA256 해시를 생성하여 DB와 대조합니다(0.01초). 변화가 없으면 API 연산을 건너뛰고 DB에 저장된 과거의 Risk Score를 리턴합니다. 이를 통해 API 비용을 90% 절감하면서도 사용자에게는 언제나 유효한 점수를 보여줍니다.</p>
+  </div>
+
+  <div class="arch-block">
+    <div class="arch-label">SQLite Caching</div>
+    <p>가벼운 SQLite를 활용해 RAG 검색 결과와 금융 시뮬레이션 결과를 캐싱하여 응답 속도를 3초에서 0.1초로 단축했습니다.</p>
+  </div>
+
+  <div class="verify-grid">
+    <div class="verify-card"><div class="verify-num">90%</div><div class="verify-label">API 비용 절감</div><div class="verify-sub">Smart Hash Filter</div></div>
+    <div class="verify-card"><div class="verify-num">0.1s</div><div class="verify-label">캐시 응답 속도</div><div class="verify-sub">SQLite Caching</div></div>
+    <div class="verify-card"><div class="verify-num">24/7</div><div class="verify-label">실시간 모니터링</div><div class="verify-sub">n8n + Notion</div></div>
+    <div class="verify-card"><div class="verify-num">5</div><div class="verify-label">전문 에이전트</div><div class="verify-sub">LangGraph 오케스트레이션</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="features"><div class="container fade-in">
+  <div class="section-label">Key Features</div>
+  <h2 class="section-title">주요 기능</h2>
+  <p class="section-desc">복잡한 부동산 절차를 AI가 단순화합니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">안전 진단 (Safety Scan)</div><div class="card-text">등기부등본 PDF를 업로드하면 소유자 일치 여부, 근저당 비율, 경매 위험도를 분석합니다. 강제퇴거 조항 같은 독소 조항도 자동 탐지합니다.</div></div>
+    <div class="card"><div class="card-title">24시간 등기 모니터링</div><div class="card-text">n8n + Notion 연동으로 관심 지역의 공고를 24시간 감시합니다. 분석 결과는 Notion 데이터베이스에 실시간 적재되고, Markdown 리포트로 저장됩니다.</div></div>
+    <div class="card"><div class="card-title">금융 계산기 (Smart Calculator)</div><div class="card-text">전세 vs 월세 비교 시 대출 이자와 관리비까지 포함하여 2년 거주 총비용을 정확하게 계산합니다. 정부 지원 프로그램 자동 매칭.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="stack"><div class="container fade-in">
+  <div class="section-label">Stack</div>
+  <h2 class="section-title">기술 스택</h2>
+  <div class="tech-grid" style="margin-top:1.5rem;">
+    <div class="tech-item"><div class="tech-cat">AI / Agent</div><ul class="tech-list"><li>LangGraph (Multi-Agent)</li><li>OpenAI GPT</li><li>RAG (Vector Search)</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Backend</div><ul class="tech-list"><li>FastAPI</li><li>Python 3.10+</li><li>SQLite Caching</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Frontend</div><ul class="tech-list"><li>Streamlit</li><li>Glassmorphism UI</li><li>Card-based Layout</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Automation</div><ul class="tech-list"><li>n8n (Workflow)</li><li>Notion API</li><li>Slack Webhook</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Infrastructure</div><ul class="tech-list"><li>Docker Compose</li><li>Fault Tolerance</li><li>Auto Retry</li></ul></div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  Young &amp; Home &mdash; 청년 안심 주거 코디네이터 &middot; 2026 서강대 AI Winter Camp Hackathon<br>
+  <a href="https://github.com/soccz/young-and-home" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+</div></footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

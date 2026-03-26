@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AETHER — Transformer+CNN 하이브리드 암호화폐 예측 시스템</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    .q-list { display: flex; flex-direction: column; gap: 0.8rem; counter-reset: q; }
+    .q-item {
+      counter-increment: q; display: flex; align-items: flex-start; gap: 1.2rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.3rem 1.8rem; transition: all 0.2s;
+    }
+    .q-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .q-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .q-num::before { content: counter(q); }
+    .q-content { flex: 1; }
+    .q-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 0.3rem; }
+    .q-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      .q-item { flex-direction: column; gap: 0.5rem; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#ops">Ops</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Explainable AI &times; Crypto Forecasting</span>
+    <h1>AETHER<br>Chrono-Trader v2</h1>
+    <p class="hero-sub">
+      설명 가능한 하이브리드 인코더(Transformer+CNN)와 불확실성 인식 의사결정 파이프라인을 결합한<br>
+      운영 지향적 암호화폐 예측 및 추천 시스템
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">168h</span><span class="hero-stat-label">입력 시퀀스 윈도우</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">6h</span><span class="hero-stat-label">예측 호라이즌</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">27</span><span class="hero-stat-label">엔지니어링 피처</span></div>
+    </div>
+    <a href="https://github.com/soccz/Chrono-Trader-v2" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">프로젝트 개요</h2>
+  <p class="section-desc">암호화폐 시장은 추세 수준의 구조와 국소 모티프 반복이라는 두 가지 힘을 동시에 보입니다. AETHER는 이 두 관점을 명시적으로 표현하고, 불확실성 인식 및 운영 견고성을 갖춘 추천을 생성합니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">패턴 국소화</div><div class="card-text">시간 속의 패턴 국소화 문제로 접근합니다. "알려진 과거 모티프에서 현재 어디에 위치하는가?"를 매크로 컨텍스트(BTC/ETH 인덱스)로 조건화하여 분석합니다.</div></div>
+    <div class="card"><div class="card-title">설명 가능한 라우팅</div><div class="card-text">게이트 변수를 통해 Global(Transformer)과 Local(CNN) 중 어느 표현이 출력을 지배했는지 해석 가능하도록 설계되었습니다.</div></div>
+    <div class="card"><div class="card-title">운영 견고성</div><div class="card-text">워치독 타임아웃, 데이터 신선도 게이트, 안전 폴백, 최소 출력 정책 등 무인 스케줄링 환경의 장애 모드를 일급 제약조건으로 처리합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="method"><div class="container fade-in">
+  <div class="section-label">Method</div>
+  <h2 class="section-title">방법론</h2>
+  <p class="section-desc">동일 시퀀스를 두 가지 상호보완적 관점으로 인코딩한 후 설명 가능한 게이트 퓨전을 거쳐 다단계 수익 경로를 생성합니다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">피처 엔지니어링</div><div class="flow-desc">매크로 + 팩터 +<br>기술적 지표</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">하이브리드 인코더</div><div class="flow-desc">Transformer (글로벌) +<br>CNN (로컬)</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">게이트 퓨전</div><div class="flow-desc">설명 가능한<br>가중치 결합</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">의사결정 퍼널</div><div class="flow-desc">불확실성 필터 +<br>단계적 추천</div></div>
+  </div>
+  <div class="card-grid" style="margin-top: 2rem;">
+    <div class="layer-card"><div class="layer-num">Context Features</div><div class="layer-title">매크로 컨텍스트 + 패턴 메모리</div><div class="layer-q">BTC/ETH 시가총액 인덱스 수익률, 과거 윈도우 메모리 뱅크 유사도, 알파/베타 스타일 피처, 크립토 FF-스타일 팩터</div><div class="tags"><span class="tag">Market Index</span><span class="tag">Historical Similarity</span><span class="tag">Alpha/Beta</span><span class="tag">FF Factors</span></div></div>
+    <div class="layer-card"><div class="layer-num">Hybrid Encoder</div><div class="layer-title">글로벌 + 로컬 표현 학습</div><div class="layer-q">Transformer로 레짐 수준의 장기 의존성을, CNN 스택으로 로컬 모티프와 형상 기본 요소를 동시에 추출합니다</div><div class="tags"><span class="tag">Transformer</span><span class="tag">CNN Stack</span><span class="tag">Gated Fusion</span><span class="tag">GAN Decoder</span></div></div>
+    <div class="layer-card"><div class="layer-num">Decision Funnel</div><div class="layer-title">불확실성 인식 의사결정</div><div class="layer-q">거래 가능성 검증, 레짐/리드-래그 휴리스틱, 유동성/수익/불확실성 제약을 순차적으로 적용하여 필터링합니다</div><div class="tags"><span class="tag">Uncertainty Filter</span><span class="tag">Liquidity</span><span class="tag">MC-Dropout</span><span class="tag">ECE Calibration</span></div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="architecture"><div class="container fade-in">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">기술 스택</h2>
+  <p class="section-desc">Chrono-Trader v1의 아키텍처를 계승하면서, 설명 가능성과 운영 안정성을 핵심 설계 원칙으로 추가했습니다.</p>
+  <div class="tech-grid">
+    <div class="tech-item">
+      <div class="tech-cat">Representation</div>
+      <ul class="tech-list">
+        <li>Transformer Encoder</li>
+        <li>CNN Stack (Local Motif)</li>
+        <li>Gated Fusion Layer</li>
+        <li>GAN-style Decoder</li>
+      </ul>
+    </div>
+    <div class="tech-item">
+      <div class="tech-cat">Uncertainty</div>
+      <ul class="tech-list">
+        <li>MC-Dropout</li>
+        <li>ECE Calibration</li>
+        <li>Probabilistic Forecasting</li>
+        <li>Optuna (5-Fold CV)</li>
+      </ul>
+    </div>
+    <div class="tech-item">
+      <div class="tech-cat">Operations</div>
+      <ul class="tech-list">
+        <li>Watchdog Timeout</li>
+        <li>Freshness Gate</li>
+        <li>MinRec Policy</li>
+        <li>Safe Fallback (Watch-only)</li>
+      </ul>
+    </div>
+    <div class="tech-item">
+      <div class="tech-cat">Data</div>
+      <ul class="tech-list">
+        <li>Upbit API</li>
+        <li>168h Hourly Candles</li>
+        <li>27 Engineered Features</li>
+        <li>Cross-sectional Factors</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="ops"><div class="container fade-in">
+  <div class="section-label">Strengths &amp; Limitations</div>
+  <h2 class="section-title">강점과 한계</h2>
+  <p class="section-desc">시스템의 설계 강점과 현재 알려진 한계를 투명하게 제시합니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">하이브리드 편향</div><div class="card-text">글로벌 추세 모델링과 로컬 모티프 추출을 단일 귀납 편향에 강제하지 않고 각각의 강점을 살립니다.</div></div>
+    <div class="card"><div class="card-title">해석 가능한 라우팅</div><div class="card-text">게이트가 어느 표현이 지배적이었는지 노출하여 디버깅과 반복 개선을 용이하게 합니다.</div></div>
+    <div class="card"><div class="card-title">백테스트 한계</div><div class="card-text">단순화된 체결/슬리피지 모델과 불완전한 미시구조 효과로 인해 성능이 과대 평가될 수 있습니다.</div></div>
+    <div class="card"><div class="card-title">연산 비용</div><div class="card-text">Optuna 시행(5-Fold CV, MC-Dropout)은 CPU 환경에서 높은 연산 비용이 발생합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="roadmap"><div class="container fade-in">
+  <div class="section-label">Roadmap</div>
+  <h2 class="section-title">연구 방향</h2>
+  <p class="section-desc">AETHER의 향후 연구 및 개선 방향입니다.</p>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">매크로 컨텍스트 재설계</div><div class="q-desc">다중 스케일 컨텍스트(일/4h/1h) 임베딩, 레짐 상태 분리, 명시적 지연/전파 모델링</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">팩터 모델 안정화</div><div class="q-desc">얇은 유동성 하에서의 견고한 팩터 구성, 축소/정규화, 레짐 조건부 팩터 가중</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">보정 + 확률적 출력</div><div class="q-desc">불확실성 보정(ECE)과 의사결정 임계값, 실현 결과 간의 긴밀한 연결</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">평가 강화</div><div class="q-desc">누수 검사, 고정 종료시간 백테스트, 비용 모델(수수료/슬리피지), 워크포워드 스트레스 스위트</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">운영 자율성</div><div class="q-desc">지속적 건강 보고, 이전 가중치로의 자동 롤백, 시장 로테이션 기준 개선</div></div></div>
+  </div>
+</div></section>
+
+<footer>
+  <p class="footer-text"><a href="/">soccz.</a> &mdash; AETHER (Chrono-Trader v2)</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

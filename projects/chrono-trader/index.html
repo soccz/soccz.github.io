@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrono-Trader — 하이브리드 AI 암호화폐 예측 프레임워크</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow-step {
+      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-list { list-style: none; }
+    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+
+    .q-list { display: flex; flex-direction: column; gap: 0.8rem; counter-reset: q; }
+    .q-item {
+      counter-increment: q; display: flex; align-items: flex-start; gap: 1.2rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.3rem 1.8rem; transition: all 0.2s;
+    }
+    .q-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .q-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .q-num::before { content: counter(q); }
+    .q-content { flex: 1; }
+    .q-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 0.3rem; }
+    .q-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      .q-item { flex-direction: column; gap: 0.5rem; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#methodology">Methodology</a></li>
+      <li><a href="#tech">Tech Stack</a></li>
+      <li><a href="#future">Future</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Deep Learning &times; Algorithmic Trading</span>
+    <h1>Chrono-Trader<br>하이브리드 AI 암호화폐 예측</h1>
+    <p class="hero-sub">
+      Transformer-GAN 기반 거시 추세 분석과 XGBoost 기반 미시 이상 탐지를<br>
+      병렬로 운용하는 이중 시스템 암호화폐 트레이딩 프레임워크
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">병렬 AI 시스템</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">GAN</span><span class="hero-stat-label">Transformer + GAN</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">DTW</span><span class="hero-stat-label">패턴 매칭 알고리즘</span></div>
+    </div>
+    <a href="https://github.com/soccz/Chrono-Trader" target="_blank" class="hero-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Source Code
+    </a>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">프로젝트 개요</h2>
+  <p class="section-desc">암호화폐 시장의 높은 변동성과 비선형적 특성에 대응하기 위해 설계된 이중 시스템 아키텍처입니다. 거시적 추세 분석과 미시적 이상 탐지를 동시에 수행하여 단일 모델 시스템보다 포괄적인 시장 이해를 가능하게 합니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">System 1: 추세 분석</div><div class="card-text">Transformer-GAN 아키텍처를 활용한 거시적 시장 추세 예측 및 패턴 추종 기회 식별. 장기 의존성을 포착하는 시계열 예측 모델.</div></div>
+    <div class="card"><div class="card-title">System 2: 이상 탐지</div><div class="card-text">Gradient Boosting(XGBoost) 기반의 단기 펌프 이벤트 분류. 미시적 시장 이상 현상을 고속으로 탐지합니다.</div></div>
+    <div class="card"><div class="card-title">추천 합성기</div><div class="card-text">두 시스템의 결과를 불확실성 및 리스크 관리 필터를 통해 합성하여 최종 트레이딩 시그널을 생성합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="architecture"><div class="container fade-in">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">시스템 아키텍처</h2>
+  <p class="section-desc">실시간 및 과거 시장 데이터를 수집하여 피처 엔지니어링을 거친 후, 두 개의 독립적인 AI 시스템이 병렬로 분석을 수행합니다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">데이터 수집</div><div class="flow-desc">실시간 & 과거<br>시장 데이터 파이프라인</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">피처 엔지니어링</div><div class="flow-desc">시계열 & 스냅샷<br>데이터 분리</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">이중 분석</div><div class="flow-desc">Transformer-GAN +<br>XGBoost 병렬 처리</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">시그널 합성</div><div class="flow-desc">리스크 필터링 &<br>최종 트레이딩 시그널</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="methodology"><div class="container fade-in">
+  <div class="section-label">Methodology</div>
+  <h2 class="section-title">핵심 방법론</h2>
+  <p class="section-desc">딥러닝 기반 시계열 분석과 머신러닝 기반 이상 탐지를 시너지적으로 결합한 하이브리드 접근 방식입니다.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">Transformer-GAN</div><div class="card-text">장기 의존성을 포착하는 Transformer 인코더와 GAN 프레임워크를 결합하여 강건한 시계열 예측을 수행합니다.</div></div>
+    <div class="card"><div class="card-title">Multi-Scale CNN</div><div class="card-text">다중 스케일 1D CNN 레이어를 통해 서로 다른 시간 해상도에서 시장 데이터를 동시에 분석하여 풍부한 피처를 추출합니다.</div></div>
+    <div class="card"><div class="card-title">Dynamic Time Warping</div><div class="card-text">DTW를 활용하여 가격 움직임 간의 비선형 유사성을 식별합니다. 리더 자산의 패턴을 추종하는 팔로워 자산을 발견합니다.</div></div>
+    <div class="card"><div class="card-title">적응형 파라미터</div><div class="card-text">시장 변동성과 거래량에 기반하여 시스템 파라미터를 동적으로 조정하여 변화하는 시장 레짐에 적응합니다.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="tech"><div class="container fade-in">
+  <div class="section-label">Tech Stack</div>
+  <h2 class="section-title">기술 스택</h2>
+  <p class="section-desc">Python 생태계 기반의 딥러닝 및 머신러닝 프레임워크를 활용합니다.</p>
+  <div class="tech-grid">
+    <div class="tech-item">
+      <div class="tech-cat">Deep Learning</div>
+      <ul class="tech-list">
+        <li>PyTorch</li>
+        <li>Transformer Encoder</li>
+        <li>GAN (Generative Adversarial Network)</li>
+        <li>1D CNN (Multi-Scale)</li>
+      </ul>
+    </div>
+    <div class="tech-item">
+      <div class="tech-cat">Machine Learning</div>
+      <ul class="tech-list">
+        <li>XGBoost</li>
+        <li>scikit-learn</li>
+        <li>Gradient Boosting</li>
+      </ul>
+    </div>
+    <div class="tech-item">
+      <div class="tech-cat">Data &amp; Analysis</div>
+      <ul class="tech-list">
+        <li>Python 3.9+</li>
+        <li>Pandas</li>
+        <li>SQLite</li>
+        <li>Dynamic Time Warping</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="future"><div class="container fade-in">
+  <div class="section-label">Future Work</div>
+  <h2 class="section-title">향후 연구 방향</h2>
+  <p class="section-desc">Chrono-Trader를 기반으로 진행 중인 후속 연구 주제들입니다.</p>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">동적 포지션 사이징</div><div class="q-desc">모델 불확실성을 활용한 리스크 조정 포지션 사이징 연구</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">거시경제 지표 통합</div><div class="q-desc">온체인 데이터와 거시경제 지표를 피처 세트에 통합하여 예측력 강화</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">강화학습 에이전트</div><div class="q-desc">트레이드 실행 및 포트폴리오 관리 최적화를 위한 RL 에이전트 개발</div></div></div>
+  </div>
+</div></section>
+
+<footer>
+  <p class="footer-text"><a href="/">soccz.</a> &mdash; Chrono-Trader</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
