@@ -53,6 +53,17 @@
     #toc-view.hidden {
       opacity: 0; pointer-events: none; position: absolute; transform: translateY(-20px);
     }
+    .toc-home-link {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 30;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .toc-home-link:hover { color: var(--text-primary); }
 
     /* Hero */
     .hero {
@@ -448,6 +459,7 @@
 
 <!-- ══════════ TOC VIEW ══════════ -->
 <div id="toc-view">
+  <a class="toc-home-link" href="/" rel="noopener">Home</a>
   <section class="hero">
     <div class="hero-inner">
       <span class="hero-label">Research Guide</span>
