@@ -1219,7 +1219,8 @@ function renderFeatured() {
   document.getElementById('featuredBadge').style.color = `var(--${cat})`;
   document.getElementById('featuredDate').textContent = fmtDate(dateKey);
 
-  const hp = latest.homepage || latest.homepageUrl;
+  let hp = latest.homepage || latest.homepageUrl;
+  if (latest.name === 'market-impact-analysis') hp = '/projects/market-impact/';
   card.href = hp || `https://github.com/soccz/${latest.name}`;
 
   const iconEl = section.querySelector('.featured-icon');
@@ -1300,7 +1301,8 @@ function renderPosts(catKey) {
     const cat = getCat(r.name);
     const lang = r.language || r.primaryLanguage?.name;
     const lc = LANG_COLORS[lang] || '#ccc';
-    const hp = r.homepage || r.homepageUrl;
+    let hp = r.homepage || r.homepageUrl;
+    if (r.name === 'market-impact-analysis') hp = '/projects/market-impact/';
     const url = `https://github.com/soccz/${r.name}`;
     const desc = r.description || DESCS[r.name] || '';
     const stars = r.stargazers_count || r.stargazerCount || 0;
