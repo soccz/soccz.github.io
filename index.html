@@ -165,7 +165,7 @@
       max-width: var(--max-w);
       margin: 0 auto;
       padding-top: var(--header-h);
-      min-height: 100vh;
+      min-height: calc(100vh - var(--header-h));
       opacity: 0;
       transform: translateY(6px);
       transition: opacity 0.35s ease, transform 0.35s ease;
@@ -183,6 +183,7 @@
       flex-direction: column;
       align-items: center;
       padding: calc(var(--header-h) + 16px) 24px 0;
+      min-height: calc(100vh - var(--header-h) - 16px);
     }
 
     /* Hero section */
@@ -745,7 +746,10 @@
       .sidebar.open { left: 0; }
       .sidebar-toggle { display: flex; }
       .blog-main { padding: 24px 20px 48px; }
-      .home { padding: calc(var(--header-h) + 8px) 16px 0; }
+      .home {
+        padding: calc(var(--header-h) + 8px) 16px 0;
+        min-height: calc(100vh - var(--header-h) - 8px);
+      }
       .hero { padding: 36px 8px 36px; margin-bottom: 36px; }
       .hero h1 { font-size: 32px; letter-spacing: -1.2px; }
       .hero-sub { font-size: 14px; }
