@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Momentum Investing Study Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #faf7f2;
+  --bg-card: #ffffff;
+  --bg-hover: #f5f0e8;
+  --text: #2c2c2c;
+  --text-muted: #6b6560;
+  --text-light: #9a9590;
+  --accent: #c4713b;
+  --accent-light: #e8a06a;
+  --accent-bg: #fdf4ed;
+  --border: #e8e2d8;
+  --border-light: #f0ebe3;
+  --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+  --shadow-hover: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+  --radius: 12px;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans KR', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.hero-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  max-width: 560px;
+  margin: 0 auto 32px;
+}
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+.hero-meta-item strong {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* CHAPTERS */
+.chapters-section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 20px;
+  padding-left: 4px;
+}
+
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chapter-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+.chapter-card:hover {
+  border-color: var(--border);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+.chapter-card.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+.chapter-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 32px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+.chapter-info { flex: 1; }
+.chapter-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.chapter-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  line-height: 1.6;
+}
+.chapter-difficulty {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  flex-shrink: 0;
+  padding-top: 4px;
+}
+
+/* DIVIDER */
+.section-divider {
+  max-width: 860px;
+  margin: 16px auto 40px;
+  padding: 0 24px;
+}
+.section-divider hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+}
+
+/* READER */
+.reader-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  overflow-y: auto;
+}
+.reader-overlay.open { display: block; }
+
+.reader-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(250, 247, 242, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-light);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.reader-back {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.reader-back:hover { background: var(--bg-card); }
+.reader-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reader-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.reader-nav button {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.reader-nav button:hover { background: var(--bg-card); color: var(--text); }
+.reader-nav button:disabled { opacity: 0.3; cursor: default; }
+
+.reader-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 120px;
+}
+
+/* MARKDOWN STYLES */
+.reader-content h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.3;
+  color: var(--text);
+}
+.reader-content h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin: 48px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+  color: var(--text);
+}
+.reader-content h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 32px 0 12px;
+  color: var(--text);
+}
+.reader-content h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 24px 0 8px;
+  color: var(--text-muted);
+}
+.reader-content p {
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+.reader-content ul, .reader-content ol {
+  margin: 0 0 16px 24px;
+  font-size: 0.95rem;
+}
+.reader-content li { margin-bottom: 6px; }
+.reader-content blockquote {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: var(--accent-bg);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--text-muted);
+  font-size: 0.93rem;
+}
+.reader-content blockquote p:last-child { margin-bottom: 0; }
+.reader-content pre {
+  background: #2c2c2c;
+  color: #e8e2d8;
+  padding: 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 20px 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.reader-content code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.88em;
+}
+.reader-content p code, .reader-content li code {
+  background: #f0ebe3;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.reader-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.88rem;
+}
+.reader-content th, .reader-content td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.reader-content th {
+  background: var(--bg);
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.82rem;
+}
+.reader-content hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 32px 0;
+}
+.reader-content strong { font-weight: 600; }
+.reader-content img {
+  max-width: 100%;
+  border-radius: var(--radius);
+}
+
+/* KaTeX overrides */
+.reader-content .katex-display {
+  margin: 24px 0;
+  overflow-x: auto;
+  padding: 8px 0;
+}
+
+/* LOADING */
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* FOOTER */
+.site-footer {
+  text-align: center;
+  padding: 40px 24px 60px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .hero { padding: 48px 20px 40px; }
+  .chapter-card { padding: 16px; gap: 14px; }
+  .chapter-title { font-size: 0.95rem; }
+  .chapter-desc { font-size: 0.82rem; }
+  .reader-content { padding: 32px 20px 80px; }
+  .reader-content h1 { font-size: 1.6rem; }
+  .reader-content h2 { font-size: 1.25rem; }
+  .reader-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-label">Study Guide</div>
+  <h1>Momentum Investing<br>Research Guide</h1>
+  <p class="hero-sub">
+    한국 주식시장 모멘텀 전략 실증 분석을 위한 학습서.
+    기초 수익률 이론에서 머신러닝까지, 9개 챕터와 3개 부록으로 구성.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><strong>9</strong> Chapters + <strong>3</strong> Appendices</div>
+    <div class="hero-meta-item"><strong>36</strong> Referenced Papers</div>
+    <div class="hero-meta-item">Core: <strong>Asness, Moskowitz &amp; Pedersen (2013)</strong></div>
+  </div>
+</header>
+
+<section class="chapters-section">
+  <div class="section-title">Chapters</div>
+  <div class="chapter-list" id="mainChapters"></div>
+</section>
+
+<div class="section-divider"><hr></div>
+
+<section class="chapters-section">
+  <div class="section-title">Appendices &amp; Design</div>
+  <div class="chapter-list" id="appendixChapters"></div>
+</section>
+
+<footer class="site-footer">
+  Based on <em>Value and Momentum Everywhere</em> (Asness, Moskowitz &amp; Pedersen, 2013, JF)
+</footer>
+
+<!-- READER OVERLAY -->
+<div class="reader-overlay" id="reader">
+  <div class="reader-header">
+    <button class="reader-back" onclick="closeReader()">Back</button>
+    <span class="reader-title" id="readerTitle"></span>
+    <div class="reader-nav">
+      <button id="prevBtn" onclick="navigateChapter(-1)">Prev</button>
+      <button id="nextBtn" onclick="navigateChapter(1)">Next</button>
+    </div>
+  </div>
+  <div class="reader-content" id="readerContent">
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      Loading...
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+const BASE_URL = 'https://raw.githubusercontent.com/soccz/fin-momentum/main/';
+
+const chapters = [
+  { id: '00_WORLD_MAP', num: 'Part 0', title: '세계 지도 -- 이 여정의 전체 그림', desc: '전체 학습 로드맵. 모멘텀 연구의 전체 여정과 교수님 과제의 연결 구조를 조망한다.', diff: '1/5' },
+  { id: '01_RETURNS_MAGIC', num: 'Part 1', title: '수익률의 마법 -- 돈은 어떻게 자라는가', desc: '단순/로그 수익률, 평균, 변동성, 왜도, 첨도, MDD, t-통계량 등 금융의 9가지 기본 도구.', diff: '1/5' },
+  { id: '02_PORTFOLIO_BIRTH', num: 'Part 2', title: '포트폴리오의 탄생 -- 분산투자의 수학적 필연', desc: 'Markowitz 포트폴리오 이론, 분산투자의 마법, CAPM 도출까지.', diff: '2/5' },
+  { id: '03_FACTOR_KINGDOM', num: 'Part 3', title: '팩터의 왕국 -- 시장만으로 설명 안 되는 것들', desc: 'CAPM의 한계, Fama-French 3팩터 모형(MKT, SMB, HML), 이상현상(anomaly).', diff: '3/5' },
+  { id: '04_MOMENTUM_DISCOVERY', num: 'Part 4', title: '모멘텀의 발견 -- 이긴 자가 계속 이기는가', desc: 'Jegadeesh & Titman(1993)의 모멘텀 효과 발견. FF3로 설명 불가능한 네 번째 팩터.', diff: '3/5' },
+  { id: '05_VME_MASTERY', num: 'Part 5', title: '모든 곳의 가치와 모멘텀 -- VME 완전 정복', desc: 'Asness, Moskowitz & Pedersen(2013). 8개 자산군에서 Value와 Momentum의 보편성 검증.', diff: '4/5' },
+  { id: '06_MOMENTUM_CRASHES', num: 'Part 6', title: '모멘텀의 그림자 -- 붕괴와 생존', desc: '모멘텀 크래시의 역사(-90% in 1932), 원인 분석, 헤지 전략, 동적 위험관리.', diff: '4/5' },
+  { id: '07_KOREAN_MARKET', num: 'Part 7', title: '한국 시장이라는 미지의 영역', desc: 'KOSPI/KOSDAQ 구조, 한국에서 모멘텀이 약한 이유, 실증 연구 설계의 핵심 이슈.', diff: '4/5' },
+  { id: '08_IMPLEMENTATION', num: 'Part 8', title: '최종 보스 -- 구현과 검정', desc: '백테스트 7단계: 데이터 수집 -> 유니버스 정제 -> 시그널 -> 포트폴리오 -> 성과 평가 -> 팩터 분해.', diff: '5/5' },
+  { id: '09_ML_FRONTIER', num: 'Part 9', title: '미래의 무기 -- 머신러닝과 자산가격', desc: '전통 팩터 모형의 한계와 ML의 대안. Gu, Kelly & Xiu(2020) 등 최신 연구 프론티어.', diff: '5/5' },
+];
+
+const appendices = [
+  { id: 'A1_FORMULA_DICTIONARY', num: 'A1', title: '수식 사전 (Formula Dictionary)', desc: '학습서 전체 핵심 수식 모음. 변수 설명, 참조 챕터, 출처 논문 포함.', diff: 'Ref' },
+  { id: 'A2_PAPER_CARDS', num: 'A2', title: '논문 카드 (Paper Cards)', desc: '36편 참조 논문의 1페이지 요약 카드. 핵심 한 줄, 방법, 결과, 한계.', diff: 'Ref' },
+  { id: 'A3_GLOSSARY', num: 'A3', title: '용어 사전 (Glossary)', desc: '전문 용어 사전. 초등학생 설명 + 정확한 학술 정의 병기.', diff: 'Ref' },
+  { id: 'STUDY_GUIDE_DESIGN', num: 'Design', title: '학습서 설계 문서', desc: '콘셉트, 핵심 원칙, 논문 맵, 챕터별 설계 기준.', diff: 'Meta' },
+  { id: 'WHY_PROFESSOR_DESIGNED_THIS', num: 'Why', title: '교수님은 왜 이 과제를 이렇게 설계했는가', desc: '교수님 메일 역추적: 학술적 의도, 연구 전략, 암묵적 기대 분석.', diff: 'Meta' },
+];
+
+const allItems = [...chapters, ...appendices];
+let currentIndex = -1;
+let contentCache = {};
+
+function createCard(item, index) {
+  const card = document.createElement('div');
+  card.className = 'chapter-card';
+  card.dataset.index = index;
+  card.innerHTML = `
+    <span class="chapter-num">${item.num}</span>
+    <div class="chapter-info">
+      <div class="chapter-title">${item.title}</div>
+      <div class="chapter-desc">${item.desc}</div>
+    </div>
+    <span class="chapter-difficulty">${item.diff}</span>
+  `;
+  card.addEventListener('click', () => openChapter(index));
+  return card;
+}
+
+function renderLists() {
+  const mainEl = document.getElementById('mainChapters');
+  const appEl = document.getElementById('appendixChapters');
+  chapters.forEach((ch, i) => mainEl.appendChild(createCard(ch, i)));
+  appendices.forEach((ap, i) => appEl.appendChild(createCard(ap, chapters.length + i)));
+}
+
+async function fetchContent(id) {
+  if (contentCache[id]) return contentCache[id];
+  const url = BASE_URL + id + '.md';
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`Failed to fetch ${url}: ${resp.status}`);
+  const text = await resp.text();
+  contentCache[id] = text;
+  return text;
+}
+
+function renderMarkdown(md) {
+  // Extract and protect LaTeX blocks before marked processes them
+  let blocks = [];
+  let inline = [];
+
+  // Protect display math ($$...$$)
+  md = md.replace(/\$\$([\s\S]*?)\$\$/g, (match, p1) => {
+    blocks.push(p1);
+    return `%%DISPLAY_MATH_${blocks.length - 1}%%`;
+  });
+
+  // Protect inline math ($...$) - but not currency like $100
+  md = md.replace(/\$([^\$\n]+?)\$/g, (match, p1) => {
+    if (/^\d/.test(p1)) return match; // skip $100 etc
+    inline.push(p1);
+    return `%%INLINE_MATH_${inline.length - 1}%%`;
+  });
+
+  let html = marked.parse(md);
+
+  // Restore display math
+  html = html.replace(/%%DISPLAY_MATH_(\d+)%%/g, (_, i) => {
+    try {
+      return '<div class="katex-display">' + katex.renderToString(blocks[i], { displayMode: true, throwOnError: false }) + '</div>';
+    } catch(e) { return '<pre>' + blocks[i] + '</pre>'; }
+  });
+
+  // Restore inline math
+  html = html.replace(/%%INLINE_MATH_(\d+)%%/g, (_, i) => {
+    try {
+      return katex.renderToString(inline[i], { displayMode: false, throwOnError: false });
+    } catch(e) { return '<code>' + inline[i] + '</code>'; }
+  });
+
+  return html;
+}
+
+async function openChapter(index) {
+  currentIndex = index;
+  const item = allItems[index];
+  const reader = document.getElementById('reader');
+  const content = document.getElementById('readerContent');
+  const title = document.getElementById('readerTitle');
+
+  title.textContent = `${item.num} - ${item.title}`;
+  content.innerHTML = '<div class="loading"><div class="loading-spinner"></div>Loading...</div>';
+  reader.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  updateNavButtons();
+
+  try {
+    const md = await fetchContent(item.id);
+    content.innerHTML = renderMarkdown(md);
+  } catch (err) {
+    content.innerHTML = `<p style="color:var(--accent)">Failed to load content. ${err.message}</p>`;
+  }
+
+  reader.scrollTop = 0;
+}
+
+function closeReader() {
+  document.getElementById('reader').classList.remove('open');
+  document.body.style.overflow = '';
+  currentIndex = -1;
+}
+
+function navigateChapter(dir) {
+  const next = currentIndex + dir;
+  if (next >= 0 && next < allItems.length) openChapter(next);
+}
+
+function updateNavButtons() {
+  document.getElementById('prevBtn').disabled = currentIndex <= 0;
+  document.getElementById('nextBtn').disabled = currentIndex >= allItems.length - 1;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('reader').classList.contains('open')) return;
+  if (e.key === 'Escape') closeReader();
+  if (e.key === 'ArrowLeft') navigateChapter(-1);
+  if (e.key === 'ArrowRight') navigateChapter(1);
+});
+
+renderLists();
+</script>
+</body>
+</html>

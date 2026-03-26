@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자산운용 학습서 — 비전공자를 위한 12단원 시리즈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #faf7f2;
+  --bg-card: #ffffff;
+  --text: #2d2a26;
+  --text-secondary: #6b6560;
+  --accent: #c67b42;
+  --accent-light: #f0d9c4;
+  --accent-hover: #b06830;
+  --border: #e8e2da;
+  --shadow: 0 2px 12px rgba(45,42,38,0.06);
+  --shadow-hover: 0 4px 20px rgba(45,42,38,0.12);
+  --radius: 12px;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ── */
+.site-header {
+  text-align: center;
+  padding: 60px 24px 48px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.site-header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+.site-header .subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.7;
+}
+.site-header .divider {
+  width: 60px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  margin: 24px auto 0;
+}
+
+/* ── TOC ── */
+.toc-container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+.toc-section-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toc-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow);
+}
+.toc-item:hover {
+  border-color: var(--accent-light);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+.toc-item .ch-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.toc-item .ch-info {
+  flex: 1;
+  min-width: 0;
+}
+.toc-item .ch-title {
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.toc-item .ch-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.toc-item .ch-arrow {
+  color: var(--accent);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s ease;
+}
+.toc-item:hover .ch-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Chapter View ── */
+.chapter-view {
+  display: none;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.chapter-view.active { display: block; }
+
+.chapter-nav-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-back:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.chapter-indicator {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ── Markdown Content ── */
+.chapter-content {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+.chapter-content h1 {
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+.chapter-content h2 {
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin: 48px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent-light);
+  letter-spacing: -0.01em;
+}
+.chapter-content h3 {
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 36px 0 12px;
+  color: var(--accent-hover);
+}
+.chapter-content h4 {
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 28px 0 10px;
+}
+.chapter-content p { margin: 0 0 16px; }
+.chapter-content ul, .chapter-content ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.chapter-content li { margin-bottom: 6px; }
+.chapter-content strong { font-weight: 600; color: var(--text); }
+.chapter-content em { font-style: italic; }
+
+.chapter-content blockquote {
+  border-left: 3px solid var(--accent);
+  background: rgba(198,123,66,0.06);
+  margin: 20px 0;
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  color: var(--text);
+}
+.chapter-content blockquote p:last-child { margin-bottom: 0; }
+
+.chapter-content code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.88em;
+  background: rgba(45,42,38,0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.chapter-content pre {
+  background: #2d2a26;
+  color: #f0ece6;
+  padding: 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 20px 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.chapter-content pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.chapter-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.92rem;
+}
+.chapter-content th, .chapter-content td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.chapter-content th {
+  background: var(--accent-light);
+  font-weight: 600;
+  font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+  font-size: 0.85rem;
+}
+.chapter-content tr:nth-child(even) { background: rgba(45,42,38,0.02); }
+
+.chapter-content hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+  margin: 36px 0;
+}
+
+.chapter-content img {
+  max-width: 100%;
+  border-radius: var(--radius);
+}
+
+/* KaTeX overrides */
+.chapter-content .katex-display {
+  margin: 20px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0;
+}
+
+/* ── Bottom Nav ── */
+.chapter-nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  max-width: 48%;
+  font-family: inherit;
+}
+.nav-btn:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-hover);
+}
+.nav-btn.next { margin-left: auto; text-align: right; }
+.nav-btn .nav-label {
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'Space Grotesk', sans-serif;
+}
+.nav-btn .nav-title {
+  font-size: 0.92rem;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Loading ── */
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--text-secondary);
+}
+.loading .spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Footer ── */
+.site-footer {
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .site-header { padding: 40px 20px 32px; }
+  .toc-item { padding: 16px; gap: 14px; }
+  .toc-item .ch-num { font-size: 1.1rem; min-width: 28px; }
+  .toc-item .ch-title { font-size: 0.95rem; }
+  .toc-item .ch-desc { font-size: 0.82rem; }
+  .chapter-view { padding: 0 16px 60px; }
+  .chapter-content h1 { font-size: 1.5rem; }
+  .chapter-content h2 { font-size: 1.25rem; }
+  .chapter-nav-bottom { flex-direction: column; }
+  .nav-btn { max-width: 100%; }
+  .nav-btn.next { text-align: left; }
+}
+
+/* ── Scroll to top ── */
+.scroll-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(198,123,66,0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--accent-hover); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="header">
+  <h1>자산운용 학습서</h1>
+  <p class="subtitle">비전공자를 위한 12단원 시리즈 &mdash; "왜?"가 끊기지 않는 체계적 학습</p>
+  <div class="divider"></div>
+</header>
+
+<main>
+  <!-- TOC -->
+  <section class="toc-container" id="toc">
+    <p class="toc-section-label">Table of Contents</p>
+    <ul class="toc-list" id="toc-list"></ul>
+  </section>
+
+  <!-- Chapter View -->
+  <section class="chapter-view" id="chapter-view">
+    <div class="chapter-nav-top">
+      <button class="btn-back" onclick="showToc()">&#8592; 목차</button>
+      <span class="chapter-indicator" id="chapter-indicator"></span>
+    </div>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>단원을 불러오는 중...</p>
+    </div>
+    <article class="chapter-content" id="chapter-content"></article>
+    <div class="chapter-nav-bottom" id="chapter-nav-bottom"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  교재: Andrew Ang, <em>Asset Management</em> &middot; 관련 논문 9편 기반
+</footer>
+
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+
+<script>
+const chapters = [
+  { num: '01', file: '01_자산운용이란.md', title: '자산운용이란? — 왜 포트폴리오인가', desc: '자산운용 정의, 포트폴리오, 수익률·분산·공분산, 분산투자' },
+  { num: '02', file: '02_평균분산투자와_효율적프론티어.md', title: '평균-분산 투자와 효율적 프론티어', desc: '최적화, 라그랑주, 효율적 프론티어, 공매도' },
+  { num: '03', file: '03_효용함수와_최적포트폴리오.md', title: '효용함수와 최적 포트폴리오', desc: '효용함수, 위험회피계수 γ, 무차별곡선, 접점 포트폴리오' },
+  { num: '04', file: '04_무위험자산_CAL_샤프비율.md', title: '무위험자산, 자본배분선(CAL), 샤프비율', desc: '무위험자산, CAL, 샤프비율, 2기금 분리, 레버리지' },
+  { num: '05', file: '05_포트폴리오전략.md', title: '포트폴리오 전략', desc: '동일가중, 최소분산, 리스크패리티, 최대분산, 리밸런싱' },
+  { num: '06', file: '06_할인과_SDF_자산가격결정.md', title: '할인과 확률할인인자(SDF)', desc: '할인, SDF, 리스크프리미엄, CAPM, 베타, 알파' },
+  { num: '07', file: '07_팩터모델과_APT.md', title: '팩터모델과 APT', desc: '단일/다중팩터, SDF 등가성, APT, PCA, 이변량 정렬' },
+  { num: '08', file: '08_사이즈팩터_가치팩터_FF3.md', title: '사이즈 팩터·가치 팩터·FF3', desc: '가치 프리미엄, B/M, HML, Fama-French 3팩터 모형' },
+  { num: '09', file: '09_모멘텀팩터.md', title: '모멘텀 팩터 — 승자는 계속 이긴다', desc: '모멘텀 효과, WML, 산업 모멘텀, 1월 효과, 보편성' },
+  { num: '10', file: '10_모멘텀크래시와_변동성스케일링.md', title: '모멘텀 크래시와 변동성 스케일링', desc: '모멘텀 크래시 메커니즘, 변동성 스케일링, 목표 변동성' },
+  { num: '11', file: '11_논문리뷰종합.md', title: '논문 리뷰 종합', desc: '9편의 논문 요약, 단원 매핑, 논문 간 관계도' },
+  { num: '12', file: '12_왜_이_모든것을_배우는가.md', title: '왜 이 모든 것을 배우는가', desc: '"왜?" 프레임워크, 사고방식, 추론 습관, 진로' },
+];
+
+const BASE_URL = 'https://raw.githubusercontent.com/soccz/asset-management-guide/main/';
+const cache = {};
+let currentIndex = -1;
+
+// ── Build TOC ──
+const tocList = document.getElementById('toc-list');
+chapters.forEach((ch, i) => {
+  const li = document.createElement('li');
+  li.className = 'toc-item';
+  li.onclick = () => loadChapter(i);
+  li.innerHTML = `
+    <span class="ch-num">${ch.num}</span>
+    <div class="ch-info">
+      <div class="ch-title">${ch.title}</div>
+      <div class="ch-desc">${ch.desc}</div>
+    </div>
+    <span class="ch-arrow">&#8594;</span>
+  `;
+  tocList.appendChild(li);
+});
+
+// ── Markdown Rendering ──
+function renderMath(el) {
+  renderMathInElement(el, {
+    delimiters: [
+      { left: '$$', right: '$$', display: true },
+      { left: '$', right: '$', display: false },
+      { left: '\\[', right: '\\]', display: true },
+      { left: '\\(', right: '\\)', display: false },
+    ],
+    throwOnError: false,
+    trust: true,
+  });
+}
+
+marked.setOptions({
+  breaks: false,
+  gfm: true,
+});
+
+async function loadChapter(index) {
+  currentIndex = index;
+  const ch = chapters[index];
+
+  document.getElementById('toc').style.display = 'none';
+  document.getElementById('chapter-view').classList.add('active');
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('chapter-content').innerHTML = '';
+  document.getElementById('chapter-indicator').textContent = `${ch.num} / 12`;
+  window.scrollTo({ top: 0 });
+  updateUrl(index);
+
+  let md;
+  if (cache[ch.file]) {
+    md = cache[ch.file];
+  } else {
+    try {
+      const res = await fetch(BASE_URL + encodeURIComponent(ch.file));
+      if (!res.ok) throw new Error(res.status);
+      md = await res.text();
+      cache[ch.file] = md;
+    } catch (e) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('chapter-content').innerHTML =
+        `<p style="color:var(--accent)">단원을 불러올 수 없습니다. (${e.message})</p>`;
+      buildBottomNav();
+      return;
+    }
+  }
+
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('chapter-content').innerHTML = marked.parse(md);
+  renderMath(document.getElementById('chapter-content'));
+  buildBottomNav();
+}
+
+function buildBottomNav() {
+  const nav = document.getElementById('chapter-nav-bottom');
+  const prev = currentIndex > 0 ? chapters[currentIndex - 1] : null;
+  const next = currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null;
+
+  let html = '';
+  if (prev) {
+    html += `<button class="nav-btn prev" onclick="loadChapter(${currentIndex - 1})">
+      <span class="nav-label">&larr; 이전</span>
+      <span class="nav-title">${prev.num}. ${prev.title}</span>
+    </button>`;
+  } else {
+    html += '<div></div>';
+  }
+  if (next) {
+    html += `<button class="nav-btn next" onclick="loadChapter(${currentIndex + 1})">
+      <span class="nav-label">다음 &rarr;</span>
+      <span class="nav-title">${next.num}. ${next.title}</span>
+    </button>`;
+  }
+  nav.innerHTML = html;
+}
+
+function showToc() {
+  document.getElementById('toc').style.display = 'block';
+  document.getElementById('chapter-view').classList.remove('active');
+  currentIndex = -1;
+  window.scrollTo({ top: 0 });
+  history.pushState(null, '', window.location.pathname);
+}
+
+// ── URL Hash ──
+function updateUrl(index) {
+  history.pushState({ chapter: index }, '', `?ch=${index + 1}`);
+}
+
+window.addEventListener('popstate', (e) => {
+  if (e.state && typeof e.state.chapter === 'number') {
+    loadChapter(e.state.chapter);
+  } else {
+    showToc();
+  }
+});
+
+// Load from URL on page load
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const ch = parseInt(params.get('ch'));
+  if (ch >= 1 && ch <= 12) {
+    loadChapter(ch - 1);
+  }
+})();
+
+// ── Scroll to top button ──
+const scrollBtn = document.getElementById('scroll-top');
+window.addEventListener('scroll', () => {
+  scrollBtn.classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+</body>
+</html>
