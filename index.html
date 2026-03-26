@@ -276,105 +276,7 @@
     }
 
     /* Featured project */
-    .featured-section {
-      width: 100%;
-      max-width: 960px;
-      margin-bottom: 48px;
-    }
-    .featured-label {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .featured-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .featured-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 32px 36px;
-      display: flex;
-      gap: 28px;
-      align-items: center;
-      transition: all 0.25s;
-      cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      overflow: hidden;
-    }
-    .featured-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, var(--accent), var(--accent-soft));
-      opacity: 0;
-      transition: opacity 0.25s;
-    }
-    .featured-card:hover {
-      border-color: var(--accent-soft);
-      box-shadow: var(--shadow-warm);
-      transform: translateY(-2px);
-    }
-    .featured-card:hover::before { opacity: 1; }
-    .featured-icon {
-      width: 56px; height: 56px;
-      border-radius: 12px;
-      background: var(--finance-light);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .featured-icon svg { width: 24px; height: 24px; color: var(--finance); }
-    .featured-content { flex: 1; min-width: 0; }
-    .featured-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.7px;
-      margin-bottom: 4px;
-    }
-    .featured-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 10px;
-    }
-    .featured-meta {
-      display: flex; align-items: center; gap: 14px;
-      font-size: 12px; color: var(--text-muted);
-    }
-    .featured-badge {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.8px; padding: 4px 10px; border-radius: 5px;
-      background: var(--finance-light); color: var(--finance);
-    }
-    .featured-arrow {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.25s;
-    }
-    .featured-card:hover .featured-arrow {
-      background: var(--accent);
-      color: #fff;
-    }
-    .featured-arrow svg { width: 16px; height: 16px; color: var(--text-muted); transition: color 0.25s; }
-    .featured-card:hover .featured-arrow svg { color: #fff; }
+    /* featured section removed */
 
     /* Category cards grid */
     .section-label {
@@ -675,9 +577,8 @@
       margin-bottom: 12px;
     }
     .post-bottom {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
+      text-align: right;
+      margin-top: 8px;
     }
     .post-gh {
       display: inline-flex;
@@ -826,8 +727,6 @@
 
     /* ======== RESPONSIVE ======== */
     @media (max-width: 900px) {
-      .featured-card { flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
-      .featured-arrow { display: none; }
       .categories-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
     }
 
@@ -852,8 +751,6 @@
       .hero-sub { font-size: 14px; }
       .hero h1 { font-size: 36px; }
       .categories-grid { grid-template-columns: 1fr; gap: 12px; }
-      .featured-card { padding: 20px; }
-      .featured-title { font-size: 17px; }
       .nav-links a { padding: 6px 10px; font-size: 12px; }
       .blog-title { font-size: 22px; }
       .post-card { padding: 18px 20px; }
@@ -902,37 +799,7 @@
     </div>
   </section>
 
-  <section class="featured-section fade-up" id="featuredSection" style="display:none">
-    <div class="featured-label">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      Recently Updated
-    </div>
-    <a class="featured-card" id="featuredCard" href="#" target="_blank">
-      <div class="featured-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 4 5-8"/></svg>
-      </div>
-      <div class="featured-content">
-        <div class="featured-title" id="featuredTitle"></div>
-        <div class="featured-desc" id="featuredDesc"></div>
-        <div class="featured-meta">
-          <span class="featured-badge" id="featuredBadge"></span>
-          <span id="featuredDate"></span>
-        </div>
-      </div>
-      <div class="featured-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
-    </a>
-  </section>
-
-  <div class="divider fade-up">
-    <span class="divider-label">Explore by Category</span>
-  </div>
-
-  <div class="section-label fade-up">
-    <span>Projects</span>
-  </div>
-  <div class="categories-grid" id="catGrid">
+  <div class="categories-grid fade-up" id="catGrid">
     <!-- skeleton loading -->
     <div class="skel-cat-card"><div class="skel-cat-header"><div class="skeleton skel-cat-icon"></div><div class="skel-cat-lines"><div class="skeleton skel-line w60"></div><div class="skeleton skel-line w40" style="margin-bottom:0"></div></div></div><div class="skeleton skel-line w80"></div><div class="skeleton skel-line w60"></div></div>
     <div class="skel-cat-card"><div class="skel-cat-header"><div class="skeleton skel-cat-icon"></div><div class="skel-cat-lines"><div class="skeleton skel-line w60"></div><div class="skeleton skel-line w40" style="margin-bottom:0"></div></div></div><div class="skeleton skel-line w80"></div><div class="skeleton skel-line w60"></div></div>
@@ -941,13 +808,7 @@
 
   <footer>
     <div class="footer-inner">
-      <div class="footer-brand">soccz<span class="dot">.</span></div>
-      <p class="footer-text">Sogang University Graduate | Quantitative Finance & AI</p>
-      <div class="footer-links">
-        <a href="https://github.com/soccz" target="_blank" rel="noopener" class="footer-link">GitHub</a>
-        <a href="#" onclick="showPage('blog');return false" class="footer-link">Projects</a>
-      </div>
-      <p class="footer-copy">&copy; 2026 soccz. Powered by GitHub Pages.</p>
+      <p class="footer-copy">&copy; 2026 soccz</p>
     </div>
   </footer>
 </div>
@@ -1102,55 +963,7 @@ function showPage(page) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function renderFeatured() {
-  const categorized = allRepos.filter(r => getCat(r.name));
-  if (!categorized.length) return;
-  const latest = categorized.sort((a, b) => new Date(b.pushed_at || b.pushedAt) - new Date(a.pushed_at || a.pushedAt))[0];
-  const cat = getCat(latest.name);
-  const desc = latest.description || DESCS[latest.name] || '';
-  const section = document.getElementById('featuredSection');
-  const card = document.getElementById('featuredCard');
-  const dateKey = latest.pushed_at || latest.pushedAt;
-
-  document.getElementById('featuredTitle').textContent = latest.name;
-  document.getElementById('featuredDesc').textContent = desc;
-  const catColor = CATEGORIES[cat]?.color || cat;
-  document.getElementById('featuredBadge').textContent = CATEGORIES[cat]?.label || '';
-  document.getElementById('featuredBadge').className = 'featured-badge';
-  document.getElementById('featuredBadge').style.background = `var(--${catColor}-light)`;
-  document.getElementById('featuredBadge').style.color = `var(--${catColor})`;
-  document.getElementById('featuredDate').textContent = fmtDate(dateKey);
-
-  const PP = {
-    'market-impact-analysis':'/projects/market-impact/','boundarybench':'/projects/boundarybench/',
-    'asset-management-guide':'/projects/asset-management/','fin-momentum':'/projects/fin-momentum/',
-    'tactical-factor-allocation':'/projects/tactical-factor-allocation/','CBAM':'/projects/cbam/',
-    'Chrono-Trader-v2':'/projects/chrono-trader-v2/',
-    'fomc':'/projects/fomc/','bit_sector':'/projects/bit-sector/','bit_test':'/projects/bit-test/',
-    'finance_semiconductor':'/projects/finance-semiconductor/','HIGAN':'/projects/higan/',
-    'finance-note':'/projects/finance-note/','FF3':'/projects/ff3/','RCNN_test':'/projects/rcnn-test/',
-    'MC_order':'/projects/mc-order/','forjp':'/projects/forjp/','naverAPI':'/projects/naverapi/',
-    'review_chatbot':'/projects/review-chatbot/','son_data':'/projects/son-data/',
-    'NeuroTraffic-DT':'/projects/neurotraffic-dt/','night-shift-escape':'/projects/night-shift-escape/',
-    'self_exercise':'/projects/self-exercise/','kaggle_test':'/projects/kaggle-test/',
-    'Daily-report':'/projects/daily-report/','young-and-home':'/projects/young-and-home/'
-  };
-  const projectPage = PP[latest.name];
-  card.href = projectPage || `https://github.com/soccz/${latest.name}`;
-  if (projectPage) {
-    card.removeAttribute('target');
-    card.removeAttribute('rel');
-  } else {
-    card.setAttribute('target', '_blank');
-    card.setAttribute('rel', 'noopener');
-  }
-
-  const iconEl = section.querySelector('.featured-icon');
-  iconEl.style.background = `var(--${catColor}-light)`;
-  iconEl.querySelector('svg').style.color = `var(--${catColor})`;
-
-  section.style.display = 'block';
-}
+/* renderFeatured removed */
 
 function renderCatGrid() {
   const grid = document.getElementById('catGrid');
@@ -1312,7 +1125,6 @@ async function init() {
   } catch (e) {
     allRepos = [];
   }
-  renderFeatured();
   renderCatGrid();
   if (!allRepos.length) {
     document.getElementById('catGrid').innerHTML = '<div style="text-align:center;padding:40px 0;color:var(--text-muted);font-size:14px;grid-column:1/-1">GitHub API에서 데이터를 불러오지 못했습니다.</div>';
