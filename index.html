@@ -233,7 +233,7 @@
         linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.08) 49%, rgba(255,255,255,0.08) 51%, transparent 52%);
       background-size: 12px 12px;
     }
-    .hero-avatar:hover { transform: scale(1.04) rotate(-1deg); }
+    .hero-avatar { pointer-events: none; }
 
     .hero-status {
       display: inline-flex;
@@ -316,14 +316,7 @@
       background: var(--surface);
       color: var(--tag-text);
       border: 1px solid var(--border);
-      transition: all 0.2s;
       letter-spacing: -0.2px;
-    }
-    .hero-tag:hover {
-      border-color: var(--accent);
-      background: var(--accent-light);
-      color: var(--accent);
-      transform: translateY(-1px);
     }
 
     /* Decorative divider */
@@ -1177,7 +1170,7 @@ function showPage(page) {
   });
   document.querySelectorAll('.nav-links a:not(.gh-link)').forEach(a => a.classList.remove('active'));
   document.getElementById('nav-' + page).classList.add('active');
-  if (page === 'blog' && allRepos.length) renderSidebar(currentCat);
+  if (page === 'blog') renderSidebar(currentCat);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1213,7 +1206,15 @@ function renderFeatured() {
     'self_exercise':'/projects/self-exercise/','kaggle_test':'/projects/kaggle-test/',
     'Daily-report':'/projects/daily-report/','young-and-home':'/projects/young-and-home/'
   };
-  card.href = PP[latest.name] || `https://github.com/soccz/${latest.name}`;
+  const projectPage = PP[latest.name];
+  card.href = projectPage || `https://github.com/soccz/${latest.name}`;
+  if (projectPage) {
+    card.removeAttribute('target');
+    card.removeAttribute('rel');
+  } else {
+    card.setAttribute('target', '_blank');
+    card.setAttribute('rel', 'noopener');
+  }
 
   const iconEl = section.querySelector('.featured-icon');
   iconEl.style.background = `var(--${cat}-light)`;
@@ -1390,6 +1391,9 @@ async function init() {
   }
   renderFeatured();
   renderCatGrid();
+  if (!allRepos.length) {
+    document.getElementById('catGrid').innerHTML = '<div style="text-align:center;padding:40px 0;color:var(--text-muted);font-size:14px;grid-column:1/-1">GitHub API에서 데이터를 불러오지 못했습니다.</div>';
+  }
   initScrollObserver();
 }
 
