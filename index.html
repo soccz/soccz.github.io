@@ -46,6 +46,9 @@
       --note: #8a7a6a;
       --note-light: #f0ece4;
       --note-bg: #f9f6f2;
+      --side: #6a8a8a;
+      --side-light: #eef4f4;
+      --side-bg: #f4f9f9;
       --sidebar-w: 260px;
       --header-h: 64px;
       --max-w: 1200px;
@@ -536,6 +539,7 @@
     .cat-card-icon.web { background: var(--web-light); color: var(--web); }
     .cat-card-icon.data { background: var(--data-light); color: var(--data); }
     .cat-card-icon.note { background: var(--note-light); color: var(--note); }
+    .cat-card-icon.side { background: var(--side-light); color: var(--side); }
 
     .cat-card-title {
       font-family: 'Space Grotesk', sans-serif;
@@ -722,6 +726,7 @@
     .post-badge.web { background: var(--web-light); color: var(--web); }
     .post-badge.data { background: var(--data-light); color: var(--data); }
     .post-badge.note { background: var(--note-light); color: var(--note); }
+    .post-badge.side { background: var(--side-light); color: var(--side); }
 
     .post-date {
       font-size: 12px;
@@ -1097,17 +1102,17 @@ const CATEGORIES = {
   },
   research: {
     label: 'Research & Paper',
-    desc: 'Fama-French, CBAM, MAE 등 논문 구현과 모델 실험',
+    desc: '논문 구현, 벤치마크, 정량 연구, 학술 프로젝트',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','CBAM','MAE','RCNN_test','kaggle_test','market-impact-analysis']
+    match: ['FF3','CBAM','MAE','RCNN_test','market-impact-analysis','boundarybench','fin-momentum','tactical-factor-allocation','asset-management-guide']
   },
   web: {
     label: 'Web & App',
-    desc: '데이트 플래너, 호러 게임, 주문 관리 등 사이드 프로젝트',
+    desc: '웹 애플리케이션, 풀스택 프로젝트',
     color: 'web',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10M12 17v4"/></svg>`,
-    match: ['MC_order','night-shift-escape','demo','forjp','self_exercise','Ptravel']
+    match: ['MC_order','forjp','Ptravel']
   },
   data: {
     label: 'Data & ML',
@@ -1115,6 +1120,13 @@ const CATEGORIES = {
     color: 'data',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>`,
     match: ['naverAPI','review_chatbot','son_data','NeuroTraffic-DT']
+  },
+  side: {
+    label: 'Side Project',
+    desc: '혼자 만들어보는 실험적 프로젝트, 게임, 연습',
+    color: 'side',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
+    match: ['night-shift-escape','demo','self_exercise','kaggle_test']
   },
   note: {
     label: 'Notes & Daily',
@@ -1149,7 +1161,11 @@ const DESCS = {
   'MAE': 'Masked Autoencoder 사전학습 모델 구현',
   'RCNN_test': 'R-CNN 객체탐지 모델 테스트',
   'kaggle_test': 'Kaggle 대회 데이터 분석 실습',
-  'market-impact-analysis': '정책 변수와 자본시장 반응 정량 분석 \u2014 50건 이벤트 스터디 + NLP 감성분석',
+  'market-impact-analysis': '정책 변수와 자본시장 반응 정량 분석 — 50건 이벤트 스터디 + NLP 감성분석',
+  'boundarybench': 'AI가 모르는 것을 아는지 측정하는 벤치마크 — AGI 메타인지 연구',
+  'fin-momentum': '모멘텀 투자 연구 스터디 가이드 — 9챕터 + 부록',
+  'tactical-factor-allocation': '2022 AEL 논문 재현 — 멀티팩터 포트폴리오 전술적 배분',
+  'asset-management-guide': '비전공자를 위한 자산운용 학습 시리즈 — 12챕터 완성',
   'MC_order': '주문 관리 웹 애플리케이션',
   'night-shift-escape': '솔로 호러-디펜스 브라우저 게임 \u2014 방 점유, 감염자 대응, 탈출',
   'demo': 'MediaPipe Vision 기반 데모 프로젝트',
@@ -1301,13 +1317,20 @@ function renderPosts(catKey) {
     const cat = getCat(r.name);
     const lang = r.language || r.primaryLanguage?.name;
     const lc = LANG_COLORS[lang] || '#ccc';
-    let hp = r.homepage || r.homepageUrl;
-    if (r.name === 'market-impact-analysis') hp = '/projects/market-impact/';
-    const url = `https://github.com/soccz/${r.name}`;
+    const PROJECT_PAGES = {
+      'market-impact-analysis': '/projects/market-impact/',
+      'boundarybench': '/projects/boundarybench/',
+      'asset-management-guide': '/projects/asset-management/',
+      'fin-momentum': '/projects/fin-momentum/',
+      'tactical-factor-allocation': '/projects/tactical-factor-allocation/',
+      'CBAM': '/projects/cbam/'
+    };
+    const page = PROJECT_PAGES[r.name];
+    const url = page || `https://github.com/soccz/${r.name}`;
     const desc = r.description || DESCS[r.name] || '';
     const stars = r.stargazers_count || r.stargazerCount || 0;
-    const cardTarget = hp && !hp.startsWith('http') ? '' : 'target="_blank" rel="noopener"';
-    return `<a class="post-card ${cat}-post fade-in" href="${hp || url}" ${cardTarget} style="animation-delay:${i * 0.04}s">
+    const cardTarget = page ? '' : 'target="_blank" rel="noopener"';
+    return `<a class="post-card ${cat}-post fade-in" href="${url}" ${cardTarget} style="animation-delay:${i * 0.04}s">
       <div class="post-top">
         <span class="post-badge ${cat}">${CATEGORIES[cat]?.label || ''}</span>
         <span class="post-date">${fmtDate(r[dateKey])}</span>
@@ -1317,11 +1340,7 @@ function renderPosts(catKey) {
       <div class="post-meta">
         ${lang ? `<span class="post-lang"><span class="lang-dot" style="background:${lc}"></span>${lang}</span>` : ''}
         ${stars > 0 ? `<span class="post-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>${stars}</span>` : ''}
-        ${hp ? '<span class="post-live">LIVE</span>' : ''}
-        <a class="post-gh" href="${url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
+        ${page ? '<span class="post-live">PAGE</span>' : ''}
       </div>
     </a>`;
   }).join('');
