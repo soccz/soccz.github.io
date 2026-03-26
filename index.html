@@ -993,28 +993,26 @@
     <div class="hero-avatar">SZ</div>
     <div class="hero-status">Sogang Univ. Graduate</div>
     <h1>soccz<span class="accent">.</span></h1>
-    <p class="hero-tagline">금융 데이터와 AI의 교차점을 탐구하는 대학원생</p>
+    <p class="hero-tagline">숫자 뒤에 숨은 구조를 찾습니다</p>
     <div class="hero-letter">
-      서강대학교에서 퀀트 금융과 인공지능을 공부하고 있습니다.
-      한국 주식시장의 팩터 모델을 직접 구현하고, AI로 암호화폐 시장을 분석하며,
-      데이터가 말해주는 이야기에 귀를 기울이고 있습니다.
-      Kaggle에서는 BoundaryBench로 AGI 인지 실험에 참여하고,
-      WorldQuant에서 알파 시그널을 발굴합니다.
+      주가 수익률에서 팩터를 분해하고, 뉴스 텍스트에서 시장 심리를 읽고,
+      AI 모델이 '모르는 것을 아는지' 실험합니다.
+      금융 데이터와 코드 사이 어딘가에서 연구하고 만들고 기록하는 공간입니다.
     </div>
     <div class="hero-tags">
-      <span class="hero-tag">Quantitative Finance</span>
-      <span class="hero-tag">Factor Investing</span>
-      <span class="hero-tag">Deep Learning</span>
+      <span class="hero-tag">Factor Models</span>
+      <span class="hero-tag">Momentum</span>
+      <span class="hero-tag">NLP &times; Finance</span>
       <span class="hero-tag">Python</span>
       <span class="hero-tag">Next.js</span>
-      <span class="hero-tag">CFA</span>
+      <span class="hero-tag">AGI Evaluation</span>
     </div>
   </section>
 
   <section class="featured-section fade-up" id="featuredSection" style="display:none">
     <div class="featured-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      Latest Project
+      Recently Updated
     </div>
     <a class="featured-card" id="featuredCard" href="#" target="_blank">
       <div class="featured-icon">
@@ -1096,42 +1094,42 @@
 const CATEGORIES = {
   finance: {
     label: 'Finance & Trading',
-    desc: '한국 주식 팩터 모델, 암호화폐 AI 분석, 트레이딩 시스템 연구',
+    desc: '팩터 분해, 시계열 예측, 크립토 시그널 — 시장을 숫자로 읽는 프로젝트',
     color: 'finance',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 4 5-8"/></svg>`,
     match: ['Chrono-Trader','Chrono-Trader-v2','fomc','bit_sector','bit_test','finance_semiconductor','HIGAN','finance-note']
   },
   research: {
     label: 'Research & Paper',
-    desc: '논문 구현, 벤치마크, 정량 연구, 학술 프로젝트',
+    desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
     match: ['FF3','CBAM','RCNN_test','market-impact-analysis','boundarybench','fin-momentum','tactical-factor-allocation','asset-management-guide']
   },
   web: {
     label: 'Web & App',
-    desc: '웹 애플리케이션, 풀스택 프로젝트',
+    desc: '아이디어를 브라우저에 올리는 풀스택 프로젝트',
     color: 'web',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10M12 17v4"/></svg>`,
     match: ['MC_order','forjp']
   },
   data: {
     label: 'Data & ML',
-    desc: '교통 디지털 트윈, 챗봇, API 활용 등 데이터 프로젝트',
+    desc: '수집하고, 학습시키고, 예측하는 데이터 파이프라인',
     color: 'data',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>`,
     match: ['naverAPI','review_chatbot','son_data','NeuroTraffic-DT']
   },
   side: {
     label: 'Side Project',
-    desc: '혼자 만들어보는 실험적 프로젝트, 게임, 연습',
+    desc: '재미로 만들고, 실험하고, 부숴보는 놀이터',
     color: 'side',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
     match: ['night-shift-escape','self_exercise','kaggle_test']
   },
   note: {
     label: 'Notes & Daily',
-    desc: '일일 기록, 부동산 분석, 학습 노트',
+    desc: '오늘 배운 것, 내일 할 것 — 매일의 기록',
     color: 'note',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
     match: ['Daily-report','young-and-home']
