@@ -165,9 +165,9 @@
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
       <li><a href="#overview">Overview</a></li>
-      <li><a href="#features">Features</a></li>
+      <li><a href="#pmode">P Mode</a></li>
+      <li><a href="#jmode">J Mode</a></li>
       <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#providers">Providers</a></li>
       <li><a href="#stack">Stack</a></li>
     </ul>
   </div>
@@ -178,14 +178,14 @@
     <span class="hero-label">Web Application</span>
     <h1>COUPLE<br>대중교통 데이트 코스 플래너</h1>
     <p class="hero-sub">
-      출발지 하나만 입력하면 대중교통으로 이동 가능한 데이트 코스를 자동 생성합니다.<br>
-      P mode &middot; J mode 전환, 커스텀 코스 생성, 저장/공유까지 지원하는 Next.js 앱입니다.
+      즉흥적인 사람과 꼼꼼한 사람이 데이트를 계획하는 방식은 다르다.<br>
+      P mode는 대화로, J mode는 직접 편집으로 — 같은 문제를 두 가지 UX로 풀어봤다.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">모드 (P / J)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">플래닝 모드 (P / J)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">코스 테마 변형</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">API Routes</span></div>
       <div class="hero-stat"><span class="hero-stat-num">Live</span><span class="hero-stat-label">실데이터 Provider</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">API</span><span class="hero-stat-label">Kakao + ODsay</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">Cache</span><span class="hero-stat-label">Supabase 캐시</span></div>
     </div>
     <a href="https://github.com/soccz/forjp" target="_blank" class="hero-link">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -198,56 +198,122 @@
 
 <section id="overview"><div class="container fade-in">
   <div class="section-label">Overview</div>
-  <h2 class="section-title">프로젝트 소개</h2>
-  <p class="section-desc">COUPLE은 대중교통 기반 데이트 코스 플래너입니다. Kakao Local로 장소를 검색하고, ODsay로 이동 시간을 계산하며, 시간대별 혼잡도와 대기 시간을 시뮬레이션합니다.</p>
+  <h2 class="section-title">두 종류의 사람을 위한 데이트 플래너</h2>
+  <p class="section-desc">
+    "오늘 뭐 할까?"라는 질문에 답하는 방식은 사람마다 다르다. 어떤 사람은 대충 말하면 알아서 짜줬으면 하고, 어떤 사람은 직접 고르고 순서도 바꾸고 싶다. 그 두 스타일을 각각 다른 UI 흐름으로 만드는 게 이 프로젝트의 출발점이었다.
+  </p>
   <div class="card-grid">
-    <div class="card"><div class="card-title">코스 자동 생성</div><div class="card-text">출발지와 선호 카테고리를 기반으로 식사, 카페, 활동, 산책 등의 장소를 조합한 데이트 코스를 자동으로 추천합니다.</div></div>
-    <div class="card"><div class="card-title">대중교통 최적화</div><div class="card-text">ODsay API를 통해 장소 간 대중교통 이동 시간을 실시간으로 계산하고, 이동이 효율적인 코스를 우선 추천합니다.</div></div>
-    <div class="card"><div class="card-title">저장 &amp; 공유</div><div class="card-text">마음에 드는 코스를 Supabase에 저장하고, 링크를 통해 상대방과 공유할 수 있습니다. 로컬 저장 fallback도 지원합니다.</div></div>
+    <div class="card">
+      <div class="card-title">P mode — 대화형 플래닝</div>
+      <div class="card-text">챗봇이 몇 가지를 물어보고 코스를 만들어준다. 장소, 시간, 분위기, 예산만 말하면 5가지 테마의 코스 후보가 나온다. 즉흥적인 사람에게 맞는 방식이다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">J mode — 직접 편집</div>
+      <div class="card-text">추천 결과를 놓고 장소를 바꾸고, 순서를 조정하고, 동선 최적화 제안도 받는다. 꼼꼼하게 계획하는 사람이 쓰기 좋은 방식이다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">날씨 & 상황 인식</div>
+      <div class="card-text">서울 실시간 날씨를 가져와서 비 오는 날엔 실내 코스를 우선 추천한다. 단순한 기능이지만, "지금 이 순간"을 반영하려는 시도다.</div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="features"><div class="container fade-in">
-  <div class="section-label">Features</div>
-  <h2 class="section-title">주요 기능</h2>
-  <p class="section-desc">두 가지 모드와 커스텀 코스 생성, 장소 품질 필터링을 지원합니다.</p>
+<section id="pmode"><div class="container fade-in">
+  <div class="section-label">P Mode</div>
+  <h2 class="section-title">대화로 코스를 만든다</h2>
+  <p class="section-desc">
+    복잡한 입력 폼 대신 대화로 정보를 모으는 방식이 더 자연스럽지 않을까? 라는 질문에서 시작했다. 챗봇이 단계별로 질문하고, 수집된 정보로 후보 장소들을 가져온 다음, 같은 데이터에서 성격이 다른 5가지 코스를 뽑아낸다.
+  </p>
   <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">모드 선택</div><div class="flow-desc">P mode / J mode<br>취향별 코스 분기</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">장소 검색</div><div class="flow-desc">Kakao Local API<br>카테고리 매칭</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">이동 계산</div><div class="flow-desc">ODsay 대중교통<br>실시간 시간 산출</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">코스 생성</div><div class="flow-desc">추천 + 대안 후보<br>저장 &amp; 공유</div></div>
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">상황 파악</div><div class="flow-desc">퇴근 후 / 기념일 /<br>소개팅 / 여유로운 주말</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">조건 수집</div><div class="flow-desc">지역 · 시간 · 분위기<br>예산 순서로 대화</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">후보 탐색</div><div class="flow-desc">Kakao + ODsay로<br>실데이터 수집</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">코스 변형</div><div class="flow-desc">5가지 테마로<br>같은 후보 재조합</div></div>
   </div>
   <div class="card-grid">
-    <div class="layer-card"><div class="layer-num">Feature 1 &mdash; Dual Mode</div><div class="layer-title">P mode &amp; J mode</div><div class="layer-q">"두 사람의 취향에 맞는 코스를 각각의 모드로 분기하여 생성한다."</div><div class="tags"><span class="tag">P mode</span><span class="tag">J mode</span><span class="tag">모드 전환</span></div></div>
-    <div class="layer-card"><div class="layer-num">Feature 2 &mdash; Custom Plan</div><div class="layer-title">커스텀 코스 생성</div><div class="layer-q">"자동 추천이 아닌, 사용자가 직접 장소를 선택하여 코스를 구성할 수 있다."</div><div class="tags"><span class="tag">장소 직접 선택</span><span class="tag">순서 조정</span><span class="tag">이동 시간 자동 계산</span></div></div>
-    <div class="layer-card"><div class="layer-num">Feature 3 &mdash; Quality Filter</div><div class="layer-title">장소 품질 필터링</div><div class="layer-q">"카테고리 불일치, 과도한 거리, 중복 상호명, 일반적 체인을 자동으로 필터링한다."</div><div class="tags"><span class="tag">카테고리 필터</span><span class="tag">거리 필터</span><span class="tag">중복 제거</span><span class="tag">체인 감점</span></div></div>
+    <div class="layer-card">
+      <div class="layer-num">Plan Variant 1 &mdash; Efficient</div>
+      <div class="layer-title">이동 시간 최소 코스</div>
+      <div class="layer-q">"같은 장소들인데 순서가 다르면 이동 시간이 크게 달라진다. 최근접 이웃 알고리즘으로 동선을 최적화한다."</div>
+      <div class="tags"><span class="tag">루트 최적화</span><span class="tag">이동 시간 최소</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Plan Variant 2 &mdash; Mood / Romantic</div>
+      <div class="layer-title">분위기 우선 코스</div>
+      <div class="layer-q">"quietScore, visualScore로 장소의 감성 점수를 계산하고, 분위기에 맞는 장소를 우선 선발한다."</div>
+      <div class="tags"><span class="tag">감성 점수</span><span class="tag">vibe 매칭</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Plan Variant 3 &mdash; Value / Relaxed</div>
+      <div class="layer-title">가성비 & 여유 코스</div>
+      <div class="layer-q">"valueDensity = stayMinutes / (cost / 1000). 같은 돈으로 더 오래 머물 수 있는 장소를 선호한다."</div>
+      <div class="tags"><span class="tag">가성비 점수</span><span class="tag">체류 시간</span><span class="tag">예산 최적화</span></div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="jmode"><div class="container fade-in">
+  <div class="section-label">J Mode</div>
+  <h2 class="section-title">직접 고르고, 직접 다듬는다</h2>
+  <p class="section-desc">
+    추천 결과를 그냥 받아들이는 게 아니라 직접 손볼 수 있어야 한다는 생각이었다. 장소를 교체하고, 순서를 바꾸고, "이 동선이 더 효율적이에요"라는 제안도 받을 수 있다. 그리고 그 과정에서 왜 이 장소가 추천됐는지 — 품질 필터가 어떻게 작동했는지를 보여주려 했다.
+  </p>
+  <div class="card-grid">
+    <div class="layer-card">
+      <div class="layer-num">Feature 1 &mdash; Alt Panel</div>
+      <div class="layer-title">장소 교체</div>
+      <div class="layer-q">"각 슬롯마다 대안 후보를 미리 계산해둔다. 교체하면 이동 시간과 총 비용이 즉시 재계산된다."</div>
+      <div class="tags"><span class="tag">대안 후보</span><span class="tag">즉시 재계산</span><span class="tag">swap</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Feature 2 &mdash; Quality Filter</div>
+      <div class="layer-title">장소 품질 필터링</div>
+      <div class="layer-q">"카테고리 불일치, 과도한 거리, 중복 상호명, 체인점을 자동으로 걸러낸다. 왜 이 장소가 걸러졌는지 추적 가능하다."</div>
+      <div class="tags"><span class="tag">카테고리 필터</span><span class="tag">거리 필터</span><span class="tag">중복 제거</span><span class="tag">체인 감점</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Feature 3 &mdash; Route Optimizer</div>
+      <div class="layer-title">동선 최적화 제안</div>
+      <div class="layer-q">"현재 순서보다 이동 시간을 줄일 수 있는 순서가 있으면 제안한다. 최근접 이웃 알고리즘 기반."</div>
+      <div class="tags"><span class="tag">TSP 근사</span><span class="tag">순서 제안</span><span class="tag">이동 단축</span></div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
 
 <section id="architecture"><div class="container fade-in">
   <div class="section-label">Architecture</div>
-  <h2 class="section-title">시스템 구조</h2>
-  <p class="section-desc">Provider 패턴으로 데이터 소스를 추상화하여, API 키 유무에 따라 live/mock이 자동 전환됩니다.</p>
-  <div class="data-block"><div class="data-title">Provider 계층</div><div class="data-desc">각 데이터 소스는 live, hybrid, mock 세 가지 모드로 동작합니다. 환경 변수가 없으면 자동으로 mock fallback합니다.</div><div class="data-stats"><div class="data-stat"><div class="data-stat-num">live</div><div class="data-stat-label">전부 실데이터</div></div><div class="data-stat"><div class="data-stat-num">hybrid</div><div class="data-stat-label">일부 실데이터 + fallback</div></div><div class="data-stat"><div class="data-stat-num">mock</div><div class="data-stat-label">전부 목업 fallback</div></div></div></div>
-  <div class="data-block"><div class="data-title">API 엔드포인트</div><div class="data-desc">추천, 커스텀 플랜, 플래너, 저장, 진단까지 6개 API 엔드포인트로 구성됩니다.</div><div class="data-stats"><div class="data-stat"><div class="data-stat-num">6</div><div class="data-stat-label">API Routes</div></div><div class="data-stat"><div class="data-stat-num">3</div><div class="data-stat-label">Supabase 테이블</div></div></div></div>
-  <div class="card-grid">
-    <div class="card"><div class="card-title">POST /api/recommendations</div><div class="card-text">추천 후보, 캐시 상태, provider 상태, 시간대 진단, 대체 후보를 반환합니다.</div></div>
-    <div class="card"><div class="card-title">POST /api/custom-plan</div><div class="card-text">커스텀 추천 결과를 실제 플래너 구조로 변환합니다.</div></div>
-    <div class="card"><div class="card-title">GET /api/diagnostics</div><div class="card-text">provider 상태와 setup 이슈를 확인합니다. 서비스 전환 가능 여부를 진단합니다.</div></div>
+  <h2 class="section-title">API 키가 없어도 개발할 수 있게</h2>
+  <p class="section-desc">
+    외부 API 의존도가 높은 프로젝트일수록 개발 중 막히는 순간이 많다. Provider 패턴으로 데이터 소스를 추상화하면, API 키가 없어도 mock 데이터로 전체 흐름을 테스트할 수 있다. live / mock 전환은 환경 변수 하나로 된다.
+  </p>
+  <div class="data-block">
+    <div class="data-title">Provider 계층</div>
+    <div class="data-desc">장소 검색(Kakao), 대중교통(ODsay), 챗(mock/live), 리뷰 요약 각각에 독립 provider가 있다. 환경 변수가 없으면 자동으로 mock fallback한다.</div>
+    <div class="data-stats">
+      <div class="data-stat"><div class="data-stat-num">live</div><div class="data-stat-label">전부 실데이터</div></div>
+      <div class="data-stat"><div class="data-stat-num">hybrid</div><div class="data-stat-label">일부 실데이터 + fallback</div></div>
+      <div class="data-stat"><div class="data-stat-num">mock</div><div class="data-stat-label">전부 목업 fallback</div></div>
+    </div>
   </div>
-</div></section>
-<hr class="divider">
-
-<section id="providers"><div class="container fade-in">
-  <div class="section-label">Providers</div>
-  <h2 class="section-title">데이터 소스</h2>
-  <p class="section-desc">장소 검색, 대중교통, 리뷰, 저장, 캐시 각각에 독립적인 provider가 할당됩니다.</p>
+  <div class="data-block">
+    <div class="data-title">API 엔드포인트</div>
+    <div class="data-desc">추천, 커스텀 플랜, 채팅, 날씨, 저장, 공유, 플래너, 인증, 진단, 헬스 — 10개 Route로 구성된다.</div>
+    <div class="data-stats">
+      <div class="data-stat"><div class="data-stat-num">10</div><div class="data-stat-label">API Routes</div></div>
+      <div class="data-stat"><div class="data-stat-num">3</div><div class="data-stat-label">Supabase 테이블</div></div>
+      <div class="data-stat"><div class="data-stat-num">30분</div><div class="data-stat-label">날씨 캐시 TTL</div></div>
+    </div>
+  </div>
   <div class="card-grid">
-    <div class="card"><div class="card-title">Kakao Local</div><div class="card-text">장소 검색 실데이터 provider. 카테고리 매칭, 거리 필터, 중복 제거 등 품질 필터가 적용됩니다.</div></div>
-    <div class="card"><div class="card-title">ODsay Transit</div><div class="card-text">대중교통 이동 시간 계산 실데이터 provider. 장소 간 최적 경로와 소요 시간을 산출합니다.</div></div>
-    <div class="card"><div class="card-title">Supabase</div><div class="card-text">코스 저장, 추천 캐시, 리뷰 요약 저장소. saved_plans, api_cache, place_review_summaries 테이블로 구성됩니다.</div></div>
+    <div class="card"><div class="card-title">POST /api/chat</div><div class="card-text">대화 단계(step)와 수집된 정보(collected)를 받아 다음 AI 응답을 반환한다. Provider 교체로 실제 LLM과 mock 응답을 전환할 수 있다.</div></div>
+    <div class="card"><div class="card-title">GET /api/weather</div><div class="card-text">Open-Meteo에서 서울 현재 날씨를 가져와 30분 캐시로 반환한다. 비/눈 여부를 실내 코스 우선순위 결정에 사용한다.</div></div>
+    <div class="card"><div class="card-title">POST /api/recommendations</div><div class="card-text">장소 후보, 캐시 상태, provider 상태, 시간대 혼잡도 진단, 대안 후보를 한 번에 반환한다.</div></div>
+    <div class="card"><div class="card-title">GET /api/shared-plans/:id</div><div class="card-text">저장된 코스를 링크로 공유할 수 있다. Supabase에 없으면 로컬 fallback으로 응답한다.</div></div>
+    <div class="card"><div class="card-title">GET /api/diagnostics</div><div class="card-text">어떤 provider가 활성화돼 있는지, 환경 변수 설정 이슈가 있는지 확인할 수 있다.</div></div>
+    <div class="card"><div class="card-title">POST /api/custom-plan</div><div class="card-text">사용자가 직접 선택한 장소 목록을 실제 플래너 구조로 변환한다. J mode 코스 확정 시 호출된다.</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -257,9 +323,11 @@
   <h2 class="section-title">기술 스택</h2>
   <div class="tech-grid" style="margin-top:1.5rem;">
     <div class="tech-item"><div class="tech-cat">Framework</div><ul class="tech-list"><li>Next.js (App Router)</li><li>React</li><li>TypeScript</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">External APIs</div><ul class="tech-list"><li>Kakao Local (장소 검색)</li><li>ODsay (대중교통 경로)</li><li>Supabase (저장/캐시)</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Data Layer</div><ul class="tech-list"><li>Provider 패턴 (live/mock)</li><li>추천 캐시 계층</li><li>품질 필터 파이프라인</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Infrastructure</div><ul class="tech-list"><li>환경 변수 기반 전환</li><li>Health &amp; Diagnostics API</li><li>Mock fallback 자동 전환</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">External APIs</div><ul class="tech-list"><li>Kakao Local (장소 검색)</li><li>ODsay (대중교통 경로)</li><li>Open-Meteo (날씨)</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Data Layer</div><ul class="tech-list"><li>Supabase (저장 / 캐시 / 리뷰)</li><li>Provider 패턴 (live/mock)</li><li>품질 필터 파이프라인</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Auth & Infra</div><ul class="tech-list"><li>NextAuth.js</li><li>환경 변수 기반 provider 전환</li><li>Health &amp; Diagnostics API</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Algorithm</div><ul class="tech-list"><li>최근접 이웃 (루트 최적화)</li><li>valueDensity 점수 계산</li><li>5-variant 코스 분기</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Monitoring</div><ul class="tech-list"><li>Sentry 연동 (captureError)</li><li>Mock fallback 자동 전환</li><li>Provider 상태 진단</li></ul></div>
   </div>
 </div></section>
 
