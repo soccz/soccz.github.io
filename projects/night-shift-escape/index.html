@@ -74,12 +74,15 @@
     .hero-stat { text-align: center; }
     .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
     .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-links { display: flex; gap: 0.8rem; justify-content: center; margin-top: 2.5rem; flex-wrap: wrap; }
     .hero-link {
-      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
       color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
     }
     .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-link.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .hero-link.primary:hover { background: #292524; border-color: #292524; color: #fff; }
     .scroll-ind {
       position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
       color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
@@ -106,39 +109,46 @@
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
     .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
 
-    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    /* Flow diagram */
+    .flow-wrap { overflow-x: auto; margin: 2rem 0; }
+    .flow { display: flex; align-items: stretch; gap: 0; min-width: 600px; }
     .flow-step {
-      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
-      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+      flex: 1; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.6rem 1.2rem; text-align: center; position: relative;
     }
     .flow-step:first-child { border-radius: 8px 0 0 8px; }
     .flow-step:last-child { border-radius: 0 8px 8px 0; }
-    .flow-step::after {
+    .flow-step:not(:last-child)::after {
       content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
       border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
     }
-    .flow-step:last-child::after { display: none; }
-    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
     .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
-    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+    .flow-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
 
-    .key-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.8rem; margin: 2rem 0; }
+    /* Table */
+    .tbl-wrap { overflow-x: auto; margin: 1.5rem 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    th { background: var(--bg-secondary); color: var(--text-secondary); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-primary); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-secondary); }
+    td code { font-size: 0.8rem; background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
+
+    .key-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.8rem; margin: 2rem 0; }
     .key-item {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
       padding: 1rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
-    .key-label { font-family: 'Noto Sans KR', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--accent); display: block; margin-bottom: 0.3rem; }
+    .key-label { font-size: 0.9rem; font-weight: 700; color: var(--accent); display: block; margin-bottom: 0.3rem; }
     .key-desc { font-size: 0.72rem; color: var(--text-secondary); }
 
-    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
     .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
     .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
     .tech-list { list-style: none; }
     .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
-    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
-
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); transform: translateY(-50%); }
 
     .callout {
       background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c;
@@ -147,15 +157,18 @@
     .callout-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
     .callout p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
 
+    .badge-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .badge { font-size: 0.7rem; padding: 0.25rem 0.65rem; border-radius: 3px; border: 1px solid var(--border); background: var(--bg-secondary); color: var(--text-secondary); }
+
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .flow { flex-direction: column; }
+      .flow { flex-direction: column; min-width: unset; }
       .flow-step { border-radius: 8px !important; }
-      .flow-step::after { display: none; }
+      .flow-step::after { display: none !important; }
       .key-grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); }
       section { padding: 4rem 1.5rem; }
     }
@@ -168,9 +181,9 @@
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
       <li><a href="#overview">Overview</a></li>
-      <li><a href="#mechanics">Mechanics</a></li>
-      <li><a href="#howto">How to Play</a></li>
-      <li><a href="#controls">Controls</a></li>
+      <li><a href="#flow">흐름도</a></li>
+      <li><a href="#systems">시스템</a></li>
+      <li><a href="#controls">조작법</a></li>
       <li><a href="#stack">Stack</a></li>
     </ul>
   </div>
@@ -182,18 +195,21 @@
     <h1>Night Shift Escape</h1>
     <p class="hero-sub">
       야간 근무 중 폐쇄된 건물에서 탈출하라.<br>
-      수호자를 소환하고, 발전기를 수리하며, 정전을 버텨내는<br>
-      솔로 호러-디펜스 브라우저 게임.
+      방을 점거하고, 수호자를 소환하며, 헌터를 피해 시질을 모아<br>
+      탈출구를 여는 솔로 호러-디펜스 게임.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">1</span><span class="hero-stat-label">플레이어</span></div>
       <div class="hero-stat"><span class="hero-stat-num">0</span><span class="hero-stat-label">설치 필요</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">100%</span><span class="hero-stat-label">브라우저 구동</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">7000+</span><span class="hero-stat-label">Lines of JS</span></div>
     </div>
-    <a href="https://github.com/soccz/night-shift-escape" target="_blank" class="hero-link">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      Source Code
-    </a>
+    <div class="hero-links">
+      <a href="https://night-shift-escape.vercel.app" target="_blank" class="hero-link primary">▶ 플레이하기</a>
+      <a href="https://github.com/soccz/night-shift-escape" target="_blank" class="hero-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
   </div>
   <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
@@ -202,47 +218,131 @@
 <section id="overview"><div class="container fade-in">
   <div class="section-label">Overview</div>
   <h2 class="section-title">어떤 게임인가</h2>
-  <p class="section-desc">Night Shift Escape는 폐쇄된 건물 안에서 생존하며 탈출구를 찾는 솔로 호러-디펜스 게임입니다. 빈 방을 점거하고, 골드를 모아 수호자를 소환하며, 지도 조각과 인장을 수집해 탈출하세요. 정전, 감염자, 헌터의 습격을 견뎌야 합니다.</p>
+  <p class="section-desc">Night Shift Escape는 폐쇄된 건물 안에서 생존하며 탈출하는 솔로 호러-디펜스 게임입니다. 방을 점거해 골드를 모으고, 수호자를 소환해 방어선을 구축하며, 감염자·헌터·정전·격리 이상을 모두 버텨내야 합니다.</p>
+  <div class="badge-row">
+    <span class="badge">Canvas 2D</span>
+    <span class="badge">Vanilla JS</span>
+    <span class="badge">Web Audio API</span>
+    <span class="badge">메타 진행</span>
+    <span class="badge">런덤 이벤트</span>
+    <span class="badge">계약 시스템</span>
+  </div>
   <div class="card-grid">
-    <div class="card"><div class="card-icon">&#x1F6CF;</div><div class="card-title">방 점거 & 골드 수집</div><div class="card-text">빈 방을 찾아 침대 위에 서면 골드를 획득합니다. 하지만 한 방에 너무 오래 머물면 감염된 침입자가 나타납니다.</div></div>
-    <div class="card"><div class="card-icon">&#x1F6E1;</div><div class="card-title">수호자 소환</div><div class="card-text">모은 골드로 랜덤 수호자를 소환하여 방어력을 강화합니다. 어떤 수호자가 올지는 운에 달려 있습니다.</div></div>
-    <div class="card"><div class="card-icon">&#x1F50D;</div><div class="card-title">정보 구매 & 탈출</div><div class="card-text">골드로 랜덤 인텔을 구매해 탈출 진행도를 확인합니다. 지도 조각과 양쪽 인장을 모두 모으면 탈출 성공.</div></div>
+    <div class="card"><div class="card-icon">🏠</div><div class="card-title">방 점거 & 골드</div><div class="card-text">최대 2개 방을 동시에 점거할 수 있습니다. 침대 위에 서면 골드가 수입되고, 오래 머물수록 돌연변이 시계가 차올라 균열이 열립니다.</div></div>
+    <div class="card"><div class="card-icon">🛡️</div><div class="card-title">수호자 소환</div><div class="card-text">골드로 Sentinel·Rover·Relic 중 랜덤한 수호자를 소환합니다. 각각 방어, 정찰, 광역 딜이 특기입니다.</div></div>
+    <div class="card"><div class="card-icon">🗺️</div><div class="card-title">탈출 조건</div><div class="card-text">지도 조각 6개 + 시질 2개를 수집해야 탈출 게이트가 열립니다. 인텔 구매, 나침반, 레이더로 위치를 추적하세요.</div></div>
+    <div class="card"><div class="card-icon">⚡</div><div class="card-title">정전 & 발전기</div><div class="card-text">불시에 정전이 발생합니다. 발전기를 찾아 수리하지 않으면 헌터가 빨라지고 시야가 좁아집니다.</div></div>
+    <div class="card"><div class="card-icon">🌕</div><div class="card-title">격리 이상 이벤트</div><div class="card-text">혈월·에코 스캔·골드 러시 등 7종의 워드 이벤트가 랜덤 발동해 게임 규칙을 일시적으로 바꿉니다.</div></div>
+    <div class="card"><div class="card-icon">📋</div><div class="card-title">계약 시스템</div><div class="card-text">6종 계약이 랜덤 발급됩니다. 제한 시간 내 목표를 달성하면 골드·레이더·샤드 보상을 받습니다.</div></div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="mechanics"><div class="container fade-in">
-  <div class="section-label">Game Mechanics</div>
-  <h2 class="section-title">핵심 메커니즘</h2>
-  <p class="section-desc">긴장감을 유지하는 여러 시스템이 서로 맞물려 돌아갑니다. 자원 관리, 위험 회피, 타이밍 판단이 생존의 열쇠입니다.</p>
-  <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">방 점거</div><div class="flow-desc">빈 방을 찾아<br>거점 확보</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">골드 수집</div><div class="flow-desc">침대 위에서<br>자원 획득</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">소환 & 정보</div><div class="flow-desc">수호자 소환<br>인텔 구매</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">탈출</div><div class="flow-desc">조각 + 인장<br>수집 완료</div></div>
+<section id="flow"><div class="container fade-in">
+  <div class="section-label">Game Flow</div>
+  <h2 class="section-title">한 런의 흐름</h2>
+  <p class="section-desc">런은 방 점거부터 시작해 탈출 또는 사망으로 끝납니다. 그 사이 수많은 위협과 선택이 얽힙니다.</p>
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="flow-title">방 점거</div>
+        <div class="flow-desc">빈 방 확보<br>골드 수입 시작</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="flow-title">자원 투자</div>
+        <div class="flow-desc">수호자 소환<br>인텔·아이템 구매</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="flow-title">위협 대응</div>
+        <div class="flow-desc">문 보강, 정전 수리<br>헌터·감염자 회피</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <div class="flow-title">조각 수집</div>
+        <div class="flow-desc">조각 6 + 시질 2<br>나침반으로 탐색</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">05</div>
+        <div class="flow-title">탈출</div>
+        <div class="flow-desc">게이트에서 E 유지<br>샤드 획득</div>
+      </div>
+    </div>
   </div>
-
-  <div class="card-grid" style="margin-top: 2rem;">
-    <div class="card"><div class="card-icon">&#x26A1;</div><div class="card-title">정전 (Blackout)</div><div class="card-text">불시에 정전이 발생합니다. 발전기를 찾아 수리하지 않으면 어둠 속에서 위험이 급증합니다. 빠르게 발전기로 이동하세요.</div></div>
-    <div class="card"><div class="card-icon">&#x1F9DF;</div><div class="card-title">감염자 & 침입</div><div class="card-text">한 방에 오래 캠핑하면 감염된 은신자가 나타나고, 방문이 뚫릴 수 있습니다. 문을 보강(R키)하여 시간을 벌 수 있습니다.</div></div>
-    <div class="card"><div class="card-icon">&#x1F5FA;</div><div class="card-title">지도 조각 & 인장</div><div class="card-text">탈출에는 충분한 지도 조각과 양쪽 인장이 모두 필요합니다. 인텔 구매로 진행도를 확인하며 수집 전략을 세우세요.</div></div>
-  </div>
-
   <div class="callout">
-    <div class="callout-label">Tip</div>
-    <p>골드를 수호자에게 쓸지, 인텔에 투자할지의 선택이 매 순간 생존과 탈출 속도를 결정합니다. 정전 타이밍에 발전기 근처에 있는 것이 이상적이지만, 예측할 수 없기에 항상 경로를 파악해 두세요.</p>
+    <div class="callout-label">압박 구조</div>
+    <p>5분 이후 소규모 습격이 시작되고, 10분 이후 본격 레이드가 반복됩니다. 격리 이상 이벤트는 최대 4회까지 발동하며, 이상 현상(Anomaly)과 계약이 맞물려 끊임없는 판단을 요구합니다.</p>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="howto"><div class="container fade-in">
-  <div class="section-label">How to Play</div>
-  <h2 class="section-title">플레이 가이드</h2>
-  <p class="section-desc">설치 없이 브라우저에서 바로 플레이할 수 있습니다. 로컬 실행도 간단합니다.</p>
-  <div class="card-grid">
-    <div class="card"><div class="card-title">1. 브라우저에서 열기</div><div class="card-text">index.html을 브라우저에서 직접 열거나, 아래 명령으로 로컬 서버를 띄우세요.<br><br><code style="font-size:0.82rem; background:var(--bg-secondary); padding:0.2rem 0.5rem; border-radius:3px;">python3 -m http.server 8000</code></div></div>
-    <div class="card"><div class="card-title">2. 방 찾기</div><div class="card-text">시작하면 건물 내부에 놓입니다. WASD 또는 클릭으로 이동하여 빈 방을 찾아 점거하세요. E키로 상호작용합니다.</div></div>
-    <div class="card"><div class="card-title">3. 생존 & 탈출</div><div class="card-text">골드를 모아 수호자와 인텔에 투자하고, 정전과 침입을 버텨내며, 지도 조각과 인장을 모두 모아 탈출하세요.</div></div>
+<section id="systems"><div class="container fade-in">
+  <div class="section-label">Game Systems</div>
+  <h2 class="section-title">핵심 시스템</h2>
+  <p class="section-desc">독립적이면서도 서로 영향을 주는 여러 시스템이 매 런을 다르게 만듭니다.</p>
+
+  <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem;">수호자 유형</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>유형</th><th>특성</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sentinel</strong></td><td>문 근처 방어 특화. 데미지 보너스 적용</td></tr>
+        <tr><td><strong>Rover</strong></td><td>방 내부를 순찰하며 빠른 공격속도</td></tr>
+        <tr><td><strong>Relic</strong></td><td>고데미지 + 80px 광역 스플래시. 느린 쿨다운</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:1rem; font-weight:700; margin:2rem 0 1rem;">격리 이상 이벤트 (Ward Event)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>이벤트</th><th>효과</th></tr></thead>
+      <tbody>
+        <tr><td><code>blood_moon</code></td><td>감염자 HP·속도 ×1.5, 붉은 시각 효과</td></tr>
+        <tr><td><code>echo_scan</code></td><td>레이더 상시 활성화</td></tr>
+        <tr><td><code>gold_rush</code></td><td>골드 수입 ×2.2</td></tr>
+        <tr><td><code>gold_tax</code></td><td>골드 수입 ×0.65</td></tr>
+        <tr><td><code>speed_boost</code></td><td>플레이어 이동속도 증가</td></tr>
+        <tr><td><code>phantom_surge</code></td><td>감염자 스폰 주기 가속</td></tr>
+        <tr><td><code>reinforced_walls</code></td><td>모든 문 피해 면역</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:1rem; font-weight:700; margin:2rem 0 1rem;">이상 현상 (Anomaly)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>유형</th><th>효과</th></tr></thead>
+      <tbody>
+        <tr><td><code>void_drain</code></td><td>초당 −1.5골드 드레인</td></tr>
+        <tr><td><code>plague_nexus</code></td><td>8초마다 감염자 스폰</td></tr>
+        <tr><td><code>temporal_spike</code></td><td>돌연변이 시계 1.5배 가속</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:1rem; font-weight:700; margin:2rem 0 1rem;">계약 시스템 (Contract)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>계약</th><th>목표</th></tr></thead>
+      <tbody>
+        <tr><td><code>upperSweep</code></td><td>상층(f2)에서 일정 시간 생존</td></tr>
+        <tr><td><code>doorSentinel</code></td><td>점거 방 문 앞 수비 유지</td></tr>
+        <tr><td><code>signalTap</code></td><td>단말기 인텔 구매 횟수 달성</td></tr>
+        <tr><td><code>purge</code></td><td>감염자 처치 수 달성</td></tr>
+        <tr><td><code>sealHunter</code></td><td>헌터 HP 소진 횟수 달성</td></tr>
+        <tr><td><code>blackoutWatch</code></td><td>정전 중 발전기 수리 완료</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:1rem; font-weight:700; margin:2rem 0 1rem;">메타 진행 (Shard)</h3>
+  <div class="card-grid" style="margin-top:0;">
+    <div class="card"><div class="card-title">탈출 성공</div><div class="card-text">기본 샤드 + 시간 보너스 + 이상 현상 해소 보너스 (최대 +3)</div></div>
+    <div class="card"><div class="card-title">첫 탈출</div><div class="card-text">+10 샤드 추가 지급. 영구 업그레이드 해금에 활용</div></div>
+    <div class="card"><div class="card-title">실패해도</div><div class="card-text">최소 2샤드 보장. 도전이 완전히 무의미하지 않음</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -250,22 +350,19 @@
 <section id="controls"><div class="container fade-in">
   <div class="section-label">Controls</div>
   <h2 class="section-title">조작법</h2>
-  <p class="section-desc">키보드 모드와 클릭 모드를 Tab으로 전환할 수 있습니다.</p>
+  <p class="section-desc">Tab으로 키보드 이동 ↔ 클릭 이동을 전환할 수 있습니다.</p>
   <div class="key-grid">
     <div class="key-item"><span class="key-label">W A S D</span><span class="key-desc">이동</span></div>
     <div class="key-item"><span class="key-label">Tab</span><span class="key-desc">모드 전환</span></div>
     <div class="key-item"><span class="key-label">E</span><span class="key-desc">상호작용</span></div>
     <div class="key-item"><span class="key-label">R</span><span class="key-desc">문 보강</span></div>
+    <div class="key-item"><span class="key-label">Esc</span><span class="key-desc">일시정지</span></div>
     <div class="key-item"><span class="key-label">F1 / Q</span><span class="key-desc">관리자 모드</span></div>
     <div class="key-item"><span class="key-label">Insert</span><span class="key-desc">골드 추가</span></div>
-    <div class="key-item"><span class="key-label">G</span><span class="key-desc">갓 모드</span></div>
+    <div class="key-item"><span class="key-label">G</span><span class="key-desc">무적 모드</span></div>
     <div class="key-item"><span class="key-label">K</span><span class="key-desc">헌터 제거</span></div>
     <div class="key-item"><span class="key-label">F</span><span class="key-desc">전체 수집</span></div>
-    <div class="key-item"><span class="key-label">N</span><span class="key-desc">정전 발동</span></div>
-  </div>
-  <div class="callout" style="margin-top:1.5rem;">
-    <div class="callout-label">Admin Mode</div>
-    <p>F1 또는 Q로 관리자 모드를 켠 뒤 Insert, G, K, F, N 키를 사용할 수 있습니다. Insert가 유일한 관리자 전용 골드 추가 수단입니다.</p>
+    <div class="key-item"><span class="key-label">N</span><span class="key-desc">즉시 정전</span></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -274,15 +371,18 @@
   <div class="section-label">Stack</div>
   <h2 class="section-title">기술 스택</h2>
   <div class="tech-grid" style="margin-top:1.5rem;">
-    <div class="tech-item"><div class="tech-cat">Frontend</div><ul class="tech-list"><li>Vanilla HTML / CSS / JS</li><li>Canvas 기반 렌더링</li><li>반응형 UI</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Game Engine</div><ul class="tech-list"><li>자체 게임 루프</li><li>충돌 감지 시스템</li><li>이벤트 기반 상태 관리</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Deploy</div><ul class="tech-list"><li>순수 정적 파일</li><li>Vercel 배포 가능</li><li>빌드 도구 불필요</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Rendering</div><ul class="tech-list"><li>Canvas 2D API</li><li>requestAnimationFrame 루프</li><li>카메라 추적 + 화면 흔들림</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Game Logic</div><ul class="tech-list"><li>Vanilla JavaScript (단일 파일)</li><li>A* 경로 탐색</li><li>Run Profile 난이도 시스템</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Audio</div><ul class="tech-list"><li>Web Audio API</li><li>절차적 음향 합성</li><li>footstep·경보·이벤트음</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Deploy</div><ul class="tech-list"><li>순수 정적 파일</li><li>Vercel 자동 배포</li><li>빌드 도구 불필요</li></ul></div>
   </div>
 </div></section>
 
 <footer><div class="footer-text">
   Night Shift Escape &mdash; 솔로 호러-디펜스 브라우저 게임<br>
-  <a href="https://github.com/soccz/night-shift-escape" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
+  <a href="https://night-shift-escape.vercel.app" target="_blank">플레이하기</a> &middot;
+  <a href="https://github.com/soccz/night-shift-escape" target="_blank">GitHub</a> &middot;
+  <a href="/">Home</a>
 </div></footer>
 
 <script>
