@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iron Quant — 운동 기록 앱</title>
+  <title>Iron Quant — Personal Quant for Your Fitness</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
       --bg-primary: #fafaf9;
@@ -18,10 +18,9 @@
       --text-muted: #a8a29e;
       --accent: #44403c;
       --accent-dim: rgba(68, 64, 60, 0.07);
-      --accent-red: #b91c1c;
-      --accent-green: #15803d;
       --border: #e7e5e4;
       --border-light: #d6d3d1;
+      --mono: 'JetBrains Mono', 'Fira Code', monospace;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,27 +58,32 @@
       background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
                   radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
     }
-    .hero-content { position: relative; max-width: 780px; }
+    .hero-content { position: relative; max-width: 800px; }
     .hero-label {
       display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--text-secondary); border: 1px solid var(--border-light);
       padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+      font-family: var(--mono);
     }
     .hero h1 {
       font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
       font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
     }
-    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
-    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
-    .hero-stat { text-align: center; }
-    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
-    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-sub { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 2.5rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 3.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-stat-num { font-family: var(--mono); font-size: 2rem; font-weight: 500; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em; }
+
+    .hero-links { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
     .hero-link {
-      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
-      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.4rem; border: 1px solid var(--border-light); border-radius: 4px;
       color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
     }
     .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-link.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .hero-link.primary:hover { background: #292524; border-color: #292524; }
+
     .scroll-ind {
       position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
       color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
@@ -89,66 +93,105 @@
 
     section { padding: 6rem 2rem; }
     .container { max-width: 1100px; margin: 0 auto; }
-    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; font-family: var(--mono); }
     .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
-    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 720px; line-height: 1.85; margin-bottom: 2.5rem; }
     .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
     .card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      padding: 1.8rem; transition: all 0.3s;
     }
-    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+    .card-label { font-size: 0.68rem; font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.6rem; }
+    .card-text { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.75; }
 
-    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
-    .flow-step {
-      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
-      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+    code {
+      font-family: var(--mono); font-size: 0.8rem;
+      background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent);
     }
-    .flow-step:first-child { border-radius: 8px 0 0 8px; }
-    .flow-step:last-child { border-radius: 0 8px 8px 0; }
-    .flow-step::after {
-      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
-      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+
+    .code-block {
+      background: #1c1917; border-radius: 8px; padding: 1.5rem 1.8rem;
+      margin: 1.5rem 0; overflow-x: auto;
     }
-    .flow-step:last-child::after { display: none; }
-    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
-    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+    .code-block pre {
+      font-family: var(--mono); font-size: 0.82rem; line-height: 1.7; color: #d6d3d1;
+    }
+    .code-block .cm { color: #78716c; }
+    .code-block .kw { color: #c4b5fd; }
+    .code-block .fn { color: #6ee7b7; }
+    .code-block .st { color: #fcd34d; }
+    .code-block .nu { color: #fb923c; }
+    .code-block .op { color: #94a3b8; }
+
+    .arch {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; margin: 2rem 0;
+    }
+    .arch-col { background: var(--bg-card); padding: 1.5rem; }
+    .arch-col-title {
+      font-size: 0.72rem; font-family: var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border);
+    }
+    .arch-item {
+      font-size: 0.83rem; color: var(--text-secondary); padding: 0.3rem 0;
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .arch-item::before { content: '\2014'; color: var(--border-light); flex-shrink: 0; font-family: var(--mono); }
+
+    .pipeline {
+      display: flex; flex-direction: column; gap: 1px;
+      background: var(--border); border-radius: 8px; overflow: hidden; margin: 2rem 0;
+    }
+    .pipeline-row { display: grid; grid-template-columns: 160px 1fr; background: var(--bg-card); }
+    .pipeline-step {
+      padding: 1rem 1.2rem; font-size: 0.78rem; font-family: var(--mono);
+      color: var(--text-muted); background: var(--bg-secondary);
+      display: flex; align-items: center; border-right: 1px solid var(--border);
+    }
+    .pipeline-detail { padding: 1rem 1.4rem; font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; }
 
     .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
     .mode-card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      padding: 1.8rem; border-top: 3px solid #78716c;
     }
-    .mode-label { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .mode-label { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; font-family: var(--mono); }
     .mode-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.8rem; }
     .mode-list { list-style: none; }
     .mode-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.3rem 0 0.3rem 1rem; position: relative; }
     .mode-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
 
-    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin: 2rem 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
-    thead { background: var(--bg-card); position: sticky; top: 0; }
-    th { padding: 0.85rem 1rem; text-align: left; font-weight: 500; color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); white-space: nowrap; }
-    td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
-    tr { transition: background 0.15s; }
-    tr:hover { background: #f5f5f4; }
+    .tbl-wrap { overflow-x: auto; margin: 1.5rem 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    th {
+      background: var(--bg-secondary); color: var(--text-secondary); font-weight: 500;
+      font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.65rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-family: var(--mono);
+    }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-primary); vertical-align: top; line-height: 1.6; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--bg-secondary); }
+
+    .callout {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-left: 3px solid #78716c; border-radius: 0 8px 8px 0;
+      padding: 1.3rem 1.8rem; margin: 2rem 0;
+    }
+    .callout-label { font-size: 0.68rem; font-family: var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .callout p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
 
     .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
     .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
-    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; font-family: var(--mono); }
     .tech-list { list-style: none; }
     .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
     .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
-
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
-    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
 
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
@@ -156,9 +199,9 @@
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .flow { flex-direction: column; }
-      .flow-step { border-radius: 8px !important; }
-      .flow-step::after { display: none; }
+      .arch { grid-template-columns: 1fr; }
+      .pipeline-row { grid-template-columns: 1fr; }
+      .pipeline-step { border-right: none; border-bottom: 1px solid var(--border); }
       section { padding: 4rem 1.5rem; }
     }
   </style>
@@ -170,9 +213,10 @@
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
       <li><a href="#overview">Overview</a></li>
-      <li><a href="#modes">Modes</a></li>
-      <li><a href="#flow">Flow</a></li>
+      <li><a href="#quant">Quant Engine</a></li>
+      <li><a href="#architecture">Architecture</a></li>
       <li><a href="#telegram">Telegram</a></li>
+      <li><a href="#challenges">Challenges</a></li>
       <li><a href="#stack">Stack</a></li>
     </ul>
   </div>
@@ -180,124 +224,350 @@
 
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">Fitness Tracking &times; Telegram Bot</span>
+    <div class="hero-label">Fitness Tracking &times; Quant Metaphor &times; Telegram Bot</div>
     <h1>Iron Quant</h1>
-    <p class="hero-sub">
-      웹과 텔레그램을 함께 사용하는 단일 사용자 운동 기록 앱.<br>
-      목표 모드에 맞는 추천을 받고, 기록을 빠르게 남기세요.
-    </p>
+    <p class="hero-sub">운동을 투자로 비유하는 단일 사용자 피트니스 트래커.<br/>텍스트 한 줄로 기록하면 1RM 추정, 포트폴리오 분석, 투자 의견까지 자동으로 계산합니다.</p>
+
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">운동 모드</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">입력 채널 (웹 + TG)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">자동 분석 지표</span></div>
+      <div>
+        <span class="hero-stat-num">10+</span>
+        <span class="hero-stat-label">Telegram 명령어</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">Epley</span>
+        <span class="hero-stat-label">1RM 추정 공식</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">Offline</span>
+        <span class="hero-stat-label">First Architecture</span>
+      </div>
     </div>
-    <a href="https://github.com/soccz/self_exercise" target="_blank" class="hero-link">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      Source Code
-    </a>
+
+    <div class="hero-links">
+      <a href="https://self-exercise.vercel.app" class="hero-link primary">Iron Quant 열기</a>
+      <a href="https://github.com/soccz/self_exercise" class="hero-link">Source</a>
+    </div>
   </div>
-  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+  <div class="scroll-ind">SCROLL</div>
 </section>
+
 <hr class="divider">
 
-<section id="overview"><div class="container fade-in">
-  <div class="section-label">Overview</div>
-  <h2 class="section-title">프로젝트 개요</h2>
-  <p class="section-desc">Iron Quant는 감량 모드와 근육 모드를 지원하는 단일 사용자 운동 기록 앱입니다. 웹 앱에서 상세 분석을, 텔레그램에서 빠른 기록을 남길 수 있습니다. 목표에 맞는 추천과 자동 분석이 핵심입니다.</p>
-  <div class="card-grid">
-    <div class="card"><div class="card-title">목표 기반 추천</div><div class="card-text">감량 모드에서는 유산소 시간과 회복 중심으로, 근육 모드에서는 중량과 볼륨 중심으로 오늘의 운동을 추천합니다.</div></div>
-    <div class="card"><div class="card-title">듀얼 입력 채널</div><div class="card-text">웹 앱에서 여러 줄 텍스트 입력 또는 텔레그램 고정 버튼으로 빠르게 기록. 동기화 상태를 실시간으로 확인할 수 있습니다.</div></div>
-    <div class="card"><div class="card-title">자동 분석</div><div class="card-text">최근 기록, 주간 요약, 1RM 추적 등을 자동으로 계산합니다. CSV/JSON 내보내기도 지원합니다.</div></div>
-  </div>
-</div></section>
-<hr class="divider">
+<section id="overview">
+  <div class="container">
+    <div class="section-label">Overview</div>
+    <h2 class="section-title">운동을 자산으로 관리하다</h2>
+    <p class="section-desc">Iron Quant는 운동 기록을 금융 투자에 비유합니다. 몸의 근력은 자산 포트폴리오, 각 운동은 매매, 앱은 개인 퀀트 애널리스트입니다. <code>스쿼트 100 5 5</code> 한 줄이면 볼륨, 추정 시간, 칼로리, 1RM까지 자동 계산됩니다.</p>
 
-<section id="modes"><div class="container fade-in">
-  <div class="section-label">Modes</div>
-  <h2 class="section-title">감량 vs 근육</h2>
-  <p class="section-desc">두 가지 모드에 따라 홈 화면의 핵심 지표, 추천 방향, 기록 템플릿이 달라집니다.</p>
-  <div class="mode-grid">
-    <div class="mode-card">
-      <div class="mode-label">Fat Loss Mode</div>
-      <div class="mode-title">감량 모드</div>
-      <ul class="mode-list">
-        <li>홈: 주간 유산소 목표 진행률, 칼로리</li>
-        <li>추천: 유산소 시간 / 회복 중심</li>
-        <li>입력 예시: 러닝머신 30분 8km/h 경사 1</li>
-        <li>입력 예시: 사이클 35분 20km/h</li>
-      </ul>
-    </div>
-    <div class="mode-card">
-      <div class="mode-label">Muscle Gain Mode</div>
-      <div class="mode-title">근육 모드</div>
-      <ul class="mode-list">
-        <li>홈: 3대 1RM, 자산 지표</li>
-        <li>추천: 중량 / 볼륨 중심</li>
-        <li>입력 예시: 스쿼트 100 5 5</li>
-        <li>입력 예시: 벤치 60x10x5 @9</li>
-      </ul>
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="card-label">Text Parsing</div>
+        <h3 class="card-title">자연어 운동 입력</h3>
+        <p class="card-text"><code>벤치 60 10 5 @9</code> 형태로 입력하면 종목, 중량, 횟수, 세트, RPE를 자동 파싱합니다. 웹과 텔레그램 모두 동일한 파서를 사용하며, 미리보기로 파싱 결과를 바로 확인할 수 있습니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1RM Estimation</div>
+        <h3 class="card-title">Epley 공식 기반 1RM</h3>
+        <p class="card-text">Big 3(스쿼트, 벤치, 데드리프트)의 1RM을 Epley 공식으로 추정합니다. 12회 이상 고반복 세트의 과대 추정을 방지하기 위해 rep clamp를 적용하며, PR은 최대값만 유지됩니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Portfolio Analysis</div>
+        <h3 class="card-title">투자 의견 자동 생성</h3>
+        <p class="card-text">최근 5회 운동을 분석해 상/하체 볼륨 불균형, 비활동 경고(4일+), 과훈련 감지(평균 RPE > 8.5)를 수행합니다. 결과는 Buy/Hold/Sell 형태의 투자 의견으로 전달됩니다.</p>
+      </div>
     </div>
   </div>
-</div></section>
+</section>
+
 <hr class="divider">
 
-<section id="flow"><div class="container fade-in">
-  <div class="section-label">User Flow</div>
-  <h2 class="section-title">사용 흐름</h2>
-  <p class="section-desc">목표 설정부터 추세 확인까지, 반복되는 루프 구조입니다.</p>
-  <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">목표 모드 선택</div><div class="flow-desc">감량 또는<br>근육 모드</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">오늘 추천 확인</div><div class="flow-desc">모드 기반<br>운동 추천</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">기록 입력</div><div class="flow-desc">웹 또는<br>텔레그램</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">분석 & 추세</div><div class="flow-desc">자동 분석<br>주간 요약</div></div>
+<section id="quant">
+  <div class="container">
+    <div class="section-label">Quant Engine</div>
+    <h2 class="section-title">퀀트 분석 시스템</h2>
+    <p class="section-desc">총 자산 가치(Total Asset Value)는 3대 운동 1RM의 가중합으로 계산됩니다. 벤치프레스에는 1.2x 가중치가 적용되며, 이 값에 10을 곱해 직관적인 "자산" 수치를 만듭니다.</p>
+
+    <div class="code-block fade-in">
+<pre><span class="cm">// 총 자산 가치 계산</span>
+<span class="kw">const</span> totalAsset <span class="op">=</span> (
+  user.estimated_1rm_squat  <span class="op">*</span> <span class="nu">1.0</span> <span class="op">+</span>
+  user.estimated_1rm_bench  <span class="op">*</span> <span class="nu">1.2</span> <span class="op">+</span>
+  user.estimated_1rm_dead   <span class="op">*</span> <span class="nu">1.0</span>
+) <span class="op">*</span> <span class="nu">10</span>;
+
+<span class="cm">// Epley 1RM 추정 (rep clamp 적용)</span>
+<span class="kw">function</span> <span class="fn">estimate1RM</span>(weight, reps) {
+  <span class="kw">const</span> clampedReps <span class="op">=</span> Math.<span class="fn">min</span>(reps, <span class="nu">12</span>);
+  <span class="kw">return</span> weight <span class="op">*</span> (<span class="nu">1</span> <span class="op">+</span> clampedReps <span class="op">/</span> <span class="nu">30</span>);
+}</pre>
+    </div>
+
+    <h3 class="section-title" style="margin-top: 3rem;">포트폴리오 분석 파이프라인</h3>
+
+    <div class="pipeline fade-in">
+      <div class="pipeline-row">
+        <div class="pipeline-step">데이터 수집</div>
+        <div class="pipeline-detail">최근 5회 운동의 logs, RPE, 날짜를 Supabase에서 조회</div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-step">섹터 분석</div>
+        <div class="pipeline-detail">상체/하체 볼륨 비율 계산 &mdash; 불균형 시 <code>sector_imbalance</code> 경고</div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-step">시장 감시</div>
+        <div class="pipeline-detail">마지막 운동일 기준 4일 이상 공백 감지 &mdash; <code>market_crash_warning</code></div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-step">변동성 체크</div>
+        <div class="pipeline-detail">평균 RPE &gt; 8.5일 때 과훈련 의심 &mdash; <code>volatility_check</code></div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-step">투자 의견</div>
+        <div class="pipeline-detail">분석 결과를 종합하여 Buy / Hold / Sell 형태의 <code>AssetAdvice[]</code> 배열 반환</div>
+      </div>
+    </div>
+
+    <div class="mode-grid fade-in">
+      <div class="mode-card">
+        <div class="mode-label">Buy Signal</div>
+        <div class="mode-title">볼륨 증가 추천</div>
+        <ul class="mode-list">
+          <li>충분한 회복 기간 확보</li>
+          <li>RPE 여유 (평균 &lt; 7)</li>
+          <li>섹터 균형 양호</li>
+          <li>중량 또는 세트 수 증가 권장</li>
+        </ul>
+      </div>
+      <div class="mode-card">
+        <div class="mode-label">Sell Signal</div>
+        <div class="mode-title">회복 우선 추천</div>
+        <ul class="mode-list">
+          <li>과훈련 징후 (RPE &gt; 8.5)</li>
+          <li>연속 고강도 세션</li>
+          <li>특정 섹터 과부하</li>
+          <li>경량 or 휴식일 권장</li>
+        </ul>
+      </div>
+    </div>
   </div>
-</div></section>
+</section>
+
 <hr class="divider">
 
-<section id="telegram"><div class="container fade-in">
-  <div class="section-label">Telegram</div>
-  <h2 class="section-title">텔레그램 봇 명령어</h2>
-  <p class="section-desc">고정 버튼 6개와 슬래시 명령어로 빠르게 기록하고 조회합니다. cron 브리핑 메시지에서도 동일한 버튼이 유지됩니다.</p>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>명령어</th><th>설명</th></tr></thead>
-      <tbody>
-        <tr><td>/status</td><td>현재 상태 리포트</td></tr>
-        <tr><td>/rec</td><td>오늘 추천</td></tr>
-        <tr><td>/mode fat|muscle</td><td>모드 전환</td></tr>
-        <tr><td>/cond sleep 7 fatigue 4 ...</td><td>오늘 컨디션 입력</td></tr>
-        <tr><td>/last</td><td>마지막 운동 조회</td></tr>
-        <tr><td>/edit ...</td><td>마지막 운동 수정</td></tr>
-        <tr><td>/undo</td><td>마지막 운동 삭제</td></tr>
-        <tr><td>/export csv|json</td><td>데이터 내보내기</td></tr>
-        <tr><td>/remind ...</td><td>리마인더 설정</td></tr>
-        <tr><td>/debug</td><td>연결 상태 점검</td></tr>
-      </tbody>
-    </table>
+<section id="architecture">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">시스템 구조</h2>
+    <p class="section-desc">단일 사용자(ID: <code>"me"</code>) 설계입니다. <code>DataProvider</code> 인터페이스가 저장소를 추상화하며, 웹 UI는 API 라우트를 경유하고 텔레그램은 웹훅으로 직접 Supabase에 접근합니다.</p>
+
+    <div class="arch fade-in">
+      <div class="arch-col">
+        <div class="arch-col-title">Web UI</div>
+        <div class="arch-item">React Context (DataContext)</div>
+        <div class="arch-item">SupabaseDataProvider</div>
+        <div class="arch-item">/api/workouts, /api/user</div>
+        <div class="arch-item">service_role key (RLS 우회)</div>
+        <div class="arch-item">Offline queue (localStorage)</div>
+        <div class="arch-item">HMAC-SHA256 앱 잠금</div>
+      </div>
+      <div class="arch-col">
+        <div class="arch-col-title">Telegram Bot</div>
+        <div class="arch-item">Webhook &rarr; /api/telegram</div>
+        <div class="arch-item">텍스트 파싱 (동일 파서)</div>
+        <div class="arch-item">Supabase admin client 직접</div>
+        <div class="arch-item">Rate limit (30 req/min)</div>
+        <div class="arch-item">Secret token 검증</div>
+        <div class="arch-item">인라인 키보드 버튼</div>
+      </div>
+      <div class="arch-col">
+        <div class="arch-col-title">Automation</div>
+        <div class="arch-item">GitHub Actions cron (10분)</div>
+        <div class="arch-item">/api/cron/remind 호출</div>
+        <div class="arch-item">사용자 timezone 기반 판단</div>
+        <div class="arch-item">일일 중복 방지 (날짜 비교)</div>
+        <div class="arch-item">Telegram 메시지 전송</div>
+        <div class="arch-item">리마인더 on/off/시간 설정</div>
+      </div>
+    </div>
+
+    <h3 class="section-title" style="margin-top: 3rem;">데이터 흐름</h3>
+
+    <div class="pipeline fade-in">
+      <div class="pipeline-row">
+        <div class="pipeline-step">웹 입력</div>
+        <div class="pipeline-detail">WorkoutLogger &rarr; DataContext &rarr; SupabaseDataProvider &rarr; <code>/api/workouts</code> &rarr; Supabase</div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-step">TG 입력</div>
+        <div class="pipeline-detail">사용자 메시지 &rarr; Telegram Webhook &rarr; <code>/api/telegram</code> &rarr; Supabase admin client</div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-step">PR 갱신</div>
+        <div class="pipeline-detail">운동 저장 후 <code>applyBig3Prs()</code> 실행 &mdash; 1RM 최대값만 유지 (append-only)</div>
+      </div>
+      <div class="pipeline-row">
+        <div class="pipeline-step">오프라인</div>
+        <div class="pipeline-detail">네트워크 실패 시 localStorage 큐에 적재 (최대 50건) &rarr; 재연결 시 oldest-first 플러시</div>
+      </div>
+    </div>
+
+    <div class="callout fade-in">
+      <div class="callout-label">Offline Queue</div>
+      <p>workout add, delete, user patch를 각각 큐에 쌓습니다. 같은 유저 프로필에 대한 여러 오프라인 수정은 하나의 큐 아이템으로 병합되어 불필요한 요청을 줄입니다. UI에서는 프로필 페이지에 큐 사이즈를 표시합니다.</p>
+    </div>
   </div>
-</div></section>
+</section>
+
 <hr class="divider">
 
-<section id="stack"><div class="container fade-in">
-  <div class="section-label">Stack</div>
-  <h2 class="section-title">기술 스택</h2>
-  <div class="tech-grid" style="margin-top:1.5rem;">
-    <div class="tech-item"><div class="tech-cat">Frontend</div><ul class="tech-list"><li>Next.js</li><li>React</li><li>반응형 웹 앱</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Backend</div><ul class="tech-list"><li>Next.js API Routes</li><li>Supabase (PostgreSQL)</li><li>Telegram Bot API</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Automation</div><ul class="tech-list"><li>GitHub Actions (cron)</li><li>브리핑 / 주간 / 월간 알림</li><li>리마인더 시스템</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Deploy</div><ul class="tech-list"><li>Vercel</li><li>Supabase Cloud</li><li>Telegram Webhook</li></ul></div>
-  </div>
-</div></section>
+<section id="telegram">
+  <div class="container">
+    <div class="section-label">Telegram Bot</div>
+    <h2 class="section-title">텔레그램 인터페이스</h2>
+    <p class="section-desc">슬래시 명령어와 일반 텍스트 입력 모두 지원합니다. 일반 텍스트(예: <code>벤치 60 10 5</code>)를 보내면 운동 기록으로 자동 인식하여 저장합니다.</p>
 
-<footer><div class="footer-text">
-  Iron Quant &mdash; 운동 기록 앱<br>
-  <a href="https://github.com/soccz/self_exercise" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
-</div></footer>
+    <div class="tbl-wrap fade-in">
+      <table>
+        <thead>
+          <tr>
+            <th>명령어</th>
+            <th>별칭</th>
+            <th>설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/status</code></td><td><code>자산</code></td><td>총 자산 가치, 체중, Big 3 1RM, 투자 의견 리포트</td></tr>
+          <tr><td><code>/rec</code></td><td><code>추천</code></td><td>포트폴리오 분석 기반 오늘의 운동 추천</td></tr>
+          <tr><td><code>/name &lt;이름&gt;</code></td><td></td><td>디스플레이 이름 변경</td></tr>
+          <tr><td><code>/last</code></td><td></td><td>마지막 운동 상세 조회 (종목, 볼륨, RPE)</td></tr>
+          <tr><td><code>/undo</code></td><td></td><td>마지막 운동 삭제 (30분 이내, <code>/undo!</code>로 강제)</td></tr>
+          <tr><td><code>/edit &lt;텍스트&gt;</code></td><td></td><td>마지막 운동 수정 (30분 이내)</td></tr>
+          <tr><td><code>/export csv|json</code></td><td></td><td>전체 운동 데이터를 파일로 내보내기</td></tr>
+          <tr><td><code>/recompute</code></td><td></td><td>전체 히스토리에서 Big 3 PR 재계산</td></tr>
+          <tr><td><code>/remind</code></td><td></td><td>리마인더 on/off/time/timezone 설정</td></tr>
+          <tr><td><code>/debug</code></td><td></td><td>연결 진단 (DB, webhook, 환경변수 상태)</td></tr>
+          <tr><td><em>일반 텍스트</em></td><td></td><td><code>스쿼트 100 5 5</code> &mdash; 운동으로 자동 인식 및 저장</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-block fade-in">
+<pre><span class="cm">// 텍스트 파싱 예시: "벤치 60 10 5 @9"</span>
+<span class="cm">//   → name: "벤치", weight: 60, reps: 10, sets: 5, rpe: 9</span>
+
+<span class="cm">// /status 응답 예시</span>
+<span class="st">"총 자산: 4,320"</span>
+<span class="st">"  스쿼트 1RM: 120kg"</span>
+<span class="st">"  벤치   1RM:  80kg (×1.2 = 96)"</span>
+<span class="st">"  데드   1RM: 140kg"</span>
+<span class="st">"투자 의견: HOLD — 섹터 균형 양호, 현 볼륨 유지"</span></pre>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="challenges">
+  <div class="container">
+    <div class="section-label">Engineering Details</div>
+    <h2 class="section-title">설계 결정과 구현 디테일</h2>
+    <p class="section-desc">단일 사용자 앱이지만 보안, 오프라인 대응, 데이터 무결성에서 의도적인 설계 결정이 있습니다.</p>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="card-label">Security</div>
+        <h3 class="card-title">HMAC-SHA256 앱 잠금</h3>
+        <p class="card-text">로그인 시스템 대신 공유 시크릿 기반 쿠키 인증을 사용합니다. <code>crypto.timingSafeEqual</code>로 타이밍 공격을 방지하며, 헤더(<code>x-app-secret</code>)와 쿠키 두 경로를 모두 지원합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Data Integrity</div>
+        <h3 class="card-title">PR은 최대값만 유지</h3>
+        <p class="card-text">1RM PR은 append-only로 단일 운동이 기존 값을 낮출 수 없습니다. 전체 히스토리 기반 재계산이 필요하면 <code>/recompute</code> 명령어로 명시적으로 실행합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Rate Limiting</div>
+        <h3 class="card-title">인메모리 토큰 버킷</h3>
+        <p class="card-text">Telegram 웹훅은 채팅당 30 req/min, cron 엔드포인트는 IP당 60 req/min으로 제한합니다. 서버리스 환경에서도 cold start 간 리셋되는 수준의 방어입니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Observability</div>
+        <h3 class="card-title">Request ID 트레이싱</h3>
+        <p class="card-text">모든 API 응답에 <code>x-request-id</code> 헤더를 포함합니다. 텔레그램 봇의 <code>/debug</code> 명령어로 DB 연결, 웹훅 상태, 환경변수를 한번에 진단할 수 있습니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Cron Dedup</div>
+        <h3 class="card-title">리마인더 중복 방지</h3>
+        <p class="card-text">GitHub Actions가 10분마다 실행되지만, <code>telegram_last_reminded_date</code> 컬럼과 사용자 timezone 기반 10분 윈도우 체크로 하루에 한 번만 알림을 전송합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Calorie Estimation</div>
+        <h3 class="card-title">MET 기반 칼로리 계산</h3>
+        <p class="card-text">사용자 체중, 추정 운동 시간, RPE를 조합한 MET(Metabolic Equivalent of Task) 기반 칼로리 추정입니다. 별도 센서 없이 입력 데이터만으로 근사합니다.</p>
+      </div>
+    </div>
+
+    <div class="callout fade-in" style="margin-top: 2rem;">
+      <div class="callout-label">Design Philosophy</div>
+      <p>전체 UX 언어가 금융 투자 메타포로 통일되어 있습니다. 상/하체 볼륨 분석은 "섹터 분석", 장기간 미운동은 "시장 폭락 경고", 과훈련은 "변동성 체크"로 표현합니다. Toss 스타일 디자인 시스템(커스텀 컬러 토큰, 다크 모드)을 적용했으며 PWA로도 동작합니다.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="stack">
+  <div class="container">
+    <div class="section-label">Stack</div>
+    <h2 class="section-title">기술 스택</h2>
+
+    <div class="tbl-wrap fade-in">
+      <table>
+        <thead>
+          <tr>
+            <th>분류</th>
+            <th>기술</th>
+            <th>용도</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>프레임워크</td><td>Next.js (App Router)</td><td>SSR, API 라우트, 정적 빌드</td></tr>
+          <tr><td>UI</td><td>React 19 + Tailwind CSS 4</td><td>컴포넌트 기반 UI, 유틸리티 스타일링</td></tr>
+          <tr><td>애니메이션</td><td>Framer Motion</td><td>페이지 전환, 카드 인터랙션</td></tr>
+          <tr><td>차트</td><td>Recharts</td><td>운동 통계 시각화</td></tr>
+          <tr><td>데이터베이스</td><td>Supabase (PostgreSQL)</td><td>운동 기록, 사용자 프로필, PR 저장</td></tr>
+          <tr><td>봇</td><td>Telegram Bot API</td><td>웹훅 모드, 텍스트 파싱, 파일 전송</td></tr>
+          <tr><td>자동화</td><td>GitHub Actions</td><td>10분 주기 cron 리마인더</td></tr>
+          <tr><td>배포</td><td>Vercel</td><td>프로덕션 호스팅, 엣지 함수</td></tr>
+          <tr><td>언어</td><td>TypeScript 5</td><td>전체 코드베이스 타입 안전성</td></tr>
+          <tr><td>아이콘</td><td>Lucide React</td><td>일관된 아이콘 시스템</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-text">
+    Iron Quant &mdash; Personal Quant for Your Fitness<br/>
+    <a href="https://self-exercise.vercel.app">서비스 열기</a> &middot;
+    <a href="https://github.com/soccz/self_exercise">GitHub</a> &middot;
+    <a href="/">Home</a>
+  </p>
+</footer>
 
 <script>
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
+
 </body>
 </html>
