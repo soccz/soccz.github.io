@@ -116,6 +116,17 @@
     .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
 
+    .journey-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .journey-step {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.5rem 1.2rem; text-align: center; position: relative;
+      transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .journey-step:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .journey-num { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .journey-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .journey-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+
     .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
     .flow-step {
       flex: 1; min-width: 160px; background: var(--bg-card); border: 1px solid var(--border);
@@ -155,8 +166,15 @@
     .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
     .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
 
+    .quote-block {
+      background: var(--bg-secondary); border-radius: 8px; padding: 2rem 2.5rem; margin: 2rem 0;
+      border-left: 3px solid var(--border-light);
+    }
+    .quote-block p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.9; font-style: italic; }
+    .quote-block .quote-src { font-style: normal; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.8rem; }
+
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
-    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
     @media (max-width: 768px) {
@@ -174,29 +192,33 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#agents">Agents</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#stack">Stack</a></li>
+      <li><a href="#starting-point">출발점</a></li>
+      <li><a href="#questions">질문들</a></li>
+      <li><a href="#design">설계</a></li>
+      <li><a href="#result">결과물</a></li>
+      <li><a href="#learned">배운 것</a></li>
+      <li><a href="#stack">기술</a></li>
     </ul>
   </div>
 </nav>
 
+<!-- ======================================== -->
+<!-- HERO -->
+<!-- ======================================== -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">AI Hackathon &times; Multi-Agent System</span>
-    <h1>청년 안심 주거 코디네이터</h1>
+    <span class="hero-label">Multi-Agent System &times; LangGraph &times; RAG</span>
+    <h1>처음 집을 구하는 사람 옆에<br>AI가 있다면</h1>
     <p class="hero-sub">
-      집 구하기부터 계약, 그리고 혜택까지.<br>
-      5명의 AI 에이전트가 떠먹여주는 청년 주거 토탈 케어.<br>
-      2026 서강대 AI Winter Camp 해커톤 출품작.
+      부동산 지식이 전혀 없는 사회초년생이<br>
+      혜택 검색부터 계약 안전 진단, 협상, 입주까지<br>
+      혼자서도 전문가처럼 해낼 수 있게 만드는 시스템을 고민했습니다.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">AI 에이전트</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">팀원</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">90%</span><span class="hero-stat-label">API 비용 절감</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">30x</span><span class="hero-stat-label">응답 속도 향상</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">9</span><span class="hero-stat-label">페이지</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">15</span><span class="hero-stat-label">정부 혜택 매칭</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">KO/EN</span><span class="hero-stat-label">다국어</span></div>
     </div>
     <a href="https://github.com/soccz/young-and-home" target="_blank" class="hero-link">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -207,113 +229,237 @@
 </section>
 <hr class="divider">
 
-<section id="overview"><div class="container fade-in">
-  <div class="section-label">Overview</div>
-  <h2 class="section-title">Information Asymmetry Zero</h2>
-  <p class="section-desc">부동산 지식이 없는 사회초년생도, AI와 함께라면 전문가처럼. 단순한 매물 검색을 넘어, 계약 안전 진단부터 집주인과의 협상, 숨겨진 금융 혜택까지 전 과정을 5명의 AI 에이전트가 코디네이팅합니다.</p>
-  <div class="card-grid">
-    <div class="card"><div class="card-title">실질 비용 계산</div><div class="card-text">"월세 50만원" 집이 내 조건(연소득, 자산, 나이)에서 정부 지원 대출과 보조금을 적용하면 "실질 월세 12만원"이 되는 마법을 보여줍니다.</div></div>
-    <div class="card"><div class="card-title">계약 안전 진단</div><div class="card-text">등기부등본 PDF를 업로드하면 소유자 일치 여부, 근저당 비율, 경매 위험도를 AI가 자동 분석합니다. 독소 조항도 탐지합니다.</div></div>
-    <div class="card"><div class="card-title">24시간 감시</div><div class="card-text">n8n + Notion 연동으로 관심 지역의 공고를 24시간 모니터링합니다. Slack 알림과 Notion 대시보드에 실시간 적재됩니다.</div></div>
+<!-- ======================================== -->
+<!-- 1. 출발점 — 이 프로젝트를 시작한 이유 -->
+<!-- ======================================== -->
+<section id="starting-point"><div class="container fade-in">
+  <div class="section-label">Starting Point</div>
+  <h2 class="section-title">뭘 모르는지도 모르는 상태</h2>
+  <p class="section-desc">처음 자취를 알아보면서 느낀 건, 부동산 시장의 정보 비대칭이 구조적이라는 것이었습니다. 집주인과 중개사는 수십 번 해본 거래를, 나는 태어나서 처음 합니다. 뭘 물어봐야 하는지조차 모르니까, "괜찮아 보이는데?" 하고 넘어갈 수밖에 없습니다.</p>
+
+  <div class="quote-block">
+    <p>"월세 50만원"이라고 적힌 매물. 그런데 내가 중소기업에 다니는 만 28세라면, 중기청 전세대출(금리 1.2%)로 전세 전환이 가능하고, 청년월세지원(월 20만원)까지 더하면 실질 부담은 완전히 다른 숫자가 됩니다. 이걸 아는 사람과 모르는 사람의 격차가 매달 수십만원입니다.</p>
+    <div class="quote-src">그 격차를 기술로 줄일 수 있지 않을까?</div>
+  </div>
+
+  <div class="card-grid" style="margin-top: 2rem;">
+    <div class="card">
+      <div class="card-title">검색으로 끝나지 않는 문제</div>
+      <div class="card-text">매물을 찾는 건 시작일 뿐입니다. 등기부등본은 어떻게 읽어? 근저당이 높으면 뭐가 위험해? 전세보증보험은 꼭 들어야 해? 집주인한테 뭐라고 말해야 해? 각 단계마다 전혀 다른 종류의 지식이 필요합니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">흩어져 있는 혜택</div>
+      <div class="card-text">청년 주거 지원 제도가 15개 넘게 있지만, 내 나이 &middot; 소득 &middot; 자산 &middot; 직장 유형에 따라 받을 수 있는 게 다릅니다. 조건을 하나하나 대조하는 건 사람이 할 일이 아니라, 시스템이 할 일이라고 생각했습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">사후 대응의 부재</div>
+      <div class="card-text">깡통전세 피해 뉴스를 보면, 사전에 알 수 있었던 신호가 있었던 경우가 대부분입니다. 등기부의 근저당 비율, 소유자-임대인 불일치, 경매 진행 이력. 문서를 읽을 줄 알기만 하면 피할 수 있는 위험이 많았습니다.</div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="agents"><div class="container fade-in">
-  <div class="section-label">Multi-Agent System</div>
-  <h2 class="section-title">5명의 AI 에이전트</h2>
-  <p class="section-desc">하나의 문제를 5명의 전문가가 동시에 바라봅니다. 단순한 LLM 래퍼가 아니라, 각기 다른 전문성을 가진 에이전트들이 LangGraph 위에서 협업하는 Multi-Agent System입니다.</p>
+<!-- ======================================== -->
+<!-- 2. 질문들 — 무엇을 공부하고 싶었는가 -->
+<!-- ======================================== -->
+<section id="questions"><div class="container fade-in">
+  <div class="section-label">Questions</div>
+  <h2 class="section-title">이걸 만들면서 공부하고 싶었던 것들</h2>
+  <p class="section-desc">단순히 문제를 해결하는 것만큼, 어떻게 해결할 것인가에 관심이 있었습니다. 이 프로젝트는 네 가지 기술적 질문에 대한 실험이기도 합니다.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">하나의 거대한 프롬프트 vs 여러 전문가</div>
+      <div class="card-text">GPT에게 "집 구하기 전체를 도와줘"라고 하면 어중간한 답이 나옵니다. 대신 매물 추천 &middot; 안전 진단 &middot; 금융 계산 &middot; 법률 상담 &middot; 협상 보조를 각각 독립된 에이전트로 나누면? Multi-Agent System이 단일 LLM보다 실질적으로 나은지 직접 확인하고 싶었습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">RAG가 정말 검색보다 나은가</div>
+      <div class="card-text">15개 정부 혜택을 단순 조건 필터로도 매칭할 수 있습니다. 그런데 "나 대학원생인데 돈이 없어"처럼 비정형 입력이 들어오면? 키워드 매칭은 한계가 있고, 의미 기반 벡터 검색이 필요해집니다. ChromaDB + 한국어 임베딩(ko-sbert)의 실제 성능을 테스트했습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">LLM 비용을 어디까지 줄일 수 있는가</div>
+      <div class="card-text">학생 프로젝트에서 API 비용은 현실적인 제약입니다. 모든 에이전트를 gpt-4o-mini(temperature 0)로 통일하고, 임베딩은 무료 로컬 모델, 금융 계산은 API 없이 로컬에서, 자가진단은 순수 연산으로. "LLM이 꼭 필요한 곳에만 LLM을 쓴다"는 원칙을 세웠습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">"긴 여정"을 하나의 앱으로 담을 수 있는가</div>
+      <div class="card-text">집 구하기는 한 번의 검색이 아니라, 몇 주에 걸친 여정입니다. 온보딩에서 프로필을 수집하고, 이후 9개 페이지가 그 맥락을 공유하며 동작하는 구조. session_state 기반 상태 관리로 페이지 간 데이터를 이어붙이는 설계를 고민했습니다.</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- ======================================== -->
+<!-- 3. 설계 — 어떻게 접근했는가 -->
+<!-- ======================================== -->
+<section id="design"><div class="container fade-in">
+  <div class="section-label">Design Decisions</div>
+  <h2 class="section-title">그래서 이렇게 설계했습니다</h2>
+  <p class="section-desc">5명의 에이전트가 각자의 전문 분야를 담당하고, LangGraph의 StateGraph 위에서 상태를 넘기며 추론합니다. 하나의 에이전트 안에서도 4단계 노드(수집 &rarr; 분석 &rarr; 검증 &rarr; 생성)가 순서대로 실행됩니다.</p>
+
   <div class="agent-grid">
     <div class="agent-card">
       <div class="agent-num">Agent 1 &mdash; Recommender</div>
-      <div class="agent-title">매물 추천 에이전트</div>
-      <div class="agent-desc">사용자의 예산, 통근 거리, 선호 조건을 분석하여 최적의 매물을 추천합니다. RAG 기반 검색으로 정확한 매칭을 수행합니다.</div>
-      <div class="tags"><span class="tag">RAG</span><span class="tag">벡터 검색</span><span class="tag">조건 매칭</span></div>
+      <div class="agent-title">매물 + 혜택 추천</div>
+      <div class="agent-desc">나이, 소득, 자산, 직장 유형을 받아서 15개 정부 혜택 중 자격이 되는 것을 RAG로 매칭합니다. 동시에 35개 이상의 매물에서 예산 &middot; 통근 &middot; 위험도 기준으로 필터링하고, 서울 15개 구별 지역 가이드도 함께 보여줍니다.</div>
+      <div class="tags"><span class="tag">RAG</span><span class="tag">ChromaDB</span><span class="tag">ko-sbert</span><span class="tag">지역 가이드</span></div>
     </div>
     <div class="agent-card">
       <div class="agent-num">Agent 2 &mdash; Safety Analyzer</div>
-      <div class="agent-title">안전 진단 에이전트</div>
-      <div class="agent-desc">등기부등본, 계약서를 분석하여 근저당 비율, 소유자 일치 여부, 경매 위험도를 자동 진단합니다. 특약 사항의 독소 조항도 탐지합니다.</div>
-      <div class="tags"><span class="tag">PDF 파싱</span><span class="tag">위험도 스코어링</span><span class="tag">독소 조항 탐지</span></div>
+      <div class="agent-title">계약 안전 진단</div>
+      <div class="agent-desc">등기부등본 PDF를 업로드하면 4단계로 분석합니다. 데이터 추출 &rarr; 위험도 스코어링(근저당, 압류, 가처분) &rarr; 등기부-계약서 교차 검증(소유자 불일치 = 사기 징후) &rarr; 마크다운 리포트 생성. API 없이 쓸 수 있는 자가진단 탭과 SOS 긴급대응 탭도 만들었습니다.</div>
+      <div class="tags"><span class="tag">PDF 파싱</span><span class="tag">깡통전세 탐지</span><span class="tag">교차 검증</span><span class="tag">SOS</span></div>
     </div>
     <div class="agent-card">
       <div class="agent-num">Agent 3 &mdash; Negotiator</div>
-      <div class="agent-title">협상 보조 에이전트</div>
-      <div class="agent-desc">시세 데이터와 매물 조건을 기반으로 협상 전략을 제안합니다. 집주인과의 커뮤니케이션 템플릿도 생성합니다.</div>
-      <div class="tags"><span class="tag">시세 분석</span><span class="tag">협상 전략</span><span class="tag">템플릿 생성</span></div>
+      <div class="agent-title">협상 메시지 생성</div>
+      <div class="agent-desc">"집주인한테 뭐라고 말하지?"를 해결합니다. 전세보증보험 가입 요청, 특약 추가, 수리 요청, 조건 변경, 보증금 반환 내용증명까지 5종. 법적 근거가 포함된 정중하면서 단호한 톤으로, 복사해서 바로 보낼 수 있는 메시지를 만듭니다.</div>
+      <div class="tags"><span class="tag">5종 템플릿</span><span class="tag">법적 근거</span><span class="tag">내용증명</span></div>
     </div>
     <div class="agent-card">
-      <div class="agent-num">Agent 4 &mdash; Financial Agent</div>
-      <div class="agent-title">금융 계산 에이전트</div>
-      <div class="agent-desc">사용자의 연소득, 자산, 나이를 분석하여 적용 가능한 정부 지원 대출(중기청, 청년버팀목)과 보조금을 자동 계산합니다.</div>
-      <div class="tags"><span class="tag">대출 시뮬레이션</span><span class="tag">전세 vs 월세</span><span class="tag">실질 비용</span></div>
+      <div class="agent-num">Agent 4 &mdash; Financial Simulator</div>
+      <div class="agent-title">금융 시뮬레이션</div>
+      <div class="agent-desc">중기청(1.2%), 청년버팀목(1.8%), 일반버팀목(4.5%) 등 실제 대출 상품 시뮬레이션. DSR 진단, 전세 vs 월세 2년 총비용 비교, 생활비 시뮬레이션, 금융 용어 사전까지 5개 탭. API 호출 없이 로컬에서 전부 계산하도록 의도적으로 설계했습니다.</div>
+      <div class="tags"><span class="tag">대출 매칭</span><span class="tag">DSR</span><span class="tag">생활비 시뮬</span><span class="tag">API 불필요</span></div>
     </div>
     <div class="agent-card">
-      <div class="agent-num">Agent 5 &mdash; Monitor</div>
-      <div class="agent-title">실시간 감시 에이전트</div>
-      <div class="agent-desc">n8n 워크플로우와 연동하여 관심 지역의 매물 공고와 뉴스를 24시간 감시합니다. SHA256 해시 기반 Smart Filter로 API 비용을 90% 절감합니다.</div>
-      <div class="tags"><span class="tag">n8n</span><span class="tag">Smart Hash Filter</span><span class="tag">Notion 적재</span></div>
+      <div class="agent-num">Agent 5 &mdash; Legal Advisor</div>
+      <div class="agent-title">법률 상담 챗봇</div>
+      <div class="agent-desc">주택임대차보호법 전문 + 5건의 주요 판례를 지식 기반으로 답합니다. 보증금 반환, 월세 인상 한도, 수선 의무, 확정일자, HUG 보험, 깡통전세 대응 등 6개 FAQ를 사전 구성하고, 자유 질문도 채팅으로 받습니다.</div>
+      <div class="tags"><span class="tag">임대차보호법</span><span class="tag">판례 5건</span><span class="tag">FAQ 6종</span><span class="tag">채팅</span></div>
+    </div>
+  </div>
+
+  <div class="arch-block" style="margin-top: 1rem;">
+    <div class="arch-label">왜 5개로 나눴는가</div>
+    <p>하나의 프롬프트에 모든 지식을 넣으면, 맥락이 길어질수록 답변 품질이 떨어졌습니다. 에이전트별로 전문 분야를 한정하고, 시스템 프롬프트에 해당 도메인의 법률 &middot; 데이터 &middot; 판단 기준만 넣으니 정확도가 올라갔습니다. 트레이드오프는 에이전트 간 상태 전달의 복잡성인데, LangGraph의 StateGraph가 이 부분을 깔끔하게 처리해줬습니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- ======================================== -->
+<!-- 4. 결과물 — 실제로 만든 것 -->
+<!-- ======================================== -->
+<section id="result"><div class="container fade-in">
+  <div class="section-label">What I Built</div>
+  <h2 class="section-title">온보딩부터 입주까지, 9개 페이지</h2>
+  <p class="section-desc">처음 앱을 열면 4단계 온보딩 위저드가 사용자의 상황(신분, 소득, 자산, 주요 고민)을 파악하고, 그 사람에게 맞는 커스텀 로드맵을 자동 생성합니다. "사기가 걱정돼요"를 선택하면 안전 진단 중심으로, "예산이 부족해요"를 선택하면 금융 시뮬레이션 중심으로. 이후 모든 페이지가 이 프로필을 기반으로 동작합니다.</p>
+
+  <div class="journey-grid">
+    <div class="journey-step">
+      <div class="journey-num">01</div>
+      <div class="journey-title">온보딩</div>
+      <div class="journey-desc">신분 &middot; 소득 &middot; 자산 &middot; 고민<br>맞춤형 로드맵 생성</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">02</div>
+      <div class="journey-title">매물 + 혜택</div>
+      <div class="journey-desc">RAG 혜택 매칭<br>조건별 매물 추천</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">03</div>
+      <div class="journey-title">안전 진단</div>
+      <div class="journey-desc">등기부 AI 분석<br>자가진단 &middot; SOS</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">04</div>
+      <div class="journey-title">금융 계산</div>
+      <div class="journey-desc">대출 &middot; DSR &middot; 생활비<br>전세 vs 월세 비교</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">05</div>
+      <div class="journey-title">계약 준비</div>
+      <div class="journey-desc">협상 메시지 &middot; 법률 상담<br>5종 템플릿 &middot; 채팅</div>
+    </div>
+    <div class="journey-step">
+      <div class="journey-num">06</div>
+      <div class="journey-title">입주</div>
+      <div class="journey-desc">35항목 체크리스트<br>종합 리포트</div>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top: 2rem;">
+    <div class="card">
+      <div class="card-title">종합 리포트</div>
+      <div class="card-text">매물 하나를 선택하면 안전 진단 &rarr; 대출 시뮬레이션 &rarr; 생활비 분석 &rarr; 지역 가이드를 한 번에 생성합니다. 여러 페이지를 돌아다닐 필요 없이, 그 집에 대해 알아야 할 모든 것을 한 화면에서.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">35항목 체크리스트</div>
+      <div class="card-text">집보기(15항목: 구조, 배관, 전기, 환경) &rarr; 계약(11항목: 등기 확인, 보험, 특약) &rarr; 입주(9항목: 확정일자, 전입신고). 각 항목에 "왜 확인해야 하는지" 이유를 달았습니다. 경험 없는 사람도 빠뜨리지 않도록.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">서울 15구 지역 가이드</div>
+      <div class="card-text">평균 시세, 교통, 분위기, 안전 점수, 근처 대학교, 장단점 5개씩. "마포가 좋대" 같은 막연한 정보 대신, 구조화된 데이터로 비교할 수 있습니다. 매물 추천 결과에 지역 가이드가 함께 붙습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">다국어 (KO/EN)</div>
+      <div class="card-text">한국에서 집을 구하는 외국인 유학생도 타겟입니다. 95개 이상의 번역 키로 모든 UI를 한국어/영어 전환 가능하게 만들었습니다. 사이드바 토글 하나로 언어를 바꾸면 전체 앱이 반응합니다.</div>
     </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="architecture"><div class="container fade-in">
-  <div class="section-label">Architecture</div>
-  <h2 class="section-title">Hybrid Agentic Workflow</h2>
-  <p class="section-desc">실시간성이 중요한 '감시'는 n8n이, 깊이 있는 '추론'은 Python Backend가 담당하는 이중 구조입니다.</p>
-  <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">User Input</div><div class="flow-desc">Streamlit UI<br>조건 입력</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">Agent Router</div><div class="flow-desc">LangGraph<br>에이전트 라우팅</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">Agent 처리</div><div class="flow-desc">5개 에이전트<br>병렬 실행</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">결과 통합</div><div class="flow-desc">리포트 생성<br>알림 발송</div></div>
+<!-- ======================================== -->
+<!-- 5. 배운 것 — 기술적 판단과 회고 -->
+<!-- ======================================== -->
+<section id="learned"><div class="container fade-in">
+  <div class="section-label">What I Learned</div>
+  <h2 class="section-title">만들면서 알게 된 것들</h2>
+  <p class="section-desc">해커톤에서 첫 버전을 만들고, 이후 계속 고도화하면서 배운 것들입니다. 기술적 선택 뒤에는 항상 트레이드오프가 있었습니다.</p>
+
+  <div class="arch-block">
+    <div class="arch-label">에이전트 분리의 효과</div>
+    <p>하나의 프롬프트에 모든 것을 넣으면 "대략적으로 맞는 답"이 나옵니다. 에이전트를 분리하니 각 도메인에서 "정확하게 맞는 답"이 나왔습니다. 특히 안전 진단에서 교차 검증(등기부 소유자 vs 계약서 임대인) 같은 구체적 로직은 전담 에이전트가 아니면 빠뜨리기 쉽습니다.</p>
   </div>
 
   <div class="arch-block">
-    <div class="arch-label">Smart Hash Filter</div>
-    <p>들어오는 모든 데이터의 SHA256 해시를 생성하여 DB와 대조합니다(0.01초). 변화가 없으면 API 연산을 건너뛰고 DB에 저장된 과거의 Risk Score를 리턴합니다. 이를 통해 API 비용을 90% 절감하면서도 사용자에게는 언제나 유효한 점수를 보여줍니다.</p>
+    <div class="arch-label">RAG vs 규칙 기반의 경계</div>
+    <p>15개 혜택 매칭에서, 조건이 명확한 것(나이 19-34세, 소득 중위 60% 이하)은 규칙 기반 필터가 더 정확했습니다. 하지만 "돈이 없는 대학원생"처럼 비정형 입력이 들어오면 의미 기반 검색이 필요했습니다. 결국 RAG를 기본으로 하되, 키워드 기반 폴백을 두는 하이브리드 구조가 가장 안정적이었습니다.</p>
   </div>
 
   <div class="arch-block">
-    <div class="arch-label">SQLite Caching</div>
-    <p>가벼운 SQLite를 활용해 RAG 검색 결과와 금융 시뮬레이션 결과를 캐싱하여 응답 속도를 3초에서 0.1초로 단축했습니다.</p>
+    <div class="arch-label">LLM을 안 쓰는 것도 설계다</div>
+    <p>금융 시뮬레이터는 API를 한 번도 호출하지 않습니다. 대출 금리 계산, DSR 진단, 생활비 시뮬레이션은 수학 공식이지 언어 문제가 아닙니다. 깡통전세 자가진단도 근저당/시세 비율 계산이니까 순수 연산으로 충분합니다. "LLM이 필요한 곳"과 "규칙으로 되는 곳"을 구분하는 판단이 비용과 정확도 모두에 영향을 줬습니다.</p>
   </div>
 
-  <div class="verify-grid">
-    <div class="verify-card"><div class="verify-num">90%</div><div class="verify-label">API 비용 절감</div><div class="verify-sub">Smart Hash Filter</div></div>
-    <div class="verify-card"><div class="verify-num">0.1s</div><div class="verify-label">캐시 응답 속도</div><div class="verify-sub">SQLite Caching</div></div>
-    <div class="verify-card"><div class="verify-num">24/7</div><div class="verify-label">실시간 모니터링</div><div class="verify-sub">n8n + Notion</div></div>
-    <div class="verify-card"><div class="verify-num">5</div><div class="verify-label">전문 에이전트</div><div class="verify-sub">LangGraph 오케스트레이션</div></div>
+  <div class="arch-block">
+    <div class="arch-label">상태 관리가 UX를 결정한다</div>
+    <p>9개 페이지가 하나의 여정으로 느껴지려면, 온보딩에서 입력한 프로필이 모든 곳에서 살아있어야 합니다. Streamlit의 session_state로 페이지 간 데이터를 이어붙이고, 사이드바에서 프로필을 수정하면 즉시 반영되는 구조를 만들었습니다. 기술적으로 복잡하진 않지만, 이 흐름이 없으면 "9개 분리된 도구"가 됩니다.</p>
   </div>
-</div></section>
-<hr class="divider">
 
-<section id="features"><div class="container fade-in">
-  <div class="section-label">Key Features</div>
-  <h2 class="section-title">주요 기능</h2>
-  <p class="section-desc">복잡한 부동산 절차를 AI가 단순화합니다.</p>
-  <div class="card-grid">
-    <div class="card"><div class="card-title">안전 진단 (Safety Scan)</div><div class="card-text">등기부등본 PDF를 업로드하면 소유자 일치 여부, 근저당 비율, 경매 위험도를 분석합니다. 강제퇴거 조항 같은 독소 조항도 자동 탐지합니다.</div></div>
-    <div class="card"><div class="card-title">24시간 등기 모니터링</div><div class="card-text">n8n + Notion 연동으로 관심 지역의 공고를 24시간 감시합니다. 분석 결과는 Notion 데이터베이스에 실시간 적재되고, Markdown 리포트로 저장됩니다.</div></div>
-    <div class="card"><div class="card-title">금융 계산기 (Smart Calculator)</div><div class="card-text">전세 vs 월세 비교 시 대출 이자와 관리비까지 포함하여 2년 거주 총비용을 정확하게 계산합니다. 정부 지원 프로그램 자동 매칭.</div></div>
+  <div class="verify-grid" style="margin-top: 2rem;">
+    <div class="verify-card"><div class="verify-num">5</div><div class="verify-label">LangGraph 에이전트</div><div class="verify-sub">각 4-node 워크플로우</div></div>
+    <div class="verify-card"><div class="verify-num">15</div><div class="verify-label">정부 혜택 DB</div><div class="verify-sub">RAG + 규칙 하이브리드</div></div>
+    <div class="verify-card"><div class="verify-num">35+</div><div class="verify-label">서울 매물 데이터</div><div class="verify-sub">15개 구 커버</div></div>
+    <div class="verify-card"><div class="verify-num">0원</div><div class="verify-label">임베딩 비용</div><div class="verify-sub">ko-sbert 로컬 모델</div></div>
   </div>
 </div></section>
 <hr class="divider">
 
+<!-- ======================================== -->
+<!-- 6. 기술 스택 + 다음 단계 -->
+<!-- ======================================== -->
 <section id="stack"><div class="container fade-in">
   <div class="section-label">Stack</div>
   <h2 class="section-title">기술 스택</h2>
   <div class="tech-grid" style="margin-top:1.5rem;">
-    <div class="tech-item"><div class="tech-cat">AI / Agent</div><ul class="tech-list"><li>LangGraph (Multi-Agent)</li><li>OpenAI GPT</li><li>RAG (Vector Search)</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Backend</div><ul class="tech-list"><li>FastAPI</li><li>Python 3.10+</li><li>SQLite Caching</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Frontend</div><ul class="tech-list"><li>Streamlit</li><li>Glassmorphism UI</li><li>Card-based Layout</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Automation</div><ul class="tech-list"><li>n8n (Workflow)</li><li>Notion API</li><li>Slack Webhook</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Infrastructure</div><ul class="tech-list"><li>Docker Compose</li><li>Fault Tolerance</li><li>Auto Retry</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">AI / Agent</div><ul class="tech-list"><li>LangGraph (StateGraph)</li><li>OpenAI GPT-4o-mini</li><li>LangChain</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">RAG</div><ul class="tech-list"><li>ChromaDB (벡터 DB)</li><li>ko-sbert-nli (임베딩)</li><li>sentence-transformers</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Frontend</div><ul class="tech-list"><li>Streamlit</li><li>Glassmorphism UI</li><li>모바일 반응형</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Document</div><ul class="tech-list"><li>PyMuPDF (PDF 파싱)</li><li>GPT-4o-mini Vision</li><li>pytesseract (OCR)</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Data</div><ul class="tech-list"><li>JSON 기반 데이터셋</li><li>SQLite (리뷰 DB)</li><li>session_state (상태)</li></ul></div>
+  </div>
+
+  <div class="arch-block" style="margin-top: 2rem;">
+    <div class="arch-label">다음에 해보고 싶은 것</div>
+    <p>현재는 Streamlit 단독 구성입니다. FastAPI로 백엔드를 분리하면 에이전트 응답을 비동기로 처리할 수 있고, n8n 워크플로우(이미 설계 완료)를 연결하면 실시간 등기 변동 알림도 가능해집니다. 공공데이터 API를 연동해서 샘플이 아닌 실제 매물 데이터로 전환하는 것이 다음 목표입니다.</p>
   </div>
 </div></section>
 
+<!-- ======================================== -->
+<!-- FOOTER -->
+<!-- ======================================== -->
 <footer><div class="footer-text">
-  Young &amp; Home &mdash; 청년 안심 주거 코디네이터 &middot; 2026 서강대 AI Winter Camp Hackathon<br>
+  Young &amp; Home &mdash; 청년 안심 주거 코디네이터<br>
   <a href="https://github.com/soccz/young-and-home" target="_blank">GitHub</a> &middot; <a href="/">Home</a>
 </div></footer>
 
