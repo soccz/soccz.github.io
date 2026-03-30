@@ -176,15 +176,13 @@
       padding-top: var(--header-h);
       min-height: 0;
       opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
+      transition: opacity 0.35s ease;
       position: relative;
       z-index: 1;
     }
     .page.active {
       display: flex;
       opacity: 1;
-      transform: translateY(0);
     }
 
     /* ======== HOME PAGE ======== */
@@ -852,12 +850,11 @@
       </div>
     </footer>
   </main>
+  <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 </div>
-
-<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-</button>
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
 <script>
 const CATEGORIES = {
