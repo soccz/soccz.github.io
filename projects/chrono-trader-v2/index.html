@@ -432,6 +432,72 @@
     </div>
 
     <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2025 — 아키텍처 설계</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">왜 TCN이었나 — LSTM 대신 확장 인과 합성곱</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        CNN을 선택할 때 단순 1D Conv가 아니라 TCN(Temporal Convolutional Network)을 쓴 이유가 있었다. LSTM은 순차적으로 처리되기 때문에 병렬화가 안 되고, 긴 시퀀스에서 그래디언트 소실 문제가 있다. 반면 TCN은 dilated causal convolution을 사용한다 — dilation factor를 1, 2, 4, 8...로 늘리면 receptive field가 지수적으로 커지면서 168h 전체를 계층적으로 볼 수 있다. 그리고 인과 패딩(causal padding)으로 미래 정보가 과거를 오염시키지 않는다.<br><br>
+        더 중요한 건 Transformer와의 결합 방식이었다. TCN을 독립적으로 돌리는 게 아니라 Transformer의 attention weight로 입력을 가중한 뒤 TCN에 통과시키는 구조를 만들었다 — Attention-guided TCN. Transformer가 168h 중 어떤 시점이 중요한지 먼저 판단하고, TCN은 그 중요한 시점 주변의 로컬 패턴에 집중한다. 글로벌 컨텍스트가 로컬 추출을 안내하는 구조다. gate_value는 두 인코더의 출력을 섞는 비율인데, 추세 장에서는 Transformer가 우세하고 패턴 장에서는 TCN이 우세할 것이라는 가설이 있었다. 이걸 gate를 통해 데이터가 스스로 결정하게 하려 했다.
+      </div>
+      <div style="margin-top:1.2rem; padding:1rem 1.2rem; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);">
+        <div style="font-size:0.78rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.5rem;">증명하려 했던 것</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.8;">같은 시퀀스를 두 관점(글로벌 의존성 / 로컬 모티프)으로 동시에 보면 하나의 인코더보다 더 풍부한 표현을 만들 수 있다. gate가 데이터에 따라 두 관점의 비중을 자동으로 조절한다면, 레짐이 바뀔 때 모델이 적응할 수 있다.</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2025 — 아키텍처 설계</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">왜 CVAE였나 — "가능한 미래들의 분포"를 만들고 싶었다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        예측의 핵심 문제는 미래가 하나가 아니라는 것이다. 12시간 후에 BTC가 오를 수도 있고 내릴 수도 있다. 점 추정(point estimate)은 이 불확실성을 무시하고 하나의 값을 내놓는다. 그게 틀렸을 때 얼마나 틀린 건지도 모른다.<br><br>
+        CVAE(Conditional Variational Autoencoder)를 디코더로 선택한 이유가 여기있다. CVAE의 잠재 변수 <span class="c">z ~ N(μ_z, σ_z)</span>는 "가능한 미래 시나리오"를 인코딩하는 공간이다. 인코더 출력(현재 시장 상태)을 조건으로 주면, z를 여러 번 샘플링할 때마다 서로 다른 가능한 미래 수익률 경로가 나온다. 이 샘플들의 분산이 불확실성이 된다. z 공간이 의미있게 학습됐다면, "강세장 시나리오" z와 "약세장 시나리오" z가 공간 안에서 분리되어야 한다.<br><br>
+        여기에 GAN discriminator를 추가한 이유도 있었다. CVAE만으로는 생성된 경로가 현실적이지 않을 수 있다 — 실제 가격 움직임의 통계적 특성(fat tail, 레짐 의존성)을 VAE loss만으로는 포착하기 어렵다. GAN discriminator가 "이게 실제 같은 경로인가"를 추가로 판단하면서 생성 품질을 높이려 했다. CVAE로 다양한 시나리오를, GAN으로 현실감을 함께 잡는 구조였다.
+      </div>
+      <div style="margin-top:1rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+        <div style="background:var(--blue-dim); border:1px solid rgba(59,130,246,0.15); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--blue); margin-bottom:0.3rem;">설계 의도</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">z 샘플링 60회 → 60개 미래 경로 → 분산 = 예측별 불확실성</div>
+        </div>
+        <div style="background:var(--red-dim); border:1px solid rgba(220,38,38,0.15); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--red); margin-bottom:0.3rem;">실제 결과</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">KL=0.000 (100 epoch) → z가 N(0,1)에 붙어버림 → 잠재공간 미사용</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2025 — 아키텍처 설계</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">KL collapse가 의미하는 것 — z 공간이 텅 비어버렸다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        CVAE 훈련에서 KL divergence가 0으로 붙어버리는 KL collapse는 알려진 문제다. posterior q(z|x)가 prior p(z) = N(0,1)에 수렴해버리는 것이다. 디코더가 z를 무시하고 조건(인코더 출력)만으로 출력을 만들어낸다. 결과적으로 z를 다르게 샘플링해도 거의 같은 경로가 나온다. "가능한 미래들의 분포"라는 설계 의도가 완전히 무너진 것이다.<br><br>
+        KL collapse가 생기는 원인은 여러 가지다 — β-VAE의 β 값 설정, KL annealing warm-up 미적용, 디코더가 너무 강력해서 z 없이도 좋은 재구성이 가능한 경우, 혹은 신호 자체가 약해서 posterior가 prior에서 멀어질 이유가 없는 경우. 이 모델에서는 아마 마지막이 가장 큰 원인이었을 것이다 — 12h 수익률 신호 자체의 예측 가능성이 낮으니 z가 어떤 값이든 비슷한 출력이 나오는 게 손실 측면에서 "최적"이 돼버린다.<br><br>
+        해결책으로 KL annealing(초반에 KL weight를 0에서 천천히 올리는 것), β-VAE로 KL 비중을 줄이거나 늘리는 것, posterior network를 더 강하게 만드는 것 등을 시도해볼 수 있었다. 하지만 근본 원인이 신호 부재라면 이 방법들도 z 공간이 의미있게 채워지기 어렵다. 더 나은 신호가 먼저여야 한다.
+      </div>
+      <div style="margin-top:1.2rem; padding:1rem 1.2rem; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);">
+        <div style="font-size:0.78rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.5rem;">증명하려 했던 것 — 결과적으로 확인한 것</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.8;">CVAE가 의미있는 잠재공간을 학습한다면 → z 샘플별로 다른 불확실성이 나와야 한다 → 불확실성이 높을 때 실제로 틀릴 확률이 높아야 한다. 이 전체 체인의 첫 번째 링크(KL>0)가 성립하지 않았다. 나머지 검증은 불가능했다.</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2025 — 아키텍처 설계</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">FiLM과 4-state 레짐 — 레짐이 바뀌면 모델도 바뀌어야 한다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        하나의 모델이 강세장에서도 잘 작동하고 약세장에서도 잘 작동하기를 기대하는 것은 비현실적이다. 같은 피처라도 Bull 조용한 장과 Bear 변동성 장에서 의미가 달라진다. RSI=70이 강세장에서는 과매수지만 급등 초입에서는 모멘텀이다.<br><br>
+        FiLM(Feature-wise Linear Modulation)은 이 문제를 해결하기 위한 구조다. BTC의 200h MA와 실현 변동성 분위수로 4가지 레짐을 정의하고(Bull×조용, Bull×변동, Bear×조용, Bear×변동), 각 레짐 상태를 벡터로 인코딩한 뒤 FiLM 레이어에서 인코더 출력에 affine 변환을 가한다 — <span class="c">y = γ(regime) · x + β(regime)</span>. 레짐마다 다른 γ, β가 학습되면서 같은 피처가 레짐에 따라 다르게 해석된다. 특정 레짐에서만 유효한 팩터(예: Bear×변동 레짐에서 유동성 팩터)도 자연스럽게 표현된다.<br><br>
+        결과적으로 gate_value와 FiLM 레이어가 실제로 레짐별로 다르게 작동했는지 검증하지 못했다. 설계 의도는 명확했지만, IC=-0.059 상황에서 레짐별 IC를 분해해 보지 않았다. 이게 다음 전략에서 확인해야 할 질문 중 하나다.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Jan — 앙상블 설계</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">왜 Model 2를 제외했나 — 2v2 분열</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        원래 4개 모델로 앙상블을 구성하려 했다 — d=64/48h, d=128/96h, d=256/168h, 그리고 2D CNN을 사용하는 Model 2. 모델마다 다른 lookback과 크기로 단기/중기/장기 패턴을 각각 담당하고, 앙상블 집계로 단일 모델의 편향을 줄이는 게 목표였다.<br><br>
+        Model 2에 2D CNN을 쓴 이유는 있었다. 시계열을 (시간 × 피처) 2D 행렬로 보면 CNN이 피처 간 상관을 포착할 수 있다. 예를 들어 volume과 price의 동시 패턴. 하지만 실제로 돌려보니 Model 2의 출력 방향이 나머지 세 모델과 자주 엇갈렸다. 4개 모델을 모두 쓰면 2:2로 의견이 나뉘어 컨센서스가 없어지는 경우가 잦았다. 홀수(3개)로 바꾸면 다수결이 항상 성립한다 — 그래서 Model 2를 제외했다. 다양성이 너무 높으면 앙상블이 오히려 노이즈가 된다.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
       <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Jan — 데이터를 다시 보니</div>
       <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">RSI가 0이 나올 수는 없잖아</div>
       <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
@@ -511,6 +577,92 @@
         IC=-0.059라는 숫자 앞에서 선택지는 두 가지였다. 재훈련을 계속 반복하면서 무언가 더 좋아지길 기다리거나, 아니면 전략 자체를 바꾸거나.<br><br>
         스크리너가 55.8%, 모델이 53.1%라는 숫자가 이 결정을 쉽게 만들었다. 모델이 단순 스크리너를 이기지 못하고 있었다. 모델을 아무리 복잡하게 만들어도 raw 신호 자체가 IC=-0.059인 상황에서 한계가 있다. 문제가 아키텍처가 아니라 예측 대상 자체에 있다는 결론이었다.<br><br>
         개별 코인의 12h 절대 수익률 예측 → 200+ 코인 사이의 상대 랭킹으로 전환한다. 시장 방향(베타)을 상쇄하고 상대적으로 강한 코인과 약한 코인만 구분하는 문제다. 같은 피처로도 크로스섹션 문제는 개별 절대값 예측보다 노이즈가 작다 — 200개 코인의 공통 레짐 노이즈가 랭킹에서 부분적으로 상쇄되기 때문이다. 1년간 쌓은 파이프라인과 피처는 그대로 쓴다.
+      </div>
+    </div>
+
+    <div style="margin-top:1rem; padding:1.2rem 1.6rem; background:var(--amber-dim); border-radius:8px; border:1px solid rgba(180,83,9,0.15);">
+      <div style="font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; font-family:'JetBrains Mono',monospace; color:var(--amber); margin-bottom:0.5rem;">논문 연구 트랙 — 2025-2026</div>
+      <div style="font-size:0.88rem; color:var(--text-secondary); line-height:1.8;">시스템을 만들면서 평행하게 진행한 연구 트랙이 있다. Chrono-Trader에서 부딪힌 질문들을 논문 수준으로 파고든 것이다. FiLM이 왜 실패했는지, tau-RoPE가 attention을 바꾸는데 예측은 왜 안 나아지는지, 테스트 타임에 위치 정보를 바꾸면 어떻게 되는지, Clark(1973)의 이론을 Transformer에 연결하면 어떤 구조가 나오는지. 4편의 논문이 됐다.</div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0; border-color:rgba(37,99,235,0.25);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">논문 1 — 조건화 인터페이스</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">FiLM이 항상 concat보다 좋다는 게 맞을까</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        FiLM을 레짐 조건화에 쓰면서 이론적 배경을 파고들었다. Jayakumar et al. (2020, ICLR)은 곱셈 조건화가 덧셈보다 표현 공간이 넓다고 증명했다. Perez et al. (2018)의 원래 FiLM, Peebles &amp; Xie (2023, DiT)의 adaLN도 같은 방향이었다. 이론대로라면 FiLM이 concat보다 나아야 한다.<br><br>
+        직접 실험했다. concat, FiLM, positional encoding 주입, tau-RoPE, explicit interaction projection — 5가지 인터페이스를 Ken French 25 포트폴리오 데이터셋에서 IC로 비교했다. 결과: concat IC=0.057, FiLM IC=-0.0081. FiLM이 이론상 우월한데 실험에서 완패했다.<br><br>
+        이유는 SNR이었다. Jayakumar의 이론은 SNR ≈ 3~10인 환경에서 성립한다. 금융 데이터의 SNR은 0.2 미만이다. 곱셈 조건화는 신호를 증폭하는 구조인데, 신호가 노이즈에 묻혀있으면 증폭할 게 없다. SNR*≈0.2 임계점이 있고, 그 아래에서는 단순한 concat이 더 강건하다. Chrono-Trader에서 FiLM이 의도대로 작동하지 않았던 이유 중 하나다.
+      </div>
+      <div style="margin-top:1rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+        <div style="background:var(--bg-secondary); border:1px solid var(--border); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.3rem;">이론 예측</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">곱셈 조건화(FiLM) &gt; 덧셈(concat) — Jayakumar 2020</div>
+        </div>
+        <div style="background:var(--red-dim); border:1px solid rgba(220,38,38,0.15); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--red); margin-bottom:0.3rem;">실험 결과</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">concat IC=0.057 vs FiLM IC=−0.008. SNR&lt;0.2에서 이론 붕괴</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0; border-color:rgba(37,99,235,0.25);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">논문 2 — 표현-유용성 갭</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">표현이 좋아졌는데 예측은 왜 안 올랐나</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        tau-RoPE를 설계했다. Clark(1973)의 subordinated process — 거래량을 내부 시계로 쓰면 가격 움직임이 정규분포에 가까워진다는 이론을 Transformer에 적용하려 했다. 고변동성 구간에서 τ가 빠르게 흐르고, 저변동성 구간에서 느리게 흐르는 경제적 시간 좌표를 학습하게 했다. Su et al. (2021)의 RoPE에서 출발해 τ(t) = ∫λ(s)ds를 학습 가능한 변수로 만들었다.<br><br>
+        attention map이 바뀌었다. τ가 변동성 구조를 포착하고 있었다. 그런데 IC는 거의 움직이지 않았다. 수술적 실험을 했다 — softmax를 linear attention으로 교체했더니 IC가 +49% 회복됐다. softmax compression bottleneck이 원인이었다. tau가 QK 공간에서 위치를 조정해도 softmax 함수가 그 순서 정보를 압축한다.<br><br>
+        두 가지 bottleneck을 추가로 찾았다. tau 경로가 피처 간 상호작용(예: 변동성×인덱스 수익률)에 구조적으로 접근 못하는 interaction access 문제, 그리고 cumsum이 τ를 물리적 시간에 단조 의존하게 만드는 monotonicity 제약. 표현 품질(representation quality)과 예측 유용성(prediction utility)이 분리된다는 것이 핵심 발견이다.
+      </div>
+      <div style="margin-top:1.2rem; padding:1rem 1.2rem; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);">
+        <div style="font-size:0.78rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.5rem;">3가지 bottleneck</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.9;">
+          <strong>① softmax compression</strong> — QK 순서 변환이 softmax를 통과하며 소실. linear attention 교체 → +49% IC.<br>
+          <strong>② interaction access</strong> — τ 경로가 피처 간 상호작용에 구조적으로 접근 불가.<br>
+          <strong>③ monotonicity constraint</strong> — cumsum이 τ를 물리적 시간에 종속시킴.
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0; border-color:rgba(37,99,235,0.25);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">논문 3 — 테스트 타임 위치 적응</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">아무도 포지션 공간을 건드리지 않았다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        논문 2의 결론에서 다른 질문이 생겼다. 학습 단계에서 end-to-end로 τ를 학습하면 gradient constraint 때문에 표현은 바뀌지만 예측에 전달이 안 된다. 그렇다면 학습은 건드리지 않고 추론 시점에만 τ를 조정하면 어떨까?<br><br>
+        TTA(Test-Time Adaptation) 문헌을 전수 조사했다. TENT, TTT, DynaTTA(ICML 2025 Oral), TAFAS(AAAI 2025) — 전부 value space를 적응시킨다. normalization 통계를 업데이트하거나 마지막 레이어를 fine-tune하는 방식. 아무도 positional encoding, 즉 위치 공간을 추론 시점에 건드리지 않았다.<br><br>
+        TTPA(Test-Time Positional Adaptation)를 설계했다. 추론 시점의 market statistics(실현 변동성, 거래 강도)에서 τ를 직접 계산해 positional encoding index를 교체한다. 파라미터는 고정, 위치만 바꾼다. IC −0.031 → −0.015 (p=0.011). U자 곡선이 관찰됐다 — α=0.5 워핑이 최적이고, 과도한 워핑은 오히려 성능을 떨어뜨렸다(호환성 제약). Kim et al. (2026, StretchTime)이 RoPE 비-affine 워핑의 한계를 증명한 것과 일치한다.
+      </div>
+      <div style="margin-top:1rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+        <div style="background:var(--blue-dim); border:1px solid rgba(59,130,246,0.15); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--blue); margin-bottom:0.3rem;">새로운 차원</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">기존 TTA 전부 value space. 포지션 공간 TTA는 미개척 영역.</div>
+        </div>
+        <div style="background:var(--green-dim); border:1px solid rgba(22,163,74,0.15); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--green); margin-bottom:0.3rem;">결과</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">IC −0.031 → −0.015 (p=0.011). α=0.5 최적. U자형 곡선 확인.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0; border-color:rgba(37,99,235,0.25);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">논문 4 — 연속 경제적 시간 Attention</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">Clark(1973), 50년 된 이론을 Transformer에 연결하다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        논문 2에서 발견한 3가지 bottleneck을 구조적으로 한번에 우회하는 방법을 찾고 싶었다. 단서는 1973년 Clark의 subordinated process였다. 거래량을 내부 시계로 쓰면 가격 움직임이 정규분포에 수렴한다는 이론. Ane &amp; Geman(2000)이 empirically 검증했고, Lopez de Prado(2018)가 volume bar sampling으로 실용화했다. 그런데 이 이론은 deep learning과 연결된 적이 없었다.<br><br>
+        ContiFormer(Chen et al., NeurIPS 2024)는 Transformer attention을 Neural ODE로 확장했다 — hidden state가 <span class="c">dH/dt</span>로 연속 전파된다. 여기서 clock time t를 경제적 시간 τ(t)로 교체하면 어떨까. τ(t) = ∫₀ᵗ λ(s)ds (λ는 시장 강도 함수). <span class="c">dH/dτ</span>. Zagatti et al. (2024, AISTATS)의 time-change theorem이 이 대체의 이론적 근거를 준다.<br><br>
+        이 구조(EOA)가 3가지 bottleneck을 동시에 우회한다. softmax 없는 ODE dynamics → compression 해소. ODE state가 전체 표현에 직접 접근 → interaction access 해소. 적분이 단조성을 구조적으로 보장 → monotonicity 제약 해소. 고변동성 구간에서 τ가 빠르게 흐르면 attention이 자연스럽게 조밀해진다. 50년 된 금융 이론과 2024년 Neural ODE가 하나의 식으로 만난다.
+      </div>
+      <div style="margin-top:1.2rem; padding:1rem 1.2rem; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);">
+        <div style="font-size:0.78rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.5rem;">4편의 연결 구조</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.9;">
+          Chrono-Trader에서 FiLM 사용 →
+          <strong>논문1</strong>: SNR&lt;0.2에서 FiLM 실패 →
+          tau-RoPE 시도 →
+          <strong>논문2</strong>: softmax가 τ를 죽인다 (3가지 bottleneck) →
+          추론 시점에 우회하면 →
+          <strong>논문3</strong>: 포지션 공간 TTA가 작동한다 →
+          구조적 해결책은 →
+          <strong>논문4</strong>: Economic ODE (dH/dτ)가 3가지 bottleneck을 동시에 우회한다.
+        </div>
       </div>
     </div>
 
