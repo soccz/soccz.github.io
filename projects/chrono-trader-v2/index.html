@@ -241,9 +241,10 @@
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
       <li><a href="#summary">Summary</a></li>
+      <li><a href="#thesis">Thesis</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#experiments">Experiments</a></li>
-      <li><a href="#signal">Signal Analysis</a></li>
+      <li><a href="#signal">Signal</a></li>
       <li><a href="#funnel">Funnel</a></li>
       <li><a href="#lessons">Lessons</a></li>
       <li><a href="#next">Next</a></li>
@@ -319,6 +320,86 @@
       <div class="hbar-val amber">열위</div>
     </div>
     <p class="chart-note">Short(filtered): 10단계 퍼널을 통과한 거래만. 필터가 신호를 선별하고 있으나 거래 수 부족(127건 중 극소수만 통과)으로 통계적으로 불안정. 결론: raw 예측 신호 자체에 알파 없음.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- What We Were Trying to Prove -->
+<section id="thesis"><div class="container fade-in">
+  <div class="section-label">Core Thesis</div>
+  <h2 class="section-title">무엇을 증명하고 싶었나</h2>
+  <p class="section-desc">이 프로젝트는 세 가지 믿음에서 출발했다. 이 믿음들이 맞는지 검증하는 것이 1년간의 실험 목표였다.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-bottom:3rem;">
+    <div class="card" style="border-top:3px solid rgba(68,64,60,0.4);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem;">믿음 01</div>
+      <div class="card-title" style="font-size:1rem; margin-bottom:0.8rem;">암호화폐 가격에는 예측 가능한 패턴이 존재한다</div>
+      <div class="card-text">BTC에서 시작된 움직임이 알트코인으로 전파되는 리드-래그 구조, 과거에 반복된 W패턴/스파이크/추세 반전 — 이것들이 단순한 노이즈가 아니라 학습 가능한 구조라고 믿었다. Transformer가 레짐 수준의 구조를, CNN이 로컬 모티프를 포착할 수 있다고 가정했다.</div>
+      <div style="margin-top:1rem; padding:0.7rem 1rem; background:var(--red-dim); border-radius:6px; border:1px solid rgba(220,38,38,0.15);">
+        <div style="font-size:0.72rem; font-family:'JetBrains Mono',monospace; color:var(--red); font-weight:700; margin-bottom:0.3rem;">검증 결과</div>
+        <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.6;">12h AC=0.100으로 구조는 존재하나, OHLCV만으로는 IC=-0.059. 패턴은 있지만 우리가 사용한 피처로는 충분히 포착하지 못했다.</div>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid rgba(68,64,60,0.4);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem;">믿음 02</div>
+      <div class="card-title" style="font-size:1rem; margin-bottom:0.8rem;">불확실성 추정이 잘못된 추천을 걸러낼 수 있다</div>
+      <div class="card-text">예측이 맞는지보다 "예측이 얼마나 확실한지"를 알면 불확실한 예측을 걸러낼 수 있다. MC-Dropout 60회 샘플로 PI_80 구간을 추정하고, 넓은 구간(높은 불확실성)의 추천을 제외하면 남은 추천의 품질이 높아진다고 가정했다.</div>
+      <div style="margin-top:1rem; padding:0.7rem 1rem; background:var(--green-dim); border-radius:6px; border:1px solid rgba(22,163,74,0.15);">
+        <div style="font-size:0.72rem; font-family:'JetBrains Mono',monospace; color:var(--green); font-weight:700; margin-bottom:0.3rem;">검증 결과</div>
+        <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.6;">부분적으로 맞다. filtered Short IC=+0.18로 필터가 선별력을 가진다. 하지만 log_sigma가 상수로 수렴해 불확실성 추정 자체가 제대로 작동하지 않았다.</div>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid rgba(68,64,60,0.4);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.6rem;">믿음 03</div>
+      <div class="card-title" style="font-size:1rem; margin-bottom:0.8rem;">운영 자동화가 연구 가속도를 높인다</div>
+      <div class="card-text">매일 돌아가는 라이브 시스템이 있으면 실제 데이터로 문제를 빠르게 발견할 수 있다. 백테스트로만 검증하면 놓치는 문제들 — 이상 예측, 추천 공백, 데이터 신선도 문제 — 을 ops 파이프라인이 드러낸다. 연구와 운영을 분리하지 않는 것이 더 효율적이라고 가정했다.</div>
+      <div style="margin-top:1rem; padding:0.7rem 1rem; background:var(--green-dim); border-radius:6px; border:1px solid rgba(22,163,74,0.15);">
+        <div style="font-size:0.72rem; font-family:'JetBrains Mono',monospace; color:var(--green); font-weight:700; margin-bottom:0.3rem;">검증 결과</div>
+        <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.6;">맞았다. 이상 예측(TOSHI 71×), 98% Short 고착, watch-only 문제는 모두 라이브 시스템에서 먼저 발견됐다. 이 인프라는 전략이 바뀌어도 그대로 재활용된다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label"><span>1년의 사고 흐름</span></div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+    <div>
+      <div class="card-sm" style="margin-bottom:1rem;">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem; color:var(--text-secondary);">처음 질문 (2025 초)</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.85; font-style:italic; border-left:2px solid var(--border); padding-left:1rem;">
+          "BTC가 오르면 그다음에 ETH가 오르고, 그다음에 알트가 오른다. 이 순서를 모델이 학습할 수 있다면? 지금 어떤 패턴인지 알 수 있다면 다음에 어떤 코인이 올라올지 알 수 있지 않을까?"
+        </div>
+      </div>
+      <div class="card-sm" style="margin-bottom:1rem;">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem; color:var(--text-secondary);">6개월 후 질문 (2025 중반)</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.85; font-style:italic; border-left:2px solid var(--border); padding-left:1rem;">
+          "모델이 예측하는 것은 좋은데, 언제 틀리는지 알 수 있을까? 불확실할 때 추천하지 않는 시스템을 만들 수 있다면 손실을 줄일 수 있지 않을까?"
+        </div>
+      </div>
+      <div class="card-sm">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem; color:var(--text-secondary);">1년 후 질문 (2026 초)</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.85; font-style:italic; border-left:2px solid var(--border); padding-left:1rem;">
+          "재훈련을 계속 반복하는데 이게 의미 있는 방향인가? 모델을 아무리 개선해도 스크리너를 못 이기고 있다. 문제가 모델인가, 신호인가?"
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card-sm" style="margin-bottom:1rem;">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem;">증명하고 싶었던 핵심 명제</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.85;">
+          <strong>1.</strong> OHLCV 피처 기반 하이브리드 인코더가 단순 기술적 스크리너보다 나은 예측을 낼 수 있다.<br><br>
+          <strong>2.</strong> 불확실성 인식 필터링이 점 추정 기반 필터링보다 리스크를 줄일 수 있다.<br><br>
+          <strong>3.</strong> 라이브 ops 시스템이 학문적 백테스트보다 실용적인 피드백을 준다.
+        </div>
+      </div>
+      <div class="card-sm" style="background:var(--amber-dim); border-color:rgba(180,83,9,0.15);">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem; color:var(--amber);">최종 답변</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.85;">
+          1은 <strong>부분 실패</strong> — 피처 자체에 알파가 불충분. 모델 구조 문제가 아님.<br><br>
+          2는 <strong>부분 성공</strong> — 필터가 선별력을 가지지만 불확실성 추정 자체가 제대로 작동하지 않았다.<br><br>
+          3은 <strong>성공</strong> — ops 시스템이 백테스트로 발견하지 못했을 문제들을 드러냈다.
+        </div>
+      </div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
