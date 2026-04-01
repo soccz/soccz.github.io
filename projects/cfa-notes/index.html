@@ -390,6 +390,23 @@
 
   marked.setOptions({gfm:true,breaks:false});
 
+  // KaTeX와 marked 충돌 방지: 수식 블록을 먼저 보호
+  const mathStore=[];
+  function protectMath(md){
+    // display math $$...$$
+    md=md.replace(/\$\$[\s\S]*?\$\$/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    // inline math $...$  (단, \$ 이스케이프 제외, 빈 $ 제외)
+    md=md.replace(/(?<![\\$])\$(?!\$)([^\n$]+?)\$(?!\$)/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    return md;
+  }
+  function restoreMath(html){
+    return html.replace(/%%MATH(\d+)%%/g,(_,i)=>{
+      const m=mathStore[i];
+      // HTML 엔티티 복원 (marked가 &amp; 등으로 변환한 것)
+      return m;
+    });
+  }
+
   function idx(id){return CH.findIndex(c=>c.id===String(id))}
 
   function buildToc(){
@@ -440,19 +457,23 @@
   }
 
   function render(md){
-    readC.innerHTML=marked.parse(md);
+    mathStore.length=0;
+    const protected=protectMath(md);
+    let html=marked.parse(protected);
+    html=restoreMath(html);
+    readC.innerHTML=html;
     renderMathInElement(readC,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
   }
 
   function nav(i){
     const p=i>0?CH[i-1]:null,n=i<T-1?CH[i+1]:null;
     readN.innerHTML=`
-      <div class="reader-nav-card prev ${p?'':'empty'}" ${p?`onclick="open('${p.id}')"`:''}>${p?`<div class="reader-nav-label">&larr; Previous</div><div class="reader-nav-title">R${p.id}. ${p.title}</div>`:''}</div>
-      <div class="reader-nav-card next ${n?'':'empty'}" ${n?`onclick="open('${n.id}')"`:''}>${n?`<div class="reader-nav-label">Next &rarr;</div><div class="reader-nav-title">R${n.id}. ${n.title}</div>`:''}</div>`;
+      <div class="reader-nav-card prev ${p?'':'empty'}" ${p?`onclick="openCh('${p.id}')"`:''}>${p?`<div class="reader-nav-label">&larr; Previous</div><div class="reader-nav-title">R${p.id}. ${p.title}</div>`:''}</div>
+      <div class="reader-nav-card next ${n?'':'empty'}" ${n?`onclick="openCh('${n.id}')"`:''}>${n?`<div class="reader-nav-label">Next &rarr;</div><div class="reader-nav-title">R${n.id}. ${n.title}</div>`:''}</div>`;
   }
 
   window.goToToc=function(){readV.classList.remove('active');tocV.classList.remove('hidden');pBar.classList.remove('visible');pBar.style.width='0%';curId=null;history.pushState(null,'',location.pathname)};
-  window.open=open;window.toggleDrawer=toggleD;
+  window.openCh=open;window.toggleDrawer=toggleD;
 
   // Scroll progress + scroll-to-top
   window.addEventListener('scroll',()=>{
