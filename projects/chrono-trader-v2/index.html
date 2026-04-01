@@ -1208,8 +1208,63 @@
       <div class="tags"><span class="tag">2026-04 종료</span></div>
     </div>
   </div>
+  <div style="margin:3rem 0 2rem; padding:0;">
+    <div style="font-size:0.68rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--text-muted); margin-bottom:1.2rem; font-family:'JetBrains Mono',monospace;">고민이 닫히는 지점 — 논문 발견 → 다음 전략 결정</div>
+    <div style="display:flex; flex-direction:column; gap:0.8rem;">
+
+      <div style="display:grid; grid-template-columns:1fr 40px 1fr; gap:0; align-items:center;">
+        <div style="padding:1rem 1.2rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px 0 0 6px;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.3rem;">논문 1 발견</div>
+          <div style="font-size:0.85rem; font-weight:600; color:var(--text-primary);">SNR&lt;0.2에서 FiLM이 concat을 이기지 못한다</div>
+        </div>
+        <div style="text-align:center; color:var(--text-muted); font-size:1rem;">→</div>
+        <div style="padding:1rem 1.2rem; background:var(--green-dim); border:1px solid rgba(22,163,74,0.2); border-radius:0 6px 6px 0;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--green); margin-bottom:0.3rem;">다음 전략 적용</div>
+          <div style="font-size:0.85rem; color:var(--text-secondary);">팩터 모델에서 레짐 조건화는 FiLM 없이 concat+interaction term으로. 복잡도를 낮추는 명분이 생겼다.</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 40px 1fr; gap:0; align-items:center;">
+        <div style="padding:1rem 1.2rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px 0 0 6px;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.3rem;">논문 2 발견</div>
+          <div style="font-size:0.85rem; font-weight:600; color:var(--text-primary);">표현 품질과 예측 유용성은 분리된다. IC가 1차 지표여야 한다.</div>
+        </div>
+        <div style="text-align:center; color:var(--text-muted); font-size:1rem;">→</div>
+        <div style="padding:1rem 1.2rem; background:var(--green-dim); border:1px solid rgba(22,163,74,0.2); border-radius:0 6px 6px 0;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--green); margin-bottom:0.3rem;">다음 전략 적용</div>
+          <div style="font-size:0.85rem; color:var(--text-secondary);">XGBoost/Ridge에서 최적화 proxy를 IC로 직접 잡는다. loss가 좋아졌다고 좋아하지 않는다.</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 40px 1fr; gap:0; align-items:center;">
+        <div style="padding:1rem 1.2rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px 0 0 6px;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.3rem;">논문 3 발견</div>
+          <div style="font-size:0.85rem; font-weight:600; color:var(--text-primary);">추론 시점 τ 조정이 IC를 개선한다 (p=0.011)</div>
+        </div>
+        <div style="text-align:center; color:var(--text-muted); font-size:1rem;">→</div>
+        <div style="padding:1rem 1.2rem; background:var(--green-dim); border:1px solid rgba(22,163,74,0.2); border-radius:0 6px 6px 0;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--green); margin-bottom:0.3rem;">다음 전략 적용</div>
+          <div style="font-size:0.85rem; color:var(--text-secondary);">피처 엔지니어링 단계에서 volume-time resampling 도입. Clark(1973) 경제적 시간을 피처 공간에 먼저 적용.</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 40px 1fr; gap:0; align-items:center;">
+        <div style="padding:1rem 1.2rem; background:var(--bg-card); border:1px solid var(--border); border-radius:6px 0 0 6px;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.3rem;">논문 4 발견</div>
+          <div style="font-size:0.85rem; font-weight:600; color:var(--text-primary);">Economic ODE (dH/dτ)가 3가지 bottleneck을 구조적으로 우회한다</div>
+        </div>
+        <div style="text-align:center; color:var(--text-muted); font-size:1rem;">→</div>
+        <div style="padding:1rem 1.2rem; background:var(--amber-dim); border:1px solid rgba(180,83,9,0.2); border-radius:0 6px 6px 0;">
+          <div style="font-size:0.65rem; font-family:'JetBrains Mono',monospace; color:var(--amber); margin-bottom:0.3rem;">다음 단계 (IC &gt; 0.10 확인 후)</div>
+          <div style="font-size:0.85rem; color:var(--text-secondary);">팩터 모델 IC 확인 후 시퀀스 인코더를 올릴 때 EOA 구조를 기본 아키텍처로 사용한다.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <div class="callout">
-    <p>이 프로젝트의 핵심 자산은 모델 가중치가 아니다. 200개+ KRW 마켓 실시간 데이터 파이프라인, 35개 피처 엔지니어링, 매일 돌아가는 ops 인프라, 그리고 무엇이 왜 안 되는지를 실증적으로 확인한 경험이다. 이것들은 전략이 바뀌어도 그대로 남는다.</p>
+    <p>이 프로젝트의 핵심 자산은 모델 가중치가 아니다. 200개+ KRW 마켓 실시간 데이터 파이프라인, 35개 피처 엔지니어링, 매일 돌아가는 ops 인프라, 그리고 무엇이 왜 안 되는지를 실증적으로 확인한 경험 — 그리고 그 과정에서 나온 4편의 연구. 이것들은 전략이 바뀌어도 그대로 남는다.</p>
   </div>
 </div></section>
 
