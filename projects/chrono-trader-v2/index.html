@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AETHER — Transformer+CNN 하이브리드 암호화폐 예측 시스템</title>
+  <title>AETHER — Chrono-Trader v2 · 고민의 기록</title>
+  <meta name="description" content="GAN+Transformer 기반 암호화폐 예측 시스템을 1년간 만들며 실패하고 배운 것들. IC=-0.06, Sharpe 0.17, 그리고 다음 전략.">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
       --bg-primary: #fafaf9;
@@ -17,9 +18,13 @@
       --text-secondary: #57534e;
       --text-muted: #a8a29e;
       --accent: #44403c;
-      --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-dim: rgba(68,64,60,0.07);
       --border: #e7e5e4;
       --border-light: #d6d3d1;
+      --red: #dc2626;
+      --red-dim: rgba(220,38,38,0.08);
+      --green: #16a34a;
+      --green-dim: rgba(22,163,74,0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -57,7 +62,7 @@
       background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
                   radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
     }
-    .hero-content { position: relative; max-width: 780px; }
+    .hero-content { position: relative; max-width: 820px; }
     .hero-label {
       display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--text-secondary); border: 1px solid var(--border-light);
@@ -67,13 +72,14 @@
       font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
       font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
     }
-    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-sub { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
     .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
     .hero-stat { text-align: center; }
-    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
-    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
     .hero-link {
-      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
       padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
       color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
     }
@@ -95,18 +101,20 @@
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
     .card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
       padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
     .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
 
     .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
     .flow-step {
-      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
-      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+      flex: 1; min-width: 160px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.5rem 1.2rem; text-align: center; position: relative;
     }
     .flow-step:first-child { border-radius: 8px 0 0 8px; }
     .flow-step:last-child { border-radius: 0 8px 8px 0; }
@@ -115,39 +123,89 @@
       border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
     }
     .flow-step:last-child::after { display: none; }
-    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
-    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
 
-    .layer-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: var(--bg-secondary); color: var(--text-secondary); border-radius: 3px; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .timeline-item { position: relative; margin-bottom: 2.5rem; }
+    .timeline-dot { position: absolute; left: -2.4rem; top: 0.35rem; width: 10px; height: 10px; border-radius: 50%; background: var(--border-light); border: 2px solid var(--bg-primary); }
+    .timeline-dot.active { background: var(--accent); }
+    .timeline-date { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; font-family: 'JetBrains Mono', monospace; }
+    .timeline-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; }
+    .timeline-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .badge {
+      display: inline-block; margin-top: 0.5rem; margin-right: 0.3rem;
+      font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+      padding: 0.2rem 0.6rem; border-radius: 3px;
     }
+    .badge-fail { background: var(--red-dim); color: var(--red); border: 1px solid rgba(220,38,38,0.2); }
+    .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .badge-pivot { background: rgba(234,179,8,0.08); color: #92400e; border: 1px solid rgba(234,179,8,0.3); }
+    .badge-neutral { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border); }
+
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
+    .metric-val { font-family: 'Noto Serif KR', serif; font-size: 2rem; font-weight: 700; display: block; line-height: 1.2; margin-bottom: 0.3rem; }
+    .metric-val.negative { color: var(--red); }
+    .metric-val.positive { color: var(--green); }
+    .metric-val.neutral { color: #292524; }
+    .metric-label { font-size: 0.78rem; color: var(--text-muted); }
+    .metric-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; line-height: 1.5; }
+
+    .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
+    .chart-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .chart-subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.8rem; }
+    .ic-bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .ic-bar-label { font-size: 0.8rem; color: var(--text-secondary); min-width: 110px; text-align: right; }
+    .ic-bar-track { flex: 1; position: relative; height: 28px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+    .ic-bar-center { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border-light); z-index: 1; }
+    .ic-bar-fill { position: absolute; top: 4px; bottom: 4px; border-radius: 3px; }
+    .ic-bar-fill.neg { right: 50%; background: rgba(220,38,38,0.55); }
+    .ic-bar-fill.pos { left: 50%; background: rgba(22,163,74,0.55); }
+    .ic-bar-val { font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; min-width: 60px; }
+    .ic-bar-val.neg { color: var(--red); }
+    .ic-bar-val.pos { color: var(--green); }
+
+    .winrate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .winrate-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
+    .winrate-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 700; margin-bottom: 0.5rem; }
+    .winrate-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.6; }
+    .winrate-note.warn { color: #b45309; }
+
+    .result-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .result-table th { background: var(--bg-secondary); padding: 0.7rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 600; border-bottom: 2px solid var(--border); }
+    .result-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; }
+    .result-table td.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+    .result-table td.neg { color: var(--red); }
+    .result-table td.warn { color: #b45309; }
+    .result-table tr:last-child td { border-bottom: none; }
+
+    .layer-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
     .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
-    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); line-height: 1.7; }
 
-    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
-    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
-    .tech-list { list-style: none; }
-    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
-    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+    .lesson-item { display: flex; align-items: flex-start; gap: 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem 1.8rem; margin-bottom: 0.8rem; transition: all 0.2s; }
+    .lesson-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .lesson-num { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .lesson-content { flex: 1; }
+    .lesson-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
+    .lesson-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.75; }
+    .code-inline { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
 
-    .q-list { display: flex; flex-direction: column; gap: 0.8rem; counter-reset: q; }
-    .q-item {
-      counter-increment: q; display: flex; align-items: flex-start; gap: 1.2rem;
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      padding: 1.3rem 1.8rem; transition: all 0.2s;
-    }
-    .q-item:hover { border-color: var(--border-light); transform: translateX(3px); }
-    .q-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
-    .q-num::before { content: counter(q); }
-    .q-content { flex: 1; }
-    .q-title { font-weight: 700; font-size: 0.98rem; margin-bottom: 0.3rem; }
-    .q-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+    .next-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+    .next-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
+    .next-step { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .next-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .next-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7; }
+
+    .callout { margin-top: 2.5rem; padding: 1.5rem 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; border-left: 3px solid var(--border-light); }
+    .callout p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; }
 
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
@@ -158,8 +216,10 @@
       .flow { flex-direction: column; }
       .flow-step { border-radius: 8px !important; }
       .flow-step::after { display: none; }
-      .q-item { flex-direction: column; gap: 0.5rem; }
       section { padding: 4rem 1.5rem; }
+      .winrate-grid { grid-template-columns: 1fr; }
+      .ic-bar-label { min-width: 80px; font-size: 0.72rem; }
+      .lesson-item { flex-direction: column; gap: 0.4rem; }
     }
   </style>
 </head>
@@ -170,139 +230,385 @@
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
       <li><a href="#overview">Overview</a></li>
-      <li><a href="#method">Method</a></li>
       <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#ops">Ops</a></li>
-      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#findings">Findings</a></li>
+      <li><a href="#lessons">Lessons</a></li>
+      <li><a href="#next">Next</a></li>
     </ul>
   </div>
 </nav>
 
+<!-- Hero -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">Explainable AI &times; Crypto Forecasting</span>
+    <span class="hero-label">GAN &middot; Transformer &middot; Crypto &middot; 1년의 기록</span>
     <h1>AETHER<br>Chrono-Trader v2</h1>
     <p class="hero-sub">
-      설명 가능한 하이브리드 인코더(Transformer+CNN)와 불확실성 인식 의사결정 파이프라인을 결합한<br>
-      운영 지향적 암호화폐 예측 및 추천 시스템
+      "지금 오르는 코인 옆에서 다음에 오를 코인을 찾는다"는 아이디어 하나로 시작했다.<br>
+      GAN+Transformer 하이브리드를 만들고, 매일 돌아가는 ops 파이프라인을 쌓고,<br>
+      IC 분석으로 신호의 한계를 확인했다. 그 과정의 솔직한 기록.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">168h</span><span class="hero-stat-label">입력 시퀀스 윈도우</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">6h</span><span class="hero-stat-label">예측 호라이즌</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">27</span><span class="hero-stat-label">엔지니어링 피처</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">12h</span><span class="hero-stat-label">예측 호라이즌</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">35</span><span class="hero-stat-label">엔지니어링 피처</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">200+</span><span class="hero-stat-label">KRW 마켓</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">앙상블 모델</span></div>
     </div>
-    <a href="https://github.com/soccz/Chrono-Trader-v2" target="_blank" class="hero-link">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      Source Code
-    </a>
+    <div class="hero-links">
+      <a href="https://github.com/soccz/Chrono-Trader-v2" target="_blank" class="hero-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Source Code
+      </a>
+    </div>
   </div>
   <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
 <hr class="divider">
 
+<!-- Overview -->
 <section id="overview"><div class="container fade-in">
   <div class="section-label">Overview</div>
-  <h2 class="section-title">프로젝트 개요</h2>
-  <p class="section-desc">암호화폐 시장은 추세 수준의 구조와 국소 모티프 반복이라는 두 가지 힘을 동시에 보입니다. AETHER는 이 두 관점을 명시적으로 표현하고, 불확실성 인식 및 운영 견고성을 갖춘 추천을 생성합니다.</p>
+  <h2 class="section-title">무엇을 만들려 했나</h2>
+  <p class="section-desc">암호화폐 시장에서 '지금 오르는 코인'과 '다음에 오를 코인'은 연결되어 있다는 가설에서 출발했다. 이 두 관점을 하나의 모델에 담고, 불확실성을 측정하며, 매일 자동으로 돌아가는 시스템을 목표로 했다.</p>
   <div class="card-grid">
-    <div class="card"><div class="card-title">패턴 국소화</div><div class="card-text">시간 속의 패턴 국소화 문제로 접근합니다. "알려진 과거 모티프에서 현재 어디에 위치하는가?"를 매크로 컨텍스트(BTC/ETH 인덱스)로 조건화하여 분석합니다.</div></div>
-    <div class="card"><div class="card-title">설명 가능한 라우팅</div><div class="card-text">게이트 변수를 통해 Global(Transformer)과 Local(CNN) 중 어느 표현이 출력을 지배했는지 해석 가능하도록 설계되었습니다.</div></div>
-    <div class="card"><div class="card-title">운영 견고성</div><div class="card-text">워치독 타임아웃, 데이터 신선도 게이트, 안전 폴백, 최소 출력 정책 등 무인 스케줄링 환경의 장애 모드를 일급 제약조건으로 처리합니다.</div></div>
+    <div class="card">
+      <div class="card-icon">⬡</div>
+      <div class="card-title">패턴 전이 탐지</div>
+      <div class="card-text">BTC/ETH에서 시작된 상승이 알트코인으로 퍼지는 리드-래그 구조를 포착한다. 과거 유사 패턴(메모리 뱅크)과 현재 시퀀스의 유사도로 "지금 어디에 있는지"를 판단한다.</div>
+      <div class="tags"><span class="tag">Lead-Lag</span><span class="tag">DTW Similarity</span><span class="tag">Memory Bank</span></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⟁</div>
+      <div class="card-title">불확실성 우선 설계</div>
+      <div class="card-text">예측값을 점 추정 대신 분포로 출력한다. 60회 MC-Dropout 샘플로 PI_80 구간을 구하고, 불확실성이 높은 예측은 추천에서 제외한다. "모르면 하지 않는다."</div>
+      <div class="tags"><span class="tag">MC-Dropout</span><span class="tag">PI_80</span><span class="tag">Uncertainty Filter</span></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⟳</div>
+      <div class="card-title">운영 자동화</div>
+      <div class="card-text">매일 아침 데이터 수집 → 추론 → 추천 CSV → 텔레그램 알림까지 무인으로 동작한다. 워치독 타임아웃, 신선도 게이트, Watch-only 폴백으로 장애를 흡수한다.</div>
+      <div class="tags"><span class="tag">Systemd</span><span class="tag">Watchdog</span><span class="tag">MinRec Policy</span></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⊞</div>
+      <div class="card-title">설명 가능한 라우팅</div>
+      <div class="card-text">Transformer(글로벌 추세)와 CNN(로컬 모티프) 두 인코더 중 어느 쪽이 예측을 주도했는지 gate 값으로 추적할 수 있다. attention_top3가 중요 타임스텝을 노출한다.</div>
+      <div class="tags"><span class="tag">Gate Value</span><span class="tag">attention_top3</span><span class="tag">FiLM Conditioning</span></div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="method"><div class="container fade-in">
-  <div class="section-label">Method</div>
-  <h2 class="section-title">방법론</h2>
-  <p class="section-desc">동일 시퀀스를 두 가지 상호보완적 관점으로 인코딩한 후 설명 가능한 게이트 퓨전을 거쳐 다단계 수익 경로를 생성합니다.</p>
-  <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">피처 엔지니어링</div><div class="flow-desc">매크로 + 팩터 +<br>기술적 지표</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">하이브리드 인코더</div><div class="flow-desc">Transformer (글로벌) +<br>CNN (로컬)</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">게이트 퓨전</div><div class="flow-desc">설명 가능한<br>가중치 결합</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">의사결정 퍼널</div><div class="flow-desc">불확실성 필터 +<br>단계적 추천</div></div>
-  </div>
-  <div class="card-grid" style="margin-top: 2rem;">
-    <div class="layer-card"><div class="layer-num">Context Features</div><div class="layer-title">매크로 컨텍스트 + 패턴 메모리</div><div class="layer-q">BTC/ETH 시가총액 인덱스 수익률, 과거 윈도우 메모리 뱅크 유사도, 알파/베타 스타일 피처, 크립토 FF-스타일 팩터</div><div class="tags"><span class="tag">Market Index</span><span class="tag">Historical Similarity</span><span class="tag">Alpha/Beta</span><span class="tag">FF Factors</span></div></div>
-    <div class="layer-card"><div class="layer-num">Hybrid Encoder</div><div class="layer-title">글로벌 + 로컬 표현 학습</div><div class="layer-q">Transformer로 레짐 수준의 장기 의존성을, CNN 스택으로 로컬 모티프와 형상 기본 요소를 동시에 추출합니다</div><div class="tags"><span class="tag">Transformer</span><span class="tag">CNN Stack</span><span class="tag">Gated Fusion</span><span class="tag">GAN Decoder</span></div></div>
-    <div class="layer-card"><div class="layer-num">Decision Funnel</div><div class="layer-title">불확실성 인식 의사결정</div><div class="layer-q">거래 가능성 검증, 레짐/리드-래그 휴리스틱, 유동성/수익/불확실성 제약을 순차적으로 적용하여 필터링합니다</div><div class="tags"><span class="tag">Uncertainty Filter</span><span class="tag">Liquidity</span><span class="tag">MC-Dropout</span><span class="tag">ECE Calibration</span></div></div>
-  </div>
-</div></section>
-<hr class="divider">
-
+<!-- Architecture -->
 <section id="architecture"><div class="container fade-in">
   <div class="section-label">Architecture</div>
-  <h2 class="section-title">기술 스택</h2>
-  <p class="section-desc">Chrono-Trader v1의 아키텍처를 계승하면서, 설명 가능성과 운영 안정성을 핵심 설계 원칙으로 추가했습니다.</p>
-  <div class="tech-grid">
-    <div class="tech-item">
-      <div class="tech-cat">Representation</div>
-      <ul class="tech-list">
-        <li>Transformer Encoder</li>
-        <li>CNN Stack (Local Motif)</li>
-        <li>Gated Fusion Layer</li>
-        <li>GAN-style Decoder</li>
-      </ul>
+  <h2 class="section-title">어떻게 만들었나</h2>
+  <p class="section-desc">168시간 OHLCV 시퀀스를 입력으로 받아 12시간 후 수익률 경로를 예측하는 파이프라인. 인코더는 두 개, 디코더는 이종 분산(heteroscedastic)으로 설계했다.</p>
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit API<br>168h 캔들<br>200+ 마켓</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">피처 엔지니어링</div><div class="flow-desc">35개 피처<br>매크로 + 팩터<br>크로스섹션 랭크</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">하이브리드 인코더</div><div class="flow-desc">Transformer (글로벌)<br>+ CNN (로컬)<br>Gate Fusion</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">디코더</div><div class="flow-desc">GAN + CVAE<br>&mu;, log &sigma; 출력<br>MC-Dropout 60회</div></div>
+    <div class="flow-step"><div class="flow-num">05</div><div class="flow-title">의사결정 퍼널</div><div class="flow-desc">10단계 필터<br>net-alpha / PI_80<br>DTW 유사도</div></div>
+  </div>
+  <div class="card-grid-2" style="margin-top: 2rem;">
+    <div class="layer-card">
+      <div class="layer-num">Input Features (35개)</div>
+      <div class="layer-title">매크로 + 팩터 + 기술적 지표</div>
+      <div class="layer-q">"지금 시장은 어떤 국면인가?"를 BTC/ETH 인덱스 수익률, 4-state 레짐(Bull/Bear × 조용/변동성), 크로스섹션 랭크, FF-스타일 팩터로 표현한다. beta/alpha는 벡터화된 72/168/336h 롤링 윈도우로 계산.</div>
+      <div class="tags"><span class="tag">BTC Regime</span><span class="tag">Cross-sectional Rank</span><span class="tag">Rolling Beta</span><span class="tag">FF Factors × Regime</span></div>
     </div>
-    <div class="tech-item">
-      <div class="tech-cat">Uncertainty</div>
-      <ul class="tech-list">
-        <li>MC-Dropout</li>
-        <li>ECE Calibration</li>
-        <li>Probabilistic Forecasting</li>
-        <li>Optuna (5-Fold CV)</li>
-      </ul>
+    <div class="layer-card">
+      <div class="layer-num">3-Model Ensemble</div>
+      <div class="layer-title">다양한 lookback × 모델 크기</div>
+      <div class="layer-q">Model 1 (d=64, 48h lookback), Model 3 (d=256, 168h), Model 4 (d=128, 96h). 각각 다른 lookback으로 단기/중기/장기 패턴을 담당한다. 앙상블 집계는 예측 수익률과 불확실성의 가중 평균.</div>
+      <div class="tags"><span class="tag">d=64 / 48h</span><span class="tag">d=256 / 168h</span><span class="tag">d=128 / 96h</span><span class="tag">Weighted Ensemble</span></div>
     </div>
-    <div class="tech-item">
-      <div class="tech-cat">Operations</div>
-      <ul class="tech-list">
-        <li>Watchdog Timeout</li>
-        <li>Freshness Gate</li>
-        <li>MinRec Policy</li>
-        <li>Safe Fallback (Watch-only)</li>
-      </ul>
+    <div class="layer-card">
+      <div class="layer-num">Decision Funnel (10단계)</div>
+      <div class="layer-title">불확실성 인식 단계적 필터</div>
+      <div class="layer-q">Tradeable 검증 → net_alpha + step1_score → 레짐/리드-래그 조정 → 유동성 → 최소 기대수익률 → 컨센서스 → 불확실성(적응적 임계값) → DTW 패턴 → Short 차단 → MinRec 보장</div>
+      <div class="tags"><span class="tag">net_alpha</span><span class="tag">PI_80</span><span class="tag">DTW Match</span><span class="tag">Watch-only Fallback</span></div>
     </div>
-    <div class="tech-item">
-      <div class="tech-cat">Data</div>
-      <ul class="tech-list">
-        <li>Upbit API</li>
-        <li>168h Hourly Candles</li>
-        <li>27 Engineered Features</li>
-        <li>Cross-sectional Factors</li>
-      </ul>
+    <div class="layer-card">
+      <div class="layer-num">Ops Infrastructure</div>
+      <div class="layer-title">매일 무인 실행 파이프라인</div>
+      <div class="layer-q">Systemd 타이머 (아침 + 장중) → 데이터 수집 → 추론 → 추천 CSV → 텔레그램 → Flask 대시보드. 신선도 게이트 실패 시 안전 종료(exit 10). 오프라인에서도 Watch-only 유지.</div>
+      <div class="tags"><span class="tag">Systemd Timer</span><span class="tag">Freshness Gate</span><span class="tag">Flask Dashboard</span><span class="tag">Telegram Bot</span></div>
     </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="ops"><div class="container fade-in">
-  <div class="section-label">Strengths &amp; Limitations</div>
-  <h2 class="section-title">강점과 한계</h2>
-  <p class="section-desc">시스템의 설계 강점과 현재 알려진 한계를 투명하게 제시합니다.</p>
-  <div class="card-grid">
-    <div class="card"><div class="card-title">하이브리드 편향</div><div class="card-text">글로벌 추세 모델링과 로컬 모티프 추출을 단일 귀납 편향에 강제하지 않고 각각의 강점을 살립니다.</div></div>
-    <div class="card"><div class="card-title">해석 가능한 라우팅</div><div class="card-text">게이트가 어느 표현이 지배적이었는지 노출하여 디버깅과 반복 개선을 용이하게 합니다.</div></div>
-    <div class="card"><div class="card-title">백테스트 한계</div><div class="card-text">단순화된 체결/슬리피지 모델과 불완전한 미시구조 효과로 인해 성능이 과대 평가될 수 있습니다.</div></div>
-    <div class="card"><div class="card-title">연산 비용</div><div class="card-text">Optuna 시행(5-Fold CV, MC-Dropout)은 CPU 환경에서 높은 연산 비용이 발생합니다.</div></div>
+<!-- Journey -->
+<section id="journey"><div class="container fade-in">
+  <div class="section-label">Journey</div>
+  <h2 class="section-title">어떤 과정을 거쳤나</h2>
+  <p class="section-desc">초기 설계에서 IC 분석까지. 각 단계에서 무엇을 발견하고 어떻게 수정했는지의 타임라인.</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-date">2025 초기</div>
+      <div class="timeline-title">GAN+Transformer 초기 설계</div>
+      <div class="timeline-desc">Transformer 인코더 + CNN 스택 + GAN 디코더. 6h 호라이즌, 27개 피처. Optuna로 hyperparameter 탐색. 운영 자동화(systemd, 텔레그램)부터 먼저 완성했다. "시스템이 매일 돌아가는 것"을 연구보다 우선했기 때문에 — 이 판단은 나중에 맞았다고 생각한다.</div>
+      <div class="tags" style="margin-top:0.6rem;"><span class="tag">6h horizon</span><span class="tag">27 features</span><span class="tag">GAN decoder</span><span class="tag">Ops-first</span></div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-date">2026 Jan — Phase 1</div>
+      <div class="timeline-title">데이터 파이프라인 수정 + 12h 전환</div>
+      <div class="timeline-desc">세 가지 근본 문제를 발견했다: ① <span class="code-inline">fillna(0)</span>이 RSI=0, volatility=0 같은 불가능한 값을 만들었다. ② Train/Test가 100% 겹쳐 모든 메트릭이 무효였다. ③ 3h 예측 AC=0.025(노이즈 수준), 12h AC=0.100(통계적으로 유의미). 호라이즌을 12h로 전환하고 ffill/bfill + 480행 드롭, temporal holdout 20%를 적용했다.</div>
+      <span class="badge badge-ok">12h AC=0.100 (p=0.00015)</span>
+      <span class="badge badge-fail">메트릭 재산정 필요</span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-date">2026 Feb — Phase 2</div>
+      <div class="timeline-title">Heteroscedastic 디코더</div>
+      <div class="timeline-desc">CVAE 디코더를 이종 분산(heteroscedastic) 구조로 교체했다. &mu;와 log &sigma;를 별도 헤드로 출력해 불확실성이 예측마다 다르게 계산되도록 설계. 하지만 훈련 후 log_sigma_mean = -5.05(초기화 편향에 갇힘), &sigma; &approx; 0.0067로 사실상 상수. KL collapse도 확인(KL=0.000 throughout 100 epoch).</div>
+      <span class="badge badge-fail">log_sigma 상수 수렴 — 설계 실패</span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-date">2026 Mar — Phase 3</div>
+      <div class="timeline-title">추천 필터 수정 + 이상 예측 차단</div>
+      <div class="timeline-desc">라이브 추천에서 세 문제 발견: ① direction_consistency 임계값 0.66이 너무 엄격해 추천이 거의 없었다 → 0.55로 완화. ② TOSHI predicted_return=71&times;, POKT=9-11&times;(불확실성 폭발) → 이상치 하드 필터 추가. ③ Short 신호에서 gate &lt; 0.25이면 예측력 없음 → gate_value 필터 추가. 세 필터 모두 uncertainty bypass 이전에 적용했다.</div>
+      <span class="badge badge-ok">이상 예측 차단</span>
+      <span class="badge badge-ok">추천 다양성 확보</span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot active"></div>
+      <div class="timeline-date">2026 Apr 1 — IC 분석</div>
+      <div class="timeline-title">신호 검증: 근본 진단</div>
+      <div class="timeline-desc">22시간 걸리는 백테스트 대신 5분 만에 신호 품질을 확인할 수 있는 IC 분석으로 방법론을 전환. holdout 17개 마켓, 2025-10 ~ 2026-01 데이터로 측정. 결과: 전체 IC=-0.059, Short IC=-0.158. Short 58.3% 승률은 BTC -21.9% 하락 기간의 시장 베타로 판명(p=0.031 marginal). 모델이 가치를 파괴하고 있었다.</div>
+      <span class="badge badge-fail">Overall IC = -0.059</span>
+      <span class="badge badge-pivot">전략 피벗 결정</span>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2026 Apr — Next</div>
+      <div class="timeline-title">크로스섹션 팩터 모델로 전환</div>
+      <div class="timeline-desc">개별 12h 수익률 예측 대신 200+ 코인을 팩터(모멘텀, 유동성, 변동성)로 랭킹하고 상위 10% Long / 하위 10% Short. 시장 베타를 중립화하고 상대 수익률만 추출한다. 기존 ops 인프라와 피처(rank_return_4h, breadth_ratio 등)를 재활용. IC를 1차 지표로 사용해 5분 만에 반복 가능.</div>
+      <div class="tags" style="margin-top:0.6rem;"><span class="tag">Cross-sectional</span><span class="tag">Factor Ranking</span><span class="tag">Beta Neutral</span><span class="tag">IC Evaluation</span></div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="roadmap"><div class="container fade-in">
-  <div class="section-label">Roadmap</div>
-  <h2 class="section-title">연구 방향</h2>
-  <p class="section-desc">AETHER의 향후 연구 및 개선 방향입니다.</p>
-  <div class="q-list">
-    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">매크로 컨텍스트 재설계</div><div class="q-desc">다중 스케일 컨텍스트(일/4h/1h) 임베딩, 레짐 상태 분리, 명시적 지연/전파 모델링</div></div></div>
-    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">팩터 모델 안정화</div><div class="q-desc">얇은 유동성 하에서의 견고한 팩터 구성, 축소/정규화, 레짐 조건부 팩터 가중</div></div></div>
-    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">보정 + 확률적 출력</div><div class="q-desc">불확실성 보정(ECE)과 의사결정 임계값, 실현 결과 간의 긴밀한 연결</div></div></div>
-    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">평가 강화</div><div class="q-desc">누수 검사, 고정 종료시간 백테스트, 비용 모델(수수료/슬리피지), 워크포워드 스트레스 스위트</div></div></div>
-    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">운영 자율성</div><div class="q-desc">지속적 건강 보고, 이전 가중치로의 자동 롤백, 시장 로테이션 기준 개선</div></div></div>
+<!-- Findings -->
+<section id="findings"><div class="container fade-in">
+  <div class="section-label">Findings</div>
+  <h2 class="section-title">정직한 결과</h2>
+  <p class="section-desc">90일 백테스트(2026 Jan-Mar) 및 IC 분석 결과. 숫자 그대로 기록한다.</p>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <span class="metric-val negative">0.17</span>
+      <div class="metric-label">Sharpe (90일 백테스트)</div>
+      <div class="metric-sub">랜덤과 구분 불가 수준</div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-val negative">-0.059</span>
+      <div class="metric-label">Overall IC (holdout)</div>
+      <div class="metric-sub">|0.05| = weak signal 기준</div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-val negative">-0.158</span>
+      <div class="metric-label">Short IC (raw predictions)</div>
+      <div class="metric-sub">역방향 예측 — 음의 신호</div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-val neutral">55.8%</span>
+      <div class="metric-label">단순 스크리너 승률</div>
+      <div class="metric-sub">vs 모델 53.1%<br>스크리너 &gt; 모델</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">IC 분석 — Holdout (2025-10 ~ 2026-01, 17개 마켓)</div>
+    <div class="chart-subtitle">Spearman correlation between predicted and actual 12h returns. 기준: |0.05| weak, |0.10| medium, |0.20| strong signal.</div>
+    <div class="ic-bar-row">
+      <div class="ic-bar-label">Overall</div>
+      <div class="ic-bar-track">
+        <div class="ic-bar-center"></div>
+        <div class="ic-bar-fill neg" style="width:5.9%"></div>
+      </div>
+      <div class="ic-bar-val neg">-0.059</div>
+    </div>
+    <div class="ic-bar-row">
+      <div class="ic-bar-label">Long (raw)</div>
+      <div class="ic-bar-track">
+        <div class="ic-bar-center"></div>
+        <div class="ic-bar-fill pos" style="width:6%"></div>
+      </div>
+      <div class="ic-bar-val pos">+0.060</div>
+    </div>
+    <div class="ic-bar-row">
+      <div class="ic-bar-label">Short (raw)</div>
+      <div class="ic-bar-track">
+        <div class="ic-bar-center"></div>
+        <div class="ic-bar-fill neg" style="width:15.8%"></div>
+      </div>
+      <div class="ic-bar-val neg">-0.158</div>
+    </div>
+    <div class="ic-bar-row">
+      <div class="ic-bar-label">Short (filtered)</div>
+      <div class="ic-bar-track">
+        <div class="ic-bar-center"></div>
+        <div class="ic-bar-fill pos" style="width:18%"></div>
+      </div>
+      <div class="ic-bar-val pos">+0.180</div>
+    </div>
+    <p style="font-size:0.75rem; color:var(--text-muted); margin-top:1rem; line-height:1.7;">Short(filtered): 10단계 퍼널을 통과한 추천 거래에서만 측정. raw 예측 IC=-0.158이지만, 필터를 통과한 거래들은 +0.18. 필터 자체가 작동하고 있음을 시사하나 거래 수가 너무 적어 통계적으로 불안정하다.</p>
+  </div>
+
+  <div class="winrate-grid">
+    <div class="winrate-card">
+      <div class="winrate-label">Long 신호 (33거래)</div>
+      <svg width="110" height="110" viewBox="0 0 110 110" style="margin: 0.5rem auto; display:block;">
+        <circle cx="55" cy="55" r="42" fill="none" stroke="#e7e5e4" stroke-width="11"/>
+        <circle cx="55" cy="55" r="42" fill="none" stroke="#dc2626" stroke-width="11" stroke-opacity="0.7"
+          stroke-dasharray="263.9" stroke-dashoffset="175.9"
+          stroke-linecap="round" transform="rotate(-90 55 55)"/>
+        <text x="55" y="60" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="20" font-weight="700" fill="#1c1917">33%</text>
+      </svg>
+      <div class="winrate-note">이상 예측(TOSHI 71&times;, POKT 9&times;)이 평균 왜곡.<br>avg return = -3.5%</div>
+    </div>
+    <div class="winrate-card">
+      <div class="winrate-label">Short 신호 (127거래)</div>
+      <svg width="110" height="110" viewBox="0 0 110 110" style="margin: 0.5rem auto; display:block;">
+        <circle cx="55" cy="55" r="42" fill="none" stroke="#e7e5e4" stroke-width="11"/>
+        <circle cx="55" cy="55" r="42" fill="none" stroke="#b45309" stroke-width="11" stroke-opacity="0.7"
+          stroke-dasharray="263.9" stroke-dashoffset="110.8"
+          stroke-linecap="round" transform="rotate(-90 55 55)"/>
+        <text x="55" y="60" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="20" font-weight="700" fill="#1c1917">58%</text>
+      </svg>
+      <div class="winrate-note warn">표면적 58.3% — BTC -21.9% 하락 베타.<br>p=0.031 marginal, 알파 아님.</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">확인된 근본 문제 (2026-03-28)</div>
+    <div class="chart-subtitle">모델 아키텍처 문제가 아니라 신호 한계와 데이터 파이프라인 문제들이 복합 작용했다.</div>
+    <table class="result-table">
+      <thead><tr><th>문제</th><th>증거</th><th>영향</th></tr></thead>
+      <tbody>
+        <tr><td>3h 예측 호라이즌 너무 짧음</td><td class="mono">AC=0.025 (노이즈)</td><td class="warn">예측 불가능한 timescale</td></tr>
+        <tr><td>KL collapse</td><td class="mono">KL=0.000 (100 epoch)</td><td class="neg">CVAE 잠재공간 미사용</td></tr>
+        <tr><td>fillna(0) 오염</td><td class="mono">RSI=0, vol=0 불가능</td><td class="neg">첫 480행 + 중간 누락 오염</td></tr>
+        <tr><td>Train/Test 100% overlap</td><td class="mono">학습 720일 &#x2283; 백테스트 90일</td><td class="neg">모든 보고 메트릭 무효</td></tr>
+        <tr><td>confidence_head 상수 출력</td><td class="mono">mean=0.503, std=0.0008</td><td class="neg">position sizing 정보 없음</td></tr>
+        <tr><td>스크리너 &gt; 모델</td><td class="mono">55.8% vs 53.1%</td><td class="neg">모델이 가치를 파괴</td></tr>
+        <tr><td>98% Short + Short 라이브 차단</td><td class="mono">거의 전부 watch-only</td><td class="warn">실행 가능 추천 거의 0</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Lessons -->
+<section id="lessons"><div class="container fade-in">
+  <div class="section-label">Lessons</div>
+  <h2 class="section-title">무엇을 배웠나</h2>
+  <p class="section-desc">1년간의 반복 학습-검증 사이클에서 실제로 유효했던 교훈들. 알고 있던 것을 확인한 것도 있고, 실제로 틀렸던 것도 있다.</p>
+  <div>
+    <div class="lesson-item">
+      <div class="lesson-num">1</div>
+      <div class="lesson-content">
+        <div class="lesson-title">평가 지표부터 잡아야 한다 — IC는 5분, 백테스트는 22시간</div>
+        <div class="lesson-desc">22시간 걸리는 백테스트를 반복하는 동안 신호 자체가 있는지 없는지를 확인하지 못했다. Spearman IC는 5분 만에 신호 품질을 알려준다. 빠른 피드백 루프 없이는 잘못된 방향으로 긴 시간을 쓸 수 있다. <span class="code-inline">np.corrcoef(pred, actual)</span>가 먼저였어야 했다.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">2</div>
+      <div class="lesson-content">
+        <div class="lesson-title">승률은 시장 베타를 제거하고 봐야 한다</div>
+        <div class="lesson-desc">Short 58.3% 승률을 모델 신호로 착각할 뻔했다. BTC가 -21.9% 하락한 기간이었다. 방향이 맞은 것이지 예측이 맞은 것이 아니다. 알파를 측정할 때는 반드시 시장 수익률 대비 상대 수익률로 봐야 한다. 크로스섹션 접근법이 이 문제를 구조적으로 해결한다.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">3</div>
+      <div class="lesson-content">
+        <div class="lesson-title">데이터 파이프라인 버그가 모델 성능보다 먼저다</div>
+        <div class="lesson-desc"><span class="code-inline">fillna(0)</span>은 RSI=0, volatility=0 같은 물리적으로 불가능한 값을 만든다. Train/Test가 겹치면 모든 메트릭이 낙관적으로 편향된다. beta의 bfill은 미래 누출을 만든다. 모델을 복잡하게 만들기 전에 데이터가 깨끗한지부터 확인해야 한다.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">4</div>
+      <div class="lesson-content">
+        <div class="lesson-title">운영 인프라는 연구보다 먼저 완성해야 한다</div>
+        <div class="lesson-desc">처음부터 systemd 타이머, watchdog, freshness gate, 텔레그램 알림을 갖춘 운영 파이프라인을 만든 것은 올바른 선택이었다. 모델 성능이 부족하더라도 시스템이 매일 돌아가면서 실제 데이터로 문제를 발견할 수 있었다. "완벽한 모델을 만들고 배포"가 아니라 "돌아가는 것을 먼저 만들고 개선"이 실질적이다.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">5</div>
+      <div class="lesson-content">
+        <div class="lesson-title">복잡한 모델이 단순한 스크리너를 이기지 못할 수 있다</div>
+        <div class="lesson-desc">GAN+Transformer 앙상블(53.1%)이 단순 스크리너(55.8%)에 졌다. 모델 복잡도를 높이는 것보다 신호 자체의 예측력을 확인하는 것이 우선이다. 12h OHLCV만으로는 크립토 수익률 예측에 충분한 정보가 없을 수 있다. 더 나은 피처가 더 복잡한 모델보다 효과적이다.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">6</div>
+      <div class="lesson-content">
+        <div class="lesson-title">필터 시스템이 나쁜 신호를 구제할 수 있다</div>
+        <div class="lesson-desc">raw 예측의 Short IC=-0.158이지만 10단계 퍼널을 통과한 거래의 IC=+0.18. 나쁜 예측들을 걸러내는 필터 자체가 알파를 만들 수 있다. 다만 거래 수가 너무 적어 통계적으로 불안정하다. 필터를 통과하는 거래가 충분히 많아야 의미가 있다 — 커버리지와 품질의 트레이드오프.</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Next -->
+<section id="next"><div class="container fade-in">
+  <div class="section-label">Next Direction</div>
+  <h2 class="section-title">다음: 크로스섹션 팩터 모델</h2>
+  <p class="section-desc">개별 수익률 예측 → 200+ 코인 상대 랭킹으로 전략을 전환한다. 기존 ops 인프라와 피처는 그대로 재활용한다.</p>
+  <div class="next-grid">
+    <div class="next-card">
+      <div class="next-step">핵심 아이디어</div>
+      <div class="next-title">절대값 대신 순위</div>
+      <div class="next-desc">12h 후 수익률을 예측하는 대신, 모멘텀·유동성·변동성 팩터로 코인을 랭킹한다. 상위 10% Long, 하위 10% Short. 시장 전체가 오르든 내리든 관계없이 상대적으로 강한 코인 vs 약한 코인을 구분하는 문제로 재정의.</div>
+      <div class="tags"><span class="tag">rank_return_4h</span><span class="tag">breadth_ratio</span><span class="tag">vol_ratio</span></div>
+    </div>
+    <div class="next-card">
+      <div class="next-step">베타 중립화</div>
+      <div class="next-title">시장 방향과 독립</div>
+      <div class="next-desc">Long/Short을 동시에 내어 시장 베타를 상쇄한다. BTC가 -20% 빠지든 +20% 오르든, 상대적으로 강한 코인이 약한 코인을 이기는 구조만 필요하다. Short 58% 승률이 베타였던 문제를 구조적으로 해결.</div>
+      <div class="tags"><span class="tag">Long/Short</span><span class="tag">Beta Neutral</span><span class="tag">Relative Return</span></div>
+    </div>
+    <div class="next-card">
+      <div class="next-step">평가 방식</div>
+      <div class="next-title">IC를 1차 지표로</div>
+      <div class="next-desc">랭킹 예측과 실제 순위의 Spearman IC. 5분 만에 신호 품질을 확인한다. IC &gt; 0.05이면 신호 있음, 0.10이면 실용적. 22h 백테스트 대신 IC로 빠른 반복 가능. 백테스트는 신호가 확인된 후에 실행.</div>
+      <div class="tags"><span class="tag">Spearman IC</span><span class="tag">5-min feedback</span><span class="tag">IC &gt; 0.10 target</span></div>
+    </div>
+    <div class="next-card">
+      <div class="next-step">모델</div>
+      <div class="next-title">XGBoost 또는 Ridge</div>
+      <div class="next-desc">크로스섹션 랭킹에는 단순한 모델이 효과적이다. XGBoost (비선형 팩터 상호작용) 또는 Ridge regression (선형 팩터 조합). 기존 35개 피처를 그대로 입력으로 사용. Transformer를 쓰지 않아도 된다 — 피처 품질이 먼저.</div>
+      <div class="tags"><span class="tag">XGBoost</span><span class="tag">Ridge</span><span class="tag">Feature Reuse</span></div>
+    </div>
+    <div class="next-card">
+      <div class="next-step">재활용 자산</div>
+      <div class="next-title">인프라 그대로 유지</div>
+      <div class="next-desc">데이터 수집 파이프라인, 전처리, Flask 대시보드, systemd 타이머, 텔레그램 알림 — 전부 그대로 쓴다. 모델 출력 형식만 바뀐다. 1년간 쌓은 ops 인프라가 새 전략의 기반이 된다.</div>
+      <div class="tags"><span class="tag">Systemd</span><span class="tag">Flask</span><span class="tag">Telegram</span><span class="tag">Same DB</span></div>
+    </div>
+    <div class="next-card">
+      <div class="next-step">현재 상태</div>
+      <div class="next-title">GAN+Transformer 단계 종료</div>
+      <div class="next-desc">이 저장소는 GAN+Transformer 접근법의 최종 스냅샷이다. 코드, 실험, 발견이 모두 보존되어 있다. 실패의 기록도 기록이다. 무엇이 왜 안 되는지를 실증적으로 확인한 것 자체가 자산이다.</div>
+      <div class="tags"><span class="tag">2026-04 확정</span></div>
+    </div>
+  </div>
+  <div class="callout">
+    <p>이 프로젝트의 핵심 자산은 모델 가중치가 아니다. 200개 이상 KRW 마켓의 실시간 데이터 파이프라인, 35개 피처 엔지니어링 코드, 매일 돌아가는 ops 인프라, 그리고 무엇이 왜 안 되는지를 실증적으로 확인한 경험이다. 이것들은 전략이 바뀌어도 그대로 남는다.</p>
   </div>
 </div></section>
 
 <footer>
-  <p class="footer-text"><a href="/">soccz.</a> &mdash; AETHER (Chrono-Trader v2)</p>
+  <p class="footer-text"><a href="/">soccz.</a> &mdash; AETHER · Chrono-Trader v2 · GAN+Transformer 단계 종료 2026-04</p>
 </footer>
 
 <script>
