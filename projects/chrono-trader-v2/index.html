@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AETHER — Chrono-Trader v2 · 고민의 기록</title>
-  <meta name="description" content="GAN+Transformer 기반 암호화폐 예측 시스템을 1년간 만들며 실패하고 배운 것들. IC=-0.06, Sharpe 0.17, 그리고 다음 전략.">
+  <title>AETHER — Chrono-Trader v2 · 분석 보고서</title>
+  <meta name="description" content="GAN+Transformer 기반 암호화폐 예측 시스템 1년 분석 보고서. IC=-0.06, Sharpe 0.17, 근본 원인 진단과 전략 전환.">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -18,207 +18,218 @@
       --text-secondary: #57534e;
       --text-muted: #a8a29e;
       --accent: #44403c;
-      --accent-dim: rgba(68,64,60,0.07);
       --border: #e7e5e4;
       --border-light: #d6d3d1;
       --red: #dc2626;
       --red-dim: rgba(220,38,38,0.08);
       --green: #16a34a;
       --green-dim: rgba(22,163,74,0.08);
+      --amber: #b45309;
+      --amber-dim: rgba(180,83,9,0.07);
+      --blue-dim: rgba(59,130,246,0.07);
+      --blue: #2563eb;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; }
 
-    body {
-      font-family: 'Noto Sans KR', -apple-system, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border); transition: all 0.3s;
-    }
-    nav.scrolled { background: rgba(250,250,249,0.95); }
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
-      display: flex; align-items: center; justify-content: space-between; height: 64px;
-    }
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
+    nav.scrolled { background: rgba(250,250,249,0.97); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
     .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
 
-    .hero {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      text-align: center; padding: 2rem; position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
-                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
-    }
-    .hero-content { position: relative; max-width: 820px; }
-    .hero-label {
-      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--text-secondary); border: 1px solid var(--border-light);
-      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
-    }
-    .hero h1 {
-      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
-      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
-    }
+    /* Hero */
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%); }
+    .hero-content { position: relative; max-width: 860px; }
+    .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem; }
+    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
     .hero-sub { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
-    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .hero-stat { text-align: center; }
     .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
-    .hero-stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-stat-label { font-size: 0.73rem; color: var(--text-muted); letter-spacing: 0.04em; }
     .hero-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
-    .hero-link {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
-      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
-    }
+    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s; }
     .hero-link:hover { border-color: var(--accent); color: var(--accent); }
-    .scroll-ind {
-      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
-      animation: float 2s ease-in-out infinite;
-    }
+    .scroll-ind { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em; animation: float 2s ease-in-out infinite; }
     @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
+    /* Layout */
     section { padding: 6rem 2rem; }
+    section.compact { padding: 4rem 2rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
     .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
-    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 720px; line-height: 1.85; margin-bottom: 3rem; }
     .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .four-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .auto-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
 
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .card-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
-    .card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    }
-    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .card-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+    /* Cards */
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .card:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-sm { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem 1.5rem; }
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
 
-    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
-    .flow-step {
-      flex: 1; min-width: 160px; background: var(--bg-card); border: 1px solid var(--border);
-      padding: 1.5rem 1.2rem; text-align: center; position: relative;
-    }
-    .flow-step:first-child { border-radius: 8px 0 0 8px; }
-    .flow-step:last-child { border-radius: 0 8px 8px 0; }
-    .flow-step::after {
-      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
-      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
-    }
-    .flow-step:last-child::after { display: none; }
-    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .flow-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.3rem; }
-    .flow-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+    /* Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.8rem; }
+    .tag { font-size: 0.67rem; padding: 0.18rem 0.5rem; background: var(--bg-secondary); color: var(--text-secondary); border-radius: 3px; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
 
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
-    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: var(--bg-secondary); color: var(--text-secondary); border-radius: 3px; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
-
-    .timeline { position: relative; padding-left: 2rem; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
-    .timeline-item { position: relative; margin-bottom: 2.5rem; }
-    .timeline-dot { position: absolute; left: -2.4rem; top: 0.35rem; width: 10px; height: 10px; border-radius: 50%; background: var(--border-light); border: 2px solid var(--bg-primary); }
-    .timeline-dot.active { background: var(--accent); }
-    .timeline-date { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; font-family: 'JetBrains Mono', monospace; }
-    .timeline-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; }
-    .timeline-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
-    .badge {
-      display: inline-block; margin-top: 0.5rem; margin-right: 0.3rem;
-      font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
-      padding: 0.2rem 0.6rem; border-radius: 3px;
-    }
+    /* Badges */
+    .badge { display: inline-block; margin-top: 0.5rem; margin-right: 0.35rem; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; padding: 0.2rem 0.6rem; border-radius: 3px; }
     .badge-fail { background: var(--red-dim); color: var(--red); border: 1px solid rgba(220,38,38,0.2); }
     .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
-    .badge-pivot { background: rgba(234,179,8,0.08); color: #92400e; border: 1px solid rgba(234,179,8,0.3); }
+    .badge-pivot { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(180,83,9,0.2); }
     .badge-neutral { background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border); }
+    .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
 
-    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    /* Metric */
     .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
     .metric-val { font-family: 'Noto Serif KR', serif; font-size: 2rem; font-weight: 700; display: block; line-height: 1.2; margin-bottom: 0.3rem; }
-    .metric-val.negative { color: var(--red); }
-    .metric-val.positive { color: var(--green); }
+    .metric-val.neg { color: var(--red); }
+    .metric-val.pos { color: var(--green); }
     .metric-val.neutral { color: #292524; }
-    .metric-label { font-size: 0.78rem; color: var(--text-muted); }
+    .metric-val.amber { color: var(--amber); }
+    .metric-label { font-size: 0.78rem; color: var(--text-secondary); font-weight: 500; }
     .metric-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; line-height: 1.5; }
 
-    .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
+    /* Chart wrap */
+    .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem 2rem; margin-bottom: 1.5rem; }
     .chart-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
-    .chart-subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.8rem; }
-    .ic-bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-    .ic-bar-label { font-size: 0.8rem; color: var(--text-secondary); min-width: 110px; text-align: right; }
-    .ic-bar-track { flex: 1; position: relative; height: 28px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
-    .ic-bar-center { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border-light); z-index: 1; }
-    .ic-bar-fill { position: absolute; top: 4px; bottom: 4px; border-radius: 3px; }
-    .ic-bar-fill.neg { right: 50%; background: rgba(220,38,38,0.55); }
-    .ic-bar-fill.pos { left: 50%; background: rgba(22,163,74,0.55); }
-    .ic-bar-val { font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; min-width: 60px; }
-    .ic-bar-val.neg { color: var(--red); }
-    .ic-bar-val.pos { color: var(--green); }
+    .chart-subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.6rem; line-height: 1.6; }
+    .chart-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.7; }
 
-    .winrate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-    .winrate-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
-    .winrate-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 700; margin-bottom: 0.5rem; }
-    .winrate-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.6; }
-    .winrate-note.warn { color: #b45309; }
+    /* Horizontal bar chart */
+    .hbar-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
+    .hbar-label { font-size: 0.78rem; color: var(--text-secondary); min-width: 120px; text-align: right; white-space: nowrap; }
+    .hbar-track { flex: 1; height: 26px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; position: relative; }
+    .hbar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 0.5rem; }
+    .hbar-fill.red { background: rgba(220,38,38,0.18); }
+    .hbar-fill.green { background: rgba(22,163,74,0.18); }
+    .hbar-fill.stone { background: rgba(120,113,108,0.15); }
+    .hbar-fill.amber { background: rgba(180,83,9,0.13); }
+    .hbar-val { font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; min-width: 70px; }
+    .hbar-val.neg { color: var(--red); }
+    .hbar-val.pos { color: var(--green); }
+    .hbar-val.stone { color: var(--text-secondary); }
+    .hbar-val.amber { color: var(--amber); }
 
-    .result-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    .result-table th { background: var(--bg-secondary); padding: 0.7rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 600; border-bottom: 2px solid var(--border); }
-    .result-table td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; }
-    .result-table td.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
-    .result-table td.neg { color: var(--red); }
-    .result-table td.warn { color: #b45309; }
-    .result-table tr:last-child td { border-bottom: none; }
+    /* IC centered bar */
+    .ic-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
+    .ic-label { font-size: 0.78rem; color: var(--text-secondary); min-width: 130px; text-align: right; }
+    .ic-track { flex: 1; position: relative; height: 26px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+    .ic-center { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border-light); z-index: 1; }
+    .ic-fill { position: absolute; top: 4px; bottom: 4px; border-radius: 3px; }
+    .ic-fill.neg { right: 50%; background: rgba(220,38,38,0.55); }
+    .ic-fill.pos { left: 50%; background: rgba(22,163,74,0.55); }
+    .ic-val { font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; min-width: 65px; }
+    .ic-val.neg { color: var(--red); }
+    .ic-val.pos { color: var(--green); }
 
-    .layer-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    /* Flow */
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2rem 0; }
+    .flow-step { flex: 1; min-width: 140px; background: var(--bg-card); border: 1px solid var(--border); padding: 1.3rem 1rem; text-align: center; position: relative; }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after { content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1; }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .flow-title { font-weight: 700; font-size: 0.82rem; margin-bottom: 0.25rem; }
+    .flow-desc { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 2.2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .timeline-item { position: relative; margin-bottom: 3rem; }
+    .timeline-dot { position: absolute; left: -2.6rem; top: 0.3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--border-light); border: 2px solid var(--bg-primary); }
+    .timeline-dot.done { background: var(--accent); }
+    .timeline-dot.fail { background: var(--red); }
+    .timeline-dot.pivot { background: var(--amber); }
+    .timeline-dot.next { background: var(--border-light); border: 2px solid var(--border-light); }
+    .t-meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .t-date { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+    .t-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .t-hyp { font-size: 0.84rem; color: var(--blue); background: var(--blue-dim); border: 1px solid rgba(59,130,246,0.15); border-radius: 6px; padding: 0.7rem 1rem; margin-bottom: 0.7rem; line-height: 1.7; }
+    .t-hyp::before { content: '가설 '; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; }
+    .t-find { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 0.7rem; }
+    .t-imp { font-size: 0.83rem; color: var(--accent); background: var(--accent-dim); border-radius: 6px; padding: 0.6rem 1rem; border: 1px solid rgba(68,64,60,0.1); line-height: 1.7; }
+    .t-imp::before { content: '→ 함의 '; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; }
+    .t-detail { margin-top: 0.8rem; }
+
+    /* Funnel */
+    .funnel-wrap { display: flex; flex-direction: column; gap: 0.35rem; }
+    .funnel-step { display: flex; align-items: center; gap: 1rem; }
+    .funnel-bar-wrap { flex: 1; position: relative; }
+    .funnel-bar { height: 34px; border-radius: 4px; display: flex; align-items: center; padding: 0 1rem; background: rgba(120,113,108,0.1); border: 1px solid rgba(120,113,108,0.15); transition: width 0.5s; }
+    .funnel-bar-text { font-size: 0.78rem; font-weight: 700; color: var(--text-primary); white-space: nowrap; }
+    .funnel-bar-sub { font-size: 0.7rem; color: var(--text-secondary); margin-left: 0.5rem; white-space: nowrap; }
+    .funnel-count { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-muted); min-width: 55px; text-align: right; }
+    .funnel-label { font-size: 0.75rem; color: var(--text-secondary); min-width: 145px; text-align: right; white-space: nowrap; }
+
+    /* Layer card */
+    .layer-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; border-top: 3px solid #78716c; }
     .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
     .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
-    .layer-q { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); line-height: 1.7; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); line-height: 1.75; }
 
-    .lesson-item { display: flex; align-items: flex-start; gap: 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem 1.8rem; margin-bottom: 0.8rem; transition: all 0.2s; }
+    /* Lesson */
+    .lesson-item { display: flex; align-items: flex-start; gap: 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem 1.8rem; margin-bottom: 0.8rem; transition: all 0.2s; }
     .lesson-item:hover { border-color: var(--border-light); transform: translateX(3px); }
     .lesson-num { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
-    .lesson-content { flex: 1; }
+    .lesson-body { flex: 1; }
     .lesson-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
-    .lesson-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.75; }
-    .code-inline { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
+    .lesson-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.8; }
+    .c { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
 
-    .next-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+    /* Table */
+    .tbl { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .tbl th { background: var(--bg-secondary); padding: 0.7rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 600; border-bottom: 2px solid var(--border); }
+    .tbl td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; }
+    .tbl td.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+    .tbl td.neg { color: var(--red); }
+    .tbl td.pos { color: var(--green); }
+    .tbl td.warn { color: var(--amber); }
+    .tbl tr:last-child td { border-bottom: none; }
+
+    /* Next */
     .next-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; }
     .next-step { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
     .next-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .next-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7; }
+    .next-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.75; }
 
-    .callout { margin-top: 2.5rem; padding: 1.5rem 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; border-left: 3px solid var(--border-light); }
-    .callout p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8; }
+    .callout { padding: 1.4rem 1.8rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; border-left: 3px solid var(--border-light); }
+    .callout p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.85; }
+
+    .divider-label { display: flex; align-items: center; gap: 1rem; margin: 2rem 0 1.5rem; }
+    .divider-label span { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); white-space: nowrap; }
+    .divider-label::before, .divider-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
+      .two-col, .three-col { grid-template-columns: 1fr; }
       .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+    }
+    @media (max-width: 680px) {
       .flow { flex-direction: column; }
       .flow-step { border-radius: 8px !important; }
       .flow-step::after { display: none; }
-      section { padding: 4rem 1.5rem; }
-      .winrate-grid { grid-template-columns: 1fr; }
-      .ic-bar-label { min-width: 80px; font-size: 0.72rem; }
+      .ic-label { min-width: 80px; font-size: 0.72rem; }
+      .funnel-label { min-width: 100px; font-size: 0.7rem; }
       .lesson-item { flex-direction: column; gap: 0.4rem; }
     }
   </style>
@@ -229,10 +240,11 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
-      <li><a href="#overview">Overview</a></li>
+      <li><a href="#summary">Summary</a></li>
       <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#journey">Journey</a></li>
-      <li><a href="#findings">Findings</a></li>
+      <li><a href="#experiments">Experiments</a></li>
+      <li><a href="#signal">Signal Analysis</a></li>
+      <li><a href="#funnel">Funnel</a></li>
       <li><a href="#lessons">Lessons</a></li>
       <li><a href="#next">Next</a></li>
     </ul>
@@ -242,18 +254,19 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">GAN &middot; Transformer &middot; Crypto &middot; 1년의 기록</span>
+    <span class="hero-label">분석 보고서 · GAN · Transformer · Crypto · 2025–2026</span>
     <h1>AETHER<br>Chrono-Trader v2</h1>
     <p class="hero-sub">
-      "지금 오르는 코인 옆에서 다음에 오를 코인을 찾는다"는 아이디어 하나로 시작했다.<br>
-      GAN+Transformer 하이브리드를 만들고, 매일 돌아가는 ops 파이프라인을 쌓고,<br>
-      IC 분석으로 신호의 한계를 확인했다. 그 과정의 솔직한 기록.
+      "지금 오르는 코인 옆에서 다음에 오를 코인을 찾는다."<br>
+      GAN+Transformer 하이브리드 시스템을 만들고, 매일 돌아가는 ops 파이프라인을 쌓고,<br>
+      IC 분석으로 신호의 한계를 실증했다. 실패 포함, 과정 전체의 분석 기록.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">12h</span><span class="hero-stat-label">예측 호라이즌</span></div>
       <div class="hero-stat"><span class="hero-stat-num">35</span><span class="hero-stat-label">엔지니어링 피처</span></div>
       <div class="hero-stat"><span class="hero-stat-num">200+</span><span class="hero-stat-label">KRW 마켓</span></div>
       <div class="hero-stat"><span class="hero-stat-num">3</span><span class="hero-stat-label">앙상블 모델</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">−0.06</span><span class="hero-stat-label">최종 IC</span></div>
     </div>
     <div class="hero-links">
       <a href="https://github.com/soccz/Chrono-Trader-v2" target="_blank" class="hero-link">
@@ -266,293 +279,539 @@
 </section>
 <hr class="divider">
 
-<!-- Overview -->
-<section id="overview"><div class="container fade-in">
-  <div class="section-label">Overview</div>
-  <h2 class="section-title">무엇을 만들려 했나</h2>
-  <p class="section-desc">암호화폐 시장에서 '지금 오르는 코인'과 '다음에 오를 코인'은 연결되어 있다는 가설에서 출발했다. 이 두 관점을 하나의 모델에 담고, 불확실성을 측정하며, 매일 자동으로 돌아가는 시스템을 목표로 했다.</p>
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-icon">⬡</div>
-      <div class="card-title">패턴 전이 탐지</div>
-      <div class="card-text">BTC/ETH에서 시작된 상승이 알트코인으로 퍼지는 리드-래그 구조를 포착한다. 과거 유사 패턴(메모리 뱅크)과 현재 시퀀스의 유사도로 "지금 어디에 있는지"를 판단한다.</div>
-      <div class="tags"><span class="tag">Lead-Lag</span><span class="tag">DTW Similarity</span><span class="tag">Memory Bank</span></div>
+<!-- Executive Summary -->
+<section id="summary" class="compact"><div class="container fade-in">
+  <div class="section-label">Executive Summary</div>
+  <h2 class="section-title">핵심 결과 한눈에</h2>
+  <p class="section-desc">90일 백테스트 및 holdout IC 분석 결과. 모델이 가치를 파괴하고 있다는 결론에 도달해 전략 전환을 결정했다.</p>
+  <div class="four-col" style="margin-bottom:2rem;">
+    <div class="metric-card"><span class="metric-val neg">0.17</span><div class="metric-label">Sharpe Ratio</div><div class="metric-sub">90일 백테스트<br>랜덤 수준</div></div>
+    <div class="metric-card"><span class="metric-val neg">-0.059</span><div class="metric-label">Overall IC</div><div class="metric-sub">holdout, 17 markets<br>weak threshold: |0.05|</div></div>
+    <div class="metric-card"><span class="metric-val neg">-0.158</span><div class="metric-label">Short IC (raw)</div><div class="metric-sub">역방향 예측<br>음의 신호</div></div>
+    <div class="metric-card"><span class="metric-val amber">55.8%</span><div class="metric-label">Screener Win Rate</div><div class="metric-sub">vs 모델 53.1%<br>스크리너 &gt; 모델</div></div>
+  </div>
+  <div class="chart-wrap">
+    <div class="chart-title">주요 지표 요약 — 모델 vs 벤치마크</div>
+    <div class="chart-subtitle">각 지표의 실측값과 의미. 음수 IC는 예측 방향이 실제와 반대임을 의미한다.</div>
+    <div class="hbar-row">
+      <div class="hbar-label">Overall IC</div>
+      <div class="hbar-track"><div class="hbar-fill red" style="width:29.5%"><span style="font-size:0.73rem;font-family:'JetBrains Mono',monospace;color:var(--red);">-0.059</span></div></div>
+      <div class="hbar-val neg">신호 없음</div>
     </div>
-    <div class="card">
-      <div class="card-icon">⟁</div>
-      <div class="card-title">불확실성 우선 설계</div>
-      <div class="card-text">예측값을 점 추정 대신 분포로 출력한다. 60회 MC-Dropout 샘플로 PI_80 구간을 구하고, 불확실성이 높은 예측은 추천에서 제외한다. "모르면 하지 않는다."</div>
-      <div class="tags"><span class="tag">MC-Dropout</span><span class="tag">PI_80</span><span class="tag">Uncertainty Filter</span></div>
+    <div class="hbar-row">
+      <div class="hbar-label">Short IC (raw)</div>
+      <div class="hbar-track"><div class="hbar-fill red" style="width:79%"><span style="font-size:0.73rem;font-family:'JetBrains Mono',monospace;color:var(--red);">-0.158</span></div></div>
+      <div class="hbar-val neg">역방향 예측</div>
     </div>
-    <div class="card">
-      <div class="card-icon">⟳</div>
-      <div class="card-title">운영 자동화</div>
-      <div class="card-text">매일 아침 데이터 수집 → 추론 → 추천 CSV → 텔레그램 알림까지 무인으로 동작한다. 워치독 타임아웃, 신선도 게이트, Watch-only 폴백으로 장애를 흡수한다.</div>
-      <div class="tags"><span class="tag">Systemd</span><span class="tag">Watchdog</span><span class="tag">MinRec Policy</span></div>
+    <div class="hbar-row">
+      <div class="hbar-label">Short IC (filtered)</div>
+      <div class="hbar-track"><div class="hbar-fill green" style="width:90%"><span style="font-size:0.73rem;font-family:'JetBrains Mono',monospace;color:var(--green);">+0.180</span></div></div>
+      <div class="hbar-val pos">필터 효과 확인</div>
     </div>
-    <div class="card">
-      <div class="card-icon">⊞</div>
-      <div class="card-title">설명 가능한 라우팅</div>
-      <div class="card-text">Transformer(글로벌 추세)와 CNN(로컬 모티프) 두 인코더 중 어느 쪽이 예측을 주도했는지 gate 값으로 추적할 수 있다. attention_top3가 중요 타임스텝을 노출한다.</div>
-      <div class="tags"><span class="tag">Gate Value</span><span class="tag">attention_top3</span><span class="tag">FiLM Conditioning</span></div>
+    <div class="hbar-row">
+      <div class="hbar-label">Screener Win Rate</div>
+      <div class="hbar-track"><div class="hbar-fill stone" style="width:55.8%"><span style="font-size:0.73rem;font-family:'JetBrains Mono',monospace;color:var(--text-secondary);">55.8%</span></div></div>
+      <div class="hbar-val stone">모델보다 우수</div>
     </div>
+    <div class="hbar-row">
+      <div class="hbar-label">Model Win Rate</div>
+      <div class="hbar-track"><div class="hbar-fill amber" style="width:53.1%"><span style="font-size:0.73rem;font-family:'JetBrains Mono',monospace;color:var(--amber);">53.1%</span></div></div>
+      <div class="hbar-val amber">열위</div>
+    </div>
+    <p class="chart-note">Short(filtered): 10단계 퍼널을 통과한 거래만. 필터가 신호를 선별하고 있으나 거래 수 부족(127건 중 극소수만 통과)으로 통계적으로 불안정. 결론: raw 예측 신호 자체에 알파 없음.</p>
   </div>
 </div></section>
 <hr class="divider">
 
 <!-- Architecture -->
 <section id="architecture"><div class="container fade-in">
-  <div class="section-label">Architecture</div>
-  <h2 class="section-title">어떻게 만들었나</h2>
-  <p class="section-desc">168시간 OHLCV 시퀀스를 입력으로 받아 12시간 후 수익률 경로를 예측하는 파이프라인. 인코더는 두 개, 디코더는 이종 분산(heteroscedastic)으로 설계했다.</p>
+  <div class="section-label">System Architecture</div>
+  <h2 class="section-title">시스템 구조</h2>
+  <p class="section-desc">168시간 OHLCV 시퀀스를 입력으로 받아 12시간 후 수익률 경로를 예측하는 엔드-투-엔드 파이프라인. 인코더 이중화, 이종 분산 디코더, 10단계 의사결정 퍼널로 구성된다.</p>
+
   <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit API<br>168h 캔들<br>200+ 마켓</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">피처 엔지니어링</div><div class="flow-desc">35개 피처<br>매크로 + 팩터<br>크로스섹션 랭크</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">하이브리드 인코더</div><div class="flow-desc">Transformer (글로벌)<br>+ CNN (로컬)<br>Gate Fusion</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">디코더</div><div class="flow-desc">GAN + CVAE<br>&mu;, log &sigma; 출력<br>MC-Dropout 60회</div></div>
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit API<br>168h 캔들<br>200+ KRW 마켓</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">피처 공학</div><div class="flow-desc">35개 피처<br>4개 카테고리<br>크로스섹션 랭크</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">하이브리드 인코더</div><div class="flow-desc">Transformer ∥ CNN<br>Gate Fusion<br>FiLM 레짐 조건화</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">앙상블 디코더</div><div class="flow-desc">3-Model Ensemble<br>μ, log σ 출력<br>MC-Dropout 60회</div></div>
     <div class="flow-step"><div class="flow-num">05</div><div class="flow-title">의사결정 퍼널</div><div class="flow-desc">10단계 필터<br>net-alpha / PI_80<br>DTW 유사도</div></div>
+    <div class="flow-step"><div class="flow-num">06</div><div class="flow-title">Ops 출력</div><div class="flow-desc">추천 CSV<br>텔레그램 알림<br>Flask 대시보드</div></div>
   </div>
-  <div class="card-grid-2" style="margin-top: 2rem;">
+
+  <div class="divider-label"><span>피처 구성 (35개)</span></div>
+  <div class="two-col" style="margin-bottom:2rem;">
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div class="chart-title">피처 카테고리 분류</div>
+      <div class="chart-subtitle">네 가지 카테고리로 구성. 각 카테고리가 모델에 전달하는 정보의 종류가 다르다.</div>
+      <div style="display:flex; align-items:center; gap:2rem; flex-wrap:wrap; margin-top:0.5rem;">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <!-- Macro: 9/35 = 25.7% → 92.6° -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="#e7e5e4" stroke-width="28"/>
+          <!-- slice 1: Macro 25.7% -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="rgba(68,64,60,0.55)" stroke-width="28"
+            stroke-dasharray="314.16" stroke-dashoffset="234.9" transform="rotate(-90 70 70)"/>
+          <!-- slice 2: Technical 28.6% (rotated 92.6°) -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="rgba(120,113,108,0.4)" stroke-width="28"
+            stroke-dasharray="314.16" stroke-dashoffset="224.0" transform="rotate(2.6 70 70)"/>
+          <!-- slice 3: Factor 25.7% (rotated 195.4°) -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="rgba(180,83,9,0.35)" stroke-width="28"
+            stroke-dasharray="314.16" stroke-dashoffset="234.9" transform="rotate(105.4 70 70)"/>
+          <!-- slice 4: Cross-sectional 20% (rotated 287.9°) -->
+          <circle cx="70" cy="70" r="50" fill="none" stroke="rgba(37,99,235,0.3)" stroke-width="28"
+            stroke-dasharray="314.16" stroke-dashoffset="251.3" transform="rotate(197.9 70 70)"/>
+          <circle cx="70" cy="70" r="36" fill="var(--bg-card)"/>
+          <text x="70" y="66" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="14" font-weight="700" fill="#1c1917">35</text>
+          <text x="70" y="80" text-anchor="middle" font-family="'Noto Sans KR',sans-serif" font-size="9" fill="#a8a29e">피처</text>
+        </svg>
+        <div style="flex:1; min-width:160px;">
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+            <div style="width:10px;height:10px;border-radius:2px;background:rgba(68,64,60,0.55);flex-shrink:0;"></div>
+            <span style="font-size:0.8rem; color:var(--text-secondary);">매크로 컨텍스트 — 9개</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+            <div style="width:10px;height:10px;border-radius:2px;background:rgba(120,113,108,0.4);flex-shrink:0;"></div>
+            <span style="font-size:0.8rem; color:var(--text-secondary);">기술적 지표 — 10개</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+            <div style="width:10px;height:10px;border-radius:2px;background:rgba(180,83,9,0.35);flex-shrink:0;"></div>
+            <span style="font-size:0.8rem; color:var(--text-secondary);">팩터 (FF-스타일) — 9개</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <div style="width:10px;height:10px;border-radius:2px;background:rgba(37,99,235,0.3);flex-shrink:0;"></div>
+            <span style="font-size:0.8rem; color:var(--text-secondary);">크로스섹션 랭크 — 7개</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div class="chart-title">3-Model Ensemble 구성</div>
+      <div class="chart-subtitle">각 모델이 다른 lookback과 파라미터 크기로 단기/중기/장기 패턴을 담당한다.</div>
+      <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem;">
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <div style="flex:1; background:rgba(68,64,60,0.06); border:1px solid var(--border); border-radius:6px; padding:0.7rem 1rem;">
+            <div style="font-weight:700; font-size:0.85rem; margin-bottom:0.15rem;">Model 1</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">d=64 · lookback=48h · 단기 패턴</div>
+          </div>
+          <div style="font-size:0.7rem; color:var(--text-muted);">↘</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <div style="flex:1; background:rgba(68,64,60,0.06); border:1px solid var(--border); border-radius:6px; padding:0.7rem 1rem;">
+            <div style="font-weight:700; font-size:0.85rem; margin-bottom:0.15rem;">Model 3</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">d=256 · lookback=168h · 장기 패턴</div>
+          </div>
+          <div style="font-size:0.8rem; color:var(--text-secondary); font-weight:700;">→ 가중 평균</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <div style="flex:1; background:rgba(68,64,60,0.06); border:1px solid var(--border); border-radius:6px; padding:0.7rem 1rem;">
+            <div style="font-weight:700; font-size:0.85rem; margin-bottom:0.15rem;">Model 4</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">d=128 · lookback=96h · 중기 패턴</div>
+          </div>
+          <div style="font-size:0.7rem; color:var(--text-muted);">↗</div>
+        </div>
+        <div style="background:var(--bg-secondary); border:1px solid var(--border); border-radius:6px; padding:0.6rem 1rem; text-align:center;">
+          <div style="font-size:0.78rem; font-family:'JetBrains Mono',monospace; color:var(--text-secondary);">μ̄, σ̄ → decision funnel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-label"><span>Hybrid Encoder 상세</span></div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem;">
     <div class="layer-card">
-      <div class="layer-num">Input Features (35개)</div>
-      <div class="layer-title">매크로 + 팩터 + 기술적 지표</div>
-      <div class="layer-q">"지금 시장은 어떤 국면인가?"를 BTC/ETH 인덱스 수익률, 4-state 레짐(Bull/Bear × 조용/변동성), 크로스섹션 랭크, FF-스타일 팩터로 표현한다. beta/alpha는 벡터화된 72/168/336h 롤링 윈도우로 계산.</div>
-      <div class="tags"><span class="tag">BTC Regime</span><span class="tag">Cross-sectional Rank</span><span class="tag">Rolling Beta</span><span class="tag">FF Factors × Regime</span></div>
+      <div class="layer-num">Transformer Path</div>
+      <div class="layer-title">글로벌 의존성 — 레짐 수준</div>
+      <div class="layer-q">Multi-head attention으로 168h 전체에서 중요 타임스텝을 추출. attention_weights[-1] → (B, 168) importance row. attention_top3가 예측을 지배한 3개 타임스텝을 노출해 해석 가능성을 제공한다.</div>
+      <div class="tags"><span class="tag">Multi-head Attention</span><span class="tag">168h context</span><span class="tag">attention_top3</span></div>
     </div>
     <div class="layer-card">
-      <div class="layer-num">3-Model Ensemble</div>
-      <div class="layer-title">다양한 lookback × 모델 크기</div>
-      <div class="layer-q">Model 1 (d=64, 48h lookback), Model 3 (d=256, 168h), Model 4 (d=128, 96h). 각각 다른 lookback으로 단기/중기/장기 패턴을 담당한다. 앙상블 집계는 예측 수익률과 불확실성의 가중 평균.</div>
-      <div class="tags"><span class="tag">d=64 / 48h</span><span class="tag">d=256 / 168h</span><span class="tag">d=128 / 96h</span><span class="tag">Weighted Ensemble</span></div>
+      <div class="layer-num">CNN Path</div>
+      <div class="layer-title">로컬 모티프 — 형상 수준</div>
+      <div class="layer-q">Transformer attention으로 가중된 입력을 CNN에 통과시켜 로컬 패턴(W패턴, 스파이크, 추세 반전 등)을 추출한다. Attention-guided CNN이라 두 인코더가 독립적이지 않고 결합된다.</div>
+      <div class="tags"><span class="tag">Attention-guided</span><span class="tag">Local Motif</span><span class="tag">Shape Primitive</span></div>
     </div>
     <div class="layer-card">
-      <div class="layer-num">Decision Funnel (10단계)</div>
-      <div class="layer-title">불확실성 인식 단계적 필터</div>
-      <div class="layer-q">Tradeable 검증 → net_alpha + step1_score → 레짐/리드-래그 조정 → 유동성 → 최소 기대수익률 → 컨센서스 → 불확실성(적응적 임계값) → DTW 패턴 → Short 차단 → MinRec 보장</div>
-      <div class="tags"><span class="tag">net_alpha</span><span class="tag">PI_80</span><span class="tag">DTW Match</span><span class="tag">Watch-only Fallback</span></div>
+      <div class="layer-num">Gate Fusion + FiLM</div>
+      <div class="layer-title">두 표현의 결합과 레짐 조건화</div>
+      <div class="layer-q">Gated fusion이 두 인코더 출력의 가중 합을 만든다. gate_value가 어느 쪽이 지배했는지 추적 가능. FiLM(Feature-wise Linear Modulation)이 4-state BTC 레짐(Bull/Bear × 조용/변동성)으로 표현을 조건화한다.</div>
+      <div class="tags"><span class="tag">Gate Value</span><span class="tag">FiLM</span><span class="tag">4-State Regime</span></div>
     </div>
     <div class="layer-card">
-      <div class="layer-num">Ops Infrastructure</div>
-      <div class="layer-title">매일 무인 실행 파이프라인</div>
-      <div class="layer-q">Systemd 타이머 (아침 + 장중) → 데이터 수집 → 추론 → 추천 CSV → 텔레그램 → Flask 대시보드. 신선도 게이트 실패 시 안전 종료(exit 10). 오프라인에서도 Watch-only 유지.</div>
-      <div class="tags"><span class="tag">Systemd Timer</span><span class="tag">Freshness Gate</span><span class="tag">Flask Dashboard</span><span class="tag">Telegram Bot</span></div>
+      <div class="layer-num">Heteroscedastic Decoder</div>
+      <div class="layer-title">이종 분산 출력 — μ, log σ</div>
+      <div class="layer-q">CVAE 기반 디코더가 μ(예측 수익률)와 log σ(예측별 불확실성)를 별도 헤드로 출력한다. MC-Dropout 60회 샘플로 PI_80(80% prediction interval)를 구성. 결과적으로 log σ는 -5.05에 수렴해 사실상 상수가 됐다 (설계 실패).</div>
+      <div class="tags"><span class="tag">μ head</span><span class="tag">log σ head</span><span class="tag">MC-Dropout ×60</span><span class="tag">PI_80</span></div>
     </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<!-- Journey -->
-<section id="journey"><div class="container fade-in">
-  <div class="section-label">Journey</div>
-  <h2 class="section-title">어떤 과정을 거쳤나</h2>
-  <p class="section-desc">초기 설계에서 IC 분석까지. 각 단계에서 무엇을 발견하고 어떻게 수정했는지의 타임라인.</p>
+<!-- Experiments -->
+<section id="experiments"><div class="container fade-in">
+  <div class="section-label">Experiment Log</div>
+  <h2 class="section-title">실험 과정 — 가설, 발견, 함의</h2>
+  <p class="section-desc">각 Phase마다 무엇을 가정했고, 실제로 무엇을 발견했으며, 그것이 다음 결정에 어떤 영향을 미쳤는지 구조적으로 기록한다.</p>
   <div class="timeline">
+
+    <!-- Phase 0 -->
     <div class="timeline-item">
-      <div class="timeline-dot active"></div>
-      <div class="timeline-date">2025 초기</div>
-      <div class="timeline-title">GAN+Transformer 초기 설계</div>
-      <div class="timeline-desc">Transformer 인코더 + CNN 스택 + GAN 디코더. 6h 호라이즌, 27개 피처. Optuna로 hyperparameter 탐색. 운영 자동화(systemd, 텔레그램)부터 먼저 완성했다. "시스템이 매일 돌아가는 것"을 연구보다 우선했기 때문에 — 이 판단은 나중에 맞았다고 생각한다.</div>
-      <div class="tags" style="margin-top:0.6rem;"><span class="tag">6h horizon</span><span class="tag">27 features</span><span class="tag">GAN decoder</span><span class="tag">Ops-first</span></div>
+      <div class="timeline-dot done"></div>
+      <div class="t-meta">
+        <span class="t-date">2025 초기</span>
+        <span class="badge badge-neutral">Phase 0</span>
+        <span class="badge badge-blue">Ops-first</span>
+      </div>
+      <div class="t-title">초기 설계 — GAN+Transformer, 운영 우선</div>
+      <div class="t-hyp">암호화폐 가격 시퀀스에는 반복되는 패턴이 있고, Transformer(글로벌)와 CNN(로컬)의 이중 인코더가 이를 효과적으로 포착할 수 있다. 불확실성 추정(MC-Dropout)이 잘못된 추천을 걸러낼 수 있다.</div>
+      <div class="t-find">
+        Transformer 인코더 + CNN 스택 + GAN 디코더. 6h 호라이즌, 27개 피처. Optuna Purged Walk-Forward CV(6h embargo)로 hyperparameter 탐색. <strong>운영 자동화를 연구보다 먼저 완성</strong>했다 — systemd 타이머, watchdog timeout, freshness gate, 텔레그램 알림, Flask 대시보드. 이 결정은 나중에 옳았다고 판단한다. 시스템이 매일 돌아가지 않으면 실제 데이터로 문제를 발견할 수 없기 때문이다.
+      </div>
+      <div class="t-imp">ops 인프라가 먼저 완성되어야 나중에 신호 문제를 발견할 수 있었다. "배포 가능한 것"을 먼저 만들고 "좋은 것"을 나중에 만드는 순서가 실질적이다.</div>
+      <div class="tags"><span class="tag">6h horizon</span><span class="tag">27 features</span><span class="tag">GAN decoder</span><span class="tag">Optuna</span><span class="tag">Systemd</span></div>
     </div>
+
+    <!-- Phase 1 -->
     <div class="timeline-item">
-      <div class="timeline-dot active"></div>
-      <div class="timeline-date">2026 Jan — Phase 1</div>
-      <div class="timeline-title">데이터 파이프라인 수정 + 12h 전환</div>
-      <div class="timeline-desc">세 가지 근본 문제를 발견했다: ① <span class="code-inline">fillna(0)</span>이 RSI=0, volatility=0 같은 불가능한 값을 만들었다. ② Train/Test가 100% 겹쳐 모든 메트릭이 무효였다. ③ 3h 예측 AC=0.025(노이즈 수준), 12h AC=0.100(통계적으로 유의미). 호라이즌을 12h로 전환하고 ffill/bfill + 480행 드롭, temporal holdout 20%를 적용했다.</div>
-      <span class="badge badge-ok">12h AC=0.100 (p=0.00015)</span>
-      <span class="badge badge-fail">메트릭 재산정 필요</span>
+      <div class="timeline-dot done"></div>
+      <div class="t-meta">
+        <span class="t-date">2026 Jan</span>
+        <span class="badge badge-neutral">Phase 1</span>
+        <span class="badge badge-ok">데이터 수정</span>
+      </div>
+      <div class="t-title">데이터 파이프라인 수정 + 호라이즌 전환 (6h → 12h)</div>
+      <div class="t-hyp">6h 호라이즌으로 충분한 신호를 얻을 수 있다. 데이터 전처리는 문제없다. Train과 Test 분리가 되어있다.</div>
+      <div class="t-find">
+        <strong>세 가지 근본 문제를 동시에 발견:</strong><br><br>
+        ① <strong>fillna(0) 오염:</strong> RSI=0, volatility=0 같은 물리적으로 불가능한 값이 첫 480행(20일)과 중간 누락 구간에 주입됐다. 모든 기술적 지표가 초기 구간에서 0으로 시작해 모델이 "0이 정상"이라고 학습했다.<br><br>
+        ② <strong>Train/Test 100% overlap:</strong> 학습 데이터(720일)가 백테스트 기간(90일)을 완전히 포함했다. 모든 보고 메트릭이 사실상 훈련 세트 성능이었다.<br><br>
+        ③ <strong>호라이즌 예측 불가능:</strong> 3h 예측의 autocorrelation = 0.025 (노이즈 수준). 12h autocorrelation = 0.100 (p=0.00015). 예측할 수 없는 시간척도에서 학습하고 있었다.
+      </div>
+      <div class="t-detail">
+        <div class="chart-wrap" style="margin-bottom:0.8rem;">
+          <div class="chart-title">호라이즌 비교 — Autocorrelation (AC)</div>
+          <div class="chart-subtitle">레이블 autocorrelation이 높을수록 예측 가능성이 높다. |AC| &lt; 0.05는 사실상 노이즈.</div>
+          <div class="hbar-row" style="margin-top:1rem;">
+            <div class="hbar-label">3h horizon</div>
+            <div class="hbar-track"><div class="hbar-fill red" style="width:12.5%"><span style="font-size:0.72rem;font-family:'JetBrains Mono',monospace;color:var(--red);">AC=0.025</span></div></div>
+            <div class="hbar-val neg">노이즈</div>
+          </div>
+          <div class="hbar-row">
+            <div class="hbar-label">12h horizon</div>
+            <div class="hbar-track"><div class="hbar-fill green" style="width:50%"><span style="font-size:0.72rem;font-family:'JetBrains Mono',monospace;color:var(--green);">AC=0.100</span></div></div>
+            <div class="hbar-val pos">유의미 (p=0.00015)</div>
+          </div>
+          <p class="chart-note">AC 4배 차이. 예측 불가능한 timescale에서 학습하는 것이 모델 복잡도를 높여도 성능이 개선되지 않는 근본 원인 중 하나였다.</p>
+        </div>
+      </div>
+      <div class="t-imp">ffill/bfill + 첫 480행 드롭, temporal holdout 20%, 12h 호라이즌으로 전환. 이 수정이 가장 임팩트가 컸다.</div>
+      <div class="tags"><span class="tag">fillna → ffill/bfill</span><span class="tag">480행 드롭</span><span class="tag">temporal holdout 20%</span><span class="tag">12h horizon</span></div>
     </div>
+
+    <!-- Phase 2 -->
     <div class="timeline-item">
-      <div class="timeline-dot active"></div>
-      <div class="timeline-date">2026 Feb — Phase 2</div>
-      <div class="timeline-title">Heteroscedastic 디코더</div>
-      <div class="timeline-desc">CVAE 디코더를 이종 분산(heteroscedastic) 구조로 교체했다. &mu;와 log &sigma;를 별도 헤드로 출력해 불확실성이 예측마다 다르게 계산되도록 설계. 하지만 훈련 후 log_sigma_mean = -5.05(초기화 편향에 갇힘), &sigma; &approx; 0.0067로 사실상 상수. KL collapse도 확인(KL=0.000 throughout 100 epoch).</div>
-      <span class="badge badge-fail">log_sigma 상수 수렴 — 설계 실패</span>
+      <div class="timeline-dot fail"></div>
+      <div class="t-meta">
+        <span class="t-date">2026 Feb</span>
+        <span class="badge badge-neutral">Phase 2</span>
+        <span class="badge badge-fail">설계 실패</span>
+      </div>
+      <div class="t-title">Heteroscedastic 디코더 — 이종 분산 불확실성 추정</div>
+      <div class="t-hyp">CVAE를 heteroscedastic 구조로 교체하면 예측별 불확실성이 다르게 계산돼 필터의 정밀도가 높아진다. μ와 log σ를 별도 헤드로 학습하면 confidence가 의미 있는 신호가 된다.</div>
+      <div class="t-find">
+        <strong>두 가지 근본 실패:</strong><br><br>
+        ① <strong>log σ 상수 수렴:</strong> log_sigma head의 bias가 -5.0으로 초기화되고 학습 후 log_sigma_mean = -5.0547. σ ≈ 0.0067로 100 epoch 내내 사실상 상수. 예측마다 불확실성이 다르게 계산되어야 하는데, mu_head의 NLL loss와 log_sigma loss의 스케일 불균형으로 log_sigma가 갱신되지 않았다.<br><br>
+        ② <strong>KL collapse:</strong> CVAE의 KL divergence가 100 epoch 전체에서 0.0000. 잠재공간이 사실상 미사용. 비싼 연산(CVAE 샘플링) 대비 얻는 정보가 없었다. confidence_head 출력도 mean=0.503, std=0.0008으로 상수 — position sizing에 정보를 제공하지 못했다.
+      </div>
+      <div class="t-detail">
+        <div class="chart-wrap" style="margin-bottom:0.8rem;">
+          <div class="chart-title">Heteroscedastic 디코더 실패 지표</div>
+          <div class="chart-subtitle">이상적으로는 각 지표가 학습에 따라 변해야 한다. 실제 결과는 초기화 값에 갇혀 있다.</div>
+          <table class="tbl" style="margin-top:1rem;">
+            <thead><tr><th>지표</th><th>이상적 목표</th><th>실제 결과</th><th>판정</th></tr></thead>
+            <tbody>
+              <tr><td>log_sigma_mean</td><td class="mono">학습에 따라 변동</td><td class="mono neg">-5.0547 (초기화 편향)</td><td class="neg">미학습</td></tr>
+              <tr><td>sigma 표준편차</td><td class="mono">&gt; 0.05 (예측별 다름)</td><td class="mono neg">≈ 0.0067 (상수)</td><td class="neg">상수 출력</td></tr>
+              <tr><td>KL divergence</td><td class="mono">&gt; 0.01</td><td class="mono neg">0.0000 (100 epoch)</td><td class="neg">collapse</td></tr>
+              <tr><td>confidence std</td><td class="mono">&gt; 0.05</td><td class="mono neg">0.0008</td><td class="neg">사실상 0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="t-imp">구조 자체는 맞지만 초기화 전략(mu_head Kaiming, log_sigma bias=-5)과 loss 스케일이 문제. 두 헤드가 독립적으로 학습될 수 있도록 loss coefficient 재조정이 필요하다. 이번 단계에서는 해결하지 못했다.</div>
+      <div class="tags"><span class="tag">log_sigma collapse</span><span class="tag">KL=0</span><span class="tag">confidence=0.503±0.001</span></div>
     </div>
+
+    <!-- Phase 3 -->
     <div class="timeline-item">
-      <div class="timeline-dot active"></div>
-      <div class="timeline-date">2026 Mar — Phase 3</div>
-      <div class="timeline-title">추천 필터 수정 + 이상 예측 차단</div>
-      <div class="timeline-desc">라이브 추천에서 세 문제 발견: ① direction_consistency 임계값 0.66이 너무 엄격해 추천이 거의 없었다 → 0.55로 완화. ② TOSHI predicted_return=71&times;, POKT=9-11&times;(불확실성 폭발) → 이상치 하드 필터 추가. ③ Short 신호에서 gate &lt; 0.25이면 예측력 없음 → gate_value 필터 추가. 세 필터 모두 uncertainty bypass 이전에 적용했다.</div>
-      <span class="badge badge-ok">이상 예측 차단</span>
-      <span class="badge badge-ok">추천 다양성 확보</span>
+      <div class="timeline-dot done"></div>
+      <div class="t-meta">
+        <span class="t-date">2026 Mar</span>
+        <span class="badge badge-neutral">Phase 3</span>
+        <span class="badge badge-ok">필터 개선</span>
+      </div>
+      <div class="t-title">추천 필터 재조정 + 이상 예측 차단</div>
+      <div class="t-hyp">라이브 추천 수가 너무 적은 것은 필터 임계값이 너무 엄격하기 때문이다. 임계값을 완화하면 품질을 유지하면서 추천 수를 늘릴 수 있다.</div>
+      <div class="t-find">
+        <strong>세 가지 문제와 수정:</strong><br><br>
+        ① <strong>direction_consistency 과엄격:</strong> 12-step 예측 중 동일 방향 비율이 0.66(8/12) 이상이어야 했다. 실제 데이터에서 이 조건을 만족하는 예측이 거의 없어 대부분 watch-only. → <span class="c">0.66 → 0.55</span>로 완화.<br><br>
+        ② <strong>이상 예측 폭발:</strong> TOSHI predicted_return=71×, POKT=9-11×, BOUNTY=6.6× — uncertainty=5.2(폭발). 이 이상치들이 Long 평균 수익률을 왜곡하고 있었다. uncertainty bypass 이전에 하드 필터 추가: <span class="c">|return| &gt; 0.5 → reject</span>, <span class="c">uncertainty &gt; 3.0 → reject</span>.<br><br>
+        ③ <strong>gate 기반 Short 차단:</strong> gate_value &lt; 0.25인 Short 신호는 모델이 로컬 패턴(CNN)을 거의 사용하지 않았다는 의미. 이런 Short 신호는 예측력이 없다고 판단해 제외.
+      </div>
+      <div class="t-imp">필터 수정 후 추천 다양성이 증가하고 이상 예측이 차단됐다. 하지만 raw 신호 자체의 IC가 음수라는 근본 문제는 해결되지 않았다. 필터는 나쁜 신호를 걸러내지만 좋은 신호를 만들어내지는 않는다.</div>
+      <div class="tags"><span class="tag">direction_consistency 0.66→0.55</span><span class="tag">anomaly hard filter</span><span class="tag">gate_value &lt; 0.25 reject</span></div>
     </div>
+
+    <!-- IC Analysis -->
     <div class="timeline-item">
-      <div class="timeline-dot active"></div>
-      <div class="timeline-date">2026 Apr 1 — IC 분석</div>
-      <div class="timeline-title">신호 검증: 근본 진단</div>
-      <div class="timeline-desc">22시간 걸리는 백테스트 대신 5분 만에 신호 품질을 확인할 수 있는 IC 분석으로 방법론을 전환. holdout 17개 마켓, 2025-10 ~ 2026-01 데이터로 측정. 결과: 전체 IC=-0.059, Short IC=-0.158. Short 58.3% 승률은 BTC -21.9% 하락 기간의 시장 베타로 판명(p=0.031 marginal). 모델이 가치를 파괴하고 있었다.</div>
-      <span class="badge badge-fail">Overall IC = -0.059</span>
-      <span class="badge badge-pivot">전략 피벗 결정</span>
+      <div class="timeline-dot pivot"></div>
+      <div class="t-meta">
+        <span class="t-date">2026 Apr 1</span>
+        <span class="badge badge-neutral">IC 분석</span>
+        <span class="badge badge-fail">신호 없음 확인</span>
+        <span class="badge badge-pivot">전략 전환 결정</span>
+      </div>
+      <div class="t-title">근본 진단 — IC 분석으로 전환</div>
+      <div class="t-hyp">Short 58.3% 승률은 모델의 실제 예측 능력을 반영한다. 백테스트 Sharpe 0.17은 낮지만 더 긴 기간이나 필터 개선으로 개선될 수 있다.</div>
+      <div class="t-find">
+        <strong>평가 방법론 전환이 핵심이었다:</strong> 22시간 걸리는 백테스트 대신 IC(Spearman correlation) 분석으로 전환하자 5분 만에 신호 품질을 확인할 수 있었다.<br><br>
+        <strong>결과: IC = -0.059 (신호 없음)</strong><br>
+        Short 58.3% 승률의 실체: 동일 기간 BTC 수익률 = -21.9%. 127개 Short 거래 전부의 trend_alignment = Counter(역추세). Short 거래가 시장 하락 베타를 타고 있었을 뿐이다. p=0.031 (marginal), 95% CI = [0.498, 0.661] — 하한이 50%에 걸쳐있다.<br><br>
+        <strong>레이블 분포는 문제없었다:</strong> 훈련 데이터(2019-2024) 레이블: 양수 51.5% / 음수 48.5% (균형). 하락 월 비율: 41.2%. 레이블 불균형이나 레짐 편향 문제가 아니라 순수하게 신호가 없는 것이다.
+      </div>
+      <div class="t-imp">재훈련-백테스트 사이클을 반복해도 의미가 없다. raw 예측 신호 자체에 알파가 없다. 피처 품질과 예측 가능성이 근본 문제. 전략을 크로스섹션 팩터 모델로 전환한다.</div>
+      <div class="tags"><span class="tag">IC=-0.059</span><span class="tag">Short IC=-0.158</span><span class="tag">BTC -21.9% 베타</span><span class="tag">레이블 균형 OK</span></div>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">2026 Apr — Next</div>
-      <div class="timeline-title">크로스섹션 팩터 모델로 전환</div>
-      <div class="timeline-desc">개별 12h 수익률 예측 대신 200+ 코인을 팩터(모멘텀, 유동성, 변동성)로 랭킹하고 상위 10% Long / 하위 10% Short. 시장 베타를 중립화하고 상대 수익률만 추출한다. 기존 ops 인프라와 피처(rank_return_4h, breadth_ratio 등)를 재활용. IC를 1차 지표로 사용해 5분 만에 반복 가능.</div>
-      <div class="tags" style="margin-top:0.6rem;"><span class="tag">Cross-sectional</span><span class="tag">Factor Ranking</span><span class="tag">Beta Neutral</span><span class="tag">IC Evaluation</span></div>
-    </div>
+
   </div>
 </div></section>
 <hr class="divider">
 
-<!-- Findings -->
-<section id="findings"><div class="container fade-in">
-  <div class="section-label">Findings</div>
-  <h2 class="section-title">정직한 결과</h2>
-  <p class="section-desc">90일 백테스트(2026 Jan-Mar) 및 IC 분석 결과. 숫자 그대로 기록한다.</p>
+<!-- Signal Analysis -->
+<section id="signal"><div class="container fade-in">
+  <div class="section-label">Signal Analysis</div>
+  <h2 class="section-title">신호 분석</h2>
+  <p class="section-desc">160개 거래(Long 33, Short 127)의 상세 분석. IC 분해, 승률 분해, 수익률 분포.</p>
 
-  <div class="metric-grid">
-    <div class="metric-card">
-      <span class="metric-val negative">0.17</span>
-      <div class="metric-label">Sharpe (90일 백테스트)</div>
-      <div class="metric-sub">랜덤과 구분 불가 수준</div>
+  <div class="two-col" style="margin-bottom:1.5rem;">
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div class="chart-title">IC 분해 — holdout (2025-10 ~ 2026-01)</div>
+      <div class="chart-subtitle">17개 마켓, Spearman correlation. 기준: |0.05|=weak, |0.10|=medium, |0.20|=strong.</div>
+      <div style="margin-top:1rem;">
+        <div class="ic-row">
+          <div class="ic-label">Overall</div>
+          <div class="ic-track"><div class="ic-center"></div><div class="ic-fill neg" style="width:5.9%"></div></div>
+          <div class="ic-val neg">-0.059</div>
+        </div>
+        <div class="ic-row">
+          <div class="ic-label">Long (raw)</div>
+          <div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:6%"></div></div>
+          <div class="ic-val pos">+0.060</div>
+        </div>
+        <div class="ic-row">
+          <div class="ic-label">Short (raw)</div>
+          <div class="ic-track"><div class="ic-center"></div><div class="ic-fill neg" style="width:15.8%"></div></div>
+          <div class="ic-val neg">-0.158</div>
+        </div>
+        <div class="ic-row">
+          <div class="ic-label">Short (filtered)</div>
+          <div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:18%"></div></div>
+          <div class="ic-val pos">+0.180</div>
+        </div>
+      </div>
+      <p class="chart-note">Short(filtered)는 10단계 퍼널 통과 거래만. 필터 자체가 선별력을 가지나 통과 거래 수가 너무 적어 통계적으로 불안정하다.</p>
     </div>
-    <div class="metric-card">
-      <span class="metric-val negative">-0.059</span>
-      <div class="metric-label">Overall IC (holdout)</div>
-      <div class="metric-sub">|0.05| = weak signal 기준</div>
-    </div>
-    <div class="metric-card">
-      <span class="metric-val negative">-0.158</span>
-      <div class="metric-label">Short IC (raw predictions)</div>
-      <div class="metric-sub">역방향 예측 — 음의 신호</div>
-    </div>
-    <div class="metric-card">
-      <span class="metric-val neutral">55.8%</span>
-      <div class="metric-label">단순 스크리너 승률</div>
-      <div class="metric-sub">vs 모델 53.1%<br>스크리너 &gt; 모델</div>
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div class="chart-title">신호별 승률 vs 실제 수익률</div>
+      <div class="chart-subtitle">160개 백테스트 거래(2026 Jan-Mar). 승률 ≠ 수익률.</div>
+      <div style="display:flex; justify-content:space-around; align-items:center; margin: 1rem 0 0.5rem;">
+        <div style="text-align:center;">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#e7e5e4" stroke-width="10"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(220,38,38,0.65)" stroke-width="10"
+              stroke-dasharray="238.76" stroke-dashoffset="159.35" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            <text x="50" y="54" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="17" font-weight="700" fill="#1c1917">33%</text>
+          </svg>
+          <div style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); margin-top:0.3rem;">Long (33거래)</div>
+          <div style="font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">avg return: -3.5%</div>
+        </div>
+        <div style="text-align:center;">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#e7e5e4" stroke-width="10"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(180,83,9,0.65)" stroke-width="10"
+              stroke-dasharray="238.76" stroke-dashoffset="99.98" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            <text x="50" y="54" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="17" font-weight="700" fill="#1c1917">58%</text>
+          </svg>
+          <div style="font-size:0.8rem; font-weight:700; color:var(--text-secondary); margin-top:0.3rem;">Short (127거래)</div>
+          <div style="font-size:0.72rem; color:var(--amber); font-family:'JetBrains Mono',monospace;">BTC -21.9% 베타</div>
+        </div>
+      </div>
+      <p class="chart-note">Short 58% 승률: BTC -21.9% 하락 기간의 시장 베타. p=0.031 marginal, CI [0.498, 0.661]. Long 33% 승률: TOSHI(71×), POKT(9×) 이상 예측이 평균 왜곡.</p>
     </div>
   </div>
 
   <div class="chart-wrap">
-    <div class="chart-title">IC 분석 — Holdout (2025-10 ~ 2026-01, 17개 마켓)</div>
-    <div class="chart-subtitle">Spearman correlation between predicted and actual 12h returns. 기준: |0.05| weak, |0.10| medium, |0.20| strong signal.</div>
-    <div class="ic-bar-row">
-      <div class="ic-bar-label">Overall</div>
-      <div class="ic-bar-track">
-        <div class="ic-bar-center"></div>
-        <div class="ic-bar-fill neg" style="width:5.9%"></div>
-      </div>
-      <div class="ic-bar-val neg">-0.059</div>
-    </div>
-    <div class="ic-bar-row">
-      <div class="ic-bar-label">Long (raw)</div>
-      <div class="ic-bar-track">
-        <div class="ic-bar-center"></div>
-        <div class="ic-bar-fill pos" style="width:6%"></div>
-      </div>
-      <div class="ic-bar-val pos">+0.060</div>
-    </div>
-    <div class="ic-bar-row">
-      <div class="ic-bar-label">Short (raw)</div>
-      <div class="ic-bar-track">
-        <div class="ic-bar-center"></div>
-        <div class="ic-bar-fill neg" style="width:15.8%"></div>
-      </div>
-      <div class="ic-bar-val neg">-0.158</div>
-    </div>
-    <div class="ic-bar-row">
-      <div class="ic-bar-label">Short (filtered)</div>
-      <div class="ic-bar-track">
-        <div class="ic-bar-center"></div>
-        <div class="ic-bar-fill pos" style="width:18%"></div>
-      </div>
-      <div class="ic-bar-val pos">+0.180</div>
-    </div>
-    <p style="font-size:0.75rem; color:var(--text-muted); margin-top:1rem; line-height:1.7;">Short(filtered): 10단계 퍼널을 통과한 추천 거래에서만 측정. raw 예측 IC=-0.158이지만, 필터를 통과한 거래들은 +0.18. 필터 자체가 작동하고 있음을 시사하나 거래 수가 너무 적어 통계적으로 불안정하다.</p>
-  </div>
-
-  <div class="winrate-grid">
-    <div class="winrate-card">
-      <div class="winrate-label">Long 신호 (33거래)</div>
-      <svg width="110" height="110" viewBox="0 0 110 110" style="margin: 0.5rem auto; display:block;">
-        <circle cx="55" cy="55" r="42" fill="none" stroke="#e7e5e4" stroke-width="11"/>
-        <circle cx="55" cy="55" r="42" fill="none" stroke="#dc2626" stroke-width="11" stroke-opacity="0.7"
-          stroke-dasharray="263.9" stroke-dashoffset="175.9"
-          stroke-linecap="round" transform="rotate(-90 55 55)"/>
-        <text x="55" y="60" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="20" font-weight="700" fill="#1c1917">33%</text>
-      </svg>
-      <div class="winrate-note">이상 예측(TOSHI 71&times;, POKT 9&times;)이 평균 왜곡.<br>avg return = -3.5%</div>
-    </div>
-    <div class="winrate-card">
-      <div class="winrate-label">Short 신호 (127거래)</div>
-      <svg width="110" height="110" viewBox="0 0 110 110" style="margin: 0.5rem auto; display:block;">
-        <circle cx="55" cy="55" r="42" fill="none" stroke="#e7e5e4" stroke-width="11"/>
-        <circle cx="55" cy="55" r="42" fill="none" stroke="#b45309" stroke-width="11" stroke-opacity="0.7"
-          stroke-dasharray="263.9" stroke-dashoffset="110.8"
-          stroke-linecap="round" transform="rotate(-90 55 55)"/>
-        <text x="55" y="60" text-anchor="middle" font-family="'Noto Serif KR',serif" font-size="20" font-weight="700" fill="#1c1917">58%</text>
-      </svg>
-      <div class="winrate-note warn">표면적 58.3% — BTC -21.9% 하락 베타.<br>p=0.031 marginal, 알파 아님.</div>
-    </div>
-  </div>
-
-  <div class="chart-wrap">
-    <div class="chart-title">확인된 근본 문제 (2026-03-28)</div>
-    <div class="chart-subtitle">모델 아키텍처 문제가 아니라 신호 한계와 데이터 파이프라인 문제들이 복합 작용했다.</div>
-    <table class="result-table">
-      <thead><tr><th>문제</th><th>증거</th><th>영향</th></tr></thead>
+    <div class="chart-title">확인된 근본 문제 — 복합 진단 (2026-03-28)</div>
+    <div class="chart-subtitle">아키텍처 문제가 아니라 신호 한계와 데이터 파이프라인 문제의 복합 작용이다.</div>
+    <table class="tbl" style="margin-top:1rem;">
+      <thead><tr><th>문제</th><th>측정값</th><th>영향</th><th>수정 여부</th></tr></thead>
       <tbody>
-        <tr><td>3h 예측 호라이즌 너무 짧음</td><td class="mono">AC=0.025 (노이즈)</td><td class="warn">예측 불가능한 timescale</td></tr>
-        <tr><td>KL collapse</td><td class="mono">KL=0.000 (100 epoch)</td><td class="neg">CVAE 잠재공간 미사용</td></tr>
-        <tr><td>fillna(0) 오염</td><td class="mono">RSI=0, vol=0 불가능</td><td class="neg">첫 480행 + 중간 누락 오염</td></tr>
-        <tr><td>Train/Test 100% overlap</td><td class="mono">학습 720일 &#x2283; 백테스트 90일</td><td class="neg">모든 보고 메트릭 무효</td></tr>
-        <tr><td>confidence_head 상수 출력</td><td class="mono">mean=0.503, std=0.0008</td><td class="neg">position sizing 정보 없음</td></tr>
-        <tr><td>스크리너 &gt; 모델</td><td class="mono">55.8% vs 53.1%</td><td class="neg">모델이 가치를 파괴</td></tr>
-        <tr><td>98% Short + Short 라이브 차단</td><td class="mono">거의 전부 watch-only</td><td class="warn">실행 가능 추천 거의 0</td></tr>
+        <tr><td>3h 호라이즌 노이즈</td><td class="mono neg">AC=0.025</td><td>예측 불가능 timescale</td><td class="pos">✓ 12h 전환</td></tr>
+        <tr><td>KL collapse</td><td class="mono neg">KL=0.000 (100ep)</td><td>CVAE 잠재공간 미사용</td><td class="warn">△ 미해결</td></tr>
+        <tr><td>fillna(0) 오염</td><td class="mono neg">RSI=0, vol=0</td><td>첫 480행 오염</td><td class="pos">✓ ffill/bfill</td></tr>
+        <tr><td>Train/Test overlap</td><td class="mono neg">720일 ⊃ 90일</td><td>모든 메트릭 무효</td><td class="pos">✓ temporal holdout</td></tr>
+        <tr><td>confidence_head 상수</td><td class="mono neg">std=0.0008</td><td>position sizing 정보 없음</td><td class="warn">△ 미해결</td></tr>
+        <tr><td>스크리너 &gt; 모델</td><td class="mono neg">55.8% vs 53.1%</td><td>모델이 가치 파괴</td><td class="neg">✗ 전략 전환</td></tr>
+        <tr><td>98% Short 출력</td><td class="mono neg">거의 전부 watch-only</td><td>실행 가능 추천 ≈ 0</td><td class="pos">✓ 필터 수정</td></tr>
       </tbody>
     </table>
   </div>
 </div></section>
 <hr class="divider">
 
+<!-- Funnel -->
+<section id="funnel"><div class="container fade-in">
+  <div class="section-label">Decision Funnel</div>
+  <h2 class="section-title">10단계 의사결정 퍼널</h2>
+  <p class="section-desc">200+개 마켓이 10단계를 거쳐 최종 추천으로 좁혀지는 과정. 각 단계의 탈락 기준과 설계 의도.</p>
+  <div class="two-col">
+    <div>
+      <div class="funnel-wrap">
+        <div class="funnel-step">
+          <div class="funnel-label">Step 0 — Tradeable</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:100%"><span class="funnel-bar-text">200+ 마켓</span><span class="funnel-bar-sub">상폐/스테이블/레버리지 제외</span></div>
+          </div>
+          <div class="funnel-count">~200</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Step 1 — net_alpha</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:80%"><span class="funnel-bar-text">수수료·슬리피지 차감</span><span class="funnel-bar-sub">step1_score = alpha - λ·downside</span></div>
+          </div>
+          <div class="funnel-count">~120</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Step 1.5 — 레짐</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:72%"><span class="funnel-bar-text">레짐/리드-래그 조정</span><span class="funnel-bar-sub">BTC 4-state + 리드 코인 보정</span></div>
+          </div>
+          <div class="funnel-count">~100</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Step 2 — 유동성</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:60%"><span class="funnel-bar-text">24h 거래량 임계값</span><span class="funnel-bar-sub">저유동성 제외</span></div>
+          </div>
+          <div class="funnel-count">~80</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Step 3 — 최소 수익</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:40%"><span class="funnel-bar-text">최소 기대수익률</span><span class="funnel-bar-sub">비용 초과 예측만</span></div>
+          </div>
+          <div class="funnel-count">~40</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Step 3.5 — 컨센서스</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:30%"><span class="funnel-bar-text">앙상블 일치도</span><span class="funnel-bar-sub">3모델 방향 컨센서스</span></div>
+          </div>
+          <div class="funnel-count">~25</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Step 4 — 불확실성</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:20%"><span class="funnel-bar-text">적응적 임계값</span><span class="funnel-bar-sub">PI_80 + MC uncertainty</span></div>
+          </div>
+          <div class="funnel-count">~12</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Step 5 — DTW</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:14%"><span class="funnel-bar-text">패턴 유사도</span><span class="funnel-bar-sub">메모리 뱅크 DTW 매칭</span></div>
+          </div>
+          <div class="funnel-count">~7</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-label">Short 차단 + MinRec</div>
+          <div class="funnel-bar-wrap">
+            <div class="funnel-bar" style="width:8%; background:rgba(68,64,60,0.12); border-color:rgba(68,64,60,0.2);">
+              <span class="funnel-bar-text">최종 추천</span>
+            </div>
+          </div>
+          <div class="funnel-count" style="color:var(--text-primary);font-weight:700;">1–5</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card-sm" style="margin-bottom:1rem;">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem;">퍼널 설계 의도</div>
+        <div style="font-size:0.83rem; color:var(--text-secondary); line-height:1.8;">
+          각 단계는 서로 다른 종류의 리스크를 제거한다. net_alpha는 비용 리스크, 유동성은 실행 리스크, 불확실성은 예측 리스크, DTW는 새로운 패턴 리스크를 제어한다. 단계가 많을수록 추천 수는 줄어들지만 남은 추천의 품질이 높아진다는 가정이다.
+        </div>
+      </div>
+      <div class="card-sm" style="margin-bottom:1rem;">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem;">Short IC(filtered) = +0.18의 의미</div>
+        <div style="font-size:0.83rem; color:var(--text-secondary); line-height:1.8;">
+          raw Short IC=-0.158이지만 퍼널을 통과한 Short 거래들의 IC=+0.18. 필터가 나쁜 Short 예측을 걸러내고 있다는 증거. 문제는 통과하는 거래 수가 너무 적어 통계적 검정이 불가능하다는 것이다. 커버리지(통과율)와 품질의 트레이드오프.
+        </div>
+      </div>
+      <div class="card-sm" style="background:var(--red-dim); border-color:rgba(220,38,38,0.15);">
+        <div style="font-weight:700; font-size:0.88rem; margin-bottom:0.6rem; color:var(--red);">퍼널의 한계</div>
+        <div style="font-size:0.83rem; color:var(--text-secondary); line-height:1.8;">
+          필터는 나쁜 예측을 거르지만 좋은 예측을 만들지는 않는다. raw 신호 자체의 IC=-0.059인 상황에서 필터를 아무리 정교하게 만들어도 신호 품질의 근본 한계를 넘을 수 없다. 깨끗한 파이프는 더러운 수도꼭지 문제를 해결하지 못한다.
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
 <!-- Lessons -->
 <section id="lessons"><div class="container fade-in">
-  <div class="section-label">Lessons</div>
-  <h2 class="section-title">무엇을 배웠나</h2>
-  <p class="section-desc">1년간의 반복 학습-검증 사이클에서 실제로 유효했던 교훈들. 알고 있던 것을 확인한 것도 있고, 실제로 틀렸던 것도 있다.</p>
+  <div class="section-label">Lessons Learned</div>
+  <h2 class="section-title">배운 것들</h2>
+  <p class="section-desc">1년간의 반복 학습-검증 사이클에서 실제로 유효했던 교훈. 알고 있었지만 확인한 것, 실제로 틀렸던 것을 구분해서 기록한다.</p>
   <div>
     <div class="lesson-item">
       <div class="lesson-num">1</div>
-      <div class="lesson-content">
-        <div class="lesson-title">평가 지표부터 잡아야 한다 — IC는 5분, 백테스트는 22시간</div>
-        <div class="lesson-desc">22시간 걸리는 백테스트를 반복하는 동안 신호 자체가 있는지 없는지를 확인하지 못했다. Spearman IC는 5분 만에 신호 품질을 알려준다. 빠른 피드백 루프 없이는 잘못된 방향으로 긴 시간을 쓸 수 있다. <span class="code-inline">np.corrcoef(pred, actual)</span>가 먼저였어야 했다.</div>
+      <div class="lesson-body">
+        <div class="lesson-title">IC 먼저, 백테스트는 나중에</div>
+        <div class="lesson-desc">22시간 걸리는 백테스트를 수십 번 반복하는 동안, 신호 자체가 있는지 5분 만에 확인할 수 있는 IC 분석을 쓰지 않았다. Spearman IC는 예측값과 실제값의 랭크 상관으로 신호 품질을 즉시 알려준다. 백테스트는 신호가 확인된 후에 실행해야 한다. <span class="c">np.corrcoef(rank(pred), rank(actual))</span>가 먼저였어야 했다.</div>
       </div>
     </div>
     <div class="lesson-item">
       <div class="lesson-num">2</div>
-      <div class="lesson-content">
-        <div class="lesson-title">승률은 시장 베타를 제거하고 봐야 한다</div>
-        <div class="lesson-desc">Short 58.3% 승률을 모델 신호로 착각할 뻔했다. BTC가 -21.9% 하락한 기간이었다. 방향이 맞은 것이지 예측이 맞은 것이 아니다. 알파를 측정할 때는 반드시 시장 수익률 대비 상대 수익률로 봐야 한다. 크로스섹션 접근법이 이 문제를 구조적으로 해결한다.</div>
+      <div class="lesson-body">
+        <div class="lesson-title">승률은 시장 베타와 함께 봐야 한다</div>
+        <div class="lesson-desc">Short 58.3% 승률을 발견했을 때 모델 성능이라고 착각했다. BTC -21.9% 하락 기간이었다. 모든 Short이 trend_alignment=Counter였다. 방향이 우연히 맞은 것이다. 알파를 측정할 때는 항상 "시장이 같은 방향으로 움직였다면 랜덤 전략도 이 성능이 나왔을까?"를 먼저 물어야 한다. 크로스섹션 접근법은 이 문제를 구조적으로 해결한다 — Long/Short 동시 진입으로 베타를 상쇄한다.</div>
       </div>
     </div>
     <div class="lesson-item">
       <div class="lesson-num">3</div>
-      <div class="lesson-content">
-        <div class="lesson-title">데이터 파이프라인 버그가 모델 성능보다 먼저다</div>
-        <div class="lesson-desc"><span class="code-inline">fillna(0)</span>은 RSI=0, volatility=0 같은 물리적으로 불가능한 값을 만든다. Train/Test가 겹치면 모든 메트릭이 낙관적으로 편향된다. beta의 bfill은 미래 누출을 만든다. 모델을 복잡하게 만들기 전에 데이터가 깨끗한지부터 확인해야 한다.</div>
+      <div class="lesson-body">
+        <div class="lesson-title">데이터 파이프라인 버그는 모델보다 먼저 고쳐야 한다</div>
+        <div class="lesson-desc"><span class="c">fillna(0)</span>이 RSI=0, volatility=0을 만들었다. Train/Test가 겹쳤다. 이 두 가지가 해결되지 않은 상태에서 모델 복잡도를 높여봐야 의미가 없다. 더러운 입력으로 정교한 모델을 학습하면 모델이 노이즈 패턴을 학습한다. 수정 순서: 데이터 정제 → 올바른 평가 분리 → 그 다음 모델 개선.</div>
       </div>
     </div>
     <div class="lesson-item">
       <div class="lesson-num">4</div>
-      <div class="lesson-content">
-        <div class="lesson-title">운영 인프라는 연구보다 먼저 완성해야 한다</div>
-        <div class="lesson-desc">처음부터 systemd 타이머, watchdog, freshness gate, 텔레그램 알림을 갖춘 운영 파이프라인을 만든 것은 올바른 선택이었다. 모델 성능이 부족하더라도 시스템이 매일 돌아가면서 실제 데이터로 문제를 발견할 수 있었다. "완벽한 모델을 만들고 배포"가 아니라 "돌아가는 것을 먼저 만들고 개선"이 실질적이다.</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Ops 인프라를 먼저 만드는 것이 맞다</div>
+        <div class="lesson-desc">처음부터 systemd 타이머, watchdog, freshness gate, 텔레그램, Flask 대시보드를 완성한 것은 올바른 선택이었다. 모델 성능이 부족해도 시스템이 매일 돌아가면서 실제 라이브 데이터로 문제를 발견할 수 있었다 — 이상 예측(TOSHI 71×), 98% Short 출력, watch-only 고착 문제 등. "완벽한 모델 → 배포"가 아니라 "돌아가는 것 → 개선"이 실질적이다. 이 인프라는 전략이 바뀌어도 재활용된다.</div>
       </div>
     </div>
     <div class="lesson-item">
       <div class="lesson-num">5</div>
-      <div class="lesson-content">
+      <div class="lesson-body">
         <div class="lesson-title">복잡한 모델이 단순한 스크리너를 이기지 못할 수 있다</div>
-        <div class="lesson-desc">GAN+Transformer 앙상블(53.1%)이 단순 스크리너(55.8%)에 졌다. 모델 복잡도를 높이는 것보다 신호 자체의 예측력을 확인하는 것이 우선이다. 12h OHLCV만으로는 크립토 수익률 예측에 충분한 정보가 없을 수 있다. 더 나은 피처가 더 복잡한 모델보다 효과적이다.</div>
+        <div class="lesson-desc">GAN+Transformer 앙상블(53.1%)이 단순 스크리너(55.8%)에 졌다. 이것은 모델 버그의 문제가 아니라 신호원의 문제다. 12h OHLCV 기술적 지표만으로는 크립토 수익률 예측에 충분한 정보가 없을 수 있다. 아키텍처를 복잡하게 만들기 전에 "피처 자체에 알파가 있는가?"를 IC로 먼저 확인해야 한다. 더 나은 피처 > 더 복잡한 모델.</div>
       </div>
     </div>
     <div class="lesson-item">
       <div class="lesson-num">6</div>
-      <div class="lesson-content">
-        <div class="lesson-title">필터 시스템이 나쁜 신호를 구제할 수 있다</div>
-        <div class="lesson-desc">raw 예측의 Short IC=-0.158이지만 10단계 퍼널을 통과한 거래의 IC=+0.18. 나쁜 예측들을 걸러내는 필터 자체가 알파를 만들 수 있다. 다만 거래 수가 너무 적어 통계적으로 불안정하다. 필터를 통과하는 거래가 충분히 많아야 의미가 있다 — 커버리지와 품질의 트레이드오프.</div>
+      <div class="lesson-body">
+        <div class="lesson-title">필터가 신호를 구제할 수 있지만 한계가 있다</div>
+        <div class="lesson-desc">raw Short IC=-0.158 → filtered Short IC=+0.18. 필터가 나쁜 예측들을 걸러내 남은 것들의 품질을 높인다. 이것은 실제로 작동했다. 하지만 통과하는 거래가 너무 적으면 통계적으로 무의미해진다. 그리고 raw 신호가 IC=-0.059인 상황에서 아무리 필터를 개선해도 커버리지가 붕괴된다. 필터는 보조 도구일 뿐 신호 자체를 대체할 수 없다.</div>
       </div>
     </div>
   </div>
@@ -562,58 +821,58 @@
 <!-- Next -->
 <section id="next"><div class="container fade-in">
   <div class="section-label">Next Direction</div>
-  <h2 class="section-title">다음: 크로스섹션 팩터 모델</h2>
-  <p class="section-desc">개별 수익률 예측 → 200+ 코인 상대 랭킹으로 전략을 전환한다. 기존 ops 인프라와 피처는 그대로 재활용한다.</p>
-  <div class="next-grid">
+  <h2 class="section-title">다음 전략 — 크로스섹션 팩터 모델</h2>
+  <p class="section-desc">개별 12h 수익률 예측 → 200+ 코인 상대 랭킹으로 전환. 기존 ops 인프라와 피처를 재활용하고, IC를 1차 지표로 쓴다.</p>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; margin-bottom:2rem;">
     <div class="next-card">
-      <div class="next-step">핵심 아이디어</div>
-      <div class="next-title">절대값 대신 순위</div>
-      <div class="next-desc">12h 후 수익률을 예측하는 대신, 모멘텀·유동성·변동성 팩터로 코인을 랭킹한다. 상위 10% Long, 하위 10% Short. 시장 전체가 오르든 내리든 관계없이 상대적으로 강한 코인 vs 약한 코인을 구분하는 문제로 재정의.</div>
+      <div class="next-step">핵심 전환</div>
+      <div class="next-title">절대값 예측 → 상대 순위</div>
+      <div class="next-desc">12h 후 수익률 절대값 대신, 200+ 코인을 팩터로 랭킹한다. 상위 10% Long, 하위 10% Short. 시장이 전체적으로 오르든 내리든 무관하게 "상대적으로 강한 코인"을 찾는 문제로 재정의한다.</div>
       <div class="tags"><span class="tag">rank_return_4h</span><span class="tag">breadth_ratio</span><span class="tag">vol_ratio</span></div>
     </div>
     <div class="next-card">
-      <div class="next-step">베타 중립화</div>
+      <div class="next-step">베타 중립</div>
       <div class="next-title">시장 방향과 독립</div>
-      <div class="next-desc">Long/Short을 동시에 내어 시장 베타를 상쇄한다. BTC가 -20% 빠지든 +20% 오르든, 상대적으로 강한 코인이 약한 코인을 이기는 구조만 필요하다. Short 58% 승률이 베타였던 문제를 구조적으로 해결.</div>
-      <div class="tags"><span class="tag">Long/Short</span><span class="tag">Beta Neutral</span><span class="tag">Relative Return</span></div>
+      <div class="next-desc">Long/Short 동시 진입으로 시장 베타 상쇄. BTC가 -20% 빠지든 +20% 오르든 관계없다. Short 58% 베타 함정 문제를 구조적으로 해결. 측정하는 것은 "얼마나 올랐는가"가 아니라 "다른 코인 대비 얼마나 강했는가"이다.</div>
+      <div class="tags"><span class="tag">Long/Short</span><span class="tag">Beta Neutral</span><span class="tag">Relative Alpha</span></div>
     </div>
     <div class="next-card">
       <div class="next-step">평가 방식</div>
-      <div class="next-title">IC를 1차 지표로</div>
-      <div class="next-desc">랭킹 예측과 실제 순위의 Spearman IC. 5분 만에 신호 품질을 확인한다. IC &gt; 0.05이면 신호 있음, 0.10이면 실용적. 22h 백테스트 대신 IC로 빠른 반복 가능. 백테스트는 신호가 확인된 후에 실행.</div>
-      <div class="tags"><span class="tag">Spearman IC</span><span class="tag">5-min feedback</span><span class="tag">IC &gt; 0.10 target</span></div>
+      <div class="next-title">IC = 1차 지표</div>
+      <div class="next-desc">랭킹 예측과 실제 순위의 Spearman IC. 5분 만에 신호 품질 확인. IC &gt; 0.05 = 신호 있음, &gt; 0.10 = 실용적. 22h 백테스트 사이클을 IC 루프로 대체. 백테스트는 IC &gt; 0.10 확인 후에만 실행.</div>
+      <div class="tags"><span class="tag">Spearman IC</span><span class="tag">5-min loop</span><span class="tag">IC &gt; 0.10 target</span></div>
     </div>
     <div class="next-card">
-      <div class="next-step">모델</div>
+      <div class="next-step">모델 선택</div>
       <div class="next-title">XGBoost 또는 Ridge</div>
-      <div class="next-desc">크로스섹션 랭킹에는 단순한 모델이 효과적이다. XGBoost (비선형 팩터 상호작용) 또는 Ridge regression (선형 팩터 조합). 기존 35개 피처를 그대로 입력으로 사용. Transformer를 쓰지 않아도 된다 — 피처 품질이 먼저.</div>
+      <div class="next-desc">크로스섹션 팩터 모델에는 단순한 모델이 효과적이다. XGBoost(비선형 팩터 상호작용)나 Ridge(선형 팩터 조합). 기존 35개 피처 입력 재활용. 피처 품질이 확인되면 그 위에 복잡도를 올린다.</div>
       <div class="tags"><span class="tag">XGBoost</span><span class="tag">Ridge</span><span class="tag">Feature Reuse</span></div>
     </div>
     <div class="next-card">
       <div class="next-step">재활용 자산</div>
-      <div class="next-title">인프라 그대로 유지</div>
-      <div class="next-desc">데이터 수집 파이프라인, 전처리, Flask 대시보드, systemd 타이머, 텔레그램 알림 — 전부 그대로 쓴다. 모델 출력 형식만 바뀐다. 1년간 쌓은 ops 인프라가 새 전략의 기반이 된다.</div>
+      <div class="next-title">1년 인프라 그대로</div>
+      <div class="next-desc">데이터 파이프라인, 전처리, Flask 대시보드, systemd 타이머, 텔레그램 — 전부 그대로. 모델 출력 형식만 바뀐다. GAN+Transformer 단계가 쌓아온 인프라가 새 전략의 기반이 된다.</div>
       <div class="tags"><span class="tag">Systemd</span><span class="tag">Flask</span><span class="tag">Telegram</span><span class="tag">Same DB</span></div>
     </div>
     <div class="next-card">
       <div class="next-step">현재 상태</div>
       <div class="next-title">GAN+Transformer 단계 종료</div>
-      <div class="next-desc">이 저장소는 GAN+Transformer 접근법의 최종 스냅샷이다. 코드, 실험, 발견이 모두 보존되어 있다. 실패의 기록도 기록이다. 무엇이 왜 안 되는지를 실증적으로 확인한 것 자체가 자산이다.</div>
-      <div class="tags"><span class="tag">2026-04 확정</span></div>
+      <div class="next-desc">이 저장소는 GAN+Transformer 접근법의 최종 스냅샷이다. 코드, 실험, 발견 전부 보존. 실패의 기록도 기록이다. 무엇이 왜 안 되는지를 실증한 것 자체가 다음 전략을 더 날카롭게 만든다.</div>
+      <div class="tags"><span class="tag">2026-04 종료</span></div>
     </div>
   </div>
   <div class="callout">
-    <p>이 프로젝트의 핵심 자산은 모델 가중치가 아니다. 200개 이상 KRW 마켓의 실시간 데이터 파이프라인, 35개 피처 엔지니어링 코드, 매일 돌아가는 ops 인프라, 그리고 무엇이 왜 안 되는지를 실증적으로 확인한 경험이다. 이것들은 전략이 바뀌어도 그대로 남는다.</p>
+    <p>이 프로젝트의 핵심 자산은 모델 가중치가 아니다. 200개+ KRW 마켓 실시간 데이터 파이프라인, 35개 피처 엔지니어링, 매일 돌아가는 ops 인프라, 그리고 무엇이 왜 안 되는지를 실증적으로 확인한 경험이다. 이것들은 전략이 바뀌어도 그대로 남는다.</p>
   </div>
 </div></section>
 
 <footer>
-  <p class="footer-text"><a href="/">soccz.</a> &mdash; AETHER · Chrono-Trader v2 · GAN+Transformer 단계 종료 2026-04</p>
+  <p class="footer-text"><a href="/">soccz.</a> &mdash; AETHER · Chrono-Trader v2 분석 보고서 · GAN+Transformer 단계 종료 2026-04</p>
 </footer>
 
 <script>
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+window.addEventListener('scroll',()=>{ document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50); });
+const obs = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }); },{threshold:0.08});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
 </body>
