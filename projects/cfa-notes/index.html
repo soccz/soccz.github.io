@@ -458,8 +458,8 @@
 
   function render(md){
     mathStore.length=0;
-    const protected=protectMath(md);
-    let html=marked.parse(protected);
+    const safemd=protectMath(md);
+    let html=marked.parse(safemd);
     html=restoreMath(html);
     readC.innerHTML=html;
     renderMathInElement(readC,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
