@@ -5,398 +5,170 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CFA Level 1 Complete Study Guide — 93 Readings Deep Dive</title>
-  <meta name="description" content="CFA Level 1 전체 93 Readings 한국어 해설집. 아무것도 모르는 사람부터 전공자 수준까지, 일상 비유→숫자 시나리오→수식 유도→변수 바꾸기 구조.">
+  <meta name="description" content="CFA Level 1 전체 93 Readings 한국어 해설집. 아무것도 모르는 사람부터 전공자 수준까지.">
+  <meta property="og:title" content="CFA Level 1 Complete Study Guide">
+  <meta property="og:description" content="93 Readings, 4 Books, 한국어 Deep Dive — 일상 비유에서 수식 유도까지">
+  <meta property="og:type" content="website">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/marked/marked.min.js" as="script">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" as="script">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root{--bg-toc:#fafaf9;--bg-reader:#fff;--bg-tint:#f5f5f4;--text-primary:#1c1917;--text-secondary:#57534e;--text-muted:#a8a29e;--accent:#c4724e;--accent-light:#fdf0ea;--accent-hover:#b06240;--border:#e7e5e4;--border-light:#d6d3d1;--code-bg:#292524;--code-text:#e7e5e4;--book1:#c4724e;--book2:#5a7a96;--book3:#5a8a6a;--book4:#7a6a9a}
+    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-toc);color:var(--text-primary);-webkit-font-smoothing:antialiased}
 
-    :root {
-      --bg-toc: #fafaf9;
-      --bg-reader: #ffffff;
-      --bg-tint: #f5f5f4;
-      --text-primary: #1c1917;
-      --text-secondary: #57534e;
-      --text-muted: #a8a29e;
-      --accent: #c4724e;
-      --accent-light: #fdf0ea;
-      --border: #e7e5e4;
-      --border-light: #d6d3d1;
-      --code-bg: #292524;
-      --code-text: #e7e5e4;
-    }
+    /* Progress */
+    #progress-bar{position:fixed;top:0;left:0;height:2px;z-index:9999;background:var(--accent);width:0%;transition:width 80ms linear;opacity:0;pointer-events:none}
+    #progress-bar.visible{opacity:1}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-toc);
-      color: var(--text-primary);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    #progress-bar {
-      position: fixed; top: 0; left: 0; height: 2px; z-index: 9999;
-      background: var(--accent);
-      width: 0%; transition: width 80ms linear;
-      opacity: 0; pointer-events: none;
-    }
-    #progress-bar.visible { opacity: 1; }
-
-    /* ── TOC VIEW ── */
-    #toc-view {
-      min-height: 100vh;
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-    #toc-view.hidden {
-      opacity: 0; pointer-events: none; position: absolute; transform: translateY(-20px);
-    }
-    .toc-home-link {
-      position: fixed; top: 1.5rem; left: 1.5rem; z-index: 30;
-      font-size: 0.78rem; color: var(--text-muted);
-      text-decoration: none; transition: color 0.2s ease;
-    }
-    .toc-home-link:hover { color: var(--text-primary); }
+    /* TOC */
+    #toc-view{min-height:100vh;transition:opacity .35s,transform .35s}
+    #toc-view.hidden{opacity:0;pointer-events:none;position:absolute;transform:translateY(-20px)}
+    .toc-home-link{position:fixed;top:1.5rem;left:1.5rem;z-index:30;font-size:.78rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+    .toc-home-link:hover{color:var(--text-primary)}
 
     /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center; padding: 3rem 2rem;
-      position: relative;
-    }
-    .hero-inner { max-width: 640px; }
-    .hero-label {
-      display: inline-block; font-size: 0.68rem; letter-spacing: 0.25em;
-      text-transform: uppercase; color: var(--text-muted);
-      margin-bottom: 3rem;
-    }
-    .hero h1 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700; line-height: 1.4;
-      letter-spacing: -0.03em; margin-bottom: 1rem;
-    }
-    .hero-subtitle {
-      font-size: 1rem; color: var(--text-secondary);
-      font-weight: 300; line-height: 1.8; margin-bottom: 3.5rem;
-    }
-    .hero-meta {
-      display: flex; justify-content: center; gap: 3rem;
-      flex-wrap: wrap;
-    }
-    .hero-meta-item { text-align: center; }
-    .hero-meta-num {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 2rem; font-weight: 700; color: var(--text-primary);
-      display: block; line-height: 1.2;
-    }
-    .hero-meta-label {
-      font-size: 0.72rem; color: var(--text-muted);
-      letter-spacing: 0.05em; margin-top: 0.25rem; display: block;
-    }
-    .scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.12em;
-      animation: drift 2.5s ease-in-out infinite;
-    }
-    @keyframes drift {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
-    }
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;position:relative;background:linear-gradient(180deg,var(--bg-toc) 0%,#f0ece4 100%)}
+    .hero-inner{max-width:660px}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:.4rem 1rem;border-radius:20px;margin-bottom:2.5rem}
+    .hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:700;line-height:1.35;letter-spacing:-.03em;margin-bottom:1.2rem}
+    .hero h1 span{color:var(--accent)}
+    .hero-subtitle{font-size:1rem;color:var(--text-secondary);font-weight:300;line-height:1.9;margin-bottom:3rem}
+    .hero-stats{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+    .hero-stat{background:var(--bg-reader);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.8rem;min-width:120px;transition:transform .2s,box-shadow .2s}
+    .hero-stat:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,114,78,.12)}
+    .hero-stat-num{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:700;color:var(--text-primary);display:block;line-height:1.1}
+    .hero-stat-label{font-size:.72rem;color:var(--text-muted);letter-spacing:.06em;margin-top:.3rem;display:block}
+    .hero-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;padding:.8rem 2rem;border-radius:8px;font-size:.9rem;font-weight:500;text-decoration:none;transition:background .2s,transform .2s;cursor:pointer;border:none}
+    .hero-cta:hover{background:var(--accent-hover);transform:translateY(-1px)}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:.6rem;letter-spacing:.15em;animation:drift 2.5s ease-in-out infinite}
+    @keyframes drift{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
 
     /* Book Progress */
-    .book-progress {
-      max-width: 640px; margin: 0 auto; padding: 0 2rem 3rem;
-    }
-    .progress-bar-container {
-      display: flex; gap: 4px; margin-bottom: 0.5rem;
-    }
-    .progress-segment {
-      flex: 1; height: 4px; border-radius: 2px;
-      transition: background 0.3s;
-    }
-    .progress-segment.book1 { background: var(--accent); }
-    .progress-segment.book2 { background: #5a7a96; }
-    .progress-segment.book3 { background: #5a8a6a; }
-    .progress-segment.book4 { background: #7a6a9a; }
-    .progress-labels {
-      display: flex; justify-content: space-between;
-      font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.05em;
-    }
+    .book-progress{max-width:660px;margin:0 auto;padding:0 2rem 2rem}
+    .progress-bar-visual{display:flex;gap:3px;margin-bottom:.6rem;height:6px;border-radius:3px;overflow:hidden}
+    .progress-seg{transition:flex .3s}
+    .progress-seg.b1{background:var(--book1);flex:26}
+    .progress-seg.b2{background:var(--book2);flex:20}
+    .progress-seg.b3{background:var(--book3);flex:29}
+    .progress-seg.b4{background:var(--book4);flex:18}
+    .progress-legend{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+    .legend-item{display:flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--text-muted)}
+    .legend-dot{width:8px;height:8px;border-radius:50%}
+
+    /* Search */
+    .search-bar{max-width:660px;margin:0 auto 2rem;padding:0 2rem}
+    .search-input{width:100%;padding:.7rem 1rem .7rem 2.5rem;border:1px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--bg-reader) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a8a29e' stroke-width='2'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='M16 16l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .8rem center;outline:none;transition:border-color .2s,box-shadow .2s;font-family:inherit;color:var(--text-primary)}
+    .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(196,114,78,.1)}
+    .search-input::placeholder{color:var(--text-muted)}
 
     /* Chapter List */
-    .chapter-list-section {
-      max-width: 640px; margin: 0 auto;
-      padding: 0 2rem 6rem;
-    }
-    .part-group { margin-bottom: 3rem; }
-    .part-label {
-      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--text-muted); margin-bottom: 1.2rem;
-      padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .part-count {
-      font-size: 0.65rem; color: var(--border-light);
-      letter-spacing: 0.05em;
-    }
-    .chapter-item {
-      display: flex; align-items: baseline; gap: 1.5rem;
-      padding: 1rem 0; cursor: pointer;
-      transition: padding-left 0.2s ease, color 0.2s ease;
-    }
-    .chapter-item:hover { padding-left: 0.5rem; }
-    .chapter-item:hover .chapter-title { color: var(--accent); }
-    .chapter-item:hover .chapter-num { color: var(--text-secondary); }
-    .chapter-num {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.6rem; font-weight: 700;
-      color: var(--border-light);
-      min-width: 2.5rem; text-align: right;
-      transition: color 0.2s ease;
-      line-height: 1;
-    }
-    .chapter-info { flex: 1; }
-    .chapter-title {
-      font-size: 1rem; font-weight: 500;
-      color: var(--text-primary); line-height: 1.5;
-      transition: color 0.2s ease;
-    }
-    .chapter-desc {
-      font-size: 0.82rem; color: var(--text-muted);
-      margin-top: 0.2rem; line-height: 1.5;
-    }
+    .chapter-list-section{max-width:660px;margin:0 auto;padding:0 2rem 5rem}
+    .part-group{margin-bottom:2.5rem}
+    .part-label{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
+    .part-count{font-size:.65rem;color:var(--border-light);letter-spacing:.05em}
+    .part-color{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:.5rem}
+    .chapter-item{display:flex;align-items:baseline;gap:1.2rem;padding:.85rem 0;cursor:pointer;transition:padding-left .2s,background .15s;border-radius:6px}
+    .chapter-item:hover{padding-left:.6rem;background:rgba(196,114,78,.03)}
+    .chapter-item:hover .chapter-title{color:var(--accent)}
+    .chapter-item:hover .chapter-num{color:var(--text-secondary)}
+    .chapter-num{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:500;color:var(--border-light);min-width:2rem;text-align:right;transition:color .2s}
+    .chapter-info{flex:1}
+    .chapter-title{font-size:.95rem;font-weight:500;color:var(--text-primary);line-height:1.5;transition:color .2s}
+    .chapter-desc{font-size:.78rem;color:var(--text-muted);margin-top:.15rem;line-height:1.5}
+    .chapter-item.hidden{display:none}
 
-    /* TOC Footer */
-    .toc-footer {
-      max-width: 640px; margin: 0 auto;
-      padding: 2rem 2rem 4rem;
-      border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .toc-footer a {
-      font-size: 0.8rem; color: var(--text-muted);
-      text-decoration: none; transition: color 0.2s;
-    }
-    .toc-footer a:hover { color: var(--accent); }
-    .toc-footer-count {
-      font-size: 0.75rem; color: var(--text-muted);
-    }
+    /* Footer */
+    .toc-footer{max-width:660px;margin:0 auto;padding:2rem 2rem 4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .toc-footer a{font-size:.8rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+    .toc-footer a:hover{color:var(--accent)}
+    .toc-footer-count{font-size:.75rem;color:var(--text-muted)}
 
-    /* ── READER VIEW ── */
-    #reader-view {
-      display: none; background: var(--bg-reader);
-      min-height: 100vh;
-    }
-    #reader-view.active { display: block; }
+    /* Reader */
+    #reader-view{display:none;background:var(--bg-reader);min-height:100vh}
+    #reader-view.active{display:block}
+    .reader-topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;padding:0 1.5rem}
+    .topbar-back{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:1.1rem;padding:.4rem;margin-right:1rem;transition:color .2s;display:flex;align-items:center}
+    .topbar-back:hover{color:var(--text-primary)}
+    .topbar-title{flex:1;font-size:.85rem;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .topbar-home{font-size:.76rem;color:var(--text-muted);text-decoration:none;white-space:nowrap;margin-left:.75rem;transition:color .2s}
+    .topbar-home:hover{color:var(--text-primary)}
+    .topbar-chapter-num{font-size:.78rem;color:var(--text-muted);margin-left:1rem;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+    .topbar-toc-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:1.1rem;padding:.4rem;margin-left:.8rem;transition:color .2s;display:flex;align-items:center}
+    .topbar-toc-btn:hover{color:var(--text-primary)}
 
-    .reader-topbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      height: 52px; display: flex; align-items: center;
-      padding: 0 1.5rem;
-    }
-    .topbar-back {
-      background: none; border: none; cursor: pointer;
-      color: var(--text-secondary); font-size: 1.1rem;
-      padding: 0.4rem; margin-right: 1rem;
-      transition: color 0.2s; display: flex; align-items: center;
-    }
-    .topbar-back:hover { color: var(--text-primary); }
-    .topbar-title {
-      flex: 1; font-size: 0.85rem; color: var(--text-secondary);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .topbar-home {
-      font-size: 0.76rem; color: var(--text-muted);
-      text-decoration: none; white-space: nowrap;
-      margin-left: 0.75rem; transition: color 0.2s;
-    }
-    .topbar-home:hover { color: var(--text-primary); }
-    .topbar-chapter-num {
-      font-size: 0.78rem; color: var(--text-muted);
-      margin-left: 1rem; white-space: nowrap;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .topbar-toc-btn {
-      background: none; border: none; cursor: pointer;
-      color: var(--text-secondary); font-size: 1.1rem;
-      padding: 0.4rem; margin-left: 0.8rem;
-      transition: color 0.2s; display: flex; align-items: center;
-    }
-    .topbar-toc-btn:hover { color: var(--text-primary); }
+    /* Drawer */
+    .toc-drawer-overlay{position:fixed;inset:0;z-index:200;background:rgba(28,25,23,.3);opacity:0;pointer-events:none;transition:opacity .25s}
+    .toc-drawer-overlay.open{opacity:1;pointer-events:auto}
+    .toc-drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:340px;max-width:85vw;background:var(--bg-toc);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .3s;overflow-y:auto;padding:1.5rem}
+    .toc-drawer.open{transform:translateX(0)}
+    .toc-drawer-title{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+    .toc-drawer-sep{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-top:1rem;margin-bottom:.5rem;padding-top:.5rem;border-top:1px solid var(--border)}
+    .toc-drawer-item{display:flex;align-items:baseline;gap:.8rem;padding:.45rem .5rem;cursor:pointer;border-radius:4px;transition:background .15s;font-size:.8rem;color:var(--text-secondary)}
+    .toc-drawer-item:hover{background:var(--bg-tint)}
+    .toc-drawer-item.active{color:var(--text-primary);font-weight:500;background:var(--bg-tint)}
+    .toc-drawer-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);min-width:2rem;text-align:right}
 
-    /* TOC Drawer */
-    .toc-drawer-overlay {
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(28,25,23,0.3);
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.25s ease;
-    }
-    .toc-drawer-overlay.open { opacity: 1; pointer-events: auto; }
-    .toc-drawer {
-      position: fixed; top: 0; right: 0; bottom: 0; z-index: 201;
-      width: 340px; max-width: 85vw;
-      background: var(--bg-toc); border-left: 1px solid var(--border);
-      transform: translateX(100%); transition: transform 0.3s ease;
-      overflow-y: auto; padding: 1.5rem;
-    }
-    .toc-drawer.open { transform: translateX(0); }
-    .toc-drawer-title {
-      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--text-muted); margin-bottom: 1.2rem;
-      padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
-    }
-    .toc-drawer-sep {
-      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--text-muted); margin-top: 1rem; margin-bottom: 0.5rem;
-      padding-top: 0.5rem; border-top: 1px solid var(--border);
-    }
-    .toc-drawer-item {
-      display: flex; align-items: baseline; gap: 0.8rem;
-      padding: 0.5rem 0.5rem; cursor: pointer;
-      border-radius: 4px; transition: background 0.15s;
-      font-size: 0.82rem; color: var(--text-secondary);
-    }
-    .toc-drawer-item:hover { background: var(--bg-tint); }
-    .toc-drawer-item.active { color: var(--text-primary); font-weight: 500; background: var(--bg-tint); }
-    .toc-drawer-num {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem; color: var(--text-muted);
-      min-width: 2rem; text-align: right;
-    }
-
-    /* Reading Column */
-    .reader-column {
-      max-width: 680px; margin: 0 auto;
-      padding: 80px 2rem 4rem;
-    }
-    .reader-content { font-size: 16.5px; line-height: 2.0; color: var(--text-primary); }
-    .reader-content h1 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 2rem; font-weight: 700;
-      margin-top: 3rem; margin-bottom: 1rem;
-      line-height: 1.4; letter-spacing: -0.02em;
-    }
-    .reader-content h1:first-child { margin-top: 0; }
-    .reader-content h2 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.5rem; font-weight: 600;
-      margin-top: 2.5rem; margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
-      line-height: 1.4;
-    }
-    .reader-content h3 {
-      font-size: 1.15rem; font-weight: 700;
-      margin-top: 2rem; margin-bottom: 0.8rem; line-height: 1.5;
-    }
-    .reader-content h4 {
-      font-size: 1.05rem; font-weight: 600;
-      margin-top: 1.5rem; margin-bottom: 0.6rem;
-      color: var(--text-secondary);
-    }
-    .reader-content p { margin-bottom: 1rem; }
-    .reader-content ul, .reader-content ol { margin: 0.8rem 0 1rem 1.5rem; }
-    .reader-content li { margin-bottom: 0.4rem; }
-    .reader-content blockquote {
-      border-left: 3px solid var(--accent);
-      padding: 0.8rem 1.2rem; margin: 1.2rem 0;
-      background: var(--accent-light); border-radius: 0 6px 6px 0;
-      font-size: 0.95rem; color: var(--text-secondary);
-    }
-    .reader-content table {
-      width: 100%; border-collapse: collapse; margin: 1.2rem 0;
-      font-size: 0.9rem;
-    }
-    .reader-content th, .reader-content td {
-      border: 1px solid var(--border); padding: 0.6rem 0.8rem;
-      text-align: left;
-    }
-    .reader-content th { background: var(--bg-tint); font-weight: 600; }
-    .reader-content code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.88em; background: var(--bg-tint);
-      padding: 0.15em 0.4em; border-radius: 3px;
-    }
-    .reader-content pre {
-      background: var(--code-bg); color: var(--code-text);
-      padding: 1.2rem; border-radius: 8px;
-      overflow-x: auto; margin: 1.2rem 0;
-      font-size: 0.85rem; line-height: 1.6;
-    }
-    .reader-content pre code {
-      background: none; padding: 0; font-size: inherit;
-    }
-    .reader-content strong { font-weight: 700; }
-    .reader-content hr {
-      border: none; border-top: 1px solid var(--border);
-      margin: 2rem 0;
-    }
-    .reader-content details {
-      margin: 1rem 0; border: 1px solid var(--border);
-      border-radius: 6px; overflow: hidden;
-    }
-    .reader-content summary {
-      padding: 0.8rem 1rem; cursor: pointer;
-      font-weight: 500; background: var(--bg-tint);
-    }
-    .reader-content details[open] summary { border-bottom: 1px solid var(--border); }
-    .reader-content details > *:not(summary) { padding: 0.8rem 1rem; }
+    /* Reader Content */
+    .reader-column{max-width:700px;margin:0 auto;padding:80px 2rem 4rem}
+    .reader-content{font-size:16.5px;line-height:2;color:var(--text-primary)}
+    .reader-content h1{font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;margin-top:3rem;margin-bottom:1rem;line-height:1.4;letter-spacing:-.02em}
+    .reader-content h1:first-child{margin-top:0}
+    .reader-content h2{font-family:'Noto Serif KR',serif;font-size:1.45rem;font-weight:600;margin-top:2.5rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);line-height:1.4}
+    .reader-content h3{font-size:1.12rem;font-weight:700;margin-top:2rem;margin-bottom:.8rem;line-height:1.5}
+    .reader-content h4{font-size:1.02rem;font-weight:600;margin-top:1.5rem;margin-bottom:.6rem;color:var(--text-secondary)}
+    .reader-content p{margin-bottom:1rem}
+    .reader-content ul,.reader-content ol{margin:.8rem 0 1rem 1.5rem}
+    .reader-content li{margin-bottom:.4rem}
+    .reader-content blockquote{border-left:3px solid var(--accent);padding:.8rem 1.2rem;margin:1.2rem 0;background:var(--accent-light);border-radius:0 6px 6px 0;font-size:.95rem;color:var(--text-secondary)}
+    .reader-content table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.88rem}
+    .reader-content th,.reader-content td{border:1px solid var(--border);padding:.55rem .75rem;text-align:left}
+    .reader-content th{background:var(--bg-tint);font-weight:600}
+    .reader-content code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--bg-tint);padding:.15em .4em;border-radius:3px}
+    .reader-content pre{background:var(--code-bg);color:var(--code-text);padding:1.2rem;border-radius:8px;overflow-x:auto;margin:1.2rem 0;font-size:.84rem;line-height:1.6}
+    .reader-content pre code{background:none;padding:0;font-size:inherit}
+    .reader-content strong{font-weight:700}
+    .reader-content hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
+    .reader-content details{margin:1rem 0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+    .reader-content summary{padding:.8rem 1rem;cursor:pointer;font-weight:500;background:var(--bg-tint)}
+    .reader-content details[open] summary{border-bottom:1px solid var(--border)}
+    .reader-content details>*:not(summary){padding:.8rem 1rem}
+    .katex-display{overflow-x:auto;overflow-y:hidden;padding:.5rem 0}
 
     /* Nav Bottom */
-    .reader-nav-bottom {
-      display: flex; gap: 1rem; margin-top: 4rem;
-      padding-top: 2rem; border-top: 1px solid var(--border);
-    }
-    .reader-nav-card {
-      flex: 1; padding: 1.2rem; border: 1px solid var(--border);
-      border-radius: 8px; cursor: pointer;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .reader-nav-card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 2px 12px rgba(196,114,78,0.1);
-    }
-    .reader-nav-card.empty { visibility: hidden; }
-    .reader-nav-card.next { text-align: right; }
-    .reader-nav-label {
-      font-size: 0.72rem; color: var(--text-muted);
-      letter-spacing: 0.08em; margin-bottom: 0.3rem;
-    }
-    .reader-nav-title {
-      font-size: 0.9rem; font-weight: 500; color: var(--text-primary);
-    }
+    .reader-nav-bottom{display:flex;gap:1rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border)}
+    .reader-nav-card{flex:1;padding:1.2rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+    .reader-nav-card:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(196,114,78,.1)}
+    .reader-nav-card.empty{visibility:hidden}
+    .reader-nav-card.next{text-align:right}
+    .reader-nav-label{font-size:.72rem;color:var(--text-muted);letter-spacing:.08em;margin-bottom:.3rem}
+    .reader-nav-title{font-size:.9rem;font-weight:500;color:var(--text-primary)}
 
     /* Loading */
-    .loading-indicator {
-      display: flex; justify-content: center; gap: 6px;
-      padding: 4rem 0;
-    }
-    .loading-dot {
-      width: 6px; height: 6px; background: var(--border-light);
-      border-radius: 50%; animation: pulse 1s ease-in-out infinite;
-    }
-    .loading-dot:nth-child(2) { animation-delay: 0.15s; }
-    .loading-dot:nth-child(3) { animation-delay: 0.3s; }
-    @keyframes pulse {
-      0%,100% { opacity: 0.3; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1); }
-    }
+    .loading-indicator{display:flex;justify-content:center;gap:6px;padding:4rem 0}
+    .loading-dot{width:6px;height:6px;background:var(--border-light);border-radius:50%;animation:pulse 1s ease-in-out infinite}
+    .loading-dot:nth-child(2){animation-delay:.15s}
+    .loading-dot:nth-child(3){animation-delay:.3s}
+    @keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
 
-    /* KaTeX overflows */
-    .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.5rem 0; }
+    /* Scroll to Top */
+    .scroll-top{position:fixed;bottom:2rem;right:2rem;z-index:50;width:40px;height:40px;border-radius:50%;background:var(--bg-reader);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    .scroll-top.visible{opacity:1;pointer-events:auto}
+    .scroll-top:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px)}
 
-    @media (max-width: 640px) {
-      .hero-meta { gap: 2rem; }
-      .chapter-item { gap: 1rem; }
-      .chapter-num { font-size: 1.3rem; min-width: 2rem; }
-      .reader-column { padding: 70px 1.2rem 3rem; }
-      .reader-nav-bottom { flex-direction: column; }
-      .reader-nav-card.next { text-align: left; }
-      .toc-drawer { width: 280px; }
+    @media(max-width:640px){
+      .hero-stats{gap:.6rem}
+      .hero-stat{padding:.8rem 1.2rem;min-width:90px}
+      .hero-stat-num{font-size:1.6rem}
+      .chapter-item{gap:.8rem}
+      .reader-column{padding:70px 1.2rem 3rem}
+      .reader-nav-bottom{flex-direction:column}
+      .reader-nav-card.next{text-align:left}
+      .toc-drawer{width:280px}
+      .progress-legend{gap:.8rem}
     }
   </style>
 </head>
@@ -404,51 +176,54 @@
 
 <div id="progress-bar"></div>
 
-<!-- ══════════ TOC VIEW ══════════ -->
+<!-- TOC -->
 <div id="toc-view">
   <a class="toc-home-link" href="/">&larr; Home</a>
 
   <section class="hero">
     <div class="hero-inner">
-      <span class="hero-label">CFA Level 1 &middot; 2026 Schweser Notes</span>
-      <h1>CFA Level 1<br>Complete Study Guide</h1>
+      <span class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        CFA Level 1 &middot; 2026
+      </span>
+      <h1>CFA Level 1<br><span>Complete Study Guide</span></h1>
       <p class="hero-subtitle">
         아무것도 모르는 사람부터 전공자 수준까지.<br>
-        일상 비유 &rarr; 숫자 시나리오 &rarr; 수식 유도 &rarr; 변수 바꾸기.<br>
-        93 Readings &middot; 4 Books &middot; 한국어 Deep Dive
+        일상 비유 &rarr; 숫자 시나리오 &rarr; 수식 유도 &rarr; 변수 바꾸기.
       </p>
-      <div class="hero-meta">
-        <div class="hero-meta-item">
-          <span class="hero-meta-num">93</span>
-          <span class="hero-meta-label">Readings</span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-num">4</span>
-          <span class="hero-meta-label">Books</span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-num">10</span>
-          <span class="hero-meta-label">Topics</span>
-        </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">93</span><span class="hero-stat-label">Readings</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">Books</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">Topics</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">1.7M</span><span class="hero-stat-label">Characters</span></div>
       </div>
+      <button class="hero-cta" onclick="document.querySelector('.book-progress').scrollIntoView({behavior:'smooth'})">
+        Start Reading
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
     </div>
     <div class="scroll-hint">SCROLL &darr;</div>
   </section>
 
   <!-- Book Progress -->
   <div class="book-progress">
-    <div class="progress-bar-container">
-      <div class="progress-segment book1" style="flex:26"></div>
-      <div class="progress-segment book2" style="flex:20"></div>
-      <div class="progress-segment book3" style="flex:29"></div>
-      <div class="progress-segment book4" style="flex:18"></div>
+    <div class="progress-bar-visual">
+      <div class="progress-seg b1"></div>
+      <div class="progress-seg b2"></div>
+      <div class="progress-seg b3"></div>
+      <div class="progress-seg b4"></div>
     </div>
-    <div class="progress-labels">
-      <span>Book 1 (26)</span>
-      <span>Book 2 (20)</span>
-      <span>Book 3 (29)</span>
-      <span>Book 4 (18)</span>
+    <div class="progress-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--book1)"></span>Quant &middot; Econ &middot; Corp (26)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--book2)"></span>FSA &middot; Equity (20)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--book3)"></span>FI &middot; Deriv (29)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--book4)"></span>Alt &middot; PM &middot; Ethics (18)</span>
     </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <input type="text" class="search-input" id="search-input" placeholder="Reading 검색... (예: 듀레이션, CAPM, 윤리)">
   </div>
 
   <div class="chapter-list-section" id="chapter-list"></div>
@@ -460,16 +235,16 @@
   </footer>
 </div>
 
-<!-- ══════════ READER VIEW ══════════ -->
+<!-- Reader -->
 <div id="reader-view">
   <div class="reader-topbar">
-    <button class="topbar-back" onclick="goToToc()" aria-label="Back to table of contents">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <button class="topbar-back" onclick="goToToc()" aria-label="Back">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
     </button>
     <span class="topbar-title" id="topbar-title"></span>
     <a class="topbar-home" href="/" rel="noopener">Home</a>
     <span class="topbar-chapter-num" id="topbar-num"></span>
-    <button class="topbar-toc-btn" onclick="toggleDrawer()" aria-label="Open chapter list">
+    <button class="topbar-toc-btn" onclick="toggleDrawer()" aria-label="Chapters">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
   </div>
@@ -486,296 +261,232 @@
   </div>
 </div>
 
-<!-- ══════════ SCRIPTS ══════════ -->
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script>
-(function() {
+(function(){
   'use strict';
 
-  const GITHUB_RAW = 'https://raw.githubusercontent.com/soccz/CFA-notes/main/chapters/';
-
-  const BOOKS = [
-    { label: 'Book 1 — Quantitative Methods, Economics, Corporate Issuers', color: 'book1', readings: [
-      { id:'01', file:'R01_rates_and_returns.md', title:'수익률과 이자율', desc:'이자율의 해석, 수익률 측정, 금액/시간가중수익률' },
-      { id:'02', file:'R02_time_value_of_money.md', title:'화폐의 시간가치', desc:'PV/FV, 채권·주식·영구채 가치평가, 연금' },
-      { id:'03', file:'R03_statistical_measures.md', title:'통계 측정치', desc:'중심경향, 분산, 왜도, 첨도' },
-      { id:'04', file:'R04_probability_trees.md', title:'확률과 의사결정 트리', desc:'베이즈 정리, 기대값, 의사결정 분석' },
-      { id:'05', file:'R05_portfolio_mathematics.md', title:'포트폴리오 수학', desc:'공분산, 상관계수, 포트폴리오 분산' },
-      { id:'06', file:'R06_simulation_methods.md', title:'시뮬레이션 방법', desc:'몬테카를로, 부트스트래핑, 히스토리컬 시뮬레이션' },
-      { id:'07', file:'R07_estimation_and_inference.md', title:'추정과 추론', desc:'표본 분포, 신뢰구간, 편향' },
-      { id:'08', file:'R08_hypothesis_testing.md', title:'가설 검정', desc:'1종/2종 오류, p-값, 검정력' },
-      { id:'09', file:'R09_parametric_nonparametric_tests.md', title:'모수/비모수 검정', desc:'t-검정, 카이제곱, 순위 검정' },
-      { id:'10', file:'R10_simple_linear_regression.md', title:'단순선형회귀', desc:'OLS, 결정계수, 예측구간' },
-      { id:'11', file:'R11_big_data_techniques.md', title:'빅데이터 기법', desc:'머신러닝, 텍스트 분석, 과적합' },
-      { id:'12', file:'R12_firm_market_structures.md', title:'시장 구조', desc:'완전경쟁, 독점, 과점, HHI' },
-      { id:'13', file:'R13_business_cycles.md', title:'경기 순환', desc:'확장/수축, 선행지표, GDP 갭' },
-      { id:'14', file:'R14_fiscal_policy.md', title:'재정정책', desc:'재정 승수, 구축 효과, 적자' },
-      { id:'15', file:'R15_monetary_policy.md', title:'통화정책', desc:'중앙은행, 금리, 인플레이션 목표' },
-      { id:'16', file:'R16_introduction_to_geopolitics.md', title:'지정학 입문', desc:'지정학적 위험, 국제 관계' },
-      { id:'17', file:'R17_international_trade.md', title:'국제 무역', desc:'비교우위, 관세, 무역수지' },
-      { id:'18', file:'R18_capital_flows_and_fx_market.md', title:'자본 흐름과 외환', desc:'국제수지, 환율 결정' },
-      { id:'19', file:'R19_exchange_rate_calculations.md', title:'환율 계산', desc:'교차환율, 선물환, IRP' },
-      { id:'20', file:'R20_organizational_forms_corporate_issuers.md', title:'기업 조직 형태', desc:'주식회사, 유한책임, 이해관계자' },
-      { id:'21', file:'R21_investors_and_other_stakeholders.md', title:'투자자와 이해관계자', desc:'주주 vs 채권자, 이사회' },
-      { id:'22', file:'R22_corporate_governance.md', title:'기업 지배구조', desc:'대리인 문제, 이사회 구조' },
-      { id:'23', file:'R23_working_capital_and_liquidity.md', title:'운전자본과 유동성', desc:'CCC, 유동성 비율, 단기 금융' },
-      { id:'24', file:'R24_capital_investments_and_capital_allocation.md', title:'자본 투자와 배분', desc:'NPV, IRR, 실물옵션' },
-      { id:'25', file:'R25_capital_structure.md', title:'자본 구조', desc:'WACC, MM 명제, 최적 구조' },
-      { id:'26', file:'R26_business_models.md', title:'비즈니스 모델', desc:'수익 모델, 네트워크 효과, 가격 전략' },
+  const RAW='https://raw.githubusercontent.com/soccz/CFA-notes/main/chapters/';
+  const BOOKS=[
+    {label:'Book 1 — Quantitative Methods, Economics, Corporate Issuers',color:'book1',readings:[
+      {id:'01',file:'R01_rates_and_returns.md',title:'수익률과 이자율',desc:'이자율의 해석, 수익률 측정, 금액/시간가중수익률'},
+      {id:'02',file:'R02_time_value_of_money.md',title:'화폐의 시간가치',desc:'PV/FV, 채권·주식·영구채 가치평가, 연금'},
+      {id:'03',file:'R03_statistical_measures.md',title:'통계 측정치',desc:'중심경향, 분산, 왜도, 첨도'},
+      {id:'04',file:'R04_probability_trees.md',title:'확률과 의사결정 트리',desc:'베이즈 정리, 기대값, 의사결정 분석'},
+      {id:'05',file:'R05_portfolio_mathematics.md',title:'포트폴리오 수학',desc:'공분산, 상관계수, 포트폴리오 분산'},
+      {id:'06',file:'R06_simulation_methods.md',title:'시뮬레이션 방법',desc:'몬테카를로, 부트스트래핑, 히스토리컬'},
+      {id:'07',file:'R07_estimation_and_inference.md',title:'추정과 추론',desc:'표본 분포, 신뢰구간, 편향'},
+      {id:'08',file:'R08_hypothesis_testing.md',title:'가설 검정',desc:'1종/2종 오류, p-값, 검정력'},
+      {id:'09',file:'R09_parametric_nonparametric_tests.md',title:'모수/비모수 검정',desc:'t-검정, 카이제곱, 순위 검정'},
+      {id:'10',file:'R10_simple_linear_regression.md',title:'단순선형회귀',desc:'OLS, 결정계수, 예측구간'},
+      {id:'11',file:'R11_big_data_techniques.md',title:'빅데이터 기법',desc:'머신러닝, 텍스트 분석, 과적합'},
+      {id:'12',file:'R12_firm_market_structures.md',title:'시장 구조',desc:'완전경쟁, 독점, 과점, HHI'},
+      {id:'13',file:'R13_business_cycles.md',title:'경기 순환',desc:'확장/수축, 선행지표, GDP 갭'},
+      {id:'14',file:'R14_fiscal_policy.md',title:'재정정책',desc:'재정 승수, 구축 효과, 적자'},
+      {id:'15',file:'R15_monetary_policy.md',title:'통화정책',desc:'중앙은행, 금리, 인플레이션 목표'},
+      {id:'16',file:'R16_introduction_to_geopolitics.md',title:'지정학 입문',desc:'지정학적 위험, 국제 관계'},
+      {id:'17',file:'R17_international_trade.md',title:'국제 무역',desc:'비교우위, 관세, 무역수지'},
+      {id:'18',file:'R18_capital_flows_and_fx_market.md',title:'자본 흐름과 외환',desc:'국제수지, 환율 결정'},
+      {id:'19',file:'R19_exchange_rate_calculations.md',title:'환율 계산',desc:'교차환율, 선물환, IRP'},
+      {id:'20',file:'R20_organizational_forms_corporate_issuers.md',title:'기업 조직 형태',desc:'주식회사, 유한책임'},
+      {id:'21',file:'R21_investors_and_other_stakeholders.md',title:'투자자와 이해관계자',desc:'주주 vs 채권자, 이사회'},
+      {id:'22',file:'R22_corporate_governance.md',title:'기업 지배구조',desc:'대리인 문제, 이사회 구조'},
+      {id:'23',file:'R23_working_capital_and_liquidity.md',title:'운전자본과 유동성',desc:'CCC, 유동성 비율'},
+      {id:'24',file:'R24_capital_investments_and_capital_allocation.md',title:'자본 투자와 배분',desc:'NPV, IRR, 실물옵션'},
+      {id:'25',file:'R25_capital_structure.md',title:'자본 구조',desc:'WACC, MM 명제'},
+      {id:'26',file:'R26_business_models.md',title:'비즈니스 모델',desc:'수익 모델, 네트워크 효과'},
     ]},
-    { label: 'Book 2 — Financial Statement Analysis, Equity Investments', color: 'book2', readings: [
-      { id:'27', file:'R27_introduction_to_financial_statement_analysis.md', title:'재무제표 분석 소개', desc:'6단계 프레임워크, 규제, 감사' },
-      { id:'28', file:'R28_analyzing_income_statements.md', title:'손익계산서 분석', desc:'수익 인식, EPS, 비경상 항목' },
-      { id:'29', file:'R29_analyzing_balance_sheets.md', title:'대차대조표 분석', desc:'자산·부채 측정, 공통형 분석' },
-      { id:'30', file:'R30_analyzing_statements_of_cash_flows_1.md', title:'현금흐름표 분석 I', desc:'직접법/간접법, CFO/CFI/CFF' },
-      { id:'31', file:'R31_analyzing_statements_of_cash_flows_2.md', title:'현금흐름표 분석 II', desc:'FCFF/FCFE, 성과 비율' },
-      { id:'32', file:'R32_analysis_of_inventories.md', title:'재고 분석', desc:'FIFO/LIFO, NRV, 재고 비율' },
-      { id:'33', file:'R33_analysis_of_long_term_assets.md', title:'장기자산 분석', desc:'감가상각, 손상, 영업권' },
-      { id:'34', file:'R34_topics_in_long_term_liabilities_and_equity.md', title:'부채와 자본', desc:'리스, 연금, 주식보상' },
-      { id:'35', file:'R35_analysis_of_income_taxes.md', title:'법인세 분석', desc:'DTA/DTL, 유효세율' },
-      { id:'36', file:'R36_financial_reporting_quality.md', title:'재무보고 품질', desc:'이익 품질, 조작 경고 신호' },
-      { id:'37', file:'R37_financial_analysis_techniques.md', title:'재무분석 기법', desc:'비율 분석, DuPont, CCC' },
-      { id:'38', file:'R38_introduction_to_financial_statement_modeling.md', title:'재무제표 모델링', desc:'Pro Forma, 예측 편향' },
-      { id:'39', file:'R39_market_organization_and_structure.md', title:'주식 시장 구조', desc:'마진 거래, 주문 유형, 규제' },
-      { id:'40', file:'R40_security_market_indexes.md', title:'증권 시장 지수', desc:'가격/시총/동일가중, 리밸런싱' },
-      { id:'41', file:'R41_market_efficiency.md', title:'시장 효율성', desc:'약형/준강형/강형, 이상현상' },
-      { id:'42', file:'R42_overview_of_equity_securities.md', title:'주식 증권 개요', desc:'보통주/우선주, ROE, 의결권' },
-      { id:'43', file:'R43_company_analysis_past_and_present.md', title:'기업 분석', desc:'비즈니스 모델, DOL/DFL' },
-      { id:'44', file:'R44_industry_and_competitive_analysis.md', title:'산업·경쟁 분석', desc:'Porter 5 Forces, HHI' },
-      { id:'45', file:'R45_company_analysis_forecasting.md', title:'기업 분석: 예측', desc:'매출 예측, 시나리오 분석' },
-      { id:'46', file:'R46_equity_valuation_concepts_and_basic_tools.md', title:'주식 가치평가', desc:'DDM, Gordon Model, P/E, EV/EBITDA' },
+    {label:'Book 2 — Financial Statement Analysis, Equity Investments',color:'book2',readings:[
+      {id:'27',file:'R27_introduction_to_financial_statement_analysis.md',title:'재무제표 분석 소개',desc:'6단계 프레임워크, 규제, 감사'},
+      {id:'28',file:'R28_analyzing_income_statements.md',title:'손익계산서 분석',desc:'수익 인식, EPS, 비경상 항목'},
+      {id:'29',file:'R29_analyzing_balance_sheets.md',title:'대차대조표 분석',desc:'자산·부채 측정, 공통형'},
+      {id:'30',file:'R30_analyzing_statements_of_cash_flows_1.md',title:'현금흐름표 분석 I',desc:'직접법/간접법, CFO/CFI/CFF'},
+      {id:'31',file:'R31_analyzing_statements_of_cash_flows_2.md',title:'현금흐름표 분석 II',desc:'FCFF/FCFE, 성과 비율'},
+      {id:'32',file:'R32_analysis_of_inventories.md',title:'재고 분석',desc:'FIFO/LIFO, NRV'},
+      {id:'33',file:'R33_analysis_of_long_term_assets.md',title:'장기자산 분석',desc:'감가상각, 손상, 영업권'},
+      {id:'34',file:'R34_topics_in_long_term_liabilities_and_equity.md',title:'부채와 자본',desc:'리스, 연금, 주식보상'},
+      {id:'35',file:'R35_analysis_of_income_taxes.md',title:'법인세 분석',desc:'DTA/DTL, 유효세율'},
+      {id:'36',file:'R36_financial_reporting_quality.md',title:'재무보고 품질',desc:'이익 품질, 조작 경고 신호'},
+      {id:'37',file:'R37_financial_analysis_techniques.md',title:'재무분석 기법',desc:'비율 분석, DuPont, CCC'},
+      {id:'38',file:'R38_introduction_to_financial_statement_modeling.md',title:'재무제표 모델링',desc:'Pro Forma, 예측 편향'},
+      {id:'39',file:'R39_market_organization_and_structure.md',title:'주식 시장 구조',desc:'마진 거래, 주문 유형'},
+      {id:'40',file:'R40_security_market_indexes.md',title:'증권 시장 지수',desc:'가격/시총/동일가중'},
+      {id:'41',file:'R41_market_efficiency.md',title:'시장 효율성',desc:'약형/준강형/강형'},
+      {id:'42',file:'R42_overview_of_equity_securities.md',title:'주식 증권 개요',desc:'보통주/우선주, ROE'},
+      {id:'43',file:'R43_company_analysis_past_and_present.md',title:'기업 분석',desc:'비즈니스 모델, DOL/DFL'},
+      {id:'44',file:'R44_industry_and_competitive_analysis.md',title:'산업·경쟁 분석',desc:'Porter 5 Forces, HHI'},
+      {id:'45',file:'R45_company_analysis_forecasting.md',title:'기업 분석: 예측',desc:'매출 예측, 시나리오'},
+      {id:'46',file:'R46_equity_valuation_concepts_and_basic_tools.md',title:'주식 가치평가',desc:'DDM, P/E, EV/EBITDA'},
     ]},
-    { label: 'Book 3 — Fixed Income, Derivatives', color: 'book3', readings: [
-      { id:'47', file:'R47_fixed_income_instrument_features.md', title:'채권 기본 특성', desc:'쿠폰, 만기, 가격-수익률 관계' },
-      { id:'48', file:'R48_fixed_income_cash_flows_and_types.md', title:'채권 현금흐름', desc:'Bullet, 분할상환, FRN, TIPS' },
-      { id:'49', file:'R49_fixed_income_issuance_and_trading.md', title:'채권 발행과 거래', desc:'1차/2차 시장, 결제' },
-      { id:'50', file:'R50_fixed_income_markets_for_corporate_issuers.md', title:'기업 채권 시장', desc:'CP, 레포, 신용한도' },
-      { id:'51', file:'R51_fixed_income_markets_for_government_issuers.md', title:'국채 시장', desc:'T-bill, 경매, 차환 위험' },
-      { id:'52', file:'R52_fixed_income_bond_valuation_prices_and_yields.md', title:'채권 가치평가', desc:'YTM, 경과이자, 매트릭스 가격' },
-      { id:'53', file:'R53_yield_and_yield_spread_measures_for_fixed_rate_bonds.md', title:'수익률 스프레드', desc:'G-스프레드, Z-스프레드, OAS' },
-      { id:'54', file:'R54_yield_and_yield_spread_measures_for_floating_rate_instruments.md', title:'변동금리 수익률', desc:'QM/DM, BEY, 단기금융' },
-      { id:'55', file:'R55_term_structure_of_interest_rates.md', title:'이자율 기간구조', desc:'현물/선도/액면가 수익률' },
-      { id:'56', file:'R56_interest_rate_risk_and_return.md', title:'이자율 위험과 수익', desc:'가격 위험, 재투자 위험, 면역' },
-      { id:'57', file:'R57_yield_based_bond_duration_measures_and_properties.md', title:'듀레이션', desc:'수정/Macaulay/화폐 듀레이션, PVBP' },
-      { id:'58', file:'R58_yield_based_bond_convexity_and_portfolio_properties.md', title:'볼록성', desc:'볼록성 조정, 포트폴리오 속성' },
-      { id:'59', file:'R59_curve_based_and_empirical_fixed_income_risk_measures.md', title:'커브 기반 위험 측정', desc:'유효듀레이션, Key Rate Duration' },
-      { id:'60', file:'R60_credit_risk.md', title:'신용 위험', desc:'기대손실, 신용 스프레드, 등급' },
-      { id:'61', file:'R61_credit_analysis_for_government_issuers.md', title:'정부 신용 분석', desc:'주권면제, 정성/정량 요인' },
-      { id:'62', file:'R62_credit_analysis_for_corporate_issuers.md', title:'기업 신용 분석', desc:'재무비율, 노칭, 구조적 열후화' },
-      { id:'63', file:'R63_fixed_income_securitization.md', title:'증권화', desc:'SPE, 파산격리, 트랜칭' },
-      { id:'64', file:'R64_abs_instrument_and_market_features.md', title:'ABS', desc:'신용보강, 워터폴, CLO' },
-      { id:'65', file:'R65_mbs_instrument_and_market_features.md', title:'MBS', desc:'조기상환, CMO, CMBS' },
-      { id:'66', file:'R66_derivative_instrument_and_market_features.md', title:'파생상품 특성', desc:'선도, 선물, 옵션, OTC/거래소' },
-      { id:'67', file:'R67_forward_commitment_and_contingent_claim_features_and_instruments.md', title:'선도약정과 조건부 청구권', desc:'선물 증거금, 스왑, CDS' },
-      { id:'68', file:'R68_derivative_benefits_risks_and_issuer_and_investor_uses.md', title:'파생상품 이점과 위험', desc:'레버리지, 헤지 회계' },
-      { id:'69', file:'R69_arbitrage_replication_and_the_cost_of_carry_in_pricing_derivatives.md', title:'차익거래와 보유비용', desc:'무차익 가격, 복제, 연속복리' },
-      { id:'70', file:'R70_pricing_and_valuation_of_forward_contracts.md', title:'선도 가격결정', desc:'내재선도금리, FRA' },
-      { id:'71', file:'R71_pricing_and_valuation_of_futures_contracts.md', title:'선물 가격결정', desc:'일일정산, 볼록성 편의' },
-      { id:'72', file:'R72_pricing_and_valuation_of_interest_rate_and_other_swaps.md', title:'스왑 가격결정', desc:'파 스왑 금리, 가치 변동' },
-      { id:'73', file:'R73_pricing_and_valuation_of_options.md', title:'옵션 가격결정', desc:'행사가치, 시간가치, 6가지 요인' },
-      { id:'74', file:'R74_option_replication_using_put_call_parity.md', title:'풋-콜 패리티', desc:'합성 증권, 기업금융 적용' },
-      { id:'75', file:'R75_valuing_a_derivative_using_a_one_period_binomial_model.md', title:'이항 모형', desc:'헤지 비율, 위험중립 확률' },
+    {label:'Book 3 — Fixed Income, Derivatives',color:'book3',readings:[
+      {id:'47',file:'R47_fixed_income_instrument_features.md',title:'채권 기본 특성',desc:'쿠폰, 만기, 가격-수익률'},
+      {id:'48',file:'R48_fixed_income_cash_flows_and_types.md',title:'채권 현금흐름',desc:'Bullet, FRN, TIPS'},
+      {id:'49',file:'R49_fixed_income_issuance_and_trading.md',title:'채권 발행과 거래',desc:'1차/2차 시장'},
+      {id:'50',file:'R50_fixed_income_markets_for_corporate_issuers.md',title:'기업 채권 시장',desc:'CP, 레포, 신용한도'},
+      {id:'51',file:'R51_fixed_income_markets_for_government_issuers.md',title:'국채 시장',desc:'T-bill, 경매'},
+      {id:'52',file:'R52_fixed_income_bond_valuation_prices_and_yields.md',title:'채권 가치평가',desc:'YTM, 경과이자'},
+      {id:'53',file:'R53_yield_and_yield_spread_measures_for_fixed_rate_bonds.md',title:'수익률 스프레드',desc:'G/Z-스프레드, OAS'},
+      {id:'54',file:'R54_yield_and_yield_spread_measures_for_floating_rate_instruments.md',title:'변동금리 수익률',desc:'QM/DM, BEY'},
+      {id:'55',file:'R55_term_structure_of_interest_rates.md',title:'이자율 기간구조',desc:'현물/선도/액면가 수익률'},
+      {id:'56',file:'R56_interest_rate_risk_and_return.md',title:'이자율 위험과 수익',desc:'가격 위험, 재투자, 면역'},
+      {id:'57',file:'R57_yield_based_bond_duration_measures_and_properties.md',title:'듀레이션',desc:'수정/Macaulay, PVBP'},
+      {id:'58',file:'R58_yield_based_bond_convexity_and_portfolio_properties.md',title:'볼록성',desc:'볼록성 조정, 포트폴리오'},
+      {id:'59',file:'R59_curve_based_and_empirical_fixed_income_risk_measures.md',title:'커브 기반 위험',desc:'유효듀레이션, KRD'},
+      {id:'60',file:'R60_credit_risk.md',title:'신용 위험',desc:'기대손실, 신용 스프레드'},
+      {id:'61',file:'R61_credit_analysis_for_government_issuers.md',title:'정부 신용 분석',desc:'주권면제, 정성/정량'},
+      {id:'62',file:'R62_credit_analysis_for_corporate_issuers.md',title:'기업 신용 분석',desc:'재무비율, 노칭'},
+      {id:'63',file:'R63_fixed_income_securitization.md',title:'증권화',desc:'SPE, 파산격리, 트랜칭'},
+      {id:'64',file:'R64_abs_instrument_and_market_features.md',title:'ABS',desc:'신용보강, 워터폴'},
+      {id:'65',file:'R65_mbs_instrument_and_market_features.md',title:'MBS',desc:'조기상환, CMO'},
+      {id:'66',file:'R66_derivative_instrument_and_market_features.md',title:'파생상품 특성',desc:'선도, 선물, 옵션'},
+      {id:'67',file:'R67_forward_commitment_and_contingent_claim_features_and_instruments.md',title:'선도약정과 조건부 청구권',desc:'증거금, 스왑, CDS'},
+      {id:'68',file:'R68_derivative_benefits_risks_and_issuer_and_investor_uses.md',title:'파생상품 이점과 위험',desc:'레버리지, 헤지 회계'},
+      {id:'69',file:'R69_arbitrage_replication_and_the_cost_of_carry_in_pricing_derivatives.md',title:'차익거래와 보유비용',desc:'무차익, 복제'},
+      {id:'70',file:'R70_pricing_and_valuation_of_forward_contracts.md',title:'선도 가격결정',desc:'내재선도금리, FRA'},
+      {id:'71',file:'R71_pricing_and_valuation_of_futures_contracts.md',title:'선물 가격결정',desc:'일일정산, 볼록성 편의'},
+      {id:'72',file:'R72_pricing_and_valuation_of_interest_rate_and_other_swaps.md',title:'스왑 가격결정',desc:'파 스왑 금리'},
+      {id:'73',file:'R73_pricing_and_valuation_of_options.md',title:'옵션 가격결정',desc:'행사가치, 6가지 요인'},
+      {id:'74',file:'R74_option_replication_using_put_call_parity.md',title:'풋-콜 패리티',desc:'합성 증권'},
+      {id:'75',file:'R75_valuing_a_derivative_using_a_one_period_binomial_model.md',title:'이항 모형',desc:'헤지 비율, 위험중립'},
     ]},
-    { label: 'Book 4 — Alternative Investments, Portfolio Management, Ethics', color: 'book4', readings: [
-      { id:'76', file:'R76_alternative_investment_features_methods_and_structures.md', title:'대안투자 특성', desc:'LP/GP, 수수료, 허들레이트' },
-      { id:'77', file:'R77_alternative_investment_performance_and_returns.md', title:'대안투자 성과', desc:'J-커브, 레버리지, 공정가치' },
-      { id:'78', file:'R78_investments_in_private_capital_equity_and_debt.md', title:'사모자본', desc:'VC, LBO, 사모부채' },
-      { id:'79', file:'R79_real_estate_and_infrastructure.md', title:'부동산과 인프라', desc:'REIT, Cap Rate, BOT' },
-      { id:'80', file:'R80_natural_resources.md', title:'천연자원', desc:'상품 선물, 콘탱고, 편의수익' },
-      { id:'81', file:'R81_hedge_funds.md', title:'헤지펀드', desc:'롱/숏, 이벤트 드리븐, 알파' },
-      { id:'82', file:'R82_introduction_to_digital_assets.md', title:'디지털 자산', desc:'블록체인, DeFi, 토큰' },
-      { id:'83', file:'R83_portfolio_risk_and_return_part1.md', title:'포트폴리오 위험과 수익 I', desc:'효율적 프론티어, CAL, 분산투자' },
-      { id:'84', file:'R84_portfolio_risk_and_return_part2.md', title:'포트폴리오 위험과 수익 II', desc:'CAPM, SML, Sharpe/Treynor/M²' },
-      { id:'85', file:'R85_portfolio_management_overview.md', title:'포트폴리오 관리 개요', desc:'IPS, 자산배분, ETF' },
-      { id:'86', file:'R86_basics_of_portfolio_planning_and_construction.md', title:'포트폴리오 계획과 구성', desc:'IPS 작성, ESG, 코어-위성' },
-      { id:'87', file:'R87_the_behavioral_biases_of_individuals.md', title:'행동 편향', desc:'인지 오류 9가지, 감정 편향 6가지' },
-      { id:'88', file:'R88_introduction_to_risk_management.md', title:'리스크 관리', desc:'VaR, 스트레스 테스트, 위험 수정' },
-      { id:'89', file:'R89_ethics_and_trust_in_the_investment_profession.md', title:'윤리와 신뢰', desc:'전문직 윤리, 수탁자 기준' },
-      { id:'90', file:'R90_code_of_ethics_and_standards_of_professional_conduct.md', title:'윤리 강령과 기준', desc:'7개 Standard, PCP' },
-      { id:'91', file:'R91_guidance_for_standards.md', title:'Standards I-VII 지침', desc:'23개 하위 조항 상세 가이드' },
-      { id:'92', file:'R92_introduction_to_gips.md', title:'GIPS 소개', desc:'성과 보고 표준, 컴포지트, 검증' },
-      { id:'93', file:'R93_ethics_application.md', title:'윤리 적용', desc:'사례별 판단, 11문항 실전' },
+    {label:'Book 4 — Alternative Investments, Portfolio Management, Ethics',color:'book4',readings:[
+      {id:'76',file:'R76_alternative_investment_features_methods_and_structures.md',title:'대안투자 특성',desc:'LP/GP, 수수료'},
+      {id:'77',file:'R77_alternative_investment_performance_and_returns.md',title:'대안투자 성과',desc:'J-커브, 레버리지'},
+      {id:'78',file:'R78_investments_in_private_capital_equity_and_debt.md',title:'사모자본',desc:'VC, LBO'},
+      {id:'79',file:'R79_real_estate_and_infrastructure.md',title:'부동산과 인프라',desc:'REIT, Cap Rate'},
+      {id:'80',file:'R80_natural_resources.md',title:'천연자원',desc:'상품 선물, 콘탱고'},
+      {id:'81',file:'R81_hedge_funds.md',title:'헤지펀드',desc:'롱/숏, 이벤트 드리븐'},
+      {id:'82',file:'R82_introduction_to_digital_assets.md',title:'디지털 자산',desc:'블록체인, DeFi'},
+      {id:'83',file:'R83_portfolio_risk_and_return_part1.md',title:'포트폴리오 위험과 수익 I',desc:'효율적 프론티어, CAL'},
+      {id:'84',file:'R84_portfolio_risk_and_return_part2.md',title:'포트폴리오 위험과 수익 II',desc:'CAPM, SML, Sharpe'},
+      {id:'85',file:'R85_portfolio_management_overview.md',title:'포트폴리오 관리 개요',desc:'IPS, 자산배분'},
+      {id:'86',file:'R86_basics_of_portfolio_planning_and_construction.md',title:'포트폴리오 계획과 구성',desc:'IPS 작성, ESG'},
+      {id:'87',file:'R87_the_behavioral_biases_of_individuals.md',title:'행동 편향',desc:'인지 오류, 감정 편향'},
+      {id:'88',file:'R88_introduction_to_risk_management.md',title:'리스크 관리',desc:'VaR, 스트레스 테스트'},
+      {id:'89',file:'R89_ethics_and_trust_in_the_investment_profession.md',title:'윤리와 신뢰',desc:'전문직 윤리, 수탁자'},
+      {id:'90',file:'R90_code_of_ethics_and_standards_of_professional_conduct.md',title:'윤리 강령과 기준',desc:'7개 Standard'},
+      {id:'91',file:'R91_guidance_for_standards.md',title:'Standards I-VII 지침',desc:'23개 하위 조항'},
+      {id:'92',file:'R92_introduction_to_gips.md',title:'GIPS 소개',desc:'성과 보고 표준'},
+      {id:'93',file:'R93_ethics_application.md',title:'윤리 적용',desc:'사례별 판단'},
     ]},
   ];
 
-  // Flatten
-  const CHAPTERS = [];
-  BOOKS.forEach(b => b.readings.forEach(r => CHAPTERS.push({ ...r, bookLabel: b.label, bookColor: b.color })));
-  const TOTAL = CHAPTERS.length;
-  const cache = {};
-  let currentId = null;
+  const CH=[];BOOKS.forEach(b=>b.readings.forEach(r=>CH.push({...r,bookLabel:b.label,bookColor:b.color})));
+  const T=CH.length,cache={};let curId=null;
 
-  const tocView = document.getElementById('toc-view');
-  const readerView = document.getElementById('reader-view');
-  const readerContent = document.getElementById('reader-content');
-  const readerNav = document.getElementById('reader-nav');
-  const progressBar = document.getElementById('progress-bar');
-  const topbarTitle = document.getElementById('topbar-title');
-  const topbarNum = document.getElementById('topbar-num');
-  const drawerOverlay = document.getElementById('drawer-overlay');
-  const tocDrawer = document.getElementById('toc-drawer');
-  const drawerList = document.getElementById('drawer-list');
+  const $=id=>document.getElementById(id);
+  const tocV=$('toc-view'),readV=$('reader-view'),readC=$('reader-content'),readN=$('reader-nav'),
+        pBar=$('progress-bar'),tTitle=$('topbar-title'),tNum=$('topbar-num'),
+        dOverlay=$('drawer-overlay'),drawer=$('toc-drawer'),dList=$('drawer-list'),
+        scrollBtn=$('scroll-top');
 
-  marked.setOptions({ gfm: true, breaks: false });
+  marked.setOptions({gfm:true,breaks:false});
 
-  function getIdx(id) { return CHAPTERS.findIndex(c => c.id === String(id)); }
+  function idx(id){return CH.findIndex(c=>c.id===String(id))}
 
-  // Build TOC
-  function buildToc() {
-    const el = document.getElementById('chapter-list');
-    el.innerHTML = BOOKS.map(book => `
-      <div class="part-group">
+  function buildToc(){
+    $('chapter-list').innerHTML=BOOKS.map(b=>`
+      <div class="part-group" data-book="${b.color}">
         <div class="part-label">
-          ${book.label}
-          <span class="part-count">${book.readings.length} readings</span>
+          <span><span class="part-color" style="background:var(--${b.color})"></span>${b.label}</span>
+          <span class="part-count">${b.readings.length} readings</span>
         </div>
-        ${book.readings.map(r => `
-          <div class="chapter-item" data-ch="${r.id}">
-            <span class="chapter-num">${r.id}</span>
+        ${b.readings.map(r=>`
+          <div class="chapter-item" data-ch="${r.id}" data-search="${r.id} ${r.title} ${r.desc}">
+            <span class="chapter-num">R${r.id}</span>
             <div class="chapter-info">
               <div class="chapter-title">${r.title}</div>
               <div class="chapter-desc">${r.desc}</div>
             </div>
-          </div>
-        `).join('')}
-      </div>
-    `).join('');
-    el.addEventListener('click', e => {
-      const item = e.target.closest('.chapter-item');
-      if (item) openChapter(item.dataset.ch);
-    });
+          </div>`).join('')}
+      </div>`).join('');
+    $('chapter-list').addEventListener('click',e=>{const i=e.target.closest('.chapter-item');if(i)open(i.dataset.ch)});
   }
 
-  // Build drawer
-  function buildDrawer() {
-    let html = '';
-    BOOKS.forEach(book => {
-      html += `<div class="toc-drawer-sep">${book.label.split('—')[0].trim()}</div>`;
-      book.readings.forEach(r => {
-        html += `<div class="toc-drawer-item" data-ch="${r.id}">
-          <span class="toc-drawer-num">R${r.id}</span>
-          <span>${r.title}</span>
-        </div>`;
-      });
+  function buildDrawer(){
+    let h='';
+    BOOKS.forEach(b=>{
+      h+=`<div class="toc-drawer-sep">${b.label.split('—')[0].trim()}</div>`;
+      b.readings.forEach(r=>{h+=`<div class="toc-drawer-item" data-ch="${r.id}"><span class="toc-drawer-num">R${r.id}</span><span>${r.title}</span></div>`});
     });
-    drawerList.innerHTML = html;
-    drawerList.addEventListener('click', e => {
-      const item = e.target.closest('.toc-drawer-item');
-      if (item) { openChapter(item.dataset.ch); toggleDrawer(); }
-    });
+    dList.innerHTML=h;
+    dList.addEventListener('click',e=>{const i=e.target.closest('.toc-drawer-item');if(i){open(i.dataset.ch);toggleD()}});
   }
 
-  function toggleDrawer() {
-    drawerOverlay.classList.toggle('open');
-    tocDrawer.classList.toggle('open');
-  }
+  function toggleD(){dOverlay.classList.toggle('open');drawer.classList.toggle('open')}
 
-  async function openChapter(id) {
-    id = String(id);
-    const idx = getIdx(id);
-    const ch = CHAPTERS[idx];
-    if (!ch) return;
-    currentId = id;
-
-    tocView.classList.add('hidden');
-    readerView.classList.add('active');
-    progressBar.classList.add('visible');
-    window.scrollTo({ top: 0, behavior: 'instant' });
-
-    topbarTitle.textContent = `R${ch.id}. ${ch.title}`;
-    topbarNum.textContent = `${idx + 1} / ${TOTAL}`;
-
-    drawerList.querySelectorAll('.toc-drawer-item').forEach(el => {
-      el.classList.toggle('active', el.dataset.ch === id);
-    });
-
-    history.pushState({ ch: id }, '', `?ch=${id}`);
-
-    if (cache[id]) {
-      renderContent(cache[id]);
-    } else {
-      readerContent.innerHTML = `<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
-      try {
-        const res = await fetch(GITHUB_RAW + encodeURIComponent(ch.file));
-        if (!res.ok) throw new Error(res.status);
-        const md = await res.text();
-        cache[id] = md;
-        if (currentId === id) renderContent(md);
-      } catch(e) {
-        readerContent.innerHTML = `<p style="color:var(--text-muted);text-align:center;padding:4rem 0;">콘텐츠를 불러올 수 없습니다.</p>`;
-      }
+  async function open(id){
+    id=String(id);const i=idx(id),ch=CH[i];if(!ch)return;curId=id;
+    tocV.classList.add('hidden');readV.classList.add('active');pBar.classList.add('visible');
+    window.scrollTo({top:0,behavior:'instant'});
+    tTitle.textContent=`R${ch.id}. ${ch.title}`;tNum.textContent=`${i+1} / ${T}`;
+    dList.querySelectorAll('.toc-drawer-item').forEach(el=>el.classList.toggle('active',el.dataset.ch===id));
+    history.pushState({ch:id},'',`?ch=${id}`);
+    if(cache[id]){render(cache[id])}
+    else{
+      readC.innerHTML=`<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
+      try{const r=await fetch(RAW+encodeURIComponent(ch.file));if(!r.ok)throw 0;const md=await r.text();cache[id]=md;if(curId===id)render(md)}
+      catch(e){readC.innerHTML=`<p style="color:var(--text-muted);text-align:center;padding:4rem 0">불러올 수 없습니다.</p>`}
     }
-    renderNav(idx);
+    nav(i);
   }
 
-  function renderContent(md) {
-    readerContent.innerHTML = marked.parse(md);
-    renderMathInElement(readerContent, {
-      delimiters: [
-        { left: '$$', right: '$$', display: true },
-        { left: '$', right: '$', display: false },
-        { left: '\\[', right: '\\]', display: true },
-        { left: '\\(', right: '\\)', display: false },
-      ],
-      throwOnError: false,
+  function render(md){
+    readC.innerHTML=marked.parse(md);
+    renderMathInElement(readC,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  }
+
+  function nav(i){
+    const p=i>0?CH[i-1]:null,n=i<T-1?CH[i+1]:null;
+    readN.innerHTML=`
+      <div class="reader-nav-card prev ${p?'':'empty'}" ${p?`onclick="open('${p.id}')"`:''}>${p?`<div class="reader-nav-label">&larr; Previous</div><div class="reader-nav-title">R${p.id}. ${p.title}</div>`:''}</div>
+      <div class="reader-nav-card next ${n?'':'empty'}" ${n?`onclick="open('${n.id}')"`:''}>${n?`<div class="reader-nav-label">Next &rarr;</div><div class="reader-nav-title">R${n.id}. ${n.title}</div>`:''}</div>`;
+  }
+
+  window.goToToc=function(){readV.classList.remove('active');tocV.classList.remove('hidden');pBar.classList.remove('visible');pBar.style.width='0%';curId=null;history.pushState(null,'',location.pathname)};
+  window.open=open;window.toggleDrawer=toggleD;
+
+  // Scroll progress + scroll-to-top
+  window.addEventListener('scroll',()=>{
+    if(readV.classList.contains('active')){const h=document.documentElement.scrollHeight-innerHeight;pBar.style.width=h>0?(scrollY/h*100)+'%':'0%'}
+    scrollBtn.classList.toggle('visible',scrollY>400);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown',e=>{
+    if(!readV.classList.contains('active'))return;const i=idx(curId);
+    if(e.key==='ArrowRight'&&i<T-1)open(CH[i+1].id);
+    if(e.key==='ArrowLeft'&&i>0)open(CH[i-1].id);
+    if(e.key==='Escape'){if(drawer.classList.contains('open'))toggleD();else goToToc()}
+  });
+
+  // Search
+  $('search-input').addEventListener('input',e=>{
+    const q=e.target.value.toLowerCase().trim();
+    document.querySelectorAll('.chapter-item').forEach(el=>{
+      el.classList.toggle('hidden',q&&!el.dataset.search.toLowerCase().includes(q));
     });
-  }
-
-  function renderNav(idx) {
-    const prev = idx > 0 ? CHAPTERS[idx - 1] : null;
-    const next = idx < TOTAL - 1 ? CHAPTERS[idx + 1] : null;
-    readerNav.innerHTML = `
-      <div class="reader-nav-card prev ${prev ? '' : 'empty'}" ${prev ? `onclick="openChapter('${prev.id}')"` : ''}>
-        ${prev ? `<div class="reader-nav-label">&#8592; Previous</div><div class="reader-nav-title">R${prev.id}. ${prev.title}</div>` : ''}
-      </div>
-      <div class="reader-nav-card next ${next ? '' : 'empty'}" ${next ? `onclick="openChapter('${next.id}')"` : ''}>
-        ${next ? `<div class="reader-nav-label">Next &#8594;</div><div class="reader-nav-title">R${next.id}. ${next.title}</div>` : ''}
-      </div>
-    `;
-  }
-
-  window.goToToc = function() {
-    readerView.classList.remove('active');
-    tocView.classList.remove('hidden');
-    progressBar.classList.remove('visible');
-    progressBar.style.width = '0%';
-    currentId = null;
-    history.pushState(null, '', window.location.pathname);
-  };
-
-  window.openChapter = openChapter;
-  window.toggleDrawer = toggleDrawer;
-
-  window.addEventListener('scroll', () => {
-    if (!readerView.classList.contains('active')) return;
-    const h = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0%';
+    document.querySelectorAll('.part-group').forEach(g=>{
+      const visible=g.querySelectorAll('.chapter-item:not(.hidden)').length;
+      g.style.display=q&&!visible?'none':'';
+    });
   });
 
-  document.addEventListener('keydown', e => {
-    if (!readerView.classList.contains('active')) return;
-    const idx = getIdx(currentId);
-    if (e.key === 'ArrowRight' && idx < TOTAL - 1) openChapter(CHAPTERS[idx + 1].id);
-    if (e.key === 'ArrowLeft' && idx > 0) openChapter(CHAPTERS[idx - 1].id);
-    if (e.key === 'Escape') {
-      if (tocDrawer.classList.contains('open')) toggleDrawer();
-      else goToToc();
-    }
-  });
-
-  window.addEventListener('popstate', e => {
-    if (e.state && e.state.ch) openChapter(e.state.ch);
-    else goToToc();
-  });
+  // Popstate
+  window.addEventListener('popstate',e=>{if(e.state&&e.state.ch)open(e.state.ch);else goToToc()});
 
   // Init
-  buildToc();
-  buildDrawer();
-  const params = new URLSearchParams(window.location.search);
-  const initCh = params.get('ch');
-  if (initCh !== null && getIdx(initCh) >= 0) openChapter(initCh);
+  buildToc();buildDrawer();
+  const p=new URLSearchParams(location.search).get('ch');
+  if(p!==null&&idx(p)>=0)open(p);
 })();
 </script>
 </body>
