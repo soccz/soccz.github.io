@@ -242,6 +242,7 @@
     <ul class="nav-links">
       <li><a href="#summary">Summary</a></li>
       <li><a href="#thesis">Thesis</a></li>
+      <li><a href="#story">기록</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#experiments">Experiments</a></li>
       <li><a href="#signal">Signal</a></li>
@@ -400,6 +401,119 @@
         </div>
       </div>
     </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- 고민의 흔적 -->
+<section id="story"><div class="container fade-in">
+  <div class="section-label">고민의 흔적</div>
+  <h2 class="section-title">1년, 구체적인 순간들</h2>
+  <p class="section-desc">분석 지표 뒤에 있는 실제 과정. 무엇을 보고 어떻게 판단했는지, 틀렸을 때 어떻게 알았는지의 기록.</p>
+
+  <div style="display:flex; flex-direction:column; gap:2.5rem;">
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2025 초 — 아이디어</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">BTC가 오르면 다음에 뭐가 오를까</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        처음 아이디어는 단순했다. BTC가 오르고, 그다음 ETH가 따라오고, 그다음 알트가 온다. 이 패턴이 항상 같은 순서로 오지는 않지만 분명히 존재한다. 그렇다면 "지금 BTC가 어떤 패턴을 그리고 있는지"를 알면 "다음에 따라올 코인"을 미리 볼 수 있지 않을까. 거기서 시작했다.<br><br>
+        두 번째 질문은 "언제 틀리는지 알 수 있을까"였다. 예측이 맞는 것도 중요하지만, 불확실할 때 추천하지 않을 수 있다면 그게 더 실용적이다. 틀린 걸 아는 시스템이 맞는 척하는 시스템보다 낫다고 생각했다. 그래서 MC-Dropout으로 불확실성을 측정하고, 불확실하면 watch-only로 내리는 구조를 처음부터 설계에 넣었다.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2025 초 — 첫 번째 결정</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">모델보다 파이프라인을 먼저 만들었다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        처음에 직관적으로 "운영이 돌아가지 않으면 아무리 좋은 모델도 의미없다"고 생각했다. 그래서 모델 성능을 높이기 전에 systemd 타이머, watchdog, freshness gate, 텔레그램 알림, Flask 대시보드를 먼저 완성했다. 매일 아침 자동으로 돌아가는 파이프라인이 먼저였다.<br><br>
+        이 결정이 나중에 맞았다는 걸 알게 됐다. 시스템이 매일 돌아가고 있었기 때문에 실제 라이브 데이터에서 문제를 발견할 수 있었다. 백테스트 환경에서는 절대 보이지 않는 것들 — TOSHI가 predicted_return=71을 내뱉거나, 추천이 며칠째 전부 watch-only로 떨어지거나, 데이터가 stale한데도 추론이 그냥 돌아가거나 — 이 모든 것들이 라이브 시스템에서 먼저 보였다.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Jan — 데이터를 다시 보니</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">RSI가 0이 나올 수는 없잖아</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        데이터를 자세히 들여다봤을 때 이상한 걸 발견했다. 일부 피처 값이 0으로 시작하고 있었다. RSI가 0이라는 건 물리적으로 불가능하다. volatility가 0이라는 것도. <span class="c">fillna(0)</span>이 원인이었다. 시퀀스 초반에 계산할 수 없는 구간을 0으로 채웠고, 그게 첫 480행(약 20일)에 걸쳐 퍼져있었다. 모델이 "RSI=0이 정상이다"라고 학습하고 있었던 것이다.<br><br>
+        그다음에 train/test split을 확인했다. 학습 데이터가 720일이고 백테스트 기간이 90일이었는데, 학습 기간이 백테스트 기간을 통째로 포함하고 있었다. 지금까지 봤던 모든 보고 메트릭이 사실상 훈련 세트 성능이었다는 뜻이다. 숫자가 좋게 나온 이유 중 상당 부분이 여기 있었다.<br><br>
+        세 번째는 호라이즌이었다. 3시간 후 수익률의 autocorrelation을 계산해봤더니 0.025였다. 사실상 노이즈다. 12시간으로 바꿨더니 0.100이 나왔다. 통계적으로 유의미한 수준이었다. 1년 가까이 예측 불가능한 타임스케일에서 학습하고 있었던 것이다.
+      </div>
+      <div style="margin-top:1.2rem; display:flex; gap:0.8rem; flex-wrap:wrap;">
+        <div style="background:var(--red-dim); border:1px solid rgba(220,38,38,0.15); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--red); margin-bottom:0.3rem;">발견</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">fillna(0) → RSI=0, vol=0 / Train⊃Test / 3h AC=0.025</div>
+        </div>
+        <div style="background:var(--green-dim); border:1px solid rgba(22,163,74,0.15); border-radius:6px; padding:0.7rem 1rem; flex:1; min-width:200px;">
+          <div style="font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:var(--green); margin-bottom:0.3rem;">수정</div>
+          <div style="font-size:0.82rem; color:var(--text-secondary);">ffill/bfill + 480행 드롭 / temporal holdout 20% / 12h 전환</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Feb — 불확실성을 제대로 잡으려고</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">σ가 학습을 안 한다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        불확실성이 예측마다 다르게 계산되려면 모델이 μ와 σ를 별도로 학습해야 한다. CVAE 디코더를 heteroscedastic 구조로 교체했다. μ 헤드와 log σ 헤드가 각각 다른 값을 출력하고, NLL loss로 함께 학습되도록 설계했다.<br><br>
+        훈련을 돌려보니 log σ가 -5.05에서 거의 움직이지 않았다. 초기화 편향이었다. σ ≈ 0.0067으로 100 에폭 내내 사실상 상수였다. KL divergence도 0.000으로 붙어있었다. CVAE 잠재공간이 아무 정보도 담지 않고 있다는 뜻이다. confidence_head의 출력도 mean=0.503, std=0.0008 — 예측 6만 개가 거의 전부 0.503이었다.<br><br>
+        설계 자체는 맞았지만 두 헤드의 loss 스케일이 균형을 못 잡았다. μ_loss가 빠르게 줄면 log σ loss가 그냥 멈춰버린다. 각 헤드가 독립적으로 학습되도록 loss coefficient를 재조정해야 하는데 이번 단계에서는 해결하지 못했다. 불확실성 추정이 제대로 작동하지 않는 상태가 이후까지 이어졌다.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Mar — 라이브 추천을 보니</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">TOSHI predicted_return = 71</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        라이브 추천 로그를 보다가 이상한 숫자가 눈에 들어왔다. TOSHI라는 코인의 predicted_return이 71이었다. 7,100% 수익률 예측. POKT는 9-11, BOUNTY는 6.6이었다. uncertainty도 5.2로 폭발했다. 모델이 특정 휘발성 높은 코인에서 μ 헤드가 발산하고 있었다.<br><br>
+        또 다른 문제도 있었다. 추천의 98%가 Short으로 나오고 있었는데, Short는 라이브에서 실행이 차단돼 있어서 사실상 전부 watch-only였다. 시스템이 매일 돌아가고 있는데 실질적인 추천은 거의 없는 상태였다. direction_consistency 임계값이 0.66으로 너무 엄격해서 대부분이 첫 필터에서 탈락했다. 세 가지를 수정했다: 임계값을 0.55로 낮추고, |return| > 0.5이면 이상 예측으로 하드 차단하고, Short 신호에서 gate_value < 0.25면 걸러내는 필터를 추가했다.<br><br>
+        이상 예측은 차단됐고 추천 다양성이 생겼다. 하지만 근본 질문은 여전히 남아있었다. 이 모든 필터가 실제로 알파를 만들고 있는 걸까, 아니면 나쁜 신호를 가리고 있을 뿐인 걸까.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0; border-color:rgba(180,83,9,0.2);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Mar — 과거 강세장 검증 시도</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">DB에 데이터가 없었다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        테스트 기간(2026 Jan-Mar)이 BTC 하락장이어서 Short 승률이 베타 효과일 수 있다고 의심하기 시작했다. 그렇다면 과거 강세장(2024 상반기)에서 백테스트를 돌려보면 Long 신호가 얼마나 나오는지 비교할 수 있을 것이라고 생각했다.<br><br>
+        백테스트 종료 시점을 <span class="c">AETHER_BACKTEST_END_TIME_ISO="2024-06-30T23:59:59+00:00"</span>으로 설정하고 돌렸더니 결과가 0건이었다. DB를 확인했더니 2024 상반기에는 KRW-BTC와 KRW-ETH 두 개 마켓밖에 데이터가 없었다. 200+ 알트 마켓 데이터는 2025-09부터만 있었다. 강세장 검증은 불가능했다.<br><br>
+        이 시점에서 중요한 걸 깨달았다. 우리가 가진 데이터 자체가 한 가지 시장 국면(2025 하반기 ~ 2026 초)에만 집중돼 있다는 것이다. 그 기간이 하락장이었다. 백테스트를 아무리 돌려도 이 기간에서만 돌아가는 것이다.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0; border-color:rgba(37,99,235,0.2);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Apr 1 — 방법론을 바꿨다</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">22시간짜리 백테스트가 잘못된 도구였다</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        그때까지 신호 품질을 검증하는 방법이 백테스트였다. 한 번 돌리면 22시간이 걸렸다. 그걸 수십 번 반복했다. 재훈련하고 백테스트 돌리고, 필터 바꾸고 백테스트 돌리고. 어느 시점에서 "재훈련을 계속 끊임없이 하는데 이게 뭐 효과가 있는 방향이냐"는 의문이 들었다.<br><br>
+        IC(Information Coefficient) 분석으로 전환했다. Spearman correlation — 예측 랭크와 실제 랭크의 상관계수. 계산이 5분이면 끝난다. holdout 17개 마켓, 2025-10 ~ 2026-01 데이터로 측정했다. 결과: Overall IC = <strong>-0.059</strong>.<br><br>
+        이 숫자가 나왔을 때 꽤 오래 봤다. -0.059는 신호가 없다는 뜻이다. |0.05|이 weak signal의 기준인데 그것도 안 된다. Short IC는 -0.158이었다. 음수라는 건 예측 방향이 실제와 반대라는 뜻이다. Short 58.3% 승률이 왜 나왔는지도 이때 정리됐다 — 같은 기간 BTC 수익률이 -21.9%였고, 127개 Short 거래 전부의 trend_alignment가 Counter(역추세)였다. 모델 예측이 맞은 게 아니라 시장이 그냥 내려간 것이다. p=0.031이고 95% CI 하한이 0.498이었다. 베팅할 수 있는 숫자가 아니었다.
+      </div>
+      <div style="margin-top:1.2rem; padding:1rem 1.2rem; background:var(--bg-secondary); border-radius:6px; border:1px solid var(--border);">
+        <div style="font-size:0.78rem; font-family:'JetBrains Mono',monospace; color:var(--text-muted); margin-bottom:0.5rem;">22h 백테스트 → 5분 IC 전환</div>
+        <div style="font-size:0.85rem; color:var(--text-secondary); line-height:1.8;">백테스트는 "이 전략이 돈이 됐는가"를 묻는다. IC는 "이 예측이 정보를 담고 있는가"를 묻는다. 후자가 먼저여야 했다. 신호가 없으면 전략이 돈이 될 수 없다. IC를 먼저 확인했다면 수십 번의 22시간 백테스트는 필요 없었다.</div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Apr — 한 가지 발견</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">filtered Short IC = +0.18 — 이건 뭘까</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        raw 예측의 Short IC가 -0.158인데, 10단계 퍼널을 통과한 Short 거래들의 IC는 +0.18이었다. raw에서 filtered까지 Δ=0.338. 방향이 완전히 뒤집혔다. 이게 의미하는 건 필터가 단순히 나쁜 예측을 제거하는 게 아니라 선별 자체에 예측력이 있다는 것이다.<br><br>
+        거래 수가 너무 적어서 통계적으로 확정짓기 어렵다. 하지만 이 숫자는 버리기 아깝다. 다음 전략을 설계할 때 이 퍼널 로직이 어떤 형태로든 역할을 할 수 있을 것이다.
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-bottom:0; border-color:rgba(180,83,9,0.25);">
+      <div style="font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:0.5rem; font-family:'JetBrains Mono',monospace;">2026 Apr — 전략 전환</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:1rem; font-family:'Noto Serif KR',serif;">"재훈련이 의미 있는 방향이냐"</div>
+      <div style="font-size:0.9rem; color:var(--text-secondary); line-height:2; max-width:720px;">
+        IC=-0.059라는 숫자 앞에서 선택지는 두 가지였다. 재훈련을 계속 반복하면서 무언가 더 좋아지길 기다리거나, 아니면 전략 자체를 바꾸거나.<br><br>
+        스크리너가 55.8%, 모델이 53.1%라는 숫자가 이 결정을 쉽게 만들었다. 모델이 단순 스크리너를 이기지 못하고 있었다. 모델을 아무리 복잡하게 만들어도 raw 신호 자체가 IC=-0.059인 상황에서 한계가 있다. 문제가 아키텍처가 아니라 예측 대상 자체에 있다는 결론이었다.<br><br>
+        개별 코인의 12h 절대 수익률 예측 → 200+ 코인 사이의 상대 랭킹으로 전환한다. 시장 방향(베타)을 상쇄하고 상대적으로 강한 코인과 약한 코인만 구분하는 문제다. 같은 피처로도 크로스섹션 문제는 개별 절대값 예측보다 노이즈가 작다 — 200개 코인의 공통 레짐 노이즈가 랭킹에서 부분적으로 상쇄되기 때문이다. 1년간 쌓은 파이프라인과 피처는 그대로 쓴다.
+      </div>
+    </div>
+
   </div>
 </div></section>
 <hr class="divider">
