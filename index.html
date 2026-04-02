@@ -856,6 +856,42 @@
         <p class="footer-copy">&copy; 2026 soccz. Powered by GitHub Pages.</p>
       </div>
     </footer>
+
+    <!-- PIN Modal -->
+    <div id="pinOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(26,20,16,0.55);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+      <div style="background:#faf7f2;border:1px solid #e7e2db;border-radius:16px;padding:36px 32px;width:320px;box-shadow:0 16px 48px rgba(26,20,16,0.18);text-align:center;font-family:'Inter','Noto Sans KR',sans-serif;">
+        <div style="font-size:1.5rem;font-weight:800;color:#1a1410;margin-bottom:6px;letter-spacing:-0.03em;">파이썬은 왜?</div>
+        <div style="font-size:0.85rem;color:#96887a;margin-bottom:24px;">4자리 번호를 입력하세요</div>
+        <div id="pinDots" style="display:flex;gap:12px;justify-content:center;margin-bottom:24px;">
+          <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+          <button class="pin-btn" onclick="pinInput('1')">1</button>
+          <button class="pin-btn" onclick="pinInput('2')">2</button>
+          <button class="pin-btn" onclick="pinInput('3')">3</button>
+          <button class="pin-btn" onclick="pinInput('4')">4</button>
+          <button class="pin-btn" onclick="pinInput('5')">5</button>
+          <button class="pin-btn" onclick="pinInput('6')">6</button>
+          <button class="pin-btn" onclick="pinInput('7')">7</button>
+          <button class="pin-btn" onclick="pinInput('8')">8</button>
+          <button class="pin-btn" onclick="pinInput('9')">9</button>
+          <button class="pin-btn pin-clear" onclick="pinClear()">지우기</button>
+          <button class="pin-btn" onclick="pinInput('0')">0</button>
+          <button class="pin-btn pin-cancel" onclick="pinClose()">취소</button>
+        </div>
+        <div id="pinError" style="font-size:0.8rem;color:#c45858;height:18px;"></div>
+      </div>
+    </div>
+    <style>
+      .pin-dot { width:12px;height:12px;border-radius:50%;border:2px solid #d4c8b8;background:transparent;transition:background 0.15s,border-color 0.15s; }
+      .pin-dot.filled { background:#c4724e;border-color:#c4724e; }
+      .pin-btn { background:#fff;border:1px solid #e7e2db;border-radius:10px;padding:14px;font-size:1.1rem;font-weight:600;color:#1a1410;cursor:pointer;font-family:inherit;transition:all 0.15s; }
+      .pin-btn:hover { background:#fdf0ea;border-color:#c4724e;color:#c4724e; }
+      .pin-btn:active { transform:scale(0.94); }
+      .pin-clear { font-size:0.8rem;color:#96887a; }
+      .pin-cancel { font-size:0.8rem;color:#96887a; }
+      #pinOverlay.show { display:flex !important; }
+    </style>
   </main>
   <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -1195,6 +1231,60 @@ requestAnimationFrame(() => {
 });
 
 init();
+
+// PIN logic for python-why
+let pinValue = '';
+const PIN_CORRECT = '1004';
+const PIN_TARGET = 'https://soccz.github.io/python-why/';
+
+function pinOpen() {
+  pinValue = '';
+  pinRender();
+  document.getElementById('pinError').textContent = '';
+  document.getElementById('pinOverlay').classList.add('show');
+}
+function pinClose() {
+  document.getElementById('pinOverlay').classList.remove('show');
+  pinValue = '';
+  pinRender();
+  document.getElementById('pinError').textContent = '';
+}
+function pinInput(d) {
+  if (pinValue.length >= 4) return;
+  pinValue += d;
+  pinRender();
+  if (pinValue.length === 4) {
+    if (pinValue === PIN_CORRECT) {
+      pinClose();
+      window.location.href = PIN_TARGET;
+    } else {
+      document.getElementById('pinError').textContent = '번호가 틀렸습니다';
+      setTimeout(() => { pinValue = ''; pinRender(); document.getElementById('pinError').textContent = ''; }, 600);
+    }
+  }
+}
+function pinClear() {
+  pinValue = pinValue.slice(0, -1);
+  pinRender();
+}
+function pinRender() {
+  document.querySelectorAll('.pin-dot').forEach((d, i) => {
+    d.classList.toggle('filled', i < pinValue.length);
+  });
+}
+// ESC to close
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('pinOverlay').classList.contains('show')) return;
+  if (e.key === 'Escape') { pinClose(); return; }
+  if (e.key === 'Backspace') { pinClear(); return; }
+  if (/^[0-9]$/.test(e.key)) pinInput(e.key);
+});
+// Override openPost for python-why
+const _origOpenPost = openPost;
+window.openPost = function(url, openInNewTab) {
+  if (url === PIN_TARGET) { pinOpen(); return; }
+  _origOpenPost(url, openInNewTab);
+};
 </script>
 </body>
 </html>
