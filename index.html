@@ -860,7 +860,7 @@
     <!-- PIN Modal -->
     <div id="pinOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(26,20,16,0.55);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
       <div style="background:#faf7f2;border:1px solid #e7e2db;border-radius:16px;padding:36px 32px;width:320px;box-shadow:0 16px 48px rgba(26,20,16,0.18);text-align:center;font-family:'Inter','Noto Sans KR',sans-serif;">
-        <div style="font-size:1.5rem;font-weight:800;color:#1a1410;margin-bottom:6px;letter-spacing:-0.03em;">파이썬은 왜?</div>
+        <div id="pinTitle" style="font-size:1.5rem;font-weight:800;color:#1a1410;margin-bottom:6px;letter-spacing:-0.03em;">PyWhy</div>
         <div style="font-size:0.85rem;color:#96887a;margin-bottom:24px;">4자리 번호를 입력하세요</div>
         <div id="pinDots" style="display:flex;gap:12px;justify-content:center;margin-bottom:24px;">
           <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
@@ -989,7 +989,7 @@ const DESCS = {
   'NeuroTraffic-DT': '지능형 교통 관제 디지털 트윈 \u2014 Deep LSTM 기반 혼잡도 예측',
   'Daily-report': '일일 리포트 & 회고 기록',
   'young-and-home': '청년 안심 주거 코디네이터 \u2014 서강대 AI 해커톤 5개 에이전트 시스템',
-  'python-why': '파이썬은 왜? \u2014 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의. 초등학생부터 CS 전공자까지 4레벨, 10주 커리큘럼'
+  'python-why': 'PyWhy \u2014 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의. 초급부터 전공자까지 4레벨, 15주 커리큘럼'
 };
 
 let allRepos = [];
@@ -1232,7 +1232,7 @@ requestAnimationFrame(() => {
 
 init();
 
-// PIN logic for python-why
+// PIN logic — URL별 이름 매핑
 let pinValue = '';
 const PIN_CORRECT = '1004';
 const PIN_TARGET = 'https://soccz.github.io/python-why/';
@@ -1242,6 +1242,12 @@ const PIN_TARGETS = new Set([
   '/projects/fin-momentum/',
   '/projects/asset-management/'
 ]);
+const PIN_NAMES = {
+  [PIN_TARGET]: 'PyWhy',
+  '/projects/cfa-notes/': 'CFA Notes',
+  '/projects/fin-momentum/': 'Momentum Study',
+  '/projects/asset-management/': 'Asset Management'
+};
 let pinPendingUrl = null;
 
 function pinOpen(url) {
@@ -1249,6 +1255,7 @@ function pinOpen(url) {
   pinValue = '';
   pinRender();
   document.getElementById('pinError').textContent = '';
+  document.getElementById('pinTitle').textContent = PIN_NAMES[url] || 'Protected';
   document.getElementById('pinOverlay').classList.add('show');
 }
 function pinClose() {
