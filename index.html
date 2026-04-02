@@ -58,6 +58,9 @@
       --side: #6a8a8a;
       --side-light: #eef4f4;
       --side-bg: #f4f9f9;
+      --edu: #7a5c3e;
+      --edu-light: #f5ede4;
+      --edu-bg: #faf5f0;
       --sidebar-w: 260px;
       --header-h: 64px;
       --max-w: 1200px;
@@ -344,6 +347,7 @@
     .cat-card.data-card::before { background: var(--data); }
     .cat-card.note-card::before { background: var(--note); }
     .cat-card.side-card::before { background: var(--side); }
+    .cat-card.edu-card::before { background: var(--edu); }
     .cat-card:hover {
       border-color: var(--border-hover);
       box-shadow: var(--shadow-lg);
@@ -375,6 +379,7 @@
     .cat-card-icon.data { background: var(--data-light); color: var(--data); }
     .cat-card-icon.note { background: var(--note-light); color: var(--note); }
     .cat-card-icon.side { background: var(--side-light); color: var(--side); }
+    .cat-card-icon.edu  { background: var(--edu-light);  color: var(--edu); }
 
     .cat-card-title {
       font-family: 'Space Grotesk', sans-serif;
@@ -543,6 +548,7 @@
     .post-card.data-post::before { background: var(--data); }
     .post-card.note-post::before { background: var(--note); }
     .post-card.side-post::before { background: var(--side); }
+    .post-card.edu-post::before  { background: var(--edu); }
 
     .post-top {
       display: flex;
@@ -565,6 +571,7 @@
     .post-badge.data { background: var(--data-light); color: var(--data); }
     .post-badge.note { background: var(--note-light); color: var(--note); }
     .post-badge.side { background: var(--side-light); color: var(--side); }
+    .post-badge.edu  { background: var(--edu-light);  color: var(--edu); }
 
     .post-date {
       font-size: 12px;
@@ -892,6 +899,13 @@ const CATEGORIES = {
     color: 'note',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
     match: ['Daily-report','finance-note','fin-momentum','asset-management-guide','CFA-notes']
+  },
+  edu: {
+    label: 'Education',
+    desc: '"왜"를 중심으로 — 개념의 뿌리부터 CPython 내부까지',
+    color: 'edu',
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+    match: ['python-why']
   }
 };
 
@@ -938,7 +952,8 @@ const DESCS = {
   'son_data': '손흥민 경기 데이터 분석',
   'NeuroTraffic-DT': '지능형 교통 관제 디지털 트윈 \u2014 Deep LSTM 기반 혼잡도 예측',
   'Daily-report': '일일 리포트 & 회고 기록',
-  'young-and-home': '청년 안심 주거 코디네이터 \u2014 서강대 AI 해커톤 5개 에이전트 시스템'
+  'young-and-home': '청년 안심 주거 코디네이터 \u2014 서강대 AI 해커톤 5개 에이전트 시스템',
+  'python-why': '파이썬은 왜? \u2014 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의. 초등학생부터 CS 전공자까지 4레벨, 10주 커리큘럼'
 };
 
 let allRepos = [];
@@ -1080,7 +1095,8 @@ function renderPosts(catKey) {
       'Daily-report': '/projects/daily-report/',
       'young-and-home': '/projects/young-and-home/',
       'economic-time-transformer': '/projects/economic-time-transformer/',
-      'worldquant-alpha': '/projects/worldquant-alpha/'
+      'worldquant-alpha': '/projects/worldquant-alpha/',
+      'python-why': 'https://soccz.github.io/python-why/'
     };
     const page = PROJECT_PAGES[r.name];
     const url = page || `https://github.com/soccz/${r.name}`;
