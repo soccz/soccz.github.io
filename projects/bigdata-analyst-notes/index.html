@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>빅데이터 분석기사 필기 완벽 가이드 — 4과목 Deep Dive</title>
+  <meta name="description" content="빅데이터 분석기사 필기 전 과목 한국어 해설집. 전공 제로에서 합격까지.">
+  <meta property="og:title" content="빅데이터 분석기사 필기 완벽 가이드">
+  <meta property="og:description" content="4과목 14,000줄 Deep Dive — 전공 제로에서 합격까지">
+  <meta property="og:type" content="website">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/marked/marked.min.js" as="script">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" as="script">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg-toc:#fafaf9;--bg-reader:#fff;--bg-tint:#f5f5f4;--text-primary:#1c1917;--text-secondary:#57534e;--text-muted:#a8a29e;--accent:#4a90a4;--accent-light:#eaf4f8;--accent-hover:#3a7a8e;--border:#e7e5e4;--border-light:#d6d3d1;--code-bg:#292524;--code-text:#e7e5e4;--part0:#8a7a6a;--part1:#4a90a4;--part2:#6a9a5a;--part3:#c4724e;--part4:#7a6a9a;--part5:#5a7a96;--part6:#9a6a5a}
+    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-toc);color:var(--text-primary);-webkit-font-smoothing:antialiased}
+
+    /* PIN Screen */
+    #pin-screen{position:fixed;inset:0;z-index:10000;background:var(--bg-toc);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .4s}
+    #pin-screen.hidden{opacity:0;pointer-events:none}
+    .pin-title{font-family:'Noto Serif KR',serif;font-size:1.4rem;font-weight:700;margin-bottom:.5rem;color:var(--text-primary)}
+    .pin-subtitle{font-size:.82rem;color:var(--text-muted);margin-bottom:2rem}
+    .pin-dots{display:flex;gap:12px;margin-bottom:2rem}
+    .pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border-light);transition:background .15s,border-color .15s}
+    .pin-dot.filled{background:var(--accent);border-color:var(--accent)}
+    .pin-dot.error{border-color:#e05050;background:#e05050;animation:shake .4s}
+    .pin-pad{display:grid;grid-template-columns:repeat(3,64px);gap:10px}
+    .pin-btn{width:64px;height:64px;border-radius:50%;border:1px solid var(--border);background:var(--bg-reader);font-size:1.3rem;font-weight:500;color:var(--text-primary);cursor:pointer;transition:background .15s,transform .1s;font-family:inherit}
+    .pin-btn:hover{background:var(--bg-tint)}
+    .pin-btn:active{transform:scale(.95)}
+    .pin-btn.wide{grid-column:span 1;font-size:.75rem;color:var(--text-muted)}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+    /* Progress */
+    #progress-bar{position:fixed;top:0;left:0;height:2px;z-index:9999;background:var(--accent);width:0%;transition:width 80ms linear;opacity:0;pointer-events:none}
+    #progress-bar.visible{opacity:1}
+
+    /* TOC */
+    #toc-view{min-height:100vh;transition:opacity .35s,transform .35s}
+    #toc-view.hidden{opacity:0;pointer-events:none;position:absolute;transform:translateY(-20px)}
+
+    /* Hero */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;position:relative;background:linear-gradient(180deg,var(--bg-toc) 0%,#e8eff4 100%)}
+    .hero-inner{max-width:660px}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:.4rem 1rem;border-radius:20px;margin-bottom:2.5rem}
+    .hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:700;line-height:1.35;letter-spacing:-.03em;margin-bottom:1.2rem}
+    .hero h1 span{color:var(--accent)}
+    .hero-subtitle{font-size:1rem;color:var(--text-secondary);font-weight:300;line-height:1.9;margin-bottom:3rem}
+    .hero-stats{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+    .hero-stat{background:var(--bg-reader);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.8rem;min-width:120px;transition:transform .2s,box-shadow .2s}
+    .hero-stat:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(74,144,164,.12)}
+    .hero-stat-num{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:700;color:var(--text-primary);display:block;line-height:1.1}
+    .hero-stat-label{font-size:.72rem;color:var(--text-muted);letter-spacing:.06em;margin-top:.3rem;display:block}
+    .hero-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;padding:.8rem 2rem;border-radius:8px;font-size:.9rem;font-weight:500;text-decoration:none;transition:background .2s,transform .2s;cursor:pointer;border:none}
+    .hero-cta:hover{background:var(--accent-hover);transform:translateY(-1px)}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:.6rem;letter-spacing:.15em;animation:drift 2.5s ease-in-out infinite}
+    @keyframes drift{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+    /* Part Progress */
+    .part-progress{max-width:660px;margin:0 auto;padding:0 2rem 2rem}
+    .progress-bar-visual{display:flex;gap:3px;margin-bottom:.6rem;height:6px;border-radius:3px;overflow:hidden}
+    .progress-seg{transition:flex .3s}
+    .progress-seg.p1{background:var(--part1);flex:1}
+    .progress-seg.p2{background:var(--part2);flex:1}
+    .progress-seg.p3{background:var(--part3);flex:1}
+    .progress-seg.p4{background:var(--part4);flex:1}
+    .progress-legend{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+    .legend-item{display:flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--text-muted)}
+    .legend-dot{width:8px;height:8px;border-radius:50%}
+
+    /* Search */
+    .search-bar{max-width:660px;margin:0 auto 2rem;padding:0 2rem}
+    .search-input{width:100%;padding:.7rem 1rem .7rem 2.5rem;border:1px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--bg-reader) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a8a29e' stroke-width='2'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='M16 16l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .8rem center;outline:none;transition:border-color .2s,box-shadow .2s;font-family:inherit;color:var(--text-primary)}
+    .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(74,144,164,.1)}
+    .search-input::placeholder{color:var(--text-muted)}
+
+    /* Chapter List */
+    .chapter-list-section{max-width:660px;margin:0 auto;padding:0 2rem 5rem}
+    .part-group{margin-bottom:2.5rem}
+    .part-label{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
+    .part-count{font-size:.65rem;color:var(--border-light);letter-spacing:.05em}
+    .part-color{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:.5rem}
+    .chapter-item{display:flex;align-items:baseline;gap:1.2rem;padding:.85rem 0;cursor:pointer;transition:padding-left .2s,background .15s;border-radius:6px}
+    .chapter-item:hover{padding-left:.6rem;background:rgba(74,144,164,.03)}
+    .chapter-item:hover .chapter-title{color:var(--accent)}
+    .chapter-item:hover .chapter-num{color:var(--text-secondary)}
+    .chapter-num{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:500;color:var(--border-light);min-width:2rem;text-align:right;transition:color .2s}
+    .chapter-info{flex:1}
+    .chapter-title{font-size:.95rem;font-weight:500;color:var(--text-primary);line-height:1.5;transition:color .2s}
+    .chapter-desc{font-size:.78rem;color:var(--text-muted);margin-top:.15rem;line-height:1.5}
+    .chapter-item.hidden{display:none}
+
+    /* Footer */
+    .toc-footer{max-width:660px;margin:0 auto;padding:2rem 2rem 4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .toc-footer a{font-size:.8rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+    .toc-footer a:hover{color:var(--accent)}
+    .toc-footer-count{font-size:.75rem;color:var(--text-muted)}
+
+    /* Reader */
+    #reader-view{display:none;background:var(--bg-reader);min-height:100vh}
+    #reader-view.active{display:block}
+    .reader-topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;padding:0 1.5rem}
+    .topbar-back{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:1.1rem;padding:.4rem;margin-right:1rem;transition:color .2s;display:flex;align-items:center}
+    .topbar-back:hover{color:var(--text-primary)}
+    .topbar-title{flex:1;font-size:.85rem;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .topbar-chapter-num{font-size:.78rem;color:var(--text-muted);margin-left:1rem;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+    .topbar-toc-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:1.1rem;padding:.4rem;margin-left:.8rem;transition:color .2s;display:flex;align-items:center}
+    .topbar-toc-btn:hover{color:var(--text-primary)}
+
+    /* Drawer */
+    .toc-drawer-overlay{position:fixed;inset:0;z-index:200;background:rgba(28,25,23,.3);opacity:0;pointer-events:none;transition:opacity .25s}
+    .toc-drawer-overlay.open{opacity:1;pointer-events:auto}
+    .toc-drawer{position:fixed;top:0;right:0;bottom:0;z-index:201;width:340px;max-width:85vw;background:var(--bg-toc);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .3s;overflow-y:auto;padding:1.5rem}
+    .toc-drawer.open{transform:translateX(0)}
+    .toc-drawer-title{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+    .toc-drawer-sep{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-top:1rem;margin-bottom:.5rem;padding-top:.5rem;border-top:1px solid var(--border)}
+    .toc-drawer-item{display:flex;align-items:baseline;gap:.8rem;padding:.45rem .5rem;cursor:pointer;border-radius:4px;transition:background .15s;font-size:.8rem;color:var(--text-secondary)}
+    .toc-drawer-item:hover{background:var(--bg-tint)}
+    .toc-drawer-item.active{color:var(--text-primary);font-weight:500;background:var(--bg-tint)}
+    .toc-drawer-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);min-width:2rem;text-align:right}
+
+    /* Reader Content */
+    .reader-column{max-width:700px;margin:0 auto;padding:80px 2rem 4rem}
+    .reader-content{font-size:16.5px;line-height:2;color:var(--text-primary)}
+    .reader-content h1{font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;margin-top:3rem;margin-bottom:1rem;line-height:1.4;letter-spacing:-.02em}
+    .reader-content h1:first-child{margin-top:0}
+    .reader-content h2{font-family:'Noto Serif KR',serif;font-size:1.45rem;font-weight:600;margin-top:2.5rem;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);line-height:1.4}
+    .reader-content h3{font-size:1.12rem;font-weight:700;margin-top:2rem;margin-bottom:.8rem;line-height:1.5}
+    .reader-content h4{font-size:1.02rem;font-weight:600;margin-top:1.5rem;margin-bottom:.6rem;color:var(--text-secondary)}
+    .reader-content p{margin-bottom:1rem}
+    .reader-content ul,.reader-content ol{margin:.8rem 0 1rem 1.5rem}
+    .reader-content li{margin-bottom:.4rem}
+    .reader-content blockquote{border-left:3px solid var(--accent);padding:.8rem 1.2rem;margin:1.2rem 0;background:var(--accent-light);border-radius:0 6px 6px 0;font-size:.95rem;color:var(--text-secondary)}
+    .reader-content table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.88rem}
+    .reader-content th,.reader-content td{border:1px solid var(--border);padding:.55rem .75rem;text-align:left}
+    .reader-content th{background:var(--bg-tint);font-weight:600}
+    .reader-content code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--bg-tint);padding:.15em .4em;border-radius:3px}
+    .reader-content pre{background:var(--code-bg);color:var(--code-text);padding:1.2rem;border-radius:8px;overflow-x:auto;margin:1.2rem 0;font-size:.84rem;line-height:1.6}
+    .reader-content pre code{background:none;padding:0;font-size:inherit}
+    .reader-content strong{font-weight:700}
+    .reader-content hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
+    .reader-content details{margin:1rem 0;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+    .reader-content summary{padding:.8rem 1rem;cursor:pointer;font-weight:500;background:var(--bg-tint)}
+    .reader-content details[open] summary{border-bottom:1px solid var(--border)}
+    .reader-content details>*:not(summary){padding:.8rem 1rem}
+    .katex-display{overflow-x:auto;overflow-y:hidden;padding:.5rem 0}
+
+    /* Nav Bottom */
+    .reader-nav-bottom{display:flex;gap:1rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border)}
+    .reader-nav-card{flex:1;padding:1.2rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+    .reader-nav-card:hover{border-color:var(--accent);box-shadow:0 2px 12px rgba(74,144,164,.1)}
+    .reader-nav-card.empty{visibility:hidden}
+    .reader-nav-card.next{text-align:right}
+    .reader-nav-label{font-size:.72rem;color:var(--text-muted);letter-spacing:.08em;margin-bottom:.3rem}
+    .reader-nav-title{font-size:.9rem;font-weight:500;color:var(--text-primary)}
+
+    /* Loading */
+    .loading-indicator{display:flex;justify-content:center;gap:6px;padding:4rem 0}
+    .loading-dot{width:6px;height:6px;background:var(--border-light);border-radius:50%;animation:pulse 1s ease-in-out infinite}
+    .loading-dot:nth-child(2){animation-delay:.15s}
+    .loading-dot:nth-child(3){animation-delay:.3s}
+    @keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+
+    /* Scroll to Top */
+    .scroll-top{position:fixed;bottom:2rem;right:2rem;z-index:50;width:40px;height:40px;border-radius:50%;background:var(--bg-reader);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    .scroll-top.visible{opacity:1;pointer-events:auto}
+    .scroll-top:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px)}
+
+    @media(max-width:640px){
+      .hero-stats{gap:.6rem}
+      .hero-stat{padding:.8rem 1.2rem;min-width:90px}
+      .hero-stat-num{font-size:1.6rem}
+      .chapter-item{gap:.8rem}
+      .reader-column{padding:70px 1.2rem 3rem}
+      .reader-nav-bottom{flex-direction:column}
+      .reader-nav-card.next{text-align:left}
+      .toc-drawer{width:280px}
+      .progress-legend{gap:.8rem}
+      .pin-pad{grid-template-columns:repeat(3,56px);gap:8px}
+      .pin-btn{width:56px;height:56px;font-size:1.1rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- PIN Screen -->
+<div id="pin-screen">
+  <div class="pin-title">빅데이터 분석기사</div>
+  <div class="pin-subtitle">PIN을 입력하세요</div>
+  <div class="pin-dots">
+    <span class="pin-dot" id="dot0"></span>
+    <span class="pin-dot" id="dot1"></span>
+    <span class="pin-dot" id="dot2"></span>
+    <span class="pin-dot" id="dot3"></span>
+  </div>
+  <div class="pin-pad">
+    <button class="pin-btn" onclick="pinInput('1')">1</button>
+    <button class="pin-btn" onclick="pinInput('2')">2</button>
+    <button class="pin-btn" onclick="pinInput('3')">3</button>
+    <button class="pin-btn" onclick="pinInput('4')">4</button>
+    <button class="pin-btn" onclick="pinInput('5')">5</button>
+    <button class="pin-btn" onclick="pinInput('6')">6</button>
+    <button class="pin-btn" onclick="pinInput('7')">7</button>
+    <button class="pin-btn" onclick="pinInput('8')">8</button>
+    <button class="pin-btn" onclick="pinInput('9')">9</button>
+    <button class="pin-btn wide" onclick="pinClear()">Clear</button>
+    <button class="pin-btn" onclick="pinInput('0')">0</button>
+    <button class="pin-btn wide" onclick="pinDelete()">Del</button>
+  </div>
+</div>
+
+<div id="progress-bar"></div>
+
+<!-- TOC -->
+<div id="toc-view" class="hidden">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        2026 EDITION
+      </span>
+      <h1>빅데이터 분석기사<br><span>필기 완벽 가이드</span></h1>
+      <p class="hero-subtitle">
+        전공 제로에서 합격까지 — 4과목 14,000줄 Deep Dive
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">8</span><span class="hero-stat-label">Chapters</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">과목</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">143+</span><span class="hero-stat-label">문제</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">14K</span><span class="hero-stat-label">Lines</span></div>
+      </div>
+      <button class="hero-cta" onclick="document.querySelector('.part-progress').scrollIntoView({behavior:'smooth'})">
+        Start Reading
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="scroll-hint">SCROLL &darr;</div>
+  </section>
+
+  <!-- Part Progress -->
+  <div class="part-progress">
+    <div class="progress-bar-visual">
+      <div class="progress-seg p1"></div>
+      <div class="progress-seg p2"></div>
+      <div class="progress-seg p3"></div>
+      <div class="progress-seg p4"></div>
+    </div>
+    <div class="progress-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--part1)"></span>1과목: 분석 기획</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--part2)"></span>2과목: 탐색</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--part3)"></span>3과목: 모델링</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--part4)"></span>4과목: 결과해석</span>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <input type="text" class="search-input" id="search-input" placeholder="챕터 검색... (예: 회귀, EDA, 혼동행렬, CRISP-DM)">
+  </div>
+
+  <div class="chapter-list-section" id="chapter-list"></div>
+
+  <footer class="toc-footer">
+    <a href="https://github.com/soccz/bigdata-analyst-notes" target="_blank" rel="noopener">GitHub &nearr;</a>
+    <span class="toc-footer-count">8 chapters &middot; 4 과목</span>
+  </footer>
+</div>
+
+<!-- Reader -->
+<div id="reader-view">
+  <div class="reader-topbar">
+    <button class="topbar-back" onclick="goToToc()" aria-label="Back">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </button>
+    <span class="topbar-title" id="topbar-title"></span>
+    <span class="topbar-chapter-num" id="topbar-num"></span>
+    <button class="topbar-toc-btn" onclick="toggleDrawer()" aria-label="Chapters">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+
+  <div class="toc-drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
+  <div class="toc-drawer" id="toc-drawer">
+    <div class="toc-drawer-title">Chapters</div>
+    <div id="drawer-list"></div>
+  </div>
+
+  <div class="reader-column">
+    <div class="reader-content" id="reader-content"></div>
+    <div class="reader-nav-bottom" id="reader-nav"></div>
+  </div>
+</div>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  /* ========== PIN ========== */
+  const PIN_CODE='1004';
+  let pinValue='';
+  const pinScreen=document.getElementById('pin-screen');
+  const dots=[0,1,2,3].map(i=>document.getElementById('dot'+i));
+
+  function updateDots(){
+    dots.forEach((d,i)=>{d.className='pin-dot'+(i<pinValue.length?' filled':'')});
+  }
+  function pinError(){
+    dots.forEach(d=>d.classList.add('error'));
+    setTimeout(()=>{pinValue='';updateDots()},500);
+  }
+  window.pinInput=function(n){
+    if(pinValue.length>=4)return;
+    pinValue+=n;updateDots();
+    if(pinValue.length===4){
+      if(pinValue===PIN_CODE){
+        pinScreen.classList.add('hidden');
+        document.getElementById('toc-view').classList.remove('hidden');
+        sessionStorage.setItem('bigdata-pin-ok','1');
+      }else{pinError()}
+    }
+  };
+  window.pinClear=function(){pinValue='';updateDots()};
+  window.pinDelete=function(){pinValue=pinValue.slice(0,-1);updateDots()};
+
+  // keyboard PIN input
+  document.addEventListener('keydown',function pinKey(e){
+    if(!pinScreen.classList.contains('hidden')){
+      if(e.key>='0'&&e.key<='9')window.pinInput(e.key);
+      else if(e.key==='Backspace')window.pinDelete();
+    }
+  });
+
+  // check session
+  if(sessionStorage.getItem('bigdata-pin-ok')==='1'){
+    pinScreen.classList.add('hidden');
+    document.getElementById('toc-view').classList.remove('hidden');
+  }
+
+  /* ========== DATA ========== */
+  const RAW='https://raw.githubusercontent.com/soccz/bigdata-analyst-notes/main/chapters/';
+  const CACHE_BUST='v='+Date.now();
+
+  const CHAPTERS=[
+    {id:'00',title:'오리엔테이션 & 시험 안내',desc:'시험 구조, 합격 전략, 학습 순서',part:0},
+    {id:'01',title:'1과목: 빅데이터 분석 기획',desc:'DIKW, 3V, 개인정보, CRISP-DM, 거버넌스, HDFS',part:1},
+    {id:'02',title:'2과목: 빅데이터 탐색',desc:'전처리, EDA, 확률분포, 가설검정, 상관분석',part:2},
+    {id:'03',title:'3과목: 빅데이터 모델링',desc:'회귀, 분류, 군집, 앙상블, 딥러닝, 시계열',part:3},
+    {id:'04',title:'4과목: 빅데이터 결과해석',desc:'혼동행렬, ROC, 교차검증, R출력, 시각화',part:4},
+    {id:'05',title:'기출분석 & 시험 총평',desc:'9/10/11회 총평, 80문제 해설, 출제 경향',part:5},
+    {id:'06',title:'핵심암기 치트시트',desc:'시험 30분 전 속독용 압축 정리',part:6},
+    {id:'INDEX',title:'전체 목차 & 키워드 찾기',desc:'크로스 레퍼런스, 주요 키워드 위치',part:0}
+  ];
+
+  const FILE_MAP={
+    '00':'00_오리엔테이션_시험안내.md',
+    '01':'01_빅데이터_분석기획.md',
+    '02':'02_빅데이터_탐색.md',
+    '03':'03_빅데이터_모델링.md',
+    '04':'04_빅데이터_결과해석.md',
+    '05':'05_기출분석_총평.md',
+    '06':'06_핵심암기_치트시트.md',
+    'INDEX':'INDEX.md'
+  };
+
+  const PART_LABELS={
+    0:'시작하기',
+    1:'빅데이터 분석 기획',
+    2:'빅데이터 탐색',
+    3:'빅데이터 모델링',
+    4:'빅데이터 결과해석',
+    5:'기출분석',
+    6:'시험 직전'
+  };
+
+  const PART_COLORS={
+    0:'part0',1:'part1',2:'part2',3:'part3',4:'part4',5:'part5',6:'part6'
+  };
+
+  const T=CHAPTERS.length,cache=new Map();let curId=null;
+
+  const $=id=>document.getElementById(id);
+  const tocV=$('toc-view'),readV=$('reader-view'),readC=$('reader-content'),readN=$('reader-nav'),
+        pBar=$('progress-bar'),tTitle=$('topbar-title'),tNum=$('topbar-num'),
+        dOverlay=$('drawer-overlay'),drawer=$('toc-drawer'),dList=$('drawer-list'),
+        scrollBtn=$('scroll-top');
+
+  marked.setOptions({gfm:true,breaks:false});
+
+  // KaTeX + marked 충돌 방지
+  const mathStore=[];
+  function protectMath(md){
+    md=md.replace(/\$\$[\s\S]*?\$\$/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    md=md.replace(/(?<![\\$])\$(?!\$)([^\n$]+?)\$(?!\$)/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    return md;
+  }
+  function restoreMath(html){
+    return html.replace(/%%MATH(\d+)%%/g,(_,i)=>mathStore[i]);
+  }
+
+  function idx(id){return CHAPTERS.findIndex(c=>c.id===String(id))}
+
+  // Group chapters by part
+  function groupByPart(){
+    const groups=new Map();
+    CHAPTERS.forEach(ch=>{
+      const p=ch.part;
+      if(!groups.has(p))groups.set(p,[]);
+      groups.get(p).push(ch);
+    });
+    return groups;
+  }
+
+  function buildToc(){
+    const groups=groupByPart();
+    let html='';
+    for(const [part,chs] of groups){
+      const color=PART_COLORS[part];
+      const label=PART_LABELS[part];
+      html+=`<div class="part-group" data-part="${part}">
+        <div class="part-label">
+          <span><span class="part-color" style="background:var(--${color})"></span>Part ${part} — ${label}</span>
+          <span class="part-count">${chs.length} chapter${chs.length>1?'s':''}</span>
+        </div>
+        ${chs.map(r=>`
+          <div class="chapter-item" data-ch="${r.id}" data-search="${r.id} ${r.title} ${r.desc}">
+            <span class="chapter-num">${r.id}</span>
+            <div class="chapter-info">
+              <div class="chapter-title">${r.title}</div>
+              <div class="chapter-desc">${r.desc}</div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+    }
+    $('chapter-list').innerHTML=html;
+    $('chapter-list').addEventListener('click',e=>{const i=e.target.closest('.chapter-item');if(i)openCh(i.dataset.ch)});
+  }
+
+  function buildDrawer(){
+    let h='';
+    const groups=groupByPart();
+    for(const [part,chs] of groups){
+      h+=`<div class="toc-drawer-sep">Part ${part} — ${PART_LABELS[part]}</div>`;
+      chs.forEach(r=>{h+=`<div class="toc-drawer-item" data-ch="${r.id}"><span class="toc-drawer-num">${r.id}</span><span>${r.title}</span></div>`});
+    }
+    dList.innerHTML=h;
+    dList.addEventListener('click',e=>{const i=e.target.closest('.toc-drawer-item');if(i){openCh(i.dataset.ch);toggleD()}});
+  }
+
+  function toggleD(){dOverlay.classList.toggle('open');drawer.classList.toggle('open')}
+
+  async function openCh(id){
+    id=String(id);const i=idx(id),ch=CHAPTERS[i];if(!ch)return;curId=id;
+    tocV.classList.add('hidden');readV.classList.add('active');pBar.classList.add('visible');
+    window.scrollTo({top:0,behavior:'instant'});
+    tTitle.textContent=`${ch.id}. ${ch.title}`;tNum.textContent=`${i+1} / ${T}`;
+    dList.querySelectorAll('.toc-drawer-item').forEach(el=>el.classList.toggle('active',el.dataset.ch===id));
+    history.pushState({ch:id},'',`?ch=${id}`);
+    if(cache.has(id)){render(cache.get(id))}
+    else{
+      readC.innerHTML=`<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
+      try{
+        const file=FILE_MAP[id];
+        const r=await fetch(RAW+encodeURIComponent(file)+'?'+CACHE_BUST);
+        if(!r.ok)throw 0;
+        const md=await r.text();cache.set(id,md);if(curId===id)render(md);
+      }catch(e){readC.innerHTML=`<p style="color:var(--text-muted);text-align:center;padding:4rem 0">불러올 수 없습니다.</p>`}
+    }
+    nav(i);
+  }
+
+  function render(md){
+    mathStore.length=0;
+    const safemd=protectMath(md);
+    let html=marked.parse(safemd);
+    html=restoreMath(html);
+    readC.innerHTML=html;
+    renderMathInElement(readC,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  }
+
+  function nav(i){
+    const p=i>0?CHAPTERS[i-1]:null,n=i<T-1?CHAPTERS[i+1]:null;
+    readN.innerHTML=`
+      <div class="reader-nav-card prev ${p?'':'empty'}" ${p?`onclick="openChGlobal('${p.id}')"`:''}>${p?`<div class="reader-nav-label">&larr; 이전</div><div class="reader-nav-title">${p.id}. ${p.title}</div>`:''}</div>
+      <div class="reader-nav-card next ${n?'':'empty'}" ${n?`onclick="openChGlobal('${n.id}')"`:''}>${n?`<div class="reader-nav-label">다음 &rarr;</div><div class="reader-nav-title">${n.id}. ${n.title}</div>`:''}</div>`;
+  }
+
+  window.goToToc=function(){readV.classList.remove('active');tocV.classList.remove('hidden');pBar.classList.remove('visible');pBar.style.width='0%';curId=null;history.pushState(null,'',location.pathname)};
+  window.openChGlobal=openCh;window.toggleDrawer=toggleD;
+
+  // Scroll progress + scroll-to-top
+  window.addEventListener('scroll',()=>{
+    if(readV.classList.contains('active')){const h=document.documentElement.scrollHeight-innerHeight;pBar.style.width=h>0?(scrollY/h*100)+'%':'0%'}
+    scrollBtn.classList.toggle('visible',scrollY>400);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown',e=>{
+    if(!readV.classList.contains('active'))return;const i=idx(curId);
+    if(e.key==='ArrowRight'&&i<T-1)openCh(CHAPTERS[i+1].id);
+    if(e.key==='ArrowLeft'&&i>0)openCh(CHAPTERS[i-1].id);
+    if(e.key==='Escape'){if(drawer.classList.contains('open'))toggleD();else goToToc()}
+  });
+
+  // Search
+  $('search-input').addEventListener('input',e=>{
+    const q=e.target.value.toLowerCase().trim();
+    document.querySelectorAll('.chapter-item').forEach(el=>{
+      el.classList.toggle('hidden',q&&!el.dataset.search.toLowerCase().includes(q));
+    });
+    document.querySelectorAll('.part-group').forEach(g=>{
+      const visible=g.querySelectorAll('.chapter-item:not(.hidden)').length;
+      g.style.display=q&&!visible?'none':'';
+    });
+  });
+
+  // Popstate
+  window.addEventListener('popstate',e=>{if(e.state&&e.state.ch)openCh(e.state.ch);else goToToc()});
+
+  // Init
+  buildToc();buildDrawer();
+  const p=new URLSearchParams(location.search).get('ch');
+  if(p!==null&&idx(p)>=0){
+    // PIN 통과 후 자동 오픈
+    if(sessionStorage.getItem('bigdata-pin-ok')==='1')openCh(p);
+  }
+})();
+</script>
+</body>
+</html>
