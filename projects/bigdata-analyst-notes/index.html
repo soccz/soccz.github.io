@@ -400,11 +400,19 @@
 
   marked.setOptions({gfm:true,breaks:false});
 
-  // KaTeX + marked 충돌 방지
+  // KaTeX + marked 충돌 방지 (코드블록 먼저 보호)
   const mathStore=[];
   function protectMath(md){
+    // 1. 코드블록 보호 (```...``` 안의 $는 건드리지 않음)
+    const codeBlocks=[];
+    md=md.replace(/```[\s\S]*?```/g,m=>{codeBlocks.push(m);return `%%CODE${codeBlocks.length-1}%%`});
+    md=md.replace(/`[^`]+`/g,m=>{codeBlocks.push(m);return `%%CODE${codeBlocks.length-1}%%`});
+    // 2. 이중 달러 수식
     md=md.replace(/\$\$[\s\S]*?\$\$/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    // 3. 단일 달러 수식
     md=md.replace(/(?<![\\$])\$(?!\$)([^\n$]+?)\$(?!\$)/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    // 4. 코드블록 복원
+    md=md.replace(/%%CODE(\d+)%%/g,(_,i)=>codeBlocks[i]);
     return md;
   }
   function restoreMath(html){
@@ -507,9 +515,12 @@
     scrollBtn.classList.toggle('visible',scrollY>400);
   });
 
-  // Keyboard
+  // Keyboard (입력 필드에서는 무시)
   document.addEventListener('keydown',e=>{
-    if(!readV.classList.contains('active'))return;const i=idx(curId);
+    if(!readV.classList.contains('active'))return;
+    const tag=document.activeElement.tagName;
+    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+    const i=idx(curId);
     if(e.key==='ArrowRight'&&i<T-1)openCh(CHAPTERS[i+1].id);
     if(e.key==='ArrowLeft'&&i>0)openCh(CHAPTERS[i-1].id);
     if(e.key==='Escape'){if(drawer.classList.contains('open'))toggleD();else goToToc()}
