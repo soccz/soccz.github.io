@@ -330,6 +330,9 @@
         pinScreen.classList.add('hidden');
         document.getElementById('toc-view').classList.remove('hidden');
         sessionStorage.setItem('bigdata-pin-ok','1');
+        // URL 파라미터에 챕터가 있으면 자동 오픈
+        const pendingCh=new URLSearchParams(location.search).get('ch');
+        if(pendingCh!==null&&typeof openCh==='function')setTimeout(()=>openCh(pendingCh),100);
       }else{pinError()}
     }
   };
@@ -398,7 +401,7 @@
         dOverlay=$('drawer-overlay'),drawer=$('toc-drawer'),dList=$('drawer-list'),
         scrollBtn=$('scroll-top');
 
-  marked.setOptions({gfm:true,breaks:false});
+  marked.use({gfm:true,breaks:false});
 
   // KaTeX + marked 충돌 방지 (코드블록 먼저 보호)
   const mathStore=[];
@@ -507,7 +510,7 @@
   }
 
   window.goToToc=function(){readV.classList.remove('active');tocV.classList.remove('hidden');pBar.classList.remove('visible');pBar.style.width='0%';curId=null;history.pushState(null,'',location.pathname)};
-  window.openChGlobal=openCh;window.toggleDrawer=toggleD;
+  window.openChGlobal=id=>openCh(id).catch(()=>{});window.toggleDrawer=toggleD;
 
   // Scroll progress + scroll-to-top
   window.addEventListener('scroll',()=>{
