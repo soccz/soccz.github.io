@@ -15,6 +15,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <meta property="og:image" content="/assets/og-default.png">
+  <meta property="og:url" content="https://soccz.github.io/projects/VME_paper/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://soccz.github.io/projects/VME_paper/">
   <style>
     :root{--bg-toc:#fafaf9;--bg-reader:#fff;--bg-tint:#f5f5f4;--text-primary:#1c1917;--text-secondary:#57534e;--text-muted:#a8a29e;--accent:#2d6a4f;--accent-light:#eaf5ef;--accent-hover:#1b5e3b;--border:#e7e5e4;--border-light:#d6d3d1;--code-bg:#292524;--code-text:#e7e5e4;--dissect:#b45309;--dissect-light:#fef3c7;--part0:#78716c;--part1:#2d6a4f;--part2:#0369a1;--part3:#7c3aed;--part4:#b45309}
     *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
@@ -251,7 +255,7 @@
 
   /* ========== DATA ========== */
   const RAW='./';
-  const CACHE_BUST='v='+Date.now();
+  // No cache bust needed — localStorage handles versioning via LS_VER
 
   const CHAPTERS=[
     // Part 0: 배경지식 (교재)
@@ -301,6 +305,17 @@
   };
 
   const T=CHAPTERS.length,cache=new Map();let curId=null,curLayer='all';
+  const LS_PREFIX='vme_';
+  const LS_VER='1';
+
+  // localStorage cache helpers
+  function lsGet(id){try{const d=localStorage.getItem(LS_PREFIX+id);if(d){const p=JSON.parse(d);if(p.v===LS_VER)return p.md}return null}catch(e){return null}}
+  function lsSet(id,md){try{localStorage.setItem(LS_PREFIX+id,JSON.stringify({v:LS_VER,md}))}catch(e){}}
+  function saveLastRead(id){try{localStorage.setItem(LS_PREFIX+'last',id)}catch(e){}}
+  function getLastRead(){try{return localStorage.getItem(LS_PREFIX+'last')}catch(e){return null}}
+
+  // Scroll throttle
+  let scrollTick=false;
 
   const $=id=>document.getElementById(id);
   const tocV=$('toc-view'),readV=$('reader-view'),readC=$('reader-content'),readN=$('reader-nav'),
@@ -395,16 +410,24 @@
     tTitle.textContent=`${ch.id}. ${ch.title}`;tNum.textContent=`${i+1} / ${T}`;
     dList.querySelectorAll('.toc-drawer-item').forEach(el=>el.classList.toggle('active',el.dataset.ch===id));
     history.pushState({ch:id},'',`?ch=${id}`);
+    // Try memory cache → localStorage → network
     if(cache.has(id)){render(cache.get(id))}
     else{
-      readC.innerHTML=`<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
-      try{
-        const r=await fetch(RAW+ch.file+'?'+CACHE_BUST);
-        if(!r.ok)throw 0;
-        const md=await r.text();cache.set(id,md);if(curId===id)render(md);
-      }catch(e){readC.innerHTML=`<p style="color:var(--text-muted);text-align:center;padding:4rem 0">불러올 수 없습니다.</p>`}
+      const lsMd=lsGet(id);
+      if(lsMd){cache.set(id,lsMd);render(lsMd)}
+      else{
+        readC.innerHTML=`<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
+        try{
+          const r=await fetch(RAW+ch.file);
+          if(!r.ok)throw 0;
+          const md=await r.text();cache.set(id,md);lsSet(id,md);if(curId===id)render(md);
+        }catch(e){readC.innerHTML=`<p style="color:var(--text-muted);text-align:center;padding:4rem 0">불러올 수 없습니다.</p>`}
+      }
     }
+    saveLastRead(id);
     nav(i);
+    // Prefetch adjacent chapters
+    prefetch(i-1);prefetch(i+1);
   }
 
   function render(md){
@@ -439,12 +462,25 @@
       <div class="reader-nav-card next ${n?'':'empty'}" ${n?`onclick="openChGlobal('${n.id}')"`:''}>${n?`<div class="reader-nav-label">다음 &rarr;</div><div class="reader-nav-title">${n.id}. ${n.title}</div>`:''}</div>`;
   }
 
+  // Prefetch adjacent chapters silently
+  async function prefetch(i){
+    if(i<0||i>=T)return;
+    const ch=CHAPTERS[i];
+    if(cache.has(ch.id)||lsGet(ch.id))return;
+    try{const r=await fetch(RAW+ch.file);if(r.ok){const md=await r.text();cache.set(ch.id,md);lsSet(ch.id,md)}}catch(e){}
+  }
+
   window.goToToc=function(){readV.classList.remove('active');tocV.classList.remove('hidden');pBar.classList.remove('visible');pBar.style.width='0%';curId=null;history.pushState(null,'',location.pathname)};
   window.openChGlobal=id=>openCh(id).catch(()=>{});window.toggleDrawer=toggleD;
 
+  // Throttled scroll handler
   window.addEventListener('scroll',()=>{
-    if(readV.classList.contains('active')){const h=document.documentElement.scrollHeight-innerHeight;pBar.style.width=h>0?(scrollY/h*100)+'%':'0%'}
-    scrollBtn.classList.toggle('visible',scrollY>400);
+    if(scrollTick)return;scrollTick=true;
+    requestAnimationFrame(()=>{
+      if(readV.classList.contains('active')){const h=document.documentElement.scrollHeight-innerHeight;pBar.style.width=h>0?(scrollY/h*100)+'%':'0%'}
+      scrollBtn.classList.toggle('visible',scrollY>400);
+      scrollTick=false;
+    });
   });
 
   document.addEventListener('keydown',e=>{
@@ -472,7 +508,21 @@
 
   buildToc();buildDrawer();
   const p=new URLSearchParams(location.search).get('ch');
-  if(p!==null&&idx(p)>=0) openCh(p);
+  if(p!==null&&idx(p)>=0){openCh(p)}
+  else{
+    const last=getLastRead();
+    if(last&&idx(last)>=0){
+      const lch=CHAPTERS[idx(last)];
+      const hint=document.createElement('div');
+      hint.style.cssText='max-width:700px;margin:0 auto 1.5rem;padding:0 2rem';
+      hint.innerHTML=`<div style="padding:.8rem 1.2rem;border:1px solid var(--accent);border-radius:8px;background:var(--accent-light);display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="openChGlobal('${last}')">
+        <span style="font-size:.85rem;color:var(--text-secondary)">이어서 읽기: <strong style="color:var(--accent)">${lch.title}</strong></span>
+        <span style="font-size:.8rem;color:var(--accent)">&rarr;</span>
+      </div>`;
+      const lt=document.querySelector('.layer-toggle');
+      if(lt)lt.before(hint);
+    }
+  }
 })();
 </script>
 </body>
