@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>soccz — Finance & AI</title>
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="description" content="Finance & AI Research by soccz">
@@ -1236,7 +1238,8 @@ init();
 
 // PIN logic — URL별 이름 매핑
 let pinValue = '';
-const PIN_CORRECT = '1004';
+const PIN_HASH = '75992a5ac67ff644d3063976c2effd10bdd93fcc109798e3d5c1acf2e530d01a';
+async function sha256(msg){const d=new TextEncoder().encode(msg);const h=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
 const PIN_TARGET = 'https://soccz.github.io/python-why/';
 const PIN_TARGETS = new Set([
   PIN_TARGET,
@@ -1268,12 +1271,13 @@ function pinClose() {
   pinRender();
   document.getElementById('pinError').textContent = '';
 }
-function pinInput(d) {
+async function pinInput(d) {
   if (pinValue.length >= 4) return;
   pinValue += d;
   pinRender();
   if (pinValue.length === 4) {
-    if (pinValue === PIN_CORRECT) {
+    const h = await sha256(pinValue);
+    if (h === PIN_HASH) {
       const dest = pinPendingUrl;
       pinClose();
       window.location.href = dest;
