@@ -153,6 +153,50 @@
     .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
     .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
 
+    /* Dual model visual */
+    .dual-wrap { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: stretch; margin: 2.5rem 0; }
+    .dual-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; position: relative; }
+    .dual-card.short { border-top: 4px solid var(--green); }
+    .dual-card.long { border-top: 4px solid var(--amber); }
+    .dual-vs { display: flex; align-items: center; justify-content: center; }
+    .dual-vs span { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-muted); background: var(--bg-primary); padding: 0.5rem; z-index: 1; }
+    .dual-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; }
+    .dual-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .dual-icon.short-icon { background: var(--green-dim); color: var(--green); }
+    .dual-icon.long-icon { background: var(--amber-dim); color: var(--amber); }
+    .dual-name { font-weight: 700; font-size: 1.1rem; }
+    .dual-sub { font-size: 0.72rem; color: var(--text-muted); }
+    .dual-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.84rem; }
+    .dual-row:last-child { border-bottom: none; }
+    .dual-key { color: var(--text-muted); font-size: 0.78rem; }
+    .dual-val { font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+    .dual-val.g { color: var(--green); }
+    .dual-val.a { color: var(--amber); }
+    .dual-philosophy { margin-top: 1.2rem; padding: 1rem; border-radius: 8px; font-size: 0.82rem; line-height: 1.7; }
+    .dual-philosophy.short-phil { background: rgba(22,163,74,0.04); border: 1px solid rgba(22,163,74,0.12); color: var(--text-secondary); }
+    .dual-philosophy.long-phil { background: rgba(180,83,9,0.04); border: 1px solid rgba(180,83,9,0.12); color: var(--text-secondary); }
+    .dual-philosophy strong { color: var(--text-primary); }
+
+    /* Cadence timeline */
+    .cadence-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin: 2rem 0; }
+    .cadence-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .cadence-sub { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .cadence-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .cadence-label { font-size: 0.78rem; font-weight: 600; min-width: 60px; }
+    .cadence-label.g { color: var(--green); }
+    .cadence-label.a { color: var(--amber); }
+    .cadence-bar { display: flex; flex: 1; gap: 2px; }
+    .cadence-slot { flex: 1; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+    .cadence-slot.active-g { background: rgba(22,163,74,0.15); color: var(--green); border: 1px solid rgba(22,163,74,0.3); }
+    .cadence-slot.active-a { background: rgba(180,83,9,0.12); color: var(--amber); border: 1px solid rgba(180,83,9,0.25); }
+    .cadence-slot.carry { background: rgba(180,83,9,0.05); color: var(--text-muted); border: 1px dashed rgba(180,83,9,0.2); }
+    .cadence-slot.inactive { background: var(--bg-secondary); color: var(--text-muted); border: 1px solid var(--border); }
+    .cadence-legend { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .cadence-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text-secondary); }
+    .cadence-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    @media (max-width: 900px) { .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } }
+
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
@@ -262,6 +306,72 @@
     <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">실행</div><div class="flow-desc">SHORT 5 (실행)<br>WATCH LONG 5 (관찰)</div></div>
     <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측</div><div class="flow-desc">Ledger + IC 추적<br>텔레그램 알림</div></div>
   </div>
+
+  <!-- Dual Model Visual Comparison -->
+  <div class="dual-wrap">
+    <div class="dual-card short">
+      <div class="dual-header">
+        <div class="dual-icon short-icon">S</div>
+        <div><div class="dual-name">Short Model</div><div class="dual-sub">떨어질 코인을 골라낸다</div></div>
+      </div>
+      <div class="dual-row"><span class="dual-key">Horizon</span><span class="dual-val g">6h</span></div>
+      <div class="dual-row"><span class="dual-key">Holdout IC</span><span class="dual-val g">+0.189</span></div>
+      <div class="dual-row"><span class="dual-key">t-stat</span><span class="dual-val">11.3</span></div>
+      <div class="dual-row"><span class="dual-key">리밸런스</span><span class="dual-val">매 run</span></div>
+      <div class="dual-row"><span class="dual-key">레짐 게이트</span><span class="dual-val">없음 (전 레짐)</span></div>
+      <div class="dual-row"><span class="dual-key">상태</span><span class="dual-val g">실행 중</span></div>
+      <div class="dual-philosophy short-phil">
+        <strong>철학: 역추세 + 교차거래소 선행</strong><br>
+        최근에 오른 코인은 반락한다. 김프가 높은 코인은 과열됐다. 글로벌에서 먼저 빠진 코인은 로컬도 따라간다. 이 셋을 조합해서 "다음에 떨어질 코인"을 찾는다.
+      </div>
+    </div>
+    <div class="dual-vs"><span>vs</span></div>
+    <div class="dual-card long">
+      <div class="dual-header">
+        <div class="dual-icon long-icon">L</div>
+        <div><div class="dual-name">Long Model</div><div class="dual-sub">조용해진 코인에서 폭발을 기다린다</div></div>
+      </div>
+      <div class="dual-row"><span class="dual-key">Horizon</span><span class="dual-val a">12h</span></div>
+      <div class="dual-row"><span class="dual-key">Holdout IC</span><span class="dual-val a">+0.216</span></div>
+      <div class="dual-row"><span class="dual-key">t-stat</span><span class="dual-val">4.2</span></div>
+      <div class="dual-row"><span class="dual-key">리밸런스</span><span class="dual-val">12h (carry)</span></div>
+      <div class="dual-row"><span class="dual-key">레짐 게이트</span><span class="dual-val a">BTC bull only</span></div>
+      <div class="dual-row"><span class="dual-key">상태</span><span class="dual-val a">WATCH</span></div>
+      <div class="dual-philosophy long-phil">
+        <strong>철학: 압축 후 팽창 + 딥 매수</strong><br>
+        고저폭이 줄어든 코인은 에너지를 모으고 있다. 단기 하락 후 반등할 코인을 고른다. 모멘텀(순추세)이 아니라 compression(압축)이 크립토 long의 핵심 패턴이다.
+      </div>
+    </div>
+  </div>
+
+  <!-- Cadence Timeline -->
+  <div class="cadence-wrap">
+    <div class="cadence-title">듀얼 리밸런스 타이밍</div>
+    <div class="cadence-sub">systemd 타이머가 6h마다 실행. Short는 매번 새로 스코어링. Long은 12h 슬롯에서만 갱신, 오프사이클은 이전 포지션 carry.</div>
+    <div class="cadence-row">
+      <div class="cadence-label g">Short</div>
+      <div class="cadence-bar">
+        <div class="cadence-slot active-g">05:00</div>
+        <div class="cadence-slot active-g">11:00</div>
+        <div class="cadence-slot active-g">17:00</div>
+        <div class="cadence-slot active-g">23:00</div>
+      </div>
+    </div>
+    <div class="cadence-row">
+      <div class="cadence-label a">Long</div>
+      <div class="cadence-bar">
+        <div class="cadence-slot carry">carry</div>
+        <div class="cadence-slot active-a">11:00</div>
+        <div class="cadence-slot carry">carry</div>
+        <div class="cadence-slot active-a">23:00</div>
+      </div>
+    </div>
+    <div class="cadence-legend">
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(22,163,74,0.3)"></div>Short 리밸런스 (매 6h)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.25)"></div>Long 리밸런스 (12h마다)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.08); border: 1px dashed rgba(180,83,9,0.3)"></div>Long carry (이전 포지션 유지)</div>
+    </div>
+  </div>
 </div></section>
 <hr class="divider">
 
@@ -284,6 +394,10 @@
 
   <div class="callout">
     <p><strong>1h vs 6h Horizon 결정:</strong> 1h는 lag=0에서 IC +0.307이지만 lag=1에서 74% 꺾임 &rarr; 마이크로스트럭처 의존. 6h는 lag=1에서도 IC +0.109로 gate 통과. <strong>6h 채택.</strong></p>
+  </div>
+
+  <div class="callout">
+    <p><strong>왜 Short과 Long이 다른 팩터를 쓰는가?</strong> 처음에는 같은 reversal 팩터를 쓰면 long/short 양쪽에서 수익이 나올 거라고 생각했다. 하지만 크립토에서 reversal은 "떨어질 놈 식별"에 강하지 "올라갈 놈 식별"에는 약하다. Long은 <strong>compression(고저폭 압축)</strong>이라는 완전히 다른 신호가 필요했다. 같은 데이터, 다른 질문, 다른 팩터.</p>
   </div>
 </div></section>
 <hr class="divider">
