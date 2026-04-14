@@ -1242,7 +1242,7 @@ init();
 let pinValue = '';
 const PIN_HASH = '75992a5ac67ff644d3063976c2effd10bdd93fcc109798e3d5c1acf2e530d01a';
 async function sha256(msg){const d=new TextEncoder().encode(msg);const h=await crypto.subtle.digest('SHA-256',d);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-const PIN_TARGET = '/projects/python-why/';
+const PIN_TARGET = 'https://soccz.github.io/python-why/';
 const PIN_TARGETS = new Set([
   PIN_TARGET,
   '/projects/cfa-notes/',
