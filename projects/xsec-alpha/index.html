@@ -221,13 +221,11 @@
     .funnel-step.drop .funnel-ic { color: var(--amber); }
     .funnel-arrow { color: var(--text-muted); font-size: 0.7rem; margin: 0.1rem 0; }
 
-    @media (max-width: 900px) { .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } }
-
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
-    @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } }
+    @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } }
     @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 60px; font-size: 0.65rem; word-break: break-all; } .lesson-item { flex-direction: column; gap: 0.4rem; } .funnel-step { flex-wrap: wrap; } .funnel-step .funnel-ic { margin-left: 0; margin-top: 0.3rem; font-size: 0.68rem; } .cadence-slot { font-size: 0.55rem; } }
   </style>
 </head>
@@ -263,7 +261,7 @@
       <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.22" data-decimals="2">0</span><span class="hero-stat-label">Long Holdout IC</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="200" data-suffix="+" data-decimals="0">0</span><span class="hero-stat-label">KRW Markets</span></div>
       <div class="hero-stat"><span class="hero-stat-num">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="4" data-decimals="0">0</span><span class="hero-stat-label">Verified Factors</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">6+4</span><span class="hero-stat-label">Short / Long Factors</span></div>
     </div>
     <div class="hero-links">
       <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
@@ -327,7 +325,7 @@
 
   <div class="flow">
     <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">수집</div><div class="flow-desc">Upbit 200+ KRW<br>Binance USDT</div></div>
-    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">Short: reversal, vol_inv, kimchi, binance_lead<br>Long: range_contraction, reversal, binance_lead</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">Short: 6개 (reversal, vol_inv, kimchi, binance_lead, order_flow)<br>Long: 4개 (range_contraction, reversal, binance_lead)</div></div>
     <div class="flow-step"><div class="flow-num">3</div><div class="flow-title">스코어링</div><div class="flow-desc">Ensemble (Ridge + LightGBM)<br>Short 6h / Long 12h</div></div>
     <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">실행</div><div class="flow-desc">SHORT 5 (실행)<br>WATCH LONG 5 (관찰)</div></div>
     <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측</div><div class="flow-desc">Ledger + IC 추적<br>텔레그램 알림</div></div>
@@ -659,7 +657,7 @@
       <div class="layer-title">Short Model (6h)</div>
       <div class="card-text">
         <strong>IC:</strong> +0.189 (t=11.3)<br>
-        <strong>팩터:</strong> reversal, vol_inv, kimchi_inv, binance_lead, order_flow_bear<br>
+        <strong>팩터:</strong> kimchi_inv, binance_lead, vol_inv, reversal_1h/4h, order_flow_bear<br>
         <strong>모델:</strong> Ensemble (Ridge + LightGBM)<br>
         <strong>포지션:</strong> SHORT 5, Bitget USDT perp<br>
         <strong>리밸런스:</strong> 매 6h<br>
