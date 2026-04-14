@@ -323,7 +323,17 @@
       <div class="t-meta"><span class="t-date">Factor Discovery</span><span class="badge badge-ok">BREAKTHROUGH</span></div>
       <div class="t-title">"조용해진 코인이 터진다" — range_contraction 발견</div>
       <div class="t-find">
-        10개 대안 팩터를 bull 레짐 + top100에서 탐색. <strong>range_contraction_12h</strong>가 IC=+0.179(24h)로 기존 모든 팩터보다 강했다. 4분기 split에서 전부 양수, rolling 7d 최솟값도 양수. 운이 아님.
+        10개 대안 팩터를 bull 레짐 + top100에서 탐색. <strong>range_contraction_12h</strong>가 IC=+0.179(24h)로 기존 모든 팩터보다 강했다. 4분기 split에서 전부 양수, rolling 7d 최솟값도 양수. 운이 아님.<br><br>
+        <strong>vol_inv_24h(IC=+0.168)도 강했지만 탈락.</strong> 이유: range_contraction과 r=0.785로 강하게 상관 — 둘 다 "조용한 코인"을 측정하지만, range_contraction이 IC가 더 높고 고저폭 기반이라 return std와 다른 정보를 담는다.
+      </div>
+    </div>
+
+    <!-- Horizon decision -->
+    <div class="timeline-item"><div class="timeline-dot done"></div>
+      <div class="t-meta"><span class="t-date">Horizon Decision</span><span class="badge badge-blue">12h</span></div>
+      <div class="t-title">왜 24h가 아니라 12h인가</div>
+      <div class="t-find">
+        range_contraction은 24h에서 IC +0.179로 최강이지만, 24h 리밸런스로 바꾸면 holdout 평가점이 22개 &rarr; 5~6개로 급감해 t-stat 신뢰도가 불가능. 12h는 IC +0.137로 충분하면서 평가점을 유지하는 <strong>타협점</strong>이다. 신호 강도보다 검증 가능성을 우선했다.
       </div>
     </div>
 
@@ -332,7 +342,16 @@
       <div class="t-meta"><span class="t-date">Long v3</span><span class="badge badge-ok">CURRENT</span></div>
       <div class="t-title">Compression + Reversal 모델</div>
       <div class="t-find">
-        모멘텀 전부 제거. range_contraction(압축) + reversal(딥 매수) + binance_lead(글로벌 선행)로 재설계. 호라이즌 12h. Ensemble(Ridge+LightGBM) 채택. Ridge 계수 전부 양수 = 설계와 결과 일치.
+        모멘텀 전부 제거. range_contraction(압축) + reversal(딥 매수) + binance_lead(글로벌 선행)로 재설계. 호라이즌 12h. 4개 모델(Ridge/XGBoost/LightGBM/Ensemble) 비교 후 Ensemble 채택. Ridge 계수 전부 양수 = 설계와 결과 일치.
+      </div>
+    </div>
+
+    <!-- Watch enforcement -->
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">Watch Enforcement</span><span class="badge badge-pivot">GUARD</span></div>
+      <div class="t-title">결론과 코드의 불일치를 잡다</div>
+      <div class="t-find">
+        처음에 <span class="c">EXECUTION_MODE="long_only"</span>로 설정했다가, 검증 에이전트가 "코드가 결론을 강제하지 않는다"고 지적. config에 <span class="c">"watch"</span>로 변경하고 런타임(fetch_and_rank.py)에서 이를 실제로 읽어 <strong>WATCH_LONG + actionable=False</strong>만 출력하도록 수정. 텔레그램 알림도 동일하게 잠금. 결론 → 코드 → 런타임 → 알림까지 4단계 일관성 확보.
       </div>
     </div>
   </div>
@@ -352,6 +371,33 @@
         <tr><td>L/S Hit Rate</td><td class="mono">72.7%</td><td class="pos">90.9%</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- 4-model comparison -->
+  <div class="chart-wrap">
+    <div class="chart-title">Long v3 — 4모델 비교 (holdout, 12h)</div>
+    <div class="chart-subtitle">같은 팩터 세트에서 모델만 바꿔서 비교. Ensemble이 IC, net spread 모두 최고.</div>
+    <table class="tbl">
+      <thead><tr><th>모델</th><th>Holdout IC</th><th>t-stat</th><th>Net spread</th><th>Pred std</th></tr></thead>
+      <tbody>
+        <tr><td>Ridge</td><td class="mono pos">+0.184</td><td class="mono">3.16</td><td class="mono pos">+0.0198</td><td class="mono">0.0031</td></tr>
+        <tr><td>XGBoost</td><td class="mono pos">+0.168</td><td class="mono">3.61</td><td class="mono pos">+0.0115</td><td class="mono">0.0059</td></tr>
+        <tr><td>LightGBM</td><td class="mono pos">+0.179</td><td class="mono">4.56</td><td class="mono pos">+0.0195</td><td class="mono">0.0050</td></tr>
+        <tr><td><strong>Ensemble</strong></td><td class="mono pos"><strong>+0.216</strong></td><td class="mono"><strong>4.24</strong></td><td class="mono pos"><strong>+0.0238</strong></td><td class="mono">0.0034</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Long vs Random -->
+  <div class="chart-wrap">
+    <div class="chart-title">Long 모델이 랜덤보다 나은가?</div>
+    <div class="chart-subtitle">122 holdout 기간, 모델 top5 vs 랜덤 5개 비교. 모델이 유의미하게 낫다.</div>
+    <div class="four-col" style="margin-bottom:1rem;">
+      <div class="metric-card"><span class="metric-val pos">73.8%</span><div class="metric-label">모델 > 랜덤 비율</div><div class="metric-sub">122 기간 중 90 기간</div></div>
+      <div class="metric-card"><span class="metric-val pos">+0.57%</span><div class="metric-label">초과 수익/period</div><div class="metric-sub">모델 vs 랜덤 5</div></div>
+      <div class="metric-card"><span class="metric-val pos">7.34</span><div class="metric-label">t-stat</div><div class="metric-sub">통계적 유의</div></div>
+      <div class="metric-card"><span class="metric-val pos">&lt;0.0001</span><div class="metric-label">p-value</div><div class="metric-sub">확실한 edge</div></div>
+    </div>
   </div>
 
   <!-- Long v3 Factor IC -->
