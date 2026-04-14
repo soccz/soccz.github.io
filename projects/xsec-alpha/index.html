@@ -195,6 +195,22 @@
     .cadence-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text-secondary); }
     .cadence-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
 
+    /* Funnel */
+    .funnel-wrap { display: flex; flex-direction: column; gap: 0.4rem; align-items: center; margin: 2rem 0; }
+    .funnel-step { display: flex; align-items: center; border-radius: 6px; padding: 0.7rem 1.2rem; transition: all 0.3s; position: relative; }
+    .funnel-step .funnel-text { font-size: 0.82rem; font-weight: 500; white-space: nowrap; }
+    .funnel-step .funnel-ic { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-left: 0.8rem; }
+    .funnel-step.pass { background: var(--green-dim); border: 1px solid rgba(22,163,74,0.2); }
+    .funnel-step.pass .funnel-text { color: var(--green); }
+    .funnel-step.pass .funnel-ic { color: var(--green); }
+    .funnel-step.fail { background: var(--red-dim); border: 1px solid rgba(220,38,38,0.15); }
+    .funnel-step.fail .funnel-text { color: var(--red); text-decoration: line-through; }
+    .funnel-step.fail .funnel-ic { color: var(--red); }
+    .funnel-step.drop { background: var(--amber-dim); border: 1px solid rgba(180,83,9,0.15); }
+    .funnel-step.drop .funnel-text { color: var(--amber); }
+    .funnel-step.drop .funnel-ic { color: var(--amber); }
+    .funnel-arrow { color: var(--text-muted); font-size: 0.7rem; margin: 0.1rem 0; }
+
     @media (max-width: 900px) { .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } }
 
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
@@ -233,11 +249,11 @@
       Short 6h + Long 12h 듀얼 모델 시스템. 20+ 에이전트 다각도 검증.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">+0.19</span><span class="hero-stat-label">Short Holdout IC</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">+0.22</span><span class="hero-stat-label">Long Holdout IC</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">200+</span><span class="hero-stat-label">KRW Markets</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">Verified Factors</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.19" data-decimals="2">0</span><span class="hero-stat-label">Short Holdout IC</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.22" data-decimals="2">0</span><span class="hero-stat-label">Long Holdout IC</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="200" data-suffix="+" data-decimals="0">0</span><span class="hero-stat-label">KRW Markets</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" data-static="true">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="4" data-decimals="0">0</span><span class="hero-stat-label">Verified Factors</span></div>
     </div>
     <div class="hero-links">
       <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
@@ -470,6 +486,28 @@
     </div>
   </div>
 
+  <!-- Factor Discovery Funnel -->
+  <div class="chart-wrap" style="margin-top:2rem;">
+    <div class="chart-title">팩터 발견 퍼널 — 10개 후보에서 4개 생존</div>
+    <div class="chart-subtitle">bull regime + top100에서 IC 측정. 양수 IC + 안정성 + 콜리니어리티 통과한 것만 최종 채택.</div>
+    <div class="funnel-wrap">
+      <div class="funnel-step pass" style="width:95%;"><span class="funnel-text">range_contraction_12h</span><span class="funnel-ic">IC +0.179 (24h) &mdash; 최강 팩터, 4분기 안정</span></div>
+      <div class="funnel-arrow">&darr;</div>
+      <div class="funnel-step pass" style="width:85%;"><span class="funnel-text">binance_lead_1h</span><span class="funnel-ic">IC +0.117 (6h) &mdash; 글로벌 선행, 단기 최강</span></div>
+      <div class="funnel-arrow">&darr;</div>
+      <div class="funnel-step pass" style="width:78%;"><span class="funnel-text">reversal_1h</span><span class="funnel-ic">IC +0.102 (6h) &mdash; 딥 매수 신호</span></div>
+      <div class="funnel-arrow">&darr;</div>
+      <div class="funnel-step pass" style="width:72%;"><span class="funnel-text">reversal_4h</span><span class="funnel-ic">IC +0.094 (6h) &mdash; 중기 반전</span></div>
+      <div class="funnel-arrow">&darr; 여기서부터 탈락</div>
+      <div class="funnel-step drop" style="width:65%;"><span class="funnel-text">vol_inv_24h</span><span class="funnel-ic">IC +0.112 &mdash; range_contraction과 r=0.785 중복 &rarr; 탈락</span></div>
+      <div class="funnel-step drop" style="width:58%;"><span class="funnel-text">volume_quiet</span><span class="funnel-ic">IC +0.061 (24h only) &mdash; 너무 약함</span></div>
+      <div class="funnel-step fail" style="width:50%;"><span class="funnel-text">dip_from_7d_high</span><span class="funnel-ic">IC &lt; 0 &mdash; 추가 하락 예측</span></div>
+      <div class="funnel-step fail" style="width:44%;"><span class="funnel-text">upside_capture_24h</span><span class="funnel-ic">IC &lt; 0 &mdash; 과열 신호</span></div>
+      <div class="funnel-step fail" style="width:38%;"><span class="funnel-text">recovery_speed_6h</span><span class="funnel-ic">IC &lt; 0 &mdash; 이미 반등 완료</span></div>
+      <div class="funnel-step fail" style="width:32%;"><span class="funnel-text">momentum (전부)</span><span class="funnel-ic">IC &lt; 0 at 6h~72h &mdash; 크립토에서 작동 안 함</span></div>
+    </div>
+  </div>
+
   <!-- v1 vs v3 comparison -->
   <div class="chart-wrap" style="margin-top:2rem;">
     <div class="chart-title">Long v1 vs v3 비교</div>
@@ -655,6 +693,35 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Hero countup animation
+function animateCountup(el) {
+  const target = parseFloat(el.dataset.target);
+  const decimals = parseInt(el.dataset.decimals || '0');
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const start = performance.now();
+
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = target * eased;
+    el.textContent = prefix + current.toFixed(decimals) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const heroObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.animated) {
+      e.target.dataset.animated = '1';
+      animateCountup(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.countup').forEach(el => heroObserver.observe(el));
 </script>
 </body>
 </html>
