@@ -1,0 +1,3041 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9주차: 함수 — 왜 함수가 존재하는가 | PyWhy</title>
+  <link rel="stylesheet" href="../css/style.min.css">
+  <meta name="description" content="함수 완전 분해 — First-class, LEGB, 재귀, 클로저를 CPython 바이트코드까지">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="9주차: 함수 — 왜 함수가 존재하는가 | PyWhy">
+  <meta property="og:description" content="함수 완전 분해 — First-class, LEGB, 재귀, 클로저를 CPython 바이트코드까지">
+  <meta property="og:url" content="https://soccz.github.io/python-why/weeks/week09.html">
+  <meta property="og:site_name" content="PyWhy">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="9주차: 함수 — 왜 함수가 존재하는가 | PyWhy">
+  <meta name="twitter:description" content="함수 완전 분해 — First-class, LEGB, 재귀, 클로저를 CPython 바이트코드까지">
+</head>
+<body data-week="9">
+<a href="#main-content" class="skip-link">본문 바로가기</a>
+
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://soccz.github.io" class="home-btn" title="soccz.github.io" aria-label="포트폴리오 홈"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+        <a href="../index.html" class="site-title">PyWhy</a>
+      </div>
+    <div class="header-nav">
+      <a href="week08.html" class="nav-btn">&larr; 이전</a>
+      <a href="week10.html" class="nav-btn">다음 &rarr;</a>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrapper">
+<main id="main-content">
+
+<!-- ==================== WEEK HEADER ==================== -->
+<div class="week-header">
+  <div class="week-number">WEEK 09</div>
+  <h1 class="week-title">함수 — 왜 함수가<br>존재하는가</h1>
+  <p class="week-subtitle">
+    같은 코드를 세 번 복붙했습니다. 버그를 고치려면 세 곳을 다 고쳐야 합니다.<br>
+    <strong>함수는 이름을 붙인 코드 블록</strong>이 아닙니다 —<br>
+    Python에서 함수는 <strong>First-class Object</strong>입니다.<br>
+    def, return, LEGB, 클로저까지 완전히 분해합니다.
+  </p>
+</div>
+
+<!-- ==================== 목차 ==================== -->
+<details class="toc">
+  <summary>목차 — 9주차 전체 내용</summary>
+  <div class="toc-body">
+    <div class="toc-section">
+      <a href="#story" class="toc-section-link">
+        <span class="toc-num">01</span>이번 주 이야기
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#why-functions" class="toc-section-link">
+        <span class="toc-num">02</span>왜 함수가 존재하는가?
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#def-return" class="toc-section-link">
+        <span class="toc-num">03</span>def와 return
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#first-class" class="toc-section-link">
+        <span class="toc-num">04</span>First-class Object — 함수는 객체
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#scope-legb" class="toc-section-link">
+        <span class="toc-num">05</span>스코프와 LEGB Rule
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#arguments" class="toc-section-link">
+        <span class="toc-num">06</span>인자 전달 방식
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#recursion" class="toc-section-link">
+        <span class="toc-num">07</span>재귀와 Call Stack
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#closure" class="toc-section-link">
+        <span class="toc-num">08</span>클로저
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#ai-functions" class="toc-section-link">
+        <span class="toc-num">09</span>AI와 함수
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#hands-on" class="toc-section-link">
+        <span class="toc-num">10</span>실습: 함수 분해 탐험
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#exercises" class="toc-section-link">
+        <span class="toc-num">11</span>연습문제 (13문제 — 초급4 + 중급4 + 고급2 + 전공자3)
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#summary" class="toc-section-link">
+        <span class="toc-num">12</span>이번 주 정리
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#glossary" class="toc-section-link">
+        <span class="toc-num">13</span>용어 사전 (30개)
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#next-week" class="toc-section-link">
+        <span class="toc-num">14</span>다음 주 맛보기
+      </a>
+    </div>
+  </div>
+</details>
+
+<!-- ==================== 01. 이번 주 이야기 ==================== -->
+<section id="story">
+  <h2>이번 주 이야기</h2>
+  <div class="story-block">
+    <p>
+      지난 주 while 루프로 이진 탐색을 구현했습니다.
+      그런데 세 개의 서로 다른 정렬된 배열에서 탐색을 해야 한다면 어떻게 될까요?
+    </p>
+    <pre><code class="language-python"># 이진 탐색 — 배열1에서
+arr1 = [1, 3, 5, 7, 9, 11, 13]
+target = 7
+left, right = 0, len(arr1) - 1
+while left &lt;= right:
+    mid = (left + right) // 2
+    if arr1[mid] == target:
+        print(f"arr1에서 인덱스 {mid}")
+        break
+    elif arr1[mid] &lt; target:
+        left = mid + 1
+    else:
+        right = mid - 1
+
+# 이진 탐색 — 배열2에서 (복붙!)
+arr2 = [2, 4, 6, 8, 10, 12, 14]
+target = 10
+left, right = 0, len(arr2) - 1
+while left &lt;= right:
+    mid = (left + right) // 2
+    if arr2[mid] == target:
+        print(f"arr2에서 인덱스 {mid}")
+        break
+    elif arr2[mid] &lt; target:
+        left = mid + 1
+    else:
+        right = mid - 1
+
+# 이진 탐색 — 배열3에서 (또 복붙!)
+arr3 = [10, 20, 30, 40, 50]
+target = 30
+left, right = 0, len(arr3) - 1
+while left &lt;= right:
+    mid = (left + right) // 2
+    if arr3[mid] == target:
+        print(f"arr3에서 인덱스 {mid}")
+        break
+    elif arr3[mid] &lt; target:
+        left = mid + 1
+    else:
+        right = mid - 1</code></pre>
+    <div class="callout callout-warning">
+      <strong>문제:</strong> 같은 코드가 세 번 복붙되었습니다.
+      만약 이진 탐색 로직에 버그가 있다면 — 세 곳을 모두 수정해야 합니다.
+      버그를 한 곳만 고치고 나머지를 잊는다면 어떻게 될까요?
+    </div>
+    <p>
+      이것이 바로 <strong>함수가 필요한 이유</strong>입니다.
+      함수는 코드에 이름을 붙여 재사용 가능하게 만듭니다:
+    </p>
+    <pre><code class="language-python">def binary_search(arr, target):
+    """정렬된 배열에서 target의 인덱스를 반환. 없으면 -1."""
+    left, right = 0, len(arr) - 1
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] &lt; target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+# 이제 세 배열 모두 한 줄씩
+arr1 = [1, 3, 5, 7, 9, 11, 13]
+arr2 = [2, 4, 6, 8, 10, 12, 14]
+arr3 = [10, 20, 30, 40, 50]
+
+print(binary_search(arr1, 7))    # 3
+print(binary_search(arr2, 10))   # 4
+print(binary_search(arr3, 30))   # 2</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+3
+4
+2
+    </div>
+    <p>
+      함수는 단순히 코드 중복을 줄이는 도구가 아닙니다.
+      Python에서 함수는 <strong>객체(Object)</strong>입니다 — 변수에 담고,
+      다른 함수에 인수로 전달하고, 함수가 함수를 반환할 수 있습니다.
+      오늘은 함수를 바이트코드까지 완전히 분해합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 02. 왜 함수가 존재하는가? ==================== -->
+<section id="why-functions">
+  <h2>왜 함수가 존재하는가? — DRY와 추상화</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 볶음밥 레시피</h3>
+    <div class="callout callout-info">
+      <strong>레시피 비유:</strong><br>
+      친구에게 볶음밥 만드는 법을 알려줄 때, 매번 "달걀 2개 풀고, 밥 한 공기 넣고, 간장 두 스푼…"을
+      처음부터 다 말하지 않습니다.<br>
+      한 번 적어놓고 "볶음밥 레시피 참고해" 라고 이름만 말합니다.<br><br>
+      <strong>함수 = 레시피</strong>: 한 번 만들어놓으면 이름만으로 언제든 다시 쓸 수 있습니다.
+    </div>
+    <p>
+      함수가 없다면 같은 코드를 계속 반복해서 써야 합니다.
+      예를 들어 숫자가 짝수인지 확인하는 코드를 세 번 쓴다면:
+    </p>
+    <pre><code class="language-python"># ❌ 함수 없이 — 같은 코드를 계속 반복
+num1 = 4
+if num1 % 2 == 0:
+    print(f"{num1}은 짝수")
+else:
+    print(f"{num1}은 홀수")
+
+num2 = 7
+if num2 % 2 == 0:
+    print(f"{num2}은 짝수")
+else:
+    print(f"{num2}은 홀수")
+
+num3 = 12
+if num3 % 2 == 0:
+    print(f"{num3}은 짝수")
+else:
+    print(f"{num3}은 홀수")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+4은 짝수
+7은 홀수
+12은 짝수
+    </div>
+    <pre><code class="language-python"># ✅ 함수로 — 한 번 만들고 이름만 호출
+def check_even(num):
+    if num % 2 == 0:
+        print(f"{num}은 짝수")
+    else:
+        print(f"{num}은 홀수")
+
+check_even(4)
+check_even(7)
+check_even(12)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+4은 짝수
+7은 홀수
+12은 짝수
+    </div>
+    <div class="callout callout-tip">
+      <strong>DRY 원칙 (Don't Repeat Yourself):</strong><br>
+      "같은 코드를 두 번 쓰지 마라." 코드를 수정해야 할 때 한 곳만 고치면 됩니다.
+      세 군데에서 같은 코드를 썼다면 → 함수로 만들 때입니다.
+    </div>
+    <div class="callout callout-tip">
+      <strong>✏️ 지금 바로 해봐:</strong> 직접 함수를 만들고 호출해보세요.
+      <pre><code class="language-python">def greet(name):
+    """이름을 받아 인사 문구를 반환하는 함수"""
+    return f"안녕하세요, {name}님!"
+
+# 함수 호출
+message = greet("파이썬")
+print(message)   # 안녕하세요, 파이썬님!
+
+# 여러 번 호출 가능
+for name in ["민수", "지은", "서연"]:
+    print(greet(name))</code></pre>
+      같은 코드를 3번 반복하지 않고 함수로 묶으면 이렇게 됩니다!
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>추상화(Abstraction) — 복잡성을 이름 뒤에 숨기기</h3>
+    <p>
+      함수의 두 번째 역할은 <strong>추상화</strong>입니다.
+      이름이 의도를 설명하면, 호출하는 쪽은 내부 구현을 몰라도 됩니다.
+    </p>
+    <pre><code class="language-python"># 소수 판별 — 추상화 전
+n = 17
+is_prime = True
+if n &lt; 2:
+    is_prime = False
+else:
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            is_prime = False
+            break
+print(f"{n}은 소수?" , is_prime)
+
+# 소수 판별 — 추상화 후
+def is_prime(n):
+    """n이 소수이면 True, 아니면 False를 반환."""
+    if n &lt; 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+# 사용하는 쪽: is_prime(17)의 내부를 몰라도 됨
+primes = [n for n in range(2, 50) if is_prime(n)]
+print(primes)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+17은 소수? True
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    </div>
+    <p>
+      <code>is_prime(n)</code>은 내부에 루프와 조건문이 있지만, 호출하는 쪽은
+      "이 함수가 소수인지 알려준다"는 것만 알면 충분합니다.
+      이것이 추상화 — <strong>세부 구현을 숨기고 의도만 드러내는 것</strong>입니다.
+    </p>
+    <div class="callout callout-info">
+      <strong>좋은 함수 이름의 조건:</strong><br>
+      함수 이름은 동사로 시작하고, 무엇을 하는지 정확히 설명해야 합니다.<br>
+      <code>get_max_value()</code> vs <code>gmax()</code> — 전자가 훨씬 명확합니다.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Python 공식 문서의 funcdef 문법과 함수의 3가지 역할</h3>
+    <p>
+      Python 공식 문서(reference/compound_stmts)의 함수 정의 BNF:
+    </p>
+    <pre><code class="language-text">funcdef        ::= [decorators] "def" funcname [type_params]
+                   "(" [parameter_list] ")" ["->" expression] ":" suite
+decorators     ::= decorator+
+decorator      ::= "@" assignment_expression NEWLINE
+funcname       ::= identifier</code></pre>
+    <p>함수는 세 가지 역할을 동시에 합니다:</p>
+    <ol>
+      <li>
+        <strong>재사용(Reuse)</strong>: 코드를 한 번 정의하고 여러 번 호출.
+        DRY 원칙 — 수정은 한 곳에서만.
+      </li>
+      <li>
+        <strong>추상화(Abstraction)</strong>: 복잡한 로직에 이름을 붙여 숨김.
+        호출하는 쪽은 What만, 내부는 How만 알면 됨.
+      </li>
+      <li>
+        <strong>네임스페이스 경계(Namespace boundary)</strong>: 함수 안에서 만든 변수는
+        함수 밖에서 보이지 않음. 이름 충돌 방지 (§05 LEGB에서 상세 설명).
+      </li>
+    </ol>
+    <pre><code class="language-python">def compute_statistics(data):
+    """리스트의 평균, 최솟값, 최댓값을 반환."""
+    # 이 n, total, minimum, maximum은 함수 밖에 영향 없음 (네임스페이스 경계)
+    n = len(data)
+    total = sum(data)
+    minimum = min(data)
+    maximum = max(data)
+    return total / n, minimum, maximum
+
+scores = [85, 92, 78, 96, 88]
+avg, lo, hi = compute_statistics(scores)
+print(f"평균: {avg:.1f}, 최소: {lo}, 최대: {hi}")
+
+# n, total, minimum, maximum은 여기서 없음 (NameError가 발생함)
+# print(n)   # NameError: name 'n' is not defined</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+평균: 87.8, 최소: 78, 최대: 96
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — MAKE_FUNCTION 바이트코드</h3>
+    <p>
+      <code>def</code>문이 실행되면 CPython은 <code>MAKE_FUNCTION</code> 바이트코드를
+      실행하여 새로운 <code>PyFunctionObject</code>를 생성합니다.
+      함수 <em>정의</em>와 함수 <em>호출</em>은 완전히 다른 시점에 일어납니다.
+    </p>
+    <pre><code class="language-python">import dis
+
+def make_adder(x):
+    def adder(y):
+        return x + y
+    return adder
+
+dis.dis(make_adder)</code></pre>
+    <div class="output-block">
+      <div class="output-label">make_adder 핵심 바이트코드 (Python 3.12):</div>
+  LOAD_CLOSURE    x                      ← 자유변수 x의 cell을 스택에 로드
+  BUILD_TUPLE     1                      ← cell 1개를 튜플로 묶음
+  LOAD_CONST      &lt;code object adder&gt;   ← code object를 상수로 로드
+  MAKE_FUNCTION   8 (closure)            ← 클로저 플래그: cell 튜플을 포함해 생성
+  STORE_FAST      adder                  ← 이름 'adder'에 바인딩
+  LOAD_FAST       adder
+  RETURN_VALUE
+    </div>
+    <p>
+      <code>MAKE_FUNCTION</code>의 인수 플래그가 <strong>8</strong>이면 클로저입니다.
+      스택에서 cell 튜플을 꺼내 <code>PyFunctionObject.__closure__</code>에 저장합니다.
+      함수 정의가 실행될 때마다 새 객체가 생성됩니다.
+    </p>
+    <pre><code class="language-python">def make_adder(x):
+    def adder(y):
+        return x + y
+    return adder
+
+add5 = make_adder(5)
+add10 = make_adder(10)
+
+print(type(add5))         # &lt;class 'function'&gt;
+print(add5 is add10)      # False — 호출마다 새 PyFunctionObject
+print(add5.__code__ is add10.__code__)  # True — code object는 공유</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+&lt;class 'function'&gt;
+False
+True
+    </div>
+    <h3>Part B — 구조화 프로그래밍과 절차적 추상화</h3>
+    <p>
+      Dijkstra, Böhm, Jacopini가 1960년대에 정립한 <strong>구조화 프로그래밍</strong>에서
+      <strong>Procedural Abstraction(절차적 추상화)</strong>은 핵심 원리입니다:
+      "어떻게 하는가(How)"를 서브루틴에 캡슐화하고, 호출하는 쪽은 "무엇을 하는가(What)"만 알면 된다는 원칙.
+    </p>
+    <p>
+      이것이 현대 Python 함수의 설계 철학과 직결됩니다.
+      함수는 단순한 문법 도구가 아니라 <strong>계산의 이름 붙이기(Naming of computation)</strong>입니다.
+      함수에 이름을 붙이는 순간 그 계산은 재사용 가능한 단위가 됩니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 03. def와 return ==================== -->
+<section id="def-return">
+  <h2>def와 return — 함수의 기본 구조</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>def 기본 문법: 정의 vs 호출</h3>
+    <div class="callout callout-info">
+      <strong>용어 구분:</strong><br>
+      <strong>매개변수(Parameter)</strong>: 함수를 정의할 때 쓰는 이름. <code>def greet(name):</code>에서 <code>name</code><br>
+      <strong>인수(Argument)</strong>: 함수를 호출할 때 실제로 전달하는 값. <code>greet("민수")</code>에서 <code>"민수"</code>
+    </div>
+    <pre><code class="language-python"># 함수 정의 (def) — 이 시점에는 실행되지 않음
+def greet(name):          # name = 매개변수(Parameter)
+    """이름을 받아 인사말을 출력한다."""  # docstring
+    print(f"안녕하세요, {name}님!")
+
+# 함수 호출 (call) — 이 시점에 실행됨
+greet("민수")             # "민수" = 인수(Argument)
+greet("지은")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+안녕하세요, 민수님!
+안녕하세요, 지은님!
+    </div>
+    <h3>return: 값을 돌려주기</h3>
+    <pre><code class="language-python"># return 있음: 결과값을 돌려줌
+def add(a, b):
+    """두 수의 합을 반환한다."""
+    return a + b
+
+result = add(3, 4)
+print(result)         # 7
+
+# return 없음: None을 반환
+def say_hi():
+    print("Hi!")
+
+value = say_hi()      # Hi! 출력됨
+print(value)          # None — return이 없으면 None
+
+# return에서 즉시 함수 종료
+def first_positive(numbers):
+    """리스트에서 처음 만나는 양수를 반환."""
+    for n in numbers:
+        if n > 0:
+            return n   # 찾는 순간 즉시 반환하고 함수 종료
+    return None        # 못 찾으면 None
+
+print(first_positive([-3, -1, 5, 2]))   # 5</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+7
+Hi!
+None
+5
+    </div>
+    <h3>docstring: 함수 설명서</h3>
+    <pre><code class="language-python">def calculate_area(width, height):
+    """직사각형의 넓이를 계산한다.
+
+    Args:
+        width: 가로 길이
+        height: 세로 길이
+
+    Returns:
+        가로 x 세로 값
+    """
+    return width * height
+
+# docstring은 help()로 볼 수 있음
+help(calculate_area)</code></pre>
+    <div class="output-block">
+      <div class="output-label">help() 출력 (요약):</div>
+Help on function calculate_area:
+
+calculate_area(width, height)
+    직사각형의 넓이를 계산한다.
+    ...
+    </div>
+    <div class="callout callout-warning">
+      <strong>return을 빠뜨리는 흔한 실수:</strong><br>
+      <code>result = add(3, 4)</code>를 했는데 result가 None이라면, 함수에 return이 없는 것입니다.
+      함수가 뭔가를 반환해야 한다면 반드시 return을 명시하세요.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>여러 return 경로 / 튜플 반환 / 기본값 매개변수</h3>
+    <pre><code class="language-python"># 여러 return 경로 — guard clause 패턴
+def safe_divide(a, b):
+    """b로 a를 나눈다. b가 0이면 None 반환."""
+    if b == 0:
+        return None   # 조기 반환 (Early Return)
+    return a / b
+
+print(safe_divide(10, 2))   # 5.0
+print(safe_divide(10, 0))   # None</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+5.0
+None
+    </div>
+    <pre><code class="language-python"># 튜플로 여러 값 반환 — return a, b는 return (a, b)와 동일
+def min_max(numbers):
+    """리스트의 최솟값과 최댓값을 함께 반환."""
+    return min(numbers), max(numbers)   # 튜플 반환
+
+lo, hi = min_max([5, 2, 8, 1, 9, 3])
+print(f"최소: {lo}, 최대: {hi}")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+최소: 1, 최대: 9
+    </div>
+    <pre><code class="language-python"># 기본값 매개변수 (Default Parameter)
+def greet(name, greeting="안녕하세요"):
+    """기본 인사말을 사용하거나, 직접 지정할 수 있음."""
+    return f"{greeting}, {name}님!"
+
+print(greet("민수"))               # 기본값 사용
+print(greet("지은", "반갑습니다"))  # 기본값 대체
+
+# 기본값 매개변수는 뒤쪽에 와야 함
+# def f(a=0, b):  # SyntaxError!
+# def f(a, b=0):  # OK</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+안녕하세요, 민수님!
+반갑습니다, 지은님!
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Python 공식 문서 funcdef BNF / 타입 힌트</h3>
+    <p>
+      Python 3.5+의 타입 어노테이션(type annotation)과 반환 타입 힌트는
+      공식 문서의 <code>"->" expression</code> 부분에 해당합니다.
+      타입 힌트는 런타임에 강제되지 않지만 IDE와 mypy 같은 정적 분석 도구가 활용합니다.
+    </p>
+    <pre><code class="language-python">from typing import Optional
+
+# 타입 힌트 완전 예시
+def find_index(arr: list[int], target: int) -> Optional[int]:
+    """정렬된 리스트에서 target의 인덱스를 반환.
+
+    Args:
+        arr: 정수 리스트
+        target: 찾을 값
+
+    Returns:
+        target의 인덱스, 없으면 None
+    """
+    left, right = 0, len(arr) - 1
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] &lt; target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return None
+
+# 타입 힌트는 __annotations__ 딕셔너리에 저장됨
+print(find_index.__annotations__)
+print(find_index([1, 3, 5, 7, 9], 7))
+print(find_index([1, 3, 5, 7, 9], 4))</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'arr': list[int], 'target': &lt;class 'int'&gt;, 'return': typing.Optional[int]}
+3
+None
+    </div>
+    <div class="callout callout-info">
+      <strong>타입 힌트 원칙:</strong> Python은 타입 힌트를 런타임에 강제하지 않습니다.
+      <code>find_index("hello", 7)</code>를 호출해도 TypeError가 나지 않습니다 (런타임엔 무시).
+      정적 분석(mypy)에서만 오류로 잡힙니다.
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — PyFunctionObject 내부 구조</h3>
+    <p>
+      <code>MAKE_FUNCTION</code>이 생성하는 <code>PyFunctionObject</code>는 여러 속성을 가집니다.
+    </p>
+    <pre><code class="language-python">import dis
+
+def power(base: int, exp: int = 2) -> int:
+    """base의 exp 거듭제곱을 반환."""
+    return base ** exp
+
+# __code__: 컴파일된 bytecode를 담은 code object
+print(type(power.__code__))              # &lt;class 'code'&gt;
+print(power.__code__.co_varnames)        # ('base', 'exp') — 지역 변수 이름
+print(power.__code__.co_argcount)        # 2 — 매개변수 개수
+print(power.__code__.co_filename)        # 정의된 파일명
+
+# __defaults__: 기본값 매개변수들의 값
+print(power.__defaults__)                # (2,) — exp=2
+
+# __annotations__: 타입 힌트
+print(power.__annotations__)            # {'base': int, 'exp': int, 'return': int}
+
+# __name__: 함수 이름
+print(power.__name__)                   # 'power'
+
+# __globals__: 함수가 정의된 모듈의 global namespace
+print(type(power.__globals__))          # &lt;class 'dict'&gt;
+
+# 바이트코드 직접 확인
+dis.dis(power)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (요약):</div>
+&lt;class 'code'&gt;
+('base', 'exp')
+2
+&lt;module 이름&gt;.py
+(2,)
+{'base': &lt;class 'int'&gt;, 'exp': &lt;class 'int'&gt;, 'return': &lt;class 'int'&gt;}
+power
+&lt;class 'dict'&gt;
+    </div>
+    <h3>Part B — code object vs function object</h3>
+    <p>
+      <code>code object</code>(<code>PyCodeObject</code>)와 <code>function object</code>(<code>PyFunctionObject</code>)는 다릅니다:
+    </p>
+    <ul>
+      <li>
+        <strong>code object</strong>: 컴파일된 바이트코드 + 상수 + 이름. <em>불변(immutable)</em>.
+        같은 <code>def</code>문에서 만들어진 함수 객체들이 공유합니다.
+      </li>
+      <li>
+        <strong>function object</strong>: code object + global namespace + 기본값 + 클로저.
+        <em>가변</em>. <code>def</code>문이 실행될 때마다 새로 생성됩니다.
+      </li>
+    </ul>
+    <pre><code class="language-python">def make_counter(start=0):
+    count = start
+    def increment():
+        nonlocal count
+        count += 1
+        return count
+    return increment
+
+c1 = make_counter(0)
+c2 = make_counter(10)
+
+# code object는 공유 — 같은 바이트코드
+print(c1.__code__ is c2.__code__)   # True
+
+# function object는 별개 — 각자의 closure(상태) 보유
+print(c1 is c2)                     # False
+print(c1())                         # 1
+print(c2())                         # 11</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+True
+False
+1
+11
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04. First-class Object ==================== -->
+<section id="first-class">
+  <h2>First-class Object — 함수는 객체다</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>함수 = 변수에 담을 수 있는 객체</h3>
+    <div class="callout callout-info">
+      <strong>핵심 개념:</strong><br>
+      Python에서 함수는 숫자, 문자열과 똑같은 <strong>객체</strong>입니다.<br>
+      변수에 담을 수 있고, 다른 함수에 인수로 전달할 수 있습니다.
+    </div>
+    <pre><code class="language-python">def square(x):
+    return x * x
+
+# 함수를 변수에 저장 — 괄호 없음!
+f = square          # f는 이제 square 함수를 가리킴
+print(f)            # &lt;function square at 0x...&gt;
+print(f(5))         # 25 — f(5)는 square(5)와 동일
+print(square(5))    # 25</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+&lt;function square at 0x7f...&gt;
+25
+25
+    </div>
+    <div class="callout callout-warning">
+      <strong>괄호의 의미:</strong><br>
+      <code>f = square</code> → 함수 객체 자체를 f에 저장 (호출 안 함)<br>
+      <code>f = square(5)</code> → square(5)를 호출하고 결과값 25를 f에 저장<br><br>
+      <code>sorted(words, key=len)</code>에서 <code>key=len</code>은 len 함수 객체를 전달.
+      <code>key=len()</code>이라면 len()을 먼저 호출하려다가 TypeError가 납니다!
+    </div>
+    <pre><code class="language-python"># 함수를 인수로 전달하기
+words = ["banana", "apple", "cherry", "fig"]
+
+# len을 key 함수로 전달 (괄호 없음!)
+sorted_words = sorted(words, key=len)
+print(sorted_words)   # ['fig', 'apple', 'banana', 'cherry']</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+['fig', 'apple', 'banana', 'cherry']
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>고차 함수: map, filter, sorted / 람다 함수</h3>
+    <p>
+      <strong>고차 함수(Higher-order Function)</strong>: 함수를 인수로 받거나 함수를 반환하는 함수.
+    </p>
+    <pre><code class="language-python"># map(func, iterable): 각 원소에 func 적용
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, numbers))
+print(squared)   # [1, 4, 9, 16, 25]
+
+# filter(func, iterable): func가 True인 원소만 통과
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+print(evens)     # [2, 4]
+
+# sorted(key=func): 각 원소에 func를 적용한 결과로 정렬
+words = ["banana", "Apple", "cherry", "fig"]
+by_lower = sorted(words, key=str.lower)   # 대소문자 무시 정렬
+print(by_lower)  # ['Apple', 'banana', 'cherry', 'fig']</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+[1, 4, 9, 16, 25]
+[2, 4]
+['Apple', 'banana', 'cherry', 'fig']
+    </div>
+    <h3>람다 함수 (lambda)</h3>
+    <pre><code class="language-python"># lambda: 이름 없는 함수를 간결하게 표현
+# lambda 매개변수: 표현식
+double = lambda x: x * 2
+print(double(5))   # 10
+
+# def로 쓰면:
+# def double(x):
+#     return x * 2
+
+# 실용적인 사용: sorted key
+students = [("민수", 90), ("지은", 75), ("서연", 88)]
+by_score = sorted(students, key=lambda s: s[1], reverse=True)
+print(by_score)   # [('민수', 90), ('서연', 88), ('지은', 75)]</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+10
+[('민수', 90), ('서연', 88), ('지은', 75)]
+    </div>
+    <div class="callout callout-info">
+      <strong>람다 vs def:</strong> 람다는 한 줄짜리 표현식만 가능합니다.
+      여러 줄이 필요하면 def를 쓰세요. 람다를 변수에 저장하는 것은 파이썬 스타일 가이드(PEP 8)에서 권장하지 않습니다.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>functools.partial / 함수를 반환하는 함수</h3>
+    <pre><code class="language-python">from functools import partial
+
+# functools.partial: 인수 일부를 고정한 새 함수 생성
+def power(base, exp):
+    return base ** exp
+
+square = partial(power, exp=2)   # exp=2로 고정
+cube   = partial(power, exp=3)   # exp=3으로 고정
+
+print(square(5))   # 25
+print(cube(3))     # 27
+
+# 함수를 반환하는 함수 (팩토리 패턴)
+def make_multiplier(n):
+    """n을 곱하는 함수를 반환."""
+    def multiplier(x):
+        return x * n
+    return multiplier
+
+double = make_multiplier(2)
+triple = make_multiplier(3)
+print(double(7))   # 14
+print(triple(7))   # 21</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+25
+27
+14
+21
+    </div>
+    <div class="callout callout-info">
+      <strong>int, str, list도 함수(callable)입니다:</strong><br>
+      <code>int</code>, <code>str</code>, <code>list</code>는 사실 클래스입니다.
+      하지만 <code>int("42")</code>처럼 호출(call)할 수 있으므로 callable입니다.
+      <code>callable(int)</code>는 <code>True</code>를 반환합니다.
+      <code>map(int, ["1","2","3"])</code>에서 <code>int</code>를 함수처럼 전달할 수 있는 이유입니다.
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — PyFunctionObject의 핵심 속성</h3>
+    <pre><code class="language-python">import dis
+
+def make_adder(x):
+    def adder(y):
+        return x + y
+    return adder
+
+add5 = make_adder(5)
+
+# function object의 핵심 속성들
+print(add5.__name__)      # 'adder'
+print(add5.__qualname__)  # 'make_adder.&lt;locals&gt;.adder'
+print(type(add5))         # &lt;class 'function'&gt;
+
+# __closure__: 외부 변수(x)를 담은 cell 객체 튜플
+print(add5.__closure__)                        # (&lt;cell at 0x...&gt;,)
+print(add5.__closure__[0].cell_contents)       # 5
+
+# __globals__: 함수가 정의된 모듈의 global dict
+print('make_adder' in add5.__globals__)        # True
+
+# __code__: code object (바이트코드 정보)
+print(add5.__code__.co_freevars)               # ('x',) — 자유 변수(free variable)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+adder
+make_adder.&lt;locals&gt;.adder
+&lt;class 'function'&gt;
+(&lt;cell at 0x7f...&gt;,)
+5
+True
+('x',)
+    </div>
+    <h3>Part B — Lambda Calculus와 First-class Functions</h3>
+    <p>
+      Lambda Calculus(Alonzo Church, 1930s)는 함수를 계산의 기본 단위로 정의합니다.
+      세 가지 규칙만으로 모든 계산을 표현합니다:
+    </p>
+    <ul>
+      <li><strong>변수(Variable)</strong>: <code>x</code></li>
+      <li><strong>추상화(Abstraction)</strong>: <code>λx.M</code> — Python의 <code>lambda x: M</code></li>
+      <li><strong>적용(Application)</strong>: <code>M N</code> — Python의 <code>f(x)</code></li>
+    </ul>
+    <p>
+      Python 함수가 "일반 객체"인 이유는 이 수학적 토대에서 비롯됩니다.
+      함수가 First-class이면, 고차 함수, 클로저, 커링(Currying), 컴비네이터가 모두 자연스럽게 표현됩니다.
+      Guido van Rossum이 Python에 lambda를 도입한 것도 이 계보를 따릅니다 (Python 3000 설계 당시 lambda 제거가 논의되었지만, 커뮤니티 반발로 Guido가 철회함).
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 05. 스코프와 LEGB Rule ==================== -->
+<section id="scope-legb">
+  <h2>스코프와 LEGB Rule — 이름을 찾는 순서</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 교실과 복도</h3>
+    <div class="callout callout-info">
+      <strong>교실/복도 비유:</strong><br>
+      <strong>교실(함수 안)</strong>: 교실에서 만든 메모지(지역 변수)는 교실 안에서만 읽을 수 있습니다.<br>
+      <strong>복도(모듈 전체)</strong>: 복도에 붙인 공지(전역 변수)는 교실 안에서도 읽을 수 있습니다.<br>
+      교실 메모지는 복도로 나올 수 없고, 복도 공지는 교실 안에서 읽을 수 있습니다.
+    </div>
+    <pre><code class="language-python">x = "전역"   # 복도 공지 — 어디서나 읽을 수 있음
+
+def show():
+    x = "지역"   # 교실 안 메모 — 교실(show) 안에서만 유효
+    print(x)     # "지역" — 교실 메모를 먼저 찾음
+
+show()
+print(x)         # "전역" — 함수 밖은 복도 공지가 보임</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+지역
+전역
+    </div>
+    <pre><code class="language-python"># 교실에서 복도 공지를 읽는 예시
+greeting = "안녕"   # 복도 공지 (전역)
+
+def say_hello(name):
+    # greeting을 교실 안에서 읽고 있음 (복도 공지 참조)
+    print(f"{greeting}, {name}!")
+
+say_hello("민수")   # 안녕, 민수! — 전역 변수 사용 가능</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+안녕, 민수!
+    </div>
+    <div class="callout callout-warning">
+      <strong>변수가 없으면 NameError:</strong><br>
+      교실 안에도, 복도에도 없는 이름을 읽으려 하면 Python이 "없다"고 오류를 냅니다.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>LEGB — 이름 탐색 순서</h3>
+    <p>
+      Python이 변수 이름을 찾을 때 다음 순서로 탐색합니다:
+    </p>
+    <div class="callout callout-info">
+      <strong>L → E → G → B</strong><br>
+      <strong>L</strong>ocal: 현재 함수 안<br>
+      <strong>E</strong>nclosing: 바깥 함수들 (중첩 함수일 때)<br>
+      <strong>G</strong>lobal: 모듈(파일) 수준<br>
+      <strong>B</strong>uilt-in: Python 내장 함수들 (print, len, range...)
+    </div>
+    <pre><code class="language-python">x = "global"   # G
+
+def outer():
+    x = "enclosing"   # E
+
+    def inner():
+        x = "local"   # L
+        print(x)      # L: "local"
+
+    inner()
+    print(x)          # E: "enclosing"
+
+outer()
+print(x)              # G: "global"</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+local
+enclosing
+global
+    </div>
+    <pre><code class="language-python"># Built-in 탐색
+def show_type(value):
+    # type은 어디에도 정의되지 않았지만 Built-in으로 찾음
+    print(type(value))   # B: type은 Built-in
+
+show_type(42)   # &lt;class 'int'&gt;
+
+# 전역에서 Built-in 이름을 재정의하면 Built-in이 가려짐 (권장하지 않음!)
+len = "실수로 덮어씀"   # G에 len이 생겨서 Built-in len을 가림
+# print(len([1, 2, 3]))  # TypeError: 'str' object is not callable
+
+del len   # 복구</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+&lt;class 'int'&gt;
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>global, nonlocal 키워드 / UnboundLocalError 함정</h3>
+    <pre><code class="language-python"># global: 함수 안에서 전역 변수를 수정
+count = 0
+
+def increment():
+    global count    # 전역 count를 수정하겠다고 선언
+    count += 1
+
+increment()
+increment()
+print(count)   # 2</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+2
+    </div>
+    <pre><code class="language-python"># nonlocal: 중첩 함수에서 Enclosing 변수를 수정
+def make_counter():
+    count = 0
+    def increment():
+        nonlocal count   # Enclosing의 count를 수정
+        count += 1
+        return count
+    return increment
+
+counter = make_counter()
+print(counter())   # 1
+print(counter())   # 2
+print(counter())   # 3</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+1
+2
+3
+    </div>
+    <div class="callout callout-warning">
+      <strong>UnboundLocalError — 흔한 함정:</strong><br>
+      함수 안에서 같은 이름의 변수에 대입(<code>=</code>)이 한 번이라도 있으면,
+      Python은 그 변수를 <em>전체 함수 범위에서</em> 지역 변수로 처리합니다.
+      대입 이전에 읽으려 하면 UnboundLocalError가 발생합니다.
+    </div>
+    <pre><code class="language-python">x = 10
+
+def f():
+    print(x)   # UnboundLocalError! — 아래의 x = 20 때문에
+    x = 20     # 이 줄이 있으면 x는 함수 전체에서 지역 변수로 처리됨
+
+# f()   # UnboundLocalError: cannot access local variable 'x' before assignment
+
+# 해결책 1: global 사용
+def f_global():
+    global x
+    print(x)   # 10 — 전역 x 참조
+    x = 20
+
+# 해결책 2: 지역 변수 이름을 다르게
+def f_local():
+    local_x = x   # 전역 x를 읽어 지역 변수에 저장
+    print(local_x)
+    local_x = 20</code></pre>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — LOAD_FAST / LOAD_GLOBAL / LOAD_DEREF 바이트코드</h3>
+    <pre><code class="language-python">import dis
+
+x = "global"
+
+def outer():
+    y = "enclosing"
+    def inner(z):
+        print(x)   # LOAD_GLOBAL: 전역 변수
+        print(y)   # LOAD_DEREF:  Enclosing (클로저)
+        print(z)   # LOAD_FAST:   지역 변수
+    return inner
+
+dis.dis(outer())  # inner 함수 바이트코드 분석</code></pre>
+    <div class="output-block">
+      <div class="output-label">inner 핵심 바이트코드 (Python 3.12):</div>
+  LOAD_GLOBAL    print          ← Built-in/Global에서 print 탐색
+  LOAD_GLOBAL    x              ← 전역 변수 x (LOAD_GLOBAL)
+  CALL           1
+  LOAD_GLOBAL    print
+  LOAD_DEREF     y              ← Enclosing cell에서 y (LOAD_DEREF)
+  CALL           1
+  LOAD_GLOBAL    print
+  LOAD_FAST      z              ← 지역 변수 z (LOAD_FAST)
+  CALL           1
+    </div>
+    <p>
+      함수 호출마다 <strong>_PyInterpreterFrame</strong>이 C 스택에 할당됩니다 (CPython 3.12+, 3.11 이전에는 PyFrameObject가 힙에 할당):
+    </p>
+    <ul>
+      <li><code>f_locals</code>: 지역 변수를 딕셔너리로 제공 (실제 LOAD_FAST/STORE_FAST는 _PyInterpreterFrame의 localsplus 배열을 인덱스로 접근 (CPython 3.12 기준))</li>
+      <li><code>f_globals</code>: LOAD_GLOBAL이 탐색하는 딕셔너리 (모듈 전체 공유)</li>
+      <li><code>f_builtins</code>: LOAD_GLOBAL에서 f_globals에 없을 때 탐색</li>
+      <li><code>f_back</code>: 호출한 프레임 (call stack 역방향 링크)</li>
+    </ul>
+    <h3>Part B — Lexical Scoping vs Dynamic Scoping</h3>
+    <p>
+      Python은 <strong>Lexical Scoping(정적 스코핑)</strong>을 채택합니다:
+      변수의 범위가 <em>소스 코드의 구조(텍스트 위치)</em>에 의해 결정됩니다.
+    </p>
+    <p>
+      반면 <strong>Dynamic Scoping</strong>에서는 변수 범위가 <em>런타임 호출 스택</em>에 의해 결정됩니다.
+      Emacs Lisp, 초기 Perl이 동적 스코핑을 사용했습니다.
+    </p>
+    <pre><code class="language-python">x = "global"
+
+def print_x():
+    print(x)   # Lexical: 정의 위치의 x = "global"
+
+def caller():
+    x = "caller_local"   # Dynamic이었다면 print_x()에서 이 x가 보였겠지만
+    print_x()            # Lexical: print_x는 자신이 정의된 곳의 x를 봄
+
+caller()   # "global" 출력 — Lexical scoping</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+global
+    </div>
+    <p>
+      Python이 Lexical Scoping을 선택한 이유: 코드를 읽는 것만으로 변수가 어디서 오는지
+      파악 가능하여 추론 용이성(Reasonability)이 높습니다.
+      Dynamic Scoping은 호출 경로를 추적해야 하므로 디버깅이 어렵습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 06. 인자 전달 방식 ==================== -->
+<section id="arguments">
+  <h2>인자 전달 방식 — Pass by Object Reference</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>위치 인수, 키워드 인수, 기본값 매개변수</h3>
+    <pre><code class="language-python">def describe_pet(name, species, age=1):
+    """반려동물 정보를 출력."""
+    print(f"{name}은(는) {species}이고 {age}살입니다.")
+
+# 위치 인수 (Positional): 순서대로 전달
+describe_pet("뽀삐", "강아지", 3)
+
+# 키워드 인수 (Keyword): 이름으로 지정
+describe_pet(species="고양이", name="나비", age=5)
+
+# 기본값 사용: age를 생략하면 기본값 1 사용
+describe_pet("해피", "토끼")
+
+# 혼합: 위치 인수 먼저, 키워드 인수 뒤
+describe_pet("쿠키", "햄스터", age=2)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+뽀삐은(는) 강아지이고 3살입니다.
+나비은(는) 고양이이고 5살입니다.
+해피은(는) 토끼이고 1살입니다.
+쿠키은(는) 햄스터이고 2살입니다.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>*args, **kwargs / keyword-only arguments</h3>
+    <pre><code class="language-python"># *args: 가변 위치 인수 — 튜플로 묶임
+def total(*args):
+    """임의 개수의 숫자를 모두 더함."""
+    print(f"받은 인수: {args}")   # 튜플
+    return sum(args)
+
+print(total(1, 2, 3))          # 6
+print(total(10, 20, 30, 40))   # 100</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+받은 인수: (1, 2, 3)
+6
+받은 인수: (10, 20, 30, 40)
+100
+    </div>
+    <pre><code class="language-python"># **kwargs: 가변 키워드 인수 — 딕셔너리로 묶임
+def print_info(**kwargs):
+    """임의 이름-값 쌍을 출력."""
+    print(f"받은 키워드: {kwargs}")   # 딕셔너리
+    for key, value in kwargs.items():
+        print(f"  {key}: {value}")
+
+print_info(name="민수", age=20, city="Seoul")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+받은 키워드: {'name': '민수', 'age': 20, 'city': 'Seoul'}
+  name: 민수
+  age: 20
+  city: Seoul
+    </div>
+    <pre><code class="language-python"># keyword-only arguments: * 이후의 매개변수는 반드시 키워드로 전달
+def send_message(message, *, to, subject="알림"):
+    """to와 subject는 반드시 키워드로 지정해야 함."""
+    print(f"[{subject}] {to}에게: {message}")
+
+send_message("안녕하세요", to="민수", subject="인사")
+# send_message("안녕하세요", "민수")  # TypeError: to는 keyword-only</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+[인사] 민수에게: 안녕하세요
+    </div>
+    <div class="callout callout-info">
+      <strong>인수 종류 정리:</strong>
+      <table style="width:100%; border-collapse: collapse; margin-top: 8px;">
+        <thead>
+          <tr style="background: var(--bg-code);">
+            <th style="padding:6px; border:1px solid var(--border);">종류</th>
+            <th style="padding:6px; border:1px solid var(--border);">문법</th>
+            <th style="padding:6px; border:1px solid var(--border);">받는 타입</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:6px; border:1px solid var(--border);">위치 인수</td><td style="padding:6px; border:1px solid var(--border);"><code>def f(a, b):</code></td><td style="padding:6px; border:1px solid var(--border);">순서대로</td></tr>
+          <tr><td style="padding:6px; border:1px solid var(--border);">기본값</td><td style="padding:6px; border:1px solid var(--border);"><code>def f(a, b=0):</code></td><td style="padding:6px; border:1px solid var(--border);">생략 가능</td></tr>
+          <tr><td style="padding:6px; border:1px solid var(--border);">가변 위치</td><td style="padding:6px; border:1px solid var(--border);"><code>def f(*args):</code></td><td style="padding:6px; border:1px solid var(--border);">튜플</td></tr>
+          <tr><td style="padding:6px; border:1px solid var(--border);">keyword-only</td><td style="padding:6px; border:1px solid var(--border);"><code>def f(*, key):</code></td><td style="padding:6px; border:1px solid var(--border);">키워드 필수</td></tr>
+          <tr><td style="padding:6px; border:1px solid var(--border);">가변 키워드</td><td style="padding:6px; border:1px solid var(--border);"><code>def f(**kwargs):</code></td><td style="padding:6px; border:1px solid var(--border);">딕셔너리</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Pass by Object Reference / mutable 기본값 함정</h3>
+    <div class="callout callout-info">
+      <strong>Python의 인자 전달:</strong><br>
+      Python은 Call by Value도, Call by Reference도 아닙니다.<br>
+      <strong>Pass by Object Reference</strong>: 객체에 대한 참조(포인터)를 값으로 전달합니다.
+    </div>
+    <pre><code class="language-python"># immutable 객체 (int, str, tuple): 함수 안에서 변경 불가
+def try_modify_int(x):
+    x = x + 1   # 새 int 객체를 만들어 지역 x에 바인딩
+    print(f"함수 안: {x}")
+
+n = 10
+try_modify_int(n)
+print(f"함수 밖: {n}")   # 여전히 10 — 원본 불변</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+함수 안: 11
+함수 밖: 10
+    </div>
+    <pre><code class="language-python"># mutable 객체 (list, dict): 함수 안에서 내용 변경 가능
+def append_item(lst, item):
+    lst.append(item)   # 같은 리스트 객체를 변경
+
+my_list = [1, 2, 3]
+append_item(my_list, 4)
+print(my_list)   # [1, 2, 3, 4] — 원본이 변경됨!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+[1, 2, 3, 4]
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 파이썬의 가장 유명한 함정 — 가변 기본 인수(Mutable Default Argument):</strong>
+      <pre><code class="language-python"># ❌ 위험: 기본값으로 [] 사용
+def append_to(element, lst=[]):   # lst=[]는 함수 정의 시 한 번만 생성!
+    lst.append(element)
+    return lst
+
+print(append_to(1))   # [1]
+print(append_to(2))   # [1, 2] ← 2만 있어야 하는데!
+print(append_to(3))   # [1, 2, 3] ← 같은 리스트를 계속 공유
+
+# 왜? 기본값은 함수 객체에 저장됨 (호출마다 새로 만들지 않음)
+print(append_to.__defaults__)   # ([1, 2, 3],) ← 누적된 상태!
+
+# ✅ 해결: None을 기본값으로 사용
+def append_to_safe(element, lst=None):
+    if lst is None:
+        lst = []   # 호출마다 새 리스트 생성
+    lst.append(element)
+    return lst
+
+print(append_to_safe(1))   # [1]
+print(append_to_safe(2))   # [2] ← 독립적!
+print(append_to_safe(3))   # [3] ← 독립적!</code></pre>
+      <strong>규칙:</strong> 함수 기본 인수에는 절대 <code>[]</code>, <code>{}</code>, <code>set()</code> 등 가변 객체를 사용하지 마세요.
+      항상 <code>None</code>을 사용하고 함수 내부에서 생성하세요.
+    </div>
+    <pre><code class="language-python"># 함정 확인: 기본값 객체의 identity
+def f(lst=[]):
+    lst.append(1)
+    return lst
+
+print(f.__defaults__)       # ([],) — 처음엔 빈 리스트
+f()
+print(f.__defaults__)       # ([1],) — 기본값이 변해버림!
+f()
+print(f.__defaults__)       # ([1, 1],)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+([],)
+([1],)
+([1, 1],)
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — CALL 바이트코드 (CPython 3.12)</h3>
+    <pre><code class="language-python">import dis
+
+def call_example():
+    def add(a, b):
+        return a + b
+    result = add(10, 20)
+    return result
+
+dis.dis(call_example)</code></pre>
+    <div class="output-block">
+      <div class="output-label">call_example 핵심 바이트코드 (Python 3.12):</div>
+  LOAD_FAST      add           ← 함수 객체를 스택에 push
+  LOAD_CONST     10            ← 첫 번째 인수
+  LOAD_CONST     20            ← 두 번째 인수
+  CALL           2             ← 인수 2개로 함수 호출 (CPython 3.12)
+  STORE_FAST     result
+    </div>
+    <p>
+      CPython 3.12에서 <code>CALL</code>은 이전 버전의 <code>CALL_FUNCTION</code>을 대체합니다.
+      인수는 스택에 순서대로 push된 뒤, <code>CALL N</code>이 스택에서 N개의 인수와 함수 객체를 꺼내
+      새 <code>PyFrameObject</code>를 생성하고 함수 body의 바이트코드를 실행합니다.
+    </p>
+    <h3>Part B — Evaluation Strategy: Eager vs Lazy</h3>
+    <p>
+      Python은 <strong>Strict (Eager) Evaluation</strong>을 사용합니다:
+      함수를 호출하기 전에 <em>모든 인수가 완전히 평가</em>됩니다.
+    </p>
+    <pre><code class="language-python">def first_arg(a, b):
+    return a
+
+# Eager: b=print("B") 는 함수 호출 전에 먼저 평가됨
+result = first_arg(print("A"), print("B"))</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+A
+B
+    </div>
+    <p>
+      Haskell의 Lazy Evaluation과 달리, Python은 사용되지 않는 인수도 먼저 평가합니다.
+      이것이 기본값으로 mutable이 위험한 이유이기도 합니다 — 기본값 표현식이
+      <em>함수 정의 시점</em>에 즉시 평가되어 고정됩니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 07. 재귀와 Call Stack ==================== -->
+<section id="recursion">
+  <h2>재귀와 Call Stack — 함수가 자기 자신을 부르다</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 마트료시카 (러시아 인형)</h3>
+    <div class="callout callout-info">
+      <strong>마트료시카 비유:</strong><br>
+      러시아 인형을 열면 안에 똑같은 모양의 더 작은 인형이 있습니다.
+      계속 열다 보면 더 이상 열 수 없는 제일 작은 인형이 나옵니다.<br><br>
+      재귀 함수도 같습니다:
+      함수가 더 작은 같은 문제를 계속 부르다가, <strong>더 이상 쪼갤 수 없는 기저 사례(base case)</strong>에서 멈춥니다.
+    </div>
+    <pre><code class="language-python">def factorial(n):
+    """n의 팩토리얼을 계산한다. (n! = n × (n-1) × ... × 1)"""
+    if n == 0:          # base case: 더 이상 쪼갤 수 없음
+        return 1
+    return n * factorial(n - 1)   # recursive case: 더 작은 문제를 호출
+
+print(factorial(5))   # 120
+print(factorial(0))   # 1
+print(factorial(1))   # 1</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+120
+1
+1
+    </div>
+    <div class="callout callout-info">
+      <strong>재귀의 두 필수 요소:</strong><br>
+      1. <strong>base case</strong>: 재귀를 멈추는 조건 — 없으면 무한 재귀!<br>
+      2. <strong>recursive case</strong>: 문제를 더 작게 줄여 자기 자신을 호출
+    </div>
+    <pre><code class="language-python"># factorial(3) 실행 흐름
+# factorial(3)
+#   → 3 * factorial(2)
+#          → 2 * factorial(1)
+#                 → 1 * factorial(0)
+#                        → 1  (base case!)
+#                 ← 1 * 1 = 1
+#          ← 2 * 1 = 2
+#   ← 3 * 2 = 6
+print(factorial(3))   # 6</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+6
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>피보나치: 재귀 vs 반복 / Call Stack 시각화</h3>
+    <pre><code class="language-python"># 재귀 피보나치 — 직관적이지만 느림
+def fib_recursive(n):
+    if n &lt;= 1:
+        return n
+    return fib_recursive(n - 1) + fib_recursive(n - 2)
+
+# 반복 피보나치 — 빠름
+def fib_iterative(n):
+    if n &lt;= 1:
+        return n
+    a, b = 0, 1
+    for _ in range(n - 1):
+        a, b = b, a + b
+    return b
+
+print(fib_recursive(10))   # 55
+print(fib_iterative(10))   # 55</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+55
+55
+    </div>
+    <pre><code class="language-python">import sys
+
+# 재귀 깊이 제한 확인
+print(sys.getrecursionlimit())   # 기본값: 1000
+
+# 재귀 Call Stack을 들여쓰기로 시각화
+def factorial_verbose(n, depth=0):
+    indent = "  " * depth
+    print(f"{indent}factorial({n}) 호출")
+    if n == 0:
+        print(f"{indent}→ base case: return 1")
+        return 1
+    result = n * factorial_verbose(n - 1, depth + 1)
+    print(f"{indent}→ {n} * ... = {result}")
+    return result
+
+factorial_verbose(4)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+factorial(4) 호출
+  factorial(3) 호출
+    factorial(2) 호출
+      factorial(1) 호출
+        factorial(0) 호출
+        → base case: return 1
+      → 1 * ... = 1
+    → 2 * ... = 2
+  → 3 * ... = 6
+→ 4 * ... = 24
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 함정 — base case를 빼먹으면?</strong>
+      <pre><code class="language-python"># ❌ base case 없는 재귀 → RecursionError
+def infinite_recursion(n):
+    return infinite_recursion(n - 1)   # 멈추는 조건이 없음!
+
+try:
+    infinite_recursion(5)
+except RecursionError as e:
+    print(f"에러 발생: {e}")
+    print(f"재귀 제한: {__import__('sys').getrecursionlimit()}")</code></pre>
+      <div class="output-block">
+        <div class="output-label">실행 결과:</div>
+에러 발생: maximum recursion depth exceeded
+재귀 제한: 1000
+      </div>
+      <p>
+        Python은 재귀 깊이가 <code>sys.getrecursionlimit()</code>(기본 1000)을 초과하면
+        <code>RecursionError</code>를 발생시켜 스택 오버플로를 방지합니다.
+        base case를 반드시 먼저 작성하세요!
+      </p>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>lru_cache 메모이제이션 / 꼬리 재귀(TCO) / 하노이 탑</h3>
+    <pre><code class="language-python">from functools import lru_cache
+import time
+
+# 메모이제이션 없는 재귀 피보나치 — 지수 시간 O(2^n)
+def fib_slow(n):
+    if n &lt;= 1:
+        return n
+    return fib_slow(n-1) + fib_slow(n-2)
+
+# lru_cache로 결과를 캐시 — 선형 시간 O(n)
+@lru_cache(maxsize=None)
+def fib_fast(n):
+    if n &lt;= 1:
+        return n
+    return fib_fast(n-1) + fib_fast(n-2)
+
+start = time.time()
+fib_slow(35)
+print(f"캐시 없음: {time.time() - start:.3f}초")
+
+start = time.time()
+fib_fast(35)
+print(f"lru_cache: {time.time() - start:.6f}초")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (대략적):</div>
+캐시 없음: 2.800초
+lru_cache: 0.000001초
+    </div>
+    <div class="callout callout-info">
+      <strong>lru_cache의 동작 원리:</strong><br>
+      LRU = Least Recently Used. 함수 인수를 키로 하는 딕셔너리에 결과를 저장합니다.
+      같은 인수로 다시 호출되면 함수 실행 없이 캐시에서 즉시 반환합니다.<br>
+      <code>fib(35)</code> 계산 시 <code>fib_slow</code>는 약 2,900만 번 호출되지만, <code>fib_fast</code>는 36번만 호출됩니다.
+      <pre><code class="language-python"># cache_info()로 캐시 히트/미스 확인
+@lru_cache(maxsize=None)
+def fib(n):
+    if n &lt;= 1:
+        return n
+    return fib(n-1) + fib(n-2)
+
+fib(10)
+print(fib.cache_info())
+# CacheInfo(hits=8, misses=11, maxsize=None, currsize=11)</code></pre>
+    </div>
+    <pre><code class="language-python"># 하노이 탑 — 재귀의 우아한 예
+def hanoi(n, source, target, auxiliary):
+    """원판 n개를 source에서 target으로 이동."""
+    if n == 1:
+        print(f"원판 1: {source} → {target}")
+        return
+    hanoi(n - 1, source, auxiliary, target)
+    print(f"원판 {n}: {source} → {target}")
+    hanoi(n - 1, auxiliary, target, source)
+
+hanoi(3, "A", "C", "B")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+원판 1: A → C
+원판 2: A → B
+원판 1: C → B
+원판 3: A → C
+원판 1: B → A
+원판 2: B → C
+원판 1: A → C
+    </div>
+    <div class="callout callout-info">
+      <strong>꼬리 재귀(Tail Recursion)와 Python:</strong><br>
+      꼬리 재귀는 재귀 호출이 함수의 마지막 연산인 경우입니다.
+      많은 언어가 TCO(Tail Call Optimization)로 이를 반복문으로 변환합니다.
+      그러나 <strong>Python은 TCO를 의도적으로 지원하지 않습니다.</strong><br>
+      Guido van Rossum의 이유: "TCO를 적용하면 traceback이 망가진다.
+      Python은 디버깅 가능성(Debuggability)을 성능보다 우선한다."
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — 재귀 호출과 PyFrameObject 생성</h3>
+    <pre><code class="language-python">import inspect, sys
+
+def recursive_frames(n):
+    """재귀 깊이에 따른 frame 생성을 측정."""
+    if n == 0:
+        # 현재 call stack의 모든 frame 출력
+        stack = inspect.stack()
+        print(f"현재 스택 깊이: {len(stack)}")
+        # frame 정보 출력 (상위 5개)
+        for i, frame_info in enumerate(stack[:5]):
+            print(f"  [{i}] {frame_info.function}:{frame_info.lineno}")
+        return
+    recursive_frames(n - 1)
+
+recursive_frames(5)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (요약):</div>
+현재 스택 깊이: 9
+  [0] recursive_frames:9
+  [1] recursive_frames:14
+  [2] recursive_frames:14
+  [3] recursive_frames:14
+  [4] recursive_frames:14
+    </div>
+    <p>
+      재귀 호출마다 새로운 <code>_PyInterpreterFrame</code>이 C 스택에 할당되고 (3.12+, 이전에는 PyFrameObject가 힙에 할당) <code>f_back</code>으로
+      이전 프레임을 가리킵니다. <code>sys.getrecursionlimit()</code>(기본값 1000)은
+      이 체인의 최대 깊이를 제한합니다 — 스택 오버플로 방지.
+    </p>
+    <pre><code class="language-python"># 재귀 깊이에 따른 메모리 사용 측정
+import sys
+
+def measure_frame_depth(n):
+    if n == 0:
+        frame = sys._getframe()
+        depth = 0
+        while frame is not None:
+            depth += 1
+            frame = frame.f_back
+        return depth
+    return measure_frame_depth(n - 1)
+
+for depth in [10, 100, 500]:
+    print(f"재귀 {depth}단계 → frame 체인 길이: {measure_frame_depth(depth)}")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (대략적):</div>
+재귀 10단계 → frame 체인 길이: 12
+재귀 100단계 → frame 체인 길이: 102
+재귀 500단계 → frame 체인 길이: 502
+    </div>
+    <h3>Part B — TCO 이론과 Python의 선택</h3>
+    <p>
+      <strong>Tail Call Optimization(TCO)</strong>: 꼬리 위치의 재귀 호출을 컴파일러가
+      <code>JUMP</code>로 변환하여 새 스택 프레임을 만들지 않는 최적화.
+      Scheme, Haskell, Scala 등이 지원합니다.
+    </p>
+    <p>
+      Python이 TCO를 지원하지 않는 구체적 이유 (Guido van Rossum, 2009):
+    </p>
+    <ol>
+      <li>TCO는 traceback에서 중간 스택 프레임을 제거합니다 — 디버깅 시 정보 손실.</li>
+      <li>Python의 <code>sys.settrace()</code> 기반 디버거/프로파일러가 모든 프레임을 기대합니다.</li>
+      <li>반복문으로 재작성하는 것이 파이썬다운(Pythonic) 해결책이라고 봅니다.</li>
+    </ol>
+    <p>
+      이 결정은 성능보다 <strong>명시성(Explicitness)</strong>을 우선하는 Python의 철학(Zen of Python)을 반영합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 08. 클로저 ==================== -->
+<section id="closure">
+  <h2>클로저 — 함수가 외부 변수를 기억하는 방법</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 가방에 물건 넣어가기</h3>
+    <div class="callout callout-info">
+      <strong>가방 비유:</strong><br>
+      여행을 떠날 때 집의 물건을 가방에 담아 나옵니다.
+      집(외부 함수)이 사라져도 가방(내부 함수) 안의 물건은 남아 있습니다.<br><br>
+      클로저 = 함수가 정의될 때 주변 변수를 "가방에 담아" 가지고 다니는 것.
+    </div>
+    <pre><code class="language-python">def make_greeting(greeting):
+    """인사말을 고정한 함수를 반환."""
+    def say_hello(name):
+        return f"{greeting}, {name}!"   # 외부의 greeting을 기억
+    return say_hello   # 내부 함수를 반환
+
+# make_greeting 호출 끝났지만 greeting을 기억
+hi = make_greeting("안녕")
+good_morning = make_greeting("좋은 아침이에요")
+
+print(hi("민수"))             # 안녕, 민수!
+print(hi("지은"))               # 안녕, 지은!
+print(good_morning("서연"))   # 좋은 아침이에요, 서연!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+안녕, 민수!
+안녕, 지은!
+좋은 아침이에요, 서연!
+    </div>
+    <p>
+      <code>make_greeting("안녕")</code>이 끝나고 함수가 사라진 뒤에도,
+      반환된 <code>say_hello</code>는 <code>"안녕"</code>을 기억합니다.
+      이것이 <strong>클로저(Closure)</strong>입니다.
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>nonlocal로 클로저 카운터 / 데코레이터 기초</h3>
+    <pre><code class="language-python"># 클로저 카운터 — nonlocal로 외부 변수 수정
+def make_counter(start=0):
+    count = start
+    def increment(by=1):
+        nonlocal count
+        count += by
+        return count
+    def reset():
+        nonlocal count
+        count = start
+    increment.reset = reset   # 함수 객체에 속성 추가
+    return increment
+
+c = make_counter(10)
+print(c())    # 11
+print(c())    # 12
+print(c(5))   # 17
+c.reset()
+print(c())    # 11</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+11
+12
+17
+11
+    </div>
+    <pre><code class="language-python"># 데코레이터 기초 — 함수를 받아 함수를 반환
+def log_call(func):
+    """함수 호출 전후에 로그를 출력하는 데코레이터."""
+    def wrapper(*args, **kwargs):
+        print(f"{func.__name__} 호출됨: args={args}")
+        result = func(*args, **kwargs)
+        print(f"{func.__name__} 완료: result={result}")
+        return result
+    return wrapper
+
+@log_call   # add = log_call(add)와 동일
+def add(a, b):
+    return a + b
+
+add(3, 4)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+add 호출됨: args=(3, 4)
+add 완료: result=7
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>@functools.wraps / 실용 데코레이터 / 루프 변수 캡처 함정</h3>
+    <pre><code class="language-python">import time, functools
+
+# functools.wraps: 원본 함수 메타데이터 보존
+def timer(func):
+    @functools.wraps(func)   # func의 __name__, __doc__ 등을 wrapper에 복사
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        print(f"{func.__name__}: {elapsed:.6f}초")
+        return result
+    return wrapper
+
+@timer
+def compute_sum(n):
+    """1부터 n까지의 합을 계산."""
+    return sum(range(n + 1))
+
+result = compute_sum(1_000_000)
+print(result)
+print(compute_sum.__name__)   # 'compute_sum' — wraps 덕분에 보존됨
+print(compute_sum.__doc__)    # '1부터 n까지의 합을 계산.'</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+compute_sum: 0.029000초
+500000500000
+compute_sum
+1부터 n까지의 합을 계산.
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — 루프에서 클로저 변수 포획:</strong>
+      <pre><code class="language-python"># ❌ 의도와 다른 동작
+functions = []
+for i in range(5):
+    def f():
+        return i   # i를 클로저로 포획
+    functions.append(f)
+
+# 루프 종료 후 i = 4
+print([f() for f in functions])   # [4, 4, 4, 4, 4] ← 모두 4!
+# 왜? 모든 f가 같은 i 변수를 참조, 루프 종료 시 i=4
+
+# ✅ 해결 1: 기본 인수로 값 복사
+functions = []
+for i in range(5):
+    def f(i=i):   # i=i: 현재 i 값을 기본 인수에 복사
+        return i
+    functions.append(f)
+print([f() for f in functions])   # [0, 1, 2, 3, 4] ✅
+
+# ✅ 해결 2: 클로저 팩토리
+def make_func(i):
+    def f():
+        return i   # 팩토리 호출마다 새 cell에 현재 i 값 저장
+    return f
+
+functions = [make_func(i) for i in range(5)]
+print([f() for f in functions])   # [0, 1, 2, 3, 4] ✅</code></pre>
+      <strong>원인:</strong> 클로저는 변수 자체를 참조합니다 (값의 복사가 아닙니다). 루프가 끝나면 변수에는 마지막 값이 남습니다.
+    </div>
+    <p>
+      함정의 원인: 클로저는 변수의 <em>현재 값</em>이 아니라 <em>변수 자체</em>(cell)를 캡처합니다.
+      루프가 끝난 시점에 i가 마지막 값이므로 모든 함수가 같은 값을 봅니다.
+    </p>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — cell objects와 LOAD_DEREF / STORE_DEREF</h3>
+    <pre><code class="language-python">import dis
+
+def outer():
+    x = 10   # cell variable — 내부 함수가 참조
+
+    def inner():
+        return x   # LOAD_DEREF: cell에서 읽음
+
+    return inner
+
+f = outer()
+
+# __closure__: cell 객체들의 튜플
+print(f.__closure__)                        # (&lt;cell at 0x...&gt;,)
+print(type(f.__closure__[0]))               # &lt;class 'cell'&gt;
+print(f.__closure__[0].cell_contents)       # 10
+
+# code object에서 자유 변수 이름 확인
+print(f.__code__.co_freevars)               # ('x',)
+
+# 바이트코드에서 LOAD_DEREF 확인
+dis.dis(f)</code></pre>
+    <div class="output-block">
+      <div class="output-label">inner 함수 바이트코드 (Python 3.12):</div>
+  COPY_FREE_VARS  1
+  LOAD_DEREF     x    ← cell에서 x 값을 읽음 (LOAD_FAST가 아님!)
+  RETURN_VALUE
+    </div>
+    <pre><code class="language-python"># nonlocal을 쓰면 STORE_DEREF도 생성됨
+def make_counter():
+    count = 0
+    def increment():
+        nonlocal count   # STORE_DEREF 사용
+        count += 1
+        return count
+    return increment
+
+c = make_counter()
+print(c.__code__.co_freevars)   # ('count',)
+print(c())   # 1
+print(c.__closure__[0].cell_contents)   # 1 — cell 내용이 변경됨
+print(c())   # 2
+print(c.__closure__[0].cell_contents)   # 2</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+('count',)
+1
+1
+2
+2
+    </div>
+    <h3>Part B — 클로저의 함수형 프로그래밍 의미론</h3>
+    <p>
+      함수형 프로그래밍에서 <strong>자유 변수(Free Variable)</strong>는
+      함수 내에서 사용되지만 함수 내에서 정의되지 않은 변수입니다.
+      클로저는 함수 + 자유 변수들의 <em>환경(Environment)</em>을 묶은 것입니다.
+    </p>
+    <p>
+      CPython에서 cell은 힙에 할당되어 외부 함수가 반환된 뒤에도 생존합니다.
+      외부 함수의 지역 변수는 보통 함수 종료 시 해제되지만,
+      내부 함수(클로저)가 참조하는 변수는 cell로 승격되어 힙에 남습니다.
+      이것이 클로저가 "상태를 기억"할 수 있는 메커니즘입니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 09. AI와 함수 ==================== -->
+<section id="ai-functions">
+  <h2>AI와 함수 — AI가 만든 함수를 검토하는 방법</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>AI 함수 검토 체크리스트 3가지</h3>
+    <div class="callout callout-info">
+      <strong>AI가 함수를 만들어줬을 때 반드시 확인하세요:</strong>
+    </div>
+    <ol>
+      <li>
+        <strong>return이 있는가?</strong> — return을 빠뜨리면 None을 반환합니다.
+        <pre><code class="language-python"># ❌ AI가 자주 빠뜨리는 return
+def get_squared(x):
+    x * x   # return이 없음! None 반환
+
+result = get_squared(5)
+print(result)   # None — 예상했던 25가 아님!
+
+# ✅ 수정
+def get_squared(x):
+    return x * x</code></pre>
+      </li>
+      <li>
+        <strong>부작용(Side Effect)이 있는가?</strong> — 전역 변수를 몰래 수정하는 함수.
+        <pre><code class="language-python">data = []   # 전역 변수
+
+# ❌ 부작용: 전역 data를 수정
+def add_item(item):
+    data.append(item)   # 전역 data 변경!
+
+# ✅ 부작용 없음: 새 리스트를 반환
+def add_item_safe(lst, item):
+    return lst + [item]   # 원본 변경 없음</code></pre>
+      </li>
+      <li>
+        <strong>기본값으로 mutable을 썼는가?</strong> — 리스트/딕셔너리가 기본값이면 위험합니다.
+        <pre><code class="language-python"># ❌ 위험한 기본값
+def collect(item, result=[]):
+    result.append(item)
+    return result
+
+# ✅ 안전한 기본값
+def collect_safe(item, result=None):
+    if result is None:
+        result = []
+    result.append(item)
+    return result</code></pre>
+      </li>
+    </ol>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>순수 함수(Pure Function) vs 부작용 함수</h3>
+    <pre><code class="language-python"># 순수 함수(Pure Function): 같은 입력 → 항상 같은 출력, 부작용 없음
+def pure_add(a, b):
+    return a + b   # 외부 상태 읽지도 쓰지도 않음
+
+# 부작용 함수: 외부 상태에 의존하거나 변경
+total = 0
+def impure_add(n):
+    global total
+    total += n   # 전역 변수 수정 = 부작용
+    return total
+
+print(pure_add(3, 4))   # 항상 7
+print(pure_add(3, 4))   # 항상 7
+
+print(impure_add(3))    # 3 (total이 0이었을 때)
+print(impure_add(3))    # 6 (total이 이미 3으로 바뀌었으므로)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+7
+7
+3
+6
+    </div>
+    <div class="callout callout-info">
+      <strong>AI에게 순수 함수 요청하기:</strong><br>
+      "전역 변수를 쓰지 말고 순수 함수(pure function)로 작성해줘.
+      외부 상태를 변경하지 말고 결과만 return으로 돌려줘."
+    </div>
+    <pre><code class="language-python"># AI가 자주 쓰는 과도한 global 패턴
+state = {"count": 0, "total": 0}
+
+# ❌ AI가 생성한 코드 (global 남용)
+def update(n):
+    global state
+    state["count"] += 1
+    state["total"] += n
+
+# ✅ 개선: 상태를 인수로 받고 새 상태를 반환
+def update_pure(state, n):
+    return {
+        "count": state["count"] + 1,
+        "total": state["total"] + n
+    }
+
+s = {"count": 0, "total": 0}
+s = update_pure(s, 10)
+s = update_pure(s, 20)
+print(s)   # {'count': 2, 'total': 30}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'count': 2, 'total': 30}
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>단일 책임 원칙(SRP) / AI 함수 리팩토링</h3>
+    <p>
+      <strong>단일 책임 원칙(Single Responsibility Principle)</strong>:
+      함수는 한 가지 일만 해야 합니다.
+      AI가 생성한 함수가 너무 길거나 여러 일을 동시에 하면 분리해야 합니다.
+    </p>
+    <div class="callout callout-info">
+      <strong>함수 길이 판단 기준:</strong><br>
+      · 20줄 이상이면 쪼갤 수 있는지 검토<br>
+      · 함수를 한 문장으로 설명하기 어렵다면 → 분리 신호<br>
+      · "그리고(and)"가 설명에 들어간다면 → 두 함수로 분리
+    </div>
+    <pre><code class="language-python"># ❌ AI가 생성한 함수 — 너무 많은 책임
+def process_students(students):
+    """학생 점수를 읽고, 필터링하고, 정렬하고, 출력까지 모두 함."""
+    result = []
+    for name, score in students:
+        if score >= 60:
+            result.append((name, score))
+    result.sort(key=lambda x: x[1], reverse=True)
+    print("통과한 학생 (점수 순):")
+    for name, score in result:
+        print(f"  {name}: {score}")
+    return result
+
+# ✅ 리팩토링: 각 책임을 분리
+def filter_passing(students, threshold=60):
+    """threshold 이상의 점수를 받은 학생만 반환."""
+    return [(name, score) for name, score in students if score >= threshold]
+
+def sort_by_score(students, reverse=True):
+    """점수 기준으로 정렬."""
+    return sorted(students, key=lambda x: x[1], reverse=reverse)
+
+def print_students(students, label="학생 목록"):
+    """학생 목록을 출력."""
+    print(f"{label}:")
+    for name, score in students:
+        print(f"  {name}: {score}")
+
+# 사용: 조합 방식으로 유연하게
+data = [("지민", 85), ("수현", 55), ("하은", 92), ("태우", 61)]
+passing = filter_passing(data)
+ranked = sort_by_score(passing)
+print_students(ranked, "통과한 학생 (점수 순)")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+통과한 학생 (점수 순):
+  하은: 92
+  지민: 85
+  태우: 61
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — type annotations + inspect.signature()</h3>
+    <pre><code class="language-python">import inspect
+from typing import Callable, TypeVar
+
+T = TypeVar('T')
+
+def apply_twice(func: Callable[[int], int], value: int) -> int:
+    """func을 value에 두 번 적용한다."""
+    return func(func(value))
+
+# inspect.signature()로 함수 시그니처 분석
+sig = inspect.signature(apply_twice)
+print(sig)                          # (func: Callable[[int], int], value: int) -> int
+
+for name, param in sig.parameters.items():
+    print(f"  {name}: kind={param.kind.name}, annotation={param.annotation}")
+
+# 반환 타입
+print(f"반환: {sig.return_annotation}")
+
+result = apply_twice(lambda x: x * 2, 3)
+print(result)   # 12 (3 → 6 → 12)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+(func: Callable[[int], int], value: int) -&gt; int
+  func: kind=POSITIONAL_OR_KEYWORD, annotation=Callable[[int], int]
+  value: kind=POSITIONAL_OR_KEYWORD, annotation=&lt;class 'int'&gt;
+반환: &lt;class 'int'&gt;
+12
+    </div>
+    <h3>Part B — 정적 타입 분석과 Liskov Substitution Principle</h3>
+    <p>
+      <strong>mypy</strong>는 Python 타입 힌트를 정적으로 분석합니다.
+      런타임 전에 타입 오류를 잡을 수 있어 AI가 생성한 코드를 검증하는 데 유용합니다.
+    </p>
+    <p>
+      <strong>Liskov Substitution Principle(LSP)</strong>은 함수 시그니처에도 적용됩니다:
+      더 구체적인 타입을 요구하거나 더 추상적인 타입을 반환하는 함수는 LSP를 위반합니다.
+    </p>
+    <pre><code class="language-python">from typing import Union
+
+# LSP 관점에서의 함수 시그니처
+# 올바른 예: 더 넓은 타입을 받아 더 좁은 타입을 반환 (공변 반환)
+def safe_parse(value: Union[int, str]) -> int:
+    """int 또는 str을 받아 항상 int를 반환."""
+    if isinstance(value, str):
+        return int(value)
+    return value
+
+# 잘못된 예: 반환 타입이 약속보다 더 광범위
+# def bad_parse(value: int) -> Union[int, None]:  # None은 호출자가 기대 안 함
+#     if value > 0:
+#         return value
+#     # return None은 암묵적 — 시그니처 위반
+
+print(safe_parse(42))    # 42
+print(safe_parse("99"))  # 99</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+42
+99
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. 실습 ==================== -->
+<section id="hands-on">
+  <h2>실습: 함수 분해 탐험</h2>
+
+  <div class="story-block">
+    <h3>실습 1 — dis.dis()로 함수 객체 해부하기</h3>
+    <p>
+      다음 세 함수의 바이트코드를 분석하고 MAKE_FUNCTION, CALL, LOAD_FAST,
+      LOAD_GLOBAL, LOAD_DEREF의 차이를 확인하세요.
+    </p>
+    <pre><code class="language-python">import dis
+
+def simple(x, y):
+    return x + y
+
+multiplier = 3
+def uses_global(x):
+    return x * multiplier   # 전역 변수 사용
+
+def outer_fn(n):
+    factor = n
+    def inner_fn(x):
+        return x * factor   # Enclosing 변수 사용
+    return inner_fn
+
+print("=== simple ===")
+dis.dis(simple)
+print("\n=== uses_global ===")
+dis.dis(uses_global)
+print("\n=== outer_fn ===")
+dis.dis(outer_fn)
+print("\n=== inner_fn ===")
+dis.dis(outer_fn(5))
+
+# 탐구 질문:
+# Q1. simple에서 x, y는 LOAD_FAST인가 LOAD_GLOBAL인가?
+# Q2. uses_global에서 multiplier는 어떤 바이트코드로 읽는가?
+# Q3. inner_fn에서 factor는 LOAD_FAST인가 LOAD_DEREF인가? 왜?</code></pre>
+
+    <h3>실습 2 — 클로저 상태 추적</h3>
+    <p>
+      클로저가 상태를 어떻게 유지하는지 cell object를 통해 직접 확인하세요.
+    </p>
+    <pre><code class="language-python">def make_accumulator(initial=0):
+    """누산기 — 호출할 때마다 값을 더해 반환."""
+    total = initial
+    def add(n):
+        nonlocal total
+        total += n
+        return total
+    return add
+
+acc = make_accumulator(100)
+
+# 호출 전 closure 확인
+print(f"초기 cell 값: {acc.__closure__[0].cell_contents}")
+
+acc(10)
+print(f"10 추가 후: {acc.__closure__[0].cell_contents}")
+
+acc(25)
+print(f"25 추가 후: {acc.__closure__[0].cell_contents}")
+
+# 두 개의 독립적인 누산기
+acc1 = make_accumulator(0)
+acc2 = make_accumulator(1000)
+
+acc1(50)
+acc2(50)
+print(f"acc1: {acc1.__closure__[0].cell_contents}")   # 50
+print(f"acc2: {acc2.__closure__[0].cell_contents}")   # 1050
+print(f"같은 cell인가? {acc1.__closure__[0] is acc2.__closure__[0]}")</code></pre>
+
+    <h3>실습 3 — LEGB 탐험: 이름이 어디서 오는가</h3>
+    <p>
+      각 print()에서 어느 LEGB 레이어의 변수가 출력되는지 맞춰보세요.
+    </p>
+    <pre><code class="language-python">x = "G"   # Global
+
+def level1():
+    x = "E1"   # Enclosing 1
+    def level2():
+        x = "E2"   # Enclosing 2
+        def level3():
+            # x는 정의하지 않음
+            print(x)   # 어디서? — E2 (Enclosing 2)
+        level3()
+        print(x)       # 어디서? — E2 (Local of level2)
+    level2()
+    print(x)           # 어디서? — E1 (Local of level1)
+
+level1()
+print(x)               # 어디서? — G (Global)
+
+# 확인: 각 print의 출력값을 예측한 후 실행해보세요</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 11. 연습문제 ==================== -->
+<section id="exercises">
+  <h2>연습문제 (13문제)</h2>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 1</span>
+    <h3>최대값 찾기</h3>
+    <p>for 루프로 리스트에서 최대값을 반환하는 함수를 작성하세요. <code>max()</code> 내장함수는 사용하지 않습니다:</p>
+    <pre><code class="language-python">def find_max(numbers):
+    """리스트에서 가장 큰 값을 반환.
+    빈 리스트면 None을 반환.
+    """
+    # 구현하세요
+    pass
+
+print(find_max([3, 1, 4, 1, 5, 9, 2, 6]))   # 9
+print(find_max([42]))                         # 42
+print(find_max([]))                           # None</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def find_max(numbers):
+    if not numbers:
+        return None
+    result = numbers[0]
+    for n in numbers[1:]:
+        if n > result:
+            result = n
+    return result</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 2</span>
+    <h3>단어 뒤집기</h3>
+    <p>문자열을 받아 거꾸로 뒤집어 반환하는 함수를 작성하세요. 슬라이싱을 사용하지 않고 for 루프로 구현하세요:</p>
+    <pre><code class="language-python">def reverse_string(s):
+    """문자열을 거꾸로 뒤집어 반환."""
+    # 구현하세요 — for 루프 사용, s[::-1] 사용 금지
+    pass
+
+print(reverse_string("hello"))     # "olleh"
+print(reverse_string("파이썬"))    # "썬이파"
+print(reverse_string(""))          # ""</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def reverse_string(s):
+    result = ""
+    for char in s:
+        result = char + result
+    return result</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 3</span>
+    <h3>짝수 필터</h3>
+    <p>리스트에서 짝수만 모아 새 리스트로 반환하는 함수를 작성하세요. filter() 사용 금지:</p>
+    <pre><code class="language-python">def filter_evens(numbers):
+    """리스트에서 짝수만 골라 반환."""
+    # 구현하세요
+    pass
+
+print(filter_evens([1, 2, 3, 4, 5, 6]))    # [2, 4, 6]
+print(filter_evens([1, 3, 5, 7]))           # []
+print(filter_evens([]))                     # []</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def filter_evens(numbers):
+    return [n for n in numbers if n % 2 == 0]</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 4</span>
+    <h3>온도 변환</h3>
+    <p>섭씨와 화씨를 상호 변환하는 함수를 작성하세요. 기본값 매개변수를 활용하세요:</p>
+    <pre><code class="language-python">def convert_temp(temp, to="F"):
+    """온도를 변환한다.
+    to='F': 섭씨 → 화씨  (공식: F = C × 9/5 + 32)
+    to='C': 화씨 → 섭씨  (공식: C = (F - 32) × 5/9)
+    """
+    # 구현하세요
+    pass
+
+print(convert_temp(100))       # 212.0 (섭씨 → 화씨, 기본값)
+print(convert_temp(32, "C"))   # 0.0   (화씨 → 섭씨)
+print(convert_temp(0))         # 32.0  (섭씨 → 화씨)</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def convert_temp(temp, to="F"):
+    if to == "F":
+        return temp * 9/5 + 32
+    elif to == "C":
+        return (temp - 32) * 5/9
+    else:
+        raise ValueError(f"올바르지 않은 단위: {to}")</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 5</span>
+    <h3>고차 함수 구현</h3>
+    <p><code>map(func, lst)</code>을 직접 구현하세요. 내장 <code>map()</code>은 사용하지 않습니다:</p>
+    <pre><code class="language-python">def my_map(func, lst):
+    """func을 lst의 각 원소에 적용한 결과 리스트를 반환."""
+    # 구현하세요
+    pass
+
+print(my_map(lambda x: x**2, [1, 2, 3, 4, 5]))   # [1, 4, 9, 16, 25]
+print(my_map(str.upper, ["hello", "world"]))       # ['HELLO', 'WORLD']
+print(my_map(lambda x: x * 2, []))                # []</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def my_map(func, lst):
+    result = []
+    for item in lst:
+        result.append(func(item))
+    return result
+# 또는 리스트 컴프리헨션: return [func(item) for item in lst]</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 6</span>
+    <h3>클로저 카운터</h3>
+    <p>호출 횟수를 세는 <code>make_counter()</code>를 클로저로 구현하세요. 클래스는 사용하지 않습니다:</p>
+    <pre><code class="language-python">def make_counter(start=0, step=1):
+    """start에서 시작해 step씩 증가하는 카운터를 반환.
+    반환된 함수를 호출할 때마다 현재 카운터 값을 반환하고 증가.
+    """
+    # 구현하세요 (nonlocal 사용)
+    pass
+
+c1 = make_counter()
+print(c1())   # 0
+print(c1())   # 1
+print(c1())   # 2
+
+c2 = make_counter(start=10, step=5)
+print(c2())   # 10
+print(c2())   # 15</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def make_counter(start=0, step=1):
+    count = start
+    def counter():
+        nonlocal count
+        current = count
+        count += step
+        return current
+    return counter</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 7</span>
+    <h3>재귀로 리스트 합산</h3>
+    <p>내장 <code>sum()</code>을 사용하지 않고 재귀로 리스트 합산을 구현하세요:</p>
+    <pre><code class="language-python">def recursive_sum(lst):
+    """리스트의 모든 원소를 재귀로 합산.
+    hint: 빈 리스트면 0, 아니면 첫 원소 + 나머지의 합
+    """
+    # 구현하세요 — base case와 recursive case 모두 작성
+    pass
+
+print(recursive_sum([1, 2, 3, 4, 5]))   # 15
+print(recursive_sum([10]))              # 10
+print(recursive_sum([]))               # 0</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def recursive_sum(lst):
+    if not lst:          # base case: 빈 리스트
+        return 0
+    return lst[0] + recursive_sum(lst[1:])   # recursive case</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 8</span>
+    <h3>데코레이터 구현</h3>
+    <p>함수 실행 시간을 측정하는 데코레이터를 구현하세요. <code>@functools.wraps</code>를 사용해 원본 함수 이름을 보존하세요:</p>
+    <pre><code class="language-python">import time, functools
+
+def timer(func):
+    """함수 실행 시간을 밀리초로 출력하는 데코레이터."""
+    # 구현하세요
+    # wrapper 안에서: 시작 시간 측정 → func 호출 → 종료 시간 측정 → 출력
+    pass
+
+@timer
+def slow_sum(n):
+    """1부터 n까지 합산."""
+    total = 0
+    for i in range(n):
+        total += i
+    return total
+
+result = slow_sum(1_000_000)
+# 출력 예시: slow_sum: 23.45ms
+print(f"결과: {result}")
+print(slow_sum.__name__)   # 'slow_sum' — wraps 덕분에 보존</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">import time, functools
+
+def timer(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        elapsed = (time.perf_counter() - start) * 1000
+        print(f"{func.__name__}: {elapsed:.2f}ms")
+        return result
+    return wrapper</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-adv">
+    <span class="level-badge level-advanced">고급 9</span>
+    <h3>LEGB 탐구 — global/nonlocal 동작을 바이트코드로 분석</h3>
+    <p>다음 세 함수의 바이트코드를 분석하고, 같은 이름 <code>x</code>를 읽는 방식의 차이를 설명하세요:</p>
+    <pre><code class="language-python">import dis
+
+x = "global"
+
+def reads_global():
+    return x   # LOAD_GLOBAL
+
+def reads_local():
+    x = "local"
+    return x   # LOAD_FAST
+
+def outer_fn():
+    x = "enclosing"
+    def reads_enclosing():
+        return x   # LOAD_DEREF
+    return reads_enclosing
+
+print("=== reads_global ===")
+dis.dis(reads_global)
+
+print("\n=== reads_local ===")
+dis.dis(reads_local)
+
+print("\n=== reads_enclosing ===")
+dis.dis(outer_fn())
+
+# 분석 질문:
+# Q1. 세 함수 각각에서 x를 읽는 바이트코드는 무엇인가?
+# Q2. LOAD_FAST vs LOAD_GLOBAL vs LOAD_DEREF의 내부 차이는?
+# Q3. UnboundLocalError가 발생하는 상황을 만들어 바이트코드를 확인하세요.</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python"># Q1 답: LOAD_GLOBAL(전역), LOAD_FAST(지역), LOAD_DEREF(엔클로징)
+# Q2 답: LOAD_FAST는 locals 배열에서 인덱스로, LOAD_GLOBAL은 globals dict에서
+#        이름으로, LOAD_DEREF는 cell object에서 값을 꺼냄
+# Q3: UnboundLocalError — 지역 변수로 인식되었지만 아직 할당 전
+x = "global"
+def bad():
+    print(x)   # UnboundLocalError! x를 아래에서 할당하면 지역 변수로 인식됨
+    x = "local"
+dis.dis(bad)   # LOAD_FAST 0(x) → 할당 전이라 오류</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-adv">
+    <span class="level-badge level-advanced">고급 10</span>
+    <h3>compose / pipe 구현</h3>
+    <p><code>compose(f, g)</code> 함수를 구현하세요. <code>compose(f, g)(x)</code>는 <code>f(g(x))</code>와 같아야 합니다.<br>
+    그리고 <code>pipe(x, f1, f2, f3)</code> 함수를 구현하세요. <code>f3(f2(f1(x)))</code>와 같아야 합니다.</p>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def compose(f, g):
+    def composed(*args, **kwargs):
+        return f(g(*args, **kwargs))
+    return composed
+
+def pipe(x, *funcs):
+    result = x
+    for f in funcs:
+        result = f(result)
+    return result
+
+# 테스트
+double = lambda x: x * 2
+add_one = lambda x: x + 1
+
+double_then_add = compose(add_one, double)
+print(double_then_add(3))  # 7 (3*2=6, 6+1=7)
+
+print(pipe(3, double, add_one, str))  # "7"</code></pre>
+          <p class="answer-why"><strong>왜 이렇게 동작하는가?</strong><br>
+          <code>compose</code>는 클로저로 f, g를 캡처하여 새 함수를 반환합니다.<br>
+          <code>pipe</code>는 functools.reduce와 동일한 패턴으로, 값을 함수 체인에 순서대로 통과시킵니다.<br>
+          이것이 <strong>일급 객체(first-class object)</strong>로서 함수의 진정한 활용입니다.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 11</span>
+    <h3>PyFunctionObject 탐구</h3>
+    <p>다음 함수들의 내부 속성(<code>__code__</code>, <code>__defaults__</code>, <code>__closure__</code>)을 분석하세요:</p>
+    <pre><code class="language-python">import dis, inspect
+
+def greet(name: str, greeting: str = "안녕하세요") -> str:
+    """이름과 인사말로 문자열을 만든다."""
+    return f"{greeting}, {name}!"
+
+def make_power(exp):
+    def power(base):
+        return base ** exp
+    return power
+
+square = make_power(2)
+cube   = make_power(3)
+
+# 분석하세요:
+# 1. greet.__code__.co_varnames, co_argcount, co_filename
+# 2. greet.__defaults__, greet.__annotations__
+# 3. square.__closure__, cube.__closure__ — cell_contents 값
+# 4. square.__code__ is cube.__code__ — True인가 False인가? 이유는?
+# 5. dis.dis(square)에서 exp를 읽는 바이트코드는?
+# 6. inspect.signature(greet) 출력
+
+# 구현하세요: 위 6가지를 직접 출력하고 결과를 분석
+pass</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">print(greet.__code__.co_varnames)   # ('name', 'greeting')
+print(greet.__code__.co_argcount)   # 2
+print(greet.__defaults__)           # ('안녕하세요',)
+print(greet.__annotations__)        # {'name': str, 'greeting': str, 'return': str}
+print(square.__closure__[0].cell_contents)   # 2
+print(cube.__closure__[0].cell_contents)     # 3
+print(square.__code__ is cube.__code__)      # True — 같은 code object 공유!
+print(inspect.signature(greet))             # (name: str, greeting: str = '안녕하세요') -> str</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 12</span>
+    <h3>Call Stack 추적 — 재귀 깊이에 따른 frame 생성 측정</h3>
+    <p>재귀 호출마다 PyFrameObject가 생성되는 것을 실제로 측정하세요:</p>
+    <pre><code class="language-python">import sys, inspect, tracemalloc
+
+def count_frames():
+    """현재 call stack의 frame 개수를 반환."""
+    # 구현하세요 — inspect.stack() 또는 sys._getframe()을 활용
+    pass
+
+def recursive_with_frame_count(n):
+    """n단계 재귀 후 frame 개수를 반환."""
+    if n == 0:
+        frames = count_frames()
+        return frames
+    return recursive_with_frame_count(n - 1)
+
+# 1. 재귀 깊이별 frame 개수 측정
+for depth in [0, 5, 10, 50, 100]:
+    frames = recursive_with_frame_count(depth)
+    print(f"재귀 {depth}단계 → frame 체인: {frames}")
+
+# 2. 메모리 사용 측정
+tracemalloc.start()
+snapshot1 = tracemalloc.take_snapshot()
+
+recursive_with_frame_count(100)
+
+snapshot2 = tracemalloc.take_snapshot()
+top_stats = snapshot2.compare_to(snapshot1, 'lineno')
+print("\n메모리 사용 증가 (상위 3개):")
+for stat in top_stats[:3]:
+    print(stat)
+
+# 분석 질문:
+# Q1. 재귀 깊이와 frame 개수의 관계는?
+# Q2. frame 하나당 추가 메모리는 대략 얼마인가?
+# Q3. sys.getrecursionlimit() = 1000인 이유는?</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def count_frames():
+    return len(inspect.stack())
+
+# Q1: 재귀 깊이 n → frame 개수 = n + (기본 스택 깊이)
+# Q2: PyFrameObject 하나당 대략 수백 바이트 ~ 수 KB (지역변수 수에 따라 다름)
+# Q3: 1000은 일반적인 운영체제 스택 크기 제한과의 균형점.
+#     너무 크면 실제 C 스택 오버플로 위험, 너무 작으면 정상 재귀도 막힘</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 13</span>
+    <h3>클로저 cell object 분석</h3>
+    <p>클로저의 cell object와 LOAD_DEREF 바이트코드를 직접 분석하세요:</p>
+    <pre><code class="language-python">import dis
+
+def make_multipliers(n):
+    """0부터 n-1까지의 곱셈 함수를 리스트로 반환."""
+    # ❌ 함정 버전 (루프 변수 캡처 문제)
+    funcs_bad = [lambda x: x * i for i in range(n)]
+
+    # ✅ 수정 버전 (기본 인수로 값 고정)
+    funcs_good = [lambda x, i=i: x * i for i in range(n)]
+
+    return funcs_bad, funcs_good
+
+bad, good = make_multipliers(4)
+
+# 1. 함정 버전 확인
+print("함정 버전:", [f(10) for f in bad])    # [30, 30, 30, 30] 또는 유사
+
+# 2. 수정 버전 확인
+print("수정 버전:", [f(10) for f in good])   # [0, 10, 20, 30]
+
+# 3. bad[0]의 closure와 good[0]의 closure 비교
+# 구현하세요: __closure__, cell_contents를 출력
+
+# 4. bad[0]과 good[0]의 바이트코드 비교 (dis.dis)
+# 구현하세요: LOAD_DEREF vs LOAD_FAST 의 차이를 찾으세요
+
+# 5. 분석 질문:
+# Q1. bad 버전은 왜 모두 같은 값을 반환하는가? (cell이 몇 개인지 확인)
+# Q2. good 버전의 각 lambda는 몇 개의 cell을 가지는가?
+# Q3. LOAD_DEREF와 LOAD_FAST의 차이를 바이트코드로 설명하라.
+pass</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python"># Q1: bad 버전의 모든 lambda는 같은 cell(i)을 공유.
+#     make_multipliers 실행 후 i=3(마지막)이므로 모두 30 반환.
+print(bad[0].__closure__)   # (&lt;cell at 0x...&gt;,) — 모두 같은 cell!
+print(bad[0].__closure__[0].cell_contents)   # 3 (마지막 값)
+
+# Q2: good 버전의 각 lambda는 cell 없음 (__closure__ = None)
+#     i=i로 기본 인수에 복사했으므로 LOAD_FAST(지역변수)로 접근
+print(good[0].__closure__)   # None
+
+# Q3: LOAD_DEREF → cell object에서 간접 참조 (클로저 변수)
+#     LOAD_FAST  → locals 배열에서 직접 인덱스 접근 (지역 변수)
+dis.dis(bad[0])    # LOAD_DEREF i
+dis.dis(good[0])   # LOAD_FAST  i</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ==================== 12. 요약 ==================== -->
+<section id="summary">
+  <h2>이번 주 정리</h2>
+
+  <table class="summary-table">
+    <thead>
+      <tr><th>개념</th><th>핵심 내용</th><th>키워드</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>함수의 존재 이유</td>
+        <td>DRY, 추상화, 네임스페이스 경계 — 3가지 역할</td>
+        <td>Don't Repeat Yourself, MAKE_FUNCTION</td>
+      </tr>
+      <tr>
+        <td>def와 return</td>
+        <td>def는 실행문, return 없으면 None. 기본값은 정의 시 한 번만 생성</td>
+        <td>Parameter vs Argument, docstring, __defaults__</td>
+      </tr>
+      <tr>
+        <td>First-class Object</td>
+        <td>함수 = 객체. 변수에 저장, 인수로 전달, 반환 가능</td>
+        <td>Higher-order Function, lambda, callable</td>
+      </tr>
+      <tr>
+        <td>LEGB Rule</td>
+        <td>Local → Enclosing → Global → Built-in 순서로 이름 탐색</td>
+        <td>LOAD_FAST, LOAD_GLOBAL, LOAD_DEREF</td>
+      </tr>
+      <tr>
+        <td>인자 전달</td>
+        <td>Pass by Object Reference. mutable 기본값 함정</td>
+        <td>*args, **kwargs, keyword-only, None 기본값</td>
+      </tr>
+      <tr>
+        <td>재귀</td>
+        <td>base case + recursive case. 호출마다 새 _PyInterpreterFrame 할당</td>
+        <td>Call Stack, sys.getrecursionlimit, lru_cache, TCO 미지원</td>
+      </tr>
+      <tr>
+        <td>클로저</td>
+        <td>내부 함수 + 자유 변수 환경. nonlocal로 Enclosing 변수 수정</td>
+        <td>cell object, LOAD_DEREF, __closure__, Free Variable</td>
+      </tr>
+      <tr>
+        <td>순수 함수</td>
+        <td>같은 입력 → 항상 같은 출력, 부작용 없음</td>
+        <td>Pure Function, Side Effect, SRP</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pre><code class="language-text">def f(x, y=0):      ←→   MAKE_FUNCTION (PyFunctionObject 생성)
+    local = x              f.__code__    (컴파일된 바이트코드)
+    return local + y       f.__defaults__ = (0,)
+
+f(1, 2)             ←→   LOAD_FAST x      (매개변수/지역 변수)
+                          LOAD_GLOBAL g    (전역 변수 읽기)
+                          LOAD_DEREF z     (클로저/Enclosing 변수)
+                          CALL 2           (새 _PyInterpreterFrame 할당)
+
+def outer():
+    x = "enc"       ←→   x는 cell variable로 승격
+    def inner():           inner.__closure__[0].cell_contents == "enc"
+        return x           LOAD_DEREF x
+    return inner</code></pre>
+</section>
+
+<!-- ==================== 13. 용어 사전 ==================== -->
+<section id="glossary">
+  <h2>용어 사전 (30개)</h2>
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <h4>함수 (Function)</h4>
+      <p>이름이 붙은 코드 블록. Python에서는 First-class Object로, 변수에 저장하고 인수로 전달할 수 있음.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>매개변수 (Parameter)</h4>
+      <p>함수를 <em>정의</em>할 때 괄호 안에 쓰는 이름. <code>def f(x):</code>에서 <code>x</code>.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>인수 (Argument)</h4>
+      <p>함수를 <em>호출</em>할 때 전달하는 실제 값. <code>f(42)</code>에서 <code>42</code>.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>return</h4>
+      <p>함수 실행을 즉시 종료하고 값을 반환. return 없으면 None 반환. 함수 어디서든 사용 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>docstring</h4>
+      <p>함수 def 바로 다음에 오는 삼중따옴표 문자열. <code>__doc__</code> 속성에 저장. <code>help()</code>로 확인.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>DRY 원칙</h4>
+      <p>Don't Repeat Yourself. 같은 코드를 두 번 쓰지 마라. 함수가 존재하는 핵심 이유.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>First-class Object</h4>
+      <p>변수에 저장, 인수로 전달, 반환값으로 사용할 수 있는 객체. Python 함수는 First-class.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>고차 함수 (Higher-order Function)</h4>
+      <p>함수를 인수로 받거나 함수를 반환하는 함수. map, filter, sorted(key=), 데코레이터.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>람다 (lambda)</h4>
+      <p>이름 없는 한 줄짜리 함수. <code>lambda x: x*2</code>. 표현식만 가능, 문(statement) 불가.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>스코프 (Scope)</h4>
+      <p>변수 이름이 유효한 코드 범위. Python은 Lexical Scoping — 소스 코드 구조에 의해 결정.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>LEGB Rule</h4>
+      <p>Python의 이름 탐색 순서: Local → Enclosing → Global → Built-in.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>지역 변수 (Local Variable)</h4>
+      <p>함수 안에서 정의된 변수. 함수 외부에서 접근 불가. LOAD_FAST로 접근.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>전역 변수 (Global Variable)</h4>
+      <p>모듈(파일) 수준에서 정의된 변수. 모든 함수에서 읽기 가능. LOAD_GLOBAL로 접근.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Enclosing Scope</h4>
+      <p>중첩 함수에서 바깥 함수의 스코프. 지역도 전역도 아닌 중간 단계. LEGB의 E.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Built-in Scope</h4>
+      <p>Python이 기본 제공하는 이름들(print, len, range 등)이 있는 스코프. LEGB의 B.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>global 키워드</h4>
+      <p>함수 안에서 전역 변수를 수정할 때 선언. <code>global x</code>. 없으면 UnboundLocalError 발생 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>nonlocal 키워드</h4>
+      <p>중첩 함수에서 Enclosing 변수를 수정할 때 선언. <code>nonlocal x</code>. 클로저 상태 변경에 필수.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Pass by Object Reference</h4>
+      <p>Python의 인자 전달 방식. 객체의 참조(포인터)를 값으로 전달. Call by Value도 Call by Reference도 아님.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>기본값 매개변수 (Default Parameter)</h4>
+      <p>함수 정의 시 기본값을 지정하는 매개변수. <code>def f(x, y=0):</code>. 기본값은 정의 시 단 한 번만 평가.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>재귀 (Recursion)</h4>
+      <p>함수가 자기 자신을 호출하는 기법. base case와 recursive case가 필수. 호출마다 새 frame 생성.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>base case</h4>
+      <p>재귀를 멈추는 조건. 더 이상 자기 자신을 호출하지 않고 바로 값을 반환. 없으면 무한 재귀.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Call Stack</h4>
+      <p>함수 호출 정보를 저장하는 스택. 각 호출마다 PyFrameObject를 push. return 시 pop.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>클로저 (Closure)</h4>
+      <p>내부 함수 + 외부 함수의 자유 변수 환경. 외부 함수가 사라져도 자유 변수를 기억.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>순수 함수 (Pure Function)</h4>
+      <p>같은 입력이면 항상 같은 출력. 외부 상태를 읽거나 쓰지 않음. 테스트, 예측이 쉬움.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>부작용 (Side Effect)</h4>
+      <p>함수가 반환값 외에 외부 상태(전역 변수, 파일, DB 등)를 변경하는 행위.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>MAKE_FUNCTION</h4>
+      <p>CPython 바이트코드. def 문이 실행될 때 PyFunctionObject를 생성. code object를 참조.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>LOAD_FAST</h4>
+      <p>지역 변수를 스택에 push하는 바이트코드. PyFrameObject의 f_localsplus 배열에서 인덱스로 직접 접근. 가장 빠름.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>LOAD_GLOBAL</h4>
+      <p>전역/내장 변수를 스택에 push하는 바이트코드. f_globals 딕셔너리에서 탐색.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>LOAD_DEREF</h4>
+      <p>클로저(Enclosing)의 cell object에서 값을 읽는 바이트코드. 자유 변수(free variable) 접근에 사용.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>TCO (Tail Call Optimization)</h4>
+      <p>꼬리 위치 재귀 호출을 JUMP로 변환해 스택 프레임을 재사용하는 최적화. Scheme·Haskell 등이 지원. Python은 traceback 가독성·디버깅 가능성을 이유로 의도적으로 미지원.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 14. 다음 주 맛보기 ==================== -->
+<section id="next-week">
+  <h2>다음 주 맛보기 — Week 10: 딕셔너리와 세트</h2>
+
+  <p>
+    이번 주에 함수로 코드를 재사용하고 추상화하는 방법을 배웠습니다.
+    함수 안에서, 그리고 함수끼리 데이터를 주고받을 때 리스트는 순서가 있는 데이터를 담습니다.
+    그런데 <strong>"이름으로 빠르게 찾아야"</strong> 할 때는 어떻게 할까요?
+  </p>
+  <pre><code class="language-python"># 리스트로 전화번호부를 만들면
+phone_book_list = [("지민", "010-1111"), ("수현", "010-2222"), ("하은", "010-3333")]
+
+# 지민의 번호를 찾으려면 처음부터 다 뒤져야 함 — O(n)
+for name, number in phone_book_list:
+    if name == "지민":
+        print(number)   # "010-1111"
+
+# 딕셔너리로 만들면
+phone_book = {"지민": "010-1111", "수현": "010-2222", "하은": "010-3333"}
+
+# 이름만 알면 즉시 찾음 — O(1) ← 이게 어떻게 가능할까?
+print(phone_book["지민"])   # "010-1111"</code></pre>
+  <div class="output-block">
+    <div class="output-label">실행 결과:</div>
+010-1111
+010-1111
+  </div>
+
+  <p>다음 주에 배울 것들:</p>
+  <ul>
+    <li>딕셔너리가 왜 O(1)으로 찾을 수 있는가 — 해시(Hash)의 원리</li>
+    <li>Key-Value 구조 — <code>dict</code>의 동작 메커니즘</li>
+    <li>세트(set) — 중복 없는 집합. <code>in</code> 연산이 O(1)인 이유</li>
+    <li>해시 충돌(Hash Collision)과 Python의 해결 방법</li>
+    <li>딕셔너리 컴프리헨션, <code>.items()</code>, <code>.get()</code></li>
+    <li>CPython의 딕셔너리 내부 구조 — compact dict (Python 3.6+)</li>
+  </ul>
+
+  <p style="margin-top: 24px; font-size: 0.9rem; color: var(--text-secondary);">
+    참조:
+    <a href="https://docs.python.org/3/reference/compound_stmts.html#function-definitions" target="_blank">Python Docs: Function definitions</a> ·
+    <a href="https://docs.python.org/3/reference/executionmodel.html#naming-and-binding" target="_blank">Naming and Binding (LEGB)</a> ·
+    <a href="https://docs.python.org/3/library/functools.html" target="_blank">functools — Higher-order functions</a> ·
+    <a href="https://docs.python.org/3/library/dis.html" target="_blank">dis — Bytecode disassembler</a> ·
+    <a href="https://peps.python.org/pep-3107/" target="_blank">PEP 3107: Function Annotations</a>
+  </p>
+</section>
+
+</main>
+</div>
+
+<footer class="site-footer">
+  <p>파이썬은 왜? &mdash; 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의</p>
+</footer>
+
+<script src="../js/bundle.min.js"></script>
+</body>
+</html>

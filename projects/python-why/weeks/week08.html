@@ -1,0 +1,2864 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8주차: 반복문 while — 상태를 보는 루프 | PyWhy</title>
+  <link rel="stylesheet" href="../css/style.min.css">
+  <meta name="description" content="반복문 while — 상태를 보는 루프. 조건 기반 반복의 내부를 바이트코드까지 분해합니다">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="8주차: 반복문 while — 상태를 보는 루프 | PyWhy">
+  <meta property="og:description" content="반복문 while — 상태를 보는 루프. 조건 기반 반복의 내부를 바이트코드까지 분해합니다">
+  <meta property="og:url" content="https://soccz.github.io/python-why/weeks/week08.html">
+  <meta property="og:site_name" content="PyWhy">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="8주차: 반복문 while — 상태를 보는 루프 | PyWhy">
+  <meta name="twitter:description" content="반복문 while — 상태를 보는 루프. 조건 기반 반복의 내부를 바이트코드까지 분해합니다">
+</head>
+<body data-week="8">
+<a href="#main-content" class="skip-link">본문 바로가기</a>
+
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://soccz.github.io" class="home-btn" title="soccz.github.io" aria-label="포트폴리오 홈"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+        <a href="../index.html" class="site-title">PyWhy</a>
+      </div>
+    <div class="header-nav">
+      <a href="week07.html" class="nav-btn">&larr; 이전</a>
+      <a href="week09.html" class="nav-btn">다음 &rarr;</a>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrapper">
+<main id="main-content">
+
+<!-- ==================== WEEK HEADER ==================== -->
+<div class="week-header">
+  <div class="week-number">WEEK 08</div>
+  <h1 class="week-title">반복문 — while<br>상태를 보는 루프</h1>
+  <p class="week-subtitle">
+    <code>for</code>는 Iterator Protocol이었습니다.<br>
+    <code>while</code>은 다릅니다 — <strong>Iterable이 없어도</strong> 됩니다.<br>
+    조건이 True인 동안 반복하는 루프의 내부를 분해합니다.
+  </p>
+</div>
+
+<!-- ==================== 목차 ==================== -->
+<details class="toc">
+  <summary>목차 — 8주차 전체 내용</summary>
+  <div class="toc-body">
+    <div class="toc-section">
+      <a href="#story" class="toc-section-link">
+        <span class="toc-num">01</span>이번 주 이야기
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#why-while" class="toc-section-link">
+        <span class="toc-num">02</span>왜 while이 존재하는가?
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#while-basics" class="toc-section-link">
+        <span class="toc-num">03</span>while 기본 문법
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#while-true" class="toc-section-link">
+        <span class="toc-num">04</span>while True + break — 무한 루프
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#while-else" class="toc-section-link">
+        <span class="toc-num">05</span>while-else — "no break" 패턴
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#sentinel" class="toc-section-link">
+        <span class="toc-num">06</span>Sentinel 패턴 — 종료 신호값
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#state-machine" class="toc-section-link">
+        <span class="toc-num">07</span>상태 기계 (State Machine)
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#while-vs-for" class="toc-section-link">
+        <span class="toc-num">08</span>while vs for — 선택 기준
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#ai-while" class="toc-section-link">
+        <span class="toc-num">09</span>AI와 while 루프
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#hands-on" class="toc-section-link">
+        <span class="toc-num">10</span>실습: while 루프 탐험
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#exercises" class="toc-section-link">
+        <span class="toc-num">11</span>연습문제 (10문제 — 7+3 전공자)
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#summary" class="toc-section-link">
+        <span class="toc-num">12</span>이번 주 정리
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#glossary" class="toc-section-link">
+        <span class="toc-num">13</span>용어 사전 (22개)
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#next-week" class="toc-section-link">
+        <span class="toc-num">14</span>다음 주 맛보기
+      </a>
+    </div>
+  </div>
+</details>
+
+<!-- ==================== 01. 이번 주 이야기 ==================== -->
+<section id="story">
+  <h2>이번 주 이야기</h2>
+  <div class="story-block">
+    <p>
+      지난 주 for 루프로 리스트를 순회했습니다. 그런데 이런 상황은 어떨까요?
+    </p>
+    <pre><code class="language-python"># 사용자에게 숫자를 입력받아 합산 — 언제 끝날지 모름
+numbers = []
+# for i in range(???):   ← 몇 번 반복할지 모름!
+#     numbers.append(int(input()))</code></pre>
+    <p>
+      <code>for</code>는 미리 알고 있는 Iterable을 순회합니다.
+      하지만 "사용자가 'quit'을 입력할 때까지", "조건이 거짓이 될 때까지"처럼
+      <strong>끝을 미리 알 수 없는 반복</strong>에는 for가 맞지 않습니다.
+    </p>
+    <pre><code class="language-python"># while: "이 조건이 참인 동안 계속"
+total = 0
+while True:
+    text = input("숫자 입력 (quit으로 종료): ")
+    if text == "quit":
+        break
+    total += int(text)
+print(f"합계: {total}")</code></pre>
+    <p>
+      <code>while</code>은 <strong>조건을 보면서 반복</strong>합니다.
+      Iterator가 없어도 됩니다. 상태만 있으면 충분합니다.
+      오늘은 while 루프를 바이트코드까지 완전히 분해합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 02. 왜 while인가? ==================== -->
+<section id="why-while">
+  <h2>왜 while이 존재하는가? — Iterable 없이 반복하기</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>for와 while: 두 가지 반복의 차이</h3>
+    <div class="callout callout-info">
+      <strong>비유로 이해하기:</strong><br>
+      <strong>for</strong> = 택배 기사 — "이 목록에 있는 집을 순서대로 방문한다". 목록이 있어야 시작.<br>
+      <strong>while</strong> = 경비원 — "문 앞에서 계속 확인한다. 조건이 참이면 통과, 거짓이면 닫음". 목록 없이 조건만으로 동작.
+    </div>
+    <p>
+      <strong>for</strong>: "이 목록을 순서대로 처리해줘" — 목록이 있어야 함<br>
+      <strong>while</strong>: "이 조건이 참인 동안 계속해줘" — 조건만 있으면 됨
+    </p>
+    <pre><code class="language-python"># for: 항목이 정해져 있을 때
+fruits = ["사과", "바나나", "딸기"]
+for fruit in fruits:
+    print(fruit)   # 3번 실행, 끝이 명확
+
+# while: 언제 끝날지 조건으로 결정
+count = 0
+while count < 3:
+    print(f"{count}번째")
+    count += 1     # 이 줄 없으면 영원히 반복!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+0번째
+1번째
+2번째
+    </div>
+    <div class="callout callout-warning">
+      <strong>while의 규칙:</strong> 조건 변수를 루프 안에서 반드시 바꿔야 합니다.
+      안 바꾸면 조건이 영원히 True → 무한 루프!
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>for가 안 되는 상황 — while이 필요한 이유</h3>
+    <div class="callout callout-info">
+      <strong>while이 필요한 실제 상황들:</strong><br>
+      <ul>
+        <li><strong>게임 루프</strong>: "플레이어가 살아있는 동안" 계속 실행 — for로는 끝을 알 수 없음</li>
+        <li><strong>네트워크 재시도</strong>: "연결이 성공할 때까지" 계속 시도</li>
+        <li><strong>사용자 입력 검증</strong>: "올바른 입력이 들어올 때까지" 계속 받기</li>
+        <li><strong>데이터 스트림 처리</strong>: "파일의 끝(EOF)을 만날 때까지" 계속 읽기</li>
+        <li><strong>알고리즘 수렴</strong>: "오차가 충분히 작아질 때까지" 계속 반복</li>
+      </ul>
+      <pre><code class="language-python"># for가 불가능한 상황: 끝을 모를 때
+# 네트워크 재시도 패턴
+import random
+
+def try_connect():
+    return random.random() > 0.7   # 30% 성공률
+
+attempts = 0
+while not try_connect():
+    attempts += 1
+    print(f"연결 실패 ({attempts}회 시도), 재시도...")
+
+print(f"연결 성공! (총 {attempts+1}회 시도)")</code></pre>
+    </div>
+    <pre><code class="language-python"># ① 입력 횟수를 미리 모를 때
+password = ""
+while password != "correct":
+    password = input("비밀번호: ")
+print("로그인 성공")
+
+# ② 수렴 조건 (미리 몇 번인지 모름)
+x = 100.0
+while abs(x * x - 2) > 1e-10:   # 오차가 충분히 작아질 때까지
+    x = (x + 2 / x) / 2          # 뉴턴법으로 √2 근사
+print(f"√2 ≈ {x:.10f}")         # 1.4142135624
+
+# ③ 이진 탐색 (범위가 줄어드는 조건)
+arr = [1, 3, 5, 7, 9, 11, 13]
+target = 7
+left, right = 0, len(arr) - 1
+while left &lt;= right:
+    mid = (left + right) // 2
+    if arr[mid] == target:
+        print(f"인덱스 {mid}")
+        break
+    elif arr[mid] &lt; target:
+        left = mid + 1
+    else:
+        right = mid - 1</code></pre>
+    <div class="output-block">
+      <div class="output-label">이진 탐색 결과:</div>
+인덱스 3
+    </div>
+    <p>
+      세 경우 모두 "몇 번 반복할지"가 아니라 "언제 멈출지"가 핵심입니다.
+      이때 while이 for보다 자연스럽습니다.
+    </p>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Python 공식 문서의 while 문법</h3>
+    <p>
+      Python 공식 문서(reference/compound_stmts)의 while 문 정의:
+    </p>
+    <pre><code class="language-text">while_stmt ::= "while" assignment_expression ":" suite
+               ["else" ":" suite]</code></pre>
+    <p>
+      조건 자리에 <code>assignment_expression</code>이 옵니다 —
+      일반 표현식뿐 아니라 <strong>Walrus 연산자(<code>:=</code>)</strong>도 허용합니다.
+    </p>
+    <pre><code class="language-python">import re
+
+text = "price:100 count:5 discount:20"
+pos = 0
+results = {}
+
+# := (Walrus)로 매칭과 할당을 동시에
+while m := re.match(r'(\w+):(\d+)', text[pos:]):
+    key, val = m.group(1), int(m.group(2))
+    results[key] = val
+    pos += m.end()
+    if pos &lt; len(text) and text[pos] == ' ':
+        pos += 1   # 공백 건너뜀
+
+print(results)   # {'price': 100, 'count': 5, 'discount': 20}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'price': 100, 'count': 5, 'discount': 20}
+    </div>
+    <div class="callout callout-info">
+      <strong>while과 for의 근본 차이:</strong> for는 <code>__iter__ → __next__</code>라는
+      Protocol을 따릅니다. while은 Protocol이 없습니다 — 표현식이 Truthy인 동안 실행될 뿐입니다.
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — while vs for 바이트코드 골격 비교</h3>
+    <pre><code class="language-python">import dis
+
+def f_for(lst):
+    for x in lst:
+        pass
+
+def f_while(n):
+    while n > 0:
+        n -= 1
+
+dis.dis(f_for)
+print("---")
+dis.dis(f_while)</code></pre>
+    <div class="output-block">
+      <div class="output-label">f_for 핵심 바이트코드 (Python 3.12):</div>
+  LOAD_FAST lst
+  GET_ITER              ← iter(lst) 호출 — Iterator 생성
+  >> FOR_ITER N         ← next() + StopIteration 처리
+  STORE_FAST x
+  JUMP_BACKWARD → FOR_ITER
+  >> END_FOR
+    </div>
+    <div class="output-block">
+      <div class="output-label">f_while 핵심 바이트코드 (Python 3.12):</div>
+  >> LOAD_FAST n        ← 조건 변수 로드 (매 반복마다)
+  LOAD_CONST 0
+  COMPARE_OP &gt;
+  POP_JUMP_IF_FALSE → END   ← False이면 루프 탈출
+  LOAD_FAST n
+  LOAD_CONST 1
+  BINARY_OP (-=)
+  STORE_FAST n
+  JUMP_BACKWARD → LOAD_FAST  ← 조건 검사로 되돌아감
+  >> (END) RETURN_CONST None
+    </div>
+    <p>핵심 차이:</p>
+    <ul>
+      <li><strong>for</strong>: <code>GET_ITER</code>(1회) + <code>FOR_ITER</code>(매 반복) — Iterator가 상태를 관리</li>
+      <li><strong>while</strong>: 조건 표현식을 <strong>매 반복마다 직접 평가</strong> — <code>POP_JUMP_IF_FALSE</code>로 탈출</li>
+      <li>for는 Iterator에 위임, while은 스스로 조건 평가 — 근본적으로 다른 메커니즘</li>
+    </ul>
+    <h3>Part B — 왜 for가 while보다 Iterable 순회에 효율적인가</h3>
+    <p>
+      <code>for x in lst:</code>를 while로 구현하면:
+    </p>
+    <pre><code class="language-python">i = 0
+while i &lt; len(lst):   # len(lst) 매 반복 평가
+    x = lst[i]
+    i += 1</code></pre>
+    <p>
+      이 버전은 매 반복마다 <code>len(lst)</code> 호출 + 인덱싱 비용이 발생합니다.
+      for 루프의 FOR_ITER_LIST 특화는 이보다 빠릅니다 (Week07 §03 참조).
+      반면 while은 조건 표현식이 단순 비교일 때 오버헤드가 적어
+      <strong>수렴 조건, 이진 탐색, 상태 변화</strong> 같은 복잡한 탈출 조건에 적합합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 03. while 기본 문법 ==================== -->
+<section id="while-basics">
+  <h2>while 기본 문법 — 조건 루프의 구조</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: while은 경비원이다</h3>
+    <p>
+      while 루프를 <strong>경비원(Guard)</strong>이라고 생각하세요.<br>
+      경비원은 문 앞에 서서 매번 확인합니다:
+      <strong>"조건이 True면 통과, False면 멈춤."</strong>
+    </p>
+    <div class="callout callout-info">
+      <strong>경비원 비유:</strong><br>
+      <code>while 조건:</code> → "조건이 참인 동안 통과시켜라"<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<code>실행할 코드</code><br>
+      → 코드가 끝나면 경비원에게 다시 돌아가 재확인<br>
+      → 조건이 False가 되는 순간 문이 닫힘
+    </div>
+    <h3>while 조건 설계 3단계</h3>
+    <p>
+      while을 처음 짤 때 이 순서대로 생각하세요:
+    </p>
+    <ol>
+      <li><strong>"언제 계속할까?"</strong> → 조건 작성 <code>while count &lt;= 5:</code></li>
+      <li><strong>"무엇을 할까?"</strong> → 루프 body 작성</li>
+      <li><strong>"조건이 언젠가 False가 되는가?"</strong> → 상태 변경 확인 <code>count += 1</code></li>
+    </ol>
+    <div class="callout callout-warning">
+      <strong>③을 빠뜨리면 무한 루프!</strong> 작성 후 반드시 "이 루프는 언젠가 끝나는가?"를 확인하세요.
+    </div>
+    <h3>카운터 루프와 입력 루프</h3>
+    <pre><code class="language-python"># 카운터 루프: count를 직접 관리
+count = 1
+while count &lt;= 5:
+    print(f"{count}번째 실행")
+    count += 1   # 반드시 필요! 없으면 무한 루프
+
+# 입력 루프: 특정 입력이 들어올 때까지
+answer = ""
+while answer != "y":
+    answer = input("계속하시겠습니까? (y/n): ")
+    if answer == "n":
+        print("종료합니다.")
+        break
+print("계속합니다.")</code></pre>
+    <div class="output-block">
+      <div class="output-label">카운터 루프 실행 결과:</div>
+1번째 실행
+2번째 실행
+3번째 실행
+4번째 실행
+5번째 실행
+    </div>
+    <p>
+      <strong>while 루프의 3요소:</strong><br>
+      ① 초기값 설정 (루프 전) → <code>count = 1</code><br>
+      ② 조건 검사 → <code>count &lt;= 5</code><br>
+      ③ 상태 변경 (루프 안) → <code>count += 1</code>
+    </p>
+    <div class="callout callout-tip">
+      <strong>무한 루프 방지 체크:</strong> while을 작성했다면
+      "이 루프가 언젠가는 끝나는가?"를 먼저 확인하세요.
+      ③이 없으면 영원히 반복됩니다.
+    </div>
+    <div class="callout callout-tip">
+      <strong>✏️ 지금 바로 해봐:</strong> 카운트다운을 직접 실행해보세요.
+      <pre><code class="language-python">count = 5
+while count > 0:
+    print(count)
+    count -= 1   # 이 줄을 빼면 무한 루프! (Ctrl+C로 중단)
+print("발사!")
+
+# while True 패턴: 입력 검증
+while True:
+    answer = input("yes 또는 no를 입력하세요: ")
+    if answer in ("yes", "no"):
+        break
+    print("잘못된 입력입니다. 다시 입력해주세요.")
+print(f"입력받은 답: {answer}")</code></pre>
+      <strong>주의:</strong> <code>count -= 1</code>을 빼면 무한 루프가 됩니다. Ctrl+C로 중단하세요!
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>do-while 시뮬레이션 / 루프 변수 스코프</h3>
+    <pre><code class="language-python"># Python에는 do-while이 없음
+# C의 do { ... } while (condition) 을 Python에서:
+
+# ❌ 자주 보이는 패턴 (조건 변수 초기화 필요)
+value = -1    # 가짜 초기값으로 루프 진입
+while value &lt; 0:
+    value = int(input("양수 입력: "))
+
+# ✅ while True + break (더 명확)
+while True:
+    value = int(input("양수 입력: "))
+    if value > 0:
+        break
+print(f"입력값: {value}")
+
+# 루프 변수는 루프 후에도 살아있음 (for와 동일)
+i = 0
+while i &lt; 3:
+    i += 1
+print(i)   # 3 — while 종료 후에도 유지
+
+# 반면 조건이 처음부터 False이면 한 번도 실행 안 됨
+while False:
+    print("이 줄은 실행되지 않음")
+# NameError 없음 — while 블록 자체가 건너뜀</code></pre>
+    <div class="output-block">
+      <div class="output-label">루프 변수 스코프 확인:</div>
+3
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Walrus 연산자 := 와 while</h3>
+    <p>
+      Python 3.8+의 Walrus 연산자(<code>:=</code>)는 while 조건에서
+      할당과 검사를 동시에 수행합니다. 반복적인 패턴을 제거합니다:
+    </p>
+    <pre><code class="language-python">import sys
+
+# ❌ 반복적인 패턴 (조건과 할당이 두 곳)
+chunk = sys.stdin.buffer.read(4096)
+while chunk:
+    process(chunk)
+    chunk = sys.stdin.buffer.read(4096)   # 중복!
+
+# ✅ Walrus로 단순화
+while chunk := sys.stdin.buffer.read(4096):
+    process(chunk)
+
+# 파일 읽기에도 동일하게 적용
+with open("data.txt") as f:
+    while line := f.readline():   # 빈 문자열("")은 Falsy
+        print(line.strip())
+
+# 정규식 매칭
+import re
+text = "abc123def456"
+pos = 0
+while m := re.search(r'\d+', text[pos:]):
+    print(m.group())   # 123, 456
+    pos += m.end()</code></pre>
+    <div class="callout callout-info">
+      <strong>Walrus 주의:</strong> 파일의 <code>readline()</code>은 EOF에서 빈 문자열 <code>""</code>을
+      반환합니다. <code>""</code>는 Falsy이므로 <code>while line := f.readline():</code>이
+      자연스럽게 종료됩니다.
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — while 조건 평가의 바이트코드</h3>
+    <pre><code class="language-python">import dis
+
+def count_down(n):
+    while n > 0:
+        n -= 1
+
+dis.dis(count_down)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (Python 3.12):</div>
+  1           RESUME               0
+
+  2     >>    LOAD_FAST            0 (n)        ← 매 반복마다 n 로드
+              LOAD_CONST           1 (0)
+              COMPARE_OP           4 (&gt;)
+              POP_JUMP_IF_FALSE    6 (to 22)    ← False이면 종료로 jump
+
+  3           LOAD_FAST            0 (n)
+              LOAD_CONST           2 (1)
+              BINARY_OP           23 (-=)
+              STORE_FAST           0 (n)
+              JUMP_BACKWARD        5 (to 4)     ← 조건 평가로 되돌아감
+
+        >>   RETURN_CONST          0 (None)
+    </div>
+    <p>
+      <code>&gt;&gt;</code>가 붙은 두 위치:
+      <strong>LOAD_FAST</strong>(루프 시작, 조건 평가 지점)와
+      <strong>RETURN_CONST</strong>(루프 종료 후).
+      for와 달리 Iterator 없이 <code>COMPARE_OP + POP_JUMP_IF_FALSE</code>로 조건을 직접 처리합니다.
+    </p>
+    <h3>Part B — Walrus 연산자의 바이트코드</h3>
+    <pre><code class="language-python">def walrus_while(it):
+    while x := next(it, None):
+        pass
+
+dis.dis(walrus_while)
+# 핵심 바이트코드:
+# LOAD_GLOBAL next
+# LOAD_FAST it
+# LOAD_CONST None
+# CALL 2
+# COPY 1          ← := 대입을 위해 스택 복사
+# STORE_FAST x    ← x에 할당
+# POP_JUMP_IF_FALSE → end  ← None(Falsy)이면 종료
+# (body)
+# JUMP_BACKWARD → LOAD_GLOBAL next</code></pre>
+    <p>
+      Walrus(<code>:=</code>)는 표현식 평가 결과를 <code>COPY</code>한 후
+      <code>STORE_FAST</code>로 변수에 할당하고, 원본 값을 조건 검사에 사용합니다.
+      할당과 검사가 단일 표현식 안에서 처리됩니다.
+    </p>
+    <div class="callout callout-warning">
+      <strong>함정:</strong> <code>while x := next(it, None):</code>는 <code>None</code>뿐 아니라
+      <code>0</code>, <code>""</code>, <code>False</code>, <code>[]</code> 등 모든 Falsy 값에서
+      조기 종료됩니다. 이터레이터가 Falsy 값을 산출할 수 있다면
+      <code>while (x := next(it, SENTINEL)) is not SENTINEL:</code> 패턴을 사용하세요
+      (§06 Sentinel 패턴 참조).
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04. while True + break ==================== -->
+<section id="while-true">
+  <h2>while True + break — 무한 루프의 올바른 설계</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>"일단 시작하고 중간에 판단"하는 루프</h3>
+    <p>
+      <code>while True:</code>는 "무조건 반복, 탈출은 break로"를 뜻합니다.
+      종료 조건이 루프 <strong>중간</strong>에 있을 때 사용합니다.
+    </p>
+    <pre><code class="language-python"># 숫자 맞추기 게임
+import random
+secret = random.randint(1, 10)
+attempts = 0
+
+while True:
+    guess = int(input("1~10 사이 숫자를 맞춰보세요: "))
+    attempts += 1
+    if guess == secret:
+        print(f"{attempts}번 만에 맞췄습니다!")
+        break
+    elif guess &lt; secret:
+        print("더 큰 숫자입니다.")
+    else:
+        print("더 작은 숫자입니다.")</code></pre>
+    <p>
+      <code>while attempts &lt; 100:</code>처럼 쓸 수도 있지만,
+      "정답을 맞출 때까지"라는 의도는 <code>while True + break</code>가 더 명확합니다.
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>탈출 조건 설계 원칙 — break는 하나만</h3>
+    <pre><code class="language-python"># ❌ 여러 break: 탈출 경로가 많아 추적이 어려움
+while True:
+    data = input()
+    if data == "quit":
+        break
+    if data == "exit":
+        break
+    if data == "q":
+        break
+    process(data)
+
+# ✅ 탈출 조건을 하나로 통합
+QUIT_COMMANDS = {"quit", "exit", "q"}
+while True:
+    data = input()
+    if data in QUIT_COMMANDS:
+        break
+    process(data)
+
+# ✅ 복잡한 경우: is_done() 함수로 분리
+def is_done(data, attempts, budget):
+    return data == "quit" or attempts > 10 or budget &lt;= 0
+
+attempts = 0
+budget = 100
+while True:
+    data = input()
+    attempts += 1
+    if is_done(data, attempts, budget):
+        break
+    budget -= int(data)</code></pre>
+    <div class="callout callout-tip">
+      <strong>설계 원칙:</strong> break가 여러 개라면 "탈출 조건이 함수로 분리될 만큼 복잡하다"는 신호입니다.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>중첩 루프 탈출 / try-except 패턴</h3>
+    <pre><code class="language-python"># 중첩 while 탈출: 함수로 분리가 최선 (Week07 §08 참조)
+def find_prime_pair(limit):
+    """합이 limit인 소수 쌍 탐색"""
+    def is_prime(n):
+        if n &lt; 2: return False
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0: return False
+        return True
+
+    a = 2
+    while a &lt; limit:
+        b = limit - a
+        if is_prime(a) and is_prime(b):
+            return (a, b)   # return이 중첩 루프를 즉시 탈출
+        a += 1
+    return None
+
+print(find_prime_pair(100))   # (3, 97)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+(3, 97)
+    </div>
+    <pre><code class="language-python"># try-except로 안전한 입력 처리
+while True:
+    try:
+        n = int(input("정수 입력: "))
+        if n == 0:
+            break
+        result = 1 / n
+        print(f"역수: {result}")
+    except ValueError:
+        print("정수가 아닙니다. 다시 입력하세요.")</code></pre>
+    <div class="callout callout-warning">
+      <strong>함정:</strong> 수정 전 코드에는 <code>except ZeroDivisionError</code>가 있었지만,
+      <code>n == 0</code> 체크가 <code>1/n</code>보다 먼저 실행되어 break로 빠져나가므로
+      <code>ZeroDivisionError</code>는 절대 발생하지 않는 dead code였습니다.
+      예외 핸들러 작성 시 <strong>해당 예외가 도달 가능한 코드 경로인지</strong> 반드시 확인하세요.
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — while True 바이트코드 최적화</h3>
+    <p>
+      Python 3.12의 flowgraph 최적화기는 <code>while True:</code>의 조건
+      (<code>True</code>)이 항상 참임을 컴파일 타임에 인식하고, 조건 평가 코드를 제거합니다:
+    </p>
+    <pre><code class="language-python">import dis
+
+def with_condition(n):
+    while n > 0:         # 조건 평가 필요
+        n -= 1
+
+def with_true():
+    x = 0
+    while True:          # 조건 평가 불필요
+        x += 1
+        if x >= 5:
+            break
+
+dis.dis(with_condition)
+print("---")
+dis.dis(with_true)</code></pre>
+    <div class="output-block">
+      <div class="output-label">with_condition — 조건 평가 있음:</div>
+  >> LOAD_FAST n
+     LOAD_CONST 0
+     COMPARE_OP &gt;
+     POP_JUMP_IF_FALSE → END    ← 매 반복마다 평가
+     ...body...
+     JUMP_BACKWARD → LOAD_FAST
+  >> END
+    </div>
+    <div class="output-block">
+      <div class="output-label">with_true — 조건 평가 없음 (최적화):</div>
+     LOAD_CONST 0           ← x = 0 초기화
+     STORE_FAST x
+  >> LOAD_FAST x            ← 바로 body 시작, 조건 체크 없음!
+     LOAD_CONST 1
+     BINARY_OP (+=)
+     STORE_FAST x
+     LOAD_FAST x
+     LOAD_CONST 5
+     COMPARE_OP (&gt;=)
+     POP_JUMP_IF_FALSE → after_if   ← x &lt; 5: break 안 함 → if 블록 건너뜀
+     JUMP_FORWARD → END             ← break: 루프 탈출
+  >> after_if:
+     JUMP_BACKWARD → >>             ← 정상 반복: 루프 시작으로
+  >> END
+    </div>
+    <p>
+      <code>while True:</code>에서 <code>LOAD_GLOBAL True + POP_JUMP_IF_FALSE</code>가
+      완전히 제거됩니다. <strong>while True는 while 조건 중 가장 효율적입니다.</strong>
+    </p>
+    <h3>Part B — CPython flowgraph.c의 Peephole Optimization (dead code elimination)</h3>
+    <p>
+      CPython의 <code>Python/flowgraph.c</code>에서 <code>while True:</code>는
+      두 단계로 최적화됩니다:
+    </p>
+    <pre><code class="language-text">1단계 (AST): While(test=Constant(True), ...)
+2단계 (flowgraph): test가 항상 True → JUMP_IF_FALSE 제거
+   → 루프 body + JUMP_BACKWARD만 남음
+
+반면 while bool_var:
+  → 런타임에 bool_var 값을 알 수 없어 최적화 불가
+  → 매 반복마다 LOAD_FAST + POP_JUMP_IF_FALSE 실행</code></pre>
+    <p>
+      이것이 <code>while True: ... if cond: break</code> 패턴이
+      <code>while not_done:</code>보다 빠를 수 있는 이유입니다 —
+      탈출 조건을 while 헤더가 아닌 body 안에서 평가하므로,
+      컴파일러가 while 헤더를 최적화 제거할 수 있습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 05. while-else ==================== -->
+<section id="while-else">
+  <h2>while-else — "no break" 패턴</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>for-else와 똑같은 규칙</h3>
+    <p>
+      <code>while-else</code>는 for-else와 동일합니다:
+      <strong>break 없이 루프가 정상 종료되면 else 실행</strong>.
+    </p>
+    <pre><code class="language-python">attempts = 0
+max_attempts = 3
+secret = 42
+
+while attempts &lt; max_attempts:
+    guess = int(input("숫자를 맞춰보세요: "))
+    attempts += 1
+    if guess == secret:
+        print(f"{attempts}번 만에 맞췄습니다!")
+        break
+else:
+    # break 없이 루프가 끝났다 = max_attempts 소진
+    print(f"{max_attempts}번 안에 못 맞췄습니다. 정답은 {secret}입니다.")</code></pre>
+    <div class="callout callout-tip">
+      <strong>while-else 읽는 법:</strong>
+      else를 "루프가 break 없이 끝났을 때"로 읽으세요.
+      for-else(Week07 §08)와 동일한 "no break" 의미입니다.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>실용 패턴: 검색 실패 감지</h3>
+    <pre><code class="language-python"># while-else: 조건 소진 후 "못 찾음" 처리
+def find_available_slot(schedule, duration):
+    """duration 시간만큼 비어있는 슬롯 탐색"""
+    start = 8   # 오전 8시부터
+    while start + duration &lt;= 18:   # 오후 6시까지
+        end = start + duration
+        # 이 시간대에 예약이 있는가?
+        for booking in schedule:
+            if not (end &lt;= booking[0] or start &gt;= booking[1]):
+                start = booking[1]   # 예약 끝 이후로 이동
+                break
+        else:
+            # for 루프가 break 없이 완료 = 겹치는 예약 없음
+            return (start, end)
+    else:
+        # while 루프가 break 없이 완료 = 슬롯 없음
+        return None
+
+schedule = [(9, 11), (13, 15)]
+print(find_available_slot(schedule, 2))   # (11, 13)
+print(find_available_slot(schedule, 5))   # None (5시간 연속 불가)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+(11, 13)
+None
+    </div>
+    <p>
+      for-else와 while-else가 중첩된 패턴입니다.
+      각 else가 "해당 루프에서 break가 없었다"는 의미를 담습니다.
+    </p>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>while-else vs 플래그 변수 — 가독성 비교</h3>
+    <pre><code class="language-python"># ❌ 플래그 변수 방식
+found = False
+i = 0
+while i &lt; len(data):
+    if condition(data[i]):
+        found = True
+        break
+    i += 1
+if not found:
+    handle_not_found()
+
+# ✅ while-else 방식 (더 선언적)
+i = 0
+while i &lt; len(data):
+    if condition(data[i]):
+        handle_found(data[i])
+        break
+    i += 1
+else:
+    handle_not_found()
+
+# 주의: while-else의 한계
+# else는 "조건이 False가 되어 종료"와 "break로 종료"만 구분
+# "예외 발생으로 종료"는 else를 건너뜀
+try:
+    while condition():
+        risky_operation()
+except SomeError:
+    pass
+# else 블록이 없으므로 예외 발생 시 처리 불가 → try-except 병용 필요</code></pre>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — while-else 바이트코드: JUMP_FORWARD의 역할</h3>
+    <pre><code class="language-python">import dis
+
+def with_while_else(n, target):
+    while n > 0:
+        if n == target:
+            break
+        n -= 1
+    else:
+        print("not found")
+
+dis.dis(with_while_else)</code></pre>
+    <div class="output-block">
+      <div class="output-label">핵심 바이트코드 구조 (Python 3.12):</div>
+  >> LOAD_FAST n
+     COMPARE_OP (&gt;)
+     POP_JUMP_IF_FALSE → else_block  ← 조건 False → else 실행
+     (body: n == target 검사)
+     POP_JUMP_IF_FALSE → JUMP_BACKWARD
+     JUMP_FORWARD → after_else       ← break: else 건너뜀
+  >> JUMP_BACKWARD → LOAD_FAST
+  >> else_block: (print "not found")
+  >> after_else: RETURN_CONST None
+    </div>
+    <p>
+      for-else와 동일한 구조:
+    </p>
+    <ul>
+      <li>조건이 False → <code>POP_JUMP_IF_FALSE → else_block</code> → else 실행</li>
+      <li>break → <code>JUMP_FORWARD → after_else</code> → else 건너뜀</li>
+    </ul>
+    <p>
+      "else는 break가 없었을 때만 실행"이 바이트코드 수준에서도 명확하게 구현됩니다.
+    </p>
+    <h3>Part B — for/while-else와 구조화 프로그래밍: n-and-a-half 루프 문제</h3>
+    <p>
+      C와 Java에는 for/while-else가 없습니다. 왜 Python만 있을까요?
+      이 패턴은 Knuth가 제안한 <strong>n-and-a-half loop</strong> 문제와 관련됩니다:
+    </p>
+    <pre><code class="language-c">/* C에서 "찾지 못함"을 감지하는 전통적 방법: 플래그 변수 */
+int found = 0;
+int i = 0;
+while (i &lt; n) {
+    if (arr[i] == target) {
+        found = 1;
+        break;
+    }
+    i++;
+}
+if (!found) {
+    handle_not_found();  /* 플래그 없이는 break 여부 알 수 없음 */
+}</code></pre>
+    <pre><code class="language-python"># Python: 플래그 없이 else로 동일하게 표현
+i = 0
+while i &lt; n:
+    if arr[i] == target:
+        break
+    i += 1
+else:
+    handle_not_found()   # break 없이 완료 = 못 찾음</code></pre>
+    <p>
+      Dijkstra의 구조화 프로그래밍(1968)은 goto 제거를 요구했습니다.
+      C의 플래그 변수 패턴은 실질적으로 <strong>은닉된 goto</strong>입니다 —
+      플래그가 정보를 루프 밖으로 "점프"시킵니다.<br>
+      Python의 for/while-else는 이 패턴을 언어 수준에서 구조화된 방식으로 지원합니다.
+      <strong>break 여부가 else 블록 실행 여부에 직접 인코딩</strong>되어 플래그가 필요 없습니다.
+    </p>
+    <div class="callout callout-info">
+      <strong>실무 노트:</strong> while-else는 강력하지만 드물게 사용됩니다.
+      팀원이 익숙하지 않으면 명시적 플래그나 함수 분리가 더 읽기 쉬울 수 있습니다.
+      "이 팀이 Python-fluent인가?"를 먼저 물어보세요.
+    </div>
+    <div class="callout callout-info">
+      <strong>while-else의 실용 패턴 — 검색 실패 감지:</strong>
+      <pre><code class="language-python"># 검색 성공/실패를 while-else로 명확하게 처리
+def find_prime_factor(n):
+    """n의 소인수를 찾아 반환. 없으면(n이 소수) None 반환."""
+    factor = 2
+    while factor * factor <= n:
+        if n % factor == 0:
+            return factor   # 발견! break와 달리 즉시 반환
+        factor += 1
+    else:
+        # while 조건이 False가 되어 정상 종료 → 소인수 없음
+        return None
+
+print(find_prime_factor(12))   # 2 (12 = 2 × 6)
+print(find_prime_factor(17))   # None (17은 소수)
+print(find_prime_factor(100))  # 2
+
+# 플래그 변수 없이 break/else로 처리
+numbers = [3, 7, 11, 15, 19]
+target = 15
+i = 0
+while i < len(numbers):
+    if numbers[i] == target:
+        print(f"{target}을 index {i}에서 발견!")
+        break
+    i += 1
+else:
+    print(f"{target}을 찾지 못함")</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06. Sentinel 패턴 ==================== -->
+<section id="sentinel">
+  <h2>Sentinel 패턴 — 종료 신호값</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>종료를 알리는 특별한 값</h3>
+    <p>
+      <strong>Sentinel(파수꾼)</strong>은 "여기서 멈춰"를 알리는 특별한 값입니다.
+      루프가 언제 끝날지 모를 때, Sentinel 값이 들어오면 멈춥니다.
+    </p>
+    <pre><code class="language-python"># 문자열 "quit"을 sentinel로 사용
+numbers = []
+print("숫자를 입력하세요. 'quit'으로 종료:")
+
+while True:
+    text = input("> ")
+    if text == "quit":   # sentinel 감지
+        break
+    numbers.append(int(text))
+
+print(f"입력한 숫자들: {numbers}")
+print(f"합계: {sum(numbers)}")
+
+# None을 sentinel로 사용 (값이 없음을 표시)
+def get_next_task():
+    """더 이상 태스크가 없으면 None 반환"""
+    # ...
+    return None   # 여기서는 예시로 None 반환
+
+while (task := get_next_task()) is not None:
+    process(task)</code></pre>
+    <div class="callout callout-info">
+      <strong>Sentinel의 조건:</strong> 정상 데이터와 절대 혼동되지 않는 값이어야 합니다.
+      숫자 데이터라면 <code>-1</code> 또는 <code>None</code>을, 문자열이라면 <code>"quit"</code>을 자주 씁니다.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>유일한 Sentinel — object()</h3>
+    <pre><code class="language-python"># None이 유효한 데이터일 때: None을 sentinel로 쓸 수 없음
+data_with_none = [1, None, 3, None, 5]   # None이 의미 있는 값!
+
+# ✅ object()로 절대 유일한 sentinel 생성
+SENTINEL = object()
+
+def get_item(iterator):
+    return next(iterator, SENTINEL)
+
+it = iter(data_with_none)
+while (item := get_item(it)) is not SENTINEL:
+    print(item)   # 1, None, 3, None, 5 — None도 정상 출력
+
+# SENTINEL은 전 우주에서 유일한 객체 — 어떤 데이터와도 is 비교에서 False
+print(SENTINEL is None)    # False
+print(SENTINEL is False)   # False
+print(SENTINEL is 0)       # False</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+1
+None
+3
+None
+5
+False
+False
+False
+    </div>
+    <p>
+      <code>object()</code>는 CPython에서 레퍼런스 동일성(<code>is</code>)만으로 구별되는
+      새 객체를 만듭니다. <code>==</code>가 아닌 <code>is</code>로 비교하는 이유입니다.
+    </p>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>표준 라이브러리의 Sentinel 패턴</h3>
+    <pre><code class="language-python"># iter()의 두 번째 형태: iter(callable, sentinel)
+import random
+
+# random.randint(1,6)을 호출하다가 6이 나오면 멈춤
+rolls = list(iter(lambda: random.randint(1, 6), 6))
+print(rolls)   # 예: [3, 1, 4, 1] — 6이 나오기 직전까지
+
+# 파일에서 EOF까지 한 줄씩 읽기 (readline()은 EOF에서 "" 반환)
+with open("data.txt") as f:
+    lines = list(iter(f.readline, ""))
+# 주의: iter(f.readline, "\n")으로 쓰면 빈 줄이 없을 때 무한 루프!
+
+# functools.reduce의 initializer: 빈 시퀀스의 기본값(항등원) 역할
+from functools import reduce
+print(reduce(lambda a, b: a + b, [], 0))   # 0 — 빈 시퀀스일 때 초기값 반환</code></pre>
+    <div class="output-block">
+      <div class="output-label">reduce([], initializer=0) 결과:</div>
+0
+    </div>
+    <pre><code class="language-python"># Python 내부의 sentinel: itertools._sentinel
+# next()의 두 번째 인수가 없을 때 StopIteration을 발생시키는
+# 내부 sentinel object가 사용됨</code></pre>
+    <div class="callout callout-info">
+      <strong><code>iter(callable, sentinel)</code> 형태:</strong>
+      callable을 반복 호출하다가 sentinel과 같은 값이 나오면 StopIteration.
+      for 루프와 함께 사용 가능합니다.
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — Sentinel과 StopIteration의 관계</h3>
+    <p>
+      Python의 Iterator Protocol은 소진 신호로 <code>StopIteration</code>을 사용합니다.
+      이것 자체가 "프로토콜 정의된 Sentinel" 패턴입니다:
+    </p>
+    <pre><code class="language-python">from collections.abc import Iterator
+
+# StopIteration = Iterator Protocol의 공식 sentinel
+class CountUpTo:
+    def __init__(self, limit):
+        self.n = 0
+        self.limit = limit
+    def __iter__(self): return self
+    def __next__(self):
+        if self.n >= self.limit:
+            raise StopIteration   # ← 공식 sentinel
+        val = self.n
+        self.n += 1
+        return val
+
+# next(it, default): default가 비공식 sentinel
+it = CountUpTo(3)
+DONE = object()
+while (val := next(it, DONE)) is not DONE:
+    print(val)   # 0, 1, 2</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+0
+1
+2
+    </div>
+    <pre><code class="language-python"># CPython 내부: next()의 default 인수 유무는
+# PyArg_UnpackTuple의 인수 개수 체크로 처리됨
+# (default 없으면 StopIteration 전파, 있으면 default 반환)
+# Objects/iterobject.c, Python/bltinmodule.c 참조</code></pre>
+    <h3>Part B — object()의 CPython 구현</h3>
+    <pre><code class="language-python">import sys
+
+s1 = object()
+s2 = object()
+
+# 각 object()는 별개의 PyObject 인스턴스
+print(s1 is s2)              # False
+print(id(s1) == id(s2))      # False (다른 메모리 주소)
+print(sys.getsizeof(s1))     # 16 bytes (PyObject_HEAD만)
+
+# object.__eq__는 self is other일 때만 True, 아니면 NotImplemented 반환
+print(s1 == s2)   # False (identity 비교)
+print(s1 == s1)   # True  (동일 객체)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+False
+False
+16
+False
+True
+    </div>
+    <p>
+      <code>object()</code>의 CPython 구현(<code>Objects/typeobject.c</code>)은
+      <code>object_richcompare</code>는 <code>Py_EQ</code>에서 identity만 검사합니다.
+      따라서 <code>is</code> 비교와 <code>==</code> 비교가 동일하게 동작 —
+      sentinel로 쓰기에 완벽합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 07. State Machine ==================== -->
+<section id="state-machine">
+  <h2>상태 기계 (State Machine) — while의 핵심 사용 사례</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>상태에 따라 다르게 동작하는 루프</h3>
+    <p>
+      상태 기계(State Machine)는 "지금 어떤 상태인가"에 따라 다르게 행동합니다.
+      while 루프는 상태가 바뀔 때마다 다른 처리를 자연스럽게 표현합니다.
+    </p>
+    <pre><code class="language-python"># 신호등 시뮬레이션
+state = "green"
+cycle = 0
+
+while cycle &lt; 3:   # 3번 순환
+    if state == "green":
+        print("초록 — 출발!")
+        state = "yellow"
+    elif state == "yellow":
+        print("노랑 — 주의!")
+        state = "red"
+    elif state == "red":
+        print("빨강 — 정지!")
+        state = "green"
+        cycle += 1</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (일부):</div>
+초록 — 출발!
+노랑 — 주의!
+빨강 — 정지!
+초록 — 출발!
+...
+    </div>
+    <p>
+      <code>state</code> 변수가 현재 상태를 담고, while 루프가 상태 전이를 반복합니다.
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>ATM 시뮬레이션 — 실용적인 State Machine</h3>
+    <pre><code class="language-python">def atm():
+    balance = 100_000
+    state = "MENU"
+
+    while True:
+        if state == "MENU":
+            print(f"\n잔액: {balance:,}원")
+            print("1. 출금  2. 입금  3. 종료")
+            choice = input("선택: ")
+            if choice == "1":
+                state = "WITHDRAW"
+            elif choice == "2":
+                state = "DEPOSIT"
+            elif choice == "3":
+                state = "EXIT"
+
+        elif state == "WITHDRAW":
+            amount = int(input("출금액: "))
+            if amount > balance:
+                print("잔액 부족")
+            else:
+                balance -= amount
+                print(f"{amount:,}원 출금 완료")
+            state = "MENU"
+
+        elif state == "DEPOSIT":
+            amount = int(input("입금액: "))
+            balance += amount
+            print(f"{amount:,}원 입금 완료")
+            state = "MENU"
+
+        elif state == "EXIT":
+            print("이용해주셔서 감사합니다.")
+            break
+
+atm()</code></pre>
+    <p>
+      상태가 명시적 변수에 담기므로 "지금 어디에 있는가"가 항상 명확합니다.
+      조건이 복잡해질수록 State Machine 패턴이 빛납니다.
+    </p>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Enum으로 상태 표현 / 간단한 파서</h3>
+    <pre><code class="language-python">from enum import Enum, auto
+
+class ParseState(Enum):
+    FIELD_START = auto()
+    IN_FIELD = auto()
+    IN_QUOTED = auto()
+    AFTER_QUOTE = auto()
+
+def parse_csv_field(text):
+    """간단한 CSV 필드 파서"""
+    state = ParseState.FIELD_START
+    fields = []
+    current = []
+
+    for char in text + ",":   # 끝에 , 추가로 마지막 필드 처리
+        if state == ParseState.FIELD_START:
+            if char == '"':
+                state = ParseState.IN_QUOTED
+            elif char == ',':
+                fields.append("".join(current))
+                current = []
+            else:
+                current.append(char)
+                state = ParseState.IN_FIELD
+
+        elif state == ParseState.IN_FIELD:
+            if char == ',':
+                fields.append("".join(current))
+                current = []
+                state = ParseState.FIELD_START
+            else:
+                current.append(char)
+
+        elif state == ParseState.IN_QUOTED:
+            if char == '"':
+                state = ParseState.AFTER_QUOTE
+            else:
+                current.append(char)
+
+        elif state == ParseState.AFTER_QUOTE:
+            if char == ',':
+                fields.append("".join(current))
+                current = []
+                state = ParseState.FIELD_START
+
+    return fields
+
+print(parse_csv_field('hello,"world, python",42'))
+# ['hello', 'world, python', '42']</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+['hello', 'world, python', '42']
+    </div>
+    <p>
+      Enum 상태는 문자열보다 오타 방지와 IDE 자동완성 지원이 뛰어납니다.
+      복잡한 파서, 프로토콜 구현, 게임 상태 관리에 널리 사용됩니다.
+    </p>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — State Machine과 Iterator Protocol의 연결</h3>
+    <p>
+      Python의 Generator는 State Machine의 CPython 수준 구현입니다.
+      <code>yield</code>가 상태를 저장하고, <code>next()</code>가 재개합니다:
+    </p>
+    <pre><code class="language-python">import dis
+
+# State Machine while 버전
+def traffic_light_while():
+    states = ["green", "yellow", "red"]
+    i = 0
+    while True:
+        yield states[i % 3]
+        i += 1
+
+# Generator는 내부적으로 프레임 상태를 보존
+gen = traffic_light_while()
+print(next(gen))   # green
+print(next(gen))   # yellow
+print(next(gen))   # red
+print(next(gen))   # green (순환)
+
+# Generator의 frame 상태 확인
+print(gen.gi_frame.f_locals)   # {'states': [...], 'i': 3}
+
+# 바이트코드에서 YIELD_VALUE가 상태 보존점
+dis.dis(traffic_light_while)
+# YIELD_VALUE: 현재 프레임(로컬변수, 명령어 포인터)을 보존하고 값 반환
+# RESUME: next() 호출 시 이 지점부터 재개</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+green
+yellow
+red
+green
+{'states': ['green', 'yellow', 'red'], 'i': 3}
+    </div>
+    <h3>Part B — while-based State Machine vs 함수형 전이표</h3>
+    <pre><code class="language-python"># 전이 테이블: 상태 × 입력 → 다음 상태
+TRANSITIONS: dict[str, dict[str, str]] = {
+    "IDLE":       {"start": "RUNNING", "reset": "IDLE"},
+    "RUNNING":    {"pause": "PAUSED",  "stop":  "IDLE"},
+    "PAUSED":     {"resume": "RUNNING", "stop": "IDLE"},
+}
+
+def run_state_machine(initial: str, events: list[str]) -> str:
+    state = initial
+    while events:
+        event = events.pop(0)
+        if event in TRANSITIONS.get(state, {}):
+            state = TRANSITIONS[state][event]
+        else:
+            raise ValueError(f"Invalid transition: {state} + {event}")
+    return state
+
+print(run_state_machine("IDLE", ["start", "pause", "resume", "stop"]))
+# IDLE → RUNNING → PAUSED → RUNNING → IDLE</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+IDLE
+    </div>
+    <p>
+      전이 테이블 방식은 상태-이벤트 조합이 코드가 아닌 데이터로 표현됩니다.
+      새 상태/이벤트를 추가할 때 코드 수정 없이 딕셔너리 항목만 추가하면 됩니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 08. while vs for ==================== -->
+<section id="while-vs-for">
+  <h2>while vs for — 언제 어느 것을 선택하는가</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>선택 기준 한 줄 요약</h3>
+    <p>
+      <strong>"순회할 것이 있으면 for, 조건만 있으면 while"</strong>
+    </p>
+    <pre><code class="language-python"># for: 목록, 범위, 문자열 등 "이미 있는 것" 처리
+for fruit in ["사과", "바나나"]:   # ✅ for
+    print(fruit)
+
+for i in range(10):                # ✅ for
+    print(i)
+
+# while: 조건, 입력, 상태 변화 등 "언제 끝날지 모르는 것"
+while input("계속? ") != "n":     # ✅ while
+    do_something()
+
+count = 0
+while count &lt; 10:                 # ⚠ 이건 for range(10)이 더 명확
+    count += 1</code></pre>
+    <div class="callout callout-warning">
+      <strong>흔한 실수:</strong> <code>while count &lt; 10: count += 1</code>은
+      <code>for i in range(10):</code>으로 쓰는 게 더 Python답습니다.
+      횟수가 정해진 반복은 for + range를 사용하세요.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>이진 탐색은 왜 while인가</h3>
+    <pre><code class="language-python">def binary_search(arr, target):
+    """정렬된 배열에서 target 탐색 — O(log n)"""
+    left, right = 0, len(arr) - 1
+
+    # for가 안 되는 이유:
+    # 반복 횟수가 탐색 결과에 따라 달라짐 (left, right가 동적으로 변함)
+    # "left &lt;= right"라는 상태 조건이 핵심
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] &lt; target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1   # 못 찾음
+
+# 선택 기준 요약표:
+# ┌─────────────────────────────┬──────────┐
+# │ 상황                         │  선택    │
+# ├─────────────────────────────┼──────────┤
+# │ Iterable 순회                │  for     │
+# │ 횟수가 정해진 반복            │  for+range│
+# │ 조건 기반 반복                │  while   │
+# │ 탈출 조건이 루프 중간에 있음   │  while True│
+# │ 이진 탐색, 수렴 알고리즘       │  while   │
+# │ 사용자 입력, 네트워크 수신     │  while True│
+# └─────────────────────────────┴──────────┘</code></pre>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>수렴 알고리즘 — 뉴턴법</h3>
+    <pre><code class="language-python">def sqrt_newton(n, tolerance=1e-10):
+    """뉴턴-랩슨법으로 √n 계산 — 수렴할 때까지 반복"""
+    if n &lt; 0:
+        raise ValueError("음수의 제곱근은 실수가 아닙니다")
+    if n == 0:
+        return 0.0
+
+    x = n / 2.0   # 초기 추정값
+
+    # for는 불가: 몇 번 반복해야 할지 모름 (수렴 속도가 n에 따라 다름)
+    while True:
+        x_new = (x + n / x) / 2
+        if abs(x_new - x) &lt; tolerance:   # 수렴 조건
+            return x_new
+        x = x_new
+
+import math
+result = sqrt_newton(2)
+print(f"뉴턴법: {result:.15f}")   # 1.414213562373095
+print(f"math.sqrt: {math.sqrt(2):.15f}")   # 1.414213562373095
+
+# 프로파일: 2에 대해 약 5~6회 반복으로 수렴 (뉴턴법은 2차 수렴)
+count = 0
+x = 2 / 2.0
+while abs(x * x - 2) > 1e-15:
+    x = (x + 2 / x) / 2
+    count += 1
+print(f"반복 횟수: {count}")   # 약 5~6회</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+뉴턴법: 1.414213562373095
+math.sqrt: 1.414213562373095
+반복 횟수: 5
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — 이진 탐색 while vs for: 바이트코드 효율성</h3>
+    <pre><code class="language-python">import dis, timeit
+
+arr = list(range(1000))
+target = 734
+
+def search_while(arr, target):
+    left, right = 0, len(arr) - 1
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] &lt; target: left = mid + 1
+        else: right = mid - 1
+    return -1
+
+def search_for(arr, target):
+    # for로 이진 탐색 흉내 (비교용 — 실제로는 쓰지 말 것)
+    for _ in range(len(arr).bit_length() + 1):
+        if not (0 &lt;= (mid := (0 + len(arr) - 1) // 2) &lt; len(arr)):
+            break
+        if arr[mid] == target: return mid
+    return -1  # 실제로는 left/right를 관리할 방법이 없어 올바르지 않음
+
+dis.dis(search_while)
+# 핵심:
+# while: POP_JUMP_IF_FALSE(조건) → left/right 갱신 → JUMP_BACKWARD
+# 각 반복에서 left, right, mid 세 변수를 추적
+
+t1 = timeit.timeit(lambda: search_while(arr, target), number=100000)
+print(f"while 이진탐색: {t1:.3f}초")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (예시 — 환경마다 다름):</div>
+while 이진탐색: 0.083초
+    </div>
+    <h3>Part B — while이 for보다 적합한 알고리즘 특성</h3>
+    <pre><code class="language-python"># 루프 불변식(Loop Invariant)과 while
+# 이진탐색의 불변식: arr[left] &lt;= target &lt;= arr[right] (target이 있다면)
+# while left &lt;= right: 는 이 불변식이 유지되는 동안 탐색을 계속하는 표현
+
+# for + range로 표현하면 불변식이 숨겨짐:
+# for _ in range(len(arr).bit_length()): 는 "왜 이 횟수인가"가 불명확
+
+# 알고리즘적 관점:
+# - O(n) 단순 순회: for
+# - O(log n) 이진 탐색: while
+# - O(1) ~ O(수렴): while True
+# 탈출 조건의 복잡도가 높을수록 while이 더 표현력이 높음</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 피트폴 — 흔한 실수 3가지 ==================== -->
+<section id="pitfalls">
+  <h2>while 루프의 흔한 실수 — 피트폴 3가지</h2>
+
+  <div class="callout callout-warning">
+    <strong>🚨 흔한 실수 1 — 루프 변수 업데이트 잊기 (무한 루프):</strong>
+    <pre><code class="language-python"># ❌ 무한 루프: i를 업데이트하지 않음
+i = 0
+while i < 5:
+    print(i)
+    # i += 1 을 깜빡! → 무한 루프 (Ctrl+C로 중단)
+
+# ✅ 루프 변수를 항상 바디 끝에서 업데이트
+i = 0
+while i < 5:
+    print(i)
+    i += 1   # 반드시 포함!
+
+# ✅ for로 대체 가능하면 for 사용 (업데이트 자동)
+for i in range(5):
+    print(i)</code></pre>
+  </div>
+
+  <div class="callout callout-warning">
+    <strong>🚨 흔한 실수 2 — off-by-one 오류 (경계 조건):</strong>
+    <pre><code class="language-python"># 1부터 10까지 합계를 구하려는 코드
+total = 0
+i = 1
+while i < 10:   # ❌ i < 10이면 10을 포함 안 함!
+    total += i
+    i += 1
+print(total)   # 45 ← 55가 아님! (10이 빠짐)
+
+# ✅ 수정
+total = 0
+i = 1
+while i <= 10:   # <= 으로 10 포함
+    total += i
+    i += 1
+print(total)   # 55 ✅
+
+# 경계 조건 체크리스트:
+# < vs <= : 마지막 원소 포함 여부
+# 초기값: 0부터인가, 1부터인가
+# 업데이트: += 1인가, 다른 값인가</code></pre>
+  </div>
+
+  <div class="callout callout-warning">
+    <strong>🚨 흔한 실수 3 — while 조건의 부작용:</strong>
+    <pre><code class="language-python">data = [1, 2, 3, 4, 5]
+
+# ❌ 조건에서 pop() 사용 → 두 가지 함정
+# 1) pop()이 0(falsy)을 반환하면 루프가 조기 종료
+# 2) 리스트가 비면 IndexError 발생
+while data.pop():   # 조건 평가마다 pop 발생!
+    print("처리 중")
+# data = [0, 1, 2]라면 → 2 처리, 1 처리, 0에서 종료(0은 falsy!)
+# data = []라면 → IndexError!
+
+# ✅ 바디에서 명시적으로 처리
+data = [1, 2, 3, 4, 5]
+while data:
+    item = data.pop()   # 바디에서 명시적 소비
+    print(f"처리: {item}")</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 09. AI와 while ==================== -->
+<section id="ai-while">
+  <h2>AI와 while 루프 — AI 코드를 안전하게 사용하는 법</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>AI while 루프 코드 체크리스트</h3>
+    <div class="callout callout-tip">
+      <strong>☑ 체크 1: 조건 변수가 루프 안에서 업데이트되는가?</strong>
+    </div>
+    <pre><code class="language-python"># ❌ 무한 루프 — i가 업데이트되지 않음
+i = 0
+while i &lt; 10:
+    print(i)
+    # i += 1 ← 빠뜨림!
+
+# ✅ 업데이트 포함
+i = 0
+while i &lt; 10:
+    print(i)
+    i += 1</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+    </div>
+    <div class="callout callout-tip">
+      <strong>☑ 체크 2: while True에 break 조건이 반드시 도달 가능한가?</strong>
+    </div>
+    <pre><code class="language-python"># ❌ break에 도달 불가 — 버그 (입력이 항상 숫자라고 가정)
+while True:
+    text = input()
+    n = int(text)   # ValueError 발생 시 break에 못 도달
+    if n == 0:
+        break
+
+# ✅ 예외 처리 포함
+while True:
+    try:
+        n = int(input("0을 입력하면 종료: "))
+        if n == 0:
+            break
+    except ValueError:
+        print("숫자를 입력하세요.")</code></pre>
+    <div class="callout callout-tip">
+      <strong>☑ 체크 3: 중첩 루프에서 break가 어느 루프를 탈출하는가?</strong>
+    </div>
+    <pre><code class="language-python"># ❌ 내부 break가 외부 루프를 탈출한다고 착각
+while outer_condition:
+    while inner_condition:
+        if done:
+            break   # 내부 while만 탈출! 외부는 계속
+    # 외부 루프는 여기서 계속됨
+
+# ✅ 함수로 분리하거나 플래그 사용
+def do_nested():
+    while outer_condition:
+        while inner_condition:
+            if done:
+                return   # 모든 루프 탈출</code></pre>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>AI가 생성하는 흔한 while 패턴과 개선</h3>
+    <pre><code class="language-python">items = [1, 2, 3, 4, 5]
+
+# ❌ AI 기본 패턴 1: while로 Iterable 순회 (for가 더 적합)
+i = 0
+while i &lt; len(items):
+    print(items[i])
+    i += 1
+
+# ✅ 개선: for
+for item in items:
+    print(item)
+
+# ❌ AI 기본 패턴 2: 조건 반복을 while True + 외부 플래그로 표현
+running = True
+while running:
+    data = get_data()
+    if data is None:
+        running = False   # 번잡한 플래그 관리
+    else:
+        process(data)
+
+# ✅ 개선: while 조건에 직접 표현 또는 Walrus
+while (data := get_data()) is not None:
+    process(data)
+
+# AI에게 명시적으로 요청하는 방법:
+# "while True 대신 while 조건을 직접 써줘"
+# "조건 변수 업데이트를 잊지 말아줘"
+# "중첩 루프 탈출은 함수 return으로 처리해줘"</code></pre>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>AI while → for/comprehension 리팩토링</h3>
+    <pre><code class="language-python">import timeit
+
+# AI 생성 코드 (while로 필터링)
+def filter_while(data, pred):
+    result = []
+    i = 0
+    while i &lt; len(data):
+        if pred(data[i]):
+            result.append(data[i])
+        i += 1
+    return result
+
+# 리팩토링 1: for + append
+def filter_for(data, pred):
+    result = []
+    for x in data:
+        if pred(x):
+            result.append(x)
+    return result
+
+# 리팩토링 2: 컴프리헨션 (가장 간결)
+def filter_comp(data, pred):
+    return [x for x in data if pred(x)]
+
+# 리팩토링 3: filter() 내장 함수
+def filter_builtin(data, pred):
+    return list(filter(pred, data))
+
+data = list(range(10_000))
+pred = lambda x: x % 2 == 0
+
+t1 = timeit.timeit(lambda: filter_while(data, pred), number=500)
+t2 = timeit.timeit(lambda: filter_for(data, pred), number=500)
+t3 = timeit.timeit(lambda: filter_comp(data, pred), number=500)
+print(f"while:          {t1:.3f}초")
+print(f"for+append:     {t2:.3f}초")
+print(f"comprehension:  {t3:.3f}초  ← 보통 가장 빠름")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (예시 — 환경마다 다름):</div>
+while:          0.312초
+for+append:     0.248초
+comprehension:  0.187초  ← 보통 가장 빠름
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — 무한 루프 탐지와 정지 문제(Halting Problem)</h3>
+    <p>
+      AI가 생성한 while 루프가 무한 루프인지 자동으로 확인할 수 없을까요?
+      이것은 <strong>정지 문제(Halting Problem)</strong>로 귀결됩니다:
+    </p>
+    <pre><code class="language-python">def will_terminate(code: str) -> bool:
+    """이 코드가 반드시 종료되는가를 판단하는 함수"""
+    # 튜링(1936): 이 함수를 완벽하게 구현하는 것은 불가능
+    # → 임의의 프로그램에 대해 정지 여부를 결정할 수 없음
+    raise NotImplementedError("정지 문제는 결정 불가능")
+
+# ── 귀류법 스케치 (대각선 논법) ──────────────────────
+# 가정: 범용 정지 판별 함수 will_halt(f, x)가 존재한다고 하자.
+
+def will_halt(f, x) -> bool:
+    """f(x)가 정지하면 True, 무한 루프면 False (가상)"""
+    ...   # 존재한다고 가정
+
+def paradox(x):
+    """will_halt를 이용해 모순을 만드는 함수"""
+    if will_halt(x, x):   # x(x)가 정지한다고 판정되면
+        while True: pass   # → 일부러 무한 루프 (정지 안 함!)
+    else:                  # x(x)가 정지 안 한다고 판정되면
+        return              # → 즉시 정지
+
+# paradox(paradox)를 호출하면?
+#   will_halt(paradox, paradox) == True  → 무한 루프 → 정지 안 함 → 모순!
+#   will_halt(paradox, paradox) == False → 즉시 정지 → 정지함 → 모순!
+# 어느 쪽이든 모순 → will_halt는 존재할 수 없다. ■
+
+# 실용적 대안: 정적 분석 + 타임아웃
+import signal
+
+def with_timeout(func, seconds=5):
+    def handler(signum, frame):
+        raise TimeoutError("루프가 너무 오래 실행됩니다")
+    signal.signal(signal.SIGALRM, handler)
+    signal.alarm(seconds)
+    try:
+        return func()
+    finally:
+        signal.alarm(0)</code></pre>
+    <h3>Part A — dis.dis()로 while 바이트코드 분석 + for와 비교</h3>
+    <pre><code class="language-python">import dis
+
+def while_loop():
+    i = 0
+    while i < 5:
+        i += 1
+
+def for_loop():
+    for i in range(5):
+        pass
+
+print("=== while 루프 ===")
+dis.dis(while_loop)
+print("\n=== for 루프 ===")
+dis.dis(for_loop)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 요약 (Python 3.12):</div>
+=== while 루프 ===
+  LOAD_CONST      0          ← i = 0
+  STORE_FAST      i
+  LOAD_FAST       i          ← while 조건: i &lt; 5 매회 평가
+  LOAD_CONST      5
+  COMPARE_OP      &lt;
+  POP_JUMP_IF_FALSE → 루프 종료
+  LOAD_FAST       i          ← i += 1
+  LOAD_CONST      1
+  BINARY_OP       +=
+  STORE_FAST      i
+  JUMP_BACKWARD   → while 조건으로
+
+=== for 루프 ===
+  LOAD_GLOBAL     range      ← range(5) 한 번 생성
+  LOAD_CONST      5
+  CALL
+  GET_ITER                   ← iter() 한 번 호출
+  FOR_ITER        → 루프 종료   ← next() + StopIteration 처리 (매회)
+  STORE_FAST      i
+  JUMP_BACKWARD   → FOR_ITER
+    </div>
+    <div class="callout callout-info">
+      <strong>while vs for 바이트코드 차이:</strong><br>
+      • <code>while</code>: 매 반복마다 <code>LOAD</code> + <code>COMPARE_OP</code> + <code>POP_JUMP_IF_FALSE</code> — 조건을 직접 평가<br>
+      • <code>for</code>: 한 번의 <code>GET_ITER</code> 후 매 반복마다 <code>FOR_ITER</code> — next() + StopIteration 처리<br>
+      • <code>JUMP_BACKWARD</code>: 루프 뒤로 점프 (Python 3.11+에서 JUMP_ABSOLUTE → JUMP_BACKWARD로 변경)
+    </div>
+
+    <h3>Part A — while True + break의 바이트코드와 최적화</h3>
+    <pre><code class="language-python">import dis
+
+def while_true_break():
+    i = 0
+    while True:
+        if i >= 5:
+            break
+        i += 1
+
+dis.dis(while_true_break)</code></pre>
+    <div class="callout callout-info">
+      <strong>while True 최적화:</strong> CPython은 <code>while True</code>를 특별하게 처리합니다.
+      <code>True</code>는 항상 참이므로 조건 평가(<code>COMPARE_OP</code>)를 생략합니다.
+      내부적으로 단순한 <code>JUMP_BACKWARD</code>로 변환됩니다.
+      이 때문에 <code>while True: ... break</code> 패턴이 <code>while condition:</code>보다
+      유연하고 경우에 따라 더 명확합니다.
+    </div>
+
+    <h3>Part B — 실용적 무한 루프 방어 패턴</h3>
+    <pre><code class="language-python">MAX_ITERATIONS = 10_000   # 안전 상한선
+
+def safe_while(condition_fn, body_fn):
+    """무한 루프 방어 래퍼"""
+    iterations = 0
+    while condition_fn():
+        body_fn()
+        iterations += 1
+        if iterations >= MAX_ITERATIONS:
+            raise RuntimeError(
+                f"루프가 {MAX_ITERATIONS}회 초과 — 무한 루프 의심"
+            )
+    return iterations
+
+# AI 생성 코드를 검토할 때:
+# 1. 루프 변수 업데이트 유무 확인 (정적 분석)
+# 2. 수렴 조건의 단조성 확인 (이진탐색: left는 증가, right는 감소)
+# 3. 상한 반복 횟수 추가 (방어적 프로그래밍)
+# 4. 실제 실행으로 검증 (profiling)</code></pre>
+
+    <h3>Part B — 루프 불변식(Loop Invariant)과 정확성 증명</h3>
+    <p>
+      <strong>루프 불변식(Loop Invariant)</strong>은 각 반복 <strong>시작 시점에서</strong> 항상 참인 조건입니다
+      (반복 도중에는 일시적으로 깨질 수 있으며, 반복 끝에 복원됩니다).
+      올바른 알고리즘 설계의 핵심 도구이며, while 루프의 정확성을 증명하는 데 사용됩니다.
+    </p>
+    <pre><code class="language-python">def binary_search(arr, target):
+    """
+    루프 불변식: arr[low] <= target <= arr[high] (target이 존재한다면)
+    초기: low=0, high=n-1 → 전체 배열
+    유지: 매 반복에서 절반을 버리되 불변식 유지
+    종료: low > high → target 없음, 또는 arr[mid] == target → 발견
+    """
+    low, high = 0, len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2    # 중간 인덱스
+
+        if arr[mid] == target:
+            return mid             # 발견!
+        elif arr[mid] < target:
+            low = mid + 1          # 오른쪽 절반만 탐색
+        else:
+            high = mid - 1         # 왼쪽 절반만 탐색
+
+    return -1   # 발견 못함
+
+arr = [1, 3, 5, 7, 9, 11, 13, 15]
+print(binary_search(arr, 7))    # 3 (인덱스)
+print(binary_search(arr, 6))    # -1 (없음)
+
+# 왜 이 알고리즘이 항상 올바른가?
+# 불변식 증명:
+# 1. 초기: low=0, high=7 → 모든 원소 포함 ✓
+# 2. 유지: mid를 버리고 반쪽으로 줄여도 불변식 유지 ✓
+# 3. 종료: low > high → 빈 범위 → target 없음 ✓
+print(f"이진 탐색으로 O(log n) 달성: 8개 원소, 최대 {len(arr).bit_length()}번 비교")</code></pre>
+    <div class="callout callout-info">
+      <strong>루프 불변식의 3가지 조건:</strong><br>
+      1. <strong>초기화(Initialization)</strong>: 루프 시작 전 불변식이 참<br>
+      2. <strong>유지(Maintenance)</strong>: 각 반복 후에도 불변식이 참<br>
+      3. <strong>종료(Termination)</strong>: 루프 종료 시 불변식 + 종료 조건으로 알고리즘 정확성 증명<br>
+      이것은 수학의 <strong>귀납법(Mathematical Induction)</strong>과 동일한 구조입니다.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. 실습 ==================== -->
+<section id="hands-on">
+  <h2>실습: while 루프 탐험</h2>
+
+  <div class="hands-on-block">
+    <h3>실습 1 — 이진 탐색 구현</h3>
+    <p>
+      while 루프로 이진 탐색을 구현하고, 반복 횟수가 O(log n)임을 확인하세요:
+    </p>
+    <pre><code class="language-python">def binary_search(arr, target):
+    """정렬된 배열에서 target의 인덱스 반환 (없으면 -1)"""
+    left, right = 0, len(arr) - 1
+    iterations = 0
+
+    while left &lt;= right:
+        # 구현하세요 — mid 계산, 비교, left/right 갱신
+        pass
+
+    return -1  # 구현 후 적절한 값 반환
+
+# 테스트
+arr = list(range(0, 200, 2))   # [0, 2, 4, ..., 198]
+print(binary_search(arr, 100))  # 50
+print(binary_search(arr, 101))  # -1
+
+# 탐구 질문:
+# Q1. len(arr) = 100일 때 최대 반복 횟수는? (hint: ceil(log2(100)))
+# Q2. 배열 크기를 10배 늘리면 반복 횟수는 몇 배 늘어나는가?</code></pre>
+
+    <h3>실습 2 — while True vs while 조건 바이트코드 비교</h3>
+    <pre><code class="language-python">import dis
+
+def loop_with_condition(n):
+    while n > 0:
+        n -= 1
+
+def loop_with_true(n):
+    while True:
+        if n &lt;= 0:
+            break
+        n -= 1
+
+dis.dis(loop_with_condition)
+print("---")
+dis.dis(loop_with_true)
+
+# 탐구 질문:
+# Q1. 두 함수의 바이트코드에서 가장 큰 차이는 무엇인가?
+# Q2. loop_with_true에서 while True의 조건 체크 코드가 보이는가?
+# Q3. 성능 차이가 있는가? timeit으로 측정해보세요.</code></pre>
+
+    <h3>실습 3 — 커스텀 State Machine: 자판기</h3>
+    <p>
+      자판기 State Machine을 while 루프로 구현하세요.
+      상태: <code>"IDLE"</code> → <code>"SELECTING"</code> → <code>"DISPENSING"</code> → <code>"IDLE"</code>
+    </p>
+    <pre><code class="language-python">def vending_machine():
+    """자판기 State Machine"""
+    menu = {"콜라": 1500, "사이다": 1500, "물": 1000}
+    state = "IDLE"
+    inserted = 0
+    selected = None
+
+    while True:
+        if state == "IDLE":
+            print(f"\n돈을 넣으세요. 메뉴: {list(menu.keys())}")
+            # 구현하세요 — 금액 입력 → SELECTING으로 전환
+
+        elif state == "SELECTING":
+            # 구현하세요 — 메뉴 선택 → DISPENSING으로 전환 또는 잔돈 반환
+
+        elif state == "DISPENSING":
+            # 구현하세요 — 음료 배출 + 잔돈 반환 → IDLE로 전환
+
+        elif state == "EXIT":
+            print("종료")
+            break
+
+vending_machine()</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 11. 연습문제 ==================== -->
+<section id="exercises">
+  <h2>연습문제 (10문제)</h2>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 1</span>
+    <h3>합산 루프</h3>
+    <p>사용자에게 숫자를 계속 입력받아 합계를 구하는 프로그램을 작성하세요.
+       0을 입력하면 종료하고 합계를 출력합니다:</p>
+    <pre><code class="language-python">total = 0
+while True:
+    # 구현하세요
+    pass
+print(f"합계: {total}")</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">total = 0
+while True:
+    n = int(input("숫자 입력 (0=종료): "))
+    if n == 0:
+        break
+    total += n
+print(f"합계: {total}")</code></pre>
+          <p><strong>왜 이렇게?</strong>
+            종료 조건(0)을 <code>total += n</code> 앞에서 검사하는 이유: 순서를 바꾸면 0이 합계에 포함됩니다.
+            <code>break</code>와 누적의 순서가 결과를 바꾸는 전형적 함정입니다.</p>
+          <div class="callout callout-warning">
+            <strong>⚠️ 함정:</strong> <code>int(input())</code>에 문자열을 넣으면
+            <code>ValueError</code>. 실전에서는 <code>try/except</code>로 감싸야 합니다.
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 2</span>
+    <h3>자릿수 분해</h3>
+    <p>양의 정수 n을 입력받아 각 자리 숫자를 거꾸로 출력하세요.
+       (예: 12345 → 5, 4, 3, 2, 1)</p>
+    <pre><code class="language-python">n = int(input("정수 입력: "))
+while n > 0:
+    # 구현하세요 — n % 10으로 마지막 자리, n // 10으로 나머지
+    pass</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">n = int(input("정수 입력: "))
+while n > 0:
+    print(n % 10)   # 마지막 자리
+    n //= 10        # 마지막 자리 제거</code></pre>
+          <p><strong>왜 이렇게?</strong>
+            <code>% 10</code>으로 마지막 자리를 꺼내고 <code>//= 10</code>으로 그 자리를 버립니다.
+            매 반복마다 n이 줄어들어 0이 되면 종료 — 조건 변수 업데이트의 전형적 패턴입니다.</p>
+          <div class="callout callout-warning">
+            <strong>⚠️ 함정:</strong> <code>n = 0</code>이면 루프에 진입하지 않아 아무것도 출력되지 않습니다.
+            0도 처리하려면 <code>while True</code> + 끝에서 조건 검사(do-while 패턴)가 필요합니다.
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 3</span>
+    <h3>유효성 검사 루프</h3>
+    <p>1~10 사이의 정수가 입력될 때까지 계속 입력을 받는 함수를 작성하세요:</p>
+    <pre><code class="language-python">def get_valid_input():
+    while True:
+        try:
+            # 구현하세요 — int() 변환 + 범위 확인
+            pass
+        except ValueError:
+            print("정수를 입력하세요.")
+
+result = get_valid_input()
+print(f"유효한 입력: {result}")</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def get_valid_input():
+    while True:
+        try:
+            n = int(input("1~10 사이 정수: "))
+            if 1 <= n <= 10:
+                return n
+            print("범위를 벗어났습니다.")
+        except ValueError:
+            print("정수를 입력하세요.")
+
+result = get_valid_input()
+print(f"유효한 입력: {result}")</code></pre>
+          <p><strong>왜 이렇게?</strong>
+            <code>while True</code> + <code>return</code>은 "유효한 값이 올 때까지 반복"의 정석입니다.
+            <code>break</code> 대신 <code>return</code>을 쓰면 유효 값을 바로 돌려주므로 별도 변수가 필요 없습니다.</p>
+          <div class="callout callout-warning">
+            <strong>⚠️ 함정:</strong> <code>1 &lt;= n &lt;= 10</code>은 Python 체이닝 비교라서 올바르게 작동하지만,
+            C/Java에서는 <code>(1 &lt;= n) &lt;= 10</code>으로 해석되어 의도와 다른 결과가 나옵니다.
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 4</span>
+    <h3>이진수 변환</h3>
+    <p>양의 정수를 이진수 문자열로 변환하는 함수를 while 루프로 구현하세요
+       (<code>bin()</code> 내장 함수 사용 금지):</p>
+    <pre><code class="language-python">def to_binary(n):
+    if n == 0:
+        return "0"
+    bits = []
+    while n > 0:
+        # 구현하세요 — n % 2 로 비트 추출, n //= 2
+        pass
+    return "".join(reversed(bits))
+
+print(to_binary(0))    # "0"
+print(to_binary(10))   # "1010"
+print(to_binary(255))  # "11111111"</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def to_binary(n):
+    if n == 0:
+        return "0"
+    bits = []
+    while n > 0:
+        bits.append(str(n % 2))   # 마지막 비트 추출
+        n //= 2                    # 다음 비트로 이동
+    return "".join(reversed(bits))
+
+print(to_binary(10))   # "1010"
+print(to_binary(255))  # "11111111"</code></pre>
+          <p><strong>왜 이렇게?</strong>
+            자릿수 분해(초급 2)와 동일한 원리입니다. <code>% 2</code>로 마지막 비트를, <code>//= 2</code>로 다음 비트를 꺼냅니다.
+            LSB(최하위 비트)부터 추출되므로 <code>reversed()</code>로 뒤집어야 올바른 이진수가 됩니다.</p>
+          <div class="callout callout-warning">
+            <strong>⚠️ 함정:</strong> <code>n = 0</code>을 별도 처리하지 않으면 루프에 진입하지 않아 빈 문자열 <code>""</code>이 반환됩니다.
+            음수도 처리 대상이라면 2의 보수 변환이 추가로 필요합니다.
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 5</span>
+    <h3>팰린드롬 검사 (두 포인터)</h3>
+    <p>while 루프와 두 포인터로 문자열이 팰린드롬인지 확인하세요:</p>
+    <pre><code class="language-python">def is_palindrome(s):
+    left, right = 0, len(s) - 1
+    while left &lt; right:
+        # 구현하세요
+        pass
+    return True
+
+print(is_palindrome("racecar"))   # True
+print(is_palindrome("python"))    # False
+print(is_palindrome("a"))         # True
+print(is_palindrome(""))          # True</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def is_palindrome(s):
+    left, right = 0, len(s) - 1
+    while left < right:
+        if s[left] != s[right]:
+            return False   # 불일치 → 팰린드롬 아님
+        left += 1
+        right -= 1
+    return True</code></pre>
+          <p><strong>왜 이렇게?</strong>
+            두 포인터가 양쪽 끝에서 중앙으로 좁혀오므로, 불일치를 발견하면 즉시 <code>False</code>를 반환합니다.
+            <code>left &lt; right</code>가 거짓이 되면 모든 쌍이 일치한 것이므로 <code>True</code>입니다.
+            <code>s == s[::-1]</code>보다 메모리 효율적입니다 — 슬라이싱은 새 문자열을 생성하지만 두 포인터는 O(1) 공간입니다.</p>
+          <div class="callout callout-warning">
+            <strong>⚠️ 함정:</strong> 빈 문자열 <code>""</code>이면 <code>right = -1</code>이 되어
+            <code>left(0) &lt; right(-1)</code>이 거짓 → 루프 미진입 → <code>True</code> 반환.
+            이것은 수학적으로 올바르지만(공진술), 실무에서는 빈 문자열을 팰린드롬으로 볼지 요구사항 확인이 필요합니다.
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 6</span>
+    <h3>소인수분해</h3>
+    <p>양의 정수를 소인수분해하는 함수를 while 루프로 구현하세요:</p>
+    <pre><code class="language-python">def factorize(n):
+    factors = []
+    divisor = 2
+    while divisor * divisor &lt;= n:
+        # 구현하세요 — n이 divisor로 나눠지면 factors에 추가, n //= divisor
+        pass
+    # 구현하세요 — n > 1이면 n 자체가 소수
+    return factors
+
+print(factorize(12))    # [2, 2, 3]
+print(factorize(100))   # [2, 2, 5, 5]
+print(factorize(97))    # [97]</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def factorize(n):
+    factors = []
+    divisor = 2
+    while divisor * divisor <= n:
+        while n % divisor == 0:
+            factors.append(divisor)
+            n //= divisor
+        divisor += 1
+    if n > 1:
+        factors.append(n)   # 남은 n은 소수
+    return factors
+
+print(factorize(12))    # [2, 2, 3]
+print(factorize(100))   # [2, 2, 5, 5]
+print(factorize(97))    # [97]</code></pre>
+          <p><strong>왜 이렇게?</strong>
+            <code>divisor * divisor &lt;= n</code>까지만 검사하는 이유: n의 소인수 중 하나는 반드시 &radic;n 이하입니다.
+            내부 <code>while</code>로 같은 소인수를 반복 추출하고, 다 빠지면 <code>divisor += 1</code>로 다음 수로 넘깁니다.
+            마지막에 <code>n &gt; 1</code>이면 남은 n 자체가 소수 — 이 처리를 빠뜨리면 큰 소인수가 누락됩니다.</p>
+          <div class="callout callout-warning">
+            <strong>⚠️ 함정:</strong> <code>factorize(1)</code>은 빈 리스트 <code>[]</code>를 반환합니다.
+            1은 소수도 합성수도 아니므로 올바른 결과이지만, 직관적으로 혼란을 줄 수 있습니다.
+            또한 <code>divisor += 1</code>은 짝수도 검사하므로 비효율적 — 2를 먼저 처리하고 3부터 2씩 증가하면 약 2배 빨라집니다.
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-adv">
+    <span class="level-badge level-advanced">고급 7</span>
+    <h3>뉴턴-랩슨 제곱근</h3>
+    <p>
+      뉴턴-랩슨법으로 √n을 구하는 함수를 while 루프로 구현하세요.
+      반복 횟수도 반환하여 수렴 속도를 확인하세요:
+    </p>
+    <pre><code class="language-python">def sqrt_newton(n, tolerance=1e-12):
+    """(근사값, 반복횟수) 반환"""
+    if n &lt; 0:
+        raise ValueError("음수")
+    if n == 0:
+        return 0.0, 0
+    x = float(n)
+    count = 0
+    while True:
+        # 구현하세요 — 뉴턴 공식으로 x_new 계산
+        pass
+        # 구현하세요 — count 증가
+        # 구현하세요 — 수렴 판정: abs(x_new - x) < tolerance면 반환
+        # 구현하세요 — x 갱신
+
+import math
+for n in [2, 9, 100, 1_000_000]:
+    result, iters = sqrt_newton(n)
+    print(f"√{n}: {result:.10f} ({iters}회) — math.sqrt: {math.sqrt(n):.10f}")</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def sqrt_newton(n, tolerance=1e-12):
+    if n < 0:
+        raise ValueError("음수")
+    if n == 0:
+        return 0.0, 0
+    x = float(n)
+    count = 0
+    while True:
+        x_new = (x + n / x) / 2   # 뉴턴-랩슨 공식: x_{n+1} = (x_n + S/x_n) / 2
+        count += 1
+        if abs(x_new - x) < tolerance:
+            return x_new, count
+        x = x_new
+
+import math
+for n in [2, 9, 100, 1_000_000]:
+    result, iters = sqrt_newton(n)
+    print(f"√{n}: {result:.10f} ({iters}회)")</code></pre>
+          <p><strong>왜 이렇게?</strong>
+            뉴턴-랩슨법은 <code>x_{n+1} = (x_n + S/x_n) / 2</code>로 추정값을 갱신합니다.
+            매 반복마다 오차가 제곱으로 줄어드는(2차 수렴) 특성 덕분에 &radic;1000000도 20회 이내에 수렴합니다.
+            <code>while True</code> + 수렴 조건 <code>break</code>는 "종료 시점을 미리 알 수 없는 반복"의 전형적 패턴입니다.</p>
+          <div class="callout callout-warning">
+            <strong>⚠️ 함정:</strong> <code>tolerance</code>를 너무 작게 설정하면(예: <code>1e-300</code>)
+            부동소수점 정밀도 한계로 <code>x_new == x</code>가 되어도 <code>abs(x_new - x) == 0.0 &lt; tolerance</code>로
+            종료되긴 하지만, 중간 단계에서 정밀도 손실이 발생할 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 8</span>
+    <h3>while True 바이트코드 분석</h3>
+    <p>다음 두 함수의 바이트코드를 분석하고 성능 차이의 이유를 설명하세요:</p>
+    <pre><code class="language-python">import dis, timeit
+
+def loop_a(n):
+    while n > 0:
+        n -= 1
+
+def loop_b(n):
+    while True:
+        if n &lt;= 0:
+            break
+        n -= 1
+
+def loop_c(n):
+    flag = True
+    while flag:
+        n -= 1
+        if n &lt;= 0:
+            flag = False
+
+dis.dis(loop_a)
+print("---")
+dis.dis(loop_b)
+print("---")
+dis.dis(loop_c)
+
+n = 1_000_000
+t_a = timeit.timeit(lambda: loop_a(n), number=10)
+t_b = timeit.timeit(lambda: loop_b(n), number=10)
+t_c = timeit.timeit(lambda: loop_c(n), number=10)
+print(f"loop_a (while 조건): {t_a:.3f}초")
+print(f"loop_b (while True):  {t_b:.3f}초")
+print(f"loop_c (플래그):      {t_c:.3f}초")
+
+# 분석 질문:
+# Q1. loop_a와 loop_b의 바이트코드에서 가장 큰 차이는?
+# Q2. loop_c의 flag 변수는 바이트코드에서 어떻게 처리되는가?
+# Q3. 어느 버전이 가장 빠르고, 그 이유는?</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <p><strong>핵심 분석 포인트:</strong></p>
+          <pre><code class="language-python">import dis, timeit
+
+def loop_a(n):
+    while n > 0:
+        n -= 1
+
+def loop_b(n):
+    while True:
+        if n <= 0:
+            break
+        n -= 1
+
+def loop_c(n):
+    flag = True
+    while flag:
+        n -= 1
+        if n <= 0:
+            flag = False
+
+# Q1: loop_a는 COMPARE_OP로 조건을 매 반복마다 평가.
+#     loop_b는 LOAD_CONST True를 조건으로 쓰므로 비교 연산 없음.
+#     (Python 3.12+에서는 peephole optimizer가 while True의 조건 자체를
+#      제거하므로 LOAD_CONST True도 생성되지 않고 JUMP_BACKWARD만 남음.)
+#     대신 내부 if에서 COMPARE_OP + JUMP 발생 → 명령어 수는 비슷하거나 많음.
+
+# Q2: loop_c의 flag는 LOAD_FAST/STORE_FAST로 처리.
+#     매 반복마다 flag를 읽고 쓰는 비용 + 내부 if 비교까지 이중 부담.
+
+# Q3: 일반적으로 loop_a ≈ loop_b (Python 3.12 기준 거의 동일),
+#     loop_c가 가장 느림 (LOAD_FAST + STORE_FAST 추가 오버헤드).
+#     while True + break 패턴은 가독성을 위해 선호되며 성능 손해 없음.
+
+n = 1_000_000
+t_a = timeit.timeit(lambda: loop_a(n), number=10)
+t_b = timeit.timeit(lambda: loop_b(n), number=10)
+t_c = timeit.timeit(lambda: loop_c(n), number=10)
+print(f"loop_a: {t_a:.3f}초")
+print(f"loop_b: {t_b:.3f}초")
+print(f"loop_c: {t_c:.3f}초")  # 가장 느림</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 9</span>
+    <h3>Sentinel 패턴 — object() 동작 분석</h3>
+    <p>object() sentinel의 메모리와 동일성(identity) 동작을 분석하세요:</p>
+    <pre><code class="language-python">import sys, dis
+
+SENTINEL = object()
+
+def consume_with_sentinel(data):
+    it = iter(data)
+    results = []
+    while (val := next(it, SENTINEL)) is not SENTINEL:
+        results.append(val)
+    return results
+
+# 1. SENTINEL의 메모리 특성
+print(f"SENTINEL 크기: {sys.getsizeof(SENTINEL)} bytes")
+print(f"SENTINEL id: {id(SENTINEL)}")
+
+# 2. None이 sentinel이 될 수 없는 상황
+data = [1, None, 3, None, 5]
+print(consume_with_sentinel(data))   # [1, None, 3, None, 5]
+
+# 3. SENTINEL 동일성 분석
+s1 = object()
+s2 = object()
+print(f"s1 is s2: {s1 is s2}")   # False
+print(f"s1 == s2: {s1 == s2}")   # False
+print(f"hash(s1): {hash(s1)}, hash(s2): {hash(s2)}")   # 다름
+
+# 4. 바이트코드에서 SENTINEL is not val 비교
+dis.dis(consume_with_sentinel)
+# IS_OP opcode: is/is not 비교 전용 바이트코드 확인
+
+# 분석 질문:
+# Q1. IS_OP와 COMPARE_OP(==)의 차이를 바이트코드에서 설명하세요.
+# Q2. object()의 __eq__가 정의되지 않은 이유는?
+# Q3. module-level SENTINEL vs function-level sentinel의 차이는?</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <p><strong>핵심 분석 포인트:</strong></p>
+          <pre><code class="language-python">import dis
+
+SENTINEL = object()
+
+def check(val):
+    return val is not SENTINEL
+
+dis.dis(check)
+# IS_OP 1  ← 'is not' 비교 전용 opcode (1 = not, 0 = is)
+# COMPARE_OP은 __eq__를 호출하지만 IS_OP는 포인터 비교만 수행
+
+# Q1: IS_OP는 id() 비교만 수행 (C 포인터 비교, O(1), 절대 실패 없음).
+#     COMPARE_OP(==)는 __eq__ 메서드를 호출 → 오버라이드 가능 → 느리고 예외 발생 가능.
+
+# Q2: object.__eq__는 기본적으로 id 비교 (is와 동일).
+#     일부러 재정의하지 않는 이유: sentinel의 목적 자체가 고유 동일성(identity) 보장.
+#     __eq__를 재정의하면 sentinel 간 우연한 동등성이 생길 위험.
+
+# Q3: module-level SENTINEL은 프로세스 전체에서 단 하나.
+#     function-level에서 생성하면 호출마다 새 object() → sentinel 역할 불가.
+s1 = object()
+s2 = object()
+print(s1 is s2)   # False ← 매번 다른 sentinel
+print(SENTINEL is SENTINEL)  # True ← 모듈 레벨은 항상 동일</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 10</span>
+    <h3>무한 루프 방어 래퍼 구현</h3>
+    <p>while 루프에 최대 반복 횟수를 강제하는 안전 래퍼를 구현하고 성능을 분석하세요:</p>
+    <pre><code class="language-python">import dis, timeit, functools
+
+def safe_loop(max_iterations=10_000):
+    """while 루프를 데코레이터로 감싸는 안전 래퍼"""
+    def decorator(condition_fn):
+        @functools.wraps(condition_fn)
+        def wrapper(*args, **kwargs):
+            iterations = 0
+            while condition_fn(*args, **kwargs):
+                iterations += 1
+                if iterations >= max_iterations:
+                    raise RuntimeError(
+                        f"루프가 {max_iterations}회 초과 — 무한 루프 의심"
+                    )
+            return iterations
+        return wrapper
+    return decorator
+
+# 사용 예시
+count = [0]
+
+@safe_loop(max_iterations=100)
+def converge():
+    count[0] += 1
+    return count[0] &lt; 50
+
+iters = converge()
+print(f"정상 종료: {iters}회")
+
+# 분석 질문:
+# Q1. safe_loop의 오버헤드는 얼마인가? (일반 while 대비 timeit 측정)
+# Q2. condition_fn을 호출하는 비용이 인라인 while보다 크다면 왜인가?
+# Q3. 현업에서 이런 방어 패턴이 실제로 사용되는 상황은?</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <p><strong>핵심 분석 포인트:</strong></p>
+          <pre><code class="language-python">import timeit, functools
+
+# 비교용 인라인 while
+def inline_loop(n):
+    count = 0
+    while count < n:
+        count += 1
+    return count
+
+# safe_loop 버전 (데코레이터 래퍼)
+def safe_loop(max_iterations=10_000):
+    def decorator(condition_fn):
+        @functools.wraps(condition_fn)
+        def wrapper(*args, **kwargs):
+            iterations = 0
+            while condition_fn(*args, **kwargs):
+                iterations += 1
+                if iterations >= max_iterations:
+                    raise RuntimeError(f"루프 {max_iterations}회 초과")
+            return iterations
+        return wrapper
+    return decorator
+
+count_ref = [0]
+
+@safe_loop(max_iterations=1_000_000)
+def safe_version():
+    count_ref[0] += 1
+    return count_ref[0] < 10_000
+
+# Q1: 오버헤드 측정
+t1 = timeit.timeit(lambda: inline_loop(10_000), number=100)
+count_ref[0] = 0
+t2 = timeit.timeit(lambda: (safe_version(), count_ref.__setitem__(0, 0)), number=100)
+print(f"인라인: {t1:.4f}초")
+print(f"래퍼:   {t2:.4f}초")
+# 일반적으로 래퍼가 3~5배 느림
+
+# Q2: condition_fn 호출 비용
+# Python 함수 호출은 프레임 생성(PyFrameObject 할당) + 인수 바인딩 + CALL opcode.
+# 인라인 while은 이 비용이 없음 → 타이트 루프에서 차이 극대화.
+
+# Q3: 현업 활용 사례
+# - 외부 API 폴링 루프 (응답 올 때까지 반복)
+# - 게임 엔진 물리 시뮬레이션 스텝 제한
+# - 파서/인터프리터의 토큰 소비 루프
+# - 테스트 코드에서 무한루프 방지용 안전망</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ==================== 12. 요약 ==================== -->
+<section id="summary">
+  <h2>이번 주 정리</h2>
+
+  <table class="summary-table">
+    <thead>
+      <tr><th>개념</th><th>핵심 내용</th><th>키워드</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>while 문법</td>
+        <td><code>while condition:</code> — 조건이 Truthy인 동안 반복</td>
+        <td>assignment_expression, Truthiness</td>
+      </tr>
+      <tr>
+        <td>while vs for</td>
+        <td>for: Iterator Protocol / while: 조건 직접 평가</td>
+        <td>POP_JUMP_IF_FALSE vs FOR_ITER</td>
+      </tr>
+      <tr>
+        <td>while True</td>
+        <td>무한 루프. 컴파일러가 조건 평가 코드를 제거 (최적화)</td>
+        <td>break, Peephole Optimization</td>
+      </tr>
+      <tr>
+        <td>while-else</td>
+        <td>break 없이 루프 완료 시 else 실행 ("no break")</td>
+        <td>JUMP_FORWARD로 else 건너뜀</td>
+      </tr>
+      <tr>
+        <td>Sentinel</td>
+        <td>종료를 알리는 특별한 값. None 또는 object()</td>
+        <td>is not, object(), iter(callable, sentinel)</td>
+      </tr>
+      <tr>
+        <td>State Machine</td>
+        <td>상태 변수 + while 루프. 복잡한 흐름을 상태로 표현</td>
+        <td>state, Enum, 전이(Transition)</td>
+      </tr>
+      <tr>
+        <td>Walrus (:=)</td>
+        <td>while 조건에서 할당과 검사를 동시에. Python 3.8+</td>
+        <td>COPY + STORE_FAST</td>
+      </tr>
+      <tr>
+        <td>바이트코드</td>
+        <td>조건 루프: LOAD + COMPARE + POP_JUMP_IF_FALSE + JUMP_BACKWARD</td>
+        <td>POP_JUMP_IF_FALSE, JUMP_BACKWARD</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pre><code class="language-text">while condition:   ←→   >> LOAD condition vars
+    body                   COMPARE_OP
+                           POP_JUMP_IF_FALSE → END
+                           body
+                           JUMP_BACKWARD → >>
+                        >> END
+
+while True:        ←→   >> body             (조건 평가 코드 없음!)
+    body                   JUMP_BACKWARD → >>
+    if cond: break         (break = JUMP_FORWARD → END)</code></pre>
+</section>
+
+<!-- ==================== 13. 용어 사전 ==================== -->
+<section id="glossary">
+  <h2>용어 사전 (22개)</h2>
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <h4>while 문 (while statement)</h4>
+      <p>조건 표현식이 Truthy인 동안 suite를 반복 실행하는 제어 구조. Iterator 없이 동작.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>while True</h4>
+      <p>항상 참인 조건의 무한 루프. Python 컴파일러가 조건 평가 코드를 최적화 제거. break로만 탈출.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>while-else</h4>
+      <p>while 루프가 break 없이 조건이 False가 되어 종료할 때 else 블록 실행. "no break" 패턴.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Sentinel (파수꾼 값)</h4>
+      <p>루프 종료를 알리는 특별한 값. 정상 데이터와 절대 혼동되지 않아야 함. None 또는 object().</p>
+    </div>
+    <div class="glossary-item">
+      <h4>object()</h4>
+      <p>전 우주에서 유일한 새 객체 생성. is 비교로만 동일성 구분. 완벽한 sentinel 값.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>State Machine (상태 기계)</h4>
+      <p>유한한 상태 집합과 전이 규칙으로 동작을 표현하는 계산 모델. while 루프로 자연스럽게 구현.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Walrus 연산자 (:=)</h4>
+      <p>Python 3.8+. 표현식 내에서 할당과 평가를 동시에 수행. while 조건에서 코드 중복 제거.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>do-while 시뮬레이션</h4>
+      <p>Python에는 do-while 없음. while True + break로 "먼저 실행 후 조건 검사"를 구현.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>이진 탐색 (Binary Search)</h4>
+      <p>정렬된 배열에서 O(log n) 탐색. left ≤ right 상태 조건으로 while 루프가 적합.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>뉴턴-랩슨법</h4>
+      <p>수치 해석에서 방정식의 근을 반복으로 근사. 수렴 조건 기반 while 루프의 대표 사례.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>수렴 조건 (Convergence)</h4>
+      <p>반복 알고리즘에서 결과가 충분히 안정될 때까지 반복. abs(new - old) &lt; tolerance.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>무한 루프 (Infinite Loop)</h4>
+      <p>탈출 조건이 없거나 조건 변수가 업데이트되지 않아 영원히 실행되는 루프.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>POP_JUMP_IF_FALSE</h4>
+      <p>while 조건이 False일 때 루프 끝으로 jump하는 바이트코드. for의 FOR_ITER와 대비.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>JUMP_BACKWARD</h4>
+      <p>while 루프 body 실행 후 조건 검사 위치로 되돌아가는 바이트코드. for에서도 사용.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Peephole Optimization (핍홀 최적화)</h4>
+      <p>바이트코드 수준에서 불필요한 명령어를 제거하는 최적화. while True의 조건 평가 코드 제거(dead code elimination)에 적용.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>루프 불변식 (Loop Invariant)</h4>
+      <p>각 반복 시작 시점에서 항상 참인 조건 (반복 도중 일시적으로 깨질 수 있으며, 반복 끝에 복원). 이진탐색: "target이 있다면 arr[left..right] 안에 있다".</p>
+    </div>
+    <div class="glossary-item">
+      <h4>정지 문제 (Halting Problem)</h4>
+      <p>임의의 프로그램이 반드시 종료되는지 판별하는 것이 불가능함. 튜링(1936) 증명.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>iter(callable, sentinel)</h4>
+      <p>callable을 반복 호출해 sentinel과 같은 값이 나오면 StopIteration. 이중 인수 iter() 형태.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Guard Clause + while</h4>
+      <p>루프 초반 continue/break로 특수 케이스를 먼저 처리. 중첩 줄이기 패턴 (Week07 §08 참조).</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Enum (열거형)</h4>
+      <p>State Machine에서 상태를 명명하는 데 사용. 오타 방지, IDE 자동완성, 가독성 향상.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>전이 테이블 (Transition Table)</h4>
+      <p>State Machine의 상태 × 이벤트 → 다음 상태 매핑. 딕셔너리로 표현. 코드 없이 규칙 추가 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>수렴 알고리즘 vs 순회 알고리즘</h4>
+      <p>수렴: while로 구현 (몇 번인지 모름). 순회: for로 구현 (Iterable 있음). 선택 기준.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 14. 다음 주 맛보기 ==================== -->
+<section id="next-week">
+  <h2>다음 주 맛보기 — Week 09: 함수</h2>
+
+  <p>
+    이번 주에 while 루프로 복잡한 반복 논리를 표현했습니다.
+    하지만 같은 루프 코드를 여러 곳에서 쓰려면? 바로 <strong>함수(Function)</strong>가 필요합니다.
+  </p>
+  <pre><code class="language-python"># 같은 이진 탐색을 여러 배열에 쓰려면?
+# 이 코드를 복붙하는 건 잘못된 방법
+left, right = 0, len(arr1) - 1
+while left &lt;= right:
+    mid = (left + right) // 2
+    ...
+
+# 함수로 추출하면 한 번 정의하고 어디서든 호출
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left &lt;= right:
+        mid = (left + right) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] &lt; target: left = mid + 1
+        else: right = mid - 1
+    return -1
+
+# 이제 어디서든 재사용 가능
+print(binary_search([1,3,5,7,9], 7))   # 3
+print(binary_search([2,4,6,8], 5))     # -1</code></pre>
+
+  <p>다음 주에 배울 것들:</p>
+  <ul>
+    <li>함수가 왜 존재하는가 — DRY 원칙(Don't Repeat Yourself)</li>
+    <li><code>def</code>와 <code>return</code> — 함수 객체(First-class object)의 의미</li>
+    <li>스코프(Scope) — LEGB Rule과 Namespace</li>
+    <li>인자 전달 방식 — Pass by Object Reference</li>
+    <li>재귀 함수와 콜 스택(Call Stack)</li>
+    <li>CPython의 함수 호출 — CALL 바이트코드와 프레임(Frame) 생성</li>
+  </ul>
+
+  <p style="margin-top: 24px; font-size: 0.9rem; color: var(--text-secondary);">
+    참조:
+    <a href="https://docs.python.org/3/reference/compound_stmts.html#the-while-statement" target="_blank">Python Docs: The while statement</a> ·
+    <a href="https://docs.python.org/3/reference/expressions.html#assignment-expressions" target="_blank">Assignment expressions (:=)</a> ·
+    <a href="https://docs.python.org/3/library/functions.html#iter" target="_blank">iter(callable, sentinel)</a> ·
+    <a href="https://peps.python.org/pep-0572/" target="_blank">PEP 572: Walrus Operator</a>
+  </p>
+</section>
+
+</main>
+</div>
+
+<footer class="site-footer">
+  <p>파이썬은 왜? &mdash; 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의</p>
+</footer>
+
+<script src="../js/bundle.min.js"></script>
+</body>
+</html>

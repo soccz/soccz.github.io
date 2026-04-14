@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7주차: 반복문 for — Iterator Protocol | PyWhy</title>
+  <link rel="stylesheet" href="../css/style.min.css">
+  <meta name="description" content="반복문 for — Iterator Protocol과 De-sugaring을 분해합니다">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="7주차: 반복문 for — Iterator Protocol | PyWhy">
+  <meta property="og:description" content="반복문 for — Iterator Protocol과 De-sugaring을 분해합니다">
+  <meta property="og:url" content="https://soccz.github.io/python-why/weeks/week07.html">
+  <meta property="og:site_name" content="PyWhy">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="7주차: 반복문 for — Iterator Protocol | PyWhy">
+  <meta name="twitter:description" content="반복문 for — Iterator Protocol과 De-sugaring을 분해합니다">
+</head>
+<body data-week="7">
+<a href="#main-content" class="skip-link">본문 바로가기</a>
+
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://soccz.github.io" class="home-btn" title="soccz.github.io" aria-label="포트폴리오 홈"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+        <a href="../index.html" class="site-title">PyWhy</a>
+      </div>
+    <div class="header-nav">
+      <a href="week06.html" class="nav-btn">&larr; 이전</a>
+      <a href="week08.html" class="nav-btn">다음 &rarr;</a>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrapper">
+<main id="main-content">
+
+<!-- ==================== WEEK HEADER ==================== -->
+<div class="week-header">
+  <div class="week-number">WEEK 07</div>
+  <h1 class="week-title">반복문 — for<br>Iterator Protocol과 De-sugaring</h1>
+  <p class="week-subtitle">
+    <code>for x in lst:</code>는 실제로 어떻게 작동하는가?<br>
+    <code>iter()</code>와 <code>next()</code>가 숨어있는 곳을 찾아서<br>
+    <strong>for 루프를 완전히 분해합니다.</strong>
+  </p>
+</div>
+
+<!-- ==================== 목차 ==================== -->
+<details class="toc">
+  <summary>목차 — 7주차 전체 내용</summary>
+  <div class="toc-body">
+    <div class="toc-section">
+      <a href="#story" class="toc-section-link">
+        <span class="toc-num">01</span>이번 주 이야기
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#why-for" class="toc-section-link">
+        <span class="toc-num">02</span>왜 for가 존재하는가?
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#for-basics" class="toc-section-link">
+        <span class="toc-num">03</span>for 기본 사용법
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#range" class="toc-section-link">
+        <span class="toc-num">04</span>range() — 숫자 반복의 핵심
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#desugaring" class="toc-section-link">
+        <span class="toc-num">05</span>De-sugaring — for의 진짜 구조
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#iterable-vs-iterator" class="toc-section-link">
+        <span class="toc-num">06</span>Iterable vs Iterator
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#enumerate-zip" class="toc-section-link">
+        <span class="toc-num">07</span>enumerate()와 zip()
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#break-continue" class="toc-section-link">
+        <span class="toc-num">08</span>break, continue, for-else
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#ai-for" class="toc-section-link">
+        <span class="toc-num">09</span>AI와 for 루프
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#hands-on" class="toc-section-link">
+        <span class="toc-num">10</span>실습: Iterator Protocol 탐험
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#exercises" class="toc-section-link">
+        <span class="toc-num">11</span>연습문제 (12문제 — 9+3 전공자)
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#summary" class="toc-section-link">
+        <span class="toc-num">12</span>이번 주 정리
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#glossary" class="toc-section-link">
+        <span class="toc-num">13</span>용어 사전 (24개)
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#next-week" class="toc-section-link">
+        <span class="toc-num">14</span>다음 주 맛보기
+      </a>
+    </div>
+  </div>
+</details>
+
+<!-- ==================== 01. 이번 주 이야기 ==================== -->
+<section id="story">
+  <h2>이번 주 이야기</h2>
+  <div class="story-block">
+    <p>
+      지난 주에 리스트에 30명의 성적을 담았습니다.
+      이제 문제: 각 학생의 성적을 출력하려면?
+    </p>
+    <pre><code class="language-python">scores = [85, 92, 78, 95, 63, 88, 71, 90, 82, 76,
+          89, 74, 97, 81, 69, 93, 77, 84, 70, 96,
+          83, 68, 91, 79, 87, 73, 94, 80, 65, 88]
+
+# 3주차 방식으로?
+print(scores[0])
+print(scores[1])
+# ... 28줄 더 ...</code></pre>
+    <p>
+      1000명이면 1000줄. 이건 컴퓨터를 제대로 쓰는 게 아닙니다.
+      컴퓨터가 가장 잘하는 것 중 하나는 <strong>지치지 않고 반복하는 것</strong>입니다.
+    </p>
+    <pre><code class="language-python"># for 루프: 1줄로 30번 출력
+for score in scores:
+    print(score)</code></pre>
+    <p>
+      그런데 <code>for score in scores:</code>는 정확히 어떻게 리스트에서 값을 꺼내오는 걸까요?
+      Python이 내부에서 실제로 하는 일을 오늘 완전히 분해합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 02. 왜 for인가? ==================== -->
+<section id="why-for">
+  <h2>왜 for가 존재하는가? — 반복의 추상화</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>컴퓨터는 반복이 특기다</h3>
+    <p>
+      for 루프는 "이 작업을 각 항목마다 해줘"를 한 줄로 표현하는 방법입니다.
+      리스트, 문자열, 숫자 범위 등 <strong>순서 있는 것이라면 무엇이든</strong> 반복할 수 있습니다.
+    </p>
+    <pre><code class="language-python">fruits = ["사과", "바나나", "딸기", "망고"]
+
+for fruit in fruits:
+    print(f"과일: {fruit}")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+과일: 사과
+과일: 바나나
+과일: 딸기
+과일: 망고
+    </div>
+    <p>
+      <code>for fruit in fruits:</code>는 "fruits에서 항목을 하나씩 꺼내 fruit라고 부르면서 아래를 실행해줘"라는 뜻입니다.
+    </p>
+    <div class="callout callout-info">
+      <strong>Week06 연결:</strong> 지난 주에 배운 리스트가 있어야 for 루프가 의미를 가집니다.
+      빈 리스트 <code>[]</code>에 for 루프를 돌리면 꺼낼 항목이 없어 한 번도 실행되지 않습니다.
+    </div>
+    <div class="callout callout-tip">
+      <strong>✏️ 지금 바로 해봐:</strong> 직접 수정하며 for의 동작을 확인하세요.
+      <pre><code class="language-python"># range를 바꿔보세요: range(5), range(1, 10), range(0, 20, 3)
+for i in range(5):
+    print(i, end=" ")
+print()   # 줄바꿈
+
+# 리스트도 순회할 수 있습니다
+fruits = ["사과", "바나나", "포도"]
+for fruit in fruits:
+    print(f"나는 {fruit}을(를) 좋아합니다")</code></pre>
+      range(0, 20, 3)은 어떤 숫자들을 출력하나요? 예상해보고 확인해보세요.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>for의 in — Syntax Marker vs Membership Test</h3>
+    <p>
+      Python에서 <code>in</code>은 두 가지 완전히 다른 역할을 합니다:
+    </p>
+    <pre><code class="language-python">fruits = ["사과", "바나나", "딸기"]
+
+# ① Membership Test (4주차) — if에서 사용
+if "사과" in fruits:      # 포함 여부 검사 → True/False 반환
+    print("있음")
+
+# ② Syntax Marker — for에서 사용
+for fruit in fruits:      # in은 단지 구분자, 검사가 아님
+    print(fruit)          # True/False가 아님!
+
+# 같은 키워드처럼 보이지만 완전히 다른 동작
+print(type("사과" in fruits))   # <class 'bool'>
+# for에서의 in은 type이 없음 — 문법 기호</code></pre>
+    <p>
+      4주차에서 배운 <code>in</code>은 포함 여부를 검사하는 연산자였습니다.
+      for문의 <code>in</code>은 <strong>Syntax Marker</strong> — "무엇에서 반복할지"를 표시하는 문법 기호입니다.
+      같은 단어가 문맥에 따라 다르게 해석됩니다.
+    </p>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>for는 Iterable 프로토콜의 소비자</h3>
+    <p>
+      Python 공식 문서(reference/compound_stmts)의 for문 문법:
+    </p>
+    <pre><code class="language-text">for_stmt ::= "for" target_list "in" starred_expression_list ":" suite
+             ["else" ":" suite]</code></pre>
+    <p>
+      <code>for</code>는 <strong>Iterable</strong>이면 무엇이든 순회할 수 있습니다.
+      Iterable이란 <code>__iter__()</code> 메서드가 있는 모든 객체입니다:
+    </p>
+    <pre><code class="language-python"># 다양한 Iterable
+for ch in "hello":              # 문자열
+    print(ch, end=" ")          # h e l l o
+
+for i in range(3):              # range 객체
+    print(i, end=" ")           # 0 1 2
+
+for key in {"국어": 90, "수학": 85}:  # 딕셔너리 (키를 순회)
+    print(key, end=" ")               # 국어 수학
+
+# __iter__ 확인
+print(hasattr([1, 2, 3], '__iter__'))   # True
+print(hasattr(42, '__iter__'))          # False — int는 Iterable 아님
+# for x in 42:  → TypeError: 'int' object is not iterable</code></pre>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A: GET_ITER + FOR_ITER — for 루프의 바이트코드 골격</h3>
+    <pre><code class="language-python">import dis
+
+def simple_loop(lst):
+    for x in lst:
+        pass
+
+dis.dis(simple_loop)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (Python 3.12):</div>
+  2           2 LOAD_FAST                0 (lst)
+              4 GET_ITER
+        >>    6 FOR_ITER                 2 (to 14)
+             10 STORE_FAST               1 (x)
+             12 JUMP_BACKWARD            4 (to 6)
+        >>   14 END_FOR
+             16 RETURN_CONST             0 (None)
+    </div>
+    <p>각 바이트코드의 역할:</p>
+    <ul>
+      <li><code>GET_ITER</code> (offset 4): <code>iter(lst)</code> → <code>lst.__iter__()</code> 호출. Iterator 객체를 스택에 push</li>
+      <li><code>FOR_ITER N</code> (offset 6): <code>next(iterator)</code> → <code>iterator.__next__()</code> 호출. StopIteration 시 N steps 앞으로 jump (→ END_FOR)</li>
+      <li><code>STORE_FAST</code> (offset 10): 꺼낸 값을 루프 변수 <code>x</code>에 저장</li>
+      <li><code>JUMP_BACKWARD</code> (offset 12): FOR_ITER (offset 6)로 되돌아감</li>
+      <li><code>END_FOR</code> (offset 14): 루프 정상 종료 표시 (Python 3.11에서 도입, 3.12에서 동작이 변경됨)</li>
+    </ul>
+    <p>
+      <code>&gt;&gt;</code>는 jump target을 의미합니다.
+      FOR_ITER(루프 시작)와 END_FOR(루프 끝) 모두 jump target입니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 03. for 기본 사용법 ==================== -->
+<section id="for-basics">
+  <h2>for 기본 사용법 — 다양한 Iterable 순회</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>리스트, 문자열, 튜플 순회</h3>
+    <p>
+      for 루프는 항목을 <strong>하나씩 꺼내는</strong> 도구입니다.
+      리스트, 문자열, 튜플 등 순서 있는 데이터면 무엇이든 순회할 수 있습니다.
+    </p>
+    <pre><code class="language-python"># 리스트 순회
+colors = ["빨강", "초록", "파랑"]
+for color in colors:
+    print(color)
+
+# 문자열 순회 (한 글자씩)
+for ch in "Python":
+    print(ch, end=" ")
+print()   # 줄바꿈
+
+# 튜플 순회
+coords = (10, 20, 30)
+for val in coords:
+    print(val)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+빨강
+초록
+파랑
+P y t h o n
+10
+20
+30
+    </div>
+    <p>
+      <strong>루프 변수는 매번 덮어씁니다:</strong>
+      <code>for color in colors:</code>에서 <code>color</code>는 루프마다 새 값을 받습니다.
+      기존에 같은 이름의 변수가 있으면 덮어씁니다. 루프가 끝나도 마지막 값이 남습니다.
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>루프 변수 스코프와 중첩 for</h3>
+    <pre><code class="language-python"># 루프 변수는 루프 후에도 살아있음
+for i in [1, 2, 3]:
+    pass
+print(i)    # 3 — 마지막 값 유지
+
+# 빈 리스트면 루프 변수 미할당
+for x in []:
+    pass
+# print(x)  # NameError! x가 할당된 적 없음
+
+# 중첩 for
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+for row in matrix:
+    for val in row:
+        print(val, end=" ")
+    print()   # 각 행 끝에서 줄바꿈</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+3
+1 2 3
+4 5 6
+7 8 9
+    </div>
+    <p>
+      Python에는 for 전용 스코프가 없습니다. 루프 변수는 함수(또는 모듈) 스코프에 남습니다.
+      이것이 list comprehension이 자체 스코프를 가지는 것(Week06 §08)과 다른 점입니다.
+    </p>
+    <div class="callout callout-warning">
+      <strong>함정: 루프 변수가 외부에 남는다</strong><br>
+      <code>for i in range(3): pass</code> 후 <code>i</code>는 2입니다.
+      다른 언어(C, Java)에서는 for 블록이 끝나면 루프 변수가 사라지지만,
+      Python은 그렇지 않습니다. 루프 뒤에서 실수로 <code>i</code>를 재사용하면
+      의도치 않은 값(마지막 반복 값)이 사용됩니다.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>for target_list — 구조적 언패킹</h3>
+    <pre><code class="language-python"># for 타겟은 Week06에서 배운 언패킹을 지원합니다
+학생들 = [(1, "김민수"), (2, "이하은"), (3, "박준서")]
+
+# 구조적 언패킹 (더 명확)
+for 번호, 이름 in 학생들:
+    print(f"{번호}번: {이름}")
+
+# 중첩 언패킹
+좌석 = [((2, 3), "김민수"), ((4, 1), "이하은")]
+for (행, 열), 이름 in 좌석:
+    print(f"{이름}: ({행}행, {열}열)")
+
+# 확장 언패킹
+월별매출 = [(150, 200, 180, 210, 195), (130, 170, 160, 190, 185)]
+for 첫달, *나머지 in 월별매출:
+    print(f"첫달: {첫달}만원, 나머지: {나머지}")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+1번: 김민수
+2번: 이하은
+3번: 박준서
+김민수: (2행, 3열)
+이하은: (4행, 1열)
+첫달: 150만원, 나머지: [200, 180, 210, 195]
+첫달: 130만원, 나머지: [170, 160, 190, 185]
+    </div>
+    <p>
+      for의 <code>target_list</code>는 좌변 언패킹과 동일한 규칙을 따릅니다.
+      <code>UNPACK_SEQUENCE</code> / <code>UNPACK_EX</code> 바이트코드가 사용됩니다 (Week06 §07 참조).
+    </p>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part B: FOR_ITER의 특화(Specialization) — Python 3.12</h3>
+    <p>
+      Python 3.12의 Specializing Adaptive Interpreter는 <code>FOR_ITER</code>를
+      반복 실행 후 타입에 맞게 자동 특화합니다:
+    </p>
+    <ul>
+      <li><code>FOR_ITER_LIST</code>: list_iterator → <code>ob_item[index]</code> 직접 접근, C 수준 range 검사</li>
+      <li><code>FOR_ITER_RANGE</code>: range_iterator → 정수 증가 연산만 수행, 가장 빠름</li>
+      <li><code>FOR_ITER_TUPLE</code>: tuple_iterator → tuple의 고정 크기 활용</li>
+      <li><code>FOR_ITER_GEN</code>: generator → 제너레이터 프레임 재개</li>
+    </ul>
+    <pre><code class="language-python">import dis
+
+def loop_list(lst):
+    total = 0
+    for x in lst:
+        total += x
+    return total
+
+# 반복 실행으로 특화 유도
+lst = list(range(1000))
+for _ in range(200):
+    loop_list(lst)
+
+# 특화 후 바이트코드 확인
+dis.dis(loop_list)
+# FOR_ITER → FOR_ITER_LIST 로 교체된 것을 확인 가능
+
+# FOR_ITER_LIST가 빠른 이유:
+# list_next() 함수 호출을 제거하고 로직을 인터프리터 루프에 직접 인라인
+# → PyList_GET_SIZE로 길이 확인
+# → PyList_GET_ITEM(seq, it->it_index++) 로 값 반환
+# 함수 호출 오버헤드 자체가 없음 — 일반 FOR_ITER의 tp_iternext() 간접 호출과 대비</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 04. range() ==================== -->
+<section id="range">
+  <h2>range() — 숫자 반복의 핵심</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>range()로 숫자 반복하기</h3>
+    <p>
+      <code>range()</code>는 숫자의 연속된 범위를 만들어줍니다.
+      실제 숫자 리스트를 만드는 게 아니라 <strong>필요할 때 하나씩 생성</strong>합니다.
+    </p>
+    <pre><code class="language-python"># range(끝): 0부터 끝-1까지
+for i in range(5):
+    print(i, end=" ")   # 0 1 2 3 4
+print()
+
+# range(시작, 끝): 시작부터 끝-1까지
+for i in range(1, 6):
+    print(i, end=" ")   # 1 2 3 4 5
+print()
+
+# range(시작, 끝, 스텝): 스텝 간격으로
+for i in range(0, 10, 2):
+    print(i, end=" ")   # 0 2 4 6 8
+print()
+
+# 거꾸로 세기
+for i in range(5, 0, -1):
+    print(i, end=" ")   # 5 4 3 2 1</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+0 1 2 3 4
+1 2 3 4 5
+0 2 4 6 8
+5 4 3 2 1
+    </div>
+    <p>
+      <strong>주의:</strong> <code>range(5)</code>는 1~5가 아니라 0~4입니다.
+      리스트 인덱스가 0부터 시작하는 것과 같은 이유입니다.
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>range는 Lazy — 숫자를 미리 만들지 않는다</h3>
+    <pre><code class="language-python">import sys
+
+# range는 리스트가 아님!
+r = range(1_000_000)
+print(type(r))              # &lt;class 'range'&gt;
+print(sys.getsizeof(r))     # 48 bytes — 항목 수와 무관!
+
+lst = list(range(1_000_000))
+print(sys.getsizeof(lst))   # ~8,000,056 bytes — 100만 포인터
+
+# range는 인덱싱 지원 (lazy하지만 O(1) — 수학 공식으로 계산)
+r = range(100)
+print(r[50])    # 50
+print(r[-1])    # 99
+print(50 in r)  # True — O(1) 최적화!
+
+# list()로 변환 가능 (보통 불필요)
+print(list(range(5)))   # [0, 1, 2, 3, 4]</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+&lt;class 'range'&gt;
+48
+8000056
+50
+99
+True
+[0, 1, 2, 3, 4]
+    </div>
+    <div class="callout callout-warning">
+      <strong>흔한 실수:</strong> <code>range(len(lst))</code>로 인덱스를 만들어 순회하는 것은
+      Python스럽지 않습니다. <code>enumerate(lst)</code>를 사용하세요 (§07 참조).
+    </div>
+    <div class="callout callout-info">
+      <strong>참고:</strong> <code>range</code>는 Iterable이지만 Iterator가 아닙니다
+      (<code>__iter__</code> 있음, <code>__next__</code> 없음).
+      Iterable vs Iterator의 차이는 §06에서 자세히 다룹니다.
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — for 순회 중 리스트 수정:</strong>
+      <pre><code class="language-python">numbers = [1, 2, 3, 4, 5, 6]
+
+# ❌ 위험: 순회 중 삭제 → 원소를 건너뜀!
+for n in numbers:
+    if n % 2 == 0:
+        numbers.remove(n)
+print(numbers)   # [1, 3, 5] — 결과가 맞아 보이지만 우연!
+# 3, 5는 검사 없이 건너뛰어짐 (삭제로 인덱스가 밀리므로)
+# 연속 짝수 [2, 4, 6, 8]로 시도하면 [4, 8]이 남음 — 버그가 드러남
+
+numbers = [1, 2, 3, 4, 5, 6]
+# ✅ 해결 1: 복사본으로 순회
+for n in numbers[:]:   # numbers[:]는 복사본
+    if n % 2 == 0:
+        numbers.remove(n)
+print(numbers)   # [1, 3, 5] ← 정확
+
+# ✅ 해결 2: 컴프리헨션으로 새 리스트 생성
+numbers = [1, 2, 3, 4, 5, 6]
+numbers = [n for n in numbers if n % 2 != 0]
+print(numbers)   # [1, 3, 5] ← 더 파이썬스러운 방식</code></pre>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>range의 특별한 최적화</h3>
+    <p>
+      Python 공식 문서(library/stdtypes): range는 일반 시퀀스가 지원하는 거의 모든 연산을 지원하되,
+      <code>+</code> concatenation과 <code>*</code> repetition은 제외합니다.
+      <code>__contains__</code>와 <code>__len__</code>은 O(1)로 최적화됩니다:
+    </p>
+    <pre><code class="language-python">r = range(0, 100, 2)   # 짝수 범위
+
+# O(1) in 연산 — 수학 공식으로 계산
+# (value - start) % step == 0 and start <= value < stop
+print(50 in r)    # True
+print(51 in r)    # False — 홀수
+print(100 in r)   # False — 범위 초과
+
+# 슬라이싱 → 새 range 반환
+r2 = r[2:8]
+print(r2)           # range(4, 16, 2)
+print(list(r2))     # [4, 6, 8, 10, 12, 14]
+
+# 비교 (== 는 값 기반)
+print(range(10) == range(0, 10, 1))   # True
+print(range(0) == range(1, 0))        # True (둘 다 빈 range)</code></pre>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — range 객체의 C 구현 — 왜 항상 48 bytes인가</h3>
+    <p>
+      CPython <code>Objects/rangeobject.c</code>에서 range는 단순한 C 구조체입니다:
+    </p>
+    <pre><code class="language-c">typedef struct {
+    PyObject_HEAD        // ob_refcnt(8) + ob_type(8) = 16 bytes
+    PyObject *start;     // 시작값 (PyLong 포인터, 8 bytes)
+    PyObject *stop;      // 끝값 (8 bytes)
+    PyObject *step;      // 스텝 (8 bytes)
+    PyObject *length;    // 미리 계산된 길이 (8 bytes)
+} rangeobject;
+// 합계: 16 + 32 = 48 bytes</code></pre>
+    <pre><code class="language-python">import sys
+
+# 항목 수에 무관하게 항상 48 bytes
+for n in [1, 100, 10_000, 1_000_000]:
+    print(f"range({n}): {sys.getsizeof(range(n))} bytes")
+# 모두 48 bytes
+
+# range_iterator의 C 구조 (단순화):
+# typedef struct {
+#     PyObject_HEAD
+#     long index;     // 현재 위치 (0부터 시작)
+#     long start;
+#     long step;
+#     long len;       // 총 개수
+# } rangeiterobject;
+#
+# __next__() 구현:
+# if (index >= len) → StopIteration
+# value = start + index * step
+# index++
+# return PyLong_FromLong(value)</code></pre>
+    <div class="callout callout-info">
+      <strong>FOR_ITER_RANGE 최적화:</strong>
+      FOR_ITER_RANGE는 tp_iternext 디스패치 없이 C 레벨에서 직접 index를 증가시킵니다.
+      작은 정수(-5~256) 범위에서는 캐싱된 싱글턴 PyLong을 참조하므로 추가 이점이 있습니다.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05. De-sugaring ==================== -->
+<section id="desugaring">
+  <h2>De-sugaring — for의 진짜 구조</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>for 루프를 분해하면?</h3>
+    <p>
+      <code>for x in lst:</code>는 Python이 제공하는 <strong>편의 문법(Syntactic Sugar)</strong>입니다.
+      사탕이 실제로 당 분자의 조합인 것처럼, for도 더 긴 과정의 약칭입니다.
+      분해하면(De-sugaring) 이렇게 됩니다:
+    </p>
+    <pre><code class="language-python">lst = [10, 20, 30]
+
+# ① for 루프 (편의 문법)
+for x in lst:
+    print(x)
+
+# ② 완전히 같은 동작 (분해 버전)
+_iter = iter(lst)           # 반복기 준비
+while True:
+    try:
+        x = next(_iter)     # 다음 값 꺼내기
+    except StopIteration:   # 더 없으면 멈춤
+        break
+    print(x)                # body는 try 밖 — next()가 성공한 후에 실행</code></pre>
+    <div class="output-block">
+      <div class="output-label">두 코드 모두 같은 출력:</div>
+10
+20
+30
+    </div>
+    <p>
+      핵심은 <code>iter()</code>와 <code>next()</code>입니다.
+      Python은 for 루프를 만날 때마다 이 과정을 자동으로 실행합니다.
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>iter()와 next() — 직접 사용해보기</h3>
+    <pre><code class="language-python">lst = [1, 2, 3]
+
+# iter(): Iterable에서 Iterator 생성
+it = iter(lst)
+print(type(it))    # &lt;class 'list_iterator'&gt;
+
+# next(): 다음 값 꺼내기
+print(next(it))    # 1
+print(next(it))    # 2
+print(next(it))    # 3
+
+# 더 이상 값이 없으면 StopIteration
+try:
+    print(next(it))
+except StopIteration:
+    print("더 이상 없음!")
+
+# next()의 기본값 인수 — StopIteration 대신 기본값 반환
+it2 = iter([1, 2])
+print(next(it2, "끝"))   # 1
+print(next(it2, "끝"))   # 2
+print(next(it2, "끝"))   # "끝" (StopIteration 방지)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+&lt;class 'list_iterator'&gt;
+1
+2
+3
+더 이상 없음!
+1
+2
+끝
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Iterator Protocol — __iter__와 __next__ 직접 구현</h3>
+    <p>
+      Python 공식 문서(reference/datamodel)의 Iterator Protocol:
+    </p>
+    <ul>
+      <li><code>__iter__()</code>: iterator 객체 반환. Iterator는 자기 자신을 반환.</li>
+      <li><code>__next__()</code>: 다음 값 반환, 소진 시 <code>StopIteration</code> 예외</li>
+    </ul>
+    <pre><code class="language-python">class Countdown:
+    """n부터 1까지 카운트다운하는 커스텀 Iterator"""
+    def __init__(self, n):
+        self.n = n
+
+    def __iter__(self):
+        return self   # Iterator는 자기 자신을 반환
+
+    def __next__(self):
+        if self.n <= 0:
+            raise StopIteration
+        value = self.n
+        self.n -= 1
+        return value
+
+# for 루프에서 직접 사용 가능
+for count in Countdown(5):
+    print(count, end=" ")   # 5 4 3 2 1
+print()
+
+# iter()와 next()도 정상 동작
+cd = Countdown(3)
+print(next(cd))   # 3
+print(next(cd))   # 2</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+5 4 3 2 1
+3
+2
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — CPython의 tp_iternext 슬롯 — FOR_ITER 내부</h3>
+    <p>
+      CPython에서 <code>__next__()</code>는 C 레벨에서 <code>tp_iternext</code> 슬롯으로 구현됩니다.
+      <code>FOR_ITER</code> 바이트코드는 이 슬롯을 직접 호출합니다:
+    </p>
+    <pre><code class="language-c">// Python/ceval.c — FOR_ITER 핵심 로직 (단순화)
+case FOR_ITER: {
+    PyObject *iter = TOP();
+    // tp_iternext를 통해 __next__() 호출
+    PyObject *next = (*Py_TYPE(iter)->tp_iternext)(iter);
+    if (next != NULL) {
+        PUSH(next);
+        DISPATCH();   // 다음 바이트코드로
+    } else {
+        if (PyErr_ExceptionMatches(PyExc_StopIteration)) {
+            PyErr_Clear();
+            JUMPBY(oparg);   // END_FOR로 jump
+        } else {
+            // 다른 예외: 전파
+            goto error;
+        }
+    }
+}</code></pre>
+    <p>
+      <code>tp_iternext</code>가 NULL을 반환하고 StopIteration이 설정되면 루프 종료.
+      이것이 Python for 루프가 예외를 직접 다루지 않아도 되는 이유입니다 —
+      <code>FOR_ITER</code>가 내부에서 처리합니다.
+    </p>
+    <pre><code class="language-python">import dis
+
+# De-sugaring의 바이트코드 비교
+def f_for(lst):
+    for x in lst:
+        pass
+
+def f_while(lst):
+    _it = iter(lst)
+    while True:
+        try:
+            x = next(_it)
+        except StopIteration:
+            break
+
+print("--- for 루프 ---")
+dis.dis(f_for)
+print("--- while 루프 ---")
+dis.dis(f_while)
+# f_for: ~8개 명령어 / f_while: 훨씬 많은 명령어 (RESUME 포함)
+# for가 효율적인 이유: FOR_ITER 하나가 next+예외처리 전체를 담당</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 06. Iterable vs Iterator ==================== -->
+<section id="iterable-vs-iterator">
+  <h2>Iterable vs Iterator — 자판기와 배출구</h2>
+
+  <div class="callout callout-info">
+    <strong>🔮 다음 단계 — 제너레이터(Generator):</strong><br>
+    Iterator Protocol을 직접 구현하는 더 쉬운 방법이 있습니다. <code>yield</code> 키워드를 사용한 <strong>제너레이터 함수</strong>입니다.
+    <pre><code class="language-python"># Iterator 클래스로 구현 (현재 방식)
+class Counter:
+    def __init__(self, limit):
+        self.limit = limit
+        self.current = 0
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.current >= self.limit:
+            raise StopIteration
+        self.current += 1
+        return self.current
+
+# 제너레이터로 같은 기능 (Week 14 이후에 배울 내용)
+def counter_gen(limit):
+    for i in range(1, limit + 1):
+        yield i   # yield: "여기서 멈추고 값을 반환, 다음 next()에서 여기서 재개"
+
+# 둘 다 똑같이 사용 가능
+for n in counter_gen(5):
+    print(n, end=" ")   # 1 2 3 4 5</code></pre>
+    <code>yield</code>가 자동으로 <code>__iter__</code>와 <code>__next__</code>를 구현해줍니다. 지금은 "이런 게 있다" 정도만 알아두세요!
+  </div>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>자판기(Iterable)와 배출구(Iterator)</h3>
+    <p>
+      <strong>Iterable(자판기):</strong> 항목을 순서대로 제공할 수 있는 것.
+      여러 번 사용할 수 있습니다. (리스트, 튜플, 문자열, range)<br>
+      <strong>Iterator(배출구):</strong> 실제로 항목을 하나씩 꺼내는 과정.
+      한 번 소진되면 끝입니다.
+    </p>
+    <pre><code class="language-python">lst = [1, 2, 3]   # 자판기 (Iterable)
+
+# 자판기에서 배출구를 만듦
+배출구 = iter(lst)
+
+# 배출구에서 꺼내기
+print(next(배출구))   # 1
+print(next(배출구))   # 2
+print(next(배출구))   # 3
+
+# 배출구는 소진됨, 하지만 자판기(lst)는 그대로
+print(list(lst))        # [1, 2, 3] — 자판기는 남아있음
+print(list(iter(lst)))  # [1, 2, 3] — 새 배출구로 다시 가능</code></pre>
+    <p>
+      for 루프는 자동으로 배출구를 만들고(GET_ITER), 하나씩 꺼냅니다(FOR_ITER).
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>iter(iterable)과 iter(iterator)의 차이</h3>
+    <pre><code class="language-python">lst = [1, 2, 3]
+
+# Iterable: iter()마다 새 Iterator 생성
+it1 = iter(lst)
+it2 = iter(lst)
+print(it1 is it2)   # False — 별개의 Iterator
+
+# 리스트는 여러 번 순회 가능
+for x in lst: pass
+for x in lst: pass   # 두 번째도 정상 동작
+
+# Iterator: iter(iterator) == 자기 자신
+it = iter(lst)
+print(iter(it) is it)   # True — 자기 자신 반환
+
+# Iterator는 소진 후 재사용 불가
+it = iter(lst)
+for x in it: pass      # [1, 2, 3] 소진
+for x in it: pass      # 빈 루프! it가 이미 소진됨
+
+# 흔한 실수
+it = iter([1, 2, 3])
+print(list(it))    # [1, 2, 3]
+print(list(it))    # [] — 이미 소진!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+False
+True
+[1, 2, 3]
+[]
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>collections.abc로 Iterable/Iterator 구분</h3>
+    <pre><code class="language-python">from collections.abc import Iterable, Iterator
+
+lst = [1, 2, 3]
+it = iter(lst)
+
+# 타입 확인
+print(isinstance(lst, Iterable))    # True — __iter__ 있음
+print(isinstance(lst, Iterator))    # False — __next__ 없음
+print(isinstance(it, Iterable))     # True — __iter__ 있음(자기자신 반환)
+print(isinstance(it, Iterator))     # True — __next__ 있음
+
+# range도 Iterable이지 Iterator가 아님
+r = range(5)
+print(isinstance(r, Iterable))      # True
+print(isinstance(r, Iterator))      # False
+
+# generator는 Iterator
+def gen():
+    yield 1
+    yield 2
+g = gen()
+print(isinstance(g, Iterator))      # True
+
+# 규칙: 모든 Iterator는 Iterable
+#       모든 Iterable이 Iterator인 것은 아님</code></pre>
+    <p>
+      Iterator가 <code>__iter__(self): return self</code>를 구현하는 이유:
+      for 루프는 GET_ITER를 통해 <code>__iter__()</code>를 먼저 호출합니다.
+      Iterator가 자기 자신을 반환해야 FOR_ITER가 올바르게 동작합니다.
+    </p>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — list vs list_iterator — CPython 내부 구조</h3>
+    <pre><code class="language-python">lst = [1, 2, 3]
+it = iter(lst)
+
+print(type(lst))   # &lt;class 'list'&gt;
+print(type(it))    # &lt;class 'list_iterator'&gt;
+
+# list: tp_iter 슬롯 있음 (→ list.__iter__() = list_iter 생성)
+#       tp_iternext 없음 (list 자체는 __next__ 없음)
+# list_iterator: tp_iter(→자기자신) + tp_iternext(→다음값) 모두 있음</code></pre>
+    <pre><code class="language-c">// Objects/listobject.c — list_iterator 구조체
+typedef struct {
+    PyObject_HEAD
+    Py_ssize_t it_index;    // 현재 인덱스
+    PyListObject *it_seq;   // 원본 리스트 참조 (소진 시 NULL)
+} listiterobject;
+
+// __next__() 구현 (단순화):
+static PyObject *
+listiter_next(listiterobject *it) {
+    PyListObject *seq = it->it_seq;
+    if (seq == NULL) return NULL;  // 이미 소진됨
+    if (it->it_index < PyList_GET_SIZE(seq)) {
+        return PyList_GET_ITEM(seq, it->it_index++);
+    }
+    // 소진: 참조 카운트 감소 후 NULL 설정
+    Py_DECREF(seq);   // 원본 리스트의 refcount 감소
+    it->it_seq = NULL;
+    return NULL;  // → FOR_ITER가 StopIteration으로 처리
+}</code></pre>
+    <pre><code class="language-python">import sys
+
+print(sys.getsizeof(lst))   # ~88 bytes (3 항목 기준)
+print(sys.getsizeof(it))    # ~56 bytes (항상 고정)
+
+# Iterator가 소진되면 Py_DECREF(seq) 후 it_seq = NULL
+# → 리스트의 참조 카운트 감소. 다른 참조가 없으면 GC가 해제 가능</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 07. enumerate와 zip ==================== -->
+<section id="enumerate-zip">
+  <h2>enumerate()와 zip() — Lazy Iterator 활용</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>enumerate: 번호표 자동 붙이기 / zip: 두 리스트 나란히</h3>
+    <p>
+      <code>enumerate()</code>는 항목에 자동으로 번호를 붙여줍니다.
+      <code>zip()</code>은 두 리스트를 나란히 묶어줍니다.
+    </p>
+    <pre><code class="language-python">fruits = ["사과", "바나나", "딸기"]
+
+# enumerate: (인덱스, 값) 쌍으로
+for i, fruit in enumerate(fruits):
+    print(f"{i}번: {fruit}")
+
+print()
+
+# zip: 두 리스트를 병렬로
+names = ["Alice", "Bob", "Carol"]
+scores = [95, 82, 78]
+for name, score in zip(names, scores):
+    print(f"{name}: {score}점")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+0번: 사과
+1번: 바나나
+2번: 딸기
+
+Alice: 95점
+Bob: 82점
+Carol: 78점
+    </div>
+    <p>
+      <strong>enumerate(fruits, start=1)</strong>로 1번부터 시작할 수 있습니다.
+    </p>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>range(len()) vs enumerate — 왜 enumerate가 더 나은가</h3>
+    <pre><code class="language-python">fruits = ["사과", "바나나", "딸기"]
+
+# ❌ Python스럽지 않은 방식 (AI가 자주 쓰는 패턴)
+for i in range(len(fruits)):
+    print(f"{i}: {fruits[i]}")
+
+# ✅ enumerate 사용 (더 안전하고 명확)
+for i, fruit in enumerate(fruits, start=1):
+    print(f"{i}: {fruit}")
+
+# zip의 길이 차이 처리
+a = [1, 2, 3, 4, 5]
+b = [10, 20, 30]   # 더 짧음
+
+for x, y in zip(a, b):   # 짧은 쪽에서 멈춤
+    print(x, y)
+
+# 모두 순회하려면 itertools.zip_longest
+from itertools import zip_longest
+for x, y in zip_longest(a, b, fillvalue=0):
+    print(x, y)</code></pre>
+    <div class="output-block">
+      <div class="output-label">zip(a, b) 출력 (짧은 쪽 b=3개에서 멈춤):</div>
+1 10
+2 20
+3 30
+    </div>
+    <div class="output-block">
+      <div class="output-label">zip_longest(a, b, fillvalue=0) 출력 (긴 쪽 a=5개까지):</div>
+1 10
+2 20
+3 30
+4 0
+5 0
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>zip으로 행렬 전치 / unzip 패턴</h3>
+    <pre><code class="language-python"># 행렬 전치 (transpose) — zip(*matrix)
+matrix = [[1, 2, 3],
+          [4, 5, 6],
+          [7, 8, 9]]
+
+transposed = list(zip(*matrix))   # *로 언패킹 후 zip
+for row in transposed:
+    print(row)
+# (1, 4, 7)
+# (2, 5, 8)
+# (3, 6, 9)
+
+# unzip 패턴 (zip의 역)
+pairs = [(1, "one"), (2, "two"), (3, "three")]
+numbers, words = zip(*pairs)
+print(numbers)   # (1, 2, 3)
+print(words)     # ('one', 'two', 'three')
+
+# dict 생성에 zip 활용
+keys = ["name", "age", "city"]
+values = ["Alice", 30, "서울"]
+d = dict(zip(keys, values))
+print(d)   # {'name': 'Alice', 'age': 30, 'city': '서울'}</code></pre>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — enumerate와 zip의 CPython 내부 구조</h3>
+    <pre><code class="language-python">from collections.abc import Iterator
+import sys
+
+# enumerate와 zip은 즉시 평가하지 않음 — Iterator
+e = enumerate([1, 2, 3])
+z = zip([1, 2, 3], [4, 5, 6])
+
+print(isinstance(e, Iterator))   # True
+print(isinstance(z, Iterator))   # True
+print(sys.getsizeof(e))          # ~56 bytes (항목 수 무관)
+print(sys.getsizeof(z))          # ~56 bytes
+
+# enumerate의 내부 최적화 (Objects/enumobject.c):
+# typedef struct {
+#     PyObject_HEAD
+#     Py_ssize_t en_index;    // 현재 인덱스
+#     PyObject  *en_sit;      // 내부 iterator
+#     PyObject  *en_result;   // 반환용 튜플 (재사용 최적화)
+#     PyObject  *en_longindex; // 큰 인덱스용
+# } enumobject;
+#
+# en_result 최적화:
+# refcount == 1인 (i, v) 튜플을 새로 만들지 않고 재사용
+# → tuple 할당 비용 절감
+
+# zip도 유사한 결과 재사용 최적화 적용
+# 단, 외부에서 참조를 유지하면 재사용하지 않음</code></pre>
+
+    <h3>Part B — 참조 카운트와 튜플 재사용 최적화</h3>
+    <p>enumerate의 <code>en_result</code> 튜플은 <code>ob_refcnt == 1</code>일 때만 in-place 수정됩니다.
+    이것은 CPython의 참조 카운팅(Reference Counting) 메모리 관리와 직결됩니다.
+    refcount가 1이면 이 튜플을 참조하는 곳이 자신뿐이므로 안전하게 내용을 바꿀 수 있습니다.</p>
+    <pre><code class="language-python"># 튜플 재사용 관찰 실험
+import sys
+
+# Case 1: 참조를 유지하지 않으면 → 튜플 재사용 (같은 id)
+e = enumerate([10, 20, 30])
+ids_no_ref = []
+for pair in e:
+    ids_no_ref.append(id(pair))
+# 같은 id가 반복될 수 있음 (CPython 구현에 따라 다름)
+
+# Case 2: 참조를 유지하면 → 새 튜플 생성 (refcount > 1)
+e = enumerate([10, 20, 30])
+saved = []
+for pair in e:
+    saved.append(pair)   # pair에 대한 참조가 saved에 남음 → refcount > 1
+    # → 다음 반복에서 새 튜플을 할당해야 함
+
+# 이것이 "list(enumerate(...))"이 안전한 이유:
+# list()가 각 튜플의 참조를 유지하므로 enumerate는 매번 새 튜플을 생성</code></pre>
+    <p><strong>성능 영향</strong>: 단순 <code>for i, v in enumerate(data)</code>에서는 언패킹 후
+    튜플 참조가 즉시 해제되어 <code>ob_refcnt == 1</code>이 유지됩니다.
+    따라서 루프 전체에서 단 하나의 튜플 객체만 재사용되어 메모리 할당 비용이 O(1)입니다.
+    zip도 동일한 최적화(<code>zip_next</code>의 <code>result</code> 튜플)를 적용합니다.</p>
+  </div>
+</section>
+
+<!-- ==================== 08. break, continue, for-else ==================== -->
+<section id="break-continue">
+  <h2>break, continue, for-else — 루프 흐름 제어</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>break: 나가기 / continue: 건너뛰기 / else: 못 찾았을 때</h3>
+    <pre><code class="language-python">numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# break: 조건 만족 시 즉시 루프 종료
+for n in numbers:
+    if n == 5:
+        print("5 발견!")
+        break
+    print(n, end=" ")
+# 출력: 1 2 3 4 5 발견!
+print()
+
+# continue: 이번 항목 건너뛰고 다음으로
+for n in numbers:
+    if n % 2 == 0:
+        continue   # 짝수 건너뜀
+    print(n, end=" ")   # 홀수만 출력: 1 3 5 7 9
+print()
+
+# for-else: break 없이 루프가 끝나면 else 실행
+target = 15
+for n in numbers:
+    if n == target:
+        print(f"{target} 발견!")
+        break
+else:
+    print(f"{target}을 찾지 못했습니다.")   # 이 줄이 실행됨</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+1 2 3 4 5 발견!
+1 3 5 7 9
+15을 찾지 못했습니다.
+    </div>
+    <div class="callout callout-tip">
+      <strong>for-else 읽는 법:</strong>
+      "break로 나가지 않으면 else 실행". else를 "no break"로 읽으면 헷갈리지 않습니다.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>Guard Clause + continue / for-else 실용 패턴</h3>
+    <pre><code class="language-python"># ❌ 깊은 중첩 (continue 없이)
+def process_v1(data):
+    results = []
+    for item in data:
+        if item is not None:
+            if item > 0:
+                if item % 2 == 0:
+                    results.append(item * 2)
+    return results
+
+# ✅ Guard Clause + continue (더 명확, Week05 참조)
+def process_v2(data):
+    results = []
+    for item in data:
+        if item is None: continue
+        if item <= 0: continue
+        if item % 2 != 0: continue
+        results.append(item * 2)
+    return results
+
+# for-else: 소수 판별 (break 기반 — for-else의 정확한 의미)
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            break          # 약수 발견 → else 건너뜀
+    else:
+        return True        # break 없이 루프 완료 → 소수
+    return False           # break 후 여기로
+
+print([n for n in range(2, 20) if is_prime(n)])
+# [2, 3, 5, 7, 11, 13, 17, 19]</code></pre>
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — for 루프 변수는 루프 후에도 살아있습니다:</strong>
+      <pre><code class="language-python"># 파이썬에서 for 루프 변수는 루프 스코프가 없음 (C/Java와 다름!)
+for i in range(5):
+    pass
+print(i)   # 4 ← 루프가 끝났는데도 i가 살아있음!
+
+# 리스트 컴프리헨션은 자체 스코프를 가짐 (Python 3)
+result = [x for x in range(5)]
+# print(x)   # NameError: name 'x' is not defined ← 누출 없음
+
+# 함정: 루프 후 변수를 의도치 않게 사용
+for item in ["a", "b", "c"]:
+    if item == "b":
+        found = item
+        break
+
+# found가 정의되지 않을 수도 있음!
+# for 루프가 실행되지 않으면 found는 undefined
+items = []
+for item in items:
+    found = item
+# print(found)   # NameError: 빈 리스트라 found가 정의되지 않음
+
+# ✅ 안전한 패턴: 초기화
+found = None   # 미리 초기화
+for item in items:
+    found = item
+print(found)   # None ← 안전</code></pre>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>중첩 루프 탈출 전략</h3>
+    <pre><code class="language-python">matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+target = 5
+
+# ❌ 방법 1: 플래그 변수 (Python스럽지 않음)
+found = False
+for row in matrix:
+    for val in row:
+        if val == target:
+            found = True
+            break
+    if found:
+        break
+
+# ✅ 방법 2: 함수로 분리 (권장)
+def find_in_matrix(matrix, target):
+    for i, row in enumerate(matrix):
+        for j, val in enumerate(row):
+            if val == target:
+                return (i, j)   # return이 모든 루프를 즉시 탈출
+    return None
+
+pos = find_in_matrix(matrix, target)
+print(pos)   # (1, 1)
+
+# ✅ 방법 3: any() + generator expression
+found = any(val == target for row in matrix for val in row)
+print(found)   # True</code></pre>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — break/continue/for-else의 바이트코드</h3>
+    <pre><code class="language-python">import dis
+
+def with_break(lst):
+    for x in lst:
+        if x > 5:
+            break
+
+def with_continue(lst):
+    for x in lst:
+        if x % 2 == 0:
+            continue
+        print(x)
+
+def with_for_else(lst, target):
+    for x in lst:
+        if x == target:
+            break
+    else:
+        print("not found")
+
+dis.dis(with_break)</code></pre>
+    <div class="output-block">
+      <div class="output-label">with_break 바이트코드 요약 (Python 3.12):</div>
+  2           LOAD_FAST    0 (lst)
+              GET_ITER
+        >>    FOR_ITER     N      ← StopIteration 시 END_FOR로 jump
+              STORE_FAST   1 (x)
+
+  3           LOAD_FAST    1 (x)
+              LOAD_CONST   (5)
+              COMPARE_OP   (&gt;)
+              POP_JUMP_IF_FALSE    (→ JUMP_BACKWARD)  ← x &lt;= 5: 다음 항목으로
+
+  4           POP_TOP               ← break: iterator를 스택에서 제거
+              JUMP_FORWARD          ← END_FOR 이후로 jump (else 블록도 건너뜀)
+        >>    JUMP_BACKWARD         ← continue / 정상 흐름: FOR_ITER로 되돌아감
+        >>    END_FOR
+              RETURN_CONST (None)
+    </div>
+    <p>핵심 바이트코드 의미:</p>
+    <ul>
+      <li><code>break</code> → <code>POP_TOP</code> + <code>JUMP_FORWARD</code>: iterator를 스택에서 제거(POP_TOP)한 뒤 END_FOR 이후로 점프 (else 블록도 건너뜀)</li>
+      <li><code>continue</code> → <code>JUMP_BACKWARD</code>: FOR_ITER 위치로 되돌아감</li>
+      <li><code>for-else</code>: FOR_ITER가 StopIteration으로 정상 종료 → END_FOR 직후가 else 블록.<br>
+          break 시 POP_TOP + JUMP_FORWARD로 else 블록도 건너뜀</li>
+    </ul>
+
+    <h3>Part B — PEP 479: 제너레이터와 StopIteration의 언어 설계</h3>
+    <p>Python 3.7부터 PEP 479가 적용되어 제너레이터 안에서 처리되지 않은 <code>StopIteration</code>은
+    <code>RuntimeError</code>로 변환됩니다. 이것은 언어 설계 관점에서 중요한 결정입니다:</p>
+    <ul>
+      <li><strong>문제</strong>: 제너레이터 내부에서 의도치 않은 <code>StopIteration</code>이 발생하면 제너레이터가 조용히 종료되어 버그를 숨김</li>
+      <li><strong>해결</strong>: <code>StopIteration</code>을 <code>RuntimeError</code>로 변환하여 명시적 오류 처리를 강제</li>
+      <li><strong>원칙</strong>: "Errors should never pass silently" — Zen of Python</li>
+    </ul>
+    <div class="callout callout-warning">
+      <strong>🚨 고급 함정 — 제너레이터 안에서 StopIteration (Python 3.7+, PEP 479):</strong>
+      <pre><code class="language-python"># Python 3.7 이전: 제너레이터 안에서 StopIteration이 발생하면 조용히 제너레이터 종료
+# Python 3.7+: RuntimeError로 변환! (PEP 479)
+
+def old_style_gen():
+    """Python 3.6 이하에서는 작동했지만 3.7+에서는 오류"""
+    data = [1, 2, 3]
+    it = iter(data)
+    while True:
+        yield next(it)   # StopIteration이 발생하면?
+        # Python 3.7+: RuntimeError: generator raised StopIteration
+
+try:
+    list(old_style_gen())
+except RuntimeError as e:
+    print(f"RuntimeError: {e}")
+
+# ✅ 올바른 방법: 명시적으로 처리
+def safe_gen():
+    data = [1, 2, 3]
+    it = iter(data)
+    while True:
+        try:
+            yield next(it)
+        except StopIteration:
+            return   # 명시적으로 제너레이터 종료
+
+print(list(safe_gen()))   # [1, 2, 3]
+
+# ✅ 더 파이썬스러운 방법
+def pythonic_gen():
+    yield from [1, 2, 3]   # yield from: iterable을 위임
+
+print(list(pythonic_gen()))   # [1, 2, 3]</code></pre>
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — Iterator를 한 번만 순회할 수 있음 (Exhaustion):</strong>
+      <pre><code class="language-python"># zip, map, filter, enumerate는 Iterator → 한 번만 순회 가능!
+names = ["Alice", "Bob", "Carol"]
+scores = [90, 85, 92]
+
+zipped = zip(names, scores)   # zip 객체 (Iterator)
+
+# 첫 번째 순회
+for name, score in zipped:
+    print(f"{name}: {score}")
+
+# ❌ 두 번째 순회: 아무것도 출력 안 됨!
+print("두 번째 순회:")
+for name, score in zipped:
+    print(f"{name}: {score}")   # 아무것도 출력 안 됨
+
+# 왜? zip은 Iterator, 이미 소진(exhausted) 상태
+print(list(zipped))   # [] ← 텅 비어있음
+
+# ✅ 해결: 리스트로 변환해서 재사용
+zipped_list = list(zip(names, scores))   # 미리 변환
+for name, score in zipped_list:
+    print(f"{name}: {score}")
+for name, score in zipped_list:   # ✅ 다시 순회 가능
+    print(f"다시: {name}")
+
+# ✅ 또는 itertools.tee()로 복제
+import itertools
+gen1, gen2 = itertools.tee(zip(names, scores), 2)
+print(list(gen1))   # [('Alice', 90), ('Bob', 85), ('Carol', 92)]
+print(list(gen2))   # [('Alice', 90), ('Bob', 85), ('Carol', 92)]</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 09. AI와 for 루프 ==================== -->
+<section id="ai-for">
+  <h2>AI와 for 루프 — AI 코드를 안전하게 사용하는 법</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>AI for 루프 코드 체크리스트</h3>
+    <p>AI가 for 루프 코드를 만들어줬을 때 확인할 것들:</p>
+    <div class="callout callout-tip">
+      <strong>☑ 체크 1: for 루프 안에서 리스트를 수정하고 있는가?</strong>
+    </div>
+    <pre><code class="language-python"># ❌ 반복 중 수정 — 예측 불가 (Week06 §09 참조)
+nums = [1, 2, 3, 4, 5]
+for n in nums:
+    if n % 2 == 0:
+        nums.remove(n)   # Iterator가 혼란에 빠짐
+
+# ✅ 새 리스트 만들기
+nums = [n for n in nums if n % 2 != 0]</code></pre>
+    <div class="callout callout-tip">
+      <strong>☑ 체크 2: range(len(lst)) 대신 더 나은 방법을 쓸 수 있는가?</strong>
+    </div>
+    <pre><code class="language-python"># ❌ AI 기본 패턴 (인덱스만 만들어서 값 조회)
+for i in range(len(fruits)):
+    print(fruits[i])
+
+# ✅ 인덱스가 필요 없을 때: 직접 순회
+for fruit in fruits:
+    print(fruit)
+
+# ✅ 인덱스도 필요할 때: enumerate
+for i, fruit in enumerate(fruits):
+    print(f"{i}: {fruit}")</code></pre>
+    <div class="callout callout-tip">
+      <strong>☑ 체크 3: 소진된 Iterator를 재사용하려 하는가?</strong>
+    </div>
+    <pre><code class="language-python"># ❌ 버그 — it가 소진된 후 재사용
+it = iter(data)
+result1 = list(it)    # 소진!
+result2 = list(it)    # [] — 빈 리스트, 버그
+
+# ✅ 매번 새로 만들기
+result1 = list(data)
+result2 = list(data)</code></pre>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>AI가 range(len()) 패턴을 고집하는 이유와 개선</h3>
+    <pre><code class="language-python">data = ["Alice", "Bob", "Carol"]
+scores = [95, 82, 78]
+
+# ❌ AI 기본 출력 (C/Java 스타일 — range + index)
+for i in range(len(data)):
+    print(f"{data[i]}: {scores[i]}")
+# 문제:
+# 1. data와 scores 길이가 다르면 IndexError
+# 2. 가독성 낮음, data[i] 인덱싱 오류 가능
+
+# ✅ zip 사용 (더 안전)
+for name, score in zip(data, scores):
+    print(f"{name}: {score}")
+
+# ✅ 인덱스도 필요할 때: enumerate + zip
+for i, (name, score) in enumerate(zip(data, scores), start=1):
+    print(f"{i}위 {name}: {score}점")
+
+# AI에게 명시적으로 요청:
+# "range(len()) 대신 enumerate나 zip을 사용해줘"</code></pre>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>for vs 내장 함수 — 언제 어느 것을 쓸까</h3>
+    <pre><code class="language-python">import timeit
+
+data = list(range(10_000))
+
+def total_for(data):
+    total = 0
+    for x in data:
+        total += x
+    return total
+
+def total_sum(data):
+    return sum(data)   # C 레벨 루프
+
+t1 = timeit.timeit(lambda: total_for(data), number=1000)
+t2 = timeit.timeit(lambda: total_sum(data), number=1000)
+print(f"for 합계:  {t1:.3f}초")
+print(f"sum():     {t2:.3f}초  ← 3~5배 빠름")
+
+# 선택 기준:
+# 단순 집계 (합, 최대, 최소, 개수) → sum/max/min/len
+# 변환 (각 항목을 변환)          → 컴프리헨션 또는 map()
+# 필터 (조건에 맞는 항목만)        → 컴프리헨션 또는 filter()
+# 복잡한 로직, 부작용 필요          → for 루프</code></pre>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — FOR_ITER 특화 비교: list vs range vs dict</h3>
+    <pre><code class="language-python">import dis, timeit
+
+data_list = list(range(1000))
+data_range = range(1000)
+data_dict = {i: i for i in range(1000)}
+
+def loop_list(lst):
+    total = 0
+    for x in lst:
+        total += x
+    return total
+
+def loop_range(r):
+    total = 0
+    for x in r:
+        total += x
+    return total
+
+def loop_dict(d):
+    total = 0
+    for k in d:
+        total += k
+    return total
+
+# 특화 유도 (반복 실행)
+for _ in range(200):
+    loop_list(data_list)
+    loop_range(data_range)
+
+t1 = timeit.timeit(lambda: loop_list(data_list), number=5000)
+t2 = timeit.timeit(lambda: loop_range(data_range), number=5000)
+t3 = timeit.timeit(lambda: loop_dict(data_dict), number=5000)
+print(f"FOR_ITER_LIST:  {t1:.3f}초")
+print(f"FOR_ITER_RANGE: {t2:.3f}초  ← 가장 빠름")
+print(f"FOR_ITER(dict): {t3:.3f}초")
+
+# FOR_ITER_RANGE가 가장 빠른 이유:
+# 1. 포인터 역참조 없음 (ob_item 조회 불필요)
+# 2. start + index * step 단순 정수 연산
+# 3. 작은 정수는 CPython 캐시 사용 → PyLong 생성 비용 없음</code></pre>
+
+    <h3>Part A (계속) — FOR_ITER 바이트코드 특화 분석: FOR_ITER_LIST vs FOR_ITER_RANGE</h3>
+    <p>
+      Python 3.12+의 <strong>특화 적응형 인터프리터(Specializing Adaptive Interpreter)</strong>는
+      <code>FOR_ITER</code>를 실행 패턴에 따라 특화합니다.
+    </p>
+    <pre><code class="language-python">import dis
+
+# 리스트 순회
+def iterate_list():
+    total = 0
+    for x in [1, 2, 3, 4, 5]:
+        total += x
+    return total
+
+# range 순회
+def iterate_range():
+    total = 0
+    for x in range(5):
+        total += x
+    return total
+
+# 제너레이터 순회
+def iterate_gen():
+    total = 0
+    for x in (x**2 for x in range(5)):
+        total += x
+    return total
+
+print("=== 리스트 순회 ===")
+dis.dis(iterate_list)
+print("\n=== range 순회 ===")
+dis.dis(iterate_range)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (Python 3.12, 핵심 옵코드):</div>
+=== 리스트 순회 ===
+  BUILD_LIST      0          ← [1,2,3,4,5] 리스트 생성
+  ...
+  GET_ITER                   ← list.__iter__() 호출 → listiterator 반환
+  FOR_ITER        → 루프 종료  ← next() + StopIteration 처리
+  ...
+  JUMP_BACKWARD   → FOR_ITER
+
+=== range 순회 ===
+  LOAD_GLOBAL     range
+  LOAD_CONST      5
+  CALL                       ← range(5) 객체 생성
+  GET_ITER                   ← range.__iter__() 호출 → range_iterator 반환
+  FOR_ITER        → 루프 종료
+  ...
+    </div>
+    <pre><code class="language-python">import timeit
+
+# 성능 비교: 리스트 vs range vs 제너레이터
+def sum_list():
+    return sum([x for x in range(1000)])
+
+def sum_range():
+    return sum(range(1000))
+
+def sum_gen():
+    return sum(x for x in range(1000))
+
+t_list  = timeit.timeit(sum_list,  number=10000)
+t_range = timeit.timeit(sum_range, number=10000)
+t_gen   = timeit.timeit(sum_gen,   number=10000)
+
+print(f"리스트 컴프리헨션: {t_list:.3f}s")
+print(f"range 직접 합산:  {t_range:.3f}s  ← 가장 빠름 (C 레벨 최적화)")
+print(f"제너레이터 표현식: {t_gen:.3f}s")
+
+# range_iterator의 C 레벨 최적화:
+# rangeobject.c에서 r_step만큼 단순 덧셈으로 구현
+# list_iterator는 ob_item 포인터 배열에서 직접 읽음
+# gen_iterator는 프레임 재개(frame evaluation) 오버헤드 있음</code></pre>
+    <div class="callout callout-info">
+      <strong>FOR_ITER의 C 레벨 구현 (ceval.c):</strong> (3.11 이전 스타일 — 3.12+는 specializing adaptive interpreter로 리팩터링됨)<br>
+      <pre><code class="language-c">case TARGET(FOR_ITER): {
+    PyObject *iter = TOP();
+    PyObject *next = (*Py_TYPE(iter)->tp_iternext)(iter);
+    if (next != NULL) {
+        PUSH(next);
+        DISPATCH();
+    }
+    // StopIteration 처리
+    if (tstate->c_tracefunc == NULL) {
+        if (_PyErr_ExceptionMatches(tstate, PyExc_StopIteration)) {
+            _PyErr_Clear(tstate);
+        }
+    }
+    JUMPBY(oparg);  // 루프 종료로 점프
+}</code></pre>
+      핵심: <code>tp_iternext</code>가 직접 호출됩니다. Python 레벨의 <code>__next__()</code> 메서드 조회(LOAD_ATTR + CALL) 없이 C 함수 포인터를 바로 호출합니다. 이것이 for 루프가 while + __next__()보다 빠른 이유입니다.
+    </div>
+
+    <h3>Part B — Lazy Evaluation vs Eager Evaluation: Iterator의 성능·메모리 특성</h3>
+    <p>
+      Iterator는 <strong>지연 평가(Lazy Evaluation)</strong>를 구현합니다.
+      즉, 값이 필요할 때까지 계산을 미룹니다. 이것이 리스트와의 핵심 차이입니다.
+    </p>
+    <pre><code class="language-python">import sys
+import itertools
+
+# Eager (즉시 평가): 리스트
+def process_eager(n):
+    squares = [x**2 for x in range(n)]   # 모든 값을 즉시 계산, 메모리에 저장
+    return sum(squares)
+
+# Lazy (지연 평가): 제너레이터
+def process_lazy(n):
+    squares = (x**2 for x in range(n))   # 계산을 미룸, 필요할 때만 실행
+    return sum(squares)
+
+# 메모리 비교
+eager_list = [x**2 for x in range(1000)]
+lazy_gen   = (x**2 for x in range(1000))
+print(f"리스트 (1000개):    {sys.getsizeof(eager_list):,} bytes")
+print(f"제너레이터 (1000개): {sys.getsizeof(lazy_gen):,} bytes")   # 항상 ~200 bytes (객체 셸만 — frame/code 객체 메모리 별도)
+
+# 단락 평가(Short-circuit) — Lazy의 핵심 장점
+def find_first_large(iterable, threshold):
+    """임계값을 초과하는 첫 번째 값만 찾기"""
+    for x in iterable:
+        if x > threshold:
+            return x
+    return None
+
+# ❌ Eager: 100만 개를 모두 생성 후 순회
+# ✅ Lazy: 발견 즉시 중단 (나머지는 계산조차 않음)
+gen = (x**2 for x in range(1_000_000))
+result = find_first_large(gen, 999)
+print(f"첫 번째 999 초과 제곱수: {result}")   # 1024 (32**2)
+# 32**2 = 1024를 찾자마자 중단 → 33~999999는 계산 안 함!
+
+# itertools: 무한 이터레이터
+counter = itertools.count(start=1)   # 1, 2, 3, ... (무한)
+first_10 = list(itertools.islice(counter, 10))
+print(first_10)   # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# 무한 피보나치 제너레이터
+def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+fib = fibonacci()
+first_10_fib = [next(fib) for _ in range(10)]
+print(first_10_fib)   # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+리스트 (1000개):    8,856 bytes
+제너레이터 (1000개): 200 bytes
+첫 번째 999 초과 제곱수: 1024
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+    </div>
+    <div class="callout callout-info">
+      <strong>Lazy vs Eager 선택 기준:</strong><br>
+      • <strong>Lazy (제너레이터)</strong>: 큰 데이터셋, 무한 시퀀스, 단락 평가 필요, 파이프라인 처리<br>
+      • <strong>Eager (리스트)</strong>: 데이터를 여러 번 순회, 인덱스 접근 필요, 역순 순회<br>
+      • <strong>Haskell</strong>은 기본이 Lazy (ML 계열인 OCaml/SML은 Eager), Python은 기본이 Eager + 선택적 Lazy
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. 실습 ==================== -->
+<section id="hands-on">
+  <h2>실습: Iterator Protocol 탐험</h2>
+
+  <div class="hands-on-block">
+    <h3>실습 1 — iter()와 next() 직접 다루기</h3>
+    <p>for 루프 없이 iter()와 next()만으로 구현해보세요:</p>
+    <pre><code class="language-python">fruits = ["apple", "banana", "cherry", "date", "elderberry"]
+
+# 1. iter()와 next()만으로 첫 번째, 두 번째 항목 출력
+it = iter(fruits)
+# 구현하세요
+
+# 2. next(iterator, default)를 활용해
+#    리스트에서 5번 꺼내는 코드 작성 (StopIteration 없이)
+it2 = iter([1, 2, 3])
+for _ in range(5):
+    val = next(it2, "끝")
+    print(val)
+
+# 탐구 질문:
+# Q1. it3 = iter(fruits); iter(it3) is it3 가 True인가 False인가?
+# Q2. iter(fruits)를 두 번 만들면 각각 독립적으로 순회 가능한가?</code></pre>
+
+    <h3>실습 2 — GET_ITER / FOR_ITER 바이트코드 관찰</h3>
+    <p>다음 세 함수의 바이트코드를 비교하세요:</p>
+    <pre><code class="language-python">import dis
+
+def loop_a(lst):
+    for x in lst:
+        pass
+
+def loop_b(lst):
+    it = iter(lst)
+    while True:
+        try:
+            x = next(it)
+        except StopIteration:
+            break
+
+def loop_c():
+    for i in range(5):
+        pass
+
+dis.dis(loop_a)
+print("---")
+dis.dis(loop_b)
+print("---")
+dis.dis(loop_c)
+
+# 탐구 질문:
+# Q1. loop_a와 loop_b의 바이트코드 수를 비교하세요
+# Q2. loop_c (range)에서 FOR_ITER와 다른 특화가 나타나는가?
+# Q3. GET_ITER가 loop_b의 iter() 호출에 해당하는가?</code></pre>
+
+    <h3>실습 3 — 커스텀 Iterator: 피보나치 수열</h3>
+    <p>피보나치 수열을 생성하는 Iterator를 구현하세요:</p>
+    <pre><code class="language-python">class Fibonacci:
+    """limit개까지 피보나치 수열을 생성하는 Iterator"""
+    def __init__(self, limit):
+        self.limit = limit
+        self.count = 0
+        self.a, self.b = 0, 1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.count >= self.limit:
+            raise StopIteration
+        # 구현하세요
+        pass
+
+# 테스트
+for fib in Fibonacci(10):
+    print(fib, end=" ")
+# 예상: 0 1 1 2 3 5 8 13 21 34
+
+# 추가 과제:
+# 1. Fibonacci(5)를 두 번 순회하면 두 번째는 빈 루프가 됩니다.
+#    왜 그런가? 어떻게 수정하면 여러 번 순회 가능한가?
+# 2. from collections.abc import Iterator
+#    isinstance(Fibonacci(5), Iterator)가 True가 되는가?</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 11. 연습문제 ==================== -->
+<section id="exercises">
+  <h2>연습문제 (12문제)</h2>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 1</span>
+    <h3>FizzBuzz</h3>
+    <p>1부터 50까지 출력하되, 3의 배수면 "Fizz", 5의 배수면 "Buzz", 둘 다면 "FizzBuzz"를 출력하세요:</p>
+    <pre><code class="language-python">for i in range(1, 51):
+    # 구현하세요
+    pass</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">for i in range(1, 51):
+    if i % 15 == 0:      # 15의 배수 먼저 (3과 5 모두)
+        print("FizzBuzz")
+    elif i % 3 == 0:
+        print("Fizz")
+    elif i % 5 == 0:
+        print("Buzz")
+    else:
+        print(i)</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 2</span>
+    <h3>구구단 표</h3>
+    <p>중첩 for 루프로 2단부터 9단까지 출력하세요. 각 단 사이에 빈 줄을 넣으세요:</p>
+    <pre><code class="language-python">for dan in range(2, 10):
+    for n in range(1, 10):
+        # 구현하세요 — "dan × n = 결과" 형식으로 출력
+        pass
+    # 구현하세요 — 단 사이 빈 줄 출력
+</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">for dan in range(2, 10):
+    for n in range(1, 10):
+        print(f"{dan} × {n} = {dan * n}")
+    print()   # 단 사이 빈 줄</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 3</span>
+    <h3>별 직각삼각형</h3>
+    <p>
+      <code>range()</code>와 중첩 for 루프로 아래 패턴을 출력하세요.
+      <code>n = 5</code>일 때 1행에 별 1개, 2행에 별 2개, …, n행에 별 n개:
+    </p>
+    <pre><code class="language-python">n = 5
+# 출력 예시:
+# *
+# **
+# ***
+# ****
+# *****
+
+for i in range(1, n + 1):
+    # 구현하세요 — i개의 '*' 출력 (힌트: print("*" * i))
+    pass</code></pre>
+    <p>
+      심화: <code>print(end="")</code>를 이용해 중첩 for로도 구현해보세요.
+      안쪽 for가 별 1개씩 출력하고, 바깥 for가 줄을 바꿉니다.
+    </p>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">n = 5
+for i in range(1, n + 1):
+    print("*" * i)
+
+# 중첩 for 버전
+for i in range(1, n + 1):
+    for j in range(i):
+        print("*", end="")
+    print()   # 줄바꿈</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 4</span>
+    <h3>중첩 리스트 합산</h3>
+    <p>다음 중첩 리스트의 모든 숫자 합을 for 루프로 구하세요 (sum() 사용 금지):</p>
+    <pre><code class="language-python">data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+total = 0
+# 구현하세요
+print(total)   # 45</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+total = 0
+for row in data:
+    for num in row:
+        total += num
+print(total)   # 45</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 5</span>
+    <h3>중복 제거 (순서 유지)</h3>
+    <p>리스트에서 중복을 제거하되 원래 순서를 유지하는 함수를 작성하세요:</p>
+    <pre><code class="language-python">def remove_duplicates(lst):
+    # set()을 사용하면 순서가 바뀜 — for 루프와 seen 집합으로 구현하세요
+    pass
+
+print(remove_duplicates([3, 1, 4, 1, 5, 9, 2, 6, 5, 3]))
+# [3, 1, 4, 5, 9, 2, 6]</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def remove_duplicates(lst):
+    seen = set()
+    result = []
+    for item in lst:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+
+print(remove_duplicates([3, 1, 4, 1, 5, 9, 2, 6, 5, 3]))
+# [3, 1, 4, 5, 9, 2, 6]</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 6</span>
+    <h3>별 피라미드 (중앙 정렬)</h3>
+    <p>
+      <code>range()</code>와 문자열 연산으로 아래 피라미드를 출력하세요.
+      <code>n = 5</code>일 때:
+    </p>
+    <pre><code class="language-python">n = 5
+# 출력 예시 (n=5):
+#     *        ← 공백 4개 + 별 1개
+#    ***       ← 공백 3개 + 별 3개
+#   *****      ← 공백 2개 + 별 5개
+#  *******     ← 공백 1개 + 별 7개
+# *********    ← 공백 0개 + 별 9개
+
+for i in range(1, n + 1):
+    spaces = 0   # 구현하세요 — i번째 줄의 공백 개수는? (힌트: n - i)
+    stars  = 0   # 구현하세요 — i번째 줄의 별 개수는? (힌트: 2*i - 1)
+    print(" " * spaces + "*" * stars)</code></pre>
+    <p>
+      패턴을 찾는 법: i=1일 때 공백=4, 별=1 / i=2일 때 공백=3, 별=3 / …
+      <code>i</code>와 <code>n</code>의 관계로 공식을 도출하세요.
+    </p>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">n = 5
+for i in range(1, n + 1):
+    spaces = n - i       # 공백 개수
+    stars  = 2 * i - 1  # 별 개수
+    print(" " * spaces + "*" * stars)</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 7</span>
+    <h3>zip으로 행렬 전치</h3>
+    <p>zip()을 이용해 m×n 행렬을 n×m으로 전치하는 함수를 작성하세요:</p>
+    <pre><code class="language-python">def transpose(matrix):
+    # zip(*matrix)를 활용하세요
+    pass
+
+mat = [[1, 2, 3], [4, 5, 6]]
+print(transpose(mat))
+# [[1, 4], [2, 5], [3, 6]]</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def transpose(matrix):
+    return [list(row) for row in zip(*matrix)]
+
+mat = [[1, 2, 3], [4, 5, 6]]
+print(transpose(mat))   # [[1, 4], [2, 5], [3, 6]]</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 8</span>
+    <h3>for-else로 소수 목록</h3>
+    <p>for-else를 활용해 2부터 100 사이의 소수를 모두 구하세요.
+       약수가 발견되면 break, 발견 안 되면 else에서 소수로 추가하는 패턴을 사용하세요:</p>
+    <pre><code class="language-python">primes = []
+for n in range(2, 101):
+    for divisor in range(2, int(n**0.5) + 1):
+        # 구현하세요 — 약수 발견 시 break
+        pass
+    else:
+        # break 없이 완료 = 소수
+        pass
+print(primes)
+# [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">primes = []
+for n in range(2, 101):
+    for divisor in range(2, int(n**0.5) + 1):
+        if n % divisor == 0:
+            break   # 약수 발견 — 소수 아님
+    else:
+        primes.append(n)   # break 없이 완료 = 소수
+print(primes)</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-adv">
+    <span class="level-badge level-advanced">고급 9</span>
+    <h3>커스텀 Iterable 클래스</h3>
+    <p>
+      Python의 range()처럼 동작하는 MyRange를 구현하세요.
+      <strong>Iterable이어야 합니다 (Iterator 아님) — 여러 번 순회 가능해야 합니다.</strong>
+    </p>
+    <pre><code class="language-python">class MyRange:
+    def __init__(self, start, stop=None, step=1):
+        # 구현하세요 (range()처럼 인수 1개면 stop만)
+        pass
+
+    def __iter__(self):
+        # 매번 새로운 Iterator를 반환해야 합니다!
+        # 힌트: 내부에 MyRangeIterator 클래스를 따로 만드세요
+        pass
+
+    def __len__(self):
+        pass
+
+# 테스트
+r = MyRange(1, 10, 2)
+print(list(r))   # [1, 3, 5, 7, 9]
+print(len(r))    # 5
+
+# 여러 번 순회 가능해야 함
+for x in r: pass
+for x in r: pass   # 두 번째도 동작해야 함</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">class MyRangeIterator:
+    def __init__(self, start, stop, step):
+        self.current = start
+        self.stop = stop
+        self.step = step
+    def __iter__(self): return self
+    def __next__(self):
+        if (self.step > 0 and self.current >= self.stop) or \
+           (self.step < 0 and self.current <= self.stop):
+            raise StopIteration
+        val = self.current
+        self.current += self.step
+        return val
+
+class MyRange:
+    def __init__(self, start, stop=None, step=1):
+        if stop is None:
+            self.start, self.stop, self.step = 0, start, step
+        else:
+            self.start, self.stop, self.step = start, stop, step
+    def __iter__(self):
+        return MyRangeIterator(self.start, self.stop, self.step)
+    def __len__(self):
+        if self.step > 0:
+            return max(0, (self.stop - self.start + self.step - 1) // self.step)
+        else:
+            return max(0, (self.stop - self.start + self.step + 1) // self.step)
+
+r = MyRange(1, 10, 2)
+print(list(r))   # [1, 3, 5, 7, 9]
+print(len(r))    # 5</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 10</span>
+    <h3>GET_ITER vs FOR_ITER 바이트코드 분석</h3>
+    <p>for 루프와 De-sugaring 버전의 바이트코드를 분석하고 효율성을 비교하세요:</p>
+    <pre><code class="language-python">import dis, timeit
+
+def f_for(lst):
+    total = 0
+    for x in lst:
+        total += x
+    return total
+
+def f_while(lst):
+    total = 0
+    _it = iter(lst)
+    while True:
+        try:
+            x = next(_it)
+            total += x
+        except StopIteration:
+            break
+    return total
+
+# 1. 바이트코드 비교
+dis.dis(f_for)
+print("---")
+dis.dis(f_while)
+
+# 2. 성능 비교
+data = list(range(1000))
+t1 = timeit.timeit(lambda: f_for(data), number=10000)
+t2 = timeit.timeit(lambda: f_while(data), number=10000)
+print(f"for 루프:    {t1:.3f}초")
+print(f"while 루프:  {t2:.3f}초")
+
+# 분석 질문:
+# Q1. 어느 쪽 바이트코드 수가 더 많은가? 왜인가?
+# Q2. FOR_ITER가 CALL(next)+SETUP_CLEANUP+EXCEPT보다 효율적인 이유는?
+# Q3. 특화(specialization) 유도 후 FOR_ITER가 FOR_ITER_LIST로 바뀌는가?</code></pre>
+    <details class="answer">
+      <summary>힌트 / 모범 답안</summary>
+      <div class="answer-content">
+        <p><strong>Q1. 바이트코드 수:</strong> <code>f_while</code>이 훨씬 많습니다. <code>while True</code>는 LOAD_CONST(True) + POP_JUMP_IF_FALSE, try/except는 SETUP_CLEANUP + PUSH_EXC_INFO + POP_EXCEPT + RERAISE 등 예외 처리 오버헤드가 추가됩니다. <code>f_for</code>는 GET_ITER → FOR_ITER → STORE_FAST → … → JUMP_BACKWARD → END_FOR 의 최소 구조입니다.</p>
+        <p><strong>Q2. FOR_ITER의 효율:</strong> FOR_ITER는 단일 C 명령으로 <code>tp_iternext()</code>를 직접 호출합니다. 반면 <code>next(it)</code>는 globals 조회(LOAD_GLOBAL) + 인자 push + CALL + 반환값 처리 + 예외 분기까지 다수의 바이트코드가 필요합니다. 또한 FOR_ITER는 StopIteration을 예외 메커니즘이 아닌 단순 점프로 처리하므로 예외 핸들러 설치 비용이 없습니다.</p>
+        <p><strong>Q3. 특화:</strong> 예, 반복 실행 후 <code>FOR_ITER</code>는 <code>FOR_ITER_LIST</code>로 특화됩니다. <code>dis.dis()</code>의 첫 실행에는 보이지 않지만, 핫 루프 실행 후 <code>sys._stats()</code> (Python 3.12+) 또는 <code>python3 -X pystats</code>로 수집 후 확인 가능합니다.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 11</span>
+    <h3>Iterator 소진과 메모리 참조</h3>
+    <p>Iterator가 소진된 후 원본 리스트와의 참조 관계를 추적하세요:</p>
+    <pre><code class="language-python">import sys, gc, weakref
+
+lst = [1, 2, 3, 4, 5]
+it = iter(lst)
+
+# 1. 소진 전 상태
+print(f"남은 힌트: {it.__length_hint__()}")   # 5
+
+# 2. 절반 소진
+next(it); next(it)
+print(f"남은 힌트: {it.__length_hint__()}")   # 3
+
+# 3. 완전 소진
+list(it)
+print(f"남은 힌트: {it.__length_hint__()}")   # 0
+
+# 4. Iterator가 원본 리스트의 생명주기에 영향을 주는가?
+ref = weakref.ref(lst)
+it2 = iter(lst)
+del lst          # 원본 삭제 시도
+
+print(f"원본 살아있음: {ref() is not None}")   # True or False?
+# 이유를 설명하세요
+
+# 5. Iterator 소진 후에도 참조 유지되는가?
+list(it2)        # 소진
+del it2
+gc.collect()
+print(f"소진 후 원본: {ref() is not None}")</code></pre>
+    <details class="answer">
+      <summary>힌트 / 모범 답안</summary>
+      <div class="answer-content">
+        <p><strong>Q4 (원본 살아있음 = True):</strong> <code>it2 = iter(lst)</code>를 할 때 list_iterator가 원본 리스트에 대한 <strong>강한 참조(strong reference)</strong>를 보유합니다. <code>del lst</code>는 변수 바인딩만 제거할 뿐, 리스트 객체의 참조 카운트는 <code>it2</code>가 유지하므로 GC에 의해 수거되지 않습니다. 따라서 <code>ref() is not None</code>은 True.</p>
+        <p><strong>Q5 (소진 후):</strong> <code>list(it2)</code>로 소진하면 <code>listiter_next()</code>가 내부에서 <code>it_seq = NULL</code>로 설정하고 <code>Py_DECREF(seq)</code>를 호출합니다. 즉, <strong>소진 시점에 이미 원본 리스트 참조가 해제</strong>됩니다. 따라서 <code>del it2</code> + <code>gc.collect()</code> 이후 <code>ref()</code>는 None을 반환합니다. (참고: 소진 전이라도 <code>del it2</code>만으로 참조 카운트가 0이 되면 같은 결과)</p>
+        <p><strong>핵심 교훈:</strong> Iterator가 살아있는 동안 원본 컨테이너도 GC되지 않습니다. 대용량 데이터를 다룰 때 Iterator를 오래 보유하면 메모리 해제가 지연될 수 있습니다.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 12</span>
+    <h3>순수 Python Iterator vs 내장 Iterator 성능 분석</h3>
+    <p>tp_iternext(C 레벨)과 Python __next__의 성능 차이를 측정하고 원인을 분석하세요:</p>
+    <pre><code class="language-python">import timeit
+
+class PyIterator:
+    """순수 Python Iterator"""
+    def __init__(self, lst):
+        self.lst = lst
+        self.idx = 0
+
+    def __iter__(self): return self
+
+    def __next__(self):
+        if self.idx >= len(self.lst):
+            raise StopIteration
+        val = self.lst[self.idx]
+        self.idx += 1
+        return val
+
+data = list(range(10_000))
+
+def use_list_iter():
+    total = 0
+    for x in data:       # list_iterator (C tp_iternext)
+        total += x
+    return total
+
+def use_py_iter():
+    total = 0
+    for x in PyIterator(data):   # Python __next__
+        total += x
+    return total
+
+t1 = timeit.timeit(use_list_iter, number=500)
+t2 = timeit.timeit(use_py_iter, number=500)
+print(f"list_iterator (C):   {t1:.3f}초")
+print(f"PyIterator (Python): {t2:.3f}초")
+print(f"차이: {t2/t1:.1f}배")
+
+# 분석 질문:
+# Q1. 차이가 발생하는 가장 큰 이유는 무엇인가?
+#     (힌트: CALL_PY_EXACT_ARGS vs tp_iternext 직접 호출)
+# Q2. PyIterator에서 FOR_ITER 특화(FOR_ITER_LIST)가 적용되는가?
+# Q3. C extension으로 tp_iternext를 구현하면 차이가 줄어드는가?</code></pre>
+    <details class="answer">
+      <summary>힌트 / 모범 답안</summary>
+      <div class="answer-content">
+        <p><strong>Q1. 차이의 근본 원인:</strong> <code>list_iterator.__next__</code>는 C 레벨에서 <code>tp_iternext</code> 슬롯으로 등록되어 있어, FOR_ITER가 함수 호출 없이 직접 C 함수 포인터를 실행합니다. 반면 <code>PyIterator.__next__</code>는 Python 함수이므로 <code>CALL_PY_EXACT_ARGS</code> 바이트코드가 발생하고, 새 프레임 생성(PyFrameObject 할당) + 로컬 변수 설정 + 인터프리터 진입/탈출 비용이 추가됩니다. 일반적으로 2~5배 차이가 납니다.</p>
+        <p><strong>Q2. FOR_ITER 특화 적용 여부:</strong> 아니오. 특화 적응형 인터프리터는 <code>tp_iternext</code>가 알려진 C 타입(<code>listiterator</code>, <code>range_iterator</code> 등)일 때만 특화합니다. Python 클래스는 <code>FOR_ITER</code>가 특화되지 않고 일반 경로로 처리됩니다.</p>
+        <p><strong>Q3. C extension:</strong> 예, <code>tp_iternext</code>를 C로 구현한 확장 타입은 <code>list_iterator</code>와 동등한 성능을 냅니다. 특화는 적용되지 않더라도 Python 프레임 생성 비용이 없어 차이가 크게 줄어듭니다.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ==================== 12. 요약 ==================== -->
+<section id="summary">
+  <h2>이번 주 정리</h2>
+
+  <table class="summary-table">
+    <thead>
+      <tr><th>개념</th><th>핵심 내용</th><th>키워드</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>for 문법</td>
+        <td><code>for x in iterable:</code> — <code>in</code>은 Syntax Marker</td>
+        <td>Iterable, target_list</td>
+      </tr>
+      <tr>
+        <td>De-sugaring</td>
+        <td><code>_it = iter(obj)</code> → <code>while True: x = next(_it)</code></td>
+        <td>iter(), next(), StopIteration</td>
+      </tr>
+      <tr>
+        <td>Iterable</td>
+        <td><code>__iter__()</code> 있는 객체. 여러 번 순회 가능</td>
+        <td>list, tuple, str, range, dict</td>
+      </tr>
+      <tr>
+        <td>Iterator</td>
+        <td><code>__iter__() + __next__()</code>. 한 번 소진, 재사용 불가</td>
+        <td>list_iterator, range_iterator</td>
+      </tr>
+      <tr>
+        <td>range()</td>
+        <td>Lazy Iterable. 항상 ~48 bytes. O(1) in, O(1) len</td>
+        <td>start, stop, step</td>
+      </tr>
+      <tr>
+        <td>enumerate()</td>
+        <td>(인덱스, 값) Lazy Iterator. range(len()) 대체</td>
+        <td>enumerate(iter, start=0)</td>
+      </tr>
+      <tr>
+        <td>zip()</td>
+        <td>여러 Iterable 병렬 순회. 짧은 쪽에서 멈춤</td>
+        <td>zip(*iterables), unzip</td>
+      </tr>
+      <tr>
+        <td>break</td>
+        <td>루프 즉시 탈출. else 블록 건너뜀</td>
+        <td>JUMP_FORWARD</td>
+      </tr>
+      <tr>
+        <td>continue</td>
+        <td>이번 항목 건너뜀, 다음 항목으로</td>
+        <td>JUMP_BACKWARD</td>
+      </tr>
+      <tr>
+        <td>for-else</td>
+        <td>break 없이 루프 완료 시 else 실행 ("no break")</td>
+        <td>StopIteration 정상 종료</td>
+      </tr>
+      <tr>
+        <td>바이트코드</td>
+        <td>GET_ITER → FOR_ITER → STORE_FAST → JUMP_BACKWARD → END_FOR</td>
+        <td>FOR_ITER_LIST, FOR_ITER_RANGE</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pre><code class="language-text">for x in iterable:   ←→   _iter = iter(iterable)    # GET_ITER
+    body                   while True:
+                               try:
+                                   x = next(_iter)    # FOR_ITER
+                               except StopIteration:  # END_FOR
+                                   break
+                               body</code></pre>
+</section>
+
+<!-- ==================== 13. 용어 사전 ==================== -->
+<section id="glossary">
+  <h2>용어 사전 (24개)</h2>
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <h4>Iterable (이터러블)</h4>
+      <p><code>__iter__()</code> 메서드가 있는 객체. for 루프에 사용 가능. list, tuple, str, range, dict, set, file 등.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Iterator (이터레이터)</h4>
+      <p><code>__iter__()</code>와 <code>__next__()</code>를 모두 구현한 객체. 상태를 가지며 한 번만 순회 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Iterator Protocol</h4>
+      <p>Python의 반복 규약. <code>__iter__()</code>로 iterator 반환, <code>__next__()</code>로 값 꺼내기, StopIteration으로 종료.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>StopIteration</h4>
+      <p>Iterator가 소진됐을 때 <code>__next__()</code>가 발생시키는 예외. for 루프의 FOR_ITER 바이트코드가 감지해 종료.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>De-sugaring (역설탕화)</h4>
+      <p>편의 문법(Syntactic Sugar)을 원래의 더 긴 형태로 분해하는 것. <code>for</code> → <code>iter/next/while/StopIteration</code>.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Syntactic Sugar (문법 설탕)</h4>
+      <p>읽기 편하게 만든 편의 문법. for 루프, 컴프리헨션, with문, += 등이 해당.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>iter()</h4>
+      <p>Iterable에서 Iterator를 생성하는 내장 함수. <code>obj.__iter__()</code> 호출. GET_ITER 바이트코드에 대응.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>next()</h4>
+      <p>Iterator에서 다음 값을 꺼내는 내장 함수. <code>obj.__next__()</code> 호출. 기본값 인수로 StopIteration 방지 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>range</h4>
+      <p>숫자 범위를 나타내는 Lazy Iterable. 항상 ~48 bytes. start/stop/step C 구조체. O(1) in, O(1) len 최적화.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Lazy Evaluation (지연 평가)</h4>
+      <p>필요할 때만 값을 생성하는 방식. range, enumerate, zip, generator 등. 메모리 효율적.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>enumerate()</h4>
+      <p>(인덱스, 값) 튜플을 생성하는 Lazy Iterator. range(len()) 패턴의 Python스러운 대안. start 인수 지원.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>zip()</h4>
+      <p>여러 Iterable을 병렬로 묶는 Lazy Iterator. 짧은 쪽에서 멈춤. zip(*matrix)로 전치 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>break</h4>
+      <p>가장 가까운 루프를 즉시 탈출. else 블록을 건너뜀. 바이트코드: JUMP_FORWARD.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>continue</h4>
+      <p>현재 항목을 건너뛰고 다음 항목으로. 바이트코드: JUMP_BACKWARD (FOR_ITER로 되돌아감).</p>
+    </div>
+    <div class="glossary-item">
+      <h4>for-else</h4>
+      <p>break 없이 루프가 완료되면 else 블록 실행. "no break" 패턴. 검색/검증 로직에 유용.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>GET_ITER</h4>
+      <p>for 루프 진입 시 <code>iter(obj)</code>를 호출하는 바이트코드. Iterator 객체를 스택에 push.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>FOR_ITER</h4>
+      <p><code>next(iterator)</code>를 호출하는 바이트코드. StopIteration 시 END_FOR로 jump. 루프의 핵심.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>FOR_ITER_LIST</h4>
+      <p>Python 3.12 특화 명령어. list_iterator 전용. ob_item[index] 직접 접근. 일반 FOR_ITER보다 빠름.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>FOR_ITER_RANGE</h4>
+      <p>range_iterator 전용 특화 명령어. 정수 증가 연산만 수행. 가장 빠른 for 루프 형태.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>END_FOR</h4>
+      <p>Python 3.11에서 도입, 3.12에서 동작이 변경된 for 루프 종료 바이트코드. FOR_ITER의 StopIteration jump target.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>tp_iternext</h4>
+      <p>CPython의 <code>__next__()</code>에 해당하는 C 슬롯. FOR_ITER가 직접 호출. NULL 반환 = StopIteration.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Syntax Marker</h4>
+      <p>문법 구분자로만 사용되는 키워드. for문의 <code>in</code>은 포함 여부 검사가 아닌 Syntax Marker.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Guard Clause</h4>
+      <p>루프/함수 시작 부분의 조건 검사 + continue/return 패턴. 깊은 중첩 없이 예외 조건을 먼저 처리.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>list_iterator</h4>
+      <p>list에서 생성되는 Iterator. it_index(현재 위치)와 it_seq(원본 리스트 참조) C 구조체. 소진 시 it_seq=NULL.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 14. 다음 주 맛보기 ==================== -->
+<section id="next-week">
+  <h2>다음 주 맛보기 — Week 08: 반복문 while</h2>
+
+  <p>
+    이번 주에 for 루프가 Iterator Protocol의 편의 문법임을 배웠습니다.
+    다음 주는 <strong>while</strong> — for보다 원시적이고, "상태를 보면서" 반복하는 루프입니다.
+  </p>
+  <pre><code class="language-python"># 미리보기: while 루프
+count = 0
+while count < 5:      # Iterable이 아닌 조건(bool)으로 반복
+    print(count)
+    count += 1
+
+# while은 Iterator가 필요 없음 — 상태만 있으면 됨
+# while True + break → 무한 루프와 탈출 조건
+data = input("입력: ")
+while data != "quit":
+    print(f"처리: {data}")
+    data = input("입력: ")</code></pre>
+
+  <p>다음 주에 배울 것들:</p>
+  <ul>
+    <li>while이 for와 다른 이유 — "Iterable 없이 상태만으로 반복"</li>
+    <li>while True + break 패턴 — 무한 루프의 올바른 설계</li>
+    <li>while과 for의 바이트코드 비교</li>
+    <li>무한 루프 탈출 조건 설계 원칙</li>
+    <li>Sentinel 값 패턴</li>
+  </ul>
+
+  <p style="margin-top: 24px; font-size: 0.9rem; color: var(--text-secondary);">
+    참조:
+    <a href="https://docs.python.org/3/reference/compound_stmts.html#the-for-statement" target="_blank">Python Docs: The for statement</a> ·
+    <a href="https://docs.python.org/3/library/stdtypes.html#iterator-types" target="_blank">Iterator Types</a> ·
+    <a href="https://docs.python.org/3/library/functions.html#iter" target="_blank">iter() / next()</a> ·
+    <a href="https://peps.python.org/pep-0659/" target="_blank">PEP 659: Specializing Adaptive Interpreter</a>
+  </p>
+</section>
+
+</main>
+</div>
+
+<footer class="site-footer">
+  <p>파이썬은 왜? &mdash; 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의</p>
+</footer>
+
+<script src="../js/bundle.min.js"></script>
+</body>
+</html>

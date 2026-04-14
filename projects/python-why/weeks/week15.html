@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15주차: 동시성 &amp; 비동기 프로그래밍 | PyWhy</title>
+  <link rel="stylesheet" href="../css/style.min.css">
+  <meta name="description" content="동시성 & 비동기 — threading, multiprocessing, asyncio를 완전 분해">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="15주차: 동시성 &amp; 비동기 프로그래밍 | PyWhy">
+  <meta property="og:description" content="동시성 & 비동기 — threading, multiprocessing, asyncio를 완전 분해">
+  <meta property="og:url" content="https://soccz.github.io/python-why/weeks/week15.html">
+  <meta property="og:site_name" content="PyWhy">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="15주차: 동시성 &amp; 비동기 프로그래밍 | PyWhy">
+  <meta name="twitter:description" content="동시성 & 비동기 — threading, multiprocessing, asyncio를 완전 분해">
+</head>
+<body data-week="15">
+<a href="#main-content" class="skip-link">본문 바로가기</a>
+
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="https://soccz.github.io" class="home-btn" title="soccz.github.io" aria-label="포트폴리오 홈"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+      <a href="../index.html" class="site-title">PyWhy</a>
+    </div>
+    <div class="header-nav">
+      <a href="week14.html" class="nav-btn">&larr; 이전</a>
+      <span class="nav-btn disabled">다음 &rarr;</span>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrapper">
+<main id="main-content">
+
+<!-- ==================== WEEK HEADER ==================== -->
+<div class="week-header">
+  <div class="week-number">WEEK 15</div>
+  <h1 class="week-title">동시성 &amp; 비동기 프로그래밍<br>— 기다리지 않는 코드</h1>
+  <p class="week-subtitle">
+    웹 서버가 요청 1000개를 동시에 처리합니다. CPU는 하나인데 어떻게?<br>
+    <code>threading</code>, <code>multiprocessing</code>, <code>asyncio</code> — 세 가지 도구의 차이.<br>
+    <strong>GIL</strong>이 왜 존재하고, <code>await</code>는 정확히 무엇을 기다리는지<br>
+    Python 동시성의 모든 것을 완전히 분해합니다.
+  </p>
+</div>
+
+<!-- ==================== 목차 ==================== -->
+<details class="toc">
+  <summary>목차 — 15주차 전체 내용</summary>
+  <div class="toc-body">
+    <div class="toc-section">
+      <a href="#story" class="toc-section-link"><span class="toc-num">01</span>이번 주 이야기</a>
+    </div>
+    <div class="toc-section">
+      <a href="#concurrency" class="toc-section-link"><span class="toc-num">02</span>동시성 vs 병렬성 — 개념 정리</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#gil" class="toc-section-link"><span class="toc-num">03</span>GIL — 왜 존재하는가</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#threading" class="toc-section-link"><span class="toc-num">04</span>threading — I/O 대기를 줄이는 방법</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#multiprocessing" class="toc-section-link"><span class="toc-num">05</span>multiprocessing — 진짜 병렬</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#asyncio-basic" class="toc-section-link"><span class="toc-num">06</span>asyncio 기초 — 단일 스레드인데 왜 빠른가</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#gather-task" class="toc-section-link"><span class="toc-num">07</span>gather vs create_task — 동시 실행</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#async-patterns" class="toc-section-link"><span class="toc-num">08</span>async for, async with — 비동기 패턴</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#futures" class="toc-section-link"><span class="toc-num">09</span>concurrent.futures — 통합 인터페이스</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#decision" class="toc-section-link"><span class="toc-num">10</span>언제 무엇을 쓸 것인가</a>
+      <div class="toc-levels">
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#ai" class="toc-section-link"><span class="toc-num">11</span>AI와 동시성</a>
+    </div>
+    <div class="toc-section">
+      <a href="#practice" class="toc-section-link"><span class="toc-num">12</span>실습 &amp; 연습문제</a>
+    </div>
+    <div class="toc-section">
+      <a href="#summary" class="toc-section-link"><span class="toc-num">13</span>요약 &amp; 용어집</a>
+    </div>
+  </div>
+</details>
+
+<!-- ==================== 01 이야기 ==================== -->
+<section id="story">
+  <div class="story-block">
+    <h2>01 — 이번 주 이야기</h2>
+    <p>
+      카페에서 주문을 받는 직원이 있습니다.
+      손님이 커피를 주문하면, 커피가 나올 때까지 <strong>가만히 서서 기다릴까요?</strong>
+    </p>
+    <p>
+      당연히 아닙니다. 커피 머신에 주문을 넣고,
+      <strong>다음 손님의 주문을 받습니다.</strong>
+      커피가 완성되면 그때 가져다줍니다.
+    </p>
+    <p>
+      이것이 <strong>비동기(Asynchronous)</strong> 프로그래밍입니다.
+      직원 한 명(단일 스레드)이 여러 주문을 동시에 처리합니다.
+    </p>
+<pre><code># 동기 (Synchronous) — 한 번에 하나씩
+result1 = fetch_from_api("서버A")   # 2초 기다림
+result2 = fetch_from_api("서버B")   # 2초 기다림
+# 총 4초
+
+# 비동기 (Asynchronous) — 기다리는 동안 다른 일
+result1, result2 = await asyncio.gather(
+    fetch_from_api("서버A"),   # 요청 보내고
+    fetch_from_api("서버B"),   # 바로 다음 요청
+)
+# 총 ~2초 (동시 대기)</code></pre>
+    <p>
+      이번 주는 Python이 제공하는 세 가지 동시성 도구 —
+      <code>threading</code>, <code>multiprocessing</code>, <code>asyncio</code> —
+      의 차이와 내부 동작을 완전히 분해합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 02 동시성 vs 병렬성 ==================== -->
+<section id="concurrency">
+  <h2>02 — 동시성 vs 병렬성: 개념 정리</h2>
+
+  <div class="why-box">
+    <h3>핵심 비유: 요리사</h3>
+    <p>
+      <strong>동시성(Concurrency)</strong>: 요리사 1명이 파스타 삶는 동안 소스를 만든다.
+      한 번에 하나만 하지만, 대기 시간을 활용해 <em>여러 일을 진행</em>시킨다.<br>
+      <strong>병렬성(Parallelism)</strong>: 요리사 3명이 각자 다른 요리를 <em>동시에</em> 만든다.
+      실제로 같은 순간에 여러 일이 일어난다.
+    </p>
+  </div>
+
+  <div class="level-section elementary">
+    <div class="level-badge">초급</div>
+    <h3>먼저, 문제를 느껴봅시다</h3>
+    <p>세 웹사이트에서 데이터를 가져와야 합니다:</p>
+<pre><code>import time
+
+def fetch(url):
+    print(f"{url} 요청 중...")
+    time.sleep(1)   # 네트워크 응답 1초 대기
+    return f"{url}: 데이터"
+
+start = time.perf_counter()
+r1 = fetch("api/users")      # 1초 기다림
+r2 = fetch("api/posts")      # 또 1초 기다림
+r3 = fetch("api/comments")   # 또 1초 기다림
+elapsed = time.perf_counter() - start
+
+print(f"총 시간: {elapsed:.1f}초")   # 3.0초!
+# 각 요청은 독립적인데 왜 3초나 걸리는가?
+# 두 번째 요청은 첫 번째가 끝날 때까지 아무것도 안 하고 기다림!</code></pre>
+    <p>
+      1초짜리 작업 3개인데 3초 걸립니다.
+      <strong>기다리는 동안 다음 요청을 보내면 ~1초로 줄일 수 있지 않을까요?</strong>
+      이것이 동시성의 핵심입니다.
+    </p>
+
+    <h3>동시성 ≠ 병렬성</h3>
+    <div class="callout callout-info">
+      <strong>핵심 구분:</strong>
+      <ul>
+        <li><strong>동시성</strong>: 여러 작업이 <em>번갈아가며</em> 실행 (1 CPU도 가능)</li>
+        <li><strong>병렬성</strong>: 여러 작업이 <em>동시에</em> 실행 (여러 CPU 필요)</li>
+      </ul>
+      동시성은 "구조", 병렬성은 "실행 방식"입니다.
+    </div>
+
+    <h3>Python의 세 가지 도구</h3>
+<pre><code># 1. threading — 동시성 (GIL 때문에 병렬 아님)
+#    I/O 대기(네트워크, 파일)를 줄이는 데 효과적
+
+# 2. multiprocessing — 진짜 병렬
+#    CPU 연산(이미지 처리, 수학 계산)에 효과적
+
+# 3. asyncio — 동시성 (단일 스레드)
+#    대량의 I/O 대기(수천 API 호출)에 가장 효과적</code></pre>
+  </div>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>I/O-bound vs CPU-bound</h3>
+<pre><code># I/O-bound: 대부분의 시간을 기다리는 데 소비
+# - 웹 API 호출, 파일 읽기/쓰기, DB 쿼리
+# → threading 또는 asyncio가 효과적
+
+# CPU-bound: 대부분의 시간을 계산에 소비
+# - 이미지 처리, 암호화, 수학 연산, ML 학습
+# → multiprocessing이 효과적 (또는 C 확장)</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>가장 흔한 실수:</strong>
+      CPU-bound 작업에 threading을 쓰면 <strong>GIL 때문에 오히려 느려집니다.</strong>
+      스레드 전환 오버헤드만 추가됩니다.
+    </div>
+  </div>
+
+  <div class="level-section expert">
+    <div class="level-badge">전공자</div>
+    <h3>Part B: 동시성 모델 — OS 이론</h3>
+    <p>
+      동시성의 역사: <strong>프로세스</strong>(1960s, Multics) → <strong>스레드</strong>(1980s, Mach) →
+      <strong>이벤트 루프</strong>(1990s, Tcl/Tk) → <strong>코루틴</strong>(2000s, Lua/Python).
+    </p>
+    <p>
+      <strong>선점형(Preemptive)</strong>: OS가 스레드를 강제로 전환 (threading).<br>
+      <strong>협력형(Cooperative)</strong>: 코드가 자발적으로 양보 (asyncio의 await).
+    </p>
+    <p>
+      Rob Pike(Go 언어 창시자): "Concurrency is not parallelism."
+      동시성은 <em>독립적 실행 단위를 구성하는 방법</em>이고,
+      병렬성은 <em>실제로 동시에 실행하는 것</em>입니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 03 GIL ==================== -->
+<section id="gil">
+  <h2>03 — GIL: 왜 존재하는가</h2>
+
+  <div class="why-box">
+    <h3>핵심 비유: 화장실 열쇠</h3>
+    <p>
+      사무실에 화장실(메모리)이 1개 있고, 열쇠(GIL)도 1개입니다.
+      직원(스레드) 3명이 있지만, 열쇠를 가진 사람만 화장실을 쓸 수 있습니다.
+      다른 직원은 열쇠를 받을 때까지 <strong>기다려야</strong> 합니다.
+    </p>
+    <p>이것이 <strong>Global Interpreter Lock(GIL)</strong>입니다.</p>
+  </div>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>GIL이란 무엇인가</h3>
+<pre><code># GIL = Global Interpreter Lock
+# Python 바이트코드를 한 번에 하나의 스레드만 실행하게 하는 뮤텍스
+
+# CPU-bound에서 threading이 느린 이유
+import threading
+import time
+
+def count_up(n):
+    total = 0
+    for _ in range(n):
+        total += 1
+    return total
+
+N = 50_000_000
+
+# 단일 스레드
+start = time.perf_counter()
+count_up(N)
+single = time.perf_counter() - start
+
+# 2개 스레드 (GIL 때문에 이득 없음)
+start = time.perf_counter()
+t1 = threading.Thread(target=count_up, args=(N//2,))
+t2 = threading.Thread(target=count_up, args=(N//2,))
+t1.start(); t2.start()
+t1.join(); t2.join()
+threaded = time.perf_counter() - start
+
+print(f"단일 스레드: {single:.2f}초")    # 0.97초 (실측)
+print(f"2개 스레드:  {threaded:.2f}초")  # 0.89초 (실측)
+# 2개 스레드가 8% 빠를 뿐! GIL 때문에 병렬 효과 거의 없음
+# (스레드 전환 오버헤드 때문에 오히려 느려질 수도 있음)</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>GIL의 핵심:</strong>
+      Python 스레드가 여러 개여도, <strong>Python 바이트코드는 한 번에 하나만 실행됩니다.</strong>
+      단, I/O 대기 중에는 GIL을 풀어서 다른 스레드가 실행될 수 있습니다.
+      이것이 I/O-bound에서만 threading이 효과적인 이유입니다.
+    </div>
+
+    <details>
+      <summary>GIL을 왜 없애지 않나요?</summary>
+      <div class="answer">
+        <ol>
+          <li><strong>안전성</strong>: GIL 덕분에 CPython의 참조 카운팅(Reference Counting)이 스레드 안전합니다.
+          GIL 없이는 모든 객체에 잠금(lock)이 필요해 성능이 크게 떨어집니다.</li>
+          <li><strong>C 확장 호환성</strong>: NumPy 등 C 확장이 GIL 존재를 가정하고 작성되었습니다.</li>
+          <li><strong>진행 중</strong>: PEP 703(Python 3.13+)에서 GIL 선택적 비활성화가 도입되고 있습니다!</li>
+        </ol>
+      </div>
+    </details>
+  </div>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>GIL이 풀리는 순간</h3>
+<pre><code># GIL이 풀리는 대표적 경우:
+# 1. I/O 작업 (파일, 네트워크, sleep)
+# 2. C 확장에서 Py_BEGIN_ALLOW_THREADS 호출 시
+# 3. NumPy 같은 라이브러리의 행렬 연산 시
+
+# I/O-bound에서는 threading이 효과적!
+import threading
+import time
+
+def io_task(name, duration):
+    time.sleep(duration)   # sleep 동안 GIL 해제!
+    return f"{name} 완료"
+
+# 순차 실행: 3초
+start = time.perf_counter()
+io_task("A", 1); io_task("B", 1); io_task("C", 1)
+seq = time.perf_counter() - start
+
+# 스레드 실행: ~1초
+start = time.perf_counter()
+threads = [
+    threading.Thread(target=io_task, args=("A", 1)),
+    threading.Thread(target=io_task, args=("B", 1)),
+    threading.Thread(target=io_task, args=("C", 1)),
+]
+for t in threads: t.start()
+for t in threads: t.join()
+par = time.perf_counter() - start
+
+print(f"순차: {seq:.1f}초, 스레드: {par:.1f}초")
+# 순차: 3.0초, 스레드: 1.0초  ← 3배 빠름!</code></pre>
+  </div>
+
+  <div class="level-section expert">
+    <div class="level-badge">전공자</div>
+    <h3>Part A: GIL의 CPython 구현</h3>
+    <div class="callout callout-warning">
+      <strong>Part A:</strong>
+      CPython의 GIL은 <code>_PyRuntimeState</code>에 저장된 뮤텍스입니다.
+      Python 3.2+에서 GIL은 <strong>5밀리초마다</strong> 전환 기회를 줍니다
+      (<code>sys.getswitchinterval()</code>으로 확인, 기본 0.005초).
+      이전 Python 2에서는 100 바이트코드 명령어마다 전환했습니다.
+<pre><code>import sys
+print(sys.getswitchinterval())   # 0.005 (5ms)</code></pre>
+      GIL 전환 시 현재 스레드는 <code>drop_gil()</code>을 호출하고
+      대기 중인 스레드가 <code>take_gil()</code>로 GIL을 획득합니다.
+      <code>ceval_gil</code> 구조체에서 조건 변수(condition variable)로 관리됩니다.
+    </div>
+
+    <h3>Part B: 왜 GIL 제거에 30년이 걸리고 있는가</h3>
+    <p>
+      GIL 제거는 1990년대부터 요구되었지만 번번이 실패했습니다. 왜?
+    </p>
+    <p>
+      <strong>1999년 — Greg Stein의 시도:</strong>
+      GIL을 제거하고 모든 객체에 개별 뮤텍스를 추가했습니다.
+      결과: <strong>단일 스레드 성능이 40% 하락.</strong>
+      대부분의 Python 코드는 단일 스레드이므로 "모두가 느려지는" 해결책은 받아들여지지 않았습니다.
+    </p>
+    <p>
+      <strong>핵심 딜레마:</strong> GIL 덕분에 CPython의 참조 카운팅(<code>ob_refcnt++</code>, <code>ob_refcnt--</code>)은
+      잠금 없이 수행됩니다. GIL을 제거하면 매 참조 카운트 변경마다 원자적 연산이 필요하고,
+      이것은 <strong>모든 Python 코드를 느리게</strong> 합니다.
+    </p>
+    <p>
+      <strong>2023년 — Sam Gross의 PEP 703:</strong>
+      30년 만에 실용적 해결책이 나왔습니다.
+      <strong>Biased Reference Counting</strong>: 객체를 생성한 스레드는 잠금 없이 카운트를 수정하고,
+      다른 스레드에서 접근할 때만 원자적 연산을 사용합니다.
+      대부분의 객체는 생성한 스레드에서만 사용되므로 오버헤드가 최소화됩니다.
+    </p>
+    <p>
+      Python 3.13(2024)에서 실험적 빌드(<code>--disable-gil</code>)가 도입되었고,
+      향후 버전에서 점진적으로 기본화될 예정이지만 정확한 일정은 미정입니다.
+      <strong>30년의 교훈:</strong> "GIL은 나쁘다"는 단순한 문제가 아니라,
+      "단일 스레드 성능 vs 멀티 스레드 성능"의 트레이드오프입니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 04 threading ==================== -->
+<section id="threading">
+  <h2>04 — threading: I/O 대기를 줄이는 방법</h2>
+
+  <div class="level-section elementary">
+    <div class="level-badge">초급</div>
+    <h3>스레드의 기본 사용법</h3>
+<pre><code>import threading
+import time
+
+def download(filename):
+    print(f"{filename} 다운로드 시작...")
+    time.sleep(1)   # 다운로드 시뮬레이션
+    print(f"{filename} 다운로드 완료!")
+
+# 스레드 3개 생성
+threads = [
+    threading.Thread(target=download, args=("파일A",)),
+    threading.Thread(target=download, args=("파일B",)),
+    threading.Thread(target=download, args=("파일C",)),
+]
+
+start = time.perf_counter()
+for t in threads:
+    t.start()       # 각 스레드 시작
+
+for t in threads:
+    t.join()        # 모든 스레드 완료 대기
+
+elapsed = time.perf_counter() - start
+print(f"총 시간: {elapsed:.1f}초")   # ~1초 (순차면 3초)</code></pre>
+
+    <div class="callout callout-info">
+      <code>start()</code>는 스레드를 시작하고 즉시 반환합니다.
+      <code>join()</code>은 해당 스레드가 끝날 때까지 기다립니다.
+    </div>
+  </div>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>스레드 안전성과 Lock</h3>
+<pre><code>import threading
+
+# 위험: 여러 스레드가 같은 변수를 수정
+counter = 0
+
+def increment():
+    global counter
+    for _ in range(100_000):
+        counter += 1   # 읽기-수정-쓰기가 원자적이지 않음!
+
+threads = [threading.Thread(target=increment) for _ in range(5)]
+for t in threads: t.start()
+for t in threads: t.join()
+print(f"기대값: 500000, 실제값: {counter}")
+# 500000이 아닌 경우가 있음! (Race condition)</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>Race Condition (경쟁 조건):</strong>
+      <code>counter += 1</code>은 실제로 세 단계입니다:
+      (1) counter 읽기 → (2) 1 더하기 → (3) counter에 쓰기.
+      두 스레드가 동시에 (1)을 실행하면 같은 값을 읽고, 결과가 하나만 반영됩니다.
+    </div>
+
+<pre><code># 해결: Lock으로 보호
+counter = 0
+lock = threading.Lock()
+
+def safe_increment():
+    global counter
+    for _ in range(100_000):
+        with lock:          # Lock 획득 → 해제 (context manager)
+            counter += 1    # 한 번에 하나의 스레드만 실행
+
+threads = [threading.Thread(target=safe_increment) for _ in range(5)]
+for t in threads: t.start()
+for t in threads: t.join()
+print(f"기대값: 500000, 실제값: {counter}")   # 항상 500000!</code></pre>
+
+    <details>
+      <summary>Lock 외에 다른 동기화 도구는?</summary>
+      <div class="answer">
+        <ul>
+          <li><code>threading.RLock</code>: 같은 스레드가 여러 번 acquire 가능 (Reentrant Lock)</li>
+          <li><code>threading.Semaphore(n)</code>: n개의 스레드가 동시 접근 가능</li>
+          <li><code>threading.Event</code>: 스레드 간 신호 전달</li>
+          <li><code>threading.Barrier(n)</code>: n개 스레드가 모두 도착할 때까지 대기</li>
+          <li><code>queue.Queue</code>: 스레드 안전한 큐 (producer-consumer 패턴)</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>daemon 스레드와 생명주기</h3>
+<pre><code>import threading
+import time
+
+def background_task():
+    while True:
+        print("백그라운드 작업 중...")
+        time.sleep(1)
+
+# daemon=True: 메인 스레드 종료 시 함께 종료
+t = threading.Thread(target=background_task, daemon=True)
+t.start()
+
+time.sleep(2.5)
+print("메인 종료 — daemon도 종료됩니다")
+# daemon 스레드는 메인이 끝나면 강제 종료됨 (정리 코드 실행 안 됨!)</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>daemon 주의:</strong>
+      daemon 스레드는 finally 블록이나 context manager의 __exit__이
+      실행되지 않을 수 있습니다. 파일 쓰기나 DB 트랜잭션에 사용하면 위험합니다.
+    </div>
+  </div>
+
+  <div class="level-section expert">
+    <div class="level-badge">전공자</div>
+    <h3>Part A: Python 스레드의 CPython 구현</h3>
+    <div class="callout callout-warning">
+      <strong>Part A:</strong>
+      CPython의 <code>threading.Thread</code>는 OS 네이티브 스레드를 래핑합니다.
+      Linux에서는 <code>pthread_create</code>, Windows에서는 <code>_beginthreadex</code>를 호출합니다.
+      각 스레드는 자신의 <code>PyThreadState</code>를 가지지만,
+      바이트코드 실행은 GIL을 획득한 스레드만 가능합니다.
+      <code>LOAD_GLOBAL</code>, <code>STORE_FAST</code> 같은 단일 바이트코드는
+      GIL 덕분에 원자적이지만, <code>counter += 1</code>은
+      <code>LOAD_GLOBAL 0 (counter) → LOAD_CONST 1 (1) → BINARY_OP 13 (+=) → STORE_GLOBAL 0 (counter)</code> 4개 명령어이므로
+      중간에 GIL이 전환될 수 있습니다.
+      (Python 3.11 이하에서는 <code>BINARY_OP</code> 대신 <code>BINARY_ADD</code>였습니다.)
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05 multiprocessing ==================== -->
+<section id="multiprocessing">
+  <h2>05 — multiprocessing: 진짜 병렬</h2>
+
+  <div class="why-box">
+    <h3>핵심 비유: 분점 (Branch Office)</h3>
+    <p>
+      threading이 한 사무실에서 여러 직원이 일하는 것이라면,
+      multiprocessing은 <strong>각 직원이 독립된 사무실(프로세스)을 가지는 것</strong>입니다.
+      각 사무실에 자체 메모리, 자체 GIL이 있어 진짜 동시에 일할 수 있습니다.
+      단, 사무실 간 서류를 주고받으려면(프로세스 간 통신) 비용이 듭니다.
+    </p>
+  </div>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>multiprocessing 기본 사용법</h3>
+<pre><code>from multiprocessing import Pool
+import time
+
+def heavy_computation(n):
+    """CPU-bound 작업"""
+    total = sum(i * i for i in range(n))
+    return total
+
+numbers = [10_000_000] * 4
+
+# 순차 실행
+start = time.perf_counter()
+results_seq = [heavy_computation(n) for n in numbers]
+seq_time = time.perf_counter() - start
+
+# 병렬 실행 (4 프로세스)
+start = time.perf_counter()
+with Pool(4) as pool:
+    results_par = pool.map(heavy_computation, numbers)
+par_time = time.perf_counter() - start
+
+print(f"순차: {seq_time:.2f}초")
+print(f"병렬: {par_time:.2f}초")
+# CPU 코어가 4개 이상이면 ~4배 빨라짐</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>multiprocessing의 비용:</strong>
+      각 프로세스는 독립된 메모리 공간을 가집니다.
+      데이터를 넘길 때 <strong>직렬화(pickle)</strong>가 필요하고,
+      프로세스 생성 자체도 스레드보다 훨씬 무겁습니다.
+      작은 작업에 쓰면 오히려 오버헤드가 더 큽니다.
+    </div>
+
+    <details>
+      <summary>Pool의 다른 메서드들은?</summary>
+      <div class="answer">
+<pre><code>from multiprocessing import Pool
+
+with Pool(4) as pool:
+    # map: 리스트를 병렬 처리
+    results = pool.map(func, [1, 2, 3, 4])
+
+    # apply_async: 단일 작업 비동기 실행
+    future = pool.apply_async(func, args=(42,))
+    result = future.get(timeout=5)
+
+    # imap: 지연(lazy) 병렬 처리
+    for result in pool.imap(func, range(100)):
+        print(result)
+
+    # starmap: 여러 인수 전달
+    results = pool.starmap(add, [(1,2), (3,4), (5,6)])</code></pre>
+      </div>
+    </details>
+  </div>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>프로세스 간 통신</h3>
+<pre><code>from multiprocessing import Process, Queue
+
+def producer(q):
+    for i in range(5):
+        q.put(f"데이터-{i}")
+    q.put(None)   # 종료 신호
+
+def consumer(q):
+    while True:
+        item = q.get()
+        if item is None:
+            break
+        print(f"처리: {item}")
+
+q = Queue()
+p1 = Process(target=producer, args=(q,))
+p2 = Process(target=consumer, args=(q,))
+p1.start(); p2.start()
+p1.join(); p2.join()</code></pre>
+  </div>
+
+  <div class="level-section expert">
+    <div class="level-badge">전공자</div>
+    <h3>Part A: fork vs spawn — 프로세스 생성 방식</h3>
+    <div class="callout callout-warning">
+      <strong>Part A:</strong>
+      multiprocessing의 start method:
+      <ul>
+        <li><strong>fork</strong> (Linux 기본): <code>os.fork()</code>로 부모 프로세스를 복제. 빠르지만
+        스레드 + fork = 데드락 위험. Copy-on-Write로 메모리 효율적.</li>
+        <li><strong>spawn</strong> (Windows/macOS 기본): 새 인터프리터를 시작하고 필요한 모듈만 import.
+        안전하지만 느림. 인수는 pickle로 직렬화.</li>
+        <li><strong>forkserver</strong>: fork용 서버 프로세스를 하나 두고, 거기서 fork. 안전 + 빠름.</li>
+      </ul>
+<pre><code>import multiprocessing
+print(multiprocessing.get_start_method())   # 'fork' (Linux)
+# multiprocessing.set_start_method('spawn')  # 변경 가능</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06 asyncio 기초 ==================== -->
+<section id="asyncio-basic">
+  <h2>06 — asyncio 기초: 단일 스레드인데 왜 빠른가</h2>
+
+  <div class="why-box">
+    <h3>핵심 비유: 카페 직원 (Event Loop)</h3>
+    <p>
+      직원 1명(이벤트 루프)이 주문을 받고, 커피 머신에 넣고, 다음 손님을 받습니다.
+      커피가 완성되면("이벤트 발생") 그때 가져다줍니다.
+    </p>
+    <p>
+      직원이 여러 명이 아닙니다. <strong>한 명이 대기 시간을 효율적으로 관리</strong>합니다.
+      이것이 asyncio의 이벤트 루프입니다.
+    </p>
+  </div>
+
+  <div class="level-section elementary">
+    <div class="level-badge">초급</div>
+    <h3>async와 await — 기본 문법</h3>
+<pre><code>import asyncio
+
+# async def = "이 함수는 비동기 함수(코루틴)입니다"
+async def greet(name):
+    print(f"{name}에게 인사 시작...")
+    await asyncio.sleep(1)   # 1초 대기 (이 동안 다른 일 가능!)
+    print(f"안녕, {name}!")
+    return f"{name} 완료"
+
+# asyncio.run()으로 실행
+result = asyncio.run(greet("철수"))
+print(result)   # 철수 완료</code></pre>
+
+    <div class="callout callout-info">
+      <code>async def</code>는 코루틴(coroutine)을 정의합니다.
+      <code>await</code>는 "여기서 대기할 테니 다른 일을 해도 됩니다"라는 의미입니다.
+      <code>asyncio.run()</code>이 이벤트 루프를 생성하고 코루틴을 실행합니다.
+    </div>
+
+    <div class="callout callout-warning">
+      <strong>주의:</strong> 코루틴을 직접 호출하면 실행되지 않습니다!
+<pre><code>result = greet("철수")   # 코루틴 객체만 생성됨, 실행 안 됨!
+print(type(result))      # &lt;class 'coroutine'&gt;
+
+# 반드시 await 하거나 asyncio.run()으로 실행해야 합니다</code></pre>
+    </div>
+  </div>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>동시 실행의 핵심: await가 양보하는 순간</h3>
+<pre><code>import asyncio
+import time
+
+async def task(name, delay):
+    print(f"[{name}] 시작")
+    await asyncio.sleep(delay)   # ← 여기서 양보!
+    print(f"[{name}] 완료 ({delay}초)")
+    return name
+
+async def main():
+    start = time.perf_counter()
+
+    # gather: 여러 코루틴을 동시 실행
+    results = await asyncio.gather(
+        task("A", 2),
+        task("B", 1),
+        task("C", 3),
+    )
+    elapsed = time.perf_counter() - start
+    print(f"결과: {results}")
+    print(f"총 시간: {elapsed:.1f}초")
+
+asyncio.run(main())
+# [A] 시작
+# [B] 시작
+# [C] 시작
+# [B] 완료 (1초)
+# [A] 완료 (2초)
+# [C] 완료 (3초)
+# 결과: ['A', 'B', 'C']
+# 총 시간: 3.0초  ← 2+1+3=6이 아닌 3초!</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>asyncio.sleep vs time.sleep:</strong>
+      <code>time.sleep(1)</code>은 <strong>이벤트 루프를 통째로 멈춥니다</strong> (동기 대기).
+      <code>asyncio.sleep(1)</code>은 <strong>양보</strong>합니다 — 1초 후 재개를 이벤트 루프에 예약하고
+      다른 코루틴이 실행됩니다.
+      비동기 코드에서 <code>time.sleep()</code>은 절대 쓰면 안 됩니다.
+    </div>
+  </div>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>이벤트 루프의 동작 원리</h3>
+<pre><code># 이벤트 루프의 의사코드 (De-sugaring)
+# 실제 CPython 구현의 단순화된 버전
+
+"""
+while True:
+    # 1. 준비된 콜백 실행
+    for callback in ready_callbacks:
+        callback()
+
+    # 2. I/O 이벤트 대기 (select/epoll/kqueue)
+    events = selector.select(timeout)
+
+    # 3. 완료된 I/O에 대한 콜백 등록
+    for event in events:
+        ready_callbacks.append(event.callback)
+
+    # 4. 예약된 타이머 확인
+    for timer in scheduled_timers:
+        if timer.when &lt;= now:
+            ready_callbacks.append(timer.callback)
+"""</code></pre>
+
+    <div class="callout callout-info">
+      <strong>핵심:</strong> asyncio는 OS의 I/O 멀티플렉싱
+      (Linux: <code>epoll</code>, macOS: <code>kqueue</code>, Windows: <code>IOCP</code>)을
+      Python으로 래핑한 것입니다.
+      <code>await</code>는 "이 I/O가 완료되면 여기서 재개하세요"라고 이벤트 루프에 등록하는 행위입니다.
+    </div>
+
+    <h3>asyncio.wait_for — 타임아웃</h3>
+<pre><code>async def slow_operation():
+    await asyncio.sleep(10)
+    return "완료"
+
+async def main():
+    try:
+        result = await asyncio.wait_for(slow_operation(), timeout=2.0)
+    except asyncio.TimeoutError:
+        print("타임아웃! 2초 안에 완료되지 않았습니다.")
+
+asyncio.run(main())
+# 타임아웃! 2초 안에 완료되지 않았습니다.</code></pre>
+  </div>
+
+  <div class="level-section expert">
+    <div class="level-badge">전공자</div>
+    <h3>Part A: 코루틴의 내부 — 제너레이터에서 코루틴으로</h3>
+    <div class="callout callout-warning">
+      <strong>Part A:</strong>
+      Python의 코루틴은 역사적으로 제너레이터에서 발전했습니다:
+      <ol>
+        <li><strong>PEP 255 (Python 2.2)</strong>: <code>yield</code> 도입 — 제너레이터</li>
+        <li><strong>PEP 342 (Python 2.5)</strong>: <code>send()</code>, <code>throw()</code> 추가 — 양방향 제너레이터</li>
+        <li><strong>PEP 380 (Python 3.3)</strong>: <code>yield from</code> — 서브제너레이터 위임</li>
+        <li><strong>PEP 492 (Python 3.5)</strong>: <code>async def</code> / <code>await</code> — 네이티브 코루틴</li>
+        <li><strong>PEP 525 (Python 3.6)</strong>: <code>async def</code> + <code>yield</code> — 비동기 제너레이터</li>
+      </ol>
+      네이티브 코루틴(<code>async def</code>)의 내부 상태 머신은 제너레이터와 동일합니다:
+      <code>gi_frame</code>(<code>cr_frame</code>)에 실행 위치를 저장하고,
+      <code>send(None)</code>으로 재개합니다.
+<pre><code>async def example():
+    await asyncio.sleep(0)
+    return 42
+
+coro = example()
+print(type(coro))          # &lt;class 'coroutine'&gt;
+print(dir(coro))           # cr_frame, cr_code, cr_origin, send, throw, close...</code></pre>
+    </div>
+
+    <h3>Part B: I/O 멀티플렉싱 — OS 레벨</h3>
+    <p>
+      asyncio의 성능은 OS의 I/O 멀티플렉싱 시스템 콜에 의존합니다:
+    </p>
+    <p>
+      <strong>select(2)</strong>: 가장 오래된 방식. fd_set 비트마스크로 관리. O(n) 스캔. FD 1024개 제한.<br>
+      <strong>poll(2)</strong>: select 개선. FD 수 제한 없지만 여전히 O(n).<br>
+      <strong>epoll(7)</strong> (Linux): 이벤트 기반. O(1) 알림. 수만 연결 가능. asyncio의 기본.<br>
+      <strong>kqueue</strong> (macOS/BSD): epoll과 유사. 파일/소켓/프로세스 등 다양한 이벤트 통합.
+    </p>
+    <p>
+      이것이 asyncio가 수천~수만 개의 동시 연결을 단일 스레드로 처리할 수 있는 이유입니다.
+      C10K 문제(동시 1만 연결)의 해결책입니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 07 gather vs create_task ==================== -->
+<section id="gather-task">
+  <h2>07 — gather vs create_task: 동시 실행</h2>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>asyncio.gather — 여러 코루틴을 동시에</h3>
+<pre><code>import asyncio
+
+async def fetch(url, delay):
+    await asyncio.sleep(delay)
+    return f"{url}: 데이터"
+
+async def main():
+    # gather: 모든 결과를 한 번에 받음
+    results = await asyncio.gather(
+        fetch("api/users", 1),
+        fetch("api/posts", 2),
+        fetch("api/comments", 1.5),
+    )
+    print(results)
+    # ['api/users: 데이터', 'api/posts: 데이터', 'api/comments: 데이터']
+    # 순서 보장! (완료 순서가 아닌 인수 순서)
+
+asyncio.run(main())</code></pre>
+
+    <h3>asyncio.create_task — 백그라운드 실행</h3>
+<pre><code>async def main():
+    # create_task: 즉시 실행 시작, 나중에 결과 수집
+    task1 = asyncio.create_task(fetch("api/users", 1))
+    task2 = asyncio.create_task(fetch("api/posts", 2))
+
+    # 다른 일을 하는 동안 task1, task2는 백그라운드에서 실행!
+    print("다른 작업 수행 중...")
+    await asyncio.sleep(0.5)
+
+    # 결과 수집
+    result1 = await task1
+    result2 = await task2
+    print(result1, result2)
+
+asyncio.run(main())</code></pre>
+
+    <div class="callout callout-info">
+      <strong>차이점:</strong>
+      <code>gather</code>는 "모두 끝날 때까지 기다림" — 간결한 패턴.
+      <code>create_task</code>는 "시작해놓고 다른 일" — 유연한 패턴.
+    </div>
+  </div>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>TaskGroup (Python 3.11+) — 구조화된 동시성</h3>
+<pre><code>async def main():
+    results = []
+
+    async with asyncio.TaskGroup() as tg:
+        task1 = tg.create_task(fetch("api/users", 1))
+        task2 = tg.create_task(fetch("api/posts", 2))
+        # TaskGroup이 끝나면 모든 task가 완료됨
+
+    results = [task1.result(), task2.result()]
+    print(results)</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>TaskGroup vs gather의 차이:</strong>
+      TaskGroup은 하나의 task가 예외를 발생시키면 <strong>나머지를 모두 취소</strong>합니다.
+      gather는 <code>return_exceptions=True</code>를 쓰지 않으면 첫 번째 예외만 전파합니다.
+      TaskGroup이 더 안전한 패턴입니다 (Structured Concurrency).
+    </div>
+
+    <h3>asyncio.wait — 부분 완료 처리</h3>
+<pre><code>async def main():
+    tasks = [
+        asyncio.create_task(fetch("api/fast", 0.5)),
+        asyncio.create_task(fetch("api/slow", 5)),
+        asyncio.create_task(fetch("api/medium", 1.5)),
+    ]
+
+    # FIRST_COMPLETED: 하나라도 끝나면 즉시 반환
+    done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+    print(f"완료: {len(done)}개, 대기: {len(pending)}개")
+
+    # 나머지 취소
+    for task in pending:
+        task.cancel()
+
+asyncio.run(main())
+# 완료: 1개, 대기: 2개  (fast가 먼저 완료)</code></pre>
+
+    <h3>Task.cancel()과 CancelledError 처리</h3>
+<pre><code>async def long_running():
+    try:
+        await asyncio.sleep(100)
+    except asyncio.CancelledError:
+        print("취소됨! 정리 작업 수행...")
+        # DB 연결 해제, 파일 닫기 등
+        raise   # CancelledError를 다시 발생시켜야 취소가 완료됨
+
+async def main():
+    task = asyncio.create_task(long_running())
+    await asyncio.sleep(1)
+
+    task.cancel()         # 취소 요청
+    try:
+        await task        # CancelledError 발생
+    except asyncio.CancelledError:
+        print("태스크가 정상적으로 취소되었습니다")
+
+asyncio.run(main())
+# 취소됨! 정리 작업 수행...
+# 태스크가 정상적으로 취소되었습니다</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>cancel() 주의:</strong>
+      <code>cancel()</code>은 즉시 취소하는 게 아니라 다음 <code>await</code> 지점에서
+      <code>CancelledError</code>를 발생시킵니다.
+      <code>except CancelledError</code>에서 정리 작업 후 반드시 <code>raise</code>해야
+      취소가 완료됩니다. 삼키면 태스크가 취소되지 않습니다.
+    </div>
+
+    <h3>asyncio.Queue — Producer-Consumer 패턴</h3>
+<pre><code>async def producer(queue, n):
+    for i in range(n):
+        await asyncio.sleep(0.1)
+        await queue.put(f"item-{i}")
+        print(f"생산: item-{i}")
+    await queue.put(None)   # 종료 신호
+
+async def consumer(queue):
+    while True:
+        item = await queue.get()
+        if item is None:
+            break
+        print(f"소비: {item}")
+        queue.task_done()
+
+async def main():
+    queue = asyncio.Queue(maxsize=5)   # 최대 5개 버퍼
+    await asyncio.gather(
+        producer(queue, 10),
+        consumer(queue),
+    )
+
+asyncio.run(main())</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 08 async for / async with ==================== -->
+<section id="async-patterns">
+  <h2>08 — async for, async with: 비동기 패턴</h2>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>async for — 비동기 이터레이터</h3>
+<pre><code>import asyncio
+
+# 비동기 제너레이터
+async def async_range(start, stop, delay=0.1):
+    for i in range(start, stop):
+        await asyncio.sleep(delay)   # 비동기 대기
+        yield i
+
+async def main():
+    # async for로 순회
+    async for num in async_range(0, 5):
+        print(f"받음: {num}")
+
+asyncio.run(main())
+# 받음: 0 (0.1초 후)
+# 받음: 1 (0.1초 후)
+# ...</code></pre>
+
+    <h3>async with — 비동기 컨텍스트 매니저</h3>
+<pre><code>import asyncio
+
+class AsyncDB:
+    """비동기 DB 연결 시뮬레이션"""
+
+    async def __aenter__(self):
+        print("DB 연결 중...")
+        await asyncio.sleep(0.1)   # 연결 대기
+        print("DB 연결 완료!")
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        print("DB 연결 해제 중...")
+        await asyncio.sleep(0.05)
+        print("DB 연결 해제 완료!")
+        return False
+
+    async def query(self, sql):
+        await asyncio.sleep(0.1)
+        return f"결과: {sql}"
+
+async def main():
+    async with AsyncDB() as db:
+        result = await db.query("SELECT * FROM users")
+        print(result)
+    # __aexit__ 자동 호출
+
+asyncio.run(main())
+# DB 연결 중...
+# DB 연결 완료!
+# 결과: SELECT * FROM users
+# DB 연결 해제 중...
+# DB 연결 해제 완료!</code></pre>
+
+    <div class="callout callout-info">
+      <code>async for</code>는 <code>__aiter__</code>/<code>__anext__</code>를,
+      <code>async with</code>는 <code>__aenter__</code>/<code>__aexit__</code>를 사용합니다.
+      12주차에서 배운 동기 버전의 비동기 확장입니다.
+    </div>
+  </div>
+
+  <div class="level-section expert">
+    <div class="level-badge">전공자</div>
+    <h3>Part A: async for의 De-sugaring</h3>
+    <div class="callout callout-warning">
+      <strong>Part A:</strong>
+      <code>async for item in iterable:</code>의 내부:
+<pre><code># De-sugaring
+_iter = aiter(iterable)          # iterable.__aiter__()
+while True:
+    try:
+        item = await anext(_iter)  # await iterable.__anext__()
+    except StopAsyncIteration:
+        break
+    # body</code></pre>
+      <code>__anext__</code>는 코루틴을 반환하고, <code>await</code>로 실행됩니다.
+      <code>StopAsyncIteration</code>으로 반복 종료를 알립니다 (동기의 <code>StopIteration</code>에 대응).
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 09 concurrent.futures ==================== -->
+<section id="futures">
+  <h2>09 — concurrent.futures: 통합 인터페이스</h2>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>ThreadPoolExecutor / ProcessPoolExecutor</h3>
+<pre><code>from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+import time
+
+def download(url):
+    time.sleep(1)   # I/O 시뮬레이션
+    return f"{url}: 완료"
+
+# ThreadPoolExecutor — I/O-bound에 적합
+with ThreadPoolExecutor(max_workers=5) as executor:
+    urls = ["url1", "url2", "url3", "url4", "url5"]
+    results = list(executor.map(download, urls))
+    print(results)   # 5개 URL을 ~1초에 처리
+
+# ProcessPoolExecutor — CPU-bound에 적합
+def compute(n):
+    return sum(i*i for i in range(n))
+
+with ProcessPoolExecutor(max_workers=4) as executor:
+    futures = [executor.submit(compute, 5_000_000) for _ in range(4)]
+    results = [f.result() for f in futures]</code></pre>
+
+    <h3>Future 객체와 as_completed</h3>
+<pre><code>from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+
+def fetch(name, delay):
+    time.sleep(delay)
+    return f"{name}: {delay}초"
+
+with ThreadPoolExecutor(max_workers=3) as executor:
+    futures = {
+        executor.submit(fetch, "A", 3): "A",
+        executor.submit(fetch, "B", 1): "B",
+        executor.submit(fetch, "C", 2): "C",
+    }
+
+    # as_completed: 완료된 순서대로 처리
+    for future in as_completed(futures):
+        name = futures[future]
+        print(f"{name} 완료: {future.result()}")
+    # B 완료: B: 1초
+    # C 완료: C: 2초
+    # A 완료: A: 3초</code></pre>
+
+    <div class="callout callout-info">
+      <code>concurrent.futures</code>는 threading과 multiprocessing의
+      <strong>통합 인터페이스</strong>입니다. Executor만 교체하면 스레드↔프로세스를 쉽게 전환합니다.
+    </div>
+
+    <div class="callout callout-warning">
+      <strong>max_workers 선택 기준:</strong>
+      <ul>
+        <li><strong>ThreadPoolExecutor (I/O-bound)</strong>: 기본값 <code>min(32, os.cpu_count() + 4)</code>
+        (Python 3.13+: <code>min(32, (os.process_cpu_count() or 1) + 4)</code>).
+        I/O 대기가 길면 코어 수 × 5~10까지 올릴 수 있음. 너무 많으면 컨텍스트 스위칭 오버헤드</li>
+        <li><strong>ProcessPoolExecutor (CPU-bound)</strong>: 기본값 <code>os.cpu_count()</code>
+        (Python 3.13+: <code>os.process_cpu_count()</code>).
+        코어 수를 초과하면 프로세스 전환 비용만 증가</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>asyncio와 함께 사용: run_in_executor</h3>
+<pre><code>import asyncio
+from concurrent.futures import ThreadPoolExecutor
+
+def blocking_io(name):
+    """동기 I/O 함수 (수정 불가한 라이브러리)"""
+    import time
+    time.sleep(1)
+    return f"{name} 완료"
+
+async def main():
+    loop = asyncio.get_running_loop()
+    executor = ThreadPoolExecutor(max_workers=3)
+
+    # 동기 함수를 비동기로 래핑
+    results = await asyncio.gather(
+        loop.run_in_executor(executor, blocking_io, "A"),
+        loop.run_in_executor(executor, blocking_io, "B"),
+        loop.run_in_executor(executor, blocking_io, "C"),
+    )
+    print(results)   # ['A 완료', 'B 완료', 'C 완료'] — ~1초
+
+asyncio.run(main())</code></pre>
+
+    <div class="callout callout-warning">
+      <strong>실전 팁:</strong>
+      동기 라이브러리(requests, time.sleep 등)를 asyncio에서 쓰려면
+      <code>run_in_executor</code>로 스레드풀에 위임하세요.
+      asyncio 이벤트 루프를 블로킹하는 것을 방지합니다.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10 언제 무엇을 ==================== -->
+<section id="decision">
+  <h2>10 — 언제 무엇을 쓸 것인가</h2>
+
+  <div class="level-section intermediate">
+    <div class="level-badge">중급</div>
+    <h3>판단 기준 요약</h3>
+    <table>
+      <thead>
+        <tr><th>상황</th><th>도구</th><th>이유</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>API 수천 개 동시 호출</td>
+          <td><code>asyncio</code></td>
+          <td>경량 코루틴, 수만 동시 연결</td>
+        </tr>
+        <tr>
+          <td>파일 10개 동시 다운로드</td>
+          <td><code>threading</code> / <code>asyncio</code></td>
+          <td>I/O-bound, 스레드면 충분</td>
+        </tr>
+        <tr>
+          <td>이미지 100장 병렬 처리</td>
+          <td><code>multiprocessing</code></td>
+          <td>CPU-bound, 진짜 병렬 필요</td>
+        </tr>
+        <tr>
+          <td>기존 동기 라이브러리 + asyncio</td>
+          <td><code>run_in_executor</code></td>
+          <td>동기 코드를 비동기로 래핑</td>
+        </tr>
+        <tr>
+          <td>간단한 병렬 처리</td>
+          <td><code>concurrent.futures</code></td>
+          <td>통합 API, 쉬운 전환</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <details>
+      <summary>Flask/Django는 왜 asyncio를 안 쓰나요?</summary>
+      <div class="answer">
+        전통적인 웹 프레임워크는 <strong>WSGI</strong>(동기) 기반입니다.
+        각 요청을 별도의 스레드나 프로세스로 처리합니다.
+        Django 3.1+에서 async 뷰를 지원하기 시작했고,
+        FastAPI/Starlette은 처음부터 <strong>ASGI</strong>(비동기) 기반입니다.
+        ASGI 프레임워크는 단일 프로세스로도 수천 동시 연결을 처리합니다.
+      </div>
+    </details>
+  </div>
+
+  <div class="level-section advanced">
+    <div class="level-badge">고급</div>
+    <h3>성능 비교: 100개 I/O 작업</h3>
+<pre><code>import asyncio
+import time
+from concurrent.futures import ThreadPoolExecutor
+
+N = 100
+DELAY = 0.1
+
+# 1. 순차 — 10초
+# for _ in range(100): time.sleep(0.1)
+
+# 2. threading — ~0.2초
+def sync_task(): time.sleep(DELAY)
+start = time.perf_counter()
+with ThreadPoolExecutor(max_workers=100) as ex:
+    list(ex.map(lambda _: sync_task(), range(N)))
+threading_time = time.perf_counter() - start
+
+# 3. asyncio — ~0.1초
+async def async_task(): await asyncio.sleep(DELAY)
+async def async_main():
+    await asyncio.gather(*[async_task() for _ in range(N)])
+start = time.perf_counter()
+asyncio.run(async_main())
+asyncio_time = time.perf_counter() - start
+
+print(f"순차:      {N * DELAY:.1f}초")
+print(f"threading: {threading_time:.3f}초 ({N} 스레드)")  # ~0.1초 + 스레드 생성 오버헤드
+print(f"asyncio:   {asyncio_time:.3f}초 (1 스레드)")      # ~0.1초 + 이벤트루프 오버헤드
+# 순차 대비 ~100배 빠름! asyncio가 스레드보다 약간 더 빠르면서 메모리는 훨씬 적음</code></pre>
+  </div>
+
+  <div class="level-section expert">
+    <div class="level-badge">전공자</div>
+    <h3>Part A: 스레드 vs 코루틴 — 메모리와 전환 비용</h3>
+    <div class="callout callout-warning">
+      <strong>Part A:</strong>
+      OS 스레드: 스택 크기 ~8MB (Linux 기본), 컨텍스트 스위칭 ~수 마이크로초.
+      코루틴: 초기 크기 ~100–200바이트 (코루틴 객체 셸 기준, 프레임 포함 시 더 큼), 전환은 Python 레벨 함수 호출과 동일.
+      따라서 1만 스레드 = ~80GB 가상 메모리 예약 (물리 메모리는 실사용량만큼만 commit), 1만 코루틴 = ~2MB.
+      이것이 asyncio가 대량 동시 연결에 적합한 이유입니다.
+      <code>sys.getsizeof</code>로 코루틴 크기를 확인할 수 있습니다.
+    </div>
+
+    <h3>Part B: 왜 구조화된 동시성(Structured Concurrency)이 필요했는가</h3>
+    <p>
+      1960년대 <code>goto</code>가 코드를 스파게티로 만든 것처럼,
+      전통적 동시성(threading, asyncio.create_task)도 같은 문제를 가집니다:
+    </p>
+<pre><code># 문제: 태스크를 "발사"하고 추적을 잃어버림
+async def problematic():
+    task = asyncio.create_task(some_work())   # 발사!
+    # ... 여기서 예외가 발생하면?
+    # task는 어디서 실행되고 있는가?
+    # task의 결과는 누가 처리하는가?
+    # task에서 예외가 나면 누가 잡는가?</code></pre>
+    <p>
+      Dijkstra가 <code>goto</code>를 <code>if/while/for</code>로 대체한 것처럼,
+      <strong>Martin Sústrik(2016)</strong>과 <strong>Nathaniel J. Smith(2018, Trio)</strong>가
+      동시성에 같은 원칙을 적용했습니다:
+      "동시 작업은 <strong>스코프</strong>가 있어야 한다. 스코프가 끝나면 모든 자식 태스크가 끝나야 한다."
+    </p>
+    <p>
+      Python의 <code>asyncio.TaskGroup</code>(3.11+)이 이 패턴을 구현합니다.
+      Kotlin의 <code>coroutineScope</code>, Java 21의 <code>StructuredTaskScope</code>도 같은 개념.
+      핵심: 부모 스코프가 끝나면 모든 자식 태스크가 완료/취소됨을 보장합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 11 AI 연결 ==================== -->
+<section id="ai">
+  <h2>11 — AI와 동시성</h2>
+
+  <div class="callout callout-info">
+    <strong>AI 서비스는 비동기의 대표 사례입니다:</strong>
+    LLM API 호출은 수초가 걸리는 I/O-bound 작업입니다.
+    여러 프롬프트를 동시에 보내면 처리량이 극적으로 향상됩니다.
+  </div>
+
+  <h3>LLM API 동시 호출</h3>
+<pre><code>import asyncio
+
+# AI API 호출 시뮬레이션
+async def call_llm(prompt, delay=2):
+    """LLM API 호출 (2초 소요)"""
+    await asyncio.sleep(delay)
+    return f"AI 응답: {prompt[:20]}..."
+
+async def main():
+    prompts = [
+        "파이썬에서 리스트란 무엇인가?",
+        "for 문은 어떻게 동작하는가?",
+        "클로저와 데코레이터의 차이는?",
+        "GIL이란 무엇인가?",
+        "asyncio는 왜 빠른가?",
+    ]
+
+    # 순차: 5 × 2초 = 10초
+    # 동시: ~2초!
+    results = await asyncio.gather(
+        *[call_llm(p) for p in prompts]
+    )
+
+    for prompt, result in zip(prompts, results):
+        print(f"Q: {prompt[:15]}... → {result}")
+
+asyncio.run(main())</code></pre>
+
+  <h3>실제 AI 프레임워크의 비동기 활용</h3>
+<pre><code># FastAPI + AI — 실제 패턴
+from fastapi import FastAPI
+import asyncio
+
+app = FastAPI()
+
+async def generate_response(prompt: str) -&gt; str:
+    # 실제로는 OpenAI/Anthropic API 호출
+    await asyncio.sleep(1)   # API 응답 대기
+    return f"AI 답변: {prompt}"
+
+@app.post("/chat")
+async def chat(prompt: str):
+    # 비동기이므로 다른 요청도 동시 처리 가능!
+    response = await generate_response(prompt)
+    return {"response": response}
+
+# 동시에 1000명이 /chat을 호출해도
+# 단일 프로세스에서 처리 가능 (asyncio 덕분)</code></pre>
+
+  <div class="callout callout-warning">
+    <strong>AI 시대의 동시성:</strong>
+    바이브코딩에서 AI에게 "API 100개를 동시 호출해줘"라고 하면
+    AI가 asyncio 코드를 생성합니다. 하지만 <code>time.sleep</code>과 <code>asyncio.sleep</code>을
+    혼용하거나, <code>await</code>를 빠뜨리는 실수를 할 수 있습니다.
+    동시성의 원리를 이해해야 AI가 생성한 비동기 코드의 정확성을 검증할 수 있습니다.
+  </div>
+</section>
+
+<!-- ==================== 12 실습 & 연습문제 ==================== -->
+<section id="practice">
+  <h2>12 — 실습 &amp; 연습문제</h2>
+
+  <h3>실습: 비동기 웹 크롤러 뼈대</h3>
+<pre><code>import asyncio
+
+async def fetch_page(url, delay=0.5):
+    """웹 페이지 다운로드 시뮬레이션"""
+    await asyncio.sleep(delay)
+    return f"&lt;html&gt;{url} 내용&lt;/html&gt;"
+
+async def parse(html):
+    """HTML 파싱 시뮬레이션"""
+    await asyncio.sleep(0.1)
+    return html.replace("&lt;html&gt;", "").replace("&lt;/html&gt;", "")
+
+async def crawl(urls):
+    """여러 URL을 동시에 크롤링"""
+    # 1단계: 동시 다운로드
+    pages = await asyncio.gather(
+        *[fetch_page(url) for url in urls]
+    )
+
+    # 2단계: 동시 파싱
+    results = await asyncio.gather(
+        *[parse(page) for page in pages]
+    )
+
+    return results
+
+urls = [f"https://example.com/page/{i}" for i in range(10)]
+results = asyncio.run(crawl(urls))
+for r in results[:3]:
+    print(r)</code></pre>
+
+  <h3>연습문제</h3>
+
+  <details>
+    <summary>문제 1 (초급): 첫 번째 코루틴 작성</summary>
+    <div class="answer">
+<pre><code>import asyncio
+
+async def countdown(n):
+    for i in range(n, 0, -1):
+        print(i)
+        await asyncio.sleep(0.5)
+    print("발사!")
+
+asyncio.run(countdown(5))
+# 5 (0.5초) 4 (0.5초) 3 (0.5초) 2 (0.5초) 1 (0.5초) 발사!</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 2 (초급): asyncio.gather로 동시 실행</summary>
+    <div class="answer">
+<pre><code>import asyncio
+
+async def say(message, delay):
+    await asyncio.sleep(delay)
+    print(message)
+    return message
+
+async def main():
+    results = await asyncio.gather(
+        say("안녕!", 1),
+        say("반가워!", 2),
+        say("잘가!", 0.5),
+    )
+    print(f"결과: {results}")
+
+asyncio.run(main())
+# 잘가! (0.5초)
+# 안녕! (1초)
+# 반가워! (2초)
+# 결과: ['안녕!', '반가워!', '잘가!']</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 3 (초급): threading 기본 사용</summary>
+    <div class="answer">
+<pre><code>import threading
+import time
+
+def task(name, delay):
+    print(f"[{name}] 시작")
+    time.sleep(delay)
+    print(f"[{name}] 완료")
+
+threads = [
+    threading.Thread(target=task, args=("A", 1)),
+    threading.Thread(target=task, args=("B", 2)),
+    threading.Thread(target=task, args=("C", 1.5)),
+]
+
+start = time.perf_counter()
+for t in threads: t.start()
+for t in threads: t.join()
+elapsed = time.perf_counter() - start
+print(f"총 시간: {elapsed:.1f}초")   # ~2초</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 4 (중급): Lock으로 Race Condition 해결</summary>
+    <div class="answer">
+<pre><code>import threading
+
+counter = 0
+lock = threading.Lock()
+
+def safe_increment(n):
+    global counter
+    for _ in range(n):
+        with lock:
+            counter += 1
+
+threads = [
+    threading.Thread(target=safe_increment, args=(100_000,))
+    for _ in range(10)
+]
+for t in threads: t.start()
+for t in threads: t.join()
+print(f"결과: {counter}")   # 항상 1_000_000</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 5 (중급): ThreadPoolExecutor 사용</summary>
+    <div class="answer">
+<pre><code>from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+
+def process(item):
+    time.sleep(0.5)
+    return item ** 2
+
+with ThreadPoolExecutor(max_workers=5) as executor:
+    futures = {executor.submit(process, i): i for i in range(10)}
+
+    for future in as_completed(futures):
+        original = futures[future]
+        result = future.result()
+        print(f"{original}² = {result}")</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 6 (중급): asyncio.create_task 활용</summary>
+    <div class="answer">
+<pre><code>import asyncio
+
+async def download(name, size):
+    print(f"[{name}] 다운로드 시작 ({size}MB)")
+    await asyncio.sleep(size / 10)   # 크기에 비례
+    print(f"[{name}] 다운로드 완료!")
+    return name
+
+async def main():
+    # 백그라운드에서 시작
+    tasks = [
+        asyncio.create_task(download("파일A", 10)),
+        asyncio.create_task(download("파일B", 5)),
+        asyncio.create_task(download("파일C", 20)),
+    ]
+
+    print("다운로드 진행 중... 다른 작업 가능")
+    await asyncio.sleep(0.5)
+
+    # 모든 태스크 완료 대기
+    results = await asyncio.gather(*tasks)
+    print(f"완료: {results}")
+
+asyncio.run(main())</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 7 (중급): asyncio.wait_for 타임아웃</summary>
+    <div class="answer">
+<pre><code>import asyncio
+
+async def slow_api(name, delay):
+    await asyncio.sleep(delay)
+    return f"{name}: 성공"
+
+async def fetch_with_timeout(name, delay, timeout):
+    try:
+        result = await asyncio.wait_for(
+            slow_api(name, delay), timeout=timeout
+        )
+        return result
+    except asyncio.TimeoutError:
+        return f"{name}: 타임아웃!"
+
+async def main():
+    results = await asyncio.gather(
+        fetch_with_timeout("빠른API", 0.5, 2.0),
+        fetch_with_timeout("느린API", 5.0, 2.0),
+        fetch_with_timeout("중간API", 1.5, 2.0),
+    )
+    for r in results:
+        print(r)
+
+asyncio.run(main())
+# 빠른API: 성공
+# 느린API: 타임아웃!
+# 중간API: 성공</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 8 (고급): async 제너레이터 작성</summary>
+    <div class="answer">
+<pre><code>import asyncio
+
+async def async_fibonacci(limit):
+    a, b = 0, 1
+    while a &lt; limit:
+        yield a
+        await asyncio.sleep(0.1)
+        a, b = b, a + b
+
+async def main():
+    results = []
+    async for num in async_fibonacci(100):
+        results.append(num)
+    print(results)
+
+asyncio.run(main())
+# [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 9 (고급): async context manager 직접 구현</summary>
+    <div class="answer">
+<pre><code>import asyncio
+
+class AsyncTimer:
+    """비동기 실행 시간 측정 컨텍스트 매니저"""
+
+    async def __aenter__(self):
+        import time
+        self.start = time.perf_counter()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        import time
+        self.elapsed = time.perf_counter() - self.start
+        print(f"실행 시간: {self.elapsed:.3f}초")
+        return False
+
+async def main():
+    async with AsyncTimer() as timer:
+        await asyncio.gather(
+            asyncio.sleep(1),
+            asyncio.sleep(0.5),
+            asyncio.sleep(0.8),
+        )
+    # 실행 시간: ~1.000초
+
+asyncio.run(main())</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 10 (고급): Producer-Consumer with asyncio.Queue</summary>
+    <div class="answer">
+<pre><code>import asyncio
+
+async def producer(queue, items):
+    for item in items:
+        await asyncio.sleep(0.1)
+        await queue.put(item)
+        print(f"생산: {item}")
+    await queue.put(None)
+
+async def consumer(queue, name):
+    while True:
+        item = await queue.get()
+        if item is None:
+            await queue.put(None)   # 다른 consumer에 전파
+            break
+        await asyncio.sleep(0.2)
+        print(f"[{name}] 소비: {item}")
+
+async def main():
+    queue = asyncio.Queue(maxsize=3)
+    await asyncio.gather(
+        producer(queue, list(range(8))),
+        consumer(queue, "C1"),
+        consumer(queue, "C2"),
+    )
+
+asyncio.run(main())</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 11 (전공자): run_in_executor로 동기→비동기 변환</summary>
+    <div class="answer">
+<pre><code>import asyncio
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+def blocking_download(url):
+    """수정 불가한 동기 라이브러리"""
+    time.sleep(1)
+    return f"{url}: 완료"
+
+async def async_download(url):
+    result = await asyncio.to_thread(blocking_download, url)
+    return result
+
+async def main():
+    urls = [f"url_{i}" for i in range(5)]
+    start = time.perf_counter()
+    results = await asyncio.gather(
+        *[async_download(url) for url in urls]
+    )
+    elapsed = time.perf_counter() - start
+    print(f"결과: {results}")
+    print(f"시간: {elapsed:.1f}초")   # ~1초
+
+asyncio.run(main())</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 12 (전공자): GIL switch interval 실험</summary>
+    <div class="answer">
+<pre><code>import sys
+import threading
+import time
+
+# GIL switch interval 확인
+print(f"기본 switch interval: {sys.getswitchinterval()}초")
+
+# CPU-bound에서 스레드 수에 따른 성능 변화 측정
+def cpu_task(n):
+    total = 0
+    for i in range(n):
+        total += i
+    return total
+
+N = 10_000_000
+
+for num_threads in [1, 2, 4]:
+    start = time.perf_counter()
+    threads = [
+        threading.Thread(target=cpu_task, args=(N // num_threads,))
+        for _ in range(num_threads)
+    ]
+    for t in threads: t.start()
+    for t in threads: t.join()
+    elapsed = time.perf_counter() - start
+    print(f"스레드 {num_threads}개: {elapsed:.3f}초")
+# GIL 때문에 스레드를 늘려도 빨라지지 않음!</code></pre>
+    </div>
+  </details>
+
+  <details>
+    <summary>문제 13 (전공자): 코루틴 내부 상태 탐색</summary>
+    <div class="answer">
+<pre><code>import asyncio
+import dis
+
+async def example(x):
+    await asyncio.sleep(0)
+    y = x + 1
+    await asyncio.sleep(0)
+    return y
+
+# 1. 코루틴 객체의 내부 속성 확인
+coro = example(42)
+print(f"타입: {type(coro)}")               # &lt;class 'coroutine'&gt;
+print(f"cr_frame: {coro.cr_frame}")         # 실행 프레임 (아직 시작 안 됨)
+print(f"cr_running: {coro.cr_running}")     # False
+print(f"cr_code: {coro.cr_code.co_name}")   # 'example'
+
+# 2. 바이트코드 확인 — async def의 내부 구조
+print("\n=== 바이트코드 ===")
+dis.dis(example)
+# GET_AWAITABLE, SEND 등 코루틴 전용 바이트코드 확인
+
+# 3. send()로 수동 구동 (이벤트 루프가 내부적으로 하는 일)
+coro2 = example(10)
+try:
+    # 첫 번째 send(None) — 첫 await까지 실행
+    awaitable = coro2.send(None)
+    print(f"첫 번째 양보: {type(awaitable)}")
+except StopIteration as e:
+    print(f"결과: {e.value}")
+
+coro2.close()  # 정리</code></pre>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== 13 요약 & 용어집 ==================== -->
+<section id="summary">
+  <h2>13 — 요약 &amp; 용어집</h2>
+
+  <h3>핵심 개념 요약표</h3>
+  <table>
+    <thead>
+      <tr><th>개념</th><th>핵심</th><th>비유</th><th>적합한 상황</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>동시성</td>
+        <td>번갈아 실행</td>
+        <td>요리사 1명, 여러 요리</td>
+        <td>I/O-bound</td>
+      </tr>
+      <tr>
+        <td>병렬성</td>
+        <td>동시 실행</td>
+        <td>요리사 3명</td>
+        <td>CPU-bound</td>
+      </tr>
+      <tr>
+        <td>GIL</td>
+        <td>바이트코드 잠금</td>
+        <td>화장실 열쇠 1개</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>threading</td>
+        <td>OS 스레드</td>
+        <td>한 사무실 여러 직원</td>
+        <td>I/O-bound (소규모)</td>
+      </tr>
+      <tr>
+        <td>multiprocessing</td>
+        <td>별도 프로세스</td>
+        <td>각자 사무실 (분점)</td>
+        <td>CPU-bound</td>
+      </tr>
+      <tr>
+        <td>asyncio</td>
+        <td>이벤트 루프</td>
+        <td>카페 직원 1명</td>
+        <td>I/O-bound (대규모)</td>
+      </tr>
+      <tr>
+        <td>concurrent.futures</td>
+        <td>통합 인터페이스</td>
+        <td>범용 리모컨</td>
+        <td>스레드/프로세스 전환</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>용어집 (32개)</h3>
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <span class="term">동시성 (Concurrency)</span>
+      <span class="definition">여러 작업이 번갈아가며 진행되는 것. 1 CPU로도 가능. 구조적 개념</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">병렬성 (Parallelism)</span>
+      <span class="definition">여러 작업이 물리적으로 동시에 실행되는 것. 여러 CPU 필요</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">I/O-bound</span>
+      <span class="definition">대부분의 시간을 I/O 대기(네트워크, 파일)에 소비하는 작업</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">CPU-bound</span>
+      <span class="definition">대부분의 시간을 CPU 연산(계산, 처리)에 소비하는 작업</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">GIL (Global Interpreter Lock)</span>
+      <span class="definition">CPython에서 한 번에 하나의 스레드만 바이트코드를 실행하게 하는 뮤텍스</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">Thread (스레드)</span>
+      <span class="definition">프로세스 내의 실행 단위. 같은 메모리 공간 공유. OS가 스케줄링</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">Process (프로세스)</span>
+      <span class="definition">독립된 메모리 공간을 가진 실행 단위. 각 프로세스에 자체 GIL</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">코루틴 (Coroutine)</span>
+      <span class="definition">async def로 정의된 비동기 함수. await로 실행을 양보할 수 있음</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">이벤트 루프 (Event Loop)</span>
+      <span class="definition">asyncio의 핵심. 코루틴 스케줄링, I/O 이벤트 감시, 콜백 실행을 관리</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">await</span>
+      <span class="definition">코루틴의 실행을 일시 중지하고 이벤트 루프에 제어를 양보하는 키워드</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">asyncio.run()</span>
+      <span class="definition">이벤트 루프를 생성하고 코루틴을 실행하는 진입점 함수</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">asyncio.gather()</span>
+      <span class="definition">여러 코루틴을 동시 실행하고 모든 결과를 리스트로 반환</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">asyncio.create_task()</span>
+      <span class="definition">코루틴을 Task로 감싸서 이벤트 루프에 즉시 스케줄링</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">asyncio.TaskGroup</span>
+      <span class="definition">Python 3.11+의 구조화된 동시성 도구. 모든 태스크의 완료/취소를 보장</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">asyncio.Queue</span>
+      <span class="definition">비동기 Producer-Consumer 패턴을 위한 코루틴 안전 큐 (스레드 안전 아님 — 스레드용은 queue.Queue)</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">asyncio.wait_for()</span>
+      <span class="definition">코루틴에 타임아웃을 설정. 초과 시 TimeoutError 발생</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">Lock (잠금)</span>
+      <span class="definition">한 번에 하나의 스레드만 임계 영역에 접근하게 하는 동기화 도구</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">Race Condition (경쟁 조건)</span>
+      <span class="definition">여러 스레드가 공유 자원에 동시 접근하여 결과가 예측 불가한 상황</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">Deadlock (교착 상태)</span>
+      <span class="definition">두 스레드가 서로의 Lock을 기다려 영원히 진행되지 않는 상태</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">daemon 스레드</span>
+      <span class="definition">메인 스레드 종료 시 함께 종료되는 배경 스레드. 정리 코드가 실행 안 될 수 있음</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">ThreadPoolExecutor</span>
+      <span class="definition">concurrent.futures의 스레드 풀. I/O-bound 작업에 적합</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">ProcessPoolExecutor</span>
+      <span class="definition">concurrent.futures의 프로세스 풀. CPU-bound 작업에 적합</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">Future</span>
+      <span class="definition">아직 완료되지 않은 작업의 결과를 나타내는 객체. result()로 결과 수집</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">run_in_executor()</span>
+      <span class="definition">동기 함수를 asyncio 이벤트 루프에서 스레드/프로세스풀로 실행</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">epoll / kqueue</span>
+      <span class="definition">OS 레벨 I/O 멀티플렉싱. asyncio 이벤트 루프의 기반 기술</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">선점형 멀티태스킹 (Preemptive)</span>
+      <span class="definition">OS가 스레드를 강제 전환. threading이 이 방식</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">협력형 멀티태스킹 (Cooperative)</span>
+      <span class="definition">코드가 자발적으로 양보(await). asyncio가 이 방식</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">PEP 703</span>
+      <span class="definition">GIL-free Python 제안. Python 3.13+에서 실험적 지원</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">구조화된 동시성 (Structured Concurrency)</span>
+      <span class="definition">동시 작업의 시작과 끝을 스코프로 보장하는 패턴. TaskGroup이 구현</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">async for</span>
+      <span class="definition">비동기 이터레이터를 순회하는 문법. __aiter__/__anext__ 사용</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">async with</span>
+      <span class="definition">비동기 컨텍스트 매니저 문법. __aenter__/__aexit__ 사용</span>
+    </div>
+    <div class="glossary-item">
+      <span class="term">C10K 문제</span>
+      <span class="definition">동시 10,000개 연결 처리 문제. epoll/asyncio로 해결</span>
+    </div>
+  </div>
+
+  <h3>커리큘럼 완료!</h3>
+  <div class="callout callout-info">
+    <strong>15주 커리큘럼을 마쳤습니다.</strong>
+    <ul>
+      <li>1~4주: Python 기초 (변수, 자료형, 조건문, 반복문)</li>
+      <li>5~8주: 자료구조와 함수 (리스트, 딕셔너리, 함수, 스코프)</li>
+      <li>9~10주: 심화 자료구조 (문자열, 딕셔너리·세트 종합)</li>
+      <li>11~12주: 함수형 프로그래밍과 OOP (컴프리헨션, 제너레이터, 클래스 심화)</li>
+      <li>13~14주: 고급 패턴 (데코레이터, 타입 힌트, Protocol)</li>
+      <li>15주: 동시성과 비동기 프로그래밍</li>
+    </ul>
+    "컴퓨터가 어떻게 생각하는가"를 이해하셨다면, 이제 AI가 생성하는 코드를
+    <strong>검증하고 수정할 수 있는</strong> 역량을 갖추었습니다.
+  </div>
+</section>
+
+</main>
+</div>
+
+<script src="../js/bundle.min.js"></script>
+</body>
+</html>

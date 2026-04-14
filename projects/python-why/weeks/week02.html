@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2주차: 데이터와 타입 — 컴퓨터는 무엇을 저장하는가? | PyWhy</title>
+  <link rel="stylesheet" href="../css/style.min.css">
+  <meta name="description" content="연산자와 표현식 — Python이 계산을 어떻게 처리하는지 분해합니다">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="2주차: 데이터와 타입 — 컴퓨터는 무엇을 저장하는가? | PyWhy">
+  <meta property="og:description" content="연산자와 표현식 — Python이 계산을 어떻게 처리하는지 분해합니다">
+  <meta property="og:url" content="https://soccz.github.io/python-why/weeks/week02.html">
+  <meta property="og:site_name" content="PyWhy">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2주차: 데이터와 타입 — 컴퓨터는 무엇을 저장하는가? | PyWhy">
+  <meta name="twitter:description" content="연산자와 표현식 — Python이 계산을 어떻게 처리하는지 분해합니다">
+</head>
+<body data-week="2">
+<a href="#main-content" class="skip-link">본문 바로가기</a>
+
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://soccz.github.io" class="home-btn" title="soccz.github.io" aria-label="포트폴리오 홈"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+        <a href="../index.html" class="site-title">PyWhy</a>
+      </div>
+    <div class="header-nav">
+      <a href="week01.html" class="nav-btn">&larr; 이전</a>
+      <a href="week03.html" class="nav-btn">다음 &rarr;</a>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrapper">
+<main id="main-content">
+
+<!-- ==================== WEEK HEADER ==================== -->
+<div class="week-header">
+  <div class="week-number">WEEK 02</div>
+  <h1 class="week-title">데이터와 타입<br>컴퓨터는 무엇을 저장하는가?</h1>
+  <p class="week-subtitle">
+    컴퓨터는 오직 <strong>비트(0과 1)</strong>만 저장합니다.
+    그렇다면 숫자와 글자, 참과 거짓을 어떻게 구분할까요?<br>
+    이번 주의 핵심 질문: <em>"타입(Type)이란 무엇이고, 왜 존재하는가?"</em>
+  </p>
+</div>
+
+<!-- ==================== 목차 ==================== -->
+<details class="toc">
+  <summary>목차 — 2주차 전체 내용</summary>
+  <div class="toc-body">
+    <div class="toc-section">
+      <a href="#story" class="toc-section-link">
+        <span class="toc-num">01</span>이번 주 이야기
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#why-type" class="toc-section-link">
+        <span class="toc-num">02</span>왜 타입이 필요한가?
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#int" class="toc-section-link">
+        <span class="toc-num">03</span>int — 정수
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#float" class="toc-section-link">
+        <span class="toc-num">04</span>float — 실수와 IEEE 754
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#str" class="toc-section-link">
+        <span class="toc-num">05</span>str — 문자열
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#bool" class="toc-section-link">
+        <span class="toc-num">06</span>bool — 논리값
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#type-func" class="toc-section-link">
+        <span class="toc-num">07</span>type() — 타입을 보는 눈
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#conversion" class="toc-section-link">
+        <span class="toc-num">08</span>타입 변환 (Type Conversion)
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#ai-types" class="toc-section-link">
+        <span class="toc-num">09</span>AI는 타입을 어떻게 다루는가?
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#hands-on" class="toc-section-link">
+        <span class="toc-num">10</span>실습: 타입 탐험
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#exercises" class="toc-section-link">
+        <span class="toc-num">11</span>연습문제 (10문제 — 7+3 전공자)
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#summary" class="toc-section-link">
+        <span class="toc-num">12</span>이번 주 정리
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#glossary" class="toc-section-link">
+        <span class="toc-num">13</span>용어 사전 (30개)
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#next-week" class="toc-section-link">
+        <span class="toc-num">14</span>다음 주 맛보기
+      </a>
+    </div>
+  </div>
+</details>
+
+<!-- ==================== 01. 이번 주 이야기 ==================== -->
+<section id="story">
+  <h2>이번 주 이야기</h2>
+  <blockquote>
+    우편번호 <strong>"06152"</strong>와 숫자 <strong>6152</strong>는 어떻게 다를까요?<br><br>
+    "06152"에서 앞의 0을 지우면 6152가 됩니다. 하지만 우편번호에서 앞의 0은 의미가 있습니다 — 없애면 다른 우편번호가 됩니다.<br>
+    숫자 6152에서 앞에 0을 붙이면? 그냥 6152입니다. 숫자에서 앞의 0은 의미가 없습니다.<br><br>
+    같아 보이는 "숫자들"이 왜 다르게 동작할까요?<br>
+    그 이유가 바로 <strong>타입(Type)</strong>입니다.
+  </blockquote>
+
+  <div class="why-box">
+    <div class="box-header">이번 주 핵심 질문</div>
+    <p>
+      컴퓨터의 메모리에는 오직 <strong>0과 1의 나열</strong>만 저장됩니다.
+      그렇다면 <code>65</code>라는 숫자와 <code>'A'</code>라는 문자는 어떻게 구분될까요?<br><br>
+      실제로 비트로 보면: <code>01000001</code><br>
+      이 비트열을 <strong>정수(int)로 읽으면</strong> → 65<br>
+      이 비트열을 <strong>문자(str)로 읽으면</strong> → 'A' (ASCII)<br><br>
+      <strong>타입은 "이 비트들이 무엇을 의미하는가"를 결정하는 규칙입니다.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 02. 왜 타입이 필요한가? ==================== -->
+<section id="why-type">
+  <h2>왜 타입이 필요한가?</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">같은 모양, 다른 의미</h3>
+    </div>
+    <p>
+      "3"과 3은 같을까요, 다를까요?<br>
+      화면에 보이는 모습은 비슷하지만 <strong>컴퓨터 안에서는 완전히 다른 것</strong>입니다.
+    </p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">문자열 "3"과 숫자 3의 차이</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">print("3" + "3")   # 문자열 이어붙이기 → "33"
+print(3 + 3)       # 숫자 더하기 → 6</code></pre>
+    </div>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+33
+6
+    </div>
+    <p>
+      같은 <code>+</code> 연산자를 사용했는데 결과가 다릅니다.<br>
+      컴퓨터는 <strong>타입</strong>을 보고 "이 +가 더하기인지, 이어붙이기인지"를 결정합니다.
+    </p>
+    <div class="callout callout-tip">
+      <strong>핵심 비유:</strong> 타입은 박스의 <strong>레이블</strong>입니다.<br>
+      같은 크기의 박스라도 "음식" 레이블이 붙은 것과 "폭발물" 레이블이 붙은 것은 다르게 취급됩니다.<br>
+      컴퓨터도 비트를 보기 전에 먼저 타입(레이블)을 봅니다.
+    </div>
+    <div class="callout callout-tip">
+      <strong>✏️ 지금 바로 해봐:</strong> 각 타입을 직접 확인해보세요.<br>
+      <pre><code class="language-python">print(type(42))        # 정수
+print(type(3.14))      # 소수
+print(type("안녕"))    # 문자열
+print(type(True))      # 참/거짓
+print(type(None))      # 없음</code></pre>
+      각 줄에 무엇이 출력되는지 예상해보고, 실제로 확인해보세요!
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">비트와 해석 — 타입이 의미를 만든다</h3>
+    </div>
+    <p>
+      컴퓨터 메모리는 오직 <strong>0과 1의 나열</strong>만 저장합니다.
+      <code>type()</code> 함수로 파이썬이 어떻게 타입을 구분하는지 확인해봅시다.
+    </p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">type()으로 타입 확인하기</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">print(type(42))        # &lt;class 'int'&gt;
+print(type(3.14))      # &lt;class 'float'&gt;
+print(type("hello"))   # &lt;class 'str'&gt;
+print(type(True))      # &lt;class 'bool'&gt;
+
+# 같은 비트열, 다른 해석
+print(65)              # int: 65
+print(chr(65))         # str: 'A' (같은 숫자 65를 문자로 해석)
+print(ord('A'))        # int: 65 (문자 'A'를 숫자로 해석)</code></pre>
+    </div>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+&lt;class 'int'&gt;
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;
+&lt;class 'bool'&gt;
+65
+A
+65
+    </div>
+    <p>
+      <code>65</code>와 <code>'A'</code>는 메모리에서 같은 비트(01000001)를 가질 수 있지만,
+      타입이 다르기 때문에 완전히 다르게 동작합니다.
+    </p>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">Python Data Model — 모든 것은 객체</h3>
+    </div>
+    <div class="why-box">
+      <div class="box-header">WHY — Python 공식 문서가 말하는 타입</div>
+      <p>
+        Python 3.14 Data Model(데이터 모델) 문서는 이렇게 시작합니다:<br>
+        <em>"Every object has an identity, a type and a value."</em><br>
+        (모든 객체는 <strong>아이덴티티</strong>, <strong>타입</strong>, <strong>값</strong>을 갖습니다.)
+      </p>
+      <ul>
+        <li><strong>아이덴티티(identity)</strong>: 메모리 주소 — <code>id(x)</code>로 확인</li>
+        <li><strong>타입(type)</strong>: 어떤 연산을 지원하는지 정의 — <code>type(x)</code>로 확인</li>
+        <li><strong>값(value)</strong>: 실제 데이터 — <code>print(x)</code>로 확인</li>
+      </ul>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">객체의 3요소 확인하기</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">x = 42
+print(id(x))      # 아이덴티티: 메모리 주소 (예: 140234866532640)
+print(type(x))    # 타입: &lt;class 'int'&gt;
+print(x)          # 값: 42
+
+# 타입은 가능한 연산을 결정한다
+print(42 + 1)     # int: 덧셈 가능
+# print("A" + 1)  # TypeError: str + int 불가 — 타입이 다름</code></pre>
+    </div>
+    <p>
+      <strong>타입이 연산을 결정한다</strong>는 것이 핵심입니다.
+      <code>"A" + 1</code>이 불가능한 이유는 "문자와 숫자를 더하는 방법"이 정의되지 않았기 때문입니다.
+      타입 시스템은 이런 무의미한 연산을 막아주는 <strong>안전망</strong>입니다.
+    </p>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <div class="level-section-header">
+      <span class="level-badge level-expert">전공자</span>
+      <h3 class="level-section-title">CPython PyObject 구조 + 타이핑 이론</h3>
+    </div>
+
+    <div class="why-box">
+      <div class="box-header">Part A — CPython: 모든 것은 PyObject*</div>
+      <p>
+        CPython에서 파이썬의 모든 값은 C 구조체 <code>PyObject</code>로 표현됩니다.
+        <code>cpython/Include/object.h</code>에 정의되어 있습니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">CPython PyObject 구조 (C 코드)</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">/* CPython Include/object.h (단순화) */
+typedef struct _object {
+    Py_ssize_t  ob_refcnt;   /* 참조 카운트: 이 객체를 가리키는 포인터 수 */
+    PyTypeObject *ob_type;   /* 타입 포인터: 이 객체의 타입 객체를 가리킴 */
+} PyObject;
+
+/* 예: int 42는 실제로 이렇게 저장됨 */
+typedef struct {
+    PyObject   ob_base;     /* ob_refcnt + ob_type */
+    Py_ssize_t ob_size;     /* 자릿수 */
+    digit      ob_digit[1]; /* 실제 값 (가변 길이 배열) */
+} PyLongObject;</code></pre>
+    </div>
+    <p>
+      <code>ob_type</code> 포인터가 핵심입니다. <code>42</code>라는 객체의 <code>ob_type</code>은
+      <code>&amp;PyLong_Type</code>을 가리킵니다.
+      파이썬이 <code>42 + 1</code>을 계산할 때, 실제로는
+      <code>ob_type-&gt;tp_as_number-&gt;nb_add(42, 1)</code>을 호출합니다.
+    </p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">Python에서 ob_type 확인하기</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">import sys
+x = 42
+print(type(x))            # &lt;class 'int'&gt;  ← ob_type이 가리키는 타입 객체
+print(sys.getsizeof(x))   # 28 bytes (작은 int)
+print(x.__class__)        # &lt;class 'int'&gt;  ← ob_type 접근
+
+# 타입 객체도 객체다
+print(type(int))          # &lt;class 'type'&gt;  ← int의 타입은 type(메타클래스)</code></pre>
+    </div>
+
+    <div class="why-box">
+      <div class="box-header">Part B — 타이핑 이론: 동적 vs 정적 vs 덕 타이핑</div>
+      <p>
+        이 CS 이론이 필요한 이유: Python이 왜 이런 타입 시스템을 가졌는지 설명하려면
+        타이핑 철학을 이해해야 합니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">세 가지 타이핑 방식 비교</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 1. 정적 타이핑 (Static Typing) — 예: Java, C
+# int x = 42;  ← 컴파일 시점에 타입 결정, 변경 불가
+# x = "hello"; ← 컴파일 에러
+
+# 2. 동적 타이핑 (Dynamic Typing) — Python
+x = 42          # 런타임에 타입 결정
+x = "hello"     # OK — 같은 변수가 다른 타입을 가질 수 있음
+x = [1, 2, 3]   # OK
+
+# 3. 덕 타이핑 (Duck Typing) — Python의 핵심
+# "오리처럼 걷고 오리처럼 꽥꽥거리면 오리다"
+# 타입 이름이 아니라 "무엇을 할 수 있는가"로 판단
+def add(a, b):
+    return a + b   # int, float, str 모두 + 를 지원하면 동작함
+
+print(add(1, 2))       # 3
+print(add(1.0, 2.0))   # 3.0
+print(add("a", "b"))   # "ab"</code></pre>
+    </div>
+    <p>
+      CPython의 타입 시스템은 동적 타이핑 + 덕 타이핑의 조합입니다.
+      변수의 타입은 런타임에 결정되고(<code>ob_type</code> 포인터로 관리),
+      연산 가능 여부는 해당 타입 객체에 해당 슬롯(<code>tp_as_number</code>, <code>tp_as_sequence</code> 등)이
+      정의되어 있는지로 판단합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 03. int ==================== -->
+<section id="int">
+  <h2>int — 정수</h2>
+
+  <div class="why-box">
+    <div class="box-header">WHY — 왜 int가 존재하는가?</div>
+    <p>
+      개수를 세거나, 순서를 나타내거나, 인덱스를 다룰 때 소수점이 필요 없습니다.
+      <code>3.0번째 항목</code>은 의미가 없습니다. <code>3번째 항목</code>만 의미가 있습니다.<br>
+      int는 <strong>"소수점 없이 정확한 정수 연산"</strong>을 위해 존재합니다.
+    </p>
+  </div>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">정수로 할 수 있는 것들</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">기본 정수 연산</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">print(2 + 3)    # 덧셈: 5           (사과 2개 + 3개)
+print(10 - 4)   # 뺄셈: 6           (10명 중 4명 퇴장)
+print(3 * 4)    # 곱셈: 12          (한 줄에 3명 × 4줄)
+print(10 / 3)   # 나눗셈: 3.3333... (피자 10조각 ÷ 3명, 항상 소수점!)
+print(10 // 3)  # 정수 나눗셈 (몫): 3  (10개를 3명에게 — 몫)
+print(10 % 3)   # 나머지: 1            (10개를 3명에게 — 나머지)
+print(2 ** 8)   # 거듭제곱: 256      (2를 8번 곱하기)</code></pre>
+    </div>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+5
+6
+12
+3.3333333333333335
+3
+1
+256
+    </div>
+    <div class="callout callout-warning">
+      <strong>주의:</strong> <code>/</code>는 항상 소수점 숫자(float)를 돌려줍니다.
+      <code>10 / 2</code>의 결과는 <code>5</code>가 아니라 <code>5.0</code>입니다.
+      정수 결과를 원하면 <code>//</code>를 사용하세요.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">Python int의 특별함 — 크기 제한이 없다</h3>
+    </div>
+    <div class="why-box">
+      <div class="box-header">WHY — 파이썬 int는 왜 overflow가 없는가?</div>
+      <p>
+        C나 Java의 <code>int</code>는 32비트 또는 64비트로 고정되어,
+        일정 크기를 넘으면 <strong>overflow</strong>(넘침)가 발생합니다.<br>
+        파이썬의 <code>int</code>는 <strong>임의 정밀도(arbitrary precision)</strong>를 지원합니다.
+        메모리가 허용하는 한 얼마든지 큰 숫자를 다룰 수 있습니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">파이썬 int의 임의 정밀도</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 파이썬은 아무리 큰 정수도 정확하게 계산한다
+print(2 ** 100)
+# 1267650600228229401496703205376
+
+print(2 ** 1000)  # 301자리 수도 정확히!
+
+# 다른 진수 표현
+print(0b1010)   # 2진수: 10
+print(0o17)     # 8진수: 15
+print(0xff)     # 16진수: 255
+
+# 진수 변환
+print(bin(255))  # '0b11111111'
+print(oct(255))  # '0o377'
+print(hex(255))  # '0xff'</code></pre>
+    </div>
+    <div class="callout callout-info">
+      <strong>PEP 238 — 왜 <code>/</code>는 항상 float을 돌려주는가?</strong><br>
+      Python 2에서는 <code>5 / 2</code>가 <code>2</code>(정수)였습니다.
+      이로 인해 수많은 버그가 발생했습니다 — 프로그래머가 "5를 2로 나누면 2.5"라고 기대하는데
+      파이썬이 2를 돌려줬기 때문입니다.<br>
+      PEP 238(2001)에서 제안되어 Python 2.2에서 <code>from __future__ import division</code>으로 먼저 도입되었고,
+      Python 3에서 <code>/</code>는 기본적으로 항상 float을 돌려주는 것이 표준이 되었습니다.
+      <em>"명시적인 것이 암묵적인 것보다 낫다(Explicit is better than implicit)"</em> — Zen of Python
+    </div>
+
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — <code>is</code>와 <code>==</code> 혼동:</strong><br>
+      <pre><code class="language-python">a = 256
+b = 256
+print(a is b)    # True  ← CPython이 -5~256을 캐싱!
+
+a = 257
+b = 257
+print(a is b)    # False ← 257은 캐시 범위 밖, 다른 객체
+
+# 규칙: 값 비교는 반드시 ==, 동일 객체 확인에만 is
+print(a == b)    # True  ← 값이 같음 (항상 신뢰 가능)
+print(a is b)    # False ← 같은 객체가 아님</code></pre>
+      <strong>결론:</strong> 숫자·문자열 비교는 항상 <code>==</code>. <code>is</code>는 <code>is None</code>, <code>is not None</code>에서만 사용하세요.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">int 연산의 세부 동작 + 정수 나눗셈</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">정수 나눗셈의 정확한 동작</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># // 연산: 수학적 바닥 나눗셈(floor division)
+# 결과는 항상 "아래 방향으로" 내림
+print(7 // 2)     #  3  (양수: 3.5의 바닥)
+print(-7 // 2)    # -4  (음수: -3.5의 바닥 = -4)
+
+# % 연산: 수학적 모듈로
+# 결과의 부호는 항상 제수(오른쪽 수)와 같다
+print(7 % 2)      #  1
+print(-7 % 2)     #  1  (양수 — 제수가 양수이므로)
+print(7 % -2)     # -1  (음수 — 제수가 음수이므로)
+
+# 검증: a == (a // b) * b + (a % b)
+a, b = -7, 2
+print((a // b) * b + (a % b))  # -7</code></pre>
+    </div>
+    <div class="callout callout-info">
+      <strong>C의 정수 나눗셈과 다릅니다.</strong>
+      C에서 <code>-7 / 2</code>는 <code>-3</code>(0 방향 절단), 파이썬에서는 <code>-4</code>(바닥).
+      파이썬의 방식이 수학적으로 더 일관성이 있습니다.
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <div class="level-section-header">
+      <span class="level-badge level-expert">전공자</span>
+      <h3 class="level-section-title">CPython PyLongObject 구조 + 소정수 캐싱</h3>
+    </div>
+    <div class="why-box">
+      <h3>Part A — CPython: PyLongObject</h3>
+      <div class="box-header">Part A — CPython: PyLongObject</div>
+      <p>
+        CPython 3.12+에서 <code>int</code>는 <code>longobject.c</code>에 구현됩니다.
+        임의 정밀도를 위해 내부적으로 자릿수를 배열로 저장합니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">PyLongObject 구조 (단순화)</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">/* CPython 3.11 이하 — Include/cpython/longintrepr.h (단순화) */
+struct PyLongObject {
+    PyObject_VAR_HEAD      /* ob_refcnt, ob_type, ob_size */
+    digit ob_digit[1];     /* 자릿수 배열 (기수 2^30) */
+};
+
+/* Python 3.12+: 내부 구조가 재설계됨 (compact representation, _PyLongValue union)
+   그러나 기수 2^30, 임의 정밀도 원리는 동일하게 유지됨 */
+/* 예: 1,073,741,824 (= 2^30) 이상의 수는 두 개의 digit이 필요 */</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">Python에서 확인: 크기와 소정수 캐싱</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">import sys
+
+# 정수 크기 — 숫자가 클수록 더 많은 메모리
+print(sys.getsizeof(0))          # 28 bytes (Python 3.12+)
+print(sys.getsizeof(1))          # 28 bytes
+print(sys.getsizeof(10**30))     # 40 bytes (더 큰 배열 필요)
+print(sys.getsizeof(10**100))    # 72 bytes
+
+# 소정수 캐싱: -5 ~ 256은 미리 만들어 놓는다
+a = 100
+b = 100
+print(a is b)    # True  — 같은 객체 (캐시된 정수)
+
+# 주의: REPL에서 한 줄씩 입력할 때만 False
+# 스크립트로 실행하면 상수 폴딩(constant folding)으로 True가 될 수 있음
+# → 정수 비교는 반드시 == 을 사용해야 한다 (is 아님)
+a = 1000
+b = 1000
+# REPL: a is b → False (줄마다 별도 컴파일)
+# script: a is b → True (같은 블록 내 리터럴은 폴딩)</code></pre>
+    </div>
+    <div class="why-box">
+      <h3>Part B — 2의 보수(Two's Complement)</h3>
+      <div class="box-header">Part B — 2의 보수(Two's Complement)</div>
+      <p>
+        C int가 왜 overflow하는지 이해하려면 2의 보수가 필요합니다.<br>
+        32비트 int의 최대값: 2³¹ - 1 = 2,147,483,647<br>
+        여기에 1을 더하면: -2,147,483,648 (wrap-around)<br><br>
+        Python int는 <code>ob_digit[]</code> 배열을 동적으로 늘리기 때문에 이런 제한이 없습니다.
+        이것이 Python의 "임의 정밀도 정수"가 의미하는 것입니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 04. float ==================== -->
+<section id="float">
+  <h2>float — 실수와 IEEE 754</h2>
+
+  <div class="why-box">
+    <div class="box-header">WHY — 왜 float이 int와 분리되어 있는가?</div>
+    <p>
+      <code>3.14</code>, <code>1.6</code>, <code>-0.5</code> 같은 소수는 정수와 다르게 표현해야 합니다.
+      컴퓨터는 소수를 <strong>부동소수점(floating point)</strong> 방식으로 저장합니다.
+      이 방식은 매우 크거나 작은 수를 표현할 수 있지만, <strong>모든 소수를 정확히 표현하지는 못합니다.</strong>
+    </p>
+  </div>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">소수점 있는 숫자 사용하기</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">float 기본 사용</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">키 = 1.65            # 키 (미터)
+몸무게 = 52.3        # 몸무게 (킬로그램)
+bmi = 몸무게 / (키 ** 2)
+print(bmi)           # 19.21... — BMI 계산
+
+온도 = 36.5          # 체온
+가격 = 3500.50       # 상품 가격
+print(온도, 가격)
+
+# 정수도 나눗셈하면 float이 된다
+총점 = 285
+과목수 = 4
+평균 = 총점 / 과목수
+print(평균)          # 71.25 (정수처럼 보이지만 float!)
+print(type(평균))    # &lt;class 'float'&gt;</code></pre>
+    </div>
+    <div class="callout callout-warning">
+      <strong>float 계산의 깜짝 결과:</strong>
+      <pre><code class="python">print(0.1 + 0.2)   # 0.30000000000000004</code></pre>
+      <code>0.3</code>이 나오지 않습니다! 이것은 버그가 아닙니다 — 이유는 중급 섹션에서 설명합니다.
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">왜 0.1 + 0.2 ≠ 0.3인가?</h3>
+    </div>
+    <div class="why-box">
+      <div class="box-header">WHY — 부동소수점 오차의 원인</div>
+      <p>
+        <code>0.1</code>을 이진수로 변환하면 <strong>무한소수</strong>가 됩니다.<br>
+        십진수에서 <code>1/3 = 0.3333...</code>이 무한소수인 것처럼,
+        이진수에서 <code>0.1</code>은 <code>0.0001100110011...</code>로 무한히 반복됩니다.<br>
+        컴퓨터는 이것을 64비트에 맞게 잘라서 저장하므로, 미세한 오차가 생깁니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">부동소수점 오차 확인과 대처법</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 문제: 0.1 + 0.2는 정확히 0.3이 아니다
+print(0.1 + 0.2)             # 0.30000000000000004
+print(0.1 + 0.2 == 0.3)      # False
+
+# 해결책 1: round()로 반올림
+print(round(0.1 + 0.2, 1))   # 0.3
+print(round(0.1 + 0.2, 1) == 0.3)  # True
+
+# 해결책 2: math.isclose() (권장)
+import math
+print(math.isclose(0.1 + 0.2, 0.3))  # True
+
+# 0.1의 실제 저장값 확인
+print(f"{0.1:.55f}")
+# 0.1000000000000000055511151231257827021181583404541015625</code></pre>
+    </div>
+    <div class="callout callout-tip">
+      <strong>돈 계산을 할 때는?</strong>
+      float 오차가 치명적인 경우(금융, 회계 등)에는
+      <code>decimal.Decimal</code>을 사용하세요. 소수를 정확하게 계산합니다.
+      <pre><code class="python">from decimal import Decimal
+print(Decimal("0.1") + Decimal("0.2"))  # 0.3 (정확!)</code></pre>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">IEEE 754 — 부동소수점의 국제 표준</h3>
+    </div>
+    <p>
+      Python의 <code>float</code>는 IEEE 754 <strong>배정밀도(double precision)</strong> 64비트 형식을 사용합니다.
+      이것은 C의 <code>double</code>과 동일합니다.
+    </p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">IEEE 754 64비트 구조</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># IEEE 754 double (64비트) 구조:
+# [1비트 부호] [11비트 지수] [52비트 가수]
+
+# struct 모듈로 실제 비트 확인
+import struct
+
+def float_to_bits(f):
+    # '>d' = 빅엔디언 double → IEEE 754 표준 비트 순서로 표시
+    # 리틀엔디언(x86) 시스템에서 'd'만 쓰면 바이트 순서가 뒤집힌다
+    return struct.pack('>d', f).hex()
+
+print(float_to_bits(1.0))   # 3ff0000000000000
+print(float_to_bits(0.1))   # 3fb999999999999a
+print(float_to_bits(-1.0))  # bff0000000000000
+print(float_to_bits(float('inf')))  # 7ff0000000000000 (무한대)</code></pre>
+    </div>
+    <p>
+      <code>0.1</code>의 비트 패턴(<code>3fb999999...</code>)을 보면
+      <code>9999...</code>가 반복되는 것이 보입니다 — 이진 무한소수를 잘라낸 흔적입니다.
+    </p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">특수 float 값들</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">import math
+
+# IEEE 754는 특수 값을 정의한다
+print(float('inf'))   # 양의 무한대 (Infinity)
+print(float('-inf'))  # 음의 무한대
+print(float('nan'))   # Not a Number
+
+# NaN의 특이한 성질
+nan = float('nan')
+print(nan == nan)     # False (NaN은 자기 자신과도 같지 않다!)
+print(math.isnan(nan))  # True (NaN 검사는 isnan() 사용)
+
+print(1 / 0)  # ZeroDivisionError (파이썬은 C와 달리 예외 발생)</code></pre>
+    </div>
+
+    <h3>float의 함정 — IEEE 754 부동소수점</h3>
+    <div class="callout callout-warning">
+      <strong>🚨 파이썬 개발자 99%가 한 번은 당황하는 버그:</strong>
+      <pre><code class="language-python">print(0.1 + 0.2)          # 0.30000000000000004 ← 0.3이 아님!
+print(0.1 + 0.2 == 0.3)   # False ← 충격!
+
+# 왜? 컴퓨터는 소수를 2진수로 저장
+# 0.1을 2진수로 정확히 표현 불가 → 반올림 오차 누적
+import decimal
+print(decimal.Decimal(0.1))
+# 0.1000000000000000055511151231257827021181583404541015625
+# ← 0.1은 사실 이 값을 저장하고 있음!</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">IEEE 754 정밀도 문제 해결책</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="language-python"># IEEE 754 double-precision (64비트):
+# 부호 1비트 + 지수 11비트 + 가수 52비트
+import struct
+# 0.1을 64비트 부동소수점으로 보기 (빅엔디언)
+bits = struct.pack('>d', 0.1)
+print(bits.hex())   # 3fb999999999999a ← 빅엔디언(네트워크 바이트 순서)
+
+# 해결책은 중급 섹션 참조 (round, math.isclose, Decimal)
+# 여기서는 IEEE 754 비트 구조를 더 깊이 분석합니다
+
+# 비트 분해: 부호(1) + 지수(11) + 가수(52)
+import struct
+raw = struct.pack('>d', 0.1)
+bits_int = int.from_bytes(raw, 'big')
+부호 = (bits_int >> 63) & 1
+지수 = (bits_int >> 52) & 0x7FF
+가수 = bits_int & 0xFFFFFFFFFFFFF
+print(f"부호: {부호}, 지수(편향): {지수} (실제: {지수-1023}), 가수: {가수:013x}")
+# 부호: 0, 지수(편향): 1019 (실제: -4), 가수: 999999999999a</code></pre>
+    </div>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+0.30000000000000004
+False
+3fb999999999999a
+부호: 0, 지수(편향): 1019 (실제: -4), 가수: 999999999999a
+    </div>
+    <div class="callout callout-info">
+      <strong>언제 float을 쓰고 언제 Decimal을 쓰는가?</strong><br>
+      • <code>float</code>: 과학 계산, 통계, 머신러닝 — 속도 중요, 약간의 오차 허용<br>
+      • <code>decimal.Decimal</code>: 금융 계산, 세금, 회계 — 정확성이 절대적<br>
+      • <code>fractions.Fraction</code>: 분수 계산이 정확해야 할 때 (ex. 1/3 + 1/6 = 1/2)
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <div class="level-section-header">
+      <span class="level-badge level-expert">전공자</span>
+      <h3 class="level-section-title">CPython PyFloatObject + dtoa 알고리즘</h3>
+    </div>
+    <div class="why-box">
+      <h3>Part A — CPython: PyFloatObject</h3>
+      <div class="box-header">Part A — CPython: PyFloatObject</div>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">PyFloatObject 구조 (C)</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">/* CPython Objects/floatobject.c (단순화) */
+typedef struct {
+    PyObject_HEAD       /* ob_refcnt + ob_type */
+    double ob_fval;     /* IEEE 754 double 값 — 단 하나의 C double */
+} PyFloatObject;
+
+/* PyLongObject와 달리 단순: double 하나만 저장 */</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">Python에서 확인</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">import sys
+print(sys.getsizeof(3.14))    # 24 bytes (고정 크기 — double 1개)
+print(sys.getsizeof(0.0))     # 24 bytes (크기 무관)
+print(sys.getsizeof(10**100)) # 72 bytes (int는 크기에 따라 다름)
+
+# float의 정밀도 한계
+import sys
+print(sys.float_info.max)     # 1.7976931348623157e+308
+print(sys.float_info.epsilon) # 2.220446049250313e-16 (가장 작은 차이)</code></pre>
+    </div>
+    <div class="why-box">
+      <h3>Part B — repr(0.1)이 어떻게 올바르게 보이는가: David Gay의 dtoa</h3>
+      <div class="box-header">Part B — repr(0.1)이 어떻게 올바르게 보이는가: David Gay의 dtoa</div>
+      <p>
+        Python 3.1 이전에는 <code>repr(0.1)</code>이 <code>0.10000000000000001</code>을 출력했습니다.<br>
+        Python 3.1+에서는 <code>0.1</code>을 출력합니다.<br><br>
+        이것은 David Gay의 <strong>dtoa(double to ASCII) 알고리즘</strong> 덕분입니다.
+        이 알고리즘은 "같은 IEEE 754 비트 패턴으로 다시 변환될 수 있는 <strong>가장 짧은</strong> 십진수 표현"을 찾습니다.<br><br>
+        <code>0.1</code>의 정확한 값은 <code>0.1000000000000000055511151231257827...</code>이지만,
+        <code>0.1</code>이라고 써도 같은 IEEE 754 비트로 변환되므로 더 짧은 <code>0.1</code>을 사용합니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 05. str ==================== -->
+<section id="str">
+  <h2>str — 문자열</h2>
+
+  <div class="why-box">
+    <div class="box-header">WHY — 왜 str이 별도 타입인가?</div>
+    <p>
+      컴퓨터에 텍스트를 저장하려면 각 문자를 숫자로 변환해야 합니다(인코딩).
+      <code>str</code>은 이 인코딩/디코딩 로직을 내장한 타입입니다.
+      단순히 "숫자 배열"이 아니라, <strong>사람이 읽을 수 있는 텍스트</strong>를 다루기 위한 타입입니다.
+    </p>
+  </div>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">따옴표 사이의 모든 것</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">문자열 기본 사용</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 작은따옴표, 큰따옴표 모두 OK
+name = '파이썬'
+greeting = "안녕하세요"
+
+# + 로 이어붙이기 (concatenation)
+print(name + "은 " + greeting)
+
+# * 로 반복
+print("ha" * 3)   # hahaha
+
+# len() 으로 길이 확인
+print(len("Python"))  # 6
+print(len("안녕"))     # 2
+
+# f-string으로 값 삽입 (f-string)
+age = 15
+print(f"나는 {age}살입니다.")  # 나는 15살입니다.</code></pre>
+    </div>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+파이썬은 안녕하세요
+hahaha
+6
+2
+나는 15살입니다.
+    </div>
+  </div>
+
+    <div class="callout callout-warning">
+      <strong>🚨 함정 — 문자열은 수정할 수 없다 (Immutable)!</strong><br>
+      <pre><code class="language-python"># ❌ 될 것 같은데 안 되는 코드
+이름 = "Python"
+이름[0] = "p"    # TypeError: 'str' object does not support item assignment
+
+# 왜? 파이썬의 문자열은 불변(Immutable) 객체입니다.
+# 한 번 만들어진 문자열은 내용을 바꿀 수 없습니다.
+
+# ✅ 새로운 문자열을 만들어야 합니다
+이름 = "p" + 이름[1:]      # "python"
+이름 = 이름.replace("P", "p")  # "python"</code></pre>
+    </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">str은 불변(Immutable)이다</h3>
+    </div>
+    <div class="why-box">
+      <div class="box-header">WHY — 왜 str은 변경할 수 없는가?</div>
+      <p>
+        문자열을 한 번 만들면 내용을 바꿀 수 없습니다.
+        이것은 설계 선택입니다 — 불변 타입은 <strong>딕셔너리 키</strong>로 사용할 수 있고,
+        <strong>해시 계산</strong>이 가능하며, 여러 변수가 같은 문자열을 안전하게 공유할 수 있습니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">str 불변성 + 슬라이싱 + 이스케이프</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">s = "Python"
+
+# 인덱싱 (읽기만 가능)
+print(s[0])    # 'P'
+print(s[-1])   # 'n' (뒤에서 첫 번째)
+
+# 슬라이싱
+print(s[0:3])  # 'Pyt'
+print(s[2:])   # 'thon'
+print(s[::-1]) # 'nohtyP' (역순)
+
+# 변경 시도 → 에러
+# s[0] = 'p'  # TypeError: 'str' object does not support item assignment
+
+# 변경하려면 새 문자열을 만들어야 한다
+new_s = 'p' + s[1:]   # 'python'
+print(new_s)
+
+# 이스케이프 시퀀스
+print("첫 번째 줄\n두 번째 줄")  # \n = 줄바꿈
+print("탭\t구분")                  # \t = 탭
+print(r"C:\this\name")             # raw string: \ 해석 안 함</code></pre>
+    </div>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+P
+n
+Pyt
+thon
+nohtyP
+python
+첫 번째 줄
+두 번째 줄
+탭	구분
+C:\this\name
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">Unicode, ord(), chr() — 문자와 숫자의 관계</h3>
+    </div>
+    <p>
+      Python 3의 <code>str</code>은 <strong>Unicode</strong>를 사용합니다.
+      세상의 모든 문자(한글, 한자, 이모지 등)를 하나의 표준으로 표현합니다.
+    </p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">Unicode 코드 포인트</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># ord(): 문자 → 코드 포인트(정수)
+print(ord('A'))   # 65
+print(ord('a'))   # 97
+print(ord('가'))  # 44032
+print(ord('😀'))  # 128512
+
+# chr(): 코드 포인트 → 문자
+print(chr(65))    # 'A'
+print(chr(44032)) # '가'
+print(chr(128512))# '😀'
+
+# str은 불변이므로 해시 가능 → dict 키로 사용 가능
+d = {"python": 1, "java": 2}
+print(d["python"])  # 1
+
+# 왜 불변인가? — 해시는 값이 변하면 무의미해진다
+print(hash("python"))  # 고정된 해시값
+# print(hash([1, 2]))  # TypeError: list는 가변이므로 해시 불가</code></pre>
+    </div>
+    <div class="callout callout-info">
+      <strong>Python 2 vs Python 3 — 가장 큰 변화 중 하나</strong><br>
+      Python 2에서 <code>str</code>은 바이트 배열이었습니다 (ASCII 기반).
+      한글이 깨지는 문제가 자주 발생했습니다.<br>
+      Python 3에서 <code>str</code>은 완전한 Unicode 문자열이고,
+      바이트 배열은 별도의 <code>bytes</code> 타입을 사용합니다.
+    </div>
+
+    <h3>문자열과 유니코드 — 왜 인코딩이 필요한가</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">str과 bytes — 인코딩/디코딩</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="language-python"># Python 3의 str은 유니코드(Unicode) 문자열
+s = "안녕하세요"
+print(len(s))           # 5 (문자 수)
+print(type(s))          # &lt;class 'str'&gt;
+
+# 유니코드 코드포인트 확인
+for c in "ABC가나다":
+    print(f"'{c}': U+{ord(c):04X}")
+# 'A': U+0041  'B': U+0042  'C': U+0043
+# '가': U+AC00  '나': U+B098  '다': U+B2E4
+
+# str → bytes: 인코딩 (UTF-8)
+encoded = "안녕".encode('utf-8')
+print(encoded)           # b'\xec\x95\x88\xeb\x85\x95'
+print(len(encoded))      # 6바이트 (한글 1자 = 3바이트)
+
+# bytes → str: 디코딩
+decoded = encoded.decode('utf-8')
+print(decoded)           # 안녕
+
+# 인코딩 오류
+try:
+    "안녕".encode('ascii')   # ASCII는 한글 표현 불가
+except UnicodeEncodeError as e:
+    print(f"인코딩 실패: {e}")</code></pre>
+    </div>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+5
+&lt;class 'str'&gt;
+'A': U+0041
+'B': U+0042
+'C': U+0043
+'가': U+AC00
+'나': U+B098
+'다': U+B2E4
+b'\xec\x95\x88\xeb\x85\x95'
+6
+안녕
+인코딩 실패: 'ascii' codec can't encode characters in position 0-1: ordinal not in range(128)
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <div class="level-section-header">
+      <span class="level-badge level-expert">전공자</span>
+      <h3 class="level-section-title">CPython PEP 393 — Flexible String Representation</h3>
+    </div>
+    <h3>Part A — CPython: 문자열은 어떻게 메모리에 저장되는가?</h3>
+    <div class="why-box">
+      <div class="box-header">Part A — CPython: 문자열은 어떻게 메모리에 저장되는가?</div>
+      <p>
+        CPython 3.3+(PEP 393) 이전에는 빌드 설정에 따라 UCS-2(narrow, 2바이트/문자) 또는 UCS-4(wide, 4바이트/문자)로 <strong>고정</strong>되었습니다.
+        대부분의 배포판은 narrow build였지만, ASCII 텍스트조차 2바이트씩 낭비하는 비효율이 있었습니다.<br>
+        PEP 393은 문자열 내용에 따라 <strong>3가지 표현</strong>을 자동 선택합니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">CPython str 내부 표현 확인</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">import sys
+
+# ASCII only → PyASCIIObject (1바이트/문자)
+s1 = "hello"
+print(sys.getsizeof(s1))   # 46 bytes (오버헤드 + 5 * 1)
+
+# Latin-1 (U+0000~U+00FF) → PyCompactUnicodeObject (1바이트/문자)
+s2 = "café"
+print(sys.getsizeof(s2))   # ~61 bytes
+
+# 한글/한자/이모지 → UCS-2 또는 UCS-4 (2~4바이트/문자)
+s3 = "안녕하세요"
+print(sys.getsizeof(s3))   # ~68 bytes (2바이트/문자 × 5 + 오버헤드)
+
+s4 = "hello😀"
+print(sys.getsizeof(s4))   # 이모지가 있어서 UCS-4 필요 → 더 큰 크기
+
+# String Interning: 짧은 식별자 형태 문자열은 캐시됨
+a = "hello"
+b = "hello"
+print(a is b)   # True (인터닝됨)
+
+a = "hello world"
+b = "hello world"
+print(a is b)   # 보장되지 않음 (CPython 구현 세부사항이므로 보장되지 않음. 인터닝 기준은 버전마다 다르며, 식별자 형태 여부와 컴파일 타임 상수 여부 등 여러 요인에 의존)</code></pre>
+    </div>
+    <h3>Part B — Unicode 표준: Code Point vs Grapheme Cluster</h3>
+    <div class="why-box">
+      <div class="box-header">Part B — Unicode 표준: Code Point vs Grapheme Cluster</div>
+      <p>
+        <strong>Code Point</strong>: Unicode에서 각 문자에 할당된 정수 값 (U+0041 = 'A')<br>
+        <strong>Grapheme Cluster</strong>: 사용자가 인식하는 하나의 "글자" 단위<br><br>
+        예: <code>"é"</code>는 <code>e</code>(U+0065) + <code>◌́</code>(U+0301, 결합 악센트)로 표현 가능
+        (2 code point = 1 grapheme cluster). <code>len("é") == 2</code>일 수 있습니다.<br><br>
+        이것이 텍스트 처리를 복잡하게 만드는 이유입니다.
+        Unicode 정규화(NFC, NFD)로 이를 표준화할 수 있습니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">Unicode 정규화</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">import unicodedata
+
+# 두 가지 방법으로 'é' 표현
+e1 = "\u00e9"          # NFC: é (단일 code point)
+e2 = "e\u0301"         # NFD: e + 결합 악센트 (2 code points)
+
+print(e1 == e2)          # False (다른 코드 포인트 시퀀스)
+print(len(e1), len(e2))  # 1  2
+
+# 정규화로 통일
+n1 = unicodedata.normalize("NFC", e1)
+n2 = unicodedata.normalize("NFC", e2)
+print(n1 == n2)          # True</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 06. bool ==================== -->
+<section id="bool">
+  <h2>bool — 논리값</h2>
+
+  <div class="why-box">
+    <div class="box-header">WHY — 왜 bool은 int의 서브클래스인가?</div>
+    <p>
+      <code>True</code>와 <code>False</code>는 왜 각각 <code>1</code>과 <code>0</code>처럼 동작할까요?<br>
+      PEP 285(2002)에서 Guido van Rossum이 <code>bool</code> 타입을 추가할 때,
+      하위 호환성을 위해 <code>int</code>의 서브클래스로 만들었습니다.
+      이전 코드에서 <code>1</code>과 <code>0</code>을 논리값으로 쓰던 것이 계속 동작하도록요.
+    </p>
+  </div>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">True와 False — 두 가지만 존재한다</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">bool 기본 사용</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">print(True)    # True
+print(False)   # False
+print(type(True))   # &lt;class 'bool'&gt;
+
+# 비교 연산은 bool을 돌려준다
+print(3 &gt; 2)    # True
+print(3 &lt; 2)    # False
+print(3 == 3)   # True
+print("a" == "b")  # False
+
+# 조건문에 사용
+if 3 &gt; 2:
+    print("맞아요!")   # 출력됨</code></pre>
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 함정 — bool("False")는 True다!</strong><br>
+      <pre><code class="language-python"># ❌ 될 것 같은데 예상과 다른 코드
+print(bool("False"))   # True ← False가 아니다!
+print(bool("0"))       # True ← 0이 아니다!
+print(bool(""))        # False ← 빈 문자열만 False
+
+# 왜? bool()은 문자열의 "내용"을 해석하지 않습니다.
+# "비어있는가 아닌가"만 봅니다.
+# "False"는 6글자짜리 비어있지 않은 문자열 → True
+# "0"은 1글자짜리 비어있지 않은 문자열 → True
+
+# ✅ 문자열을 논리값으로 바꾸고 싶다면
+user_input = "False"
+result = user_input.lower() not in ("false", "0", "no", "")
+# 또는 직접 조건 판별이 필요</code></pre>
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">Truthiness — 모든 값에는 참/거짓이 있다</h3>
+    </div>
+    <div class="why-box">
+      <div class="box-header">WHY — 왜 파이썬은 모든 값을 True/False로 해석하는가?</div>
+      <p>
+        파이썬에서 <code>if x:</code>는 <code>x</code>가 반드시 <code>bool</code>일 필요가 없습니다.
+        모든 객체는 <strong>Truthiness(진리값)</strong>를 가집니다.
+        이것이 파이썬 코드를 간결하게 만드는 핵심 설계입니다.
+      </p>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">Falsy 값들 — False로 취급되는 것들</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># Falsy: False로 취급되는 값들
+print(bool(False))  # False
+print(bool(0))      # False (정수 0)
+print(bool(0.0))    # False (실수 0)
+print(bool(""))     # False (빈 문자열)
+print(bool([]))     # False (빈 리스트)
+print(bool(None))   # False (None — "없음")
+
+# Truthy: 그 외의 모든 것
+print(bool(1))      # True
+print(bool(-1))     # True (0이 아닌 모든 정수)
+print(bool("a"))    # True (비어있지 않은 문자열)
+print(bool([1]))    # True
+
+# bool은 int의 서브클래스 — 산술에도 사용 가능
+print(True + True)   # 2
+print(True * 5)      # 5
+print(False + 1)     # 1</code></pre>
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 함정 — True == 1이지만 True is 1은 아니다!</strong><br>
+      <pre><code class="language-python">print(True == 1)    # True ← 값이 같다
+print(True is 1)    # False ← 같은 객체는 아니다!
+# (Python 3.8+에서는 SyntaxWarning 발생)
+
+# 왜? ==는 "값이 같은가", is는 "같은 객체인가"
+# True는 bool 타입 싱글턴, 1은 int 타입 → 다른 객체
+print(type(True))   # &lt;class 'bool'&gt;
+print(type(1))      # &lt;class 'int'&gt;
+
+# ✅ 값 비교는 ==, 정체 확인은 is
+# None 비교만 is를 씁니다: if x is None</code></pre>
+    </div>
+    <div class="callout callout-tip">
+      <strong>실용 팁:</strong> <code>if len(items) != 0:</code> 대신 <code>if items:</code>를 씁니다.
+      빈 리스트는 Falsy이기 때문입니다. 더 파이썬다운(Pythonic) 코드입니다.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">PEP 285 + __bool__ 프로토콜</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">isinstance 확인 + __bool__ 프로토콜</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># bool은 int의 서브클래스
+print(isinstance(True, bool))  # True
+print(isinstance(True, int))   # True  ← int의 서브클래스!
+print(issubclass(bool, int))   # True
+
+# PEP 285: bool은 반드시 True 또는 False 중 하나
+# bool을 상속하더라도 새 인스턴스를 만들 수 없다
+# bool(x)는 x.__bool__() 또는 x.__len__()을 호출한다
+
+class MyList:
+    def __init__(self, items):
+        self.items = items
+    def __bool__(self):
+        return len(self.items) &gt; 0   # 비어있으면 False
+
+ml_empty = MyList([])
+ml_full  = MyList([1, 2, 3])
+print(bool(ml_empty))   # False
+print(bool(ml_full))    # True
+if ml_full:
+    print("항목이 있습니다")  # 출력됨</code></pre>
+    </div>
+    <p>
+      파이썬이 <code>if x:</code>를 평가할 때 내부적으로 <code>x.__bool__()</code>을 호출합니다.
+      <code>__bool__</code>이 없으면 <code>x.__len__()</code>을 시도하고, 둘 다 없으면 <code>True</code>를 반환합니다.
+      이것이 <strong>덕 타이핑</strong>의 예입니다 — bool이 아니어도 bool처럼 동작할 수 있습니다.
+    </p>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <div class="level-section-header">
+      <span class="level-badge level-expert">전공자</span>
+      <h3 class="level-section-title">CPython boolobject.c — True/False는 싱글턴</h3>
+    </div>
+    <h3>Part A — CPython: Py_True와 Py_False</h3>
+    <div class="why-box">
+      <div class="box-header">Part A — CPython: Py_True와 Py_False</div>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">bool 싱글턴 확인</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># True와 False는 싱글턴 — 파이썬 전체에서 단 하나씩만 존재
+a = True
+b = True
+print(a is b)          # True  ← 같은 객체!
+print(id(a) == id(b))  # True
+
+# (1 == 1)은 새 bool 객체를 만들지 않고 Py_True를 반환
+print(True is (1 == 1))  # True
+
+# bool의 새 인스턴스는 만들 수 없다
+# bool(x)는 항상 Py_True 또는 Py_False를 반환
+print(bool.__new__ is object.__new__)  # False — 오버라이드됨
+
+import sys
+print(sys.getsizeof(True))   # 28 bytes (PyLongObject와 동일)</code></pre>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">CPython boolobject.c (핵심 부분)</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">/* CPython Objects/boolobject.c (단순화) */
+/* Py_True와 Py_False는 전역 변수 */
+struct _longobject _Py_TrueStruct = {
+    PyVarObject_HEAD_INIT(&PyBool_Type, 1)
+    { 1 }  /* ob_digit[0] = 1 */
+};
+struct _longobject _Py_FalseStruct = {
+    PyVarObject_HEAD_INIT(&PyBool_Type, 0)
+    { 0 }  /* ob_digit[0] = 0 */
+};
+#define Py_True  ((PyObject *) &_Py_TrueStruct)
+#define Py_False ((PyObject *) &_Py_FalseStruct)</code></pre>
+    </div>
+    <h3>Part B — 논리 대수(Boolean Algebra)</h3>
+    <div class="why-box">
+      <div class="box-header">Part B — 논리 대수(Boolean Algebra)</div>
+      <p>
+        George Boole(1854)의 논리 대수가 컴퓨터의 기반입니다.
+        <code>AND</code>, <code>OR</code>, <code>NOT</code> 세 가지 연산으로 모든 논리를 표현할 수 있습니다.<br><br>
+        파이썬: <code>and</code>, <code>or</code>, <code>not</code><br>
+        드 모르간 법칙: <code>not (A and B) == (not A) or (not B)</code><br><br>
+        5주차 조건문에서 복잡한 조건을 단순화할 때 이 법칙을 씁니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 07. type() ==================== -->
+<section id="type-func">
+  <h2>type() — 타입을 보는 눈</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">type()으로 타입 확인하기</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">type() 기본 사용</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">print(type(42))        # &lt;class 'int'&gt;
+print(type(3.14))      # &lt;class 'float'&gt;
+print(type("hello"))   # &lt;class 'str'&gt;
+print(type(True))      # &lt;class 'bool'&gt;
+print(type(None))      # &lt;class 'NoneType'&gt;
+
+# 변수의 타입도 확인 가능
+x = "파이썬"
+print(type(x))   # &lt;class 'str'&gt;</code></pre>
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">type() vs isinstance() — 올바른 타입 검사</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">두 방법의 차이</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># type() == : 정확히 그 타입인지
+print(type(True) == int)    # False (bool이지, int가 아님)
+print(type(True) == bool)   # True
+
+# isinstance(): 서브클래스도 포함
+print(isinstance(True, int))   # True  (bool은 int의 서브클래스)
+print(isinstance(True, bool))  # True
+
+# 실무에서는 isinstance()를 권장한다
+# 이유: 서브클래스를 자동으로 처리하므로 더 유연함
+def print_number(n):
+    if isinstance(n, (int, float)):  # 여러 타입 한번에 검사
+        print(f"숫자: {n}")
+    else:
+        print("숫자가 아닙니다")
+
+print_number(42)     # 숫자: 42
+print_number(3.14)   # 숫자: 3.14
+print_number("hi")   # 숫자가 아닙니다</code></pre>
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 함정 — type(True) == int는 False!</strong><br>
+      <pre><code class="language-python"># ❌ 예상과 다른 결과
+print(type(True) == int)      # False ← True는 int가 아니라 bool!
+print(type(True) == bool)     # True
+
+# 하지만:
+print(isinstance(True, int))  # True ← bool은 int의 서브클래스!
+
+# 왜 다른가?
+# type()은 "정확히 이 타입인가"만 확인 (상속 무시)
+# isinstance()는 "이 타입이거나 상속받았는가" 확인
+
+# ✅ 대부분의 경우 isinstance()가 더 적절
+# type() == 은 정확한 타입 일치가 필요할 때만</code></pre>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">type은 메타클래스다</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">type의 이중 역할</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 역할 1: 타입 확인 함수
+print(type(42))       # &lt;class 'int'&gt;
+
+# 역할 2: 클래스의 클래스(메타클래스)
+print(type(int))      # &lt;class 'type'&gt;  ← int의 타입은 type
+print(type(str))      # &lt;class 'type'&gt;
+print(type(type))     # &lt;class 'type'&gt;  ← type의 타입도 type!
+
+# 타입 계층
+print(issubclass(bool, int))     # True
+print(issubclass(int, object))   # True  ← 모든 것은 object의 서브클래스
+print(issubclass(str, object))   # True
+
+# type()의 세 인자 버전: 동적 클래스 생성
+# type(name, bases, dict)
+MyClass = type("MyClass", (object,), {"x": 42})
+obj = MyClass()
+print(obj.x)   # 42 (class 문법 없이 클래스 생성)</code></pre>
+    </div>
+    <div class="callout callout-info">
+      <code>type</code>은 파이썬 타입 시스템의 뿌리입니다.
+      모든 클래스는 <code>type</code>의 인스턴스이고,
+      모든 값은 <code>object</code>의 인스턴스입니다.
+      이 두 축이 파이썬의 객체 모델을 구성합니다.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 08. 타입 변환 ==================== -->
+<section id="conversion">
+  <h2>타입 변환 (Type Conversion)</h2>
+
+  <div class="why-box">
+    <div class="box-header">WHY — 파이썬은 왜 명시적 변환을 요구하는가?</div>
+    <p>
+      일부 언어는 <code>"3" + 3</code>을 자동으로 <code>"33"</code>이나 <code>6</code>으로 변환합니다.
+      파이썬은 이런 <strong>암묵적 변환(implicit conversion)</strong>을 최소화합니다.<br>
+      Zen of Python: <em>"명시적인 것이 암묵적인 것보다 낫다."</em><br>
+      자동 변환은 코드의 의도를 불명확하게 만들고, 숨어있는 버그의 원인이 됩니다.
+    </p>
+  </div>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">int(), float(), str() — 타입 바꾸기</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">기본 타입 변환</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># str → int
+age_str = "25"
+age = int(age_str)
+print(age + 1)    # 26 (이제 더하기 가능)
+
+# int → str
+score = 95
+print("점수: " + str(score))   # "점수: 95"
+
+# int → float
+print(float(3))    # 3.0
+
+# float → int (0 방향으로 절삭, 반올림 아님!)
+print(int(3.9))    # 3  (← 3.9에서 .9 제거, 반올림이 아님)
+print(int(-3.9))   # -3 (0 방향으로 절삭(truncation toward zero) — math.floor(-3.9)는 -4)
+
+# str → float
+print(float("3.14"))  # 3.14</code></pre>
+    </div>
+    <div class="callout callout-warning">
+      <strong>input()은 항상 str을 반환합니다!</strong>
+      <pre><code class="python">n = input("숫자를 입력하세요: ")  # "5" 라고 입력해도
+print(n + 1)  # TypeError: str + int 불가
+# 해결: int(n) + 1</code></pre>
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">변환이 실패하는 경우</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">ValueError와 TypeError</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 올바른 변환
+print(int("42"))     # 42  OK
+print(int("  42 ")) # 42  OK (공백 무시)
+
+# 실패하는 변환 → ValueError
+# int("3.14")  → ValueError: '3.14'에는 소수점이 있어서 int 직접 불가
+# int("abc")   → ValueError: 숫자가 아님
+# int("")      → ValueError: 빈 문자열
+
+# 올바른 방법: 소수점 문자열은 float → int 2단계
+print(int(float("3.14")))   # 3
+
+# bool 변환
+print(bool(0))    # False
+print(bool(1))    # True
+print(bool(""))   # False
+print(bool("0"))  # True  ← "0"은 비어있지 않으므로 True!</code></pre>
+    </div>
+
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — 문자열과 숫자 더하기:</strong><br>
+      <pre><code class="language-python">age = input("나이를 입력하세요: ")   # "20" (문자열로 받음!)
+next_year = age + 1   # ❌ TypeError: can only concatenate str (not "int") to str
+
+# 해결: 명시적 타입 변환
+next_year = int(age) + 1   # ✅
+print(f"내년 나이: {next_year}")</code></pre>
+      <strong>원인:</strong> <code>input()</code>은 항상 <code>str</code>을 반환합니다. 숫자 계산 전에 반드시 <code>int()</code> 또는 <code>float()</code>으로 변환하세요.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">매직 메서드와 타입 변환 프로토콜</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">__int__, __float__, __str__ — 변환 프로토콜</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># int(x)는 내부적으로 x.__int__()를 호출한다
+class Temperature:
+    def __init__(self, celsius):
+        self.celsius = celsius
+    def __int__(self):
+        return int(self.celsius)   # 정수 변환 시 소수점 제거
+    def __float__(self):
+        return float(self.celsius)
+    def __str__(self):
+        return f"{self.celsius}°C"
+
+t = Temperature(36.6)
+print(int(t))    # 36
+print(float(t))  # 36.6
+print(str(t))    # 36.6°C
+
+# 암묵적 변환: 연산에서 자동으로 float으로 승격
+print(4 * 3.75)  # 14.0 (int → float 자동 변환)
+# 이것이 파이썬이 허용하는 유일한 주요 암묵적 변환이다</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 09. AI와 타입 ==================== -->
+<section id="ai-types">
+  <h2>AI는 타입을 어떻게 다루는가?</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <div class="level-section-header">
+      <span class="level-badge level-elem">초급</span>
+      <h3 class="level-section-title">AI가 만든 코드의 타입 확인하기</h3>
+    </div>
+    <p>
+      AI가 코드를 작성해줄 때, 타입을 잘못 다루는 실수가 자주 발생합니다.
+      가장 흔한 실수: <strong>input()이 str을 반환한다는 것을 잊어버리는 것</strong>입니다.
+    </p>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">AI 코드의 흔한 타입 실수</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># AI가 만들어준 코드 (버그 있음)
+나이 = input("나이를 입력하세요: ")
+내년나이 = 나이 + 1   # TypeError! str + int 불가
+
+# 올바른 코드
+나이 = int(input("나이를 입력하세요: "))
+내년나이 = 나이 + 1
+print(f"내년에는 {내년나이}살이 됩니다.")</code></pre>
+    </div>
+    <div class="callout callout-tip">
+      <strong>AI 코드 검증 체크리스트:</strong>
+      <ol>
+        <li><code>input()</code> 결과를 변환하고 있는가?</li>
+        <li>str과 int를 <code>+</code>로 합치려는 시도는 없는가?</li>
+        <li><code>0.1 + 0.2</code> 같은 float 비교는 <code>==</code>를 피하는가?</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <div class="level-section-header">
+      <span class="level-badge level-inter">중급</span>
+      <h3 class="level-section-title">타입 힌트 — AI가 더 정확한 코드를 만드는 방법</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">타입 힌트(Type Hints) 사용</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 타입 힌트를 추가하면 AI가 더 정확한 코드를 생성한다
+# (파이썬이 직접 강제하지는 않지만, AI와 도구에 의미를 전달한다)
+
+def greet(name: str, age: int) -> str:
+    return f"{name}님은 {age}살입니다."
+
+# AI에게 이 함수를 수정해달라고 할 때
+# 타입 힌트가 있으면 AI가 타입 오류를 더 잘 피한다
+result: str = greet("파이썬", 30)
+print(result)</code></pre>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <div class="level-section-header">
+      <span class="level-badge level-adv">고급</span>
+      <h3 class="level-section-title">AI의 타입 관련 버그 패턴</h3>
+    </div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">AI 코드 검증 패턴</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># 패턴 1: float 비교 오류
+# AI가 생성한 코드
+def check_price(price: float) -> bool:
+    return price == 0.1 + 0.2   # 버그! 항상 False
+
+# 올바른 방법
+import math
+def check_price_correct(price: float) -> bool:
+    return math.isclose(price, 0.3)
+
+# 패턴 2: bool 판단 오류
+# AI가 생성한 코드
+result = []  # 빈 리스트
+if result == False:   # 버그! 빈 리스트는 False와 == 비교 시 False
+    print("결과 없음")  # 출력 안 됨
+
+# 올바른 방법
+if not result:        # Truthiness 활용
+    print("결과 없음")  # 올바르게 출력됨
+
+# 패턴 3: 타입 검사 방법
+# 덜 좋은 방법
+if type(x) == int:
+    pass
+# 더 좋은 방법 (서브클래스도 처리)
+if isinstance(x, (int, float)):
+    pass</code></pre>
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <div class="level-section-header">
+      <span class="level-badge level-expert">전공자</span>
+      <h3 class="level-section-title">LLM의 산술 약점과 타입 추론 시스템</h3>
+    </div>
+    <h3>Part A — LLM의 산술 약점: BPE와 토큰 단위 처리</h3>
+    <div class="why-box">
+      <div class="box-header">왜 LLM은 수학 계산에 약한가?</div>
+      <p>
+        GPT/Claude 같은 LLM은 BPE(Byte Pair Encoding)로 텍스트를 토큰으로 분해합니다.<br>
+        숫자 <code>1234</code>는 하나의 토큰이 될 수 있지만,
+        큰 숫자의 덧셈은 토큰 단위로 처리되지 않습니다.<br><br>
+        LLM은 <strong>다음 토큰의 확률 분포</strong>를 학습한 것이지,
+        실제 산술 회로가 없습니다.
+        <code>99999 + 1</code>을 틀리는 이유가 여기 있습니다.<br><br>
+        이것이 LLM이 생성한 코드에서 타입 변환 오류가 많은 이유 중 하나입니다:
+        LLM은 "다음에 올 것 같은 토큰"을 예측하지, 코드를 실제로 실행해서 검증하지 않습니다.
+      </p>
+    </div>
+    <h3>Part B — 정적 타입 추론 시스템: mypy, pyright</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">타입 추론 시스템 — mypy, pyright</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python"># mypy를 사용하면 실행 전에 타입 오류를 찾을 수 있다
+# pip install mypy
+
+def add(a: int, b: int) -> int:
+    return a + b
+
+result = add("hello", 1)  # mypy가 에러 보고:
+# error: Argument 1 to "add" has incompatible type "str"; expected "int"
+
+# GitHub Copilot, Claude 등은 타입 힌트가 있을 때 더 정확한 코드를 생성한다
+# 타입 힌트 = AI에게 의도를 명확히 전달하는 인터페이스</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. 실습 ==================== -->
+<section id="hands-on">
+  <h2>실습: 타입 탐험</h2>
+  <p>REPL(파이썬 대화형 셸)을 열고 직접 실행해보세요. (<code>python</code> 또는 <code>python3</code>)</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-label">단계별 실습</span>
+      <button class="copy-btn">복사</button>
+    </div>
+    <pre><code class="python"># 실습 1: 기본 타입 확인
+>>> type(42)
+>>> type(3.14)
+>>> type("hello")
+>>> type(True)
+
+# 실습 2: 0.1 + 0.2 직접 확인
+>>> 0.1 + 0.2
+>>> 0.1 + 0.2 == 0.3
+
+# 실습 3: bool의 정체
+>>> True + True
+>>> isinstance(True, int)
+>>> True is (1 == 1)
+
+# 실습 4: 타입 변환
+>>> int("100")
+>>> int(3.9)       # 반올림? 버림?
+>>> int("3.14")    # 이건?
+>>> bool("")
+>>> bool("0")      # 조심!
+
+# 실습 5: 소정수 캐싱 (REPL에서 한 줄씩 입력하세요)
+>>> a = 100
+>>> b = 100
+>>> a is b      # True — 캐시
+>>> a = 1000
+>>> b = 1000
+>>> a is b      # False — 줄마다 별도 컴파일이라 다른 객체
+
+# 실습 6: chr/ord
+>>> ord('A')
+>>> chr(65)
+>>> ord('가')</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 11. 연습문제 ==================== -->
+<section id="exercises">
+  <h2>연습문제</h2>
+  <p>각 문제를 읽고 답을 생각해본 뒤, <strong>▶ 정답 보기</strong>를 클릭하세요.</p>
+
+  <!-- 문제 1 — 초급 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 1</span>
+      <span class="level-badge level-elem">초급</span>
+    </div>
+    <p class="exercise-question">
+      다음 코드의 출력 결과를 예측하세요.
+    </p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-label">코드</span></div>
+      <pre><code class="python">print("5" + "3")
+print(5 + 3)
+print(type("5" + "3"))
+print(type(5 + 3))</code></pre>
+    </div>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="output-block">
+          <div class="output-label">실행 결과:</div>
+53
+8
+&lt;class 'str'&gt;
+&lt;class 'int'&gt;
+        </div>
+        <p>
+          <code>"5" + "3"</code>은 str의 <code>+</code> — 이어붙이기(concatenation).<br>
+          <code>5 + 3</code>은 int의 <code>+</code> — 덧셈.<br>
+          같은 기호지만 타입이 다르면 완전히 다른 연산입니다.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 2 — 초급 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 2</span>
+      <span class="level-badge level-elem">초급</span>
+    </div>
+    <p class="exercise-question">
+      사용자에게 나이를 입력받아 "당신은 X살입니다. 내년에는 Y살이 됩니다."를 출력하는 코드를 작성하세요.
+    </p>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">정답</span></div>
+          <pre><code class="python">age = int(input("나이를 입력하세요: "))
+print(f"당신은 {age}살입니다. 내년에는 {age + 1}살이 됩니다.")</code></pre>
+        </div>
+        <p>
+          <strong>핵심:</strong> <code>input()</code>은 항상 <code>str</code>을 반환합니다.
+          숫자 연산을 하려면 반드시 <code>int()</code>로 변환해야 합니다.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 3 — 초급 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 3</span>
+      <span class="level-badge level-elem">초급</span>
+    </div>
+    <p class="exercise-question">
+      <code>int(3.9)</code>의 결과는 <code>4</code>인가, <code>3</code>인가? 그 이유는?
+    </p>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <p><strong>정답: 3</strong></p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">확인</span></div>
+          <pre><code class="python">print(int(3.9))    # 3 — 소수점 이하 버림
+print(int(-3.9))   # -3 — 0 방향으로 절삭(truncation toward zero) — math.floor(-3.9)는 -4
+print(round(3.9))  # 4 — 반올림하려면 round() 사용</code></pre>
+        </div>
+        <p>
+          <code>int()</code>는 반올림이 아니라 <strong>소수점 이하를 버립니다</strong>(truncation).
+          반올림이 필요하면 <code>round()</code>를 사용하세요.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 4 — 중급 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 4</span>
+      <span class="level-badge level-inter">중급</span>
+    </div>
+    <p class="exercise-question">
+      다음 코드에서 버그를 찾고, 올바르게 수정하세요.
+    </p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-label">버그 있는 코드</span></div>
+      <pre><code class="python">result = 0.1 + 0.2
+if result == 0.3:
+    print("같습니다")
+else:
+    print("다릅니다")</code></pre>
+    </div>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">정답</span></div>
+          <pre><code class="python">import math
+result = 0.1 + 0.2
+print(repr(result))  # 0.30000000000000004 — float 오차!
+
+if math.isclose(result, 0.3):
+    print("같습니다")   # 올바르게 출력됨</code></pre>
+        </div>
+        <p>
+          float끼리 <code>==</code> 비교는 오차 때문에 실패할 수 있습니다.
+          <code>math.isclose()</code>는 허용 오차(기본 1e-9) 내에서 같으면 <code>True</code>를 반환합니다.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 5 — 중급 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 5</span>
+      <span class="level-badge level-inter">중급</span>
+    </div>
+    <p class="exercise-question">
+      아래 <code>bool()</code> 호출의 결과를 모두 예측하세요.
+    </p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-label">코드</span></div>
+      <pre><code class="python">print(bool(0))
+print(bool(0.0))
+print(bool(""))
+print(bool("0"))
+print(bool([]))
+print(bool(None))
+print(bool(-1))
+print(bool("False"))</code></pre>
+    </div>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="output-block">
+          <div class="output-label">실행 결과:</div>
+False
+False
+False
+True
+False
+False
+True
+True
+        </div>
+        <p>
+          Falsy 값: <code>0</code>, <code>0.0</code>, <code>""</code>(빈 문자열), <code>[]</code>(빈 컨테이너), <code>None</code><br>
+          <code>"0"</code>과 <code>"False"</code>는 <strong>비어있지 않은 문자열</strong>이므로 <code>True</code>입니다.
+          문자열의 내용이 아니라 길이가 0인지만 봅니다.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 6 — 중급 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 6</span>
+      <span class="level-badge level-inter">중급</span>
+    </div>
+    <p class="exercise-question">
+      다음 코드가 왜 오류를 내는지 설명하고, 올바른 방법을 2가지 제시하세요.
+    </p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-label">코드</span></div>
+      <pre><code class="python">s = "Python"
+s[0] = "p"   # 소문자로 바꾸고 싶다</code></pre>
+    </div>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <p>
+          <strong>원인:</strong> <code>str</code>은 <strong>불변(Immutable)</strong> 타입입니다.
+          한 번 생성된 문자열의 특정 위치를 직접 변경할 수 없습니다.
+        </p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">두 가지 해결법</span></div>
+          <pre><code class="python">s = "Python"
+
+# 방법 1: 새 문자열 만들기
+s = "p" + s[1:]
+print(s)   # "python"
+
+# 방법 2: str 메서드 사용
+s = "Python"
+s = s.replace("P", "p", 1)  # 첫 번째 P만 교체
+print(s)   # "python"</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 7 — 고급 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 7</span>
+      <span class="level-badge level-adv">고급</span>
+    </div>
+    <p class="exercise-question">
+      다음 코드의 출력 결과를 예측하고, 각 줄이 왜 그 결과를 내는지 설명하세요.
+    </p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-label">코드</span></div>
+      <pre><code class="python">print(type(True))
+print(isinstance(True, int))
+print(True == 1)
+print(True is 1)
+print(True + True + False)
+print(sum([True, False, True, True]))</code></pre>
+    </div>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="output-block">
+          <div class="output-label">실행 결과:</div>
+&lt;class 'bool'&gt;
+True
+True
+False
+2
+3
+        </div>
+        <p>
+          <code>isinstance(True, int)</code>가 <code>True</code>인 이유: <code>bool</code>은 <code>int</code>의 서브클래스.<br>
+          <code>True == 1</code>이 <code>True</code>인 이유: <code>bool</code>이 <code>int</code>를 상속하므로 값 비교에서 1과 같음.<br>
+          <code>True is 1</code>이 <code>False</code>인 이유: 같은 값이지만 다른 객체 — <code>True</code>는 bool 싱글턴, <code>1</code>은 int.<br>
+          <code>True + True</code>: bool이 int처럼 동작하므로 1 + 1 = 2.<br>
+          <code>sum([True, False, True, True])</code>: True=1, False=0으로 계산 → 3.<br><br>
+          참고: Python 3.8+에서는 <code>is</code>와 정수 리터럴 비교 시 <code>SyntaxWarning: "is" with 'int' literal</code>이 발생합니다. 리터럴과 <code>is</code> 비교는 권장되지 않으며, <code>==</code>를 사용해야 합니다.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 8 — 전공자 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 8</span>
+      <span class="level-badge level-expert">전공자</span>
+    </div>
+    <p class="exercise-question">
+      <code>sys.getsizeof(0)</code>은 28이고, <code>sys.getsizeof(10**100)</code>은 72입니다.
+      이 차이가 나는 이유를 <strong>CPython PyLongObject 구조</strong>를 이용해 설명하세요.
+    </p>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">확인 코드</span></div>
+          <pre><code class="python">import sys
+for n in [0, 1, 2**30, 10**30, 10**60, 10**100]:
+    print(f"sys.getsizeof({n:.2e}) = {sys.getsizeof(n)} bytes")</code></pre>
+        </div>
+        <p>
+          <strong>설명:</strong><br>
+          CPython의 <code>PyLongObject</code>는 <code>ob_digit[]</code> 배열에 숫자를 저장합니다.
+          각 digit은 기수 2³⁰(약 10억) 단위입니다.<br><br>
+          <code>0</code>: ob_digit 배열 크기 0이지만 최소 1 슬롯 할당 = 28 bytes<br>
+          <code>1</code>: ob_digit[0] = 1 → 1 digit = 28 bytes<br>
+          <code>10**100</code>: 100자리 십진수는 약 11개의 2³⁰ 단위 필요 → 72 bytes<br><br>
+          숫자가 커질수록 ob_digit 배열이 늘어나므로 메모리도 늘어납니다.
+          이것이 Python int가 임의 정밀도를 구현하는 방식입니다.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 9 — 전공자 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 9</span>
+      <span class="level-badge level-expert">전공자</span>
+    </div>
+    <p class="exercise-question">
+      <code>struct.pack('>d', 0.1).hex()</code>의 결과를 실행해보고,
+      이 16진수가 IEEE 754 64비트 구조에서 어떤 의미인지 설명하세요.
+      (부호 비트, 지수 필드, 가수 필드)
+    </p>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">분석 코드</span></div>
+          <pre><code class="python">import struct
+
+# '>Q'/'>d' = 빅엔디언 → [부호][지수][가수] 순서 그대로 읽힘
+bits = struct.unpack('>Q', struct.pack('>d', 0.1))[0]
+print(f"Hex: {struct.pack('>d', 0.1).hex()}")
+# 3fb999999999999a  ← [0|01111111011|1001100110011...] 순서
+
+sign    = (bits >> 63) & 1
+exp_raw = (bits >> 52) & 0x7FF
+frac    = bits & ((1 << 52) - 1)
+
+print(f"부호:  {sign}")              # 0 (양수)
+print(f"지수:  {exp_raw} (biased)")  # 1019
+print(f"실제 지수: {exp_raw - 1023}") # -4
+print(f"가수:  {frac:#014x}")         # 0x999999999999a
+# 값 = (-1)^0 × 2^(-4) × 1.b999...₁₆ ≈ 0.1</code></pre>
+        </div>
+        <p>
+          <code>0.1</code>의 IEEE 754 표현:<br>
+          - 부호 비트: <code>0</code> (양수)<br>
+          - 지수: <code>1019 - 1023 = -4</code> (바이어스 1023을 빼야 실제 지수)<br>
+          - 가수: <code>1.999...a × 2^-4</code> (이진 반복소수로 인해 <code>999...</code> 패턴)<br><br>
+          <code>0.1</code>이 이진수로 정확히 표현되지 않는 이유:
+          <code>1/10</code>을 이진수로 변환하면 <code>0.0001100110011...</code>로 무한히 반복됩니다.
+          이 반복이 가수 52비트에서 잘려 오차가 생깁니다.
+        </p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 문제 10 — 전공자 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <span class="exercise-num">문제 10</span>
+      <span class="level-badge level-expert">전공자</span>
+    </div>
+    <p class="exercise-question">
+      다음 코드의 결과를 예측하고, CPython의 내부 동작으로 설명하세요.
+    </p>
+    <div class="code-block">
+      <div class="code-header"><span class="code-label">코드</span></div>
+      <pre><code class="python">a = True
+b = (1 == 1)
+c = bool(1)
+
+print(a is b)
+print(a is c)
+print(b is c)
+print(id(a) == id(b) == id(c))</code></pre>
+    </div>
+    <details class="answer">
+      <summary>▶ 정답 보기</summary>
+      <div class="answer-body">
+        <div class="output-block">
+          <div class="output-label">실행 결과:</div>
+True
+True
+True
+True
+        </div>
+        <p>
+          <strong>CPython 내부 동작:</strong><br><br>
+          <code>True</code>: 파이썬 인터프리터가 시작될 때 <code>Py_True</code>라는 전역 객체가 생성됩니다.<br>
+          <code>(1 == 1)</code>: <code>int.__eq__</code>가 호출되고, 결과로 <code>Py_True</code>를 반환합니다(새 객체 생성 아님).<br>
+          <code>bool(1)</code>: <code>bool.__new__</code>가 <code>1</code>을 받아 <code>Py_True</code>를 반환합니다(역시 새 객체 아님).<br><br>
+          따라서 <code>a</code>, <code>b</code>, <code>c</code> 모두 <strong>같은 <code>Py_True</code> 객체</strong>를 가리키므로
+          <code>is</code> 비교가 모두 <code>True</code>입니다.<br>
+          이것이 <code>None</code>, <code>True</code>, <code>False</code>를 <code>==</code> 대신 <code>is</code>로 비교하는 이유입니다.
+        </p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ==================== 12. 정리 ==================== -->
+<section id="summary">
+  <h2>이번 주 정리</h2>
+
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-card-icon">🔢</div>
+      <h3>타입 = 비트의 해석 규칙</h3>
+      <p>
+        같은 비트열 <code>01000001</code>이라도 타입에 따라 65(int)이거나 'A'(str)가 됩니다.
+        타입 없이 데이터는 의미를 가질 수 없습니다.
+      </p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-icon">📦</div>
+      <h3>4가지 기본 타입</h3>
+      <ul>
+        <li><strong>int</strong>: 임의 정밀도 정수</li>
+        <li><strong>float</strong>: IEEE 754 배정밀도 실수</li>
+        <li><strong>str</strong>: Unicode 문자열 (불변)</li>
+        <li><strong>bool</strong>: int의 서브클래스 (True/False 싱글턴)</li>
+      </ul>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-icon">⚠️</div>
+      <h3>주의할 점</h3>
+      <ul>
+        <li><code>0.1 + 0.2 ≠ 0.3</code> — float은 근삿값</li>
+        <li><code>int(3.9) == 3</code> — 반올림이 아니라 버림</li>
+        <li><code>input()</code>은 항상 str 반환</li>
+        <li><code>bool("0") == True</code> — 비어있지 않으면 True</li>
+      </ul>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-icon">🔍</div>
+      <h3>핵심 함수</h3>
+      <ul>
+        <li><code>type(x)</code>: 타입 확인</li>
+        <li><code>isinstance(x, T)</code>: 서브클래스 포함 확인</li>
+        <li><code>int()</code>, <code>float()</code>, <code>str()</code>, <code>bool()</code>: 명시적 변환</li>
+        <li><code>ord()</code>, <code>chr()</code>: 문자 ↔ 숫자</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="why-box" style="margin-top: 24px;">
+    <div class="box-header">이번 주 WHY 요약</div>
+    <ol>
+      <li><strong>왜 타입이 필요한가?</strong> — 비트에 의미를 부여하기 위해</li>
+      <li><strong>왜 Python int는 overflow가 없는가?</strong> — 임의 정밀도(ob_digit[] 배열)</li>
+      <li><strong>왜 0.1 + 0.2 ≠ 0.3인가?</strong> — IEEE 754 이진 부동소수점 표현의 한계</li>
+      <li><strong>왜 str은 불변인가?</strong> — 해시 가능성, 딕셔너리 키, 스레드 안전성</li>
+      <li><strong>왜 bool은 int의 서브클래스인가?</strong> — PEP 285: 하위 호환성 + 산술 활용</li>
+      <li><strong>왜 명시적 타입 변환인가?</strong> — "명시적인 것이 암묵적인 것보다 낫다"</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ==================== 13. 용어 사전 ==================== -->
+<section id="glossary">
+  <h2>용어 사전</h2>
+  <div class="glossary-grid">
+
+    <div class="glossary-item">
+      <div class="glossary-term">Type (타입)</div>
+      <div class="glossary-def">값이 무엇인지, 어떤 연산을 지원하는지를 정의하는 레이블. 비트에 의미를 부여한다.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">int</div>
+      <div class="glossary-def">정수 타입. Python에서는 임의 정밀도 — 크기 제한 없음. CPython: PyLongObject.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">float</div>
+      <div class="glossary-def">실수 타입. IEEE 754 64비트 배정밀도. 모든 소수를 정확히 표현하지 못함.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">str</div>
+      <div class="glossary-def">문자열 타입. Unicode 기반, 불변(Immutable). Python 3의 기본 텍스트 타입.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">bool</div>
+      <div class="glossary-def">논리값 타입. True와 False만 존재. int의 서브클래스. True=1, False=0.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Immutable (불변)</div>
+      <div class="glossary-def">한 번 생성되면 값을 변경할 수 없는 타입. int, float, str, bool, tuple이 해당.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Mutable (가변)</div>
+      <div class="glossary-def">생성 후 내용을 변경할 수 있는 타입. list, dict, set이 해당.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Truthiness</div>
+      <div class="glossary-def">모든 Python 객체가 가지는 True/False 해석. if문에서 bool이 아닌 값을 사용 가능하게 함.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Falsy</div>
+      <div class="glossary-def">bool로 변환 시 False가 되는 값들: 0, 0.0, "", [], {}, set(), (), None, False.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Type Conversion (타입 변환)</div>
+      <div class="glossary-def">값을 한 타입에서 다른 타입으로 변환하는 것. int(), float(), str(), bool() 등.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Explicit Conversion (명시적 변환)</div>
+      <div class="glossary-def">프로그래머가 직접 변환 함수를 호출하는 것. Python이 선호하는 방식.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Implicit Conversion (암묵적 변환)</div>
+      <div class="glossary-def">언어가 자동으로 타입을 변환하는 것. Python은 int→float 같은 제한적 경우만 허용.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">IEEE 754</div>
+      <div class="glossary-def">부동소수점 수의 컴퓨터 표현 국제 표준. Python float는 64비트 double precision 사용.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Floating Point (부동소수점)</div>
+      <div class="glossary-def">소수를 [부호][지수][가수] 형태로 저장하는 방식. 큰 범위를 표현하지만 정밀도에 한계.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Arbitrary Precision (임의 정밀도)</div>
+      <div class="glossary-def">크기 제한 없이 정수를 표현하는 방식. Python int의 특성. 메모리가 허용하는 한 무한히 큰 수.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">PyObject</div>
+      <div class="glossary-def">CPython에서 모든 Python 값의 기반 C 구조체. ob_refcnt(참조 카운트)와 ob_type(타입 포인터)를 포함.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">ob_type</div>
+      <div class="glossary-def">PyObject의 필드. 해당 객체의 타입 객체(PyTypeObject)를 가리키는 포인터. 가능한 연산을 결정.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">ob_refcnt</div>
+      <div class="glossary-def">PyObject의 필드. 참조 카운트 — 이 객체를 가리키는 포인터 수. 0이 되면 메모리 해제.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Singleton (싱글턴)</div>
+      <div class="glossary-def">프로그램 전체에서 단 하나의 인스턴스만 존재하는 객체. None, True, False가 해당.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Duck Typing (덕 타이핑)</div>
+      <div class="glossary-def">"오리처럼 걷고 꽥꽥거리면 오리다" — 타입 이름 대신 "무엇을 할 수 있는가"로 판단.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Dynamic Typing (동적 타이핑)</div>
+      <div class="glossary-def">변수의 타입이 런타임에 결정되는 방식. Python은 동적 타이핑. Java/C는 정적 타이핑.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Type Annotation (타입 힌트)</div>
+      <div class="glossary-def">변수나 함수에 예상 타입을 명시하는 문법 (def f(x: int) -> str). 실행 시 강제되지 않음.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Unicode</div>
+      <div class="glossary-def">세상의 모든 문자를 표현하는 국제 표준. Python 3의 str은 Unicode 기반.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Code Point</div>
+      <div class="glossary-def">Unicode에서 각 문자에 할당된 정수 값. 예: 'A' = U+0041 = 65.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Metaclass (메타클래스)</div>
+      <div class="glossary-def">클래스의 클래스. type은 Python의 기본 메타클래스 — 모든 클래스 객체는 type의 인스턴스.</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Truncation (절삭)</div>
+      <div class="glossary-def">소수점 이하를 0 방향으로 잘라내는 것. <code>int(3.9)→3</code>, <code>int(-3.9)→-3</code>. <code>math.floor</code>와 다름</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Concatenation (이어붙이기)</div>
+      <div class="glossary-def">문자열을 <code>+</code>로 연결하는 연산. <code>"안녕" + "하세요"</code> → <code>"안녕하세요"</code></div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">PEP 285</div>
+      <div class="glossary-def"><code>bool</code> 타입을 파이썬에 추가한 제안서. <code>bool</code>은 <code>int</code>의 서브클래스로 설계됨</div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Subclass (서브클래스)</div>
+      <div class="glossary-def">다른 클래스를 상속받아 확장한 클래스. <code>bool</code>은 <code>int</code>의 서브클래스이므로 <code>isinstance(True, int)</code>가 <code>True</code></div>
+    </div>
+    <div class="glossary-item">
+      <div class="glossary-term">Operator Overloading (연산자 오버로딩)</div>
+      <div class="glossary-def">같은 연산자(<code>+</code>)가 타입에 따라 다르게 동작하는 것. <code>3+2→5</code>(덧셈), <code>"안녕"+"하세요"→"안녕하세요"</code>(이어붙이기)</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== 14. 다음 주 맛보기 ==================== -->
+<section id="next-week">
+  <h2>다음 주 맛보기</h2>
+  <div class="next-week-box">
+    <div class="next-week-label">WEEK 03</div>
+    <h3>변수와 입출력 — 이름표와 바인딩</h3>
+    <p>
+      이번 주에 타입을 배웠다면, 다음 주에는 <strong>"값에 이름을 붙이는 방법"</strong>을 배웁니다.
+    </p>
+    <ul>
+      <li>왜 변수는 "상자"가 아니라 "이름표"인가? — Python의 <strong>바인딩(Binding)</strong> 모델</li>
+      <li><code>x = 1; y = x; x = 2</code>에서 y는 몇인가? — 변수가 값을 복사하지 않는 이유</li>
+      <li><code>print()</code>와 <code>input()</code>의 완전한 구조</li>
+      <li>전공자: LEGB 규칙 + 네임스페이스(Namespace)의 CPython 구현</li>
+    </ul>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-label">다음 주 핵심 수수께끼</span>
+        <button class="copy-btn">복사</button>
+      </div>
+      <pre><code class="python">x = [1, 2, 3]
+y = x          # y에 x를 "대입"했다
+y.append(4)    # y를 변경했다
+
+print(x)       # [1, 2, 3, 4] — 왜 x도 바뀌었는가?</code></pre>
+    </div>
+    <p>이 수수께끼의 답은 3주차에서 밝혀집니다.</p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<button class="back-to-top" aria-label="맨 위로">↑</button>
+
+<footer class="site-footer">
+  <p>파이썬은 왜? &mdash; 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의</p>
+</footer>
+
+<script src="../js/bundle.min.js"></script>
+
+</body>
+</html>

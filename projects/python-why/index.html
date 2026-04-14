@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PyWhy — 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의</title>
+  <meta name="description" content="컴퓨터가 어떻게 생각하는가를 중심으로 한 파이썬 강의. 초급부터 전공자까지 4단계, 15주 커리큘럼. CPython 내부, 바이트코드, 설계 철학까지.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PyWhy — 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의">
+  <meta property="og:description" content="컴퓨터가 어떻게 생각하는가를 중심으로 한 파이썬 강의. 초급부터 전공자까지 4단계, 15주 커리큘럼.">
+  <meta property="og:url" content="https://soccz.github.io/python-why/">
+  <meta property="og:site_name" content="PyWhy">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PyWhy — 파이썬 강의">
+  <meta name="twitter:description" content="컴퓨터가 어떻게 생각하는가를 중심으로 한 파이썬 강의. 15주 커리큘럼.">
+  <link rel="canonical" href="https://soccz.github.io/python-why/">
+  <link rel="stylesheet" href="css/style.min.css">
+  <style>
+    /* ===== LANDING PAGE STYLES ===== */
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 64px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-full);
+      padding: 5px 16px;
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .hero-title .accent {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle-main {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 560px;
+      margin: 20px auto 0;
+    }
+    .hero-subtitle-main strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+    .hero-cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 13px 28px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: 'Noto Sans KR', sans-serif;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+      box-shadow: var(--shadow-sm), 0 0 0 0 var(--accent-soft);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md), 0 0 0 4px var(--accent-soft);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 13px 28px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: 'Noto Sans KR', sans-serif;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+    }
+    .btn-secondary:hover {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-elevated);
+      overflow: hidden;
+      margin: 52px 0 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 20px 12px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* Divider */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 64px 0;
+    }
+
+    /* About / Why */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+    }
+    .about-text h2 {
+      font-size: 1.7rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      line-height: 1.35;
+    }
+    .about-text p {
+      color: var(--text-secondary);
+      line-height: 1.9;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { color: var(--accent); }
+    .difference-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .difference-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-xs);
+      transition: all 0.2s var(--ease-out);
+    }
+    .difference-list li:hover {
+      border-color: var(--border-accent);
+      box-shadow: var(--shadow-sm);
+      transform: translateX(3px);
+    }
+    .diff-icon {
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .diff-body strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .diff-body span {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Curriculum */
+    .section-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .section-header h2 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 14px;
+      margin-bottom: 64px;
+    }
+    .week-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s var(--ease-out);
+      box-shadow: var(--shadow-xs);
+      display: block;
+      border-left: 3px solid transparent;
+    }
+    .week-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--border-accent);
+      border-left-color: var(--accent);
+      color: inherit;
+    }
+    .week-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .week-card-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .week-card-status {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid;
+    }
+    .status-ready {
+      color: #3b9b6e;
+      background: #f0f9f4;
+      border-color: rgba(59, 155, 110, 0.25);
+    }
+    .status-upcoming {
+      color: var(--text-muted);
+      background: var(--surface);
+      border-color: var(--border);
+    }
+    .week-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.35;
+      color: var(--text);
+    }
+    .week-card-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .week-card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .week-tag {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .week-card.upcoming {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* Level legend */
+    .level-legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+    .level-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+    }
+    .level-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Philosophy */
+    .philosophy-section {
+      margin-bottom: 64px;
+    }
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .philosophy-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      transition: all 0.2s var(--ease-out);
+    }
+    .philosophy-item:hover {
+      border-color: var(--border-accent);
+      box-shadow: var(--shadow-sm);
+    }
+    .philosophy-icon {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .philosophy-item strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    .philosophy-item p {
+      font-size: 0.81rem;
+      color: var(--text-secondary);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Audience */
+    .audience-section {
+      margin-bottom: 64px;
+    }
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+    }
+    @media (max-width: 640px) {
+      .audience-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .audience-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      text-align: center;
+    }
+    .audience-level {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 10px;
+    }
+    .aud-elem  .audience-level { background: #f0f9f4; color: #3b9b6e; border: 1px solid rgba(59,155,110,0.2); }
+    .aud-inter .audience-level { background: #fdf8ef; color: #c48b2c; border: 1px solid rgba(196,139,44,0.2); }
+    .aud-adv   .audience-level { background: #fdf2f2; color: #c45858; border: 1px solid rgba(196,88,88,0.2); }
+    .aud-exp   .audience-level { background: #f2f0fc; color: #5a48c0; border: 1px solid rgba(90,72,192,0.2); }
+    .audience-card h4 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .audience-card p {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Final CTA */
+    .final-cta {
+      text-align: center;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 32px;
+      margin-bottom: 64px;
+      box-shadow: var(--shadow-sm);
+    }
+    .final-cta h2 {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+    .final-cta p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">본문 바로가기</a>
+
+
+<header class="site-header">
+  <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://soccz.github.io" class="home-btn" title="soccz.github.io" aria-label="포트폴리오 홈"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+        <a href="index.html" class="site-title">PyWhy</a>
+      </div>
+    <div class="header-nav">
+      <a href="weeks/week01.html" class="nav-btn">강의 시작하기 →</a>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrapper">
+<main id="main-content">
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <span class="hero-eyebrow">Python 3.14 공식 문서 기반</span>
+  <h1 class="hero-title">
+    파이썬은<br><span class="accent">왜?</span>
+  </h1>
+  <p class="hero-subtitle-main">
+    코딩을 <strong>"어떻게"</strong> 하는지가 아니라<br>
+    <strong>"왜"</strong> 이렇게 작동하는지를 배우는 파이썬 강의
+  </p>
+  <div class="hero-cta-group">
+    <a href="weeks/week01.html" class="btn-primary">Week 01부터 시작하기 →</a>
+    <a href="#curriculum" class="btn-secondary">커리큘럼 보기</a>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item">
+      <span class="stat-num">15</span>
+      <span class="stat-label">주차 커리큘럼</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">4</span>
+      <span class="stat-label">난이도 레벨</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100+</span>
+      <span class="stat-label">연습문제</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">200+</span>
+      <span class="stat-label">코드 예제</span>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== ABOUT ===== -->
+<div class="about-grid">
+  <div class="about-text">
+    <h2>왜 이 강의인가?</h2>
+    <p>
+      대부분의 파이썬 강의는 <strong>문법을 암기</strong>하는 데 집중합니다.
+      <code>for</code> 루프를 어떻게 쓰는지는 알려주지만,
+      파이썬이 내부적으로 <code>iter()</code>와 <code>next()</code>를 호출한다는 사실은 말하지 않습니다.
+    </p>
+    <p>
+      이 강의는 다릅니다. <strong>파이썬 인터프리터가 실제로 어떻게 생각하는지</strong>를 보여줍니다.
+      AI가 코드를 생성하는 시대에, 그 코드를 <em>읽고 판단</em>할 수 있는 능력이 진짜 실력입니다.
+    </p>
+    <p>
+      Python 3.14 <strong>공식 문서</strong>를 기반으로, 초등학생도 이해할 수 있는 비유부터
+      CPython 바이트코드 수준의 내부 구현까지 — 하나의 커리큘럼에 담았습니다.
+    </p>
+  </div>
+  <ul class="difference-list">
+    <li>
+      <span class="diff-icon">🔍</span>
+      <div class="diff-body">
+        <strong>De-sugaring 방식</strong>
+        <span><code>for</code>문을 <code>iter()</code>/<code>next()</code>/<code>StopIteration</code>으로 분해해서 이해합니다</span>
+      </div>
+    </li>
+    <li>
+      <span class="diff-icon">📖</span>
+      <div class="diff-body">
+        <strong>공식 문서 기반</strong>
+        <span>Python 공식 튜토리얼의 개념 흐름과 용어를 그대로 사용합니다</span>
+      </div>
+    </li>
+    <li>
+      <span class="diff-icon">🤖</span>
+      <div class="diff-body">
+        <strong>AI 시대 관점</strong>
+        <span>AI가 생성한 코드를 읽고, 검증하고, 판단하는 능력을 키웁니다</span>
+      </div>
+    </li>
+    <li>
+      <span class="diff-icon">⚠️</span>
+      <div class="diff-body">
+        <strong>실수 포인트 명시</strong>
+        <span>Mutable 기본값, 클로저 캡처 등 실제로 자주 틀리는 함정을 짚어줍니다</span>
+      </div>
+    </li>
+    <li>
+      <span class="diff-icon">🧪</span>
+      <div class="diff-body">
+        <strong>직접 실행 중심</strong>
+        <span>모든 개념마다 "지금 바로 해봐" 블록으로 즉시 확인합니다</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<hr class="section-divider" id="curriculum">
+
+<!-- ===== CURRICULUM ===== -->
+<div class="section-header">
+  <h2>주차별 커리큘럼</h2>
+  <p>각 주차는 초급부터 전공자 수준까지 4단계로 구성됩니다</p>
+</div>
+
+<div class="level-legend">
+  <div class="level-legend-item"><div class="level-dot" style="background:#3b9b6e"></div> 초급 — 초등~중학</div>
+  <div class="level-legend-item"><div class="level-dot" style="background:#c48b2c"></div> 중급 — 고등~대학 비전공</div>
+  <div class="level-legend-item"><div class="level-dot" style="background:#c45858"></div> 고급 — 대학 입문</div>
+  <div class="level-legend-item"><div class="level-dot" style="background:#5a48c0"></div> 전공자 — CS 전공+</div>
+</div>
+
+<div class="week-grid">
+  <a href="weeks/week01.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 01</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">PyWhy</div>
+    <div class="week-card-desc">컴퓨터, AI, 그리고 우리가 코딩을 배워야 하는 이유. <code>print()</code>는 왜 함수인가?</div>
+    <div class="week-card-tags">
+      <span class="week-tag">print()</span>
+      <span class="week-tag">인터프리터</span>
+      <span class="week-tag">함수란 무엇인가</span>
+    </div>
+  </a>
+  <a href="weeks/week02.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 02</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">데이터와 타입</div>
+    <div class="week-card-desc">컴퓨터는 숫자와 글자를 어떻게 구분하는가? <code>int</code>, <code>str</code>, <code>float</code>, <code>bool</code>의 존재 이유</div>
+    <div class="week-card-tags">
+      <span class="week-tag">IEEE 754</span>
+      <span class="week-tag">Unicode</span>
+      <span class="week-tag">PyLongObject</span>
+    </div>
+  </a>
+  <a href="weeks/week03.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 03</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">변수와 입출력</div>
+    <div class="week-card-desc">왜 변수는 "이름표"인가? <code>print</code>와 <code>input</code>의 함수 구조, LEGB의 시작</div>
+    <div class="week-card-tags">
+      <span class="week-tag">이름표 vs 상자</span>
+      <span class="week-tag">Binding</span>
+      <span class="week-tag">GC</span>
+    </div>
+  </a>
+  <a href="weeks/week04.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 04</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">연산자와 표현식</div>
+    <div class="week-card-desc">왜 <code>==</code>과 <code>=</code>이 다른가? Truthiness란 무엇인가, walrus 연산자</div>
+    <div class="week-card-tags">
+      <span class="week-tag">Truthiness</span>
+      <span class="week-tag">__add__ / __radd__</span>
+      <span class="week-tag">:= 왈러스</span>
+    </div>
+  </a>
+  <a href="weeks/week05.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 05</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">조건문</div>
+    <div class="week-card-desc">왜 컴퓨터는 <code>True</code>/<code>False</code>로만 판단하는가? <code>if</code>/<code>elif</code>/<code>else</code></div>
+    <div class="week-card-tags">
+      <span class="week-tag">COMPARE_OP</span>
+      <span class="week-tag">분기 예측</span>
+      <span class="week-tag">Short-circuit</span>
+    </div>
+  </a>
+  <a href="weeks/week06.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 06</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">리스트와 튜플</div>
+    <div class="week-card-desc">왜 Mutable/Immutable이 나뉘는가? Iterable의 세계, shallow copy 함정</div>
+    <div class="week-card-tags">
+      <span class="week-tag">Mutable</span>
+      <span class="week-tag">PyListObject</span>
+      <span class="week-tag">LIST_APPEND</span>
+    </div>
+  </a>
+  <a href="weeks/week07.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 07</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">반복문 — for</div>
+    <div class="week-card-desc"><code>for</code>는 왜 Iterator Protocol인가? De-sugaring, <code>FOR_ITER</code> 바이트코드</div>
+    <div class="week-card-tags">
+      <span class="week-tag">Iterator Protocol</span>
+      <span class="week-tag">FOR_ITER</span>
+      <span class="week-tag">Lazy Evaluation</span>
+    </div>
+  </a>
+  <a href="weeks/week08.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 08</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">반복문 — while</div>
+    <div class="week-card-desc">왜 <code>while</code>은 "상태"를 보는가? <code>break</code>/<code>continue</code>, Loop Invariant</div>
+    <div class="week-card-tags">
+      <span class="week-tag">Loop Invariant</span>
+      <span class="week-tag">FSM</span>
+      <span class="week-tag">while-else</span>
+    </div>
+  </a>
+  <a href="weeks/week09.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 09</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">함수</div>
+    <div class="week-card-desc">왜 함수가 존재하는가? 일급 객체, LEGB 규칙, 클로저, 데코레이터</div>
+    <div class="week-card-tags">
+      <span class="week-tag">First-class object</span>
+      <span class="week-tag">LEGB</span>
+      <span class="week-tag">Closure</span>
+    </div>
+  </a>
+  <a href="weeks/week10.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 10</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">딕셔너리, 세트 + 종합</div>
+    <div class="week-card-desc">왜 Key-Value 구조가 필요한가? 해시의 원리 + 10주 전체 복습</div>
+    <div class="week-card-tags">
+      <span class="week-tag">Hash Table</span>
+      <span class="week-tag">Open Addressing</span>
+      <span class="week-tag">Perturbation</span>
+    </div>
+  </a>
+  <a href="weeks/week11.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 11</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">컴프리헨션 & 제너레이터</div>
+    <div class="week-card-desc"><code>[x for x in]</code>이 왜 <code>for</code>보다 빠른가? <code>yield</code>로 함수가 일시정지하는 원리</div>
+    <div class="week-card-tags">
+      <span class="week-tag">LIST_APPEND</span>
+      <span class="week-tag">PyGenObject</span>
+      <span class="week-tag">yield from</span>
+    </div>
+  </a>
+  <a href="weeks/week12.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 12</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">클래스 심화 & 던더 메서드</div>
+    <div class="week-card-desc"><code>__init__</code> vs <code>__new__</code>, MRO, <code>__eq__</code>/<code>__hash__</code>의 관계, with문 내부</div>
+    <div class="week-card-tags">
+      <span class="week-tag">PyTypeObject</span>
+      <span class="week-tag">MRO C3</span>
+      <span class="week-tag">__dunder__</span>
+    </div>
+  </a>
+  <a href="weeks/week13.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 13</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">데코레이터 & 컨텍스트 매니저</div>
+    <div class="week-card-desc"><code>@decorator</code>가 실제로 하는 일, <code>with</code>문 De-sugaring, <code>functools.wraps</code>의 이유</div>
+    <div class="week-card-tags">
+      <span class="week-tag">Syntactic Sugar</span>
+      <span class="week-tag">AOP</span>
+      <span class="week-tag">SETUP_WITH</span>
+    </div>
+  </a>
+  <a href="weeks/week14.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 14</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">타입 힌트 & Protocol</div>
+    <div class="week-card-desc">타입 힌트는 왜 "힌트"인가? Protocol vs ABC, <code>dataclass</code> 내부 코드 생성</div>
+    <div class="week-card-tags">
+      <span class="week-tag">PEP 544</span>
+      <span class="week-tag">Structural Typing</span>
+      <span class="week-tag">dataclass</span>
+    </div>
+  </a>
+  <a href="weeks/week15.html" class="week-card">
+    <div class="week-card-meta">
+      <span class="week-card-num">Week 15</span>
+      <span class="week-card-status status-ready">완성</span>
+    </div>
+    <div class="week-card-title">동시성 & GIL의 진실</div>
+    <div class="week-card-desc">왜 GIL이 존재하는가? <code>threading</code> vs <code>asyncio</code>, Event Loop 내부, PEP 703</div>
+    <div class="week-card-tags">
+      <span class="week-tag">GIL</span>
+      <span class="week-tag">Event Loop</span>
+      <span class="week-tag">async/await</span>
+    </div>
+  </a>
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== AUDIENCE ===== -->
+<div class="audience-section">
+  <div class="section-header">
+    <h2>누구를 위한 강의인가?</h2>
+    <p>각 주차는 4개 레벨로 분리되어 있어 자신의 수준에 맞게 선택할 수 있습니다</p>
+  </div>
+  <div class="audience-grid">
+    <div class="audience-card aud-elem">
+      <span class="audience-level">초급</span>
+      <h4>초등 ~ 중학생</h4>
+      <p>실생활 비유, 그림으로 이해하는 개념, 바로 실행해보는 예제</p>
+    </div>
+    <div class="audience-card aud-inter">
+      <span class="audience-level">중급</span>
+      <h4>고등 ~ 대학 비전공</h4>
+      <p>동작 원리 설명, 오류 상황 분석, 실제 코드 패턴</p>
+    </div>
+    <div class="audience-card aud-adv">
+      <span class="audience-level">고급</span>
+      <h4>대학 입문자</h4>
+      <p>공식 문서 용어, 내부 메커니즘, dis.dis() 바이트코드</p>
+    </div>
+    <div class="audience-card aud-exp">
+      <span class="audience-level">전공자</span>
+      <h4>CS 전공자 이상</h4>
+      <p>CPython 구현 (Part A) + CS 이론 배경 (Part B)</p>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== PHILOSOPHY ===== -->
+<div class="philosophy-section">
+  <div class="section-header">
+    <h2>수업 철학</h2>
+    <p>이 강의가 구성된 원칙들</p>
+  </div>
+  <div class="philosophy-grid">
+    <div class="philosophy-item">
+      <span class="philosophy-icon">❓</span>
+      <strong>WHY 중심</strong>
+      <p>모든 개념에 "왜 이것이 존재하는가"를 먼저 설명합니다</p>
+    </div>
+    <div class="philosophy-item">
+      <span class="philosophy-icon">🔬</span>
+      <strong>내부 동작 해체</strong>
+      <p><code>for</code>문이 실제로 <code>iter()</code>/<code>next()</code>를 호출하는 것을 직접 확인합니다</p>
+    </div>
+    <div class="philosophy-item">
+      <span class="philosophy-icon">📚</span>
+      <strong>공식 문서 기반</strong>
+      <p>Python 3.14 공식 튜토리얼의 구조와 용어를 존중합니다</p>
+    </div>
+    <div class="philosophy-item">
+      <span class="philosophy-icon">🤖</span>
+      <strong>AI 시대 준비</strong>
+      <p>AI가 만든 코드를 읽고, 검증하고, 판단하는 능력을 키웁니다</p>
+    </div>
+    <div class="philosophy-item">
+      <span class="philosophy-icon">💬</span>
+      <strong>소크라테스식</strong>
+      <p>질문 → 답변 → 반론 → 심화 형태로 개념을 깊이 파고듭니다</p>
+    </div>
+    <div class="philosophy-item">
+      <span class="philosophy-icon">🏋️</span>
+      <strong>실전 연습</strong>
+      <p>문법 암기가 아닌 "왜 이 코드가 답인가"를 설명하는 연습</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FINAL CTA ===== -->
+<div class="final-cta">
+  <h2>지금 바로 시작하기</h2>
+  <p>Week 01에서는 왜 파이썬을 배우는지, <code>print()</code>가 왜 함수인지부터 시작합니다. 아무것도 몰라도 됩니다.</p>
+  <a href="weeks/week01.html" class="btn-primary">Week 01: 파이썬은 왜? →</a>
+</div>
+
+</main>
+</div>
+
+<footer class="site-footer">
+  <p>파이썬은 왜? &mdash; 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의</p>
+</footer>
+
+<script src="js/bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,3009 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10주차: 딕셔너리와 세트 — 왜 Key-Value 구조가 필요한가 | PyWhy</title>
+  <link rel="stylesheet" href="../css/style.min.css">
+  <meta name="description" content="딕셔너리·세트 종합 — 해시 테이블, 컴프리헨션, 성능 비교를 완전 분해">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="10주차: 딕셔너리와 세트 — 왜 Key-Value 구조가 필요한가 | PyWhy">
+  <meta property="og:description" content="딕셔너리·세트 종합 — 해시 테이블, 컴프리헨션, 성능 비교를 완전 분해">
+  <meta property="og:url" content="https://soccz.github.io/python-why/weeks/week10.html">
+  <meta property="og:site_name" content="PyWhy">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="10주차: 딕셔너리와 세트 — 왜 Key-Value 구조가 필요한가 | PyWhy">
+  <meta name="twitter:description" content="딕셔너리·세트 종합 — 해시 테이블, 컴프리헨션, 성능 비교를 완전 분해">
+</head>
+<body data-week="10">
+<a href="#main-content" class="skip-link">본문 바로가기</a>
+
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header">
+  <div class="header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="https://soccz.github.io" class="home-btn" title="soccz.github.io" aria-label="포트폴리오 홈"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+        <a href="../index.html" class="site-title">PyWhy</a>
+      </div>
+    <div class="header-nav">
+      <a href="week09.html" class="nav-btn">&larr; 이전</a>
+      <span class="nav-btn" style="opacity:0.3; pointer-events:none;">다음 &rarr;</span>
+      <button class="theme-toggle" aria-label="테마 전환">🌙</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrapper">
+<main id="main-content">
+
+<!-- ==================== WEEK HEADER ==================== -->
+<div class="week-header">
+  <div class="week-number">WEEK 10</div>
+  <h1 class="week-title">딕셔너리와 세트 —<br>왜 O(1) 검색이 가능한가</h1>
+  <p class="week-subtitle">
+    100만 개 중에서 하나를 찾는 데 리스트는 <strong>12ms</strong>, 딕셔너리는 <strong>0.001ms</strong>.<br>
+    어떻게 가능한가? 답은 <strong>해시(Hash)</strong>입니다.<br>
+    Key-Value 구조의 원리, 세트의 집합 연산, 해시 충돌 해결까지 분해합니다.<br>
+    마지막으로 10주 전체 여정을 한눈에 정리합니다.
+  </p>
+</div>
+
+<!-- ==================== 목차 ==================== -->
+<details class="toc">
+  <summary>목차 — 10주차 전체 내용</summary>
+  <div class="toc-body">
+    <div class="toc-section">
+      <a href="#story" class="toc-section-link">
+        <span class="toc-num">01</span>이번 주 이야기
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#why-dict" class="toc-section-link">
+        <span class="toc-num">02</span>왜 딕셔너리가 필요한가?
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#hash" class="toc-section-link">
+        <span class="toc-num">03</span>해시의 원리 — 왜 O(1)인가
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#dict-ops" class="toc-section-link">
+        <span class="toc-num">04</span>딕셔너리 연산 — CRUD + 메서드
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#sets" class="toc-section-link">
+        <span class="toc-num">05</span>세트(set) — 중복 없는 집합
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#comprehension" class="toc-section-link">
+        <span class="toc-num">06</span>딕셔너리·세트 컴프리헨션
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#collision" class="toc-section-link">
+        <span class="toc-num">07</span>해시 충돌 — Hash Collision
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#ai-dict" class="toc-section-link">
+        <span class="toc-num">08</span>AI와 딕셔너리
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#review" class="toc-section-link">
+        <span class="toc-num">09</span>10주 종합 복습
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#hands-on" class="toc-section-link">
+        <span class="toc-num">10</span>실습: 해시 테이블 탐험
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#exercises" class="toc-section-link">
+        <span class="toc-num">11</span>연습문제 (12문제 — 초급4 + 중급4 + 고급1 + 전공자3)
+      </a>
+      <div class="toc-levels">
+        <span class="toc-level-dot elem">초급</span>
+        <span class="toc-level-dot inter">중급</span>
+        <span class="toc-level-dot adv">고급</span>
+        <span class="toc-level-dot exp">전공자</span>
+      </div>
+    </div>
+    <div class="toc-section">
+      <a href="#summary" class="toc-section-link">
+        <span class="toc-num">12</span>이번 주 정리
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#glossary" class="toc-section-link">
+        <span class="toc-num">13</span>용어 사전 (30개)
+      </a>
+    </div>
+    <div class="toc-section">
+      <a href="#next-step" class="toc-section-link">
+        <span class="toc-num">14</span>다음 단계 — 파이썬 여정 계속하기
+      </a>
+    </div>
+  </div>
+</details>
+
+<!-- ==================== 01. 이번 주 이야기 ==================== -->
+<section id="story">
+  <h2>이번 주 이야기</h2>
+  <div class="story-block">
+    <p>
+      10,000명의 학생 이름과 점수가 있습니다.<br>
+      "지민"의 점수를 찾아야 합니다.
+    </p>
+    <pre><code class="language-python"># 방법 1: 리스트 — 처음부터 찾아야 함
+students_list = [("지민", 95), ("수진", 87), ..., ("Zara", 72)]
+for name, score in students_list:
+    if name == "지민":
+        print(score)
+# 지민가 운 나쁘게 맨 뒤에 있으면 10,000번 비교!
+
+# 방법 2: 딕셔너리 — 이름만 알면 즉시
+students_dict = {"지민": 95, "수진": 87, ..., "Zara": 72}
+print(students_dict["지민"])   # 딱 1번 — 데이터가 100만 개여도 똑같이 빠름</code></pre>
+    <p>
+      딕셔너리는 어떻게 100만 개에서도 <strong>1번만</strong>에 찾을 수 있을까요?<br>
+      비밀은 <strong>해시(Hash)</strong>입니다 — 값을 "주소"로 변환하는 함수.
+    </p>
+    <div class="callout callout-info">
+      <strong>이번 주 핵심 질문:</strong>
+      <ul>
+        <li>왜 리스트는 O(n)인데 딕셔너리는 O(1)인가?</li>
+        <li>key는 왜 반드시 hashable(불변)이어야 하는가?</li>
+        <li><code>{}</code>는 왜 빈 딕셔너리고 빈 세트는 <code>set()</code>인가?</li>
+        <li>Python 딕셔너리는 왜 삽입 순서를 보장하는가? (3.7+)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 02. 왜 딕셔너리가 필요한가 ==================== -->
+<section id="why-dict">
+  <h2>왜 딕셔너리가 필요한가?</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 사물함 vs 줄 서기</h3>
+    <div class="callout callout-info">
+      <strong>줄 서기(리스트) vs 사물함(딕셔너리):</strong><br>
+      <strong>리스트</strong>는 번호표를 뽑고 줄 서는 것입니다. "3번"을 찾으려면 1번, 2번, 3번 순서대로 지나가야 합니다.<br>
+      <strong>딕셔너리</strong>는 이름이 붙은 사물함입니다. "지민"라고 적힌 사물함은 번호 계산으로 직접 찾아갑니다.
+    </div>
+    <pre><code class="language-python"># 리스트: 이름으로 찾으려면 처음부터 뒤져야 함
+contacts_list = [("지민", "010-1111"), ("수진", "010-2222"), ("하늘", "010-3333")]
+
+for name, number in contacts_list:   # 순서대로 전부 확인
+    if name == "수진":
+        print(number)   # 010-2222
+
+# 딕셔너리: 이름만 알면 즉시
+contacts = {
+    "지민": "010-1111",
+    "수진":   "010-2222",
+    "하늘": "010-3333"
+}
+print(contacts["수진"])   # 010-2222 — 1번에 찾음!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+010-2222
+010-2222
+    </div>
+    <div class="callout callout-tip">
+      <strong>✏️ 지금 바로 해봐:</strong> 딕셔너리를 직접 만들고 조회해보세요.
+      <pre><code class="language-python"># 나만의 연락처 만들기
+contacts = {
+    "엄마": "010-1234-5678",
+    "아빠": "010-8765-4321",
+    "친구": "010-1111-2222",
+}
+
+# 조회
+print(contacts["엄마"])      # 전화번호 출력
+print(contacts.get("선생님", "없음"))  # 없는 키는 기본값
+
+# 추가
+contacts["할머니"] = "010-3333-4444"
+print(f"연락처 {len(contacts)}개")
+
+# 순회
+for name, phone in contacts.items():
+    print(f"{name}: {phone}")</code></pre>
+      리스트와 달리 이름(key)으로 즉시 찾을 수 있습니다!
+    </div>
+    <pre><code class="language-python"># 딕셔너리 기본 문법
+d = {"key": "value"}   # key: value 쌍
+
+# key가 없으면 새로 추가, 있으면 수정
+d["name"] = "지민"
+d["age"]  = 30
+print(d)   # {'key': 'value', 'name': '지민', 'age': 30}
+
+# key로 value 읽기
+print(d["name"])   # 지민
+print(len(d))      # 3</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'key': 'value', 'name': '지민', 'age': 30}
+지민
+3
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 파이썬의 유명한 함정 — <code>{}</code>는 빈 딕셔너리입니다:</strong>
+      <pre><code class="language-python">empty_dict = {}
+empty_set  = set()   # 빈 세트는 반드시 set() 사용!
+
+print(type(empty_dict))   # &lt;class 'dict'&gt;
+print(type(empty_set))    # &lt;class 'set'&gt;
+
+# 세트 리터럴은 원소가 있을 때만 가능
+s = {1, 2, 3}   # ✅ 세트
+d = {}           # ❌ 이건 빈 딕셔너리!
+
+# 실수 예시
+def get_unique_words(text):
+    unique = {}   # ❌ 의도: 세트, 실제: 딕셔너리
+    for word in text.split():
+        unique.add(word)   # AttributeError: 'dict' object has no attribute 'add'
+    return unique
+
+# ✅ 수정
+def get_unique_words_fixed(text):
+    unique = set()   # ✅ 빈 세트
+    for word in text.split():
+        unique.add(word)
+    return unique</code></pre>
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>O(n) vs O(1) — 실제 속도 차이 측정</h3>
+    <pre><code class="language-python">import time
+
+# 100만 개 데이터 준비
+data_list = list(range(1_000_000))
+data_dict = {i: i for i in range(1_000_000)}
+
+target = 999_999   # 최악의 경우: 맨 끝 원소
+
+# 리스트 in: 처음부터 순서대로 — O(n)
+start = time.perf_counter()
+found = target in data_list
+list_time = time.perf_counter() - start
+
+# 딕셔너리 in: 해시 계산 → 즉시 — O(1)
+start = time.perf_counter()
+found = target in data_dict
+dict_time = time.perf_counter() - start
+
+print(f"리스트  in: {list_time*1000:.3f}ms")
+print(f"딕셔너리 in: {dict_time*1000:.6f}ms")
+print(f"딕셔너리가 약 {list_time/dict_time:.0f}배 빠름")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (대략적 — 환경마다 다름):</div>
+리스트  in: 11.234ms
+딕셔너리 in: 0.001ms
+딕셔너리가 약 11234배 빠름
+    </div>
+    <div class="callout callout-info">
+      <strong>빅-O 표기법 (Big-O Notation):</strong><br>
+      데이터 크기(n)가 늘어날 때 연산 횟수가 어떻게 늘어나는지를 나타냅니다.<br>
+      <code>O(n)</code>: 데이터가 2배면 시간도 2배 (리스트 선형 탐색)<br>
+      <code>O(1)</code>: 데이터가 100만 배여도 시간 불변 (딕셔너리 해시 탐색)
+    </div>
+    <pre><code class="language-python"># 딕셔너리: key는 반드시 불변(hashable) 객체
+d = {}
+d[42]       = "정수 key"    # ✓
+d["name"]   = "문자열 key"  # ✓
+d[(1, 2)]   = "튜플 key"   # ✓ — 튜플은 불변
+
+try:
+    d[[1, 2]] = "리스트 key"  # ❌ 리스트는 가변 → unhashable
+except TypeError as e:
+    print(e)   # unhashable type: 'list'
+
+# Python 3.7+: 삽입 순서가 보장됨
+menu = {"커피": 4500, "녹차": 3500, "주스": 5000}
+print(list(menu.keys()))   # ['커피', '녹차', '주스'] — 넣은 순서!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+unhashable type: 'list'
+['커피', '녹차', '주스']
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>Hashable 조건 / 삽입 순서 보장 / dict() 생성자</h3>
+    <pre><code class="language-python"># hashable 조건: __hash__()가 정의되어 있고 __eq__()와 일관성 있을 것
+# 일반 규칙: 불변(Immutable) 객체 → hashable
+
+hashable_examples = [42, 3.14, True, "string", (1, 2, 3), frozenset({1, 2})]
+unhashable_examples = [[1, 2], {"a": 1}, {1, 2}]
+
+for obj in hashable_examples:
+    print(f"hash({obj!r:20}) = {hash(obj)}")
+
+print()
+for obj in unhashable_examples:
+    try:
+        hash(obj)
+    except TypeError as e:
+        print(f"hash({obj!r:15}) → TypeError: {e}")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (정수/bool 해시는 항상 일정, 문자열은 실행마다 다름):</div>
+hash(42                 ) = 42
+hash(3.14               ) = 322818021289917443
+hash(True               ) = 1
+hash('string'           ) = (실행마다 다른 값 — hash randomization)
+hash((1, 2, 3)          ) = (실행마다 다른 값)
+hash(frozenset({1, 2})  ) = (실행마다 다른 값)
+
+hash([1, 2]        ) → TypeError: unhashable type: 'list'
+hash({'a': 1}      ) → TypeError: unhashable type: 'dict'
+hash({1, 2}        ) → TypeError: unhashable type: 'set'
+    </div>
+    <pre><code class="language-python"># dict() 생성자: 여러 방법으로 딕셔너리 생성
+# 방법 1: 중괄호 리터럴
+d1 = {"a": 1, "b": 2}
+
+# 방법 2: 키워드 인자 (key가 식별자인 경우)
+d2 = dict(a=1, b=2)
+
+# 방법 3: (key, value) 튜플의 리스트
+d3 = dict([("a", 1), ("b", 2)])
+
+# 방법 4: zip() 활용
+keys   = ["name", "age", "city"]
+values = ["지민", 30, "Seoul"]
+d4 = dict(zip(keys, values))
+
+print(d1 == d2 == d3)   # True (값이 같으면 동등)
+print(d4)               # {'name': '지민', 'age': 30, 'city': 'Seoul'}
+
+# 삽입 순서 보장 (Python 3.7+)
+d = {}
+for char in "dcba":
+    d[char] = ord(char)
+print(list(d.keys()))   # ['d', 'c', 'b', 'a'] — 넣은 순서 그대로</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+True
+{'name': '지민', 'age': 30, 'city': 'Seoul'}
+['d', 'c', 'b', 'a']
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — PyDictObject와 compact dict (Python 3.6+)</h3>
+    <pre><code class="language-python">import sys
+
+# PyDictObject의 메모리 구조 탐색
+d_empty   = {}
+d_small   = {"a": 1, "b": 2, "c": 3}
+d_medium  = {str(i): i for i in range(10)}
+
+print(f"빈 dict:   {sys.getsizeof(d_empty)} bytes")
+print(f"3개 dict:  {sys.getsizeof(d_small)} bytes")
+print(f"10개 dict: {sys.getsizeof(d_medium)} bytes")
+
+# view 객체 — 딕셔너리의 실시간 뷰 (복사본이 아님)
+d = {"a": 1, "b": 2}
+keys_view = d.keys()
+print(f"수정 전: {list(keys_view)}")   # ['a', 'b']
+
+d["c"] = 3   # 딕셔너리 수정
+print(f"수정 후: {list(keys_view)}")   # ['a', 'b', 'c'] — 자동 반영!
+print(type(keys_view))                 # &lt;class 'dict_keys'&gt;</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (대략적 — Python 3.12, 64-bit):</div>
+빈 dict:   64 bytes
+3개 dict:  184 bytes
+10개 dict: 272 bytes
+
+수정 전: ['a', 'b']
+수정 후: ['a', 'b', 'c']
+&lt;class 'dict_keys'&gt;
+    </div>
+    <p>
+      <strong>compact dict (Python 3.6+, Raymond Hettinger 제안):</strong><br>
+      기존 dict는 <code>(hash, key, value)</code> 튜플 배열에 빈 슬롯이 많아 메모리를 낭비했습니다.<br>
+      compact dict는 두 배열로 분리합니다:
+    </p>
+    <ul>
+      <li><code>dk_indices</code>: 해시 테이블 슬롯 → 엔트리 인덱스 (소형 배열, 슬롯당 1~8 bytes)</li>
+      <li><code>dk_entries</code>: <code>(me_hash, me_key, me_value)</code> 엔트리를 빈 슬롯 없이 밀착 배열</li>
+    </ul>
+    <p>
+      이로 인해 <strong>삽입 순서 자연 보존</strong>(엔트리가 순서대로 추가)과
+      <strong>메모리 절약</strong>(최대 ~50%)이 동시에 달성됩니다.
+    </p>
+    <h3>Part B — Associative Array ADT와 Python dict의 복잡도</h3>
+    <p>
+      <strong>Associative Array</strong>는 키-값 쌍을 저장하고 <em>key → value</em> 매핑을 지원하는 ADT입니다.
+      구현 방법에 따라 복잡도가 달라집니다:
+    </p>
+    <table class="summary-table">
+      <thead><tr><th>구현</th><th>탐색</th><th>삽입</th><th>삭제</th><th>순서</th></tr></thead>
+      <tbody>
+        <tr><td>정렬 배열 + 이진 탐색</td><td>O(log n)</td><td>O(n)</td><td>O(n)</td><td>정렬 순서</td></tr>
+        <tr><td>BST (균형 미보장)</td><td>O(n) 최악</td><td>O(n) 최악</td><td>O(n) 최악</td><td>키 순서</td></tr>
+        <tr><td>Red-Black Tree (Java TreeMap)</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>키 순서</td></tr>
+        <tr><td><strong>Hash Table (Python dict)</strong></td><td><strong>O(1) 평균</strong></td><td><strong>O(1) 평균</strong></td><td><strong>O(1) 평균</strong></td><td><strong>삽입 순서</strong></td></tr>
+      </tbody>
+    </table>
+    <p>
+      해시 테이블의 O(1)은 <strong>평균(average-case)</strong>입니다 — 해시 충돌이 적다는 전제 하에 대부분의 연산이 O(1)입니다.
+      단, resize(테이블 크기 확장)는 O(n)이 발생하지만 이는 <strong>상각(amortized) O(1)</strong>로 분석됩니다.
+      최악의 경우(모든 키가 같은 슬롯에 충돌) 단일 연산이 O(n)이 될 수 있습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 03. 해시의 원리 ==================== -->
+<section id="hash">
+  <h2>해시의 원리 — 왜 O(1)인가</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 도서관 분류번호</h3>
+    <div class="callout callout-info">
+      <strong>도서관 분류번호 비유:</strong><br>
+      도서관에서 "파이썬 프로그래밍" 책을 찾으려면:<br>
+      · <strong>리스트</strong>: 1번 서가부터 순서대로 전부 확인<br>
+      · <strong>딕셔너리</strong>: 제목을 계산기에 넣으면 → "프로그래밍 분야 → 205호 → 3번째 칸" 즉시 알려줌<br><br>
+      이 "계산기"가 <strong>hash() 함수</strong>입니다.
+    </div>
+    <pre><code class="language-python"># hash() 함수: 어떤 값이든 → 정수 "주소"로 변환
+print(hash(42))       # 42 (정수는 자기 자신)
+print(hash(0))        # 0
+print(hash(True))     # 1
+print(hash(False))    # 0
+
+# 같은 값은 항상 같은 해시 (같은 실행 내에서)
+print(hash("hello") == hash("hello"))   # True — 일관성 보장
+print(hash((1, 2, 3)) == hash((1, 2, 3)))  # True</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+42
+0
+1
+0
+True
+True
+    </div>
+    <pre><code class="language-python"># 해시가 주소가 되는 원리 (단순화)
+table_size = 8   # 딕셔너리 내부에 8개 슬롯 (시작)
+
+key = "지민"
+slot = hash(key) % table_size   # 해시 → 슬롯 번호 계산
+
+print(f'hash("지민") % 8 = {hash("지민") % 8}')   # 0~7 사이 숫자
+# → 이 슬롯 번호에 직접 저장하고, 직접 읽음 → O(1)!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (실행마다 다름 — hash randomization):</div>
+hash("지민") % 8 = 3
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>hash() 함수의 성질 / hashable vs unhashable</h3>
+    <pre><code class="language-python"># 정수의 해시: 자기 자신 (CPython 특성)
+for n in [0, 1, 2, 100, -5]:
+    print(f"hash({n}) = {hash(n)}")
+
+# 특별 케이스: hash(-1) = -2
+# CPython에서 -1은 C 레벨에서 "오류" 신호로 예약됨
+# → hash()는 절대 -1을 반환하지 않음 (-1이 나오면 -2로 대체)
+print(hash(-1))   # -2
+print(hash(-2))   # -2  (둘 다 -2)
+
+# 값이 같으면 해시도 같아야 함 (등호 일관성)
+print(hash(1) == hash(1.0) == hash(True))   # True — 모두 정수 1
+print(1 == 1.0 == True)                     # True — 이므로 해시도 같아야 함</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+hash(0) = 0
+hash(1) = 1
+hash(2) = 2
+hash(100) = 100
+hash(-5) = -5
+-2
+-2
+True
+True
+    </div>
+    <pre><code class="language-python"># hashable 여부 확인: __hash__ 속성 존재 여부
+print(hash.__doc__[:50] if hash.__doc__ else "")
+
+# Mutable 객체는 unhashable — 변경되면 해시가 달라질 수 있으니
+try:
+    hash([1, 2, 3])   # 리스트: Mutable → unhashable
+except TypeError as e:
+    print(f"list: {e}")
+
+try:
+    hash({"a": 1})    # 딕셔너리: Mutable → unhashable
+except TypeError as e:
+    print(f"dict: {e}")
+
+try:
+    hash({1, 2, 3})   # 세트: Mutable → unhashable
+except TypeError as e:
+    print(f"set: {e}")
+
+# frozenset: 불변 세트 → hashable!
+print(hash(frozenset({1, 2, 3})))   # (정수값)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+list: unhashable type: 'list'
+dict: unhashable type: 'dict'
+set: unhashable type: 'set'
+(frozenset의 해시값 — 정수)
+    </div>
+    <div class="callout callout-info">
+      <strong>해시 랜덤화 (Hash Randomization):</strong><br>
+      Python 3.3+부터 문자열·바이트·datetime의 해시는 실행마다 달라집니다 (<code>PYTHONHASHSEED=random</code>).<br>
+      이유: 공격자가 해시 충돌을 의도적으로 유발하는 DoS 공격 방지 (Python 3.3 기본 활성화, PEP 456에서 SipHash 알고리즘으로 교체).<br>
+      정수·float의 해시는 항상 일정합니다.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>해시 함수의 조건 / 커스텀 __hash__ / 딕셔너리 조회 흐름</h3>
+    <pre><code class="language-python"># 좋은 해시 함수의 3가지 조건:
+# 1. 결정적 (Deterministic): 같은 입력 → 항상 같은 출력
+# 2. 균등 분포 (Uniform): 출력이 슬롯에 고르게 퍼짐
+# 3. 빠름 (Fast): O(1)에 가깝게 계산
+
+# 딕셔너리 조회 흐름 (d["key"]의 내부):
+# 1. hash("key") → 정수 h 계산
+# 2. slot = h & mask (mask = table_size - 1)
+# 3. dk_indices[slot]의 엔트리 인덱스 → dk_entries[i] 확인
+# 4. 저장된 hash와 key가 일치하면 → value 반환
+# 5. 불일치(충돌)이면 → 다음 슬롯으로 (perturbation probing)
+
+# 커스텀 __hash__ 구현
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __eq__(self, other):
+        if not isinstance(other, Point):
+            return NotImplemented
+        return self.x == other.x and self.y == other.y
+
+    def __hash__(self):
+        # tuple의 해시를 재활용 — Python 권장 패턴
+        return hash((self.x, self.y))
+
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+
+p1 = Point(1, 2)
+p2 = Point(1, 2)
+p3 = Point(3, 4)
+
+print(p1 == p2)           # True
+print(hash(p1) == hash(p2))   # True (같은 값 → 같은 해시)
+print(hash(p1) == hash(p3))   # False (보통 다른 값 → 다른 해시, 하지만 충돌 가능 **)
+
+# 딕셔너리 key로 사용 가능
+location_map = {p1: "원점 근처", p3: "오른쪽"}
+print(location_map[Point(1, 2)])   # '원점 근처' — 새 Point 객체로 조회 가능!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+True
+True
+False
+원점 근처
+    </div>
+    <p>
+      ** 다른 값에서 우연히 해시가 같을 수 있습니다(해시 충돌). 이는 정상이며 Python이 처리합니다.
+    </p>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — CPython hash() 구현과 정수 해시 최적화</h3>
+    <pre><code class="language-python">import sys
+
+# CPython 정수 해시: PyObject_Hash → long_hash
+# 정수 해시는 자기 자신 (mod Py_HASH_MODULUS = 2^61 - 1 on 64-bit)
+# 단, -1은 -2로 대체 (C 함수 오류 반환값과 충돌 방지)
+print(hash(-1))   # -2  ← CPython 특수 케이스
+print(hash(-2))   # -2  ← 자연스럽게 -2
+print(sys.hash_info)   # hash_info 구조체 출력</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+-2
+-2
+sys.hash_info(width=64, modulus=2305843009213693951, inf=314159, nan=0, imag=1000003, algorithm='siphash13', hash_seed=None, cutoff=0)
+    </div>
+    <p>
+      <code>modulus = 2^61 - 1</code> (Mersenne prime) — 나머지 연산이 비트 조작으로 최적화됩니다.<br>
+      문자열·바이트는 <strong>SipHash</strong>를 사용합니다 (Python 3.4에서 SipHash-2-4 도입(PEP 456), Python 3.11+에서 SipHash-1-3으로 변경 — 속도와 보안의 균형).
+    </p>
+    <pre><code class="language-python"># 해시 일관성 검증 (Python Data Model 규칙)
+# 규칙: a == b → hash(a) == hash(b) (역은 성립 안 해도 됨)
+
+# 정수·float·bool의 등호-해시 일관성
+pairs = [(1, 1.0), (1, True), (0, False), (0, 0.0)]
+for a, b in pairs:
+    eq   = (a == b)
+    heq  = (hash(a) == hash(b))
+    print(f"{a!r} == {b!r}: {eq}, hash equal: {heq}")
+
+# 위반 시 딕셔너리가 깨짐:
+# dict 조회 시 hash 비교 후 __eq__ 비교를 2단계로 수행
+# → hash(a) != hash(b)이면 a == b여도 찾지 못함</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+1 == 1.0: True, hash equal: True
+1 == True: True, hash equal: True
+0 == False: True, hash equal: True
+0 == 0.0: True, hash equal: True
+    </div>
+    <h3>Part B — 해시 함수 이론: 완전 해시 vs 보편 해시</h3>
+    <p>
+      <strong>완전 해시 함수 (Perfect Hash Function)</strong>: n개의 키에 대해 충돌이 전혀 없는 해시 함수.
+      키 집합이 미리 알려진 경우에만 구성 가능 (예: Python 내장 키워드 집합).
+    </p>
+    <p>
+      <strong>보편 해시 (Universal Hashing)</strong>: 임의의 키 집합에 대해 충돌 확률이
+      <code>1/m</code> 이하 (m=테이블 크기)가 되도록 랜덤하게 선택된 해시 함수 군.
+      Python의 <code>PYTHONHASHSEED</code> 기반 랜덤화는 이 아이디어를 구현합니다.
+    </p>
+    <p>
+      <strong>비둘기집 원리 (Pigeonhole Principle)</strong>: 키 공간(무한)이 슬롯 수(유한)보다 크므로
+      충돌은 수학적으로 불가피합니다. 해시 테이블은 충돌을 없애는 것이 아니라 <em>처리</em>하는 방법을 설계합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 04. 딕셔너리 연산 ==================== -->
+<section id="dict-ops">
+  <h2>딕셔너리 연산 — CRUD + 핵심 메서드</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>기본 CRUD — 만들고, 읽고, 수정하고, 삭제하기</h3>
+    <pre><code class="language-python"># Create (생성)
+profile = {"name": "지민", "age": 30, "city": "Seoul"}
+
+# Read (읽기)
+print(profile["name"])           # 지민
+print(profile.get("age"))        # 30
+print(profile.get("phone", "없음"))  # 없음 — KeyError 대신 기본값 반환
+
+# Update (수정)
+profile["age"] = 31              # 있는 key: 덮어씀
+profile["job"] = "개발자"        # 없는 key: 새로 추가
+print(profile)
+
+# Delete (삭제)
+del profile["city"]
+print("city" in profile)   # False
+
+# 전체 확인
+print(len(profile))        # 3
+print(profile)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+지민
+30
+없음
+{'name': '지민', 'age': 31, 'city': 'Seoul', 'job': '개발자'}
+False
+3
+{'name': '지민', 'age': 31, 'job': '개발자'}
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — KeyError 대신 .get() 사용:</strong>
+      <pre><code class="language-python">scores = {"지민": 95, "수진": 87}
+
+# ❌ 없는 키 접근 → KeyError (프로그램 종료!)
+try:
+    print(scores["하늘"])   # KeyError: '하늘'
+except KeyError as e:
+    print(f"KeyError: {e}")
+
+# ✅ .get()으로 안전하게
+print(scores.get("하늘"))           # None (기본값)
+print(scores.get("하늘", 0))        # 0 (직접 지정한 기본값)
+print(scores.get("지민", 0))        # 95 (있는 키는 정상 반환)
+
+# ✅ setdefault: 없으면 추가하고 반환
+scores.setdefault("하늘", 0)   # 하늘이 없으면 0으로 추가
+scores["하늘"] += 10
+print(scores["하늘"])   # 10
+
+# 카운팅 패턴: setdefault vs defaultdict
+from collections import defaultdict
+word_count = defaultdict(int)   # 없는 키 접근 시 0으로 초기화
+for word in "the quick brown fox the".split():
+    word_count[word] += 1
+print(dict(word_count))</code></pre>
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>.keys()·.values()·.items() / .pop() / .setdefault() / | 병합</h3>
+    <pre><code class="language-python">d = {"a": 1, "b": 2, "c": 3}
+
+# .keys(), .values(), .items() — 뷰 객체 (복사본이 아님!)
+print(list(d.keys()))    # ['a', 'b', 'c']
+print(list(d.values()))  # [1, 2, 3]
+print(list(d.items()))   # [('a', 1), ('b', 2), ('c', 3)]
+
+# for 루프에서 items() 활용
+for key, value in d.items():
+    print(f"{key}: {value}")
+
+print()
+
+# .pop(): 키를 제거하고 값 반환
+val = d.pop("a")
+print(f"꺼낸 값: {val}, 남은 dict: {d}")
+
+# .pop()에 기본값: key 없어도 에러 없음
+result = d.pop("없는키", "없음")
+print(result)   # 없음
+
+# .setdefault(): key가 없을 때만 추가
+d.setdefault("b", 99)   # b가 이미 있으므로 무시
+d.setdefault("d", 4)    # d가 없으므로 4로 추가
+print(d)                # {'b': 2, 'c': 3, 'd': 4}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+['a', 'b', 'c']
+[1, 2, 3]
+[('a', 1), ('b', 2), ('c', 3)]
+a: 1
+b: 2
+c: 3
+
+꺼낸 값: 1, 남은 dict: {'b': 2, 'c': 3}
+없음
+{'b': 2, 'c': 3, 'd': 4}
+    </div>
+    <pre><code class="language-python"># .update(): 다른 딕셔너리를 병합 (in-place)
+base = {"a": 1, "b": 2}
+extra = {"b": 99, "c": 3}   # "b"가 겹침
+
+base.update(extra)           # extra가 우선
+print(base)                  # {'a': 1, 'b': 99, 'c': 3}
+
+# Python 3.9+: | 연산자로 새 딕셔너리 병합 (in-place 아님)
+d1 = {"a": 1, "b": 2}
+d2 = {"b": 99, "c": 3}
+merged = d1 | d2       # d2가 우선
+print(merged)          # {'a': 1, 'b': 99, 'c': 3}
+print(d1)              # {'a': 1, 'b': 2} — 변경 없음
+
+# |= 연산자: in-place 병합
+d1 |= d2
+print(d1)              # {'a': 1, 'b': 99, 'c': 3}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'a': 1, 'b': 99, 'c': 3}
+{'a': 1, 'b': 99, 'c': 3}
+{'a': 1, 'b': 2}
+{'a': 1, 'b': 99, 'c': 3}
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>defaultdict / Counter / 순회 중 수정 함정</h3>
+    <pre><code class="language-python">from collections import defaultdict, Counter
+
+# defaultdict: 없는 key에 접근 시 기본값 자동 생성
+# → setdefault()를 매번 쓰는 번거로움 해소
+
+# 패턴 1: 카운팅
+word_count = defaultdict(int)   # 기본값: 0
+for word in ["apple", "banana", "apple", "cherry", "banana", "apple"]:
+    word_count[word] += 1       # 없는 key도 0에서 시작
+print(dict(word_count))         # {'apple': 3, 'banana': 2, 'cherry': 1}
+
+# 패턴 2: 그루핑
+students = [("지민", "A"), ("수진", "B"), ("하늘", "A"), ("도윤", "B"), ("서연", "A")]
+by_grade = defaultdict(list)    # 기본값: []
+for name, grade in students:
+    by_grade[grade].append(name)
+print(dict(by_grade))           # {'A': ['지민', '하늘', '서연'], 'B': ['수진', '도윤']}
+
+# Counter: 빈도 카운팅 전용 (defaultdict(int)의 강화 버전)
+words = ["apple", "banana", "apple", "cherry", "banana", "apple"]
+counter = Counter(words)
+print(counter)                         # Counter({'apple': 3, 'banana': 2, 'cherry': 1})
+print(counter.most_common(2))          # [('apple', 3), ('banana', 2)]
+print(counter["banana"] + counter["apple"])  # 5
+print(counter["없는단어"])             # 0 — KeyError 없음!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'apple': 3, 'banana': 2, 'cherry': 1}
+{'A': ['지민', '하늘', '서연'], 'B': ['수진', '도윤']}
+Counter({'apple': 3, 'banana': 2, 'cherry': 1})
+[('apple', 3), ('banana', 2)]
+5
+0
+    </div>
+    <div class="callout callout-warning">
+      <strong>순회 중 딕셔너리 수정 — RuntimeError 함정:</strong>
+    </div>
+    <pre><code class="language-python">d = {"a": 1, "b": 2, "c": 3}
+
+# ❌ 순회 중 크기 변경 → RuntimeError
+try:
+    for key in d:
+        if d[key] &lt; 2:
+            del d[key]   # RuntimeError!
+except RuntimeError as e:
+    print(e)   # dictionary changed size during iteration
+
+# ✅ 해결 1: 키 목록을 먼저 복사
+d = {"a": 1, "b": 2, "c": 3}
+for key in list(d.keys()):     # 복사본으로 순회
+    if d[key] &lt; 2:
+        del d[key]
+print(d)   # {'b': 2, 'c': 3}
+
+# ✅ 해결 2: 컴프리헨션으로 새 딕셔너리 생성
+d = {"a": 1, "b": 2, "c": 3}
+d = {k: v for k, v in d.items() if v >= 2}
+print(d)   # {'b': 2, 'c': 3}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+dictionary changed size during iteration
+{'b': 2, 'c': 3}
+{'b': 2, 'c': 3}
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — 딕셔너리 복사의 함정:</strong>
+      <pre><code class="language-python">import copy
+
+original = {"name": "지민", "scores": [90, 85, 92]}
+
+# ❌ 얕은 복사: 최상위만 복사, 내부 리스트는 공유!
+shallow = original.copy()   # 또는 dict(original)
+shallow["scores"].append(100)
+print(original["scores"])   # [90, 85, 92, 100] ← original도 바뀜!
+
+original = {"name": "지민", "scores": [90, 85, 92]}
+# ✅ 깊은 복사: 모든 내부 객체까지 복사
+deep = copy.deepcopy(original)
+deep["scores"].append(100)
+print(original["scores"])   # [90, 85, 92] ← 원본 보존!
+print(deep["scores"])       # [90, 85, 92, 100]
+
+# 단, 최상위 값만 수정할 때는 얕은 복사로 충분
+shallow = original.copy()
+shallow["name"] = "수진"     # 문자열은 불변 → 새 객체 생성
+print(original["name"])     # 지민 ← 영향 없음</code></pre>
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 알아두기 — 딕셔너리 순서 보장은 Python 3.7+부터입니다:</strong>
+      <pre><code class="language-python"># Python 3.7+ (CPython 3.6+): 삽입 순서 보장
+d = {"c": 3, "a": 1, "b": 2}
+print(list(d.keys()))   # ['c', 'a', 'b'] ← 삽입 순서 유지
+
+# 하지만 정렬된 순서를 원한다면 sorted() 사용
+print(sorted(d.keys()))   # ['a', 'b', 'c'] ← 알파벳순
+
+# collections.OrderedDict: Python 3.7 이전에 순서 보장을 위해 사용
+# 현재는 주로 특수 용도 (이동/삭제 등 OrderedDict 특유 메서드)
+from collections import OrderedDict
+
+od = OrderedDict([("c", 3), ("a", 1), ("b", 2)])
+od.move_to_end("c")   # c를 끝으로 이동 (dict에는 없는 메서드)
+print(list(od.keys()))   # ['a', 'b', 'c']
+
+# 주의: 딕셔너리 비교는 순서와 무관
+d1 = {"a": 1, "b": 2}
+d2 = {"b": 2, "a": 1}
+print(d1 == d2)   # True ← 순서 달라도 값이 같으면 같음</code></pre>
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — BINARY_SUBSCR / STORE_SUBSCR 바이트코드</h3>
+    <pre><code class="language-python">import dis
+
+def dict_ops(d, key, value):
+    x = d[key]        # BINARY_SUBSCR
+    d[key] = value    # STORE_SUBSCR
+    return x
+
+dis.dis(dict_ops)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (Python 3.12):</div>
+  LOAD_FAST   0 (d)
+  LOAD_FAST   1 (key)
+  BINARY_SUBSCR          ← d[key] 읽기
+  STORE_FAST  3 (x)
+
+  LOAD_FAST   2 (value)
+  LOAD_FAST   0 (d)
+  LOAD_FAST   1 (key)
+  STORE_SUBSCR           ← d[key] = value 쓰기
+
+  LOAD_FAST   3 (x)
+  RETURN_VALUE
+    </div>
+    <p>
+      CPython은 <code>BINARY_SUBSCR</code>에서 <code>tp_as_mapping-&gt;mp_subscript</code>를 호출합니다.
+      dict의 경우 <code>dict_subscript()</code> → <code>_Py_dict_lookup()</code>으로 이어집니다.
+      이 과정에서 hash 계산, 슬롯 탐색, key 비교가 수행됩니다.
+    </p>
+    <pre><code class="language-python"># Python 3.12 특화 바이트코드 (Specializing Adaptive Interpreter)
+# BINARY_SUBSCR은 실행 횟수가 쌓이면 특화(specialize)됨
+# 딕셔너리의 경우: BINARY_SUBSCR_DICT로 특화
+# → dict lookup을 C 레벨에서 직접 호출 (인터프리터 오버헤드 제거)
+
+import dis
+
+def repeated_lookup(d):
+    for _ in range(100_000):
+        _ = d["key"]   # 반복 실행 시 특화됨
+
+# 특화 전과 후의 바이트코드 변화는 CPython 내부에서만 확인 가능
+# Python 3.12 dis 모듈은 적응 옵코드를 show_caches=True로 볼 수 있음
+dis.dis(repeated_lookup, show_caches=True)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (일부):</div>
+  BINARY_SUBSCR
+      CACHE  (...)     ← 특화를 위한 캐시 슬롯
+    </div>
+    <h3>Part B — 상각 분석 (Amortized Analysis)</h3>
+    <p>
+      딕셔너리 삽입은 대부분 O(1)이지만, 테이블이 꽉 차면(<strong>load factor ≥ 2/3</strong>)
+      resize가 발생합니다. resize는 O(n)이지만 n번의 삽입마다 한 번씩 발생합니다.
+    </p>
+    <p>
+      <strong>상각 O(1) 증명 (회계 방법, Accounting Method):</strong><br>
+      각 삽입 시 실제 비용 1 + "저축" 2를 누적합니다 (총 3크레딧).
+      resize 시 n개를 재배치하는 비용 n은 누적된 n×2 크레딧으로 지불합니다.
+      따라서 삽입 1회의 상각 비용 = O(1).
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 05. 세트(set) ==================== -->
+<section id="sets">
+  <h2>세트(set) — 중복 없는 집합</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 출석부 — 이름은 한 번만</h3>
+    <div class="callout callout-info">
+      <strong>출석부 비유:</strong><br>
+      세트는 "출석부"입니다. 같은 이름을 두 번 적어도 한 번만 기록됩니다.<br>
+      순서는 중요하지 않고, "있다/없다"만 중요합니다.
+    </div>
+    <pre><code class="language-python"># 세트: 중복 자동 제거
+fruits = {"apple", "banana", "apple", "cherry", "banana"}
+print(fruits)       # 중복 제거 (순서는 실행마다 다를 수 있음)
+print(len(fruits))  # 3
+
+# 주의: {} 는 빈 딕셔너리! 빈 세트는 set()
+empty_dict = {}
+empty_set  = set()
+print(type(empty_dict))   # &lt;class 'dict'&gt;
+print(type(empty_set))    # &lt;class 'set'&gt;
+
+# 리스트 → 세트로 중복 제거
+numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3]
+unique = set(numbers)
+print(sorted(unique))   # [1, 2, 3, 4, 5, 6, 9]
+
+# in 연산: O(1) — 딕셔너리와 같은 이유
+print("apple" in fruits)    # True
+print("grape" in fruits)    # False</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'cherry', 'apple', 'banana'}  (순서는 실행마다 다를 수 있음)
+3
+&lt;class 'dict'&gt;
+&lt;class 'set'&gt;
+[1, 2, 3, 4, 5, 6, 9]
+True
+False
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>집합 연산 (|, &amp;, -, ^) / 추가·삭제 메서드</h3>
+    <pre><code class="language-python">a = {1, 2, 3, 4, 5}
+b = {3, 4, 5, 6, 7}
+
+# 집합 연산 (수학의 집합과 동일)
+print(a | b)    # 합집합: {1, 2, 3, 4, 5, 6, 7}
+print(a &amp; b)    # 교집합: {3, 4, 5}
+print(a - b)    # 차집합: {1, 2}  (a에만 있는 것)
+print(b - a)    # 차집합: {6, 7}  (b에만 있는 것)
+print(a ^ b)    # 대칭차집합: {1, 2, 6, 7}  (하나에만 있는 것)
+
+# 부분집합 검사
+print({1, 2} &lt;= {1, 2, 3})    # True  (부분집합)
+print({1, 2} &lt; {1, 2, 3})     # True  (진부분집합)
+print({1, 2, 3} &gt;= {1, 2})    # True  (상위집합)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (순서는 다를 수 있음):</div>
+{1, 2, 3, 4, 5, 6, 7}
+{3, 4, 5}
+{1, 2}
+{6, 7}
+{1, 2, 6, 7}
+True
+True
+True
+    </div>
+    <pre><code class="language-python"># 원소 추가·삭제
+s = {1, 2, 3}
+
+s.add(4)            # 추가
+print(s)            # {1, 2, 3, 4}
+
+s.discard(10)       # 없어도 에러 없음 (safe remove)
+s.remove(1)         # 없으면 KeyError 발생
+print(s)            # {2, 3, 4}
+
+# 메서드 방식 (연산자 동일)
+print(s.union({5, 6}))          # {2, 3, 4, 5, 6}
+print(s.intersection({2, 10}))  # {2}
+print(s.difference({3, 4}))     # {2}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (순서는 다를 수 있음):</div>
+{1, 2, 3, 4}
+{2, 3, 4}
+{2, 3, 4, 5, 6}
+{2}
+{2}
+    </div>
+    <div class="callout callout-warning">
+      <strong>🚨 흔한 실수 — 세트 연산자 <code>|</code>/<code>&amp;</code>/<code>-</code>는 새 세트를 반환합니다:</strong>
+      <pre><code class="language-python">a = {1, 2, 3}
+b = {3, 4, 5}
+
+# ❌ 자주 하는 실수: 반환값을 무시
+a | b   # 새 세트를 반환하지만 a는 그대로!
+print(a)   # {1, 2, 3} ← 변화 없음
+
+# ✅ 반환값을 저장해야 함
+result = a | b
+print(result)   # {1, 2, 3, 4, 5}
+
+# in-place 수정이 필요하면 |= 사용
+a |= b
+print(a)   # {1, 2, 3, 4, 5} ← a가 수정됨
+
+# 정리:
+# a | b    → 새 세트 반환, a 불변     (= a.union(b))
+# a |= b   → a를 수정, 반환 없음      (= a.update(b))
+# a & b    → 새 세트 반환             (= a.intersection(b))
+# a &= b   → a를 수정                 (= a.intersection_update(b))
+# a - b    → 새 세트 반환             (= a.difference(b))
+# a -= b   → a를 수정                 (= a.difference_update(b))</code></pre>
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>frozenset / 순서 보존 중복 제거 / set vs list 성능</h3>
+    <pre><code class="language-python">import time
+
+# frozenset: 불변 세트 → hashable → dict key로 사용 가능
+fs = frozenset({1, 2, 3})
+d = {fs: "불변 세트 키"}
+print(d[frozenset({1, 2, 3})])   # 불변 세트 키
+
+try:
+    s = {1, 2, 3}
+    d2 = {s: "일반 세트"}   # TypeError!
+except TypeError as e:
+    print(e)   # unhashable type: 'set'
+
+# 순서 보존 중복 제거 (set은 순서 없음)
+def deduplicate(lst):
+    """원본 순서를 보존하며 중복 제거."""
+    seen = set()
+    result = []
+    for item in lst:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+
+data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
+print(deduplicate(data))   # [3, 1, 4, 5, 9, 2, 6] — 순서 보존!</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+불변 세트 키
+unhashable type: 'set'
+[3, 1, 4, 5, 9, 2, 6]
+    </div>
+    <pre><code class="language-python"># set in vs list in: 성능 비교
+n = 1_000_000
+data_list = list(range(n))
+data_set  = set(range(n))
+
+target = n - 1   # 최악의 경우: 마지막 원소
+
+start = time.perf_counter()
+_ = target in data_list
+list_time = time.perf_counter() - start
+
+start = time.perf_counter()
+_ = target in data_set
+set_time = time.perf_counter() - start
+
+print(f"list in: {list_time*1000:.3f}ms    — O(n)")
+print(f"set  in: {set_time*1000:.6f}ms  — O(1)")
+print(f"set이 약 {list_time/set_time:.0f}배 빠름")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (대략적):</div>
+list in: 11.234ms    — O(n)
+set  in: 0.001ms  — O(1)
+set이 약 11234배 빠름
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — PySetObject 내부 구조</h3>
+    <pre><code class="language-python">import sys
+
+s_empty  = set()
+s_small  = {1, 2, 3}
+s_medium = set(range(20))
+fs       = frozenset({1, 2, 3})
+
+print(f"빈 set:       {sys.getsizeof(s_empty)} bytes")
+print(f"3개 set:      {sys.getsizeof(s_small)} bytes")
+print(f"20개 set:     {sys.getsizeof(s_medium)} bytes")
+print(f"frozenset 3개: {sys.getsizeof(fs)} bytes")
+
+# set과 frozenset의 타입 계층
+print(issubclass(frozenset, object))  # True
+print(issubclass(set, object))        # True
+# set과 frozenset은 서로 상속 관계가 아님
+print(issubclass(set, frozenset))     # False</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (대략적 — Python 3.12, 64-bit):</div>
+빈 set:       216 bytes
+3개 set:      216 bytes
+20개 set:     2264 bytes
+frozenset 3개: 216 bytes
+True
+True
+False
+    </div>
+    <p>
+      <code>PySetObject</code>는 내부적으로 <code>setentry</code> 배열(hash + key 쌍)을 가집니다.
+      값(value)이 없는 단일 setentry 배열 구조입니다 (dict는 3.6+부터 indices/entries를 분리한 compact dict이지만, set은 단일 배열 유지).
+      초기 크기는 8 슬롯이며, load factor 3/5 초과 시 (fill×5 > (mask+1)×3 (fill = used + dummy, 즉 사용 중 슬롯 + 삭제된 슬롯), 즉 fill/size > 3/5) 확장합니다 (소규모 ≤50,000은 4배, 대규모는 2배 — dict와 동일).
+    </p>
+    <h3>Part B — Set ADT: Hash Set vs Tree Set</h3>
+    <p>
+      집합 자료구조는 두 가지 방식으로 구현됩니다:
+    </p>
+    <table class="summary-table">
+      <thead><tr><th>구현</th><th>in 탐색</th><th>add</th><th>remove</th><th>순서</th><th>예</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hash Set</strong> (Python set)</td><td><strong>O(1)</strong></td><td><strong>O(1)</strong></td><td><strong>O(1)</strong></td><td>없음</td><td>Python set</td></tr>
+        <tr><td><strong>Tree Set</strong> (Red-Black Tree)</td><td>O(log n)</td><td>O(log n)</td><td>O(log n)</td><td>정렬 순서</td><td>Java TreeSet</td></tr>
+        <tr><td>Sorted List</td><td>O(log n)</td><td>O(n)</td><td>O(n)</td><td>정렬 순서</td><td>sortedcontainers</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Python에 Tree Set이 내장되지 않는 이유: 정렬된 집합이 필요하면
+      <code>sortedcontainers.SortedSet</code> 또는 <code>bisect</code> 모듈을 사용합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 06. 컴프리헨션 ==================== -->
+<section id="comprehension">
+  <h2>딕셔너리·세트 컴프리헨션</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>기본 형태 — {key: value for ... }</h3>
+    <pre><code class="language-python"># 딕셔너리 컴프리헨션: {key: value for item in iterable}
+squares = {x: x**2 for x in range(1, 6)}
+print(squares)   # {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+# 단어 길이 딕셔너리
+words = ["apple", "banana", "cherry"]
+word_lengths = {w: len(w) for w in words}
+print(word_lengths)   # {'apple': 5, 'banana': 6, 'cherry': 6}
+
+# 세트 컴프리헨션: {expression for item in iterable}
+evens = {x for x in range(10) if x % 2 == 0}
+print(evens)   # {0, 2, 4, 6, 8}
+
+# 리스트 컴프리헨션과 비교
+list_result = [x**2 for x in range(5)]   # 리스트: [0, 1, 4, 9, 16]
+set_result  = {x**2 for x in range(5)}   # 세트:   {0, 1, 4, 9, 16}
+dict_result = {x: x**2 for x in range(5)}  # 딕셔너리: {0:0, 1:1, 2:4, 3:9, 4:16}
+print(type(list_result), type(set_result), type(dict_result))</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+{'apple': 5, 'banana': 6, 'cherry': 6}
+{0, 2, 4, 6, 8}
+&lt;class 'list'&gt; &lt;class 'set'&gt; &lt;class 'dict'&gt;
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>조건부 / 딕셔너리 변환 / zip() 결합</h3>
+    <pre><code class="language-python"># 조건부 필터링
+scores = {"지민": 85, "수진": 55, "하늘": 92, "도윤": 45, "서연": 78}
+passing = {name: score for name, score in scores.items() if score >= 60}
+print(passing)   # {'지민': 85, '하늘': 92, '서연': 78}
+
+# 딕셔너리 key ↔ value 뒤집기
+original = {"name": "지민", "age": 30, "city": "Seoul"}
+flipped  = {v: k for k, v in original.items()}
+print(flipped)   # {'지민': 'name', 30: 'age', 'Seoul': 'city'}
+
+# 두 리스트를 딕셔너리로 결합: zip() + 컴프리헨션
+keys   = ["name", "age", "city"]
+values = ["수진", 25, "Busan"]
+combined = {k: v for k, v in zip(keys, values)}
+print(combined)  # {'name': '수진', 'age': 25, 'city': 'Busan'}
+
+# 값 변환 + 필터 동시에
+data = {"a": "  Hello  ", "b": "  World  ", "c": ""}
+cleaned = {k: v.strip() for k, v in data.items() if v.strip()}
+print(cleaned)   # {'a': 'Hello', 'b': 'World'}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'지민': 85, '하늘': 92, '서연': 78}
+{'지민': 'name', 30: 'age', 'Seoul': 'city'}
+{'name': '수진', 'age': 25, 'city': 'Busan'}
+{'a': 'Hello', 'b': 'World'}
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>중첩 컴프리헨션 / dict.fromkeys() / 성능 비교</h3>
+    <pre><code class="language-python">import time
+
+# dict.fromkeys(): 동일한 초기값으로 딕셔너리 생성
+keys = ["a", "b", "c", "d"]
+init_dict = dict.fromkeys(keys, 0)    # 모든 값을 0으로 초기화
+print(init_dict)   # {'a': 0, 'b': 0, 'c': 0, 'd': 0}
+
+# 주의: mutable 기본값은 모두 같은 객체를 참조!
+bad  = dict.fromkeys(keys, [])   # 모두 같은 [] 객체!
+good = {k: [] for k in keys}    # 각각 새 [] 생성
+
+bad["a"].append(1)
+print(bad)    # {'a': [1], 'b': [1], 'c': [1], 'd': [1]} ← 모두 변함!
+good["a"].append(1)
+print(good)   # {'a': [1], 'b': [], 'c': [], 'd': []} ← a만 변함
+
+# 중첩 컴프리헨션
+matrix = {(i, j): i * j for i in range(1, 4) for j in range(1, 4)}
+print(matrix[(2, 3)])   # 6
+
+# 성능: 컴프리헨션 vs 루프
+n = 100_000
+
+start = time.perf_counter()
+d1 = {}
+for i in range(n):
+    d1[i] = i**2
+loop_time = time.perf_counter() - start
+
+start = time.perf_counter()
+d2 = {i: i**2 for i in range(n)}
+comp_time = time.perf_counter() - start
+
+print(f"루프: {loop_time*1000:.3f}ms")
+print(f"컴프리헨션: {comp_time*1000:.3f}ms")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'a': 0, 'b': 0, 'c': 0, 'd': 0}
+{'a': [1], 'b': [1], 'c': [1], 'd': [1]}
+{'a': [1], 'b': [], 'c': [], 'd': []}
+6
+루프: 25.432ms
+컴프리헨션: 18.762ms
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — BUILD_MAP / MAP_ADD 바이트코드 / 컴프리헨션 스코프</h3>
+    <pre><code class="language-python">import dis
+
+# 딕셔너리 리터럴: BUILD_MAP
+def make_literal():
+    return {"a": 1, "b": 2}
+
+# 딕셔너리 컴프리헨션: BUILD_MAP + MAP_ADD
+def make_comprehension():
+    return {x: x**2 for x in range(3)}
+
+print("=== 리터럴 ===")
+dis.dis(make_literal)
+print("\n=== 컴프리헨션 ===")
+dis.dis(make_comprehension)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (Python 3.12, 주요 옵코드만):</div>
+=== 리터럴 ===
+  LOAD_CONST              1
+  LOAD_CONST              2
+  LOAD_CONST              ('a', 'b')
+  BUILD_CONST_KEY_MAP     2    ← 키 튜플 + 값들로 dict 생성
+  RETURN_VALUE
+
+=== 컴프리헨션 (PEP 709 인라인) ===
+  LOAD_GLOBAL   range
+  LOAD_CONST    3
+  CALL          1
+  GET_ITER
+  LOAD_FAST_AND_CLEAR  x      ← 외부 x 보호
+  SWAP          2
+  BUILD_MAP     0
+  SWAP          2
+  FOR_ITER      ...
+    STORE_FAST  x
+    LOAD_FAST   x              ← key
+    LOAD_FAST   x              ← base for value
+    LOAD_CONST  2
+    BINARY_OP   8 (**)
+    MAP_ADD     2              ← 딕셔너리에 key:value 추가
+  END_FOR
+  SWAP          2
+  STORE_FAST    x              ← 외부 x 복원
+  RETURN_VALUE
+    </div>
+    <p>
+      <strong>컴프리헨션은 자체 스코프를 가집니다</strong> (Python 3 이후).<br>
+      컴프리헨션 내부 변수는 외부로 유출되지 않습니다.<br>
+      (Python 2의 리스트 컴프리헨션은 외부 스코프를 공유해 변수가 유출됐습니다.)
+    </p>
+    <h3>Part B — 함수형 프로그래밍 관점: 컴프리헨션 = map + filter의 합성</h3>
+    <p>
+      딕셔너리 컴프리헨션 <code>{k: f(k) for k in source if pred(k)}</code>는
+      함수형으로 표현하면:
+    </p>
+    <pre><code class="language-python"># 컴프리헨션
+result1 = {k: k**2 for k in range(10) if k % 2 == 0}
+
+# 동등한 함수형 표현
+result2 = dict(map(lambda k: (k, k**2), filter(lambda k: k % 2 == 0, range(10))))
+
+print(result1 == result2)   # True
+# {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
+
+# 컴프리헨션이 선호되는 이유:
+# 1. 가독성: 의도가 명확
+# 2. 성능: CPython이 MAP_ADD로 최적화 (map+dict는 여러 호출 오버헤드)
+# 3. Pythonic: PEP 274에서 도입 (Python 2.7+)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+True
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 07. 해시 충돌 ==================== -->
+<section id="collision">
+  <h2>해시 충돌 — Hash Collision</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>비유: 같은 서가에 두 권의 책</h3>
+    <div class="callout callout-info">
+      <strong>서가 충돌 비유:</strong><br>
+      도서관에서 "파이썬 기초"와 "파이썬 심화" 두 책의 분류번호가 우연히 같은 서가를 가리킬 수 있습니다.<br>
+      이것이 <strong>해시 충돌(Hash Collision)</strong>입니다.<br><br>
+      해결책: "이미 책이 있으면 옆 칸으로 이동"합니다. 이 방식을 <strong>오픈 어드레싱(Open Addressing)</strong>이라 합니다.
+    </div>
+    <pre><code class="language-python"># 해시 충돌이 일어날 수 있음을 시각화
+# (슬롯 수가 8일 때, 서로 다른 두 키가 같은 슬롯을 가리킬 수 있음)
+n_slots = 8
+keys_to_try = ["a", "i", "q", "y"]   # 실제로 충돌할 수 있음
+
+for key in keys_to_try:
+    slot = hash(key) % n_slots
+    print(f'hash("{key}") % 8 = {slot}')
+
+# Python이 충돌을 자동으로 처리 → 사용자는 신경 쓸 필요 없음!
+d = {}
+for key in keys_to_try:
+    d[key] = ord(key)
+print(d)   # 모든 key가 정상적으로 저장됨</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (실행마다 다름 — hash randomization):</div>
+hash("a") % 8 = (0~7 사이 값)
+hash("i") % 8 = (0~7 사이 값)
+hash("q") % 8 = (0~7 사이 값)
+hash("y") % 8 = (0~7 사이 값)
+{'a': 97, 'i': 105, 'q': 113, 'y': 121}
+    </div>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>오픈 어드레싱 / 리사이징 / 딕셔너리 메모리 특성</h3>
+    <div class="callout callout-info">
+      <strong>오픈 어드레싱 (Open Addressing):</strong><br>
+      충돌 시 "다음 빈 슬롯"을 찾아 이동합니다.<br>
+      Python dict는 단순 선형 탐사(linear probing) 대신 <strong>perturbation 기반 탐사</strong>를 사용합니다
+      — 특정 패턴에서의 군집화(clustering) 방지.
+    </div>
+    <pre><code class="language-python">import sys
+
+# 딕셔너리 크기 변화 측정 (내부 테이블이 언제 확장되는가)
+sizes = []
+d = {}
+for i in range(20):
+    d[i] = i
+    sizes.append(sys.getsizeof(d))
+
+# 크기가 커지는 시점 확인
+prev = sizes[0]
+for i, size in enumerate(sizes):
+    if size != prev:
+        print(f"항목 {i+1}개일 때 resize: {prev} → {size} bytes")
+        prev = size
+
+# 딕셔너리는 리스트보다 더 많은 메모리를 씀
+# 이유: 해시 테이블 슬롯을 미리 확보 + 슬롯당 3개 포인터 (hash, key, value)
+import sys
+lst = list(range(100))
+dct = {i: i for i in range(100)}
+print(f"\nlist 100개: {sys.getsizeof(lst)} bytes")
+print(f"dict 100개: {sys.getsizeof(dct)} bytes")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (Python 3.12):</div>
+항목 6개일 때 resize: 224 → 352 bytes
+항목 11개일 때 resize: 352 → 632 bytes
+
+list 100개: 856 bytes
+dict 100개: 4688 bytes
+    </div>
+    <div class="callout callout-info">
+      <strong>부하 인수 (Load Factor) = 사용 중인 슬롯 / 전체 슬롯:</strong><br>
+      Python dict는 load factor가 <strong>2/3</strong>를 초과하면 자동으로 테이블을 확장합니다.<br>
+      확장 크기: 소규모 dict는 4배, 대규모 dict는 2배.
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>충돌의 영향 / 극단적 충돌 케이스 / 설계 시사점</h3>
+    <pre><code class="language-python">import time
+
+# 정상 딕셔너리: 균등 분포
+normal_dict = {str(i): i for i in range(10_000)}
+
+# 극단적 충돌 예시 만들기
+# (보통은 불가능하지만, 고의로 같은 해시를 가진 키를 만들 수 있음)
+# PYTHONHASHSEED가 고정된 경우에만 재현 가능
+
+# 실용적 시사점: 키 선택 기준
+# 1. 불변 (Immutable) — int, str, tuple, frozenset
+# 2. 같은 값 = 같은 해시 (해시-등호 일관성)
+# 3. 해시 분포가 고름 (문자열·숫자는 Python이 보장)
+
+# 나쁜 키 패턴: 거의 같은 해시를 만들어내는 커스텀 객체
+class BadHash:
+    def __init__(self, value):
+        self.value = value
+    def __hash__(self):
+        return 42   # 모든 객체가 같은 해시! 최악의 O(n) 충돌
+    def __eq__(self, other):
+        return self.value == other.value
+
+# O(n)으로 성능 저하되는 케이스
+n = 1000
+bad_dict = {}
+start = time.perf_counter()
+for i in range(n):
+    bad_dict[BadHash(i)] = i   # 모두 같은 해시 → 최악의 충돌
+bad_time = time.perf_counter() - start
+
+good_dict = {}
+start = time.perf_counter()
+for i in range(n):
+    good_dict[i] = i   # 정상 해시
+good_time = time.perf_counter() - start
+
+print(f"BadHash dict 삽입 {n}개: {bad_time*1000:.2f}ms")
+print(f"정상    dict 삽입 {n}개: {good_time*1000:.2f}ms")
+print(f"충돌 비율: {bad_time/good_time:.1f}배 느림")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과 (대략적):</div>
+BadHash dict 삽입 1000개: 45.32ms
+정상    dict 삽입 1000개: 0.12ms
+충돌 비율: 377.7배 느림
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — CPython perturbation probing 공식 / DKIX_EMPTY·DKIX_DUMMY</h3>
+    <pre><code class="language-python"># CPython Objects/dictobject.c의 탐사 공식 (Python으로 재현)
+def cpython_probe_sequence(hash_val, mask):
+    """CPython dict의 충돌 해결 탐사 순서를 시뮬레이션."""
+    perturb = hash_val
+    i = hash_val & mask          # 초기 슬롯
+
+    visited = [i]
+    for _ in range(min(mask, 20)):  # 최대 20 단계만
+        perturb >>= 5              # perturbation 감소
+        i = (i * 5 + perturb + 1) & mask   # 다음 슬롯
+        visited.append(i)
+        if len(set(visited)) == len(visited):
+            pass  # 중복 없이 탐색 중
+        else:
+            break   # 순환 완료
+
+    return visited
+
+# mask = table_size - 1 (table_size는 2의 거듭제곱)
+mask = 7  # table_size = 8
+
+print("hash=0 탐사 순서:", cpython_probe_sequence(0, mask))
+print("hash=3 탐사 순서:", cpython_probe_sequence(3, mask))</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+hash=0 탐사 순서: [0, 1, 6, 7, 4, 5, 2, 3]
+hash=3 탐사 순서: [3, 0, 1, 6, 7, 4, 5, 2]
+    </div>
+    <p>
+      슬롯의 상태는 세 가지입니다:
+    </p>
+    <ul>
+      <li><strong>DKIX_EMPTY</strong>: 한 번도 사용된 적 없는 슬롯. 탐사 중 이 슬롯을 만나면 → 키 없음 확정.</li>
+      <li><strong>Active</strong>: 현재 키-값이 저장된 슬롯.</li>
+      <li><strong>DKIX_DUMMY (Tombstone)</strong>: 삭제된 슬롯. 탐사를 계속해야 함 (중간에 멈추면 다음 충돌 키를 못 찾음).</li>
+    </ul>
+    <h3>Part B — Separate Chaining vs Open Addressing</h3>
+    <table class="summary-table">
+      <thead><tr><th>방식</th><th>충돌 처리</th><th>메모리</th><th>캐시 효율</th><th>사용 예</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Open Addressing</strong></td><td>다음 빈 슬롯으로 이동</td><td>배열 내부 (연속적)</td><td>높음 (캐시 친화적)</td><td>Python dict/set</td></tr>
+        <tr><td><strong>Separate Chaining</strong></td><td>같은 슬롯에 연결 리스트 연결</td><td>포인터 추가 필요 (비연속)</td><td>낮음 (포인터 추적)</td><td>Java HashMap</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Python이 Open Addressing을 선택한 이유: 메모리 연속성 덕분에 CPU 캐시 적중률이 높아 실제 성능이 우수합니다.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 08. AI와 딕셔너리 ==================== -->
+<section id="ai-dict">
+  <h2>AI와 딕셔너리 — AI가 만든 코드를 검토하는 방법</h2>
+
+  <!-- 초급 -->
+  <div class="level-section elementary">
+    <span class="level-badge level-elementary">초급</span>
+    <h3>AI 딕셔너리 코드 체크리스트 3가지</h3>
+    <div class="callout callout-info">
+      <strong>AI가 딕셔너리를 사용한 코드, 이것을 확인하세요:</strong>
+    </div>
+    <ol>
+      <li>
+        <strong>없는 key에 d[key]로 접근하는가?</strong> — KeyError 발생!
+        <pre><code class="language-python"># ❌ AI가 자주 쓰는 패턴 — 없는 key에 바로 접근
+user = {"name": "지민", "age": 30}
+print(user["phone"])   # KeyError: 'phone'
+
+# ✅ .get()으로 안전하게
+print(user.get("phone", "없음"))   # 없음</code></pre>
+      </li>
+      <li>
+        <strong>순회(for) 중에 딕셔너리를 수정하는가?</strong> — RuntimeError!
+        <pre><code class="language-python"># ❌ 순회 중 삭제
+scores = {"지민": 85, "수진": 40, "하늘": 70}
+for name in scores:
+    if scores[name] &lt; 60:
+        del scores[name]   # RuntimeError!
+
+# ✅ 키 복사 후 순회
+for name in list(scores.keys()):
+    if scores[name] &lt; 60:
+        del scores[name]</code></pre>
+      </li>
+      <li>
+        <strong>빈 세트를 {}로 만드는가?</strong> — 딕셔너리가 됩니다!
+        <pre><code class="language-python"># ❌ 잘못된 빈 세트
+empty = {}
+print(type(empty))   # &lt;class 'dict'&gt; ← 세트가 아님!
+
+# ✅ 올바른 빈 세트
+empty = set()
+print(type(empty))   # &lt;class 'set'&gt;</code></pre>
+      </li>
+    </ol>
+  </div>
+
+  <!-- 중급 -->
+  <div class="level-section intermediate">
+    <span class="level-badge level-intermediate">중급</span>
+    <h3>AI 코드 패턴 분석: 카운팅 / 그루핑 / 중복 제거</h3>
+    <pre><code class="language-python"># 패턴 1: 카운팅 — AI가 자주 쓰는 세 가지 방식
+text = "the quick brown fox jumps over the lazy dog"
+words = text.split()
+
+# 방식 A: if-else (장황함)
+count_a = {}
+for word in words:
+    if word in count_a:
+        count_a[word] += 1
+    else:
+        count_a[word] = 1
+
+# 방식 B: .get() (중급)
+count_b = {}
+for word in words:
+    count_b[word] = count_b.get(word, 0) + 1
+
+# 방식 C: Counter (가장 간결)
+from collections import Counter
+count_c = Counter(words)
+
+print(count_a == count_b == dict(count_c))   # True — 결과 동일
+print(count_c.most_common(3))  # 가장 많은 단어 3개</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+True
+[('the', 2), ('quick', 1), ('brown', 1)]
+    </div>
+    <pre><code class="language-python"># 패턴 2: 그루핑 — AI 개선 포인트
+data = [
+    ("지민", "개발"),
+    ("수진", "디자인"),
+    ("하늘", "개발"),
+    ("도윤", "기획"),
+    ("서연", "개발"),
+]
+
+# ❌ AI가 자주 쓰는 장황한 코드
+groups = {}
+for name, dept in data:
+    if dept not in groups:
+        groups[dept] = []
+    groups[dept].append(name)
+
+# ✅ setdefault로 개선
+groups2 = {}
+for name, dept in data:
+    groups2.setdefault(dept, []).append(name)
+
+# ✅✅ defaultdict로 가장 간결
+from collections import defaultdict
+groups3 = defaultdict(list)
+for name, dept in data:
+    groups3[dept].append(name)
+
+print(dict(groups3))  # {'개발': ['지민', '하늘', '서연'], '디자인': ['수진'], '기획': ['도윤']}</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'개발': ['지민', '하늘', '서연'], '디자인': ['수진'], '기획': ['도윤']}
+    </div>
+  </div>
+
+  <!-- 고급 -->
+  <div class="level-section advanced">
+    <span class="level-badge level-advanced">고급</span>
+    <h3>JSON ↔ dict / 중첩 딕셔너리 탐색 / AI 리팩토링</h3>
+    <pre><code class="language-python">import json
+
+# JSON ↔ dict: Python dict는 JSON의 기반
+data = {
+    "name": "지민",
+    "age": 30,
+    "skills": ["Python", "SQL"],
+    "address": {"city": "Seoul", "zip": "04000"}
+}
+
+# dict → JSON 문자열
+json_str = json.dumps(data, ensure_ascii=False, indent=2)
+print(json_str[:80], "...")
+
+# JSON 문자열 → dict
+parsed = json.loads(json_str)
+print(parsed["address"]["city"])   # Seoul
+print(type(parsed))                # &lt;class 'dict'&gt;
+
+# 중첩 딕셔너리 안전 탐색 (.get() 체이닝)
+user = {"profile": {"name": "수진"}}
+# ❌ 위험: user["settings"]["theme"] → KeyError
+# ✅ 안전:
+theme = user.get("settings", {}).get("theme", "light")
+print(theme)   # light (기본값)</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{
+  "name": "지민",
+  "age": 30, ...
+Seoul
+&lt;class 'dict'&gt;
+light
+    </div>
+    <pre><code class="language-python"># AI가 자주 만드는 과도한 조건부 패턴 → 딕셔너리로 리팩토링
+# ❌ AI 생성 코드: 긴 if-elif 체인
+def get_grade_msg_bad(score):
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    elif score >= 60:
+        return "D"
+    else:
+        return "F"
+
+# ✅ 리스트 + 반복으로 리팩토링
+def get_grade_msg_good(score):
+    thresholds = [(90, "A"), (80, "B"), (70, "C"), (60, "D")]
+    for threshold, grade in thresholds:
+        if score >= threshold:
+            return grade
+    return "F"
+
+for s in [95, 83, 71, 62, 45]:
+    print(f"{s}점: {get_grade_msg_good(s)}")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+95점: A
+83점: B
+71점: C
+62점: D
+45점: F
+    </div>
+  </div>
+
+  <!-- 전공자 -->
+  <div class="level-section expert">
+    <span class="level-badge level-expert">전공자</span>
+    <h3>Part A — TypedDict / type annotations / NamedTuple 비교</h3>
+    <pre><code class="language-python">from typing import TypedDict, Optional
+import inspect
+
+# TypedDict: dict의 구조를 정적으로 선언
+class UserProfile(TypedDict):
+    name: str
+    age: int
+    email: Optional[str]
+
+# 사용: 일반 dict처럼 동작하지만 mypy가 타입 검사
+user1: UserProfile = {"name": "지민", "age": 30, "email": None}
+print(user1)                     # {'name': '지민', 'age': 30, 'email': None}
+print(type(user1))               # &lt;class 'dict'&gt; — 런타임엔 여전히 dict!
+print(isinstance(user1, dict))   # True
+
+# 주의: TypedDict는 런타임 검사를 안 함 — mypy 같은 정적 분석기 전용
+wrong: UserProfile = {"name": 123}  # mypy가 잡지만 런타임엔 허용됨
+
+# TypedDict vs dataclass vs NamedTuple
+from dataclasses import dataclass
+from typing import NamedTuple
+
+@dataclass
+class UserDC:
+    name: str
+    age: int
+
+class UserNT(NamedTuple):
+    name: str
+    age: int
+
+u_dict  = UserProfile(name="수진", age=25, email=None)  # 실제론 dict() 호출
+u_dc    = UserDC(name="수진", age=25)
+u_nt    = UserNT(name="수진", age=25)
+
+print(type(u_dict))   # &lt;class 'dict'&gt;
+print(type(u_dc))     # &lt;class '__main__.UserDC'&gt;
+print(type(u_nt))     # &lt;class '__main__.UserNT'&gt;
+print(u_nt[0])        # '수진' — NamedTuple은 인덱스 접근도 가능</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+{'name': '지민', 'age': 30, 'email': None}
+&lt;class 'dict'&gt;
+True
+&lt;class 'dict'&gt;
+&lt;class '__main__.UserDC'&gt;
+&lt;class '__main__.UserNT'&gt;
+수진
+    </div>
+    <h3>Part B — 딕셔너리와 데이터베이스 인덱스: B-Tree vs Hash Index</h3>
+    <p>
+      데이터베이스 인덱스는 Python dict와 유사한 개념이지만, 선택 기준이 다릅니다:
+    </p>
+    <table class="summary-table">
+      <thead><tr><th>인덱스 유형</th><th>조회 (=)</th><th>범위 조회 (BETWEEN)</th><th>정렬</th><th>구현</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hash Index</strong></td><td>O(1)</td><td>불가</td><td>불가</td><td>PostgreSQL Hash Index</td></tr>
+        <tr><td><strong>B-Tree Index</strong></td><td>O(log n)</td><td>O(log n + k)</td><td>자연 지원</td><td>대부분 DB 기본값</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Python dict는 Hash Index 원리를 사용합니다.
+      <code>WHERE name = '지민'</code>는 O(1)이지만 <code>WHERE age BETWEEN 20 AND 30</code>은 O(n) —
+      해시로 범위 질의 불가능.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 09. 10주 종합 복습 ==================== -->
+<section id="review">
+  <h2>10주 종합 복습 — 파이썬의 "왜"를 돌아보며</h2>
+
+  <div class="story-block">
+    <p>10주 동안 우리가 탐구한 것은 "어떻게 코드를 쓰는가"가 아니라 <strong>"파이썬이 왜 이렇게 작동하는가"</strong>였습니다.</p>
+
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th>주차</th>
+          <th>주제</th>
+          <th>핵심 WHY</th>
+          <th>기억할 키워드</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1주</strong></td>
+          <td>PyWhy</td>
+          <td>왜 코딩을 배우는가? print()는 왜 함수인가?</td>
+          <td>인터프리터, 함수 호출, REPL</td>
+        </tr>
+        <tr>
+          <td><strong>2주</strong></td>
+          <td>데이터와 타입</td>
+          <td>왜 컴퓨터는 타입을 구분하는가?</td>
+          <td>int/str/float/bool, 타입 변환, Truthiness</td>
+        </tr>
+        <tr>
+          <td><strong>3주</strong></td>
+          <td>변수와 입출력</td>
+          <td>왜 변수는 "상자"가 아닌 "이름표"인가?</td>
+          <td>Binding, Reference, Name Object</td>
+        </tr>
+        <tr>
+          <td><strong>4주</strong></td>
+          <td>연산자와 표현식</td>
+          <td>왜 ==와 =이 다른가? 단락 평가란?</td>
+          <td>Operator, Short-circuit, Truthiness</td>
+        </tr>
+        <tr>
+          <td><strong>5주</strong></td>
+          <td>조건문</td>
+          <td>왜 컴퓨터는 True/False로만 판단하는가?</td>
+          <td>if/elif/else, bool(), Truthiness</td>
+        </tr>
+        <tr>
+          <td><strong>6주</strong></td>
+          <td>리스트와 튜플</td>
+          <td>왜 Mutable/Immutable이 나뉘는가?</td>
+          <td>list, tuple, Iterable, Sequence</td>
+        </tr>
+        <tr>
+          <td><strong>7주</strong></td>
+          <td>반복문 — for</td>
+          <td>for는 왜 Iterator Protocol인가?</td>
+          <td>iter(), next(), StopIteration, De-sugaring</td>
+        </tr>
+        <tr>
+          <td><strong>8주</strong></td>
+          <td>반복문 — while</td>
+          <td>왜 while은 "상태"를 보는가?</td>
+          <td>조건 설계, break/continue, 무한 루프</td>
+        </tr>
+        <tr>
+          <td><strong>9주</strong></td>
+          <td>함수</td>
+          <td>왜 함수는 First-class Object인가?</td>
+          <td>LEGB, 클로저, Pass by Object Reference</td>
+        </tr>
+        <tr>
+          <td><strong>10주</strong></td>
+          <td>딕셔너리와 세트</td>
+          <td>왜 O(1) 검색이 가능한가?</td>
+          <td>hash(), hashable, Open Addressing</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-info" style="margin-top: 24px;">
+      <strong>10주가 연결되는 방식:</strong><br>
+      <code>이름표(3주)</code> → <code>이름은 타입을 가진다(2주)</code> → <code>이름은 조건에 따라 분기한다(5주)</code><br>
+      → <code>이름을 반복한다(7~8주)</code> → <code>이름을 함수로 묶는다(9주)</code><br>
+      → <code>함수와 데이터를 Key로 찾는다(10주)</code><br><br>
+      파이썬의 모든 개념은 <strong>"이름이 객체를 가리킨다"</strong>는 하나의 원리로 연결됩니다.
+    </div>
+
+    <pre><code class="language-python"># 10주 여정을 하나의 코드로
+from collections import Counter
+
+def analyze_text(text: str) -> dict:
+    """텍스트 분석 — 10주 개념 총동원.
+
+    사용된 개념:
+    - 변수/타입: text, words, result
+    - 조건문: if not text
+    - 함수: def, return, 타입 어노테이션
+    - for 반복문: Iterator Protocol
+    - 리스트/세트: words, unique_words
+    - 딕셔너리: result, Counter
+    - 클로저 없이도 함수가 독립적으로 작동
+    """
+    if not text:        # Truthiness (2주)
+        return {}
+
+    words = text.lower().split()          # str 메서드 (2주)
+    unique_words = set(words)             # 세트 (10주)
+    word_count = Counter(words)           # 딕셔너리 (10주)
+
+    result = {                            # 딕셔너리 컴프리헨션 (10주)
+        "total": len(words),
+        "unique": len(unique_words),
+        "top3": word_count.most_common(3),
+        "avg_length": sum(len(w) for w in words) / len(words),  # 제너레이터 (7주)
+    }
+    return result
+
+sample = "the quick brown fox jumps over the lazy dog the"
+result = analyze_text(sample)
+for key, value in result.items():        # items() 순회 (10주)
+    print(f"{key}: {value}")</code></pre>
+    <div class="output-block">
+      <div class="output-label">실행 결과:</div>
+total: 10
+unique: 8
+top3: [('the', 3), ('quick', 1), ('brown', 1)]
+avg_length: 3.8
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. 실습 ==================== -->
+<section id="hands-on">
+  <h2>실습: 해시 테이블 탐험</h2>
+
+  <div class="story-block">
+    <h3>실습 1 — 딕셔너리 내부 동작 시각화</h3>
+    <p>
+      딕셔너리의 메모리 사용량이 어느 시점에 어떻게 변하는지 직접 측정하세요.
+      load factor 2/3 지점을 찾아보세요.
+    </p>
+    <pre><code class="language-python">import sys
+
+# 딕셔너리에 항목을 하나씩 추가하며 크기 변화 측정
+d = {}
+prev_size = sys.getsizeof(d)
+print(f"항목 수  | 크기(bytes) | 변화")
+print("-" * 35)
+
+for i in range(30):
+    d[i] = i
+    curr_size = sys.getsizeof(d)
+    changed = "← resize!" if curr_size != prev_size else ""
+    print(f"{i+1:6}   | {curr_size:10}  | {changed}")
+    prev_size = curr_size
+
+# 탐구 질문:
+# Q1. resize가 일어나는 항목 수와 load factor(2/3)의 관계는?
+# Q2. resize 후 크기는 이전의 몇 배가 되는가?
+# Q3. 세트(set)도 같은 패턴을 보이는가?</code></pre>
+
+    <h3>실습 2 — hash() 함수 탐구</h3>
+    <p>
+      다양한 객체의 해시값을 분석하고 해시 일관성을 직접 확인하세요.
+    </p>
+    <pre><code class="language-python">import sys
+
+# 1. 정수, float, bool의 해시 관계
+for val in [0, 0.0, False, 1, 1.0, True, -1, -2]:
+    h = hash(val)
+    print(f"hash({val!r:10}) = {h}")
+
+# 2. 해시 일관성 검증: a == b → hash(a) == hash(b)
+pairs = [(1, 1.0), (1, True), (0, False), (0, 0.0)]
+print("\n=== 등호-해시 일관성 ===")
+for a, b in pairs:
+    print(f"{a!r} == {b!r}: {a == b}, hash equal: {hash(a) == hash(b)}")
+
+# 3. 문자열 해시 랜덤화 확인
+# 같은 실행 내에서는 일관됨
+s = "hello"
+print(f"\nhash('{s}') 3번 비교: {hash(s) == hash(s) == hash(s)}")
+
+# 4. 커스텀 __hash__ 구현 실험
+class GoodPoint:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+    def __eq__(self, other):
+        return (self.x, self.y) == (other.x, other.y)
+    def __hash__(self):
+        return hash((self.x, self.y))
+
+p1 = GoodPoint(1, 2)
+p2 = GoodPoint(1, 2)
+d = {p1: "first", p2: "second"}   # p1 == p2이므로 같은 key!
+print(f"\ndict with two equal points: {len(d)} 항목")   # 1 항목
+print(d[GoodPoint(1, 2)])   # 'second'</code></pre>
+
+    <h3>실습 3 — 집합 연산으로 데이터 분석</h3>
+    <p>
+      세트 연산을 활용하여 두 그룹의 차이를 분석하세요.
+    </p>
+    <pre><code class="language-python">class_a = {"지민", "수진", "하늘", "도윤", "서연"}
+class_b = {"하늘", "도윤", "민준", "예은", "태호"}
+
+# 두 반 모두 있는 학생
+both = class_a &amp; class_b
+print(f"양 반 모두: {both}")
+
+# A반에만 있는 학생
+only_a = class_a - class_b
+print(f"A반만: {only_a}")
+
+# B반에만 있는 학생
+only_b = class_b - class_a
+print(f"B반만: {only_b}")
+
+# 한 반에만 있는 학생 (대칭 차집합)
+exclusive = class_a ^ class_b
+print(f"한 반만: {exclusive}")
+
+# 전체 학생 수 (중복 없이)
+all_students = class_a | class_b
+print(f"전체 {len(all_students)}명: {sorted(all_students)}")</code></pre>
+  </div>
+</section>
+
+<!-- ==================== 11. 연습문제 ==================== -->
+<section id="exercises">
+  <h2>연습문제 (12문제)</h2>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 1</span>
+    <h3>빈도 카운터</h3>
+    <p>문자열을 받아 각 문자의 등장 횟수를 딕셔너리로 반환하는 함수를 작성하세요. <code>Counter</code>는 사용하지 않습니다:</p>
+    <pre><code class="language-python">def char_count(s):
+    """각 문자의 등장 횟수를 딕셔너리로 반환. 공백 제외."""
+    # 구현하세요
+    pass
+
+print(char_count("hello"))          # {'h': 1, 'e': 1, 'l': 2, 'o': 1}
+print(char_count("banana"))         # {'b': 1, 'a': 3, 'n': 2}
+print(char_count(""))               # {}</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def char_count(s):
+    result = {}
+    for c in s:
+        if c != " ":
+            result[c] = result.get(c, 0) + 1
+    return result
+# 또는: {c: s.count(c) for c in set(s) if c != " "}</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 2</span>
+    <h3>딕셔너리 뒤집기</h3>
+    <p>key와 value를 서로 바꾸는 함수를 작성하세요. 모든 value는 hashable하다고 가정합니다:</p>
+    <pre><code class="language-python">def invert_dict(d):
+    """dict의 key와 value를 바꾸어 반환."""
+    # 구현하세요
+    pass
+
+print(invert_dict({"a": 1, "b": 2, "c": 3}))   # {1: 'a', 2: 'b', 3: 'c'}
+print(invert_dict({"x": "X", "y": "Y"}))        # {'X': 'x', 'Y': 'y'}
+print(invert_dict({}))                           # {}</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def invert_dict(d):
+    return {v: k for k, v in d.items()}</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 3</span>
+    <h3>두 딕셔너리의 공통 키</h3>
+    <p>두 딕셔너리에서 공통으로 존재하는 키들의 세트를 반환하는 함수를 작성하세요:</p>
+    <pre><code class="language-python">def common_keys(d1, d2):
+    """두 딕셔너리의 공통 키를 세트로 반환."""
+    # 구현하세요 — 세트 연산 활용
+    pass
+
+d1 = {"a": 1, "b": 2, "c": 3}
+d2 = {"b": 20, "c": 30, "d": 40}
+print(common_keys(d1, d2))   # {'b', 'c'}
+print(common_keys({}, d2))   # set()
+print(common_keys(d1, {}))   # set()</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def common_keys(d1, d2):
+    return set(d1) & set(d2)
+# set(d)는 딕셔너리의 키 집합을 반환함</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-elem">
+    <span class="level-badge level-elementary">초급 4</span>
+    <h3>리스트 중복 제거 (순서 보존)</h3>
+    <p>리스트에서 중복을 제거하되 원본 순서를 보존하여 반환하는 함수를 작성하세요. 세트를 활용하세요:</p>
+    <pre><code class="language-python">def unique_ordered(lst):
+    """순서를 보존하며 중복 제거한 리스트 반환."""
+    # 구현하세요 — set을 보조 도구로 사용
+    pass
+
+print(unique_ordered([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]))  # [3, 1, 4, 5, 9, 2, 6]
+print(unique_ordered(["a", "b", "a", "c", "b"]))           # ['a', 'b', 'c']
+print(unique_ordered([]))                                   # []</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def unique_ordered(lst):
+    return list(dict.fromkeys(lst))
+# dict.fromkeys(lst)는 중복 없이 순서를 보존한 딕셔너리를 만듦
+# Python 3.7+ 딕셔너리는 삽입 순서 보장</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 5</span>
+    <h3>단어 빈도 분석</h3>
+    <p>텍스트에서 단어별 빈도를 계산하고, 상위 N개 단어를 반환하는 함수를 작성하세요. <code>Counter</code>는 사용하지 않습니다:</p>
+    <pre><code class="language-python">def top_words(text, n=3):
+    """텍스트에서 가장 많이 등장한 n개 단어를 (단어, 횟수) 튜플 리스트로 반환.
+    소문자로 통일, 빈 문자열 제외.
+    """
+    # 구현하세요 — 딕셔너리로 카운팅 후 정렬
+    pass
+
+text = "the quick brown fox jumps over the lazy dog the quick"
+print(top_words(text, 3))   # [('the', 3), ('quick', 2), ('brown', 1)]
+print(top_words("", 3))     # []</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def top_words(text, n=3):
+    if not text:
+        return []
+    counts = {}
+    for word in text.lower().split():
+        if word:
+            counts[word] = counts.get(word, 0) + 1
+    return sorted(counts.items(), key=lambda x: x[1], reverse=True)[:n]</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 6</span>
+    <h3>그루핑 함수</h3>
+    <p>리스트를 주어진 key 함수 기준으로 그루핑하는 함수를 작성하세요:</p>
+    <pre><code class="language-python">def group_by(lst, key_func):
+    """lst를 key_func 결과값 기준으로 그루핑.
+    반환: {key: [해당 key를 가진 원소들]}
+    """
+    # 구현하세요
+    pass
+
+# 짝수/홀수 그루핑
+result = group_by([1, 2, 3, 4, 5, 6], lambda x: x % 2)
+print(result)   # {1: [1, 3, 5], 0: [2, 4, 6]}
+
+# 길이 기준 그루핑
+words = ["a", "bb", "cc", "ddd", "ee"]
+print(group_by(words, len))   # {1: ['a'], 2: ['bb', 'cc', 'ee'], 3: ['ddd']}</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">from collections import defaultdict
+
+def group_by(lst, key_func):
+    result = defaultdict(list)
+    for item in lst:
+        result[key_func(item)].append(item)
+    return dict(result)</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 7</span>
+    <h3>딕셔너리 컴프리헨션 활용</h3>
+    <p>다음 세 가지를 딕셔너리 컴프리헨션으로 구현하세요:</p>
+    <pre><code class="language-python"># 1. 숫자 리스트에서 짝수만 골라 {숫자: 제곱} 딕셔너리 만들기
+def even_squares(numbers):
+    # 구현하세요 — 딕셔너리 컴프리헨션 사용
+    pass
+
+print(even_squares([1, 2, 3, 4, 5, 6]))   # {2: 4, 4: 16, 6: 36}
+
+# 2. 두 리스트를 zip으로 결합
+def lists_to_dict(keys, values):
+    # 구현하세요 — 딕셔너리 컴프리헨션 + zip
+    pass
+
+print(lists_to_dict(["a", "b", "c"], [1, 2, 3]))   # {'a': 1, 'b': 2, 'c': 3}
+
+# 3. 딕셔너리에서 value가 None인 항목 제거
+def remove_none(d):
+    # 구현하세요
+    pass
+
+print(remove_none({"a": 1, "b": None, "c": 3, "d": None}))   # {'a': 1, 'c': 3}</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def even_squares(numbers):
+    return {n: n**2 for n in numbers if n % 2 == 0}
+
+def lists_to_dict(keys, values):
+    return {k: v for k, v in zip(keys, values)}
+
+def remove_none(d):
+    return {k: v for k, v in d.items() if v is not None}</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-inter">
+    <span class="level-badge level-intermediate">중급 8</span>
+    <h3>집합 연산으로 공통·고유 원소 분석</h3>
+    <p>두 리스트의 공통 원소, 첫 번째에만 있는 원소, 두 번째에만 있는 원소를 분석하세요:</p>
+    <pre><code class="language-python">def compare_lists(lst1, lst2):
+    """두 리스트를 집합 연산으로 비교.
+    반환: {'common': set, 'only_first': set, 'only_second': set}
+    """
+    # 구현하세요 — 세트 연산 활용
+    pass
+
+result = compare_lists([1, 2, 3, 4, 5], [3, 4, 5, 6, 7])
+print(result["common"])       # {3, 4, 5}
+print(result["only_first"])   # {1, 2}
+print(result["only_second"])  # {6, 7}</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def compare_lists(lst1, lst2):
+    s1, s2 = set(lst1), set(lst2)
+    return {
+        "common":      s1 & s2,
+        "only_first":  s1 - s2,
+        "only_second": s2 - s1,
+    }</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-adv">
+    <span class="level-badge level-advanced">고급 9</span>
+    <h3>딕셔너리 깊은 병합 (Deep Merge)</h3>
+    <p>중첩 딕셔너리를 재귀로 깊게 병합하는 함수를 구현하세요. 같은 키에서 충돌 시 두 번째 딕셔너리가 우선:</p>
+    <pre><code class="language-python">def deep_merge(d1, d2):
+    """두 딕셔너리를 깊게 병합.
+    중첩 딕셔너리는 재귀적으로 병합.
+    충돌 시 d2 우선.
+    """
+    # 구현하세요 — 재귀 활용
+    pass
+
+base = {
+    "name": "지민",
+    "settings": {"theme": "dark", "font": 14},
+    "tags": ["python", "dev"]
+}
+override = {
+    "name": "수진",
+    "settings": {"theme": "light", "lang": "ko"},
+    "extra": True
+}
+result = deep_merge(base, override)
+print(result["name"])                    # '수진' (override 우선)
+print(result["settings"]["theme"])       # 'light' (override 우선)
+print(result["settings"]["font"])        # 14 (base에만 있음)
+print(result["settings"]["lang"])        # 'ko' (override에만 있음)
+print(result["tags"])                    # ['python', 'dev'] (base)
+print(result["extra"])                   # True (override에만 있음)</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def deep_merge(d1, d2):
+    result = dict(d1)   # 얕은 복사로 시작
+    for key, val in d2.items():
+        if key in result and isinstance(result[key], dict) and isinstance(val, dict):
+            result[key] = deep_merge(result[key], val)   # 재귀
+        else:
+            result[key] = val   # d2 우선
+    return result</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 10</span>
+    <h3>hash() 함수 탐구 — CPython 해시 동작 분석</h3>
+    <p>다양한 객체의 해시 패턴을 분석하고, hash-equals 일관성을 검증하세요:</p>
+    <pre><code class="language-python">import sys
+
+# 1. 정수 해시 패턴: hash(n) == n (단, hash(-1) == -2)
+print("=== 정수 해시 ===")
+for n in [0, 1, -1, -2, 2**61 - 2, 2**61 - 1, 2**61]:
+    print(f"  hash({n}) = {hash(n)}")
+# 분석: 2^61 - 1 이상에서 왜 다른 값이 나오는가?
+# (힌트: sys.hash_info.modulus = 2^61 - 1)
+
+# 2. float 해시: hash(x) == hash(int(x)) if x.is_integer()
+print("\n=== float-int 해시 일관성 ===")
+for f in [1.0, 2.0, 0.5, 1.5]:
+    # 구현하세요: f가 정수인 경우 hash(f) == hash(int(f)) 확인
+    pass
+
+# 3. 커스텀 객체 해시 일관성 검증
+class Vector:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+    # 구현하세요: __eq__와 __hash__를 올바르게 정의
+    # 규칙: v1 == v2 → hash(v1) == hash(v2) 반드시 성립해야 함
+
+# 4. 해시 일관성 자동 검증 함수
+def verify_hash_consistency(objects):
+    """동등한 객체들의 해시가 같은지 검증."""
+    # 구현하세요: 모든 (a, b) 쌍에서 a == b → hash(a) == hash(b) 확인
+    pass</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python"># 힌트: sys.hash_info.modulus = 2^61 - 1 (Mersenne prime)
+# 정수 해시: hash(n) = n % (2^61 - 1), 단 hash(-1) = -2 (C에서 -1은 오류 코드)
+# float 해시: x.is_integer()이면 hash(x) == hash(int(x)) 보장
+
+class Vector:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+    def __eq__(self, other):
+        return isinstance(other, Vector) and self.x == other.x and self.y == other.y
+    def __hash__(self):
+        return hash((self.x, self.y))   # 튜플 해시 활용
+
+def verify_hash_consistency(objects):
+    for i, a in enumerate(objects):
+        for b in objects[i+1:]:
+            if a == b and hash(a) != hash(b):
+                return False, (a, b)
+    return True, None</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 11</span>
+    <h3>딕셔너리 내부 구조 탐구 — compact dict 분석</h3>
+    <p>딕셔너리의 내부 구조를 sys, ctypes, dis로 탐구하세요:</p>
+    <pre><code class="language-python">import sys, dis
+
+# 1. 크기 변화 측정 (load factor 2/3 확인)
+def measure_resize_points(max_items=50):
+    """항목을 추가하며 resize 시점을 기록."""
+    # 구현하세요
+    pass
+
+# 2. 뷰 객체의 동적 업데이트 확인
+def demonstrate_view():
+    """dict_keys 뷰가 실시간으로 업데이트됨을 보여주는 코드."""
+    d = {"a": 1, "b": 2}
+    # 구현하세요: keys_view를 만들고 d 수정 후 뷰가 반영됨을 확인
+    pass
+
+# 3. d[key]의 바이트코드 분석
+def lookup(d, key):
+    return d[key]
+
+dis.dis(lookup)
+
+# 4. 딕셔너리 vs 세트 메모리 비교
+for n in [0, 10, 100, 1000]:
+    d = {i: i for i in range(n)}
+    s = set(range(n))
+    # 구현하세요: 두 자료구조의 getsizeof 비교 출력
+    pass
+
+# 분석 질문:
+# Q1. compact dict에서 dk_indices와 dk_entries가 분리된 이유는?
+# Q2. 딕셔너리가 세트보다 약 몇 배 더 메모리를 쓰는가? 왜?
+# Q3. view 객체는 딕셔너리를 복사하는가 참조하는가? 증명하라.</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def measure_resize_points(max_items=50):
+    d = {}
+    prev_size = sys.getsizeof(d)
+    for i in range(max_items):
+        d[i] = i
+        curr_size = sys.getsizeof(d)
+        if curr_size != prev_size:
+            print(f"  resize at {i} items: {prev_size} → {curr_size}")
+            prev_size = curr_size
+
+def demonstrate_view():
+    d = {"a": 1, "b": 2}
+    keys_view = d.keys()
+    print(f"before: {keys_view}")   # dict_keys(['a', 'b'])
+    d["c"] = 3
+    print(f"after:  {keys_view}")   # dict_keys(['a', 'b', 'c']) — 실시간 반영!
+
+# 4. 딕셔너리 vs 세트 메모리 비교
+for n in [0, 10, 100, 1000]:
+    d = {i: i for i in range(n)}
+    s = set(range(n))
+    print(f"n={n:4d}  dict={sys.getsizeof(d):6d}  set={sys.getsizeof(s):6d}")
+
+# Q1: dk_indices(슬롯 인덱스 배열)와 dk_entries(실제 항목 배열)를 분리하면
+#     항목 순서를 보존하면서도 해시 탐사를 효율적으로 할 수 있음 (CPython 3.6+ 구현, 3.7부터 언어 명세)
+# Q2: 딕셔너리는 key+value+hash를 저장하므로 세트(key+hash만)보다 약 1.5~2배 크다
+# Q3: d["a"] = 2 후 keys_view에 반영됨 → 참조임을 증명 (복사였다면 반영 안 됨)</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="exercise-block level-expert">
+    <span class="level-badge level-expert">전공자 12</span>
+    <h3>미니 해시 테이블 구현</h3>
+    <p>Python의 dict를 흉내낸 미니 해시 테이블을 Open Addressing(선형 탐사)으로 직접 구현하세요:</p>
+    <pre><code class="language-python">class MiniHashTable:
+    """Open Addressing(선형 탐사)을 사용한 미니 해시 테이블."""
+
+    EMPTY   = object()   # 빈 슬롯 마커
+    DELETED = object()   # 삭제된 슬롯 마커 (Tombstone)
+
+    def __init__(self, size=8):
+        self.size = size
+        self.slots = [self.EMPTY] * size
+        self.values = [None] * size
+        self.count = 0
+
+    def _probe(self, key):
+        """key의 초기 슬롯 반환 (선형 탐사)."""
+        # 구현하세요: hash(key) % self.size
+        pass
+
+    def __setitem__(self, key, value):
+        """key: value 삽입. load factor > 2/3이면 resize."""
+        # 구현하세요:
+        # 1. _probe로 슬롯 계산
+        # 2. EMPTY나 DELETED 만나면 삽입
+        # 3. 같은 key 만나면 업데이트
+        # 4. 충돌 시 (slot + 1) % size로 선형 탐사
+        # 5. count / size > 2/3이면 _resize() 호출
+        pass
+
+    def __getitem__(self, key):
+        """key에 해당하는 value 반환. 없으면 KeyError."""
+        # 구현하세요:
+        # 1. _probe로 슬롯 계산
+        # 2. EMPTY 만나면 KeyError
+        # 3. DELETED는 건너뜀
+        # 4. key 일치하면 value 반환
+        pass
+
+    def __delitem__(self, key):
+        """key 삭제 — Tombstone(DELETED) 마커 사용."""
+        # 구현하세요
+        pass
+
+    def _resize(self):
+        """테이블 크기를 2배로 확장."""
+        # 구현하세요: 새 테이블 생성 후 재삽입
+        pass
+
+    def __len__(self):
+        return self.count
+
+# 테스트
+ht = MiniHashTable()
+ht["a"] = 1
+ht["b"] = 2
+ht["c"] = 3
+print(ht["a"])   # 1
+print(ht["b"])   # 2
+del ht["a"]
+print(len(ht))   # 2
+ht["a"] = 10     # 재삽입
+print(ht["a"])   # 10
+
+# 분석 질문:
+# Q1. Tombstone(DELETED) 마커가 왜 필요한가? 그냥 EMPTY로 하면 안 되는가?
+# Q2. 선형 탐사(linear probing)의 군집화(clustering) 문제를 설명하라.
+# Q3. CPython의 perturbation 탐사가 선형 탐사보다 나은 이유는?</code></pre>
+    <details class="answer">
+      <summary>💡 힌트 / 정답 보기</summary>
+      <div class="answer-content">
+        <div class="answer-body">
+          <pre><code class="language-python">def _probe(self, key):
+    return hash(key) % self.size
+
+def __setitem__(self, key, value):
+    slot = self._probe(key)
+    first_deleted = None
+    for _ in range(self.size):
+        if self.slots[slot] is self.EMPTY:
+            insert_slot = first_deleted if first_deleted is not None else slot
+            self.slots[insert_slot] = key
+            self.values[insert_slot] = value
+            self.count += 1
+            if self.count / self.size > 2/3:
+                self._resize()
+            return
+        elif self.slots[slot] is self.DELETED:
+            if first_deleted is None:
+                first_deleted = slot
+        elif self.slots[slot] == key:
+            self.values[slot] = value
+            return
+        slot = (slot + 1) % self.size
+
+def __getitem__(self, key):
+    slot = self._probe(key)
+    for _ in range(self.size):
+        if self.slots[slot] is self.EMPTY:
+            raise KeyError(key)
+        elif self.slots[slot] is not self.DELETED and self.slots[slot] == key:
+            return self.values[slot]
+        slot = (slot + 1) % self.size
+    raise KeyError(key)
+
+def __delitem__(self, key):
+    slot = self._probe(key)
+    for _ in range(self.size):
+        if self.slots[slot] is self.EMPTY:
+            raise KeyError(key)
+        elif self.slots[slot] is not self.DELETED and self.slots[slot] == key:
+            self.slots[slot] = self.DELETED
+            self.values[slot] = None
+            self.count -= 1
+            return
+        slot = (slot + 1) % self.size
+    raise KeyError(key)
+
+def _resize(self):
+    old_slots, old_values = self.slots, self.values
+    self.size *= 2
+    self.slots = [self.EMPTY] * self.size
+    self.values = [None] * self.size
+    self.count = 0
+    for s, v in zip(old_slots, old_values):
+        if s is not self.EMPTY and s is not self.DELETED:
+            self[s] = v   # __setitem__ 재활용
+
+# Q1: DELETED(Tombstone)가 없으면 삭제 후 EMPTY로 표시할 때 이후 탐사가
+#     중간에 끊겨 그 뒤에 있는 항목을 못 찾게 됨
+# Q2: 선형 탐사는 연속된 슬롯에 클러스터가 형성되어 성능 저하
+# Q3: CPython: j = (5*j + perturb + 1) &amp; mask; perturb &gt;&gt;= 5 — 해시 상위 비트를 매 탐사마다 섞어
+#     전체 슬롯에 고르게 분산, 군집화(clustering) 최소화</code></pre>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ==================== 12. 요약 ==================== -->
+<section id="summary">
+  <h2>이번 주 정리</h2>
+
+  <table class="summary-table">
+    <thead>
+      <tr><th>개념</th><th>핵심 내용</th><th>키워드</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>딕셔너리의 존재 이유</td>
+        <td>이름으로 즉시 찾기. 리스트 O(n) → 딕셔너리 O(1)</td>
+        <td>Key-Value, Associative Array, O(1)</td>
+      </tr>
+      <tr>
+        <td>해시 함수</td>
+        <td>값 → 정수 주소. 결정적·균등·빠름. hash(-1) = -2</td>
+        <td>hash(), hashable, hash randomization</td>
+      </tr>
+      <tr>
+        <td>Hashable 조건</td>
+        <td>Immutable만 key 가능. __hash__ + __eq__ 일관성 필수</td>
+        <td>unhashable, frozenset, TypeError</td>
+      </tr>
+      <tr>
+        <td>딕셔너리 연산</td>
+        <td>d[k], .get(), .keys()·.values()·.items(), .pop(), .update()</td>
+        <td>KeyError, dict_keys view, | 병합 (3.9+)</td>
+      </tr>
+      <tr>
+        <td>세트(set)</td>
+        <td>중복 없는 집합. in은 O(1). {} = 빈 dict, set() = 빈 set</td>
+        <td>|, &amp;, -, ^, frozenset, add/discard/remove</td>
+      </tr>
+      <tr>
+        <td>컴프리헨션</td>
+        <td>{k: v for ...} / {x for ...}. 자체 스코프 가짐</td>
+        <td>BUILD_MAP, MAP_ADD, dict.fromkeys()</td>
+      </tr>
+      <tr>
+        <td>해시 충돌</td>
+        <td>불가피. Open Addressing + perturbation으로 해결</td>
+        <td>Collision, DKIX_EMPTY, DKIX_DUMMY, load factor 2/3</td>
+      </tr>
+      <tr>
+        <td>compact dict (3.6+)</td>
+        <td>dk_indices + dk_entries 분리. 삽입 순서 보존 + 메모리 절약</td>
+        <td>PyDictObject, Raymond Hettinger, dict_keys view</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pre><code class="language-text">d = {"key": "value"}    ←→  PyDictObject
+                              ├─ ma_keys (PyDictKeysObject)
+d["key"]                ←→      ├─ dk_indices [해시→엔트리 인덱스]
+                                 └─ dk_entries [(hash, key, value), ...]
+                              └─ ma_used: 사용 중 항목 수
+
+hash(key) % mask → slot       ← 초기 슬롯 계산
+→ collision? (5*i + perturb + 1) & mask  ← perturbation 탐사
+→ key match? → return value  ← O(1) 평균
+
+s = {1, 2, 3}           ←→  PySetObject (값 없는 dict와 동일 구조)
+s | t                   ←→  합집합   {x : x ∈ s or x ∈ t}
+s &amp; t                   ←→  교집합   {x : x ∈ s and x ∈ t}
+s - t                   ←→  차집합   {x : x ∈ s and x ∉ t}</code></pre>
+</section>
+
+<!-- ==================== 13. 용어 사전 ==================== -->
+<section id="glossary">
+  <h2>용어 사전 (30개)</h2>
+  <div class="glossary-grid">
+    <div class="glossary-item">
+      <h4>딕셔너리 (Dictionary)</h4>
+      <p>Key-Value 쌍의 집합. Python 3.7+부터 삽입 순서 보장. key는 hashable, value는 제한 없음.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Key-Value 쌍</h4>
+      <p>딕셔너리의 기본 단위. <code>{"name": "지민"}</code>에서 "name"이 key, "지민"가 value.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>해시 함수 (Hash Function)</h4>
+      <p>임의의 데이터를 고정 크기 정수로 변환하는 함수. Python의 <code>hash()</code>. 결정적·균등·빠름.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>hashable</h4>
+      <p><code>__hash__()</code>가 정의되어 hash 값이 있고 생애 동안 변하지 않는 객체. dict key/set 원소로 사용 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>unhashable</h4>
+      <p>hash 값이 없거나 변할 수 있는 객체. list, dict, set. key로 사용 시 TypeError 발생.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>해시 테이블 (Hash Table)</h4>
+      <p>해시 함수로 키를 배열 인덱스로 변환해 저장하는 자료구조. 평균 O(1) 탐색.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>해시 충돌 (Hash Collision)</h4>
+      <p>서로 다른 두 키의 해시값이 같은 슬롯을 가리키는 현상. 비둘기집 원리로 불가피.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>오픈 어드레싱 (Open Addressing)</h4>
+      <p>충돌 시 배열 내 다른 빈 슬롯을 찾아 저장하는 충돌 해결 방식. Python dict/set 사용.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Perturbation Probing</h4>
+      <p>CPython의 해시 충돌 탐사 알고리즘. <code>i = (5*i + perturb + 1) &amp; mask</code>. 군집화 방지.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>부하 인수 (Load Factor)</h4>
+      <p>사용 중인 슬롯 / 전체 슬롯. Python dict는 2/3 초과 시 테이블 자동 확장(resize).</p>
+    </div>
+    <div class="glossary-item">
+      <h4>compact dict</h4>
+      <p>Python 3.6+의 딕셔너리 내부 구조. dk_indices(해시 테이블)와 dk_entries(엔트리 배열) 분리. Raymond Hettinger 제안.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>뷰 객체 (View Object)</h4>
+      <p><code>.keys()</code>, <code>.values()</code>, <code>.items()</code>의 반환값. 복사본이 아닌 딕셔너리의 실시간 뷰.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>KeyError</h4>
+      <p>존재하지 않는 key를 <code>d[key]</code>로 접근할 때 발생. <code>.get(key, 기본값)</code>으로 방지 가능.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>.get(key, default)</h4>
+      <p>key가 없으면 default를 반환 (기본 None). KeyError 없이 안전하게 접근.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>.setdefault(key, default)</h4>
+      <p>key가 없을 때만 default로 추가. 있으면 기존 값 유지. 그루핑 패턴에 유용.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>세트 (set)</h4>
+      <p>순서 없고 중복 없는 hashable 객체의 집합. <code>in</code> 연산 O(1). 빈 세트는 <code>set()</code>.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>frozenset</h4>
+      <p>불변 세트. hashable → dict key/set 원소로 사용 가능. set처럼 집합 연산 지원.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>합집합 (Union)</h4>
+      <p><code>a | b</code>. a 또는 b에 있는 모든 원소. <code>a.union(b)</code>와 동일.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>교집합 (Intersection)</h4>
+      <p><code>a &amp; b</code>. a와 b 모두에 있는 원소. <code>a.intersection(b)</code>와 동일.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>차집합 (Difference)</h4>
+      <p><code>a - b</code>. a에 있지만 b에 없는 원소. <code>a.difference(b)</code>와 동일.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>대칭 차집합 (Symmetric Difference)</h4>
+      <p><code>a ^ b</code>. a 또는 b 중 하나에만 있는 원소. <code>a.symmetric_difference(b)</code>와 동일.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>딕셔너리 컴프리헨션</h4>
+      <p><code>{k: v for k, v in ...}</code>. dict를 간결하게 생성. 자체 스코프를 가짐 (Python 3).</p>
+    </div>
+    <div class="glossary-item">
+      <h4>세트 컴프리헨션</h4>
+      <p><code>{x for x in ...}</code>. set을 간결하게 생성. 중복 자동 제거.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>defaultdict</h4>
+      <p><code>collections.defaultdict</code>. 없는 key에 접근 시 기본값 자동 생성. 카운팅·그루핑에 유용.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Counter</h4>
+      <p><code>collections.Counter</code>. 빈도 카운팅 전용 딕셔너리. <code>.most_common(n)</code>으로 상위 n개 조회.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>O(1) 상각 (Amortized O(1))</h4>
+      <p>대부분의 연산은 O(1)이지만 resize 시 O(n) 발생. 연산 전체를 평균 내면 O(1)로 수렴.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Tombstone (DKIX_DUMMY)</h4>
+      <p>삭제된 슬롯을 표시하는 마커. 빈 슬롯과 구별하여 탐사 체인이 끊기지 않도록 함.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>hash randomization</h4>
+      <p>Python 3.3+: 문자열 해시가 실행마다 달라짐 (PYTHONHASHSEED). DoS 해시 충돌 공격 방지.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>Separate Chaining</h4>
+      <p>해시 충돌 시 같은 슬롯에 연결 리스트를 연결하는 방식. Java HashMap이 사용. Open Addressing과 대비.</p>
+    </div>
+    <div class="glossary-item">
+      <h4>TypedDict</h4>
+      <p><code>typing.TypedDict</code>. 런타임엔 일반 dict지만 mypy 등 정적 분석기가 구조를 검사. AI 코드 검증에 유용.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 14. 다음 단계 ==================== -->
+<section id="next-step">
+  <h2>다음 단계 — 파이썬 여정 계속하기</h2>
+
+  <p>
+    10주 동안 파이썬의 핵심 빌딩 블록을 배웠습니다.<br>
+    이제 여러분은 <strong>"파이썬이 왜 이렇게 작동하는가"</strong>를 설명할 수 있습니다.<br>
+    다음 단계에서 배울 것들을 미리 맛보세요.
+  </p>
+
+  <pre><code class="language-python"># 지금까지 배운 것: 절차적 프로그래밍 (Procedural Programming)
+def analyze_data(data):
+    """함수로 묶고, 딕셔너리로 관리하고, 세트로 중복 제거."""
+    unique = set(data)
+    count  = {item: data.count(item) for item in unique}
+    return count
+
+# 다음 단계 1: 클래스 (Class) — 데이터 + 함수를 묶는 더 큰 단위
+class DataAnalyzer:
+    def __init__(self, data):
+        self.data = data              # 인스턴스 변수
+        self._cache = {}              # 내부 상태
+
+    def count(self):
+        """각 항목의 빈도 반환."""
+        if not self._cache:
+            for item in self.data:
+                self._cache[item] = self._cache.get(item, 0) + 1
+        return self._cache
+
+# 다음 단계 2: 예외 처리 (Exception Handling)
+try:
+    result = int("abc")   # ValueError!
+except ValueError as e:
+    print(f"변환 실패: {e}")
+finally:
+    print("항상 실행됨")   # 정리 코드
+
+# 다음 단계 3: 파일 I/O — with문으로 자원 관리
+with open("data.txt", "w", encoding="utf-8") as f:
+    f.write("파이썬은 왜?\n")
+# with 블록 끝에서 파일 자동 닫힘 (__exit__ 호출)
+
+# 다음 단계 4: 제너레이터 — 메모리 효율적 이터레이터
+def fibonacci():
+    """무한 피보나치 수열 생성기."""
+    a, b = 0, 1
+    while True:
+        yield a       # yield: 값을 반환하고 일시정지
+        a, b = b, a + b
+
+fib = fibonacci()
+print([next(fib) for _ in range(8)])   # [0, 1, 1, 2, 3, 5, 8, 13]</code></pre>
+  <div class="output-block">
+    <div class="output-label">실행 결과:</div>
+변환 실패: invalid literal for int() with base 10: 'abc'
+항상 실행됨
+[0, 1, 1, 2, 3, 5, 8, 13]
+  </div>
+
+  <p>다음에 배울 주요 주제들:</p>
+  <ul>
+    <li><strong>클래스와 객체 지향</strong> — <code>__init__</code>, 상속, 다형성, 매직 메서드</li>
+    <li><strong>예외 처리</strong> — try/except/finally, 커스텀 예외, with문의 내부 동작</li>
+    <li><strong>파일 I/O</strong> — open(), Context Manager, <code>__enter__/__exit__</code></li>
+    <li><strong>모듈과 패키지</strong> — import 메커니즘, <code>__name__</code>, 패키지 구조</li>
+    <li><strong>제너레이터</strong> — yield, send(), Generator Protocol</li>
+    <li><strong>데코레이터 심화</strong> — 클래스 기반 데코레이터, @property, @staticmethod</li>
+    <li><strong>비동기 프로그래밍</strong> — async/await, Event Loop, coroutine</li>
+  </ul>
+
+  <div class="callout callout-info" style="margin-top: 32px;">
+    <strong>10주를 마치며:</strong><br>
+    "파이썬은 왜?"의 답은 하나입니다.<br>
+    <em>모든 것은 객체이고, 이름은 그 객체를 가리킵니다.</em><br>
+    변수도, 함수도, 클래스도, 모듈도 — 전부 이름이 가리키는 객체입니다.<br>
+    이 하나의 원리 위에 파이썬의 모든 기능이 세워져 있습니다.
+  </div>
+
+  <p style="margin-top: 24px; font-size: 0.9rem; color: var(--text-secondary);">
+    참조:
+    <a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries" target="_blank">Python Docs: Dictionaries</a> ·
+    <a href="https://docs.python.org/3/tutorial/datastructures.html#sets" target="_blank">Python Docs: Sets</a> ·
+    <a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict" target="_blank">Mapping Types — dict</a> ·
+    <a href="https://docs.python.org/3/library/collections.html" target="_blank">collections — Counter, defaultdict</a> ·
+    <a href="https://peps.python.org/pep-0274/" target="_blank">PEP 274: Dict Comprehensions</a> ·
+    <a href="https://code.activestate.com/recipes/578375/" target="_blank">Raymond Hettinger: Compact dict proposal</a>
+  </p>
+</section>
+
+</main>
+</div>
+
+<footer class="site-footer">
+  <p>파이썬은 왜? &mdash; 컴퓨터가 어떻게 생각하는지를 배우는 파이썬 강의</p>
+</footer>
+
+<script src="../js/bundle.min.js"></script>
+</body>
+</html>

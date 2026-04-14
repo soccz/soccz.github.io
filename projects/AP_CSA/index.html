@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP CSA Tutoring System — From Zero to Exam Day in 10 Sessions</title>
+  <meta name="description" content="AP Computer Science A 시험 대비 과외 시스템. 교사도 학생도 Java 제로에서 시작, 공식 CED 기반 10회 커리큘럼.">
+  <meta property="og:title" content="AP CSA Tutoring System">
+  <meta property="og:description" content="Java 제로에서 AP 시험까지 — 10회 과외, 55개 파일, 360+ MCQ, 5세트 모의시험">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#fafaf9;--bg-card:#fff;--bg-tint:#f5f5f4;--text-primary:#1c1917;--text-secondary:#57534e;--text-muted:#a8a29e;--accent:#3a7d44;--accent-light:#edf7ef;--accent-hover:#2d6335;--border:#e7e5e4;--border-light:#d6d3d1;--code-bg:#292524;--code-text:#e7e5e4;--unit1:#3a7d44;--unit2:#5a7a96;--unit3:#c4724e;--unit4:#7a6a9a}
+    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text-primary);-webkit-font-smoothing:antialiased}
+
+    /* Home Link */
+    .home-link{position:fixed;top:1.5rem;left:1.5rem;z-index:30;font-size:.78rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+    .home-link:hover{color:var(--text-primary)}
+
+    /* Hero */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;position:relative;background:linear-gradient(180deg,var(--bg) 0%,#e8f0ea 100%)}
+    .hero-inner{max-width:700px}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:.4rem 1rem;border-radius:20px;margin-bottom:2.5rem}
+    .hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:700;line-height:1.35;letter-spacing:-.03em;margin-bottom:1.2rem}
+    .hero h1 span{color:var(--accent)}
+    .hero-subtitle{font-size:1rem;color:var(--text-secondary);font-weight:300;line-height:1.9;margin-bottom:3rem}
+    .hero-stats{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+    .hero-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.8rem;min-width:110px;transition:transform .2s,box-shadow .2s}
+    .hero-stat:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,125,68,.12)}
+    .hero-stat-num{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:700;color:var(--text-primary);display:block;line-height:1.1}
+    .hero-stat-label{font-size:.72rem;color:var(--text-muted);letter-spacing:.06em;margin-top:.3rem;display:block}
+    .hero-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;padding:.8rem 2rem;border-radius:8px;font-size:.9rem;font-weight:500;text-decoration:none;transition:background .2s,transform .2s;cursor:pointer;border:none}
+    .hero-cta:hover{background:var(--accent-hover);transform:translateY(-1px)}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:.6rem;letter-spacing:.15em;animation:drift 2.5s ease-in-out infinite}
+    @keyframes drift{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+    /* Sections */
+    .section{max-width:700px;margin:0 auto;padding:4rem 2rem}
+    .section-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+    .section h2{font-family:'Noto Serif KR',serif;font-size:1.6rem;font-weight:700;margin-bottom:1.5rem;line-height:1.4}
+    .section p{font-size:.95rem;color:var(--text-secondary);line-height:2;margin-bottom:1rem}
+    .section p strong{color:var(--text-primary);font-weight:500}
+
+    /* Divider */
+    .divider{max-width:700px;margin:0 auto;padding:0 2rem}
+    .divider-line{border:none;border-top:1px solid var(--border)}
+
+    /* Story Cards */
+    .story-cards{display:grid;gap:1.2rem;margin-top:2rem}
+    .story-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:transform .2s,box-shadow .2s}
+    .story-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.05)}
+    .story-card-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.6rem}
+    .story-card-title{font-size:1.05rem;font-weight:700;margin-bottom:.5rem;line-height:1.4}
+    .story-card-body{font-size:.88rem;color:var(--text-secondary);line-height:1.8}
+
+    /* Curriculum Progress */
+    .progress-visual{display:flex;gap:3px;margin-bottom:.8rem;height:6px;border-radius:3px;overflow:hidden}
+    .progress-seg{transition:flex .3s}
+    .progress-seg.u1{background:var(--unit1);flex:15}
+    .progress-seg.u2{background:var(--unit2);flex:12}
+    .progress-seg.u3{background:var(--unit3);flex:9}
+    .progress-seg.u4{background:var(--unit4);flex:17}
+    .progress-legend{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
+    .legend-item{display:flex;align-items:center;gap:.4rem;font-size:.68rem;color:var(--text-muted)}
+    .legend-dot{width:8px;height:8px;border-radius:50%}
+
+    /* Session List */
+    .session-item{display:flex;align-items:baseline;gap:1.2rem;padding:.85rem 0;border-bottom:1px solid var(--bg-tint);transition:padding-left .2s,background .15s;border-radius:6px}
+    .session-item:last-child{border-bottom:none}
+    .session-item:hover{padding-left:.6rem;background:rgba(58,125,68,.03)}
+    .session-item:hover .session-title{color:var(--accent)}
+    .session-num{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:500;color:var(--border-light);min-width:2.5rem;text-align:right;transition:color .2s}
+    .session-item:hover .session-num{color:var(--text-secondary)}
+    .session-info{flex:1}
+    .session-title{font-size:.95rem;font-weight:500;color:var(--text-primary);line-height:1.5;transition:color .2s}
+    .session-desc{font-size:.78rem;color:var(--text-muted);margin-top:.15rem;line-height:1.5}
+    .session-tags{display:flex;gap:.4rem;margin-top:.4rem;flex-wrap:wrap}
+    .session-tag{font-size:.62rem;padding:.15rem .5rem;border-radius:10px;background:var(--bg-tint);color:var(--text-muted);letter-spacing:.03em}
+
+    /* Materials Grid */
+    .materials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:2rem}
+    .material-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;transition:transform .2s,box-shadow .2s}
+    .material-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.05)}
+    .material-icon{font-size:1.4rem;margin-bottom:.6rem;display:block}
+    .material-title{font-size:.9rem;font-weight:700;margin-bottom:.3rem}
+    .material-desc{font-size:.78rem;color:var(--text-muted);line-height:1.6}
+    .material-count{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);margin-top:.5rem;display:block}
+
+    /* Folder Tree */
+    .folder-tree{background:var(--code-bg);color:var(--code-text);padding:1.5rem;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.8;overflow-x:auto;margin-top:1.5rem}
+    .folder-tree .dir{color:#8ac;font-weight:500}
+    .folder-tree .comment{color:#8a8a7a}
+
+    /* Approach */
+    .approach-steps{counter-reset:step;margin-top:2rem}
+    .approach-step{position:relative;padding-left:3rem;margin-bottom:2rem}
+    .approach-step::before{counter-increment:step;content:counter(step);position:absolute;left:0;top:0;width:2rem;height:2rem;background:var(--accent-light);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700}
+    .approach-step-title{font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+    .approach-step-body{font-size:.88rem;color:var(--text-secondary);line-height:1.8}
+
+    /* Takeaway */
+    .takeaway{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:1.5rem;margin-top:2rem}
+    .takeaway-title{font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:.5rem}
+    .takeaway-body{font-size:.88rem;color:var(--text-secondary);line-height:1.8}
+
+    /* Footer */
+    .footer{max-width:700px;margin:0 auto;padding:2rem 2rem 4rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .footer a{font-size:.8rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+    .footer a:hover{color:var(--accent)}
+    .footer-note{font-size:.72rem;color:var(--text-muted)}
+
+    /* Scroll to Top */
+    .scroll-top{position:fixed;bottom:2rem;right:2rem;z-index:50;width:40px;height:40px;border-radius:50%;background:var(--bg-card);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    .scroll-top.visible{opacity:1;pointer-events:auto}
+    .scroll-top:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px)}
+
+    @media(max-width:640px){
+      .hero-stats{gap:.6rem}
+      .hero-stat{padding:.8rem 1.2rem;min-width:85px}
+      .hero-stat-num{font-size:1.6rem}
+      .section{padding:3rem 1.2rem}
+      .materials-grid{grid-template-columns:1fr}
+      .progress-legend{gap:.8rem}
+    }
+  </style>
+</head>
+<body>
+
+<a class="home-link" href="/">&larr; Home</a>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      AP Computer Science A &middot; 2026
+    </span>
+    <h1>AP CSA<br><span>Tutoring System</span></h1>
+    <p class="hero-subtitle">
+      Java를 한 줄도 모르는 교사가,<br>
+      Java를 한 줄도 모르는 학생을 가르치기 위해<br>
+      처음부터 설계한 시험 대비 시스템.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">55</span><span class="hero-stat-label">Files</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">Sessions</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">360+</span><span class="hero-stat-label">MCQ</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">Mock Exams</span></div>
+    </div>
+    <button class="hero-cta" onclick="document.getElementById('context').scrollIntoView({behavior:'smooth'})">
+      Read the Story
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+  <div class="scroll-hint">SCROLL &darr;</div>
+</section>
+
+<!-- Context: Why -->
+<div class="section" id="context">
+  <span class="section-label">Context</span>
+  <h2>왜 이걸 만들었나</h2>
+  <p>
+    2026년 4월, AP CSA 과외 요청을 받았다. 학생 목표는 <strong>4점 이상</strong>, 시험일은 <strong>5월 8일</strong>.
+    문제가 하나 있었다 &mdash; 나도 AP CSA를 모른다.
+  </p>
+  <p>
+    Java는 쓸 줄 알지만, College Board가 정의한 AP CSA의 범위와 출제 기준은 전혀 다른 영역이다.
+    "내가 아는 Java"와 "시험에 나오는 Java"는 같지 않다.
+    그래서 공식 자료부터 분석하고, 교사와 학생 모두를 위한 시스템을 처음부터 설계했다.
+  </p>
+
+  <div class="story-cards">
+    <div class="story-card">
+      <div class="story-card-label">Problem</div>
+      <div class="story-card-title">교사도 학생도 제로에서 시작</div>
+      <div class="story-card-body">
+        Java 실력 &#x2260; AP CSA 실력. 시험은 CED에 정의된 53개 토픽,
+        4가지 FRQ 유형, 특정 알고리즘과 자료구조만을 다룬다.
+        이 범위를 정확히 파악하지 않으면 "쓸모없는 것을 가르치는" 실수를 한다.
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-card-label">Constraint</div>
+      <div class="story-card-title">시간: 20시간 (10회 &times; 2시간)</div>
+      <div class="story-card-body">
+        전체 커리큘럼을 150시간짜리 학교 수업처럼 가르칠 수 없다.
+        핵심만 추려서, 시험에 나오는 것만, 점수로 직결되는 순서로 배치해야 했다.
+        나머지 연습량은 자율 학습으로 확보하는 구조.
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-card-label">Principle</div>
+      <div class="story-card-title">공식 자료만 신뢰한다</div>
+      <div class="story-card-body">
+        인터넷의 AP CSA 자료는 구버전 CED 기준이거나 범위가 틀린 경우가 많다.
+        2025-26 CED(185p)를 직접 분석하고, FRQ 2021~2025 채점 기준을 대조해서
+        모든 자료를 만들었다. 추측 기반의 자료는 하나도 없다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><hr class="divider-line"></div>
+
+<!-- Approach -->
+<div class="section">
+  <span class="section-label">Approach</span>
+  <h2>어떻게 설계했나</h2>
+  <div class="approach-steps">
+    <div class="approach-step">
+      <div class="approach-step-title">공식 문서 전수 분석</div>
+      <div class="approach-step-body">
+        AP CSA CED 2025-26 전체를 읽고, 53개 Essential Knowledge 항목을 매핑.
+        Java Quick Reference(시험 중 제공)의 신규 항목(File, Scanner)까지 반영.
+        각 토픽이 MCQ/FRQ에서 어떤 비중으로 출제되는지 역분석.
+      </div>
+    </div>
+    <div class="approach-step">
+      <div class="approach-step-title">FRQ 5년치 채점 기준 역공학</div>
+      <div class="approach-step-body">
+        2021~2025 FRQ 20문제의 채점 기준(Scoring Guidelines)과 모범 답안(Sample Responses)을 분석.
+        Q1(배열/ArrayList), Q2(클래스 설계), Q3(ArrayList 조작), Q4(2D 배열) 유형별 패턴을 추출.
+        학생이 "부분 점수를 최대화"할 수 있는 작성 전략을 수립.
+      </div>
+    </div>
+    <div class="approach-step">
+      <div class="approach-step-title">10회 커리큘럼 역설계</div>
+      <div class="approach-step-body">
+        CED의 4개 Unit을 10회에 배치하되, 출제 비중과 의존 관계를 고려.
+        Unit 1~2(기초 문법)를 4회에 압축, Unit 3~4(OOP + 자료구조)에 4회 집중,
+        마지막 2회는 FRQ 실전 + 모의시험. 매 수업은 분 단위 스크립트로 작성.
+      </div>
+    </div>
+    <div class="approach-step">
+      <div class="approach-step-title">자율 학습 시스템 구축</div>
+      <div class="approach-step-body">
+        수업 20시간만으로는 부족하다. MCQ 360문제, 코드 트레이싱 43문제, 모의시험 5세트,
+        용어사전 134개를 만들어 학생이 혼자서도 반복 연습할 수 있는 구조를 설계.
+        오답 노트 템플릿으로 약점을 추적하는 피드백 루프까지 포함.
+      </div>
+    </div>
+    <div class="approach-step">
+      <div class="approach-step-title">전수 검증</div>
+      <div class="approach-step-body">
+        MCQ 360문제 정답 전수 확인. FRQ 채점 기준 대조.
+        CED 53개 토픽 커버리지 100% 확인. 레벨 테스트 10세트로 학생 수준 진단 가능.
+        "만들고 끝"이 아니라 "검증까지 끝난" 자료.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><hr class="divider-line"></div>
+
+<!-- Curriculum -->
+<div class="section">
+  <span class="section-label">Curriculum</span>
+  <h2>10회 수업 구조</h2>
+
+  <div class="progress-visual">
+    <div class="progress-seg u1"></div>
+    <div class="progress-seg u2"></div>
+    <div class="progress-seg u3"></div>
+    <div class="progress-seg u4"></div>
+  </div>
+  <div class="progress-legend">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--unit1)"></span>Unit 1: 기초 문법 (1~2회)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--unit2)"></span>Unit 2: 제어문 (3~4회)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--unit3)"></span>Unit 3: OOP (5회)</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--unit4)"></span>Unit 4: 배열/재귀 (6~8회)</span>
+  </div>
+
+  <div class="session-list">
+    <div class="session-item">
+      <span class="session-num">01</span>
+      <div class="session-info">
+        <div class="session-title">Java 첫걸음 &mdash; 변수, 타입, 출력, 연산</div>
+        <div class="session-desc">IDE 설치부터 정수 나눗셈 함정(5/2=2)까지. AP 시험 구조 오리엔테이션 포함.</div>
+        <div class="session-tags"><span class="session-tag">Unit 1 (1.1~1.6)</span><span class="session-tag">CodingBat</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">02</span>
+      <div class="session-info">
+        <div class="session-title">객체의 세계 &mdash; 메서드, Math, String</div>
+        <div class="session-desc">API 읽기, static vs instance, String 조작. Quick Reference 첫 정독.</div>
+        <div class="session-tags"><span class="session-tag">Unit 1 (1.7~1.15)</span><span class="session-tag">String-1</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">03</span>
+      <div class="session-info">
+        <div class="session-title">분기 &mdash; Boolean, if/else, De Morgan</div>
+        <div class="session-desc">true/false 트레이싱, 단락 평가, 조건문 중첩. MCQ 핵심 함정.</div>
+        <div class="session-tags"><span class="session-tag">Unit 2 (2.1~2.6)</span><span class="session-tag">De Morgan</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">04</span>
+      <div class="session-info">
+        <div class="session-title">반복 &mdash; while, for, 중첩 루프</div>
+        <div class="session-desc">루프 트레이싱 집중 훈련. 무한 루프 디버깅, off-by-one 오류.</div>
+        <div class="session-tags"><span class="session-tag">Unit 2 (2.7~2.12)</span><span class="session-tag">코드 트레이싱</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">05</span>
+      <div class="session-info">
+        <div class="session-title">클래스 설계 &mdash; OOP, 생성자, 상속</div>
+        <div class="session-desc">private 필드, getter/setter, this, super. FRQ Q2 유형 첫 도전.</div>
+        <div class="session-tags"><span class="session-tag">Unit 3 (3.1~3.9)</span><span class="session-tag">FRQ Q2</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">06</span>
+      <div class="session-info">
+        <div class="session-title">배열 &mdash; Array + 9가지 알고리즘</div>
+        <div class="session-desc">선언/초기화/순회, 최솟값/최댓값/합계/평균/검색/카운트/역순/이동/삽입.</div>
+        <div class="session-tags"><span class="session-tag">Unit 4 (4.1~4.5)</span><span class="session-tag">알고리즘 9종</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">07</span>
+      <div class="session-info">
+        <div class="session-title">ArrayList &mdash; 동적 배열, FRQ Q3</div>
+        <div class="session-desc">add/remove/get/set/size, 순회 중 삭제 함정(역순 삭제). FRQ Q3 유형.</div>
+        <div class="session-tags"><span class="session-tag">Unit 4 (4.6~4.10)</span><span class="session-tag">FRQ Q3</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">08</span>
+      <div class="session-info">
+        <div class="session-title">2D Array, 정렬, 재귀 &mdash; FRQ Q4</div>
+        <div class="session-desc">행/열 순회, Selection/Insertion Sort, 재귀 트레이싱. FRQ Q4 유형.</div>
+        <div class="session-tags"><span class="session-tag">Unit 4 (4.11~4.17)</span><span class="session-tag">FRQ Q4</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">09</span>
+      <div class="session-info">
+        <div class="session-title">FRQ 실전 &mdash; 풀세트 시간 연습</div>
+        <div class="session-desc">2025 FRQ 4문제를 90분 안에. 부분 점수 전략, 채점 기준 자기 채점.</div>
+        <div class="session-tags"><span class="session-tag">FRQ 2025</span><span class="session-tag">채점 기준</span></div>
+      </div>
+    </div>
+    <div class="session-item">
+      <span class="session-num">10</span>
+      <div class="session-info">
+        <div class="session-title">모의시험 + 최종 리뷰</div>
+        <div class="session-desc">MCQ 42문제 실전 시뮬레이션, 약점 분석, 시험 전략 최종 확인.</div>
+        <div class="session-tags"><span class="session-tag">Mock Set 1</span><span class="session-tag">시험 전략</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"><hr class="divider-line"></div>
+
+<!-- Materials -->
+<div class="section">
+  <span class="section-label">Materials</span>
+  <h2>만든 것들</h2>
+
+  <div class="materials-grid">
+    <div class="material-card">
+      <span class="material-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--unit1)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </span>
+      <div class="material-title">강의노트 4권</div>
+      <div class="material-desc">Unit 1~4 전체 내용. 개념 설명 + 코드 예시 + AP 시험 포인트. CED 53개 토픽 완전 대응.</div>
+      <span class="material-count">4 files &middot; Unit1~4</span>
+    </div>
+    <div class="material-card">
+      <span class="material-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--unit2)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </span>
+      <div class="material-title">MCQ 문제집</div>
+      <div class="material-desc">Unit별 360문제. 전수 정답 검증 완료. 실제 AP 시험 난이도 + 함정 패턴 반영.</div>
+      <span class="material-count">360+ questions &middot; 6 sets</span>
+    </div>
+    <div class="material-card">
+      <span class="material-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--unit3)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </span>
+      <div class="material-title">모의시험 5세트</div>
+      <div class="material-desc">MCQ 42문제 + FRQ 4문제 &times; 5세트. 실제 시험과 동일한 구성, 점수 변환표 포함.</div>
+      <span class="material-count">5 sets &middot; 210 MCQ + 20 FRQ</span>
+    </div>
+    <div class="material-card">
+      <span class="material-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--unit4)" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </span>
+      <div class="material-title">교사용 수업 스크립트</div>
+      <div class="material-desc">분 단위 수업 진행 가이드. "0:15 &mdash; 변수 선언 설명" 형식. 초보 교사도 바로 수업 가능.</div>
+      <span class="material-count">10 sessions &middot; minute-by-minute</span>
+    </div>
+    <div class="material-card">
+      <span class="material-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8a7a6a" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      </span>
+      <div class="material-title">참고 자료 모음</div>
+      <div class="material-desc">Java 용어사전(134개), 초보자 FAQ(50개), Quick Reference 한국어 해설, 치트시트.</div>
+      <span class="material-count">7 files &middot; reference</span>
+    </div>
+    <div class="material-card">
+      <span class="material-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5a8a6a" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </span>
+      <div class="material-title">레벨 테스트 10세트</div>
+      <div class="material-desc">학생 수준 진단용. Unit별 세분화된 난이도. 수업 시작 전 위치 파악 + 진행 중 성장 측정.</div>
+      <span class="material-count">10 tests &middot; diagnostic</span>
+    </div>
+  </div>
+
+  <div class="folder-tree">
+    <span class="dir">AP_CSA/</span><br>
+    ├── <span class="dir">00_official_docs/</span>    <span class="comment">&larr; CED, Quick Reference, Course Overview</span><br>
+    ├── <span class="dir">01_curriculum/</span>       <span class="comment">&larr; CSAwesome v2 교재 목차</span><br>
+    ├── <span class="dir">02_frq_archive/</span>      <span class="comment">&larr; FRQ 2021~2025 + 채점기준 + 모범답안</span><br>
+    ├── <span class="dir">03_practice/</span>         <span class="comment">&larr; 강의노트, 실습, MCQ, FRQ 풀이</span><br>
+    ├── <span class="dir">04_reference/</span>        <span class="comment">&larr; 용어사전, FAQ, 치트시트</span><br>
+    ├── <span class="dir">05_mock_exams/</span>       <span class="comment">&larr; 모의시험 5세트 + 점수변환표</span><br>
+    └── <span class="dir">06_level_tests/</span>      <span class="comment">&larr; 레벨 테스트 10세트</span>
+  </div>
+</div>
+
+<div class="divider"><hr class="divider-line"></div>
+
+<!-- Reflection -->
+<div class="section">
+  <span class="section-label">Reflection</span>
+  <h2>배운 것</h2>
+  <p>
+    이 프로젝트의 핵심은 "가르치는 것"이 아니라 <strong>"가르칠 수 있는 시스템을 설계하는 것"</strong>이었다.
+    내가 Java를 아는지 여부는 중요하지 않다.
+    중요한 것은 시험이 무엇을 묻는지 정확히 파악하고,
+    제한된 시간 안에 그 범위를 커버할 수 있는 구조를 만드는 것이다.
+  </p>
+
+  <div class="takeaway">
+    <div class="takeaway-title">Key Insight</div>
+    <div class="takeaway-body">
+      "모르는 것을 가르치는" 상황은 오히려 장점이 된다.
+      전문가는 무의식적으로 지식을 전제하지만, 같이 배우는 사람은 학습자의 혼란 지점을 정확히 안다.
+      대신 그 장점을 살리려면, 공식 출처를 철저히 분석하고 검증된 자료로 보완하는 구조가 필수다.
+      &ldquo;내가 아는 만큼&rdquo;이 아니라 &ldquo;시험이 요구하는 만큼&rdquo; 가르치는 것.
+    </div>
+  </div>
+
+  <div class="story-cards" style="margin-top:2rem">
+    <div class="story-card">
+      <div class="story-card-label">Design Decision</div>
+      <div class="story-card-title">분 단위 수업 스크립트</div>
+      <div class="story-card-body">
+        "오늘 Unit 1 해야지"가 아니라 "0:15~0:50 변수 선언, 0:50~1:00 쉬는시간" 수준의 스크립트.
+        초보 교사가 수업 중에 길을 잃지 않도록. 수업 설계의 핵심은 "무엇을 가르칠까"보다
+        "몇 분 동안 가르칠까"다.
+      </div>
+    </div>
+    <div class="story-card">
+      <div class="story-card-label">Design Decision</div>
+      <div class="story-card-title">자율 학습 &gt; 수업</div>
+      <div class="story-card-body">
+        10회 &times; 2시간 = 20시간. AP CSA 학교 수업은 보통 150시간.
+        격차는 수업이 아니라 학생의 자율 학습으로 메운다.
+        그래서 수업 자료보다 연습 자료(MCQ, 코드 트레이싱, 모의시험)를 더 많이 만들었다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <a href="/" rel="noopener">Home</a>
+  <a href="https://github.com/soccz" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+  <span class="footer-note">55 files &middot; 10 sessions &middot; AP CSA 2025-26 CED</span>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+(function(){
+  'use strict';
+  const scrollBtn=document.getElementById('scroll-top');
+  window.addEventListener('scroll',()=>{
+    scrollBtn.classList.toggle('visible',scrollY>400);
+  });
+})();
+</script>
+</body>
+</html>
