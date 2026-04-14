@@ -6,8 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>xsec_alpha — Cross-Sectional Crypto Ranking · 분석 보고서</title>
   <meta name="description" content="크로스섹션 크립토 랭킹 시스템. Short 6h + Long 12h 듀얼 모델. IC +0.19(short), +0.22(long). 20+ 에이전트 다각도 검증.">
+  <meta property="og:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
+  <meta property="og:description" content="Short 6h + Long 12h 듀얼 모델. IC +0.19 / +0.22. 20+ 에이전트 다각도 검증. gan_t 실패에서 출발한 크로스섹션 랭킹 연구.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://soccz.github.io/projects/xsec-alpha/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
+  <meta name="twitter:description" content="Short 6h + Long 12h 듀얼 모델. 20+ 에이전트 다각도 검증.">
+  <link rel="canonical" href="https://soccz.github.io/projects/xsec-alpha/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
       --bg-primary: #fafaf9;
@@ -198,7 +208,7 @@
     /* Funnel */
     .funnel-wrap { display: flex; flex-direction: column; gap: 0.4rem; align-items: center; margin: 2rem 0; }
     .funnel-step { display: flex; align-items: center; border-radius: 6px; padding: 0.7rem 1.2rem; transition: all 0.3s; position: relative; }
-    .funnel-step .funnel-text { font-size: 0.82rem; font-weight: 500; white-space: nowrap; }
+    .funnel-step .funnel-text { font-size: 0.82rem; font-weight: 500; }
     .funnel-step .funnel-ic { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; margin-left: 0.8rem; }
     .funnel-step.pass { background: var(--green-dim); border: 1px solid rgba(22,163,74,0.2); }
     .funnel-step.pass .funnel-text { color: var(--green); }
@@ -218,7 +228,7 @@
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
     @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } }
-    @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 80px; font-size: 0.72rem; } .lesson-item { flex-direction: column; gap: 0.4rem; } }
+    @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 60px; font-size: 0.65rem; word-break: break-all; } .lesson-item { flex-direction: column; gap: 0.4rem; } .funnel-step { flex-wrap: wrap; } .funnel-step .funnel-ic { margin-left: 0; margin-top: 0.3rem; font-size: 0.68rem; } .cadence-slot { font-size: 0.55rem; } }
   </style>
 </head>
 <body>
@@ -252,17 +262,17 @@
       <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.19" data-decimals="2">0</span><span class="hero-stat-label">Short Holdout IC</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.22" data-decimals="2">0</span><span class="hero-stat-label">Long Holdout IC</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="200" data-suffix="+" data-decimals="0">0</span><span class="hero-stat-label">KRW Markets</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" data-static="true">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="4" data-decimals="0">0</span><span class="hero-stat-label">Verified Factors</span></div>
     </div>
     <div class="hero-links">
       <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         Source Code
       </a>
     </div>
   </div>
-  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+  <div class="scroll-ind">SCROLL<br><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
 <hr class="divider">
 
@@ -463,7 +473,7 @@
       <div class="t-meta"><span class="t-date">Horizon Decision</span><span class="badge badge-blue">12h</span></div>
       <div class="t-title">왜 24h가 아니라 12h인가</div>
       <div class="t-find">
-        range_contraction은 24h에서 IC +0.179로 최강이지만, 24h 리밸런스로 바꾸면 holdout 평가점이 22개 &rarr; 5~6개로 급감해 t-stat 신뢰도가 불가능. 12h는 IC +0.137로 충분하면서 평가점을 유지하는 <strong>타협점</strong>이다. 신호 강도보다 검증 가능성을 우선했다.
+        range_contraction은 24h에서 IC +0.179로 최강이지만, 24h 리밸런스로 바꾸면 holdout 평가점이 22개 &rarr; 5~6개로 급감해 t-stat 유의성 확보가 불가능. 12h는 IC +0.137로 충분하면서 평가점을 유지하는 <strong>타협점</strong>이다. 신호 강도보다 검증 가능성을 우선했다.
       </div>
     </div>
 
