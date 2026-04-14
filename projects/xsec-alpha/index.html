@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xsec_alpha — Cross-Sectional Crypto Ranking · 분석 보고서</title>
+  <meta name="description" content="크로스섹션 크립토 랭킹 시스템. Short 6h + Long 12h 듀얼 모델. IC +0.19(short), +0.22(long). 20+ 에이전트 다각도 검증.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+      --red: #dc2626;
+      --red-dim: rgba(220,38,38,0.08);
+      --green: #16a34a;
+      --green-dim: rgba(22,163,74,0.08);
+      --amber: #b45309;
+      --amber-dim: rgba(180,83,9,0.07);
+      --blue: #2563eb;
+      --blue-dim: rgba(59,130,246,0.07);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
+    nav.scrolled { background: rgba(250,250,249,0.97); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%); }
+    .hero-content { position: relative; max-width: 860px; }
+    .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem; }
+    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .hero-sub { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.73rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s; }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em; animation: float 2s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 6rem 2rem; }
+    section.compact { padding: 4rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 720px; line-height: 1.85; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .four-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .card:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+
+    .badge { display: inline-block; margin-top: 0.5rem; margin-right: 0.35rem; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; padding: 0.2rem 0.6rem; border-radius: 3px; }
+    .badge-fail { background: var(--red-dim); color: var(--red); border: 1px solid rgba(220,38,38,0.2); }
+    .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .badge-pivot { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(180,83,9,0.2); }
+    .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
+
+    .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
+    .metric-val { font-family: 'Noto Serif KR', serif; font-size: 2rem; font-weight: 700; display: block; line-height: 1.2; margin-bottom: 0.3rem; }
+    .metric-val.neg { color: var(--red); }
+    .metric-val.pos { color: var(--green); }
+    .metric-val.neutral { color: #292524; }
+    .metric-val.amber { color: var(--amber); }
+    .metric-label { font-size: 0.78rem; color: var(--text-secondary); font-weight: 500; }
+    .metric-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; line-height: 1.5; }
+
+    .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem 2rem; margin-bottom: 1.5rem; }
+    .chart-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .chart-subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.6rem; line-height: 1.6; }
+
+    .ic-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.9rem; }
+    .ic-label { font-size: 0.78rem; color: var(--text-secondary); min-width: 160px; text-align: right; }
+    .ic-track { flex: 1; position: relative; height: 26px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+    .ic-center { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--border-light); z-index: 1; }
+    .ic-fill { position: absolute; top: 4px; bottom: 4px; border-radius: 3px; }
+    .ic-fill.neg { right: 50%; background: rgba(220,38,38,0.55); }
+    .ic-fill.pos { left: 50%; background: rgba(22,163,74,0.55); }
+    .ic-val { font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; min-width: 65px; }
+    .ic-val.neg { color: var(--red); }
+    .ic-val.pos { color: var(--green); }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2rem 0; }
+    .flow-step { flex: 1; min-width: 140px; background: var(--bg-card); border: 1px solid var(--border); padding: 1.3rem 1rem; text-align: center; position: relative; }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after { content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1; }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .flow-title { font-weight: 700; font-size: 0.82rem; margin-bottom: 0.25rem; }
+    .flow-desc { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .timeline { position: relative; padding-left: 2.2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .timeline-item { position: relative; margin-bottom: 3rem; }
+    .timeline-dot { position: absolute; left: -2.6rem; top: 0.3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--border-light); border: 2px solid var(--bg-primary); }
+    .timeline-dot.done { background: var(--accent); }
+    .timeline-dot.fail { background: var(--red); }
+    .timeline-dot.pivot { background: var(--amber); }
+    .timeline-dot.next { background: var(--border-light); border: 2px solid var(--border-light); }
+    .t-meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .t-date { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+    .t-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .t-find { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 0.7rem; }
+
+    .lesson-item { display: flex; align-items: flex-start; gap: 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem 1.8rem; margin-bottom: 0.8rem; transition: all 0.2s; }
+    .lesson-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .lesson-num { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .lesson-body { flex: 1; }
+    .lesson-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
+    .lesson-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.8; }
+    .c { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
+
+    .tbl { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .tbl th { background: var(--bg-secondary); padding: 0.7rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 600; border-bottom: 2px solid var(--border); }
+    .tbl td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; }
+    .tbl td.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+    .tbl td.neg { color: var(--red); }
+    .tbl td.pos { color: var(--green); }
+    .tbl td.warn { color: var(--amber); }
+    .tbl tr:last-child td { border-bottom: none; }
+
+    .callout { padding: 1.4rem 1.8rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; border-left: 3px solid var(--border-light); margin: 2rem 0; }
+    .callout p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.85; }
+    .callout strong { color: var(--text-primary); }
+
+    .layer-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; border-top: 3px solid #78716c; }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } }
+    @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 80px; font-size: 0.72rem; } .lesson-item { flex-direction: column; gap: 0.4rem; } }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#summary">Summary</a></li>
+      <li><a href="#thesis">Thesis</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#short-model">Short Model</a></li>
+      <li><a href="#long-journey">Long Journey</a></li>
+      <li><a href="#lessons">Lessons</a></li>
+      <li><a href="#status">Status</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Cross-Sectional Ranking &middot; Crypto &middot; 2026</span>
+    <h1>xsec_alpha</h1>
+    <p class="hero-sub">
+      "떨어질 코인을 골라내고, 조용해진 코인에서 폭발을 기다린다."<br>
+      gan_t의 실패에서 출발해, 절대 수익률 예측을 버리고 크로스섹션 상대 랭킹으로 전환.<br>
+      Short 6h + Long 12h 듀얼 모델 시스템. 20+ 에이전트 다각도 검증.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">+0.19</span><span class="hero-stat-label">Short Holdout IC</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">+0.22</span><span class="hero-stat-label">Long Holdout IC</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">200+</span><span class="hero-stat-label">KRW Markets</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">Verified Factors</span></div>
+    </div>
+    <div class="hero-links">
+      <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Source Code
+      </a>
+    </div>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<!-- Executive Summary -->
+<section id="summary" class="compact"><div class="container fade-in">
+  <div class="section-label">Executive Summary</div>
+  <h2 class="section-title">핵심 결과</h2>
+  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발. 절대 수익률 예측을 버리고 크로스섹션 상대 랭킹으로 전환한 결과.</p>
+  <div class="four-col" style="margin-bottom:2rem;">
+    <div class="metric-card"><span class="metric-val pos">+0.189</span><div class="metric-label">Short Holdout IC</div><div class="metric-sub">6h horizon, lag=1<br>t-stat = 11.3</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.216</span><div class="metric-label">Long Holdout IC</div><div class="metric-sub">12h horizon, bull only<br>t-stat = 4.2</div></div>
+    <div class="metric-card"><span class="metric-val neutral">82%</span><div class="metric-label">Short L/S Hit Rate</div><div class="metric-sub">67 holdout periods<br>5 long / 5 short</div></div>
+    <div class="metric-card"><span class="metric-val amber">watch</span><div class="metric-label">Long Status</div><div class="metric-sub">WATCH_LONG<br>승격 조건 미충족</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Thesis -->
+<section id="thesis"><div class="container fade-in">
+  <div class="section-label">Thesis</div>
+  <h2 class="section-title">왜 이걸 만들었는가</h2>
+  <p class="section-desc">gan_t에서 1년 동안 CVAE, GAN, MC-Dropout, 35개 피처를 쌓았지만 결과는 "스크리너보다 못한 모델"이었다. 근본 원인을 진단하고, 완전히 다른 접근으로 다시 시작했다.</p>
+
+  <div class="two-col" style="margin-bottom:2rem;">
+    <div class="card">
+      <div class="card-title">gan_t: 왜 실패했나</div>
+      <div class="card-text">
+        절대 수익률 예측은 BTC 베타에 종속된다. 3h 호라이즌의 AC=0.025는 노이즈 수준이고, train이 test를 100% 포함하고 있었다. confidence head는 상수 0.503을 출력했고, 98% short 편향에 short 차단까지 걸려서 실행 가능한 추천이 0건이었다.
+      </div>
+      <span class="badge badge-fail">IC = -0.06</span>
+      <span class="badge badge-fail">Sharpe 0.17</span>
+      <span class="badge badge-fail">Screener > Model</span>
+    </div>
+    <div class="card">
+      <div class="card-title">xsec_alpha: 뭘 바꿨나</div>
+      <div class="card-text">
+        절대 수익률 &rarr; residual return (coin - beta &times; BTC). 개별 코인 예측 &rarr; 크로스섹션 상대 랭킹. per-market MinMax &rarr; per-timestamp z-score. fillna(0) &rarr; ffill only + 480행 drop. train&supset;test &rarr; temporal holdout 20%.
+      </div>
+      <span class="badge badge-ok">IC = +0.19</span>
+      <span class="badge badge-ok">Holdout PASS</span>
+      <span class="badge badge-blue">Dual Model</span>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Architecture -->
+<section id="architecture"><div class="container fade-in">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">시스템 구조</h2>
+  <p class="section-desc">Short 6h / Long 12h 듀얼 모델. systemd 타이머가 6h마다 실행하고, long은 12h 리밸런스 슬롯에서만 갱신, 나머지는 carry.</p>
+
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">수집</div><div class="flow-desc">Upbit 200+ KRW<br>Binance USDT</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">Short: reversal, vol_inv, kimchi, binance_lead<br>Long: range_contraction, reversal, binance_lead</div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-title">스코어링</div><div class="flow-desc">Ensemble (Ridge + LightGBM)<br>Short 6h / Long 12h</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">실행</div><div class="flow-desc">SHORT 5 (실행)<br>WATCH LONG 5 (관찰)</div></div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측</div><div class="flow-desc">Ledger + IC 추적<br>텔레그램 알림</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Short Model -->
+<section id="short-model"><div class="container fade-in">
+  <div class="section-label">Short Model</div>
+  <h2 class="section-title">Short 전문 모델 — 떨어질 코인 골라내기</h2>
+  <p class="section-desc">6h horizon, top100 유니버스, Bitget USDT perp tradable. 핵심 팩터 4개가 전반/후반 split에서 모두 STABLE.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Short 팩터 IC (6h horizon, top 100)</div>
+    <div class="chart-subtitle">양수 IC = 팩터가 높을수록 residual return이 높다. 전부 유의하고 안정적.</div>
+    <div class="ic-row"><div class="ic-label">kimchi_inv</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:33%"></div></div><div class="ic-val pos">+0.166</div></div>
+    <div class="ic-row"><div class="ic-label">binance_lead_1h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:23%"></div></div><div class="ic-val pos">+0.114</div></div>
+    <div class="ic-row"><div class="ic-label">volatility_inv_24h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:21%"></div></div><div class="ic-val pos">+0.105</div></div>
+    <div class="ic-row"><div class="ic-label">reversal_1h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:19%"></div></div><div class="ic-val pos">+0.095</div></div>
+    <div class="ic-row"><div class="ic-label">reversal_4h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:18%"></div></div><div class="ic-val pos">+0.090</div></div>
+    <div class="ic-row"><div class="ic-label">order_flow_bear</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:12%"></div></div><div class="ic-val pos">+0.062</div></div>
+  </div>
+
+  <div class="callout">
+    <p><strong>1h vs 6h Horizon 결정:</strong> 1h는 lag=0에서 IC +0.307이지만 lag=1에서 74% 꺾임 &rarr; 마이크로스트럭처 의존. 6h는 lag=1에서도 IC +0.109로 gate 통과. <strong>6h 채택.</strong></p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Long Journey -->
+<section id="long-journey"><div class="container fade-in">
+  <div class="section-label">Long Model Journey</div>
+  <h2 class="section-title">Long 모델의 진화 — v1에서 v3까지</h2>
+  <p class="section-desc">short이 short 전문이라면, long은 완전히 다른 문제로 봐야 한다. 이 과정에서 "크립토에서 momentum은 어디서도 안 먹힌다"는 핵심 교훈을 얻었다.</p>
+
+  <div class="timeline">
+    <!-- v1 -->
+    <div class="timeline-item"><div class="timeline-dot fail"></div>
+      <div class="t-meta"><span class="t-date">Long v1</span><span class="badge badge-fail">FAILED</span></div>
+      <div class="t-title">Momentum/Trend 접근 — 전면 실패</div>
+      <div class="t-find">
+        가설: "short이 역추세라면, long은 순추세(momentum)로 가야 한다."<br><br>
+        momentum_12h, momentum_24h, breakout_24h, volume_surge, bullish_order_flow, relative_strength 팩터로 학습. Holdout IC +0.177 — 겉으로는 좋았다.<br><br>
+        <strong>하지만 20+ 에이전트 다각도 감사에서 근본 결함 발견:</strong>
+      </div>
+    </div>
+
+    <!-- Audit -->
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">13-Agent Audit</span><span class="badge badge-pivot">PIVOT</span></div>
+      <div class="t-title">다각도 감사 — 모멘텀은 어디서도 안 먹힌다</div>
+      <div class="t-find">
+        <strong>발견 1:</strong> 모멘텀 IC가 6h~72h 전 구간에서 음수. Bull 레짐에서도 mean-reversion이 지배적.<br>
+        <strong>발견 2:</strong> Ridge가 음수 IC 팩터에 음수 계수를 부여 &rarr; 사실상 reversal 모델로 동작.<br>
+        <strong>발견 3:</strong> Long hit rate 43.6% (동전 던지기보다 나쁨). 수익의 90.5%가 short leg.<br>
+        <strong>발견 4:</strong> momentum_12h &times; momentum_24h r=0.63, 3개 팩터가 같은 정보 중복.
+      </div>
+    </div>
+
+    <!-- Discovery -->
+    <div class="timeline-item"><div class="timeline-dot done"></div>
+      <div class="t-meta"><span class="t-date">Factor Discovery</span><span class="badge badge-ok">BREAKTHROUGH</span></div>
+      <div class="t-title">"조용해진 코인이 터진다" — range_contraction 발견</div>
+      <div class="t-find">
+        10개 대안 팩터를 bull 레짐 + top100에서 탐색. <strong>range_contraction_12h</strong>가 IC=+0.179(24h)로 기존 모든 팩터보다 강했다. 4분기 split에서 전부 양수, rolling 7d 최솟값도 양수. 운이 아님.
+      </div>
+    </div>
+
+    <!-- v3 -->
+    <div class="timeline-item"><div class="timeline-dot done"></div>
+      <div class="t-meta"><span class="t-date">Long v3</span><span class="badge badge-ok">CURRENT</span></div>
+      <div class="t-title">Compression + Reversal 모델</div>
+      <div class="t-find">
+        모멘텀 전부 제거. range_contraction(압축) + reversal(딥 매수) + binance_lead(글로벌 선행)로 재설계. 호라이즌 12h. Ensemble(Ridge+LightGBM) 채택. Ridge 계수 전부 양수 = 설계와 결과 일치.
+      </div>
+    </div>
+  </div>
+
+  <!-- v1 vs v3 comparison -->
+  <div class="chart-wrap" style="margin-top:2rem;">
+    <div class="chart-title">Long v1 vs v3 비교</div>
+    <div class="chart-subtitle">팩터 철학을 바꾸니 모든 지표가 개선됐다.</div>
+    <table class="tbl">
+      <thead><tr><th>지표</th><th>v1 (momentum)</th><th>v3 (compression)</th></tr></thead>
+      <tbody>
+        <tr><td>팩터 IC 부호</td><td class="neg">전부 음수 (모델이 반전시킴)</td><td class="pos">전부 양수 (설계=결과 일치)</td></tr>
+        <tr><td>Ridge 계수 부호</td><td class="warn">혼재</td><td class="pos">전부 양수</td></tr>
+        <tr><td>Long hit rate</td><td class="neg">43.6%</td><td class="pos">52.6%</td></tr>
+        <tr><td>Long vs Random</td><td class="mono">미측정</td><td class="pos">73.8% (p&lt;0.0001)</td></tr>
+        <tr><td>Holdout IC</td><td class="mono">+0.177</td><td class="pos">+0.216</td></tr>
+        <tr><td>L/S Hit Rate</td><td class="mono">72.7%</td><td class="pos">90.9%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Long v3 Factor IC -->
+  <div class="chart-wrap">
+    <div class="chart-title">Long v3 팩터 IC (12h, bull regime, top 100)</div>
+    <div class="chart-subtitle">4개 팩터 전부 양수 IC, 전부 STABLE, 전부 FRESH.</div>
+    <div class="ic-row"><div class="ic-label">range_contraction_12h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:27%"></div></div><div class="ic-val pos">+0.137</div></div>
+    <div class="ic-row"><div class="ic-label">reversal_1h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:16%"></div></div><div class="ic-val pos">+0.078</div></div>
+    <div class="ic-row"><div class="ic-label">reversal_4h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:15%"></div></div><div class="ic-val pos">+0.073</div></div>
+    <div class="ic-row"><div class="ic-label">binance_lead_1h</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill pos" style="width:18%"></div></div><div class="ic-val pos">+0.088</div></div>
+  </div>
+
+  <!-- Horizon scan -->
+  <div class="chart-wrap">
+    <div class="chart-title">range_contraction_12h 안정성 — 4분기 Split</div>
+    <div class="chart-subtitle">IC=+0.179(24h)이 운이 아닌지 확인. 4분기 전부 양수, 모든 호라이즌에서.</div>
+    <table class="tbl">
+      <thead><tr><th>구간</th><th>6h IC</th><th>12h IC</th><th>24h IC</th></tr></thead>
+      <tbody>
+        <tr><td>Q1</td><td class="mono pos">+0.097</td><td class="mono pos">+0.113</td><td class="mono pos">+0.155</td></tr>
+        <tr><td>Q2</td><td class="mono pos">+0.102</td><td class="mono pos">+0.122</td><td class="mono pos">+0.193</td></tr>
+        <tr><td>Q3</td><td class="mono pos">+0.095</td><td class="mono pos">+0.136</td><td class="mono pos">+0.170</td></tr>
+        <tr><td>Q4</td><td class="mono pos">+0.141</td><td class="mono pos">+0.178</td><td class="mono pos">+0.198</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Momentum horizon scan -->
+  <div class="chart-wrap">
+    <div class="chart-title">모멘텀 IC 호라이즌 스캔 — "어디서도 양수 안 됨"</div>
+    <div class="chart-subtitle">6h~72h 전 구간, bull regime only. 모멘텀은 크립토에서 단기 long 신호가 아니다.</div>
+    <div class="ic-row"><div class="ic-label">momentum_12h (6h)</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill neg" style="width:16%"></div></div><div class="ic-val neg">-0.080</div></div>
+    <div class="ic-row"><div class="ic-label">momentum_12h (24h)</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill neg" style="width:16%"></div></div><div class="ic-val neg">-0.082</div></div>
+    <div class="ic-row"><div class="ic-label">momentum_12h (72h)</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill neg" style="width:12%"></div></div><div class="ic-val neg">-0.059</div></div>
+    <div class="ic-row"><div class="ic-label">relative_strength (6h)</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill neg" style="width:19%"></div></div><div class="ic-val neg">-0.093</div></div>
+    <div class="ic-row"><div class="ic-label">vol_weighted_mom (6h)</div><div class="ic-track"><div class="ic-center"></div><div class="ic-fill neg" style="width:17%"></div></div><div class="ic-val neg">-0.085</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Lessons -->
+<section id="lessons"><div class="container fade-in">
+  <div class="section-label">Lessons Learned</div>
+  <h2 class="section-title">핵심 교훈</h2>
+
+  <div class="lesson-item">
+    <div class="lesson-num">01</div>
+    <div class="lesson-body">
+      <div class="lesson-title">크립토에서 bull이라도 단기 모멘텀은 mean-reversion에 밀린다</div>
+      <div class="lesson-desc">6h~72h 전 구간, bull regime에서도 모멘텀 IC는 전부 음수. "올라간 코인을 사라"는 크립토에서 작동하지 않는다. 대신 "조용해진 코인이 터진다"가 맞다.</div>
+    </div>
+  </div>
+
+  <div class="lesson-item">
+    <div class="lesson-num">02</div>
+    <div class="lesson-body">
+      <div class="lesson-title">모델을 나눴으면 long은 short의 반대편이 아니라 완전히 다른 문제다</div>
+      <div class="lesson-desc">v1은 short 철학(reversal)의 변형판을 long에 얹었다. Ridge가 자동으로 부호를 뒤집어서 겉으로는 작동했지만, 설계 의도와 실제 동작이 불일치. v3에서 "compression + reversal"로 재정의하니 설계=결과가 일치.</div>
+    </div>
+  </div>
+
+  <div class="lesson-item">
+    <div class="lesson-num">03</div>
+    <div class="lesson-body">
+      <div class="lesson-title">IC가 좋아도 실행에서 검증해야 한다</div>
+      <div class="lesson-desc">v1 holdout IC +0.177이었지만 long hit rate 43.6%, 수익의 90%가 short. "L/S IC"와 "long-only 성능"은 다른 질문이다. 반드시 long-only, short-only 분리 검증 필수.</div>
+    </div>
+  </div>
+
+  <div class="lesson-item">
+    <div class="lesson-num">04</div>
+    <div class="lesson-body">
+      <div class="lesson-title">pred_std가 낮은 건 정규화 문제가 아니라 피처 예측력 한계</div>
+      <div class="lesson-desc">Ridge alpha를 1.0&rarr;0.01로 바꿔도 계수가 동일. R&sup2;=1%. 모델이 "정직하게 신호가 없다고 말하고 있는 것"이었다. 정규화 탓이 아님.</div>
+    </div>
+  </div>
+
+  <div class="lesson-item">
+    <div class="lesson-num">05</div>
+    <div class="lesson-body">
+      <div class="lesson-title">멀티 에이전트 토론이 사람의 편향을 잡는다</div>
+      <div class="lesson-desc">혼자였으면 v1의 IC +0.177에 만족하고 배포했을 것. 13개 에이전트가 "팩터 IC 전부 음수", "long hit rate 43%", "pred_std 근상수"를 동시에 지적해서 근본 재설계로 이어졌다.</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Current Status -->
+<section id="status"><div class="container fade-in">
+  <div class="section-label">Current Status</div>
+  <h2 class="section-title">현재 운영 상태</h2>
+  <p class="section-desc">Short는 실행 중, Long은 watch 모드로 관찰 데이터 축적 중.</p>
+
+  <div class="two-col" style="margin-bottom:2rem;">
+    <div class="layer-card" style="border-top-color: var(--green);">
+      <div class="layer-num">실행 중</div>
+      <div class="layer-title">Short Model (6h)</div>
+      <div class="card-text">
+        <strong>IC:</strong> +0.189 (t=11.3)<br>
+        <strong>팩터:</strong> reversal, vol_inv, kimchi_inv, binance_lead, order_flow_bear<br>
+        <strong>모델:</strong> Ensemble (Ridge + LightGBM)<br>
+        <strong>포지션:</strong> SHORT 5, Bitget USDT perp<br>
+        <strong>리밸런스:</strong> 매 6h<br>
+        <strong>관측:</strong> ledger + ic_history.json
+      </div>
+    </div>
+    <div class="layer-card" style="border-top-color: var(--amber);">
+      <div class="layer-num">관찰 중 (WATCH)</div>
+      <div class="layer-title">Long Model (12h)</div>
+      <div class="card-text">
+        <strong>IC:</strong> +0.216 (t=4.2)<br>
+        <strong>팩터:</strong> range_contraction, reversal_1h/4h, binance_lead<br>
+        <strong>모델:</strong> Ensemble (Ridge + LightGBM)<br>
+        <strong>포지션:</strong> WATCH_LONG 5 (actionable=False)<br>
+        <strong>리밸런스:</strong> 12h (오프사이클 carry)<br>
+        <strong>레짐 게이트:</strong> BTC 7d &gt; 0%, 30d &gt; -10%<br>
+        <strong>승격 조건:</strong> holdout &ge; 60 timestamps, pred_std &ge; 0.01, long-only IC &gt; 0
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p><strong>다음 마일스톤:</strong> Long watch 데이터 60+ 시점 축적 &rarr; long-only 성과 재평가 &rarr; 조건 충족 시 <span class="c">EXECUTION_MODE = "long_only"</span> 전환. 대시보드에 ledger/next_rebalance 노출. Short 모델 재저장 (feature names 경고 제거).</p>
+  </div>
+</div></section>
+
+<footer>
+  <p class="footer-text">
+    xsec_alpha &middot; Cross-Sectional Crypto Ranking &middot; 2026<br>
+    개인 연구용. 투자 조언이 아님. &middot; <a href="https://github.com/soccz/xsec_alpha">GitHub</a>
+  </p>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+// Fade-in on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
