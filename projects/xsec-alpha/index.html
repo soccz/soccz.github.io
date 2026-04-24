@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xsec_alpha — Cross-Sectional Crypto Ranking · 분석 보고서</title>
-  <meta name="description" content="크로스섹션 크립토 랭킹 시스템. Short 6h + Long 12h 듀얼 모델. IC +0.19(short), +0.22(long). 20+ 에이전트 다각도 검증.">
+  <title>xsec_alpha — Cross-Sectional Crypto Ranking · 연구 + 운영 보고서</title>
+  <meta name="description" content="크로스섹션 크립토 랭킹 시스템. F1 통합 아키텍처: 같은 10-feature 파이프라인으로 6h/12h 두 모델. 2σ+ 적중 64.6%/70.6%. 방향 합의 92%. 자동 재학습 + promotion gate.">
   <meta property="og:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
-  <meta property="og:description" content="Short 6h + Long 12h 듀얼 모델. IC +0.19 / +0.22. 20+ 에이전트 다각도 검증. gan_t 실패에서 출발한 크로스섹션 랭킹 연구.">
+  <meta property="og:description" content="F1 통합 아키텍처 · 6h/12h 동일 피처 · 92% 방향 합의 · 2σ+ 적중 64.6%/70.6% · systemd 자동 재학습.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/xsec-alpha/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
-  <meta name="twitter:description" content="Short 6h + Long 12h 듀얼 모델. 20+ 에이전트 다각도 검증.">
+  <meta name="twitter:description" content="F1 통합 아키텍처 · 연구(v1-v3) + 운영 재설계 · 60+ 에이전트 토론.">
+
   <link rel="canonical" href="https://soccz.github.io/projects/xsec-alpha/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -225,6 +226,98 @@
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
+    /* === PART 2 STYLES (F1 operational chapter, 2026-04-25) === */
+    .part-divider { text-align: center; padding: 5rem 2rem 2rem; }
+    .part-divider .part-label { display: inline-block; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .part-divider h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .part-divider p { font-size: 0.92rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.85; }
+    .part-divider .part-ornament { width: 40px; height: 1px; background: var(--border-light); margin: 1.5rem auto; }
+
+    /* Bar chart (SVG-free, pure CSS) */
+    .bar-chart { display: flex; flex-direction: column; gap: 0.6rem; }
+    .bar-row { display: grid; grid-template-columns: 100px 1fr 80px; align-items: center; gap: 0.8rem; }
+    .bar-label { font-size: 0.78rem; color: var(--text-secondary); text-align: right; font-family: 'JetBrains Mono', monospace; }
+    .bar-track { height: 24px; background: var(--bg-secondary); border-radius: 4px; position: relative; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 0.7rem; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .bar-fill.tier-fire { background: linear-gradient(90deg, rgba(220,38,38,0.2), rgba(220,38,38,0.5)); }
+    .bar-fill.tier-check { background: linear-gradient(90deg, rgba(22,163,74,0.15), rgba(22,163,74,0.4)); }
+    .bar-fill.tier-mid { background: linear-gradient(90deg, rgba(180,83,9,0.1), rgba(180,83,9,0.3)); }
+    .bar-fill.tier-faint { background: linear-gradient(90deg, rgba(168,162,158,0.1), rgba(168,162,158,0.25)); }
+    .bar-fill.short-side { background: linear-gradient(90deg, rgba(22,163,74,0.15), rgba(22,163,74,0.45)); }
+    .bar-fill.long-side { background: linear-gradient(90deg, rgba(180,83,9,0.15), rgba(180,83,9,0.45)); }
+    .bar-val { font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-weight: 600; }
+
+    /* Before/After comparison */
+    .ba-grid { display: grid; grid-template-columns: 1fr 80px 1fr; align-items: stretch; gap: 0; margin: 2rem 0; }
+    .ba-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem; }
+    .ba-card.before { border-top: 3px solid var(--red); opacity: 0.85; }
+    .ba-card.after { border-top: 3px solid var(--green); }
+    .ba-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--text-muted); }
+    .ba-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--border); }
+    .ba-title { font-weight: 700; font-size: 1rem; }
+    .ba-tag { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .ba-metric { display: flex; justify-content: space-between; padding: 0.4rem 0; font-size: 0.85rem; }
+    .ba-metric-key { color: var(--text-muted); }
+    .ba-metric-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .ba-metric-val.neg { color: var(--red); }
+    .ba-metric-val.pos { color: var(--green); }
+
+    /* Telegram mockup */
+    .tg-mockup { background: #17212b; border-radius: 12px; padding: 1.6rem 1.4rem; margin: 2rem 0; font-family: 'JetBrains Mono', monospace; box-shadow: 0 4px 16px rgba(0,0,0,0.08); max-width: 640px; }
+    .tg-mockup .tg-sender { color: #6ab3f3; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; font-family: 'Noto Sans KR', sans-serif; }
+    .tg-mockup .tg-header { color: #8d9aa5; font-size: 0.72rem; border-bottom: 1px solid #2a3947; padding-bottom: 0.6rem; margin-bottom: 0.8rem; line-height: 1.7; }
+    .tg-mockup .tg-section-title { color: #e8e8e8; font-size: 0.82rem; margin: 0.8rem 0 0.5rem; font-weight: 700; }
+    .tg-mockup .tg-meta { color: #8d9aa5; font-size: 0.7rem; margin-bottom: 0.4rem; }
+    .tg-mockup .tg-row { color: #d4d4d4; font-size: 0.75rem; margin: 0.28rem 0; display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+    .tg-mockup .tg-row .tg-tier { font-size: 0.95rem; }
+    .tg-mockup .tg-row .tg-coin { color: #fff; font-weight: 700; min-width: 55px; }
+    .tg-mockup .tg-row .tg-dir { font-size: 0.85rem; }
+    .tg-mockup .tg-row .tg-chip { background: #2a3947; padding: 0.1rem 0.45rem; border-radius: 3px; font-size: 0.7rem; color: #c8d2d8; }
+    .tg-mockup .tg-row .tg-chip.green { color: #6ac789; }
+    .tg-mockup .tg-row .tg-chip.red { color: #f07070; }
+    .tg-mockup .tg-legend { color: #8d9aa5; font-size: 0.65rem; margin-top: 1rem; line-height: 1.7; border-top: 1px solid #2a3947; padding-top: 0.8rem; }
+
+    /* Tag explanations */
+    .tag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .tag-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+    .tag-card .tag-icon { font-size: 1.6rem; margin-bottom: 0.4rem; }
+    .tag-card .tag-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .tag-card .tag-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.7; }
+
+    /* Pipeline flow */
+    .pipe-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; margin: 2rem 0; }
+    .pipe-stage { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; background: var(--bg-secondary); border-radius: 6px; border-left: 3px solid var(--border-light); margin-bottom: 0.7rem; }
+    .pipe-stage.gate { border-left-color: var(--amber); }
+    .pipe-stage.deploy { border-left-color: var(--green); }
+    .pipe-stage.fail { border-left-color: var(--red); }
+    .pipe-num { font-family: 'Noto Serif KR', serif; font-size: 1rem; color: var(--text-muted); min-width: 30px; font-weight: 700; }
+    .pipe-body { flex: 1; }
+    .pipe-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.2rem; }
+    .pipe-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+    .pipe-arrow { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin: 0.2rem 0; }
+
+    /* Vote bar */
+    .vote-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem 1.8rem; margin-bottom: 1rem; }
+    .vote-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .vote-sub { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .vote-bar { display: flex; height: 28px; border-radius: 4px; overflow: hidden; background: var(--bg-secondary); margin-bottom: 0.5rem; }
+    .vote-seg { display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; transition: width 0.6s; }
+    .vote-seg.win { background: #16a34a; }
+    .vote-seg.mid { background: #b45309; }
+    .vote-seg.min { background: #a8a29e; }
+    .vote-seg.other { background: #57534e; }
+    .vote-legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.72rem; color: var(--text-secondary); }
+    .vote-legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 0.3rem; vertical-align: middle; }
+
+    /* Automation timeline (reused .cadence-wrap style extended) */
+    .auto-timer { display: grid; grid-template-columns: 180px 1fr 160px; gap: 1rem; align-items: center; padding: 1rem 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.8rem; }
+    .auto-name { font-weight: 700; font-size: 0.88rem; }
+    .auto-name .mono-small { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-top: 0.15rem; }
+    .auto-role { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+    .auto-when { text-align: right; font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .auto-when strong { color: var(--accent); font-weight: 600; display: block; font-size: 0.82rem; }
+    @media (max-width: 680px) { .auto-timer { grid-template-columns: 1fr; gap: 0.4rem; } .auto-when { text-align: left; } .ba-grid { grid-template-columns: 1fr; } .ba-arrow { transform: rotate(90deg); padding: 0.5rem 0; } }
+
     @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } }
     @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 60px; font-size: 0.65rem; word-break: break-all; } .lesson-item { flex-direction: column; gap: 0.4rem; } .funnel-step { flex-wrap: wrap; } .funnel-step .funnel-ic { margin-left: 0; margin-top: 0.3rem; font-size: 0.68rem; } .cadence-slot { font-size: 0.55rem; } }
   </style>
@@ -241,6 +334,9 @@
       <li><a href="#short-model">Short Model</a></li>
       <li><a href="#long-journey">Long Journey</a></li>
       <li><a href="#lessons">Lessons</a></li>
+      <li><a href="#ops-reality">Ops Reality</a></li>
+      <li><a href="#f1-unified">F1 Unified</a></li>
+      <li><a href="#automation">Automation</a></li>
       <li><a href="#status">Status</a></li>
     </ul>
   </div>
@@ -253,8 +349,8 @@
     <h1>xsec_alpha</h1>
     <p class="hero-sub">
       "떨어질 코인을 골라내고, 조용해진 코인에서 폭발을 기다린다."<br>
-      gan_t의 실패에서 출발해, 절대 수익률 예측을 버리고 크로스섹션 상대 랭킹으로 전환.<br>
-      Short 6h + Long 12h 듀얼 모델 시스템. 20+ 에이전트 다각도 검증.
+      gan_t의 실패에서 출발해 크로스섹션 상대 랭킹으로 전환 — Short 6h + Long 12h 듀얼 모델.<br>
+      Part II (2026-04-25): 원장이 드러낸 구조적 결함 3가지, 60+ 에이전트 토론 3라운드, F1 통합 아키텍처 재설계.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.19" data-decimals="2">0</span><span class="hero-stat-label">Short Holdout IC</span></div>
@@ -645,42 +741,454 @@
 </div></section>
 <hr class="divider">
 
-<!-- Current Status -->
-<section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status</div>
-  <h2 class="section-title">현재 운영 상태</h2>
-  <p class="section-desc">Short는 실행 중, Long은 watch 모드로 관찰 데이터 축적 중.</p>
+<!-- ============================================== -->
+<!-- PART 2 (2026-04-25): Ops Reality + F1 Rebuild  -->
+<!-- 위 §1-15는 "연구→설계"의 기록, 아래는 "운영→재설계" -->
+<!-- ============================================== -->
 
-  <div class="two-col" style="margin-bottom:2rem;">
-    <div class="layer-card" style="border-top-color: var(--green);">
-      <div class="layer-num">실행 중</div>
-      <div class="layer-title">Short Model (6h)</div>
+<div class="part-divider fade-in">
+  <span class="part-label">Part II · Operational Rebuild · 2026-04-25</span>
+  <h2>운영이 드러낸 것들, 그리고 재설계</h2>
+  <div class="part-ornament"></div>
+  <p>
+    위의 연구는 "IC는 좋다"에서 멈췄다. 2~4주 라이브가 돌고 원장이 쌓이자,
+    숫자가 덮어주지 못한 구조적 문제 세 가지가 드러났다.
+    아래는 그 문제를 발견하고, 20명 트레이더 토론을 3라운드 돌려서,
+    F1 통합 아키텍처로 재설계한 기록이다.
+  </p>
+</div>
+
+<!-- Ops Reality -->
+<section id="ops-reality"><div class="container fade-in">
+  <div class="section-label">Operational Reality Check</div>
+  <h2 class="section-title">원장이 드러낸 진실</h2>
+  <p class="section-desc">
+    LONG 82.7% 적중률은 <strong>training-data overlap에 걸린 숫자</strong>였다.
+    텔레그램 WATCH_LONG 부호는 몇 주 동안 뒤집혀 있었다.
+    같은 코인에 대해 두 모델은 90% 다른 방향을 가리키고 있었다.
+  </p>
+
+  <div class="three-col" style="margin-bottom:2.5rem;">
+    <div class="card" style="border-top: 3px solid var(--red);">
+      <div class="card-title">텔레그램 WATCH_LONG 부호 버그</div>
       <div class="card-text">
-        <strong>IC:</strong> +0.189 (t=11.3)<br>
-        <strong>팩터:</strong> kimchi_inv, binance_lead, vol_inv, reversal_1h/4h, order_flow_bear<br>
-        <strong>모델:</strong> Ensemble (Ridge + LightGBM)<br>
-        <strong>포지션:</strong> SHORT 5, Bitget USDT perp<br>
-        <strong>리밸런스:</strong> 매 6h<br>
-        <strong>관측:</strong> ledger + ic_history.json
+        <code class="c">format_performance</code>가 <code class="c">side == "LONG"</code> 정확 매칭만 해서
+        <strong>WATCH_LONG은 SHORT 공식으로 계산됨</strong>. 원장은 맞았지만 텔레그램만
+        거짓말. 몇 주 동안 드러나지 않았다.
       </div>
+      <span class="badge badge-fail">부호 반전</span>
+      <span class="badge badge-ok">regression test 도입</span>
     </div>
-    <div class="layer-card" style="border-top-color: var(--amber);">
-      <div class="layer-num">관찰 중 (WATCH)</div>
-      <div class="layer-title">Long Model (12h)</div>
+    <div class="card" style="border-top: 3px solid var(--amber);">
+      <div class="card-title">LONG 82.7% = Survivorship Bias</div>
       <div class="card-text">
-        <strong>IC:</strong> +0.216 (t=4.2)<br>
-        <strong>팩터:</strong> range_contraction, reversal_1h/4h, binance_lead<br>
-        <strong>모델:</strong> Ensemble (Ridge + LightGBM)<br>
-        <strong>포지션:</strong> WATCH_LONG 5 (actionable=False)<br>
-        <strong>리밸런스:</strong> 12h (오프사이클 carry)<br>
-        <strong>레짐 게이트:</strong> BTC 7d &gt; 0%, 30d &gt; -10%<br>
-        <strong>승격 조건:</strong> holdout &ge; 60 timestamps, pred_std &ge; 0.01, long-only IC &gt; 0
+        calibration 윈도우와 training이 겹쳤다. bull-regime-only 학습 + macro 피처가
+        <strong>bull 구간에서만 과적합</strong>. 진짜 holdout에서 dir_hit <span class="c">58%</span>, IC <span class="c">0.13</span>.
+      </div>
+      <span class="badge badge-pivot">holdout 분리 재검증</span>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--red);">
+      <div class="card-title">SHORT ↔ LONG 방향 10% 합의</div>
+      <div class="card-text">
+        같은 코인에 대해 SHORT 91/100 ↓, LONG 99/100 ↑. rank correlation은 +0.55로 양수 — 즉
+        <strong>"같은 순서" but "다른 baseline"</strong>. SHORT는 전 regime 학습, LONG은 bull-only.
+      </div>
+      <span class="badge badge-fail">baseline drift</span>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">LONG 2σ+ 적중률: 주장 vs 실측</div>
+    <div class="chart-subtitle">calibration 윈도우 (training 포함) vs 진짜 holdout</div>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">주장 (calib)</div>
+        <div class="bar-track"><div class="bar-fill tier-fire" style="width:82.7%;"></div></div>
+        <div class="bar-val">82.7%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">진짜 holdout</div>
+        <div class="bar-track"><div class="bar-fill tier-faint" style="width:58.1%;"></div></div>
+        <div class="bar-val">58.1%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">랜덤 baseline</div>
+        <div class="bar-track"><div class="bar-fill tier-faint" style="width:50%;"></div></div>
+        <div class="bar-val">50.0%</div>
       </div>
     </div>
   </div>
 
   <div class="callout">
-    <p><strong>다음 마일스톤:</strong> Long watch 데이터 60+ 시점 축적 &rarr; long-only 성과 재평가 &rarr; 조건 충족 시 <span class="c">EXECUTION_MODE = "long_only"</span> 전환. 대시보드에 ledger/next_rebalance 노출. Short 모델 재저장 (feature names 경고 제거).</p>
+    <p>
+      <strong>근본 원인 공통점:</strong> <em>감시가 운영에 없었다</em>.
+      CLAUDE.md의 롤백 규칙은 문서로만 존재했고, 원장↔텔레그램 일관성 체크도 없었다.
+      이 챕터부터는 <strong>자동 게이트·drift 감지·holdout 추적</strong>을 시스템에 박는 이야기다.
+    </p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Per-coin Probabilistic Output -->
+<section id="per-coin-output"><div class="container fade-in">
+  <div class="section-label">Per-Coin Probabilistic Output</div>
+  <h2 class="section-title">5-pick basket에서 100-coin 확률 예측으로</h2>
+  <p class="section-desc">
+    이전 텔레그램은 top-5 basket만 보냈고 "잔차 −0.5%" 숫자의 의미를 유저가 알 수 없었다.
+    재설계: 전체 유니버스 100개 코인을 <strong>방향 + 확률 + 기대 % + 95% CI + 제안 사이즈 + 합의/신뢰 태그</strong>로 출력.
+  </p>
+
+  <!-- Sigma bucket calibration bars -->
+  <div class="chart-wrap">
+    <div class="chart-title">σ-bucket 보정 (7,600 예측 스캔 기반)</div>
+    <div class="chart-subtitle">
+      <code class="c">|σ| = |score| / batch_std</code> 구간별 과거 방향 적중률.
+      6h / 12h 양 호라이즌. 이 수치가 <code class="c">output/calibration_sigma.json</code>에 저장되어 실시간 예측에 쓰임.
+    </div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+      <div>
+        <div style="font-weight:700; font-size:0.82rem; margin-bottom:0.7rem; color: var(--green);">🔎 6h 예측</div>
+        <div class="bar-chart">
+          <div class="bar-row"><div class="bar-label">🔥 2σ+</div><div class="bar-track"><div class="bar-fill short-side" style="width:64.6%;"></div></div><div class="bar-val">64.6%</div></div>
+          <div class="bar-row"><div class="bar-label">✅ 1.5~2σ</div><div class="bar-track"><div class="bar-fill short-side" style="width:55.6%;"></div></div><div class="bar-val">55.6%</div></div>
+          <div class="bar-row"><div class="bar-label">✅ 1~1.5σ</div><div class="bar-track"><div class="bar-fill short-side" style="width:57.4%;"></div></div><div class="bar-val">57.4%</div></div>
+          <div class="bar-row"><div class="bar-label">▫ 0.5~1σ</div><div class="bar-track"><div class="bar-fill short-side" style="width:51.9%;"></div></div><div class="bar-val">51.9%</div></div>
+          <div class="bar-row"><div class="bar-label">· &lt;0.5σ</div><div class="bar-track"><div class="bar-fill short-side" style="width:47.8%;"></div></div><div class="bar-val">47.8%</div></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700; font-size:0.82rem; margin-bottom:0.7rem; color: var(--amber);">🔎 12h 예측</div>
+        <div class="bar-chart">
+          <div class="bar-row"><div class="bar-label">🔥 2σ+</div><div class="bar-track"><div class="bar-fill long-side" style="width:70.6%;"></div></div><div class="bar-val">70.6%</div></div>
+          <div class="bar-row"><div class="bar-label">✅ 1.5~2σ</div><div class="bar-track"><div class="bar-fill long-side" style="width:60.7%;"></div></div><div class="bar-val">60.7%</div></div>
+          <div class="bar-row"><div class="bar-label">✅ 1~1.5σ</div><div class="bar-track"><div class="bar-fill long-side" style="width:56.7%;"></div></div><div class="bar-val">56.7%</div></div>
+          <div class="bar-row"><div class="bar-label">▫ 0.5~1σ</div><div class="bar-track"><div class="bar-fill long-side" style="width:54.2%;"></div></div><div class="bar-val">54.2%</div></div>
+          <div class="bar-row"><div class="bar-label">· &lt;0.5σ</div><div class="bar-track"><div class="bar-fill long-side" style="width:50.5%;"></div></div><div class="bar-val">50.5%</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Telegram mockup -->
+  <div class="chart-wrap" style="background: var(--bg-secondary);">
+    <div class="chart-title">텔레그램 출력 예시</div>
+    <div class="chart-subtitle">실제 라이브 포맷. σ-tier + 방향 + 확률 + 기대% + coin vol + 95% CI + 사이즈 + 합의/신뢰 태그.</div>
+    <div class="tg-mockup">
+      <div class="tg-sender">📊 xsec_alpha</div>
+      <div class="tg-header">
+        📅 2026-04-24 15:00 UTC<br>
+        📈 Regime: 🟢 bull  BTC 7d +1.6% / 30d +8.9%<br>
+        🩺 Model IC: 🟢 SHORT +0.050 | 🟢 LONG +0.047<br>
+        📉 Factor drift: volatility_inv_24h(SIGN_FLIP)
+      </div>
+      <div class="tg-section-title">🔎 6h 예측</div>
+      <div class="tg-meta">총 100 | |σ|≥1.0: 54 | 표시 5개</div>
+      <div class="tg-row"><span class="tg-tier">🔥</span><span class="tg-coin">KAITO</span><span class="tg-dir">↓</span><span class="tg-chip">65%</span><span class="tg-chip red">-1.29%</span><span class="tg-chip">±2.6%</span><span class="tg-chip">[-6.4, +3.9]</span><span class="tg-chip">💰 3.0%</span><span class="tg-chip green">⚡</span></div>
+      <div class="tg-row"><span class="tg-tier">🔥</span><span class="tg-coin">ESP</span><span class="tg-dir">↓</span><span class="tg-chip">65%</span><span class="tg-chip red">-1.29%</span><span class="tg-chip">±3.4%</span><span class="tg-chip">[-8.0, +5.4]</span><span class="tg-chip">💰 3.0%</span><span class="tg-chip green">⚡</span></div>
+      <div class="tg-row"><span class="tg-tier">🔥</span><span class="tg-coin">SENT</span><span class="tg-dir">↓</span><span class="tg-chip">65%</span><span class="tg-chip red">-1.29%</span><span class="tg-chip">±3.3%</span><span class="tg-chip">[-7.8, +5.2]</span><span class="tg-chip">💰 3.0%</span><span class="tg-chip green">⚡</span></div>
+      <div class="tg-row"><span class="tg-tier">🔥</span><span class="tg-coin">PENGU</span><span class="tg-dir">↓</span><span class="tg-chip">65%</span><span class="tg-chip red">-1.29%</span><span class="tg-chip">±3.4%</span><span class="tg-chip">[-8.0, +5.4]</span><span class="tg-chip">💰 3.0%</span><span class="tg-chip green">⚡</span><span class="tg-chip red">⚠</span></div>
+      <div class="tg-row"><span class="tg-tier">✅</span><span class="tg-coin">BREV</span><span class="tg-dir">↓</span><span class="tg-chip">57%</span><span class="tg-chip red">-0.47%</span><span class="tg-chip">±3.0%</span><span class="tg-chip">[-6.2, +5.6]</span><span class="tg-chip">💰 2.0%</span><span class="tg-chip green">⚡</span><span class="tg-chip green">⭐</span></div>
+      <div class="tg-legend">
+        🔥 강한 (|σ|≥2, 64-70% 적중)&nbsp;&nbsp;✅ 보통 (1σ+, 55-61%)&nbsp;&nbsp;▫ 약 (0.5σ+, 52-55%)<br>
+        ⚡ 6h+12h 방향 합의&nbsp;&nbsp;⭐ 과거 적중률 ≥60% (신뢰)&nbsp;&nbsp;⚠ 과거 적중률 ≤40% (역신호)
+      </div>
+    </div>
+  </div>
+
+  <!-- Tag explanations -->
+  <div class="tag-grid">
+    <div class="tag-card"><div class="tag-icon">🔥</div><div class="tag-name">2σ+ tier</div><div class="tag-desc">가장 강한 모델 확신. 과거 방향 적중률 64-70%. 제안 사이즈 3%.</div></div>
+    <div class="tag-card"><div class="tag-icon">✅</div><div class="tag-name">1σ+ tier</div><div class="tag-desc">보통 신뢰. 55-61% 적중. 제안 사이즈 2%.</div></div>
+    <div class="tag-card"><div class="tag-icon">⚡</div><div class="tag-name">6h + 12h 합의</div><div class="tag-desc">두 호라이즌 모델이 같은 방향을 가리킬 때. 92%에서 일치.</div></div>
+    <div class="tag-card"><div class="tag-icon">⭐</div><div class="tag-name">신뢰 코인</div><div class="tag-desc">원장 기준 과거 적중률 ≥60% (n≥5). 모델이 이 코인에서 특히 잘 맞춘 이력.</div></div>
+    <div class="tag-card"><div class="tag-icon">⚠</div><div class="tag-name">역신호 경향</div><div class="tag-desc">과거 적중률 ≤40%. 모델이 이 코인에서 반대로 가는 경향. 사이즈 축소 권장.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- F1 Unified Architecture -->
+<section id="f1-unified"><div class="container fade-in">
+  <div class="section-label">F1 Unified Architecture</div>
+  <h2 class="section-title">2 모델, 같은 피처 — 호라이즌만 다르게</h2>
+  <p class="section-desc">
+    20명 트레이더 × 3 라운드 토론 결과, 13/20이 F1 (Unified cleanup)을 택했다.
+    같은 10-피처 파이프라인으로 두 모델을 학습 → <strong>방향 합의 10%→92%, rank correlation 0.55→0.908</strong>.
+  </p>
+
+  <!-- Before / After Dashboard -->
+  <div class="ba-grid">
+    <div class="ba-card before">
+      <div class="ba-header">
+        <div class="ba-title">Before — 분리 피처</div>
+        <div class="ba-tag">v3 + v4</div>
+      </div>
+      <div class="ba-metric"><span class="ba-metric-key">SHORT 피처 수</span><span class="ba-metric-val">9</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">LONG 피처 수</span><span class="ba-metric-val">7</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">공통 피처</span><span class="ba-metric-val">6</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">방향 합의</span><span class="ba-metric-val neg">10%</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">rank correlation</span><span class="ba-metric-val">+0.55</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">6h 2σ+ 적중</span><span class="ba-metric-val">63.7%</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">12h 2σ+ 적중</span><span class="ba-metric-val">64.3%</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">Regime 필터</span><span class="ba-metric-val">bull only (LONG)</span></div>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-card after">
+      <div class="ba-header">
+        <div class="ba-title">After — 통합 피처 (F1)</div>
+        <div class="ba-tag">xsec_6h + xsec_12h</div>
+      </div>
+      <div class="ba-metric"><span class="ba-metric-key">6h 피처 수</span><span class="ba-metric-val">10</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">12h 피처 수</span><span class="ba-metric-val">10</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">공통 피처</span><span class="ba-metric-val pos">10 (전체)</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">방향 합의</span><span class="ba-metric-val pos">92%</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">rank correlation</span><span class="ba-metric-val pos">+0.908</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">6h 2σ+ 적중</span><span class="ba-metric-val pos">64.6%</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">12h 2σ+ 적중</span><span class="ba-metric-val pos">70.6%</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">Regime 필터</span><span class="ba-metric-val pos">없음 (all-regime)</span></div>
+    </div>
+  </div>
+
+  <!-- Architecture diagram (pure CSS) -->
+  <div class="chart-wrap">
+    <div class="chart-title">F1 통합 파이프라인</div>
+    <div class="chart-subtitle">하나의 피처 라이브러리 → 두 호라이즌 모델 → σ-bucket 보정 → 확률형 per-coin 출력</div>
+    <div style="display:flex; flex-direction:column; align-items:center; gap: 0.4rem; padding: 1.5rem 0;">
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.5rem; text-align:center; min-width: 300px;">
+        <div style="font-weight:700; font-size:0.88rem;">Upbit + Binance 1h OHLCV</div>
+        <div style="font-size:0.72rem; color:var(--text-muted); font-family: 'JetBrains Mono', monospace;">200+ KRW markets</div>
+      </div>
+      <div style="color: var(--text-muted);">↓</div>
+      <div style="background: var(--bg-card); border: 2px solid var(--accent); border-radius: 8px; padding: 1rem 1.5rem; text-align:center; min-width: 440px;">
+        <div style="font-weight:700; font-size:0.88rem; color: var(--accent);">compute_unified_factors( ) — 10 features</div>
+        <div style="font-size:0.7rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; line-height: 1.7;">
+          reversal_1h / reversal_4h / volatility_inv_24h / order_flow_bear<br>
+          range_contraction_12h / binance_lead_1h / kimchi_inv / kimchi_zscore_24h<br>
+          dow_bull / hour_vol
+        </div>
+      </div>
+      <div style="color: var(--text-muted);">↓ cross-section z-score</div>
+      <div style="display:flex; gap: 1.5rem; justify-content:center;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--green); border-radius: 8px; padding: 1rem 1.3rem; text-align:center; min-width: 180px;">
+          <div style="font-weight:700; font-size:0.88rem;">xsec_6h.pkl</div>
+          <div style="font-size:0.72rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem;">Ridge + LightGBM<br>horizon = 6h<br>target = absolute</div>
+        </div>
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 8px; padding: 1rem 1.3rem; text-align:center; min-width: 180px;">
+          <div style="font-weight:700; font-size:0.88rem;">xsec_12h.pkl</div>
+          <div style="font-size:0.72rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem;">Ridge + LightGBM<br>horizon = 12h<br>target = absolute</div>
+        </div>
+      </div>
+      <div style="color: var(--text-muted); text-align:center;">↓ 92% direction agreement · rank_corr 0.908</div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.5rem; text-align:center; min-width: 340px;">
+        <div style="font-weight:700; font-size:0.88rem;">σ-bucket calibration</div>
+        <div style="font-size:0.72rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.25rem;">direction_prob · expected_pct · CI_95 · position_size</div>
+      </div>
+      <div style="color: var(--text-muted);">↓</div>
+      <div style="display:flex; gap: 0.6rem; flex-wrap:wrap; justify-content:center;">
+        <span style="background: var(--blue-dim); color: var(--blue); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">enrich (⚡⭐⚠)</span>
+        <span style="background: var(--amber-dim); color: var(--amber); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">preflight gates</span>
+        <span style="background: var(--red-dim); color: var(--red); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">ic_gate §7</span>
+        <span style="background: var(--green-dim); color: var(--green); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;">drift_detector</span>
+      </div>
+      <div style="color: var(--text-muted);">↓</div>
+      <div style="background: #17212b; color: #fff; border-radius: 8px; padding: 0.9rem 1.5rem; text-align:center; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;">
+        📱 텔레그램 &nbsp;·&nbsp; CSV &nbsp;·&nbsp; ledger
+      </div>
+    </div>
+  </div>
+
+  <!-- 20 trader debate votes -->
+  <div style="margin: 2.5rem 0;">
+    <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">20명 트레이더 · 3라운드 토론</h3>
+    <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">각 라운드마다 4 배치 × 5명 = 20명 스페셜리스트가 실제 코드·원장 접근 권한으로 토론.</p>
+
+    <div class="vote-wrap">
+      <div class="vote-title">라운드 1 · "가장 강력한 형태는?"</div>
+      <div class="vote-sub">Tier 1 (확률 출력) / Tier 2 (ops) / Tier 3 (피처) / Tier 4 (재학습) 중 실행 우선순위</div>
+      <div class="vote-bar">
+        <div class="vote-seg win" style="width:75%;">Tier 1 먼저 · 15/20</div>
+        <div class="vote-seg mid" style="width:15%;">T2 먼저 · 3</div>
+        <div class="vote-seg min" style="width:10%;">T3 · 2</div>
+      </div>
+    </div>
+
+    <div class="vote-wrap">
+      <div class="vote-title">라운드 2 · "주기·재학습·리셋 정책"</div>
+      <div class="vote-sub">Regime 필터 vs all-regime + 주간 soft retrain + promotion gate</div>
+      <div class="vote-bar">
+        <div class="vote-seg win" style="width:70%;">F1 Unify Regime · 14/20</div>
+        <div class="vote-seg mid" style="width:15%;">F2 Multi-horizon · 3</div>
+        <div class="vote-seg min" style="width:15%;">기타 · 3</div>
+      </div>
+    </div>
+
+    <div class="vote-wrap">
+      <div class="vote-title">라운드 3 · "최종 아키텍처"</div>
+      <div class="vote-sub">F1 통합 피처 / F2 multi-horizon 단일 모델 / F3 meta-learner / F4 기타</div>
+      <div class="vote-bar">
+        <div class="vote-seg win" style="width:65%;">F1 Unified · 13/20</div>
+        <div class="vote-seg mid" style="width:25%;">F3 meta · 5</div>
+        <div class="vote-seg min" style="width:10%;">F2 · 2</div>
+      </div>
+      <div class="vote-legend" style="margin-top:0.8rem;">
+        <span><span class="vote-legend-dot" style="background:#16a34a;"></span>채택</span>
+        <span><span class="vote-legend-dot" style="background:#b45309;"></span>2위</span>
+        <span><span class="vote-legend-dot" style="background:#a8a29e;"></span>기타</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>왜 F1이 이겼나:</strong> 20명 중 14명 (라운드 2)·13명 (라운드 3)이 "91% rank 합의 = 이미 통합된 상태,
+      피처 파이프라인만 맞추면 90% 가치" 라고 판단. F2 (multi-horizon) 는 "미래 지향이지만 XGBoost 기반에선 이득 없음",
+      F3 (meta-learner) 는 "필요성 없음 — 91% 이미 합의". 13분 훈련 + 30분 runtime 수정으로 끝났다.
+    </p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Automation stack -->
+<section id="automation"><div class="container fade-in">
+  <div class="section-label">Automation Stack</div>
+  <h2 class="section-title">운영 자동화 — 6h / 일간 / 주간 3층</h2>
+  <p class="section-desc">
+    감시·게이트·재학습을 systemd timer 3개로 분리. 각 단계마다 pre-flight + promotion gate + atomic archive.
+  </p>
+
+  <!-- Retrain pipeline -->
+  <div class="pipe-wrap">
+    <div class="chart-title">Retrain Pipeline (scripts/retrain_pipeline.py)</div>
+    <div class="chart-subtitle">주 1회 일요일 UTC 20:00 발사. Promotion gate 실패 시 기존 모델 자동 유지.</div>
+    <div class="pipe-stage">
+      <div class="pipe-num">01</div>
+      <div class="pipe-body"><div class="pipe-title">Pre-flight</div><div class="pipe-desc">DB 신선도 ≤3h · 디스크 ≥500MB · lock file 확인</div></div>
+    </div>
+    <div class="pipe-arrow">↓</div>
+    <div class="pipe-stage">
+      <div class="pipe-num">02</div>
+      <div class="pipe-body"><div class="pipe-title">Train candidates</div><div class="pipe-desc">xsec_6h_candidate · xsec_12h_candidate (unified 10 feat · absolute target · 60d)</div></div>
+    </div>
+    <div class="pipe-arrow">↓</div>
+    <div class="pipe-stage gate">
+      <div class="pipe-num">03</div>
+      <div class="pipe-body"><div class="pipe-title">Promotion Gate</div><div class="pipe-desc"><code class="c">new_ic ≥ old_ic − 0.015</code> AND <code class="c">new_ic ≥ 0.040</code> — 둘 다 통과해야 배포</div></div>
+    </div>
+    <div class="pipe-arrow">↓</div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div class="pipe-stage deploy" style="margin-bottom:0;">
+        <div class="pipe-num">04</div>
+        <div class="pipe-body"><div class="pipe-title">통과 → 배포</div><div class="pipe-desc">archive 백업 → 모델 교체 → calibration_sigma.json 재생성</div></div>
+      </div>
+      <div class="pipe-stage fail" style="margin-bottom:0;">
+        <div class="pipe-num">04</div>
+        <div class="pipe-body"><div class="pipe-title">실패 → 기각</div><div class="pipe-desc">후보 삭제 → 이전 모델 유지 → retrain_history.json 로그</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Systemd timers -->
+  <div class="chart-wrap">
+    <div class="chart-title">Systemd 타이머 3층</div>
+    <div class="chart-subtitle">모든 타이머 <code class="c">Persistent=true</code> — 미싱 윈도우 자동 복구.</div>
+
+    <div class="auto-timer">
+      <div class="auto-name">xsec-alpha.timer<span class="mono-small">fetch_and_rank.py</span></div>
+      <div class="auto-role">데이터 수집 · track_ic · 전체 유니버스 예측 · 텔레그램 발송</div>
+      <div class="auto-when"><strong>매 6h</strong>05/11/17/23 UTC</div>
+    </div>
+
+    <div class="auto-timer">
+      <div class="auto-name">xsec-measure.timer<span class="mono-small">wf_holdout_harness + drift_detector</span></div>
+      <div class="auto-role">Walk-forward holdout IC 측정 · 팩터 drift 감지 · wf_history.json / drift_state.json 업데이트</div>
+      <div class="auto-when"><strong>매일</strong>00:00 UTC</div>
+    </div>
+
+    <div class="auto-timer">
+      <div class="auto-name">xsec-retrain.timer<span class="mono-small">retrain_pipeline.py</span></div>
+      <div class="auto-role">두 모델 재학습 → promotion gate → archive → calibration 재생성</div>
+      <div class="auto-when"><strong>주 1회</strong>일 20:00 UTC</div>
+    </div>
+  </div>
+
+  <!-- Gate state machine -->
+  <div class="chart-wrap">
+    <div class="chart-title">IC Gate 자동 집행 (CLAUDE.md §7)</div>
+    <div class="chart-subtitle"><code class="c">utils/ic_gate.py</code> 가 매 run 평가. FREEZE 이상이면 자동으로 해당 사이드 watch-only.</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+      <div style="padding: 1rem 1.2rem; border-radius: 8px; background: var(--green-dim); border-left: 3px solid var(--green);">
+        <div style="font-weight:700; font-size:0.9rem; color: var(--green);">🟢 OK</div>
+        <div style="font-size:0.78rem; color: var(--text-secondary); margin-top: 0.3rem;">last-3 IC 모두 ≥ 0.05. 정상 운영.</div>
+      </div>
+      <div style="padding: 1rem 1.2rem; border-radius: 8px; background: var(--amber-dim); border-left: 3px solid var(--amber);">
+        <div style="font-weight:700; font-size:0.9rem; color: var(--amber);">🟡 WARN</div>
+        <div style="font-size:0.78rem; color: var(--text-secondary); margin-top: 0.3rem;">last-3에 IC &lt; 0.05 포함. 알림만, 실행 유지.</div>
+      </div>
+      <div style="padding: 1rem 1.2rem; border-radius: 8px; background: var(--red-dim); border-left: 3px solid var(--red);">
+        <div style="font-weight:700; font-size:0.9rem; color: var(--red);">🔴 FREEZE</div>
+        <div style="font-size:0.78rem; color: var(--text-secondary); margin-top: 0.3rem;">2회 연속 IC &lt; 0.03. 자동 watch-only 전환.</div>
+      </div>
+      <div style="padding: 1rem 1.2rem; border-radius: 8px; background: #2d1414; border-left: 3px solid #7f1d1d; color: #fff;">
+        <div style="font-weight:700; font-size:0.9rem;">⛔ LIQUIDATE</div>
+        <div style="font-size:0.78rem; opacity: 0.85; margin-top: 0.3rem;">3회 연속 IC &lt; 0.03. 신규 픽 emit 차단. 인간 ack 필요.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>한 번의 <code class="c">sudo bash deploy/install_f1.sh</code></strong> 로 3개 유닛 설치.
+      이후 재학습·측정·예측이 무인 자동 운영. 재학습 실패 3회 연속이면 systemd 타이머 자동 mask + 이전 모델 유지.
+    </p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Current Status -->
+<section id="status"><div class="container fade-in">
+  <div class="section-label">Current Status · F1 Production</div>
+  <h2 class="section-title">현재 운영 상태 (2026-04-25)</h2>
+  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중.</p>
+
+  <div class="two-col" style="margin-bottom:2rem;">
+    <div class="layer-card" style="border-top-color: var(--green);">
+      <div class="layer-num">Live · F1</div>
+      <div class="layer-title">xsec_6h (6h horizon)</div>
+      <div class="card-text">
+        <strong>2σ+ 적중:</strong> 64.6% · E[signed] +1.29%<br>
+        <strong>피처:</strong> 10개 통합 (reversal, vol_inv, order_flow, range_contraction, binance_lead, kimchi, kimchi_z, calendar)<br>
+        <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
+        <strong>출력:</strong> 전체 100 코인 · 방향 + 확률 + 기대% + 95% CI + 사이즈<br>
+        <strong>리밸런스:</strong> 매 6h (05/11/17/23 UTC)
+      </div>
+    </div>
+    <div class="layer-card" style="border-top-color: var(--amber);">
+      <div class="layer-num">Live · F1</div>
+      <div class="layer-title">xsec_12h (12h horizon)</div>
+      <div class="card-text">
+        <strong>2σ+ 적중:</strong> 70.6% · E[signed] +1.85%<br>
+        <strong>피처:</strong> xsec_6h와 동일 (10개) — 호라이즌 타겟만 다름<br>
+        <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
+        <strong>방향 합의:</strong> 6h와 92%, rank correlation +0.908<br>
+        <strong>리밸런스:</strong> 12h (오프사이클 carry)
+      </div>
+    </div>
+  </div>
+
+  <div class="four-col" style="margin-bottom:2rem;">
+    <div class="metric-card"><span class="metric-val pos">92%</span><div class="metric-label">방향 합의</div><div class="metric-sub">6h ↔ 12h direction<br>(was 10%)</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.908</span><div class="metric-label">Rank Correlation</div><div class="metric-sub">unified baseline<br>(was +0.55)</div></div>
+    <div class="metric-card"><span class="metric-val pos">64.6%</span><div class="metric-label">6h 2σ+ Hit</div><div class="metric-sub">n=1,134 predictions<br>E +1.29%</div></div>
+    <div class="metric-card"><span class="metric-val pos">70.6%</span><div class="metric-label">12h 2σ+ Hit</div><div class="metric-sub">n=625 predictions<br>E +1.85%</div></div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>자동 운영 상태:</strong>
+      <span class="c">xsec-alpha.timer</span> (예측, 매 6h) ·
+      <span class="c">xsec-measure.timer</span> (IC + drift, 매일 00:00 UTC) ·
+      <span class="c">xsec-retrain.timer</span> (재학습 + promotion gate, 주 1회 일 20:00 UTC).
+      CLAUDE.md §7 IC gate 자동 집행 · verify_telegram regression test 원장 일관성 보장 · retrain_pipeline promotion gate로 나쁜 모델 자동 기각.
+    </p>
   </div>
 </div></section>
 
