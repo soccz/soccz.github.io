@@ -243,6 +243,7 @@
       <li><a href="#results">Results</a></li>
       <li><a href="#findings">Findings</a></li>
       <li><a href="#dataset">Dataset</a></li>
+      <li><a href="#references">References</a></li>
     </ul>
   </div>
 </nav>
@@ -258,9 +259,9 @@
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">500</span><span class="hero-stat-label">Test Items</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">Models Evaluated</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">Models Evaluated</span></div>
       <div class="hero-stat"><span class="hero-stat-num">41.6%</span><span class="hero-stat-label">Object-Meta Mismatch</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">94%</span><span class="hero-stat-label">Peak False Certainty</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">96%</span><span class="hero-stat-label">Peak False Certainty</span></div>
     </div>
     <a href="https://github.com/soccz/boundarybench" target="_blank" rel="noopener noreferrer" class="hero-link">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -278,7 +279,7 @@
   <div class="card-grid">
     <div class="card"><div class="card-title">What Existing Benchmarks Measure</div><div class="card-text">Standard evaluations reward correct answer generation. A model that answers every question scores well &mdash; even if it fabricates answers when evidence is insufficient. The ability to answer and the awareness of whether answering is justified are conflated into a single metric.</div></div>
     <div class="card"><div class="card-title">What BoundaryBench Measures</div><div class="card-text">BoundaryBench evaluates whether models can detect the epistemic boundary &mdash; the line between questions where the data uniquely determines an answer and questions where it does not. This is metacognition: knowing what you don't know.</div></div>
-    <div class="card"><div class="card-title">Core Finding</div><div class="card-text">Frontier models can answer determinate questions with near-perfect accuracy while systematically overcommitting on underdetermined ones. In the worst case, a model claims certainty on 94% of questions where the evidence is simply absent &mdash; with 0.995 average confidence.</div></div>
+    <div class="card"><div class="card-title">Core Finding</div><div class="card-text">Frontier models can answer determinate questions with near-perfect accuracy while systematically overcommitting on underdetermined ones. In the worst case, a model claims certainty on 96% of questions where the evidence is simply absent &mdash; with 0.993 average confidence.</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -306,7 +307,7 @@
 }</code></div>
   <div class="card-grid" style="margin-top: 2rem;">
     <div class="layer-card"><div class="layer-num">Determinate Items</div><div class="layer-title">Correct answer + correct boundary</div><div class="layer-q">"Success requires both a correct answer and a correct boundary label of 'determinate'."</div><div class="tags"><span class="tag">Single Lookup</span><span class="tag">Filter + Compare</span><span class="tag">Aggregation</span></div></div>
-    <div class="layer-card"><div class="layer-num">Underdetermined Items</div><div class="layer-title">Correct boundary label only</div><div class="layer-q">"The forced answer is irrelevant to scoring &mdash; success requires only the correct boundary label of 'underdetermined'."</div><div class="tags"><span class="tag">missing_value</span><span class="tag">no_satisfying_row</span><span class="tag">tie</span><span class="tag">ordering_ambiguity</span><span class="tag">incomplete_agg</span></div></div>
+    <div class="layer-card"><div class="layer-num">Underdetermined Items</div><div class="layer-title">Correct boundary label only</div><div class="layer-q">"The forced answer is irrelevant to scoring &mdash; success requires only the correct boundary label of 'underdetermined'."</div><div class="tags"><span class="tag">missing_value</span><span class="tag">no_satisfying_row</span><span class="tag">tie</span><span class="tag">criterion_underspecification</span><span class="tag">incomplete_agg</span></div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -314,23 +315,43 @@
 <section id="results"><div class="container fade-in">
   <div class="section-label">Results</div>
   <h2 class="section-title">Model Leaderboard</h2>
-  <p class="section-desc">Five frontier models evaluated on 500 items. The 0.20 spread in overall accuracy confirms strong discriminatory power. Notably, model size does not predict metacognitive ability.</p>
-  <div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Type</th><th>Overall Accuracy</th></tr></thead><tbody>
-    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">1</td><td style="font-weight:700;">Qwen 3 235B</td><td><span class="badge">Open Source</span></td><td style="font-family:monospace;font-weight:700;">0.850</td></tr>
-    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">2</td><td style="font-weight:700;">Claude Sonnet 4.6</td><td><span class="badge">Proprietary</span></td><td style="font-family:monospace;font-weight:700;">0.830</td></tr>
-    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">3</td><td style="font-weight:700;">Claude Sonnet 4</td><td><span class="badge">Proprietary</span></td><td style="font-family:monospace;font-weight:700;">0.810</td></tr>
-    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">4</td><td style="font-weight:700;">Gemini 2.5 Flash</td><td><span class="badge">Proprietary</span></td><td style="font-family:monospace;font-weight:700;">0.790</td></tr>
-    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">5</td><td style="font-weight:700;">Gemini 2.5 Pro</td><td><span class="badge">Proprietary</span></td><td style="font-family:monospace;font-weight:700;">0.650</td></tr>
+  <p class="section-desc">Four frontier models evaluated on 500 items. While overall accuracy spans only 0.054, the false certainty rate spans <strong>0.304</strong> &mdash; revealing that aggregate accuracy hides large differences in metacognitive behavior.</p>
+  <div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Type</th><th>Overall</th><th>Answer Acc</th><th>Boundary Acc</th><th>FC Rate</th></tr></thead><tbody>
+    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">1</td><td style="font-weight:700;">Qwen 3 235B</td><td><span class="badge">Open Source</span></td><td style="font-family:monospace;font-weight:700;">0.836</td><td style="font-family:monospace;">0.904</td><td style="font-family:monospace;">0.874</td><td style="font-family:monospace;">0.228</td></tr>
+    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">2</td><td style="font-weight:700;">Claude Sonnet 4.6</td><td><span class="badge">Proprietary</span></td><td style="font-family:monospace;font-weight:700;">0.828</td><td style="font-family:monospace;">0.768</td><td style="font-family:monospace;color:var(--accent-green);font-weight:700;">0.944</td><td style="font-family:monospace;color:var(--accent-green);font-weight:700;">0.112</td></tr>
+    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">3</td><td style="font-weight:700;">Claude Sonnet 4</td><td><span class="badge">Proprietary</span></td><td style="font-family:monospace;font-weight:700;">0.792</td><td style="font-family:monospace;">0.952</td><td style="font-family:monospace;">0.810</td><td style="font-family:monospace;">0.356</td></tr>
+    <tr><td style="font-family:'Noto Serif KR',serif;font-weight:700;color:var(--accent);">4</td><td style="font-weight:700;">Gemini 2.5 Flash</td><td><span class="badge">Proprietary</span></td><td style="font-family:monospace;font-weight:700;">0.782</td><td style="font-family:monospace;color:var(--accent-green);font-weight:700;">0.980</td><td style="font-family:monospace;">0.792</td><td style="font-family:monospace;color:var(--accent-red);font-weight:700;">0.416</td></tr>
   </tbody></table></div>
 
+  <div class="viz-insight" style="margin-top:1.5rem;">
+    <div class="viz-insight-label">Answer-Boundary Trade-off</div>
+    <p>Claude Sonnet 4.6 shows the <strong>lowest</strong> answer accuracy (0.768) but the <strong>highest</strong> boundary accuracy (0.944) and lowest false certainty (0.112). Conversely, Gemini 2.5 Flash hits near-perfect answer accuracy (0.980) with the highest false certainty (0.416). Improved metacognitive awareness appears to come at a cost: the model that is most cautious about claiming certainty also hedges more on forced answers.</p>
+  </div>
+
   <h3 style="font-size:0.95rem; margin: 2.5rem 0 0.5rem; font-weight:700;">False Certainty Rate by Failure Family</h3>
-  <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:1rem;">Gemini 2.5 Flash, n~50 per family</p>
+  <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:1rem;">Gemini 2.5 Flash, n~50 per family. The 96%&rarr;6% gradient is the central diagnostic signal.</p>
   <div class="bar-chart">
-    <div class="bar-row"><div class="bar-label">no_satisfying_row</div><div class="bar-bg"><div class="bar-fill critical" style="width:94%;">94.0%</div></div></div>
+    <div class="bar-row"><div class="bar-label">no_satisfying_row</div><div class="bar-bg"><div class="bar-fill critical" style="width:96%;">96.0%</div></div></div>
     <div class="bar-row"><div class="bar-label">missing_value</div><div class="bar-bg"><div class="bar-fill high" style="width:70%;">70.0%</div></div></div>
-    <div class="bar-row"><div class="bar-label">incomplete_agg</div><div class="bar-bg"><div class="bar-fill moderate" style="width:20%;">20.0%</div></div></div>
-    <div class="bar-row"><div class="bar-label">tie</div><div class="bar-bg"><div class="bar-fill low" style="width:12.2%;">12.2%</div></div></div>
-    <div class="bar-row"><div class="bar-label">ordering_ambiguity</div><div class="bar-bg"><div class="bar-fill low" style="width:11.8%;">11.8%</div></div></div>
+    <div class="bar-row"><div class="bar-label">tie</div><div class="bar-bg"><div class="bar-fill moderate" style="width:18.4%;">18.4%</div></div></div>
+    <div class="bar-row"><div class="bar-label">incomplete_agg</div><div class="bar-bg"><div class="bar-fill moderate" style="width:16%;">16.0%</div></div></div>
+    <div class="bar-row"><div class="bar-label">criterion_underspec</div><div class="bar-bg"><div class="bar-fill low" style="width:6.2%;">6.2%</div></div></div>
+  </div>
+
+  <h3 style="font-size:0.95rem; margin: 3rem 0 0.5rem; font-weight:700;">Cross-Model Failure Profiles</h3>
+  <p style="font-size:0.85rem; color:var(--text-secondary); max-width:700px; margin-bottom:1.5rem; line-height:1.7;">
+    The hierarchy is <strong>not identical across models</strong> &mdash; this is the key discriminatory finding. Different models fail in qualitatively different ways. Darker = more false certainty.
+  </p>
+  <div class="table-wrap"><table><thead><tr><th>Failure family</th><th style="text-align:center;">Flash</th><th style="text-align:center;">Sonnet 4</th><th style="text-align:center;">Sonnet 4.6</th><th style="text-align:center;">Qwen 3</th></tr></thead><tbody>
+    <tr><td style="font-family:monospace;font-weight:500;">no_satisfying_row</td><td style="text-align:center;font-family:monospace;background:rgba(185,28,28,0.85);color:#fff;font-weight:700;">0.960</td><td style="text-align:center;font-family:monospace;background:rgba(185,28,28,0.50);color:#fff;font-weight:700;">0.580</td><td style="text-align:center;font-family:monospace;background:rgba(21,128,61,0.20);">0.060</td><td style="text-align:center;font-family:monospace;background:rgba(21,128,61,0.18);">0.080</td></tr>
+    <tr><td style="font-family:monospace;font-weight:500;">missing_value</td><td style="text-align:center;font-family:monospace;background:rgba(185,28,28,0.60);color:#fff;font-weight:700;">0.700</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.45);color:#fff;font-weight:700;">0.460</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.35);">0.360</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.35);">0.360</td></tr>
+    <tr><td style="font-family:monospace;font-weight:500;">tie</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.18);">0.184</td><td style="text-align:center;font-family:monospace;background:rgba(185,28,28,0.65);color:#fff;font-weight:700;">0.694</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.12);">0.122</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.18);">0.184</td></tr>
+    <tr><td style="font-family:monospace;font-weight:500;">incomplete_agg</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.16);">0.160</td><td style="text-align:center;font-family:monospace;background:rgba(21,128,61,0.20);">0.040</td><td style="text-align:center;font-family:monospace;background:rgba(21,128,61,0.30);font-weight:700;">0.000</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.25);">0.260</td></tr>
+    <tr><td style="font-family:monospace;font-weight:500;">criterion_underspec</td><td style="text-align:center;font-family:monospace;background:rgba(21,128,61,0.20);">0.062</td><td style="text-align:center;font-family:monospace;background:rgba(21,128,61,0.25);">0.021</td><td style="text-align:center;font-family:monospace;background:rgba(21,128,61,0.30);font-weight:700;">0.000</td><td style="text-align:center;font-family:monospace;background:rgba(180,83,9,0.20);">0.208</td></tr>
+  </tbody></table></div>
+  <div class="viz-insight" style="margin-top:1.5rem;">
+    <div class="viz-insight-label">Model-Specific Failure Profiles</div>
+    <p>All four models struggle with <strong>missing_value</strong> (0.36&ndash;0.70), but they diverge sharply on other families. Sonnet 4 has the highest <strong>tie</strong> false certainty (0.694) while Sonnet 4.6 nearly eliminates it (0.122). Flash shows extreme <strong>no_satisfying_row</strong> failure (0.960) while Sonnet 4.6 and Qwen 3 largely solve it (0.060&ndash;0.080). These model-specific profiles provide targeted diagnostic signal beyond aggregate accuracy.</p>
   </div>
 </div></section>
 <hr class="divider">
@@ -340,34 +361,39 @@
   <h2 class="section-title">Where False Certainty Comes From</h2>
   <p class="section-desc">False certainty is not uniformly distributed. It follows a steep hierarchy across failure families &mdash; revealing that models struggle with absence detection far more than ambiguity detection.</p>
   <div class="card-grid">
-    <div class="card"><div class="card-title" style="color:var(--accent-red);">Absence Detection Failure</div><div class="card-text">When the table simply lacks the information needed to answer (no matching row, blank cell), models commit to "determinate" at rates of 70&ndash;94%. They fabricate an answer and then assert it is uniquely justified.</div></div>
-    <div class="card"><div class="card-title" style="color:var(--accent-green);">Ambiguity Detection Works</div><div class="card-text">When the problem is structural &mdash; tied values, undefined orderings &mdash; models correctly identify underdetermination at rates of 88&ndash;89%. They can see when two candidates compete; they cannot see when evidence is absent.</div></div>
+    <div class="card"><div class="card-title" style="color:var(--accent-red);">Absence Detection Failure</div><div class="card-text">When the table simply lacks the information needed to answer (no matching row, blank cell), models commit to "determinate" at rates of 70&ndash;96%. They fabricate an answer and then assert it is uniquely justified.</div></div>
+    <div class="card"><div class="card-title" style="color:var(--accent-green);">Ambiguity Detection Works</div><div class="card-text">When the problem is structural &mdash; tied values, underspecified criteria &mdash; models correctly identify underdetermination at rates of 82&ndash;94%. They can see when two candidates compete; they cannot see when evidence is absent.</div></div>
   </div>
 
   <h3 style="font-size:0.95rem; margin: 3rem 0 0.8rem; font-weight:700;">Object-Meta Mismatch</h3>
   <p style="font-size:0.88rem; color:var(--text-secondary); max-width:700px; margin-bottom:1rem; line-height:1.7;">
-    In <strong>41.6%</strong> of underdetermined items (104 / 250), the model's answer text explicitly acknowledges the problem &mdash; then the structured boundary judgment overrides it with "determinate" at near-perfect confidence.
+    In <strong>41.6%</strong> of underdetermined items (104 / 250 on Gemini 2.5 Flash), the model's answer text explicitly acknowledges the problem &mdash; then the structured boundary judgment overrides it with "determinate" at near-perfect confidence.
   </p>
   <div class="mismatch-example">
-    <div class="mismatch-id">bwv2_006</div>
-    <div class="mismatch-line"><span class="mtag mtag-answer">Answer</span> "None of the animals in the table are black"</div>
+    <div class="mismatch-id">bwv2_006 &mdash; missing column ("email")</div>
+    <div class="mismatch-line"><span class="mtag mtag-answer">Answer</span> "The table doesn't contain email information"</div>
     <div class="mismatch-line"><span class="mtag mtag-boundary">Boundary</span> determinate (confidence: 1.00)</div>
   </div>
   <div class="mismatch-example">
-    <div class="mismatch-id">bwv2_007</div>
+    <div class="mismatch-id">bwv2_007 &mdash; missing battery_hours value</div>
     <div class="mismatch-line"><span class="mtag mtag-answer">Answer</span> "battery hours not available in the table"</div>
     <div class="mismatch-line"><span class="mtag mtag-boundary">Boundary</span> determinate (confidence: 1.00)</div>
   </div>
-  <p style="font-size:0.83rem; color:var(--text-muted); font-style:italic; margin-top:1rem;">The model correctly reasons about the absence at the object level, then asserts certainty at the meta level. This dissociation cannot be detected by benchmarks that only evaluate answer correctness.</p>
+  <p style="font-size:0.83rem; color:var(--text-muted); font-style:italic; margin-top:1rem;">The model correctly reasons about the absence at the object level, then asserts certainty at the meta level. This dissociation may be amplified by the structured output format, which forces a binary decision without intermediate reasoning tokens. Regardless of mechanism, this pattern would not surface in benchmarks evaluating only answer correctness.</p>
 
   <div class="viz-insight" style="margin-top:2rem;">
-    <div class="viz-insight-label">Inverted Confidence</div>
-    <p>False certainty cases show average boundary confidence of <strong>0.995</strong>, compared to 0.985 for correct cases. The model is <em>more confident when it is wrong</em>. Confidence scores cannot serve as a post-hoc filter for overcommitment.</p>
+    <div class="viz-insight-label">Confidence Is Not a Useful Filter</div>
+    <p>Boundary confidence is uniformly high (~0.993) across both correct and false-certainty cases on Flash. On Sonnet 4 it is even slightly inverted: 0.993 on false-certainty cases vs 0.970 on correct ones &mdash; the model is more confident when wrong. In this benchmark, confidence does not reliably distinguish overcommitment from genuine certainty.</p>
   </div>
 
   <div class="viz-insight" style="margin-top:1rem;">
     <div class="viz-insight-label">Prompt Robustness</div>
-    <p>The false certainty signal was tested across three distinct prompt formulations (original, rephrased, compact). All three produce <strong>identical false certainty rates</strong> (0.428, std=0.000). The signal is completely prompt-invariant, confirming it reflects a genuine model property rather than sensitivity to wording.</p>
+    <p>The false certainty signal was tested across three prompt formulations (original, rephrased, compact). On every model tested, all three variants produce <strong>identical false certainty rates</strong> (std=0.000, range=0.000) with 100% per-item agreement. This rules out prompt wording as the source of the signal &mdash; it is item-determined, not prompt-determined.</p>
+  </div>
+
+  <div class="viz-insight" style="margin-top:1rem;">
+    <div class="viz-insight-label">Asymmetric Failure Mode</div>
+    <p>Across all four models, the missed certainty rate (correct items wrongly flagged as underdetermined) was at most 0.024 and often 0.000. Models almost never err toward caution &mdash; they err toward certainty. This asymmetry means the failure has a single direction: overcommitment, not abstention.</p>
   </div>
 </div></section>
 <hr class="divider">
@@ -384,9 +410,10 @@
     </div>
     <div class="card">
       <div class="card-title" style="color:var(--accent-red);">250 Underdetermined Items</div>
-      <div class="card-text" style="margin-bottom:1rem;">Questions where evidence is insufficient</div>
-      <div class="data-stats"><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">missing_value</div></div><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">no_satisfying_row</div></div><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">tie</div></div></div>
-      <div class="data-stats" style="margin-top:0.5rem;"><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">ordering_ambiguity</div></div><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">incomplete_agg</div></div></div>
+      <div class="card-text" style="margin-bottom:1rem;">Six failure families covering distinct underdetermination modes</div>
+      <div class="data-stats"><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">missing_value</div></div><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">no_satisfying_row</div></div><div class="data-stat"><div class="data-stat-num">49</div><div class="data-stat-label">tie</div></div></div>
+      <div class="data-stats" style="margin-top:0.5rem;"><div class="data-stat"><div class="data-stat-num">48</div><div class="data-stat-label">criterion_underspec</div></div><div class="data-stat"><div class="data-stat-num">50</div><div class="data-stat-label">incomplete_agg</div></div><div class="data-stat"><div class="data-stat-num">3</div><div class="data-stat-label">ordering_ambiguity*</div></div></div>
+      <div style="font-size:0.7rem; color:var(--text-muted); margin-top:0.6rem;">*exploratory; excluded from per-family analysis</div>
     </div>
   </div>
 
@@ -406,6 +433,33 @@
     <div class="card"><div class="card-title">Deployment Risk</div><div class="card-text">A model that cannot detect when evidence is insufficient will confidently provide wrong answers in high-stakes settings &mdash; medical, legal, financial &mdash; with no signal that it is guessing.</div></div>
     <div class="card"><div class="card-title">Hidden Failure Mode</div><div class="card-text">Standard accuracy benchmarks cannot detect this. A model scores well on all determinate questions, masking the fact that it fabricates answers on underdetermined ones with equal or higher confidence.</div></div>
     <div class="card"><div class="card-title">Actionable Diagnostics</div><div class="card-text">The failure-family hierarchy provides specific, actionable signal: models need better absence detection, not just better reasoning. This points to concrete training objectives.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="limitations"><div class="container fade-in">
+  <div class="section-label">Limitations</div>
+  <h2 class="section-title">What This Benchmark Doesn't Measure</h2>
+  <p class="section-desc">Honest limitations that future work should address.</p>
+  <div class="card-grid">
+    <div class="card"><div class="card-title">Small Synthetic Tables</div><div class="card-text">Tables are intentionally small (3&ndash;5 rows, 2&ndash;5 columns) to isolate boundary judgment. Results may not transfer to larger, noisier real-world data.</div></div>
+    <div class="card"><div class="card-title">Surface Cue Exploitability</div><div class="card-text">The <code>no_satisfying_row</code> and <code>missing_value</code> families have surface-level cues (absent columns, empty cells) that simple heuristics could detect. The benchmark measures functional boundary detection, not deep metacognitive reasoning.</div></div>
+    <div class="card"><div class="card-title">Stage 1 Anchoring</div><div class="card-text">The two-stage design means the model sees its own prior answer in Stage 2, potentially creating anchoring effects. A clean ablation comparing two-stage vs single-stage prompts is not yet performed.</div></div>
+    <div class="card"><div class="card-title">No Human Baseline</div><div class="card-text">Without a human performance reference, we cannot rule out that some failures reflect intrinsic question difficulty rather than model-specific metacognitive gaps.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="references"><div class="container fade-in">
+  <div class="section-label">References</div>
+  <h2 class="section-title">Related Work</h2>
+  <p class="section-desc">BoundaryBench builds on a rich literature of selective prediction, calibration, and metacognitive evaluation. We differ by using synthetic tables where answerability is formally verifiable, and by separating answer generation from boundary judgment via a two-stage protocol.</p>
+  <div class="q-list">
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">Geifman &amp; El-Yaniv (2017) <span class="q-tag">NeurIPS</span></div><div class="q-desc">Selective classification for deep neural networks &mdash; trains models to abstain when uncertain.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">Lin, Hilton &amp; Evans (2022) <span class="q-tag">ACL</span></div><div class="q-desc">TruthfulQA: Measuring how models mimic human falsehoods &mdash; tests whether models generate false claims.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">Yin et al. (2023) <span class="q-tag">ACL Findings</span></div><div class="q-desc">Do large language models know what they don't know? &mdash; classifies questions as answerable or unanswerable using open-domain inputs.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">Kadavath et al. (2022) <span class="q-tag">arXiv:2207.05221</span></div><div class="q-desc">Language models (mostly) know what they know &mdash; measures whether model confidence tracks accuracy.</div></div></div>
+    <div class="q-item"><div class="q-num"></div><div class="q-content"><div class="q-title">DeepMind (2025) <span class="q-tag">Framework</span></div><div class="q-desc">Measuring progress toward AGI: A cognitive framework &mdash; the host competition's organizing taxonomy.</div></div></div>
   </div>
 </div></section>
 
