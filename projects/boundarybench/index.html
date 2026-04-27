@@ -221,12 +221,52 @@
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
+    /* Timeline */
+    .timeline { position: relative; padding-left: 2rem; margin: 2rem 0; }
+    .timeline::before { content: ''; position: absolute; left: 0.55rem; top: 0.5rem; bottom: 0.5rem; width: 2px; background: var(--border); }
+    .timeline-item { position: relative; padding-bottom: 1.8rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -1.6rem; top: 0.4rem; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-primary); border: 2px solid var(--accent); }
+    .timeline-item.major::before { background: var(--accent); }
+    .timeline-version { font-family: monospace; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; }
+    .timeline-title { font-weight: 700; font-size: 0.95rem; margin: 0.25rem 0 0.4rem; }
+    .timeline-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+    .timeline-meta { font-size: 0.72rem; color: var(--text-muted); font-family: monospace; margin-top: 0.3rem; }
+
+    /* Reviewer panels */
+    .reviewer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .reviewer-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .reviewer-role { display: inline-block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.18rem 0.55rem; border-radius: 3px; margin-bottom: 0.6rem; }
+    .reviewer-role.internal { background: rgba(68,64,60,0.08); color: var(--accent); border: 1px solid rgba(68,64,60,0.2); }
+    .reviewer-role.external { background: rgba(120,113,108,0.08); color: #57534e; border: 1px solid rgba(120,113,108,0.2); }
+    .reviewer-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
+    .reviewer-focus { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.7rem; }
+    .reviewer-quote { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; font-style: italic; padding-left: 0.8rem; border-left: 2px solid var(--border); }
+
+    /* Fix list */
+    .fix-list { display: flex; flex-direction: column; gap: 0.6rem; margin: 1.5rem 0; }
+    .fix-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.3rem; display: grid; grid-template-columns: 80px 1fr; gap: 1rem; align-items: start; }
+    .fix-severity { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border-radius: 3px; text-align: center; align-self: start; margin-top: 0.15rem; }
+    .fix-severity.critical { background: rgba(185,28,28,0.1); color: var(--accent-red); border: 1px solid rgba(185,28,28,0.25); }
+    .fix-severity.major { background: rgba(180,83,9,0.1); color: #b45309; border: 1px solid rgba(180,83,9,0.25); }
+    .fix-severity.minor { background: rgba(120,113,108,0.1); color: #57534e; border: 1px solid rgba(120,113,108,0.2); }
+    .fix-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.2rem; }
+    .fix-detail { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.65; }
+    .fix-meta { display: inline-block; font-size: 0.7rem; color: var(--text-muted); font-family: monospace; margin-top: 0.3rem; }
+
+    /* Stat strip */
+    .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1rem; text-align: center; }
+    .stat-tile-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); display: block; line-height: 1.2; }
+    .stat-tile-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .flow { flex-direction: column; }
       .flow-step { border-radius: 8px !important; }
       .flow-step::after { display: none; }
       .q-item { flex-direction: column; gap: 0.5rem; }
+      .fix-item { grid-template-columns: 1fr; gap: 0.5rem; }
       section { padding: 4rem 1.5rem; }
       .bar-label { width: 120px; font-size: 0.72rem; }
     }
@@ -242,7 +282,7 @@
       <li><a href="#methodology">Methodology</a></li>
       <li><a href="#results">Results</a></li>
       <li><a href="#findings">Findings</a></li>
-      <li><a href="#dataset">Dataset</a></li>
+      <li><a href="#journey">Process</a></li>
       <li><a href="#references">References</a></li>
     </ul>
   </div>
@@ -433,6 +473,211 @@
     <div class="card"><div class="card-title">Deployment Risk</div><div class="card-text">A model that cannot detect when evidence is insufficient will confidently provide wrong answers in high-stakes settings &mdash; medical, legal, financial &mdash; with no signal that it is guessing.</div></div>
     <div class="card"><div class="card-title">Hidden Failure Mode</div><div class="card-text">Standard accuracy benchmarks cannot detect this. A model scores well on all determinate questions, masking the fact that it fabricates answers on underdetermined ones with equal or higher confidence.</div></div>
     <div class="card"><div class="card-title">Actionable Diagnostics</div><div class="card-text">The failure-family hierarchy provides specific, actionable signal: models need better absence detection, not just better reasoning. This points to concrete training objectives.</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="journey"><div class="container fade-in">
+  <div class="section-label">Development Journey</div>
+  <h2 class="section-title">From Pilot to Final Submission</h2>
+  <p class="section-desc">BoundaryBench is the result of 27 days of iteration. The benchmark went through seven major versions, three taxonomy revisions, four model evaluation rounds, and a 10-reviewer validation pass before final submission.</p>
+
+  <div class="stat-strip">
+    <div class="stat-tile"><span class="stat-tile-num">27</span><div class="stat-tile-label">days of iteration</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">v1 &rarr; v7</span><div class="stat-tile-label">major versions</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">10 &rarr; 500</span><div class="stat-tile-label">items scaled</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">10</span><div class="stat-tile-label">expert reviewers</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">5&times;5</span><div class="stat-tile-label">review loops</div></div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-version">v1 &mdash; PILOT</div>
+      <div class="timeline-title">10-item proof of concept</div>
+      <div class="timeline-desc">Initial design with single-stage abstain prompts. Quickly revealed instruction-following collapse: models would say "I don't know" without actually evaluating evidence sufficiency.</div>
+      <div class="timeline-meta">Mar 19 &middot; data/table_world_pilot.jsonl</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-version">v2 &mdash; TWO-STAGE</div>
+      <div class="timeline-title">Forced answer + boundary judgment introduced</div>
+      <div class="timeline-desc">Restructured to two-stage protocol. Stage 1 forces an answer (preventing simple refusal); Stage 2 asks for the metacognitive boundary label. This separated answer ability from boundary detection.</div>
+      <div class="timeline-meta">Mar 19&ndash;23 &middot; 24 &rarr; 50 items</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-version">v3&ndash;v4 &mdash; SCALE</div>
+      <div class="timeline-title">Scaled to 200 items, then 500</div>
+      <div class="timeline-desc">Expanded the dataset to enable per-failure-family analysis with statistically meaningful sample sizes (~50 per family).</div>
+      <div class="timeline-meta">Mar 23&ndash;24 &middot; 50 &rarr; 500 items</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-version">v5 &mdash; ROBUSTNESS</div>
+      <div class="timeline-title">Three prompt variants for robustness validation</div>
+      <div class="timeline-desc">Added prompt variant testing (original, rephrased, compact) on the 250 abstain items to confirm the false certainty signal is item-determined, not prompt-determined.</div>
+      <div class="timeline-meta">Mar 24 &middot; per-variant + per-item agreement</div>
+    </div>
+    <div class="timeline-item major">
+      <div class="timeline-version">v6 &mdash; MULTI-MODEL</div>
+      <div class="timeline-title">4 models executed on Kaggle Benchmarks</div>
+      <div class="timeline-desc">Qwen 3 235B, Claude Sonnet 4.6, Claude Sonnet 4, Gemini 2.5 Flash. (Gemini 2.5 Pro attempted but failed due to per-day quota limits on thinking-token cost.)</div>
+      <div class="timeline-meta">Apr 14&ndash;15 &middot; 500 items &times; 4 models = 2,000 evaluations</div>
+    </div>
+    <div class="timeline-item major">
+      <div class="timeline-version">v7 &mdash; FINAL</div>
+      <div class="timeline-title">10-reviewer validation + targeted fixes</div>
+      <div class="timeline-desc">Five "internal stakeholder" reviewers (rubric-aligned) and five "external evaluator" reviewers (academic, safety, competitive) audited the benchmark across 5 rounds each. Their findings drove the final round of fixes: taxonomy split, table_csv normalization, defensive scoring, reference additions.</div>
+      <div class="timeline-meta">Apr 15 &middot; final_submission/ frozen</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="validation"><div class="container fade-in">
+  <div class="section-label">10-Reviewer Validation</div>
+  <h2 class="section-title">Five-Round Adversarial Audit</h2>
+  <p class="section-desc">Before final submission, BoundaryBench was put through a structured review by ten expert personas, five rounds each. Five internal reviewers covered the competition rubric (dataset quality, writeup, discriminatory power, code, head-judge); five external reviewers attacked from research, AI safety, competitor, data quality, and community angles. Each round had to surface <em>new</em> issues.</p>
+
+  <h3 style="font-size:0.95rem; margin: 2rem 0 0.8rem; font-weight:700;">Internal Stakeholder Reviewers</h3>
+  <div class="reviewer-grid">
+    <div class="reviewer-card">
+      <span class="reviewer-role internal">Rubric &middot; 50%</span>
+      <div class="reviewer-title">Dataset Quality Judge</div>
+      <div class="reviewer-focus">Label correctness, taxonomy clarity, code soundness</div>
+      <div class="reviewer-quote">Found the table_csv newline encoding inconsistency affecting 97/500 items &mdash; the single biggest data fix surfaced in the audit.</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role internal">Rubric &middot; 20%</span>
+      <div class="reviewer-title">Writeup Quality Judge</div>
+      <div class="reviewer-focus">Clarity, structure, claim support</div>
+      <div class="reviewer-quote">Pushed for tone-down on overclaims ("completely prompt-invariant", "cannot be detected") and required real academic citations beyond the DeepMind framework.</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role internal">Rubric &middot; 30%</span>
+      <div class="reviewer-title">Discriminatory Power Judge</div>
+      <div class="reviewer-focus">Cross-model spread, statistical significance</div>
+      <div class="reviewer-quote">Demanded model &times; failure-family cross-tabulation and confidence intervals on every reported proportion.</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role internal">Code</span>
+      <div class="reviewer-title">Technical Code Judge</div>
+      <div class="reviewer-focus">SDK usage, scoring correctness, edge cases</div>
+      <div class="reviewer-quote">Flagged the assertion-after-scoring ordering bug and the lack of defensive parsing on confidence values.</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role internal">Final</span>
+      <div class="reviewer-title">Head Judge / Grand Prize</div>
+      <div class="reviewer-focus">Holistic competitiveness</div>
+      <div class="reviewer-quote">Framed the trade-off: novelty real, but execution gaps (only 4 models, no human baseline) cap Grand Prize ceiling.</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:0.95rem; margin: 2.5rem 0 0.8rem; font-weight:700;">External Evaluator Reviewers</h3>
+  <div class="reviewer-grid">
+    <div class="reviewer-card">
+      <span class="reviewer-role external">Academic</span>
+      <div class="reviewer-title">ML Researcher (Calibration)</div>
+      <div class="reviewer-focus">Related work, methodology, statistical rigor</div>
+      <div class="reviewer-quote">Required citation of TruthfulQA, SelfAware, Kadavath calibration work, and questioned whether two-stage design isolates metacognition from instruction-following.</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role external">Safety</span>
+      <div class="reviewer-title">AI Safety Researcher</div>
+      <div class="reviewer-focus">Real-world harm relevance, gameability</div>
+      <div class="reviewer-quote">Pushed back on calling false certainty "metacognitive" without ruling out surface heuristic confounds (empty cells, missing column headers).</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role external">Adversarial</span>
+      <div class="reviewer-title">Competing Participant</div>
+      <div class="reviewer-focus">Attack angles, vulnerabilities</div>
+      <div class="reviewer-quote">Strongest attack: real-world entities in <code>no_satisfying_row</code> items could leak background knowledge and inflate the 96% headline number.</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role external">Audit</span>
+      <div class="reviewer-title">Data Quality Specialist</div>
+      <div class="reviewer-focus">Label noise, systematic bias</div>
+      <div class="reviewer-quote">Discovered structural correlations: 3-row tables &asymp; 100% abstain, "best" keyword &asymp; 97.8% abstain. Noted these as exploitable surface cues to disclose in Limitations.</div>
+    </div>
+    <div class="reviewer-card">
+      <span class="reviewer-role external">Community</span>
+      <div class="reviewer-title">Kaggle Grandmaster</div>
+      <div class="reviewer-focus">Presentation, narrative, upvote likelihood</div>
+      <div class="reviewer-quote">Required a narrative hook in the opening and a visualization of the FC gradient. Drove the cover image redesign and the bwv2_006 example placement.</div>
+    </div>
+  </div>
+
+  <div class="viz-insight" style="margin-top:2rem;">
+    <div class="viz-insight-label">Reviewer Synthesis</div>
+    <p>Across 50 review rounds, the panel produced <strong>14 critical/major issues</strong> and <strong>9 minor issues</strong>. All critical fixes shipped before submission; major issues were addressed either in code or acknowledged in the Limitations section. Minor cosmetic issues (ID gaps, named-entity contamination on 7 items) were documented but not blocking.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="engineering"><div class="container fade-in">
+  <div class="section-label">Engineering Improvements</div>
+  <h2 class="section-title">Concrete Fixes from the Audit</h2>
+  <p class="section-desc">Every fix below was driven by a specific reviewer finding. Each has a measurable impact on data integrity, scoring correctness, or evaluation fairness.</p>
+
+  <div class="fix-list">
+    <div class="fix-item">
+      <span class="fix-severity critical">Critical</span>
+      <div>
+        <div class="fix-title">table_csv newline normalization (97/500 items)</div>
+        <div class="fix-detail">97 items had literal <code>\n</code> escape sequences instead of real newlines, causing roughly 20% of tables to render as a single unformatted line in the prompt. The bias was skewed toward abstain items (71/97) and would have inflated false certainty rates.</div>
+        <div class="fix-meta">v6 &rarr; v7 &middot; data/v6 fix</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity critical">Critical</span>
+      <div>
+        <div class="fix-title">Failure family taxonomy split</div>
+        <div class="fix-detail">The original <code>ordering_ambiguity</code> family conflated 3 true ordering items with 48 multi-criteria preference items ("Which X is best?"). Renamed the latter to <code>criterion_underspecification</code> for cleaner per-family analysis. This split changed the per-family hierarchy interpretation but kept all 500 items intact.</div>
+        <div class="fix-meta">v6 taxonomy revision</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity major">Major</span>
+      <div>
+        <div class="fix-title">Defensive scoring + assertion ordering</div>
+        <div class="fix-detail">In v6 the validation assertions ran <em>after</em> the scoring logic, so an unexpected boundary-stage decision would silently score wrong with no flag. v7 reorders: defensive parsing of confidence (try/except float cast) &rarr; assertions (validation flag) &rarr; scoring with a sanitized decision value.</div>
+        <div class="fix-meta">scoring pipeline hardened</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity major">Major</span>
+      <div>
+        <div class="fix-title">answer_matches with numeric fallback</div>
+        <div class="fix-detail">v6 used pure string normalization for answer matching, which would mark "23.0" wrong when the gold answer was "23". v7 adds a numeric fallback: if string match fails, try parsing both as numbers and compare with 1e-6 tolerance. Affects 113 items with numeric acceptable_answers.</div>
+        <div class="fix-meta">tolerant matching for format variants</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity major">Major</span>
+      <div>
+        <div class="fix-title">Robustness: per-item agreement rate</div>
+        <div class="fix-detail">v5 reported only the std of FC rates across prompt variants. v7 adds per-item agreement (fraction of items getting the same boundary decision across all three variants). Result: 100% agreement on every model tested &mdash; concrete evidence that the signal is item-determined, not prompt-driven.</div>
+        <div class="fix-meta">stronger statistical claim</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity minor">Minor</span>
+      <div>
+        <div class="fix-title">bwv2_013 column rename: "score" &rarr; "time_s"</div>
+        <div class="fix-detail">"Best sprint score" was ambiguous &mdash; conventionally higher = better, but the gold answer assumed lower-is-better (time interpretation). Renamed the column and the question to "fastest sprint time" to remove the ambiguity. Single-item fix surfaced by sampling audit.</div>
+        <div class="fix-meta">label disambiguation</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity minor">Minor</span>
+      <div>
+        <div class="fix-title">label_type display field deprecated in analysis</div>
+        <div class="fix-detail">The original <code>label_type</code> field (answerable / unanswerable / trap) was used in the analysis output alongside <code>failure_family</code>, creating two parallel taxonomies. v7 keeps the field for backwards compatibility but routes all per-family analysis through <code>failure_family</code> only.</div>
+        <div class="fix-meta">analysis output simplified</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="viz-insight" style="margin-top:2rem;">
+    <div class="viz-insight-label">What Could Not Be Fixed In Time</div>
+    <p>Quota limits prevented running Gemini 2.5 Pro to completion (HTTP 403 after ~26 minutes of thinking-token spend). Human baseline was not collected. Adversarial table-size variation was scoped but not built. These are documented as future work.</p>
   </div>
 </div></section>
 <hr class="divider">
