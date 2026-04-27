@@ -908,7 +908,7 @@ const CATEGORIES = {
     desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer']
+    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','xsec_alpha']
   },
   project: {
     label: 'Project',
@@ -960,6 +960,7 @@ const DESCS = {
   'fin_gan_train': 'Fin-GAN 모델 학습 파이프라인',
   'coin': '암호화폐 데이터 분석',
   'worldquant-alpha': 'Alpha Research Journal \u2014 퀀트 알파 연구의 사고 과정, 실패, 발견을 기록한 21챕터 연구 저널',
+  'xsec_alpha': 'Cross-Sectional Crypto Ranking \u2014 gan_t 실패에서 출발한 크로스섹션 랭킹. v1\u2192v3 연구 + Part II 운영 재설계 (F1 통합 아키텍처, 60+ 에이전트 토론, 자동 재학습 파이프라인)',
   'economic-time-transformer': 'Economic Time in Financial Transformers \u2014 Clark(1973)의 경제적 시간을 Transformer에 구현하려다 배운 것들. 논문 4편 + ~400 실험',
   'Chrono-Trader': '시계열 기반 트레이딩 시스템 v1',
   'Chrono-Trader-v2': 'AETHER \u2014 Transformer+CNN 하이브리드 암호화폐 예측 시스템',
@@ -1138,6 +1139,7 @@ function renderPosts(catKey) {
       'young-and-home': '/projects/young-and-home/',
       'economic-time-transformer': '/projects/economic-time-transformer/',
       'worldquant-alpha': '/projects/worldquant-alpha/',
+      'xsec_alpha': '/projects/xsec-alpha/',
       'python-why': 'https://soccz.github.io/python-why/'
     };
     const page = PROJECT_PAGES[r.name];
