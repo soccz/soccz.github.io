@@ -908,7 +908,7 @@ const CATEGORIES = {
     desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer']
+    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper']
   },
   project: {
     label: 'Project',
@@ -943,7 +943,7 @@ const CATEGORIES = {
     desc: '"왜"에서 시작해서 "어떻게"로 끝나는 — 아무것도 모르는 상태에서 체화까지',
     color: 'edu',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-    match: ['python-why','bigdata-analyst-notes','claude-thinking']
+    match: ['python-why','bigdata-analyst-notes','M_C_P','AP_CSA']
   }
 };
 
@@ -954,7 +954,9 @@ const LANG_COLORS = {
 };
 
 const DESCS = {
-  'claude-thinking': 'Claude Thinking \u2014 클로드의 생각을 따라가는 교재. 파이썬 입문 + 클로드 완벽 이해 가이드 (7 Parts, 28 Chapters)',
+  'M_C_P': 'Claude Thinking \u2014 클로드 코드 완벽 가이드. 7 Parts 30 Chapters \u00B7 Surface너나들기 / ComputerUse / Agent와 SubAgent / MCP / Plugins / Hooks / Schedule / Remote Control / 워크플로우 / 팀운영까지 (한국어 교재 + 발표자료)',
+  'VME_paper': 'Value and Momentum Everywhere (AMP 2013) \u2014 논문 완전 해체. AQR 데이터로 8개 시장 \u00D7 두 팩터 재현 + 한국 시장 모멘텀 검증 (시각화 사이트)',
+  'AP_CSA': 'AP Computer Science A 한국어 완벽 가이드 \u2014 CSAwesome2 기반 Unit 1-4 강의노트\u00B7시험개념 딥다이브 + FRQ Q1 완전공략 + Mock 5세트 + Level Test 10회 + Topical 9개',
   'fin_final': 'AI 기반 크립토 분석 시스템 \u2014 베이지안 추론 + 칼만 필터로 179개 암호화폐 자동 분석',
   'enhanced-fin-gan-final': 'Enhanced Fin-GAN 자율 학습 시스템',
   'fin_gan_train': 'Fin-GAN 모델 학습 파이프라인',
@@ -1127,7 +1129,9 @@ function renderPosts(catKey) {
       'RCNN_test': '/projects/rcnn-test/',
       'MC_order': '/projects/mc-order/',
       'forjp': '/projects/forjp/',
-      'claude-thinking': 'https://soccz.github.io/M_C_P/',
+      'M_C_P': 'https://soccz.github.io/M_C_P/',
+      'AP_CSA': 'https://soccz.github.io/AP_CSA/',
+      'VME_paper': 'https://soccz.github.io/VME_paper/',
       'naverAPI': '/projects/naverapi/',
       'review_chatbot': '/projects/review-chatbot/',
       'son_data': '/projects/son-data/',
