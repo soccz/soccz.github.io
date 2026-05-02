@@ -599,25 +599,27 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   display: block;
 }
 
-/* ─────── Macro 지표 바 (KOSPI·KOSDAQ·USDKRW·WTI) ─────── */
+/* ─────── Macro 지표 바 — TradingView 라이브 위젯 ─────── */
 .macro-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
   margin: 24px 0 4px;
-  padding: 20px 0 8px;
+  padding: 16px 0 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border-light);
 }
 .macro-cell {
-  padding: 0 16px;
+  padding: 0 14px 8px;
   border-right: 1px solid var(--border-light);
-  display: flex; flex-direction: column; gap: 6px;
+  display: flex; flex-direction: column; gap: 4px;
+  min-width: 0;
 }
 .macro-cell:last-child { border-right: none; }
 .macro-cell:first-child { padding-left: 0; }
 .macro-head {
   display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 4px;
 }
 .macro-label {
   font-family: var(--display);
@@ -629,41 +631,27 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   font-family: var(--mono); font-size: 10px;
   color: var(--text-light); font-weight: 500;
 }
-.macro-value {
-  font-family: var(--display);
-  font-size: 22px; font-weight: 700;
-  letter-spacing: -0.015em; color: var(--text);
-  font-feature-settings: 'tnum';
-  line-height: 1.1;
+.tv-widget-container {
+  width: 100%; height: 145px;
+  overflow: hidden;
+  position: relative;
 }
-.sparkline {
-  width: 100%; height: 32px;
-  display: block;
-  margin: 2px 0 2px;
+.tv-widget-container .tradingview-widget-container,
+.tv-widget-container .tradingview-widget-container__widget {
+  width: 100%; height: 100%;
 }
-.spark-line {
-  stroke-width: 1.5;
-  stroke-linejoin: round; stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-}
-.sparkline.spark-up .spark-line { stroke: var(--positive); }
-.sparkline.spark-up .spark-area { fill: var(--positive); opacity: 0.08; }
-.sparkline.spark-down .spark-line { stroke: var(--negative); }
-.sparkline.spark-down .spark-area { fill: var(--negative); opacity: 0.08; }
-.macro-changes {
-  display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 11px;
-  font-family: var(--mono);
-  font-feature-settings: 'tnum';
-}
-.macro-up { color: var(--positive); font-weight: 600; }
-.macro-down { color: var(--negative); font-weight: 600; }
-.macro-1y { color: var(--text-light); font-size: 10px; }
+/* TradingView 위젯 내부 iframe 스타일 강제 (best effort) */
+.tv-widget-container iframe { background: transparent !important; }
 
 @media (max-width: 720px) {
-  .macro-bar { grid-template-columns: repeat(2, 1fr); gap: 18px 0; padding: 16px 0; }
-  .macro-cell { padding: 0 10px; }
-  .macro-value { font-size: 18px; }
+  .macro-bar { grid-template-columns: repeat(2, 1fr); gap: 4px 0; padding: 12px 0 0; }
+  .macro-cell { padding: 0 8px 6px; }
+  .tv-widget-container { height: 120px; }
+}
+@media (max-width: 480px) {
+  .macro-bar { grid-template-columns: 1fr; }
+  .macro-cell { border-right: none; border-bottom: 1px solid var(--border-light); padding: 8px 4px; }
+  .macro-cell:last-child { border-bottom: none; }
 }
 
 /* ─────── 마스터 인덱스 — Dashboard 표 레이아웃 ─────── */
@@ -868,53 +856,61 @@ tr.stock-row.stock-active td.action {
   <span class="doc-tag">Equity Research Pipeline</span>
   <h1>K_E_R — Korea Equity Reports</h1>
   <p class="subtitle">DART 기반 한국 상장사 종합 진단. 출처 엄격주의 + 추론 명시 + XBRL ground truth.</p>
-  <div class="macro-bar">
+  <div class="macro-bar macro-live">
 <div class="macro-cell">
   <div class="macro-head">
     <span class="macro-label">KOSPI</span>
-    <span class="macro-symbol">^KS11</span>
+    <span class="macro-symbol">KOSPI</span>
   </div>
-  <div class="macro-value">6,598.87</div>
-  <svg viewBox="0 0 140 32" class="sparkline spark-down" preserveAspectRatio="none"><polygon points="0,32 0.0,32.0 2.4,25.8 4.7,24.3 7.1,28.1 9.5,29.4 11.9,25.6 14.2,25.5 16.6,24.6 19.0,21.5 21.4,21.8 23.7,18.6 26.1,16.2 28.5,15.5 30.8,13.3 33.2,11.2 35.6,7.1 38.0,8.2 40.3,16.5 42.7,29.4 45.1,20.3 47.5,20.3 49.8,26.4 52.2,21.3 54.6,19.9 56.9,20.4 59.3,22.1 61.7,21.0 64.1,19.3 66.4,14.1 68.8,17.0 71.2,16.7 73.6,23.6 75.9,20.9 78.3,19.3 80.7,22.6 83.1,23.0 85.4,26.0 87.8,30.1 90.2,22.3 92.5,26.8 94.9,24.1 97.3,22.8 99.7,22.0 102.0,15.0 104.4,16.8 106.8,15.3 109.2,16.2 111.5,13.3 113.9,11.0 116.3,8.5 118.6,9.2 121.0,8.7 123.4,5.6 125.8,5.0 128.1,4.0 130.5,4.0 132.9,1.4 135.3,0.9 137.6,0.0 140.0,1.7 140,32" class="spark-area"/><polyline points="0.0,32.0 2.4,25.8 4.7,24.3 7.1,28.1 9.5,29.4 11.9,25.6 14.2,25.5 16.6,24.6 19.0,21.5 21.4,21.8 23.7,18.6 26.1,16.2 28.5,15.5 30.8,13.3 33.2,11.2 35.6,7.1 38.0,8.2 40.3,16.5 42.7,29.4 45.1,20.3 47.5,20.3 49.8,26.4 52.2,21.3 54.6,19.9 56.9,20.4 59.3,22.1 61.7,21.0 64.1,19.3 66.4,14.1 68.8,17.0 71.2,16.7 73.6,23.6 75.9,20.9 78.3,19.3 80.7,22.6 83.1,23.0 85.4,26.0 87.8,30.1 90.2,22.3 92.5,26.8 94.9,24.1 97.3,22.8 99.7,22.0 102.0,15.0 104.4,16.8 106.8,15.3 109.2,16.2 111.5,13.3 113.9,11.0 116.3,8.5 118.6,9.2 121.0,8.7 123.4,5.6 125.8,5.0 128.1,4.0 130.5,4.0 132.9,1.4 135.3,0.9 137.6,0.0 140.0,1.7" class="spark-line" fill="none"/></svg>
-  <div class="macro-changes">
-    <span class="macro-down">▼ 1.38%</span>
-    <span class="macro-1y">+158.1% (1Y)</span>
+  <div class="tv-widget-container">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+        async>{"symbol":"KRX:KOSPI","width":"100%","height":140,"locale":"kr","dateRange":"12M","colorTheme":"light","trendLineColor":"rgba(20,33,61,1)","underLineColor":"rgba(20,33,61,0.12)","underLineBottomColor":"rgba(20,33,61,0)","isTransparent":true,"autosize":false,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script>
+    </div>
   </div>
 </div>
 <div class="macro-cell">
   <div class="macro-head">
     <span class="macro-label">KOSPI 200</span>
-    <span class="macro-symbol">^KS200</span>
+    <span class="macro-symbol">KOSPI200</span>
   </div>
-  <div class="macro-value">992.15</div>
-  <svg viewBox="0 0 140 32" class="sparkline spark-down" preserveAspectRatio="none"><polygon points="0,32 0.0,32.0 2.4,25.8 4.7,24.6 7.1,28.4 9.5,29.4 11.9,25.7 14.2,25.7 16.6,24.8 19.0,21.7 21.4,21.9 23.7,18.9 26.1,16.7 28.5,16.1 30.8,13.6 33.2,11.7 35.6,7.1 38.0,8.3 40.3,16.8 42.7,28.4 45.1,20.0 47.5,20.2 49.8,26.3 52.2,20.9 54.6,19.6 56.9,20.4 59.3,22.0 61.7,20.5 64.1,18.9 66.4,13.4 68.8,16.4 71.2,16.4 73.6,23.0 75.9,20.4 78.3,19.1 80.7,22.5 83.1,22.9 85.4,25.8 87.8,29.8 90.2,21.9 92.5,26.4 94.9,23.7 97.3,22.2 99.7,21.1 102.0,14.1 104.4,16.0 106.8,14.5 109.2,15.5 111.5,12.5 113.9,10.2 116.3,7.8 118.6,8.6 121.0,8.1 123.4,5.0 125.8,4.8 128.1,3.5 130.5,4.0 132.9,1.3 135.3,0.9 137.6,0.0 140.0,1.6 140,32" class="spark-area"/><polyline points="0.0,32.0 2.4,25.8 4.7,24.6 7.1,28.4 9.5,29.4 11.9,25.7 14.2,25.7 16.6,24.8 19.0,21.7 21.4,21.9 23.7,18.9 26.1,16.7 28.5,16.1 30.8,13.6 33.2,11.7 35.6,7.1 38.0,8.3 40.3,16.8 42.7,28.4 45.1,20.0 47.5,20.2 49.8,26.3 52.2,20.9 54.6,19.6 56.9,20.4 59.3,22.0 61.7,20.5 64.1,18.9 66.4,13.4 68.8,16.4 71.2,16.4 73.6,23.0 75.9,20.4 78.3,19.1 80.7,22.5 83.1,22.9 85.4,25.8 87.8,29.8 90.2,21.9 92.5,26.4 94.9,23.7 97.3,22.2 99.7,21.1 102.0,14.1 104.4,16.0 106.8,14.5 109.2,15.5 111.5,12.5 113.9,10.2 116.3,7.8 118.6,8.6 121.0,8.1 123.4,5.0 125.8,4.8 128.1,3.5 130.5,4.0 132.9,1.3 135.3,0.9 137.6,0.0 140.0,1.6" class="spark-line" fill="none"/></svg>
-  <div class="macro-changes">
-    <span class="macro-down">▼ 1.43%</span>
-    <span class="macro-1y">+192.9% (1Y)</span>
+  <div class="tv-widget-container">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+        async>{"symbol":"KRX:KOSPI200","width":"100%","height":140,"locale":"kr","dateRange":"12M","colorTheme":"light","trendLineColor":"rgba(20,33,61,1)","underLineColor":"rgba(20,33,61,0.12)","underLineBottomColor":"rgba(20,33,61,0)","isTransparent":true,"autosize":false,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script>
+    </div>
   </div>
 </div>
 <div class="macro-cell">
   <div class="macro-head">
     <span class="macro-label">USD/KRW</span>
-    <span class="macro-symbol">KRW=X</span>
+    <span class="macro-symbol">USDKRW</span>
   </div>
-  <div class="macro-value">₩1,471.22</div>
-  <svg viewBox="0 0 140 32" class="sparkline spark-down" preserveAspectRatio="none"><polygon points="0,32 0.0,20.7 2.4,21.8 4.7,25.8 7.1,27.0 9.5,27.5 11.9,27.2 14.2,27.3 16.6,27.3 19.0,24.5 21.4,26.1 23.7,26.5 26.1,27.3 28.5,32.0 30.8,30.1 33.2,27.8 35.6,22.9 38.0,11.9 40.3,19.9 42.7,13.1 45.1,11.6 47.5,18.5 49.8,15.6 52.2,14.6 54.6,16.3 56.9,5.2 59.3,9.8 61.7,11.2 64.1,3.9 66.4,9.4 68.8,4.3 71.2,11.0 73.6,6.8 75.9,5.4 78.3,2.8 80.7,3.3 83.1,0.0 85.4,4.6 87.8,1.4 90.2,2.5 92.5,2.5 94.9,3.0 97.3,6.1 99.7,13.8 102.0,15.4 104.4,12.2 106.8,14.1 109.2,16.8 111.5,15.1 113.9,13.7 116.3,18.3 118.6,16.8 121.0,10.9 123.4,13.7 125.8,13.0 128.1,14.9 130.5,15.5 132.9,15.8 135.3,10.3 137.6,15.1 140.0,16.1 140,32" class="spark-area"/><polyline points="0.0,20.7 2.4,21.8 4.7,25.8 7.1,27.0 9.5,27.5 11.9,27.2 14.2,27.3 16.6,27.3 19.0,24.5 21.4,26.1 23.7,26.5 26.1,27.3 28.5,32.0 30.8,30.1 33.2,27.8 35.6,22.9 38.0,11.9 40.3,19.9 42.7,13.1 45.1,11.6 47.5,18.5 49.8,15.6 52.2,14.6 54.6,16.3 56.9,5.2 59.3,9.8 61.7,11.2 64.1,3.9 66.4,9.4 68.8,4.3 71.2,11.0 73.6,6.8 75.9,5.4 78.3,2.8 80.7,3.3 83.1,0.0 85.4,4.6 87.8,1.4 90.2,2.5 92.5,2.5 94.9,3.0 97.3,6.1 99.7,13.8 102.0,15.4 104.4,12.2 106.8,14.1 109.2,16.8 111.5,15.1 113.9,13.7 116.3,18.3 118.6,16.8 121.0,10.9 123.4,13.7 125.8,13.0 128.1,14.9 130.5,15.5 132.9,15.8 135.3,10.3 137.6,15.1 140.0,16.1" class="spark-line" fill="none"/></svg>
-  <div class="macro-changes">
-    <span class="macro-down">▼ 0.19%</span>
-    <span class="macro-1y">+3.3% (1Y)</span>
+  <div class="tv-widget-container">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+        async>{"symbol":"FX_IDC:USDKRW","width":"100%","height":140,"locale":"kr","dateRange":"12M","colorTheme":"light","trendLineColor":"rgba(20,33,61,1)","underLineColor":"rgba(20,33,61,0.12)","underLineBottomColor":"rgba(20,33,61,0)","isTransparent":true,"autosize":false,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script>
+    </div>
   </div>
 </div>
 <div class="macro-cell">
   <div class="macro-head">
-    <span class="macro-label">WTI</span>
-    <span class="macro-symbol">CL=F</span>
+    <span class="macro-label">WTI Crude</span>
+    <span class="macro-symbol">USOIL</span>
   </div>
-  <div class="macro-value">$101.94</div>
-  <svg viewBox="0 0 140 32" class="sparkline spark-down" preserveAspectRatio="none"><polygon points="0,32 0.0,31.4 2.4,31.2 4.7,30.7 7.1,31.0 9.5,30.5 11.9,31.7 14.2,31.6 16.6,32.0 19.0,30.2 21.4,29.4 23.7,29.4 26.1,29.5 28.5,29.9 30.8,30.0 33.2,30.2 35.6,29.0 38.0,26.4 40.3,24.3 42.7,24.2 45.1,20.2 47.5,13.9 49.8,11.5 52.2,18.6 54.6,16.2 56.9,10.9 59.3,9.0 61.7,12.3 64.1,10.6 66.4,10.5 68.8,10.6 71.2,9.2 73.6,15.7 75.9,13.0 78.3,14.3 80.7,11.7 83.1,8.4 85.4,6.4 87.8,7.3 90.2,8.1 92.5,0.9 94.9,0.3 97.3,0.0 99.7,11.7 102.0,9.5 104.4,10.4 106.8,8.8 109.2,13.7 111.5,13.7 113.9,11.5 116.3,18.4 118.6,14.8 121.0,13.2 123.4,12.6 125.8,10.8 128.1,11.7 130.5,10.5 132.9,8.2 135.3,3.8 137.6,5.0 140.0,7.0 140,32" class="spark-area"/><polyline points="0.0,31.4 2.4,31.2 4.7,30.7 7.1,31.0 9.5,30.5 11.9,31.7 14.2,31.6 16.6,32.0 19.0,30.2 21.4,29.4 23.7,29.4 26.1,29.5 28.5,29.9 30.8,30.0 33.2,30.2 35.6,29.0 38.0,26.4 40.3,24.3 42.7,24.2 45.1,20.2 47.5,13.9 49.8,11.5 52.2,18.6 54.6,16.2 56.9,10.9 59.3,9.0 61.7,12.3 64.1,10.6 66.4,10.5 68.8,10.6 71.2,9.2 73.6,15.7 75.9,13.0 78.3,14.3 80.7,11.7 83.1,8.4 85.4,6.4 87.8,7.3 90.2,8.1 92.5,0.9 94.9,0.3 97.3,0.0 99.7,11.7 102.0,9.5 104.4,10.4 106.8,8.8 109.2,13.7 111.5,13.7 113.9,11.5 116.3,18.4 118.6,14.8 121.0,13.2 123.4,12.6 125.8,10.8 128.1,11.7 130.5,10.5 132.9,8.2 135.3,3.8 137.6,5.0 140.0,7.0" class="spark-line" fill="none"/></svg>
-  <div class="macro-changes">
-    <span class="macro-down">▼ 2.98%</span>
-    <span class="macro-1y">+74.9% (1Y)</span>
+  <div class="tv-widget-container">
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript"
+        src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
+        async>{"symbol":"TVC:USOIL","width":"100%","height":140,"locale":"kr","dateRange":"12M","colorTheme":"light","trendLineColor":"rgba(20,33,61,1)","underLineColor":"rgba(20,33,61,0.12)","underLineBottomColor":"rgba(20,33,61,0)","isTransparent":true,"autosize":false,"largeChartUrl":"","chartOnly":false,"noTimeScale":true}</script>
+    </div>
   </div>
 </div></div>
   <div class="hero-stats">
@@ -961,7 +957,7 @@ tr.stock-row.stock-active td.action {
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-02 19:35 </p>
+    <p style="margin-top:6px">생성: 2026-05-02 19:39 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
