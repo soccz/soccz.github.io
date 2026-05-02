@@ -598,6 +598,187 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   text-decoration: none; color: inherit;
   display: block;
 }
+
+/* ─────── 마스터 인덱스 — Dashboard 표 레이아웃 ─────── */
+
+/* Hero stats — 4구획 숫자 */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 28px; padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.hero-stats .stat {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 0 16px;
+  border-right: 1px solid var(--border-light);
+}
+.hero-stats .stat:last-child { border-right: none; }
+.hero-stats .stat:first-child { padding-left: 0; }
+.hero-stats .stat-num {
+  font-family: var(--display);
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text);
+  font-feature-settings: 'tnum';
+}
+.hero-stats .stat-lbl {
+  font-size: 11px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* 섹터 필터 pills (sticky 가까이) */
+.filter-bar {
+  margin: 28px 0 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.filter-pills {
+  display: flex; flex-wrap: wrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 0;
+}
+.filter-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  background: var(--surface); color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 12.5px; font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  font-family: var(--sans);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.filter-pill:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-alt);
+}
+.filter-pill.active {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
+.filter-pill .pill-count {
+  font-family: var(--mono); font-size: 11px;
+  opacity: 0.75; font-weight: 500;
+}
+.filter-pill.active .pill-count { opacity: 0.85; }
+
+/* Watchlist 표 */
+.watchlist-table {
+  background: var(--surface);
+  border-top: 2px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
+  overflow-x: auto;
+}
+.watchlist-table table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px; font-variant-numeric: tabular-nums;
+}
+.watchlist-table thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-family: var(--display);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--surface-alt);
+}
+.watchlist-table thead th.status { width: 32px; text-align: center; }
+.watchlist-table thead th.date,
+.watchlist-table thead th.action { text-align: right; }
+.watchlist-table thead th.action { width: 100px; }
+
+/* 섹터 헤더 행 */
+tr.sector-header td {
+  padding: 18px 14px 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+tr.sector-header .sector-name {
+  font-family: var(--display);
+  font-size: 13px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.005em;
+}
+tr.sector-header .sector-stat {
+  margin-left: 10px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); font-weight: 500;
+}
+
+/* 종목 행 */
+tr.stock-row td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+tr.stock-row.stock-active {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+tr.stock-row.stock-active:hover {
+  background: var(--accent-light);
+}
+tr.stock-row.stock-empty {
+  opacity: 0.7;
+}
+tr.stock-row td.status { width: 32px; text-align: center; }
+tr.stock-row td.name { font-weight: 500; color: var(--text); }
+tr.stock-row td.name .ticker {
+  margin-left: 8px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); font-weight: 400;
+}
+tr.stock-row td.latest {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+tr.stock-row td.latest .empty-text {
+  color: var(--text-light); font-style: italic; font-size: 12.5px;
+}
+tr.stock-row td.date {
+  text-align: right;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-muted); white-space: nowrap;
+}
+tr.stock-row td.action {
+  text-align: right;
+  font-size: 12px; color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+tr.stock-row.stock-active td.action {
+  color: var(--accent);
+}
+
+/* 상태 dot */
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.dot-active { background: var(--accent); }
+.dot-empty {
+  border: 1.5px solid var(--text-light);
+  background: transparent;
+  width: 7px; height: 7px;
+}
+
+/* 모바일 — 표 padding 축소 + 일부 칼럼 숨김 */
+@media (max-width: 720px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+  .hero-stats .stat { padding: 0 12px; }
+  .hero-stats .stat-num { font-size: 22px; }
+  .filter-pills { gap: 5px; }
+  .filter-pill { padding: 5px 10px; font-size: 12px; }
+  .watchlist-table table { font-size: 12.5px; }
+  .watchlist-table thead th, tr.stock-row td { padding: 8px 10px; }
+  tr.stock-row td.date { display: none; }
+  tr.sector-header td { padding: 14px 10px 6px; }
+}
 </style>
 </head>
 <body>
@@ -620,304 +801,51 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   <span class="doc-tag">Equity Research Pipeline</span>
   <h1>K_E_R — Korea Equity Reports</h1>
   <p class="subtitle">DART 기반 한국 상장사 종합 진단. 출처 엄격주의 + 추론 명시 + XBRL ground truth.</p>
-  <div class="meta"><span class="item">총 24종목 · 1개 보고서 시작</span><span class="item">누적 1건</span><span class="item">분기 단위 자동 갱신</span></div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">24</span><span class="stat-lbl">종목</span></div>
+    <div class="stat"><span class="stat-num">1</span><span class="stat-lbl">진단 완료</span></div>
+    <div class="stat"><span class="stat-num">1</span><span class="stat-lbl">누적 보고서</span></div>
+    <div class="stat"><span class="stat-num">18</span><span class="stat-lbl">섹터</span></div>
+  </div>
 </div>
 
+<div class="filter-bar">
+  <div class="filter-pills" id="filterPills">
+    <button class="filter-pill active" data-sector="all" onclick="window.kerFilter('all')">전체 <span class="pill-count">24</span></button><button class="filter-pill" data-sector="반도체" onclick="window.kerFilter('반도체')">반도체 <span class="pill-count">1/2</span></button><button class="filter-pill" data-sector="2차전지" onclick="window.kerFilter('2차전지')">2차전지 <span class="pill-count">0/2</span></button><button class="filter-pill" data-sector="자동차" onclick="window.kerFilter('자동차')">자동차 <span class="pill-count">0/2</span></button><button class="filter-pill" data-sector="바이오/제약" onclick="window.kerFilter('바이오/제약')">바이오/제약 <span class="pill-count">0/2</span></button><button class="filter-pill" data-sector="인터넷·플랫폼" onclick="window.kerFilter('인터넷·플랫폼')">인터넷·플랫폼 <span class="pill-count">0/2</span></button><button class="filter-pill" data-sector="금융 (은행)" onclick="window.kerFilter('금융 (은행)')">금융 (은행) <span class="pill-count">0/2</span></button><button class="filter-pill" data-sector="금융 (생보)" onclick="window.kerFilter('금융 (생보)')">금융 (생보) <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="금융 (손보)" onclick="window.kerFilter('금융 (손보)')">금융 (손보) <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="화학·소재" onclick="window.kerFilter('화학·소재')">화학·소재 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="철강·소재" onclick="window.kerFilter('철강·소재')">철강·소재 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="조선·중공업" onclick="window.kerFilter('조선·중공업')">조선·중공업 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="통신" onclick="window.kerFilter('통신')">통신 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="방산" onclick="window.kerFilter('방산')">방산 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="항공·운송" onclick="window.kerFilter('항공·운송')">항공·운송 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="유통·소비" onclick="window.kerFilter('유통·소비')">유통·소비 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="식음료·내수" onclick="window.kerFilter('식음료·내수')">식음료·내수 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="엔터·콘텐츠" onclick="window.kerFilter('엔터·콘텐츠')">엔터·콘텐츠 <span class="pill-count">0/1</span></button><button class="filter-pill" data-sector="건설·상사·복합" onclick="window.kerFilter('건설·상사·복합')">건설·상사·복합 <span class="pill-count">0/1</span></button>
+  </div>
+</div>
 
-<h2 class="section-title">
-  <span>반도체 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">1</span><span style="color:var(--text-muted)"> / 2</span></span></span>
-</h2>
-<div class="report-grid">
-<a href="삼성전자/index.html" style="text-decoration:none;color:inherit;">
-  <div class="report-card">
-    <span class="badge">2025-annual · 사업보고서 (2025)</span>
-    <h3>삼성전자</h3>
-    <p class="desc">삼성전자는 1969년 설립된 대한민국 최대 전자 기업이다. **2025년 연결 기준 매출 333조 6,059억원, 영업이익 43조 6,011억원**. 세계 스마트폰 판매 1위(점유율 19.2%), DRAM 세계 1위(점유율 34.0%), TV 20년 연속 세계 1위(점유율 29.1%). 한국에 308개 종속기업을 포함한 글로벌 전자 그룹이다. [사업보고서 …</p>
-    <div class="meta">
-      <span>최신 2026-05-02</span>
-      <span>→ 1건 모두 보기</span>
-    </div>
-  </div>
-</a>
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>SK하이닉스</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>2차전지 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 2</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>LG에너지솔루션</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
+<div class="watchlist-table">
+<table id="watchlistTable">
+  <thead>
+    <tr>
+      <th class="status">●</th>
+      <th class="name">종목</th>
+      <th class="latest">최신 보고서</th>
+      <th class="date">작성일</th>
+      <th class="action"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="sector-header" data-sector="반도체"><td colspan="5"><span class="sector-name">반도체</span><span class="sector-stat">1/2</span></td></tr><tr class="stock-row stock-active" data-sector="반도체" onclick="location.href='삼성전자/index.html'"><td class="status"><span class="dot dot-active"></span></td><td class="name"><strong>삼성전자</strong><span class="ticker">005930</span></td><td class="latest">사업보고서 (2025)</td><td class="date">2026-05-02</td><td class="action">1건 →</td></tr><tr class="stock-row stock-empty" data-sector="반도체"><td class="status"><span class="dot dot-empty"></span></td><td class="name">SK하이닉스<span class="ticker">000660</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="2차전지"><td colspan="5"><span class="sector-name">2차전지</span><span class="sector-stat">0/2</span></td></tr><tr class="stock-row stock-empty" data-sector="2차전지"><td class="status"><span class="dot dot-empty"></span></td><td class="name">LG에너지솔루션<span class="ticker">373220</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="stock-row stock-empty" data-sector="2차전지"><td class="status"><span class="dot dot-empty"></span></td><td class="name">삼성SDI<span class="ticker">006400</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="자동차"><td colspan="5"><span class="sector-name">자동차</span><span class="sector-stat">0/2</span></td></tr><tr class="stock-row stock-empty" data-sector="자동차"><td class="status"><span class="dot dot-empty"></span></td><td class="name">현대차<span class="ticker">005380</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="stock-row stock-empty" data-sector="자동차"><td class="status"><span class="dot dot-empty"></span></td><td class="name">기아<span class="ticker">000270</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="바이오/제약"><td colspan="5"><span class="sector-name">바이오/제약</span><span class="sector-stat">0/2</span></td></tr><tr class="stock-row stock-empty" data-sector="바이오/제약"><td class="status"><span class="dot dot-empty"></span></td><td class="name">삼성바이오로직스<span class="ticker">207940</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="stock-row stock-empty" data-sector="바이오/제약"><td class="status"><span class="dot dot-empty"></span></td><td class="name">셀트리온<span class="ticker">068270</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="인터넷·플랫폼"><td colspan="5"><span class="sector-name">인터넷·플랫폼</span><span class="sector-stat">0/2</span></td></tr><tr class="stock-row stock-empty" data-sector="인터넷·플랫폼"><td class="status"><span class="dot dot-empty"></span></td><td class="name">NAVER<span class="ticker">035420</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="stock-row stock-empty" data-sector="인터넷·플랫폼"><td class="status"><span class="dot dot-empty"></span></td><td class="name">카카오<span class="ticker">035720</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="금융 (은행)"><td colspan="5"><span class="sector-name">금융 (은행)</span><span class="sector-stat">0/2</span></td></tr><tr class="stock-row stock-empty" data-sector="금융 (은행)"><td class="status"><span class="dot dot-empty"></span></td><td class="name">KB금융<span class="ticker">105560</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="stock-row stock-empty" data-sector="금융 (은행)"><td class="status"><span class="dot dot-empty"></span></td><td class="name">신한지주<span class="ticker">055550</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="금융 (생보)"><td colspan="5"><span class="sector-name">금융 (생보)</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="금융 (생보)"><td class="status"><span class="dot dot-empty"></span></td><td class="name">삼성생명<span class="ticker">032830</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="금융 (손보)"><td colspan="5"><span class="sector-name">금융 (손보)</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="금융 (손보)"><td class="status"><span class="dot dot-empty"></span></td><td class="name">삼성화재<span class="ticker">000810</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="화학·소재"><td colspan="5"><span class="sector-name">화학·소재</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="화학·소재"><td class="status"><span class="dot dot-empty"></span></td><td class="name">LG화학<span class="ticker">051910</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="철강·소재"><td colspan="5"><span class="sector-name">철강·소재</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="철강·소재"><td class="status"><span class="dot dot-empty"></span></td><td class="name">POSCO홀딩스<span class="ticker">005490</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="조선·중공업"><td colspan="5"><span class="sector-name">조선·중공업</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="조선·중공업"><td class="status"><span class="dot dot-empty"></span></td><td class="name">HD현대중공업<span class="ticker">329180</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="통신"><td colspan="5"><span class="sector-name">통신</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="통신"><td class="status"><span class="dot dot-empty"></span></td><td class="name">SK텔레콤<span class="ticker">017670</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="방산"><td colspan="5"><span class="sector-name">방산</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="방산"><td class="status"><span class="dot dot-empty"></span></td><td class="name">한화에어로스페이스<span class="ticker">012450</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="항공·운송"><td colspan="5"><span class="sector-name">항공·운송</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="항공·운송"><td class="status"><span class="dot dot-empty"></span></td><td class="name">대한항공<span class="ticker">003490</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="유통·소비"><td colspan="5"><span class="sector-name">유통·소비</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="유통·소비"><td class="status"><span class="dot dot-empty"></span></td><td class="name">이마트<span class="ticker">139480</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="식음료·내수"><td colspan="5"><span class="sector-name">식음료·내수</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="식음료·내수"><td class="status"><span class="dot dot-empty"></span></td><td class="name">CJ제일제당<span class="ticker">097950</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="엔터·콘텐츠"><td colspan="5"><span class="sector-name">엔터·콘텐츠</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="엔터·콘텐츠"><td class="status"><span class="dot dot-empty"></span></td><td class="name">하이브<span class="ticker">352820</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr><tr class="sector-header" data-sector="건설·상사·복합"><td colspan="5"><span class="sector-name">건설·상사·복합</span><span class="sector-stat">0/1</span></td></tr><tr class="stock-row stock-empty" data-sector="건설·상사·복합"><td class="status"><span class="dot dot-empty"></span></td><td class="name">삼성물산<span class="ticker">028260</span></td><td class="latest" colspan="2"><em class="empty-text">추적 중 — 첫 정기공시 도착 시 자동</em></td><td class="action">대기</td></tr>
+  </tbody>
+</table>
 </div>
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>삼성SDI</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>자동차 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 2</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>현대차</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div>
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>기아</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>바이오/제약 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 2</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>삼성바이오로직스</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div>
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>셀트리온</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>인터넷·플랫폼 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 2</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>NAVER</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div>
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>카카오</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>금융 (은행) <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 2</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>KB금융</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div>
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>신한지주</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>금융 (생보) <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>삼성생명</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>금융 (손보) <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>삼성화재</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>화학·소재 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>LG화학</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>철강·소재 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>POSCO홀딩스</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>조선·중공업 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>HD현대중공업</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>통신 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>SK텔레콤</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>방산 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>한화에어로스페이스</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>항공·운송 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>대한항공</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>유통·소비 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>이마트</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>식음료·내수 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>CJ제일제당</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>엔터·콘텐츠 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>하이브</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
-<h2 class="section-title">
-  <span>건설·상사·복합 <span style="font-weight:400;color:var(--text-muted);font-size:14px;margin-left:8px"><span style="color:var(--accent);font-weight:500">0</span><span style="color:var(--text-muted)"> / 1</span></span></span>
-</h2>
-<div class="report-grid">
-<div class="report-card report-card-empty">
-  <span class="badge badge-empty">추적 중</span>
-  <h3>삼성물산</h3>
-  <p class="desc">첫 정기공시 도착 시 자동 진단 시작.</p>
-  <div class="meta">
-    <span>—</span>
-    <span style="opacity:0.5">대기</span>
-  </div>
-</div></div>
+
+<script>
+  window.kerFilter = function(sector) {
+    document.querySelectorAll('.filter-pill').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.sector === sector);
+    });
+    document.querySelectorAll('#watchlistTable tr[data-sector]').forEach(function(tr) {
+      tr.style.display = (sector === 'all' || tr.dataset.sector === sector) ? '' : 'none';
+    });
+  };
+</script>
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-02 19:24 </p>
+    <p style="margin-top:6px">생성: 2026-05-02 19:28 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>

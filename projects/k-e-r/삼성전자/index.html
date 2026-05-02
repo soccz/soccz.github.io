@@ -598,6 +598,187 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   text-decoration: none; color: inherit;
   display: block;
 }
+
+/* ─────── 마스터 인덱스 — Dashboard 표 레이아웃 ─────── */
+
+/* Hero stats — 4구획 숫자 */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 28px; padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.hero-stats .stat {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 0 16px;
+  border-right: 1px solid var(--border-light);
+}
+.hero-stats .stat:last-child { border-right: none; }
+.hero-stats .stat:first-child { padding-left: 0; }
+.hero-stats .stat-num {
+  font-family: var(--display);
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text);
+  font-feature-settings: 'tnum';
+}
+.hero-stats .stat-lbl {
+  font-size: 11px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* 섹터 필터 pills (sticky 가까이) */
+.filter-bar {
+  margin: 28px 0 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.filter-pills {
+  display: flex; flex-wrap: wrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 0;
+}
+.filter-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  background: var(--surface); color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 12.5px; font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  font-family: var(--sans);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.filter-pill:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-alt);
+}
+.filter-pill.active {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
+.filter-pill .pill-count {
+  font-family: var(--mono); font-size: 11px;
+  opacity: 0.75; font-weight: 500;
+}
+.filter-pill.active .pill-count { opacity: 0.85; }
+
+/* Watchlist 표 */
+.watchlist-table {
+  background: var(--surface);
+  border-top: 2px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
+  overflow-x: auto;
+}
+.watchlist-table table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px; font-variant-numeric: tabular-nums;
+}
+.watchlist-table thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-family: var(--display);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--surface-alt);
+}
+.watchlist-table thead th.status { width: 32px; text-align: center; }
+.watchlist-table thead th.date,
+.watchlist-table thead th.action { text-align: right; }
+.watchlist-table thead th.action { width: 100px; }
+
+/* 섹터 헤더 행 */
+tr.sector-header td {
+  padding: 18px 14px 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+tr.sector-header .sector-name {
+  font-family: var(--display);
+  font-size: 13px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.005em;
+}
+tr.sector-header .sector-stat {
+  margin-left: 10px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); font-weight: 500;
+}
+
+/* 종목 행 */
+tr.stock-row td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+tr.stock-row.stock-active {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+tr.stock-row.stock-active:hover {
+  background: var(--accent-light);
+}
+tr.stock-row.stock-empty {
+  opacity: 0.7;
+}
+tr.stock-row td.status { width: 32px; text-align: center; }
+tr.stock-row td.name { font-weight: 500; color: var(--text); }
+tr.stock-row td.name .ticker {
+  margin-left: 8px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); font-weight: 400;
+}
+tr.stock-row td.latest {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+tr.stock-row td.latest .empty-text {
+  color: var(--text-light); font-style: italic; font-size: 12.5px;
+}
+tr.stock-row td.date {
+  text-align: right;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-muted); white-space: nowrap;
+}
+tr.stock-row td.action {
+  text-align: right;
+  font-size: 12px; color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+tr.stock-row.stock-active td.action {
+  color: var(--accent);
+}
+
+/* 상태 dot */
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.dot-active { background: var(--accent); }
+.dot-empty {
+  border: 1.5px solid var(--text-light);
+  background: transparent;
+  width: 7px; height: 7px;
+}
+
+/* 모바일 — 표 padding 축소 + 일부 칼럼 숨김 */
+@media (max-width: 720px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+  .hero-stats .stat { padding: 0 12px; }
+  .hero-stats .stat-num { font-size: 22px; }
+  .filter-pills { gap: 5px; }
+  .filter-pill { padding: 5px 10px; font-size: 12px; }
+  .watchlist-table table { font-size: 12.5px; }
+  .watchlist-table thead th, tr.stock-row td { padding: 8px 10px; }
+  tr.stock-row td.date { display: none; }
+  tr.sector-header td { padding: 14px 10px 6px; }
+}
 </style>
 </head>
 <body>
@@ -672,7 +853,7 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-02 19:24 </p>
+    <p style="margin-top:6px">생성: 2026-05-02 19:28 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
