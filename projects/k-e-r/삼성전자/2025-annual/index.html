@@ -599,27 +599,25 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   display: block;
 }
 
-/* ─────── Macro 지표 바 — TradingView 라이브 위젯 ─────── */
+/* ─────── Macro 지표 바 — 인라인 SVG 스파크라인 ─────── */
 .macro-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
   margin: 24px 0 4px;
-  padding: 16px 0 0;
+  padding: 20px 0 8px;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border-light);
 }
 .macro-cell {
-  padding: 0 14px 8px;
+  padding: 0 16px;
   border-right: 1px solid var(--border-light);
-  display: flex; flex-direction: column; gap: 4px;
-  min-width: 0;
+  display: flex; flex-direction: column; gap: 6px;
 }
 .macro-cell:last-child { border-right: none; }
 .macro-cell:first-child { padding-left: 0; }
 .macro-head {
   display: flex; align-items: baseline; justify-content: space-between;
-  margin-bottom: 4px;
 }
 .macro-label {
   font-family: var(--display);
@@ -631,27 +629,41 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   font-family: var(--mono); font-size: 10px;
   color: var(--text-light); font-weight: 500;
 }
-.tv-widget-container {
-  width: 100%; height: 145px;
-  overflow: hidden;
-  position: relative;
+.macro-value {
+  font-family: var(--display);
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.015em; color: var(--text);
+  font-feature-settings: 'tnum';
+  line-height: 1.1;
 }
-.tv-widget-container .tradingview-widget-container,
-.tv-widget-container .tradingview-widget-container__widget {
-  width: 100%; height: 100%;
+.sparkline {
+  width: 100%; height: 32px;
+  display: block;
+  margin: 2px 0;
 }
-/* TradingView 위젯 내부 iframe 스타일 강제 (best effort) */
-.tv-widget-container iframe { background: transparent !important; }
+.spark-line {
+  stroke-width: 1.5;
+  stroke-linejoin: round; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.sparkline.spark-up .spark-line { stroke: var(--positive); }
+.sparkline.spark-up .spark-area { fill: var(--positive); opacity: 0.08; }
+.sparkline.spark-down .spark-line { stroke: var(--negative); }
+.sparkline.spark-down .spark-area { fill: var(--negative); opacity: 0.08; }
+.macro-changes {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 11px;
+  font-family: var(--mono);
+  font-feature-settings: 'tnum';
+}
+.macro-up { color: var(--positive); font-weight: 600; }
+.macro-down { color: var(--negative); font-weight: 600; }
+.macro-1y { color: var(--text-light); font-size: 10px; }
 
 @media (max-width: 720px) {
-  .macro-bar { grid-template-columns: repeat(2, 1fr); gap: 4px 0; padding: 12px 0 0; }
-  .macro-cell { padding: 0 8px 6px; }
-  .tv-widget-container { height: 120px; }
-}
-@media (max-width: 480px) {
-  .macro-bar { grid-template-columns: 1fr; }
-  .macro-cell { border-right: none; border-bottom: 1px solid var(--border-light); padding: 8px 4px; }
-  .macro-cell:last-child { border-bottom: none; }
+  .macro-bar { grid-template-columns: repeat(2, 1fr); gap: 18px 0; padding: 16px 0; }
+  .macro-cell { padding: 0 10px; }
+  .macro-value { font-size: 18px; }
 }
 
 /* ─────── 마스터 인덱스 — Dashboard 표 레이아웃 ─────── */
@@ -3916,7 +3928,7 @@ OECD 주도의 국제조세 규정으로, 연매출 7.5억 유로 이상 다국�
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-02 19:39 </p>
+    <p style="margin-top:6px">생성: 2026-05-02 19:41 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
