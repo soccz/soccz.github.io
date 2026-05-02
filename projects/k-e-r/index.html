@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K_E_R — Korea Equity Reports</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  /* 기업 리서치 보고서 톤 — cool, professional */
+  --bg: #f8f9fb;
+  --surface: #ffffff;
+  --surface-alt: #fbfcfd;
+  --surface-hover: #f3f5f9;
+  --border: #e3e8ef;
+  --border-light: #eef1f6;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --accent: #1e3a8a;
+  --accent-light: #eff6ff;
+  --accent-hover: #1e40af;
+  --accent-soft: #93c5fd;
+  --positive: #15803d;
+  --positive-light: #f0fdf4;
+  --negative: #b91c1c;
+  --negative-light: #fef2f2;
+  --warn: #b45309;
+  --warn-light: #fefce8;
+  --tag-bg: #eef1f6;
+  --tag-text: #475569;
+  --max-w: 1080px;
+  --content-w: 820px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --shadow-sm: 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-md: 0 2px 8px rgba(15,23,42,0.06);
+  --shadow-lg: 0 8px 24px rgba(15,23,42,0.08);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding-bottom: 80px;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'cv11', 'ss01';
+}
+::selection { background: var(--accent-light); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; transition: color 0.15s; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  padding: 14px 24px;
+}
+.site-header .inner {
+  max-width: var(--max-w); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.site-header .brand {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-weight: 700; font-size: 16px; letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 10px;
+  color: var(--text);
+}
+.site-header .brand .badge {
+  background: var(--accent-light); color: var(--accent);
+  padding: 2px 10px; border-radius: 4px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.site-header nav a {
+  color: var(--text-secondary); margin-left: 18px; font-size: 13px;
+  font-weight: 500;
+}
+.site-header nav a:hover { color: var(--accent); text-decoration: none; }
+
+.container { max-width: var(--max-w); margin: 0 auto; padding: 28px 24px; }
+
+/* HERO — 보고서 표지 */
+.page-hero {
+  margin: 8px 0 32px;
+  padding: 32px 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.page-hero .doc-tag {
+  display: inline-block;
+  background: var(--accent-light); color: var(--accent);
+  padding: 3px 10px; border-radius: 4px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 14px;
+}
+.page-hero h1 {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-size: 30px; font-weight: 700; line-height: 1.2;
+  margin-bottom: 6px; letter-spacing: -0.02em;
+}
+.page-hero .subtitle {
+  color: var(--text-muted); font-size: 15px;
+}
+.page-hero .meta {
+  display: flex; gap: 24px; flex-wrap: wrap;
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px dashed var(--border);
+  font-size: 13px;
+}
+.page-hero .meta .item {
+  display: inline-flex; flex-direction: column; gap: 2px;
+}
+.page-hero .meta .item .label {
+  color: var(--text-light); font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.page-hero .meta .item .value {
+  color: var(--text-secondary); font-weight: 500;
+}
+
+/* ARTICLE — 본문 */
+article.report {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 56px 64px;
+  box-shadow: var(--shadow-sm);
+  max-width: var(--content-w); margin: 0 auto;
+}
+article.report > h1:first-child { margin-top: 0; }
+article.report h1 {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-size: 26px; font-weight: 700; letter-spacing: -0.015em;
+  margin: 36px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+}
+article.report h2 {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-size: 20px; font-weight: 700; letter-spacing: -0.01em;
+  margin: 40px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+article.report h3 {
+  font-size: 16px; font-weight: 600;
+  margin: 28px 0 10px;
+  color: var(--text);
+}
+article.report h4 {
+  font-size: 14px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--text-secondary);
+  margin: 22px 0 8px;
+}
+article.report p { margin: 12px 0; }
+article.report ul, article.report ol { margin: 12px 0 12px 24px; }
+article.report li { margin: 4px 0; }
+
+/* 데이터 기준시점 박스 (blockquote 첫 위치) */
+article.report blockquote {
+  border-left: 3px solid var(--accent);
+  background: var(--surface-alt);
+  padding: 14px 20px;
+  margin: 20px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+article.report blockquote strong { color: var(--accent); }
+article.report blockquote p { margin: 4px 0; }
+article.report blockquote ul { margin: 6px 0 0 20px; }
+
+/* 코드 — 출처 인용 [...] 형식 */
+article.report code {
+  background: var(--tag-bg); color: var(--tag-text);
+  padding: 1px 6px; border-radius: 3px;
+  font-family: 'IBM Plex Mono', 'Menlo', monospace;
+  font-size: 88%; font-weight: 500;
+}
+article.report pre {
+  background: var(--surface-alt); border: 1px solid var(--border);
+  padding: 16px; border-radius: var(--radius-sm);
+  overflow-x: auto; margin: 16px 0;
+  font-size: 13px;
+}
+article.report pre code { background: transparent; padding: 0; }
+
+/* 표 — 재무 데이터 스타일 */
+article.report table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm); overflow: hidden;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+article.report table th, article.report table td {
+  padding: 9px 14px; text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+article.report table th {
+  background: var(--surface-alt);
+  font-weight: 600; color: var(--text);
+  border-bottom: 1.5px solid var(--border-strong);
+  font-size: 12px; letter-spacing: 0.02em;
+}
+article.report table td:not(:first-child) { text-align: right; font-feature-settings: 'tnum'; }
+article.report table th:not(:first-child) { text-align: right; }
+article.report table tr:last-child td { border-bottom: none; }
+article.report table tr:hover { background: var(--surface-hover); }
+article.report table strong { color: var(--text); }
+
+article.report hr {
+  border: none; border-top: 1px solid var(--border-light);
+  margin: 32px 0;
+}
+
+article.report em { color: var(--text-muted); font-style: normal; }
+
+/* INDEX — 카드 그리드 */
+.section-title {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-weight: 700; font-size: 18px;
+  margin: 32px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+.section-title .more {
+  font-size: 13px; font-weight: 500;
+  color: var(--accent);
+}
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.report-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  transition: transform 0.16s, box-shadow 0.16s, border-color 0.16s;
+  position: relative;
+}
+.report-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+.report-card .badge {
+  display: inline-block;
+  background: var(--accent-light); color: var(--accent);
+  padding: 3px 8px; border-radius: 3px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.report-card h3 {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-size: 16px; font-weight: 600;
+  margin-bottom: 6px; letter-spacing: -0.01em;
+}
+.report-card .desc {
+  color: var(--text-secondary); font-size: 13px;
+  line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.report-card .meta {
+  margin-top: 14px; padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+  font-size: 11px; color: var(--text-muted);
+  display: flex; justify-content: space-between;
+  letter-spacing: 0.02em;
+}
+
+footer.site-footer {
+  margin-top: 60px;
+  padding: 20px 24px;
+  text-align: center;
+  color: var(--text-muted); font-size: 12px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+footer.site-footer p { margin: 3px 0; }
+
+/* 모바일 */
+@media (max-width: 720px) {
+  article.report { padding: 28px 22px; }
+  article.report h1 { font-size: 22px; }
+  .page-hero { padding: 24px; }
+  .page-hero h1 { font-size: 24px; }
+  article.report table { font-size: 12px; }
+  article.report table th, article.report table td { padding: 7px 10px; }
+}
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand">
+        <span>K_E_R</span>
+        <span class="badge">Korea Equity Reports</span>
+      </div>
+      <nav>
+        <a href="/">soccz.github.io</a>
+        <a href="/projects/k-e-r/">전체 보고서</a>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="container">
+    
+<div class="page-hero">
+  <h1>K_E_R — Korea Equity Reports</h1>
+  <p style="color:var(--text-secondary);margin-top:8px;font-size:15px">
+    DART 기반 한국 상장사 종합 진단. 출처 엄격주의 + 추론 명시 + XBRL ground truth.
+  </p>
+  <div class="meta">
+    <span class="item">코스피 24종목 · 섹터별 분산</span>
+    <span class="item">분기 단위 누적</span>
+    <span class="item">기업 종합 검진 톤</span>
+  </div>
+</div>
+
+
+<h2 style="font-family:'Space Grotesk';margin:36px 0 14px">삼성전자
+  <a href="삼성전자/index.html" style="font-size:14px;font-weight:400;margin-left:12px">전체 보기 →</a>
+</h2>
+<div class="report-grid">
+<a href="2025-annual/index.html" style="text-decoration:none;color:inherit;">
+  <div class="report-card">
+    <span class="badge">2025-annual</span>
+    <h3>삼성전자</h3>
+    <p class="desc">삼성전자는 1969년 설립된 대한민국 최대 전자 기업이다. **2025년 연결 기준 매출 333조 6,059억원, 영업이익 43조 6,011억원**. 세계 스마트폰 판매 1위(점유율 19.2%), DRAM 세계 1위(점유율 34.0%), TV 20년 연속 세계 1위(점유율 29.1%). 한국에 308개 종속기업을 포함한 글로벌 전자 그룹이다. [사업보고서 …</p>
+    <div class="meta">
+      <span>2026-05-02</span>
+      <span>→ 본문 보기</span>
+    </div>
+  </div>
+</a></div>
+  </div>
+  <footer class="site-footer">
+    <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
+    <p style="margin-top:6px">생성: 2026-05-02 18:25 </p>
+  </footer>
+</body>
+</html>
