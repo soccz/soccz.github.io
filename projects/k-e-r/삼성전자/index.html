@@ -289,6 +289,20 @@ article.report em { color: var(--text-muted); font-style: normal; }
   letter-spacing: 0.02em;
 }
 
+/* 추적 중 (보고서 미생성) 카드 — placeholder */
+.report-card.report-card-empty {
+  background: var(--surface-alt);
+  border-style: dashed;
+  opacity: 0.85;
+}
+.report-card.report-card-empty:hover {
+  transform: none; box-shadow: var(--shadow-sm);
+  border-color: var(--border);
+}
+.badge.badge-empty {
+  background: var(--tag-bg); color: var(--text-muted);
+}
+
 footer.site-footer {
   margin-top: 60px;
   padding: 20px 24px;
@@ -340,7 +354,7 @@ footer.site-footer p { margin: 3px 0; }
   <div class="report-card">
     <span class="badge">2025-annual</span>
     <h3>사업보고서 (2025)</h3>
-    <p class="desc">삼성전자는 1969년 설립된 대한민국 최대 전자 기업이다. **2025년 연결 기준 매출 333조 6,059억원, 영업이익 43조 6,011억원**. 세계 스마트폰 판매 1위(점유율 19.2%), DRAM 세계 1위(점유율 34.0%), TV 20년 연속 세계 1위(점유율 29.1%). 한국에 308개 종속기업을 포함한 글로벌 전자 그룹이다. [사업보고서 …</p>
+    <p class="desc">- [01_사업구조진단](#01_사업구조진단)</p>
     <div class="meta">
       <span>2026-05-02</span>
       <span>→ 본문 보기</span>
@@ -351,7 +365,7 @@ footer.site-footer p { margin: 3px 0; }
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-02 18:45 </p>
+    <p style="margin-top:6px">생성: 2026-05-02 19:02 </p>
   </footer>
 </body>
 </html>
