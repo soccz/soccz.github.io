@@ -545,6 +545,49 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
 @media (max-width: 480px) {
   .report-grid { grid-template-columns: 1fr; gap: 12px; }
 }
+
+/* 회사 인덱스 정렬 토글 */
+.list-controls {
+  display: flex; align-items: center; gap: 16px;
+  margin: 24px 0 16px; padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.list-controls-label {
+  color: var(--text-muted);
+  font-family: var(--display);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 11px; font-weight: 600;
+}
+.list-controls-count {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-family: var(--mono); font-size: 12px;
+}
+.sort-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+}
+.sort-btn {
+  padding: 7px 16px;
+  border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  font-size: 13px; font-weight: 500;
+  font-family: var(--sans);
+  transition: background 0.15s, color 0.15s;
+}
+.sort-btn + .sort-btn { border-left: 1px solid var(--border); }
+.sort-btn:hover { background: var(--surface-alt); color: var(--text); }
+.sort-btn.active {
+  background: var(--accent); color: #fff;
+}
+.report-card-link {
+  text-decoration: none; color: inherit;
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -561,23 +604,39 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
     </div>
   </header>
   
-<div class="container" style="padding-top:20px; padding-bottom:0; font-size:14px; color:var(--text-muted);">
-  <a href="../index.html">← K_E_R 전체 보고서</a> &nbsp;·&nbsp; 삼성전자
+<div class="container" style="padding-top:24px; padding-bottom:0; font-size:12px; color:var(--text-muted); letter-spacing:0.04em;">
+  <a href="../index.html" style="color:var(--text-muted)">K_E_R</a>
+  &nbsp;/&nbsp;
+  <span style="color:var(--text-secondary)">삼성전자</span>
 </div>
   <div class="container">
     
 <div class="page-hero">
+  <span class="doc-tag">Issuer Coverage</span>
   <h1>삼성전자</h1>
-  <p style="color:var(--text-secondary)">분기·연간 종합 진단 누적 (1건)</p>
+  <p class="subtitle">분기·연간 종합 진단 — 누적 1건</p>
 </div>
 
-<div class="report-grid">
+<div class="list-controls">
+  <span class="list-controls-label">정렬</span>
+  <div class="sort-toggle" role="tablist">
+    <button class="sort-btn active" data-sort="newest" onclick="window.kerSort('newest')">최신순</button>
+    <button class="sort-btn" data-sort="oldest" onclick="window.kerSort('oldest')">과거순</button>
+  </div>
+  <span class="list-controls-count">1건</span>
+</div>
+
+<div class="report-grid" id="reportGrid">
   
-<a href="2025-annual/index.html" style="text-decoration:none;color:inherit;">
+<a href="2025-annual/index.html"
+   class="report-card-link"
+   data-period="2025-annual"
+   data-written="2026-05-02"
+   data-order="0">
   <div class="report-card">
     <span class="badge">2025-annual</span>
     <h3>사업보고서 (2025)</h3>
-    <p class="desc">- [01_사업구조진단](#01_사업구조진단)</p>
+    <p class="desc">삼성전자는 1969년 설립된 대한민국 최대 전자 기업이다. **2025년 연결 기준 매출 333조 6,059억원, 영업이익 43조 6,011억원**. 세계 스마트폰 판매 1위(점유율 19.2%), DRAM 세계 1위(점유율 34.0%), TV 20년 연속 세계 1위(점유율 29.1%). 한국에 308개 종속기업을 포함한 글로벌 전자 그룹이다. [사업보고서 …</p>
     <div class="meta">
       <span>2026-05-02</span>
       <span>→ 본문 보기</span>
@@ -585,10 +644,25 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
   </div>
 </a>
 </div>
+
+<script>
+  window.kerSort = function(mode) {
+    var grid = document.getElementById('reportGrid');
+    var items = Array.from(grid.querySelectorAll('.report-card-link'));
+    items.sort(function(a, b) {
+      var pa = a.dataset.period, pb = b.dataset.period;
+      return mode === 'oldest' ? pa.localeCompare(pb) : pb.localeCompare(pa);
+    });
+    items.forEach(function(el) { grid.appendChild(el); });
+    document.querySelectorAll('.sort-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.sort === mode);
+    });
+  };
+</script>
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-02 19:09 </p>
+    <p style="margin-top:6px">생성: 2026-05-02 19:19 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>

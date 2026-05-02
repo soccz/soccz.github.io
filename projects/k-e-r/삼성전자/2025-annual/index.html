@@ -545,6 +545,49 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
 @media (max-width: 480px) {
   .report-grid { grid-template-columns: 1fr; gap: 12px; }
 }
+
+/* 회사 인덱스 정렬 토글 */
+.list-controls {
+  display: flex; align-items: center; gap: 16px;
+  margin: 24px 0 16px; padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.list-controls-label {
+  color: var(--text-muted);
+  font-family: var(--display);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 11px; font-weight: 600;
+}
+.list-controls-count {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-family: var(--mono); font-size: 12px;
+}
+.sort-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+}
+.sort-btn {
+  padding: 7px 16px;
+  border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  font-size: 13px; font-weight: 500;
+  font-family: var(--sans);
+  transition: background 0.15s, color 0.15s;
+}
+.sort-btn + .sort-btn { border-left: 1px solid var(--border); }
+.sort-btn:hover { background: var(--surface-alt); color: var(--text); }
+.sort-btn.active {
+  background: var(--accent); color: #fff;
+}
+.report-card-link {
+  text-decoration: none; color: inherit;
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -3627,7 +3670,7 @@ OECD 주도의 국제조세 규정으로, 연매출 7.5억 유로 이상 다국�
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-02 19:09 </p>
+    <p style="margin-top:6px">생성: 2026-05-02 19:19 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
