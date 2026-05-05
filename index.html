@@ -915,7 +915,7 @@ const CATEGORIES = {
     desc: '직접 설계하고 만드는 진행형 프로젝트',
     color: 'finance',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 4 5-8"/></svg>`,
-    match: ['CBAM','boundarybench','market-impact-analysis','Chrono-Trader-v2','HIGAN','xsec_alpha']
+    match: ['CBAM','boundarybench','market-impact-analysis','Chrono-Trader-v2','HIGAN','xsec_alpha','prelude']
   },
   data: {
     label: 'Data & ML',
@@ -963,6 +963,7 @@ const DESCS = {
   'coin': '암호화폐 데이터 분석',
   'worldquant-alpha': 'Alpha Research Journal \u2014 퀀트 알파 연구의 사고 과정, 실패, 발견을 기록한 21챕터 연구 저널',
   'xsec_alpha': 'Cross-Sectional Crypto Ranking \u2014 gan_t 실패에서 출발한 크로스섹션 랭킹. v1\u2192v3 연구 + Part II 운영 재설계 (F1 통합 아키텍처, 60+ 에이전트 토론, 자동 재학습 파이프라인)',
+  'prelude': 'Pre-Open Pump Radar — 업비트 KRW 09:00 직전 펌프 레이더. 6-class → detector → distribution → pre-open 까지 5번 재정의. 6 실험 검증 (Bootstrap CI, multi-scale ablation, calibration). 듀얼 텔레그램 (08:55 + 09:05) 운영',
   'economic-time-transformer': 'Economic Time in Financial Transformers \u2014 Clark(1973)의 경제적 시간을 Transformer에 구현하려다 배운 것들. 논문 4편 + ~400 실험',
   'Chrono-Trader': '시계열 기반 트레이딩 시스템 v1',
   'Chrono-Trader-v2': 'AETHER \u2014 Transformer+CNN 하이브리드 암호화폐 예측 시스템',
@@ -1146,6 +1147,7 @@ function renderPosts(catKey) {
       'economic-time-transformer': '/projects/economic-time-transformer/',
       'worldquant-alpha': '/projects/worldquant-alpha/',
       'xsec_alpha': '/projects/xsec-alpha/',
+      'prelude': '/projects/prelude/',
       'python-why': 'https://soccz.github.io/python-why/'
     };
     const page = PROJECT_PAGES[r.name];

@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prelude — 09:00 직전 펌프 레이더 · 운영 + 연구 보고서</title>
+  <meta name="description" content="업비트 KRW 일봉 펌프 레이더. 6-class softprob → ≥20% tail detector → multi-head distribution → 08:55 pre-open trigger 까지 5 단계 재정의. Bootstrap CI / Path-aware backtest / Multi-scale ablation / Bucket calibration 전 과정 공개.">
+  <meta property="og:title" content="prelude — 09:00 직전 펌프 레이더">
+  <meta property="og:description" content="단일 점수 detector 의 모호함을 multi-head 조건부 분포로 재정의. 5 phases · 6 experiments · 92.9% bootstrap edge · 9.56 Sharpe (TP-tiered) · 진입가 표기까지.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="prelude — 09:00 직전 펌프 레이더">
+  <meta name="twitter:description" content="듀얼 알림 · 09:00 boundary · multi-scale ablation · bucket calibration · failures wall.">
+
+  <link rel="canonical" href="https://soccz.github.io/projects/prelude/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+      --red: #dc2626;
+      --red-dim: rgba(220,38,38,0.08);
+      --green: #16a34a;
+      --green-dim: rgba(22,163,74,0.08);
+      --amber: #b45309;
+      --amber-dim: rgba(180,83,9,0.07);
+      --blue: #2563eb;
+      --blue-dim: rgba(59,130,246,0.07);
+      --purple: #7e3af2;
+      --purple-dim: rgba(126,58,242,0.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
+    nav.scrolled { background: rgba(250,250,249,0.97); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.4rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(180,83,9,0.05) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(59,130,246,0.04) 0%, transparent 50%); }
+    .hero-content { position: relative; max-width: 880px; }
+    .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem; }
+    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .hero-sub { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.2rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.73rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s; }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .scroll-ind { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em; animation: float 2s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 5.5rem 2rem; }
+    section.compact { padding: 3.5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 720px; line-height: 1.85; margin-bottom: 3rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .four-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .six-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; }
+
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .card:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+
+    .badge { display: inline-block; margin-top: 0.5rem; margin-right: 0.35rem; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; padding: 0.2rem 0.6rem; border-radius: 3px; }
+    .badge-fail { background: var(--red-dim); color: var(--red); border: 1px solid rgba(220,38,38,0.2); }
+    .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid rgba(22,163,74,0.2); }
+    .badge-pivot { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(180,83,9,0.2); }
+    .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
+    .badge-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(126,58,242,0.18); }
+
+    .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
+    .metric-val { font-family: 'Noto Serif KR', serif; font-size: 2rem; font-weight: 700; display: block; line-height: 1.2; margin-bottom: 0.3rem; }
+    .metric-val.neg { color: var(--red); }
+    .metric-val.pos { color: var(--green); }
+    .metric-val.neutral { color: #292524; }
+    .metric-val.amber { color: var(--amber); }
+    .metric-val.blue { color: var(--blue); }
+    .metric-val.purple { color: var(--purple); }
+    .metric-label { font-size: 0.78rem; color: var(--text-secondary); font-weight: 500; }
+    .metric-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; line-height: 1.5; }
+
+    .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem 2rem; margin-bottom: 1.5rem; }
+    .chart-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
+    .chart-subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.6rem; line-height: 1.6; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2rem 0; }
+    .flow-step { flex: 1; min-width: 140px; background: var(--bg-card); border: 1px solid var(--border); padding: 1.3rem 1rem; text-align: center; position: relative; }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after { content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1; }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .flow-title { font-weight: 700; font-size: 0.82rem; margin-bottom: 0.25rem; }
+    .flow-desc { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .timeline { position: relative; padding-left: 2.2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .timeline-item { position: relative; margin-bottom: 2.6rem; }
+    .timeline-dot { position: absolute; left: -2.6rem; top: 0.3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--border-light); border: 2px solid var(--bg-primary); }
+    .timeline-dot.done { background: var(--accent); }
+    .timeline-dot.fail { background: var(--red); }
+    .timeline-dot.pivot { background: var(--amber); }
+    .timeline-dot.ok { background: var(--green); }
+    .timeline-dot.next { background: var(--border-light); border: 2px solid var(--border-light); }
+    .t-meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .t-date { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+    .t-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .t-find { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 0.7rem; }
+
+    .lesson-item { display: flex; align-items: flex-start; gap: 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem 1.8rem; margin-bottom: 0.8rem; transition: all 0.2s; }
+    .lesson-item:hover { border-color: var(--border-light); transform: translateX(3px); }
+    .lesson-num { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: 700; color: var(--text-muted); min-width: 40px; line-height: 1; padding-top: 0.15rem; }
+    .lesson-body { flex: 1; }
+    .lesson-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
+    .lesson-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.8; }
+    .c { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
+
+    .tbl { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .tbl th { background: var(--bg-secondary); padding: 0.7rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 600; border-bottom: 2px solid var(--border); }
+    .tbl td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; }
+    .tbl td.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+    .tbl td.neg { color: var(--red); }
+    .tbl td.pos { color: var(--green); }
+    .tbl td.warn { color: var(--amber); }
+    .tbl td.hilite { background: rgba(59,130,246,0.06); font-weight: 600; }
+    .tbl tr:last-child td { border-bottom: none; }
+
+    .callout { padding: 1.4rem 1.8rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; border-left: 3px solid var(--border-light); margin: 2rem 0; }
+    .callout p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.85; }
+    .callout strong { color: var(--text-primary); }
+    .callout.warn { border-left-color: var(--amber); background: rgba(180,83,9,0.025); }
+    .callout.win { border-left-color: var(--green); background: rgba(22,163,74,0.025); }
+    .callout.fail { border-left-color: var(--red); background: rgba(220,38,38,0.025); }
+
+    .layer-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; border-top: 3px solid #78716c; }
+    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
+
+    /* Dual signal */
+    .dual-wrap { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: stretch; margin: 2.5rem 0; }
+    .dual-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; position: relative; }
+    .dual-card.pre { border-top: 4px solid var(--amber); }
+    .dual-card.dist { border-top: 4px solid var(--blue); }
+    .dual-vs { display: flex; align-items: center; justify-content: center; }
+    .dual-vs span { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-muted); background: var(--bg-primary); padding: 0.5rem; z-index: 1; }
+    .dual-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; }
+    .dual-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; }
+    .dual-icon.pre-icon { background: var(--amber-dim); color: var(--amber); }
+    .dual-icon.dist-icon { background: var(--blue-dim); color: var(--blue); }
+    .dual-name { font-weight: 700; font-size: 1.1rem; }
+    .dual-sub { font-size: 0.72rem; color: var(--text-muted); }
+    .dual-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.84rem; }
+    .dual-row:last-child { border-bottom: none; }
+    .dual-key { color: var(--text-muted); font-size: 0.78rem; }
+    .dual-val { font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+    .dual-val.a { color: var(--amber); }
+    .dual-val.b { color: var(--blue); }
+    .dual-philosophy { margin-top: 1.2rem; padding: 1rem; border-radius: 8px; font-size: 0.82rem; line-height: 1.7; }
+    .dual-philosophy.pre-phil { background: rgba(180,83,9,0.04); border: 1px solid rgba(180,83,9,0.12); color: var(--text-secondary); }
+    .dual-philosophy.dist-phil { background: rgba(59,130,246,0.04); border: 1px solid rgba(59,130,246,0.12); color: var(--text-secondary); }
+    .dual-philosophy strong { color: var(--text-primary); }
+
+    /* Cadence */
+    .cadence-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin: 2rem 0; }
+    .cadence-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .cadence-sub { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .cadence-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .cadence-label { font-size: 0.78rem; font-weight: 600; min-width: 80px; }
+    .cadence-label.a { color: var(--amber); }
+    .cadence-label.b { color: var(--blue); }
+    .cadence-label.g { color: var(--green); }
+    .cadence-bar { display: flex; flex: 1; gap: 2px; }
+    .cadence-slot { flex: 1; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+    .cadence-slot.fire-a { background: rgba(180,83,9,0.18); color: var(--amber); border: 1px solid rgba(180,83,9,0.35); font-weight: 700; }
+    .cadence-slot.fire-b { background: rgba(59,130,246,0.18); color: var(--blue); border: 1px solid rgba(59,130,246,0.35); font-weight: 700; }
+    .cadence-slot.fire-g { background: rgba(22,163,74,0.15); color: var(--green); border: 1px solid rgba(22,163,74,0.3); }
+    .cadence-slot.inactive { background: var(--bg-secondary); color: var(--text-muted); border: 1px solid var(--border); }
+    .cadence-legend { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .cadence-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text-secondary); }
+    .cadence-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    /* Bar chart */
+    .bar-chart { display: flex; flex-direction: column; gap: 0.55rem; }
+    .bar-row { display: grid; grid-template-columns: 150px 1fr 90px; align-items: center; gap: 0.8rem; }
+    .bar-label { font-size: 0.78rem; color: var(--text-secondary); text-align: right; font-family: 'JetBrains Mono', monospace; }
+    .bar-track { height: 26px; background: var(--bg-secondary); border-radius: 4px; position: relative; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 0.7rem; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .bar-fill.tier-a { background: linear-gradient(90deg, rgba(180,83,9,0.2), rgba(180,83,9,0.55)); }
+    .bar-fill.tier-b { background: linear-gradient(90deg, rgba(59,130,246,0.18), rgba(59,130,246,0.5)); }
+    .bar-fill.tier-g { background: linear-gradient(90deg, rgba(22,163,74,0.18), rgba(22,163,74,0.5)); }
+    .bar-fill.tier-mid { background: linear-gradient(90deg, rgba(168,162,158,0.12), rgba(168,162,158,0.32)); }
+    .bar-fill.tier-r { background: linear-gradient(90deg, rgba(220,38,38,0.18), rgba(220,38,38,0.5)); }
+    .bar-fill.tier-p { background: linear-gradient(90deg, rgba(126,58,242,0.18), rgba(126,58,242,0.5)); }
+    .bar-val { font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-weight: 600; }
+
+    /* Heatmap */
+    .heatmap { display: grid; gap: 2px; margin: 0; font-size: 0.75rem; }
+    .heatmap.h-3 { grid-template-columns: 100px repeat(6, 1fr); }
+    .heatmap-cell { padding: 0.6rem 0.4rem; border-radius: 3px; text-align: center; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .heatmap-cell.head-name { background: var(--bg-secondary); color: var(--text-primary); text-align: right; padding-right: 0.7rem; font-size: 0.72rem; }
+    .heatmap-cell.col-name { background: var(--bg-primary); color: var(--text-muted); font-weight: 500; font-size: 0.68rem; padding: 0.4rem 0.2rem; text-align: center; }
+    .heatmap-cell.l1 { background: rgba(22,163,74,0.06); color: var(--text-muted); }
+    .heatmap-cell.l2 { background: rgba(22,163,74,0.15); color: var(--text-primary); }
+    .heatmap-cell.l3 { background: rgba(22,163,74,0.28); color: var(--text-primary); }
+    .heatmap-cell.l4 { background: rgba(22,163,74,0.42); color: #064d23; font-weight: 700; }
+    .heatmap-cell.l5 { background: rgba(22,163,74,0.6); color: #064d23; font-weight: 700; box-shadow: 0 0 0 2px var(--green); }
+    .heatmap-cell.lo { background: rgba(220,38,38,0.08); color: var(--text-muted); }
+
+    /* Failures wall */
+    .fail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .fail-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; border-left: 3px solid var(--red); position: relative; }
+    .fail-card::before { content: '×'; position: absolute; top: 0.5rem; right: 0.8rem; color: var(--red); font-size: 1.6rem; line-height: 1; opacity: 0.5; font-family: 'Noto Serif KR'; }
+    .fail-card .f-tag { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase; font-family: 'JetBrains Mono', monospace; margin-bottom: 0.4rem; }
+    .fail-card .f-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; line-height: 1.4; }
+    .fail-card .f-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; }
+    .fail-card .f-takeaway { margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px dashed var(--border); font-size: 0.76rem; color: var(--text-primary); font-style: italic; }
+    .fail-card .f-takeaway::before { content: '→ '; color: var(--text-muted); }
+
+    /* Telegram */
+    .tg-mockup { background: #17212b; border-radius: 12px; padding: 1.6rem 1.4rem; margin: 1rem 0; font-family: 'JetBrains Mono', monospace; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    .tg-mockup .tg-sender { color: #6ab3f3; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; font-family: 'Noto Sans KR', sans-serif; }
+    .tg-mockup .tg-header { color: #8d9aa5; font-size: 0.72rem; border-bottom: 1px solid #2a3947; padding-bottom: 0.6rem; margin-bottom: 0.8rem; line-height: 1.7; }
+    .tg-mockup .tg-section-title { color: #e8e8e8; font-size: 0.82rem; margin: 0.8rem 0 0.5rem; font-weight: 700; }
+    .tg-mockup .tg-row { color: #d4d4d4; font-size: 0.76rem; margin: 0.3rem 0; line-height: 1.7; }
+    .tg-mockup .tg-row .tg-tier { font-size: 0.95rem; }
+    .tg-mockup .tg-row .tg-coin { color: #fff; font-weight: 700; }
+    .tg-mockup .tg-row .tg-price { color: #ffd486; }
+    .tg-mockup .tg-row .tg-detail { color: #aab8c2; font-size: 0.72rem; padding-left: 1.2rem; }
+    .tg-mockup .tg-row .tg-key { color: #6ac789; }
+    .tg-mockup .tg-legend { color: #8d9aa5; font-size: 0.65rem; margin-top: 1rem; line-height: 1.7; border-top: 1px solid #2a3947; padding-top: 0.8rem; }
+
+    /* Pipeline */
+    .pipe-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; margin: 2rem 0; }
+    .pipe-stage { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1rem; background: var(--bg-secondary); border-radius: 6px; border-left: 3px solid var(--border-light); margin-bottom: 0.7rem; }
+    .pipe-stage.gate { border-left-color: var(--amber); }
+    .pipe-stage.deploy { border-left-color: var(--green); }
+    .pipe-stage.fail { border-left-color: var(--red); }
+    .pipe-num { font-family: 'Noto Serif KR', serif; font-size: 1rem; color: var(--text-muted); min-width: 30px; font-weight: 700; }
+    .pipe-body { flex: 1; }
+    .pipe-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.2rem; }
+    .pipe-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Auto-timer */
+    .auto-timer { display: grid; grid-template-columns: 200px 1fr 160px; gap: 1rem; align-items: center; padding: 1rem 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.8rem; }
+    .auto-timer.amber-acc { border-left: 3px solid var(--amber); }
+    .auto-timer.blue-acc { border-left: 3px solid var(--blue); }
+    .auto-timer.muted-acc { border-left: 3px solid var(--text-muted); }
+    .auto-name { font-weight: 700; font-size: 0.88rem; }
+    .auto-name .mono-small { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-top: 0.15rem; }
+    .auto-role { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+    .auto-when { text-align: right; font-size: 0.75rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .auto-when strong { color: var(--accent); font-weight: 600; display: block; font-size: 0.82rem; }
+
+    /* Tag grid */
+    .tag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .tag-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+    .tag-card .tag-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .tag-card .tag-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .tag-card .tag-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.7; }
+
+    /* Phase chip flow */
+    .phase-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin: 2rem 0 1.5rem; }
+    .phase-chip { padding: 1rem 0.7rem; border-radius: 8px; text-align: center; position: relative; }
+    .phase-chip .pc-num { font-family: 'Noto Serif KR', serif; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .phase-chip .pc-name { font-weight: 700; font-size: 0.82rem; margin-bottom: 0.3rem; }
+    .phase-chip .pc-status { font-size: 0.66rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; }
+    .phase-chip.legacy { background: var(--bg-secondary); border: 1px solid var(--border); }
+    .phase-chip.legacy .pc-status { color: var(--text-muted); }
+    .phase-chip.fail { background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.18); }
+    .phase-chip.fail .pc-status { color: var(--red); }
+    .phase-chip.pivot { background: rgba(180,83,9,0.06); border: 1px solid rgba(180,83,9,0.18); }
+    .phase-chip.pivot .pc-status { color: var(--amber); }
+    .phase-chip.live { background: rgba(22,163,74,0.06); border: 1px solid rgba(22,163,74,0.18); }
+    .phase-chip.live .pc-status { color: var(--green); }
+
+    /* SVG chart misc */
+    svg { display: block; max-width: 100%; height: auto; }
+    .svg-axis { stroke: var(--border); stroke-width: 1; }
+    .svg-grid { stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.6; }
+    .svg-text { fill: var(--text-muted); font-size: 10px; font-family: 'JetBrains Mono', monospace; }
+    .svg-text.axis-title { fill: var(--text-secondary); font-size: 11px; font-weight: 600; }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    .part-divider { text-align: center; padding: 5rem 2rem 2rem; }
+    .part-divider .part-label { display: inline-block; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .part-divider h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .part-divider p { font-size: 0.92rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.85; }
+    .part-divider .part-ornament { width: 40px; height: 1px; background: var(--border-light); margin: 1.5rem auto; }
+
+    @media (max-width: 980px) { .heatmap.h-3 { grid-template-columns: 80px repeat(6, 1fr); font-size: 0.65rem; } .phase-flow { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } .auto-timer { grid-template-columns: 1fr; gap: 0.4rem; } .auto-when { text-align: left; } }
+    @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .lesson-item { flex-direction: column; gap: 0.4rem; } .cadence-slot { font-size: 0.55rem; } .bar-row { grid-template-columns: 90px 1fr 70px; } }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#summary">Summary</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#thesis">Thesis</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#distribution">Distribution</a></li>
+      <li><a href="#preopen">Pre-open</a></li>
+      <li><a href="#experiments">Experiments</a></li>
+      <li><a href="#failures">Failures</a></li>
+      <li><a href="#ops">Ops</a></li>
+      <li><a href="#status">Status</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Pre-Open Pump Radar &middot; Upbit KRW &middot; 2026</span>
+    <h1>prelude</h1>
+    <p class="hero-sub">
+      "09:00 직전, 오늘 터질 코인을 두 번 묻는다."<br>
+      08:55 pre-open trigger (15분 안 펌프) + 09:05 distribution beta (장중 setup 분포) 듀얼 알림.<br>
+      6-class softprob → ≥20% tail detector → multi-head distribution → pre-open 분리, <strong>5번의 재정의</strong> 끝에 운영 단계 도달.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="5" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9" data-decimals="0">0</span><span class="hero-stat-label">Total Heads</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">TP-tiered Sharpe</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">21s</span><span class="hero-stat-label">Predict Latency</span></div>
+    </div>
+    <div class="hero-links">
+      <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer" class="hero-link">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Source Code
+      </a>
+    </div>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<!-- Executive Summary -->
+<section id="summary" class="compact"><div class="container fade-in">
+  <div class="section-label">Executive Summary</div>
+  <h2 class="section-title">핵심 결과 — 한 눈에</h2>
+  <p class="section-desc">단일 점수 모델이 던진 모호함을 multi-head 조건부 분포로 재정의. 09:05 timer 가 첫 15분 펌프를 못 잡는 한계를 인정하고 08:55 전용 모델로 분리. backtest 가 좋다는 이유로 넘어가지 않고 <strong>6 종류 audit 으로 edge 가 통계적으로 살아있는지 검증</strong>.</p>
+  <div class="four-col" style="margin-bottom:1.4rem;">
+    <div class="metric-card"><span class="metric-val pos">9.56</span><div class="metric-label">TP-tiered Sharpe</div><div class="metric-sub">distribution_beta vs<br>random 2.37 (4× 격차)</div></div>
+    <div class="metric-card"><span class="metric-val amber">+9.61&times;</span><div class="metric-label">Pre-open Top1% Lift</div><div class="metric-sub">first15_5pct head<br>base 1.83% &rarr; 17.03%</div></div>
+    <div class="metric-card"><span class="metric-val blue">42.96%</span><div class="metric-label">first1h +3% Precision</div><div class="metric-sub">top0.5% bucket<br>(base 6.70%)</div></div>
+    <div class="metric-card"><span class="metric-val pos">21s</span><div class="metric-label">Predict Latency</div><div class="metric-sub">08:55 boundary safe<br>(was 4m 48s)</div></div>
+  </div>
+  <div class="four-col">
+    <div class="metric-card"><span class="metric-val purple">92.9%</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">5000 boot, sharpe diff<br>vs setup_momentum</div></div>
+    <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>운영은 fractional</div></div>
+    <div class="metric-card"><span class="metric-val neutral">2 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">08:55 + 09:05 KST<br>silence on BTC bear</div></div>
+    <div class="metric-card"><span class="metric-val neutral">4 timers</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">2 predict + 2 close<br>cron 미사용</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Project Journey -->
+<section id="journey"><div class="container fade-in">
+  <div class="section-label">Project Journey</div>
+  <h2 class="section-title">5 단계 — 무엇을 부수고 무엇을 남겼나</h2>
+  <p class="section-desc">첫 모델은 "다중 클래스 펌프 분포 예측"이었다. 운영하니 ledger 가 음수로 무너졌고, task 정의 자체가 잘못이라는 진단으로 다시 시작했다. 이후 detector, distribution, pre-open 까지 구조 재정의가 4번 더 일어났다.</p>
+
+  <div class="phase-flow">
+    <div class="phase-chip legacy">
+      <div class="pc-num">Phase 0</div>
+      <div class="pc-name">설계 8 MD</div>
+      <div class="pc-status">DONE · legacy</div>
+    </div>
+    <div class="phase-chip fail">
+      <div class="pc-num">Phase 1</div>
+      <div class="pc-name">6-class softprob</div>
+      <div class="pc-status">FAIL · ledger ⊖</div>
+    </div>
+    <div class="phase-chip pivot">
+      <div class="pc-num">Phase X</div>
+      <div class="pc-name">≥20% tail detector v1</div>
+      <div class="pc-status">PIVOT · single-score</div>
+    </div>
+    <div class="phase-chip live">
+      <div class="pc-num">Phase X+1a</div>
+      <div class="pc-name">Distribution beta</div>
+      <div class="pc-status">LIVE · 09:05</div>
+    </div>
+    <div class="phase-chip live">
+      <div class="pc-num">Phase X+1b</div>
+      <div class="pc-name">Pre-open trigger v1</div>
+      <div class="pc-status">LIVE · 08:55</div>
+    </div>
+  </div>
+
+  <div class="timeline" style="margin-top:2rem;">
+
+    <div class="timeline-item"><div class="timeline-dot done"></div>
+      <div class="t-meta"><span class="t-date">Phase 0 · 2026-04</span><span class="badge badge-ok">DONE</span></div>
+      <div class="t-title">8 개 MD 로 모든 결정 명문화</div>
+      <div class="t-find">
+        코드 짜기 전 <span class="c">CLAUDE.md / SIGNAL.md / LEDGER.md / OPS.md / ASSETS.md / PHASES.md / README.md / NOTES.md</span> 8 개 문서로 시그널 정의, 가상 ledger 룰, 운영 인프라, 외부 자산 매핑을 모두 합의. <strong>실패 비용을 줄이기 위해 코드보다 글이 먼저였다.</strong> 폴더는 self-contained — gan_t / xsec_alpha 의존 X.
+      </div>
+    </div>
+
+    <div class="timeline-item"><div class="timeline-dot fail"></div>
+      <div class="t-meta"><span class="t-date">Phase 1 · 6-class softprob</span><span class="badge badge-fail">FAILED</span></div>
+      <div class="t-title">"내일 일봉 분포 예측" — 운영 순간 ledger 가 음수로</div>
+      <div class="t-find">
+        가설: 다음날 일봉을 6 class (≤-5 / -5~-2 / -2~+2 / +2~+5 / +5~+10 / ≥+10%) 로 분류. 학습 좋아 보였지만 paper ledger 누적 net 음수.<br>
+        진단: 라벨 정의가 매매 행동과 분리됨. "5~10% class 가 60% 라고 알림이 와도 사용자가 무엇을 해야 할지 모름". <strong>task 정의 자체가 잘못이라고 결론.</strong>
+      </div>
+      <span class="badge badge-fail">ledger ⊖</span>
+      <span class="badge badge-fail">action ambiguous</span>
+    </div>
+
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">Phase X · detector_v1 sweep</span><span class="badge badge-pivot">PIVOT</span></div>
+      <div class="t-title">90 조합 sweep → C3 (bull_all p99.95 cap2)</div>
+      <div class="t-find">
+        재정의: ≥20% tail pump detector. rare event + silence-heavy. BTC bull regime 한정 + threshold 0.8815 (full panel OOF p99.95) 고정.<br>
+        Fold stability 검증 v1 (regime-internal threshold leak 발견) → v2 (train direct, overfit zero-trade) → v3 (train-OOF 통과). C1/C2 (bull_quiet 단독) sparse 하여 3/5 fold 침묵, fail. <strong>C3 채택</strong>: 3/4 active fold 양수, 2024 -0.89%. C8-C10 rank fallback 은 EV 음수 — silence-heavy 가 옳다는 증거.
+      </div>
+      <span class="badge badge-ok">artifact 0.8815</span>
+      <span class="badge badge-pivot">silence-heavy</span>
+      <span class="badge badge-blue">bull regime only</span>
+    </div>
+
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">Phase X+1a · Distribution Beta</span><span class="badge badge-pivot">REDESIGN</span></div>
+      <div class="t-title">단일 점수의 모호함 → multi-head 조건부 분포</div>
+      <div class="t-find">
+        문제 의식: detector_v1 의 "≥20% tail 후보" 한 줄로는 사용자가 "지금 진입? 종가 봐? 그냥 관찰?" 결정 못함.<br>
+        재설계: <span class="c">h2_hit_3_4h</span> (4h 안 +3%) + <span class="c">h6_hit_5_24h</span> (24h 안 +5%) + <span class="c">h5_tail_20</span> (+20% tail) 동시 표시. setup library S01-S04 매칭 (require ≥1 primary). bucket calibration 으로 raw probability 숨기고 historical hit % 만 표시.
+      </div>
+      <span class="badge badge-blue">3 binary heads</span>
+      <span class="badge badge-blue">setup matching</span>
+      <span class="badge badge-ok">decile calibrated</span>
+    </div>
+
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">09:05 timer audit</span><span class="badge badge-pivot">SPLIT</span></div>
+      <div class="t-title">"09:05 알림은 첫 15분 펌프를 못 잡는다"</div>
+      <div class="t-find">
+        Distribution alerts 가 부른 후보 중 <strong>+3% hit 의 33%, +5% hit 의 25%</strong> 가 09:00-09:15 첫 15m candle 안에 발생. 09:05 timer 가 fire 할 때 이미 가격이 +3~5% 가버린 상태. 즉발 진입을 원하면 별도 모델 필요.<br>
+        결정: 08:55 pre-open 전용 모델 분리. 09:05 distribution 은 데이터 위생상 유지하되 즉발 진입은 pre-open 이 담당하는 분업 구조.
+      </div>
+    </div>
+
+    <div class="timeline-item"><div class="timeline-dot ok"></div>
+      <div class="t-meta"><span class="t-date">Phase X+1b · Pre-open Trigger v1</span><span class="badge badge-ok">LIVE</span></div>
+      <div class="t-title">15m precursor only — train/live mismatch 0</div>
+      <div class="t-find">
+        가설 1차: daily 47 features + 15m precursor 19 features 멀티스케일. → audit 에서 "daily 의 train (full closed) vs live (08:55 partial 5min) mismatch" 발견.<br>
+        v1 lock: 15m precursor only 19 features. 6 binary heads (first15/30/1h × 3pct/5pct). first15_5pct top1% precision 17.03% (base 1.83%) <strong>= lift 9.29×</strong>. predict latency 4m 48s → 21s.
+      </div>
+      <span class="badge badge-ok">19 ft / 6 heads</span>
+      <span class="badge badge-blue">15m only</span>
+      <span class="badge badge-pivot">21s latency</span>
+    </div>
+
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Thesis -->
+<section id="thesis"><div class="container fade-in">
+  <div class="section-label">Thesis</div>
+  <h2 class="section-title">왜 다시 만들었는가</h2>
+  <p class="section-desc">두 번의 task 재정의 + 한 번의 timer 분리 = 총 세 번의 큰 pivot. 각 단계가 어떤 운영 incident 또는 audit 결과로 강제됐는지 비교.</p>
+
+  <div class="three-col" style="margin-bottom:2rem;">
+    <div class="card" style="border-top: 3px solid var(--red);">
+      <div class="card-title">Phase 1 — 6-class softprob</div>
+      <div class="card-text">
+        다음날 일봉 6 class 분포 예측. 학습은 깔끔하고 cross-entropy loss 도 떨어졌지만, 가상 ledger 가 운영하자 cumulative net <strong>음수</strong>. "5-10% class 60%" 라는 알림이 매매 결정으로 안 이어짐.
+      </div>
+      <span class="badge badge-fail">action 모호</span>
+      <span class="badge badge-fail">ledger ⊖</span>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--amber);">
+      <div class="card-title">Phase X — detector_v1 single-score</div>
+      <div class="card-text">
+        ≥20% tail pump 한 점만. silence-heavy + bull regime + cap 2. Backtest 는 통과, 운영해도 false alarm 적었지만 "이게 즉발인지 종가 유지인지" 한 줄로 알 수 없음. 사용자 timing 판단 불가.
+      </div>
+      <span class="badge badge-pivot">single-score</span>
+      <span class="badge badge-pivot">timing 모호</span>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--green);">
+      <div class="card-title">Phase X+1 — multi-head + dual signal</div>
+      <div class="card-text">
+        h2/h6/h5 분포 + setup tag + decile calibration. 09:05 가 못 잡는 첫 15분은 08:55 pre-open 이 담당. 두 알림 모두 진입가 표기. 사용자가 알림 두 줄로 "즉발 / TP3 / TP5 / tail" 판단.
+      </div>
+      <span class="badge badge-ok">multi-head</span>
+      <span class="badge badge-blue">dual signal</span>
+      <span class="badge badge-ok">price + decile</span>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Architecture -->
+<section id="architecture"><div class="container fade-in">
+  <div class="section-label">Architecture</div>
+  <h2 class="section-title">시스템 구조</h2>
+  <p class="section-desc">두 모델이 KST 09:00 boundary 를 사이에 두고 다른 입력 (15m precursor / daily) 위에서 다른 horizon 을 예측. systemd 4 timer 가 모든 일정 무인 운영.</p>
+
+  <div class="flow">
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit KRW d1 / 15m / 1h<br>Binance d1 (BTC reference)</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">Daily 47 features<br>15m precursor 19 features</div></div>
+    <div class="flow-step"><div class="flow-num">3</div><div class="flow-title">스코어링</div><div class="flow-desc">Pre-open 6 binary heads<br>Distribution 3 + setup S01-S04</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">알림</div><div class="flow-desc">08:55 pre-open + 진입가<br>09:05 distribution + 진입가</div></div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측</div><div class="flow-desc">paper ledger 2 종<br>09:30 / 10:05 close-out</div></div>
+  </div>
+
+  <div class="dual-wrap">
+    <div class="dual-card pre">
+      <div class="dual-header">
+        <div class="dual-icon pre-icon">P</div>
+        <div><div class="dual-name">Pre-open Trigger</div><div class="dual-sub">09:00 직후 첫 15분 펌프</div></div>
+      </div>
+      <div class="dual-row"><span class="dual-key">발사 시각</span><span class="dual-val a">KST 08:55</span></div>
+      <div class="dual-row"><span class="dual-key">입력</span><span class="dual-val a">15m precursor 19 ft</span></div>
+      <div class="dual-row"><span class="dual-key">Heads</span><span class="dual-val">6 (15/30/60m × 3/5%)</span></div>
+      <div class="dual-row"><span class="dual-key">Top1% lift (first15_5)</span><span class="dual-val a">9.29×</span></div>
+      <div class="dual-row"><span class="dual-key">Latency</span><span class="dual-val">21s (8:30 snapshot)</span></div>
+      <div class="dual-row"><span class="dual-key">Decision window</span><span class="dual-val">08:45 ~ 08:59</span></div>
+      <div class="dual-philosophy pre-phil">
+        <strong>철학: 직전 3시간 정보가 첫 15분을 가른다</strong><br>
+        08:30 까지의 closed 15m bar 만 입력. daily 의 partial-close mismatch 제거. 연구는 daily+1h+15m 멀티스케일이 강했지만 운영은 15m only 로 좁혀 train/live 일치 우선.
+      </div>
+    </div>
+    <div class="dual-vs"><span>+</span></div>
+    <div class="dual-card dist">
+      <div class="dual-header">
+        <div class="dual-icon dist-icon">D</div>
+        <div><div class="dual-name">Distribution Beta</div><div class="dual-sub">장중 setup + 다중 분포</div></div>
+      </div>
+      <div class="dual-row"><span class="dual-key">발사 시각</span><span class="dual-val b">KST 09:05</span></div>
+      <div class="dual-row"><span class="dual-key">입력</span><span class="dual-val b">Daily 47 ft + BTC regime</span></div>
+      <div class="dual-row"><span class="dual-key">Heads</span><span class="dual-val">h2 / h6 / h5 binary</span></div>
+      <div class="dual-row"><span class="dual-key">Setup library</span><span class="dual-val">S01-S04 (3 primary + ctx)</span></div>
+      <div class="dual-row"><span class="dual-key">Calibration</span><span class="dual-val b">bucket decile (10 / 10)</span></div>
+      <div class="dual-row"><span class="dual-key">Decision window</span><span class="dual-val">09:00 ~ 09:20</span></div>
+      <div class="dual-philosophy dist-phil">
+        <strong>철학: 단일 점수 X, 조건부 분포 O</strong><br>
+        h2 (4h 안 +3%) / h6 (24h 안 +5%) / h5 (+20% tail) 동시 표시. setup 매칭 (S01 high-vol momentum, S02 strong yesterday, S03 vol expansion) 으로 사용자가 판단 컨텍스트 직접 본다.
+      </div>
+    </div>
+  </div>
+
+  <div class="cadence-wrap">
+    <div class="cadence-title">하루 운영 타이밍 (KST)</div>
+    <div class="cadence-sub">systemd 4 timer. 텔레그램 2 (사용자 알림) + close-out 2 (자동 ledger 마감, 텔레그램 X).</div>
+    <div class="cadence-row">
+      <div class="cadence-label a">08:55</div>
+      <div class="cadence-bar">
+        <div class="cadence-slot inactive">~08:30</div>
+        <div class="cadence-slot fire-a">08:55 PRE</div>
+        <div class="cadence-slot inactive">09:00</div>
+        <div class="cadence-slot inactive">09:30</div>
+        <div class="cadence-slot inactive">10:05</div>
+      </div>
+    </div>
+    <div class="cadence-row">
+      <div class="cadence-label b">09:05</div>
+      <div class="cadence-bar">
+        <div class="cadence-slot inactive">~08:30</div>
+        <div class="cadence-slot inactive">08:55</div>
+        <div class="cadence-slot fire-b">09:05 DIST</div>
+        <div class="cadence-slot inactive">09:30</div>
+        <div class="cadence-slot inactive">10:05</div>
+      </div>
+    </div>
+    <div class="cadence-row">
+      <div class="cadence-label g">close</div>
+      <div class="cadence-bar">
+        <div class="cadence-slot inactive">~08:30</div>
+        <div class="cadence-slot inactive">08:55</div>
+        <div class="cadence-slot inactive">09:05</div>
+        <div class="cadence-slot fire-g">09:30 dist</div>
+        <div class="cadence-slot fire-g">10:05 pre</div>
+      </div>
+    </div>
+    <div class="cadence-legend">
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.35)"></div>Pre-open trigger (텔레그램)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>Distribution beta (텔레그램)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(22,163,74,0.3)"></div>Paper ledger close-out (자동)</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Distribution -->
+<section id="distribution"><div class="container fade-in">
+  <div class="section-label">Distribution Engine v1</div>
+  <h2 class="section-title">분포 알림 — 단일 점수 대신 조건부 확률</h2>
+  <p class="section-desc">Daily 47 features 위 multi-binary head. setup library 가 매칭된 후보만 발사. raw probability 숨기고 historical OOF 기반 bucket decile 만 표시.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Distribution heads — 다른 질문, 다른 답</div>
+    <div class="chart-subtitle">한 알림에 세 head 동시 표시 → 사용자가 timing 직접 판단 (h2 강 = 즉발, h5 만 강 = tail bonus 관찰).</div>
+    <table class="tbl">
+      <thead><tr><th>head</th><th>질문</th><th>T (target)</th><th>H (horizon)</th><th>positive rate</th></tr></thead>
+      <tbody>
+        <tr><td><strong>h2_hit_3_4h</strong></td><td>4시간 안에 +3% 한 번이라도 찍었나</td><td class="mono">+3%</td><td class="mono">4h</td><td class="mono">21.51%</td></tr>
+        <tr><td><strong>h6_hit_5_24h</strong></td><td>24시간 안에 +5% 한 번이라도 찍었나</td><td class="mono">+5%</td><td class="mono">24h</td><td class="mono">9.11%</td></tr>
+        <tr><td><strong>h5_tail_20</strong></td><td>오늘 일봉 high 가 +20% 넘었나 (rare tail)</td><td class="mono">+20%</td><td class="mono">24h</td><td class="mono">1.70%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Setup library v1 — 매칭 룰 (require ≥1 primary)</div>
+    <div class="chart-subtitle">주관적 threshold X. 과거 OOF lift 기반 정의. S04 는 primary 가 아니라 BTC bull context tag.</div>
+    <div class="tag-grid">
+      <div class="tag-card"><div class="tag-icon">📈</div><div class="tag-name">S01 — high-vol momentum</div><div class="tag-desc">vol_5d rank 상위 + log_return_1d 양수. 과거 h2 lift <strong>4.09×</strong>, h6 lift <strong>2.63×</strong>.</div></div>
+      <div class="tag-card"><div class="tag-icon">🚀</div><div class="tag-name">S02 — strong yesterday</div><div class="tag-desc">전일 종가 상승률 상위. 과거 h5 lift <strong>4.07×</strong> (depth=1).</div></div>
+      <div class="tag-card"><div class="tag-icon">💥</div><div class="tag-name">S03 — vol expansion 5d</div><div class="tag-desc">5일 변동성 급증 분기. 과거 h5 lift <strong>6.81×</strong> — tail 모델에서 가장 강한 setup.</div></div>
+      <div class="tag-card"><div class="tag-icon">🌅</div><div class="tag-name">S04 — BTC bull context</div><div class="tag-desc">BTC bull regime 만족 (context only). primary 가 아니라 보조 tag.</div></div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>왜 raw probability 는 숨기는가?</strong> XGBoost <code class="c">predict_proba</code> 는 calibration 안 된 raw score. h2 top bucket 평균 예측 <strong>90.8%</strong>, 실제 hit <strong>58.1%</strong> &mdash; 32.7pp 의 calibration error 가 실제로 측정됐다. "85%" 표기는 매매 판단을 망친다. 대신 BucketCalibrator 가 OOF 결과를 10 등분 deciles 로 나누고 알림에는 "decile 10/10, 58.1% hist hit, n=508" 만 표시.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Pre-open -->
+<section id="preopen"><div class="container fade-in">
+  <div class="section-label">Pre-open Trigger v1</div>
+  <h2 class="section-title">즉발 모델 — 09:05 가 못 잡는 첫 15분</h2>
+  <p class="section-desc">09:05 audit 결과: +3% hit 의 33%, +5% hit 의 25% 가 첫 15분 candle 안에 발생. 그래서 08:55 진입의 전용 모델로 분리. 입력은 15m precursor only 19 features.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Pre-open v1 lift — 6 heads × 3 buckets (KRW only, 1 fold)</div>
+    <div class="chart-subtitle">first15_5pct top1% precision <strong>17.03%</strong> (base 1.83%) = <strong>lift 9.29×</strong>. 모든 head 의 top1% 가 base 의 6× 이상.</div>
+    <table class="tbl">
+      <thead><tr><th>head</th><th>질문</th><th>base</th><th>lift@top0.5%</th><th>lift@top1%</th><th>lift@top2%</th><th>prec@top1%</th></tr></thead>
+      <tbody>
+        <tr><td><strong>first15_3pct</strong></td><td>09:00-09:15 안 +3%</td><td class="mono">3.76%</td><td class="mono pos">10.42×</td><td class="mono pos">8.00×</td><td class="mono">6.32×</td><td class="mono pos">30.07%</td></tr>
+        <tr><td class="hilite"><strong>first15_5pct</strong></td><td class="hilite">09:00-09:15 안 +5%</td><td class="mono hilite">1.83%</td><td class="mono pos hilite">9.88×</td><td class="mono pos hilite"><strong>9.29×</strong></td><td class="mono hilite">6.92×</td><td class="mono pos hilite"><strong>17.03%</strong></td></tr>
+        <tr><td><strong>first30_3pct</strong></td><td>09:00-09:30 안 +3%</td><td class="mono">5.10%</td><td class="mono pos">7.58×</td><td class="mono pos">6.91×</td><td class="mono">5.73×</td><td class="mono pos">35.27%</td></tr>
+        <tr><td><strong>first30_5pct</strong></td><td>09:00-09:30 안 +5%</td><td class="mono">2.53%</td><td class="mono pos">9.80×</td><td class="mono pos">8.04×</td><td class="mono">6.31×</td><td class="mono pos">20.36%</td></tr>
+        <tr><td><strong>first1h_3pct</strong></td><td>09:00-10:00 안 +3%</td><td class="mono">6.70%</td><td class="mono pos">6.42×</td><td class="mono pos">6.39×</td><td class="mono">5.42×</td><td class="mono pos">42.80%</td></tr>
+        <tr><td><strong>first1h_5pct</strong></td><td>09:00-10:00 안 +5%</td><td class="mono">3.42%</td><td class="mono pos">8.66×</td><td class="mono pos">7.01×</td><td class="mono">5.38×</td><td class="mono pos">23.99%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div class="chart-title">first15_5pct — base vs top buckets</div>
+      <div class="chart-subtitle">base 1.83% 막대 좌측 가는 선. top1% 가 9.29× = 17.03%.</div>
+      <div class="bar-chart">
+        <div class="bar-row"><div class="bar-label">base (random)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:8%"></div></div><div class="bar-val">1.83%</div></div>
+        <div class="bar-row"><div class="bar-label">top2%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:55%"></div></div><div class="bar-val">12.68%</div></div>
+        <div class="bar-row"><div class="bar-label">top1%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:75%"></div></div><div class="bar-val">17.03%</div></div>
+        <div class="bar-row"><div class="bar-label">top0.5%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:80%"></div></div><div class="bar-val">18.12%</div></div>
+      </div>
+    </div>
+    <div class="chart-wrap" style="margin-bottom:0;">
+      <div class="chart-title">first1h_3pct — base vs top buckets</div>
+      <div class="chart-subtitle">prec@top1% 가 42.80% — 알림 1건당 4-in-10 정확도.</div>
+      <div class="bar-chart">
+        <div class="bar-row"><div class="bar-label">base (random)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:15%"></div></div><div class="bar-val">6.70%</div></div>
+        <div class="bar-row"><div class="bar-label">top2%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:80%"></div></div><div class="bar-val">36.28%</div></div>
+        <div class="bar-row"><div class="bar-label">top1%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:95%"></div></div><div class="bar-val">42.80%</div></div>
+        <div class="bar-row"><div class="bar-label">top0.5%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:96%"></div></div><div class="bar-val">42.96%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:1.5rem;">
+    <div class="chart-title">19 features — 모두 15m precursor 위에서 계산</div>
+    <div class="chart-subtitle">08:30 closed bar 까지만 사용. daily mismatch 차단 = train (full closed) ↔ live (5min partial) 일치.</div>
+    <div class="three-col" style="gap:0.6rem; font-size:0.78rem;">
+      <div style="background:var(--bg-secondary); padding:0.7rem 1rem; border-radius:6px; line-height:1.85;"><strong>15m direct (4)</strong><br><span class="c">pre15m_ret</span> · <span class="c">pre15m_vol_ratio</span> · <span class="c">pre15m_range_pct</span> · <span class="c">pre15m_close_position</span></div>
+      <div style="background:var(--bg-secondary); padding:0.7rem 1rem; border-radius:6px; line-height:1.85;"><strong>30m / 1h / 3h roll (7)</strong><br><span class="c">pre30m_ret</span> · <span class="c">pre30m_vol_ratio</span> · <span class="c">pre1h_ret</span> · <span class="c">pre1h_vol_ratio</span> · <span class="c">pre3h_ret</span> · <span class="c">pre3h_vol_ratio</span> · <span class="c">pre3h_range_pct</span></div>
+      <div style="background:var(--bg-secondary); padding:0.7rem 1rem; border-radius:6px; line-height:1.85;"><strong>day cumulative (6)</strong><br><span class="c">cum_max_ret_to_0830</span> · <span class="c">cum_dd_to_0830</span> · <span class="c">close0830_vs_cum_high</span> · <span class="c">close0830_vs_day_open</span> · <span class="c">cum_volume_to_0830</span> · <span class="c">breakout_24h_high</span></div>
+      <div style="background:var(--bg-secondary); padding:0.7rem 1rem; border-radius:6px; line-height:1.85;"><strong>cross-section (2)</strong><br><span class="c">pre15m_btc_ret</span> · <span class="c">pre15m_breadth</span></div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>왜 daily features 를 버렸나?</strong> 초기 멀티스케일은 daily 47 + 15m 19 features 를 함께 썼다. 학습 데이터의 daily candle 은 fully closed 인 반면 live 08:55 시점에서는 5min partial. 이 train/live mismatch 가 raw score 를 부풀렸을 가능성을 audit 이 시사. 15m precursor only 로 좁혀 mismatch 0. daily context 는 09:05 distribution 이 책임지므로 분업 구조도 자연스러워졌다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Part divider -->
+<div class="part-divider">
+  <span class="part-label">Part II</span>
+  <h2>Experiments &amp; Audit Wall</h2>
+  <div class="part-ornament"></div>
+  <p>backtest 가 좋다는 이유로 운영하지 않았다. 6 종류 실험으로 edge 가 통계적으로 살아있는지, sizing 은 어디서 깨지는지, 어디서 calibration 이 무너지는지 — 모두 빨간불 하나라도 있으면 운영 폭을 좁혔다.</p>
+</div>
+
+<!-- Experiments -->
+<section id="experiments"><div class="container fade-in">
+
+  <!-- Experiment 1: Bootstrap CI -->
+  <div class="section-label" style="margin-bottom:0.5rem;">Experiment 01 · Bootstrap CI</div>
+  <h3 class="section-title" style="font-size:1.5rem;">edge 가 통계적으로 0 이 아닌가</h3>
+  <p class="section-desc">5,000 회 bootstrap. distribution_beta 와 setup_momentum baseline 의 TP-tiered Sharpe diff 분포. 점추정 +0.18, p2.5 -0.05, p97.5 +0.42, <strong>0 위 92.9%</strong> — 양수 우세지만 95% CI 하단이 살짝 음수 = marginal evidence.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Sharpe diff distribution (n=5,000 bootstrap)</div>
+    <div class="chart-subtitle">distribution_beta − setup_momentum, TP-tiered (TP3/TP5 mix). 0 위 92.9%, mean +0.181, median +0.179.</div>
+    <svg viewBox="0 0 880 280" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bootstrap distribution histogram">
+      <!-- gridlines -->
+      <line class="svg-grid" x1="60" y1="40" x2="60" y2="220"/>
+      <line class="svg-grid" x1="220" y1="40" x2="220" y2="220"/>
+      <line class="svg-grid" x1="380" y1="40" x2="380" y2="220"/>
+      <line class="svg-grid" x1="540" y1="40" x2="540" y2="220"/>
+      <line class="svg-grid" x1="700" y1="40" x2="700" y2="220"/>
+      <line class="svg-grid" x1="860" y1="40" x2="860" y2="220"/>
+      <!-- axis -->
+      <line class="svg-axis" x1="60" y1="220" x2="860" y2="220"/>
+      <!-- bars: bins from -0.3 to +0.6 -->
+      <!-- max count = 1551 → scale to 170 -->
+      <rect x="60" y="219.6" width="80" height="0.4" fill="rgba(220,38,38,0.45)"/>
+      <rect x="140" y="215.7" width="80" height="4.3" fill="rgba(220,38,38,0.45)"/>
+      <rect x="220" y="178" width="80" height="42" fill="rgba(220,38,38,0.45)"/>
+      <rect x="300" y="186.2" width="80" height="33.8" fill="rgba(220,38,38,0.55)"/>
+      <rect x="380" y="118.1" width="80" height="101.9" fill="rgba(22,163,74,0.45)"/>
+      <rect x="460" y="51.6" width="80" height="168.4" fill="rgba(22,163,74,0.6)"/>
+      <rect x="540" y="78.6" width="80" height="141.4" fill="rgba(22,163,74,0.6)"/>
+      <rect x="620" y="145.5" width="80" height="74.5" fill="rgba(22,163,74,0.5)"/>
+      <rect x="700" y="203.4" width="80" height="16.6" fill="rgba(22,163,74,0.45)"/>
+      <rect x="780" y="217.7" width="80" height="2.3" fill="rgba(22,163,74,0.45)"/>
+      <!-- zero line -->
+      <line x1="460" y1="40" x2="460" y2="225" stroke="#dc2626" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="465" y="50" fill="#dc2626" font-size="11" font-family="JetBrains Mono">H₀: diff=0</text>
+      <!-- mean line -->
+      <line x1="606" y1="40" x2="606" y2="225" stroke="#16a34a" stroke-width="2"/>
+      <text x="610" y="50" fill="#16a34a" font-size="11" font-family="JetBrains Mono" font-weight="700">mean +0.181</text>
+      <!-- 95% CI band -->
+      <line x1="421" y1="232" x2="793" y2="232" stroke="#7e3af2" stroke-width="3"/>
+      <circle cx="421" cy="232" r="3.5" fill="#7e3af2"/>
+      <circle cx="793" cy="232" r="3.5" fill="#7e3af2"/>
+      <text x="421" y="252" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="start">−0.05 (p2.5)</text>
+      <text x="793" y="252" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="end">+0.42 (p97.5)</text>
+      <!-- x-axis labels -->
+      <text x="60" y="235" class="svg-text" text-anchor="middle">−0.30</text>
+      <text x="220" y="235" class="svg-text" text-anchor="middle">−0.10</text>
+      <text x="380" y="235" class="svg-text" text-anchor="middle">+0.00</text>
+      <text x="540" y="235" class="svg-text" text-anchor="middle">+0.20</text>
+      <text x="700" y="235" class="svg-text" text-anchor="middle">+0.40</text>
+      <text x="860" y="235" class="svg-text" text-anchor="middle">+0.60</text>
+      <text x="450" y="275" class="svg-text axis-title" text-anchor="middle">Sharpe diff (boot)</text>
+      <!-- bin counts -->
+      <text x="100" y="219" class="svg-text" text-anchor="middle"></text>
+      <text x="180" y="213" class="svg-text" text-anchor="middle">4</text>
+      <text x="260" y="175" class="svg-text" text-anchor="middle">39</text>
+      <text x="340" y="183" class="svg-text" text-anchor="middle">312</text>
+      <text x="420" y="115" class="svg-text" text-anchor="middle" font-weight="700">930</text>
+      <text x="500" y="48" class="svg-text" text-anchor="middle" font-weight="700">1551</text>
+      <text x="580" y="75" class="svg-text" text-anchor="middle" font-weight="700">1303</text>
+      <text x="660" y="142" class="svg-text" text-anchor="middle">687</text>
+      <text x="740" y="200" class="svg-text" text-anchor="middle">153</text>
+      <text x="820" y="215" class="svg-text" text-anchor="middle">21</text>
+    </svg>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>해석:</strong> 점추정 (mean +0.181) 양수 + 92.9% boot 가 0 위. 그러나 95% CI 하단이 -0.05 로 0 을 살짝 걸침. 통계적으로는 "양수 가능성 높지만 reject H₀ 는 marginal". 운영 결정: <strong>full-size 채택 X, 1/4-1/8 fractional sizing 으로 보수적 운영.</strong></p>
+  </div>
+
+  <!-- Experiment 2: Baseline showdown -->
+  <div class="section-label" style="margin-top:4rem; margin-bottom:0.5rem;">Experiment 02 · Baseline Showdown</div>
+  <h3 class="section-title" style="font-size:1.5rem;">distribution_beta 가 단순 baseline 을 이기는가</h3>
+  <p class="section-desc">7 개 strategy × 754 거래일 시뮬레이션 (avg 6.74 alerts/day, cost 0.15% per side, TP-tiered exit). distribution_beta 가 모든 baseline 을 Sharpe 와 hit rate 에서 이김. random_top100 대비 Sharpe 4× 격차.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Annualized Sharpe — TP-tiered exit</div>
+    <div class="chart-subtitle">distribution_beta = h2/h6/h5 score 합산 ranking. setup_only = setup library 룰만. setup_momentum = setup + 1d momentum. random_top100 = noise floor.</div>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">distribution_beta</div><div class="bar-track"><div class="bar-fill tier-b" style="width:96%"></div></div><div class="bar-val">9.56</div></div>
+      <div class="bar-row"><div class="bar-label">setup_only</div><div class="bar-track"><div class="bar-fill tier-g" style="width:85%"></div></div><div class="bar-val">8.51</div></div>
+      <div class="bar-row"><div class="bar-label">setup_momentum</div><div class="bar-track"><div class="bar-fill tier-g" style="width:85%"></div></div><div class="bar-val">8.49</div></div>
+      <div class="bar-row"><div class="bar-label">momentum_1d</div><div class="bar-track"><div class="bar-fill tier-g" style="width:84%"></div></div><div class="bar-val">8.39</div></div>
+      <div class="bar-row"><div class="bar-label">vol_momentum</div><div class="bar-track"><div class="bar-fill tier-g" style="width:81%"></div></div><div class="bar-val">8.13</div></div>
+      <div class="bar-row"><div class="bar-label">atr_14</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:46%"></div></div><div class="bar-val">4.60</div></div>
+      <div class="bar-row"><div class="bar-label">random_top100</div><div class="bar-track"><div class="bar-fill tier-r" style="width:24%"></div></div><div class="bar-val">2.37</div></div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Hit rate (% of trades net positive after cost)</div>
+    <div class="chart-subtitle">distribution_beta 67.5% — momentum_1d 와 setup_only 보다 2.5pp 높음. random 54% (약간 양수 = TP-tiered 의 자연스러운 우상향 bias).</div>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">distribution_beta</div><div class="bar-track"><div class="bar-fill tier-b" style="width:67.5%"></div></div><div class="bar-val">67.5%</div></div>
+      <div class="bar-row"><div class="bar-label">setup_only</div><div class="bar-track"><div class="bar-fill tier-g" style="width:65%"></div></div><div class="bar-val">65.0%</div></div>
+      <div class="bar-row"><div class="bar-label">setup_momentum</div><div class="bar-track"><div class="bar-fill tier-g" style="width:65%"></div></div><div class="bar-val">65.0%</div></div>
+      <div class="bar-row"><div class="bar-label">momentum_1d</div><div class="bar-track"><div class="bar-fill tier-g" style="width:64.6%"></div></div><div class="bar-val">64.6%</div></div>
+      <div class="bar-row"><div class="bar-label">atr_14</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:57.2%"></div></div><div class="bar-val">57.2%</div></div>
+      <div class="bar-row"><div class="bar-label">random_top100</div><div class="bar-track"><div class="bar-fill tier-r" style="width:54%"></div></div><div class="bar-val">54.0%</div></div>
+    </div>
+  </div>
+
+  <!-- Experiment 3: Multi-scale ablation -->
+  <div class="section-label" style="margin-top:4rem; margin-bottom:0.5rem;">Experiment 03 · Multi-Scale Ablation</div>
+  <h3 class="section-title" style="font-size:1.5rem;">head 별로 best scale 이 다르다</h3>
+  <p class="section-desc">같은 common period 위에서 6 가지 feature set 비교 (top1% lift, 3 fold mean). h2 (즉발 +3%) 는 scale 무관 평준, h5 (+20% tail) 는 멀티스케일 강력 우위, h6 (24h +5%) 는 daily+1h 가 최적. <strong>v1 은 단순화 우선해서 daily-only 운영 — multi-scale swap 은 1주 live 후 결정.</strong></p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Top-1% lift heatmap — 3 heads × 6 feature sets</div>
+    <div class="chart-subtitle">색이 진할수록 lift 큼. 각 row 의 best 셀에 outline. h5 는 daily+1h+15m 가 5.57× = 단연 최강.</div>
+    <div class="heatmap h-3">
+      <div class="heatmap-cell col-name"></div>
+      <div class="heatmap-cell col-name">daily</div>
+      <div class="heatmap-cell col-name">daily+15m</div>
+      <div class="heatmap-cell col-name">daily+1h</div>
+      <div class="heatmap-cell col-name">daily+4h</div>
+      <div class="heatmap-cell col-name">daily+1h+15m</div>
+      <div class="heatmap-cell col-name">daily+all</div>
+
+      <div class="heatmap-cell head-name">h2_hit_3_4h</div>
+      <div class="heatmap-cell l3">3.56</div>
+      <div class="heatmap-cell l3">3.95</div>
+      <div class="heatmap-cell l5">3.99</div>
+      <div class="heatmap-cell l3">3.88</div>
+      <div class="heatmap-cell l3">3.95</div>
+      <div class="heatmap-cell l3">3.97</div>
+
+      <div class="heatmap-cell head-name">h5_tail_20</div>
+      <div class="heatmap-cell l3">4.00</div>
+      <div class="heatmap-cell l4">5.26</div>
+      <div class="heatmap-cell l4">4.92</div>
+      <div class="heatmap-cell l3">4.46</div>
+      <div class="heatmap-cell l5">5.57</div>
+      <div class="heatmap-cell l3">4.15</div>
+
+      <div class="heatmap-cell head-name">h6_hit_5_24h</div>
+      <div class="heatmap-cell l2">2.11</div>
+      <div class="heatmap-cell l2">2.04</div>
+      <div class="heatmap-cell l5">2.14</div>
+      <div class="heatmap-cell l1">1.98</div>
+      <div class="heatmap-cell l2">2.08</div>
+      <div class="heatmap-cell l2">2.10</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p><strong>왜 v1 은 daily-only 인가?</strong> h5 는 multi-scale 우위 명확하지만 운영 복잡도 증가 (15m DB incremental update + 1h DB freshness 가드 + feature alignment). 1주 live 결과로 distribution_beta 의 실 hit rate 검증 후 v2 multi-scale swap 결정. <strong>premature complexity 회피</strong> — 단순한 v1 으로 ground truth 먼저, 그 위에 v2 build.</p>
+  </div>
+
+  <!-- Experiment 4: Calibration breakdown -->
+  <div class="section-label" style="margin-top:4rem; margin-bottom:0.5rem;">Experiment 04 · Calibration Reliability</div>
+  <h3 class="section-title" style="font-size:1.5rem;">XGBoost predict_proba 는 거짓말이다</h3>
+  <p class="section-desc">3 head 모두 top bucket (decile 10/10) 에서 예측이 실제보다 크게 부풀려져 있다. h2 mean 90.8% / 실제 58.1% (32.7pp gap). h5 (rare tail) 는 60.3% / 11.6% (48.7pp). 알림에 raw probability 표기를 금지하고 historical hit % 만 보여주는 이유.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Top bucket — mean predicted vs actual hit %</div>
+    <div class="chart-subtitle">파란 막대 = XGBoost 가 부른 raw probability mean. 회색 막대 = 같은 bucket 의 실제 hit %. 빨간 숫자 = calibration error (pp).</div>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">h2 (predicted)</div><div class="bar-track"><div class="bar-fill tier-b" style="width:90%"></div></div><div class="bar-val">90.8%</div></div>
+      <div class="bar-row"><div class="bar-label">h2 (actual)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:58.1%"></div></div><div class="bar-val">58.1%</div></div>
+      <div class="bar-row"><div class="bar-label" style="color:var(--red);">→ error</div><div class="bar-track" style="background:rgba(220,38,38,0.04); border:1px dashed rgba(220,38,38,0.25);"></div><div class="bar-val" style="color:var(--red);">+32.7pp</div></div>
+      <div class="bar-row"><div class="bar-label">h6 (predicted)</div><div class="bar-track"><div class="bar-fill tier-b" style="width:88%"></div></div><div class="bar-val">88.2%</div></div>
+      <div class="bar-row"><div class="bar-label">h6 (actual)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:58.1%"></div></div><div class="bar-val">58.1%</div></div>
+      <div class="bar-row"><div class="bar-label" style="color:var(--red);">→ error</div><div class="bar-track" style="background:rgba(220,38,38,0.04); border:1px dashed rgba(220,38,38,0.25);"></div><div class="bar-val" style="color:var(--red);">+30.2pp</div></div>
+      <div class="bar-row"><div class="bar-label">h5 tail (predicted)</div><div class="bar-track"><div class="bar-fill tier-b" style="width:60%"></div></div><div class="bar-val">60.3%</div></div>
+      <div class="bar-row"><div class="bar-label">h5 tail (actual)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:11.6%"></div></div><div class="bar-val">11.6%</div></div>
+      <div class="bar-row"><div class="bar-label" style="color:var(--red);">→ error</div><div class="bar-track" style="background:rgba(220,38,38,0.04); border:1px dashed rgba(220,38,38,0.25);"></div><div class="bar-val" style="color:var(--red);">+48.7pp</div></div>
+    </div>
+  </div>
+
+  <div class="callout fail">
+    <p><strong>대응:</strong> BucketCalibrator 가 OOF score 를 10 등분 deciles 로 partition. 알림에는 "decile 10/10, 58.1% hist hit, n=508" 만 표시. raw 표기는 사용자 명시 요청 시에만. <strong>운영 메시지에서 "hist hit" 이라고 명확히 말하는 것 = 거짓말 안 하기 인프라.</strong></p>
+  </div>
+
+  <!-- Experiment 5: MDD by sizing -->
+  <div class="section-label" style="margin-top:4rem; margin-bottom:0.5rem;">Experiment 05 · MDD by Sizing</div>
+  <h3 class="section-title" style="font-size:1.5rem;">full-size 는 못 운영한다 — fractional 만 안전</h3>
+  <p class="section-desc">distribution_beta TP5 path-aware. full-size MDD -55%, 1/4 sizing -16.5%, 1/8 sizing -8.5%. 운영 가이드는 <strong>1/4 ~ 1/8 사이</strong>. 이는 backtest 의 평균 수익을 그대로 받지 않겠다는 명시적 선택.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Maximum Drawdown — sizing ladder</div>
+    <div class="chart-subtitle">막대 길이 = MDD 절대값. 작을수록 안전. full-size 는 사용자 자본 절반 이상 잠시 까질 수 있는 수준.</div>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">full-size (1.0)</div><div class="bar-track"><div class="bar-fill tier-r" style="width:96%"></div></div><div class="bar-val" style="color:var(--red);">-55.0%</div></div>
+      <div class="bar-row"><div class="bar-label">half (0.5)</div><div class="bar-track"><div class="bar-fill tier-r" style="width:55%"></div></div><div class="bar-val" style="color:var(--red);">-31.5%</div></div>
+      <div class="bar-row"><div class="bar-label">quarter (0.25)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:29%"></div></div><div class="bar-val" style="color:var(--amber);">-16.5%</div></div>
+      <div class="bar-row"><div class="bar-label">eighth (0.125)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:15%"></div></div><div class="bar-val">-8.5%</div></div>
+      <div class="bar-row"><div class="bar-label">sixteenth (0.0625)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:8%"></div></div><div class="bar-val">-4.3%</div></div>
+    </div>
+  </div>
+
+  <!-- Experiment 6: 09:05 timer audit -->
+  <div class="section-label" style="margin-top:4rem; margin-bottom:0.5rem;">Experiment 06 · 09:05 Timer Audit</div>
+  <h3 class="section-title" style="font-size:1.5rem;">알림 후보의 첫 15분 비중 — 09:05 가 못 잡는 영역</h3>
+  <p class="section-desc">distribution alerts 가 부른 후보 중 +3% / +5% hit 이 언제 일어났는지 분해. 첫 15m candle 안 비중이 33% / 25% — 09:05 timer 가 fire 할 때 이미 가격이 가버린 상태. 이 결과가 pre-open trigger 분리의 직접적 근거.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Hit timing breakdown (distribution alerts)</div>
+    <div class="chart-subtitle">first15 = 09:00-09:15, first30 = 09:00-09:30, first1h = 09:00-10:00, intra-day = 10:00 이후. base universe 의 first15 비중은 9-12% — 알림 후보가 3-4× 더 즉발성이 높다.</div>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">+3% hit</div>
+        <div class="bar-track" style="display:flex; gap:0; padding:0;">
+          <div class="bar-fill tier-r" style="width:33%; border-radius:4px 0 0 4px;"><span style="font-size:0.7rem; color:#fff; font-weight:600;">first15 33%</span></div>
+          <div class="bar-fill tier-a" style="width:18%; border-radius:0;"><span style="font-size:0.7rem; color:#fff; font-weight:600;">+15m 18%</span></div>
+          <div class="bar-fill tier-b" style="width:24%; border-radius:0;"><span style="font-size:0.7rem; color:#fff; font-weight:600;">+30m 24%</span></div>
+          <div class="bar-fill tier-mid" style="width:25%; border-radius:0 4px 4px 0;"><span style="font-size:0.7rem; color:var(--text-primary);">intra 25%</span></div>
+        </div><div class="bar-val">100%</div></div>
+      <div class="bar-row"><div class="bar-label">+5% hit</div>
+        <div class="bar-track" style="display:flex; gap:0; padding:0;">
+          <div class="bar-fill tier-r" style="width:25%; border-radius:4px 0 0 4px;"><span style="font-size:0.7rem; color:#fff; font-weight:600;">first15 25%</span></div>
+          <div class="bar-fill tier-a" style="width:18%; border-radius:0;"><span style="font-size:0.7rem; color:#fff; font-weight:600;">+15m 18%</span></div>
+          <div class="bar-fill tier-b" style="width:22%; border-radius:0;"><span style="font-size:0.7rem; color:#fff; font-weight:600;">+30m 22%</span></div>
+          <div class="bar-fill tier-mid" style="width:35%; border-radius:0 4px 4px 0;"><span style="font-size:0.7rem; color:var(--text-primary);">intra 35%</span></div>
+        </div><div class="bar-val">100%</div></div>
+      <div class="bar-row"><div class="bar-label">base universe</div>
+        <div class="bar-track" style="display:flex; gap:0; padding:0;">
+          <div class="bar-fill tier-mid" style="width:10%; border-radius:4px 0 0 4px;"><span style="font-size:0.65rem;">10%</span></div>
+          <div class="bar-fill" style="width:90%; background:var(--bg-secondary); border-radius:0 4px 4px 0;"></div>
+        </div><div class="bar-val">≈ 9-12%</div></div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>결정:</strong> 09:05 timer 유지 (데이터 위생, h2/h6/h5 분포 학습 안정). 즉발 진입은 별도 08:55 pre-open 모델로 분리. 09:05 알림은 "TP3/TP5 + 24h tail 판단" 용도로 명시 framing. <strong>한 timer 가 두 일을 다 하려고 욕심 부리지 않기.</strong></p>
+  </div>
+
+  <!-- Experiment Summary Verdict Table -->
+  <div class="chart-wrap" style="margin-top:3rem;">
+    <div class="chart-title">실험 6 종 — 통합 verdict</div>
+    <div class="chart-subtitle">하나라도 빨간불이면 운영 폭 축소. 노란불은 sizing/framing 으로 우회. 초록불만 full 진행.</div>
+    <table class="tbl">
+      <thead><tr><th>#</th><th>실험</th><th>verdict</th><th>운영 반영</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td>Bootstrap CI (5000 boot)</td><td><span class="badge badge-pivot">CAUTION</span></td><td class="mono">fractional 1/4-1/8 sizing</td></tr>
+        <tr><td>02</td><td>Baseline showdown</td><td><span class="badge badge-ok">PASS</span></td><td class="mono">distribution_beta 채택</td></tr>
+        <tr><td>03</td><td>Multi-scale ablation</td><td><span class="badge badge-pivot">DEFER</span></td><td class="mono">v1 은 daily-only, v2 swap 보류</td></tr>
+        <tr><td>04</td><td>Calibration reliability</td><td><span class="badge badge-fail">BROKEN</span></td><td class="mono">raw 숨김, decile/hist hit 만</td></tr>
+        <tr><td>05</td><td>MDD by sizing</td><td><span class="badge badge-pivot">CAUTION</span></td><td class="mono">full-size X, fractional only</td></tr>
+        <tr><td>06</td><td>09:05 timer audit</td><td><span class="badge badge-pivot">SPLIT</span></td><td class="mono">pre-open 모델 분리</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Failures Wall -->
+<section id="failures"><div class="container fade-in">
+  <div class="section-label">Failures Wall</div>
+  <h2 class="section-title">버린 것들 — 시도하고 버린 가설/팩터/룰</h2>
+  <p class="section-desc">한 줄로 통과한 결과 뒤에 여러 줄의 시도-실패가 있었다. 사후엔 자명해 보여도 시도하기 전엔 모두 합리적 후보였다.</p>
+
+  <div class="fail-grid">
+    <div class="fail-card">
+      <div class="f-tag">Phase 1</div>
+      <div class="f-title">6-class softprob (next-day return distribution)</div>
+      <div class="f-desc">cross-entropy loss 잘 떨어졌고 confusion matrix 도 깔끔. 운영하니 ledger net 음수. "5-10% class 60%" 가 매매 결정으로 안 이어짐.</div>
+      <div class="f-takeaway">label 정의는 학습 metric 이 아니라 사용자 행동 가능성 기준</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">Phase 1</div>
+      <div class="f-title">Train ⊃ Test (fold split 누수)</div>
+      <div class="f-desc">초기 fold split 에서 시간순 정렬 안 되어 train 에 future bar 가 섞임. holdout IC 가 비현실적으로 좋았다 (의심하기 전까지).</div>
+      <div class="f-takeaway">temporal hold-out 은 fold 첫째 줄에서 검증할 것</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">detector v1</div>
+      <div class="f-title">Live quantile threshold 재계산</div>
+      <div class="f-desc">초기 detector 가 매일 라이브 데이터로 p99.95 quantile 재계산. 분포가 매일 약간씩 다름 → 알림 빈도 불안정. 운영 코드에서 절대 X 룰로 고정.</div>
+      <div class="f-takeaway">threshold 는 OOF 결과로 한 번 계산하고 동결</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">detector v1</div>
+      <div class="f-title">C8-C10 rank fallback</div>
+      <div class="f-desc">"threshold 통과 후보 0건이면 score rank top-1 알림" 룰. EV 음수. silence 가 옳다는 강한 증거.</div>
+      <div class="f-takeaway">silence 는 기능, 침묵 안 하려고 룰을 늘리지 말 것</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">distribution</div>
+      <div class="f-title">Auto-SL (4h SL-first / 15m path)</div>
+      <div class="f-desc">두 simulator 모두 net 음수. 사용자 매매 패턴에 자동 SL 룰이 안 맞음. 알림에 SL price 표시도 안 함. 사용자 수동 판단으로 둠.</div>
+      <div class="f-takeaway">자동 SL 룰은 신호와 별개로 검증해야</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">distribution</div>
+      <div class="f-title">h3/h4 (종가 유지 head)</div>
+      <div class="f-desc">"종가가 +3/+5% 유지" head 시도. daily features 한계로 학습 어려움. h2/h5/h6 만 운영 채택, 종가 유지는 미검증 상태로 caveat 처리.</div>
+      <div class="f-takeaway">target 정의가 features 와 매칭 안 되면 head 강제 안 함</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">pre-open v1</div>
+      <div class="f-title">Daily features 포함 시도</div>
+      <div class="f-desc">초기 multi-scale 모델은 daily 47 + 15m 19 ft 같이 썼다. live 08:55 시점 daily 가 5min partial → train/live mismatch. raw score 부풀려짐.</div>
+      <div class="f-takeaway">live snapshot 시점이 train data 의 closure 와 다르면 feature 제외</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">pre-open v1</div>
+      <div class="f-title">Predict latency 4m 48s</div>
+      <div class="f-desc">초기 코드가 매 실행마다 15m DB 전체 history reload. 08:55 발사면 알림이 09:00 이후 도착 = trigger 후 = 의미 없음. 최근 3일 window load 로 21s 단축.</div>
+      <div class="f-takeaway">latency 는 운영 spec, 모델 정확도 0.001 보다 30× 단축이 더 가치</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">pre-open v1</div>
+      <div class="f-title">Telegram message "85%" 표기</div>
+      <div class="f-desc">초기 알림은 raw probability 를 "85%" 로 표시. calibration error 30+pp 인 상태에서 사용자 매매 판단을 망칠 수 있음. "raw 85" 로 변경 + 1주 live 후 calibrator.</div>
+      <div class="f-takeaway">calibration 안 된 score 는 % 기호 금지</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">close-out</div>
+      <div class="f-title">09:30 close-out (premature)</div>
+      <div class="f-desc">처음 pre-open close-out 을 distribution 과 같은 09:30 로 둠. first1h 가 4 bars 중 2 bars 만 closed. partial 결과로 status=closed 가 됨. 10:05 로 늦추고 4 bars 모두 닫혔을 때만 closed 처리.</div>
+      <div class="f-takeaway">close-out 시각은 데이터 가용성 기준</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">ops</div>
+      <div class="f-title">cron 사용 (early experiment)</div>
+      <div class="f-desc">초기에 cron 등록 시도 → systemd persistent / late catch-up / dependency 관리 어려움. xsec_alpha 패턴 차용해 systemd timer 로 전환. install 1 줄.</div>
+      <div class="f-takeaway">cron 은 가볍지만 timer 가 운영 단계에서 더 견고</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">ops</div>
+      <div class="f-title">Manual rerun ledger 오염</div>
+      <div class="f-desc">디버깅 중 manual rerun 으로 stale data + 잘못된 시각 ledger entry 가 들어간 incident 실제 발생. decision-window guard + <code class="c">--allow-late-*</code> escape hatch 추가.</div>
+      <div class="f-takeaway">manual override 는 명시 플래그로만 가능하게</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Operational Reality -->
+<section id="ops"><div class="container fade-in">
+  <div class="section-label">Operational Reality</div>
+  <h2 class="section-title">실제로 매일 받는 두 통의 메시지</h2>
+  <p class="section-desc">두 알림 모두 진입가 ≈ 일봉 close 표시. paper ledger entry_price_proxy 와 매칭하여 close-out 시 실제 첫 15m bar 와 비교 = slippage / signal-quality 자동 추적 인프라.</p>
+
+  <div class="two-col" style="gap:1.2rem;">
+    <div>
+      <div class="chart-title" style="margin-bottom:0.4rem;">⚡ Pre-open Trigger (KST 08:55)</div>
+      <div class="chart-subtitle" style="margin-bottom:0.6rem;">15m precursor 위 6 heads. raw score 표기 (1주 live 후 calibration).</div>
+      <div class="tg-mockup">
+        <div class="tg-sender">prelude bot</div>
+        <div class="tg-header">
+          ⚡ pre-open trigger 2026-05-06 (KST 08:55)<br>
+          BTC: 🔴 약세 안정 | universe: top100
+        </div>
+        <div class="tg-section-title">━━━ 09:00 직후 펌프 후보 5건 ━━━</div>
+        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">CPOOL</span>  진입가 ≈ <span class="tg-price">42.80원</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 85  +5 raw: 72</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 80</span></div>
+        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">AXL</span>  진입가 ≈ <span class="tg-price">122.0원</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 90  +5 raw: 46</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 93</span></div>
+        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">BIO</span>  진입가 ≈ <span class="tg-price">81.50원</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 95  +5 raw: 46</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 92</span></div>
+        <div class="tg-legend">
+          • 09:00 직후 진입, 5% 오르면 즉시 매도<br>
+          • 자동 손절 X — 직접 판단<br>
+          • raw score 는 실제 확률 아님 — 1주 live 후 calibration 예정
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="chart-title" style="margin-bottom:0.4rem;">🌅 Distribution Beta (KST 09:05)</div>
+      <div class="chart-subtitle" style="margin-bottom:0.6rem;">Daily 47 features 위 3 binary heads + setup library + bucket calibration.</div>
+      <div class="tg-mockup">
+        <div class="tg-sender">prelude bot</div>
+        <div class="tg-header">
+          🌅 prelude distribution beta 2026-05-06 (KST 09:05)<br>
+          BTC: bear_quiet | universe: top100 (100)
+        </div>
+        <div class="tg-section-title">━━━ 상승 setup 후보 (5건) ━━━</div>
+        <div class="tg-row"><span class="tg-tier">🔍</span> <span class="tg-coin">CPOOL</span> 진입가 ≈ <span class="tg-price">45.80원</span> Setup: S01+S02+S03</div>
+        <div class="tg-row"><span class="tg-detail tg-key">판단 즉발 +3% / 24h +5% / +20% tail | 우선: TP3/TP5, tail bonus</span></div>
+        <div class="tg-row"><span class="tg-detail">+3% in 4h : 58.1% hist hit (decile 10/10, n=508)</span></div>
+        <div class="tg-row"><span class="tg-detail">+5% in 24h : 55.1% hist hit (decile 9/10, n=508)</span></div>
+        <div class="tg-row"><span class="tg-detail">+20% tail : 11.6% hist hit (decile 10/10, rare)</span></div>
+        <div class="tg-row"><span class="tg-detail">근거 전일 +18.41% / ATR14 11.76% / vol5 0.98 / return5 0.99</span></div>
+        <div class="tg-row"><span class="tg-tier">🔍</span> <span class="tg-coin">BIO</span> 진입가 ≈ <span class="tg-price">89.90원</span> Setup: S01+S02</div>
+        <div class="tg-row"><span class="tg-detail tg-key">판단 즉발 +3% / 24h +5% / +20% tail | 우선: TP3/TP5, tail bonus</span></div>
+        <div class="tg-row"><span class="tg-detail">+3% in 4h : 58.1% hist hit (decile 10/10, n=508)</span></div>
+        <div class="tg-row"><span class="tg-detail">+5% in 24h : 58.1% hist hit (decile 10/10, n=508)</span></div>
+        <div class="tg-legend">
+          ※ 매수 추천 아님 / 표시 = OOF backfill 기반 historical hit (raw probability X)<br>
+          ⚠️ 실거래는 사용자 본인 판단. 가상 paper ledger 만 자동 누적
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:2rem;">
+    <div class="chart-title">Before / After — 운영 단계의 실제 변경 5종</div>
+    <div class="chart-subtitle">모두 incident 또는 audit 결과로 추가됨. 모델 재학습 X — 운영 코드 변경만으로 ledger 무결성과 latency 가 바뀜.</div>
+    <table class="tbl">
+      <thead><tr><th>운영 spec</th><th>Before</th><th>After</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td>Predict latency</td><td class="neg">4m 48s</td><td class="pos">21s</td><td class="mono">15m DB recent 3-day window</td></tr>
+        <tr><td>Late manual run</td><td class="neg">ledger 오염 가능</td><td class="pos">08:45-08:59 외 skip</td><td class="mono">decision-window guard</td></tr>
+        <tr><td>Score 표기</td><td class="neg">"85%" (raw)</td><td class="pos">raw 85 + decile 10/10</td><td class="mono">calib error 30+pp</td></tr>
+        <tr><td>알림 진입가</td><td class="neg">미표시</td><td class="pos">≈ 일봉 close</td><td class="mono">close-out slippage 추적</td></tr>
+        <tr><td>Pre-open close-out</td><td class="neg">09:30 (partial 위험)</td><td class="pos">10:05 (full 1h)</td><td class="mono">first1h 4 bars 모두 closed</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Automation -->
+<section id="automation"><div class="container fade-in">
+  <div class="section-label">Automation</div>
+  <h2 class="section-title">systemd 4 timer — 무인 운영</h2>
+  <p class="section-desc">cron 대신 systemd timer (xsec_alpha 패턴 차용). install <code class="c">sudo bash deploy/install_systemd.sh</code> 한 줄. 모든 unit 은 <code class="c">deploy/</code> 에서 버전 관리.</p>
+
+  <div style="margin: 2rem 0;">
+    <div class="auto-timer amber-acc">
+      <div class="auto-name">prelude-preopen.timer<span class="mono-small">scripts/daily_run_preopen.sh</span></div>
+      <div class="auto-role">15m DB incremental update + health_check + pre-open trigger predict + 텔레그램 1번. decision-window 08:45-08:59 가드.</div>
+      <div class="auto-when"><strong>매일</strong>08:55 KST</div>
+    </div>
+    <div class="auto-timer blue-acc">
+      <div class="auto-name">prelude-distribution.timer<span class="mono-small">scripts/daily_run_distribution.sh</span></div>
+      <div class="auto-role">d1 update + setup detection + h2/h6/h5 score + bucket calibration lookup + 텔레그램 2번. decision-window 09:00-09:20 가드.</div>
+      <div class="auto-when"><strong>매일</strong>09:05 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-close.timer<span class="mono-small">scripts/close_paper_ledger.py</span></div>
+      <div class="auto-role">distribution paper ledger close-out — 4h SL-first + 15m path-aware 두 모드 결과 자동 채움. 텔레그램 X.</div>
+      <div class="auto-when"><strong>매일</strong>09:30 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-preopen-close.timer<span class="mono-small">scripts/daily_close_preopen.sh</span></div>
+      <div class="auto-role">15m DB update wrapper + pre-open ledger close-out. first1h 4 bars 모두 closed 일 때만 status=closed, 부족하면 pending 으로 retry.</div>
+      <div class="auto-when"><strong>매일</strong>10:05 KST</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Decision-window guard — 늦은 manual run 차단</div>
+    <div class="chart-subtitle">systemd <code class="c">Persistent=false</code> 와 별개로 script 안에서도 시간 가드. 두 로직이 함께 ledger 오염 방지.</div>
+    <div class="pipe-wrap">
+      <div class="pipe-stage gate">
+        <div class="pipe-num">1</div>
+        <div class="pipe-body"><div class="pipe-title">Pre-open: <code class="c">is_preopen_window()</code></div><div class="pipe-desc">asof.hour == 8 and 45 ≤ minute ≤ 59. 외부면 ledger append + telegram skip (<code class="c">--allow-late-run</code> 으로 manual override).</div></div>
+      </div>
+      <div class="pipe-stage gate">
+        <div class="pipe-num">2</div>
+        <div class="pipe-body"><div class="pipe-title">Distribution: <code class="c">is_decision_window()</code></div><div class="pipe-desc">09:00-09:20 KST. <code class="c">--allow-late-ledger</code> 가 명시 backfill 용 escape hatch.</div></div>
+      </div>
+      <div class="pipe-stage deploy">
+        <div class="pipe-num">3</div>
+        <div class="pipe-body"><div class="pipe-title">Close-out: 데이터 가용성 가드</div><div class="pipe-desc">pre-open close 는 first1h = 4 bars 모두 closed 일 때만 status=closed. 부족하면 pending 으로 두고 다음 실행에서 retry.</div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Lessons -->
+<section id="lessons"><div class="container fade-in">
+  <div class="section-label">Lessons</div>
+  <h2 class="section-title">10 가지 교훈 — 다음 프로젝트로 가져갈 것</h2>
+  <p class="section-desc">전부 incident 또는 audit 결과. backtest 만 잘 나오면 운영 단계에서 비싼 수업료를 낸다.</p>
+
+  <div style="margin-top:2rem;">
+    <div class="lesson-item">
+      <div class="lesson-num">01</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Label 정의는 학습 metric 이 아니라 <em>사용자 행동 가능성</em> 기준</div>
+        <div class="lesson-desc">6-class softprob 은 cross-entropy 잘 떨어졌지만 "5-10% class 60%" 가 매매 결정으로 안 이어짐. h2/h5/h6 처럼 "4h 안 +3% 이상" 같은 actionable label 로 재정의 후 ledger 가 양수로.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">02</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Train ↔ Live mismatch 는 backtest 에서 안 보인다</div>
+        <div class="lesson-desc">Pre-open daily features 는 학습 데이터에서 fully closed 였지만 live 08:55 에서 5min partial. 양쪽 다 closed 인 backtest 는 mismatch 안 잡음. 15m precursor only 로 좁힘.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">03</div>
+      <div class="lesson-body">
+        <div class="lesson-title">단일 점수 → 조건부 분포로 가면 사용자 판단이 가능해진다</div>
+        <div class="lesson-desc">"≥20% tail 후보" 한 줄은 timing 모호. h2/h6/h5 + setup 분해하니 알림이 결정 트리 — h2 강 = 즉발, h5 만 강 = tail bonus 관찰.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">04</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Calibration 안 된 raw probability 는 거짓말 표시</div>
+        <div class="lesson-desc">XGBoost <code class="c">predict_proba</code> 0.85 ≠ "85% 확률". h2 top bucket calib error 32.7pp 측정됨. BucketCalibrator 로 historical hit % 만 표시.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">05</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Bootstrap CI 가 0 을 걸치면 fractional sizing</div>
+        <div class="lesson-desc">TP5 path-aware Sharpe diff = +0.18, 95% CI [-0.05, +0.42]. 점추정 양수지만 통계적으로 marginal. full-size X, 1/4-1/8 sizing 으로 보수.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">06</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Latency 는 운영 spec, backtest spec 아니다</div>
+        <div class="lesson-desc">초기 4m 48s. 08:55 발사면 알림이 09:00 이후 도착 = trigger 후 = 의미 없음. recent-window load 로 21s 단축. 정확도 0.001 보다 latency 30× 단축이 더 큰 P&amp;L 기여.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">07</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Decision-window guard 가 ledger 를 살린다</div>
+        <div class="lesson-desc">Manual rerun, systemd catch-up, debugging 시 stale data 로 ledger 가 오염된 incident 가 실제로 있었음. <code class="c">is_preopen_window() / is_decision_window()</code> + <code class="c">--allow-late-*</code> escape hatch 만 명시 manual 인정.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">08</div>
+      <div class="lesson-body">
+        <div class="lesson-title">진입가 표기는 사소한 UX 가 아니라 close-out 정합성 도구</div>
+        <div class="lesson-desc">알림에 진입가 ≈ 일봉 close 표시. paper ledger 의 entry_price_proxy 와 매칭 → close-out 시 실제 첫 15m bar 와 비교해서 slippage / signal-quality 자동 추적. 한 줄 추가가 디버깅 인프라.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">09</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Silence 는 기능, 침묵 안 하려고 룰을 늘리지 말 것</div>
+        <div class="lesson-desc">detector_v1 의 C8-C10 rank fallback ("threshold 통과 0건이면 top-1 알림") 모두 EV 음수. silence-heavy 가 옳음. cap 2 / day, BTC bear silence 운영 기본값.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">10</div>
+      <div class="lesson-body">
+        <div class="lesson-title">Premature complexity 회피 — v1 은 단순, v2 는 데이터로 결정</div>
+        <div class="lesson-desc">Multi-scale ablation 에서 h5 가 daily+1h+15m 우위였지만 v1 은 daily-only 채택. 1주 live 결과로 ground truth 잡고 v2 swap 결정. 검증 안 된 복잡성을 운영에 넣지 않음.</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Status -->
+<section id="status"><div class="container fade-in">
+  <div class="section-label">Current Status · 2026-05-05</div>
+  <h2 class="section-title">지금 어디까지 왔나</h2>
+  <p class="section-desc">Stage 2 (텔레그램 ON) 진입. 1주 live paper ledger 누적 후 calibration / threshold / top-k 조정 + multi-scale v2 swap 결정.</p>
+
+  <div class="two-col" style="margin-bottom:2rem;">
+    <div class="layer-card" style="border-top-color: var(--amber);">
+      <div class="layer-num">Live · Stage 2</div>
+      <div class="layer-title">Pre-open Trigger v1</div>
+      <div class="card-text">
+        <strong>Heads:</strong> 6 binary (first15/30/1h × 3pct/5pct)<br>
+        <strong>피처:</strong> 19 (15m precursor only, 08:30 snapshot)<br>
+        <strong>Top1% lift:</strong> first15_3 8.00× / first15_5 9.29× / first1h_3 6.39×<br>
+        <strong>발사:</strong> 08:55 KST · 진입가 표시<br>
+        <strong>가드:</strong> 08:45-08:59 decision-window
+      </div>
+    </div>
+    <div class="layer-card" style="border-top-color: var(--blue);">
+      <div class="layer-num">Live · Stage 2</div>
+      <div class="layer-title">Distribution Beta v1</div>
+      <div class="card-text">
+        <strong>Heads:</strong> 3 binary (h2 / h6 / h5)<br>
+        <strong>피처:</strong> 47 (Daily + BTC regime z-scores)<br>
+        <strong>Setup:</strong> S01-S03 primary + S04 BTC bull context<br>
+        <strong>발사:</strong> 09:05 KST · 진입가 + decile 표시<br>
+        <strong>Calibration:</strong> bucket decile 10 등분
+      </div>
+    </div>
+  </div>
+
+  <div class="four-col" style="margin-bottom:2rem;">
+    <div class="metric-card"><span class="metric-val pos">4 timers</span><div class="metric-label">systemd 운영</div><div class="metric-sub">2 predict + 2 close<br>cron 미사용</div></div>
+    <div class="metric-card"><span class="metric-val neutral">2 ledgers</span><div class="metric-label">분리 paper ledger</div><div class="metric-sub">preopen / distribution<br>schema 호환</div></div>
+    <div class="metric-card"><span class="metric-val amber">1 week</span><div class="metric-label">Live 누적 목표</div><div class="metric-sub">calibrator 생성<br>v2 swap 결정</div></div>
+    <div class="metric-card"><span class="metric-val neutral">silent</span><div class="metric-label">BTC bear 운영</div><div class="metric-sub">알림 fire X<br>cap 2 / day</div></div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>다음 단계:</strong>
+      1주 live 텔레그램 + paper ledger 누적 후 (1) BucketCalibrator pre-open 용 생성 — raw score 를 historical hit % 로 변환, (2) multi-scale v2 swap 검토 — common-period ablation 에서 head 별 best scale 다른 점 활용, (3) top-k / threshold 조정 — 실데이터 hit-rate 기반.
+    </p>
+    <p style="margin-top:0.7rem;">
+      <strong>운영 원칙 유지:</strong>
+      매수 추천 X · 자동매매 X · 텔레그램 알림 + paper ledger 만 · BTC bear silence · raw probability 표기 금지 · 모든 코드 self-contained (gan_t / xsec_alpha import X).
+    </p>
+  </div>
+</div></section>
+
+<footer>
+  <p class="footer-text">
+    prelude &middot; Pre-Open Pump Radar · Upbit KRW &middot; 2026<br>
+    개인 트레이딩용. 투자 조언이 아님. &middot; <a href="https://github.com/soccz/prelude">GitHub</a>
+  </p>
+</footer>
+
+<script>
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+function animateCountup(el) {
+  const target = parseFloat(el.dataset.target);
+  const decimals = parseInt(el.dataset.decimals || '0');
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  const duration = 1800;
+  const start = performance.now();
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = target * eased;
+    el.textContent = prefix + current.toFixed(decimals) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const heroObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.animated) {
+      e.target.dataset.animated = '1';
+      animateCountup(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.countup').forEach(el => heroObserver.observe(el));
+</script>
+</body>
+</html>
