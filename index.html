@@ -908,7 +908,7 @@ const CATEGORIES = {
     desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper']
+    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper','papers']
   },
   project: {
     label: 'Project',
@@ -998,8 +998,18 @@ const DESCS = {
   'Daily-report': '일일 리포트 & 회고 기록',
   'young-and-home': '청년 안심 주거 코디네이터 \u2014 서강대 AI 해커톤 5개 에이전트 시스템',
   'python-why': 'PyWhy \u2014 컴퓨터가 어떻게 생각하는가. 4레벨 15주 본 강의 + 30주 알고리즘 심화 커리큘럼',
-  'bigdata-analyst-notes': '빅데이터 분석기사 필기 완벽 가이드 \u2014 4과목 14,000줄 Deep Dive. 전공 제로에서 합격까지'
+  'bigdata-analyst-notes': '빅데이터 분석기사 필기 완벽 가이드 \u2014 4과목 14,000줄 Deep Dive. 전공 제로에서 합격까지',
+  'papers': 'Paper Deconstructions \u2014 \ub9e4\uc8fc \uc6d4/\uc218/\uae08 \ud55c \ud3b8\uc529, Source Lock \ud1b5\uacfc \ub17c\ubb38\uc744 11\uac1c \uc139\uc158\uc73c\ub85c \ud574\uccb4. KaTeX \uc218\uc2dd + \uc778\ud130\ub799\ud2f0\ube0c viz (grokking \uacf1\uc120 / attention motif / phase transition)'
 };
+
+// Synthetic entry for the (private) papers repo \u2014 surfaced as a research project card
+const STATIC_PROJECTS = [{
+  name: 'papers',
+  description: DESCS['papers'],
+  language: 'Markdown',
+  pushed_at: new Date().toISOString(),
+  __static: true
+}];
 
 let allRepos = [];
 let currentCat = null;
@@ -1148,7 +1158,8 @@ function renderPosts(catKey) {
       'worldquant-alpha': '/projects/worldquant-alpha/',
       'xsec_alpha': '/projects/xsec-alpha/',
       'prelude': '/projects/prelude/',
-      'python-why': 'https://soccz.github.io/python-why/'
+      'python-why': 'https://soccz.github.io/python-why/',
+      'papers': '/projects/papers/'
     };
     const page = PROJECT_PAGES[r.name];
     const url = page || `https://github.com/soccz/${r.name}`;
@@ -1231,6 +1242,13 @@ async function init() {
     allRepos = await res.json();
   } catch (e) {
     allRepos = [];
+  }
+  // Merge static (non-public) projects so private repos with site pages still surface.
+  if (typeof STATIC_PROJECTS !== 'undefined') {
+    const existing = new Set(allRepos.map(r => r.name));
+    for (const sp of STATIC_PROJECTS) {
+      if (!existing.has(sp.name)) allRepos.unshift(sp);
+    }
   }
   renderCatGrid();
   if (!allRepos.length) {

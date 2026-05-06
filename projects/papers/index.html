@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <title>Paper Deconstructions — soccz</title>
+  <meta name="description" content="매주 월/수/금 1편씩 — Source Lock 통과한 논문을 섹션 단위로 해체한다.">
+  <meta property="og:title" content="Paper Deconstructions — soccz">
+  <meta property="og:description" content="매주 월/수/금 1편씩 — Source Lock 통과한 논문을 섹션 단위로 해체한다.">
+  <meta property="og:image" content="https://soccz.github.io/assets/og-image.svg">
+  <meta property="og:url" content="https://soccz.github.io/projects/papers/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-light.min.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #faf7f2;
+      --bg-warm: #f5f0e8;
+      --bg-dot: rgba(196,114,78,0.06);
+      --surface: #ffffff;
+      --surface-warm: #fefcf9;
+      --border: #e5ddd3;
+      --border-light: #eee7de;
+      --border-hover: #d4c8b8;
+      --text: #1a1410;
+      --text-secondary: #5c4f42;
+      --text-muted: #96887a;
+      --text-light: #b5a898;
+      --accent: #c4724e;
+      --accent-light: #fdf0ea;
+      --accent-hover: #b06240;
+      --tag-bg: #f0e8de;
+      --tag-text: #6d5e4e;
+      --research: #5a7a96;
+      --research-light: #edf3f8;
+      --research-bg: #f5f8fb;
+      --bucket-core: #c4724e;
+      --bucket-near: #5a7a96;
+      --bucket-far: #7a6a9a;
+      --bucket-misc: #8a7a6a;
+      --code-bg: #1c1917;
+      --code-text: #e7e5e4;
+      --header-h: 64px;
+      --max-w: 1200px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 2px rgba(26,20,16,0.05);
+      --shadow-md: 0 4px 16px rgba(26,20,16,0.07);
+      --shadow-lg: 0 8px 32px rgba(26,20,16,0.09);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Header (matches main site) ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,247,242,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      height: var(--header-h);
+    }
+    .header-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+    .logo .dot { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; align-items: center; }
+    .nav-links a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      transition: all 0.18s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--accent-light); }
+    .gh-link { color: var(--text-muted); }
+    .gh-link svg { width: 18px; height: 18px; display: block; }
+
+    /* ── Hero / TOC view ── */
+    .toc-view {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 60px 32px 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 16px 64px;
+    }
+    .hero-label {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 6px 14px;
+      background: var(--accent-light);
+      border-radius: 100px;
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 620px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-stats {
+      display: inline-flex;
+      gap: 28px;
+      padding: 18px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-md);
+    }
+    .hero-stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      display: block;
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 6px;
+      display: block;
+    }
+    .hero-stat-divider { width: 1px; background: var(--border); }
+
+    /* ── Filter chips ── */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+    .chip {
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.16s;
+    }
+    .chip:hover { border-color: var(--border-hover); color: var(--text); }
+    .chip.active {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+    .chip-count {
+      font-size: 10px;
+      opacity: 0.65;
+      margin-left: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Paper grid ── */
+    .papers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+    }
+    .paper-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 26px 26px 24px;
+      cursor: pointer;
+      transition: all 0.22s;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .paper-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .paper-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .bucket-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      color: #fff;
+    }
+    .bucket-badge.core { background: var(--bucket-core); }
+    .bucket-badge.near { background: var(--bucket-near); }
+    .bucket-badge.far { background: var(--bucket-far); }
+    .bucket-badge.misc { background: var(--bucket-misc); }
+    .paper-date {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+    .paper-title {
+      font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    .paper-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .paper-meta-line { margin-bottom: 2px; }
+    .paper-meta-line .label { color: var(--text-light); }
+    .paper-verdict {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding: 12px 14px;
+      background: var(--bg-warm);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      font-style: italic;
+    }
+    .paper-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 100px;
+    }
+
+    /* ── Reader view ── */
+    .reader-view { display: none; min-height: calc(100vh - var(--header-h)); }
+    .reader-view.active { display: grid; grid-template-columns: 280px minmax(0, 1fr); }
+
+    .reader-sidebar {
+      background: var(--surface-warm);
+      border-right: 1px solid var(--border);
+      padding: 28px 18px 60px;
+      position: sticky;
+      top: var(--header-h);
+      height: calc(100vh - var(--header-h));
+      overflow-y: auto;
+    }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 6px;
+      transition: all 0.15s;
+      margin-bottom: 18px;
+      width: fit-content;
+    }
+    .back-btn:hover { background: var(--accent-light); color: var(--accent); }
+    .back-btn svg { width: 14px; height: 14px; }
+
+    .sidebar-paper-title {
+      font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 4px;
+      padding: 0 8px;
+    }
+    .sidebar-paper-meta {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 18px;
+      padding: 0 8px;
+      line-height: 1.5;
+    }
+    .sidebar-section-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .sidebar-section {
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      transition: all 0.12s;
+      border-left: 2px solid transparent;
+    }
+    .sidebar-section:hover { background: var(--surface); color: var(--text); }
+    .sidebar-section.active {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 600;
+      border-left-color: var(--accent);
+    }
+    .sidebar-section .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-light);
+      flex-shrink: 0;
+      min-width: 24px;
+      letter-spacing: 0;
+    }
+    .sidebar-section.active .num { color: var(--accent); }
+
+    .reader-main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 48px 96px;
+      width: 100%;
+    }
+    .reader-meta-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 18px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .reader-meta-bar .sep { color: var(--text-light); }
+    .reader-meta-bar code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: var(--bg-warm);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    /* ── Markdown content ── */
+    .md-content {
+      font-family: 'Inter', 'Noto Sans KR', sans-serif;
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .md-content h1 {
+      font-family: 'Noto Serif KR', 'Space Grotesk', serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.6px;
+      line-height: 1.25;
+      margin: 0 0 28px;
+      color: var(--text);
+    }
+    .md-content h2 {
+      font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
+      margin: 48px 0 18px;
+      padding-top: 8px;
+      color: var(--text);
+    }
+    .md-content h3 {
+      font-family: 'Space Grotesk', 'Noto Sans KR', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      margin: 32px 0 12px;
+      color: var(--text);
+    }
+    .md-content h4 { font-size: 15px; font-weight: 700; margin: 24px 0 8px; color: var(--text-secondary); }
+    .md-content p { margin: 0 0 18px; }
+    .md-content strong { font-weight: 600; color: var(--text); }
+    .md-content em { color: var(--text-secondary); }
+    .md-content ul, .md-content ol { margin: 0 0 18px; padding-left: 24px; }
+    .md-content li { margin-bottom: 6px; }
+    .md-content li::marker { color: var(--accent); }
+    .md-content blockquote {
+      margin: 22px 0;
+      padding: 16px 22px;
+      background: var(--bg-warm);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .md-content blockquote p:last-child { margin-bottom: 0; }
+    .md-content a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-color: rgba(196,114,78,0.4);
+      text-underline-offset: 3px;
+    }
+    .md-content a:hover { text-decoration-color: var(--accent); }
+    .md-content code:not(pre code) {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88em;
+      background: var(--bg-warm);
+      padding: 2px 7px;
+      border-radius: 4px;
+      color: var(--accent-hover);
+    }
+    .md-content pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 18px 22px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin: 22px 0;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .md-content pre code {
+      font-family: 'JetBrains Mono', monospace;
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+    .md-content table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 22px 0;
+      font-size: 14px;
+    }
+    .md-content th, .md-content td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .md-content th {
+      background: var(--bg-warm);
+      font-weight: 600;
+      color: var(--text);
+    }
+    .md-content tr:nth-child(even) td { background: var(--surface-warm); }
+    .md-content hr {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 36px 0;
+    }
+    .md-content .katex-display {
+      margin: 22px 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    /* ── Viz embed ── */
+    .viz-block {
+      margin: 28px 0;
+      padding: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .viz-block-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .viz-block-label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .viz-block canvas {
+      width: 100%;
+      height: 280px;
+      display: block;
+    }
+
+    /* ── Reader nav ── */
+    .reader-nav {
+      display: flex;
+      gap: 12px;
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border-light);
+    }
+    .reader-nav-btn {
+      flex: 1;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: left;
+    }
+    .reader-nav-btn:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+    .reader-nav-btn.next { text-align: right; }
+    .reader-nav-btn.disabled { opacity: 0.4; pointer-events: none; }
+    .reader-nav-direction {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .reader-nav-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── Loading / empty ── */
+    .loading {
+      text-align: center;
+      padding: 80px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .loading::after {
+      content: '';
+      display: inline-block;
+      animation: dots 1.4s steps(4, end) infinite;
+    }
+    @keyframes dots {
+      0% { content: ''; } 25% { content: '·'; } 50% { content: '··'; } 75% { content: '···'; }
+    }
+
+    /* ── Mobile ── */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 200;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(26,20,16,0.22);
+      align-items: center;
+      justify-content: center;
+    }
+    .mobile-toggle svg { width: 18px; height: 18px; }
+
+    @media (max-width: 900px) {
+      .reader-view.active { grid-template-columns: 1fr; }
+      .reader-sidebar {
+        position: fixed;
+        left: -300px;
+        top: var(--header-h);
+        z-index: 150;
+        transition: left 0.28s cubic-bezier(0.25,0.46,0.45,0.94);
+        box-shadow: 8px 0 32px rgba(26,20,16,0.1);
+        width: 282px;
+      }
+      .reader-sidebar.open { left: 0; }
+      .mobile-toggle { display: flex; }
+      .reader-main { padding: 32px 24px 96px; }
+      .hero h1 { font-size: 38px; letter-spacing: -1.2px; }
+      .toc-view { padding: 28px 20px 60px; }
+      .papers-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .header-inner { padding: 0 18px; }
+      .hero { padding: 28px 8px 36px; }
+      .hero h1 { font-size: 32px; }
+      .hero-stats { gap: 18px; padding: 14px 20px; }
+      .hero-stat-num { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">soccz<span class="dot">.</span></a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/#blog" onclick="parent.postMessage('','')">Blog</a>
+      <a href="https://github.com/soccz" target="_blank" rel="noopener" class="gh-link" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<div class="toc-view" id="tocView">
+  <section class="hero">
+    <span class="hero-label">Paper Deconstructions</span>
+    <h1>논문 해체<span class="accent">.</span></h1>
+    <p class="hero-sub">
+      매주 월/수/금, Source Lock을 통과한 논문 한 편을 섹션 단위로 분해한다.<br>
+      무배경 독자도 따라올 수 있게, 전공자가 새 통찰을 얻을 수 있게.
+    </p>
+    <div class="hero-stats" id="heroStats">
+      <div>
+        <span class="hero-stat-num" id="statCount">·</span>
+        <span class="hero-stat-label">Papers</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div>
+        <span class="hero-stat-num" id="statCore">·</span>
+        <span class="hero-stat-label">Core</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div>
+        <span class="hero-stat-num" id="statNear">·</span>
+        <span class="hero-stat-label">Near</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div>
+        <span class="hero-stat-num" id="statFar">·</span>
+        <span class="hero-stat-label">Far</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="filter-bar" id="filterBar"></div>
+  <div class="papers-grid" id="papersGrid">
+    <div class="loading">불러오는 중</div>
+  </div>
+</div>
+
+<div class="reader-view" id="readerView">
+  <aside class="reader-sidebar" id="readerSidebar">
+    <div class="back-btn" onclick="goToTOC()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+      목록으로
+    </div>
+    <div class="sidebar-paper-title" id="sbTitle"></div>
+    <div class="sidebar-paper-meta" id="sbMeta"></div>
+    <ul class="sidebar-section-list" id="sbList"></ul>
+  </aside>
+  <main class="reader-main">
+    <div class="reader-meta-bar" id="readerMeta"></div>
+    <div class="md-content" id="readerContent">
+      <div class="loading">불러오는 중</div>
+    </div>
+    <div class="reader-nav" id="readerNav"></div>
+  </main>
+</div>
+
+<button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()" aria-label="메뉴">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 6h16M4 12h16M4 18h16"/>
+  </svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/bash.min.js"></script>
+<script src="viz/registry.js"></script>
+<script>
+const BUCKET_CLASS = { '코어': 'core', '인접': 'near', '원거리': 'far', '기타': 'misc' };
+const BUCKET_LABEL = { '코어': 'CORE', '인접': 'NEAR', '원거리': 'FAR', '기타': 'MISC' };
+
+let MANIFEST = null;
+let currentPaper = null;
+let currentSectionIdx = 0;
+let currentFilter = 'all';
+
+/* ─────────  Markdown rendering  ───────── */
+function setupMarked() {
+  const renderer = new marked.Renderer();
+  renderer.code = function (code, lang) {
+    if (lang && lang.startsWith('viz:')) {
+      const spec = lang.slice(4);
+      const [type, ...paramParts] = spec.split(':');
+      const params = {};
+      paramParts.join(':').split(',').forEach(kv => {
+        const [k, v] = kv.split('=');
+        if (k) params[k.trim()] = (v || '').trim();
+      });
+      const id = 'viz_' + Math.random().toString(36).slice(2, 9);
+      return `<div class="viz-block">
+        <div class="viz-block-label">interactive · ${type}</div>
+        <canvas id="${id}" data-viz-type="${type}" data-viz-params='${JSON.stringify(params).replace(/'/g, '&#39;')}'></canvas>
+      </div>`;
+    }
+    let highlighted = code;
+    try {
+      if (lang && hljs.getLanguage(lang)) {
+        highlighted = hljs.highlight(code, { language: lang }).value;
+      } else {
+        highlighted = hljs.highlightAuto(code).value;
+      }
+    } catch (e) { highlighted = escapeHtml(code); }
+    return `<pre><code class="hljs ${lang || ''}">${highlighted}</code></pre>`;
+  };
+  marked.setOptions({ renderer, breaks: false, gfm: true });
+}
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* Pre-process: protect $...$/$$...$$ from marked, restore as KaTeX placeholders */
+function renderMarkdown(md) {
+  const blocks = [];
+  let pre = md.replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) => {
+    blocks.push({ display: true, expr });
+    return `\n\n@@MATH${blocks.length - 1}@@\n\n`;
+  });
+  pre = pre.replace(/(?<!\\)\$([^\$\n]+?)(?<!\\)\$/g, (_, expr) => {
+    blocks.push({ display: false, expr });
+    return `@@MATH${blocks.length - 1}@@`;
+  });
+  let html = marked.parse(pre);
+  html = html.replace(/@@MATH(\d+)@@/g, (_, idx) => {
+    const b = blocks[parseInt(idx, 10)];
+    try {
+      return katex.renderToString(b.expr, { displayMode: b.display, throwOnError: false });
+    } catch (e) {
+      return `<span style="color:#c45858">[math error: ${escapeHtml(b.expr)}]</span>`;
+    }
+  });
+  return html;
+}
+
+function activateViz(container) {
+  container.querySelectorAll('canvas[data-viz-type]').forEach(canvas => {
+    const type = canvas.dataset.vizType;
+    const params = JSON.parse(canvas.dataset.vizParams || '{}');
+    const fn = window.VIZ_REGISTRY && window.VIZ_REGISTRY[type];
+    if (typeof fn === 'function') {
+      try { fn(canvas, params); }
+      catch (e) {
+        console.error('viz error', type, e);
+        canvas.parentElement.querySelector('.viz-block-label').textContent =
+          `viz error: ${type}`;
+      }
+    } else {
+      canvas.parentElement.querySelector('.viz-block-label').textContent =
+        `unknown viz type: ${type}`;
+    }
+  });
+}
+
+/* ─────────  TOC view  ───────── */
+function renderHeroStats() {
+  document.getElementById('statCount').textContent = MANIFEST.papers.length;
+  const c = { 코어: 0, 인접: 0, 원거리: 0, 기타: 0 };
+  MANIFEST.papers.forEach(p => { c[p.bucket] = (c[p.bucket] || 0) + 1; });
+  document.getElementById('statCore').textContent = c['코어'] || 0;
+  document.getElementById('statNear').textContent = c['인접'] || 0;
+  document.getElementById('statFar').textContent = c['원거리'] || 0;
+}
+
+function renderFilterBar() {
+  const bar = document.getElementById('filterBar');
+  const buckets = ['all', '코어', '인접', '원거리', '기타'];
+  const counts = { all: MANIFEST.papers.length };
+  MANIFEST.papers.forEach(p => { counts[p.bucket] = (counts[p.bucket] || 0) + 1; });
+  bar.innerHTML = buckets
+    .filter(b => b === 'all' || counts[b])
+    .map(b => {
+      const label = b === 'all' ? 'All' : BUCKET_LABEL[b];
+      const cls = currentFilter === b ? 'chip active' : 'chip';
+      return `<span class="${cls}" onclick="setFilter('${b}')">${label}<span class="chip-count">${counts[b] || 0}</span></span>`;
+    })
+    .join('');
+}
+
+function setFilter(b) {
+  currentFilter = b;
+  renderFilterBar();
+  renderPapersGrid();
+}
+
+function renderPapersGrid() {
+  const grid = document.getElementById('papersGrid');
+  const list = MANIFEST.papers.filter(p =>
+    currentFilter === 'all' ? true : p.bucket === currentFilter
+  );
+  if (!list.length) {
+    grid.innerHTML = '<div class="loading" style="grid-column:1/-1">해당 필터에 논문이 없습니다.</div>';
+    return;
+  }
+  grid.innerHTML = list.map(p => {
+    const bucketCls = BUCKET_CLASS[p.bucket] || 'misc';
+    const bucketLbl = BUCKET_LABEL[p.bucket] || p.bucket;
+    const tags = (p.tags || []).slice(0, 4).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
+    return `<div class="paper-card" onclick="openPaper('${p.slug}')">
+      <div class="paper-card-top">
+        <span class="bucket-badge ${bucketCls}">${bucketLbl}</span>
+        <span class="paper-date">${p.date} · ${p.weekday}</span>
+      </div>
+      <div class="paper-title">${escapeHtml(p.title || p.slug)}</div>
+      <div class="paper-meta">
+        ${p.authors ? `<div class="paper-meta-line"><span class="label">저자</span> ${escapeHtml(p.authors)}</div>` : ''}
+        ${p.venue ? `<div class="paper-meta-line"><span class="label">발표</span> ${escapeHtml(p.venue)}${p.identifier ? ` · ${escapeHtml(p.identifier)}` : ''}</div>` : ''}
+      </div>
+      ${p.verdict ? `<div class="paper-verdict">${escapeHtml(p.verdict)}</div>` : ''}
+      ${tags ? `<div class="paper-tags">${tags}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+/* ─────────  Reader view  ───────── */
+function findPaper(slug) {
+  return MANIFEST.papers.find(p => p.slug === slug);
+}
+
+async function openPaper(slug, sectionFile) {
+  const paper = findPaper(slug);
+  if (!paper) return;
+  currentPaper = paper;
+
+  if (sectionFile) {
+    const idx = paper.sections.findIndex(s => s.file === sectionFile);
+    currentSectionIdx = idx >= 0 ? idx : 0;
+  } else {
+    currentSectionIdx = 0;
+  }
+
+  document.getElementById('tocView').style.display = 'none';
+  document.getElementById('readerView').classList.add('active');
+  window.scrollTo({ top: 0 });
+
+  document.getElementById('sbTitle').textContent = paper.title || paper.slug;
+  document.getElementById('sbMeta').innerHTML =
+    `${paper.date} · ${paper.weekday} · ${paper.bucket}<br>${escapeHtml(paper.identifier || '')}`;
+
+  renderSidebarSections();
+  await loadSection();
+  setHash();
+}
+
+function renderSidebarSections() {
+  const list = document.getElementById('sbList');
+  list.innerHTML = currentPaper.sections.map((s, i) => {
+    const cls = i === currentSectionIdx ? 'sidebar-section active' : 'sidebar-section';
+    const numDisplay = s.num === '99' ? '※' : (s.num + (s.suffix || ''));
+    return `<li class="${cls}" onclick="jumpToSection(${i})">
+      <span class="num">${numDisplay}</span>
+      <span>${escapeHtml(s.title)}</span>
+    </li>`;
+  }).join('');
+}
+
+async function loadSection() {
+  const section = currentPaper.sections[currentSectionIdx];
+  const url = `${currentPaper.data_path}/${section.file}`;
+  const meta = document.getElementById('readerMeta');
+  meta.innerHTML = `
+    <span class="bucket-badge ${BUCKET_CLASS[currentPaper.bucket] || 'misc'}">${BUCKET_LABEL[currentPaper.bucket] || currentPaper.bucket}</span>
+    <span>${currentPaper.date}</span>
+    <span class="sep">·</span>
+    <span>${escapeHtml(section.title)}</span>
+    ${currentPaper.identifier ? `<span class="sep">·</span><code>${escapeHtml(currentPaper.identifier)}</code>` : ''}
+  `;
+
+  const content = document.getElementById('readerContent');
+  content.innerHTML = '<div class="loading">불러오는 중</div>';
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('fetch failed');
+    const md = await res.text();
+    content.innerHTML = renderMarkdown(md);
+    activateViz(content);
+    if (window.renderMathInElement) {
+      renderMathInElement(content, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+        ],
+        throwOnError: false,
+      });
+    }
+  } catch (e) {
+    content.innerHTML = `<div class="loading">불러오기 실패: ${escapeHtml(url)}</div>`;
+  }
+
+  renderReaderNav();
+  renderSidebarSections();
+}
+
+function renderReaderNav() {
+  const nav = document.getElementById('readerNav');
+  const prev = currentPaper.sections[currentSectionIdx - 1];
+  const next = currentPaper.sections[currentSectionIdx + 1];
+  nav.innerHTML = `
+    <div class="reader-nav-btn ${prev ? '' : 'disabled'}" onclick="${prev ? `jumpToSection(${currentSectionIdx - 1})` : ''}">
+      <div class="reader-nav-direction">← 이전</div>
+      <div class="reader-nav-title">${prev ? escapeHtml(prev.title) : '시작'}</div>
+    </div>
+    <div class="reader-nav-btn next ${next ? '' : 'disabled'}" onclick="${next ? `jumpToSection(${currentSectionIdx + 1})` : ''}">
+      <div class="reader-nav-direction">다음 →</div>
+      <div class="reader-nav-title">${next ? escapeHtml(next.title) : '끝'}</div>
+    </div>
+  `;
+}
+
+function jumpToSection(i) {
+  currentSectionIdx = i;
+  loadSection();
+  setHash();
+  if (window.innerWidth <= 900) {
+    document.getElementById('readerSidebar').classList.remove('open');
+  }
+  document.querySelector('.reader-main').scrollTo?.({ top: 0 });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goToTOC() {
+  document.getElementById('readerView').classList.remove('active');
+  document.getElementById('tocView').style.display = 'block';
+  currentPaper = null;
+  history.replaceState({}, '', location.pathname);
+}
+
+function toggleSidebar() {
+  document.getElementById('readerSidebar').classList.toggle('open');
+}
+
+function setHash() {
+  if (currentPaper) {
+    const sec = currentPaper.sections[currentSectionIdx];
+    history.replaceState({}, '',
+      `?paper=${encodeURIComponent(currentPaper.slug)}&section=${encodeURIComponent(sec.file)}`);
+  }
+}
+
+function readHash() {
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('paper');
+  const section = params.get('section');
+  if (slug) openPaper(slug, section);
+}
+
+/* ─────────  Init  ───────── */
+async function init() {
+  setupMarked();
+  hljs.registerLanguage('python', hljs.getLanguage('python') || (() => ({})));
+  try {
+    const res = await fetch('manifest.json?_=' + Date.now());
+    MANIFEST = await res.json();
+  } catch (e) {
+    document.getElementById('papersGrid').innerHTML =
+      '<div class="loading" style="grid-column:1/-1">manifest.json 로드 실패. 사이트 빌드를 확인하세요.</div>';
+    return;
+  }
+  renderHeroStats();
+  renderFilterBar();
+  renderPapersGrid();
+  readHash();
+}
+window.addEventListener('popstate', readHash);
+init();
+</script>
+
+</body>
+</html>

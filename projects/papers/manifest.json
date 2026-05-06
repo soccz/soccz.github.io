@@ -1,0 +1,454 @@
+{
+  "generated_at": "2026-05-06T17:55:46",
+  "count": 4,
+  "papers": [
+    {
+      "slug": "2026-04-24_grokked-transformers-implicit-reasoners",
+      "date": "2026-04-24",
+      "weekday": "금",
+      "bucket": "원거리",
+      "title": "Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization",
+      "title_ko": "그로킹된 트랜스포머는 암묵적 추론자다: 일반화 경계로의 메커니즘 여행",
+      "authors": "Boshi Wang, Xiang Yue, Yu Su, Huan Sun",
+      "venue": "NeurIPS 2024 (Proceedings)",
+      "identifier": "2405.15071 (v2)",
+      "code": "github.com/OSU-NLP-Group/GrokkedTransformer (공개, PyTorch)",
+      "data": "합성 데이터셋 (SharePoint 배포 또는 Jupyter 노트북 생성)",
+      "tags": [
+        "algorithmic-grok",
+        "mech-interp-circuits"
+      ],
+      "verdict": "암묵적 추론은 그로킹 없이는 불가능하다 — 단 Composition의 OOD 일반화는 트랜스포머 아키텍처의 비순환성으로 구조적으로 막힌다. 이 논문은 Grokking track의 \"왜 grokking이 필요한가\"에 대한 가장 깊은 메커니즘 근거다.",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "표지 & 네비게이션"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "문제 지형도"
+        },
+        {
+          "file": "04_claims_a_main.md",
+          "num": "04",
+          "suffix": "a",
+          "title": "핵심 Claim 해체 (Claim 1~3: 주요 발견)"
+        },
+        {
+          "file": "04_claims_b_ood.md",
+          "num": "04",
+          "suffix": "b",
+          "title": "핵심 Claim 해체 (Claim 4~5: OOD·아키텍처)"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "방법론: 큰 그림 (전체 흐름)"
+        },
+        {
+          "file": "05_method_b_tasks.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "방법론: Composition vs Comparison 태스크 설계"
+        },
+        {
+          "file": "05_method_c_circuits.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "방법론: 두 회로의 경쟁 메커니즘"
+        },
+        {
+          "file": "05_method_d_analysis.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "방법론: Logit Lens·Causal Tracing 구체 적용"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "사고 확장: 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "사고 확장: Follow-up 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "사고 확장: 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-04-24_grokked-transformers-implicit-reasoners"
+    },
+    {
+      "slug": "2026-04-22_neural-sde-gan",
+      "date": "2026-04-22",
+      "weekday": "수",
+      "bucket": "인접",
+      "title": "Neural SDEs as Infinite-Dimensional GANs",
+      "title_ko": "무한차원 GAN으로서의 신경 확률미분방정식",
+      "authors": "Patrick Kidger, James Foster, Xuechen Li, Harald Oberhauser, Terry Lyons",
+      "venue": "ICML 2021 (Proceedings of the 38th International Conference on Machine Learning)",
+      "identifier": "arXiv:2102.03657",
+      "code": "",
+      "data": "",
+      "tags": [
+        "neural-sde",
+        "fin-ts-dl",
+        "neural-ode-cde"
+      ],
+      "verdict": "Neural SDE(생성자)–Neural CDE(판별자)라는 이중 구조는 Paper 4의 ODE 시간변수를 economic time으로 교체할 때 이론적 근거를 제공하나, 이 논문의 목표가 **예측이 아닌 경로 생성**임을 명확히 인식하고 인용 위치를 §3·§4의 시간-변환 논의로 한정해야 한다.",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 · 표지 및 네비게이션"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01 · 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02 · 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03 · 문제 지형도"
+        },
+        {
+          "file": "04_claims_a_claim1_2.md",
+          "num": "04",
+          "suffix": "a",
+          "title": "04a · 핵심 Claim 해체 (Claim 1–2)"
+        },
+        {
+          "file": "04_claims_b_claim3_4.md",
+          "num": "04",
+          "suffix": "b",
+          "title": "04b · 핵심 Claim 해체 (Claim 3–4)"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05a · 방법론 큰 그림"
+        },
+        {
+          "file": "05_method_b_sde_generator.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05b · Neural SDE 생성자"
+        },
+        {
+          "file": "05_method_c_cde_discriminator.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05c · Neural CDE 판별자"
+        },
+        {
+          "file": "05_method_d_training.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "05d · 학습 프로토콜"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06 · 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07 · 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08 · 이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09 · 내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "10a · 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "10b · Follow-up 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "10c · 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11 · 한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-04-22_neural-sde-gan"
+    },
+    {
+      "slug": "2026-04-20_contiformer",
+      "date": "2026-04-20",
+      "weekday": "월",
+      "bucket": "코어",
+      "title": "ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling",
+      "title_ko": "",
+      "authors": "Chen, Ren, Wang, Fang, Sun, Li",
+      "venue": "NeurIPS 2023",
+      "identifier": "arXiv:2402.10635",
+      "code": "",
+      "data": "",
+      "tags": [],
+      "verdict": "",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "04-20 · 월 · 코어 버킷 해체"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "0. 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "1. 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "2. 문제 지형도"
+        },
+        {
+          "file": "04_claims.md",
+          "num": "04",
+          "suffix": null,
+          "title": "3. 핵심 Claim 해체"
+        },
+        {
+          "file": "05_method.md",
+          "num": "05",
+          "suffix": null,
+          "title": "4. 방법론 해부"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "5. 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "6. 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "7. 이론적 계보"
+        },
+        {
+          "file": "09_connection.md",
+          "num": "09",
+          "suffix": null,
+          "title": "8. 내 연구와의 연결"
+        },
+        {
+          "file": "10_expansion.md",
+          "num": "10",
+          "suffix": null,
+          "title": "9. 사고 확장"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "10. 한 줄 판결"
+        },
+        {
+          "file": "2026-04-20.md",
+          "num": "99",
+          "suffix": null,
+          "title": "전체 합본"
+        }
+      ],
+      "data_path": "data/2026/2026-04-20_contiformer"
+    },
+    {
+      "slug": "2026-04-19_contiformer-continuous-time-transformer",
+      "date": "2026-04-19",
+      "weekday": "월",
+      "bucket": "코어",
+      "title": "ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling",
+      "title_ko": "컨티포머 — 비정규 시계열 모델링을 위한 연속시간 트랜스포머",
+      "authors": "Yuqi Chen, Kan Ren, Yansen Wang, Yuchen Fang, Weiwei Sun, Dongsheng Li (Fudan + Microsoft Research Asia + Shanghai Jiao Tong)",
+      "venue": "NeurIPS 2023 (Main Track)",
+      "identifier": "arXiv:2402.10635",
+      "code": "<https://github.com/microsoft/SeqML/tree/main/ContiFormer> (MIT)",
+      "data": "",
+      "tags": [
+        "neural-ode-cde",
+        "time-series-transformer"
+      ],
+      "verdict": "ContiFormer는 \"Neural ODE × Attention\" 합성을 가장 깔끔하게 정식화했지만, **시간축이 곧 물리시간**이라는 가정을 깔고 있어 — Economic Time을 그 자리에 끼워 넣는 Paper 4의 정확한 출발점이자, 동시에 가장 비판적으로 인용해야 할 베이스라인이다.",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "ContiFormer — 표지"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "문제 지형도"
+        },
+        {
+          "file": "04_claims.md",
+          "num": "04",
+          "suffix": null,
+          "title": "핵심 Claim 해체"
+        },
+        {
+          "file": "05_method.md",
+          "num": "05",
+          "suffix": null,
+          "title": "방법론 해부"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions.md",
+          "num": "10",
+          "suffix": null,
+          "title": "사고 확장"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-04-19_contiformer-continuous-time-transformer"
+    }
+  ]
+}
