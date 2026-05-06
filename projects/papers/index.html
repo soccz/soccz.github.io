@@ -751,8 +751,6 @@ let MANIFEST = null;
 let currentPaper = null;
 let currentSectionIdx = 0;
 let currentFilter = 'all';
-let unlockPass = '';
-let pendingEncryptedPayload = null;
 
 /* ─────────  Markdown rendering  ───────── */
 function setupMarked() {
@@ -811,64 +809,6 @@ function renderMarkdown(md) {
   return html;
 }
 
-function b64ToBytes(s) {
-  const bin = atob(s);
-  const out = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
-  return out;
-}
-
-function concatBytes(...parts) {
-  const n = parts.reduce((sum, p) => sum + p.length, 0);
-  const out = new Uint8Array(n);
-  let off = 0;
-  parts.forEach(p => { out.set(p, off); off += p.length; });
-  return out;
-}
-
-function equalBytes(a, b) {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
-  return diff === 0;
-}
-
-async function decryptPayload(payload, passphrase) {
-  if (!window.crypto || !window.crypto.subtle) {
-    throw new Error('Web Crypto API is unavailable');
-  }
-  const enc = new TextEncoder();
-  const salt = b64ToBytes(payload.salt);
-  const iv = b64ToBytes(payload.iv);
-  const ct = b64ToBytes(payload.ct);
-  const expectedMac = b64ToBytes(payload.mac);
-  const passKey = await crypto.subtle.importKey(
-    'raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveBits']
-  );
-  const bits = await crypto.subtle.deriveBits(
-    { name: 'PBKDF2', salt, iterations: payload.iterations, hash: 'SHA-256' },
-    passKey,
-    512
-  );
-  const keymat = new Uint8Array(bits);
-  const aesKeyBytes = keymat.slice(0, 32);
-  const macKeyBytes = keymat.slice(32, 64);
-  const macKey = await crypto.subtle.importKey(
-    'raw', macKeyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-  );
-  const actualMac = new Uint8Array(
-    await crypto.subtle.sign('HMAC', macKey, concatBytes(salt, iv, ct))
-  );
-  if (!equalBytes(actualMac, expectedMac)) {
-    throw new Error('코드가 맞지 않거나 데이터가 손상되었습니다.');
-  }
-  const aesKey = await crypto.subtle.importKey(
-    'raw', aesKeyBytes, { name: 'AES-CBC' }, false, ['decrypt']
-  );
-  const plain = await crypto.subtle.decrypt({ name: 'AES-CBC', iv }, aesKey, ct);
-  return new TextDecoder().decode(plain);
-}
-
 function renderMarkdownInto(content, md) {
   content.innerHTML = renderMarkdown(md);
   activateViz(content);
@@ -883,42 +823,11 @@ function renderMarkdownInto(content, md) {
   }
 }
 
-function renderLockedPrompt(content, message = '') {
+function renderPrivateNotice(content) {
   content.innerHTML = `<div class="loading" style="text-align:left;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px">
     <div style="font-weight:700;color:var(--text);margin-bottom:8px">잠금 섹션</div>
-    <div style="font-size:13px;color:var(--text-secondary);margin-bottom:14px">이 섹션은 비공개 연구 연결 메모입니다. 코드를 입력하면 이 브라우저 안에서만 복호화됩니다.</div>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <input id="sectionPass" type="password" inputmode="numeric" autocomplete="off" placeholder="코드"
-        style="height:36px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface-warm);color:var(--text);font:inherit;font-size:13px;max-width:160px">
-      <button onclick="unlockCurrentSection()"
-        style="height:36px;padding:0 14px;border:1px solid var(--text);border-radius:6px;background:var(--text);color:#fff;font:inherit;font-size:13px;cursor:pointer">열기</button>
-    </div>
-    <div id="lockError" style="margin-top:10px;font-size:12px;color:#c45858">${message ? escapeHtml(message) : ''}</div>
+    <div style="font-size:13px;color:var(--text-secondary)">이 섹션은 public site에 게시하지 않았습니다.</div>
   </div>`;
-  const input = document.getElementById('sectionPass');
-  input?.focus();
-  input?.addEventListener('keydown', ev => {
-    if (ev.key === 'Enter') unlockCurrentSection();
-  });
-}
-
-async function unlockCurrentSection() {
-  const content = document.getElementById('readerContent');
-  const input = document.getElementById('sectionPass');
-  const pass = (input?.value || unlockPass || '').trim();
-  if (!pendingEncryptedPayload || !pass) {
-    renderLockedPrompt(content, '코드를 입력하세요.');
-    return;
-  }
-  try {
-    const md = await decryptPayload(pendingEncryptedPayload, pass);
-    unlockPass = pass;
-    pendingEncryptedPayload = null;
-    renderMarkdownInto(content, md);
-  } catch (e) {
-    unlockPass = '';
-    renderLockedPrompt(content, e.message || '복호화 실패');
-  }
 }
 
 function activateViz(container) {
@@ -1057,27 +966,18 @@ async function loadSection() {
   const content = document.getElementById('readerContent');
   content.innerHTML = '<div class="loading">불러오는 중</div>';
 
+  if (section.private || section.published === false) {
+    renderPrivateNotice(content);
+    renderReaderNav();
+    renderSidebarSections();
+    return;
+  }
+
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('fetch failed');
-    if (section.encrypted) {
-      pendingEncryptedPayload = await res.json();
-      renderLockedPrompt(content);
-      if (unlockPass) {
-        try {
-          const md = await decryptPayload(pendingEncryptedPayload, unlockPass);
-          pendingEncryptedPayload = null;
-          renderMarkdownInto(content, md);
-        } catch (e) {
-          unlockPass = '';
-          renderLockedPrompt(content, e.message || '복호화 실패');
-        }
-      }
-    } else {
-      pendingEncryptedPayload = null;
-      const md = await res.text();
-      renderMarkdownInto(content, md);
-    }
+    const md = await res.text();
+    renderMarkdownInto(content, md);
   } catch (e) {
     content.innerHTML = `<div class="loading">불러오기 실패: ${escapeHtml(url)}</div>`;
   }
