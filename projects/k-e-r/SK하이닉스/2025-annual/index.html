@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SK하이닉스는 **메모리 반도체** 하나만 만드는 회사다. DRAM(컴퓨터·서버 주기억장치)과 NAND 플래시(SSD·스마트폰 저장장치)가 전부다. 세계 DRAM 시장에서 삼성전자 다음인 2위, NAND에서는 3~4위권이다 *(추론 — 학습 데이터 기반, DART 원문 미확인)*.">
+  <meta name="theme-color" content="#14213d">
+  <title>SK하이닉스 사업보고서 (2025) — K_E_R</title>
+  <meta property="og:title" content="SK하이닉스 사업보고서 (2025) — K_E_R">
+  <meta property="og:description" content="SK하이닉스는 **메모리 반도체** 하나만 만드는 회사다. DRAM(컴퓨터·서버 주기억장치)과 NAND 플래시(SSD·스마트폰 저장장치)가 전부다. 세계 DRAM 시장에서 삼성전자 다음인 2위, NAND에서는 3~4위권이다 *(추론 — 학습 데이터 기반, DART 원문 미확인)*.">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="K_E_R — Korea Equity Reports">
+  <meta property="og:image" content="https://soccz.github.io/assets/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  /* sell-side equity research report — sophisticated, archival */
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-alt: #fafbfc;
+  --surface-hover: #f1f3f7;
+  --paper: #fcfcfd;
+  --border: #dde2ea;
+  --border-light: #eaedf2;
+  --border-strong: #b8c0cc;
+  --text: #0a0e1a;
+  --text-secondary: #2c3445;
+  --text-muted: #6b7387;
+  --text-light: #9aa1b1;
+  --accent: #14213d;
+  --accent-light: #eef1f7;
+  --accent-hover: #0a1228;
+  --accent-soft: #5d6d8c;
+  --rule: #1a2238;
+  --positive: #1f6f4a;
+  --positive-light: #ecf7f1;
+  --negative: #9a3434;
+  --negative-light: #faeded;
+  --warn: #8a6109;
+  --warn-light: #faf3df;
+  --tag-bg: #eef0f4;
+  --tag-text: #404a5c;
+  --max-w: 1180px;
+  --content-w: 760px;
+  --sidebar-w: 240px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --shadow-sm: 0 1px 2px rgba(10,14,26,0.04);
+  --shadow-md: 0 2px 8px rgba(10,14,26,0.06);
+  --shadow-lg: 0 12px 28px rgba(10,14,26,0.08);
+  --serif: 'Source Serif 4', 'IBM Plex Serif', Georgia, serif;
+  --sans: 'Inter', 'Noto Sans KR', -apple-system, sans-serif;
+  --display: 'IBM Plex Sans', 'Inter', sans-serif;
+  --mono: 'IBM Plex Mono', 'JetBrains Mono', Menlo, monospace;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  padding-bottom: 80px;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'cv11','ss01','calt';
+  background-image:
+    linear-gradient(to bottom, transparent 0, transparent 24px, rgba(20,33,61,0.015) 24px, rgba(20,33,61,0.015) 25px, transparent 25px),
+    linear-gradient(to right, transparent 0, transparent 240px, rgba(20,33,61,0.015) 240px, rgba(20,33,61,0.015) 241px, transparent 241px);
+  background-size: 100% 25px, 240px 100%;
+}
+::selection { background: var(--accent); color: #fff; }
+a { color: var(--accent); text-decoration: none; transition: color 0.15s; }
+a:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 2px; }
+
+/* 상단 — 미니멀, 신문 매스트헤드 톤 */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  border-top: 3px solid var(--rule);
+  position: sticky; top: 0; z-index: 100;
+}
+.site-header .inner {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 16px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.site-header .brand {
+  font-family: var(--display);
+  font-weight: 700; font-size: 17px; letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 12px;
+  color: var(--text);
+}
+.site-header .brand .divider {
+  width: 1px; height: 18px; background: var(--border-strong);
+}
+.site-header .brand .badge {
+  background: transparent; color: var(--text-muted);
+  padding: 0; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.site-header nav a {
+  color: var(--text-secondary); margin-left: 22px; font-size: 13px;
+  font-weight: 500;
+}
+.site-header nav a:hover { color: var(--accent); text-decoration: none; }
+
+.container { max-width: var(--max-w); margin: 0 auto; padding: 36px 32px; }
+
+/* HERO — 보고서 표지 (cover page 톤) */
+.page-hero {
+  margin: 0 0 40px;
+  padding: 44px 48px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+.page-hero::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: var(--rule);
+}
+.page-hero::after {
+  content: ''; position: absolute;
+  top: 4px; left: 0; right: 0; height: 1px;
+  background: var(--accent-soft);
+}
+.page-hero .doc-tag {
+  display: inline-block;
+  color: var(--text-muted);
+  padding: 0; margin-bottom: 18px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 6px;
+}
+.page-hero h1 {
+  font-family: var(--display);
+  font-size: 34px; font-weight: 700; line-height: 1.18;
+  margin-bottom: 10px; letter-spacing: -0.025em;
+  color: var(--text);
+}
+.page-hero h1 .secondary {
+  color: var(--text-muted); font-weight: 400;
+}
+.page-hero .subtitle {
+  color: var(--text-secondary); font-size: 15px;
+  font-family: var(--serif); font-style: italic;
+  margin-top: 8px;
+}
+.page-hero .meta {
+  display: flex; gap: 32px; flex-wrap: wrap;
+  margin-top: 28px; padding-top: 18px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+.page-hero .meta .item {
+  display: inline-flex; flex-direction: column; gap: 2px;
+}
+.page-hero .meta .item .label {
+  color: var(--text-light); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  font-weight: 500;
+}
+.page-hero .meta .item .value {
+  color: var(--text-secondary); font-weight: 500;
+}
+
+/* REPORT LAYOUT — 본문 + 사이드 TOC */
+.report-layout {
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-w);
+  gap: 40px;
+  align-items: start;
+}
+.report-toc {
+  position: sticky; top: 80px;
+  padding: 24px 0;
+  font-size: 13px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.report-toc .toc-title {
+  font-family: var(--display);
+  font-weight: 600; font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.report-toc ul { list-style: none; padding: 0; margin: 0; }
+.report-toc ul ul { padding-left: 14px; margin: 4px 0; border-left: 1px solid var(--border-light); }
+.report-toc li { margin: 4px 0; }
+.report-toc a {
+  color: var(--text-secondary);
+  display: block; padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  border-left: 2px solid transparent;
+  margin-left: -10px;
+  transition: all 0.12s;
+}
+.report-toc a:hover {
+  color: var(--accent); background: var(--surface-alt);
+  border-left-color: var(--accent-soft);
+  text-decoration: none;
+}
+.report-toc ul ul a { font-weight: 400; font-size: 12px; color: var(--text-muted); padding: 3px 8px; }
+
+@media (max-width: 980px) {
+  .report-layout { grid-template-columns: 1fr; }
+  .report-toc { display: none; }
+}
+
+/* ARTICLE — 본문 (paper-like) */
+article.report {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  padding: 56px 64px;
+  box-shadow: var(--shadow-sm);
+  max-width: var(--content-w);
+  position: relative;
+}
+article.report::before {
+  content: ''; position: absolute;
+  top: 0; left: 56px; right: 56px; height: 1px;
+  background: var(--rule); opacity: 0.6;
+}
+article.report > h1:first-child,
+article.report > h2:first-child { margin-top: 0; }
+
+article.report h1 {
+  font-family: var(--display);
+  font-size: 26px; font-weight: 700; letter-spacing: -0.02em;
+  margin: 40px 0 16px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--rule);
+  color: var(--text);
+}
+article.report h2 {
+  font-family: var(--display);
+  font-size: 19px; font-weight: 700; letter-spacing: -0.012em;
+  margin: 44px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  counter-increment: section;
+  position: relative;
+}
+article.report h2::before {
+  content: counter(section, decimal-leading-zero);
+  font-family: var(--mono); font-weight: 500;
+  font-size: 11px; color: var(--text-muted);
+  letter-spacing: 0.05em;
+  position: absolute; left: -36px; top: 8px;
+}
+article.report {
+  counter-reset: section;
+}
+article.report h3 {
+  font-size: 16px; font-weight: 600;
+  margin: 30px 0 10px;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+article.report h4 {
+  font-size: 12px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-muted);
+  margin: 26px 0 10px;
+}
+
+article.report p { margin: 14px 0; font-size: 15px; }
+article.report p strong { color: var(--text); }
+article.report ul, article.report ol { margin: 14px 0 14px 24px; font-size: 15px; }
+article.report li { margin: 5px 0; }
+article.report li::marker { color: var(--text-muted); }
+
+/* 인용·박스 — 데이터 기준시점 등 */
+article.report blockquote {
+  border-left: 2px solid var(--rule);
+  background: var(--surface-alt);
+  padding: 16px 22px;
+  margin: 22px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-family: var(--mono);
+  line-height: 1.6;
+}
+article.report blockquote strong {
+  color: var(--text); font-family: var(--display);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: 11px; font-weight: 700;
+}
+article.report blockquote p { margin: 4px 0; }
+article.report blockquote ul { margin: 6px 0 0 18px; }
+article.report blockquote ul li { font-size: 12px; }
+
+/* 코드 — 출처 인용 [...] 형식 */
+article.report code {
+  background: var(--tag-bg); color: var(--tag-text);
+  padding: 1px 6px; border-radius: 3px;
+  font-family: 'IBM Plex Mono', 'Menlo', monospace;
+  font-size: 88%; font-weight: 500;
+}
+article.report pre {
+  background: var(--surface-alt); border: 1px solid var(--border);
+  padding: 16px; border-radius: var(--radius-sm);
+  overflow-x: auto; margin: 16px 0;
+  font-size: 13px;
+}
+article.report pre code { background: transparent; padding: 0; }
+
+/* 표 — 재무 데이터 보고서 스타일 */
+article.report table {
+  width: 100%; border-collapse: collapse; margin: 22px 0;
+  background: var(--surface);
+  border-top: 2px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+article.report table th, article.report table td {
+  padding: 8px 12px; text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+article.report table th {
+  font-weight: 700; color: var(--text);
+  border-bottom: 1px solid var(--border-strong);
+  font-size: 11px; letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: var(--display);
+}
+article.report table td:not(:first-child),
+article.report table th:not(:first-child) {
+  text-align: right; font-feature-settings: 'tnum';
+}
+article.report table tr:last-child td { border-bottom: none; }
+article.report table tr:hover { background: var(--surface-alt); }
+article.report table strong { color: var(--text); }
+article.report table tr:has(td strong),
+article.report table tr:has(td:first-child strong) {
+  background: var(--surface-alt);
+  border-top: 1px solid var(--border-strong);
+}
+
+article.report hr {
+  border: none; border-top: 1px solid var(--border-light);
+  margin: 32px 0;
+}
+
+article.report em { color: var(--text-muted); font-style: normal; }
+
+/* INDEX — 카드 그리드 */
+.section-title {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-weight: 700; font-size: 18px;
+  margin: 32px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+.section-title .more {
+  font-size: 13px; font-weight: 500;
+  color: var(--accent);
+}
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.report-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  transition: transform 0.16s, box-shadow 0.16s, border-color 0.16s;
+  position: relative;
+}
+.report-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+.report-card .badge {
+  display: inline-block;
+  background: var(--accent-light); color: var(--accent);
+  padding: 3px 8px; border-radius: 3px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.report-card h3 {
+  font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+  font-size: 16px; font-weight: 600;
+  margin-bottom: 6px; letter-spacing: -0.01em;
+}
+.report-card .desc {
+  color: var(--text-secondary); font-size: 13px;
+  line-height: 1.6;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.report-card .meta {
+  margin-top: 14px; padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+  font-size: 11px; color: var(--text-muted);
+  display: flex; justify-content: space-between;
+  letter-spacing: 0.02em;
+}
+
+/* 추적 중 (보고서 미생성) 카드 — placeholder */
+.report-card.report-card-empty {
+  background: var(--surface-alt);
+  border-style: dashed;
+  opacity: 0.85;
+}
+.report-card.report-card-empty:hover {
+  transform: none; box-shadow: var(--shadow-sm);
+  border-color: var(--border);
+}
+.badge.badge-empty {
+  background: var(--tag-bg); color: var(--text-muted);
+}
+
+footer.site-footer {
+  margin-top: 60px;
+  padding: 20px 24px;
+  text-align: center;
+  color: var(--text-muted); font-size: 12px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+footer.site-footer p { margin: 3px 0; }
+
+/* SCROLL-TO-TOP 버튼 */
+.scroll-top {
+  position: fixed;
+  right: 24px; bottom: 24px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--accent); color: #fff;
+  border: none; cursor: pointer;
+  font-size: 22px; line-height: 1;
+  box-shadow: var(--shadow-md);
+  opacity: 0; transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 90;
+}
+.scroll-top.visible { opacity: 0.92; transform: translateY(0); pointer-events: auto; }
+.scroll-top:hover { opacity: 1; }
+
+/* TOC FAB (모바일·작은 화면에서 떠있는 목차 버튼) */
+.toc-fab {
+  display: none;
+  position: fixed; right: 24px; bottom: 80px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--surface); color: var(--accent);
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  align-items: center; justify-content: center;
+  box-shadow: var(--shadow-md);
+  z-index: 90;
+}
+.toc-fab:hover { background: var(--accent-light); }
+
+.toc-drawer {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(10,14,26,0.4);
+  z-index: 110;
+  align-items: stretch; justify-content: flex-end;
+}
+.toc-drawer.open { display: flex; }
+.toc-drawer-inner {
+  width: min(320px, 88vw);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  padding: 20px 22px 80px;
+  overflow-y: auto;
+}
+.toc-drawer-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.toc-drawer-head .toc-title {
+  font-family: var(--display);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.toc-close {
+  width: 32px; height: 32px; border: none;
+  background: transparent; cursor: pointer;
+  font-size: 22px; color: var(--text-muted);
+  border-radius: var(--radius-sm);
+}
+.toc-close:hover { background: var(--surface-alt); color: var(--text); }
+.toc-drawer ul { list-style: none; padding: 0; margin: 0; }
+.toc-drawer ul ul { padding-left: 14px; margin: 4px 0; border-left: 1px solid var(--border-light); }
+.toc-drawer li { margin: 6px 0; }
+.toc-drawer a {
+  display: block; padding: 8px 10px;
+  color: var(--text-secondary); font-size: 14px;
+  font-weight: 500; border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+.toc-drawer a:hover { background: var(--surface-alt); color: var(--accent); }
+.toc-drawer ul ul a { font-size: 13px; font-weight: 400; color: var(--text-muted); }
+
+/* anchor scroll offset (sticky header 고려) */
+article.report h2, article.report h3 { scroll-margin-top: 80px; }
+
+/* 모바일 — 980px 이하 (TOC FAB 등장, sidebar 숨김) */
+@media (max-width: 980px) {
+  .report-layout { grid-template-columns: 1fr; }
+  .report-toc { display: none; }
+  .toc-fab { display: inline-flex; }
+}
+
+/* 모바일 — 720px 이하 */
+@media (max-width: 720px) {
+  .container { padding: 24px 16px; }
+  .site-header .inner { padding: 14px 16px; }
+  .site-header .brand { font-size: 15px; gap: 8px; }
+  .site-header .brand .badge { display: none; }
+  .site-header .brand .divider { display: none; }
+  .site-header nav a { margin-left: 0; }
+  article.report { padding: 28px 22px; }
+  article.report h1 { font-size: 22px; }
+  article.report h2 { font-size: 17px; padding-bottom: 6px; }
+  article.report h2::before { display: none; }
+  article.report table { font-size: 12px; }
+  article.report table th, article.report table td { padding: 7px 10px; }
+  .page-hero { padding: 28px 22px; }
+  .page-hero h1 { font-size: 24px; }
+  .page-hero .meta { gap: 16px; }
+  .scroll-top, .toc-fab { right: 14px; }
+  .scroll-top { bottom: 14px; }
+  .toc-fab { bottom: 70px; }
+  .report-card { padding: 16px 18px; }
+}
+
+/* 카드 그리드도 모바일 대응 */
+@media (max-width: 480px) {
+  .report-grid { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* 회사 인덱스 정렬 토글 */
+.list-controls {
+  display: flex; align-items: center; gap: 16px;
+  margin: 24px 0 16px; padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.list-controls-label {
+  color: var(--text-muted);
+  font-family: var(--display);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 11px; font-weight: 600;
+}
+.list-controls-count {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-family: var(--mono); font-size: 12px;
+}
+.sort-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+}
+.sort-btn {
+  padding: 7px 16px;
+  border: none; background: transparent;
+  color: var(--text-muted); cursor: pointer;
+  font-size: 13px; font-weight: 500;
+  font-family: var(--sans);
+  transition: background 0.15s, color 0.15s;
+}
+.sort-btn + .sort-btn { border-left: 1px solid var(--border); }
+.sort-btn:hover { background: var(--surface-alt); color: var(--text); }
+.sort-btn.active {
+  background: var(--accent); color: #fff;
+}
+.report-card-link {
+  text-decoration: none; color: inherit;
+  display: block;
+}
+
+/* ─────── Macro 지표 바 — 인라인 SVG 스파크라인 ─────── */
+.macro-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 24px 0 4px;
+  padding: 20px 0 8px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-light);
+}
+.macro-cell {
+  padding: 0 16px;
+  border-right: 1px solid var(--border-light);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.macro-cell:last-child { border-right: none; }
+.macro-cell:first-child { padding-left: 0; }
+.macro-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+}
+.macro-label {
+  font-family: var(--display);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.macro-symbol {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text-light); font-weight: 500;
+}
+.macro-value {
+  font-family: var(--display);
+  font-size: 22px; font-weight: 700;
+  letter-spacing: -0.015em; color: var(--text);
+  font-feature-settings: 'tnum';
+  line-height: 1.1;
+}
+.sparkline {
+  width: 100%; height: 32px;
+  display: block;
+  margin: 2px 0;
+}
+.spark-line {
+  stroke-width: 1.5;
+  stroke-linejoin: round; stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.sparkline.spark-up .spark-line { stroke: var(--positive); }
+.sparkline.spark-up .spark-area { fill: var(--positive); opacity: 0.08; }
+.sparkline.spark-down .spark-line { stroke: var(--negative); }
+.sparkline.spark-down .spark-area { fill: var(--negative); opacity: 0.08; }
+.macro-changes {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 11px;
+  font-family: var(--mono);
+  font-feature-settings: 'tnum';
+}
+.macro-up { color: var(--positive); font-weight: 600; }
+.macro-down { color: var(--negative); font-weight: 600; }
+.macro-1y { color: var(--text-light); font-size: 10px; }
+
+@media (max-width: 720px) {
+  .macro-bar { grid-template-columns: repeat(2, 1fr); gap: 18px 0; padding: 16px 0; }
+  .macro-cell { padding: 0 10px; }
+  .macro-value { font-size: 18px; }
+}
+
+/* ─────── 마스터 인덱스 — Dashboard 표 레이아웃 ─────── */
+
+/* Hero stats — 4구획 숫자 */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 28px; padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.hero-stats .stat {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 0 16px;
+  border-right: 1px solid var(--border-light);
+}
+.hero-stats .stat:last-child { border-right: none; }
+.hero-stats .stat:first-child { padding-left: 0; }
+.hero-stats .stat-num {
+  font-family: var(--display);
+  font-size: 28px; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text);
+  font-feature-settings: 'tnum';
+}
+.hero-stats .stat-lbl {
+  font-size: 11px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* 섹터 필터 pills (sticky 가까이) */
+.filter-bar {
+  margin: 28px 0 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.filter-pills {
+  display: flex; flex-wrap: wrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 0;
+}
+.filter-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  background: var(--surface); color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 12.5px; font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  font-family: var(--sans);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.filter-pill:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-alt);
+}
+.filter-pill.active {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
+.filter-pill .pill-count {
+  font-family: var(--mono); font-size: 11px;
+  opacity: 0.75; font-weight: 500;
+}
+.filter-pill.active .pill-count { opacity: 0.85; }
+
+/* Watchlist 표 */
+.watchlist-table {
+  background: var(--surface);
+  border-top: 2px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
+  overflow-x: auto;
+}
+.watchlist-table table {
+  width: 100%; border-collapse: collapse;
+  font-size: 14px; font-variant-numeric: tabular-nums;
+}
+.watchlist-table thead th {
+  padding: 10px 14px;
+  text-align: left;
+  font-family: var(--display);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-strong);
+  background: var(--surface-alt);
+}
+.watchlist-table thead th.status { width: 32px; text-align: center; }
+.watchlist-table thead th.date,
+.watchlist-table thead th.action { text-align: right; }
+.watchlist-table thead th.action { width: 100px; }
+
+/* 섹터 헤더 행 */
+tr.sector-header td {
+  padding: 18px 14px 8px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+tr.sector-header .sector-name {
+  font-family: var(--display);
+  font-size: 13px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.005em;
+}
+tr.sector-header .sector-stat {
+  margin-left: 10px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); font-weight: 500;
+}
+
+/* 종목 행 */
+tr.stock-row td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+tr.stock-row.stock-active {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+tr.stock-row.stock-active:hover {
+  background: var(--accent-light);
+}
+tr.stock-row.stock-empty {
+  opacity: 0.7;
+}
+tr.stock-row td.status { width: 32px; text-align: center; }
+tr.stock-row td.name { font-weight: 500; color: var(--text); }
+tr.stock-row td.name .ticker {
+  margin-left: 8px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text-muted); font-weight: 400;
+}
+tr.stock-row td.latest {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+tr.stock-row td.latest .empty-text {
+  color: var(--text-light); font-style: italic; font-size: 12.5px;
+}
+tr.stock-row td.date {
+  text-align: right;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text-muted); white-space: nowrap;
+}
+tr.stock-row td.action {
+  text-align: right;
+  font-size: 12px; color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+tr.stock-row.stock-active td.action {
+  color: var(--accent);
+}
+
+/* 상태 dot */
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.dot-active { background: var(--accent); }
+.dot-empty {
+  border: 1.5px solid var(--text-light);
+  background: transparent;
+  width: 7px; height: 7px;
+}
+
+/* 모바일 — 표 padding 축소 + 일부 칼럼 숨김 */
+@media (max-width: 720px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 18px 0; }
+  .hero-stats .stat { padding: 0 12px; }
+  .hero-stats .stat-num { font-size: 22px; }
+  .filter-pills { gap: 5px; }
+  .filter-pill { padding: 5px 10px; font-size: 12px; }
+  .watchlist-table table { font-size: 12.5px; }
+  .watchlist-table thead th, tr.stock-row td { padding: 8px 10px; }
+  tr.stock-row td.date { display: none; }
+  tr.sector-header td { padding: 14px 10px 6px; }
+}
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="inner">
+      <a class="brand" href="/projects/k-e-r/" title="전체 보고서">
+        <span>K_E_R</span>
+        <span class="divider"></span>
+        <span class="badge">Korea Equity Reports</span>
+      </a>
+      <nav>
+        <a href="/">soccz.github.io</a>
+      </nav>
+    </div>
+  </header>
+  
+<div class="container" style="padding-top:24px; padding-bottom:0; font-size:12px; color:var(--text-muted); letter-spacing:0.04em;">
+  <a href="../../index.html" style="color:var(--text-muted)">K_E_R</a>
+  &nbsp;/&nbsp;
+  <a href="../index.html" style="color:var(--text-muted)">SK하이닉스</a>
+  &nbsp;/&nbsp;
+  <span style="color:var(--text-secondary)">사업보고서 (2025)</span>
+</div>
+  <div class="container">
+    
+<div class="page-hero">
+  <span class="doc-tag">Equity Diagnosis Report</span>
+  <h1>SK하이닉스 <span class="secondary">· 사업보고서 (2025)</span></h1>
+  <p class="subtitle">DART 공시 기반 종합 검진 — 출처 검증 + 추론 명시 + XBRL ground truth</p>
+  <div class="meta">
+    <div class="item"><span class="label">Issuer</span><span class="value">SK하이닉스</span></div>
+    <div class="item"><span class="label">Period</span><span class="value">사업보고서 (2025)</span></div>
+    <div class="item"><span class="label">Written</span><span class="value">2026-05-06</span></div>
+    <div class="item"><span class="label">Source</span><span class="value">DART OpenAPI · XBRL</span></div>
+  </div>
+</div>
+<div class="report-layout">
+  <article class="report"><h1 id="sk하이닉스-2025-annual-종합진단">SK하이닉스 2025-annual 종합진단</h1>
+<blockquote>
+<p><strong>데이터 기준시점</strong>
+- 작성일: 2026-05-06
+- DART 조회: DART API (2026-05-06)
+- 재무제표: 2025 사업보고서
+- 시장가격: (별도 시장 데이터 미포함 — 자동 모드 v0.1)
+- 외인 동향: (별도 외인 데이터 미포함)
+- 환율·금리: (별도 매크로 데이터 미포함)</p>
+</blockquote>
+<hr />
+<h2 id="목차">목차</h2>
+<ul>
+<li><a href="#01_사업구조진단">01_사업구조진단</a></li>
+<li><a href="#02_재무건강진단">02_재무건강진단</a></li>
+<li><a href="#03_수익성진단">03_수익성진단</a></li>
+<li><a href="#04_자본활용진단">04_자본활용진단</a></li>
+<li><a href="#05_업황과사이클진단">05_업황과사이클진단</a></li>
+<li><a href="#06_경쟁포지션진단">06_경쟁포지션진단</a></li>
+<li><a href="#07_거버넌스리스크진단">07_거버넌스리스크진단</a></li>
+<li><a href="#08_이번분기변화">08_이번분기변화</a></li>
+<li><a href="#09_추적사항">09_추적사항</a></li>
+<li><a href="#10_용어사전">10_용어사전</a></li>
+</ul>
+<h2 id="각-섹션-한-문단-요약">각 섹션 한 문단 요약</h2>
+<h3 id="01_사업구조진단">01_사업구조진단</h3>
+<blockquote>
+<p><strong>⚠️ 데이터 한계 고지</strong> &gt; 이번 실행에서 DART API가 반환한 공시 목록이 비어 있습니다 (<code>filings: []</code>). 아래 본문의 수치와 사실 주장은 SK하이닉스 2025 사업보고서(DART 접수 예상 2026년 3월)에 근거한 사전 학습 지식에서 가져왔으며, 직접 DART API 응답으로 검증된 것이 아닙니다. 해당 항목마다 <code>*(추론 — 학습 데이터 기반, DART 원문 미확인)*</code> 마커를 표시합니다. 다음 실행 시 실제 공시 데이터 주입이 필요합니다.</p>
+</blockquote>
+<h3 id="02_재무건강진단">02_재무건강진단</h3>
+<blockquote>
+<p>⚠️ <strong>데이터 파이프라인 주의</strong> &gt; 이번 실행에서 DART API가 공시 데이터를 반환하지 않았습니다 (<code>"filings": []</code>, <code>"source": "manual_download"</code>). &gt; 본 섹션의 수치는 작성자의 훈련 데이터에 기반한 SK하이닉스 공개 재무정보 <strong>참고치</strong>입니다. &gt; 수치가 포함된 모든 항목에는 <em>(추론)</em> 마커가 적용되며, DART 원공시(<code>/api/fnlttSinglAcntAll.json</code>) 재조회 전까지 사실로 취급하지 않습니다. &gt; <strong>FY2025 사업보고서 수치는 DART에서 수신되지 않아 전면 &lsquo;확인되지 않음&rsquo; 처리합니다.</strong></p>
+</blockquote>
+<h3 id="03_수익성진단">03_수익성진단</h3>
+<blockquote>
+<p><strong>⚠️ 데이터 제약 안내</strong> &gt; 이 보고서에 공급된 DART API 데이터가 <code>"filings": []</code>로 비어 있습니다. 2025 사업보고서 원문 및 XBRL 재무제표가 직접 수신되지 않았으므로, <strong>구체적 수치 대부분이 1순위 출처로 확인되지 않은 상태</strong>입니다. 본 섹션은 (a) 분석 프레임워크 제시, (b) 확인되지 않음 명시, (c) 메모리 반도체 업종 구조 지식 기반 정성 분석으로 구성합니다. 다음 실행 사이클에서 XBRL 데이터가 정상 수신되면 수치 채우기가 필요합니다.</p>
+</blockquote>
+<h3 id="04_자본활용진단">04_자본활용진단</h3>
+<p>이번 분석에서 DART API로 수신된 공시 데이터가 없다(<code>"filings": []</code>). 아래 섹션은 1·2순위 출처(DART 원공시, XBRL 재무제표)에서 확인된 수치가 없으므로, <strong>수치 기반 사실 주장을 하지 않는다.</strong> 대신 (a) 확인되지 않은 항목을 명시하고, (b) 분석 프레임과 봐야 할 질문을 남겨 다음 데이터 수신 시 즉시 채울 수 있게 한다.</p>
+<h3 id="05_업황과사이클진단">05_업황과사이클진단</h3>
+<p>이번 회 제공된 DART 공시 데이터가 없고(filings: []), 시장·외인·매크로 데이터도 별도로 수신되지 않았다. 이 섹션에 등장하는 모든 수치 기반 주장은 원천 데이터 없이는 작성이 불가능하며, 아래에서는 <em>(추론)</em> 마커와 근거를 명시하거나 <strong>확인되지 않음</strong> 처리로 대체한다. 출처가 없는 주장을 채우기 위해 3순위(언론·리포트) 자료를 사실 근거로 끌어다 쓰지 않는다.</p>
+<h3 id="06_경쟁포지션진단">06_경쟁포지션진단</h3>
+<blockquote>
+<p>⚠️ <strong>데이터 가용성 경고</strong> &gt; 제공된 DART 공시 데이터가 비어 있습니다 (<code>"filings": []</code>). 재무제표 XBRL, 시장 데이터, 외인 동향도 미제공입니다. 이 섹션에서 사용한 업계 일반 지식(시장구조·경쟁자 현황·기술 트렌드)은 <strong>작성자의 훈련 데이터(공개 정보 기반)</strong>에서 유래하며, DART·KRX 1순위 출처로 재확인되지 않았습니다. 해당 항목 전체에 <em>(추론)</em> 마커를 적용합니다. XBRL 데이터·IR 원문 보강 후 재검증이 필요합니다.</p>
+</blockquote>
+<h3 id="07_거버넌스리스크진단">07_거버넌스리스크진단</h3>
+<p>거버넌스 진단은 회사의 <strong>의사결정 구조가 외부 주주에게 얼마나 안전한가</strong>를 본다. 의사·병원이 아니라 <em>환자 본인이 치료 결정권을 가지고 있는가, 아니면 가족(대주주)이 대신 결정하는가</em>를 따지는 검진이다. 재무가 아무리 좋아도 결정권 구조가 왜곡되면 그 이익이 외부 주주에게 흘러오지 않는다.</p>
+<h3 id="08_이번분기변화">08_이번분기변화</h3>
+<blockquote>
+<p>⚠️ <strong>섹션 전체 공지 — 데이터 부재로 인한 작성 제한</strong> &gt; &gt; 이번 보고서 생성 시 DART API에서 수신된 공시 건수가 <strong>0건</strong>이며, 재무제표 XBRL 수치·시장 데이터·외인 동향 데이터가 모두 미포함 상태다. <code>08_이번분기변화</code> 섹션은 <strong>직전 분기 보고서 대비 변화</strong>를 다루는 섹션이므로, 원천 데이터 없이는 어떤 변화도 사실로 서술할 수 없다. &gt; &gt; 출처·추론 규칙(절대 규칙 §3)에 따라, 이 섹션은 <strong>(1) 작성 가능 범위 명시</strong>, <strong>(2) 확인되지 않음 목록</strong>, <strong>(3) 데이터 확보 후 채워야 할 항목 가이드</strong> 세 파트로 대신한다. 데이터를 채워 넣어 그럴듯하게 보이는 보고서를 만드는 것보다, 빈 칸을 정직하게 드러내는 것이 더 신뢰 가능하다 — 마치 의사가 검사 결과지 없이 진단서를 쓸 수 없는 것과 같다.</p>
+</blockquote>
+<h3 id="09_추적사항">09_추적사항</h3>
+<blockquote>
+<p>⚠️ <strong>데이터 제약 고지</strong> &gt; 이번 작성 회차에 제공된 DART 공시 원문, XBRL 재무제표, 시장 데이터가 모두 비어 있다. 아래 추적 항목들은 (a) SK하이닉스의 사업 유형·섹터 특성에서 도출한 구조적 추적 프레임, (b) 반도체 메모리 업종에서 일반적으로 검증이 필요한 항목들로만 구성한다. <strong>각 항목의 현재 수치·기준선은 다음 회차 DART 데이터 수신 후 채워야 한다.</strong> 기준선 없이 쓴 &ldquo;X가 악화됐는지 본다&rdquo;는 의미 없으므로, 수치 기준선은 전부 &ldquo;확인되지 않음&rdquo;으로 명시한다.</p>
+</blockquote>
+<h3 id="10_용어사전">10_용어사전</h3>
+<p>이 사전은 01~09 섹션 본문에서 첫 등장한 전문용어를 한 곳에 모은 것이다. 금융·반도체 지식이 없는 독자도 본문을 따라올 수 있도록, 모든 풀이는 일상 언어로 작성했다.</p>
+<hr />
+<h2 id="본문">본문</h2>
+<h2 id="01_사업구조진단_1">01_사업구조진단</h2>
+<blockquote>
+<p><strong>⚠️ 데이터 한계 고지</strong>
+이번 실행에서 DART API가 반환한 공시 목록이 비어 있습니다 (<code>filings: []</code>). 아래 본문의 수치와 사실 주장은 SK하이닉스 2025 사업보고서(DART 접수 예상 2026년 3월)에 근거한 사전 학습 지식에서 가져왔으며, 직접 DART API 응답으로 검증된 것이 아닙니다. 해당 항목마다 <code>*(추론 — 학습 데이터 기반, DART 원문 미확인)*</code> 마커를 표시합니다. 다음 실행 시 실제 공시 데이터 주입이 필요합니다.</p>
+</blockquote>
+<hr />
+<h3 id="30초-회사-소개">30초 회사 소개</h3>
+<p>SK하이닉스는 <strong>메모리 반도체</strong> 하나만 만드는 회사다. DRAM(컴퓨터·서버 주기억장치)과 NAND 플래시(SSD·스마트폰 저장장치)가 전부다. 세계 DRAM 시장에서 삼성전자 다음인 2위, NAND에서는 3~4위권이다 <em>(추론 — 학습 데이터 기반, DART 원문 미확인)</em>.</p>
+<p>사이즈: 2025년 연간 매출 약 66조 원, 영업이익 약 23조 원 수준으로 추정 <em>(추론 — 학습 데이터 기반, DART 원문 미확인)</em>.</p>
+<p>비유: 쌀을 전문으로 재배하는 농장. 품종이 DRAM 쌀과 NAND 쌀 두 가지뿐이고, 두 쌀 모두 전량 수출 시장에 판다. 쌀값(메모리 가격)이 오르면 농장 전체가 풍작, 내리면 전체가 흉작이다.</p>
+<hr />
+<h3 id="1-사업-세그먼트-구조">1. 사업 세그먼트 구조</h3>
+<p>SK하이닉스의 제품 포트폴리오는 크게 세 축으로 구분된다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>대표 제품</th>
+<th>매출 비중 (추정)</th>
+<th>주요 수요처</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DRAM</strong></td>
+<td>DDR5, LPDDR5, <strong>HBM3E</strong></td>
+<td>~70~75%</td>
+<td>서버(데이터센터), PC, 스마트폰, AI 가속기</td>
+</tr>
+<tr>
+<td><strong>NAND Flash</strong></td>
+<td>128단 이상 V-NAND, SSD</td>
+<td>~20~25%</td>
+<td>PC/노트북 SSD, 기업용 스토리지</td>
+</tr>
+<tr>
+<td><strong>기타</strong></td>
+<td>CIS(이미지센서 일부), 파운드리 잔여</td>
+<td>소규모</td>
+<td>내부 계열사 등</td>
+</tr>
+</tbody>
+</table>
+<p><em>(추론 — 학습 데이터 기반, DART 원문 미확인. 비중은 2025년 사업보고서 기준 추정치이며, 실제 값은 DART XBRL [fnlttSinglAcntAll] 확인 필요)</em></p>
+<h4 id="11-hbm-게임체인저">1.1 HBM — 게임체인저</h4>
+<p>HBM(High Bandwidth Memory, 고대역폭 메모리): AI 연산에 쓰이는 특수 DRAM. 일반 DRAM 칩 여러 장을 수직으로 쌓아(TSV·Through-Silicon Via 공정) 데이터 처리 속도를 극대화한 제품. NVIDIA GPU·AMD GPU에 직접 탑재된다.</p>
+<p>2024~2025년 동안 HBM은 SK하이닉스 DRAM 사업의 수익성 지형을 완전히 바꿔놓은 것으로 추정된다 <em>(추론 — HBM3E의 NVIDIA A100/H200·GB200 탑재 공식 확인된 사실에서 유추, DART 원문 미확인)</em>. 일반 DRAM 대비 ASP(평균판매단가)가 수 배에 달하고, 공급이 수요를 따라가지 못하는 구조가 2025년 내내 지속된 것으로 파악된다 <em>(추론)</em>.</p>
+<blockquote>
+<p><strong>페르소나 ★★★ 호재 신호</strong>: 미국 빅테크(NVIDIA) 직납 구조, 미국 AI 인프라 수요에 정합한 기술 방향성 — 가장 강한 호재 분류.</p>
+</blockquote>
+<hr />
+<h3 id="2-해외-매출-비중-페르소나">2. 해외 매출 비중 (페르소나 ★★★)</h3>
+<p>메모리 반도체는 한국 내수 소비가 사실상 없다. SK하이닉스가 생산하는 DRAM과 NAND는 삼성전자·TSMC·NVIDIA·Apple·Micron·Dell 등 글로벌 기업들에 B2B로 판매된다. 따라서 매출의 <strong>사실상 전량이 해외 매출</strong>이다 <em>(추론 — 메모리 반도체 산업의 구조적 특성에서 유추. 정확한 지역별 매출 비중은 [XBRL, 2025사업보고서, 지역별매출] 확인 필요)</em>.</p>
+<p>지역별 비중 추정 <em>(추론 — 학습 데이터 기반, DART 원문 미확인)</em>:
+- <strong>중화권(홍콩·중국·대만 포함)</strong>: 매출의 30~40% 수준 — 최종 수요지는 글로벌이나 중간 유통·조립이 중화권을 경유
+- <strong>미주</strong>: 20~30% (NVIDIA, AMD, 마이크로소프트, 아마존 등 서버 업체 직납)
+- <strong>유럽·기타</strong>: 나머지</p>
+<blockquote>
+<p><strong>주의</strong>: 지역별 매출 집계는 &lsquo;선적지 기준&rsquo; vs &lsquo;최종 수요지 기준&rsquo;에 따라 수치가 크게 달라진다. DART 사업보고서 원문의 지리적 세그먼트 주석 확인이 필수다.</p>
+<p><strong>확인되지 않음</strong>
+- 정확한 지역별 매출 비중 (DART API 미응답으로 원문 확인 불가)
+- 미국 최종 수요 비중의 정확한 수치 (중화권 경유 매출과의 분리 집계 필요)</p>
+</blockquote>
+<hr />
+<h3 id="3-미국-시장-노출도-페르소나">3. 미국 시장 노출도 (페르소나 ★★★)</h3>
+<p>SK하이닉스의 미국 시장 노출은 두 층위에서 작동한다.</p>
+<p><strong>① 직접 매출 — HBM을 통한 NVIDIA 납품</strong></p>
+<p>HBM3E는 NVIDIA의 AI 가속기(H200, GB200 Blackwell 아키텍처)에 탑재되며, SK하이닉스가 사실상 NVIDIA의 1순위 HBM 공급자 위치를 유지하고 있는 것으로 파악된다 <em>(추론 — NVIDIA 공식 발표 및 SK하이닉스 IR 자료에 근거하나 DART 원문 미확인)</em>. NVIDIA의 데이터센터 매출이 미국·글로벌 클라우드 업체에서 나오는 만큼, 이 채널은 미국 AI 인프라 투자 사이클과 직결된다.</p>
+<p><strong>② 간접 노출 — 미국 클라우드 업체 서버 DRAM</strong></p>
+<p>AWS, 마이크로소프트 Azure, Google Cloud 등 미국 하이퍼스케일러들의 서버 DRAM 수요가 또 다른 축이다 <em>(추론 — 업계 구조에서 유추, DART 원문 미확인)</em>.</p>
+<blockquote>
+<p><strong>페르소나 ★★★ 호재</strong>: 미국 시장에서 &ldquo;검증된&rdquo; 기술 (NVIDIA가 직접 선택한 HBM 공급자). 미국 기술 트렌드(AI 인프라 투자)와 가장 직접적으로 연결된 한국 기업 중 하나.</p>
+</blockquote>
+<hr />
+<h3 id="4-정부-정책-의존도-페르소나">4. 정부 정책 의존도 (페르소나 ★★★)</h3>
+<p>SK하이닉스의 핵심 사업은 <strong>정부 정책 없이도 자생한다</strong>. 메모리 반도체의 가격·수요는 글로벌 시장(미국 클라우드, 중국 스마트폰 수요 등)이 결정하며, 한국 정부의 보조금 여부가 매출을 만들지 않는다.</p>
+<p>단, 다음의 정책 연관성은 존재한다:</p>
+<ul>
+<li><strong>K-칩스법 (조세특례제한법 개정안)</strong>: 반도체 시설 투자에 대한 세액공제 (대기업 기준 최대 15% 수준) <em>(추론 — 법령 내용에서 유추, 실제 적용 금액은 [DART, 2025사업보고서, 법인세 주석] 확인 필요)</em>. 이는 capex 비용을 낮추는 보너스이지 매출 동인이 아니다.</li>
+<li><strong>반도체 특화 클러스터(용인 등) 지원</strong>: 인프라 지원 성격이며, 공장을 짓는 주체는 SK하이닉스 자신이다.</li>
+</ul>
+<p><strong>결론</strong>: 정부 정책은 <em>capex 비용 절감</em> 차원의 부가 혜택이지 사업 생존의 전제조건이 아니다 <em>(추론)</em>. 페르소나 기준 ★★★ 적신호 해당 없음.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- K-칩스법 세액공제 실제 수혜 금액 (DART 원문 미확인)
+- 정부 R&amp;D 보조금 수혜 규모 (DART 원문 미확인)</p>
+</blockquote>
+<hr />
+<h3 id="5-국내-개미테마-의존도-페르소나">5. 국내 개미·테마 의존도 (페르소나 ★★★)</h3>
+<p>이 항목은 <strong>매출 동인 관점</strong>과 <strong>주주 구성 관점</strong> 두 가지로 봐야 한다.</p>
+<p><strong>매출 동인 관점</strong>: 국내 소비자나 국내 정책 테마가 SK하이닉스 매출을 만들지는 않는다. 메모리 반도체 수요는 철저히 글로벌 B2B다. 매출 동인에서 &lsquo;국내 개미·테마 의존&rsquo; 적신호는 해당 없음.</p>
+<p><strong>주주 구성·수급 관점</strong> <em>(페르소나 ★★★ 주의 영역)</em>:</p>
+<p>SK하이닉스는 HBM·AI 테마로 한국 개인투자자(개미)에게 큰 인기를 얻은 대형주다 <em>(추론 — 학습 데이터 기반)</em>. 이 경우 페르소나 규칙에 따라 다음을 확인해야 한다:</p>
+<ul>
+<li><strong>외인 비중 추세 vs 국내 인기 추세의 괴리 여부</strong> — 이 데이터는 외인 동향 데이터가 미포함된 이번 실행에서 확인 불가.</li>
+</ul>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 외국인 보유 비중 및 그 추세 (별도 KRX 데이터 필요 — 이번 실행에 미포함)
+- 장기 외인(연기금·SWF) vs 단기 외인(헤지펀드) 비중 분해 (별도 데이터 필요)
+- 국내 개인 보유 비중 추세 (DART 임원·주요주주 공시 외 전체 주주 분포는 별도 조회 필요)</p>
+</blockquote>
+<p>이 항목은 외인 데이터가 확보되는 다음 실행에서 <strong>07_거버넌스리스크진단</strong>과 연계해 재검토가 필요하다.</p>
+<hr />
+<h3 id="6-사업-다각화의-정도와-방향성">6. 사업 다각화의 정도와 방향성</h3>
+<p>SK하이닉스는 단일 산업(메모리 반도체) 집중 전략을 유지한다. 이는 양날의 검이다.</p>
+<p><strong>집중의 강점</strong>: 기술 투자 효율. 전 세계 DRAM과 NAND 기술을 양쪽 다 키우는 데 R&amp;D 예산을 집중할 수 있다. HBM이라는 신규 고부가 카테고리도 DRAM 기반에서 파생됐다 — 다각화 없이 기존 역량에서 업그레이드된 사례.</p>
+<p><strong>집중의 약점</strong>: 메모리 가격 사이클에 100% 종속된다. DRAM 가격이 하락 사이클에 진입하면 타 산업으로 손실을 상쇄할 완충재가 없다. 2023년 DRAM 하락기에 수조 원의 영업손실을 기록한 것이 대표 사례 <em>(추론 — 학습 데이터 기반, DART 원문 미확인)</em>.</p>
+<p><strong>방향성 — Solidigm 흡수와 NAND 재편</strong> <em>(추론 — 학습 데이터 기반, DART 원문 미확인)</em>: SK하이닉스는 2021년 인텔로부터 NAND 플래시 사업부(이후 &lsquo;Solidigm&rsquo;)를 인수했다. 2025년 현재 이 사업의 통합 완료 및 수익성 정상화 여부가 주요 관심사다. NAND 사업 자체를 매각하거나 분리하는 시나리오도 간헐적으로 거론됐으나, 이 부분은 확인된 공시가 없다.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- Solidigm 사업의 2025년 기준 수익성 및 손익 기여 (DART 원문 미확인)
+- NAND 사업 분리·매각 관련 공식 결정 여부 (이번 실행에서 DART 공시 미응답)</p>
+</blockquote>
+<hr />
+<h3 id="7-이번-분기-주요-사업구조-변화-포인트">7. 이번 분기 주요 사업구조 변화 포인트</h3>
+<p>직전 분기 대비 <em>새로 바뀐 것</em>을 이번 실행에서는 확인할 수 없다. DART 공시 데이터가 비어 있기 때문이다. 다음 실행에서 2026년 1분기 보고서(2026년 5월 접수 예정)가 제공되면:</p>
+<ul>
+<li>HBM 매출 비중이 DRAM 내에서 몇 %를 차지하는지 변화 추적</li>
+<li>NAND 사업 손익 개선 여부</li>
+<li>해외 지역별 매출 구성의 중화권 의존도 변화 (미중 갈등 대응 차원)</li>
+</ul>
+<p>를 우선 확인한다.</p>
+<hr />
+<h3 id="비유-한-줄-의무">비유 한 줄 (의무)</h3>
+<p>SK하이닉스는 <strong>세계에서 가장 빠른 쌀 두 종류를 전량 수출하는 전문 농장</strong>이다. 요즘은 AI 서버용 프리미엄 쌀(HBM)이 특수 고가로 팔리면서 농장 전체 수익이 폭발했다 — 단, 쌀값이 내리면 막을 방법이 없다는 구조는 그대로다.</p>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음 (종합)</strong>
+- 세그먼트별 정확한 매출·이익 비중 수치 [XBRL, 2025사업보고서, 부문별손익]
+- 지역별 매출 비중 (중화권·미주·유럽 분해) [XBRL, 2025사업보고서, 지역별수익]
+- HBM의 DRAM 매출 내 비중 (회사는 세부 공개를 제한적으로 해왔음)
+- Solidigm(NAND 사업) 손익 기여 [DART, 2025사업보고서, 종속기업현황]
+- 외국인 보유 비중 추세 (KRX 외인 잔고 데이터 별도 필요)
+- K-칩스법 실제 수혜 세액공제 금액 [DART, 2025사업보고서, 법인세주석]</p>
+</blockquote>
+<hr />
+<p><strong>이번 회 등장 용어</strong>: DRAM, NAND 플래시, HBM(고대역폭 메모리), TSV(Through-Silicon Via), ASP(평균판매단가), B2B, 하이퍼스케일러, Solidigm, K-칩스법, capex, XBRL, 메모리 가격 사이클</p>
+<hr />
+<h2 id="02_재무건강진단-sk하이닉스">02_재무건강진단 — SK하이닉스</h2>
+<blockquote>
+<p>⚠️ <strong>데이터 파이프라인 주의</strong>
+이번 실행에서 DART API가 공시 데이터를 반환하지 않았습니다 (<code>"filings": []</code>, <code>"source": "manual_download"</code>).
+본 섹션의 수치는 작성자의 훈련 데이터에 기반한 SK하이닉스 공개 재무정보 <strong>참고치</strong>입니다.
+수치가 포함된 모든 항목에는 <em>(추론)</em> 마커가 적용되며, DART 원공시(<code>/api/fnlttSinglAcntAll.json</code>) 재조회 전까지 사실로 취급하지 않습니다.
+<strong>FY2025 사업보고서 수치는 DART에서 수신되지 않아 전면 &lsquo;확인되지 않음&rsquo; 처리합니다.</strong></p>
+</blockquote>
+<hr />
+<h3 id="0-영업이익-vs-영업현금흐름ocf-먼저-본다-페르소나">0. 영업이익 vs 영업현금흐름(OCF) — 먼저 본다 (페르소나 ★★★)</h3>
+<blockquote>
+<p><em>&ldquo;현금이 따라오지 않는 이익은 이익이 아니다.&rdquo;</em> — 페르소나 최우선 진단 항목.</p>
+</blockquote>
+<p><strong>왜 반도체 회사는 OCF &gt; 영업이익이 정상인가?</strong></p>
+<p>SK하이닉스는 수십조 원짜리 팹(fab, 반도체 생산 공장)을 보유한 장치산업체다. 이 설비는 매년 <strong>감가상각비(D&amp;A: Depreciation &amp; Amortization)</strong> — 자산을 사용하면서 줄어드는 가치를 장부에 비용으로 인식하는 것 — 로 비용 처리된다. 그런데 이 비용은 <em>현금이 실제로 나가지 않는 비용</em>이다. 그 결과:</p>
+<pre><code>영업CF ≈ 영업이익 + D&amp;A + 운전자본 변화 ± 기타
+</code></pre>
+<p>D&amp;A가 연간 수조 원 규모인 SK하이닉스에서는 <strong>정상 상태라면 영업CF가 영업이익보다 훨씬 커야 한다.</strong> 이 괴리가 줄어들거나 역전되면 이익의 질(Earnings Quality — 장부 이익이 실제 현금흐름에 얼마나 충실히 반영되는지의 척도)이 나빠지고 있다는 신호다.</p>
+<p><strong>FY2023–FY2024 개요</strong> <em>(추론 — 훈련데이터 기반, <code>[XBRL fnlttSinglAcntAll, 사업보고서 2024, 영업활동현금흐름]</code> DART 재확인 필요)</em></p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>FY2023</th>
+<th>FY2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출액</td>
+<td>약 35.8조원</td>
+<td>약 66.2조원</td>
+</tr>
+<tr>
+<td>영업이익(손실)</td>
+<td>약 △7.7조원</td>
+<td>약 23.4조원</td>
+</tr>
+<tr>
+<td>영업활동현금흐름(OCF)</td>
+<td>약 +5~6조원</td>
+<td>약 +28~32조원</td>
+</tr>
+<tr>
+<td>OCF − 영업이익 (괴리)</td>
+<td>약 +13조원 (양수: 정상)</td>
+<td>약 +5~9조원 (양수: 정상)</td>
+</tr>
+<tr>
+<td>D&amp;A 추정</td>
+<td>약 10~12조원</td>
+<td>약 11~13조원</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>FY2023 해석</strong>: 영업 적자임에도 OCF는 플러스를 유지했다. D&amp;A가 손실을 완충한 구조 <em>(추론)</em>. 현금 기반에서는 회사가 버텼다는 의미 — 이익의 질 측면에서 오히려 안도 신호.</li>
+<li><strong>FY2024 해석</strong>: 영업이익 급반등과 함께 OCF도 동반 상승. 양쪽이 함께 오르는 정상 패턴 <em>(추론)</em>. 괴리가 FY2023보다 줄어든 것은, FY2023엔 운전자본 개선(재고 소화)이 OCF를 특별히 끌어올린 효과가 있었기 때문으로 추정 <em>(추론)</em>.</li>
+<li><strong>페르소나 판단</strong>: FY2023~FY2024까지 OCF ≥ 영업이익 패턴 유지 — 이익의 질 적신호 없음 <em>(추론)</em>. <strong>그러나 FY2025 데이터 부재로 현재 상태 판단 불가.</strong></li>
+</ul>
+<p>비유: 공장을 가진 사장님이 &ldquo;올해 이익이 23조원&rdquo;이라고 했을 때, 통장에 23조원보다 더 들어왔다면 그 이익은 진짜다. 반대로 통장에 들어온 돈이 장부 이익보다 적다면 — &ldquo;뭔가 이상하다&rdquo;고 봐야 한다.</p>
+<hr />
+<h3 id="1-자본구조-부채와-자기자본의-균형">1. 자본구조 — 부채와 자기자본의 균형</h3>
+<p>반도체 팹 투자는 수십조 원 단위다. SK하이닉스는 장치산업의 전형으로, 부채 자체보다 <strong>만기 구조</strong>와 <strong>이익 창출로 감당 가능한가</strong>가 핵심이다.</p>
+<p><em>(추론 — 훈련데이터 기반, <code>[XBRL fnlttSinglAcntAll, 사업보고서 2024, 부채총계/자본총계]</code> DART 재확인 필요)</em></p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>FY2023</th>
+<th>FY2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>자산총계</td>
+<td>약 80~90조원</td>
+<td>약 100조원 이상</td>
+</tr>
+<tr>
+<td>부채총계</td>
+<td>약 45~55조원</td>
+<td>약 40~50조원</td>
+</tr>
+<tr>
+<td>자기자본</td>
+<td>약 40~45조원</td>
+<td>약 55~65조원</td>
+</tr>
+<tr>
+<td>부채비율 (부채÷자본)</td>
+<td>약 100~130%</td>
+<td>약 70~90%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>FY2024 이익 급증 효과</strong>: 19조원 이상의 당기순이익이 자기자본에 쌓이면서 부채비율 개선 <em>(추론)</em>.</li>
+<li><strong>Solidigm(인텔 NAND 사업부, 2021년 인수 계약·2022년 완료) 관련 인수금융</strong>: 이 시점에 차입한 금액의 만기 일정이 자본구조의 잠재 변수. DART 주석 확인 필수.</li>
+<li><strong>HBM 증설 자금 조달</strong>: 자체 OCF + 회사채 혼합 구조로 추정 <em>(추론 — 회사 IR 언급 트리거, 1순위 출처 미확인)</em>.</li>
+</ul>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- FY2025 부채총계·자기자본·부채비율 실수치
+- 차입금 만기 분포 (1년 이내 / 1~3년 / 3년 초과 비중) — FY2025 사업보고서 주석 필수
+- 순차입금(Net Debt = 차입금 − 현금성자산) 규모 및 Net Debt/EBITDA 배수
+- Solidigm 인수금융 잔액 및 잔여 만기 일정
+- 신용등급 최신 현황 (한국신용평가·나이스신용평가 원자료 필요)</p>
+</blockquote>
+<hr />
+<h3 id="2-현금흐름-3종-패턴">2. 현금흐름 3종 패턴</h3>
+<p>현금흐름표는 세 파트로 구성된다: 영업·투자·재무. 이 셋의 조합이 회사가 지금 어떤 국면에 있는지를 보여준다.</p>
+<p><strong>반도체 대형 사이클 기업의 전형적 국면별 패턴</strong>:
+- 불황기: 영업CF(+) / 투자CF(−) / 재무CF(+) → 벌기는 하지만 빚도 끌어써 투자를 유지
+- 호황기: 영업CF(↑↑) / 투자CF(−) / 재무CF(−) → 넘치는 돈으로 빚 갚고 주주환원</p>
+<p><em>(추론 — 훈련데이터 기반, DART <code>[XBRL fnlttSinglAcntAll, 사업보고서 2024, 투자·재무활동현금흐름]</code> 재확인 필요)</em></p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>FY2023</th>
+<th>FY2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>영업활동 CF</td>
+<td>약 +5~6조원</td>
+<td>약 +28~32조원</td>
+</tr>
+<tr>
+<td>투자활동 CF</td>
+<td>대규모 마이너스 (HBM 라인 투자)</td>
+<td>대규모 마이너스 (지속 증설)</td>
+</tr>
+<tr>
+<td>재무활동 CF</td>
+<td>플러스 (차입 확대)</td>
+<td>마이너스 또는 혼조 (일부 상환)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>영업CF</strong>: FY2023 하락기에도 플러스 유지 — D&amp;A 완충 덕분. FY2024 이익 정상화로 급등 <em>(추론)</em>.</li>
+<li><strong>투자CF</strong>: HBM3E 증설(이천·청주 팹), 기존 M14·M16 라인 업그레이드 등 연간 12~18조원 수준 capex 추정 <em>(추론)</em>. 투자CF는 구조적으로 대규모 마이너스가 지속될 것 <em>(추론)</em>.</li>
+<li><strong>재무CF</strong>: FY2024 이익 급증 이후 신규 차입보다 기존 차입 상환·배당 지급 비중이 커졌을 가능성 <em>(추론)</em>. 전형적인 호황기 패턴으로의 이행.</li>
+</ul>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- FY2025 영업·투자·재무 현금흐름 3종 전체
+- FY2024 투자CF 세부 내역 (capex 항목별 — HBM vs 일반 DRAM vs NAND 분리)
+- FY2025 capex 집행 규모 (HBM4 증설 투자 포함 여부)</p>
+</blockquote>
+<hr />
+<h3 id="3-free-cash-flow-fcf-진짜-손에-남은-돈">3. Free Cash Flow (FCF) — 진짜 손에 남은 돈</h3>
+<p>FCF(잉여현금흐름)는 영업으로 번 현금에서 사업 유지·성장에 필요한 시설 투자(Capex — 자본적 지출)를 뺀 것이다. <strong>이것이 주주환원, 채무 상환, 신규 사업에 쓸 수 있는 진짜 돈이다.</strong></p>
+<pre><code>FCF = 영업활동현금흐름 − 자본적 지출(Capex)
+</code></pre>
+<p><em>(추론 — 훈련데이터 기반, DART 재확인 필요)</em></p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>FY2023</th>
+<th>FY2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>영업CF</td>
+<td>약 +5~6조원</td>
+<td>약 +28~32조원</td>
+</tr>
+<tr>
+<td>Capex (추정)</td>
+<td>약 12~16조원</td>
+<td>약 12~18조원</td>
+</tr>
+<tr>
+<td>FCF</td>
+<td>약 △6~11조원 <strong>(마이너스)</strong></td>
+<td>약 +10~19조원 <strong>(플러스 전환 추정)</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>FY2023</strong>: FCF 적자. 불황기에도 HBM 전환 투자를 멈추지 않은 전략적 선택 <em>(추론)</em>. 현금 소모가 실재했다는 사실은 변하지 않는다.</li>
+<li><strong>FY2024</strong>: 이익 급등으로 영업CF가 capex를 초과 → FCF 흑자 전환 추정 <em>(추론)</em>. 이것이 실현되었다면 재무 건강도 개선의 핵심 근거.</li>
+<li><strong>FY2025 전망</strong>: HBM4 양산 전환 및 추가 증설 관련 capex가 크다면 FCF 재악화 가능성 <em>(추론 — 회사 IR 발표 트리거 기반, 1순위 출처 미확인)</em>. <strong>OCF 성장이 capex 증가를 앞서느냐가 FY2025 재무 건강의 핵심 질문이나, DART 데이터 부재로 현재 판단 불가.</strong></li>
+</ul>
+<p>비유: 식당 사장님이 장사로 100만 원 벌었지만 주방 설비를 교체하는 데 80만 원을 썼다면, 손에 남는 돈은 20만 원이다. 이게 FCF다. SK하이닉스는 공장 설비가 워낙 비싸서 FCF가 종종 마이너스가 나오는 구조이며, 이걸 &lsquo;실패&rsquo;가 아니라 &lsquo;미래 투자&rsquo;로 볼 수 있는 조건은 — 그 투자가 훗날 수익으로 돌아온다는 증거가 있어야 한다.</p>
+<hr />
+<h3 id="4-운전자본-영업-사이클의-건강도">4. 운전자본 — 영업 사이클의 건강도</h3>
+<p>운전자본(Working Capital)은 매출채권(아직 못 받은 돈) + 재고자산 − 매입채무(아직 안 갚은 돈)다. 운전자본이 늘면 현금이 사업에 묶이고, 줄면 현금이 풀린다. 반도체 업황에서 <strong>재고 수준은 사이클의 가장 빠른 선행 지표 중 하나다.</strong></p>
+<p><em>(추론 — 훈련데이터 기반, DART <code>[XBRL fnlttSinglAcntAll, 사업보고서 2024, 재고자산]</code> 재확인 필요)</em></p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>FY2022 말</th>
+<th>FY2023 말</th>
+<th>FY2024 말</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>재고자산 방향</td>
+<td>급증 (다운사이클 초입)</td>
+<td>정점 후 소화 중 <em>(추론)</em></td>
+<td>감소 추세 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>매출채권 회전일수</td>
+<td>확인되지 않음</td>
+<td>확인되지 않음</td>
+<td>확인되지 않음</td>
+</tr>
+<tr>
+<td>재고 회전일수</td>
+<td>확인되지 않음</td>
+<td>확인되지 않음</td>
+<td>확인되지 않음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>핵심 관찰</strong>:
+- FY2022~2023 재고 급증은 메모리 다운사이클의 전형 — 현금이 재고에 묶이며 OCF를 끌어내린 요인 중 하나 <em>(추론)</em>.
+- FY2024 수요 회복(HBM 폭증 + 일반 DRAM 반등)으로 재고가 소화되면서 운전자본 개선이 OCF 급등에 기여했을 가능성 <em>(추론)</em>.
+- <strong>HBM 특이성</strong>: HBM(High Bandwidth Memory — AI 가속기용 고대역폭 메모리)은 일반 DRAM보다 공정이 복잡하고 리드타임(주문부터 납품까지의 시간)이 길다. 재고 구조가 일반 메모리와 다를 수 있어 단순 비교 주의.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- FY2025 재고자산 규모 및 FY2024 대비 증감
+- FY2025 매출채권·재고·매입채무 각 회전일수 (사업보고서 주석 필요)
+- HBM 전용 재고와 일반 DRAM·NAND 재고의 분리 수치</p>
+</blockquote>
+<hr />
+<h3 id="5-단기-유동성-급한-불-끌-수-있나">5. 단기 유동성 — 급한 불 끌 수 있나</h3>
+<p>유동성(Liquidity)은 단기적으로 돈이 필요할 때의 대응 능력이다. 아무리 펀더멘털이 좋아도 단기 자금이 막히면 치명적이다.</p>
+<p><em>(추론 — 훈련데이터 기반, DART 재확인 필요)</em></p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>FY2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>현금 및 현금성자산</td>
+<td>수조 원 규모 추정 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>단기금융상품</td>
+<td>확인되지 않음</td>
+</tr>
+<tr>
+<td>단기차입금 + 유동성 장기부채</td>
+<td>확인되지 않음</td>
+</tr>
+<tr>
+<td>유동비율 (유동자산 ÷ 유동부채)</td>
+<td>확인되지 않음</td>
+</tr>
+<tr>
+<td>당좌비율 ((유동자산 − 재고) ÷ 유동부채)</td>
+<td>확인되지 않음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>구조적 완충재</strong>:
+- FY2024 대규모 이익 발생으로 내부 현금 창출 능력이 단기 유동성 위험을 상당 부분 상쇄했을 가능성 <em>(추론)</em>.
+- 신용등급이 높게 유지되는 한 국내 회사채 시장 접근성은 양호 <em>(추론 — 신용평가사 원자료 미확인)</em>.
+- 단기차입금과 CP(기업어음) 만기 집중 여부는 FY2025 사업보고서 주석에서 반드시 확인해야 하는 항목 — <strong>DART 데이터 미수신으로 현재 판단 불가.</strong></p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- FY2025 현금 및 현금성자산 + 단기금융상품 합계
+- 단기차입금·CP(기업어음) 잔액 및 만기 분포
+- 미사용 여신한도(커밋드 크레딧라인) 규모
+- 유동비율·당좌비율 실수치</p>
+</blockquote>
+<hr />
+<h3 id="종합-재무건강-현황-한눈에">종합 — 재무건강 현황 한눈에</h3>
+<p><em>(추론 — 아래 판단은 훈련데이터 기반 FY2023~FY2024까지의 흐름 평가. FY2025 DART 원공시 확인 전 사실로 취급 금지)</em></p>
+<table>
+<thead>
+<tr>
+<th>진단 항목</th>
+<th>상태</th>
+<th>핵심 근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>이익의 질 (OCF vs 영업이익)</td>
+<td>✅ FY2024까지 양호</td>
+<td>OCF ≥ 영업이익 패턴 유지 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>자본구조</td>
+<td>✅ FY2024 이익으로 부채비율 개선 <em>(추론)</em></td>
+<td>Solidigm 인수금융 잔액 요주의</td>
+</tr>
+<tr>
+<td>Free Cash Flow</td>
+<td>✅ FY2024 플러스 전환 추정 <em>(추론)</em></td>
+<td>FY2025 HBM 증설 capex 크기에 따라 가변</td>
+</tr>
+<tr>
+<td>운전자본</td>
+<td>✅ FY2024 재고 소화 중 <em>(추론)</em></td>
+<td>FY2025 재고 수준 미확인</td>
+</tr>
+<tr>
+<td>단기 유동성</td>
+<td>⚠️ 확인 필요</td>
+<td>단기차입금·CP 만기 집중 여부 미확인</td>
+</tr>
+<tr>
+<td>차입금 만기 구조</td>
+<td>⚠️ 확인 필요</td>
+<td>Solidigm 관련 잔여 일정 핵심</td>
+</tr>
+</tbody>
+</table>
+<p><strong>페르소나 ★★★ 항목 요약</strong>:
+영업이익 vs OCF 괴리는 FY2024까지 &ldquo;이상 없음&rdquo; <em>(추론)</em>. 그러나 <strong>FY2025 수치 부재가 이 섹션 최대 결함</strong>이다. HBM 증설로 capex가 크게 늘었다면 FCF가 다시 압박받을 수 있고, 그 결과가 OCF 추이에 어떻게 반영됐는지가 다음 DART 조회의 1순위 질문이다.</p>
+<p>비유: 병원 정밀 검진을 예약했는데 채혈 결과가 아직 안 나온 상태다. 지난번 검진(FY2024까지)까지는 수치가 정상 범위였고 지금도 그럴 가능성이 높지만 — 결과지 없이 &ldquo;건강합니다&rdquo;라고 확언할 수 없다. FY2025 DART 데이터가 이 섹션의 핵심 미싱 링크다.</p>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음 (섹션 종합)</strong>
+- FY2025 사업보고서 영업·투자·재무 현금흐름 3종 전체 (<code>[XBRL fnlttSinglAcntAll, 사업보고서 2025]</code>)
+- FY2025 재고자산·매출채권·매입채무 잔액 및 회전일수
+- FY2025 차입금 총액, 만기 분포, 순차입금(Net Debt)
+- FY2025 현금성자산 + 단기금융상품 합계
+- FY2024 Capex 세부 항목별 지출 (HBM vs 일반 DRAM vs NAND 분리)
+- Solidigm 인수금융 잔액 및 잔여 만기 일정
+- Net Debt / EBITDA 배수 (FY2024·FY2025)
+- 신용등급 최신 현황 (한국신용평가·나이스신용평가 원자료)</p>
+</blockquote>
+<hr />
+<p>이번 회 등장 용어: 영업활동현금흐름(OCF), 감가상각비(D&amp;A, Depreciation &amp; Amortization), Free Cash Flow(FCF·잉여현금흐름), 이익의 질(Earnings Quality), 부채비율, 운전자본(Working Capital), 유동비율, 당좌비율, 자본적 지출(Capex), 순차입금(Net Debt), EBITDA, HBM(High Bandwidth Memory), 리드타임, 팹(Fab·반도체 생산 공장), CP(기업어음)</p>
+<hr />
+<h2 id="03_수익성진단_1">03_수익성진단</h2>
+<blockquote>
+<p><strong>⚠️ 데이터 제약 안내</strong>
+이 보고서에 공급된 DART API 데이터가 <code>"filings": []</code>로 비어 있습니다. 2025 사업보고서 원문 및 XBRL 재무제표가 직접 수신되지 않았으므로, <strong>구체적 수치 대부분이 1순위 출처로 확인되지 않은 상태</strong>입니다. 본 섹션은 (a) 분석 프레임워크 제시, (b) 확인되지 않음 명시, (c) 메모리 반도체 업종 구조 지식 기반 정성 분석으로 구성합니다. 다음 실행 사이클에서 XBRL 데이터가 정상 수신되면 수치 채우기가 필요합니다.</p>
+</blockquote>
+<hr />
+<h3 id="수익성-진단이란-무엇인가-비전문가를-위한-안내">수익성 진단이란 무엇인가? (비전문가를 위한 안내)</h3>
+<p>수익성 진단은 &ldquo;회사가 돈을 얼마나 잘 버는가&rdquo;를 여러 각도에서 보는 작업이다.</p>
+<ul>
+<li><strong>매출총이익률</strong>: 제품 하나를 팔았을 때 원가를 빼고 남은 비율. &ldquo;장사 자체의 마진&rdquo;</li>
+<li><strong>영업이익률</strong>: 거기서 인건비·R&amp;D·관리비까지 빼고 남은 비율. &ldquo;진짜 본업의 마진&rdquo;</li>
+<li><strong>순이익률</strong>: 세금·이자까지 다 빼고 최종으로 남는 비율</li>
+<li><strong>영업현금흐름(영업CF)</strong>: 이익이 아니라 실제로 통장에 들어온 현금. 이익은 회계 기교로 부풀릴 수 있지만 현금은 그렇지 않다</li>
+<li><strong>ROE (자기자본이익률)</strong>: 주주 돈 100원으로 1년에 얼마를 벌었는가</li>
+<li><strong>ROIC (투하자본이익률)</strong>: 빌린 돈 포함해서 사업에 쓴 돈 100원으로 얼마를 벌었는가</li>
+</ul>
+<blockquote>
+<p><strong>비유</strong>: 수익성 지표는 식당의 건강 검진표와 같다. 매출은 손님 수, 영업이익률은 식재료값·인건비·임대료 다 내고 남는 비율, 영업CF는 카드 수수료에 외상까지 실제로 현금이 얼마나 들어왔는가다. 매출이 많아도 현금이 안 들어오는 식당은 망할 수 있다.</p>
+</blockquote>
+<hr />
+<h3 id="1-sk하이닉스-사업-구조와-수익성-드라이버">1. SK하이닉스 사업 구조와 수익성 드라이버</h3>
+<p>SK하이닉스는 <strong>메모리 반도체</strong> 전문 기업이다. 주요 제품군은 두 가지다.</p>
+<ul>
+<li><strong>DRAM</strong>: 컴퓨터·서버·스마트폰에 들어가는 휘발성 메모리. 매출의 약 70~80% 비중 <em>(추론 — 공개된 사업보고서 세그먼트 공시 패턴 기반 추정. XBRL 확인 필요)</em></li>
+<li><strong>NAND Flash</strong>: 저장 장치(SSD·스마트폰 저장)에 들어가는 비휘발성 메모리. 나머지 비중 <em>(추론)</em></li>
+</ul>
+<p>메모리 반도체는 <strong>극도로 사이클적(cyclical)인 장치산업</strong>이다. 공급이 수요를 앞서면 가격이 폭락하고(이익률 급감), 공급이 부족하면 가격이 폭등한다(이익률 급등). SK하이닉스의 수익성은 본질적으로 이 <strong>메모리 가격 사이클</strong>에 연동된다.</p>
+<p>최근 사이클의 구조적 변화:
+- <strong>2023년</strong>: 메모리 다운사이클. 재고 과잉 + 수요 위축으로 전 업계 대규모 손실 시기
+- <strong>2024년~</strong>: HBM(High Bandwidth Memory, 고대역폭 메모리 — AI 서버용 특수 DRAM) 수요 급증 및 일반 DRAM 회복이 겹치며 수익성 회복 국면</p>
+<blockquote>
+<p><em>이 구조 서술은 메모리 반도체 업종의 공개된 산업 지식에 기반한다. 특정 수치는 DART 확인 없이 인용하지 않는다.</em></p>
+</blockquote>
+<p><strong>HBM은 일반 DRAM 대비 단가가 수배 높고 이익률도 우수하다</strong> <em>(추론 — 업계 구조 특성. 회사 공시의 제품별 이익률 공개 여부는 DART 원문 확인 필요)</em>. SK하이닉스는 HBM 선점에 성공한 것으로 업계에서 널리 인식되나, <strong>구체적 HBM 매출 비중 및 이익 기여는 DART 공시 원문 확인 전까지 수치로 제시하지 않는다.</strong></p>
+<hr />
+<h3 id="2-영업cf-기준-수익성-페르소나-우선-점검">2. 영업CF 기준 수익성 — 페르소나 우선 점검</h3>
+<blockquote>
+<p><strong>페르소나 원칙</strong>: &ldquo;돈이 가장 중요하다. 영업이익은 가공할 수 있지만 영업현금흐름과 자금 흐름은 거짓말 못 한다.&rdquo; — <em>_persona.md §1.3</em></p>
+</blockquote>
+<p>영업이익과 영업CF의 괴리는 수익성 진단의 1번 항목이다. 메모리 반도체 업종에서 이 괴리가 생기는 주요 원인:</p>
+<ol>
+<li><strong>재고평가 회계</strong>: 메모리 가격 급락 시 재고자산에 평가손실을 대규모로 인식 → 영업이익 더 나쁘게 나오지만 현금은 상대적으로 방어</li>
+<li><strong>대규모 감가상각</strong>: 반도체 공장(fab) 투자 후 수년간 감가상각 → 영업이익은 감가상각으로 깎이지만, 현금 지출은 capex 집행 시점에 발생</li>
+<li><strong>운전자본 변화</strong>: 재고 축적기(하락기)에는 운전자본이 현금을 흡수, 재고 소진기(회복기)에는 현금이 환류</li>
+</ol>
+<p>따라서 SK하이닉스는 <strong>업황 하락기에는 영업이익 손실이 영업CF보다 더 크게 나타나고, 업황 회복기에는 영업CF가 영업이익보다 빠르게 회복하는 패턴</strong>을 보이는 경향이 있다 <em>(추론 — 메모리 업종 사이클 구조에 근거한 구조적 추론. 실제 수치는 DART XBRL 확인 필요)</em>.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025년 영업이익 vs 영업CF 실제 수치 및 괴리 (DART <code>fnlttSinglAcntAll</code>, 2025 사업보고서 — 제공 데이터에 미포함)
+- 2023년~2025년 영업CF 절대값 추이 (직전 4분기 시계열 포함)
+- 운전자본 변화 규모 (재고·매출채권 증감이 CF에 미친 영향)</p>
+</blockquote>
+<hr />
+<h3 id="3-이익률-추이-직전-48분기-시계열">3. 이익률 추이 — 직전 4~8분기 시계열</h3>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+아래 표는 <strong>분석 프레임워크</strong>를 보여주는 템플릿이다. 수치는 제공된 DART 데이터에 없으므로 공란 처리한다. 실제 XBRL 수신 후 채워야 한다.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>기간</th>
+<th>매출 (조원)</th>
+<th>매출총이익률</th>
+<th>영업이익률</th>
+<th>영업CF 마진</th>
+<th>순이익률</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023 1Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2023 2Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2023 3Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2023 4Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2024 1Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2024 2Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2024 3Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2024 4Q</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2025 연간</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><em>출처 필요: [XBRL fnlttSinglAcntAll, 각 분기 사업·분기보고서, SK하이닉스]</em></p>
+<p><strong>동종업계 비교 기준점</strong> <em>(추론 — 수치 확인 전 업계 구조 서술만)</em> :</p>
+<p>메모리 반도체 3사(삼성전자 DS부문, SK하이닉스, Micron Technology)는 업황 사이클을 함께 탄다. 비교 시 주의점:
+- 삼성전자는 비메모리(Foundry, MX 등)와 메모리가 혼재 → 단순 비교 시 과소 추정
+- Micron은 회계연도가 8월말 기준 → 분기 정렬 시 주의
+- 의미 있는 비교를 위해서는 삼성전자 DS 세그먼트 분리 수치 또는 Micron 사업보고서가 필요</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 삼성전자 DS 세그먼트 영업이익률 (비교 기준점으로 필요)
+- Micron Technology 영업이익률 (동종업계 최소 2개사 비교 기준)
+- 업계 평균 DRAM 가격지수 추이 (DRAMeXchange 또는 Omdia — 3순위 출처로 트리거만, 1순위 공시와 교차확인 필요)</p>
+</blockquote>
+<hr />
+<h3 id="4-roe-roic-분석">4. ROE / ROIC 분석</h3>
+<p><strong>ROE (자기자본이익률)</strong>: 주주가 맡긴 돈으로 회사가 1년에 얼마나 벌었는지를 보여주는 숫자다. ROE 12%는 100원을 맡겼더니 12원을 벌었다는 뜻.</p>
+<p><strong>ROIC (투하자본이익률)</strong>: 빌린 돈을 포함해 사업에 실제 투입된 전체 자본 대비 세후 영업이익 비율. 자본 효율의 더 엄격한 기준.</p>
+<p><strong>WACC (가중평균자본비용)</strong>: 주주와 채권자 모두를 만족시키기 위해 회사가 최소한 벌어야 하는 수익률. ROIC &gt; WACC이면 가치를 창출하고 있다는 뜻 (&ldquo;가치 창출&rdquo;). ROIC &lt; WACC이면 돈을 쓸수록 회사 가치가 줄어들고 있다는 뜻 (&ldquo;가치 파괴&rdquo;).</p>
+<p>메모리 반도체 업종의 ROIC 구조적 특성:
+- <strong>업황 호황기</strong>: ROIC가 20~40% 이상으로 치솟는 경향 <em>(추론 — 업종 사이클 패턴 기반)</em>
+- <strong>업황 침체기</strong>: ROIC가 마이너스로 떨어지는 경향 (2023년이 해당) <em>(추론)</em>
+- <strong>사이클 평균 ROIC</strong>가 WACC를 넘는가가 진짜 질문</p>
+<p><em>이 수치들의 실제 값은 제공 데이터에 없어 수치 제시 불가.</em></p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- SK하이닉스 2023~2025 ROE 추이 [XBRL, 사업보고서, 자기자본·당기순이익]
+- SK하이닉스 2023~2025 ROIC 계산치 (= 세후 영업이익 ÷ 투하자본. 투하자본 = 총자산 − 비이자부 유동부채)
+- SK하이닉스의 WACC 추정치 (공시에 직접 나오지 않음 → 산출 필요: 부채비용 [사채·차입금 이자비용 ÷ 평균 차입금], 자기자본비용 [CAPM 기반 추정], 자본구조 가중치)
+- ROIC vs WACC 스프레드 추이</p>
+</blockquote>
+<p><strong>★★ 페르소나 적신호 체크</strong>: <code>ROIC &lt; WACC인데 capex 계속 증가</code></p>
+<p>메모리 반도체는 대규모 공장 투자가 필수적인 장치산업이기 때문에, 업황 침체기에는 ROIC &lt; WACC 상태에서도 capex를 줄이기 어려운 구조적 특성이 있다. 이 적신호가 <em>구조적 필요</em>인지 <em>경영 판단 오류</em>인지를 구분하는 게 핵심이다. 판단 기준은 capex의 <em>방향성</em> — HBM 등 고마진 제품 중심인지, 범용 가격경쟁 제품 중심인지. <em>(추론 — capex 구성 내역은 DART 주석 확인 필요)</em></p>
+<hr />
+<h3 id="5-이익률-변화-분해-가격물량비용믹스-효과">5. 이익률 변화 분해 — 가격·물량·비용·믹스 효과</h3>
+<p>이익률이 변하는 이유를 쪼개 보는 것이다. SK하이닉스의 수익성 변동을 구조적으로 이해하는 데 가장 중요한 프레임이다.</p>
+<p><strong>SK하이닉스 수익성 분해의 핵심 변수 4개</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>효과</th>
+<th>정의</th>
+<th>SK하이닉스에서의 중요도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>가격 효과</strong></td>
+<td>메모리 평균판매가격(ASP) 변화</td>
+<td>★★★ 최우선. 메모리는 가격 변동이 이익률의 80%를 결정하는 경우 많음 <em>(추론)</em></td>
+</tr>
+<tr>
+<td><strong>물량 효과</strong></td>
+<td>출하량 변화</td>
+<td>★★ 공장 가동률과 직결. 가동률이 낮으면 고정비 부담 급증</td>
+</tr>
+<tr>
+<td><strong>비용 효과</strong></td>
+<td>원가 절감 (공정 효율화, 소재 비용 등)</td>
+<td>★★ 세대 전환(ex. 1a→1b나노 DRAM) 시마다 원가 구조 개선</td>
+</tr>
+<tr>
+<td><strong>믹스 효과</strong></td>
+<td>HBM vs 범용 DRAM vs NAND 비중 변화</td>
+<td>★★★ HBM 비중이 커질수록 평균 이익률 구조적 개선 <em>(추론)</em></td>
+</tr>
+</tbody>
+</table>
+<p>2024년 이후 SK하이닉스 수익성 회복의 핵심 드라이버는 <strong>믹스 효과</strong> (HBM 비중 확대) + <strong>가격 효과</strong> (DRAM 가격 회복)의 복합으로 추정된다 <em>(추론 — 업황 사이클 + HBM 공급 구조 기반. 정량 기여도 분해는 XBRL + IR 자료로 확인 필요)</em>.</p>
+<p><strong>비용 측면 구조 특성</strong> <em>(구조 지식 — 수치 미확인)</em>:
+- <strong>고정비 비중이 높다</strong>: 감가상각비(공장·장비)와 인건비가 비용의 큰 부분. 매출이 줄어도 비용은 잘 안 줄어 업황 하락기에 레버리지가 역방향으로 작동
+- <strong>업황 회복기의 영업 레버리지</strong>: 반대로 매출이 늘면 이익이 매출보다 훨씬 빠르게 늘어나는 구조 (고정비 희석 효과)</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 연도별 ASP 추이 (DRAM, NAND 각각 — 공시에서는 직접 제공하지 않는 경우가 많음. IR 자료·실적발표에서 확인 필요)
+- HBM 매출 비중 (회사가 별도 공시 여부 — 사업보고서 세그먼트 주석 확인 필요)
+- 감가상각비 절대 규모 및 매출 대비 비중 추이 [XBRL, 현금흐름표·주석]
+- 세대별 공정 원가 개선 규모 (회사 IR 자료에서 가이던스로 제공하는 경우 있음 — 3순위 출처로 트리거만)</p>
+</blockquote>
+<hr />
+<h3 id="6-수익성-종합-진단-현재-알-수-있는-것">6. 수익성 종합 진단 — 현재 알 수 있는 것</h3>
+<p><strong>DART 데이터 수신 없이 확정 가능한 구조적 진단</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>구조적 판단</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>수익성의 핵심 변수</td>
+<td>메모리 ASP + HBM 믹스</td>
+<td>업종 구조 (산업 지식)</td>
+</tr>
+<tr>
+<td>이익률 변동성</td>
+<td>업종 내 최고 수준으로 높음</td>
+<td>고정비 레버리지 구조 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>영업CF vs 영업이익 괴리 가능성</td>
+<td>감가상각비 규모가 커서 CF가 이익보다 클 가능성 높음</td>
+<td>장치산업 구조 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>3년 수익성 사이클</td>
+<td>2023 저점 → 2024~2025 회복 국면으로 추정</td>
+<td>업황 사이클 구조 <em>(추론)</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>페르소나 관점 우선 점검 결과</strong> (데이터 없이 구조적으로만):</p>
+<p>★★★ 신호 <code>영업이익↑인데 영업CF 정체·감소</code> — 현재 DART 데이터 없어 확인 불가. <strong>다음 사이클에서 반드시 영업이익과 영업CF를 나란히 놓고 괴리를 먼저 확인할 것.</strong></p>
+<hr />
+<h3 id="비유-한-줄">비유 한 줄</h3>
+<blockquote>
+<p>SK하이닉스의 수익성은 <strong>날씨에 따라 수익이 극적으로 달라지는 과수원</strong>과 같다. 풍년(메모리 가격 상승·HBM 수요 호황)에는 100원 심어서 400원 버는 사업이지만, 흉년(메모리 가격 급락)에는 100원 심고 50원만 건지는 구조다. 진짜 실력은 <em>흉년에 얼마나 버티느냐</em> + <em>풍년을 얼마나 미리 준비했느냐</em> — HBM이 바로 그 다음 풍년을 위한 새 품종 전환이다.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음 (종합)</strong>
+아래 항목들은 이 섹션이 반드시 다뤄야 하지만, 제공된 DART 데이터(<code>"filings": []</code>)에 없어 수치 기재가 불가능하다. 다음 실행 사이클에서 XBRL 정상 수신 시 채워야 한다:
+- 분기별 영업이익률 / 순이익률 시계열 (직전 4~8분기)
+- 분기별 영업CF 마진 시계열
+- 영업이익 vs 영업CF 갭 추이
+- ROE / ROIC 연도별 수치
+- WACC 추정치 및 ROIC-WACC 스프레드
+- HBM 매출 비중 (사업보고서 세그먼트 주석)
+- 동종업계(삼성전자 DS, Micron) 이익률 비교치
+- 감가상각비 절대 규모 추이
+- 법인세 실효세율 추이 [XBRL, 법인세비용·세전이익]</p>
+</blockquote>
+<hr />
+<p><strong>이번 회 등장 용어</strong>: 매출총이익률, 영업이익률, 영업현금흐름(영업CF), ROE(자기자본이익률), ROIC(투하자본이익률), WACC(가중평균자본비용), HBM(고대역폭메모리), ASP(평균판매가격), 가격 효과, 물량 효과, 믹스 효과, 영업 레버리지, 운전자본, DRAM, NAND Flash, 감가상각비, 다운사이클</p>
+<hr />
+<h2 id="04_자본활용진단_1">04_자본활용진단</h2>
+<blockquote>
+<p><strong>데이터 기준시점</strong>
+- 작성일: 2026-05-06
+- DART 조회: DART API (2026-05-06) — 이번 분석에서 수신된 공시 건수: 0건
+- 재무제표: 2025 사업보고서 (XBRL 미수신)
+- 시장가격: 미포함
+- 외인 동향: 미포함</p>
+</blockquote>
+<hr />
+<h3 id="섹션-읽기-전-한-줄-안내">섹션 읽기 전 한 줄 안내</h3>
+<p>이번 분석에서 DART API로 수신된 공시 데이터가 없다(<code>"filings": []</code>). 아래 섹션은 1·2순위 출처(DART 원공시, XBRL 재무제표)에서 확인된 수치가 없으므로, <strong>수치 기반 사실 주장을 하지 않는다.</strong> 대신 (a) 확인되지 않은 항목을 명시하고, (b) 분석 프레임과 봐야 할 질문을 남겨 다음 데이터 수신 시 즉시 채울 수 있게 한다.</p>
+<hr />
+<h3 id="4-1-capex-규모와-방향">4-1. Capex — 규모와 방향</h3>
+<h4 id="확인되지-않은-항목">확인되지 않은 항목</h4>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025년 연간 Capex 총액 및 전년 대비 증감 [XBRL, 2025 사업보고서, 유형자산 취득액 — 미수신]
+- Capex의 사업부별 배분 (DRAM / NAND / HBM 전용 라인 구분) [사업보고서 본문 설비투자 섹션 — 미수신]
+- 이천·청주·용인 클러스터별 투자 규모 [사업보고서 주석, 유형자산 지역별 취득 — 미수신]
+- 미국·해외법인 Capex 비중 [사업보고서 해외 종속기업 투자 내역 — 미수신]</p>
+</blockquote>
+<h4 id="분석-프레임-데이터-수신-시-여기서-볼-것">분석 프레임 — 데이터 수신 시 여기서 볼 것</h4>
+<p><strong>페르소나 핵심 질문</strong>: &ldquo;이 Capex가 미국 기술 트렌드(AI 인프라 → HBM 수요)에 정합한 방향인가?&rdquo;</p>
+<p>데이터가 확보되면 다음 세 가지를 순서대로 본다:</p>
+<ol>
+<li><strong>총량 비교</strong>: Capex ÷ 영업현금흐름. 벌어들이는 현금 대비 투자 규모가 지속 가능한가. 비율이 100%를 지속적으로 초과하면 외부 조달에 의존하는 구조 <em>(추론 기준 — 현금흐름 대비 Capex 과잉은 재무 건전성 리스크의 공통 신호)</em>.</li>
+<li><strong>방향성 검증</strong>: HBM·첨단 DRAM(1b nm 이하) 등 AI 서버 수요에 직결되는 투자 비중이 늘고 있는가, 아니면 범용 NAND에 집중되어 있는가. 전자면 미국 AI 인프라 Capex 사이클과 정합, 후자면 업황 의존도가 높은 방향 <em>(추론 기준 — 반도체 Capex 방향성과 수요처 연결은 업황 사이클 분석의 일반 원리)</em>.</li>
+<li><strong>지역 분산</strong>: 용인 클러스터 외 미국 현지 생산 또는 합작 여부. 미국 CHIPS Act 수혜 구조에 들어가 있는지 여부가 장기 자금 조달 비용에 영향 <em>(추론 기준 — CHIPS Act 보조금 수혜는 외국 기업도 미국 내 투자 요건 충족 시 가능하다는 법령 구조에서 유추 [CHIPS and Science Act, Pub.L. 117-167, Sec. 9902])</em>.</li>
+</ol>
+<blockquote>
+<p><strong>비유</strong>: Capex는 식당의 주방 설비 투자다. 지금 손님(AI 서버 시장)이 몰리는 메뉴(HBM)에 맞게 주방을 바꾸고 있는지, 아니면 손님이 줄어드는 메뉴(범용 NAND)에 계속 투자하고 있는지가 핵심이다.</p>
+</blockquote>
+<hr />
+<h3 id="4-2-ma-최근-인수매각과-의도">4-2. M&amp;A — 최근 인수·매각과 의도</h3>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2024~2025년 주요 M&amp;A 거래 내역 [DART 주요사항보고서 — 미수신]
+- 종속기업 신규 취득·처분 내역 [XBRL, 2025 사업보고서, 종속기업 현황 — 미수신]
+- 지분 투자 및 조인트벤처 변동 사항 [사업보고서 주석, 관계기업·공동기업 투자 — 미수신]</p>
+</blockquote>
+<h4 id="분석-프레임">분석 프레임</h4>
+<p>반도체 장비·소재 기업에 대한 소수지분 투자, 또는 AI 소프트웨어·패키징 기업 인수가 있었는지가 봐야 할 핵심이다. 이는 단순 생산 능력 확장을 넘어 <strong>수직계열화와 기술 자립도</strong>를 보여주는 신호이기 때문이다.</p>
+<p>페르소나 관점에서 추가로 볼 것: 미국 자본(빅테크·사모펀드)과의 합작(JV) 또는 전략적 투자 유치 여부. 이것이 확인되면 IP 보호·합작 구조(★★ 호재 신호) 평가로 이어진다.</p>
+<hr />
+<h3 id="4-3-주주환원-자사주배당">4-3. 주주환원 — 자사주·배당</h3>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025년 배당금 총액·주당 배당금·배당성향 [XBRL, 2025 사업보고서, 배당 관련 항목 — 미수신]
+- 자사주 매입·소각 규모 및 잔여 자사주 비율 [DART 임원·주요주주 등 소유 보고, 자기주식 취득·처분 공시 — 미수신]
+- 주주환원 정책 변경 공시 여부 [DART 기타 공시 — 미수신]</p>
+</blockquote>
+<h4 id="분석-프레임_1">분석 프레임</h4>
+<p>주주환원은 두 가지 맥락으로 읽는다:</p>
+<ol>
+<li><strong>여유 현금의 신호</strong>: 배당·자사주 매입이 늘면 경영진이 &ldquo;현재 투자처보다 주주에게 돌려주는 게 낫다&rdquo;고 판단했다는 뜻. Capex 강도와 역관계인지 확인.</li>
+<li><strong>외인 유인 여부</strong>: 배당성향이 글로벌 반도체 피어 대비 경쟁력 있는 수준인가. 외국인 장기 투자자(연기금·패시브 펀드)는 배당 정책의 예측 가능성을 중시한다 <em>(추론 기준 — 글로벌 패시브 펀드의 배당 안정성 선호는 ESG 투자 기준 및 인덱스 편입 요건에서 일반적으로 관찰되는 패턴)</em>.</li>
+</ol>
+<hr />
+<h3 id="4-4-roic-vs-wacc-자본효율">4-4. ROIC vs WACC — 자본효율</h3>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- NOPAT (세후 영업이익) [XBRL, 2025 사업보고서, 영업이익·법인세 항목 — 미수신]
+- 투하자본 (유형자산 + 운전자본) [XBRL, 2025 사업보고서 — 미수신]
+- WACC 산출 기초 데이터 (차입금리·자본비용) [사업보고서 주석, 차입금 내역 — 미수신]</p>
+</blockquote>
+<h4 id="분석-프레임_2">분석 프레임</h4>
+<p><strong>ROIC vs WACC 비교</strong>는 &ldquo;이 회사가 투자한 돈으로 자본 비용 이상의 이익을 내고 있는가&rdquo;를 측정한다. 쉽게 말하면, 1,000원을 빌리거나 출자받아서 최소한 그 이자·기회비용(WACC)보다 많이 벌고 있는가의 문제다.</p>
+<ul>
+<li>ROIC &gt; WACC: 가치를 창출하는 투자 구조 (호재)</li>
+<li>ROIC &lt; WACC인데 Capex 지속 증가: ★★ 적신호 — 돈을 쓸수록 주주 가치가 깎이는 구조</li>
+</ul>
+<p>메모리 반도체는 업황 사이클에 따라 ROIC 변동성이 크다. 따라서 단일 연도가 아닌 <strong>업 사이클(2021~2022)·다운 사이클(2023)·회복기(2024~2025)에 걸친 평균 ROIC</strong>를 보는 게 더 정확하다 <em>(추론 기준 — 사이클 산업에서 단일 연도 ROIC는 노이즈가 크다는 것은 가치평가론의 일반 원칙)</em>.</p>
+<blockquote>
+<p><strong>비유</strong>: ROIC vs WACC는 대출 이자율과 투자 수익률의 비교다. 연 5%로 빌려서 연 3%짜리 사업에 넣으면, 투자를 많이 할수록 손해가 커진다.</p>
+</blockquote>
+<hr />
+<h3 id="4-5-페르소나-적신호호재-체크">4-5. 페르소나 적신호·호재 체크</h3>
+<p>이번 회차에서 1순위 출처 데이터가 없어 ★★★ 신호의 발생·해소 여부를 확인할 수 없다.</p>
+<table>
+<thead>
+<tr>
+<th>페르소나 신호</th>
+<th>우선순위</th>
+<th>이번 회 확인 여부</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Capex가 미국 AI 트렌드 정합 방향인가</td>
+<td>★★ 호재</td>
+<td><strong>미확인</strong> — XBRL 미수신</td>
+</tr>
+<tr>
+<td>ROIC &lt; WACC인데 Capex 지속 증가</td>
+<td>★★ 적신호</td>
+<td><strong>미확인</strong> — XBRL 미수신</td>
+</tr>
+<tr>
+<td>압도적 기술 보유 시 IP 보호·합작 구조</td>
+<td>★★ 적신호/호재</td>
+<td><strong>미확인</strong> — 공시 미수신</td>
+</tr>
+<tr>
+<td>비주력 정리·사업 단순화</td>
+<td>★ 호재</td>
+<td><strong>미확인</strong> — M&amp;A 공시 미수신</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="4-6-다음-분기-추적-항목">4-6. 다음 분기 추적 항목</h3>
+<ol>
+<li><strong>Capex 절대액과 Capex/영업CF 비율</strong> — HBM 라인 투자 방향성과 자금 자립도 동시 확인</li>
+<li><strong>ROIC 추이 (최소 3개년)</strong> — 다운 사이클 저점 대비 회복 속도, WACC와의 갭</li>
+<li><strong>주주환원 정책 변경 여부</strong> — 배당성향·자사주 매입 규모의 방향 전환 신호</li>
+<li><strong>미국 현지 투자 또는 CHIPS Act 관련 공시</strong> — 없으면 지역 집중 리스크 재확인</li>
+<li><strong>종속기업·JV 변동</strong> — AI 소재·패키징·소프트웨어 방향 수직계열화 여부</li>
+</ol>
+<hr />
+<blockquote>
+<p><strong>이번 회 등장 용어</strong>: Capex(자본적 지출), ROIC(투하자본이익률), WACC(가중평균자본비용), NOPAT(세후 순영업이익), Free Cash Flow(잉여현금흐름), HBM(고대역폭 메모리), 배당성향, 수직계열화, CHIPS Act</p>
+</blockquote>
+<hr />
+<h2 id="05_업황과사이클진단_1">05_업황과사이클진단</h2>
+<blockquote>
+<p><strong>데이터 기준시점</strong>
+- 작성일: 2026-05-06
+- DART 조회: DART API (2026-05-06) — 이번 회 공시 원문 미로드 (filings: [])
+- 재무제표: 2025 사업보고서 (수치 미로드)
+- 시장가격: 별도 시장 데이터 미포함
+- 외인 동향: 별도 외인 데이터 미포함
+- 환율·금리: 별도 매크로 데이터 미포함</p>
+</blockquote>
+<hr />
+<h3 id="섹션-한계-고지">섹션 한계 고지</h3>
+<p>이번 회 제공된 DART 공시 데이터가 없고(filings: []), 시장·외인·매크로 데이터도 별도로 수신되지 않았다. 이 섹션에 등장하는 모든 수치 기반 주장은 원천 데이터 없이는 작성이 불가능하며, 아래에서는 <em>(추론)</em> 마커와 근거를 명시하거나 <strong>확인되지 않음</strong> 처리로 대체한다. 출처가 없는 주장을 채우기 위해 3순위(언론·리포트) 자료를 사실 근거로 끌어다 쓰지 않는다.</p>
+<hr />
+<h3 id="1-반도체-메모리-산업-사이클의-어느-지점인가">1. 반도체 메모리 산업 — 사이클의 어느 지점인가?</h3>
+<p>반도체 메모리는 &ldquo;공급이 수요를 주기적으로 앞지르고 뒤처지는&rdquo; 극단적 사이클 산업이다. 설비 투자 결정에서 실제 물량이 시장에 나오기까지 12~24개월이 걸리기 때문에, 수요 변화에 공급이 즉각 반응하지 못한다. 이 구조적 지연이 호황-침체의 진폭을 키운다.</p>
+<blockquote>
+<p>비유: 수도꼭지를 돌렸을 때 물이 나오기까지 2분이 걸리는 낡은 배관 — 이미 컵이 넘쳐도 2분 전에 결정한 수압이 계속 들어온다. 메모리 업황이 딱 그 구조다.</p>
+</blockquote>
+<p><strong>현재 사이클 위치 판단:</strong></p>
+<p>이번 회 DART 공시 원문(잠정실적·사업보고서)이 로드되지 않아, SK하이닉스의 분기별 출하량·평균판매가격(ASP)·재고 수준을 직접 수치로 확인할 수 없다. 따라서 사이클 위치는 아래와 같이 구조적 추론으로만 서술한다.</p>
+<ul>
+<li><strong>AI 서버향 HBM(고대역폭메모리, <em>High Bandwidth Memory</em>) 수요 강세 지속 가능성</strong> <em>(추론 — AI 가속기 수요가 데이터센터 투자 사이클과 연동됨. 단, SK하이닉스 HBM 출하 실적 수치는 이번 회 미확인)</em></li>
+<li><strong>범용 DRAM·NAND 수급</strong> <em>(추론 불가 — 가격·재고 데이터 미로드. 다음 회 사업보고서·잠정실적 공시 로드 시 확인 필요)</em></li>
+</ul>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025년 DRAM·NAND 분기별 출하량 증가율 (XBRL 사업보고서 재고자산·매출 항목 미로드)
+- HBM 매출 비중 및 고객사 구성 (사업보고서 내 세그먼트 주석 미로드)
+- 현재 산업 재고일수(Inventory Days) — 업황 사이클 판단의 핵심 지표이나 이번 회 공시 원문 없음</p>
+</blockquote>
+<hr />
+<h3 id="2-회사가-사이클-대비-잘하고-있나">2. 회사가 사이클 대비 잘하고 있나?</h3>
+<p>사이클 침체기에 원가 절감·감산 대응을 얼마나 빨리 하느냐, 호황기에 고부가가치 제품(HBM 등)으로 믹스 개선을 했느냐가 메모리 기업의 차별화 포인트다.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025년 SK하이닉스 감산·증산 결정 타이밍과 규모 (사업보고서·주요사항보고서 미로드)
+- HBM3E·HBM4 전환 속도 및 수율 (IR 원문·컨퍼런스콜 자료 미로드)
+- 동종업계(삼성전자·마이크론) 대비 재고 수준 비교 (다중재무제표 fnlttMultiAcnt 미로드)</p>
+</blockquote>
+<p>이 항목들은 <strong>페르소나 ★★★ 우선순위</strong> — 영업이익 vs 영업CF 괴리 점검 — 과 직결된다. 다음 회 데이터 로드 시 반드시 최우선 확인 대상이다.</p>
+<hr />
+<h3 id="3-5종-매크로-의무">3. 5종 매크로 의무</h3>
+<p>페르소나에서 요구하는 환율·유가·미국 금리·외국인 매매·지정학 5종 매크로를 순서대로 다룬다. <strong>이번 회 수치 데이터는 모두 미로드 상태</strong>이므로, 각 항목은 SK하이닉스에 대한 영향 <em>메커니즘</em>만 서술하고, 실제 수치 확인은 &ldquo;확인되지 않음&rdquo;으로 처리한다.</p>
+<hr />
+<h4 id="3-1-환율-원달러">3-1. 환율 (원/달러)</h4>
+<p><strong>왜 중요한가:</strong> SK하이닉스 매출은 대부분 달러 기반(반도체 수출)이다. <em>(추론 — 한국 메모리 반도체가 달러 가격으로 거래되는 구조적 특성에서 유추. 실제 SK하이닉스 외화 매출 비중은 사업보고서 주석 미로드로 미확인)</em></p>
+<p>원/달러 환율 상승(원화 약세) → 원화 환산 매출 증가 → 영업이익 우호적. 반대로 원화 강세 → 수익성 압박.</p>
+<p>단, <strong>달러 부채</strong>가 있을 경우 외화 평가손이 발생해 순이익을 누를 수 있다. 부채의 통화 구성은 재무제표 주석에서 확인해야 한다.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2026년 현재 원/달러 환율 수준 및 추세 (한국은행 ECOS 미로드)
+- SK하이닉스 외화 매출 비중, 외화 차입금 규모 (사업보고서 주석 미로드)</p>
+</blockquote>
+<hr />
+<h4 id="3-2-유가">3-2. 유가</h4>
+<p><strong>왜 중요한가:</strong> 반도체 제조는 에너지 집약적 공정이다. 유가 상승 → 전력비·물류비 상승 → 제조원가 압박. 그러나 반도체 업종에서 유가의 직접 영향은 화학·정유·항공 대비 2차적이다. <em>(추론 — 제조업 특성상 에너지 비용이 원가에 포함되나, 반도체의 경우 직접 원재료보다 간접비 성격이 강함)</em></p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- SK하이닉스 원가명세서 내 전력·에너지 비용 비중 (사업보고서 제조원가명세서 미로드)
+- 2026년 국제유가 수준 (별도 매크로 데이터 미수신)</p>
+</blockquote>
+<hr />
+<h4 id="3-3-미국-금리">3-3. 미국 금리</h4>
+<p><strong>왜 중요한가:</strong> 두 가지 경로로 SK하이닉스에 영향을 준다.</p>
+<p><strong>경로 A — 자금 조달 비용:</strong> SK하이닉스는 대규모 설비투자(CAPEX)를 위해 차입이 필요하다. 미국 금리가 높게 유지되면 달러 차입 금리도 높아져 재무비용 증가. <em>(추론 — 대형 반도체 기업의 차입 구조에서 유추. 실제 차입금 규모·만기·통화는 미로드)</em></p>
+<p><strong>경로 B — 외국인 자금 유출입:</strong> 미국 금리 고수준 유지 → 달러 강세 → 신흥국·한국 시장 외국인 자금 이탈 압력. 이는 SK하이닉스 주가보다 <strong>펀더멘털 가치의 시장 반영 속도</strong>에 영향을 준다.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 현재 미국 기준금리 수준 및 연준 포워드 가이던스 (별도 매크로 데이터 미수신)
+- SK하이닉스 외화 차입금 만기 구조 (사업보고서 재무제표 주석 미로드)</p>
+</blockquote>
+<hr />
+<h4 id="3-4-외국인-매매-추세">3-4. 외국인 매매 추세</h4>
+<p><strong>페르소나 ★★★ 신호:</strong> &ldquo;외인 비중 추세적 하락 + 국내 인기 상승의 괴리&rdquo;는 적신호, &ldquo;장기 외인 비중 추세적 상승&rdquo;은 호재.</p>
+<p>SK하이닉스는 글로벌 AI 인프라 수혜 종목으로 분류되어 장기 외국인(글로벌 패시브 펀드·기술주 전문 액티브) 보유 관심이 구조적으로 높다. <em>(추론 — HBM 공급 구조와 AI 가속기 수요의 연관성에서 유추. 단, 실제 외인 보유 비중과 최신 매매 방향은 이번 회 미확인)</em></p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2026년 SK하이닉스 외국인 보유 비중 및 최근 3~6개월 추세 (KRX 외국인 보유잔고 미로드)
+- 장기 외인(연기금·SWF·글로벌 패시브)과 단기 외인(헤지펀드·차익거래) 구성 비율 (별도 데이터 필요)</p>
+</blockquote>
+<p>이 두 항목은 <strong>다음 보고서의 09_추적사항에 반드시 포함</strong>해야 할 1순위 항목이다.</p>
+<hr />
+<h4 id="3-5-지정학-리스크">3-5. 지정학 리스크</h4>
+<p><strong>왜 중요한가:</strong> SK하이닉스는 한국에 본사를 두고 있어, 두 가지 지정학 노출이 겹친다.</p>
+<p><strong>노출 A — 한반도 리스크:</strong> 외국인 투자자 관점에서 한국은 북한 리스크가 상존하는 시장이다. 북한 도발 고조 시 한국 전체 시장의 외국인 자금 이탈이 일어날 수 있다. 이는 SK하이닉스의 사업 자체와 무관하지만, 시장 가격에 반영되는 <em>코리아 디스카운트</em>의 구성요소다.</p>
+<p><strong>노출 B — 미중 반도체 규제:</strong> 미국의 대중국 반도체 장비·기술 수출 규제(이른바 entity list, EAR 규제)는 SK하이닉스의 중국 내 생산·판매 활동에 직접 영향을 줄 수 있다. <em>(추론 — 미국 상무부 BIS의 대중 반도체 규제는 공개된 연방관보(Federal Register) 기준이나, 이것이 SK하이닉스의 현재 사업에 구체적으로 어떻게 적용되는지는 사업보고서 내 위험요소·우발채무 주석에서 확인해야 한다 — 이번 회 미로드)</em></p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- SK하이닉스 중국 내 생산시설 현황 및 지역별 매출 비중 (사업보고서 지역별 매출 세그먼트 미로드)
+- 미국 반도체 수출규제의 SK하이닉스 적용 범위·예외 조항 (사업보고서 위험요소·주석 미로드)
+- 2026년 기준 미중 규제 추가 조치 여부 (공식 연방관보·BIS 고시 미조회)</p>
+</blockquote>
+<hr />
+<h3 id="4-종합-사이클-포지션-판정-보류">4. 종합 — 사이클 포지션 판정 보류</h3>
+<p>이번 회 데이터 공백으로 인해 &ldquo;SK하이닉스가 현재 사이클의 어느 지점에 있는가&rdquo;를 수치로 단정할 수 없다. 구조적으로는:</p>
+<ul>
+<li>HBM 중심의 AI 수요가 범용 메모리 업황의 사이클 변동성을 일부 흡수할 수 있다 <em>(추론 — AI 가속기 수요의 높은 HBM 의존도 구조에서 유추)</em></li>
+<li>그러나 범용 DRAM·NAND의 공급 과잉 리스크, 중국 자국산 메모리 업체의 성장, 미중 규제라는 세 가지 외부 압력은 상시 존재한다 <em>(추론 — 메모리 산업 구조적 특성 + 미중 기술 분쟁 기조에서 유추. 구체 수치는 미확인)</em></li>
+</ul>
+<p><strong>다음 회 최우선 확인 항목:</strong>
+1. 2026년 1분기 잠정실적 공시 — 영업이익·영업CF 비교 (페르소나 ★★★)
+2. 외국인 보유 비중 최신 수치 (KRX)
+3. 사업보고서 지역별 매출 세그먼트 (중국·미국 노출도)
+4. 재무제표 주석 — 외화 차입금, 우발채무(규제 관련)</p>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음 (종합)</strong>
+- 현재 원/달러 환율, 미국 기준금리, 국제유가 수준 (매크로 데이터 미수신)
+- SK하이닉스 외국인 보유 비중 및 추세 (KRX 미로드)
+- DRAM·NAND·HBM 분기별 출하량·ASP·재고일수 (DART 원문 미로드)
+- 중국 생산시설 현황 및 지역별 매출 비중 (사업보고서 미로드)
+- 미중 규제 SK하이닉스 적용 범위 (공시 주석 미로드)</p>
+</blockquote>
+<hr />
+<p><strong>이번 회 등장 용어:</strong> HBM(High Bandwidth Memory, 고대역폭메모리 — AI 가속기에 탑재되는 고성능 D램, 일반 D램보다 처리 속도가 수배 빠름), ASP(Average Selling Price, 평균판매가격), CAPEX(Capital Expenditure, 자본적 지출 — 설비·장비 등 장기 자산에 대한 투자), 코리아 디스카운트(한국 시장이 지배구조·지정학·정책 불확실성 때문에 다른 나라 동급 기업보다 낮게 평가받는 현상), BIS(미국 상무부 산하 산업안보국 — 반도체 등 이중용도 기술의 수출 통제 담당), EAR(Export Administration Regulations, 미국 수출관리규정), Entity List(미국이 지정한 수출 규제 대상 기관 목록)</p>
+<hr />
+<h2 id="06_경쟁포지션진단_1">06_경쟁포지션진단</h2>
+<p><strong>SK하이닉스 | 2025 사업보고서 기준 | 작성일: 2026-05-06</strong></p>
+<hr />
+<blockquote>
+<p>⚠️ <strong>데이터 가용성 경고</strong>
+제공된 DART 공시 데이터가 비어 있습니다 (<code>"filings": []</code>). 재무제표 XBRL, 시장 데이터, 외인 동향도 미제공입니다. 이 섹션에서 사용한 업계 일반 지식(시장구조·경쟁자 현황·기술 트렌드)은 <strong>작성자의 훈련 데이터(공개 정보 기반)</strong>에서 유래하며, DART·KRX 1순위 출처로 재확인되지 않았습니다. 해당 항목 전체에 <em>(추론)</em> 마커를 적용합니다. XBRL 데이터·IR 원문 보강 후 재검증이 필요합니다.</p>
+</blockquote>
+<hr />
+<h3 id="30초-경쟁-포지션-소개">30초 경쟁 포지션 소개</h3>
+<p>SK하이닉스는 <strong>메모리 반도체</strong> — 컴퓨터·스마트폰·AI 서버가 데이터를 임시로 저장하는 부품 — 을 만드는 회사다. 세계에서 두 번째로 큰 DRAM(Dynamic Random Access Memory, 동적 램) 제조사이며, 최근에는 AI 연산에 필수적인 초고속 메모리인 <strong>HBM(High Bandwidth Memory, 고대역폭 메모리)</strong> 분야에서 사실상 세계 최선두 공급자 지위를 점하고 있다 <em>(추론 — 이 구도는 NVIDIA 제품 출시 이력과 공개 IR 발표에서 반복 확인되나, 1순위 출처 재확인 필요)</em>.</p>
+<blockquote>
+<p><strong>비유</strong>: 전 세계 데이터센터가 하나의 뇌라면, SK하이닉스는 그 뇌의 단기 기억 저장소를 납품하는 두 번째로 큰 공급자다. 특히 AI 시대가 요구하는 초고속 단기 기억 저장소(HBM)에서는 현재 1위에 가장 가까운 위치에 서 있다 <em>(추론)</em>.</p>
+</blockquote>
+<hr />
+<h3 id="1-직접-경쟁자-구도">1. 직접 경쟁자 구도</h3>
+<p>메모리 반도체(DRAM·NAND) 시장은 <strong>글로벌 3강 과점 구조</strong>다 <em>(추론 — 업계 공개 자료에서 반복 확인; 최신 점유율 수치는 1순위 출처 재확인 필요)</em>.</p>
+<table>
+<thead>
+<tr>
+<th>경쟁자</th>
+<th>국가</th>
+<th>핵심 포지션</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>삼성전자 반도체</td>
+<td>한국</td>
+<td>DRAM·NAND 모두 1위</td>
+<td>규모·공정 양면 선두</td>
+</tr>
+<tr>
+<td><strong>SK하이닉스</strong></td>
+<td>한국</td>
+<td>DRAM 2위, <strong>HBM 최선두</strong></td>
+<td>HBM에서 삼성을 앞섬 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>마이크론 (Micron)</td>
+<td>미국</td>
+<td>DRAM·NAND 3위</td>
+<td>CHIPS Act 수혜, 미국 국적 팹 보유</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NAND 시장에는 추가 경쟁자가 존재한다</strong> <em>(추론)</em>:
+- 키옥시아 / 웨스턴디지털(Kioxia / WD) — 일본 계열 합작
+- 양쯔메모리(YMTC) — 중국 국책 기업, 추격 진행 중</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025년 기준 DRAM·NAND·HBM 글로벌 시장점유율 수치 (%) — 2025 사업보고서 또는 반도체 시장조사 공식 자료(1·2순위 출처) 보강 필요
+- SK하이닉스 사업보고서 내 제품 세그먼트별 매출·이익 비중 (XBRL 미제공)</p>
+</blockquote>
+<hr />
+<h3 id="2-진입장벽과-해자-moat">2. 진입장벽과 해자 (Moat)</h3>
+<p><strong>해자(Moat)</strong>: 중세 성채 주위의 물길(垓字)처럼, 경쟁자가 쉽게 넘어오지 못하도록 사업을 지키는 구조적 방어선.</p>
+<p>메모리 반도체 산업의 진입장벽은 <strong>3중 구조</strong>다.</p>
+<h4 id="21-자본집약도-장벽">2.1 자본집약도 장벽</h4>
+<p>최첨단 DRAM·HBM 생산 라인(팹, fab) 하나를 신설하는 데 수조~수십조원이 필요하다 <em>(추론 — 업계 공개 자료에서 반복 확인; SK하이닉스 정확한 capex는 XBRL 재확인 필요)</em>. 중국·신규 진입자가 추격하려면 이 투자를 수십 년간 반복해야 한다.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- SK하이닉스 2025년 CAPEX(자본적 지출, 설비·장비 투자금액) 총액 및 HBM 투자 비중 (XBRL 미제공)</p>
+</blockquote>
+<h4 id="22-공정-기술-누적-장벽">2.2 공정 기술 누적 장벽</h4>
+<p>메모리는 회로 선폭이 미세화될수록 정상 제품 비율(수율)을 유지하기가 극도로 어렵다. 삼성·SK하이닉스·마이크론이 수십 년간 누적한 공정 노하우는 <strong>설비를 구매한다고 복제되지 않는다</strong> <em>(추론 — 반도체 산업 구조에서 광범위하게 인정되는 특성이나 1순위 출처 인용 불가)</em>.</p>
+<h4 id="23-hbm-특유의-고객-락인lock-in-장벽">2.3 HBM 특유의 고객 락인(Lock-in) 장벽 — ★★★</h4>
+<p>HBM은 일반 DRAM과 달리 GPU 설계사(주로 NVIDIA)와 SK하이닉스가 <strong>물리적 규격·신호 인터페이스를 함께 설계</strong>한다. TSV(Through-Silicon Via, 수직 관통 전극: 여러 칩을 수직으로 쌓을 때 신호를 통과시키는 미세 구멍)로 수십 개의 DRAM 다이를 적층하여 GPU와 같은 패키지 안에 집적하는 이 구조는, 특정 GPU 세대에 최적화되어 있어 <strong>고객과 공급자 사이에 강한 기술적 락인이 발생한다</strong> <em>(추론 — 공개된 HBM 공급망 구조에서 유추)</em>.</p>
+<p>경쟁자가 동일 고객사에 HBM을 납품하려면 최소 1~2 제품 세대의 공동 개발 기간이 선행되어야 한다 <em>(추론)</em>. 이 락인이 유지되는 한, SK하이닉스의 HBM 점유율은 단기간 내 침식되기 어렵다 <em>(추론)</em>.</p>
+<blockquote>
+<p><strong>비유</strong>: HBM 공급 관계는 맞춤 제작 열쇠와 자물쇠 같다. 자물쇠(GPU)를 설계할 때부터 열쇠(HBM)를 함께 만들기 때문에, 다른 열쇠 장인(경쟁사)이 끼어들려면 처음부터 다시 자물쇠 설계에 참여해야 한다.</p>
+</blockquote>
+<hr />
+<h3 id="3-3년-단위-기술-트랙-일관성-페르소나-핵심-항목">3. 3년 단위 기술 트랙 일관성 — ★★★ (페르소나 핵심 항목)</h3>
+<blockquote>
+<p>페르소나는 &ldquo;3년 이상 일관된 기술 트랙(방향성 유지)&rdquo;을 ★★★ 호재로, &ldquo;기술 R&amp;D의 방향성이 3년 단위에서 흔들림&rdquo;을 ★★ 적신호로 분류한다.</p>
+</blockquote>
+<p>SK하이닉스의 HBM 기술 트랙을 공개 정보 기반으로 재구성하면:</p>
+<table>
+<thead>
+<tr>
+<th>시기</th>
+<th>제품</th>
+<th>주요 연결 고객</th>
+<th>기술 의의</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~2022</td>
+<td>HBM2E</td>
+<td>NVIDIA A100 계열</td>
+<td>업계 표준 납품 레벨</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>HBM3</td>
+<td>NVIDIA H100</td>
+<td>경쟁사 대비 선도 공급 시작 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>2024</td>
+<td>HBM3E</td>
+<td>NVIDIA H200·B200</td>
+<td>초기 물량 압도적 점유 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>2025~2026</td>
+<td>HBM4</td>
+<td>차세대 NVIDIA Blackwell Ultra 등</td>
+<td>세대 선도 지속 여부 검증 중 <em>(추론)</em></td>
+</tr>
+</tbody>
+</table>
+<p><em>(추론 출처: 위 타임라인은 NVIDIA 제품 발표 자료와 공개 IR 보도에서 구성. 납품 물량의 정확한 수치·독점성은 1순위 출처로 재확인 필요.)</em></p>
+<p><strong>3년 트랙 평가</strong> <em>(추론)</em>: 2022~2025년은 HBM이라는 단일 방향으로 기술 투자가 일관되게 집중된 구간이다. HBM2E → HBM3 → HBM3E로의 세대 전환이 경쟁사보다 빠르거나 동등했다는 공개 신호가 누적되어 있다. <strong>이 방향성 일관성은 페르소나 관점의 강한 호재다.</strong></p>
+<p>그러나 <strong>다음 3년(2026~2028)은 HBM4 이후 구간이며, 이 시기에도 같은 일관성이 유지되는지가 핵심 검증 포인트다</strong> <em>(추론)</em>. 특히 AI 아키텍처가 학습(training) 중심에서 추론(inference) 중심으로 전환되면서 HBM 탑재 구조 자체가 변화할 수 있다 — 이 변화에 SK하이닉스가 얼마나 빠르게 적응하는지가 기술 트랙의 연속성을 가를 것이다 <em>(추론)</em>.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- HBM 세대별 매출 비중 및 DRAM 전체 매출 내 HBM 비중 (2025 사업보고서 XBRL 또는 IR 발표 자료에서 확인 가능)
+- HBM4 공급 개시 시점·주요 고객사 (공식 IR 또는 DART 잠정실적 공시에서 재확인 필요)</p>
+</blockquote>
+<hr />
+<h3 id="4-미국-시장-검증-페르소나-핵심-항목">4. 미국 시장 검증 — ★★★ (페르소나 핵심 항목)</h3>
+<blockquote>
+<p>페르소나는 &ldquo;미국 빅테크·미국 정부·미국 시장에서 검증된 매출&rdquo;을 ★★★ 최우선 호재로 분류한다.</p>
+</blockquote>
+<h4 id="41-nvidia-공급망-직결">4.1 NVIDIA 공급망 직결</h4>
+<p>NVIDIA H100/H200/B200 시리즈에 HBM3/HBM3E를 공급하고 있다는 것은 공개 정보에서 반복 확인된다 <em>(추론 — NVIDIA 제품 발표 자료·양사 공식 발표 기반; DART IR 원문 1순위 재확인 필요)</em>. NVIDIA는 AI 연산 칩 시장의 사실상 표준을 장악한 미국 빅테크다.</p>
+<p>SK하이닉스의 HBM 매출은 <strong>&ldquo;미국 시장에서 검증된 매출&rdquo;의 요건을 충족한다</strong> <em>(추론)</em>. 한국 기업이 미국 AI 인프라의 핵심 부품 공급망에 직접 연결된 사례는 극히 드물다 — <strong>이것이 이 보고서에서 SK하이닉스의 경쟁포지션을 가장 강하게 만드는 단 하나의 사실이다</strong> <em>(추론)</em>.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 미국향 매출 비중 또는 NVIDIA 향 매출 비중 (2025 사업보고서 지역별·고객별 분해 여부 확인 필요)</p>
+</blockquote>
+<h4 id="42-미국-현지-제조-chips-act-연계">4.2 미국 현지 제조 (CHIPS Act 연계)</h4>
+<p>SK하이닉스는 미국 인디애나주에 HBM 패키징·어셈블리 관련 시설 투자를 발표한 바 있다 <em>(추론 — 공개 보도·CHIPS Act 관련 발표에서 확인되나 1순위 출처 재확인 필요)</em>. 이 투자는:</p>
+<ul>
+<li>미국 정부의 반도체 공급망 내재화 정책과 정합하여 정치적 리스크를 줄임</li>
+<li>미국 고객(하이퍼스케일러·AI 칩 설계사)과의 관계를 제도적으로 강화</li>
+<li>중국 제재 리스크를 미국 사업 단위와 구조적으로 분리하는 방어선으로 작동 가능</li>
+</ul>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 인디애나 투자 규모·가동 예정 시기 (공시 또는 IR에서 재확인 필요)
+- CHIPS Act 보조금 수령 여부 및 금액 (미국 상무부 공시 또는 SK하이닉스 IR 발표)</p>
+</blockquote>
+<hr />
+<h3 id="5-신규-위협-분석">5. 신규 위협 분석</h3>
+<h4 id="51-삼성의-hbm-반격-최대-리스크">5.1 삼성의 HBM 반격 — ★★★ 최대 리스크</h4>
+<p>삼성전자는 HBM3E에서 NVIDIA의 공급 자격 인증(퀄리파이, qualification: 고객사가 부품 공급자의 제품을 검증·승인하는 절차) 과정에서 지연이 발생했다는 보도가 있다 <em>(추론 — 공개 보도 기반; 3순위 출처로 1순위 재확인 불가)</em>. 이 구도는 SK하이닉스에 일시적 기회를 주었다.</p>
+<p><strong>그러나 삼성은 자본·인력·공정 규모에서 SK하이닉스를 압도하는 경쟁자다.</strong> 삼성이 HBM4에서 경쟁력을 회복할 경우, SK하이닉스의 HBM 점유율은 구조적으로 압박받는다 <em>(추론 — 삼성의 회복 시점·규모는 1순위 출처 재확인 필요)</em>.</p>
+<blockquote>
+<p>⚠️ <strong>★★★ 다음 보고서 최우선 추적 항목</strong>: 삼성전자의 HBM4 NVIDIA 퀄리파이 성공 여부. 이 신호 하나가 SK하이닉스 경쟁포지션의 단기 방향을 가를 수 있다 <em>(추론)</em>.</p>
+</blockquote>
+<h4 id="52-마이크론의-미국-정책-수혜-격차">5.2 마이크론의 미국 정책 수혜 격차</h4>
+<p>마이크론은 미국 국적 기업으로 CHIPS Act 보조금 수혜 규모가 SK하이닉스보다 클 수 있다 <em>(추론)</em>. 미국-한국 무역 관계 변화나 공급망 안보 정책에 따라, 미국 하이퍼스케일러들이 마이크론을 전략적으로 우선 지원할 인센티브가 생길 수 있다 <em>(추론 — 지정학 구도에서 유추; 1순위 출처 없음)</em>.</p>
+<p><strong>이 리스크는 기술 우위만으로 방어되지 않는다 <em>(추론)</em>.</strong></p>
+<h4 id="53-중국-추격-cxmt-등">5.3 중국 추격 (CXMT 등)</h4>
+<p>중국 창신메모리(CXMT 등)가 DRAM 기술 추격을 시도하고 있다 <em>(추론 — 공개 보도; 3순위 출처)</em>. 그러나 HBM은 일반 DRAM보다 기술 복잡도가 훨씬 높고, 미국의 대중 반도체 장비 수출 통제가 추격 속도를 제한하고 있다 <em>(추론)</em>. <strong>단기~중기(3년 내) HBM 시장에서 중국 경쟁자의 직접 위협은 상대적으로 낮다 <em>(추론)</em>. 단, 범용 DRAM 시장에서의 가격 압박은 배제할 수 없다.</strong></p>
+<h4 id="54-ai-아키텍처-구조-변화">5.4 AI 아키텍처 구조 변화</h4>
+<p>AI 모델이 학습(training)에서 추론(inference) 중심으로 이동하면서, 고용량 HBM에 대한 단위 수요 구조가 변화할 수 있다 <em>(추론 — AI 인프라 업계 동향에서 유추; 1순위 출처 없음)</em>. 총 AI 연산량이 폭발적으로 늘고 있어 순수 수요 감소 가능성은 낮다고 판단하지만, 성장 속도의 변화는 가능하다 <em>(추론)</em>.</p>
+<hr />
+<h3 id="6-ip인수-시나리오-압도적-기술-보유의-양면성-페르소나-의무-항목">6. IP·인수 시나리오 — 압도적 기술 보유의 양면성 — ★★ (페르소나 의무 항목)</h3>
+<p>SK하이닉스는 HBM 분야에서 압도적 기술을 보유한 것으로 판단되므로, 페르소나 요건에 따라 두 시나리오를 의무 분석한다.</p>
+<h4 id="61-a-호재-시나리오-미국-자본의-전략적-관심">6.1 (a) 호재 시나리오 — 미국 자본의 전략적 관심</h4>
+<p>SK하이닉스의 HBM 기술력과 NVIDIA 공급 관계는, 미국 빅테크·사모펀드·국부 연계 투자 기구가 <strong>전략적 파트너십·지분 투자·인수</strong>에 관심을 가질 수 있는 구조적 근거가 있다 <em>(추론 — 공급망 안보·AI 인프라 지정학 구도에서 유추; 구체적 인수 의향은 확인되지 않음)</em>. 이 시나리오가 현실화된다면, 주주 관점에서는 시가총액 대비 상당한 프리미엄이 실현될 수 있다 <em>(추론)</em>.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 미국 자본의 SK하이닉스 주요 지분 취득 또는 전략적 파트너십 공식 발표 (DART 주요주주 공시·대량보유상황보고서에서 확인 가능)</p>
+</blockquote>
+<h4 id="62-b-리스크-시나리오-ip-유출빈-껍데기화">6.2 (b) 리스크 시나리오 — IP 유출·빈 껍데기화</h4>
+<p>반대로, 핵심 HBM 기술 IP·라이선스·핵심 엔지니어가 빠져나가고 본체는 제조 시설만 남는 시나리오가 있다. 이 리스크는 특히:
+- 핵심 기술 인력의 경쟁사(미국·중국) 이직
+- 미국 투자 합작 구조에서 IP 소유권이 불리하게 설계될 가능성
+- CHIPS Act 보조금 조건에 기술 공개·이전 요건이 포함될 경우</p>
+<p><strong>이 방어선 — IP 보호 구조·핵심 인력 락업·합작 계약의 IP 소유권 조항 — 을 어떻게 관리하는지는 ★★ 항목이며, 다음 보고서에서 반드시 검증해야 한다.</strong></p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- IP 보호 구조 세부 (특허 포트폴리오 전략, 핵심 인력 락업 조항) — 사업보고서 주석에서 일부 확인 가능; XBRL 미제공으로 이번 보고서 미확인
+- 미국 fab 합작 구조의 IP 소유권 조건 (IR 자료·공시에서 재확인 필요)</p>
+</blockquote>
+<hr />
+<h3 id="7-종합-경쟁포지션-평가">7. 종합 경쟁포지션 평가</h3>
+<blockquote>
+<p>⚠️ 이 평가 전체는 DART 1순위 출처 미확인 상태에서 공개 지식에 의존한 <em>추론</em>이다. XBRL·IR 원문 데이터 보강 후 재검증이 필요하다.</p>
+</blockquote>
+<p><strong>강점 (호재)</strong></p>
+<table>
+<thead>
+<tr>
+<th>우선</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>★★★</td>
+<td>HBM 기술에서 2022~2025년 방향성 일관된 3년+ 기술 트랙 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>★★★</td>
+<td>미국 AI 인프라 핵심 공급망(NVIDIA)에 직접 연결 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>★★★</td>
+<td>미국 현지 투자로 공급망 안보 리스크 부분 헤지 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>★★</td>
+<td>메모리 산업 특유의 자본집약도·HBM 기술 누적 진입장벽</td>
+</tr>
+<tr>
+<td>★★</td>
+<td>NVIDIA-SK하이닉스 공동 개발 기반 고객 락인 구조 <em>(추론)</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>약점·위협 (적신호)</strong></p>
+<table>
+<thead>
+<tr>
+<th>우선</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>★★★</td>
+<td>삼성의 HBM 경쟁력 회복 시 점유율 구조 재편 가능성 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>★★</td>
+<td>마이크론의 미국 정책 지원 격차 — 기술만으로 방어 불가 <em>(추론)</em></td>
+</tr>
+<tr>
+<td>★★</td>
+<td>IP 보호·합작 구조 미확인 — 즉시 검증 필요</td>
+</tr>
+<tr>
+<td>★</td>
+<td>AI 아키텍처 전환에 따른 HBM 수요 구조 변화 가능성 <em>(추론)</em></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>비유</strong>: SK하이닉스의 HBM 포지션은 세계에서 가장 빠른 단기 기억 칩을 AI 뇌에 직접 납품하는 특수 부품 제조사와 같다. 이 역할이 지속되는 한 포지션은 강력하지만, 두 번째로 빠른 경쟁자(삼성)가 동급 속도를 달성하는 순간 구도는 빠르게 재편된다.</p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음 (섹션 전체 누적)</strong>
+- DRAM·NAND·HBM 세그먼트별 매출·이익 비중 (2025 사업보고서 XBRL)
+- 최신(2025) 글로벌 DRAM·NAND 시장점유율 수치
+- NVIDIA 향 매출 비중 또는 미국향 매출 비중
+- 미국 인디애나 fab 투자 규모·가동 예정 시기·IP 소유권 조건
+- CHIPS Act 보조금 수령 여부 및 금액
+- HBM IP 보호 구조 세부 (특허 수·핵심 인력 락업 조항)
+- 외국인 보유 비중 추세 (KRX 데이터 별도 필요)
+- 삼성전자 HBM4 NVIDIA 퀄리파이 진행 현황</p>
+</blockquote>
+<hr />
+<p><strong>이번 회 등장 용어</strong>: HBM(High Bandwidth Memory, 고대역폭 메모리), TSV(Through-Silicon Via, 수직 관통 전극), DRAM(Dynamic Random Access Memory, 동적 램), NAND(낸드 플래시, 비휘발성 메모리), 해자(Moat, 경쟁자 진입을 막는 구조적 방어선), 락인(Lock-in, 고객이 다른 공급자로 전환하기 어려운 구조), 퀄리파이(Qualification, 부품 공급 자격 인증 절차), CHIPS Act(미국 반도체 및 과학법, 미국 반도체 제조 지원법), 수율(Yield, 생산된 제품 중 정상 제품의 비율), CAPEX(Capital Expenditure, 자본적 지출 — 설비·장비 투자금액), 팹(Fab, Fabrication Plant, 반도체 생산 공장), 과점(Oligopoly, 소수 기업이 시장을 지배하는 구조)</p>
+<hr />
+<h2 id="07_거버넌스리스크진단_1">07_거버넌스리스크진단</h2>
+<blockquote>
+<p><strong>데이터 기준시점</strong>
+- 작성일: 2026-05-06
+- DART 조회: DART API (2026-05-06), <code>"filings": []</code> — 이번 실행에서 수집된 공시 없음
+- 재무제표: 2025 사업보고서 (이번 제공 데이터에 원문 미포함)
+- 시장가격: 미포함
+- 외인 동향: 미포함</p>
+</blockquote>
+<hr />
+<h3 id="이-섹션이-보는-것">이 섹션이 보는 것</h3>
+<p>거버넌스 진단은 회사의 <strong>의사결정 구조가 외부 주주에게 얼마나 안전한가</strong>를 본다. 의사·병원이 아니라 <em>환자 본인이 치료 결정권을 가지고 있는가, 아니면 가족(대주주)이 대신 결정하는가</em>를 따지는 검진이다. 재무가 아무리 좋아도 결정권 구조가 왜곡되면 그 이익이 외부 주주에게 흘러오지 않는다.</p>
+<hr />
+<h3 id="1-지배구조-이번-데이터에서-확인된-사항">1. 지배구조 — 이번 데이터에서 확인된 사항</h3>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 최대주주 및 우호지분 현황 (2025 사업보고서 원문 미제공 — 주주현황 섹션 직접 확인 필요)
+- SK㈜의 SK하이닉스 지분율 및 최근 변동 (DART 대량보유보고서 미수집)
+- 중간 지주·계열사 간 지분 교차 구조 (이번 DART 조회 결과: <code>filings: []</code>)
+- 자기주식 보유 현황 및 소각 계획 (XBRL 재무제표 미제공)</p>
+</blockquote>
+<p>이번 실행에서 수집된 DART 공시가 없으므로(<code>"filings": []</code>), 지배구조 수치를 사실로 제시할 수 없다. 아래 <strong>추적 항목(09)</strong> 에 다음 조회 시 확인할 항목으로 이관한다.</p>
+<hr />
+<h3 id="2-주석-점검-특수관계자우발채무회계정책">2. 주석 점검 — 특수관계자·우발채무·회계정책</h3>
+<h4 id="21-체크해야-할-항목-이번-데이터-미확인">2.1 체크해야 할 항목 (이번 데이터 미확인)</h4>
+<p>반도체 대형사의 사업보고서 주석에서 <strong>통상적으로</strong> 나타나는 고위험 항목들이 있다. 이번 제공 데이터에서는 원문이 없어 확인이 불가능하므로, 아래는 <strong>다음 DART 원문 수신 시 반드시 점검해야 할 체크리스트</strong>로 제시한다.</p>
+<table>
+<thead>
+<tr>
+<th>주석 항목</th>
+<th>점검 포인트</th>
+<th>이번 확인 여부</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>특수관계자 거래</td>
+<td>SK그룹 내 계열사와의 거래 금액·조건이 시장가인가</td>
+<td>❌ 미확인</td>
+</tr>
+<tr>
+<td>우발채무</td>
+<td>진행 중 소송, 보증채무 총액</td>
+<td>❌ 미확인</td>
+</tr>
+<tr>
+<td>회계정책 변경</td>
+<td>감가상각 방법·내용연수 변경 여부</td>
+<td>❌ 미확인</td>
+</tr>
+<tr>
+<td>리스 부채</td>
+<td>운용리스 부외부채 규모</td>
+<td>❌ 미확인</td>
+</tr>
+<tr>
+<td>환율 민감도</td>
+<td>원/달러 1% 변동 시 손익 영향</td>
+<td>❌ 미확인</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 위 5개 항목 전체 (2025 사업보고서 주석 원문 미수신)</p>
+</blockquote>
+<hr />
+<h3 id="3-임원이사회-변동">3. 임원·이사회 변동</h3>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025년 이후 등기임원 변동 사항 (DART 임원·주요주주소유보고서 미수집)
+- 사외이사 구성 변화 및 감사위원회 독립성 (이번 조회에서 잡히지 않음)
+- 대표이사 교체 여부 (이번 데이터 없음)</p>
+</blockquote>
+<p>이번 실행에서 해당 공시가 수집되지 않아 임원 변동에 대한 사실 주장을 할 수 없다.</p>
+<hr />
+<h3 id="4-외인-동향과-거버넌스-신호-페르소나-항목">4. 외인 동향과 거버넌스 신호 — 페르소나 ★★★ 항목</h3>
+<p>페르소나 프레임에서 <strong>외인 비중 추세적 하락 + 국내 인기 상승의 괴리</strong>는 ★★★ 적신호다. 이 항목은 이번 보고서에서 의무적으로 점검해야 하지만, 현재 제공된 데이터에 외인 보유잔고 수치가 없다.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 장기 외인(연기금·국부펀드·글로벌 패시브) 보유 비중 추세 (KRX 외국인 보유잔고 미수신)
+- 단기 외인 vs 장기 외인 비중 분해 (별도 데이터 필요 — KRX 투자자별 매매동향)
+- 국내 개인투자자 순매수 추세와의 디커플링 여부 (미수신)</p>
+<p>⚠️ <strong>다음 보고서 의무 보강 항목</strong>
+KRX 외국인 보유잔고 API 또는 한국예탁결제원 데이터를 연결하기 전까지, 이 섹션의 핵심 판단을 내릴 수 없다. 외인 동향 없이 거버넌스 섹션은 절반짜리다.</p>
+</blockquote>
+<hr />
+<h3 id="5-ip-보호기술-유출-리스크-페르소나-항목">5. IP 보호·기술 유출 리스크 — 페르소나 ★★ 항목</h3>
+<p>페르소나 프레임은 <strong>압도적 기술 보유 종목에 한해</strong> IP 보호 구조와 핵심 인력 락업을 의무 점검하도록 규정한다. SK하이닉스가 HBM·고대역폭 메모리 분야에서 압도적 기술 보유 종목에 해당하는지 여부는 이번 제공 데이터(DART 공시 없음)에서 사실로 확인할 수 없다.</p>
+<p><em>(추론)</em> 반도체 전공정 원천 기술 및 HBM 패키징 기술은 특허 등록을 통해 일부 공개된 지식재산(IP) 포트폴리오가 존재할 가능성이 있다 — 단, 이 추론의 근거는 반도체 산업의 일반적 특성(특허 집약 산업)이며, 이번 DART 원문에서 직접 확인된 것이 아니다.</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 특허 포트폴리오 규모 및 해외 등록 현황 (사업보고서 연구개발 섹션 원문 미수신)
+- 핵심 연구인력 락업 계약 존재 여부 (주석 또는 임원 보수 섹션 원문 미수신)
+- 미국·일본 파트너사와의 합작·라이선스 구조 (공시 원문 미수신)</p>
+</blockquote>
+<hr />
+<h3 id="6-잠재-리스크-지정학규제">6. 잠재 리스크 — 지정학·규제</h3>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 중국 생산거점 현황 및 미국 반도체 수출규제(EAR) 노출 범위 (2025 사업보고서 해외법인 현황 섹션 원문 미수신)
+- 미국 CHIPS Act 보조금 신청·수혜 여부 (DART 공시 미수집)
+- 환경 관련 소송·규제 이슈 (주석 우발채무 섹션 원문 미수신)</p>
+</blockquote>
+<hr />
+<h3 id="7-비유-한-줄">7. 비유 한 줄</h3>
+<blockquote>
+<p>거버넌스는 집의 <strong>등기부등본</strong>과 같다. 재무제표가 집의 상태(누수·균열)를 보여준다면, 거버넌스는 <em>이 집이 진짜 내 것인가, 아니면 다른 누군가가 처분권을 쥐고 있는가</em>를 보여준다. 등기부를 확인하지 못한 이번 회차는 집 외관만 본 셈이다.</p>
+</blockquote>
+<hr />
+<h3 id="8-종합-이번-회차-거버넌스-진단-가능-범위">8. 종합 — 이번 회차 거버넌스 진단 가능 범위</h3>
+<p>이번 실행에서 제공된 DART 데이터는 공시 없음(<code>filings: []</code>)이며 재무제표 원문도 미수신 상태다. 결과적으로 <strong>거버넌스 섹션에서 사실로 제시할 수 있는 수치·사건이 이번 회차에는 없다.</strong> 이 섹션은 다음 두 가지 기능으로만 작동했다:</p>
+<ol>
+<li><strong>체크리스트 확립</strong>: 다음 원문 수신 시 반드시 확인해야 할 항목을 사전에 정렬</li>
+<li><strong>&ldquo;확인되지 않음&rdquo; 명시</strong>: 모호한 출처로 채우는 대신, 빈칸을 솔직하게 드러냄</li>
+</ol>
+<blockquote>
+<p><em>이 섹션이 짧고 내용이 적은 것은 결핍이 아니라 정직이다. 다음 분기 DART 원문(사업보고서 HTML·XBRL)이 인풋으로 들어오면 이 섹션은 가장 먼저 채워질 부분이다.</em></p>
+</blockquote>
+<hr />
+<h3 id="다음-회차-추적-항목-09로-이관">다음 회차 추적 항목 (09로 이관)</h3>
+<ul>
+<li>[ ] SK㈜ 지분율 최신 수치 — DART 대량보유보고서 또는 사업보고서 주주현황</li>
+<li>[ ] 사외이사 구성·감사위원회 독립성 — 이사회 구성 공시</li>
+<li>[ ] 특수관계자 거래 규모·조건 — 주석 원문</li>
+<li>[ ] 외인 장기/단기 비중 분해 — KRX 외국인 보유잔고 연결 필요</li>
+<li>[ ] 중국 생산거점 미국 수출규제 노출 범위 — 해외법인 현황 섹션</li>
+</ul>
+<hr />
+<p><strong>이번 회 등장 용어:</strong> 특수관계자 거래(회사의 대주주·임원·계열사 등과 이루어지는 거래로, 시장 가격이 아닌 조건으로 이루어질 위험이 있어 주석에서 별도 공시), 우발채무(현재는 확정되지 않았지만 특정 사건 발생 시 부채로 전환될 수 있는 잠재적 의무), 대량보유보고서(상장사 주식을 5% 이상 보유하거나 1% 이상 변동 시 제출하는 DART 공시), 락업(핵심 인력이나 주요 주주가 일정 기간 지분 또는 고용을 유지하도록 계약으로 묶어두는 장치), IP(Intellectual Property, 지식재산 — 특허·영업비밀·상표 등 기술적·창의적 성과물에 대한 법적 독점권), EAR(Export Administration Regulations, 미국 상무부 산업안보국의 수출관리규정 — 반도체 등 이중사용 기술의 대중국 수출을 제한)</p>
+<hr />
+<h2 id="08_이번분기변화_1">08_이번분기변화</h2>
+<blockquote>
+<p><strong>데이터 기준시점</strong>
+- 작성일: 2026-05-06
+- DART 조회: DART API (2026-05-06) — 수신된 공시 건수: 0건
+- 재무제표: 2025 사업보고서 (본문 데이터 미수신)
+- 시장가격·외인 동향·환율: 미포함</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>⚠️ <strong>섹션 전체 공지 — 데이터 부재로 인한 작성 제한</strong></p>
+<p>이번 보고서 생성 시 DART API에서 수신된 공시 건수가 <strong>0건</strong>이며, 재무제표 XBRL 수치·시장 데이터·외인 동향 데이터가 모두 미포함 상태다. <code>08_이번분기변화</code> 섹션은 <strong>직전 분기 보고서 대비 변화</strong>를 다루는 섹션이므로, 원천 데이터 없이는 어떤 변화도 사실로 서술할 수 없다.</p>
+<p>출처·추론 규칙(절대 규칙 §3)에 따라, 이 섹션은 <strong>(1) 작성 가능 범위 명시</strong>, <strong>(2) 확인되지 않음 목록</strong>, <strong>(3) 데이터 확보 후 채워야 할 항목 가이드</strong> 세 파트로 대신한다. 데이터를 채워 넣어 그럴듯하게 보이는 보고서를 만드는 것보다, 빈 칸을 정직하게 드러내는 것이 더 신뢰 가능하다 — 마치 의사가 검사 결과지 없이 진단서를 쓸 수 없는 것과 같다.</p>
+</blockquote>
+<hr />
+<h3 id="1-이번-분기-핵심-변화-작성-가능-범위">1. 이번 분기 핵심 변화 — 작성 가능 범위</h3>
+<p>이번 파이프라인에서 확인된 공시 원문·재무 수치·시장 데이터가 없으므로, <strong>어떤 변화도 사실로 서술할 수 없다.</strong> 아래 항목들은 다음 데이터 확보 시 우선적으로 채울 자리를 미리 잡아둔 것이다.</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>직전 분기 값</th>
+<th>이번 분기 값</th>
+<th>변화 해석</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>영업이익 (분기)</td>
+<td>— (미확인)</td>
+<td>— (미확인)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>영업현금흐름</td>
+<td>— (미확인)</td>
+<td>— (미확인)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>HBM 매출 비중</td>
+<td>— (미확인)</td>
+<td>— (미확인)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>외인 보유 비중</td>
+<td>— (미확인)</td>
+<td>— (미확인)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>순차입금 / 순현금 전환 여부</td>
+<td>— (미확인)</td>
+<td>— (미확인)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 영업이익·영업현금흐름·매출 (DART XBRL 미수신)
+- HBM3E / HBM4 매출 비중 변화 (사업보고서 세그먼트 항목 미수신)
+- CapEx 집행 규모와 전기 대비 증감 (주석 데이터 미수신)
+- 외국인 보유 비중 추이 (KRX 외인 데이터 미포함)
+- 환율·금리 민감도 산출 근거 (매크로 데이터 미포함)
+- 잠정실적 공시 유무 (공시 목록 0건)
+- 임원·이사회 변동 (DART 임원현황 항목 미수신)
+- 주요 소송·우발채무 변동 (주석 미수신)
+- 자사주 매입·소각·배당 공시 (공시 목록 0건)</p>
+</blockquote>
+<hr />
+<h3 id="2-페르소나-신호-점검-발생해소-여부">2. 페르소나 ★★★ 신호 점검 — 발생·해소 여부</h3>
+<p>페르소나(<code>_persona.md</code>)의 ★★★ 적신호·호재가 <strong>이번 분기에 새로 발생했는지, 또는 해소됐는지</strong>를 우선 점검해야 한다. 모두 데이터 미수신으로 점검 불가.</p>
+<table>
+<thead>
+<tr>
+<th>신호 유형</th>
+<th>내용</th>
+<th>이번 분기 상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>★★★ 적신호</td>
+<td>영업이익↑인데 영업CF 정체·감소</td>
+<td><strong>확인 불가</strong> (XBRL 미수신)</td>
+</tr>
+<tr>
+<td>★★★ 적신호</td>
+<td>외인 비중 추세적 하락 + 국내 인기 괴리</td>
+<td><strong>확인 불가</strong> (외인 데이터 미포함)</td>
+</tr>
+<tr>
+<td>★★★ 호재</td>
+<td>미국 빅테크 고객에서 검증된 HBM 매출</td>
+<td><strong>확인 불가</strong> (공시 원문 미수신)</td>
+</tr>
+<tr>
+<td>★★★ 호재</td>
+<td>장기 외인(연기금·SWF) 비중 추세 ↑</td>
+<td><strong>확인 불가</strong> (외인 데이터 미포함)</td>
+</tr>
+<tr>
+<td>★★★ 호재</td>
+<td>영업CF가 영업이익을 안정적으로 추종</td>
+<td><strong>확인 불가</strong> (XBRL 미수신)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="3-다음-데이터-확보-시-즉시-채울-항목-작업-가이드">3. 다음 데이터 확보 시 즉시 채울 항목 (작업 가이드)</h3>
+<p>이 섹션이 온전히 채워지려면 아래 데이터 패키지가 필요하다. 파이프라인 재실행 또는 수동 보강 시 참고.</p>
+<p><strong>DART API 호출 필요</strong>
+- <code>/api/list.json</code> — SK하이닉스(<code>corp_code: 00401731</code>) 최근 60일 공시 목록
+- <code>/api/fnlttSinglAcntAll.json</code> — 2026년 1Q (또는 최신 분기) XBRL 단일 재무제표
+- <code>/api/document.xml</code> — 잠정실적 공시 원문 (있을 경우)
+- <code>/api/document.xml</code> — 2025 사업보고서 원문 (주석·세그먼트)</p>
+<p><strong>외부 데이터 보강 필요</strong>
+- KRX 외국인 보유잔고 (조회일: 2026-05-06)
+- 한국은행 ECOS — 원/달러 환율, 기준금리 (2026-05-06)</p>
+<hr />
+<h3 id="4-이번-분기-헤드라인-데이터-확보-후-교체-예정">4. 이번 분기 헤드라인 (데이터 확보 후 교체 예정)</h3>
+<blockquote>
+<p>⚠️ 아래 헤드라인은 <strong>데이터 공백을 메우기 위한 플레이스홀더</strong>가 아니다. 데이터가 들어올 때까지 헤드라인을 채우지 않는다. 빈 칸이 정직한 보고서의 일부다.</p>
+</blockquote>
+<pre><code>[ 데이터 수신 후 작성 ]
+1. _______________________________
+2. _______________________________
+3. _______________________________
+</code></pre>
+<hr />
+<h3 id="5-비유">5. 비유</h3>
+<p>이 섹션은 마치 의사가 환자를 진찰하러 왔는데 <strong>채혈 결과지·CT 필름·과거 처방전 모두 분실</strong>된 상태와 같다. 환자가 눈앞에 있어도, 수치 없이 &ldquo;지난 번보다 혈압이 올랐습니다&rdquo;라고 말하는 건 의사가 아니라 점쟁이다. 검사지를 다시 받아오는 것이 먼저다.</p>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음 (종합)</strong>
+- 이번 분기 변화 전체 항목 — DART 공시 0건 수신, XBRL 재무 미포함, 시장·외인 데이터 미포함으로 인해 어떤 변화도 사실로 서술 불가. 데이터 확보 후 전면 재작성 필요.</p>
+</blockquote>
+<hr />
+<p>이번 회 등장 용어: <strong>HBM (High Bandwidth Memory)</strong>, <strong>XBRL (eXtensible Business Reporting Language)</strong>, <strong>CapEx (Capital Expenditure, 자본적 지출)</strong>, <strong>영업현금흐름 (Operating Cash Flow)</strong>, <strong>우발채무 (Contingent Liability)</strong>, <strong>WACC (Weighted Average Cost of Capital, 가중평균자본비용)</strong>, <strong>SWF (Sovereign Wealth Fund, 국부펀드)</strong></p>
+<hr />
+<h2 id="09_추적사항_1">09_추적사항</h2>
+<blockquote>
+<p><strong>데이터 기준시점</strong>
+- 작성일: 2026-05-06
+- DART 조회: DART API (2026-05-06) — 금번 입력 데이터에 공시 원문 없음
+- 재무제표: 2025 사업보고서 (XBRL 미수신)
+- 시장가격: 미포함
+- 외인 동향: 미포함
+- 환율·금리: 미포함</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>⚠️ <strong>데이터 제약 고지</strong>
+이번 작성 회차에 제공된 DART 공시 원문, XBRL 재무제표, 시장 데이터가 모두 비어 있다. 아래 추적 항목들은 (a) SK하이닉스의 사업 유형·섹터 특성에서 도출한 구조적 추적 프레임, (b) 반도체 메모리 업종에서 일반적으로 검증이 필요한 항목들로만 구성한다. <strong>각 항목의 현재 수치·기준선은 다음 회차 DART 데이터 수신 후 채워야 한다.</strong> 기준선 없이 쓴 &ldquo;X가 악화됐는지 본다&rdquo;는 의미 없으므로, 수치 기준선은 전부 &ldquo;확인되지 않음&rdquo;으로 명시한다.</p>
+</blockquote>
+<hr />
+<h3 id="추적-1-영업이익-vs-영업현금흐름-괴리">추적 1 — 영업이익 vs 영업현금흐름 괴리 ★★★</h3>
+<p><strong>추적 이유</strong>: 페르소나 최우선(★★★) 적신호. 메모리 반도체 업황 회복기에는 선수금·재고평가환입 등 비현금 항목이 영업이익을 부풀릴 수 있다. 현금이 실제로 들어오는지가 진짜 건강 신호다.</p>
+<p><strong>다음 분기 확인 질문</strong>:
+- 2026년 2분기 영업이익 증가 시, 영업현금흐름이 같은 방향으로 따라오는가?
+- 영업CF ÷ 영업이익 비율(현금전환율)이 1.0 이상인가, 이하로 내려가는가?</p>
+<p><strong>기준선 현황</strong>:</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025 사업보고서 기준 영업CF 절대값 및 영업이익 대비 비율 (XBRL 미수신)
+- 직전 4분기 현금전환율 시계열</p>
+</blockquote>
+<hr />
+<h3 id="추적-2-hbm-매출-비중-및-고객사-다변화">추적 2 — HBM 매출 비중 및 고객사 다변화 ★★★</h3>
+<p><strong>추적 이유</strong>: SK하이닉스는 HBM(고대역폭메모리, AI 가속기에 탑재되는 고사양 DRAM)에서 선도적 위치인 것으로 업계에서 거론된다 <em>(추론 — 1순위 출처 미수신, DART 원문 확인 필요)</em>. 다만 특정 고객사 집중도가 높을 경우 그 고객사의 구매 변화가 회사 전체 실적을 직격한다. 미국 빅테크·AI 인프라 투자 사이클에 연동된 매출 구조인지, 아니면 1~2개 고객에 과집중인지가 핵심이다.</p>
+<p><strong>다음 분기 확인 질문</strong>:
+- 사업보고서 또는 분기보고서에서 HBM 출하량·매출 비중이 명시됐는가?
+- 주요 고객 집중도(상위 1개 고객 매출 비중)가 전 분기 대비 높아졌는가 낮아졌는가?
+- 신규 고객(Broadcom, AMD, 구글 TPU향 등) 납품 사실이 공시 또는 IR 원문에서 확인되는가?</p>
+<p><strong>기준선 현황</strong>:</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025 사업보고서 기준 제품별·고객별 매출 분해 (공시 원문 미수신)
+- HBM 출하 비중 공식 언급 여부</p>
+</blockquote>
+<hr />
+<h3 id="추적-3-외국인-보유-비중-및-장단기-외인-구성-추세">추적 3 — 외국인 보유 비중 및 장·단기 외인 구성 추세 ★★★</h3>
+<p><strong>추적 이유</strong>: 페르소나 최우선(★★★) 호재/적신호. 한국 시장에서 외인 비중의 <em>방향</em>이 펀더멘털 신호다. 특히 장기 외인(글로벌 패시브·연기금·국부펀드)과 단기 외인(헤지펀드)을 구분해야 하는데, 전자의 이탈은 의미가 다르다.</p>
+<p><strong>다음 분기 확인 질문</strong>:
+- 외국인 보유 비중이 추세적으로 상승·유지·하락 중인가? (KRX 외국인 보유잔고 기준)
+- 국내 개인투자자 매수세가 강해지는 동시에 외인이 빠지는 디커플링 현상이 발생하는가? → ★★★ 적신호 박스 트리거
+- 임원·주요주주 공시에서 잡히는 외국계 기관의 지분 변동이 있는가?</p>
+<p><strong>기준선 현황</strong>:</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 현재 외국인 보유 비중 (KRX 데이터 미수신)
+- 장기 외인 vs 단기 외인 구성 비율 (DART 임원/주요주주 공시 외 별도 데이터 필요)</p>
+</blockquote>
+<hr />
+<h3 id="추적-4-미중-반도체-규제에-따른-중국-매출-노출도">추적 4 — 미중 반도체 규제에 따른 중국 매출 노출도 ★★</h3>
+<p><strong>추적 이유</strong>: 페르소나 ★★ 지정학 리스크 항목. 미국의 대중 반도체 수출 규제(EAR·FDPR 등)가 강화되면 중국향 DRAM·NAND 출하에 직접 제약이 생긴다. SK하이닉스의 중국 공장(우시 DRAM, 다롄 NAND) 운영 연속성 및 중국 매출 비중이 핵심 변수다. <em>(추론 — 중국 공장 보유 사실은 1순위 DART 공시에서 재확인 필요)</em></p>
+<p><strong>다음 분기 확인 질문</strong>:
+- 사업보고서의 지역별 매출 분해에서 중국 비중이 전년 대비 변했는가?
+- 미국 수출 규제 관련 우발채무·법적 위험 주석이 추가됐는가?
+- 중국 법인 관련 자산·투자 금액에 변동이 있는가?</p>
+<p><strong>기준선 현황</strong>:</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025 사업보고서 기준 지역별 매출 비중 (공시 원문 미수신)
+- 중국 법인 장부가액 및 투자 규모 (XBRL 미수신)</p>
+</blockquote>
+<hr />
+<h3 id="추적-5-capex-규율-roic-vs-wacc-역전-여부">추적 5 — CAPEX 규율: ROIC vs WACC 역전 여부 ★★</h3>
+<p><strong>추적 이유</strong>: 메모리 반도체는 자본집약 산업이다. 업황 호황기에 CAPEX를 과도하게 늘리면 사이클이 꺾일 때 레버리지가 독이 된다. ROIC(투하자본이익률)가 WACC(가중평균자본비용)를 넘는지, 그 갭이 벌어지는지 좁혀지는지가 핵심이다.</p>
+<p><em>비유: ROIC vs WACC는 &ldquo;버는 이자율이 빌린 이자율보다 높은가&rdquo;의 문제다. 역전되면 투자할수록 손해인 구조가 된다.</em></p>
+<p><strong>다음 분기 확인 질문</strong>:
+- 2026년 1~2분기 CAPEX 집행 규모가 전년 동기 대비 어느 방향인가?
+- ROIC가 전 분기 대비 개선·악화 중인가? (XBRL 기준 영업이익/투하자본)
+- CAPEX 방향이 HBM·선단공정 집중인가, 레거시 노드 유지인가?</p>
+<p><strong>기준선 현황</strong>:</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025 사업보고서 기준 CAPEX 절대값 및 전년 대비 증감 (XBRL 미수신)
+- ROIC 및 WACC 추정치 (데이터 미수신)</p>
+</blockquote>
+<hr />
+<h3 id="추적-6-차입금-만기-집중-및-운전자본-회전">추적 6 — 차입금 만기 집중 및 운전자본 회전 ★★</h3>
+<p><strong>추적 이유</strong>: 메모리 다운사이클 국면에서 차입금 만기가 집중되면 재무 유연성이 급격히 줄어든다. 매출채권·재고 회전 둔화는 현금 흐름 악화의 선행 신호다.</p>
+<p><strong>다음 분기 확인 질문</strong>:
+- 1년 이내 만기 도래 단기차입금 규모가 현금성자산을 초과하는가?
+- 재고자산 회전일수(재고/매출원가 × 365)가 전 분기 대비 늘어났는가?
+- 주석의 차입금 만기 분석표에서 1~2년 집중 구간이 새로 생겼는가?</p>
+<p><strong>기준선 현황</strong>:</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 2025 사업보고서 기준 단기차입금·유동성장기부채 절대값 (XBRL 미수신)
+- 재고자산 회전일수 시계열 (XBRL 미수신)</p>
+</blockquote>
+<hr />
+<h3 id="추적-7-ip-보호핵심-기술-유출-리스크-조건부">추적 7 — IP 보호·핵심 기술 유출 리스크 ★★ (조건부)</h3>
+<p><strong>추적 이유</strong>: 페르소나 ★★ 항목 — 압도적 기술 보유 시 IP 보호 구조 점검. HBM 기술은 글로벌 AI 인프라의 병목 자원으로 부상했다 <em>(추론 — 반도체 산업 맥락, 1순위 DART 공시에서 재확인 필요)</em>. 이 경우 (a) 미국 자본의 합작·인수 시나리오와 (b) 핵심 인력 유출·경쟁사 이전 리스크가 동시에 존재한다.</p>
+<p><strong>다음 분기 확인 질문</strong>:
+- 우발채무 주석에 지식재산권 관련 소송·분쟁이 신규 기재됐는가?
+- 핵심 임원 이탈이 DART 임원 공시에서 확인되는가?
+- 미국·일본 파트너사와의 합작·라이선스 계약 관련 공시(주요사항보고)가 있는가?</p>
+<p><strong>기준선 현황</strong>:</p>
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- 현재 IP 관련 소송·우발채무 주석 내용 (공시 원문 미수신)
+- 임원 변동 현황 (DART 임원공시 미수신)</p>
+</blockquote>
+<hr />
+<h3 id="비유-한-줄_1">비유 한 줄</h3>
+<p>추적사항은 의사가 퇴원하는 환자에게 주는 &ldquo;다음 검진 때 이 수치 꼭 재봅시다&rdquo; 메모지와 같다. 지금은 숫자가 빠져 있지만, 메모지의 항목 자체가 다음 회차의 검진 설계다.</p>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음 (섹션 전체 요약)</strong>
+- 모든 추적 항목의 <em>현재 기준선 수치</em>: 이번 회차 DART 공시 원문 및 XBRL 재무제표 미수신으로 채울 수 없음
+- 기준선 없는 추적 항목은 방향성 판단이 불가하므로, 다음 회차 데이터 수신 시 각 항목에 현재값을 입력하는 작업이 선행되어야 한다</p>
+</blockquote>
+<hr />
+<p>이번 회 등장 용어: HBM(고대역폭메모리), 영업현금흐름(영업CF), 현금전환율(영업CF÷영업이익), ROIC(투하자본이익률), WACC(가중평균자본비용), CAPEX(자본적지출), EAR(미국 수출관리규정), FDPR(해외직접제품규칙), 재고자산회전일수, 우발채무, 운전자본</p>
+<hr />
+<h2 id="10_용어사전_1">10_용어사전</h2>
+<p>이 사전은 01~09 섹션 본문에서 첫 등장한 전문용어를 한 곳에 모은 것이다. 금융·반도체 지식이 없는 독자도 본문을 따라올 수 있도록, 모든 풀이는 일상 언어로 작성했다.</p>
+<hr />
+<h3 id="ㄱ">ㄱ</h3>
+<p><strong>GAAP (일반회계기준)</strong>
+기업이 재무제표를 작성할 때 따르는 공통 규칙 모음. 요리책의 레시피처럼, 어느 회사나 같은 규칙으로 숫자를 만들어야 비교가 가능해진다. 한국 상장사는 K-IFRS(한국채택국제회계기준)를 쓴다.</p>
+<p><strong>거버넌스 (Corporate Governance)</strong>
+회사를 누가, 어떻게 통제하는지에 관한 구조. 이사회·감사·최대주주 관계, 의사결정 투명성 등이 포함된다. 회사가 주주 이익을 위해 움직이는지 아닌지를 보는 창문.</p>
+<hr />
+<h3 id="ㄴ">ㄴ</h3>
+<p><strong>내수 의존도</strong>
+전체 매출 중 국내 시장에서 나오는 비중. 한국은 인구 감소·내수 정체 구조이므로, 이 비중이 높을수록 장기 성장성에 부정적 신호로 읽힌다.</p>
+<hr />
+<h3 id="ㄷ">ㄷ</h3>
+<p><strong>D램 (DRAM, Dynamic Random-Access Memory)</strong>
+전원이 켜진 동안 데이터를 빠르게 읽고 쓸 수 있는 휘발성 메모리 반도체. 컴퓨터의 &lsquo;작업대&rsquo; 역할. 전원이 꺼지면 내용이 사라진다.</p>
+<p><strong>당기순이익</strong>
+영업이익에서 이자·세금·기타 비영업 손익을 모두 더하거나 뺀 최종 이익. 회사가 한 해 동안 실제로 벌어 주주 몫으로 남긴 돈.</p>
+<hr />
+<h3 id="ㄹ">ㄹ</h3>
+<p><strong>ROIC (투하자본이익률, Return on Invested Capital)</strong>
+회사가 사업에 투입한 자본(자기자본+차입금)으로 얼마나 이익을 냈는지 측정하는 비율. ROIC가 WACC(자본비용)보다 높아야 가치를 만들어내는 것. 운동선수로 치면 &lsquo;훈련 대비 성적&rsquo;.</p>
+<hr />
+<h3 id="ㅁ">ㅁ</h3>
+<p><strong>매출채권 회전율</strong>
+매출채권(외상 판매 대금)이 현금으로 회수되는 속도. 회전율이 낮아지면 대금 회수가 늦어지고 있다는 신호 — 마치 외상값이 쌓이는 가게.</p>
+<p><strong>무형자산</strong>
+물리적 실체가 없지만 경제적 가치를 갖는 자산. 특허·브랜드·소프트웨어·고객 관계 등이 해당. 반도체 기업에서는 핵심 IP(지식재산권)가 핵심 무형자산.</p>
+<hr />
+<h3 id="ㅂ">ㅂ</h3>
+<p><strong>반도체 다운사이클 / 업사이클</strong>
+반도체 산업은 수요·공급의 불균형에 따라 호황(업사이클)과 불황(다운사이클)이 주기적으로 반복된다. 농산물 가격처럼, 공급이 넘치면 가격이 폭락하고 부족하면 폭등.</p>
+<p><strong>부채비율</strong>
+총부채 ÷ 자기자본 × 100. 남의 돈(빚)으로 자기 돈 대비 얼마나 사업을 굴리는지 보여준다. 비율이 높을수록 재무 레버리지가 크고 이자 부담도 크다.</p>
+<p><strong>FCF (잉여현금흐름, Free Cash Flow)</strong>
+영업활동으로 벌어들인 현금에서 사업 유지·성장을 위한 설비투자(Capex)를 뺀 나머지 현금. 회사가 주주에게 배당하거나, 빚을 갚거나, 신사업에 쓸 수 있는 &lsquo;진짜 남는 돈&rsquo;.</p>
+<hr />
+<h3 id="ㅅ">ㅅ</h3>
+<p><strong>상각 (감가상각·무형자산상각)</strong>
+유형자산(건물·장비)이나 무형자산(특허)의 가치가 시간이 지남에 따라 줄어드는 것을 비용으로 인식하는 회계 처리. 10억짜리 장비를 10년에 나눠 비용 처리하면 매년 1억씩 상각.</p>
+<p><strong>순차입금 (Net Debt)</strong>
+총차입금(빌린 돈의 합계)에서 보유 현금성자산을 뺀 값. 실질적인 빚의 크기. 현금이 많으면 순차입금이 줄거나 마이너스(순현금)가 될 수 있다.</p>
+<hr />
+<h3 id="ㅇ">ㅇ</h3>
+<p><strong>영업이익률</strong>
+영업이익 ÷ 매출 × 100. 100원어치 팔아서 순수한 사업 활동으로 얼마를 남기는지 보여준다. 이자·세금 전 수치라 사업 자체의 효율을 본다.</p>
+<p><strong>영업현금흐름 (OCF, Operating Cash Flow)</strong>
+영업활동으로 실제 들어오고 나간 현금의 합. 영업이익과 달리 상각·운전자본 변화가 반영된 &lsquo;현금 기준&rsquo; 수치. 영업이익은 좋아도 현금흐름이 나쁘면 이익이 &lsquo;종이 위에만 있는&rsquo; 것.</p>
+<p><strong>우발채무</strong>
+현재는 확정된 빚이 아니지만, 미래에 일정 조건이 충족되면 갚아야 할 수 있는 잠재 부채. 재판 중인 소송·보증채무 등. 재무제표 주석에 표시되는 숨겨진 위험.</p>
+<p><strong>운전자본 (Working Capital)</strong>
+매출채권 + 재고자산 - 매입채무. 일상 사업 운영에 묶여 있는 자금. 운전자본이 늘어나면 현금이 사업 안에 갇혀서 FCF가 줄어든다.</p>
+<hr />
+<h3 id="ㅈ">ㅈ</h3>
+<p><strong>자기자본이익률 (ROE, Return on Equity)</strong>
+당기순이익 ÷ 자기자본 × 100. 주주가 넣은 돈으로 얼마를 벌었는지. 은행 예금 이자율과 비교해보면 이 회사가 주주 돈을 효율적으로 쓰는지 판단 가능.</p>
+<p><strong>잠정실적 공시</strong>
+분기 또는 연간 실적 확정 전에 회사가 매출·영업이익의 잠정(예비) 수치를 공개하는 공시. 확정 재무제표보다 먼저 나오지만, 이후 수치가 바뀔 수 있다.</p>
+<p><strong>지배구조 디스카운트 (코리아 디스카운트)</strong>
+한국 상장사가 동종 글로벌 기업 대비 낮은 주가 배수(PER·PBR)를 받는 현상. 지배구조 불투명성·정책 변동성·지정학 리스크가 주된 원인으로 거론된다 <em>(추론 — 학계·시장 참여자 공통 관찰에서 유추, DART 원공시 직접 확인 항목 아님)</em>.</p>
+<hr />
+<h3 id="ㅊ">ㅊ</h3>
+<p><strong>Capex (자본적 지출, Capital Expenditure)</strong>
+공장·장비·인프라 등 장기 자산 취득에 쓰는 투자 지출. 미래 성장을 위한 씨앗이지만 과도하면 단기 FCF를 줄인다. &ldquo;오늘 아끼면 내일 못 크고, 오늘 너무 쓰면 내일 돈이 없다&rdquo;는 딜레마.</p>
+<hr />
+<h3 id="ㅎ">ㅎ</h3>
+<p><strong>HBM (고대역폭 메모리, High Bandwidth Memory)</strong>
+D램을 수직으로 쌓아 연결한 고속·고용량 메모리. GPU 옆에 붙어 AI 연산에 필요한 대용량 데이터를 빠르게 공급한다. 일반 D램이 &lsquo;도로&rsquo;라면 HBM은 &lsquo;고속전용철도&rsquo;.</p>
+<p><strong>WACC (가중평균자본비용, Weighted Average Cost of Capital)</strong>
+회사가 자기자본과 차입금을 조달하는 데 드는 평균 비용률. ROIC가 WACC보다 높으면 사업이 가치를 창출하고, 낮으면 자본을 소모하는 것.</p>
+<hr />
+<blockquote>
+<p><strong>확인되지 않음</strong>
+- HBM 세부 세대(HBM3E 등) 시장점유율 수치: 제공된 DART 공시 데이터에서 확인되지 않음. 1순위 출처(IR 원문·공시) 별도 확인 필요.</p>
+</blockquote>
+<hr />
+<p>이번 회 등장 용어: GAAP, K-IFRS, 거버넌스, 내수 의존도, D램(DRAM), 당기순이익, ROIC, 매출채권 회전율, 무형자산, 반도체 다운사이클/업사이클, 부채비율, FCF(잉여현금흐름), 상각(감가상각), 순차입금(Net Debt), 영업이익률, 영업현금흐름(OCF), 우발채무, 운전자본(Working Capital), ROE(자기자본이익률), 잠정실적 공시, 지배구조 디스카운트(코리아 디스카운트), Capex(자본적 지출), HBM(고대역폭 메모리), WACC(가중평균자본비용)</p>
+<hr />
+<h2 id="종합-한-페이지-owner-valuation">종합 한 페이지 — Owner valuation</h2>
+<blockquote>
+<p><strong>데이터 기준시점 (종합진단 기준)</strong>
+시장가격 미포함으로 시가총액 확정 불가 — 본문에서 &ldquo;시총 X조원&rdquo; 자리를 공란으로 둔다. 모든 재무 수치는 FY2023~FY2024 훈련 데이터 기반 추론이며, FY2025 DART XBRL 미수신 상태다.</p>
+</blockquote>
+<hr />
+<p>SK하이닉스를 시총 X조원에 통째로 산다고 가정하면, 핵심 질문은 하나로 수렴한다: <strong>2028년에도 미국 AI 인프라의 필수 기억장치 공급자 자리를 지키고 있는가.</strong> FY2024 기준 영업CF 약 28~32조원이 영업이익(약 23조원)을 안정적으로 상회하는 패턴 <em>(추론)</em> [섹션 02, 03]과, HBM2E → HBM3 → HBM3E로 이어진 3년 연속 기술 트랙 일관성 [섹션 06]은 이 회사가 단순 메모리 사이클주가 아닌 기술 구조주로 읽힐 수 있는 <strong>현재까지 가장 강한 근거</strong>다 — 페르소나 기준 ★★★ 호재가 두 개 동시에 성립하는 구간이다. 그러나 이 판단을 흔드는 변수 세 가지가 해소되지 않은 채 남아 있다: (1) FY2025 HBM 증설 capex가 커졌다면 FCF가 다시 마이너스로 돌아설 수 있고 — 이 숫자가 이번 보고서에 없어 지금 판단이 불가능하다 [섹션 02, 04]; (2) 삼성전자가 HBM4에서 경쟁력을 회복하는 순간, 현재의 공급자 락인 구조는 단 한 세대 만에 재편될 수 있으며 <em>(추론)</em> [섹션 06]; (3) 외인 보유 비중 추세가 이번 보고서 전체에서 확인되지 않아, ★★★ 적신호(외인 이탈 + 국내 인기 디커플링) 발령 여부를 끝내 판단하지 못했다 [섹션 07]. <strong>통째로 사기 전에 반드시 확인해야 할 순서는 이렇다: 먼저 다음 분기 영업CF가 영업이익을 여전히 상회하는지 — 그게 &lsquo;현금이 따라오는 이익&rsquo;의 증거다 [섹션 03]; 그다음 외인이 이 회사를 계속 들고 있는지 — 그게 글로벌 자본이 이 기술 트랙을 믿는다는 신호다 [섹션 07].</strong> 두 조건이 다음 분기에 동시에 확인된다면, 메모리 단일 집중이라는 구조적 약점 [섹션 01]을 감수하고서도 살 만한 사업체다 — 단, HBM이라는 단 하나의 기술 경쟁에 회사 전체 수익성이 걸려 있다는 사실은, 지금 이 가격에 통째로 사는 사람이 가장 무겁게 짊어져야 할 리스크다.</p>
+<blockquote>
+<p><strong>★★★ 외인 vs 국내 자금 박스 — 이번 회 발령 불가</strong>
+외인 보유잔고 데이터 미수신으로, 외인 이탈 + 국내 인기 괴리(적신호) 또는 장기 외인 비중 상승(호재) 중 어느 쪽도 사실로 판정할 수 없다. KRX 외국인 보유잔고 연결이 다음 보고서의 <strong>첫 번째 인프라 과제</strong>다 [섹션 07, 09].</p>
+</blockquote></article>
+  <aside class="report-toc"><div class="toc-title">목차</div><ul><li><a href="#목차">목차</a></li><li><a href="#각-섹션-한-문단-요약">각 섹션 한 문단 요약</a></li><ul><li><a href="#01_사업구조진단">01_사업구조진단</a></li><li><a href="#02_재무건강진단">02_재무건강진단</a></li><li><a href="#03_수익성진단">03_수익성진단</a></li><li><a href="#04_자본활용진단">04_자본활용진단</a></li><li><a href="#05_업황과사이클진단">05_업황과사이클진단</a></li><li><a href="#06_경쟁포지션진단">06_경쟁포지션진단</a></li><li><a href="#07_거버넌스리스크진단">07_거버넌스리스크진단</a></li><li><a href="#08_이번분기변화">08_이번분기변화</a></li><li><a href="#09_추적사항">09_추적사항</a></li><li><a href="#10_용어사전">10_용어사전</a></li></ul><li><a href="#본문">본문</a></li><li><a href="#01_사업구조진단">01_사업구조진단</a></li><ul><li><a href="#30초-회사-소개">30초 회사 소개</a></li><li><a href="#1-사업-세그먼트-구조">1. 사업 세그먼트 구조</a></li><li><a href="#2-해외-매출-비중-페르소나">2. 해외 매출 비중 (페르소나 ★★★)</a></li><li><a href="#3-미국-시장-노출도-페르소나">3. 미국 시장 노출도 (페르소나 ★★★)</a></li><li><a href="#4-정부-정책-의존도-페르소나">4. 정부 정책 의존도 (페르소나 ★★★)</a></li><li><a href="#5-국내-개미테마-의존도-페르소나">5. 국내 개미·테마 의존도 (페르소나 ★★★)</a></li><li><a href="#6-사업-다각화의-정도와-방향성">6. 사업 다각화의 정도와 방향성</a></li><li><a href="#7-이번-분기-주요-사업구조-변화-포인트">7. 이번 분기 주요 사업구조 변화 포인트</a></li><li><a href="#비유-한-줄-의무">비유 한 줄 (의무)</a></li></ul><li><a href="#02_재무건강진단-sk하이닉스">02_재무건강진단 — SK하이닉스</a></li><ul><li><a href="#0-영업이익-vs-영업현금흐름ocf-먼저-본다-페르소나">0. 영업이익 vs 영업현금흐름(OCF) — 먼저 본다 (페르소나 ★★★)</a></li><li><a href="#1-자본구조-부채와-자기자본의-균형">1. 자본구조 — 부채와 자기자본의 균형</a></li><li><a href="#2-현금흐름-3종-패턴">2. 현금흐름 3종 패턴</a></li><li><a href="#3-free-cash-flow-fcf-진짜-손에-남은-돈">3. Free Cash Flow (FCF) — 진짜 손에 남은 돈</a></li><li><a href="#4-운전자본-영업-사이클의-건강도">4. 운전자본 — 영업 사이클의 건강도</a></li><li><a href="#5-단기-유동성-급한-불-끌-수-있나">5. 단기 유동성 — 급한 불 끌 수 있나</a></li><li><a href="#종합-재무건강-현황-한눈에">종합 — 재무건강 현황 한눈에</a></li></ul><li><a href="#03_수익성진단">03_수익성진단</a></li><ul><li><a href="#수익성-진단이란-무엇인가-비전문가를-위한-안내">수익성 진단이란 무엇인가? (비전문가를 위한 안내)</a></li><li><a href="#1-sk하이닉스-사업-구조와-수익성-드라이버">1. SK하이닉스 사업 구조와 수익성 드라이버</a></li><li><a href="#2-영업cf-기준-수익성-페르소나-우선-점검">2. 영업CF 기준 수익성 — 페르소나 우선 점검</a></li><li><a href="#3-이익률-추이-직전-48분기-시계열">3. 이익률 추이 — 직전 4~8분기 시계열</a></li><li><a href="#4-roe-roic-분석">4. ROE / ROIC 분석</a></li><li><a href="#5-이익률-변화-분해-가격물량비용믹스-효과">5. 이익률 변화 분해 — 가격·물량·비용·믹스 효과</a></li><li><a href="#6-수익성-종합-진단-현재-알-수-있는-것">6. 수익성 종합 진단 — 현재 알 수 있는 것</a></li><li><a href="#비유-한-줄">비유 한 줄</a></li></ul><li><a href="#04_자본활용진단">04_자본활용진단</a></li><ul><li><a href="#섹션-읽기-전-한-줄-안내">섹션 읽기 전 한 줄 안내</a></li><li><a href="#4-1-capex-규모와-방향">4-1. Capex — 규모와 방향</a></li><li><a href="#4-2-ma-최근-인수매각과-의도">4-2. M&amp;A — 최근 인수·매각과 의도</a></li><li><a href="#4-3-주주환원-자사주배당">4-3. 주주환원 — 자사주·배당</a></li><li><a href="#4-4-roic-vs-wacc-자본효율">4-4. ROIC vs WACC — 자본효율</a></li><li><a href="#4-5-페르소나-적신호호재-체크">4-5. 페르소나 적신호·호재 체크</a></li><li><a href="#4-6-다음-분기-추적-항목">4-6. 다음 분기 추적 항목</a></li></ul><li><a href="#05_업황과사이클진단">05_업황과사이클진단</a></li><ul><li><a href="#섹션-한계-고지">섹션 한계 고지</a></li><li><a href="#1-반도체-메모리-산업-사이클의-어느-지점인가">1. 반도체 메모리 산업 — 사이클의 어느 지점인가?</a></li><li><a href="#2-회사가-사이클-대비-잘하고-있나">2. 회사가 사이클 대비 잘하고 있나?</a></li><li><a href="#3-5종-매크로-의무">3. 5종 매크로 의무</a></li><li><a href="#4-종합-사이클-포지션-판정-보류">4. 종합 — 사이클 포지션 판정 보류</a></li></ul><li><a href="#06_경쟁포지션진단">06_경쟁포지션진단</a></li><ul><li><a href="#30초-경쟁-포지션-소개">30초 경쟁 포지션 소개</a></li><li><a href="#1-직접-경쟁자-구도">1. 직접 경쟁자 구도</a></li><li><a href="#2-진입장벽과-해자-moat">2. 진입장벽과 해자 (Moat)</a></li><li><a href="#3-3년-단위-기술-트랙-일관성-페르소나-핵심-항목">3. 3년 단위 기술 트랙 일관성 — ★★★ (페르소나 핵심 항목)</a></li><li><a href="#4-미국-시장-검증-페르소나-핵심-항목">4. 미국 시장 검증 — ★★★ (페르소나 핵심 항목)</a></li><li><a href="#5-신규-위협-분석">5. 신규 위협 분석</a></li><li><a href="#6-ip인수-시나리오-압도적-기술-보유의-양면성-페르소나-의무-항목">6. IP·인수 시나리오 — 압도적 기술 보유의 양면성 — ★★ (페르소나 의무 항목)</a></li><li><a href="#7-종합-경쟁포지션-평가">7. 종합 경쟁포지션 평가</a></li></ul><li><a href="#07_거버넌스리스크진단">07_거버넌스리스크진단</a></li><ul><li><a href="#이-섹션이-보는-것">이 섹션이 보는 것</a></li><li><a href="#1-지배구조-이번-데이터에서-확인된-사항">1. 지배구조 — 이번 데이터에서 확인된 사항</a></li><li><a href="#2-주석-점검-특수관계자우발채무회계정책">2. 주석 점검 — 특수관계자·우발채무·회계정책</a></li><li><a href="#3-임원이사회-변동">3. 임원·이사회 변동</a></li><li><a href="#4-외인-동향과-거버넌스-신호-페르소나-항목">4. 외인 동향과 거버넌스 신호 — 페르소나 ★★★ 항목</a></li><li><a href="#5-ip-보호기술-유출-리스크-페르소나-항목">5. IP 보호·기술 유출 리스크 — 페르소나 ★★ 항목</a></li><li><a href="#6-잠재-리스크-지정학규제">6. 잠재 리스크 — 지정학·규제</a></li><li><a href="#7-비유-한-줄">7. 비유 한 줄</a></li><li><a href="#8-종합-이번-회차-거버넌스-진단-가능-범위">8. 종합 — 이번 회차 거버넌스 진단 가능 범위</a></li><li><a href="#다음-회차-추적-항목-09로-이관">다음 회차 추적 항목 (09로 이관)</a></li></ul><li><a href="#08_이번분기변화">08_이번분기변화</a></li><ul><li><a href="#1-이번-분기-핵심-변화-작성-가능-범위">1. 이번 분기 핵심 변화 — 작성 가능 범위</a></li><li><a href="#2-페르소나-신호-점검-발생해소-여부">2. 페르소나 ★★★ 신호 점검 — 발생·해소 여부</a></li><li><a href="#3-다음-데이터-확보-시-즉시-채울-항목-작업-가이드">3. 다음 데이터 확보 시 즉시 채울 항목 (작업 가이드)</a></li><li><a href="#4-이번-분기-헤드라인-데이터-확보-후-교체-예정">4. 이번 분기 헤드라인 (데이터 확보 후 교체 예정)</a></li><li><a href="#5-비유">5. 비유</a></li></ul><li><a href="#09_추적사항">09_추적사항</a></li><ul><li><a href="#추적-1-영업이익-vs-영업현금흐름-괴리">추적 1 — 영업이익 vs 영업현금흐름 괴리 ★★★</a></li><li><a href="#추적-2-hbm-매출-비중-및-고객사-다변화">추적 2 — HBM 매출 비중 및 고객사 다변화 ★★★</a></li><li><a href="#추적-3-외국인-보유-비중-및-장단기-외인-구성-추세">추적 3 — 외국인 보유 비중 및 장·단기 외인 구성 추세 ★★★</a></li><li><a href="#추적-4-미중-반도체-규제에-따른-중국-매출-노출도">추적 4 — 미중 반도체 규제에 따른 중국 매출 노출도 ★★</a></li><li><a href="#추적-5-capex-규율-roic-vs-wacc-역전-여부">추적 5 — CAPEX 규율: ROIC vs WACC 역전 여부 ★★</a></li><li><a href="#추적-6-차입금-만기-집중-및-운전자본-회전">추적 6 — 차입금 만기 집중 및 운전자본 회전 ★★</a></li><li><a href="#추적-7-ip-보호핵심-기술-유출-리스크-조건부">추적 7 — IP 보호·핵심 기술 유출 리스크 ★★ (조건부)</a></li><li><a href="#비유-한-줄">비유 한 줄</a></li></ul><li><a href="#10_용어사전">10_용어사전</a></li><ul><li><a href="#ㄱ">ㄱ</a></li><li><a href="#ㄴ">ㄴ</a></li><li><a href="#ㄷ">ㄷ</a></li><li><a href="#ㄹ">ㄹ</a></li><li><a href="#ㅁ">ㅁ</a></li><li><a href="#ㅂ">ㅂ</a></li><li><a href="#ㅅ">ㅅ</a></li><li><a href="#ㅇ">ㅇ</a></li><li><a href="#ㅈ">ㅈ</a></li><li><a href="#ㅊ">ㅊ</a></li><li><a href="#ㅎ">ㅎ</a></li></ul><li><a href="#종합-한-페이지-owner-valuation">종합 한 페이지 — Owner valuation</a></li></ul></aside><div class="toc-drawer" id="tocDrawer" aria-hidden="true"><div class="toc-drawer-inner"><div class="toc-drawer-head"><span class="toc-title">목차</span><button class="toc-close" onclick="document.getElementById('tocDrawer').classList.remove('open')" aria-label="닫기">×</button></div><ul><li><a href="#목차">목차</a></li><li><a href="#각-섹션-한-문단-요약">각 섹션 한 문단 요약</a></li><ul><li><a href="#01_사업구조진단">01_사업구조진단</a></li><li><a href="#02_재무건강진단">02_재무건강진단</a></li><li><a href="#03_수익성진단">03_수익성진단</a></li><li><a href="#04_자본활용진단">04_자본활용진단</a></li><li><a href="#05_업황과사이클진단">05_업황과사이클진단</a></li><li><a href="#06_경쟁포지션진단">06_경쟁포지션진단</a></li><li><a href="#07_거버넌스리스크진단">07_거버넌스리스크진단</a></li><li><a href="#08_이번분기변화">08_이번분기변화</a></li><li><a href="#09_추적사항">09_추적사항</a></li><li><a href="#10_용어사전">10_용어사전</a></li></ul><li><a href="#본문">본문</a></li><li><a href="#01_사업구조진단">01_사업구조진단</a></li><ul><li><a href="#30초-회사-소개">30초 회사 소개</a></li><li><a href="#1-사업-세그먼트-구조">1. 사업 세그먼트 구조</a></li><li><a href="#2-해외-매출-비중-페르소나">2. 해외 매출 비중 (페르소나 ★★★)</a></li><li><a href="#3-미국-시장-노출도-페르소나">3. 미국 시장 노출도 (페르소나 ★★★)</a></li><li><a href="#4-정부-정책-의존도-페르소나">4. 정부 정책 의존도 (페르소나 ★★★)</a></li><li><a href="#5-국내-개미테마-의존도-페르소나">5. 국내 개미·테마 의존도 (페르소나 ★★★)</a></li><li><a href="#6-사업-다각화의-정도와-방향성">6. 사업 다각화의 정도와 방향성</a></li><li><a href="#7-이번-분기-주요-사업구조-변화-포인트">7. 이번 분기 주요 사업구조 변화 포인트</a></li><li><a href="#비유-한-줄-의무">비유 한 줄 (의무)</a></li></ul><li><a href="#02_재무건강진단-sk하이닉스">02_재무건강진단 — SK하이닉스</a></li><ul><li><a href="#0-영업이익-vs-영업현금흐름ocf-먼저-본다-페르소나">0. 영업이익 vs 영업현금흐름(OCF) — 먼저 본다 (페르소나 ★★★)</a></li><li><a href="#1-자본구조-부채와-자기자본의-균형">1. 자본구조 — 부채와 자기자본의 균형</a></li><li><a href="#2-현금흐름-3종-패턴">2. 현금흐름 3종 패턴</a></li><li><a href="#3-free-cash-flow-fcf-진짜-손에-남은-돈">3. Free Cash Flow (FCF) — 진짜 손에 남은 돈</a></li><li><a href="#4-운전자본-영업-사이클의-건강도">4. 운전자본 — 영업 사이클의 건강도</a></li><li><a href="#5-단기-유동성-급한-불-끌-수-있나">5. 단기 유동성 — 급한 불 끌 수 있나</a></li><li><a href="#종합-재무건강-현황-한눈에">종합 — 재무건강 현황 한눈에</a></li></ul><li><a href="#03_수익성진단">03_수익성진단</a></li><ul><li><a href="#수익성-진단이란-무엇인가-비전문가를-위한-안내">수익성 진단이란 무엇인가? (비전문가를 위한 안내)</a></li><li><a href="#1-sk하이닉스-사업-구조와-수익성-드라이버">1. SK하이닉스 사업 구조와 수익성 드라이버</a></li><li><a href="#2-영업cf-기준-수익성-페르소나-우선-점검">2. 영업CF 기준 수익성 — 페르소나 우선 점검</a></li><li><a href="#3-이익률-추이-직전-48분기-시계열">3. 이익률 추이 — 직전 4~8분기 시계열</a></li><li><a href="#4-roe-roic-분석">4. ROE / ROIC 분석</a></li><li><a href="#5-이익률-변화-분해-가격물량비용믹스-효과">5. 이익률 변화 분해 — 가격·물량·비용·믹스 효과</a></li><li><a href="#6-수익성-종합-진단-현재-알-수-있는-것">6. 수익성 종합 진단 — 현재 알 수 있는 것</a></li><li><a href="#비유-한-줄">비유 한 줄</a></li></ul><li><a href="#04_자본활용진단">04_자본활용진단</a></li><ul><li><a href="#섹션-읽기-전-한-줄-안내">섹션 읽기 전 한 줄 안내</a></li><li><a href="#4-1-capex-규모와-방향">4-1. Capex — 규모와 방향</a></li><li><a href="#4-2-ma-최근-인수매각과-의도">4-2. M&amp;A — 최근 인수·매각과 의도</a></li><li><a href="#4-3-주주환원-자사주배당">4-3. 주주환원 — 자사주·배당</a></li><li><a href="#4-4-roic-vs-wacc-자본효율">4-4. ROIC vs WACC — 자본효율</a></li><li><a href="#4-5-페르소나-적신호호재-체크">4-5. 페르소나 적신호·호재 체크</a></li><li><a href="#4-6-다음-분기-추적-항목">4-6. 다음 분기 추적 항목</a></li></ul><li><a href="#05_업황과사이클진단">05_업황과사이클진단</a></li><ul><li><a href="#섹션-한계-고지">섹션 한계 고지</a></li><li><a href="#1-반도체-메모리-산업-사이클의-어느-지점인가">1. 반도체 메모리 산업 — 사이클의 어느 지점인가?</a></li><li><a href="#2-회사가-사이클-대비-잘하고-있나">2. 회사가 사이클 대비 잘하고 있나?</a></li><li><a href="#3-5종-매크로-의무">3. 5종 매크로 의무</a></li><li><a href="#4-종합-사이클-포지션-판정-보류">4. 종합 — 사이클 포지션 판정 보류</a></li></ul><li><a href="#06_경쟁포지션진단">06_경쟁포지션진단</a></li><ul><li><a href="#30초-경쟁-포지션-소개">30초 경쟁 포지션 소개</a></li><li><a href="#1-직접-경쟁자-구도">1. 직접 경쟁자 구도</a></li><li><a href="#2-진입장벽과-해자-moat">2. 진입장벽과 해자 (Moat)</a></li><li><a href="#3-3년-단위-기술-트랙-일관성-페르소나-핵심-항목">3. 3년 단위 기술 트랙 일관성 — ★★★ (페르소나 핵심 항목)</a></li><li><a href="#4-미국-시장-검증-페르소나-핵심-항목">4. 미국 시장 검증 — ★★★ (페르소나 핵심 항목)</a></li><li><a href="#5-신규-위협-분석">5. 신규 위협 분석</a></li><li><a href="#6-ip인수-시나리오-압도적-기술-보유의-양면성-페르소나-의무-항목">6. IP·인수 시나리오 — 압도적 기술 보유의 양면성 — ★★ (페르소나 의무 항목)</a></li><li><a href="#7-종합-경쟁포지션-평가">7. 종합 경쟁포지션 평가</a></li></ul><li><a href="#07_거버넌스리스크진단">07_거버넌스리스크진단</a></li><ul><li><a href="#이-섹션이-보는-것">이 섹션이 보는 것</a></li><li><a href="#1-지배구조-이번-데이터에서-확인된-사항">1. 지배구조 — 이번 데이터에서 확인된 사항</a></li><li><a href="#2-주석-점검-특수관계자우발채무회계정책">2. 주석 점검 — 특수관계자·우발채무·회계정책</a></li><li><a href="#3-임원이사회-변동">3. 임원·이사회 변동</a></li><li><a href="#4-외인-동향과-거버넌스-신호-페르소나-항목">4. 외인 동향과 거버넌스 신호 — 페르소나 ★★★ 항목</a></li><li><a href="#5-ip-보호기술-유출-리스크-페르소나-항목">5. IP 보호·기술 유출 리스크 — 페르소나 ★★ 항목</a></li><li><a href="#6-잠재-리스크-지정학규제">6. 잠재 리스크 — 지정학·규제</a></li><li><a href="#7-비유-한-줄">7. 비유 한 줄</a></li><li><a href="#8-종합-이번-회차-거버넌스-진단-가능-범위">8. 종합 — 이번 회차 거버넌스 진단 가능 범위</a></li><li><a href="#다음-회차-추적-항목-09로-이관">다음 회차 추적 항목 (09로 이관)</a></li></ul><li><a href="#08_이번분기변화">08_이번분기변화</a></li><ul><li><a href="#1-이번-분기-핵심-변화-작성-가능-범위">1. 이번 분기 핵심 변화 — 작성 가능 범위</a></li><li><a href="#2-페르소나-신호-점검-발생해소-여부">2. 페르소나 ★★★ 신호 점검 — 발생·해소 여부</a></li><li><a href="#3-다음-데이터-확보-시-즉시-채울-항목-작업-가이드">3. 다음 데이터 확보 시 즉시 채울 항목 (작업 가이드)</a></li><li><a href="#4-이번-분기-헤드라인-데이터-확보-후-교체-예정">4. 이번 분기 헤드라인 (데이터 확보 후 교체 예정)</a></li><li><a href="#5-비유">5. 비유</a></li></ul><li><a href="#09_추적사항">09_추적사항</a></li><ul><li><a href="#추적-1-영업이익-vs-영업현금흐름-괴리">추적 1 — 영업이익 vs 영업현금흐름 괴리 ★★★</a></li><li><a href="#추적-2-hbm-매출-비중-및-고객사-다변화">추적 2 — HBM 매출 비중 및 고객사 다변화 ★★★</a></li><li><a href="#추적-3-외국인-보유-비중-및-장단기-외인-구성-추세">추적 3 — 외국인 보유 비중 및 장·단기 외인 구성 추세 ★★★</a></li><li><a href="#추적-4-미중-반도체-규제에-따른-중국-매출-노출도">추적 4 — 미중 반도체 규제에 따른 중국 매출 노출도 ★★</a></li><li><a href="#추적-5-capex-규율-roic-vs-wacc-역전-여부">추적 5 — CAPEX 규율: ROIC vs WACC 역전 여부 ★★</a></li><li><a href="#추적-6-차입금-만기-집중-및-운전자본-회전">추적 6 — 차입금 만기 집중 및 운전자본 회전 ★★</a></li><li><a href="#추적-7-ip-보호핵심-기술-유출-리스크-조건부">추적 7 — IP 보호·핵심 기술 유출 리스크 ★★ (조건부)</a></li><li><a href="#비유-한-줄">비유 한 줄</a></li></ul><li><a href="#10_용어사전">10_용어사전</a></li><ul><li><a href="#ㄱ">ㄱ</a></li><li><a href="#ㄴ">ㄴ</a></li><li><a href="#ㄷ">ㄷ</a></li><li><a href="#ㄹ">ㄹ</a></li><li><a href="#ㅁ">ㅁ</a></li><li><a href="#ㅂ">ㅂ</a></li><li><a href="#ㅅ">ㅅ</a></li><li><a href="#ㅇ">ㅇ</a></li><li><a href="#ㅈ">ㅈ</a></li><li><a href="#ㅊ">ㅊ</a></li><li><a href="#ㅎ">ㅎ</a></li></ul><li><a href="#종합-한-페이지-owner-valuation">종합 한 페이지 — Owner valuation</a></li></ul></div></div><button class="toc-fab" onclick="document.getElementById('tocDrawer').classList.toggle('open')" aria-label="목차"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="13" y2="18"/></svg></button>
+</div>
+  </div>
+  <footer class="site-footer">
+    <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
+    <p style="margin-top:6px">생성: 2026-05-06 13:49 </p>
+  </footer>
+  <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
+  <script>
+    // scroll-to-top 버튼 visibility + smooth anchor scroll offset
+    (function(){
+      var st = document.querySelector('.scroll-top');
+      if (st) window.addEventListener('scroll', function(){
+        st.classList.toggle('visible', window.scrollY > 400);
+      });
+      // anchor link → smooth scroll (with header offset)
+      document.querySelectorAll('a[href^="#"]').forEach(function(a){
+        a.addEventListener('click', function(e){
+          var id = a.getAttribute('href').slice(1);
+          if (!id) return;
+          var t = document.getElementById(id) || document.querySelector('[id="'+id+'"]');
+          if (!t) return;
+          e.preventDefault();
+          var top = t.getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({top: top, behavior: 'smooth'});
+          history.replaceState(null, '', '#'+id);
+          // close drawer if open
+          var dr = document.getElementById('tocDrawer');
+          if (dr) dr.classList.remove('open');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
