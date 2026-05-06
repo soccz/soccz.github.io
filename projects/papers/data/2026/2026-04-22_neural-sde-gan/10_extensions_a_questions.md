@@ -1,31 +1,11 @@
-# 10a · 자문 질문 5개
-
----
-
-## Q1. Neural SDE의 확산 계수 $\sigma_\theta$가 0에 가까워지면 무슨 일이 일어나는가?
-
-**왜 중요한가**: $\sigma_\theta \to 0$이면 SDE가 ODE로 퇴화한다. 결정론적 ODE는 노이즈가 없으므로, 동일한 초기값 $Y_0$에서 항상 같은 경로를 생성한다. 이는 생성 모델로서 완전히 실패하는 것이다. 그런데 학습 과정에서 생성자가 "가짜를 진짜처럼 보이게" 하는 가장 쉬운 방법이 "하나의 좋은 경로를 항상 복사"하는 것(mode collapse의 SDE 유사체)일 수 있다. 이 때 $\sigma_\theta$가 자연스럽게 0으로 수렴하는 현상이 생기는지, 그리고 어떻게 방지하는지는 이 프레임워크의 실용성을 크게 좌우한다.
-
----
-
-## Q2. 판별자 Neural CDE의 은닉 차원 $h$가 생성 품질에 어떤 영향을 미치는가?
-
-**왜 중요한가**: Neural CDE 판별자의 용량(capacity)은 주로 $h$로 결정된다. 판별자가 너무 작으면 생성자의 가짜 경로를 구분하지 못하고, 너무 크면 생성자가 과적합된 판별자를 속이기 어려워진다. "생성자 용량 : 판별자 용량 = 1 : 1이 최적인가, 아니면 비대칭이 나은가?"는 실용 설계 핵심 질문이다. 특히 Paper 4에서 CDE를 평가 도구로 도입할 때 이 비율을 어떻게 설정할지에 직접 영향을 준다.
-
----
-
-## Q3. Economic Time $\tau(t)$를 Neural SDE 생성자에 어떻게 삽입해야 합법적인 확률 측도를 유지하는가?
-
-**왜 중요한가**: 시간 변환 $t \to \tau(t)$를 SDE에 적용할 때, 결과물이 여전히 Markov 과정이려면 $\tau$가 stopping time이거나 measurable해야 한다. 또한 새 브라운 운동 $\tilde{W}_\tau = W_{\tau^{-1}(t)}$가 Lévy 특성을 보존하려면 $\tau$가 단조 증가이고 $\tau(0) = 0$이어야 한다. 단, $\tau$를 거래량에서 데이터로 추정할 때 이 조건들이 실용적으로 보장되는지 — 이것이 Paper 4의 이론 섹션에서 반드시 다뤄야 할 질문이다.
-
----
-
-## Q4. 이 논문의 프레임워크를 고빈도(분 또는 초) 금융 데이터에 적용하면 무슨 문제가 생기는가?
-
-**왜 중요한가**: 고빈도 데이터는 일간 데이터와 세 가지가 다르다: (1) 경로 길이가 수천~수만 스텝이어서 Euler-Maruyama 적분 비용이 폭증, (2) 스프레드·마이크로스트럭처 노이즈가 브라운 운동 가정을 심각하게 위반, (3) 비동시적 거래(nonsynchronous trading)로 인해 자연 스플라인 보간이 잘못된 경로를 만든다. 이 세 문제 중 어느 것이 가장 큰 병목인지 이해하면, 고빈도 경로 생성을 위한 확장 방향을 결정할 수 있다.
-
----
-
-## Q5. Neural SDE GAN과 Score-Based Diffusion Model 중 금융 시계열 생성에 어느 것이 더 적합한가?
-
-**왜 중요한가**: Diffusion 모델은 2022년 이후 이미지·오디오에서 GAN을 능가했다. 그러나 금융 시계열은 이미지와 다르다: (1) 시간 방향성이 엄격히 존재하고, (2) 경로의 통계 구조(자기상관, 변동성 클러스터링)가 픽셀 값의 분포보다 훨씬 복잡하며, (3) 생성 비용이 민감하다(몬테카를로 시뮬레이션에서 수천 개 경로를 빠르게 생성해야). Diffusion의 순차적 복원이 이 요구를 충족하는지, 아니면 Neural SDE GAN의 순방향 생성이 더 유리한지를 구체적 실험으로 비교하는 것이 2024~2025년에 가장 중요한 open question이다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "xX1vUqxzgicEN8/KCjUgNw==",
+  "iv": "vv59mYVIsAS0p7iqh8aScw==",
+  "ct": "nYYNcUaedWFtcy7bAR6UT/Wl6yGY79XQ5js4SQjGnopJ2qBc2nCljD0L5W1VC6srIRw/4D1OLQQPXGkZitfn/+o+QE4ECYiUz6mGNEChZFCHTnUE5t2+yf85VTOgITrl9g+iGreL8uplvhPpRQhXj22spiYrzLV/+LKjdbPoKOG3dX11EbsgOnB3z9lJ1abXQOs5thZpU5IGQgZoEbBGXtKk9rUZn9NCMhWBqm5RvN8gENuszkx4ytp10IjxAJ6vPXqmMUxN7kGXNjWKaRLtMs6opFqpl9I7dvWGljCG9oqRvBsRW0wxwE1wciJEoMnKNR6+F4nTIOUeNlRCBO7nAuENpPMtSdEMFd/XQY8V+WD/KaMiNj8LQmXfzBF9EYkEU+nU4Lh1WBP4Idmi4EF2880AfyRB4oBA/NJETMY5Lu2YWfrOukXOjsyi2tnYz/Bgb4Px3mwO/zlXTm2EHFNj0d3fKcXw5WnOxssTdOOJmICz+hFa2uWJBt8BKlgiQ8WibEGEZsulqAbgUZTJKXix5Bo7vBXyGD5DVjIi1j9zIOz3HIXEEdR8xLSjeoG0X1dK41O5Z0Cs7KEKm+xaX8LFHC2mI6c0rTaIVwwX8c+TOKiepnbjOcm3f+zq8ZS82YXKJiKdpcIczxG8G/7eIfjvABFMrKjbspAJEhqJnjth7UzNTd47wq9C1cxENeHTLoXm2dOru2WViVEtvrmThsdNTNTZf5yJjtJaMM201yeN8KtRjqSSHWxsLWqLxgc4lbvaXPbZ7hBWPpCFI108C0Tj/07y3jatXtK3T8fX3BcgzluJNFg09Oa3v7bO8LiVVBgwF9FgH8a+kOUZaReFYR4jPTfP1gOpKrWhRaIbhLHdJq7ndElzVFGXnQZ7w3R8EDbhk6uQcTnijR7EaLmoHD5kbpvO+E9Myh2nkbmQZD6t+OODR5ibANZheMnEpr05CiLGME7elWmWcJzEF7YDgoASRXeJBJeczAQanqqu3Vpy5CokAQFfItfpDng9rrZOGlU3Dpkp3UUL8uFxS2u5WwYiDRFvniUjbnrcJTNgRe5ElemK4zk7qlTcDGMieayHkGTqt1h0BFeSvQsfficRlyzwAa2TJD1WokroJy/rAdI517MYG/wPpYjZR1zrZCD5mVEgAPkjQPNz5Gm1R6//hs9vh5FR5UJJQAb978Tja1UQAytVtW3Yd8tdRaYFgELMT+WADC4uv6o/GUSKKkn4v1A80aiRqu6RK2l90Y3jXDmEpb8fyYvDzN1DFqagHPyA0ruIVN9A8HZnw3Zi872TChDKMq2t3e3SD8DkCIy76NIt3JYLGH8BEjXtjhP7J4X46VgLMj5sHvsZg0nkVyJgb6f5jq7FGVMnPeSQ8xZU7dELWkYCsn64kC/3lypp8WPHpWpCNfgu/ZLziC14iaZHtFFiUEKqEff3sRvTG8mq2epAzZzlx3MwILr62pn57wUqUUjrnBwaxJaXGMqrFfZQXg2pHdJ5BtYIpW7o+dAu25yiWXWjD3k+JvbBOuihmkkPxn2tP5iOtcnKCmMFPE6+Bpb9fOD07tf8MfzJOsUWlVj+XhC2/lUCRMC8twm3XkGYW8xfs9kvBoJjLqRuS5PW1oNCCFZTHl7LMlO/xz8gS6VtIvqLF2DbFUjlIQtYsbZtYmhbkwD5sKD422ZAOgR9AR0gwwl8WzFk4xsTRquVnw63uazoscuLOzyjwu8G0xkihivFhonoq25jgtH+RlUdjHc/nXl7j+ACn9ETNAwgqBPbVNiB9Jj/uX2D4cy+CXcyWYEjZSZotwYJ+Uphb6hUuiM2usItTMgEZcbKxcAr2lZ2uiTZUrC25B7JDy9tIqlYSy3eDYG930dNbMHkxw9QaY7Yw0W0mfS0SUobsTdJaCuOsLsu0p7boqwpmfcwy3Y6m2YHRCE6pRMSFwceugp06A0m6AEH0lvm56i0Uh0Q/PnwoTVSRhPZsOUDwar644TOikoHQVhxVuecbLXfG9Mz+yteTRhmKn3eNSdv2zssuOYjLdg2xJ3gh82SlkAcVvftKwspzqf46R6q1NLC1MSyzYuAfeuYQamwVET4yMaeYkiWE1/82xOwH6PI4IzpdD1LA+hRXQ2KnHFvowgPIMnYSRxdFPNFDbb6jll4q32BFCsij3QAy8GLyc+ztywrmF+Nfj5ke+y8K7Qq0gPxisxpmFJuowE1ICFSRdLwqIAOhNcA7plG7w1gqbUrcGzVxfXkPSIx1rR8FHtm4DIxWcflm+LxdkqZwCBZrfE6gkgdlXH8V6QUU5kKMjMpfCUX7g0aVY+RoRy4MrfgMaXectnxuvlL/ZW6qCGx7g6uFUnl9nyQoZp9d2WpHtgFTLVh4JeEBptl95hS6ZTuDphEzc24+0/i3/n5I/SeNvNUdsWU22Nh48KBerNStPRsXIRsPODjFyeMBIIrdRTrRdBwGNPz5L1MvoYAF0dL5mVequDRf5edD0YpPNW3yHA0TN0+9xhoUB+Hfi/yBiyjf1ZFxKPdpDFS+krn1dIt5oM+n8evD+qArpJKX7+H8/2FUz+iDORiLczobL/bU4/J0XcOup0tA0Iw++B/qvSLpkHp1YLsIUg2funE0foJ73cjjpxkQFcJR4D4b/Ay51il305y2VB39ohZi63xyEDoTX53RVYJAVbtLl1X47B7GxlNSI12dGTV7O+prdQJ/sIfbl0Sm1duwtZDcRCm999mjo0tMd2Mn7tUEqmrTQ4pmKMeWVeSE2Ud1cwrz6p8kyW29+r2AgQifNNgMS8MTexCzFWB77rwD4wqq01wY81q1k6OSq70pCtNrMNXlTPeDMAHJ3g/MWWDoT5VUmWSKqSZgeIANQRqcQ+6FZnSBTsXgyF6zMRCy/nxuAA5fpSm0e4zBwarE7sjQnTj7vb9LzEQ9UnwBiUKp1XdoAL6APJnJSN3VOpPw4AXYBFDCKFhvxdNa2ZIOfQPmqDW8QsCpVZe5Y5VTfLJ60F1/6UDC4WRS2XrWpe4TZLooxQ0sHHf6pd7uXJsd+k8qO1lStcgsQBxR10+xX5yHM4JwPtCpPrSEVoIi9bb55e/fRhgR5Nkqk4VT1KQIBV4EcC7nzMHijnIfJNamwPdyGixqCaR3v8OHnjS++CJKKEAK39Z6F51SvacpmmYe+FRBc8QkuzZFk51OMirMobeOOBCHvUFEvRxvvqQHVcMHe5mwunHZQBu3W3xSqt4j94zEJU1Mei18HQMRdc02NB5HoXW9aS5RKefI1DPrqS/y6FoX3ZT0LFXPqtWtPt3ssqysVbWuPQp8Ih4APaZPgD4ZW54Jf+2lpoVS7Uujtum/AMIkVm7jC8AQlh+f5KEFj2kJaxPXZGdGua1p4ylqKPUoexkkB2UQW90jmYzJDKxD5LtLR8Idgw/O1vFzXXeNYFajtn5OcQ0MoZ8ficPVS1tjIxly+y83bJhKYW4/w/fSrs6m3KU1IhCKji2mlLN9AaXyyv00efmoeo0ul2tPNuKsA75ZLHYbPTsDss4NZrMGNMYUab6n0RRXeUIkLva9vvS8Ep0gt/rIOt3VFnWDrHL2wIx+eUif/OAkT+gA6v6XBIp7KmIp4WFo3oqhT9CSBm8fxN+tOheSSFAJloSka/im2g40ztM2hSnEgFWNZVvI74OTZaS5pSc93Vbk6yA5IhSEmj5R1hwzgHHHo4aFltJFh/MCAxcsJAJwnCzKnLfR3dI+VcMDX3N8q9ScTFLqTtciZjv5YfvNTDKO0eLgKgYRRyBSYonyrVm2OfvpCriyDouaIukfRMrnn/nyU805dCBWwT0r6VtZgR13E6hslwQK2ztAUTgd+fzP1fOicKs0N3qFsF+X8O/AiGlw6hCst/2Nm+87iJBr9CsrFgYC6+6unxlmwD53VpGmrvGbcS7k1bOjvgt6PbIfQ2nAAfTvChwuC3ZCcXPk3G6JrSX5NsYJJruZmyOJJhb72p4fdeZCZAMLIEe/dqb8CPcliyYsS2uv77vFCb7YmtYjnOkvPf4bTy3C3fBcxnOiwWIn6ire15nrgOADeeUZOgtDIZOOMLDR0QA8wuheF+n+g5P9l4SPBsvRWfIIHvdof/S8tAIVWckZExZsWVGPXsHkvkfIInOCl+h2MFetmp0tSC37Q/OZ7eaV3yG8ORHd8QQI8rZnJdpVW0Dl09VZupq7rzVH/phM2tIQeq0IaBaNAVwUQM4TKbcvZqthyLMPth0psAkozhh9twvMf7ju1B8dEkxERuxLP4h5QkfJPOHfJenpUWxfT0w0IOPEPbnlJ3KELyaU+H00WcUAV6lccmiEZetWHL5SwMEyueJron5bHDf287TjEASh/aXl79QOSDOdd6cBcTY5WQHu5QKv9J7nCC/GjkfAGkLF3TtmVeQ95rs1ERy9S6z0VAf6eNywIZBHxbInmy/kiUEVTCBH/5rJ3mTlpzFSawCg/toJKb2UG0jAo7oCSn732h4TsUuMS4RBcSNl2eXya4fbtpy/5h/jQEH5UBfzPZ0JnUH75GLI3bSIPvasXIEVdq8M1D5WoR99YO13BWB5MaPr2UMV+0Bl6/08G1citofrAf/E2c77ZpRRttcLhuBwYmfUNH5TMauWl1LOVDnIulDLMbHqSQnyGqJDmOv9P9uq5Gyd3nwCfkVb8vl/NRrxDXjcCkWnyzyFxWlXZl37CE1hay+SfCblsROZ4T2ntQfntOdYvQYGux4wsdA/pnHfqCpqHazYnOQ76JJAYaIJBycjIRwZpUP7Y4ZL8i0FCnvTg==",
+  "mac": "bFagQNQVf8je+Wr1X+wUBS4frTWK4y9HSDZHdk+3FS8="
+}

@@ -1,41 +1,11 @@
-# 10a. 사고 확장 — 자문 질문 5개
-
----
-
-## 질문 1: Chronos 인코더의 Self-Attention 행렬은 어떤 패턴을 형성하는가?
-
-**질문**: 주기성이 강한 시계열(M4 monthly, 전력 소비)과 랜덤워크에 가까운 시계열(금융 일별 수익률)을 Chronos-Large에 입력했을 때, 각 레이어·헤드의 Attention 행렬 $A^{(l,h)}$는 어떻게 다른가? APF가 분류한 6가지 모티프(diagonal/stripe/block/edge/spike/checker) 중 어떤 것이 지배적인가?
-
-**왜 이 질문이 중요한가**: Chronos는 수십억 개의 TS 토큰으로 학습된 파운데이션 모델이다. 이 규모에서 형성되는 어텐션 패턴은 "모델이 어떤 TS 구조를 암묵적으로 학습했는가"를 드러내는 창이다. PatchTST, iTransformer 같은 소형 모델과 비교했을 때 파운데이션 모델의 어텐션 패턴이 더 다양하고 구조적이라면, 규모(scale)가 어텐션 구조를 바꾼다는 새로운 가설이 된다. APF 프레임워크의 자연스러운 다음 실험이다.
-
----
-
-## 질문 2: Chronos 사전학습 과정에서 Grokking이 발생하는가?
-
-**질문**: Chronos 학습 곡선(학습 loss vs. 검증 loss, 특히 Benchmark II zero-shot loss)에서, 처음에는 검증 loss가 내려가지 않다가 특정 임계점에서 급격히 개선되는 "지연 일반화(delayed generalization)" 패턴이 나타나는가?
-
-**왜 이 질문이 중요한가**: Nanda et al. (2023)은 모듈식 산술 학습에서 grokking이 발생하며, 그 시점에 Fourier 기반 일반화 알고리즘이 형성된다고 보였다. Chronos는 같은 cross-entropy + 이산 토큰 구조이지만, 훈련 데이터가 수치 패턴이다. Grokking이 발생한다면, 이는 "TS 파운데이션 모델도 훈련 후반에 알고리즘적 일반화가 일어난다"는 강력한 증거가 되며, Grokking in TS Transformers track의 핵심 배경 동기를 강화한다.
-
----
-
-## 질문 3: 균등 bin 대신 분포 적응 bin을 쓰면 금융 TS 예측이 유의미하게 좋아지는가?
-
-**질문**: Chronos의 균등 bin을 log-return 기반 Student-t 분포에 맞춘 bin(heavy-tail을 고려해 꼬리 부분에 더 많은 bin을 할당)으로 교체하고 동일한 아키텍처와 학습 절차를 유지했을 때, 금융 시계열 벤치마크(GluonTS의 Exchange Rate, M4 finance 부분)에서 WQL 및 꼬리 커버리지(5%, 95% 분위수 정확도)가 유의미하게 달라지는가?
-
-**왜 이 질문이 중요한가**: ProTran-TFA의 잠재적 핵심 기술 기여. 균등 bin의 꼬리 실패는 Chronos 논문 자체가 암묵적으로 인정한 문제다. 이 질문에 "예스"라는 답이 나오면, log-return bin이 금융 특화 파운데이션 TS 모델의 차별화 포인트가 된다.
-
----
-
-## 질문 4: TSMixup과 KernelSynth의 독립 기여도는 어느 쪽이 더 큰가?
-
-**질문**: Chronos의 Ablation이 두 기법을 항상 함께 포함했다. TSMixup만 쓴 모델, KernelSynth만 쓴 모델, 둘 다 쓴 모델, 둘 다 안 쓴 모델의 Benchmark II 성능을 비교하면 어떤 결과가 나오는가?
-
-**왜 이 질문이 중요한가**: 데이터 증강의 어떤 성질이 zero-shot 일반화를 만드는지를 이해하면, 더 효율적인 합성 데이터 전략을 설계할 수 있다. KernelSynth가 더 중요하다면 GP 구조 다양성이 핵심, TSMixup이 더 중요하다면 실제 데이터 패턴의 보간이 핵심이다. 이것은 합성 TS 벤치마크를 만드는 APF에도 직접 적용 가능한 인사이트다.
-
----
-
-## 질문 5: Chronos의 T5 vs. GPT2 (디코더 전용) 아키텍처 비교 — 인코더의 역할은 무엇인가?
-
-**질문**: Chronos의 인코더-디코더 T5를 동일 파라미터의 디코더 전용 GPT2 스타일로 바꿨을 때 성능 차이가 있는가? 인코더가 만드는 전역 맥락 벡터가 시계열 예측에 실질적으로 기여하는가, 아니면 자기회귀 디코더만으로 충분한가?
-
-**왜 이 질문이 중요한가**: T5 인코더는 전체 과거 시퀀스를 양방향으로 처리해 풍부한 맥락 표현을 만든다. 이 표현이 디코더에 Cross-Attention으로 전달된다. 인코더의 기여가 크다면, Chronos의 어텐션 패턴 분석은 인코더의 Bidirectional Self-Attention에 초점을 맞춰야 한다. 디코더 전용이 충분하다면 인과적(causal) 어텐션 분석이 더 적절하다. APF가 어떤 어텐션을 분석 대상으로 삼아야 하는지를 결정하는 질문이다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "xBG90eXN6fmsqRBXTDm9Wg==",
+  "iv": "Gm3OMxSqaQa2eaj+banM3w==",
+  "ct": "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",
+  "mac": "fYtQiiK/LQkyqhQmTv849fkgt8elOCiX/UR3YrCnW+Y="
+}

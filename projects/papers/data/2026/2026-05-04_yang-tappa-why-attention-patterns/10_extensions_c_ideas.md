@@ -1,67 +1,11 @@
-# 10. 사고 확장 — Part C: 실험 아이디어 2개
-
-## 아이디어 1 — q-similarity 의 TS Transformer 이식 + Multi-PE 비교 (APF 의 직접 sub-experiment)
-
-**가설**: TAPPA 의 q-similarity 가 LLM 에서 motif typology 와 강한 회귀 (high $S_l$ → re-access pattern, high freq RoPE → slash pattern) 를 보였다면, TS Transformer (PatchTST, iTransformer) 에서도 비슷한 회귀가 보이는가? 그리고 그 회귀가 (i) RoPE, (ii) sinusoidal, (iii) ALiBi, (iv) NoPE, (v) learned PE 다섯 PE 에서 어떻게 다른가?
-
-**데이터**: 
-- 합성 데이터 (사용자 보유): logistic map (chaotic), sin/periodic (high autocorr), regime-switching (q-sim discontinuity 유도). 각 1000 sequence × length 512.
-- 실제 데이터: ETT-mini, Weather-mini, Traffic-mini (사용자 보유).
-
-**비교 조건**: 
-- 모델: PatchTST 4-layer × 4-head × $d_h = 64$ (small for cheap sweep)
-- PE: 5 종 × 모델 동일 설정 → 5 모델 학습
-- Motif typology: APF 의 6 motif (diagonal/stripe/block/edge/spike/checker) 분류 + TAPPA 의 3 motif (slash/sink/reaccess) 분류 두 set 비교
-- Layer-wise q-similarity 측정 + motif label 과 회귀
-
-**예상 결과**:
-- RoPE 모델에서 TAPPA 의 q-sim → motif 회귀가 LLM 에서와 같이 강함 (cross-domain replication)
-- ALiBi 에서는 invariance algebra 가 다르므로 회귀 약화
-- NoPE 에서는 q-sim 이 motif 와 무관 (RoPE-frequency 가 중요했던 게 본질이라는 증거)
-- Learned PE 에서는 회귀가 prompt 의존적
-- TS-specific motif (block, checker) 는 어느 PE 에서도 q-sim 만으로는 설명 안 됨
-
-**반증 조건**: 
-- 만약 NoPE 에서도 q-sim 이 motif 와 강하게 회귀한다면 TAPPA 의 RoPE-frequency decomposition 이 본질이 아니라 q-sim 자체가 본질 → APF 의 multi-PE 비교 차별화 약화 → APF 가 다른 차별화 (causal intervention) 에 더 의존해야 함.
-- 만약 TS Transformer 에서 q-sim 자체가 LLM 과 너무 다른 분포를 보여 (예: 모든 layer 에서 거의 동일 $S_l$) layer-wise allocation 이 의미 없으면, TS 도메인에서는 다른 metric 필요 → APF 가 TS 특화 metric 발견의 niche.
-
-**비용 추정**: 5 PE × 4 dataset × 4 seed = 80 small training run × 10 min/run = 13 GPU-hours (1 A100). Motif 분석 + 회귀 분석 = 추가 2일 분석. 총 1주.
-
----
-
-## 아이디어 2 — q-similarity 의 학습 dynamics 추적: Grokking 의 새 signature
-
-**가설**: Grokking phase transition (memorization → generalization) 동안 query self-similarity 가 sharp transition 을 보인다. 구체적으로 (i) memorization phase 에서 q-sim 이 noise-level (random query distribution 으로 인한 낮은 cosine), (ii) grokking 직전 q-sim 이 sudden jump (representation collapse → structured query manifold), (iii) post-grokking 에서 high stable q-sim. 이 trajectory 가 grokking 의 또 다른 progress measure (Nanda 2023 의 restricted/excluded loss 와 보완적) 가 된다.
-
-**데이터**:
-- Modular addition (Power 2022, Nanda 2023 표준 grokking task): mod-113 addition, 5000 examples train / rest test
-- Logistic map (사용자 보유, grokking 적용 thesis 의 task): 학습 task = next-step prediction
-- Optionally: TS forecasting on logistic map with grokking-inducing setting (small data + weight decay)
-
-**비교 조건**:
-- Architecture: 1-layer Transformer (Nanda 2023 setting), 4-layer Transformer (사용자 P2 logistic 4-layer 실험)
-- Track: 매 100 step 마다 layer-wise / head-wise q-sim 측정
-- Compare with: Nanda 의 progress measures (restricted loss, excluded loss, gini coefficient)
-
-**예상 결과**:
-- Grokking 발생 시점 (test acc sudden jump) 의 ~ 1000 step 전부터 q-sim 이 monotonic increase
-- q-sim trajectory 가 progress measure 와 strong correlation
-- Pre-grokking phase 의 layer 별 q-sim 분산이 큼 (some layers are already in "correct" regime, others lagging)
-
-**반증 조건**:
-- q-sim 이 grokking 전 학습 내내 거의 평탄하다면 inference-only metric 에 머무름 → training signature 로의 확장 무효
-- q-sim 의 변화가 grokking 시점과 무관하게 다른 시점에 jump 한다면 (예: weight decay 의 phase transition 과 동기) q-sim 이 grokking-specific 이 아닌 일반적 학습 dynamics 의 byproduct → contribution 약화
-
-**확장 가설** (낚시): grokking 발생을 q-sim threshold 로 **predict** 가능. 학습 중 q-sim 이 특정 임계값을 넘으면 N step 안 grokking 발생. 만약 사실이면 grokking induction 의 early stopping 신호.
-
-**비용 추정**: modular addition × 1-layer = 30 min/run × 10 seed = 5 GPU-hours. Logistic 4-layer × Grokking-inducing setting = 2 hour/run × 10 seed = 20 GPU-hours. 분석 = 3일. 총 2주.
-
----
-
-## 두 아이디어의 cross-track 가치
-
-이 두 아이디어가 사용자의 두 active track (APF + Grokking) 양쪽에 직접 기여:
-- **아이디어 1**: APF 의 motif sweep 의 세 번째 축 (q-sim) 추가 + multi-PE 비교 의 baseline / sanity check.
-- **아이디어 2**: Grokking 의 새 progress measure + APF 의 inference metric 의 학습 dynamics 확장.
-
-두 아이디어가 같은 metric (q-similarity) 으로 두 track 을 연결한다는 점에서, TAPPA 의 framework 를 사용자 연구의 unifying methodology 로 흡수 가능. ICLR 2026 의 강한 작업을 lemma 로 빌리면서 두 track 모두 차별화 niche 를 점유하는 전략적 추출.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "NWpeGtZvWiZTlx5q8jtmqA==",
+  "iv": "1drUu2s29eCbkmH6ioJKxA==",
+  "ct": "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",
+  "mac": "uhH7x3rK4VDx3gaoQf56NFNnXmV9prFNzbffKxNlLIw="
+}

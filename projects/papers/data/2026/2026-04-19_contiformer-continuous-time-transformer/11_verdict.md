@@ -1,3 +1,11 @@
-## 10. 한 줄 판결
-
-> ContiFormer는 "Neural ODE × Attention" 합성을 가장 깔끔하게 정식화했지만, **시간축이 곧 물리시간**이라는 가정을 깔고 있어 — Economic Time을 그 자리에 끼워 넣는 Paper 4의 정확한 출발점이자, 동시에 가장 비판적으로 인용해야 할 베이스라인이다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "X2wn+N0lmmRdNHcHGG0h6A==",
+  "iv": "ES51OdqqShIDIVVEi04DZA==",
+  "ct": "mmQ3mpRsxYrYPPtOmYOs6t48d7ms/cwRkvpH699SzASuDR+1OraQwdUc+HZcbEz+5coCGfMord1Al9g8melc/s3lQrh86KMWUf73421aF7K5NtUHFoyDRV07VRnjpaFGf+v9G6vTG7nGCpUZXtAfrlgg+TEZ9tr79o1gEL2s4i4cffwpA19VM6AlxICZ2gvLfLEyS9gPOMvZ5cwc75ggjUsPcI61R1Z9+4fcaQ1FiScTV+jAezTvhfESwnG1jBXc1k7gOTFDFkFnBQW4xF3DsIBFbcXNSkM3D8G6tRlforQxn/8QG2nga+S+YE3rf+oHu3WufhOY9DyAUqwtLtYguyPZaUnT1h/s94EQuO8Rep0r0Asp8ZUHACVLEHvHiR9r4MTamLMDto7G/zcJhB6F+EcQOcOpqvs7tXTCX0wt8ftRsyH/95zxI8zVr5DAvHmlxQPseY0BuYiVIKI7jlqKZQ==",
+  "mac": "KBPwFMp53mQIgxmbKgZIo9oNdTJljSymuF64N1DD3LM="
+}

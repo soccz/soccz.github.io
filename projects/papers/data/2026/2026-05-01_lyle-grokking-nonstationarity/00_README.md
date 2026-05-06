@@ -1,47 +1,11 @@
-# 00 — 표지 및 목차
-
-## 원문 제목
-**What Can Grokking Teach Us About Learning Under Nonstationarity?**
-
-## 한국어 번역
-그로킹(Grokking)은 비정상성(Nonstationarity) 하의 학습에 대해 무엇을 가르쳐주는가?
-
-## 저자 · 소속
-Clare Lyle · Ghada Sokar · Razvan Pascanu · András György  
-(Google DeepMind)
-
-## 발표처 · 연도 · 식별자
-- **발표처**: 4th Conference on Lifelong Learning Agents (CoLLAs 2025)
-- **arXiv**: [2507.20057](https://arxiv.org/abs/2507.20057)
-- **제출일**: 2025년 7월 26일
-
-## 주 태그
-`continual-learning` (primary) · `grokking-delayed-gen` (cross)
-
-## 코드 · 데이터 공개 여부
-별도 공개 저장소 미확인. 논문에서 표준 modular arithmetic 및 공개 RL 벤치마크(주로 Atari류)를 사용. 코드 부록 확인 불가(본문 접근 제한으로 추정).
-
-## 한 줄 판결
-> **Grokking = ELR(유효학습률) 붕괴의 역전**: 모든 지연된 일반화·원시 편향·소성 상실은 하나의 메커니즘(파라미터 노름 증가 → ELR 붕괴 → 게으른 regime 고착)으로 통합되며, ELR 재가열(Re-warming)이 그 보편 치료제임을 실증한다.
-
----
-
-## 목차
-
-| 파일 | 섹션 |
-|------|------|
-| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 |
-| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR |
-| [03_problem.md](03_problem.md) | 2. 문제 지형도 |
-| [04_claims.md](04_claims.md) | 3. 핵심 Claim 해체 |
-| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 큰 그림 |
-| [05_method_b_elr.md](05_method_b_elr.md) | 4b. 방법론 — 유효학습률(ELR) |
-| [05_method_c_nap_rewarm.md](05_method_c_nap_rewarm.md) | 4c. 방법론 — NaP & ELR Re-warming |
-| [06_experiments.md](06_experiments.md) | 5. 실험 해부 |
-| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 |
-| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 |
-| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 |
-| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 사고 확장 — 자문 질문 |
-| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 |
-| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 |
-| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "AmiSWPfn5W7m79woH/o8kw==",
+  "iv": "S1re7srfNGjlsyMPYknrOQ==",
+  "ct": "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",
+  "mac": "lFXqnVkwenvGxizuTErBTYBg7KwmBn/8GNyz+CKERmI="
+}

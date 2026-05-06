@@ -1,54 +1,11 @@
-# 00 · 표지 및 네비게이션
-
-## 원문 제목
-**Neural SDEs as Infinite-Dimensional GANs**
-
-## 한국어 번역
-무한차원 GAN으로서의 신경 확률미분방정식
-
-## 저자 및 소속
-- Patrick Kidger (University of Oxford, Mathematical Institute)
-- James Foster (University of Oxford)
-- Xuechen Li (University of Toronto / Stanford University)
-- Harald Oberhauser (University of Oxford)
-- Terry Lyons (University of Oxford, Alan Turing Institute)
-
-## 발표처 · 연도 · arXiv ID
-- **학술지/학회**: ICML 2021 (Proceedings of the 38th International Conference on Machine Learning)
-- **연도**: 2021
-- **arXiv ID**: arXiv:2102.03657
-
-## 태그
-- **주 태그**: `neural-sde`
-- **부 태그**: `fin-ts-dl`, `neural-ode-cde`
-
-## 코드 · 데이터 공개
-- 코드: [torchsde 라이브러리](https://github.com/google-research/torchsde) 활용; 실험 코드는 논문 저자 GitHub(kidger/torchsde)에 공개
-- 데이터: 주식 종가(Yahoo Finance), Ornstein-Uhlenbeck 합성 데이터 사용
-
-## 한 줄 판결
-> Neural SDE(생성자)–Neural CDE(판별자)라는 이중 구조는 Paper 4의 ODE 시간변수를 economic time으로 교체할 때 이론적 근거를 제공하나, 이 논문의 목표가 **예측이 아닌 경로 생성**임을 명확히 인식하고 인용 위치를 §3·§4의 시간-변환 논의로 한정해야 한다.
-
----
-
-## 목차
-
-| 파일 | 섹션 | 내용 |
-|------|------|------|
-| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 | 저자 권위, 인용, 선정 근거 |
-| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR | 초등/학부/전문가 수준 요약 |
-| [03_problem.md](03_problem.md) | 2. 문제 지형도 | 기존 접근 계보 및 핵심 gap |
-| [04_claims_a_claim1_2.md](04_claims_a_claim1_2.md) | 3a. 핵심 Claim 1–2 | GAN 등가성·최적 판별자 |
-| [04_claims_b_claim3_4.md](04_claims_b_claim3_4.md) | 3b. 핵심 Claim 3–4 | 재현 가능·금융 적용 |
-| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 큰 그림 | 전체 파이프라인 다이어그램 지문 |
-| [05_method_b_sde_generator.md](05_method_b_sde_generator.md) | 4b. SDE 생성자 | 드리프트·확산 신경망 |
-| [05_method_c_cde_discriminator.md](05_method_c_cde_discriminator.md) | 4c. CDE 판별자 | Neural CDE가 최적인 이유 |
-| [05_method_d_training.md](05_method_d_training.md) | 4d. 학습 프로토콜 | WGAN-GP, 경사 페널티 |
-| [06_experiments.md](06_experiments.md) | 5. 실험 해부 | 데이터셋·지표·표 해석 |
-| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 | 암묵적 가정 및 검증 방법 |
-| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 | 조상·평행연구·후손 예측 |
-| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 | Paper 1–4 구체 연결 |
-| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 자문 질문 5개 | |
-| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. Follow-up 논문 3편 | |
-| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 실험 아이디어 2개 | |
-| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 | |
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "qxdj0uxNwZmwpHTaBcDqVQ==",
+  "iv": "rjpklUJOz3DAgJM/26yzag==",
+  "ct": "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",
+  "mac": "qf2jQDauTwVhsqJeYpgmKs61tVkZgD01MY6x3Yp+u/Y="
+}

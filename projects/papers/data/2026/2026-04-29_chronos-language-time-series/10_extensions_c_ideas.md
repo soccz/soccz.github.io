@@ -1,89 +1,11 @@
-# 10c. 사고 확장 — 실험 아이디어 2개
-
----
-
-## 실험 아이디어 1: "Chronos 어텐션 패턴 × APF 모티프 분류기"
-
-### 가설
-
-Chronos 인코더의 Self-Attention 행렬은 입력 시계열의 구조(주기성/추세/랜덤성)에 따라 APF의 6가지 어텐션 모티프 중 서로 다른 패턴을 형성한다. 특히:
-- 강한 주기성 → stripe 모티프 (주기 간격의 대각선 줄기)
-- 강한 추세 → diagonal 또는 edge 모티프
-- 랜덤워크 → uniform 또는 checker 모티프
-
-### 데이터
-
-- **시계열 입력**: 4가지 합성 시계열 (순수 사인파, 선형 추세, 랜덤워크, 혼합)
-- **실제 시계열**: M4 monthly 10개 (주기성 강), Exchange Rate 10개 (랜덤워크)
-- **총 N = 200개 시계열** per 조건
-
-### 비교 조건
-
-1. Chronos-Large (710M, 사전학습 완료)
-2. Chronos-Tiny (8M)
-3. 동일 아키텍처 T5-Small (TS 학습 없이 랜덤 초기화) — 통제 조건
-4. PatchTST-128-patch16 (APF 기존 분석 대상)
-
-### 예상 결과
-
-Chronos-Large의 어텐션 패턴이 PatchTST보다 더 입력 구조 의존적(모티프가 뚜렷이 구분)이며, Chronos-Tiny와 대조적으로 레이어 깊이에 따라 모티프가 변화한다(얕은 레이어: 국소 패턴, 깊은 레이어: 전역 패턴). 랜덤 초기화 T5는 뚜렷한 모티프 없음.
-
-### 반증 조건
-
-모든 조건에서 모티프 분포가 통계적으로 유사하다면(χ² 검정 p > 0.1), APF의 "모티프가 아키텍처/학습에 의해 결정된다"는 가설이 기각되고 모티프는 단순히 입력 신호에 의해서만 결정된다는 의미가 된다.
-
-### 비용 추정
-
-- Chronos 인퍼런스: HuggingFace에서 가중치 무료 다운로드, A100 단일 GPU 4시간 이내
-- APF CNN probe 학습: 기존 APF 파이프라인 재사용, 2~4시간
-- 총 연산 비용: 무시할 수준 (기존 Chronos 가중치 사용, 새 학습 없음)
-- 데이터 준비: 3일
-
----
-
-## 실험 아이디어 2: "이산화 토크나이제이션이 TS Grokking에 미치는 영향"
-
-### 가설
-
-연속값 MSE 학습 대비 이산 토큰 cross-entropy 학습은 동일한 Transformer 아키텍처에서 Grokking 발생 속도와 형태를 다르게 만든다. 구체적으로:
-- 이산 토큰 학습: bin 수가 클수록 학습 초기 암기가 쉬워지고(더 많은 구별 가능한 "답"이 있어서), Grokking 전환점이 더 늦게 나타난다.
-- 연속값 학습: 초기부터 일반화 압력이 있어 Grokking 전환점이 더 이르거나 없다.
-
-### 데이터
-
-- **합성 주기 시계열**: $x_t = A\sin(2\pi t/T) + \epsilon_t$, $T = 12$ (월별 계절성), $n = 5000$ 시리즈
-- **Grokking 체제**: 소규모 훈련 세트(100~500 시리즈)로 학습 → 1000 시리즈 검증
-- 기존 APF/Grokking 실험의 ETT-mini 데이터도 포함
-
-### 비교 조건
-
-| 조건 | 손실 | 출력 | 비고 |
-|------|------|------|------|
-| A (Chronos 스타일) | Cross-entropy | 4096-bin 소프트맥스 | 이산화 |
-| B (연속 MSE) | MSE | 스칼라 | 표준 회귀 |
-| C (소규모 bin) | Cross-entropy | 32-bin 소프트맥스 | 거친 이산화 |
-| D (Gaussian NLL) | 가우시안 NLL | μ, σ 출력 | DeepAR 스타일 |
-
-모두 동일한 4층 T5-Small (46M) 아키텍처.
-
-### 측정 지표
-
-- 훈련/검증 손실 곡선 (5000 에폭 이상)
-- **Grokking 전환점 탐지**: 검증 손실의 2차 미분이 최대가 되는 지점
-- Nanda et al.의 "Excluded Loss" 대응 지표: 각 조건의 "일반화 회로" 형성 여부를 gradient 흐름 분석으로 측정
-- 어텐션 엔트로피 시계열: 각 학습 단계에서 Attention 행렬의 행별 엔트로피 변화
-
-### 예상 결과
-
-조건 A (Chronos 스타일)에서 Grokking 전환점이 가장 늦게 나타나고(bin 수가 많아 암기 용량이 커서), 조건 B (MSE)에서 Grokking이 없거나 가장 일찍 나타난다. 이 결과가 나오면 "이산화는 Grokking을 늦추지만, 일단 Grokking이 발생하면 더 풍부한 분포 표현이 가능하다"는 가설을 지지한다.
-
-### 반증 조건
-
-모든 조건에서 Grokking이 나타나지 않는다면(훈련 손실과 검증 손실이 동시에 감소), TS 예측에서 Grokking은 알고리즘적 패턴(모듈식 산술, 논리 함수)에서만 발생하고 실수값 시계열에서는 발생하지 않는다는 의미가 된다 — Grokking track의 범위를 좁히는 반증이 된다.
-
-### 비용 추정
-
-- 데이터 생성: 1일 (파이썬 numpy, 자체 생성)
-- 각 조건 학습 (4층 T5-Small, 5000 에폭): A100 4시간 × 4 조건 = 16시간
-- 분석 코드: 기존 Grokking track 코드 재사용 + 어텐션 엔트로피 추가
-- 총 소요: 2~3일
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "YqoekUXisvLOu+3Q1JSUqg==",
+  "iv": "tJ97sTLA9uIQIetIHEldlw==",
+  "ct": "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",
+  "mac": "7pSGcanjzsjiD5/4fjD0Hms03p2KuTe3DU54OdkNxEM="
+}

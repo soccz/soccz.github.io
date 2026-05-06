@@ -1,40 +1,11 @@
-# Chronos: Learning the Language of Time Series
-
-**원문 제목**: Chronos: Learning the Language of Time Series  
-**한국어 제목**: Chronos: 시계열의 언어를 배우다  
-**저자**: Abdul Fatir Ansari, Lorenzo Stella, Caner Turkmen, Xiyuan Zhang, Pedro Mercado, Huibin Shen, Oleksandr Shchur, Syama Sundar Rangapuram, Sebastian Pineda Arango, Shubham Kapoor, Jasper Zschiegner, Danielle C. Maddix, Hao Wang, Michael W. Mahoney, Kari Torkkola, Andrew Gordon Wilson, Michael Bohlke-Schneider, Yuyang Wang  
-**소속**: Amazon, UC Berkeley, New York University  
-**발표처**: Transactions on Machine Learning Research (TMLR), 2024년 10월  
-**arXiv ID**: 2403.07815  
-**태그**: `ts-transformer-baseline` (주), `probabilistic-forecast` (부)  
-**코드·모델**: 공개 — https://github.com/amazon-science/chronos-forecasting (Apache 2.0), 모델 5종 HuggingFace 배포  
-
----
-
-## 한 줄 판결
-
-> Chronos는 시계열을 이산 토큰의 언어로 치환하여 T5 언어모델로 학습하는 가장 단순한 형태의 TS 파운데이션 모델이다 — 그 단순함이 강점이자 한계이며, APF 시각에서는 "Transformer가 TS 토큰 시퀀스에서 어떤 어텐션 패턴을 형성하는가"라는 핵심 미답 질문을 남긴다.
-
----
-
-## 목차
-
-| 파일 | 섹션 |
-|------|------|
-| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 |
-| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR |
-| [03_problem.md](03_problem.md) | 2. 문제 지형도 |
-| [04_claims.md](04_claims.md) | 3. 핵심 Claim 해체 |
-| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 전체 흐름 |
-| [05_method_b_tokenization.md](05_method_b_tokenization.md) | 4b. 방법론 — 토크나이제이션 |
-| [05_method_c_architecture.md](05_method_c_architecture.md) | 4c. 방법론 — T5 아키텍처 |
-| [05_method_d_data_augmentation.md](05_method_d_data_augmentation.md) | 4d. 방법론 — 데이터 증강 |
-| [05_method_z_implementation.md](05_method_z_implementation.md) | 4z. 방법론 — 구현 디테일 |
-| [06_experiments.md](06_experiments.md) | 5. 실험 해부 |
-| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 |
-| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 |
-| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 |
-| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 사고 확장 — 자문 질문 |
-| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 |
-| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 |
-| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "eUybZMageqEVQ3DkcryOHg==",
+  "iv": "S+Uhz1q+MjSWPUrxulMZMQ==",
+  "ct": "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",
+  "mac": "A7eSytsW6Vwu5DTWXe3aSbb8hA2FvLYuLQQYnv0fJ/8="
+}

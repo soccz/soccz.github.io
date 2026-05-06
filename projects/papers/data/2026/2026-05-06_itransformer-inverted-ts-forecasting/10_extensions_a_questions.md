@@ -1,41 +1,11 @@
-# 10-A. 사고 확장 — 자문 질문 5개
-
----
-
-### Q1. N×N 어텐션 맵에도 2D 모티프가 존재하는가?
-
-APF 연구는 T×T 어텐션 맵에서 대각선/블록/스트라이프 등의 패턴을 분류한다. N×N 어텐션 맵(변수 간 상관)에서도 유사한 모티프 분류 체계가 가능한가?
-
-**왜 중요한가**: 만약 N×N 맵에도 "변수 클러스터 블록 패턴", "소수 허브 변수로의 스파이크 패턴", "전변수 균등 참조 스트라이프 패턴" 등이 존재한다면, APF의 분류 체계는 축(T vs N)에 무관하게 일반화 가능하다. 반대로 N×N 맵이 완전히 다른 구조를 보인다면, TS 트랜스포머의 2D 어텐션 패턴 이해는 "축 선택"에 강하게 의존하는 것이다. 이 질문은 APF와 iTransformer를 잇는 핵심 교량이다.
-
----
-
-### Q2. iTransformer의 FFN에서 Grokking이 발생하는가?
-
-iTransformer에서 FFN은 각 변수의 시간 패턴(T-dim → D-dim)을 학습한다. 주기 합성 TS 데이터로 iTransformer를 훈련할 때, FFN 내부의 가중치 행렬 $W_1, W_2$에서 Fourier 특징이 나타나는가? 그리고 일반화 성능이 훈련 후 갑자기 급등하는 Grokking 현상이 관찰되는가?
-
-**왜 중요한가**: Nanda 2023은 "Fourier 회로"가 형성되면서 Grokking이 발생한다고 설명한다. iTransformer의 FFN은 선형 임베딩($W_\text{emb}$)과 결합되어 본질적으로 "T → D → D → D → S"의 MLP 스택이다. 이 스택이 Fourier 회로를 형성하는가? 형성한다면 T×T 어텐션 모델과 어떻게 다른 방식으로 형성하는가? Grokking track의 "비교 대상 아키텍처"로 iTransformer가 유력하다.
-
----
-
-### Q3. 금융 TS에서 N×N 어텐션은 "위험 요인 행렬"을 포착하는가?
-
-iTransformer를 금융 포트폴리오(예: S&P 500 구성 주식 500개, N=500)에 적용하면, 학습된 N×N 어텐션 맵이 Fama-French 3/5 요인 구조(성장/가치/규모/모멘텀 등으로 나뉘는 주식 그룹)를 반영하는 클러스터를 보여주는가?
-
-**왜 중요한가**: 만약 어텐션 맵이 요인 구조와 일치한다면, iTransformer는 "데이터 기반 요인 발견기"로 해석 가능하다. 이것은 §E(금융 응용)의 핵심 질문이며, P1 ProTran-TFA와의 결합을 정당화한다. 반대로 일치하지 않는다면 "N×N 어텐션은 예측에는 유용하지만 경제적으로 해석 가능한 구조는 학습하지 않는다"는 결론이 나온다.
-
----
-
-### Q4. 위치 임베딩을 추가하면 iTransformer가 나빠지는가?
-
-저자들은 "위치 임베딩이 불필요하다"고 주장하지만, 추가했을 때의 어블레이션을 제공하지 않는다. sinusoidal / RoPE / ALiBi 위치 임베딩을 N개 변수 토큰에 적용하면 성능이 어떻게 변하는가?
-
-**왜 중요한가**: APF 연구에서 위치 임베딩 유형(NoPE/sinusoidal/RoPE/ALiBi)이 T×T 모티프를 크게 바꾼다. 동일한 실험을 iTransformer(N×N 어텐션)에서 수행하면, "변수 순서가 중요한가"(예: 데이터가 지리적 순서로 정렬된 경우)를 측정할 수 있다. 이 실험은 APF의 PE 비교 실험을 "N×N 어텐션 도메인"으로 직접 확장하는 것이다.
-
----
-
-### Q5. "채널 혼합 vs 채널 독립"의 진짜 승자는 무엇인가?
-
-PatchTST(채널 독립, 변수 간 어텐션 없음)와 iTransformer(채널 혼합, N×N 어텐션)는 정반대의 선택이다. 데이터셋의 "변수 간 상관 강도"를 정량화하면(예: 평균 절대 Pearson 상관계수 $\bar{\rho}$), $\bar{\rho}$가 높은 데이터에서는 iTransformer가, 낮은 데이터에서는 PatchTST(또는 DLinear)가 우월한가?
-
-**왜 중요한가**: 이 질문은 "어떤 데이터에 어떤 모델을 쓸 것인가"의 실용적 가이드라인을 만든다. 금융 TS($\bar{\rho}$ 낮음)에서 iTransformer가 실망스럽다면, 그것은 모델 실패가 아니라 "채널 혼합 가정이 맞지 않는 도메인"에 대한 자연스러운 결과다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "opwyCZNwnjIL5IDezwXQhg==",
+  "iv": "5QM0KOSVfquePtExrtIGwQ==",
+  "ct": "vhcxCJP46oPAqYu4BK1cKY8bsy9JA/9J0GCRjlZ3R6jWvbhrhmyQOuPMaGq14B8Ak+AYVf6NwIMrmKELkZuUvKPl6Wpy8rOauDJT5GwdkvTsh1ZOy+2vA/iU34yNjiOgYgE6ozi5rW96amAHdpBFnp0rPGgPNP/wel6t4AX2TqA3bM9QGnfclJPwn/1FxgP/0FY2NyC05PAvgcjjmm1RZEwOiTc4RIfbXRLZMHUMZ1G2wipdoM6eO11H5t5N9adCAmkPxrF8GSsblK3m6tflhdnRDWfpDrcWWbXp3lCZUZjC6Dinkcyx4OzKto9LIdMHnA2B2FkCXBxif5XDxPfkuCit2HHt1ZBQLC/LeYdIHN7YMytSLuDcUJhzCKX344VioXyW8LWDeXPoOOyQB9tTXUBWFz96B0o6e3S7KQK1UWFxlJikGjDAaF6zeb6pWc9aSsPGMl/GoiyeMaltfEQPu8tm4FA446OCFW8VbgIsx9iqfSalpMHfpp47EnobiNhiv3E5e/qi+mLmnIoA8XYkNCT8RfWa5Z+qmMn21KhA9eMyI8QIRHJmt00YRU8FE/APZ8nembuIrFAY7TfNwkJvFuk/AaLseiEfeCz4mWedAIvfEtJRKPbXxSRliewf1Am6JqipRVcWpqMVXGfpF79BENaNiVpiv+lkiYDCsPdXz2wROkQKordx7U9jZJQy+Oqj4WYEJmepE5+3PP3akLmkjNqR5zAyGTrZTDvr/Utn4Dh1dWUDLubWH3xEb/+Wn6CV0D6d3YgMYFfbklUKByiCAgYF1zfUzJPJntc5RVbPRtffQEwAE4zGUF3zZyx5W05Q8itohHXysYuqxbEhSSn7vkxI6vAYSigDCh/IO+whrNEa7cei6sWyESXtuLxs23DXiQ3G3r7x+rCUw/qVyULdMeNE6dMeKTEboTazetErVVPp9tzjP/wP1usddMFRQ52Qymk31+4CvaT63W2bZ1nECOmh+KZw/jUR+Z0/aksxB+bCLtS2ff6X+Z5Q2HcbdSUTBPoELT4kM5pdIDHtgqPYUX6ZT7V5fSf+DHV73c77ypbOxuHygydePFCeV2NtxCiH+GWd/uijMY+mlG0x9xyfmeD3+eeC1Q8z8zFQaxzObla7qLRIAF7zKgbqtyjw8hmd2D3hPM/x1+IVr0F6xeBYRcAWezWT4Nf5yFKIwmKGw6fmryGeSIApzmhZKjUErsmaFPJh/dENfO0oJrF5gQzDJYWau9o274QJuP2CcuW3CoB1Ih7AI/P6zRg14sV3pJNJFbqqikOHyOsw7ZHGjwvvm4DkREeCkVds3pZY6WNbMKJEK67XQ+SXAISY+LwyxjB0F/Dk+2mBLjpdZkhPNg2HRahoN41KJdIKDy7JYR0Rnoe1a5rGqPb/x8lmb3oRdyIuwlVSGZE+BGVjCEVzqClr9BvbYJof4SkoVzemvH+ANJsZh2scZgqJxknN8IAVvxMG4lrO1xDGGBY8/nPvfFSG5QfUx+w9BljciET0S1YaB1abkc+ciIrApzINzHEN8V1QlwYwUdQqHR8Ha1QK6RCXdDnOA78y8ozhK3Ef45e+tBsIAt17O2THEQUyWScBiEDuOKcyGG4RImwh9gxc/2zJ4DtzWlhi3w2MtczqV/zuTwG3/FMKAKjkS0RUmxWFHw4nmZ9g93op1Ti++ZxXoGmkgpv6PLLRFreS7qQXRvV4FcTcm2ShqEVhAhNdkBdSpmWaRQitfUU0PcqdvLfsmTYp29zOrf9Rl1n+icugndTFjkJ8nHvoIVtkfCrBZ7JzN5Z39i/YeEzo19FXEzv0YzLkFX4aEbmkhw9L1uaIleNftKW+F9VgTBx4yeisMzDkR+sa8YiaZUa2Ow6rlZHZcHWyFtraQtYwle77cIX4ogpXLP+uZJdqs7vIPGJJBAQKf3txE4xcpkyQ/EzkLgqAM4+ThnYXbFdoba+mqX3aaVYybLO06pA4b5KvG0MsJbwuQMXxf8UAvHHhOzwW0xybyGdtiuTN8VLHgTdNqf/5SRoGM597v7cLL+ZT9fldOuHSbZagvqhNBx7qv7lDcCsJ7ubz5Gx43sciSO2JizHIdxZs79XZnOkHHu4lh2DKMFYiCgog4k0q09owmcunjOcx01rn03T/0Mya3/rmdWvFhMu5gVY9seDyv63VTbYgczUiS6CGHPTQsEC5Vd87Y09ZkEybQhuFl49DxEjGRltZ5YbVXiuNwMkZonEgyvj+HswdsKLDfm13W2YTDoUX9jKlxjBXFmQ/aGNnx43eyouUXU0c7xpk6OGiwdMC8IO3VoMS38hszCtrROIcVPrrcr8kjsAT3EyMdfZg6F81Vs/KWdRTQnDF0s/ISKhI445TVF8dprHRdFY8VNXT2ix79MrTVADHGhKKOtoSjHtuq1NfFc9/yi/P5U7h1j9rlo4n8L0vlJbYFrrDFRlp6ld0y2rCAOpf7eYG9aQMo5ulQboix2BpjePaa0TAjYlNVz7OQj5gWPpUdLddQNbQK187bxZgPXpR5ePLtQEj6aJujPFDlakcQDAlQihs8VFimh8LA4d0LPls0h3a4r02+ZDR0rUiJAkmJ+XLJMIaT8r+jxJCqeBPX/ro4a1w/UE/9084OQCavYyUVIGxcPDCWBYaavPvoWCTT7ucmfnvTtEg0v8jQ+bzLJ301qvvZDDWVS/0hRG0qhUsQZ2f06xD25EFGZfD6g94qq+JzATHSFShkzmZm0mVio3QP+xiYgYky5K+/5u5ViC3jBFTjpQrtZVCLWFmdHjQOlMp56ViVIB7f4NeCkdhKERLxitSQZ1Ul5l0vEitHJokONkIRlGOM3tJSsAzLu8r92NHuSLvKwIi6Qm508lMiyhqBfuMKu0R5Igr6jGyPwGkCyAWfHxTZJzxTqC31i4I9mxm0GzKSYy/wSCtiYwVE+YKNJEf9duJU/ivhG60fn12UKzaX2OszPUpv5YeT3ucqdQSyZfMTS+fnwotDWPM50YrFske560vtQ1y52bgA6uNIgiWzdAFi63YrO5FNPxQ6ddp1FvDm8UOBxL+MLB3RhLvsChc1lj29hLwQZaWemJafVZMnit5Iw1uieGQlZLDqYAQQlFVI165MsA77NzxME6IiACl1izOivS5I6EBAYsCE+EnNAvhgVa/rB7kfwzezgT9C3wqTgTAFIQ9gxXw4ZVcq8aPe8y499/awhs2FkPTYi01NOCbHxJ9Z5QQHWtbdhy+Lcka6IbYnd2SbUvojv+mxkBUySEaVy7YYZuShpOPbJ/b/zBA1wV1L3HDhrRHOnJIT03g31+cPGwP91ddeLDErgoY6ZxrN3J7vW2pLVmUmfcxi2jXZu0fYHShsrfT8eRla/4dHaYrb/i/4dTMdUSuSo9XCPvzuk9cipU/2FYDwihbhwtC0SujuheAD19FFOJCE+TYcsHF+pdv/FiVrF2wi+rgl4A7zzVIH6hUET6OssdY4a//2+Ezk2rGihDs+AIh3+oAsN8cEZltEXj7f8tDlrCiq0XBap7brpU9sWiIbyjM09sW3yxAZIeRuidNgrK4m9H8Tt+4MSmwoCvVL4q6w8Zt9RPN1JvaLpCyQW9O/QCVyLNL2Ru1d2l6CnamOB50nXLmcTh8eZo6w8F7ewHcZDBDk4uEWTa00X13NY7Zsgb2HbPje9HKjKg/FAibaBIWGCf74c2BIjidjpRkys8C1kWJOwqVC6Nmd6z29nr6zbhlfKiB8nh9JZdQvgZEICNXRYvldHPrT7bzzccO/B8wxPwscYUS5bXWvuv4IVvSuZA2jCGvX+mcpGDauJVjr4iGRTVEtwpmqAxZLnETcfJ9ZjgjUbvoYUErdBvNLT7s/4+Ej0L4oj6MdwnuCwQwmVCSGNbT/29M8iClg5AZvuUv8rbtg9YtYXtf2nWV8OrN+/3vjXAxioR0D5bnZPGq3vzwasWUbE7F/Re6jx5xnaYQcjFKT6PQ4yedpUFc5UUakDLyq2vQvpW4PbEEZrrQut3xJSnYnMWE5QAYZOwQFnFMQODX8AH0cmX4kexqlADSuh1KgDECQLX0bRN4Y4cmBkHMmXeVOgsrreH4Yu3SPEREblIsxjZDE8o76admfKKRODX1+BvWqy1cAkmwzFP5G8luSJAPJvfvB7QmaO1kOvunEVlqniyiaDLtUhFXf48KwmpfLwvJqT0XV6aOdTC2RAgLAgaG7dGjFCJhbnTyqrj8InneCCUQJzZHt5p1ry0VfK44DHTZ9clg/R4C+B0RFiiEvCekaxfcx8jvzaBp71xX179R1yYh8MbBd4nPJMDj9mSjzmJEdRu8e2HpidjpyXDgPxfJAXVXQTOvJ3rOERkd8aqTieQePjc5WoVg7mwE2j1TAXo2cuq9uhe+pBOPKhx78X2FSeiVLXNI5KZYhVsbdqMbEJLriMaDlcz0BnzMFjvj69tfaH9/uDIUJ0aohti9LxakJaz9iraL9ra64Bn8Jjy3+qAll1CNnPx6htppflf6ilWRNeHPajpOeFE8pEgUIuaCC1A5dpc5S1h4I52NvPt0RH8PF9XTWXjAxpWOOjbFuliSdXX0/puMERLKTYvaujHpeSajBu1W2tk/Up10bi1k7HtC6yi7QVt71qaU/kIdTSSHyF5b5/hFXbwrNGLX6wiJ4KeDOeEu1y7TMAiJOQS9SCzcEZuc+KacYlK+hKDOuGCiA+E5dyOexEfg5YHwopR9MU3ldou1PJ3hx2/CSMRj2Z++kYDW3aNFkbGU3jH2C0+yaKdgBVKbMwCzLw/iyH6+TNgdcvILWKVSGbUH0aBFkVI40O8SLsCdSuj7X1lLvrLocLyjhx+xNp81HCCO71/B5H+5/IYZtFSaU5I2jJWUw2s01Bm/X7GENdE1YohMpkylkqcu2OpueCCoXt8w7OTDMIQ9oVbBG/VJQnA6aqsl/5jimvBgQ9w5R1XRvSmcVzH6h5i3yoFAOx7R0Moo+aYqD794KD+BuA3Tx6hGCi7Vf960dNf4UTzd0u7F6SI2GpHW4y/Kd1ZTfgHwo9yDbiOxxK+dS7BlBaC3EoqhTXl6zUWbN2BhlwQ10/bmI9oVHrOB3yGoJ+fjgrV9bpONSNI2009//tq02ZSfF40FhTS7oz3LaBmKW0/kHtzP5EhWrXqWMD0McEJMp3YhBTz3CLEIlMX7vaOYTDFBCpHgDtbfgDIIBprcsRCxNStew6MHsp/fSLF3N9pTbYvcXEcU6bswdluowvQkbJm/ZyhHkjG4hwzDWrNUDnUl18M6LWYv8PzXhwPQf6qpwmaSq/LbeVSGYghRrr0m2iJXU+PvKUVr568i9haUrcd6wOMOkCnJCWMXHI/Mx26ZNJ8yk18p1+6iV01AbnX8rWWw5nj1DwRefS1l2wKbLT/Zf8RvWEdcIHhsoI7PzlUo9A7GSg==",
+  "mac": "f66Vjv7y7nT0UX4M09OStuebCxJAOUZ6aJL6G869m3k="
+}

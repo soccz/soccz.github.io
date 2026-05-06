@@ -1,29 +1,11 @@
-# 10. 한 줄 판결
-
-> **ContiFormer는 "시계가 하나뿐인 세계"에서 attention과 ODE를 한 식에 녹여낸 우아한 기준점이다 — 그래서 내 Paper 4는 이 기준점의 "시계"를 경제시간으로 갈아 끼우는 수술로 정확히 정의된다.**
-
-## 핀 위치
-
-- 연구 지도 좌표: **핵심 선행연구 (Core Reference)**, 좌표계의 "$\tau = t$ (원점)"에 꽂는 깃발.
-- 사용 용도: Paper 4의 **직접 선행**, Paper 1·2·3의 **베이스라인**.
-- 재독 타이밍: Paper 4 §3 (method) 작성 직전에 본 해체 01·05·07 재독. Paper 4 §4 (experiments) 직전에 06 재독.
-
-## 종합 평가
-
-| 축 | 점수 | 메모 |
-|----|------|------|
-| 학문적 신선도 | ★★★★☆ | 이산 attention의 함수공간 승격 아이디어 신선 |
-| 이론적 깊이 | ★★★☆☆ | 두 포함 정리는 구조적. optimization 보장 부재 |
-| 경험적 근거 | ★★★☆☆ | 벤치마크 범위가 좁음. 도메인 편향 의심 |
-| 재현 가능성 | ★★★★☆ | MIT 공개 + seed + hyperparameter 노출 |
-| 실무 적용성 | ★★☆☆☆ | 3~8배 추론 비용. 장기 시계열 미검증 |
-| 내 연구 기여도 | ★★★★★ | Paper 4 정의의 전제 자체 |
-
-## 최종 메시지 (미래의 나에게)
-
-1. 이 논문을 **베끼지 마라**. 그러나 **깊이 베껴라**: 비대칭 projection 구조, 포함관계 정리의 서술 패턴, spiral toy로 시간 축 효과를 시각화하는 전략 — 세 가지는 그대로 Paper 4에 재활용 가능한 패턴이다.
-2. 이 논문의 **약점을 조용히 피해 가지 말고 정면으로 인용**해라. "저자는 $t$의 선택에 침묵한다" 는 한 줄이 Paper 4의 논문 존재 이유다.
-3. ContiFormer의 실험이 넓지 않다고 내 실험까지 좁아서는 안 된다. 금융 외 1종 도메인을 반드시 포함해 "경제시간 효과는 금융 특이한 trick이 아니다"를 증명해야 reviewer pool이 확장된다.
-4. ContiFormer가 hyperparameter를 dataset마다 바꾸는 약점을, 내 논문은 **"$\tau(t)$의 도입이 hyperparameter 의존성을 오히려 낮춘다"** 라는 포지션으로 재해석하면 그 자체가 별도의 기여 포인트가 될 수 있다. 이 가설은 실험으로 검증 가치 있음.
-
-— *2026-04-20, 월요일 코어 버킷 1회차 · ContiFormer 해체 완료.*
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "GqTZOaUKjFTTJ3At8fqSmA==",
+  "iv": "/G9Ie8wlgZXH21ONSnI+rw==",
+  "ct": "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",
+  "mac": "w2JX19EF/KT6dw2i2XqcQuLQCZa4sHTGux4Y+AlKaFI="
+}

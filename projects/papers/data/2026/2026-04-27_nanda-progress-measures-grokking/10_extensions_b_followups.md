@@ -1,65 +1,11 @@
-# 9. 사고 확장 (b) — Follow-up 논문 3편
-
-> 본 논문 *전후* 의 paper 중 사용자가 다음으로 읽어야 할 3편.
-
----
-
-## Follow-up 1 (선행). Liu et al. (2022) — "Towards Understanding Grokking: An Effective Theory of Representation Learning"
-
-**무엇인가**: grokking 을 *representation manifold* 위의 phase transition 으로 모델링한 *이전* paper. order parameter 추출 시도. NeurIPS 2022.
-
-**본 논문과의 관계**: Liu 가 phase transition 의 *추상* 을 보였고, Nanda 가 그 *구체* (Fourier circuit + 진행도) 를 닫는다. Liu 의 framework 가 *큰 그림*, Nanda 가 *세부 그림*.
-
-**얻을 것**: 
-- Representation learning 의 *phase transition* language. critical point, order parameter 의 ML 정의.
-- 사용자 paper 의 *theoretical framing* 에 인용 가능 — "grokking 은 learning dynamics 의 phase transition (Liu 2022) 의 specific instantiation 에서 측정 가능 (Nanda 2023)".
-
-**우선순위**: Tier 3, 4–6 시간 분량.
-
-**이 논문이 사용자 work 의 어디에 들어갈지**: Grokking paper 의 §2 (Background) 에 *phase transition framework* 인용. Nanda 와 함께 *paired citation*.
-
----
-
-## Follow-up 2 (경쟁). Merrill et al. (2023) — "A Tale of Two Circuits: Grokking as Competition of Sparse and Dense Subnetworks"
-
-**무엇인가**: *sparse parity* task 위에서 grokking 을 *dense memorization circuit* + *sparse generalization circuit* 의 경쟁으로 모델링. ICML 2023 또는 NeurIPS 2023.
-
-**본 논문과의 관계**: 동시기 *경쟁* 작업. 같은 결론 (두 circuit 의 cleanup 시간 비대칭) 을 *다른 task* 에서 도출. Nanda 가 *closed form* 으로 회로를 보였고, Merrill 이 *task family generality* 를 보였다.
-
-**얻을 것**:
-- Sparse parity 라는 *다른* algorithmic task 에서의 회로 — 회로 형태가 task 마다 어떻게 변하는지.
-- Two-circuit 경쟁 이론의 *수식적 정리* — Nanda 보다 *동학식* 측면을 더 명시적으로 다룸.
-- 사용자가 logistic map 위에서 같은 frame 을 적용할 때, *Merrill 의 sparse/dense decomposition language* 가 *Nanda 의 Fourier/non-Fourier decomposition language* 보다 더 일반화 가능.
-
-**우선순위**: Tier 3, Grokking track 의 next-target literature.
-
-**이 논문이 사용자 work 의 어디에 들어갈지**: Grokking paper 의 §3 (Method) 에 두 circuit 경쟁 frame 을 인용 — "Following Merrill et al. (2023) and Nanda et al. (2023), we model the learning dynamics as a competition between a memorization circuit (high-norm, dense) and a generalization circuit (low-norm, structured)".
-
----
-
-## Follow-up 3 (후속). Lyle et al. (2025) — "Grokking and Primacy Bias in Continual Learning"
-
-**무엇인가**: Continual learning setting 에서 grokking 이 어떻게 변하는지. Non-stationarity 가 본 논문의 깔끔한 3-phase 를 어떻게 *재배열* 하는지. 2025 paper. (사용자 priority list 에 등재됨.)
-
-**본 논문과의 관계**: 본 논문 frame 의 *직접적 generalization*. Stationary task 에서 non-stationary task 로 옮기면, cleanup phase 가 *task switch* 와 얽히면서 회로의 *primacy bias* (먼저 본 task 가중치가 우선) 가 발생. 이건 사용자 Grokking track 의 *non-stationarity 측 핵심 문제* 와 정확히 같은 question.
-
-**얻을 것**:
-- Non-stationarity 가 progress measure 에 어떻게 영향을 주는지 — 본 논문의 *fixed K* 가정이 어떻게 깨지는지.
-- TS forecasting 의 *regime shift* 와 continual learning 의 *task switch* 의 동형성. 사용자 paper 가 *finance non-stationarity* 와 연결할 수 있는 방법론적 다리.
-- 본 사용자 thesis 의 *직접 prior work* 가 됨 — Lyle 2025 위에 사용자가 한 단계.
-
-**우선순위**: Tier 1 (사용자 priority list 에 이미 등재). Grokking track 의 *most-direct prior*.
-
-**이 논문이 사용자 work 의 어디에 들어갈지**: Grokking paper 의 §1 (Introduction) 의 *gap statement* 에 핵심 인용 — "Lyle et al. (2025) extended Nanda's progress measures to continual learning, observing primacy bias. We extend further to *intrinsically non-stationary* time-series forecasting, where the regime shift is not externally imposed but emerges from the data-generating process itself."
-
----
-
-## 종합 — 4편의 reading order
-
-사용자가 *이미 읽은* Power 2022 + *오늘 다룬* Nanda 2023 위에:
-
-1. **Liu 2022** (4시간) — phase transition framework.
-2. **Merrill 2023** (4–6시간) — two-circuit decomposition.
-3. **Lyle 2025** (6–8시간) — non-stationarity 일반화.
-
-이 3편을 다 읽으면 Grokking track 의 *literature 척추* 가 완성된다 (총 22 must-cite 중 핵심 4편 + 본 논문). 다음 코어 버킷 월요일에 위 3편 중 하나가 후보.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "V0zDxDRdaNnL+OZx8Dr76g==",
+  "iv": "B8RJIHTBNLggHlsvaiESww==",
+  "ct": "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",
+  "mac": "F0+uqKYASrvr9bmFn6PJD1UTlprVvhy5ltqLDyiSNB4="
+}

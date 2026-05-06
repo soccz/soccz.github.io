@@ -1,11 +1,11 @@
-# 11. 한 줄 판결
-
-## 판결
-
-> **"어텐션 패턴 통합 이론" 의 가장 야심찬 ICLR 2026 시도. APF 의 직접 concurrent work — 우리 motif sweep 의 모든 motif (diagonal/sink/reaccess) 를 q-similarity × RoPE-frequency 두 축으로 환원한다. 우리 framework 의 "PE → motif → CNN probe" 사다리 중 첫 두 칸을 닫는 정리(Theorem 5.2) 가 이미 존재한다는 사실은 충격이지만, 그들은 (a) RoPE 외 PE 미커버, (b) TS 도메인 미커버, (c) causal intervention 단계가 비어 있어 APF 에 niche 가 충분히 남아 있다."**
-
-## 보충
-
-- **즉시 행동**: APF draft 의 Related Work 에 본 논문 섹션 (1 paragraph), Method 의 RoPE 분석에 Theorem 5.2 lemma 인용 (1 lemma), Discussion 의 APF 차별화 3 영역 (multi-PE / TS / causal) 명시. 본 해체의 §09 인용 초안 그대로 활용 가능.
-- **차주 실험 우선순위**: 본 해체의 §10 아이디어 1 (q-sim × multi-PE × TS) 가 APF 의 motif sweep 에 third-axis 로 가장 자연스럽게 통합되는 sub-experiment. 본문 PDF 확보 후 (i) Theorem 5.2 의 정확한 epsilon-bound, (ii) NoPE 비교 부재 확인 두 가지 1차 검증.
-- **장기**: 본 해체의 §10 아이디어 2 (q-sim 의 grokking trajectory) 는 사용자 두 active track 의 cross-pollination 첫 다리 — TAPPA 의 inference metric 을 training dynamics 로 확장하는 연구가 NeurIPS 2027 의 main contribution candidate.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "L6Ft+OWdeNtUyptRRpy3zg==",
+  "iv": "NkwEHwCtCiWddgZsKMgIPg==",
+  "ct": "wc1x81UmIXbB3L41VX/Xr8htQwHd4lRiUyWi/jCKTZk0evMfQdXc1WPWwBzHQXzhNppsBbDX58fQOTrCIHcc52bSob5wxMcf0ShgTbXzAHMEAEbgGHYSgTB0WH0mKYvBja4U29UkWlhczaVia2yLmMoHlhch/VlQJ3nmaVpgpiD5y5su/Cs8nCSabUM5f5rrMRiEuFoEmyA82ogJxiFz0tE/UpoGDFZOdw9jkKVbblr2oRB84lVZw90AQI4p8vnKIdSxQQl+gXxPEKfSpIb7Hd3NGWp7e6QeBup6PkMM7SyUT5LjX0mZZ1OsaAXxZHLNuVuM3YCnIBN5oWL7URvStcO2s9N/2jQdLQU1GnYNA7frwk1GyvBBIBB7qs9OlUk+jh3xhzMLfQA4Qjl0DCzHbYKMEqDan59fORWmMvP9B8ayHrTdA5joHz/m9h4iZ3mR3NsB+W+0tu2u05a2ElFsWaoDRcFEncYD5q15NRVpprdIfK9K/rDrHNtw5NTCi/+tjwZw+GvpbFdTilFeWBk9Pksqn/0MSi0B8fMeUw0tkUTlNwiOaWk5FqXSXsyofFPd16rQbwni8JGDAhVOsZagfzpITGT+fxc4DEhPWtl/arJGI2nVSN1CRyFN9TC2tf6VMWd+dzWXjruf3cEqkFAMW4agOVkU2GAjw47s/HWj8xFS7TxdTEEpYdM5PYf91y2CLKFkkm1DIuKEhe94/loC/Rs3f+YEx4rBMK7ojewf2PROpPvyABK2PPKs77vYL0xEPraBEsgwleZp9M/88vPb0LmQGltlUQ56k8YON9Bi2hOtdAIre9h1wvx/KwxKQVdJseKOAPn6zHXGfEEo63yv5BSMHcU92TGoz2MqhkNvCOjnszH2PVbV/Pa4+VLnJO0MLDk2xeq1cW5xrA24Th0fjjmN1ALjg+fShrhDiEgYIBXFX6cOjdvDrY/BIosjH/FIWbf8gLpgxpIX8nOJWQ1bxsnOSmM6ZG/OScTN8vWW1jt/zhqg1xlES0chlXvyDEfxHroYnX4DMYQVdhr833wpkdCyg92NIlYKM2vMT8PPl1Djmta6UBC1tl38sRrNUtVT76fwWDnHF5w+S7BK3en3xhiHVj+SkE24GR5In2X3LWwwnNc3BdToZQ2UJwdXgVhZ+tJjhQrPO3jYwHDEBsm1AOTwTEUdgTUbU8zSJ6QiDK+bPycQ/NaL75BuHgK8jVY/K8r2pNB5HbocNIB7vwOh5/5K0dUi06xrt8m7vLOJbDLVCtG+GEvxoNO5bRIjsiHMDzZYJZpIU10YvvMKX6afAEGvncBehsPic7jiCQyyuc9BFbA7Zzg9CJKuRwbi8NZ48lqh1Xv5sAFRqS7Lvs4at/bExksnO7Ktuztjb1MJ9Qrd+DRbsmHfcSe8AZgb4F1z7jtAcloCb6CAEVQDMFUcxQsCZJUDZHXHnVSwEwWrFaK/FsBO2gT61Qqyw/xcWRfLLXfz6NzjF0IbW0zm+7aoQhaioFtRuihRexZtzHjfASK7v7BAo4kVt1at73UpKAxTH+zGa9ZbcIIURkvppegN7d/IcqxZ5tP2i1wPJcp9umYZRFQemNqfx+QhHoctAOJ6C3XqjAoXZj4lgnG5FQG6ElkuE0Vf2ujZr2dM0M98wyzO9d0pkyJUSlFOyyZAMwsADXwRVTSmqcpbgmYFRXfoK9unVbRaYKIX1dMyFmt6+YndDb8eisQmWIXCnaIgAmqhrANv8vOIvZ6sdOe32bmrQ57pG5rPGKJokDs2Cs+pddMMvZcv/77BIlTh3eRzSa9bssEmEhXo0RDi62VjI5PlSyxD5ESbXAlEK06KuXq1xf3jLcAAPdtk3ZqFgMUq3HR2NgOgewakLiH7E+EcsYj9wVaXS9xBm+3QosKt+UiOm0F1vrKl7LlJgPDLBMPpl5tQkAJhjisI0y1PJJCNfcDpJuGZXihyPdNMrwoOuFpaCeU=",
+  "mac": "EqW+ad7OC7M9i544DD/pv7hkKtqSYFgi5sD2r8ldnJ0="
+}

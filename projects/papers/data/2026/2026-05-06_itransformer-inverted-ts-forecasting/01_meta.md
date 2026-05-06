@@ -1,26 +1,11 @@
-# 01. 메타 & 선정 이유
-
-## 서지 정보
-
-| 항목 | 내용 |
-|------|------|
-| 저자 | Yong Liu¹, Tengge Hu¹, Haoran Zhang¹, Haixu Wu¹, Shiyu Wang¹, Lintao Ma², Mingsheng Long¹ |
-| 소속 | ¹Tsinghua University (thuml 랩, Long 교수 그룹) · ²Ant Group |
-| arXiv 제출 | 2023-10-10 (v1) |
-| 게재 | ICLR 2024 Spotlight |
-| 인용 수 | 약 500+ (2024년 기준 scispace 173, 이후 급증 추정) |
-| 코드 | https://github.com/thuml/iTransformer (pip install 가능, GluonTS 통합) |
-
-## 저자 권위 배경
-
-Mingsheng Long 교수(thuml 랩)는 Autoformer(NeurIPS 2021), TimeMixer(ICLR 2024) 등 TS 트랜스포머의 연속 발표 그룹이다. 이전 작업들이 시계열 분해 및 Auto-Correlation에 집중했다면, iTransformer는 그 흐름과 결별해 아키텍처 가정 자체를 뒤집는 방향으로 선회한다. Haixu Wu는 TimesNet(ICLR 2023) 제1저자로, 이 논문과의 계보 연결이 명확하다.
-
-## 선정 이유
-
-세 가지 이유로 오늘 선정했다.
-
-첫째, **APF (Attention Pattern Fields) 직접 연결**: APF 연구의 핵심은 "T×T 어텐션 맵에 어떤 2D 모티프가 존재하는가"이다. iTransformer는 어텐션 축을 T(시간)에서 N(변수)으로 전환한다 — 즉 어텐션 맵이 N×N으로 바뀐다. 이 '축 전환'은 APF가 연구하는 T×T 모티프 분류 체계의 반증 실험군 또는 비교 기저로 필수적이다. "T×T 모티프가 예측 성능에 기여하는가?" vs "N×N 모티프가 더 효과적인가?"라는 질문을 iTransformer가 경험적으로 답한다.
-
-둘째, **Grokking 연구 연결**: iTransformer에서 FFN이 각 변수의 시간 패턴(T-dim)을 학습한다. Grokking 연구는 "FFN이 어떤 회로로 주기 패턴을 암기→일반화하는가"를 추적하는 방향인데, iTransformer의 FFN은 정확히 그 역할(시간 방향 표현)을 명시적으로 맡는다.
-
-셋째, **ts-transformer-baseline priority 항목**: `_index.md` 우선 읽기 목록에 등재된 미커버 항목이다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "HtB9/ygiFtMXGrhobfJSow==",
+  "iv": "Td8Y6g9QwLQKMl2DR0Fy2A==",
+  "ct": "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",
+  "mac": "RUcepW+P7C7bg+9i0fAFCy1Mkol3jerdOY6aGU0jal0="
+}

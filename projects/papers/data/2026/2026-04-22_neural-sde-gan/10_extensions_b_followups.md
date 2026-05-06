@@ -1,31 +1,11 @@
-# 10b · Follow-up 논문 3편
-
----
-
-## 선행 논문 — Rough Volatility (Gatheral et al., Quantitative Finance 2018)
-
-**어떤 논문인가**: 주식 시장의 실현 변동성(realized volatility)이 Hurst 지수 $H \approx 0.1$인 fractional Brownian motion을 따른다는 실증 발견. "Rough volatility"라는 개념을 확립한 논문.
-
-**본 논문과의 관계**: 이 논문(Neural SDE GAN)의 SDE 생성자는 표준 브라운 운동 $W_t$ ($H = 0.5$)를 사용한다. 그러나 실제 금융 변동성은 $H < 0.5$인 "거친(rough)" 경로를 따른다. Rough volatility 논문은 Neural SDE GAN의 한계(브라운 운동 가정)를 정량화하는 이론적 기준을 제공한다. "왜 표준 SDE가 금융에서 불충분한가?"를 묻는 독자에게 이 논문이 답이다.
-
-**무엇을 얻을 수 있나**: Paper 4에서 economic time $\tau(t)$가 변동성 시계열의 rough 성질을 부분적으로 흡수할 수 있는지 — 즉, "시간 변환으로 rough 경로를 smooth하게 변환할 수 있는가?" — 를 논증하는 데 이 논문이 반례 또는 근거로 사용된다.
-
----
-
-## 경쟁 논문 — Diffusion-TS (Tim Xiu, Emile Mathieu 등 2024 계열)
-
-**어떤 논문인가**: Score-based diffusion model을 시계열 생성에 적용한 일련의 논문들. 대표적으로 TimeGrad (Rasul et al. 2021), CSDI (Tashiro et al. NeurIPS 2021), Diffusion-TS (2023) 등. 역방향 SDE로 노이즈를 제거해 경로를 생성.
-
-**본 논문과의 관계**: 직접 경쟁. 둘 다 SDE 언어를 쓰지만 방향이 반대다: Neural SDE GAN은 순방향(노이즈 → 경로), Diffusion 기반은 역방향(경로 → 노이즈 → 경로). 최신 벤치마크에서 Diffusion 계열이 일부 지표에서 앞서는 결과가 나왔다.
-
-**무엇을 얻을 수 있나**: 두 접근의 trade-off를 이해하면 Paper 4의 economic time attention이 어느 생성 프레임워크에 더 자연스럽게 통합되는지를 결정할 수 있다. GAN 기반은 빠른 생성, Diffusion 기반은 높은 품질(단 느림)이 일반적 특성이다.
-
----
-
-## 후속 논문 — Conditional Neural SDE 계열 (2022–2023)
-
-**어떤 논문인가**: Kidger 이후 그룹들이 Neural SDE를 조건부 생성(conditional generation)으로 확장한 일련의 작업. 대표적으로 "Score-Based SDEs for Conditional Generation" 계열. 조건 변수(예: 시장 레짐, 이자율 수준)를 생성자에 주입해 시나리오 특정 경로를 생성.
-
-**본 논문과의 관계**: 이 논문의 직접 후손. 생성자 $dY = \mu_\theta(t, Y, c)\,dt + \sigma_\theta(t, Y, c)\,dW$에서 $c$가 조건 변수. 판별자도 동일하게 조건화.
-
-**무엇을 얻을 수 있나**: Paper 4에서 economic time $\tau(t)$가 사실상 "시장 상태 조건 변수"의 역할을 하므로, Conditional Neural SDE의 $c$ 주입 방식(concat vs. FiLM vs. cross-attention)이 Paper 4의 conditioning space 선택 논의에 직접 참조된다. 이 논문들이 조건화 방식에 따른 성능 차이를 실험하면 Paper 1("When Multiplicative Conditioning Fails")의 논증을 SDE 영역에서 재검증하는 기회가 된다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "xzNut2VNRdoiu8Xei0WC8g==",
+  "iv": "VBMc/yr9qIs8MblxLOHMxQ==",
+  "ct": "2I7GXcMr+aLqDAUuuGK6oiXwSwPF4A9Evmn4Rh9FDGc1kzd6y3C1AMmgfzGp+sPYw9HVFY5MP/VO/aHqI1QdN7DQ5O+McvDwr7MNkec+ALTJOFz/L3wmQ7qBBTgm0HXJhsYYkQxd8kKTxzeaPaouuWOY5dDEXSKZNDpRYuIKbThBY6bzSOpIFqPJqBRSoatbzegt+kWQBHyirWqbEx3bjDQ490JSm76BhPwEodiknmtnEQBqS10+3TYV0ojybqXR/8NJ8vT/JWaOrm22iGImPrvdrFO8HzZOh64mAy+h8LkHYwivWw/YBgldkLC8/TEV3B+zw/q6UopC5Al+g46hF9POkxsFM424DknRLs9KrmZJ7kDxoAg18Rum+qoujnQRl3vl5oWMFOtDpTDJOve8h7iiLVNfjHfd6gCSUDy/ZtlvA1NoY3OoTBo3+bMjBQoY/SywWTj6saSZvxaLZy+4z9cX4LNEnOdM7qC1hiC+w5xeZl0KkF6xzu1FYrR7e7KorUGnEGZIkB1tGoa13sV4q9CnDUZbStzv1JJ/Nw8znM/Rv3e+/IP+o0DZLs0pST/HaSVQlIuSBS2KVlP7MFZa9iJGcN5ZEbas/XSLuqfPDc+6n2PvTMUB73p9Whe5bocdodm2aHD9cYZMmCoeyKwoYC3fm8gjLCDJVihwOKCkNSBqGtfZkzsPdbDtkTAQltPzrcvuJwAV7iVRKj6iEhdIiUH/GSEY6x74jjhQS7YQTNlAL6vIQjnleLH7SiREfnCj4JzoViivpicEgK+DUSP8LiSuI2IcU8P0se1eT70eMp061LeyA+H38mZcz9WBNRfGOiC9LDWam/j26WkA0PCo6U1EXFEfkDaJUfOGG3OEvqv2cqHbRBCFZSZLghfsHHaq5d8wd5jcSWjFMDRpaHDgN0goMWKsv6UJlwVYsv6WPMybZgZZ8tEWsudwoqxA6HDz6iwloYtsjM1dzDhzsN35aIT1/4Dfn7YWnNBZ3jDKzUW3DQtL0aN2WLHuqFhb9M7vbaIt8WRX0qngMdCuSlSQN6WMVRm9OdyG44bzsGiXJyBZokBFrwwPo3jOoACJc3ksgD3Jo2z56O2km3aHRPMK6zIG3uMuuEr7j5WHRb737zMOuQ3kP9vBZsDZ3gZ+oQIefaCV9LF/eSq0BeaXghvEzkJTmdA7FNA7MUEpHXHqY83sJyB1qXy5uJix+vlcyTxxYJKybAM0lMC/+S+VRSgA7b7+0793HQF2fMCcEwgkgP9MQ+Mkt+IKOHbLCFzKkl1u+GErtf3jzZtHZz4kSIXDDl9zQg42AVFLHuatUbJGryfTZrh/UI5eFjPQF0YEnxGy1eljTW5d0HxwxyhQzxiuZPo/RmaflaVXkwfTUg1r/1TXMSUu+QqthSzeQV4mTCan2AmxqCiXXHMncsY/8/YMkf4KOaAyStNfVuGiYlGIgg3N41VyQUxBYo9QwotOu5p2bje5vxKI7PRAdx5u9NyPfkfud0TKvn4eJwU/Rn+yc4/JsmocMbtmjlVCZl5f/TVx9awv6hDoN9wwNTNCqcvv8GxXGTlxL4Y2YW65SBKWJAhju1hAb3M7cslnW6QM+sgk3yG+yYZ4DAA097AyDMENhblQ82xIMcsGWRvsAjumOylci/8VYfDG/aM2oh4cVrIcPewYqkpEPsoSjJg590Yn9yayjiIphH87DKCl+RHaKk8qptk9k3uOmF7NHs06Fq/V0ZN9T/Obgo91cQRaFgG3LtxOv5XEpnjFIhLz1XNhDCsQDvp17zIOOIqeHLAHjDv5PKrl31BRpLrfjpkr+1s6aM5u/SDseQwvJZnmSdnKRAU1TO2+AfHEINJPbaVNHDq7xXUs5/LuIo7AfypYyH9yT9ntzh7L/fyA5dJ5lbNJBwB8yHYwZTME2+I2Fmv5nKy2o0oNIPzI6pykrI8DrEbeofjoDmxJVhGsc7LAbjVZQ4ATOfK3qkYWteceBucd2yB/Df9RSaSvKnG7vArXkgqEQbfhxosa0xS0Q6Oxcs0cPIZlStzb3ScRNoc/uXD+3kDbldRR1W+N4twfkVUNWg2/v44X38cJBFUUXbHvgIJMIoBmUVzf1TJtBn5vfl7/VRJc74EUgkv+CPSY9RauNVyw4AGXtP4HfOkFmgcjnARHTE45eMNW83x1P3eX3tgI9aGwWwahxiDtkxtLNIPkEG+ljjB+JWnLPMDn5ouXK8F2wnjXoLQGEsFpdhKqBRYWaS1KN+pxMDd5O7I0IBzYSrZS9+a5aQs85fLLycwpJEsr502O6Kdsm+n3iWbAEMzJi8BhAeOMuw5R61HMb+O7TaJYqxwL0OrzWx8SOTjdZH6sxglGzK0tH+jS8lhH6AgIF+pA6P+5kOn9EuxVNB88RV7TPR9vn/Zp5gcswyw0B4RC9TJotHFJGZ4Ivx7yquv0YNr1HKVgGvjDnN/y4WMpN/pVaTaM5mnBkH9DpnLL6Q5jFgZ3UTMDvd2+jNsR97apjJeiZt5y19BocDc3i2VCPyNn9aepS/80h4JaAUa/9LYWtTF6EULi+wkSNXLRUz6zADsp9UGfF2+Z8TOWhPxKt90hZGUX9cGBzG1e/aYYmpCSegkJkxPoFR01JQ5gFXNchcKU8ximoUKoFZV7D+EcHGtimNS2JtV35X+qOBMrE0JBUvXjka3I6kwI1MFcfuAvxrwcKzIMtO9WSxJ36LvJTjcH4ZenA6+Snen4kiZ52S/JoVemQS0zAexkL3vW/qOVkAdqUitekMQdz+gKVXGQO8mY4/NEyxL6Xd0YCPK+Nli2xCmq9eMReKnjj4NXdTcND69QloCWv6HZuRW0HAQIWfjhrzfPQA/X2/C1MhjdrPtK0Tnw8u748romdiun3Ba8qfZbf8FDfpkPh8fFfJJcIQ+/o9WSbqsx77bFuGKTCXdGc6oSgzCoUM1Noz09Kk8BIiErjFuKJ/Z0tfxx+fl2XSz7c0aM0d3VyLsCdMJ2gyUh20RhKzmH4JAjmZzYyalhnzFVcDS8PRocyJcUOoh2gTTqVitmYpUlvMVwn6u6SUWN91yTiEof2tSMJ1tHaCeA7wWzA70yPFUqYs+gNopmvmWK/Ekt65SPl9P1oG8RDAbzq6VKOCfBxKqwFBI+tDNSfqQ7rxq/jEt6x3nTgRJ7brTwtoEnlWI9DDvf2WtrtxWGNZ2lVjfnRL2/9rEPMbTZADwEnrzgJ+cdsAwxLIgXf03u0Ou3WXjU40yEQ6mzKsKpkFf1vFi4sKYFDqcoaeKRN1ieH645HD7oLHtPl0aL79i985Fr2Qn5ZXpBLqmGDT/O2eZ67V+jTsMOLr4dLoKjmG8OtGMjW8Rr1dnFnP/UOmeo2kSSkVvDtXXT8jBuyQ0P06Foz1e7cvJAtvPMZdGXwqis+YpUxmtEYR+xno66xx7R7S5v1X6HYyK7bWDJj1dk9SHZ04b2KC3ZLCG8/6MKSRxEuNlgVoGke5SpE1Pc3wtet1v+j3BahtaOIgS5eHGp7FAOWtYPNkwGvJITh0ZnBsgT8HjcjXUYhgFRnxqz6sw6nmR6iDssvXT3P5oCOvM4MVsLwCsgd/01uK5akSKqJSlwnqgkvm+laS0JEoHk8/a0w8x/zIzX1DSJ/HlXBFGWP5iU7y+qRbcqPfyPdEwcNIjgrKNdcNkXpm+bVIbVIDPSzQQe47Zi2Dr0Uszo9e/Un21nDCjXrTweW2siJvCK5bzWdpTW7QGoCEsGPRPDR8cGN5VfAWqLFtg7Xszww3huzelQwXSQumcY4k3PEk5de7A6jVJj0BEMHfZ1m1Blmgz6CgPDF534n6xXnAOKhHThYl9gmu6/cTnXoJLZfnvuUumG17OLWqX4GKUjFry7Gdh+S4oTdvisXW+H8QTOzUPp22oRjBM2b8o6EBPm/ljBH5AYVBoS57iEhKsdFE5qCfjat1trWMYHRNar83k/A1vrigAD0q3RkmrQWmOhRgbiZFkW0gKDrL/hNVE1qskTYuLZk2jvjOLA6MPHQ7FozIspi+dNgsAbn0TOEW9VGwxIJWUY7zKpl/c8qWmKx0IPOL0u/cc2Elyjp4OdrFl8G5ONIE16fjjUYrL5fsNN3vkm0HNAucVuPZ819s2uPBJOMFcdHDFA0cXoqyPcgcNCXoKy2iRG9PA95z1QUWKPTkga6mQ4Hx9MduOmn71BZwM95JQ8tGYgQYfANzhU67VrW0tnGt+fJd+0eYO9w2LDvIJHHmd6",
+  "mac": "xAVTuO0is0jmY5MkuKjznqqvSwqEyOHkDClYba9XkH0="
+}

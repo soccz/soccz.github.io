@@ -1,23 +1,11 @@
-# 01. 메타 & 선정 이유
-
-## 인용·발표 정보
-
-- **인용 수**: 미확인 (Semantic Scholar 접근 차단). 2026-01-29 등록 → 4월 말 기준 3개월 미만이므로 정식 인용은 적을 것이나, 동시기 follow-up arXiv 가 빠르게 누적되는 영역 (KV cache, attention head 분류) 임은 분명.
-- **DOI**: 미확인 (ICLR 2026 proceedings DOI 미발급 단계 가능)
-- **저자 권위 배경**:
-  - **Jie Wang** (USTC MIRA Lab 책임자, corresponding 추정): 강화학습·조합최적화·LLM 효율성 분야 다수. MIRA Lab 은 KV cache / inference acceleration 으로 NeurIPS·ICLR 다수 출판.
-  - **Mingxuan Yuan, Jianye HAO** (Huawei Noah's Ark): RL · LLM scaling 권위. Hao 는 multi-agent RL 의 중국권 대표 그룹.
-  - **Bin Li** (USTC, info theory / signal processing 백그라운드): "temporal continuous perspective" 라는 framing 의 출처일 가능성. APF 가 "PE → 2D motif" 로 가는 경로와 닮은 발상은 이쪽 영향.
-- **컨텍스트**: MIRA Lab 에서 같은 시기 KV cache 압축 논문이 다수 나옴 (예: 같은 1월 내 arXiv:2510.00636 "Expected Attention", arXiv:2601.08297 "Demystifying the Slash Pattern" 등). TAPPA 는 그 흐름의 **이론적 우산** 으로 위치.
-
-## 선정 이유 (왜 오늘, 왜 이 논문)
-
-세 가지가 겹쳤다.
-
-1. **Axis balance 강제** — `_coverage.md` 코어 §C (pe-attention-geometry / attention-as-explanation) 가 0회 커버. §A (grokking) 는 최근 Nanda(04-27) + Lyle(05-01) 연속 2회로 과대표현. 오늘 §C 를 안 채우면 5주 연속 §A 편향 가능성. axis balance 규칙(최대 5주)이 깨지진 않지만 "최소 3주 단위 교대" 권고를 따라 §C 차례.
-
-2. **Priority 매칭이 사용자 active 트랙의 직접 concurrent work** — `_profile.md` 에 "Concurrent work 2개 식별: arXiv:2511.21514 (Kalnāre 2025), **arXiv:2601.21709 (Yang ICLR 2026)**" 라고 명시되어 있다. 이는 사용자의 APF (Attention Pattern Fields) 프로젝트가 motif sweep / PE intervention 을 진행 중인데, 정확히 같은 framing ("attention 패턴이 왜 그렇게 생기는가, PE 가 어떻게 결정하는가") 으로 ICLR 2026 에 먼저 도착한 논문. **읽지 않고 APF 를 쓰면 reviewer 가 제일 먼저 던질 비교 논문**. 우선순위 1.
-
-3. **"내 가설" 의 사전검정 가치** — APF 는 (a) PE 별 motif 분포, (b) motif → CNN probe → 분류, (c) causal intervention (motif swap) 의 3단 사다리. TAPPA 가 (a)~(b) 사이의 **이론적 다리**(q-similarity × RoPE-frequency → motif type) 를 이미 깔았다면, APF 는 (a) 대신 그들의 다리를 인용하고 (c) 단계 — causal intervention 과 시계열 도메인 — 에 자원을 몰아야 한다. 이 판단을 위해 본 논문을 실제로 읽고 비교점을 명문화할 필요가 있다.
-
-부수적 이유: ICLR 2026 게재라는 경량 권위, RoPE 주파수 분해라는 sub-mechanism 이 사용자의 "Spectral PE" (현재 shelved) 발상과 표면적으로 겹쳐 재개 신호가 될 수 있는지 검토 필요.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "aI9UJqnSoY+zDPazbApQYQ==",
+  "iv": "8eDl6YVMrB+QHZOV7s2Tpg==",
+  "ct": "uOyGYqG3pkof0ZVQSv7u4Z5I2Tgk2Jp1YB2q8LGli2LP3BG9tEM/KuDVs4cDvN29TbVcLNZKi67SaKnCtLu/hY/hagYH2OStokOTb1f1veg0Es+Q6luOUQcI9nbyfDwPZKgbVA0tKRrQVuMIyW85eGA65QOvBWf8Znc+/CN5bPzwlqi0mXZVZ+QWbd0V8b2xvMkxGUOjbQJokrjEZ+Ql+FfjH0sLyiYdV97jUxM7lsHXS2WBEjiMKaKRNgHmaSCJArYGGmgw2upOr9qkWB2HLAFVCjU3f4WtGscar7OIT6HgctBH/cNgWh5ve8IuxUbh1EDHZfNSg2POgPcbgW7Wa5q1SZryBTpH8D2lu/H+U6w83d9znyyhirxJXZfzYmA2ApHvHeqGdjJm5dlBWmhVab2+GQ1tARzOWCFUgEEumSTgWFSEKpRUKHluY+J1qgHu8Z/tY0Eiys+2rK0Txtc4ZA+iDUTvrUXI435B57q74MtDsa34YfMoMFRzAuY9Gkzg7FY2x89M3abOmjSbbfWQzB7rp6W2g4uf6yjJRHQAFkGhVS2C7otx3+g/f/2TJeNAqCuJQDAgYHjEOc96emfZP6kg4LP9Bhw9AiwnaJ0WdJsvf/3fx73sATXxx3LEjhedL9KsoaUBxn8GjDFqlUKlNUW3PK9g5uDDJuvo+zAcYWbdGDWtqzbLIqZh+kMCjSGvTZNKHyOYFdt0X0F8Gm6w5yAHKJTSgoVxJGX8913c/JLNqcXUuDPP+M8SkiPWbeKqARmUCR0IQgB2IuuzL6L+HupN+eBvI3ccN4JdklGWS9vrlNLk0nwUMNQ6Rbn84CLHbIk2uauWaKeyTi7jeqfsCj5CFshULpWAdWTRjAvyWGY+aWpgKV4xUQoEPpZQKYOgRFxL0ANRVBHwJOwSu/C9K6d8E0flFeBryTToH2MWqkG6MsRZblUpm33Lwu2jLZGzLqKp96sLYbKotc7/q2+vdwwIHw37NIX1qIEzmYHgIOEAaVipiG3WIU9kCqDDARyr0Y7965z/Fz5BCozfqaMHEMKZiQDAHttZ70gE7ngXTP/HQopIBm0CofBcdc4LefdO/Xc0OB7+OB9wJ2Wnp2S5Ap/CuRdfOPJF+hasp74nWX4QV1I94cSuRaTAQzlVC3xMc4CVSqUFxoUXKMYYfa8DSFQ22KCT5/JGrGtBcu854dGBGDI1NwaWPVVORBEVGthJL3xOGkYTKbBENvfsqflnGxsFwcmaonp+4oqNGqDm3I+4hsbD7p6Z30AEe+dWLpHY+GX/b6PzVKZp1d1wh1AfrqCSD31HnAySRlafb7auzRY6qkxOR8x/8t8Up97WvtTb/hlHJVQvXW0DNrvnv8733KSot770fwp5o08zbbPmIilYJ4hjk7L8DfbuO8y1GiSn5IF3x0JG78z2I3UrbfuVPXoQMPZfwygGfxN17Y6AOdhT+7Sc4CIA48EDRoLr5l1rzFrPdGfZug+kDEX0fFGPdE3bgc4YSupIKAlAbfzSs9IE+i3ETj2YxVWS4mnujpMX24X8eHmaKQVOj/JQSVwevCoQTw243ykRZCXF+N9LsAQ7Lg6sZ8aKoJPdktOIv+iBDzJTOiBgF0GTy4eGGrshJb95osAPt3OGiaN/FX2k7UHb2l5Qu6aHmL89CPPFh51Lq1S9C5SYblMJL14klAvozeLZLOVKYHMuXdCfn7Dkovia8omc4LA6mjl0xuCnhkvHQszuJL+2azGSywy+Hsljt9NpKbJYly3zq48C8J8gblXRNKj4D5r3l9HbjG/U0PKzmtaD2rY0/BbpnKuY040iGIiCGKZiZ+kfXEBtmLeQu0lmMA4cfAukPXN235VV8Dz7xXPEwhjSLrZnIhBfYILEyUB6tvl2CxjTsBR0t19LxqMtiKslschdmd7JHhOwSPyznPiYklshO2eN0NhqI+gmvYgafnxEqDZW1FOccaP5ZdPXUc1iBVHMoJFE7XIYvMdjC7vteGpHAxXk5v88Lv+/z57T4CY0ZWmimw4YEPbPstfyNwG1FL1aLiOoZ9+w+KG0cmhMFBNZ35vwgW8YlaaPVVSeXP0/wf0hFFBwC8dL79PpQRC/uKg3m/kllGHOXL7rrgQoX6yjnGKWK3SUIr8BuJq3OG/TsiAq8sRPOqThIWOFDRySlr801QMWqYesORv2rc1GQ+babKPkfu67E2RVzv3c/xFeIyOiW+CZ3qM5rdq3rhNXZo3KO+ttXpgfSUliLjSAUIU83tl2L4dZa9Sw8gF8ChbwQckLW/i0xn27Yvjd+3IWujsTmrieiP+DshyHMIi8tYA82UG6derkMESeo06qQ9JeasrA5snktHUpT5FE2T8NVmTs8ShoCdNMqxkWvMUUExYW5kQ/9VAPrnUFouD0z5SaQ510WBhYLLlegNbfc3iod9V+glP+vAYpDWiADgP0sDdx+4pHJdi0LsojT6q+ioegwcPrD42LDjxXLyJGKZ6RZfY8OgMov22c2xGQuPGbLWKsVQlJdAxbyF30T7O88aQL3FDpI+eyf3qBhoHjWD6QIF7diGlPomLhRp7h73Kgcg15ZT3NvAY+Dd4Oy8FMC+Fap3T2FwJtzXvRiBuVwuy3qzfgPLvjo++nGUFYEhyndqeCwRhsleke9MQuY917XdkmyOdrh6PbKZwIXN8Ih3cjmgJsYJv/RWVRCI3Ce2tgQa0hDt6dOZhUA8kpSXwOuNAWH9NkBX0fZzLWjnN5pQprUxoHvdPwAwCfPcOXMyX3epGfHHxJuqsayjy/zowRvLoL9hFNpz3BEbM1tT2/3dyt2daIXQ7jIfVc+VHqctxvv9fVHimkcJhxoFXHyNRpXEzirXHvUiM+ESuirwl8l4rJQ+6ewFx/A7HUU1Sx3rcetVojZP7p3rV+I5Uai1feRnHLCndsPzTavVWsoWaStsgjj7TrAqOKcelsPGYFcrpRVEF/9zVpynEGG3FMvW7ks3K/xCTS9XzClZvl1/A35mswfi1uU+SmVHNEXRV9B12P64D0vO/vtmGKPzubDqEyxIZasnIMPFVFkO4IeaLTJfek8hgGAFKYwHpE0s+S2BVvtWs96/9R5zyQPT4W+7J91HLGXDf/9t59sO4UX0FeBBqZgwYOWmks8tUyxtPvVDk6s1p9aCo34dqEg/TqxpRWnfou4+Qjn7JWO84KKSpBZqBgLdlq9ZN5UZMSr6EjYZRMFYddTJlz+8S0BEFE+71ercyuNwtsO1VEtAda4baUMO7IexhHbU6bpQI0e9BEq0MFbWEe81FlT+QHxUMc3CJjsuXYnvauFtAAqVIbI2Y9Iv60xqcMur8Jd3/OHs9SW1h5xe08j1hKdHm7/Fu+LuRLqDFzFOWjQFM9pxachR5zCNgk7EAZchPTGCwscdkvwiWICB/rlvCN2K93aU02CCgtMxURtCq1BOPhbGwXKHkKkLymD6IUbdF4oliBXFho4Oh1Yfjbatl0MtZwzyLSTg8LyR9weXgxaW749e624W2qx3HBNQczGTjkUneAbhf/InPv3sN+PLvtrtU0DOCPV+yUy5IJW4F2XIi0rPs5viUHLaeoY846TSZjqDOxc3EiwNjFWDh/XqP6EJ2TovkOhzC0G9IVflKAJLqzCv9Rw5d7YAn9C9SX/cyFQk5GWGl9iiRRgQZuvxqYmvkM/Pijz44ktZqgdgSKkgNjeLwPU7EAg0JALXviD8P771/8RSTNuLaqiYNx+vK9bPzeJ1KRrr3XOv+3g0YJQT7ux4dC48L4X00HVTbnLGkenDSwfKsiNzvDjty/j+rutBZpJ/BrWgU0anN8IhWBbTeVtE4nAtU9U00x96gUS+MowQzk5wV8mlIUvw97Fqu6xIddqj+y5gPQhepDQ9vw5s/Jfyk0oslst070+2/6To9ZYH8NM8wFyPdkYaQ/f0v4y1gVfg7RGVj156yzIBMwsAaKBGYeOuBBMnb0nl6n8L5vOik37yMv9VXr7GniyCqLVdc3rCd4AOcFvk29PN3AUjJoRDBIPeTi/EQ1WDG7e0f+zMxXB1AYrQr1TW+hK1LGF7PxKrW6nEdyYPa9CAHPqAaPfwR/gWaKXXSfZsUb1urAy3qYfXKics/LDr7vK9Wd9dg0rsvDJptThzr1PCmtbHSz+nrZApk=",
+  "mac": "PPsMg2/9kD0+XsBQmXpuYiB9v+p+dsTLlvWlVD4c0/8="
+}

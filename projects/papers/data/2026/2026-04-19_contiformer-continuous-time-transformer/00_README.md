@@ -1,26 +1,11 @@
-# ContiFormer — 표지
-
-- **원문 제목**: ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling
-- **한국어 번역**: 컨티포머 — 비정규 시계열 모델링을 위한 연속시간 트랜스포머
-- **저자**: Yuqi Chen, Kan Ren, Yansen Wang, Yuchen Fang, Weiwei Sun, Dongsheng Li (Fudan + Microsoft Research Asia + Shanghai Jiao Tong)
-- **발표처·연도**: NeurIPS 2023 (Main Track), arXiv:2402.10635 (v1: 2024-02)
-- **태그**: `neural-ode-cde` (보조: `time-series-transformer`)
-- **코드**: <https://github.com/microsoft/SeqML/tree/main/ContiFormer> (MIT)
-
-## 한 줄 판결
-
-> ContiFormer는 "Neural ODE × Attention" 합성을 가장 깔끔하게 정식화했지만, **시간축이 곧 물리시간**이라는 가정을 깔고 있어 — Economic Time을 그 자리에 끼워 넣는 Paper 4의 정확한 출발점이자, 동시에 가장 비판적으로 인용해야 할 베이스라인이다.
-
-## 목차
-
-- [01_meta.md — 메타 & 선정 이유](01_meta.md)
-- [02_tldr.md — 3층 TL;DR](02_tldr.md)
-- [03_problem.md — 문제 지형도](03_problem.md)
-- [04_claims.md — 핵심 Claim 해체](04_claims.md)
-- [05_method.md — 방법론 해부](05_method.md)
-- [06_experiments.md — 실험 해부](06_experiments.md)
-- [07_limits.md — 가정·한계·반박](07_limits.md)
-- [08_lineage.md — 이론적 계보](08_lineage.md)
-- [09_my_research.md — 내 연구와의 연결](09_my_research.md)
-- [10_extensions.md — 사고 확장](10_extensions.md)
-- [11_verdict.md — 한 줄 판결](11_verdict.md)
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "jd6N69ovHFsJP6GSkQn4nw==",
+  "iv": "0WU+m/n0N21IQcguh3Uu1g==",
+  "ct": "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",
+  "mac": "PAMl+v1eTwEXxN9mBMQLC+12znZ4X451l/fCOTX/ex0="
+}

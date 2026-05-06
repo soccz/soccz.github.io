@@ -1,74 +1,11 @@
-# 9. 사고 확장
-
-## 9.1 스스로에게 던질 질문 5개
-
-### Q1. "시간 변수를 학습 가능하게 만들면 Theorem 4.1·4.2가 여전히 성립하는가?"
-
-내가 Paper 4에서 $\tau(t)$를 학습 가능 함수로 두면, "Transformer·Neural ODE 포함관계" 증명이 자동으로 유지되는지 비자명. $\tau$가 identity로 학습되어야 ContiFormer가 복원되므로, **학습 시 $\tau$에 identity prior 혹은 regularization이 필요**할 수 있다. 이 질문에 대한 답이 Paper 4의 수학 §의 절반을 차지할 것으로 예상.
-
-### Q2. "ContiFormer의 per-segment ODE reset 구조가 volatility clustering을 어떻게 처리하는가?"
-
-reset은 "새 관측마다 초기화"인데, 관측이 클러스터로 몰리면 reset이 자주 발생하고, 가뭄 구간에서는 ODE가 길게 돈다. 이 비대칭이 volatility clustering 패턴을 대체 표현하는지, 아니면 단지 관측 밀도를 반영하는지 분해가 필요. **Clark의 subordination 관점에서 보면 이 reset 빈도 자체가 $\tau$의 증가율**에 해당할 수도 있다. 흥미로운 동치 가능성.
-
-### Q3. "causal mask + ODE integration의 상호작용은 안전한가?"
-
-causal 모드에서 $\tilde t_i = \min(t, t_i)$인데, 이는 ODE 경로를 $(t_{i-1}, t_i]$ 구간이 아니라 $(t_{i-1}, \tilde t_i]$로 잘라야 정확하다. 구현이 이를 정확히 하고 있는지 확인 필요. 만약 내가 Paper 4에서 **금융 real-time 예측**을 하려면, 이 지점이 information leakage의 원천이 될 수 있다.
-
-### Q4. "왜 Query만 InterpLinear인가?"의 진짜 답은?
-
-저자가 학술적 근거로 제시하지 않았지만, 가능한 실무적 이유는: (a) Query 쪽 ODE를 추가하면 계산 비용 2배, (b) attention의 "관점" 역할을 Query가 해야 하므로 과거 dependency를 주는 건 semantic 중복. **(c)** 가장 중요한 의심: Q에 ODE를 더 했을 때 **실제 실험 결과가 나빴을 것** — negative ablation을 숨기고 있을 수 있다. 내가 직접 실험해 볼 가치.
-
-### Q5. "이 논문의 성공이 'irregular sampling의 어려움이 실은 별 게 아니었다'는 방향으로 해석될 위험은?"
-
-ContiFormer가 거의 모든 데이터셋에서 이긴다는 사실은 "irregular sampling이 그냥 더 복잡한 모델을 넣으면 해결된다"는 반학문적 결론을 유도할 수 있다. 반대로 해석해야 할 지점: **"문제는 특정 도메인에서는 이 수준의 구조로도 해결되지만, 금융처럼 구조 자체가 다른 도메인에서는 다른 해법이 필요하다"** 는 방향. 이것이 Paper 4의 독자 설득 논거.
-
-## 9.2 Follow-up 논문 3편 (선행 1 / 경쟁 1 / 후속 1)
-
-### 선행: Neural CDE (Kidger et al., NeurIPS 2020)
-
-- **왜 선행인가**: Neural CDE는 "입력 경로를 driving path로 쓴다"는 수학적으로 더 우아한 정식화. ContiFormer가 여러 면에서 CDE의 "분산화 + attention 버전"으로 읽힌다.
-- **읽을 때 초점**: $X(t)$ driving path 해석과 ContiFormer의 per-segment ODE의 차이. 둘을 섞어 "CDE + attention"을 만들 수 있을지.
-
-### 경쟁: mTAND (Shukla & Marlin, ICLR 2021)
-
-- **왜 경쟁인가**: 연속시간 attention의 가장 가까운 선행. ContiFormer가 이 논문 대비 **순수 이익**이 얼마나 있는지가 ContiFormer 기여도의 진정한 측정치.
-- **읽을 때 초점**: reference point 기반 continuous attention과 ODE-driven path 기반 continuous attention의 trade-off. 계산 비용 대비 성능의 Pareto 비교.
-
-### 후속: Subordinated ContiFormer · Neural SDE Transformer (내가 쓸 Paper 4 + 후손)
-
-- **왜 후속인가**: ContiFormer의 두 핵심 암묵 가정(결정론·clock time)을 각각 하나씩 풀어가는 후속 연구 축. Paper 4는 clock time 가정을 풀고, 추가 후속은 결정론 가정을 SDE로 푸는 축.
-
-## 9.3 실험해볼 후속 아이디어 2개
-
-### 아이디어 1 — *Q-ODE ContiFormer*
-
-- ContiFormer의 Query도 ODE로 바꾼 symmetric 버전.
-- 기대: 표현력 증가 but 계산 2배, 학습 안정성 감소 가능.
-- 실제 가치: **비대칭 설계의 정당성 증명** (혹은 반박). 이 ablation이 저자 설계의 "정치적" 약점이므로, 공격 · 수비 양쪽에서 활용 가능.
-
-### 아이디어 2 — *Explicit Time-Kernel Attention over ContiFormer*
-
-- attention weight $\alpha_i(t)$의 분모에 명시적 time kernel $K_\sigma(t-t_i)$를 multiplicative로 곱함.
-- 기대: 장기/단기 분리가 명확해져 금융 forecasting 특유의 "최근 이벤트 heavy weight" 편향을 학습 없이 주입.
-- 실제 가치: 단순 수정으로 ContiFormer의 한 축 약점(§6.2 (iii))을 실용적으로 보완. Paper 2에서 "같은 representation이라도 attention weighting 재조정 시 ranking vs absolute의 gap이 어떻게 움직이는가"를 분해하는 재료.
-
-## 9.4 연구 메타 층위 — 이 논문으로부터 얻은 생각
-
-### 글쓰기 관찰
-
-- 본문이 경쾌하게 진행되지만 **한계 논의를 부록에 깊이 숨기는** 패턴. 내 논문 작성 시 **한계를 본문에 정직하게 노출**하는 것이 학문적 품격이고, 장기 인용에 유리.
-
-### 실험 관찰
-
-- "표준 Transformer"만 baseline으로 쓴 것은 2023년 기준 이미 약한 선택. 2026년에 쓰는 내 논문들은 RoPE·ALiBi·FlashAttention 등 **"중강 상대"** 를 반드시 포함해야 한다.
-
-### 커뮤니티 관찰
-
-- ODE·CDE·SDE 계열이 모두 "표현력 증가 + 계산 비용 증가 + 특수 도메인에서 빛남"의 패턴을 반복. 차별화 축은 "어느 도메인의 어느 구조"를 새로 다루느냐. 금융은 이 축에서 **상대적으로 덜 개척된 필드**.
-
-## 9.5 "이 논문을 안 읽었으면 못했을 판단" 목록
-
-1. Paper 4의 Theorem을 "ContiFormer 복원 관계"로 프레임하는 착상. (원 논문을 읽지 않으면 이 프레임 자체가 떠오르지 않음.)
-2. Query만 InterpLinear라는 비대칭이 내 Paper 1의 "어느 path에 conditioning을 주입할지"라는 자유도로 복제된다는 관찰.
-3. per-segment ODE reset 구조가 volatility clustering의 자연 표현일 수 있다는 Q2.
-4. hyperparameter가 데이터셋별 변동한다는 이 논문의 약점을 **내 논문의 단일-hyperparameter robust 설계의 마케팅 포인트**로 전환하는 전략.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "GoiyEiuc7LB/okw04HZ2Gw==",
+  "iv": "J5wLc0V9XTcf5EK2Gz+fjg==",
+  "ct": "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",
+  "mac": "LclPGEBFtKnj6P8fV6Bd5UVxhicb4K0eRoSgiZyOnV4="
+}

@@ -1,30 +1,11 @@
-# 0. 메타 & 선정 이유
-
-## 인용 / 권위
-
-- **인용 수**: 2026-04 시점 약 600+ (Semantic Scholar 직접 접근 차단 상태이지만 Wang et al. 2024, Merrill et al. 2023, Lyle et al. 2025, Doshi 2024 의 인용 그래프에서 must-cite 로 등장하는 빈도로 추정).
-- **저자 권위**:
-  - **Neel Nanda** — 본 논문 당시 Anthropic interpretability 팀 직전. 이후 DeepMind interpretability lead. 메커니즘 해석학 분야의 사실상 표준 교재인 *TransformerLens* 라이브러리·블로그 시리즈("A Comprehensive Mechanistic Interpretability Explainer & Glossary") 의 저자.
-  - **Lawrence Chan** — Anthropic / UC Berkeley. ARC Evals 공동 설립. 본 논문의 ACDC 후속 연구(Conmy et al. 2023) 와 연결된 인물.
-  - **Jacob Steinhardt** — UC Berkeley 조교수, ML safety / 해석학 분야의 핵심 PI. *Forecasting AI* / scaling laws / capability emergence 측 연구.
-  - **Tom Lieberum** — DeepMind, 후속 논문 *Tracr* (compiled transformers) 공동저자.
-- **DOI / venue**: ICLR 2023 poster. OpenReview ID: `9XFSbDPmdW`.
-- **계보 위치**: Power et al. (2022, "Grokking") 이 *현상* 을 발견하고 → 본 논문이 *메커니즘* 을 닫는다. 이후 Merrill et al. (2023), Davies et al. (2023, double descent 통합), Doshi et al. (2024, multi-task grokking) 의 모든 후속 연구가 본 논문의 progress measure 또는 Fourier circuit 가설을 출발점으로 삼는다.
-
-## 선정 이유 (오늘, 2026-04-27)
-
-1. **버킷 적합도**: 월요일 = 코어. 본 논문은 `grokking-delayed-gen` + `mech-interp-circuits` 두 태그를 동시에 cover 하며, `causal-intervention` 와 `training-dynamics` 까지 보조 태그로 닿는다. `_coverage.md` 상 4개 태그 모두 0건이라 **가장 적자가 큰 영역의 단일 진입점**.
-2. **Priority 매칭**: `_index.md` Tier 1 Grokking primary 의 두 번째 항목. 사용자의 Grokking active track 22 must-cite 중 *circuit 분석 측 척추*. (Power 2022 가 "현상 발견" 척추라면, 본 논문은 "메커니즘 설명" 척추.)
-3. **Axis balance**: 최근 3주(4-19 ContiFormer = §D, 4-22 Neural-SDE-GAN = §D, 4-24 Wang Grokked Transformers = §A 응용) 에서 §A 가 한 번, §B (mech interp circuits) 는 0회. 본 논문은 §A + §B 교차점에 정확히 위치 — axis balance 회복.
-4. **사용자 연구 직접 연결**:
-   - **Grokking track**: P2 logistic 4-layer 실험에서 *진행도 측정* 이 핵심 미해결 문제. 본 논문의 restricted/excluded loss 와 Gini sparsity 가 직접 이식 가능.
-   - **APF track**: motif 진행도 — *언제 diagonal stripe 가 형성되었나* — 를 attention pattern 의 frequency 분해로 측정하는 발상은 본 논문 §3 Fourier projection 의 attention map 버전이다. APF Section "motif causality" 실험에서 인용 1순위.
-5. **재현성**: Colab 노트북 공개, p=113 modular addition 은 RTX 3090 1대로 1시간 재현 가능. P2 환경에서 sanity check 용 baseline 으로 활용 가능.
-
-## 무엇을 노리는 해체인가
-
-본 해체는 *논문 요약* 이 아니라:
-- (a) Fourier 회로의 수식을 **유도** 한다 (논문은 사실관계만 적시함). 사용자가 "왜 cos(ω(a+b−c)) 형태가 logit 으로 자연스럽게 나오는지" 를 직접 손계산할 수 있도록.
-- (b) 세 progress measure 가 *서로 다른 무엇을 재는지* 를 분리해 본다.
-- (c) **사용자가 logistic map / TS Transformer 환경에 그대로 옮기지 못하는 부분** 을 명시한다 (본 논문의 가장 큰 한계는 algorithmic data 의존).
-- (d) "circuit cleanup 의 지연" 가설이 TS non-stationarity 와 만났을 때 어떻게 깨질 수 있는지 의심해본다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "ns97z71m/Q14xWZLNXzG0g==",
+  "iv": "c+etYYCuAsFrhwWu3OuuPQ==",
+  "ct": "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",
+  "mac": "PEqUBV5LdYdlElCy0eDqm36ElMm13YVv7DmQHw1vE6o="
+}

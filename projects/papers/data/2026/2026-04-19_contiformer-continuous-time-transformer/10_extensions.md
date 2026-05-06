@@ -1,29 +1,11 @@
-## 9. 사고 확장
-
-### 9.1 스스로에게 던질 질문 5개
-
-1. ContiFormer의 vector field $f_\theta(z, s)$ 에서 $s$ 를 economic time $\tau(s)$ 로 치환했을 때, 표현력 정리(Sec 4) 의 "vanilla attention 회복" 부분이 여전히 성립하는가, 아니면 새 가정이 필요한가?
-2. mTAND vs ContiFormer 격차의 절반 이상이 "ODE-induced smoothing" (= implicit regularizer) 으로 설명된다면, smoothing 강도(tolerance)를 매칭한 fair comparison에서 격차가 사라지는가?
-3. 거래시간 gap을 "휴식 측도"(measure $\nu$ with $\nu([\text{closed hours}]) = 0$) 로 모델링한 ContiFormer는, 동일 wall-clock 데이터를 받은 vanilla ContiFormer보다 **out-of-sample 변동성 예측**에서 실제로 우월한가?
-4. ContiFormer의 attention $\hat\alpha_{ij}(t)$ 가 시간함수라면, 그 함수의 spectral density (Fourier 분해) 는 시장 cycle (intraday seasonality, weekly effect) 과 어떻게 대응하는가? Attention interpretability의 새 레인즈가 될 수 있는가?
-5. NFE budget을 동결한 채 vector field 표현력만 키우면 (deeper $f_\theta$), 학습 안정성은 어디서 무너지는가? Spectral norm penalty가 NFE를 어떻게 통제하는가?
-
-### 9.2 Follow-up 논문 3편
-
-- **선행 (배경)**: Kidger, P. et al. (2020). *Neural Controlled Differential Equations for Irregular Time Series*. NeurIPS 2020. — Neural CDE의 controlled formulation은 ContiFormer의 ODE 임베딩과 자연 결합 가능. Paper 4의 economic-time CDE 변형의 출발점.
-- **경쟁 (대안 노선)**: Schirmer, M. et al. (2022). *Modeling Irregular Time Series with Continuous Recurrent Units*. ICML 2022. — Bayesian Kalman-style continuous recurrence. ContiFormer의 attention 강조와 대비되는 *probabilistic / linear-Gaussian* 노선.
-- **후속 (직계 자손)**: Kidger, P., Foster, J., Li, X., & Lyons, T. (2021). *Neural SDEs as Infinite-Dimensional GANs*. ICML 2021. — ContiFormer의 deterministic ODE를 SDE로 일반화하는 자연 경로. 금융 변동성의 stochastic vol 모델링과 직접 호환.
-
-### 9.3 실험해볼 후속 아이디어 2개
-
-**Idea A — "$\tau$-ContiFormer" 미니 실험 (Paper 4 의 1차 검증)**
-
-KOSPI 200 종목 일중 1분봉을 가져와 두 모델을 같은 budget으로 학습:
-1. Vanilla ContiFormer: ODE 시각 $s$ = 분 단위 wall-clock
-2. $\tau$-ContiFormer: $s$ = 누적 거래량 분위수 (Clark의 economic time 근사)
-
-평가: (a) 다음 1분 변동성 prediction RMSE, (b) 거래량 급증 직후 30분의 attention 집중도 변화. 가설: $\tau$-ContiFormer 가 (a) 에서 5–15% 개선, (b) 에서 더 sharp한 attention spike. 비용: 단일 GPU 1주일 추정. 핵심 control: NFE 매칭, query 시각 매칭.
-
-**Idea B — Attention spectral analysis (Q4 의 직접 검증)**
-
-학습된 ContiFormer 의 $\hat\alpha_{ij}(t)$ 를 $t \in [0, T]$ 로 dense 평가 → 각 (i, j) 쌍마다 시간 함수의 FFT. 합성 데이터 (intraday seasonality 주입) 와 실제 KOSPI에서 dominant frequency 비교. 가설: 학습된 attention의 spectrum이 시장의 known cycle (1-day, 1-week) 과 일치한다면 attention 자체가 *비지도 cycle detector* 로 사용 가능. 비용: GPU 2~3일. 산출: Paper 4 의 *부록 figure* 로 직접 사용 가능.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "dwfPW04CvYbwZPI6wpRDsA==",
+  "iv": "ZX93lDXyl/XVoowOSACZ+Q==",
+  "ct": "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",
+  "mac": "tk/WEnvXXTDmSO6ursXIuRxeiS+uu45dKYy1wp/gWI0="
+}

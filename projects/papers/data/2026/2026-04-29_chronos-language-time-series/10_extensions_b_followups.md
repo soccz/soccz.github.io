@@ -1,31 +1,11 @@
-# 10b. 사고 확장 — Follow-up 논문 3편
-
----
-
-## Follow-up 1 (선행) — "Probabilistic Transformer for Time Series Analysis" (NeurIPS 2021)
-
-**어떤 논문**: NeurIPS 2021에 발표된 확률 예측 Transformer. 시계열을 Gaussian process로 모델링하고, 어텐션 메커니즘으로 시계열 간의 복잡한 시간적 의존성을 포착한다.
-
-**본 논문(Chronos)과의 관계**: Chronos의 이산화 접근에 대한 선행 대안. Probabilistic Transformer는 연속 확률 모델(GP 기반)을 유지하면서 Transformer의 표현력을 활용한다. Chronos가 "이산화로 단순화"한 반면, 이 논문은 "연속 분포로 정밀화"를 택했다.
-
-**무엇을 얻을 수 있는가**: 확률 예측의 두 접근(이산 토큰 vs. 연속 분포)의 트레이드오프를 이해할 수 있다. ProTran-TFA는 이 두 접근의 중간점에 위치할 수 있다 — 금융 수익률의 fat-tail 분포에는 연속 분포가, 파운데이션 모델 재사용에는 이산화가 유리하다. _index.md의 "사전 독파 논문" 섹션에 이미 포함된 논문이다.
-
----
-
-## Follow-up 2 (경쟁) — "Exploring Representations and Interventions in Time Series Foundation Models" (Wilinski et al., ICML 2025)
-
-**어떤 논문**: TS 파운데이션 모델(MOIRAI, Chronos 등 포함 가능)의 내부 표현 공간을 분석하고, 개입(intervention)을 통해 어떤 표현이 예측에 기여하는지를 실험한다.
-
-**본 논문(Chronos)과의 관계**: Chronos를 분석 대상으로 하는 해석론 후속 연구. APF의 어텐션 패턴 분석과 상호 보완적 — Wilinski는 "표현 공간"에서, APF는 "어텐션 공간"에서 같은 현상을 봄.
-
-**무엇을 얻을 수 있는가**: Chronos의 인코더 표현이 어떤 TS 특성(추세, 계절성, 불규칙성)을 분리해 인코딩하는지에 대한 실증적 증거를 얻을 수 있다. APF 논문 Related Work에서 이 논문을 "표현 공간 분석"으로 인용하고, APF를 "어텐션 공간 분석"으로 차별화하는 데 사용 가능. _index.md 우선 읽기 목록의 "APF — TSFM Interpretability" 섹션 항목이다.
-
----
-
-## Follow-up 3 (후속) — "Chronos-2: From Univariate to Universal Forecasting" (arXiv:2510.15821, 2025)
-
-**어떤 논문**: Chronos의 단변량 한계를 극복한 직접 후속작. 그룹 어텐션(Group Attention) 레이어를 인코더에 추가해 여러 관련 시계열 간의 정보 공유를 가능하게 한다. 다변량 + 공변량(covariate) 지원.
-
-**본 논문(Chronos)과의 관계**: 동일 저자군(Amazon)의 직접 확장. Chronos의 핵심 설계(mean-scaling, bin quantization, T5)를 유지하면서 그룹 어텐션만 추가.
-
-**무엇을 얻을 수 있는가**: (1) 그룹 어텐션이 어떤 어텐션 패턴을 형성하는지 — APF에서 "관련 시계열 간의 Cross-Series Attention 패턴"이라는 새로운 분석 차원이 열린다. (2) 다변량 TS를 처리하는 Transformer의 채널 간 어텐션 패턴 — iTransformer가 "역전된 채널 어텐션"을 사용하는 것과 비교 가능. (3) Grokking track에서: 단변량 → 다변량 전환 학습 시 훈련 동학 변화가 있는가?
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "ZdQl8NgNJeNM142qah7M+Q==",
+  "iv": "aTkAD5yZ5WXuMULn2CI7OA==",
+  "ct": "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",
+  "mac": "iXtNk/EB8hv1tz+gGfL3bMsNpaIg1KrhY6lYKqr9lGM="
+}

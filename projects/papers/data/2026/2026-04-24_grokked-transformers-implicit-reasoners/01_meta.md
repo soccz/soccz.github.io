@@ -1,33 +1,11 @@
-# 01 — 메타 & 선정 이유
-
-## 서지 정보
-
-| 항목 | 내용 |
-|------|------|
-| **arXiv** | 2405.15071 (초고 2024-05-24, v2 이후 NeurIPS 최종본) |
-| **발표처** | NeurIPS 2024 (Poster) |
-| **인용 수** | Semantic Scholar 기준 ~50회 이상 (2025년 초 기준, 신흥 급성장 논문) |
-| **코드·데이터** | 공개 (github.com/OSU-NLP-Group/GrokkedTransformer), 데이터 생성 노트북 포함 |
-
-## 저자 배경
-
-- **Boshi Wang** (제1저자, OSU NLP PhD student): NLP 추론 및 LLM 이해 전공. OSU NLP Group의 핵심 박사과정.
-- **Xiang Yue** (공동 제1저자): MMMU 벤치마크 등 다중모달 평가로 유명.
-- **Yu Su** (공동 교신): OSU NLP Group 교수, knowledge-grounded NLP의 권위자.
-- **Huan Sun** (교신): OSU CSE 교수, 지식 기반 AI 및 NLP 추론 다수 NeurIPS/EMNLP 발표.
-
-OSU NLP Group은 KnowledgeBase QA, 다중 홉 추론, LLM 평가 분야에서 꾸준히 top-venue 논문을 내는 연구실이다.
-
-## 선정 이유
-
-**왜 지금, 이 논문인가?**
-
-사용자는 2026-04-22 저녁에 "Grokking in Time Series Transformers" 트랙을 시작했다. 이 논문은 그 트랙의 **이론적 토대**를 제공하는 동시에, 세 가지 즉각적 가치를 갖는다:
-
-1. **메커니즘 근거**: "왜 grokking이 필요한가"를 단순 관찰이 아닌, 두 회로(Cₘₑₘ vs Cᵍᵉⁿ)의 경쟁 메커니즘으로 설명한다. Grokking track 논문의 Related Work / Motivation 섹션을 직접 보강한다.
-
-2. **태스크 전이 신호**: 이 논문은 알고리즘 태스크(합성 knowledge graph)에서의 grokking을 다루지만, composition·comparison 구분이 시계열 예측의 "패턴 조합 vs 임계값 비교" 구조와 구조적으로 유사하다. `_profile.md` §B·§C 교차지점.
-
-3. **아키텍처 교훈**: cross-layer 지식 공유(parameter sharing) 실험이 EOA의 순환적 attention 설계와 직접 비교 가능한 시사점을 제공한다. `_profile.md` §A.
-
-**원거리 버킷이지만 전이 가능성**: 이 논문은 `algorithmic-grok` 태그지만 사용자의 Grokking axis (§B)에 코어 수준으로 직결된다. 금요일 원거리 버킷의 "전이 가능성 탐색" 의무를 충분히 이행한다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "lVZc+zfJ2fKZFzidG/owXA==",
+  "iv": "pluFjUda+zQMoD7yBACxRw==",
+  "ct": "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",
+  "mac": "ugPvOxPMjd9IfKmOern2Z/u888qW9shFjddpcauL0dY="
+}

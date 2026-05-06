@@ -1,42 +1,11 @@
-# Progress Measures for Grokking via Mechanistic Interpretability
-
-> 메커니즘 해석으로 그로킹의 진행도를 재는 법
-
-## 메타
-
-- **원문 제목**: Progress Measures for Grokking via Mechanistic Interpretability
-- **한국어 번역**: 메커니즘 해석으로 측정하는 그로킹 진행도
-- **저자**: Neel Nanda · Lawrence Chan · Tom Lieberum · Jess Smith · Jacob Steinhardt
-- **소속**: Independent · Anthropic / UC Berkeley · DeepMind · UC Berkeley
-- **발표처**: ICLR 2023 (poster)
-- **arXiv ID**: [2301.05217](https://arxiv.org/abs/2301.05217) (제출 2023-01-12)
-- **태그(주)**: `mech-interp-circuits` / `grokking-delayed-gen`
-- **태그(보조)**: `causal-intervention` / `training-dynamics`
-- **코드·데이터**: 공개. 저자 블로그 + Colab 노트북, 별도 GitHub 레포 (`mechanistic-interpretability/grokking`) 으로 reproduction 사례 다수.
-- **본문 접근 상태(2026-04-27)**: arXiv abs / pdf / html / ar5iv / alphaxiv / Semantic Scholar / OpenReview 7개 소스 모두 403 차단. 본 해체는 **(a) 공개 abstract·인용·후속 연구(Wang 2024, Merrill 2023, Lyle 2025)에서 직접 인용된 결과**, **(b) 사용자가 사전 보유한 Power 2022 / Liu 2022 등 인접 문헌 사실관계**, **(c) 1-layer attention transformer 의 Fourier modular-addition 회로에 대한 표준 수식 유도** 위에서 작성됐다. 추정 부분은 §5·§6에 명시.
-
-## 한 줄 판결
-
-> "Grokking 은 generalization 의 지연이 아니라 circuit cleanup 의 지연이다 — 그리고 진행도는 회로의 Fourier sparsity 로 직접 잴 수 있다." Grokking active track 의 **이론 척추** 논문이며, APF 가 motif 진행도를 측정할 때 베껴야 할 *progress measure* 의 원형이다.
-
-## 목차
-
-- `00_README.md` — 본 페이지
-- `01_meta.md` — 0. 메타 & 선정 이유
-- `02_tldr.md` — 1. 3층 TL;DR
-- `03_problem.md` — 2. 문제 지형도
-- `04_claims_a_circuit.md` — 3. Claim 1 (Fourier 회로의 발견)
-- `04_claims_b_progress.md` — 3. Claim 2~3 (Progress measure & 3단계 동학)
-- `05_method_a_intuition.md` — 4. 방법론 ① 큰 그림
-- `05_method_b_modadd.md` — 4. 방법론 ② Modular addition setup
-- `05_method_c_fourier_circuit.md` — 4. 방법론 ③ Fourier 회로 수식
-- `05_method_d_progress_measures.md` — 4. 방법론 ④ 세 progress measure
-- `05_method_e_implementation.md` — 4. 방법론 ⑤ 구현 디테일
-- `06_experiments.md` — 5. 실험 해부
-- `07_limits.md` — 6. 가정·한계·반박
-- `08_lineage.md` — 7. 이론적 계보
-- `09_my_research.md` — 8. 내 연구와의 연결 (APF + Grokking track)
-- `10_extensions_a_questions.md` — 9. 자문 질문 5개
-- `10_extensions_b_followups.md` — 9. Follow-up 3편
-- `10_extensions_c_ideas.md` — 9. 후속 실험 아이디어 2개
-- `11_verdict.md` — 10. 한 줄 판결
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "tPhnKFZGgK0DY5/eY4cJ8w==",
+  "iv": "SfMr89DqCdS7qlCwwsIQCg==",
+  "ct": "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",
+  "mac": "SkNXv9LuKfwvvVvy9kxhx8KThZP4rcyc1xaW82wGlso="
+}

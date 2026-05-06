@@ -1,69 +1,11 @@
-# 09. 내 연구와의 연결
-
-> **이 섹션은 `_profile.md`의 §A~F와 보유 자산(APF, Grokking)을 기준으로 작성한다. 일반론 금지 — 구체적 mechanism/axis/수식 연결만.**
-
----
-
-## §C + §D — APF (Attention Pattern Fields): 핵심 연결
-
-### 연결 1: 2D 어텐션 모티프 분류 체계의 '역전 축' 비교군
-
-APF 연구의 핵심 주장은 "TS 트랜스포머의 T×T 어텐션 맵에 대각선/블록/스트라이프/엣지/스파이크/체커 패턴 등의 2D 모티프가 존재하며, 이 모티프가 예측 성능에 인과적으로 기여한다"는 것이다.
-
-iTransformer는 이 주장에 직접적 도전 질문을 제기한다:
-
-> **"T×T 모티프를 완전히 포기하고 N×N 어텐션으로 대체했더니 SOTA를 달성했다 — 그렇다면 T×T 모티프의 예측 기여는 과대평가된 것인가?"**
-
-APF 논문의 Discussion 또는 Related Work 섹션에서 iTransformer를 인용하며 이 질문에 답해야 한다. 가능한 두 가지 답:
-
-- **답 A (APF 지지)**: iTransformer가 잘 작동하는 이유는 "변수 상관 포착"이지, T×T 모티프가 쓸모없기 때문이 아니다. 단변량 또는 저변수 TS에서는 T×T 모티프가 여전히 중요하다.
-- **답 B (APF 수정)**: T×T 모티프의 기여가 실제로는 N×N 어텐션으로 대체 가능하다. 따라서 APF는 "T×T 모티프가 언제 필수이고 언제 부차적인가"를 조건부로 논의해야 한다.
-
-**구체적 인용 초안**: APF 논문 §3(Motif Causality) 말미에:
-> "이 분석은 T×T 어텐션 맵의 모티프가 예측에 인과적으로 기여함을 보인다. 단, Liu et al. [iTransformer, ICLR 2024]는 어텐션 축을 변수 방향(N×N)으로 전환함으로써 T×T 모티프 없이도 SOTA를 달성한다. 이는 T×T 모티프가 예측에 충분조건이 아님을 시사하며, 우리의 framework를 단변량·소변수 TS로 적용 범위를 명확히 한정하는 계기가 된다."
-
-### 연결 2: PE 실험과의 관련성
-
-APF에서 NoPE/Sinusoidal/RoPE/ALiBi에 따른 T×T 어텐션 모티프 차이를 분석한다. iTransformer는 위치 임베딩이 없다(불필요하다고 주장). 이는 "위치 임베딩이 T×T 모티프를 어떻게 형성하는가"라는 APF 질문의 대조군이 된다:
-
-> APF 실험 확장 아이디어: "PE 없는 iTransformer의 N×N 어텐션 맵 모티프 분류" — 이것이 T×T 모티프 분류와 어떻게 다른가? 블록/클러스터 패턴이 N×N에서도 나타나는가, 아니면 전혀 다른 모티프 체계가 필요한가?
-
----
-
-## §A + §B — Grokking 트랙: FFN 회로 분석
-
-### 연결 3: FFN이 시간 패턴을 학습한다 — 어떤 회로로?
-
-iTransformer Claim 2는 "FFN이 각 변수의 시간 패턴을 학습한다"고 주장한다. 그러나 이것이 어떤 내부 회로로 구현되는지 분석하지 않는다.
-
-Grokking 연구에서 우리는 "FFN이 주기 패턴을 어떻게 암기→일반화하는가"를 추적한다 (Nanda 2023의 modular arithmetic에서 Fourier feature 형성과 유사). iTransformer에 Grokking 분석을 적용하면:
-
-- 훈련 초기: FFN이 $T$개 시간 점의 단순 가중 평균을 학습? (암기 단계)
-- Grokking 이후: 주기적 구조를 내재화한 회로가 형성? (일반화 단계)
-- 테스트: iTransformer를 ETT(계절성 있는 TS)에서 훈련 시 Grokking이 나타나는가? 나타난다면 어느 레이어, 어느 헤드에서?
-
-**보유 자산 활용**: Grokking 프로젝트의 synthetic periodic TS 데이터를 iTransformer에도 적용해 비교 실험. 표준 트랜스포머(T×T)와 iTransformer(N×N)에서 Grokking 발생 시점, 회로 형성 방식이 달라지는가?
-
----
-
-## §E — P1 ProTran-TFA: 금융 응용 연결
-
-iTransformer의 N×N 어텐션이 변수(자산) 간 상관을 학습한다는 것은 포트폴리오 맥락에서 직접적 응용이 가능하다:
-
-- ProTran-TFA는 확률적 예측 Transformer를 금융 시계열에 적용. 현재 채널 독립(channel-independent) 방식.
-- iTransformer의 N×N 어텐션을 ProTran에 통합하면 "자산 간 상관을 반영한 확률적 예측"이 가능해진다.
-- 구체적: ProTran의 인코더를 iTransformer 블록으로 대체하되, 디코더(확률 분포 출력)는 그대로 유지하는 하이브리드.
-
-**현실적 제약**: ProTran-TFA는 현재 ⏸️ Paused 상태. iTransformer와의 결합은 재개 시점의 첫 실험 방향으로 검토 가능.
-
----
-
-## 연결이 약한 부분 — 솔직한 평가
-
-§F(원거리: SAE, 점과정, 딥헤징) 와의 연결은 매우 약하다. iTransformer는 TS 예측 기법이며, 원거리 영역의 특수 문제(이벤트 시퀀스, 옵션 헤징)와 직접 연결되지 않는다. 전이 가능성: "희소 어텐션 → SAE(Sparse Autoencoder)와 희소 행렬 분해의 관계" 정도지만, 이것도 억지스럽다.
-
-**종합 연결 강도**:
-- APF (§C): ⬛⬛⬛⬛⬜ (매우 강)
-- Grokking (§A/§B): ⬛⬛⬛⬜⬜ (강)
-- ProTran-TFA (§E): ⬛⬛⬜⬜⬜ (중간, 재개 시 활용 가능)
-- 원거리 §F: ⬛⬜⬜⬜⬜ (약)
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "ws8t1QEwM4iCk/rinI13mA==",
+  "iv": "Gx5rDKo2G8cU/uCY6jtJOw==",
+  "ct": "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",
+  "mac": "aJkuUuDul3gYmeA3Z6YjjBTd759q10au7kT3rnrBiug="
+}

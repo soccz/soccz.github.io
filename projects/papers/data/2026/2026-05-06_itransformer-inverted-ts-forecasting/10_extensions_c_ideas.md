@@ -1,89 +1,11 @@
-# 10-C. 사고 확장 — 실험 아이디어 2개
-
----
-
-## 아이디어 1: iTransformer vs 표준 Transformer — N×N 어텐션 모티프 분류 비교 실험
-
-### 가설
-
-iTransformer의 N×N 어텐션 맵은 APF의 T×T 모티프 분류 체계(대각선/블록/스트라이프/스파이크/체커)와 구조적으로 다른 패턴 체계를 형성한다. 특히 N×N 맵은 "변수 클러스터 블록 패턴"이 지배적이며, 이 패턴은 데이터의 도메인 구조(지리적 그룹, 계절 동기화 등)를 반영한다.
-
-### 데이터
-
-- APF의 기존 synthetic motif benchmark (trend/seasonal/regime/anomaly/freq drift 포함)
-- ECL (321 변수, 실제 전력 데이터, 지역 그룹 구조 알려짐)
-- Weather (21 변수, 소규모, 기상 변수 간 물리적 상관 명확)
-
-### 비교 조건
-
-| 조건 | 모델 | 어텐션 맵 크기 |
-|------|------|--------------|
-| A | 표준 Transformer | T×T |
-| B | iTransformer | N×N |
-| C | Crossformer | T×T + N×N (각각) |
-
-### 실험 절차
-
-1. APF 기존 코드의 `motif_classifier.py`를 수정해 N×N 어텐션 맵도 입력받을 수 있게 확장
-2. 각 모델을 동일 데이터로 훈련 후, 각 레이어·헤드의 어텐션 맵을 추출
-3. T×T 맵: 기존 APF 분류기로 {대각선/블록/스트라이프/스파이크/체커/엣지} 분류
-4. N×N 맵: 동일 분류기 + 추가 카테고리("클러스터 블록") 적용
-5. 데이터셋별, 레이어별 모티프 분포 비교
-
-### 예상 결과
-
-- ECL: N×N 맵에서 블록 클러스터 패턴 지배적 (전력망 지역 그룹 반영)
-- Weather: N×N 맵에서 전체 밀집 패턴 (기상 변수 간 전반적 상관)
-- T×T 맵: 대각선/스트라이프 패턴 지배적 (시간 인접성 반영)
-
-### 반증 조건
-
-N×N 맵에서도 T×T와 동일한 모티프 분포가 나타나면 "축 선택과 무관하게 동일한 기하학적 구조"라는 주장이 성립 → APF 분류 체계의 축 독립성을 지지.
-
-### 비용 추정
-
-- 코드 수정: 1~2일 (기존 APF 코드 기반)
-- 훈련 실험: GPU 3~5일 (ECL, Weather 기준 iTransformer 훈련 10 epoch × 3 seeds)
-- 분석 및 시각화: 2~3일
-- **총 1.5~2주, 논문 Figure 1개 생산 가능**
-
----
-
-## 아이디어 2: "변수 상관 강도 $\bar{\rho}$가 낮은 금융 TS에서의 iTransformer 성능 한계 분석"
-
-### 가설
-
-iTransformer의 N×N 어텐션은 변수 간 상관이 강할수록($\bar{\rho}$ 높을수록) 유리하고, 상관이 약할수록($\bar{\rho}$ 낮을수록) DLinear 또는 채널 독립 모델(PatchTST)에 미치지 못한다. 금융 TS(주가 수익률, $\bar{\rho} \approx 0.1$)는 후자에 해당한다.
-
-### 데이터
-
-- **강한 상관 ($\bar{\rho}$ 높음)**: ECL(전력, 동일 지역 부하 간 높은 상관), Weather(기상 변수)
-- **중간 상관**: ETT(변압기 데이터)
-- **약한 상관 ($\bar{\rho}$ 낮음)**: Ken French 25 포트폴리오 수익률, GSPC/IXIC 섹터 ETF 10~30개
-- **생성 데이터**: $\bar{\rho}$를 0.0~0.9로 조절한 합성 다변량 TS (VAR 모델로 생성)
-
-### 비교 조건
-
-- iTransformer vs PatchTST(채널 독립) vs DLinear 를 각 $\bar{\rho}$ 구간에서 비교
-
-### 실험 절차
-
-1. 데이터셋별 $\bar{\rho}$ 계산 (훈련 셋 기준 Pearson 상관계수 절대값 평균)
-2. 각 모델을 동일 조건(lookback 96, horizon 24)으로 훈련
-3. MSE, MAE 기록
-4. $\bar{\rho}$ vs (iTransformer MSE - DLinear MSE) 산점도 작성
-
-### 예상 결과
-
-선형 관계: $\bar{\rho}$가 높을수록 iTransformer 이득 커짐. $\bar{\rho} < 0.2$ 구간에서 iTransformer = DLinear 수준 또는 열등.
-
-### 반증 조건
-
-$\bar{\rho}$와 무관하게 iTransformer가 항상 우월하다면 — N×N 어텐션의 이점이 "변수 상관 포착"이 아닌 다른 메커니즘(예: 더 큰 효과적 표현 차원)에서 비롯되는 것이다.
-
-### 비용 추정
-
-- 합성 데이터 생성: 0.5일
-- 실험 실행: GPU 2~3일 (소규모 데이터셋, 빠른 실험)
-- 분석 및 시각화: 1~2일
-- **총 1주 내, P1 ProTran-TFA 재개 시 "iTransformer 기반 금융 채널 어텐션"의 유효성을 미리 검증하는 파일럿 실험으로 활용 가능**
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "vvNDANXhqhOdq05AT7IwkQ==",
+  "iv": "G1WcWyAgpxdHi0sihctzjg==",
+  "ct": "hfpKFpftk540JB+PESx2E3aeWVo+2XMVQdcD8d9s4KigYd0RK/TT4ssP5K0bzVVPEv1m36V4rak4hyADlnAlPrFB9GwnNEnPdNkUECwAuH/oKp4LwvXbKKguMZQqD1kU43Qqg0eQuUReU6PT/VIlq0eYbDj3MwnIKej9hrB2lQsnCBtf8G8iPq0K2FJomD3Szay3vxbS2drwr8y7S4qSAQxzVTu6tB3fIdTLNbybymLBCC6DB+vRtcaZO8lOpRCDgSuFSF0co2LNoxs9V8FDJa50juEb22YlWQXpZ5GRiy2YqXdswgJ5ho9zCBA76apYPma4QQ3IutEDFxI8RU0ThqJ7feYlpnPfh2O6lD+vQxhQ1SW//bw8VQKEYekAPV4r5Mbsh/9jvmokxm8glpAPnK/E6dOOaQhDY9G+QYdh5i7HVOrJN3p2MFjClqE7E0gsjXQhweUJW1i1raw1s1of6D9dHwwVgzc5ukRb7Q8bLjb39F/Mv9geh314nWY4QthaW0iI5I5EHgEeIA1vwaJl+EknRxgfR0RbzBiw3gcHpOgpI7o5WEn6KjTpj/lEsyFXW64inT6dEB3Hx29+0MCeJktO4hCwHTeIdrcT1eoUoiPgMcBRbgqAunnirUXZwS7ps2d4eq9qJlRRmtkGycxm8P1BG/0OAscIr2pWMUJuLIoEQqaKGhTZ3Kq1OqjnmAoBdH8lvKzK/Cdk7XZjuYlyIrzAFnekEZGNYrImwKEomTpGG8gUG82HFVwoZnq7YPlPjLlfM3nP/1wig1GVHuDrV6P1TP2m6sQkudXWX3E22YDin1S6H0pAJO8hC8+f6VhZW1grAxak6DgCbeXKDLScNFrFyNAqI22fV1XHcxEIEk/Bec6CwNseHm37mrAioCuuKSeJzuwTpqq44wAeAfivMfn1aaMigeS17B7Ru1Kc/2fmkQM+ErCPqzkPGqU6q4wDRwf7XMZ7bHaG50Vyds8/AdcK4M5Pk7O3okVGzy/6myAEuGwHDiLX2KGPTM4V/5OegUOwP5apMAU6RjZWLBxBVG0BkQ3oMjhP6RZvCQVG4ENd9pCUZLzFoEzoMyFUKOJLdAWv+OSQ7M78NXUKzEIGj3U6nPLbYoj618x8XdaefX/jZmJSlT1tSlqid+wXI1hL+KjSub0rMHt2IBTWXf+1TYQ8fA/YQvSZ7enNp0CDwDoCS48Ji0IyLBl1rLQMnAfOtbXfe+EFIu7xQLZw18unqO5LjHzoDm4y4gmo7JJGVPodfSfZPKeP9j8dwqsUw9351ghEpE7XoUVF3+MbBcehliY5PBJNcgg3bz1CGU2md8Oi8NVH4Vj/FMDYOhFyiGZ1PGjwZCrVaFmioVm2jSCxJWmBzIVdjjzDP19aFW5/nVRJCRd3F5asspygSBS3ElUEQi6WKyy2b/3mCqqh0PYkOxKzs8t909BH06m2rrg9bVzgdzXD2VU+4kgBT2wzEis1dD2dB8wGvhvD0ed3MeDkQpjlZLjk/0Umtefq2AHlFq3vEuAEW6ynuLzBWb+6UCn7JYy/mO68FZU29TaHgB2AaprvMz8kwTT6o4S3og/jL2OYuOW8VRmE0f00KPDv01BgEk7RiT/TFNLR0Z2jxwGDR9ItOOrBATSdPThu8hkHyxPh1anxd3bHbXS7RMZonpiIYWKUhQtM+h+0jvX4v6UvqfJH3DIRJEy7BCWw/RExzKMAx8ZcY9tiuIwJ/M+eVo2xWmJxwARyHXk6nbTaW1+PAA7ts7YwkGJ4dh1XcqFD7Buo1zQlGCS2x/Ye4vBwPjjf5sWOMr0q6ESePB2nONz4Mi1f3TcceUwoxhtnNor/wzrENJzAizR7+LuhptwYtDHaXt6NtCSJ0y71jjcUvQZsWnC/3Rel+tNkQp+UkSJkCSmJLx3hjYyEKmeYLzB9zsH1YlOF2SqShnuRoNcRTGr4xJbeQOWLroGPfWDtTzGN3X8roqouvF5e8WbSgc/WNIkhqf9qIQ8QNu/uujvZO/xMu2zjCJHUX+Q5mAHsYyWyw4H9R7DiHI9NxsquqawdPUCl76J3nBJ1an/DRni+C3b+b/K6/98bQVHt3yghWP+SDCSxRevxu0LOEnT4kLqWetNhZR/i70kpjdONHLy3N0vWKgTlwpopxkzBSDl2A+HWzQu6mCtPB2JNGsyL+ucRypnYDksKFXolQyb5OW066rz4sRVUBZDWU5oIwL5WzLY5xFE66nTdKHbhIP947YKVK41NVNnDzXIQrUEP7AsyXwPvlEgeH7yXathCzafN2QNs5Zs8LZjMhpvKBki8RloloNa4g9o7MXpNTunuBq6kR9/O6Fh/NavVmzrwWTpz95lRMHCzQ14vAtoilCDFQhjCPsHZTIJYiPtUSepRmu3yPXGewVdCwjf/11lt1EQcg/yODGVABE8x5kLibHjyJezwsqfr12KteCaBd2OyJQGG8+EkSG4vSuCvPK5Ddvd6gluQHKActIyhinrIVT3o1CPTUlu3egI07YWubNAlX58PK040hH98uRYc0LxaOTNUe+0Uqkx9qYSrkEa8+65BL5BDB9YK9fQuBT1IA8GaNaUwP7HBu3c0DGJMYiDhuvEu2IveLekhc9ftdVqJEU7OgUyGNt5EjdeEJ8sPzwv3HS5fco1b7G/lqXjMBEJT71vD2ar+o0Kmgh+IPesJTx8Z11rzeMchAlrTXRDeZw3+QBJyakWxGx0JxiRdl/8rVOt8qN4Otj+6kCWj9x2D9sXIKT9WuyWV1zAZ9h+h89Gnj9U7qdu7A3n6QRg2rFNbRrpO5bdLwO5gGouk/4fODzgaTn81aqsSv11YdLUN38lJ7rPyDvdA8WInwOZCaFp7IJTe3gxXt0qQ7Rm4O5L1TUidl1U6JvFHUu+qSbv4zq1oWS3ipPjpafSeWLpgiyVMcz/PfDX9xUYRbIPqbJQgkdAK8XhmhEm2A9QXodRxx7jXfXe5Z1SNOVtBmtT5SasV3WjHe3gf6A1q+oV7CpF6AXrseyRj3PUrLE5X8SX4N70aPJwNlJmBs84q370dULAu/xdfKxihxbELVjrb1iUN0dlFjSWEWBtLUS++KaNRanyis+aIwhkXBqyML7rN+ByZkA5lq8YDeFe+QanrnjmGKP7aaT3li2uTiK7V2zdtYhfo4pOGBSBFlHrIjnvSk6tHgENua0coLgZD4/kQbM+gljTYKntMIh2V4iAO+YjPWPI7VGrtTjh+BpHZX86J4fa+A5rsoHEgRWXUJ6+CMsPC9l00nENoylPP/qMti2ggCm9TXaV9tK3odBgmL2za9Nep0exkSytvZHxUw/DbvnEaePsNb5wKWJ/ML/2DX9LxZj7GPKVPns9CA0z48uhDIIHGc1LU4tE/RXcLUyLGVqw2BweRvDML20yax7iMdQjnM+R/0VXY0FbkbDMabTpSU0SJvZLyJhhxucaBk4piB7JZkePca8J8NtZsMrqJw85irtc+GZzk6SDnG77hncQmyhF1PdOxLPJbGfMBEnD/YZqYzia5qlfFSLdzZdCNestclopNJXW9r5+n3wgZH1+bjtlP4vMvJpjnJJ3Qp/06JMeqn6xZM/LrNEIdPfzfPThFaNiKdCGtPAwl5x8DwYA4yADaaCovf8ZKhiHOB6mglmteIcQ7iQaLZKt4lwYS4Bn+fKCYuIHsjemoY1RnNxR/Ihl8BtsGYIj9a2kSCtZMHLFg0svOjUvTeGAKj/iHiHvLuhWuW1CVByTei9y7UfOeCQsN2HPrFQ0zX8KVU2Z78GcwrwFq3UG3mWZ1KEXzkVkw1/ddoCtZNnAJQY8JfOih2meYbxYTOBtLjNJTW2RzEt2YnxVC9rRpFzxV8xyLixNfIxL3jVQnZHndtJgoTD04O/298uxxvs5OoYkwZXedVNmMcZKaI5AKk7BJySk4OKgXPDcvioLkwQSewmdFy/eVRPJu0ePzccCjTYsJR6nJycNCfWTtHRp2C4qhlUGCmBXG8ub1EHEGE9E+n2arfYCsvALA1r714n92flrGs0+Ga5ICQ0QA42Y/exxPIfg1MYFFhjIjupYnBhZ3oj5DU9AT36U7OWdU8Jl8g+GKcyjH1erKQyVqk93qS6t/DfW++QJK5tVgDOtQv1nzJgW4VUak8JaRtvF7dCgxuBsEs0FGQXIU3qOhC9CT2PvArfRj7CrT+u3dxfeaxXFsoeIfgzbvHmfLlE6QyGHvO6cqC6Olyq8EApiUW7Va+zsJQGrb/tHFf/M4cpkkYkbYHoUXkMD+I1fz1ziXSTChhiIEH4ft3ydx4xDoop1UVoc9g0PoTVAQJ6nsHIJMyrTi+U85S/rkcQPUsJ0woIeXBZWLF2YCQhLO2PQfKHuF+AFRDsGPQQjOj4RNm0xzE241BwONUVtleC1kOUsq7Euj9upYNSrJvehoF0shG1xpsGp1V5wViuLI94X/H0R4hTdBNmSSAsvrK5hrIM74la4BmwSiKMoXadUNJ0/d2LDAxh2hwiWrZX1vpWHe632vyXoYjG8JrPjIATl9+YJEXRF0D0ZFwxd9DA71BPolnYMneKBZcBhdabRimhJHmiU2uqeP1jvO36dFt1cBEAKyEOuhjyrhV9uM65vEb4GO09FKvpK1kj2A9TROltDWEcw4/wOfaCAbHUjqL7Vv+EjSO4V38z3Ln2kLpnd1k5BXTJ5U1FVwxrm0UuPX5UKxGcnnhc7ZExklqj1dBL6K9/kE//xjTPHAZoqgYkqykBx4KHkJKGI1V177LIPf7o2aXvkb0RwHGKKZPMQ3LMLWRuFqeXQgHqet0PEJS2pRcLaymr15M4WiB2+Ktl0kq3mhx0uLGusKsuxufcggz7O2w6L/Czh2AN15AUwWpUUHXnYqSzy0KlOcUCaDzLP+48nv6C84fm/GjTKott8b0Y69iSC38pHNpGb95GcEGi8InC7W3CCTOTt+s5NGjqgZMkxq8ewIyf6wXNBCiz6vfzN/dymvTtXpK4EBcJJd0ehQR63mVrozO1JNpYEsoz3OosR3Vvs26YLIzQ28dna0GuK+ymt4F7v9HCOqI6+5afPSbEAI3/GKag8eLXZGnZ6NdhGQE7tYTN2GkSLW1rPBCV33NhNBxedCYtc18dASMAcxYat2tH+Xt+YblerY1eG/j9j582YKlwwyY1IGOMlIApq2xgv31KMSNoOTeUo2DxXQ3xJE1exqVoP7mCkj+Xr8lyziq1ckekOvQnSreAoMxl9vP1y5VHxNp47W+ilXha5h4VAODixBKlo8JC9A0ePBI3T+ctneodX4uBHjdThB4YJFAbEKcrkFEeh/v6B9ZH3bbQSl76ZO4UDMc80WEy/8nN5h3VPUABiy2V42MuM2nlHwBekYllEgKxPwAyw5BZKDn+5S23ogXOUa6UJ9zsBqCoKRL2nn3b1gbIPhjLEgg8yu1Gg+sUlcqmYcA1qfHgrWcuFLm6QbVhYnT6DPtL9Iv9KP5U5HiQ4xNFhXmOW085UkIiUO9qq+TNetRWAbzAZBv4rUhqXIEWKu4MMk0jLZyQ6QFDGWP8Uw4ptmGDHtJn4Ut/vrZ1v06hH3DnJCt9JrJmUgZPoRgQ+N",
+  "mac": "txhrZ1z97gk/8WrHeFzt8Ktsja+dCAIkyBDEEJE69IE="
+}

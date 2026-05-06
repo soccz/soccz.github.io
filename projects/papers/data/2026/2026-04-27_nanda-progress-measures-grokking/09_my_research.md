@@ -1,103 +1,11 @@
-# 8. 내 연구와의 연결
-
-> 일반론 금지. 사용자의 *active 두 track* (APF + Grokking) 에 어떤 수식 / 발상 / 측정 도구를 *어떤 섹션* 에 *어떤 문장 형태* 로 흡수할지를 구체로 명시.
-
-## 8.1 Grokking active track 과의 연결 (직접 — § Primary)
-
-### 8.1.A 흡수할 기법: Progress measure 의 *TS Transformer 이식*
-
-**원본**: Nanda 의 $\mathcal{L}_{\text{res}}$, $\mathcal{L}_{\text{exc}}$, Gini-on-Fourier — 모두 *modular addition* 의 cyclic group character 위에서 정의.
-
-**이식 방법**: 사용자의 P2 logistic 4-layer 실험에서, *logistic map* $x_{t+1} = r x_t (1-x_t)$ 의 동학을 학습한 transformer 에서 다음 변형 measure 정의:
-
-1. **Restricted loss for periodic regime**: logistic map 이 $r < 3.57$ (chaos 임계값) 에서 *periodic orbit* (period $2^n$) 을 가짐. 학습된 transformer 의 output 을 *period 의 Fourier component* 로 projection. 이 restricted loss 가 학습 중 단조 감소하는지 측정.
-2. **Excluded loss for chaos regime**: $r > 3.57$ 의 chaotic regime 에서는 spectrum 이 broadband. *low-frequency component 만* projection 한 excluded loss 측정 — chaos regime 에서 모델이 high-frequency 정보를 사용하는 양상 추적.
-3. **Gini on Fourier-decomposed weight matrices**: 학습된 transformer 의 $W_E$ 및 attention $W_Q, W_K$ 의 *temporal axis 의 Fourier 분해* 의 Gini.
-
-**구체 인용 위치**: `Grokking in Time Series Transformers/PAPER_DRAFT.md` 의 §3.2 (Method) 에 다음 형태로 인용:
-
-> "Nanda et al. (2023) define three progress measures for tracking circuit formation in algorithmic transformers: restricted loss, excluded loss, and Gini coefficient of Fourier components. We adapt these to the time-series setting by replacing the modular-arithmetic character basis with the *spectral basis of the underlying dynamical system*. For the logistic map regime $r < 3.57$, this is the dyadic period basis $\{\cos(2\pi k t / 2^n)\}_{k}$; for the chaotic regime, this is the empirical spectrogram support set."
-
-### 8.1.B 충돌/경쟁 지점: Non-stationarity 가 *fixed K* 가정을 깬다
-
-본 논문의 progress measure 는 *학습 종료 후 fixed K* 를 input 으로 받는다. TS forecasting 에서 *non-stationarity* (regime shift) 가 들어오면, 회로가 *시간에 따라* 다른 frequency 를 사용할 수 있다. 즉:
-
-- 본 논문 frame: $K$ 는 static, learning trajectory 의 axis.
-- 사용자 frame: $K(t)$ — 시간 의존, 또는 regime 의존.
-
-**해결 방향**: 사용자 paper 에서 "windowed progress measure" 를 정의 — moving window 위에서 $K_t$ 를 추정하고 그 위에 restricted/excluded loss 를 정의. 이게 *Nanda 의 단순 복제가 아닌 사용자 contribution*.
-
-**인용 문장**:
-> "Unlike Nanda et al. (2023) where the key-frequency set $K$ is post-hoc fixed across the entire trajectory, time-series transformers operating on non-stationary data exhibit *regime-conditional circuits* — we propose a windowed variant $K_t$ estimated on a sliding window, and demonstrate that the cleanup-phase asymmetry survives this generalization."
-
-### 8.1.C 인용 포인트: Grokking track 의 *척추 인용*
-
-Grokking track 의 22 must-cite 중 본 논문은:
-- **Theory section**: progress measure 정의 인용.
-- **Method section**: circuit hypothesis 의 *post-hoc 사후 검증* 방법론.
-- **Discussion section**: 본 논문의 한계 (algorithmic-only) 를 사용자 contribution 의 *gap* 으로 강조.
-
-### 8.1.D 반면교사: 본 논문이 못 한 *online* 회로 발견
-
-본 논문은 *학습 종료 후* 회로 분석 → progress measure 적용. Online (학습 진행 중) 회로 발견은 ACDC (Conmy 2023) 의 영역. 사용자가 *online* 측정 (학습 동안 진행도 추정) 을 contribution 으로 하면 Nanda 위에 한 단계.
-
----
-
-## 8.2 APF active track 과의 연결 (간접 — § Secondary)
-
-### 8.2.A 흡수할 기법: Motif progress measure as Fourier analog
-
-**원본 idea**: Nanda 가 *Fourier sparsity* 로 회로 진행도를 측정.
-
-**APF 이식**: APF 의 *motif* (diagonal, stripe, block, edge, spike, checker) 도 attention pattern 의 *2D 도메인 위 sparse representation*. 즉:
-
-- Diagonal motif → 2D Fourier 의 diagonal stripe peak (single frequency on the diagonal).
-- Stripe motif → axis-aligned frequency.
-- Block motif → low-frequency rectangular envelope.
-- Spike motif → broadband impulse.
-
-각 motif 가 *2D Fourier basis 의 sparse component* 라면, Nanda 의 Gini 측정을 APF 의 *motif progress measure* 로 직접 이식 가능.
-
-**구체 인용 위치**: APF 의 `attention pattern field motif sweep` 실험에서, 학습 동안 attention pattern 의 2D Fourier 분해의 Gini 를 매 step 측정. *언제 motif 가 형성됐는지* 의 quantitative timeline 이 만들어짐.
-
-**인용 문장 (APF paper draft 의 §4.3)**:
-> "Following Nanda et al. (2023), who use the Gini coefficient of Fourier components as a progress measure for circuit formation in algorithmic transformers, we adapt the same measure to the 2D attention pattern: at each training step, we compute the 2D Fourier transform of the attention matrix and measure the Gini of squared Fourier coefficients. This provides a *task-agnostic motif-formation timeline* applicable across PE choices (NoPE, RoPE, ALiBi)."
-
-### 8.2.B 충돌 지점: Attention pattern 은 *softmax* 출력 — Fourier 분해의 normalization 문제
-
-Nanda 의 weight matrix Fourier 분해는 unnormalized weight 위에서 작동. APF 의 attention pattern 은 *softmax 후 row-stochastic* 이라 Fourier component 의 의미가 다름. 
-
-해결: log-attention (logit 단계, softmax 전) 의 Fourier 분해를 측정. 이는 본 논문의 logit-based restricted/excluded loss 와 더 정렬됨.
-
-### 8.2.C APF 의 motif causality 실험에서의 활용
-
-APF 가 motif → CNN probe → causal intervention 의 framework. Nanda 의 *causal intervention* 부분 (frequency ablation) 이 APF 의 *motif ablation* 과 메커니즘적으로 동형. 
-
-APF paper 의 *related work* 섹션:
-> "Nanda et al. (2023) demonstrated that ablating non-key Fourier components of an algorithmic transformer preserves task performance, while ablating key components destroys it — providing causal evidence for the discovered circuit. We perform an analogous causal experiment in the attention-pattern domain: ablating non-motif components of the 2D attention map (zeroing out non-stripe / non-diagonal frequencies) is shown to preserve forecasting accuracy, while ablating the motif itself collapses generalization."
-
----
-
-## 8.3 *교차* 연결: APF + Grokking 동시 활용
-
-본 논문이 *유일하게* 두 track 모두에 핵심으로 들어오는 이유:
-
-| Track | Nanda 의 어디 |
-|---|---|
-| Grokking | progress measure (3종) — *학습 동학* 측정 |
-| APF | causal intervention (frequency ablation) — *공간적 회로* 검증 |
-
-이 두 axis 를 *결합* 한 사용자 paper 가능 — "PE 선택이 attention motif 형성 dynamics 에 어떻게 영향을 주는가" 를 Nanda-style progress measure (시간 axis) + APF-style motif causality (공간 axis) 로 합쳐 측정. 이는 *현재 어떤 paper 도 안 한* 영역. (지도교수 결정 후 두 track 통합 시 paper 1의 backbone 가능.)
-
----
-
-## 8.4 *전이 가능성만 있는* 약한 연결 (정직한 표시)
-
-- **Paper 1 (ProTran-TFA)**: probabilistic / quantile forecasting 위주. Nanda 의 회로 분석은 *deterministic* — 직접 연결 약함. *전이 가능성만*: probabilistic transformer 의 attention head 가 distributional regime detection 회로를 가질 수 있다는 가설 — 이건 사용자 paper 가 *처음으로* 다룰 영역.
-- **금융 응용 (factor / momentum)**: Nanda 본 논문과 거의 직접 연결 없음. 다만 *grokking 이 finance ML 에서도 일어나는가* 라는 question 이 가능하지만, 본 사용자 두 main track 의 *원거리 axis*. — 금요일 버킷에 들어가는 *separate* 라인.
-
----
-
-## 8.5 한 줄 종합
-
-본 논문은 사용자의 *Grokking track 척추* 이고, *APF track 의 motif progress measure 의 원형* 이다. 두 track 모두에서 직접 인용 + 직접 흡수 + 직접 한계 차별화 가능. *연결 강도* 로 보면 본 해체에서 다룬 모든 paper 중 **최상위**.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "+WsUWyjnF+GoLx5UqDMb3w==",
+  "iv": "umkTD4l9PbsBOHvzytQYbw==",
+  "ct": "Ccv1eL4Od4Ksky6RuAfqofxAw8WqhiCm23oc6nFTve0JLD9tQSfKCUgqtzZoXjCMDBfVkuO1CYlAbzmuvM0TdH7fL825mYs13UhkKNWP10dNxkV2RfScbJ4W/HnkxWK9w0cV8SvphlHOsIGlVODhq1pejrQHFUrtzR8xONQMzEuLl0HRzLboJCamCI9PqOczsRPoIj9YsHuMH7SI3j7TgAQqaVmJYSpXMyuuYIIFrprw26wq1DWp/qLjKfIIyotACkr+QXvTFh1ajDk3d3rfyGnWxeC4xVQiwdtGq/NjvYzhituHz57Epj5NOu28qACMs367DtPtXhMXh3Yd7pkYj0F8dR0Nj0wyTBra9zHgGv/+8JWX8j4dKLHgNdcmhVN4rkA8obEjSn3PvTSfE9SexhdgQJ+Xy+j3imHuJqN5jCtowwDO/BnzbY3bwk6CAAiEv/dNp+NGCuZKgrBjZP7HnNC8+vDiSAfaM0KBTMgOmXFcwcC3edm7tU0Ypu7c+VuUKOEUaDnyf3lE4wTY3q3c6eOd+WpjerRoJqen7fn6quNOjfNOFhJ0zhdu4pB/CkTmNnAitJNktRZcXboy9tBqPg29H7nxv7RxMfhyVtpaivUXV9/+mQxBqAGw9lzNk6UtUhDh0gOpKkgpo4M2QFu1Zlg62gv6SRJvKrAev2k2YbfcZkUOuREkxLLPHrUCodSI4WlLys0Hk2HE6zi8Gv5+8nXOvfNHul7/BbZafk2i5MBX3XlROYMZao+xaQM+j3uUP1Ew9PY3A6+3Db0bYhpUcGgXjEvT/ed+1qhNu10sGGB1pOAyb9wQZojmjdd0bD54BRMAVe+cLtJ/BrFtC45FFFBwqlFADQbOODq19alGaUxqqjGraReI2NN/X50FyegLZIYUIHXjF24mNVxPM+jJVo3iAAKI5Y1p9/Hop8NUQ6zDu2Ti4i0zwAiGqDuCF7rpc5M2uQqjvCIAGn+ruu+ZXRKDvaFdYGCrdNGvN/S5hRzx1p45Jam+Mk9t/Oi19H5n/MsOEwWahbrxW9PYhky0SnxUJvTDTk7vty324/XOOc/Y4XLDUXO+dDJbpZOfs3MT7F0k1EZ8xyr5tNN4zcZJrRnAlGkly/pK2+LXXcyZhrQS5S0H0+muJTBPoPDVvjkwPBkRu70RcXR76th1anLt4S9Lc/rmQd65W3UAeteMUTQJMvRGcf9vYe5ZoosLmLdWCyWqHideBrRbuS+nMPR1sRmfD8SRDx+0tjI62UbLfHZT8bA9dtB6IvWtURte9JIZNul67Ez8JROHkjCPuUswV3QrwBbWZnUek7/hKexaGTXQB6G+w9mTzzsXNnpZm/BhtCRB+ecAuAp4POdzpl3DQHQ/ms0aR48kkwyTGNTfiHfVPAjqhYMY5NNbaEknFxcHfsxlpHqe+MmLKj2nLDyez4tlTKPZNd0nQOfc3DZEWnNudDdqwXTbqOTL0GZ8E4isQl5lH6N9a/xnLuacxwn3+MTs6hX4OjP+ZlHdwteawU+fyftW+3QAQtcBucQucFcmnfRRekLis/KpiEbmWiiaEHneoU2LyOjc5O0gw8eIQ+cP8uyuedYvFi4yxl8VaMrZX21tTSBhWFtJaa/lbTYD444xXD+SkcKKfEoThsKw3R11c/30p4M7chnw+kTvbqr8QkfBwtcNQ+pIPCk3EY6y+zIw+T0mpYfDF2rV2Xbsc6twwhVYMdN3c5oM1vy9xH1VlGqV3/fCDkKNuU0GcLsOV+vqPt+wLnKzGKL5xXwQHoTR2DhgBZU5KP7T1tm1QgEPHHUXV1gLYKqTOODKamyu+b+a6c8koiz/7ABtxeTfmc46uyl6LquSb8CwynoxlceO7NJeJaqmUlMF4AHyrMGFUGKThay2g7TvYK6pJIomaT+tDW1tFxdSyTBoaUBJEi/eYH6kBtf/C917DQQ1uRok01ge5mn8ehdUtBoux1Zz1c3Jx6AmtK5gWpokAWiVUK0uZ592qm6+cPQ0Bj05tQgzHoQQiiyn7+Ya6VcdnyHZ7z1XxpuKuUtNyCaty8FvK5qp93ZNwGxnXvKaDB3g68sUEG2WT2444xYJ5BR2Qi1oppuGF/c/a4puv4pbvCucU8foxdRrzRnBPES3lRo+snvTlF+Sg1CqZ1e3UROlAlzoOa2YqYP8ZurcO1b8QQixaHoFn/XmyHEju0FdKpv38Du3RLhKjnRo5PVHfh5OETamRXz3UItjfMaQqTyf3T4G71IEMMN20sO0mcfYbzsx7p4SZnNk5qHmFZu4NDybvbyjyL9LPfRbjTMZDfn4+FiJc44+vGbK7PXKggoiI3ewl2og28dCPdR3Dh82bhMKcrKvdja7EMu+phFwOCVDiwlvfkwfryXRNUVbN8m9kVJcYyw4nhQcMo8zlVz/cf1BmJqeId2ur0QgI61g2yQXVZqvXh4Jr0jP0hre0892Gu07Dfb8hUdD2L6RLNwyo3e3jHGGhmzSaDrQ95+1YdF5Pym2DrhlOhGoAzkuMsCodu7ulAZA7N85OdnlUsjmODyBGG+ElvzV4i5nzfeiEfqQtwW0N3q3KUUXfICOEb427BVO+MYN+Wo2oonEgSqZGz1bgTZAYXjlPnMRxtCALKIKYI7FTw5mTovQzwi7pCnctO2H9MZmfeB/unhuZHlf1O9K7xpX0QOlABlKCdKUt2ZFxEbX5qhZvvNW2iDDGF/c/FmX5Yk6CbI2yVlXiOV4C2NknufIuW0CngK8SYk5cC0gLFL76siuUXpXrg8I0MbwAM0vk5fOD4dsrtXfeYv9uRzzXZ1lgPAJzDDb864lhFL6TjV4SOtyi+EY1VQhvhY/YLZPuEnDmjMo1LNMRYYr9nz5qBQV3vcaGWS+H6AfMTz2sqtIzQbWWr3zWpIHiH3GS5ML3SmyuVHCl8Mb7l+W01onsdj1pbYVP6/lglZgtZ9mZ/cqomya8ui6ahabi0oDYlzy8beiNvms7hu1bJCQ2WHOcVQ9N1KODi2kZQkr3hZxR0Cv8hnkff3TOeUMVCeQmSIm2jc9F4iulssqtVau44w4oDJ1LGZOjqM7jeJJALPkZa3bfiGp4pEmwvKPjhScDGUANAYJx1OddL/cGrhWybsyzj5EzzcdsK9T1dJtdjk2jDZUpY1dL/p5wl1geDZXzj/Qi8KsVmE5UmsNR4VMauFdlZ3wucGF7cwj6RTWg54nA0Lm2NdXfMAY6wm9ryuYw81X41qYmSz0MpDrpFSWjyHXp+0kUy9VvxZHGt7mPPiafa88Pc5DdaTf6cfm3E6ks0l9+1BNOCe8a9wezYyy5ym7byhfUgh3ZW4tmpr26m/F/Znj+cRj7+ElypVyK9mteRwUcTfOcPYLVueFBxWVhoEcn18pe/d8ZXlqllQ8k85mQCqzxyGp/Mh+2FLz0YJaxP94+7+ElpDBuO0K08HTqciIv/1HT+uO0wwo5NZbC+HwZJkxEaU7K9xLd7pCABkorpxGVoHHbZvD+vVwi4inOakuOmK4lLXf1/ubn++UueEPTow8b6Jg321Hv08JIQkGuc1ytSLhZ9X4at/EO/B9fjsYPCvG9jMTzbrHJTCUQ25beI92FsI63CCBdISBGGI7T5k6N/nj564O/apihQzYD3F9th211y/W9xaDP3f19on8EeeBGGcQR83670tzAc3UISy6nwB5Cx8y+2AfMzDOVKd31T8x5ypMPZOqgvMy3dbOSNlta371aHi4HtOH0+Ui86rzCh6hGYJmH1xIzUZklcNAXzw1D9F10UxnUjEVHFmEXK0dKu67SmXne6FfBRbfeObURch1NfK/E9b75LS5GNZomudso2GzpQj44l26vbNkO4TeKfRYWgYZn1xiJAVgmn3NDFLRKd3o4D8wfrik3OeHpHJQiWR7uuchfZpkxEJHpsJneD4Z+C1+74QGb7w5mt5o7dl81mjSkvvHy2wlHLq7Drpotsmi8/4soNHpU9JcRC7FhPWm8p6lRrzWpg1HAo/poWL/HrxJyehr2iF/MsKpnAgtJcoxX1jCdy/tNiBGCOV+pTGFnU9arBPzOWBIispfNRI2rJDI7l5SEDyPacNvzBqv3F+7VwlKe866kBOzQDjmnq330cTSyUCF7zQUNUP7Z5ftL3jA7zaCVrDeImRiH3ovUqjns2EehDWy/siYy7IPDEcrXThI9cbrSwianbfZ5rRpVj3X88F6EDx48I9iWgyyijwpLgbYNxCeHEkrwOxQ+nR3emaXVT88UHFs4H9b3geA2qsjiXlByepTdOU0W+OxyFoLP6FGHiP0gD7ofSKpfYN1Ykc8Gd3G3/aFIxOAUVbmYND79PEbu64SDCq3osfSE3xyaFZBsy0SYS8MKPgKOwlBKmFunha4nmCyr+N9cB3EYOC21jhSvFNOa3HeO6k+pxU8e8S+A6hYOo4SNBsedYwCeizl9MO7VGZmVQfu+6zYISzOYVOacoY4GPlIv4GaQzFygOCvTuC4yhw1BOgofw9/21DFHnPrBJ+KKK0gZiEOdVLjXRp6YbbQacoeuNyaNJMYZ0wTMzl7DBFC4D09PHPO3zy5DxW3DMmH3+ohFEa/Lr5IkGnbHcpx9RQzvE9bPCZQfad+grokoEqoX+cgI9Z15ni8snbJOMQNkMVHo1eZ9NisY1z4j+83bN/lVkQ3ZjiTA4bFp/+dqjkLRVT0mKXRznDEpTzrXEDGIl2uJrE+mSv50K0N+XXYT9yZBPrIoS6h8adIrR3e8o8xeaHx2g7H3BniNdymLLvr135/9BpwncT+bLUteBX5lTh9xnCTxGfDoofw5dLJPIVVgL97HWP6wUVX6i9RSxUhkHywba8INrVrqPxl5M0DRVZwCtZEVaJfa6P7SjL5hM/ICTIiKGTHuISaNeCvZdm1hclQL66U4QsPyaW3eSbHJkZb/pOcqXJLoNlulEEEtK831kjjOWNSPXXIFvUsOw6kNeT/CJHatRRxc0f4+0/8PQrQd7f0oNKUCv4jPc5xsG8/YXCs+o+QsYSVpdxs9TrvktawGIcFPmxu2uSvij6akkSzVztQGYKnWXOMPRQKY043q2kfUGSEq/bKEh2SWJibrWgRLNVBFBm6AKjuhdmwjTSM0nl/bQDk65HAuNLQYtD+/dyRj0nsY4BlbbcoP402u45/quOI+lYtXQdCtEighTk0s3Q9oFP1mQW1kmERXbQ8EeX80c3yCTqX86uql1ZlrDi58JMU+bvWosWxNjMZQaX89hxoDlMunbzqBv2fQrGp1BnIqdcR3IitpSH8yopw2a+dRLE1x0tBVcM3i1YT3oJ3GAxFvmNFHl0kLPzMxYHUtRqyZmq9SDaBpnB7nliffZCqKslheR7PsVkf1NPQ2jX1hYvycnUxg2FrXCHGYwYTimNSWN4HLATNMTBe5b4XZUppejTmOANaoc7hESjKdqqdlz6wf7i4H/pZFG73Zu8W7jgLTrHU7CwNJxPRy/QpIpibm0ky8ouSTHrGA5X7WBo090weXVDs3SE3/YK/DXjb73sDQSZIzdkY0Key7xIP0RobAB7BIEXSsmv1UnbV5czTEbr5vKO2sBq6fLhSBbUgSFr5wEhw94c08dVOQuvGuoNDc1buHMObcKXV/7VOKjPRfFrdupNX6QWxk3ztwYFK8oIqxM2iyOa8JuDc3vz4P9qcGLv56BW8eynMifpusxEC4MgQRxPQK2btsKaiLUumXnoqsnMtdrIoGhEGdXno7cPhggEdCXeQIIsOccSfIb32INuFlPEhZHEDIOOIOjIj8iQaAf3KlQXHmXm9s0hXx5l5JqAayjecN6UKiiIFVd679P8vvOhMkC/oaAtXdgg7e+MYzPa2h7HzU4nd65fgCWTQ+4QXYyguS7KEsYTA3dTdLCvQ9vjHSIiHXXRnqEw4eqpuAvzFDBA1snB05ksM2SiOHphQMxHuaGE4e2IWdpC5PzoViPUP5iKdievSUBmxniKXexHYMtgwfwZWDl7gmkKOvEVLrqMdSINKeFjMeRXd1OmAUzRdudLvnXdAL4B02x2W9hWee+syCw1r9piOCqQuFUXleEbqQOxT4b3XiWV2b3eB8uusS4GjQ/eeJ69nmh5fNJjNSRqgqHIXVa8MSz1NLuWsioXRojIyaxOqdjCyCf16Su5lFLiHbZ5W00sIXSNKVijSc4aGxAjtgCAcD8DmSO5FOPI+jqa4ECctPQv09WLGH/moCLIbBG3tqYJrGEEdQK4qcHrE30ofuyMbZJZm0q6r7HxTHAPKPgZArfKJTKZv8uhYhAPk1n0U7QMu9jjNx0tYZ9ddqAciFLzPfJ8BhsNBGEOcXYhLv86gblQKX8YDPrRwFtuWtxX+b9fKHyzlkxH10fYXI2acCfN+8Rf0HjkexnTExWcKZ/0jQVCCShA0cbByW994b3cn0pj+SOUEnkNNW8LRr8AHo9yUe5FdYwj59tap310DqC+XP5KZq1iBGuUSoFRl0jn7FjC/A6PTx3B9w/MTT2J3CL0p5Z9AAT6A5XND1Mh74MWBXwXJrRqX50onfhLGNylcc28OkRmQqMsYQfo48jO/f41XojWt3wnTUvrQDwJeUEDwLeFDQfB/0cdzu+7nFHeHX6v/mRsO4Mj9RgXl4lt6vSyH2EOB2goa/5l/esuN1Wza2PmWAlZkGuJF+CvsYa0dLe9S5PC1C1xJxlCEYpHfY2kCzqqvfrubUiOCGVOAq8jucVNfFcTeVHSZNpH4DrRJWxubVoISXaDobG9BnN2CirzYe1DJtp4YSPx7wpyR6cmVCvENphuqgRFuYge4jq8Q/YxV3KhW3+KZb52DHfKRluy8PlpFxnkIUFTDiun69QRiwZNl2oRP6cwXf6Nyi1zPLKf9drPwxdgCLMz7S9GgmkQUSqKITsIAqtsRuBuqq9HxnoAFgY7i6iFXivfYXyhH5w4kQ9fqM0TViUxKFV0obEEdXHbBOqgrvTSHEi/ffoGaABfq0ScDtNO31eBWvHqGXaEBTinFZim/ZChCJgb1KBo8RP865/c/wkMCVf9MiOcq2v+BW4PDBEqFQlBEO+wRw1frZpoGmEKgjHU+aSPNEW/KG5gkWr/XHqB4s3BvUS3LAszUYraa7clYQ7h6Q95p8LzB1+uuRv1MGUE/21SyuodqG1QcRL0dt1YcDUaImr0FkPKPe+XnnxuH8ABrjHfPujSi/K+zKQRAoKypNz0LWVihnnNms6Ypi3CtRjvmtuA8jniWnWMqD8IKZJ9+EiI4hudSBGMZ/hxfHeP5yz24GrO/FAbHGFrdDcwa0d/+2z4XBFSJ+VB4JrH2/vfzON53fUg8/1Se7zbrgxnAT8ErUi5xxcXaylgbamtT6wuFBKdYELKPYdUZW0JaxCMhXSh3p6ihPpN16BNJMjwxn6XZIyFkoZc2Q9gtOCfiK00+H/td1Bgp5J/RfHoqKCz3Dsyc0opOPJ0HBQcAVPvWT3Gdw4elzwvhQU8zJOo9ueMDoeZMkhESrtoUkwHA1GqI4oxLMPNBUdi9GRjFpqnYAijtVvJeCNQHwhF4VSXluwsKN+6li7NpaYx3Ef5PgdFjn8FjkILmrtgtKujd2v+M3V/hfnnYLpcv+SEyr+eXqvy8lRzgSYUL/VIuw9blxdrGH3hPkicN29jXcLwn24tIpa5/QJfjl8tIFSgqG4SvIbZmICtaclq2rj+87+PsgoOfHbEcp4nyzeqBrNA7AIilLLRGHhCtk9WYARisB8f7Rnm7TRDpkfmh3UMFg9AMIZTQ+fBB6pTZOgwuEkeXUuCdsxyv01yYBA1qm9TPUakDvuoGLWEfuYt4XCUjuT/HnYnmik+NwVZhXRvShKJBEbzmJr5AOOYHFYMNji5My0q76K3t8Lc3H77ghSLMmjKMM8pOPb4W+6Y1unO3fN3h/MqWzqYUqJ4qsDvCNvWjScRGsP3eRGFHv49PncC8dDUM+KM/Vr+CK8sTrND7NkuuN6HnxNsAP4wg25SvRxX8HIXhV724jQJQ8OY/pbbnIUIhwJkRHyRoJo9w3lKof79zxDqRgF8FiWayKIdlQtAWegkyb/tLRbEIcXQUln4Y4hYoEZyLyN2xWbTQBO2j19/1qFrN9a+L17hNXj9P0mvRJgnABIWBeFE3xjUccBLYiXc5NiedUg0fMB84Xt8U1+A2lgphYxg9I95hHzKpV2jC6s/qHHXk+plZIjqcMJSAgdQjtZectw4a66qx5Blcs28fvckna/ujwAgXHHaagrrUKMUb+Pu08Tdphc1K8T8qdGz9cDtr1qcyBbWhD/8ZxUCBU5MUXxsg1uxpPDQgyJcxBk7nHGw5ZLDCsMaEeNtBYLX69PpuNg9MmEH2K7CekVWPdnuUbiV2eVgSzX0mriCuwxrXd+1rlBQDJ0ungLtLfjSUYfV6ffddmRVMdy9Y1A5foVRucpmGy6dac2mp9p7/WiD23eiBLLmgcwKkPiaAWgzrxUEyxrqt5drUmkUfeUyIkQFKMhhwNmmjqxVebYxZotsHDnqMFEXG9qND3aFjAGxkc/Zc9wPijt2XZXH6HjkTEsIK2Xaof2nVJcW+3TCOQW/JW66p6vT9gH1FGXFaTVzXEpIIQyE+uYW7b+TOskZJAEj7xpGfujCaW1mhe+i9iKzi2ZzwsRvCgMDn3vbMBys/fNYCj1ff23bTPYOy3sKypMfun+H06VxLoSyRq+f1SAJb0XAQUABWBiH+UzgfzjsDWu/8ikviqE4NVhMb9Bn9/e+EM7KsBgY7V5B86bsArz8nk4B8tzOlX6VKgUEZ33r0A2lQ+eDVUkq/gF4+disbdQnGlfIt4XVVYG5utvgwVK/k8dQjXXe9tNru1mm94x+R9dOkroF2h6PIB9VQZhoZA7dFkqNe1EvN/n4eSvGoFKkxGu5klfHCgBs/4+OuHxiDDiVTse3RTob9Cq8wmzInPyoxt+qXYke+Wl3PC+ld5hoafqdUtsESkgjbNd7k3hOnyV+hyyjUj3uE3YhtqA/5/W7TYyAHo3CgLCl8nwWe6yJfePU4MvABfZVIzP+Ze0A7C02U6DEzVqWbhleeY8ChttriHfGIuBpgXvMVoAJ59Or+fznBoyuyJ+mgO7tqYRd5b1WOBdfvMaBht4ZOP9/8uxmK258Y+qWLEVU38ahTtt5XcvV+VAY8My8GmLj22DQdv2BypV2idvplmQ08dRdHTgq7YKKiBS8U2Tapokn1D20b4SKc8QCeoSx0WSWTg+sFovcjpVPfbp3kNTt36X7be7NLBGssikIlybPQX41XkZ96ar5LCPSaQlrjaRRY1lD5sluhZ4xfbzw88M0F14KBx79/eeNuTIyozVpb9IYJMGPV65o+xdL7nbswk/dNvMab8BMkDWMddlYJRmJziX9/GLsHNewz3mqo3iytZ1fp1IaEuMWwppJ4kpQSARX0AJe/yE7IgyssCDfuWVtPaiHTXNmy3b0hUHApa25eM2ex0V8bNQ5rEchJ4m600ysrpZu6IsElLAcBGvlGZrrdTlOFEPzEH8fruEayzEhI909b9X4KgArj3k7NoaLmt2bJJYSljF0idRYNQf6pfkZkWAAtyAbJaOJASlpw3hBEtAOTz3h6fCp5UWcCxv5xdJwbgX9Nnl61kYtZzOmdIm97ZQeaQUrxmdvBb8oJRZiLS+Yha4g3W0kv08h/vQZjNFMxLGwxiarmSHWDLHTJPf3MFj5tPngaJhXnIZ1o5TVJCZmNh2C1UH5dtcNNUl7PptnC24g8lhCq9xXzYn22D6xPZQoOrFQwwLkZReaAlgBbdengO0J/xdi1C9Y48oTaj3lUpqMKHiqlB6uHfPPOn/hGKnnGfXJ187UfESX9XLvrik3sGnHtepxLBl8E0DXXS609LkDRiog2rbTl2zLa6xuAfSZ9KOTq2D5P0EUiJ79dyh2SLJB3mai0m87aOJ+J/b9CkjFLRm6zeHzG9gjkJLVjUhzsoVoUbBf41jlqxBidAzsYwsupGhUF26u6KQfFRt6D5tM/6AYHmxTQdEoa/qNzQ/KvH1BTx2J8CZG94IY9+u9oaMIwxXrfIorwSU8NgiGapCNPJfk8Hmw1XuZ2fQ6+7uaU3mpR0MPNj1ewpuvrIrKGTW4cJtJDxj6Re5a1xdNATwbERS6xrFHzY4zT5vhuIaJl8cTC7cjo8GlFfg9WedQGBv3pO1jLVJNKcZIDP2e0pC+Qquaqxsg+n+GH4wigX2twUGBeFDfNft95NxIMwOyXUMQwpVf0GcpLgjnXxvsaeB9tpDNeUXvsTQ3rqHI7K5r0Q1hoTtn/m3+Pb7PHYtyRfpOm8ezKp3bejXY5VNg25VIyjYBSMFlsMobNyNt13OolMLFzvDUvEF8IWQ/NfWjsd2b8AdufutpH02LYPQ1Bz9lv8vAWC8Uylo7N1ACbiMJtsY06aLcfC079YtzFvJmquUB96cBVXVnVHftL/kEn3pW2NfSOLQkoyhQbFlLR/uWJI4F+3lTtfYCMnoWeLpi2Vot/RFgXABzWTfGl6iCAO5AJFwsleO8S2Zx2mJjGxugT7nI5yPbBtMSVSOOdTQJuPXeUkupQnV+DrYqTCIDUnHIFyar6HMc4VUj3dU2Pr3+j8zAsGbRLlnF1Mfas11M6LuaAtRT1GWR1Ne1LqQfYvZixALtFSM2lVRFDi0swe7Ey3lkqJaadgDTgm9P3YUQW0WBmGUHCBzP08fpNqPJDQhrC6pJMf/RJDGCxeMGGGrUNj9Zz7TMVPgx/bGay9kaUU/2TgrL53nY0r494JmROi9jFeg0d1fKHYKw1JJOE8JhNbCnMXMGR6TIcMuT3sHF1JohHQ/H/Peby+1ORvVbXUhyVkfO0Qaqv/zu/CD6oc1nLfjGc2w373kJ6jZZp8CYBSR+lnSKhauuY2gucj6It9yc1xo5nUtCNY52j5SXQQp9ISzY0CvahwcLFMhD4mXkLxGE0wSTR0WZ4NRphwHTgh2b/n+j8VSs/Pgen98qp83/KV2K6ulrfrCXH73AzzKc6bSMB9mHYM03yHOOQyOn5aRchrldBtsyfxjn+qs0eoeFcxulzf41Y43QvPse41VMtrcnu6GTdA65V0awU2NpCPC/UlhTzzydqBset+mY7V0egKWMtJSRByXxK9stsNglK0TEk64/m0+9HhUh0eS6Nzttya79QBnij8upEohHJP3FT8uE5O441pZpLlIBlvlzDnw==",
+  "mac": "dkezKpTlzNRdm/eEL/kZxJePSmsRZl+CyoJ0rOzVsxY="
+}

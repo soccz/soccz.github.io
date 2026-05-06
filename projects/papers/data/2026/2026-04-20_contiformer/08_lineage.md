@@ -1,99 +1,11 @@
-# 7. 이론적 계보
-
-## 7.1 상위 조상 (2~4편, 없으면 안 되는 뿌리)
-
-### (i) Chen et al., *Neural Ordinary Differential Equations*, NeurIPS 2018
-
-- ContiFormer의 Key·Value 경로 자체가 Neural ODE. "discrete layer를 continuous depth/time으로 올린다"는 세계관의 원류.
-- ContiFormer가 상속받는 것: ODE solver + adjoint backward, vector field 학습 프레임.
-- 상속받지 않는 것: "depth as time"의 순수 해석. ContiFormer에서는 time이 real observation time이라 depth와 분리.
-
-### (ii) Vaswani et al., *Attention Is All You Need*, NeurIPS 2017
-
-- Self-attention의 근본 구조. ContiFormer는 이 구조를 함수 공간으로 올린 변주.
-- 상속: Q/K/V 분리, scaled dot-product, multi-head, residual + LN.
-- 변형: Key·Value가 이산 행렬이 아니라 연속 경로.
-
-### (iii) Rubanova, Chen, Duvenaud, *Latent ODEs for Irregularly-Sampled Time Series*, NeurIPS 2019
-
-- "irregular sampling을 ODE로 해결"의 직접 선조. RNN encoder + ODE decoder 구조.
-- ContiFormer가 이걸 어떻게 넘어서는가: encoder를 attention으로 교체하여 병렬성과 long-range context 확보.
-
-### (iv) Kidger, Morrill, Foster, Lyons, *Neural Controlled Differential Equations for Irregular Time Series*, NeurIPS 2020
-
-- 입력 경로 $X(t)$를 driving path로 사용하는 CDE 정식화. 수학적으로는 ContiFormer보다 더 우아.
-- ContiFormer와의 본질적 차이: CDE는 "one path, one dynamics", ContiFormer는 "multi-head × multi-segment dynamics + attention". 즉 "attention의 다시점" 추가.
-
-## 7.2 평행 연구 (같은 시기 비슷한 방향 2~4편)
-
-### (i) Shukla & Marlin, *Multi-Time Attention Networks for Irregularly Sampled Time Series (mTAND)*, ICLR 2021
-
-- Attention을 연속 시간 reference point에 대해 정의. ContiFormer와 **가장 가까운 전신**이자 경쟁자.
-- 차이: mTAND은 representation이 여전히 **이산 reference points**에서 정의됨. ContiFormer는 **연속 함수 자체**.
-
-### (ii) Chen et al., *Transformer Hawkes Process (THP)*, ICML 2020
-
-- TPP용 Transformer. ContiFormer의 TPP 부문 직접 경쟁.
-- 차이: THP의 시간 encoding은 이산. ContiFormer는 intensity를 ODE로 접근.
-
-### (iii) Shukla et al., *HeTVAE*, 2022 · **De Brouwer et al., GRU-ODE-Bayes**, NeurIPS 2019
-
-- 변분 추론 + ODE의 결합. ContiFormer가 포괄하지 않는 "불확실성 정량" 축.
-- 미래 통합 가능성: ContiFormer + variational bottleneck.
-
-### (iv) Zhang et al., *ODE Transformer for Machine Translation*, ACL 2022
-
-- Transformer 레이어 사이에 ODE를 끼워 넣음. ContiFormer와 다른 방향: "depth-ODE vs time-ODE".
-- 구별 감각을 잡는 데 좋은 대조군.
-
-## 7.3 후손 예측 (이 논문에서 파생될 수 있는 방향)
-
-### 후손 1 — *Continuous-Time SDE Transformer* (Neural SDE + Attention)
-
-- Key·Value 경로를 ODE에서 SDE로 확장. $d\mathbf{k} = f\,dt + g\,dW$.
-- 장점: 확률적 dynamics 자연 수용. 금융 latent의 noise 구조에 더 적합.
-- 단점: backward의 분산 관리 어려움. pathwise gradient vs score-based gradient 선택.
-- **내 체감 확률**: 1~2년 내 반드시 등장 (이미 부분적으로 preprint에 보이는 방향).
-
-### 후손 2 — *Subordinated ContiFormer* (= 나의 Paper 4)
-
-- 시간 축 $t$를 $\tau(t)$ (economic/volume/trade clock)로 대체. Key·Value ODE를 $d\mathbf{k}/d\tau$로.
-- 장점: Clark (1973) subordination이 가진 "정보 시계 normalization"의 재현.
-- 리스크: $\tau$를 어떻게 추정할지 (exogenous vs learnable) 설계 결정 필요. Paper 4의 핵심 기여 지점.
-
-### 후손 3 — *Multi-scale ODE-Attention with Explicit Time Kernel*
-
-- head별로 time-scale $\sigma_h$를 학습하고, attention 분모에 명시적 time kernel을 넣어 장기/단기 분리.
-- 장점: Informer·FEDformer의 시간 스케일 분해 지혜를 ContiFormer 세계에 흡수.
-
-## 7.4 계보 지도 (ASCII)
-
-```
-              Vaswani'17          Chen'18 (Neural ODE)
-                  │                     │
-                  │                     │
-                  ▼                     ▼
-        Transformer variants      Rubanova'19 (Latent ODE)
-         (Informer, TST, PatchTST)  Kidger'20 (Neural CDE)
-                  │                     │
-                  └─────────┬───────────┘
-                            │
-                      Shukla'21 (mTAND)
-                            │
-                            ▼
-                  ★ ContiFormer (2023) ★
-                            │
-             ┌──────────────┼──────────────┐
-             ▼              ▼              ▼
-   Continuous SDE       Subordinated    Multi-scale
-     Transformer        ContiFormer       Time-Kernel
-      (후손 1)           (Paper 4)        (후손 3)
-```
-
-## 7.5 이 계보 안에서 ContiFormer의 위치 평가
-
-- **표현력 축**: Transformer → mTAND → ContiFormer 방향으로 시간 축 표현력이 단조 증가.
-- **계산 비용 축**: 같은 방향으로 단조 증가. Neural CDE는 계산 비용/표현력 frontier 위의 또 다른 점.
-- **금융 적합도 축**: 오히려 하락. 가장 좌측 Transformer가 jump-heavy 데이터에 가장 경직되게 대응하지만, Neural ODE 기반 모델들은 "연속성 전제"가 추가로 깨진다.
-
-즉 **ContiFormer는 "smooth latent + irregular sampling" Pareto frontier의 우상단**. 금융으로 가려면 이 계보에서 옆으로 (SDE) 이동하거나 아래로 (subordinated time) 이동해야 한다. Paper 4는 후자 쪽의 한 점을 선점하는 것이 목표.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "W3XdXQwHTaROthLTe0dQ/g==",
+  "iv": "U85OLpXSabcWF31p5ZYVvA==",
+  "ct": "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",
+  "mac": "PsDQVlFB5XQJjKJjcO3ZpHgxL/byirVsOKKQXvTGy4Y="
+}

@@ -1,44 +1,11 @@
-# 00 — 표지 & 네비게이션
-
-## 원문 정보
-
-| 항목 | 내용 |
-|------|------|
-| **원제** | Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization |
-| **한국어 제목** | 그로킹된 트랜스포머는 암묵적 추론자다: 일반화 경계로의 메커니즘 여행 |
-| **NeurIPS 표제** | Grokking of Implicit Reasoning in Transformers |
-| **저자** | Boshi Wang, Xiang Yue, Yu Su, Huan Sun |
-| **소속** | Ohio State University (OSU NLP Group) |
-| **발표처** | NeurIPS 2024 (Proceedings) |
-| **arXiv ID** | 2405.15071 (v2) |
-| **코드** | github.com/OSU-NLP-Group/GrokkedTransformer (공개, PyTorch) |
-| **데이터** | 합성 데이터셋 (SharePoint 배포 또는 Jupyter 노트북 생성) |
-| **태그** | `algorithmic-grok` (주), `mech-interp-circuits` (보조) |
-
-## 한 줄 판결
-
-> **암묵적 추론은 그로킹 없이는 불가능하다 — 단 Composition의 OOD 일반화는 트랜스포머 아키텍처의 비순환성으로 구조적으로 막힌다. 이 논문은 Grokking track의 "왜 grokking이 필요한가"에 대한 가장 깊은 메커니즘 근거다.**
-
----
-
-## 목차
-
-| 파일 | 섹션 |
-|------|------|
-| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 |
-| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR |
-| [03_problem.md](03_problem.md) | 2. 문제 지형도 |
-| [04_claims_a_main.md](04_claims_a_main.md) | 3a. 핵심 Claim 1~3 |
-| [04_claims_b_ood.md](04_claims_b_ood.md) | 3b. 핵심 Claim 4~5 (OOD·아키텍처) |
-| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 큰 그림 |
-| [05_method_b_tasks.md](05_method_b_tasks.md) | 4b. 방법론 — Composition vs Comparison 태스크 |
-| [05_method_c_circuits.md](05_method_c_circuits.md) | 4c. 방법론 — 회로 경쟁 메커니즘 |
-| [05_method_d_analysis.md](05_method_d_analysis.md) | 4d. 방법론 — Logit Lens·Causal Tracing |
-| [06_experiments.md](06_experiments.md) | 5. 실험 해부 |
-| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 |
-| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 |
-| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 |
-| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 자문 질문 5개 |
-| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. Follow-up 논문 3편 |
-| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 실험 아이디어 2개 |
-| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "Yzge6x81zOz2vhLh86c75A==",
+  "iv": "hlYMhR9CWFhcgd6VEuv+YQ==",
+  "ct": "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",
+  "mac": "lcxlvsR+wFbE/Pr9za+VUjdeZdjdbNJJKbymXwmpDw0="
+}

@@ -1,16 +1,11 @@
-# 11 — 한 줄 판결
-
-## 판결
-
-> **암묵적 추론은 Grokking 없이는 불가능하고, Grokking은 두 회로의 weight decay 심판 결과다 — 단 Composition의 OOD 실패는 트랜스포머의 비순환성이라는 구조적 천장이며, 이 논문은 사용자의 Grokking track에 "왜 grokking인가"의 메커니즘 근거와 "어떻게 실험할 것인가"의 분석 도구함을 모두 제공한다.**
-
-## 보충 (판결의 이유)
-
-이 논문이 내 연구 지도의 어디에 꽂히는가:
-
-- **핵심 위치**: Grokking track (§B) 의 Related Work + Methodology 템플릿.
-- **두 회로 경쟁 프레임** ($\mathcal{C}_\text{mem}$ vs $\mathcal{C}_\text{gen}$)과 **Logit Lens·Causal Tracing 방법론**은 "Grokking in Time Series Transformers" 논문의 §2(이론적 배경)와 §3(방법론)에 직접 이식 가능하다.
-- **OOD 실패 발견**은 TS 예측에서의 grokking 연구가 단순 성능 향상이 아닌 **아키텍처 한계 탐색**으로 확장될 수 있음을 시사 — EOA(§A)와의 교차점이 열린다.
-- **한계**: 합성 KG에 한정된 실험. 실제 TS 데이터 적용은 이 논문의 미검증 영역이며, 그것이 Grokking track의 기회다.
-
-**요약 한 줄**: 이 논문은 Grokking track의 이론적 뼈대고, 실험 설계 도구함이다 — 읽지 않고는 트랙을 시작할 수 없다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "LRDLl36pBAIEu7uDmUtdNA==",
+  "iv": "GwBO8iSAxJOaEQBWR3HhfA==",
+  "ct": "AL/jUagN2AusaVyOwVhPotO9q/ZZPmz6gaNBQ+uFoLDZ7zzCAcJS0QCjcIfbHq50drgFyJHdtxYUk0RNeTN95p6Bq43ajCWaNyJmpV+/tF463Cu6NKyjDIj0DIekWO2r0KhkJD60AvoaCXcj4hTfrj/VlOgmVw7gI7JHfSNHG/QLEsVK5vCeYKyv4GPoodp8auwI+5KMvlVpXSxeg4KWu6id3H4k1O7pSxEmcUCbF/sL3juFeONEnDhdJULAd6LXmA01rT/ZiJBFn6re37ddGmoymgMbqXINdrZvdlIGFFELXFcbSdG6BrwQCTGcayS1EhGRjv4jQgg7d5Mf/Ox080vjDiAz3DMO2zesjivm1nOAN+o5Hyp6KlWjkHkwMXn/4KeMGjE5iJ52KH7RKEDX6/o8NjJROSjDkDHjt4yqpokDlHN67YJvqJUQ3YW+MVZ7mYARR8JKn+igoxip4dFaCZUlW/nHc8ocVRH+8SGipDHBI5huAoErUtVGj0j8nOh0GZ8w959eqStzTlo38Q0fU9RLaQkUP50mB0Pk6ATvoLWjhFCRZpyHLULqa2VwM8iTQsNcOVTI7GVjiN14vJFkZk4YXe8NiA0Yz/ju5HG/D6joGj+6SPyFxaQA26I2kpi6BoDEPEt21hBC7S/uSKO6/QJR/VVeJsVSiK7guPeFWIw2AtLbmaCRMY0ib5I0mtBKh1s2cNPWIRDRRASUlC1biTYLYo8iETFRP6Aqb3VW6fgLsmJeMtoffSrdG8bUsXbABwQrlDIb4GG9ZPQzMLPvIG66IBk5j+HpSz+iblrgSGPzzTKVaaZO75FN2dHmKyQJKcTezV+GY3brjsm8MN8EAFfRAWFWYpyxupHgpQc700o1VdWbnPBpmgkHRtlWiHGyTvZNqstm+OGB43PLwdMleftSNkTTphM7CoyZs+JtfybsSjByduzcKYqy2Eo1sUryboua8+RIS6uXNt6Hi93jp+yOoVpsovGrAKzXFQABOyGprS+w8L1D90tbwXI+EJJT9LMgLk0oCXvI4hUQ/bgZayT+vbtcJbyz3U2bDdcgoR4Q4yB/kijDHwTbMkufZsYjnN341OevM0w/Rldk4wela1pkmC5EiYp/aStMEP7jYmDeiv5nTWNwd6pSeKIixUbnfUu+ny+Ez+NyuYUwOTvxM9zEZm+wt8sMkjYo9Va8eKQXYGYGpU3FUGXGsKxqxCUfW531pMyRYyy9Evx3ZlmqeRk4Xm3Rjujw3N5WJ3W5glCnYULsrXTr3f7RW1tMi0dgRsZabcYdy0LtNJEilchQnK9vCadyOg9ztFm1fJODodYEAGBRAkxRGVMU9ENjpK4JqqzCqws0isz1LfEkKJLN7ctQEHAZL5+Dw4uWqgwy44/SqoVUNeQeJcsP47m6jws+4Nn9cmxD2oDudkvsptY1/XgvZakijZ8t614Y6+rpOzZ3VE8mFgZhB2txvCRDMvS3AAgXCvJm1deWhQ/nxIvTAF+o1qZdf2iWx6KU2GoWN7PsiqZO6W5RYqmN+Vhp9GmVsa70GrsCW9LFet6QRPCz4GNapNtmQaCGgJHGE73Ftbb9lg+dVmKJgYMyVxo7NitvbaKoP3GnuexDkvL8dXv3YOwTslE0/v+gocDSLE0+/2NL6EAvAt9TYcWfUsVYZwS8uNnDiJ0H2qNtevHi66ZVznrzhs5il4Dfb5ioRdxNYfV48gKc4i1p4Qdva9YQdNHX1kJK+4WzaQAX+7qa/ITJgcWc400c0fCsOzbWIwlexTgKKsIZ5gHGHdsVxPdFdFDHwWpn76wfmSxsu5ZmxNyiBfKbfRvLX+woNZzJEf2yGqo=",
+  "mac": "gDqa7BldXUvoTW/ix6ev1JcjaXPFZ1pTusoDtev1oEM="
+}

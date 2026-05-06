@@ -1,58 +1,11 @@
-# 2026-04-20 · 월 · 코어 버킷 해체
-
-## 대상 논문
-
-**ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling**
-Chen, Ren, Wang, Fang, Sun, Li — NeurIPS 2023 (arXiv: 2402.10635)
-
-## 커버 태그
-
-- 주: `neural-ode-cde` (0 → 1)
-- 부: `time-series-transformer` (0 → 1)
-
-## 선정 근거 (요약)
-
-- `_coverage.md`: 코어 전 태그가 0으로 동률. 가장 뒤처진 태그 기준에서 모두 동일 자격.
-- `_profile.md`의 **Paper 4 ("Continuous Economic Time Attention — ContiFormer의 ODE 시간 변수 대체")** 가 이 논문을 직접 대체·확장하는 기획. 따라서 월요일 코어 1회차로 이 논문을 먼저 해부하지 않으면 이후 Paper 4 드래프트의 "무엇을 대체하고 있는가"가 공중에 뜬다.
-- 2차 근거: `rope-positional`, `conditioning-mechanism` 태그도 이 논문의 연속시간 재해석을 통해 간접 터치됨.
-
-## 대안 후보 (기각 사유)
-
-| 후보 | 태그 | 기각 사유 |
-|------|------|----------|
-| Su et al. 2021 — RoFormer (RoPE) | rope-positional | Paper 1·2 base line. 이미 내부적으로 충분히 숙지. 월요일 1회차로는 자원 낭비. → 2차 후보로 보류 |
-| iTransformer (Liu et al., ICLR 2024) | time-series-transformer | variate-as-token 트릭은 흥미롭지만 conditioning·연속시간 축과 직접 연결 약함 |
-| Informer (Zhou et al., AAAI 2021) | time-series-transformer | 이미 고전. 해체보다 재인용이 더 자연스러움 |
-| Neural CDE (Kidger et al., NeurIPS 2020) | neural-ode-cde | ContiFormer의 선행. 다음 회차에서 비교 관점으로 읽는 편이 레버리지가 큼 |
-
-## 디렉터리 구조
-
-```
-2026-04-20_contiformer/
-├── 00_README.md          (이 파일)
-├── 01_meta.md            (0. 메타 & 선정 이유)
-├── 02_tldr.md            (1. 3층 TL;DR)
-├── 03_problem.md         (2. 문제 지형도)
-├── 04_claims.md          (3. 핵심 Claim 해체)
-├── 05_method.md          (4. 방법론 해부)
-├── 06_experiments.md     (5. 실험 해부)
-├── 07_limits.md          (6. 가정·한계·반박)
-├── 08_lineage.md         (7. 이론적 계보)
-├── 09_connection.md      (8. 내 연구와의 연결)
-├── 10_expansion.md       (9. 사고 확장)
-├── 11_verdict.md         (10. 한 줄 판결)
-└── 2026-04-20.md         (위 11개 합본)
-```
-
-## 소스 접근 기록
-
-- `arxiv.org/abs/2402.10635` → 403
-- `semanticscholar.org` → 403
-- `openreview.net` → 403
-- `proceedings.neurips.cc` → 403
-- `ar5iv.labs.arxiv.org` → 403
-- `paperswithcode.com` → 403
-- `github.com/microsoft/SeqML/ContiFormer` (README) → **성공**
-- `github.com/microsoft/physiopro` (소스 트리) → **성공**
-
-본 해체는 (a) 공식 구현 소스코드, (b) README에 명시된 하이퍼파라미터·데이터셋, (c) 공개된 NeurIPS 2023 프로시딩에 대한 선지식을 교차 검증해 작성. 수식 표기가 원문과 정확히 일치하지 않을 수 있으므로 인용 시 재확인 필요.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "MpzIlwdNPmuxNXYXqMXUpQ==",
+  "iv": "/MLrM2sJ+oACs4f0pxuuXA==",
+  "ct": "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",
+  "mac": "Y9K+Dv9Qbq9oSgpP3C6NLAG/5cgxkZvJCLwnik2pjws="
+}

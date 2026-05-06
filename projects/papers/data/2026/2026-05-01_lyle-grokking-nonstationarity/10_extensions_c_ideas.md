@@ -1,86 +1,11 @@
-# 10c — 사고 확장: 실험 아이디어 2개
-
----
-
-## 실험 아이디어 1 — ELR 역학이 TS 트랜스포머 Grokking을 예측하는가?
-
-### 가설
-시계열 트랜스포머(PatchTST, iTransformer)를 비정상 합성 데이터(regime-switching)로 훈련할 때, **ELR 붕괴 속도**가 grokking(지연된 일반화) 발생 시점과 강한 역상관 관계를 보인다. 즉, ELR이 빨리 붕괴할수록 grokking이 더 늦게 또는 아예 발생하지 않는다.
-
-### 데이터 설계
-- **Synthetic Regime-Switching**: AR(1) 프로세스 2개를 주기적으로 전환. Parameter A: $y_t = 0.8 y_{t-1} + \epsilon_t$ (지속적), Parameter B: $y_t = -0.3 y_{t-1} + \epsilon_t$ (평균회귀). 전환 주기는 100 스텝.
-- **ETT-mini** (실제 데이터 검증): Oil temperature 예측.
-- 훈련:테스트 비율 = 40:60 (의도적으로 소량 훈련, grokking 유도 조건)
-
-### 비교 조건
-1. Baseline: standard Adam, weight decay 없음
-2. Weight Decay: Adam + L2 $\lambda = 0.01$ (Power 2022 설정)
-3. NaP: ELR 일정 유지
-4. ELR Re-warming ($T = 100$)
-5. ELR Re-warming ($T = 500$)
-
-### 측정 지표
-- 테스트 MSE 곡선 (훈련 스텝 × 테스트 MSE)
-- ELR_t 곡선 (각 레이어별)
-- **Grokking 발생 시점**: 테스트 MSE가 훈련 MSE의 1.2배 이하로 처음 떨어지는 스텝
-- Nanda 진행 측도: restricted weight norm (= 1/ELR 역수)
-
-### 예상 결과
-- Baseline: grokking 없음 (ELR → 0)
-- Weight Decay: grokking 발생 (수천 스텝)
-- NaP: grokking 발생 (weight decay보다 빠름 또는 비슷)
-- Re-warming T=100: grokking이 가장 빠름 (주기적 ELR 복원)
-- Re-warming T=500: grokking이 Re-warming T=100보다 느리지만 Baseline보다 빠름
-
-### 반증 조건
-만약 ELR re-warming을 적용해도 grokking이 발생하지 않는다면, TS 트랜스포머에서 grokking을 막는 다른 요인(시계열의 강한 temporal correlation, 데이터 분포의 연속성 등)이 있는 것이다.
-
-### 비용 추정
-- 모델 크기: 2층 PatchTST (파라미터 ~500K)
-- 훈련 스텝: 50K per condition × 5 conditions × 3 seeds = 750K 스텝 총
-- 예상 실행 시간: 1 GPU × ~6시간
-- 구현 복잡도: 낮음 (NaP/Re-warming은 10줄 코드)
-
----
-
-## 실험 아이디어 2 — Head-Wise ELR과 Attention Motif 등장의 상관관계
-
-### 가설
-트랜스포머에서 Attention Head마다 **Head-Wise ELR**을 측정했을 때, 특정 motif(diagonal, stripe, global average 등)가 등장하는 시점과 해당 head의 ELR이 높은 시점이 상관관계를 보인다. 구체적으로: "High ELR head → task-specific motif 형성 먼저". 이것은 APF(Attention Pattern Fields) 트랙에서 관찰하는 PE × motif 관계에 ELR 역학 차원을 추가한다.
-
-### 데이터 설계
-- Modular arithmetic (표준 grokking 설정, $p = 97$)
-- 소형 트랜스포머: 2층, 4 head per layer
-- 입력: one-hot encoded integers
-
-### 측정 지표
-- **Head-Wise ELR**: 각 head의 QKV 행렬 노름으로 계산
-  $$\text{ELR}_t^{(l,h)} = \frac{\eta}{\|\theta_t^{(l,h)}\|}$$
-  ($\theta_t^{(l,h)}$: 레이어 $l$, head $h$의 QKV 파라미터 concat 벡터)
-- **Attention Motif Score**: 각 head의 attention 행렬 $A^{(l,h)} \in \mathbb{R}^{n \times n}$에 대해:
-  - Diagonal score: $\text{tr}(A^{(l,h)}) / n$
-  - Stripe score: $\max_i \sum_j A^{(l,h)}_{ij} / n$ (행 최댓값)
-  - Flat score: $1 - \text{Var}(A^{(l,h)}) \cdot n^2$
-- **Mutual Information** between ELR_t^{(l,h)} and Motif_Score_t^{(l,h)} across time
-
-### 비교 조건
-1. Standard training (ELR 자연 감소)
-2. NaP (ELR 일정)
-3. ELR Re-warming (ELR 주기적 상승)
-
-각 조건에서 head별 ELR × motif 상관관계 비교.
-
-### 예상 결과
-- **Standard training**: 초기 high-ELR 기간(스텝 0~1000)에 task-specific motif 형성 시작. ELR 붕괴(스텝 > 2000) 후 motif가 고정 또는 소멸.
-- **NaP**: ELR이 일정하게 유지되므로 motif가 더 안정적으로 발전.
-- **Re-warming**: Re-warming 직후 ELR이 상승하고, 이 시점에 motif가 재조직화됨. 마치 "motif가 주기적으로 리셋 후 재형성"되는 패턴.
-
-### 반증 조건
-만약 head-wise ELR과 motif score 사이에 유의미한 상관관계가 없다면, motif 형성은 ELR 독립적인 다른 메커니즘(예: attention head specialization의 경쟁, entropy regularization 등)에 의해 결정되는 것이다.
-
-### 비용 추정
-- 모델 크기: 2층 트랜스포머, 4 head ($p=97$ 모듈러 산수)
-- 훈련 스텝: 20K × 3 conditions × 5 seeds = 300K 스텝
-- 추가 로깅: 매 100 스텝마다 attention 행렬 + 파라미터 노름 저장 → ~1GB
-- 예상 실행 시간: 1 GPU × ~3시간
-- APF 트랙과의 시너지: 이 실험 결과를 APF 논문의 appendix에 직접 포함 가능. "ELR 역학이 attention motif 형성에 미치는 영향"이라는 새 분석 축 추가.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "rGKr1Agna9w4hV+2w+sVXw==",
+  "iv": "5JSPeHbajLo9hDfwDM3EAg==",
+  "ct": "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",
+  "mac": "7lMQAfFqYYIjmiJwb/TuSqZM7y8pUQbFiGEdDwqcLxU="
+}

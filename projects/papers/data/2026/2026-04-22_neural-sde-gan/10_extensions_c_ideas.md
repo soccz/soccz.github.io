@@ -1,80 +1,11 @@
-# 10c · 실험 아이디어 2개
-
----
-
-## 아이디어 1 — Economic Time으로 구동되는 Neural SDE: 시간-변환 생성자
-
-### 가설
-
-Clark (1973)의 경제 시간(economic time)으로 SDE 시간축을 교체하면 — 즉, $dY_{\tau(t)} = \mu_\theta(\tau, Y)\,d\tau + \sigma_\theta(\tau, Y)\,d\tilde{W}_\tau$ 에서 $\tau(t) = \int_0^t v(s)\,ds$ ($v$: 거래량) — 표준 SDE 생성자 대비 금융 경로 생성 품질이 향상된다. 특히 변동성 클러스터링 재현 지표에서 차이가 나타날 것이다.
-
-### 데이터
-
-- S&P500 구성 종목 일간 종가 + 거래량 (2010–2023, Yahoo Finance)
-- 비교용: OU 합성 경로 (단순 baseline)
-
-### 비교 조건
-
-| 조건 | 설명 |
-|------|------|
-| Baseline | 표준 Neural SDE GAN (wall-clock time $t$) |
-- | Ours | Economic Time Neural SDE GAN ($\tau(t)$ 기반) |
-| Ablation 1 | $\tau(t)$ 대신 cumulative bid-ask spread (거래 비용 기반 시간) |
-| Ablation 2 | $\tau(t)$ 대신 VIX 기반 시간 (변동성 지수 누적) |
-
-### 예상 결과
-
-- Economic time 기반 SDE가 변동성 클러스터링 지표(ARCH(1) 계수 차이)에서 baseline을 개선.
-- ACF(자기상관함수) 비교에서 economic time 생성 경로의 단기 의존성이 실제 데이터와 더 일치.
-
-### 반증 조건
-
-- Economic time 기반 SDE가 baseline 대비 TSTR·discriminative score에서 유의미한 차이가 없다면 → "economic time이 생성 품질에 유익하지 않다"는 반증. 이 경우 Paper 4의 주장을 생성 맥락이 아닌 *예측* 맥락에만 한정해야 한다.
-
-### 비용 추정
-
-- 코드: torchsde 기반, 시간 변환 적용 ≈ 2일
-- 학습: GPU 1개, 10 epochs × 50 배치 ≈ 4~6시간
-- 전체: ≈ 1주일 (데이터 정리 포함)
-
----
-
-## 아이디어 2 — Neural CDE 판별자 vs. Transformer 판별자: Paper 2 재검증
-
-### 가설
-
-Neural CDE 판별자와 Transformer(이산 attention 기반) 판별자를 동일한 Neural SDE 생성자에 붙였을 때, Transformer 판별자는 장기 의존성 캡처에서 Neural CDE와 유사하지만, *불규칙 관측 시계열*에서는 Neural CDE가 의미 있게 우수하다. 이 차이는 Paper 2의 "Representation Utility Gap"의 시계열 생성 유사체이다.
-
-### 데이터
-
-- 불규칙 관측 OU 과정 (관측 확률 $p \in \{0.3, 0.5, 0.8, 1.0\}$으로 랜덤 다운샘플)
-- 이 설정에서 두 판별자의 discriminative score와 TSTR을 비교.
-
-### 비교 조건
-
-| 조건 | 판별자 | 생성자 |
-|------|--------|--------|
-| A | Neural CDE | Neural SDE |
-| B | Transformer (sin PE) | Neural SDE |
-| C | Transformer (learnable PE) | Neural SDE |
-| D | LSTM | Neural SDE |
-
-### 예상 결과
-
-- 규칙 관측($p=1.0$): A ≈ B > D (Transformer와 CDE 동등)
-- 불규칙 관측($p=0.3$): A > B > C > D (불규칙 간격에서 CDE가 명확히 우세)
-- 이 결과는 "이론적으로 최적인 판별자 = CDE"의 실험적 지지 + 불규칙 관측에서의 실용적 우위를 동시에 보여준다.
-
-### 반증 조건
-
-- Transformer (learnable PE)가 Neural CDE와 통계적으로 동등하다면 → "CDE의 이론적 우위가 실용에서 발현되지 않는다"는 반증. 이 경우 더 간단한 Transformer 판별자로 대체하는 것이 효율적임을 의미한다.
-
-### Paper 2 연결
-
-이 실험의 "conditioning mechanism"을 판별자 구조로, "representation utility"를 생성 품질로 매핑하면 — Paper 2의 결론("input-space conditioning vs. coordinate-space conditioning의 utility gap")을 생성 모델 판별자 영역에서 재검증하는 실험이 된다. 두 실험 결과가 일치하면 "conditioning space의 선택이 용도(예측/생성)와 무관하게 성능에 영향을 준다"는 더 강한 주장이 가능해진다.
-
-### 비용 추정
-
-- 코드: torchsde + HuggingFace Transformer ≈ 3일
-- 학습: GPU 1개, 4개 조건 × 4개 결측 비율 = 16 실험, 각 2시간 ≈ 32시간
-- 전체: ≈ 2주일
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "7tThlIunjGXTDITfSFTO1w==",
+  "iv": "dRNyZ+NyhqErZJAvBn2gTQ==",
+  "ct": "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",
+  "mac": "hia9qgFyUeMB9woGmdY+dxALkBiN5Y2QE2n2CR9KxAo="
+}

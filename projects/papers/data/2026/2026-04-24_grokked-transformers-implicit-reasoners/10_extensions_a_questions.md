@@ -1,55 +1,11 @@
-# 10a — 사고 확장: 자문 질문 5개
-
----
-
-## Q1. Grokking이 시계열 트랜스포머에서도 일어나는가? 어떤 조건에서?
-
-**왜 이 질문이 중요한가**:
-
-이 논문의 핵심 발견은 "합성 KG 추론"에서의 grokking이다. 시계열 예측 트랜스포머(PatchTST, iTransformer)에서도 유사한 현상 — 훈련 손실 수렴 후 갑작스러운 검증 성능 도약 — 이 일어나는가? 만약 그렇다면 어떤 조건(weight decay, 데이터 분포, 아키텍처 크기)에서 일어나는가?
-
-이 질문에 답하는 것이 사용자의 "Grokking in Time Series Transformers" 트랙의 출발점이다. 긍정 결과는 논문의 핵심 contribution이 되고, 부정 결과(TS에서 grokking이 없다)도 흥미로운 발견이 될 수 있다.
-
----
-
-## Q2. Composition OOD 실패가 "더 긴 훈련"으로 극복되는가, 아니면 영구적인 구조적 한계인가?
-
-**왜 이 질문이 중요한가**:
-
-본 논문은 Composition OOD 실패를 "비순환 트랜스포머의 구조적 한계"로 진단하지만, 이 결론은 150만 스텝 내의 관찰에서 도출됐다. 만약 5천만 스텝, 혹은 충분히 큰 모델에서 훈련하면 OOD가 해결되는가? 
-
-이 질문은 "grokking을 얼마나 오래 기다려야 하는가"의 실용적 함의뿐 아니라, "구조적 한계"라는 주장의 강도를 결정한다. He et al. (2026) "Is Grokking Worthwhile?"가 이 방향으로 비판을 제기하고 있다.
-
----
-
-## Q3. φ (inferred/atomic 비율) 개념을 시계열 데이터에서 어떻게 정의할 수 있는가?
-
-**왜 이 질문이 중요한가**:
-
-KG에서는 "원자 사실"과 "추론된 사실"이 명확히 구분된다. 시계열에서 이에 해당하는 것은 무엇인가? 
-
-후보 정의:
-- **원자 패턴**: 단순 주기(단일 sin), 단일 추세(선형), 단일 레짐
-- **추론된 패턴**: 원자 패턴의 조합 (추세 + 계절성, 여러 주기의 합, 레짐 전환 + 주기 변화)
-
-TS에서의 $\phi$ 정의가 가능하고, 이를 데이터 설계에 활용하면 "어떤 비율의 복합 패턴이 트랜스포머의 일반화 학습을 가속하는가"라는 실용적 가이드라인이 나온다. Grokking track의 contribution 후보 중 하나.
-
----
-
-## Q4. Parameter Sharing이 "경제적 시간" 조건화와 결합될 때 어떤 효과를 내는가?
-
-**왜 이 질문이 중요한가**:
-
-본 논문의 parameter sharing 실험은 "같은 레이어를 반복 통과"해 정보 재순환 효과를 얻는다. EOA(Paper 4)의 Neural ODE 레이어는 연속 시간 위에서 같은 dynamics를 반복 적용한다는 점에서 구조적으로 유사하다. 두 아이디어를 결합하면 "economic time 조건화 + 순환적 정보 흐름"을 동시에 갖는 모델이 된다.
-
-이 결합이 시계열 예측에서 grokking을 빠르게 유도하거나, OOD 레짐에서 일반화를 향상시키는가? EOA와 Grokking track의 교차점에 있는 질문이다.
-
----
-
-## Q5. GPT-4 수준의 LLM을 동일 KG로 파인튜닝하면 더 빠르게 grokking이 일어나는가?
-
-**왜 이 질문이 중요한가**:
-
-본 논문은 GPT-2 수준의 소형 트랜스포머를 처음부터 훈련한다. 실제로 연구자들이 LLM을 특정 추론 태스크에 파인튜닝할 때 grokking이 일어나는가? 사전학습된 representation이 $\mathcal{C}_\text{gen}$ 형성을 가속하는가, 오히려 방해하는가?
-
-이 질문은 "Foundation Model fine-tuning"이 grokking의 관점에서 어떻게 이해될 수 있는지를 묻는다. 실용적으로 중요한 것은, ProTran-TFA나 Chronos 같은 foundation TS 모델을 금융 데이터에 파인튜닝할 때 grokking이 일어나는지 여부다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "Ro5zZz9u+BeWfHwWbTj3+Q==",
+  "iv": "3ZbLfYn7ETCK5vJfxZD0aA==",
+  "ct": "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",
+  "mac": "FIda4FkX/7g+UNpoYh+F/QYd6ptX6KnIT5bu0qgLbyI="
+}

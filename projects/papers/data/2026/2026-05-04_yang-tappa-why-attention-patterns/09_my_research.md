@@ -1,77 +1,11 @@
-# 09. 내 연구와의 연결 (APF 정면 충돌 + 흡수 전략)
-
-## 연결 강도 진단
-
-`_profile.md` 에 이미 명시: *"Concurrent work 2개 식별: arXiv:2511.21514 (Kalnāre 2025), **arXiv:2601.21709 (Yang ICLR 2026)**"*. 즉 본 논문은 사용자 APF 의 **명시된 직접 경쟁 작업**. 연결 강도 = 매우 강함 (§C 직접). 약한 연결 표기 불요.
-
-## APF 와 TAPPA 의 매핑 (axis-by-axis)
-
-| APF 의 단계 | TAPPA 의 대응 | 충돌/보완 |
-|---|---|---|
-| (a) PE 비교 (NoPE/sin/learned/RoPE/ALiBi) × motif 분포 측정 | RoPE 만 분석, low/high freq channel 분해 | **부분 충돌**: TAPPA 가 RoPE 만 다뤄 NoPE/ALiBi 비교는 APF 의 niche |
-| (b) Motif → CNN probe → 분류 | q-similarity (학습 free metric) → motif 직접 환원 | **strong 충돌**: TAPPA 가 한 줄 metric 으로 CNN probe 의 분류 중 일부 (slash/sink/reaccess) 를 해결. APF 의 motif typology (diagonal/stripe/block/edge/spike/checker) 와 정확히 겹치지 않음 — APF 는 6개, TAPPA 는 3개. APF 의 stripe/block/edge/spike/checker 는 TAPPA 미커버 |
-| (c) Causal intervention (motif swap) | 미언급 (필자 추정) | **APF 의 본질적 niche**: TAPPA 는 q-similarity 가 metric 일 뿐 attention map 을 직접 perturb 하는 intervention 부재 |
-
-## 흡수할 기법 (구체)
-
-### 흡수 1. q-similarity 를 APF 의 motif sweep 의 통제 변수로
-
-APF 는 현재 motif sweep 을 PE × motif type 의 2축 격자로 진행 (`_profile.md`: "PE 비교 × motif 종류"). 여기에 TAPPA 의 q-similarity 를 **세 번째 축** 으로 추가:
-
-- 합성 데이터 (logistic map, sin/periodic, regime-switching) 에서 query self-similarity 를 인위적으로 통제 (예: 입력 token sequence 의 autocorrelation 을 조절)
-- 같은 PE 에서도 q-sim 통제로 motif 가 어떻게 바뀌는지 측정
-- Result: motif typology 가 (PE, q-sim) 의 2D 함수임을 시각화
-
-이것이 APF 의 framing 을 "PE 가 motif 결정" 에서 "PE × query dynamics 가 motif 결정" 로 격상시키는 직접 흡수. TAPPA 를 넘어서는 점은 **TS 도메인** + **multi-PE 비교** + **causal intervention**.
-
-### 흡수 2. RoPE channel decomposition 을 APF 의 PE 분석에 차용
-
-APF 의 PE 비교 단계에서 RoPE 의 frequency band 별 ablation 추가. 현재 APF 는 PE 별 비교 (RoPE vs ALiBi vs ...) 를 head-level 로 수행 추정. 거기에 RoPE channel 의 low/high freq 분리 ablation 을 추가하면 motif 별 PE channel response 의 정량 매핑 가능. TAPPA 의 Theorem 5.2 를 직접 lemma 로 인용.
-
-### 흡수 3. q-similarity 를 grokking phase transition 의 signature 로 (cross-track)
-
-사용자의 다른 active track (Grokking in TS Transformer) 에서 학습 중 q-similarity 의 evolution 을 추적. 가설: grokking 발생 직전 q-similarity 가 sharp transition 을 보일 수 있음 (representation collapse → structure 의 phase change 와 동기). 이건 TAPPA 의 inference-time metric 을 training-time signature 로 확장하는 것 — TAPPA 본문에 없는 새 use case.
-
-## 충돌 / 경쟁 지점
-
-### 충돌 1. APF 의 motif typology 우위가 TAPPA 의 통합 framing 으로 약화 위험
-
-APF 의 6 motif typology (diagonal/stripe/block/edge/spike/checker) 가 만약 TAPPA 의 (slash, sink, reaccess) + "noise" 의 4-cell 분류로 환원 가능하다면, APF 의 typology contribution 이 약해짐. 대응:
-- **APF 의 motif 가 TAPPA 의 4-cell 로 환원 안 되는 case** 를 명시 (예: stripe 는 multiple parallel slash, block 은 attention 이 chunk 단위로 cluster — TAPPA 의 q-sim 만으로 설명 안 됨)
-- APF 의 motif 가 **TS 도메인 특화** (regime change → block, anomaly → spike) 임을 강조 — TAPPA 는 LLM 일반 도메인.
-
-### 충돌 2. TAPPA 가 이미 ICLR 2026 게재라 APF 의 attention-as-explanation foundation 작업이 늦어 보일 위험
-
-대응:
-- APF 가 (i) **TS 도메인** (TAPPA 는 LLM), (ii) **multi-PE 비교** (TAPPA 는 RoPE only), (iii) **causal intervention** (TAPPA 는 metric only) 의 3 niche 점유. 이 셋을 본문에서 prominently 강조.
-- TAPPA 를 lemma 로 인용 (Section 2 Related Work + Section 3 Method 의 RoPE 분석 부분). "Yang et al. 2026 introduce q-similarity for LLM. We extend this lens to time series and multi-PE comparison with causal intervention."
-
-### 충돌 3. APF 가 `TMAO method falsified at n=12` (`_profile.md`) 로 한 method 이미 fail. TAPPA 의 q-similarity 가 더 강력한 metric 이라면 APF 의 다음 method 가 같은 fate 위험
-
-대응:
-- TMAO falsification 이 APF 의 **motif causality 실험 진행 중** 으로 이어진 것은 정상적 부정적 결과 (Lyle 2025 처럼 "negative result 의 가치"). TAPPA 의 q-similarity 는 LLM 에서 작동, **TS** 에서 작동하는지는 미증명 — 이걸 APF 의 첫 sanity check 로 삼아 TAPPA 의 metric 이 TS 에서 fail 하면 APF 의 motif typology niche 가 오히려 확대.
-
-## 인용 포인트 (구체 문장 초안)
-
-### Pos 1. Related Work 섹션의 첫 paragraph (Recent unifying frameworks 소절)
-
-> "Most relevant to our work is the recent TAPPA framework (Yang et al., ICLR 2026) [arXiv:2601.21709], which proposes that LLM attention patterns can be explained by query temporal self-similarity combined with RoPE frequency-channel response. While TAPPA achieves elegant unification for three LLM motifs (re-access, sink, slash) on RoPE-based language models, it does not address (i) non-RoPE positional encodings, (ii) the time-series domain where motif typology is dominated by regime-change and anomaly patterns absent in language, or (iii) causal interventions on motif structure. Our APF framework extends Yang et al.'s lens to all three settings."
-
-### Pos 2. Method 섹션의 PE 분석 시작부 (Section 3.1 또는 Lemma 1 인용)
-
-> "We adopt the RoPE frequency-channel decomposition of Yang et al. (2026) [Theorem 5.2 of arXiv:2601.21709], which states that under high query self-similarity, the simultaneous-shift invariance of RoPE rotation matrices propagates attention scores along the (+1, +1) diagonal. We extend this analysis by (a) measuring query self-similarity for time-series Transformers (PatchTST, iTransformer) where token-level semantics differ from language, and (b) systematically comparing across NoPE, sinusoidal, learned, RoPE, ALiBi to test the generality of the q-similarity × PE-channel decomposition."
-
-### Pos 3. Discussion / Limitations 섹션
-
-> "Our motif typology contains 6 categories (diagonal, stripe, block, edge, spike, checker), of which 3 (diagonal, edge, spike) directly correspond to TAPPA's (slash, sink, partial reaccess). The remaining 3 (stripe, block, checker) are time-series-domain-specific patterns reflecting periodicity, regime structure, and frequency drift — phenomena absent in language modeling and not covered by Yang et al.'s framework."
-
-## 반면교사
-
-- TAPPA 가 **causal intervention 부재** 는 APF 의 step (c) 가 차별화 핵심임을 재확인. APF 의 motif swap intervention (synthetically constructed attention map 을 model 에 injection 후 output 변화 측정) 이 TAPPA 가 못한 인과성 증명을 제공.
-- TAPPA 가 **NoPE/ALiBi 미다룸** → APF 의 multi-PE 비교가 ICLR 2026 이후 reviewer 가 가장 먼저 요구할 ablation 의 정확한 영역. 이건 niche 확보 신호.
-- TAPPA 의 GitHub 가 **부분 공개** (KVCache 만, Pruning/Visualization 미공개) → APF 가 from day 1 full code release + reproducibility 강조하면 community impact 차별화.
-- TAPPA 가 **헤드라인 수치** 만 제시 (분산·서브태스크 분해 미확인) → APF 는 분산 + 서브 motif breakdown 을 default 로.
-
-## 핵심 한 문장
-
-> **TAPPA 는 APF 의 attention-as-explanation 사다리 중 첫 두 칸 (PE → motif framing, motif typology 의 일부) 을 닫았으나, 시계열 도메인 + multi-PE 비교 + causal intervention 의 세 niche 가 APF 에 남아 있다 — 본 논문을 인용 lemma 로 활용하면서 APF 의 차별화 3 영역을 본문에서 prominently 강조하면 reviewer 의 첫 질문 ("how does this differ from Yang 2026?") 에 즉답 가능.**
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "FQD/Ki8jUoDmYmUSrwWgEg==",
+  "iv": "C9MsZh32Hr1E8DnE6fLl9A==",
+  "ct": "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",
+  "mac": "thB5redxBiNAp/HaaIkena04gQavwfl5MDDkaRZ3nF0="
+}

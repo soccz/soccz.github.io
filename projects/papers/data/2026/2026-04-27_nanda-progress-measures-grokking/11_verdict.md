@@ -1,7 +1,11 @@
-# 10. 한 줄 판결
-
-> "Grokking 은 generalization 의 지연이 아니라 circuit cleanup 의 지연이다 — 그리고 진행도는 회로의 Fourier sparsity 로 직접 잴 수 있다."
-
-본 논문은 grokking 의 *현상학* 을 *메커니즘론* 으로 전환한 transition paper 이며, 사용자의 Grokking active track 의 *이론 척추* + APF active track 의 *motif progress measure 의 원형* 으로 동시에 작동한다. *modular addition* 이라는 toy 위에서 *깊고 닫힌 회로* 를 보여줌으로써, "회로 가설 + 인과 검증 + 진행도 측정" 의 mech interp 표준 method 를 정착시켰다.
-
-내 연구 지도에 핀으로 꽂는 위치: **Grokking paper 의 §3 (Method) 와 APF paper 의 §4.3 (Motif Dynamics) 의 양쪽 척추 인용**. 본 논문이 *못 한 것* — non-stationary task 에서의 회로 변동, online 회로 발견, 비algebraic task 일반화 — 가 정확히 사용자의 *contribution 영역*. 즉 "Nanda 위에 한 단계" 가 사용자 thesis 의 selling point.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "/1vzwAEKUU7VJyuCbPnbAQ==",
+  "iv": "A2/ApSF0/bR/7s9fF9/bwQ==",
+  "ct": "YK5rbx50OdL797Qgahjpci2gJSoBUnY+SCI/qChaz4HXCZM+bm12ZuxdRCYdxqI82bP9jFs7VXVHYAB6vFzluPgYeHh8TH22TzD+z6AsEsMD8emulD2nX9Mab6lwNY6X4DPZbYzVY65PxBWFsUEjcv1AcXywJ8pXByQahGFYybNHCDK/+b1G3Yz8iF1yuLQMhXH/WQzn02ZuLKN1WpsbH3AZmXPheJcJNmKk8XBvOCbT50aBBMpPwAe3hqPcUYzklL82LojcTdVYJ7KJVA4wjWTYeuqTz3/A29gNqa4jKPR7KQkuxx+Tuay+RjTSvd6v9T5CjuBOYbj62C7uAOh4V+J3iSbcjo6EezgesBNg3MYit2OmpGcN1f3IvdCzPppsOej3ebremt29a7xmnY3KuzpZ0vWHnRh9usXvk14Fq4gKwMB2jtJW6PP9HL36jo+3Jo6NjiqBU2O9edgc4F/1WrehGaj1ABVN/Wfoxrxhh/bEdcsWaHgYIGzDCGJLJtmn0QkIxgnTVJwouSWrLObv/uPq5NnlPTIyeOo7CibUZLGIyE7sRCPhFlcy8aZyiK/FA8exdQowy6zFv4ovfbGHB8gkajN1Kh15muAALL5qg2j9RtQxfEC2YfvfY1rRBZ/ATGQFkBsnm3Z847rNPVliRGPcmQJ2NyJjWVp003RugMgiHX/BjGMlDOcHM3dSsAS3fUssxXJyexrFE944dnXovVXZXT+FLoRUc/LB81+C9hlTKLn15/daeyK2cwfvf+ywUh9+RlKH9lf22UUMxhT7ITG3hw+WXTqz+djETzbh/6g39Bf3H+hGVHwkOXjmhIncuLJ7rAhnnhDuRwswRf7qy8eQxu7+Z/H/g9BdHr1IrJbRE6b5ZaOz1fQ25GZmaKiT81daW4lYo6R7rWGY0/0cuDaNCwfaj1r2hMCierWoMdGVo2zZSKk5QLaMWvZqnKJ78sskP5cCC7qpaNRHxjXv+y59da0zU5tghd5y1kzLJzPnqdPi1rlTnuXUUDDv/AyjRaHjlWlZx8xDFYgBFVeCkh9SMpzpt0xWG+7E6EipDdwlfyWytn/iZw79x/WEt42c6g1eZVTJ6K0RX6HtpLkP9UvtzpiY2JB4JvSpkUsCEERHtvHdguQR8VyMunrcyNRwbLPULG/z5gmwv/lIWAWcOIcNu2lXgd3YrD9m3u5l9d0poKJGSb2faWB9+6ffvn7cHyFpHs1jhf3LvhdhOxl/LthqlEFOkUDMbrQvQIuR97N0CMXYe/DEb5jr1CDvAa2f02PUqccMJDjNgcRALl4PMYL1upyPdcfdGaSCoWdWFVMTGY17N/YLSW8CvPCHcwdYPZ8Gyza8YOOaYsmflKTqfbMlyQmhYoTPgVbfQPXxLUo=",
+  "mac": "gvyujIf2CvnE2ifbULQRYr5YdtG0FT+2LA1Ms9IoXbU="
+}

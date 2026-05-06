@@ -1,37 +1,11 @@
-# 10-B. 사고 확장 — Follow-up 논문 3편
-
----
-
-## 선행 논문 — Crossformer (Zhang & Yan, ICLR 2023)
-
-**arXiv ID**: arXiv:2303.06208
-
-**한 줄 설명**: T×T와 N×N 어텐션을 계층적으로 결합한 "양방향 어텐션" 트랜스포머.
-
-**iTransformer와의 관계**: Crossformer는 "시간 방향 + 변수 방향 어텐션 모두 필요하다"는 입장이고, iTransformer는 "변수 방향만으로 충분하다"는 입장이다. 이 대립은 해결되지 않았다. Crossformer는 ETT처럼 변수 수가 적고 시간 구조가 복잡한 데이터에서 더 경쟁력 있을 수 있다.
-
-**무엇을 얻을 수 있는가**: iTransformer와 Crossformer를 같은 데이터에서 비교하면 "양방향 어텐션의 추가 비용 대비 이득"을 정확히 측정할 수 있다. APF 연구에서 "T×T + N×N 하이브리드 어텐션 맵의 2D 모티프"라는 새로운 분석 대상이 나온다.
-
----
-
-## 경쟁 논문 — TimeMixer (Wang et al., ICLR 2024)
-
-**arXiv ID**: arXiv:2405.14616 (ICLR 2024 Oral)
-
-**한 줄 설명**: 다중 스케일 분해(Past Decomposable Mixing + Future Multipredictor Mixing)로 TS를 예측하는, 트랜스포머 없는 MLP 계열 모델.
-
-**iTransformer와의 관계**: 같은 ICLR 2024 발표, 같은 thuml 랩에서 나온 경쟁 아키텍처. TimeMixer는 어텐션 대신 다중 해상도 MLP 혼합을 사용하며, 일부 벤치마크에서 iTransformer와 비슷하거나 더 높은 성능을 보고한다. "어텐션이 정말 필요한가, 아니면 MLP 혼합으로 충분한가"라는 더 근본적인 질문을 제기한다.
-
-**무엇을 얻을 수 있는가**: Grokking 연구 관점에서, 어텐션이 없는 TimeMixer의 훈련 동학과 이텐션이 있는 iTransformer의 훈련 동학을 비교하면 "어텐션이 Grokking에 필수인가"를 검증할 수 있다. APF 연구 관점에서는, "어텐션 없는 모델이 어텐션 있는 모델과 비슷하게 잘 된다면, T×T 어텐션 모티프의 기능적 역할은 무엇인가"라는 질문을 더 날카롭게 만든다.
-
----
-
-## 후속 논문 — Interpretability for TS Transformers via Concept Bottleneck (Sprang et al., 2024)
-
-**arXiv ID**: arXiv:2410.06070
-
-**한 줄 설명**: 개념 병목 모델(Concept Bottleneck Model)을 TS 트랜스포머에 통합해, "이 모델이 어떤 시계열 개념(계절성, 추세, 변곡점)을 사용해 예측하는가"를 해석 가능하게 만드는 프레임워크.
-
-**iTransformer와의 관계**: iTransformer의 N×N 어텐션이 "변수 상관관계"를 포착한다고 주장하지만, 이것이 실제로 해석 가능한 개념(예: "냉방 수요가 온도 증가 신호에 반응")으로 분해될 수 있는지 검증하지 않는다. Sprang 2024의 Concept Bottleneck을 iTransformer에 적용하면 N×N 어텐션이 어떤 개념적 단위로 동작하는지 시각화할 수 있다.
-
-**무엇을 얻을 수 있는가**: APF의 "2D 어텐션 모티프 → 예측 개념 연결" 분석을 N×N 어텐션으로 확장하는 구체적 방법론을 제공한다. Amsterdam NLP 그룹(Zuidema)의 해석 가능성 방법론이 TS 도메인에서 어떻게 적용되는지 파악하는 필수 선행 논문이다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "7AW1OYK1KMfyZsUIomjVLw==",
+  "iv": "fYDCk4u1ok2GIqHHOvVxBg==",
+  "ct": "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",
+  "mac": "De4Q6el98JxEokGV6FiiQ7+BEgjWYvs2TAHyEGMV+kM="
+}

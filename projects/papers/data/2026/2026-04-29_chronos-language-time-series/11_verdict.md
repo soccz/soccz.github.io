@@ -1,13 +1,11 @@
-# 11. 한 줄 판결
-
-> **판결**: Chronos는 "시계열을 언어로 치환하면 NLP 인프라 전체를 무료로 얻는다"는 발상의 실증 성공작이며, APF 시각에서는 "파운데이션 모델이 TS 토큰에서 형성하는 어텐션 패턴"이라는 미개척 해석 공간을 열어놓았고, Grokking 시각에서는 "이산 토큰 cross-entropy 학습이 만드는 지연 일반화" 가설의 자연 실험 대상이다.
-
----
-
-**판결 보충 (3줄)**:
-
-1. **아키텍처 혁신이 아닌 패러다임 이식**: Chronos의 강점은 새로운 수식이나 아키텍처가 아니라, NLP의 검증된 인프라(T5, cross-entropy, 대규모 사전학습)를 TS에 성공적으로 이식했다는 실행력이다. 단순함이 강점이자 한계 — 금융 tail risk, 다변량 의존성, 어텐션 해석 가능성 모두 미해결.
-
-2. **APF/Grokking의 분석 대상**: 논문 자체는 어텐션 패턴을 전혀 분석하지 않는다. 이것은 공백이다. Chronos를 APF의 "파운데이션 모델 어텐션 패턴 분석" 확장 실험 대상으로 설정하면, APF의 기여를 소형 특화 모델을 넘어 파운데이션 모델 수준으로 확장할 수 있다.
-
-3. **금융 응용의 명확한 개선 방향**: 균등 bin의 꼬리 실패 → log-return 적응 bin으로의 수정이 ProTran-TFA의 기술 기여가 될 수 있다. Chronos-2가 다변량을 해결했다면, 금융 특화 토크나이제이션은 아직 열린 문제다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "WZaBm6ic8dbh+/T8BiyrjA==",
+  "iv": "hGlUeGlUiNCqE2tHGb2z9Q==",
+  "ct": "fUI3y53lKCTgeETs5VXZUUELA4G0PiR96z87Anqo8mQvXGxOtIikv/3Tlt4ODRCFOwluFyFCC8jcGA2IuqVGG14N8Ndwd+BpTIe+IdhiO146iMd1/jX1IXnPGLwU3P3d4UuY+Hhb8bBaTG3I3W3zqv+jofi729ixyh0ogIDhrE+aLRzLl3B+7+MBHL1wWAWJdTQ4qyiaGkH3sCz7PMhiVZ/cg4Z9bsOTz0gWG8F7ZbwiO6b/ONGQ6o1EFdn/dbWPDVEYyENgukusCsgbHjD5XgSFkxjUyuXkZhIKCk2ZMwb9brrtpby9SR6qlHulD+Fz00Q7PTOqSiRvqarFJrDrFvjSemGEJxh/w+dAR6cCHy/7hgOv136ALhRv4Cspv1HDEZYEdBmWGqNP/Kr1LWZ70tRheEiIz8pxDKjFDlUVkffLelPzR+QhmGXSpcKI13c9EC6XIgaI6B28ToxfPQL9aCK1PqtQvmrdprG3qfUWlEcvFY8qAwx+YWfEWj/OKxDmEPHfNeDSV708B4KLiqcDMYoA69Xs4y6CNXgU6L1wssGjt8tQQB6SpgXvss40ALgm9vB9DerFEhxcY9aH5JsS2nh/9UlK9w5Fi9YYQP0ZqUQAipdNgzXddO8nnkcoyo3d2XJaxC5D0MO05zdXtD0//GQJpXKlYc1k1AtEbllxhVV3/W0wBfeFeZs4b2ge4CZgZri4Ci4y4ri59dCR3H/no5iyTrRlUj1d5M4mCGDVnBuwJarSb9VCZZxiRDESL97aoQKiT7ZRPtGuM1VykVdqqMfAH4pfS/4H5Ohiv7wclRn71hROAEuddFjhk/Q3V/5yoQQqrUm7LgIjeAeXgrWdDiNuOFJhHh3HaDEc3rBJ2N2ej7AmYkvreR0zkFQiazwrzSA7fRV9f0XsZTeV9rkt9Ky3iUmbRVrpyrc2PhOlT2Nq1sn7NSoTdMdnByxF6R43ltzQiWaQlFxGAMwSF2yOlj6rmgik/6MOwq1aF4lqnaHxUiCwxlr18OTlioZ45HS5lFFHRmTCaPrCnkbYxBlbQCAM6xXLg7MPKDby7Fwjbqbe/ulx11vngbjuSbTRBQ+Mb3G1im/4zE2LOMzztqjjJR9VyqOfKwCH6ZbMEy/Xk9e9kYB7aAzr1nC61lyB/hwzyDMoodqe6Is6rsUeTAWhdHcOLqvZN2c1tYrN43OWL7/g0fumZ0ljitG/ntDOovtGiyvOsZFW/Qq69O1UcuN1TgEthBIAWUxpSQmYg7c1L5Y+P+ckZriZCPH5JjSGfCDN4zmws1O0ZQrqdjXoIQ1Jo/9d/Nssy/aTK++JzYGu+fFWlqhcfjgeXMY0L0oqyV8jvi9Vjo2BIerOwXIIvTAeMFu8DBCNmumLWCI0AAy9mT9a8HuvRjUgqRA1oIFzL8O9E5e41zAlXoHG6I7MQxuJqgvJmmRGAKroaToUZYEw3nnuwbS0d4HFKC/L6WKA7tFDJxQGnTnXuKmXRxYMku8mQ9ZEBbdtM4U4a2KrGtup0SVYLwIAMWYOmSEJDB3jCzYgJS4zvjQV6XuxLS0Qges8jlgipbzyeSSu9E3GztlvXkbMPRc90g24qhVFzAq7sOuaofmAOyoDOVLAdlCuUvhNBNH7fX1BG6mE6nXcPj4NeiW410hCRjgU96tpjXeDqbF33Mo40Md98q/bU3DB6vKxbTBrM9pRNUx3qstuom2aXcqCa/wyg9xSal2CCrsipnwJdnd4HhBKovNFAEkyFXekTxJeNlcz/cW9XgZYkhPjcZxCtN9AJsjbx+fNdqczt5AJ7qZcI0ib5mJ4Crz0f2PASC7KLFw/zAR5hZdMtccQjXOPiL2VGA01g6ujC9IAK3oQ01nSm7RSWe+68iMfnSVbOtYTEu9CQ5hTFyDtHy14HQgjsDR136jM0Eh+G5dPfbHjdGiWJH4Gi3FMsPS4iSWP5TEqdmYbhJeyMqvrfk7b/w8biWqC1yK6Vki/iJpx02yW",
+  "mac": "PkpWH24GKT88vPqrE5ymoV1GYxVodmQRHoYzOGZof4M="
+}

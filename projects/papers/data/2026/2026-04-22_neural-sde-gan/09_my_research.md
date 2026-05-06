@@ -1,82 +1,11 @@
-# 09 · 내 연구와의 연결
-
-> 이 섹션은 `_profile.md`의 Paper 1–4 라인과 구체적으로 연결한다. 일반론("참고 가능하다")은 쓰지 않는다.
-
----
-
-## Paper 4 — Continuous Economic Time Attention (ContiFormer의 ODE 시간변수 대체)
-
-### 흡수할 기법 1: SDE의 시간-변환 동치
-
-이 논문의 핵심 SDE
-
-$$dY_t = \mu_\theta(t, Y_t)\,dt + \sigma_\theta(t, Y_t)\,dW_t$$
-
-에서 시간 $t$를 단조 증가 함수 $\tau = \tau(t)$로 치환하면 (Clark 1973의 time-change theorem):
-
-$$dY_{\tau} = \tilde{\mu}_\theta(\tau, Y_\tau)\,d\tau + \tilde{\sigma}_\theta(\tau, Y_\tau)\,d\tilde{W}_\tau$$
-
-여기서 $\tilde{W}_\tau = W_{\tau^{-1}(t)}$는 새 시간 척도에서의 브라운 운동이다. 이 변환이 합법적(법칙 동치)인 조건은 $\tau'(t) > 0$, 즉 economic time이 단조 증가할 것.
-
-**Paper 4 §3.2 적용**: ODE 시간변수를 $\tau(t) = \int_0^t v(s)\,ds$ (거래량 기반 누적 시간)으로 교체할 때, 이 변환이 경로 측도 수준에서 합법적임을 정당화하는 데 이 논문의 **Equation (2.1)–(2.3)** (SDE time-change equivalence)를 인용할 수 있다.
-
-구체적 인용 문장 초안:
-
-> "Following the time-change theorem (Clark 1973; Kidger et al. 2021, §2), replacing wall-clock time $t$ with economic time $\tau(t)$ in the SDE generator corresponds to a measure-equivalent transformation of the path space, preserving the Markov property under mild regularity conditions on $\tau'(t) > 0$."
-
----
-
-### 흡수할 기법 2: CDE 판별자 구조 → Paper 4의 어텐션 판별자
-
-Paper 4에서 economic time attention의 성능을 평가할 때, 어텐션 기반 모델이 생성하는 경로 분포를 평가하는 판별자가 필요하다면 Neural CDE 구조 $dZ = f(Z)\,dX$를 채용할 수 있다. 기존 TSTR 지표보다 이론적 근거가 명확하다.
-
-구체적으로: Paper 4의 §5 (실험) 중 "생성된 금융 경로 품질 평가" 서브섹션에서, Neural CDE discriminator를 보조 평가 도구로 도입하고 이 논문(arXiv:2102.03657)을 "판별자 아키텍처의 이론적 근거"로 인용.
-
----
-
-## Paper 1 — When Multiplicative Conditioning Fails
-
-### 충돌/경쟁 지점: 확산 항의 "조건화" 해석
-
-Paper 1의 핵심 주장은 "입력-공간 조건화(concat_a)가 특정 조건에서 실패한다"는 것이다. 이 논문의 SDE에서 확산 항 $\sigma_\theta(t, Y_t)$는 현재 잠재 상태 $Y_t$에 조건화된다 — 이것이 바로 "상태-공간 곱셈 조건화(state-space multiplicative conditioning)"의 한 형태다.
-
-**충돌**: Paper 1이 "곱셈 조건화(multiplicative conditioning)"가 실패한다고 주장한다면, SDE의 $\sigma_\theta(t, Y) \cdot dW$도 같은 실패 모드를 갖는가? 정확히는 다르다 — SDE의 확산 조건화는 *랜덤성의 세기*를 상태에 따라 조절하는 것이고, Paper 1이 다루는 것은 *결정론적 특징*에 대한 조건화다. 그러나 둘 다 "상태에 곱해지는 계수"라는 형태를 공유하므로, 이 구분을 Paper 1 §2.3의 "조건화 실패 분류" 항에 각주로 명시해야 한다.
-
-**수용 방향**: "SDE의 확산 조건화는 랜덤성 크기 조절이므로 Paper 1의 실패 모드와 다르다. 단, 확산 계수가 특정 상태에서 0으로 수렴(퇴화)하면 이는 곱셈 조건화 실패의 SDE 유사체다."
-
----
-
-## Paper 2 — Representation Utility Gap
-
-### 흡수할 기법: CDE 은닉 상태 $Z_T$의 "표현 유용성" 측정
-
-Paper 2의 "Representation Utility Gap"은 서로 다른 조건화 방식이 만드는 표현(representation)이 하류 작업(downstream task)에서 얼마나 유용한지를 측정한다.
-
-**직접 연결**: 이 논문의 판별자 Neural CDE가 경로를 $Z_T$로 압축한다. 이 $Z_T$가 다운스트림 예측(TSTR)에서 얼마나 유용한지가 Discriminative Score의 본질이다. Paper 2의 "representation utility" 개념과 이 논문의 "TSTR score"는 동일한 측정을 다른 이름으로 부른다는 것을 Paper 2 §1의 동기 부여 단락에서 명시적으로 연결할 수 있다.
-
-인용 문장 초안:
-
-> "The TSTR evaluation metric (Kidger et al. 2021) can be seen as a path-space analogue of representation utility: a representation is useful if a model trained on synthetic paths transfers to real paths. This motivates our utility gap measurement across conditioning strategies."
-
----
-
-## Paper 3 — TTPA (Temporal Transformer with Path Attention)
-
-### 반면교사: TTPA의 판별자가 CDE 기반이어야 하는 이유
-
-만약 Paper 3이 경로 기반 평가 지표를 사용한다면, 이산 MHA(multi-head attention) 기반 판별자보다 Neural CDE 판별자가 이론적으로 더 적합하다. 이 논문이 "CDE 판별자 > LSTM 판별자"를 실험적으로 보여준 것을 근거로, Paper 3의 실험 섹션에서 평가 지표 선택을 정당화할 때 인용 가능.
-
----
-
-## 종합: 인용 위치 지도
-
-| 내 논문 | 섹션 | 인용 형태 |
-|---------|------|-----------|
-| Paper 4 | §3.2 (τ(t) 정의) | "time-change theorem으로부터 경로 측도 동치성 근거" |
-| Paper 4 | §5 (실험) | "Neural CDE discriminator를 보조 평가 도구로 도입" |
-| Paper 1 | §2.3 (조건화 분류) | "SDE 확산 조건화와 결정론적 조건화의 구분" 각주 |
-| Paper 2 | §1 (동기) | "TSTR = 경로 공간 표현 유용성의 동치 개념" |
-
-## 반면교사
-
-이 논문이 명확히 못한 것: **"경로 생성 품질이 좋은 것"과 "예측에 유용한 것"이 같지 않다.** 좋은 통계적 생성자(낮은 discriminative score)가 미래 예측력이 좋은 표현을 만들지 않는다. 내 연구(Paper 4)는 *예측*에 목표가 있으므로, 이 논문의 생성 중심 프레임워크에서 예측 중심 프레임워크로 이동하는 근거를 Paper 4 §1에서 명확히 서술해야 한다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "kBZ562LuKaSg6NlnutBCbQ==",
+  "iv": "UCTRS9LqMTi7tFmS4QIo1A==",
+  "ct": "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",
+  "mac": "SUrB7Gx1Hjkug0w9aftvCF4BiqtRRWwLl+ubpD6a4ec="
+}

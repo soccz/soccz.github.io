@@ -1,9 +1,11 @@
-# 11. 한 줄 판결
-
-> **"TS 트랜스포머의 '시간 방향 어텐션' 가정을 90도 뒤집어 변수 방향으로 돌린 단순하면서도 강력한 논문 — APF 연구 지도에서 'T×T 어텐션 모티프 체계의 대립 축'으로 핀을 꽂고, Grokking 연구에서 'FFN-only 시간 학습' 회로 분석의 출발점으로 활용한다."**
-
----
-
-**판결 보충 (3줄)**:
-
-iTransformer의 기여는 "더 복잡한 아키텍처"가 아니라 "더 올바른 토큰화"다. 이 교훈은 APF에도 적용된다: T×T 어텐션 맵을 연구할 때 "이 방향이 정말 자연스러운가"를 iTransformer가 끊임없이 되묻는다. 변수가 많은 공학 데이터에서는 명백한 SOTA이지만, 금융처럼 변수 간 상관이 약한 도메인에서의 유효성은 별도 검증이 필요하다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "a61IiHXKaa3LhQo9kjttlQ==",
+  "iv": "nCNktSORgyNLz8f5pgCBXQ==",
+  "ct": "Jz6vhTrZlOAQqroABr/QgMT9VOhE7mLkYfmeO2Rbm2EXXlBPIEzyuD6fSHczlhHkigYxky1beul09drmNpaMuIcB8cpQR81yYyark6oUREZeyxRFxJnjaG7u++wWNmB7STemw2iJTiTo+NpQlM6GQVRfbuolp84lJibQcvzUgVc2pjDZWFbt4OTBrsLnBdyPrhm1lKb15PV5UmgP6vtuKi1Sgrth35mHM4vDZ7TIGvtR3U+ga19DX+FsPUG7usQLv0v5TZ8lxa10YXyXh0pm41GPSFTPLFNjN6FqCSfhjyrSbqgxzUpqaAUkuxeE/sfKSz59kMElVkiVDsGVVSCxH2lU0GZsyegyd5Pp6KDa3DInpxTH9KI+9u86Q6xKDIvZSPyXE8BjccD5Ka3MwHSkdVEs3Pw4IarDn7SB2m9Lg6hJRfkFfam0w65yGmre+dqgWcZPtbK+6K/a3XaP8/Jk9UVU8PcFhrgYa8h5GmyQlTfYUk8UNIgZHD8V7H2f+BcQogtSbF5dkhJFRb2C4s3LhqmIwSQ5g1lm0YkGM6XLbQC2dRnz8fhhLbK8Zps5We2uxj6lZonM1BHWfef7k+XVgCYExMCRcYgBAdAFhsCsDe8z7p/1xNT+7q/s+UGBFI/rQyffVcxgPNzqWvxEiXskFgBuAf2GH7Lifnlkd+aCLGFG7MfxQu5eo54+pljwfv5rmo8zA1WVvSuVfyKCWrPwyfW/uRecT1GaJdf96fdQsrk1Pt0Dn6+tyHtzrMnRWSEGo55mghZrwnyVYqqoY95W5oCgmmngNcigaSoQQ/AMIjyTuJS+xObVWs9aKs6M2dAEBNqUBnnsZKASHg/ozuekq08AWsUNqM4S5c2GXQUIDw6jFeqdKhC+g2kUgmtQWAh76EZ10jVPFcFefXx/nN6lNOoITEWF+uutMsxSdD1U59MMeWxxhgQy3tFjTBhqQxNEYWPP2t/oIY6w0V7zya0AbcEYF9qfZxUx2kesrr80lVSMHzAGuGAsBS7OQvpP2py8noVsnmFX4z6TNYXxU9gSLBrPENVedy1sUdZt8n5XN+yEipXvvAx1NrbwfEyXGj7gGVfmq0RnfMd/6qm1Aei+3w==",
+  "mac": "VjxTs2adJq9tvKWkHdR56yTsrwpOiOqHS+kbOpvahBc="
+}
