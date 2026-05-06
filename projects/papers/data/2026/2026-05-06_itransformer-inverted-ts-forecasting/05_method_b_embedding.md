@@ -1,65 +1,11 @@
-# 05-B. 방법론 — 변수 토큰 임베딩
-
-> **배경 사다리**: ① MLP(다층 퍼셉트론)는 선형 변환(행렬 곱)과 비선형 함수(ReLU, GELU 등)를 번갈아 쌓은 함수로, 임의의 비선형 매핑을 근사할 수 있다. ② 임베딩(embedding)은 원래 데이터를 모델이 처리하기 좋은 고정 차원 벡터로 변환하는 과정이다.
-
----
-
-## 왜 임베딩이 필요한가
-
-각 변수 $n$의 관측값 시리즈는 $x_n \in \mathbb{R}^T$ 벡터다 (T-dim 원시 신호). 이 벡터를 트랜스포머가 직접 처리하려면 두 가지 문제가 있다:
-
-1. 어텐션에서 모든 변수가 공통 임베딩 공간 $\mathbb{R}^D$을 공유해야 한다. $T$가 데이터마다 달라지면 변수 비교가 불가능하다.
-2. 원시 신호에는 노이즈가 많다. 유용한 시간 패턴 (주기, 추세)을 비선형 변환으로 추출해야 한다.
-
-따라서 각 변수의 $T$-dim 원시 신호를 $D$-dim 표현 벡터로 임베딩해야 한다.
-
----
-
-## 임베딩 수식
-
-$$h_n = \text{Embed}(x_n) = W_\text{emb} \cdot \text{LN}(x_n) + b_\text{emb}$$
-
-여기서:
-
-| 기호 | 의미 |
-|------|------|
-| $x_n \in \mathbb{R}^T$ | 변수 $n$의 과거 $T$개 관측값 벡터 |
-| $\text{LN}(x_n)$ | LayerNorm — $x_n$의 $T$개 값을 평균 0, 분산 1로 정규화 |
-| $W_\text{emb} \in \mathbb{R}^{D \times T}$ | 학습 가능한 임베딩 가중치 행렬 |
-| $b_\text{emb} \in \mathbb{R}^D$ | 편향 벡터 |
-| $h_n \in \mathbb{R}^D$ | 변수 $n$의 임베딩 벡터 (D-dim) |
-
-**4줄 해석**:
-1. **기호 뜻**: $W_\text{emb}$는 "T-dim 시리즈 → D-dim 특징"으로 매핑하는 학습 가능한 선형 변환이다. $D$는 보통 512 또는 1024.
-2. **일상 비유**: 악보($T$개 음표로 된 시리즈)를 "이 곡의 장르·분위기·조성"을 요약한 $D$차원 악곡 지문(fingerprint)으로 변환하는 것과 같다. 원본 음표 수($T$)는 달라도 지문은 같은 크기다.
-3. **왜 이 형태**: 선형 변환 $W_\text{emb}$는 $T$개 시간 점의 임의 가중 합산을 허용해서, 어느 시간대 패턴을 강조할지 학습으로 결정한다. 단순 평균(1개 파라미터 필요)보다 표현력이 훨씬 크다.
-4. **조심할 점**: $W_\text{emb}$의 크기가 $D \times T$이므로, $T=720$이면 임베딩 레이어 단독으로 $D \times 720$개 파라미터가 필요하다. $D=512$이면 약 37만 개, 이는 전체 모델의 상당 비중을 차지할 수 있다.
-
----
-
-## LayerNorm의 역할: 변수 간 측정 단위 차이 제거
-
-$$\text{LN}(x_n) = \frac{x_n - \mu_n}{\sigma_n + \epsilon}$$
-
-- $\mu_n = \frac{1}{T}\sum_{t=1}^T x_{n,t}$: 변수 $n$의 시간 평균
-- $\sigma_n = \sqrt{\frac{1}{T}\sum_{t=1}^T (x_{n,t} - \mu_n)^2}$: 변수 $n$의 표준편차
-- $\epsilon$: 분모가 0이 되는 것을 방지하는 작은 상수 (보통 $10^{-8}$)
-
-**왜 중요한가**: 표준 트랜스포머는 타임스텝 $t$에서 $N$개 변수를 혼합한 벡터를 정규화한다. 이는 단위가 서로 다른 변수들을 섞어 정규화하므로 왜곡이 생긴다. iTransformer는 각 변수를 **독립적으로** 정규화한다. 온도는 온도 자체의 평균/분산으로, 전력은 전력 자체의 평균/분산으로. 이로써 "전력이 10^3 kWh 단위, 온도가 10^1 °C 단위"라는 측정 규모 차이가 임베딩 전에 제거된다.
-
----
-
-## 전체 변수 토큰 행렬
-
-$N$개 변수 각각의 임베딩을 쌓으면:
-
-$$H = [h_1, h_2, \ldots, h_N] \in \mathbb{R}^{N \times D}$$
-
-이것이 트랜스포머 인코더에 들어가는 토큰 시퀀스다. 길이는 $N$(변수 수), 각 토큰 차원은 $D$.
-
-**대안과 비교**:
-- **단순 선형 프로젝션 없이 원시 값 사용**: 표현력 부족, 학습 불안정
-- **CNN 임베딩 (PatchTST 방식의 패치 CNN)**: 국소 시간 패턴은 잘 잡지만, 변수 전체 시리즈를 하나의 수용 필드(receptive field)로 볼 수 없음
-- **선택된 방식 (선형 + LayerNorm)**: 간단하면서 $T$개 타임스텝의 임의 가중 합을 학습할 수 있음; 보편 근사 정리 관점에서 충분
-
-다음 파일(05-C)에서 이 $H$를 받아 어텐션이 어떻게 작동하는지 수식화한다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "qj88vn/C/Js6E9jaqAv4SQ==",
+  "iv": "s3bZFnnG97sdkocJc5/mbA==",
+  "ct": "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",
+  "mac": "lIG3odeMShGaQKt3Ti8iYS2/4OAdYpbhn+B2Cb/9sEw="
+}

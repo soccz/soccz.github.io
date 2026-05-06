@@ -1,62 +1,11 @@
-# 04a · 핵심 Claim 해체 (Claim 1–2)
-
-> **배경 사다리**: Claim 1–2를 이해하려면 ① Wasserstein 거리가 "두 확률 분포 사이의 이동 비용"이라는 것, ② GAN의 판별자가 분포 간 거리를 측정하는 함수라는 것, ③ 보편 근사 정리(Universal Approximation Theorem, UAT)가 신경망이 임의의 연속 함수를 근사할 수 있다는 주장임을 알면 된다.
-
----
-
-## Claim 1 — 경로 공간에서의 Wasserstein GAN 최적 판별자는 Neural CDE이다
-
-### 주장
-
-$$\max_{D \in \text{Lip}_1} \mathbb{E}_{X \sim \mathbb{P}}[D(X)] - \mathbb{E}_{Y \sim \mathbb{Q}}[D(Y)]$$
-
-에서 Lip-1 함수 클래스를 Neural CDE로 근사하는 것이 원리적으로 정당하다.
-
-더 구체적으로: 연속 시간 경로 $X \in C([0,T]; \mathbb{R}^d)$에 대해, 충분한 크기의 Neural CDE가 임의의 연속 경로 범함수(path functional)를 임의의 정밀도로 근사할 수 있다.
-
-### 증거
-
-- Theorem (Kidger et al. 2020, arXiv:2005.08926): Neural CDE는 $C([0,T]; \mathbb{R}^d) \to \mathbb{R}^e$의 연속 함수를 균등 근사한다.
-- 이 정리를 판별자 클래스에 적용: $D: C([0,T]; \mathbb{R}^d) \to \mathbb{R}$ 형태의 임의 Lip-1 함수를 Neural CDE로 충분히 근사 가능.
-- 논문의 Section 3에서 이 논증이 전개된다.
-
-### 숨은 전제
-
-1. **입력 경로가 충분히 매끄럽다**: Neural CDE 이론은 bounded variation(유한 변동) 경로를 요구한다. 거친 경로(예: 브라운 운동 자체)에는 추가 이론(rough path theory)이 필요하지만, 실용 상 자연 스플라인 보간이 이를 해결한다.
-2. **망 크기가 충분히 크다**: 보편 근사 정리는 "충분히 큰 망"이라는 조건 하에서만 성립. 유한 크기에서는 근사 오차가 있다.
-3. **Lip-1 제약의 실용적 강제**: WGAN-GP gradient penalty가 진짜 Lipschitz-1 제약이 아닌 "부드러운 정규화"임을 저자들이 인정한다.
-
-### 쉬운 말 풀이
-
-"두 집단의 경로 분포 차이를 측정하는 가장 좋은 도구는 무엇인가?" 를 수학적으로 묻는 것이다. 그 답이 바로 "경로 전체를 처음부터 끝까지 읽으면서 적분하는 CDE 형태"라는 것. 마치 영화 전체를 처음부터 끝까지 보고 나서 "이게 진짜 같은가 가짜 같은가"를 판단하는 것이 가장 정확한 것처럼.
-
----
-
-## Claim 2 — Neural SDE가 경로 분포의 보편 생성자이다
-
-### 주장
-
-어떤 $\mathbb{R}^d$-값 확률과정의 분포도 적절한 Neural SDE
-
-$$dY_t = \mu_\theta(t, Y_t)\,dt + \sigma_\theta(t, Y_t)\,dW_t, \quad Y_0 \sim p_0$$
-
-로 표현할 수 있다.
-
-더 강하게: 이토 공식(Itô's formula)에 의해, 확산 계수 $\sigma_\theta$가 완전 랭크(full rank)인 경우 Neural SDE는 $C([0,T]; \mathbb{R}^d)$ 위의 임의의 분포를 임의의 정밀도로 생성할 수 있다.
-
-### 증거
-
-- 확산 과정의 지지(support)에 관한 고전 결과 (Stroock & Varadhan, 1972): 드리프트와 확산이 충분히 비퇴화적(non-degenerate)이면 SDE의 경로 측도가 경로 공간 전체를 지지한다.
-- 이 결과와 Neural ODE의 보편 근사성(다수의 선행 연구)을 결합: $\mu_\theta, \sigma_\theta$를 신경망으로 파라미터화하면 원하는 분포로 수렴 가능.
-
-### 숨은 전제
-
-1. **비퇴화 확산**: $\sigma_\theta(t, y) \sigma_\theta(t, y)^\top$가 양정치(positive definite)여야 한다. 실용에서 이를 강제하는 아키텍처적 보장이 없어서, 학습 중 확산이 퇴화할 수 있다.
-2. **초기 분포 $p_0$ 고정**: 생성자의 표현력은 초기 분포 선택에 의존한다. $p_0 = \mathcal{N}(0, I)$로 고정하면 이것이 충분한지 논문에서 완전히 검증되지 않는다.
-3. **연속 시간 경로의 이산화 오차**: 실용에서는 Euler-Maruyama 이산화를 쓰므로, 진짜 SDE 경로와 이산 근사 경로 사이에 차이가 있다. 이 오차가 생성 품질에 미치는 영향이 정량화되지 않는다.
-
-### 쉬운 말 풀이
-
-주식 가격 경로를 비유로 들면: "드리프트(평균적 방향)와 확산(랜덤 진동의 세기)만 잘 설계하면 어떤 경로 패턴도 만들 수 있다."는 주장. 신경망으로 이 두 함수를 유연하게 학습하니, 이론적으로 모든 현실 경로 분포를 흉내낼 수 있다. 단, 이 "이론적으로"가 "유한 망 크기·이산화·학습 수렴"의 세 가지 현실적 장벽에 막힌다는 점이 Claim 2의 약점이다.
-
-> **[04b 파일로 계속]** → [04_claims_b_claim3_4.md](04_claims_b_claim3_4.md)
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "XHzemxz9wRKIBMkOF0IzzA==",
+  "iv": "nMSSXDe84EZjKHJtU7Q8QQ==",
+  "ct": "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",
+  "mac": "lBPnilEJ+3VqF32uFsLcq3xBpaqFLiqo7AautRydVX8="
+}

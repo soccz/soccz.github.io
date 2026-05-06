@@ -1,93 +1,11 @@
-# 06. 실험 해부
-
-> **배경 사다리**: ① "WQL (Weighted Quantile Loss, 가중 분위수 손실)"은 예측 구간(예: 10%, 50%, 90% 분위수)이 실제값을 얼마나 잘 포괄하는지를 측정하는 확률 예측 지표다. 낮을수록 좋다. ② "MASE (Mean Absolute Scaled Error, 평균 절대 스케일 오차)"는 계절 Naive 예측(단순히 지난 계절과 같다고 예측)을 기준선으로 정규화한 절대 오차다. MASE < 1 이면 계절 Naive보다 낫다는 의미. ③ 집계 순위(aggregate rank)는 여러 데이터셋에서의 순위를 평균한 값이다.
-
----
-
-## 벤치마크 구조
-
-논문은 총 55개 데이터셋 중:
-- **학습 전용 (13개)**: 모델이 학습에 사용했지만 평가에는 없음
-- **Benchmark I (15개, in-domain)**: 학습과 평가 모두에 사용 — 공정한 "외워서 치는 시험"
-- **Benchmark II (27개, zero-shot)**: 평가에만 사용, 학습 중 한 번도 안 봄 — "처음 보는 시험"
-
-이 구분이 핵심이다. 파운데이션 모델의 진짜 가치는 Benchmark II 성능에 있다.
-
----
-
-## 주요 데이터셋 분석
-
-### M4 (Benchmark I): 10만 개 시계열, 다양한 주기성
-
-M-competitions 시리즈의 4번째 대회 데이터. 시간별(hourly), 일별(daily), 주별(weekly), 월별(monthly), 분기별(quarterly), 연별(yearly) 등 6가지 주기성을 포함한다. Chronos가 학습 데이터로 봤기 때문에 in-domain에 해당.
-
-이 데이터가 Chronos에 유리한 이유: M4는 경제·금융·인구·자연 등 매우 다양한 도메인의 시계열을 포함해, 사전학습 모델이 다양한 패턴을 학습했음을 검증하기 좋다. 불리한 면: M4는 학습에 포함되어 있으므로 이 성능은 기억(memorization)의 영향을 배제하기 어렵다.
-
-### ETT (ETTh1, ETTm1, ETTm2 등): 전력망 변압기 데이터
-
-Electricity Transformer Temperature — 중국 전력망의 변압기 온도와 전력 부하 데이터, 시간 단위(h) 및 분 단위(m). 학습 분할(train)이 사전학습에 포함되어 있고, 평가는 테스트 분할로 진행.
-
-이 데이터는 명확한 일일 주기성과 계절 추세를 가지고 있어, GP 커널 합성으로 만든 KernelSynth 데이터와 패턴이 유사하다 — Chronos에 유리한 편향.
-
-### Traffic (Benchmark II 일부): 센프란시스코 도로 점유율
-
-시간당 센프란시스코 도로 약 862개 구간의 점유율. **다변량** 시계열이지만, Chronos는 각 변수를 독립 단변량으로 처리. 변수 간 상관관계를 무시하는 것이 이 데이터에서 Chronos의 취약점이 된다.
-
-### 금융 관련 데이터 (Exchange Rate 등)
-
-일부 데이터셋은 환율·주가 지수를 포함한다. 금융 TS의 특징인 heavy-tail 분포, 점프 프로세스, 비정상성이 Chronos의 균등 bin 설계와 충돌한다. 논문은 금융 데이터에 대한 별도 분석을 제공하지 않으며, 이것이 중요한 공백이다.
-
----
-
-## 베이스라인 공정성 평가
-
-논문이 비교한 모델군:
-
-**통계 모델**: Seasonal Naive, ETS (지수평활), Theta, (T)BATS, ARIMA. 이들은 데이터셋별로 자동 파라미터 선택(auto-ARIMA 등)을 사용했다고 기술. 공정한 편.
-
-**딥러닝**: DeepAR, N-BEATS, N-HiTS, WaveNet, DLinear, PatchTST, TiDE. 이들은 "기본 하이퍼파라미터"로 학습했다고 기술. 문제: 딥러닝 모델의 성능은 튜닝에 매우 민감하다. 특히 DeepAR, N-BEATS는 domain-specific 튜닝 시 훨씬 강해질 수 있다. 논문은 이를 인정하지만 한계로 명시한다.
-
-**잠재적 공정성 문제**: Chronos 팀(Amazon)이 DeepAR(Amazon이 개발)의 비교 설정을 결정했다는 점에서 이해충돌 가능성.
-
----
-
-## 주요 결과 해석
-
-### Benchmark I (in-domain)
-
-Chronos-Large는 집계 WQL 및 MASE 기준 모두 1위 또는 최상위권. 특히 확률 예측(WQL)에서 강세. 통계 모델 대비 우위가 명확하다.
-
-**숨은 신호**: in-domain에서의 우수성은 상당 부분 학습 데이터 암기에서 비롯될 수 있다. M4처럼 큰 데이터셋이 사전학습에 포함되면, Chronos는 실질적으로 테스트 분포에 노출됐다. "사전학습 데이터 오염(data contamination)"에 대한 엄격한 분석이 없다.
-
-### Benchmark II (zero-shot)
-
-이것이 더 의미 있는 평가다. Chronos-Large의 집계 순위가 상위 2~3위 안에 들며, 확률 예측(WQL)에서 특히 강세. **데이터셋별 결과를 보면** 변동이 크다: 일부 데이터셋에서는 Seasonal Naive조차 Chronos를 앞서는 경우가 있다.
-
-이 변동성이 파운데이션 모델의 현실이다 — 특정 도메인이나 주기 구조에는 단순 통계 방법이 더 강할 수 있다.
-
-### 모델 크기와 성능
-
-Large(710M)가 전반적으로 최고 성능이지만, Small(46M)과의 격차가 생각보다 작다. Tiny(8M)는 확률 예측에서 ETS를 여러 데이터셋에서 능가. 스케일링 법칙(scaling law)이 TS에서도 작동하지만, NLP에서만큼 가파르지 않음을 시사.
-
----
-
-## Ablation: 합성 데이터 효과
-
-| KernelSynth 비율 | Benchmark II WQL |
-|-----------------|-----------------|
-| 0% (없음) | 기준 |
-| 5% | -3% 개선 |
-| 10% | -5% 개선 (최적) |
-| 20% | -3% 개선 |
-| 50% | 기준과 유사 |
-
-합성 데이터가 10% 수준에서 가장 효과적. 과도하면 오히려 in-domain 성능 하락.
-
----
-
-## 부록의 숨은 신호
-
-부록에는 데이터셋별 세부 결과표가 있다. 여기서 주목할 것:
-1. **계절성이 강한 데이터** (예: 시간별 에너지)에서 Chronos의 확률 커버리지가 좋다.
-2. **단기 랜덤워크 성질이 강한 데이터** (금융 관련)에서 Seasonal Naive와 성능이 유사하거나 열등. 이것은 Chronos가 "패턴 없는 랜덤 시계열"을 위한 모델이 아님을 보여준다.
-3. **TSMixup vs KernelSynth 별도 Ablation 부재**: 두 기법의 독립 기여도를 분리한 실험이 없다. 어떤 것이 더 중요한지 알 수 없다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "cj+PyQ8nQj2di4kLiwqzww==",
+  "iv": "kUQ04XZ2WFMEVWvhjwOhIQ==",
+  "ct": "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",
+  "mac": "FK0oqKb3IzSMlKbr2n2BDMDXaqgg1sFmSetcQ7Xbctw="
+}

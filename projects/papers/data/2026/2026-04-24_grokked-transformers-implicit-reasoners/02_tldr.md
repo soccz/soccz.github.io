@@ -1,50 +1,11 @@
-# 02 — 3층 TL;DR
-
----
-
-## 🧒 초등학생 수준
-
-상상해보자. 너는 "농구는 스니커즈를 신는다"는 것을 알고, "민준이는 농구를 좋아한다"는 것도 안다. 그런데 누군가 "민준이는 무슨 신발을 신어?"라고 물어보면, 너는 두 가지 지식을 연결해서 "스니커즈!"라고 대답할 수 있다. 이걸 **연결 추론(Composition)**이라고 한다.
-
-이 논문은 AI(인공지능)가 이 연결 추론을 할 수 있는지 연구했다. 처음엔 AI가 그냥 "민준이 → 스니커즈"를 외워버린다. 하지만 엄청 오랫동안 훈련하면 — 마치 갑자기 퍼즐이 맞춰지듯이 — AI가 진짜 연결 추론을 할 수 있게 된다. 이 갑작스러운 깨달음을 **그로킹(Grokking)**이라고 한다.
-
-재미있는 것은, AI가 "큰 것 vs 작은 것 비교"를 배울 때는 훨씬 잘 일반화한다는 것이다. 연결 추론보다 비교가 더 쉬운 이유는, AI 내부 구조가 비교엔 잘 맞지만 연결 추론의 "층 사이 정보 전달"엔 구조적 제한이 있기 때문이다.
-
----
-
-## 🎓 학부생 수준
-
-이 논문의 핵심 질문은: **트랜스포머가 암묵적 추론(implicit reasoning)을 학습할 수 있는가?** 여기서 "암묵적 추론"이란, 학습 데이터에 직접 명시되지 않은 지식을 파라미터 안에 저장하고 꺼내 쓰는 능력이다.
-
-저자들은 두 가지 추론 유형을 정의한다:
-- **Composition (합성 추론)**: $A \xrightarrow{r_1} B \xrightarrow{r_2} C$ 관계에서, $(A, r_1 \circ r_2, ?)$를 답하는 2-hop 추론.
-- **Comparison (비교 추론)**: 두 엔티티의 속성값을 비교해 대소를 판단하는 추론.
-
-핵심 발견:
-1. 트랜스포머는 두 유형 모두 학습 가능하지만, **오직 grokking을 통해서만** 가능하다 — 즉, 훈련 오차가 0에 도달한 이후로도 엄청나게 오래 훈련해야 한다.
-2. **Composition에서 OOD 실패**: 분포 밖 원자적 사실(atomic fact)에 대해선 일반화에 실패한다. 트랜스포머의 비순환 구조 때문에 계층 간 정보 공유가 안 되기 때문이다.
-3. **Comparison에서 OOD 성공**: 비교 추론의 일반화 회로(generalizing circuit)는 구조적으로 더 체계적이다.
-4. **데이터 분포가 핵심**: 추론된 사실($\phi$, inferred/atomic 비율)의 비율이 높을수록 grokking이 빨리 일어난다. 데이터 총량보다 구성이 중요하다.
-
----
-
-## 🔬 전문가 수준
-
-**기여 1: Grokking을 통한 암묵적 추론 학습의 보편성 확인**
-
-GPT-2 아키텍처 기반 소형 트랜스포머를 합성 KG(Knowledge Graph) 위에서 훈련할 때, 훈련 정확도가 100%에 도달한 이후에도 수십만~수백만 스텝을 추가로 훈련해야 검증 정확도가 급격히 상승(grokking)한다. 이 현상은 Composition·Comparison 양쪽에서 공통으로 관찰된다.
-
-**기여 2: 두 회로의 경쟁 메커니즘 규명**
-
-- **$\mathcal{C}_\text{mem}$ (memorizing circuit)**: 학습 데이터의 각 추론 사실을 key-value 쌍으로 암기하는 회로. 파라미터 비효율적(데이터 크기에 선형 비례). 훈련 초기에 먼저 형성된다.
-- **$\mathcal{C}_\text{gen}$ (generalizing circuit)**: 원자적 사실들을 조합해 추론하는 알고리즘적 회로. 파라미터 효율적(원자 사실 수에 비례). 느리게 형성되지만 weight decay 압력 하에서 최종적으로 우위를 점한다.
-
-Grokking = $\mathcal{C}_\text{mem}$에서 $\mathcal{C}_\text{gen}$으로의 지배 전환.
-
-**기여 3: OOD 실패의 아키텍처적 근원 진단**
-
-Logit lens와 Causal tracing 분석으로 Composition에서 grokked 모델이 OOD 실패하는 이유를 규명: 트랜스포머의 비순환(non-recurrent) 구조가 하위 레이어의 정보를 상위 레이어에서 재사용하는 것을 막기 때문이다. Parameter-sharing(순환형 가중치 공유) 실험으로 이 한계를 부분적으로 극복 가능함을 보인다.
-
-**기여 4: LLM과의 비교에서 parametric memory의 우위 실증**
-
-대규모 search space를 가진 복잡한 추론 태스크에서, GPT-4-Turbo·Gemini-1.5-Pro는 CoT·RAG 등 모든 prompting 전략에도 불구하고 실패하는 반면, 완전히 grokked된 소형 트랜스포머는 near-perfect 정확도를 달성한다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "9uBfk4Mt593RZApUmIslOQ==",
+  "iv": "Fu2zlypKv06J8tVOJfd2vA==",
+  "ct": "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",
+  "mac": "ZOhrT9WGQViNwgRCdDbEKTxrtYJXVakoXaI8uzvy5us="
+}

@@ -1,85 +1,11 @@
-# 05b · Neural SDE 생성자
-
-> **배경 사다리**: 이 파일의 핵심은 SDE이다. ① 미분방정식(ODE)은 "변화율 = 결정론적 함수"이다. ② SDE는 거기에 "확률적 진동"을 더한 것이다. ③ 브라운 운동 $W_t$는 각 순간 임의 방향으로 아주 작게 진동하는 랜덤 경로이다. 이 세 가지만 알면 된다.
-
----
-
-## 1. 왜 SDE를 생성자로 쓰는가?
-
-경로를 생성하는 방법으로는 크게 두 가지가 있다:
-1. **이산 순환 모델** (LSTM, GRU): 각 시점의 다음 값을 이전 값에서 예측. 시간 격자가 고정.
-2. **연속 시간 모델** (ODE/SDE): 연속 변화율을 정의하고 적분. 시간 격자 자유.
-
-금융 시계열에서 ODE만으로는 불충분하다. 주가 경로의 불확실성(랜덤성)을 표현하려면 **확률 항**이 필요하다. SDE가 그 도구다.
-
-ODE와 SDE의 차이를 한 줄로:
-
-$$\underbrace{dy = f(t,y)\,dt}_{\text{ODE: 결정론적 경로}} \quad \longrightarrow \quad \underbrace{dY = \mu(t,Y)\,dt + \sigma(t,Y)\,dW}_{\text{SDE: 확률적 경로}}$$
-
----
-
-## 2. Neural SDE의 정의
-
-$$dY_t = \mu_\theta(t, Y_t)\,dt + \sigma_\theta(t, Y_t)\,dW_t, \quad Y_0 \sim p_0$$
-
-**기호 뜻**:
-- $Y_t \in \mathbb{R}^d$: 시각 $t$에서의 잠재 상태 벡터 (예: 4차원이면 4개 종목의 잠재 상태)
-- $\mu_\theta: [0,T] \times \mathbb{R}^d \to \mathbb{R}^d$: 드리프트 함수 (신경망 파라미터 $\theta$)
-- $\sigma_\theta: [0,T] \times \mathbb{R}^d \to \mathbb{R}^{d \times m}$: 확산 행렬 (신경망 파라미터 $\theta$)
-- $W_t \in \mathbb{R}^m$: $m$차원 표준 브라운 운동
-- $p_0$: 초기 분포 (주로 $\mathcal{N}(0, I)$)
-
-**일상 비유**: 드리프트 $\mu$는 "풍향계" — 현재 위치에서 어느 방향으로 흐르는지. 확산 $\sigma$는 "바람의 세기" — 얼마나 많이 흔들리는지. 브라운 운동 $dW_t$는 "돌풍" — 방향과 크기가 매 순간 랜덤. 배가 항해할 때 풍향계+돌풍의 합으로 실제 경로가 결정된다.
-
-**왜 이 형태**: 이토 공식(Itô's formula)에 의해 SDE의 해(solution)는 확률과정의 경로 공간 $C([0,T]; \mathbb{R}^d)$에 분포를 유도한다. 이 분포를 $\mathbb{P}_\theta$라고 하면, 생성자의 학습 = $\mathbb{P}_\theta$를 실제 데이터 분포 $\mathbb{P}_\text{real}$에 가까워지도록 $\theta$를 조정하는 것이다.
-
-**조심할 점**: 이토 적분 $\int \sigma\,dW$는 Riemann 적분과 다르다. 이토 공식에서는 2차 변동(quadratic variation) 항이 생기므로, 고전 적분처럼 쉽게 계산되지 않는다. 수치 계산에서는 Euler-Maruyama 또는 Milstein 방법을 사용한다.
-
----
-
-## 3. 수치 적분: Euler-Maruyama
-
-$$Y_{t_{k+1}} \approx Y_{t_k} + \mu_\theta(t_k, Y_{t_k})(t_{k+1} - t_k) + \sigma_\theta(t_k, Y_{t_k})(W_{t_{k+1}} - W_{t_k})$$
-
-**기호 뜻**:
-- $t_0 < t_1 < \cdots < t_K = T$: 이산 시간 격자
-- $W_{t_{k+1}} - W_{t_k} \sim \mathcal{N}(0, (t_{k+1}-t_k) \cdot I)$: 브라운 증분 (정규분포 샘플)
-
-**일상 비유**: 한 시간 간격으로 배의 위치를 업데이트하는 내비게이션. 현재 방향(드리프트)으로 이동하고, 거기에 랜덤 바람(브라운 증분)을 추가. 시간 간격이 작을수록 정확해진다.
-
-**왜 이 형태**: 가장 단순한 SDE 수치해법. 오차 $O(\sqrt{\Delta t})$. Milstein 방법은 $O(\Delta t)$이지만 확산 함수의 미분이 필요해 계산 복잡도가 높다.
-
-**조심할 점**: 스텝 크기 $\Delta t = t_{k+1} - t_k$가 클수록 수치 오차가 커진다. 또한 확산 계수 $\sigma$의 크기가 크면 경로가 불안정해져 학습이 어렵다.
-
----
-
-## 4. 잠재 SDE vs. 출력 디코딩
-
-논문에서는 SDE가 **잠재 공간(latent space)**에서 돌아가고, 관측 공간으로의 디코딩은 별도 신경망 $g_\theta: \mathbb{R}^e \to \mathbb{R}^d$로 처리한다:
-
-$$\tilde{Y}_t = g_\theta(Y_t)$$
-
-**기호 뜻**:
-- $Y_t \in \mathbb{R}^e$: 잠재 상태 ($e$가 관측 차원 $d$보다 클 수 있음)
-- $\tilde{Y}_t \in \mathbb{R}^d$: 관측 공간으로 사영된 생성 경로
-
-이 디자인은 SDE의 표현력(잠재 공간에서 복잡한 동역학)과 관측 공간의 해석 가능성을 분리한다.
-
----
-
-## 5. 대안과 비교
-
-| 대안 | 차이점 | 이 논문이 SDE를 선택한 이유 |
-|------|--------|--------------------------|
-| Neural ODE (결정론적) | 확산 항 없음 | 시계열의 확률적 변동을 표현 못함 |
-| VAE (변분 오토인코더) | 잠재 변수 이산, 경로 ELBO | 경로 공간에서 명시적 분포 없음 |
-| Normalizing Flow | 역방향 흐름 필요 | 경로 공간에 적용 어려움 |
-| Diffusion Model | 역방향 SDE 필요 | 이 논문과 다른 방향 (생성 vs. 잡음 제거) |
-
----
-
-## 6. 이 블록의 핵심 한 문장
-
-> **드리프트 $\mu_\theta$와 확산 $\sigma_\theta$를 신경망으로 파라미터화한 SDE는 경로 공간의 임의 확률 분포를 유연하게 표현하는 연속-시간 생성자이며, Euler-Maruyama 이산화로 미분 가능하게 구현된다.**
-
-> **[다음 파일]** → [05_method_c_cde_discriminator.md](05_method_c_cde_discriminator.md)
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "oizz/7izmlrrJOZ15Cfkjw==",
+  "iv": "5ygcio0lU+hFb4wJ3F4rWw==",
+  "ct": "yHVetd8NI6iJA65h9b4swZUMcklkZyYem5n27OOPTduWrxGqosOOHI7C+CFigUZxPNsLF76ofi57KBljNjCR5LVxSyfY4zFcCwMowh+jM9RVfkbdGEOLXxHD2iAjTW4CoiB+spdsdvFiE88LIQnNaYlHXCeziyIG0y7IQcZnUKzTh3taX68vCOgv6uH7Fqo/itH690spqszHSu87fMEHDM7clYJNouUwnGJSwYlcSzrtLbP7oxarZG+cLVa0MjkyQ0WFPm80cfeAZSsmC+l/mDSlU3sqQwpeYjHjvhAIi4iNFR9k1hOjmZqEisu+jB0v8PCjHObfx4Gx5kJd8TR5qwO1ktcG6RZz3EMHDljGRZUTIiuuSZHifxovSmbBr8Vl33y/C4RRd7h8Qmd88TjaOJbk6dYhIDc7zxhVa3CrofSeMpSKuEIRLx/CVRWMEYwuCc6Rp2YFEw0K3T8DjRiZ0gvHNbvItya962lYqZv3VvS1SICQcTjWd/ByxLDe77hakABBl9cKKE54mUuRck40pnzI5s6ySuaK8JYqEbYUNw/qu9nQxUdPzA+RTgW1HpLnPBCDTA+Y6etepEBb5yLURS0lo2jgLVcHhsYBrYFCT3ifSLUwUgYfR92gNFjOWP1zcEQIR9ACm9iv71N0Fp4fO9PFwJtmqgXc+PuNDxlHrsWKhQBO8CAFMqw5SfdMXDw6ggYbmT7mnL34BkIqPs7Ak8Fqg5N7XUXTlcmsg8jFP8iDF3BvkYn26ijIq14Tgbbg+A1QZWq8GPpBiPRudLkiHYaWmoYH/EWpGYrBaJgNTaexSPQeFi1aPxvFhMWqB8ncCYL6wcMS3igFbWJ704EM66PH7rKPOEL4wcQ8FHVQ0yR8WgKtJXOt9x8Q+CT/vLjQUSQ/inamWGmcLGE5HjZN8UKLwkotGMCJZNNaSpMN5UNj74qWCnyifJ8qBNJfbE7uDuO6j5IHWgEI8hxW2xuromYZaQyFhF8lDVevKUyCw6595PjxeC6vEmY3aAvah4INeW6uWlT/DlxTw3LwW67CKxoLTi6gs/2MEDF9svxVUcOZuManbr7r3b+8DPxq4FUOuvY28bm4dPb/O+S47e2MNdlIfnWWKag4kzlJGVQV3v3HApcX5x67HYb/YgZ1Hc+hqHmhkyY3Q6+1WKcZEy7EMAaJxaUuhvGmhofl1lUna1WRHnXZHXO6a8j+cKE9k/8/XMXmXdSf+rf/cVDruM3aKllMgDSlNpIt/awoVRLF9GiioVNTKXBQC2kujulIWSGi/F6HE1BRTddmmA3wNfgUMRGh8vfWWvZ2UlU7XwNaRk38fMV6/69Dd7g7p7VpGXMs3Et7344LDLhwiwzo6ok/23DT1KgR6hxoYqlS+6GMjLdI/BlqlY7+ide8tKWkX290y4LhPlJ+ru/mL7Wax6edX3y0h0Wr0xXrF+CYwD4hke2UOrTAiC/XMErcHbkZssX1cTVlumaqu0jrHrROXu3t/4deh2CdXlCc2UOcM1wQ4d26klgwicMguz/4y7fUW976vJ6aboxJK7QN8KhedZmAxaJvOIMmn7MviPj4BA7Ti+hoa7xJeRmRsx54kAwSSqL+H7tWDtTDERiNYmc8xw7ULqbldAd30KprKCpfL3JJ1rHNTmjUW6h/qrLSasildzdAXC6c5GUqD7USoUIdDdRXcWt53FvaDxFvRU1obScj/OyibK7GGY2oZGSHVKeIMYowKhhSQLNoGgRoPfCZBUpqOP2lyVHEUfZdvOr6PfqXf6DBYH22y25kIlLyXFFqVRek2Xxwy2ieMdzGn01iAT66tZbmRFkKKlxiEq81npbwwf2NJTPCX9Kz1+mBHL2PSNfHly8sr5MReHUxtDhdg5/0BNGuIjyOSXC76ZPu4juM5LKGx0pf8phbPKIq0xeHOXLgv60FxIUY5iiOpziHLhuf0S+3CugkrtZI2pCKxhjfzyayAZT0w8GCOsH665DcuL/uoRA/GavXb7KdSJLkgvwZC25/4TlzAArqpf1Cu7Hm/n/pp+m/dcHcz+ojGPFSMCDqXkvpunPRqdlnYnI7pNq3dzIbZ8CIMrF/Sd65dqQhW6oGeh7WeQ+Iu1RLAHt/Tlh16U9T1l5bei1yq2rj6kaGFR1sszaSJsLGmIU24r6Nz7hkxpOrNRd6KMN/N2DhF+UDhc8y+OMuXh9ECzcyOQbtDQ1Asl8KCHGd/GW7TeJOXTVYYGr0hFjrraq9yqBr9ZnCeyn9t4O4c/ofFEbAZCxHrNT5LzXaLsrg29Wb1Mcua/OR7sFwBJhwborw0mBZ13naI9Eq8YLjph83jhAZ5CN48kD2XAnUkfceqIRS+ZJUm+z7sKa42WSh/XkxHkXJZTuVZWZxf/7qn3hKhAknggxujyC43K1wcnDSCxtG5faF9VWAsd+dFU+cp+jXp2PpuIRG9FIpVgXEZe3DRMnX2VIRQEI/pU5A1A/HxMsZ90SQ35B5Usdg0Wz7DybwKRCu4TYQWLUHViHrsgLeXqWP9Smr2v+pLaha4TfmDSonDKW6GZ27smAL6qDUJI8eZPsF1OJUr6ri5uIBfDF/iYaN+QOFahwRC+Ix689QFRKMRvwVhdmuK5pBtHvtaM9XtXj7PDru2Z5bntWb0Qoa+eXJyYQj0Y2HEkHJ7pGHNpymp1Tsg2Ej71jRVpeswEeaisvWzGg1XXXT7iSJsd/DsOdaTp9f9BAXLfuWg37fPIdkpLJTy31l0qZWI9U7+K72Xo61dciB0dF61aYGAPDmoQjcPliEQFRFvAxPkqXwyk0uRHDeWNKo5KYnxWt4oeLaHVvgoBWzDaoVhBrKArrt+1OX9sjOLb+LLhSglQZh+RqIXnRzv4Iy9exnlSipqC/mPU1GRTd+n7W5apgwLrNGH5BmLdj0MVKcVrcMIq+b7EEmmoRaaMTmfcsqBcTeqL9XCT+ZQPGHO1cyfBpvhEgGxapOEwKOpxPgIaX1lXWEho47JKZ+/lUb+AlD27vTvI+GesdO8JXySNsTjupPSWox7HbvbZu+S91ovka3VHCtFK0Tr9pVtHXFnbUl140RTmTKrKvGQEs43D4w0eJiKefuBmKXbH6sjfG0s6Q6FnFOLU2EpjvJmDoXVvUXnrMhKNQYWida1KnQFTDsOLnZt1s2xnBnxvMN3ZPDPMWl7fVUbTrsU6prliNEkSASltcq9uS4FPVKe5+XHiCxpNXr6SxXIQOZZbC0YU++g+6yDuYANW9edtov/l3Z5PzxNRbHiwSWGpsxRyvxeJqYxKZe4eAzpL9soEoV0Oy7If5NVBWSKrzON4/4s1S1mJZmHEy3qj4QYQhfXGGwFWaMPd6C1mpiBWspfd6rqROPtT9pQ/un9DVi/FnxfMVrUkevDFeKpn5egNFDDpFKGe3boiGJl3xBqkX3nyXKFGSJ5cbxatcRw7jNERHSWeP3vLz1rndxJ61N7C8KcfJTxZnR+/zOtQChpSsZQnrARnKEeTd8Ts8slFWsL5joLX99quam6BaliFFKiTsBEyDyMsAyNfhGM2Q56Zgyn9XxhHIgASDDgkbTvAVxuj3EKJpPeKR2K8zJ1TAXOnXWF+rNqdMu82FjUr89eFqtN8Uz6ATArG2L5oPPPS/G+6AlgBWxWnQOVzgKJ5u3H9rmnfudb8DLd9RajjIx+Dq09Fteh9eQVrscKDOivZR5AEn1c3NbjnSEhnaIumEHRUT5RWAM04xF9eoWNHVbFZQKe2ZCIezyYujrSKcBj8OPl0ronbQT/2VSK2ddYY1ukaXOFOuDgjohyvb3x+zm9aZ02Tj6XaC1L0Sn1xrVC4bYtT0rhdf+li+XBHu4HVpuOvJQBlfDvsc34Fsu1KVMu9xZIh9zYJrMWcMHg64hQ5k94T7bT99qjj6ZwDGuzFx36fdxLmS3tHHdd9qKyGDAkualBWiVsYDjpWkjnBYsqQlZ8ivc34TE6S5iovKqJa2D1/vzHVyG/lvZQkZIbe1c7nNBXxIXcbe7JLz88NIIIAAmiWh7jx5IQvbNfwgaG3rDX5fv4bF8rGlqw1qBbOqJscFiOdWQ/bq3jrAr0K3sC8LKAnCiFxtWxj0DsrOMMvfYQu/EtmK/EION3WxKhYVi/O6ik48dKGW5qEpGvgZyJaQd+G5C3JVKzkp9kosMg7n0eWtIDRVrrtSX0rk5l8UevJvTWN6X/7mXxe1tfyFvUcTlYjxIQ5uhefPWOP7VCHp/Bk9EZLhIifiSTv0rvVgt1vejksbq/cE7okpsaBkJlmQzZdgJKdsKdjdiDDdv8eg52v/9dqHTLHf0a8Ee4WanQbJruoYXc/qk9GseyiX3pJguO3NUQzB9lmlkUnoxil+Os3Qfx2Y6wDMhGSvGeZoHO1rTFZAVvuVX1JnXTSkQ5WwB0sbXu7eaxpxDOJmi/dfY4o5JHE3UbVqALq+KDDXuFN1C9DGxNK2ImOrCWMrxHX1DzCQ9ccpZeBxcas7jVT4Xi1lWLsar5ZuRR5qFdyxlJfiWbyAT3DhpxzGjj99BF7eCoVBqY3CJV00dN7AQ9YukpHyZJFe4bLH4Bqbjjy5FN7lbFexIGhqgDkOcK3Dy5HbZ7Bdz+vtbOxyxAMbzX7DhcydEcQKEhEsmmSooVPoESGGblIjbZtjeS1zQkMur2dBcxZHSRICuuP2uTJLqej6iWPW0dGC8lni3lPjza98nc5Q9KVDItYYsqvHRhIbhhu+xSEB6hzLp8DOqQQuQNhJ+KrhdfxQIIn1qBBGblmfhvyITUI+8WJ6U2YrGq3CYFU9T+jGib7ztwYBiCkdVrrzbg0il6COW8MBka5yD0qfvtd2unK6uaeT1pYqialKUIu7UGi+7dtky14s+sRfsnRXrmlHBR9sQD0T2ufC2fp17u86FNajMw9XL+XS38q8uJ/A4Sl5lc4q1myvo37XSDHGaJ4Ml0mFxOyveAPJUmGFs0UktaG2SZ1BVyIQ0fY9sg2TSpYPc3VF7daoyza8v5VinN3zZ5gYVr5ineuPlVEW0FzSvAhxX+tJ/flwEbp2uYdx3umkJaGmsJbRHwjywmGT2MypXH2fReoC4Fwb2NaMarf7ao4ZwlzIF2BMOzVGcC7d2dvgF0JMXhOr+URuMLXz3+SrwWtrenldoH8DxWVDWOakZ4NOcpZh3FtUk2bmTmE4w/u/D1gu6+Kp2wVqY/yHw34wlaNw2TvGMHOxp18aYelTq4owf4OJ4UDkb/GITvkYkolIMurduDacfHucWqBABirMmOkOuvsQhkEkZa8i6a2V4LzU1no+sosJ7iZ5uhArMRYVmXotCac4mrJr0pxzpnymOQ7O/zY4N1et+/IUpSUWLwpbVqLir1ajLqZSdmmsW0OlfOjZYCbRQ35cype+LjmpmNuStOuKu+Ez89ZRPMeXzgGB+JOOOxaxDji1rn3ppQdIXPBSdacEMPrUgrlnNog2Y8g4uDXoLK/oEb3tleAfCnL7VO5BNFsWRy3cBQzQxUqz7PRvRajK25tKhjKaLvspPaspiXpRKT1YbLyTxD2x7h52x2Rs44SwayeoXi9wdN+eiun1BHC4iwA/MWFN3IxX0wFeguUedij94FKsRYyRjATpdYMWLfyYJySYrJiFFhLGW4muSMHtXXonxbNx5Wp+qXAHHRNK+pC2F8BSJBwf5SHj1yim6mPfdqRUgXEZIyKsXdNi5YDuAsUfsVSspyLhZ06nwEfsICH121MXphNom9WdPl41hm31QQ3dlDf7icbcuQfh/226jzR1dXQ73P2EXNwQ+Kt6to705noZVyFzV/iiSAHYmi7UjdXpWonFlcxpE2fPak8B5mSqprjshDV0VLtuYuzp8oNHgJaHqv/Xu+ykoAp0VKMWWczaqsqVZ1qa9AC/v/Qp40rGXzeEqu1fGCBmIs4PU+5iSWjgOl5DeXuaSTZFN5EvgFyk8fxRh//jRdFgUPGwqw4O/gkGR5oWOJkKO0eHCzcvWvjwC3ri5CW5/ZCpD5CGpZ6KkFNa7KIZY9VTUqq8VlH2k3mH33i+gFaWuJaYDQSGx2yE10qyVUsU4+cPaImmC7Fhpqd0GpsRtjgQHu+lkufTujsT3jyDHOSAZlTHXc+vgGhpVNEtjnajdp1LTtMU+1NDY12nX/1H7Wn5niA/Fd9OJapbUn+qInADjQROmSqM/EQIggkUVfwQtc9uCpVnV1Ct126lwkRQg9sk/t/38bGAVDjwAGYd+yQQhMaWVDGq3tt68b9SA/cSE2QKV8m/a2792RPJlvNfw5pRlKTA6OshQ99SM1/F9jhotd13zcGdw/ta0x1MK0j+3yBPymDDpHtYHjxIWS8ZaEcPb8dO6MGRlP9zVtMFmmRvnsfQ+hKtpSll3qYqqvPTgULAqKU5CCWKEbecwMZDu5RKRVbqlm+7Yec/K687+YJhmFwjyiquCsAp35PRKII1nhUR238bMDMukOo+sehiSrQc1DEVnmJB3AHUSIKVugKpnReidn7oWYqBRWeJ1sYNZdVBtDkSE2ryj3cb1IPY2sIPRYLMr3abU7/bHgqN2fwfx5jXZ6zOcPw/X5n7yRB0tPNMJ3S1CE+4bYuuCuLoUHpQ6JjTDUFcExSjonRAuqoqfGMmSk0v/+UR7ftpIHnfgaW0+uD0hojEcY2SM3VRscYo9f0zDRA2HVb5qMmneBQcOGHN8pC1ttqomIidGINH2V+khZam/tcQQDPblTxh9/zkTOzcLFpEBxm5jCUUwoVJEqLHlGjUAjoxK206P4CcXNfSIK82wUdcgHK8pVi2TQ6R2tHDwZZf/6DrzU6Ux95IU7OJ7zUwcHAArWwUwz8xVSpApyfGa+J3N3ETb73zvXiY3ikA1Y8WpeCS2I3qs9E4E3j8IRRXj5kNoQqjU42OHEtBgDpADUoa4/btF7IONgf3YqJhEUm1pCBx6MuapaswH7TuVEcbDE82/nKSUrKzjGg==",
+  "mac": "mAo86sIsgsbpnG4giaDDR/Oc7Odzy3zZGRGULOgg7R4="
+}

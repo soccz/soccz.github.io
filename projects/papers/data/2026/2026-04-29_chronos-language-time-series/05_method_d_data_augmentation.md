@@ -1,98 +1,11 @@
-# 05d. 방법론 — 데이터 증강: TSMixup과 KernelSynth
-
-> **이 파일의 독립 도입부**: 딥러닝 모델이 "처음 보는 데이터"에도 잘 일반화하려면 다양한 패턴을 학습해야 한다. 이 파일은 Chronos가 84B 실제 토큰 외에 추가로 어떻게 다양성을 확보했는지를 설명한다. ① "가우시안 프로세스(Gaussian Process, GP)"가 "어떤 함수가 될지를 확률 분포로 정의하는 수학적 틀"임을 알면 충분하다. GP는 뒤에서 비유로 설명한다.
-
----
-
-## 왜 합성 데이터가 필요한가
-
-공개 시계열 데이터셋 55개, 890K 시계열은 많아 보이지만 실제로는 특정 도메인(에너지, 교통, 소매)에 편중되어 있다. 학습 데이터에 없는 패턴의 시계열에 대한 제로샷 예측은 자연스럽게 약하다. 
-
-두 가지 접근으로 데이터 다양성을 인위적으로 확장한다:
-
----
-
-## 기법 1: TSMixup — 실제 데이터의 볼록 조합
-
-### 아이디어
-
-기존 NLP의 Mixup 증강(두 입력을 가중 평균하는 기법)을 시계열에 적용한다.
-
-### 수식
-
-$$y = \sum_{i=1}^{K} \lambda_i \cdot s_i(x^{(i)})$$
-
-여기서:
-- $x^{(1)}, \ldots, x^{(K)}$: 훈련 데이터에서 무작위 샘플링된 $K$개 시계열의 부분 시퀀스 (동일 길이 $L$로 절단)
-- $s_i$: 각 시계열의 스케일 조정 인수 (mean-scaling)
-- $\lambda_i \geq 0, \sum_i \lambda_i = 1$: 볼록 조합(convex combination — 각 성분에 양수 가중치를 주되 합이 1인 선형 결합) 계수
-- $y$: 새로운 합성 시계열
-
-**기호 뜻**: $\lambda_i$는 각 시계열이 새 시계열에 기여하는 비율. 예를 들어 $\lambda_1 = 0.6, \lambda_2 = 0.4$면 시계열 1에 60%, 시계열 2에 40%의 가중치를 두고 더한다.
-
-**일상 비유**: 두 음악 트랙을 믹싱하는 것과 같다. 재즈와 클래식을 6:4로 섞으면 둘 다 아니지만 둘의 특성을 모두 가진 새 음악이 만들어진다.
-
-**왜 이 형태**: Mixup은 결정 경계(decision boundary) 근방에서 보간을 강제해 모델의 과적합(overfitting)을 줄이는 효과가 있다. TS에서는 서로 다른 주기성·추세가 섞인 시계열로 데이터 다양성을 기하급수적으로 늘린다.
-
-**조심할 점**: 실제 시계열에서 볼 수 없는 인위적 패턴이 생성된다. 예를 들어 전력 소비량과 주가를 섞으면 물리적으로 무의미한 시계열이 나온다. 모델이 이런 "비현실적" 패턴을 과도하게 학습하면 오히려 해가 될 수 있다.
-
----
-
-## 기법 2: KernelSynth — GP 커널 합성으로 새 시계열 생성
-
-### 아이디어
-
-"Automatic Statistician" (Duvenaud et al., 2013) 프로젝트의 역방향 사용. 원래 Automatic Statistician은 관측 데이터를 보고 GP 커널 구조를 자동으로 찾는다. KernelSynth는 **반대로** — 무작위로 커널을 구성해 새 시계열을 **생성**한다.
-
-### 기반 개념: Gaussian Process
-
-가우시안 프로세스(GP)는 "어떤 함수 $f: \mathbb{R} \to \mathbb{R}$이 있을 때, $f$의 여러 점에서의 값이 공동 가우시안 분포를 따른다"는 가정으로 함수를 정의하는 확률 모델이다.
-
-$$f \sim \mathcal{GP}(\mu, k)$$
-
-- $\mu(t)$: 평균 함수 (보통 0으로 설정)
-- $k(t, t')$: 커널 함수 (공분산 함수) — 두 시점 $t, t'$의 함수값이 얼마나 상관되는지를 정의
-
-**일상 비유**: 커널은 "어떤 성격의 함수를 그릴까"를 결정하는 붓 같은 것이다. RBF 커널은 매끄럽게 굴곡지는 함수를 그리고, 주기 커널은 반복 패턴을 그리고, 선형 커널은 추세선을 그린다.
-
-### 기반 커널 4종
-
-| 커널 | 수식 (간략) | 생성되는 패턴 |
-|------|-----------|------------|
-| RBF (radial basis function) | $\exp(-\|t-t'\|^2 / 2l^2)$ | 부드럽고 연속적인 변동 |
-| 주기 (Periodic) | $\exp(-2\sin^2(\pi\|t-t'\|/p)/l^2)$ | 주기성 (계절성) |
-| 선형 (Linear) | $\sigma_b^2 + \sigma_v^2(t-c)(t'-c)$ | 추세 (선형 증가/감소) |
-| 화이트 노이즈 (White Noise) | $\sigma_n^2 \mathbb{1}[t=t']$ | 순수 랜덤 노이즈 |
-
-### 커널 합성 과정
-
-1. 위 4개 기본 커널 중 무작위로 2~5개를 고른다
-2. **덧셈**($+$) 또는 **곱셈**($\times$)으로 합성한다. 예:
-   - $k_1 + k_2$: 두 패턴이 **중첩** (추세 + 주기성)
-   - $k_1 \times k_2$: 하나의 패턴이 다른 것에 **변조** (진폭이 시간에 따라 변하는 주기 패턴)
-3. 합성 커널로 GP를 정의하고, 길이 $L$의 시계열 샘플을 뽑는다
-
-$$f \sim \mathcal{GP}(0, k_{\text{composite}}), \quad (f(t_1), \ldots, f(t_L)) \sim \mathcal{N}(0, K)$$
-
-여기서 $K_{ij} = k_{\text{composite}}(t_i, t_j)$는 그람(Gram) 행렬.
-
-**왜 이 형태**: 커널 합성은 지수급수적인 패턴 다양성을 만든다. 4개 기본 커널을 덧셈/곱셈으로 최대 5층까지 합성하면 수십~수백 종류의 서로 다른 시계열 형태가 가능하다. 이것이 실제 시계열에서 발견되는 패턴의 큰 부분을 포괄한다고 저자는 주장한다.
-
-**조심할 점**: GP는 선형 커널의 합성이 가능하지만, 비선형 인과구조(예: 비선형 regime switch, 극단 이벤트 클러스터링)나 heavy-tail 분포는 GP 샘플에서 잘 나타나지 않는다. 금융 시계열의 변동성 클러스터링(GARCH 효과), 점프 등은 GP가 기본적으로 표현하기 어렵다.
-
----
-
-## 훈련 데이터 배합 비율
-
-최종 학습에서:
-- 실제 데이터 + TSMixup 증강: 90%
-- KernelSynth 합성 데이터: 10%
-
-저자의 Ablation에서 KernelSynth 비율 약 10%가 zero-shot 성능 향상에 가장 일관적이었다고 보고. 비율을 더 올리면(50%) in-domain 성능이 하락하는 경향.
-
-**총 학습 데이터 규모**:
-- 실제 시계열: 55개 데이터셋, ~890K TS, ~84B 토큰
-- TSMixup 증강: 1천만 개 시계열
-- KernelSynth: 100만 개 시계열
-
-→ 다음 파일: [05_method_z_implementation.md](05_method_z_implementation.md) — 하이퍼파라미터와 구현 디테일
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "jtzIVowiTvbbdzrL3Py7XA==",
+  "iv": "huDGXJCjXs4Vdjnqc1sh/Q==",
+  "ct": "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",
+  "mac": "BxkJMQQV8FNSVpmODKEgvsvcGLg8hpsAfv8VGZN19LI="
+}

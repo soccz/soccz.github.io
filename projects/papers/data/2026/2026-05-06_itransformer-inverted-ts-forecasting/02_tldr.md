@@ -1,39 +1,11 @@
-# 02. 3층 TL;DR
-
----
-
-## 🧒 초등학생 수준
-
-상상해보자. 날씨, 교통, 전력 사용량처럼 여러 가지를 동시에 재는 센서가 있다. 우리는 이 센서들의 미래 값을 예측하고 싶다.
-
-기존 AI 방법은 이렇게 했다: "어제 오후 3시"를 하나의 메모지로 만들고, 그 메모지에 그날 오후 3시의 날씨·교통·전력 정보를 전부 적어서 AI에게 보여준다. 그러면 AI는 "어제 오후 3시"와 "오늘 오후 3시"가 얼마나 비슷한지 비교해서 예측한다.
-
-iTransformer는 완전히 다르게 한다: "전력 센서"를 하나의 메모지로 만들고, 그 메모지에 전력 센서의 최근 한 달치 기록을 전부 적어둔다. AI는 "전력 센서"와 "온도 센서"가 얼마나 같이 움직이는지를 비교해서 예측한다.
-
-발상의 전환은 이것이다 — **"시간 축을 따라 비교"하는 대신 "센서끼리 비교"한다.** 결과적으로 전력 사용량이 많은 것처럼 보이지 않았지만 온도가 이미 올라가 있었다면, AI가 그 관계를 포착해서 더 정확하게 예측한다.
-
----
-
-## 🎓 학부생 수준
-
-트랜스포머(Transformer)를 시계열 예측에 그대로 적용하면 어떻게 될까? 표준 방식은 각 **타임스텝**(time step, 특정 시각)을 하나의 토큰(token, AI가 처리하는 정보 단위)으로 만든다. $N$개 변수, $T$개 타임스텝이면 $T$개의 토큰이 생긴다. 어텐션(attention, 어느 토큰끼리 관련이 있는지 계산하는 메커니즘)은 $T \times T$ 행렬을 만들어 타임스텝 간 유사도를 잰다.
-
-문제가 두 가지다. 첫째, 각 타임스텝 토큰이 $N$개 변수의 정보를 한데 섞어버려서, 물리적으로 전혀 다른 단위(온도·전류·속도)가 뒤엉킨 의미 없는 벡터가 된다. 둘째, 잘 학습된 어텐션 맵이 "시간 순서"만 반영하고 실제 예측에 유용한 정보를 담지 못한다.
-
-iTransformer는 축을 뒤집는다. 각 **변수**($n$번째 센서의 $T$개 관측값 전체)를 하나의 토큰으로 만들어, $N$개의 토큰으로 구성한다. 어텐션은 이제 $N \times N$ 행렬로 **변수 간 상관관계**를 학습한다. **피드포워드 네트워크**(FFN, 비선형 변환 레이어)는 각 변수 토큰 내부에서 $T$개 시간 점을 받아 시간 패턴을 추출한다. 이 분리가 핵심이다: "어떤 변수가 다른 변수를 선행하는가"는 어텐션이, "변수 자체의 시간 패턴이 무엇인가"는 FFN이 학습한다.
-
-실험 결과, ECL(전력, 321개 변수) 데이터에서 기존 트랜스포머 대비 MSE(평균제곱오차, 예측 오차의 제곱 평균) 약 9% 감소, Traffic(862개 변수)에서 약 34% 감소를 보였다. 변수가 많을수록 더 큰 이득을 얻는다.
-
----
-
-## 🔬 전문가 수준
-
-**Contribution 1 — 어텐션 실패 진단의 구체화**: 저자들은 표준 TS 트랜스포머의 실패가 "잘못된 토큰화"에서 비롯됨을 실증한다. 타임스텝 토큰은 (a) 이종 단위 변수를 혼합해 임베딩을 오염시키고, (b) 어텐션 맵이 시간 위치 정보만 인코딩하여 변수 간 관계를 포착하지 못한다는 두 가지 결함을 가진다. CKA (Centered Kernel Alignment, 두 표현 공간의 유사도 측정 도구) 분석으로 iTransformer의 내부 표현이 예측 친화적임을 정량화한다.
-
-**Contribution 2 — 역전 아키텍처의 형식화**: iTransformer는 표준 트랜스포머 컴포넌트를 수정하지 않고, 입력 형상만 전치(transpose)한다. 입력 $X \in \mathbb{R}^{T \times N}$을 $X^\top \in \mathbb{R}^{N \times T}$로 재해석하여 각 행(변수 시리즈)을 MLP로 임베딩한다. 어텐션은 $N \times N$, FFN은 각 $D$-dim 토큰 내부에서 작동한다. 위치 임베딩은 불필요하다(시간 순서가 FFN의 뉴런 순열에 암묵적으로 저장되기 때문).
-
-**Contribution 3 — 확장성 및 일반화**: 학습 시 부분 변수 집합으로 훈련하고 미관측 변수를 제로샷으로 예측 가능하다. 룩백 창($T$)이 커질수록 일관되게 성능이 향상된다(기존 트랜스포머는 $T$ 증가 시 성능 정체 또는 저하).
-
-**Contribution 4 — 기존 트랜스포머 변종과의 플러그-인 호환**: FlashAttention, Crossformer 등에 역전 구조를 적용하면 추가 개선이 나타나, "역전"이 범용 개선 기법임을 시사한다.
-
-**한계**: ETT(7개 변수)처럼 변수 수가 적은 데이터에서는 DLinear(단순 선형 분해) 대비 우위가 제한적이다. $N \times N$ 어텐션 복잡도가 변수 수에 이차적으로 증가한다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "1OX/b9QTNPalEAvATPKraw==",
+  "iv": "1g7RCfp0Gv1pBxgc4V1mMw==",
+  "ct": "iyxATAljCi2dK+13E+8cDPiU3FejHImAByni036TIPv0X5x8FCSEb/EZOh11aqOtUT244MDuypq8JfGdlSS27HSJmE1R2M3m0rUSy88kCMpHMd4N1N+eQ0sMVy4u4Vj8CBqBiJEhYCnk8LLlF1hrr7uW/3/771ydqDr4hzzKHiB0F+jmT76TKi4tmiZb/LkZwHDFgSEGv+49RnZsCOeEMytYaBex9LeK61kzrW8yHFI0pmeWqRU0Ne5Hplglzw5dzDrc0nuOkTo6JnJEj3pFjgWcKoulfk4iEiV6QGblL0cWNHRkE8coIuzE5GCSRwI8JMEGw5P5Zi0vdAmtZBvbpkeIBpcx4L3L7UQpW8DXYQTs9Qd5tsZd5G7c5XqkoA4gYAmEPnOPDfhYMBrfqdl0MOCjKmM66eTb+1SGYuJF6VetNKYtgP2TYrbojNMU/PChuXZJeFG6hRRLf5zVYBdjKtGFMBoxwxRQGJo/bt9EhXX6MPGCaj7LJiXkl1xCYaWzPKutG/7f5L4fbMGDzg+IQV7u0p/ey5rpWM5z63J3ktP6Nh44F6pSJn4SEsKgHZKfwhxkwAaNIrM8jj606Kr6d1Hl+uj26kBudYQUDE11pWLYrtpJK8F+klsHDludK64X7Al6oaPKt0ww8SbNZRf9vn+DKvhJIcQoN/RZnJlojo7zzbAwiD1esm/ktWaZo7aX56eHgbzfNEXdVd0D9iDnp4K1A/wBS815opzetm6BUmGSQm5rymWgN4IAOOO+2xnhz7JbeewarizTCKX1ImVQTrjW/GVcnxgSt4+nc0s4osu/yvy81fEHw8RppQ8cffSyAt/M0UQTtf+NrfVITl49PIrl72DHAZgyFVzS0k4TSO5o5s1Y3oXIwueokedeP4dli0By++rFu9ax45cihkLK2aECquOd7HMgi4tzUVhNcWuJizUPn08uy9vkBn4DaQl0qZYVX5/gYwfDhXi72n/ye93ssQKSo8tSm8eAkVvNGbRfXYEzAhgSyCm+YXu2zKBnnpm+1MGDv0YoEAtQl6xiFv7bK/lISwSTDh5bk5wDt3ZGVsRqk3vKaH7KrURZSwnE+3Ke2JP7fJKGy8It/0r9py3ZLT/Vk+o/0zeEZIbGgQkvICn+idpwsSrKQSUzVsDjIKYF5jXiZe8Sz9UY3DB0hWI9oRorvk1s14PxKmOFknLY3iTQzWSiOZqjtA6Rkt0WlWSTmpFCimdQVxDvVtCEGR03PWALCJ+it9pvkzJhqBuxRmrNUbsuCz0lOvAtP6L/9jizoDxpWg+nJaxU+/uEm9520Mk1j5K3FD4S8bRWJvz+exHTkOGiGqMu1cGLahQyuIaYUpPzaqv4eOFb2zHKZ61JsxsZ65zyuYtw6ENnLNX0TRhFcqI+Lq4llsB/OmsenpdSJe07+pUz8f5UkBdMnw0aWw/qXvcOjJLz1p34rDCMOEy2lixl0QkiFoORLmyFSydHsjHwkDiRY/HOqtdd46K6Oszj9bYjrfYNmRyVGEYTgNQxIldNvxF6agd4urXoNjKCIm1DvjaIY7vb28G5dyNiCXsBXOTX+DPKqlytJQrGDmO72Rbg4sclMzMbwqRgtMlS8xGP2ZcEmR9+Q+LE/6MUwavSIp/pLQ17cWv7NAiJf/SGUwk7QnQtJyvlEPXkXFEJilcstEA/jzJWS/jdLO3RsxHBOjgjEn30soStYkxX3U22MLzFWdd15i5hnJr9L884BAymSWeUtZEOLcSwEp2IlKtfOiFLKt9CGtB5adXM86c4xhVH20zbUkEo5iYw9CYC85DaBQ0zToVerJ9UU4MOz11T1F1Tfjv8gwQj5wcrmWKUShcPqrPUx4DJ9O/JJGIqN7GIoPxrKhXsgkhxbpm0CNsx8rxd1MhSPghFZk3Pd1iCe9x2Qh09BJY27am+e/V+lKi3b8m1qWojBJfT5aOjxYPdSpQpQvu44n4PbjqPNDglb9mf549cUnrbRhHkhPww9fACVhpNgTR7rdHyItkMbdXOZ9FmyIB35l5ZOgT1OqqOzeaF/wbR2TcagJprvbJLmVFL2IqujGI8R1BeczPXur1aVtyueJHEehEM7X0Hp+ZPTOjiwyT3//FQnt7eN5Y4lQz3SQMf9puIy8ErugVVmHoEmOvxx9smp4mCAGSZhZmHUEc4llIVaLfhikVd4sqwfbovQ7bAo+ek4wqI6zOSA/srkQ2dm7OdOQxS1VxY+uEfa6nI01WlrvsZyXfbvJNVJqzpiR62Q+L/59fcYIVZvYHYa2ai0CugEphf5y2EK2vJ/x7GupmfxjL0X/Zb5yBZYHbp3JM+MPlXFukZyw6b4897KVhTJPLpm/wB+RZ8jewxhuTIWeZrcbIMU0KJW0EspHm3WkQ3PBMmFA8F/C5l1zaJ5tULIAwBUqjMaTuvY35WuI+G2RSGJrStlWBaIo+qpkFzRB6Iz3w/u6sSkBjBBWArYPjvWcY4DxJUT0T5ANzlNDiRKH43P4KaoArqw/jKwNmGnEGNaiNrRjGvNyNC+yvXtl9nYExe21tBhFQRu2TCNCb+wZQeQMqN5yK5wL6wO+XIYO64uO+aNXb9oKH52vtHbC2dYjA3602mPv0+fBA1IrtGHsce6E+LGc6us5J8S5hzhwj5j2H/UY/xJ9M3U/5pJQ7SWHSY6L/UYdMsqYDAlHDU/KVfB/2n50ZZvvTDtIB+P9o9+4vl7ncIe+s7n0MYX98yNv0EM8qkILqzE/WdXd7yfGPJos0e0xZuZLVKXjrpgMCVua3dGr6gmk/tPjwgo4+v+YQnjxz5IYJQFMdDyOqYfVpvSaTlM502WuFBt7qfQrcLrUKB4Siv7KjCDFv2IQHGrRi5vcVOQcfBu59sE33gUyw93bA0n2tpdA92dQnXkSxOzZ5nTiaofV9qhVOkNWxbtOGODvg0hxajQA7+MWpjUMQ8+EBnxinNrWEbVria5jOSCaA4WuDMIUh8pDFNaql4wxnd5U3SMkLHVgmSTo3rUkyg9rik4zXyqVIukdmneLwsco/+potj0aABjCxpqNCDaXNJHbuBArVjAi2DLDUgO3O58JIPeBgBumlVAiNB4tMockYwiZz6mj65JYsaNTUxLg2XUiYt/veKsPbRH9eqYM+z62ao+6CYSgHqcMOaqKxiK7oEt0AmD1AyuO2a4fgLnQFxIXxJjks1YDsS7ilgGKIHhV8Z/WdEHSBm7lv2LeHf07/cXC1yMogj8/CUnAG8bTVVMoaylgBDxTglTVI8EjOxJnZ9PCX3woHKrrtjl1LDv4jnH7dkCvMND6+jYeIJcyeYC+TdJxcMpdlI3F3BFrh4KPt8KLbgEoIJWuJRQnEFnbab3QLIqHLvIYssSgrWH+cM2HQ4kMXHHZTD4G+4noFJINPWxiAtbpdssTP+ywJGXdkzHZA3MYHTakkAAv3lywjdLBf0+9Q2Ss43tE8+HmHH90JmSTWnIF+orGsE8Mu6OKncYXOjroprhIkbp48p2JAGsz6N2tbiRxws+9gjGWTeFCao5ta2IeH5I1dkERrrorUfnauZ9N7AhoxoAYnI+AsrRVxSNn2LDTIK7EmMos6U6Hpa6wvcuo1C9gYkXgTc925F9AjgI7737vQthkzVX5R18qdcNUVBi9o5VUoAghe8fVAaYq08EwM5jdykxzEmOIe/RNL5hmHIU0JIA/VsPvv/EqDX/Pm+uZtGnFSLpUzeqiNAuibTX28nds+RsnVoG+poWl19VMHjS+IPXAlAuB6BiH2VfXuuxLSyXmw70x7MKgbdLT8YoQUFCyK19QIGXQ8BBZCgCmHVuODGcQ8n3EmU8kST/GJgVY7nOly1dLBSqmWV6D4LzOvaMG/EcUnfeKnXDQY+aVWwD9lb0iaHE60CdOqueaPDtTO1W88TJN7qANUspJpY+df5pm2qKcNSqPw1C9iHKvBtnf1PS4Oyn9GrT+M3Kwv+w/LkKVGEV9PYVL05BoRptxC2ckUs0rMKxRQyJMhKXHGKOZeMgKYiSMuUsQZGWq+jrbZvva2V3aMEZY37KM3YEJzi64PrY/0Qieq2TwbSDYzZUyDRA2vDjuRBaHYrj37K8Q4sZqnW6h9OoIYtpd/kQfkRIoxxmx07Fbgd1dGtIdaZzCbO+ZFCyMyAfLyNa/BImgS9sfTNkTwu8Q+QVzroi6MSci4S+q7qswNyA47rY5hoObsrWqx4c+xBFzrGh5VuIA1YXNB/3PWFNF99HFInZFC76l/5UIAeiPa5+rBtGHtiZJ1YvKlpWTzK0JY4LYjau0D7KxL7xXik1ZZZ8fVicjpDQJ6tWkNxk5wVRuDmyoWDGaL4QE1JQx/UgsyBHV2IFof35XOIRhGlmct0vGuaL0/0Iy7wL7A5BBHUDsqeLjylwIfNn706pIdl/8EUW3hXvfSNbmls1eMb8knGu1y5JRyZiGugUhyEHq3HxiOxoVp0SNquNsBySDGRE82mnlX3yAf8ctyY4Jb7MCU6iebXHhCML2dunouW1bCdS2RkgijG5jRukRcAlVCbibaMIfNKX3pEDRCAPE5nXfb03RE3XMxqY1mCtUofpJc/O/Z1HgVrrcOyBPORb/KbzQxr8hg3irKza3Gj5NvTqesylgOi2+o3mW+PUFCyZBSLAC05JTak/RAPiN5GJFHvjgquSWRHoDq37hf5/Kcn18toHD2fBllEnREiEe/XQIG4tjgwiuy+4k1aIGEID4/asH4OstK/ma6kF/pWVkm+w4rH51cqsU+MyTnQNVhY+eqYKME67WjvCTtZuhPemyHmLI0+wLaVLJFcMR3lzn+lGNG9X5jCJxF5mIlLwkVxeKamEhryxPmr1No8N9Tn9pxScMs7VkGF1A4o3bdyOPSXyQ14/qYArvVa+dmCsTV9yUSmStDPze9VF8iIdTnTCHsn1E4hqUbbUBna2zMWLehKZTZDIRfQlrSlSe3tMOiSB7XfJYH19oBmRfRLW9KjV/9QFAu4Mt0hO9EmbNTt9Aa9sex2Yj1LgpgDrGDj50BGfzqy7JjZD9m3bReC0zAUW9GKXe5sea4yHYtgBqA+lqkhx1jWljQAOk94dkoP4IYW3KnbMckLIbf+DQWBJWo2A+vrz8D7mbpfkItpe9nKfqyd1KI/FX5OpMlb97xbCAW6ccPii1oAtH9jyfDh/l+J9zlBfTJ0Noe50/VVk1X9JdKuz2EIYpBHH2mbdELuCnbkhNVfmwkqyHu6uqvSWPki8A2RfgeTBMFeKBF2gRE9OsKpFU9XUDqms5QQJ3hPV6ry6MHqewNvc/PjLmIsnCgaa39xXCmsDdKKzqzMw6ow7NKyWSZfqxrHkow4wnwPD7a6XupdYFmJDLA/BjlDGQLcz3ebbGivgQhDifesoErHiOZqXt9nw69P/QV9WiP4sG8soc5EfMFJjNsRvI/LHp0smaqjp9ZIeBORv/YsZvrqrAY4t77n76CbUQTD5ahMMjbIYjS4rbwF3n+2nlM9FOT6AoPivjUbExFbJZh+ve/8GYrixCYYlyCRTZWW0BUWNloo0bIvJcr2hWs8NqapzrOFApvo8ynQ5TdnXZSSgAzlDkXHZ1+0FCDNfuvvhUjOi1AzcM5XxXb+4GJZUS705EKPr7y8Oc7Y7GEOkkTlHY466qysnVuCjJhTleMpYclgfPigp78GL/zr7/+mXkYrsY+tcBAOurATdDoqaff8KUs/J+2pAlNSpavkSZcw3t2BmxWck+4lvB5cvj7s8vK2jT3e6cfsJlzegzmCOPIUK/UkRtwlNDcWkdYrUURJ0e2W52TBnkw7Z8hx8V+dZwD1uTs0xBjZuIkhKiMzfdTTsedeX9JLherl9Kin4Ppn7RPT0bn++7unsds3JcQSMTPTavBnxRsND19489RVc7D23WK69sriKmPyM15RmprR7/htkohWUhHAVaT30b1IUk9yAwhWdQxrjK+gyY1db3SXRzjo55g18K0s2GO5nP92XD234CAgYRrsj6Di8Goq6zN3zFdjyCGyFupPRvf5tFlhXjNOTiMBD8BS3Sqc6y37b+awn5oqaEpDhWu87aun9Siw6BAd5Nm7EJEfXGWjsxCdBTArjeCGqzoDDyL7tw2ZZxBnhR8ZSE68J8+lm7kiM5qwjpZ0apSaGCE5CPFypDyWvCA0yoCZsV5Z4DTjwkc5cHME4jxFl2xwOtvi6vfvE560kGNKnWGIGwTkJ7cXGil8UnyWJMvRPVuqqMwwUN5D/PBA+77HqZ8QaLidYaOFDw9S6XXbeRdveXYAJYvE/nTi8YrbBirL5e1Lozyp",
+  "mac": "fhQ/8Rr+a55wpIuBj7/q9LPn8vHpfCSBhHuW88OZUhI="
+}

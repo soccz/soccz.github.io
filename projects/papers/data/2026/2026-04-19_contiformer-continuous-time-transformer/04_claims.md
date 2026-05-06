@@ -1,25 +1,11 @@
-## 3. 핵심 Claim 해체
-
-### Claim 1 — 연속시간 Attention의 정식화
-
-- **주장**: query·key·value를 모두 시각의 함수로 lift 한 attention $\text{CT-ATTN}(t) = \sum_i \hat\alpha_i(t)\,\hat v_i(t)$ 가 잘 정의되며, vanilla attention보다 *엄격히* 표현력이 크다.
-- **증거**: 표현력 정리 (Sec 4 / Appendix). $f_\theta \equiv 0$ 으로 두고 query interpolation을 step function으로 두면 vanilla attention 회복; vector field를 $-\lambda h$ 형태의 exponential decay로 두면 GRU-D 식 decay 회복; query만 시간함수로 두면 mTAND 회복. 즉 **5개의 선행 모델 모두 ContiFormer의 특수해**.
-- **숨은 전제**: vector field $f_\theta$ 가 Lipschitz (ODE 해의 존재·유일성). Picard–Lindelöf 가정이 깨지면 trajectory가 분기·발산. 입력 시계열의 측정 잡음이 vector field를 spike하게 만들면 실제 학습에서 깨지기 쉽다.
-
-### Claim 2 — 비정규 시계열 벤치마크 우위
-
-- **주장**: 합성 (spiral, sin), 의료 (PhysioNet, Human Activity), 일반 시계열 등에서 interpolation MSE / classification AUC / prediction RMSE 모두 SOTA.
-- **증거**: 표 형태로 mTAND, Latent ODE, ODE-RNN, Neural CDE, vanilla Transformer, Informer 비교. 대부분 통계적으로 유의한 우위 (특히 missing rate 50% 이상에서 격차 확대).
-- **숨은 전제**: 데이터셋의 "비정규성"이 진짜 정보적이라는 것. PhysioNet은 의료적 의사결정에 의해 sampling되므로 시각 자체가 leak할 수 있고, 등간격 가정 모델이 불리할 수밖에 없다 (선택 편향).
-
-### Claim 3 — 임의 시각에서의 query 가능
-
-- **주장**: training time의 관측 시각과 무관하게, 추론 시 임의 $t \in [0, T]$에서 출력을 만들 수 있다 (continuous-time inference).
-- **증거**: interpolation task에서 학습 시 보지 못한 시각을 query로 사용. 보간 곡선이 ODE-RNN 대비 매끈하면서도 변동을 잡음.
-- **숨은 전제**: ODE solver의 수치 오차가 query 시각에 따라 균일하다는 가정. 적분 구간이 길어질수록 오차 누적 → "먼 미래"의 query는 여전히 위험. extrapolation 성능은 본문에서 강조되지 않음.
-
-### Claim 4 — 통일성 (unified framework)
-
-- **주장**: ContiFormer는 단순한 모델이 아니라, 비정규 시계열 처리의 **설계 공간**(design space)을 제시하는 *recipe*. vector field, query interpolation, attention quadrature 세 축을 분리.
-- **증거**: 표현력 정리 + ablation (각 축을 끄면 기존 모델로 환원).
-- **숨은 전제**: 세 축의 분리가 직교(독립)라는 것. 실제로는 quadrature 정밀도와 vector field 표현력은 서로의 부담을 떠넘길 수 있다 — vector field가 거칠면 quadrature 오차 폭증, vector field가 매끈하면 quadrature는 1차 근사로 충분. 즉 design space의 차원이 명목상 3이지만 실효 차원은 더 낮다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "ZGtMIpQOF84s4fQnxU9Wug==",
+  "iv": "GESV7gVJRMb3rMISeM/1ew==",
+  "ct": "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",
+  "mac": "qR5MRCMGbEgSD7f0IcD0/GmLuQw66HaX4FWLcQi1yEg="
+}

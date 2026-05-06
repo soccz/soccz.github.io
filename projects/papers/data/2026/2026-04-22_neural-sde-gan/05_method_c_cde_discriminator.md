@@ -1,90 +1,11 @@
-# 05c · Neural CDE 판별자
-
-> **배경 사다리**: ① Neural CDE는 "입력 경로 $X$를 읽으면서 은닉 상태 $Z$를 업데이트하는 미분방정식"이다. ODE와 다른 점은 시간 자체가 아니라 *입력 경로*를 따라 적분한다는 것. ② Wasserstein 거리는 "두 분포 사이의 최소 운반 비용"이고, WGAN은 이것을 최적화하는 GAN이다.
-
----
-
-## 1. 왜 CDE를 판별자로 쓰는가?
-
-판별자가 할 일은 경로 전체 $X = (X_0, X_1, \ldots, X_T)$를 보고 "진짜인가 가짜인가"를 판단하는 것이다. 이 판단은 **경로 전체의 패턴**에 의존해야 한다 — 특정 시점의 값만 봐서는 안 된다.
-
-이산 순환 모델(LSTM)은 이 일을 이산 스텝으로 한다. 하지만 연속 시간 경로를 이산 LSTM으로 판별하면:
-1. 시간 해상도가 고정된다.
-2. 경로 전체의 수학적 구조(러프 경로, path signature)를 충분히 활용하지 못한다.
-3. 이론적 최적성 보장이 없다.
-
-Neural CDE는 이 문제를 한 번에 해결한다: 경로를 연속 시간으로 처음부터 끝까지 읽으면서 판별.
-
----
-
-## 2. Neural CDE의 정의
-
-$$dZ_t = f_\phi(Z_t)\,dX_t, \quad Z_0 = \xi_\phi(X_0)$$
-
-$$D(X) = \ell_\phi(Z_T)$$
-
-**기호 뜻**:
-- $Z_t \in \mathbb{R}^h$: 판별자의 은닉 상태 ($h$: 은닉 차원)
-- $f_\phi: \mathbb{R}^h \to \mathbb{R}^{h \times d}$: 신경망 (은닉 상태를 입력 경로 차원으로 확장)
-- $X_t \in \mathbb{R}^d$: 판별할 경로 (진짜 또는 가짜)
-- $dX_t$: 경로의 미소 증분 (스플라인 보간 후 미분)
-- $\xi_\phi: \mathbb{R}^d \to \mathbb{R}^h$: 초기 상태 인코더
-- $\ell_\phi: \mathbb{R}^h \to \mathbb{R}$: 선형 출력 레이어
-- $D(X) \in \mathbb{R}$: 판별 점수 (높을수록 "진짜 같다")
-
-**일상 비유**: 소설 필사 판별기. $Z_t$는 "지금까지 읽은 소설의 인상". $dX_t$는 "다음 문장". $f_\phi(Z_t)\,dX_t$는 "새 문장을 읽고 인상을 업데이트하는 양". 소설을 처음부터 끝까지 다 읽고 나서($Z_T$) "이 글이 특정 작가의 것인가?"를 판단($\ell(Z_T)$).
-
-**왜 이 형태**: ODE $dZ = g(Z, t)\,dt$와 비교하면 — ODE는 시간 $t$ 자체를 구동력으로 쓴다. CDE는 *입력 경로 $X_t$의 변화* $dX_t$를 구동력으로 쓴다. 이 차이가 핵심: CDE는 입력 경로의 순서와 패턴을 모두 인코딩하고, ODE는 시간 함수만 인코딩한다.
-
-**수학적으로**: $dZ_t = f(Z_t)\,dX_t$를 전개하면
-
-$$Z_T = Z_0 + \int_0^T f_\phi(Z_t)\,dX_t$$
-
-이 적분은 경로 $X$의 **서명(signature)** — 경로의 기하학적 정보 전체 — 를 처리하는 것과 등가적이다(Lyons 1998, rough path theory). 즉 Neural CDE는 경로의 모든 구조적 정보를 이론적으로 포착한다.
-
-**조심할 점**: CDE 적분 $\int f(Z_t)\,dX_t$는 $X$에 대한 Stratonovich 적분이나 이토 적분이 아니라 **Young 적분** (경로가 충분히 매끄러운 경우) 또는 **러프 경로 적분**이다. 실용에서 $X$가 스플라인 보간된 매끄러운 경로라면 Young 적분으로 안전하게 계산된다.
-
----
-
-## 3. CDE를 효율적으로 적분하기: Log-ODE 방법
-
-순진한 CDE 적분은 각 스텝마다 행렬-벡터 곱 $f_\phi(Z_t) \cdot \dot{X}_t\,dt$를 계산한다. 긴 경로에서 느리다.
-
-**Log-ODE (Logarithmic ODE) 방법**:
-
-각 구간 $[t_k, t_{k+1}]$을 한 번에 처리. 구간의 경로 서명(signature) $\log(X_{t_k \to t_{k+1}})$를 계산하고, 이를 구동력으로 쓴 ODE를 적분한다:
-
-$$Z_{t_{k+1}} \approx Z_{t_k} + \text{ODE}\bigl(f_\phi, Z_{t_k}, \log(X_{t_k \to t_{k+1}})\bigr)$$
-
-**왜 유리한가**: 경로 서명은 구간 길이와 무관하게 낮은 차수로 경로 정보를 압축한다. 긴 경로를 큰 스텝으로 처리할 수 있어 계산 효율이 크게 향상된다.
-
----
-
-## 4. 이론적 근거: Neural CDE의 보편 근사성
-
-**Theorem (Kidger et al. 2020)**: 임의의 연속 경로 범함수 $F: C([0,T]; \mathbb{R}^d) \to \mathbb{R}$에 대해, 임의의 $\varepsilon > 0$에 대해 충분히 큰 신경망 $f_\phi$가 존재하여
-
-$$\sup_{X \in K} |Z_T - F(X)| < \varepsilon$$
-
-가 성립한다. 여기서 $K$는 컴팩트 집합.
-
-이 정리의 의미: Neural CDE는 "경로를 숫자로 바꾸는 임의의 연속 함수"를 임의의 정밀도로 근사할 수 있다. 따라서 WGAN에서 요구하는 "Lip-1 함수 클래스"를 Neural CDE로 근사하는 것이 이론적으로 정당화된다.
-
----
-
-## 5. 대안과 비교
-
-| 판별자 대안 | Neural CDE와의 차이 |
-|------------|---------------------|
-| LSTM 판별자 | 이산 시간, 이론적 최적성 없음 |
-| Transformer 판별자 | 이산 위치 인코딩, 경로 연속성 불보장 |
-| 1D CNN | 지역 패턴만 봄, 장기 의존성 약함 |
-| Signature 분류기 | 직접 서명을 특징으로 — CDE와 이론적 등가, 하지만 계산 비용 높음 |
-
----
-
-## 6. 이 블록의 핵심 한 문장
-
-> **Neural CDE $dZ = f(Z)\,dX$는 경로 전체를 읽으면서 특징을 누적하는 연속-시간 판별자이며, 경로 범함수의 보편 근사성 덕분에 경로 공간 WGAN의 이론적 최적 판별자 클래스를 형성한다.**
-
-> **[다음 파일]** → [05_method_d_training.md](05_method_d_training.md)
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "ATYZSV9t0X+jSardVnFqkw==",
+  "iv": "15sK0yEP9g0CjDrkCz2e6A==",
+  "ct": "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",
+  "mac": "PQCMkYEyDAnl2TumMokyPPVzSTnaIzxeM7JdIXwAL0g="
+}
