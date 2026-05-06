@@ -1,7 +1,638 @@
 {
-  "generated_at": "2026-05-06T17:55:46",
-  "count": 4,
+  "generated_at": "2026-05-06T21:39:32",
+  "count": 9,
   "papers": [
+    {
+      "slug": "2026-05-06_itransformer-inverted-ts-forecasting",
+      "date": "2026-05-06",
+      "weekday": "수",
+      "bucket": "인접",
+      "title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
+      "title_ko": "iTransformer: 축을 뒤집은 트랜스포머는 시계열 예측에 효과적이다",
+      "authors": "Yong Liu, Tengge Hu, Haoran Zhang, Haixu Wu, Shiyu Wang, Lintao Ma, Mingsheng Long",
+      "venue": "ICLR 2024 **Spotlight**",
+      "identifier": "arXiv:2310.06625 (제출 2023-10-10)",
+      "code": "",
+      "data": "",
+      "tags": [],
+      "verdict": "\"시간(T) 방향 어텐션\"이라는 트랜스포머 TS 적용의 암묵적 가정을 정면으로 뒤집어, 변수(N) 방향 어텐션 + 시간 방향 FFN으로 다변량 예측 SOTA를 달성한 논문 — APF 연구에서 T×T 어텐션 모티프 분류 체계의 '대안 축' 비교군으로, Grokking 연구에서 FFN이 시간 패턴을 학습하는 회로 구조 분석의 초기점으로 필수 참조한다.",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00. 네비게이션 — iTransformer: 축을 뒤집은 트랜스포머"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01. 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02. 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03. 문제 지형도"
+        },
+        {
+          "file": "04_claims.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04. 핵심 Claim 해체"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "A. 방법론 — 큰 그림: 축 전환 직관"
+        },
+        {
+          "file": "05_method_b_embedding.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "B. 방법론 — 변수 토큰 임베딩"
+        },
+        {
+          "file": "05_method_c_attention.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "C. 방법론 — 변수 방향 어텐션 메커니즘"
+        },
+        {
+          "file": "05_method_d_ffn_arch.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "D. 방법론 — FFN + 전체 아키텍처 & 구현 디테일"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06. 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07. 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08. 이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09. 내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "A. 사고 확장 — 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "B. 사고 확장 — Follow-up 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "C. 사고 확장 — 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11. 한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-05-06_itransformer-inverted-ts-forecasting"
+    },
+    {
+      "slug": "2026-05-04_yang-tappa-why-attention-patterns",
+      "date": "2026-05-04",
+      "weekday": "월",
+      "bucket": "코어",
+      "title": "Why Attention Patterns Exist: A Unifying Temporal Perspective Analysis",
+      "title_ko": "왜 어텐션 패턴은 존재하는가: 통합적 시간 관점 분석",
+      "authors": "Qingyue Yang, Jie Wang, Xing Li, Yinqi Bai, Xialiang Tong, Huiling Zhen, Jianye HAO, Mingxuan Yuan, Bin Li",
+      "venue": "ICLR 2026 (poster/conference)",
+      "identifier": "[2601.21709](https://arxiv.org/abs/2601.21709) (2026-01-29 등록)",
+      "code": "[github.com/MIRALab-USTC/LLM-TAPPA](https://github.com/MIRALab-USTC/LLM-TAPPA) (2026-02-04 KVCache 모듈 공개, Prune/Visualization 모듈은 예정)",
+      "data": "",
+      "tags": [
+        "pe-attention-geometry",
+        "mech-interp-circuits",
+        "attention-as-explanation"
+      ],
+      "verdict": "\"어텐션 패턴 통합 이론\" 의 가장 야심찬 ICLR 2026 시도. APF 의 직접 concurrent work — 우리 motif sweep 의 모든 motif (diagonal/sink/reaccess) 를 q-similarity × RoPE-frequency 두 축으로 환원한다. 우리 framework 의 \"PE → motif → CNN probe\" 사다리 중 첫 두 칸을 닫는 정리(Theorem 5.2) 가 이미 존재한다는 사실은 충격이지만, 그들은 CNN probe 와 causal intervention 단계가 비어 있어 우리에게 niche 가 남아 있다.\"",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00. 표지 — Why Attention Patterns Exist (TAPPA)"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01. 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02. 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03. 문제 지형도 — \"패턴은 왜 존재하는가\" 라는 무거운 질문"
+        },
+        {
+          "file": "04_claims_a_predictability.md",
+          "num": "04",
+          "suffix": "a",
+          "title": "04. 핵심 Claim 해체 — Part A (예측가능 / 불가능 이분법)"
+        },
+        {
+          "file": "04_claims_b_three_patterns.md",
+          "num": "04",
+          "suffix": "b",
+          "title": "04. 핵심 Claim 해체 — Part B (re-access / sink / slash 통합)"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05. 방법론 해부 — Part A: 큰 그림 (시간 연속 관점)"
+        },
+        {
+          "file": "05_method_b_qsim.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05. 방법론 해부 — Part B: q-similarity 의 정의와 측정"
+        },
+        {
+          "file": "05_method_c_rope_decomposition.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05. 방법론 해부 — Part C: RoPE 의 주파수 채널 분해"
+        },
+        {
+          "file": "05_method_d_theorem.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "05. 방법론 해부 — Part D: Theorem 5.2 의 분해"
+        },
+        {
+          "file": "05_method_e_apps.md",
+          "num": "05",
+          "suffix": "e",
+          "title": "05. 방법론 해부 — Part E: 응용으로의 번역 (KV cache & pruning)"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06. 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07. 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08. 이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09. 내 연구와의 연결 (APF 정면 충돌 + 흡수 전략)"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "10. 사고 확장 — Part A: 자문 5 질문"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "10. 사고 확장 — Part B: Follow-up 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "10. 사고 확장 — Part C: 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11. 한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-05-04_yang-tappa-why-attention-patterns"
+    },
+    {
+      "slug": "2026-05-01_lyle-grokking-nonstationarity",
+      "date": "2026-05-01",
+      "weekday": "금",
+      "bucket": "원거리",
+      "title": "What Can Grokking Teach Us About Learning Under Nonstationarity?",
+      "title_ko": "그로킹(Grokking)은 비정상성(Nonstationarity) 하의 학습에 대해 무엇을 가르쳐주는가?",
+      "authors": "",
+      "venue": "4th Conference on Lifelong Learning Agents (CoLLAs 2025)",
+      "identifier": "",
+      "code": "",
+      "data": "",
+      "tags": [],
+      "verdict": "Grokking = ELR(유효학습률) 붕괴의 역전**: 모든 지연된 일반화·원시 편향·소성 상실은 하나의 메커니즘(파라미터 노름 증가 → ELR 붕괴 → 게으른 regime 고착)으로 통합되며, ELR 재가열(Re-warming)이 그 보편 치료제임을 실증한다.",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "표지 및 목차"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "문제 지형도"
+        },
+        {
+          "file": "04_claims.md",
+          "num": "04",
+          "suffix": null,
+          "title": "핵심 Claim 해체"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "방법론: 큰 그림"
+        },
+        {
+          "file": "05_method_b_elr.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "방법론: 유효학습률(ELR) 정의와 붕괴"
+        },
+        {
+          "file": "05_method_c_nap_rewarm.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "방법론: NaP와 ELR Re-warming 알고리즘"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "사고 확장: 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "사고 확장: 후속 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "사고 확장: 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-05-01_lyle-grokking-nonstationarity"
+    },
+    {
+      "slug": "2026-04-29_chronos-language-time-series",
+      "date": "2026-04-29",
+      "weekday": "수",
+      "bucket": "인접",
+      "title": "Chronos: Learning the Language of Time Series",
+      "title_ko": "Chronos: 시계열의 언어를 배우다",
+      "authors": "Abdul Fatir Ansari, Lorenzo Stella, Caner Turkmen, Xiyuan Zhang, Pedro Mercado, Huibin Shen, Oleksandr Shchur, Syama Sundar Rangapuram, Sebastian Pineda Arango, Shubham Kapoor, Jasper Zschiegner, Danielle C. Maddix, Hao Wang, Michael W. Mahoney, Kari Torkkola, Andrew Gordon Wilson, Michael Bohlke-Schneider, Yuyang Wang",
+      "venue": "Transactions on Machine Learning Research (TMLR), 2024년 10월",
+      "identifier": "2403.07815",
+      "code": "",
+      "data": "",
+      "tags": [
+        "ts-transformer-baseline",
+        "probabilistic-forecast"
+      ],
+      "verdict": "Chronos는 시계열을 이산 토큰의 언어로 치환하여 T5 언어모델로 학습하는 가장 단순한 형태의 TS 파운데이션 모델이다 — 그 단순함이 강점이자 한계이며, APF 시각에서는 \"Transformer가 TS 토큰 시퀀스에서 어떤 어텐션 패턴을 형성하는가\"라는 핵심 미답 질문을 남긴다.",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "Chronos: Learning the Language of Time Series"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01. 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02. 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03. 문제 지형도"
+        },
+        {
+          "file": "04_claims.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04. 핵심 Claim 해체"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05a. 방법론 — 전체 흐름의 큰 그림"
+        },
+        {
+          "file": "05_method_b_tokenization.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05b. 방법론 — 토크나이제이션: 스케일링과 양자화"
+        },
+        {
+          "file": "05_method_c_architecture.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05c. 방법론 — T5 아키텍처와 학습"
+        },
+        {
+          "file": "05_method_d_data_augmentation.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "05d. 방법론 — 데이터 증강: TSMixup과 KernelSynth"
+        },
+        {
+          "file": "05_method_z_implementation.md",
+          "num": "05",
+          "suffix": "z",
+          "title": "05z. 방법론 — 구현 디테일 & 하이퍼파라미터"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06. 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07. 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08. 이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09. 내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "10a. 사고 확장 — 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "10b. 사고 확장 — Follow-up 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "10c. 사고 확장 — 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11. 한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-04-29_chronos-language-time-series"
+    },
+    {
+      "slug": "2026-04-27_nanda-progress-measures-grokking",
+      "date": "2026-04-27",
+      "weekday": "월",
+      "bucket": "코어",
+      "title": "Progress Measures for Grokking via Mechanistic Interpretability",
+      "title_ko": "메커니즘 해석으로 측정하는 그로킹 진행도",
+      "authors": "Neel Nanda · Lawrence Chan · Tom Lieberum · Jess Smith · Jacob Steinhardt",
+      "venue": "ICLR 2023 (poster)",
+      "identifier": "[2301.05217](https://arxiv.org/abs/2301.05217) (제출 2023-01-12)",
+      "code": "",
+      "data": "",
+      "tags": [],
+      "verdict": "\"Grokking 은 generalization 의 지연이 아니라 circuit cleanup 의 지연이다 — 그리고 진행도는 회로의 Fourier sparsity 로 직접 잴 수 있다.\" Grokking active track 의 **이론 척추** 논문이며, APF 가 motif 진행도를 측정할 때 베껴야 할 *progress measure* 의 원형이다.",
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "Progress Measures for Grokking via Mechanistic Interpretability"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "0. 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "1. 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "2. 문제 지형도"
+        },
+        {
+          "file": "04_claims_a_circuit.md",
+          "num": "04",
+          "suffix": "a",
+          "title": "3. 핵심 Claim 해체 (a) — Fourier 회로의 발견"
+        },
+        {
+          "file": "04_claims_b_progress.md",
+          "num": "04",
+          "suffix": "b",
+          "title": "3. 핵심 Claim 해체 (b) — Progress measure & 3단계 동학"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "4. 방법론 해부 ① — 큰 그림"
+        },
+        {
+          "file": "05_method_b_modadd.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "4. 방법론 ② — Modular addition setup"
+        },
+        {
+          "file": "05_method_c_fourier_circuit.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "4. 방법론 ③ — Fourier 회로의 수식 유도"
+        },
+        {
+          "file": "05_method_d_progress_measures.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "4. 방법론 ④ — 세 progress measure 의 정확한 정의와 implementation"
+        },
+        {
+          "file": "05_method_e_implementation.md",
+          "num": "05",
+          "suffix": "e",
+          "title": "4. 방법론 ⑤ — 구현 디테일 & 재현 가능성"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "5. 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "6. 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "7. 이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "8. 내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "9. 사고 확장 (a) — 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "9. 사고 확장 (b) — Follow-up 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "9. 사고 확장 (c) — 후속 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "10. 한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-04-27_nanda-progress-measures-grokking"
+    },
     {
       "slug": "2026-04-24_grokked-transformers-implicit-reasoners",
       "date": "2026-04-24",
