@@ -1027,7 +1027,6 @@ function readHash() {
 /* ─────────  Init  ───────── */
 async function init() {
   setupMarked();
-  hljs.registerLanguage('python', hljs.getLanguage('python') || (() => ({})));
   try {
     const res = await fetch('manifest.json?_=' + Date.now());
     MANIFEST = await res.json();
