@@ -738,7 +738,7 @@
   </svg>
 </button>
 
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
@@ -1025,22 +1025,56 @@ function readHash() {
 }
 
 /* ─────────  Init  ───────── */
+function showInitError(stage, err) {
+  const msg = (err && (err.message || err.toString())) || '(no message)';
+  document.getElementById('papersGrid').innerHTML =
+    `<div class="loading" style="grid-column:1/-1;text-align:left;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text)">
+      <div style="font-weight:600;margin-bottom:8px;color:#c45858">초기화 실패 (${stage})</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-secondary);white-space:pre-wrap">${msg}</div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-muted)">브라우저 콘솔(F12)에서 자세한 스택을 확인하세요.</div>
+    </div>`;
+}
+
 async function init() {
-  setupMarked();
+  // External libs — verify they actually loaded before using.
+  if (typeof marked === 'undefined') return showInitError('marked CDN', new Error('marked is undefined'));
+  if (typeof katex === 'undefined')  return showInitError('katex CDN',  new Error('katex is undefined'));
+  if (typeof hljs === 'undefined')   return showInitError('hljs CDN',   new Error('hljs is undefined'));
+
+  try { setupMarked(); }
+  catch (e) { console.error(e); return showInitError('setupMarked', e); }
+
+  let res;
   try {
-    const res = await fetch('manifest.json?_=' + Date.now());
+    res = await fetch('manifest.json?_=' + Date.now());
+  } catch (e) {
+    console.error(e);
+    return showInitError('fetch manifest.json', e);
+  }
+  if (!res.ok) return showInitError('manifest.json HTTP', new Error(`HTTP ${res.status}`));
+
+  try {
     MANIFEST = await res.json();
   } catch (e) {
-    document.getElementById('papersGrid').innerHTML =
-      '<div class="loading" style="grid-column:1/-1">manifest.json 로드 실패. 사이트 빌드를 확인하세요.</div>';
-    return;
+    console.error(e);
+    return showInitError('parse manifest.json', e);
   }
-  renderHeroStats();
-  renderFilterBar();
-  renderPapersGrid();
-  readHash();
+
+  try {
+    renderHeroStats();
+    renderFilterBar();
+    renderPapersGrid();
+    readHash();
+  } catch (e) {
+    console.error(e);
+    return showInitError('render', e);
+  }
 }
 window.addEventListener('popstate', readHash);
+window.addEventListener('error', (ev) => {
+  // Surface uncaught script errors that fired before init.
+  if (!MANIFEST) showInitError('uncaught', ev.error || new Error(ev.message));
+});
 init();
 </script>
 
