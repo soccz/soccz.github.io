@@ -386,6 +386,17 @@
       overflow-x: auto;
     }
 
+    /* Mermaid */
+    .reader-content .mermaid {
+      margin: 1.8rem 0;
+      padding: 1rem;
+      background: var(--bg-tint);
+      border-radius: 8px;
+      text-align: center;
+      overflow-x: auto;
+    }
+    .reader-content .mermaid svg { max-width: 100%; height: auto; }
+
     /* ── Bottom Navigation ── */
     .reader-nav-bottom {
       display: grid; grid-template-columns: 1fr 1fr;
@@ -663,6 +674,7 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
 (function() {
   'use strict';
@@ -707,6 +719,12 @@
   marked.setOptions({
     gfm: true, breaks: false,
   });
+
+  // mermaid config (한 번만)
+  if (window.mermaid) {
+    mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
+  }
+  let mermaidCounter = 0;
 
   // Build drawer
   function buildDrawer() {
@@ -772,8 +790,55 @@
   }
 
   function renderContent(md) {
-    readerContent.innerHTML = marked.parse(md);
-    // KaTeX
+    // 1. 수식 보호 — marked가 $x_t$의 _t를 italic으로 먹는 걸 방지
+    const mathStore = [];
+    md = md.replace(/\$\$([\s\S]+?)\$\$/g, (_, c) => {
+      mathStore.push({ display: true, content: c });
+      return `@@KMATH_${mathStore.length - 1}@@`;
+    });
+    md = md.replace(/(?<!\\)\$([^\$\n]+?)\$/g, (_, c) => {
+      mathStore.push({ display: false, content: c });
+      return `@@KMATH_${mathStore.length - 1}@@`;
+    });
+
+    // 2. marked 렌더
+    let html = marked.parse(md);
+
+    // 3. 수식 placeholder 복원
+    html = html.replace(/@@KMATH_(\d+)@@/g, (_, i) => {
+      const m = mathStore[+i];
+      return m.display ? `$$${m.content}$$` : `$${m.content}$`;
+    });
+
+    readerContent.innerHTML = html;
+
+    // 4. 이미지 상대경로 → GitHub raw 절대경로
+    readerContent.querySelectorAll('img').forEach(img => {
+      const src = img.getAttribute('src');
+      if (src && !/^https?:|^\/|^data:/.test(src)) {
+        img.src = GITHUB_RAW + src.split('/').map(encodeURIComponent).join('/');
+        img.loading = 'lazy';
+      }
+    });
+
+    // 5. Mermaid 코드블록 → div.mermaid 변환
+    const mermaidNodes = [];
+    readerContent.querySelectorAll('pre > code.language-mermaid').forEach(code => {
+      const def = code.textContent;
+      const div = document.createElement('div');
+      div.className = 'mermaid';
+      div.id = `mermaid-${++mermaidCounter}`;
+      div.textContent = def;
+      code.parentNode.replaceWith(div);
+      mermaidNodes.push(div);
+    });
+    if (mermaidNodes.length && window.mermaid) {
+      mermaid.run({ nodes: mermaidNodes }).catch(err =>
+        console.warn('[mermaid] render error:', err)
+      );
+    }
+
+    // 6. KaTeX
     renderMathInElement(readerContent, {
       delimiters: [
         { left: '$$', right: '$$', display: true },
