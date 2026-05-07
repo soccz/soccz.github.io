@@ -1053,7 +1053,6 @@ function renderPapersGrid() {
     return `<div class="paper-card" onclick="openPaper('${p.slug}')">
       <div class="paper-card-top">
         <span class="bucket-badge ${bucketCls}">${bucketLbl}</span>
-        ${p.private ? `<span class="lock-badge">🔒 PIN</span>` : ''}
         <span class="paper-date" style="margin-left:auto">${p.date} · ${p.weekday}</span>
       </div>
       <div class="paper-title">${escapeHtml(p.title || p.slug)}</div>
