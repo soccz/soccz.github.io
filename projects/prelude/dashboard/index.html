@@ -254,6 +254,92 @@
     .alpha-card .ac-num.neg { color: var(--red); }
     .alpha-card .ac-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; }
 
+    /* Confidence (PSR/DSR/MinTRL) cards */
+    .confidence-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .confidence-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem 1.4rem;
+    }
+    .confidence-card .cf-label {
+      font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.5rem;
+    }
+    .confidence-card .cf-num {
+      font-family: 'Noto Serif KR', serif; font-size: 1.9rem; font-weight: 700;
+      line-height: 1; margin-bottom: 0.3rem;
+    }
+    .confidence-card .cf-num.pos { color: var(--green); }
+    .confidence-card .cf-num.neg { color: var(--red); }
+    .confidence-card .cf-num.muted { color: var(--text-muted); }
+    .confidence-card .cf-sub {
+      font-size: 0.74rem; color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace; line-height: 1.6;
+    }
+    .confidence-card .cf-formula {
+      margin-top: 0.7rem; padding: 0.5rem 0.7rem;
+      background: var(--bg-secondary); border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      color: var(--text-muted); line-height: 1.55;
+    }
+
+    /* Drawdown table */
+    .dd-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden;
+    }
+    .dd-table th, .dd-table td { padding: 0.55rem 0.85rem; text-align: right; border-bottom: 1px solid var(--border); }
+    .dd-table th { background: var(--bg-secondary); font-weight: 700; color: var(--text-secondary); font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .dd-table th:first-child, .dd-table td:first-child { text-align: left; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-weight: 700; }
+    .dd-table td { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+    .dd-table td.neg { color: var(--red); font-weight: 700; }
+    .dd-table tr:last-child td { border-bottom: 0; }
+
+    /* Monthly heatmap */
+    .heatmap-wrap { overflow-x: auto; padding-bottom: 0.4rem; }
+    .heatmap {
+      border-collapse: collapse;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    }
+    .heatmap th, .heatmap td { padding: 0.4rem 0.5rem; text-align: center; min-width: 56px; }
+    .heatmap th { background: var(--bg-secondary); color: var(--text-secondary); font-weight: 700; font-size: 0.72rem; }
+    .heatmap th:first-child, .heatmap td:first-child { background: var(--bg-secondary); color: var(--text-primary); font-weight: 700; min-width: 64px; text-align: left; }
+    .heatmap td { color: var(--text-primary); border: 1px solid var(--border); border-radius: 0; }
+
+    /* Best/Worst card */
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+    @media (max-width: 760px) { .narrative-grid { grid-template-columns: 1fr; } }
+    .narrative-block .nb-title {
+      font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .narrative-block .nb-title.win { color: var(--green); }
+    .narrative-block .nb-title.loss { color: var(--red); }
+    .nb-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.9rem 1.2rem; margin-bottom: 0.6rem;
+    }
+    .nb-card .nb-head {
+      display: flex; gap: 0.6rem; align-items: baseline; margin-bottom: 0.3rem;
+    }
+    .nb-card .nb-coin { font-weight: 700; color: var(--text-primary); }
+    .nb-card .nb-pnl { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.95rem; margin-left: auto; }
+    .nb-card .nb-pnl.pos { color: var(--green); }
+    .nb-card .nb-pnl.neg { color: var(--red); }
+    .nb-card .nb-meta {
+      font-size: 0.72rem; color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace; line-height: 1.5;
+    }
+
     /* Download button */
     .download-btn {
       display: inline-flex; align-items: center; gap: 0.4rem;
@@ -389,6 +475,82 @@
       <div class="ac-row"><div class="ac-label">α (dist − BTC)</div><div class="ac-num" id="alphaDistDiff">—</div><div class="ac-sub" id="alphaDistVerdict">—</div></div>
       <div class="ac-row"><div class="ac-label">α (pre − BTC)</div><div class="ac-num" id="alphaPreDiff">—</div><div class="ac-sub" id="alphaPreVerdict">—</div></div>
     </div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">Information Ratio · Beta · Tracking Error</h3>
+    <p class="section-desc" style="margin-bottom:1rem;font-size:0.85rem">
+      institutional active management 표준 — IR = α / TE × √252, Beta = cov(strat, BTC)/var(BTC).
+      소수 거래일 정렬 시 noisy.
+    </p>
+    <div class="alpha-card" id="benchmarkCard">
+      <div class="ac-row"><div class="ac-label">dist · IR</div><div class="ac-num" id="benDistIR">—</div><div class="ac-sub">α / tracking error</div></div>
+      <div class="ac-row"><div class="ac-label">dist · Beta</div><div class="ac-num" id="benDistBeta">—</div><div class="ac-sub">vs BTC daily</div></div>
+      <div class="ac-row"><div class="ac-label">dist · TE</div><div class="ac-num" id="benDistTE">—</div><div class="ac-sub">tracking error (ann)</div></div>
+      <div class="ac-row"><div class="ac-label">pre · IR</div><div class="ac-num" id="benPreIR">—</div><div class="ac-sub">α / tracking error</div></div>
+      <div class="ac-row"><div class="ac-label">pre · Beta</div><div class="ac-num" id="benPreBeta">—</div><div class="ac-sub">vs BTC daily</div></div>
+      <div class="ac-row"><div class="ac-label">pre · TE</div><div class="ac-num" id="benPreTE">—</div><div class="ac-sub">tracking error (ann)</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Statistical Confidence — PSR / DSR / MinTRL (Lopez de Prado) -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">STATISTICAL CONFIDENCE</div>
+    <h2 class="section-title">통계적 신뢰도 — PSR · DSR · MinTRL</h2>
+    <p class="section-desc">
+      Lopez de Prado (2014) 의 Probabilistic / Deflated Sharpe Ratio + Minimum Track Record Length.
+      *작은 표본에서도* "이 Sharpe 가 0 보다 클 확률 / selection bias 보정 후 신뢰도 / 95% 신뢰 위해 필요한 표본 길이" 를 정직하게 답한다. 표본 28건 / 24건 같은 prelude 에서는 가장 결정적인 metric.
+    </p>
+    <div class="confidence-grid" id="confidenceGrid">
+      <div class="confidence-card"><div class="cf-label">loading…</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Risk Profile — Top 5 DD + Underwater + Return distribution -->
+<section>
+  <div class="container">
+    <div class="section-label">RISK PROFILE</div>
+    <h2 class="section-title">위험 프로파일 — drawdown · underwater · 수익 분포</h2>
+    <p class="section-desc">
+      pyfolio 표준 — 누적 곡선의 top-N 손실 구간, 얼마나 오래 underwater, return 의 분포 모양.
+      VaR / CVaR / Tail Ratio 같은 분포 metric 은 채널 KPI 카드에서 같이 본다.
+    </p>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">Top 5 Drawdowns</h3>
+    <div id="ddTables" class="two-col" style="gap:1rem">
+      <div class="loading-state">loading…</div>
+    </div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">Underwater Plot · Return 분포</h3>
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag dist">dist</span>distribution underwater</div>
+        <div class="chart-subtitle">cumulative − running peak (% below peak)</div>
+        <canvas id="chartUnderwaterDist"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag pre">pre</span>pre-open underwater</div>
+        <div class="chart-subtitle">cumulative − running peak (% below peak)</div>
+        <canvas id="chartUnderwaterPre"></canvas>
+      </div>
+    </div>
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag dist">dist</span>per-trade return distribution</div>
+        <div class="chart-subtitle">algorithm 의 trade-level 수익 histogram (1% bin)</div>
+        <canvas id="chartDistDist"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag pre">pre</span>per-trade return distribution</div>
+        <div class="chart-subtitle">1h horizon 결과 분포</div>
+        <canvas id="chartDistPre"></canvas>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -456,6 +618,64 @@
         <div class="chart-title"><span class="ch-tag pre">pre</span>pre-open — +3% in 1h / +5% in 1h</div>
         <div class="chart-subtitle">실선 = +3% / 점선 = +5%</div>
         <canvas id="chartRollingPre"></canvas>
+      </div>
+    </div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">Rolling Sharpe — annualized</h3>
+    <p class="section-desc" style="margin-bottom:1rem;font-size:0.85rem">
+      30일 rolling daily-PnL Sharpe × √252. pyfolio 표준 — hit rate 보다 PnL ergonomics 가 보임.
+      표본 < 5일은 표시 X.
+    </p>
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag dist">dist</span>distribution rolling Sharpe (30d)</div>
+        <canvas id="chartRollingSharpeDist"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag pre">pre</span>pre-open rolling Sharpe (30d)</div>
+        <canvas id="chartRollingSharpePre"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Monthly returns heatmap -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">MONTHLY RETURNS</div>
+    <h2 class="section-title">월별 수익 — heatmap (year × month)</h2>
+    <p class="section-desc">
+      institutional factsheet 표준. 각 셀 = 그 달의 가상 net return 합 (%).
+      녹색 = 양수 / 적색 = 음수, 절대값 클수록 진하다. 표본 짧은 셀은 작아 보임.
+    </p>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">distribution</h3>
+    <div class="heatmap-wrap" id="heatmapDist"><div class="loading-state">loading…</div></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">pre-open</h3>
+    <div class="heatmap-wrap" id="heatmapPre"><div class="loading-state">loading…</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Best / Worst trades -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">BEST · WORST TRADES</div>
+    <h2 class="section-title">최고 / 최악 알림 — narrative</h2>
+    <p class="section-desc">
+      가상 PnL 기준 top 3 win / top 3 loss. *어떤 코인이 어떤 setup 으로 어떻게 갔는가* 의 case-study —
+      지표 모두 더해도 결국 가장 기억에 남는 건 episode.
+    </p>
+    <div class="narrative-grid">
+      <div class="narrative-block">
+        <div class="nb-title win">Top 3 wins</div>
+        <div id="bestList"><div class="loading-state">loading…</div></div>
+      </div>
+      <div class="narrative-block">
+        <div class="nb-title loss">Top 3 losses</div>
+        <div id="worstList"><div class="loading-state">loading…</div></div>
       </div>
     </div>
   </div>
@@ -924,6 +1144,31 @@ function channelKpiHtml(s, kind) {
       </div>`;
   }
 
+  // Statistical chips (Vol/Skew/Kurt/VaR/CVaR/TailRatio/Recovery/Ulcer/CSR/Streak)
+  const stat = s.stats || {};
+  if (Object.keys(stat).length) {
+    html += `<div class="kpi-row divider-row"><span class="label">분포 · 위험</span><span class="value muted">pyfolio / quantstats 표준</span></div>`;
+    html += `<div class="quant-grid">`;
+    const chip = (lbl, val, cls = '', sub = '') => `
+      <div class="metric-chip">
+        <div class="mc-label">${escapeHtml(lbl)}</div>
+        <div class="mc-value ${cls}">${val}</div>
+        ${sub ? `<div class="mc-sub">${escapeHtml(sub)}</div>` : ''}
+      </div>`;
+    html += chip('Volatility (ann)', stat.volatility_ann_pct == null ? '—' : fmtPct(stat.volatility_ann_pct, 1), '', 'daily × √252');
+    html += chip('Skewness', fmt(stat.skewness, 2), stat.skewness < 0 ? 'neg' : 'pos', 'distribution shape');
+    html += chip('Kurt (excess)', fmt(stat.kurtosis_excess, 2), '', 'fat-tail proxy');
+    html += chip('VaR 95%', fmtPct(stat.var_95_pct), 'neg', 'per-trade quantile');
+    html += chip('CVaR 95%', fmtPct(stat.cvar_95_pct), 'neg', 'expected shortfall');
+    html += chip('Tail Ratio', fmt(stat.tail_ratio, 2), stat.tail_ratio > 1 ? 'pos' : 'neg', 'right / left tail');
+    html += chip('Recovery Factor', fmt(stat.recovery_factor, 2), sgnClass(stat.recovery_factor), 'cum / |MDD|');
+    html += chip('Ulcer Index', fmt(stat.ulcer_index, 1), '', 'drawdown RMS');
+    html += chip('Common Sense Ratio', fmt(stat.common_sense_ratio, 2), stat.common_sense_ratio > 1 ? 'pos' : 'neg', 'PF × Tail Ratio');
+    html += chip('Win streak', String(stat.max_win_streak ?? '—'), 'pos', 'consecutive');
+    html += chip('Loss streak', String(stat.max_loss_streak ?? '—'), 'neg', 'consecutive');
+    html += `</div>`;
+  }
+
   if (v.rule) html += `<div class="kpi-rule">룰: ${escapeHtml(v.rule)}</div>`;
   return html;
 }
@@ -1134,6 +1379,254 @@ function renderScatter() {
   });
 }
 
+/* ───────── Confidence (PSR/DSR/MinTRL) ───────── */
+function renderConfidence(summary) {
+  const root = document.getElementById('confidenceGrid');
+  if (!root) return;
+  const items = [];
+  for (const [kind, label] of [['distribution', 'distribution (09:05)'], ['preopen', 'pre-open (08:55)']]) {
+    const c = summary.channels[kind]?.confidence;
+    if (!c) continue;
+    const psr = c.psr_pct;
+    const dsr = c.dsr_pct;
+    const mintrl = c.min_trl_trades;
+    const psrCls = psr == null ? 'muted' : (psr >= 95 ? 'pos' : psr >= 50 ? '' : 'neg');
+    const dsrCls = dsr == null ? 'muted' : (dsr >= 95 ? 'pos' : dsr >= 50 ? '' : 'neg');
+    items.push(`
+      <div class="confidence-card">
+        <div class="cf-label">${escapeHtml(label)} · PSR</div>
+        <div class="cf-num ${psrCls}">${psr == null ? '—' : fmt(psr, 1) + '%'}</div>
+        <div class="cf-sub">"Sharpe > 0" 일 확률 (T=${c.n_trades}, SR=${fmt(c.sr_per_trade, 3)}/trade)</div>
+        <div class="cf-formula">Φ((SR − 0)·√(T−1) / √(1 − γ₃·SR + (γ₄−1)/4·SR²))<br>γ₃ skew=${fmt(c.skew, 2)} · γ₄ kurt=${fmt(c.kurt_excess, 2)}+3</div>
+      </div>
+      <div class="confidence-card">
+        <div class="cf-label">${escapeHtml(label)} · DSR</div>
+        <div class="cf-num ${dsrCls}">${dsr == null ? '—' : fmt(dsr, 1) + '%'}</div>
+        <div class="cf-sub">N=${c.n_trials_assumed} 시도 가정 selection bias 보정</div>
+        <div class="cf-formula">SR_threshold = ${fmt(c.sr_threshold, 3)}<br>Lopez de Prado (2014) — Bailey · DSR</div>
+      </div>
+      <div class="confidence-card">
+        <div class="cf-label">${escapeHtml(label)} · MinTRL @ 95%</div>
+        <div class="cf-num ${mintrl == null ? 'muted' : ''}">${mintrl == null ? '∞' : Math.ceil(mintrl) + ' trades'}</div>
+        <div class="cf-sub">95% 신뢰 위해 필요한 추가 거래 수<br>${mintrl == null ? '⚠️ 현재 SR < threshold — 도달 불가' : `현재 ${c.n_trades} → ${Math.ceil(mintrl)} 까지`}</div>
+        <div class="cf-formula">MinTRL = 1 + (1 − γ₃·SR* + (γ₄−1)/4·SR*²) × (Φ⁻¹(α) / (SR − SR*))²</div>
+      </div>
+    `);
+  }
+  root.innerHTML = items.join('');
+}
+
+/* ───────── Benchmark (IR/Beta/TE) ───────── */
+function renderBenchmark(summary) {
+  const set = (id, val, cls) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = val;
+    el.className = 'ac-num' + (cls ? ' ' + cls : '');
+  };
+  for (const [kind, prefix] of [['distribution', 'benDist'], ['preopen', 'benPre']]) {
+    const b = summary.channels[kind]?.vs_benchmark || {};
+    set(prefix + 'IR', fmt(b.information_ratio, 2), sgnClass(b.information_ratio));
+    set(prefix + 'Beta', fmt(b.beta_vs_btc, 2));
+    set(prefix + 'TE', b.tracking_error_ann_pct == null ? '—' : fmtPct(b.tracking_error_ann_pct, 1));
+  }
+}
+
+/* ───────── Drawdown tables ───────── */
+function renderDrawdownTables(summary) {
+  const root = document.getElementById('ddTables');
+  if (!root) return;
+  const blocks = [];
+  for (const [kind, label] of [['distribution', 'distribution'], ['preopen', 'pre-open']]) {
+    const dds = summary.channels[kind]?.top_drawdowns || [];
+    const rows = dds.length ? dds.map(d => `
+      <tr>
+        <td>${escapeHtml(d.peak_date || '—')}</td>
+        <td>${escapeHtml(d.valley_date || '—')}</td>
+        <td>${escapeHtml(d.recovery_date || '진행 중')}</td>
+        <td class="neg">${fmtPct(d.depth_pct)}</td>
+        <td>${d.length_days == null ? '—' : d.length_days + 'd'}</td>
+      </tr>`).join('') : `<tr><td colspan="5" class="muted">표본 부족 — drawdown 없음</td></tr>`;
+    blocks.push(`
+      <div>
+        <div class="strat-block sb-title">${escapeHtml(label)}</div>
+        <table class="dd-table">
+          <thead><tr><th>peak</th><th>valley</th><th>recovery</th><th>depth</th><th>length</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`);
+  }
+  root.innerHTML = blocks.join('');
+}
+
+/* ───────── Underwater plot ───────── */
+function _renderUnderwater(canvasId, series, color) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  const dates = series.map(r => r.date);
+  const uw = series.map(r => r.underwater_pct);
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{ label: 'underwater %', data: uw, borderColor: COLORS.red, backgroundColor: COLORS.red + '22', fill: true, tension: 0.15, spanGaps: true, borderWidth: 1.5, pointRadius: 1.2 }],
+    },
+    options: _baseLineOpts(),
+  });
+}
+
+function renderUnderwater(accuracy) {
+  _renderUnderwater('chartUnderwaterDist', accuracy.distribution.underwater || []);
+  _renderUnderwater('chartUnderwaterPre',  accuracy.preopen.underwater || []);
+}
+
+/* ───────── Return distribution histogram ───────── */
+function _renderHist(canvasId, bins, color) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  if (!bins || !bins.length) {
+    ctx.parentElement.innerHTML += '<div class="loading-state">표본 없음</div>';
+    return;
+  }
+  const labels = bins.map(b => `${fmt(b.bin_low, 0)}~${fmt(b.bin_high, 0)}%`);
+  const counts = bins.map(b => b.count);
+  const colors = bins.map(b => (b.bin_low + b.bin_high) / 2 >= 0 ? COLORS.green + 'cc' : COLORS.red + 'cc');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: 'count', data: counts, backgroundColor: colors, borderWidth: 0 }],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => `n=${ctx.parsed.y}` } },
+      },
+      scales: {
+        x: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 9 }, autoSkip: true, maxTicksLimit: 12 }, grid: { display: false } },
+        y: { ticks: { stepSize: 1, font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+      },
+    },
+  });
+}
+
+function renderReturnDist(summary) {
+  _renderHist('chartDistDist', summary.channels.distribution?.return_distribution || []);
+  _renderHist('chartDistPre',  summary.channels.preopen?.return_distribution || []);
+}
+
+/* ───────── Rolling Sharpe chart ───────── */
+function _renderRollingSharpe(canvasId, series, color) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  if (!series || !series.length) {
+    ctx.parentElement.innerHTML += '<div class="loading-state">표본 < 5 일 — rolling 표시 불가</div>';
+    return;
+  }
+  const dates = series.map(r => r.date);
+  const rs = series.map(r => r.rolling_sharpe);
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{ label: 'Sharpe (ann, 30d)', data: rs, borderColor: color, backgroundColor: color + '22', tension: 0.18, fill: true, spanGaps: true, borderWidth: 1.6, pointRadius: 1.4 }],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: "'JetBrains Mono', monospace", size: 11 } } },
+        tooltip: { callbacks: { label: ctx => `Sharpe ${fmt(ctx.parsed.y, 2)}` } },
+      },
+      scales: {
+        y: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+        x: { ticks: { maxTicksLimit: 8, autoSkip: true, font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+function renderRollingSharpe(accuracy) {
+  _renderRollingSharpe('chartRollingSharpeDist', accuracy.distribution.rolling_sharpe || [], COLORS.distribution);
+  _renderRollingSharpe('chartRollingSharpePre',  accuracy.preopen.rolling_sharpe || [],     COLORS.preopen);
+}
+
+/* ───────── Monthly returns heatmap ───────── */
+function _renderHeatmap(rootId, monthly) {
+  const root = document.getElementById(rootId);
+  if (!root) return;
+  if (!monthly || !monthly.length) {
+    root.innerHTML = '<div class="loading-state">표본 없음 — 월별 합계 없음</div>';
+    return;
+  }
+  const yearSet = new Set(monthly.map(m => m.year));
+  const years = [...yearSet].sort();
+  const cellMap = new Map();
+  let absMax = 0;
+  for (const m of monthly) {
+    cellMap.set(`${m.year}-${m.month}`, m.return_pct);
+    if (m.return_pct != null && Math.abs(m.return_pct) > absMax) absMax = Math.abs(m.return_pct);
+  }
+  const months = [1,2,3,4,5,6,7,8,9,10,11,12];
+  const monthName = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const cellColor = v => {
+    if (v == null) return 'transparent';
+    const intensity = absMax > 0 ? Math.min(1, Math.abs(v) / absMax) : 0;
+    const alpha = (0.15 + 0.45 * intensity).toFixed(2);
+    return v >= 0 ? `rgba(22,163,74,${alpha})` : `rgba(220,38,38,${alpha})`;
+  };
+  let html = `<table class="heatmap"><thead><tr><th>year</th>${monthName.map(m => `<th>${m}</th>`).join('')}<th>YTD</th></tr></thead><tbody>`;
+  for (const y of years) {
+    let ytd = 0;
+    let ytdValid = false;
+    html += `<tr><td>${y}</td>`;
+    for (const m of months) {
+      const v = cellMap.get(`${y}-${m}`);
+      if (v != null) { ytd += v; ytdValid = true; }
+      html += `<td style="background:${cellColor(v)}">${v == null ? '—' : fmtPct(v, 1)}</td>`;
+    }
+    html += `<td style="background:${cellColor(ytdValid ? ytd : null)}"><strong>${ytdValid ? fmtPct(ytd, 1) : '—'}</strong></td></tr>`;
+  }
+  html += `</tbody></table>`;
+  root.innerHTML = html;
+}
+
+function renderMonthlyHeatmap(accuracy) {
+  _renderHeatmap('heatmapDist', accuracy.distribution.monthly_returns || []);
+  _renderHeatmap('heatmapPre',  accuracy.preopen.monthly_returns || []);
+}
+
+/* ───────── Best / Worst trades ───────── */
+function _bwCard(t) {
+  const cls = t.pnl_pct > 0 ? 'pos' : 'neg';
+  return `
+    <div class="nb-card">
+      <div class="nb-head">
+        <span class="nb-coin">${escapeHtml(t.coin)}</span>
+        <span class="nb-coin muted">${escapeHtml(t.date)}</span>
+        <span class="nb-pnl ${cls}">${fmtPct(t.pnl_pct, 1)}</span>
+      </div>
+      <div class="nb-meta">
+        regime ${escapeHtml(t.regime || '—')} · setup ${escapeHtml(t.setup || '—')} ·
+        진입가 ${fmtKrw(t.entry_price)}원 ·
+        max ${fmtPct(t.max_pct)} / min ${fmtPct(t.min_pct)} / close ${fmtPct(t.close_pct)}
+      </div>
+    </div>`;
+}
+
+function renderBestWorst(summary) {
+  const best = [
+    ...(summary.channels.distribution?.best_worst?.best || []).map(t => ({...t, channel: 'distribution'})),
+    ...(summary.channels.preopen?.best_worst?.best || []).map(t => ({...t, channel: 'preopen'})),
+  ].sort((a, b) => (b.pnl_pct ?? -Infinity) - (a.pnl_pct ?? -Infinity)).slice(0, 3);
+  const worst = [
+    ...(summary.channels.distribution?.best_worst?.worst || []).map(t => ({...t, channel: 'distribution'})),
+    ...(summary.channels.preopen?.best_worst?.worst || []).map(t => ({...t, channel: 'preopen'})),
+  ].sort((a, b) => (a.pnl_pct ?? Infinity) - (b.pnl_pct ?? Infinity)).slice(0, 3);
+  document.getElementById('bestList').innerHTML = best.length ? best.map(_bwCard).join('') : '<div class="loading-state">표본 없음</div>';
+  document.getElementById('worstList').innerHTML = worst.length ? worst.map(_bwCard).join('') : '<div class="loading-state">표본 없음</div>';
+}
+
 /* ───────── CSV download ───────── */
 function downloadCsv() {
   if (!HISTORY_ROWS.length) return;
@@ -1326,9 +1819,17 @@ window.addEventListener('scroll', () => {
     HISTORY_ROWS = history.rows || [];
     renderHero(summary);
     renderAlphaCard(summary, accuracy);
+    renderBenchmark(summary);
+    renderConfidence(summary);
     renderChannels(summary);
     renderCumPnl(accuracy);
     renderRolling(accuracy);
+    renderRollingSharpe(accuracy);
+    renderDrawdownTables(summary);
+    renderUnderwater(accuracy);
+    renderReturnDist(summary);
+    renderMonthlyHeatmap(accuracy);
+    renderBestWorst(summary);
     renderStratification(summary);
     renderScatter();
     attachSort();
