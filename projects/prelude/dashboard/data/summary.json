@@ -1,0 +1,51 @@
+{
+  "asof": "2026-05-07T13:53:00.209521",
+  "generated_at_utc": "2026-05-07T04:53:00.213905+00:00",
+  "channels": {
+    "distribution": {
+      "n_alerts_total": 38,
+      "n_closed": 28,
+      "n_pending": 10,
+      "first_alert_date": "2025-11-06",
+      "last_alert_date": "2026-05-07",
+      "hit_h2_pct": 50.0,
+      "hit_h6_pct": 39.285714285714285,
+      "hit_h5_pct": 10.714285714285714,
+      "avg_max_return_pct": 6.824677233246029,
+      "avg_min_return_pct": -5.940696944112548,
+      "avg_close_return_pct": -1.0766847301265723,
+      "median_max_return_pct": 4.501175287389925,
+      "win_rate_pct": 39.285714285714285,
+      "virtual": {
+        "rule": "5% TP / EOD close, equal weight, cost 0.15% 차감",
+        "n_trades": 28,
+        "cum_pnl_pct": -12.974991103235023,
+        "max_dd_pct": -56.174991103235016,
+        "avg_pnl_per_trade_pct": -0.4633925394012508,
+        "tp_hit_rate_pct": 39.285714285714285
+      }
+    },
+    "preopen": {
+      "n_alerts_total": 24,
+      "n_closed": 24,
+      "n_pending": 0,
+      "first_alert_date": "2026-05-05",
+      "last_alert_date": "2026-05-07",
+      "hit_first15_3pct_pct": 16.666666666666664,
+      "hit_first15_5pct_pct": 12.5,
+      "hit_first1h_3pct_pct": 37.5,
+      "hit_first1h_5pct_pct": 12.5,
+      "avg_max_return_pct": 2.7052042138104464,
+      "avg_min_return_pct": -2.360629442092515,
+      "avg_close_return_pct": -0.33633105637149346,
+      "virtual": {
+        "rule": "1h horizon: 5% TP / 1h close, equal weight, cost 0.15% 차감",
+        "n_trades": 24,
+        "cum_pnl_pct": -13.469782572685729,
+        "max_dd_pct": -15.734008322874338,
+        "avg_pnl_per_trade_pct": -0.5612409405285721,
+        "tp_hit_rate_pct": 12.5
+      }
+    }
+  }
+}

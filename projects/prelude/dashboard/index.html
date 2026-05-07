@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prelude live dashboard — 알림 히스토리 + 가상 누적</title>
+  <meta name="description" content="prelude detector / distribution / preopen alerts 의 실제 결과 누적 표 + rolling hit rate + 가상 누적 PnL. 매일 cron 자동 갱신.">
+  <link rel="canonical" href="https://soccz.github.io/projects/prelude/dashboard/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+      --red: #dc2626;
+      --green: #16a34a;
+      --amber: #b45309;
+      --blue: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 32px; }
+    header h1 { font-size: 24px; font-weight: 700; margin: 0 0 4px; }
+    header .meta { color: var(--text-muted); font-size: 13px; }
+    header .meta a { color: var(--blue); text-decoration: none; }
+    header .meta a:hover { text-decoration: underline; }
+
+    h2 { font-size: 18px; font-weight: 700; margin: 32px 0 12px; }
+    h3 { font-size: 15px; font-weight: 700; margin: 16px 0 8px; color: var(--text-secondary); }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .kpi-card h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .kpi-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; }
+    .kpi-row .label { color: var(--text-secondary); }
+    .kpi-row .value { font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+    .kpi-row .value.pos { color: var(--green); }
+    .kpi-row .value.neg { color: var(--red); }
+    .kpi-divider { border-top: 1px dashed var(--border); margin: 8px 0; }
+    .kpi-headline {
+      display: flex; align-items: baseline; gap: 8px;
+      margin-bottom: 12px;
+    }
+    .kpi-headline .number {
+      font-size: 28px; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .kpi-headline .number.pos { color: var(--green); }
+    .kpi-headline .number.neg { color: var(--red); }
+    .kpi-headline .label { font-size: 13px; color: var(--text-muted); }
+
+    .chart-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .chart-block canvas { max-height: 320px; }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+    .controls label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .controls select, .controls input {
+      font-family: inherit;
+      font-size: 13px;
+      padding: 6px 10px;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: var(--bg-card);
+    }
+    th, td {
+      padding: 8px 10px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+    }
+    th:first-child, td:first-child,
+    th:nth-child(2), td:nth-child(2),
+    th:nth-child(3), td:nth-child(3),
+    th:nth-child(4), td:nth-child(4) { text-align: left; }
+    th {
+      background: var(--bg-secondary);
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+      position: sticky;
+      top: 0;
+    }
+    th.sorted-asc::after { content: ' ▲'; color: var(--text-muted); }
+    th.sorted-desc::after { content: ' ▼'; color: var(--text-muted); }
+    td.num { font-family: 'JetBrains Mono', monospace; }
+    td.pos { color: var(--green); }
+    td.neg { color: var(--red); }
+    td.muted { color: var(--text-muted); }
+    .pill {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .pill.dist { background: rgba(37,99,235,0.1); color: var(--blue); }
+    .pill.pre  { background: rgba(180,83,9,0.1); color: var(--amber); }
+    .pill.hit  { background: rgba(22,163,74,0.12); color: var(--green); }
+    .pill.miss { background: rgba(220,38,38,0.1); color: var(--red); }
+    .pill.entered { background: rgba(168,162,158,0.15); color: var(--text-secondary); }
+
+    .table-wrap {
+      max-height: 600px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 12px;
+      text-align: center;
+    }
+    footer code {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-secondary);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 16px 12px; }
+      header h1 { font-size: 20px; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      th, td { padding: 6px 6px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>prelude live dashboard</h1>
+      <div class="meta">
+        <span id="asof-label">loading…</span>
+        &nbsp;·&nbsp;
+        <a href="../">← 연구 보고서</a>
+        &nbsp;·&nbsp;
+        가상 진입 룰: 5% TP / EOD close, 비용 0.15% 차감 (텔레그램 가이드 동일)
+      </div>
+    </header>
+
+    <h2>요약 — 채널별 누적</h2>
+    <div class="kpi-grid" id="kpi-grid">
+      <div class="kpi-card"><h3>distribution (09:05)</h3><div class="loading">loading…</div></div>
+      <div class="kpi-card"><h3>preopen (08:55)</h3><div class="loading">loading…</div></div>
+    </div>
+
+    <h2>가상 누적 PnL 곡선</h2>
+    <div class="chart-block">
+      <canvas id="chart-cum-pnl"></canvas>
+    </div>
+
+    <h2>Rolling 30일 hit rate</h2>
+    <div class="chart-block">
+      <canvas id="chart-rolling"></canvas>
+    </div>
+
+    <h2>전체 알림 히스토리</h2>
+    <div class="controls">
+      <label>채널
+        <select id="filter-channel">
+          <option value="all">전체</option>
+          <option value="distribution">distribution</option>
+          <option value="preopen">preopen</option>
+        </select>
+      </label>
+      <label>최근
+        <select id="filter-days">
+          <option value="0">전체</option>
+          <option value="7">7일</option>
+          <option value="30">30일</option>
+          <option value="90">90일</option>
+        </select>
+      </label>
+      <label>코인 검색
+        <input id="filter-coin" type="text" placeholder="예: FIL" size="12">
+      </label>
+      <span id="row-count" style="margin-left:auto;color:var(--text-muted);font-size:13px"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table id="history-table">
+        <thead>
+          <tr>
+            <th data-sort="date">날짜</th>
+            <th data-sort="channel">채널</th>
+            <th data-sort="coin">코인</th>
+            <th data-sort="setups">setup</th>
+            <th data-sort="composite" class="num-th">composite</th>
+            <th data-sort="next_max_pct" class="num-th">max %</th>
+            <th data-sort="next_min_pct" class="num-th">min %</th>
+            <th data-sort="next_close_pct" class="num-th">close %</th>
+            <th data-sort="virtual_pnl_pct" class="num-th">가상 PnL</th>
+            <th data-sort="hit_h2" class="num-th">+3%</th>
+            <th data-sort="hit_h6" class="num-th">+5%</th>
+            <th data-sort="hit_h5" class="num-th">+20%</th>
+            <th data-sort="status">상태</th>
+          </tr>
+        </thead>
+        <tbody id="history-tbody"></tbody>
+      </table>
+    </div>
+
+    <footer>
+      자동 갱신: 매일 KST 09:30 / 10:05 close cron 직후 ·
+      소스: <code>output/paper_ledger*.csv</code> →
+      <code>scripts/build_dashboard.py</code>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    const DATA_DIR = 'data';
+    const COLORS = {
+      distribution: '#2563eb',
+      preopen: '#b45309',
+      pos: '#16a34a',
+      neg: '#dc2626',
+    };
+
+    let HISTORY_ROWS = [];
+    let SORT_KEY = 'date';
+    let SORT_DIR = 'desc';
+
+    function fmtPct(v, decimals = 2) {
+      if (v === null || v === undefined || isNaN(v)) return '—';
+      const sign = v > 0 ? '+' : '';
+      return sign + v.toFixed(decimals) + '%';
+    }
+    function fmt(v, decimals = 2) {
+      if (v === null || v === undefined || isNaN(v)) return '—';
+      return v.toFixed(decimals);
+    }
+    function sgnClass(v) {
+      if (v === null || v === undefined || isNaN(v)) return 'muted';
+      return v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+    }
+    function pillFor(channel) {
+      return channel === 'distribution'
+        ? '<span class="pill dist">dist</span>'
+        : '<span class="pill pre">pre</span>';
+    }
+    function hitPill(v) {
+      if (v === 1) return '<span class="pill hit">●</span>';
+      if (v === 0) return '<span class="pill miss">○</span>';
+      return '<span class="muted">—</span>';
+    }
+    function statusPill(s) {
+      if (s === 'closed') return '<span class="pill hit">closed</span>';
+      if (s === 'entered') return '<span class="pill entered">entered</span>';
+      return `<span class="pill miss">${s || '—'}</span>`;
+    }
+
+    async function loadData() {
+      const [summary, history, accuracy] = await Promise.all([
+        fetch(`${DATA_DIR}/summary.json`).then(r => r.json()),
+        fetch(`${DATA_DIR}/history.json`).then(r => r.json()),
+        fetch(`${DATA_DIR}/accuracy.json`).then(r => r.json()),
+      ]);
+      return { summary, history, accuracy };
+    }
+
+    function renderAsof(asof) {
+      const d = new Date(asof);
+      document.getElementById('asof-label').textContent =
+        `데이터 기준 ${d.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'medium', timeStyle: 'short' })} (KST)`;
+    }
+
+    function renderKpi(summary) {
+      const grid = document.getElementById('kpi-grid');
+      grid.innerHTML = '';
+      const channels = [
+        ['distribution', 'distribution (09:05)'],
+        ['preopen',      'preopen (08:55)'],
+      ];
+      for (const [key, title] of channels) {
+        const s = summary.channels[key] || {};
+        const v = s.virtual || {};
+        const cumPnl = v.cum_pnl_pct;
+        const cumClass = cumPnl == null ? '' : (cumPnl >= 0 ? 'pos' : 'neg');
+
+        const hits = key === 'distribution'
+          ? [
+              ['+3% in 4h',  s.hit_h2_pct],
+              ['+5% in 24h', s.hit_h6_pct],
+              ['+20% tail',  s.hit_h5_pct],
+            ]
+          : [
+              ['+3% in 15m', s.hit_first15_3pct_pct],
+              ['+5% in 15m', s.hit_first15_5pct_pct],
+              ['+3% in 1h',  s.hit_first1h_3pct_pct],
+              ['+5% in 1h',  s.hit_first1h_5pct_pct],
+            ];
+
+        let html = `<h3>${title}</h3>`;
+        html += `
+          <div class="kpi-headline">
+            <span class="number ${cumClass}">${fmtPct(cumPnl)}</span>
+            <span class="label">가상 누적 PnL · ${v.n_trades || 0} trades</span>
+          </div>`;
+        html += `
+          <div class="kpi-row"><span class="label">총 알림</span><span class="value">${s.n_alerts_total || 0}</span></div>
+          <div class="kpi-row"><span class="label">closed / pending</span><span class="value">${s.n_closed || 0} / ${s.n_pending || 0}</span></div>
+          <div class="kpi-row"><span class="label">기간</span><span class="value" style="font-size:12px">${s.first_alert_date || '—'} ~ ${s.last_alert_date || '—'}</span></div>
+          <div class="kpi-divider"></div>`;
+        if (s.avg_max_return_pct !== undefined) {
+          html += `
+            <div class="kpi-row"><span class="label">평균 max</span><span class="value ${sgnClass(s.avg_max_return_pct)}">${fmtPct(s.avg_max_return_pct)}</span></div>
+            <div class="kpi-row"><span class="label">평균 min</span><span class="value ${sgnClass(s.avg_min_return_pct)}">${fmtPct(s.avg_min_return_pct)}</span></div>
+            <div class="kpi-row"><span class="label">평균 close</span><span class="value ${sgnClass(s.avg_close_return_pct)}">${fmtPct(s.avg_close_return_pct)}</span></div>
+            <div class="kpi-divider"></div>`;
+        }
+        for (const [lbl, val] of hits) {
+          html += `<div class="kpi-row"><span class="label">${lbl}</span><span class="value">${fmt(val, 1)}%</span></div>`;
+        }
+        if (v.max_dd_pct !== undefined) {
+          html += `<div class="kpi-divider"></div>
+            <div class="kpi-row"><span class="label">MDD</span><span class="value neg">${fmtPct(v.max_dd_pct)}</span></div>
+            <div class="kpi-row"><span class="label">avg/trade</span><span class="value ${sgnClass(v.avg_pnl_per_trade_pct)}">${fmtPct(v.avg_pnl_per_trade_pct)}</span></div>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'kpi-card';
+        card.innerHTML = html;
+        grid.appendChild(card);
+      }
+    }
+
+    function renderCumPnl(accuracy) {
+      const ctx = document.getElementById('chart-cum-pnl');
+      const dist = accuracy.distribution.cum_pnl || [];
+      const pre = accuracy.preopen.cum_pnl || [];
+      const allDates = [...new Set([...dist.map(r => r.date), ...pre.map(r => r.date)])].sort();
+      const distMap = new Map(dist.map(r => [r.date, r.cum_pnl_pct]));
+      const preMap = new Map(pre.map(r => [r.date, r.cum_pnl_pct]));
+      const distSeries = allDates.map(d => distMap.has(d) ? distMap.get(d) : null);
+      const preSeries  = allDates.map(d => preMap.has(d)  ? preMap.get(d)  : null);
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: allDates,
+          datasets: [
+            { label: 'distribution', data: distSeries, borderColor: COLORS.distribution, backgroundColor: COLORS.distribution + '22', tension: 0.15, spanGaps: true },
+            { label: 'preopen',      data: preSeries,  borderColor: COLORS.preopen,      backgroundColor: COLORS.preopen + '22',      tension: 0.15, spanGaps: true },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top', align: 'end' },
+            tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${fmtPct(ctx.parsed.y)}` } },
+          },
+          scales: {
+            y: { ticks: { callback: v => v + '%' } },
+            x: { ticks: { maxTicksLimit: 10, autoSkip: true } },
+          },
+        },
+      });
+    }
+
+    function renderRolling(accuracy) {
+      const ctx = document.getElementById('chart-rolling');
+      const dist = accuracy.distribution.rolling || [];
+      const pre = accuracy.preopen.rolling || [];
+      const allDates = [...new Set([...dist.map(r => r.date), ...pre.map(r => r.date)])].sort();
+      const distMapH2 = new Map(dist.map(r => [r.date, r.hit_h2_pct]));
+      const distMapH6 = new Map(dist.map(r => [r.date, r.hit_h6_pct]));
+      const preMap1h3 = new Map(pre.map(r => [r.date, r.hit_first1h_3pct_pct]));
+      const preMap1h5 = new Map(pre.map(r => [r.date, r.hit_first1h_5pct_pct]));
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: allDates,
+          datasets: [
+            { label: 'dist · +3% in 4h',   data: allDates.map(d => distMapH2.get(d) ?? null), borderColor: COLORS.distribution, backgroundColor: COLORS.distribution + '11', borderDash: [],     spanGaps: true, tension: 0.15 },
+            { label: 'dist · +5% in 24h',  data: allDates.map(d => distMapH6.get(d) ?? null), borderColor: COLORS.distribution, backgroundColor: 'transparent',                borderDash: [6, 4], spanGaps: true, tension: 0.15 },
+            { label: 'pre · +3% in 1h',    data: allDates.map(d => preMap1h3.get(d) ?? null), borderColor: COLORS.preopen,      backgroundColor: COLORS.preopen + '11',        borderDash: [],     spanGaps: true, tension: 0.15 },
+            { label: 'pre · +5% in 1h',    data: allDates.map(d => preMap1h5.get(d) ?? null), borderColor: COLORS.preopen,      backgroundColor: 'transparent',                borderDash: [6, 4], spanGaps: true, tension: 0.15 },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top', align: 'end' },
+            tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${fmt(ctx.parsed.y, 1)}%` } },
+          },
+          scales: {
+            y: { min: 0, max: 100, ticks: { callback: v => v + '%' } },
+            x: { ticks: { maxTicksLimit: 10, autoSkip: true } },
+          },
+        },
+      });
+    }
+
+    function renderHistory() {
+      const tbody = document.getElementById('history-tbody');
+      const channelF = document.getElementById('filter-channel').value;
+      const daysF = parseInt(document.getElementById('filter-days').value, 10);
+      const coinF = document.getElementById('filter-coin').value.trim().toUpperCase();
+
+      let rows = HISTORY_ROWS.slice();
+
+      if (channelF !== 'all') {
+        rows = rows.filter(r => r.channel === channelF);
+      }
+      if (daysF > 0) {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - daysF);
+        rows = rows.filter(r => new Date(r.date) >= cutoff);
+      }
+      if (coinF) {
+        rows = rows.filter(r => (r.coin || '').toUpperCase().includes(coinF));
+      }
+
+      // sort
+      rows.sort((a, b) => {
+        const va = a[SORT_KEY], vb = b[SORT_KEY];
+        const fa = (va === null || va === undefined) ? -Infinity : (typeof va === 'number' ? va : String(va));
+        const fb = (vb === null || vb === undefined) ? -Infinity : (typeof vb === 'number' ? vb : String(vb));
+        let cmp;
+        if (typeof fa === 'number' && typeof fb === 'number') cmp = fa - fb;
+        else cmp = String(fa).localeCompare(String(fb));
+        return SORT_DIR === 'asc' ? cmp : -cmp;
+      });
+
+      document.getElementById('row-count').textContent = `${rows.length} 행`;
+
+      tbody.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      for (const r of rows) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.date}</td>
+          <td>${pillFor(r.channel)}</td>
+          <td><strong>${r.coin}</strong></td>
+          <td class="muted">${r.setups || '—'}</td>
+          <td class="num">${fmt(r.composite)}</td>
+          <td class="num ${sgnClass(r.next_max_pct)}">${fmtPct(r.next_max_pct)}</td>
+          <td class="num ${sgnClass(r.next_min_pct)}">${fmtPct(r.next_min_pct)}</td>
+          <td class="num ${sgnClass(r.next_close_pct)}">${fmtPct(r.next_close_pct)}</td>
+          <td class="num ${sgnClass(r.virtual_pnl_pct)}">${fmtPct(r.virtual_pnl_pct)}</td>
+          <td>${hitPill(r.hit_h2)}</td>
+          <td>${hitPill(r.hit_h6)}</td>
+          <td>${hitPill(r.hit_h5)}</td>
+          <td>${statusPill(r.status)}</td>
+        `;
+        frag.appendChild(tr);
+      }
+      tbody.appendChild(frag);
+
+      // header sort indicator
+      document.querySelectorAll('th').forEach(th => {
+        th.classList.remove('sorted-asc', 'sorted-desc');
+        if (th.dataset.sort === SORT_KEY) {
+          th.classList.add(SORT_DIR === 'asc' ? 'sorted-asc' : 'sorted-desc');
+        }
+      });
+    }
+
+    function attachSort() {
+      document.querySelectorAll('th').forEach(th => {
+        const key = th.dataset.sort;
+        if (!key) return;
+        th.addEventListener('click', () => {
+          if (SORT_KEY === key) {
+            SORT_DIR = SORT_DIR === 'asc' ? 'desc' : 'asc';
+          } else {
+            SORT_KEY = key;
+            SORT_DIR = (key === 'date' || key === 'composite' || key.includes('pct') || key.startsWith('hit')) ? 'desc' : 'asc';
+          }
+          renderHistory();
+        });
+      });
+    }
+
+    function attachFilters() {
+      ['filter-channel', 'filter-days', 'filter-coin'].forEach(id => {
+        const el = document.getElementById(id);
+        const ev = el.tagName === 'SELECT' ? 'change' : 'input';
+        el.addEventListener(ev, renderHistory);
+      });
+    }
+
+    (async function main() {
+      try {
+        const { summary, history, accuracy } = await loadData();
+        HISTORY_ROWS = history.rows || [];
+        renderAsof(summary.asof);
+        renderKpi(summary);
+        renderCumPnl(accuracy);
+        renderRolling(accuracy);
+        attachSort();
+        attachFilters();
+        renderHistory();
+      } catch (e) {
+        console.error(e);
+        document.getElementById('kpi-grid').innerHTML =
+          `<div class="kpi-card"><h3>error</h3><div>data load failed: ${e.message}</div></div>`;
+      }
+    })();
+  </script>
+</body>
+</html>
