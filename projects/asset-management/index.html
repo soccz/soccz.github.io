@@ -1331,6 +1331,10 @@
                         def: 'L = D − W (D=대각 차수, W=유사도). 고유값 분해로 클러스터 구조 추출. 스펙트럴 클러스터링의 핵심.' },
     'payoff':         { full: 'Payoff (지불금)',
                         def: '미래 시점에 자산이 지급하는 금액(또는 수익률). 가격 p = E[m·payoff]에서 m이 SDF, x가 payoff.' },
+    'Conditional Autoencoder': { full: 'Conditional Autoencoder (Gu·Kelly·Xiu 2021)',
+                        def: '자산 특성 z를 비선형 신경망으로 변환해 잠재 팩터 노출 β를 추정. IPCA의 선형 매핑(β=z′Γ)을 NN(z)로 확장.' },
+    'Autoencoder':    { full: 'Autoencoder (오토인코더)',
+                        def: '입력을 압축(encoder) → 복원(decoder)하는 신경망. 자산가격결정에선 수익률을 잠재 팩터로 압축.' },
   };
 
   function applyGlossary() {
