@@ -685,6 +685,150 @@
 
 <hr class="divider">
 
+<!-- Confidence 추가: Factor Regression + PBO -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">FACTOR REGRESSION · ROBUSTNESS</div>
+    <h2 class="section-title">α / β / R² + chronological K-fold consistency</h2>
+    <p class="section-desc">
+      <strong>Factor regression</strong> — 일별 strat = α + β·BTC + ε OLS.
+      α 가 양수 + t-stat > 1.96 면 *BTC 외 진짜 alpha* 의 통계적 유의.<br>
+      <strong>PBO simple</strong> — chronological 5-fold 분할로 cum PnL 양수 fold 비율.
+      정식 PBO (Bailey-Lopez de Prado 2014) 는 multi-strategy 가 필요해 단순 robustness check 로 변형.
+    </p>
+    <div class="confidence-grid" id="factorPboGrid">
+      <div class="confidence-card"><div class="cf-label">loading…</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Calibration — predicted P vs actual hit -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">CALIBRATION</div>
+    <h2 class="section-title">모델이 외친 확률 vs 실제 적중</h2>
+    <p class="section-desc">
+      reliability diagram (Quantopian 표준). x축 = 예측 확률 decile 평균, y축 = 실제 hit 비율.
+      대각선에 가까울수록 모델 *솔직*. 위쪽 = 저평가 / 아래쪽 = 과신.
+    </p>
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag dist">dist</span>distribution heads (h2 / h6 / h5)</div>
+        <div class="chart-subtitle">+3% 4h / +5% 24h / +20% tail</div>
+        <canvas id="chartCalibrationDist"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag pre">pre</span>pre-open heads (15m / 1h)</div>
+        <div class="chart-subtitle">+3%/+5% 첫 15m + 첫 1h</div>
+        <canvas id="chartCalibrationPre"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Decay — alert 후 시간별 평균 return -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">DECAY CURVE</div>
+    <h2 class="section-title">알림 후 시간별 평균 return</h2>
+    <p class="section-desc">
+      *알림 받고 몇 분 후 들어가는 게 좋은가* 의 답.
+      preopen 은 15m / 30m / 1h 의 max·low·close — fine-grained.
+      distribution 은 24h 의 max·min·close — coarse (4h bar 정밀화는 추후).
+    </p>
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag dist">dist</span>distribution decay (24h horizon)</div>
+        <canvas id="chartDecayDist"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title"><span class="ch-tag pre">pre</span>pre-open decay (1h horizon)</div>
+        <canvas id="chartDecayPre"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TP / Cost sensitivity -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">RULE SENSITIVITY</div>
+    <h2 class="section-title">TP 룰 + 거래비용 민감도</h2>
+    <p class="section-desc">
+      한계 ③ (비용 낙관) / ⑤ (5% TP 단순) 의 정량 답. *룰 다양화* 시
+      누적이 어떻게 변하는가 — robustness check.
+    </p>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.4rem 0 0.5rem">TP 룰 sweep (3% / 5% / 7% / 10% / no TP)</h3>
+    <div id="tpSweepTables" class="two-col" style="gap:1rem"><div class="loading-state">loading…</div></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.4rem 0 0.5rem">거래비용 민감도 (0.15% / 0.30% / 0.50% / 1.00%)</h3>
+    <div id="costSweepTables" class="two-col" style="gap:1rem"><div class="loading-state">loading…</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Per-coin tear sheet -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">PER-COIN</div>
+    <h2 class="section-title">코인별 mini tear sheet (top 10 most-alerted)</h2>
+    <p class="section-desc">
+      어떤 코인이 *자주 알림 + 잘 맞는가* — 코인별 누적 / hit / 평균 max.
+    </p>
+    <div id="perCoinTables" class="two-col" style="gap:1rem"><div class="loading-state">loading…</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Coin universe matrix + Time of day -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">COIN UNIVERSE · TIME OF DAY</div>
+    <h2 class="section-title">코인 × 채널 매트릭스 + 첫 분 hit 분포</h2>
+    <p class="section-desc">
+      좌 — 코인이 어느 채널에서 자주 외쳐지는지 (top 15).
+      우 — preopen 의 첫 15m / 30m / 1h 별 hit 비율 분포 (진입 시점 의사결정).
+    </p>
+    <div class="two-col">
+      <div>
+        <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0 0 0.5rem">Coin × channel</h3>
+        <div id="coinUniverseTable"><div class="loading-state">loading…</div></div>
+      </div>
+      <div>
+        <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0 0 0.5rem">Pre-open hit by horizon</h3>
+        <div class="chart-wrap" style="margin-bottom:0">
+          <canvas id="chartTimeOfDay"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- NOTES vs system -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">NOTES vs SYSTEM</div>
+    <h2 class="section-title">사용자 실제 매매 vs 시스템 가상 매매</h2>
+    <p class="section-desc">
+      <code>NOTES.md</code> 의 사용자 실 매매 일지 vs system 가상 ledger.
+      *시스템이 외친 거 vs 사용자 본인 판단으로 산 것* 비교 — prelude 의
+      "사용자 본인 판단 보조" 정신의 정량화. NOTES 가 비어있으면 placeholder.
+    </p>
+    <div id="notesVsSystemBlock"><div class="loading-state">loading…</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- Stratification — regime / setup / score 분위 -->
 <section>
   <div class="container">
@@ -1637,6 +1781,299 @@ function renderBestWorst(summary) {
   document.getElementById('worstList').innerHTML = worst.length ? worst.map(_bwCard).join('') : '<div class="loading-state">표본 없음</div>';
 }
 
+/* ───────── Factor Regression + PBO ───────── */
+function renderFactorPbo(summary) {
+  const root = document.getElementById('factorPboGrid');
+  if (!root) return;
+  const items = [];
+  for (const [kind, label] of [['distribution', 'distribution'], ['preopen', 'pre-open']]) {
+    const fr = summary.channels[kind]?.factor_regression || {};
+    const pbo = summary.channels[kind]?.pbo || {};
+    const a = fr.alpha_ann_pct;
+    const aSig = fr.alpha_significant;
+    const beta = fr.beta;
+    const r2 = fr.r_squared;
+    const consistency = pbo.consistency_pct;
+    const folds = pbo.folds || [];
+    items.push(`
+      <div class="confidence-card">
+        <div class="cf-label">${escapeHtml(label)} · α (vs BTC)</div>
+        <div class="cf-num ${sgnClass(a)}">${a == null ? '—' : fmtPct(a, 1)}</div>
+        <div class="cf-sub">annualized · t=${fmt(fr.alpha_t_stat, 2)} ${aSig ? '<span class="warn-badge" style="background:rgba(22,163,74,0.12);color:var(--green);border-color:rgba(22,163,74,0.2)">유의 (|t|>1.96)</span>' : '<span class="warn-badge">유의 X</span>'}</div>
+        <div class="cf-formula">strat = α + β·BTC + ε · OLS · n=${fr.n_days || 0}</div>
+      </div>
+      <div class="confidence-card">
+        <div class="cf-label">${escapeHtml(label)} · β · R²</div>
+        <div class="cf-num">${fmt(beta, 3)} <span style="font-size:1rem;color:var(--text-muted)">/ ${fmt(r2, 3)}</span></div>
+        <div class="cf-sub">β = BTC 노출도 (0 = 무관) · R² = BTC 가 설명하는 분산</div>
+        <div class="cf-formula">cov(strat, BTC) / var(BTC)</div>
+      </div>
+      <div class="confidence-card">
+        <div class="cf-label">${escapeHtml(label)} · K-fold consistency</div>
+        <div class="cf-num ${consistency == null ? 'muted' : (consistency >= 60 ? 'pos' : 'neg')}">${consistency == null ? '—' : fmt(consistency, 0) + '%'}</div>
+        <div class="cf-sub">${pbo.n_positive_folds || 0} / ${pbo.n_folds || 0} fold 양수 · n=${pbo.n_trades || 0}</div>
+        <div class="cf-formula">chronological 5-fold cum PnL > 0 비율 (PBO 단순 변형)</div>
+      </div>
+    `);
+  }
+  root.innerHTML = items.join('');
+}
+
+/* ───────── Calibration scatter ───────── */
+function _renderCalibration(canvasId, calMap, color) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  Chart.getChart(ctx)?.destroy();
+  const datasets = [];
+  let i = 0;
+  for (const [name, points] of Object.entries(calMap || {})) {
+    if (!points || !points.length) continue;
+    const data = points.map(p => ({ x: (p.predicted_mean || 0) * 100, y: (p.actual_hit_rate || 0) * 100, n: p.n }));
+    datasets.push({
+      label: name.replace('p_', '').replace('_vs_hit', '').replace('_', '/'),
+      data,
+      backgroundColor: color + (i === 0 ? 'cc' : (i === 1 ? '99' : '66')),
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      showLine: false,
+    });
+    i++;
+  }
+  // 대각선 reference
+  datasets.push({
+    label: 'perfect',
+    data: [{ x: 0, y: 0 }, { x: 100, y: 100 }],
+    borderColor: COLORS.text,
+    borderDash: [4, 4],
+    borderWidth: 1,
+    showLine: true,
+    pointRadius: 0,
+    fill: false,
+  });
+  new Chart(ctx, {
+    type: 'scatter',
+    data: { datasets },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: "'JetBrains Mono', monospace", size: 11 }, boxWidth: 22 } },
+        tooltip: { callbacks: { label: c => `pred ${fmt(c.parsed.x, 1)}% → actual ${fmt(c.parsed.y, 1)}%${c.raw.n ? ' (n=' + c.raw.n + ')' : ''}` } },
+      },
+      scales: {
+        x: { min: 0, max: 100, title: { display: true, text: 'predicted P (%)', font: { family: "'JetBrains Mono', monospace", size: 11 } }, ticks: { callback: v => v + '%' }, grid: { color: COLORS.border } },
+        y: { min: 0, max: 100, title: { display: true, text: 'actual hit rate (%)', font: { family: "'JetBrains Mono', monospace", size: 11 } }, ticks: { callback: v => v + '%' }, grid: { color: COLORS.border } },
+      },
+    },
+  });
+}
+function renderCalibration(summary) {
+  _renderCalibration('chartCalibrationDist', summary.channels.distribution?.calibration, COLORS.distribution);
+  _renderCalibration('chartCalibrationPre',  summary.channels.preopen?.calibration,     COLORS.preopen);
+}
+
+/* ───────── Decay curve ───────── */
+function _renderDecay(canvasId, points, color) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  Chart.getChart(ctx)?.destroy();
+  if (!points || !points.length) return;
+  const labels = points.map(p => p.t_label);
+  const data = points.map(p => p.avg_return_pct);
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'avg return %',
+        data,
+        backgroundColor: data.map(v => v == null ? color + '44' : (v >= 0 ? COLORS.green + 'aa' : COLORS.red + 'aa')),
+        borderWidth: 0,
+      }],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => fmtPct(c.parsed.y, 2) } },
+      },
+      scales: {
+        y: { ticks: { callback: v => v + '%', font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+        x: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+function renderDecay(summary) {
+  _renderDecay('chartDecayDist', summary.channels.distribution?.decay, COLORS.distribution);
+  _renderDecay('chartDecayPre',  summary.channels.preopen?.decay,     COLORS.preopen);
+}
+
+/* ───────── TP / Cost sweep tables ───────── */
+function _sweepTable(rows, headers) {
+  if (!rows || !rows.length) return '<div class="loading-state">loading…</div>';
+  const trs = rows.map(r => `
+    <tr>
+      ${headers.map(h => {
+        const v = r[h.key];
+        if (h.key === 'cum_pnl_pct') {
+          return `<td class="${sgnClass(v)}"><strong>${fmtPct(v, 2)}</strong></td>`;
+        }
+        if (typeof v === 'number') return `<td>${h.fmt ? h.fmt(v) : fmt(v)}</td>`;
+        return `<td>${escapeHtml(v ?? '—')}</td>`;
+      }).join('')}
+    </tr>`).join('');
+  return `<table class="strat-table"><thead><tr>${headers.map(h => `<th>${escapeHtml(h.label)}</th>`).join('')}</tr></thead><tbody>${trs}</tbody></table>`;
+}
+function renderTpSweep(summary) {
+  const root = document.getElementById('tpSweepTables');
+  if (!root) return;
+  const headers = [
+    { key: 'rule', label: '룰' },
+    { key: 'n_trades', label: 'n' },
+    { key: 'tp_hit_rate_pct', label: 'TP hit %', fmt: v => v == null ? '—' : fmt(v, 1) + '%' },
+    { key: 'cum_pnl_pct', label: '누적 PnL' },
+  ];
+  const blocks = [];
+  for (const [kind, label] of [['distribution', 'distribution'], ['preopen', 'pre-open']]) {
+    const rows = summary.channels[kind]?.tp_sweep || [];
+    blocks.push(`
+      <div>
+        <div class="strat-block sb-title">${escapeHtml(label)}</div>
+        ${_sweepTable(rows, headers)}
+      </div>`);
+  }
+  root.innerHTML = blocks.join('');
+}
+function renderCostSweep(summary) {
+  const root = document.getElementById('costSweepTables');
+  if (!root) return;
+  const headers = [
+    { key: 'cost_pct', label: '비용 %', fmt: v => v == null ? '—' : fmt(v, 2) + '%' },
+    { key: 'n_trades', label: 'n' },
+    { key: 'avg_pnl_pct', label: 'avg / trade', fmt: v => fmtPct(v, 3) },
+    { key: 'cum_pnl_pct', label: '누적 PnL' },
+  ];
+  const blocks = [];
+  for (const [kind, label] of [['distribution', 'distribution'], ['preopen', 'pre-open']]) {
+    const rows = summary.channels[kind]?.cost_sweep || [];
+    blocks.push(`
+      <div>
+        <div class="strat-block sb-title">${escapeHtml(label)}</div>
+        ${_sweepTable(rows, headers)}
+      </div>`);
+  }
+  root.innerHTML = blocks.join('');
+}
+
+/* ───────── Per-coin mini tear sheet ───────── */
+function renderPerCoin(summary) {
+  const root = document.getElementById('perCoinTables');
+  if (!root) return;
+  const headers = [
+    { key: 'coin', label: '코인' },
+    { key: 'n_alerts', label: 'n' },
+    { key: 'win_rate_pct', label: 'win %', fmt: v => v == null ? '—' : fmt(v, 0) + '%' },
+    { key: 'avg_max_pct', label: 'avg max', fmt: v => fmtPct(v) },
+    { key: 'avg_pnl_pct', label: 'avg PnL', fmt: v => fmtPct(v, 2) },
+    { key: 'cum_pnl_pct', label: '누적' },
+  ];
+  const blocks = [];
+  for (const [kind, label] of [['distribution', 'distribution'], ['preopen', 'pre-open']]) {
+    const rows = summary.channels[kind]?.per_coin || [];
+    blocks.push(`
+      <div>
+        <div class="strat-block sb-title">${escapeHtml(label)}</div>
+        ${_sweepTable(rows, headers)}
+      </div>`);
+  }
+  root.innerHTML = blocks.join('');
+}
+
+/* ───────── Coin universe matrix + Time of day ───────── */
+function renderCoinUniverse(summary) {
+  const root = document.getElementById('coinUniverseTable');
+  if (!root) return;
+  const rows = summary.coin_universe || [];
+  if (!rows.length) {
+    root.innerHTML = '<div class="loading-state">표본 없음</div>';
+    return;
+  }
+  const max = Math.max(...rows.map(r => r.total));
+  const cell = (v, m) => {
+    if (v === 0) return '<td class="muted">·</td>';
+    const intensity = m > 0 ? Math.min(1, v / m) : 0;
+    const alpha = (0.2 + 0.5 * intensity).toFixed(2);
+    return `<td style="background:rgba(68,64,60,${alpha});color:#fff;font-weight:700">${v}</td>`;
+  };
+  const trs = rows.map(r => `
+    <tr>
+      <td>${escapeHtml(r.coin)}</td>
+      ${cell(r.dist, max)}
+      ${cell(r.pre, max)}
+      <td><strong>${r.total}</strong></td>
+    </tr>`).join('');
+  root.innerHTML = `<table class="strat-table"><thead><tr><th>coin</th><th>dist</th><th>pre</th><th>total</th></tr></thead><tbody>${trs}</tbody></table>`;
+}
+
+function renderTimeOfDay(summary) {
+  const ctx = document.getElementById('chartTimeOfDay');
+  if (!ctx) return;
+  Chart.getChart(ctx)?.destroy();
+  const tod = summary.channels.preopen?.time_of_day || {};
+  const labels = ['+3% / 15m', '+5% / 15m', '+3% / 30m', '+5% / 30m', '+3% / 1h', '+5% / 1h'];
+  const keys = ['hit_first15_3pct', 'hit_first15_5pct', 'hit_first30_3pct', 'hit_first30_5pct', 'hit_first1h_3pct', 'hit_first1h_5pct'];
+  const data = keys.map(k => tod[k]);
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'hit %',
+        data,
+        backgroundColor: COLORS.preopen + 'cc',
+        borderWidth: 0,
+      }],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => fmt(c.parsed.y, 1) + '%' } },
+      },
+      scales: {
+        y: { min: 0, max: 100, ticks: { callback: v => v + '%', font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+        x: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+/* ───────── NOTES vs system ───────── */
+function renderNotesVsSystem(summary) {
+  const root = document.getElementById('notesVsSystemBlock');
+  if (!root) return;
+  const nv = summary.notes_vs_system || {};
+  if (!nv.available) {
+    root.innerHTML = `
+      <div class="about-card">
+        <div class="ac-label">PLACEHOLDER</div>
+        <div class="ac-title">NOTES.md 가 비어있음 — 채워지면 자동 활성</div>
+        <div class="ac-body">${escapeHtml(nv.note || '템플릿: ## YYYY-MM-DD KST 08:30 알림 → ### 내가 진입 / ### 청산 결과 형식.')}</div>
+      </div>`;
+    return;
+  }
+  const rows = (nv.rows || []).map(r => `<tr><td>${escapeHtml(r.date)}</td><td class="coin">${escapeHtml(r.coin)}</td><td class="${sgnClass(r.return_pct)}">${fmtPct(r.return_pct, 2)}</td></tr>`).join('');
+  root.innerHTML = `
+    <div class="alpha-card">
+      <div class="ac-row"><div class="ac-label">user 평균</div><div class="ac-num ${sgnClass(nv.user_avg_pct)}">${fmtPct(nv.user_avg_pct, 2)}</div><div class="ac-sub">per-trade</div></div>
+      <div class="ac-row"><div class="ac-label">user 누적</div><div class="ac-num ${sgnClass(nv.user_cum_pct)}">${fmtPct(nv.user_cum_pct, 1)}</div><div class="ac-sub">${nv.n_results || 0} closed</div></div>
+      <div class="ac-row"><div class="ac-label">entries</div><div class="ac-num">${nv.n_entries || 0}</div><div class="ac-sub">일자 수</div></div>
+    </div>
+    <h4 style="font-family:'Noto Serif KR',serif;margin:1rem 0 0.4rem">최근 결과 (max 20)</h4>
+    <table class="strat-table"><thead><tr><th>date</th><th>coin</th><th>return</th></tr></thead><tbody>${rows}</tbody></table>
+  `;
+}
+
 /* ───────── CSV download ───────── */
 function downloadCsv() {
   if (!HISTORY_ROWS.length) return;
@@ -1835,6 +2272,7 @@ window.addEventListener('scroll', () => {
     renderAlphaCard(summary, accuracy);
     renderBenchmark(summary);
     renderConfidence(summary);
+    renderFactorPbo(summary);
     renderChannels(summary);
     renderCumPnl(accuracy);
     renderRolling(accuracy);
@@ -1842,7 +2280,15 @@ window.addEventListener('scroll', () => {
     renderDrawdownTables(summary);
     renderUnderwater(accuracy);
     renderReturnDist(summary);
+    renderCalibration(summary);
+    renderDecay(summary);
+    renderTpSweep(summary);
+    renderCostSweep(summary);
     renderMonthlyHeatmap(accuracy);
+    renderPerCoin(summary);
+    renderCoinUniverse(summary);
+    renderTimeOfDay(summary);
+    renderNotesVsSystem(summary);
     renderBestWorst(summary);
     renderStratification(summary);
     renderScatter();
