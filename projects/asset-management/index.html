@@ -624,6 +624,63 @@
       overflow-x: auto;
     }
 
+    /* 인터랙티브 시각화 (D3) */
+    .interactive-viz {
+      margin: 1.8rem -0.2rem;
+      padding: 1.2rem 1.2rem 1rem;
+      background: linear-gradient(180deg, #fafaf9, #f5f5f4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .viz-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+    }
+    .viz-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.8rem 1.2rem;
+      margin-bottom: 1rem;
+      font-size: 0.86rem;
+    }
+    .viz-controls label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .viz-controls input[type="range"] {
+      flex: 1; min-width: 140px;
+      accent-color: var(--accent);
+    }
+    .viz-output {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      color: var(--accent);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .viz-canvas {
+      width: 100%;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .viz-canvas .axis path,
+    .viz-canvas .axis line { stroke: #d6d3d1; }
+    .viz-canvas .axis text { fill: var(--text-secondary); font-size: 11px; }
+    .viz-canvas .axis-label {
+      fill: var(--text-secondary); font-size: 12px; font-weight: 500;
+    }
+    .viz-note {
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-top: 0.6rem; line-height: 1.5;
+    }
+
     /* 단원 시작 Hero 배너 */
     .ch-hero {
       margin: 0 -0.5rem 2.5rem;
@@ -1041,6 +1098,7 @@
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script>
 (function() {
   'use strict';
@@ -1136,6 +1194,182 @@
     drawerList.addEventListener('click', e => {
       const item = e.target.closest('.toc-drawer-item');
       if (item) { openChapter(+item.dataset.ch); toggleDrawer(); }
+    });
+  }
+
+  // ═══════════ 인터랙티브 시각화 (D3) ═══════════
+  // .md 안 <div data-viz="id"></div> 마커를 init 함수로 활성화
+
+  const VIZ_REGISTRY = {};
+
+  // 1) 자산수 N 슬라이더 — 분산투자 한계 (02단원)
+  VIZ_REGISTRY['variance-reduction'] = function(el) {
+    el.innerHTML = `
+      <div class="viz-title">▶ 인터랙티브 — 자산수에 따른 변동성 변화</div>
+      <div class="viz-controls">
+        <label>자산 수 N:</label>
+        <input type="range" min="1" max="50" step="1" value="10">
+        <span class="viz-output">N = 10</span>
+      </div>
+      <svg class="viz-canvas" viewBox="0 0 600 280" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="viz-note">개별 자산 σ=30%, 평균 상관계수 ρ=0.3 가정. σ_p² = (1/N)·σ² + ((N−1)/N)·ρ·σ²</div>
+    `;
+    const sigInd = 0.30, rho = 0.30;
+    const covAvg = rho * sigInd * sigInd;
+    const sigSys = Math.sqrt(covAvg);
+    const Ns = d3.range(1, 51);
+    const sds = Ns.map(n => Math.sqrt(sigInd*sigInd / n + (n-1)/n * covAvg) * 100);
+
+    const svg = d3.select(el).select('svg');
+    const W = 600, H = 280, M = { t: 20, r: 30, b: 38, l: 48 };
+    const x = d3.scaleLinear().domain([0, 50]).range([M.l, W - M.r]);
+    const y = d3.scaleLinear().domain([0, 32]).range([H - M.b, M.t]);
+
+    // axes
+    svg.append('g').attr('class', 'axis')
+      .attr('transform', `translate(0,${H - M.b})`)
+      .call(d3.axisBottom(x).ticks(6));
+    svg.append('g').attr('class', 'axis')
+      .attr('transform', `translate(${M.l},0)`)
+      .call(d3.axisLeft(y).ticks(6).tickFormat(d => d + '%'));
+    svg.append('text').attr('class', 'axis-label')
+      .attr('x', W/2).attr('y', H - 6).attr('text-anchor', 'middle')
+      .text('자산 수 N');
+    svg.append('text').attr('class', 'axis-label')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -H/2).attr('y', 14).attr('text-anchor', 'middle')
+      .text('포트폴리오 σ (%)');
+
+    // 체계적 위험 라인
+    svg.append('line')
+      .attr('x1', x(0)).attr('x2', x(50))
+      .attr('y1', y(sigSys * 100)).attr('y2', y(sigSys * 100))
+      .attr('stroke', '#d62728').attr('stroke-width', 1.4)
+      .attr('stroke-dasharray', '5,3');
+    svg.append('text')
+      .attr('x', x(48)).attr('y', y(sigSys * 100) - 5)
+      .attr('text-anchor', 'end').attr('fill', '#a31515').attr('font-size', 11)
+      .text(`체계적 위험 ${(sigSys*100).toFixed(1)}%`);
+
+    // σ 곡선
+    const line = d3.line().x((d,i) => x(i+1)).y(d => y(d));
+    svg.append('path').datum(sds)
+      .attr('fill', 'none').attr('stroke', '#1f6feb').attr('stroke-width', 2.4)
+      .attr('d', line);
+
+    // 현재 N marker
+    const marker = svg.append('circle')
+      .attr('r', 7).attr('fill', '#1c1917').attr('stroke', 'white').attr('stroke-width', 2);
+    const label = svg.append('text')
+      .attr('font-size', 12).attr('font-weight', 700).attr('fill', '#1c1917');
+
+    const slider = el.querySelector('input');
+    const out = el.querySelector('.viz-output');
+    function update() {
+      const n = +slider.value;
+      const sd = sds[n - 1];
+      out.textContent = `N = ${n} → σ = ${sd.toFixed(1)}%`;
+      marker.attr('cx', x(n)).attr('cy', y(sd));
+      label.attr('x', x(n) + 12).attr('y', y(sd) - 6).text(`${sd.toFixed(1)}%`);
+    }
+    slider.addEventListener('input', update);
+    update();
+  };
+
+  // 2) 2자산 가중치 슬라이더 — 효율적 프론티어 + 접점 (02단원)
+  VIZ_REGISTRY['frontier-2asset'] = function(el) {
+    el.innerHTML = `
+      <div class="viz-title">▶ 인터랙티브 — 2자산 효율적 프론티어 + 가중치</div>
+      <div class="viz-controls">
+        <label>주식 비중 w_A:</label>
+        <input type="range" min="0" max="100" step="1" value="50">
+        <span class="viz-output">w_A = 50%, σ = 11.7%, μ = 9.0%</span>
+      </div>
+      <svg class="viz-canvas" viewBox="0 0 600 320" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="viz-note">자산 A(채권): μ=6%, σ=10% / 자산 B(주식): μ=12%, σ=20% / ρ=0.3.
+        곡선이 효율적 프론티어. 마커가 현재 가중치 포지션.</div>
+    `;
+    const muA = 0.06, sigA = 0.10, muB = 0.12, sigB = 0.20, rho = 0.30;
+
+    function pt(wA) {
+      const wB = 1 - wA;
+      const mu = wA * muA + wB * muB;
+      const v = wA*wA*sigA*sigA + wB*wB*sigB*sigB + 2*wA*wB*rho*sigA*sigB;
+      return { sigma: Math.sqrt(v) * 100, mu: mu * 100 };
+    }
+    const ws = d3.range(0, 1.001, 0.01);
+    const front = ws.map(w => pt(w));
+
+    const svg = d3.select(el).select('svg');
+    const W = 600, H = 320, M = { t: 20, r: 30, b: 42, l: 50 };
+    const x = d3.scaleLinear().domain([0, 22]).range([M.l, W - M.r]);
+    const y = d3.scaleLinear().domain([4, 14]).range([H - M.b, M.t]);
+
+    svg.append('g').attr('class', 'axis')
+      .attr('transform', `translate(0,${H - M.b})`)
+      .call(d3.axisBottom(x).ticks(6).tickFormat(d => d + '%'));
+    svg.append('g').attr('class', 'axis')
+      .attr('transform', `translate(${M.l},0)`)
+      .call(d3.axisLeft(y).ticks(6).tickFormat(d => d + '%'));
+    svg.append('text').attr('class', 'axis-label')
+      .attr('x', W/2).attr('y', H - 8).attr('text-anchor', 'middle')
+      .text('표준편차 σ (%)');
+    svg.append('text').attr('class', 'axis-label')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -H/2).attr('y', 14).attr('text-anchor', 'middle')
+      .text('기대 수익률 μ (%)');
+
+    // 프론티어
+    const line = d3.line().x(d => x(d.sigma)).y(d => y(d.mu));
+    svg.append('path').datum(front)
+      .attr('fill', 'none').attr('stroke', '#1f6feb').attr('stroke-width', 2.4)
+      .attr('d', line);
+
+    // 자산 A, B 표기
+    const ptA = pt(1), ptB = pt(0);
+    [['A (채권)', ptA, '#2ca02c'], ['B (주식)', ptB, '#d62728']].forEach(([n, p, c]) => {
+      svg.append('circle').attr('cx', x(p.sigma)).attr('cy', y(p.mu))
+        .attr('r', 6).attr('fill', c).attr('stroke', 'white').attr('stroke-width', 2);
+      svg.append('text').attr('x', x(p.sigma) + 9).attr('y', y(p.mu) + 4)
+        .attr('font-size', 11).attr('font-weight', 700).attr('fill', c).text(n);
+    });
+
+    // MVP (최소분산점) — 분석 해
+    const wMin = (sigB*sigB - rho*sigA*sigB) /
+                 (sigA*sigA + sigB*sigB - 2*rho*sigA*sigB);
+    const ptMin = pt(wMin);
+    svg.append('circle').attr('cx', x(ptMin.sigma)).attr('cy', y(ptMin.mu))
+      .attr('r', 5).attr('fill', '#ff9900').attr('stroke', 'white').attr('stroke-width', 1.5);
+    svg.append('text').attr('x', x(ptMin.sigma) - 9).attr('y', y(ptMin.mu) + 4)
+      .attr('text-anchor', 'end').attr('font-size', 10).attr('fill', '#cc7a00')
+      .text('MVP');
+
+    // 현재 marker
+    const marker = svg.append('circle').attr('r', 9)
+      .attr('fill', '#1c1917').attr('stroke', 'white').attr('stroke-width', 2.5);
+
+    const slider = el.querySelector('input');
+    const out = el.querySelector('.viz-output');
+    function update() {
+      const wA = +slider.value / 100;
+      const p = pt(wA);
+      out.textContent = `w_A = ${slider.value}% → σ = ${p.sigma.toFixed(1)}%, μ = ${p.mu.toFixed(1)}%`;
+      marker.attr('cx', x(p.sigma)).attr('cy', y(p.mu));
+    }
+    slider.addEventListener('input', update);
+    update();
+  };
+
+  function activateInteractiveVizs() {
+    if (!window.d3) return;
+    readerContent.querySelectorAll('[data-viz]').forEach(el => {
+      const id = el.dataset.viz;
+      const fn = VIZ_REGISTRY[id];
+      if (fn && !el.dataset.vizInited) {
+        el.classList.add('interactive-viz');
+        try { fn(el); el.dataset.vizInited = '1'; }
+        catch (e) { console.warn('[viz]', id, e); }
+      }
     });
   }
 
@@ -1412,6 +1646,9 @@
 
     // 7. 우측 outline 빌드
     buildOutline();
+
+    // 8. 인터랙티브 시각화 활성화 (D3)
+    activateInteractiveVizs();
   }
 
   function renderNav(num) {
