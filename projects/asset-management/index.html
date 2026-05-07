@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>자산운용 학습서 — 비전공자를 위한 12단원 시리즈</title>
-  <meta name="description" content="비전공자를 위한 자산운용 학습서. 포트폴리오 이론부터 팩터 모델까지 12단원으로 구성된 체계적 학습 가이드.">
+  <title>자산운용 학습서 — 비전공자를 위한 14단원 + 부록 3편</title>
+  <meta name="description" content="비전공자를 위한 자산운용 학습서. 포트폴리오 이론부터 팩터 모델·ML 자산가격결정까지 14단원과 수학·ML 부록 3편으로 구성된 체계적 학습 가이드.">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -460,7 +460,7 @@
     <div class="hero-inner">
       <span class="hero-label">Study Guide</span>
       <h1>자산운용 학습서</h1>
-      <p class="hero-subtitle">비전공자를 위한 12단원 시리즈<br>포트폴리오 이론에서 팩터 모델까지</p>
+      <p class="hero-subtitle">비전공자를 위한 14단원 + 부록 3편<br>포트폴리오 이론에서 팩터 모델·ML 자산가격결정까지</p>
       <div class="hero-meta">
         <div class="hero-meta-item">
           <span class="hero-meta-num">12</span>
@@ -568,7 +568,7 @@
         <span class="chapter-num">11</span>
         <div class="chapter-info">
           <div class="chapter-title">논문 리뷰 종합</div>
-          <div class="chapter-desc">9편 논문 요약, 단원 매핑, 논문 간 관계</div>
+          <div class="chapter-desc">16편 논문 요약, 단원 매핑, 논문 간 관계</div>
         </div>
       </div>
       <div class="chapter-item" data-ch="12">
@@ -579,12 +579,57 @@
         </div>
       </div>
     </div>
+
+    <!-- Part 5 -->
+    <div class="part-group">
+      <div class="part-label">Part V &mdash; 확장 팩터</div>
+      <div class="chapter-item" data-ch="13">
+        <span class="chapter-num">13</span>
+        <div class="chapter-info">
+          <div class="chapter-title">시계열 모멘텀 (TSMOM)</div>
+          <div class="chapter-desc">TSMOM, 변동성 스케일링, momentum smile, vs XSMOM</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="14">
+        <span class="chapter-num">14</span>
+        <div class="chapter-info">
+          <div class="chapter-title">BAB·워렌 버핏·팩터 투자</div>
+          <div class="chapter-desc">BAB, Buffett 6팩터, Novy-Marx 비판, Factor Investing</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appendix -->
+    <div class="part-group">
+      <div class="part-label">Part VI &mdash; 도구·부록</div>
+      <div class="chapter-item" data-ch="15">
+        <span class="chapter-num">A1</span>
+        <div class="chapter-info">
+          <div class="chapter-title">선형대수와 이차최적화</div>
+          <div class="chapter-desc">고유값, 실대칭 Lemma, Rayleigh quotient, 양정부호, QP</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="16">
+        <span class="chapter-num">B1</span>
+        <div class="chapter-info">
+          <div class="chapter-title">ML 기반 자산가격결정</div>
+          <div class="chapter-desc">KNS, IPCA, Conditional Autoencoder, Deng</div>
+        </div>
+      </div>
+      <div class="chapter-item" data-ch="17">
+        <span class="chapter-num">B2</span>
+        <div class="chapter-info">
+          <div class="chapter-title">스펙트럴 클러스터링</div>
+          <div class="chapter-desc">그래프 라플라시안, RatioCut/Ncut, 자산 클러스터링</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <footer class="toc-footer">
     <a href="/" rel="noopener">Home</a>
     <a href="https://github.com/soccz/asset-management-guide" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
-    <span class="toc-footer-count">12 chapters</span>
+    <span class="toc-footer-count">14 chapters + 3 appendices</span>
   </footer>
 </div>
 
@@ -624,18 +669,23 @@
 
   const GITHUB_RAW = 'https://raw.githubusercontent.com/soccz/asset-management-guide/main/';
   const CHAPTERS = [
-    { num: 1,  file: '01_자산운용이란.md',                     title: '자산운용이란' },
-    { num: 2,  file: '02_평균분산투자와_효율적프론티어.md',       title: '평균-분산 투자와 효율적 프론티어' },
-    { num: 3,  file: '03_효용함수와_최적포트폴리오.md',          title: '효용함수와 최적 포트폴리오' },
-    { num: 4,  file: '04_무위험자산_CAL_샤프비율.md',           title: '무위험자산, CAL, 샤프비율' },
-    { num: 5,  file: '05_포트폴리오전략.md',                    title: '포트폴리오 전략' },
-    { num: 6,  file: '06_할인과_SDF_자산가격결정.md',           title: '할인과 SDF, 자산가격결정' },
-    { num: 7,  file: '07_팩터모델과_APT.md',                   title: '팩터모델과 APT' },
-    { num: 8,  file: '08_사이즈팩터_가치팩터_FF3.md',           title: '사이즈팩터, 가치팩터, FF3' },
-    { num: 9,  file: '09_모멘텀팩터.md',                       title: '모멘텀 팩터' },
-    { num: 10, file: '10_모멘텀크래시와_변동성스케일링.md',      title: '모멘텀 크래시와 변동성 스케일링' },
-    { num: 11, file: '11_논문리뷰종합.md',                     title: '논문 리뷰 종합' },
-    { num: 12, file: '12_왜_이_모든것을_배우는가.md',           title: '왜 이 모든 것을 배우는가' },
+    { num: 1,  displayNum: '01', file: '01_자산운용이란.md',                     title: '자산운용이란' },
+    { num: 2,  displayNum: '02', file: '02_평균분산투자와_효율적프론티어.md',       title: '평균-분산 투자와 효율적 프론티어' },
+    { num: 3,  displayNum: '03', file: '03_효용함수와_최적포트폴리오.md',          title: '효용함수와 최적 포트폴리오' },
+    { num: 4,  displayNum: '04', file: '04_무위험자산_CAL_샤프비율.md',           title: '무위험자산, CAL, 샤프비율' },
+    { num: 5,  displayNum: '05', file: '05_포트폴리오전략.md',                    title: '포트폴리오 전략' },
+    { num: 6,  displayNum: '06', file: '06_할인과_SDF_자산가격결정.md',           title: '할인과 SDF, 자산가격결정' },
+    { num: 7,  displayNum: '07', file: '07_팩터모델과_APT.md',                   title: '팩터모델과 APT' },
+    { num: 8,  displayNum: '08', file: '08_사이즈팩터_가치팩터_FF3.md',           title: '사이즈팩터, 가치팩터, FF3' },
+    { num: 9,  displayNum: '09', file: '09_모멘텀팩터.md',                       title: '모멘텀 팩터' },
+    { num: 10, displayNum: '10', file: '10_모멘텀크래시와_변동성스케일링.md',      title: '모멘텀 크래시와 변동성 스케일링' },
+    { num: 11, displayNum: '11', file: '11_논문리뷰종합.md',                     title: '논문 리뷰 종합' },
+    { num: 12, displayNum: '12', file: '12_왜_이_모든것을_배우는가.md',           title: '왜 이 모든 것을 배우는가' },
+    { num: 13, displayNum: '13', file: '13_시계열모멘텀_TSMOM.md',                title: '시계열 모멘텀 (TSMOM)' },
+    { num: 14, displayNum: '14', file: '14_BAB_워렌버핏_팩터투자.md',             title: 'BAB·워렌 버핏·팩터 투자' },
+    { num: 15, displayNum: 'A1', file: 'A1_선형대수와_이차최적화.md',             title: '선형대수와 이차최적화' },
+    { num: 16, displayNum: 'B1', file: 'B1_ML기반_자산가격결정.md',               title: 'ML 기반 자산가격결정' },
+    { num: 17, displayNum: 'B2', file: 'B2_스펙트럴클러스터링.md',                title: '스펙트럴 클러스터링' },
   ];
 
   const cache = {};
@@ -662,7 +712,7 @@
   function buildDrawer() {
     drawerList.innerHTML = CHAPTERS.map(ch =>
       `<div class="toc-drawer-item" data-ch="${ch.num}">
-        <span class="toc-drawer-num">${String(ch.num).padStart(2,'0')}</span>
+        <span class="toc-drawer-num">${ch.displayNum}</span>
         <span>${ch.title}</span>
       </div>`
     ).join('');
@@ -691,7 +741,7 @@
 
     // Update topbar
     topbarTitle.textContent = ch.title;
-    topbarNum.textContent = `${ch.num} / ${CHAPTERS.length}`;
+    topbarNum.textContent = `${ch.displayNum} / ${CHAPTERS.length}`;
 
     // Update drawer active
     drawerList.querySelectorAll('.toc-drawer-item').forEach(el => {
@@ -740,10 +790,10 @@
     const next = CHAPTERS.find(c => c.num === num + 1);
     readerNav.innerHTML = `
       <div class="reader-nav-card prev ${prev ? '' : 'empty'}" ${prev ? `onclick="openChapter(${prev.num})"` : ''}>
-        ${prev ? `<div class="reader-nav-label">&#8592; Previous</div><div class="reader-nav-title">${String(prev.num).padStart(2,'0')}. ${prev.title}</div>` : ''}
+        ${prev ? `<div class="reader-nav-label">&#8592; Previous</div><div class="reader-nav-title">${prev.displayNum}. ${prev.title}</div>` : ''}
       </div>
       <div class="reader-nav-card next ${next ? '' : 'empty'}" ${next ? `onclick="openChapter(${next.num})"` : ''}>
-        ${next ? `<div class="reader-nav-label">Next &#8594;</div><div class="reader-nav-title">${String(next.num).padStart(2,'0')}. ${next.title}</div>` : ''}
+        ${next ? `<div class="reader-nav-label">Next &#8594;</div><div class="reader-nav-title">${next.displayNum}. ${next.title}</div>` : ''}
       </div>
     `;
   }
