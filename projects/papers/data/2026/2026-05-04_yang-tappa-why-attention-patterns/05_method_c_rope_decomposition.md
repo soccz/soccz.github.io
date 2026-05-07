@@ -1,59 +1,11 @@
-# 05. 방법론 해부 — Part C: RoPE 의 주파수 채널 분해
-
-## 왜 이 부분이 필요한가
-
-q-similarity 가 attention 의 시간 변동을 통제한다 해도, 그 변동이 **공간적으로 어디로 propagate** 하는지 (대각선 / 첫 토큰 / 멀리 떨어진 같은 위치) 는 PE 가 결정한다. RoPE 의 회전이 dimension 에 따라 다른 주파수를 갖는 사실이 그 분해의 출발.
-
-## RoPE 표준식 복습 (배경 사다리)
-
-RoPE (Su et al. 2024) 는 query/key 를 **2차원 쌍** 으로 묶어 위치 의존 회전을 곱한다. dimension index $i = 0, 1, \dots, d/2 - 1$ 에 대해 회전 각속도를:
-
-$$\theta_i = b^{-2i/d}, \quad b = 10000$$
-
-으로 정한다. 위치 $m$ 의 query 의 $i$-번째 2D-쌍은 회전행렬:
-
-$$R(m\theta_i) = \begin{pmatrix} \cos(m\theta_i) & -\sin(m\theta_i) \\ \sin(m\theta_i) & \cos(m\theta_i) \end{pmatrix}$$
-
-으로 곱해진다. 핵심 성질: $q_m^\top k_n$ 의 RoPE-version 은 상대거리 $n - m$ 에만 의존:
-
-$$\langle q_m, k_n \rangle_\mathrm{RoPE} = \sum_{i=0}^{d/2-1} \big[\, q_m^{[i]\top} R((n-m)\theta_i) k_n^{[i]} \,\big]$$
-
-**4줄 해석**
-
-- **기호 뜻**: $q_m^{[i]} \in \mathbb{R}^2$ 는 $i$-번째 2D 쌍 (channel). $\theta_i$ 는 그 channel 의 회전 각속도. $b = 10000$ 은 base — Vaswani 2017 sinusoidal PE 에서 물려받음.
-- **일상 비유**: 시계의 초침/분침/시침이 다른 속도로 회전하듯, RoPE 의 dim 별 회전이 다른 주파수. 초침 (high $\theta_i$) 은 1초만 지나도 크게 회전 → 인접 위치 정보 민감, 시침 (low $\theta_i$) 은 1시간 가야 1/12 만 회전 → 멀리 떨어져도 정렬 보존.
-- **왜 이 형태**: 기하수열 $\theta_i = b^{-2i/d}$ 는 multi-scale 을 가장 효율적으로 cover. $b = 10000$ 은 max context length 의 log 와 비례하도록 tuned (Vaswani 의 "long enough" heuristic).
-- **조심할 점**: $\theta_i$ 가 너무 작으면 (low-freq) 거의 정적 → query/key 가 변할 때 회전이 noise 에 가려짐. $\theta_i$ 가 너무 크면 (high-freq) 인접 token 도 정렬 깨짐. 그래서 **multi-band 이 본질**.
-
-## TAPPA 의 분해 — Low-freq vs High-freq 채널
-
-저자들의 분해 핵심은 channel 들을 두 group 으로:
-
-$$\underbrace{i \in I_\mathrm{low} = \{i : \theta_i < \theta_*\}}_{\text{slow rotation}}, \quad \underbrace{i \in I_\mathrm{high} = \{i : \theta_i \ge \theta_*\}}_{\text{fast rotation}}$$
-
-threshold $\theta_*$ 는 ablation 으로 결정 (본문 미확인). 그리고 attention score 를 두 group 의 기여 합으로 분해:
-
-$$\langle q_m, k_n \rangle_\mathrm{RoPE} = A_\mathrm{low}(m, n) + A_\mathrm{high}(m, n)$$
-
-검색 스니펫 직접: *"the low-frequency components of RoPE preserve alignment between queries and fixed keys even as time progresses"* + *"High-frequency components in RoPE have been demonstrated to be responsible for the formation of diagonal or previous-token patterns."*
-
-### 수학적 직관
-
-- **Low-freq channel**: $|n - m| \theta_i$ 가 작아서 $R((n-m)\theta_i) \approx I + (n-m)\theta_i J$ ($J = \begin{pmatrix} 0 & -1 \\ 1 & 0\end{pmatrix}$). 즉 회전이 거의 identity → 멀리 떨어진 $m, n$ 도 정렬 보존. 결과: 멀리서 retrieval/sink 가능.
-- **High-freq channel**: $|n - m| \theta_i$ 가 $2\pi$ 를 빠르게 넘김. $|n - m|$ 이 작을 때만 $R$ 이 identity 근처. 즉 **인접 위치만** 정렬. 결과: diagonal/slash pattern.
-
-이 분해는 본 논문의 **핵심 메커니즘 한 그림** 이다. 사실 같은 직관은 Su 2024 부터 (long-term decay 분석) 있었으나, TAPPA 는 그걸 **head 별 motif typology 와 직접 매핑** 한다.
-
-## 다른 접근으로 했다면
-
-대안 1: **NTK / fourier feature 분석** (Tancik 2020). RoPE 의 frequency band 를 NTK 식으로 학습 ‑ 일반화 영향까지 분석. 더 깊지만 실용 metric 추출은 어려움.
-
-대안 2: **PE 를 학습 가능 (learned)** 으로 두고 channel response 자체를 학습. 그러면 motif 분석이 모델별로 다 달라져 **일반 framework** 라는 강점 사라짐.
-
-대안 3: **NoPE (PE 없이) 만 사용**. Kazemnejad 2023 이 보였듯 retrieval / induction 일부 head 는 PE 없이도 학습됨. 그러나 motif 의 기하학적 구조 (정확한 slash 위치) 는 약화. TAPPA 는 RoPE 에 한정해 분석이 깊어짐.
-
-저자가 RoPE 만 다룬 이유는 **모던 LLM 의 사실상 표준** (Llama-2/3, Qwen, Mistral, GPT-4 추정 모두 RoPE 변종) 이기 때문. 실용성 측면에서 합리적.
-
-## 핵심 한 문장
-
-> **RoPE 의 dimension-별 기하수열 주파수 분포는 자연스럽게 multi-band 응답을 만들고, low-freq 가 long-range alignment 를 (re-access/sink), high-freq 가 short-range alignment 를 (slash/diagonal) 담당하므로, motif typology 가 PE 의 spectrum 안에 이미 인코딩되어 있다.**
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "qGQVkLuq3AM/7WtPYE8i5A==",
+  "iv": "CRqPq8gNGsHTrPWC4L3Z5g==",
+  "ct": "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",
+  "mac": "zxYKCoLdeyzqAOx71MJSsn6TmorIkll4rOu9/N6phrY="
+}

@@ -1,64 +1,11 @@
-# 07. 가정·한계·반박
-
-## 명시된 가정 (저자가 직접 말한 것)
-
-1. **RoPE 가정**: 본 framework 의 핵심 정리 (Theorem 5.2 등) 는 RoPE relative-position encoding 을 전제. ALiBi, NoPE, learned PE 에 대한 직접 적용 보장 없음.
-2. **Predictable / Unpredictable 이항 분류 가능**: attention pattern 이 두 부류로 가분 (separable) 하다고 가정. 경계가 어디인지는 metric 의 hyperparameter 로 처리.
-3. **Inference time setting**: 학습 후 고정 모델의 inference 시 query/key 를 분석. 학습 동안의 dynamics (Lyle 2025 의 grokking 관점) 는 다루지 않음.
-
-## 암묵적 가정 (말 안 했지만 깔린 것)
-
-### 1. Query 의 self-similarity 가 task / domain 무관하게 stable
-모든 분석은 query 시퀀스의 step-to-step cosine 이 의미 있는 통계량이라는 전제. 그러나:
-- **Code generation** 에서는 token-level cyclic syntax 가 query 를 강하게 oscillate 시킬 수 있음 — q-similarity 가 prompt 마다 크게 다름.
-- **Multilingual prompt** 에서는 언어 전환 boundary 에서 query 가 jump.
-- **Long-context QA** 에서는 question 부분과 context 부분의 query distribution 이 다름.
-
-이런 heterogeneity 가 layer-wise 단일 $S_l$ 로 환원 가능한가는 자명하지 않음. 본 논문이 한 두 task 에서만 테스트했다면 이 가정의 robustness 가 의문.
-
-### 2. Layer 가 head 의 pure aggregator 이상의 구조 없음
-$S_l$ 은 layer 평균. 그러나 한 layer 안에서도 head 별 motif 가 매우 다름 (Voita 2019 specialized heads). 평균이 head-level 신호를 평탄화하면 정보 loss. 만약 head-wise scoring 이 layer-wise 보다 훨씬 우월하다면, 본 논문의 layer-wise 결과는 sub-optimal point.
-
-### 3. RoPE channel 의 frequency band 가 head 와 무관
-$\theta_i$ 는 RoPE 정의상 dimension index 의 함수이고 head 와 무관. 그러나 학습된 $W_Q, W_K$ projection 이 frequency band 별로 다른 weight 분포를 가지면 head 별 effective frequency response 가 다름. 본 framework 가 그 점을 감안하는지 불명.
-
-### 4. q-similarity 측정의 inference latency 무시
-매 step 마다 window $w$ 의 query pair 에 대해 cosine 계산 → $O(L \cdot w^2 \cdot d_h)$. small $w$ 에서는 무시 가능하나 KV cache 의 시간 critical path 에 들어가면 압축 gain 을 latency 가 갉아먹을 수 있음.
-
-## 반박 가능한 지점
-
-### 반박 1: NoPE LLM 에서 retrieval / sink 가 발생한다면 framework 의 universality 가 부서진다
-
-**근거**: Kazemnejad et al. (NeurIPS 2023) "The Impact of Positional Encoding on Length Generalization in Transformers" 는 NoPE (positional encoding 없이) Transformer 가 일부 task (e.g., copy, retrieval) 에서 RoPE 보다 우수한 length generalization 을 보임. 즉 NoPE 에서도 retrieval head 패턴이 학습됨. 만약 q-similarity 가 NoPE 모델에서도 같은 motif typology 를 예측한다면 RoPE-frequency decomposition 은 framework 의 부수 요소가 되고 (q-similarity 가 진짜 본질), 만약 NoPE 에서 패턴이 무너진다면 framework 의 RoPE 의존성이 본질이라는 의미.
-
-**검증 실험**: NoPE Llama (Kazemnejad 의 fork) 에서 (i) attention map 의 motif 분류, (ii) q-similarity 측정, (iii) 둘 사이 회귀. RoPE 모델과 비교. 6 GPU-day 정도. 본 논문이 이 비교를 안 했다면 reviewer 가 가장 먼저 요구할 점.
-
-### 반박 2: Theorem 5.2 의 "high self-similarity" 가 정량 임계값을 갖지 못하면 metric 의 이론적 정당화는 한정적
-
-**근거**: 정리가 $\epsilon \to 0$ 에서 만 attention propagation 을 보장한다면 finite $\epsilon$ 의 경우의 quantitative behavior 는 미해결. 실제 LLM 의 query self-similarity 는 0.7~0.95 정도 (head 별로 추정), 즉 $\epsilon = 0.05 \sim 0.3$. 이 "moderate" regime 에서 정리의 bound 가 tight 한지가 응용의 정당성 결정.
-
-**검증 실험**: 합성 데이터 (controlled $S_l$) 로 attention map 시뮬레이션 → bound 와 실제 deviation 의 ratio 측정. 이론과 경험의 gap 정량화. 1 GPU-week.
-
-### 반박 3: 단일 metric 으로 두 응용에 우월하다는 주장은 selection bias 가능
-
-**근거**: 같은 metric 으로 KV cache 와 pruning 모두 SOTA 라는 결과는 매력적이지만, 두 응용의 baseline 이 모두 metric 이 미흡한 영역 (KV cache 는 future query distribution 추정의 어려움, pruning 은 layer importance 의 흔들림) 일 가능성. metric 이 우월하다기보다 baseline 들이 약했을 수 있음.
-
-**검증 실험**: q-similarity 가 의미 없는 응용 (e.g., training-time gradient routing) 에 강제 적용 후 실패하는지 확인. 만약 어디서나 잘 작동한다면 metric 자체가 trivially good (예: norm proxy), 만약 일부에서 실패한다면 신뢰성 증명.
-
-### 반박 4: q-similarity 가 task 와 무관한 시간적 통계량이라면 task accuracy 를 직접 예측 못 한다
-
-**근거**: framework 가 attention pattern 을 설명할 뿐 그 pattern 이 down-stream accuracy 에 어떻게 기여하는지 (예: retrieval head 가 깨지면 accuracy drop) 의 다리는 본 논문 미언급. 즉 layer 를 prune 했을 때 attention pattern 이 깨진 정도와 task accuracy drop 사이의 mediation 미증명.
-
-**검증 실험**: Pruning 후 (i) attention pattern shift 측정, (ii) task accuracy drop 측정, (iii) 두 변화의 correlation. mediation 강하면 framework 신뢰성 증가, 약하면 metric 이 task-relevant 신호가 아닌 다른 무엇 (e.g., layer norm scale) 의 proxy.
-
-## 재현성 평가
-
-- **코드 공개**: 부분적. GitHub `MIRALab-USTC/LLM-TAPPA` 가 KVCache 모듈 (q-similarity guided budget allocation) 만 공개. Pruning, Visualization 모듈 "예정". 즉 헤드라인 +5.60 (pruning) 결과 재현 불가능 (현재 시점 기준 2026-04 말 ~ 5월 초).
-- **데이터**: LongBench / MMLU 등 공개 benchmark 추정.
-- **Hyperparameter**: window size $w$, frequency threshold $\theta_*$ 등의 sensitivity 가 보고되지 않으면 reproduction 시 차이 큼.
-- **변산성**: 평균만 보고됐는지 분산도 보고됐는지 (스니펫에서 단일 수치 +11.34, +5.60 만 확인 → 분산 미확인). 단일 seed 평균이라면 ±2 정도의 noise 가능.
-- **GitHub commit history 확인 필요**: 2026-02-04 첫 release, 그 후 update 빈도 확인 시 maintenance 강도 파악 가능.
-
-## 핵심 한 문장
-
-> **본 framework 의 가장 큰 약점은 RoPE-기반 모델로의 한정성 (NoPE/ALiBi 미검증), Theorem 5.2 의 quantitative bound 모호성, 그리고 metric → attention pattern → task accuracy 의 mediation 미증명 — 이 셋이 함께 닫혀야 framework 가 진정한 universal 이론 지위를 얻는다.**
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "PAnAKWHzsDYjvkaFOw6EMw==",
+  "iv": "87LvMfS+EClxWvnULSRbwg==",
+  "ct": "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",
+  "mac": "yRffgNCUQDd5vfRatBejjJBeDj5V2yQFcuNTwjaBOOI="
+}

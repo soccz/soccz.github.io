@@ -262,6 +262,69 @@
     .bucket-badge.near { background: var(--bucket-near); }
     .bucket-badge.far { background: var(--bucket-far); }
     .bucket-badge.misc { background: var(--bucket-misc); }
+    .lock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--surface-warm);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+    .lock-overlay {
+      position: fixed; inset: 0;
+      background: rgba(20,18,16,0.55);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    .lock-modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 26px;
+      box-shadow: var(--shadow-md);
+      max-width: 380px;
+      width: calc(100% - 40px);
+    }
+    .lock-modal h3 {
+      font-family: 'Space Grotesk','Noto Sans KR',sans-serif;
+      font-size: 16px; font-weight: 700;
+      margin: 0 0 6px; color: var(--text);
+    }
+    .lock-modal p {
+      font-size: 13px; color: var(--text-secondary);
+      margin: 0 0 16px; line-height: 1.55;
+    }
+    .lock-modal .lock-row {
+      display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    }
+    .lock-modal input {
+      flex: 1; min-width: 140px;
+      height: 38px; padding: 0 12px;
+      border: 1px solid var(--border); border-radius: 6px;
+      background: var(--surface-warm); color: var(--text);
+      font: inherit; font-size: 14px;
+    }
+    .lock-modal button {
+      height: 38px; padding: 0 16px;
+      border: 1px solid var(--text); border-radius: 6px;
+      background: var(--text); color: #fff;
+      font: inherit; font-size: 14px; cursor: pointer;
+    }
+    .lock-modal .lock-cancel {
+      background: transparent; color: var(--text-secondary);
+      border-color: var(--border);
+    }
+    .lock-modal .lock-error {
+      margin-top: 10px; font-size: 12px; color: #c45858; min-height: 14px;
+    }
     .paper-date {
       font-family: 'Space Grotesk', sans-serif;
       font-size: 11px;
@@ -751,6 +814,7 @@ let MANIFEST = null;
 let currentPaper = null;
 let currentSectionIdx = 0;
 let currentFilter = 'all';
+const unlockedPapers = {}; // slug → passphrase (in-memory only)
 
 /* ─────────  Markdown rendering  ───────── */
 function setupMarked() {
@@ -807,6 +871,106 @@ function renderMarkdown(md) {
     }
   });
   return html;
+}
+
+/* ─────────  Crypto (PBKDF2-HMAC-SHA256 + AES-256-CBC + HMAC-SHA256)  ───────── */
+function b64ToBytes(s) {
+  const bin = atob(s);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+function concatBytes(...parts) {
+  const n = parts.reduce((s, p) => s + p.length, 0);
+  const out = new Uint8Array(n);
+  let off = 0;
+  parts.forEach(p => { out.set(p, off); off += p.length; });
+  return out;
+}
+function equalBytes(a, b) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
+  return diff === 0;
+}
+async function decryptPayload(payload, passphrase) {
+  if (!window.crypto?.subtle) throw new Error('Web Crypto unavailable');
+  const enc = new TextEncoder();
+  const salt = b64ToBytes(payload.salt);
+  const iv   = b64ToBytes(payload.iv);
+  const ct   = b64ToBytes(payload.ct);
+  const expectedMac = b64ToBytes(payload.mac);
+  const passKey = await crypto.subtle.importKey(
+    'raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveBits']
+  );
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt, iterations: payload.iterations, hash: 'SHA-256' },
+    passKey, 512
+  );
+  const keymat = new Uint8Array(bits);
+  const macKey = await crypto.subtle.importKey(
+    'raw', keymat.slice(32, 64), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const actualMac = new Uint8Array(
+    await crypto.subtle.sign('HMAC', macKey, concatBytes(salt, iv, ct))
+  );
+  if (!equalBytes(actualMac, expectedMac)) {
+    throw new Error('PIN이 맞지 않습니다.');
+  }
+  const aesKey = await crypto.subtle.importKey(
+    'raw', keymat.slice(0, 32), { name: 'AES-CBC' }, false, ['decrypt']
+  );
+  const plain = await crypto.subtle.decrypt({ name: 'AES-CBC', iv }, aesKey, ct);
+  return new TextDecoder().decode(plain);
+}
+
+/* ─────────  Per-paper unlock modal  ───────── */
+function closeLockModal() {
+  document.getElementById('lockOverlay')?.remove();
+}
+function showPaperUnlockModal(paper, onSuccess) {
+  closeLockModal();
+  const overlay = document.createElement('div');
+  overlay.id = 'lockOverlay';
+  overlay.className = 'lock-overlay';
+  overlay.innerHTML = `
+    <div class="lock-modal" onclick="event.stopPropagation()">
+      <h3>비공개 논문</h3>
+      <p>${escapeHtml(paper.title || paper.slug)}<br>이 논문은 PIN 입력 후 열람 가능합니다.</p>
+      <div class="lock-row">
+        <input id="paperPin" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN">
+        <button id="paperPinSubmit">열기</button>
+        <button class="lock-cancel" id="paperPinCancel">취소</button>
+      </div>
+      <div class="lock-error" id="paperPinError"></div>
+    </div>`;
+  overlay.addEventListener('click', closeLockModal);
+  document.body.appendChild(overlay);
+
+  const input = document.getElementById('paperPin');
+  const errEl = document.getElementById('paperPinError');
+  input.focus();
+
+  const submit = async () => {
+    const pin = (input.value || '').trim();
+    if (!pin) { errEl.textContent = 'PIN을 입력하세요.'; return; }
+    const probe = paper.sections.find(s => s.encrypted);
+    if (!probe) { errEl.textContent = '검증할 암호화 섹션이 없습니다.'; return; }
+    errEl.textContent = '확인 중…';
+    try {
+      const res = await fetch(`${paper.data_path}/${probe.file}?_=` + Date.now());
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      await decryptPayload(await res.json(), pin);
+      unlockedPapers[paper.slug] = pin;
+      closeLockModal();
+      onSuccess();
+    } catch (e) {
+      errEl.textContent = e.message || 'PIN이 맞지 않습니다.';
+    }
+  };
+  document.getElementById('paperPinSubmit').addEventListener('click', submit);
+  document.getElementById('paperPinCancel').addEventListener('click', closeLockModal);
+  input.addEventListener('keydown', ev => { if (ev.key === 'Enter') submit(); });
 }
 
 function renderMarkdownInto(content, md) {
@@ -889,7 +1053,8 @@ function renderPapersGrid() {
     return `<div class="paper-card" onclick="openPaper('${p.slug}')">
       <div class="paper-card-top">
         <span class="bucket-badge ${bucketCls}">${bucketLbl}</span>
-        <span class="paper-date">${p.date} · ${p.weekday}</span>
+        ${p.private ? `<span class="lock-badge">🔒 PIN</span>` : ''}
+        <span class="paper-date" style="margin-left:auto">${p.date} · ${p.weekday}</span>
       </div>
       <div class="paper-title">${escapeHtml(p.title || p.slug)}</div>
       <div class="paper-meta">
@@ -910,6 +1075,12 @@ function findPaper(slug) {
 async function openPaper(slug, sectionFile) {
   const paper = findPaper(slug);
   if (!paper) return;
+
+  if (paper.private && !unlockedPapers[paper.slug]) {
+    showPaperUnlockModal(paper, () => openPaper(slug, sectionFile));
+    return;
+  }
+
   currentPaper = paper;
 
   if (sectionFile) {
@@ -962,9 +1133,24 @@ async function loadSection() {
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('fetch failed');
-    const md = await res.text();
+    let md;
+    if (section.encrypted) {
+      const pin = unlockedPapers[currentPaper.slug];
+      if (!pin) throw new Error('locked');
+      md = await decryptPayload(await res.json(), pin);
+    } else {
+      md = await res.text();
+    }
     renderMarkdownInto(content, md);
   } catch (e) {
+    if (e.message === 'locked') {
+      delete unlockedPapers[currentPaper.slug];
+      const paper = currentPaper;
+      const sectionFile = currentPaper.sections[currentSectionIdx].file;
+      goToTOC();
+      showPaperUnlockModal(paper, () => openPaper(paper.slug, sectionFile));
+      return;
+    }
     content.innerHTML = `<div class="loading">불러오기 실패: ${escapeHtml(url)}</div>`;
   }
 

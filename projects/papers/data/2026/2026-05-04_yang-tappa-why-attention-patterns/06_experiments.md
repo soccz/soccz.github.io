@@ -1,65 +1,11 @@
-# 06. 실험 해부
-
-## 본문 접근 제약 명시 (앞)
-
-본 섹션은 arXiv html/pdf/ar5iv/alphaxiv/Semantic Scholar 가 모두 403 차단된 상태에서, GitHub README + 검색 엔진 스니펫 + 동시기 비교 논문 정보를 종합하여 작성. 정확한 ablation 수치 행렬·표 plot 의 시각적 디테일은 미확보. 따라서 본 절은 **(i) 실험 설계의 추정 골격, (ii) 헤드라인 수치 (+11.34, +5.60) 의 의미와 한계, (iii) 빠진 ablation 의 추정** 으로 구성.
-
-## 데이터셋·모델·baseline
-
-### KV cache 압축 평가
-- **모델**: Qwen2.5 (7B 또는 14B 추정 — 스니펫엔 size 미명시. Qwen2.5 는 GQA + RoPE 변종 사용).
-- **데이터**: LongBench (THUDM, ACL'24/'25) 가 KV cache 분야 표준. 2-Wiki, NarrativeQA, HotpotQA 등 single/multi-doc QA + summarization. 본 논문이 LongBench 사용 추정 (본문 미확인).
-- **Baseline**: EA (Expected Attention, NVIDIA arXiv:2510.00636 2025), StreamingLLM, H2O, SnapKV, FullKV 등 표준.
-- **Budget setting**: 스니펫 명시: "budget 512". 즉 layer 당 512 token 만 보존. 표준 token 수 32K~128K 의 prompt 에서 공격적 압축 영역.
-
-### Pruning 평가
-- **모델**: Llama-3.1-8B (32 layer transformer, GQA + RoPE).
-- **데이터**: 표준 LM evaluation harness (MMLU, HellaSwag, ARC, PIQA 등 추정).
-- **Baseline**: ShortGPT (Baichuan 2024 arXiv:2403.03853), LLM-Pruner (Ma 2023), 균등 random drop.
-
-## 헤드라인 수치 — 의미와 비판적 읽기
-
-### "+11.34 average gain over EA on Qwen2.5 at budget 512"
-
-EA 가 KV cache 압축의 가장 최신/강한 baseline (NVIDIA 2025) 임을 감안하면 **두 자릿수 평균 점수 향상** 은 큰 신호. 단 다음 의문이 남는다:
-
-1. **"average" 의 평균 단위** — 여러 LongBench 서브태스크의 단순 평균인지, weighted average 인지, single-doc vs multi-doc 분리 평균인지 불명. LongBench 는 task 별 metric scale 이 다양 (F1, ROUGE, accuracy) 해서 단순 평균은 misleading 할 수 있음.
-2. **Budget 512 가 sweet spot 인가** — KV cache 압축 논문의 common pattern 은 모델별로 특정 budget 에서만 큰 gain 이 나타남. budget 1024, 2048 에서도 gain 이 유지되는지가 robustness 시험.
-3. **EA 자체가 specific scenario 에 약할 수 있음** — Expected Attention 은 future query distribution 추정 기반인데, distribution shift 가 큰 prompt (예: 갑자기 주제 전환) 에서 약함. TAPPA 의 q-similarity 는 그런 prompt 에서 query drift 자체를 측정하니 자연스럽게 우월.
-
-### "+5.60 average gain over ShortGPT on Llama-3.1-8B"
-
-Pruning 은 KV cache 보다 baseline 차이가 본래 크고 (drop 한 layer 수에 sensitive), ShortGPT 가 강한 baseline (perplexity 기반 layer importance) 임을 감안하면 +5.60 도 의미. 단:
-
-1. **얼마나 prune 했는가** — drop 비율 (e.g., 32 → 24 layer) 명시 부재. 압축률에 따라 baseline 들의 ranking 바뀜.
-2. **MMLU 처럼 zero-shot eval 이 domain mismatch 에서 큰 분산을 가진다** — 평균 점수 +5.60 의 std 가 함께 보고됐는지가 결정적. 단일 seed 평균이라면 reproducibility 의문.
-
-## 추정 ablation 목록 (본문에 있을 가능성)
-
-본 framework 에서 reviewer 가 요구할 ablation:
-- **(A1)** $S_l$ 정의 변형: cosine vs Pearson vs angular distance, window size $w$ 의 sensitivity.
-- **(A2)** RoPE band threshold $\theta_*$ 의 ablation: low/high freq 분리 위치 변화에 따른 metric 변화.
-- **(A3)** Layer-wise vs head-wise scoring: head 별 분리하면 gain 추가 있는지.
-- **(A4)** Models: Llama-3.1, Qwen2.5 외 Mistral, Gemma 등에서 generalization.
-- **(A5)** Prompt domain: code, math, narrative, multilingual 등 q-similarity 분포가 다른 domain 에서 metric 의 robustness.
-- **(A6)** **Causal intervention**: q-similarity 가 정말 인과적으로 attention pattern 을 결정하는지 — query 를 인위적으로 perturb 해서 attention map 이 예측대로 변하는지.
-
-(A6) 가 특히 중요. Theorem 5.2 가 sufficient condition 만 주는데 인과성을 보장하려면 perturbation 실험이 필수. 본 논문이 (A6) 을 했는지가 이 framework 의 진정한 인과성 주장 여부를 가른다.
-
-## 부록에 숨은 신호 (추정)
-
-ICLR 2026 접근 paper 의 부록은 보통:
-- **Section A: Detailed proofs** (Theorem 5.2 의 정확한 epsilon-bound).
-- **Section B: Per-task LongBench breakdown** (어떤 task 에서 가장 큰 gain — 보통 long-context retrieval task).
-- **Section C: Visualization** — 각 layer 의 attention map 과 $S_l$ 의 scatter (재현 어려움).
-- **Section D: Compute cost** — q-similarity 측정 overhead. inference latency 에 영향.
-
-본 논문은 GitHub README 가 "Visualization 모듈 예정" 이라 표기 → 부록 시각화는 있을 가능성 큼.
-
-## 베이스라인 공정성 평가
-
-검색으로 확보한 정보로는 (i) baseline reproduce 인지 paper-reported 인지 (ii) hyperparameter tuning 동등성이 불명. KV cache 분야는 baseline reimpl 시 hyperparam 에 sensitive 하고, 같은 baseline 을 다른 논문이 다른 점수로 보고하는 경우 흔함. 본 논문이 baseline 수치를 어디서 가져왔는지 (자체 reimpl vs 원 논문) 가 비교 신뢰성의 핵심.
-
-## 핵심 한 문장
-
-> **헤드라인 두 수치 (+11.34, +5.60) 는 framework 의 실용 가능성을 강력히 시사하나, (i) average 의 단위, (ii) budget/pruning ratio 의 sensitivity, (iii) causal intervention 의 부재 가능성 세 디테일이 본문 확보 후 검증 우선순위.**
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "dRXaaCQBMM/V3Eecj0UJVg==",
+  "iv": "sYTz1CdYx+8oW2NBeaKtiQ==",
+  "ct": "yu+HiFUWU70W3ggYwtGPnPTdeO4IYcD55s9uD109d+uWLdcHlsg3n+ztDxvkF8EENvp+sVWGAlNMo6w86ln7D1DuA31ZCGjqCiqaExqgc3bAYnnvepxnNuuy4TLtFZQBNZjaQSCfXYfbQMWL8I9y/EeAqi27XRO+Ef+hfV2LRcrQDsRAQaw5KhBi6rTSzrohWJ3ZeqyJDX+NneVO2gtamBcSxbVF4RU1aixaUc5OIkY4I5PxD1AhgXMGOKRTB1NFAuXrjV62UIuEciX5YXteqlo8k08KREB+vB0TBstHQ/SLHUVzng8H0CsQ5OBksJ7Ltfq6l+MJDlc+e3vp2Ykiy8DCs2CXToscKxV2NbewmPb/D1TdjC1bJ5DTjBhxBp+zukI3ODtruWMyqnOIrJa4f/DPUZxAzaWZ6CQzu0tpjALPTX57BEtBCiWj2Knjq47HpAuwTyvATFQDsBZ5qr1oR0H/uWrQyDnG59AQc/Mt5+tIXkfn4msNLKyWkuZKbezqLqDhkDCbWlNY99Fm2rH4/Zbc51kk8wDBG6okJ6j2FTZ73nkznz/c4NaU/M1Ou+An6Od2Ufy7K1FhOExgV9w1XLD0XXFmuDWtXB+JZip1j0+9EkoUDrOvdTXFhXCjt5G8+nAclLGL0oRNltYWe1HPb37lbycO4iQijgo/+YGUOfI72mrjovImRDCgZJ6ECkBv+7ECbBTFZKP0i7otedqWtxK+z1UKYhhTLkNGFatrPPN0OI1wn3s5obmzcCUoLQKJzhJRzJ1M4jm/jSTHqIOqsq7SbhqfKK8P2MNIYRl+Vee4C0/0Oj4WZL1nSoF9EJhf8CDsegtpYEeHH5ZiKfPQtNka6HTOEt8ziO47SjMX2UY75a5mjbZeBYzen0h0lXFqu6AcxCfYqJBm+s8bDgIxBPB3sbtOqGD0XRaBa31WzhcL+zytokXRgk8Tys4CdICcp/kg+mbk6rfZSAfohY3RxOVEY67rU81247jXKXDYgqfxzphcvfo4vfBhsad/tZy14IKJS1WHWOyfNzYhANAvvxJglbm5mWIoFoHro8M7Sx2Wh5t7+XIA2pjr+heG4rLEpEMTv1w0lz5V/BZFTehllg/vEDwpRQWj+GykzGj31WHwjI22v79RYsP71IZMgIJSy6o39NjdvEPa2eSQbmkBuGeoq0jUQxj2My30pdCP2ZpAW8Ws6bAGSHcHEYs+el1ZHVhg6cOPVwPzn9hpS6/i1L+VrVEJ4aeZBWbykVqsM5hqZNQFtZJd6J24WaqEu8PNH1NPbb9YrEz81DfY4whgckYGC1w86+iOjB2+CrjMUwr708yt3/NylMpMWqn/8kazH5Oo0xde/BFblYK2WV7S0nUgqlqp8SwrPODs5YXiQK3bQeDBy62ZSFgEBKu+eqljMTheCcE5pZUslzWRJ9O4WHZO18gtwc7iQC9D/ix5BOQZSsIgMkDBjDg94vQSDvWJHxBiVWb+g3lIphl6+dUHXQWVCwa0/g+xCbEzTcLBubLdV5gVmp5sSu7oZxntvy76Te38VSradHd6iJBoVFEQBYPqFqauTNBps+MGPrvi7V2qBv2zEbI/2/lGh0NFjhXe+hvb5d9O8EGc74NtMXaxFl/pwyX8nnbI1PbRBpTZCrh5p5enmhj06EA28akMuwpdQiMGPnXyC8bj30sMg5sm7i0DMUSlUXFAPYX/y24EQ6gDVfJEU30VDcmIrmpOwJ+mgY0e/3GuqPiDDH7DRFvCXwMyB+eUvckcGHg5bTRwSi5p5Y0p7/yN2ai361SYu/ph4YBh13VCB1shaJ8vYKilvbWLLrNjSJedQnOLgJtShs8h61ZSIBtchvkEFIye+gqsZ+HQzhr3I9+Rl1mptvrPON+hd+MituaZDxa4rKA+2kpDFbhmNTpZ/JJwY5GIYeN6GEcuYHyuSNgabHxcWthjbFx1vZBSFlX8YtgE7j7EQ4Fd7lXSQypBaPnkbmrHLgw8sCjgL7cLZAxTne3QxbDW+oXj9QwSgQ7Uo4QczmW73+sc7GbfWmL3s9pSRYddLxckLj+t2v+/2TErgo2st6826sJ+3buM3xXc2Hucz4LR06RCFkyPDtkLTZc0Qj/CQbtfZLSc4F5JqFgTANStqEzEk2uCXv7g4lzLsfSnLV/9WR7yi2J/GuVHJwglnhdNi2EhDbvaMuHu2MxkTNKNRm3RR12cOEkTa335kjV0Z2rrspUjBUxsjYlG+0/7edsncj+bJ6vpK/PkDnH79VRVwIdevRCNxiQkOT8wS37KdyXelgP8FEj9SlmUmEFR8zRBuIWBOiOSh9ZFtToGynnbNC4GpyxSiXLlUL2AiIVds23/1/3uGdWweYUdLAPHeXmnYQ64oUgcx4gnzXZjGGf7BshCdS/EK3YL5EyASydapC/lG1tsescAH7FLxm9u7Ma8bdSFSMtP1bREuKEXABazAOjBGhwVeIbBHxh1eMPruYPupmPva2RSvyz1RdyeCuGkx4E2vDQBaUfE6SwawkcN11paGw8kJr4E+/bhQnP36fj3RXKmQqsJtzI6CR3FINKgOT9lGVAdVhNgYLznY55aimwdIk6zRc8VMqvkpD823yvsnG4b186Nh7y8qdIEBDk+aX6lFh5KcU2kulX0YkeR/7caYzBYGetjGRdi64DmnuwwHQ/p4lxU44FNv0fujQkEKQNhFNUVtwtk7Owh48ha+v5+tSSTQlRlq9rsOhs5KU5EdbdcE8R+UrivXBqYRALr87lVzERqLlUupZNqEbRlA9Cd+w0DHWzIif+MQH/NASf1iP1QjbdM2C/mFE2ryb/4x2rTFFsbyPEwGDBGtYtYjNE6jUDdJKdhjUTVzZ4rsdMI7uCAkJfbLT0daYn6KKkzapTpBxM5sUHesJYoukLiX7iKt3suDDazblD/NXt0V5QrD4vhu7qZ8OiVwCTS0dmyaTB/kX+CIy08+FH6yGFJvq84lfEGtXNRT+sx8h5/P1pABCBRq5Tc7hSibJ41mpsPr3B2zIJWaT6oU2ogvxMH24+K5yv4PLBDC5lhNpToE/2JvovuGVwMssn3Ru4uMPP6v2U2XAtH6mQgPv6nPEFk/dXnce5dApXnCunugXU0+fwZBzXDvpwRkxCLrrGo9p35lJyKA567HHTZOAqpXm8/EXRLFUu6sVj+44TviM4vP+FclQC2uFQAZMlQxRk9BvxCawuxkfO64YtpRrk8hgDqgIoOEqp6Da3xjMzt8E60GjABfhV9+qaS7kywnxvy9ph6L2Kp7/6IxuatxwaF0o3pgmGjsF9bwmUm/f28hU5UOxYJeEpWGzBQeBJK8PGs6gMCBGtvM96gkG5RGHXCaj436+QTuBTFSo2fwhO+hEcbtt49dxIPPx3nmMKvE9Waxa0ED4FHBcRxmHHm71wE6YBoBo8iPyuMR60DIOhnmvUJBEYkbkTTpOaNqahD5Oh7L5nM4/PLg1VdfqeV8Cynf41J36junBeo6QFU9nfnlvvSKnIW+z8cEgRFdXYt2pFng1/OmgX70wyHC2wzjFNrQQoBQipcx/79e5Zj1th8vnQnoe3KMH2/FUB5kN6NJUw8FzHO8rJTOBnnJUV/k36zh4+FscAjPlk1ToVEHa30yQe0eG3Ilk7YkAmwTJ/hu0FwgnqQ0wIMCGJJFT3XcnqXj1BB7rT3bj59HPL0GuqVAGL8s5i2MPKnKNE0G11xsJdxwpXgBqT+KYFVLpS3fGODqZyFw+IjWTkeI2rEo/QZOWFUsCHN0sVDsi8Ozg7lTHgOEH5B1OgD1fIs3xetvgQj2YAmbS7Yd9TwzZc08cwTtYQPZWJ88k+JIAlqvpiw6UFmiP6esKeque7ZxwoSTxngjIvmLLrRKnb0P/Z9cCgSfWciXNFdOWnToe13tJ61U9UiloKvAHBQHa3VFZpALygoAjCJwk2DYjVM474CcaekECe7qj6U1iEOW8YM7QqiIeJpRRdmPlq7nVres5suOrkJ+YuMX5zCWYHmDYv1zKPXISG6zTawrCnPlIHHK4DJkTKtRe+HUJcD0rh49qYr5nG4ZnHYS3lameoStGAF++klC1rsbFcWs7ciUCCrF3s2MH8FonEI784UDVDBDefkFgddmF5twnro1yWIy7yDO2HApXfNG2cAyA8YUDxBUaVOyKxOz+H/X72EidDpGOFAAmxg3CJaTe/oZtkjGK0DfGnHaLoAtovjAxAH7WaEIZ/v7tqdUgjfmoAYCsbLUYflXtubf7bRBGjHE+xHko+U+ezFlzxRhjFJjMTtFhwyzck328CW/+FWLJBjCX+RXcpKhtDA4P6Y2d+rXrO+A6gyrMoLcofcd+LvR4fv3Cvq9It/bmodVH9EEtkuq7npl3D6xTK7uOnmhmFZ1N9IEyaDFjrLpR9x83xcN/w0FBMb0KSuI15YpaGiweO4OzwY29NtN7fDtvzajvMftZtIQWzqNd7XlupQEJclpVKYxFk4prp7ebPS/G22BJ87Qhn2PSqHaM/fMecc9E+fiuFbgNA9hUNKo06/iVx+gZvU+YTfDftDqoqKjDspnCCKwy/1LG0AgOBYSlrjeBGfwlOOuRsq+AJ7QmkAP90eMRKTeFXQm+EsXihL478cRy/oBSChCa7L7ELRyZWZmVrlNdWDmvzZMpSTjLLVD9zZc6m+iKcJviHc2UMqANZeIZlBAJMaLOKFHpVlWTgz+Nk6h69avM6cW3sCAJbUK2fONhwq9kXG5mRW1R0CaxsgwFuIthSUYrRyLDqhyQ6Jb1G6cNy091Dfn1ESYWkwhmx6TWnXUEgYUNXavCW6jhQ7N6/yY236jDmArd+J7j5CifQG6Qzkrajlv6eDeByA0eL2xt+rWrNwpxsX/YyI5hy4CLkyQZ/pIEZy/Fe0dsIM2ENs8imU/pg9j/5pBrUkVAaXlDaMK2pYN2oDcy5Y8/O0OSM1VVNjHMGHs4iFaTJnRyzH34Guae7qE+FdQAKJSU7lqhN4Uh4sSOMwI4yBn6YkIjrKqZnjfTodVIXXhQHc6mZ9gactzqU2htNPGhMOr/JAvL9cPy009GSP1GCKxQWh3eT1geBVsvEa66AtWmVIu0Lhfj8SUWuKlF858ycaicM9Ls3ph3Uq+9e/bK/SRuUfcj60C7EnMxcEU8Rv+htNABeSVWVU9tV10/je/1lcyGinvKWgtkrSgP4uTDGW8gPHLCPruEjF9Z/doN2MtycHyDGQ5qyKCcIXESOaSJjk950Tf6gD96IvB2Bsg2nMN6cyruciMmTMVSjysJyjhhTJVLgDSBJaxKAOygVtq1B624+l3jH72PWL/GuDIrtV18v0JQ799ZRyM5dfVEiXu5hXWovtWFK0+KWQzy1tISWGhVp79UzyuuyAVdRoAnjgHRiHlYMKznQEUWEAMQ7L7uCk3+dPmeZAPFpDAtlP/8UjTTZXkwcaDR4L/xYpjg50Zdw/pGdUTYCet7U4CIG/stQPjNeXi2ztVQa2uhFzebQ6gz+K6wOu3u++z9Rmbmfn5oc2tG85qjtEPlgx0t/GI2JpXTYhyZrM5gSK7vGZxYBONz0QSVGwz1+34mV/4VkyHnxdTYWQTTCJOxK+2BUYk0dkSDakmv9l6EfyCRuUQhfgT8hMwxdtLUUbtgjVlDuIXa92UgpIMH1OFXB5IUTcb07wsF+zej0zEOqu5eo5nA+Z9QCYFHT7SN2kwoiws+m+U5+fw6iUJPlGPgV5a2q9JU3Qeq1BTV8+ho3hSDDZaemh+hkZnIXdkULcZDEWpS7+1y7vDK61BtgWF6QZLNgY7s1+6++ZiBbcOgJ8wJkCCCUE4G1kqggJzXpvMz+jFbdbzqkvBiP1LeN00Koo5WcS+A1IvkLLXxCi8rY/17cY5Tdy/XNNpLHsPqDODbLJW+wJ7sHpU8n6jmM3nSwsMrg1CvxayjiIuoU3AZ1FpsFOY/ZaXXfBiKPAMfmW+o8sN2nF0uwmff3QaUj4XGBX6xEFyU3+VTiWJzigSPYNdoaT3S+gaGS7pxc38PG7OIXFyuMLSCo63PWH7WdoEHz4w/9XK5D1XvxJIzFdbDJJnroyFTmPhGN+rtVKhhLIlRrBHHtP0EEKw8eiTn/8IODaSiGBv94QI1X9xWZLCFfsuAJBFSgJrcykhEcbWmDP8L8QQnLUNytKMXg1XWCXuFcNATEArSU46Ej5R8owa/GUjygQAIjxCE+nvJnuvDL9mVjNJCaMLUo6ROSTEW0q5cHBoGfzhF2h47tKk9USgJ89mNVMe9IMgHSy7Ssn2JEellqRNPeF+fH0mDqwXItLUCV2zTj0s/8TbHHQkNHjwzshZLI6Iyf5p9mi1g3Bw61wwgoAzt5Y/cYT7CjhzAHF8bfHiGtvQvoeSc9rx9EmkMgZTJSvjouS59mWU3aXqfwU696AZBUCcPpLkvVIV61JPUSNSs9Gt/ohPnaJeOpT2Ip1AfByRVhhg/qsYQj+5FaaUmoQTuArc4st9+qa1ukXDGPkxP6Nn/wx27HokwXq2fmezsedv9/h96lVdBb1+WlSoMUo6TpX+zLlUAqDDiSWEEHCsW7WURq6TyoqLgaT589ZoMHoSjjKPOgNI1avKuAtpFYT5R5xpC7HMfsQGqaBWeDxGzpBy65xfbG5kzM8SpgD5wxhQT6RONqJNwSm6Pz7rEXj6aucop7ZXrdsollxJWrA2fgHDaYeAgghO00m9Msk0AaHVoIaXocYLiX/i2BTjl7gSG22bSvH+9F4PYac6TQkvvHWITc84umzQzlmCU1f8vU735wbgY3UiuJaDzqWOZt2RTrZcOsR/1S/ITctMsBiCNatSRIftyluKD+B1fyySacIdu/dLKF3CAI+7SM4Tik96nx+DgMPsZxaVsbT909uZ2q/Tp9MHqWYD4hj7H8zuXeg7ZvwAzKi/Q+/m+1X/PzxwFS2wGtsf6GTlxnwJPhEALWwVUIGRX6KjKZOj5WUmw3zZxRpEIYtq33ABGJUq2DvcXBus2uFsX/Ky6fLs5uMxyroCLSTjd9iKvj+gccx2OuAYGayEP8CLqYMs1qCvoX9VtHVA+wry4Awp9ljCNUv/pbMgaj3F/dxpl8e2uf2u/pVNx/oNdFcBtsgzGlcnrGWLdklbP6pNWWhq44jhte6s5UwwB3HUTcMND20RJmU3YbGXlMF+st4DvkwWVNxgRuWLdhmqnP3HXG1maaNgYyRurIAJ3nnTr25Z8fRX1t6I/iGT4L7bWC19VA0Tgg3ILv90FXXxqKuijBvNEV/zEz+hovyszLUUChM1Ve6xc1HHxeBDuhrOaWlTGmOurZoUVXDfYw2zebcZ4F5idO4GxBlZKvLOXbWHltLESNNiNZLdufw/ya5GTyYCoSKYUG950krC8lNjvxJpIAA+bzuDEooqGvYuAQmd2Glq4m4AsSshNVuyFNYgxQATrmPzpDu916v43+sJluregHczjHAjrUf5Av53kbbdY6U+OyH3qO1ryht4ckSux1UMPy3dc+SBvK/q+F2vM7U10lhUYhjEF2B3RDIUll7kCvLTw==",
+  "mac": "TeaCavJ+CuEnep0Yd/RFG9rAI7TE2H2QwyAvNLogdRM="
+}

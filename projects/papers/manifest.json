@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-07T09:07:55",
-  "count": 9,
+  "generated_at": "2026-05-07T09:28:14",
+  "count": 8,
   "papers": [
     {
       "slug": "2026-05-06_itransformer-inverted-ts-forecasting",
@@ -16,6 +16,7 @@
       "data": "",
       "tags": [],
       "verdict": "\"시간(T) 방향 어텐션\"이라는 트랜스포머 TS 적용의 암묵적 가정을 정면으로 뒤집어, 변수(N) 방향 어텐션 + 시간 방향 FFN으로 다변량 예측 SOTA를 달성한 논문 — APF 연구에서 T×T 어텐션 모티프 분류 체계의 '대안 축' 비교군으로, Grokking 연구에서 FFN이 시간 패턴을 학습하는 회로 구조 분석의 초기점으로 필수 참조한다.",
+      "private": false,
       "sections": [
         {
           "file": "00_README.md",
@@ -140,120 +141,140 @@
         "attention-as-explanation"
       ],
       "verdict": "\"어텐션 패턴 통합 이론\" 의 가장 야심찬 ICLR 2026 시도. APF 의 직접 concurrent work — 우리 motif sweep 의 모든 motif (diagonal/sink/reaccess) 를 q-similarity × RoPE-frequency 두 축으로 환원한다. 우리 framework 의 \"PE → motif → CNN probe\" 사다리 중 첫 두 칸을 닫는 정리(Theorem 5.2) 가 이미 존재한다는 사실은 충격이지만, 그들은 CNN probe 와 causal intervention 단계가 비어 있어 우리에게 niche 가 남아 있다.\"",
+      "private": true,
       "sections": [
         {
           "file": "00_README.md",
           "num": "00",
           "suffix": null,
-          "title": "00. 표지 — Why Attention Patterns Exist (TAPPA)"
+          "title": "00. 표지 — Why Attention Patterns Exist (TAPPA)",
+          "encrypted": true
         },
         {
           "file": "01_meta.md",
           "num": "01",
           "suffix": null,
-          "title": "01. 메타 & 선정 이유"
+          "title": "01. 메타 & 선정 이유",
+          "encrypted": true
         },
         {
           "file": "02_tldr.md",
           "num": "02",
           "suffix": null,
-          "title": "02. 3층 TL;DR"
+          "title": "02. 3층 TL;DR",
+          "encrypted": true
         },
         {
           "file": "03_problem.md",
           "num": "03",
           "suffix": null,
-          "title": "03. 문제 지형도 — \"패턴은 왜 존재하는가\" 라는 무거운 질문"
+          "title": "03. 문제 지형도 — \"패턴은 왜 존재하는가\" 라는 무거운 질문",
+          "encrypted": true
         },
         {
           "file": "04_claims_a_predictability.md",
           "num": "04",
           "suffix": "a",
-          "title": "04. 핵심 Claim 해체 — Part A (예측가능 / 불가능 이분법)"
+          "title": "04. 핵심 Claim 해체 — Part A (예측가능 / 불가능 이분법)",
+          "encrypted": true
         },
         {
           "file": "04_claims_b_three_patterns.md",
           "num": "04",
           "suffix": "b",
-          "title": "04. 핵심 Claim 해체 — Part B (re-access / sink / slash 통합)"
+          "title": "04. 핵심 Claim 해체 — Part B (re-access / sink / slash 통합)",
+          "encrypted": true
         },
         {
           "file": "05_method_a_intuition.md",
           "num": "05",
           "suffix": "a",
-          "title": "05. 방법론 해부 — Part A: 큰 그림 (시간 연속 관점)"
+          "title": "05. 방법론 해부 — Part A: 큰 그림 (시간 연속 관점)",
+          "encrypted": true
         },
         {
           "file": "05_method_b_qsim.md",
           "num": "05",
           "suffix": "b",
-          "title": "05. 방법론 해부 — Part B: q-similarity 의 정의와 측정"
+          "title": "05. 방법론 해부 — Part B: q-similarity 의 정의와 측정",
+          "encrypted": true
         },
         {
           "file": "05_method_c_rope_decomposition.md",
           "num": "05",
           "suffix": "c",
-          "title": "05. 방법론 해부 — Part C: RoPE 의 주파수 채널 분해"
+          "title": "05. 방법론 해부 — Part C: RoPE 의 주파수 채널 분해",
+          "encrypted": true
         },
         {
           "file": "05_method_d_theorem.md",
           "num": "05",
           "suffix": "d",
-          "title": "05. 방법론 해부 — Part D: Theorem 5.2 의 분해"
+          "title": "05. 방법론 해부 — Part D: Theorem 5.2 의 분해",
+          "encrypted": true
         },
         {
           "file": "05_method_e_apps.md",
           "num": "05",
           "suffix": "e",
-          "title": "05. 방법론 해부 — Part E: 응용으로의 번역 (KV cache & pruning)"
+          "title": "05. 방법론 해부 — Part E: 응용으로의 번역 (KV cache & pruning)",
+          "encrypted": true
         },
         {
           "file": "06_experiments.md",
           "num": "06",
           "suffix": null,
-          "title": "06. 실험 해부"
+          "title": "06. 실험 해부",
+          "encrypted": true
         },
         {
           "file": "07_limits.md",
           "num": "07",
           "suffix": null,
-          "title": "07. 가정·한계·반박"
+          "title": "07. 가정·한계·반박",
+          "encrypted": true
         },
         {
           "file": "08_lineage.md",
           "num": "08",
           "suffix": null,
-          "title": "08. 이론적 계보"
+          "title": "08. 이론적 계보",
+          "encrypted": true
         },
         {
           "file": "09_my_research.md",
           "num": "09",
           "suffix": null,
-          "title": "09. 내 연구와의 연결 (APF 정면 충돌 + 흡수 전략)"
+          "title": "09. 내 연구와의 연결 (APF 정면 충돌 + 흡수 전략)",
+          "encrypted": true
         },
         {
           "file": "10_extensions_a_questions.md",
           "num": "10",
           "suffix": "a",
-          "title": "10. 사고 확장 — Part A: 자문 5 질문"
+          "title": "10. 사고 확장 — Part A: 자문 5 질문",
+          "encrypted": true
         },
         {
           "file": "10_extensions_b_followups.md",
           "num": "10",
           "suffix": "b",
-          "title": "10. 사고 확장 — Part B: Follow-up 3편"
+          "title": "10. 사고 확장 — Part B: Follow-up 3편",
+          "encrypted": true
         },
         {
           "file": "10_extensions_c_ideas.md",
           "num": "10",
           "suffix": "c",
-          "title": "10. 사고 확장 — Part C: 실험 아이디어 2개"
+          "title": "10. 사고 확장 — Part C: 실험 아이디어 2개",
+          "encrypted": true
         },
         {
           "file": "11_verdict.md",
           "num": "11",
           "suffix": null,
-          "title": "11. 한 줄 판결"
+          "title": "11. 한 줄 판결",
+          "encrypted": true
         }
       ],
       "data_path": "data/2026/2026-05-04_yang-tappa-why-attention-patterns"
@@ -272,102 +293,119 @@
       "data": "",
       "tags": [],
       "verdict": "Grokking = ELR(유효학습률) 붕괴의 역전**: 모든 지연된 일반화·원시 편향·소성 상실은 하나의 메커니즘(파라미터 노름 증가 → ELR 붕괴 → 게으른 regime 고착)으로 통합되며, ELR 재가열(Re-warming)이 그 보편 치료제임을 실증한다.",
+      "private": true,
       "sections": [
         {
           "file": "00_README.md",
           "num": "00",
           "suffix": null,
-          "title": "표지 및 목차"
+          "title": "표지 및 목차",
+          "encrypted": true
         },
         {
           "file": "01_meta.md",
           "num": "01",
           "suffix": null,
-          "title": "메타 & 선정 이유"
+          "title": "메타 & 선정 이유",
+          "encrypted": true
         },
         {
           "file": "02_tldr.md",
           "num": "02",
           "suffix": null,
-          "title": "3층 TL;DR"
+          "title": "3층 TL;DR",
+          "encrypted": true
         },
         {
           "file": "03_problem.md",
           "num": "03",
           "suffix": null,
-          "title": "문제 지형도"
+          "title": "문제 지형도",
+          "encrypted": true
         },
         {
           "file": "04_claims.md",
           "num": "04",
           "suffix": null,
-          "title": "핵심 Claim 해체"
+          "title": "핵심 Claim 해체",
+          "encrypted": true
         },
         {
           "file": "05_method_a_intuition.md",
           "num": "05",
           "suffix": "a",
-          "title": "방법론: 큰 그림"
+          "title": "방법론: 큰 그림",
+          "encrypted": true
         },
         {
           "file": "05_method_b_elr.md",
           "num": "05",
           "suffix": "b",
-          "title": "방법론: 유효학습률(ELR) 정의와 붕괴"
+          "title": "방법론: 유효학습률(ELR) 정의와 붕괴",
+          "encrypted": true
         },
         {
           "file": "05_method_c_nap_rewarm.md",
           "num": "05",
           "suffix": "c",
-          "title": "방법론: NaP와 ELR Re-warming 알고리즘"
+          "title": "방법론: NaP와 ELR Re-warming 알고리즘",
+          "encrypted": true
         },
         {
           "file": "06_experiments.md",
           "num": "06",
           "suffix": null,
-          "title": "실험 해부"
+          "title": "실험 해부",
+          "encrypted": true
         },
         {
           "file": "07_limits.md",
           "num": "07",
           "suffix": null,
-          "title": "가정·한계·반박"
+          "title": "가정·한계·반박",
+          "encrypted": true
         },
         {
           "file": "08_lineage.md",
           "num": "08",
           "suffix": null,
-          "title": "이론적 계보"
+          "title": "이론적 계보",
+          "encrypted": true
         },
         {
           "file": "09_my_research.md",
           "num": "09",
           "suffix": null,
-          "title": "내 연구와의 연결"
+          "title": "내 연구와의 연결",
+          "encrypted": true
         },
         {
           "file": "10_extensions_a_questions.md",
           "num": "10",
           "suffix": "a",
-          "title": "사고 확장: 자문 질문 5개"
+          "title": "사고 확장: 자문 질문 5개",
+          "encrypted": true
         },
         {
           "file": "10_extensions_b_followups.md",
           "num": "10",
           "suffix": "b",
-          "title": "사고 확장: 후속 논문 3편"
+          "title": "사고 확장: 후속 논문 3편",
+          "encrypted": true
         },
         {
           "file": "10_extensions_c_ideas.md",
           "num": "10",
           "suffix": "c",
-          "title": "사고 확장: 실험 아이디어 2개"
+          "title": "사고 확장: 실험 아이디어 2개",
+          "encrypted": true
         },
         {
           "file": "11_verdict.md",
           "num": "11",
           "suffix": null,
-          "title": "한 줄 판결"
+          "title": "한 줄 판결",
+          "encrypted": true
         }
       ],
       "data_path": "data/2026/2026-05-01_lyle-grokking-nonstationarity"
@@ -389,6 +427,7 @@
         "probabilistic-forecast"
       ],
       "verdict": "Chronos는 시계열을 이산 토큰의 언어로 치환하여 T5 언어모델로 학습하는 가장 단순한 형태의 TS 파운데이션 모델이다 — 그 단순함이 강점이자 한계이며, APF 시각에서는 \"Transformer가 TS 토큰 시퀀스에서 어떤 어텐션 패턴을 형성하는가\"라는 핵심 미답 질문을 남긴다.",
+      "private": false,
       "sections": [
         {
           "file": "00_README.md",
@@ -515,6 +554,7 @@
       "data": "",
       "tags": [],
       "verdict": "\"Grokking 은 generalization 의 지연이 아니라 circuit cleanup 의 지연이다 — 그리고 진행도는 회로의 Fourier sparsity 로 직접 잴 수 있다.\" Grokking active track 의 **이론 척추** 논문이며, APF 가 motif 진행도를 측정할 때 베껴야 할 *progress measure* 의 원형이다.",
+      "private": false,
       "sections": [
         {
           "file": "00_README.md",
@@ -650,6 +690,7 @@
         "mech-interp-circuits"
       ],
       "verdict": "암묵적 추론은 그로킹 없이는 불가능하다 — 단 Composition의 OOD 일반화는 트랜스포머 아키텍처의 비순환성으로 구조적으로 막힌다. 이 논문은 Grokking track의 \"왜 grokking이 필요한가\"에 대한 가장 깊은 메커니즘 근거다.",
+      "private": false,
       "sections": [
         {
           "file": "00_README.md",
@@ -780,6 +821,7 @@
         "neural-ode-cde"
       ],
       "verdict": "Neural SDE(생성자)–Neural CDE(판별자)라는 이중 구조는 Paper 4의 ODE 시간변수를 economic time으로 교체할 때 이론적 근거를 제공하나, 이 논문의 목표가 **예측이 아닌 경로 생성**임을 명확히 인식하고 인용 위치를 §3·§4의 시간-변환 논의로 한정해야 한다.",
+      "private": false,
       "sections": [
         {
           "file": "00_README.md",
@@ -906,6 +948,7 @@
       "data": "",
       "tags": [],
       "verdict": "",
+      "private": false,
       "sections": [
         {
           "file": "00_README.md",
@@ -987,99 +1030,6 @@
         }
       ],
       "data_path": "data/2026/2026-04-20_contiformer"
-    },
-    {
-      "slug": "2026-04-19_contiformer-continuous-time-transformer",
-      "date": "2026-04-19",
-      "weekday": "월",
-      "bucket": "코어",
-      "title": "ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling",
-      "title_ko": "컨티포머 — 비정규 시계열 모델링을 위한 연속시간 트랜스포머",
-      "authors": "Yuqi Chen, Kan Ren, Yansen Wang, Yuchen Fang, Weiwei Sun, Dongsheng Li (Fudan + Microsoft Research Asia + Shanghai Jiao Tong)",
-      "venue": "NeurIPS 2023 (Main Track)",
-      "identifier": "arXiv:2402.10635",
-      "code": "<https://github.com/microsoft/SeqML/tree/main/ContiFormer> (MIT)",
-      "data": "",
-      "tags": [
-        "neural-ode-cde",
-        "time-series-transformer"
-      ],
-      "verdict": "ContiFormer는 \"Neural ODE × Attention\" 합성을 가장 깔끔하게 정식화했지만, **시간축이 곧 물리시간**이라는 가정을 깔고 있어 — Economic Time을 그 자리에 끼워 넣는 Paper 4의 정확한 출발점이자, 동시에 가장 비판적으로 인용해야 할 베이스라인이다.",
-      "sections": [
-        {
-          "file": "00_README.md",
-          "num": "00",
-          "suffix": null,
-          "title": "ContiFormer — 표지"
-        },
-        {
-          "file": "01_meta.md",
-          "num": "01",
-          "suffix": null,
-          "title": "메타 & 선정 이유"
-        },
-        {
-          "file": "02_tldr.md",
-          "num": "02",
-          "suffix": null,
-          "title": "3층 TL;DR"
-        },
-        {
-          "file": "03_problem.md",
-          "num": "03",
-          "suffix": null,
-          "title": "문제 지형도"
-        },
-        {
-          "file": "04_claims.md",
-          "num": "04",
-          "suffix": null,
-          "title": "핵심 Claim 해체"
-        },
-        {
-          "file": "05_method.md",
-          "num": "05",
-          "suffix": null,
-          "title": "방법론 해부"
-        },
-        {
-          "file": "06_experiments.md",
-          "num": "06",
-          "suffix": null,
-          "title": "실험 해부"
-        },
-        {
-          "file": "07_limits.md",
-          "num": "07",
-          "suffix": null,
-          "title": "가정·한계·반박"
-        },
-        {
-          "file": "08_lineage.md",
-          "num": "08",
-          "suffix": null,
-          "title": "이론적 계보"
-        },
-        {
-          "file": "09_my_research.md",
-          "num": "09",
-          "suffix": null,
-          "title": "내 연구와의 연결"
-        },
-        {
-          "file": "10_extensions.md",
-          "num": "10",
-          "suffix": null,
-          "title": "사고 확장"
-        },
-        {
-          "file": "11_verdict.md",
-          "num": "11",
-          "suffix": null,
-          "title": "한 줄 판결"
-        }
-      ],
-      "data_path": "data/2026/2026-04-19_contiformer-continuous-time-transformer"
     }
   ]
 }

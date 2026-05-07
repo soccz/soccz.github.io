@@ -1,49 +1,11 @@
-# 10b — 사고 확장: 후속 논문 3편
-
----
-
-## 선행 논문 — Lyle et al. (2024): "Normalization and Effective Learning Rates in RL"
-
-**식별자**: arXiv:2407.01800 (NeurIPS 2024)  
-**저자**: Clare Lyle, Zeyu Zheng, Khimya Khetarpal, James Martens, Hado van Hasselt, Razvan Pascanu, Will Dabney
-
-**어떤 논문인가?**  
-이 논문(2507.20057)의 직접적 선행 작업이다. LayerNorm이 있는 네트워크에서 ELR = $\eta / \|\theta\|$를 수학적으로 정의하고, 이 ELR이 훈련 중 자동으로 붕괴한다는 것을 이론적으로 보인다. 해결책으로 NaP(Normalize-and-Project)를 제안해 ELR을 일정하게 유지.
-
-**본 논문과 어떤 관계인가?**  
-기반이 되는 이론 전체가 이 논문에서 온다. ELR 정의, 스케일-불변 조건, LayerNorm 삽입 방식, NaP 알고리즘 모두 여기서 처음 제시됐다. 2507.20057은 이 토대 위에 "ELR을 일정하게 유지"에서 "ELR을 주기적으로 재가열"로 한 단계 전진하고, grokking 연결을 추가한다.
-
-**무엇을 얻을 수 있는가?**  
-ELR 이론의 수학적 기반을 완전히 이해하려면 이 논문을 먼저 읽어야 한다. 특히 "스케일-불변 레이어에서 그래디언트가 파라미터에 수직임"에 대한 Euler 동차 함수 정리 기반 증명, NaP의 Adam 호환성 분석, RL 소성 실험의 상세 결과를 제공한다. 2507.20057은 기반 논문으로 arXiv:2407.01800을 전제하므로 먼저 읽는 것을 권장.
-
----
-
-## 경쟁 논문 — Nanda et al. (2023): "Progress Measures for Grokking"
-
-**식별자**: arXiv:2301.05217 (ICLR 2023)  
-**저자**: Neel Nanda, Lawrence Chan, Tom Lieberum, Jess Smith, Jacob Steinhardt
-
-**어떤 논문인가?**  
-[2026-04-27에 이미 해체 완료] Grokking을 메커니즘 해석 가능성 관점에서 분석. 훈련 중 내부 표현(restricted weight norm, excluded loss 등)의 진행 측도를 정의하고, 모듈러 산수에서 푸리에 회로가 형성되는 과정을 추적한다.
-
-**본 논문과 어떤 관계인가?**  
-Nanda 2023은 "grokking 후 무엇이 생기는가(내부 표현)"를 보고, Lyle 2025는 "왜 grokking이 늦게 일어나는가(ELR 역학)"를 본다. 둘은 서로 다른 관점에서 같은 현상을 설명한다 — 상호보완적이면서, 한편으로는 경쟁적이다. Nanda의 "restricted weight norm" 진행 측도가 Lyle의 "ELR = 1/노름"과 역수 관계임을 발견하면 두 프레임워크가 동치임을 보일 수 있다.
-
-**무엇을 얻을 수 있는가?**  
-Grokking 실험을 설계할 때, Nanda의 진행 측도를 로깅하는 동시에 Lyle의 ELR을 로깅하면 두 관점을 하나의 실험에서 통합할 수 있다. 내 Grokking TS 논문에서 "훈련 동학 분석" 절에 두 측도를 모두 포함해 선행 문헌을 포괄적으로 커버할 수 있다.
-
----
-
-## 후속 논문 — Lyle et al. (2025): "The State of Plasticity in 2025" (Survey)
-
-**URL**: https://clarelyle.com/posts/2025-09-06-plasticity-survey.html (블로그 버전)  
-**연도**: 2025년 9월 (논문 전문 접근 미확인)
-
-**어떤 논문인가?**  
-Clare Lyle의 2025년 9월 블로그 포스트 "The state of plasticity in 2025"는 신경망 소성 연구의 현황을 정리한 서베이 성격의 글이다. 소성 상실의 원인들(ELR 붕괴, dead neurons, rank collapse, gradient interference)과 해결책들을 망라한다.
-
-**본 논문과 어떤 관계인가?**  
-2507.20057의 결과를 확장하고 소성 연구 전체를 조망하는 상위 개념 문서다. 2507.20057이 "ELR re-warming"이라는 한 가지 해결책에 집중했다면, 이 서베이는 다른 해결책들과의 관계를 정리한다.
-
-**무엇을 얻을 수 있는가?**  
-소성 상실 문제의 전체 지도를 얻을 수 있다. 내 Grokking TS 논문에서 소성 관련 내용을 쓸 때 이 서베이를 참조하면 관련 문헌을 체계적으로 커버할 수 있다. 특히 "내 비정상 시계열 설정에서 ELR 붕괴 이외에 어떤 소성 문제가 있을 수 있는가"를 진단하는 데 유용.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "PnCKW4pMGmfvgatOL7Q+Uw==",
+  "iv": "XDH3QkWf6qJrC+NsW30Yug==",
+  "ct": "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",
+  "mac": "Ba4xBgRGNCIDRFszTwoi9pfHIIlOxRuq7AZyv3RvZ0E="
+}

@@ -1,47 +1,11 @@
-# 00. 표지 — Why Attention Patterns Exist (TAPPA)
-
-## 원문 정보
-
-- **원제**: *Why Attention Patterns Exist: A Unifying Temporal Perspective Analysis*
-- **한국어 번역**: *왜 어텐션 패턴은 존재하는가: 통합적 시간 관점 분석*
-- **저자**: Qingyue Yang, Jie Wang, Xing Li, Yinqi Bai, Xialiang Tong, Huiling Zhen, Jianye HAO, Mingxuan Yuan, Bin Li
-- **소속**: MIRA Lab @ USTC (중국과학기술대) + Huawei Noah's Ark Lab
-- **발표처**: ICLR 2026 (poster/conference)
-- **arXiv ID**: [2601.21709](https://arxiv.org/abs/2601.21709) (2026-01-29 등록)
-- **코드**: [github.com/MIRALab-USTC/LLM-TAPPA](https://github.com/MIRALab-USTC/LLM-TAPPA) (2026-02-04 KVCache 모듈 공개, Prune/Visualization 모듈은 예정)
-
-## 태그
-
-- 1차: `pe-attention-geometry` (코어 §C — 0회 → 1회)
-- 보조: `mech-interp-circuits`, `attention-as-explanation`
-
-## 한 줄 판결
-
-> **"어텐션 패턴 통합 이론" 의 가장 야심찬 ICLR 2026 시도. APF 의 직접 concurrent work — 우리 motif sweep 의 모든 motif (diagonal/sink/reaccess) 를 q-similarity × RoPE-frequency 두 축으로 환원한다. 우리 framework 의 "PE → motif → CNN probe" 사다리 중 첫 두 칸을 닫는 정리(Theorem 5.2) 가 이미 존재한다는 사실은 충격이지만, 그들은 CNN probe 와 causal intervention 단계가 비어 있어 우리에게 niche 가 남아 있다."**
-
-## 목차
-
-1. [01_meta.md](01_meta.md) — 메타 & 선정 이유
-2. [02_tldr.md](02_tldr.md) — 3층 TL;DR (초·학·전)
-3. [03_problem.md](03_problem.md) — 문제 지형도: "패턴은 왜 존재하는가" 라는 무거운 질문
-4. [04_claims_a_predictability.md](04_claims_a_predictability.md) — Claim 1: 예측가능/불가능 이분법
-5. [04_claims_b_three_patterns.md](04_claims_b_three_patterns.md) — Claim 2~4: re-access/sink/slash 통합 설명
-6. [05_method_a_intuition.md](05_method_a_intuition.md) — 큰 그림: 시간연속 관점
-7. [05_method_b_qsim.md](05_method_b_qsim.md) — q-similarity 정의 & 측정
-8. [05_method_c_rope_decomposition.md](05_method_c_rope_decomposition.md) — RoPE 주파수 분해
-9. [05_method_d_theorem.md](05_method_d_theorem.md) — Theorem 5.2 분해
-10. [05_method_e_apps.md](05_method_e_apps.md) — KV cache / pruning 으로의 번역
-11. [06_experiments.md](06_experiments.md) — 실험 해부
-12. [07_limits.md](07_limits.md) — 가정·한계·반박
-13. [08_lineage.md](08_lineage.md) — 이론적 계보
-14. [09_my_research.md](09_my_research.md) — APF 와의 연결 (정면 충돌 + 활용)
-15. [10_extensions_a_questions.md](10_extensions_a_questions.md) — 자문 5문
-16. [10_extensions_b_followups.md](10_extensions_b_followups.md) — 후속 3편
-17. [10_extensions_c_ideas.md](10_extensions_c_ideas.md) — 실험 아이디어 2개
-18. [11_verdict.md](11_verdict.md) — 한 줄 판결
-
-## 본문 접근 메모
-
-- arXiv abs/html/pdf, ar5iv, alphaxiv, Semantic Scholar 모두 403 차단
-- GitHub README + 다중 검색 스니펫 + 관련 동시기 논문 (arXiv:2601.08297 "Demystifying the Slash Pattern: The Role of RoPE", arXiv:2404.15574 "Retrieval Head", arXiv:2502.00919 "Attention Sinks: Catch-Tag-Release") 으로 보완
-- 따라서 본 해체는 **공개 스니펫 + 관련 표준 수학 + 동시기 논문 cross-reference** 로 구성. 정량 표 일부는 검색 스니펫에 노출된 헤드라인 숫자 (+11.34, +5.60) 외엔 정확 재현 불가. 섹션 06·07 에서 그 제약 명시.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "VgFK2+qJA8Nx84Ha2TDUjg==",
+  "iv": "ZO4PC/gIcaSTkWqmC5Cr3Q==",
+  "ct": "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",
+  "mac": "DzyzP+vGmLmwbmH6UCxnUabZiYsSZo5HUhpZkna9Pic="
+}

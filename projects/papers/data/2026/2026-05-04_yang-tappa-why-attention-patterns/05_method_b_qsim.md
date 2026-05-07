@@ -1,39 +1,11 @@
-# 05. 방법론 해부 — Part B: q-similarity 의 정의와 측정
-
-## 왜 이 부분이 필요한가
-
-(Q1) "attention 의 시간 변화를 설명하는 단일 변수가 있는가" 에 대한 답이 q-similarity. 이 변수가 이론적 분석 (Theorem 5.2) 의 기둥이자 실용 metric (KV/pruning 의 직접 입력) 이다. 정의를 정확히 박아야 (i) 통계적 추정의 안정성, (ii) 응용에서의 layer-wise scoring 이 의미를 가진다.
-
-## 수식과 해석
-
-### 정의 (저자 framing 으로부터 재구성)
-
-$$S_l(W) := \frac{1}{|W| (|W|-1)} \sum_{\substack{(t, t') \in W \\ t \ne t'}} \cos\big(q^{(l)}_t,\ q^{(l)}_{t'}\big)$$
-
-검색 스니펫 직접 인용: *"S_l is the cosine similarity among queries within a recent window, which instantiates q-similarity in TAPPA."*
-
-**4줄 해석**
-
-- **기호 뜻**: $q^{(l)}_t \in \mathbb{R}^{d_h}$ 는 layer $l$ (head 도 인덱스 가능, head 평균/concat 인지는 본문 디테일) 의 step $t$ query. $W \subseteq \{t-w, \dots, t\}$ 는 최근 window (size $w$). $\cos(\cdot, \cdot)$ 는 표준 코사인 유사도 $\frac{q^\top q'}{\|q\| \|q'\|}$. $S_l \in [-1, 1]$.
-- **일상 비유**: "최근 $w$ 개 step 동안 묻는 질문들이 서로 얼마나 닮았나" 의 평균. 30분짜리 강의 중 마지막 5분간 학생 질문 3개가 모두 "이 부분 다시 설명해 주세요" 였다면 $S_l \approx 1$, "수식 / 비유 / 활용" 식으로 다른 영역이었다면 $S_l \approx 0$.
-- **왜 이 형태**: 코사인 유사도는 norm 의 변동성 (token 별 $\|q_t\|$ 가 layer norm 의 영향으로 변할 수 있음) 을 normalize 해 방향성만 비교. dot-product $q_t^\top q_{t'}$ 만 쓰면 norm 이 큰 step 의 영향이 과대. 그렇다고 Pearson correlation 으로 가면 mean-centering 이 RoPE 회전과 충돌 (회전 후 mean 이 의미 변동). 그래서 **non-centered cosine** 이 자연 선택.
-- **조심할 점**: (i) $w$ 가 너무 작으면 noise, 너무 크면 long-context 변동 평균돼서 "현재 phase" 신호가 흐려짐. 적정 $w$ 가 hyperparameter (논문에 ablation 가야 함). (ii) layer 간 $q^{(l)}_t$ 의 scale 이 다르면 layer 간 비교가 무의미 — 코사인이라 norm-free 라 큰 문제 없을 듯하지만 세밀한 layer-wise allocation 시 주의. (iii) head 별로 다 다른 패턴인데 layer 평균 $S_l$ 로 묶으면 head 다양성이 사라짐.
-
-### 변종 (논문이 직접 다뤘는지 미확인 — 필자 추정)
-
-대안 정의 후보:
-- **Lag-$\Delta$ 자기상관**: $S_l(\Delta) = \mathbb{E}_t[\cos(q_t, q_{t+\Delta})]$. 단일 lag 값. window 내 평균보다 시간 상관 구조 보존.
-- **Spectral measure**: $\{q_t\}$ 의 power spectral density 의 low-freq mass. 시계열 분석 표준이지만 LLM head 에는 과한 도구.
-- **Top-k similarity**: 윈도우 내 가장 닮은 k 쌍의 평균. 이상치 (outlier query) 에 robust.
-
-저자가 cosine-window 평균을 택한 이유는 **계산 비용** 일 가능성 — KV cache decision 마다 O($w^2 d_h$) 면 충분하나 spectral 은 FFT 비용 추가.
-
-## 측정 시 실무 디테일
-
-- **Layer-wise averaging**: 한 layer 의 모든 head 를 평균낼 수도 있고 head-wise 별도 score 를 가질 수도 있다. 본 논문 KV cache 적용은 layer-level allocation 이라 head 평균 사용 추정.
-- **Window 슬라이딩**: 매 step 새 query 가 들어오면 oldest query 를 drop 하고 새로 추가 — incremental 계산 가능 (online cosine sums).
-- **GQA / MQA 호환**: Llama-3 / Qwen2.5 처럼 grouped-query attention 인 모델은 그룹당 query 한 set 만 있어 상대적으로 깨끗.
-
-## 핵심 한 문장
-
-> **q-similarity 는 "query 시계열의 최근 window cosine 평균" 이라는 단순한 한 줄짜리 측도이지만, attention 패턴 예측가능성의 sufficient signal 이라는 본 논문의 강한 가설의 무게가 그 위에 모두 실려 있다.**
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "awTuyS3O4OUIm8CAA0Uj8A==",
+  "iv": "BOCLSBsl5ZHhvO34B+SFlQ==",
+  "ct": "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",
+  "mac": "4nfRliKZSx5spqywgIDaLS/gDKORo7ZO1r23Y/UOGIQ="
+}

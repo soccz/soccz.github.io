@@ -1,31 +1,11 @@
-# 04. 핵심 Claim 해체 — Part A (예측가능 / 불가능 이분법)
-
-## 배경 사다리
-
-본 절을 이해하려면 ① 시계열의 **자기유사도** (autocorrelation 또는 cosine similarity 의 lag 함수) 가 "신호가 시간이 지나도 자기 자신과 닮은 정도" 라는 것, ② attention 확률 분포 $\alpha_t = \mathrm{softmax}(q_t^\top K / \sqrt{d})$ 가 step 마다 새로 계산된다는 것 — 두 개면 충분.
-
----
-
-## Claim 1 — 예측가능 / 불가능 이분법 (Predictability dichotomy)
-
-### 주장
-
-**모든 attention 패턴은 두 부류로 나뉜다: (a) clear regularity 가 있어 다음 step 의 패턴을 직전 step 들로부터 예측할 수 있는 "predictable patterns", (b) effectively random 으로 보여 그런 예측이 의미 없는 "unpredictable patterns".**
-
-### 증거
-
-저자들의 framing 글 (abstract + intro 추정 본문) 에서 직접: *"Attention patterns can be characterized as predictable patterns with clear regularities and unpredictable patterns that appear effectively random, and this distinction can be explained by the degree of query self-similarity along the temporal dimension."* 정량적으로는 layer × head 단위 attention map 시퀀스 $\{\alpha^{(l,h)}_t\}_{t=1}^T$ 에 대해 예측가능성 척도 (필자 추정: time-series 자기상관 또는 next-step KL 거리) 를 측정한 후, 이를 query self-similarity $S(\Delta t)$ 와 회귀하는 그림이 본문에 있을 것 (스니펫 미확보).
-
-### 숨은 전제
-
-- **Query 시계열이 충분히 길다** — 짧은 seq (예: $T < 64$) 에서는 자기유사도 추정 noise 가 신호를 압도. 본 논문은 LLM long-context 가정 (수천~수만 token).
-- **Attention 패턴이 "stationary 또는 slowly varying" 하다** — predictable / unpredictable 이분법 자체가 패턴이 단일 구조를 유지한다는 가정. 만약 head 가 phase 마다 다른 패턴을 띠면 (multi-modal) 이 분류가 무너짐.
-- **Self-similarity 가 충분 통계량 (sufficient statistic) 으로 본다** — 사실 query 시계열의 통계량은 자기유사도 외에도 (variance, drift, burstiness 등) 많은데, 저자는 self-similarity 한 차원으로 환원.
-
-### 쉬운 말 풀이
-
-말하자면 "이 head 는 비슷한 일을 계속 반복하나? 아니면 매번 새로운 일을 하나?" 라는 질문에 한 줄짜리 점수를 매기면, 그 점수가 높으면 attention 모양이 늘 비슷해 (predictable), 낮으면 매번 들쭉날쭉 (unpredictable) 이라는 주장. 그리고 "비슷한 일을 반복하는" head 는 패턴이 정해진 모양으로 수렴하기 때문에 그 모양을 이론적으로 도출할 수 있다 — 이것이 Claim 2~4 로 이어진다.
-
-### 비판 지점
-
-이 이분법이 **완전 이항** 인지 **연속 spectrum** 인지 본문이 어떻게 정리하는지가 관건. 만약 spectrum 이라면 "어디부터가 predictable 인가" 의 threshold 가 hyperparameter 가 되고, 그 hyperparameter 가 task/model 의존이라면 metric 의 일반성이 약해진다. KV cache 응용에서 layer-wise score $S_l$ 을 직접 budget 함수로 쓰는 것을 보면 저자들은 spectrum 으로 다루는 것 같으나, 그렇다면 "이분법" 이라는 강한 framing 이 marketing 에 가까워진다.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "b5zZLfMkt+woaZI9AhYqPg==",
+  "iv": "PxRGXk4REodC0P5IPG2NUg==",
+  "ct": "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",
+  "mac": "QXbja9xWq77XC1KFyMycOTS9jW8Iplv0OIDZ8OhrCik="
+}

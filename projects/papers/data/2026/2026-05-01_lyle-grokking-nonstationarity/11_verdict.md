@@ -1,29 +1,11 @@
-# 11 — 한 줄 판결
-
----
-
-## 판결
-
-> **Grokking의 "왜"를 비로소 최적화 역학으로 닫아주는 논문: ELR = η/‖θ‖ 하나로 지연된 일반화·원시 편향·소성 상실을 통합하고, 두 줄짜리 재가열(Re-warming)이 세 도메인 모두에서 효과를 낸다는 실험적 증거를 제시했다는 점에서, 내 Grokking TS 트랙의 "왜 weight decay가 필수였는가" 질문에 대한 권위 있는 답이 되며, 비정상 시계열 적응 실험의 이론적 토대로 직접 활용 가능하다.**
-
----
-
-## 판결 이유 (3줄 보충)
-
-1. **이론적 기여 중간, 실험적 기여 높음**: ELR 이론 자체는 선행 NaP 논문(arXiv:2407.01800)에서 온 것이지만, grokking·primacy bias·plasticity loss를 하나의 프레임으로 묶고 세 도메인에서 실증한 통합이 이 논문의 핵심 기여다.
-
-2. **내 연구 지도에서의 좌표**: §A Grokking 트랙의 "훈련 역학" 축 → Nanda 2023(표현 변화)과 함께 읽어야 완전한 그림이 나온다. 단독으로는 "왜"만 설명하고 "어떻게 보이는가"가 없다.
-
-3. **한계 인식**: 소규모 실험·이론적 수렴 증명 부재·$T$ 민감도 미검증. 대형 시계열 모델로의 전이 가능성은 내가 직접 실험으로 확인해야 한다.
-
----
-
-## 연구 지도 핀 위치
-
-```
-§A (Grokking dynamics 층)
-    │
-    ├── Power 2022: "무엇이 일어나는가" (현상 발견)
-    ├── Nanda 2023: "내부에 무엇이 생기는가" (메커니즘, 표현)
-    └── Lyle 2025: "왜 늦게 일어나는가" (최적화 역학, ELR)  ← 여기에 핀
-```
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "b8mPp58FWLmxX7aR1ORvyA==",
+  "iv": "WV95jPh8qi5fhtl9V2tZmQ==",
+  "ct": "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",
+  "mac": "/hx4fGGTOUkEVUm31S1kmvHfvT75JrbbXQcGkodhxdM="
+}
