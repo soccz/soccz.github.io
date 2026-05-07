@@ -1,11 +1,114 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "EkMA0025sW6lxAdyaj+1mg==",
-  "iv": "dDZ0MA864mStVByTjRx/DQ==",
-  "ct": "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",
-  "mac": "LYlNj2ECHLrPwDJWEiExgMmEEdzTh/L7oUwV7Xq5Nm4="
-}
+# 06 — 실험 해부
+
+> **배경 사다리**: 이 섹션을 이해하려면 ① "베이스라인"이 비교 대상이 되는 기존 방법임, ② "정확도(accuracy)"가 모델이 맞힌 비율임, ③ "ablation"이 특정 요소 하나를 제거했을 때 성능 변화를 보는 실험임을 알면 된다.
+
+---
+
+## 데이터셋
+
+### 합성 Knowledge Graph (주 데이터)
+
+**왜 이 데이터인가**: 완전한 통제 가능성. 어떤 사실이 원자적이고 어떤 것이 추론됐는지 100% 알 수 있다. 실제 LLM 사전학습 데이터에 이미 답이 있을 오염(contamination) 가능성이 없다.
+
+구성:
+- 엔티티 수 $|\mathcal{E}|$: 수천~수만 (정확한 수치는 논문 Table 참조)
+- 관계 수 $|\mathcal{R}|$: 수십
+- 원자 사실 수: $|\mathcal{E}| \times |\mathcal{R}|$ 규모
+- 추론된 사실: $\phi \times |\text{atomic}|$ (φ 제어)
+
+**데이터 편향 분석**: 합성 데이터 선택 자체가 편향이다. 자연어 지식베이스에서는 관계가 균일하게 분포하지 않는다. 어떤 관계는 수백만 번 등장하고 어떤 것은 수십 번만 등장한다. 균일 합성 KG에서의 발견이 실제 불균일 데이터에 그대로 적용될지는 별도 검증이 필요하다.
+
+### LLM 비교용 실제 데이터
+
+GPT-4-Turbo / Gemini-1.5-Pro와 비교할 때는 더 복잡한 multi-hop reasoning 태스크(대규모 search space)를 사용. 이 태스크는 합성 KG 기반이지만 엔티티와 관계 수를 크게 늘려 LLM의 non-parametric 전략(CoT, RAG)이 실패할 수밖에 없는 조건을 만든다.
+
+---
+
+## 베이스라인 공정성 분석
+
+### GPT-4-Turbo / Gemini-1.5-Pro와의 비교
+
+**공정한가?** 엄밀히 말해 완전히 공정하지 않다. 다음 비대칭이 있다:
+- Grokked 트랜스포머는 합성 KG에 **맞춤 훈련됨** (task-specific fine-tuning)
+- GPT-4는 범용 모델로 zero/few-shot prompting만 사용
+
+이 비교의 진짜 요점은 "어느 모델이 더 강한가"가 아니라, **parametric memory vs. non-parametric memory의 질적 차이**를 보여주는 것이다. 즉, "in-context 검색 기반 추론이 근본적으로 실패하는 태스크에서 parametric 학습이 유일한 해결책"임을 주장한다.
+
+그러나 이 논리는 "GPT-4를 이 KG로 파인튜닝하면 어떨까?"라는 질문에 답하지 않는다. 이것이 논문의 숨은 공백이다.
+
+### Weight Decay Ablation
+
+실험 설계: $\lambda \in \{0, 0.001, 0.01, 0.1, 1.0\}$ 범위에서 grokking 발생 여부와 속도 측정.
+
+**결과 해석**:
+- $\lambda = 0$: 훈련 정확도만 최적화. Grokking이 일어나지 않거나 매우 느림. $\mathcal{C}_\text{mem}$만 형성됨.
+- 중간 $\lambda$: 최적 범위. Grokking이 적정 스텝에서 발생.
+- 너무 큰 $\lambda$: 모델이 수렴하지 못하거나 underfitting.
+
+**중요**: Weight decay는 grokking의 필요 조건이 아닌 **촉매**다. Weight decay 없이도 무한히 긴 훈련으로 grokking이 일어날 수 있지만, 실용적이지 않다.
+
+---
+
+## 주요 표·그림 해석
+
+### Figure 1 계열 (Grokking 학습 곡선)
+
+훈련 정확도와 검증 정확도를 스텝에 따라 그린 그래프. 핵심 패턴:
+
+```
+정확도
+ 100% ┤━━━━━━━━━━━━━━━━━━━━━━━━━━━  ← 훈련 정확도 (암기로 빠르게 100%)
+      │
+      │         grokking!
+  50% ┤              ╭━━━━━━━━━━━━  ← 검증 정확도 (grokking 이후 급상승)
+      │              │
+   0% ┼━━━━━━━━━━━━━━┘
+      0       50만     100만 스텝
+```
+
+이 갭이 바로 "grokking 구간"이다. Overfitting 이후에도 한참을 더 훈련해야 한다.
+
+### Composition vs Comparison OOD 정확도 표
+
+IND/OOD 정확도를 Composition·Comparison 양쪽에서 측정:
+
+| | Composition IND | Composition OOD | Comparison IND | Comparison OOD |
+|--|--|--|--|--|
+| 비-grokked | ~100% | ~0% | ~100% | ~0% |
+| Grokked | ~100% | **~0% (실패)** | ~100% | **높음 (성공)** |
+
+이 비대칭이 논문의 핵심 발견이다.
+
+**해석**: Grokked 모델도 Composition OOD에서 여전히 실패한다. 이것은 단순히 "더 훈련하면 해결되는 문제"가 아니라 **아키텍처의 구조적 한계**임을 시사한다.
+
+### Logit Lens 히트맵
+
+레이어(y축) vs. 훈련 스텝(x축)로 "answer 토큰 확률"을 표시. 색이 진할수록 해당 레이어에서 정답이 높은 확률로 예측됨.
+
+**Grokking 이전**: 마지막 레이어에서만 정답 확률이 높음. 중간 레이어는 무관.
+**Grokking 이후**: 레이어 3~4에서 first hop 결과가, 레이어 6~8에서 final answer가 순차적으로 나타남 → 두 단계 회로 형성의 직접 증거.
+
+---
+
+## Ablation: 저자가 일부러 넣은 것 vs 숨긴 것
+
+### 명시적으로 넣은 ablation
+- Weight decay 크기 변화
+- $\phi$ (inferred/atomic 비율) 변화
+- 데이터 총량 변화 (φ 고정)
+- Parameter sharing vs 비공유
+
+### 숨긴/빠진 ablation
+1. **모델 크기 스케일링**: GPT-2 크기에서만 실험. 더 큰 모델(예: GPT-2-medium, GPT-2-large)에서도 같은 패턴인가? 저자들은 "스케일링으로 근본 문제가 해결되지 않는다"고 주장하지만, 직접 실험은 제한적.
+2. **3-hop 이상**: 2-hop Composition만 다룸. 3-hop에서는 레이어가 더 많이 필요한가? 스케일링은 어떻게 되는가?
+3. **GPT-4 파인튜닝 조건**: 범용 LLM을 동일 합성 KG에 맞춤 훈련했을 때 grokking이 일어나는가? 이 실험이 빠져 있다.
+
+---
+
+## 재현성 평가
+
+- **코드 공개**: GitHub (OSU-NLP-Group/GrokkedTransformer). PyTorch 1.13.1, CUDA 11.6.
+- **데이터**: SharePoint 링크 또는 Jupyter 노트북으로 재생성 가능.
+- **LLM 비교 데이터**: GPT-4-Turbo / Gemini 출력이 캐시됨 → 재현 가능.
+- **분산 미보고 (우려)**: 메인 결과 정확도를 단일 시드로만 보고하는지, 여러 시드로 평균내는지 명확하지 않음. Grokking은 시드에 따라 발생 타이밍이 크게 달라질 수 있다.
+- **구체 수치 투명성**: 논문 접근 제한으로 정확한 OOD 정확도 숫자 확인 불가(본 해체 문서의 제약). 단, 방향성(Composition OOD ≈ 0%, Comparison OOD > 80%)은 다양한 출처에서 확인됨.

@@ -1,11 +1,74 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "F3+BhqM7tdE5n8Cpf5gD1g==",
-  "iv": "oFh4rG96jsLOTT1GUsZM2w==",
-  "ct": "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",
-  "mac": "pihG8yFOETzZHw58EkSkN/XC9BPfuOuDvhcgJrBfN8w="
-}
+# 10c — 사고 확장: 실험 아이디어 2개
+
+---
+
+## 아이디어 1: "TS-Grok 탐색 실험" — 시계열 트랜스포머에서 Grokking이 일어나는가?
+
+### 가설
+PatchTST (또는 iTransformer)를 합성 다중 주기 시계열(sin 합성 + 로지스틱 맵)에서 훈련할 때, 훈련 MSE 수렴 이후에도 추가 훈련을 계속하면 검증 MSE가 갑작스럽게 하락하는 grokking 유사 현상이 관찰된다.
+
+### 데이터
+- **합성 A (주기 조합)**: $y_t = \sum_{k=1}^{K} A_k \sin(2\pi t / T_k + \phi_k)$, $K=3$, 주기 $T_k \in \{7, 30, 365\}$일. 훈련: $T_1, T_2$ 주기만 있는 시퀀스. 검증 OOD: $T_3$ 주기도 포함된 시퀀스.
+- **합성 B (로지스틱 맵)**: $x_{t+1} = r \cdot x_t (1 - x_t)$, 훈련 $r \in [3.5, 3.8]$, 검증 OOD: $r \in [3.8, 4.0]$ (카오스 레짐 전환).
+- **사용자 보유 데이터**: ETT (Informer 벤치마크), GEFCom Wind/Solar.
+
+### 비교 조건
+| 조건 | 설명 |
+|------|------|
+| Baseline | PatchTST, 조기 종료 (검증 loss 최소 시) |
+| Long-train | 조기 종료 없이 10× 더 훈련 |
+| Long-train + WD | weight decay ($\lambda = 0.01, 0.1$) 추가 |
+| Parameter-shared | 레이어 가중치 공유 버전 |
+
+### 예상 결과
+- "Long-train + WD" 조건에서 일부 태스크(특히 주기 조합 합성)에서 grokking 유사 검증 MSE 급하락 관찰될 것.
+- 로지스틱 맵(카오스 레짐 전환)에서는 grokking 없음 — Composition OOD 실패와 유사한 한계 예상.
+
+### 반증 조건
+- 어느 조건에서도 검증 MSE가 단조 감소할 뿐 급격한 도약이 없다면 → TS에서 grokking이 없다는 부정적 발견. 이것도 논문으로 쓸 수 있다 (negative result paper).
+
+### 비용 추정
+- GPU: A100 1장, 합성 A 기준 각 조건 1~5만 스텝 × 4조건 × 3 시드 = 약 60 GPU-hour.
+- 데이터 생성: `Grokking in Time Series Transformers/` 폴더의 기존 sin/logistic 합성 스크립트 활용 가능.
+- 구현: PatchTST 공식 코드 + logit lens wrapper (~200줄 추가).
+
+---
+
+## 아이디어 2: "φ-TS 데이터 설계 실험" — Inferred/Atomic 비율의 TS 버전 탐색
+
+### 가설
+시계열 예측 모델이 "복합 패턴(추론된 패턴, inferred pattern)"을 학습하는 속도는 훈련 데이터 내 "복합 패턴 대 원자 패턴의 비율" $\phi_{TS}$에 의존한다. 높은 $\phi_{TS}$에서 더 빠른 일반화가 일어난다.
+
+### TS에서의 φ 정의 (이 실험의 contribution)
+$$\phi_{TS} = \frac{N_\text{compound}}{N_\text{atomic}}$$
+
+- **원자 패턴(atomic)**: 단일 주기 sin 시퀀스, 선형 추세만 있는 시퀀스, 단일 레짐 정상 시퀀스.
+- **복합 패턴(compound/inferred)**: 주기 + 추세 + 잡음 조합 시퀀스, 다중 주기 합성 시퀀스, 레짐 전환이 포함된 시퀀스.
+
+$\phi_{TS}$는 훈련 배치 내 복합 패턴 시퀀스 비율로 조작 가능.
+
+### 데이터 설계
+| $\phi_{TS}$ | 훈련 데이터 구성 | 예상 일반화 속도 |
+|------------|----------------|--------------|
+| 0.0 | 100% 원자 패턴 | 매우 느림 |
+| 0.3 | 70% 원자 + 30% 복합 | 중간 |
+| 0.5 | 50-50 균형 | 빠름 |
+| 0.8 | 20% 원자 + 80% 복합 | 매우 빠름 또는 불안정 |
+
+검증: **OOD 복합 패턴** (훈련에 없는 주기 조합) 정확도를 훈련 스텝별로 측정.
+
+### 비교 조건
+- 데이터 총량 고정, $\phi_{TS}$만 변화 (∝ Wang et al.의 $\phi$ 실험)
+- $\phi_{TS}$ 고정, 데이터 총량 변화 → 총량보다 구성이 중요한지 검증
+
+### 예상 결과
+- $\phi_{TS}$가 높을수록 일반화가 빠르게 일어남.
+- 데이터 총량보다 $\phi_{TS}$가 더 중요한 결정자 (= Wang et al.의 KG 결과 재확인 + TS 도메인 일반화).
+
+### 반증 조건
+- $\phi_{TS}$와 일반화 속도 사이에 관계가 없다면 → TS 도메인의 구조가 KG와 근본적으로 다름을 시사.
+
+### 비용 추정
+- GPU: A100 1장, $\phi_{TS} \in \{0, 0.3, 0.5, 0.8\}$ × 3 시드 = 12회 실험, 각 10만 스텝 = 약 30 GPU-hour.
+- 데이터 생성: 합성 TS generator 구현 (~100줄 Python).
+- 이 아이디어가 성공하면 Grokking track 논문의 §4 "Data Design for Grokking in TS"로 발전 가능.

@@ -1,11 +1,41 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "fM7CfmzzguhQWcbGez+FBQ==",
-  "iv": "Ac1G9OSrafDwJuAyZBh7Hg==",
-  "ct": "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",
-  "mac": "h9EB5qvee9RIwnHY4grgENLrVvBHG22qvIALsmvJ//o="
-}
+# 10-A. 사고 확장 — 자문 질문 5개
+
+---
+
+### Q1. N×N 어텐션 맵에도 2D 모티프가 존재하는가?
+
+APF 연구는 T×T 어텐션 맵에서 대각선/블록/스트라이프 등의 패턴을 분류한다. N×N 어텐션 맵(변수 간 상관)에서도 유사한 모티프 분류 체계가 가능한가?
+
+**왜 중요한가**: 만약 N×N 맵에도 "변수 클러스터 블록 패턴", "소수 허브 변수로의 스파이크 패턴", "전변수 균등 참조 스트라이프 패턴" 등이 존재한다면, APF의 분류 체계는 축(T vs N)에 무관하게 일반화 가능하다. 반대로 N×N 맵이 완전히 다른 구조를 보인다면, TS 트랜스포머의 2D 어텐션 패턴 이해는 "축 선택"에 강하게 의존하는 것이다. 이 질문은 APF와 iTransformer를 잇는 핵심 교량이다.
+
+---
+
+### Q2. iTransformer의 FFN에서 Grokking이 발생하는가?
+
+iTransformer에서 FFN은 각 변수의 시간 패턴(T-dim → D-dim)을 학습한다. 주기 합성 TS 데이터로 iTransformer를 훈련할 때, FFN 내부의 가중치 행렬 $W_1, W_2$에서 Fourier 특징이 나타나는가? 그리고 일반화 성능이 훈련 후 갑자기 급등하는 Grokking 현상이 관찰되는가?
+
+**왜 중요한가**: Nanda 2023은 "Fourier 회로"가 형성되면서 Grokking이 발생한다고 설명한다. iTransformer의 FFN은 선형 임베딩($W_\text{emb}$)과 결합되어 본질적으로 "T → D → D → D → S"의 MLP 스택이다. 이 스택이 Fourier 회로를 형성하는가? 형성한다면 T×T 어텐션 모델과 어떻게 다른 방식으로 형성하는가? Grokking track의 "비교 대상 아키텍처"로 iTransformer가 유력하다.
+
+---
+
+### Q3. 금융 TS에서 N×N 어텐션은 "위험 요인 행렬"을 포착하는가?
+
+iTransformer를 금융 포트폴리오(예: S&P 500 구성 주식 500개, N=500)에 적용하면, 학습된 N×N 어텐션 맵이 Fama-French 3/5 요인 구조(성장/가치/규모/모멘텀 등으로 나뉘는 주식 그룹)를 반영하는 클러스터를 보여주는가?
+
+**왜 중요한가**: 만약 어텐션 맵이 요인 구조와 일치한다면, iTransformer는 "데이터 기반 요인 발견기"로 해석 가능하다. 이것은 §E(금융 응용)의 핵심 질문이며, P1 ProTran-TFA와의 결합을 정당화한다. 반대로 일치하지 않는다면 "N×N 어텐션은 예측에는 유용하지만 경제적으로 해석 가능한 구조는 학습하지 않는다"는 결론이 나온다.
+
+---
+
+### Q4. 위치 임베딩을 추가하면 iTransformer가 나빠지는가?
+
+저자들은 "위치 임베딩이 불필요하다"고 주장하지만, 추가했을 때의 어블레이션을 제공하지 않는다. sinusoidal / RoPE / ALiBi 위치 임베딩을 N개 변수 토큰에 적용하면 성능이 어떻게 변하는가?
+
+**왜 중요한가**: APF 연구에서 위치 임베딩 유형(NoPE/sinusoidal/RoPE/ALiBi)이 T×T 모티프를 크게 바꾼다. 동일한 실험을 iTransformer(N×N 어텐션)에서 수행하면, "변수 순서가 중요한가"(예: 데이터가 지리적 순서로 정렬된 경우)를 측정할 수 있다. 이 실험은 APF의 PE 비교 실험을 "N×N 어텐션 도메인"으로 직접 확장하는 것이다.
+
+---
+
+### Q5. "채널 혼합 vs 채널 독립"의 진짜 승자는 무엇인가?
+
+PatchTST(채널 독립, 변수 간 어텐션 없음)와 iTransformer(채널 혼합, N×N 어텐션)는 정반대의 선택이다. 데이터셋의 "변수 간 상관 강도"를 정량화하면(예: 평균 절대 Pearson 상관계수 $\bar{\rho}$), $\bar{\rho}$가 높은 데이터에서는 iTransformer가, 낮은 데이터에서는 PatchTST(또는 DLinear)가 우월한가?
+
+**왜 중요한가**: 이 질문은 "어떤 데이터에 어떤 모델을 쓸 것인가"의 실용적 가이드라인을 만든다. 금융 TS($\bar{\rho}$ 낮음)에서 iTransformer가 실망스럽다면, 그것은 모델 실패가 아니라 "채널 혼합 가정이 맞지 않는 도메인"에 대한 자연스러운 결과다.

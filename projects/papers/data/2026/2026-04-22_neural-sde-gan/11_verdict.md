@@ -1,11 +1,13 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "Tq4klsjdCHjsITfDo26tKQ==",
-  "iv": "YEzs2ZnW1JTmhXJsOO1gww==",
-  "ct": "LkSediIfIT72gUR+Er1+VjhtzANVAIuMPl83aUH8z0pRJ8Vp9nZjVEB+FPwUqt9boxwoWaAcXFDhmwEjdV87YPXidWvUK4BRKb4vXAv09NoUxdZswiaKQa4k4Wfy3i7bPlzqJu8/pJfsgtQsa2gwNM1yNJIb+YDabrFR0zWt7a5vheFsxddTk9FXOLxFvDVlSTffmrXxtTCHfiTcnbyxXP3EMstyiXWrUr8zmrCl2zQjNdIbb7wiJHHByGtkWlTzgmfDsQPpZSGDrioqdiR5YwZfhh16uVaaypJAT4YziCCcSuu4/WaA67e8IT1IICyZaMMxsOSeOA/6/ke3IT8bY4iVv32hQw4KEhsQjZV0nR0WY8yowRbbmh9v8ks3iMVXFm3KiW3YhymDxVU823qjPupANKxyKLQg9alTEk8GkJv5MnTp4evdGhYVXdwUXg4yjBiE/jkXvHGX90oZtMIJ0xZLW6+mQ/s0AdeNlVyoEEYTM9In7ibfQ8Ya9/myVwDwsxasWCfVGyWOdh3BoKXwkq9wVLr5m9A3/EbsO/sGs1KSPF82yYxoln5tqYOUMjOvE+Ovs1olw+1smrcViHtaN4Hq3ooDER5LNdfMtzSSVNdNfr6kO6OI7yCBNqhqDQAM+vri9klfwAQqLXumuGw+kqBL6hHgAfp8anb/Q/OKyWWTPQ4CIc+vyyjPqYm/ZEOmZHdXHuv9U8+cT+xwzQwTPEhoE9NepMeHF6mVuxXHG02sJW9sPUkCJA34hQEB2rUAtYjr+Z/dYB9Zc49m0Uk+hpoclm3AiT+lkFSvzCU4DiU/k0stEerBRkujPmKtIxCpSnLEYw8h4teb71mNM1UDTiizzWq1a3Cj+BLNtMMjyYSNewzn2gMSngduQdtGJ1AVI42pYOKDoE0QST6XRaV7ljRUxHDeR5B25Ya9lqXFdbCZISvZppnIWdCv8gBCIneD5q5McWRAB47UMvJvO22knLl/DAKfXE8hAWjDFk3haBMNSbPQ8BvbEVWQXUQmAmtAC00wO/heu6+2yfBPeroMEOYeoDshkxDGHqdJHa+WGiq1yCmgX4F6HafTxW0F6jxavbp2GePpoiJbI3SsaC7IhachNbthBPXOb5PKlDKYe98di8iRA6lv15dcVTcT+piCXMIhhhAdxmS63n/+36CWnCoVPC2YZuaGRE8FKMfdAAH56y1AOtJ2zT1fsOxfDMVqs5EJdIY5rpJ0cXIbjDscRQqLn0Re1gl4M/WYEQwqC6Fdlen6sFEFgivKd2H1XlfroY2F8xgPA2ZRELMsQ8SYdY9SpuH3Jj/05MZVRRq0sEF1aszlV33jCJIe4LcRVBreRq4bBSo1zZoJlzWh4lwYok3fgcMGXLI0KzYUGGKQwBOcDbcthoZ4c4DnuqMXQWC/s0guW5nYeSu3df5PSomy+EixBhnpBzzWP2vYsHGPjsWj/LXi95A419PhH8055Y6ExCxBvsuEOVTyxMZJoKfwVL3qnI47d27caVeFIHPTR9Yiel6ZuaVs1FM1rI64ZeUEHI5mNLHPZA9ZWRZui2QHrOUmeVIsKhDvUMh5q+PoXYwkMZAijvZ9hYu9WUODdAENv1i7+9WZqdAYfIOOaK+Uq7XDDFBvF0xZzpy99oW87oiGbj4mDTP8XWWLZMXIE2B8IqQgqTR98P/V4tox609vyGWZgGPSoEQHbzZaF+T7MRUVKkOn85vSxhvve5YgY1BgTL6I7+XiBBT+KnvCEGwYM0kw5s6fYUJ/14HuDYJZ800=",
-  "mac": "MJbu7EMcEjCGHsuTWh6ptQOoDQosJ0FCju+QvX+dGy4="
-}
+# 11 · 한 줄 판결
+
+> **Neural SDE(생성자)–Neural CDE(판별자)의 이론적 쌍은 Paper 4의 economic time 시간-변환 정당성을 제공하는 핵심 문헌이지만, 이 논문이 *경로 생성*에 최적화되어 있음을 망각하고 *예측* 문맥에 무비판적으로 인용하면 논문의 핵심 주장이 흐려진다 — "SDE GAN에서의 시간 변환 = Paper 4의 ODE 시간 변환"이라는 다리는 건설 가능하지만, 다리 위에서는 반드시 '생성 vs. 예측' 방향 표지판을 세워야 한다.**
+
+---
+
+### 판결 근거 (3줄 보충)
+
+1. **이론적 가치**: SDE time-change theorem을 통해 economic time $\tau(t)$의 경로 측도 동치성을 정당화하는 가장 수학적으로 직접적인 참고문헌. Paper 4 §3.2에 인용 확정.
+
+2. **실용적 한계**: arXiv 접근 불가로 실험 수치 직접 확인 불가 + 논문 자체의 실험이 단순한 금융 데이터에 한정 — 고차원 포트폴리오 생성이나 불규칙 고빈도 데이터에서의 성능은 미지수.
+
+3. **연구 지도 위치**: 핀(pin)은 "neural-sde 태그의 기초 문헌"에 꽂는다. 직접 구현 대상은 아니지만, Paper 4의 이론 섹션과 Paper 1의 조건화 분류 각주, Paper 2의 representation utility 동기 단락에서 각각 인용 예정.

@@ -1,11 +1,79 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "GUELzJ0zXRveIKYqncOdbw==",
-  "iv": "J4fwPUctlbUmmJmTZ2Kdcg==",
-  "ct": "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",
-  "mac": "9RMIHADAQGwA5fJRs7Fmchajl9MXHl/8G1ddgngpobg="
-}
+# 09. 내 연구와의 연결
+
+> 이 섹션은 `_profile.md`의 관심 영역 §A~F와 보유 자산(APF, Grokking track)에 구체적으로 연결한다. 일반론 나열 금지 — mechanism, axis, 수식 요소를 지정해 연결.
+
+---
+
+## §D 연결 (TS Transformers / TSFM Interp — APF 직접 입력)
+
+### 연결 1: Chronos 어텐션 패턴이 APF의 "미발굴 광산"이다
+
+APF 프레임워크의 현재 상태: 합성 TS 모티프(diagonal/stripe/block/edge/spike/checker) 위에서 sinusoidal/learned/RoPE/ALiBi PE가 만드는 어텐션 패턴을 PatchTST·iTransformer 수준 모델에서 분석한다.
+
+Chronos는 T5 인코더-디코더 아키텍처에서 **4096 token 어휘로 표현된 이산 TS 시퀀스**를 처리한다. 이때 어텐션 패턴은 어떤 모습인가? 이 질문에 답한 논문이 아직 없다.
+
+**구체 연결 포인트**:
+- Chronos 인코더의 Self-Attention 가중치 행렬 $A^{(l,h)}[t, t']$ (레이어 $l$, 헤드 $h$에서 위치 $t$가 위치 $t'$를 얼마나 주목하는지) — APF의 "2D attention motif"로 직접 해석 가능
+- Chronos가 주기성이 강한 시계열(M4 monthly)을 처리할 때의 어텐션 패턴 vs. 금융 시계열(랜덤워크 성질)을 처리할 때의 패턴 비교 — APF의 "입력 모티프 → 어텐션 모티프 매핑" 가설을 파운데이션 모델에서 테스트
+
+**인용 포인트**: APF 논문 방법론 섹션에서 "분석 대상 아키텍처"를 소개할 때, Chronos를 "TS 파운데이션 모델의 대표 사례"로 나열하고 "자기회귀 토큰 예측 설정에서의 어텐션 패턴은 별도 탐구가 필요하다"는 맥락으로 인용 가능.
+
+### 연결 2: TSFM 해석론의 공백 — Wilinski 2025와의 비교
+
+Wilinski et al. (ICML 2025, "Exploring Representations and Interventions in TS Foundation Models")은 TSFM의 내부 표현에 개입(intervention) 실험을 한다. Chronos는 이 논문의 분석 대상 중 하나일 가능성이 높다.
+
+**구체 연결 포인트**: APF가 제안하는 "CNN probe로 어텐션 패턴에서 모티프를 분류하는" 방법론을 Chronos에 적용하면, Wilinski 2025와 직접 비교 가능한 보완적 분석이 된다. Wilinski가 "표현(representation)" 공간에 초점을 맞춘다면, APF는 "어텐션(attention)" 공간에 초점을 맞추는 차별화.
+
+---
+
+## §A 연결 (Grokking — 훈련 동학 직접 입력)
+
+### 연결 3: Chronos 사전학습에서 Grokking이 일어나는가?
+
+Chronos 학습의 구조를 Grokking 렌즈로 보면:
+- 입력: 이산 토큰 시퀀스 $c_1, \ldots, c_T$
+- 출력: 다음 토큰 분포 $P(c_{T+1} \mid c_1, \ldots, c_T)$
+- 손실: Cross-entropy
+
+이것은 Nanda et al. (2023, Progress Measures for Grokking)이 분석한 모듈식 산술 학습과 **구조가 동일**하다 — 이산 입력 → 다음 토큰 예측 → cross-entropy. 차이는 (1) 입력이 4096 어휘의 수치 토큰, (2) 시퀀스 길이가 512, (3) 데이터가 진짜 시계열.
+
+**핵심 가설**: Chronos 학습 과정에서도 "처음엔 암기(memorization), 이후 일반화된 알고리즘 형성"이라는 Grokking 패턴이 나타나는가? 특히:
+- 주기성 패턴(M4 monthly) 학습 시: Fourier 알고리즘 형성? (Nanda et al.의 modular addition Fourier circuit과 analogous)
+- 추세 패턴 학습 시: 선형 외삽 알고리즘 형성?
+- 무작위 금융 패턴 학습 시: Grokking 없이 암기만?
+
+**인용 포인트**: Grokking track 논문 §2 Related Work에서 "Grokking이 언어모델 학습에서 일어나는 것처럼(Nanda 2023), TS 파운데이션 모델 학습에서도 유사한 지연 일반화가 나타날 수 있다는 가설을 세운다. Ansari et al. (2024)의 Chronos는 cross-entropy 기반 이산 토큰 예측 모델로, Grokking 분석의 자연스러운 출발점이 된다."
+
+### 연결 4: 비정상성(Non-stationarity)과 Grokking의 교차
+
+Chronos는 사전학습 후 새 데이터셋에서 fine-tuning 없이 예측한다. 하지만 금융 TS처럼 분포가 지속 변화하는 시계열에서는 어떻게 되는가? 이것은 Grokking track의 "non-stationarity × grokking" 교차점과 연결된다:
+
+- Lyle et al. (2025, "Grokking and Primacy Bias in Continual Learning") 이 제안한 틀: continual learning 환경에서 grokking이 "primacy bias"를 낳는다 — 초기 데이터 패턴을 과도하게 기억해 새 패턴을 학습하지 못하는 현상.
+- Chronos의 사전학습 후 fine-tuning 없는 zero-shot 사용이 바로 이 상황과 유사하다 — 사전학습 분포와 다른 새 TS에 대한 성능 저하.
+
+**내 연구에서의 활용**: Grokking track §2에서 "사전학습 TS 모델이 비정상 시계열에 노출될 때의 훈련 동학"을 future work로 언급하면서 Chronos를 구체적 분석 대상으로 명시할 수 있다.
+
+---
+
+## §E 연결 (금융 응용 — P1 ProTran-TFA와의 전이 가능성)
+
+### 연결 5: Chronos의 이산화 토크나이제이션 → ProTran-TFA에 적용 가능성
+
+P1 ProTran-TFA ("Probabilistic Transformer for Financial Asset Allocation", ⏸️ Paused)는 Transformer 기반 확률 예측 모델로, 금융 자산 배분에 적용하려는 초안이다.
+
+**구체 전이 가능성**:
+1. **토크나이제이션 transfer**: Chronos의 mean-scaling + bin quantization을 ProTran-TFA의 입력 파이프라인에 적용하면 교차 자산 학습(cross-asset pretraining)이 가능해진다. 서로 다른 자산(주식, 채권, 원자재)을 단일 모델에서 처리하는 공통 어휘를 만드는 것.
+
+2. **한계 인식**: 금융 TS의 heavy-tail 분포는 균등 bin이 아니라 log-scale bin 또는 분포 적응 bin이 필요하다. 이 수정이 ProTran-TFA의 기술적 기여로 자리잡을 수 있다.
+
+**인용 포인트**: ProTran-TFA 논문 방법론 섹션 "Tokenization"에서 "Chronos (Ansari et al., 2024)의 mean-scaling + uniform quantization을 금융 TS에 적용하면 heavy-tail에서 bin이 편향되는 문제가 있으며, 이를 수정하기 위해 우리는 log-return 기반 분위수 bin을 제안한다."
+
+---
+
+## 반면교사: Chronos가 못한 것을 내가 어떻게 다룰지
+
+1. **어텐션 패턴 블랙박스**: Chronos는 어텐션이 무엇을 학습했는지 분석하지 않는다. APF는 이 공백을 채운다.
+
+2. **훈련 동학 분석 부재**: 학습 곡선, grokking phase, 표현 구조 변화를 분석하지 않는다. Grokking track이 이 공백을 채운다.
+
+3. **금융 TS 특화 설계 부재**: 균등 bin이 금융 tail risk에 부적합함을 인정하지만 해결하지 않는다. ProTran-TFA가 이 공백을 채울 수 있다.

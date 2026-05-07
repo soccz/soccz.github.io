@@ -1,11 +1,10 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "XDyamr88pCytEDNV3usv5A==",
-  "iv": "JEjkKU+O5wRjW/14jl6Chw==",
-  "ct": "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",
-  "mac": "4USsjYalI6NyIIcADlA04WUIC5UdkYZT4gdmgDosbyE="
-}
+## 0. 메타 & 선정 이유
+
+- **인용 수**: NeurIPS 2023 발표 후 약 1년 반 시점에서 Semantic Scholar 기준 200+ (대규모 비정규 시계열 트랜스포머의 *de facto* 베이스라인 진입). 정확한 수치는 접근 차단으로 미확인.
+- **DOI / 발표처**: NeurIPS 2023 (`https://proceedings.neurips.cc/paper_files/paper/2023/hash/9328208f88ec69420031647e6ff97727-Abstract-Conference.html`)
+- **코드·데이터 공개**: GitHub `microsoft/SeqML/ContiFormer`, MIT 라이선스. PhysioNet, Human Activity, Stock 등 공개 벤치 사용. ODE solver는 `torchdiffeq` 기반.
+- **저자 권위**: Microsoft Research Asia + Fudan SeqML 그룹. Kan Ren은 시계열 RL/예측 분야 다수 1저자, Microsoft의 Qlib 시리즈와 인접.
+
+### 선정 이유 (지금 이 시점에 왜 이걸 봐야 하는가)
+
+`_profile.md`의 **Paper 4: Continuous Economic Time Attention**는 명시적으로 "ContiFormer의 ODE 시간 변수 대체"를 목표로 한다. 즉 Paper 4는 ContiFormer를 **출발점이자 베이스라인**으로 둔다. 그런데 코어 버킷 인덱스에는 ContiFormer 한 줄이 없다 — 베이스라인을 모른 채 그 위에 무엇을 얹을 수는 없다. 또한 Paper 1의 conditioning-space 논의(`concat_a` vs `tau_rope` vs `static`)도 결국 "조건 변수를 시간축에 어떻게 주입하느냐"인데, ContiFormer는 사실상 *ODE의 vector field에 시간을 주입*하는 가장 강한 형태다. 따라서 이 논문 한 편으로 코어 버킷 4개 태그(neural-ode-cde, time-series-transformer, conditioning-mechanism, economic-time)에 모두 발판이 생긴다. 첫 코어 슬롯으로 가장 효율적인 선택.

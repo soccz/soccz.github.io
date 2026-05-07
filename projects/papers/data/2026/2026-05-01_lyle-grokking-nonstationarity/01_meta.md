@@ -1,11 +1,37 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "URPECEFlWDuVhvr/5jHmPQ==",
-  "iv": "fZvDRlMuIWITDdV4gG8sTQ==",
-  "ct": "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",
-  "mac": "Gk7MTDFNIGAo+ibe7bniaTaAfpRqS9bE3OtyF+9yN+o="
-}
+# 01 — 메타 & 선정 이유
+
+## 서지 정보
+
+| 항목 | 내용 |
+|------|------|
+| **제목** | What Can Grokking Teach Us About Learning Under Nonstationarity? |
+| **저자** | Clare Lyle, Ghada Sokar, Razvan Pascanu, András György |
+| **소속** | Google DeepMind |
+| **발표처** | CoLLAs 2025 (4th Conference on Lifelong Learning Agents) |
+| **arXiv** | 2507.20057 (제출: 2025-07-26) |
+| **인용 수** | 미확인 (2025년 7월 제출, 접근 제한으로 Semantic Scholar 수치 불가) |
+| **선행 연구** | Lyle et al. NeurIPS 2024 "Normalization and effective learning rates in RL" (arXiv:2407.01800) |
+
+## 저자 권위 배경
+
+**Clare Lyle** (Google DeepMind): RL의 소성(plasticity) 상실 문제 전문가. "Disentangling the Causes of Plasticity Loss in Neural Networks" 등 지속학습·RL 표현 동학의 핵심 연구자. NeurIPS 2024 NaP 논문의 제1저자이기도 하며, 2025년 현재 가장 활발하게 grokking-continual learning 교차 영역을 개척하고 있다.
+
+**Razvan Pascanu** (Google DeepMind): RNN 그래디언트 소실/폭발 이론의 고전 논문 저자, DeepMind의 이론 ML 리서처. 다수의 딥러닝 동학(dynamics) 기반 논문에 참여.
+
+**Ghada Sokar** (Google DeepMind): 소성 상실 및 신경망 continual learning 전문. "The Dormant Neuron Phenomenon" 등 관련 작업.
+
+**András György** (Google DeepMind): 이론 ML, 온라인 학습, 최적화 전문.
+
+→ DeepMind plasticity/continual-learning 팀의 핵심 구성원이 직접 grokking-continual 연결을 분석한 논문이다.
+
+## 선정 이유
+
+1. **Priority Tier 1 매칭**: `_index.md`의 "사용자 우선 읽기 목록 Tier 1"에 "(2025) Grokking and Primacy Bias in Continual Learning | Lyle et al. (2025) | grokking-delayed-gen / continual-learning"으로 등재된 논문이다. 이것이 해당 논문의 완성된 형태임이 검색으로 확인됐다.
+
+2. **태그 커버리지**: `continual-learning` 태그 커버 수 0 — 가장 뒤처진 원거리 태그 중 하나.
+
+3. **Grokking 트랙 직결**: 현재 active track인 "Grokking in TS Transformers"에서 핵심 질문인 "왜 grokking이 일어나는가, 어떻게 촉진할 수 있는가"에 직접 답하는 논문이다. ELR 개념은 Grokking 실험 설계에서 weight decay의 역할을 이론적으로 설명해준다.
+
+4. **저자 권위 + 발표처**: CoLLAs는 지속학습 분야의 핵심 학회. DeepMind 팀의 논문은 재현성·실험 품질 면에서 신뢰도가 높다.
+
+5. **연결 폭**: Grokking(§A) × Continual Learning(§F) × RL(§E와 인접) × 소성 상실 이론을 모두 아우른다. 원거리 버킷이지만 APF·Grokking 두 active track과의 전이 가능성이 높다.

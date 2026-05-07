@@ -1,11 +1,29 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "i5cV3ost2UNkJI9NsOioZA==",
-  "iv": "rkYReXbbJOtB3HBlBYHxMg==",
-  "ct": "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",
-  "mac": "wQrTXv7tdJXOjiHlr+WuUtGxsHY5k0JCyndhOyfz3F0="
-}
+# 10. 한 줄 판결
+
+> **ContiFormer는 "시계가 하나뿐인 세계"에서 attention과 ODE를 한 식에 녹여낸 우아한 기준점이다 — 그래서 내 Paper 4는 이 기준점의 "시계"를 경제시간으로 갈아 끼우는 수술로 정확히 정의된다.**
+
+## 핀 위치
+
+- 연구 지도 좌표: **핵심 선행연구 (Core Reference)**, 좌표계의 "$\tau = t$ (원점)"에 꽂는 깃발.
+- 사용 용도: Paper 4의 **직접 선행**, Paper 1·2·3의 **베이스라인**.
+- 재독 타이밍: Paper 4 §3 (method) 작성 직전에 본 해체 01·05·07 재독. Paper 4 §4 (experiments) 직전에 06 재독.
+
+## 종합 평가
+
+| 축 | 점수 | 메모 |
+|----|------|------|
+| 학문적 신선도 | ★★★★☆ | 이산 attention의 함수공간 승격 아이디어 신선 |
+| 이론적 깊이 | ★★★☆☆ | 두 포함 정리는 구조적. optimization 보장 부재 |
+| 경험적 근거 | ★★★☆☆ | 벤치마크 범위가 좁음. 도메인 편향 의심 |
+| 재현 가능성 | ★★★★☆ | MIT 공개 + seed + hyperparameter 노출 |
+| 실무 적용성 | ★★☆☆☆ | 3~8배 추론 비용. 장기 시계열 미검증 |
+| 내 연구 기여도 | ★★★★★ | Paper 4 정의의 전제 자체 |
+
+## 최종 메시지 (미래의 나에게)
+
+1. 이 논문을 **베끼지 마라**. 그러나 **깊이 베껴라**: 비대칭 projection 구조, 포함관계 정리의 서술 패턴, spiral toy로 시간 축 효과를 시각화하는 전략 — 세 가지는 그대로 Paper 4에 재활용 가능한 패턴이다.
+2. 이 논문의 **약점을 조용히 피해 가지 말고 정면으로 인용**해라. "저자는 $t$의 선택에 침묵한다" 는 한 줄이 Paper 4의 논문 존재 이유다.
+3. ContiFormer의 실험이 넓지 않다고 내 실험까지 좁아서는 안 된다. 금융 외 1종 도메인을 반드시 포함해 "경제시간 효과는 금융 특이한 trick이 아니다"를 증명해야 reviewer pool이 확장된다.
+4. ContiFormer가 hyperparameter를 dataset마다 바꾸는 약점을, 내 논문은 **"$\tau(t)$의 도입이 hyperparameter 의존성을 오히려 낮춘다"** 라는 포지션으로 재해석하면 그 자체가 별도의 기여 포인트가 될 수 있다. 이 가설은 실험으로 검증 가치 있음.
+
+— *2026-04-20, 월요일 코어 버킷 1회차 · ContiFormer 해체 완료.*

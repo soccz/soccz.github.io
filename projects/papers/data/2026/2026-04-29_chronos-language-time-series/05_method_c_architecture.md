@@ -1,11 +1,78 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "CxqIYLRolghrBAvSVG10Lw==",
-  "iv": "S/F1/1kuZj2DRi/O35qqhQ==",
-  "ct": "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",
-  "mac": "mwODY/FrAPuJRwgFH/OF+lQ9Dkor5tAa2ZpwVJF8KdI="
-}
+# 05c. 방법론 — T5 아키텍처와 학습
+
+> **이 파일의 독립 도입부**: 앞 파일에서 토큰이 어떻게 만들어지는지 봤다. 이 파일은 그 토큰 시퀀스가 T5 신경망을 어떻게 통과하는지, 어떻게 학습되는지, 5가지 크기 변형이 어떻게 다른지를 다룬다. ① "자기 주의(self-attention)"가 "시퀀스 안의 모든 위치 쌍 사이의 관련성을 계산하는 것"임을 알면 충분하다.
+
+---
+
+## T5 아키텍처 개요
+
+T5 (Raffel et al., 2020, "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer")는 Google이 제안한 **인코더-디코더 Transformer** 아키텍처다. 원래 NLP를 위해 설계됐지만, Chronos는 어휘 크기만 조정하고 나머지 구조를 그대로 사용한다.
+
+**인코더 역할**: 과거 시계열 토큰 $(c_1, c_2, \ldots, c_T)$를 입력받아, 각 위치의 토큰을 문맥(context)을 반영한 벡터 표현으로 변환. 인코더의 Self-Attention은 어떤 과거 시점이 현재 맥락 이해에 중요한지를 학습한다.
+
+**디코더 역할**: 인코더 출력을 기반으로, 미래 토큰 $(c_{T+1}, c_{T+2}, \ldots, c_{T+H})$을 **자기회귀적(autoregressive)** 으로 생성. 즉, $c_{T+1}$을 예측하고, 이를 다시 입력으로 넣어 $c_{T+2}$를 예측하는 방식.
+
+---
+
+## 모델 크기 패밀리
+
+| 이름 | 파라미터 | 레이어 수 | 어텐션 헤드 | 숨겨진 차원 |
+|------|--------|----------|-----------|-----------|
+| Tiny | 8M | 4 | 4 | 256 |
+| Mini | 20M | 4 | 8 | 512 |
+| Small | 46M | 6 | 8 | 512 |
+| Base | 200M | 12 | 12 | 768 |
+| Large | 710M | 24 | 16 | 1024 |
+
+어휘 크기: $B = 4096$ (특수 토큰 2개 포함, 실질 4096 bin + PAD + EOS).
+
+---
+
+## 학습 목표: Cross-Entropy
+
+학습 시 디코더는 다음 토큰의 범주형 분포를 출력한다. 손실 함수는:
+
+$$\mathcal{L} = -\sum_{h=1}^{H} \log P(c_{T+h} \mid c_1, \ldots, c_{T+h-1})$$
+
+**기호 뜻**:
+- $H$: 예측 지평(prediction horizon) — 학습 배치에서 무작위로 샘플링
+- $P(c_{T+h} \mid \cdot)$: 디코더 softmax 출력에서 정답 토큰 $c_{T+h}$에 할당된 확률
+- $\mathcal{L}$: 배치 내 모든 스텝에 대한 음의 로그 우도 합
+
+**일상 비유**: 퀴즈 채점 방식. "다음 값이 몇 번 bin에 떨어지는가?"를 묻는 4096지선다 시험에서, 정답을 더 높은 확률로 예측할수록 점수(음수 손실)가 좋아진다.
+
+**왜 이 형태**: Cross-entropy는 예측 분포와 실제 분포의 KL 발산(KL divergence — 두 확률 분포가 얼마나 다른지 측정하는 지표)을 최소화하는 것과 동치다. MSE가 '점 추정'을 최적화하는 반면, cross-entropy는 전체 분포를 최적화한다.
+
+**조심할 점**: Cross-entropy는 bin들 사이에 순서 관계를 암묵적으로 반영하지 않는다. bin 1과 bin 2가 bin 1과 bin 4096보다 "더 가깝다"는 정보를 손실이 직접 반영하지 않는다. 즉, 크게 틀리는 것과 조금 틀리는 것에 대해 구조적으로 다른 패널티를 주지 않는다. 이것은 ordinal regression과의 근본적인 차이이며, Chronos의 숨겨진 약점이다.
+
+---
+
+## 맥락 길이와 예측 지평
+
+- **최대 컨텍스트**: 512 토큰 (= 512 과거 시점). 이보다 긴 시계열은 마지막 512 스텝만 사용.
+- **예측 지평**: 학습 시 무작위 $H$, 추론 시 사용자 지정. 문서화된 범위: 1~64 스텝 (Chronos-Bolt 기준).
+- **위치 인코딩**: T5의 상대적 위치 편향(relative position bias) 계승.
+
+---
+
+## NLP 사전학습 가중치 이식 여부
+
+중요한 세부사항: Chronos는 T5 아키텍처를 사용하지만, **NLP 텍스트로 사전학습된 T5 가중치는 사용하지 않는다**. 어휘가 다르기 때문에 임베딩 레이어를 교체해야 하고, NLP 맥락에서 학습된 의미론적 표현이 수치 시계열에는 의미 없기 때문이다.
+
+따라서 Chronos는 T5 사전학습 가중치에서 시작하는 게 아니라 **무작위 초기화에서 TS 데이터만으로 처음부터 학습**된다. "T5를 파인튜닝(fine-tuning)한 것"이 아니라 "T5 아키텍처를 처음부터 TS로 학습한 것"이다. 이 점이 종종 오해된다.
+
+---
+
+## 추론: 샘플링 기반 확률 예측
+
+추론 시:
+
+1. 과거 시계열 $(x_1, \ldots, x_T)$ → mean scaling → 토큰 시퀀스
+2. 인코더로 문맥 벡터 생성
+3. 디코더를 $N$회(기본값 $N = 20$) 독립 실행, 각 실행에서 전체 horizon $H$ 토큰 샘플링
+4. $N$개 토큰 궤적 → 역양자화 → $N$개 실수값 궤적
+5. 궤적에서 분위수 계산: $\hat{x}_{T+h}^{(q)}$ for $q \in \{0.1, 0.5, 0.9\}$ 등
+
+$N = 20$번 디코더 전체 패스가 필요하므로, 단일 예측(결정론적) 모델보다 추론 비용이 $N$배다. 이것이 실제 응용에서 가장 큰 병목이다.
+
+→ 다음 파일: [05_method_d_data_augmentation.md](05_method_d_data_augmentation.md) — TSMixup과 KernelSynth

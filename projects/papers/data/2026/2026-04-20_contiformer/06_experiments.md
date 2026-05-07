@@ -1,11 +1,99 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "EcfY1d1DDgim6sCTe7FQkw==",
-  "iv": "AN+rs9orsix9FUoO0aiGQg==",
-  "ct": "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",
-  "mac": "Hc7E0ay13n7MKi9+HoatJds144Wn988ICgLG1OGYH0M="
-}
+# 5. 실험 해부
+
+## 5.1 실험 세트 개요
+
+| § | 태스크 | 데이터 | 평가지표 | 주된 비교 |
+|---|--------|--------|---------|----------|
+| 4.1 | 연속 함수 근사 | 2D Archimedean spiral (3종, noise=0.02) | MAE / RMSE | Neural ODE, Latent ODE, ODE-RNN, mTAND |
+| 4.2 | 불규칙 시계열 분류 | UEA Multivariate 2018 (Heartbeat, JapaneseVowels, ...) | Accuracy | Transformer, Informer, TST, mTAND, NeuralCDE, GRU-ODE |
+| 4.3 | Temporal Point Process | Neonate EEG, Synthetic, Mimic, StackOverflow, BookOrder, Traffic | Log-likelihood / RMSE / Accuracy | THP, SAHP, Neural Hawkes, ODE-TPP |
+
+## 5.2 데이터셋 선택의 함의
+
+### 포함
+
+- **Spiral**: Neural ODE 문헌의 표준 장난감. 선택 자체는 교과서적이나 "2D 저차원·결정론적·무점프" 조건의 정면. ContiFormer의 가정이 모두 성립하는 **홈그라운드**.
+- **UEA**: 다변량 분류 표준 벤치마크이지만 **EEG·센서 계열이 과대표현**. 분포는 "부드러운 생리 신호 + 샘플 드롭".
+- **TPP 6개**: Neonate(의료 EEG event), Synthetic(Hawkes), Mimic(의료), StackOverflow(질문 도착), BookOrder(금융 주문 도착), Traffic(교통 흐름). 이 중 **BookOrder가 내 입장에서 가장 관심이 가는 포인트**: 금융 Limit Order Book의 이벤트 도착 과정.
+
+### 배제된 것
+
+- **규칙 샘플 장기 예측 벤치마크(ETT, Weather, Traffic for forecasting)**: Informer·PatchTST 대비 정면 비교 없음. ContiFormer가 여기에 약하다고 의심할 근거.
+- **금융 return 시계열** (일봉·분봉): 가장 jump-heavy한 도메인이 없음.
+- **초장기 시계열** (수천 스텝): ODE cost의 scaling이 드러나는 구간. 의도적 회피로 보인다.
+
+## 5.3 베이스라인 공정성 평가
+
+### 공정한 점
+
+- **Hyperparameter search**가 모든 baseline에 부여됨 (저자 진술).
+- Seed 3개(27, 42, 1024) 평균.
+- 동일 코드베이스(PhysioPro)에서 구현해 데이터 파이프라인 동일.
+
+### 의심할 점
+
+- **mask_ratio가 ContiFormer에 유리한 평가 셋업일 가능성**: ContiFormer는 drop에 본질적으로 강하게 설계됨. Transformer baseline은 시간 간격 feature를 제대로 받는지 불분명. 즉 "공평한 경기장"이 아니라 **"이 경기장에 맞춰 설계된 선수 vs 일반 선수"**.
+- **Hyperparameter 탐색 grid의 비대칭**: README에서 ContiFormer는 activation(2) × layer_type(3) × actfn(2) × PE(2) = 24 조합 정도를 탐색. Transformer baseline에 같은 폭을 주었는지 명시 부족.
+- **RoPE·ALiBi를 붙인 Transformer**는 비교에 없다. "표준 Transformer"만 이기는 것은 2023년 시점에서는 약한 baseline.
+
+### 미싱 링크
+
+- **파라미터 수·추론 시간 비교**가 주 본문이 아닌 부록으로 밀려 있음 (§D). ContiFormer가 **추론 시 ODE 적분 때문에 수 배 느리다**는 것은 부록에서야 드러남. 실무 적용 결정에 중요한 정보.
+
+## 5.4 지표 선택의 함의
+
+- **Accuracy** (UEA): 분류에서 가장 일반적이지만 class imbalance 고려 없음.
+- **Log-likelihood** (TPP): intensity 모델의 표준. marginal likelihood가 아니라 sequence likelihood라 sequence 길이에 편향.
+- **RMSE / MAE** (spiral + TPP time): 규모 의존. spiral은 단위 정규화됐지만 TPP time RMSE는 데이터셋별 스케일 차이 큼.
+- **Extrapolation error**: spiral에서 중요한 지표지만 **별도 표로는 없음** (시각화 figure로만). 본 논문이 핵심적으로 주장해야 할 "extrapolation 우위"의 정량 표가 빈약.
+
+## 5.5 주요 결과 (정성·정량 혼합)
+
+### Spiral (§4.1)
+
+- 관측 비율이 낮을수록 (50%, 30%, 10%) ContiFormer 우위가 커짐. Neural ODE와 비교해서 extrapolation 구간 재구성 error가 **RMSE 기준 10~25% 낮음**.
+- 시각화에서 Neural ODE는 원의 반지름이 점차 줄어드는 "수축 붕괴" 증세가 있으나 ContiFormer는 형상 유지.
+
+### UEA 분류 (§4.2)
+
+- mask_ratio ∈ {0.0, 0.3, 0.5, 0.7}. ContiFormer는 drop이 커져도 정확도 하락 곡선이 가장 완만.
+- Heartbeat, JapaneseVowels 등에서 best. 몇몇 데이터셋(예: Characters, UWave)에서는 mTAND·Transformer가 근접.
+- 대부분의 데이터셋에서 "통계적으로 유의한" 우위이지만, 평균 1~3%p 개선 정도 — **revolutionary가 아니라 consistent**.
+
+### TPP (§4.3)
+
+- Neonate EEG에서 **log-likelihood 유의 개선** (THP 대비 +5~10% 수준).
+- 금융 BookOrder에서도 개선 주장. 그러나 BookOrder의 **이벤트 도착 분포 heavy-tail 특성**이 구체 분석되지 않음. "연속 latent + ODE" 가정이 깨질 영역인데 왜 이기는지에 대한 해석 없음.
+- 저자가 명시하지 않지만, TPP 하이퍼파라미터가 **데이터셋마다 크게 다름** (lr, actfn, layer_type_ode, tmax 모두 다름). 이는 강건성(robustness) 주장을 약화시킨다.
+
+## 5.6 Ablation의 실제 의미
+
+논문에서 수행한 ablation (appendix 기준):
+
+1. **ODE 제거** (Transformer로 축소): 전 데이터셋 성능 하락. → Claim 2의 환원을 실제로 학습하지 않음 확인.
+2. **Attention 제거** (Neural ODE 축소): 마찬가지 하락. → Claim 3도 확인.
+3. **Interpolation 종류** (linear / cubic / rectilinear): 대부분 linear가 robust. cubic이 때때로 유리.
+4. **`actfn_ode`**: 태스크 의존. Ablation이라기보다 tuning 가이드.
+
+### 내가 보고 싶었던, 그러나 없는 Ablation
+
+- **Query 쪽도 ODE로** vs 현재의 InterpLinear-Q: 설계 비대칭의 타당성 검증 누락.
+- **시간 축 스케일링** (real time vs $\log t$ vs 임의 monotone $\tau$): 시간 변수 자체의 선택에 대한 민감도. **Paper 4에 직접 대응**하는 핵심 ablation이 비어 있음.
+- **Multi-head 수** vs Neural ODE의 "representation rank": multi-head의 의미.
+
+## 5.7 표·그림에서 읽어야 할 숨은 신호
+
+- **§D의 연산 시간 표**: ContiFormer가 Transformer 대비 **3~8배 느리다**. 이는 실무자에게 결정적.
+- **Figure: spiral reconstruction**: Neural ODE의 붕괴가 과장된 각도(예: 100% extrapolation)에서 두드러짐. "extrapolation 거리에 비례"하는 우위가 아닌, 특정 구간에서만 확연한 우위일 수 있음.
+- **TPP 하이퍼파라미터의 데이터셋별 차이** (README에 노출된 명령들): 한 세트 hyperparameter로는 전 데이터셋을 커버 못 함. **"도메인 고유성 경고등"**.
+
+## 5.8 재현성 실무 체크리스트
+
+- [x] 코드 공개 (MIT).
+- [x] 데이터 pipeline 공개 (UEA url, TPP Google Drive).
+- [x] 시드 공개.
+- [x] 하이퍼파라미터 공개 (README 명령어).
+- [ ] 훈련 시간·GPU 메모리 프로파일 명시 부족.
+- [ ] **Adjoint vs direct backprop 모드의 결과 차이 표 없음** — 실무에서 메모리 부족 시 선택할 수 있는 trade-off 가이드 미비.
+
+전반적으로 재현성은 이 수준의 연구로는 양호. 다만 실제 돌릴 때 **PhysioPro** 프레임워크 의존이 귀찮음. 단독 ContiFormer 블록을 떼어내 독립 패키지로 쓰기에 약간의 리팩터링 필요.

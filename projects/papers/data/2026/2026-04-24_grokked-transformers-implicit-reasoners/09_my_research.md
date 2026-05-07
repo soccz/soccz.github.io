@@ -1,11 +1,88 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "OLjn/+rvL99kmQ7D1IBOrg==",
-  "iv": "jTxDt0MTtx58zBrck9b5XA==",
-  "ct": "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",
-  "mac": "K4U3NjYYbrzWDU+TLdueP0I7E31XY3vdOn4bJJzL1B0="
-}
+# 09 — 내 연구와의 연결
+
+> **이 섹션은 `_profile.md`의 관심 영역 §A~F 및 보유 자산과 직접 연결한다.** 일반론 나열 금지 — 구체적 메커니즘·수식·draft 섹션을 지칭한다.
+
+---
+
+## §B (Grokking/Mech Interp) — 코어 연결: Grokking Track
+
+### 연결 강도: ★★★★★ (직접 코어)
+
+사용자는 2026-04-22 저녁에 "Grokking in Time Series Transformers" 트랙을 시작했다. 이 논문은 그 트랙의 **직접 이론적 토대**가 된다.
+
+#### 흡수할 기법 1: Two-Circuit Competition Framework
+
+본 논문의 $\mathcal{C}_\text{mem}$ vs $\mathcal{C}_\text{gen}$ 경쟁 프레임을 Grokking track에 그대로 가져올 수 있다.
+
+가설 형태:
+> "시계열 트랜스포머가 주기적 패턴을 학습할 때, 초기엔 특정 주기 값을 직접 암기하는 $\mathcal{C}_\text{mem}^{TS}$를 형성하고, 충분한 훈련 후 DFT 기반 주기 감지 알고리즘 $\mathcal{C}_\text{gen}^{TS}$로 전환된다."
+
+이 가설은 Power (2022)와 Nanda (2023)의 모듈 덧셈 Fourier 회로 발견 + 본 논문의 KG 추론 two-circuit frame을 시계열 도메인으로 확장한 것이다. Grokking track 논문의 핵심 가설 섹션(§2.2 정도)에 다음 형태로 인용:
+
+> "Wang et al. (NeurIPS 2024)은 KG 추론에서도 grokking이 암기 회로에서 일반화 회로로의 전환임을 보였다. 우리는 이 framework가 시계열 주기 패턴 학습에도 적용된다고 가설한다."
+
+#### 흡수할 기법 2: Logit Lens 방법론
+
+본 논문이 사용한 logit lens를 PatchTST·iTransformer에 적용해 "언제 grokking이 일어나는가, 어느 레이어에서 패치-레벨 특징이 형성되는가"를 추적할 수 있다.
+
+구체적 실험: PatchTST를 sin 합성 데이터 + 로지스틱 맵에서 훈련하면서, 각 중간 레이어의 hidden state에 output head를 직접 붙여 "이 레이어까지의 예측 정확도"를 훈련 스텝별로 추적. Grokking 이전·이후의 레이어별 정확도 프로파일 비교.
+
+이 실험 설계는 `Grokking in Time Series Transformers/` 폴더의 실험 계획 섹션에 즉시 추가 가능하다.
+
+#### 충돌·경쟁 지점
+
+본 논문의 주요 결과 중 하나는 "Composition OOD 실패가 트랜스포머의 비순환 구조에서 기인한다"다. 이를 TS 도메인에 적용하면: **시계열 트랜스포머가 훈련 분포 밖의 주기(OOD period)에서 일반화하지 못하는 것도 같은 구조적 한계인가?**
+
+만약 그렇다면, Grokking track 논문은 "OOD 주기에서의 실패가 아키텍처 한계"라는 부정적 발견을 포함할 수 있다. 이것은 오히려 EOA(§A)의 연속시간 구조 — which allows recurrent-like information flow — 가 필요한 이유로 연결된다.
+
+---
+
+## §A (Economic Time / PE / Conditioning) — EOA (Paper 4)와의 연결
+
+### 연결 강도: ★★★☆☆ (간접, 설계 교훈)
+
+EOA의 핵심 아이디어는 "경제적 시간(economic time, τ(t))"을 attention에 condition하는 것이다. 본 논문의 parameter sharing 실험이 EOA 설계에 시사하는 바:
+
+**교훈**: 복잡한 다단계 정보 처리(≈ KG에서의 two-hop)를 위해 레이어 간 정보 재순환이 필요하다. EOA가 Neural ODE 기반의 연속 시간 레이어를 사용하면, 이 "recurrent-like 흐름"이 자연스럽게 내장된다.
+
+구체 연결:
+
+`economic_ode_attention/` draft의 §3.2에서 τ(t) 정의 부분 아래에 다음 주석 형태로 인용 가능:
+> "비순환 트랜스포머는 다단계 추론에서 레이어 간 정보 재순환 없이 OOD 실패를 보인다 (Wang et al., 2024). EOA의 Neural ODE 레이어는 연속 시간 흐름으로 이 한계를 구조적으로 완화하는 잠재력을 갖는다."
+
+단, 이 연결은 가설적이며 실증하려면 별도 실험이 필요하다. EOA draft에 넣기엔 주의가 필요하다 — 강제 매칭 금지 원칙을 유의.
+
+---
+
+## §D (금융 시계열 / 자산가격 응용) — P1 ProTran-TFA와의 연결
+
+### 연결 강도: ★★☆☆☆ (약함, 데이터 설계 교훈만)
+
+P1 ProTran-TFA는 금융 시계열 예측 트랜스포머다. 본 논문의 $\phi$ (inferred/atomic 비율) 발견이 P1의 **데이터 설계**에 하나의 교훈을 준다:
+
+> 학습 데이터에서 "두 번에 걸친 패턴 합성(예: 추세 × 계절성 조합)"의 예시가 충분히 포함돼야 트랜스포머가 이를 내재화한다. 원자적 패턴(단순 추세, 단순 계절성)만 있고 합성 패턴(추세 + 계절성)이 없으면 모델이 합성 예측 능력을 얻기 어렵다.
+
+이것은 ProTran-TFA의 데이터 증강(data augmentation) 설계에 반영할 수 있다. 단, 금융 시계열에서 "원자적 패턴"과 "추론된 패턴"을 어떻게 정의할지는 별도 고민이 필요하다.
+
+---
+
+## §E (금융 × ML 원거리) — AETHER와의 연결
+
+### 연결 강도: ★★☆☆☆ (개념적, 약한 전이)
+
+AETHER는 암호화폐 시장 ML 프레임워크 설계다. 본 논문의 composition/comparison 구분이 AETHER의 추론 구조 설계에 하나의 프레임을 제공한다:
+
+- **Composition 추론**: "BTC 가격 → DeFi TVL → altcoin 흐름" 같은 다단계 causal chain. Grokking 기반 composition이 필요하다면 직접 학습이 아닌 장기 훈련이 필요.
+- **Comparison 추론**: "BTC vs ETH 모멘텀 강도 비교". 이 유형은 OOD 일반화가 더 잘 되므로 실용적으로 더 신뢰 가능.
+
+단, 이 연결은 느슨하다. "연결 약함, 전이 가능성만 있음"으로 명시한다.
+
+---
+
+## 반면교사: 이 논문이 못한 것
+
+1. **실제 언어 모델 검증 부재**: 본 논문의 발견이 GPT-2 수준 합성 KG에 한정된다는 한계를 반면교사 삼아, Grokking track 논문은 **실제 시계열 데이터(ETT, GEFCom)**에서의 실험을 핵심에 두어야 한다. 합성 sin/로지스틱 맵만으로는 충분하지 않다.
+
+2. **분산 미보고 문제**: Grokking 발생 타이밍의 시드 의존성이 보고되지 않았다. Grokking track 논문에서는 **최소 5개 랜덤 시드**에서 grokking 발생 여부와 타이밍을 보고해야 한다.
+
+3. **$\phi$ 개념의 TS 적용**: KG의 inferred/atomic 비율 $\phi$ 개념을 TS 도메인에서 어떻게 정의할지 — 논문이 답하지 않은 이 질문이 Grokking track의 핵심 contribution 후보가 될 수 있다.

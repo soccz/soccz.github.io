@@ -1,11 +1,114 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "uKMyEb6AazPZU8uypepF4A==",
-  "iv": "5riWiXyCFTRnIDnUHpf4WA==",
-  "ct": "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",
-  "mac": "WgFfiQV3hLT6ywUFcilLOhzAzLpk9LB/9r3QtvrxUnw="
-}
+# 9. 사고 확장 (c) — 후속 실험 아이디어 2개
+
+> 사용자가 *직접* 시도해볼 만한 실험 두 개. 각 아이디어는 가설 / 데이터 / 비교 조건 / 예상 결과 / 반증 조건 / 비용 추정.
+
+---
+
+## Idea 1. *Logistic-map 위 progress measure 의 regime-conditional 검증*
+
+### 가설
+
+Logistic map $x_{t+1} = r x_t (1-x_t)$ 의 동학을 학습한 transformer 가, $r$ 이 *bifurcation 점* 을 통과할 때마다 *회로의 frequency 집합 $K$* 이 변한다. 즉:
+
+- $r < 3$: fixed point. $K \approx \emptyset$ (DC 만).
+- $3 \leq r < 3.45$: period-2. $K = \{1/2\}$ (frequency in normalized unit).
+- $3.45 \leq r < 3.54$: period-4. $K = \{1/4, 1/2\}$.
+- $r > 3.57$: chaos. $K$ 가 broadband.
+
+본 논문의 *fixed K* 가정이 이런 regime-shift 환경에서 깨질 것을 검증한다.
+
+### 데이터
+
+- 합성 logistic map trajectory. $r$ 을 학습 도중 *천천히* 변화 ($r(t) = 2.8 + 0.8 \cdot t/T$).
+- 초기 $r$ 은 stable, 후기 $r$ 은 chaotic. 학습 종료 시 모델은 chaotic regime 의 다음 step 을 예측.
+
+### 비교 조건
+
+- 조건 A: $r$ 고정 ($r=3.7$, chaotic 직전 region) 에서 학습. Nanda-style fixed K 적용.
+- 조건 B: $r$ 가 시간에 따라 변화. windowed $K_t$ 적용.
+- 조건 C: $r$ 가 *잡음* 추가 (regime detection 어려움) 위에서 학습.
+
+각 조건에서 (i) test loss trajectory, (ii) $\mathcal{L}_{\text{res}}(t)$, (iii) $\mathcal{L}_{\text{exc}}(t)$, (iv) $G(t)$ 를 매 100 step 측정.
+
+### 예상 결과
+
+- 조건 A: Nanda 와 동일. 단조 progress measure, 깔끔한 3-phase.
+- 조건 B: $K_t$ 가 bifurcation 점에서 *jump*. progress measure 가 *piecewise* 단조 — 각 regime 안에서는 단조, regime 변경 시 *re-grokking*.
+- 조건 C: 잡음 강도가 클수록 progress measure 의 단조성이 약화 — 학습이 *각 regime 마다 partial circuit* 만 형성.
+
+### 반증 조건
+
+만약 조건 B 에서 $K_t$ 가 bifurcation 과 *무관하게* 변동하거나, 조건 A 의 깔끔한 단조 grokking 이 *재현되지 않는다면* — Nanda 의 frame 이 logistic map 에 옮겨지지 않음. 그 경우 사용자가 *왜 깨지는지* 의 메커니즘 분석 후 alternative measure 제안.
+
+### 비용 추정
+
+- 모델: 4-layer transformer, $d_{\text{model}}=128$, $\sim 5\cdot 10^5$ params.
+- 학습: $5 \cdot 10^4$ steps, full batch (~2k samples per regime).
+- GPU 시간: 단일 RTX 3090 에서 조건 당 ~2시간. 3 조건 × 5 seed → 30시간 정도. 사용자 P2 환경에서 1주.
+- Plot 코드: 사용자 기존 P2 setup 에서 progress measure 만 추가. 1일.
+- 총: 1.5 주.
+
+### 이 실험이 좋은 이유
+
+본 논문의 *direct extension* 이고, 사용자 P2 logistic 4-layer 실험과 *완벽히 정렬*. 실험 결과가 어느 방향이든 publishable — 본 논문 frame 이 잘 옮겨지면 *positive validation*, 안 옮겨지면 *gap discovery*.
+
+---
+
+## Idea 2. *APF motif progress measure: PE 별 motif 형성 timeline 비교*
+
+### 가설
+
+PE (NoPE / sinusoidal / learned / RoPE / ALiBi) 의 *선택* 이 attention motif (diagonal / stripe / block 등) 의 *형성 속도* 를 결정. 즉:
+
+- RoPE: rotational structure 가 diagonal motif 를 *빨리* induce (low formation step).
+- ALiBi: linear bias 가 stripe motif 를 dominant 로 만듦.
+- NoPE: motif 형성 자체가 *늦거나 무질서* 하게.
+
+이 가설을 Nanda-style Gini-on-Fourier-of-attention 으로 정량 검증.
+
+### 데이터
+
+- APF synthetic motif benchmark — trend / seasonal / regime / anomaly / freq drift 의 5 가지 motif type.
+- Forecasting task: 길이 96 input → 24 output.
+- 각 motif type × 각 PE = 25 조합.
+
+### 비교 조건
+
+- 학습 도중 *매 step* attention pattern 의 2D Fourier 분해 → Gini 측정.
+- *Restricted attention loss*: attention pattern 의 *target motif Fourier component* 만 남긴 projection 의 forecasting loss.
+- *Excluded attention loss*: 반대.
+
+### 예상 결과
+
+- RoPE × diagonal motif: 가장 빠른 Gini 상승. 학습 ~$10^3$ step 에서 saturate.
+- ALiBi × stripe motif: 두 번째로 빠름. ~$2 \cdot 10^3$.
+- NoPE × any motif: 매우 느림 또는 불완전 saturate. ~$10^4$ 이상 또는 saturate 못 함.
+- *Cross-motif* (PE 가 motif 와 misaligned): motif 형성 지연 또는 *다른 motif 로 collapse*.
+
+이게 검증되면, APF 의 *PE → motif 형성 dynamics* 가 *quantitative timeline* 으로 측정됨.
+
+### 반증 조건
+
+- 만약 *모든* PE 에서 같은 Gini trajectory 가 나오면 — PE 의 inductive bias 가 motif 형성에 *영향을 안 줌* — APF hypothesis 의 핵심이 부정됨. (사용자 가설의 negative result, 그러나 *정직한 publication 가능*.)
+- 만약 Gini saturation 이 motif 형성과 *무관* 하게 변동 (예: weight norm 의 simple monotone) — measure 가 *task-specific* 정보를 못 잡음 → 다른 measure 필요.
+
+### 비용 추정
+
+- 모델: APF standard 4-layer transformer, $d_{\text{model}}=64$.
+- 학습: 25 조합 × 5 seed × 학습 ~$2 \cdot 10^4$ step.
+- GPU 시간: 한 조합 1시간 → 125 시간. RTX 3090 4 GPU 분산 시 1.5일. 단일 GPU 시 1주.
+- Plot: PE 별 Gini 곡선 5개 (motif 별).
+- 총: 1–2 주.
+
+### 이 실험이 좋은 이유
+
+APF 의 *motif causality* 다음 단계로 *motif 형성 dynamics* 를 측정 — 이건 *시간 axis* 의 새로운 contribution. Nanda 의 progress measure 가 APF 에 어떻게 *이식 가능* 한지 직접 보임. APF paper 의 강한 contribution.
+
+---
+
+## 종합 — 두 실험의 우선순위
+
+- Idea 1 은 사용자 *Grokking track* 의 직접 contribution. NeurIPS 2027 target 의 *first experiment*.
+- Idea 2 는 사용자 *APF track* 의 motif causality 후속. APF paper 의 §5 (motif dynamics) 에 추가.
+
+지도교수가 두 track 중 어느 쪽으로 좁히느냐에 따라 둘 중 하나에 집중. *둘 다 1.5–2 주 내 끝나는* 분량이라, 둘 다 시도해 보고 더 깔끔한 결과 쪽으로 paper 라인 결정 가능.

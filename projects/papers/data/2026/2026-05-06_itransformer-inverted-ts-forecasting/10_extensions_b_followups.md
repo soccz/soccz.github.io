@@ -1,11 +1,37 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "aUeysV7jXhp4WP3y/vdm1g==",
-  "iv": "ChTApM6mTNNBm08HVEl1Zw==",
-  "ct": "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",
-  "mac": "yrkWxvmwxKqmyd60MnDtQTjKGI4yQ1Ukj4wDxwuPKSQ="
-}
+# 10-B. 사고 확장 — Follow-up 논문 3편
+
+---
+
+## 선행 논문 — Crossformer (Zhang & Yan, ICLR 2023)
+
+**arXiv ID**: arXiv:2303.06208
+
+**한 줄 설명**: T×T와 N×N 어텐션을 계층적으로 결합한 "양방향 어텐션" 트랜스포머.
+
+**iTransformer와의 관계**: Crossformer는 "시간 방향 + 변수 방향 어텐션 모두 필요하다"는 입장이고, iTransformer는 "변수 방향만으로 충분하다"는 입장이다. 이 대립은 해결되지 않았다. Crossformer는 ETT처럼 변수 수가 적고 시간 구조가 복잡한 데이터에서 더 경쟁력 있을 수 있다.
+
+**무엇을 얻을 수 있는가**: iTransformer와 Crossformer를 같은 데이터에서 비교하면 "양방향 어텐션의 추가 비용 대비 이득"을 정확히 측정할 수 있다. APF 연구에서 "T×T + N×N 하이브리드 어텐션 맵의 2D 모티프"라는 새로운 분석 대상이 나온다.
+
+---
+
+## 경쟁 논문 — TimeMixer (Wang et al., ICLR 2024)
+
+**arXiv ID**: arXiv:2405.14616 (ICLR 2024 Oral)
+
+**한 줄 설명**: 다중 스케일 분해(Past Decomposable Mixing + Future Multipredictor Mixing)로 TS를 예측하는, 트랜스포머 없는 MLP 계열 모델.
+
+**iTransformer와의 관계**: 같은 ICLR 2024 발표, 같은 thuml 랩에서 나온 경쟁 아키텍처. TimeMixer는 어텐션 대신 다중 해상도 MLP 혼합을 사용하며, 일부 벤치마크에서 iTransformer와 비슷하거나 더 높은 성능을 보고한다. "어텐션이 정말 필요한가, 아니면 MLP 혼합으로 충분한가"라는 더 근본적인 질문을 제기한다.
+
+**무엇을 얻을 수 있는가**: Grokking 연구 관점에서, 어텐션이 없는 TimeMixer의 훈련 동학과 이텐션이 있는 iTransformer의 훈련 동학을 비교하면 "어텐션이 Grokking에 필수인가"를 검증할 수 있다. APF 연구 관점에서는, "어텐션 없는 모델이 어텐션 있는 모델과 비슷하게 잘 된다면, T×T 어텐션 모티프의 기능적 역할은 무엇인가"라는 질문을 더 날카롭게 만든다.
+
+---
+
+## 후속 논문 — Interpretability for TS Transformers via Concept Bottleneck (Sprang et al., 2024)
+
+**arXiv ID**: arXiv:2410.06070
+
+**한 줄 설명**: 개념 병목 모델(Concept Bottleneck Model)을 TS 트랜스포머에 통합해, "이 모델이 어떤 시계열 개념(계절성, 추세, 변곡점)을 사용해 예측하는가"를 해석 가능하게 만드는 프레임워크.
+
+**iTransformer와의 관계**: iTransformer의 N×N 어텐션이 "변수 상관관계"를 포착한다고 주장하지만, 이것이 실제로 해석 가능한 개념(예: "냉방 수요가 온도 증가 신호에 반응")으로 분해될 수 있는지 검증하지 않는다. Sprang 2024의 Concept Bottleneck을 iTransformer에 적용하면 N×N 어텐션이 어떤 개념적 단위로 동작하는지 시각화할 수 있다.
+
+**무엇을 얻을 수 있는가**: APF의 "2D 어텐션 모티프 → 예측 개념 연결" 분석을 N×N 어텐션으로 확장하는 구체적 방법론을 제공한다. Amsterdam NLP 그룹(Zuidema)의 해석 가능성 방법론이 TS 도메인에서 어떻게 적용되는지 파악하는 필수 선행 논문이다.

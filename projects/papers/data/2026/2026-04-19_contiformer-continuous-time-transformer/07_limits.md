@@ -1,11 +1,27 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "ShC5XVmrvAioLW+KfqKV2Q==",
-  "iv": "X04T7+xQi2Zr4X08p6OsSw==",
-  "ct": "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",
-  "mac": "ausNztlWiA79XvJou12+tDNjBQbo6rLDG7icR02at7U="
-}
+## 6. 가정·한계·반박
+
+### 6.1 명시된 가정
+
+1. Vector field $f_\theta$ 의 Lipschitz 연속 — Picard–Lindelöf로 ODE 해의 존재·유일성 확보.
+2. 관측 시각 $t_i$ 가 정확히 알려져 있음 (no measurement timing noise).
+3. Sampling은 임의 (unspecified) — informative sampling을 명시적으로 다루지 않음.
+
+### 6.2 암묵적 가정
+
+1. **시간축은 물리시간(wall-clock)이며 측정의 의미 시계와 같다.** 의료/금융에서는 거짓일 수 있다 — 시장이 "쉬는 날"의 1초와 FOMC 발표 직후 1초는 정보량이 다르다.
+2. **Vector field가 시각 $s$의 모든 $z_i$에 동일 적용**된다. 즉 토큰별 dynamics가 *공유*되며, 이는 시계열에 *single underlying generative process*가 있다는 강한 가정.
+3. **ODE solver의 수치 오차가 학습 신호를 압도하지 않는다** — 실제로는 NFE 폭주 시 gradient noise가 weight 업데이트를 dominate할 수 있다.
+4. **Loss는 query 시각에 대해 잘 정의된다** — extrapolation으로 갈수록 vector field의 외삽 오차가 누적되지만 본문 loss는 대개 in-distribution query에서만 평가.
+
+### 6.3 반박 가능한 지점 (최소 1개 — 여러 개 제시)
+
+- **반박 1 (가장 치명적)**: "ContiFormer가 mTAND를 이긴 것은 표현력이 아니라 *implicit regularization* 때문일 수 있다." Vector field가 매끈한 trajectory를 강요 → noise가 많은 데이터에서 inductive bias로 작동. 즉 ODE는 "smoother"의 다른 이름. 이를 검증하려면 spline-smoothed mTAND와 직접 비교가 필요한데 본문에 없다.
+- **반박 2**: 표현력 정리는 *이론적 포함*이지 *학습 가능성*이 아니다. ContiFormer가 mTAND 특수해에 도달할 수 있다 ≠ gradient descent로 도달한다. NFE budget 안에서 학습 동역학이 mTAND-shape에 머무는지 검증 부재.
+- **반박 3**: NFE 비용을 통제한 비교가 없다. wall-clock 동일 budget에서 vanilla Transformer를 더 깊게/넓게 키운 모델과 비교했어야 fair.
+- **반박 4 (금융 관점)**: 거래시간 (trading hours) gap, 공휴일, 야간을 단일 ODE trajectory로 잇는 것은 **시장 미시구조 가정에 어긋난다**. 이는 Paper 4의 "Economic Time" 도입 동기가 된다 — ContiFormer 그대로는 이 한계를 노출.
+
+### 6.4 재현성
+
+- **+**: 코드 공개 (Microsoft SeqML), MIT, 표준 데이터셋, `torchdiffeq` 사용 → 재현 가능.
+- **−**: ODE solver tolerance / random seed에 따른 분산이 main text에 충분히 보고되지 않음. 학습 NFE의 hardware 의존성. 금융 stock 데이터는 부분 비공개.
+- **종합**: 재현성 B+ (학계 표준 충족, production-grade는 아님).

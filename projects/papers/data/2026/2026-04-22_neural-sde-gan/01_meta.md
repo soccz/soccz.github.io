@@ -1,11 +1,33 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "JyadEYpgftaFAXs32iI2+Q==",
-  "iv": "I+xyQDg6HeCDhPWd/Ip+Iw==",
-  "ct": "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",
-  "mac": "8MfXT9wWjsg4AoTqsxosylMu38gPEW/egb1Tk2ggjx0="
-}
+# 01 · 메타 & 선정 이유
+
+## 기본 서지
+
+| 항목 | 내용 |
+|------|------|
+| 제목 | Neural SDEs as Infinite-Dimensional GANs |
+| 저자 | Patrick Kidger, James Foster, Xuechen Li, Harald Oberhauser, Terry Lyons |
+| 학회 | ICML 2021 (Proceedings of the 38th ICML, PMLR 139) |
+| arXiv | 2102.03657 (제출: 2021-02-07) |
+| 인용 수 | ≈ 430+ (Semantic Scholar 접근 차단 — arXiv 제출 이후 3년간 공개 인용 기록 기준, 미확인) |
+
+---
+
+## 저자 권위
+
+**Patrick Kidger** (1저자)는 Oxford Mathematical Institute에서 Terry Lyons 지도 하에 박사를 마치고 Google Brain으로 이동한 연구자다. 이전 작업인 **Neural CDEs (arXiv:2005.08926, NeurIPS 2020)**는 불규칙 시계열을 위한 연속-시간 순환 모델의 이론적 기초가 되었으며, ContiFormer(arXiv:2402.10635)가 직접 이 방법론 위에 구축된 만큼 사용자의 연구와 직접 연결된다.
+
+**Terry Lyons**는 러프 경로 이론(rough path theory)의 창시자로, 확률과정의 경로 공간 분석에서 세계 최고 권위자이다. 이 논문은 그의 러프 경로 언어를 머신러닝으로 가져오는 작업의 핵심 결과물이다.
+
+**James Foster**는 고차 확률미분방정식 수치해법(Runge-Kutta 형태의 SDE solver)을 전문으로 하며, 이 논문에서 SDE 학습의 실용적 안정성을 책임진다.
+
+---
+
+## 선정 이유
+
+오늘(2026-04-22, 수요일 · 인접 버킷)은 `_coverage.md`의 인접 태그 5개가 모두 커버 수 0으로 동률이다. 그 중 **`neural-sde`**를 우선 선정한 이유는 세 가지다:
+
+1. **코어 연결 최단 경로**: 이 논문의 판별자는 **Neural CDE**이고, 사용자의 core 논문 ContiFormer도 Neural CDE 위에 구축된다. 즉 동일한 이론 베이스를 공유하면서도 생성 방향으로 확장하므로, 코어 지식이 그대로 활용된다.
+
+2. **Paper 4 직접 연관**: "Continuous Economic Time Attention"에서 ODE 시간변수를 economic time $\tau(t)$로 교체하는 작업은 결국 *시간-변환된 확률과정*의 수학이다. 이 논문이 다루는 SDE의 드리프트·확산 함수에 시간 변환을 적용하는 방식은 Paper 4의 이론 섹션에서 직접 참조할 수 있다.
+
+3. **인접 태그 중 재현성 최고**: 코드가 `torchsde` 라이브러리로 공개되어 있어, 논문에서 논의한 수식을 직접 실험으로 검증할 수 있다.

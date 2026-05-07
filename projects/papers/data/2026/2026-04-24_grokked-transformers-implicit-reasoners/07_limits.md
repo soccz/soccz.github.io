@@ -1,11 +1,68 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "CEjfSHyRhWTpnjZfZCYx7Q==",
-  "iv": "w9ygYN3vnmvzUeKMtolOvw==",
-  "ct": "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",
-  "mac": "dchXJsm1H2S4u5M7gkFGkgwu6HY/iby/CjJRR2Z4v4Y="
-}
+# 07 — 가정·한계·반박
+
+> **배경 사다리**: 이 섹션은 논문의 주장에 비판적으로 접근한다. "반박"은 논문을 폄하하는 것이 아니라, 주장이 성립하는 조건의 경계를 명확히 하는 것이다.
+
+---
+
+## 명시된 가정 (논문이 대놓고 말한 것)
+
+1. **합성 KG의 충분성**: 합성 데이터에서의 발견이 실제 언어 모델의 암묵적 추론 메커니즘을 대표한다고 가정. 논문 자체가 이 한계를 명시하고 향후 연구 방향으로 제시.
+
+2. **GPT-2 아키텍처의 대표성**: GPT-2 기반 소형 트랜스포머에서의 발견이 다른 아키텍처(예: BERT, T5, LLaMA)에도 적용된다고 암묵적으로 가정. 논문은 이 일반화를 직접 주장하지 않으나, 독자들이 자연스럽게 이를 기대한다.
+
+3. **Weight decay의 필수성**: Grokking의 촉매로 weight decay를 강조하지만, Adam optimizer 내의 implicit regularization 효과 등 다른 촉매 요인들이 있을 수 있다.
+
+---
+
+## 암묵적 가정 (말 안 했지만 깔려 있는 것)
+
+### 암묵적 가정 1: "회로"의 분리 가능성
+
+논문은 $\mathcal{C}_\text{mem}$과 $\mathcal{C}_\text{gen}$이 분리된 회로인 것처럼 기술한다. 그러나 뉴럴 네트워크에서 기능은 중첩(superposition)되는 경우가 많다 (Elhage et al., 2022의 superposition 이론). 두 회로가 같은 뉴런들을 공유하고 훈련 중 "비율"이 변한다는 시각도 가능하다. 논문은 이 구분을 경험적으로 지지하지만, mechanistic하게 완전히 분리된 회로임을 증명하지는 않는다.
+
+### 암묵적 가정 2: Grokking이 parametric reasoning의 유일 경로
+
+논문의 주요 비교 대상은 CoT·RAG 같은 non-parametric 전략이다. 그러나 "grokking 없이 parametric reasoning을 학습하는 방법" — 예: curriculum learning, data augmentation, explicit intermediate supervision — 은 실험되지 않았다. "grokking이 필요하다"는 주장이 "grokking이 유일한 경로다"로 과도하게 해석될 수 있다.
+
+### 암묵적 가정 3: 비교(Comparison)의 OOD 성공이 진정한 체계적 일반화
+
+Comparison이 OOD에서 높은 정확도를 보인다고 해서 이것이 "체계적(systematic)" 일반화인지, 아니면 더 단순한 패턴 매칭인지 완전히 구분되지 않는다. 예를 들어, 비교 태스크의 엔티티 속성값이 연속적인 수치라면 보간(interpolation)으로 OOD에 답할 수 있을 수도 있다.
+
+---
+
+## 반박 가능한 지점 1: 합성 KG → 실제 언어 전이의 타당성
+
+**반박 주장**: 합성 KG에서의 grokking은 "이미 완전히 지정된 관계 구조" 위에서 일어나는 특수한 현상이다. 실제 LLM이 사전학습하는 데이터에서는 관계가 불명확하고, 같은 사실이 수천 가지 표현으로 등장하고, 노이즈가 많다. 이 환경에서 $\mathcal{C}_\text{gen}$이 동일한 방식으로 형성되리라는 보장이 없다.
+
+**어떻게 검증할 수 있는가**: 
+- Freebase·WikiData 기반 실제 KG에서 동일 실험 반복.
+- 사전학습된 LLM(BERT-base)에 logit lens·causal tracing을 적용해 동일한 first/second hop 구조가 보이는지 확인.
+- T-REX, LAMA 같은 factual probing 벤치마크에서 grokking 패턴 탐색.
+
+---
+
+## 반박 가능한 지점 2: Composition OOD 실패가 "구조적 한계"가 아닐 수 있다
+
+**반박 주장**: Composition OOD 실패가 트랜스포머 아키텍처의 필연적 한계라기보다는, 단순히 "학습 데이터 분포 문제"일 수 있다. 만약 훈련 데이터에 OOD 엔티티의 추론 예시를 조금이라도 포함하면 해결되는 문제라면, 이는 아키텍처 한계가 아니라 데이터 부족 문제다.
+
+**어떻게 검증할 수 있는가**:
+- OOD 엔티티 집합의 일부를 훈련 데이터에 인퍼드 팩트로 포함시키고 나머지는 OOD로 유지. 포함된 것과 유지된 것의 정확도 차이 측정.
+- 만약 작은 양의 추가 데이터가 OOD를 크게 개선한다면 → 데이터 부족 문제. 그래도 OOD 실패가 지속된다면 → 구조적 한계.
+
+논문의 parameter sharing 실험이 이미 이 방향을 탐색하고 있으며, 부분적 개선만 보여 구조적 성격을 지지한다. 그러나 "데이터 부족 vs 아키텍처 한계"를 더 날카롭게 분리하는 실험이 아쉽다.
+
+---
+
+## 재현성 평가
+
+| 항목 | 평가 |
+|------|------|
+| **코드 공개** | ✅ GitHub (PyTorch) |
+| **데이터 재생성** | ✅ Jupyter 노트북 제공 |
+| **LLM 비교 캐시** | ✅ GPT-4/Gemini 출력 캐시됨 |
+| **분산 보고** | ⚠️ 불명확 (단일 시드 결과인지 멀티 시드 평균인지) |
+| **하이퍼파라미터 완전 공개** | ✅ GitHub README에 명시 |
+| **환경 재현성** | ⚠️ PyTorch 1.13.1 + CUDA 11.6 — 2024-2026 기준 구버전 |
+| **분석 스크립트** | ✅ causal_tracing_*.py 공개 |
+
+가장 큰 재현성 우려: **Grokking 발생 타이밍의 확률적 성격**. 동일 하이퍼파라미터라도 랜덤 시드에 따라 grokking이 50만 스텝 vs 130만 스텝에서 일어날 수 있다. 단일 곡선 그래프가 이 분산을 숨기고 있다면 결과의 안정성이 과장됐을 수 있다.

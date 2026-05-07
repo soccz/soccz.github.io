@@ -1,11 +1,72 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "aG5Ile6Hcw2DR65baIn66Q==",
-  "iv": "nSkCXd05sVf5CGqPiSzP+w==",
-  "ct": "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",
-  "mac": "PRpDR2NkGz95CwXnHxuIKaM6Ja+6SRwam15EfToWbHQ="
-}
+# 05a · 방법론 큰 그림
+
+> **배경 사다리**: 이 파일은 수식 최소로 전체 시스템 흐름을 잡는다. ① GAN이 생성자-판별자 두 신경망의 경쟁임을 알면 된다. ② 미분방정식이 "상태 변화율 = 함수" 형태임을 알면 된다. 수식 세부는 [05b](05_method_b_sde_generator.md), [05c](05_method_c_cde_discriminator.md)에서 다룬다.
+
+---
+
+## 전체 파이프라인: 무한차원 GAN의 한 사이클
+
+```
+【진짜 경로 데이터】               【노이즈 + Neural SDE 생성자】
+  X_1, X_2, ..., X_N                  z ~ N(0,I)
+  (주가, OU 과정 등의                   ↓ SDE 적분
+   실제 관측 경로)                   Y_1, Y_2, ..., Y_N  ← 가짜 경로
+        |                                    |
+        └──────────────┬────────────────────┘
+                       ↓
+              【Neural CDE 판별자】
+               입력: 경로 X 또는 Y
+               처리: dZ_t = f(Z_t) dX_t 적분
+               출력: 실수 스칼라 D(X)
+                       ↓
+              【WGAN 손실 계산】
+               L = E[D(X_real)] - E[D(Y_fake)]
+               + λ · (gradient penalty)
+                       ↓
+              【역전파 + 업데이트】
+               판별자: L을 최대화 방향으로
+               생성자: L을 최소화 방향으로
+```
+
+---
+
+## 각 블록의 역할
+
+### 생성자 (Neural SDE)
+
+생성자는 **랜덤 씨앗(노이즈 벡터)**을 받아서 **연속 시간 경로** 한 개를 뱉는다.
+
+비유: 서울에서 부산까지 가는 길을 랜덤하게 고르는 내비게이션. 같은 출발점(노이즈)이라도 드리프트(대략적 방향)와 확산(바람 영향)을 어떻게 설정하느냐에 따라 다른 경로가 나온다. 학습이 진행되면서 이 내비게이션이 점점 실제 사람들이 다니는 경로와 비슷한 경로를 출력하도록 조정된다.
+
+→ 상세는 [05_method_b_sde_generator.md](05_method_b_sde_generator.md)
+
+### 판별자 (Neural CDE)
+
+판별자는 **경로 하나 전체**를 읽고 "진짜인지 가짜인지"를 나타내는 **하나의 실수**를 출력한다.
+
+비유: 필적 감정사. 서류를 처음 글자부터 마지막 글자까지 모두 읽고 나서 "진짜 서명 같다 → 높은 점수" 또는 "위조 같다 → 낮은 점수"를 준다. CDE는 경로를 처음부터 끝까지 적분하면서 특징을 누적한다.
+
+→ 상세는 [05_method_c_cde_discriminator.md](05_method_c_cde_discriminator.md)
+
+### WGAN-GP 학습 프로토콜
+
+단순 GAN은 판별자가 너무 빨리 이기면 생성자가 기울기를 받지 못한다. WGAN(Wasserstein GAN)은 Wasserstein 거리를 최적화 목적으로 쓰고, 이를 위해 판별자에 Lipschitz-1 제약을 건다. GP(Gradient Penalty)는 이 제약을 부드럽게 강제하는 방법이다.
+
+→ 상세는 [05_method_d_training.md](05_method_d_training.md)
+
+---
+
+## 시스템의 핵심 미학: 대칭성
+
+이 논문의 아름다운 점은 **생성자와 판별자가 같은 언어(미분방정식)**로 작성된다는 것이다:
+
+| | 생성자 | 판별자 |
+|---|---|---|
+| 타입 | SDE (확률 → 경로) | CDE (경로 → 스칼라) |
+| 입력 | 노이즈 $z$, 시간 $t$ | 경로 $X$, 시간 $t$ |
+| 핵심 연산 | $dY = \mu\,dt + \sigma\,dW$ | $dZ = f(Z)\,dX$ |
+| 출력 | 경로 $Y: [0,T] \to \mathbb{R}^d$ | 스칼라 $D(X) \in \mathbb{R}$ |
+
+생성자는 노이즈를 경로로 올리고, 판별자는 경로를 스칼라로 내린다. 이 두 방향이 경쟁하면서 생성자의 경로 분포가 실제 데이터 분포로 수렴한다.
+
+> **[다음 파일]** → [05_method_b_sde_generator.md](05_method_b_sde_generator.md) — Neural SDE 생성자의 수학적 구조

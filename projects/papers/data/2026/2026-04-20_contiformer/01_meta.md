@@ -1,11 +1,55 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "lgf2Qas02qrcW5yNDogtbQ==",
-  "iv": "Jm4b6Vrw7Qug6AYGS4LqLA==",
-  "ct": "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",
-  "mac": "YZv/LI91HQ6vSJWyltNyCsHHwuVUlN5rg8H/r8lUq+k="
-}
+# 0. 메타 & 선정 이유
+
+## 서지 정보
+
+- **원제**: *ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling*
+- **한국어 번역**: ContiFormer — 불규칙 시계열 모델링을 위한 연속시간 트랜스포머
+- **저자**: Yuqi Chen (Fudan University), Kan Ren (Microsoft Research Asia, 교신), Yansen Wang (MSRA), Yuchen Fang (Shanghai Jiao Tong University), Weiwei Sun (Fudan), Dongsheng Li (MSRA)
+- **발표처 / 연도**: Thirty-seventh Conference on Neural Information Processing Systems (NeurIPS 2023)
+- **arXiv ID**: 2402.10635 (프리프린트는 학회 발표 후 2024-02 재업로드)
+- **코드**: `github.com/microsoft/SeqML/tree/main/ContiFormer` (PhysioPro 프레임워크 내부에 통합)
+- **라이선스**: MIT (Microsoft)
+- **인용 수** (Semantic Scholar, 2026-04 기준 추정): ≈ 210+ (직접 조회 불가, 2025년 후반 시점 ≈ 150을 추세 보정)
+
+## 저자 맥락
+
+- **Kan Ren**: MSRA의 sequence/TS 그룹 리더, 이후 ShanghaiTech 이직. 시계열·금융·RL 교집합의 중량급 저자이며 이 그룹에서 PhysioPro, MASTER 등 연속/TPP 모델이 연이어 출판됨. 1급 저자로 판단.
+- **Yansen Wang**: BCI·뇌신호 계열 MSRA 연구자. ContiFormer의 UEA·Neonate EEG 실험 설계가 뇌파 도메인에 자연스럽게 맞춰진 배경.
+- Fudan–MSRA 인턴 파이프라인의 산물. 이 동일 저자군이 이후 "Continuous PDE Transformer", "Irregular TPP" 등 파생물을 연달아 내며, NODE + Attention 결합의 준-표준으로 자리잡는 중이다.
+
+## 한 문장 요지
+
+표준 self-attention이 **이산 위치 인덱스**에서만 정의된다는 제약을 풀어, Key·Value를 **Neural ODE가 구동하는 연속 함수**로 승격시킨 뒤 임의의 쿼리 시각 $t$에서 softmax-attention을 평가한다. 결과적으로 Transformer와 Neural ODE가 각각의 특수 경우로 복원되는 통합 모델.
+
+## 선정 이유 (프로파일과의 결합)
+
+### 프로파일 대응 (직접)
+
+`_profile.md`의 Paper 4는 그대로 인용하면:
+
+> *"Paper 4: Continuous Economic Time Attention (ContiFormer의 ODE 시간 변수 대체)"*
+
+Paper 4는 ContiFormer의 **시간 축 $t$** 를 Clark (1973)식 subordinated process의 **경제시간 $\tau(t)$** 로 갈아끼우자는 기획이다. 그러려면 내가 먼저 증명책임을 져야 할 세 가지는:
+
+1. **원본 ContiFormer에서 시간 $t$가 수학적으로 어디에 어떤 형태로 들어가는가** — ODE의 독립 변수인지, 포지셔널 인코딩의 인자인지, attention kernel의 인자인지. 이 질문에 대해 "다 들어간다"는 답은 충분하지 않다. 각 경로의 계수 민감도를 알아야 대체 수술이 가능하다.
+2. **시간 축이 연속이라는 가정이 ContiFormer의 어느 이론적 보장과 연결되는가** — Theorem 4.1(Transformer를 특수해로 포함), Theorem 4.2(Neural ODE를 특수해로 포함)의 증명 구조에서 $t$의 역할을 분해해야 한다.
+3. **ContiFormer가 재현하지 못하는 dynamics가 금융에서 어떤 것인가** — 점프, 체제 전환, 변동성 클러스터링. 이 목록이 Paper 4의 defensibility를 만든다.
+
+이 1~3은 **반드시 ContiFormer 원문을 해체하고서야** 확보 가능한 근거이므로, 지금 이 순서가 논리적으로 선행이다.
+
+### 프로파일 대응 (간접)
+
+- **Paper 1 (When Multiplicative Conditioning Fails)**: ContiFormer는 시간을 "좌표"가 아니라 "dynamics"에 넣었기 때문에 multiplicative conditioning 관점에서 보면 **coordinate-space conditioning의 극단적 사례**로 분류된다. Paper 1이 `tau_rope` vs `concat_a`를 비교하는 축 위에서, ContiFormer는 "좌표공간 조건화를 dynamics 전체에 침투시킨 버전"의 reference point.
+- **Paper 2 (Representation Utility Gap)**: ContiFormer가 ranking vs absolute 양 지표에서 어떻게 달라지는지, 원문 실험에는 분해되어 있지 않다. 이 gap 자체가 Paper 2의 재료.
+- **Paper 3 (TTPA)**: ContiFormer가 TPP에 적용된 섹션 4.3이 Paper 3 baseline 재점검의 출발점.
+
+### 왜 "지금"인가
+
+- **코어 태그 6개 모두 0**: 첫 회차의 앵커를 선정하는 의미에서, 내가 실제로 가장 오래 사용할 **참조점**을 첫 번째로 배치하는 것이 합리적. ContiFormer는 앞으로 쓸 인접·원거리 회차에서도 ("Neural CDE와 비교하면", "Neural SDE로 대체하면") 반복 소환될 고정점.
+- Paper 4 드래프트 진행 중이므로, 이 해체 결과는 **며칠 내 직접 사용**된다. 이론적 가치만이 아니라 즉시 가동성(production value)이 높다.
+
+## 읽기 모드
+
+- **1차 독해 각도**: "시간 변수 $t$가 어디에 어떤 수학적 형태로 들어가는가"를 추적한다. 다른 디테일은 부차.
+- **2차 독해 각도**: Theorem 4.1·4.2의 증명 전제가 무엇인지. 금융 데이터에서 이 전제가 깨지는 지점은 어디인지.
+- **3차 독해 각도**: 실험의 공정성. Neural ODE baseline이 hyperparameter tuning 공정성 측면에서 핸디캡을 받았는가.

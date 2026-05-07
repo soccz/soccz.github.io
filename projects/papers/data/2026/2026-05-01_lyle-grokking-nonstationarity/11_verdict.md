@@ -1,11 +1,29 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "agjswX4F/a2dDs6339psnA==",
-  "iv": "xiG7vO3eMII9ARMjyO5QaA==",
-  "ct": "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",
-  "mac": "V7lhCW6ytL6Embj3H7qWu+2vQhO2xBkl1Q+kbVMN3bw="
-}
+# 11 — 한 줄 판결
+
+---
+
+## 판결
+
+> **Grokking의 "왜"를 비로소 최적화 역학으로 닫아주는 논문: ELR = η/‖θ‖ 하나로 지연된 일반화·원시 편향·소성 상실을 통합하고, 두 줄짜리 재가열(Re-warming)이 세 도메인 모두에서 효과를 낸다는 실험적 증거를 제시했다는 점에서, 내 Grokking TS 트랙의 "왜 weight decay가 필수였는가" 질문에 대한 권위 있는 답이 되며, 비정상 시계열 적응 실험의 이론적 토대로 직접 활용 가능하다.**
+
+---
+
+## 판결 이유 (3줄 보충)
+
+1. **이론적 기여 중간, 실험적 기여 높음**: ELR 이론 자체는 선행 NaP 논문(arXiv:2407.01800)에서 온 것이지만, grokking·primacy bias·plasticity loss를 하나의 프레임으로 묶고 세 도메인에서 실증한 통합이 이 논문의 핵심 기여다.
+
+2. **내 연구 지도에서의 좌표**: §A Grokking 트랙의 "훈련 역학" 축 → Nanda 2023(표현 변화)과 함께 읽어야 완전한 그림이 나온다. 단독으로는 "왜"만 설명하고 "어떻게 보이는가"가 없다.
+
+3. **한계 인식**: 소규모 실험·이론적 수렴 증명 부재·$T$ 민감도 미검증. 대형 시계열 모델로의 전이 가능성은 내가 직접 실험으로 확인해야 한다.
+
+---
+
+## 연구 지도 핀 위치
+
+```
+§A (Grokking dynamics 층)
+    │
+    ├── Power 2022: "무엇이 일어나는가" (현상 발견)
+    ├── Nanda 2023: "내부에 무엇이 생기는가" (메커니즘, 표현)
+    └── Lyle 2025: "왜 늦게 일어나는가" (최적화 역학, ELR)  ← 여기에 핀
+```

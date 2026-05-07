@@ -1,11 +1,80 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "F5MsYUo0Y4ALO97Xi+NU/w==",
-  "iv": "Am1/4QUvaztdEoY2h/gUvQ==",
-  "ct": "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",
-  "mac": "TlKGPDDEWm1mWjDWkleTmYQa5/VzrRGHfYYGx2tFdR4="
-}
+# 10c · 실험 아이디어 2개
+
+---
+
+## 아이디어 1 — Economic Time으로 구동되는 Neural SDE: 시간-변환 생성자
+
+### 가설
+
+Clark (1973)의 경제 시간(economic time)으로 SDE 시간축을 교체하면 — 즉, $dY_{\tau(t)} = \mu_\theta(\tau, Y)\,d\tau + \sigma_\theta(\tau, Y)\,d\tilde{W}_\tau$ 에서 $\tau(t) = \int_0^t v(s)\,ds$ ($v$: 거래량) — 표준 SDE 생성자 대비 금융 경로 생성 품질이 향상된다. 특히 변동성 클러스터링 재현 지표에서 차이가 나타날 것이다.
+
+### 데이터
+
+- S&P500 구성 종목 일간 종가 + 거래량 (2010–2023, Yahoo Finance)
+- 비교용: OU 합성 경로 (단순 baseline)
+
+### 비교 조건
+
+| 조건 | 설명 |
+|------|------|
+| Baseline | 표준 Neural SDE GAN (wall-clock time $t$) |
+- | Ours | Economic Time Neural SDE GAN ($\tau(t)$ 기반) |
+| Ablation 1 | $\tau(t)$ 대신 cumulative bid-ask spread (거래 비용 기반 시간) |
+| Ablation 2 | $\tau(t)$ 대신 VIX 기반 시간 (변동성 지수 누적) |
+
+### 예상 결과
+
+- Economic time 기반 SDE가 변동성 클러스터링 지표(ARCH(1) 계수 차이)에서 baseline을 개선.
+- ACF(자기상관함수) 비교에서 economic time 생성 경로의 단기 의존성이 실제 데이터와 더 일치.
+
+### 반증 조건
+
+- Economic time 기반 SDE가 baseline 대비 TSTR·discriminative score에서 유의미한 차이가 없다면 → "economic time이 생성 품질에 유익하지 않다"는 반증. 이 경우 Paper 4의 주장을 생성 맥락이 아닌 *예측* 맥락에만 한정해야 한다.
+
+### 비용 추정
+
+- 코드: torchsde 기반, 시간 변환 적용 ≈ 2일
+- 학습: GPU 1개, 10 epochs × 50 배치 ≈ 4~6시간
+- 전체: ≈ 1주일 (데이터 정리 포함)
+
+---
+
+## 아이디어 2 — Neural CDE 판별자 vs. Transformer 판별자: Paper 2 재검증
+
+### 가설
+
+Neural CDE 판별자와 Transformer(이산 attention 기반) 판별자를 동일한 Neural SDE 생성자에 붙였을 때, Transformer 판별자는 장기 의존성 캡처에서 Neural CDE와 유사하지만, *불규칙 관측 시계열*에서는 Neural CDE가 의미 있게 우수하다. 이 차이는 Paper 2의 "Representation Utility Gap"의 시계열 생성 유사체이다.
+
+### 데이터
+
+- 불규칙 관측 OU 과정 (관측 확률 $p \in \{0.3, 0.5, 0.8, 1.0\}$으로 랜덤 다운샘플)
+- 이 설정에서 두 판별자의 discriminative score와 TSTR을 비교.
+
+### 비교 조건
+
+| 조건 | 판별자 | 생성자 |
+|------|--------|--------|
+| A | Neural CDE | Neural SDE |
+| B | Transformer (sin PE) | Neural SDE |
+| C | Transformer (learnable PE) | Neural SDE |
+| D | LSTM | Neural SDE |
+
+### 예상 결과
+
+- 규칙 관측($p=1.0$): A ≈ B > D (Transformer와 CDE 동등)
+- 불규칙 관측($p=0.3$): A > B > C > D (불규칙 간격에서 CDE가 명확히 우세)
+- 이 결과는 "이론적으로 최적인 판별자 = CDE"의 실험적 지지 + 불규칙 관측에서의 실용적 우위를 동시에 보여준다.
+
+### 반증 조건
+
+- Transformer (learnable PE)가 Neural CDE와 통계적으로 동등하다면 → "CDE의 이론적 우위가 실용에서 발현되지 않는다"는 반증. 이 경우 더 간단한 Transformer 판별자로 대체하는 것이 효율적임을 의미한다.
+
+### Paper 2 연결
+
+이 실험의 "conditioning mechanism"을 판별자 구조로, "representation utility"를 생성 품질로 매핑하면 — Paper 2의 결론("input-space conditioning vs. coordinate-space conditioning의 utility gap")을 생성 모델 판별자 영역에서 재검증하는 실험이 된다. 두 실험 결과가 일치하면 "conditioning space의 선택이 용도(예측/생성)와 무관하게 성능에 영향을 준다"는 더 강한 주장이 가능해진다.
+
+### 비용 추정
+
+- 코드: torchsde + HuggingFace Transformer ≈ 3일
+- 학습: GPU 1개, 4개 조건 × 4개 결측 비율 = 16 실험, 각 2시간 ≈ 32시간
+- 전체: ≈ 2주일

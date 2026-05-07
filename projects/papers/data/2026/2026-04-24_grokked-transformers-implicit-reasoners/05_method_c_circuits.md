@@ -1,11 +1,94 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "NUzly8iCF5jtdXX6RQywDA==",
-  "iv": "d92BqjHw0o+uMkGzNgcflg==",
-  "ct": "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",
-  "mac": "OQtOOUGLvU9uknb6dJJN7ukYcxKUggL1KKKOiJLoj+4="
-}
+# 05c — 방법론: 두 회로의 경쟁 메커니즘
+
+> **이 파일은 [05_method_b_tasks.md](05_method_b_tasks.md)에서 이어집니다.** 배경 사다리: ① "회로(circuit)"가 뉴럴 네트워크에서 특정 기능을 수행하는 뉴런·어텐션 헤드·레이어의 서브집합임, ② "L2 정규화(weight decay)"가 가중치의 크기를 작게 만드는 제약임을 알면 된다.
+
+---
+
+## 왜 두 회로가 공존하는가
+
+모델이 훈련 데이터를 학습하는 방법은 유일하지 않다. Composition 태스크에서 "민준이 → 스니커즈"를 학습하는 두 가지 방식이 존재한다:
+
+### 방식 A: 암기 회로 $\mathcal{C}_\text{mem}$ (Memorizing Circuit)
+
+"민준이 → 스니커즈"라는 쌍을 직접 key-value 형태로 저장. 마치 사전처럼, 모든 인퍼드 팩트를 개별적으로 기억하는 방식.
+
+**특성**:
+- **빨리 학습됨**: 경사하강법에서 단순 패턴 암기가 먼저 일어난다 (neural network의 "spectral bias").
+- **파라미터 비효율**: 인퍼드 팩트가 $N$개라면 대략 $O(N)$ 파라미터가 필요.
+- **일반화 불가**: 훈련에 없는 쿼리에 대한 답이 없다.
+
+### 방식 B: 일반화 회로 $\mathcal{C}_\text{gen}$ (Generalizing Circuit)
+
+원자적 사실 두 개를 연결하는 알고리즘을 학습. 마치 "민준이 스포츠 찾기" → "그 스포츠의 용품 찾기"를 순차 실행하는 규칙.
+
+**특성**:
+- **느리게 학습됨**: 더 복잡한 알고리즘이므로 학습에 시간이 걸린다.
+- **파라미터 효율**: 원자 사실의 수에 비례하는 파라미터로 모든 조합을 처리. $O(|\mathcal{E}| + |\mathcal{R}|)$ 수준.
+- **일반화 가능**: 원자 사실이 있는 한 새로운 조합에도 적용.
+
+---
+
+## 경쟁 역학: Weight Decay가 심판이다
+
+훈련 목적함수:
+$$\mathcal{L}(\theta) = \mathcal{L}_\text{CE}(\theta) + \lambda \|\theta\|_2^2$$
+
+초반엔 $\mathcal{C}_\text{mem}$이 $\mathcal{L}_\text{CE}$를 빠르게 낮춘다 → 훈련 정확도 100% 도달.
+
+그런데 weight decay 항 $\lambda \|\theta\|_2^2$은 계속 작용한다. $\mathcal{C}_\text{mem}$은 파라미터가 많으므로 $\|\theta_\text{mem}\|_2^2$가 크다. $\mathcal{C}_\text{gen}$은 파라미터 효율적이므로 $\|\theta_\text{gen}\|_2^2$가 작다.
+
+따라서 충분한 훈련이 계속되면:
+
+$$\mathcal{L}(\theta_\text{gen}) = \mathcal{L}_\text{CE}(\theta_\text{gen}) + \lambda \|\theta_\text{gen}\|_2^2 < \mathcal{L}(\theta_\text{mem}) = \mathcal{L}_\text{CE}(\theta_\text{mem}) + \lambda \|\theta_\text{mem}\|_2^2$$
+
+이 시점부터 경사하강법이 $\mathcal{C}_\text{gen}$ 쪽으로 이동하기 시작한다. Grokking은 $\mathcal{C}_\text{gen}$이 훈련 정확도에도 기여하기 시작하는 전환점이다.
+
+---
+
+## 레이어별 역할 분담
+
+Logit lens 분석에서 확인된 구조:
+
+### Composition에서의 레이어별 역할
+
+**레이어 1~4 (하위)**: "첫 번째 hop" 원자 사실 검색.
+- "민준이" 토큰의 representation이 이 구간에서 "농구"에 해당하는 의미를 갖게 됨.
+- Logit lens에서 `h^(3)` 정도에서 이미 "농구"가 높은 확률로 예측됨.
+
+**레이어 5~8 (상위)**: "두 번째 hop" 계산 및 최종 답 생성.
+- "농구"를 받아 "스니커즈"로 변환하는 연산이 이 구간에서 이루어짐.
+- Grokking **이전**: 이 구간에서 정답 "스니커즈"가 나타나지 않음 ($\mathcal{C}_\text{mem}$은 직접 답을 검색하므로 중간 hop이 없음).
+- Grokking **이후**: 이 구간에서 점진적으로 "스니커즈"의 확률이 높아짐 ($\mathcal{C}_\text{gen}$ 형성).
+
+이것이 grokking의 내부에서 일어나는 일이다: **상위 레이어에 두 번째 hop 회로가 새로 형성된다.**
+
+### Composition $\mathcal{C}_\text{gen}$의 구조 (추정)
+
+```
+[입력] (민준, r1∘r2, ?)
+   ↓ 하위 레이어
+[중간] h^(4) ≈ representation of "농구" (first hop result)
+   ↓ 상위 레이어
+[출력] h^(8) ≈ representation of "스니커즈" (second hop result)
+```
+
+이 구조가 OOD에서 실패하는 이유: OOD 엔티티(훈련 때 인퍼드 팩트로 등장 안 한 엔티티)의 경우, 하위 레이어에서 "first hop 결과"를 얻지만 상위 레이어가 그 결과에 대한 "second hop 경로"를 내부에 갖고 있지 않다. 비순환 구조이므로 하위 레이어로 돌아가 새 first hop을 다시 실행할 수 없다.
+
+---
+
+## 두 회로의 공존 증거
+
+Grokking 이후에도 $\mathcal{C}_\text{mem}$이 완전히 사라지지 않는다는 증거:
+
+- **Activation patching**: $\mathcal{C}_\text{gen}$ 경로를 차단해도 모델이 일부 훈련 데이터는 맞힌다 (= $\mathcal{C}_\text{mem}$ 잔존).
+- **Weight norm 분석**: Grokking 이후 weight norm이 감소하지만 제로로 수렴하지는 않는다.
+
+이는 Nanda et al. (2023)의 "cleanup phase" — 암기 회로가 점진적으로 제거되는 단계 — 와 일치한다. 단, 본 논문의 KG 태스크에서는 cleanup이 모듈 산술보다 느리게 진행된다.
+
+---
+
+## 핵심 한 문장 요약
+
+> Grokking = 암기 회로($\mathcal{C}_\text{mem}$)의 파라미터 비효율성이 weight decay에 의해 불이익을 받는 동안, 파라미터 효율적인 일반화 회로($\mathcal{C}_\text{gen}$)가 점진적으로 상위 레이어에 형성되어 결국 지배권을 획득하는 과정이다.
+
+**→ Logit Lens와 Causal Tracing의 구체적 적용은 [05_method_d_analysis.md](05_method_d_analysis.md)에서 계속.**

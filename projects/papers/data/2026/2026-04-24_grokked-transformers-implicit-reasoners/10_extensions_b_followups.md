@@ -1,11 +1,38 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "9FbUIpCohPrxL+Bq6tHBNA==",
-  "iv": "Z7ApATHY+IQodUJVeapgpQ==",
-  "ct": "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",
-  "mac": "rMdhqsWtliSXSi+Eh8sjZFI4KsOF83sqwo9CqNxySfM="
-}
+# 10b — 사고 확장: Follow-up 논문 3편
+
+---
+
+## Follow-up 1 (선행): Nanda et al. (2023) "Progress measures for grokking via mechanistic interpretability" (ICLR 2023 Oral, arXiv:2301.05217)
+
+**어떤 논문인가**: 모듈 덧셈 $(a+b) \mod p$에서 grokking이 일어나는 이유를 역공학한 논문. 모델이 DFT 기반 "Fourier 회로"를 학습하며, 훈련을 memorization → circuit formation → cleanup 3단계로 나눌 수 있음을 보인다. ICLR 2023 Oral로 발표된 grokking 메커니즘 해석의 선행 연구.
+
+**본 논문과의 관계**: 본 논문(Wang et al., NeurIPS 2024)의 직접적 선행. 두 회로($\mathcal{C}_\text{mem}$, $\mathcal{C}_\text{gen}$) 경쟁 프레임을 모듈 산술에서 처음 실증한 것이 Nanda et al. 본 논문은 이를 KG 추론으로 확장.
+
+**무엇을 얻을 수 있는가**: 
+- 3단계 훈련 구조(memorization/circuit formation/cleanup)의 상세 수식과 실증 방법.
+- "Progress measures" (restricted loss, excluded loss 등) — grokking을 조기에 예측하는 지표. 이 지표를 TS Grokking track에 도입할 수 있다.
+- Fourier 회로의 역공학 방법론 — TS 주기 패턴 회로를 역공학하는 방법의 모델.
+
+---
+
+## Follow-up 2 (경쟁): He et al. (2026) "Is Grokking Worthwhile? Functional Analysis and Transferability of Generalization Circuits in Transformers" (arXiv:2601.09049)
+
+**어떤 논문인가**: 본 논문(Wang et al., NeurIPS 2024)의 직접적 비판자. 2026년 1월 발표된 신작. 핵심 주장: (1) In-distribution 쿼리에서 grokked/non-grokked 모델의 inference path가 동일하다 → "$\mathcal{C}_\text{gen}$ 형성"이 새로운 추론 능력을 주지 않는다. (2) Grokked 모델도 새 지식 통합 시 전이 가능성이 제한적이다.
+
+**본 논문과의 관계**: Grokking이 "worthwhile"한가라는 정반대 질문을 던진다. Wang et al.이 "grokking이 implicit reasoning의 유일 경로"라고 주장한다면, He et al.은 "grokking 이후에도 진정한 체계적 추론이 달성되지 않는다"고 반박한다.
+
+**무엇을 얻을 수 있는가**: 
+- Grokking의 한계에 대한 균형 잡힌 시각 — Grokking track 논문의 "Related Work"와 "Limitations"에 반드시 인용해야 한다.
+- 두 논문이 상충하는 포인트를 TS 도메인에서 직접 검증할 수 있다: TS grokked 모델이 OOD 분포에서 정말 새로운 능력을 보이는가?
+
+---
+
+## Follow-up 3 (후속): Power et al. (2022) "Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets" (arXiv:2201.02177)
+
+**어떤 논문인가**: Grokking 현상 자체를 처음 명명하고 발표한 원조 논문. DeepMind 연구팀 (Alethea Power, Yuri Burda, Harri Edwards, Igor Babuschkin, Vedant Misra). 모듈 산술, 순열, 집합 연산 등 다양한 알고리즘 태스크에서 grokking을 체계적으로 기록.
+
+**본 논문과의 관계**: Wang et al.이 "grokking이 KG 추론에서도 일어난다"를 보임으로써 Power et al.의 발견을 일반화. 그러나 Power et al.의 태스크(모듈 산술)에선 OOD 문제가 없음 — 모듈 덧셈은 닫힌 구조라 OOD 개념이 다름. 이 대조가 흥미롭다.
+
+**무엇을 얻을 수 있는가**: 
+- 다양한 알고리즘 태스크에서 grokking의 기본 조건(데이터 크기, weight decay, 모델 크기 상호작용). TS Grokking track에서 어떤 hyperparameter 범위를 탐색해야 하는지 가이드.
+- "언제 grokking이 일어나는가"의 경험적 법칙: 훈련 데이터 크기가 충분히 작고, weight decay가 있고, 충분히 오래 훈련할 때. 이 조건이 TS 예측 설정에서 자연스럽게 충족되는가?

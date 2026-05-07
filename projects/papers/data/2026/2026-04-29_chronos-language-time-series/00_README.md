@@ -1,11 +1,40 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "WlS7OlljZVppILf1+pJbhA==",
-  "iv": "Zj08DorS9iCBrAbbNJWuPA==",
-  "ct": "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",
-  "mac": "P2pIUAKy3LwATh4gtgTJ2w48mNhgDmQotuWX7YlPIB4="
-}
+# Chronos: Learning the Language of Time Series
+
+**원문 제목**: Chronos: Learning the Language of Time Series  
+**한국어 제목**: Chronos: 시계열의 언어를 배우다  
+**저자**: Abdul Fatir Ansari, Lorenzo Stella, Caner Turkmen, Xiyuan Zhang, Pedro Mercado, Huibin Shen, Oleksandr Shchur, Syama Sundar Rangapuram, Sebastian Pineda Arango, Shubham Kapoor, Jasper Zschiegner, Danielle C. Maddix, Hao Wang, Michael W. Mahoney, Kari Torkkola, Andrew Gordon Wilson, Michael Bohlke-Schneider, Yuyang Wang  
+**소속**: Amazon, UC Berkeley, New York University  
+**발표처**: Transactions on Machine Learning Research (TMLR), 2024년 10월  
+**arXiv ID**: 2403.07815  
+**태그**: `ts-transformer-baseline` (주), `probabilistic-forecast` (부)  
+**코드·모델**: 공개 — https://github.com/amazon-science/chronos-forecasting (Apache 2.0), 모델 5종 HuggingFace 배포  
+
+---
+
+## 한 줄 판결
+
+> Chronos는 시계열을 이산 토큰의 언어로 치환하여 T5 언어모델로 학습하는 가장 단순한 형태의 TS 파운데이션 모델이다 — 그 단순함이 강점이자 한계이며, APF 시각에서는 "Transformer가 TS 토큰 시퀀스에서 어떤 어텐션 패턴을 형성하는가"라는 핵심 미답 질문을 남긴다.
+
+---
+
+## 목차
+
+| 파일 | 섹션 |
+|------|------|
+| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 |
+| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR |
+| [03_problem.md](03_problem.md) | 2. 문제 지형도 |
+| [04_claims.md](04_claims.md) | 3. 핵심 Claim 해체 |
+| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 전체 흐름 |
+| [05_method_b_tokenization.md](05_method_b_tokenization.md) | 4b. 방법론 — 토크나이제이션 |
+| [05_method_c_architecture.md](05_method_c_architecture.md) | 4c. 방법론 — T5 아키텍처 |
+| [05_method_d_data_augmentation.md](05_method_d_data_augmentation.md) | 4d. 방법론 — 데이터 증강 |
+| [05_method_z_implementation.md](05_method_z_implementation.md) | 4z. 방법론 — 구현 디테일 |
+| [06_experiments.md](06_experiments.md) | 5. 실험 해부 |
+| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 |
+| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 |
+| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 |
+| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 사고 확장 — 자문 질문 |
+| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 |
+| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 |
+| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |

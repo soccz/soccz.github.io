@@ -1,11 +1,60 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "5J9DmRcf8Zi3PtuUhw8OXA==",
-  "iv": "941OUtyF/nFUZ8YyDH3tVA==",
-  "ct": "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",
-  "mac": "mjhI0R5Ur0wYKLf1Larbr7vdhjg4h+8rQLRHDAYCC88="
-}
+# 05. 방법론 해부 — Part A: 큰 그림 (시간 연속 관점)
+
+## 배경 사다리
+
+이 절을 이해하려면 ① **causal LLM inference** 가 step $t = 1, 2, \dots, T$ 에서 한 token 씩 생성하면서 매 step query $q_t$ 를 새로 만들고 모든 과거 key $k_1, \dots, k_t$ 와 inner product 한다는 것, ② 그 결과 attention vector $\alpha_t \in \Delta^{t-1}$ (확률 simplex) 가 매 step 길이가 늘어나는 시계열을 이룬다는 것 — 이 둘만 알면 된다.
+
+## 큰 그림
+
+기존 연구들은 attention map 을 **공간적 (한 시점의 $T \times T$ 행렬)** 객체로 본다. TAPPA 의 발상 전환은 이걸 **시간적 (step 마다 길어지는 시퀀스)** 객체로 본다는 데 있다. 즉 같은 head 의 attention 을:
+
+$$\{\alpha_t\}_{t=1}^T, \quad \alpha_t \in \Delta^{t-1}$$
+
+으로 쓰고, 이 시퀀스의 **시간 차원의 자기상관** 을 분석 대상으로 삼는다.
+
+이렇게 보면 자연스럽게 두 질문이 나온다:
+- **(Q1)** $\alpha_t$ 와 $\alpha_{t+1}$ 가 얼마나 닮았는가? — predictability
+- **(Q2)** 닮음의 패턴은 어떤 구조를 가지는가? — re-access (멀리 떨어진 같은 위치 반복) / sink (첫 위치 고정) / slash (인접 위치)
+
+저자들의 핵심 발상은 (Q1) 이 **거의 전적으로 query 시퀀스 $\{q_t\}$ 의 자기유사도** 에 의해 결정된다는 것이다. 왜? attention 은 $\alpha_t = \mathrm{softmax}(q_t^\top K_t / \sqrt{d})$ 이고 (causal mask), key matrix $K_t = [k_1, \dots, k_t]$ 는 한 step 에 한 column 만 추가될 뿐 기존 columns 는 불변. 따라서 $\alpha_{t+1} - \alpha_t$ 의 변동성의 source 는 (i) $q_{t+1} - q_t$ 의 변화, (ii) $k_{t+1}$ 의 새 column 추가. (ii) 는 새 query 와의 dot-product 한 항의 추가로 통제 가능하므로, 본질적으로 (i) 가 지배. 그러므로:
+
+> **"Query 자기유사도 = attention 패턴 예측가능성의 sufficient signal"**
+
+이라는 가설이 그럴듯해진다.
+
+(Q2) 는 (Q1) 의 미시구조다. attention map 의 두 정보소스가 query 내적에 어떻게 들어가는가:
+- query 의 방향성 (semantic 정보)
+- RoPE 가 query/key 위치 정보로 곱하는 회전 (positional 정보)
+
+전자는 학습된 representation 에 의존, 후자는 PE 메커니즘에 의존. RoPE 는 dimension 별로 주파수가 정해진 회전이므로 channel 마다 다른 주파수 응답을 갖는다. 저주파 (느린 회전) channel 은 멀리 떨어진 query-key pair 의 정렬을 보존, 고주파 (빠른 회전) channel 은 작은 위치 차이만 정렬 보존 — 이 사실로부터 자연스럽게 (re-access ↔ low-freq, slash ↔ high-freq) 의 매핑이 나온다.
+
+## 다이어그램 지문 (본문 그림 추정)
+
+본문 Figure 1 (저자 framing 그림) 은 대략 이런 구조일 것이다:
+
+```
+              high q-similarity     low q-similarity
+            +------------------+------------------+
+low-freq    |    re-access /   |   sink (residual)|
+RoPE 우세   |    sink          |    or noise      |
+            +------------------+------------------+
+high-freq   |    slash /       |    unpredictable |
+RoPE 우세   |    diagonal      |    (random-look) |
+            +------------------+------------------+
+```
+
+(2 × 2 phase diagram. 실제 본문에 phase diagram 표기로 등장하는지는 미확인 — 검색 스니펫엔 직접 안 나옴. 그러나 framing 의 논리상 이 구조가 자연스럽다.)
+
+## 다른 접근으로 했다면
+
+대안 1: **공간적 통계 (e.g. attention entropy, top-k mass)** 만으로 motif 를 분류 — 기존 SnapKV / H2O 노선. 한계: head 의 시간 진화를 무시. TAPPA 가 우월한 이유는 시간 통계량 (q-similarity) 이 단일 시점 통계량이 잡지 못하는 head 동학을 잡음.
+
+대안 2: **PE 만 보고 attention motif 를 예측** — Press 2022 ALiBi · Su 2024 RoPE 의 분석. 한계: 같은 PE (RoPE) 라도 head 마다 다른 motif 가 나오는 사실을 설명 못함 (PE 는 head-invariant, motif 는 head-variant).
+
+대안 3: **head representation 만 보고 motif 분류** — Wu 2025 retrieval head 같은 학습 후 head probe. 한계: PE 를 갈아끼우면 motif 가 어떻게 바뀌는지 예측 불가.
+
+TAPPA 의 의의는 **세 대안의 공집합** — query 동학 (alternative 3 의 일부) 과 PE 메커니즘 (alternative 2) 을 곱한다. 이게 새 framing 인지 단순한 양 노선의 합인지는 reviewer 가 가를 부분.
+
+## 핵심 한 문장
+
+> **TAPPA 의 method 1차 contribution 은 attention 패턴의 인과 변수를 (query 자기유사도, RoPE channel 주파수) 의 곱으로 환원한 데 있고, 그 곱이 충분 통계량으로 기능하면 (Theorem 5.2) 패턴의 형태가 강제되며, 그 metric (q-similarity) 이 학습 없이 inference 시간에 측정 가능하므로 즉시 KV/pruning 에 응용된다.**

@@ -1,11 +1,22 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "q3/KEZmHEqACc4nAVTezFw==",
-  "iv": "1ibrkPCEZLjebuGWmPvT4A==",
-  "ct": "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",
-  "mac": "e3IjvW2Z0SItpKoc8B03DAS+8JHC7tJBIPsl671pEiQ="
-}
+## 7. 이론적 계보
+
+### 7.1 이론적 조상
+
+1. **Neural ODE — Chen et al. (NeurIPS 2018)**: hidden state $h(t)$를 ODE로 진화. ContiFormer의 $z_i(t)$는 직계 후손. Adjoint method로 메모리 효율 backprop.
+2. **Latent ODE / ODE-RNN — Rubanova et al. (NeurIPS 2019)**: ODE를 비정규 시계열에 처음 본격 적용. ContiFormer는 이 구조의 단일 trajectory 한계를 token-별 trajectory + attention으로 극복.
+3. **Neural CDE — Kidger et al. (NeurIPS 2020)**: 입력 자체를 vector field에 흡수 (controlled differential equation). ContiFormer는 입력을 임베딩 후 ODE로 lift — CDE의 "input as control"보다 약하지만 attention과 호환 쉬움.
+4. **Multi-time Attention (mTAND) — Shukla & Marlin (ICLR 2021)**: query를 시간 함수로 두는 첫 시도. ContiFormer는 query뿐 아니라 key/value까지 시간함수로 — mTAND의 자연스러운 일반화.
+
+### 7.2 평행 연구 (비슷한 시기, 유사 방향)
+
+1. **TADA / TimesNet (2023)**: 시계열의 다중 주기를 명시 — 비정규성보다 다중 스케일에 초점. ContiFormer와 직교.
+2. **PrimeNet (Chowdhury et al., 2023)**: irregular TS contrastive pretraining. ContiFormer는 supervised, PrimeNet은 self-supervised — 결합 가능.
+3. **CRU (Continuous Recurrent Unit, Schirmer et al., ICML 2022)**: Kalman-style continuous filtering + recurrence. ContiFormer 대비 Bayesian 입장이 강함.
+4. **STraTS / SeFT (2022)**: triplet (time, variable, value) 형태로 sparse multivariate를 처리. ContiFormer는 dense embedding 후 ODE — 입력 표현이 다름.
+
+### 7.3 후손 예측 (파생될 수 있는 방향)
+
+1. **Continuous SDE-Transformer**: deterministic ODE를 SDE로 일반화 → uncertainty quantification 자연 도입. 금융 변동성 모델링에 직접 유용. (실제로 2024-2025 일부 follow-up 등장 추정.)
+2. **시간 변환 기반 ContiFormer (Time-changed ContiFormer / Paper 4 line)**: ODE의 독립변수 $t$를 economic time $\tau(t)$로 치환. Clark (1973) subordination + Bochner 정리와 결합.
+3. **Sparse / efficient ContiFormer**: full attention의 $O(N^2)$를 시간적 locality로 줄이는 sliding-window 또는 routing mechanism. ODE solve와 결합 시 NFE 절감 큰 도전.
+4. **State-space hybrid**: S5 / Mamba의 효율성과 ContiFormer의 attention 표현력을 합치는 설계 — irregular TS의 새로운 SOTA 후보.

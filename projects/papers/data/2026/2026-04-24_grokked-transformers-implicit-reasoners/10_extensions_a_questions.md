@@ -1,11 +1,55 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "irsOrTyrg6h+RlPePfeT2w==",
-  "iv": "fER9Mg5gP0phgrKd3ucPeQ==",
-  "ct": "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",
-  "mac": "V3U/lmn4GbO5aW0cMcMathe0eV4Ar51UhuUJ4GYnlVU="
-}
+# 10a — 사고 확장: 자문 질문 5개
+
+---
+
+## Q1. Grokking이 시계열 트랜스포머에서도 일어나는가? 어떤 조건에서?
+
+**왜 이 질문이 중요한가**:
+
+이 논문의 핵심 발견은 "합성 KG 추론"에서의 grokking이다. 시계열 예측 트랜스포머(PatchTST, iTransformer)에서도 유사한 현상 — 훈련 손실 수렴 후 갑작스러운 검증 성능 도약 — 이 일어나는가? 만약 그렇다면 어떤 조건(weight decay, 데이터 분포, 아키텍처 크기)에서 일어나는가?
+
+이 질문에 답하는 것이 사용자의 "Grokking in Time Series Transformers" 트랙의 출발점이다. 긍정 결과는 논문의 핵심 contribution이 되고, 부정 결과(TS에서 grokking이 없다)도 흥미로운 발견이 될 수 있다.
+
+---
+
+## Q2. Composition OOD 실패가 "더 긴 훈련"으로 극복되는가, 아니면 영구적인 구조적 한계인가?
+
+**왜 이 질문이 중요한가**:
+
+본 논문은 Composition OOD 실패를 "비순환 트랜스포머의 구조적 한계"로 진단하지만, 이 결론은 150만 스텝 내의 관찰에서 도출됐다. 만약 5천만 스텝, 혹은 충분히 큰 모델에서 훈련하면 OOD가 해결되는가? 
+
+이 질문은 "grokking을 얼마나 오래 기다려야 하는가"의 실용적 함의뿐 아니라, "구조적 한계"라는 주장의 강도를 결정한다. He et al. (2026) "Is Grokking Worthwhile?"가 이 방향으로 비판을 제기하고 있다.
+
+---
+
+## Q3. φ (inferred/atomic 비율) 개념을 시계열 데이터에서 어떻게 정의할 수 있는가?
+
+**왜 이 질문이 중요한가**:
+
+KG에서는 "원자 사실"과 "추론된 사실"이 명확히 구분된다. 시계열에서 이에 해당하는 것은 무엇인가? 
+
+후보 정의:
+- **원자 패턴**: 단순 주기(단일 sin), 단일 추세(선형), 단일 레짐
+- **추론된 패턴**: 원자 패턴의 조합 (추세 + 계절성, 여러 주기의 합, 레짐 전환 + 주기 변화)
+
+TS에서의 $\phi$ 정의가 가능하고, 이를 데이터 설계에 활용하면 "어떤 비율의 복합 패턴이 트랜스포머의 일반화 학습을 가속하는가"라는 실용적 가이드라인이 나온다. Grokking track의 contribution 후보 중 하나.
+
+---
+
+## Q4. Parameter Sharing이 "경제적 시간" 조건화와 결합될 때 어떤 효과를 내는가?
+
+**왜 이 질문이 중요한가**:
+
+본 논문의 parameter sharing 실험은 "같은 레이어를 반복 통과"해 정보 재순환 효과를 얻는다. EOA(Paper 4)의 Neural ODE 레이어는 연속 시간 위에서 같은 dynamics를 반복 적용한다는 점에서 구조적으로 유사하다. 두 아이디어를 결합하면 "economic time 조건화 + 순환적 정보 흐름"을 동시에 갖는 모델이 된다.
+
+이 결합이 시계열 예측에서 grokking을 빠르게 유도하거나, OOD 레짐에서 일반화를 향상시키는가? EOA와 Grokking track의 교차점에 있는 질문이다.
+
+---
+
+## Q5. GPT-4 수준의 LLM을 동일 KG로 파인튜닝하면 더 빠르게 grokking이 일어나는가?
+
+**왜 이 질문이 중요한가**:
+
+본 논문은 GPT-2 수준의 소형 트랜스포머를 처음부터 훈련한다. 실제로 연구자들이 LLM을 특정 추론 태스크에 파인튜닝할 때 grokking이 일어나는가? 사전학습된 representation이 $\mathcal{C}_\text{gen}$ 형성을 가속하는가, 오히려 방해하는가?
+
+이 질문은 "Foundation Model fine-tuning"이 grokking의 관점에서 어떻게 이해될 수 있는지를 묻는다. 실용적으로 중요한 것은, ProTran-TFA나 Chronos 같은 foundation TS 모델을 금융 데이터에 파인튜닝할 때 grokking이 일어나는지 여부다.

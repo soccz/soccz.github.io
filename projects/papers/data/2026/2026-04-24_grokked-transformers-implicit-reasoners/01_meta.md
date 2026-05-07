@@ -1,11 +1,33 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "eUJ3R4q6uH91WgoTePTdjg==",
-  "iv": "mInBCB/BI7ErhlyTFegNJA==",
-  "ct": "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",
-  "mac": "vC/19PixvFfUqegwGiuj+ewMEAWe9cz3mZb79tA9DwY="
-}
+# 01 — 메타 & 선정 이유
+
+## 서지 정보
+
+| 항목 | 내용 |
+|------|------|
+| **arXiv** | 2405.15071 (초고 2024-05-24, v2 이후 NeurIPS 최종본) |
+| **발표처** | NeurIPS 2024 (Poster) |
+| **인용 수** | Semantic Scholar 기준 ~50회 이상 (2025년 초 기준, 신흥 급성장 논문) |
+| **코드·데이터** | 공개 (github.com/OSU-NLP-Group/GrokkedTransformer), 데이터 생성 노트북 포함 |
+
+## 저자 배경
+
+- **Boshi Wang** (제1저자, OSU NLP PhD student): NLP 추론 및 LLM 이해 전공. OSU NLP Group의 핵심 박사과정.
+- **Xiang Yue** (공동 제1저자): MMMU 벤치마크 등 다중모달 평가로 유명.
+- **Yu Su** (공동 교신): OSU NLP Group 교수, knowledge-grounded NLP의 권위자.
+- **Huan Sun** (교신): OSU CSE 교수, 지식 기반 AI 및 NLP 추론 다수 NeurIPS/EMNLP 발표.
+
+OSU NLP Group은 KnowledgeBase QA, 다중 홉 추론, LLM 평가 분야에서 꾸준히 top-venue 논문을 내는 연구실이다.
+
+## 선정 이유
+
+**왜 지금, 이 논문인가?**
+
+사용자는 2026-04-22 저녁에 "Grokking in Time Series Transformers" 트랙을 시작했다. 이 논문은 그 트랙의 **이론적 토대**를 제공하는 동시에, 세 가지 즉각적 가치를 갖는다:
+
+1. **메커니즘 근거**: "왜 grokking이 필요한가"를 단순 관찰이 아닌, 두 회로(Cₘₑₘ vs Cᵍᵉⁿ)의 경쟁 메커니즘으로 설명한다. Grokking track 논문의 Related Work / Motivation 섹션을 직접 보강한다.
+
+2. **태스크 전이 신호**: 이 논문은 알고리즘 태스크(합성 knowledge graph)에서의 grokking을 다루지만, composition·comparison 구분이 시계열 예측의 "패턴 조합 vs 임계값 비교" 구조와 구조적으로 유사하다. `_profile.md` §B·§C 교차지점.
+
+3. **아키텍처 교훈**: cross-layer 지식 공유(parameter sharing) 실험이 EOA의 순환적 attention 설계와 직접 비교 가능한 시사점을 제공한다. `_profile.md` §A.
+
+**원거리 버킷이지만 전이 가능성**: 이 논문은 `algorithmic-grok` 태그지만 사용자의 Grokking axis (§B)에 코어 수준으로 직결된다. 금요일 원거리 버킷의 "전이 가능성 탐색" 의무를 충분히 이행한다.

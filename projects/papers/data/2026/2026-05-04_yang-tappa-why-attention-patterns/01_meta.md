@@ -1,11 +1,23 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "4LVvxHgStaSDZ2YvM+xWRQ==",
-  "iv": "Nxs5iiVlRX+dejUjNG8OwA==",
-  "ct": "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",
-  "mac": "4kiMTxsLIgoAHdURlaWR5GRhVW9TcZDAWm+B/Wm0Sas="
-}
+# 01. 메타 & 선정 이유
+
+## 인용·발표 정보
+
+- **인용 수**: 미확인 (Semantic Scholar 접근 차단). 2026-01-29 등록 → 4월 말 기준 3개월 미만이므로 정식 인용은 적을 것이나, 동시기 follow-up arXiv 가 빠르게 누적되는 영역 (KV cache, attention head 분류) 임은 분명.
+- **DOI**: 미확인 (ICLR 2026 proceedings DOI 미발급 단계 가능)
+- **저자 권위 배경**:
+  - **Jie Wang** (USTC MIRA Lab 책임자, corresponding 추정): 강화학습·조합최적화·LLM 효율성 분야 다수. MIRA Lab 은 KV cache / inference acceleration 으로 NeurIPS·ICLR 다수 출판.
+  - **Mingxuan Yuan, Jianye HAO** (Huawei Noah's Ark): RL · LLM scaling 권위. Hao 는 multi-agent RL 의 중국권 대표 그룹.
+  - **Bin Li** (USTC, info theory / signal processing 백그라운드): "temporal continuous perspective" 라는 framing 의 출처일 가능성. APF 가 "PE → 2D motif" 로 가는 경로와 닮은 발상은 이쪽 영향.
+- **컨텍스트**: MIRA Lab 에서 같은 시기 KV cache 압축 논문이 다수 나옴 (예: 같은 1월 내 arXiv:2510.00636 "Expected Attention", arXiv:2601.08297 "Demystifying the Slash Pattern" 등). TAPPA 는 그 흐름의 **이론적 우산** 으로 위치.
+
+## 선정 이유 (왜 오늘, 왜 이 논문)
+
+세 가지가 겹쳤다.
+
+1. **Axis balance 강제** — `_coverage.md` 코어 §C (pe-attention-geometry / attention-as-explanation) 가 0회 커버. §A (grokking) 는 최근 Nanda(04-27) + Lyle(05-01) 연속 2회로 과대표현. 오늘 §C 를 안 채우면 5주 연속 §A 편향 가능성. axis balance 규칙(최대 5주)이 깨지진 않지만 "최소 3주 단위 교대" 권고를 따라 §C 차례.
+
+2. **Priority 매칭이 사용자 active 트랙의 직접 concurrent work** — `_profile.md` 에 "Concurrent work 2개 식별: arXiv:2511.21514 (Kalnāre 2025), **arXiv:2601.21709 (Yang ICLR 2026)**" 라고 명시되어 있다. 이는 사용자의 APF (Attention Pattern Fields) 프로젝트가 motif sweep / PE intervention 을 진행 중인데, 정확히 같은 framing ("attention 패턴이 왜 그렇게 생기는가, PE 가 어떻게 결정하는가") 으로 ICLR 2026 에 먼저 도착한 논문. **읽지 않고 APF 를 쓰면 reviewer 가 제일 먼저 던질 비교 논문**. 우선순위 1.
+
+3. **"내 가설" 의 사전검정 가치** — APF 는 (a) PE 별 motif 분포, (b) motif → CNN probe → 분류, (c) causal intervention (motif swap) 의 3단 사다리. TAPPA 가 (a)~(b) 사이의 **이론적 다리**(q-similarity × RoPE-frequency → motif type) 를 이미 깔았다면, APF 는 (a) 대신 그들의 다리를 인용하고 (c) 단계 — causal intervention 과 시계열 도메인 — 에 자원을 몰아야 한다. 이 판단을 위해 본 논문을 실제로 읽고 비교점을 명문화할 필요가 있다.
+
+부수적 이유: ICLR 2026 게재라는 경량 권위, RoPE 주파수 분해라는 sub-mechanism 이 사용자의 "Spectral PE" (현재 shelved) 발상과 표면적으로 겹쳐 재개 신호가 될 수 있는지 검토 필요.

@@ -1,11 +1,82 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "dDkrFkV780y1aCp6aip/cA==",
-  "iv": "VuPNbT9xhTlo+EyT9RTBGA==",
-  "ct": "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",
-  "mac": "ClflWQSoVIwalo7uxHLKVQnRg+apC+o6lYZ+mZORRfM="
-}
+# 09 · 내 연구와의 연결
+
+> 이 섹션은 `_profile.md`의 Paper 1–4 라인과 구체적으로 연결한다. 일반론("참고 가능하다")은 쓰지 않는다.
+
+---
+
+## Paper 4 — Continuous Economic Time Attention (ContiFormer의 ODE 시간변수 대체)
+
+### 흡수할 기법 1: SDE의 시간-변환 동치
+
+이 논문의 핵심 SDE
+
+$$dY_t = \mu_\theta(t, Y_t)\,dt + \sigma_\theta(t, Y_t)\,dW_t$$
+
+에서 시간 $t$를 단조 증가 함수 $\tau = \tau(t)$로 치환하면 (Clark 1973의 time-change theorem):
+
+$$dY_{\tau} = \tilde{\mu}_\theta(\tau, Y_\tau)\,d\tau + \tilde{\sigma}_\theta(\tau, Y_\tau)\,d\tilde{W}_\tau$$
+
+여기서 $\tilde{W}_\tau = W_{\tau^{-1}(t)}$는 새 시간 척도에서의 브라운 운동이다. 이 변환이 합법적(법칙 동치)인 조건은 $\tau'(t) > 0$, 즉 economic time이 단조 증가할 것.
+
+**Paper 4 §3.2 적용**: ODE 시간변수를 $\tau(t) = \int_0^t v(s)\,ds$ (거래량 기반 누적 시간)으로 교체할 때, 이 변환이 경로 측도 수준에서 합법적임을 정당화하는 데 이 논문의 **Equation (2.1)–(2.3)** (SDE time-change equivalence)를 인용할 수 있다.
+
+구체적 인용 문장 초안:
+
+> "Following the time-change theorem (Clark 1973; Kidger et al. 2021, §2), replacing wall-clock time $t$ with economic time $\tau(t)$ in the SDE generator corresponds to a measure-equivalent transformation of the path space, preserving the Markov property under mild regularity conditions on $\tau'(t) > 0$."
+
+---
+
+### 흡수할 기법 2: CDE 판별자 구조 → Paper 4의 어텐션 판별자
+
+Paper 4에서 economic time attention의 성능을 평가할 때, 어텐션 기반 모델이 생성하는 경로 분포를 평가하는 판별자가 필요하다면 Neural CDE 구조 $dZ = f(Z)\,dX$를 채용할 수 있다. 기존 TSTR 지표보다 이론적 근거가 명확하다.
+
+구체적으로: Paper 4의 §5 (실험) 중 "생성된 금융 경로 품질 평가" 서브섹션에서, Neural CDE discriminator를 보조 평가 도구로 도입하고 이 논문(arXiv:2102.03657)을 "판별자 아키텍처의 이론적 근거"로 인용.
+
+---
+
+## Paper 1 — When Multiplicative Conditioning Fails
+
+### 충돌/경쟁 지점: 확산 항의 "조건화" 해석
+
+Paper 1의 핵심 주장은 "입력-공간 조건화(concat_a)가 특정 조건에서 실패한다"는 것이다. 이 논문의 SDE에서 확산 항 $\sigma_\theta(t, Y_t)$는 현재 잠재 상태 $Y_t$에 조건화된다 — 이것이 바로 "상태-공간 곱셈 조건화(state-space multiplicative conditioning)"의 한 형태다.
+
+**충돌**: Paper 1이 "곱셈 조건화(multiplicative conditioning)"가 실패한다고 주장한다면, SDE의 $\sigma_\theta(t, Y) \cdot dW$도 같은 실패 모드를 갖는가? 정확히는 다르다 — SDE의 확산 조건화는 *랜덤성의 세기*를 상태에 따라 조절하는 것이고, Paper 1이 다루는 것은 *결정론적 특징*에 대한 조건화다. 그러나 둘 다 "상태에 곱해지는 계수"라는 형태를 공유하므로, 이 구분을 Paper 1 §2.3의 "조건화 실패 분류" 항에 각주로 명시해야 한다.
+
+**수용 방향**: "SDE의 확산 조건화는 랜덤성 크기 조절이므로 Paper 1의 실패 모드와 다르다. 단, 확산 계수가 특정 상태에서 0으로 수렴(퇴화)하면 이는 곱셈 조건화 실패의 SDE 유사체다."
+
+---
+
+## Paper 2 — Representation Utility Gap
+
+### 흡수할 기법: CDE 은닉 상태 $Z_T$의 "표현 유용성" 측정
+
+Paper 2의 "Representation Utility Gap"은 서로 다른 조건화 방식이 만드는 표현(representation)이 하류 작업(downstream task)에서 얼마나 유용한지를 측정한다.
+
+**직접 연결**: 이 논문의 판별자 Neural CDE가 경로를 $Z_T$로 압축한다. 이 $Z_T$가 다운스트림 예측(TSTR)에서 얼마나 유용한지가 Discriminative Score의 본질이다. Paper 2의 "representation utility" 개념과 이 논문의 "TSTR score"는 동일한 측정을 다른 이름으로 부른다는 것을 Paper 2 §1의 동기 부여 단락에서 명시적으로 연결할 수 있다.
+
+인용 문장 초안:
+
+> "The TSTR evaluation metric (Kidger et al. 2021) can be seen as a path-space analogue of representation utility: a representation is useful if a model trained on synthetic paths transfers to real paths. This motivates our utility gap measurement across conditioning strategies."
+
+---
+
+## Paper 3 — TTPA (Temporal Transformer with Path Attention)
+
+### 반면교사: TTPA의 판별자가 CDE 기반이어야 하는 이유
+
+만약 Paper 3이 경로 기반 평가 지표를 사용한다면, 이산 MHA(multi-head attention) 기반 판별자보다 Neural CDE 판별자가 이론적으로 더 적합하다. 이 논문이 "CDE 판별자 > LSTM 판별자"를 실험적으로 보여준 것을 근거로, Paper 3의 실험 섹션에서 평가 지표 선택을 정당화할 때 인용 가능.
+
+---
+
+## 종합: 인용 위치 지도
+
+| 내 논문 | 섹션 | 인용 형태 |
+|---------|------|-----------|
+| Paper 4 | §3.2 (τ(t) 정의) | "time-change theorem으로부터 경로 측도 동치성 근거" |
+| Paper 4 | §5 (실험) | "Neural CDE discriminator를 보조 평가 도구로 도입" |
+| Paper 1 | §2.3 (조건화 분류) | "SDE 확산 조건화와 결정론적 조건화의 구분" 각주 |
+| Paper 2 | §1 (동기) | "TSTR = 경로 공간 표현 유용성의 동치 개념" |
+
+## 반면교사
+
+이 논문이 명확히 못한 것: **"경로 생성 품질이 좋은 것"과 "예측에 유용한 것"이 같지 않다.** 좋은 통계적 생성자(낮은 discriminative score)가 미래 예측력이 좋은 표현을 만들지 않는다. 내 연구(Paper 4)는 *예측*에 목표가 있으므로, 이 논문의 생성 중심 프레임워크에서 예측 중심 프레임워크로 이동하는 근거를 Paper 4 §1에서 명확히 서술해야 한다.

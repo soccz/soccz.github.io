@@ -1,11 +1,63 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "sk1hmmoJihz6tL+EFWl4cA==",
-  "iv": "MFxnWxEJSwHEgY7N1aw/Kg==",
-  "ct": "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",
-  "mac": "S3J65xqi/a8PIjnOgOKlL2OTNCAGFY51T5R05Oqjto0="
-}
+# 05a. 방법론 — 전체 흐름의 큰 그림
+
+> **배경 사다리**: ① "토크나이제이션(tokenization)"이란 연속 또는 복잡한 데이터를 유한한 이산 기호들의 수열로 변환하는 작업이다. NLP에서는 단어 → 정수 ID. Chronos에서는 실수값 → 정수 bin ID. ② "인코더-디코더(encoder-decoder)"란 입력 시퀀스를 벡터로 압축하는 인코더, 그 벡터에서 출력 시퀀스를 생성하는 디코더로 구성된 아키텍처다.
+
+---
+
+## 전체 파이프라인: 4단계
+
+```
+시계열 x₁,...,xₙ
+   │
+   ▼  [Step 1] 스케일링
+스케일된 값 x̃₁,...,x̃ₙ     (절대 평균으로 나눔)
+   │
+   ▼  [Step 2] 양자화 (Quantization)
+토큰 시퀀스 c₁,...,cₙ       (각 x̃ᵢ → {0,1,...,B-1} 중 하나)
+   │
+   ▼  [Step 3] T5 인코더-디코더
+출력 로짓(logit) 분포         (각 미래 스텝에서 B개 범주의 확률)
+   │
+   ▼  [Step 4] 샘플링
+확률적 미래 궤적 N개           (분포에서 토큰 샘플 → 역변환 → 실수값)
+```
+
+이 파이프라인의 핵심 발상을 하나의 문장으로 표현하면:
+
+> **"시계열 값의 연속성은 포기하되, 언어모델의 모든 인프라(아키텍처, 사전학습 체계, cross-entropy 손실)를 그대로 가져온다."**
+
+---
+
+## 왜 이 구조인가: 3가지 전략적 선택
+
+### 선택 1: "분류 문제로 재공식화"
+
+시계열 예측은 전통적으로 **회귀 문제**(연속값 출력)로 정의되어 왔다. Chronos는 이를 **분류 문제**로 재정의한다.
+
+- **회귀 관점**: $\hat{x}_{T+h} = f(x_1, \ldots, x_T)$, 손실 = MSE/MAE
+- **분류 관점**: $P(c_{T+h} = k \mid c_1, \ldots, c_T) = \text{softmax}(\text{logit}_k)$, 손실 = cross-entropy
+
+이 재정의의 장점:
+1. 출력이 자동으로 분포(확률 벡터)가 되어, 추가 구조(Gaussian 헤드 등) 없이 분포 예측이 가능
+2. NLP 언어모델 아키텍처를 그대로 사용 가능
+3. Cross-entropy 손실은 NLP에서 수십 년간 최적화된 구현체, 수치적으로 안정적
+
+단점: 이산화 손실 — 연속값 예측에서는 오차 1이 2보다 더 "가까움"을 나타내지만, cross-entropy에서는 모든 클래스가 동등하게 취급된다. (이를 partially 해결하는 방법으로 ordinal loss도 있지만 Chronos는 사용하지 않음)
+
+### 선택 2: "아키텍처를 새로 설계하지 않는다"
+
+Chronos는 T5 (Text-to-Text Transfer Transformer) 아키텍처를 그대로 쓴다. 시계열 전용 귀납적 편향(inductive bias — 특정 데이터 구조를 더 잘 다루도록 설계된 구조적 제약)은 추가하지 않는다. Transformer의 전역 자기 주의(global self-attention)는 TS의 장기 의존성을 처리할 수 있다는 믿음이다.
+
+이 선택은 논쟁적이다: PatchTST나 iTransformer처럼 TS 구조에 맞는 귀납적 편향을 설계한 모델이 더 데이터 효율적일 수 있다. Chronos는 귀납적 편향 대신 **데이터 규모**로 보완한다.
+
+### 선택 3: "확률적 샘플링으로 불확실성 표현"
+
+추론 시, 디코더를 N번(예: N=20) 반복 호출해 N개의 토큰 궤적을 샘플링한다. 각 궤적을 역양자화(dequantization)해서 실수값 궤적을 N개 얻으면, 이것이 예측 분포의 몬테카를로(Monte Carlo) 근사가 된다. 분위수(quantile, 예: 10%, 50%, 90%)를 계산해 예측 구간을 제공한다.
+
+---
+
+## 큰 그림 요약
+
+Chronos가 새로운 것은 아이디어의 기발함이 아니라 **실행의 담대함**이다: NLP에서 이미 작동하는 모든 것을 시계열에 그대로 이식하고, 이 단순한 전략이 데이터 규모와 결합했을 때 파운데이션 모델 수준의 일반화가 가능함을 보인 것. 이어지는 섹션에서 각 단계를 해부한다.
+
+→ 다음 파일: [05_method_b_tokenization.md](05_method_b_tokenization.md) — 스케일링과 양자화의 수학

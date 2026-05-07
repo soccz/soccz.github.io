@@ -1,11 +1,7 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "ixT2JGoJXeZdSw2BqAKFMA==",
-  "iv": "J18ntuAq4Jay60kJ/Qp37g==",
-  "ct": "zFQSCs6leZUK5A4sXl3olPEzCmpcIN+egTLli/EV/FF0r0BPB2ZcDmEsHblMIZvMwnpNts5aAJl/k2bXTYdXfPL+xipMlm4rG7CBVcM4nOjnrPqKwhV53XiwU1dEE4XUv1GI+20yje3HRqrlODAWIWObyPcShloPdLItPJdJNWuzktCHiAiZiRq8AZS++exYkYpSoZyQDhLkx0YDdaquUIweiSlavis57RaG+lGZujBtf/9xMHcA7yGpyJFf6G3KTHxpfE1qVTpi+T9byfG8GvSbekupH4VYhXnjc1/KT5UbOIX2IZcf50rVSW/bj1XUMTckWDoaaGXHQtLn19Rt5wVi9HPHGbFe7uGD+BfZENjT7Phj7v8wYndz1ahPDU5HHZOZPt/X7AtnU0yLT8FKKqUlu6QYIwWxKepJdS+TOOehTH18DkUZe84267g5z2j1DBMZ4HCotyhSnabdIMK6ieSlAccnFg/iUzul1jBZRvUTY3DoE0PgM0ut8kbCoQXnMGep9za8H9r4uhxWlxk+2TsJ1z8MrLfF+dOLcK1IJkAFSdGnjUncINWFz6jYyJGjDoP7dVJq1smu2Og85FF153f866hb9vARyU7zxGMJhAHu7hDZFEdRcqQp+J+7WrAx3jnflWmR9e/ATxWErltC97naWz/TRBcbGxueMqLP6YD69ZmQcA7wMsv5htBNbrBa5vjfqCxbon+3ikwnYY3cW/3WUF7Ys1ljks8DyFLqJkff+BTy+Eyp7zc/vXmVIVX1rwxD6Zag1dYVWerD9d/EzubnAluOA9rIPQjMd2AMFWsDEOK6Yr9/VVWbVVAbzFugfbnViBwgpx/UacJRQWNG5pHRHJ2VO7Ph5N76qLbUJT14fUjZDBoIMiSHMrpoCXemqv0Ts4XwmZt9ZtAtbVDwVaLdwXEH2O+M26vDTEyDMrP1jz/BtFrXlAaeHwwEN9vP53u3jbw59YiWKW1iUP85xSXqcDCaYnQ3fqno5tOelYQjNF0QNeTAle84GyzDzk2mKOLQWNsgXsA4GGFjrgYotZAYF9qOYy/4pwCHSp08Amifb2FuYBwbGnE5EufFzSI9/Um0gSZ/1l7733E+mOIRXsAaFDRwgd3/PFNfTzg5vTkgoRs1DpHDlhBu2if1BwZQZtey50xrv2sO9lNGP5R4qofAxQNo2NWkmOD/l20Wj83FBbEF/Dk0dW3+NEEVqM4LyduRLYtTl8jhdxob7QCeLIb7yGplMDSTTFps78Hd+GS7wuPAZksYeHGnY33MVCRktm0rWRn512jUPLxmaCxwIjggVEQAF9/u3Kic/eb+ol1b+MNeec0hZFLdOYPEqhZblM+qb6sHeoK7oF19f9tO4ZwwT1NjVHPzzM0PkN3I1Yg=",
-  "mac": "u8cgwAsfKC+jnoGFdpAUSMZCROIPMNTirMq1Sdmx/bA="
-}
+# 10. 한 줄 판결
+
+> "Grokking 은 generalization 의 지연이 아니라 circuit cleanup 의 지연이다 — 그리고 진행도는 회로의 Fourier sparsity 로 직접 잴 수 있다."
+
+본 논문은 grokking 의 *현상학* 을 *메커니즘론* 으로 전환한 transition paper 이며, 사용자의 Grokking active track 의 *이론 척추* + APF active track 의 *motif progress measure 의 원형* 으로 동시에 작동한다. *modular addition* 이라는 toy 위에서 *깊고 닫힌 회로* 를 보여줌으로써, "회로 가설 + 인과 검증 + 진행도 측정" 의 mech interp 표준 method 를 정착시켰다.
+
+내 연구 지도에 핀으로 꽂는 위치: **Grokking paper 의 §3 (Method) 와 APF paper 의 §4.3 (Motif Dynamics) 의 양쪽 척추 인용**. 본 논문이 *못 한 것* — non-stationary task 에서의 회로 변동, online 회로 발견, 비algebraic task 일반화 — 가 정확히 사용자의 *contribution 영역*. 즉 "Nanda 위에 한 단계" 가 사용자 thesis 의 selling point.

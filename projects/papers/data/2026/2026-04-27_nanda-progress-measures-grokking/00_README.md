@@ -1,11 +1,42 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "DIto7qPmdi5+wQQrNV1Uvw==",
-  "iv": "k+dZZwEYEJDFf4B+XEC7Ag==",
-  "ct": "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",
-  "mac": "ZNHXPi3Alw7HwfFphKZucOZAY2d2doPE9pQxPFiA62g="
-}
+# Progress Measures for Grokking via Mechanistic Interpretability
+
+> 메커니즘 해석으로 그로킹의 진행도를 재는 법
+
+## 메타
+
+- **원문 제목**: Progress Measures for Grokking via Mechanistic Interpretability
+- **한국어 번역**: 메커니즘 해석으로 측정하는 그로킹 진행도
+- **저자**: Neel Nanda · Lawrence Chan · Tom Lieberum · Jess Smith · Jacob Steinhardt
+- **소속**: Independent · Anthropic / UC Berkeley · DeepMind · UC Berkeley
+- **발표처**: ICLR 2023 (poster)
+- **arXiv ID**: [2301.05217](https://arxiv.org/abs/2301.05217) (제출 2023-01-12)
+- **태그(주)**: `mech-interp-circuits` / `grokking-delayed-gen`
+- **태그(보조)**: `causal-intervention` / `training-dynamics`
+- **코드·데이터**: 공개. 저자 블로그 + Colab 노트북, 별도 GitHub 레포 (`mechanistic-interpretability/grokking`) 으로 reproduction 사례 다수.
+- **본문 접근 상태(2026-04-27)**: arXiv abs / pdf / html / ar5iv / alphaxiv / Semantic Scholar / OpenReview 7개 소스 모두 403 차단. 본 해체는 **(a) 공개 abstract·인용·후속 연구(Wang 2024, Merrill 2023, Lyle 2025)에서 직접 인용된 결과**, **(b) 사용자가 사전 보유한 Power 2022 / Liu 2022 등 인접 문헌 사실관계**, **(c) 1-layer attention transformer 의 Fourier modular-addition 회로에 대한 표준 수식 유도** 위에서 작성됐다. 추정 부분은 §5·§6에 명시.
+
+## 한 줄 판결
+
+> "Grokking 은 generalization 의 지연이 아니라 circuit cleanup 의 지연이다 — 그리고 진행도는 회로의 Fourier sparsity 로 직접 잴 수 있다." Grokking active track 의 **이론 척추** 논문이며, APF 가 motif 진행도를 측정할 때 베껴야 할 *progress measure* 의 원형이다.
+
+## 목차
+
+- `00_README.md` — 본 페이지
+- `01_meta.md` — 0. 메타 & 선정 이유
+- `02_tldr.md` — 1. 3층 TL;DR
+- `03_problem.md` — 2. 문제 지형도
+- `04_claims_a_circuit.md` — 3. Claim 1 (Fourier 회로의 발견)
+- `04_claims_b_progress.md` — 3. Claim 2~3 (Progress measure & 3단계 동학)
+- `05_method_a_intuition.md` — 4. 방법론 ① 큰 그림
+- `05_method_b_modadd.md` — 4. 방법론 ② Modular addition setup
+- `05_method_c_fourier_circuit.md` — 4. 방법론 ③ Fourier 회로 수식
+- `05_method_d_progress_measures.md` — 4. 방법론 ④ 세 progress measure
+- `05_method_e_implementation.md` — 4. 방법론 ⑤ 구현 디테일
+- `06_experiments.md` — 5. 실험 해부
+- `07_limits.md` — 6. 가정·한계·반박
+- `08_lineage.md` — 7. 이론적 계보
+- `09_my_research.md` — 8. 내 연구와의 연결 (APF + Grokking track)
+- `10_extensions_a_questions.md` — 9. 자문 질문 5개
+- `10_extensions_b_followups.md` — 9. Follow-up 3편
+- `10_extensions_c_ideas.md` — 9. 후속 실험 아이디어 2개
+- `11_verdict.md` — 10. 한 줄 판결

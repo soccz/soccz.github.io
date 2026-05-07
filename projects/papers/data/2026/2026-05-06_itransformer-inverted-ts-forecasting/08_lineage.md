@@ -1,11 +1,45 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "fJECNj11lZFrn2vzQUXhKA==",
-  "iv": "357cCFh1AeCWb6q8imCyKQ==",
-  "ct": "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",
-  "mac": "i6VPfxQo7vuzFXmJYZMA06JN7nGcSer4n0Ma6YOIXmo="
-}
+# 08. 이론적 계보
+
+---
+
+## 이론적 조상
+
+### 조상 1 — "Attention Is All You Need" (Vaswani et al., NeurIPS 2017)
+
+iTransformer는 트랜스포머의 기본 컴포넌트(멀티헤드 어텐션, FFN, 잔차 연결, LayerNorm)를 그대로 사용한다. Vaswani 2017이 정의한 블록 구조가 iTransformer의 골격이다. 연결선: 이 논문이 없으면 iTransformer도 없다. 그러나 Vaswani 2017은 "토큰이 무엇이어야 하는가"를 자연어 처리(단어)의 맥락에서만 논의했고, 다변량 시계열에서 "변수가 토큰이 되어야 한다"는 아이디어로 자연스럽게 이어지지 않았다.
+
+### 조상 2 — DLinear / "Are Transformers Effective for TS?" (Zeng et al., AAAI 2023)
+
+역설적으로, 트랜스포머에 도전한 이 논문이 iTransformer를 탄생시켰다. DLinear가 단순 선형 모델로 트랜스포머를 이기자, 연구 커뮤니티는 "트랜스포머 어텐션이 왜 TS에서 실패하는가"를 진지하게 분석하기 시작했다. iTransformer는 그 분석의 결론 중 하나("토큰화 방향이 잘못됐다")를 아키텍처로 구현한 것이다.
+
+### 조상 3 — PatchTST (Nie et al., ICLR 2023)
+
+PatchTST는 "단일 타임스텝 토큰은 정보가 너무 작다 — 패치로 묶어야 한다"는 방향으로 토큰화를 개선했다. iTransformer는 같은 방향에서 더 극단적 결론으로 나아간다: "타임스텝 방향으로 토큰화 자체를 포기하고, 변수 방향으로 간다." 두 논문은 "어떤 단위가 자연스러운 TS 토큰인가"라는 같은 질문에 다른 답을 제시한다.
+
+---
+
+## 평행 연구
+
+### 평행 1 — Crossformer (Zhang & Yan, ICLR 2023)
+
+Crossformer는 시간과 변수 두 축 모두에서 어텐션을 계산하는 "Cross-Dimension" 어텐션을 제안했다. iTransformer가 N×N 어텐션만 사용하는 반면, Crossformer는 T×T와 N×N을 계층적으로 조합한다. 왜 iTransformer가 이겼나: 단순성. Crossformer의 계층 설계가 과적합이나 최적화 어려움을 초래한 반면, iTransformer의 "오직 N×N"은 학습이 안정적이다. 다만 변수 수가 적은 ETT에서는 Crossformer와 비슷하거나 더 낮을 수 있다.
+
+### 평행 2 — TimesNet (Wu et al., ICLR 2023)
+
+같은 thuml 랩의 논문. TimesNet은 1D 시계열을 주기성 기반으로 2D 이미지로 재구성해 CNN을 적용한다. "시계열의 2D 구조"라는 아이디어 공유. 왜 iTransformer가 대규모 데이터에서 이겼나: TimesNet의 2D 변환은 주기 추출을 필요로 하며 비정상 시계열에서 주기가 불명확할 때 실패하기 쉽다. iTransformer는 주기 가정 없이 변수 상관관계를 직접 학습한다.
+
+---
+
+## 후손 예측
+
+### 후손 1 — 희소 변수 어텐션
+
+$N$이 수천 이상일 때 $O(N^2)$ 복잡도는 실용적 한계다. FlashAttention을 N×N에 적용하거나, 변수 클러스터링으로 블록 희소 어텐션을 구성하는 연구가 파생될 것이다. 실제로 "Sparse iTransformer" 계열 논문들이 2024-2025년에 등장하기 시작했다.
+
+### 후손 2 — 해석 가능 iTransformer
+
+N×N 어텐션 맵이 변수 간 상관을 반영한다면, 이를 활용해 Granger 인과관계나 인과 구조를 추출하려는 연구가 가능하다. Sprang 2024(Concept Bottleneck for TS Transformers)와 같은 방향. APF의 motif-to-mechanism 분석을 N×N 어텐션 맵에 적용하는 것이 자연스러운 확장이다.
+
+### 후손 3 — 금융 응용
+
+FT-iTransformer(MDPI 2025)처럼 주가 예측에 iTransformer를 적용한 사례가 이미 나왔다. 변수 수가 적고(예: 10개 주식) 상관이 약한 금융 TS에서의 성능 한계와 개선 방향을 탐구하는 연구가 후속으로 나올 것이다. 특히 P1 ProTran-TFA 맥락에서 "확률적 예측 + 변수 어텐션"의 결합이 연구 가능하다.

@@ -1,11 +1,52 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "nooV14kMFVRp9JnDaaWv1Q==",
-  "iv": "RjuA3s/DwPOuliGeXJqmNw==",
-  "ct": "OXnKDf37P1eFGemYBqFM67xddQdqeEfSOrIX6EKTBxPhfLmgRLl0uAGKzgEcen+D9qz+zi5JPPTyJwz5vci5APDG7dt7p5n6cs0YtQOKIMBvpZvBv/GnGslrwB6yY5zOkhUGBmd2Q1TcrieDrySHL0I1NxgtFDecfDI/mw8IUHlfF+UnoiXJPyuaD94b6TdITQWwrU8ec/Tlhj5VhMaq2tHdh+UxkLLEgkyqCFcCLqbjaOg+WDwLvmOZk69nrfajq+df7BXxp4rjLkqyUNaB5/odHlug7zYwK0nrv+qXhl2n35RCkpQWwwV6miGxTCchKrXfz3tTCuWf9jSKc2fNhC+j2Gy3Bxc1X714CyBvuaj4iEUIPPJ+8bmDLVtPx7F/tSTD+bXM1MZ+yphu60jsj85raNn/YpaHUYHyG2YQ6CRD3tiFHqYEWcR472P2zvx43GWAUz1o9/vKkwvgsPcpFzgIw31Zvgu4NQupOpJVAbv+FGnZZsATwKW4+L6Egb5SZ52QiAeya9sp2GeP3JnFPv+e9GEHblENchPUXppK/aJzEAggavQ9F/1SF/sXO2Dd2pfSfZbLV8mPZDE0oM8zHxOM5pI4ETLAxKuJkCWew5+dG+xZ45Ust+Y1vxRYpPTEiH7WxTDs7EH0hBEyvtI1Fc1s/K4rZTlZAlGxrjT3plax/vtQ5qNb8CPdeSxQTEYbtXX62RUxjG7plFIdEgy9ZgLNhRNeEbPajHVeHV/cJBO/ZVqkk67OUimuP/dsjs1T0sZydGbgVUyMfy8SQuvpvP/0oARco1LaZfiBYk7VsEiAwmtn7c/mXNASjBMZSOGoIKmvyeAJ9z3P4vWFWaU8Q3ZERInf2Wh5sHZHWMFlFNR5qCJks+YOnwPyxazZIbFkM247rc7aep8F+3H8GbD3ASpEzwBS5RIdo2SNQAfPHXmnNqD6GkIvWsBLa5lo42S9EePe+YZ4Xfj0qE8URyK2ahwBTb89b+uVYGDHFWtJBPh4It1wUZR4AI01cN0N6MbVYNtFUb/GEZTGVE4lejhehv/FQ/XBC0hFpdpcOxTWgMwtft5w0Noq1U3E40R7gh9lPv4E/ljYNDa1Y+BqBdIkJ9Q3cg9r2opI9rJZjBsIuw5pChfbnyxdx+sejpybdhsFwcYxlAY0mT5ZBtWTJP2U7ty74pwSqODMgfsmy1E1LjOBPiTmm+edMBZ6cDX3ipu/8FBUkGU7l2j2/em6fgmjRIi16eC4HWgW3E+9gfA9VT0sZFvMhiVsMqsgZjOmIGQX5sJ90MAExyFFcwBmyKfqQ5kW8P+YkokvnJWIoUnCoZOQGwCZelRabMNjn/0f30hz94YvNxH0zgXm2cAk3B5IQgSzcwmdZyNPh02PeMrok9UjOvo2eFCVtnxsRemxUVeCL5dY3tky9TDjcV7Hq+yVlewvN/BFutFKBMJJvXhcIcT6XACGtUYlC2kKzODvPc/Is0+vihpsIoazZDvbGSepc83b02cDeCgAs4oFepLgoryDIfzHY0iL8+VrZumLf1gAB6ptTPIoQ5tk1imnAxDUMEvE7mg1pGma3sVq9aJrInBd70KK9Dvf1OQ2t5kFSgv36lMc/gVkD8JxWfLmOk9nShLHFpaazT8anjmhLisCPryU82/uR6naGMVyjjuqRsoDzfumglEXrvvt6eaFvj3E0QqH8UH/X13oueqOS8cwEsjd0s57XJzaexEY3PUL3CTgxc/WERDCNnQcAx2DOHxVjHGPtvv5GD3Ad7biGDHZzeWyRDg5bsY3KzOZSnrPTP4BbGqiagqN18FUfONNu7GZ8ktpwozbAAvGfuG4P9aBj4iJTQmkTjsoOZ16CQwHpg6zCyR3Bs5VfKtOR9+TqfuiiHzym1KRb1M2703Av+EuEaOlYGsnm5C47Ps3SnfepgkNx/G4zWWTf1LrpaipBAaC+uobWlnoqgiRLDUWuPYVID3Vz/KMfL1XDvdaFhDlie54ZWBEeHDKZyN3g4ZT3pjKRxkyFFUiftlZMoR9+vWCx2UFIxNHZDkficdoLaTZk/sGMQSbGftZ2tak4lqRNh+bAeg4gXagj1n/6oseVKg27E+Dqei9R/oWsdIa7jscK/wpG9qpCPMYyTWoUK3sJpnkfpIg8WfTbRzecGzp042tqsZTM0UiFOJzN5A2IMeHFe3IIN9x/PF48PqJ+2dEDezoYyA17jufSO0DNB5nJc8EFzT3ZWdlGMn1DQFJQBEtTmU01qH3QXCkQMKNdArXwKmqEUUpflmjMPmc2G1BoUgTkaqejM0xQ9uI6jlcoEGNu1M2CR9d8aqdS1gpYBL9DKhTHp8qmDyMJYjN/6bYAaImLz50WuDcyBmvvx1JvhuonWBVO3kEQxfFzg/8Re2y+e/9SmlhhNH+KKyX/4hAo+NV7rjcgdgtm3bsk/Z8AFvzkiBTQKwby1GQDzQ3gZsxc9nbODKYxQ/4pxdZBoxQyHn5jhUvB58KI48YjHcYsjJ0J+EsGAA9B2ORssJzYjyGHjFGhw36zOzs0P6Ck7FBK56JBUEzRqbmbqdVPwrXuOGNT7IIoRCYmeQEv75d536Vq5twUAIRtKLwa5heYtCLet2dmm+3A5B3iRZyptpWxbvLcXqxL+6try6KNMY+H3dx4tUlA8Ks4vsD68n8L+Qaanday4gcRQNCAwmZKkq/88bJpbtxmcfQs7FJdvsB0nktve3SWvXEZlRMqjGtQRbaQKie2/kIKlkCL2XyJ2PhCkHDTRW+551zx6drbzuvXBky4x3+q2cNixblvKRE3/TWXev4gEizaf7VrktHi5evYelj7gLJCclPPW8DisZxj5HNZYpfsU99e86Enia95MRps5iZRd7ZNjoLDWTP/F6lWxlGiNg96iexQJeq1pod6953c0p4UKKpZ4GbwbelwH/bRUS52/Lgf6IHXF87CgOlFEBDB4QPglqzpnYEHkbl29LMO+XpItS8dmE4WpRvQzaGTvXvOyFKHSYpUvd9vVNDJKAm+iZj+n1fHGnSxd4VIYEHt2fWfbJWiAJF0csntt1yDe6kfeZcRgfxgkxB3Uq2NyPt81iTmsWnrcrEOlu4Ol+brwIADyCd+LVULyx9OZ1bkQSXkNWRsGp8dhv2Vc8PIK5ilA/tDl+YXaA7XlE6N84UufQtO756+yMdSDtYhG8TDpOzGIFkGIIrHJCVNuYZcueS3rHsY+H6nDHMFcq920jgwu34wE9DTRvGXdRXUYopVTMHZaZhoIB4CkRvMfOX9LMqz5xjsNrrvBpPgZkHj0E89BERWHdkPA/xGRjDuxdGhvk+j5nJH9iiwtlVg/BBQB4ucVvmYVdr6iKwSFkyjMTNMp49Bz04hSHcYcTWI9+Qc7zxbq4EmaeaQlQyFNGNwYZiNIRPEcIaR3RNob9lrC8y3sdIynKGUxVQqjxkbVr/ew4SLzq6sxZS2leF3sMkMkXbG9IJKveMZlpVpPEu0itivKbW7RqWB/wJTxPM1ac3tV6RnTx46UB9gmBUE3TajpqRFi0tx+Qi/3/qEaVsVxNVEZ/OqCofZ6EU/DEmfrKOm5MdAFhSe0zWql1ztryJF+dUaFTXmncFE048irGHUB0lA+1v/x4aJMw9y5eMnhx6z8Ydy4+ij7h87HBCTwD+G3Di9Gm6UUA2j2FTrV8EObKH1UJHg9XYGKwHdxrJkumrXrXz/+Jehn8ojn3t5rLeDlq+0ey2XZewvQPYrrw4WM1w3KZb121KiQLOeBJVng9F3pywXEEuUd4KfLKJQFf0x2bqEYTNIsgvH8i2D9S8qcIdsyuJh9zi/DucQYo/X6dxxmeOtLJYLsKRt7sAiPl78GI7TTVrXQEHgxVfJlWTPMv66VoK4PDgbHmKipDrBlI19/O/uH7b3VGdKXeJwtOD0S3NrgtIOaYnbewW/YIIwpFIOjqMhahr8H/4OYMctd7gh0LeEVREQVFdydL5nxs+5wG3PtcLmhkxlGWkk9SGtkD6CwAng8RFsaK2JJD3bTrBgiWDHa8vb9eIRXnJ/NXAjVgdRYpuP1XC3e8n4okfVKlOY+B5B6LhF6M8DeOcKasY+8RMVGtU+JzSHJ90ayDrLC1KvCqZXjFRHhsDI3uTkMnlx65uU56BD4O5f4fs1nWD09cda30kUFZEvQNaxjQuy/WwM1D6DNlYnOTs6Ti7lZqHrAJ9THOJ+F33K8LNJDVRc/OR5CQtb7Gm7RTuaxsqS/U2qVc6VjuH+0icskRpMmDwdkcwrxLeJcmV0Zv+xQHWNsAAQEPJLy7gmxnkKJEDUGBRMd7GnyN4dB89rqFLNLZSzE7y8VEgQD60pKLOBWVQdoLLhajtooAbc2fvvBmPp8gi8kX8y0F648VPLU71op8IeCGoq3fmZdcO9o2muw9MfCRxH7RWtZ51I0A7+Ws56bI/z10xtsLGB7tx585v7Jg16sqY1Nv1U6095LFQYMy7oT5CsSXGzCqaEU7vk6Fri3+eeoel5pOhvbHwu03/FC/GDBl0miy1VcLl1azpS2jhgSL5eILtFhowtBissdD88UNS97wKLogQteO5iSO6HZ0sjx7m6ZVuroYXC2RiaMqNEUSap1uOHKBJ5/YVUJIzu3j4okpC90ax5r3Uk0OCpSXCtx+E80QHRIhXoRC33L8fsRmvCJz235nMdf9Zaw9AfBnWSQE7IpSjwH5Se2EEsJQ12qEFvSweoRL5C/zuc0FW+3ZK/tuyRfeGQvcsLHeah0V7EzKp9heuaTqfoZ1YIgWFVquCJa4wGGKE/S+dWHDVSZ6KzvIO0D6SlWAQjwayb9DnaBIDTd9+VuiR6ZGs/A8FA5k2kEEiGirXE/V4WLmHNLFbbgarfiAN8XD6n1Y3mNr+8o5DeqzZ+Ya+fjKd2kXzhiYIINT4ZHqYFQGZdwjRVdsNr6p19lvwDWGBe11PkUJK1jduHteeibMUsxUj3Bgt4lrIxEi6cx8a0QzWARQx2F9t/WfrsHJghUhdCvXMYzziSGV4EVD9CCrgsjDOP9UXDeEKuJ5TgwR24xPIjZcsC4ZWNilKlIFimcnn2CsbFcoq+Hux9B0NEByE5OxGsyjyd1i9I6Hij0mc0OJoNASuO+FUMMfVqyOzmOxvrCrNofnjO+9oK+QuG37EN88apBDlhiXTOD3h71UeO6GoFkq7U0cJKe34k+dz8VMgZosHLlmu55ofgjc/wRStOj8DMlXH52KHvG0YY2dVAtXnyZhZfrH36zkuVfoeOGSwcqtG+ThfZDTL81B0Vl3eWQJkQBFxHoyHDaS8D1hkwgbD1Mlpi/FX7GGi09BYYpj8bcudrz0WsoNu/zWC9zWzzFI/dq8Ap3OcA2MEj56xQuB47ge1Cfcg+DfrioZMl+KELNF7F/l5Y9WnMyayToYDTzkBm2Bbqc9VBje2ovV77a67mdOFeqR3TbRtxzNP7TCaH03tu/NHYjS+6UdVSJEeDpMLrjuE67DywXVAhbc+paRb3DnLPgjuIrXx2o3B2I2HqLhInh/8+XR1+ckH0lmeOLEE8fhIlJmpAUaS/XMw70jNl5VHQgcbq4QtmXLAiMZdWx6TmitQjZOY+L6scO7i8wvQligYI10lRTvyQqEFybeNh+aCAQ7QVxBW4xqGJ4eNtba9bNRYkC69UaZ2yC7v1be/mJBE45buq23kOMOYCbrBYlEkpsHuGUkERf9UqbmxrHy8GEPSrncduj//gBdQEzlTjO1EhXK/V3vcPWztMFVe047pKcxwqedhCkvvlj9ii3ZDqahCMGaDxwfib/VJdFXRyP2t30drXu4mrIidcGDvDRO1av8ui6vAgtP218BqxvyVYr9X/jLNjDOP97/8HLVRmaAlFjpBMRg3So9HYncbhoA1BkoRuytkwVkJ2VJLO0n+9ifFulOQ90wGa1CQJ5bCB5fxCiqIk0LG0unca9ftHS/VzWPYrvLX7mv4Zwp6r4hFUnM9zwiPt8PbdUfKLXLktLVhYASKnpqNkgEPX8h9bAHauMaoEoAcCCriqb5/74D/SZjP5qVq8fjo/kqvgnHWX0A25ikkk2Bgy3SRfUGj7yh9256c4ew5wsVm+WG9nIdNSqAPc7f7T7kEB/i4zjGeWtdSKk8i/AdPtocxjktn7bMx2duHJgThqzEJZS5CfW6thznfAGzVj0arojNxERg+1AEEurlpSUQhYeVSoMSOKrPHLzpCLsobFAgD9FW7ldK/+FHzuzyt",
-  "mac": "dOXGKiMeu+n09GSHBLbx8ynDEm6j5cJp5d6/fZxZ0kg="
-}
+# 04b · 핵심 Claim 해체 (Claim 3–4)
+
+> **이 파일은 [04_claims_a_claim1_2.md](04_claims_a_claim1_2.md) 에서 이어진다.** Claim 1–2의 이론적 기초를 읽은 후 이 파일을 보기를 권한다.
+
+---
+
+## Claim 3 — Neural SDE GAN 프레임워크는 훈련 가능하며, 기존 이산 GAN 대비 재현성이 우수하다
+
+### 주장
+
+Neural SDE(생성자) + Neural CDE(판별자) + WGAN-GP 손실의 조합으로 학습이 수렴하며, 표준 벤치마크(TimeGAN 등)와 비교해 동등하거나 더 좋은 시계열 생성 품질을 달성한다.
+
+### 증거
+
+- 논문의 Section 4 (Experiments): OU(Ornstein-Uhlenbeck) 과정, 주가 데이터(Google, Amazon 등)에서 TSTR/TRTS 지표로 평가.
+- **TSTR (Train-on-Synthetic, Test-on-Real)**: 합성 데이터로 예측기를 학습하고 진짜 데이터로 테스트. 점수가 높을수록 합성 데이터가 진짜 데이터와 유사한 통계 구조를 갖는다.
+- **TRTS (Train-on-Real, Test-on-Synthetic)**: 반대 방향. 두 지표 모두에서 Neural SDE GAN이 TimeGAN보다 우수하거나 동등.
+- Discriminative score: 별도 분류기가 진짜/가짜를 구분하지 못할수록 좋음. Neural SDE GAN이 낮은 discriminative score 달성.
+
+### 숨은 전제
+
+1. **벤치마크 공정성**: TimeGAN은 논문에서 제안한 하이퍼파라미터로 실험했는지, 동등한 계산 예산으로 튜닝했는지 명시되지 않는다.
+2. **데이터 선택 편향**: 주가 종가 데이터는 단순한 평균 회귀 + 트렌드 구조를 가진다. 더 복잡한 금융 시계열(고빈도 거래 데이터, 옵션 내재 변동성 표면 등)에서는 결과가 다를 수 있다.
+3. **분산 미보고**: 표에 평균 점수만 제시되고 표준 편차가 보고되지 않아 결과의 신뢰구간을 파악하기 어렵다.
+
+### 쉬운 말 풀이
+
+"만든 가짜 영상의 품질을 어떻게 측정하나?" 를 시계열로 옮기면: 가짜 데이터로 훈련한 예측기가 진짜 데이터에서도 잘 작동하면, 그 가짜 데이터가 진짜와 비슷한 구조를 갖는다는 뜻이다. 이 논문은 그 기준에서 이전 방법들을 이겼다는 주장인데, 실험 조건의 공정성 검증이 다소 부족하다는 점이 이 Claim의 취약점이다.
+
+---
+
+## Claim 4 — 불규칙 시계열(Irregular Time Series)을 자연 스플라인으로 보간하면 Neural SDE GAN의 판별자가 그 구조를 올바르게 처리한다
+
+### 주장
+
+관측 간격이 불규칙한 데이터 $\{(t_i, x_i)\}_{i=1}^n$를 자연 3차 스플라인(natural cubic spline)으로 보간해 연속 경로 $X: [0,T] \to \mathbb{R}^d$를 만들고, 이를 Neural CDE 판별자에 입력하면 불규칙 간격 정보가 올바르게 반영된다.
+
+### 증거
+
+- 논문 Section 2에서 설명: 자연 스플라인 보간은 관측 간격을 path의 기울기 크기로 인코딩한다. 더 촘촘히 관측된 구간은 경로가 더 빨리 진행하고, 드문 구간은 경로가 느리게 진행한다.
+- Neural CDE $dZ_t = f_\phi(Z_t)\,dX_t$에서 $dX_t$가 스플라인 기울기이므로, 관측 밀도 정보가 판별자에 자동으로 전달된다.
+- Neural CDE 논문(Kidger et al. 2020)에서 이미 불규칙 시계열 분류에서 이 접근의 우수성이 검증됨.
+
+### 숨은 전제
+
+1. **스플라인이 진짜 경로를 잘 표현한다**: 자연 3차 스플라인은 과적합 없이 매끄러운 보간을 주지만, 진동이 심한 금융 데이터에서는 스플라인이 실제 경로를 왜곡할 수 있다. 특히 고빈도 데이터의 미세 변동은 스플라인 후 소실된다.
+2. **생성자와 판별자의 시간 격자 일치**: 생성자가 Euler-Maruyama로 만든 이산 경로와 판별자의 스플라인 보간 경로 사이의 시간 격자 불일치 문제가 있다. 이 정렬(alignment) 문제를 어떻게 처리하는지 논문에서 완전히 명시되지 않는다.
+3. **스플라인의 계산 비용**: 큰 배치·긴 경로에서 스플라인 계수 계산이 병목이 될 수 있다.
+
+### 쉬운 말 풀이
+
+병원 기록을 예로 들면: 환자마다 검사 날짜가 다르다. 어떤 환자는 매일, 어떤 환자는 한 달에 한 번 검사한다. 이 두 경우를 같은 신경망에 넣으려면 "공통 시간 축"이 필요하다. 스플라인 보간이 그 역할을 한다 — 빈 구간을 자연스럽게 채워주면서, "이 구간에 관측이 없었다"는 정보도 경로의 기울기 크기를 통해 판별자에게 전달된다. 영리한 해결책이지만, 스플라인 자체가 진짜 데이터를 왜곡할 수 있다는 한계는 남는다.

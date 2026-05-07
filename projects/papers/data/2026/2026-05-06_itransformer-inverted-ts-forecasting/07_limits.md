@@ -1,11 +1,62 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "3DK2voORRlnv0OzucJjubw==",
-  "iv": "4leN1khLJBdVAiK1imA79A==",
-  "ct": "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",
-  "mac": "N5eIqv+Mxg2UernF2g+LJe2f4uPUuFrpzZaUUvaqkKA="
-}
+# 07. 가정·한계·반박
+
+---
+
+## 명시된 가정
+
+저자들이 논문에서 직접 인정한 한계:
+1. **소규모 변수 데이터에서의 제한**: ETT(7변수)처럼 변수가 적으면 N×N 어텐션에서 얻을 수 있는 정보가 적어 이점이 제한된다.
+2. **계산 복잡도**: $N$이 클수록 $O(N^2)$ 어텐션 복잡도. Traffic(862변수)의 경우 어텐션 맵이 862×862로 상당한 메모리를 차지한다.
+
+---
+
+## 암묵적 가정 (저자가 말하지 않은 것)
+
+### 암묵적 가정 1: "변수 수 $N$이 시간 길이 $T$보다 예측에 더 중요하다"
+
+iTransformer는 $N \times N$ 어텐션에 집중한다. 이는 묵시적으로 "변수 간 상관관계 포착이 장기 시간 의존성 포착보다 더 중요하다"는 가정을 내포한다. 단일 변수 예측 시나리오(univariate forecasting, $N=1$)에서는 iTransformer가 표준 트랜스포머와 동일해진다 — 이 경우 FFN만 남고 어텐션은 의미를 잃는다.
+
+이 가정이 무너지는 조건: 금융 시계열처럼 변수 수가 적고(예: 10개 주식), 변수 간 상관이 약하고, 각 시계열의 장기 기억(long-memory) 성질이 중요한 도메인.
+
+### 암묵적 가정 2: "변수 임베딩(T→D)이 충분한 시간 정보를 보존한다"
+
+선형 임베딩 $W_\text{emb} \in \mathbb{R}^{D \times T}$는 $T$개 시간 점의 선형 결합만 할 수 있다. 고주파 패턴이 $T=720$인 입력에 희소하게 나타난다면, 고정된 선형 가중치로 그것을 포착할 수 없다. PatchTST의 패치 방식이 국소 시간 구조를 보존하는 데 더 유리할 수 있는 이유다.
+
+---
+
+## 반박 가능한 지점
+
+### 반박 1: "N×N 어텐션이 정말 변수 상관관계를 배우는가, 아니면 단순 위치 패턴인가"
+
+저자들은 ECL 데이터의 어텐션 맵에서 "지역 전력망 그룹" 클러스터를 관찰했다고 주장한다. 그러나:
+- 이 클러스터가 단순히 "인접한 변수 인덱스가 비슷하다"는 인공적 패턴일 수 있다 (데이터 전처리에서 변수가 지역별로 정렬됐다면).
+- Ground truth 상관 행렬(예: Pearson 상관계수 행렬)과 어텐션 맵 $A$의 정량적 일치도를 측정하는 실험이 없다.
+
+**검증 방법**: 변수를 랜덤 셔플 후 재학습해도 같은 클러스터가 나타나는지 확인. 또는 CausalImpact 방식으로 특정 변수 입력을 마스킹하고 예측 변화를 측정하여 어텐션 맵과 비교.
+
+### 반박 2: "이득이 '축 전환' 때문인가, 아니면 단순히 'N이 큰 데이터에서 모델 선택'이 맞은 것인가"
+
+Traffic과 ECL이 많은 변수를 가지며 iTransformer가 이에 특화된 것은 사실이지만, 이 데이터셋들에서 단순 선형 모델(DLinear+상관 피처)을 제대로 튜닝한 버전과 비교했을 때도 여전히 우위를 보이는지 검증이 부족하다.
+
+**검증 방법**: 동일 데이터셋에서 Sparse-input DLinear(변수 선택+상관 필터링)와 iTransformer를 비교. 만약 이것들이 비슷하다면 "축 전환"이 아니라 "다변수 입력 자체"가 핵심이라는 해석이 가능하다.
+
+---
+
+## 재현성 평가
+
+| 항목 | 평가 |
+|------|------|
+| 코드 공개 | ✅ GitHub + pip 패키지, GluonTS 통합 |
+| 데이터셋 공개 | ✅ 모두 공개 벤치마크 |
+| 하이퍼파라미터 보고 | ✅ Appendix에 상세 기재 |
+| 분산 보고 | ❌ 평균만 보고, 표준편차/confidence interval 없음 |
+| 독립 재현 | 여러 후속 논문에서 비슷한 수치 재현 확인됨 |
+
+**평가**: 재현성은 비교적 양호하다. 분산 미보고는 일반적인 TS 예측 논문의 관행이지만, 단일 시드 결과를 최종 비교에 사용하는 것은 여전히 비판 대상이다.
+
+---
+
+## 본문 미기재이지만 중요한 사항
+
+1. **위치 임베딩 제거의 실제 영향**: 저자들은 "위치 임베딩이 불필요하다"고 주장하지만, 위치 임베딩을 추가했을 때 성능이 실제로 어떻게 변하는지 어블레이션이 없다.
+2. **훈련 시간 비교**: 파라미터 수가 같더라도 어텐션 계산 패턴이 달라지면 실제 GPU 시간이 달라진다. 특히 N이 클 때 N×N vs T×T 어텐션의 실제 시간 비교가 없다.

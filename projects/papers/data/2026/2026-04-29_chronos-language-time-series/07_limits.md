@@ -1,11 +1,68 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "jDjqRBzdVB7EUp/vO9NF9Q==",
-  "iv": "9R+MGduEXlphxHEqXf22SQ==",
-  "ct": "pLDUmAPDfGRUI3dWwFKD98TWvFw4/4ktscZknR3KtJCUS2lfk43U3hbIFev3deTxOuRAVuok/MospSy1pR+UJY2cT4L+aQs3VLWWiIwC0FkDd8hO4qhmZinRsbHE8+U92CVCKDAW2UrQON5hFnbm2M4Tvz4IOrOSYGvWKvGLZBtRNY4mao0Nr9SozYTBhcRyOvW1NFd0h3Z7/JIThuCmxg5Dtd6Kl1iI4weeMEjEGbAuY5OEEY83+lWRk9HU1oDIiykg9giizGF7rsYx0WhomFubsUFrbP/yl5AeY48H1OancOJBpWNGxLMw54X9A09bRZf65yvmx17bfDLcnyFcFJPs+gFmtrlJB5IL7nDoL1KhMS4QOk5zHflTsqwh/pag0lDSizEjP1jnzcPia/3BkmGJ9oLfancVC3n2tcbnFavRKAG9qpCxtXYnx9C8rjI3DkbUI/HV7jLNEqsOtaNrxOdgj9BwUGO7/wqDyof9KO4jD12lMOxjt8Irhckn/zKjmOjx5IwLrBhzeKSlKD9/2z2g5jAMLzLQiPaw5dLUjlugKv6kez1yi0DQmsgR3ke+T1Oss4RauV04vDSVhhvNlqqoEi4IgmGrJfLsuQpqZnuWUgMJfcHtW1Zyp9QCc3uFjt0QE/rkO7SNsavkUMEcXO6a6QgE2PpJHGfkz+m+uB2OVw9dpVe76cZXkybPUEXj7rENPe24cW7qT1QWoeKopOBfaBAZTZk74OPXtW8UIVhbNIGB3xG3qfIsQAp/mNks+G4k5x/bd1z7qdAQdvWnT324FDgHiRanpLAegMuoyfJ+DlxBUO10+eFqn2DdgcIzZM7rr9LMOvsgpeWUpMZu41nusxfzflk+tPdFgq7Pmt6iHHIH6S1u2mmzn0S+KIUCN4anGvCZwZYWS82Rk834IhFz2bOln68sDvKVCgOGspthFfAed5kcq/1OaBRa+zmbJ75I+dwRYTc9fLYvZVFQSkZGXtqYEaNXnqNyb5AH28aPTuAqM/4RpWP96FIboSywWMBgsqKaM4wcWc7oxB37S4qcL0KMXF/QWzYl/cblnbfCx7HKshRMiwbvCloMwHZPzzBM+sesPFQccN/0a3usKIcBpL+CeG9X2PjScszS96gCNL3mWih/OEbqcl7NwKpipBB/0+PtCv6Cg+M0/BZQRGDfopI8D6yBndl8ljc4lcaSweWf4MgqmV2s2P1RcgvNXFimBjQ1l6U6/rTjfSuE0o/4BzQZlQQOgfXdMtUX1Whp7NoweAfl2/IMrZq6vsYOsFtNEEMCwzcv0uOidQuq4JoBwk8rGs/wNUk51TrDmBtpgmoHbBTHwPevuNXWq8oHi4jKhBU6A+8IJ2DjEAelN98pc4V6udsi4t1+60oNOK3H49C1543JYf4XfvaRUMNm9nFbeJ9PyBaNP0k2yoOw0Sj4OEhJURUWRh+YqMEdgaNuIY8CxCjzGeMfR1Pw33BC1lFDZXi3vkk4seG8jW103Xm2aMv+TWyqIbB27OvcXbuPEsEK9GShgwk5104kx+Eun6QXD4ZgdZPariIqaFeKTrQ1GBfnJN3LyanaBtE2+X0JcKoum0jNdY8viL0EC9sJilHP45i/4ytE348SpTnFj+6tHmBJcX0xwJ1CAOLTwbxv54JzTG0DaAE33jH7YFQ+u2o10Yd9Rqdggcvrj+jiXzLCGn1h0Ac6fftlA1eAV4gJ4WuyHUv+juvwx4nQoAGZ9zpngMaEv1NcLNYzZE46m91Y7Msx/WJkFM+s586dd3SLUMbJ6AeHQqCKBS9m72HRtdRfm/BSBJLinJUSjcL63xt8sw8tgKwSHIpYnFR9P38b+/IIhx36+k9zc/yStLP7q9mP8mB7ZSxhhCM5739Tw/oNXRH3eBx0IqOnvRbSu5xbyv1yO1Ulnuiwxhb9hXmLBvMWHsmZ5jU7msYqwLeiQWEtmAvZkUIOlIntD6IhsrOLJvVHse0r7aZc1994dsIKUanVEAl43Z9g+9w4WgQX9niH0uYUz3FyTwJ1IWixbaoX5Wpdl05ngev1Jjr56iYHvF7QGM9532KrYoRmhRZpwycEIbH0AeF7Zjl/fqCD69T37cvnwKPGUAuNvC1thOXTRymrLQn658fHhzx3Ddmki+kmmqpIfVlfMv75/Vfe4EBEX6zeb8S+Qqp+IKGoFkFtE+ZnaEngZo47G7uspKFDR0hQ70xDO70apWtyVZumkeoJDz37Z/hOMRd984198JNphTOVlv4ePdTThDld8Txth4+vJFnTnKIlUKHmp3ZsFDqiykhLjOCObXZJtjANxrcXAHCZvXv4uUFaZ2Ff3W1DEL/ZjME7h4XVprLCPYXuWz/XdTpRR59EUHBM8EBB2KCUCB/DXQEhuTMyVWRzenM20dn2kBfD29PmKi7ZW+CTEXMbE6S3oWCs5f3VY0vPeGkJDQvyAn6UslRdwbB4wxq/bCxNa9X4BPNApHxK+U+puK3n2kknKdLZCyOUGVgF5H9EJnLoaEEfbC6xsnp9ioTmtXucLKGuFomCOqdZtHeVLMz7Q6yc0oYY3cq6mpc0xgv+aPWIRPZGCcPOUj8xJX2LbEAYw8wryo4KUxC9sYzY1E63MREVzrnw2qiulgFRZ4zxjiIU3K2sb3m/0/Wf0INlzJFumjx8nsZEhxweDB+iqvebPK+R5DB3KXOTPJLuef30aPhmQxZyvNde4ukGNgbtC/6jP+teqw0carLf2MGQrtcmrsymH2GqQFKSMxct58NQzXrfwGhkjtvH7+6E4CH2PdDDeynLh+rfa2wZAtlF/5xsfqVJfaF8HJq43meDm0pUQf4HgmKccvt+S63xuf1N8S4QCk9+KLk0KqPZz6JjFrNAvNg7bexRibDxeZjWgyO3KEsbnVjewS1eEjvo/AP3MuVUU0mjNIgMYeazwMwOgx+X9M1Q8fbJU6jrM70F6idmV5rf7VT+NRtvJ11cjAQPhnkFudBiqX7lTsAJ5ahTeDC+GsDXdgBve4+s9uSFAXWTSSldp7wZnu5JzswUsC2sYN804E71I1SIka1N5mFkmWCHUTGNt6IMg0jSEH3jTrvc7ROg7+vFtOLLXHvgr4tG3iPgYRPI23WE/AfaPVbIwwrCqGL7W7nIx7hiel2cz2Adh9jWH4PeMFLknlBvmIupUmCzQKj7caRWdd7mp6+vxkAvcA37ZxwyWH5TSy5pQRMAoW8s2coUJPxpxY8SicLSVrtaQH/Lrnq2NuVzm46GtPjFx2P3PrNDC1nbvUxK69FZCBsqu73/+ZibefvPNrI3GhvhUj5YBfE3Z3n4pZFPmIy2vzDI2YaKoIPxseSPgIw3JWQwl2QUnH4Oh5au7TbV7cbRbXzy3uqhBziaA9s84NQlH19EIrCZhqEe6jFCDpo2/bFrvCbDEh6M1wXDiQ7qPhJClz5Eds2zKzBul2TvcnIE+5qBYYMlBIjVpH7BCNIO+bmpXvtNtXTqGaDz6iVqH76Hws6KGg7bS01YDeirEt8kSngPz20PF70BvJ7+WO/okmJrk0YC3OVJQYpNL+ezzyAwC72dyzfcW3ZytpiVdRhpQbROKTbcWK3qvH75mdy3lg5GDAiUHgpt/yaBWbcbGlQLGAZDLQOpgAW4mYtnoWzlllFkZPE47kBB7Hu2UHSgUrdc1drSXWL6xFbg2lquHrSNCK1LeLeonBvciRAFblJccIv0SrcGRch4ITrPlsydipMbc1/aF45hnT7jhq5qh3n9aytdSXL+yWejJh/yvXk7F0343lV8gAf0MG7h7Yo8B0GQOVm36zsy2d8g6Cz6wU3XbtXda8Ud3DfxDl3I0xW5KQiCL/OBKOpdanKe5Cli/gEzmrIy4H2zhtEmwUDvZFvqnF0Ifmod+aCTMjt5IjKz1yVaVqwEBJqOH4yQHmgHDyVe3fSEnRK5dXToy/GSqEsmoE8QkFDzdVsdvMqVIzYVzRs/LCXO49iYHWyUHQs8WjpvWuoX07meOIELFEeMnkxjRqpc4HTfsQi8sVljrg7+S0ShONWDzI1pj91SOY8AtS8u2sfKxzmztMCalcuJOxHuzYBfS9CV3PZURIigU0QKkKezKSZI/R0KpbvbeFfXsjDBD8LhyFArg5JtGKDDw8oOcBOCdao7uUHKkh1cE2OumR42+QLOboRsd2MgL8FrYHPzWQ5anZJFDwdagIiDNEcxwQKI1n8FJSNZBIXooP1gaWwTc8bJMNcWqFpKtKRLCMeoa5xIcyz4YBMh1Z8N7ukaZYN9wdo1Wce5D7wszSINS59llEpArP3gVLei+a6PxidXfxnM+viqbDucemy9u2vzHiowTjNyUN1sgM887k/8cDK0k9xqtK9gI0AEDGRdNPqJSk7Tl/zkxd20DNwDJ3M3A0ykNkLpXDJyA5wk/wZW0iCPKiXginP4uJ/RXNy8xpIgMEjHaxLsVAu93yW35vooFqV1HQ0fmz0V5LW5Mg2Fu6gqm4ysrr99IVDqf54h39xyteiTwFf8u3ue0wGHZezjm7yJ60OyohCwEZQr2jZ10JfqYXRkFtwKZZfa7UEZxFSpDnDQ5PSGvDB6Y8QTuSSG6arv2DStjvOnKKEbIaYpG7I4IzbOOx1IFSj9vOaAj5vq5I4mrUpQ/68xMxWh+Uv3JaQ6yf6csIQV4lKjmNkTkFxD7SG1fs0H3dh7JsZpeG5HWmMDm8uRE0pCHT0lTLRgHh3AXzoM5ObskG6N1ngj9QYJgN1U0k0uIX/t9ktI8L9s1Gy3Fr0KsRUHFOyH4pS3sDy4MxwvfrXMFH76q0pkMRMg8qGVDdhugyUcJOljU2au07NBqsGUMNvbWwZfilLQhhOGcSwmWIdl5uWqcWLStw5Ybhe+JHSuj9SuqUejcQKdmtNbxuPGTDJ1/oY2alyhvXFbD3RgEDYRWsKxNgBLv6IS1cxQMZZgz6sA8HNNr7q6vHgY7r/L+99H/V7CKCzWNv54zv1oZrdiycaL7FeqosGGwbZW5kOYRFtrCUzVd/U9XbbVpr87FXRuT7r4RisKQAD8ObR0Zrnyyf7JgbGaAwTmbuQKDpEmuvfkbqhwXRsqz/UdmksrorAJE+aRcGlf6gZXvpFSX1OIwByqgsTSZ20m7ON9DIsb4l0nxiAHxxa1iFBajKHNkbbtRApgoNj4mgWFNQaU/sjZRS5+9UmmXQ0XO+FC7lDhMdenUyJIfJZXi3NVpx/MRi5mQxYzaPOSFN98EiWr+OfI/FhskqjVBJChMlJ/+9io/2gTGuBS5FFxPHenDhxMI2OxSwPmTjwHv+n+sHbm7gODJFyPx5ORuQxnU7Fd1fwmzxzQ7qQT68fzU3UiDxVIHGQ0w9jFUWB1BMERfn1tVW1p2WBn9CJ2fcLE972fHwDIDV26TABD0dxZGxIUaUb1iX2mCQwRkhYZMVed4Fx1OmDXcvqf7uNWET7bxh1X8DFj4L6gWQIwEJO1TOk+PGuwzQZZd83DAgMYtbuex4j0qGQPBaKfafd589eas9bJfN2iqDM1UT23EWLba9vLXDQ50c4IamVQYVBuFkciC4IAa/gvnWjEaPChegfzYTg/SyoPpupswIBmsAiNkoYeJ8iy8wyVEahNMgDV02i/Yo8kbjBVf/SNOIJPq1LP0w5y38hhfVsHv7ZvI416QK43WaswVTQCkh1YDPUdJBIorVhE5z4P9B4Z2TLa8pJWrOvp+mQHHyBLnfl8t2iImpJVXTh2Ui63UgxEypz8oGFgWuJzKM+5tyM9TTiCQp6vRaHEOVhnvY9YrQ74x37xqg8Xa88J9CHC8LtEbDHLFW0zu64SY9GHmsbTUJ/POJJJkACQVISKvIl+9FWLyFKAm2K1n68Q5pefJOvXs758pKIrlTddsnYA3xsu00XkuOm7VJZX0iOzcZfG1A922yb250fHjBCdc13LjYXylU7NWgX+0TQsy9yymmzlWOdt0Duc3414G0IsVq/8qfVZDDUCFLQ3Im9n3cUiyfSsrHAph1CSgnvdyGRt8ljsD45ybwN5loPqMeD2v3YysUz7yRQbmrScm+vXTQcGTgcQTAjuUiPrL/KzbkScgdR4jLi7WyQwuCvIdwHxXI3NyXSsfn1GY4pXKYO8rn3zzjb78W5PFGM3QpiGlS1URDfAnoCiSWiN4/7Jp2Z44Uf6ryjVvvYyZNejqGa8MSA5Tqmplt8sG20Dlwi5FV7KUCsTlFITjY63GekJPomiq5RXXiZG2lgOJGwX8q/ANhZi35Tp+9XQyu+MaQQMuF5APFFWgCox5Y+WhLKjqblhMRm2Aq6yLJm8hFoL+RIU+IBl4e/e90ZZjrZYZwVzA84Rip3+iDPKUCbvtOeb5zY/asBbMeDhJUEdQrcuVlANjcfjWWFlWcXtNhLy/15u5MYtRl+E9AdurioKd3xP2MIz1zGDjMaSzeNvNbLaGq8bNhuguu98D7phVqKlTQtHAibisnYbxBZpYydQH7oX8s9blph+J4BPvdirktW8+TJAMuEZWAnsO863QW3pynzRByeMEQan+Ynq8n0/lAMBIjwRhOzr8sM9Z9wWNi4J0iYmSI5w4nIJPljid8M+rz1gjlh7bWTOx2EnggCLjeuDLEZmnLgx6zjk0g8GxGGc0NxAK5Qky0IVhcsXVTzXaFrtZ90SnGZRmJhl2hcR9Rvn5EF1szlbn8jyi9BA2ZvQRhg4MYDMDdQUH5cXkn/6yN+b2b2qdX5bdDYAfd+lcV/ppXtEpp6TYlNaeY5RtaTmBIHMw6V+bwlI5OzMK8mmPc5lCGBVdTK9QclamM2iI+mFJxDy7+lqOz47rObAV+VISnAFFOXSmXQ744sA4wSa5PsoeTCu4SHSVLgqpT0ZvWZYur3Imu2Vnv2O91VTmi3fuT5EeyLZ4HlLlam2arqV9qcEaadq3CKWAiJFvTCPdxoa0TnBmFrh4atq0P4dzUNrA+YoiEjfqZAqSyMTWMvmZHK5tZEYDJjbxnNwhqT2JZ/yhyWr4Juw8u9GJKk0enQuVaM2XplA/2JMSzEMd9YOT0VEAlk/VtVrJE9JvUuyOnHWzdQfJLNh8ZCBhd8A9do1ADjav5u5HXLU0DDsCEp7A1Amuk9NtTqPIRxwF3J0JV81JuQpG7sW69IREm5FSL56U4trZGbxlu+huKBOeRm9UdMzmwtUGCV/Mq5XWywmJXnbTHnIWpBC7wLpfEQmKbkJCN0Rfn4hIIVOVHdtlFHy/GdA/PCgFxzprzUfIj84uAG5sYkHmBMifUS878VEQFj8Ot6wMxCgLrSPMTzLxgrdBa+z8ETS9j28rWbHsfKJKB2wJ33TTXFwn6LTW7XlNBbS/q6+p8yvaCEBOg==",
-  "mac": "cUo7WsgXnWoIm8owClECKDpJx2EQQeHfF+04SGgkYg8="
-}
+# 07. 가정·한계·반박
+
+> **배경 사다리**: 이 섹션은 논문이 내세운 방법의 취약한 지점을 공격적으로 탐색한다. "논문이 말하지 않은 것을 찾는 것"이 목표다.
+
+---
+
+## 명시된 가정 (논문이 대놓고 말한 것)
+
+1. **단변량 가정**: Chronos는 각 시계열을 독립적으로 처리한다. 여러 변수가 있으면 각각 별도로 예측한다. 변수 간 상관관계·인과관계를 모두 무시한다. 저자는 이를 "단변량 설정"으로 명시하고 한계로 인정한다. (Chronos-2가 이 한계를 해소)
+
+2. **스케일 독립성 가정**: mean-scaling으로 데이터셋 간 스케일 차이를 처리할 수 있다고 가정한다. 하지만 이 가정은 시계열 내에 급격한 수준 변화(level shift — 갑자기 값의 기준선이 바뀌는 것)가 없다는 전제를 내포한다.
+
+3. **컨텍스트 충분성 가정**: 512개 과거 관측으로 충분한 컨텍스트가 확보된다는 가정. 월별 시계열 512개 = 42년치. 대부분 충분하다. 하지만 고주파(초 단위, 분 단위) 시계열에서는 512 관측이 수십 분에 불과해 중요한 패턴을 잘라낼 수 있다.
+
+---
+
+## 암묵적 가정 (말 안 했지만 깔려 있는 것)
+
+### 암묵적 가정 A: "TS 구조가 GP 커널 합성 공간에 포함된다"
+
+KernelSynth의 핵심 전제는 실제 세계의 시계열이 RBF·주기·선형·노이즈 커널의 합성으로 충분히 근사된다는 것이다. 하지만:
+- **금융 시계열**: 변동성 클러스터링(GARCH 효과), 레버리지 효과, 두꺼운 꼬리(heavy-tail) — 가우시안 GP로 생성 불가
+- **점프 프로세스**: 뉴스 충격, 정책 변화에 따른 급격한 레벨 변화 — GP 샘플은 연속 경로를 가짐
+- **장기 의존성(long memory)**: ARFIMA 프로세스처럼 매우 느리게 감소하는 자기상관 — GP 기본 커널은 단기~중기 의존성을 표현
+
+이 가정이 틀리면 KernelSynth는 실제 유용한 도메인에서 오히려 편향을 만들 수 있다.
+
+### 암묵적 가정 B: "이산화 오차는 무시 가능하다"
+
+4096 bin이면 충분히 세밀하다고 논문은 암묵적으로 가정한다. 하지만 WQL 측정에서 극단 분위수(1%, 99%)는 각 bin의 경계 근방에서만 측정되므로, 꼬리 위험(tail risk) 추정에서 bin 경계 아티팩트(artifact)가 생긴다. 금융 VaR(Value at Risk, 가치위험) 계산에는 이것이 심각한 문제다.
+
+### 암묵적 가정 C: "교차 데이터셋 학습이 도움이 된다"
+
+여러 도메인의 데이터를 혼합 학습할 때, 서로 "간섭(interference)"이 없다는 가정이 내포된다. 하지만 전혀 다른 분포의 시계열을 함께 학습하면 오히려 각 도메인에 대한 성능이 낮아지는 "부정적 전이(negative transfer)"가 발생할 수 있다. 논문은 이를 제어하는 실험을 하지 않았다.
+
+---
+
+## 반박 가능한 지점 1: "Zero-shot 성능은 과장됐다"
+
+**반박의 핵심**: 논문에서 주장하는 "zero-shot 능력"은 실제로 훈련 데이터의 분포와 겹치는 부분에서 오는 게 아닌가? Benchmark II의 27개 데이터셋 중 일부는 Chronos 학습 데이터와 시간적·구조적으로 유사한 시계열(같은 도메인, 유사한 계절 패턴)을 포함한다.
+
+특히 "훈련 데이터 오염(contamination)" 문제가 있다. KernelSynth로 생성한 합성 데이터의 분포가 Benchmark II 데이터 분포와 우연히 겹친다면, 이는 진정한 의미의 zero-shot이 아니다.
+
+**검증 방법**: (1) Benchmark II 데이터셋과 훈련 데이터 간 Maximum Mean Discrepancy(MMD, 두 분포 간 거리 측정) 계산. (2) 학습 데이터를 보지 않고 Benchmark I에서만 학습한 모델로 Benchmark II 성능 측정. (3) 극단적으로 다른 도메인(예: 금융 시계열만으로 구성된 새 벤치마크) 실험.
+
+---
+
+## 반박 가능한 지점 2: "Cross-entropy가 순서 정보를 무시하는 것이 실용적 성능 저하를 낳는다"
+
+**반박의 핵심**: Bin 순서를 무시하는 cross-entropy 손실은, 예측이 실제보다 약간 크거나 약간 작은 경우와 완전히 다른 범위의 경우를 동등하게 페널티를 준다. 이것은 연속 시계열에서 불합리하다. 예를 들어 내일 기온이 25도인데 26도를 예측하는 것과 0도를 예측하는 것에 같은 페널티를 주면, 모델은 fine-grained 정확성을 학습할 유인이 없다.
+
+**검증 방법**: (1) Ordinal cross-entropy (인접 bin에 부분 점수를 주는 변형 손실)로 재학습한 모델과 성능 비교. (2) 연속 값 MSE 기반 학습한 동일 아키텍처 모델과 비교. 이 실험은 논문에 없다.
+
+---
+
+## 재현성 평가
+
+| 항목 | 평가 |
+|------|------|
+| 코드 공개 | ✅ 완전 공개 (Apache 2.0) |
+| 모델 가중치 공개 | ✅ 5가지 크기 모두 |
+| 학습 데이터 공개 | ✅ HuggingFace |
+| 분산값 보고 | ⚠️ 일부 데이터셋만 |
+| 학습 비용 | ❌ 미공개 (A100 수십 개로 추정) |
+| 구현 세부 (특수 초기화 등) | ⚠️ 코드 참조 필요 |
+| 다중 실험 평균 | ⚠️ 대부분 단일 실행 |
+
+핵심 재현성 우려: 추론 시 샘플링의 무작위성이 결과에 미치는 영향이 분석되지 않았다. $N=20$ 샘플과 $N=100$ 샘플의 성능 차이, 랜덤 시드 의존성 — 이것들이 없으면 결과의 신뢰 구간을 알 수 없다.

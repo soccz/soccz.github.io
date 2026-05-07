@@ -1,11 +1,31 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "VubDTq+ubAZRMqY/OlzIag==",
-  "iv": "DFnGA/vOaPIc8cvrMJv1lg==",
-  "ct": "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",
-  "mac": "MeVQ93oD92t9h390sKo2ZqXAKhNd9DlI/J5fMg2Hv20="
-}
+# 10b · Follow-up 논문 3편
+
+---
+
+## 선행 논문 — Rough Volatility (Gatheral et al., Quantitative Finance 2018)
+
+**어떤 논문인가**: 주식 시장의 실현 변동성(realized volatility)이 Hurst 지수 $H \approx 0.1$인 fractional Brownian motion을 따른다는 실증 발견. "Rough volatility"라는 개념을 확립한 논문.
+
+**본 논문과의 관계**: 이 논문(Neural SDE GAN)의 SDE 생성자는 표준 브라운 운동 $W_t$ ($H = 0.5$)를 사용한다. 그러나 실제 금융 변동성은 $H < 0.5$인 "거친(rough)" 경로를 따른다. Rough volatility 논문은 Neural SDE GAN의 한계(브라운 운동 가정)를 정량화하는 이론적 기준을 제공한다. "왜 표준 SDE가 금융에서 불충분한가?"를 묻는 독자에게 이 논문이 답이다.
+
+**무엇을 얻을 수 있나**: Paper 4에서 economic time $\tau(t)$가 변동성 시계열의 rough 성질을 부분적으로 흡수할 수 있는지 — 즉, "시간 변환으로 rough 경로를 smooth하게 변환할 수 있는가?" — 를 논증하는 데 이 논문이 반례 또는 근거로 사용된다.
+
+---
+
+## 경쟁 논문 — Diffusion-TS (Tim Xiu, Emile Mathieu 등 2024 계열)
+
+**어떤 논문인가**: Score-based diffusion model을 시계열 생성에 적용한 일련의 논문들. 대표적으로 TimeGrad (Rasul et al. 2021), CSDI (Tashiro et al. NeurIPS 2021), Diffusion-TS (2023) 등. 역방향 SDE로 노이즈를 제거해 경로를 생성.
+
+**본 논문과의 관계**: 직접 경쟁. 둘 다 SDE 언어를 쓰지만 방향이 반대다: Neural SDE GAN은 순방향(노이즈 → 경로), Diffusion 기반은 역방향(경로 → 노이즈 → 경로). 최신 벤치마크에서 Diffusion 계열이 일부 지표에서 앞서는 결과가 나왔다.
+
+**무엇을 얻을 수 있나**: 두 접근의 trade-off를 이해하면 Paper 4의 economic time attention이 어느 생성 프레임워크에 더 자연스럽게 통합되는지를 결정할 수 있다. GAN 기반은 빠른 생성, Diffusion 기반은 높은 품질(단 느림)이 일반적 특성이다.
+
+---
+
+## 후속 논문 — Conditional Neural SDE 계열 (2022–2023)
+
+**어떤 논문인가**: Kidger 이후 그룹들이 Neural SDE를 조건부 생성(conditional generation)으로 확장한 일련의 작업. 대표적으로 "Score-Based SDEs for Conditional Generation" 계열. 조건 변수(예: 시장 레짐, 이자율 수준)를 생성자에 주입해 시나리오 특정 경로를 생성.
+
+**본 논문과의 관계**: 이 논문의 직접 후손. 생성자 $dY = \mu_\theta(t, Y, c)\,dt + \sigma_\theta(t, Y, c)\,dW$에서 $c$가 조건 변수. 판별자도 동일하게 조건화.
+
+**무엇을 얻을 수 있나**: Paper 4에서 economic time $\tau(t)$가 사실상 "시장 상태 조건 변수"의 역할을 하므로, Conditional Neural SDE의 $c$ 주입 방식(concat vs. FiLM vs. cross-attention)이 Paper 4의 conditioning space 선택 논의에 직접 참조된다. 이 논문들이 조건화 방식에 따른 성능 차이를 실험하면 Paper 1("When Multiplicative Conditioning Fails")의 논증을 SDE 영역에서 재검증하는 기회가 된다.

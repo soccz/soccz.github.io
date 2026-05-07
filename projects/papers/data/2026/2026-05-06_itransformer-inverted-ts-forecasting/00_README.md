@@ -1,11 +1,40 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "pnVe3UahuBQr91S5wNdUqA==",
-  "iv": "AJ39TauNe9mZO2zj/JTpiw==",
-  "ct": "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",
-  "mac": "Tt9GYnxZBeTdIKBMos3PAuwAvCgbsFFk7dlfi9yWLtI="
-}
+# 00. 네비게이션 — iTransformer: 축을 뒤집은 트랜스포머
+
+## 원문 정보
+
+| 항목 | 내용 |
+|------|------|
+| 원문 제목 | iTransformer: Inverted Transformers Are Effective for Time Series Forecasting |
+| 한국어 제목 | iTransformer: 축을 뒤집은 트랜스포머는 시계열 예측에 효과적이다 |
+| 저자 | Yong Liu, Tengge Hu, Haoran Zhang, Haixu Wu, Shiyu Wang, Lintao Ma, Mingsheng Long |
+| 소속 | Tsinghua University · Ant Group |
+| 발표처 | ICLR 2024 **Spotlight** |
+| arXiv ID | arXiv:2310.06625 (제출 2023-10-10) |
+| 주 태그 | `ts-transformer-baseline` |
+| 보조 태그 | `non-stationarity-ts`, `tsfm-interp` |
+| 코드 공개 | ✅ https://github.com/thuml/iTransformer (pip 패키지 + NeuralForecast/GluonTS 통합) |
+
+## 한 줄 판결
+
+> **"시간(T) 방향 어텐션"이라는 트랜스포머 TS 적용의 암묵적 가정을 정면으로 뒤집어, 변수(N) 방향 어텐션 + 시간 방향 FFN으로 다변량 예측 SOTA를 달성한 논문 — APF 연구에서 T×T 어텐션 모티프 분류 체계의 '대안 축' 비교군으로, Grokking 연구에서 FFN이 시간 패턴을 학습하는 회로 구조 분석의 초기점으로 필수 참조한다.**
+
+## 목차
+
+| 파일 | 내용 | 목표 분량 |
+|------|------|----------|
+| [01_meta.md](01_meta.md) | 메타 & 선정 이유 | 700자 |
+| [02_tldr.md](02_tldr.md) | 3층 TL;DR | 2,000자 |
+| [03_problem.md](03_problem.md) | 문제 지형도 | 3,000자 |
+| [04_claims.md](04_claims.md) | 핵심 Claim 해체 (3개) | 3,500자 |
+| [05_method_a_intuition.md](05_method_a_intuition.md) | 방법론 A — 큰 그림: 축 전환 직관 | 1,800자 |
+| [05_method_b_embedding.md](05_method_b_embedding.md) | 방법론 B — 변수 토큰 임베딩 | 1,800자 |
+| [05_method_c_attention.md](05_method_c_attention.md) | 방법론 C — 변수 방향 어텐션 | 1,800자 |
+| [05_method_d_ffn_arch.md](05_method_d_ffn_arch.md) | 방법론 D — FFN + 전체 아키텍처 | 1,800자 |
+| [06_experiments.md](06_experiments.md) | 실험 해부 | 3,000자 |
+| [07_limits.md](07_limits.md) | 가정·한계·반박 | 2,000자 |
+| [08_lineage.md](08_lineage.md) | 이론적 계보 | 2,000자 |
+| [09_my_research.md](09_my_research.md) | 내 연구와의 연결 | 3,000자 |
+| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 사고 확장 A — 자문 질문 5개 | 1,500자 |
+| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 사고 확장 B — Follow-up 논문 3편 | 1,500자 |
+| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 사고 확장 C — 실험 아이디어 2개 | 1,500자 |
+| [11_verdict.md](11_verdict.md) | 한 줄 판결 | 300자 |

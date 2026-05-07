@@ -1,11 +1,93 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "jzyo/Txv+uTuRTPgOkCW5Q==",
-  "iv": "MFS3CiZ3qSWEowd2G/tYnw==",
-  "ct": "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",
-  "mac": "bvAffTpTsm6r5dpruP5mCnxtBXdeQck32pKBs/juz0I="
-}
+# 05d · 학습 프로토콜
+
+> **배경 사다리**: ① WGAN(Wasserstein GAN)이 "판별자가 두 분포 사이의 Wasserstein 거리를 추정하는 GAN"이라는 것. ② Gradient Penalty가 "판별자의 기울기 크기를 1에 가깝게 강제하는 정규화"라는 것. 이 두 가지면 이 파일을 따라갈 수 있다.
+
+---
+
+## 1. 목적 함수
+
+이 논문은 **WGAN-GP** (Wasserstein GAN with Gradient Penalty, Gulrajani et al. 2017)를 사용한다.
+
+$$\mathcal{L}(\theta, \phi) = \underbrace{\mathbb{E}_{X \sim \mathbb{P}_\text{real}}[D_\phi(X)]}_{\text{진짜 경로에서의 판별 점수 평균}} - \underbrace{\mathbb{E}_{Y \sim \mathbb{P}_\theta}[D_\phi(Y)]}_{\text{가짜 경로에서의 판별 점수 평균}} + \underbrace{\lambda \cdot \mathbb{E}_{\hat{X}}[(\|\nabla_{\hat{X}} D_\phi(\hat{X})\| - 1)^2]}_{\text{Gradient Penalty}}$$
+
+**기호 뜻**:
+- $\mathbb{P}_\text{real}$: 진짜 경로 데이터 분포
+- $\mathbb{P}_\theta$: 생성자 Neural SDE가 만드는 가짜 경로 분포 (파라미터 $\theta$에 의존)
+- $D_\phi$: 판별자 Neural CDE (파라미터 $\phi$에 의존)
+- $\hat{X}$: 진짜 경로와 가짜 경로를 랜덤 비율로 섞은 보간 경로
+- $\lambda > 0$: 페널티 가중치 (논문에서 $\lambda = 10$)
+
+**일상 비유**: 위조지폐 감별 훈련. 첫 번째 항은 "진짜 지폐를 높게 평가". 두 번째 항은 "가짜 지폐를 낮게 평가". 세 번째 항(GP)은 "감별사의 판단 기준이 너무 극단적이지 않도록 제어" — 기울기가 1 근처여야 Wasserstein 거리를 올바르게 추정할 수 있기 때문.
+
+**왜 이 형태**: 기본 GAN의 손실 함수 $\log D + \log(1-D)$는 진짜/가짜를 0/1로 분류하려 하므로 판별자가 너무 강해지면 생성자 기울기가 소실된다. WGAN은 분류 대신 점수 차이를 최대화해 이 문제를 피한다. GP는 gradient clipping보다 안정적인 방법으로 Lipschitz-1 제약을 강제한다.
+
+**조심할 점**: GP는 $\hat{X}$에서만 기울기 제약을 걸므로, 전체 경로 공간에서 Lip-1이 보장되지 않는다. 특히 생성자가 만드는 경로가 훈련 데이터와 크게 다른 구간에서는 판별자가 Lip-1 조건을 어길 수 있다.
+
+---
+
+## 2. 훈련 루프
+
+```python
+for iteration in range(num_iterations):
+    # 1. 판별자 업데이트 (n_critic 번)
+    for _ in range(n_critic):
+        X_real = sample_real_data(batch_size)
+        z = sample_noise(batch_size)
+        Y_fake = sde_generate(theta, z)  # Neural SDE 적분
+        
+        D_real = neural_cde_discriminate(phi, X_real)   # CDE 적분
+        D_fake = neural_cde_discriminate(phi, Y_fake)   # CDE 적분
+        
+        # 보간 경로
+        eps = uniform(0, 1)
+        X_hat = eps * X_real + (1 - eps) * Y_fake
+        grad = gradient(neural_cde_discriminate(phi, X_hat), X_hat)
+        gp = (norm(grad) - 1)^2
+        
+        L_D = -D_real.mean() + D_fake.mean() + lambda * gp.mean()
+        update(phi, L_D, maximize=True)
+    
+    # 2. 생성자 업데이트 (1번)
+    z = sample_noise(batch_size)
+    Y_fake = sde_generate(theta, z)
+    D_fake = neural_cde_discriminate(phi, Y_fake)
+    
+    L_G = -D_fake.mean()  # 판별자를 속이는 방향
+    update(theta, L_G, maximize=False)
+```
+
+`n_critic = 5` (판별자가 생성자보다 5배 더 자주 업데이트) — WGAN 표준 설정.
+
+---
+
+## 3. SDE 역전파: 수반 방법 (Adjoint Method)
+
+생성자 업데이트 시 $\frac{\partial \mathcal{L}}{\partial \theta}$를 계산해야 한다. SDE $Y_T$는 $\theta$에 미분 가능한가?
+
+**Li et al. 2020 (arXiv:2001.01328)**의 SDE 수반 방법:
+
+$$\frac{d\mathbf{a}(t)}{dt} = -\mathbf{a}(t)^\top \frac{\partial f}{\partial y}(y(t), t, \theta)$$
+
+여기서 $\mathbf{a}(t) = \frac{\partial \mathcal{L}}{\partial y(t)}$는 수반 상태(adjoint state). 이 ODE를 역방향으로 풀면 $\frac{\partial \mathcal{L}}{\partial \theta}$를 메모리 효율적으로 계산할 수 있다.
+
+SDE 경우에는 확률 항이 추가되어 역방향 SDE도 풀어야 하지만, Euler-Maruyama 이산화 하에서는 표준 역전파(backpropagation through time, BPTT)가 적용 가능하다.
+
+---
+
+## 4. 하이퍼파라미터 요약
+
+| 항목 | 값 | 비고 |
+|------|------|------|
+| SDE 스텝 수 | 50–100 | 데이터 길이에 의존 |
+| 판별자 업데이트 비율 ($n_\text{critic}$) | 5 | WGAN 표준 |
+| GP 가중치 ($\lambda$) | 10 | WGAN-GP 표준 |
+| 배치 크기 | 64 | |
+| 옵티마이저 | Adam ($\beta_1=0, \beta_2=0.9$) | WGAN 권장 설정 |
+| 학습률 | $1 \times 10^{-4}$ | |
+| 잠재 차원 ($e$) | 8–16 | 데이터 차원에 의존 |
+
+---
+
+## 5. 이 블록의 핵심 한 문장
+
+> **WGAN-GP 손실 + 수반 역전파의 조합이 Neural SDE 생성자와 Neural CDE 판별자를 안정적으로 공동 학습하게 하며, $n_\text{critic}=5$ 비율로 판별자를 더 자주 업데이트하는 것이 학습 안정성의 핵심이다.**

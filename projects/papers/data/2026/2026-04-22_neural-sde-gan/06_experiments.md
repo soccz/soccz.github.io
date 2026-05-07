@@ -1,11 +1,93 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "Mtb/4m6bZRdYGa4Zhm2Ltg==",
-  "iv": "8gxsBeqtqQxXS6NC0C2NcQ==",
-  "ct": "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",
-  "mac": "gvyySTsQzBuw9lsyYbXlxVEWDwug/j0weUkX0oZuRWA="
-}
+# 06 · 실험 해부
+
+> **중요 고지**: arXiv·ar5iv·alphaxiv·Semantic Scholar·PapersWithCode·Google Scholar 7개 소스 모두 403으로 차단되어 논문 PDF를 직접 확인하지 못했다. 이 섹션은 공개 발표 자료·사전 지식·논문 저자들의 공개 GitHub(torchsde)에 기반해 작성했다. 구체적 수치(예: TSTR 소수점 두 자리)는 미확인으로 표기한다. 재현 시 논문 원문과 대조를 권장한다.
+
+---
+
+## 1. 데이터셋
+
+### 1.1 Ornstein-Uhlenbeck (OU) 과정 (합성)
+
+**데이터란**: OU 과정은 "평균 회귀하는 랜덤 경로"의 수학적 모델. 주식의 로그 수익률, 이자율, 스프레드 등이 이 형태로 모델링된다.
+
+$$dX_t = -\alpha(X_t - \mu)\,dt + \sigma\,dW_t$$
+
+*$\alpha > 0$: 평균 회귀 속도, $\mu$: 장기 평균, $\sigma$: 변동성.*
+
+**왜 이 데이터가 이 논문의 주장에 적합한가**: OU 과정은 SDE로 정확히 정의되므로, Neural SDE가 진짜 OU를 얼마나 잘 근사하는지를 ground truth와 직접 비교할 수 있다. "SDE를 SDE로 생성하면 잘 된다"는 원리 증명의 역할.
+
+**숨은 편향**: OU는 파라미터가 3개($\alpha, \mu, \sigma$)뿐인 단순한 과정. 실제 금융 시계열의 비대칭성, 팻테일, 레짐 전환을 갖지 않는다. 여기서 좋은 결과가 복잡한 현실 데이터에서도 좋을 것이라는 보장이 없다.
+
+---
+
+### 1.2 주가 데이터 (실제)
+
+**데이터란**: Yahoo Finance에서 가져온 대형주(Google, Amazon, Apple 등) 일간 종가 시계열. 수십~수백 거래일 구간.
+
+**왜 이 데이터가 적합한가**: 주가 경로는 GAN이 생성해야 할 가장 현실적인 금융 시계열이다. 실제 데이터에서도 Neural SDE GAN이 작동함을 보여주는 역할.
+
+**숨은 편향**: 
+1. **생존 편향(Survivorship bias)**: 현재도 거래되는 대형주만 선택. 상장폐지 종목은 포함되지 않아 분포가 치우친다.
+2. **시기 편향**: 학습 기간(예: 2015-2020)과 테스트 기간(2020-2021)의 시장 레짐이 다를 수 있다. COVID-19 충격이 포함되면 분포 변화가 극적이다.
+3. **일간 데이터의 한계**: 일간 종가는 장중 변동성을 무시한다. 고빈도(분·초) 데이터에서는 결과가 달라질 것이다.
+
+---
+
+## 2. 베이스라인 공정성
+
+논문이 비교한 베이스라인:
+
+| 모델 | 유형 | 계산 예산 동일화 여부 |
+|------|------|----------------------|
+| TimeGAN (Yoon 2019) | 이산 RNN GAN | 미확인 |
+| RCGAN (Esteban 2017) | 이산 RNN GAN | 미확인 |
+| T-Forcing | Teacher Forcing RNN | 미확인 |
+| P-Forcing | Professor Forcing RNN | 미확인 |
+
+**잠재적 불공정 지점**:
+- TimeGAN은 supervised loss와 reconstructor를 갖는 복잡한 4-파트 학습 체계. 하이퍼파라미터 민감도가 높다. 논문에서 TimeGAN의 최적 설정을 얼마나 탐색했는지 불명확.
+- Neural SDE는 연속 시간이라 스텝 수를 늘리면 더 정확해지지만 느려진다. 같은 GPU 시간을 할당했는지 보고되지 않는다.
+
+---
+
+## 3. 지표
+
+### 3.1 TSTR (Train on Synthetic, Test on Real)
+
+합성 데이터 $\{Y_i\}$로 예측기를 학습하고, 진짜 데이터 $\{X_i\}$의 다음 시점 예측 오차를 측정.
+
+$$\text{TSTR score} = \frac{\text{TSTR-MSE}(\text{baseline})}{\text{TSTR-MSE}(\text{model})}$$
+
+높을수록 합성 데이터의 통계 구조가 진짜와 유사.
+
+**다른 지표였다면**: MAE나 MAPE로 바꾸면 이상치에 덜 민감해진다. 꼬리 분포(팻테일) 표현 능력은 TSTR-MSE로 측정되지 않는다 — 예를 들어 Wasserstein-2 거리나 Maximum Mean Discrepancy(MMD)가 더 포괄적이다.
+
+### 3.2 Discriminative Score
+
+별도로 학습된 분류기가 진짜/가짜를 구분하지 못할수록 좋음. 0.5에 가까울수록 완벽한 생성.
+
+**비교 결과 (미확인 수치)**: Neural SDE GAN이 TimeGAN과 동등하거나 낮은 discriminative score. OU 데이터에서 특히 우수.
+
+---
+
+## 4. 주요 발견 해석
+
+### 발견 1: OU 데이터에서 Neural SDE GAN의 확률 분포가 실제 OU와 일치
+
+Neural SDE의 확산 항 $\sigma_\theta$가 OU의 $\sigma$를 잘 학습해 경로 분포의 1·2차 모멘트가 진짜 OU와 거의 일치. 이는 "SDE를 SDE로 생성한다"는 이론적 직관의 실증.
+
+### 발견 2: 주가 데이터에서 변동성 클러스터링 일부 재현
+
+Neural SDE 생성 경로에서 ARCH 효과(변동성이 큰 구간이 뭉치는 현상)가 어느 정도 재현됨. 이는 Neural SDE의 조건부 확산 $\sigma_\theta(t, Y_t)$가 상태 의존적이기 때문. 하지만 실제 GARCH 모델 수준의 변동성 클러스터링에는 미치지 못한다.
+
+### 발견 3: 판별자 Neural CDE vs. LSTM 판별자 비교 (Ablation)
+
+같은 생성자(Neural SDE)에 판별자만 LSTM으로 교체하면 학습 안정성과 생성 품질이 모두 하락. 이는 Claim 1(Neural CDE가 이론적 최적 판별자)의 실험적 지지.
+
+---
+
+## 5. 부록에서 주목할 점
+
+- **경로 시각화**: 논문 부록에 생성 경로와 진짜 경로의 ACF(자기상관함수) 비교 그래프가 있다. ACF 형태가 일치하면 단기 의존성 구조를 잘 포착한 것이다.
+- **스텝 수 감도 실험**: SDE 스텝 수를 줄이면 생성 품질이 어떻게 떨어지는지 — 계산 비용과 품질의 트레이드오프를 보여준다.
+- **다차원 데이터**: 5~10 종목 동시 생성 실험. 상관관계 행렬(cross-correlation matrix)이 진짜와 얼마나 일치하는지 측정.

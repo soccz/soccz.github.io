@@ -1,11 +1,16 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "N+JDaq/VQXecZs+g6ptGEQ==",
-  "iv": "5fTmQ9+nL0vRbTP1URgEYg==",
-  "ct": "6vRxGK4aJm9T9ECuFx0ktW1aHUOSszYPWbxGDms82dewyiMBW6fBVnYpZzcxRErYX6aoxTeKZIHg7IBtPtX6KEsGWW3XpQo47AVFaHTjomeSU7cJ7YpGMwVjEB7SKrUE/CJeQ4i12SmYM7NwhivKjbc9lyAB6E2xe+YpOCXPhpwpaXr+OYYZBS/1Bh2qJxGaF4d0ri9limNuw7KU4Nt7CMaSX4Io0mXSE43jAolxGkMJ3KcOGnS/ObNLqCz60LdMCllBUrotj9dKFmOH5DLN1G5peFgg/1eaizaX6ZEGvIcaL8hsgCZEANlFMlgyNhvT404vAQheYPdPRdJ5hVoI6roehixlPq9N+cpsvgXrslE0/mt/mQY0LPq62hG4ihzMsbTU6P8tcnV9a7dGpirARIO3jxM9RNKPcZr+dbtduX30hVysXlpoe+5xHqKwXe+m6cTJvbQ+7Orp0pCwFxAG70tA6QVC02XGVLlTzpn6aNKfImjtPoD9xGPdv2PVdI9B4Vvt+eYKCISe5x43xQC6mpmCBtt/Uen1js/O2T+NSmiNKy0NS+eqoRIDprqZ1TqGhQH3fFr4EHnL0YlmTAy5q+I9lQCQjAIvbxAnGRaOJohiMR+XfKb32ucuYNUv+1+OH2Siv7m97a3QcD1qUh0Y2jXReMUILGZynF2f+brQ7an+bnOI1zYZuKoOXZb1dPZNR78q271r3TsabLccNZeJFK2cXPDopL7t3EzRFR6xH9iIzX4ooIgQeiQuy63KW+JuQJA36o8QMRLvvc6aNQLlpd9IWivq4w9+YDUyNad3HJJo/oTx6ck/FZr3jSrsBqQ+pC8Oyxmk/vVp9IZQBbsNk7vdI8IoHWXG4ruX5HPMfttZ/TB69SyS6OFa4ForEdyr2Snu+SC9mgL8Et4OzD0Y2H6l/96fb48bmVTXY+cxcjzGu5FVKaY4ihlm2dc7G+vXahBPt9fgBCgzoq09kYl5ecAUFY2O7ZeRJDicCQ2eZIhyj+KLlKDTnJyC/SGMxmmifCXS02+2lS60p36vWmD7aRK2BVLUxYidv575YGJL2yxhglh4Ki4swbdttZpASfSy3QGDDKNoTCW0UnoUqkaWZbJ314ZkbCyw3cfTjtIxfSjDKl7Ck6asPuwnq8Ku+D2pXSb/THZEXykVIzKdRGB+HHzIdjoptuaXhzy/aTq8whsH0xZfeH9r8B3/2iWi0Ay1BrUO67K6Cc2FYk4sMShcU7xhuY1YlMwys3KZIok2YwFowi8pkG6AGozLU9+6+noA6pJQ+Ki5YInZmGaY/CfmMXaWjsnXHRTIAOYdB8N1Y0P7eyniNFa9NIqp64L2jxgXCr3e6oB5w861/AslIQSNlAUuPR5nh640XUgNFQJTffmbwAiPALxC3HLrKsO7dOVstYZlUNM9gHOOH4azsPxA3iVSWwjnbvMC1QM7XH5bK0jwOql/yJZ5ys7S5M1g+BwWkDWf17Le0cGtEkoF4/u2Ob2kglU9o7syTE3JYFnzsQmSsvGLpuZ6f97nb4rxl/O+LNsjzjnxq1jQ+1EW4Tb6Fg49fx5I7142OdB78juCmaRw5uOkYlyLxFuZd2pROPbmsxbdYtq82CzxE4Mp+6O83JC1CvfDKsdRldNPrLsBctsfdI5mxsJsqEDmErEeD6k1MtYsBmhWRZ2gTc2oFM7kXUpbYUp468rbw2PMheRTOgmHWudWuNe0wsTTY1yJa7d3AcW3GPv1bSR4oyn/aHsAiX2zdb4Ml5H2kzaUDo16oEGh0yEBubu5GkBrlvWqHOpMxNZZfcaByQgDRV5eWwEXohW6ge17lhrgS9DNWKe6z7I=",
-  "mac": "Sbj7YjgLQMiohyffLG2W42tIoWOOVjGHT1K8Avu8ZS0="
-}
+# 11 — 한 줄 판결
+
+## 판결
+
+> **암묵적 추론은 Grokking 없이는 불가능하고, Grokking은 두 회로의 weight decay 심판 결과다 — 단 Composition의 OOD 실패는 트랜스포머의 비순환성이라는 구조적 천장이며, 이 논문은 사용자의 Grokking track에 "왜 grokking인가"의 메커니즘 근거와 "어떻게 실험할 것인가"의 분석 도구함을 모두 제공한다.**
+
+## 보충 (판결의 이유)
+
+이 논문이 내 연구 지도의 어디에 꽂히는가:
+
+- **핵심 위치**: Grokking track (§B) 의 Related Work + Methodology 템플릿.
+- **두 회로 경쟁 프레임** ($\mathcal{C}_\text{mem}$ vs $\mathcal{C}_\text{gen}$)과 **Logit Lens·Causal Tracing 방법론**은 "Grokking in Time Series Transformers" 논문의 §2(이론적 배경)와 §3(방법론)에 직접 이식 가능하다.
+- **OOD 실패 발견**은 TS 예측에서의 grokking 연구가 단순 성능 향상이 아닌 **아키텍처 한계 탐색**으로 확장될 수 있음을 시사 — EOA(§A)와의 교차점이 열린다.
+- **한계**: 합성 KG에 한정된 실험. 실제 TS 데이터 적용은 이 논문의 미검증 영역이며, 그것이 Grokking track의 기회다.
+
+**요약 한 줄**: 이 논문은 Grokking track의 이론적 뼈대고, 실험 설계 도구함이다 — 읽지 않고는 트랙을 시작할 수 없다.

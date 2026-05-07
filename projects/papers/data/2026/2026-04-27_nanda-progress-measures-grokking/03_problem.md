@@ -1,11 +1,89 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "k5+pDyPGMzgB68lEIl9Mnw==",
-  "iv": "AKjp7SSh83AJru3j+JdWzQ==",
-  "ct": "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",
-  "mac": "v9wf3E6rFryww9BvIP0ropVo0JX4Jrwz6VMEHQEf7nU="
-}
+# 2. 문제 지형도
+
+> 그로킹은 어떤 종류의 미스터리였는가, 그리고 *왜 mech interp 가 답일 수밖에 없었는가*.
+
+## 배경 사다리
+
+이 절을 이해하려면 ① **모듈러 덧셈** 이 "두 정수를 더한 뒤 어떤 수($p$) 로 나눈 나머지" 라는 것 ($p=12$ 면 시계 산수, $p=113$ 이면 더 큰 시계), ② **train accuracy / test accuracy** 가 각각 "외운 문제 / 새로운 문제" 정답률이라는 것, ③ **weight decay** 가 "쓸모없는 가중치는 시간이 지나면 사라지게 만드는 학습 정규화 항" — 이 셋만 알면 된다.
+
+---
+
+## 2.1 그로킹이라는 *경험적* 수수께끼 (Power et al. 2022 의 결정타)
+
+Power 등(OpenAI, 2022) 이 발견했다. 1~2 layer 의 작은 transformer 에 다음 같은 algorithmic task — modular addition $a+b \pmod p$, modular subtraction, $S_5$ permutation composition 등 — 을 *데이터의 일부분* (train fraction $\rho \approx 0.3$~$0.5$) 으로만 학습시키면, 학습 곡선이 다음 같은 *기괴한* 형태를 보인다:
+
+- step $\sim 10^3$: train acc $\to 100\%$, test acc $\sim$ random. (외운 상태)
+- step $\sim 10^4$~$10^5$: train acc 그대로 100%, test acc 여전히 random. (긴 침묵)
+- step $\sim 10^5$~$10^6$: 갑자기 test acc 가 *수직 상승* 해 100%. (그로킹)
+
+수수께끼의 핵심은 셋이다:
+1. 왜 두 시점이 *그렇게 떨어져 있나*? (memorization vs generalization 의 시간 격차)
+2. 왜 일반화는 *부드럽지 않고 수직* 인가? (phase transition 형태)
+3. 왜 weight decay 가 있으면 일어나고 없으면 안 일어나는가? (정규화 의존성)
+
+Power 등의 논문은 *현상* 을 보여주고 멈췄다. 가설로는 "weight decay 가 memorization 보다 generalization 해 (sparse) 를 favor 한다" 정도가 거론됐지만, *왜 그런지 / 어떤 회로인지* 는 닫히지 않았다. 1년 가까이 그로킹은 "재미있지만 설명되지 않은 현상" 으로 남아 있었다.
+
+---
+
+## 2.2 기존 접근 계보 — 그로킹 설명 시도들
+
+### 2.2.1 Liu et al. (2022) — "Effective theory of representation learning"
+
+**무엇이었나**: 학습 동학을 representation manifold 위의 phase transition 으로 모델링. order parameter 를 정의해 학습이 어떤 critical point 를 통과한다고 주장.
+
+**왜 부족했나**: 추상 수준이 높아 *정확히 어떤 회로* 가 형성되는지 말하지 못했다. "phase transition 이 있다" 까지가 결론.
+
+**남긴 교훈**: 학습 동학이 *연속적* 으로 측정 가능한 order parameter 를 가질 수 있다는 발상. 본 논문의 progress measure 가 이 발상의 *구체적 instantiation* 이다.
+
+### 2.2.2 Thilak et al. (2023) — "Slingshot Mechanism"
+
+**무엇이었나**: 학습률 스케줄과 weight norm 의 oscillation ("slingshot") 이 grokking 직전에 관찰된다는 것을 보고. 동학적 시그니처 발견.
+
+**왜 부족했나**: *symptom* 만 있고 cause 가 없음. slingshot 이 grokking 의 원인인지 결과인지 모호.
+
+**남긴 교훈**: optimizer 동학이 grokking 의 표면적 신호를 만든다 — 하지만 회로 수준 설명이 따로 필요하다.
+
+### 2.2.3 Thilak et al. (2023) — "Omnigrok"
+
+**무엇이었나**: weight 의 norm 을 직접 조작 (특정 sphere 위로 projection) 하면 grokking 이 *임의로* 유도/억제될 수 있음을 보임. weight norm 이 핵심 변수.
+
+**왜 부족했나**: norm 만으로는 *회로 정체* (어떤 함수가 학습됐는가) 를 말할 수 없음. "norm 이 큰 해 vs 작은 해" 의 분류가 남는다.
+
+**남긴 교훈**: grokking 이 weight norm 과 phase 적으로 관련된다는 *외부* 증거. 본 논문은 이 norm 변화를 Fourier sparsity 변화로 *내적* 해석한다.
+
+### 2.2.4 Davies et al. (2023) — "Unifying Grokking and Double Descent"
+
+**무엇이었나**: grokking 과 model-wise / sample-wise double descent 가 같은 통계적 현상의 변형이라고 통합. EDM (effective dimension of model) 척도 도입.
+
+**왜 부족했나**: 통합은 깔끔했지만 *왜* algorithmic task 에서 그렇게 강하게 나타나는지 — 즉 task 의 algebraic 구조가 어떻게 개입하는지 — 설명 부족.
+
+**남긴 교훈**: grokking 이 *generic* 한 현상의 special case 일 가능성 — 즉 "algorithmic 만의 기벽" 이 아닐 수 있음. 본 논문 이후 후속 연구 (Lyle 2025 continual, Wang 2024 implicit reasoning) 가 이 generality 를 증명하는 방향으로 진행.
+
+### 2.2.5 Merrill et al. (2023) — "Tale of Two Circuits"
+
+**무엇이었나**: sparse parity 학습에서 grokking 을 dense (memorizing) circuit 과 sparse (generalizing) circuit 의 *경쟁* 으로 모델링. weight decay 가 sparse circuit 의 win 을 강제한다고 주장.
+
+**왜 부족했나**: 이건 본 논문과 *동시기* 작업으로, 두 circuit 가설을 정량화한다는 점에서 본 논문과 *상보적* 이다. 다만 Merrill 측은 sparse parity 라는 다른 task 에서 작업했고 progress measure 의 정량적 정의는 약했다.
+
+**남긴 교훈**: "두 회로 경쟁" 이라는 metaphor 가 정착. Nanda 의 본 논문은 이걸 *modular addition 에서 닫힌 형태로* 보여주는 instantiation.
+
+---
+
+## 2.3 공통으로 놓친 핵심 gap
+
+**모든 선행 연구는 *외부 관찰* (loss 곡선, weight norm, EDM, slingshot) 만 봤다.** 학습이 plateau 인 동안 모델 *내부에서 무엇이 진행 중인지* 를 직접 측정한 사례는 없었다. 따라서 plateau 는 "진짜 정지" 인지 "느린 진행" 인지 알 길이 없었고, grokking 은 *현상학적 미스터리* 로 남았다.
+
+**한 문장 gap**: 그로킹의 "지연" 이 *학습이 정말 정체된 시간* 인지, *우리가 못 보던 시간* 인지를 가르는 측정 기구가 없었다.
+
+---
+
+## 2.4 본 논문이 메우는 방식
+
+Nanda 등은 두 단계로 gap 을 메운다:
+
+1. **Reverse-engineer 부터** — modular addition 을 푸는 회로의 *닫힌 형태* 를 찾는다. weight matrix 의 SVD 가 정확히 Fourier basis 로 정렬되고, MLP 가 trig identity 를 구현한다. 이 회로는 *사전 정의* 된다 — "이런 회로가 있을 거야" 가 아니라 "이게 정확한 회로다, 손으로 검증 가능".
+2. **Progress measure 정의** — 이 회로의 *진행도* 를 세 가지 기하학적/통계적 양 (restricted loss, excluded loss, Fourier sparsity) 으로 측정. 이 measure 들은 train/test loss 가 평탄한 plateau 구간에서 *단조* 변화한다.
+
+이 두 조합이 만들어내는 결론: **그로킹의 "지연" 은 측정 도구의 한계였다.** 적절한 척도로 보면 학습은 plateau 동안에도 *연속적이고 단조* 로 진행 중이고, "갑작스런 phase transition" 처럼 보이는 부분은 단지 *memorization weights 가 weight decay 에 의해 제거되는 시점* 일 뿐이다.
+
+이 재해석은 grokking 을 *별난 현상* 에서 *일반적 학습 동학의 special case* 로 끌어내린다. 동시에 **mech interp 의 효용** 을 입증한다 — "왜 모델이 이렇게 행동하는가" 라는 질문이, 적절한 회로 가설 + 회로 진행도 측정만 있으면 *경험적으로 답할 수 있다*.

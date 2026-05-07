@@ -1,11 +1,13 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "tdRPFr/CJx934fPVOvPWNw==",
-  "iv": "QYZPnYApwFVju+VteIuPLw==",
-  "ct": "Dz/7/2ayUKxRJzwtYk9si0d69sG8gu0E0CsOPxPapJb8awjTjXpKrr3wzUIjk4yOdm2JeFaaUZRocfysDE/zqNjLBZbSxwH9IZYMXzEaDOfOGYNEmCr0Lk5+kDcPt7yHCXPWAhbMJmsJMbNAe/hYt6WcFUnQ7C13B9MEuEdAh8uKUb5yd1F83Tn/fJytBaLWTEw5iyWpjZhQv36Gw01YsI67MKZMxdF4rRji40pDr//ZjWkjqd0ylxazXt+Zfk/zvTWUqkfuQolaW+GQxd9K+U7Y33iiGw5xyI/8DA3Q5wSVsN8shoR7uRTn6SIUPup7Xk+khfMhHnEfkVopmtfv8hVkwSbBLT+vllStgkrXy4MW5GYUDVQ1zFO1iCoTurff2DmvQHTy49HEbXQf9N/t3A9lWnov1mmOAPKj2kRVWjyjwlQ1Ht6jnjqW50eSfzKDpJJRSCkwD06amoc7D4AtO2oPSDo6QGMdivZdjDk5Gfey+FLV5XXzbKGfO75xPt5R6C+9W3Q5wc7eN8+6WAldTTa6SY6uPI+Bm7OEdYzBOg5XToTPgBWQL+YjGn5W+8pOu067g3P7A0FPPeMA3a9LXVry52WMKqwH5G2k4tpLhVRMawDz9U89yZwYi2+YMqe5mHvJs1oG6n2UqB/ObyJKFME51Pz/73xVHTmgqLhrgspxLuyOAevYSAsN2DUJpyy4MkLUFGGhMynjlgM4xVU2yNP2vYnmKl1jpYAJcMTOosXW/PmllFNaIlfe2v3nchB5FyU/6IVfN6fc6JlUBx4QFm5FdtIItMmyxDLtCZza18lLylZjfgEyqaG9ffNRMGF8zRMsP76elFI0Ojv45z888gxPYp6lpm6sXw1tSut98l43y7AMYTxneuel+K24Y2tACUDCwVezqO86DS5nAsH6W7u1tY3fArudK+qR6xUd0PL4/S9nt3gga26Kuf6+hC77BzQ5O5mpzL3WRMzsUgu5wDG1ca5bQMb5JyanTqK6yWodTTt1FHgbYUEE7jfNwm0Sbn3tiZ3paG4qVSoq3y+FyqxGMtxvdFIr6pbhMCyJLAV8id6bDW11hAiINx6a3ZMGYbIY6TPbowxf12Y3UjUyEq35qurwhjbouWgn0nldV+LUBx+u4Xd/SuJVLq5X7uNGUNjEXo4RCwGpU31xUNf/HiAak8+Gi7HXPkkeT5iDOSXpQwNsiPi4lrqMtdAKIU+n/G0006167loP38DTs6tvtue3H2JNw0kXjmKGHHsJefivQw1+QNqZZv5dDDTk3RCpin5h65wk7XAyjPE6gW24EPxtpU2FaRbWVIn/AsvfROqs9XA6kVnWYsZ0WTlpMatguRglKoqi8MgyZJev7G44OpVhSIWQWNaMmoQVAvVcgyrjjRR1HIhVxaXmdvzIEWhUW6qbp1D/iZbqsvBXyjehFZEM8KN62wtABR+smuUnhNUtfh3HYIUzY/Bn2i2a8fItwksHm9NzHYXw5l3p+sABtvIUNO6iVOR5SS7Ils57X/yyxnOcXmFvjtUethXt4bKKIr9IxStQr6ojRF151a517eetH8S7E0I3aowXZW8dW9faGKvl5IR9RmVmcg5qvAS1NzhmOUJCVahlKW8gqjvp0pQm9j6pP6aIQblsHbVdSdSOx1JbSt01aUUuw5Hg5tvpfkNOZiv1H4xJPeGl88QisCSdkUq+De2ELV2E/esna8dhDYuraVct1ocbocSaGsPceVTIorsBODoMfrprh1MAz/zwDipJXUJ7UdRzd+vHIIB6dPI4ylfiRNI1NFpyJpp/Gl71LvScMAW/81JH/7ovEnjpDzzdo+JwH+77x/8AsupmjtJFRK+ls6u7vXgHNu57p3sjXekySpQHDe+0wUzaL44zywlVRkzsWLpRF2e+vN35OoLG4KUcBThe4h5fuEr9YsK23ylD6PdzuLm679JVTvvm5FoRmHQPcaKKIrG1IDSJJHftcVjehVGsJ3gXXvgK",
-  "mac": "r8nrgcCD+tStQFFOcik0ye68UbY4aq6Be+sfbIt20uI="
-}
+# 11. 한 줄 판결
+
+> **판결**: Chronos는 "시계열을 언어로 치환하면 NLP 인프라 전체를 무료로 얻는다"는 발상의 실증 성공작이며, APF 시각에서는 "파운데이션 모델이 TS 토큰에서 형성하는 어텐션 패턴"이라는 미개척 해석 공간을 열어놓았고, Grokking 시각에서는 "이산 토큰 cross-entropy 학습이 만드는 지연 일반화" 가설의 자연 실험 대상이다.
+
+---
+
+**판결 보충 (3줄)**:
+
+1. **아키텍처 혁신이 아닌 패러다임 이식**: Chronos의 강점은 새로운 수식이나 아키텍처가 아니라, NLP의 검증된 인프라(T5, cross-entropy, 대규모 사전학습)를 TS에 성공적으로 이식했다는 실행력이다. 단순함이 강점이자 한계 — 금융 tail risk, 다변량 의존성, 어텐션 해석 가능성 모두 미해결.
+
+2. **APF/Grokking의 분석 대상**: 논문 자체는 어텐션 패턴을 전혀 분석하지 않는다. 이것은 공백이다. Chronos를 APF의 "파운데이션 모델 어텐션 패턴 분석" 확장 실험 대상으로 설정하면, APF의 기여를 소형 특화 모델을 넘어 파운데이션 모델 수준으로 확장할 수 있다.
+
+3. **금융 응용의 명확한 개선 방향**: 균등 bin의 꼬리 실패 → log-return 적응 bin으로의 수정이 ProTran-TFA의 기술 기여가 될 수 있다. Chronos-2가 다변량을 해결했다면, 금융 특화 토크나이제이션은 아직 열린 문제다.

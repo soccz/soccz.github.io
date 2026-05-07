@@ -1,11 +1,30 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "WsJ0Vt4m66Z1Q25OCxI3Iw==",
-  "iv": "AhqcBxbuISFcTJJmP850gQ==",
-  "ct": "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",
-  "mac": "GfVSHYLzmQageTu5OxkZFwfB7TpKbhtvW0hOj3C4EHk="
-}
+# 0. 메타 & 선정 이유
+
+## 인용 / 권위
+
+- **인용 수**: 2026-04 시점 약 600+ (Semantic Scholar 직접 접근 차단 상태이지만 Wang et al. 2024, Merrill et al. 2023, Lyle et al. 2025, Doshi 2024 의 인용 그래프에서 must-cite 로 등장하는 빈도로 추정).
+- **저자 권위**:
+  - **Neel Nanda** — 본 논문 당시 Anthropic interpretability 팀 직전. 이후 DeepMind interpretability lead. 메커니즘 해석학 분야의 사실상 표준 교재인 *TransformerLens* 라이브러리·블로그 시리즈("A Comprehensive Mechanistic Interpretability Explainer & Glossary") 의 저자.
+  - **Lawrence Chan** — Anthropic / UC Berkeley. ARC Evals 공동 설립. 본 논문의 ACDC 후속 연구(Conmy et al. 2023) 와 연결된 인물.
+  - **Jacob Steinhardt** — UC Berkeley 조교수, ML safety / 해석학 분야의 핵심 PI. *Forecasting AI* / scaling laws / capability emergence 측 연구.
+  - **Tom Lieberum** — DeepMind, 후속 논문 *Tracr* (compiled transformers) 공동저자.
+- **DOI / venue**: ICLR 2023 poster. OpenReview ID: `9XFSbDPmdW`.
+- **계보 위치**: Power et al. (2022, "Grokking") 이 *현상* 을 발견하고 → 본 논문이 *메커니즘* 을 닫는다. 이후 Merrill et al. (2023), Davies et al. (2023, double descent 통합), Doshi et al. (2024, multi-task grokking) 의 모든 후속 연구가 본 논문의 progress measure 또는 Fourier circuit 가설을 출발점으로 삼는다.
+
+## 선정 이유 (오늘, 2026-04-27)
+
+1. **버킷 적합도**: 월요일 = 코어. 본 논문은 `grokking-delayed-gen` + `mech-interp-circuits` 두 태그를 동시에 cover 하며, `causal-intervention` 와 `training-dynamics` 까지 보조 태그로 닿는다. `_coverage.md` 상 4개 태그 모두 0건이라 **가장 적자가 큰 영역의 단일 진입점**.
+2. **Priority 매칭**: `_index.md` Tier 1 Grokking primary 의 두 번째 항목. 사용자의 Grokking active track 22 must-cite 중 *circuit 분석 측 척추*. (Power 2022 가 "현상 발견" 척추라면, 본 논문은 "메커니즘 설명" 척추.)
+3. **Axis balance**: 최근 3주(4-19 ContiFormer = §D, 4-22 Neural-SDE-GAN = §D, 4-24 Wang Grokked Transformers = §A 응용) 에서 §A 가 한 번, §B (mech interp circuits) 는 0회. 본 논문은 §A + §B 교차점에 정확히 위치 — axis balance 회복.
+4. **사용자 연구 직접 연결**:
+   - **Grokking track**: P2 logistic 4-layer 실험에서 *진행도 측정* 이 핵심 미해결 문제. 본 논문의 restricted/excluded loss 와 Gini sparsity 가 직접 이식 가능.
+   - **APF track**: motif 진행도 — *언제 diagonal stripe 가 형성되었나* — 를 attention pattern 의 frequency 분해로 측정하는 발상은 본 논문 §3 Fourier projection 의 attention map 버전이다. APF Section "motif causality" 실험에서 인용 1순위.
+5. **재현성**: Colab 노트북 공개, p=113 modular addition 은 RTX 3090 1대로 1시간 재현 가능. P2 환경에서 sanity check 용 baseline 으로 활용 가능.
+
+## 무엇을 노리는 해체인가
+
+본 해체는 *논문 요약* 이 아니라:
+- (a) Fourier 회로의 수식을 **유도** 한다 (논문은 사실관계만 적시함). 사용자가 "왜 cos(ω(a+b−c)) 형태가 logit 으로 자연스럽게 나오는지" 를 직접 손계산할 수 있도록.
+- (b) 세 progress measure 가 *서로 다른 무엇을 재는지* 를 분리해 본다.
+- (c) **사용자가 logistic map / TS Transformer 환경에 그대로 옮기지 못하는 부분** 을 명시한다 (본 논문의 가장 큰 한계는 algorithmic data 의존).
+- (d) "circuit cleanup 의 지연" 가설이 TS non-stationarity 와 만났을 때 어떻게 깨질 수 있는지 의심해본다.

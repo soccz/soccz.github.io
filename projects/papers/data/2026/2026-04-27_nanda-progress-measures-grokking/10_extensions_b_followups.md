@@ -1,11 +1,65 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "xoe5udrMPPXXVu0Zy5xLjw==",
-  "iv": "dUtIXckSuE5qd7qAnP8wpw==",
-  "ct": "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",
-  "mac": "PbBTRsCi5rMTsiprjzywHQvW2xf0rRH6ctqVJMbjHB8="
-}
+# 9. 사고 확장 (b) — Follow-up 논문 3편
+
+> 본 논문 *전후* 의 paper 중 사용자가 다음으로 읽어야 할 3편.
+
+---
+
+## Follow-up 1 (선행). Liu et al. (2022) — "Towards Understanding Grokking: An Effective Theory of Representation Learning"
+
+**무엇인가**: grokking 을 *representation manifold* 위의 phase transition 으로 모델링한 *이전* paper. order parameter 추출 시도. NeurIPS 2022.
+
+**본 논문과의 관계**: Liu 가 phase transition 의 *추상* 을 보였고, Nanda 가 그 *구체* (Fourier circuit + 진행도) 를 닫는다. Liu 의 framework 가 *큰 그림*, Nanda 가 *세부 그림*.
+
+**얻을 것**: 
+- Representation learning 의 *phase transition* language. critical point, order parameter 의 ML 정의.
+- 사용자 paper 의 *theoretical framing* 에 인용 가능 — "grokking 은 learning dynamics 의 phase transition (Liu 2022) 의 specific instantiation 에서 측정 가능 (Nanda 2023)".
+
+**우선순위**: Tier 3, 4–6 시간 분량.
+
+**이 논문이 사용자 work 의 어디에 들어갈지**: Grokking paper 의 §2 (Background) 에 *phase transition framework* 인용. Nanda 와 함께 *paired citation*.
+
+---
+
+## Follow-up 2 (경쟁). Merrill et al. (2023) — "A Tale of Two Circuits: Grokking as Competition of Sparse and Dense Subnetworks"
+
+**무엇인가**: *sparse parity* task 위에서 grokking 을 *dense memorization circuit* + *sparse generalization circuit* 의 경쟁으로 모델링. ICML 2023 또는 NeurIPS 2023.
+
+**본 논문과의 관계**: 동시기 *경쟁* 작업. 같은 결론 (두 circuit 의 cleanup 시간 비대칭) 을 *다른 task* 에서 도출. Nanda 가 *closed form* 으로 회로를 보였고, Merrill 이 *task family generality* 를 보였다.
+
+**얻을 것**:
+- Sparse parity 라는 *다른* algorithmic task 에서의 회로 — 회로 형태가 task 마다 어떻게 변하는지.
+- Two-circuit 경쟁 이론의 *수식적 정리* — Nanda 보다 *동학식* 측면을 더 명시적으로 다룸.
+- 사용자가 logistic map 위에서 같은 frame 을 적용할 때, *Merrill 의 sparse/dense decomposition language* 가 *Nanda 의 Fourier/non-Fourier decomposition language* 보다 더 일반화 가능.
+
+**우선순위**: Tier 3, Grokking track 의 next-target literature.
+
+**이 논문이 사용자 work 의 어디에 들어갈지**: Grokking paper 의 §3 (Method) 에 두 circuit 경쟁 frame 을 인용 — "Following Merrill et al. (2023) and Nanda et al. (2023), we model the learning dynamics as a competition between a memorization circuit (high-norm, dense) and a generalization circuit (low-norm, structured)".
+
+---
+
+## Follow-up 3 (후속). Lyle et al. (2025) — "Grokking and Primacy Bias in Continual Learning"
+
+**무엇인가**: Continual learning setting 에서 grokking 이 어떻게 변하는지. Non-stationarity 가 본 논문의 깔끔한 3-phase 를 어떻게 *재배열* 하는지. 2025 paper. (사용자 priority list 에 등재됨.)
+
+**본 논문과의 관계**: 본 논문 frame 의 *직접적 generalization*. Stationary task 에서 non-stationary task 로 옮기면, cleanup phase 가 *task switch* 와 얽히면서 회로의 *primacy bias* (먼저 본 task 가중치가 우선) 가 발생. 이건 사용자 Grokking track 의 *non-stationarity 측 핵심 문제* 와 정확히 같은 question.
+
+**얻을 것**:
+- Non-stationarity 가 progress measure 에 어떻게 영향을 주는지 — 본 논문의 *fixed K* 가정이 어떻게 깨지는지.
+- TS forecasting 의 *regime shift* 와 continual learning 의 *task switch* 의 동형성. 사용자 paper 가 *finance non-stationarity* 와 연결할 수 있는 방법론적 다리.
+- 본 사용자 thesis 의 *직접 prior work* 가 됨 — Lyle 2025 위에 사용자가 한 단계.
+
+**우선순위**: Tier 1 (사용자 priority list 에 이미 등재). Grokking track 의 *most-direct prior*.
+
+**이 논문이 사용자 work 의 어디에 들어갈지**: Grokking paper 의 §1 (Introduction) 의 *gap statement* 에 핵심 인용 — "Lyle et al. (2025) extended Nanda's progress measures to continual learning, observing primacy bias. We extend further to *intrinsically non-stationary* time-series forecasting, where the regime shift is not externally imposed but emerges from the data-generating process itself."
+
+---
+
+## 종합 — 4편의 reading order
+
+사용자가 *이미 읽은* Power 2022 + *오늘 다룬* Nanda 2023 위에:
+
+1. **Liu 2022** (4시간) — phase transition framework.
+2. **Merrill 2023** (4–6시간) — two-circuit decomposition.
+3. **Lyle 2025** (6–8시간) — non-stationarity 일반화.
+
+이 3편을 다 읽으면 Grokking track 의 *literature 척추* 가 완성된다 (총 22 must-cite 중 핵심 4편 + 본 논문). 다음 코어 버킷 월요일에 위 3편 중 하나가 후보.

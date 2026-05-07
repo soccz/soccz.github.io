@@ -1,11 +1,82 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "cfMvdB3djcF+mC1Z55o9fA==",
-  "iv": "csIifFk1oJQhgR+XZ8rHQw==",
-  "ct": "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",
-  "mac": "FB/tZI67asY8GYff/vbD1yGFucwekTO7CWU61X8zyYM="
-}
+# 04. 핵심 Claim 해체
+
+> **배경 사다리**: ① 어텐션(attention)은 "어느 토큰끼리 서로 참조해야 하는가"를 소프트맥스 가중치로 결정하는 메커니즘, ② MSE/MAE는 예측 오차를 나타내는 지표(작을수록 좋음), ③ 어블레이션(ablation)은 특정 컴포넌트를 제거하거나 바꿔 성능 변화를 관찰하는 실험을 말한다.
+
+---
+
+## Claim 1 — "타임스텝 토큰의 혼합 임베딩이 어텐션 맵을 무의미하게 만든다"
+
+### 주장
+
+타임스텝을 토큰으로 사용하는 표준 TS 트랜스포머는, 각 토큰이 $N$개 이종(異種) 변수를 단순 연결한 벡터이므로, 어텐션이 의미 있는 시간 관계 대신 위치(포지셔널) 패턴만 학습하게 된다.
+
+### 증거
+
+- 저자들은 기존 트랜스포머의 어텐션 맵을 시각화하여, 대각선 방향(두 타임스텝 사이의 시간 거리가 가까울수록 높은 어텐션)이 지배적임을 보인다. 즉, 어텐션이 "시간 위치가 가까운가"만 배울 뿐 "예측에 유용한 의존성"은 거의 포착하지 못한다.
+- CKA (Centered Kernel Alignment, 두 표현 공간의 구조적 유사도를 $[0, 1]$로 나타내는 측정 도구) 분석으로, 표준 트랜스포머의 내부 표현이 이전 레이어와 거의 변화하지 않음(CKA ≈ 1에 가까운 레이어 간 유사도)을 실증한다. 이는 어텐션이 실질적 변환을 하지 못한다는 증거다.
+- 반면 iTransformer의 어텐션 맵(N×N)은 알려진 변수 간 물리적 상관관계 (예: ECL의 지역별 전력 그룹)를 클러스터 형태로 반영한다.
+
+### 숨은 전제
+
+변수 간 단위 차이(온도 °C와 전력 kWh)가 혼합 임베딩을 "의미 없게" 만든다는 가정이 전제된다. 실제로는 신중하게 정규화하면 일부 완화될 수 있다. 또한 "대각선 어텐션 = 무의미"라는 판단은 주관적이다 — 위치 인코딩이 없어도 대각선 패턴이 타임스텝 순서를 암묵적으로 인코딩하는 유용한 역할을 할 수도 있다.
+
+### 쉬운 말 풀이
+
+"각 시각의 날씨+교통+전력을 한 메모에 섞어 놓으면, AI가 그 메모들 사이의 관계를 파악할 때 실제로는 '시간이 가까우면 비슷하다'는 상식만 배우게 된다. 진짜 유용한 정보(전력과 온도의 관계)는 버린다."
+
+---
+
+## Claim 2 — "역전 아키텍처에서 어텐션은 변수 상관을, FFN은 시간 패턴을 자연스럽게 학습한다"
+
+### 주장
+
+이 논문의 역전 구조에서, 어텐션 레이어는 변수 간 의존관계(예: "전력 A와 전력 B는 함께 증가")를 학습하고, FFN은 각 변수의 시간 내부 패턴(예: "매일 오전 9시에 증가하는 패턴")을 학습한다는 역할 분담이 나타난다.
+
+### 증거
+
+- 어블레이션 (4×4 조합): 저자들은 어텐션 차원(T×T vs N×N)과 FFN 차원(시간 방향 vs 변수 방향)을 독립적으로 전환하는 4가지 조합을 실험한다. 결과:
+  - N×N 어텐션 + 시간 방향 FFN (iTransformer) → 최고 성능
+  - T×T 어텐션 + 시간 방향 FFN (표준 Transformer) → 최저 성능
+  - 두 중간 조합은 그 사이에 위치
+- ECL(321 변수) 데이터에서 학습된 N×N 어텐션 맵을 시각화하면, 같은 지역 전력망에 속하는 변수들이 블록(block) 클러스터를 형성함이 보인다.
+
+### 숨은 전제
+
+FFN이 "시간 패턴을 학습한다"는 주장은 간접 증거(성능 향상)에 기반한다. FFN 내부의 표현을 직접 해부해서 "특정 뉴런이 특정 주기를 포착한다"는 식의 메커니즘 분석은 제공되지 않는다. 이는 APF·Grokking 연구 관점에서 열린 질문이다.
+
+또한, 역할 분담이 어텐션/FFN의 고유한 성질 때문인지, 단순히 "많은 변수를 동시에 보는 것(N×N)"이 정보를 더 많이 공유하기 때문인지 구분되지 않는다.
+
+### 쉬운 말 풀이
+
+"각 센서의 한 달치 데이터를 하나의 메모지로 만들면, AI는 '메모지들 사이의 유사도 비교'(어텐션)로 센서 간 관계를 배우고, '메모지 내부의 패턴 분석'(FFN)으로 각 센서의 시간적 규칙을 배운다. 두 역할이 깔끔하게 나뉜다."
+
+---
+
+## Claim 3 — "역전 구조는 룩백 창이 커질수록 일관된 성능 향상을 제공한다"
+
+### 주장
+
+기존 TS 트랜스포머는 룩백 창(lookback window, $T$) 크기를 늘려도 성능이 포화하거나 저하되지만, iTransformer는 $T$가 증가할수록 일관되게 MSE가 낮아진다.
+
+### 증거
+
+- Weather, ECL, Traffic 데이터에서 $T \in \{96, 192, 336, 720\}$ 실험. 표준 트랜스포머는 $T = 336$을 넘으면 성능이 정체되거나 악화. iTransformer는 $T = 720$에서도 꾸준히 개선.
+- 해석: 기존 트랜스포머의 $T \times T$ 어텐션은 $T$가 늘수록 불필요한 노이즈 타임스텝과의 관계도 강제로 계산해야 하므로 효율이 저하된다. iTransformer의 FFN은 전체 $T$-dim 시리즈를 MLP로 처리하므로 더 긴 과거를 자연스럽게 흡수한다.
+
+### 숨은 전제
+
+"MLP(다층 퍼셉트론)는 $T$-dim 입력을 받아 모든 시간 의존성을 학습할 수 있다"는 전제가 깔려 있다. 이는 보편 근사 정리(universal approximation theorem, 충분히 큰 MLP는 임의 연속 함수를 근사할 수 있다는 수학적 결과)에 근거하지만, 실제로는 학습 샘플 수와 정규화 조건에 강하게 의존한다.
+
+또 "룩백 창 $T$가 커진다"는 것은 GPU 메모리 사용량이 $O(T)$로 증가한다는 뜻이다. iTransformer의 FFN 입력 차원이 $T$이므로 파라미터 수가 $O(T^2)$로 증가할 수 있다.
+
+### 쉬운 말 풀이
+
+"한 달치를 봐도 별로 나아지지 않던 기존 AI와 달리, iTransformer는 6개월치 데이터를 줘도 계속 예측이 정확해진다. 이건 '오래된 데이터도 잘 활용한다'는 뜻이다."
+
+---
+
+## 세 Claim의 내적 일관성 평가
+
+세 Claim은 서로 지지한다: (1)타임스텝 토큰이 나쁘고 → (2)역전으로 어텐션/FFN 역할 분담이 개선되며 → (3)그 결과 더 긴 과거도 잘 활용할 수 있게 된다. 논리 연쇄는 깔끔하다.
+
+그러나 주의할 지점이 있다. Claim 2의 "역할 분담" 주장은 블랙박스 수준의 증거(성능 수치, 어텐션 맵 시각화)에 머문다. 회로 수준의 해석(어느 헤드가 어느 변수 클러스터를 포착하는가, FFN의 어느 뉴런이 어느 주기를 인코딩하는가)은 없다. 이것이 본 논문의 한계이자, APF/Grokking 연구가 파고들 수 있는 열린 공간이다.

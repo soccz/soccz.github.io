@@ -1,11 +1,54 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "mnCymzOrQYsMIxIQB/KpHA==",
-  "iv": "tqtbKbZxbcT/jz9omcgIug==",
-  "ct": "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",
-  "mac": "9ydfvfv2auJ0qzzeQqu3vQ2uOFavW5CgsvRyDWLuaXw="
-}
+# 00 · 표지 및 네비게이션
+
+## 원문 제목
+**Neural SDEs as Infinite-Dimensional GANs**
+
+## 한국어 번역
+무한차원 GAN으로서의 신경 확률미분방정식
+
+## 저자 및 소속
+- Patrick Kidger (University of Oxford, Mathematical Institute)
+- James Foster (University of Oxford)
+- Xuechen Li (University of Toronto / Stanford University)
+- Harald Oberhauser (University of Oxford)
+- Terry Lyons (University of Oxford, Alan Turing Institute)
+
+## 발표처 · 연도 · arXiv ID
+- **학술지/학회**: ICML 2021 (Proceedings of the 38th International Conference on Machine Learning)
+- **연도**: 2021
+- **arXiv ID**: arXiv:2102.03657
+
+## 태그
+- **주 태그**: `neural-sde`
+- **부 태그**: `fin-ts-dl`, `neural-ode-cde`
+
+## 코드 · 데이터 공개
+- 코드: [torchsde 라이브러리](https://github.com/google-research/torchsde) 활용; 실험 코드는 논문 저자 GitHub(kidger/torchsde)에 공개
+- 데이터: 주식 종가(Yahoo Finance), Ornstein-Uhlenbeck 합성 데이터 사용
+
+## 한 줄 판결
+> Neural SDE(생성자)–Neural CDE(판별자)라는 이중 구조는 Paper 4의 ODE 시간변수를 economic time으로 교체할 때 이론적 근거를 제공하나, 이 논문의 목표가 **예측이 아닌 경로 생성**임을 명확히 인식하고 인용 위치를 §3·§4의 시간-변환 논의로 한정해야 한다.
+
+---
+
+## 목차
+
+| 파일 | 섹션 | 내용 |
+|------|------|------|
+| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 | 저자 권위, 인용, 선정 근거 |
+| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR | 초등/학부/전문가 수준 요약 |
+| [03_problem.md](03_problem.md) | 2. 문제 지형도 | 기존 접근 계보 및 핵심 gap |
+| [04_claims_a_claim1_2.md](04_claims_a_claim1_2.md) | 3a. 핵심 Claim 1–2 | GAN 등가성·최적 판별자 |
+| [04_claims_b_claim3_4.md](04_claims_b_claim3_4.md) | 3b. 핵심 Claim 3–4 | 재현 가능·금융 적용 |
+| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 큰 그림 | 전체 파이프라인 다이어그램 지문 |
+| [05_method_b_sde_generator.md](05_method_b_sde_generator.md) | 4b. SDE 생성자 | 드리프트·확산 신경망 |
+| [05_method_c_cde_discriminator.md](05_method_c_cde_discriminator.md) | 4c. CDE 판별자 | Neural CDE가 최적인 이유 |
+| [05_method_d_training.md](05_method_d_training.md) | 4d. 학습 프로토콜 | WGAN-GP, 경사 페널티 |
+| [06_experiments.md](06_experiments.md) | 5. 실험 해부 | 데이터셋·지표·표 해석 |
+| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 | 암묵적 가정 및 검증 방법 |
+| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 | 조상·평행연구·후손 예측 |
+| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 | Paper 1–4 구체 연결 |
+| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 자문 질문 5개 | |
+| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. Follow-up 논문 3편 | |
+| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 실험 아이디어 2개 | |
+| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 | |

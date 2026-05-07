@@ -1,11 +1,60 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "SUb0P33EBeQQ29B4XZ6YCw==",
-  "iv": "dFeeMMh7WZYH0EBBVsefTQ==",
-  "ct": "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",
-  "mac": "7sC+vyXCm4QkkAi36S4wzSf9JnVXr2xSAPpQX4I05aA="
-}
+# 07 — 가정·한계·반박
+
+---
+
+## 명시된 가정 (저자가 대놓고 말한 것)
+
+1. **스케일-불변 아키텍처 가정**: ELR 정의는 LayerNorm(또는 스케일-불변성을 갖는 정규화) 이전의 파라미터에 대해서만 수학적으로 정확하다. 저자들은 실험에서 LayerNorm을 사용한 아키텍처만 테스트했다.
+
+2. **소규모 실험**: 논문이 CoLLAs(비교적 소규모 워크숍/컨퍼런스)에 게재됐으며, 대규모 모델(GPT-2 이상, 대규모 RL)에 대한 검증은 미래 작업으로 남겼다.
+
+3. **ELR만으로의 원인 귀속**: 논문은 ELR 붕괴가 primacy bias와 grokking 지연의 핵심 원인이라고 주장하지만, "주요 원인 중 하나"라는 정도의 입장이다. 유일한 원인이라는 주장은 하지 않는다.
+
+---
+
+## 암묵적 가정 (저자가 말 안 했지만 깔려 있는 것)
+
+**암묵적 가정 1 — Re-warming 주기 $T$가 태스크에 맞게 설정됨**  
+논문은 $T$의 최적값이 태스크 종류, 데이터셋 크기, 아키텍처에 따라 어떻게 달라지는지에 대한 일반 이론을 제시하지 않는다. 실험에서 잘 작동한 특정 $T$ 값이 선택됐지만, 이것이 새 태스크에서도 잘 작동할 것이라는 암묵적 가정이 있다. 실제로는 $T$에 대한 민감도가 높을 수 있다.
+
+**암묵적 가정 2 — ELR 붕괴 원인이 파라미터 노름 성장에만 있음**  
+Adam의 경우, ELR에 해당하는 양은 단순히 $\eta/\|\theta\|$가 아니라 Adam의 적응형 스케일링까지 포함한다. Adam의 내부 분산 추정 $v_t$도 일종의 ELR 조정 역할을 한다. NaP/Re-warming이 이 더 복잡한 Adam ELR에 대해 동일한 효과를 낸다는 것은 확인됐지만, 이론적 분석은 단순 SGD 기준이다.
+
+**암묵적 가정 3 — Feature-learning dynamics가 "좋다"는 방향성 가정**  
+Re-warming이 feature-learning dynamics를 촉진한다고 할 때, 이것이 해당 태스크에서 항상 이로운 것이라는 암묵적 가정이 있다. 하지만 이미 잘 학습된 안정적인 표현을 가진 네트워크에서 Re-warming이 오히려 표현을 불안정하게 만들 수 있다 — 특히 fine-grained 분류 태스크나 언어 이해에서.
+
+---
+
+## 반박 가능한 지점 1 — ELR이 정말 유일한 병목인가?
+
+**반박의 핵심 주장**: Primacy Bias와 소성 상실에는 ELR 붕괴 외에도 다른 원인들이 있다:
+- **Dead Neuron Problem** (Sokar 2022 "Dormant Neuron"): 훈련 중 특정 뉴런이 항상 0을 출력하는 "죽은 뉴런" 현상. ELR을 높여도 죽은 뉴런은 부활하지 않는다.
+- **Gradient Interference**: 이전 태스크와 새 태스크의 그래디언트 방향이 충돌. ELR이 높아도 그래디언트 방향 자체가 반대라면 새 태스크를 배울 수 없다.
+- **Representation Rank Collapse**: 네트워크의 표현이 저차원 부분공간에 집중(효과적 랭크 감소). ELR과 독립적인 현상.
+
+**어떻게 실험으로 검증할 수 있는가?**  
+ELR을 완전히 제어(NaP로 초기 수준 유지)하면서도 primacy bias가 발생하는 경우를 찾는다. 만약 NaP + 기존 ELR로도 primacy bias가 남아있다면, ELR 이외의 요인도 중요하다는 반증이 된다. 반대로 NaP만으로 primacy bias가 제거된다면 ELR이 충분조건임을 지지한다.
+
+---
+
+## 반박 가능한 지점 2 — Re-warming의 효과가 단순히 "파라미터 리셋"과 같지 않은가?
+
+**반박의 핵심 주장**: ELR Re-warming은 결국 파라미터 노름을 되돌리는 것인데, 이것이 "방향을 유지한 부분 리셋"과 실질적으로 다른가? 완전 리셋(Nikishin 2022)이 좋은 이유가 "낮은 노름 = 높은 ELR"이었다면, Re-warming과 완전 리셋의 차이는 "방향 정보 보존" 하나뿐이다. 이 정보가 얼마나 유익한지가 핵심인데, 논문은 이를 정량화하지 않았다.
+
+**어떻게 실험으로 검증할 수 있는가?**  
+Re-warming 직후의 파라미터 방향(unit vector $\hat{\theta}$)이 완전 리셋의 랜덤 방향보다 실제로 더 좋은 초기점을 제공하는지 비교한다. 구체적으로: Re-warming 후 수렴 속도 vs 완전 리셋 후 수렴 속도를 동일한 ELR 조건에서 비교. 만약 두 방법의 수렴 속도가 비슷하다면 "방향 보존"의 이득이 없는 것이다.
+
+---
+
+## 재현성 평가
+
+**코드·데이터 공개**: 별도 저장소 미확인. 표준 벤치마크(모듈러 산수는 Power 2022 기반 코드)를 사용했으므로 기본 환경 재현은 가능하나, 정확한 하이퍼파라미터와 구현 세부사항은 논문 본문 접근 없이는 확인 불가.
+
+**분산 보고 여부**: 접근 제한으로 확인 불가. 그러나 CoLLAs 급 논문에서는 여러 시드(seed)에 대한 표준편차 또는 신뢰구간을 보고하는 것이 관행이다.
+
+**미보고 디테일 추정**: 
+- NaP에서 어떤 레이어에 LayerNorm을 추가했는지 (모든 층 vs 일부)
+- Adam의 모멘텀 상태($m_t, v_t$)를 Re-warming 시 어떻게 처리했는지
+- RL 실험에서 replay buffer의 크기·구조
+
+**접근 제한 명시**: 이 논문은 CoLLAs 2025 논문으로, arXiv 및 대부분의 대체 소스 접근이 403 오류로 차단됐다. 본 해체는 검색 결과, 저자 블로그, 선행 NaP 논문(arXiv:2407.01800 — NeurIPS 2024, 접근 가능)을 기반으로 작성됐다. 실험 세부사항·정확한 수치는 논문 전문 확인 필요.

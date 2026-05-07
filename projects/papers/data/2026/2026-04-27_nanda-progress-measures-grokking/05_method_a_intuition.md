@@ -1,11 +1,72 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "Y4CQNZ4G5Ej07a8TVAMOBg==",
-  "iv": "9NM073h2XSbO2oF0Omp8tg==",
-  "ct": "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",
-  "mac": "jKpCTkhpFYSnWqgcsjgvk0suUnuK97N0KjYcEi9o83I="
-}
+# 4. 방법론 해부 ① — 큰 그림
+
+> 본 논문의 방법은 두 줄로 압축된다: **(1) 회로를 닫힌 형태로 reverse-engineer 하라. (2) 그 회로에 대한 진행도 척도를 train trajectory 에 적용하라.** 나머지 디테일은 모두 이 두 줄을 받쳐주는 보조 장치다.
+
+## 배경 사다리
+
+이 절을 이해하려면 ① **transformer 의 한 layer 가 attention block + MLP block 으로 구성된다는 것**, ② **임베딩 / 디임베딩이 토큰을 벡터로/벡터를 토큰으로 매핑하는 *학습된 행렬* 이라는 것**, ③ **discrete Fourier transform 이 길이 $p$ 벡터를 $p$ 개의 frequency component 로 분해하는 직교 변환** 이라는 것 — 이 셋만 알면 본 절을 따라갈 수 있다.
+
+---
+
+## 4.1 전체 흐름의 다이어그램 (지문)
+
+학습이 끝난 모델을 *왼쪽에서 오른쪽으로* 추적해 보자. 입력은 토큰 시퀀스 $(a, b, =)$, 출력은 logit 벡터 $\in \mathbb{R}^p$.
+
+1. **임베딩**: 토큰 $a$ 가 임베딩 행렬 $W_E$ 의 $a$-번째 열로 매핑된다. 이 열 벡터는 $d_{\text{model}}=128$ 차원이지만, 실제로 의미 있는 부분공간은 *$2|K|$* 차원 (각 frequency 에 대해 $\cos$ 과 $\sin$ 두 개 component). $|K| \approx 5$ 이므로 약 10 차원이 본질.
+
+2. **Attention**: 단순화된 1-layer attention-only 모델에서 attention 은 (a, b, =) 토큰 정보를 = 위치로 *모아주는* 역할만. 즉 "a, b 두 토큰의 임베딩을 합한 정보가 = 위치의 residual stream 에 도착" — Olsson et al. 2022 의 induction-head 같은 *복잡한 회로* 가 아니라 일종의 *adder 라우터*.
+
+3. **MLP** (또는 attention-only 의 경우 attention output 자체): 두 시계 바늘의 *곱* 을 만든다. $\cos(\omega_k a) \cdot \cos(\omega_k b)$, $\sin(\omega_k a) \cdot \sin(\omega_k b)$, $\cos(\omega_k a) \cdot \sin(\omega_k b)$, $\sin(\omega_k a) \cdot \cos(\omega_k b)$. ReLU 또는 attention softmax 의 비선형성이 *곱셈 가능* (다항 근사) 한 사실에 의존.
+
+4. **Trig identity 적용**: 위 곱항들이 *합쳐지면서*
+   $$\cos(\omega_k(a+b)) = \cos\cos - \sin\sin, \qquad \sin(\omega_k(a+b)) = \sin\cos + \cos\sin$$
+   가 형성. 이건 학습이 자발적으로 발견하는 표현 — *합각 공식이 곱-합 변환의 유일한 해* 이기 때문.
+
+5. **디임베딩 (Unembedding)**: 합각 표현이 $W_U$ 와 곱해져 logit 으로. 후보 $c$ 에 대한 logit 은
+   $$\text{logit}(c) = \sum_k w_k \bigl[\cos(\omega_k(a+b))\cos(\omega_k c) + \sin(\omega_k(a+b))\sin(\omega_k c)\bigr] = \sum_k w_k \cos(\omega_k(a+b-c))$$
+
+   이건 $c = a+b \pmod p$ 일 때 모든 cosine 이 $1$ — 최댓값.
+
+이 5단계가 *학습이 완료된* 모델의 동작이다.
+
+---
+
+## 4.2 학습 과정의 큰 그림
+
+학습이 *진행 중* 인 모델은 위 회로의 *부분적 형성 + memorization 가중치 잔여물* 의 superposition. 이 superposition 의 진행도를 잡기 위해 본 논문이 한 일:
+
+1. **회로 가설 사전 정의**: "이 task 는 Fourier circuit 으로 풀린다" 를 사전에 가정. 가설은 *학습 후 spectral 분석* 에서 검증되지만, progress measure 는 이 가설을 *입력* 으로 받는다.
+
+2. **두 종류 projection 정의**: 
+   - $\Pi_K$: key frequency $K$ 의 character subspace 로의 projection.
+   - $I - \Pi_K$: 그 보집합으로의 projection.
+
+3. **세 척도 트리거**:
+   - $\mathcal{L}_{\text{res}}$: $\Pi_K \cdot \text{logit}$ 의 cross-entropy.
+   - $\mathcal{L}_{\text{exc}}$: $(I - \Pi_K) \cdot \text{logit}$ 의 cross-entropy.
+   - $G$: weight matrix 의 Fourier 분해 sparsity (Gini).
+
+4. **학습 trajectory 위에서 매 step 측정**: train/test loss 와 함께 위 세 척도를 plot. 이 plot 이 본 논문의 *figure 핵심* — plateau 가 사실은 active 임을 보임.
+
+5. **Causal intervention 으로 validation**: 학습 후 모델에서 key frequency 만 남기고 ablate / 또는 그 반대 → generalization 성능이 어떻게 변하는지. 회로의 충분성 (key 만 남겨도 OK) 과 필요성 (key 빼면 망가짐) 이 동시에 검증.
+
+---
+
+## 4.3 왜 이 접근이 성공했는가 — 세 가지 이유
+
+1. **Task 의 algebraic 정렬**: modular addition 의 group structure ($\mathbb{Z}/p\mathbb{Z}$) 와 transformer architecture 의 *bilinear structure* (attention 의 QK^T, MLP 의 W_in × W_out) 가 character theory 를 거쳐 정확히 정렬된다. 이게 깨끗한 회로의 *물리적 이유*.
+
+2. **사전 회로 가설**: post-hoc 분석 (학습 후 처음 inspection) 이 아니라, 표현론 기반 사전 가설 → 실험 검증 → causal intervention 의 *과학적 method* 를 따른다. 이게 attention-as-explanation 논쟁 (Jain-Wallace 2019) 의 핵심 비판 — "attention map 이 post-hoc 으로 plausible 해 보이는 이야기를 만들 수 있다" — 을 회피한다.
+
+3. **Weight decay 의 implicit margin**: AdamW 의 weight decay 가 *Fourier-sparse 해* 의 implicit bias 를 만든다. 같은 task 를 SGD + weight decay 로 풀어도 비슷한 회로가 나오지만 *훨씬 느림*. AdamW 의 adaptive scaling 이 sparse 해로의 수렴을 가속.
+
+---
+
+## 4.4 다음 파일들로의 연결
+
+- `05_method_b_modadd.md`: modular addition task 의 정확한 setup (data, vocab, p=113 의 의미).
+- `05_method_c_fourier_circuit.md`: Fourier 회로의 수식 유도 — character theory 가 transformer 에서 어떻게 자라는가.
+- `05_method_d_progress_measures.md`: 세 progress measure 의 정확한 정의와 implementation.
+- `05_method_e_implementation.md`: hyperparameter, optimizer, weight decay 값, 학습 step.
+
+각 파일은 독립적으로 읽을 수 있도록 자체 도입부를 갖는다.

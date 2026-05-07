@@ -1,11 +1,59 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "aATu8EWne1z38ihQ2BzgFQ==",
-  "iv": "j/pFCaokBfyQ6M1nZyboow==",
-  "ct": "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",
-  "mac": "yjbrejjwIH6MajCjkSb0bQnvJjpfOJhoBh6DNiKV5VA="
-}
+# 05z. 방법론 — 구현 디테일 & 하이퍼파라미터
+
+> **이 파일의 독립 도입부**: 방법론의 마지막 파일이다. 앞 파일들이 "무엇을, 왜" 했는지를 다뤘다면, 이 파일은 "어떻게" — 즉 실제로 재현하거나 비교하려면 알아야 할 구체 수치와 결정을 다룬다.
+
+---
+
+## 주요 하이퍼파라미터 요약
+
+| 항목 | 값 | 비고 |
+|------|----|----|
+| 어휘 크기 (bin 수) | 4096 | 특수 토큰 2개 포함 |
+| 컨텍스트 길이 | 최대 512 토큰 | 더 긴 경우 우측 512 사용 |
+| 예측 지평 | 1~64 (논문 기본) | 데이터셋별 다름 |
+| 학습 스텝 | 200,000 | Large 기준 (크기별 상이) |
+| 배치 크기 | 256 (토큰 수 기준 정규화) | 동적 배치 패킹 |
+| 옵티마이저 | AdamW | β₁=0.9, β₂=0.999 |
+| 학습률 | 1e-3 (웜업 포함) | 코사인 감쇠 |
+| 추론 샘플 수 (N) | 20 | 확률 궤적 샘플 |
+| 하드웨어 | A100 GPU × 수십 | 정확한 수 미공개 |
+
+---
+
+## 데이터 전처리 파이프라인
+
+1. **길이 정규화**: 시계열을 컨텍스트+예측 지평 블록으로 분할. 배치 내 가변 길이 처리를 위해 dynamic padding 사용.
+2. **결측값 처리**: 명시적 처리 없음 — 결측값이 있는 시계열은 인접 유효값으로 단순 채움 또는 제외.
+3. **음수값 처리**: mean-scaling에서 절대값을 사용하므로 음수값 자체는 문제없이 처리.
+4. **bin edge 계산**: 전체 훈련 데이터의 스케일된 값 샘플(1M 개)에서 분위수 추출. 이 edge는 고정된 채 학습/추론에 사용.
+
+---
+
+## 학습 데이터 샘플링 전략
+
+모든 데이터셋이 동등한 가중치로 샘플링되는 게 아니다. 데이터셋 $d$에서 배치 내 배치 비율은:
+
+$$p_d \propto \left(\frac{N_d}{\sum_j N_j}\right)^{1/2}$$
+
+여기서 $N_d$는 데이터셋 $d$의 시계열 수. 제곱근을 취해 큰 데이터셋에 덜 치우치도록 보정. 이를 **온도 조정 샘플링(temperature sampling)** 이라 한다. 온도 파라미터(여기서 $\alpha = 0.5$)가 낮을수록 모든 데이터셋이 균등하게 샘플링되고, 높을수록(1.0) 큰 데이터셋이 지배한다.
+
+---
+
+## 추론 최적화 (Chronos-Bolt와의 비교)
+
+원본 Chronos (2024)는 개별 토큰을 자기회귀적으로 생성하는 디코더를 사용한다. 이것은 긴 예측 지평에서 느리다. 2024년 하반기에 Amazon이 출시한 **Chronos-Bolt**는 동일한 인코더를 사용하지만, 디코더 대신 **비자기회귀(non-autoregressive) MLP 헤드**로 전체 미래 horizon을 한 번에 예측한다. 속도가 수십 배 빠르지만, 시계열 내 스텝 간 의존성을 명시적으로 모델링하지 않는다는 트레이드오프.
+
+---
+
+## 재현성 평가
+
+| 항목 | 상태 |
+|------|------|
+| 코드 공개 | ✅ github.com/amazon-science/chronos-forecasting |
+| 모델 가중치 | ✅ HuggingFace (5가지 크기) |
+| 학습 데이터 | ✅ HuggingFace (autogluon/chronos_datasets) |
+| 정확한 GPU 수·학습 비용 | ❌ 미공개 |
+| bin edge 값 | ✅ 코드에서 추출 가능 |
+| 랜덤 시드 | 부분 공개 |
+
+재현성 측면에서 논문의 장점은 모델 가중치가 직접 공개되어 있어, 자신의 데이터에 즉시 적용 가능하다는 점. 하지만 처음부터 학습 재현을 위한 정확한 분산 학습 설정은 명시되어 있지 않다.

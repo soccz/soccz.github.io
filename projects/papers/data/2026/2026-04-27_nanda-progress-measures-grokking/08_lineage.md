@@ -1,11 +1,89 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "ko52tuAPTMkmqM9SyFx1mg==",
-  "iv": "kAzUPka7KA+LNppBloFKbg==",
-  "ct": "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",
-  "mac": "vVhrP9qW345wZ/4kI2Rhx8LhXyOleprC38vPCotZCyM="
-}
+# 7. 이론적 계보
+
+> 이 논문은 *어디서 와서*, *동시기에 누구와 경쟁* 했고, *어디로 갔는가*.
+
+## 7.1 이론적 조상 (직접 연결)
+
+### 조상 1. Power et al. (2022) — "Grokking: Generalization Beyond Overfitting on Small Algorithmic Datasets" (arXiv:2201.02177)
+
+Grokking 현상을 *발견* 한 논문. 본 논문은 정확히 이 발견을 *설명* 한다. Power 가 "이런 신기한 일이 일어난다" 까지 갔고, Nanda 는 "왜 그런지" 를 닫는다. 두 논문은 *paired* 로 인용된다 — 발견 ↔ 메커니즘.
+
+직접 연결: Power 의 modular arithmetic task setup 을 그대로 차용. weight decay 의존성 관찰을 그대로 가져옴. 그 위에 회로 분석 + progress measure 추가.
+
+### 조상 2. Anthropic — "A Mathematical Framework for Transformer Circuits" (Elhage et al. 2021, transformer-circuits.pub)
+
+Transformer 의 weight matrix 들을 *circuit-component* 로 분해하는 방법론적 *조상*. attention head 의 OV (output-value) circuit, QK (query-key) circuit 분해, MLP 의 *associative memory* 해석 — 이 모든 vocabulary 를 본 논문이 가져온다.
+
+직접 연결: 본 논문의 회로 분석 (embedding → attention → MLP → unembedding 의 spectral decomposition) 은 *Anthropic 의 framework 의 알고리즘적 instantiation*. 
+
+### 조상 3. Olsson et al. (2022) — "In-context Learning and Induction Heads" (arXiv:2209.11895)
+
+In-context learning 의 메커니즘을 *induction head* 라는 specific circuit 으로 환원한 paper. 이 paper 가 "회로를 reverse-engineer 하면 ML behavior 가 설명된다" 는 mech interp 의 *경험적* 정당성을 처음 강하게 보였다.
+
+직접 연결: Nanda 본 논문은 induction heads 의 *algorithmic version* — 모듈러 덧셈 회로. methodology (causal intervention + circuit hypothesis) 가 동일.
+
+### 조상 4. Liu et al. (2022) — "Towards Understanding Grokking: An Effective Theory of Representation Learning"
+
+Grokking 을 representation manifold 의 phase transition 으로 모델링. order parameter 추출 시도. 본 논문이 *order parameter 의 구체적 형태* 를 progress measure 로 닫음.
+
+직접 연결: phase transition 에 *측정 가능한 단조 변수* 가 있다는 발상이 progress measure 의 *철학적 조상*.
+
+---
+
+## 7.2 평행 연구 (동시기, 다른 접근)
+
+### 평행 1. Merrill et al. (2023) — "A Tale of Two Circuits"
+
+본 논문과 *동시기*. sparse parity task 위에서 dense memorization circuit + sparse generalization circuit 의 *경쟁* 을 모델링. 본 논문의 "두 가중치의 cleanup 시간 비대칭" 과 거의 같은 결론을 *다른 task* 에서 도출.
+
+본 논문이 *이긴* 영역: closed-form 회로 (Fourier basis), 정량적 progress measure. Merrill 측이 *나은* 영역: task generality (sparse parity 가 modular addition 보다 더 많은 task family 에 추상화 가능).
+
+두 논문은 *서로를 cite* 하며 grokking 의 "two-circuit" frame 을 정착시킨다.
+
+### 평행 2. Davies et al. (2023) — "Unifying Grokking and Double Descent"
+
+같은 시기. grokking 을 model-wise + sample-wise double descent 의 일종으로 통합. EDM (effective dimension of model) 척도 도입. *통계학적* 시각으로 grokking 을 generic 현상으로 환원.
+
+본 논문이 *상보적*: Davies 가 phenomenon 의 *generic* 성을 보였다면, Nanda 는 *specific* 메커니즘을 닫는다. 두 시각이 결합하면 "grokking = double descent 의 mechanistic instantiation".
+
+### 평행 3. Thilak et al. (2023) — "Omnigrok"
+
+같은 시기. Grokking 이 *weight norm 의 함수* 로 임의 induce/억제 가능함을 보임. weight 를 외부에서 sphere projection 으로 강제하면 grokking 이 단축. 
+
+본 논문이 *상보적*: Thilak 가 weight norm 변수를 발견했다면, Nanda 는 norm 변화의 *내적 의미* (Fourier sparsification) 를 닫는다. Norm 이 *원인* 이 아니라 *증상* — 진짜 원인은 회로 cleanup.
+
+### 평행 4. Kumar et al. (2023) — "Grokking as the Transition from Lazy to Rich Training Dynamics"
+
+Lazy/rich regime 의 NTK 시각에서 grokking 을 분석. lazy regime 에서 rich regime 으로의 전이가 grokking 의 본질. 본 논문과 *수직 보완* — Kumar 가 *학습률 / NTK eigenvalue* 시각, Nanda 가 *circuit 시각*. 둘 다 동일 phenomenon 의 다른 면.
+
+---
+
+## 7.3 후손 (이 논문이 낳은 것)
+
+### 후손 1. Conmy et al. (2023) — "Towards Automated Circuit Discovery for Mechanistic Interpretability" (ACDC, arXiv:2304.14997)
+
+본 논문의 *수동 회로 분석* 을 *자동화* 한 후속. 회로 가설을 사람이 세우는 대신, gradient-based pruning 으로 회로를 *자동 발견*. 본 논문의 progress measure 와 같이 사용 가능.
+
+### 후손 2. Doshi et al. (2024) — multi-task grokking
+
+본 논문 frame 을 *여러 modular operation 동시 학습* 으로 확장. Frequency hopping 현상 발견 (학습 도중 $K$ 가 변함). 본 논문의 *post-hoc fixed K* 가정의 부분 부정.
+
+### 후손 3. Wang et al. (2024) — "Grokked Transformers are Implicit Reasoners" (arXiv:2405.15071, 2026-04-24 본 레포에서 cover)
+
+Grokking 이 algorithmic task 외 *implicit reasoning* (knowledge composition) 에서도 일어남을 보임. 본 논문의 frame 을 더 의미 있는 task 로 확장.
+
+### 후손 4. Lyle et al. (2025) — "Grokking and Primacy Bias in Continual Learning"
+
+Continual learning 에서 grokking 이 어떻게 변형되는지 — non-stationarity 가 들어오면 본 논문의 깔끔한 3-phase 가 어떻게 무너지는지. 사용자의 Grokking active track 과 *직접 관련* 한 후속.
+
+### 후손 5. Stander et al. (2024) — "Grokking Group Multiplication with Cosets"
+
+Nonabelian group ($S_5$ etc.) 에서의 grokking 회로. 본 논문의 character theory 가 *matrix-valued representation* 으로 일반화되며 회로가 더 복잡한 형태가 됨을 보임.
+
+---
+
+## 7.4 계보의 한 줄 요약
+
+> Power 2022 (현상 발견) → Anthropic 2021 + Olsson 2022 (mech interp 방법론) → **Nanda 2023 (메커니즘 닫음 + progress measure)** → Conmy 2023 (자동화), Doshi 2024 (multi-task), Wang 2024 (implicit reasoning), Lyle 2025 (continual + non-stationarity)
+
+본 논문은 grokking 의 *현상학* 을 *메커니즘론* 으로 전환한 *축* 의 paper. 이 전환 이후 grokking 연구는 "왜 일어나는가" 가 아니라 "어떻게 측정/조작/예측하는가" 의 질문으로 옮겨갔다.

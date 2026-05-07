@@ -1,11 +1,82 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "mFLWcWk8W0+zIEIcYmOtHA==",
-  "iv": "5lEfz76M8P2MeO//H7M5aw==",
-  "ct": "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",
-  "mac": "eaehdRY6mCWLhyv+ru8IeiZlPEQbMetdWwBYR/TyXQ0="
-}
+# 6. 가정·한계·반박
+
+> 어떤 *조건이 깨질 때* 본 논문의 결론이 무너지는가. 사용자가 자기 연구로 옮길 때 반드시 고려해야 할 부분.
+
+## 6.1 명시된 가정 (논문이 대놓고 말한 것)
+
+1. **Algorithmic task 에 한정**: 본 논문은 modular arithmetic — algebraic 구조가 명확한 task — 에서 회로가 *closed form* 임을 입증. *비algorithmic* task (NLP, vision, TS) 로의 일반화는 *향후 연구* 로 미룸.
+2. **Single-layer architecture**: 1-layer transformer 위 분석. 2-layer 이상의 회로 *구성성* 은 다루지 않음. ([Lieberum 2023, Tracr] 같은 후속 연구로 이어짐)
+3. **Weight decay 의 implicit bias 가 dominant**: weight decay 가 sparse Fourier 해를 favor 한다는 가설. 다른 정규화 (dropout, gradient noise 등) 의 효과는 분리 보고하지 않음.
+4. **Cross-entropy loss + AdamW**: 다른 loss / optimizer 조합에서 동일 현상 보장 안 함.
+
+## 6.2 암묵적 가정 (말 안 했지만 깔려 있는 것)
+
+### 암묵 1. *회로 가설* 이 사전에 알려져 있어야 한다
+
+Progress measure ($\mathcal{L}_{\text{res}}$, $\mathcal{L}_{\text{exc}}$) 는 모두 $K$ — 학습 종료 후 발견된 5 개 frequency 집합 — 를 *입력으로 받는다*. 즉:
+
+- 학습 trajectory 를 *post-hoc 으로 재해석* 하는 도구이지, *실시간으로 회로를 발견하는* 도구가 아님.
+- 학습 도중에 회로 가설이 없는 새 task 에서는, 학습 trajectory 의 어느 시점에 progress measure 를 계산할지 알 길이 없음.
+
+**왜 이게 한계인가**: 본 논문이 mech interp 의 *general method* 로 보이지만, 실제로는 *회로를 알아낸 task 에 대한 사후 측정 도구* — 즉 *회로 발견 자체* 의 방법론이 아님. 회로 발견은 별도 paper (e.g., ACDC, Conmy 2023) 의 영역.
+
+### 암묵 2. *연속 trajectory* 의 단조성이 *유일한 회로* 를 의미한다
+
+본 논문은 progress measure 가 단조 변화함을 보였다. 그런데 단조성이 *single circuit* 의 progressive formation 을 의미하는가? 
+
+대안 가설: *여러 회로 (5개 frequency, 또는 더 많은 frequency 조합)* 가 *시간 차이* 를 두고 형성 / 소멸. 일부 frequency 는 일찍 형성됐다가 학습 후반에 *제거* 되고, 다른 frequency 가 들어옴 — *frequency hopping*. 단순한 단조성 측정으로는 이걸 못 잡음.
+
+**후속 연구 (Doshi et al. 2024)** 가 multi-task grokking 에서 frequency hopping 을 부분 보고. Nanda 본 논문의 깔끔한 단조 곡선은 *single task 의 luck* 일 수 있음.
+
+### 암묵 3. *Train data 가 회로를 충분히 cover* 한다
+
+Train fraction $\rho = 0.3$ 이 회로의 모든 frequency 를 학습할 수 있을 만큼 다양한 $(a, b)$ 쌍을 포함한다고 가정. 만약 train set 이 *한쪽으로 biased* (예: $a < 30$ 만 포함) 면 회로가 그 부분만 학습 → grokking 동학이 다르게 나타남. 본 논문은 random split 이라 이 가정이 자동 만족.
+
+### 암묵 4. *$|K|$ 가 작다* — 회로의 sparsity
+
+5 개 frequency 라는 결과는 *큰 weight decay 의 implicit bias* 의 결과. weight decay 가 작으면 $|K|$ 가 커지면서 (e.g., 20 개) progress measure 의 *해석* 이 변함 — sparse 가 아니라 일종의 dictionary 표현이 됨.
+
+## 6.3 반박 가능한 지점
+
+### 반박 1: "Cleanup phase 의 지연" 은 단지 *AdamW 의 weight decay schedule artifact* 일 수 있다
+
+**핵심 주장**: AdamW 는 effective learning rate 를 layer-wise 다르게 적용. memorization 가중치 (high-norm) 와 회로 가중치 (low-norm) 사이의 cleanup 시간 차이는 *AdamW 의 specific dynamics* 에서 나오는 것. 다른 optimizer 에서는 cleanup 이 *정확히 같은 비대칭* 을 갖지 않을 수 있다 — 따라서 grokking 의 "수직 phase transition" 도 AdamW 특이.
+
+**검증 실험**: 
+- (a) SGD + L2 reg 으로 같은 task 학습. 회로는 형성되지만 grokking 의 *수직성* 이 약해짐을 예측. 
+- (b) Lion optimizer 로 학습. cleanup 동학이 다르게 나타날 것.
+- 두 결과가 본 논문 동학과 *시간 상수* 면에서 다르면 → AdamW dependency 입증.
+
+### 반박 2: Progress measure 는 *post-hoc projection* 일 뿐, *학습 동학의 인과* 가 아니다
+
+**핵심 주장**: $\mathcal{L}_{\text{res}}, \mathcal{L}_{\text{exc}}$ 는 *학습 종료 후* 발견된 $K$ 로 계산. 학습 trajectory 위에서 $K$ 를 *input* 으로 받는 측정은 *순환 정의* 에 가깝다 — "학습 끝에 도달할 회로의 좌표계로 학습을 측정" — 그래서 단조성이 보이는 게 *trivial* 일 수 있다.
+
+**검증 실험**:
+- *학습 도중* (e.g., 5k step) 의 모델에서 $K_{5k}$ 를 추정. 그 $K_{5k}$ 로 *전체 trajectory* 의 progress measure 계산. 학습 종료 후 $K$ 와 다른 trajectory 가 나오는가?
+- 만약 두 measure 가 다르면 — *post-hoc 의존성* 이 강함. 같다면 — circuit 이 학습 처음부터 *고정된 frequency* 로 형성됨.
+- Doshi 2024 가 부분 보고: frequency 가 *학습 도중 변할 수 있다*. 이는 본 논문의 결론을 약화.
+
+### 반박 3: 결론은 *modular addition 의 algebraic 정렬* 에 의존, *generic learning dynamics* 가 아니다
+
+**핵심 주장**: 회로의 깔끔함 + progress measure 의 정합성은 cyclic group character theory 가 transformer architecture 와 정렬한 결과. *비algebraic* task (예: TS forecasting, language modeling) 에서는 (a) 회로가 단일 closed-form 으로 닫히지 않고, (b) progress measure 의 정의 자체가 모호. 즉 본 논문은 *grokking 의 일반 이론* 이 아닌, *grokking 이 algebraic task 위에서 깔끔히 분해되는 example* 일 뿐이다.
+
+**검증 실험**: 
+- TS Transformer 에 grokking 이 발생하는지 (Nazaret 2024, Lyle 2025 가 부분 보고). 만약 발생한다면 그 회로는 어떻게 생겼는가? Fourier-sparse 가 아닌 *다른* 구조일 수 있음.
+- 사용자의 P2 logistic 4-layer 실험이 정확히 이 question 의 instance.
+
+## 6.4 재현성 평가
+
+- **코드 / 데이터 공개**: ✅. Colab 노트북 + 비공식 GitHub repo 다수.
+- **논문에 안 나온 디테일**: progress measure 의 *precise implementation* (특히 Fourier basis 의 normalization, $K$ 결정 algorithm 의 정확한 cutoff) 가 publication 본문보다 *부록 / 코드* 에 있음. 본문 차단 상태로 정확히 확인 불가.
+- **분산 보고**: 5–10 random seed 의 분포 보고됨. 회로 형태 (sparse Fourier) 는 *보편적*, 구체적 frequency 만 seed 의존. 이 robustness 는 강한 결과.
+- **Plot 의 log-scale**: log-log step axis 라 phase boundary 가 *시각적으로 명확*. linear scale 이었으면 cleanup phase 가 *너무 짧아* 다른 phase 와 구분 어려움. 이 시각화 선택 자체가 논문의 narrative 에 기여.
+
+## 6.5 본 해체 자체의 한계 (정직한 고지)
+
+본 해체는 arXiv 직접 접근이 차단된 상태에서 작성됐다. 따라서:
+
+- 정확한 figure 번호 / 수치 / hyperparameter 가 *기억 + 후속 연구 인용* 에 의존.
+- Progress measure 의 *exact 수식 정의* (특히 $\Pi_K$ 의 normalization, 어떤 weight matrix 의 Gini 를 측정했는지) 는 본 논문 원문 검토가 필요.
+- 본 논문의 ablation 표 / 부록 figure 의 *세부 수치* 는 미확인.
+
+원문 접근이 가능해지면 본 해체의 §5–§6 부분을 *검증/수정* 할 것. 핵심 아이디어 (3-phase 동학 + Fourier circuit + 세 progress measure) 는 본 해체에서 정확히 capture 된 것으로 판단되지만, *세부 수치* 차이는 가능.

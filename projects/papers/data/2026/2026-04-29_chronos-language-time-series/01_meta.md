@@ -1,11 +1,32 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "sNkdit8oYZGw8bmdKOP/Nw==",
-  "iv": "ih1ikflyrXstA3miyquu3w==",
-  "ct": "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",
-  "mac": "iMD1BeMUcBBr9PLcUsWg69zww6MTkLu4SNYiKDx/JyU="
-}
+# 01. 메타 & 선정 이유
+
+## 기본 서지 정보
+
+| 항목 | 내용 |
+|------|------|
+| 제목 | Chronos: Learning the Language of Time Series |
+| arXiv | 2403.07815 (v1: 2024-03-12, v3: 최신) |
+| 게재처 | Transactions on Machine Learning Research (TMLR), 2024년 10월 |
+| 인용 수 | 약 600+ (Semantic Scholar, 2026-04 기준 — 페치 제한으로 정확 수치 미확인) |
+| 코드 | github.com/amazon-science/chronos-forecasting (Apache 2.0) |
+| 모델 | HuggingFace: amazon/chronos-t5-tiny/mini/small/base/large |
+
+## 저자 배경
+
+제1저자 **Abdul Fatir Ansari** (Amazon)와 **Yuyang Wang** (Amazon, 교신저자)이 이끄는 Amazon 내부팀 작업이다. **Michael W. Mahoney** (UC Berkeley) 와 **Andrew Gordon Wilson** (NYU Courant) 이 공저자로 포함되어 있어 이론적 신뢰성을 보강한다. Wilson은 GP (Gaussian Process) 분야의 대표적 권위자로, KernelSynth의 GP 기반 합성 데이터 생성이 그의 전문 영역과 직결된다. 팀 규모는 18명으로, Amazon Science 내 시계열 예측 팀의 플래그십 논문에 해당한다.
+
+아마존 과학 블로그(Amazon Science)에 별도 페이지가 존재하며, 코드와 모델 가중치 모두 공개돼 있다. 후속작 **Chronos-2** (arXiv:2510.15821, 2025-10)가 다변량/공변량 확장을 커버하였다.
+
+## 선정 이유
+
+**오늘 버킷**: 수요일 = 인접 버킷 (§D + §E)
+
+**Priority 매칭**: `_index.md` "TS Transformer baselines" 섹션의 우선 읽기 항목 (`ts-transformer-baseline` 태그, 커버 수 0).
+
+**선정 근거 3가지**:
+
+1. **APF 직접 입력**: Chronos는 T5 인코더-디코더로 시계열 토큰 시퀀스를 처리한다. 토큰화된 TS에서 Self-Attention이 어떤 패턴(diagonal / stripe / block / edge?)을 형성하는지는 APF 프레임워크가 즉시 탐구 가능한 미답 영역이다. 논문 자체는 어텐션 시각화를 다루지 않는다 — 빈 공간이다.
+
+2. **Grokking 직접 입력**: Chronos 사전학습의 훈련 동학 — cross-entropy 손실로 이산 토큰을 학습하는 구조는 Power 2022, Nanda 2023이 분석한 알고리즘 grokking의 NLP 언어모델 버전이다. "TS 토큰 시퀀스에서 grokking이 일어나는가?"는 Grokking track의 핵심 확장 질문이다.
+
+3. **금융 월 1회 규칙**: `probabilistic-forecast` 태그 교차 커버. Chronos는 분포 예측(distributional forecast) 모델이며, 금융 TS 예측에 직접 적용 가능하다. `fin-ts-dl`과 `probabilistic-forecast` 두 커버 0 태그 중 하나를 이번 실행으로 채운다.

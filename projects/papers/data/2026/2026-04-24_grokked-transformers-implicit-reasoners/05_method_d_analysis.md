@@ -1,11 +1,95 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "grB1ytTnOEc/0sDtuJJGlg==",
-  "iv": "4h5zTejOPwoYOYh9RXAFZA==",
-  "ct": "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",
-  "mac": "PtY33WJW7Yuh9Tm5TssLoysuk3OncAh+7g9ogztdHm0="
-}
+# 05d — 방법론: Logit Lens·Causal Tracing 구체 적용
+
+> **이 파일은 [05_method_c_circuits.md](05_method_c_circuits.md)에서 이어집니다.** 배경 사다리: ① "어텐션(attention)"이 각 토큰이 다른 토큰에 얼마나 "주목"하는지를 가중치로 표현하는 트랜스포머의 핵심 연산임, ② "intervention(개입)"이 실험에서 특정 변수를 인위적으로 바꿔 인과 효과를 측정하는 방법임을 알면 된다.
+
+---
+
+## Logit Lens: 레이어별 "현재 예측" 스냅샷
+
+### 기법 설명
+
+일반 트랜스포머에서 예측은 마지막 레이어 $L$에서만 이루어진다. 그런데 각 중간 레이어 $l$의 hidden state $\mathbf{h}^{(l)}$에 unembedding matrix $W_U$를 직접 적용하면 "이 레이어의 현재 상태로 예측한다면?"을 볼 수 있다.
+
+$$P^{(l)}_\text{logit lens}(\text{token}) = \text{softmax}\bigl(W_U \cdot \mathbf{h}^{(l)}\bigr)$$
+
+- **기호 뜻**: $W_U \in \mathbb{R}^{|V| \times d}$는 토큰 수($|V|$) × hidden dimension($d$) 행렬, $\mathbf{h}^{(l)} \in \mathbb{R}^d$는 특정 위치의 레이어 $l$ 표현.
+- **일상 비유**: 요리 중간에 맛을 보는 것. 마지막 완성 전에 각 단계에서 "지금 이대로면 어떤 맛이 나나?"를 확인.
+- **왜 이 형태**: 마지막 레이어에서만 예측하는 것보다 훨씬 더 세밀한 정보 흐름 추적이 가능.
+- **조심할 점**: 초기 레이어에선 representation이 unembedding matrix와 정렬이 안 돼 있어 logit lens 값이 무의미할 수 있다. 주로 중간~후반 레이어에서 의미 있다.
+
+### Composition에서 Logit Lens가 보여주는 것
+
+**Grokking 이전 (amortized memorization 단계)**:
+- 레이어 1~4: "민준이" 위치의 logit lens → 다른 토큰이 높음 (second hop 정보 없음)
+- 레이어 5~8: "스니커즈" 확률이 낮음 → $\mathcal{C}_\text{mem}$이 직접 매핑을 하므로 중간 hop 없이 바로 최종 답을 last layer에서 꺼냄
+
+**Grokking 이후 ($\mathcal{C}_\text{gen}$ 형성)**:
+- 레이어 3~4: "민준이" 위치에서 "농구"의 확률이 급상승 (= first hop 결과 형성)
+- 레이어 6~8: "스니커즈"의 확률이 점진적으로 상승 (= second hop 수행)
+
+이 변화가 grokking의 "내부 사건"이다: 상위 레이어에 second hop을 수행하는 회로가 새로 형성된다.
+
+**OOD 엔티티에서**:
+- 레이어 3~4: "OOD 민준이" 위치에서 first hop 결과("농구") 형성 → 정상
+- 레이어 6~8: second hop 답("스니커즈") 확률이 여전히 낮음 → 상위 레이어에 이 엔티티에 대한 second hop 경로가 없음
+
+이것이 OOD 실패의 레이어 수준 증거다.
+
+---
+
+## Causal Tracing: "어느 레이어가 정보를 운반하는가"
+
+### 기법 설명
+
+세 단계로 구성된다:
+
+**단계 1 — Clean run**: 정상 입력 $(e_1, r_1 \circ r_2, ?)$로 모델 실행. 올바른 답 $e_3$에 대한 확률 $P_\text{clean}[e_3]$ 기록.
+
+**단계 2 — Corrupted run**: 입력 $e_1$을 랜덤 노이즈로 교체한 $(\tilde{e}_1, r_1 \circ r_2, ?)$로 실행. 모든 레이어의 hidden state 저장. 당연히 $P_\text{corrupt}[e_3] \ll P_\text{clean}[e_3]$.
+
+**단계 3 — Patched run**: corrupted 입력을 사용하되, 특정 레이어 $l$, 위치 $p$의 hidden state만 clean run의 것으로 교체. 복원 후 확률 $P_\text{patch}[e_3]$ 기록.
+
+$$\text{Causal Effect}(l, p) = P_\text{patch}[e_3] - P_\text{corrupt}[e_3]$$
+
+- **기호 뜻**: Effect가 클수록 레이어 $l$, 위치 $p$가 정답 정보를 운반하는 데 중요함.
+- **일상 비유**: 공장 생산라인에서 각 공정 하나씩 "정상 부품"으로 교체해보면서, 어느 공정이 불량 제품의 원인인지 찾는 것.
+- **왜 이 형태**: 단순 sensitivity 분석(gradient)은 "이 변수가 출력에 얼마나 영향을 주는가"를 측정하지만, causal tracing은 "이 변수가 실제로 정보를 전달하는가"를 인과적으로 측정한다.
+- **조심할 점**: Patching이 모든 레이어에서 의미 있는 것은 아니다. 두 run에서 표현 공간이 달라 패치가 자연스럽지 않을 수 있다.
+
+### Composition에서 Causal Tracing이 밝혀낸 것
+
+**주요 발견**: First hop ($e_1$) 토큰의 정보는 중간 레이어(대략 레이어 3~5)에서 가장 결정적인 인과 효과를 보인다. 이는 "first hop 결과가 이 구간에서 형성되고 상위 레이어로 전달된다"는 logit lens 관찰과 일치한다.
+
+**Relation token의 역할**: $r_1, r_2$에 해당하는 토큰도 특정 레이어에서 causal effect를 보인다. 이는 "어떤 관계를 탐색할지" 정보가 특정 레이어에서 처리됨을 시사한다.
+
+**OOD 실패의 인과 추적**: OOD 엔티티에 대해 causal tracing을 해보면, 상위 레이어에서 second hop에 해당하는 레이어/위치의 causal effect가 거의 0에 가깝다 — 해당 회로가 아예 없음을 확인.
+
+---
+
+## Parameter Sharing 실험의 설계
+
+비순환 구조 한계 극복을 위한 실험:
+
+```
+일반 트랜스포머:        [L1] → [L2] → [L3] → [L4] → [L5] → [L6] → [L7] → [L8]
+                        (각각 독립 가중치 θ_1, ..., θ_8)
+
+Parameter sharing:      [L_φ] → [L_φ] → [L_φ] → ... → [L_φ]
+                        (모든 레이어가 동일 가중치 θ_φ 공유)
+```
+
+Parameter sharing에서 모델은 동일한 "레이어"를 여러 번 통과한다. 이 과정에서 레이어가 이전 pass에서 얻은 정보를 "기억"하는 효과가 생긴다 (표현적으로, 순환 신경망과 유사한 역할).
+
+**Logit lens 관찰 (parameter sharing 모델)**: OOD 엔티티에 대해서도 "마지막 몇 pass"에서 second hop 정보가 점진적으로 형성됨. 비공유 모델에선 이 현상이 없음.
+
+---
+
+## 분석 도구 요약 비교
+
+| 도구 | 질문 | 한계 |
+|------|------|------|
+| **Logit lens** | "언제(어느 레이어에서) 정답이 나타나는가?" | 초기 레이어 해석 불안정 |
+| **Causal tracing** | "어느 레이어/위치가 정보를 전달하는가?" | Patching이 non-linear 상호작용 무시 |
+| **Weight norm tracking** | "$\mathcal{C}_\text{mem}$ vs $\mathcal{C}_\text{gen}$ 경쟁이 언제 전환되는가?" | 간접 증거, 직접 회로 분리 아님 |
+
+**→ 실험 설계와 결과 해석은 [06_experiments.md](06_experiments.md)에서 계속.**

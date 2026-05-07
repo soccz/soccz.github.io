@@ -1,11 +1,58 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "kXsRcqLZtipz0ZzOk8LzpA==",
-  "iv": "Wot/FTf7aJnN/VhwL0NUgQ==",
-  "ct": "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",
-  "mac": "4F8QT88KLMgIF0/5Cg3mMJxtR5H1HWGn6NPJbYqopdI="
-}
+# 2026-04-20 · 월 · 코어 버킷 해체
+
+## 대상 논문
+
+**ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling**
+Chen, Ren, Wang, Fang, Sun, Li — NeurIPS 2023 (arXiv: 2402.10635)
+
+## 커버 태그
+
+- 주: `neural-ode-cde` (0 → 1)
+- 부: `time-series-transformer` (0 → 1)
+
+## 선정 근거 (요약)
+
+- `_coverage.md`: 코어 전 태그가 0으로 동률. 가장 뒤처진 태그 기준에서 모두 동일 자격.
+- `_profile.md`의 **Paper 4 ("Continuous Economic Time Attention — ContiFormer의 ODE 시간 변수 대체")** 가 이 논문을 직접 대체·확장하는 기획. 따라서 월요일 코어 1회차로 이 논문을 먼저 해부하지 않으면 이후 Paper 4 드래프트의 "무엇을 대체하고 있는가"가 공중에 뜬다.
+- 2차 근거: `rope-positional`, `conditioning-mechanism` 태그도 이 논문의 연속시간 재해석을 통해 간접 터치됨.
+
+## 대안 후보 (기각 사유)
+
+| 후보 | 태그 | 기각 사유 |
+|------|------|----------|
+| Su et al. 2021 — RoFormer (RoPE) | rope-positional | Paper 1·2 base line. 이미 내부적으로 충분히 숙지. 월요일 1회차로는 자원 낭비. → 2차 후보로 보류 |
+| iTransformer (Liu et al., ICLR 2024) | time-series-transformer | variate-as-token 트릭은 흥미롭지만 conditioning·연속시간 축과 직접 연결 약함 |
+| Informer (Zhou et al., AAAI 2021) | time-series-transformer | 이미 고전. 해체보다 재인용이 더 자연스러움 |
+| Neural CDE (Kidger et al., NeurIPS 2020) | neural-ode-cde | ContiFormer의 선행. 다음 회차에서 비교 관점으로 읽는 편이 레버리지가 큼 |
+
+## 디렉터리 구조
+
+```
+2026-04-20_contiformer/
+├── 00_README.md          (이 파일)
+├── 01_meta.md            (0. 메타 & 선정 이유)
+├── 02_tldr.md            (1. 3층 TL;DR)
+├── 03_problem.md         (2. 문제 지형도)
+├── 04_claims.md          (3. 핵심 Claim 해체)
+├── 05_method.md          (4. 방법론 해부)
+├── 06_experiments.md     (5. 실험 해부)
+├── 07_limits.md          (6. 가정·한계·반박)
+├── 08_lineage.md         (7. 이론적 계보)
+├── 09_connection.md      (8. 내 연구와의 연결)
+├── 10_expansion.md       (9. 사고 확장)
+├── 11_verdict.md         (10. 한 줄 판결)
+└── 2026-04-20.md         (위 11개 합본)
+```
+
+## 소스 접근 기록
+
+- `arxiv.org/abs/2402.10635` → 403
+- `semanticscholar.org` → 403
+- `openreview.net` → 403
+- `proceedings.neurips.cc` → 403
+- `ar5iv.labs.arxiv.org` → 403
+- `paperswithcode.com` → 403
+- `github.com/microsoft/SeqML/ContiFormer` (README) → **성공**
+- `github.com/microsoft/physiopro` (소스 트리) → **성공**
+
+본 해체는 (a) 공식 구현 소스코드, (b) README에 명시된 하이퍼파라미터·데이터셋, (c) 공개된 NeurIPS 2023 프로시딩에 대한 선지식을 교차 검증해 작성. 수식 표기가 원문과 정확히 일치하지 않을 수 있으므로 인용 시 재확인 필요.

@@ -1,11 +1,26 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "mmjaN8pigD4cJ1+KAEgZAw==",
-  "iv": "vhPJFuFTsSOVUgytjTyhMQ==",
-  "ct": "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",
-  "mac": "3A+otnVKYlIC1Sbdg8S45B/38NA4oaPlSr/4cN2/s1U="
-}
+# ContiFormer — 표지
+
+- **원문 제목**: ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling
+- **한국어 번역**: 컨티포머 — 비정규 시계열 모델링을 위한 연속시간 트랜스포머
+- **저자**: Yuqi Chen, Kan Ren, Yansen Wang, Yuchen Fang, Weiwei Sun, Dongsheng Li (Fudan + Microsoft Research Asia + Shanghai Jiao Tong)
+- **발표처·연도**: NeurIPS 2023 (Main Track), arXiv:2402.10635 (v1: 2024-02)
+- **태그**: `neural-ode-cde` (보조: `time-series-transformer`)
+- **코드**: <https://github.com/microsoft/SeqML/tree/main/ContiFormer> (MIT)
+
+## 한 줄 판결
+
+> ContiFormer는 "Neural ODE × Attention" 합성을 가장 깔끔하게 정식화했지만, **시간축이 곧 물리시간**이라는 가정을 깔고 있어 — Economic Time을 그 자리에 끼워 넣는 Paper 4의 정확한 출발점이자, 동시에 가장 비판적으로 인용해야 할 베이스라인이다.
+
+## 목차
+
+- [01_meta.md — 메타 & 선정 이유](01_meta.md)
+- [02_tldr.md — 3층 TL;DR](02_tldr.md)
+- [03_problem.md — 문제 지형도](03_problem.md)
+- [04_claims.md — 핵심 Claim 해체](04_claims.md)
+- [05_method.md — 방법론 해부](05_method.md)
+- [06_experiments.md — 실험 해부](06_experiments.md)
+- [07_limits.md — 가정·한계·반박](07_limits.md)
+- [08_lineage.md — 이론적 계보](08_lineage.md)
+- [09_my_research.md — 내 연구와의 연결](09_my_research.md)
+- [10_extensions.md — 사고 확장](10_extensions.md)
+- [11_verdict.md — 한 줄 판결](11_verdict.md)

@@ -1,11 +1,28 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "PnXTr2oIuf9Rvop2W5hZ5Q==",
-  "iv": "n9SLgq7FjFQP93jN+SY/RQ==",
-  "ct": "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",
-  "mac": "2LJh+NpzwEKjyfZ8InCeqHUw0+9LbvFK99TF/7Id25s="
-}
+# 1. 3층 TL;DR
+
+## 🧒 초등학생 버전
+
+친구들이 매일 일기를 쓰는데, 어떤 친구는 월·수·금만, 어떤 친구는 월·화·토만 쓴다고 생각해 봐. 보통 컴퓨터는 "1번째 날, 2번째 날..." 이렇게 번호로만 볼 수 있어서, 빈 날이 많으면 무슨 일인지 잘 못 맞혀. ContiFormer는 **일기 사이사이의 빈 날에도 기분이 부드럽게 움직였다고 상상**해서, 아무 날짜나 골라 "그 날에 무슨 기분이었을까?"를 Transformer라는 똑똑한 모델로 맞출 수 있게 해 준다. 비결은 기분을 "연속된 선"으로 그려놓고, 그 선을 곧바로 어텐션에 넣는 거다.
+
+## 🎓 학부생 버전
+
+Transformer의 self-attention은 입력이 **고정된 타임스텝 인덱스** $i=1,\dots,N$에 놓여 있다고 전제한다. 금융·의료·이벤트 로그 같은 **불규칙 샘플 시계열**에서는 이 전제가 자연스럽게 깨진다. 기존 해결책은 두 갈래였다.
+
+1. **Transformer 진영**: 시간 간격을 임베딩으로 집어넣거나(Time2Vec, TimeTransformer), RoPE·ALiBi처럼 상대 위치 바이어스를 넣는 식. — 시간을 "특징"으로 처리.
+2. **Neural ODE / CDE 진영**: 관측치를 interpolation한 후 ODE로 latent state를 propagate. — 시간을 "역학의 독립변수"로 처리.
+
+ContiFormer는 이 두 갈래를 **한 식 안에서 합친다**. 각 입력 토큰 $\mathbf{x}_i$ (시각 $t_i$에서 관측)는 먼저 ODE가 구동하는 연속 표현 $\mathbf{z}(t)$의 "경유지"로 해석되고, 이 $\mathbf{z}(t)$를 Key·Value 함수로 삼아 임의 쿼리 시각 $t$에서 softmax attention을 계산한다. 저자들은 (a) $\mathbf{z}$를 상수로 놓으면 표준 Transformer로, (b) attention을 쓰지 않으면 Neural ODE로 환원된다는 정리를 제시한다. 실험은 세 가지: 나선 궤적 재구성(함수 근사), UEA 다변량 분류, Temporal Point Process(TPP). 모든 태스크에서 Neural ODE / 기존 Transformer 변종 / TPP 전용 모델 대비 고른 개선.
+
+## 🔬 전문가 버전
+
+**Contribution**: (1) 연속시간 attention $\mathrm{Attn}(t;\{t_i,\mathbf{x}_i\})$을 정의하고, $\{t_i\}$에서 ODE 초기값을 받아 $(t_{i-1}, t_i]$ 구간마다 latent를 propagate해 Key·Value 함수 $\mathbf{k}(t),\mathbf{v}(t)$를 구성, query $\mathbf{q}(t)$와 함께 softmax-attention을 closed-form적분·수치 ODE solver 혼합으로 평가. (2) Transformer·Neural ODE가 각각 ContiFormer의 특수 경우임을 정리화. (3) 세 벤치마크에서 irregular sampling 강건성과 continuous-time extrapolation 능력을 경험적으로 검증. **핵심 장치**: key·value projection을 *OdeLinear* / *InterpLinear*로 치환하되 query는 interpolation 기반 linear로 유지, 즉 비대칭 설계. **방어 가능 주장**: "시계열 표현의 시간 축을 좌표가 아닌 dynamics로 취급하면 irregular·extrapolation·long-range smoothing에서 strictly 지배적"이라는 **조건부** 주장. 조건은 latent dynamics의 smoothness·Markov 성질이며, 이 조건이 깨지는 도메인에 대한 분석은 제한적이다.
+
+## 독해 난이도 지도
+
+| 섹션 | 난이도 | 이해의 걸림돌 |
+|------|-------|--------------|
+| §3 Method | ★★★★☆ | ODE solver + softmax 적분의 수치 근사 구조가 text에 분산 |
+| §4.1 Spiral | ★★☆☆☆ | Neural ODE literature의 표준 장난감 실험 |
+| §4.2 UEA classification | ★★★☆☆ | mask_ratio의 실제 의미가 드문 베이스라인에서 명확하지 않음 |
+| §4.3 TPP | ★★★★☆ | TPP에 NODE·attention을 섞을 때 intensity 수식이 여러 층 누적 |
+| Theorem 4.1/4.2 | ★★★☆☆ | 증명 자체는 길지 않으나 **가정**이 본문 분산돼 있음 |

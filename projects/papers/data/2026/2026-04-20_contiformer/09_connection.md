@@ -1,11 +1,132 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "SG8ub2J089ZUHkd3Qm3vjg==",
-  "iv": "YzgaMnS1JJaD0w32DryDJw==",
-  "ct": "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",
-  "mac": "JU83y/uVDqqPpPdwh501LtpJ5GFNjGP57336jV52aSk="
-}
+# 8. 내 연구와의 연결
+
+이 섹션은 `_profile.md`의 Paper 1~4 각각에 대해 "이 논문이 무엇을 주는가 / 무엇을 막는가 / 어떻게 인용할 것인가"를 구체적으로 매핑한다. 일반론을 피하고 실제 드래프트 섹션과 문장 단위로 연결한다.
+
+---
+
+## 8.1 Paper 1 — *When Multiplicative Conditioning Fails* 와의 연결
+
+### 포지셔닝
+
+Paper 1의 축은 `concat_a` (input-space) vs `tau_rope` (coordinate-space) vs `static` 세 가지 conditioning space 비교. ContiFormer는 이 축에 **"dynamics-space conditioning"** 이라는 네 번째 점을 제공한다. 즉 "시장 상태"를 입력에 넣지도, 좌표에 넣지도 않고 **ODE vector field의 구동에** 넣는 셈.
+
+### 흡수할 기법
+
+- **OdeLinear의 projection 분할 패턴**: Query는 interpolation, Key/Value는 ODE. 이 비대칭은 Paper 1의 baseline에서 "어떤 path에 conditioning을 주입할 것인가"라는 질문의 **새로운 자유도**가 된다.
+- **구간별 re-initialization 구조**: 각 관측 시점에서 Key·Value를 새로 초기화하는 "reset + flow" 구조는 regime switch를 반영하는 조건화에 응용 가능.
+
+### 충돌/경쟁 지점
+
+- ContiFormer는 "conditioning 없음 (unconditional)" baseline이다. Paper 1이 주장하는 "conditioning space의 trade-off"가 유효하려면, **ContiFormer + conditioning** 버전과 비교가 필요. Paper 1에 *conditional ContiFormer*를 간단 ablation으로 추가하는 것이 좋은 수비선.
+
+### 인용 포인트
+
+- **Related Work 섹션**: "Recent work (Chen et al., 2023) generalized Transformer attention to continuous time via Neural ODE, but did not address how exogenous market-state conditioning should be injected in this continuous-time setting. Our paper fills that gap ..."
+- **Discussion**: "Unlike ContiFormer, which operates on a single clock time, our formulation explicitly isolates the conditioning channel, making the multiplicative-failure analysis tractable."
+
+### 반면교사
+
+- **Hyperparameter 의존성**: ContiFormer가 데이터셋별 조합을 크게 흔든다는 점은 Paper 1이 "동일 hyperparameter 예산"을 엄격히 유지해야 한다는 경고. 하지 않으면 reviewer로부터 "너도 cherry-pick 아니냐"는 공격을 받기 쉽다.
+
+---
+
+## 8.2 Paper 2 — *Representation Utility Gap* 와의 연결
+
+### 포지셔닝
+
+Paper 2는 "같은 representation이 ranking 지표(Spearman/IC)와 absolute 지표(MSE/MAE) 중 어디에 유리한가"라는 축에서 conditioning space의 trade-off를 진단. ContiFormer의 representation은 **연속 함수 공간**이라는 독특한 성질을 가지며, 이로 인해 ranking vs absolute의 gap이 이산 Transformer와 다르게 나타날 가능성 농후.
+
+### 흡수할 기법
+
+- **Latent path visualization 방법**: 함수 공간 representation의 구조를 시각화하는 방식(spiral reconstruction figure 스타일)을 Paper 2의 "ranking 우수하지만 absolute 나쁨"의 기전을 보여주는 시각화에 차용.
+- **Interpolation 기반 평가 프로토콜**: 임의 시각에서 Key/Value를 평가하는 관점은 "test-time prediction horizon을 연속으로 이동시키며 ranking vs absolute curve"를 그리는 실험 디자인의 근거.
+
+### 충돌/경쟁 지점
+
+- 만약 ContiFormer가 **ranking 우수 / absolute 평범** 패턴을 보인다면 Paper 2의 "conditioning space가 원인" 주장이 혼동될 수 있음 (연속시간 자체가 원인일 수 있으므로). → Paper 2 실험에서 ContiFormer는 **대조군으로 반드시 포함**, conditioning space 축과 교차 분석 필요.
+
+### 인용 포인트
+
+- **Methodology**: "To isolate the conditioning-space effect from the continuous-time effect, we also evaluate a ContiFormer variant under matched conditioning."
+- **Results discussion**: ContiFormer의 ranking-absolute profile을 표준 참조점으로.
+
+### 반면교사
+
+- ContiFormer의 평가가 "단일 지표에 편중" (accuracy 또는 log-likelihood)이라는 점. Paper 2는 두 지표를 의도적으로 분리 평가하는 설계 자체가 기여이므로 **이 단일지표 관행을 비판적으로 인용**.
+
+---
+
+## 8.3 Paper 3 — *TTPA* 와의 연결
+
+### 포지셔닝
+
+TTPA는 (이름에서 짐작하건대) Temporal/Time-aware point-process 또는 attention 기반 방법. ContiFormer §4.3이 TPP 응용이므로 **직접 베이스라인**.
+
+### 흡수할 기법
+
+- **Intensity 계산에서 구간별 ODE + attention 결합 구조**: TTPA가 기존 THP·SAHP 라인에서 새로 제공해야 하는 것이 무엇인지 selection의 기준선.
+- **Neonate / BookOrder / StackOverflow 등 표준 TPP 벤치마크 세팅**: TTPA의 실험 테이블도 같은 데이터셋을 공유해야 비교 가능.
+
+### 충돌/경쟁 지점
+
+- 만약 TTPA가 "attention + time encoding"의 방향을 취한다면, ContiFormer와의 **차별화 포인트를 명시적으로 설계**해야 함. 예:
+  - TTPA는 `tau_rope` 기반 time encoding으로 **좌표 공간 조건화 + 이산 attention** 선택 → "연속 latent가 필요 없는" 주장 가능.
+  - 이 경우 Paper 3에서 "ContiFormer가 가진 연속 latent representation은 TPP의 intensity 모델링에서 실제로 marginal에 그친다"는 반론이 가능.
+
+### 인용 포인트
+
+- **Related Work / Baseline**: "We compare against ContiFormer (Chen et al., 2023), the current strongest continuous-time attention baseline for TPP."
+- **Appendix ablation**: ContiFormer의 hyperparameter dataset-dependence를 교훈으로, TTPA는 단일 hyperparameter로도 안정적임을 강조.
+
+### 반면교사
+
+- TPP 평가에서 데이터셋별 hyperparameter tuning을 매번 새로 하는 관행 → TTPA는 이걸 하지 말고 robust baseline으로 자리 잡도록 설계.
+
+---
+
+## 8.4 Paper 4 — *Continuous Economic Time Attention* 와의 연결 (**최중요**)
+
+### 포지셔닝
+
+Paper 4는 **ContiFormer를 직접 대체·확장**하는 논문이 된다. 공격 각도는 두 가지:
+
+1. **시간 변수 $t$의 의미 전환**: clock time → economic time $\tau$.
+2. **ContiFormer의 암묵적 가정 (결정론적 연속 dynamics, 활동도 균일)이 금융에서 깨지는 구체 증거** 제공.
+
+### 흡수할 기법
+
+- **OdeLinear / InterpLinear 구조**: Paper 4의 base architecture를 그대로 차용하되, 모든 ODE integration을 $dt \to d\tau$로 치환. 구현상은 `torchdiffeq`의 시간 argument에 $\tau(t)$의 discrete sampling을 feed.
+- **Theorem 4.1/4.2의 서술 패턴**: "subordinated ContiFormer는 ContiFormer를 $\tau = t$로 특수화할 때 복원된다"는 유사 정리를 한 줄로 세워 포함관계 증명. 이는 reviewer에게 "왜 새 모델이냐"를 방어하는 표준 수.
+- **Spiral visualization**: 나의 Paper 4에서도 synthetic test로 "clock time spiral vs volume-clock spiral"을 만들어 ContiFormer(clock) vs Subordinated ContiFormer(volume clock) 대조 figure를 제작. reviewer에게 가장 쉽게 읽히는 증명.
+
+### 충돌/경쟁 지점
+
+- ContiFormer는 "시간 축이 무엇이어야 하는가"를 일절 문제 삼지 않는다. 이것이 Paper 4의 방어선이자 Paper 4가 정의되는 이유. 충돌은 없으며 **보완 관계**다.
+- 다만 reviewer가 "그냥 $\tau$를 입력 feature로 넣으면 ContiFormer로 충분하지 않나?"라고 물을 위험 있음. 이에 대한 선제 방어:
+  - Input feature로서의 $\tau$는 scalar feature. ODE의 **독립 변수**로서의 $\tau$는 전체 dynamics의 timekeeper. 두 역할은 **identifiability 관점에서 다르다** (같은 모델에 두 경로로 $\tau$가 들어가면 representation collapse 또는 redundancy).
+  - 이 방어선을 Paper 4 §3에 명시적으로 배치.
+
+### 인용 포인트 (문장 초안)
+
+> "ContiFormer (Chen et al., 2023) demonstrated that continuous-time attention over ODE-driven Key/Value paths improves irregular time-series modeling. However, their framework treats the time variable as wall-clock time and is silent on the choice of time parameterization. In financial time series, where the information arrival rate is heterogeneous (Clark, 1973), clock time is known to be a suboptimal index for aggregating market dynamics. We extend ContiFormer by replacing the time variable with economic time $\tau(t)$, which induces a time-changed latent ODE ..."
+
+> "Our architecture reduces to ContiFormer when $\tau(t) = t$, and reduces further to Transformer when the vector field vanishes (Chen et al., 2023, Theorem 4.1)."
+
+### 반면교사
+
+- ContiFormer가 **hyperparameter 민감성**을 반면교사로: Paper 4에서는 `tmax`, `step_size` 등이 $\tau$의 스케일과 혼동되지 않도록 **재정규화 프로토콜**을 명시. $\tau$가 학습 가능해지면 scale drift가 발생할 수 있으므로 normalization block 필요.
+- ContiFormer의 **금융 데이터 부재**를 교훈으로: Paper 4는 최소 2개 금융 데이터셋 (tick-level + 분봉) + 최소 1개 non-financial (대조용)를 확보. 이 조합이 있어야 "경제시간의 효과가 특수하다"는 주장이 경험적으로 완결.
+- ContiFormer의 **효율성 문제**를 교훈으로: Paper 4에서는 ODE solver step을 $\tau$ 스케일에 맞춰 **adaptive**로 돌려 실제 벽시계 시간 기준 비용 감소 가능성 시연.
+
+### Paper 4 실험 설계 체크리스트 (이 논문을 참고해 바로 뽑아낼 수 있는 것)
+
+- [ ] Spiral toy: "volume clock에서만 원형이 되는 궤적"을 합성, clock-time ContiFormer vs economic-time 버전 비교.
+- [ ] Tick-level 금융 데이터: 다음 가격 이동 방향 분류 + 다음 이벤트 시각 회귀.
+- [ ] Ablation: $\tau(t) = t$ (ContiFormer 복원) vs $\tau(t) = \int \sigma^2$ (volatility clock) vs $\tau(t) = N(t)$ (trade count) vs $\tau(t) = V(t)$ (volume).
+- [ ] Robustness: mask_ratio 실험을 그대로 승계하여 irregular sampling 강건성이 subordination 하에서도 유지되는지.
+
+---
+
+## 8.5 통합 정리
+
+ContiFormer는 내 연구의 **기준점이자 공격 대상**이다. Paper 1·2·3에서는 baseline으로, Paper 4에서는 **직접적 선행**으로 인용된다. 따라서 이 해체는 단발성이 아니라 **4편의 드래프트에 네 번 참조**될 기초 자산이다. 특히 Paper 4는 이 논문 없이는 동기 자체가 성립하지 않으므로, 오늘 이 해체를 먼저 끝내둔 것이 본 프로젝트의 논리적 선후 순서에 정확히 맞는다.

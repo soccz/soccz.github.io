@@ -1,11 +1,44 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "0pyll6xhd1LCPzGEZqVpsA==",
-  "iv": "p05n6AGPbL0VC1ttHxE3Qw==",
-  "ct": "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",
-  "mac": "S9+oZ7hegCnJr8xPRFP5P5QaNXCP8KerBJJXLMA5dC8="
-}
+# 00 — 표지 & 네비게이션
+
+## 원문 정보
+
+| 항목 | 내용 |
+|------|------|
+| **원제** | Grokked Transformers are Implicit Reasoners: A Mechanistic Journey to the Edge of Generalization |
+| **한국어 제목** | 그로킹된 트랜스포머는 암묵적 추론자다: 일반화 경계로의 메커니즘 여행 |
+| **NeurIPS 표제** | Grokking of Implicit Reasoning in Transformers |
+| **저자** | Boshi Wang, Xiang Yue, Yu Su, Huan Sun |
+| **소속** | Ohio State University (OSU NLP Group) |
+| **발표처** | NeurIPS 2024 (Proceedings) |
+| **arXiv ID** | 2405.15071 (v2) |
+| **코드** | github.com/OSU-NLP-Group/GrokkedTransformer (공개, PyTorch) |
+| **데이터** | 합성 데이터셋 (SharePoint 배포 또는 Jupyter 노트북 생성) |
+| **태그** | `algorithmic-grok` (주), `mech-interp-circuits` (보조) |
+
+## 한 줄 판결
+
+> **암묵적 추론은 그로킹 없이는 불가능하다 — 단 Composition의 OOD 일반화는 트랜스포머 아키텍처의 비순환성으로 구조적으로 막힌다. 이 논문은 Grokking track의 "왜 grokking이 필요한가"에 대한 가장 깊은 메커니즘 근거다.**
+
+---
+
+## 목차
+
+| 파일 | 섹션 |
+|------|------|
+| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 |
+| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR |
+| [03_problem.md](03_problem.md) | 2. 문제 지형도 |
+| [04_claims_a_main.md](04_claims_a_main.md) | 3a. 핵심 Claim 1~3 |
+| [04_claims_b_ood.md](04_claims_b_ood.md) | 3b. 핵심 Claim 4~5 (OOD·아키텍처) |
+| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 큰 그림 |
+| [05_method_b_tasks.md](05_method_b_tasks.md) | 4b. 방법론 — Composition vs Comparison 태스크 |
+| [05_method_c_circuits.md](05_method_c_circuits.md) | 4c. 방법론 — 회로 경쟁 메커니즘 |
+| [05_method_d_analysis.md](05_method_d_analysis.md) | 4d. 방법론 — Logit Lens·Causal Tracing |
+| [06_experiments.md](06_experiments.md) | 5. 실험 해부 |
+| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 |
+| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 |
+| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 |
+| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 자문 질문 5개 |
+| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. Follow-up 논문 3편 |
+| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 실험 아이디어 2개 |
+| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |

@@ -1,11 +1,84 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "j5Blyisk0uiKmBdH5c1NHA==",
-  "iv": "lqSuZYvLXpl205J/iw2Utw==",
-  "ct": "En724sbkExdQyzjm45pH08886XVcuepig3pL/IWh054MbB06ojSONHos46yfNP9dAKca1fvlQLiyJE9kcZwfj1pGDgPONuCvsaX2UFelX1vT7NOUKZuuTzk4+xEkhyMnQeS58kD9WnWNrBsL8iIa+9oVJWd+FxVLLCD3qCivQyvZ4yui9nI8xzjo/juBioZ2Rk3ZY7taAbbRh1+ZkOfFLl99i7I36nYOb5vPR50LurZJ1/a1NHMnGOMr0zYktGkefjaBq4KnWQ1TiDuPMDTUf/9poy26xpF3l0flp7VEh9H4t299fkSmyDSiTJBucjsllnAqrcgTxdc5edxePVQoemgwEGkGfwXbwmSustJP4fdYtmgwMkPEXtT4UHDaQV3FeK/SP5OwNmEG5aNhkUjXNK9rQ2k5TY8SvzBAKST62PQRc7+53/WZidLCn+UvJkPGXsGrmKFKkZvTzmBbc31WEWoke1YvDTi9dLU+Vt5YTgnf9o/mbf7gM6UzJaVqgn4HU5bKqjfpeFfemtGQbXiXn8O2N/wqSDUlolE/fxc02dYrCJ1tmcwR6gMU9KGNiFhZ2eeiZvEZXG2xg5BV8eWdc7zI7raJ2NJC7l5RiQZMWD9snC8Vm2UCWCLAB+SzNYmFTBT6GCF4wf7pfYdqxKeFOMAb0eOiJqbAoLuDHMGC2kAV2JUVLDeRfG8aoyt9vUlhhpVxqco3rLOJ2lXH4m4IDi7yVReS7m9mRMmC5qYW8HnuQgXaZOMoTwwT9j/BqA8dF11S5cYXGn4THTpCLuFt4of0aTfPgyZX52BaAk3bQ8bx8jKZxi9KfeN+1asgNJgI+rPkDsgyH11fu4RP3pBzpRzittOg116P4owjozzJlSt7CWKTdHCWIImayEdsq3D2uA9sarXse3JMEhl1n6wVGdXYRHrxSwmO0VMcJCGWXr9K0plShBbMeGGucI1fnWwHynCXwDsaaSTI7tYsOg2td5ljyn3vEIEGSgQ+Ir/D5v3sCK3IGXFzLs1qMf3KG4t5ttgWUR4/BscT1uXmw6A20l4nEBsCQQFXLKRykrmsl03Mj0zphBk6H0KmFNG6hfx9bmftOrsAZpnqmgsfL8ZWrDu1/TD+oKXOu0jXOHYGSAwLa/ba7xNN3yptLCCq6t21yRzH+4msPGExIwcJNHbqjchk16J+Es0pJk5jssfOnd7lVUyWvr2sN/irOZfLrBDF+FJXFsNvdq0pckqZMMxHzpvmWPM4ipuu1BoP5eGvuutmg4/t1oIWpinJsVo04hKfmN5qFQH8WM1Co9oa2h1+m7Gn7rmjxP3ze7Jle4gJqGCCTWsWAJaqjh2sBSct/k0Lbb2EkO5eIWw2odOMBDhOAbtzP1UbWZ9nKf8a+WQQ6fbXco2vIkJz72TWSdoGlJDE9ygkGSJkAXjJY8cs6EqrPrw3koNktdeXa6QltPp4ge2VweDLqXhAxZmy8oqJqQbeYiOc4X8ktnBMDTFnqUYO0yIaI8Eg/IUmsNZiMUsJO7svIXgyWcrhjY+/fSYLKdf1g0wxemfpwDYrLfuNVqTTbJKLcitgcT/rGqXnd5D6qd8N4ZQKrBMm2+r/Q5t69vhLNzYXUJxjaFKqwoqXrgSXgu+3SQP0KGRwNwiiQRh866c40kdLOYY248qrjcsNiLwTgsykSKVlXBh6ggwW8ZMctDkyLSCUuwOUNwO09p4c3doIkahidRhEF2M3Zo0MOHoCqluyyuBPk3qf046EsB1OP4rkDOoGAPTBe6U4HvgRclDAenPZkB9J0A425ytgtNxqp3fni//XBsBcqxeWvw0f4Nz3Kr/FpuA6LPUdipevnmGvh35A8DdV7YpxG37kaT0N/iUCsjHgHWUrzMfEP7iwatodqKPOBDPkcJE53tqTy8FVu7RgCLhcu+9l3/jOkvCveuuuWzTj4ZiHhue4D8zSuAwu3uWN7sKwnaGQ2rnbn+IgwhJfCCoWyVQ5BIU+3a78y+w3fvOg38cAT6um5uVH4mLoKZtb2D6UOJBwV4W0h3ya9oYd+Xxw0JqTdt1sLh2KvdtEFRkwF6L1p6sONF6ahI1g5C4SV9DArpLCFmO9NIZO4kOZab3O/gIhn8JxwK8kySusZzLpo2YL8hssgQBrAkUwr5KcrLG7nPffg/CK6xgJrTYrlFF1/uicbmz5+Fc7lZJAzV5cSfK6JHi88GtMBJ7uSbHcTcPNUk8gAYh+ugIk4peL70mbaN3wqZw0JWAk7B2WPRf+VuEpysxsw/4TEPdKJ56Yhu4XwnMOtQhGxYd8UMxBxsQg3DFFOfU0gkeKknqNExf37Chss/M8eR6raRvkTPmVqt8o1DbmjtSjWr26tEFvYpR+idbkZm4FE6W5kH1Esf5VMhLrDDCVuKHi+AYiAVLZbP/H7LK3nrW/2uNPLZDwat0bu/jXEx1GhNW4VOxxZzbaKIpLARxAt8jObHNsFZdFCiza0+GiEeXuQx7xZmk264faVXBjoPWGC1XESD//qwM0esW2KFY2cKMuHRNbN1gLgvPq9+mzyCIOkE0djQcNZXXJzeREXsgLFA2tU0DNpptVwh6LZ6SqIXcTqD+iRS/w2w+R8N9f8mV8KUc77AoGKuyECpRTF9kBXV4ZS/j3N1qt+wHHN3+MuPF3cXSdBoMxfrLylpc/XCMGB6e+qjk1K0yAJn8PAYzBEUp6tUGTTTsdr+YO+XHsdPsrmIIETHL+WacGY6eP89VO9Vq/y2O94/nTpwVcNH931NfmzWvb2EVDIbttFOhxddR8YvOvH5NL4Mkkk2sHFF4KrKJfwN6IWK3qJNMvG2Rj/4b3S0IB63pUOlF1+TQedTH0unrGmioNSKq/96VcErJEpoKDyH/NUSoxTOv1wkyzjysqa7n3q9vmc74DoALvn5VMW61qjc5la0oXIpdl5f8Kg1TUznk1kxD4KLq+pVyuehkwDzrAmJVyc/mprQI08R8ttqmu/B7wqeRn/AgIKGgRQP/1e39uXa1pXc5PCfu/8b/jbXMuDswrRzOCiez9N6Qcxeefk4BWu5kMlc5K0PIju6Jd1U2TTdVGWhwwPKxtp9U905Cmoap1G6hP+u7ArIk61Hzfm+Q2T01VQqeJnxUSVvMcTUQaja874EfSwHUp2+6jpZ2LGHnCeCJf1Mu13ucFL+MMGTXQuMeom6x13zgIamMvpFqLPKQDgI36qwjV4SHmYhb4r9Ota4s0+ogkoaWBvnA4xRZMU1qMb93Ely7giytUeDnTZcrpGY8ZybZjG+nBLoZ0zIrwB7NXUxGOue137IG+7Ev7f/16eWOcgt6CgFH6uG7XEUe6XQ0fiEhU1DCoqY9hFTyd7EbBfpQ6ReBGBCyV47pHVH57Ny03QDmq6mGR9bjP7US8iEPuC/X8e0vZf6/08YccVFXhepwyUpoCyGZNP2udV4QxlCdU4grGukdA/ysh41UavUcDPv+26XAhh0D3RvEZ0JLqjjtcErRYbAd2HbEqpEdyLr+f2y1ILK7wfA4xUTYDgOGsEkMXc4FtFdhEE7y6xjnz+nBg3Bk0YDv5mPIyqsvuFsn22mVuIGnx5DwTxG4lT6JhnoyK+EpcuEeZMDn0w/WMNwi7YIFUUhJUm+IGv7GenEmw2HtGLcddwYDbo4mqDN505VbcUQI4BN+bLB6xQ9UhepUsq+i7beTos+Ha3JxFYPtE7lvk/1Y0M9ydsvOOVjrs+DeG2TieHNfJStrPWWDvlIBeLKX9ctgiqkKqMkwNrsqD+eDK2AOYa0RSoQ/F1k2TvW/SKoCvRSda9e6yRFVfiyAreCp1GDV0CrCJywuAFnGbOlAVPr0/4NmUR5Gbf2gKl4eh8SaASvqHtPLAv1XASsgwG1O6/Sbc0GyZGFZABv089C95hdJe9ltVlSPSQbW3fU1UAap6mw9OBZSUJSvlbQU9kwrS57x5WTHSB/7sVN17G3o5TB7hdU0E4Dvg4+6RJCMc39vPczLFwLP3+72P/SkBdTUK3snSGBZxXN6NOcz0qga7pfWq18k+quaHzDSlO5Z+P6OtnYbpyQM8aMLaGmUTw4VDLFKlmW3mz1eQ9yKSdwPw60TthymYnuAtzO/70u1B0sMGLRjOAgNN4/US4W7EXflBYT3pJjvD+OFEBIsib5wAfSo+Em60EO5cm3kxxXHqiMyLfcCVw7GaxWq+JmbrhI3F2nP+5pbmiWSWskUf/VdBrf6Fxe3+dmxtIWgYjuGZ+kBEN1TB7/rOmTCkvSE8RqVjuQ34DewXFy/oKbXnSCM/eczYA8zuz0H9tjsYESpy707Z9agyv8HUB+w1aHY9X+VdYOppEE0l0CHp6KQuLe1bXLtZ0hjmwR0mlRnn19fzyDJit4L1Y+2uE98hHoi7DNkSO1xv2FBqbFQJ21534xaKBY5wrSMecoUAVwmYiFrsYFGwD/z1X88N/1ZD44YzaTJTbKDYPPhjZwFUpjkxIwz8hSIQL14Yvk+JGpsyaK1nsuOOC4hzUirL/9hLCM4ONc/2UGr3U7kVEfkEHb4XS0MsRjOEHQeO9Cedy225jrGgdSS11W9rjzvVEcK8/N3vMhpsIrrqV4qtlXvJteL+HArhWjp8gXB5+u7X2iqNGJqfZrvpclFxqjk5Hh+FjXhcIBQBnoB92dXBix5WVbJjP7xnxzqEfCvTg2x4/uCjyYwSrkNrjN/92GQirqcedw3Awe92LOwx2ZB0C6X3y9+jPRQvahqONfDyTe5pNNFRrEFLMU748aTZR12dhWhtaaElfT/AByAh6OjkNqxPxO2Hml2waKN/HVo0yTFbe4mnKIrSgnr4FDooj2YCEZyaZuTyk2jtM96LY/Yo8G6cit1ELwNaFbLkjqg+a6ctyE/KSXlkfQ9yNhiIyv+7fksjxncNi20qEhcKZGwuQf0QDDNV7VAbGQ1mgdvEMier3WQIWqtuTgL0PNYFj2TNx/N/LK3rMv2LiDhdQvfhyDUOa6gqk+6/jH3oWpkS5z7AdzcA0w4r2ewr2JFKpqVxn9HN8IU+Gvl1s83b/qY/1+utRPzh1eBwV4QmEfxr/BIF7Xw6Lv6Al33ZGz3FbfmDZiC8f6ecfec0QY9fRUuP0qUzOrvZQ4e7MvNaa+Lg3kkmkfWAAVzOQJ3rKGhJhk13TH/FfGPPXG8dryjdiRy7ISashJeHii4t5u6pb6ML1e/fpGerjwj/SlkuD9YgL7vjj4d2Ctgxrk9bAH9uy+VXmM//uPccaHYfNdpRjY0NyFKZy5rI1xzyEV9SGSQFZBTQkaSFpuaqGGAO/1+lry9V98n2zWaJZ9a4TNgKsrcWI5hfXFvK/yzWy3rxbNYACRcu8UJAZscpJlEq8OYYUlUAETMYfJ3muIiAtrGVKnVS0KHStsVzhrJGG7Gx/a4E2KcjHS8+6DnxtMeBduRMvmqPpHAqf+fn1rFgHhghmFJEXGfZRZzAmciEp2Fl1zyCfzeaKtkGJYwU6Vq8dg7O2NjxLC+TPI0QwDO28mPH1imZEvqhO6o0f7j/kV/AqMhtr1UoM65oPEmoFPFY25jIQYiBtOgVNqI8X+aQnRZWFzjivHCeI0RIozMmYha6pf/CXOKOglx9y00WWq6pfhXQsk9pJ6IGFCIDlzyIJf56r8e/ptUrgd3pVdLtU65eutTaQkkhIX9+jx84vJ3a3NnAy85IGYb2KAb7cRm7HDzkkDTgnXmD6ZH8iK0+osR+svHdUO/lQCAxHBrJvVkEv2Xer5AFlD14R64ErU+ItPClFsNDfJeLzh6JwVOOqELJB+EE21Qzju1UKyDlhESZ5ZG3vv6JMN8jKyUHKraWyMqvR9Hp4w3vQ+J6fOjMTZxBPgnViYDezpXuAXhdS8D8ZYVlZd/F62gIpAPzASaZZbCO7Abk2XPPYyD68VXajrL4Qahipv5fVyGAyKmoXL4UdA==",
-  "mac": "aB2LvoBsYkymNmzxXASxVY/i+PccvXurfaoxjwUsprQ="
-}
+# 05-D. 방법론 — FFN + 전체 아키텍처 & 구현 디테일
+
+> **배경 사다리**: ① FFN(Feed-Forward Network, 피드포워드 네트워크)은 각 토큰에 독립적으로 적용되는 2-레이어 MLP로, 표준 트랜스포머 블록의 절반을 차지한다. ② 선형 프로젝션(linear projection)은 행렬 곱으로 차원을 변환하는 연산이다.
+
+---
+
+## FFN의 역할: 각 변수 토큰 내부의 시간 패턴 추출
+
+어텐션이 $N$개 변수 토큰 사이의 상호작용을 학습했다면, FFN은 각 변수 토큰을 **독립적으로** 처리하여 그 변수의 시간 패턴을 비선형적으로 정제한다.
+
+iTransformer에서 FFN은 각 변수 토큰 $h_n \in \mathbb{R}^D$에 대해:
+
+$$\text{FFN}(h_n) = W_2 \cdot \sigma(W_1 h_n + b_1) + b_2$$
+
+| 기호 | 의미 |
+|------|------|
+| $h_n \in \mathbb{R}^D$ | 어텐션 이후 변수 $n$의 표현 벡터 |
+| $W_1 \in \mathbb{R}^{4D \times D}$ | 확장 행렬 (차원을 4배로 늘림) |
+| $\sigma(\cdot)$ | GELU 활성화 함수 (부드러운 ReLU 변종) |
+| $W_2 \in \mathbb{R}^{D \times 4D}$ | 압축 행렬 (다시 D-dim으로) |
+| $b_1, b_2$ | 편향 벡터들 |
+
+**4줄 해석**:
+1. **기호 뜻**: $W_1$이 $D$-dim 입력을 $4D$-dim으로 확장, $\sigma$로 비선형 변환, $W_2$로 다시 $D$-dim으로 압축. 전형적인 "병목(bottleneck) 역 구조"의 반대, 즉 "확장 후 압축."
+2. **일상 비유**: 번역가가 한국어 문장(D-dim)을 이해하려고 내면에서 더 풍부한 내부 언어(4D-dim)로 펼쳤다가, 번역 결과를 다시 한국어(D-dim)로 압축하는 것과 같다.
+3. **왜 이 형태**: 표준 트랜스포머(Vaswani 2017)에서 처음 채택된 구조 그대로다. 확장 비율 4는 경험적으로 잘 작동하는 값이다. FFN이 각 토큰에 독립적으로 적용된다는 점에서, 사실상 $N$개 변수 각각에 공유 가중치 MLP가 적용되는 것 — 이것이 변수 간 파라미터 공유를 통한 정규화 효과를 낳는다.
+4. **조심할 점**: FFN의 입력 차원이 $D$(임베딩 차원)이지, $T$(원시 시계열 길이)가 아니다. 즉, FFN이 "시간 패턴을 직접 보는" 것은 **임베딩 레이어** 단계이고, FFN은 이미 D-dim으로 압축된 시간 표현을 정제하는 역할이다.
+
+---
+
+## 전체 아키텍처 흐름
+
+```
+입력: X ∈ ℝ^{T×N}
+
+1. [변수별 LayerNorm + 선형 임베딩]
+   각 x_n ∈ ℝ^T → h_n ∈ ℝ^D
+   → H = [h₁, ..., h_N] ∈ ℝ^{N×D}
+
+2. [L개 iTransformer 블록 반복]
+   각 블록:
+   a. 잔차: H ← LN(H + MultiheadAttn(H))  [N×N 어텐션]
+   b. 잔차: H ← LN(H + FFN(H))             [각 h_n 독립 처리]
+
+3. [출력 프로젝션]
+   각 h_n ∈ ℝ^D → ŷ_n ∈ ℝ^S (미래 S 스텝 예측)
+   → Ŷ = [ŷ₁, ..., ŷ_N] ∈ ℝ^{S×N}
+
+손실: MSE(Ŷ, Y) 또는 MAE(Ŷ, Y)
+```
+
+**출력 프로젝션**: 최종 표현 $h_n \in \mathbb{R}^D$을 선형 레이어로 $\hat{y}_n \in \mathbb{R}^S$로 변환한다. 변수마다 독립적으로 적용된다. 이것이 **제로샷 변수 일반화**를 가능하게 한다 — 훈련에 없던 변수도 임베딩 → 어텐션 → FFN → 프로젝션 파이프라인에 넣으면 예측이 나온다.
+
+---
+
+## 구현 하이퍼파라미터 (논문 Appendix 기반)
+
+| 하이퍼파라미터 | 값 |
+|---|---|
+| 임베딩 차원 $D$ | 512 |
+| 트랜스포머 레이어 수 $L$ | 3 |
+| 어텐션 헤드 수 $H_\text{heads}$ | 8 |
+| FFN 확장 비율 | 4 |
+| Dropout | 0.1 |
+| 학습률 | $10^{-4}$ (Adam) |
+| 배치 크기 | 32 |
+| 훈련 에폭 | 10 (early stopping patience=3) |
+
+---
+
+## 표준 트랜스포머와의 파라미터 비교
+
+iTransformer의 추가 파라미터는 거의 없다:
+- 임베딩 행렬: $D \times T$ (표준은 $D \times N$, 둘 다 비슷한 크기)
+- 어텐션: $W_Q, W_K, W_V, W_O$ 크기 동일 (단지 시퀀스 길이가 $T$에서 $N$으로 바뀔 뿐)
+- FFN: 동일
+
+총 파라미터 수는 표준 트랜스포머와 거의 같다. "구조 변환"이 성능 이득의 원인이지 "파라미터 증가"가 아니다 — 이것이 논문의 핵심 실험적 통제점이다.
+
+---
+
+## 핵심 한 줄 요약
+
+> iTransformer는 "$X$를 $X^\top$으로 보라"는 단 하나의 관점 전환으로, 동일한 트랜스포머 컴포넌트를 사용하면서 다변량 시계열 예측의 근본적 어려움(이종 변수 혼합, 위치-기반 어텐션 낭비)을 해결한다.

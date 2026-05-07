@@ -1,11 +1,23 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "HY9qY6wlAbRCruMVKJU7Tw==",
-  "iv": "NqcscZvdOuuc2mXWhhludg==",
-  "ct": "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",
-  "mac": "xnupE1P7dqTAFS2G+5m8PrxfcgvsbB+n0HVC11cBsy0="
-}
+## 2. 문제 지형도
+
+### 풀고자 하는 문제
+
+**비정규 시계열(irregular / asynchronously-sampled time series)** 의 표현 학습. 입력은 길이가 가변이고, 관측 시각 $\{t_i\}$가 등간격이 아니다 (의료 EHR, ICU 모니터, 금융 tick, 인간 활동 센서). 목표는 (a) **interpolation** — 미관측 시각의 값 추정, (b) **classification** — 시퀀스 라벨, (c) **prediction** — 미래 시각의 값 예측. 핵심 어려움은 두 토큰 사이의 시간 간격 $\Delta t = t_j - t_i$ 가 정보로 살아 있어야 하면서, 동시에 멀리 떨어진 두 관측 사이의 의미적 관계도 잡아야 한다는 것.
+
+### 기존 접근 계보 (연대순)
+
+1. **RNN-기반 마스킹/decay** — GRU-D (Che et al., 2018): 결측·간격을 input mask와 exponential decay로 처리. 등간격 가정의 패치, 장거리 의존성에 약함.
+2. **Neural ODE / ODE-RNN** — Chen et al. (2018), Rubanova et al. (2019): hidden state를 $dh/dt = f_\theta(h, t)$ 로 연속 진화시켜 임의 $t$에서 평가. 시간 흐름은 자연스러우나, 단일 trajectory라 token-간 attention-식 상호작용 부재.
+3. **Latent ODE / Neural CDE** — Kidger et al. (2020): controlled differential equation으로 입력을 vector field로 흡수. 수학적으로 우아하지만 여전히 단일 hidden state.
+4. **mTAND / SeFT / Multi-time Attention** — Shukla & Marlin (2021): query 시각마다 가까운 관측에 soft attention. 시간이 cross-attention의 *bias*로 들어감, 그러나 token 임베딩 자체는 이산.
+5. **Transformer + time embedding** — Time2Vec, Informer, FEDformer 등: 시각을 sinusoidal/learnable embedding으로 더해 query/key에 주입. 본질적으로 인덱스 모델.
+
+### 기존 방법의 부족 지점
+
+- ODE 계열: **token-간 명시적 상호작용**(attention pattern) 부재, soft retrieval이 약함.
+- Transformer 계열: **시각을 feature 차원에 더하는 첨가물**로만 다룸 — 두 토큰의 관계가 *시간의 함수* $\rho(t)$ 가 아니라 학습된 상수 행렬의 한 항.
+- mTAND: query 시각은 연속이지만 key/value는 이산 관측 그대로.
+
+### 이 논문이 메우는 gap
+
+ContiFormer는 **(query, key, value) 셋 모두를 시간의 함수**로 들어 올린다. 결과적으로 attention map $\alpha_{ij}$ 가 행렬이 아니라 함수 $\alpha_i(t)$ 가 되어 "시각 $t$에서의 관계 강도" 자체가 학습 대상이 된다. 이는 위 5계보를 모두 한 우산 아래 두는 통일적 frame이라는 **이론적 야심**을 가진다 — 그래서 expressive power 정리(특수해 환원)가 핵심 contribution으로 따라온다.

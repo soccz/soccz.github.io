@@ -1,11 +1,71 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "v8U8HFjBzhg4o4nx3aCSmg==",
-  "iv": "fvsznhyvZ21IaPN9U9J0GA==",
-  "ct": "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",
-  "mac": "4wnJ+jwEpD9fReuTAhc9oDMcKbv2EF0kqut1T9YR9qs="
-}
+# 05-C. 방법론 — 변수 방향 어텐션 메커니즘
+
+> **배경 사다리**: ① 내적(dot product)은 두 벡터의 원소를 곱해 더한 스칼라 값으로, 두 벡터가 비슷할수록 크다. ② 소프트맥스(softmax)는 여러 실수 값을 받아 합이 1이 되는 확률 분포로 변환한다. ③ 멀티헤드 어텐션은 어텐션을 $H$개 독립 "헤드"로 병렬 실행해 서로 다른 관계 패턴을 포착하는 변종이다.
+
+---
+
+## 표준 어텐션 vs iTransformer 어텐션: 핵심 차이
+
+| | 표준 TS 트랜스포머 | iTransformer |
+|--|--|--|
+| 입력 토큰 시퀀스 | $H \in \mathbb{R}^{T \times D}$ | $H \in \mathbb{R}^{N \times D}$ |
+| Q, K, V 형상 | $T \times D$ | $N \times D$ |
+| 어텐션 맵 | $T \times T$ | $N \times N$ |
+| 어텐션이 포착하는 것 | 타임스텝 간 유사도 | **변수 간 상관관계** |
+
+---
+
+## 수식: 변수 방향 멀티헤드 어텐션
+
+입력: $H \in \mathbb{R}^{N \times D}$ (N개 변수 토큰, 각 D-dim)
+
+헤드 $k$에 대해 ($k = 1, \ldots, H_\text{heads}$):
+
+$$Q^{(k)} = H W_Q^{(k)}, \quad K^{(k)} = H W_K^{(k)}, \quad V^{(k)} = H W_V^{(k)}$$
+
+여기서 $W_Q^{(k)}, W_K^{(k)}, W_V^{(k)} \in \mathbb{R}^{D \times d_k}$ ($d_k = D / H_\text{heads}$).
+
+어텐션 점수 행렬:
+
+$$A^{(k)} = \text{softmax}\!\left(\frac{Q^{(k)} {K^{(k)}}^\top}{\sqrt{d_k}}\right) \in \mathbb{R}^{N \times N}$$
+
+헤드 $k$의 출력:
+
+$$\text{head}^{(k)} = A^{(k)} V^{(k)} \in \mathbb{R}^{N \times d_k}$$
+
+멀티헤드 연결 후 선형 프로젝션:
+
+$$\tilde{H} = \text{Concat}(\text{head}^{(1)}, \ldots, \text{head}^{(H_\text{heads})}) W_O \in \mathbb{R}^{N \times D}$$
+
+**4줄 해석 — 어텐션 점수 행렬 $A^{(k)}$**:
+1. **기호 뜻**: $A^{(k)}_{ij} \in [0,1]$은 "헤드 $k$에서, 변수 $i$를 업데이트할 때 변수 $j$의 정보를 얼마나 참조하는가"를 나타내는 가중치다. $\sum_j A^{(k)}_{ij} = 1$.
+2. **일상 비유**: 기상청 예보관이 "내일 서울 기온을 예측할 때, 어제의 어떤 도시 데이터를 가장 많이 참고하는가"를 결정하는 참조 가중치와 같다. iTransformer에서 "도시" 대신 "변수"가 들어간다.
+3. **왜 이 형태**: $Q K^\top / \sqrt{d_k}$는 두 변수 표현 벡터의 유사도를 측정한다. $\sqrt{d_k}$로 나누는 이유는 벡터 차원이 커질수록 내적 값이 커져 소프트맥스가 saturate되는 것을 방지하기 위함이다.
+4. **조심할 점**: $N$이 크면(예: Traffic 862개 변수) $A^{(k)} \in \mathbb{R}^{862 \times 862}$, 저장에 약 2.4MB (float32). 헤드 수 곱이면 수십 MB. GPU 메모리 효율을 위해 FlashAttention을 플러그-인해서 이 계산을 청크(chunk) 단위로 나눠 처리한다.
+
+---
+
+## N×N 어텐션 맵의 물리적 해석
+
+$A_{ij}$가 크다는 것은 "변수 $j$의 시간 패턴이 변수 $i$를 업데이트하는 데 중요하다"는 뜻이다. 이것은 변수 $i$와 $j$가 상관되어 있다는 soft-assignment다.
+
+실제 ECL 데이터 시각화(논문 Figure 4)에서:
+- 같은 지역 전력망에 속하는 변수 군(群)이 어텐션 맵에서 **블록 구조**를 형성한다.
+- 이 블록 구조는 실제 전력망의 지역적 그룹핑과 일치한다.
+- 표준 트랜스포머의 T×T 어텐션 맵에는 이런 의미 있는 패턴이 나타나지 않는다.
+
+**APF 연구 관점 첨언**: APF(Attention Pattern Fields)가 연구하는 T×T 모티프(대각선/블록/스트라이프 등)는 "타임스텝 간 유사도"를 반영한다. iTransformer의 N×N 모티프는 "변수 간 상관관계"를 반영한다 — 완전히 다른 의미의 2D 패턴이다. APF가 T×T 분류 체계를 발표할 때, "N×N 어텐션 대안이 존재한다"는 사실을 Discussion에서 명시해야 한다.
+
+---
+
+## 레이어 반복
+
+어텐션 출력 $\tilde{H}$에 잔차 연결(residual connection)과 LayerNorm을 더한다:
+
+$$H' = \text{LN}(H + \tilde{H})$$
+
+그 후 FFN(05-D에서 설명)을 거쳐 다시 잔차 연결:
+
+$$H'' = \text{LN}(H' + \text{FFN}(H'))$$
+
+이 블록을 $L$번 쌓아 깊은 표현을 형성한다 (보통 $L = 3$ 또는 4).

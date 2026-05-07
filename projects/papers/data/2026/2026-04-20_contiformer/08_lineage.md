@@ -1,11 +1,99 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "GwvE2ViHUROFOVvhT9DDDQ==",
-  "iv": "7JGzs2CqFC4v1EMWPQKsKA==",
-  "ct": "begVJMPr6qokpTngT8i3/Asw1F28/ieVTEkFlAO0WXXzPMr7vVGC+NMIf6ghogn93BEaid+wAIdR07ifuuMyoWtyFRGJ5yYouUwR0Nbqn7X8veiQmfxjBlMjXDQ0RnCvWpDP9Tj+A/iwMAmAICn97yawLTHnSax1koCxVq+/OES9+T3Ln0sw0ieHYt01MdQDnKQNwlvCEjBBGpp0OiOAeADmGmh0VnV2ewY2m6l0foi3Bgwz8WFkq/hmN6f/a4O0RjC9gROCeg0DOQBBA1kwDFpBpQMM/WuYkWDteXE/UDm1uzJRDmgP5lGyejXhcNkzPTN0pesrSgEMTRKQq8imvD11FdOvlE7MiTkFYVBTd/RARn751vPq2Yj4AfjcIf8BHMLWXpLVV38cbmyN2SYyUfSFeCRKQYqjqIgYM8Ivev/0bc8dwdcGOfCCq0aKnOFSmBeCYd4ug/vxcwsIEHy7EwbjPe8t8m2mgdO5BzJKe84TJCCwENKpoxy2DUCDPDgxre3s8s0lvI36KSK2uu5PveIrjPCrc8spXMzgA42qiBhyGzqb/CQhDzyJWH85v7AVH6f/uT+nYr6TpjduqjOXAw/k9rAedmo5N2yqZgXXJzqoWnENyIu6qsbjgXUg59NuWBaXCVZ/CL3gh6UkY1OdKaOSIr+a8RV7iG3MVv+qfpgJXbMQHp4XmxFdrCP2l485XCxlw86lxs5y2BSAO6ESAiPqeoPyfandzOx68ssZwBLpxgsuWEOAIbMz+Y4UtelFwYmscRV13D8Ip4T2FWcijIlcHi8wf8sfAQuz892LZ9JF6t/1DeOnAX/sgluJm14/zNqnhsgsLvzfRQ1ZCzYinrq/dhu5fUKdpv5J53TIe4gSw9fGNbyuran3cRP7/IXEWX4aeoZtfwq7KfR2YO7Eze3PIgd0wBSCNiOEF+P1Nbrx88oAvRX7A137yHz7E+QhcFDGYTCaO2iZl7hzAUMOnlfD29xkoQKMM92MEzZBwi5fzivJ50iIvEzggCFa3p4DVgC0T0Xws0VJrpG0gXQnggO7L6CmTh5b24UEp8vsHN1qCUMS+korKjiDQx/qRIyVyitdEkNcdRfjLQex8oVZ/+ewFsNpO5QykPzojpjjQOHDbnlL5nHn6iyW5CNQdl/qw5DhMN6oqiHodFZq+Mc+0FgCMSYlp/ij9/Bdv+MXZeOXkB3Adby4sy8iBOkXnsmsL9X/KQose5VvCrC7qJzxBE836Wyz9x1274rpqsRq735p+y9vfRL7xlp6FOJjMmn+6sTCfS1/q8PXn+Yd60n6uUSbkw+Lok++ztMcIjjpLXXVM9q5HWZQNJHb8Sw+7koNaejIxUrslKdUv+6coQR6qi2M/JrGLzbNtb+2XfGY+O3LF7YEt5p91xzKhyjRjdn6O2fjM2N4n4WRpSJPJOFVYm0LlCWUENy7FCo6b+/cAcNLJH+QAk7ZUJMEsFeTt/JSCLCYkNzdN8gJ7R3UAgabvV1zn/BRS3j0p4AdBe0fFpdw6FPGJbY5t/x+TNV//v6RgEBR3E0BdKX9/obbXB3Z5OU5fkPUR1BhLHSPH3CjnirWfTPNX25l4iiBu47zyh3T291svR+mi6iou+N78vnI/U1Zv/iPUmNcT2VeS9vgGisLXlViFuW50Jjdn0l+qwPnmvRR4SkBVHBx/6QB56xpJykB5MQrDvwK6Re8RDmvdehSqHTrhQ3/QDn0cxUkQpFQF+6/UARFPFY0vGs8DYcxDPr0u3XyC77vdNj4ACAmHdw3pbW/7mGDd2VThbzOw1iNJLgwA9J5cO6TMhmiStMc0Hroib20I1NpVI/E9cXphxbJM5Y8RZt/lKfLCjo7/HfF9cmUnfdy86B7UQR374Mbo8OwrcpnIdX8HG93TIX2Z02/veJZQTFLjfT0fA+8ZN1Bsopq2MHX0y/UuSrCOpSesqnvecmu8s76RFaW0jjhA1coxHfihAyco8UOVdjTOcnQjHtsAKSr+S7eObaRC0dxvpAqCgkpgONB+VaaonsolziUNU6FdBWZ4CUmKeEsEhus0AesSll/Ttev2DiU/0KeVd/F2PqY3wTY+ld3wuSfh1aogj/YjFbQ0z65JjCYUWAp1JM+OR03h6n3g+Outozzc0WlQaEMXWsX4FH85G0RNmEzOeMUCKsir3axlbZax1TcTlhyYUZEg681hGCuEFO3R480khvpytzhoSbpLiXYaUDLhZjcglvE7y27I9vZBC2DVUhR+dN1vgKry5ihaY85AVGRa5NSJ/vkNBXTptiluWxD5D06CHmEaG5hSG2Ma13G+mEyq5wRdtbFCnAVKKIIZsiUI0I4tJdYdlrmrx4dbTbNBwDYewbb1WKSyjwl5ovA8i5l2vq/a4ruBg0y2QAbeGeEIZz3pU5Y8P7INUuhfsm0BGSUcj1cZJVgSWCRa5GxdyYvIeB46+Nv9pzwMtfaE3piHcNzFj7iTqQjSdWmnMF4NzO7jqaEzSq3joBGYfUYSN0bsUh2VAWGds45EyRM2/5ZM98kMPpUwPD7q5W7xSryvM7EJzuMifo4Y9dcxozH3Ggxm+HOUL/ZKIW9HDEP+lxH/Jl9vyGFGgcg/I8hs/nrZ69n+uYcpx34GTPu4BFWocCLgYXrG7Mxxhl969r0+m1OlnZL3qNTWsPldIf2qS0nBiHd5vTReLbDMMvmvABD12y+Bi1lGuwXheHdwbfR7CHK+GjtOeHnyRuoWpeUA/H7HgXA2FqTqnxqatV2hTF9aDGkzMFC1mjhxThFGvlnTFEsC4S3MIBR+iwp23FLgtZeWCM3PhxzIafYrP1pVRY9yV0VLAfmZ9zjZre2ZanbxLOTlM9eIfTNodj70+29mplu2wfGSs54aeLGa5T9RJidnSAB9uYgE4klWBSsREDvONWp9TyEyPQyrotJQhOY5/FOgekCHskEP3gKjveXGox5XLXOt6b8sTqS+Zcy/nKGWDCsV9vQwD2QGtmuaWLQkZqKhVlcRW6rPsLw/jvv9QhXjUiMYGiR18hnNqM43e2mPvjjeHzT6GsvBRe/2UTRu4w51Qp9tJfuGK+zDwKf3RZV+IgiwlLzbNRvt9i+xskzISfa+QQUOa8NzwiQM5+aNXftc4camzXp/7C5UGVn//+vvVDOr90gq1zEUKk6ptA1n0C8GsXk56Da6IjWpKyNRemetCtGM44J5SMbKCnTUPzt7Pt40XUJg4/fnn+7dp2kIvulUt3UGm9J19JU4WgzU+SbvCnm8Jss6cca6HaCulJHIPciZ/BM4SrzcDJDMaLSwDrCJ7Gd6+GOLGictC2xr0p4tARhNkmk+bOLiGGQHrm/uWf7W8G5AB2sUlS7gsEjyR9eA5YORmRDHmCkxjIauW0gkr6HqjqG/O44S8tdQ4VjVpjlI2D+i+coZUWVaR3zXsCe8I5MqcAJbuQhEHXMMP92P0tAtKjJRsnnvQvkddiBUaHr5N6j1OHQZ08/Y4AukHg+mc6MNrGuC7+tQcWgVnTd3YzO9ou5sDDodZ32V1ovMAJQ9Ls9V/IdPtnJCNPn9agYkO1I38kBTL2S6w3Prh7RRVTXa613C7jVS88q/O0RWqY6LNy+f97USaH8cTLipXFu5Z2mh/crVZNcFsKZexGA9H9mEUUXur6zi751xkFlnIUKJYNqmJVluU9CQwZq90aryau6Bn/cHVqc1t5LJs0qrLT2e5+RLTFGwtit7HY1LAy0um5baIZRCBM4YdO81PTZu7izamQ3W/qtk0VfTtH25GfP2Rx4RDswjTFBVzfnunWTV+PXjdDVsTnpsiGurtXD/25Y/CBESmjuXBRfSPllJAi9/uOqYGmC0Kxug4mHr/R0b4Ypn8bLa/N1J8gtSfQIHAsOFolcq7bww2vXnkVbl/+ELSRKZAkIYYLSDv7xbHO79n7CYW1zj0hrWl5N4gI9GYNceyANAnZc8MJR8p4NKDYCbrApP+d1jqPGXaiAZx68N6jpYmo8lJ87kWu8g8v06C5WfgH3jY8msCMqDRyj7+1DfHoZgHxYRF2whYgsZr97lVxXdmOqQbRzVsOxFmW/GVBxM+iJAzsmDEBjjs//e81FOhcPcF6kZgvKdMM3CiRfplZPncgBJvG+pyKIBqBW57cRj/rFIbI9Zclbeif1ROYrsS0OPx5XByQysifZO1dZw+56u4tpPbc8X0quadAoXcxLTrTg1W+SiKBmKLTTozTTH5X/WvA3QRGFCJmiva9S85XXJ98sMVtueufNxvfihq3xSk6jEkEIJY99bW3B2bq4DxrUs+oOcEWZpTYkRwsJbTb8XInUAeKzThPgcYmRRPZ6JyeewzX3DzON9mkhxcpUK6UVyErmHv6Ps/TKJFUnZI1985k/3UkqbUdToScENor4G5ex9W6vtFpXV96Rv89N5ITJSVRfhjM2VcDsKeZiZ1wM0DO/7dLNdUlmZ6rL+NvLKRqiMrthqCrJtZ8b0dAYqoO0wsLSFeP8h1TGKj+rv1V4cl3v6kLDmk7rbZR8gunHIOsjvOyKrdiYnhommELN95SzOBJjGMY0IIIycJOwpX/7SWIxl+4Nha95G2IozdHiY8yKFywqPuIM7y40lMBYhRfG6Gly7coY4Ovhzlq8rgL0yBvM0/fq6Y/8qdaAzSbQJIqasu/TAHPvu+vXD84sOqj1B4Px0lxw+gDn0lMDjkGhVJQGvLkAeAYDVUvhL4t83ojOhVJVIm6yKuYddY6DnKxip9xsxDFkLVV37pxa/4TNqEiepeo7nf6oe+Nxupt3nSeCxKM+JAO9U9gDu3VYlNAc+VJgiKys5Mv2UaZ3hyfqwQ2wPPBljOtUigHuIENBER/AnZs93WbmmPZ7m7TiK8o1CD/ZnSBMIDt1+4i9ckWiHPXBZE39pIuLOOBs5V3de6U+5RAw3NxqiWYi9/+eUj9jIEqpXgsOGsnVWorvvfTZ8uoH2Fi8Jh9CrSsj/nhNHKjqrU0+ePSjNB0sEXnP+2oQQX8lZXhE/WKe6V01wWdsCXOq6y0hy0WY+wTfUX69KrraA+V6nMmvmBJQ5i5nU3Li5qRWmZboorA4RbifqlAGlpEhChE/jloVbnUDWDsu3ToF6p8EcMK+k4HE+XLDnJ51rT6SEJAsEk2beeIJuOdZJ5Shrht2oOImHFnXmWcaGIq/D/oUrZp40yCdZ785Od7Y1qEHnwy1ia2rAfDVtd2LDuXojz/gwYvaDb0GkYHNNUBTHDi6vkK8gCxAXKIICK9Uk2jkrQ9/88TOugPR7GQI7shXglG75aRCgrgem63e7PcFkSBH5sZxk4Znlm4dvYBh/ahDCsTo9TbYZfhBNAAHjpLLZlVcGAaEIEpNZQsBXRSlT4oGIisRuqQFBFpwC8dK9+jK7thi9XdBi4aqbAMMZMhsRmMgQipe8ssnn5imCHse+xOHnBNzvvNe7dkDMtk7hfRpzDa8WuOjXItPV6pJfad3sR8A2MFFxuL0HBFkNvPZbhACs6uRLgnI5xZjq0OgC4Ja6Y7Ixn+Ue3qXKeGClljTvg6qmw0R7yn8d/vWh2khFwR4KGwYO7veV2HP6/bwkHyfF5i7CHc8NTvj04OXhVB37T85TCVgsCpUjgWZdMXVELETtP6rDz3Qfw/j6ahm1hY/jeFL0ziaz4Mqsty61hvUjr6rC1ivMpQidmKwfB76nfYrtT+/CRsAYMjY15tBf+Pg8Gdf820gGAt/3taWSdFXpBQpz0c1uceKgeuVXF35Ms/5HpDLbSAVyIKP19MsEAzePPq85U1IopEnCZiszDJX+kVqQbGTTBFnkOhTrR6EaFme1JO7wyzIrYdPjqiDb3gUh0W0sgPInAdZRn+qCzrZmV8I2OS8N2i2qg1us8xti2zESLRAvSWhPkhj539ZvKM4sAs34x83u7vkG9SmgieP65n9ThZrEqtKww5p0MCjbD9pN1ZAOxtCo+E/Ywo+EyGfK1v5FqgyAP0KJC47YsOXMlfKPRa6nPikAeEPAdGvHoVS8xZhm+Z3SfrfUBcSPEOxm4y37gifELF+3OoZoDot/T4iqvN9gUXEEQZfQ0kjCuAhkWjswHczSjrU8yTz8E93ACWgalh1Cr3GQHomMKZldqiK/Whuz/1qd4slkuFRBoOc6V8OPjfynbWbGc2G1xrITubLKRIfLwM9SGy0RcMidokTwtF/o/HRSdrZObW5w1sf4zz9GfBMP06wU7RJBPVFiDX10xwiHMZsOYyTM/56wHVywZqdEJNXJzvuuuq9REbisagTL9lSngX+xHGjQlHLvmOzlB1/Ov8MzSElSPo8HfcZK7cSuBCfiiPA26xODxmP3E8qYOKc0Qem+zCOMSlHhAjSR5z8waOizlZ99hd09U0H15nJtaFcrkVmsdpZWKWFfFzq39n8u1Ld8DlzTDxE0MgiiAg5NUn/xWiuzvwcwLs30oDiZmqilS8LdC5hGKtFVMkY56wqbkbTIcPc1LcXEs9kY3+KpG5kdntGagasQX4Gq9rj02+w1tbEE1kpRhzMvcYGpW+YwNHpkxsJZJMxU5pFDhFNiZvK6zlaP7lhMZ54+tm+FjR/gQgzzvhXWCC00kVPWc25tJkMr7MqDM/r74mCquDEkMow5KAPsjRa/FE+7O0LPS7Zhjj14w9O8245Mlwz1okdcoj//YqfvFrzAlXh1XyvhaPUYX3qdFZ5xZ3kq5GXNlt32Rkax5HAqP1VC7ItR2w8ZFep+c9O9/wdn1f41+ecgYn0IqLAx9xU5T3oyXNZNE6PGJaE6PHrso/yL2LukRuCjvY8e3YtF6TLdZBj0cMWjEni2CwIsnP8HacQjETvLp630SQd3JjOdE9hP+HqGq/C6k2iMeiBlMAbwLDYAH62E9ZkrR8/bPUXRZnrkI8msEk1i/IvsRdHquE3l+rBVUL538LroGBZx7r2IfiGiNROqzyzd6u6JHmIfNYegzHnZSXNjETwJmskVrnuj3/pPyQiBJSgfOaDHQnpWFa/LUN/rhFoTwSoNRgnn6n+rbcTE0p37rFMLGPiRMT4MLwaudIl073pV7ecvdVGf0DDHJt+bxfMCqriOB2iO5zLn0YRpYpSC6dY4U8aS2c3dRu8ci1J17J+8Hnsyj7W6+IdlDsisCqhOCCdyPxqR/JZsd9KGwK6JOcEYnEpwnPLOWgcA7jlpNwIQrwQUqEmbegiSydsSv6CU/QKluYJ1Ct7IJBBrrPhBY9TApEQvxN4iQ9FWhwKpRQHmpXZey4zcAw205arLjmxUJxafNSHhSElF2hF1EB3fq+NPopkc1CUqgKEzA+j5vNy97KQrQ6qaI0QjDg2LHHn9bO8KX3WXrbe/07hyffEfiMw789VjObk3yBBb88hWURAVCSkKBaai9YFvjrcT48lByjQiHU9Mlj6bJ7mhq2kHyIPxw1zulLXEeXrm7V7pX1HHChabmK+9YtFJFg/cYbh55doFQs9rYdj/7z9EZXLY3TyXGvLfCzLnhQ8ZBXhjNECVsXU24GB+hTL2hHDTs0zyhrrPdTXhpzAXUjtsnfQCzNKSmmvdGCEWQ/xkgk3v1HcwGhR8esB4Fziq5ofjVSaCclgQ6MPBwOi0742Js1jAs3giv4UaEgk9pHCgqoi/+4k0Sw9w7xzm9fSSK4yU5YEcMRQWClE0k5WrZ0JKqN+nzpE5+FQ5RVWWVrLnA4=",
-  "mac": "UNbynExg9F8/foqnyWwnUc2FD0Kjm00m+h8druitKeg="
-}
+# 7. 이론적 계보
+
+## 7.1 상위 조상 (2~4편, 없으면 안 되는 뿌리)
+
+### (i) Chen et al., *Neural Ordinary Differential Equations*, NeurIPS 2018
+
+- ContiFormer의 Key·Value 경로 자체가 Neural ODE. "discrete layer를 continuous depth/time으로 올린다"는 세계관의 원류.
+- ContiFormer가 상속받는 것: ODE solver + adjoint backward, vector field 학습 프레임.
+- 상속받지 않는 것: "depth as time"의 순수 해석. ContiFormer에서는 time이 real observation time이라 depth와 분리.
+
+### (ii) Vaswani et al., *Attention Is All You Need*, NeurIPS 2017
+
+- Self-attention의 근본 구조. ContiFormer는 이 구조를 함수 공간으로 올린 변주.
+- 상속: Q/K/V 분리, scaled dot-product, multi-head, residual + LN.
+- 변형: Key·Value가 이산 행렬이 아니라 연속 경로.
+
+### (iii) Rubanova, Chen, Duvenaud, *Latent ODEs for Irregularly-Sampled Time Series*, NeurIPS 2019
+
+- "irregular sampling을 ODE로 해결"의 직접 선조. RNN encoder + ODE decoder 구조.
+- ContiFormer가 이걸 어떻게 넘어서는가: encoder를 attention으로 교체하여 병렬성과 long-range context 확보.
+
+### (iv) Kidger, Morrill, Foster, Lyons, *Neural Controlled Differential Equations for Irregular Time Series*, NeurIPS 2020
+
+- 입력 경로 $X(t)$를 driving path로 사용하는 CDE 정식화. 수학적으로는 ContiFormer보다 더 우아.
+- ContiFormer와의 본질적 차이: CDE는 "one path, one dynamics", ContiFormer는 "multi-head × multi-segment dynamics + attention". 즉 "attention의 다시점" 추가.
+
+## 7.2 평행 연구 (같은 시기 비슷한 방향 2~4편)
+
+### (i) Shukla & Marlin, *Multi-Time Attention Networks for Irregularly Sampled Time Series (mTAND)*, ICLR 2021
+
+- Attention을 연속 시간 reference point에 대해 정의. ContiFormer와 **가장 가까운 전신**이자 경쟁자.
+- 차이: mTAND은 representation이 여전히 **이산 reference points**에서 정의됨. ContiFormer는 **연속 함수 자체**.
+
+### (ii) Chen et al., *Transformer Hawkes Process (THP)*, ICML 2020
+
+- TPP용 Transformer. ContiFormer의 TPP 부문 직접 경쟁.
+- 차이: THP의 시간 encoding은 이산. ContiFormer는 intensity를 ODE로 접근.
+
+### (iii) Shukla et al., *HeTVAE*, 2022 · **De Brouwer et al., GRU-ODE-Bayes**, NeurIPS 2019
+
+- 변분 추론 + ODE의 결합. ContiFormer가 포괄하지 않는 "불확실성 정량" 축.
+- 미래 통합 가능성: ContiFormer + variational bottleneck.
+
+### (iv) Zhang et al., *ODE Transformer for Machine Translation*, ACL 2022
+
+- Transformer 레이어 사이에 ODE를 끼워 넣음. ContiFormer와 다른 방향: "depth-ODE vs time-ODE".
+- 구별 감각을 잡는 데 좋은 대조군.
+
+## 7.3 후손 예측 (이 논문에서 파생될 수 있는 방향)
+
+### 후손 1 — *Continuous-Time SDE Transformer* (Neural SDE + Attention)
+
+- Key·Value 경로를 ODE에서 SDE로 확장. $d\mathbf{k} = f\,dt + g\,dW$.
+- 장점: 확률적 dynamics 자연 수용. 금융 latent의 noise 구조에 더 적합.
+- 단점: backward의 분산 관리 어려움. pathwise gradient vs score-based gradient 선택.
+- **내 체감 확률**: 1~2년 내 반드시 등장 (이미 부분적으로 preprint에 보이는 방향).
+
+### 후손 2 — *Subordinated ContiFormer* (= 나의 Paper 4)
+
+- 시간 축 $t$를 $\tau(t)$ (economic/volume/trade clock)로 대체. Key·Value ODE를 $d\mathbf{k}/d\tau$로.
+- 장점: Clark (1973) subordination이 가진 "정보 시계 normalization"의 재현.
+- 리스크: $\tau$를 어떻게 추정할지 (exogenous vs learnable) 설계 결정 필요. Paper 4의 핵심 기여 지점.
+
+### 후손 3 — *Multi-scale ODE-Attention with Explicit Time Kernel*
+
+- head별로 time-scale $\sigma_h$를 학습하고, attention 분모에 명시적 time kernel을 넣어 장기/단기 분리.
+- 장점: Informer·FEDformer의 시간 스케일 분해 지혜를 ContiFormer 세계에 흡수.
+
+## 7.4 계보 지도 (ASCII)
+
+```
+              Vaswani'17          Chen'18 (Neural ODE)
+                  │                     │
+                  │                     │
+                  ▼                     ▼
+        Transformer variants      Rubanova'19 (Latent ODE)
+         (Informer, TST, PatchTST)  Kidger'20 (Neural CDE)
+                  │                     │
+                  └─────────┬───────────┘
+                            │
+                      Shukla'21 (mTAND)
+                            │
+                            ▼
+                  ★ ContiFormer (2023) ★
+                            │
+             ┌──────────────┼──────────────┐
+             ▼              ▼              ▼
+   Continuous SDE       Subordinated    Multi-scale
+     Transformer        ContiFormer       Time-Kernel
+      (후손 1)           (Paper 4)        (후손 3)
+```
+
+## 7.5 이 계보 안에서 ContiFormer의 위치 평가
+
+- **표현력 축**: Transformer → mTAND → ContiFormer 방향으로 시간 축 표현력이 단조 증가.
+- **계산 비용 축**: 같은 방향으로 단조 증가. Neural CDE는 계산 비용/표현력 frontier 위의 또 다른 점.
+- **금융 적합도 축**: 오히려 하락. 가장 좌측 Transformer가 jump-heavy 데이터에 가장 경직되게 대응하지만, Neural ODE 기반 모델들은 "연속성 전제"가 추가로 깨진다.
+
+즉 **ContiFormer는 "smooth latent + irregular sampling" Pareto frontier의 우상단**. 금융으로 가려면 이 계보에서 옆으로 (SDE) 이동하거나 아래로 (subordinated time) 이동해야 한다. Paper 4는 후자 쪽의 한 점을 선점하는 것이 목표.

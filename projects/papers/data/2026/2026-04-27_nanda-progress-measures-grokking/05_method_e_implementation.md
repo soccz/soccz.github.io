@@ -1,11 +1,69 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "5D3xDS0d/cfuA2/pORi2Bw==",
-  "iv": "ovWsb8uHMgmG3Q4/pF+skw==",
-  "ct": "sGzkeVE80S8oLNG+0hPrU7zyeNQJn4YJNzIoazeF6rjQolRPnLz30aed0/ABmk3OHwK4stfbAsJfkB+/9c9PowjLYxPSIvbZIx8CrDY0SAPZdSR2chjOPY112yw8LYIb7bCAOYlSfTnNfagKQjjptFETKAwR4CS6Dm8woDkiu+bSkRsmqIvgA7utLNZWDqs4RmIl57GtxgPhtzlpyS08oXQPZsLqHwWZZlsGyA69IvjOm/YZx+mm2sjUxvgv9tr1NKZkJUJl1dkc1er4Uw67Xh/YVcMBAXM+0R/9s5i5HZlmQueCGneYScfTNl9klurVKs8m2ibIOo+q6sUjstP/Np3BhjVroYkNpn6SJrga0EUMKqoqLNrOxK1oR1LOMd/ZL3ZB2cgmWKzHJEvfXU2xUDT3wSG4qBDuf0NLTNNuQSksmv76lDk3bOaWNbjlWSDXVi1dvnbrHXpK0U/RYlikoST2hnJbo/rRyhvyxnhc3XR6X3GfbKE+BxekAdwwFREyv/ZQ78rpQHDuTmjSTd1S2BuYEreLvL5rKAB0XchsklL/PgBQsuWx5us4ZCtnIm+NP3xJ8YadlN+0kJGA3xLLg1U1gZqUoX8kgtBO+3i9cEc2jxfOmCXouj4/L3zjYDO+fw4dwr1a3gu2uve+kVVJcPoAoUIFVKJoNnjVfz85kcAB90t1FbIjBsN/uDqvh4hlL/RzoRGh0w8sJZ3fUPtkoEOt6XsLDOE4pxD8GCNO3qWl7rdLjSg5W6Ubo90aTrFZ0UFdYOgXlJ9aZU8yTkqKHbIL285k3zuwHsbEfwZwCmVSdk1Mhd0uouTuMAHcxMGwiYqKAZMoppz4H4gYKRiKW6RdVC8mZE57pxuveud1P+I2bHCECmCDkSuEM4giHWShvH9ludtTThF5LgLU2Su/wqEd0ux0tirbamrGICybxntTOZX6QDsSiJWVj2LRyxeXX+sui51tuEN9xDijJ7pzINmkrISnQ8gRjjraL2dzSIeZza5jCD4t326hQ35b5xlvY8tk2XDYZf7crO3CWH/OSS4JftDYJPOlBlMcriTs20+NZnkUvXusi96Q2DMKDfYlhKpyjmJH72fEP80669logdlSXGb2y7iCYzRbEA4/TluGLRJYiGnw/e0qXv20kiLZmhOKDZCFMFK9JZ0OcmBe+SV30A9C521Qm4sZDbi1O8T/bzoDamiHHyeH2xhywCum1UthGDzzX90xCxlb3bJMN9R458fk6p0bu0SrIQv+0j8j/r/svVSCJv+ITgU5ouuWLVURy90jcix8IsrMnSnyVZKmvrXDyCnsquesEW+ObaZgYvTy2hNiD6edTH+ZJhjrYwVZeaUe0SHzFjdxiTpcy/++Afs8m8gpY6stW43K8Gs0podXqThI3er7OZ5B5qc/Xrm4uGv2/mTcjiRQduBHB6ACCVpqfHWjRxyxmmblCASqXLaOAwqLCdkzjo7uincSH0V0LxfBtTLNpSt43MLXfhQIIWTh8HmyEoJiZsFVVliHkXaI8ND+hwbXjSfAkKpMbRL5UwZ8YtGFbCvoFkVPvTMj1cfeezKfXCOBkIdVn2d59yc1NbW+3prHTsJ8QWe0bHayLcaPDPD1xgpd9KwWJM7+Ew+osK2c/PVUzkpNfUgJ8LwXKaj21/79e2VVHL5nURhnkk2sR6924OfmEIZl7YtleZPmVCga7IfZ0li5Hyas67qjWyrnlN5qjnGM03IbGdbEYsyHg48+IAEvYKEMs8JtCtAexall/DjtmQIMeFavqxxpwCstqs7sq/4DaGpKVZMMkD44ZLqwWeVjbBY2MkqaWYQLROf7Wdew6UtuOkNXYXOEZXU9QEx0GxrbdO8D6dC5p/euYi0pqRLgcz0mm0xhK47W/r0z3IWC2VDQGoDFSLnnk5i0Y77LiTX0bQwGFGn6UkSUir0zaK4XwN+VGegdqQ71ISgkD/YG5pCiFr2U501V44dh2TATXilmz3LVnGBkbnAEThzBquOwZZPVtiCwYwO7kL09r2Izwkn5ExDF3u26c/mOo4jpE1iurA45Q3u2SIrGXLtyMg1IQotg0sNdtbxg2qvXfGyhIZaBtFrtiH67hsr2XB+VDa9sRJ6KUXo9sSD7mZbFntXS0P0GKK+gJALhx/RSixJcma8p6hwVwhcoOVLFdVQL8Yir0rmI5AmQVy+Q68jHSxARR+OhUgCqPvTn8wL8Yi+Z3gY1oCQkO8pkNtvj3npYUN6GJUxR7AUi2mJRq6OPJrugoXlVkf4cTnovnJvSlHiM0vm/xPSZy2zDbflUb42o3z5LCy4uqF2Xb2F+bLnh5jHeKe9WwvSKwroFJm4Rf0ldY3pR5e3SXkWBpPMYXDqeXzadBLBIF0xWy6scZgKh9Mcg+jkNZ7yQGxFjVVlxZwgBbH+uzc25ADhYTa4h7HqDl0NlWqDbRn99bS/2LBtbRuahxGejkK44zXhYxPIoDjOCSFYmbgn/wsbp+iC+EdmglULNT2NKd0R5FROTtscTf5wapXu/IOIuBDU3xG2l/04sB0Xe+EB2W69Bbd4fgjwQO3G0+W1y2OyMk53ChkqNTeyklAccihvJza4ep20uL8s5R17EO+Kta3ojzBZxA07ztDQY7ouw6coECYMk3/qDJBzjRVV8SfT5J5XnpMaBiixor1OSeGfWwfuAhavjVtRq04/nczbBTod0t1/apDVdqPAw4N4iz6g+2A6eRuMPsKjiqnaoThStaSZFll0CIM/GWOy068vzSN5un93OvqfR6kdPkOPWTVvmYAK3imL9OSpj6SlxLEGfu4mreM6vwAp/EwSc9z7E51/ZdAIQpg0GUfDZT59fi8bT+LmA3IY1pxMTjmGO8sZYCrVhC1gEz4lCbCkWx9fF0W/8KyDr1Ix3SxQ4kc98uhNdxEerPaufdfqxU5HXOeHJnTfqnRIsXs1bPMnH8N+B6N7bO/s+1lAyYucHV5jGJnoPSj1unY8a2ozZ75vrPKeZtILuKN+PvxbB+KqN6Rhmld90f6/Cjhw+mnbpBFgN/t6IEbSav/4UKcemuMu2+wIdGv5wyIOXSANO14/WS9DYTtxaDWNnBpDsp8aIO/xY+dgMK9s+leUbTq5LOdjKDW/24EDASWHHx1Hr80WzPpLHhbIXV6Y+trUFVk4Oi2c22iu6kDpqQcec61OhkKFbzrKwIktMuFtfOkIiGQu/5k/9C9l6MjPq3rYVefb5VGI8GCo10CiM53RadxKQ/quOfPjXLQqijx5krAXU4aSLlRu2u8dXwbIinJE78Qi1ykhXG/tCkJwIUYW/Mr2UN6C7oi0aAQF/OPtsqPAaUcGopzAzev3n3XwwJDzQJ7IkurJ3heYVCNUBN94X6qoqoiIo88LQn+Al7jenQUCWqR5IUHuLto2WkRrCWy6YA6/Jmi/R9uo6GaCQi8M08myKDjrHL6e+JHkgsUkFQhK+8diVS66dwgwJRGJLoCS5gD9AnVRH3pCrWM0rQ5auvagjNMi+QVMeP5MVeHZkmeyTModMOLqOMJ3eRCtziXdn0N7Eavw4EiHFTnG63Q3P0lURWCOVZsphTv1vVo4VxwEMvhxdwkQF/vJ9e/VOFQmECZcKhBHX9i7vQ8iACzRFGy5ZltV+sg8LS6mgcbg7nVORFu1afpupwTiHLO0HCJnQPhv9Do4lunb3U8ohYicnJx9drJxG+GZ9BXpMCKQHTztER5Y4YHJpGBeMWrWRNKRT3yqZ6IIFFswjjapyAEX+B/RUDJv2uHs54OL9FkEnXdXLNu+C9RbBNlHQuWa7EExlk0C3dvZsJ8IQioS9HBfkDzH3ifL8a2xtj7MA1qbaA9LN1PEOLq13lrElQWiIRFwaQBkn1t8CyV85fPR4ucn9bDOgDd7xlj7GJvq+rhT1P1alTFdi6UgQH+l5a9LP5eA0Wa7DA6nL6/eCISaGmVIjvzFLQI+nkWoumCZa17QqiFIIqp3RUMsGsPIIxsSUNfO1e/B3G4Y9WhTeMGCObJBG7nXKyPGcmxFCB8kZrjKr5xjCQWOSJj2Ewudf8yBVhDbK4Ej41ljqhbGU7xkuAIv2w9UFLA33T2TQdsm6rapwG8DLpk6F3BOUcJMkSS11g2lA9owUG1FAgQveGSvCx4YBMukKUxLSFNvp44G5O5LtjQx66DSzo10NqP2FDr/te+DHSdqM9BvqevktSmfeyO6ACxbP5lUx+gQkw2URkL+h5hyROtsfn+qIG3/cNXhYrx6UpcfpKtgU8rSHnq448PMkpYh/PeALtxVWavjARiU9CqM6SD0+AZjJHvHbd8BLpF032OrhvhY6wbHI5yauOpwzdlkHFiE4KFPOFdy4QzsEDo0X4p6tbAyMrzfF1b2wcqiyVczCEMVEiqWNQtI7UEBAPM6ChkmwhbTJAfZfryH2Dqn35Yn22ZgriPZrkMAi0cMW0Cw30oDo+zReA3nqvmZO4UjUO2kqNh/86pzklFt+VRyk4BZ/BCzc6MuuUC6cac3Yo8CyPJRRiPRzVWM7lVMbnV0Zi/4jjKajayN1INF7hyNRMS7OsE2IboifJSbqybNhI/wD34IFE+aI6S9BCmoQarcyjQF7pZD7CKs01AHq4lCxC155Op9PJI+SIBjip6nd6L2AaYXMK7n8Rbd2dRSn0clF/nY/rrgKHNwJvfHa0lwiUUnJ3eUsESvWoK00+xlQZKZn/YuZAwTaXUs5F2Nk+5cdT8Fzb1SUBra3egHcXSkYTUtNfQvZDhQuMNtXxsvGfp8i2b9yhVXzocjdAvdhtsek2oFtw5w4J6EDTwKY4z1Lz2sJv0p6BTwBihvDf6mzceAHBQfnEXCEEwZfjHFjU9bffyrfWnJJYNUzrIH7hswpdFoY05pUHRHzfwGLu4a0FTUbi70GlwX+CunL8dozzCh+B2BbMrGCMzPbmJmNGR3oCB9XxikX0htNLg3lPCMidhLuytFvg3JMyRyFaPGTkw1OPFB5fGTw/JGWTRhfWt33gZTxD/Q6kCw6kYXfloM0wYKRbHfBvKE3ta2EbbQ0b4AHU2B1MifLv+m0Az/u5huO/Y9UDfI7zPID5s/PA+C+jP6H47upvU/7zHqSB1rZGwcQSsCAAzXjPsuIFqPmAMMP/BcFCexN5BbW/dPZtInCBnHEVvRTIlid7nJpHloivZ3fXPpR+ivRTv8iGxwOL5jqsapDC8gj6XqRvVgsao6UpEQP8A9fssPOS/HpHt8G30Ev8gzXu9geZv7S6dzimNs2aSM5UH1367LbtbSaryBLuLbobIS1ef2bBsaAS41S1V5o/7C0zhq8KqBJGezPcwZSfdp3Kgw5hZ+qhH+dOa5RBxMjBVau6JC+EmAVoz1hrKrfZcE4PXSShBnMJJ39VDqe9vpAqIYKgT2TwzdCUSzRiGXwmgc4Rhh5cnBC46HvtRkUlVQ9Ar2isoE0cJA1L/yKv9Siekeb",
-  "mac": "iC2PVPX/BwJQc9ooRS2NU/aTRDxjLj9JfjKPv7ro2QE="
-}
+# 4. 방법론 ⑤ — 구현 디테일 & 재현 가능성
+
+> Hyperparameter 가 *극단값* 들로 가득하다. 일반 NLP/CV 의 directrionable 학습과는 매우 다른 setup — 이 distinct ness 자체가 grokking 을 *induce* 하는 데 필요.
+
+## 5.E.1 핵심 hyperparameter 표
+
+| 항목 | 값 | 표준값 대비 |
+|---|---|---|
+| $p$ (modulus, prime) | 113 | (task-specific) |
+| Vocabulary size | $p+1 = 114$ | tiny |
+| Sequence length | 3 (a, b, =) | tiny |
+| Train fraction $\rho$ | 0.3 | small (실제 학습에 약 3,800 example) |
+| Layers | 1 | tiny |
+| $d_{\text{model}}$ | 128 | small |
+| Attention heads | 4 (head_dim 32) | standard |
+| MLP hidden dim | 512 (= 4·d) | standard |
+| Activation | ReLU | standard |
+| Optimizer | AdamW | standard |
+| Learning rate | $10^{-3}$ | standard |
+| Weight decay $\lambda$ | **1.0** | **약 100x 표준** |
+| Batch size | full batch (~3,800) | unusual (보통 mini-batch) |
+| Total steps | $\sim 4 \times 10^4$ | small |
+| Initialization | standard (e.g., Xavier) | standard |
+
+**굵게 표시한 weight decay** 가 핵심 — 일반적 fine-tuning 의 0.01 보다 100 배 크다.
+
+## 5.E.2 왜 full-batch 인가
+
+Mini-batch 면 noise 가 들어가 progress measure 의 *단조성* 이 깨질 수 있음. Full-batch + AdamW + weight decay 의 deterministic 학습이 *실험의 깔끔한 phase 분해* 를 가능케 함.
+
+학술적으론 단점 — full-batch 는 SGD 의 *implicit regularization* (large-batch 학습이 sharp minima 에 빠지는 known 효과) 의 일부 효과를 잃음. 본 논문이 *이 효과를 사용하지 않는다는 것* 자체가 결론의 generality 에 미치는 영향.
+
+## 5.E.3 코드 / 재현
+
+저자들은:
+
+- **Colab 노트북** 공개 — 단일 GPU 에서 1~2 시간 내 grokking trajectory 재현.
+- **TransformerLens** 라이브러리 (Nanda 본인 작) 와의 호환 — circuit 분석 standard.
+- **Github reproduction**: 비공식 repo 다수 (검색 시 nanda + grokking 으로 다수 retrieve).
+
+재현성은 비교적 양호하다고 알려짐. 다만 *progress measure 자체* 의 official implementation 이 깔끔한 라이브러리로 정리됐는지는 (2026-04 시점 본문 차단으로) 확인 못 함.
+
+## 5.E.4 LayerNorm / Bias 처리
+
+- **LayerNorm**: 각 sublayer 전후. 분석할 때는 normalized 모델 (LN free) 로 *fold-in* 후 분석. 또는 LN 의 scale parameter 만 fix 한 ablation.
+- **Bias terms**: embedding bias 는 보통 0 으로 fix. 다른 bias 는 학습.
+
+## 5.E.5 측정 freqency & overhead
+
+- Train/Test loss: 매 step 측정 (full batch 라 cheap).
+- Restricted/Excluded loss: 매 100 step 정도 (test set 전체에 대해 Fourier 분해 + softmax — 비용은 GPU 1초 정도).
+- Gini: 매 step 측정 가능 (weight 만 보면 됨, FFT 한 번).
+- 전체 학습 시간: $40k$ step × full-batch ($\sim 3,800$ example) → 단일 RTX 3090 에서 1~2 시간.
+
+## 5.E.6 재현 시 흔한 함정
+
+1. **Weight decay 를 0.01 로 설정** — grokking 자체가 안 나옴. 0.5~2.0 사이로 설정해야 함.
+2. **Train fraction 을 0.5 로 설정** — grokking 이 너무 빨리 일어나 phase 분리가 안 됨. 0.2~0.4 가 sweet spot.
+3. **Learning rate scheduling** — cosine annealing 같은 schedule 추가 시 cleanup phase 가 학습률 감소와 *얽혀* 분해 어려움. constant LR 권장.
+4. **AdamW 가 아닌 Adam** — 일반 Adam 의 L2 reg 는 effective learning rate scaling 과 얽혀 weight decay 효과가 약해짐. AdamW 의 *decoupled* weight decay 가 필수.
+5. **Batch size mini-batch** — noise 증가, progress measure 의 단조성 약화.
+
+## 5.E.7 핵심 한 문장 요약
+
+본 논문의 hyperparameter setting 은 *grokking 을 가장 깔끔히 induce 하는 모서리값* — 일반 ML training 의 표준에서 weight decay 가 ~100배, batch size 가 full-batch, train fraction 이 작은 conjunction. 이 *설정의 fragility* 가 본 논문의 한계와 직접 연결 (§7).
+
+---
+
+→ 이제 §5 (방법론) 끝. `06_experiments.md` 로 넘어가 실험 결과를 해부한다.

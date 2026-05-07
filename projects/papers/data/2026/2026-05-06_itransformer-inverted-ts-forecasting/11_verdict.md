@@ -1,11 +1,9 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "FNKDvSGebHyHIvJXHCi5fg==",
-  "iv": "QtM9xirXHXlT45newwYIfA==",
-  "ct": "ZCdiITVYtLgay0FQALxn2MPDqHrjuYD63j49+BR8AyFDg/J+O8nGDyRdQ9GKfkPLOEYI+FDzqskxOmL+GBnLaR3dxHGHdpAXDhk0gshJr1LBKD8d66UQXGSMJi5vqB3NuuJTEz8+3mgW3tavYkQ7z3JM5wiA4h1T3dLLfRgjczHQNH9YP85AC09Nfe478jgrElOLAxOwrvCjOuPFQewMiEzMkrlZgBW/BOyCVgAQL1HcEIS4j4ewIAcNgXmJAgOmwyQ6X6OKr8gJGhNf4vPveF0VE68NQxD0ire84cKXIQtXzLzAtVyH0fmyI5yPX/WArDj5EmDXG57JWi/JKNZrlU2vv0JUwnSK7M9EzZB/cMHrMhHxuwu63zD2q00VlS5WRr6RSUoytN4pf+VT/se9JV/nW2yKoljBqhjVl9Dsa/1hDkLpIDLSSuX4+qHnHwyj1aRdK1lo1n3GKCsmnFcoRsa5hR+rksOcfYp30mZI5qH6pIMcVGOgzv3LVKgasEDXzPLQMZGE7URkQzFWblE59EOUK0RgxwrrUkWqiGO7IAT7csCiBoMHMMB2q91kgAO9W6f74XfLBfco3yY++QSM1INCRBGuLwugJQ0Wkp5R4YxvxzLeUU46Bs3gJWaEBaFe5yaGUwckp1TaGnguKKkGAAYADuuwzPqAUivlJyX21sTFSMfNwJxy/IpwS025C11jY+vzpgj2ShKhsI90psR1MT2PdYjAvroqyK/lnrN8lavnh81vxa5VOepOGvV+4KsaYlvwSjim5gWKG8iKNH3MCBt8ynD/2kiJv+I2ALqj8iQvcAYkXjj+/HLJ5Fg8G01s9Tl6Q5WtprdCNgKF9qx0B9vmq7lt/ims6COBQd8VvgzbvLO6bEFUJ8Arxwu8aFBTMpPiLZifAUDpt6B7fbiDXvZ9ky/ZoAV3+rKzRjc2cvO0wWmiZFRVF5k2C5flQW74+kqoMnCLGN8KbqcK02EJJhpjQW7+zBY58SyT96BMPOO6KQpJhnxEKKXDD+KhIoldsKCTkVqDUV+eYW+yVAh+FtryJxi9d/1qiUyqYYgQ1qKLhz4kAObtL4Fgui3L54tkLu9GYDwAmzx/Pxpbj4UvMg==",
-  "mac": "+NRuzX1svx7KufvIU4NXVHdAJto3Qa+qu9mtSzHX7Wc="
-}
+# 11. 한 줄 판결
+
+> **"TS 트랜스포머의 '시간 방향 어텐션' 가정을 90도 뒤집어 변수 방향으로 돌린 단순하면서도 강력한 논문 — APF 연구 지도에서 'T×T 어텐션 모티프 체계의 대립 축'으로 핀을 꽂고, Grokking 연구에서 'FFN-only 시간 학습' 회로 분석의 출발점으로 활용한다."**
+
+---
+
+**판결 보충 (3줄)**:
+
+iTransformer의 기여는 "더 복잡한 아키텍처"가 아니라 "더 올바른 토큰화"다. 이 교훈은 APF에도 적용된다: T×T 어텐션 맵을 연구할 때 "이 방향이 정말 자연스러운가"를 iTransformer가 끊임없이 되묻는다. 변수가 많은 공학 데이터에서는 명백한 SOTA이지만, 금융처럼 변수 간 상관이 약한 도메인에서의 유효성은 별도 검증이 필요하다.

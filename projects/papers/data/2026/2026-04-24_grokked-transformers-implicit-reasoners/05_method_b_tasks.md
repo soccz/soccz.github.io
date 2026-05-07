@@ -1,11 +1,89 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "7S2boNShClVwyJYL7Wb0LQ==",
-  "iv": "0AQBf3BKzWOTolshtYljzw==",
-  "ct": "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",
-  "mac": "9EjnNMJmqgu8m3dMXOphKuCHH9y1VcRKup8L+9MgV10="
-}
+# 05b — 방법론: Composition vs Comparison 태스크 설계
+
+> **이 파일은 [05_method_a_intuition.md](05_method_a_intuition.md)에서 이어집니다.** 배경 사다리: ① "엔티티(entity)"가 사람·장소·사물처럼 이름 붙여진 개체임, ② "관계(relation)"가 "의_수도는", "을_좋아함" 같이 두 엔티티를 연결하는 동사·형용사임을 알면 된다.
+
+---
+
+## Composition 태스크 설계
+
+### 구조
+
+Composition은 **2-hop 추론** 태스크다. 세 종류의 데이터가 있다:
+
+**원자적 사실 (Atomic facts)** — 직접 가르치는 단위:
+```
+(민준, 의_스포츠, 농구)         → "민준이의 스포츠는 농구다"
+(농구, 사용하는_용품, 스니커즈)  → "농구에서는 스니커즈를 신는다"
+```
+
+**추론된 사실 (Inferred facts)** — 두 원자를 조합한 결론:
+```
+(민준, 의_스포츠→사용하는_용품, 스니커즈)  → "민준이는 스니커즈를 신는다"
+```
+
+**훈련 세트**: 원자적 사실 + 일부 추론된 사실 ($\phi$: inferred/atomic 비율)
+**검증 세트 (IND)**: 학습한 추론 쿼리에 대해 정확도 측정
+**검증 세트 (OOD)**: 학습하지 않은 추론 쿼리 — 원자 사실로만 나왔던 엔티티로 새 추론 쿼리를 만든 것
+
+### 수식으로 표현
+
+KG $\mathcal{G}$: 엔티티 집합 $\mathcal{E}$, 관계 집합 $\mathcal{R}$ 위의 트리플 $(e_1, r, e_2)$.
+
+Composition 쿼리:
+$$q = (e_1, r_1 \circ r_2, ?)$$
+
+여기서 $r_1 \circ r_2$는 관계 합성(composition): $e_1 \xrightarrow{r_1} e_2 \xrightarrow{r_2} e_3$인 경우 정답은 $e_3$.
+
+- **기호 뜻**: $e_1$은 시작 엔티티(예: 민준), $r_1$은 첫 관계(예: 의_스포츠), $e_2$는 중간 엔티티(예: 농구), $r_2$는 두 번째 관계(예: 사용하는_용품), $e_3$는 최종 답(예: 스니커즈).
+- **일상 비유**: "민준이 → 농구 → 스니커즈"를 두 단계 버스를 갈아타는 것처럼 생각.
+- **왜 이 형태**: 2-hop 구조는 자연어 추론의 가장 단순한 비자명(non-trivial) 형태. 이 구조를 완전히 이해하면 3-hop 이상으로 확장 가능.
+- **조심할 점**: 두 관계 $r_1, r_2$가 실제로 존재해야 한다 (= 원자 사실이 있어야 한다). 아무 엔티티나 조합해선 안 된다.
+
+### OOD 설계의 핵심
+
+OOD 테스트를 위해 "훈련 때 인퍼드 팩트로 등장하지 않은 엔티티"로 구성된 추론 쿼리를 만든다. 이 엔티티들은 원자 사실에는 등장했다 — 즉 모델이 "민준이의 스포츠는 농구다"는 알지만, "민준이가 스니커즈를 신는다"는 직접 학습하지 않은 경우.
+
+---
+
+## Comparison 태스크 설계
+
+### 구조
+
+Comparison은 **두 엔티티의 속성값 대소 비교** 태스크다.
+
+**원자적 사실**:
+```
+(민준, 키, 180)
+(지수, 키, 165)
+```
+
+**비교 쿼리**:
+```
+Q: 민준이 키가 지수보다 큰가? → A: Yes
+Q: 민준이 키가 지수보다 작은가? → A: No
+```
+
+### 왜 Composition과 구분하는가
+
+Comparison의 일반화 회로($\mathcal{C}_\text{gen}$)가 구조적으로 다르기 때문이다:
+
+- **Composition**: $e_1 \xrightarrow{r_1} e_2 \xrightarrow{r_2} e_3$ — 두 단계의 "전달"이 필요. $e_2$라는 중간 결론이 레이어 간 전달돼야 한다.
+- **Comparison**: $v_1 > v_2$ (혹은 $<$) — 두 숫자값의 직접 비교. 중간 엔티티를 전달할 필요가 없고, "크다/작다" 판단 회로가 더 직접적이다.
+
+이 구조적 차이가 Comparison이 OOD에서 더 잘 일반화하는 이유다: comparison 회로는 새로운 엔티티 쌍에 대해서도 적용 가능한 보편적 비교 알고리즘을 학습한다. Composition 회로처럼 특정 엔티티의 second hop을 상위 레이어에 미리 저장할 필요가 없다.
+
+---
+
+## inferred/atomic 비율 φ 실험
+
+$\phi$를 체계적으로 변화시키면서 grokking 속도와 OOD 정확도를 비교:
+
+| $\phi$ | 의미 | 예상 결과 |
+|--------|------|----------|
+| 낮음 (< 0.1) | 추론 예시가 희박 | Grokking 매우 느림 또는 없음 |
+| 중간 (0.1~0.5) | 균형 | Grokking 발생 |
+| 높음 (> 0.5) | 추론 예시 풍부 | Grokking 빠름, IND 성능 높음 |
+
+핵심 관찰: 데이터 총 사이즈를 고정하고 $\phi$만 바꿔도 grokking 타이밍이 크게 달라진다. 반대로 $\phi$를 고정하고 데이터 총 사이즈를 2배 늘려도 grokking에 미치는 영향은 작다.
+
+**→ 회로 경쟁 메커니즘 상세는 [05_method_c_circuits.md](05_method_c_circuits.md)에서 계속.**

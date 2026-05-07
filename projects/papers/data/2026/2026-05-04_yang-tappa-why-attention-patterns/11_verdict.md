@@ -1,11 +1,11 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "hcTLBuCiN7LI5zOD2CMedw==",
-  "iv": "iPllJmX6pZcbLCw2W2sqZA==",
-  "ct": "nbMNYs/ShdFV0254LKq0FtoIlzGgttZapya7Gpa7Duv9aT3C86VpW+/EClH1r4Wp4A+VvJVxbbp+aR4ehFpGeJN5lb9CD/NGhiPSUsYNnl5Ah88WwhaDa8EvvCSIbEzQovkwX9/hE8axHhyVZ4CIhP0NCd11rh6DCZ2YZ3pB9BMLOpncSQWoe6fv604MLITFtbEM+ekM35ljJ4Lj3kZfPnaD9lUt8MbW0M4PAg1D35Yuesw8dRwKwSmJV/Z9jyuwBt1hpmnPhfyFi/0ZQOOeqe619cGXaekSguLuAh/u33R4uPFKgEY9Q9lI4FqDvksF4z1JcV9UQ3r7dI+c7QdFCE3wl1fgdrhAlDrp0k2JaO/LQg89xdDvJnbnzErdjOaxp8yNdSMDs9CzyPqyoF5JglxljzLa/ezUkfJDyEfROvb3+5aO+7evUEO9+6473oap+svW7bFHOHiC3fgpfVQ7WhLetsQ6uhLTNKic9q+FW602BPy+fT4O+xtiPYHJDkKKWliygINVCfc/BaXNt8xr2gtY0J9jERr4dDq0Qc0EDZnfN6lx4i1IzQG22bBg4Ic1xGbWTQdPLjuDKv3rfV+tpqN8eaR1e+TwVNlCjDoik+IRBeN5f3L0+jObhB2fGErbwBKt73/W8n/RkioAoO2MfVf4jbRkGh8lglXJiJmf/iYO+LZEHqQy5/ySfiu/qitFE9R9ZoZcRTBT7jzhDFv4TLNkVLUasDjkQGNl8A4tFsTO/CybhiPGY1UGHN4vPMZPihA7quT7vKx/OBtn06zR362BlsWEL5x8BNObCl3hRkgOj0gPziQFb6urhFsUSlob0Wv5QcIXyKEI3qoCpaLZUVh5VWXn/Qsz1O65sB5i3/2Gy/LuNqQcEEp9A1eZN1K9keZbB+/1TQNZounrEypBr3NLG1cRA7yyreKlL789SI5YpiuSEtbVTy8km9M2f4zhqRFhmJdq33dUXYcA4g1fL/aMf9Sz/KEO+XmQbvEMDUkmWEZBI6xNH+4JVUbTIm5O0SQAAq3EVwpOaR4+jZNA8I5yXlNK1jvOHZXcCsepOyTZo4DJ/3KVa+ptVk6FCFwWOfce1Mz0ZVHUd0Bpq39Skjw6yuTL1X0i987vBp+Ub82brSiK72ttQ1kPleRHPch+wLH/CQm3PRgn5P3hY6UDltPJW61Q+VEeyRtmB/d5825f0cA/DBbgNPdswqZb5DNv3jvGyvWleISWyekKu2Gq/KWSNT6f024CUga2pT3Xbn21dcXNiVK0lq11z23rMffQbcxfmhV6bIJ2GqP2DzACNoJrjwqtsyOiqJriyElnpPPYNqqKd6L3jCJUAFAUl1S2syqmUcKKbNExV/jcEp+MUzZzM3IeE7pIwNqe+e/pW8+HWZpLHey/qBM7BjaG/I5yHJNQEtp1hCEKLAlxIhCstf81o9A+wg9NRUVaXRhOvLoOV2N2mVwxXvKewuxTYG4aqagSwemybxNdSHaY3A6UP76n3IsBbhPbeIN3o3hBXfkAflQ9zniCegI8iu6zakKzWOwp0xqk6ZjheRS6WrifJPyCjQFkU5DdPnxCt4DlbFnOGUdBcemjF0Hfiwl3xUnoolugEFckM3FL1rgxVo1Ed4unQK/iblJeuSfP7GK5C9YMzQjX4MyK+KiDkxeriMYgcNRpFX92+34HYWCcp0zeDNBQvhxRqQLdef22l5R6ntyHvl9yX8Aeq9ZQGv4tFkxaqWcGcAFQMjZMNiMpPmPlGNBBzvzBn6gOeRbS0+lz1bfOBZPfRSuyv1vtBJwK+HSEd5rbSl9sg8exKLMy2XJ+GHTRP7wRjssX7FDLzW1KfzBQu/QglhaKKrcP972AinkiID73pUXwL2BbV/srA2oU76SqSI+WHakKOXAU/SRmw6/PZI7KuJnslUmHd5wk0uvbO7QSYoLPrcglB3fDk2JfchEGzOcwv3zJ20yY1EnUvmE=",
-  "mac": "6jKJjdXKg+7JtMUWerxBvfR12RM1T5JioS+5HBLC2Yk="
-}
+# 11. 한 줄 판결
+
+## 판결
+
+> **"어텐션 패턴 통합 이론" 의 가장 야심찬 ICLR 2026 시도. APF 의 직접 concurrent work — 우리 motif sweep 의 모든 motif (diagonal/sink/reaccess) 를 q-similarity × RoPE-frequency 두 축으로 환원한다. 우리 framework 의 "PE → motif → CNN probe" 사다리 중 첫 두 칸을 닫는 정리(Theorem 5.2) 가 이미 존재한다는 사실은 충격이지만, 그들은 (a) RoPE 외 PE 미커버, (b) TS 도메인 미커버, (c) causal intervention 단계가 비어 있어 APF 에 niche 가 충분히 남아 있다."**
+
+## 보충
+
+- **즉시 행동**: APF draft 의 Related Work 에 본 논문 섹션 (1 paragraph), Method 의 RoPE 분석에 Theorem 5.2 lemma 인용 (1 lemma), Discussion 의 APF 차별화 3 영역 (multi-PE / TS / causal) 명시. 본 해체의 §09 인용 초안 그대로 활용 가능.
+- **차주 실험 우선순위**: 본 해체의 §10 아이디어 1 (q-sim × multi-PE × TS) 가 APF 의 motif sweep 에 third-axis 로 가장 자연스럽게 통합되는 sub-experiment. 본문 PDF 확보 후 (i) Theorem 5.2 의 정확한 epsilon-bound, (ii) NoPE 비교 부재 확인 두 가지 1차 검증.
+- **장기**: 본 해체의 §10 아이디어 2 (q-sim 의 grokking trajectory) 는 사용자 두 active track 의 cross-pollination 첫 다리 — TAPPA 의 inference metric 을 training dynamics 로 확장하는 연구가 NeurIPS 2027 의 main contribution candidate.

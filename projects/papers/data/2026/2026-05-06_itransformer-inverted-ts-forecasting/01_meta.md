@@ -1,11 +1,26 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "GWzdalFR5Uj7vtyuUXZOcg==",
-  "iv": "jlXYx/qc5fjLFBBSaTiqzA==",
-  "ct": "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",
-  "mac": "a4igEoq6FVrRUU9Em1g/AUYC1x5VLKb3z6JywpA2o2M="
-}
+# 01. 메타 & 선정 이유
+
+## 서지 정보
+
+| 항목 | 내용 |
+|------|------|
+| 저자 | Yong Liu¹, Tengge Hu¹, Haoran Zhang¹, Haixu Wu¹, Shiyu Wang¹, Lintao Ma², Mingsheng Long¹ |
+| 소속 | ¹Tsinghua University (thuml 랩, Long 교수 그룹) · ²Ant Group |
+| arXiv 제출 | 2023-10-10 (v1) |
+| 게재 | ICLR 2024 Spotlight |
+| 인용 수 | 약 500+ (2024년 기준 scispace 173, 이후 급증 추정) |
+| 코드 | https://github.com/thuml/iTransformer (pip install 가능, GluonTS 통합) |
+
+## 저자 권위 배경
+
+Mingsheng Long 교수(thuml 랩)는 Autoformer(NeurIPS 2021), TimeMixer(ICLR 2024) 등 TS 트랜스포머의 연속 발표 그룹이다. 이전 작업들이 시계열 분해 및 Auto-Correlation에 집중했다면, iTransformer는 그 흐름과 결별해 아키텍처 가정 자체를 뒤집는 방향으로 선회한다. Haixu Wu는 TimesNet(ICLR 2023) 제1저자로, 이 논문과의 계보 연결이 명확하다.
+
+## 선정 이유
+
+세 가지 이유로 오늘 선정했다.
+
+첫째, **APF (Attention Pattern Fields) 직접 연결**: APF 연구의 핵심은 "T×T 어텐션 맵에 어떤 2D 모티프가 존재하는가"이다. iTransformer는 어텐션 축을 T(시간)에서 N(변수)으로 전환한다 — 즉 어텐션 맵이 N×N으로 바뀐다. 이 '축 전환'은 APF가 연구하는 T×T 모티프 분류 체계의 반증 실험군 또는 비교 기저로 필수적이다. "T×T 모티프가 예측 성능에 기여하는가?" vs "N×N 모티프가 더 효과적인가?"라는 질문을 iTransformer가 경험적으로 답한다.
+
+둘째, **Grokking 연구 연결**: iTransformer에서 FFN이 각 변수의 시간 패턴(T-dim)을 학습한다. Grokking 연구는 "FFN이 어떤 회로로 주기 패턴을 암기→일반화하는가"를 추적하는 방향인데, iTransformer의 FFN은 정확히 그 역할(시간 방향 표현)을 명시적으로 맡는다.
+
+셋째, **ts-transformer-baseline priority 항목**: `_index.md` 우선 읽기 목록에 등재된 미커버 항목이다.

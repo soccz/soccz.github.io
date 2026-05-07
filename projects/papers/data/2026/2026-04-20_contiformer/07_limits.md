@@ -1,11 +1,64 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "z4S4b+IKM59anuLqhuQ8OA==",
-  "iv": "vMZ4SBKAiTTzp9BcnGL6Gw==",
-  "ct": "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",
-  "mac": "jpk+HgR1IY07JrVDxVUbiVjQBjDLrRZ/AGsjtecCEQM="
-}
+# 6. 가정·한계·반박
+
+## 6.1 명시된 가정
+
+논문 본문이 명시적으로 또는 준명시적으로 깔고 가는 가정:
+
+1. **Vector field의 Lipschitz 연속성**: ODE 해의 존재·유일성을 위해. 실제로 MLP + sigmoid/tanh는 Lipschitz이므로 이 가정은 구현적으로는 자동 충족.
+2. **관측 시점의 엄격한 순서 $t_1 < t_2 < \dots$**: 동시 발생 이벤트 배제. TPP에서 동시 이벤트가 현실적일 수 있으나 omit.
+3. **Query 시각 $t$의 범위 $[0, T]$ 안**: extrapolation은 short horizon만 평가. 장거리 extrapolation은 범위 밖.
+4. **Interpolation 방법은 입력 측면에서 고정** (linear 기본). 학습 가능한 interpolation은 아님.
+
+## 6.2 암묵적 가정 (저자가 말하지 않는 것)
+
+이것들이 진짜 공략 지점이다.
+
+### (i) 결정론적 연속 dynamics
+
+모델 전체가 "latent $\mathbf{z}(t)$는 noise-free ODE를 따른다"는 세계관. 실세계 **확률 과정**이 latent에 있다면 Neural SDE·CDE가 더 자연스러운데, 저자는 "결정론 + 외부 관측 noise"라는 분해로 갈음. 금융에서는 이 분해가 사실과 다르다: volatility 자체가 확률 과정이다.
+
+### (ii) 시간 축은 "벽시계 시간"이다
+
+$t$가 real clock time임이 당연시됨. 모든 ODE·attention이 이 $t$로 돈다. **시장 개장 중·폐장 중·점심·overnight의 구분이 표현력 밖**. Clark (1973)이 지적한 "volume/trade clock"과 clock time의 차이가 연구 대상이 아님. **이것이 Paper 4의 지렛대**.
+
+### (iii) Softmax의 분모에서 시간 가중 부재
+
+attention weight $\alpha_i(t)$의 분모는 모든 $j$에 대한 sum이다. "먼 과거 vs 가까운 과거"의 시간 거리는 **오직 Key dynamics**를 통해 간접적으로만 반영된다. 예컨대 $\alpha_i(t) \propto K_\sigma(t-t_i) \exp(\dots)$ 같은 **명시적 time kernel**이 없다. 장기 기억과 단기 기억의 명시적 분리가 이 설계에서는 불가능.
+
+### (iv) Multi-head가 "시간 축에서도 multi-scale"은 아님
+
+표준 Transformer multi-head는 "feature subspace의 분할"이다. ContiFormer도 같은 관점만 가져옴. "한 head는 짧은 시간 스케일, 다른 head는 긴 시간 스케일"을 명시적으로 분리하지 않음. Informer·FEDformer 등이 탐구한 **scale decomposition**을 흡수하지 않음.
+
+### (v) 관측치 간 constancy of information rate
+
+관측이 드문 구간과 잦은 구간의 "정보 밀도"가 같다는 암묵적 가정. 경제적 해석으로는 **활동도(activity)가 균일**하다는 가정과 같다. 시장에서 ticks가 몰리는 이유는 정보 도착이 집중되기 때문이므로, 이 가정이 금융 data의 본질을 놓친다.
+
+## 6.3 반박 가능한 지점 (내가 레퍼리였다면)
+
+1. **Theorem 4.1·4.2는 "초집합" 주장이지 "우월" 주장이 아니다**. 초집합이 성능 우위를 보장하지 않음. 저자는 종종 두 주장을 혼동해 기술하는 인상.
+2. **RoPE·ALiBi·T5 bucket PE 등 "강한 PE를 가진 Transformer"를 baseline에 넣지 않음**. 2023년 중반 이후 시계열에 이런 PE를 붙인 후속들과 비교가 빈약.
+3. **금융·jump-heavy 데이터 없이 "irregular sampling 일반"에 대한 주장**을 한다. BookOrder 한 건만으로 금융 커버리지를 주장하긴 무리.
+4. **효율성 trade-off가 주 본문이 아닌 부록**: 3~8배 계산 비용은 실무 결정에 핵심. 이게 Limitations §에 단 한 문단으로 흐려져 있다.
+5. **Ablation의 공정성**: "ODE 제거" = Transformer로 축소가 정확한 Transformer baseline과 동일해야 하는데, hyperparameter가 같이 바뀌는지 모호.
+6. **Robust loss·uncertainty quantification 부재**: 연속 attention이 noisy label에서 어떻게 되는지, confidence calibration은 어떤지 보고 없음.
+
+## 6.4 내가 지금 당장 실험으로 확인하고 싶은 반박
+
+- **Paper 4 직결**: 동일 ContiFormer 구조에서 $t$만 $\tau(t) = \int_0^t \sigma^2(s) ds$로 갈아 끼웠을 때 금융 분류·예측에서 개선이 있는가? 개선이 없으면 Paper 4의 동기가 약화. 개선이 있으면 Paper 4 논문이 성립.
+- **Multi-head time-scale prior**: head $h$마다 ODE step을 $s_h \cdot dt$로 배율을 줘서 multi-scale head를 강제. 성능 향상 여부.
+- **Explicit time kernel**: attention weight의 분모에 $K_\sigma(t-t_i)$를 곱해 장기/단기 분리. 이게 ContiFormer + 이 트릭 조합이 절대 쪽에서 잘 된다면, 저자 설계의 약점 증명.
+
+## 6.5 재현성 평가
+
+- **코드**: MIT 공개, PhysioPro 프레임워크. 관찰 가능한 결함은 "단독 모듈로 분리 어려움".
+- **데이터**: UEA·TPP 데이터 공개 링크 존재. 일부(Mimic)는 credential 필요.
+- **시드 다중**: 3개 시드 평균 보고. 분산은 표준편차 수준 보고되며 일부 ablation에서는 1-seed만 보고 — 아쉬움.
+- **결과 변동성**: 데이터셋별 best hyperparameter가 다르다는 사실이 README에 노출되어 있어 "search budget의 공평성"이 재현 조건에 개입. 이 부분이 명시되지 않아 실제 재현 시 분산이 큼.
+
+### 신뢰 점수 (subjective)
+
+- 이론적 주장: ★★★☆☆ (Claim 1 강, Claim 2·3은 구조적 통합 수준)
+- 경험적 주장: ★★★☆☆ (domain이 좁은 게 주된 감점)
+- 코드 재현 가능성: ★★★★☆
+- 실무 배포 가능성: ★★☆☆☆ (속도·메모리)
+- 이론-실험 align: ★★★☆☆

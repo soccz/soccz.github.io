@@ -1,11 +1,75 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "KOOOnLNpNHHAZ58n4SmtSg==",
-  "iv": "qcnNQzF9Mq4idfbRzfU2IA==",
-  "ct": "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",
-  "mac": "5TOgUPJBagMiWwGQi0wlAHm84+an1vkh6P6DU/GtoD0="
-}
+# 08 · 이론적 계보
+
+---
+
+## 이론적 조상 (이 논문이 직접 건 어깨)
+
+### 조상 1 — Neural ODE (Chen et al., NeurIPS 2018, arXiv:1806.07366)
+
+**어떤 논문인가**: 신경망의 레이어를 ODE의 이산화로 해석하고, ODE solver를 사용해 연속 깊이 신경망을 정의한 논문. 이 논문이 없었으면 Neural SDE도 없었다.
+
+**직접 연결선**: Neural SDE의 생성자 구조 $dY = \mu_\theta\,dt$의 결정론적 부분은 정확히 Neural ODE다. SDE는 여기에 브라운 운동 항 $\sigma_\theta\,dW$를 추가한 것. 역전파를 위한 수반 방법(adjoint method)도 Neural ODE에서 가져와 SDE로 확장.
+
+**남긴 교훈**: "연속 시간 깊이 = 미분방정식"이라는 패러다임. 이 논문의 성공이 Neural SDE, Neural CDE 등 후속 연구의 문을 열었다.
+
+---
+
+### 조상 2 — Neural CDE (Kidger et al., NeurIPS 2020, arXiv:2005.08926)
+
+**어떤 논문인가**: 불규칙 시계열을 처리하는 연속-시간 순환 모델. ODE의 "시간 구동"을 "입력 경로 구동"으로 교체. LSTM보다 불규칙 관측에서 우수한 성능.
+
+**직접 연결선**: 이 논문(Neural SDE GAN)의 판별자가 정확히 Neural CDE다. 판별자의 이론적 근거(경로 범함수 보편 근사성)가 이 논문의 정리에 의존한다. 저자 Kidger가 두 논문 모두의 1저자이므로, 자기 선행 작업을 판별자로 채용한 셈이다.
+
+**남긴 교훈**: "입력 경로 전체를 처음부터 끝까지 읽는 CDE가 시계열 처리에 최적"이라는 아이디어.
+
+---
+
+### 조상 3 — Scalable Gradients for SDEs (Li et al., NeurIPS 2020, arXiv:2001.01328)
+
+**어떤 논문인가**: SDE를 역전파로 학습하기 위한 수반 방법(adjoint sensitivity)을 개발. SDE의 log-likelihood를 효율적으로 최적화하는 프레임워크.
+
+**직접 연결선**: Neural SDE GAN의 생성자 학습은 이 논문의 SDE 역전파 기술에 의존한다. WGAN 손실에서 $\partial\mathcal{L}/\partial\theta$를 계산할 때 수반 방법을 사용.
+
+**남긴 교훈**: "SDE를 미분 가능하게 만드는 수학"이 논문.
+
+---
+
+### 조상 4 — WGAN-GP (Gulrajani et al., NeurIPS 2017)
+
+**어떤 논문인가**: Wasserstein GAN의 Lipschitz 제약을 gradient clipping 대신 gradient penalty로 구현한 논문. 훈련 안정성을 크게 향상시켜 이후 GAN 훈련의 표준이 됨.
+
+**직접 연결선**: 이 논문의 목적 함수와 훈련 알고리즘이 WGAN-GP를 그대로 사용. 경로 공간으로 확장한 것이 기여.
+
+---
+
+## 평행 연구 (비슷한 시기, 다른 접근)
+
+### 평행 1 — TimeGAN (Yoon et al., NeurIPS 2019)
+
+**다른 점**: 이산 RNN 기반. supervised loss를 추가해 안정화. 이론적 근거 없음.
+
+**누가 이겼나**: 수치 지표에서 Neural SDE GAN이 동등하거나 우세. 하지만 TimeGAN은 구현이 단순하고 튜닝이 쉬워 실용에서 더 널리 사용된다. "이론적 우아함 vs. 실용적 단순함"의 트레이드오프.
+
+---
+
+### 평행 2 — Score-Based Generative Modeling (Song et al., ICLR 2021, arXiv:2011.13456)
+
+**다른 점**: 정방향 노이즈 추가 + 역방향 SDE로 복원. GAN이 아닌 Langevin dynamics/score matching 접근. 이미지 생성에서 혁명적 성과.
+
+**왜 이 논문이 다른 영역에서 상대보다 나은가**: 시계열 경로 생성에서는 역방향 SDE 접근이 시간 조건화를 복잡하게 만든다. Neural SDE GAN은 순방향 생성이라 시간 해석이 직관적이다. 반면 고품질 이미지 생성에서는 Diffusion이 GAN을 압도.
+
+---
+
+## 후손 예측 (파생 연구 방향)
+
+### 후손 1 — Latent SDEs with Economic Time (실제로 없음, 예측)
+
+Clark (1973)의 subordinated process 아이디어와 결합: $dY_\tau = \mu_\theta(\tau, Y_\tau)\,d\tau + \sigma_\theta(\tau, Y_\tau)\,dW_\tau$ 에서 $\tau = \tau(t)$를 거래량 기반 시간으로 교체. 이는 사용자의 Paper 4와 직접 연결된다.
+
+### 후손 2 — Rough Neural SDE
+
+브라운 운동 $W_t$ 대신 fractional Brownian motion $W^H_t$ ($H \neq 1/2$)을 사용. 금융에서 변동성의 러프 경로(Rough volatility, Gatheral et al. 2018)와 연결되며, 더 현실적인 팻테일과 장기 기억을 표현 가능.
+
+### 후손 3 — Conditional Neural SDE GAN
+
+조건부 생성(conditional generation): 시장 레짐 변수나 매크로 지표를 조건으로 받아 그에 맞는 경로 분포를 생성. 리스크 시나리오 생성(stress testing)에 직접 응용 가능.

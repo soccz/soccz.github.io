@@ -1,11 +1,31 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "3ZO0YbrOYe19x1+dlPEpeg==",
-  "iv": "EI5HtgAmUFdwgwIrQV/3EQ==",
-  "ct": "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",
-  "mac": "68Rf+uiq8I/fvg4dM5RyyYaOcA8BKJuRTlz3WybBqsY="
-}
+# 10a · 자문 질문 5개
+
+---
+
+## Q1. Neural SDE의 확산 계수 $\sigma_\theta$가 0에 가까워지면 무슨 일이 일어나는가?
+
+**왜 중요한가**: $\sigma_\theta \to 0$이면 SDE가 ODE로 퇴화한다. 결정론적 ODE는 노이즈가 없으므로, 동일한 초기값 $Y_0$에서 항상 같은 경로를 생성한다. 이는 생성 모델로서 완전히 실패하는 것이다. 그런데 학습 과정에서 생성자가 "가짜를 진짜처럼 보이게" 하는 가장 쉬운 방법이 "하나의 좋은 경로를 항상 복사"하는 것(mode collapse의 SDE 유사체)일 수 있다. 이 때 $\sigma_\theta$가 자연스럽게 0으로 수렴하는 현상이 생기는지, 그리고 어떻게 방지하는지는 이 프레임워크의 실용성을 크게 좌우한다.
+
+---
+
+## Q2. 판별자 Neural CDE의 은닉 차원 $h$가 생성 품질에 어떤 영향을 미치는가?
+
+**왜 중요한가**: Neural CDE 판별자의 용량(capacity)은 주로 $h$로 결정된다. 판별자가 너무 작으면 생성자의 가짜 경로를 구분하지 못하고, 너무 크면 생성자가 과적합된 판별자를 속이기 어려워진다. "생성자 용량 : 판별자 용량 = 1 : 1이 최적인가, 아니면 비대칭이 나은가?"는 실용 설계 핵심 질문이다. 특히 Paper 4에서 CDE를 평가 도구로 도입할 때 이 비율을 어떻게 설정할지에 직접 영향을 준다.
+
+---
+
+## Q3. Economic Time $\tau(t)$를 Neural SDE 생성자에 어떻게 삽입해야 합법적인 확률 측도를 유지하는가?
+
+**왜 중요한가**: 시간 변환 $t \to \tau(t)$를 SDE에 적용할 때, 결과물이 여전히 Markov 과정이려면 $\tau$가 stopping time이거나 measurable해야 한다. 또한 새 브라운 운동 $\tilde{W}_\tau = W_{\tau^{-1}(t)}$가 Lévy 특성을 보존하려면 $\tau$가 단조 증가이고 $\tau(0) = 0$이어야 한다. 단, $\tau$를 거래량에서 데이터로 추정할 때 이 조건들이 실용적으로 보장되는지 — 이것이 Paper 4의 이론 섹션에서 반드시 다뤄야 할 질문이다.
+
+---
+
+## Q4. 이 논문의 프레임워크를 고빈도(분 또는 초) 금융 데이터에 적용하면 무슨 문제가 생기는가?
+
+**왜 중요한가**: 고빈도 데이터는 일간 데이터와 세 가지가 다르다: (1) 경로 길이가 수천~수만 스텝이어서 Euler-Maruyama 적분 비용이 폭증, (2) 스프레드·마이크로스트럭처 노이즈가 브라운 운동 가정을 심각하게 위반, (3) 비동시적 거래(nonsynchronous trading)로 인해 자연 스플라인 보간이 잘못된 경로를 만든다. 이 세 문제 중 어느 것이 가장 큰 병목인지 이해하면, 고빈도 경로 생성을 위한 확장 방향을 결정할 수 있다.
+
+---
+
+## Q5. Neural SDE GAN과 Score-Based Diffusion Model 중 금융 시계열 생성에 어느 것이 더 적합한가?
+
+**왜 중요한가**: Diffusion 모델은 2022년 이후 이미지·오디오에서 GAN을 능가했다. 그러나 금융 시계열은 이미지와 다르다: (1) 시간 방향성이 엄격히 존재하고, (2) 경로의 통계 구조(자기상관, 변동성 클러스터링)가 픽셀 값의 분포보다 훨씬 복잡하며, (3) 생성 비용이 민감하다(몬테카를로 시뮬레이션에서 수천 개 경로를 빠르게 생성해야). Diffusion의 순차적 복원이 이 요구를 충족하는지, 아니면 Neural SDE GAN의 순방향 생성이 더 유리한지를 구체적 실험으로 비교하는 것이 2024~2025년에 가장 중요한 open question이다.
