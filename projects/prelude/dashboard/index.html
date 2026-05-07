@@ -133,6 +133,7 @@
     }
     .metric-chip .mc-value.pos { color: var(--green); }
     .metric-chip .mc-value.neg { color: var(--red); }
+    .metric-chip .mc-value.muted { color: var(--text-muted); }
     .metric-chip .mc-sub {
       font-size: 0.68rem; color: var(--text-muted);
       margin-top: 0.15rem; font-family: 'JetBrains Mono', monospace;
@@ -726,7 +727,8 @@
     <h2 class="section-title">알림 히스토리</h2>
     <p class="section-desc">
       텔레그램으로 외친 모든 알림 + 알림 시점 진입가 + 다음 일봉의 실제 max / min / close.
-      가상 PnL 은 위 룰 적용 결과. 컬럼 클릭으로 정렬, 채널·날짜·코인 필터.
+      가상 PnL 은 위 룰 적용 결과. 컬럼 클릭으로 정렬, 채널·날짜·코인 필터.<br>
+      <em>※ 진입가 — distribution 은 다음 일봉 09:00 시초가 (시뮬 진입), preopen 은 알림 시점 close.</em>
     </p>
     <div class="controls">
       <label>채널
