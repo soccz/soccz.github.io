@@ -153,6 +153,13 @@
       border-color: var(--border-light);
     }
     .chapter-card:hover .card-title { color: var(--accent); }
+    /* 모바일 터치 피드백 (hover 없는 환경) */
+    .chapter-card:active {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      border-color: var(--accent);
+    }
+    .chapter-card:active .card-title { color: var(--accent); }
 
     .card-thumb {
       width: 100%; aspect-ratio: 16 / 9;
@@ -1288,6 +1295,32 @@
                         def: 'WML이 단월 −45%~−79% 손실을 입는 사건. 1932-08, 2009-04 두 번이 대표적.' },
     '변동성 스케일링': { full: 'Volatility Scaling',
                         def: '추정 변동성 σ̂에 반비례하게 포지션을 조정. 모멘텀 크래시 방어 효과.' },
+    'PCA':            { full: 'Principal Component Analysis (주성분 분석)',
+                        def: '데이터의 분산을 가장 잘 설명하는 직교 축(주성분)을 찾는 통계 기법. 자산 수익률에서 잠재 팩터 추출에 활용.' },
+    'EW':             { full: 'Equal-Weighted (동일가중)',
+                        def: 'N개 자산에 1/N씩 균등 비중. 가장 단순한 분산투자 전략. 시뮬레이션·실증 모두 의외로 강함.' },
+    'RP':             { full: 'Risk Parity (리스크 패리티)',
+                        def: '자산별 위험 기여도를 동등하게 맞추는 포트폴리오 전략. 자본 비중과 위험 분담의 차이를 이용.' },
+    'MD':             { full: 'Maximum Diversification (최대분산)',
+                        def: '가중평균 변동성과 포트폴리오 변동성의 비율(분산비)을 최대화하는 포트폴리오.' },
+    'B/M':            { full: 'Book-to-Market (장부가/시가 비율)',
+                        def: '기업의 장부가치를 시가총액으로 나눈 값. 가치주(고 B/M) vs 성장주(저 B/M) 분류 기준.' },
+    'MKT':            { full: 'Market Factor (시장 팩터)',
+                        def: 'R_m − R_f. 시장 초과수익률. CAPM·FF3 모형의 기본 팩터.' },
+    'OOS':            { full: 'Out-of-Sample (아웃샘플)',
+                        def: '학습에 사용하지 않은 기간/자산에서의 검증. 모형의 진짜 성능을 측정.' },
+    '공매도':         { full: 'Short Selling',
+                        def: '주식을 빌려서 먼저 팔고 나중에 사서 갚는 거래. 가격 하락 베팅. long-short 전략의 핵심.' },
+    '무위험자산':      { full: 'Risk-Free Asset',
+                        def: '수익률이 확정된 자산 (단기 국채). σ=0, 수익률 R_f. CAL의 출발점.' },
+    '체계적 위험':     { full: 'Systematic Risk',
+                        def: '시장 전체 변동에서 오는 위험. 분산투자로 제거 불가능. CAPM 베타가 측정.' },
+    '비체계적 위험':   { full: 'Idiosyncratic Risk',
+                        def: '개별 자산 고유 위험. 분산투자로 제거 가능 (자산수 N → ∞에서 0).' },
+    '공분산':         { full: 'Covariance',
+                        def: 'Cov(R_i, R_j) = E[(R_i − μ_i)(R_j − μ_j)]. 두 자산 수익률이 함께 움직이는 정도.' },
+    '라그랑주':        { full: 'Lagrange Multiplier',
+                        def: '제약 조건이 있는 최적화 문제를 푸는 방법. 평균분산 최적화의 표준 도구.' },
   };
 
   function applyGlossary() {
@@ -1341,6 +1374,16 @@
       tip.innerHTML = `<strong>${entry.full}</strong>${entry.def}`;
       termEl.appendChild(tip);
       termEl.classList.add('tap-active');
+      // viewport 좌우 침범 보정
+      const rect = tip.getBoundingClientRect();
+      const margin = 8;
+      if (rect.right > window.innerWidth - margin) {
+        const shift = rect.right - (window.innerWidth - margin);
+        tip.style.transform = `translateX(calc(-50% - ${shift}px))`;
+      } else if (rect.left < margin) {
+        const shift = margin - rect.left;
+        tip.style.transform = `translateX(calc(-50% + ${shift}px))`;
+      }
       activeTip = { tip, term: termEl };
     }
     function hideTip() {
@@ -1911,13 +1954,16 @@
         openLightbox(`<img src="${img.src}" alt="${(img.alt || '').replace(/"/g, '&quot;')}">`);
         return;
       }
-      // 2) 본문 Mermaid 다이어그램 — SVG outerHTML 복제
+      // 2) 본문 Mermaid 다이어그램 — SVG cloneNode + ID 제거 (중복 방지)
       const merm = e.target.closest('.reader-content .mermaid');
       if (merm) {
         const svg = merm.querySelector('svg');
         if (svg) {
           e.preventDefault();
-          openLightbox(`<div class="lb-svg-wrap">${svg.outerHTML}</div>`);
+          const cloned = svg.cloneNode(true);
+          cloned.removeAttribute('id');
+          cloned.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+          openLightbox(`<div class="lb-svg-wrap">${cloned.outerHTML}</div>`);
         }
       }
     });
