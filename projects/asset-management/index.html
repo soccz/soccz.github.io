@@ -262,6 +262,11 @@
       min-height: 100vh;
     }
 
+    /* ── 본문 상단 컨텍스트 바 (데스크탑) — "현재 13/17 · 시계열 모멘텀" ── */
+    .reader-context-bar {
+      display: none;
+    }
+
     /* Reading Column (가운데 본문) */
     .reader-column {
       max-width: 760px; margin: 0 auto; width: 100%;
@@ -620,9 +625,80 @@
       }
       .reader-sidebar { display: block; }
       .reader-topbar { display: none; }
-      .reader-column { padding: 4rem 3rem 6rem; max-width: 820px; }
+      .reader-column { padding: 0 3rem 6rem; max-width: 820px; }
       .chapter-list-section { max-width: 880px; }
       .toc-footer { max-width: 880px; }
+
+      /* 본문 상단 sticky context bar */
+      .reader-context-bar {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        padding: 1.2rem 0 1rem;
+        margin-bottom: 1.8rem;
+        background: rgba(255,255,255,0.93);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+      }
+      .ctx-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+      .ctx-num strong {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 0.86rem;
+      }
+      .ctx-divider {
+        width: 1px; height: 14px;
+        background: var(--border-light);
+      }
+      .ctx-title {
+        font-family: 'Noto Serif KR', serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+      }
+      .ctx-progress-track {
+        width: 90px; height: 3px;
+        background: var(--border);
+        border-radius: 999px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .ctx-progress-fill {
+        height: 100%;
+        background: var(--accent);
+        transition: width 0.3s ease;
+      }
+      .ctx-home {
+        font-size: 0.74rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        white-space: nowrap;
+        transition: color 0.2s;
+      }
+      .ctx-home:hover { color: var(--text-primary); }
+
+      /* collapsed 사이드바의 active 단원 강조 강화 */
+      .reader-sidebar:not(:hover) .sidebar-item.active {
+        background: var(--accent);
+        box-shadow: none;
+      }
+      .reader-sidebar:not(:hover) .sidebar-item.active .sidebar-item-num {
+        color: #fafaf9;
+        font-weight: 700;
+      }
     }
 
     /* 와이드 데스크탑: 우 outline 등장 (≥1280px) */
@@ -875,6 +951,13 @@
 
     <!-- 가운데 본문 -->
     <div class="reader-column">
+      <div class="reader-context-bar" id="reader-context">
+        <span class="ctx-num"><strong id="ctx-num">—</strong> <span id="ctx-total"></span></span>
+        <span class="ctx-divider"></span>
+        <span class="ctx-title" id="ctx-title">—</span>
+        <span class="ctx-progress-track"><span class="ctx-progress-fill" id="ctx-progress-fill" style="width:0"></span></span>
+        <a class="ctx-home" href="#" onclick="event.preventDefault(); goToToc();">목록 ↑</a>
+      </div>
       <div class="reader-content" id="reader-content"></div>
       <div class="reader-nav-bottom" id="reader-nav"></div>
     </div>
@@ -943,6 +1026,10 @@
   const drawerList   = document.getElementById('drawer-list');
   const sidebarList  = document.getElementById('sidebar-list');
   const outlineList  = document.getElementById('outline-list');
+  const ctxNum       = document.getElementById('ctx-num');
+  const ctxTotal     = document.getElementById('ctx-total');
+  const ctxTitle     = document.getElementById('ctx-title');
+  const ctxFill      = document.getElementById('ctx-progress-fill');
 
   // marked config
   marked.setOptions({
@@ -1074,9 +1161,15 @@
     progressBar.classList.add('visible');
     window.scrollTo({ top: 0, behavior: 'instant' });
 
-    // Update topbar
+    // Update topbar (모바일·태블릿)
     topbarTitle.textContent = ch.title;
     topbarNum.textContent = `${ch.displayNum} / ${CHAPTERS.length}`;
+
+    // Update context bar (데스크탑)
+    ctxNum.textContent = ch.displayNum;
+    ctxTotal.textContent = `/ ${CHAPTERS.length}`;
+    ctxTitle.textContent = ch.title;
+    ctxFill.style.width = `${(num / CHAPTERS.length) * 100}%`;
 
     // Update drawer active (모바일)
     drawerList.querySelectorAll('.toc-drawer-item').forEach(el => {
