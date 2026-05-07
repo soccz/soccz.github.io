@@ -478,8 +478,9 @@
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">Information Ratio · Beta · Tracking Error</h3>
     <p class="section-desc" style="margin-bottom:1rem;font-size:0.85rem">
-      institutional active management 표준 — IR = α / TE × √252, Beta = cov(strat, BTC)/var(BTC).
-      소수 거래일 정렬 시 noisy.
+      institutional active management 표준 — IR = α / TE × √252, Beta = cov(strat, BTC)/var(BTC).<br>
+      <em>※ sparse intermittent strategy 라 alert 없는 날의 strat PnL = 0 (cash) 가정으로
+      BTC daily 모든 날과 align. <code>n_aligned / n_alert</code> 로 표본 깊이 표시.</em>
     </p>
     <div class="alpha-card" id="benchmarkCard">
       <div class="ac-row"><div class="ac-label">dist · IR</div><div class="ac-num" id="benDistIR">—</div><div class="ac-sub">α / tracking error</div></div>
