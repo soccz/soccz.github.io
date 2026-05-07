@@ -1,91 +1,11 @@
 {
-  "asof": "2026-05-07T13:53:00.209521",
-  "window_days": 30,
-  "distribution": {
-    "rolling": [
-      {
-        "date": "2025-11-06",
-        "n": 8,
-        "hit_h2_pct": 62.5,
-        "hit_h6_pct": 50.0,
-        "hit_h5_pct": 12.5
-      },
-      {
-        "date": "2026-05-05",
-        "n": 10,
-        "hit_h2_pct": 30.0,
-        "hit_h6_pct": 10.0,
-        "hit_h5_pct": 0.0
-      },
-      {
-        "date": "2026-05-06",
-        "n": 20,
-        "hit_h2_pct": 45.0,
-        "hit_h6_pct": 35.0,
-        "hit_h5_pct": 10.0
-      }
-    ],
-    "cum_pnl": [
-      {
-        "date": "2025-11-06",
-        "daily_pnl_pct": -13.17735378576333,
-        "cum_pnl_pct": -13.17735378576333
-      },
-      {
-        "date": "2026-05-05",
-        "daily_pnl_pct": -14.585914809631786,
-        "cum_pnl_pct": -27.763268595395118
-      },
-      {
-        "date": "2026-05-06",
-        "daily_pnl_pct": 14.788277492160104,
-        "cum_pnl_pct": -12.974991103235014
-      }
-    ]
-  },
-  "preopen": {
-    "rolling": [
-      {
-        "date": "2026-05-05",
-        "n": 8,
-        "hit_first15_3pct_pct": 0.0,
-        "hit_first15_5pct_pct": 0.0,
-        "hit_first1h_3pct_pct": 25.0,
-        "hit_first1h_5pct_pct": 0.0
-      },
-      {
-        "date": "2026-05-06",
-        "n": 16,
-        "hit_first15_3pct_pct": 18.75,
-        "hit_first15_5pct_pct": 12.5,
-        "hit_first1h_3pct_pct": 43.75,
-        "hit_first1h_5pct_pct": 12.5
-      },
-      {
-        "date": "2026-05-07",
-        "n": 24,
-        "hit_first15_3pct_pct": 16.666666666666664,
-        "hit_first15_5pct_pct": 12.5,
-        "hit_first1h_3pct_pct": 37.5,
-        "hit_first1h_5pct_pct": 12.5
-      }
-    ],
-    "cum_pnl": [
-      {
-        "date": "2026-05-05",
-        "daily_pnl_pct": -14.264160206135745,
-        "cum_pnl_pct": -14.264160206135745
-      },
-      {
-        "date": "2026-05-06",
-        "daily_pnl_pct": 11.728385956324354,
-        "cum_pnl_pct": -2.5357742498113915
-      },
-      {
-        "date": "2026-05-07",
-        "daily_pnl_pct": -10.934008322874336,
-        "cum_pnl_pct": -13.469782572685729
-      }
-    ]
-  }
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "k9z6j4YcmglA2W/oyLYBHg==",
+  "iv": "peeOc6Hd15fuhE/djNQDug==",
+  "ct": "Z+O3XC5meHfhNlRIreQnnj1aZG5t2vTO2HANbVwG5gKdw0EAVgnWzTh2/43kbHCcFqgoZqBxw4/QtFDKbMm/XMc1973dMRE7pcimzT2MSPsM0eaDrkSdQt287c68UuneITqh78jTLcz4aOtEVgOCvtW8+nZWDPzHCPKDLYHkppi07eH6pyFryMOpGz1bfrEZpNO3apBez3RpNKjDdJ1fzMxD6IGwkfhTKieC690y6n172wkJRgI6w8JBbnWhprKQAN/Vfp4JS0eYwTff8andTti1gqXbkyAQM26GGtTFlYSVbcG61kaAZM/Ol8592g1F4FFMWhOUYDNxjkz8w9VOQbxiOrtEfoOIKzIE3qLLMWujRctrpbh6gh0uHhNjFTPi6Cd+cyTvd5dk2+1lbF24D5aOq/Pfk8G8g//VQ1CRo5t14YkO0v8jsN4+xoJlB3jYJKQarRbF535yBlgb5OMj5We/YlEDhLcWfCuD1u4ujxSRRKrjhgEzfYtOnUxAP3xxDVKvyICegKjis+N616pyUJueQ+0zPAhFTWOAZQQLDB60mprEev6g/LlvFUQs/F1G+BPgaKsnjToMBgqJPuM/exZq6hJaidb4nU0Q5Dmq04r3Pzwkg6V2EWB1UQR1SHtNq1yqGUIK57/1jcpf1gn9Hu8GbwkTV3A1sfnKtbte4VsCTvMbR4Z+knfnYieHQAruvybtRtuHp0ZcZzGhJqzLfRY7Fbe+OT9PQQ37mx6rSxOxwkpAqVCua1SalH+7sPrGTJqYQvDX4SsQo8H6IaqDBGmM5TjnOurGic7etOwt+aDUfzTM9al9dFpV8Vawoh3DM9p5hrEMoqwBehHhr2uEksKiUELOgMP7LMqLLMmvsszM5f7IV5nfgeAQTkGLtZnicEqB+pUoF/VJGVj/rDP3huiB07NV3JbYd/H3/qToTZ9vskaLjRgx7+ZsJE4SNzselUOx6v8WKSrW1sSUIAMn/b1RylRKqodgG8gFc5CLSkOQieSYYRTLr6L9hssir73897/pDdJVurnH5wZHSlxyS2bJMv16tEqPo1NohyPct0+QqE6teWetxZbDtX8qZctpKZpswm1GXxu1Axh9VN8IdS2w48yBhtNg2/dJii3A80zBI3IIZ5s04Mgu7+0NYk666NJolqRv7ec0TPN2MHFVQrBXg7Ty6XYOY3oXIiOVebHNh3oS8alA4mRs4DrmuUhrmvWJ/JI4qj9uqurIgQppo4WygOnua/7V66lJu9bwOkQZlW0qimZGzq/9wwpZK9fXEAi+37LiV1jjux3SunzFgKCOiXthosaXmKml779lnTIH0VyBLPcjZskdOeyG5MQ92jZDKhaBr32TUNjpHivZapNN5dHrlt/4k/QtMmXCX6PtI6NWh5BOghgZBnPQruOsoiuKA/O8g+/DmPGB8mPTX66bwA33nDhkwYb3GtyVlH5joJ7J+xI0IuDPGm8DpBvNQctMruzVL+ylzcKrP7lSqkDebMfQQ4qkJ6qTfe2XLCutIe/xo4gJlZDNTTVPj9/uP0bvSNEyTwTdYs0A3XJuvbnpqVNTQJtaez1oKMW4r/V39n3OBsQlOJlO34a2OEWCgQ5uRGBbxIt3ZLhSf/YtJMHQNmbp29/Tlm5nbmFLV7DpYpFFinbElDPG72NT+UL3KGOC26LHLvE3G6UXFzd76KPn8b+8GkWJC8eoLs+4aMZD3nUe5Nz9qyPRLqacvx+5yaqxot7eFfOZSl9S48vEalENWCaYRfrqy14+T95J7KhWIY1InmJT4NgNZTJjN3JMWXpkKeu6OzrF/2TYdQAd+qyPJMQzdwLJeWEq2ltESf9CTmG0RqFopcS9xDU13+W97919odMgklCQ/0Kq9uWti+V6DCSvQHfvhDdIapRw6xqUDA69nGAdmdhtvpmex/HaiBS9zwG+f686pz2EXV1gWpVTLQvNPU4nyfjxq6mujCD1N6Uc64Br0hrgUgfPpfw7",
+  "mac": "aT/elZ0+4Xjy0XLVQcGQm6cU8bZuf204onFuRvs77Tg="
 }

@@ -1,51 +1,11 @@
 {
-  "asof": "2026-05-07T13:53:00.209521",
-  "generated_at_utc": "2026-05-07T04:53:00.213905+00:00",
-  "channels": {
-    "distribution": {
-      "n_alerts_total": 38,
-      "n_closed": 28,
-      "n_pending": 10,
-      "first_alert_date": "2025-11-06",
-      "last_alert_date": "2026-05-07",
-      "hit_h2_pct": 50.0,
-      "hit_h6_pct": 39.285714285714285,
-      "hit_h5_pct": 10.714285714285714,
-      "avg_max_return_pct": 6.824677233246029,
-      "avg_min_return_pct": -5.940696944112548,
-      "avg_close_return_pct": -1.0766847301265723,
-      "median_max_return_pct": 4.501175287389925,
-      "win_rate_pct": 39.285714285714285,
-      "virtual": {
-        "rule": "5% TP / EOD close, equal weight, cost 0.15% 차감",
-        "n_trades": 28,
-        "cum_pnl_pct": -12.974991103235023,
-        "max_dd_pct": -56.174991103235016,
-        "avg_pnl_per_trade_pct": -0.4633925394012508,
-        "tp_hit_rate_pct": 39.285714285714285
-      }
-    },
-    "preopen": {
-      "n_alerts_total": 24,
-      "n_closed": 24,
-      "n_pending": 0,
-      "first_alert_date": "2026-05-05",
-      "last_alert_date": "2026-05-07",
-      "hit_first15_3pct_pct": 16.666666666666664,
-      "hit_first15_5pct_pct": 12.5,
-      "hit_first1h_3pct_pct": 37.5,
-      "hit_first1h_5pct_pct": 12.5,
-      "avg_max_return_pct": 2.7052042138104464,
-      "avg_min_return_pct": -2.360629442092515,
-      "avg_close_return_pct": -0.33633105637149346,
-      "virtual": {
-        "rule": "1h horizon: 5% TP / 1h close, equal weight, cost 0.15% 차감",
-        "n_trades": 24,
-        "cum_pnl_pct": -13.469782572685729,
-        "max_dd_pct": -15.734008322874338,
-        "avg_pnl_per_trade_pct": -0.5612409405285721,
-        "tp_hit_rate_pct": 12.5
-      }
-    }
-  }
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "IP8hFrxT5jOF+Osm8yY7Vw==",
+  "iv": "6BYiob/LLKztsIR7gOjZCw==",
+  "ct": "PYiUfLpquewd+q4Hc/bM7CkTJTBO6SOjL7f2oFWb/AISCpQajVx3DfN/6lpbDaj2BVr2X+NL0/ZzjmxLakprPa+gazoqFDfYI3xvvD+bM+bYCWRcIqvE5x9XSZqzC7OOMt1LxTfUuJNcV2oxemRsj6/RhpJmrjHtjRBhIMH+NHxo4NzH2AYSaYjFDeINCuOTCbXXBB2Zf8y5ydxTYohYm3Nbent0yjWtFJ2z2VgyPP03tSVZapWq55use7M7vnzJ54kj7V+7EZF+B1xFRhvJuJbNpG/ep6vYYtsIU0XFF2RTIDMkFGV41PBkbC08gMBRhGGC5mU6AsnI6KODyi6E8rN7NDKYNJjyc65jjRivLAxIM2XAGq18pDbYq08f49rnYyFYUJa1kx/kULhwjrquu5Q7yweXS/tzPVSTHDB1oeZrzZf9Hjm2Yc5iaYjRJS8yq25YLvlZCmJWqw8gVbXgzKqMkLDD4ojFWxNPO7MTv06cbHPWkUX6kN4RPzY8d0DnPs34SKwrCftubHxTikrFGV6REUwtNiunGi0ZEPfJOXZElTnG0yKdh4GgpBqGNG8z5CwvE0hKldKHwVIz++iOUaYDpC8zrUd2fb3yaiwoW0UpbJ8ywPJ/8FMkG6UnpqqOX8mI/r8TmazmuAdavELzmQGMwwFsK0wy/Pg5gG7/w0AoGmNZAwmQ61jJplx9W/fXXkAIQz8/NgH2ZpHoHiwqhxUKPpfoKxPE90hGl5Ed4Ur93OHzgKp0LXXyC3R4P8LwixOHO0SwoL9vwTDVmdQk8ib/joBWRJuZE2h+pIeSOvacB/EmNvGUayXsWj5Pq48mlZR5WRP0R5mreTFzSQZIu8eEEVqixMkroRM0bG466RWUdXibW9IDpCnJuJ4i9KWwNHw/IEUwC1W9eg2t/6IXy4ebfRCLMBjHr1a02565Lupv2AJJM4HvNndwTAjs3oUCq0p6xcxKOx8RyhvWDhxRjj3vMfLutiMtVwi1OXHTqaz3aIpcxEVh5f0kul7Ge6hq42smDzQ5MneDlwoD+mFr7beDipbAf6NJoilUWa7ZjJCCSNqNHXO6Xrmhwd2ND61JE+AqyQeEZuZxMifRXfcrZSJt9Q5Ii8Wv5I8TJ1pJGTJ3shMBzTxcnKNRwdQ7bIzHF2Nv1rXRBpXVRHCI0qpwa5CdFp3F2hBq8bvTeL2owZ1aNjwSZ0PkNswRHxMM5goHgBw+YTx88pRUiEwC5BVpqOLawLvPCsbat3trcwX61HhZBgfkRxO6dbBmU3L1pVBjzFTr6/LP7P/W4siYQ5lqpmqqTPAUGPOdy0hmk6MvWxsxfxUiFgRCShmrER6RiJNEV1UURYFdVnG/+dENrGlkpFlcfqKJfA7IoTkmEU98W75w+e8H5cI/QY67rPguE/OsfvE3pvTQ6xcmZgPNk679vMbPSTyW4P2Ju/VEaaAKHhbtFbcflFFae11OEnb052Od/kvkPY6eyRfmGRo72eaUsOfamj3kxcvNEqFoXFSoR4klXUHMR0ZXmEPsiVCykxJjiThB+FA7Ri8/GiGovDPW/8I/OD/HpNyk+Ug+R6FHVOGJnxH4LrhtpdoxD8eSM3PmOhp0UfH/AUEsDADzsfu61hjedllsL3P2hqN8ZBnfXrco6gOLVVKv8azZcjoTeiu2jwCNtCPlOJHpYVtdv1c/33I/WZqVJMHrPswAhSJh9pdAXXlVVvwkLWKt/JolWIaaJJmDjl/KfuhCqmalUT3cu6cKO1tX9d2NRdO+3YrQ0FwDYr8SAxdL4qrFemvFcVEw9OOH6NpgKaugWFK7dyPrirrsS1rY098tjc/TBs8Bwc+hplEM6l/Of05R00AmhnTjHUTA6fim40KtWuHOsSSIYUUG1J/13b1oitu4BmmpM+5Fslbt9blpxA4s6ikm9rEb",
+  "mac": "wdR6iGz+ECyXABAPFgFGrXniZXoDkhFOqQCEBQNpg9E="
 }
