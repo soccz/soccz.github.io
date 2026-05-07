@@ -1321,6 +1321,16 @@
                         def: 'Cov(R_i, R_j) = E[(R_i − μ_i)(R_j − μ_j)]. 두 자산 수익률이 함께 움직이는 정도.' },
     '라그랑주':        { full: 'Lagrange Multiplier',
                         def: '제약 조건이 있는 최적화 문제를 푸는 방법. 평균분산 최적화의 표준 도구.' },
+    'Fiedler':        { full: 'Fiedler Vector',
+                        def: '그래프 라플라시안의 두 번째 작은 고유값에 대응하는 고유벡터. 부호로 그래프를 두 클러스터로 가르는 첫 분할 신호.' },
+    'eigengap':       { full: 'Eigengap',
+                        def: '연속한 고유값 사이의 큰 격차. 작은 고유값 k개 다음에 큰 점프가 있으면 자연스러운 클러스터 수가 k.' },
+    'Banz':           { full: 'Rolf Banz (1981)',
+                        def: 'JFE 논문에서 소형주가 대형주보다 위험 조정 후에도 높은 수익을 낸다는 사이즈 효과를 처음 보고. SMB 팩터의 출발.' },
+    '라플라시안':      { full: 'Graph Laplacian',
+                        def: 'L = D − W (D=대각 차수, W=유사도). 고유값 분해로 클러스터 구조 추출. 스펙트럴 클러스터링의 핵심.' },
+    'payoff':         { full: 'Payoff (지불금)',
+                        def: '미래 시점에 자산이 지급하는 금액(또는 수익률). 가격 p = E[m·payoff]에서 m이 SDF, x가 payoff.' },
   };
 
   function applyGlossary() {
