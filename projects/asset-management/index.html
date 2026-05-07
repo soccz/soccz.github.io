@@ -268,16 +268,65 @@
       padding: 80px 2rem 4rem;
     }
 
-    /* ── 좌측 사이드바 (데스크탑) ── */
+    /* ── 좌측 사이드바 (데스크탑) ──
+       기본은 56px collapsed (번호만), hover 시 280px로 펼침 */
     .reader-sidebar {
       display: none;
       position: sticky; top: 0;
-      height: 100vh; width: 280px;
+      height: 100vh; width: 56px;
       background: var(--bg-toc);
       border-right: 1px solid var(--border);
+      overflow: hidden;
+      padding: 1.5rem 0 2rem;
+      font-size: 0.86rem;
+      transition: width 0.25s ease, box-shadow 0.25s ease, padding 0.25s ease;
+      z-index: 30;
+    }
+    .reader-sidebar:hover {
+      width: 280px;
       overflow-y: auto;
       padding: 1.8rem 1.2rem 2rem;
-      font-size: 0.86rem;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.08);
+    }
+    /* collapsed 시 컨텐츠 숨김 — 번호만 보이게 */
+    .reader-sidebar .sidebar-brand,
+    .reader-sidebar .sidebar-footer {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease;
+    }
+    .reader-sidebar:hover .sidebar-brand,
+    .reader-sidebar:hover .sidebar-footer {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .reader-sidebar .sidebar-part {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 0.6rem;
+      overflow: hidden;
+      transition: max-height 0.25s ease, opacity 0.18s ease, padding 0.25s ease;
+    }
+    .reader-sidebar:hover .sidebar-part {
+      max-height: 60px;
+      opacity: 1;
+      padding: 1rem 0.6rem 0.4rem;
+    }
+    .reader-sidebar .sidebar-item-title {
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      white-space: nowrap;
+    }
+    .reader-sidebar:hover .sidebar-item-title {
+      opacity: 1;
+    }
+    /* collapsed 상태에서 단원 항목 — 번호만 가운데 */
+    .reader-sidebar .sidebar-item {
+      justify-content: center;
+      padding: 0.5rem 0.7rem;
+    }
+    .reader-sidebar:hover .sidebar-item {
+      justify-content: flex-start;
     }
     .sidebar-brand {
       display: flex; align-items: baseline; gap: 0.5rem;
@@ -564,10 +613,10 @@
     }
 
     /* ── Responsive ── */
-    /* 데스크탑: 좌 사이드바 등장 (≥1024px) */
+    /* 데스크탑: 좌 사이드바(collapsed 56px) 등장 (≥1024px) */
     @media (min-width: 1024px) {
       .reader-shell {
-        grid-template-columns: 280px minmax(0, 1fr);
+        grid-template-columns: 56px minmax(0, 1fr);
       }
       .reader-sidebar { display: block; }
       .reader-topbar { display: none; }
@@ -579,7 +628,7 @@
     /* 와이드 데스크탑: 우 outline 등장 (≥1280px) */
     @media (min-width: 1280px) {
       .reader-shell {
-        grid-template-columns: 280px minmax(0, 1fr) 240px;
+        grid-template-columns: 56px minmax(0, 1fr) 240px;
       }
       .reader-outline { display: block; }
     }
