@@ -441,10 +441,10 @@
     <div class="hero-stats" id="heroStats">
       <div class="hero-stat"><span class="hero-stat-num" id="statTotal">—</span><span class="hero-stat-label">총 알림</span></div>
       <div class="hero-stat"><span class="hero-stat-num" id="statClosed">—</span><span class="hero-stat-label">closed</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statDistPnl">—</span><span class="hero-stat-label">dist 가상 누적</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statPrePnl">—</span><span class="hero-stat-label">pre 가상 누적</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statDistSharpe">—</span><span class="hero-stat-label">dist Sharpe</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statPreSharpe">—</span><span class="hero-stat-label">pre Sharpe</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statDistPnl">—</span><span class="hero-stat-label">dist 누적 (paper)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statPrePnl">—</span><span class="hero-stat-label">pre 누적 (paper)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statDistSharpe">—</span><span class="hero-stat-label">dist Sharpe (live ann)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statPreSharpe">—</span><span class="hero-stat-label">pre Sharpe (live ann)</span></div>
     </div>
     <div class="hero-meta" id="heroMeta">데이터 잠금 — PIN 입력 후 표시</div>
     <div class="hero-links">
@@ -783,95 +783,62 @@
 
 <hr class="divider">
 
-<!-- About / Methodology — 발표·포트폴리오용 메서드 명시 -->
+<!-- About / Methodology — dashboard 만의 가치: 출처 + 라이브 paper 한계 -->
 <section>
   <div class="container">
     <div class="section-label">ABOUT &middot; METHODOLOGY</div>
-    <h2 class="section-title">어떻게 만들었나</h2>
+    <h2 class="section-title">대시보드 메서드 + 출처</h2>
     <p class="section-desc">
-      포트폴리오·발표용 정합성 확보. signal pipeline / 검증 split / 거래비용 가정 / 한계까지
-      먼저 명시한다 — 결과보다 메서드가 먼저 신뢰를 만든다.
+      이 dashboard 는 <strong>라이브 paper trade 결과의 회고</strong>다. 시스템 architecture /
+      signal 정의 / 6 experiments / 버린 가설은 메인 연구 보고서에 있고 — 여기는
+      <em>매일 결과를 어떻게 측정하는가</em> 만 다룬다. 메서드 출처를 1:1 로 명시.
     </p>
 
-    <!-- Signal flow SVG -->
-    <svg class="flow-svg" viewBox="0 0 920 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 Z" fill="#a8a29e"/>
-        </marker>
-      </defs>
-      <g font-family="'JetBrains Mono', monospace" font-size="11" fill="#44403c">
-        <rect x="10"  y="20" width="140" height="56" rx="6" fill="#fff" stroke="#e7e5e4"/>
-        <text x="80"  y="44" text-anchor="middle" font-weight="700">Upbit KRW</text>
-        <text x="80"  y="60" text-anchor="middle" fill="#a8a29e">d1 / 4h / 1h / 15m</text>
-
-        <rect x="180" y="20" width="140" height="56" rx="6" fill="#fff" stroke="#e7e5e4"/>
-        <text x="250" y="44" text-anchor="middle" font-weight="700">Feature + Label</text>
-        <text x="250" y="60" text-anchor="middle" fill="#a8a29e">multi-LB · BTC regime</text>
-
-        <rect x="350" y="20" width="160" height="56" rx="6" fill="#fff" stroke="#e7e5e4"/>
-        <text x="430" y="44" text-anchor="middle" font-weight="700">XGBoost heads</text>
-        <text x="430" y="60" text-anchor="middle" fill="#a8a29e">tail / dist / pre-open</text>
-
-        <rect x="540" y="20" width="140" height="56" rx="6" fill="#fff" stroke="#e7e5e4"/>
-        <text x="610" y="44" text-anchor="middle" font-weight="700">Telegram alert</text>
-        <text x="610" y="60" text-anchor="middle" fill="#a8a29e">08:55 + 09:05</text>
-
-        <rect x="710" y="20" width="190" height="56" rx="6" fill="#fff" stroke="#e7e5e4"/>
-        <text x="805" y="44" text-anchor="middle" font-weight="700">Paper ledger + dashboard</text>
-        <text x="805" y="60" text-anchor="middle" fill="#a8a29e">close 09:30 / 10:05</text>
-
-        <line x1="150" y1="48" x2="180" y2="48" stroke="#a8a29e" stroke-width="1.2" marker-end="url(#arr)"/>
-        <line x1="320" y1="48" x2="350" y2="48" stroke="#a8a29e" stroke-width="1.2" marker-end="url(#arr)"/>
-        <line x1="510" y1="48" x2="540" y2="48" stroke="#a8a29e" stroke-width="1.2" marker-end="url(#arr)"/>
-        <line x1="680" y1="48" x2="710" y2="48" stroke="#a8a29e" stroke-width="1.2" marker-end="url(#arr)"/>
-      </g>
-    </svg>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;margin:1.4rem 0 0.6rem">시스템 / 신호 정의는 메인 보고서 →</h3>
+    <div class="hero-links" style="justify-content:flex-start;margin-top:0.6rem;margin-bottom:1.6rem">
+      <a class="hero-link" href="../#architecture">Architecture</a>
+      <a class="hero-link" href="../#distribution">Distribution Engine v1</a>
+      <a class="hero-link" href="../#preopen">Pre-open Trigger v1</a>
+      <a class="hero-link" href="../#experiments">6 Experiments</a>
+      <a class="hero-link" href="../#failures">Failures Wall</a>
+    </div>
 
     <div class="about-grid">
       <div class="about-card">
-        <div class="ac-label">SIGNAL</div>
-        <div class="ac-title">두 채널 알림</div>
+        <div class="ac-label">EXECUTION RULE</div>
+        <div class="ac-title">가상 진입·청산·비용 (이 dashboard 한정)</div>
         <div class="ac-body">
-          <strong>distribution (09:05)</strong> — multi-head XGBoost: P(+3% in 4h) / P(+5% in 24h) / P(+20% tail in 24h) + setup library S01·S02·S03. composite = h2 + h6 + 5×h5, top-K 알림.<br>
-          <strong>pre-open (08:55)</strong> — 15m precursor 19 features 로 첫 15m / 1h 안 +3% / +5% 즉발 펌프 head. 같은 composite ranking.
+          <strong>entry</strong> KST 09:00 시초가 시뮬 진입 (텔레그램 알림 표시 가격).
+          사용자 실 매매는 09:00~09:10 시장가 — 본 회고 대상 아님.<br>
+          <strong>exit</strong> +5% 도달 즉시 익절, 아니면 horizon close (dist 24h / pre 1h).
+          자동 SL 없음 (사용자 수동 판단).<br>
+          <strong>cost</strong> 왕복 0.15% (수수료 0.1% + 슬리피지 0.05%). thin-orderbook
+          underestimate 가능 — 한계 ③.
         </div>
       </div>
       <div class="about-card">
-        <div class="ac-label">VALIDATION</div>
-        <div class="ac-title">학습 / 검증 위생</div>
-        <div class="ac-body">
-          <strong>label</strong> next-day OHLC, market 별 <code>shift(-1)</code> (코인 간 leak 방지).
-          <strong>split</strong> 5-fold purged Walk-Forward + 10일 embargo + 180일 holdout.
-          <strong>threshold</strong> chronological OOF p99.95 — 라이브 quantile 재계산 X.
-          look-ahead leak / universe 시간정합성 / 거래비용 차감은 양보 X 위생.
-        </div>
-      </div>
-      <div class="about-card">
-        <div class="ac-label">EXECUTION ASSUMPTION</div>
-        <div class="ac-title">진입·청산·비용</div>
-        <div class="ac-body">
-          <strong>entry</strong> KST 09:00 시초가 (sim). 사용자 실 매매는 09:00~09:10 시장가 — 별도 추적.<br>
-          <strong>exit</strong> 5% 도달 즉시 익절, 아니면 horizon close (dist 24h / pre 1h). 자동 SL 없음 (사용자 수동 판단).<br>
-          <strong>cost</strong> 왕복 0.15% (수수료 0.1% + 슬리피지 0.05%). thin-orderbook 코인은 underestimate 가능.
-        </div>
-      </div>
-      <div class="about-card">
-        <div class="ac-label">METRIC</div>
-        <div class="ac-title">정량 지표</div>
-        <div class="ac-body">
-          Sharpe / Sortino = 일별 net PnL × √252.
-          Calmar = annualized return / |MDD|.
-          Profit Factor = Σ wins / |Σ losses|.
-          Expectancy = 평균 per-trade.
-          Bootstrap 1000 iter trade-level resample → 95% CI.
+        <div class="ac-label">METRIC SOURCES</div>
+        <div class="ac-title">paper / library 출처 1:1 명시</div>
+        <div class="ac-body" style="font-size:0.8rem;line-height:1.85">
+          <strong>Sharpe (1966)</strong> — risk-free=0, daily × √252.<br>
+          <strong>Sortino (1991)</strong> — downside std (r&lt;0).<br>
+          <strong>Calmar (Young 1991)</strong> — annualized / |MDD|.<br>
+          <strong>VaR / CVaR (Rockafellar &amp; Uryasev 2000)</strong> — 5% quantile + tail mean.<br>
+          <strong>Ulcer Index (Martin 1987)</strong> — √mean(drawdown²).<br>
+          <strong>PSR / DSR / MinTRL (Bailey &amp; Lopez de Prado 2014)</strong> —
+          Φ-based selection-bias 보정 Sharpe.<br>
+          <strong>Information Ratio (Treynor &amp; Black 1973)</strong> — α / TE.<br>
+          <strong>Bootstrap CI (Efron 1979)</strong> — 1000 iter trade-resample.<br>
+          <strong>pyfolio / quantstats</strong> — Top-N DD / Underwater / Monthly heatmap /
+          Tail Ratio / Recovery / Common Sense / Profit Factor 등 표준 형식.
         </div>
       </div>
     </div>
 
-    <h3 style="font-family:'Noto Serif KR',serif; font-size:1.05rem; font-weight:700; margin: 2.2rem 0 0.5rem">한계 — 솔직 명시</h3>
+    <h3 style="font-family:'Noto Serif KR',serif; font-size:1.05rem; font-weight:700; margin: 2.2rem 0 0.5rem">라이브 dashboard 의 통계적 한계 — 솔직 명시</h3>
     <p class="section-desc" style="margin-bottom: 0.6rem">
-      이 dashboard 의 결과는 절대 평가에 쓰일 수 없다. 약점을 *내가 먼저* 인정.
+      메인 보고서의 <a href="../#failures">Failures Wall</a> 은 backtest 단계에서 버린 가설들이고,
+      여기는 <em>지금 라이브 paper trade dashboard 가 절대 평가에 못 쓰이는 이유</em>다.
     </p>
     <div class="limit-list">
       <div class="limit-item">
@@ -895,6 +862,21 @@
         <span class="li-body"><strong>5% TP 룰의 단순성</strong> — sweep 결과 대신 사용자 의사결정에 맞춘 룰. avg_max +6.82% 가 5% TP 에서 잘려 +20% tail 을 놓침. 룰 민감도 분석 (3% / 7% / no TP) 추후 추가.</span>
       </div>
     </div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;margin:2.4rem 0 0.8rem">References</h3>
+    <ul style="font-size:0.82rem;line-height:1.9;color:var(--text-secondary);padding-left:1.2rem;list-style:square">
+      <li>Sharpe, W. F. (1966). <em>Mutual Fund Performance</em>. Journal of Business 39(1).</li>
+      <li>Sortino, F. A. &amp; Price, L. N. (1994). <em>Performance Measurement in a Downside Risk Framework</em>. JOI 3(3).</li>
+      <li>Young, T. W. (1991). <em>Calmar Ratio: A Smoother Tool</em>. Futures Magazine.</li>
+      <li>Martin, P. &amp; McCann, B. (1987). <em>The Investor's Guide to Fidelity Funds</em>. (Ulcer Index)</li>
+      <li>Rockafellar, R. T. &amp; Uryasev, S. (2000). <em>Optimization of Conditional Value-at-Risk</em>. Journal of Risk 2(3).</li>
+      <li>Treynor, J. L. &amp; Black, F. (1973). <em>How to Use Security Analysis to Improve Portfolio Selection</em>. Journal of Business 46(1). (Information Ratio)</li>
+      <li>Efron, B. (1979). <em>Bootstrap Methods: Another Look at the Jackknife</em>. Annals of Statistics 7(1).</li>
+      <li>Bailey, D. H. &amp; Lopez de Prado, M. (2014). <em>The Deflated Sharpe Ratio: Correcting for Selection Bias, Backtest Overfitting, and Non-Normality</em>. JPM 40(5). <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2460551" target="_blank" rel="noopener">SSRN 2460551</a></li>
+      <li>Bailey, D. H., Borwein, J., Lopez de Prado, M. &amp; Zhu, Q. J. (2014). <em>The Probability of Backtest Overfitting</em>. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253" target="_blank" rel="noopener">SSRN 2326253</a></li>
+      <li>Quantopian / pyfolio (2015–2020). <a href="https://github.com/quantopian/pyfolio" target="_blank" rel="noopener">github.com/quantopian/pyfolio</a> — Top-N drawdown, Underwater plot, Monthly returns heatmap, Rolling Sharpe 표준 형식.</li>
+      <li>Roussi, R. <em>quantstats</em>. <a href="https://github.com/ranaroussi/quantstats" target="_blank" rel="noopener">github.com/ranaroussi/quantstats</a> — Tail Ratio, Recovery Factor, Common Sense Ratio, Profit Factor 정의.</li>
+    </ul>
   </div>
 </section>
 
@@ -1119,14 +1101,14 @@ function channelKpiHtml(s, kind) {
         <div class="mc-value ${cls}">${val}</div>
         ${sub ? `<div class="mc-sub">${escapeHtml(sub)}</div>` : ''}
       </div>`;
-    html += chip('Sharpe (ann)', fmt(q.sharpe_ann), sgnClass(q.sharpe_ann), '√252 daily');
-    html += chip('Sortino (ann)', fmt(q.sortino_ann), sgnClass(q.sortino_ann), 'downside std');
-    html += chip('Calmar', fmt(q.calmar), sgnClass(q.calmar), '연 / |MDD|');
-    html += chip('Profit Factor', fmt(q.profit_factor), q.profit_factor > 1 ? 'pos' : (q.profit_factor < 1 ? 'neg' : ''), 'Σwin / |Σloss|');
-    html += chip('Expectancy', fmtPct(q.expectancy_pct), sgnClass(q.expectancy_pct), 'avg / trade');
+    html += chip('Sharpe (ann)', fmt(q.sharpe_ann), sgnClass(q.sharpe_ann), '√252 daily · Sharpe 1966');
+    html += chip('Sortino (ann)', fmt(q.sortino_ann), sgnClass(q.sortino_ann), 'downside std · Sortino 1991');
+    html += chip('Calmar', fmt(q.calmar), sgnClass(q.calmar), 'ann/|MDD| · Young 1991');
+    html += chip('Profit Factor', fmt(q.profit_factor), q.profit_factor > 1 ? 'pos' : (q.profit_factor < 1 ? 'neg' : ''), 'Σwin/|Σloss| · TradeStation');
+    html += chip('Expectancy', fmtPct(q.expectancy_pct), sgnClass(q.expectancy_pct), 'avg/trade · Van Tharp');
     html += chip('W/L Ratio', fmt(q.win_loss_ratio), q.win_loss_ratio > 1 ? 'pos' : (q.win_loss_ratio < 1 ? 'neg' : ''), `${q.n_wins}W / ${q.n_losses}L`);
-    html += chip('Avg Win', fmtPct(q.avg_win_pct), 'pos');
-    html += chip('Avg Loss', fmtPct(q.avg_loss_pct), 'neg');
+    html += chip('Avg Win', fmtPct(q.avg_win_pct), 'pos', 'mean(r > 0)');
+    html += chip('Avg Loss', fmtPct(q.avg_loss_pct), 'neg', 'mean(r < 0)');
     html += `</div>`;
   }
 
@@ -1138,7 +1120,7 @@ function channelKpiHtml(s, kind) {
     const crossesZero = lo !== null && hi !== null && (lo < 0) && (hi > 0);
     html += `
       <div class="ci-block">
-        <div><span class="ci-label">Bootstrap 95% CI · 1000 iter trade-resample</span></div>
+        <div><span class="ci-label">Bootstrap 95% CI · 1000 iter trade-resample · Efron 1979</span></div>
         <div><span class="ci-label">cum PnL  </span><span class="ci-value">[${fmtPct(lo)}, ${fmtPct(hi)}]</span> ${crossesZero ? '<span class="warn-badge">0 cross — 통계적 유의 X</span>' : ''}</div>
         <div><span class="ci-label">mean PnL </span><span class="ci-value">[${fmtPct(mlo)}, ${fmtPct(mhi)}]</span></div>
       </div>`;
@@ -1155,17 +1137,17 @@ function channelKpiHtml(s, kind) {
         <div class="mc-value ${cls}">${val}</div>
         ${sub ? `<div class="mc-sub">${escapeHtml(sub)}</div>` : ''}
       </div>`;
-    html += chip('Volatility (ann)', stat.volatility_ann_pct == null ? '—' : fmtPct(stat.volatility_ann_pct, 1), '', 'daily × √252');
-    html += chip('Skewness', fmt(stat.skewness, 2), stat.skewness < 0 ? 'neg' : 'pos', 'distribution shape');
-    html += chip('Kurt (excess)', fmt(stat.kurtosis_excess, 2), '', 'fat-tail proxy');
-    html += chip('VaR 95%', fmtPct(stat.var_95_pct), 'neg', 'per-trade quantile');
-    html += chip('CVaR 95%', fmtPct(stat.cvar_95_pct), 'neg', 'expected shortfall');
-    html += chip('Tail Ratio', fmt(stat.tail_ratio, 2), stat.tail_ratio > 1 ? 'pos' : 'neg', 'right / left tail');
-    html += chip('Recovery Factor', fmt(stat.recovery_factor, 2), sgnClass(stat.recovery_factor), 'cum / |MDD|');
-    html += chip('Ulcer Index', fmt(stat.ulcer_index, 1), '', 'drawdown RMS');
-    html += chip('Common Sense Ratio', fmt(stat.common_sense_ratio, 2), stat.common_sense_ratio > 1 ? 'pos' : 'neg', 'PF × Tail Ratio');
-    html += chip('Win streak', String(stat.max_win_streak ?? '—'), 'pos', 'consecutive');
-    html += chip('Loss streak', String(stat.max_loss_streak ?? '—'), 'neg', 'consecutive');
+    html += chip('Volatility (ann)', stat.volatility_ann_pct == null ? '—' : fmtPct(stat.volatility_ann_pct, 1), '', 'daily std × √252');
+    html += chip('Skewness', fmt(stat.skewness, 2), stat.skewness < 0 ? 'neg' : 'pos', 'Pearson · scipy bias=False');
+    html += chip('Kurt (excess)', fmt(stat.kurtosis_excess, 2), '', 'Fisher · scipy bias=False');
+    html += chip('VaR 95%', fmtPct(stat.var_95_pct), 'neg', 'q5 per-trade · RiskMetrics');
+    html += chip('CVaR 95%', fmtPct(stat.cvar_95_pct), 'neg', 'tail mean · Rockafellar 2000');
+    html += chip('Tail Ratio', fmt(stat.tail_ratio, 2), stat.tail_ratio > 1 ? 'pos' : 'neg', '|q95|/|q5| · quantstats');
+    html += chip('Recovery Factor', fmt(stat.recovery_factor, 2), sgnClass(stat.recovery_factor), 'cum/|MDD| · quantstats');
+    html += chip('Ulcer Index', fmt(stat.ulcer_index, 1), '', '√mean(DD²) · Martin 1987');
+    html += chip('Common Sense Ratio', fmt(stat.common_sense_ratio, 2), stat.common_sense_ratio > 1 ? 'pos' : 'neg', 'PF × Tail · quantstats');
+    html += chip('Win streak', String(stat.max_win_streak ?? '—'), 'pos', 'max consecutive r>0');
+    html += chip('Loss streak', String(stat.max_loss_streak ?? '—'), 'neg', 'max consecutive r<0');
     html += `</div>`;
   }
 
