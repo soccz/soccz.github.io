@@ -293,14 +293,32 @@
       padding: 1.8rem 1.2rem 2rem;
       box-shadow: 4px 0 24px rgba(0,0,0,0.08);
     }
-    /* collapsed 시 컨텐츠 숨김 — 번호만 보이게 */
-    .reader-sidebar .sidebar-brand,
+    /* collapsed 시 컨텐츠 숨김 — 번호만 보이게.
+       brand는 max-height 0으로 자리도 회수 (사이드바 상단 빈 공간 제거) */
+    .reader-sidebar .sidebar-brand {
+      max-height: 0;
+      padding: 0;
+      margin: 0;
+      border: none;
+      opacity: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: max-height 0.25s ease, opacity 0.18s ease,
+                  padding 0.25s ease, margin 0.25s ease;
+    }
+    .reader-sidebar:hover .sidebar-brand {
+      max-height: 70px;
+      padding: 0 0.6rem 1rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border);
+      opacity: 1;
+      pointer-events: auto;
+    }
     .reader-sidebar .sidebar-footer {
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.18s ease;
     }
-    .reader-sidebar:hover .sidebar-brand,
     .reader-sidebar:hover .sidebar-footer {
       opacity: 1;
       pointer-events: auto;
@@ -564,6 +582,7 @@
       border-radius: 8px;
       text-align: center;
       overflow-x: auto;
+      cursor: zoom-in;
     }
     .reader-content .mermaid svg { max-width: 100%; height: auto; }
 
@@ -713,6 +732,22 @@
       .reader-content { font-size: 17px; }
     }
 
+    /* 태블릿 (641~1023px) — 사이드바 없는 단일 컬럼이지만 데스크탑에 가까운 크기 */
+    @media (min-width: 641px) and (max-width: 1023px) {
+      .reader-column { padding: 72px 2.5rem 4rem; max-width: 720px; }
+      .reader-content { font-size: 16px; line-height: 1.9; }
+      .chapter-list-section { max-width: 740px; padding: 0 2rem 5rem; }
+      .toc-footer { max-width: 740px; }
+      .reader-content h1 { font-size: 1.85rem; }
+      .reader-content h2 { font-size: 1.4rem; }
+      .reader-content table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .reader-content .mermaid { margin: 1.5rem -0.5rem; }
+    }
+
     /* 모바일·태블릿 좁은 영역 */
     @media (max-width: 640px) {
       .hero h1 { font-size: 1.8rem; }
@@ -728,13 +763,14 @@
       .reader-content h2 { font-size: 1.3rem; margin-top: 1.8rem; }
       .reader-content h3 { font-size: 1.05rem; margin-top: 1.4rem; }
       .reader-content blockquote { padding: 0.8rem 1rem; font-size: 14px; }
-      /* 표 — 좁은 화면에서 가로 스와이프 */
+      /* 표 — 좁은 화면에서 셀은 wrap, 너무 넓으면 가로 스와이프
+         (nowrap 일괄 제거 — 짧은 표는 자연스럽게 화면 안 들어감) */
       .reader-content table {
         display: block;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
         font-size: 13.5px;
+        word-break: keep-all;
       }
       .reader-content thead th, .reader-content tbody td {
         padding: 0.55rem 0.7rem;
@@ -763,7 +799,7 @@
       .toc-footer { flex-direction: column; gap: 0.8rem; text-align: center; }
     }
 
-    /* 이미지 라이트박스 (모바일/데스크탑 둘 다) */
+    /* 이미지/Mermaid 라이트박스 (모바일/데스크탑 둘 다) */
     .img-lightbox {
       position: fixed; inset: 0; z-index: 9999;
       background: rgba(15,15,15,0.95);
@@ -772,13 +808,23 @@
       cursor: zoom-out;
       animation: lbFade 0.18s ease;
     }
-    .img-lightbox img {
+    .img-lightbox img,
+    .img-lightbox svg {
       max-width: 100%;
       max-height: 100vh;
       object-fit: contain;
       box-shadow: 0 0 60px rgba(0,0,0,0.6);
       border-radius: 6px;
     }
+    .img-lightbox .lb-svg-wrap {
+      max-width: 95vw;
+      max-height: 95vh;
+      background: #fafaf9;
+      padding: 1.5rem;
+      border-radius: 8px;
+      overflow: auto;
+    }
+    .img-lightbox .lb-svg-wrap svg { max-width: 100%; height: auto; }
     .img-lightbox-close {
       position: absolute; top: 1rem; right: 1rem;
       width: 36px; height: 36px;
@@ -1392,22 +1438,44 @@
     else goToToc();
   });
 
-  // 이미지 라이트박스 (delegation, 본문 어디서든 클릭 시)
+  // 이미지/Mermaid 라이트박스 (delegation, 본문 어디서든 클릭 시)
+  function openLightbox(innerHTML) {
+    const overlay = document.createElement('div');
+    overlay.className = 'img-lightbox';
+    overlay.innerHTML = innerHTML +
+      '<button class="img-lightbox-close" aria-label="닫기">×</button>';
+    const close = () => overlay.remove();
+    overlay.addEventListener('click', close);
+    document.body.appendChild(overlay);
+    const onEsc = ev => {
+      if (ev.key === 'Escape') {
+        close();
+        document.removeEventListener('keydown', onEsc);
+      }
+    };
+    document.addEventListener('keydown', onEsc);
+  }
+
   function setupImageLightbox() {
     document.addEventListener('click', e => {
+      // 이미 lightbox 안 클릭이면 무시 (overlay click 핸들러가 처리)
+      if (e.target.closest('.img-lightbox')) return;
+      // 1) 본문 이미지
       const img = e.target.closest('.reader-content img');
-      if (!img) return;
-      e.preventDefault();
-      const overlay = document.createElement('div');
-      overlay.className = 'img-lightbox';
-      overlay.innerHTML = `<img src="${img.src}" alt="${(img.alt || '').replace(/"/g, '&quot;')}">
-                           <button class="img-lightbox-close" aria-label="닫기">×</button>`;
-      const close = () => overlay.remove();
-      overlay.addEventListener('click', close);
-      document.body.appendChild(overlay);
-      // ESC로 닫기
-      const onEsc = ev => { if (ev.key === 'Escape') { close(); document.removeEventListener('keydown', onEsc); } };
-      document.addEventListener('keydown', onEsc);
+      if (img) {
+        e.preventDefault();
+        openLightbox(`<img src="${img.src}" alt="${(img.alt || '').replace(/"/g, '&quot;')}">`);
+        return;
+      }
+      // 2) 본문 Mermaid 다이어그램 — SVG outerHTML 복제
+      const merm = e.target.closest('.reader-content .mermaid');
+      if (merm) {
+        const svg = merm.querySelector('svg');
+        if (svg) {
+          e.preventDefault();
+          openLightbox(`<div class="lb-svg-wrap">${svg.outerHTML}</div>`);
+        }
+      }
     });
   }
 
