@@ -624,6 +624,53 @@
       overflow-x: auto;
     }
 
+    /* 용어 hover 정의 팁 */
+    .glossary-term {
+      border-bottom: 1px dashed var(--accent);
+      cursor: help;
+      position: relative;
+      transition: background 0.15s;
+    }
+    .glossary-term:hover, .glossary-term.tap-active {
+      background: rgba(255, 200, 50, 0.18);
+    }
+    .glossary-tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1c1917;
+      color: #fafaf9;
+      padding: 0.7rem 0.95rem;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+      width: 280px;
+      max-width: 80vw;
+      z-index: 100;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+      font-weight: 400;
+      font-family: 'Noto Sans KR', sans-serif;
+      pointer-events: none;
+      white-space: normal;
+      text-align: left;
+    }
+    .glossary-tooltip strong {
+      color: #fbbf24;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 0.86rem;
+    }
+    .glossary-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top-color: #1c1917;
+    }
+
     /* 인터랙티브 시각화 (D3) */
     .interactive-viz {
       margin: 1.8rem -0.2rem;
@@ -1197,6 +1244,131 @@
     });
   }
 
+  // ═══════════ 용어 사전 (hover tooltip) ═══════════
+  const GLOSSARY = {
+    'SDF':            { full: '확률할인인자 (Stochastic Discount Factor)',
+                        def: '미래 payoff에 곱해서 현재 가격을 만드는 확률변수. 자산가격결정의 만능 열쇠 — CAPM·APT·소비기반 모형 모두 SDF의 특수 경우.' },
+    'CAPM':           { full: 'Capital Asset Pricing Model',
+                        def: 'E[R_i] = R_f + β_i · (E[R_m] − R_f). 모든 자산의 기대수익률은 시장 베타로 설명된다는 모형. SDF의 첫 번째 특수 경우.' },
+    'CAL':            { full: '자본배분선 (Capital Allocation Line)',
+                        def: '무위험자산과 위험자산을 조합한 포트폴리오의 위험-수익 직선. 기울기 = 샤프비율.' },
+    'CRRA':           { full: 'Constant Relative Risk Aversion',
+                        def: '효용함수 U(W) = W^(1-γ) / (1-γ). γ가 클수록 더 보수적, γ=1이면 log 효용.' },
+    'WML':            { full: 'Winner Minus Loser',
+                        def: '과거 12개월 승자 매수 + 패자 공매도 long-short 포트폴리오. 모멘텀 팩터의 핵심 구성.' },
+    'HML':            { full: 'High Minus Low',
+                        def: '고 B/M(가치주) 매수 + 저 B/M(성장주) 공매도. Fama-French 가치 팩터.' },
+    'SMB':            { full: 'Small Minus Big',
+                        def: '소형주 매수 + 대형주 공매도. Fama-French 사이즈 팩터.' },
+    'FF3':            { full: 'Fama-French 3-Factor Model',
+                        def: 'R_i = α + β_m·MKT + β_s·SMB + β_h·HML + ε. CAPM에 사이즈·가치 팩터 추가.' },
+    'BAB':            { full: 'Betting Against Beta',
+                        def: '저베타 매수 + 고베타 공매도. Frazzini & Pedersen 2014. 워렌 버핏의 알파 핵심.' },
+    'TSMOM':          { full: 'Time-Series Momentum (시계열 모멘텀)',
+                        def: '같은 자산의 과거 12개월 수익률 부호로 long(+) 또는 short(−) 결정. Moskowitz 2012.' },
+    'XSMOM':          { full: 'Cross-Sectional Momentum (횡단면 모멘텀)',
+                        def: '여러 자산을 과거 수익률로 정렬해 승자 매수 + 패자 공매도. WML이 대표.' },
+    'IPCA':           { full: 'Instrumented PCA',
+                        def: 'β를 자산 특성 z의 함수로 모델링한 동적 팩터 모형. Kelly, Pruitt & Su 2019.' },
+    'KNS':            { full: 'Kozak, Nagel & Santosh 2020',
+                        def: '자산 특성을 직접 팩터로 사용하는 선형 SDF 모형. shrinkage·PCA로 정규화.' },
+    'ERP':            { full: 'Equity Risk Premium',
+                        def: '시장 위험 프리미엄, E[R_m] − R_f. 보통 4~8%/년 추정.' },
+    '샤프비율':        { full: 'Sharpe Ratio',
+                        def: '(μ − R_f) / σ. 위험 단위당 초과수익률. 포트폴리오 효율성의 단일 척도.' },
+    '효율적 프론티어': { full: 'Efficient Frontier',
+                        def: '같은 위험에서 가장 높은 기대수익을 주는 포트폴리오들의 곡선. Markowitz 1952.' },
+    'MVP':            { full: 'Minimum Variance Portfolio',
+                        def: '효율적 프론티어 위 점 중 위험이 최소인 포트폴리오. 좌측 끝점.' },
+    '리스크패리티':    { full: 'Risk Parity',
+                        def: '자산별 위험 기여도를 동등하게 맞추는 포트폴리오 전략. Qian 2011.' },
+    '레버리지':        { full: 'Leverage',
+                        def: '무위험자산 음수 비중(차입)으로 위험자산 비중을 1 초과로 늘리는 것.' },
+    '모멘텀 크래시':   { full: 'Momentum Crash',
+                        def: 'WML이 단월 −45%~−79% 손실을 입는 사건. 1932-08, 2009-04 두 번이 대표적.' },
+    '변동성 스케일링': { full: 'Volatility Scaling',
+                        def: '추정 변동성 σ̂에 반비례하게 포지션을 조정. 모멘텀 크래시 방어 효과.' },
+  };
+
+  function applyGlossary() {
+    const seen = new Set();
+    const terms = Object.keys(GLOSSARY).sort((a, b) => b.length - a.length);
+    const walker = document.createTreeWalker(readerContent, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => {
+        const p = n.parentElement;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        if (p.closest('.katex, code, pre, .glossary-term, .ch-hero, .img-lightbox, h1, h2, h3, .interactive-viz, .mermaid')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    let n; while (n = walker.nextNode()) nodes.push(n);
+
+    nodes.forEach(node => {
+      let text = node.nodeValue;
+      let html = text;
+      let changed = false;
+      terms.forEach(term => {
+        if (seen.has(term)) return;
+        const idx = html.indexOf(term);
+        if (idx >= 0) {
+          html = html.slice(0, idx) +
+            `<span class="glossary-term" data-term="${term.replace(/"/g, '&quot;')}">${term}</span>` +
+            html.slice(idx + term.length);
+          seen.add(term);
+          changed = true;
+        }
+      });
+      if (changed) {
+        const wrapper = document.createElement('span');
+        wrapper.innerHTML = html;
+        node.replaceWith(...wrapper.childNodes);
+      }
+    });
+  }
+
+  function setupGlossaryTooltips() {
+    let activeTip = null;
+    function showTip(termEl) {
+      const key = termEl.dataset.term;
+      const entry = GLOSSARY[key];
+      if (!entry) return;
+      hideTip();
+      const tip = document.createElement('div');
+      tip.className = 'glossary-tooltip';
+      tip.innerHTML = `<strong>${entry.full}</strong>${entry.def}`;
+      termEl.appendChild(tip);
+      termEl.classList.add('tap-active');
+      activeTip = { tip, term: termEl };
+    }
+    function hideTip() {
+      if (activeTip) {
+        activeTip.tip.remove();
+        activeTip.term.classList.remove('tap-active');
+        activeTip = null;
+      }
+    }
+    // Desktop: hover
+    readerContent.addEventListener('mouseover', e => {
+      const t = e.target.closest('.glossary-term');
+      if (t) showTip(t);
+    });
+    readerContent.addEventListener('mouseout', e => {
+      const t = e.target.closest('.glossary-term');
+      if (t && !t.contains(e.relatedTarget)) hideTip();
+    });
+    // Mobile: tap toggle
+    readerContent.addEventListener('click', e => {
+      const t = e.target.closest('.glossary-term');
+      if (!t) { hideTip(); return; }
+      e.preventDefault();
+      if (activeTip && activeTip.term === t) hideTip();
+      else showTip(t);
+    });
+  }
+
   // ═══════════ 인터랙티브 시각화 (D3) ═══════════
   // .md 안 <div data-viz="id"></div> 마커를 init 함수로 활성화
 
@@ -1649,6 +1821,9 @@
 
     // 8. 인터랙티브 시각화 활성화 (D3)
     activateInteractiveVizs();
+
+    // 9. 용어 사전 wrap (KaTeX·코드·Mermaid·viz·hero 영역 제외)
+    applyGlossary();
   }
 
   function renderNav(num) {
@@ -1753,6 +1928,7 @@
   buildSidebar();
   buildHomeChapterList();
   setupImageLightbox();
+  setupGlossaryTooltips();
   const params = new URLSearchParams(window.location.search);
   const initCh = params.get('ch');
   if (initCh && +initCh >= 1 && +initCh <= CHAPTERS.length) {
