@@ -111,9 +111,9 @@
       50% { transform: translateX(-50%) translateY(6px); }
     }
 
-    /* Chapter List */
+    /* Chapter List — 카드 그리드 */
     .chapter-list-section {
-      max-width: 640px; margin: 0 auto;
+      max-width: 1180px; margin: 0 auto;
       padding: 0 2rem 6rem;
     }
     .part-group { margin-bottom: 3rem; }
@@ -122,34 +122,84 @@
       color: var(--text-muted); margin-bottom: 1.2rem;
       padding-bottom: 0.8rem; border-bottom: 1px solid var(--border);
     }
-    .chapter-item {
-      display: flex; align-items: baseline; gap: 1.5rem;
-      padding: 1rem 0; cursor: pointer;
-      transition: padding-left 0.2s ease, color 0.2s ease;
-      border-bottom: 1px solid transparent;
+
+    /* 카드 그리드 — 모바일 1열, 태블릿 2열, 데스크탑 3열 */
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
-    .chapter-item:hover {
-      padding-left: 0.5rem;
+    @media (min-width: 641px) {
+      .chapter-grid { grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
     }
-    .chapter-item:hover .chapter-title { color: var(--accent); }
-    .chapter-item:hover .chapter-num { color: var(--text-secondary); }
-    .chapter-num {
+    @media (min-width: 1024px) {
+      .chapter-grid { grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    }
+
+    .chapter-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-reader);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+    }
+    .chapter-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+      border-color: var(--border-light);
+    }
+    .chapter-card:hover .card-title { color: var(--accent); }
+
+    .card-thumb {
+      width: 100%; aspect-ratio: 16 / 9;
+      background: var(--bg-tint);
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .card-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.4s ease;
+    }
+    .chapter-card:hover .card-thumb img { transform: scale(1.04); }
+    .card-thumb-empty {
       font-family: 'Noto Serif KR', serif;
-      font-size: 1.6rem; font-weight: 700;
+      font-size: 2.4rem;
+      font-weight: 700;
       color: var(--border-light);
-      min-width: 2.5rem; text-align: right;
-      transition: color 0.2s ease;
-      line-height: 1;
     }
-    .chapter-info { flex: 1; }
-    .chapter-title {
-      font-size: 1rem; font-weight: 500;
-      color: var(--text-primary); line-height: 1.5;
+
+    .card-info {
+      padding: 1rem 1.1rem 1.1rem;
+      flex: 1;
+      display: flex; flex-direction: column;
+    }
+    .card-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+    .card-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.02rem; font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
       transition: color 0.2s ease;
     }
-    .chapter-desc {
-      font-size: 0.82rem; color: var(--text-muted);
-      margin-top: 0.2rem; line-height: 1.5;
+    .card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
     }
 
     /* TOC Footer */
@@ -644,8 +694,8 @@
       .reader-sidebar { display: block; }
       .reader-topbar { display: none; }
       .reader-column { padding: 0 3rem 6rem; max-width: 820px; }
-      .chapter-list-section { max-width: 880px; }
-      .toc-footer { max-width: 880px; }
+      .chapter-list-section { max-width: 1180px; }
+      .toc-footer { max-width: 1180px; }
 
       /* 본문 상단 sticky context bar */
       .reader-context-bar {
@@ -870,156 +920,7 @@
     <div class="scroll-hint">SCROLL</div>
   </section>
 
-  <div class="chapter-list-section" id="chapter-list">
-    <!-- Part 1 -->
-    <div class="part-group">
-      <div class="part-label">Part I &mdash; 포트폴리오 이론</div>
-      <div class="chapter-item" data-ch="1">
-        <span class="chapter-num">01</span>
-        <div class="chapter-info">
-          <div class="chapter-title">자산운용이란</div>
-          <div class="chapter-desc">왜 포트폴리오인가 &mdash; 분산투자의 출발</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="2">
-        <span class="chapter-num">02</span>
-        <div class="chapter-info">
-          <div class="chapter-title">평균-분산 투자와 효율적 프론티어</div>
-          <div class="chapter-desc">최적화, 라그랑주, 효율적 프론티어</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="3">
-        <span class="chapter-num">03</span>
-        <div class="chapter-info">
-          <div class="chapter-title">효용함수와 최적 포트폴리오</div>
-          <div class="chapter-desc">위험회피 계수, 무차별곡선, 접점 포트폴리오</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="4">
-        <span class="chapter-num">04</span>
-        <div class="chapter-info">
-          <div class="chapter-title">무위험자산, CAL, 샤프비율</div>
-          <div class="chapter-desc">CAL, 2기금 분리, 레버리지</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="5">
-        <span class="chapter-num">05</span>
-        <div class="chapter-info">
-          <div class="chapter-title">포트폴리오 전략</div>
-          <div class="chapter-desc">동일가중, 최소분산, 리스크패리티, 리밸런싱</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Part 2 -->
-    <div class="part-group">
-      <div class="part-label">Part II &mdash; 자산가격결정</div>
-      <div class="chapter-item" data-ch="6">
-        <span class="chapter-num">06</span>
-        <div class="chapter-info">
-          <div class="chapter-title">할인과 SDF, 자산가격결정</div>
-          <div class="chapter-desc">SDF, 리스크프리미엄, CAPM, 베타</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="7">
-        <span class="chapter-num">07</span>
-        <div class="chapter-info">
-          <div class="chapter-title">팩터모델과 APT</div>
-          <div class="chapter-desc">다중팩터, SDF 등가성, APT, PCA</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Part 3 -->
-    <div class="part-group">
-      <div class="part-label">Part III &mdash; 팩터 투자</div>
-      <div class="chapter-item" data-ch="8">
-        <span class="chapter-num">08</span>
-        <div class="chapter-info">
-          <div class="chapter-title">사이즈팩터, 가치팩터, FF3</div>
-          <div class="chapter-desc">가치 프리미엄, B/M, HML, FF3 모형</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="9">
-        <span class="chapter-num">09</span>
-        <div class="chapter-info">
-          <div class="chapter-title">모멘텀 팩터</div>
-          <div class="chapter-desc">WML, 산업 모멘텀, 1월 효과, 보편성</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="10">
-        <span class="chapter-num">10</span>
-        <div class="chapter-info">
-          <div class="chapter-title">모멘텀 크래시와 변동성 스케일링</div>
-          <div class="chapter-desc">크래시 메커니즘, 목표 변동성 전략</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Part 4 -->
-    <div class="part-group">
-      <div class="part-label">Part IV &mdash; 종합</div>
-      <div class="chapter-item" data-ch="11">
-        <span class="chapter-num">11</span>
-        <div class="chapter-info">
-          <div class="chapter-title">논문 리뷰 종합</div>
-          <div class="chapter-desc">16편 논문 요약, 단원 매핑, 논문 간 관계</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="12">
-        <span class="chapter-num">12</span>
-        <div class="chapter-info">
-          <div class="chapter-title">왜 이 모든 것을 배우는가</div>
-          <div class="chapter-desc">5층 "왜?" 프레임워크와 사고방식</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Part 5 -->
-    <div class="part-group">
-      <div class="part-label">Part V &mdash; 확장 팩터</div>
-      <div class="chapter-item" data-ch="13">
-        <span class="chapter-num">13</span>
-        <div class="chapter-info">
-          <div class="chapter-title">시계열 모멘텀 (TSMOM)</div>
-          <div class="chapter-desc">TSMOM, 변동성 스케일링, momentum smile, vs XSMOM</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="14">
-        <span class="chapter-num">14</span>
-        <div class="chapter-info">
-          <div class="chapter-title">BAB·워렌 버핏·팩터 투자</div>
-          <div class="chapter-desc">BAB, Buffett 6팩터, Novy-Marx 비판, Factor Investing</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Appendix -->
-    <div class="part-group">
-      <div class="part-label">Part VI &mdash; 도구·부록</div>
-      <div class="chapter-item" data-ch="15">
-        <span class="chapter-num">A1</span>
-        <div class="chapter-info">
-          <div class="chapter-title">선형대수와 이차최적화</div>
-          <div class="chapter-desc">고유값, 실대칭 Lemma, Rayleigh quotient, 양정부호, QP</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="16">
-        <span class="chapter-num">B1</span>
-        <div class="chapter-info">
-          <div class="chapter-title">ML 기반 자산가격결정</div>
-          <div class="chapter-desc">KNS, IPCA, Conditional Autoencoder, Deng</div>
-        </div>
-      </div>
-      <div class="chapter-item" data-ch="17">
-        <span class="chapter-num">B2</span>
-        <div class="chapter-info">
-          <div class="chapter-title">스펙트럴 클러스터링</div>
-          <div class="chapter-desc">그래프 라플라시안, RatioCut/Ncut, 자산 클러스터링</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="chapter-list-section" id="chapter-list"><!-- 동적 빌드 (buildHomeChapterList) --></div>
 
   <footer class="toc-footer">
     <a href="/" rel="noopener">Home</a>
@@ -1093,23 +994,40 @@
 
   const GITHUB_RAW = 'https://raw.githubusercontent.com/soccz/asset-management-guide/main/';
   const CHAPTERS = [
-    { num: 1,  displayNum: '01', file: '01_자산운용이란.md',                     title: '자산운용이란' },
-    { num: 2,  displayNum: '02', file: '02_평균분산투자와_효율적프론티어.md',       title: '평균-분산 투자와 효율적 프론티어' },
-    { num: 3,  displayNum: '03', file: '03_효용함수와_최적포트폴리오.md',          title: '효용함수와 최적 포트폴리오' },
-    { num: 4,  displayNum: '04', file: '04_무위험자산_CAL_샤프비율.md',           title: '무위험자산, CAL, 샤프비율' },
-    { num: 5,  displayNum: '05', file: '05_포트폴리오전략.md',                    title: '포트폴리오 전략' },
-    { num: 6,  displayNum: '06', file: '06_할인과_SDF_자산가격결정.md',           title: '할인과 SDF, 자산가격결정' },
-    { num: 7,  displayNum: '07', file: '07_팩터모델과_APT.md',                   title: '팩터모델과 APT' },
-    { num: 8,  displayNum: '08', file: '08_사이즈팩터_가치팩터_FF3.md',           title: '사이즈팩터, 가치팩터, FF3' },
-    { num: 9,  displayNum: '09', file: '09_모멘텀팩터.md',                       title: '모멘텀 팩터' },
-    { num: 10, displayNum: '10', file: '10_모멘텀크래시와_변동성스케일링.md',      title: '모멘텀 크래시와 변동성 스케일링' },
-    { num: 11, displayNum: '11', file: '11_논문리뷰종합.md',                     title: '논문 리뷰 종합' },
-    { num: 12, displayNum: '12', file: '12_왜_이_모든것을_배우는가.md',           title: '왜 이 모든 것을 배우는가' },
-    { num: 13, displayNum: '13', file: '13_시계열모멘텀_TSMOM.md',                title: '시계열 모멘텀 (TSMOM)' },
-    { num: 14, displayNum: '14', file: '14_BAB_워렌버핏_팩터투자.md',             title: 'BAB·워렌 버핏·팩터 투자' },
-    { num: 15, displayNum: 'A1', file: 'A1_선형대수와_이차최적화.md',             title: '선형대수와 이차최적화' },
-    { num: 16, displayNum: 'B1', file: 'B1_ML기반_자산가격결정.md',               title: 'ML 기반 자산가격결정' },
-    { num: 17, displayNum: 'B2', file: 'B2_스펙트럴클러스터링.md',                title: '스펙트럴 클러스터링' },
+    { num: 1,  displayNum: '01', file: '01_자산운용이란.md',                     title: '자산운용이란',
+      desc: '왜 포트폴리오인가 — 분산투자의 출발',          thumb: 'ch01_diversification.png' },
+    { num: 2,  displayNum: '02', file: '02_평균분산투자와_효율적프론티어.md',       title: '평균-분산 투자와 효율적 프론티어',
+      desc: '최적화, 라그랑주, 효율적 프론티어',            thumb: 'ch02_efficient_frontier.png' },
+    { num: 3,  displayNum: '03', file: '03_효용함수와_최적포트폴리오.md',          title: '효용함수와 최적 포트폴리오',
+      desc: '위험회피 계수, 무차별곡선, 접점 포트폴리오',    thumb: 'ch03_indifference_tangency.png' },
+    { num: 4,  displayNum: '04', file: '04_무위험자산_CAL_샤프비율.md',           title: '무위험자산, CAL, 샤프비율',
+      desc: 'CAL, 2기금 분리, 레버리지',                     thumb: 'ch04_cal_tangency.png' },
+    { num: 5,  displayNum: '05', file: '05_포트폴리오전략.md',                    title: '포트폴리오 전략',
+      desc: '동일가중·최소분산·리스크패리티·리밸런싱',         thumb: 'ch05_strategies_comparison.png' },
+    { num: 6,  displayNum: '06', file: '06_할인과_SDF_자산가격결정.md',           title: '할인과 SDF, 자산가격결정',
+      desc: 'SDF, 리스크프리미엄, CAPM, 베타',                thumb: 'ch06_sml.png' },
+    { num: 7,  displayNum: '07', file: '07_팩터모델과_APT.md',                   title: '팩터모델과 APT',
+      desc: '다중팩터, SDF 등가성, APT, PCA',                 thumb: 'ch07_pca.png' },
+    { num: 8,  displayNum: '08', file: '08_사이즈팩터_가치팩터_FF3.md',           title: '사이즈팩터, 가치팩터, FF3',
+      desc: '가치 프리미엄, B/M, HML, FF3 모형',               thumb: 'ch08_hml_value_premium.png' },
+    { num: 9,  displayNum: '09', file: '09_모멘텀팩터.md',                       title: '모멘텀 팩터',
+      desc: 'WML, 산업 모멘텀, 1월 효과, 보편성',              thumb: 'ch09_momentum_lag.png' },
+    { num: 10, displayNum: '10', file: '10_모멘텀크래시와_변동성스케일링.md',      title: '모멘텀 크래시와 변동성 스케일링',
+      desc: '크래시 메커니즘, 목표 변동성 전략',                thumb: 'ch10_volatility_scaling.png' },
+    { num: 11, displayNum: '11', file: '11_논문리뷰종합.md',                     title: '논문 리뷰 종합',
+      desc: '16편 논문 요약, 단원 매핑, 논문 간 관계',           thumb: 'ch11_paper_landscape.png' },
+    { num: 12, displayNum: '12', file: '12_왜_이_모든것을_배우는가.md',           title: '왜 이 모든 것을 배우는가',
+      desc: '5층 "왜?" 프레임워크와 사고방식',                  thumb: null },
+    { num: 13, displayNum: '13', file: '13_시계열모멘텀_TSMOM.md',                title: '시계열 모멘텀 (TSMOM)',
+      desc: 'TSMOM, 변동성 스케일링, momentum smile',           thumb: 'ch13_momentum_smile.png' },
+    { num: 14, displayNum: '14', file: '14_BAB_워렌버핏_팩터투자.md',             title: 'BAB·워렌 버핏·팩터 투자',
+      desc: 'BAB, Buffett 6팩터, Novy-Marx 비판',               thumb: 'ch14_buffett_alpha.png' },
+    { num: 15, displayNum: 'A1', file: 'A1_선형대수와_이차최적화.md',             title: '선형대수와 이차최적화',
+      desc: '고유값, Lemma, Rayleigh quotient, QP',             thumb: 'chA1_eigenvector_geometry.png' },
+    { num: 16, displayNum: 'B1', file: 'B1_ML기반_자산가격결정.md',               title: 'ML 기반 자산가격결정',
+      desc: 'KNS, IPCA, Conditional Autoencoder, Deng',         thumb: null },
+    { num: 17, displayNum: 'B2', file: 'B2_스펙트럴클러스터링.md',                title: '스펙트럴 클러스터링',
+      desc: '그래프 라플라시안, RatioCut/Ncut, 군집화',          thumb: 'chB2_spectral_clustering.png' },
   ];
 
   const PARTS = [
@@ -1165,6 +1083,40 @@
     drawerList.addEventListener('click', e => {
       const item = e.target.closest('.toc-drawer-item');
       if (item) { openChapter(+item.dataset.ch); toggleDrawer(); }
+    });
+  }
+
+  // Build home page chapter list (메인 페이지 카드 그리드)
+  function buildHomeChapterList() {
+    const container = document.getElementById('chapter-list');
+    if (!container) return;
+    let html = '';
+    PARTS.forEach(part => {
+      html += `<div class="part-group">
+        <div class="part-label">${part.label}</div>
+        <div class="chapter-grid">`;
+      part.chapters.forEach(num => {
+        const ch = CHAPTERS.find(c => c.num === num);
+        if (!ch) return;
+        const thumb = ch.thumb
+          ? `<img src="${GITHUB_RAW}figures/${encodeURIComponent(ch.thumb)}" alt="${ch.title}" loading="lazy">`
+          : `<div class="card-thumb-empty">${ch.displayNum}</div>`;
+        const partName = part.label.split(' — ')[0];
+        html += `<div class="chapter-card" data-ch="${ch.num}">
+          <div class="card-thumb">${thumb}</div>
+          <div class="card-info">
+            <div class="card-num">${partName} · ${ch.displayNum}</div>
+            <div class="card-title">${ch.title}</div>
+            <div class="card-desc">${ch.desc || ''}</div>
+          </div>
+        </div>`;
+      });
+      html += `</div></div>`;
+    });
+    container.innerHTML = html;
+    container.addEventListener('click', e => {
+      const card = e.target.closest('.chapter-card');
+      if (card) openChapter(+card.dataset.ch);
     });
   }
 
@@ -1426,11 +1378,7 @@
     }
   });
 
-  // Chapter item clicks
-  document.getElementById('chapter-list').addEventListener('click', e => {
-    const item = e.target.closest('.chapter-item');
-    if (item) openChapter(+item.dataset.ch);
-  });
+  // (Chapter list 클릭 핸들러는 buildHomeChapterList 내부에서 등록됨)
 
   // Popstate
   window.addEventListener('popstate', e => {
@@ -1482,6 +1430,7 @@
   // Init
   buildDrawer();
   buildSidebar();
+  buildHomeChapterList();
   setupImageLightbox();
   const params = new URLSearchParams(window.location.search);
   const initCh = params.get('ch');
