@@ -624,6 +624,59 @@
       overflow-x: auto;
     }
 
+    /* 단원 시작 Hero 배너 */
+    .ch-hero {
+      margin: 0 -0.5rem 2.5rem;
+      padding: 1.8rem 1.4rem 1.6rem;
+      background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 100%);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .ch-hero-part {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .ch-hero-num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.6rem; font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .ch-hero-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.55rem; font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      line-height: 1.35;
+    }
+    .ch-hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+      line-height: 1.65;
+    }
+    .ch-hero-meta {
+      display: flex; gap: 0.7rem; align-items: center;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .ch-hero-meta .dot {
+      width: 3px; height: 3px;
+      background: var(--text-muted);
+      border-radius: 50%;
+    }
+    @media (min-width: 1024px) {
+      .ch-hero {
+        margin: 0 0 3rem;
+        padding: 2.5rem 2.4rem 2.2rem;
+      }
+      .ch-hero-num { font-size: 3.2rem; }
+      .ch-hero-title { font-size: 1.8rem; }
+    }
+
     /* Mermaid */
     .reader-content .mermaid {
       margin: 1.8rem 0;
@@ -1086,6 +1139,31 @@
     });
   }
 
+  // 단원 num → Part 라벨
+  function getPartLabel(num) {
+    for (const p of PARTS) {
+      if (p.chapters.includes(num)) return p.label;
+    }
+    return '';
+  }
+
+  // 단원 hero 배너 HTML 생성 (renderContent 첫 부분에 삽입)
+  function buildChapterHero(ch, md) {
+    const lines = md.split('\n').length;
+    const minutes = Math.max(5, Math.round(lines / 80));
+    return `<div class="ch-hero">
+      <div class="ch-hero-part">${getPartLabel(ch.num)}</div>
+      <div class="ch-hero-num">${ch.displayNum}</div>
+      <h1 class="ch-hero-title">${ch.title}</h1>
+      <div class="ch-hero-desc">${ch.desc || ''}</div>
+      <div class="ch-hero-meta">
+        <span>📖 약 ${minutes}분 분량</span>
+        <span class="dot"></span>
+        <span>${ch.num} / ${CHAPTERS.length}</span>
+      </div>
+    </div>`;
+  }
+
   // Build home page chapter list (메인 페이지 카드 그리드)
   function buildHomeChapterList() {
     const container = document.getElementById('chapter-list');
@@ -1248,7 +1326,7 @@
 
     // Load content
     if (cache[num]) {
-      renderContent(cache[num]);
+      renderContent(cache[num], ch);
     } else {
       readerContent.innerHTML = `<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
       try {
@@ -1256,7 +1334,7 @@
         if (!res.ok) throw new Error(res.status);
         const md = await res.text();
         cache[num] = md;
-        if (currentCh === num) renderContent(md);
+        if (currentCh === num) renderContent(md, ch);
       } catch(e) {
         readerContent.innerHTML = `<p style="color:var(--text-muted);text-align:center;padding:4rem 0;">콘텐츠를 불러올 수 없습니다.</p>`;
       }
@@ -1266,7 +1344,7 @@
     renderNav(num);
   }
 
-  function renderContent(md) {
+  function renderContent(md, ch) {
     // 1. 수식 보호 — marked가 $x_t$의 _t를 italic으로 먹는 걸 방지
     const mathStore = [];
     md = md.replace(/\$\$([\s\S]+?)\$\$/g, (_, c) => {
@@ -1286,6 +1364,12 @@
       const m = mathStore[+i];
       return m.display ? `$$${m.content}$$` : `$${m.content}$`;
     });
+
+    // 3-A. 본문 첫 H1 제거 (hero에 단원 제목 표시되므로 중복 방지)
+    html = html.replace(/<h1[^>]*>[\s\S]*?<\/h1>/, '');
+
+    // 3-B. Hero 배너 prepend
+    if (ch) html = buildChapterHero(ch, md) + html;
 
     readerContent.innerHTML = html;
 
