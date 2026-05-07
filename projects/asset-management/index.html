@@ -716,15 +716,82 @@
     /* 모바일·태블릿 좁은 영역 */
     @media (max-width: 640px) {
       .hero h1 { font-size: 1.8rem; }
-      .hero-meta { gap: 2rem; }
+      .hero-meta { gap: 1.5rem; flex-wrap: wrap; }
       .chapter-list-section { padding: 0 1.2rem 4rem; }
       .chapter-num { font-size: 1.3rem; min-width: 2rem; }
       .reader-column { padding: 72px 1.2rem 3rem; }
-      .reader-content h1 { font-size: 1.6rem; }
-      .reader-content h2 { font-size: 1.3rem; }
+      /* 가독성 — 모바일 본문 line-height 줄이고 폰트 살짝 작게 */
+      .reader-content { font-size: 15.5px; line-height: 1.85; }
+      .reader-content p { margin-bottom: 1rem; }
+      .reader-content li { line-height: 1.75; }
+      .reader-content h1 { font-size: 1.6rem; margin-top: 2rem; }
+      .reader-content h2 { font-size: 1.3rem; margin-top: 1.8rem; }
+      .reader-content h3 { font-size: 1.05rem; margin-top: 1.4rem; }
+      .reader-content blockquote { padding: 0.8rem 1rem; font-size: 14px; }
+      /* 표 — 좁은 화면에서 가로 스와이프 */
+      .reader-content table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        font-size: 13.5px;
+      }
+      .reader-content thead th, .reader-content tbody td {
+        padding: 0.55rem 0.7rem;
+      }
+      /* KaTeX 디스플레이 수식 — 가로 스크롤 (이미 있지만 모바일 강화) */
+      .reader-content .katex-display {
+        font-size: 0.92em;
+        margin: 1.2rem 0;
+        padding: 0.6rem 0;
+      }
+      /* Mermaid — 모바일 가로 스크롤 + 패딩 축소 */
+      .reader-content .mermaid {
+        padding: 0.6rem;
+        margin: 1.2rem -0.5rem;
+      }
+      /* 코드블록 폰트 작게 */
+      .reader-content pre { padding: 1rem; font-size: 13px; }
+      .reader-content code { font-size: 13.5px; }
+      /* 이미지 — 모바일에서 살짝 음각 텍스트로 탭 힌트 */
+      .reader-content img {
+        cursor: zoom-in;
+        margin: 1.2rem -0.5rem;
+        border-radius: 6px;
+      }
       .reader-nav-bottom { grid-template-columns: 1fr; }
       .toc-footer { flex-direction: column; gap: 0.8rem; text-align: center; }
     }
+
+    /* 이미지 라이트박스 (모바일/데스크탑 둘 다) */
+    .img-lightbox {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(15,15,15,0.95);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      cursor: zoom-out;
+      animation: lbFade 0.18s ease;
+    }
+    .img-lightbox img {
+      max-width: 100%;
+      max-height: 100vh;
+      object-fit: contain;
+      box-shadow: 0 0 60px rgba(0,0,0,0.6);
+      border-radius: 6px;
+    }
+    .img-lightbox-close {
+      position: absolute; top: 1rem; right: 1rem;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff; font-size: 1.2rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .img-lightbox-close:hover { background: rgba(255,255,255,0.25); }
+    @keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+    .reader-content img { cursor: zoom-in; }
   </style>
 </head>
 <body>
@@ -1325,9 +1392,29 @@
     else goToToc();
   });
 
+  // 이미지 라이트박스 (delegation, 본문 어디서든 클릭 시)
+  function setupImageLightbox() {
+    document.addEventListener('click', e => {
+      const img = e.target.closest('.reader-content img');
+      if (!img) return;
+      e.preventDefault();
+      const overlay = document.createElement('div');
+      overlay.className = 'img-lightbox';
+      overlay.innerHTML = `<img src="${img.src}" alt="${(img.alt || '').replace(/"/g, '&quot;')}">
+                           <button class="img-lightbox-close" aria-label="닫기">×</button>`;
+      const close = () => overlay.remove();
+      overlay.addEventListener('click', close);
+      document.body.appendChild(overlay);
+      // ESC로 닫기
+      const onEsc = ev => { if (ev.key === 'Escape') { close(); document.removeEventListener('keydown', onEsc); } };
+      document.addEventListener('keydown', onEsc);
+    });
+  }
+
   // Init
   buildDrawer();
   buildSidebar();
+  setupImageLightbox();
   const params = new URLSearchParams(window.location.search);
   const initCh = params.get('ch');
   if (initCh && +initCh >= 1 && +initCh <= CHAPTERS.length) {
