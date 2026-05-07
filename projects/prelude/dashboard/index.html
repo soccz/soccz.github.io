@@ -903,6 +903,16 @@ const COLORS = {
 let HISTORY_ROWS = [];
 let SORT_KEY = 'date';
 let SORT_DIR = 'desc';
+let BOOTED = false;
+
+/* PIN 재시도 시 같은 canvas 재사용 — chart.js 4 의 'Canvas is already in use' 회피 */
+function safeChart(canvasId, config) {
+  const existing = Chart.getChart(canvasId);
+  if (existing) existing.destroy();
+  const el = document.getElementById(canvasId);
+  if (!el) return null;
+  return new Chart(el, config);
+}
 
 /* ───────── Crypto (papers 와 동일 패턴) ───────── */
 function b64ToBytes(s) {
@@ -1145,7 +1155,10 @@ function channelKpiHtml(s, kind) {
     html += chip('Tail Ratio', fmt(stat.tail_ratio, 2), stat.tail_ratio > 1 ? 'pos' : 'neg', '|q95|/|q5| · quantstats');
     html += chip('Recovery Factor', fmt(stat.recovery_factor, 2), sgnClass(stat.recovery_factor), 'cum/|MDD| · quantstats');
     html += chip('Ulcer Index', fmt(stat.ulcer_index, 1), '', '√mean(DD²) · Martin 1987');
-    html += chip('Common Sense Ratio', fmt(stat.common_sense_ratio, 2), stat.common_sense_ratio > 1 ? 'pos' : 'neg', 'PF × Tail · quantstats');
+    html += chip('Common Sense Ratio', fmt(stat.common_sense_ratio, 2),
+                 stat.common_sense_ratio == null ? 'muted'
+                   : (stat.common_sense_ratio > 1 ? 'pos' : 'neg'),
+                 'PF × Tail · quantstats');
     html += chip('Win streak', String(stat.max_win_streak ?? '—'), 'pos', 'max consecutive r>0');
     html += chip('Loss streak', String(stat.max_loss_streak ?? '—'), 'neg', 'max consecutive r<0');
     html += `</div>`;
@@ -1215,6 +1228,7 @@ function _renderCumChannel(canvasId, series, color, label, btcSeries) {
       pointRadius: 0,
     });
   }
+  Chart.getChart(ctx)?.destroy();
   new Chart(ctx, {
     type: 'line',
     data: { labels: dates, datasets },
@@ -1298,13 +1312,20 @@ function renderStratification(summary) {
     const s = summary.channels[kind] || {};
     const strat = s.stratification;
     if (!strat) continue;
-    const distHits = [{ label: '+3% / 4h', key: 'hit_h2_pct' }, { label: '+5% / 24h', key: 'hit_h6_pct' }, { label: '+20% tail', key: 'hit_h5_pct' }];
-    const preHits = [{ label: '+3% / 1h', key: 'hit_first1h_3_pct' }, { label: '+5% / 1h', key: 'hit_first1h_5_pct' }];
-    // breakdown_by uses key naming hit_<label>_pct (with underscore) — match to what build_dashboard generates
-    const distHitsActual = [{ label: '+3% / 4h', key: 'hit_h2_pct' }, { label: '+5% / 24h', key: 'hit_h6_pct' }, { label: '+20% tail', key: 'hit_h5_pct' }];
-    const preHitsActual = [{ label: '+3% / 15m', key: 'hit_first15_3_pct' }, { label: '+3% / 1h', key: 'hit_first1h_3_pct' }, { label: '+5% / 1h', key: 'hit_first1h_5_pct' }];
-    const hitsR = kind === 'distribution' ? distHitsActual : preHitsActual;
-    const hitsS = kind === 'distribution' ? distHitsActual : []; // setup hits only for dist
+    // breakdown_by 가 hit_<label>_pct 형식으로 키 생성 (build_dashboard.py 매칭)
+    const distHits = [
+      { label: '+3% / 4h',  key: 'hit_h2_pct' },
+      { label: '+5% / 24h', key: 'hit_h6_pct' },
+      { label: '+20% tail', key: 'hit_h5_pct' },
+    ];
+    const preHits = [
+      { label: '+3% / 15m', key: 'hit_first15_3_pct' },
+      { label: '+5% / 15m', key: 'hit_first15_5_pct' },
+      { label: '+3% / 1h',  key: 'hit_first1h_3_pct' },
+      { label: '+5% / 1h',  key: 'hit_first1h_5_pct' },
+    ];
+    const hitsR = kind === 'distribution' ? distHits : preHits;
+    const hitsS = kind === 'distribution' ? distHits : []; // setup hits only for dist
     blocks.push(`
       <h3 style="font-family:'Noto Serif KR',serif;font-size:1.1rem;margin:1.6rem 0 0.8rem">${escapeHtml(label)}</h3>
       <div class="strat-block">
@@ -1339,6 +1360,7 @@ function renderScatter() {
     if (r.channel === 'distribution') distPts.push(pt);
     else if (r.channel === 'preopen') prePts.push(pt);
   }
+  Chart.getChart(ctx)?.destroy();
   new Chart(ctx, {
     type: 'scatter',
     data: {
@@ -1389,7 +1411,7 @@ function renderConfidence(summary) {
       </div>
       <div class="confidence-card">
         <div class="cf-label">${escapeHtml(label)} · MinTRL @ 95%</div>
-        <div class="cf-num ${mintrl == null ? 'muted' : ''}">${mintrl == null ? '∞' : Math.ceil(mintrl) + ' trades'}</div>
+        <div class="cf-num muted">${mintrl == null ? '∞' : Math.ceil(mintrl) + ' trades'}</div>
         <div class="cf-sub">95% 신뢰 위해 필요한 추가 거래 수<br>${mintrl == null ? '⚠️ 현재 SR < threshold — 도달 불가' : `현재 ${c.n_trades} → ${Math.ceil(mintrl)} 까지`}</div>
         <div class="cf-formula">MinTRL = 1 + (1 − γ₃·SR* + (γ₄−1)/4·SR*²) × (Φ⁻¹(α) / (SR − SR*))²</div>
       </div>
@@ -1447,6 +1469,7 @@ function _renderUnderwater(canvasId, series, color) {
   if (!ctx) return;
   const dates = series.map(r => r.date);
   const uw = series.map(r => r.underwater_pct);
+  Chart.getChart(ctx)?.destroy();
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -1473,6 +1496,7 @@ function _renderHist(canvasId, bins, color) {
   const labels = bins.map(b => `${fmt(b.bin_low, 0)}~${fmt(b.bin_high, 0)}%`);
   const counts = bins.map(b => b.count);
   const colors = bins.map(b => (b.bin_low + b.bin_high) / 2 >= 0 ? COLORS.green + 'cc' : COLORS.red + 'cc');
+  Chart.getChart(ctx)?.destroy();
   new Chart(ctx, {
     type: 'bar',
     data: {
@@ -1508,6 +1532,7 @@ function _renderRollingSharpe(canvasId, series, color) {
   }
   const dates = series.map(r => r.date);
   const rs = series.map(r => r.rolling_sharpe);
+  Chart.getChart(ctx)?.destroy();
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -1623,7 +1648,8 @@ function downloadCsv() {
   for (const r of HISTORY_ROWS) {
     lines.push(cols.map(c => escape(r[c])).join(','));
   }
-  const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+  // UTF-8 BOM (﻿) — 한글 Windows Excel 깨짐 방지
+  const blob = new Blob(['﻿' + lines.join('\n')], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -1636,6 +1662,7 @@ function _renderRollingChannel(canvasId, series, color, lines) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
   const dates = series.map(r => r.date);
+  Chart.getChart(ctx)?.destroy();
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -1777,10 +1804,12 @@ window.addEventListener('scroll', () => {
 
 /* ───────── Boot ───────── */
 (async function main() {
+  if (BOOTED) return;
   let pin;
   try {
     pin = await showPinModal();
   } catch (_) { return; }
+  BOOTED = true;
 
   try {
     const fetchJson = (name) => fetch(`${DATA_DIR}/${name}?_=` + Date.now()).then(r => {
