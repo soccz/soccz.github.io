@@ -7,7 +7,7 @@
   <title>prelude — 09:00 직전 펌프 레이더 · 운영 + 연구 보고서</title>
   <meta name="description" content="업비트 KRW 일봉 펌프 레이더. 6-class softprob → ≥20% tail detector → multi-head distribution → 08:55 pre-open trigger 까지 5 단계 재정의. Bootstrap CI / Path-aware backtest / Multi-scale ablation / Bucket calibration 전 과정 공개.">
   <meta property="og:title" content="prelude — 09:00 직전 펌프 레이더">
-  <meta property="og:description" content="단일 점수 detector 의 모호함을 multi-head 조건부 분포로 재정의. 5 phases · 6 experiments · 92.9% bootstrap edge · 9.56 Sharpe (TP-tiered) · 진입가 표기까지.">
+  <meta property="og:description" content="단일 점수 detector 의 모호함을 multi-head 조건부 분포로 재정의. 5 phases · 6 experiments · 92.9% bootstrap edge · optimistic TP-tiered Sharpe · 진입가 표기까지.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
   <meta name="twitter:card" content="summary">
@@ -42,7 +42,8 @@
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
-    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
     nav.scrolled { background: rgba(250,250,249,0.97); }
@@ -53,7 +54,7 @@
     .nav-links a:hover { color: var(--accent); }
 
     .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(180,83,9,0.05) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(59,130,246,0.04) 0%, transparent 50%); }
+    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(250,250,249,0.92) 0%, rgba(245,245,244,0.72) 46%, rgba(250,250,249,1) 100%), repeating-linear-gradient(90deg, rgba(68,64,60,0.035) 0 1px, transparent 1px 72px), repeating-linear-gradient(0deg, rgba(68,64,60,0.025) 0 1px, transparent 1px 72px); }
     .hero-content { position: relative; max-width: 880px; }
     .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem; }
     .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
@@ -94,7 +95,7 @@
     .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
     .badge-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(126,58,242,0.18); }
 
-    .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; }
+    .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; min-width: 0; overflow-wrap: anywhere; }
     .metric-val { font-family: 'Noto Serif KR', serif; font-size: 2rem; font-weight: 700; display: block; line-height: 1.2; margin-bottom: 0.3rem; }
     .metric-val.neg { color: var(--red); }
     .metric-val.pos { color: var(--green); }
@@ -105,7 +106,7 @@
     .metric-label { font-size: 0.78rem; color: var(--text-secondary); font-weight: 500; }
     .metric-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; line-height: 1.5; }
 
-    .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem 2rem; margin-bottom: 1.5rem; }
+    .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem 2rem; margin-bottom: 1.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .chart-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
     .chart-subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.6rem; line-height: 1.6; }
 
@@ -141,7 +142,7 @@
     .lesson-desc { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.8; }
     .c { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.15rem 0.4rem; border-radius: 3px; color: var(--accent); }
 
-    .tbl { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .tbl { width: 100%; min-width: 720px; border-collapse: collapse; font-size: 0.85rem; }
     .tbl th { background: var(--bg-secondary); padding: 0.7rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 600; border-bottom: 2px solid var(--border); }
     .tbl td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; }
     .tbl td.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
@@ -316,9 +317,11 @@
     .part-divider p { font-size: 0.92rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.85; }
     .part-divider .part-ornament { width: 40px; height: 1px; background: var(--border-light); margin: 1.5rem auto; }
 
-    @media (max-width: 980px) { .heatmap.h-3 { grid-template-columns: 80px repeat(6, 1fr); font-size: 0.65rem; } .phase-flow { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 980px) { .heatmap.h-3 { grid-template-columns: 80px repeat(6, 1fr); font-size: 0.65rem; min-width: 640px; } .phase-flow { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } .auto-timer { grid-template-columns: 1fr; gap: 0.4rem; } .auto-when { text-align: left; } }
     @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .lesson-item { flex-direction: column; gap: 0.4rem; } .cadence-slot { font-size: 0.55rem; } .bar-row { grid-template-columns: 90px 1fr 70px; } }
+    @media (max-width: 520px) { .nav-inner { height: 56px; padding: 0 1rem; } .hero { min-height: auto; padding: 6.5rem 1rem 4rem; } .hero-label { margin-bottom: 1.5rem; letter-spacing: 0.12em; } .hero h1 { font-size: 2.1rem; } .hero-sub { font-size: 0.9rem; line-height: 1.8; } .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } .hero-stat-num { font-size: 1.65rem; } .hero-stat-label, .metric-sub, .dual-key, .dual-val { overflow-wrap: anywhere; } section { padding: 3.5rem 1rem; } section.compact { padding: 2.8rem 1rem; } .chart-wrap { padding: 1.1rem; margin-left: -0.25rem; margin-right: -0.25rem; } .metric-val { font-size: 1.55rem; } .bar-row { grid-template-columns: 1fr; gap: 0.25rem; } .bar-label { text-align: left; } .bar-val { justify-self: end; } .cadence-row { align-items: stretch; flex-direction: column; } .cadence-label { min-width: 0; } .cadence-slot { min-width: 58px; } .cadence-bar { overflow-x: auto; padding-bottom: 0.25rem; } .auto-timer, .lesson-item, .card, .layer-card, .dual-card { padding: 1rem; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; } .fade-in { opacity: 1; transform: none; } }
   </style>
 </head>
 <body>
@@ -354,7 +357,7 @@
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="5" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="9" data-decimals="0">0</span><span class="hero-stat-label">Total Heads</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">TP-tiered Sharpe</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">Optimistic Tiered Sharpe</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0</span></div>
       <div class="hero-stat"><span class="hero-stat-num">21s</span><span class="hero-stat-label">Predict Latency</span></div>
     </div>
@@ -362,6 +365,10 @@
       <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer" class="hero-link">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         Source Code
+      </a>
+      <a href="dashboard/" class="hero-link" aria-label="Live dashboard">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="9" width="2.5" height="5" rx="0.5"/><rect x="6.75" y="6" width="2.5" height="8" rx="0.5"/><rect x="11.5" y="2.5" width="2.5" height="11.5" rx="0.5"/></svg>
+        Live Dashboard
       </a>
     </div>
   </div>
@@ -375,15 +382,15 @@
   <h2 class="section-title">핵심 결과 — 한 눈에</h2>
   <p class="section-desc">단일 점수 모델이 던진 모호함을 multi-head 조건부 분포로 재정의. 09:05 timer 가 첫 15분 펌프를 못 잡는 한계를 인정하고 08:55 전용 모델로 분리. backtest 가 좋다는 이유로 넘어가지 않고 <strong>6 종류 audit 으로 edge 가 통계적으로 살아있는지 검증</strong>.</p>
   <div class="four-col" style="margin-bottom:1.4rem;">
-    <div class="metric-card"><span class="metric-val pos">9.56</span><div class="metric-label">TP-tiered Sharpe</div><div class="metric-sub">distribution_beta vs<br>random 2.37 (4× 격차)</div></div>
-    <div class="metric-card"><span class="metric-val amber">+9.61&times;</span><div class="metric-label">Pre-open Top1% Lift</div><div class="metric-sub">first15_5pct head<br>base 1.83% &rarr; 17.03%</div></div>
-    <div class="metric-card"><span class="metric-val blue">42.96%</span><div class="metric-label">first1h +3% Precision</div><div class="metric-sub">top0.5% bucket<br>(base 6.70%)</div></div>
+    <div class="metric-card"><span class="metric-val pos">9.56</span><div class="metric-label">Optimistic TP-tiered Sharpe</div><div class="metric-sub">upper-bound exit<br>random 2.37 (4× gap)</div></div>
+    <div class="metric-card"><span class="metric-val amber">+9.26&times;</span><div class="metric-label">Pre-open Top1% Lift</div><div class="metric-sub">first15_5pct head<br>base 2.57% &rarr; 23.82%</div></div>
+    <div class="metric-card"><span class="metric-val blue">51.45%</span><div class="metric-label">first1h +3% Precision</div><div class="metric-sub">top0.5% bucket<br>(base 8.68%)</div></div>
     <div class="metric-card"><span class="metric-val pos">21s</span><div class="metric-label">Predict Latency</div><div class="metric-sub">08:55 boundary safe<br>(was 4m 48s)</div></div>
   </div>
   <div class="four-col">
     <div class="metric-card"><span class="metric-val purple">92.9%</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">5000 boot, sharpe diff<br>vs setup_momentum</div></div>
     <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>운영은 fractional</div></div>
-    <div class="metric-card"><span class="metric-val neutral">2 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">08:55 + 09:05 KST<br>silence on BTC bear</div></div>
+    <div class="metric-card"><span class="metric-val neutral">2 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">08:55 + 09:05 KST<br>regime shown, not advice</div></div>
     <div class="metric-card"><span class="metric-val neutral">4 timers</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">2 predict + 2 close<br>cron 미사용</div></div>
   </div>
 </div></section>
@@ -482,7 +489,7 @@
       <div class="t-title">15m precursor only — train/live mismatch 0</div>
       <div class="t-find">
         가설 1차: daily 47 features + 15m precursor 19 features 멀티스케일. → audit 에서 "daily 의 train (full closed) vs live (08:55 partial 5min) mismatch" 발견.<br>
-        v1 lock: 15m precursor only 19 features. 6 binary heads (first15/30/1h × 3pct/5pct). first15_5pct top1% precision 17.03% (base 1.83%) <strong>= lift 9.29×</strong>. predict latency 4m 48s → 21s.
+        v1 lock: 15m precursor only 19 features. 6 binary heads (first15/30/1h × 3pct/5pct). first15_5pct top1% precision 23.82% (base 2.57%) <strong>= lift 9.26×</strong>. predict latency 4m 48s → 21s.
       </div>
       <span class="badge badge-ok">19 ft / 6 heads</span>
       <span class="badge badge-blue">15m only</span>
@@ -552,7 +559,7 @@
       <div class="dual-row"><span class="dual-key">발사 시각</span><span class="dual-val a">KST 08:55</span></div>
       <div class="dual-row"><span class="dual-key">입력</span><span class="dual-val a">15m precursor 19 ft</span></div>
       <div class="dual-row"><span class="dual-key">Heads</span><span class="dual-val">6 (15/30/60m × 3/5%)</span></div>
-      <div class="dual-row"><span class="dual-key">Top1% lift (first15_5)</span><span class="dual-val a">9.29×</span></div>
+      <div class="dual-row"><span class="dual-key">Top1% lift (first15_5)</span><span class="dual-val a">9.26×</span></div>
       <div class="dual-row"><span class="dual-key">Latency</span><span class="dual-val">21s (8:30 snapshot)</span></div>
       <div class="dual-row"><span class="dual-key">Decision window</span><span class="dual-val">08:45 ~ 08:59</span></div>
       <div class="dual-philosophy pre-phil">
@@ -664,17 +671,17 @@
   <p class="section-desc">09:05 audit 결과: +3% hit 의 33%, +5% hit 의 25% 가 첫 15분 candle 안에 발생. 그래서 08:55 진입의 전용 모델로 분리. 입력은 15m precursor only 19 features.</p>
 
   <div class="chart-wrap">
-    <div class="chart-title">Pre-open v1 lift — 6 heads × 3 buckets (KRW only, 1 fold)</div>
-    <div class="chart-subtitle">first15_5pct top1% precision <strong>17.03%</strong> (base 1.83%) = <strong>lift 9.29×</strong>. 모든 head 의 top1% 가 base 의 6× 이상.</div>
+    <div class="chart-title">Pre-open v1 lift — 6 heads × 3 buckets (KRW only, 3-fold validation)</div>
+    <div class="chart-subtitle">first15_5pct top1% precision <strong>23.82%</strong> (base 2.57%) = <strong>lift 9.26×</strong>. 모든 head 의 top1% 가 base 의 6× 이상.</div>
     <table class="tbl">
       <thead><tr><th>head</th><th>질문</th><th>base</th><th>lift@top0.5%</th><th>lift@top1%</th><th>lift@top2%</th><th>prec@top1%</th></tr></thead>
       <tbody>
-        <tr><td><strong>first15_3pct</strong></td><td>09:00-09:15 안 +3%</td><td class="mono">3.76%</td><td class="mono pos">10.42×</td><td class="mono pos">8.00×</td><td class="mono">6.32×</td><td class="mono pos">30.07%</td></tr>
-        <tr><td class="hilite"><strong>first15_5pct</strong></td><td class="hilite">09:00-09:15 안 +5%</td><td class="mono hilite">1.83%</td><td class="mono pos hilite">9.88×</td><td class="mono pos hilite"><strong>9.29×</strong></td><td class="mono hilite">6.92×</td><td class="mono pos hilite"><strong>17.03%</strong></td></tr>
-        <tr><td><strong>first30_3pct</strong></td><td>09:00-09:30 안 +3%</td><td class="mono">5.10%</td><td class="mono pos">7.58×</td><td class="mono pos">6.91×</td><td class="mono">5.73×</td><td class="mono pos">35.27%</td></tr>
-        <tr><td><strong>first30_5pct</strong></td><td>09:00-09:30 안 +5%</td><td class="mono">2.53%</td><td class="mono pos">9.80×</td><td class="mono pos">8.04×</td><td class="mono">6.31×</td><td class="mono pos">20.36%</td></tr>
-        <tr><td><strong>first1h_3pct</strong></td><td>09:00-10:00 안 +3%</td><td class="mono">6.70%</td><td class="mono pos">6.42×</td><td class="mono pos">6.39×</td><td class="mono">5.42×</td><td class="mono pos">42.80%</td></tr>
-        <tr><td><strong>first1h_5pct</strong></td><td>09:00-10:00 안 +5%</td><td class="mono">3.42%</td><td class="mono pos">8.66×</td><td class="mono pos">7.01×</td><td class="mono">5.38×</td><td class="mono pos">23.99%</td></tr>
+        <tr><td><strong>first15_3pct</strong></td><td>09:00-09:15 안 +3%</td><td class="mono">4.77%</td><td class="mono pos">9.16×</td><td class="mono pos">8.23×</td><td class="mono">7.18×</td><td class="mono pos">39.23%</td></tr>
+        <tr><td class="hilite"><strong>first15_5pct</strong></td><td class="hilite">09:00-09:15 안 +5%</td><td class="mono hilite">2.57%</td><td class="mono pos hilite">10.27×</td><td class="mono pos hilite"><strong>9.26×</strong></td><td class="mono hilite">7.76×</td><td class="mono pos hilite"><strong>23.82%</strong></td></tr>
+        <tr><td><strong>first30_3pct</strong></td><td>09:00-09:30 안 +3%</td><td class="mono">6.38%</td><td class="mono pos">6.95×</td><td class="mono pos">6.96×</td><td class="mono">6.54×</td><td class="mono pos">44.39%</td></tr>
+        <tr><td><strong>first30_5pct</strong></td><td>09:00-09:30 안 +5%</td><td class="mono">3.49%</td><td class="mono pos">9.68×</td><td class="mono pos">8.79×</td><td class="mono">7.70×</td><td class="mono pos">30.70%</td></tr>
+        <tr><td><strong>first1h_3pct</strong></td><td>09:00-10:00 안 +3%</td><td class="mono">8.68%</td><td class="mono pos">5.93×</td><td class="mono pos">5.80×</td><td class="mono">5.23×</td><td class="mono pos">50.36%</td></tr>
+        <tr><td><strong>first1h_5pct</strong></td><td>09:00-10:00 안 +5%</td><td class="mono">4.78%</td><td class="mono pos">8.50×</td><td class="mono pos">8.16×</td><td class="mono">6.85×</td><td class="mono pos">38.95%</td></tr>
       </tbody>
     </table>
   </div>
@@ -682,22 +689,22 @@
   <div class="two-col">
     <div class="chart-wrap" style="margin-bottom:0;">
       <div class="chart-title">first15_5pct — base vs top buckets</div>
-      <div class="chart-subtitle">base 1.83% 막대 좌측 가는 선. top1% 가 9.29× = 17.03%.</div>
+      <div class="chart-subtitle">base 2.57% 막대 좌측 가는 선. top1% 가 9.26× = 23.82%.</div>
       <div class="bar-chart">
-        <div class="bar-row"><div class="bar-label">base (random)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:8%"></div></div><div class="bar-val">1.83%</div></div>
-        <div class="bar-row"><div class="bar-label">top2%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:55%"></div></div><div class="bar-val">12.68%</div></div>
-        <div class="bar-row"><div class="bar-label">top1%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:75%"></div></div><div class="bar-val">17.03%</div></div>
-        <div class="bar-row"><div class="bar-label">top0.5%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:80%"></div></div><div class="bar-val">18.12%</div></div>
+        <div class="bar-row"><div class="bar-label">base (random)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:9%"></div></div><div class="bar-val">2.57%</div></div>
+        <div class="bar-row"><div class="bar-label">top2%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:67%"></div></div><div class="bar-val">19.96%</div></div>
+        <div class="bar-row"><div class="bar-label">top1%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:80%"></div></div><div class="bar-val">23.82%</div></div>
+        <div class="bar-row"><div class="bar-label">top0.5%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:88%"></div></div><div class="bar-val">26.41%</div></div>
       </div>
     </div>
     <div class="chart-wrap" style="margin-bottom:0;">
       <div class="chart-title">first1h_3pct — base vs top buckets</div>
-      <div class="chart-subtitle">prec@top1% 가 42.80% — 알림 1건당 4-in-10 정확도.</div>
+      <div class="chart-subtitle">prec@top1% 가 50.36% — 알림 1건당 약 1-in-2 정확도.</div>
       <div class="bar-chart">
-        <div class="bar-row"><div class="bar-label">base (random)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:15%"></div></div><div class="bar-val">6.70%</div></div>
-        <div class="bar-row"><div class="bar-label">top2%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:80%"></div></div><div class="bar-val">36.28%</div></div>
-        <div class="bar-row"><div class="bar-label">top1%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:95%"></div></div><div class="bar-val">42.80%</div></div>
-        <div class="bar-row"><div class="bar-label">top0.5%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:96%"></div></div><div class="bar-val">42.96%</div></div>
+        <div class="bar-row"><div class="bar-label">base (random)</div><div class="bar-track"><div class="bar-fill tier-mid" style="width:17%"></div></div><div class="bar-val">8.68%</div></div>
+        <div class="bar-row"><div class="bar-label">top2%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:88%"></div></div><div class="bar-val">45.38%</div></div>
+        <div class="bar-row"><div class="bar-label">top1%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:98%"></div></div><div class="bar-val">50.36%</div></div>
+        <div class="bar-row"><div class="bar-label">top0.5%</div><div class="bar-track"><div class="bar-fill tier-a" style="width:100%"></div></div><div class="bar-val">51.45%</div></div>
       </div>
     </div>
   </div>
@@ -738,7 +745,7 @@
   <div class="chart-wrap">
     <div class="chart-title">Sharpe diff distribution (n=5,000 bootstrap)</div>
     <div class="chart-subtitle">distribution_beta − setup_momentum, TP-tiered (TP3/TP5 mix). 0 위 92.9%, mean +0.181, median +0.179.</div>
-    <svg viewBox="0 0 880 280" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bootstrap distribution histogram">
+    <svg viewBox="0 0 880 320" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bootstrap distribution histogram">
       <!-- gridlines -->
       <line class="svg-grid" x1="60" y1="40" x2="60" y2="220"/>
       <line class="svg-grid" x1="220" y1="40" x2="220" y2="220"/>
@@ -761,33 +768,35 @@
       <rect x="700" y="203.4" width="80" height="16.6" fill="rgba(22,163,74,0.45)"/>
       <rect x="780" y="217.7" width="80" height="2.3" fill="rgba(22,163,74,0.45)"/>
       <!-- zero line -->
-      <line x1="460" y1="40" x2="460" y2="225" stroke="#dc2626" stroke-width="2" stroke-dasharray="4 3"/>
-      <text x="465" y="50" fill="#dc2626" font-size="11" font-family="JetBrains Mono">H₀: diff=0</text>
+      <line x1="460" y1="50" x2="460" y2="225" stroke="#dc2626" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="464" y="25" width="92" height="18" rx="3" fill="#ffffff" opacity="0.94"/>
+      <text x="469" y="38" fill="#dc2626" font-size="11" font-family="JetBrains Mono">H₀: diff=0</text>
       <!-- mean line -->
-      <line x1="606" y1="40" x2="606" y2="225" stroke="#16a34a" stroke-width="2"/>
-      <text x="610" y="50" fill="#16a34a" font-size="11" font-family="JetBrains Mono" font-weight="700">mean +0.181</text>
+      <line x1="606" y1="50" x2="606" y2="225" stroke="#16a34a" stroke-width="2"/>
+      <rect x="610" y="25" width="122" height="18" rx="3" fill="#ffffff" opacity="0.94"/>
+      <text x="615" y="38" fill="#16a34a" font-size="11" font-family="JetBrains Mono" font-weight="700">mean +0.181</text>
       <!-- 95% CI band -->
-      <line x1="421" y1="232" x2="793" y2="232" stroke="#7e3af2" stroke-width="3"/>
-      <circle cx="421" cy="232" r="3.5" fill="#7e3af2"/>
-      <circle cx="793" cy="232" r="3.5" fill="#7e3af2"/>
-      <text x="421" y="252" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="start">−0.05 (p2.5)</text>
-      <text x="793" y="252" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="end">+0.42 (p97.5)</text>
+      <line x1="421" y1="252" x2="793" y2="252" stroke="#7e3af2" stroke-width="3"/>
+      <circle cx="421" cy="252" r="3.5" fill="#7e3af2"/>
+      <circle cx="793" cy="252" r="3.5" fill="#7e3af2"/>
+      <text x="421" y="274" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="start">−0.05 (p2.5)</text>
+      <text x="793" y="274" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="end">+0.42 (p97.5)</text>
       <!-- x-axis labels -->
-      <text x="60" y="235" class="svg-text" text-anchor="middle">−0.30</text>
-      <text x="220" y="235" class="svg-text" text-anchor="middle">−0.10</text>
-      <text x="380" y="235" class="svg-text" text-anchor="middle">+0.00</text>
-      <text x="540" y="235" class="svg-text" text-anchor="middle">+0.20</text>
-      <text x="700" y="235" class="svg-text" text-anchor="middle">+0.40</text>
-      <text x="860" y="235" class="svg-text" text-anchor="middle">+0.60</text>
-      <text x="450" y="275" class="svg-text axis-title" text-anchor="middle">Sharpe diff (boot)</text>
+      <text x="60" y="238" class="svg-text" text-anchor="middle">−0.30</text>
+      <text x="220" y="238" class="svg-text" text-anchor="middle">−0.10</text>
+      <text x="380" y="238" class="svg-text" text-anchor="middle">+0.00</text>
+      <text x="540" y="238" class="svg-text" text-anchor="middle">+0.20</text>
+      <text x="700" y="238" class="svg-text" text-anchor="middle">+0.40</text>
+      <text x="860" y="238" class="svg-text" text-anchor="middle">+0.60</text>
+      <text x="450" y="304" class="svg-text axis-title" text-anchor="middle">Sharpe diff (boot)</text>
       <!-- bin counts -->
       <text x="100" y="219" class="svg-text" text-anchor="middle"></text>
       <text x="180" y="213" class="svg-text" text-anchor="middle">4</text>
       <text x="260" y="175" class="svg-text" text-anchor="middle">39</text>
       <text x="340" y="183" class="svg-text" text-anchor="middle">312</text>
       <text x="420" y="115" class="svg-text" text-anchor="middle" font-weight="700">930</text>
-      <text x="500" y="48" class="svg-text" text-anchor="middle" font-weight="700">1551</text>
-      <text x="580" y="75" class="svg-text" text-anchor="middle" font-weight="700">1303</text>
+      <text x="500" y="69" class="svg-text" text-anchor="middle" font-weight="700">1551</text>
+      <text x="580" y="96" class="svg-text" text-anchor="middle" font-weight="700">1303</text>
       <text x="660" y="142" class="svg-text" text-anchor="middle">687</text>
       <text x="740" y="200" class="svg-text" text-anchor="middle">153</text>
       <text x="820" y="215" class="svg-text" text-anchor="middle">21</text>
@@ -1251,7 +1260,7 @@
       <div class="lesson-num">09</div>
       <div class="lesson-body">
         <div class="lesson-title">Silence 는 기능, 침묵 안 하려고 룰을 늘리지 말 것</div>
-        <div class="lesson-desc">detector_v1 의 C8-C10 rank fallback ("threshold 통과 0건이면 top-1 알림") 모두 EV 음수. silence-heavy 가 옳음. cap 2 / day, BTC bear silence 운영 기본값.</div>
+        <div class="lesson-desc">detector_v1 의 C8-C10 rank fallback ("threshold 통과 0건이면 top-1 알림") 모두 EV 음수. silence-heavy 가 옳음. cap 과 threshold 를 우선하고 BTC regime 은 알림 문맥으로 표시.</div>
       </div>
     </div>
     <div class="lesson-item">
@@ -1278,7 +1287,7 @@
       <div class="card-text">
         <strong>Heads:</strong> 6 binary (first15/30/1h × 3pct/5pct)<br>
         <strong>피처:</strong> 19 (15m precursor only, 08:30 snapshot)<br>
-        <strong>Top1% lift:</strong> first15_3 8.00× / first15_5 9.29× / first1h_3 6.39×<br>
+        <strong>Top1% lift:</strong> first15_3 8.23× / first15_5 9.26× / first1h_3 5.80×<br>
         <strong>발사:</strong> 08:55 KST · 진입가 표시<br>
         <strong>가드:</strong> 08:45-08:59 decision-window
       </div>
@@ -1300,7 +1309,7 @@
     <div class="metric-card"><span class="metric-val pos">4 timers</span><div class="metric-label">systemd 운영</div><div class="metric-sub">2 predict + 2 close<br>cron 미사용</div></div>
     <div class="metric-card"><span class="metric-val neutral">2 ledgers</span><div class="metric-label">분리 paper ledger</div><div class="metric-sub">preopen / distribution<br>schema 호환</div></div>
     <div class="metric-card"><span class="metric-val amber">1 week</span><div class="metric-label">Live 누적 목표</div><div class="metric-sub">calibrator 생성<br>v2 swap 결정</div></div>
-    <div class="metric-card"><span class="metric-val neutral">silent</span><div class="metric-label">BTC bear 운영</div><div class="metric-sub">알림 fire X<br>cap 2 / day</div></div>
+    <div class="metric-card"><span class="metric-val neutral">regime</span><div class="metric-label">BTC regime 표시</div><div class="metric-sub">bear 도 fire 가능<br>cap / threshold 우선</div></div>
   </div>
 
   <div class="callout">
@@ -1310,7 +1319,7 @@
     </p>
     <p style="margin-top:0.7rem;">
       <strong>운영 원칙 유지:</strong>
-      매수 추천 X · 자동매매 X · 텔레그램 알림 + paper ledger 만 · BTC bear silence · raw probability 표기 금지 · 모든 코드 self-contained (gan_t / xsec_alpha import X).
+      매수 추천 X · 자동매매 X · 텔레그램 알림 + paper ledger 만 · BTC regime 표시 · raw probability 표기 금지 · 모든 코드 self-contained (gan_t / xsec_alpha import X).
     </p>
   </div>
 </div></section>
@@ -1324,12 +1333,29 @@
 
 <script>
 const nav = document.getElementById('navbar');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+if (nav) {
+  let navTicking = false;
+  const updateNav = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+    navTicking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!navTicking) {
+      requestAnimationFrame(updateNav);
+      navTicking = true;
+    }
+  }, { passive: true });
+  updateNav();
+}
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+} else {
+  document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+}
 
 function animateCountup(el) {
   const target = parseFloat(el.dataset.target);
@@ -1356,7 +1382,15 @@ const heroObserver = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.5 });
-document.querySelectorAll('.countup').forEach(el => heroObserver.observe(el));
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.countup').forEach(el => {
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || '0');
+    el.textContent = (el.dataset.prefix || '') + target.toFixed(decimals) + (el.dataset.suffix || '');
+  });
+} else {
+  document.querySelectorAll('.countup').forEach(el => heroObserver.observe(el));
+}
 </script>
 </body>
 </html>
