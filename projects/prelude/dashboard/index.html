@@ -211,6 +211,60 @@
     .limit-item .li-body { flex: 1; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; }
     .limit-item .li-body strong { color: var(--text-primary); }
 
+    /* Stratification table */
+    .strat-block { margin-bottom: 1.6rem; }
+    .strat-block .sb-title {
+      font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.4rem; letter-spacing: -0.01em;
+    }
+    .strat-block .sb-desc {
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 0.7rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .strat-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden;
+    }
+    .strat-table th, .strat-table td { padding: 0.55rem 0.85rem; text-align: right; border-bottom: 1px solid var(--border); }
+    .strat-table th { background: var(--bg-secondary); font-weight: 700; color: var(--text-secondary); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .strat-table th:first-child, .strat-table td:first-child { text-align: left; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-weight: 700; }
+    .strat-table td { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+    .strat-table td.pos { color: var(--green); }
+    .strat-table td.neg { color: var(--red); }
+    .strat-table tr:last-child td { border-bottom: 0; }
+
+    /* Alpha vs BTC */
+    .alpha-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.4rem 1.6rem; margin-bottom: 1.4rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
+    }
+    .alpha-card .ac-row { text-align: center; }
+    .alpha-card .ac-label {
+      font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 0.4rem;
+    }
+    .alpha-card .ac-num {
+      font-family: 'Noto Serif KR', serif; font-size: 1.9rem; font-weight: 700;
+      line-height: 1;
+    }
+    .alpha-card .ac-num.pos { color: var(--green); }
+    .alpha-card .ac-num.neg { color: var(--red); }
+    .alpha-card .ac-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; font-family: 'JetBrains Mono', monospace; }
+
+    /* Download button */
+    .download-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border-light); border-radius: 4px;
+      background: var(--bg-card); color: var(--text-secondary);
+      font-family: inherit; font-size: 0.78rem; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .download-btn:hover { border-color: var(--accent); color: var(--accent); }
+
     /* chart wrappers */
     .chart-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem 1.8rem; margin-bottom: 1.4rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .chart-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
@@ -319,6 +373,27 @@
 
 <hr class="divider">
 
+<!-- Alpha vs BTC HODL -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">ALPHA · BENCHMARK</div>
+    <h2 class="section-title">같은 기간 BTC HODL 대비</h2>
+    <p class="section-desc">
+      "절대 수익" 만 보면 답이 부족하다. 동일 기간 KRW-BTC 단순 holding 의 누적 return 과 비교 —
+      *어떤 reference 보다 어떤가* 가 alpha 의 정의.
+    </p>
+    <div class="alpha-card" id="alphaCard">
+      <div class="ac-row"><div class="ac-label">BTC HODL</div><div class="ac-num" id="alphaBtc">—</div><div class="ac-sub" id="alphaBtcRange">—</div></div>
+      <div class="ac-row"><div class="ac-label">distribution</div><div class="ac-num" id="alphaDist">—</div><div class="ac-sub">5% TP / 24h close</div></div>
+      <div class="ac-row"><div class="ac-label">pre-open</div><div class="ac-num" id="alphaPre">—</div><div class="ac-sub">5% TP / 1h close</div></div>
+      <div class="ac-row"><div class="ac-label">α (dist − BTC)</div><div class="ac-num" id="alphaDistDiff">—</div><div class="ac-sub" id="alphaDistVerdict">—</div></div>
+      <div class="ac-row"><div class="ac-label">α (pre − BTC)</div><div class="ac-num" id="alphaPreDiff">—</div><div class="ac-sub" id="alphaPreVerdict">—</div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- 채널별 누적 KPI -->
 <section>
   <div class="container">
@@ -388,6 +463,41 @@
 
 <hr class="divider">
 
+<!-- Stratification — regime / setup / score 분위 -->
+<section>
+  <div class="container">
+    <div class="section-label">STRATIFICATION</div>
+    <h2 class="section-title">어디서 잘 맞고 어디서 깨지는가</h2>
+    <p class="section-desc">
+      분류별 break-down — BTC regime / Setup ID / composite score 분위.
+      *signal 이 monotonic 한가, 어떤 환경에서 작동하는가* 가 quant 핵심 질문.
+      표본 작은 그룹은 신뢰도 낮음 — n 우선.
+    </p>
+    <div id="stratContent">
+      <div class="loading-state">데이터 잠금 — PIN 입력 후 표시</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Score vs PnL scatter -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">SCORE vs REALIZED</div>
+    <h2 class="section-title">composite score × 실현 PnL</h2>
+    <p class="section-desc">
+      각 알림의 모델 composite score (x) 와 가상 진입의 실현 PnL (y).
+      *높은 score 가 실제로 더 높은 결과로 이어지는가* — monotonic pattern 이면 signal 신뢰도 ↑.
+    </p>
+    <div class="chart-wrap">
+      <canvas id="chartScatter"></canvas>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- 알림 히스토리 -->
 <section>
   <div class="container">
@@ -416,6 +526,10 @@
       <label>코인
         <input id="filterCoin" type="text" placeholder="예: FIL" size="10">
       </label>
+      <button class="download-btn" id="downloadCsv" type="button">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a.75.75 0 01.75.75v7.69l2.22-2.22a.75.75 0 111.06 1.06l-3.5 3.5a.75.75 0 01-1.06 0l-3.5-3.5a.75.75 0 111.06-1.06l2.22 2.22V1.75A.75.75 0 018 1zM3 13a.75.75 0 01.75-.75h8.5a.75.75 0 010 1.5h-8.5A.75.75 0 013 13z"/></svg>
+        CSV download
+      </button>
       <span class="row-count" id="rowCount"></span>
     </div>
 
@@ -840,34 +954,207 @@ function _baseLineOpts(yTickPct = true) {
   };
 }
 
-function _renderCumChannel(canvasId, series, color, label) {
+function _renderCumChannel(canvasId, series, color, label, btcSeries) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
   const dates = series.map(r => r.date);
   const cum = series.map(r => r.cum_pnl_pct);
+  // BTC overlay — same date axis
+  const btcMap = new Map((btcSeries || []).map(r => [r.date, r.btc_cum_pct]));
+  const btcLine = dates.map(d => btcMap.has(d) ? btcMap.get(d) : null);
+
+  const datasets = [{
+    label,
+    data: cum,
+    borderColor: color,
+    backgroundColor: color + '22',
+    fill: true,
+    tension: 0.2,
+    spanGaps: true,
+    borderWidth: 1.7,
+    pointRadius: 1.8,
+  }];
+  if (btcSeries && btcSeries.length) {
+    datasets.push({
+      label: 'BTC HODL',
+      data: btcLine,
+      borderColor: '#a8a29e',
+      backgroundColor: 'transparent',
+      borderDash: [4, 4],
+      fill: false,
+      tension: 0.2,
+      spanGaps: true,
+      borderWidth: 1.3,
+      pointRadius: 0,
+    });
+  }
   new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: dates,
-      datasets: [{
-        label,
-        data: cum,
-        borderColor: color,
-        backgroundColor: color + '22',
-        fill: true,
-        tension: 0.2,
-        spanGaps: true,
-        borderWidth: 1.7,
-        pointRadius: 1.8,
-      }],
-    },
+    data: { labels: dates, datasets },
     options: _baseLineOpts(),
   });
 }
 
 function renderCumPnl(accuracy) {
-  _renderCumChannel('chartCumPnlDist', accuracy.distribution.cum_pnl || [], COLORS.distribution, 'distribution 누적');
-  _renderCumChannel('chartCumPnlPre',  accuracy.preopen.cum_pnl || [],     COLORS.preopen,      'pre-open 누적');
+  const btc = accuracy.btc_benchmark || [];
+  _renderCumChannel('chartCumPnlDist', accuracy.distribution.cum_pnl || [], COLORS.distribution, 'distribution 누적', btc);
+  _renderCumChannel('chartCumPnlPre',  accuracy.preopen.cum_pnl || [],     COLORS.preopen,      'pre-open 누적',      btc);
+}
+
+/* ───────── Alpha card ───────── */
+function renderAlphaCard(summary, accuracy) {
+  const dist = summary.channels.distribution || {};
+  const pre = summary.channels.preopen || {};
+  const dPnl = dist.virtual?.cum_pnl_pct;
+  const pPnl = pre.virtual?.cum_pnl_pct;
+  const btcSer = accuracy.btc_benchmark || [];
+  const btcLast = btcSer.length ? btcSer[btcSer.length - 1].btc_cum_pct : null;
+  const btcStart = btcSer.length ? btcSer[0].date : '—';
+  const btcEnd = btcSer.length ? btcSer[btcSer.length - 1].date : '—';
+
+  const set = (id, val, cls) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.textContent = val;
+      if (cls !== undefined) el.className = 'ac-num' + (cls ? ' ' + cls : '');
+    }
+  };
+  const sgn = v => v == null ? '' : (v >= 0 ? 'pos' : 'neg');
+  set('alphaBtc', fmtPct(btcLast, 1), sgn(btcLast));
+  set('alphaDist', fmtPct(dPnl, 1), sgn(dPnl));
+  set('alphaPre', fmtPct(pPnl, 1), sgn(pPnl));
+  document.getElementById('alphaBtcRange').textContent = `${btcStart} ~ ${btcEnd}`;
+  if (dPnl != null && btcLast != null) {
+    const a = dPnl - btcLast;
+    set('alphaDistDiff', fmtPct(a, 1), sgn(a));
+    document.getElementById('alphaDistVerdict').textContent =
+      a > 0 ? 'BTC 보다 우위' : (a < 0 ? 'BTC 보다 열위' : '동등');
+  }
+  if (pPnl != null && btcLast != null) {
+    const a = pPnl - btcLast;
+    set('alphaPreDiff', fmtPct(a, 1), sgn(a));
+    document.getElementById('alphaPreVerdict').textContent =
+      a > 0 ? 'BTC 보다 우위' : (a < 0 ? 'BTC 보다 열위' : '동등');
+  }
+}
+
+/* ───────── Stratification ───────── */
+function _stratTable(rows, hitCols) {
+  if (!rows || !rows.length) return '<div class="loading-state">표본 없음</div>';
+  const headers = ['그룹', 'n', 'avg max', 'avg min', 'avg PnL', ...hitCols.map(c => c.label)];
+  const trs = rows.map(r => {
+    const cells = [
+      `<td>${escapeHtml(r.group)}${r.score_range ? ` <span class="muted" style="font-size:0.7rem">[${fmt(r.score_range[0])}~${fmt(r.score_range[1])}]</span>` : ''}</td>`,
+      `<td>${r.n}</td>`,
+      `<td class="${sgnClass(r.avg_max_pct)}">${fmtPct(r.avg_max_pct)}</td>`,
+      `<td class="${sgnClass(r.avg_min_pct)}">${fmtPct(r.avg_min_pct)}</td>`,
+      `<td class="${sgnClass(r.avg_pnl_pct)}"><strong>${fmtPct(r.avg_pnl_pct)}</strong></td>`,
+      ...hitCols.map(c => {
+        const v = r[c.key];
+        return `<td>${v == null ? '—' : fmt(v, 1) + '%'}</td>`;
+      }),
+    ];
+    return `<tr>${cells.join('')}</tr>`;
+  }).join('');
+  return `
+    <table class="strat-table">
+      <thead><tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join('')}</tr></thead>
+      <tbody>${trs}</tbody>
+    </table>`;
+}
+
+function renderStratification(summary) {
+  const root = document.getElementById('stratContent');
+  if (!root) return;
+  const blocks = [];
+  for (const [kind, label] of [['distribution', 'distribution (09:05)'], ['preopen', 'pre-open (08:55)']]) {
+    const s = summary.channels[kind] || {};
+    const strat = s.stratification;
+    if (!strat) continue;
+    const distHits = [{ label: '+3% / 4h', key: 'hit_h2_pct' }, { label: '+5% / 24h', key: 'hit_h6_pct' }, { label: '+20% tail', key: 'hit_h5_pct' }];
+    const preHits = [{ label: '+3% / 1h', key: 'hit_first1h_3_pct' }, { label: '+5% / 1h', key: 'hit_first1h_5_pct' }];
+    // breakdown_by uses key naming hit_<label>_pct (with underscore) — match to what build_dashboard generates
+    const distHitsActual = [{ label: '+3% / 4h', key: 'hit_h2_pct' }, { label: '+5% / 24h', key: 'hit_h6_pct' }, { label: '+20% tail', key: 'hit_h5_pct' }];
+    const preHitsActual = [{ label: '+3% / 15m', key: 'hit_first15_3_pct' }, { label: '+3% / 1h', key: 'hit_first1h_3_pct' }, { label: '+5% / 1h', key: 'hit_first1h_5_pct' }];
+    const hitsR = kind === 'distribution' ? distHitsActual : preHitsActual;
+    const hitsS = kind === 'distribution' ? distHitsActual : []; // setup hits only for dist
+    blocks.push(`
+      <h3 style="font-family:'Noto Serif KR',serif;font-size:1.1rem;margin:1.6rem 0 0.8rem">${escapeHtml(label)}</h3>
+      <div class="strat-block">
+        <div class="sb-title">BTC regime 별</div>
+        <div class="sb-desc">시장 상태에 따른 결과 차이 — bull/bear · quiet/volatile 분리</div>
+        ${_stratTable(strat.regime, hitsR)}
+      </div>
+      ${kind === 'distribution' ? `
+      <div class="strat-block">
+        <div class="sb-title">Setup ID 별 (S01·S02·S03·S04)</div>
+        <div class="sb-desc">알림 1건이 여러 setup fire 시 각각 카운트 (intersection)</div>
+        ${_stratTable(strat.setup || [], hitsS)}
+      </div>` : ''}
+      <div class="strat-block">
+        <div class="sb-title">composite score 분위 (Q1 lowest → Q4 highest)</div>
+        <div class="sb-desc">score 가 monotonic 하면 Q4 > Q1. 그렇지 않으면 ranking 신뢰도 ↓</div>
+        ${_stratTable(strat.score || [], [])}
+      </div>
+    `);
+  }
+  root.innerHTML = blocks.join('');
+}
+
+/* ───────── Scatter ───────── */
+function renderScatter() {
+  const ctx = document.getElementById('chartScatter');
+  if (!ctx) return;
+  const distPts = [], prePts = [];
+  for (const r of HISTORY_ROWS) {
+    if (r.composite == null || r.virtual_pnl_pct == null) continue;
+    const pt = { x: Number(r.composite), y: Number(r.virtual_pnl_pct) };
+    if (r.channel === 'distribution') distPts.push(pt);
+    else if (r.channel === 'preopen') prePts.push(pt);
+  }
+  new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [
+        { label: 'distribution', data: distPts, backgroundColor: COLORS.distribution + 'cc', pointRadius: 4 },
+        { label: 'pre-open',      data: prePts,  backgroundColor: COLORS.preopen + 'cc',      pointRadius: 4 },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: "'JetBrains Mono', monospace", size: 11 } } },
+        tooltip: { callbacks: { label: ctx => `score ${fmt(ctx.parsed.x)} → PnL ${fmtPct(ctx.parsed.y, 2)}` } },
+      },
+      scales: {
+        x: { title: { display: true, text: 'composite score', font: { family: "'JetBrains Mono', monospace", size: 11 }, color: COLORS.text }, ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+        y: { title: { display: true, text: 'realized PnL (%)', font: { family: "'JetBrains Mono', monospace", size: 11 }, color: COLORS.text }, ticks: { callback: v => v + '%', font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+      },
+    },
+  });
+}
+
+/* ───────── CSV download ───────── */
+function downloadCsv() {
+  if (!HISTORY_ROWS.length) return;
+  const cols = ['date', 'channel', 'coin', 'setups', 'btc_regime', 'entry_price', 'composite',
+                'next_max_pct', 'next_min_pct', 'next_close_pct', 'virtual_pnl_pct',
+                'hit_h2', 'hit_h6', 'hit_h5', 'status'];
+  const escape = s => {
+    s = s == null ? '' : String(s);
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const lines = [cols.join(',')];
+  for (const r of HISTORY_ROWS) {
+    lines.push(cols.map(c => escape(r[c])).join(','));
+  }
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `prelude_history_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 function _renderRollingChannel(canvasId, series, color, lines) {
@@ -1038,12 +1325,16 @@ window.addEventListener('scroll', () => {
 
     HISTORY_ROWS = history.rows || [];
     renderHero(summary);
+    renderAlphaCard(summary, accuracy);
     renderChannels(summary);
     renderCumPnl(accuracy);
     renderRolling(accuracy);
+    renderStratification(summary);
+    renderScatter();
     attachSort();
     attachFilters();
     renderHistory();
+    document.getElementById('downloadCsv')?.addEventListener('click', downloadCsv);
   } catch (e) {
     console.error(e);
     document.getElementById('heroMeta').textContent = '데이터 로드 실패: ' + e.message;
