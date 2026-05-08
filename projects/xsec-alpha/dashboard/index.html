@@ -242,9 +242,9 @@
     <div class="section-label">latest picks</div>
     <h2 class="section-title">최근 추천 — SHORT 5 / WATCH LONG 5</h2>
     <p class="section-desc">
-      <strong>SHORT</strong>는 Bitget USDT-perp tradable 종목으로 5개 실행 후보.
-      <strong>WATCH LONG</strong>는 Upbit 신호 5개 — 현재 long side는 Upbit 현물에서만 진입 가능하므로 참고용.
-      <code style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; background:var(--bg-secondary); padding:0.1rem 0.4rem; border-radius:3px">actionable=False</code>는 게이트가 watch-only로 전환된 상태.
+      <strong>SHORT</strong>는 Bitget USDT-perp tradable 종목으로 5개. <strong>WATCH LONG</strong>은 Upbit 현물 또는 Bitget perp long으로 진입 가능한 5개 — 운영자가 수동 매매 기준이라 둘 다 actionable.
+      <code style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; background:var(--bg-secondary); padding:0.1rem 0.4rem; border-radius:3px">actionable=False</code>는 게이트가 watch-only로 전환된 상태(IC FREEZE 등).
+      "WATCH" 라벨은 자동 basket 실행이 SHORT 쪽에만 연결돼있다는 의미이지 신호 품질이 약하다는 뜻이 아님 — 12h 2σ+ 적중 70.6%로 6h 64.6%보다 오히려 강함.
     </p>
     <div class="two-col">
       <div class="card">
@@ -389,8 +389,9 @@
         regime-conditional 분석은 누적 데이터 부족으로 후순위.
       </span></div>
       <div class="limit-item"><span class="li-num">04.</span><span class="li-body">
-        <strong>SHORT만 실거래 가능.</strong> WATCH_LONG은 Upbit 신호인데 현물 long-only이고, Bitget tradable은 SHORT 5만 매핑됨.
-        LONG-side는 paper-only 상태 — economic content 약함.
+        <strong>실행은 수동 매매 기준.</strong> SHORT 5는 Bitget USDT perp 매핑이 있고, LONG 5는 Upbit 현물 또는 Bitget perp long 둘 다 가능 — 운영자가 직접 매매하므로 둘 다 actionable.
+        LONG 12h 2σ+ hit 70.6% &gt; SHORT 6h 64.6%로 신호 품질도 LONG이 더 강하지만, 자동 basket 실행 인프라는 SHORT 쪽 (Bitget perp tradable 필터)이 먼저 구축됨.
+        WATCH_LONG 표기는 "자동 실행 미연결" 의미이지 "신호 약함"이 아님.
       </span></div>
       <div class="limit-item"><span class="li-num">05.</span><span class="li-body">
         <strong>σ-bucket calibration 다중 비교.</strong> 4개 σ 버킷 × 2 사이드 = 8개 그룹 hit-rate를 동시 검사 중.
