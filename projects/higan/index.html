@@ -418,6 +418,10 @@
     <li><a href="#perturb">Perturb</a></li>
     <li><a href="#grad">Gradient</a></li>
     <li><a href="#perlayer">Per-layer</a></li>
+    <li><a href="#disentangle">Disentangle</a></li>
+    <li><a href="#localedit">Local edit</a></li>
+    <li><a href="#encattn">Enc-attention</a></li>
+    <li><a href="#discover">Discover</a></li>
     <li><a href="#cycle">Full cycle</a></li>
     <li><a href="#editing">Editing</a></li>
     <li><a href="#journal">Journal</a></li>
@@ -436,6 +440,9 @@
       <li><a href="#perturb">Perturb</a></li>
       <li><a href="#grad">Gradient</a></li>
       <li><a href="#perlayer">Per-layer</a></li>
+      <li><a href="#disentangle">Disentangle</a></li>
+      <li><a href="#localedit">Local</a></li>
+      <li><a href="#discover">Discover</a></li>
       <li><a href="#cycle">Cycle</a></li>
       <li><a href="#journal">Journal</a></li>
       <li><a href="#limits">Limits</a></li>
@@ -454,10 +461,10 @@
       잠재공간이 이미지의 어디에 작용하는지 픽셀 saliency로 직접 시각화한 .py 파이프라인.
     </p>
     <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">15</span><span class="hero-stat-label">sections</span></div>
       <div class="hero-stat"><span class="hero-stat-num">8</span><span class="hero-stat-label">attribute boundary</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">14×512</span><span class="hero-stat-label">W+ 잠재 공간</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">saliency methods (perturb / JVP)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">20k</span><span class="hero-stat-label">encoder iterations</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">analysis methods</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">40k</span><span class="hero-stat-label">encoder iterations</span></div>
     </div>
     <div class="hero-links">
       <a class="hero-link primary" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">
@@ -649,18 +656,18 @@ loss.backward()
         <tr><th>image</th><th class="num">pixel MSE (optim)</th><th class="num">pixel MSE (enc)</th><th class="num">LPIPS (optim)</th><th class="num">LPIPS (enc)</th></tr>
       </thead>
       <tbody>
-        <tr><td>img_00</td><td class="num winner">0.0258</td><td class="num loser">0.1013</td><td class="num winner">0.0314</td><td class="num loser">0.3557</td></tr>
-        <tr><td>img_01</td><td class="num winner">0.0083</td><td class="num loser">0.0300</td><td class="num winner">0.0313</td><td class="num loser">0.3816</td></tr>
-        <tr><td>img_02</td><td class="num winner">0.0053</td><td class="num loser">0.0395</td><td class="num winner">0.0268</td><td class="num loser">0.4564</td></tr>
-        <tr><td>img_03</td><td class="num winner">0.0177</td><td class="num loser">0.1274</td><td class="num winner">0.0327</td><td class="num loser">0.4158</td></tr>
-        <tr style="font-weight:700;"><td>mean</td><td class="num winner">0.0143</td><td class="num loser">0.0746</td><td class="num winner">0.0305</td><td class="num loser">0.4024</td></tr>
+        <tr><td>img_00</td><td class="num winner">0.0258</td><td class="num loser">0.0864</td><td class="num winner">0.0314</td><td class="num loser">0.3087</td></tr>
+        <tr><td>img_01</td><td class="num winner">0.0083</td><td class="num loser">0.0330</td><td class="num winner">0.0313</td><td class="num loser">0.3754</td></tr>
+        <tr><td>img_02</td><td class="num winner">0.0053</td><td class="num loser">0.0388</td><td class="num winner">0.0268</td><td class="num loser">0.4403</td></tr>
+        <tr><td>img_03</td><td class="num winner">0.0177</td><td class="num loser">0.0985</td><td class="num winner">0.0327</td><td class="num loser">0.3423</td></tr>
+        <tr style="font-weight:700;"><td>mean</td><td class="num winner">0.0143</td><td class="num loser">0.0642</td><td class="num winner">0.0305</td><td class="num loser">0.3667</td></tr>
       </tbody>
     </table>
   </div>
 
   <div class="bullet-list">
     <div class="bullet-item"><div class="bullet-mark green">A</div><div><strong>optim 1000-step</strong>: pixel MSE 0.014, LPIPS 0.031, ~30 s / 장. v1이 풀지 못했던 정확 재구성 — gradient flow 한 줄 고친 결과.</div></div>
-    <div class="bullet-item"><div class="bullet-mark">B</div><div><strong>encoder 1-pass</strong>: pixel MSE 0.075, LPIPS 0.402, ~0.05 s / 장. 1번에서 600× 빠르지만 색·디테일은 미달. 추가 학습 (200k iter ≈ 17 h) 시 LPIPS ~0.20대 도달 예상.</div></div>
+    <div class="bullet-item"><div class="bullet-mark">B</div><div><strong>encoder 1-pass (40k iter)</strong>: pixel MSE 0.064, LPIPS 0.367, ~0.05 s / 장. 600× 빠르지만 색·디테일은 미달. 20k → 40k 학습 시 LPIPS 0.40 → 0.37로 개선됨. 200k까지 가면 ~0.20대 도달 예상.</div></div>
     <div class="bullet-item"><div class="bullet-mark red">×</div><div><strong>v1 pSp encoder (FFHQ)</strong>: 도메인 mismatch로 침실에 부적합. v2에서는 제거.</div></div>
   </div>
 
@@ -839,9 +846,138 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </div></section>
 <hr class="divider">
 
-<!-- =================== 08 FULL CYCLE =================== -->
-<section id="cycle" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">08 — Full cycle (target → recon → saliency → edit)</div>
+<!-- =================== 08 DISENTANGLEMENT =================== -->
+<section id="disentangle"><div class="container fade-in">
+  <div class="section-label">08 — Disentanglement matrix</div>
+  <h2 class="section-title">8개 attribute는 정말 독립적인가?</h2>
+  <p class="section-desc">
+    HiGAN의 8 boundary가 의미적으로 깔끔하게 분리돼 있는지 정량 측정. 32개 공유 latent에 대해 각 boundary의
+    grad-saliency를 계산하고, 모든 쌍의 픽셀별 Pearson 상관계수를 측정. 높을수록 entangled.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/disentangle_abs.png" alt="8x8 absolute saliency correlation matrix" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 8.1</strong> &nbsp; |abs| saliency 픽셀별 Pearson. 진한 빨강 = 강한 entanglement. <code>view</code> 행/열만 옅음 → 다른 7개와 분리됨. 7×7 우측 블록은 모두 0.6+ 의 강한 상관 (표면 텍스처 류 attribute들이 같은 픽셀들에서 작동).</div>
+  </div>
+
+  <div class="panel-2col">
+    <div class="panel">
+      <div class="panel-eyebrow">most entangled (top 5)</div>
+      <h4>표면 텍스처 클러스터</h4>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;line-height:1.85;color:var(--text-primary);">
+        cluttered_space ↔ glossy &nbsp; <strong>0.83</strong><br>
+        dirt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↔ glossy &nbsp; <strong>0.81</strong><br>
+        carpet &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↔ wood &nbsp;&nbsp;&nbsp; <strong>0.77</strong><br>
+        cluttered_space ↔ dirt &nbsp;&nbsp;&nbsp; <strong>0.76</strong><br>
+        carpet &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↔ indoor_lighting <strong>0.75</strong><br>
+      </p>
+      <p>모두 침대·바닥·벽 같은 surface region에서 작동하는 attribute들. 대체로 하나를 켜면 다른 것도 따라 변함.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-eyebrow">most disentangled (lowest)</div>
+      <h4><code>view</code>만 진정한 직교</h4>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;line-height:1.85;color:var(--text-primary);">
+        view ↔ scary &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>0.34</strong><br>
+        view ↔ cluttered_space &nbsp;&nbsp; <strong>0.33</strong><br>
+        view ↔ indoor_lighting &nbsp;&nbsp;&nbsp; <strong>0.32</strong><br>
+      </p>
+      <p>view는 layer 0–4 (coarse, 구도/창문 형상)에서만 작동. 나머지는 layer 6–11 (fine, 텍스처). layer 분리가 곧 의미 분리.</p>
+    </div>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">새 분석 결과</div>
+    <p>HiGAN의 8개 boundary는 <strong>"view"와 "그 외 7개"의 두 클러스터</strong>로 갈린다. 7개 클러스터 내부에서는
+    의미 단어(carpet/wood/dirt/glossy 등)가 다르더라도 saliency map은 0.6–0.83의 강한 상관 — 즉
+    <em>"같은 픽셀 영역에 다른 라벨이 붙은 것"</em>에 가깝다. 이는 HiGAN 원논문이 다룬 disentanglement 평가의
+    forward-mode JVP 버전. 추가 학습 0.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 09 LOCAL EDIT =================== -->
+<section id="localedit" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">09 — Saliency-guided local edit</div>
+  <h2 class="section-title">"램프만 켜고 침구는 그대로" — saliency를 마스크로 쓰기</h2>
+  <p class="section-desc">
+    grad-saliency map을 가우시안 블러 + threshold로 soft mask로 변환한 뒤, attribute 편집을 그 마스크 안에서만 적용:
+    <code>I_local = I_edited · m + I_orig · (1 − m)</code>. 글로벌 편집의 부작용(다른 영역 변색 등)을 즉시 제거.
+    saliency가 단순 시각화가 아니라 *실용 마스크*로 동작함을 보임.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/local_edit_2.png" alt="saliency-guided local edit grid" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 9.1</strong> &nbsp; 동일 침실에 indoor_lighting / wood / view boundary 적용. 컬럼: original / saliency / soft mask / global edit (전 픽셀) / <strong>local edit (saliency 영역만)</strong>. indoor_lighting 행에서 글로벌 편집은 화면 전체가 따뜻해지지만, local edit은 lamp 영역만 바뀌고 침구는 보존.</div>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">기능적 의미</div>
+    <p>Inversion → saliency → masked edit 의 <em>완성된 도구 체인</em>이 만들어짐. 실제 사진을 받아서
+    "lamp 밝기만 +3" / "wood 톤만 –2" 같은 부분 편집을 한 번의 forward + backward pass로 수행. 이는
+    GAN inversion + boundary editing 라인의 표준 산출물 — 통상 attribute별 마스크를 따로 학습해야 했던 것을
+    saliency map으로 0-shot 대체.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 10 ENCODER ATTENTION =================== -->
+<section id="encattn"><div class="container fade-in">
+  <div class="section-label">10 — Encoder attention (mirror question)</div>
+  <h2 class="section-title">인코더는 입력의 <em>어디</em>를 보고 wp를 결정하는가</h2>
+  <p class="section-desc">
+    Generator-side로 봤던 같은 도구를 인코더에 거꾸로 적용. <code>s(x) = ⟨E(x)<sub>manipulate_layers</sub>, b̂⟩</code>의
+    스칼라를 계산하고, reverse-mode autograd로 <code>∂s/∂x</code>를 측정. "boundary 방향으로 인코더가 wp를 옮기게 만드는 입력 픽셀"의 위치.
+  </p>
+
+  <div class="img-pair" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+    <div>
+      <img src="figures/enc_attn_indoor_lighting.png" alt="encoder attention indoor_lighting" loading="lazy" class="zoomable">
+      <div class="img-pair-label">indoor_lighting</div>
+    </div>
+    <div>
+      <img src="figures/enc_attn_view.png" alt="encoder attention view" loading="lazy" class="zoomable">
+      <div class="img-pair-label">view</div>
+    </div>
+  </div>
+
+  <div class="viz-insight amber">
+    <div class="viz-insight-label">비대칭 발견</div>
+    <p>Generator saliency는 <em>좁고 sharp</em> (램프, 침대 프레임 등 핵심 객체에 집중). 그런데
+    encoder attention은 <em>훨씬 diffuse</em> — 인코더가 입력 전체를 두루 보고 latent를 추정하기 때문.
+    즉 두 방향이 비대칭: <strong>"이미지 → wp"는 global 통합, "wp → 이미지"는 local 작용</strong>.
+    또한 인코더가 under-fit 상태(LPIPS 0.37)라 attention이 더욱 노이지한 측면도 있음.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 11 RANDOM DISCOVERY =================== -->
+<section id="discover" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">11 — Random direction discovery</div>
+  <h2 class="section-title">학습 없이 새 의미 방향 찾기</h2>
+  <p class="section-desc">
+    HiGAN의 8 boundary 외에 W+ 공간에서 96개 임의 단위 방향을 뽑고 각각의 grad-saliency 계산.
+    "top-5% 픽셀에 mass가 얼마나 집중되는가" 메트릭으로 정렬해서, <em>spatially 의미 있는 방향</em>만 추림.
+    학습 없이, 라벨 없이, attribute 분류기 없이.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/random_dirs_single.png" alt="discovered random directions gallery" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 11.1</strong> &nbsp; 96개 후보 중 가장 spatial 집중 8개. 컬럼: heatmap / overlay. 거의 전부 layer 1–4 (coarse 구조)에서 추출되며, 결과는 <em>창문/문 윤곽, 벽 모서리, 침대 라인</em> 같은 구조적 위치를 자동으로 짚음.</div>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">의의</div>
+    <p>이 도구가 HiGAN의 손 큐레이팅 boundary에만 의존하지 않음을 보임. <strong>W+ 공간 어디든 찔러보면
+    그 방향이 이미지 어디에 작용하는지 즉시 답이 나옴</strong>. 미래 계획: 이 random directions 위에서
+    interactive로 의미 라벨을 붙이거나, 발견된 방향들을 PCA/clustering 해서 boundary cluster를 만드는
+    pipeline 가능.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 12 FULL CYCLE =================== -->
+<section id="cycle"><div class="container fade-in">
+  <div class="section-label">12 — Full cycle (target → recon → saliency → edit)</div>
   <h2 class="section-title">한 침실에서 본 v2의 전체 흐름</h2>
   <p class="section-desc">
     한 장의 사진을 잡고 파이프라인 4단계를 좌→우로 보여준다.
@@ -871,7 +1007,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 09 EDITING (morph) =================== -->
 <section id="editing"><div class="container fade-in">
-  <div class="section-label">09 — Edit sweep (animated)</div>
+  <div class="section-label">13 — Edit sweep (animated)</div>
   <h2 class="section-title">속성 슬라이더가 실제로 어떻게 보이는가</h2>
   <p class="section-desc">
     각 boundary를 −3 → +3 → −3 으로 21프레임 ping-pong morph. 정적 5컷 그리드보다
@@ -904,7 +1040,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== JOURNAL =================== -->
 <section id="journal" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">10 — Process journal · 삽질 일지</div>
+  <div class="section-label">14 — Process journal · 삽질 일지</div>
   <h2 class="section-title">실패와 발견의 시간순</h2>
   <p class="section-desc">
     프로젝트가 깨끗하게 보이는 결과만 남기면 정직하지 않다. v1 분석부터 v2 grad-saliency까지
@@ -1101,7 +1237,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== LIMITS =================== -->
 <section id="limits"><div class="container fade-in">
-  <div class="section-label">11 — Limits & Next</div>
+  <div class="section-label">15 — Limits & Next</div>
   <h2 class="section-title">정직한 한계</h2>
   <p class="section-desc">
     v2는 컨셉 검증과 파이프라인 견고화에 집중했다. 다음 세 가지가 명시적인 한계.
@@ -1130,9 +1266,13 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
   <div class="viz-insight">
     <div class="viz-insight-label">다음 단계 옵션</div>
-    <p><strong>(a) 인코더 200k iter 추가 학습</strong> — 마지막 ckpt에서 이어서 ~17 h. 정밀 편집 데모용.<br>
-       <strong>(b) attribute classifier + Grad-CAM</strong> — perturbation CAM과 교차 검증. 약 2 h 작업.<br>
-       <strong>(c) 다른 도메인 (church/face)</strong> — wrapper 재사용 + boundary 학습. 1–2일 작업.</p>
+    <p><strong>(a) 인코더 200k+ iter 추가 학습</strong> — 40k까지 진행. 200k까지 ~13 h 더. 정밀 편집 데모용.<br>
+       <strong>(b) CLIP / classifier 기반 진짜 Grad-CAM</strong> — bedroom attribute 분류기 학습 또는 CLIP score backward로
+       *진짜* Grad-CAM 실행 → JVP saliency와 픽셀별 IoU/correlation 비교. 약 4–6 h. 본 페이지의
+       JVP 도구가 classifier-based attribution과 어디까지 일치하는지 정량 검증.<br>
+       <strong>(c) 다른 도메인 (church/face)</strong> — wrapper 재사용 + boundary 학습. 1–2일 작업.<br>
+       <strong>(d) Random direction labeling</strong> — 발견된 random direction에 의미 라벨 자동 부여
+       (CLIP zero-shot로 "lamp / window / floor" 분류) → unsupervised attribute discovery pipeline.</p>
   </div>
 </div></section>
 <hr class="divider">
