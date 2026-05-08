@@ -1150,15 +1150,15 @@
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
   <div class="section-label">Current Status · F1 Production</div>
-  <h2 class="section-title">현재 운영 상태 (2026-04-25)</h2>
-  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중.</p>
+  <h2 class="section-title">현재 운영 상태 (최근 갱신 2026-05-08)</h2>
+  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중. 매 주 일요일 자동 재학습 + promotion gate 통과 시 모델 갱신. 최신 수치는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a>에서 확인.</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--green);">
       <div class="layer-num">Live · F1</div>
       <div class="layer-title">xsec_6h (6h horizon)</div>
       <div class="card-text">
-        <strong>2σ+ 적중:</strong> 64.6% · E[signed] +1.29%<br>
+        <strong>Holdout IC:</strong> +0.176 (t=22.2, n=281) · 2σ+ 적중 62.1%<br>
         <strong>피처:</strong> 10개 통합 (reversal, vol_inv, order_flow, range_contraction, binance_lead, kimchi, kimchi_z, calendar)<br>
         <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
         <strong>출력:</strong> 전체 100 코인 · 방향 + 확률 + 기대% + 95% CI + 사이즈<br>
@@ -1169,20 +1169,20 @@
       <div class="layer-num">Live · F1</div>
       <div class="layer-title">xsec_12h (12h horizon)</div>
       <div class="card-text">
-        <strong>2σ+ 적중:</strong> 70.6% · E[signed] +1.85%<br>
+        <strong>Holdout IC:</strong> +0.138 (t=14.4, n=280) · 2σ+ 적중 67.8%<br>
         <strong>피처:</strong> xsec_6h와 동일 (10개) — 호라이즌 타겟만 다름<br>
         <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
-        <strong>방향 합의:</strong> 6h와 92%, rank correlation +0.908<br>
+        <strong>방향 합의:</strong> 6h와 92%, rank correlation +0.908 (배포 시점 측정)<br>
         <strong>리밸런스:</strong> 12h (오프사이클 carry)
       </div>
     </div>
   </div>
 
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos">92%</span><div class="metric-label">방향 합의</div><div class="metric-sub">6h ↔ 12h direction<br>(was 10%)</div></div>
-    <div class="metric-card"><span class="metric-val pos">+0.908</span><div class="metric-label">Rank Correlation</div><div class="metric-sub">unified baseline<br>(was +0.55)</div></div>
-    <div class="metric-card"><span class="metric-val pos">64.6%</span><div class="metric-label">6h 2σ+ Hit</div><div class="metric-sub">n=1,134 predictions<br>E +1.29%</div></div>
-    <div class="metric-card"><span class="metric-val pos">70.6%</span><div class="metric-label">12h 2σ+ Hit</div><div class="metric-sub">n=625 predictions<br>E +1.85%</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.176</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=22.2 · n=281<br>2σ+ hit 62.1%</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.138</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=14.4 · n=280<br>2σ+ hit 67.8%</div></div>
+    <div class="metric-card"><span class="metric-val pos">92%</span><div class="metric-label">방향 합의</div><div class="metric-sub">6h ↔ 12h direction<br>(rank corr +0.91)</div></div>
+    <div class="metric-card"><span class="metric-val neutral">5/5</span><div class="metric-label">Promotion 이력</div><div class="metric-sub">2026-05-08 KST 14:03<br>마지막 promotion</div></div>
   </div>
 
   <div class="callout">
