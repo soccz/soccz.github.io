@@ -405,11 +405,12 @@
       <li><a href="#grad">Gradient</a></li>
       <li><a href="#perlayer">Per-layer</a></li>
       <li><a href="#matrix">Matrix</a></li>
-      <li><a href="#disentangle">Disentangle</a></li>
       <li><a href="#discover">Discover</a></li>
       <li><a href="#clip">CLIP</a></li>
+      <li><a href="#ckptevo">Ckpt-evo</a></li>
+      <li><a href="#higherorder">∂²I</a></li>
       <li><a href="#realphoto">Real photo</a></li>
-      <li><a href="#cycle">Cycle</a></li>
+      <li><a href="#salmorph">Sal morph</a></li>
       <li><a href="#journal">Journal</a></li>
       <li><a href="#limits">Limits</a></li>
     </ul>
@@ -427,9 +428,9 @@
       잠재공간이 이미지의 어디에 작용하는지 픽셀 saliency로 직접 시각화한 .py 파이프라인.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">22</span><span class="hero-stat-label">sections</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">12</span><span class="hero-stat-label">analysis methods</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">8×14</span><span class="hero-stat-label">complete matrix</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">25</span><span class="hero-stat-label">sections</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">15</span><span class="hero-stat-label">analysis methods</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">∂²I/∂α²</span><span class="hero-stat-label">higher-order</span></div>
       <div class="hero-stat"><span class="hero-stat-num">+CLIP</span><span class="hero-stat-label">zero-shot labels</span></div>
     </div>
     <div class="hero-links">
@@ -1167,9 +1168,76 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </div></section>
 <hr class="divider">
 
-<!-- =================== 17 REAL PHOTO =================== -->
+<!-- =================== 18 CKPT EVOLUTION =================== -->
+<section id="ckptevo"><div class="container fade-in">
+  <div class="section-label">18 — Encoder checkpoint evolution</div>
+  <h2 class="section-title">학습 진행에 따라 saliency 품질이 어떻게 바뀌는가</h2>
+  <p class="section-desc">
+    같은 침실 사진을 5개 ckpt(1k / 5k / 10k / 20k / 40k)로 inversion하고, 각 wp 위에서
+    indoor_lighting saliency를 계산한 뒤 *true wp*로 만든 GT saliency와의 픽셀별 상관계수를 측정.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/ckpt_evolution.png" alt="encoder ckpt evolution comparison" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 18.1</strong> &nbsp; 위: target / GT (true wp) saliency. 아래 5행: iter 1k–40k의 encoder recon, saliency, overlay.</div>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:1.4rem;">
+    <table>
+      <thead><tr><th>iter</th><th class="num">recon MSE</th><th class="num">saliency corr w/ GT</th></tr></thead>
+      <tbody>
+        <tr><td>1k</td><td class="num">0.0473</td><td class="num">+0.008</td></tr>
+        <tr><td>5k</td><td class="num">0.0402</td><td class="num">+0.028</td></tr>
+        <tr><td>10k</td><td class="num">0.0426</td><td class="num">+0.126</td></tr>
+        <tr><td>20k</td><td class="num">0.0395</td><td class="num">+0.164</td></tr>
+        <tr style="font-weight:700;"><td>40k</td><td class="num">0.0388</td><td class="num">+0.359</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">발견</div>
+    <p>recon MSE는 1k → 40k에서 0.047 → 0.039로 약 18%만 개선되는데, <strong>saliency 상관은 0.008 → 0.359로 45배 향상</strong>.
+    인코더의 reconstruction quality는 일찍 saturate하지만, *latent space의 미분 구조* (즉 saliency)는 학습 내내 계속 정제됨.
+    이는 saliency가 단순 reconstruction보다 *더 깊은 정렬* 신호임을 시사 — 인코더는 "그럴듯한 침실"에 빨리 도달하지만,
+    "boundary 방향이 어디를 움직이는지"는 더 천천히 익힘.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 19 HIGHER-ORDER =================== -->
+<section id="higherorder"><div class="container fade-in">
+  <div class="section-label">19 — Higher-order saliency (∂²I/∂α²)</div>
+  <h2 class="section-title">픽셀별 비선형성 — 어디서 boundary 효과가 휘는가</h2>
+  <p class="section-desc">
+    1차 saliency (∂I/∂α)가 boundary 방향의 *순간 효과*라면, 2차 saliency (∂²I/∂α²)는 그 효과가
+    α가 변할 때 *얼마나 휘는지*. 둘 다 forward-mode JVP를 합성해 한 패스로 계산.
+    비율 ∂²/∂I = 비선형성 지수 — 작으면 선형 영역, 크면 saturation/꺾임.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/higher_order.png" alt="first-order vs second-order saliency for 3 attributes" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 19.1</strong> &nbsp; 행 = attribute, 컬럼 = 1차 saliency / 2차 saliency / 비선형성 비율.</div>
+  </div>
+
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-mark green">L</div><div><strong>indoor_lighting · 비율 0.495</strong>: 거의 선형. boundary를 −3 ↔ +3 sweep해도 픽셀이 균일하게 변함. 안전한 편집.</div></div>
+    <div class="bullet-item"><div class="bullet-mark green">L</div><div><strong>wood · 비율 0.624</strong>: 선형 영역. 동일.</div></div>
+    <div class="bullet-item"><div class="bullet-mark red">N</div><div><strong>view · 비율 23.2 (40배 큼!) · p95 65</strong>: 매우 비선형. coarse layer 0–4 perturbation은 windows/doors가 *생기거나 사라지는* 식의 위상적 변화를 일으킴 → α의 변화에 픽셀이 비선형으로 반응.</div></div>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">섹션 13 (compositional editing) 결과의 직접적 설명</div>
+    <p>섹션 13에서 view + texture 동시 편집의 saliency가 <strong>비선형 간섭 (corr 0.55)</strong>을 보였는데,
+    이번 2차 분석이 그 원인을 콕 짚어준다 — view 자체가 본질적으로 곡률이 큰 비선형 변환이기 때문.
+    indoor_lighting과 wood 사이의 합성이 선형(0.97)이었던 것도 둘 다 비선형성 비율이 0.5 수준의 거의 평탄한 변환이라 자연스럽다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 20 REAL PHOTO =================== -->
 <section id="realphoto" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">18 — Real LSUN bedroom photos</div>
+  <div class="section-label">20 — Real LSUN bedroom photos</div>
   <h2 class="section-title">진짜 침실 사진에 전체 파이프라인 적용</h2>
   <p class="section-desc">
     지금까지는 generator의 자기 출력(synthetic)에서만 검증. 이제 LSUN bedroom 데이터셋에서 받은
@@ -1222,7 +1290,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 18 FULL CYCLE =================== -->
 <section id="cycle"><div class="container fade-in">
-  <div class="section-label">19 — Full cycle (target → recon → saliency → edit)</div>
+  <div class="section-label">21 — Full cycle (target → recon → saliency → edit)</div>
   <h2 class="section-title">한 침실에서 본 v2의 전체 흐름</h2>
   <p class="section-desc">
     한 장의 사진을 잡고 파이프라인 4단계를 좌→우로 보여준다.
@@ -1252,7 +1320,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 09 EDITING (morph) =================== -->
 <section id="editing"><div class="container fade-in">
-  <div class="section-label">20 — Edit sweep (animated)</div>
+  <div class="section-label">22 — Edit sweep (animated)</div>
   <h2 class="section-title">속성 슬라이더가 실제로 어떻게 보이는가</h2>
   <p class="section-desc">
     각 boundary를 −3 → +3 → −3 으로 21프레임 ping-pong morph. 정적 5컷 그리드보다
@@ -1283,9 +1351,41 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </div></section>
 <hr class="divider">
 
+<!-- =================== 21 SALIENCY MORPH =================== -->
+<section id="salmorph" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">23 — Saliency morph (saliency도 함께 변하는 sweep)</div>
+  <h2 class="section-title">Sweep할 때 <em>saliency 자체</em>는 어떻게 변하는가</h2>
+  <p class="section-desc">
+    섹션 20 morph는 이미지가 어떻게 바뀌는지만 보여줌. 여기서는 sweep 각 프레임마다 *그 지점에서의 1차 saliency*를
+    함께 계산. 21프레임 ping-pong으로 image | saliency | overlay 3-strip animated WebP.
+    선형 attribute는 saliency가 거의 정지, 비선형 attribute는 흔들림 — 섹션 19와 직결.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/salmorph_indoor_lighting.webp" alt="saliency morph indoor_lighting" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 21.1 · indoor_lighting</strong> (선형, 비율 0.5) — saliency가 sweep 동안 거의 같은 위치에 머무름.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/salmorph_wood.webp" alt="saliency morph wood" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 21.2 · wood</strong> (선형, 비율 0.6) — 동일.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/salmorph_view.webp" alt="saliency morph view" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 21.3 · view</strong> (비선형, 비율 23) — saliency가 sweep 동안 *모양이 바뀐다*. 창문이 생겼다 사라지는 위상 변화에 saliency가 따라 이동.</div>
+  </div>
+
+  <div class="viz-insight">
+    <div class="viz-insight-label">시각적 검증</div>
+    <p>섹션 19에서 정량으로 보여준 비선형성을 여기서 *보여진다*. view는 sweep할 때 saliency가 따라가지 못하고 형태가 변함 — 즉 한 boundary 방향으로 일정하게 이동해도 픽셀의 변화 패턴은 매번 달라짐. 이는 view 같은 coarse 구조 attribute 편집이 *위상적*임을 의미.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
 <!-- =================== JOURNAL =================== -->
 <section id="journal" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">21 — Process journal · 삽질 일지</div>
+  <div class="section-label">24 — Process journal · 삽질 일지</div>
   <h2 class="section-title">실패와 발견의 시간순</h2>
   <p class="section-desc">
     프로젝트가 깨끗하게 보이는 결과만 남기면 정직하지 않다. v1 분석부터 v2 grad-saliency까지
@@ -1482,7 +1582,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== LIMITS =================== -->
 <section id="limits"><div class="container fade-in">
-  <div class="section-label">22 — Limits & Next</div>
+  <div class="section-label">25 — Limits & Next</div>
   <h2 class="section-title">정직한 한계</h2>
   <p class="section-desc">
     v2는 컨셉 검증과 파이프라인 견고화에 집중했다. 다음 세 가지가 명시적인 한계.
