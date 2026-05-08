@@ -468,6 +468,35 @@ article.report table tr:has(td:first-child strong) {
   border-top: 1px solid var(--border-strong);
 }
 
+/* 보고서 표 셀 — 자동 색칠 (JS 후처리로 .num-up·.num-down·.num-neg 클래스 추가) */
+article.report table td.num-up {
+  color: var(--kr-up); font-weight: 600;
+}
+article.report table td.num-down {
+  color: var(--kr-down); font-weight: 600;
+}
+article.report table td.num-neg {
+  color: var(--negative);
+}
+article.report table td.num-pos {
+  color: var(--text);
+}
+
+/* 변화율 셀 안에 mini bar (양·음 0 기준) */
+article.report table td.num-with-bar {
+  position: relative;
+}
+article.report table td.num-with-bar::after {
+  content: ""; position: absolute; bottom: 4px;
+  left: 50%; right: 50%; height: 2px; background: transparent;
+}
+article.report table td.num-up.num-with-bar::after {
+  right: 12px; background: var(--kr-up); opacity: 0.4;
+}
+article.report table td.num-down.num-with-bar::after {
+  left: 12px; background: var(--kr-down); opacity: 0.4;
+}
+
 article.report hr {
   border: none; border-top: 1px solid var(--border-light);
   margin: 32px 0;
@@ -1070,6 +1099,25 @@ tr.stock-row.stock-active:hover .mcap-fill { background: var(--accent); }
   font-size: 11.5px;
 }
 
+/* 일간 메모 SVG 스파크라인 (hover·축·툴팁) */
+svg.dn-spark {
+  cursor: default;
+  display: inline-block;
+  vertical-align: middle;
+}
+svg.dn-spark polyline {
+  transition: stroke-width 120ms;
+}
+svg.dn-spark.spark-up polyline { stroke: var(--kr-up); }
+svg.dn-spark.spark-down polyline { stroke: var(--kr-down); }
+svg.dn-spark.spark-flat polyline { stroke: var(--kr-flat); opacity: 0.7; }
+svg.dn-spark:hover polyline { stroke-width: 2; }
+svg.dn-spark .dn-spark-label {
+  font-family: var(--mono); font-size: 8.5px;
+  fill: var(--text-muted);
+  font-feature-settings: "tnum";
+}
+
 /* Watchlist 표 */
 .watchlist-table {
   background: var(--surface);
@@ -1282,7 +1330,7 @@ tr.stock-row.stock-active td.action {
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-09 04:01 </p>
+    <p style="margin-top:6px">생성: 2026-05-09 04:09 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
@@ -1307,6 +1355,20 @@ tr.stock-row.stock-active td.action {
           var dr = document.getElementById('tocDrawer');
           if (dr) dr.classList.remove('open');
         });
+      });
+
+      // 보고서 표 셀 자동 색칠 — 등락률·증감 패턴 감지 → .num-up/.num-down/.num-neg 클래스
+      document.querySelectorAll('article.report table td').forEach(function(td){
+        var t = td.textContent.trim();
+        if (!t || t === '—' || t === '-' || t === 'n/a') return;
+        // "+12.3%", "-5.1%", "+1.5%p" 등 변화율
+        if (/^[+]\s*\d/.test(t) && t.indexOf('%') >= 0) {
+          td.classList.add('num-up', 'num-with-bar');
+        } else if (/^[-−△▼]\s*\d/.test(t) && t.indexOf('%') >= 0) {
+          td.classList.add('num-down', 'num-with-bar');
+        } else if (/^[△▼]/.test(t) || /\(적자\)|\(loss\)/i.test(t)) {
+          td.classList.add('num-neg');
+        }
       });
     })();
   </script>
