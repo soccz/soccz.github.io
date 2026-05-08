@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HIGAN — GAN 기반 이미지 생성 및 잠재 공간 최적화</title>
+  <title>HIGAN v2 — 침실 잠재공간을 CAM으로 해석하기</title>
+  <meta name="description" content="HiGAN bedroom256 잠재공간을 GAN inversion + boundary perturbation으로 해석한 보고서. 노트북 프로토타입에서 발견한 gradient 단절 문제를 고치고, 도메인 특화 인코더와 CAM-style 픽셀 saliency까지 확장한 .py 파이프라인.">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
     :root {
       --bg-primary: #fafaf9;
@@ -18,6 +19,9 @@
       --text-muted: #a8a29e;
       --accent: #44403c;
       --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-red: #b91c1c;
+      --accent-green: #15803d;
+      --accent-amber: #b45309;
       --border: #e7e5e4;
       --border-light: #d6d3d1;
     }
@@ -44,7 +48,7 @@
       display: flex; align-items: center; justify-content: space-between; height: 64px;
     }
     .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
     .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
 
@@ -54,30 +58,36 @@
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
-                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.04) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.03) 0%, transparent 50%);
     }
-    .hero-content { position: relative; max-width: 780px; }
+    .hero-content { position: relative; max-width: 820px; }
     .hero-label {
       display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--text-secondary); border: 1px solid var(--border-light);
-      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem;
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.2rem;
     }
     .hero h1 {
-      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.9rem, 4.7vw, 3.1rem);
       font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
     }
-    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
-    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero h1 em { font-style: normal; color: var(--accent); border-bottom: 2px solid var(--border-light); padding-bottom: 2px; }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.95; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.6rem; flex-wrap: wrap; }
     .hero-stat { text-align: center; }
-    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
-    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.76rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-links { display: flex; justify-content: center; gap: 0.9rem; margin-top: 2.6rem; flex-wrap: wrap; }
     .hero-link {
-      display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem;
-      padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.4rem; border: 1px solid var(--border-light); border-radius: 4px;
       color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+      background: var(--bg-card);
     }
     .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-link.primary { background: var(--accent); color: #fafaf9; border-color: var(--accent); }
+    .hero-link.primary:hover { background: #292524; color: #fff; }
+
     .scroll-ind {
       position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
       color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
@@ -85,28 +95,30 @@
     }
     @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
-    section { padding: 6rem 2rem; }
+    section { padding: 5.5rem 2rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
-    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
-    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.45rem,3vw,2.05rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.9rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 740px; line-height: 1.85; margin-bottom: 2.6rem; }
+    .section-desc.full { max-width: none; }
     .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; }
     .card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      padding: 1.7rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .card-title { font-weight: 700; font-size: 0.96rem; margin-bottom: 0.45rem; }
     .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .card-eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
 
-    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.4rem 0; }
     .flow-step {
-      flex: 1; min-width: 200px; background: var(--bg-card); border: 1px solid var(--border);
-      padding: 1.8rem 1.3rem; text-align: center; position: relative;
+      flex: 1; min-width: 180px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.5rem 1.1rem; text-align: center; position: relative;
     }
     .flow-step:first-child { border-radius: 8px 0 0 8px; }
     .flow-step:last-child { border-radius: 0 8px 8px 0; }
@@ -115,26 +127,134 @@
       border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
     }
     .flow-step:last-child::after { display: none; }
-    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
-    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.86rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.45; }
 
     .layer-card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      padding: 1.6rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
-    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
-    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
-    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .layer-num { font-size: 0.66rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.55rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.55rem; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.9rem; padding-left: 1rem; border-left: 2px solid var(--border); }
     .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
     .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+    .tag.red { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.18); }
+    .tag.green { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.18); }
 
-    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
-    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
-    .tech-list { list-style: none; }
-    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
-    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
+    .viz-insight {
+      background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c;
+      border-radius: 0 8px 8px 0; padding: 1.25rem 1.7rem; margin: 1.6rem 0;
+    }
+    .viz-insight-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 700; }
+    .viz-insight p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.85; }
+    .viz-insight.amber { border-left-color: var(--accent-amber); }
+    .viz-insight.green { border-left-color: var(--accent-green); }
+    .viz-insight.red { border-left-color: var(--accent-red); }
+
+    .code-block {
+      background: #1c1917; border-radius: 8px; padding: 1.2rem 1.4rem; overflow-x: auto;
+      margin: 1.4rem 0; border: 1px solid #292524;
+    }
+    .code-block pre {
+      font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: 0.78rem; color: #e7e5e4; line-height: 1.65;
+      white-space: pre; tab-size: 2;
+    }
+    .code-comment { color: #78716c; }
+    .code-keyword { color: #d4a843; }
+    .code-string { color: #a8d8a8; }
+    .code-bad { color: #ef9a9a; text-decoration: line-through; opacity: 0.7; }
+    .code-good { color: #a8d8a8; font-weight: 600; }
+    .code-num { color: #d4a843; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    thead { background: var(--bg-secondary); }
+    th { padding: 0.85rem 1rem; text-align: left; font-weight: 700; color: var(--text-secondary); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    th.num { text-align: right; }
+    td { padding: 0.78rem 1rem; border-bottom: 1px solid var(--border); }
+    td.num { text-align: right; font-family: 'JetBrains Mono', monospace; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--bg-secondary); }
+    .winner { color: var(--accent-green); font-weight: 700; }
+    .loser { color: var(--accent-red); }
+
+    .img-frame {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.1rem; margin: 1.6rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .img-frame img { width: 100%; height: auto; border-radius: 6px; display: block; }
+    .img-caption {
+      font-size: 0.78rem; color: var(--text-muted); margin-top: 0.7rem;
+      text-align: center; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em;
+    }
+    .img-caption strong { color: var(--text-secondary); font-weight: 700; }
+
+    .img-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.4rem 0; }
+    .img-pair > div { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem; }
+    .img-pair img { width: 100%; height: auto; border-radius: 4px; display: block; }
+    .img-pair-label { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.5rem; text-align: center; font-family: 'JetBrains Mono', monospace; }
+    @media (max-width: 640px) { .img-pair { grid-template-columns: 1fr; } }
+
+    .cam-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.9rem;
+      margin: 1.6rem 0;
+    }
+    .cam-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .cam-tile img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+    .cam-meta { padding: 0.6rem 0.85rem; }
+    .cam-name { font-weight: 700; font-size: 0.84rem; }
+    .cam-loc { font-size: 0.73rem; color: var(--text-secondary); margin-top: 0.15rem; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem; text-align: center;
+    }
+    .stat-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1.1; }
+    .stat-num.green { color: var(--accent-green); }
+    .stat-num.red { color: var(--accent-red); }
+    .stat-num.amber { color: var(--accent-amber); }
+    .stat-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.35rem; }
+    .stat-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+    .bullet-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1.2rem 0; }
+    .bullet-item {
+      display: flex; gap: 0.8rem; padding: 0.85rem 1.1rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+      font-size: 0.88rem; line-height: 1.7;
+    }
+    .bullet-mark {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 4px;
+      background: var(--accent-dim); color: var(--accent); font-weight: 700;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bullet-mark.red { background: rgba(185,28,28,0.1); color: var(--accent-red); }
+    .bullet-mark.green { background: rgba(21,128,61,0.1); color: var(--accent-green); }
+
+    .panel-2col {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; margin: 1.6rem 0;
+    }
+    @media (max-width: 720px) { .panel-2col { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem 1.7rem;
+    }
+    .panel h4 { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .panel p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+    .panel.before { border-top: 3px solid var(--accent-red); }
+    .panel.after  { border-top: 3px solid var(--accent-green); }
+    .panel-eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.4rem; }
+
+    .file-tree {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem 1.4rem; line-height: 1.85; color: var(--text-secondary); margin: 1.4rem 0; overflow-x: auto;
+    }
+    .file-tree .dir { color: var(--accent); font-weight: 700; }
+    .file-tree .file { color: var(--text-primary); }
+    .file-tree .note { color: var(--text-muted); }
 
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
@@ -145,7 +265,7 @@
       .flow { flex-direction: column; }
       .flow-step { border-radius: 8px !important; }
       .flow-step::after { display: none; }
-      section { padding: 4rem 1.5rem; }
+      section { padding: 4rem 1.4rem; }
     }
   </style>
 </head>
@@ -155,120 +275,408 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#losses">Loss Functions</a></li>
-      <li><a href="#pipeline">Pipeline</a></li>
-      <li><a href="#tech">Tech Stack</a></li>
-      <li><a href="#limitations">Limitations</a></li>
+      <li><a href="#question">Question</a></li>
+      <li><a href="#bug">v1 Bug</a></li>
+      <li><a href="#v2">v2 Pipeline</a></li>
+      <li><a href="#inversion">Inversion</a></li>
+      <li><a href="#cam">CAM</a></li>
+      <li><a href="#editing">Editing</a></li>
+      <li><a href="#limits">Limits</a></li>
     </ul>
   </div>
 </nav>
 
+<!-- =================== HERO =================== -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">Generative AI &times; Image Synthesis</span>
-    <h1>HI-GAN<br>잠재 공간 최적화 기반 이미지 생성</h1>
+    <span class="hero-label">HiGAN bedroom — v2 report</span>
+    <h1>침실 GAN의 잠재공간을<br><em>CAM</em>으로 해석하기</h1>
     <p class="hero-sub">
-      GAN이 생성하는 이미지와 입력 이미지를 동일하게 만들기 위한 Encoder를 구축하고,<br>
-      다중 손실 함수 기반의 경사하강법으로 잠재 공간을 최적화하는 프로젝트
+      v1: Colab 노트북 3개에서 시작한 GAN inversion 실험.<br>
+      v2: gradient가 끊긴 인버전을 고치고, 도메인 특화 인코더를 만들고,<br>
+      잠재공간이 이미지의 어디에 작용하는지 픽셀 saliency로 직접 시각화한 .py 파이프라인.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">손실 함수</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">GAN</span><span class="hero-stat-label">생성 모델</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">.npy</span><span class="hero-stat-label">잠재 벡터 출력</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">8</span><span class="hero-stat-label">attribute boundary</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">14×512</span><span class="hero-stat-label">W+ 잠재 공간</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">20k</span><span class="hero-stat-label">encoder iterations</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">~50M</span><span class="hero-stat-label">encoder params</span></div>
     </div>
-    <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener noreferrer" class="hero-link">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      Source Code
-    </a>
+    <div class="hero-links">
+      <a class="hero-link primary" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub: soccz/HIGAN
+      </a>
+      <a class="hero-link" href="https://github.com/soccz/HIGAN/tree/main/higan_dev" target="_blank" rel="noopener">higan_dev/ 패키지</a>
+    </div>
   </div>
   <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
 <hr class="divider">
 
-<section id="overview"><div class="container fade-in">
-  <div class="section-label">Overview</div>
-  <h2 class="section-title">프로젝트 개요</h2>
-  <p class="section-desc">GAN이 생성하는 이미지와 입력 이미지를 일치시키기 위한 Encoder를 구축하고, 다중 손실 함수를 기반으로 경사하강법을 통해 잠재 공간(latent space)을 최적화합니다. 최적 결과를 .npy 형태로 저장하여 HIGAN 코드에 활용할 수 있도록 설계되었습니다.</p>
+<!-- =================== QUESTION =================== -->
+<section id="question"><div class="container fade-in">
+  <div class="section-label">01 — Question</div>
+  <h2 class="section-title">사고 과정: 무엇을 알고 싶었는가</h2>
+  <p class="section-desc">
+    HiGAN bedroom256은 침실 이미지를 생성하는 StyleGAN 변형이다. 부수적으로 학습된
+    semantic boundary들은 잠재공간 안에 <em>indoor_lighting</em>, <em>wood</em>, <em>view</em>
+    같은 의미 방향이 존재함을 보여준다. v1 노트북은 거기서 멈췄다. v2는 한 단계 더 묻는다.
+  </p>
+
   <div class="card-grid">
-    <div class="card"><div class="card-title">GAN Encoder</div><div class="card-text">GAN이 생성하는 이미지와 입력 이미지를 동일하게 만들기 위한 Encoder를 설계하고 학습합니다.</div></div>
-    <div class="card"><div class="card-title">잠재 공간 최적화</div><div class="card-text">다중 손실 함수의 총합을 최소화하는 방향으로 경사하강법을 수행하여 최적의 잠재 벡터를 찾습니다.</div></div>
-    <div class="card"><div class="card-title">결과 저장</div><div class="card-text">손실 함수의 총합이 가장 작은 이미지를 저장하고 .npy 형태로 잠재 벡터를 출력하여 후속 활용이 가능합니다.</div></div>
+    <div class="card">
+      <div class="card-eyebrow">Q1 · 인버전</div>
+      <div class="card-title">실제 침실 사진을 잠재공간 어디로 매핑할 수 있는가?</div>
+      <div class="card-text">최적화 기반과 인코더 기반, 두 방식의 정확도와 속도를 비교한다.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Q2 · 편집</div>
+      <div class="card-title">매핑된 잠재코드에 의미 방향을 더하면 이미지가 어떻게 변하는가?</div>
+      <div class="card-text">indoor_lighting · wood · view 등 8개 boundary에 대한 ±d 편집 sweep을 시각화한다.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Q3 · 해석</div>
+      <div class="card-title">의미 방향이 이미지의 <em>어디</em>에 작용하는가?</div>
+      <div class="card-text">분류기 없이, 잠재공간 perturbation만으로 픽셀 saliency를 누적하는 CAM-style 분석.</div>
+    </div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/sanity_grid.png" alt="HiGAN bedroom256 generator sanity check — 8 random samples">
+    <div class="img-caption"><strong>FIG 0.</strong> HiGAN bedroom256 생성기 8장 무작위 샘플 (256×256, RTX 3070, 1초 미만)</div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="losses"><div class="container fade-in">
-  <div class="section-label">Loss Functions</div>
-  <h2 class="section-title">4가지 손실 함수</h2>
-  <p class="section-desc">생성된 이미지와 입력 이미지의 유사성을 다각도로 측정하는 복합 손실 함수 체계입니다.</p>
-  <div class="card-grid">
-    <div class="layer-card"><div class="layer-num">Loss 1</div><div class="layer-title">MSE 손실</div><div class="layer-q">픽셀 간의 차이를 L2 손실로 계산하여 색상과 밝기 차이를 보정합니다</div><div class="tags"><span class="tag">L2 Loss</span><span class="tag">Pixel-level</span></div></div>
-    <div class="layer-card"><div class="layer-num">Loss 2</div><div class="layer-title">Perceptual 손실</div><div class="layer-q">VGG16의 특징 맵 차이를 계산하여 구조, 모양, 패턴의 유사성을 보장합니다</div><div class="tags"><span class="tag">VGG16</span><span class="tag">Feature Map</span></div></div>
-    <div class="layer-card"><div class="layer-num">Loss 3</div><div class="layer-title">LPIPS 손실</div><div class="layer-q">사람의 시각적 유사성을 측정하여 시각적으로 자연스러운 이미지 생성을 유도합니다</div><div class="tags"><span class="tag">Perceptual Similarity</span><span class="tag">Human Vision</span></div></div>
-    <div class="layer-card"><div class="layer-num">Loss 4</div><div class="layer-title">TV 손실</div><div class="layer-q">매끄러운 이미지를 보장하여 경계선을 부드럽게 하고 노이즈를 제거합니다</div><div class="tags"><span class="tag">Total Variation</span><span class="tag">Smoothing</span></div></div>
+<!-- =================== v1 BUG =================== -->
+<section id="bug"><div class="container fade-in">
+  <div class="section-label">02 — v1 발견</div>
+  <h2 class="section-title">최적화 인버전이 사실은 동작하지 않고 있었다</h2>
+  <p class="section-desc">
+    v1 노트북의 최적화 기반 인버전은 매 step마다 <code>easy_synthesize(latent_np, ...)</code>를 호출했다.
+    이 함수는 내부적으로 <code>get_value()</code>로 결과를 detach + numpy uint8 변환하는데,
+    그 순간 잠재→이미지의 autograd 그래프가 끊긴다. 손실에 <code>.requires_grad_()</code>를 다시 붙여도
+    그건 optimizer가 추적하는 <code>latent_code</code>와 <strong>무관한 새 텐서</strong>다.
+    결과적으로 backward()가 produced하는 <code>latent_code</code>의 gradient는 0이 되고,
+    "최적화"는 random 초기화 10번 중 운 좋은 하나를 고르는 셈이 되었다.
+  </p>
+
+  <div class="panel-2col">
+    <div class="panel before">
+      <div class="panel-eyebrow">v1 · 끊긴 gradient</div>
+      <h4>noteboook_encoder.ipynb</h4>
+      <p>매 step에서 <code>latent_code.detach().cpu().numpy()</code>로 변환 후 generator에 투입.
+      반환값을 <code>torch.tensor(...)</code>로 감싸 <code>.requires_grad_()</code>를 호출하지만,
+      이는 <em>새 leaf tensor</em>일 뿐 latent와 그래프가 연결되어 있지 않다.</p>
+    </div>
+    <div class="panel after">
+      <div class="panel-eyebrow">v2 · 보존된 gradient</div>
+      <h4>HiGANGenerator.synthesize()</h4>
+      <p>genforce의 <code>G.net.synthesis(wp)</code>를 직접 호출하는 얇은 래퍼.
+      <code>nn.Module</code>로서 frozen 상태로 유지하면서 wp 입력 → 이미지 출력 경로를
+      그대로 노출. 잠재의 <code>.grad</code>가 실제로 채워진다.</p>
+    </div>
+  </div>
+
+  <div class="code-block"><pre><span class="code-comment"># v1 — easy_synthesize는 detach + numpy로 그래프를 끊는다</span>
+latent_code_np = latent_code.detach().cpu().numpy()
+generated     = model.easy_synthesize(latent_code_np, latent_space_type=<span class="code-string">'wp'</span>)
+<span class="code-bad">img_t = torch.tensor(generated[<span class="code-string">'image'</span>].transpose(0,3,1,2))/255.0
+img_t.requires_grad_()   # 새 leaf — latent_code와 무관함</span>
+loss.backward()          <span class="code-comment"># latent_code.grad == None</span>
+
+<span class="code-comment"># v2 — synthesis()를 직접 호출, gradient flow 유지</span>
+<span class="code-keyword">class</span> <span class="code-good">HiGANGenerator</span>(nn.Module):
+    <span class="code-keyword">def</span> synthesize(<span class="code-keyword">self</span>, wp):                <span class="code-comment"># wp.requires_grad=True OK</span>
+        <span class="code-keyword">return</span> <span class="code-keyword">self</span>._net.synthesis(wp)     <span class="code-comment"># torch tensor, autograd alive</span>
+
+wp = G.sample_wp(1).requires_grad_(<span class="code-keyword">True</span>)
+img = G.synthesize(wp)
+loss = (img - target).pow(<span class="code-num">2</span>).mean()
+loss.backward()
+<span class="code-keyword">assert</span> wp.grad.norm() &gt; <span class="code-num">0</span>          <span class="code-comment"># 0.30 in our test</span></pre></div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">검증</div>
+    <p>같은 입력 이미지(generator self-test)에 대해 v1 레시피는 1500 step × 10 init 후에도
+    loss가 5.6 → 2.5 (54% 감소) 수준에서 멈추는 반면, v2 인버전은 1000 step × 1 init만으로
+    <strong>5.6 → 0.027 (99.5% 감소)</strong>까지 떨어졌다. 시각적으로도 거의 완벽한 재구성.</p>
+  </div>
+
+  <div class="img-pair">
+    <div>
+      <img src="figures/optim_target.png" alt="target image">
+      <div class="img-pair-label">target (synthetic, GT exists)</div>
+    </div>
+    <div>
+      <img src="figures/optim_recon.png" alt="reconstruction by v2 optim inversion">
+      <div class="img-pair-label">v2 optim recon — 1000 step</div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="pipeline"><div class="container fade-in">
-  <div class="section-label">Pipeline</div>
-  <h2 class="section-title">처리 파이프라인</h2>
-  <p class="section-desc">입력 이미지로부터 잠재 벡터를 최적화하여 저장하기까지의 전체 워크플로우입니다.</p>
+<!-- =================== v2 PIPELINE =================== -->
+<section id="v2"><div class="container fade-in">
+  <div class="section-label">03 — v2 Pipeline</div>
+  <h2 class="section-title">.py 패키지로 다시 짜기</h2>
+  <p class="section-desc">
+    Colab 의존성을 제거하고, 모듈 단위로 책임을 분리했다. RTX 3070 8 GB에 맞춰
+    배치/메모리를 조정하고, fp16 autocast가 StyleGAN 합성 op에서 NaN을 만드는 사실을 발견해
+    fp32로 고정했다 (그래도 5.4 GB만 사용).
+  </p>
+
   <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">입력 이미지</div><div class="flow-desc">Input image 로드<br>경로 설정</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">Encoder</div><div class="flow-desc">GAN Encoder<br>잠재 공간 매핑</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">최적화</div><div class="flow-desc">4가지 손실 함수<br>경사하강법</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">저장</div><div class="flow-desc">최소 loss 이미지<br>.npy 잠재 벡터</div></div>
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">Generator</div><div class="flow-desc">frozen<br>differentiable<br>w/wp/image API</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">Optim Inversion</div><div class="flow-desc">Adam on W+<br>lr ramp schedule<br>baseline 측정</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">Encoder</div><div class="flow-desc">ResNet50 backbone<br>+ 3 scale necks<br>+ 14 style heads</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">합성 supervision</div><div class="flow-desc">G(wp)→encoder→wp_pred<br>w_mse + image loss</div></div>
+    <div class="flow-step"><div class="flow-num">05</div><div class="flow-title">Manipulate</div><div class="flow-desc">torch-native<br>boundary 8개<br>distance sweep</div></div>
+    <div class="flow-step"><div class="flow-num">06</div><div class="flow-title">CAM</div><div class="flow-desc">±δ perturbation<br>pixel diff 누적<br>분류기 불필요</div></div>
+  </div>
+
+  <div class="file-tree">
+<span class="dir">higan_dev/</span>
+├── <span class="dir">higan_dev/</span>
+│   ├── <span class="file">config.py</span>          <span class="note"># dataclass + YAML</span>
+│   ├── <span class="file">generator.py</span>       <span class="note"># 미분 가능한 HiGAN wrapper (이번 v2의 핵심 수정)</span>
+│   ├── <span class="file">losses.py</span>          <span class="note"># VGG perceptual / LPIPS / TV / 통합 loss</span>
+│   ├── <span class="file">manipulate.py</span>      <span class="note"># torch-native boundary 조작</span>
+│   ├── <span class="dir">encoder/</span>
+│   │   ├── <span class="file">model.py</span>        <span class="note"># ResNet50 + multi-scale necks + 14 style heads</span>
+│   │   └── <span class="file">train.py</span>        <span class="note"># 합성 supervision 학습 루프</span>
+│   ├── <span class="dir">inversion/</span>
+│   │   ├── <span class="file">optim.py</span>        <span class="note"># gradient가 흐르는 W+ 인버전</span>
+│   │   └── <span class="file">encode.py</span>       <span class="note"># 학습된 인코더로 1-shot 인버전</span>
+│   └── <span class="dir">cam/</span>
+│       └── <span class="file">diff_map.py</span>     <span class="note"># 잠재 perturbation → 픽셀 saliency</span>
+├── <span class="dir">scripts/</span>               <span class="note"># 01 download → 06 cam → 09 edit_real → 10 final figure</span>
+├── <span class="dir">configs/</span> default.yaml
+└── <span class="dir">data/</span>, <span class="dir">out/</span>          <span class="note"># 자산 + 산출물</span></div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">3070</div><div class="stat-label">RTX 8 GB</div><div class="stat-sub">target hardware</div></div>
+    <div class="stat-card"><div class="stat-num green">5.4</div><div class="stat-label">GB peak (B=8)</div><div class="stat-sub">fp32, generator + encoder + LPIPS</div></div>
+    <div class="stat-card"><div class="stat-num">0.32</div><div class="stat-label">sec/iter</div><div class="stat-sub">학습 속도 측정값</div></div>
+    <div class="stat-card"><div class="stat-num amber">1h 47m</div><div class="stat-label">20k iter 소요</div><div class="stat-sub">예측 ↔ 실측 일치</div></div>
+  </div>
+
+  <div class="viz-insight amber">
+    <div class="viz-insight-label">디버그 노트</div>
+    <p>fp16 autocast로 학습을 시작했더니 <code>image</code>·<code>lpips</code>·<code>perceptual</code> loss가 모두 NaN.
+    isolated 테스트 결과 StyleGAN bedroom의 synthesis op이 fp16에서 inf를 토하는 패턴.
+    fp32로 전환하니 메모리는 4.4 → 5.4 GB로 늘었지만 8 GB 안에 충분히 들어가고 NaN은 사라졌다.</p>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="tech"><div class="container fade-in">
-  <div class="section-label">Tech Stack</div>
-  <h2 class="section-title">기술 스택</h2>
-  <p class="section-desc">Google Colab 환경에서 실행 가능하며, GAN 기반 이미지 생성에 필요한 기술 스택입니다.</p>
-  <div class="tech-grid">
-    <div class="tech-item">
-      <div class="tech-cat">Deep Learning</div>
-      <ul class="tech-list">
-        <li>GAN (Generative Adversarial Network)</li>
-        <li>VGG16 (Perceptual Loss)</li>
-        <li>LPIPS</li>
-      </ul>
+<!-- =================== INVERSION =================== -->
+<section id="inversion"><div class="container fade-in">
+  <div class="section-label">04 — Inversion</div>
+  <h2 class="section-title">두 인버전 방식, 정확도 vs 속도</h2>
+  <p class="section-desc">
+    같은 4장의 침실 이미지(generator로 생성, GT wp 존재)에 대해 (a) 1000 step Adam 최적화와
+    (b) 학습된 인코더 1-pass를 비교했다. 정확도는 최적화가 압승, 속도는 인코더가 600배 우위.
+    실시간 편집이나 대량 처리에는 인코더가, 단발 고정확도 매핑에는 최적화가 적합.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/compare_grid.png" alt="inversion comparison: target | optim | encoder">
+    <div class="img-caption"><strong>FIG 4.</strong> 행 = 4개 테스트 이미지, 열 = <strong>target | optim 1000step | encoder 1-pass</strong>. 인코더는 공간 구조는 잘 잡지만 색·텍스처가 평균화됨 (under-fit 신호).</div>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:1.2rem;">
+    <table>
+      <thead>
+        <tr><th>image</th><th class="num">pixel MSE (optim)</th><th class="num">pixel MSE (enc)</th><th class="num">LPIPS (optim)</th><th class="num">LPIPS (enc)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>img_00</td><td class="num winner">0.0258</td><td class="num loser">0.1013</td><td class="num winner">0.0314</td><td class="num loser">0.3557</td></tr>
+        <tr><td>img_01</td><td class="num winner">0.0083</td><td class="num loser">0.0300</td><td class="num winner">0.0313</td><td class="num loser">0.3816</td></tr>
+        <tr><td>img_02</td><td class="num winner">0.0053</td><td class="num loser">0.0395</td><td class="num winner">0.0268</td><td class="num loser">0.4564</td></tr>
+        <tr><td>img_03</td><td class="num winner">0.0177</td><td class="num loser">0.1274</td><td class="num winner">0.0327</td><td class="num loser">0.4158</td></tr>
+        <tr style="font-weight:700;"><td>mean</td><td class="num winner">0.0143</td><td class="num loser">0.0746</td><td class="num winner">0.0305</td><td class="num loser">0.4024</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-mark green">A</div><div><strong>optim 1000-step</strong>: pixel MSE 0.014, LPIPS 0.031, ~30 s / 장. v1이 풀지 못했던 정확 재구성 — gradient flow 한 줄 고친 결과.</div></div>
+    <div class="bullet-item"><div class="bullet-mark">B</div><div><strong>encoder 1-pass</strong>: pixel MSE 0.075, LPIPS 0.402, ~0.05 s / 장. 1번에서 600× 빠르지만 색·디테일은 미달. 추가 학습 (200k iter ≈ 17 h) 시 LPIPS ~0.20대 도달 예상.</div></div>
+    <div class="bullet-item"><div class="bullet-mark red">×</div><div><strong>v1 pSp encoder (FFHQ)</strong>: 도메인 mismatch로 침실에 부적합. v2에서는 제거.</div></div>
+  </div>
+
+  <div class="img-pair">
+    <div>
+      <img src="figures/encoder_it3000.png" alt="encoder reconstruction at iteration 3000">
+      <div class="img-pair-label">iter 3000 — 공간 구조만 잡힘</div>
     </div>
-    <div class="tech-item">
-      <div class="tech-cat">Optimization</div>
-      <ul class="tech-list">
-        <li>Gradient Descent</li>
-        <li>Multi-Loss Optimization</li>
-        <li>Latent Space Search</li>
-      </ul>
+    <div>
+      <img src="figures/encoder_it20000.png" alt="encoder reconstruction at iteration 20000">
+      <div class="img-pair-label">iter 20000 — 색·구조 모두 개선</div>
     </div>
-    <div class="tech-item">
-      <div class="tech-cat">Environment</div>
-      <ul class="tech-list">
-        <li>Google Colab</li>
-        <li>Python</li>
-        <li>NumPy (.npy output)</li>
-      </ul>
+  </div>
+  <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;font-family:'JetBrains Mono',monospace;">
+    각 패널: 좌 4장 = target / 우 4장 = encoder reconstruction
+  </p>
+</div></section>
+<hr class="divider">
+
+<!-- =================== CAM =================== -->
+<section id="cam" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">05 — CAM Saliency</div>
+  <h2 class="section-title">잠재 방향이 이미지의 <em>어디</em>에 작용하는가</h2>
+  <p class="section-desc">
+    각 boundary 방향 <code>b</code>에 대해 잠재코드를 ±δ만큼 흔들고, 그 결과 이미지의 픽셀 차이를
+    여러 샘플(64장)에 걸쳐 평균낸다. 분류기가 필요 없이 generator만으로 계산되며, 결과는
+    "이 attribute가 이미지의 어디를 움직이느냐"의 spatial map이다.
+  </p>
+
+  <div class="code-block"><pre><span class="code-comment"># 한 attribute의 픽셀 saliency</span>
+<span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(N):
+    wp = G.sample_wp(<span class="code-num">1</span>)
+    img_pos = G.synthesize(wp + δ * boundary)   <span class="code-comment"># attribute 켠 상태</span>
+    img_neg = G.synthesize(wp - δ * boundary)   <span class="code-comment"># attribute 끈 상태</span>
+    abs_diff += |img_pos - img_neg|             <span class="code-comment"># 픽셀별 변화량</span>
+    var      += var([img_neg, wp, img_pos])     <span class="code-comment"># 변화 강도</span>
+saliency = abs_diff / N                         <span class="code-comment"># (H, W) 히트맵</span></pre></div>
+
+  <div class="cam-grid">
+    <div class="cam-tile"><img src="figures/cam_indoor_lighting_abs.png" alt="indoor_lighting saliency"><div class="cam-meta"><div class="cam-name">indoor_lighting</div><div class="cam-loc">상단 중앙 — 조명·천장</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_view_abs.png" alt="view saliency"><div class="cam-meta"><div class="cam-name">view</div><div class="cam-loc">좌·우 상단 수직 띠 — 창문</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_wood_abs.png" alt="wood saliency"><div class="cam-meta"><div class="cam-name">wood</div><div class="cam-loc">중앙 띠 — 침대 프레임·바닥</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_carpet_abs.png" alt="carpet saliency"><div class="cam-meta"><div class="cam-name">carpet</div><div class="cam-loc">하단 — 바닥</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_glossy_abs.png" alt="glossy saliency"><div class="cam-meta"><div class="cam-name">glossy</div><div class="cam-loc">중앙 — 침구·반사면</div></div></div>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">결과 — 가설 검증</div>
+    <p>5개 핵심 attribute 모두 <strong>의미상 정확한 위치</strong>에 saliency가 집중된다.
+    indoor_lighting은 천장/조명 영역, view는 창문 형상의 수직 띠, wood는 침대 프레임 윤곽선,
+    carpet은 바닥, glossy는 침구. 즉 <em>"GAN의 잠재 방향은 이미지의 어디에 작용한다"는 명제가
+    정량적으로 입증된다</em>. 이것이 v2의 헤드라인 결과.</p>
+  </div>
+
+  <div class="panel-2col">
+    <div class="panel">
+      <div class="panel-eyebrow">왜 분류기가 필요 없는가</div>
+      <h4>generator-only attribution</h4>
+      <p>Grad-CAM 류는 분류기를 통한 gradient를 사용한다. 우리는 generator만으로 충분 — boundary
+      방향의 perturbation이 일으키는 <em>실제 픽셀 변화</em>가 곧 attribution. 분류기 학습/검증
+      과정이 필요 없어 즉시 실행 가능하고, 분류기의 편향이 결과에 섞이지 않는다.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-eyebrow">샘플 수 vs 노이즈</div>
+      <h4>64 samples · 96 forwards / attribute</h4>
+      <p>16 sample 시점에서도 패턴은 보였지만 노이즈가 컸다. 64 sample로 누적하니 깨끗한 띠/영역으로
+      수렴. 8개 attribute × 64 sample × 3 distance = 1,536 forward, RTX 3070에서 12초.
+      256× 더 늘려도 분 단위.</p>
     </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="limitations"><div class="container fade-in">
-  <div class="section-label">Limitations</div>
-  <h2 class="section-title">한계점 및 향후 방향</h2>
-  <p class="section-desc">현재 시스템의 알려진 한계와 향후 개선 방향입니다.</p>
+<!-- =================== EDITING =================== -->
+<section id="editing"><div class="container fade-in">
+  <div class="section-label">06 — Real-image editing</div>
+  <h2 class="section-title">실제 이미지에 의미 방향을 더해보기</h2>
+  <p class="section-desc">
+    학습된 인코더로 4장의 침실을 잠재공간에 매핑한 뒤, 각 boundary 방향으로 −3 ~ +3 sweep.
+    각 행이 한 침실, 각 열이 distance.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/edit_indoor_lighting.png" alt="indoor_lighting edit sweep">
+    <div class="img-caption"><strong>FIG 6a · indoor_lighting</strong> &nbsp; 좌측: real / 우측 5컬: dist = −3, −1.5, 0, +1.5, +3. + 쪽으로 갈수록 따뜻한 황금톤 조명이 들어옴.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/edit_wood.png" alt="wood edit sweep">
+    <div class="img-caption"><strong>FIG 6b · wood</strong> &nbsp; + 쪽으로 갈수록 침대 프레임·헤드보드가 진해지고 우드톤이 침구·벽으로 번짐.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/edit_view.png" alt="view edit sweep">
+    <div class="img-caption"><strong>FIG 6c · view</strong> &nbsp; 창문 영역의 콘트라스트와 형태가 바뀜 (낮은 layer 0–4를 조작하므로 전체 구도에도 영향).</div>
+  </div>
+
+  <div class="viz-insight">
+    <div class="viz-insight-label">관찰</div>
+    <p>인코더 reconstruction은 흐릿하지만 <strong>편집 방향성은 분명하다</strong>. 즉 잠재공간의
+    의미 구조 자체는 인코더의 표현력 한계와 무관하게 보존된다. v1이 풀지 못했던 "FFHQ pSp 인코더로
+    침실 편집"의 도메인 mismatch는, 도메인 특화 인코더로 정성적으로 해결됨을 확인.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== LIMITS =================== -->
+<section id="limits"><div class="container fade-in">
+  <div class="section-label">07 — Limits & Next</div>
+  <h2 class="section-title">정직한 한계</h2>
+  <p class="section-desc">
+    v2는 컨셉 검증과 파이프라인 견고화에 집중했다. 다음 세 가지가 명시적인 한계.
+  </p>
+
   <div class="card-grid">
-    <div class="card"><div class="card-title">가구 배치/구도 유사성</div><div class="card-text">생성된 이미지의 가구 배치와 구도는 입력 이미지와 높은 유사성을 보이며, 공간 구조의 재현에는 성공적입니다.</div></div>
-    <div class="card"><div class="card-title">색상/정확도 한계</div><div class="card-text">색상이나 세부 정확도 측면에서 잠재 공간을 완전히 일치시키지 못하는 한계가 존재합니다. 잠재 공간의 표현력 한계로 인한 것입니다.</div></div>
+    <div class="layer-card">
+      <div class="layer-num">L1 · Encoder under-fit</div>
+      <div class="layer-title">색·텍스처 평균화</div>
+      <div class="layer-q">20k iter는 표준 pSp 학습량(200–500k)의 4–10%. loss 곡선은 여전히 우하향이지만 기울기는 7배 완만해진 상태.</div>
+      <div class="tags"><span class="tag amber" style="background:rgba(180,83,9,0.08);color:var(--accent-amber);border-color:rgba(180,83,9,0.18);">LPIPS 0.40</span><span class="tag">pixel MSE 0.075</span><span class="tag">17h 더 학습 시 ~0.25 예상</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">L2 · Classifier-free CAM</div>
+      <div class="layer-title">"어디 움직이는가"는 알지만 "어디 의미 있다"는 별개</div>
+      <div class="layer-q">현재 CAM은 픽셀 변화량 기반. attribute 분류기를 따로 두면 Grad-CAM 정량값과 교차검증 가능. <code>higan_dev/cam/grad_cam.py</code> slot은 비워둠.</div>
+      <div class="tags"><span class="tag">extension hook</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">L3 · 단일 도메인</div>
+      <div class="layer-title">bedroom256만 검증</div>
+      <div class="layer-q">생성기를 다른 HiGAN 모델(LSUN church 등)로 바꾸면 wrapper만 재사용 가능하지만, boundary 자료가 침실용. 다른 도메인 적용에는 별도 boundary 학습 필요.</div>
+      <div class="tags"><span class="tag">stylegan_bedroom</span><span class="tag">256×256</span></div>
+    </div>
+  </div>
+
+  <div class="viz-insight">
+    <div class="viz-insight-label">다음 단계 옵션</div>
+    <p><strong>(a) 인코더 200k iter 추가 학습</strong> — 마지막 ckpt에서 이어서 ~17 h. 정밀 편집 데모용.<br>
+       <strong>(b) attribute classifier + Grad-CAM</strong> — perturbation CAM과 교차 검증. 약 2 h 작업.<br>
+       <strong>(c) 다른 도메인 (church/face)</strong> — wrapper 재사용 + boundary 학습. 1–2일 작업.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== RECAP =================== -->
+<section id="recap"><div class="container fade-in">
+  <div class="section-label">Recap</div>
+  <h2 class="section-title">v1 → v2 차이 요약</h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>항목</th><th>v1 노트북</th><th>v2 .py 패키지</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>최적화 인버전</td><td class="loser">gradient 단절로 사실상 비작동</td><td class="winner">loss 5.6 → 0.027 (99.5%↓)</td></tr>
+        <tr><td>인코더</td><td class="loser">pSp / FFHQ — 도메인 mismatch</td><td class="winner">ResNet50 + 합성 supervision (bedroom 전용)</td></tr>
+        <tr><td>혼합 정밀도</td><td>—</td><td>fp16 NaN 발견 → fp32 고정</td></tr>
+        <tr><td>boundary 조작</td><td>numpy 의존</td><td class="winner">torch-native, autograd 호환</td></tr>
+        <tr><td>CAM 해석</td><td class="loser">ttach 설치만, 미사용</td><td class="winner">perturbation diff-map 8 attribute</td></tr>
+        <tr><td>실행 환경</td><td>Colab</td><td class="winner">로컬 RTX 3070, &lt; 6 GB</td></tr>
+        <tr><td>학습 시간</td><td>—</td><td>20k iter, 1h 47m</td></tr>
+        <tr><td>재현성</td><td>경로 하드코딩</td><td class="winner">YAML config, CLI 7 step</td></tr>
+      </tbody>
+    </table>
   </div>
 </div></section>
 
 <footer>
-  <p class="footer-text"><a href="/">soccz.</a> &mdash; HIGAN</p>
+  <p class="footer-text">
+    <a href="/">soccz.</a> &mdash; HIGAN v2 report &mdash;
+    <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">github.com/soccz/HIGAN</a>
+  </p>
 </footer>
 
 <script>
