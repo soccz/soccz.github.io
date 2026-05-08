@@ -105,6 +105,42 @@
     /* chart wrappers */
     .chart-wrap { position: relative; height: 320px; margin-top: 0.6rem; }
 
+    /* Heatmap (daily PnL per side) */
+    .heatmap-wrap { overflow-x: auto; padding-bottom: 0.4rem; }
+    .heatmap { border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; }
+    .heatmap th, .heatmap td { padding: 0.32rem 0.42rem; text-align: center; min-width: 44px; }
+    .heatmap th { background: var(--bg-secondary); color: var(--text-secondary); font-weight: 700; font-size: 0.68rem; }
+    .heatmap th:first-child, .heatmap td:first-child { background: var(--bg-secondary); color: var(--text-primary); font-weight: 700; min-width: 64px; text-align: left; }
+    .heatmap td { color: var(--text-primary); border: 1px solid var(--border); }
+    .heatmap td.empty { color: var(--text-muted); }
+
+    /* viz split (side-by-side per side) */
+    .viz-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    @media (max-width: 880px) { .viz-split { grid-template-columns: 1fr; } }
+    .viz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.3rem; }
+    .viz-card .viz-title { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .viz-card .viz-sub { font-size: 0.74rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 0.9rem; line-height: 1.5; }
+
+    /* histogram bars (return distribution) */
+    .hist { display: flex; align-items: flex-end; gap: 2px; height: 140px; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+    .hist .bar { flex: 1; min-width: 6px; border-radius: 2px 2px 0 0; transition: opacity 0.15s; position: relative; }
+    .hist .bar:hover { opacity: 0.7; }
+    .hist .bar.pos { background: var(--green); }
+    .hist .bar.neg { background: var(--red); }
+    .hist-axis { display: flex; justify-content: space-between; font-size: 0.66rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; }
+    .hist-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 0.4rem 0.8rem; margin-top: 0.6rem; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; }
+    .hist-stats .hs { display: flex; flex-direction: column; }
+    .hist-stats .hs-l { color: var(--text-muted); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .hist-stats .hs-v { color: var(--text-primary); font-weight: 700; }
+
+    /* cumulative SVG line chart */
+    .cum-svg { width: 100%; height: 200px; display: block; }
+    .cum-svg .grid { stroke: var(--border); stroke-width: 1; }
+    .cum-svg .axis { stroke: var(--border-light); stroke-width: 1; }
+    .cum-svg .line { fill: none; stroke-width: 1.6; }
+    .cum-svg .area { opacity: 0.12; }
+    .cum-svg text { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-muted); }
+
     /* ops footer strip */
     .ops-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem 1.4rem; padding: 1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; }
     .ops-strip .ops-item { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; overflow: hidden; }
@@ -164,6 +200,9 @@
       <li><a href="#ic">ic series</a></li>
       <li><a href="#drift">drift</a></li>
       <li><a href="#calibration">calibration</a></li>
+      <li><a href="#cumulative">cumulative</a></li>
+      <li><a href="#heatmap">heatmap</a></li>
+      <li><a href="#distribution">distribution</a></li>
       <li><a href="#architecture">architecture</a></li>
       <li><a href="#automation">automation</a></li>
       <li><a href="#history">history</a></li>
@@ -360,6 +399,86 @@
       <div class="card">
         <h3>LONG (h=12)</h3>
         <div class="scroll-x"><table class="data" id="calibLongTable"></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Cumulative PnL — daily compounded mean per side -->
+<section id="cumulative" class="compact">
+  <div class="container">
+    <div class="section-label">cumulative pnl</div>
+    <h2 class="section-title">사이드별 누적 PnL — daily mean of pick returns</h2>
+    <p class="section-desc">
+      매일 그날 마감된 picks의 평균 realized %를 누적. peak 대비 underwater(drawdown)도 같이 그려져
+      <strong>최악 구간이 얼마나 깊고 길었는지</strong>가 한 눈에 보임. 수수료 후 net이 아니라 pre-fee gross.
+    </p>
+    <div class="viz-split">
+      <div class="viz-card">
+        <div class="viz-title">SHORT (h=6)</div>
+        <div class="viz-sub" id="cumShortMeta">—</div>
+        <svg class="cum-svg" id="cumShortSvg" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="viz-card">
+        <div class="viz-title">LONG (h=12)</div>
+        <div class="viz-sub" id="cumLongMeta">—</div>
+        <svg class="cum-svg" id="cumLongSvg" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Daily PnL heatmap — calendar-style intensity grid -->
+<section id="heatmap" class="compact">
+  <div class="container">
+    <div class="section-label">daily heatmap</div>
+    <h2 class="section-title">일별 평균 수익 — heatmap (week × weekday)</h2>
+    <p class="section-desc">
+      각 셀은 그 날의 picks 평균 realized %. 녹색=양수 / 적색=음수, 절대값 클수록 진하다.
+      week 단위로 묶어 <strong>요일별 / 주차별 패턴</strong>이 드러남. 표본 없는 셀은 비어 있음.
+    </p>
+    <div class="viz-split">
+      <div class="viz-card">
+        <div class="viz-title">SHORT (h=6)</div>
+        <div class="viz-sub" id="hmShortMeta">—</div>
+        <div class="heatmap-wrap" id="hmShort"><div style="color:var(--text-muted);font-size:0.78rem;">loading…</div></div>
+      </div>
+      <div class="viz-card">
+        <div class="viz-title">LONG (h=12)</div>
+        <div class="viz-sub" id="hmLongMeta">—</div>
+        <div class="heatmap-wrap" id="hmLong"><div style="color:var(--text-muted);font-size:0.78rem;">loading…</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Return distribution histogram — fat tails / skew snapshot -->
+<section id="distribution" class="compact">
+  <div class="container">
+    <div class="section-label">return distribution</div>
+    <h2 class="section-title">개별 trade 수익률 분포 — histogram</h2>
+    <p class="section-desc">
+      모든 closed picks의 realized % 히스토그램. 가운데 mean / median ·
+      양쪽 wing의 두께가 fat tail을 보여준다. <strong>positive skew</strong>면 가끔 큰 win이 손실을 상쇄하는 구조.
+    </p>
+    <div class="viz-split">
+      <div class="viz-card">
+        <div class="viz-title">SHORT (h=6)</div>
+        <div class="hist" id="histShort"></div>
+        <div class="hist-axis" id="histShortAxis"></div>
+        <div class="hist-stats" id="histShortStats"></div>
+      </div>
+      <div class="viz-card">
+        <div class="viz-title">LONG (h=12)</div>
+        <div class="hist" id="histLong"></div>
+        <div class="hist-axis" id="histLongAxis"></div>
+        <div class="hist-stats" id="histLongStats"></div>
       </div>
     </div>
   </div>
@@ -1126,6 +1245,176 @@ function renderHistory(history) {
   renderHistoryTable();
 }
 
+/* ───────── Cumulative PnL — SVG line chart ───────── */
+function _renderCumPnL(svgId, metaId, series, color) {
+  const svg = document.getElementById(svgId);
+  const meta = document.getElementById(metaId);
+  if (!svg) return;
+  if (!series || !series.length) {
+    svg.innerHTML = '';
+    if (meta) meta.textContent = '표본 없음';
+    return;
+  }
+  const W = 800, H = 200, PL = 40, PR = 16, PT = 10, PB = 22;
+  const cum = series.map(r => r.cum_pct);
+  const dd = series.map(r => r.drawdown_pct);
+  const minY = Math.min(0, ...dd);
+  const maxY = Math.max(0, ...cum);
+  const yPad = Math.max(0.5, (maxY - minY) * 0.08);
+  const yMin = minY - yPad, yMax = maxY + yPad;
+  const x = i => PL + (W - PL - PR) * (series.length === 1 ? 0.5 : i / (series.length - 1));
+  const y = v => PT + (H - PT - PB) * (1 - (v - yMin) / (yMax - yMin || 1));
+  const cumPath = series.map((r, i) => `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)},${y(r.cum_pct).toFixed(1)}`).join(' ');
+  const ddPath = series.map((r, i) => `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)},${y(r.drawdown_pct).toFixed(1)}`).join(' ');
+  const cumArea = `M${x(0).toFixed(1)},${y(0).toFixed(1)} ` +
+    series.map((r, i) => `L${x(i).toFixed(1)},${y(r.cum_pct).toFixed(1)}`).join(' ') +
+    ` L${x(series.length - 1).toFixed(1)},${y(0).toFixed(1)} Z`;
+  const yZero = y(0);
+  // gridlines: 4 horizontal
+  let grid = '';
+  const ticks = 4;
+  for (let i = 0; i <= ticks; i++) {
+    const v = yMin + (yMax - yMin) * (i / ticks);
+    const yy = y(v);
+    grid += `<line class="grid" x1="${PL}" x2="${W - PR}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" />`;
+    grid += `<text x="${PL - 4}" y="${(yy + 3).toFixed(1)}" text-anchor="end">${v.toFixed(1)}%</text>`;
+  }
+  const firstD = series[0].date, lastD = series[series.length - 1].date;
+  svg.innerHTML = `
+    ${grid}
+    <line class="axis" x1="${PL}" x2="${W - PR}" y1="${yZero.toFixed(1)}" y2="${yZero.toFixed(1)}" stroke-dasharray="3,3" />
+    <path class="area" d="${cumArea}" fill="${color}" />
+    <path class="line" d="${cumPath}" stroke="${color}" />
+    <path class="line" d="${ddPath}" stroke="var(--red)" stroke-dasharray="2,3" stroke-width="1.2" />
+    <text x="${PL}" y="${H - 6}" text-anchor="start">${firstD || ''}</text>
+    <text x="${W - PR}" y="${H - 6}" text-anchor="end">${lastD || ''}</text>
+  `;
+  if (meta) {
+    const last = series[series.length - 1];
+    const peakDD = Math.min(...dd);
+    meta.innerHTML =
+      `n=${series.length}d · 누적 <strong>${last.cum_pct >= 0 ? '+' : ''}${last.cum_pct.toFixed(2)}%</strong> · ` +
+      `최대 DD <span style="color:var(--red)">${peakDD.toFixed(2)}%</span>`;
+  }
+}
+
+function renderCumulative(accuracy) {
+  const ds = accuracy.daily_series || {};
+  _renderCumPnL('cumShortSvg', 'cumShortMeta', ds.SHORT || [], 'var(--red)');
+  _renderCumPnL('cumLongSvg', 'cumLongMeta', ds.WATCH_LONG || [], 'var(--green)');
+}
+
+/* ───────── Daily heatmap — week × weekday grid ───────── */
+function _renderHeatmap(rootId, metaId, series) {
+  const root = document.getElementById(rootId);
+  const meta = document.getElementById(metaId);
+  if (!root) return;
+  if (!series || !series.length) {
+    root.innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;">표본 없음</div>';
+    if (meta) meta.textContent = '—';
+    return;
+  }
+  const cell = new Map();
+  let absMax = 0;
+  for (const r of series) {
+    cell.set(r.date, r.mean_pct);
+    if (Math.abs(r.mean_pct) > absMax) absMax = Math.abs(r.mean_pct);
+  }
+  // Build week grid: rows = ISO weeks, columns = Mon..Sun
+  const dates = series.map(r => new Date(r.date + 'T00:00:00Z')).sort((a, b) => a - b);
+  const minDate = dates[0], maxDate = dates[dates.length - 1];
+  // Snap min to Monday
+  const start = new Date(minDate);
+  const dow = (start.getUTCDay() + 6) % 7; // Mon=0
+  start.setUTCDate(start.getUTCDate() - dow);
+  const weeks = [];
+  for (let d = new Date(start); d <= maxDate; d.setUTCDate(d.getUTCDate() + 7)) {
+    const row = [];
+    for (let i = 0; i < 7; i++) {
+      const dd = new Date(d);
+      dd.setUTCDate(dd.getUTCDate() + i);
+      const key = dd.toISOString().slice(0, 10);
+      row.push({ date: key, val: cell.has(key) ? cell.get(key) : null });
+    }
+    weeks.push(row);
+  }
+  const cellColor = v => {
+    if (v == null) return 'transparent';
+    const intensity = absMax > 0 ? Math.min(1, Math.abs(v) / absMax) : 0;
+    const a = (0.18 + 0.55 * intensity).toFixed(2);
+    return v >= 0 ? `rgba(22,163,74,${a})` : `rgba(220,38,38,${a})`;
+  };
+  const dowName = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  let html = `<table class="heatmap"><thead><tr><th>week</th>${dowName.map(d => `<th>${d}</th>`).join('')}</tr></thead><tbody>`;
+  for (const w of weeks) {
+    const wkLabel = w[0].date.slice(5); // MM-DD
+    html += `<tr><td>${wkLabel}</td>`;
+    for (const c of w) {
+      if (c.val == null) html += `<td class="empty">·</td>`;
+      else html += `<td title="${c.date}: ${c.val.toFixed(2)}%" style="background:${cellColor(c.val)}">${c.val >= 0 ? '+' : ''}${c.val.toFixed(1)}</td>`;
+    }
+    html += `</tr>`;
+  }
+  html += `</tbody></table>`;
+  root.innerHTML = html;
+  if (meta) {
+    const positives = series.filter(r => r.mean_pct > 0).length;
+    const total = series.length;
+    meta.innerHTML = `${total}일 · 양수일 <strong>${positives}/${total}</strong> (${(100 * positives / total).toFixed(0)}%) · ` +
+      `peak |${absMax.toFixed(2)}%|`;
+  }
+}
+
+function renderHeatmaps(accuracy) {
+  const ds = accuracy.daily_series || {};
+  _renderHeatmap('hmShort', 'hmShortMeta', ds.SHORT || []);
+  _renderHeatmap('hmLong', 'hmLongMeta', ds.WATCH_LONG || []);
+}
+
+/* ───────── Return distribution histogram ───────── */
+function _renderDistribution(rootId, axisId, statsId, dist) {
+  const root = document.getElementById(rootId);
+  const axis = document.getElementById(axisId);
+  const stats = document.getElementById(statsId);
+  if (!root) return;
+  if (!dist || !dist.bins || !dist.bins.length) {
+    root.innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;padding:0.6rem 0;">표본 없음</div>';
+    if (axis) axis.innerHTML = '';
+    if (stats) stats.innerHTML = '';
+    return;
+  }
+  const maxCount = Math.max(1, ...dist.bins.map(b => b.count));
+  root.innerHTML = dist.bins.map(b => {
+    const h = (b.count / maxCount) * 100;
+    const sgn = (b.bin_low + b.bin_high) / 2 >= 0 ? 'pos' : 'neg';
+    const tip = `${b.bin_low.toFixed(1)}% ~ ${b.bin_high.toFixed(1)}%: n=${b.count}`;
+    return `<div class="bar ${sgn}" style="height:${h.toFixed(1)}%" title="${tip}"></div>`;
+  }).join('');
+  if (axis) {
+    const lo = dist.bins[0].bin_low, hi = dist.bins[dist.bins.length - 1].bin_high;
+    const mid = (lo + hi) / 2;
+    axis.innerHTML = `<span>${lo.toFixed(1)}%</span><span>${mid.toFixed(1)}%</span><span>${hi.toFixed(1)}%</span>`;
+  }
+  if (stats) {
+    const s = dist.stats || {};
+    const cell = (label, val, cls) => `<div class="hs"><span class="hs-l">${label}</span><span class="hs-v ${cls || ''}">${val}</span></div>`;
+    stats.innerHTML = [
+      cell('n', s.n ?? '—'),
+      cell('mean', s.mean != null ? `${s.mean >= 0 ? '+' : ''}${s.mean.toFixed(2)}%` : '—', sgnClass(s.mean)),
+      cell('median', s.median != null ? `${s.median >= 0 ? '+' : ''}${s.median.toFixed(2)}%` : '—', sgnClass(s.median)),
+      cell('std', s.std != null ? `${s.std.toFixed(2)}%` : '—', 'muted'),
+      cell('hit %', s.hit_rate != null ? `${(s.hit_rate * 100).toFixed(1)}%` : '—'),
+      cell('p5/p95', (s.p5 != null && s.p95 != null) ? `${s.p5.toFixed(1)}/${s.p95.toFixed(1)}` : '—', 'muted'),
+    ].join('');
+  }
+}
+
+function renderDistributions(accuracy) {
+  const rd = accuracy.return_distribution || {};
+  _renderDistribution('histShort', 'histShortAxis', 'histShortStats', rd.SHORT);
+  _renderDistribution('histLong', 'histLongAxis', 'histLongStats', rd.WATCH_LONG);
+}
+
 /* ───────── Boot ───────── */
 async function boot() {
   const { pin, summary } = await showPinModal();
@@ -1146,6 +1435,9 @@ async function boot() {
   renderRealized(summary, accuracy);
   renderDrift(summary);
   renderCalibration(summary);
+  renderCumulative(accuracy);
+  renderHeatmaps(accuracy);
+  renderDistributions(accuracy);
   renderHistory(history);
   renderHoldoutVsLive(summary);
 }
