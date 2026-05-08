@@ -326,6 +326,68 @@
     .stat-strip-num.pivot { color: #6d28d9; }
     .stat-strip-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; letter-spacing: 0.02em; }
 
+    /* lightbox */
+    .lightbox {
+      position: fixed; inset: 0; background: rgba(28,25,23,0.92); display: none;
+      align-items: center; justify-content: center; z-index: 1000; padding: 2rem;
+      cursor: zoom-out;
+    }
+    .lightbox.show { display: flex; }
+    .lightbox img { max-width: 95vw; max-height: 95vh; display: block; border-radius: 4px; }
+    .lightbox-close {
+      position: absolute; top: 1.2rem; right: 1.5rem; color: #fafaf9; font-size: 2rem;
+      background: none; border: none; cursor: pointer; opacity: 0.7;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    img.zoomable { cursor: zoom-in; transition: opacity 0.15s; }
+    img.zoomable:hover { opacity: 0.92; }
+
+    /* code copy button */
+    .code-block { position: relative; }
+    .code-copy {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(231,229,228,0.1); border: 1px solid rgba(231,229,228,0.2);
+      color: #d6d3d1; font-size: 0.7rem; padding: 0.3rem 0.6rem; border-radius: 4px;
+      cursor: pointer; font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+    .code-copy:hover { background: rgba(231,229,228,0.18); color: #fff; }
+    .code-copy.copied { background: rgba(21,128,61,0.2); border-color: rgba(21,128,61,0.4); color: #86efac; }
+
+    /* sticky TOC sidebar (desktop only) */
+    .toc-side {
+      position: fixed; top: 96px; left: 1rem; width: 200px; padding: 1rem;
+      font-size: 0.78rem; line-height: 1.65; display: none; z-index: 50;
+    }
+    @media (min-width: 1320px) { .toc-side { display: block; } }
+    .toc-side ol { list-style: none; counter-reset: toc; padding-left: 0; }
+    .toc-side li { counter-increment: toc; margin-bottom: 0.32rem; }
+    .toc-side a {
+      color: var(--text-muted); text-decoration: none; display: block;
+      padding: 0.2rem 0.5rem; border-left: 2px solid transparent; transition: all 0.15s;
+    }
+    .toc-side a:hover { color: var(--text-primary); }
+    .toc-side a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-dim); }
+    .toc-side a::before { content: counter(toc, decimal-leading-zero) " · "; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-size: 0.72rem; }
+
+    /* progress bar */
+    .progress-bar {
+      position: fixed; top: 64px; left: 0; right: 0; height: 2px;
+      background: var(--accent); transform-origin: left; transform: scaleX(0);
+      z-index: 99; transition: transform 0.1s;
+    }
+
+    /* code diff (used in journal) */
+    .code-diff {
+      background: #1c1917; border-radius: 6px; padding: 0.8rem 1rem; margin-top: 0.8rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.65;
+      overflow-x: auto;
+    }
+    .code-diff .del { color: #ef9a9a; }
+    .code-diff .add { color: #a8d8a8; }
+    .code-diff .ctx { color: #78716c; }
+    .code-diff .meta { color: #a8a29e; font-style: italic; }
+
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
@@ -341,6 +403,28 @@
 </head>
 <body>
 
+<div class="progress-bar" id="progress"></div>
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')">
+  <button class="lightbox-close" aria-label="close">&times;</button>
+  <img id="lightbox-img" alt="">
+</div>
+
+<aside class="toc-side" id="toc-side">
+  <ol>
+    <li><a href="#question">Question</a></li>
+    <li><a href="#bug">v1 발견</a></li>
+    <li><a href="#v2">v2 Pipeline</a></li>
+    <li><a href="#inversion">Inversion</a></li>
+    <li><a href="#perturb">Perturb</a></li>
+    <li><a href="#grad">Gradient</a></li>
+    <li><a href="#perlayer">Per-layer</a></li>
+    <li><a href="#cycle">Full cycle</a></li>
+    <li><a href="#editing">Editing</a></li>
+    <li><a href="#journal">Journal</a></li>
+    <li><a href="#limits">Limits</a></li>
+  </ol>
+</aside>
+
 <nav id="navbar">
   <div class="nav-inner">
     <a href="/" class="nav-logo">soccz.</a>
@@ -351,7 +435,8 @@
       <li><a href="#inversion">Inversion</a></li>
       <li><a href="#perturb">Perturb</a></li>
       <li><a href="#grad">Gradient</a></li>
-      <li><a href="#editing">Editing</a></li>
+      <li><a href="#perlayer">Per-layer</a></li>
+      <li><a href="#cycle">Cycle</a></li>
       <li><a href="#journal">Journal</a></li>
       <li><a href="#limits">Limits</a></li>
     </ul>
@@ -415,7 +500,7 @@
   </div>
 
   <div class="img-frame">
-    <img src="figures/sanity_grid.png" alt="HiGAN bedroom256 generator sanity check — 8 random samples">
+    <img class="zoomable" loading="lazy" src="figures/sanity_grid.png" alt="HiGAN bedroom256 generator sanity check — 8 random samples">
     <div class="img-caption"><strong>FIG 0.</strong> HiGAN bedroom256 생성기 8장 무작위 샘플 (256×256, RTX 3070, 1초 미만)</div>
   </div>
 </div></section>
@@ -478,11 +563,11 @@ loss.backward()
 
   <div class="img-pair">
     <div>
-      <img src="figures/optim_target.png" alt="target image">
+      <img class="zoomable" loading="lazy" src="figures/optim_target.png" alt="target image">
       <div class="img-pair-label">target (synthetic, GT exists)</div>
     </div>
     <div>
-      <img src="figures/optim_recon.png" alt="reconstruction by v2 optim inversion">
+      <img class="zoomable" loading="lazy" src="figures/optim_recon.png" alt="reconstruction by v2 optim inversion">
       <div class="img-pair-label">v2 optim recon — 1000 step</div>
     </div>
   </div>
@@ -554,7 +639,7 @@ loss.backward()
   </p>
 
   <div class="img-frame">
-    <img src="figures/compare_grid.png" alt="inversion comparison: target | optim | encoder">
+    <img class="zoomable" loading="lazy" src="figures/compare_grid.png" alt="inversion comparison: target | optim | encoder">
     <div class="img-caption"><strong>FIG 4.</strong> 행 = 4개 테스트 이미지, 열 = <strong>target | optim 1000step | encoder 1-pass</strong>. 인코더는 공간 구조는 잘 잡지만 색·텍스처가 평균화됨 (under-fit 신호).</div>
   </div>
 
@@ -581,11 +666,11 @@ loss.backward()
 
   <div class="img-pair">
     <div>
-      <img src="figures/encoder_it3000.png" alt="encoder reconstruction at iteration 3000">
+      <img class="zoomable" loading="lazy" src="figures/encoder_it3000.png" alt="encoder reconstruction at iteration 3000">
       <div class="img-pair-label">iter 3000 — 공간 구조만 잡힘</div>
     </div>
     <div>
-      <img src="figures/encoder_it20000.png" alt="encoder reconstruction at iteration 20000">
+      <img class="zoomable" loading="lazy" src="figures/encoder_it20000.png" alt="encoder reconstruction at iteration 20000">
       <div class="img-pair-label">iter 20000 — 색·구조 모두 개선</div>
     </div>
   </div>
@@ -614,11 +699,11 @@ loss.backward()
 saliency = abs_diff / N                          <span class="code-comment"># (H, W) 히트맵</span></pre></div>
 
   <div class="cam-grid">
-    <div class="cam-tile"><img src="figures/cam_indoor_lighting_abs.png" alt="indoor_lighting saliency (perturbation)"><div class="cam-meta"><div class="cam-name">indoor_lighting</div><div class="cam-loc">상단 중앙 — 조명·천장</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_view_abs.png" alt="view saliency (perturbation)"><div class="cam-meta"><div class="cam-name">view</div><div class="cam-loc">좌·우 상단 수직 띠 — 창문</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_wood_abs.png" alt="wood saliency (perturbation)"><div class="cam-meta"><div class="cam-name">wood</div><div class="cam-loc">중앙 띠 — 침대 프레임·바닥</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_carpet_abs.png" alt="carpet saliency (perturbation)"><div class="cam-meta"><div class="cam-name">carpet</div><div class="cam-loc">하단 — 바닥</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_glossy_abs.png" alt="glossy saliency (perturbation)"><div class="cam-meta"><div class="cam-name">glossy</div><div class="cam-loc">중앙 — 침구·반사면</div></div></div>
+    <div class="cam-tile"><img class="zoomable" loading="lazy" src="figures/cam_indoor_lighting_abs.png" alt="indoor_lighting saliency (perturbation)"><div class="cam-meta"><div class="cam-name">indoor_lighting</div><div class="cam-loc">상단 중앙 — 조명·천장</div></div></div>
+    <div class="cam-tile"><img class="zoomable" loading="lazy" src="figures/cam_view_abs.png" alt="view saliency (perturbation)"><div class="cam-meta"><div class="cam-name">view</div><div class="cam-loc">좌·우 상단 수직 띠 — 창문</div></div></div>
+    <div class="cam-tile"><img class="zoomable" loading="lazy" src="figures/cam_wood_abs.png" alt="wood saliency (perturbation)"><div class="cam-meta"><div class="cam-name">wood</div><div class="cam-loc">중앙 띠 — 침대 프레임·바닥</div></div></div>
+    <div class="cam-tile"><img class="zoomable" loading="lazy" src="figures/cam_carpet_abs.png" alt="carpet saliency (perturbation)"><div class="cam-meta"><div class="cam-name">carpet</div><div class="cam-loc">하단 — 바닥</div></div></div>
+    <div class="cam-tile"><img class="zoomable" loading="lazy" src="figures/cam_glossy_abs.png" alt="glossy saliency (perturbation)"><div class="cam-meta"><div class="cam-name">glossy</div><div class="cam-loc">중앙 — 침구·반사면</div></div></div>
   </div>
 
   <div class="viz-insight amber">
@@ -696,17 +781,17 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
   </p>
 
   <div class="img-frame">
-    <img src="figures/grad_indoor_lighting_persample.png" alt="indoor_lighting per-sample gradient saliency">
+    <img class="zoomable" loading="lazy" src="figures/grad_indoor_lighting_persample.png" alt="indoor_lighting per-sample gradient saliency">
     <div class="img-caption"><strong>FIG 6.1 · indoor_lighting</strong> &nbsp; 침실마다 켜진 <strong>램프/창문/조명 영역</strong>에 정확히 hot spot. 같은 boundary가 각 scene에 맞춰 다른 위치를 가리킴.</div>
   </div>
 
   <div class="img-frame">
-    <img src="figures/grad_wood_persample.png" alt="wood per-sample gradient saliency">
+    <img class="zoomable" loading="lazy" src="figures/grad_wood_persample.png" alt="wood per-sample gradient saliency">
     <div class="img-caption"><strong>FIG 6.2 · wood</strong> &nbsp; 침대 헤드보드, 침대 프레임, 우드 패널 윤곽선이 선명하게 잡힘.</div>
   </div>
 
   <div class="img-frame">
-    <img src="figures/grad_view_persample.png" alt="view per-sample gradient saliency">
+    <img class="zoomable" loading="lazy" src="figures/grad_view_persample.png" alt="view per-sample gradient saliency">
     <div class="img-caption"><strong>FIG 6.3 · view</strong> &nbsp; 창문/문 형상 + 그 너머의 풍경 경계에 saliency 집중. layer 0–4(저주파) 조작 결과.</div>
   </div>
 
@@ -720,28 +805,92 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </div></section>
 <hr class="divider">
 
-<!-- =================== EDITING =================== -->
-<section id="editing"><div class="container fade-in">
-  <div class="section-label">07 — Real-image editing</div>
-  <h2 class="section-title">실제 이미지에 의미 방향을 더해보기</h2>
+<!-- =================== 07 PER-LAYER =================== -->
+<section id="perlayer"><div class="container fade-in">
+  <div class="section-label">07 — Per-layer decomposition</div>
+  <h2 class="section-title">"이 attribute는 어느 <em>layer</em>가 만드는가"</h2>
   <p class="section-desc">
-    학습된 인코더로 4장의 침실을 잠재공간에 매핑한 뒤, 각 boundary 방향으로 −3 ~ +3 sweep.
-    각 행이 한 침실, 각 열이 distance.
+    <code>indoor_lighting</code> boundary는 layer 6–11에 영향을 준다 (HiGAN 메타데이터).
+    그렇다면 그 6개 layer 중 어느 것이 *어디*를 만드는가? JVP에 layer mask만 바꿔
+    한 layer에만 boundary 방향을 두고 6번 다시 돌렸다. 추가 학습 0.
   </p>
 
   <div class="img-frame">
-    <img src="figures/edit_indoor_lighting.png" alt="indoor_lighting edit sweep">
-    <div class="img-caption"><strong>FIG 6a · indoor_lighting</strong> &nbsp; 좌측: real / 우측 5컬: dist = −3, −1.5, 0, +1.5, +3. + 쪽으로 갈수록 따뜻한 황금톤 조명이 들어옴.</div>
+    <img src="figures/grad_layer_indoor_lighting.png" alt="indoor_lighting per-layer saliency" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 7.1 · indoor_lighting</strong> &nbsp; layer 6→11. 낮은 layer는 약하고, <strong>layer 10·11(가장 fine)이 lighting 효과의 대부분을 carry</strong>. StyleGAN 계층의 "fine = 색·텍스처" 가설과 정렬.</div>
   </div>
 
   <div class="img-frame">
-    <img src="figures/edit_wood.png" alt="wood edit sweep">
-    <div class="img-caption"><strong>FIG 6b · wood</strong> &nbsp; + 쪽으로 갈수록 침대 프레임·헤드보드가 진해지고 우드톤이 침구·벽으로 번짐.</div>
+    <img src="figures/grad_layer_wood.png" alt="wood per-layer saliency" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 7.2 · wood</strong> &nbsp; layer 9·10이 침대 프레임 윤곽·우드톤을 만들고, 11은 표면 grain. mid–fine 영역.</div>
   </div>
 
   <div class="img-frame">
-    <img src="figures/edit_view.png" alt="view edit sweep">
-    <div class="img-caption"><strong>FIG 6c · view</strong> &nbsp; 창문 영역의 콘트라스트와 형태가 바뀜 (낮은 layer 0–4를 조작하므로 전체 구도에도 영향).</div>
+    <img src="figures/grad_layer_view.png" alt="view per-layer saliency" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 7.3 · view</strong> &nbsp; coarse layer 0–4. 0은 거의 정보 없고, <strong>layer 1·2가 창문 형상의 핵심 윤곽선</strong>, 3·4가 벽·문 같은 큰 구조.</div>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">새 결과</div>
+    <p>"보일러플레이트 attribute → 하나의 saliency"가 아니라 <strong>"attribute → 6개 layer × 6개 saliency"의 분해</strong>가 가능하다.
+    같은 <em>indoor_lighting</em>인데 layer 10이 만드는 효과(전체 분위기)와 layer 11이 만드는 효과(국소 highlight)가 다르다.
+    이건 우리가 알기로는 페이지가 처음 시각화하는 각도 — 공개된 HiGAN 결과는 모두 layer 통합형.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 08 FULL CYCLE =================== -->
+<section id="cycle" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">08 — Full cycle (target → recon → saliency → edit)</div>
+  <h2 class="section-title">한 침실에서 본 v2의 전체 흐름</h2>
+  <p class="section-desc">
+    한 장의 사진을 잡고 파이프라인 4단계를 좌→우로 보여준다.
+    <strong>target</strong> · <strong>encoder reconstruction</strong> ·
+    <strong>그 inverted wp 위에서의 grad-saliency</strong> · <strong>±3 편집</strong>.
+    ”내 침실의 lamp는 어디인가”까지 한 줄로 답하는 데모.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/full_cycle_2.png" alt="full pipeline cycle for image 2" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 8.1</strong> &nbsp; 같은 한 장의 침실 (img_2)에 indoor_lighting / wood / view 세 boundary 적용. saliency 컬럼이 attribute별로 다른 spatial focus를 보여주고, 마지막 두 컬럼은 −3 / +3 편집 결과.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/full_cycle_0.png" alt="full pipeline cycle for image 0" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 8.2</strong> &nbsp; 다른 침실(img_0)에 같은 분석. saliency가 scene-specific 하게 다른 위치를 짚음.</div>
+  </div>
+
+  <div class="viz-insight">
+    <div class="viz-insight-label">파이프라인 가치</div>
+    <p>인코더 reconstruction은 색·디테일 부족(섹션 04 underfit). 그럼에도
+    <strong>편집 방향성과 saliency 위치는 보존</strong>되어 ”이 침실의 lamp boundary가 가리키는 픽셀”이 일관되게
+    나옴. 즉 saliency-as-interpretability 분석은 reconstruction quality에 robust한 편.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 09 EDITING (morph) =================== -->
+<section id="editing"><div class="container fade-in">
+  <div class="section-label">09 — Edit sweep (animated)</div>
+  <h2 class="section-title">속성 슬라이더가 실제로 어떻게 보이는가</h2>
+  <p class="section-desc">
+    각 boundary를 −3 → +3 → −3 으로 21프레임 ping-pong morph. 정적 5컷 그리드보다
+    훨씬 매끄럽게 attribute의 작용이 보인다. WebP 압축으로 각 ~400 KB.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/morph_indoor_lighting.webp" alt="indoor_lighting morph" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 9.1 · indoor_lighting</strong> &nbsp; 두 침실 동시에 dim → bright → dim. 천장 조명의 ON/OFF처럼 보임.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/morph_wood.webp" alt="wood morph" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 9.2 · wood</strong> &nbsp; 침구·벽 색감이 우드톤으로 점진 이동. 침대 프레임 윤곽이 강해짐.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/morph_view.webp" alt="view morph" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 9.3 · view</strong> &nbsp; 창문 형태/밝기·문 위치가 바뀜. layer 0–4 (coarse) 조작이라 전체 layout에도 영향.</div>
   </div>
 
   <div class="viz-insight">
@@ -755,7 +904,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== JOURNAL =================== -->
 <section id="journal" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">08 — Process journal · 삽질 일지</div>
+  <div class="section-label">10 — Process journal · 삽질 일지</div>
   <h2 class="section-title">실패와 발견의 시간순</h2>
   <p class="section-desc">
     프로젝트가 깨끗하게 보이는 결과만 남기면 정직하지 않다. v1 분석부터 v2 grad-saliency까지
@@ -788,6 +937,18 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
       <div class="journal-fix">
         HiGANGenerator wrapper에서 <code>G.net.synthesis(wp)</code>를 직접 노출 → loss 5.6 → 0.027
       </div>
+      <div class="code-diff">
+<span class="meta">--- v1: noteboook</span>
+<span class="del">- latent_np = latent.detach().cpu().numpy()</span>
+<span class="del">- generated  = model.easy_synthesize(latent_np, ...)</span>
+<span class="del">- img_t      = torch.tensor(generated['image']) / 255.</span>
+<span class="del">- img_t.requires_grad_()   # 새 leaf — latent와 무관</span>
+<span class="meta">+++ v2: HiGANGenerator</span>
+<span class="add">+ wp  = G.sample_wp(1).requires_grad_(True)</span>
+<span class="add">+ img = G.synthesize(wp)            # autograd alive</span>
+<span class="add">+ loss.backward()</span>
+<span class="add">+ assert wp.grad.norm() &gt; 0   # 0.30 in our test</span>
+      </div>
     </div>
 
     <div class="journal-entry fix">
@@ -803,6 +964,16 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
       </div>
       <div class="journal-fix">
         torch 2.2.2 + nvidia-* 패키지 핀해서 재설치, lpips 는 <code>--no-deps</code>로. requirements.txt에 박아둠.
+      </div>
+      <div class="code-diff">
+<span class="meta">$ python -c "import torch"</span>
+<span class="del">ImportError: libcudnn.so.8: cannot open shared object file:</span>
+<span class="del">             No such file or directory</span>
+<span class="meta"># cu13 cudnn 9.x가 깔리고 cu12 cudnn 8.x는 사라진 상태</span>
+<span class="meta">$ pip install --force-reinstall \</span>
+<span class="add">    nvidia-cudnn-cu12==8.9.2.26 nvidia-cuda-runtime-cu12==12.1.105 \</span>
+<span class="add">    'torch==2.2.2' --index-url ...whl/cu121</span>
+<span class="add">$ pip install --no-deps lpips==0.1.4   # ← key</span>
       </div>
     </div>
 
@@ -820,6 +991,16 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
       </div>
       <div class="journal-fix">
         AMP 끄고 fp32 고정. peak 메모리 4.4 → 5.4 GB지만 8 GB에 충분히 들어감. NaN 사라짐.
+      </div>
+      <div class="code-diff">
+<span class="meta">--- log.jsonl during AMP</span>
+<span class="del">{"it":  20, "total": NaN, "w_mse": 0.071, "pixel_l2": NaN, "lpips": NaN}</span>
+<span class="del">{"it":  40, "total": NaN, "w_mse": 0.074, "pixel_l2": NaN, "lpips": NaN}</span>
+<span class="del">...</span>
+<span class="meta"># w_mse(잠재)는 정상, image-space 통과 후만 NaN — synthesis op이 fp16에서 inf</span>
+<span class="meta">--- log.jsonl after fp32</span>
+<span class="add">{"it": 100, "total": 1.299, "w_mse": 0.068, "pixel_l2": 0.190, "lpips": 0.517}</span>
+<span class="add">{"it": 550, "total": 1.202, "w_mse": 0.060, "pixel_l2": 0.176, "lpips": 0.445}</span>
       </div>
     </div>
 
@@ -876,6 +1057,19 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
         bedroom256은 <code>lod=0.0</code> 고정이므로 wrapper init 시 한 번 읽어 python float로 캐싱.
         <code>synthesis.forward</code>를 동등 로직 + 캐시값 사용으로 monkey-patch (5줄). JVP 통과.
       </div>
+      <div class="code-diff">
+<span class="meta">--- genforce/.../stylegan_generator_network.py:357</span>
+<span class="del">  def forward(self, w):</span>
+<span class="del">      ...</span>
+<span class="del">      lod = self.lod.cpu().tolist()   # ← dual tensor 깨짐</span>
+<span class="del">      for res_log2 in range(...):</span>
+<span class="meta">+++ higan_dev/generator.py — JVP-safe</span>
+<span class="add">  cached_lod = float(synth.lod.detach().cpu().item())</span>
+<span class="add">  def jvp_safe_forward(self_synth, w):</span>
+<span class="add">      lod = cached_lod                 # ← python float, dual-friendly</span>
+<span class="add">      for res_log2 in range(...):</span>
+<span class="add">  synth.forward = types.MethodType(jvp_safe_forward, synth)</span>
+      </div>
     </div>
 
     <div class="journal-entry fix">
@@ -907,7 +1101,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== LIMITS =================== -->
 <section id="limits"><div class="container fade-in">
-  <div class="section-label">09 — Limits & Next</div>
+  <div class="section-label">11 — Limits & Next</div>
   <h2 class="section-title">정직한 한계</h2>
   <p class="section-desc">
     v2는 컨셉 검증과 파이프라인 견고화에 집중했다. 다음 세 가지가 명시적인 한계.
@@ -976,9 +1170,64 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </footer>
 
 <script>
-window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+// nav scrolled state
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+});
+
+// reveal on scroll
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// progress bar
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const total = h.scrollHeight - h.clientHeight;
+  const scrolled = h.scrollTop || document.body.scrollTop;
+  progress.style.transform = `scaleX(${total > 0 ? scrolled / total : 0})`;
+});
+
+// lightbox: any img.zoomable opens enlarged view
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+document.querySelectorAll('img.zoomable').forEach(img => {
+  img.addEventListener('click', () => {
+    lbImg.src = img.src;
+    lbImg.alt = img.alt || '';
+    lb.classList.add('show');
+  });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('show'); });
+
+// code copy buttons
+document.querySelectorAll('.code-block').forEach(block => {
+  const btn = document.createElement('button');
+  btn.className = 'code-copy';
+  btn.textContent = 'copy';
+  btn.addEventListener('click', () => {
+    const code = block.querySelector('pre')?.innerText ?? '';
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = 'copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1400);
+    });
+  });
+  block.appendChild(btn);
+});
+
+// TOC active section highlight
+const tocLinks = document.querySelectorAll('.toc-side a');
+const sectionIds = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
+const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+window.addEventListener('scroll', () => {
+  const y = window.scrollY + 120;
+  let active = null;
+  sections.forEach(s => { if (s.offsetTop <= y) active = s.id; });
+  tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
+});
 </script>
 </body>
 </html>
