@@ -256,6 +256,76 @@
     .file-tree .file { color: var(--text-primary); }
     .file-tree .note { color: var(--text-muted); }
 
+    /* journal / 삽질 일지 */
+    .journal {
+      display: flex; flex-direction: column; gap: 0.9rem;
+      border-left: 1px solid var(--border); padding-left: 1.6rem;
+      margin: 1.6rem 0 1.6rem 0.4rem;
+    }
+    .journal-entry {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem 1.45rem; position: relative;
+      transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .journal-entry:hover { transform: translateX(2px); box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+    .journal-entry::before {
+      content: ''; position: absolute; left: -2.45rem; top: 1.45rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg-primary);
+      z-index: 2;
+    }
+    .journal-entry.wall::before    { background: var(--accent-red); }
+    .journal-entry.fix::before     { background: var(--accent-amber); }
+    .journal-entry.passed::before  { background: var(--accent-green); }
+    .journal-entry.pivot::before   { background: #6d28d9; }
+    .journal-head {
+      display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.55rem;
+    }
+    .journal-id {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
+    }
+    .journal-phase {
+      font-size: 0.66rem; padding: 0.16rem 0.5rem; background: var(--bg-secondary);
+      color: var(--text-secondary); border-radius: 3px; font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+    .journal-status {
+      font-size: 0.64rem; padding: 0.18rem 0.55rem; border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 700; margin-left: auto;
+    }
+    .journal-status.wall   { background: rgba(185,28,28,0.12); color: var(--accent-red); }
+    .journal-status.fix    { background: rgba(180,83,9,0.12);  color: var(--accent-amber); }
+    .journal-status.passed { background: rgba(21,128,61,0.12); color: var(--accent-green); }
+    .journal-status.pivot  { background: rgba(109,40,217,0.12); color: #6d28d9; }
+    .journal-entry h4 {
+      font-family: 'Noto Serif KR', serif; font-size: 1.02rem; font-weight: 700;
+      margin-bottom: 0.45rem; line-height: 1.45;
+    }
+    .journal-body { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.78; }
+    .journal-body code {
+      background: var(--bg-secondary); padding: 0.1rem 0.35rem; border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.82em;
+    }
+    .journal-fix {
+      margin-top: 0.75rem; padding: 0.55rem 0.85rem; background: var(--bg-secondary);
+      border-radius: 5px; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--text-primary); line-height: 1.6;
+    }
+    .journal-fix::before { content: '→ '; color: var(--accent-green); font-weight: 700; }
+
+    .stat-strip {
+      display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 2rem;
+      padding: 1.1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    }
+    .stat-strip-item { display: flex; flex-direction: column; min-width: 80px; }
+    .stat-strip-num { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 1.4rem; line-height: 1.1; }
+    .stat-strip-num.red { color: var(--accent-red); }
+    .stat-strip-num.amber { color: var(--accent-amber); }
+    .stat-strip-num.green { color: var(--accent-green); }
+    .stat-strip-num.pivot { color: #6d28d9; }
+    .stat-strip-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; letter-spacing: 0.02em; }
+
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
@@ -282,6 +352,7 @@
       <li><a href="#perturb">Perturb</a></li>
       <li><a href="#grad">Gradient</a></li>
       <li><a href="#editing">Editing</a></li>
+      <li><a href="#journal">Journal</a></li>
       <li><a href="#limits">Limits</a></li>
     </ul>
   </div>
@@ -682,9 +753,161 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </div></section>
 <hr class="divider">
 
+<!-- =================== JOURNAL =================== -->
+<section id="journal" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">08 — Process journal · 삽질 일지</div>
+  <h2 class="section-title">실패와 발견의 시간순</h2>
+  <p class="section-desc">
+    프로젝트가 깨끗하게 보이는 결과만 남기면 정직하지 않다. v1 분석부터 v2 grad-saliency까지
+    실제로 막혔던 7개의 벽을 시간순으로 적는다. 빨간 점은 벽을 만난 순간, 노란 점은 우회로,
+    초록은 통과, 보라는 방향 전환.
+  </p>
+
+  <div class="stat-strip">
+    <div class="stat-strip-item"><span class="stat-strip-num red">3</span><span class="stat-strip-label">walls hit</span></div>
+    <div class="stat-strip-item"><span class="stat-strip-num amber">3</span><span class="stat-strip-label">workarounds</span></div>
+    <div class="stat-strip-item"><span class="stat-strip-num pivot">1</span><span class="stat-strip-label">framing pivot</span></div>
+    <div class="stat-strip-item"><span class="stat-strip-num green">7</span><span class="stat-strip-label">resolved</span></div>
+  </div>
+
+  <div class="journal">
+    <div class="journal-entry wall">
+      <div class="journal-head">
+        <span class="journal-id">#01</span>
+        <span class="journal-phase">phase · v1 분석</span>
+        <span class="journal-status wall">wall hit</span>
+      </div>
+      <h4>최적화 인버전이 사실은 동작하지 않고 있었다</h4>
+      <div class="journal-body">
+        v1 노트북은 매 step <code>latent.detach().cpu().numpy()</code>로 변환 후
+        <code>easy_synthesize</code>를 호출. 결과를 <code>torch.tensor(...)</code>로 다시
+        감싸 <code>requires_grad_()</code>를 붙이지만 그건 <em>새 leaf tensor</em>고,
+        optimizer가 추적하는 원래 latent와 무관. backward()의 <code>.grad</code>가 0.
+        "1500 step × 10 init"은 사실 random init 10번 중 best pick.
+      </div>
+      <div class="journal-fix">
+        HiGANGenerator wrapper에서 <code>G.net.synthesis(wp)</code>를 직접 노출 → loss 5.6 → 0.027
+      </div>
+    </div>
+
+    <div class="journal-entry fix">
+      <div class="journal-head">
+        <span class="journal-id">#02</span>
+        <span class="journal-phase">phase · 환경 세팅</span>
+        <span class="journal-status fix">workaround</span>
+      </div>
+      <h4>pip install lpips 가 torch 를 2.11 로 강제 업그레이드</h4>
+      <div class="journal-body">
+        LPIPS 한 줄 추가하다가 의존성 그래프가 따라와 torch 2.2.2 → 2.11.0 + cudnn cu12 → cu13 교체.
+        그 결과 <code>libcudnn.so.8: cannot open shared object file</code>. CUDA 환경 깨짐.
+      </div>
+      <div class="journal-fix">
+        torch 2.2.2 + nvidia-* 패키지 핀해서 재설치, lpips 는 <code>--no-deps</code>로. requirements.txt에 박아둠.
+      </div>
+    </div>
+
+    <div class="journal-entry fix">
+      <div class="journal-head">
+        <span class="journal-id">#03</span>
+        <span class="journal-phase">phase · 인코더 학습</span>
+        <span class="journal-status fix">workaround</span>
+      </div>
+      <h4>fp16 autocast 켰더니 image-space loss 전부 NaN</h4>
+      <div class="journal-body">
+        AMP 켜고 batch 8로 학습 시작. <code>w_mse</code>는 정상이지만 <code>pixel_l2 / lpips / perceptual</code>
+        모두 NaN. isolated 테스트로 원인 좁혀가니 StyleGAN bedroom의 synthesis op 자체가 fp16 autocast
+        하에서 inf를 토하는 패턴.
+      </div>
+      <div class="journal-fix">
+        AMP 끄고 fp32 고정. peak 메모리 4.4 → 5.4 GB지만 8 GB에 충분히 들어감. NaN 사라짐.
+      </div>
+    </div>
+
+    <div class="journal-entry passed">
+      <div class="journal-head">
+        <span class="journal-id">#04</span>
+        <span class="journal-phase">phase · 인코더 학습 종료</span>
+        <span class="journal-status passed">accepted</span>
+      </div>
+      <h4>20k iter 학습된 인코더가 LPIPS 0.40 에서 정체</h4>
+      <div class="journal-body">
+        loss 곡선이 우하향이지만 기울기가 7배 완만해짐 (1k당 −0.054 → −0.0072).
+        60k 더 돌려도 LPIPS 0.30 가까이만 갈 추세. pSp 표준(200–500k)의 4–10%만 학습한 셈.
+        편집 방향성은 보존되지만 reconstruction은 회백색으로 평균화.
+      </div>
+      <div class="journal-fix">
+        ROI 낮아 추가 학습 보류, 한계로 명시 (섹션 09). 인코더는 inversion 용이지 saliency엔 불필요.
+      </div>
+    </div>
+
+    <div class="journal-entry pivot">
+      <div class="journal-head">
+        <span class="journal-id">#05</span>
+        <span class="journal-phase">phase · 페이지 검토</span>
+        <span class="journal-status pivot">framing pivot</span>
+      </div>
+      <h4>"CAM-style" 표현이 사실 부정확하다는 지적</h4>
+      <div class="journal-body">
+        초안 페이지에 perturbation diff_map을 "CAM-style saliency"로 명명. 사용자 검토 중 지적:
+        <em>"근데 cam처럼 보자는거잖아 역전파 개념이 없는데?"</em>
+        맞는 말. 우리 v1은 forward 두 번 차이를 본 finite-difference 민감도였고,
+        Grad-CAM의 핵심인 backward gradient는 흐르지 않았다. 이름과 mechanism 불일치.
+      </div>
+      <div class="journal-fix">
+        섹션 05를 "forward perturbation (1차 시도)"로 톤 다운. 진짜 backward 흐르는
+        cam/grad_saliency.py 신규 모듈을 새 헤드라인으로 추가.
+      </div>
+    </div>
+
+    <div class="journal-entry wall">
+      <div class="journal-head">
+        <span class="journal-id">#06</span>
+        <span class="journal-phase">phase · grad-saliency 구현</span>
+        <span class="journal-status wall">wall hit</span>
+      </div>
+      <h4>torch.func.jvp 가 StyleGAN synthesis 안에서 죽는다</h4>
+      <div class="journal-body">
+        forward-mode JVP를 generator에 통과시키니
+        <code>RuntimeError: Cannot access data pointer of Tensor that doesn't have storage</code>.
+        추적해보면 genforce/higan의 <code>synthesis.forward</code>가 <code>self.lod.cpu().tolist()</code>로
+        lod 버퍼를 파이썬 리스트로 변환하는 줄에서 dual tensor 깨짐.
+      </div>
+      <div class="journal-fix">
+        bedroom256은 <code>lod=0.0</code> 고정이므로 wrapper init 시 한 번 읽어 python float로 캐싱.
+        <code>synthesis.forward</code>를 동등 로직 + 캐시값 사용으로 monkey-patch (5줄). JVP 통과.
+      </div>
+    </div>
+
+    <div class="journal-entry fix">
+      <div class="journal-head">
+        <span class="journal-id">#07</span>
+        <span class="journal-phase">phase · grad-saliency 시각화</span>
+        <span class="journal-status fix">refinement</span>
+      </div>
+      <h4>64 샘플 평균 결과가 8 샘플 단일보다 흐릿함</h4>
+      <div class="journal-body">
+        스모크 테스트에서 8 샘플로 본 결과는 램프·침대 윤곽이 또렷했는데, 64 샘플 평균은
+        뿌연 spatial blob. 평균이 sample-specific 위치(이 침실의 lamp는 좌측, 저 침실은 우측)를 뭉갠 것.
+      </div>
+      <div class="journal-fix">
+        평균 외에 첫 K개 sample의 saliency를 개별로도 저장. per-sample 그리드가 진짜 헤드라인 결과.
+      </div>
+    </div>
+  </div>
+
+  <div class="viz-insight">
+    <div class="viz-insight-label">교훈</div>
+    <p>벽 7개 중 6개는 <em>도구 stack의 가정</em>에서 왔다 — autograd가 어디서 끊기는가,
+    fp16에서 어떤 op이 깨지는가, dual tensor가 어떤 호출을 못 받는가. 모델 자체의 문제는 단 하나(인코더 underfit).
+    "신박한 아이디어보다 기존 도구의 구석에 빠지지 않기"가 실제 작업의 70%였다.
+    그리고 framing pivot(#05)은 사용자 한 줄 코멘트가 가장 큰 quality gate였음을 보여줌.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
 <!-- =================== LIMITS =================== -->
 <section id="limits"><div class="container fade-in">
-  <div class="section-label">08 — Limits & Next</div>
+  <div class="section-label">09 — Limits & Next</div>
   <h2 class="section-title">정직한 한계</h2>
   <p class="section-desc">
     v2는 컨셉 검증과 파이프라인 견고화에 집중했다. 다음 세 가지가 명시적인 한계.
