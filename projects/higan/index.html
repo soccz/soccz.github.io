@@ -279,7 +279,8 @@
       <li><a href="#bug">v1 Bug</a></li>
       <li><a href="#v2">v2 Pipeline</a></li>
       <li><a href="#inversion">Inversion</a></li>
-      <li><a href="#cam">CAM</a></li>
+      <li><a href="#perturb">Perturb</a></li>
+      <li><a href="#grad">Gradient</a></li>
       <li><a href="#editing">Editing</a></li>
       <li><a href="#limits">Limits</a></li>
     </ul>
@@ -299,8 +300,8 @@
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">8</span><span class="hero-stat-label">attribute boundary</span></div>
       <div class="hero-stat"><span class="hero-stat-num">14×512</span><span class="hero-stat-label">W+ 잠재 공간</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">saliency methods (perturb / JVP)</span></div>
       <div class="hero-stat"><span class="hero-stat-num">20k</span><span class="hero-stat-label">encoder iterations</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">~50M</span><span class="hero-stat-label">encoder params</span></div>
     </div>
     <div class="hero-links">
       <a class="hero-link primary" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">
@@ -523,63 +524,134 @@ loss.backward()
 </div></section>
 <hr class="divider">
 
-<!-- =================== CAM =================== -->
-<section id="cam" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">05 — CAM Saliency</div>
-  <h2 class="section-title">잠재 방향이 이미지의 <em>어디</em>에 작용하는가</h2>
+<!-- =================== 05 PERTURBATION =================== -->
+<section id="perturb"><div class="container fade-in">
+  <div class="section-label">05 — Forward perturbation (1차 시도)</div>
+  <h2 class="section-title">잠재 방향이 이미지의 <em>어디</em>에 작용하는가 — 첫 번째 답</h2>
   <p class="section-desc">
-    각 boundary 방향 <code>b</code>에 대해 잠재코드를 ±δ만큼 흔들고, 그 결과 이미지의 픽셀 차이를
-    여러 샘플(64장)에 걸쳐 평균낸다. 분류기가 필요 없이 generator만으로 계산되며, 결과는
-    "이 attribute가 이미지의 어디를 움직이느냐"의 spatial map이다.
+    각 boundary 방향 <code>b</code>에 대해 잠재코드를 ±δ만큼 흔들고, 결과 이미지 차이를
+    64개 샘플에 걸쳐 평균. 코드가 짧고 backward가 필요 없어서 가장 단순한 분석.
+    여기서 spatial 패턴이 분명히 드러나지만, 다음 섹션의 진짜 gradient 결과와 비교하면 차이가 큼.
   </p>
 
-  <div class="code-block"><pre><span class="code-comment"># 한 attribute의 픽셀 saliency</span>
+  <div class="code-block"><pre><span class="code-comment"># forward-only finite difference (no backward)</span>
 <span class="code-keyword">for</span> i <span class="code-keyword">in</span> range(N):
     wp = G.sample_wp(<span class="code-num">1</span>)
-    img_pos = G.synthesize(wp + δ * boundary)   <span class="code-comment"># attribute 켠 상태</span>
-    img_neg = G.synthesize(wp - δ * boundary)   <span class="code-comment"># attribute 끈 상태</span>
-    abs_diff += |img_pos - img_neg|             <span class="code-comment"># 픽셀별 변화량</span>
-    var      += var([img_neg, wp, img_pos])     <span class="code-comment"># 변화 강도</span>
-saliency = abs_diff / N                         <span class="code-comment"># (H, W) 히트맵</span></pre></div>
+    img_pos = G.synthesize(wp + δ * boundary)
+    img_neg = G.synthesize(wp - δ * boundary)
+    abs_diff += |img_pos - img_neg|              <span class="code-comment"># 픽셀별 변화량</span>
+saliency = abs_diff / N                          <span class="code-comment"># (H, W) 히트맵</span></pre></div>
 
   <div class="cam-grid">
-    <div class="cam-tile"><img src="figures/cam_indoor_lighting_abs.png" alt="indoor_lighting saliency"><div class="cam-meta"><div class="cam-name">indoor_lighting</div><div class="cam-loc">상단 중앙 — 조명·천장</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_view_abs.png" alt="view saliency"><div class="cam-meta"><div class="cam-name">view</div><div class="cam-loc">좌·우 상단 수직 띠 — 창문</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_wood_abs.png" alt="wood saliency"><div class="cam-meta"><div class="cam-name">wood</div><div class="cam-loc">중앙 띠 — 침대 프레임·바닥</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_carpet_abs.png" alt="carpet saliency"><div class="cam-meta"><div class="cam-name">carpet</div><div class="cam-loc">하단 — 바닥</div></div></div>
-    <div class="cam-tile"><img src="figures/cam_glossy_abs.png" alt="glossy saliency"><div class="cam-meta"><div class="cam-name">glossy</div><div class="cam-loc">중앙 — 침구·반사면</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_indoor_lighting_abs.png" alt="indoor_lighting saliency (perturbation)"><div class="cam-meta"><div class="cam-name">indoor_lighting</div><div class="cam-loc">상단 중앙 — 조명·천장</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_view_abs.png" alt="view saliency (perturbation)"><div class="cam-meta"><div class="cam-name">view</div><div class="cam-loc">좌·우 상단 수직 띠 — 창문</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_wood_abs.png" alt="wood saliency (perturbation)"><div class="cam-meta"><div class="cam-name">wood</div><div class="cam-loc">중앙 띠 — 침대 프레임·바닥</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_carpet_abs.png" alt="carpet saliency (perturbation)"><div class="cam-meta"><div class="cam-name">carpet</div><div class="cam-loc">하단 — 바닥</div></div></div>
+    <div class="cam-tile"><img src="figures/cam_glossy_abs.png" alt="glossy saliency (perturbation)"><div class="cam-meta"><div class="cam-name">glossy</div><div class="cam-loc">중앙 — 침구·반사면</div></div></div>
+  </div>
+
+  <div class="viz-insight amber">
+    <div class="viz-insight-label">정직한 한계 — "CAM-style"이 정확한 표현이 아니다</div>
+    <p>위 결과는 <strong>backward를 쓰지 않는다</strong>. forward 두 번을 빼서 픽셀 차이를 본 것뿐.
+    분류기를 안 쓰니 Grad-CAM과는 다른 종류의 분석이고, 정확히 말하면
+    <em>occlusion-style 또는 finite-difference 민감도</em>에 가깝다.
+    1차 근사로는 직접 gradient를 계산한 것과 같은 양을 측정하지만(아래 등식 참조),
+    실제로 "역전파"는 흐르지 않는다.
+    이걸 진짜 gradient로 바꾸려면 — generator를 미분 가능하게 만들었으니 — 한 단계만 더 가면 된다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 06 GRADIENT =================== -->
+<section id="grad" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">06 — Backward gradient saliency (헤드라인)</div>
+  <h2 class="section-title">진짜 역전파를 흘려서 같은 질문을 다시 답하기</h2>
+  <p class="section-desc full">
+    Boundary 방향 <code>b</code>를 따라 잠재공간에서 한 발 움직이는 양을 스칼라 <code>α</code>로 두고,
+    출력 이미지의 모든 픽셀에 대해 <code>∂I[c,h,w]/∂α</code>를 직접 계산한다.
+    1입력(α) → 다출력(3·H·W) 구조이므로 <strong>forward-mode 자동미분(JVP)</strong>이 효율적이고,
+    이는 generator의 backward graph를 한 번 통과하는 연산이다.
+    분류기 score 자리에 "잠재 방향"이 들어간 Grad-CAM의 정신적 자매.
+  </p>
+
+  <div class="code-block"><pre><span class="code-keyword">from</span> torch.func <span class="code-keyword">import</span> jvp
+
+<span class="code-comment"># α: scalar perturbation along boundary direction</span>
+<span class="code-keyword">def</span> <span class="code-good">G_along</span>(α):
+    wp_p = wp + α.view(B, <span class="code-num">1</span>, <span class="code-num">1</span>) * b_layered     <span class="code-comment"># (B, L, D)</span>
+    <span class="code-keyword">return</span> G.synthesize(wp_p)                  <span class="code-comment"># (B, 3, H, W)</span>
+
+<span class="code-comment"># JVP: forward-mode autodiff. tangent direction = unit step in α.</span>
+<span class="code-comment"># Result is the *exact* per-pixel sensitivity ∂I/∂α at α=0.</span>
+img, dimg_dα = jvp(G_along, (torch.zeros(B),), (torch.ones(B),))
+
+saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <span class="code-comment"># (B, H, W) per-pixel</span></pre></div>
+
+  <div class="panel-2col" style="margin-bottom:0;">
+    <div class="panel">
+      <div class="panel-eyebrow">수학적 동치</div>
+      <h4>finite-diff ≈ true gradient (1차)</h4>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;line-height:1.9;color:var(--text-primary);">
+        I(wp + δb) − I(wp − δb)<br>
+        &nbsp;≈&nbsp; 2δ · (∂I/∂wp) · b<br>
+        &nbsp;=&nbsp; 2δ · ∂I/∂α
+      </p>
+      <p>1차 근사로는 같지만, 실제로 backward가 흘러야 — (1) noise가 사라지고, (2) generator
+      내부의 비선형이 정확히 반영되며, (3) δ 같은 hyperparameter도 사라진다.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-eyebrow">왜 forward-mode가 맞는가</div>
+      <h4>1입력 → 다출력</h4>
+      <p>α는 sample당 스칼라 1개. 출력은 픽셀 3·256·256 ≈ 200k. <strong>reverse-mode</strong>는
+      vector → scalar 그래디언트에 효율적(우린 그 반대), <strong>forward-mode JVP</strong>는
+      입력 차원이 작을 때 단 한 번의 backward graph traversal로 전 픽셀 그래디언트를 얻는다.</p>
+    </div>
+  </div>
+
+  <div class="viz-insight" style="margin-top:1.6rem;">
+    <div class="viz-insight-label">엔지니어링 노트 — JVP 통과 패치</div>
+    <p>genforce StyleGAN의 <code>synthesis.forward</code>에 <code>self.lod.cpu().tolist()</code>가
+    있어 JVP의 dual tensor를 깨뜨린다. 침실256은 <code>lod=0.0</code> 고정이므로
+    파이썬 float로 캐싱하는 5줄 monkey-patch로 우회. 한 번 패치하면 8개 boundary × 64샘플
+    분석이 RTX 3070에서 ~10초.</p>
+  </div>
+
+  <h3 style="font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.2rem;margin:2.6rem 0 0.6rem;">
+    개별 샘플별 saliency — 진짜 헤드라인 결과
+  </h3>
+  <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:1.4rem;">
+    각 행 = 4개의 무작위 침실. 컬럼: <strong>원본 | gradient saliency | overlay</strong>.
+    역전파 신호가 각 침실의 <em>실제 lamp/창문/우드 프레임을 정확히 짚어낸다</em>.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/grad_indoor_lighting_persample.png" alt="indoor_lighting per-sample gradient saliency">
+    <div class="img-caption"><strong>FIG 6.1 · indoor_lighting</strong> &nbsp; 침실마다 켜진 <strong>램프/창문/조명 영역</strong>에 정확히 hot spot. 같은 boundary가 각 scene에 맞춰 다른 위치를 가리킴.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/grad_wood_persample.png" alt="wood per-sample gradient saliency">
+    <div class="img-caption"><strong>FIG 6.2 · wood</strong> &nbsp; 침대 헤드보드, 침대 프레임, 우드 패널 윤곽선이 선명하게 잡힘.</div>
+  </div>
+
+  <div class="img-frame">
+    <img src="figures/grad_view_persample.png" alt="view per-sample gradient saliency">
+    <div class="img-caption"><strong>FIG 6.3 · view</strong> &nbsp; 창문/문 형상 + 그 너머의 풍경 경계에 saliency 집중. layer 0–4(저주파) 조작 결과.</div>
   </div>
 
   <div class="viz-insight green">
-    <div class="viz-insight-label">결과 — 가설 검증</div>
-    <p>5개 핵심 attribute 모두 <strong>의미상 정확한 위치</strong>에 saliency가 집중된다.
-    indoor_lighting은 천장/조명 영역, view는 창문 형상의 수직 띠, wood는 침대 프레임 윤곽선,
-    carpet은 바닥, glossy는 침구. 즉 <em>"GAN의 잠재 방향은 이미지의 어디에 작용한다"는 명제가
-    정량적으로 입증된다</em>. 이것이 v2의 헤드라인 결과.</p>
-  </div>
-
-  <div class="panel-2col">
-    <div class="panel">
-      <div class="panel-eyebrow">왜 분류기가 필요 없는가</div>
-      <h4>generator-only attribution</h4>
-      <p>Grad-CAM 류는 분류기를 통한 gradient를 사용한다. 우리는 generator만으로 충분 — boundary
-      방향의 perturbation이 일으키는 <em>실제 픽셀 변화</em>가 곧 attribution. 분류기 학습/검증
-      과정이 필요 없어 즉시 실행 가능하고, 분류기의 편향이 결과에 섞이지 않는다.</p>
-    </div>
-    <div class="panel">
-      <div class="panel-eyebrow">샘플 수 vs 노이즈</div>
-      <h4>64 samples · 96 forwards / attribute</h4>
-      <p>16 sample 시점에서도 패턴은 보였지만 노이즈가 컸다. 64 sample로 누적하니 깨끗한 띠/영역으로
-      수렴. 8개 attribute × 64 sample × 3 distance = 1,536 forward, RTX 3070에서 12초.
-      256× 더 늘려도 분 단위.</p>
-    </div>
+    <div class="viz-insight-label">v2의 진짜 결론</div>
+    <p>perturbation map은 평균적인 spatial 패턴만 보여줬다. <strong>진짜 gradient는 scene-specific 객체를
+    pinpoint</strong>한다 — "이 침실의 indoor_lighting boundary는 <em>저 램프</em>를 통제한다"
+    수준의 답이 가능. <em>잠재공간의 의미 방향이 이미지의 어디에 어떻게 작용하는가</em>의
+    질문에 분류기 없이 차원 정확성으로 답한 결과.</p>
   </div>
 </div></section>
 <hr class="divider">
 
 <!-- =================== EDITING =================== -->
 <section id="editing"><div class="container fade-in">
-  <div class="section-label">06 — Real-image editing</div>
+  <div class="section-label">07 — Real-image editing</div>
   <h2 class="section-title">실제 이미지에 의미 방향을 더해보기</h2>
   <p class="section-desc">
     학습된 인코더로 4장의 침실을 잠재공간에 매핑한 뒤, 각 boundary 방향으로 −3 ~ +3 sweep.
@@ -612,7 +684,7 @@ saliency = abs_diff / N                         <span class="code-comment"># (H,
 
 <!-- =================== LIMITS =================== -->
 <section id="limits"><div class="container fade-in">
-  <div class="section-label">07 — Limits & Next</div>
+  <div class="section-label">08 — Limits & Next</div>
   <h2 class="section-title">정직한 한계</h2>
   <p class="section-desc">
     v2는 컨셉 검증과 파이프라인 견고화에 집중했다. 다음 세 가지가 명시적인 한계.
@@ -663,7 +735,8 @@ saliency = abs_diff / N                         <span class="code-comment"># (H,
         <tr><td>인코더</td><td class="loser">pSp / FFHQ — 도메인 mismatch</td><td class="winner">ResNet50 + 합성 supervision (bedroom 전용)</td></tr>
         <tr><td>혼합 정밀도</td><td>—</td><td>fp16 NaN 발견 → fp32 고정</td></tr>
         <tr><td>boundary 조작</td><td>numpy 의존</td><td class="winner">torch-native, autograd 호환</td></tr>
-        <tr><td>CAM 해석</td><td class="loser">ttach 설치만, 미사용</td><td class="winner">perturbation diff-map 8 attribute</td></tr>
+        <tr><td>CAM 해석 (1차)</td><td class="loser">ttach 설치만, 미사용</td><td class="winner">forward perturbation diff-map 8 attribute</td></tr>
+        <tr><td>CAM 해석 (최종)</td><td class="loser">—</td><td class="winner">JVP 기반 진짜 gradient saliency · scene-specific 객체 pinpoint</td></tr>
         <tr><td>실행 환경</td><td>Colab</td><td class="winner">로컬 RTX 3070, &lt; 6 GB</td></tr>
         <tr><td>학습 시간</td><td>—</td><td>20k iter, 1h 47m</td></tr>
         <tr><td>재현성</td><td>경로 하드코딩</td><td class="winner">YAML config, CLI 7 step</td></tr>
