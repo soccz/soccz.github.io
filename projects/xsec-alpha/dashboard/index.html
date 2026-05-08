@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xsec_alpha live dashboard — IC · gates · picks</title>
+  <meta name="description" content="xsec_alpha cross-sectional ranking 모델의 라이브 IC · 게이트 상태 · 팩터 drift · 추천 히스토리. systemd 6h/12h 타이머로 자동 갱신.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://soccz.github.io/projects/xsec-alpha/dashboard/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <style>
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+      --red: #dc2626;
+      --red-dim: rgba(220,38,38,0.08);
+      --green: #16a34a;
+      --green-dim: rgba(22,163,74,0.08);
+      --amber: #b45309;
+      --amber-dim: rgba(180,83,9,0.07);
+      --blue: #2563eb;
+      --blue-dim: rgba(59,130,246,0.07);
+      --purple: #7e3af2;
+      --purple-dim: rgba(126,58,242,0.06);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.4rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    section { padding: 4rem 2rem; }
+    section.compact { padding: 2.4rem 2rem; }
+    .container { max-width: 1180px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.2rem, 2.4vw, 1.7rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.6rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.9rem; max-width: 760px; line-height: 1.8; margin-bottom: 1.8rem; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+
+    .hero { padding: 6rem 2rem 2rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(250,250,249,0.92) 0%, rgba(245,245,244,0.72) 46%, rgba(250,250,249,1) 100%), repeating-linear-gradient(90deg, rgba(68,64,60,0.035) 0 1px, transparent 1px 72px), repeating-linear-gradient(0deg, rgba(68,64,60,0.025) 0 1px, transparent 1px 72px); }
+    .hero-content { position: relative; max-width: 880px; margin: 0 auto; }
+    .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 1.5rem; }
+    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.5rem, 3.8vw, 2.4rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .hero-sub { font-size: 0.95rem; color: var(--text-secondary); font-weight: 300; line-height: 1.85; margin-bottom: 1.4rem; }
+    .hero-meta { font-size: 0.78rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    /* KPI strip */
+    .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .kpi-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .kpi-card .kpi-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .kpi-card .kpi-name { font-family: 'Noto Serif KR', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .kpi-card .kpi-value { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; line-height: 1.1; display: block; }
+    .kpi-card .kpi-value.pos { color: var(--green); }
+    .kpi-card .kpi-value.neg { color: var(--red); }
+    .kpi-card .kpi-sub { font-size: 0.72rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; }
+
+    .gate-pill { display: inline-block; padding: 0.18rem 0.7rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; }
+    .gate-OK   { background: var(--green-dim); color: var(--green); border: 1px solid rgba(22,163,74,0.25); }
+    .gate-WARN { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(180,83,9,0.3); }
+    .gate-FREEZE { background: var(--red-dim); color: var(--red); border: 1px solid rgba(220,38,38,0.25); }
+    .gate-LIQUIDATE, .gate-LIQ { background: var(--red); color: white; }
+
+    /* layout grids */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    @media (max-width: 880px) { .two-col { grid-template-columns: 1fr; } }
+
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .card h3 { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1rem; }
+    .card .card-meta { font-size: 0.74rem; color: var(--text-muted); margin-bottom: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+
+    /* tables */
+    table.data { width: 100%; border-collapse: collapse; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace; }
+    table.data th, table.data td { padding: 0.5rem 0.6rem; text-align: right; border-bottom: 1px solid var(--border); }
+    table.data th { font-family: 'Noto Sans KR', sans-serif; font-weight: 500; color: var(--text-muted); font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.05em; cursor: default; user-select: none; }
+    table.data th.sortable { cursor: pointer; }
+    table.data th.sortable:hover { color: var(--accent); }
+    table.data th:first-child, table.data td:first-child { text-align: left; }
+    table.data tbody tr:hover { background: var(--bg-secondary); }
+    table.data .pos { color: var(--green); }
+    table.data .neg { color: var(--red); }
+    table.data .muted { color: var(--text-muted); }
+
+    .scroll-x { overflow-x: auto; }
+
+    /* chart wrappers */
+    .chart-wrap { position: relative; height: 320px; margin-top: 0.6rem; }
+
+    /* ops footer strip */
+    .ops-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.6rem; padding: 1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; }
+    .ops-strip .ops-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .ops-strip .ops-label { color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .ops-strip .ops-value { font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-size: 0.78rem; }
+    .kpi-tail { font-family: 'JetBrains Mono', monospace; }
+
+    /* Realized hero — t-stat / Sharpe / net pnl */
+    .realized-card { padding: 1.6rem 1.8rem; }
+    .realized-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.6rem 1.2rem; margin-top: 0.4rem; }
+    .rg-cell { padding: 0.6rem 0; border-top: 1px dashed var(--border); }
+    .rg-label { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.2rem; }
+    .rg-val { font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
+    .rg-val.pos { color: var(--green); }
+    .rg-val.neg { color: var(--red); }
+    .rg-val.muted { color: var(--text-muted); }
+    .rg-net { font-size: 1.45rem; }
+    .rg-sub { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 0.15rem; }
+    .rg-verdict { margin-top: 0.9rem; padding: 0.5rem 0.8rem; border-radius: 4px; font-size: 0.82rem; font-weight: 500; background: var(--bg-secondary); }
+    .rg-verdict.pos { background: var(--green-dim); color: var(--green); }
+    .rg-verdict.neg { background: var(--red-dim); color: var(--red); }
+    .rg-verdict.muted { color: var(--text-muted); }
+
+    /* Limitations callout */
+    .limit-list { display: grid; gap: 0.7rem; }
+    .limit-item { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 4px; padding: 0.7rem 1rem; font-size: 0.85rem; }
+    .limit-item .li-num { font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-size: 0.74rem; margin-right: 0.5rem; }
+    .limit-item .li-body { color: var(--text-secondary); line-height: 1.7; }
+    .limit-item .li-body strong { color: var(--text-primary); }
+    .limit-item .li-body code { font-family: 'JetBrains Mono', monospace; background: var(--bg-secondary); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.78rem; }
+
+    /* PIN modal */
+    .lock-overlay { position: fixed; inset: 0; background: rgba(28,25,23,0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 200; }
+    .lock-modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; max-width: 360px; width: 90%; box-shadow: 0 12px 40px rgba(0,0,0,0.18); }
+    .lock-modal h3 { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .lock-modal p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem; }
+    .lock-row { display: flex; gap: 0.5rem; }
+    .lock-row input { flex: 1; padding: 0.65rem 0.8rem; border: 1px solid var(--border-light); border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; background: var(--bg-primary); }
+    .lock-row button { padding: 0.65rem 1.2rem; border: 1px solid var(--accent); background: var(--accent); color: white; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+    .lock-row button:hover { background: #2c2925; }
+    .lock-error { color: var(--red); font-size: 0.78rem; margin-top: 0.7rem; min-height: 1em; }
+
+    footer { padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.78rem; line-height: 1.7; }
+    footer code { font-family: 'JetBrains Mono', monospace; background: var(--bg-secondary); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="../">xsec_alpha</a>
+    <ul class="nav-links">
+      <li><a href="#kpi">kpi</a></li>
+      <li><a href="#realized-hero">realized</a></li>
+      <li><a href="#holdout-vs-live">reconcile</a></li>
+      <li><a href="#picks">picks</a></li>
+      <li><a href="#ic">ic series</a></li>
+      <li><a href="#drift">drift</a></li>
+      <li><a href="#calibration">calibration</a></li>
+      <li><a href="#history">history</a></li>
+      <li><a href="#limits">limits</a></li>
+      <li><a href="../">← project</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-label">private dashboard · pin gated</div>
+    <h1>xsec_alpha — IC · gates · realized</h1>
+    <p class="hero-sub">
+      Upbit KRW 200+ 마켓 cross-sectional ranking. SHORT 5 실행 / WATCH LONG 5 참고.<br>
+      systemd 6h/12h 타이머로 매번 갱신. 백테스트가 아니라 라이브 IC + 실현 손익.
+    </p>
+    <p class="hero-meta" id="heroMeta">데이터 로드 중…</p>
+  </div>
+</header>
+
+<hr class="divider">
+
+<!-- Paper-observation banner — only shown when LONG telegram is silent -->
+<div id="paperObsBanner" style="display:none; max-width:1180px; margin:1rem auto 0; padding:0.7rem 1.2rem; background:var(--amber-dim); border:1px solid rgba(180,83,9,0.3); border-left:3px solid var(--amber); border-radius:6px; color:var(--amber); font-size:0.84rem; font-family:'JetBrains Mono', monospace;"></div>
+
+<!-- KPI strip -->
+<section id="kpi" class="compact">
+  <div class="container">
+    <div class="section-label">snapshot</div>
+    <h2 class="section-title">현재 신호 상태</h2>
+    <div class="kpi-strip" id="kpiStrip"></div>
+    <div class="ops-strip" id="opsStrip" style="margin-top: 1.2rem"></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Realized PnL hero — most important section. Headlines t-stat first. -->
+<section id="realized-hero">
+  <div class="container">
+    <div class="section-label">realized — net of fees</div>
+    <h2 class="section-title">실현 손익이 0과 구분되는가</h2>
+    <p class="section-desc">
+      <strong>중요한 지표 먼저</strong>: 30일 동안 paper trade 원장(<code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">recommendation_ledger.csv</code>)에 기록된
+      모든 entry→exit 가격 차이 → 비용 차감 후 평균 / Sharpe / t-stat. 비용은 SHORT 0.13% (Bitget perp 0.06%×2 + 평균 funding 0.01%/6h),
+      WATCH_LONG 0.10% (Upbit spot 0.05%×2). <strong>t &lt; 1.0이면 0과 구분 안 됨</strong> — 더 많은 표본이 필요한 상태.
+      Sharpe는 per-trade 기준 (annualize 안 함, 표본이 IID 아닌 cross-sectional).
+    </p>
+    <div class="two-col" id="realizedHeroGrid"></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Holdout vs Live IC reconciliation -->
+<section id="holdout-vs-live">
+  <div class="container">
+    <div class="section-label">holdout vs live</div>
+    <h2 class="section-title">학습 시 holdout IC와 live IC 일치 검사</h2>
+    <p class="section-desc">
+      Phase 3 게이트(<code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">IC_live ≥ IC_holdout − 0.03</code>) 만족 여부.
+      live IC가 holdout보다 <em>높으면</em> leakage / look-ahead 가능성, <em>낮으면</em> 신호 약화 또는 distribution shift.
+      holdout IC는 학습 시점(2026-04-25 F1)에 봉인된 값.
+    </p>
+    <div class="card">
+      <div class="scroll-x"><table class="data" id="holdoutTable"></table></div>
+      <div class="card-meta" id="holdoutMeta" style="margin-top:0.7rem"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Latest picks -->
+<section id="picks">
+  <div class="container">
+    <div class="section-label">latest picks</div>
+    <h2 class="section-title">최근 추천 — SHORT 5 / WATCH LONG 5</h2>
+    <p class="section-desc">
+      <strong>SHORT</strong>는 Bitget USDT-perp tradable 종목으로 5개 실행 후보.
+      <strong>WATCH LONG</strong>는 Upbit 신호 5개 — 현재 long side는 Upbit 현물에서만 진입 가능하므로 참고용.
+      <code style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; background:var(--bg-secondary); padding:0.1rem 0.4rem; border-radius:3px">actionable=False</code>는 게이트가 watch-only로 전환된 상태.
+    </p>
+    <div class="two-col">
+      <div class="card">
+        <h3>SHORT (h=6)</h3>
+        <div class="card-meta" id="picksShortMeta"></div>
+        <div class="scroll-x"><table class="data" id="picksShortTable"></table></div>
+      </div>
+      <div class="card">
+        <h3>WATCH LONG (h=12)</h3>
+        <div class="card-meta" id="picksLongMeta"></div>
+        <div class="scroll-x"><table class="data" id="picksLongTable"></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- IC series -->
+<section id="ic">
+  <div class="container">
+    <div class="section-label">information coefficient</div>
+    <h2 class="section-title">IC 시계열 — SHORT h6 · LONG h12</h2>
+    <p class="section-desc">
+      매 6h(SHORT) / 12h(LONG) rebalance 직후 spearman(score, realized_return) 측정.
+      IC &gt; 0.05 = 신호 존재, &gt; 0.10 = 실용적, t-stat &gt; 2.0 = 통계 유의.
+      게이트는 last-3 IC 모두 &lt; 0.05면 <span class="gate-pill gate-FREEZE">FREEZE</span> (해당 사이드 watch-only로 강제 전환).
+    </p>
+    <div class="card">
+      <div class="chart-wrap"><canvas id="icChart"></canvas></div>
+      <div class="card-meta" style="margin-top:0.6rem" id="icMeta"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Realized performance -->
+<section id="realized">
+  <div class="container">
+    <div class="section-label">realized</div>
+    <h2 class="section-title">실현 손익 — recommendation_ledger 기준</h2>
+    <p class="section-desc">
+      IC가 좋아도 실현 손익이 양수가 아닐 수 있다 (수수료, slippage, funding). 아래는 <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">recommendation_ledger.csv</code>에 기록된
+      paper trade의 entry → exit 차이로 계산한 순수익 (수수료/funding 미반영). SHORT는 -1 곱해서 short-side 실현.
+    </p>
+    <div class="two-col">
+      <div class="card">
+        <h3>SHORT</h3>
+        <div class="scroll-x"><table class="data" id="realizedShortTable"></table></div>
+      </div>
+      <div class="card">
+        <h3>WATCH_LONG</h3>
+        <div class="scroll-x"><table class="data" id="realizedLongTable"></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Factor drift -->
+<section id="drift">
+  <div class="container">
+    <div class="section-label">factor diagnostics</div>
+    <h2 class="section-title">팩터 drift — 24h vs 7d IC</h2>
+    <p class="section-desc">
+      각 팩터의 7일 평균 IC 대비 최근 24h IC 낙폭. <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">drop_pct &gt; 50%</code> 또는 부호 반전 시 WARN.
+      drift가 누적되면 다음 retrain 후 가중치 재조정 필요.
+    </p>
+    <div class="card">
+      <div class="card-meta" id="driftMeta"></div>
+      <div class="scroll-x"><table class="data" id="driftTable"></table></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Calibration buckets -->
+<section id="calibration">
+  <div class="container">
+    <div class="section-label">calibration</div>
+    <h2 class="section-title">σ-bucket calibration</h2>
+    <p class="section-desc">
+      각 사이드의 score 표준편차(σ) 구간별 적중률과 평균 수익. 우리가 관심있는 건 <strong>2σ 이상 구간의 hit_rate &gt; 60%</strong>로 진입.
+      historical holdout에서 측정. 라이브 picks가 어느 σ 구간에 떨어지는지를 actionable 판정 기준으로 사용.
+    </p>
+    <div class="two-col">
+      <div class="card">
+        <h3>SHORT (h=6)</h3>
+        <div class="scroll-x"><table class="data" id="calibShortTable"></table></div>
+      </div>
+      <div class="card">
+        <h3>LONG (h=12)</h3>
+        <div class="scroll-x"><table class="data" id="calibLongTable"></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Pick history -->
+<section id="history">
+  <div class="container">
+    <div class="section-label">pick history</div>
+    <h2 class="section-title">최근 60일 pick history</h2>
+    <p class="section-desc">
+      heading 클릭으로 정렬. <strong>realized %</strong>는 SHORT는 +면 수익(가격 하락), LONG은 +면 수익. <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">actionable=false</code> 행은 watch-only 상태로 emit된 신호.
+    </p>
+    <div class="card">
+      <div class="card-meta" id="historyMeta"></div>
+      <div class="scroll-x"><table class="data" id="historyTable"></table></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Known limitations — required for honesty -->
+<section id="limits">
+  <div class="container">
+    <div class="section-label">known limitations</div>
+    <h2 class="section-title">알려진 한계 — 인터뷰어가 묻기 전에 먼저 말함</h2>
+    <p class="section-desc">
+      이 시스템이 <em>아직 풀지 못한 문제들</em>. 헤드라인 숫자는 이 한계 안에서만 의미가 있다.
+    </p>
+    <div class="limit-list">
+      <div class="limit-item"><span class="li-num">01.</span><span class="li-body">
+        <strong>표본 + win/avg 불일치.</strong> 30일 ledger n=469 / 224. clustered t (rebalance window 단위) SHORT≈+0.33,
+        LONG≈−0.27 — <em>둘 다 평균 수익이 0과 구분 안 됨</em>. 그런데 SHORT win-rate 57.8% Wilson CI=[53.3%, 62.2%]는
+        <em>50%를 제외</em>해서 hit-rate 자체는 의미 있음. 결론: 작은 winner가 많은데 큰 loser가 평균을 잡아먹는 fat-tail 패턴.
+        90일 운영 후 재측정 + 손절 룰 추가 검토 필요. 헤드라인 IC는 t&gt;10이지만 <strong>IC ≠ PnL</strong>이다.
+      </span></div>
+      <div class="limit-item"><span class="li-num">02.</span><span class="li-body">
+        <strong>비용 모델이 단순하다.</strong> SHORT 0.13% / LONG 0.10% 고정 round-trip만 차감. 실제로는
+        호가 sparse 시 시장 충격 0.5~1.5% 추가 가능. ATR / 체결량 기반 비용 모델이 다음 단계.
+      </span></div>
+      <div class="limit-item"><span class="li-num">03.</span><span class="li-body">
+        <strong>regime 의존성 미검증.</strong> 학습/holdout 기간 모두 BTC 일정 구간 (2026-01~04). bear regime에서의 동작은 unobserved.
+        regime-conditional 분석은 누적 데이터 부족으로 후순위.
+      </span></div>
+      <div class="limit-item"><span class="li-num">04.</span><span class="li-body">
+        <strong>SHORT만 실거래 가능.</strong> WATCH_LONG은 Upbit 신호인데 현물 long-only이고, Bitget tradable은 SHORT 5만 매핑됨.
+        LONG-side는 paper-only 상태 — economic content 약함.
+      </span></div>
+      <div class="limit-item"><span class="li-num">05.</span><span class="li-body">
+        <strong>σ-bucket calibration 다중 비교.</strong> 4개 σ 버킷 × 2 사이드 = 8개 그룹 hit-rate를 동시 검사 중.
+        Bonferroni / BH 보정은 미적용. 단일 버킷 hit_rate 60% 같은 클레임은 multiple-testing exposure 있음.
+      </span></div>
+      <div class="limit-item"><span class="li-num">06.</span><span class="li-body">
+        <strong>IID 가정 회피.</strong> ① realized PnL은 동일 rebalance 내 5 picks가 같은 regime 공유 → naive t 대신
+        <code>t_clustered</code> (entry_time별 group → window 평균 → t) 헤드라인.
+        ② IC time series는 lag-1 autocorr가 있어 단순 t를 과대평가 — <code>t_ac = mean / (std/√N_eff)</code>로
+        <code>N_eff = N(1−ρ)/(1+ρ)</code> 보정 표시. Sharpe annualize도 같은 이유로 안 함.
+      </span></div>
+      <div class="limit-item"><span class="li-num">07.</span><span class="li-body">
+        <strong>holdout 단일 분할.</strong> 마지막 20% 시간 구간 1개. walk-forward CV로 robust성 확인 필요.
+        <code>scripts/wf_holdout_harness.py</code>는 있지만 6개 split 결과 안정성 추가 검증 중.
+      </span></div>
+      <div class="limit-item"><span class="li-num">08.</span><span class="li-body">
+        <strong>Survivorship bias 미처리.</strong> Upbit KRW 현재 listing만 학습. 과거 상폐 코인은 panel에서 빠져
+        historical EV가 부풀 가능성. Upbit 공시 archive로 historical universe 재구성은 backlog.
+      </span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<footer>
+  자동 갱신: <code>scripts/build_dashboard_export.py</code> ·
+  소스 <code>output/{ic_history,gate_state,drift_state,recommendation_ledger,latest,calibration_sigma}</code> ·
+  암호화 <code>PBKDF2-HMAC-SHA256 + AES-256-CBC + HMAC(salt‖iv‖ct)</code> · 250k iter
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const DATA_DIR = 'data';
+const COLORS = {
+  short: '#dc2626',
+  long: '#2563eb',
+  text: '#57534e',
+  border: '#e7e5e4',
+};
+
+let HISTORY_ROWS = [];
+let HIST_SORT_KEY = 'entry_time';
+let HIST_SORT_DIR = 'desc';
+
+function safeChart(canvasId, config) {
+  const existing = Chart.getChart(canvasId);
+  if (existing) existing.destroy();
+  const el = document.getElementById(canvasId);
+  if (!el) return null;
+  return new Chart(el, config);
+}
+
+/* ───────── Crypto ───────── */
+function b64ToBytes(s) {
+  const bin = atob(s);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+function concatBytes(...parts) {
+  const n = parts.reduce((s, p) => s + p.length, 0);
+  const out = new Uint8Array(n);
+  let off = 0;
+  parts.forEach(p => { out.set(p, off); off += p.length; });
+  return out;
+}
+function equalBytes(a, b) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
+  return diff === 0;
+}
+async function decryptPayload(payload, passphrase) {
+  if (!payload || payload.encrypted !== true) return payload;
+  if (!window.crypto?.subtle) throw new Error('Web Crypto unavailable');
+  const enc = new TextEncoder();
+  const salt = b64ToBytes(payload.salt);
+  const iv   = b64ToBytes(payload.iv);
+  const ct   = b64ToBytes(payload.ct);
+  const expectedMac = b64ToBytes(payload.mac);
+  const passKey = await crypto.subtle.importKey('raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveBits']);
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt, iterations: payload.iterations, hash: 'SHA-256' },
+    passKey, 512
+  );
+  const keymat = new Uint8Array(bits);
+  const macKey = await crypto.subtle.importKey('raw', keymat.slice(32, 64), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const actualMac = new Uint8Array(await crypto.subtle.sign('HMAC', macKey, concatBytes(salt, iv, ct)));
+  if (!equalBytes(actualMac, expectedMac)) throw new Error('PIN 이 맞지 않습니다.');
+  const aesKey = await crypto.subtle.importKey('raw', keymat.slice(0, 32), { name: 'AES-CBC' }, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-CBC', iv }, aesKey, ct);
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+/* ───────── Format helpers ───────── */
+function fmtPct(v, d = 2) {
+  if (v === null || v === undefined || isNaN(v)) return '—';
+  const sign = v > 0 ? '+' : '';
+  return sign + Number(v).toFixed(d) + '%';
+}
+function fmtIc(v, d = 4) {
+  if (v === null || v === undefined || isNaN(v)) return '—';
+  const sign = v > 0 ? '+' : '';
+  return sign + Number(v).toFixed(d);
+}
+function fmt(v, d = 2) {
+  if (v === null || v === undefined || isNaN(v)) return '—';
+  return Number(v).toFixed(d);
+}
+function fmtKrw(v) {
+  if (v === null || v === undefined || isNaN(v)) return '—';
+  v = Number(v);
+  if (v >= 1000) return v.toLocaleString('ko-KR', { maximumFractionDigits: 0 });
+  if (v >= 100)  return v.toFixed(1);
+  if (v >= 10)   return v.toFixed(2);
+  if (v >= 1)    return v.toFixed(3);
+  if (v >= 0.01) return v.toFixed(4);
+  return v.toFixed(6);
+}
+function sgnClass(v) {
+  if (v === null || v === undefined || isNaN(v)) return 'muted';
+  return v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+}
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function shortMarket(m) {
+  if (!m) return '—';
+  return String(m).replace(/^KRW-/, '');
+}
+function shortTime(s) {
+  if (!s) return '—';
+  return String(s).replace('T', ' ').replace('+00:00', 'Z').slice(0, 16);
+}
+
+/* ───────── fetch helper with HTTP guard ───────── */
+async function fetchJson(url) {
+  const r = await fetch(url + (url.includes('?') ? '&' : '?') + '_=' + Date.now());
+  if (!r.ok) throw new Error(`HTTP ${r.status} for ${url}`);
+  return r.json();
+}
+
+/* ───────── PIN gate ─────────
+ * Verifies the PIN by decrypting summary.json once, then returns BOTH the
+ * pin and the already-decrypted summary so boot() does not fetch+decrypt twice.
+ */
+function showPinModal() {
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'lock-overlay';
+    overlay.innerHTML = `
+      <div class="lock-modal" onclick="event.stopPropagation()">
+        <h3>비공개 dashboard</h3>
+        <p>PIN 입력 후 데이터 표시. (Prelude와 동일 PIN)</p>
+        <div class="lock-row">
+          <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" autofocus>
+          <button id="pinSubmit">열기</button>
+        </div>
+        <div class="lock-error" id="pinError"></div>
+      </div>`;
+    document.body.appendChild(overlay);
+    const input = overlay.querySelector('#pinInput');
+    const errEl = overlay.querySelector('#pinError');
+    input.focus();
+    const submit = async () => {
+      const pin = (input.value || '').trim();
+      if (!pin) { errEl.textContent = 'PIN 을 입력하세요.'; return; }
+      errEl.textContent = '확인 중…';
+      try {
+        const probe = await fetchJson(`${DATA_DIR}/summary.json`);
+        const summary = await decryptPayload(probe, pin);
+        overlay.remove();
+        resolve({ pin, summary });
+      } catch (e) {
+        errEl.textContent = e.message || 'PIN 이 맞지 않습니다.';
+      }
+    };
+    overlay.querySelector('#pinSubmit').addEventListener('click', submit);
+    input.addEventListener('keydown', ev => { if (ev.key === 'Enter') submit(); });
+  });
+}
+
+/* ───────── Renderers ───────── */
+function renderHero(summary) {
+  document.getElementById('heroMeta').textContent =
+    `asof ${shortTime(summary.asof)} · model age ${fmt(summary.model_age_days?.['xsec_6h.pkl'], 1)}d / ${fmt(summary.model_age_days?.['xsec_12h.pkl'], 1)}d · overall ${summary.ops?.overall ?? '—'}`;
+
+  // Paper-observation banner (LONG side: silent telegram, ledger filling)
+  const obs = summary.long_paper_observation;
+  const banner = document.getElementById('paperObsBanner');
+  if (banner) {
+    if (obs && obs.active) {
+      const days = obs.observation_days != null ? `${obs.observation_days}d` : '—';
+      const start = obs.observation_start ? shortTime(obs.observation_start) : '—';
+      banner.innerHTML =
+        `<strong>LONG paper-observation</strong> · 텔레그렘 침묵 중 (의도) · ledger 자동 기록 중` +
+        ` · started ${escapeHtml(start)} · ${escapeHtml(days)} elapsed` +
+        ` · 결정 시점: ${escapeHtml(obs.decision_after || '—')}`;
+      banner.style.display = '';
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+}
+
+function fmtIcTail(arr) {
+  return (arr || []).filter(x => x != null && !isNaN(x)).map(x => x.toFixed(3)).join(' / ') || '—';
+}
+
+function renderKpi(summary) {
+  const s = summary.gates?.short || {};
+  const l = summary.gates?.long || {};
+  const ics = summary.ic_summary || {};
+  const sIc = ics.short_h6?.last30 || {};
+  const lIc = ics.long_h12?.last30 || {};
+
+  // gate-status string is constrained server-side; pill HTML built from
+  // sanitized status + numeric ic_tail only (no user-controlled strings).
+  const cards = [
+    {
+      name: 'SHORT IC (h=6)',
+      value: fmtIc(sIc.last),
+      cls: sIc.last == null ? '' : sIc.last >= 0.05 ? 'pos' : sIc.last < 0 ? 'neg' : '',
+      subText: `30d ${fmtIc(sIc.mean)} · t_ac=${fmt(sIc.tstat_ac,1)} (raw ${fmt(sIc.tstat,1)}) · n=${sIc.n||0}/N_eff=${fmt(sIc.n_eff,0)}`,
+      pillHtml: `<span class="gate-pill gate-${escapeHtml(s.status||'')}">${escapeHtml(s.status||'—')}</span>`,
+    },
+    {
+      name: 'LONG IC (h=12)',
+      value: fmtIc(lIc.last),
+      cls: lIc.last == null ? '' : lIc.last >= 0.05 ? 'pos' : lIc.last < 0 ? 'neg' : '',
+      subText: `30d ${fmtIc(lIc.mean)} · t_ac=${fmt(lIc.tstat_ac,1)} (raw ${fmt(lIc.tstat,1)}) · n=${lIc.n||0}/N_eff=${fmt(lIc.n_eff,0)}`,
+      pillHtml: `<span class="gate-pill gate-${escapeHtml(l.status||'')}">${escapeHtml(l.status||'—')}</span>`,
+    },
+    {
+      name: 'SHORT gate',
+      value: s.status || '—',
+      cls: s.status === 'OK' ? 'pos' : (s.status === 'FREEZE' || s.status === 'LIQUIDATE') ? 'neg' : '',
+      subText: s.reason || '—',
+      pillHtml: `<span class="kpi-tail">last3: ${escapeHtml(fmtIcTail(s.ic_tail))}</span>`,
+    },
+    {
+      name: 'LONG gate',
+      value: l.status || '—',
+      cls: l.status === 'OK' ? 'pos' : (l.status === 'FREEZE' || l.status === 'LIQUIDATE') ? 'neg' : '',
+      subText: l.reason || '—',
+      pillHtml: `<span class="kpi-tail">last3: ${escapeHtml(fmtIcTail(l.ic_tail))}</span>`,
+    },
+  ];
+
+  const html = cards.map(c => `
+    <div class="kpi-card">
+      <div class="kpi-label">live</div>
+      <div class="kpi-name">${escapeHtml(c.name)}</div>
+      <span class="kpi-value ${c.cls}">${escapeHtml(c.value)}</span>
+      <div class="kpi-sub">${escapeHtml(c.subText)} · ${c.pillHtml}</div>
+    </div>
+  `).join('');
+  document.getElementById('kpiStrip').innerHTML = html;
+
+  // ops strip — now uses flat schema from _ops_from_health()
+  const ops = summary.ops || {};
+  const opsLine = (key, label) => {
+    const o = ops[key] || {};
+    return `<div class="ops-item">
+      <span class="ops-label">${escapeHtml(label)}</span>
+      <span class="ops-value">${escapeHtml(o.detail || '—')}</span>
+    </div>`;
+  };
+  document.getElementById('opsStrip').innerHTML = `
+    ${opsLine('db', 'db latest')}
+    ${opsLine('recs', 'recs age')}
+    ${opsLine('universe', 'universe')}
+    ${opsLine('model', 'model status')}
+    <div class="ops-item">
+      <span class="ops-label">overall</span>
+      <span class="ops-value">${escapeHtml(ops.overall || '—')}</span>
+    </div>
+  `;
+}
+
+/* ───────── Realized PnL hero — the BLOCKER finding made visible ─────────
+ * A reviewer needs to see, before scrolling: "is the realized return
+ * statistically distinguishable from zero, after fees?". This card answers it.
+ */
+function renderRealizedHero(summary) {
+  const r = summary.realized_summary || {};
+  const cost = summary.cost_assumptions || {};
+  const sides = [
+    { key: 'SHORT', label: 'SHORT (Bitget perp, h=6)' },
+    { key: 'WATCH_LONG', label: 'WATCH_LONG (Upbit spot, h=12)' },
+  ];
+
+  const sigClass = (tstat) => {
+    if (tstat == null || isNaN(tstat)) return 'muted';
+    const a = Math.abs(tstat);
+    if (a >= 2.0) return 'pos';
+    if (a >= 1.0) return '';
+    return 'neg';  // |t|<1 is ~indistinguishable from zero — flagged red, on purpose
+  };
+  const sigLabel = (tstat) => {
+    if (tstat == null || isNaN(tstat)) return 'no data';
+    const a = Math.abs(tstat);
+    if (a >= 2.0) return 'significant (|t|≥2)';
+    if (a >= 1.0) return 'directional (1≤|t|<2)';
+    return 'indistinguishable from zero (|t|<1)';
+  };
+
+  // Use the clustered t-stat for the verdict — naive t over-counts because
+  // 5 picks within a single rebalance window share regime. The clustered
+  // version groups by entry_time first.
+  const cards = sides.map(({ key, label }) => {
+    const d = (r[key] && r[key].d30) || {};
+    const c = cost[key];
+    const tForVerdict = d.tstat_clustered ?? d.tstat;
+    const winCi = (d.win_ci_lo != null && d.win_ci_hi != null)
+      ? `[${d.win_ci_lo.toFixed(1)}%, ${d.win_ci_hi.toFixed(1)}%]`
+      : '';
+    const winSig = (d.win_ci_lo != null && d.win_ci_lo > 50) || (d.win_ci_hi != null && d.win_ci_hi < 50);
+    return `
+      <div class="card realized-card">
+        <h3>${escapeHtml(label)} — 30d realized</h3>
+        <div class="realized-grid">
+          <div class="rg-cell"><div class="rg-label">avg / trade (gross)</div><div class="rg-val ${sgnClass(d.avg)}">${fmtPct(d.avg)}</div></div>
+          <div class="rg-cell"><div class="rg-label">round-trip cost</div><div class="rg-val muted">−${fmt(c, 2)}%</div></div>
+          <div class="rg-cell"><div class="rg-label">avg / trade (NET)</div><div class="rg-val ${sgnClass(d.avg_net)} rg-net">${fmtPct(d.avg_net)}</div></div>
+          <div class="rg-cell"><div class="rg-label">t (clustered)</div><div class="rg-val ${sigClass(d.tstat_clustered)}">${d.tstat_clustered == null ? '—' : d.tstat_clustered.toFixed(2)}</div></div>
+          <div class="rg-cell"><div class="rg-label">t (naive, ref)</div><div class="rg-val muted">${d.tstat == null ? '—' : d.tstat.toFixed(2)}</div></div>
+          <div class="rg-cell"><div class="rg-label">Sharpe / trade</div><div class="rg-val ${sgnClass(d.sharpe)}">${d.sharpe == null ? '—' : d.sharpe.toFixed(3)}</div></div>
+          <div class="rg-cell"><div class="rg-label">win rate <span class="muted" style="font-weight:400;font-size:0.78em">${winSig ? '✓ ≠50%' : ''}</span></div><div class="rg-val">${d.win_pct == null ? '—' : d.win_pct.toFixed(1) + '%'}</div><div class="rg-sub">${escapeHtml(winCi)}</div></div>
+          <div class="rg-cell"><div class="rg-label">σ / trade</div><div class="rg-val muted">${fmt(d.std, 2)}%</div></div>
+          <div class="rg-cell"><div class="rg-label">n picks · n windows</div><div class="rg-val">${d.n ?? 0} · ${d.n_windows ?? 0}</div></div>
+        </div>
+        <div class="rg-verdict ${sigClass(tForVerdict)}">${escapeHtml(sigLabel(tForVerdict))}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('realizedHeroGrid').innerHTML = cards;
+}
+
+/* ───────── Holdout vs Live IC reconciliation ─────────
+ * Holdout numbers come from `output/holdout_report.json` (auditable; can be
+ * regenerated by `python scripts/evaluate_holdout.py`). If the file is missing
+ * the section degrades gracefully to "—".
+ */
+function renderHoldoutVsLive(summary) {
+  const ho = summary.holdout_ic || {};
+  const ics = summary.ic_summary || {};
+  const liveS = ics.short_h6?.last30 || {};
+  const liveL = ics.long_h12?.last30 || {};
+  const sides = [
+    { label: 'SHORT h6',  ho: ho.short_h6 || {}, live: liveS },
+    { label: 'LONG h12',  ho: ho.long_h12 || {}, live: liveL },
+  ];
+
+  const head = `<thead><tr>
+    <th>side</th><th>holdout IC</th><th>live IC (30d)</th>
+    <th>holdout t</th><th>live t</th><th>delta IC</th><th>verdict</th>
+  </tr></thead>`;
+  const body = sides.map(({ label, ho, live }) => {
+    const haveHo = ho.ic != null;
+    const delta = (live.mean != null && haveHo) ? live.mean - ho.ic : null;
+    let verdict = haveHo ? '—' : 'holdout report 미생성', vClass = 'muted';
+    if (delta != null) {
+      if (Math.abs(delta) <= 0.03)        { verdict = '일치'; vClass = 'pos'; }
+      else if (delta < 0)                 { verdict = `live가 ${(-delta).toFixed(3)} 낮음`; vClass = 'neg'; }
+      else                                { verdict = `live가 ${delta.toFixed(3)} 높음 (leakage 의심)`; vClass = 'neg'; }
+    }
+    const liveTstr = live.tstat_ac != null
+      ? `${live.tstat_ac.toFixed(1)} (ac, raw ${fmt(live.tstat, 1)})`
+      : fmt(live.tstat, 1);
+    return `<tr>
+      <td>${escapeHtml(label)}</td>
+      <td>${haveHo ? fmtIc(ho.ic) : '—'}</td>
+      <td>${fmtIc(live.mean)}</td>
+      <td class="muted">${ho.tstat == null ? '—' : ho.tstat.toFixed(1)}</td>
+      <td class="muted">${liveTstr}</td>
+      <td class="${sgnClass(delta)}">${delta == null ? '—' : (delta > 0 ? '+' : '') + delta.toFixed(3)}</td>
+      <td class="${vClass}">${escapeHtml(verdict)}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('holdoutTable').innerHTML = head + '<tbody>' + body + '</tbody>';
+
+  // Provenance footnote so the source is auditable from the page itself.
+  const prov = summary.holdout_ic?._provenance;
+  const meta = document.getElementById('holdoutMeta');
+  if (meta) {
+    meta.textContent = prov
+      ? `holdout asof ${prov.asof} · ${prov.source} · regenerate: ${prov.regenerate_with}`
+      : 'holdout report missing — run `python scripts/evaluate_holdout.py` to populate';
+  }
+}
+
+function renderPicksTable(picks, tableId, metaId, isShort) {
+  const meta = document.getElementById(metaId);
+  meta.textContent = `${picks.length}개 · actionable ${picks.filter(p => p.actionable).length}개`;
+  const head = `<thead><tr>
+    <th>market</th><th>score</th><th>entry</th><th>time</th>
+    <th>h</th>${isShort ? '<th>bitget</th>' : ''}<th>action</th>
+  </tr></thead>`;
+  const body = picks.map(p => {
+    const cls = sgnClass(p.score);
+    return `<tr>
+      <td>${escapeHtml(shortMarket(p.market))}</td>
+      <td class="${cls}">${fmtIc(p.score)}</td>
+      <td>${fmtKrw(p.entry_price)}</td>
+      <td class="muted">${shortTime(p.entry_time)}</td>
+      <td>${p.horizon_h ?? '—'}</td>
+      ${isShort ? `<td class="muted">${escapeHtml(p.bitget_symbol||'—')}</td>` : ''}
+      <td class="${p.actionable ? 'pos' : 'muted'}">${p.actionable ? 'ON' : 'watch'}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById(tableId).innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+
+function renderPicks(summary) {
+  const lp = summary.latest_picks || { short: [], watch_long: [] };
+  renderPicksTable(lp.short, 'picksShortTable', 'picksShortMeta', true);
+  renderPicksTable(lp.watch_long, 'picksLongTable', 'picksLongMeta', false);
+}
+
+function renderIcChart(history) {
+  const ic = history.ic_series || { short_h6: [], long_h12: [] };
+
+  // Build a unified, sorted timeline (union of both series timestamps), then map each side onto it.
+  const timeSet = new Set();
+  ic.short_h6.forEach(r => timeSet.add(r.t));
+  ic.long_h12.forEach(r => timeSet.add(r.t));
+  const times = [...timeSet].sort();
+  const labelOf = s => String(s).slice(5, 16).replace('T', ' ');  // MM-DD HH:MM
+  const labels = times.map(labelOf);
+  const idx = new Map(times.map((t, i) => [t, i]));
+
+  const fillSeries = arr => {
+    const out = new Array(times.length).fill(null);
+    arr.forEach(r => { out[idx.get(r.t)] = r.ic; });
+    return out;
+  };
+
+  safeChart('icChart', {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'SHORT h6',
+          data: fillSeries(ic.short_h6),
+          borderColor: COLORS.short,
+          backgroundColor: COLORS.short + '22',
+          tension: 0.25, pointRadius: 1.5, pointHoverRadius: 4, borderWidth: 1.6,
+          spanGaps: true,
+        },
+        {
+          label: 'LONG h12',
+          data: fillSeries(ic.long_h12),
+          borderColor: COLORS.long,
+          backgroundColor: COLORS.long + '22',
+          tension: 0.25, pointRadius: 1.5, pointHoverRadius: 4, borderWidth: 1.6,
+          spanGaps: true,
+        },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 14, font: { size: 12 } } },
+        tooltip: { mode: 'index', intersect: false, callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y == null ? '—' : ctx.parsed.y.toFixed(4)}`,
+        }},
+        annotation: undefined,
+      },
+      interaction: { mode: 'nearest', axis: 'x', intersect: false },
+      scales: {
+        x: {
+          ticks: { color: COLORS.text, font: { size: 10, family: "'JetBrains Mono', monospace" }, autoSkip: true, maxTicksLimit: 10 },
+          grid: { display: false },
+        },
+        y: {
+          grid: { color: COLORS.border },
+          ticks: { color: COLORS.text, font: { size: 11 }, callback: v => v.toFixed(2) },
+          suggestedMin: -0.2, suggestedMax: 0.5,
+        },
+      },
+    },
+  });
+
+  const sLast = ic.short_h6.at(-1)?.ic;
+  const lLast = ic.long_h12.at(-1)?.ic;
+  document.getElementById('icMeta').textContent =
+    `SHORT 최근값 ${fmtIc(sLast)} (n=${ic.short_h6.length}) · LONG 최근값 ${fmtIc(lLast)} (n=${ic.long_h12.length})`;
+}
+
+function renderRealizedTable(stats, tableId) {
+  const head = `<thead><tr>
+    <th>window</th><th>n</th><th>gross %</th><th>net %</th><th>t</th><th>sharpe</th><th>win %</th><th>σ %</th>
+  </tr></thead>`;
+  const labels = { d7: '7d', d14: '14d', d30: '30d' };
+  const body = ['d7','d14','d30'].map(k => {
+    const r = stats?.[k] || {};
+    return `<tr>
+      <td>${labels[k]}</td>
+      <td>${r.n ?? '—'}</td>
+      <td class="${sgnClass(r.avg)}">${fmtPct(r.avg)}</td>
+      <td class="${sgnClass(r.avg_net)}">${fmtPct(r.avg_net)}</td>
+      <td class="${r.tstat != null && Math.abs(r.tstat) >= 2 ? 'pos' : 'muted'}">${r.tstat == null ? '—' : r.tstat.toFixed(2)}</td>
+      <td class="muted">${r.sharpe == null ? '—' : r.sharpe.toFixed(3)}</td>
+      <td>${r.win_pct == null ? '—' : r.win_pct.toFixed(1) + '%'}</td>
+      <td class="muted">${fmt(r.std, 2)}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById(tableId).innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+
+function renderRealized(summary, accuracy) {
+  // The hero card shows the 30d-only headline. The detail table here gives 7/14/30.
+  renderRealizedHero(summary);
+  const r = accuracy.realized || {};
+  renderRealizedTable(r.SHORT, 'realizedShortTable');
+  renderRealizedTable(r.WATCH_LONG, 'realizedLongTable');
+}
+
+function renderDrift(summary) {
+  const rows = summary.drift || [];
+  const head = `<thead><tr>
+    <th>factor</th><th>ic 24h</th><th>ic 7d</th><th>drop %</th><th>flip</th><th>status</th>
+  </tr></thead>`;
+  const body = rows.map(r => `
+    <tr>
+      <td>${escapeHtml(r.factor)}</td>
+      <td class="${sgnClass(r.ic_24h)}">${fmtIc(r.ic_24h)}</td>
+      <td class="${sgnClass(r.ic_7d)}">${fmtIc(r.ic_7d)}</td>
+      <td class="${r.drop_pct > 50 ? 'neg' : ''}">${fmt(r.drop_pct, 1)}%</td>
+      <td class="${r.sign_flipped ? 'neg' : 'muted'}">${r.sign_flipped ? '↺' : '—'}</td>
+      <td><span class="gate-pill gate-${r.status}">${r.status || '—'}</span></td>
+    </tr>`).join('');
+  document.getElementById('driftTable').innerHTML = head + '<tbody>' + body + '</tbody>';
+  document.getElementById('driftMeta').textContent =
+    `generated ${shortTime(summary.drift_generated_at)} · ${rows.length}개 팩터`;
+}
+
+function renderCalibTable(buckets, tableId) {
+  const head = `<thead><tr>
+    <th>σ range</th><th>n</th><th>hit %</th><th>signed %</th><th>abs %</th>
+  </tr></thead>`;
+  const body = (buckets || []).map(b => {
+    const range = (b.sigma_high == null)
+      ? `≥${fmt(b.sigma_low, 1)}σ`
+      : `${fmt(b.sigma_low, 1)}–${fmt(b.sigma_high, 1)}σ`;
+    const hit = (b.hit_rate ?? 0) * 100;
+    return `<tr>
+      <td>${range}</td>
+      <td>${b.n ?? '—'}</td>
+      <td class="${hit > 55 ? 'pos' : hit < 45 ? 'neg' : ''}">${fmt(hit, 1)}%</td>
+      <td class="${sgnClass(b.mean_signed_return_pct)}">${fmtPct(b.mean_signed_return_pct)}</td>
+      <td class="muted">${fmt(b.mean_abs_return_pct, 2)}%</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="5" class="muted">no calibration data</td></tr>';
+  document.getElementById(tableId).innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+
+function renderCalibration(summary) {
+  const cb = summary.calibration_buckets || {};
+  renderCalibTable(cb.short_6h, 'calibShortTable');
+  renderCalibTable(cb.long_12h, 'calibLongTable');
+}
+
+/* ───────── Pick history (sortable) ───────── */
+function sortKey(row, key) {
+  const v = row[key];
+  if (key === 'entry_time' || key === 'exit_time') return v ? new Date(v).getTime() : 0;
+  if (typeof v === 'number') return v;
+  if (v === null || v === undefined) return -Infinity;
+  return String(v);
+}
+function renderHistoryTable() {
+  const cols = [
+    { k: 'entry_time', label: 'entry', fmt: r => `<span class="muted">${shortTime(r.entry_time)}</span>` },
+    { k: 'market', label: 'market', fmt: r => escapeHtml(shortMarket(r.market)) },
+    { k: 'side', label: 'side', fmt: r => `<span class="${r.side === 'SHORT' ? 'neg' : ''}">${escapeHtml(r.side)}</span>` },
+    { k: 'horizon_h', label: 'h', fmt: r => r.horizon_h ?? '—' },
+    { k: 'entry_price', label: 'entry px', fmt: r => fmtKrw(r.entry_price) },
+    { k: 'exit_price', label: 'exit px', fmt: r => fmtKrw(r.exit_price) },
+    { k: 'realized_pct', label: 'realized', fmt: r => `<span class="${sgnClass(r.realized_pct)}">${fmtPct(r.realized_pct)}</span>` },
+    { k: 'actionable', label: 'live', fmt: r => `<span class="${r.actionable ? 'pos' : 'muted'}">${r.actionable ? 'ON' : 'watch'}</span>` },
+  ];
+
+  const sorted = [...HISTORY_ROWS].sort((a, b) => {
+    const va = sortKey(a, HIST_SORT_KEY), vb = sortKey(b, HIST_SORT_KEY);
+    if (va < vb) return HIST_SORT_DIR === 'asc' ? -1 : 1;
+    if (va > vb) return HIST_SORT_DIR === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  const head = `<thead><tr>${cols.map(c =>
+    `<th class="sortable" data-key="${c.k}">${c.label}${HIST_SORT_KEY === c.k ? (HIST_SORT_DIR === 'asc' ? ' ↑' : ' ↓') : ''}</th>`
+  ).join('')}</tr></thead>`;
+  const body = sorted.map(r => `<tr>${cols.map(c => `<td>${c.fmt(r)}</td>`).join('')}</tr>`).join('');
+  const tbl = document.getElementById('historyTable');
+  tbl.innerHTML = head + '<tbody>' + body + '</tbody>';
+  tbl.querySelectorAll('th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.key;
+      if (HIST_SORT_KEY === key) HIST_SORT_DIR = HIST_SORT_DIR === 'asc' ? 'desc' : 'asc';
+      else { HIST_SORT_KEY = key; HIST_SORT_DIR = 'desc'; }
+      renderHistoryTable();
+    });
+  });
+}
+function renderHistory(history) {
+  HISTORY_ROWS = history.pick_history || [];
+  document.getElementById('historyMeta').textContent =
+    `${HISTORY_ROWS.length}건 (최근 60일) · 컬럼 클릭으로 정렬`;
+  renderHistoryTable();
+}
+
+/* ───────── Boot ───────── */
+async function boot() {
+  const { pin, summary } = await showPinModal();
+  // summary already decrypted by the PIN gate. Fetch the remaining two only.
+  const [historyEnc, accuracyEnc] = await Promise.all([
+    fetchJson(`${DATA_DIR}/history.json`),
+    fetchJson(`${DATA_DIR}/accuracy.json`),
+  ]);
+  const [history, accuracy] = await Promise.all([
+    decryptPayload(historyEnc, pin),
+    decryptPayload(accuracyEnc, pin),
+  ]);
+
+  renderHero(summary);
+  renderKpi(summary);
+  renderPicks(summary);
+  renderIcChart(history);
+  renderRealized(summary, accuracy);
+  renderDrift(summary);
+  renderCalibration(summary);
+  renderHistory(history);
+  renderHoldoutVsLive(summary);
+}
+
+boot().catch(err => {
+  console.error(err);
+  const m = document.getElementById('heroMeta');
+  if (m) m.textContent = '로드 실패: ' + (err.message || err);
+});
+</script>
+</body>
+</html>
