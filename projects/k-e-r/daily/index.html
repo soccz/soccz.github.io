@@ -857,15 +857,27 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
 }
 .filter-pill.active .pill-count { opacity: 0.85; }
 
-/* 마스터 표 — 등락률·시총 칼럼 (Phase F) */
+/* 마스터 표 — 등락률·시총·sparkline (Phase F+) */
 .watchlist-table th.change,
-.watchlist-table th.mcap {
+.watchlist-table th.mcap,
+.watchlist-table th.spark {
   font-family: var(--mono); font-size: 11px;
   font-weight: 600; letter-spacing: 0.04em;
   color: var(--text-muted); text-transform: uppercase;
 }
-.watchlist-table th.change { width: 80px; text-align: right; }
+.watchlist-table th.spark { width: 90px; text-align: left; }
+.watchlist-table th.change { width: 70px; text-align: right; }
 .watchlist-table th.mcap { width: 200px; text-align: right; }
+
+tr.stock-row td.spark { padding: 0 12px; vertical-align: middle; }
+tr.stock-row td.spark svg {
+  display: block;
+  fill: none;
+}
+tr.stock-row td.spark svg.spark-up polyline { stroke: var(--kr-up); }
+tr.stock-row td.spark svg.spark-down polyline { stroke: var(--kr-down); }
+tr.stock-row td.spark svg.spark-flat polyline { stroke: var(--kr-flat); opacity: 0.6; }
+tr.stock-row.stock-empty td.spark svg polyline { opacity: 0.5; }
 
 tr.stock-row td.change {
   font-family: var(--mono); font-size: 13px;
@@ -904,6 +916,10 @@ tr.stock-row td.mcap {
 }
 tr.stock-row.stock-active:hover .mcap-fill { background: var(--accent); }
 
+@media (max-width: 1000px) {
+  .watchlist-table th.spark,
+  tr.stock-row td.spark { display: none; }
+}
 @media (max-width: 900px) {
   .watchlist-table th.change,
   tr.stock-row td.change { display: none; }
@@ -1245,7 +1261,7 @@ tr.stock-row.stock-active td.action {
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-09 03:52 </p>
+    <p style="margin-top:6px">생성: 2026-05-09 04:01 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
