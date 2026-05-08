@@ -40,11 +40,19 @@
     a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
-    .nav-links { display: flex; gap: 1.4rem; list-style: none; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: color 0.2s; }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 1rem; }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; flex-shrink: 0; }
+    .nav-links { display: flex; gap: 1rem; list-style: none; overflow-x: auto; scrollbar-width: thin; -webkit-overflow-scrolling: touch; padding: 0.4rem 0; }
+    .nav-links::-webkit-scrollbar { height: 4px; }
+    .nav-links::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 2px; }
+    .nav-links li { flex-shrink: 0; white-space: nowrap; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
+    @media (max-width: 720px) {
+      .nav-inner { padding: 0 1rem; gap: 0.6rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-links a { font-size: 0.74rem; }
+    }
 
     section { padding: 4rem 2rem; }
     section.compact { padding: 2.4rem 2rem; }
@@ -106,13 +114,16 @@
     .chart-wrap { position: relative; height: 320px; margin-top: 0.6rem; }
 
     /* Heatmap (daily PnL per side) */
-    .heatmap-wrap { overflow-x: auto; padding-bottom: 0.4rem; }
+    .heatmap-wrap { overflow-x: auto; padding-bottom: 0.4rem; -webkit-overflow-scrolling: touch; }
     .heatmap { border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; }
-    .heatmap th, .heatmap td { padding: 0.32rem 0.42rem; text-align: center; min-width: 44px; }
+    .heatmap th, .heatmap td { padding: 0.32rem 0.42rem; text-align: center; min-width: 44px; white-space: nowrap; }
     .heatmap th { background: var(--bg-secondary); color: var(--text-secondary); font-weight: 700; font-size: 0.68rem; }
     .heatmap th:first-child, .heatmap td:first-child { background: var(--bg-secondary); color: var(--text-primary); font-weight: 700; min-width: 64px; text-align: left; }
     .heatmap td { color: var(--text-primary); border: 1px solid var(--border); }
     .heatmap td.empty { color: var(--text-muted); }
+    /* Monthly heatmap needs wider cells for "+12.34%" content */
+    .heatmap.monthly th, .heatmap.monthly td { min-width: 60px; padding: 0.4rem 0.5rem; }
+    .heatmap.monthly th:first-child, .heatmap.monthly td:first-child { min-width: 56px; }
 
     /* viz split (side-by-side per side) */
     .viz-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
@@ -147,14 +158,14 @@
     .bw-block .bw-title { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
     .bw-block .bw-title.win { color: var(--green); }
     .bw-block .bw-title.loss { color: var(--red); }
-    .bw-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; }
-    .bw-card .bw-head { display: flex; gap: 0.6rem; align-items: baseline; margin-bottom: 0.25rem; }
+    .bw-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; min-width: 0; overflow: hidden; }
+    .bw-card .bw-head { display: flex; gap: 0.6rem; align-items: baseline; margin-bottom: 0.25rem; flex-wrap: wrap; }
     .bw-card .bw-coin { font-weight: 700; color: var(--text-primary); font-size: 0.88rem; }
     .bw-card .bw-date { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
-    .bw-card .bw-pnl { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.92rem; margin-left: auto; }
+    .bw-card .bw-pnl { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.92rem; margin-left: auto; flex-shrink: 0; }
     .bw-card .bw-pnl.pos { color: var(--green); }
     .bw-card .bw-pnl.neg { color: var(--red); }
-    .bw-card .bw-meta { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; line-height: 1.55; }
+    .bw-card .bw-meta { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; line-height: 1.55; word-break: break-word; }
 
     /* Monthly heatmap (year × month) */
     .mh-section { display: grid; gap: 1.2rem; }
@@ -457,12 +468,12 @@
       <div class="viz-card">
         <div class="viz-title">SHORT (h=6)</div>
         <div class="viz-sub" id="cumShortMeta">—</div>
-        <svg class="cum-svg" id="cumShortSvg" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+        <svg class="cum-svg" id="cumShortSvg" viewBox="0 0 800 200"></svg>
       </div>
       <div class="viz-card">
         <div class="viz-title">LONG (h=12)</div>
         <div class="viz-sub" id="cumLongMeta">—</div>
-        <svg class="cum-svg" id="cumLongSvg" viewBox="0 0 800 200" preserveAspectRatio="none"></svg>
+        <svg class="cum-svg" id="cumLongSvg" viewBox="0 0 800 200"></svg>
       </div>
     </div>
   </div>
@@ -561,12 +572,12 @@
       <div class="viz-card">
         <div class="viz-title">SHORT (h=6)</div>
         <div class="viz-sub" id="rollShortMeta">—</div>
-        <svg class="roll-svg" id="rollShortSvg" viewBox="0 0 800 180" preserveAspectRatio="none"></svg>
+        <svg class="roll-svg" id="rollShortSvg" viewBox="0 0 800 180"></svg>
       </div>
       <div class="viz-card">
         <div class="viz-title">LONG (h=12)</div>
         <div class="viz-sub" id="rollLongMeta">—</div>
-        <svg class="roll-svg" id="rollLongSvg" viewBox="0 0 800 180" preserveAspectRatio="none"></svg>
+        <svg class="roll-svg" id="rollLongSvg" viewBox="0 0 800 180"></svg>
       </div>
     </div>
   </div>
@@ -629,12 +640,12 @@
       <div class="viz-card">
         <div class="viz-title">SHORT (h=6)</div>
         <div class="viz-sub" id="reliShortMeta">—</div>
-        <svg class="reli-svg" id="reliShortSvg" viewBox="0 0 800 240" preserveAspectRatio="none"></svg>
+        <svg class="reli-svg" id="reliShortSvg" viewBox="0 0 800 240"></svg>
       </div>
       <div class="viz-card">
         <div class="viz-title">LONG (h=12)</div>
         <div class="viz-sub" id="reliLongMeta">—</div>
-        <svg class="reli-svg" id="reliLongSvg" viewBox="0 0 800 240" preserveAspectRatio="none"></svg>
+        <svg class="reli-svg" id="reliLongSvg" viewBox="0 0 800 240"></svg>
       </div>
     </div>
   </div>
@@ -650,34 +661,32 @@
     <p class="section-desc">
       대시보드의 모든 수치는 <strong>같은 10-feature 파이프라인</strong>에서 두 개의 호라이즌 모델 (xsec_6h, xsec_12h)이 산출한 결과를 σ-bucket calibration으로 후처리한 것. 위쪽 "현재 신호 상태"의 IC + gate는 매 6h <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">track_ic.py</code>가 로깅하고, 아래 holdout / calibration은 매주 일 <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">retrain_pipeline.py</code>가 promotion gate 통과 시 자동 갱신.
     </p>
-    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; margin-top: 1rem;">
-      <div style="display:flex; flex-direction:column; align-items:center; gap: 0.4rem;">
-        <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1.2rem; text-align:center; min-width: 280px;">
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem 1.4rem; margin-top: 1rem; overflow: hidden;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap: 0.4rem; max-width: 100%;">
+        <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1.2rem; text-align:center; max-width: 100%;">
           <div style="font-weight:700; font-size:0.84rem;">Upbit + Binance 1h OHLCV</div>
           <div style="font-size:0.7rem; color:var(--text-muted); font-family: 'JetBrains Mono', monospace;">200+ KRW markets · top 100 by 24h volume</div>
         </div>
         <div style="color: var(--text-muted);">↓</div>
-        <div style="background: var(--bg-card); border: 2px solid var(--text-primary); border-radius: 6px; padding: 0.9rem 1.2rem; text-align:center; min-width: 420px;">
+        <div style="background: var(--bg-card); border: 2px solid var(--text-primary); border-radius: 6px; padding: 0.9rem 1.2rem; text-align:center; max-width: 100%; word-break: break-word;">
           <div style="font-weight:700; font-size:0.85rem; color: var(--text-primary);">compute_unified_factors() — 10 features</div>
           <div style="font-size:0.68rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; line-height: 1.7;">
-            reversal_1h / reversal_4h / volatility_inv_24h / order_flow_bear<br>
-            range_contraction_12h / binance_lead_1h / kimchi_inv / kimchi_zscore_24h<br>
-            dow_bull / hour_vol
+            reversal_1h · reversal_4h · volatility_inv_24h · order_flow_bear · range_contraction_12h · binance_lead_1h · kimchi_inv · kimchi_zscore_24h · dow_bull · hour_vol
           </div>
         </div>
-        <div style="color: var(--text-muted);">↓ cross-section z-score</div>
-        <div style="display:flex; gap: 1.2rem; justify-content:center; flex-wrap: wrap;">
-          <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid #16a34a; border-radius: 6px; padding: 0.9rem 1.1rem; text-align:center; min-width: 170px;">
+        <div style="color: var(--text-muted); text-align:center;">↓ cross-section z-score</div>
+        <div style="display:flex; gap: 1rem; justify-content:center; flex-wrap: wrap; max-width: 100%;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid #16a34a; border-radius: 6px; padding: 0.9rem 1.1rem; text-align:center; min-width: 150px;">
             <div style="font-weight:700; font-size:0.84rem;">xsec_6h.pkl</div>
             <div style="font-size:0.7rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.2rem;">Ridge + LightGBM<br>horizon = 6h</div>
           </div>
-          <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid #b45309; border-radius: 6px; padding: 0.9rem 1.1rem; text-align:center; min-width: 170px;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid #b45309; border-radius: 6px; padding: 0.9rem 1.1rem; text-align:center; min-width: 150px;">
             <div style="font-weight:700; font-size:0.84rem;">xsec_12h.pkl</div>
             <div style="font-size:0.7rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.2rem;">Ridge + LightGBM<br>horizon = 12h</div>
           </div>
         </div>
-        <div style="color: var(--text-muted);">↓ σ-bucket calibration · enrich (consensus / trust) · preflight gate</div>
-        <div style="background: #17212b; color: #fff; border-radius: 6px; padding: 0.7rem 1.3rem; text-align:center; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">
+        <div style="color: var(--text-muted); text-align: center; word-break: keep-all;">↓ σ-bucket calibration · enrich (consensus / trust) · preflight gate</div>
+        <div style="background: #17212b; color: #fff; border-radius: 6px; padding: 0.7rem 1.3rem; text-align:center; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; max-width: 100%; word-break: keep-all;">
           📱 Telegram &nbsp;·&nbsp; CSV &nbsp;·&nbsp; 🔒 encrypted dashboard data
         </div>
       </div>
@@ -951,17 +960,21 @@ function showPinModal() {
     const input = overlay.querySelector('#pinInput');
     const errEl = overlay.querySelector('#pinError');
     input.focus();
+    let busy = false;
     const submit = async () => {
+      if (busy) return;
       const pin = (input.value || '').trim();
       if (!pin) { errEl.textContent = 'PIN 을 입력하세요.'; return; }
+      busy = true;
       errEl.textContent = '확인 중…';
       try {
         const probe = await fetchJson(`${DATA_DIR}/summary.json`);
         const summary = await decryptPayload(probe, pin);
-        overlay.remove();
+        if (overlay.isConnected) overlay.remove();
         resolve({ pin, summary });
       } catch (e) {
         errEl.textContent = e.message || 'PIN 이 맞지 않습니다.';
+        busy = false;
       }
     };
     overlay.querySelector('#pinSubmit').addEventListener('click', submit);
@@ -1401,6 +1414,16 @@ function renderHistory(history) {
   renderHistoryTable();
 }
 
+/* ───────── SVG sizing helper — measure container so text isn't distorted ───────── */
+function _svgDims(svg, fallbackW, fallbackH) {
+  const rect = svg.getBoundingClientRect();
+  const W = Math.max(320, Math.round(rect.width || fallbackW));
+  const H = Math.round(rect.height || fallbackH);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.removeAttribute('preserveAspectRatio');  // default xMidYMid meet — but viewBox now matches actual size, so no scaling
+  return { W, H };
+}
+
 /* ───────── Cumulative PnL — SVG line chart ───────── */
 function _renderCumPnL(svgId, metaId, series, color) {
   const svg = document.getElementById(svgId);
@@ -1411,7 +1434,8 @@ function _renderCumPnL(svgId, metaId, series, color) {
     if (meta) meta.textContent = '표본 없음';
     return;
   }
-  const W = 800, H = 200, PL = 40, PR = 16, PT = 10, PB = 22;
+  const { W, H } = _svgDims(svg, 800, 200);
+  const PL = 44, PR = 16, PT = 10, PB = 22;
   const cum = series.map(r => r.cum_pct);
   const dd = series.map(r => r.drawdown_pct);
   const minY = Math.min(0, ...dd);
@@ -1594,7 +1618,7 @@ function _renderMonthlyHeatmap(rootId, monthly) {
     const a = (0.18 + 0.55 * intensity).toFixed(2);
     return v >= 0 ? `rgba(22,163,74,${a})` : `rgba(220,38,38,${a})`;
   };
-  let html = `<table class="heatmap"><thead><tr><th>year</th>${monthName.map(m => `<th>${m}</th>`).join('')}<th>YTD</th></tr></thead><tbody>`;
+  let html = `<table class="heatmap monthly"><thead><tr><th>year</th>${monthName.map(m => `<th>${m}</th>`).join('')}<th>YTD</th></tr></thead><tbody>`;
   for (const y of years) {
     let ytd = 0, ytdValid = false;
     html += `<tr><td>${y}</td>`;
@@ -1625,13 +1649,18 @@ function _renderRolling(svgId, metaId, series) {
     if (meta) meta.textContent = '표본 < 2일 — rolling 표시 불가';
     return;
   }
-  const W = 800, H = 180, PL = 42, PR = 42, PT = 12, PB = 22;
+  const { W, H } = _svgDims(svg, 800, 180);
+  const PL = 46, PR = 46, PT = 12, PB = 22;
   const means = series.map(r => r.rolling_mean_pct);
   const hits = series.map(r => r.rolling_hit_rate * 100);
   const minM = Math.min(0, ...means), maxM = Math.max(0, ...means);
   const padM = Math.max(0.3, (maxM - minM) * 0.1);
   const yMm = minM - padM, yMx = maxM + padM;
-  const yHm = 30, yHx = 70;  // hit rate axis fixed at 30-70 %
+  // Dynamic hit-rate axis — auto-scale with 5pp pad, but always include 50%
+  // so the random-baseline reference line stays visible.
+  const minH = Math.min(50, ...hits), maxH = Math.max(50, ...hits);
+  const padH = Math.max(2, (maxH - minH) * 0.12);
+  const yHm = Math.max(0, minH - padH), yHx = Math.min(100, maxH + padH);
   const x = i => PL + (W - PL - PR) * (series.length === 1 ? 0.5 : i / (series.length - 1));
   const yM = v => PT + (H - PT - PB) * (1 - (v - yMm) / (yMx - yMm || 1));
   const yH = v => PT + (H - PT - PB) * (1 - (v - yHm) / (yHx - yHm || 1));
@@ -1646,10 +1675,14 @@ function _renderRolling(svgId, metaId, series) {
     grid += `<line class="grid" x1="${PL}" x2="${W - PR}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}" />`;
     grid += `<text x="${PL - 4}" y="${(yy + 3).toFixed(1)}" text-anchor="end">${v.toFixed(1)}%</text>`;
   }
-  // right-axis labels for hit rate
-  for (const v of [30, 50, 70]) {
+  // right-axis labels for hit rate — adapt to dynamic range
+  const hitTicks = [];
+  const hitStep = (yHx - yHm) / 3;
+  for (let i = 0; i <= 3; i++) hitTicks.push(yHm + hitStep * i);
+  if (yHm < 50 && yHx > 50 && !hitTicks.some(t => Math.abs(t - 50) < 1)) hitTicks.push(50);
+  for (const v of hitTicks) {
     const yy = yH(v);
-    grid += `<text x="${W - PR + 4}" y="${(yy + 3).toFixed(1)}" text-anchor="start">${v}%</text>`;
+    grid += `<text x="${W - PR + 4}" y="${(yy + 3).toFixed(1)}" text-anchor="start">${v.toFixed(0)}%</text>`;
   }
   // zero line on mean axis
   const yZero = yM(0);
@@ -1682,15 +1715,17 @@ function renderRolling(accuracy) {
 
 /* ───────── Best / Worst trade narrative cards ───────── */
 function _bwCard(t) {
-  const cls = t.realized_pct > 0 ? 'pos' : 'neg';
+  const rp = (t.realized_pct == null || isNaN(t.realized_pct)) ? null : Number(t.realized_pct);
+  const cls = rp == null ? 'muted' : (rp > 0 ? 'pos' : 'neg');
   const date = (t.entry_time || '').slice(0, 16).replace('T', ' ');
-  const px = (p) => p == null ? '—' : fmtKrw(p);
+  const px = (p) => (p == null || isNaN(p)) ? '—' : fmtKrw(p);
+  const pnlText = rp == null ? '—' : `${rp >= 0 ? '+' : ''}${rp.toFixed(2)}%`;
   return `
     <div class="bw-card">
       <div class="bw-head">
         <span class="bw-coin">${escapeHtml(shortMarket(t.market || ''))}</span>
         <span class="bw-date">${escapeHtml(date)}</span>
-        <span class="bw-pnl ${cls}">${t.realized_pct >= 0 ? '+' : ''}${t.realized_pct.toFixed(2)}%</span>
+        <span class="bw-pnl ${cls}">${pnlText}</span>
       </div>
       <div class="bw-meta">
         h=${t.horizon_h ?? '?'}h · entry ${px(t.entry_price)}원 → exit ${px(t.exit_price)}원
@@ -1726,9 +1761,16 @@ function _renderReliability(svgId, metaId, points) {
     if (meta) meta.textContent = '표본 없음';
     return;
   }
-  const W = 800, H = 240, PL = 50, PR = 20, PT = 14, PB = 30;
-  const xMin = 0, xMax = Math.max(2.5, ...points.map(p => p.sigma_mid));
-  const yMin = 0.3, yMax = 0.75;
+  const { W, H } = _svgDims(svg, 800, 240);
+  const PL = 50, PR = 20, PT = 14, PB = 30;
+  // Dynamic x-range with right-side breathing room so the rightmost dot isn't on the edge.
+  const sigmas = points.map(p => p.sigma_mid);
+  const xMin = 0;
+  const xMax = Math.max(2.8, Math.max(...sigmas) + 0.4);
+  // Dynamic y-range — always include 50% (baseline) so the random reference line stays visible.
+  const hits = points.map(p => p.hit_rate);
+  const yMin = Math.max(0, Math.min(0.45, Math.min(...hits) - 0.05));
+  const yMax = Math.min(1, Math.max(0.55, Math.max(...hits) + 0.05));
   const x = v => PL + (W - PL - PR) * (v - xMin) / (xMax - xMin || 1);
   const y = v => PT + (H - PT - PB) * (1 - (v - yMin) / (yMax - yMin || 1));
   const maxN = Math.max(1, ...points.map(p => p.n));
