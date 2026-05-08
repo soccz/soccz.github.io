@@ -404,9 +404,11 @@
       <li><a href="#perturb">Perturb</a></li>
       <li><a href="#grad">Gradient</a></li>
       <li><a href="#perlayer">Per-layer</a></li>
+      <li><a href="#matrix">Matrix</a></li>
       <li><a href="#disentangle">Disentangle</a></li>
-      <li><a href="#localedit">Local</a></li>
       <li><a href="#discover">Discover</a></li>
+      <li><a href="#clip">CLIP</a></li>
+      <li><a href="#realphoto">Real photo</a></li>
       <li><a href="#cycle">Cycle</a></li>
       <li><a href="#journal">Journal</a></li>
       <li><a href="#limits">Limits</a></li>
@@ -425,10 +427,10 @@
       잠재공간이 이미지의 어디에 작용하는지 픽셀 saliency로 직접 시각화한 .py 파이프라인.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">19</span><span class="hero-stat-label">sections</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">9</span><span class="hero-stat-label">analysis methods</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">256</span><span class="hero-stat-label">discovered directions</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">40k</span><span class="hero-stat-label">encoder iterations</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">22</span><span class="hero-stat-label">sections</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">12</span><span class="hero-stat-label">analysis methods</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">8×14</span><span class="hero-stat-label">complete matrix</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">+CLIP</span><span class="hero-stat-label">zero-shot labels</span></div>
     </div>
     <div class="hero-links">
       <a class="hero-link primary" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">
@@ -809,9 +811,42 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </div></section>
 <hr class="divider">
 
-<!-- =================== 08 DISENTANGLEMENT =================== -->
+<!-- =================== 08 FULL 8x14 MATRIX =================== -->
+<section id="matrix"><div class="container fade-in">
+  <div class="section-label">08 — Complete 8 × 14 saliency matrix</div>
+  <h2 class="section-title">모든 attribute를 모든 layer에 적용해보면?</h2>
+  <p class="section-desc">
+    HiGAN 메타데이터는 각 attribute의 canonical layer 범위만 알려준다 (예: indoor_lighting → layers 6–11).
+    하지만 boundary 방향을 <em>다른</em> layer에 강제로 적용하면 어떻게 될까?
+    8 attribute × 14 layer = 112 cell의 완전 매트릭스. <span style="color:var(--accent-green);font-weight:700;">초록</span> 테두리 = canonical layers,
+    <span style="color:var(--accent-red);font-weight:700;">빨강</span> = peak intensity layer.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/matrix_8x14.png" alt="complete 8 attribute by 14 layer saliency matrix" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 8.1</strong> &nbsp; 각 cell = 해당 attribute boundary 방향을 layer i에만 적용했을 때의 saliency. 모두 같은 base latent 16개 평균.</div>
+  </div>
+
+  <div class="viz-insight amber">
+    <div class="viz-insight-label">놀라운 발견 — boundary는 layer-specific하다</div>
+    <p>거의 모든 attribute의 <strong>peak intensity layer가 layer 0</strong>(StyleGAN의 constant input layer).
+    그런데 layer 0의 saliency는 전 화면을 무차별적으로 흔들 뿐, attribute 의미를 만들지 않음 — 단순히 큰 effect만 줌.
+    HiGAN 저자가 손으로 잡은 canonical layers 6–11 (또는 view의 0–4)에서 saliency는 magnitude는 작아도
+    <em>의미상 정렬된 spatial 패턴</em>이 명확히 등장. 즉 <strong>"boundary 벡터는 layer-specific하게 학습된 것"</strong> —
+    같은 512차원 벡터를 다른 layer에 갖다 붙이면 효과는 크지만 의미는 사라짐.</p>
+  </div>
+
+  <div class="viz-insight">
+    <div class="viz-insight-label">실용적 함의</div>
+    <p>이는 GAN inversion / boundary 편집에 직접 함의 — boundary를 다른 layer 범위에 옮길 때 <em>magnitude만 보고</em>
+    "효과가 크다"고 판단하면 안 됨. 실제 attribute 의미는 layer 6–11 범위에서 더 작은 saliency로 표현됨.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 09 DISENTANGLEMENT =================== -->
 <section id="disentangle"><div class="container fade-in">
-  <div class="section-label">08 — Disentanglement matrix</div>
+  <div class="section-label">09 — Disentanglement matrix</div>
   <h2 class="section-title">8개 attribute는 정말 독립적인가?</h2>
   <p class="section-desc">
     HiGAN의 8 boundary가 의미적으로 깔끔하게 분리돼 있는지 정량 측정. 32개 공유 latent에 대해 각 boundary의
@@ -860,7 +895,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 09 LOCAL EDIT =================== -->
 <section id="localedit" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">09 — Saliency-guided local edit</div>
+  <div class="section-label">10 — Saliency-guided local edit</div>
   <h2 class="section-title">"램프만 켜고 침구는 그대로" — saliency를 마스크로 쓰기</h2>
   <p class="section-desc">
     grad-saliency map을 가우시안 블러 + threshold로 soft mask로 변환한 뒤, attribute 편집을 그 마스크 안에서만 적용:
@@ -885,7 +920,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 10 ENCODER ATTENTION =================== -->
 <section id="encattn"><div class="container fade-in">
-  <div class="section-label">10 — Encoder attention (mirror question)</div>
+  <div class="section-label">11 — Encoder attention (mirror question)</div>
   <h2 class="section-title">인코더는 입력의 <em>어디</em>를 보고 wp를 결정하는가</h2>
   <p class="section-desc">
     Generator-side로 봤던 같은 도구를 인코더에 거꾸로 적용. <code>s(x) = ⟨E(x)<sub>manipulate_layers</sub>, b̂⟩</code>의
@@ -915,7 +950,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 11 RANDOM DISCOVERY =================== -->
 <section id="discover" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">11 — Random direction discovery</div>
+  <div class="section-label">12 — Random direction discovery</div>
   <h2 class="section-title">학습 없이 새 의미 방향 찾기</h2>
   <p class="section-desc">
     HiGAN의 8 boundary 외에 W+ 공간에서 96개 임의 단위 방향을 뽑고 각각의 grad-saliency 계산.
@@ -940,7 +975,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 12 COMPOSITION =================== -->
 <section id="composition"><div class="container fade-in">
-  <div class="section-label">12 — Compositional editing</div>
+  <div class="section-label">13 — Compositional editing</div>
   <h2 class="section-title">두 attribute를 동시에 켜면 saliency는 더해질까, 간섭할까?</h2>
   <p class="section-desc">
     α·b₁ + β·b₂ 로 동시 편집한 결과의 saliency를 (1) 직접 JVP 계산한 값과 (2) 개별
@@ -984,7 +1019,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 13 ROBUSTNESS =================== -->
 <section id="robust"><div class="container fade-in">
-  <div class="section-label">13 — Saliency robustness</div>
+  <div class="section-label">14 — Saliency robustness</div>
   <h2 class="section-title">attribute별 saliency가 침실에 따라 얼마나 흔들리는가</h2>
   <p class="section-desc">
     같은 base latent 32개 위에서 각 attribute의 saliency map을 따로 계산하고, 32×32 sample-pair 상관계수의
@@ -1024,7 +1059,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 14 INTERMEDIATE LAYER =================== -->
 <section id="intermediate" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">14 — Intermediate-layer saliency</div>
+  <div class="section-label">15 — Intermediate-layer saliency</div>
   <h2 class="section-title">진짜 Grad-CAM에 가장 가까운 형태 — 중간 conv 활성화의 미분</h2>
   <p class="section-desc">
     Grad-CAM은 분류기의 conv feature map에 대한 gradient를 본다. 우리 generator는 분류기는 아니지만,
@@ -1064,7 +1099,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 15 TAXONOMY =================== -->
 <section id="taxonomy" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">15 — Unsupervised attribute taxonomy</div>
+  <div class="section-label">16 — Unsupervised attribute taxonomy</div>
   <h2 class="section-title">학습 없이, 라벨 없이 GAN이 만들 수 있는 attribute family를 자동 발견</h2>
   <p class="section-desc">
     W+ 공간에서 임의 단위 방향 256개를 샘플링하고, 각각의 grad-saliency map을 계산.
@@ -1099,9 +1134,95 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 </div></section>
 <hr class="divider">
 
-<!-- =================== 16 FULL CYCLE =================== -->
+<!-- =================== 16 CLIP LABELING =================== -->
+<section id="clip"><div class="container fade-in">
+  <div class="section-label">17 — CLIP zero-shot cluster labeling</div>
+  <h2 class="section-title">발견된 cluster에 의미를 입히기</h2>
+  <p class="section-desc">
+    섹션 15는 8개 cluster를 자동 발견했지만 *의미는 모름*. 각 cluster의 modal layer에 대해
+    fresh random 방향 8개를 샘플링하고 +δ 편집 결과를 4개의 base 침실에 적용해 평균.
+    그 평균 perturbed 이미지를 CLIP-score 한 뒤 base 평균을 contrastive로 빼서
+    "이 cluster가 더 강하게 만드는 개념"의 텍스트 라벨을 자동 부여. 인간 라벨 0.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/cluster_labels.png" alt="CLIP zero-shot labels for 8 random direction clusters" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 16.1</strong> &nbsp; 컬럼: centroid saliency / base bedroom / 평균 perturbed (+δ on modal layer) / normalised diff / CLIP top-k 라벨 (Δ score).</div>
+  </div>
+
+  <div class="bullet-list">
+    <div class="bullet-item"><div class="bullet-mark green">2</div><div><strong>cluster 2 (n=37, layer 1)</strong>: <em>"a view through a window" (+0.021)</em>, dirty surface, scary atmosphere — coarse 구조에서 view-like family. HiGAN의 <code>view</code>를 <strong>학습 없이 자동 재발견</strong>.</div></div>
+    <div class="bullet-item"><div class="bullet-mark green">3</div><div><strong>cluster 3 (n=21, layer 7)</strong>: <em>"soft texture, a pillow, a blanket, carpet"</em> — 침구 family. HiGAN에 없는 새 attribute.</div></div>
+    <div class="bullet-item"><div class="bullet-mark">4</div><div><strong>cluster 4 (n=32, layer 2)</strong>: view-like + dirty + scary — view boundary와 비슷하지만 다른 layer. cluster 2보다 좀 더 detailed.</div></div>
+    <div class="bullet-item"><div class="bullet-mark red">7</div><div><strong>cluster 5/6/7 (n=1–4, layer 13)</strong>: clean room, metal surface, soft texture, lamp 등 다양 — fine layer 13의 perturbation은 일관된 의미가 없고 *전체 색조 변경*에 가까워서 outlier로 분산.</div></div>
+  </div>
+
+  <div class="viz-insight green">
+    <div class="viz-insight-label">의의 — 진정한 unsupervised attribute discovery</div>
+    <p>1️⃣ random direction sampling → 2️⃣ saliency 계산 → 3️⃣ K-means 클러스터링 → 4️⃣ CLIP zero-shot 라벨 부여.
+    <strong>4 단계 모두 attribute 라벨이나 분류기 학습 없이 진행</strong>. 결과: HiGAN의 8 boundary가 다루지 않는
+    "pillow / blanket / carpet" 같은 새 attribute family들이 자동 식별. CLIP score 차이는 작지만 (Δ ≈ 0.02)
+    contrastive scoring으로 cluster마다 분명히 다른 단어가 top-k로 등장.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 17 REAL PHOTO =================== -->
+<section id="realphoto" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">18 — Real LSUN bedroom photos</div>
+  <h2 class="section-title">진짜 침실 사진에 전체 파이프라인 적용</h2>
+  <p class="section-desc">
+    지금까지는 generator의 자기 출력(synthetic)에서만 검증. 이제 LSUN bedroom 데이터셋에서 받은
+    <em>실제 사진 4장</em>에 대해 (a) optim 800-step inversion, (b) encoder inversion, (c) grad-saliency,
+    (d) 편집 ±3 sweep을 한 번에 실행. Out-of-distribution 일반화 검증.
+  </p>
+
+  <div class="img-frame">
+    <img src="figures/real_photo_cycle.png" alt="full pipeline on real LSUN bedroom photos" loading="lazy" class="zoomable">
+    <div class="img-caption"><strong>FIG 17.1</strong> &nbsp; 4 진짜 침실에 대한 전체 흐름. 각 행: real photo / optim recon (800 step) / encoder recon / sal(indoor_lighting) / sal(wood) / sal(view) / edit −3 / edit +3 (indoor_lighting).</div>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:1.4rem;">
+    <table>
+      <thead><tr><th>photo</th><th class="num">LPIPS (optim)</th><th class="num">LPIPS (encoder)</th><th class="num">MSE (optim)</th><th class="num">MSE (encoder)</th></tr></thead>
+      <tbody>
+        <tr><td>lsun_00 (ceiling fan + wood bed)</td><td class="num winner">0.0294</td><td class="num loser">0.4611</td><td class="num winner">0.0139</td><td class="num loser">0.1413</td></tr>
+        <tr><td>lsun_01 (wall photos + lamp)</td><td class="num winner">0.0514</td><td class="num loser">0.5850</td><td class="num winner">0.0450</td><td class="num loser">0.1604</td></tr>
+        <tr><td>lsun_02 (modern white)</td><td class="num winner">0.0301</td><td class="num loser">0.5228</td><td class="num winner">0.0239</td><td class="num loser">0.1376</td></tr>
+        <tr><td>lsun_03 (wood + balcony)</td><td class="num winner">0.0279</td><td class="num loser">0.4098</td><td class="num winner">0.0252</td><td class="num loser">0.2142</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel-2col">
+    <div class="panel" style="border-top:3px solid var(--accent-green);">
+      <div class="panel-eyebrow">긍정 결과</div>
+      <h4>optim inversion은 진짜 사진에서도 거의 완벽</h4>
+      <p>real photo에 대해서도 LPIPS 0.028–0.051 — synthetic과 거의 동등 (synth: 0.027–0.033).
+      즉 진짜 침실은 GAN의 manifold에 충분히 가까이 있고, gradient flow를 살린 optim inversion이
+      OOD 데이터에서도 작동.</p>
+    </div>
+    <div class="panel" style="border-top:3px solid var(--accent-red);">
+      <div class="panel-eyebrow">부정 결과</div>
+      <h4>encoder inversion은 OOD에서 더 약함</h4>
+      <p>real photo: LPIPS 0.41–0.59 (synth: 0.31–0.44). 인코더가 합성 데이터로만 학습됐기에
+      OOD에서 ~30% 추가 손실. <strong>합성 supervision의 한계</strong>. 실제 사진에 강건한 encoder를
+      위해서는 LSUN bedroom 데이터로 fine-tuning이 필요.</p>
+    </div>
+  </div>
+
+  <div class="viz-insight">
+    <div class="viz-insight-label">관찰</div>
+    <p>encoder reconstruction이 흐릿해도 <strong>saliency와 편집 방향성은 살아있다</strong> (FIG 17.1).
+    lsun_01 (벽에 사진들 + 램프) 행에서 indoor_lighting saliency는 램프 영역에 정확히 hot spot.
+    이는 보고서 내내 유지된 패턴 — saliency는 reconstruction quality보다 robust.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- =================== 18 FULL CYCLE =================== -->
 <section id="cycle"><div class="container fade-in">
-  <div class="section-label">16 — Full cycle (target → recon → saliency → edit)</div>
+  <div class="section-label">19 — Full cycle (target → recon → saliency → edit)</div>
   <h2 class="section-title">한 침실에서 본 v2의 전체 흐름</h2>
   <p class="section-desc">
     한 장의 사진을 잡고 파이프라인 4단계를 좌→우로 보여준다.
@@ -1131,7 +1252,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== 09 EDITING (morph) =================== -->
 <section id="editing"><div class="container fade-in">
-  <div class="section-label">17 — Edit sweep (animated)</div>
+  <div class="section-label">20 — Edit sweep (animated)</div>
   <h2 class="section-title">속성 슬라이더가 실제로 어떻게 보이는가</h2>
   <p class="section-desc">
     각 boundary를 −3 → +3 → −3 으로 21프레임 ping-pong morph. 정적 5컷 그리드보다
@@ -1164,7 +1285,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== JOURNAL =================== -->
 <section id="journal" style="background:var(--bg-secondary);"><div class="container fade-in">
-  <div class="section-label">18 — Process journal · 삽질 일지</div>
+  <div class="section-label">21 — Process journal · 삽질 일지</div>
   <h2 class="section-title">실패와 발견의 시간순</h2>
   <p class="section-desc">
     프로젝트가 깨끗하게 보이는 결과만 남기면 정직하지 않다. v1 분석부터 v2 grad-saliency까지
@@ -1361,7 +1482,7 @@ saliency = dimg_dα.abs().mean(dim=<span class="code-num">1</span>)         <spa
 
 <!-- =================== LIMITS =================== -->
 <section id="limits"><div class="container fade-in">
-  <div class="section-label">19 — Limits & Next</div>
+  <div class="section-label">22 — Limits & Next</div>
   <h2 class="section-title">정직한 한계</h2>
   <p class="section-desc">
     v2는 컨셉 검증과 파이프라인 견고화에 집중했다. 다음 세 가지가 명시적인 한계.
