@@ -106,10 +106,10 @@
     .chart-wrap { position: relative; height: 320px; margin-top: 0.6rem; }
 
     /* ops footer strip */
-    .ops-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.6rem; padding: 1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; }
-    .ops-strip .ops-item { display: flex; flex-direction: column; gap: 0.15rem; }
-    .ops-strip .ops-label { color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
-    .ops-strip .ops-value { font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-size: 0.78rem; }
+    .ops-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem 1.4rem; padding: 1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; }
+    .ops-strip .ops-item { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; overflow: hidden; }
+    .ops-strip .ops-label { color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+    .ops-strip .ops-value { font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-size: 0.74rem; word-break: break-all; line-height: 1.4; }
     .kpi-tail { font-family: 'JetBrains Mono', monospace; }
 
     /* Realized hero — t-stat / Sharpe / net pnl */
@@ -164,6 +164,8 @@
       <li><a href="#ic">ic series</a></li>
       <li><a href="#drift">drift</a></li>
       <li><a href="#calibration">calibration</a></li>
+      <li><a href="#architecture">architecture</a></li>
+      <li><a href="#automation">automation</a></li>
       <li><a href="#history">history</a></li>
       <li><a href="#limits">limits</a></li>
       <li><a href="../">← project</a></li>
@@ -195,6 +197,23 @@
     <h2 class="section-title">현재 신호 상태</h2>
     <div class="kpi-strip" id="kpiStrip"></div>
     <div class="ops-strip" id="opsStrip" style="margin-top: 1.2rem"></div>
+
+    <!-- Gate state explainer (collapsible) — answers "왜 WARN이야?" -->
+    <details style="margin-top: 1.5rem; padding: 1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;">
+      <summary style="cursor: pointer; font-weight: 600; font-size: 0.88rem; color: var(--text-primary);">🟡 게이트 상태 해설 — 왜 WARN인가?</summary>
+      <div style="font-size: 0.82rem; line-height: 1.8; color: var(--text-secondary); margin-top: 0.8rem;">
+        <p style="margin-bottom: 0.8rem;"><strong>§7 IC 게이트 룰:</strong></p>
+        <ul style="margin-left: 1.2rem; margin-bottom: 0.8rem;">
+          <li>🟢 <strong>OK</strong> — 최근 3개 측정값 전부 ≥ 0.05</li>
+          <li>🟡 <strong>WARN</strong> — 최근 3개 중 하나라도 < 0.05 (또는 < 0.03)</li>
+          <li>🔴 <strong>FREEZE</strong> — IC < 0.03 <em>2회 연속</em> (자동 watch-only)</li>
+          <li>⛔ <strong>LIQUIDATE</strong> — IC < 0.03 <em>3회 연속</em> (신규 픽 차단, 인간 ack 필요)</li>
+        </ul>
+        <p style="margin-bottom: 0.6rem;"><strong>지금 상태:</strong> 두 사이드 모두 last-3에 IC<0.03 슬롯이 섞여있어 WARN. <em>30일 평균 IC는 +0.196 (SHORT) / +0.139 (LONG)로 양호</em>.</p>
+        <p style="margin-bottom: 0.6rem;"><strong>왜 노이즈?</strong> 단일 timestamp IC는 80~85개 코인에 대한 Spearman 상관 — 한 슬롯 단위로 보면 ±0.2까지 흔들림이 정상. 30일 평균/누적 win rate가 진짜 지표.</p>
+        <p><strong>지금 액션 필요?</strong> 없음. FREEZE까지는 IC<0.03 연속이 필요한데 지금은 양수/음수 섞여 있음. 자동 시스템이 알아서 처리.</p>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -341,6 +360,106 @@
       <div class="card">
         <h3>LONG (h=12)</h3>
         <div class="scroll-x"><table class="data" id="calibLongTable"></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Architecture diagram — for reviewers landing here without context -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-label">architecture</div>
+    <h2 class="section-title">F1 통합 파이프라인 — 이 dashboard가 보는 것</h2>
+    <p class="section-desc">
+      대시보드의 모든 수치는 <strong>같은 10-feature 파이프라인</strong>에서 두 개의 호라이즌 모델 (xsec_6h, xsec_12h)이 산출한 결과를 σ-bucket calibration으로 후처리한 것. 위쪽 "현재 신호 상태"의 IC + gate는 매 6h <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">track_ic.py</code>가 로깅하고, 아래 holdout / calibration은 매주 일 <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">retrain_pipeline.py</code>가 promotion gate 통과 시 자동 갱신.
+    </p>
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; margin-top: 1rem;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap: 0.4rem;">
+        <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1.2rem; text-align:center; min-width: 280px;">
+          <div style="font-weight:700; font-size:0.84rem;">Upbit + Binance 1h OHLCV</div>
+          <div style="font-size:0.7rem; color:var(--text-muted); font-family: 'JetBrains Mono', monospace;">200+ KRW markets · top 100 by 24h volume</div>
+        </div>
+        <div style="color: var(--text-muted);">↓</div>
+        <div style="background: var(--bg-card); border: 2px solid var(--text-primary); border-radius: 6px; padding: 0.9rem 1.2rem; text-align:center; min-width: 420px;">
+          <div style="font-weight:700; font-size:0.85rem; color: var(--text-primary);">compute_unified_factors() — 10 features</div>
+          <div style="font-size:0.68rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; line-height: 1.7;">
+            reversal_1h / reversal_4h / volatility_inv_24h / order_flow_bear<br>
+            range_contraction_12h / binance_lead_1h / kimchi_inv / kimchi_zscore_24h<br>
+            dow_bull / hour_vol
+          </div>
+        </div>
+        <div style="color: var(--text-muted);">↓ cross-section z-score</div>
+        <div style="display:flex; gap: 1.2rem; justify-content:center; flex-wrap: wrap;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid #16a34a; border-radius: 6px; padding: 0.9rem 1.1rem; text-align:center; min-width: 170px;">
+            <div style="font-weight:700; font-size:0.84rem;">xsec_6h.pkl</div>
+            <div style="font-size:0.7rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.2rem;">Ridge + LightGBM<br>horizon = 6h</div>
+          </div>
+          <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid #b45309; border-radius: 6px; padding: 0.9rem 1.1rem; text-align:center; min-width: 170px;">
+            <div style="font-weight:700; font-size:0.84rem;">xsec_12h.pkl</div>
+            <div style="font-size:0.7rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.2rem;">Ridge + LightGBM<br>horizon = 12h</div>
+          </div>
+        </div>
+        <div style="color: var(--text-muted);">↓ σ-bucket calibration · enrich (consensus / trust) · preflight gate</div>
+        <div style="background: #17212b; color: #fff; border-radius: 6px; padding: 0.7rem 1.3rem; text-align:center; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;">
+          📱 Telegram &nbsp;·&nbsp; CSV &nbsp;·&nbsp; 🔒 encrypted dashboard data
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Automation timeline — proves the system is self-sustaining -->
+<section id="automation">
+  <div class="container">
+    <div class="section-label">automation</div>
+    <h2 class="section-title">3-레이어 자동 운영 체인</h2>
+    <p class="section-desc">
+      systemd 타이머 3개가 서로 다른 주기로 운영 — 매 6h 예측 / 매일 IC + drift 측정 / 주 1회 promotion-gate 재학습. 각 단계마다 pre-flight + 게이트가 잡으므로 <strong>나쁜 모델이 자동으로 배포되지 않음</strong>.
+    </p>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid #16a34a; border-radius: 8px; padding: 1.2rem 1.4rem;">
+        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem;">매 6h</div>
+        <div style="font-weight:700; font-size: 0.95rem; margin-bottom: 0.4rem;">xsec-alpha.timer</div>
+        <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.65;">
+          <code style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;">update_data → track_ic → fetch_and_rank</code><br>
+          전체 100 코인 예측 + Telegram 발송 + dashboard data 자동 푸시
+        </div>
+        <div style="margin-top: 0.6rem; font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">05/11/17/23 UTC</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid #2563eb; border-radius: 8px; padding: 1.2rem 1.4rem;">
+        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem;">매일</div>
+        <div style="font-weight:700; font-size: 0.95rem; margin-bottom: 0.4rem;">xsec-measure.timer</div>
+        <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.65;">
+          <code style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;">wf_holdout_harness → drift_detector</code><br>
+          Walk-forward holdout IC + 팩터 drift → wf_history.json / drift_state.json
+        </div>
+        <div style="margin-top: 0.6rem; font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">00:00 UTC</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-left: 4px solid #b45309; border-radius: 8px; padding: 1.2rem 1.4rem;">
+        <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem;">주 1회</div>
+        <div style="font-weight:700; font-size: 0.95rem; margin-bottom: 0.4rem;">xsec-retrain.timer</div>
+        <div style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.65;">
+          <code style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;">update_data → retrain_pipeline (with promotion gate)</code><br>
+          두 모델 재학습 → IC delta ≥ −0.015 AND ≥ 0.040이면 archive + 배포 + calibration 재구축
+        </div>
+        <div style="margin-top: 0.6rem; font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">일 20:00 UTC</div>
+      </div>
+    </div>
+
+    <!-- Safety gate inventory -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem 1.8rem; margin-top: 1.5rem;">
+      <div style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.8rem;">활성 안전 장치 (자동 집행)</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; font-size: 0.8rem; line-height: 1.7;">
+        <div style="border-left: 3px solid var(--green); padding-left: 0.8rem;"><strong>preflight</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">데이터 ≤90min · NaN ≤20% · universe churn ≤30%</span></div>
+        <div style="border-left: 3px solid var(--amber); padding-left: 0.8rem;"><strong>ic_gate (§7)</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">IC<0.03 연속 시 자동 watch-only 또는 신규 픽 차단</span></div>
+        <div style="border-left: 3px solid var(--red); padding-left: 0.8rem;"><strong>drift_detector</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">factor IC 24h vs 7d MA 비교 — SIGN_FLIP / 50%+ drop 감지</span></div>
+        <div style="border-left: 3px solid var(--blue); padding-left: 0.8rem;"><strong>promotion gate</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">새 모델이 IC delta 못 맞추면 기각 + 이전 모델 유지</span></div>
+        <div style="border-left: 3px solid var(--accent); padding-left: 0.8rem;"><strong>verify_telegram</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">원장 vs 텔레그램 부호/크기 자동 일관성 검증 (regression test)</span></div>
+        <div style="border-left: 3px solid #57534e; padding-left: 0.8rem;"><strong>retrain failure backoff</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">3회 연속 실패 시 systemd 타이머 자동 mask</span></div>
       </div>
     </div>
   </div>
