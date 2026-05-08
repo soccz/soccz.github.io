@@ -354,22 +354,6 @@
     .code-copy:hover { background: rgba(231,229,228,0.18); color: #fff; }
     .code-copy.copied { background: rgba(21,128,61,0.2); border-color: rgba(21,128,61,0.4); color: #86efac; }
 
-    /* sticky TOC sidebar (desktop only) */
-    .toc-side {
-      position: fixed; top: 96px; left: 1rem; width: 200px; padding: 1rem;
-      font-size: 0.78rem; line-height: 1.65; display: none; z-index: 50;
-    }
-    @media (min-width: 1320px) { .toc-side { display: block; } }
-    .toc-side ol { list-style: none; counter-reset: toc; padding-left: 0; }
-    .toc-side li { counter-increment: toc; margin-bottom: 0.32rem; }
-    .toc-side a {
-      color: var(--text-muted); text-decoration: none; display: block;
-      padding: 0.2rem 0.5rem; border-left: 2px solid transparent; transition: all 0.15s;
-    }
-    .toc-side a:hover { color: var(--text-primary); }
-    .toc-side a.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-dim); }
-    .toc-side a::before { content: counter(toc, decimal-leading-zero) " · "; font-family: 'JetBrains Mono', monospace; color: var(--text-muted); font-size: 0.72rem; }
-
     /* progress bar */
     .progress-bar {
       position: fixed; top: 64px; left: 0; right: 0; height: 2px;
@@ -408,30 +392,6 @@
   <button class="lightbox-close" aria-label="close">&times;</button>
   <img id="lightbox-img" alt="">
 </div>
-
-<aside class="toc-side" id="toc-side">
-  <ol>
-    <li><a href="#question">Question</a></li>
-    <li><a href="#bug">v1 발견</a></li>
-    <li><a href="#v2">v2 Pipeline</a></li>
-    <li><a href="#inversion">Inversion</a></li>
-    <li><a href="#perturb">Perturb</a></li>
-    <li><a href="#grad">Gradient</a></li>
-    <li><a href="#perlayer">Per-layer</a></li>
-    <li><a href="#disentangle">Disentangle</a></li>
-    <li><a href="#localedit">Local edit</a></li>
-    <li><a href="#encattn">Enc-attention</a></li>
-    <li><a href="#discover">Discover</a></li>
-    <li><a href="#composition">Composition</a></li>
-    <li><a href="#robust">Robustness</a></li>
-    <li><a href="#intermediate">Intermediate</a></li>
-    <li><a href="#taxonomy">Taxonomy</a></li>
-    <li><a href="#cycle">Full cycle</a></li>
-    <li><a href="#editing">Editing</a></li>
-    <li><a href="#journal">Journal</a></li>
-    <li><a href="#limits">Limits</a></li>
-  </ol>
-</aside>
 
 <nav id="navbar">
   <div class="nav-inner">
@@ -475,7 +435,6 @@
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub: soccz/HIGAN
       </a>
-      <a class="hero-link" href="https://github.com/soccz/HIGAN/tree/main/higan_dev" target="_blank" rel="noopener">higan_dev/ 패키지</a>
     </div>
   </div>
   <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
@@ -1523,16 +1482,6 @@ document.querySelectorAll('.code-block').forEach(block => {
   block.appendChild(btn);
 });
 
-// TOC active section highlight
-const tocLinks = document.querySelectorAll('.toc-side a');
-const sectionIds = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
-const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-window.addEventListener('scroll', () => {
-  const y = window.scrollY + 120;
-  let active = null;
-  sections.forEach(s => { if (s.offsetTop <= y) active = s.id; });
-  tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active));
-});
 </script>
 </body>
 </html>
