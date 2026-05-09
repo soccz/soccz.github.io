@@ -14,6 +14,29 @@
   <meta property="og:description" content="626 클럽 경기 × 6 시간대 × PyMC 계층 모델. 76+분 hazard 1.78x, venue/form/opp 효과는 모두 HDI 0 포함.">
   <meta property="og:type" content="article">
   <meta name="twitter:card" content="summary">
+  <style>
+    /* v3 페이지 고유 — predictor */
+    .predictor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+    @media (max-width: 768px) { .predictor-grid { grid-template-columns: 1fr; } }
+    .predictor-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .predictor-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--accent); }
+    .predictor-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 1rem; }
+    .predictor-label { font-size: 0.83rem; color: var(--text-secondary); flex-shrink: 0; min-width: 130px; }
+    .predictor-value { font-family: monospace; font-size: 0.82rem; color: var(--accent); min-width: 50px; text-align: right; }
+    .predictor-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+    .toggle-group { display: flex; gap: 0.4rem; flex: 1; }
+    .toggle-btn { flex: 1; padding: 0.4rem 0.6rem; border: 1px solid var(--border); background: var(--bg-secondary); cursor: pointer; font-size: 0.78rem; border-radius: 4px; transition: all 0.15s; color: var(--text-secondary); font-family: inherit; }
+    .toggle-btn.active { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
+    .toggle-btn:hover { border-color: var(--accent); }
+    .prob-output { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.4rem 0; }
+    .prob-row-out { display: grid; grid-template-columns: 70px 1fr 60px; gap: 0.6rem; align-items: center; }
+    .prob-class-label { font-weight: 700; }
+    .prob-bar-bg { height: 22px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+    .prob-bar-fill { height: 100%; transition: width 0.3s ease; }
+    .prob-pct { font-family: monospace; font-size: 0.8rem; font-weight: 700; text-align: right; }
+    .sweep-chart { margin-top: 1rem; padding: 0.8rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; }
+    .sweep-title { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem; font-family: monospace; }
+  </style>
 </head>
 <body>
 
@@ -195,6 +218,484 @@
       <li>골 분포: 대부분 0 (3,572 셀), 일부 1 (199), 드물게 2+ (9)</li>
       <li>총 골: 231 (전체 293 중 form/venue NaN 제외 + 본 클럽 경기만)</li>
     </ul>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — 골 타임라인 (294 골 + 139 어시)</h3>
+    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">x축: 날짜(연도) · y축: 경기 분(0~90+). 각 점이 한 사건. 76+분 영역은 옅은 초록 배경. 76+에 골 점이 시각적으로 가장 빽빽한 게 보입니다.</p>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1rem 0.5rem; margin:1rem auto; max-width:820px; overflow-x:auto;">
+<svg width="100%" viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" style="max-width:760px; display:block; margin:0 auto;">
+<line x1="60" y1="30.0" x2="730" y2="30.0" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="54" y="30.0" font-size="10" fill="#a8a29e" text-anchor="end" dy="3" font-family="monospace">0</text>
+<line x1="60" y1="72.0" x2="730" y2="72.0" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="54" y="72.0" font-size="10" fill="#a8a29e" text-anchor="end" dy="3" font-family="monospace">15</text>
+<line x1="60" y1="114.0" x2="730" y2="114.0" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="54" y="114.0" font-size="10" fill="#a8a29e" text-anchor="end" dy="3" font-family="monospace">30</text>
+<line x1="60" y1="156.0" x2="730" y2="156.0" stroke="#a8a29e" stroke-width="1.2"/>
+<text x="54" y="156.0" font-size="10" fill="#a8a29e" text-anchor="end" dy="3" font-family="monospace">45</text>
+<line x1="60" y1="198.0" x2="730" y2="198.0" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="54" y="198.0" font-size="10" fill="#a8a29e" text-anchor="end" dy="3" font-family="monospace">60</text>
+<line x1="60" y1="240.0" x2="730" y2="240.0" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="54" y="240.0" font-size="10" fill="#a8a29e" text-anchor="end" dy="3" font-family="monospace">75</text>
+<line x1="60" y1="282.0" x2="730" y2="282.0" stroke="#a8a29e" stroke-width="1.2"/>
+<text x="54" y="282.0" font-size="10" fill="#a8a29e" text-anchor="end" dy="3" font-family="monospace">90</text>
+<line x1="100.60606060606061" y1="30" x2="100.60606060606061" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="100.60606060606061" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2011</text>
+<line x1="181.8181818181818" y1="30" x2="181.8181818181818" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="181.8181818181818" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2013</text>
+<line x1="263.030303030303" y1="30" x2="263.030303030303" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="263.030303030303" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2015</text>
+<line x1="344.24242424242425" y1="30" x2="344.24242424242425" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="344.24242424242425" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2017</text>
+<line x1="425.45454545454544" y1="30" x2="425.45454545454544" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="425.45454545454544" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2019</text>
+<line x1="506.66666666666663" y1="30" x2="506.66666666666663" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="506.66666666666663" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2021</text>
+<line x1="587.8787878787879" y1="30" x2="587.8787878787879" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="587.8787878787879" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2023</text>
+<line x1="669.0909090909091" y1="30" x2="669.0909090909091" y2="310" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="669.0909090909091" y="325" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2025</text>
+<text x="395.0" y="344" font-size="11" fill="#57534e" text-anchor="middle">날짜 (연도)</text>
+<text x="18" y="170.0" font-size="11" fill="#57534e" text-anchor="middle" transform="rotate(-90,18,170.0)">분 (경기 시간)</text>
+<rect x="60" y="240.0" width="670" height="70.0" fill="rgba(21,128,61,0.06)" pointer-events="none"/>
+<text x="722" y="254.0" font-size="9" fill="#15803d" text-anchor="end" font-style="italic">76+ zone</text>
+<circle cx="229.2" cy="80.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="252.9" cy="144.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="256.3" cy="251.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="269.8" cy="72.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="296.9" cy="262.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="296.9" cy="248.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="300.3" cy="136.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="303.6" cy="214.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="330.7" cy="226.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="334.1" cy="133.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="334.1" cy="60.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="340.9" cy="167.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="351.0" cy="251.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="354.4" cy="122.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="357.8" cy="100.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="357.8" cy="161.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="374.7" cy="46.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="374.7" cy="133.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="381.5" cy="237.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="381.5" cy="139.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="381.5" cy="167.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="384.8" cy="161.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="384.8" cy="259.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="388.2" cy="125.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="388.2" cy="195.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="391.6" cy="268.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="395.0" cy="164.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="398.4" cy="170.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="411.9" cy="248.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="415.3" cy="214.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="415.3" cy="122.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="418.7" cy="105.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="422.1" cy="192.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="422.1" cy="237.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="422.1" cy="91.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="425.5" cy="63.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="425.5" cy="164.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="425.5" cy="184.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="425.5" cy="172.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="435.6" cy="290.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="452.5" cy="161.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="452.5" cy="111.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="452.5" cy="97.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="455.9" cy="80.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="459.3" cy="206.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="459.3" cy="125.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="459.3" cy="150.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="459.3" cy="234.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="459.3" cy="88.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="459.3" cy="223.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="462.7" cy="41.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="483.0" cy="259.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="486.4" cy="282.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="486.4" cy="256.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="493.1" cy="44.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="493.1" cy="251.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="496.5" cy="114.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="496.5" cy="52.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="499.9" cy="203.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="499.9" cy="86.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="499.9" cy="130.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="503.3" cy="158.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="503.3" cy="94.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="506.7" cy="170.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="506.7" cy="44.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="506.7" cy="273.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="510.1" cy="38.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="510.1" cy="262.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="510.1" cy="35.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="510.1" cy="184.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="513.4" cy="242.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="520.2" cy="200.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="533.7" cy="242.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="537.1" cy="105.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="543.9" cy="58.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="547.3" cy="298.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="550.7" cy="41.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="550.7" cy="195.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="557.4" cy="150.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="560.8" cy="91.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="571.0" cy="116.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="577.7" cy="91.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="584.5" cy="284.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="587.9" cy="158.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="594.6" cy="158.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="598.0" cy="290.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="601.4" cy="35.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="618.3" cy="226.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="618.3" cy="181.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="621.7" cy="273.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="625.1" cy="223.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="625.1" cy="102.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="625.1" cy="136.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="625.1" cy="256.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="631.9" cy="298.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="635.3" cy="178.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="635.3" cy="293.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="638.6" cy="175.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="642.0" cy="69.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="655.6" cy="58.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="655.6" cy="312.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="655.6" cy="108.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="655.6" cy="268.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="662.3" cy="167.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="662.3" cy="86.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="665.7" cy="100.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="665.7" cy="167.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="669.1" cy="329.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="672.5" cy="273.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="672.5" cy="80.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="672.5" cy="102.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="675.9" cy="164.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="675.9" cy="44.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="669.1" cy="329.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="672.5" cy="273.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="672.5" cy="80.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="672.5" cy="102.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="675.9" cy="164.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="675.9" cy="44.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="692.8" cy="293.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="696.2" cy="150.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="702.9" cy="97.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="621.7" cy="273.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="655.6" cy="58.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="655.6" cy="312.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="675.9" cy="44.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="713.1" cy="60.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="713.1" cy="97.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="713.1" cy="139.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="713.1" cy="133.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="713.1" cy="186.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="716.5" cy="186.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="719.8" cy="86.0" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="719.8" cy="94.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="719.8" cy="108.4" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="719.8" cy="139.2" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="719.8" cy="172.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="719.8" cy="284.8" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="723.2" cy="259.6" r="2" fill="#a16207" opacity="0.5"/>
+<circle cx="90.5" cy="97.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2010.75 · 24분</title></circle>
+<circle cx="93.8" cy="142.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2010.83 · 40분</title></circle>
+<circle cx="93.8" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2010.83 · 54분</title></circle>
+<circle cx="100.6" cy="256.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2011.00 · 81분</title></circle>
+<circle cx="124.3" cy="200.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2011.58 · 61분</title></circle>
+<circle cx="124.3" cy="203.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2011.58 · 62분</title></circle>
+<circle cx="131.1" cy="63.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2011.75 · 12분</title></circle>
+<circle cx="151.4" cy="63.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.25 · 12분</title></circle>
+<circle cx="151.4" cy="195.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.25 · 59분</title></circle>
+<circle cx="168.3" cy="206.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.67 · 63분</title></circle>
+<circle cx="168.3" cy="35.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.67 · 2분</title></circle>
+<circle cx="168.3" cy="195.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.67 · 59분</title></circle>
+<circle cx="171.7" cy="77.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.75 · 17분</title></circle>
+<circle cx="171.7" cy="66.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.75 · 13분</title></circle>
+<circle cx="175.1" cy="206.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2012.83 · 63분</title></circle>
+<circle cx="181.8" cy="94.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.00 · 23분</title></circle>
+<circle cx="185.2" cy="102.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.08 · 26분</title></circle>
+<circle cx="185.2" cy="279.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.08 · 89분</title></circle>
+<circle cx="188.6" cy="298.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.17 · 96분</title></circle>
+<circle cx="192.0" cy="200.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.25 · 61분</title></circle>
+<circle cx="192.0" cy="256.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.25 · 81분</title></circle>
+<circle cx="195.4" cy="80.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.33 · 18분</title></circle>
+<circle cx="205.5" cy="158.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.58 · 46분</title></circle>
+<circle cx="215.7" cy="55.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.83 · 9분</title></circle>
+<circle cx="215.7" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.83 · 16분</title></circle>
+<circle cx="215.7" cy="184.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.83 · 55분</title></circle>
+<circle cx="215.7" cy="130.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.83 · 36분</title></circle>
+<circle cx="215.7" cy="242.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.83 · 76분</title></circle>
+<circle cx="219.0" cy="80.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2013.92 · 18분</title></circle>
+<circle cx="225.8" cy="203.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.08 · 62분</title></circle>
+<circle cx="229.2" cy="184.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.17 · 55분</title></circle>
+<circle cx="229.2" cy="254.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.17 · 80분</title></circle>
+<circle cx="236.0" cy="178.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.33 · 53분</title></circle>
+<circle cx="239.3" cy="170.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.42 · 50분</title></circle>
+<circle cx="246.1" cy="259.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.58 · 82분</title></circle>
+<circle cx="246.1" cy="150.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.58 · 43분</title></circle>
+<circle cx="246.1" cy="35.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.58 · 2분</title></circle>
+<circle cx="249.5" cy="234.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.67 · 73분</title></circle>
+<circle cx="249.5" cy="122.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.67 · 33분</title></circle>
+<circle cx="252.9" cy="125.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.75 · 34분</title></circle>
+<circle cx="252.9" cy="41.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.75 · 4분</title></circle>
+<circle cx="252.9" cy="55.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.75 · 9분</title></circle>
+<circle cx="256.3" cy="220.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.83 · 68분</title></circle>
+<circle cx="256.3" cy="234.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.83 · 73분</title></circle>
+<circle cx="256.3" cy="195.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2014.83 · 59분</title></circle>
+<circle cx="263.0" cy="321.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.00 · 104분</title></circle>
+<circle cx="263.0" cy="363.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.00 · 119분</title></circle>
+<circle cx="263.0" cy="284.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.00 · 91분</title></circle>
+<circle cx="266.4" cy="189.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.08 · 57분</title></circle>
+<circle cx="266.4" cy="203.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.08 · 62분</title></circle>
+<circle cx="266.4" cy="217.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.08 · 67분</title></circle>
+<circle cx="269.8" cy="265.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.17 · 84분</title></circle>
+<circle cx="269.8" cy="290.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.17 · 93분</title></circle>
+<circle cx="273.2" cy="72.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.25 · 15분</title></circle>
+<circle cx="279.9" cy="220.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.42 · 68분</title></circle>
+<circle cx="290.1" cy="63.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.67 · 12분</title></circle>
+<circle cx="290.1" cy="237.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.67 · 74분</title></circle>
+<circle cx="290.1" cy="279.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.67 · 89분</title></circle>
+<circle cx="290.1" cy="108.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.67 · 28분</title></circle>
+<circle cx="290.1" cy="114.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.67 · 30분</title></circle>
+<circle cx="290.1" cy="220.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.67 · 68분</title></circle>
+<circle cx="296.9" cy="128.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.83 · 35분</title></circle>
+<circle cx="296.9" cy="217.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.83 · 67분</title></circle>
+<circle cx="300.3" cy="279.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2015.92 · 89분</title></circle>
+<circle cx="303.6" cy="139.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.00 · 39분</title></circle>
+<circle cx="310.4" cy="234.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.17 · 73분</title></circle>
+<circle cx="317.2" cy="153.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.33 · 44분</title></circle>
+<circle cx="317.2" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.33 · 16분</title></circle>
+<circle cx="330.7" cy="144.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.67 · 41분</title></circle>
+<circle cx="330.7" cy="186.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.67 · 56분</title></circle>
+<circle cx="330.7" cy="49.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.67 · 7분</title></circle>
+<circle cx="330.7" cy="94.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.67 · 23분</title></circle>
+<circle cx="330.7" cy="228.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.67 · 71분</title></circle>
+<circle cx="334.1" cy="192.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.75 · 58분</title></circle>
+<circle cx="340.9" cy="158.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.92 · 46분</title></circle>
+<circle cx="340.9" cy="268.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2016.92 · 85분</title></circle>
+<circle cx="344.2" cy="254.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.00 · 80분</title></circle>
+<circle cx="344.2" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.00 · 77분</title></circle>
+<circle cx="344.2" cy="198.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.00 · 60분</title></circle>
+<circle cx="344.2" cy="301.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.00 · 97분</title></circle>
+<circle cx="351.0" cy="144.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.17 · 41분</title></circle>
+<circle cx="351.0" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.17 · 54분</title></circle>
+<circle cx="351.0" cy="287.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.17 · 92분</title></circle>
+<circle cx="354.4" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.25 · 77분</title></circle>
+<circle cx="354.4" cy="284.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.25 · 91분</title></circle>
+<circle cx="354.4" cy="153.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.25 · 44분</title></circle>
+<circle cx="354.4" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.25 · 54분</title></circle>
+<circle cx="354.4" cy="83.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.25 · 19분</title></circle>
+<circle cx="357.8" cy="130.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.33 · 36분</title></circle>
+<circle cx="357.8" cy="228.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.33 · 71분</title></circle>
+<circle cx="371.3" cy="41.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.67 · 4분</title></circle>
+<circle cx="374.7" cy="214.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.75 · 66분</title></circle>
+<circle cx="374.7" cy="63.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.75 · 12분</title></circle>
+<circle cx="378.1" cy="209.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.83 · 64분</title></circle>
+<circle cx="378.1" cy="60.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.83 · 11분</title></circle>
+<circle cx="378.1" cy="200.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.83 · 61분</title></circle>
+<circle cx="378.1" cy="242.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.83 · 76분</title></circle>
+<circle cx="381.5" cy="100.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.92 · 25분</title></circle>
+<circle cx="381.5" cy="133.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.92 · 37분</title></circle>
+<circle cx="381.5" cy="178.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.92 · 53분</title></circle>
+<circle cx="381.5" cy="273.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.92 · 87분</title></circle>
+<circle cx="381.5" cy="172.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2017.92 · 51분</title></circle>
+<circle cx="384.8" cy="265.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.00 · 84분</title></circle>
+<circle cx="384.8" cy="102.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.00 · 26분</title></circle>
+<circle cx="388.2" cy="94.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.08 · 23분</title></circle>
+<circle cx="388.2" cy="212.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.08 · 65분</title></circle>
+<circle cx="391.6" cy="105.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.17 · 27분</title></circle>
+<circle cx="391.6" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.17 · 54분</title></circle>
+<circle cx="391.6" cy="139.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.17 · 39분</title></circle>
+<circle cx="391.6" cy="203.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.17 · 62분</title></circle>
+<circle cx="391.6" cy="273.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.17 · 87분</title></circle>
+<circle cx="398.4" cy="198.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.33 · 60분</title></circle>
+<circle cx="415.3" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.75 · 16분</title></circle>
+<circle cx="415.3" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.75 · 54분</title></circle>
+<circle cx="418.7" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.83 · 54분</title></circle>
+<circle cx="422.1" cy="184.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.92 · 55분</title></circle>
+<circle cx="422.1" cy="158.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.92 · 46분</title></circle>
+<circle cx="422.1" cy="86.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.92 · 20분</title></circle>
+<circle cx="422.1" cy="105.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.92 · 27분</title></circle>
+<circle cx="422.1" cy="200.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.92 · 61분</title></circle>
+<circle cx="422.1" cy="94.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.92 · 23분</title></circle>
+<circle cx="422.1" cy="226.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2018.92 · 70분</title></circle>
+<circle cx="425.5" cy="102.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.00 · 26분</title></circle>
+<circle cx="425.5" cy="189.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.00 · 57분</title></circle>
+<circle cx="425.5" cy="254.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.00 · 80분</title></circle>
+<circle cx="428.8" cy="262.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.08 · 83분</title></circle>
+<circle cx="428.8" cy="284.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.08 · 91분</title></circle>
+<circle cx="428.8" cy="161.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.08 · 47분</title></circle>
+<circle cx="432.2" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.17 · 16분</title></circle>
+<circle cx="435.6" cy="184.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.25 · 55분</title></circle>
+<circle cx="435.6" cy="248.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.25 · 78분</title></circle>
+<circle cx="435.6" cy="49.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.25 · 7분</title></circle>
+<circle cx="435.6" cy="58.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.25 · 10분</title></circle>
+<circle cx="452.5" cy="58.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.67 · 10분</title></circle>
+<circle cx="452.5" cy="94.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.67 · 23분</title></circle>
+<circle cx="455.9" cy="63.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.75 · 12분</title></circle>
+<circle cx="455.9" cy="60.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.75 · 11분</title></circle>
+<circle cx="455.9" cy="170.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.75 · 50분</title></circle>
+<circle cx="455.9" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.75 · 16분</title></circle>
+<circle cx="455.9" cy="153.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.75 · 44분</title></circle>
+<circle cx="459.3" cy="189.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.83 · 57분</title></circle>
+<circle cx="459.3" cy="200.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.83 · 61분</title></circle>
+<circle cx="459.3" cy="192.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.83 · 58분</title></circle>
+<circle cx="459.3" cy="130.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.83 · 36분</title></circle>
+<circle cx="462.7" cy="119.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2019.92 · 32분</title></circle>
+<circle cx="466.1" cy="251.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.00 · 79분</title></circle>
+<circle cx="466.1" cy="192.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.00 · 58분</title></circle>
+<circle cx="469.4" cy="228.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.08 · 71분</title></circle>
+<circle cx="469.4" cy="273.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.08 · 87분</title></circle>
+<circle cx="469.4" cy="161.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.08 · 47분</title></circle>
+<circle cx="469.4" cy="293.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.08 · 94분</title></circle>
+<circle cx="486.4" cy="83.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.50 · 19분</title></circle>
+<circle cx="486.4" cy="105.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.50 · 27분</title></circle>
+<circle cx="493.1" cy="161.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.67 · 47분</title></circle>
+<circle cx="493.1" cy="161.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.67 · 47분</title></circle>
+<circle cx="493.1" cy="209.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.67 · 64분</title></circle>
+<circle cx="493.1" cy="234.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.67 · 73분</title></circle>
+<circle cx="493.1" cy="226.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.67 · 70분</title></circle>
+<circle cx="496.5" cy="49.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.75 · 7분</title></circle>
+<circle cx="496.5" cy="133.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.75 · 37분</title></circle>
+<circle cx="496.5" cy="32.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.75 · 1분</title></circle>
+<circle cx="496.5" cy="265.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.75 · 84분</title></circle>
+<circle cx="496.5" cy="242.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.75 · 76분</title></circle>
+<circle cx="499.9" cy="44.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.83 · 5분</title></circle>
+<circle cx="503.3" cy="186.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.92 · 56분</title></circle>
+<circle cx="503.3" cy="66.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.92 · 13분</title></circle>
+<circle cx="503.3" cy="122.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2020.92 · 33분</title></circle>
+<circle cx="506.7" cy="150.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.00 · 43분</title></circle>
+<circle cx="506.7" cy="226.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.00 · 70분</title></circle>
+<circle cx="510.1" cy="192.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.08 · 58분</title></circle>
+<circle cx="510.1" cy="66.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.08 · 13분</title></circle>
+<circle cx="516.8" cy="142.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.25 · 40분</title></circle>
+<circle cx="516.8" cy="282.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.25 · 90분</title></circle>
+<circle cx="520.2" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.33 · 77분</title></circle>
+<circle cx="520.2" cy="100.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.33 · 25분</title></circle>
+<circle cx="523.6" cy="214.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.42 · 66분</title></circle>
+<circle cx="530.4" cy="184.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.58 · 55분</title></circle>
+<circle cx="530.4" cy="147.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.58 · 42분</title></circle>
+<circle cx="533.7" cy="251.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.67 · 79분</title></circle>
+<circle cx="537.1" cy="279.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.75 · 89분</title></circle>
+<circle cx="537.1" cy="164.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.75 · 48분</title></circle>
+<circle cx="537.1" cy="167.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.75 · 49분</title></circle>
+<circle cx="540.5" cy="72.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.83 · 15분</title></circle>
+<circle cx="540.5" cy="237.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.83 · 74분</title></circle>
+<circle cx="543.9" cy="212.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.92 · 65분</title></circle>
+<circle cx="543.9" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.92 · 77분</title></circle>
+<circle cx="543.9" cy="237.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.92 · 74분</title></circle>
+<circle cx="543.9" cy="237.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2021.92 · 74분</title></circle>
+<circle cx="550.7" cy="226.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.08 · 70분</title></circle>
+<circle cx="550.7" cy="268.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.08 · 85분</title></circle>
+<circle cx="554.0" cy="77.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.17 · 17분</title></circle>
+<circle cx="554.0" cy="97.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.17 · 24분</title></circle>
+<circle cx="554.0" cy="276.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.17 · 88분</title></circle>
+<circle cx="554.0" cy="161.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.17 · 47분</title></circle>
+<circle cx="557.4" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.25 · 54분</title></circle>
+<circle cx="557.4" cy="38.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.25 · 3분</title></circle>
+<circle cx="557.4" cy="214.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.25 · 66분</title></circle>
+<circle cx="557.4" cy="228.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.25 · 71분</title></circle>
+<circle cx="560.8" cy="198.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.33 · 60분</title></circle>
+<circle cx="560.8" cy="251.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.33 · 79분</title></circle>
+<circle cx="560.8" cy="186.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.33 · 56분</title></circle>
+<circle cx="560.8" cy="161.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.33 · 47분</title></circle>
+<circle cx="560.8" cy="226.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.33 · 70분</title></circle>
+<circle cx="560.8" cy="240.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.33 · 75분</title></circle>
+<circle cx="564.2" cy="284.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.42 · 91분</title></circle>
+<circle cx="564.2" cy="214.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.42 · 66분</title></circle>
+<circle cx="574.3" cy="234.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.67 · 73분</title></circle>
+<circle cx="574.3" cy="265.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.67 · 84분</title></circle>
+<circle cx="574.3" cy="270.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.67 · 86분</title></circle>
+<circle cx="574.3" cy="270.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.67 · 86분</title></circle>
+<circle cx="574.3" cy="128.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.67 · 35분</title></circle>
+<circle cx="577.7" cy="86.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.75 · 20분</title></circle>
+<circle cx="577.7" cy="130.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2022.75 · 36분</title></circle>
+<circle cx="587.9" cy="231.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.00 · 72분</title></circle>
+<circle cx="587.9" cy="170.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.00 · 50분</title></circle>
+<circle cx="587.9" cy="223.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.00 · 69분</title></circle>
+<circle cx="591.3" cy="231.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.08 · 72분</title></circle>
+<circle cx="594.6" cy="203.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.17 · 62분</title></circle>
+<circle cx="594.6" cy="58.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.17 · 10분</title></circle>
+<circle cx="594.6" cy="161.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.17 · 47분</title></circle>
+<circle cx="598.0" cy="58.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.25 · 10분</title></circle>
+<circle cx="598.0" cy="69.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.25 · 14분</title></circle>
+<circle cx="598.0" cy="251.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.25 · 79분</title></circle>
+<circle cx="598.0" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.25 · 77분</title></circle>
+<circle cx="614.9" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.67 · 16분</title></circle>
+<circle cx="614.9" cy="206.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.67 · 63분</title></circle>
+<circle cx="614.9" cy="214.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.67 · 66분</title></circle>
+<circle cx="614.9" cy="147.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.67 · 42분</title></circle>
+<circle cx="614.9" cy="184.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.67 · 55분</title></circle>
+<circle cx="614.9" cy="130.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.67 · 36분</title></circle>
+<circle cx="618.3" cy="200.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.75 · 61분</title></circle>
+<circle cx="618.3" cy="130.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.75 · 36분</title></circle>
+<circle cx="618.3" cy="214.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.75 · 66분</title></circle>
+<circle cx="621.7" cy="206.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.83 · 63분</title></circle>
+<circle cx="621.7" cy="60.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.83 · 11분</title></circle>
+<circle cx="621.7" cy="156.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.83 · 45분</title></circle>
+<circle cx="625.1" cy="46.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.92 · 6분</title></circle>
+<circle cx="625.1" cy="268.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.92 · 85분</title></circle>
+<circle cx="625.1" cy="80.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.92 · 18분</title></circle>
+<circle cx="625.1" cy="228.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.92 · 71분</title></circle>
+<circle cx="628.5" cy="55.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.00 · 9분</title></circle>
+<circle cx="628.5" cy="293.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.00 · 94분</title></circle>
+<circle cx="631.9" cy="321.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.08 · 104분</title></circle>
+<circle cx="635.3" cy="276.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.17 · 88분</title></circle>
+<circle cx="635.3" cy="284.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.17 · 91분</title></circle>
+<circle cx="635.3" cy="147.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.17 · 42분</title></circle>
+<circle cx="635.3" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.17 · 54분</title></circle>
+<circle cx="635.3" cy="270.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.17 · 86분</title></circle>
+<circle cx="638.6" cy="273.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.25 · 87분</title></circle>
+<circle cx="642.0" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.33 · 77분</title></circle>
+<circle cx="645.4" cy="178.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.42 · 53분</title></circle>
+<circle cx="645.4" cy="186.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.42 · 56분</title></circle>
+<circle cx="652.2" cy="100.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.58 · 25분</title></circle>
+<circle cx="652.2" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.58 · 77분</title></circle>
+<circle cx="655.6" cy="259.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.67 · 82분</title></circle>
+<circle cx="658.9" cy="198.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.75 · 60분</title></circle>
+<circle cx="662.3" cy="83.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.83 · 19분</title></circle>
+<circle cx="662.3" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.83 · 16분</title></circle>
+<circle cx="662.3" cy="44.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.83 · 5분</title></circle>
+<circle cx="665.7" cy="298.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.92 · 96분</title></circle>
+<circle cx="665.7" cy="63.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.92 · 12분</title></circle>
+<circle cx="665.7" cy="276.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.92 · 88분</title></circle>
+<circle cx="669.1" cy="100.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.00 · 25분</title></circle>
+<circle cx="669.1" cy="91.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.00 · 22분</title></circle>
+<circle cx="669.1" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.00 · 77분</title></circle>
+<circle cx="675.9" cy="265.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.17 · 84분</title></circle>
+<circle cx="669.1" cy="100.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.00 · 25분</title></circle>
+<circle cx="669.1" cy="91.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.00 · 22분</title></circle>
+<circle cx="669.1" cy="245.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.00 · 77분</title></circle>
+<circle cx="675.9" cy="265.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.17 · 84분</title></circle>
+<circle cx="692.8" cy="46.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.58 · 6분</title></circle>
+<circle cx="696.2" cy="80.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.67 · 18분</title></circle>
+<circle cx="696.2" cy="212.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.67 · 65분</title></circle>
+<circle cx="696.2" cy="32.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.67 · 1분</title></circle>
+<circle cx="696.2" cy="38.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.67 · 3분</title></circle>
+<circle cx="696.2" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.67 · 16분</title></circle>
+<circle cx="696.2" cy="259.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.67 · 82분</title></circle>
+<circle cx="699.5" cy="147.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.75 · 42분</title></circle>
+<circle cx="702.9" cy="88.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.83 · 21분</title></circle>
+<circle cx="702.9" cy="189.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.83 · 57분</title></circle>
+<circle cx="702.9" cy="198.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.83 · 60분</title></circle>
+<circle cx="702.9" cy="296.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2025.83 · 95분</title></circle>
+<circle cx="621.7" cy="206.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.83 · 63분</title></circle>
+<circle cx="621.7" cy="60.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.83 · 11분</title></circle>
+<circle cx="621.7" cy="156.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2023.83 · 45분</title></circle>
+<circle cx="635.3" cy="147.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.17 · 42분</title></circle>
+<circle cx="635.3" cy="181.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.17 · 54분</title></circle>
+<circle cx="645.4" cy="178.4" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.42 · 53분</title></circle>
+<circle cx="645.4" cy="186.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.42 · 56분</title></circle>
+<circle cx="655.6" cy="259.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.67 · 82분</title></circle>
+<circle cx="662.3" cy="83.2" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.83 · 19분</title></circle>
+<circle cx="662.3" cy="74.8" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2024.83 · 16분</title></circle>
+<circle cx="713.1" cy="91.6" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2026.08 · 22분</title></circle>
+<circle cx="719.8" cy="114.0" r="2.5" fill="#15803d" opacity="0.75"><title>골 · 2026.25 · 30분</title></circle>
+<circle cx="65" cy="42" r="3" fill="#15803d" opacity="0.75"/>
+<text x="72" y="42" font-size="11" fill="#1c1917" dy="3">골 (294)</text>
+<circle cx="132" cy="42" r="2" fill="#a16207" opacity="0.5"/>
+<text x="138" y="42" font-size="11" fill="#1c1917" dy="3">어시 (139)</text>
+</svg>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
@@ -293,6 +794,105 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
       <p>각 β_bin의 절대 HDI가 0을 포함하는 것은 mu_alpha와의 trade-off 때문입니다. <strong>중요한 건 빈 *간* 차이</strong>: 76+ 평균(+0.358) - 0-15 평균(-0.221) = <strong>+0.579 log scale 차이 = 1.78x hazard ratio</strong>. 이게 단조 증가 패턴이며 골 분포의 주요 신호.</p>
     </div>
 
+    
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 1 — 시간대별 HR + 95% HDI</h3>
+    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">posterior에서 직접 추출한 contrast (β_bin[i] - β_bin[0])의 HR. 점=평균, 가로선=95% HDI. 76+의 HDI [1.16, 2.76]가 1을 포함하지 않아 통계적으로 유의.</p>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:0.6rem; margin:1rem auto; max-width:820px;">
+<svg width="100%" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" style="max-width:720px; display:block; margin:0 auto;">
+<line x1="215.5725649244998" y1="30" x2="215.5725649244998" y2="270" stroke="#a8a29e" stroke-width="1.2" stroke-dasharray="4,3"/>
+<text x="215.5725649244998" y="26" font-size="10" fill="#a8a29e" text-anchor="middle">HR=1</text>
+<text x="215.5725649244998" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">1.0x</text>
+<text x="332.70727131992567" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">1.5x</text>
+<text x="449.84197771535156" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2.0x</text>
+<text x="566.9766841107776" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2.5x</text>
+<text x="385.0" y="304" font-size="11" fill="#57534e" text-anchor="middle">Hazard Ratio (vs 0-15분)</text>
+<line x1="215.6" y1="50.0" x2="215.6" y2="50.0" stroke="#a8a29e" stroke-width="3" opacity="0.6"/>
+<circle cx="215.6" cy="50.0" r="5" fill="#a8a29e"><title>0-15: HR mean=1.000 HDI=[1.000, 1.000]</title></circle>
+<text x="100" y="50.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">0-15</text>
+<text x="223.6" y="50.0" font-size="10" fill="#57534e" dy="3" font-family="monospace">1.00x</text>
+<line x1="174.9" y1="90.0" x2="458.2" y2="90.0" stroke="#78716c" stroke-width="3" opacity="0.6"/>
+<circle cx="284.7" cy="90.0" r="5" fill="#78716c"><title>16-30: HR mean=1.295 HDI=[0.826, 2.036]</title></circle>
+<text x="100" y="90.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">16-30</text>
+<text x="466.2" y="90.0" font-size="10" fill="#57534e" dy="3" font-family="monospace">1.30x</text>
+<line x1="116.8" y1="130.0" x2="341.3" y2="130.0" stroke="#57534e" stroke-width="3" opacity="0.6"/>
+<circle cx="202.0" cy="130.0" r="5" fill="#57534e"><title>31-45: HR mean=0.942 HDI=[0.578, 1.536]</title></circle>
+<text x="100" y="130.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">31-45</text>
+<text x="349.3" y="130.0" font-size="10" fill="#57534e" dy="3" font-family="monospace">0.94x</text>
+<line x1="163.7" y1="170.0" x2="421.5" y2="170.0" stroke="#a16207" stroke-width="3" opacity="0.6"/>
+<circle cx="263.2" cy="170.0" r="5" fill="#a16207"><title>46-60: HR mean=1.203 HDI=[0.779, 1.879]</title></circle>
+<text x="100" y="170.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">46-60</text>
+<text x="429.5" y="170.0" font-size="10" fill="#57534e" dy="3" font-family="monospace">1.20x</text>
+<line x1="204.8" y1="210.0" x2="523.6" y2="210.0" stroke="#15803d" stroke-width="3" opacity="0.6"/>
+<circle cx="327.1" cy="210.0" r="5" fill="#15803d"><title>61-75: HR mean=1.476 HDI=[0.954, 2.315]</title></circle>
+<text x="100" y="210.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">61-75</text>
+<text x="531.6" y="210.0" font-size="10" fill="#57534e" dy="3" font-family="monospace">1.48x</text>
+<line x1="252.6" y1="250.0" x2="627.7" y2="250.0" stroke="#b91c1c" stroke-width="3" opacity="0.6"/>
+<circle cx="399.2" cy="250.0" r="5" fill="#b91c1c"><title>76+: HR mean=1.784 HDI=[1.158, 2.759]</title></circle>
+<text x="100" y="250.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">76+</text>
+<text x="635.7" y="250.0" font-size="10" fill="#57534e" dy="3" font-family="monospace">1.78x</text>
+</svg>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 2 — β_bin posterior density</h3>
+    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">6 시간대의 posterior 분포 overlap. 각 곡선은 KDE. 76+(빨강) 분포가 오른쪽에 가장 많이 위치.</p>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:0.6rem; margin:1rem auto; max-width:820px;">
+<svg width="100%" viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" style="max-width:760px; display:block; margin:0 auto;">
+<line x1="350.5846011838078" y1="30" x2="350.5846011838078" y2="270" stroke="#a8a29e" stroke-width="1.2" stroke-dasharray="4,3"/>
+<text x="350.5846011838078" y="26" font-size="10" fill="#a8a29e" text-anchor="middle">β=0</text>
+<text x="75.72282069612552" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">-1.0</text>
+<text x="213.1537109399667" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">-0.5</text>
+<text x="350.5846011838078" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">+0.0</text>
+<text x="488.015491427649" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">+0.5</text>
+<text x="625.4463816714901" y="285" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">+1.0</text>
+<text x="355.0" y="304" font-size="11" fill="#57534e" text-anchor="middle">β_bin (log scale 시간대 효과)</text>
+<path d="M 78.5,268.4 L 83.8,268.0 L 89.1,267.3 L 94.4,266.4 L 99.7,265.2 L 105.0,263.9 L 110.3,262.5 L 115.5,260.8 L 120.8,258.9 L 126.1,256.7 L 131.4,254.3 L 136.7,251.7 L 142.0,248.8 L 147.3,245.5 L 152.5,241.6 L 157.8,237.0 L 163.1,231.5 L 168.4,224.8 L 173.7,217.0 L 179.0,208.3 L 184.3,199.3 L 189.5,190.7 L 194.8,182.4 L 200.1,174.2 L 205.4,165.7 L 210.7,156.3 L 216.0,146.0 L 221.3,135.3 L 226.5,124.8 L 231.8,115.0 L 237.1,106.0 L 242.4,97.9 L 247.7,90.7 L 253.0,84.4 L 258.3,78.7 L 263.5,73.0 L 268.8,67.3 L 274.1,62.1 L 279.4,58.2 L 284.7,56.5 L 290.0,57.6 L 295.3,61.4 L 300.5,67.0 L 305.8,73.5 L 311.1,80.0 L 316.4,86.2 L 321.7,92.0 L 327.0,97.4 L 332.3,102.7 L 337.5,108.0 L 342.8,114.2 L 348.1,121.7 L 353.4,130.5 L 358.7,140.0 L 364.0,149.4 L 369.2,158.2 L 374.5,166.2 L 379.8,173.8 L 385.1,181.2 L 390.4,188.5 L 395.7,196.0 L 401.0,203.6 L 406.2,211.3 L 411.5,219.2 L 416.8,226.8 L 422.1,233.7 L 427.4,239.4 L 432.7,243.9 L 438.0,247.4 L 443.2,250.4 L 448.5,253.2 L 453.8,256.0 L 459.1,258.8 L 464.4,261.4 L 469.7,263.5 L 475.0,265.2 L 480.2,266.2 L 485.5,266.9 L 490.8,267.3 L 496.1,267.7" fill="none" stroke="#a8a29e" stroke-width="2" opacity="0.85"><title>0-15: mean=-0.221 HDI=[-0.707, 0.261]</title></path>
+<path d="M 149.4,268.1 L 154.7,267.5 L 160.0,266.8 L 165.3,266.0 L 170.6,265.3 L 175.9,264.4 L 181.2,263.5 L 186.4,262.2 L 191.7,260.6 L 197.0,258.7 L 202.3,256.6 L 207.6,254.3 L 212.9,251.8 L 218.2,248.6 L 223.5,244.7 L 228.8,239.7 L 234.0,233.6 L 239.3,226.5 L 244.6,218.7 L 249.9,210.7 L 255.2,202.8 L 260.5,195.0 L 265.8,187.1 L 271.1,178.6 L 276.3,168.9 L 281.6,158.2 L 286.9,147.0 L 292.2,136.2 L 297.5,126.2 L 302.8,116.9 L 308.1,107.9 L 313.4,99.1 L 318.6,90.7 L 323.9,83.1 L 329.2,76.3 L 334.5,70.2 L 339.8,64.8 L 345.1,60.3 L 350.4,56.9 L 355.7,54.8 L 361.0,53.9 L 366.2,54.2 L 371.5,55.6 L 376.8,58.2 L 382.1,62.2 L 387.4,68.0 L 392.7,75.5 L 398.0,84.6 L 403.3,94.8 L 408.5,105.4 L 413.8,115.6 L 419.1,124.7 L 424.4,132.9 L 429.7,140.6 L 435.0,148.8 L 440.3,157.7 L 445.6,167.4 L 450.8,177.6 L 456.1,187.9 L 461.4,197.6 L 466.7,206.3 L 472.0,213.9 L 477.3,220.5 L 482.6,226.1 L 487.9,230.9 L 493.1,235.0 L 498.4,238.8 L 503.7,242.5 L 509.0,246.3 L 514.3,250.0 L 519.6,253.6 L 524.9,256.7 L 530.2,259.3 L 535.5,261.5 L 540.7,263.4 L 546.0,264.9 L 551.3,266.1 L 556.6,266.9 L 561.9,267.5 L 567.2,267.9" fill="none" stroke="#78716c" stroke-width="2" opacity="0.85"><title>16-30: mean=0.038 HDI=[-0.433, 0.529]</title></path>
+<path d="M 60.0,268.0 L 65.5,267.6 L 70.9,267.0 L 76.4,266.2 L 81.8,265.0 L 87.3,263.6 L 92.7,261.9 L 98.2,260.2 L 103.6,258.4 L 109.1,256.4 L 114.5,254.0 L 120.0,251.2 L 125.5,247.8 L 130.9,243.9 L 136.4,239.3 L 141.8,233.8 L 147.3,227.4 L 152.7,220.4 L 158.2,213.2 L 163.6,206.0 L 169.1,198.6 L 174.6,190.7 L 180.0,181.9 L 185.5,172.4 L 190.9,162.4 L 196.4,152.0 L 201.8,141.3 L 207.3,130.6 L 212.7,120.4 L 218.2,111.3 L 223.6,104.1 L 229.1,99.0 L 234.6,95.2 L 240.0,91.9 L 245.5,87.9 L 250.9,82.9 L 256.4,77.1 L 261.8,70.9 L 267.3,65.4 L 272.7,61.7 L 278.2,60.4 L 283.7,61.4 L 289.1,64.0 L 294.6,67.8 L 300.0,72.5 L 305.5,78.0 L 310.9,83.9 L 316.4,89.9 L 321.8,96.4 L 327.3,104.2 L 332.7,114.3 L 338.2,126.8 L 343.7,140.4 L 349.1,153.7 L 354.6,165.7 L 360.0,176.2 L 365.5,185.6 L 370.9,194.2 L 376.4,201.9 L 381.8,208.6 L 387.3,214.3 L 392.7,219.4 L 398.2,224.5 L 403.7,229.8 L 409.1,235.2 L 414.6,240.2 L 420.0,244.5 L 425.5,248.3 L 430.9,252.0 L 436.4,255.7 L 441.8,258.9 L 447.3,261.4 L 452.8,263.1 L 458.2,264.2 L 463.7,265.0 L 469.1,265.6 L 474.6,266.3 L 480.0,267.0 L 485.5,267.6 L 490.9,268.1" fill="none" stroke="#57534e" stroke-width="2" opacity="0.85"><title>31-45: mean=-0.280 HDI=[-0.776, 0.213]</title></path>
+<path d="M 128.6,268.6 L 133.9,268.2 L 139.1,267.4 L 144.4,266.3 L 149.6,264.9 L 154.9,263.2 L 160.2,261.4 L 165.4,259.8 L 170.7,258.3 L 175.9,256.8 L 181.2,255.3 L 186.4,253.7 L 191.7,252.0 L 197.0,249.8 L 202.2,246.6 L 207.5,241.9 L 212.7,235.7 L 218.0,228.5 L 223.2,220.8 L 228.5,213.2 L 233.8,205.6 L 239.0,197.9 L 244.3,189.7 L 249.5,180.9 L 254.8,171.6 L 260.0,162.0 L 265.3,152.0 L 270.6,141.6 L 275.8,130.5 L 281.1,119.2 L 286.3,108.1 L 291.6,97.9 L 296.8,88.8 L 302.1,80.5 L 307.4,73.3 L 312.6,67.4 L 317.9,63.2 L 323.1,60.6 L 328.4,58.9 L 333.6,57.6 L 338.9,56.5 L 344.2,55.7 L 349.4,56.3 L 354.7,58.6 L 359.9,63.0 L 365.2,69.2 L 370.4,76.9 L 375.7,85.6 L 381.0,94.9 L 386.2,104.6 L 391.5,114.2 L 396.7,123.6 L 402.0,132.8 L 407.2,141.9 L 412.5,150.9 L 417.8,159.8 L 423.0,168.2 L 428.3,175.7 L 433.5,182.2 L 438.8,188.3 L 444.0,194.9 L 449.3,202.4 L 454.6,210.7 L 459.8,218.8 L 465.1,225.8 L 470.3,231.4 L 475.6,235.9 L 480.8,240.0 L 486.1,244.0 L 491.4,247.8 L 496.6,251.5 L 501.9,254.9 L 507.1,257.9 L 512.4,260.6 L 517.6,262.7 L 522.9,264.4 L 528.2,265.7 L 533.4,266.7 L 538.7,267.4 L 543.9,268.0" fill="none" stroke="#a16207" stroke-width="2" opacity="0.85"><title>46-60: mean=-0.035 HDI=[-0.507, 0.451]</title></path>
+<path d="M 194.3,268.0 L 199.5,267.4 L 204.7,266.7 L 209.8,266.0 L 215.0,265.2 L 220.2,264.2 L 225.4,262.9 L 230.6,261.1 L 235.8,258.7 L 240.9,255.9 L 246.1,253.0 L 251.3,249.9 L 256.5,246.5 L 261.7,242.6 L 266.9,237.7 L 272.0,231.7 L 277.2,224.7 L 282.4,216.8 L 287.6,208.5 L 292.8,200.0 L 298.0,191.6 L 303.1,183.4 L 308.3,175.2 L 313.5,167.0 L 318.7,158.6 L 323.9,149.6 L 329.1,139.8 L 334.2,129.2 L 339.4,118.2 L 344.6,107.7 L 349.8,98.4 L 355.0,90.7 L 360.2,84.2 L 365.4,78.2 L 370.5,72.4 L 375.7,66.4 L 380.9,60.4 L 386.1,54.5 L 391.3,49.2 L 396.5,45.5 L 401.6,44.2 L 406.8,45.5 L 412.0,49.0 L 417.2,54.2 L 422.4,60.9 L 427.6,68.7 L 432.7,77.2 L 437.9,86.1 L 443.1,95.0 L 448.3,104.6 L 453.5,115.1 L 458.7,126.4 L 463.8,137.8 L 469.0,148.6 L 474.2,158.7 L 479.4,168.4 L 484.6,178.1 L 489.8,187.7 L 494.9,196.9 L 500.1,205.5 L 505.3,213.3 L 510.5,220.3 L 515.7,226.6 L 520.9,232.1 L 526.0,236.8 L 531.2,240.9 L 536.4,244.4 L 541.6,247.4 L 546.8,250.2 L 552.0,252.9 L 557.1,255.5 L 562.3,257.9 L 567.5,260.0 L 572.7,261.8 L 577.9,263.3 L 583.1,264.6 L 588.2,265.8 L 593.4,266.8 L 598.6,267.6 L 603.8,268.1" fill="none" stroke="#15803d" stroke-width="2" opacity="0.85"><title>61-75: mean=0.169 HDI=[-0.294, 0.647]</title></path>
+<path d="M 249.8,267.5 L 254.9,266.9 L 259.9,266.3 L 265.0,265.3 L 270.1,264.1 L 275.1,262.5 L 280.2,260.6 L 285.3,258.6 L 290.3,256.4 L 295.4,254.0 L 300.5,251.4 L 305.5,248.1 L 310.6,244.1 L 315.7,239.6 L 320.7,234.7 L 325.8,229.5 L 330.9,224.3 L 335.9,219.1 L 341.0,213.7 L 346.0,208.0 L 351.1,201.3 L 356.2,193.4 L 361.2,184.2 L 366.3,173.7 L 371.4,162.5 L 376.4,151.0 L 381.5,139.5 L 386.6,128.3 L 391.6,117.0 L 396.7,105.5 L 401.8,93.6 L 406.8,82.0 L 411.9,71.4 L 417.0,62.5 L 422.0,55.8 L 427.1,50.8 L 432.2,46.9 L 437.2,43.9 L 442.3,41.8 L 447.4,41.4 L 452.4,43.4 L 457.5,47.8 L 462.6,54.0 L 467.6,61.0 L 472.7,68.0 L 477.8,74.6 L 482.8,80.9 L 487.9,87.2 L 493.0,93.7 L 498.0,100.6 L 503.1,108.4 L 508.2,117.1 L 513.2,127.1 L 518.3,138.1 L 523.4,149.6 L 528.4,161.0 L 533.5,172.1 L 538.6,182.8 L 543.6,192.8 L 548.7,202.0 L 553.7,209.9 L 558.8,216.3 L 563.9,221.6 L 568.9,226.4 L 574.0,230.9 L 579.1,235.6 L 584.1,240.3 L 589.2,244.8 L 594.3,248.9 L 599.3,252.6 L 604.4,255.6 L 609.5,258.2 L 614.5,260.3 L 619.6,262.2 L 624.7,263.9 L 629.7,265.5 L 634.8,266.8 L 639.9,267.7 L 644.9,268.1 L 650.0,268.1" fill="none" stroke="#b91c1c" stroke-width="2" opacity="0.85"><title>76+: mean=0.358 HDI=[-0.112, 0.824]</title></path>
+<line x1="660" y1="42" x2="678" y2="42" stroke="#a8a29e" stroke-width="3"/>
+<text x="684" y="42" font-size="10" fill="#1c1917" dy="3" font-family="monospace">0-15</text>
+<line x1="660" y1="64" x2="678" y2="64" stroke="#78716c" stroke-width="3"/>
+<text x="684" y="64" font-size="10" fill="#1c1917" dy="3" font-family="monospace">16-30</text>
+<line x1="660" y1="86" x2="678" y2="86" stroke="#57534e" stroke-width="3"/>
+<text x="684" y="86" font-size="10" fill="#1c1917" dy="3" font-family="monospace">31-45</text>
+<line x1="660" y1="108" x2="678" y2="108" stroke="#a16207" stroke-width="3"/>
+<text x="684" y="108" font-size="10" fill="#1c1917" dy="3" font-family="monospace">46-60</text>
+<line x1="660" y1="130" x2="678" y2="130" stroke="#15803d" stroke-width="3"/>
+<text x="684" y="130" font-size="10" fill="#1c1917" dy="3" font-family="monospace">61-75</text>
+<line x1="660" y1="152" x2="678" y2="152" stroke="#b91c1c" stroke-width="3"/>
+<text x="684" y="152" font-size="10" fill="#1c1917" dy="3" font-family="monospace">76+</text>
+</svg>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 3 — Headline contrast (76+ vs 0-15)</h3>
+    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">두 시간대 차이의 직접 posterior 추출. <strong>HR mean = 1.78x, 95% HDI [1.16, 2.76]</strong>로 1보다 크게 떨어져 — <em>p_positive = 99.7%</em>로 매우 강한 통계적 증거.</p>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:0.6rem; margin:1rem auto; max-width:820px;">
+<svg width="100%" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" style="max-width:720px; display:block; margin:0 auto;">
+<line x1="79.23646496600713" y1="30" x2="79.23646496600713" y2="250" stroke="#a8a29e" stroke-width="1.2" stroke-dasharray="4,3"/>
+<text x="79.23646496600713" y="26" font-size="10" fill="#a8a29e" text-anchor="middle">HR=1 (효과 없음)</text>
+<text x="79.23646496600713" y="265" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">1.0x</text>
+<text x="202.27585231684913" y="265" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">1.5x</text>
+<text x="325.31523966769106" y="265" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2.0x</text>
+<text x="448.35462701853305" y="265" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">2.5x</text>
+<text x="571.3940143693751" y="265" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">3.0x</text>
+<text x="375.0" y="284" font-size="11" fill="#57534e" text-anchor="middle">Hazard Ratio posterior (76+ vs 0-15)</text>
+<path d="M 60.0,250 60.0,248.5 L 63.8,248.2 L 67.8,247.7 L 71.7,246.7 L 75.8,245.3 L 79.9,243.4 L 84.1,241.2 L 88.3,238.7 L 92.7,236.1 L 97.1,233.4 L 101.6,230.4 L 106.1,227.5 L 110.7,224.4 L 115.5,221.1 L 120.2,217.2 L 125.1,212.5 L 130.1,207.0 L 135.1,200.5 L 140.2,193.1 L 145.4,185.2 L 150.7,176.9 L 156.1,168.4 L 161.6,159.7 L 167.2,150.6 L 172.8,141.3 L 178.6,132.2 L 184.5,123.2 L 190.4,114.3 L 196.5,105.0 L 202.6,95.1 L 208.9,84.9 L 215.3,75.2 L 221.8,66.8 L 228.4,60.3 L 235.1,55.5 L 241.9,51.9 L 248.8,48.7 L 255.9,45.8 L 263.0,43.3 L 270.3,41.5 L 277.8,40.5 L 285.3,40.5 L 293.0,41.7 L 300.8,44.6 L 308.7,49.6 L 316.8,56.7 L 325.0,65.4 L 333.3,74.9 L 341.8,84.2 L 350.4,92.7 L 359.2,100.4 L 368.1,108.3 L 377.2,117.2 L 386.4,127.4 L 395.8,138.4 L 405.4,149.1 L 415.1,159.0 L 424.9,167.8 L 435.0,175.7 L 445.2,183.1 L 455.6,190.2 L 466.1,197.0 L 476.9,203.3 L 487.8,208.7 L 498.9,213.2 L 510.2,216.9 L 521.7,220.2 L 533.4,223.8 L 545.2,227.7 L 557.3,231.7 L 569.6,235.6 L 582.1,238.9 L 594.8,241.5 L 607.7,243.4 L 620.9,244.7 L 634.2,245.6 L 647.8,246.2 L 661.7,246.6 L 675.7,247.0 L 690.0,247.4 L 690.0,250 Z" fill="rgba(21,128,61,0.18)" stroke="none"/>
+<path d="M 60.0,248.5 L 63.8,248.2 L 67.8,247.7 L 71.7,246.7 L 75.8,245.3 L 79.9,243.4 L 84.1,241.2 L 88.3,238.7 L 92.7,236.1 L 97.1,233.4 L 101.6,230.4 L 106.1,227.5 L 110.7,224.4 L 115.5,221.1 L 120.2,217.2 L 125.1,212.5 L 130.1,207.0 L 135.1,200.5 L 140.2,193.1 L 145.4,185.2 L 150.7,176.9 L 156.1,168.4 L 161.6,159.7 L 167.2,150.6 L 172.8,141.3 L 178.6,132.2 L 184.5,123.2 L 190.4,114.3 L 196.5,105.0 L 202.6,95.1 L 208.9,84.9 L 215.3,75.2 L 221.8,66.8 L 228.4,60.3 L 235.1,55.5 L 241.9,51.9 L 248.8,48.7 L 255.9,45.8 L 263.0,43.3 L 270.3,41.5 L 277.8,40.5 L 285.3,40.5 L 293.0,41.7 L 300.8,44.6 L 308.7,49.6 L 316.8,56.7 L 325.0,65.4 L 333.3,74.9 L 341.8,84.2 L 350.4,92.7 L 359.2,100.4 L 368.1,108.3 L 377.2,117.2 L 386.4,127.4 L 395.8,138.4 L 405.4,149.1 L 415.1,159.0 L 424.9,167.8 L 435.0,175.7 L 445.2,183.1 L 455.6,190.2 L 466.1,197.0 L 476.9,203.3 L 487.8,208.7 L 498.9,213.2 L 510.2,216.9 L 521.7,220.2 L 533.4,223.8 L 545.2,227.7 L 557.3,231.7 L 569.6,235.6 L 582.1,238.9 L 594.8,241.5 L 607.7,243.4 L 620.9,244.7 L 634.2,245.6 L 647.8,246.2 L 661.7,246.6 L 675.7,247.0 L 690.0,247.4" fill="none" stroke="#15803d" stroke-width="2.5"/>
+<line x1="118.1" y1="250" x2="118.1" y2="30" stroke="#15803d" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+<line x1="512.1" y1="250" x2="512.1" y2="30" stroke="#15803d" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+<line x1="272.1" y1="250" x2="272.1" y2="60" stroke="#15803d" stroke-width="2"/>
+<text x="272.1" y="54" font-size="11" fill="#15803d" text-anchor="middle" font-weight="700">mean 1.78x</text>
+<text x="315.1" y="244" font-size="10" fill="#57534e" text-anchor="middle" font-style="italic">95% HDI [1.16, 2.76]</text>
+</svg>
+    </div>
+
+    <div class="viz-insight green" style="margin-top:1.5rem;">
+      <div class="viz-insight-label">핵심 contrast — 첫 통계적으로 유의한 효과</div>
+      <p>이전 분석에서 개별 β_bin HDI는 0을 포함했지만 <em>contrast posterior</em>를 직접 뽑으면 76+ vs 0-15가 0(즉 HR=1)을 95% HDI 안에 포함하지 않습니다. p(HR &gt; 1) = 99.7%. <strong>v3에서 처음으로 통계적으로 유의한 효과</strong>입니다.</p>
+    </div>
+
     <h3 style="font-size:1rem; margin: 2rem 0 0.6rem; font-weight:700;">왜 후반에 더 많을까 — 가능한 가설들</h3>
     <div class="card-grid">
       <div class="card">
@@ -310,6 +910,77 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
     </div>
 
     <p class="footnote" style="margin-top:1rem;">v3 모델은 *어느* 가설이 맞는지는 답하지 못합니다 — minute-level fitness, possession context 같은 추가 covariate 없이는. 하지만 *후반 hazard 증가가 통계적으로 견고한 패턴이라는 사실 자체는* 이 모델로 확인됩니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 4.5 — PPC -->
+<section id="ppc"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">4.5</div>
+    <div class="part-meta">
+      <div class="part-kicker">Posterior Predictive Check</div>
+      <div class="part-title">모델이 데이터를 잘 재현하는가</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>Bayesian 모델 진단의 표준 — 학습된 posterior에서 새 y를 sampling해 (y_rep) 실제 y와 비교. 구조적 misfit이 있으면 어느 시간대에서 예측이 빗나가는지 보여집니다.</p>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">실제 골 ◯ vs 모델 예측 ● + 95% HDI 막대</h3>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:0.6rem; margin:1rem auto; max-width:820px;">
+<svg width="100%" viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="max-width:720px; display:block; margin:0 auto;">
+<line x1="90.0" y1="30" x2="90.0" y2="230" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="90.0" y="245" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">0</text>
+<line x1="240.7963131579368" y1="30" x2="240.7963131579368" y2="230" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="240.7963131579368" y="245" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">20</text>
+<line x1="391.5926263158736" y1="30" x2="391.5926263158736" y2="230" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="391.5926263158736" y="245" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">40</text>
+<line x1="542.3889394738105" y1="30" x2="542.3889394738105" y2="230" stroke="#e7e5e4" stroke-width="0.6"/>
+<text x="542.3889394738105" y="245" font-size="10" fill="#a8a29e" text-anchor="middle" font-family="monospace">60</text>
+<text x="385.0" y="264" font-size="11" fill="#57534e" text-anchor="middle">시간대별 골 카운트 (실제 ◯ vs 예측 ●)</text>
+<line x1="210.6" y1="46.66666666666667" x2="429.3" y2="46.66666666666667" stroke="#a8a29e" stroke-width="6" opacity="0.25"/>
+<circle cx="312.8" cy="46.66666666666667" r="3" fill="#a8a29e" opacity="0.6"><title>0-15 예측 mean = 29.5</title></circle>
+<circle cx="308.7" cy="46.66666666666667" r="6" fill="white" stroke="#a8a29e" stroke-width="2.5"><title>0-15 실제 = 29</title></circle>
+<text x="80" y="46.66666666666667" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">0-15</text>
+<line x1="263.4" y1="80.0" x2="512.2" y2="80.0" stroke="#78716c" stroke-width="6" opacity="0.25"/>
+<circle cx="383.9" cy="80.0" r="3" fill="#78716c" opacity="0.6"><title>16-30 예측 mean = 39.0</title></circle>
+<circle cx="384.1" cy="80.0" r="6" fill="white" stroke="#78716c" stroke-width="2.5"><title>16-30 실제 = 39</title></circle>
+<text x="80" y="80.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">16-30</text>
+<line x1="214.2" y1="113.33333333333334" x2="433.3" y2="113.33333333333334" stroke="#57534e" stroke-width="6" opacity="0.25"/>
+<circle cx="304.3" cy="113.33333333333334" r="3" fill="#57534e" opacity="0.6"><title>31-45 예측 mean = 28.4</title></circle>
+<circle cx="293.6" cy="113.33333333333334" r="6" fill="white" stroke="#57534e" stroke-width="2.5"><title>31-45 실제 = 27</title></circle>
+<text x="80" y="113.33333333333334" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">31-45</text>
+<line x1="255.9" y1="146.66666666666669" x2="497.2" y2="146.66666666666669" stroke="#a16207" stroke-width="6" opacity="0.25"/>
+<circle cx="363.5" cy="146.66666666666669" r="3" fill="#a16207" opacity="0.6"><title>46-60 예측 mean = 36.3</title></circle>
+<circle cx="361.4" cy="146.66666666666669" r="6" fill="white" stroke="#a16207" stroke-width="2.5"><title>46-60 실제 = 36</title></circle>
+<text x="80" y="146.66666666666669" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">46-60</text>
+<line x1="308.7" y1="180.0" x2="561.4" y2="180.0" stroke="#15803d" stroke-width="6" opacity="0.25"/>
+<circle cx="424.8" cy="180.0" r="3" fill="#15803d" opacity="0.6"><title>61-75 예측 mean = 44.4</title></circle>
+<circle cx="429.3" cy="180.0" r="6" fill="white" stroke="#15803d" stroke-width="2.5"><title>61-75 실제 = 45</title></circle>
+<text x="80" y="180.0" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">61-75</text>
+<line x1="361.4" y1="213.33333333333334" x2="651.9" y2="213.33333333333334" stroke="#b91c1c" stroke-width="6" opacity="0.25"/>
+<circle cx="494.5" cy="213.33333333333334" r="3" fill="#b91c1c" opacity="0.6"><title>76+ 예측 mean = 53.6</title></circle>
+<circle cx="504.7" cy="213.33333333333334" r="6" fill="white" stroke="#b91c1c" stroke-width="2.5"><title>76+ 실제 = 55</title></circle>
+<text x="80" y="213.33333333333334" font-size="11" fill="#1c1917" text-anchor="end" dy="3" font-family="monospace">76+</text>
+</svg>
+    </div>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>시간대</th><th class="num" style="text-align:right;">실제 골</th><th class="num" style="text-align:right;">예측 mean</th><th>95% HDI</th><th>합치도</th></tr></thead>
+      <tbody>
+        <tr><td>0-15</td><td class="num" style="text-align:right;">29</td><td class="num" style="text-align:right;">29.5</td><td class="num">[16, 45]</td><td><span class="badge good">HDI 안</span></td></tr>
+        <tr><td>16-30</td><td class="num" style="text-align:right;">39</td><td class="num" style="text-align:right;">39.0</td><td class="num">[23, 56]</td><td><span class="badge good">HDI 안</span></td></tr>
+        <tr><td>31-45</td><td class="num" style="text-align:right;">27</td><td class="num" style="text-align:right;">28.4</td><td class="num">[16, 46]</td><td><span class="badge good">HDI 안</span></td></tr>
+        <tr><td>46-60</td><td class="num" style="text-align:right;">36</td><td class="num" style="text-align:right;">36.3</td><td class="num">[22, 54]</td><td><span class="badge good">HDI 안</span></td></tr>
+        <tr><td>61-75</td><td class="num" style="text-align:right;">45</td><td class="num" style="text-align:right;">44.4</td><td class="num">[29, 63]</td><td><span class="badge good">HDI 안</span></td></tr>
+        <tr><td>76+</td><td class="num" style="text-align:right;">55</td><td class="num" style="text-align:right;">53.6</td><td class="num">[36, 75]</td><td><span class="badge good">HDI 안</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="viz-insight green" style="margin-top:1.5rem;">
+      <div class="viz-insight-label">PPC 결과 — 모델 합치도 양호</div>
+      <p>모든 6 시간대에서 실제 골(흰 원)이 예측 95% HDI(연한 막대) 안에 위치합니다. 예측 평균(채운 점)도 실제와 거의 일치 — 가장 큰 차이도 1골 미만 (예: 31-45 빈에서 obs 27 vs pred 28.4). <strong>모델이 데이터의 구조적 패턴을 잘 재현</strong>하며, 시스템적 bias 없음.</p>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
@@ -442,6 +1113,91 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
         <div class="step-title">β_opp: 약한 상대일수록 약간의 양수 경향</div>
         <div class="step-desc">opponent_relative_strength가 양수면 상대가 평균보다 강함. mean +0.067은 약간의 양수 — 하지만 P(β &gt; 0) = 0.849로 방향성은 좀 강하지만 HDI가 0 포함. <strong>강팀 상대로 더 골이 들어간다는 약한 경향</strong>이지만 통계적으로 견고하지 않음. (이건 좀 의외 — 보통 약팀 상대로 골 더 많을 거라고 직관하지만 데이터는 그 반대 방향)</div>
       </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 6.5 — Interactive Predictor -->
+<section id="predictor"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">6.5</div>
+    <div class="part-meta">
+      <div class="part-kicker">Interactive Demo</div>
+      <div class="part-title">베이지안 예측기 — posterior로 직접 추론</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v2의 logistic regression 예측기보다 통계적으로 풍부한 demo. PyMC posterior의 mean + sd를 JSON에 임베드 후 브라우저에서 Poisson rate를 실시간 계산. 입력 변수에 따른 <strong>분당 예측 골 hazard λ</strong> + <strong>P(at least 1 goal in 15-min bin)</strong>을 출력합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">사용법</div>
+      <div class="qbox-text">slider/select로 입력 → 모든 6 시간대에 대한 λ 곡선 + P(goal) 막대가 즉시 갱신. 1.78x 후반 패턴이 어떻게 영향을 주는지 직접 확인.</div>
+    </div>
+
+    <div class="predictor-grid" style="margin-top:1.5rem;">
+      <div class="predictor-card">
+        <div class="predictor-title">변수 입력</div>
+        <div class="predictor-row">
+          <span class="predictor-label">Club</span>
+          <select id="v3-club" style="flex:1; padding:0.4rem; border:1px solid var(--border); border-radius:4px; background:var(--bg-card); color:var(--text-primary); font-family:inherit; font-size:0.82rem;">
+            <option value="0">Hamburger SV</option>
+            <option value="1">LAFC</option>
+            <option value="2">Leverkusen</option>
+            <option value="3" selected>Tottenham Hotspur</option>
+          </select>
+        </div>
+        <div class="predictor-row">
+          <span class="predictor-label">Venue</span>
+          <div class="toggle-group" id="v3-venue-group">
+            <button class="toggle-btn active" data-venue="0">Home</button>
+            <button class="toggle-btn" data-venue="1">Away</button>
+            <button class="toggle-btn" data-venue="2">Neutral</button>
+          </div>
+        </div>
+        <div class="predictor-row">
+          <span class="predictor-label">form5_meanres</span>
+          <input type="range" id="v3-form" min="-1" max="1" step="0.1" value="0.2">
+          <span class="predictor-value" id="v3-form-val">+0.2</span>
+        </div>
+        <div class="predictor-row">
+          <span class="predictor-label">opp_strength</span>
+          <input type="range" id="v3-opp" min="-0.5" max="0.5" step="0.05" value="0">
+          <span class="predictor-value" id="v3-opp-val">0.00</span>
+        </div>
+        <p class="footnote" style="margin-top:1rem;">모델: PyMC 계층 Poisson posterior. <em>v3 데모는 mean point estimate</em> 사용 (95% HDI 무시). 정밀 추론은 src/eval/v3_full_inference.py 참조.</p>
+      </div>
+
+      <div class="predictor-card">
+        <div class="predictor-title">예측 — 시간대별 P(at least 1 goal)</div>
+        <div id="v3-output" class="prob-output"></div>
+        <div class="sweep-chart">
+          <div class="sweep-title">시간대별 λ (15분 빈 안 골 기댓값)</div>
+          <svg id="v3-sweep" width="100%" viewBox="0 0 360 140" style="display:block;">
+            <line x1="40" y1="70" x2="350" y2="70" stroke="#d6d3d1" stroke-width="0.8" stroke-dasharray="3,3"/>
+            <text x="36" y="74" font-size="9" fill="#a8a29e" text-anchor="end" font-family="monospace">0.5</text>
+            <line x1="40" y1="20" x2="350" y2="20" stroke="#e7e5e4" stroke-width="0.6"/>
+            <text x="36" y="24" font-size="9" fill="#a8a29e" text-anchor="end" font-family="monospace">1.0</text>
+            <line x1="40" y1="120" x2="350" y2="120" stroke="#e7e5e4" stroke-width="0.6"/>
+            <text x="36" y="124" font-size="9" fill="#a8a29e" text-anchor="end" font-family="monospace">0.0</text>
+            <line x1="40" y1="20" x2="40" y2="120" stroke="#d6d3d1" stroke-width="0.6"/>
+            <text x="40" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">0-15</text>
+            <text x="91" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">16-30</text>
+            <text x="143" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">31-45</text>
+            <text x="195" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">46-60</text>
+            <text x="247" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">61-75</text>
+            <text x="299" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">76+</text>
+            <line x1="350" y1="20" x2="350" y2="120" stroke="#d6d3d1" stroke-width="0.6"/>
+            <path id="v3-sweep-path" d="" fill="rgba(21,128,61,0.15)" stroke="#15803d" stroke-width="2"/>
+            <text x="195" y="12" font-size="10" fill="#57534e" text-anchor="middle">P(≥1 goal) per 15-min bin</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="viz-insight">
+      <div class="viz-insight-label">실험할 만한 것</div>
+      <p>① club을 Hamburg → Tottenham으로 바꾸면 baseline rate 약간 상승 (alpha_club 차이는 작음). ② venue를 Home → Away로 바꾸면 모든 시간대에서 약간 감소 (β_venue mean = -0.11, 효과 약함). ③ <strong>모든 입력에서 76+ 빈이 가장 높은 곡선</strong> — 시간대 효과가 모든 covariate를 압도.</p>
     </div>
   </div>
 </div></section>
@@ -601,6 +1357,96 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
 <script src="/projects/son-data/_shared/tooltip.js"></script>
 <script>
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+
+// ============ v3 Bayesian Predictor ============
+let V3_MODEL = null;
+async function v3Init() {
+  try {
+    const res = await fetch('/projects/son-data-v3/predictor_model.json');
+    V3_MODEL = await res.json();
+    v3Bind();
+  } catch (e) {
+    console.error('v3 model load failed:', e);
+  }
+}
+
+function v3PredLambdas(clubIdx, venue, form, opp) {
+  if (!V3_MODEL) return new Array(6).fill(0.05);
+  const a = V3_MODEL.alpha_club_mean[clubIdx];
+  const bv = V3_MODEL.beta_venue_mean;
+  const bf = V3_MODEL.beta_form_mean;
+  const bo = V3_MODEL.beta_opp_mean;
+  return V3_MODEL.beta_bin_mean.map(bb => {
+    const logLambda = a + bb + bv * venue + bf * form + bo * opp;
+    return Math.exp(logLambda);
+  });
+}
+
+function v3UpdatePred() {
+  const club = parseInt(document.getElementById('v3-club').value);
+  const venue = parseInt(document.querySelector('#v3-venue-group .toggle-btn.active').dataset.venue);
+  const form = parseFloat(document.getElementById('v3-form').value);
+  const opp = parseFloat(document.getElementById('v3-opp').value);
+  const lambdas = v3PredLambdas(club, venue, form, opp);
+  const labels = V3_MODEL ? V3_MODEL.time_bin_labels : ['0-15','16-30','31-45','46-60','61-75','76+'];
+
+  // Output bars
+  const out = document.getElementById('v3-output');
+  out.innerHTML = '';
+  lambdas.forEach((lam, i) => {
+    const pAtLeast1 = 1 - Math.exp(-lam);
+    const pct = (pAtLeast1 * 100).toFixed(1);
+    const row = document.createElement('div');
+    row.className = 'prob-row-out';
+    row.innerHTML = `
+      <span class="prob-class-label" style="font-size:0.78rem;">${labels[i]}</span>
+      <div class="prob-bar-bg"><div class="prob-bar-fill win" style="width:${Math.min(pct*4, 100)}%; background:${i===5?'#15803d':(i===4?'#a16207':'#78716c')};"></div></div>
+      <span class="prob-pct">${pct}%</span>
+    `;
+    out.appendChild(row);
+  });
+
+  // SVG sweep
+  const maxL = Math.max(...lambdas);
+  const yMax = Math.max(maxL * 1.2, 0.5);
+  const xPositions = [40, 91, 143, 195, 247, 299, 350];
+  const points = lambdas.map((lam, i) => {
+    const x = xPositions[i] + (xPositions[i+1] - xPositions[i]) / 2 - 25;
+    const pAtLeast1 = 1 - Math.exp(-lam);
+    const y = 120 - pAtLeast1 * 100;
+    return `${x},${y}`;
+  });
+  const pathD = 'M 40,120 L ' + points.join(' L ') + ' L 350,120 Z';
+  document.getElementById('v3-sweep-path').setAttribute('d', pathD);
+}
+
+function v3Bind() {
+  document.querySelectorAll('#v3-venue-group .toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#v3-venue-group .toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      v3UpdatePred();
+    });
+  });
+  document.getElementById('v3-club').addEventListener('change', v3UpdatePred);
+  ['v3-form', 'v3-opp'].forEach(id => {
+    const el = document.getElementById(id);
+    const vlEl = document.getElementById(id + '-val');
+    el.addEventListener('input', () => {
+      const v = parseFloat(el.value);
+      if (id === 'v3-form') vlEl.textContent = (v >= 0 ? '+' : '') + v.toFixed(1);
+      else vlEl.textContent = v.toFixed(2);
+      v3UpdatePred();
+    });
+  });
+  v3UpdatePred();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', v3Init);
+} else {
+  v3Init();
+}
 </script>
 </body>
 </html>
