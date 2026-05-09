@@ -254,6 +254,7 @@
       <li><a href="#models">Models</a></li>
       <li><a href="#retro">Retrospective</a></li>
       <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#v2-corrections" style="color:var(--accent-red);">정정</a></li>
       <li><a href="/projects/son-data-v2/" style="color:var(--accent);font-weight:700;">v2 &rarr;</a></li>
     </ul>
   </div>
@@ -748,6 +749,44 @@ model_weighted = sm.OLS(y_result, X_weighted).fit()
     <div class="viz-insight-label">3년의 거리</div>
     <p>학부 시절의 사고 흐름을 폐기하지 않는 회고가 가능한 이유는, 그 흐름이 통계적으로 옳기 때문입니다. ML 검증 위생을 알게 된 지금, 그 옳음을 살리기 위해 필요한 것은 큰 재설계가 아니라 <strong>코드 한 줄의 위치 변경</strong>입니다. 이 단순한 차이를 인식하는 데 3년이 걸렸고, 다음 버전에서 그 거리를 좁힙니다.</p>
   </div>
+</div></section>
+<hr class="divider">
+
+<section id="v2-corrections"><div class="container fade-in">
+  <div class="section-label">v2가 측정한 결과 — 회고의 회고</div>
+  <h2 class="section-title">이 회고에도 두 가지 정정이 필요했습니다</h2>
+  <p class="section-desc">v2 페이지(<a href="/projects/son-data-v2/">son-data-v2</a>)에서 6개 실험으로 같은 데이터에 v1과 v2를 동시에 적용했습니다. 그 측정 결과로 <strong>이 회고 페이지의 두 가지 framing이 정정 대상이 되었습니다.</strong> 회고도 회고의 대상이 됩니다.</p>
+
+  <div class="card-grid" style="margin-top:1.5rem;">
+    <div class="layer-card" style="border-top-color:var(--accent-red);">
+      <div class="layer-num">정정 01</div>
+      <div class="layer-title">"누수가 v1의 결함"이라는 단순화</div>
+      <div class="layer-q">"이 회고는 9가지 수정 항목에서 'Critical: target encoding leakage'와 'Critical: scaler leakage'를 강조했지만, v2의 진단 실험은 그것이 단순화된 framing이었음을 보여줍니다."</div>
+      <div class="layer-body">
+        v2 Part 6 (v1 collapse 진단)에서 v1을 한 줄씩 변형해 측정한 결과: <strong>scaler leakage 단독으로는 collapse에 영향이 0이었고, target encoding 제거도 부분 효과만</strong> 있었습니다. v1이 모든 경기를 W로 예측한 진짜 chord는 <strong>RF top_k=6 feature selection × 클래스 불균형 × accuracy 기준 GridSearch</strong>의 3중 조합이었습니다. <code style="font-family:monospace;font-size:0.82rem;">class_weight='balanced'</code> 추가 + scoring=f1_macro만으로도 W rate 100% → 39%로 떨어집니다. <em>"누수 제거"가 아닌 "불균형 처리 + 피처 다양성 + 적절한 metric"이 진짜 fix.</em>
+      </div>
+      <div class="tags"><span class="tag warn">단순화 → 정교화</span><span class="tag">v2 Part 6 참조</span></div>
+    </div>
+
+    <div class="layer-card" style="border-top-color:var(--accent-amber);">
+      <div class="layer-num">정정 02</div>
+      <div class="layer-title">"적응 곡선 회복 시간 차이"의 통계적 견고성</div>
+      <div class="layer-q">"v2 Part 7에서 봤던 'LAFC 8경기 / Tottenham 3경기 / Leverkusen 2경기 / Hamburg 1경기' 회복 시간 차이는, 베이지안 계층 모델로 검증하면 통계적으로 구분되지 않습니다."</div>
+      <div class="layer-body">
+        v2 Part 10 (Bayesian 계층 모델)에서 클럽별 적응 시간 상수 tau를 PyMC로 추정한 결과: <strong>모든 클럽의 tau 95% HDI가 [0.2, 33] 범위로 거의 완전히 겹쳤습니다.</strong> Hamburg 10.91 / Leverkusen 11.48 / Tottenham 10.22 / LAFC 9.35로 mean은 다르지만 신뢰구간 너무 넓어 "클럽마다 적응 시간이 다르다"고 단정 못 합니다. 30경기(LAFC) 표본의 노이즈 가능성이 큽니다. <em>"4-5배 차이"라는 frequentist 표현은 점추정으로는 옳지만 통계적 유의성은 따로 검증되어야 합니다.</em>
+      </div>
+      <div class="tags"><span class="tag warn">단정 → caveat 추가</span><span class="tag">v2 Part 10 참조</span></div>
+    </div>
+  </div>
+
+  <div class="viz-insight green" style="margin-top:2rem;">
+    <div class="viz-insight-label">정정에도 불구하고 살아남은 것 — 4단 사고 흐름 전부</div>
+    <p>두 정정에도 불구하고, 이 회고의 핵심 narrative — <strong>"4단 사고 흐름은 살리고 적용 위치만 옮긴다"</strong> — 는 v2의 측정으로 모두 검증되었습니다. ① 결과 라벨링 ✓ ② venue OLS 통계 검증 ✓ (인과 추론으로 격상) ③ venue 가중 인코딩 ✓ (Ablation/SHAP/Bayesian 3중 검증) ④ R² 재검증 ✓ (TimeSeriesSplit F1 + HDI). 학부 시절의 통계학적 직관은 살아남았고, 단지 회고 자체의 framing이 한 단계 더 정교화되었을 뿐입니다.</p>
+  </div>
+
+  <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic; line-height: 1.8;">
+    더 자세한 측정 과정과 6개 실험의 결과는 <a href="/projects/son-data-v2/" style="color:var(--accent);border-bottom:1px solid var(--border-light);">son-data-v2 보고서</a>를 참조하세요. v1과 v2를 같은 627경기에 동시에 적용한 정량 비교, Feature Ablation, v1 collapse 진단, Cross-league 전이, Counterfactual venue, Bayesian 계층 모델, 다른 prediction target 실험을 단계별로 풀어 썼습니다.
+  </p>
 </div></section>
 <hr class="divider">
 
