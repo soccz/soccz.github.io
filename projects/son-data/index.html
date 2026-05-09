@@ -590,6 +590,7 @@ model_weighted = sm.OLS(y_result, X_weighted).fit()
 </div></footer>
 
 <script src="/projects/son-data/_shared/theme.js"></script>
+<script src="/projects/son-data/_shared/tooltip.js"></script>
 <script>
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});

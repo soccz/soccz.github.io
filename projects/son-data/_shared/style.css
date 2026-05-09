@@ -342,6 +342,33 @@ tr:hover { background: var(--bg-secondary); }
 /* Footnote */
 .footnote { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 0.6rem; line-height: 1.7; }
 
+/* Tooltip (charts hover) */
+.sd-tooltip {
+  position: fixed;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 0.45rem 0.75rem;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  z-index: 1000;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  max-width: 320px;
+}
+.sd-tooltip strong { color: inherit; font-weight: 700; }
+
+/* Hoverable chart targets — 시각적 피드백 */
+.bar-row { transition: transform 0.12s ease; cursor: default; }
+.bar-row:hover { transform: translateX(2px); }
+.bar-row:hover .bar-fill { filter: brightness(1.08); }
+.conf-cell:not(.head) { transition: filter 0.12s ease; cursor: default; }
+.conf-cell:not(.head):hover { filter: brightness(1.1); }
+[data-tooltip] { cursor: help; }
+
 footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
 .footer-text { font-size: 0.78rem; color: var(--text-muted); }
 .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
