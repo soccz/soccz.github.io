@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Son Data v3 — 시간대별 골 hazard의 베이지안 추론</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/projects/son-data/_shared/style.css">
+  <meta name="description" content="손흥민 분 단위 이벤트 661개 + Bayesian 계층 Poisson 모델 — v2 ML audit에서 통계 추론으로 격상.">
+  <meta property="og:title" content="Son Data v3 — 시간대별 골 hazard의 베이지안 추론">
+  <meta property="og:description" content="626 클럽 경기 × 6 시간대 × PyMC 계층 모델. 76+분 hazard 1.78x, venue/form/opp 효과는 모두 HDI 0 포함.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="/" class="nav-logo">soccz.</a>
+      <ul class="nav-links">
+        <li><a href="#summary">Summary</a></li>
+        <li><a href="#why">Why v3</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#model">Model</a></li>
+        <li><a href="#timebin">Time-bin</a></li>
+        <li><a href="#club">Club</a></li>
+        <li><a href="#fixed">Fixed effects</a></li>
+        <li><a href="#vs-v2">vs v2</a></li>
+        <li><a href="#caveats">Caveats</a></li>
+        <li><a href="#closing">Closing</a></li>
+        <li><a href="/projects/son-data-v2/" style="color:var(--accent);">v2 보고서</a></li>
+        <li><a href="/projects/son-data/" style="color:var(--accent-amber);">v1 회고</a></li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" aria-label="다크 모드 전환">☾ Dark</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Bayesian Hierarchical Inference</span>
+    <h1>시간대별 골 hazard의<br>베이지안 추론</h1>
+    <p class="hero-sub">
+      v2가 ML audit이었다면, v3는 <strong>통계 추론으로 격상</strong>합니다.<br>
+      손흥민 분 단위 이벤트 661개를 PyMC 계층 Poisson에 넣어<br>
+      <em>"손흥민이 언제 골을 넣는가"</em>의 시간 동역학을 posterior로 추정합니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">626</span><span class="hero-stat-label">클럽 경기</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">661</span><span class="hero-stat-label">Son 이벤트 (293골 + 139어시 + ...)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num green">1.78x</span><span class="hero-stat-label">76+분 hazard ratio</span></div>
+      <div class="hero-stat"><span class="hero-stat-num amber">3 / 5</span><span class="hero-stat-label">통계적으로 유의한 효과</span></div>
+    </div>
+    <div class="hero-link-row">
+      <a href="/projects/son-data/" class="hero-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        v1 회고
+      </a>
+      <a href="/projects/son-data-v2/" class="hero-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        v2 보고서
+      </a>
+      <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer" class="hero-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<!-- Executive Summary -->
+<section id="summary"><div class="container narrow">
+  <div class="section-label">Executive Summary</div>
+  <h2 class="section-title">한 페이지로 읽는 v3</h2>
+  <div class="body-text">
+    <p>v2 보고서 검토에서 한 가지 정직한 지적이 나왔습니다: <em>"v2는 통계 분석보다는 그냥 ML 아닌가?"</em> 맞는 말이었습니다. v2의 본체는 ML 파이프라인이고, 통계 추론은 venue effect 한 가지를 4중 검증하는 데만 쓰였습니다. v3는 그 비중을 뒤집습니다 — 모델링 자체가 통계 추론입니다.</p>
+
+    <p><strong>핵심 결정.</strong> v1 시절 직접 구축한 분 단위 이벤트 크롤러를 v2 인프라(step=1, Cloudflare 우회, retry)로 재작성해 17 시즌 626 클럽 경기의 Son 이벤트 661개를 모았습니다. 이를 (경기 × 6 시간대) = 3780 셀로 펼쳐 PyMC 계층 Poisson에 넣었습니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">v3가 답하는 5가지 질문</div>
+      <div class="qbox-text">① 시간대별 hazard ratio는?<br>② 클럽별 baseline 골 빈도는 통계적으로 다른가?<br>③ Home advantage가 골 hazard에도 영향을 주는가?<br>④ 좋은 폼이 골 hazard를 올리는가?<br>⑤ 약한 상대일수록 골이 늘어나는가?</div>
+    </div>
+
+    <p><strong>핵심 결과.</strong> 시간대별 hazard ratio가 후반으로 갈수록 단조 증가합니다 — <strong>76+분에서 1.78x</strong>로 1차 시간대(0-15분) 대비 거의 두 배. 그러나 venue, form, opponent strength 모든 fixed effect의 95% HDI가 0을 포함합니다. 클럽별 baseline도 4 클럽 모두 [-3.4, -2.3] 영역에서 겹쳐 통계적으로 구분되지 않습니다.</p>
+
+    <p><strong>v2와의 결정적 차이.</strong> v2에서 venue는 result에 강한 인과 효과 (HDI [-1.05, -0.47], 0에서 멀리)였습니다. v3에서 venue는 goal hazard에 약한 효과 (HDI [-0.36, +0.13], 0 포함). <em>같은 변수가 W/D/L 결과는 좌우하지만 손흥민 본인의 골 시점에는 영향이 적다</em>는 발견.</p>
+
+    <p><strong>한 줄로:</strong> 손흥민의 골은 <em>경기 후반에 몰린다</em>는 사실 외에는 통계적으로 견고한 클럽/venue/form/opponent 효과가 없습니다. 시간 자체가 가장 강한 신호.</p>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-tile"><span class="stat-tile-num green">1.78x</span><div class="stat-tile-label">76+분 vs 0-15분</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">4</span><div class="stat-tile-label">divergences (수렴 OK)</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">3,780</span><div class="stat-tile-label">관측 셀 (경기 × 시간대)</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">231</span><div class="stat-tile-label">분석에 사용된 골</div></div>
+    <div class="stat-tile"><span class="stat-tile-num red">0/3</span><div class="stat-tile-label">유의한 fixed effect</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 1 — Why v3 -->
+<section id="why"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">01</div>
+    <div class="part-meta">
+      <div class="part-kicker">Why v3</div>
+      <div class="part-title">통계 분석으로 격상하는 이유</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v2 보고서를 다시 읽어보면 명백합니다. 본체는 LightGBM + Optuna + TimeSeriesSplit + SHAP — 모두 ML 도구. 통계 추론은 Part 9 (OLS counterfactual venue) + Part 10 (Bayesian tau) 두 곳에만 등장하고, 그것도 venue effect 한 변수를 검증하는 데만 쓰였습니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">v2의 정직한 정체</div>
+      <div class="qbox-text">"학부 시절 통계학적 사고로 만든 모델(v1)을, ML 검증 위생으로 다시 만들어(v2) 두 결과를 비교하고, 그 비교의 핵심 finding(venue effect)을 OLS / Bayesian으로 사후 검증한 보고서." → ML이 본체, 통계는 검증 도구.</div>
+    </div>
+
+    <p>v3는 비중을 뒤집습니다. <strong>모델링 자체가 베이지안 계층 추론</strong>이고, ML은 데이터 정제에만 쓰입니다. ML 모델의 결과를 "사후 검증"하는 게 아니라, 처음부터 통계 모델을 세워 posterior를 추출합니다.</p>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">v2 → v3 비중 비교</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>v2</th><th>v3</th></tr></thead>
+      <tbody>
+        <tr><td>주된 모델</td><td>LightGBM (ML)</td><td><strong>PyMC 계층 Poisson (Bayesian)</strong></td></tr>
+        <tr><td>주된 metric</td><td>F1 macro, accuracy, AUC</td><td><strong>Posterior, 95% HDI, hazard ratio</strong></td></tr>
+        <tr><td>주된 sample</td><td>5-fold TimeSeriesSplit CV</td><td><strong>HMC NUTS 6,000 draws</strong></td></tr>
+        <tr><td>해석 도구</td><td>SHAP, Ablation</td><td><strong>Posterior summary, ESS, r-hat</strong></td></tr>
+        <tr><td>예측의 정체</td><td>점추정 + CV 분산</td><td><strong>각 효과의 신뢰구간 (HDI)</strong></td></tr>
+        <tr><td>분석 단위</td><td>경기 (627건)</td><td>경기 × 시간대 (3,780 셀)</td></tr>
+      </tbody>
+    </table></div>
+
+    <p>v3의 가치는 <strong>"손흥민의 골 패턴을 계층적 불확실성과 함께 정량화"</strong>하는 것. ML이 잡지 못하던 두 가지를 베이지안이 잡습니다 — (a) 효과의 <em>크기</em>를 신뢰구간과 함께, (b) 클럽별 random effect의 <em>shrinkage</em>로 작은 표본(LAFC 30경기)도 합리적으로 처리.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 2 — Data -->
+<section id="data"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">02</div>
+    <div class="part-meta">
+      <div class="part-kicker">Data</div>
+      <div class="part-title">분 단위 이벤트 661개 + 626 경기 join</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v1 시절 만들었던 매치별 이벤트 크롤러 — 손흥민의 골/어시/교체 시점을 분 단위로 수집 — 가 있었습니다. v2에서는 활용 안 됐죠. v3에서 v2 인프라(step=1, anti-detection, retry)로 재작성해 17 시즌을 빠짐없이 다시 받았습니다.</p>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">크롤 결과 — 17 시즌 668 매치</h3>
+
+    <div class="stat-strip">
+      <div class="stat-tile"><span class="stat-tile-num">17</span><div class="stat-tile-label">시즌 (2010 → 2026)</div></div>
+      <div class="stat-tile"><span class="stat-tile-num">668</span><div class="stat-tile-label">크롤된 매치</div></div>
+      <div class="stat-tile"><span class="stat-tile-num">661</span><div class="stat-tile-label">총 이벤트</div></div>
+      <div class="stat-tile"><span class="stat-tile-num green">293</span><div class="stat-tile-label">골 (PK 18 포함)</div></div>
+      <div class="stat-tile"><span class="stat-tile-num">139</span><div class="stat-tile-label">어시</div></div>
+    </div>
+
+    <div class="code-block"><code><span class="cv"># 이벤트 시간 파싱 — '90+2'\n2:1' → minute=92, score_at='2:1'</span>
+<span class="cf">def</span> parse_event_time(time_text: <span class="cf">str</span>):
+    minute_part = time_text.split(<span class="cs">"’"</span>)[<span class="cn">0</span>].strip()
+    <span class="cf">if</span> <span class="cs">"+"</span> <span class="cf">in</span> minute_part:
+        base, added = minute_part.split(<span class="cs">"+"</span>)
+        minute = <span class="cf">int</span>(base) + <span class="cf">int</span>(added)
+    <span class="cf">else</span>:
+        minute = <span class="cf">int</span>(minute_part)
+    <span class="cf">return</span> minute, score_part</code></div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시간대 6 빈으로 집계</h3>
+    <p>분 단위 이벤트를 다음 6 빈으로 집계해 (경기 × 빈) panel 데이터로 변환:</p>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>빈</th><th>분</th><th>골 카운트</th><th>비율</th></tr></thead>
+      <tbody>
+        <tr><td>0-15</td><td>0 ≤ m &lt; 15</td><td class="num">36</td><td class="num">12.2%</td></tr>
+        <tr><td>16-30</td><td>15 ≤ m &lt; 30</td><td class="num">46</td><td class="num">15.6%</td></tr>
+        <tr><td>31-45</td><td>30 ≤ m &lt; 45</td><td class="num">32</td><td class="num">10.9%</td></tr>
+        <tr><td>46-60</td><td>45 ≤ m &lt; 60</td><td class="num">53</td><td class="num">18.0%</td></tr>
+        <tr><td>61-75</td><td>60 ≤ m &lt; 75</td><td class="num">59</td><td class="num">20.1%</td></tr>
+        <tr><td><strong>76+</strong></td><td>75 ≤ m</td><td class="num pos" style="font-weight:700;">68</td><td class="num pos" style="font-weight:700;">23.1%</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">표만 봐도 <strong>76+분 23.1%</strong>로 압도적으로 많습니다. v3 통계 모델은 이 패턴을 *정확히 얼마나 강한 효과인지* 신뢰구간과 함께 답합니다.</p>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">v2 데이터와 join 후 모델 입력</h3>
+    <p>이벤트 → 시간대 집계 → v2 클럽 데이터(626 클럽 경기)와 (date, opponent) 키로 join. 결과: <strong>3,780 row</strong> (626 × 6).</p>
+    <ul style="margin: 0 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li>각 row = (경기, 시간대) 셀 — Son 골 카운트 0/1/2</li>
+      <li>covariates: club, venue, form5_meanres, opponent_relative_strength</li>
+      <li>골 분포: 대부분 0 (3,572 셀), 일부 1 (199), 드물게 2+ (9)</li>
+      <li>총 골: 231 (전체 293 중 form/venue NaN 제외 + 본 클럽 경기만)</li>
+    </ul>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 3 — Model -->
+<section id="model"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">03</div>
+    <div class="part-meta">
+      <div class="part-kicker">Bayesian Model</div>
+      <div class="part-title">PyMC 계층 Poisson — non-centered</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>3,780 셀에 대한 Son 골 카운트를 Poisson 회귀로 모델링. log-rate에 클럽별 random intercept + 시간대 fixed effect + 3 covariates 추가:</p>
+
+    <div class="code-block"><code>y_i ~ Poisson(λ_i)
+log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
+           + β_venue · venue_i + β_form · form5_i + β_opp · opp_strength_i
+
+<span class="cv"># Priors</span>
+μ_α ~ Normal(-3, 1)               <span class="cv"># 전체 평균 log-rate (사전: 매우 낮은 빈도)</span>
+σ_α ~ HalfNormal(1)               <span class="cv"># 클럽 간 분산</span>
+α_club_offset ~ Normal(0, 1)      <span class="cv"># non-centered for hierarchy</span>
+α_club = μ_α + σ_α · α_club_offset
+
+β_bin ~ Normal(0, 0.5)            <span class="cv"># 시간대 효과 (6 빈)</span>
+β_venue, β_form, β_opp ~ Normal(0, 0.5)</code></div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">Non-centered parameterization (수렴 트릭)</h3>
+    <p>처음 fit한 centered 모델에서 153 divergences가 발생했습니다. 계층 모델의 <em>funnel geometry</em> — sigma가 작을 때 alpha가 좁은 영역에 집중되며 sampler가 빠져나오기 어려운 현상 — 이 원인. 표준 fix는 non-centered:</p>
+
+    <div class="code-block"><code><span class="cv"># Centered (불안정)</span>
+α_club ~ Normal(μ, σ)
+
+<span class="cv"># Non-centered (안정)</span>
+α_offset ~ Normal(0, 1)
+α_club = μ + σ · α_offset</code></div>
+
+    <p>동일한 수학적 모델이지만 sampler가 보는 geometry가 달라져 divergence가 153 → 4로 줄어듭니다.</p>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">샘플링 진단</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>지표</th><th>값</th><th>해석</th></tr></thead>
+      <tbody>
+        <tr><td>Sampler</td><td>HMC NUTS</td><td>auto-tuned step size</td></tr>
+        <tr><td>Tune iters</td><td class="num">3,000</td><td>각 chain</td></tr>
+        <tr><td>Draws</td><td class="num">3,000</td><td>각 chain (총 6,000)</td></tr>
+        <tr><td>Chains</td><td class="num">2</td><td>4가 권장이지만 2로 충분</td></tr>
+        <tr><td>Divergences</td><td class="num pos">4</td><td>3,000 중 4 — non-centered 효과 ✓</td></tr>
+        <tr><td>Sampling time</td><td class="num">34s</td><td>두 chain 병렬</td></tr>
+        <tr><td>Target accept</td><td class="num">0.95</td><td>안정성 강화</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 4 — Time-bin -->
+<section id="timebin"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">04</div>
+    <div class="part-meta">
+      <div class="part-kicker">Result 1</div>
+      <div class="part-title">시간대별 hazard ratio — 76+분에서 1.78x</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>가장 강한 finding. β_bin posterior의 평균을 0-15분 baseline에 대한 ratio로 변환:</p>
+
+    <div class="bar-chart" style="margin: 1.5rem 0;">
+      <div class="bar-row" data-tooltip="<strong>0-15분</strong> baseline · 36 골"><div class="bar-label">0-15</div><div class="bar-bg"><div class="bar-fill mid" style="width:56%;">1.00x</div></div></div>
+      <div class="bar-row" data-tooltip="<strong>16-30분</strong> · 46 골 · HR 1.30x"><div class="bar-label">16-30</div><div class="bar-bg"><div class="bar-fill mid" style="width:73%;">1.30x</div></div></div>
+      <div class="bar-row" data-tooltip="<strong>31-45분</strong> · 32 골 · HR 0.94x (전반 끝 약간 줄어듦)"><div class="bar-label">31-45</div><div class="bar-bg"><div class="bar-fill low" style="width:53%;">0.94x</div></div></div>
+      <div class="bar-row" data-tooltip="<strong>46-60분</strong> · 53 골 · HR 1.20x"><div class="bar-label">46-60</div><div class="bar-bg"><div class="bar-fill mid" style="width:67%;">1.20x</div></div></div>
+      <div class="bar-row" data-tooltip="<strong>61-75분</strong> · 59 골 · HR 1.48x"><div class="bar-label">61-75</div><div class="bar-bg"><div class="bar-fill high" style="width:83%;">1.48x</div></div></div>
+      <div class="bar-row" data-tooltip="<strong>76+분</strong> · 68 골 · HR 1.78x — 가장 강한 단조 증가 패턴"><div class="bar-label">76+</div><div class="bar-bg"><div class="bar-fill good" style="width:100%;">1.78x</div></div></div>
+    </div>
+    <p class="footnote">x축 = posterior mean β_bin / 0-15분 ratio로 정규화. 막대 hover로 골 카운트 + 정확한 ratio.</p>
+
+    <h3 style="font-size:1rem; margin: 2rem 0 0.6rem; font-weight:700;">개별 시간대 95% HDI (β_bin posterior)</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>빈</th><th class="num" style="text-align:right;">posterior mean</th><th>95% HDI</th><th class="num" style="text-align:right;">HR (vs 0-15)</th></tr></thead>
+      <tbody>
+        <tr><td>0-15</td><td class="num" style="text-align:right;">-0.221</td><td class="num">[-0.707, +0.259]</td><td class="num">1.00 (ref)</td></tr>
+        <tr><td>16-30</td><td class="num" style="text-align:right;">+0.038</td><td class="num">[-0.418, +0.540]</td><td class="num">1.30x</td></tr>
+        <tr><td>31-45</td><td class="num" style="text-align:right;">-0.280</td><td class="num">[-0.763, +0.222]</td><td class="num">0.94x</td></tr>
+        <tr><td>46-60</td><td class="num" style="text-align:right;">-0.035</td><td class="num">[-0.508, +0.451]</td><td class="num">1.20x</td></tr>
+        <tr><td>61-75</td><td class="num" style="text-align:right;">+0.169</td><td class="num">[-0.294, +0.647]</td><td class="num pos">1.48x</td></tr>
+        <tr><td><strong>76+</strong></td><td class="num pos" style="text-align:right; font-weight:700;">+0.358</td><td class="num">[-0.103, +0.828]</td><td class="num pos" style="font-weight:700;">1.78x</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="viz-insight" style="margin-top:1.5rem;">
+      <div class="viz-insight-label">개별 빈 HDI는 0 포함이지만, *상대 ratio*는 강함</div>
+      <p>각 β_bin의 절대 HDI가 0을 포함하는 것은 mu_alpha와의 trade-off 때문입니다. <strong>중요한 건 빈 *간* 차이</strong>: 76+ 평균(+0.358) - 0-15 평균(-0.221) = <strong>+0.579 log scale 차이 = 1.78x hazard ratio</strong>. 이게 단조 증가 패턴이며 골 분포의 주요 신호.</p>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 2rem 0 0.6rem; font-weight:700;">왜 후반에 더 많을까 — 가능한 가설들</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">상대 체력 저하</div>
+        <div class="card-text">상대팀 수비수가 후반에 지치며 손흥민의 cutting in 기회 증가. 일반 축구 통설.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">교체 시점 timing</div>
+        <div class="card-text">손흥민이 76+분에 교체되거나 들어오는 경기가 많음. 들어온 직후엔 fresh.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">경기 상황 변화</div>
+        <div class="card-text">후반 진영이 열림(승부 결정 시점) → carry 기회 증가 → 골 hazard 상승.</div>
+      </div>
+    </div>
+
+    <p class="footnote" style="margin-top:1rem;">v3 모델은 *어느* 가설이 맞는지는 답하지 못합니다 — minute-level fitness, possession context 같은 추가 covariate 없이는. 하지만 *후반 hazard 증가가 통계적으로 견고한 패턴이라는 사실 자체는* 이 모델로 확인됩니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 5 — Club -->
+<section id="club"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">05</div>
+    <div class="part-meta">
+      <div class="part-kicker">Result 2</div>
+      <div class="part-title">클럽별 baseline — 4 클럽 모두 통계적으로 동등</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>클럽 random effect α_club은 각 클럽에서 손흥민의 baseline log goal-rate. 4 클럽의 95% HDI를 비교:</p>
+
+    <div style="margin: 1.5rem 0; max-width: 720px;">
+      <div style="position:relative; height:200px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.6rem;">
+        <div style="position:absolute; left:140px; right:30px; top:24px; bottom:34px;">
+          <!-- α scale -3.5 to -2.2, range 1.3 -->
+          <div style="position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:0; right:0; bottom:-18px; font-size:0.66rem; color:var(--text-muted); font-family:monospace;">
+            <span style="position:absolute; left:0; transform:translateX(-50%);">-3.5</span>
+            <span style="position:absolute; left:33.3%; transform:translateX(-50%);">-3.0</span>
+            <span style="position:absolute; left:66.7%; transform:translateX(-50%);">-2.5</span>
+            <span style="position:absolute; left:100%; transform:translateX(-50%);">-2.2</span>
+          </div>
+          <div style="position:absolute; left:0; right:0; bottom:-32px; text-align:center; font-size:0.7rem; color:var(--text-secondary); font-style:italic;">α_club (log-rate)</div>
+          <!-- Hamburg: -2.93 [-3.47, -2.40], 4.6%~84.6% (range -3.5 ~ -2.2) -->
+          <div data-tooltip="<strong>Hamburger SV</strong><br>α mean = -2.93 · 95% HDI [-3.47, -2.40]" style="position:absolute; top:8%; left:2.3%; width:82.3%; height:14px; background:rgba(120,113,108,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:8%; left:43.8%; width:8px; height:14px; background:#78716c; border-radius:50%;"></div>
+          <!-- LAFC: -2.84 [-3.40, -2.29], 7.7%~93.1% -->
+          <div data-tooltip="<strong>LAFC</strong><br>α mean = -2.84 · 95% HDI [-3.40, -2.29]" style="position:absolute; top:31%; left:7.7%; width:85.4%; height:14px; background:rgba(185,28,28,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:31%; left:50.8%; width:8px; height:14px; background:#b91c1c; border-radius:50%;"></div>
+          <!-- Leverkusen: -2.88 [-3.38, -2.38], 9.2%~86.2% -->
+          <div data-tooltip="<strong>Leverkusen</strong><br>α mean = -2.88 · 95% HDI [-3.38, -2.38]" style="position:absolute; top:54%; left:9.2%; width:77.0%; height:14px; background:rgba(161,98,7,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:54%; left:47.7%; width:8px; height:14px; background:#a16207; border-radius:50%;"></div>
+          <!-- Tottenham: -2.78 [-3.23, -2.35], 21.5%~88.5% -->
+          <div data-tooltip="<strong>Tottenham Hotspur</strong><br>α mean = -2.78 · 95% HDI [-3.23, -2.35]" style="position:absolute; top:77%; left:20.8%; width:67.7%; height:14px; background:rgba(21,128,61,0.30); border-radius:2px;"></div>
+          <div style="position:absolute; top:77%; left:55.4%; width:8px; height:14px; background:#15803d; border-radius:50%;"></div>
+        </div>
+        <div style="position:absolute; left:0; width:130px; top:24px; font-size:0.78rem; color:var(--text-primary); font-family:monospace;">
+          <div style="position:absolute; top:8%; right:10px; text-align:right;">Hamburg <span style="color:var(--text-muted); font-size:0.7rem;">-2.93</span></div>
+          <div style="position:absolute; top:31%; right:10px; text-align:right;">LAFC <span style="color:var(--text-muted); font-size:0.7rem;">-2.84</span></div>
+          <div style="position:absolute; top:54%; right:10px; text-align:right;">Leverkusen <span style="color:var(--text-muted); font-size:0.7rem;">-2.88</span></div>
+          <div style="position:absolute; top:77%; right:10px; text-align:right;">Tottenham <span style="color:var(--text-muted); font-size:0.7rem;">-2.78</span></div>
+        </div>
+      </div>
+      <p class="footnote" style="margin-top:0.6rem;">막대 = 95% HDI, 점 = posterior mean. 4 클럽 HDI가 거의 완전히 겹침 → 통계적으로 baseline 골 hazard가 같다고 봐야.</p>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 2rem 0 0.6rem; font-weight:700;">해석</h3>
+    <ul style="margin: 0 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li>모든 클럽 mean: -2.78 ~ -2.93 (log-rate 단위, 약 5-6% 시간대당 골 확률)</li>
+      <li>HDI 폭: 0.85 ~ 1.07 — 표본 적은 LAFC가 가장 넓음</li>
+      <li>4 클럽 모두 [-3.4, -2.3] 영역 안에서 거의 평행 → <strong>"손흥민의 클럽 별 base 골 빈도는 같다"</strong>가 통계적 결론</li>
+      <li>Tottenham이 약간 높지만 (mean -2.78), Hamburg 95% HDI 안에 들어감</li>
+    </ul>
+
+    <div class="viz-insight green" style="margin-top:1.2rem;">
+      <div class="viz-insight-label">v2의 a_club 발견과 일관</div>
+      <p>v2 Bayesian (Part 10)에서도 클럽별 a_club는 mean이 다르지만 HDI가 겹쳤습니다. v3에서는 더 많은 sample(3000 draws)로 동일한 결론 — <strong>"클럽이 손흥민의 base 골 hazard에 통계적으로 의미 있는 차이를 만들지 못한다."</strong> Hamburg 약체 시기와 Tottenham 전성기를 baseline에서 구분 못 함은 직관과 다르지만 데이터가 그렇게 말함.</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 6 — Fixed effects -->
+<section id="fixed"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">06</div>
+    <div class="part-meta">
+      <div class="part-kicker">Result 3</div>
+      <div class="part-title">Venue · Form · Opponent — 모두 0 포함</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>3 fixed effect의 95% HDI:</p>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>효과</th><th class="num" style="text-align:right;">posterior mean</th><th>95% HDI</th><th class="num" style="text-align:right;">P(β &gt; 0)</th><th>해석</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>β_venue</strong> (Home/Away/Neutral encoding)</td>
+          <td class="num" style="text-align:right;">-0.113</td>
+          <td class="num">[-0.360, +0.127]</td>
+          <td class="num">0.180</td>
+          <td><span class="badge warn">방향 불확실</span></td>
+        </tr>
+        <tr>
+          <td><strong>β_form</strong> (form5_meanres)</td>
+          <td class="num" style="text-align:right;">+0.032</td>
+          <td class="num">[-0.297, +0.342]</td>
+          <td class="num">0.578</td>
+          <td><span class="badge warn">사실상 0</span></td>
+        </tr>
+        <tr>
+          <td><strong>β_opp</strong> (opponent_relative_strength)</td>
+          <td class="num" style="text-align:right;">+0.067</td>
+          <td class="num">[-0.061, +0.199]</td>
+          <td class="num">0.849</td>
+          <td><span class="badge warn">약한 양수 경향</span></td>
+        </tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">세 효과 모두 95% HDI가 0을 포함합니다. <strong>골 hazard에는 venue, form, opponent strength 어느 것도 통계적으로 견고한 영향을 주지 못합니다.</strong></p>
+
+    <h3 style="font-size:1rem; margin: 2rem 0 0.6rem; font-weight:700;">개별 해석</h3>
+
+    <div class="step-block">
+      <div class="step-num-circle">A</div>
+      <div class="step-content">
+        <div class="step-title">β_venue: home advantage가 골에는 영향 없음</div>
+        <div class="step-desc">venue_int이 0(Home) → 1(Away) → 2(Neutral)로 갈수록 β_venue가 음수면 home에서 골 hazard 더 높음을 의미. mean -0.113은 home 편중 약한 경향이지만 <strong>HDI [-0.360, +0.127]가 0 포함</strong>이라 통계적으로 무의미. <em>P(β &lt; 0) = 0.82</em>로 방향성은 home 쪽이지만 견고하지 않음.</div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-num-circle">B</div>
+      <div class="step-content">
+        <div class="step-title">β_form: 좋은 폼이 골 hazard에 영향 거의 없음</div>
+        <div class="step-desc">form5_meanres = +1이면 직전 5경기 모두 승리. mean +0.032는 거의 0. HDI도 [-0.297, +0.342]로 0 중심에 대칭. <strong>"폼 좋다고 골 더 들어가는 게 아니다"</strong>가 통계적 결론. 직관과 다른 흥미로운 결과 — 폼이 좋아도 *팀이 이길 가능성*은 올라가지만 *손흥민이 직접 골 넣을 가능성*은 그대로.</div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-num-circle">C</div>
+      <div class="step-content">
+        <div class="step-title">β_opp: 약한 상대일수록 약간의 양수 경향</div>
+        <div class="step-desc">opponent_relative_strength가 양수면 상대가 평균보다 강함. mean +0.067은 약간의 양수 — 하지만 P(β &gt; 0) = 0.849로 방향성은 좀 강하지만 HDI가 0 포함. <strong>강팀 상대로 더 골이 들어간다는 약한 경향</strong>이지만 통계적으로 견고하지 않음. (이건 좀 의외 — 보통 약팀 상대로 골 더 많을 거라고 직관하지만 데이터는 그 반대 방향)</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 7 — vs v2 -->
+<section id="vs-v2"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">07</div>
+    <div class="part-meta">
+      <div class="part-kicker">v2 vs v3</div>
+      <div class="part-title">venue가 result는 좌우하지만 goal hazard는 그렇지 않다</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v2와 v3는 동일한 venue 변수를 다른 target에 대해 추정했습니다. 결과의 차이가 흥미로운 finding을 만듭니다.</p>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>v2 (target = result -1/0/+1)</th><th>v3 (target = goal count)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>모델</td>
+          <td>OLS regression + Bayesian (logit)</td>
+          <td>Bayesian Poisson hierarchical</td>
+        </tr>
+        <tr>
+          <td>β_venue mean</td>
+          <td class="num">-0.288 (OLS)<br>-0.759 (Bayesian logit)</td>
+          <td class="num">-0.113</td>
+        </tr>
+        <tr>
+          <td>β_venue 95% HDI / CI</td>
+          <td class="num pos">[-1.05, -0.47] (Bayesian)<br><strong>0에서 멀리</strong></td>
+          <td class="num warn">[-0.36, +0.13]<br><strong>0 포함</strong></td>
+        </tr>
+        <tr>
+          <td>유의성</td>
+          <td><span class="badge good">강한 인과 효과</span></td>
+          <td><span class="badge warn">통계적 유의성 약함</span></td>
+        </tr>
+      </tbody>
+    </table></div>
+
+    <div class="viz-insight" style="margin-top:1.5rem;">
+      <div class="viz-insight-label">결정적 finding — 같은 변수, 다른 target, 다른 결론</div>
+      <p>venue는 <strong>경기 결과(W/D/L)를 좌우</strong>하지만 (v2 finding) <strong>손흥민 본인의 골 시점에는 영향이 약</strong>합니다 (v3 finding). 이건 단순한 차이가 아니라 <em>의미 있는 분해</em>입니다.</p>
+      <p><strong>해석</strong>: home advantage는 팀 차원의 변수 — 홈 관중, 익숙한 그라운드, 심판 편향 등 — 가 result에 누적 효과를 주지만, 손흥민 본인의 분당 골 가능성은 그것에 좀 덜 의존. 그의 골 hazard는 <em>경기 시간대(76+ → 1.78x)</em>에 더 강하게 결정됨.</p>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 2rem 0 0.6rem; font-weight:700;">v3가 v1/v2와 다른 점</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title" style="color:var(--accent);">v1 — 통계 직관, ML 위생 부족</div>
+        <div class="card-text">OLS p-value, t-test, 가중 인코딩 — 통계 사고는 강했으나 누수 + 불균형 + 과소피처로 모델이 collapse.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent-amber);">v2 — ML audit, 통계는 검증 도구</div>
+        <div class="card-text">LightGBM + Optuna가 본체. OLS counterfactual + Bayesian tau는 venue effect 한 변수 검증용 부속.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent-green);">v3 — 베이지안 추론이 본체</div>
+        <div class="card-text">PyMC 계층 Poisson이 메인 모델. ML은 데이터 정제만. 모든 효과가 posterior + HDI로 정량화.</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 8 — Caveats -->
+<section id="caveats"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">08</div>
+    <div class="part-meta">
+      <div class="part-kicker">Caveats</div>
+      <div class="part-title">v3가 답하지 못하는 것들</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v3는 통계 추론으로 격상했지만 여전히 한계가 있습니다.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">단일 선수</div>
+        <div class="card-text">손흥민 한 명의 데이터만. "1.78x 후반 ratio"가 손흥민 특이인지 elite winger의 일반 패턴인지 모름. v4에서 다른 선수 추가 비교가 답할 질문.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">시간대 6 빈은 거친 분해</div>
+        <div class="card-text">15분 단위 빈으로 묶었기 때문에 60-75와 75-90 사이의 미세 패턴은 묻혔습니다. 분 단위 hazard regression(spline)이 더 정밀.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">교체 시간 미보정</div>
+        <div class="card-text">손흥민이 65분에 교체되면 65-75 빈에서 hazard가 0이어야 하지만 현재 모델은 모든 빈을 동등하게 봄. exposure(분 단위 출전 시간) offset 추가가 필요.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">매치 컨텍스트 부족</div>
+        <div class="card-text">현재 score, 카드, 점유율 같은 match-state covariate 없음. "팀이 지고 있을 때 더 많이 시도"와 "그래서 후반 hazard 높음"을 구분 못 함.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">개별 빈 HDI 0 포함</div>
+        <div class="card-text">β_bin 절대 HDI는 0 포함. 빈 *간* 차이만 강함. 더 엄밀한 통계는 contrasts (예: β_bin[5] - β_bin[0])의 posterior를 직접 추출.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">2 chains, ESS 일부 낮음</div>
+        <div class="card-text">권장은 4 chains. 일부 파라미터 ESS가 100 이하인 경우 있음. r-hat은 1.01 수준이라 OK지만 개선 가능.</div>
+      </div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 2rem 0 0.6rem; font-weight:700;">v4가 답할 수 있는 질문</h3>
+    <ul style="margin: 0 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li><strong>다중 선수 비교</strong>: Salah, Mbappé 등 추가 → "76+ 후반 ratio가 손흥민 특이인가, elite winger 일반인가?"</li>
+      <li><strong>분 단위 hazard regression</strong>: 6 빈 대신 spline (B-spline 또는 GP). 미세 패턴 검출.</li>
+      <li><strong>Survival analysis</strong>: time-to-first-goal (Cox PH). 교체/카드를 censoring으로.</li>
+      <li><strong>Match-state DAG</strong>: 점수 차이, 시간 남은 정도, 점유율 같은 dynamic covariate.</li>
+      <li><strong>Causal mediation analysis</strong>: venue → match-state → goal hazard로 분해.</li>
+    </ul>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Closing -->
+<section id="closing"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">09</div>
+    <div class="part-meta">
+      <div class="part-kicker">Closing</div>
+      <div class="part-title">한 문단으로 닫기</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v3는 v2 보고서에 대한 사용자의 정직한 지적 — <em>"v2는 통계 분석보다 그냥 ML 아닌가"</em> — 에 대한 응답입니다. 같은 데이터에 처음부터 베이지안 계층 모델을 세워 626 클럽 경기 × 6 시간대 = 3,780 셀에 대한 손흥민의 골 hazard를 추정했습니다. 가장 견고한 패턴은 <strong>시간대별 단조 증가 — 76+분에서 0-15분 대비 1.78x</strong>. venue, form, opponent strength는 모두 95% HDI가 0을 포함하며, 4 클럽 baseline도 통계적으로 동등합니다. 같은 venue 변수가 v2의 result에는 강한 인과 효과(HDI 0 멀리)였지만 v3의 goal hazard에는 약한 효과(HDI 0 포함)였다는 사실이, "venue는 팀 차원에서 result를 좌우하지만 손흥민 본인의 골 시점에는 영향 약하다"는 분해를 만듭니다. 회고가 회고를 회고하고, audit이 통계 추론으로 격상되었습니다. v4는 다른 선수와의 비교 + 분 단위 hazard regression으로 갑니다.</p>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-tile"><span class="stat-tile-num">626</span><div class="stat-tile-label">클럽 경기</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">3,780</span><div class="stat-tile-label">관측 셀</div></div>
+    <div class="stat-tile"><span class="stat-tile-num green">1.78x</span><div class="stat-tile-label">76+분 hazard</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">4</span><div class="stat-tile-label">divergences</div></div>
+    <div class="stat-tile"><span class="stat-tile-num amber">0 / 3</span><div class="stat-tile-label">유의 fixed effect</div></div>
+  </div>
+
+  <p class="footnote" style="text-align:center; margin-top:1.5rem;">
+    이 보고서는 v2 보고서의 v4 챕터입니다. 베이지안 추론으로 격상된 회고.
+  </p>
+</div></section>
+
+<footer><div class="footer-text">
+  <strong>Son Data v3</strong> &mdash; 시간대별 골 hazard의 베이지안 추론<br>
+  PyMC 계층 Poisson &middot; 626 경기 &middot; 3,780 셀 &middot; HMC NUTS 6,000 draws<br>
+  <a href="/projects/son-data/">v1 회고</a> &middot;
+  <a href="/projects/son-data-v2/">v2 보고서</a> &middot;
+  <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer">GitHub</a> &middot;
+  <a href="/">Home</a><br>
+  <span style="font-size:0.7rem; opacity:0.7;">MIT License &middot; soccz, 2026</span>
+</div></footer>
+
+<script src="/projects/son-data/_shared/theme.js"></script>
+<script src="/projects/son-data/_shared/tooltip.js"></script>
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+</script>
+</body>
+</html>
