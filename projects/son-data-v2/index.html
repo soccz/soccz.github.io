@@ -125,6 +125,37 @@
     .code-block .cf { color: #93c5fd; }
     .code-block .ck { color: #f9a8d4; }
 
+    /* Predictor */
+    .predictor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+    @media (max-width: 768px) { .predictor-grid { grid-template-columns: 1fr; } }
+    .predictor-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .predictor-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--accent); }
+    .predictor-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 1rem; }
+    .predictor-label { font-size: 0.83rem; color: var(--text-secondary); flex-shrink: 0; min-width: 130px; }
+    .predictor-value { font-family: monospace; font-size: 0.82rem; color: var(--accent); min-width: 50px; text-align: right; }
+    .predictor-row input[type="range"] { flex: 1; }
+    .predictor-row select, .predictor-row .toggle-group { flex: 1; }
+    .toggle-group { display: flex; gap: 0.4rem; }
+    .toggle-btn { flex: 1; padding: 0.4rem 0.6rem; border: 1px solid var(--border); background: var(--bg-secondary); cursor: pointer; font-size: 0.78rem; border-radius: 4px; transition: all 0.15s; color: var(--text-secondary); }
+    .toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .toggle-btn:hover { border-color: var(--accent); }
+    .predictor-row select { padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card); font-size: 0.82rem; color: var(--text-primary); }
+
+    /* Probability output */
+    .prob-output { display: flex; flex-direction: column; gap: 0.8rem; padding: 0.4rem 0; }
+    .prob-row-out { display: grid; grid-template-columns: 60px 1fr 60px; gap: 0.8rem; align-items: center; }
+    .prob-class-label { font-weight: 700; font-size: 0.82rem; }
+    .prob-bar-bg { height: 28px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+    .prob-bar-fill { height: 100%; transition: width 0.3s ease; }
+    .prob-bar-fill.win { background: var(--accent-green); }
+    .prob-bar-fill.draw { background: var(--accent-amber); }
+    .prob-bar-fill.lose { background: var(--accent-red); }
+    .prob-pct { font-family: monospace; font-size: 0.85rem; font-weight: 700; text-align: right; }
+
+    /* Sweep chart */
+    .sweep-chart { margin-top: 1rem; padding: 0.8rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; }
+    .sweep-title { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem; font-family: monospace; }
+
     /* Insight panel */
     .viz-insight { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c; border-radius: 0 8px 8px 0; padding: 1.2rem 1.7rem; margin: 1.5rem 0; max-width: 820px; }
     .viz-insight.green { border-left-color: var(--accent-green); }
@@ -232,6 +263,7 @@
       <li><a href="#part9">Causal</a></li>
       <li><a href="#part10">Bayesian</a></li>
       <li><a href="#part11">Targets</a></li>
+      <li><a href="#predictor" style="color:var(--accent-green);font-weight:700;">예측기</a></li>
       <li><a href="#part12">Synthesis</a></li>
       <li><a href="/projects/son-data/" style="color:var(--accent-amber);">v1 회고</a></li>
     </ul>
@@ -985,6 +1017,27 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       <li>overall winrate coef: +0.3639 (p=0.19, 유의 살짝 못 미침)</li>
     </ul>
 
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">전체 SHAP top 15 — v2 모델이 무엇을 보고 있는가</h3>
+    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">Tuned LightGBM의 마지막 fold 테스트셋에서 측정한 SHAP 절대값 평균. 상위 15개 피처를 표시.</p>
+    <div class="bar-chart" style="margin: 1rem 0 1.5rem;">
+      <div class="bar-row"><div class="bar-label">venue_int</div><div class="bar-bg"><div class="bar-fill high" style="width:100%;">0.362</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll3_minutes</div><div class="bar-bg"><div class="bar-fill high" style="width:49%;">0.177</div></div></div>
+      <div class="bar-row"><div class="bar-label">league_match_idx</div><div class="bar-bg"><div class="bar-fill high" style="width:46%;">0.166</div></div></div>
+      <div class="bar-row"><div class="bar-label">club_match_idx</div><div class="bar-bg"><div class="bar-fill high" style="width:45%;">0.164</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll5_shots</div><div class="bar-bg"><div class="bar-fill mid" style="width:45%;">0.163</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll5_minutes</div><div class="bar-bg"><div class="bar-fill mid" style="width:44%;">0.159</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll10_minutes</div><div class="bar-bg"><div class="bar-fill mid" style="width:39%;">0.143</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll5_shots_on_target</div><div class="bar-bg"><div class="bar-fill mid" style="width:38%;">0.137</div></div></div>
+      <div class="bar-row"><div class="bar-label">career_match_idx</div><div class="bar-bg"><div class="bar-fill mid" style="width:37%;">0.135</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll5_tackles_won</div><div class="bar-bg"><div class="bar-fill low" style="width:35%;">0.127</div></div></div>
+      <div class="bar-row"><div class="bar-label">form5_meanres</div><div class="bar-bg"><div class="bar-fill low" style="width:32%;">0.115</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll5_crosses</div><div class="bar-bg"><div class="bar-fill low" style="width:31%;">0.113</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll10_tackles_won</div><div class="bar-bg"><div class="bar-fill low" style="width:26%;">0.095</div></div></div>
+      <div class="bar-row"><div class="bar-label">roll5_fouled</div><div class="bar-bg"><div class="bar-fill low" style="width:26%;">0.094</div></div></div>
+      <div class="bar-row"><div class="bar-label">form10_winrate</div><div class="bar-bg"><div class="bar-fill low" style="width:25%;">0.092</div></div></div>
+    </div>
+    <p class="footnote">venue 1위(0.362), 그 아래 폼/적응 인덱스 피처들이 차례로. v1의 venue 직관 + v2가 새로 만든 적응 피처(league_match_idx, club_match_idx)가 SHAP 상위에 모두 자리.</p>
+
     <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">SHAP — opp strength 추가 후 venue 중요도 변화</h3>
     <div class="bar-chart">
       <div class="bar-row"><div class="bar-label">venue (base v2)</div><div class="bar-bg"><div class="bar-fill high" style="width:100%;">0.357</div></div></div>
@@ -1050,6 +1103,95 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
 
     <p style="margin-top:1.2rem; font-size:0.9rem;"><strong>b_venue posterior:</strong> mean -0.759, 95% HDI [-1.053, -0.472]. 0에서 멀리 떨어져 강한 인과 효과 재확인.</p>
 
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — 클럽별 tau (적응 시간 상수) 95% HDI</h3>
+    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">각 막대는 95% HDI 범위(점=평균). 이 막대들이 서로 거의 완전히 겹치면, "클럽마다 적응 시간이 다르다"고 통계적으로 단정 못 합니다.</p>
+    <div style="margin: 1rem 0 1.5rem; max-width: 720px;">
+      <div style="position:relative; height:220px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.6rem;">
+        <!-- x-axis grid -->
+        <div style="position:absolute; left:140px; right:30px; top:24px; bottom:34px;">
+          <div style="position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:14.7%; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:29.4%; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:44.1%; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:58.8%; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:73.5%; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:88.2%; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:0; right:0; bottom:-18px; font-size:0.66rem; color:var(--text-muted); font-family:monospace;">
+            <span style="position:absolute; left:0; transform:translateX(-50%);">0</span>
+            <span style="position:absolute; left:14.7%; transform:translateX(-50%);">5</span>
+            <span style="position:absolute; left:29.4%; transform:translateX(-50%);">10</span>
+            <span style="position:absolute; left:44.1%; transform:translateX(-50%);">15</span>
+            <span style="position:absolute; left:58.8%; transform:translateX(-50%);">20</span>
+            <span style="position:absolute; left:73.5%; transform:translateX(-50%);">25</span>
+            <span style="position:absolute; left:88.2%; transform:translateX(-50%);">30</span>
+          </div>
+          <div style="position:absolute; left:0; right:0; bottom:-32px; text-align:center; font-size:0.7rem; color:var(--text-secondary); font-style:italic;">tau (matches, x-scale 0~34)</div>
+          <!-- HDI bars: tau scale 0~34 -->
+          <!-- Hamburg: mean 10.91, hdi [0.40, 32.94] -->
+          <div style="position:absolute; top:8%; left:1.2%; width:95.8%; height:14px; background:rgba(120,113,108,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:8%; left:32.1%; width:8px; height:14px; background:#78716c; border-radius:50%;"></div>
+          <!-- Leverkusen: mean 11.48, hdi [0.28, 33.96] -->
+          <div style="position:absolute; top:30%; left:0.8%; width:99.0%; height:14px; background:rgba(161,98,7,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:30%; left:33.8%; width:8px; height:14px; background:#a16207; border-radius:50%;"></div>
+          <!-- Tottenham: mean 10.22, hdi [0.18, 28.83] -->
+          <div style="position:absolute; top:52%; left:0.5%; width:84.3%; height:14px; background:rgba(21,128,61,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:52%; left:30.1%; width:8px; height:14px; background:#15803d; border-radius:50%;"></div>
+          <!-- LAFC: mean 9.35, hdi [0.25, 28.33] -->
+          <div style="position:absolute; top:74%; left:0.7%; width:82.6%; height:14px; background:rgba(185,28,28,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:74%; left:27.5%; width:8px; height:14px; background:#b91c1c; border-radius:50%;"></div>
+        </div>
+        <!-- club labels -->
+        <div style="position:absolute; left:0; width:130px; top:24px; font-size:0.78rem; color:var(--text-primary); font-family:monospace;">
+          <div style="position:absolute; top:8%; right:10px; text-align:right;">Hamburg <span style="color:var(--text-muted); font-size:0.7rem;">10.91</span></div>
+          <div style="position:absolute; top:30%; right:10px; text-align:right;">Leverkusen <span style="color:var(--text-muted); font-size:0.7rem;">11.48</span></div>
+          <div style="position:absolute; top:52%; right:10px; text-align:right;">Tottenham <span style="color:var(--text-muted); font-size:0.7rem;">10.22</span></div>
+          <div style="position:absolute; top:74%; right:10px; text-align:right;">LAFC <span style="color:var(--text-muted); font-size:0.7rem;">9.35</span></div>
+        </div>
+      </div>
+      <p class="footnote" style="margin-top:0.6rem;">가로 막대 = 95% HDI, 점 = posterior mean. 4 클럽 모두 HDI가 [0.2, 33] 영역에서 거의 동일하게 펼쳐짐 → tau 차이는 통계적으로 구분 안 됨. Part 7의 frequentist 회복시간 차이(8 vs 1-3경기)는 점추정으로는 옳지만 신뢰구간 영역에서는 동등.</p>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — 클럽별 a (baseline) 95% HDI</h3>
+    <div style="margin: 1rem 0 1.5rem; max-width: 720px;">
+      <div style="position:relative; height:200px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.6rem;">
+        <div style="position:absolute; left:140px; right:30px; top:24px; bottom:34px;">
+          <!-- a scale -1 to +1.6 (range 2.6) -->
+          <div style="position:absolute; left:0; top:0; bottom:0; width:1px; background:var(--border);"></div>
+          <div style="position:absolute; left:38.5%; top:0; bottom:0; width:2px; background:var(--accent); opacity:0.4;"></div>
+          <div style="position:absolute; left:38.5%; top:-14px; font-size:0.66rem; color:var(--accent); font-family:monospace;">0</div>
+          <div style="position:absolute; left:0; right:0; bottom:-18px; font-size:0.66rem; color:var(--text-muted); font-family:monospace;">
+            <span style="position:absolute; left:0; transform:translateX(-50%);">-1.0</span>
+            <span style="position:absolute; left:19.2%; transform:translateX(-50%);">-0.5</span>
+            <span style="position:absolute; left:38.5%; transform:translateX(-50%);">0</span>
+            <span style="position:absolute; left:57.7%; transform:translateX(-50%);">+0.5</span>
+            <span style="position:absolute; left:76.9%; transform:translateX(-50%);">+1.0</span>
+            <span style="position:absolute; left:96.2%; transform:translateX(-50%);">+1.5</span>
+          </div>
+          <div style="position:absolute; left:0; right:0; bottom:-32px; text-align:center; font-size:0.7rem; color:var(--text-secondary); font-style:italic;">a_club (baseline logit)</div>
+          <!-- a scale: -1 mapped to 0%, +1.6 mapped to 100%. coef = (val + 1)/2.6 -->
+          <!-- Hamburg: -0.133 [-0.747, +0.448], 9.7%~55.7%, mean 33.3% -->
+          <div style="position:absolute; top:8%; left:9.7%; width:46.0%; height:14px; background:rgba(120,113,108,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:8%; left:33.3%; width:8px; height:14px; background:#78716c; border-radius:50%;"></div>
+          <!-- Leverkusen: +0.479 [+0.015, +0.908], 39.0%~73.4%, mean 56.9% -->
+          <div style="position:absolute; top:31%; left:39.0%; width:34.4%; height:14px; background:rgba(161,98,7,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:31%; left:56.9%; width:8px; height:14px; background:#a16207; border-radius:50%;"></div>
+          <!-- Tottenham: +0.543 [+0.290, +0.753], 49.6%~67.4%, mean 59.3% -->
+          <div style="position:absolute; top:54%; left:49.6%; width:17.8%; height:14px; background:rgba(21,128,61,0.30); border-radius:2px;"></div>
+          <div style="position:absolute; top:54%; left:59.3%; width:8px; height:14px; background:#15803d; border-radius:50%;"></div>
+          <!-- LAFC: +0.851 [+0.101, +1.535], 42.3%~97.5%, mean 71.2% -->
+          <div style="position:absolute; top:77%; left:42.3%; width:55.2%; height:14px; background:rgba(185,28,28,0.25); border-radius:2px;"></div>
+          <div style="position:absolute; top:77%; left:71.2%; width:8px; height:14px; background:#b91c1c; border-radius:50%;"></div>
+        </div>
+        <div style="position:absolute; left:0; width:130px; top:24px; font-size:0.78rem; color:var(--text-primary); font-family:monospace;">
+          <div style="position:absolute; top:8%; right:10px; text-align:right;">Hamburg <span style="color:var(--text-muted); font-size:0.7rem;">-0.13</span></div>
+          <div style="position:absolute; top:31%; right:10px; text-align:right;">Leverkusen <span style="color:var(--text-muted); font-size:0.7rem;">+0.48</span></div>
+          <div style="position:absolute; top:54%; right:10px; text-align:right;">Tottenham <span style="color:var(--text-muted); font-size:0.7rem;">+0.54</span></div>
+          <div style="position:absolute; top:77%; right:10px; text-align:right;">LAFC <span style="color:var(--text-muted); font-size:0.7rem;">+0.85</span></div>
+        </div>
+      </div>
+      <p class="footnote" style="margin-top:0.6rem;">a_club은 tau와 달리 클럽마다 의미 있게 다름. Hamburg는 0 양쪽에 걸친 약체 구간, Tottenham/Leverkusen은 양수 영역. LAFC는 평균이 가장 높지만 HDI 폭 넓어 30경기 표본의 한계 그대로 노출.</p>
+    </div>
+
     <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">해석 — 클럽별 baseline은 다르고, 적응 시간은 같다</h3>
 
     <div class="step-block">
@@ -1113,6 +1255,37 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       </tbody>
     </table></div>
 
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — AUC 비교 (random baseline 0.5 기준)</h3>
+    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">x축은 0.0~1.0 AUC. 점선이 random baseline 0.5. 모든 막대가 0.5 근처에서 멈춤 → binary 분류 무력.</p>
+
+    <div style="margin: 1rem 0 1.5rem; max-width: 720px;">
+      <div style="position:relative; padding-left:200px; padding-right:30px;">
+        <!-- random baseline line -->
+        <div style="position:absolute; left: calc(200px + 50%); top:0; bottom:24px; width:0; border-left:2px dashed var(--accent); opacity:0.4;"></div>
+        <div style="position:absolute; left: calc(200px + 50%); top:-4px; transform:translateX(-50%); font-size:0.66rem; color:var(--accent); font-family:monospace;">random 0.5</div>
+
+        <div style="display:flex; align-items:center; margin-bottom:0.42rem; height:22px;">
+          <div style="position:absolute; left:0; width:200px; text-align:right; padding-right:10px; font-size:0.78rem; font-family:monospace; color:var(--text-secondary);">손흥민 골 여부</div>
+          <div style="background:var(--bg-secondary); border-radius:4px; height:22px; flex:1; position:relative;">
+            <div style="background:#a8a29e; width:47.9%; height:100%; border-radius:4px; padding-left:8px; display:flex; align-items:center; font-size:0.7rem; color:#fff; font-weight:700;">0.479</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; margin-bottom:0.42rem; height:22px;">
+          <div style="position:absolute; left:0; width:200px; text-align:right; padding-right:10px; font-size:0.78rem; font-family:monospace; color:var(--text-secondary);">손흥민 골+어시</div>
+          <div style="background:var(--bg-secondary); border-radius:4px; height:22px; flex:1; position:relative;">
+            <div style="background:#a8a29e; width:45.9%; height:100%; border-radius:4px; padding-left:8px; display:flex; align-items:center; font-size:0.7rem; color:#fff; font-weight:700;">0.459</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; margin-bottom:0.42rem; height:22px;">
+          <div style="position:absolute; left:0; width:200px; text-align:right; padding-right:10px; font-size:0.78rem; font-family:monospace; color:var(--text-secondary);">팀 2골 이상</div>
+          <div style="background:var(--bg-secondary); border-radius:4px; height:22px; flex:1; position:relative;">
+            <div style="background:#78716c; width:51.7%; height:100%; border-radius:4px; padding-left:8px; display:flex; align-items:center; font-size:0.7rem; color:#fff; font-weight:700;">0.517</div>
+          </div>
+        </div>
+      </div>
+      <p class="footnote" style="margin-top:0.7rem;">막대 끝이 random baseline(점선)과 시각적으로 구분되지 않음. v2 모델이 W/D/L 결과 예측엔 의미 있는 신호를 잡지만, "이 경기에 손흥민이 골을 넣을지" 같은 binary 정교 target에선 random과 차별 없음.</p>
+    </div>
+
     <p style="margin-top:1.2rem;">두 가지 finding이 보입니다.</p>
 
     <ul style="margin: 0 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
@@ -1125,6 +1298,142 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       <p>v2가 W/D/L 예측에 어느 정도 작동하는데 손흥민 본인 골 예측엔 무력하다는 건 흥미롭습니다. <strong>v2 피처는 "이 경기가 어떤 종류의 경기인가"(상대 강도, 홈/어웨이, 손흥민 폼 / 팀 폼)를 잡지만, "손흥민이 이 특정 경기에서 골을 넣을지"는 잡지 못합니다.</strong></p>
       <p>이건 단순한 한계가 아니라 모델이 학습한 것의 정체를 드러냅니다. v2가 잘 잡는 것은 "팀이 이길 것 같은 경기 / 질 것 같은 경기"의 macro 분포지, 손흥민 개인의 경기당 활약은 아닙니다. <em>"손흥민 데이터로 손흥민의 영향력을 모델링한다"는 학부 시절의 framing은, 실제로는 "손흥민 경기의 결과를 모델링한다"였던 것</em>으로 정정되어야 합니다.</p>
     </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- INTERACTIVE PREDICTOR -->
+<section id="predictor"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">12</div>
+    <div class="part-meta">
+      <div class="part-kicker">Interactive Demo</div>
+      <div class="part-title">예측기 &mdash; 변수를 직접 넣어보기</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>이 보고서에서 측정한 v2 모델은 LightGBM이지만, 브라우저에서 실시간으로 돌리려면 가벼운 모델이 필요합니다. 같은 9개 입력 피처(venue / form5_meanres / form5_winrate / club_match_idx / league_match_idx + club one-hot 4)로 <strong>multinomial logistic regression</strong>을 별도 학습해 계수만 페이지에 임베드했습니다. v2 풀 모델보다 단순하지만 상대적 변화를 보기에 충분합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">사용법</div>
+      <div class="qbox-text">아래 슬라이더와 버튼을 조작하면 [패배 / 무승부 / 승리] 확률이 즉시 갱신됩니다. 오른쪽 차트는 form5_meanres를 -1에서 +1까지 sweep하면서 승리 확률이 어떻게 변하는지 보여줍니다.</div>
+    </div>
+
+    <div class="predictor-grid">
+      <!-- 입력 카드 -->
+      <div class="predictor-card">
+        <div class="predictor-title">변수 입력</div>
+
+        <div class="predictor-row">
+          <span class="predictor-label">Venue</span>
+          <div class="toggle-group" id="pred-venue-group">
+            <button class="toggle-btn active" data-venue="0">Home</button>
+            <button class="toggle-btn" data-venue="1">Away</button>
+            <button class="toggle-btn" data-venue="2">Neutral</button>
+          </div>
+        </div>
+
+        <div class="predictor-row">
+          <span class="predictor-label">Club</span>
+          <select id="pred-club">
+            <option value="Hamburger SV">Hamburg</option>
+            <option value="Leverkusen">Leverkusen</option>
+            <option value="Tottenham Hotspur" selected>Tottenham</option>
+            <option value="LAFC">LAFC</option>
+          </select>
+        </div>
+
+        <div class="predictor-row">
+          <span class="predictor-label">form5_meanres <span class="footnote" style="font-size:0.7rem;">(-1 = 5연패, +1 = 5연승)</span></span>
+          <input type="range" id="pred-form5res" min="-1" max="1" step="0.1" value="0.2">
+          <span class="predictor-value" id="pred-form5res-val">+0.2</span>
+        </div>
+
+        <div class="predictor-row">
+          <span class="predictor-label">form5_winrate</span>
+          <input type="range" id="pred-form5wr" min="0" max="1" step="0.05" value="0.5">
+          <span class="predictor-value" id="pred-form5wr-val">0.50</span>
+        </div>
+
+        <div class="predictor-row">
+          <span class="predictor-label">club_match_idx <span class="footnote" style="font-size:0.7rem;">(현재 클럽 적응 정도)</span></span>
+          <input type="range" id="pred-clubidx" min="0" max="450" step="5" value="100">
+          <span class="predictor-value" id="pred-clubidx-val">100</span>
+        </div>
+
+        <div class="predictor-row">
+          <span class="predictor-label">league_match_idx <span class="footnote" style="font-size:0.7rem;">(리그 적응 정도)</span></span>
+          <input type="range" id="pred-leagueidx" min="0" max="350" step="5" value="80">
+          <span class="predictor-value" id="pred-leagueidx-val">80</span>
+        </div>
+
+        <p class="footnote" style="margin-top:1rem;">
+          모델: multinomial logistic regression (9 features, train acc 0.527).<br>
+          로딩 시 venue=Home / Tottenham / form5+0.2 / form5wr 0.50 / club#100 / league#80 — 평균적인 Tottenham 시기 손흥민의 home 경기.
+        </p>
+      </div>
+
+      <!-- 출력 카드 -->
+      <div class="predictor-card">
+        <div class="predictor-title">예측 확률</div>
+        <div class="prob-output" id="pred-output">
+          <div class="prob-row-out">
+            <span class="prob-class-label" style="color:var(--accent-green);">승 (W)</span>
+            <div class="prob-bar-bg"><div class="prob-bar-fill win" id="pred-bar-w" style="width:0%;"></div></div>
+            <span class="prob-pct" id="pred-pct-w">—</span>
+          </div>
+          <div class="prob-row-out">
+            <span class="prob-class-label" style="color:var(--accent-amber);">무 (D)</span>
+            <div class="prob-bar-bg"><div class="prob-bar-fill draw" id="pred-bar-d" style="width:0%;"></div></div>
+            <span class="prob-pct" id="pred-pct-d">—</span>
+          </div>
+          <div class="prob-row-out">
+            <span class="prob-class-label" style="color:var(--accent-red);">패 (L)</span>
+            <div class="prob-bar-bg"><div class="prob-bar-fill lose" id="pred-bar-l" style="width:0%;"></div></div>
+            <span class="prob-pct" id="pred-pct-l">—</span>
+          </div>
+        </div>
+
+        <div class="sweep-chart">
+          <div class="sweep-title">form5_meanres &minus;1 → +1 sweep시 P(W) 변화</div>
+          <svg id="pred-sweep-svg" width="100%" viewBox="0 0 360 140" style="display:block;">
+            <!-- baseline 0.5 -->
+            <line x1="40" y1="70" x2="350" y2="70" stroke="#d6d3d1" stroke-width="0.8" stroke-dasharray="3,3"/>
+            <text x="36" y="74" font-size="9" fill="#a8a29e" text-anchor="end" font-family="monospace">0.5</text>
+            <line x1="40" y1="20" x2="350" y2="20" stroke="#e7e5e4" stroke-width="0.6"/>
+            <text x="36" y="24" font-size="9" fill="#a8a29e" text-anchor="end" font-family="monospace">1.0</text>
+            <line x1="40" y1="120" x2="350" y2="120" stroke="#e7e5e4" stroke-width="0.6"/>
+            <text x="36" y="124" font-size="9" fill="#a8a29e" text-anchor="end" font-family="monospace">0.0</text>
+
+            <!-- x ticks -->
+            <line x1="40" y1="20" x2="40" y2="120" stroke="#d6d3d1" stroke-width="0.6"/>
+            <text x="40" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">-1</text>
+            <line x1="195" y1="20" x2="195" y2="120" stroke="#d6d3d1" stroke-width="0.6"/>
+            <text x="195" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">0</text>
+            <line x1="350" y1="20" x2="350" y2="120" stroke="#d6d3d1" stroke-width="0.6"/>
+            <text x="350" y="135" font-size="9" fill="#a8a29e" text-anchor="middle" font-family="monospace">+1</text>
+
+            <path id="pred-sweep-path" d="" fill="none" stroke="#15803d" stroke-width="2"/>
+            <circle id="pred-sweep-marker" cx="0" cy="0" r="4" fill="#15803d"/>
+            <text x="195" y="12" font-size="10" fill="#57534e" text-anchor="middle">P(Win) vs form5_meanres</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="viz-insight" style="margin-top:0.5rem;">
+      <div class="viz-insight-label">실험해볼 만한 것 4가지</div>
+      <p>
+        <strong>① venue 토글:</strong> 같은 폼/클럽에서 Home → Away로 바꾸면 P(W)가 줄어드는 것을 확인 (학부 시절 발견의 즉각적 시각 검증).<br>
+        <strong>② Hamburg vs Tottenham:</strong> 같은 form5/venue에서 클럽만 바꾸면 P(W)가 어떻게 다른지 (a_club baseline 차이의 시각화).<br>
+        <strong>③ form5_meanres = -1로 끝까지 끌어내리기:</strong> 5연패 상태일 때 P(W)가 어디까지 떨어지는지.<br>
+        <strong>④ club_match_idx slider 움직이기:</strong> 적응 인덱스 변화에 따른 P(W) 변동 (Part 5에서 측정한 -0.032 영향을 직접 체감).
+      </p>
+    </div>
+
+    <p class="footnote" style="margin-top:1.5rem;">
+      <strong>주의:</strong> 이 예측기는 단순화된 logistic regression이고 v2 본 보고서의 LightGBM(F1 0.378)보다 train acc 0.527(majority baseline ≈)로 약합니다. 정확한 예측이 아니라 <em>변수 효과 방향과 상대적 영향력을 보여주는 데모</em>로 사용하세요. 코드는 페이지 소스의 <code>&lt;script&gt;</code> 블록에 임베드되어 있어 별도 백엔드/API 없이 클라이언트에서 동작합니다.
+    </p>
   </div>
 </div></section>
 <hr class="divider">
@@ -1271,6 +1580,114 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
 
 <script>
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+
+// ============ Interactive Predictor ============
+// multinomial logistic regression coefficients (trained on 627 club matches)
+const PRED_MODEL = {
+  classes: [-1, 0, 1], // L, D, W
+  feats: ['venue_int','form5_meanres','form5_winrate','club_match_idx','league_match_idx','club_Hamburger SV','club_Leverkusen','club_Tottenham Hotspur','club_LAFC'],
+  coefs: [
+    [0.0989, 0.1235, -0.2043, 0.0894, 0.1669, 0.1245, 0.0462, -0.0465, -0.1463],
+    [0.1870, -0.0644, 0.1907, -0.0521, -0.0790, 0.0315, -0.0407, -0.0284, 0.0811],
+    [-0.2860, -0.0591, 0.0136, -0.0373, -0.0879, -0.1559, -0.0054, 0.0750, 0.0652]
+  ],
+  intercepts: [-0.0843, -0.4703, 0.5546],
+  scaler_mean: [0.5080, 0.2346, 0.5198, 173.225, 110.014, 0.0942, 0.1326, 0.7252, 0.0479],
+  scaler_scale: [0.5094, 0.3989, 0.2222, 141.708, 94.812, 0.2922, 0.3391, 0.4464, 0.2136]
+};
+
+function softmax(arr){
+  const m = Math.max(...arr);
+  const exps = arr.map(v => Math.exp(v - m));
+  const s = exps.reduce((a,b)=>a+b,0);
+  return exps.map(e => e/s);
+}
+
+function predictProba(rawX){
+  const x = rawX.map((v,i) => (v - PRED_MODEL.scaler_mean[i]) / PRED_MODEL.scaler_scale[i]);
+  const logits = PRED_MODEL.intercepts.map((b,k) =>
+    b + x.reduce((acc, xi, i) => acc + xi * PRED_MODEL.coefs[k][i], 0)
+  );
+  return softmax(logits); // [P(L), P(D), P(W)]
+}
+
+function buildInputArray(){
+  const venue = parseInt(document.querySelector('#pred-venue-group .toggle-btn.active').dataset.venue);
+  const club = document.getElementById('pred-club').value;
+  const f5r = parseFloat(document.getElementById('pred-form5res').value);
+  const f5wr = parseFloat(document.getElementById('pred-form5wr').value);
+  const cidx = parseFloat(document.getElementById('pred-clubidx').value);
+  const lidx = parseFloat(document.getElementById('pred-leagueidx').value);
+  const ch = club === 'Hamburger SV' ? 1 : 0;
+  const cl = club === 'Leverkusen' ? 1 : 0;
+  const ct = club === 'Tottenham Hotspur' ? 1 : 0;
+  const cla = club === 'LAFC' ? 1 : 0;
+  return [venue, f5r, f5wr, cidx, lidx, ch, cl, ct, cla];
+}
+
+function updatePrediction(){
+  const x = buildInputArray();
+  const probs = predictProba(x);
+  const pL = probs[0], pD = probs[1], pW = probs[2];
+  document.getElementById('pred-pct-w').textContent = (pW*100).toFixed(1)+'%';
+  document.getElementById('pred-pct-d').textContent = (pD*100).toFixed(1)+'%';
+  document.getElementById('pred-pct-l').textContent = (pL*100).toFixed(1)+'%';
+  document.getElementById('pred-bar-w').style.width = (pW*100)+'%';
+  document.getElementById('pred-bar-d').style.width = (pD*100)+'%';
+  document.getElementById('pred-bar-l').style.width = (pL*100)+'%';
+  // sweep
+  const baseX = [...x];
+  const N = 41;
+  let pathD = '';
+  let markerX = 0, markerY = 0;
+  const currentF5r = baseX[1];
+  for (let i = 0; i < N; i++){
+    const f = -1 + (i/(N-1)) * 2; // -1 to +1
+    const xi = [...baseX];
+    xi[1] = f;
+    const p = predictProba(xi);
+    const pw = p[2];
+    const px = 40 + (f + 1)/2 * 310;
+    const py = 120 - pw * 100;
+    pathD += (i === 0 ? 'M ' : ' L ') + px.toFixed(1) + ',' + py.toFixed(1);
+    if (Math.abs(f - currentF5r) < 0.05){ markerX = px; markerY = py; }
+  }
+  document.getElementById('pred-sweep-path').setAttribute('d', pathD);
+  document.getElementById('pred-sweep-marker').setAttribute('cx', markerX);
+  document.getElementById('pred-sweep-marker').setAttribute('cy', markerY);
+}
+
+function bindPredictor(){
+  // venue toggle
+  document.querySelectorAll('#pred-venue-group .toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#pred-venue-group .toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updatePrediction();
+    });
+  });
+  // club select
+  document.getElementById('pred-club').addEventListener('change', updatePrediction);
+  // sliders
+  ['pred-form5res','pred-form5wr','pred-clubidx','pred-leagueidx'].forEach(id => {
+    const el = document.getElementById(id);
+    const valEl = document.getElementById(id + '-val');
+    el.addEventListener('input', () => {
+      const v = parseFloat(el.value);
+      if (id === 'pred-form5res') valEl.textContent = (v >= 0 ? '+' : '') + v.toFixed(1);
+      else if (id === 'pred-form5wr') valEl.textContent = v.toFixed(2);
+      else valEl.textContent = Math.round(v);
+      updatePrediction();
+    });
+  });
+  updatePrediction();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bindPredictor);
+} else {
+  bindPredictor();
+}
 </script>
 </body>
 </html>
