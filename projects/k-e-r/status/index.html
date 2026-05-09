@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="DART 기반 한국 상장사 종합 진단. 출처 검증 + 추론 명시 + XBRL ground truth.">
+  <meta name="description" content="K_E_R 자동 실행 health + best-effort 섹션 추적.">
   <meta name="theme-color" content="#14213d">
-  <title>LG화학 — K_E_R</title>
-  <meta property="og:title" content="LG화학 — K_E_R">
-  <meta property="og:description" content="DART 기반 한국 상장사 종합 진단. 출처 검증 + 추론 명시 + XBRL ground truth.">
+  <title>Status — K_E_R</title>
+  <meta property="og:title" content="Status — K_E_R">
+  <meta property="og:description" content="K_E_R 자동 실행 health + best-effort 섹션 추적.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="K_E_R — Korea Equity Reports">
-  <meta property="og:url" content="https://soccz.github.io/projects/k-e-r">
+  <meta property="og:url" content="https://soccz.github.io/projects/k-e-r/status/">
   <meta property="og:image" content="https://soccz.github.io/assets/og-image.svg">
   <meta property="og:locale" content="ko_KR">
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LG화학 — K_E_R">
-  <meta name="twitter:description" content="DART 기반 한국 상장사 종합 진단. 출처 검증 + 추론 명시 + XBRL ground truth.">
+  <meta name="twitter:title" content="Status — K_E_R">
+  <meta name="twitter:description" content="K_E_R 자동 실행 health + best-effort 섹션 추적.">
   <meta name="twitter:image" content="https://soccz.github.io/assets/og-image.svg">
-  <link rel="canonical" href="https://soccz.github.io/projects/k-e-r">
+  <link rel="canonical" href="https://soccz.github.io/projects/k-e-r/status/">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,42 +140,33 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
   </header>
   
 <div class="container" style="padding-top:24px; padding-bottom:0; font-size:12px; color:var(--text-muted); letter-spacing:0.04em;">
-  <a href="../index.html" style="color:var(--text-muted)">K_E_R</a>
+  <a href="../" style="color:var(--text-muted)">K_E_R</a>
   &nbsp;/&nbsp;
-  <span style="color:var(--text-secondary)">LG화학</span>
+  <span style="color:var(--text-secondary)">Status</span>
 </div>
   <div class="container">
     
 <div class="page-hero">
-  <span class="doc-tag">Issuer Coverage</span>
-  <h1>LG화학</h1>
-  <p class="subtitle">워치리스트 추적 종목 · 화학·소재 — 사업보고서 발행 예정</p>
-  
-<div class="foreign-holding-chart">
-  <div class="fhc-header">
-    <span class="fhc-label">외인 보유 비중 (KRX 30일)</span>
-    <span class="fhc-value">36.78%</span>
-    <span class="fhc-change fhc-up">+0.22pp 5d</span>
-  </div>
-  <svg viewBox="0 0 280 80" class="fhc-svg fhc-up" preserveAspectRatio="none">
-    <polyline points="0.0,64.2 9.7,61.6 19.3,60.4 29.0,61.6 38.6,68.0 48.3,68.0 57.9,66.7 67.6,62.9 77.2,59.1 86.9,54.0 96.6,50.2 106.2,46.4 115.9,42.5 125.5,46.4 135.2,46.4 144.8,41.3 154.5,40.0 164.1,37.5 173.8,31.1 183.4,31.1 193.1,29.8 202.8,26.0 212.4,27.3 222.1,28.5 231.7,22.2 241.4,18.4 251.0,19.6 260.7,12.0 270.3,15.8 280.0,13.3" fill="none" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
-    <circle cx="280.0" cy="13.3" r="2.5" class="fhc-dot"/>
-  </svg>
-  <div class="fhc-axis">
-    <span>2026-03-26</span>
-    <span>35.44% – 36.81%</span>
-    <span>2026-05-08</span>
-  </div>
-</div>
+  <span class="doc-tag">System Health</span>
+  <h1>Status</h1>
+  <p class="subtitle">자동 실행 결과 + validator 부분 통과 섹션 추적.</p>
 </div>
 
-<div class="empty-coverage">
-  <p class="empty-coverage-title">아직 사업보고서 미발행</p>
-  <p class="empty-coverage-meta">
-    워치리스트 24종목 정기보고서 자동 발행 cron 진행 중. 발행 즉시 본 페이지에 노출.
-    상단 외인 보유 비중 추이는 KRX 일별 데이터 기반 실시간 갱신.
+<div class="container" style="margin-top:32px">
+  <h2 style="font-size:14px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:14px;">최근 자동 실행</h2>
+  <table class="status-table">
+    <thead><tr><th>상태</th><th>Timer</th><th>마지막 실행</th><th>상세</th></tr></thead>
+    <tbody><tr><td colspan="4">실행 기록 없음 (첫 timer 발화 전)</td></tr></tbody>
+  </table>
+
+  <h2 style="font-size:14px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin:40px 0 14px;">Best-effort 섹션 (수동 review 권장)</h2>
+  <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
+    V1~V4 validator가 4번 모두 reject한 섹션. 무한 retry 방지를 위해 last attempt 채택. 실제 보고서에 들어갔지만 출처·자릿수·cross-section 검증 부분 통과.
   </p>
-  <a href="../index.html" class="empty-coverage-back">← 24종목 마스터 인덱스</a>
+  <table class="status-table">
+    <thead><tr><th>회사</th><th>Period</th><th>Section</th><th>날짜</th></tr></thead>
+    <tbody><tr><td colspan="4">best-effort 섹션 0건 — 모두 V1~V4 통과 ✓</td></tr></tbody>
+  </table>
 </div>
   </div>
   <footer class="site-footer">
