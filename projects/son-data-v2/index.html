@@ -357,26 +357,29 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
 
     <h3 style="font-size:1.05rem; margin: 2rem 0 0.6rem; font-weight:700;">v1의 예측 분포 — 모든 경기를 W로 예측</h3>
 
-    <p>v1의 51.6% 정확도가 분류 능력이 아닐 수 있다는 의심에서, v1 모델이 실제로 어떤 클래스를 어떻게 예측했는지를 직접 확인했습니다. 테스트셋 126경기에 대한 confusion matrix:</p>
+    <p>v1의 51.6% 정확도가 분류 능력이 아닐 수 있다는 의심에서, v1 모델이 실제로 어떤 클래스를 어떻게 예측했는지를 직접 확인했습니다. 테스트셋 126경기에 대한 confusion matrix — <strong>'0' 셀은 빈 데이터가 아니라 "v1이 그 클래스로 예측한 경기가 0개"라는 사실 자체</strong>입니다:</p>
 
-    <div class="confusion">
+    <div class="confusion" data-tooltip="행=실제 결과, 열=v1 예측. 빗금친 0 셀은 모두 'v1이 해당 클래스로 예측한 경기가 0개'.">
       <div class="conf-cell head"></div>
       <div class="conf-cell head">Pred L</div>
       <div class="conf-cell head">Pred D</div>
       <div class="conf-cell head">Pred W</div>
       <div class="conf-cell head">True L (36)</div>
-      <div class="conf-cell zero">0</div>
-      <div class="conf-cell zero">0</div>
-      <div class="conf-cell miss">36</div>
+      <div class="conf-cell zero" data-tooltip="<strong>True L → Pred L</strong><br>0 / 36 (recall = 0%)<br>패배를 패배로 맞춘 경우 없음">0</div>
+      <div class="conf-cell zero" data-tooltip="<strong>True L → Pred D</strong><br>0 / 36<br>패배를 무승부로 예측 안 함">0</div>
+      <div class="conf-cell miss" data-tooltip="<strong>True L → Pred W</strong><br>36 / 36 (모두 오분류)<br>패배 36경기 모두 승리로 예측">36</div>
       <div class="conf-cell head">True D (25)</div>
-      <div class="conf-cell zero">0</div>
-      <div class="conf-cell zero">0</div>
-      <div class="conf-cell miss">25</div>
+      <div class="conf-cell zero" data-tooltip="<strong>True D → Pred L</strong><br>0 / 25<br>무승부를 패배로 예측 안 함">0</div>
+      <div class="conf-cell zero" data-tooltip="<strong>True D → Pred D</strong><br>0 / 25 (recall = 0%)<br>무승부를 무승부로 맞춘 경우 없음">0</div>
+      <div class="conf-cell miss" data-tooltip="<strong>True D → Pred W</strong><br>25 / 25 (모두 오분류)<br>무승부 25경기 모두 승리로 예측">25</div>
       <div class="conf-cell head">True W (65)</div>
-      <div class="conf-cell zero">0</div>
-      <div class="conf-cell zero">0</div>
-      <div class="conf-cell diag">65</div>
+      <div class="conf-cell zero" data-tooltip="<strong>True W → Pred L</strong><br>0 / 65<br>승리를 패배로 예측 안 함">0</div>
+      <div class="conf-cell zero" data-tooltip="<strong>True W → Pred D</strong><br>0 / 65<br>승리를 무승부로 예측 안 함">0</div>
+      <div class="conf-cell diag" data-tooltip="<strong>True W → Pred W</strong><br>65 / 65 (recall = 100%)<br>모든 경기를 W로 예측해서 자동 정답">65</div>
     </div>
+    <p style="font-size:0.78rem; color:var(--text-muted); font-style:italic; margin-top:-0.4rem;">
+      → 빗금 = "예측 0개". 색깔 셀에 마우스 hover 시 상세.
+    </p>
 
     <div class="body-text">
       <p>126개 테스트 경기 <strong>모두 "승리(W)"로 예측</strong>. 패배 36경기 중 0개 맞춤. 무승부 25경기 중 0개 맞춤. 승리 65경기는 100% 맞췄지만, 그건 모든 걸 W로 예측했기 때문입니다.</p>
@@ -1381,10 +1384,38 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
     </div>
   </div>
 </div></section>
+<hr class="divider">
+
+<!-- Closing -->
+<section id="closing"><div class="container narrow">
+  <div class="section-label">Closing</div>
+  <h2 class="section-title">한 문단으로 닫기</h2>
+  <div class="body-text">
+    <p>학부 시절 4단 사고 흐름 — <em>① 결과 라벨링 → ② 통계 검증 → ③ 가중 인코딩 → ④ R&sup2; 재검증</em> — 은 6개 실험 모두에서 살아남았습니다. v1의 51.6% 정확도는 손흥민의 클럽 승률을 모방한 환상이었고, 누수와 과소피처와 accuracy 기준 GridSearch의 3중 조합이 그 환상을 만들었습니다. v2는 같은 사고 흐름을 fold 안으로 옮겨 macro F1을 +66.4% 끌어올렸고, venue 직관은 Ablation, SHAP, Bayesian, Counterfactual OLS의 4중 검증으로 인과적 효과임이 확정되었습니다. 다만 이 모델이 학습한 것은 <em>손흥민의 영향력</em>이 아니라 <em>팀 결과의 macro 패턴</em>이었고, 적응 시간 차이는 표본 크기 안에서 통계적으로 동등합니다. 회고는 회고의 대상이 되었고, 회고 위에 회고가 한 층 더 쌓였습니다.</p>
+  </div>
+
+  <div class="stat-strip">
+    <div class="stat-tile"><span class="stat-tile-num">6</span><div class="stat-tile-label">검증 실험</div></div>
+    <div class="stat-tile"><span class="stat-tile-num green">+66.4%</span><div class="stat-tile-label">macro F1</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">4 / 4</span><div class="stat-tile-label">사고 흐름 살아남음</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">2</span><div class="stat-tile-label">v1 회고 정정</div></div>
+    <div class="stat-tile"><span class="stat-tile-num amber">14.7년</span><div class="stat-tile-label">2011 — 2026</div></div>
+  </div>
+
+  <p class="footnote" style="text-align:center; margin-top:1.5rem;">
+    이 보고서는 <a href="/projects/son-data/" style="border-bottom:1px solid var(--border-light); color:var(--accent);">v1 회고</a>의 v3 챕터입니다.
+    이어지는 다음 단계는 v3에서.
+  </p>
+</div></section>
 
 <footer><div class="footer-text">
-  Son Data v2 &mdash; 사고의 흐름을 측정 가능한 실험으로 (보고서판)<br>
-  <a href="/projects/son-data/">v1 회고 페이지</a> &middot; <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="/">Home</a>
+  <strong>Son Data v2</strong> &mdash; 사고의 흐름을 측정 가능한 실험으로<br>
+  6 실험 &middot; 627 클럽 경기 &middot; 14.7년 &middot; macro F1 +66.4%<br>
+  <a href="/projects/son-data/">v1 회고</a> &middot;
+  <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer">GitHub</a> &middot;
+  <a href="https://github.com/soccz/son_data/blob/main/README.md" target="_blank" rel="noopener noreferrer">README</a> &middot;
+  <a href="/">Home</a><br>
+  <span style="font-size:0.7rem; opacity:0.7;">MIT License &middot; soccz, 2026</span>
 </div></footer>
 
 <script src="/projects/son-data/_shared/theme.js"></script>
