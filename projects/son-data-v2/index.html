@@ -5,125 +5,17 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Son Data v2 — 사고의 흐름을 측정 가능한 실험으로</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/projects/son-data/_shared/style.css">
+  <meta name="description" content="손흥민 경기 데이터 분석 v2 — 6개 검증 실험 + 인터랙티브 예측기. v1 회고를 측정 가능한 실험으로 다시 펼친 보고서.">
+  <meta property="og:title" content="Son Data v2 — 사고의 흐름을 측정 가능한 실험으로">
+  <meta property="og:description" content="6개 실험으로 학부 시절 사고 흐름이 살아남았는지 측정. F1 +66.4%, venue 4중 검증, 인터랙티브 예측기 포함.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
-
-    :root {
-      --bg-primary: #fafaf9;
-      --bg-secondary: #f5f5f4;
-      --bg-card: #ffffff;
-      --bg-card-hover: #fafaf9;
-      --text-primary: #1c1917;
-      --text-secondary: #57534e;
-      --text-muted: #a8a29e;
-      --accent: #44403c;
-      --accent-dim: rgba(68, 64, 60, 0.07);
-      --accent-red: #b91c1c;
-      --accent-amber: #b45309;
-      --accent-green: #15803d;
-      --border: #e7e5e4;
-      --border-light: #d6d3d1;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
-
-    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.75; -webkit-font-smoothing: antialiased; }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
-    nav.scrolled { background: rgba(250,250,249,0.95); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
-    .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-links a.active { color: var(--accent); font-weight: 700; }
-
-    /* Hero */
-    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%); }
-    .hero-content { position: relative; max-width: 880px; }
-    .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem; }
-    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
-    .hero-stats { display: flex; justify-content: center; gap: 2.4rem; flex-wrap: wrap; }
-    .hero-stat { text-align: center; }
-    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
-    .hero-stat-num.green { color: var(--accent-green); }
-    .hero-stat-num.amber { color: var(--accent-amber); }
-    .hero-stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em; }
-    .hero-link-row { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
-    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s; }
-    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
-    .scroll-ind { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em; animation: float 2s ease-in-out infinite; }
-    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
-
-    /* Section */
-    section { padding: 5rem 2rem; }
-    .container { max-width: 1000px; margin: 0 auto; }
-    .container.narrow { max-width: 820px; }
-    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
-    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
-    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 820px; line-height: 1.85; margin-bottom: 2rem; }
-    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
-
-    /* Part heading */
-    .part-heading { display: grid; grid-template-columns: 110px 1fr; gap: 1.5rem; align-items: start; padding: 2rem 0 1rem; border-top: 2px solid var(--accent); margin-top: 1rem; }
-    .part-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: var(--text-muted); line-height: 1; }
-    .part-meta { padding-top: 0.6rem; }
-    .part-kicker { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
-    .part-title { font-family: 'Noto Serif KR', serif; font-size: 1.7rem; font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; }
-
-    /* Body text */
-    .body-text { font-size: 0.95rem; color: var(--text-primary); line-height: 1.9; max-width: 820px; margin: 0 auto; }
-    .body-text p { margin-bottom: 1.2rem; }
-    .body-text strong { font-weight: 700; color: var(--text-primary); }
-    .body-text em { color: var(--accent); font-style: italic; }
-    .body-text code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-secondary); padding: 0.1rem 0.4rem; border-radius: 3px; color: var(--accent); }
-
-    /* Question / Hypothesis box */
-    .qbox { background: var(--bg-card); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 1.1rem 1.4rem; margin: 1.2rem auto; max-width: 820px; }
-    .qbox-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 0.4rem; }
-    .qbox-text { font-size: 0.92rem; color: var(--text-primary); line-height: 1.75; font-style: italic; }
-
-    /* Cards */
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-    .card:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .card-text { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.7; }
-
-    /* Tags */
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
-    .tag { font-size: 0.66rem; padding: 0.18rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
-    .tag.bad { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.25); }
-    .tag.warn { background: rgba(180,83,9,0.08); color: var(--accent-amber); border-color: rgba(180,83,9,0.25); }
-    .tag.good { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.25); }
-
-    /* Table */
-    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin: 1rem 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    thead { background: var(--bg-card); }
-    th { padding: 0.85rem 1rem; text-align: left; font-weight: 500; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); white-space: nowrap; }
-    td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); }
-    tr:hover { background: #f5f5f4; }
-    .num { font-family: monospace; }
-    .pos { color: var(--accent-green); font-weight: 600; }
-    .neg { color: var(--accent-red); font-weight: 600; }
-    .amber { color: var(--accent-amber); font-weight: 600; }
-    .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.7rem; font-weight: 500; background: #f5f5f4; color: #44403c; border: 1px solid #d6d3d1; }
-    .badge.bad { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.25); }
-    .badge.good { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.25); }
-    .badge.warn { background: rgba(180,83,9,0.08); color: var(--accent-amber); border-color: rgba(180,83,9,0.25); }
-
-    /* Code block */
-    .code-block { background: #1c1917; border: 1px solid #44403c; border-radius: 8px; padding: 1.2rem 1.5rem; overflow-x: auto; margin: 1rem auto; max-width: 820px; }
-    .code-block code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; color: #e7e5e4; line-height: 1.8; white-space: pre; }
-    .code-block .cv { color: #b8b1aa; font-style: normal; }
-    .code-block .cs { color: #86efac; }
-    .code-block .cn { color: #fcd34d; }
-    .code-block .cf { color: #93c5fd; }
-    .code-block .ck { color: #f9a8d4; }
+    /* v2 페이지 고유 스타일 (공통 CSS에 없는 예측기 + 일부 컴포넌트) */
 
     /* Predictor */
     .predictor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
@@ -133,13 +25,13 @@
     .predictor-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; gap: 1rem; }
     .predictor-label { font-size: 0.83rem; color: var(--text-secondary); flex-shrink: 0; min-width: 130px; }
     .predictor-value { font-family: monospace; font-size: 0.82rem; color: var(--accent); min-width: 50px; text-align: right; }
-    .predictor-row input[type="range"] { flex: 1; }
+    .predictor-row input[type="range"] { flex: 1; accent-color: var(--accent); }
     .predictor-row select, .predictor-row .toggle-group { flex: 1; }
     .toggle-group { display: flex; gap: 0.4rem; }
     .toggle-btn { flex: 1; padding: 0.4rem 0.6rem; border: 1px solid var(--border); background: var(--bg-secondary); cursor: pointer; font-size: 0.78rem; border-radius: 4px; transition: all 0.15s; color: var(--text-secondary); }
-    .toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .toggle-btn.active { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
     .toggle-btn:hover { border-color: var(--accent); }
-    .predictor-row select { padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card); font-size: 0.82rem; color: var(--text-primary); }
+    .predictor-row select { padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-card); color: var(--text-primary); font-size: 0.82rem; font-family: inherit; }
 
     /* Probability output */
     .prob-output { display: flex; flex-direction: column; gap: 0.8rem; padding: 0.4rem 0; }
@@ -155,94 +47,6 @@
     /* Sweep chart */
     .sweep-chart { margin-top: 1rem; padding: 0.8rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; }
     .sweep-title { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem; font-family: monospace; }
-
-    /* Insight panel */
-    .viz-insight { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c; border-radius: 0 8px 8px 0; padding: 1.2rem 1.7rem; margin: 1.5rem auto; max-width: 820px; }
-    .viz-insight.green { border-left-color: var(--accent-green); }
-    .viz-insight.amber { border-left-color: var(--accent-amber); }
-    .viz-insight.red { border-left-color: var(--accent-red); }
-    .viz-insight-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
-    .viz-insight p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.85; }
-    .viz-insight p + p { margin-top: 0.7rem; }
-
-    /* Step block */
-    .step-block { display: grid; grid-template-columns: 56px 1fr; gap: 1.2rem; align-items: start; margin-bottom: 1.5rem; }
-    .step-num-circle { width: 46px; height: 46px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700; color: var(--accent); flex-shrink: 0; }
-    .step-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.4rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-    .step-title { font-weight: 700; font-size: 0.96rem; margin-bottom: 0.4rem; }
-    .step-desc { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.8; }
-
-    /* Mismatch */
-    .mismatch-example { background: var(--bg-secondary); border-radius: 6px; padding: 1.2rem 1.4rem; margin: 1rem 0; border-left: 3px solid #78716c; }
-    .mismatch-id { font-family: monospace; font-size: 0.76rem; font-weight: 700; color: var(--accent); margin-bottom: 0.6rem; }
-    .mismatch-line { font-size: 0.84rem; color: var(--text-primary); margin-bottom: 0.4rem; line-height: 1.7; }
-    .mismatch-line .mtag { display: inline-block; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.14rem 0.5rem; border-radius: 3px; margin-right: 0.45rem; vertical-align: middle; }
-    .mtag-v1 { background: rgba(185,28,28,0.12); color: var(--accent-red); }
-    .mtag-v2 { background: rgba(21,128,61,0.12); color: var(--accent-green); }
-    .mtag-truth { background: rgba(120,113,108,0.15); color: #57534e; }
-    .mtag-then { background: rgba(120,113,108,0.15); color: #57534e; }
-    .mtag-now { background: rgba(21,128,61,0.12); color: var(--accent-green); }
-
-    /* Stat strip */
-    .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0 2.5rem; }
-    .stat-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1rem; text-align: center; }
-    .stat-tile-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--accent); display: block; line-height: 1.2; }
-    .stat-tile-num.green { color: var(--accent-green); }
-    .stat-tile-num.red { color: var(--accent-red); }
-    .stat-tile-num.amber { color: var(--accent-amber); }
-    .stat-tile-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
-
-    /* Tech grid */
-    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
-    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
-    .tech-cat { font-size: 0.66rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
-    .tech-list { list-style: none; }
-    .tech-list li { font-size: 0.8rem; color: var(--text-secondary); padding: 0.22rem 0 0.22rem 1rem; position: relative; }
-    .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
-
-    /* Confusion grid */
-    .confusion { display: grid; grid-template-columns: 100px repeat(3, 1fr); gap: 2px; margin: 1rem 0; max-width: 480px; }
-    .conf-cell { background: var(--bg-card); border: 1px solid var(--border); padding: 0.65rem; text-align: center; font-family: monospace; font-size: 0.85rem; }
-    .conf-cell.head { background: var(--bg-secondary); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }
-    .conf-cell.diag { background: rgba(21,128,61,0.08); }
-    .conf-cell.miss { background: rgba(185,28,28,0.08); color: var(--accent-red); }
-    .conf-cell.zero { color: var(--text-muted); }
-
-    /* Bar chart */
-    .bar-chart { margin: 1.5rem 0; }
-    .bar-row { display: flex; align-items: center; margin-bottom: 0.42rem; gap: 0.7rem; }
-    .bar-label { width: 200px; flex-shrink: 0; font-size: 0.78rem; font-weight: 500; color: var(--text-primary); text-align: right; font-family: monospace; }
-    .bar-bg { flex: 1; max-width: 580px; height: 22px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 0.7rem; font-weight: 700; color: #fff; min-width: 40px; }
-    .bar-fill.high { background: var(--accent); }
-    .bar-fill.mid { background: #78716c; }
-    .bar-fill.low { background: #a8a29e; }
-    .bar-fill.bad { background: var(--accent-red); }
-    .bar-fill.good { background: var(--accent-green); }
-
-    /* Lineage table */
-    .lineage-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin: 1rem 0; }
-    .lineage-table th, .lineage-table td { padding: 0.85rem 1rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
-    .lineage-table th { background: var(--bg-secondary); font-weight: 700; font-size: 0.75rem; }
-    .lineage-table .step-num { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-muted); font-weight: 700; }
-
-    /* Footnote */
-    .footnote { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 0.6rem; line-height: 1.7; }
-
-    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
-    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
-    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      section { padding: 4rem 1.3rem; }
-      .part-heading { grid-template-columns: 1fr; gap: 0.4rem; }
-      .part-num { font-size: 1.6rem; }
-      .step-block { grid-template-columns: 1fr; gap: 0.6rem; }
-      .step-num-circle { margin-bottom: 0.3rem; }
-      .bar-label { width: 130px; font-size: 0.7rem; }
-      .confusion { grid-template-columns: 70px repeat(3, 1fr); }
-    }
   </style>
 </head>
 <body>
@@ -266,6 +70,7 @@
       <li><a href="#predictor" style="color:var(--accent-green);font-weight:700;">예측기</a></li>
       <li><a href="#part12">Synthesis</a></li>
       <li><a href="/projects/son-data/" style="color:var(--accent-amber);">v1 회고</a></li>
+      <li><button class="theme-toggle" aria-label="다크 모드 전환">☾ Dark</button></li>
     </ul>
   </div>
 </nav>
@@ -1578,23 +1383,16 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
   <a href="/projects/son-data/">v1 회고 페이지</a> &middot; <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="/">Home</a>
 </div></footer>
 
+<script src="/projects/son-data/_shared/theme.js"></script>
 <script>
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
 
+const _obs_v2=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>_obs_v2.observe(el));
+
 // ============ Interactive Predictor ============
-// multinomial logistic regression coefficients (trained on 627 club matches)
-const PRED_MODEL = {
-  classes: [-1, 0, 1], // L, D, W
-  feats: ['venue_int','form5_meanres','form5_winrate','club_match_idx','league_match_idx','club_Hamburger SV','club_Leverkusen','club_Tottenham Hotspur','club_LAFC'],
-  coefs: [
-    [0.0989, 0.1235, -0.2043, 0.0894, 0.1669, 0.1245, 0.0462, -0.0465, -0.1463],
-    [0.1870, -0.0644, 0.1907, -0.0521, -0.0790, 0.0315, -0.0407, -0.0284, 0.0811],
-    [-0.2860, -0.0591, 0.0136, -0.0373, -0.0879, -0.1559, -0.0054, 0.0750, 0.0652]
-  ],
-  intercepts: [-0.0843, -0.4703, 0.5546],
-  scaler_mean: [0.5080, 0.2346, 0.5198, 173.225, 110.014, 0.0942, 0.1326, 0.7252, 0.0479],
-  scaler_scale: [0.5094, 0.3989, 0.2222, 141.708, 94.812, 0.2922, 0.3391, 0.4464, 0.2136]
-};
+// 모델 계수는 predictor_model.json에서 fetch 로드 (GitHub Pages 정적 호스팅에서 same-origin OK)
+let PRED_MODEL = null;
 
 function softmax(arr){
   const m = Math.max(...arr);
@@ -1604,6 +1402,7 @@ function softmax(arr){
 }
 
 function predictProba(rawX){
+  if (!PRED_MODEL) return [1/3, 1/3, 1/3]; // 모델 로드 전 fallback
   const x = rawX.map((v,i) => (v - PRED_MODEL.scaler_mean[i]) / PRED_MODEL.scaler_scale[i]);
   const logits = PRED_MODEL.intercepts.map((b,k) =>
     b + x.reduce((acc, xi, i) => acc + xi * PRED_MODEL.coefs[k][i], 0)
@@ -1683,10 +1482,23 @@ function bindPredictor(){
   updatePrediction();
 }
 
+async function initPredictor() {
+  try {
+    const res = await fetch('/projects/son-data-v2/predictor_model.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    PRED_MODEL = await res.json();
+    bindPredictor();
+  } catch (e) {
+    console.error('predictor model load failed:', e);
+    const out = document.getElementById('pred-output');
+    if (out) out.innerHTML = '<p style="color:var(--accent-red);font-size:0.85rem;">예측기 모델 로드 실패: ' + e.message + '</p>';
+  }
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', bindPredictor);
+  document.addEventListener('DOMContentLoaded', initPredictor);
 } else {
-  bindPredictor();
+  initPredictor();
 }
 </script>
 </body>
