@@ -69,6 +69,7 @@
       <li><a href="#part11">Targets</a></li>
       <li><a href="#predictor" style="color:var(--accent-green);font-weight:700;">예측기</a></li>
       <li><a href="#part12">Synthesis</a></li>
+      <li><a href="#closing">Closing</a></li>
       <li><a href="/projects/son-data/" style="color:var(--accent-amber);">v1 회고</a></li>
       <li><button class="theme-toggle" aria-label="다크 모드 전환">☾ Dark</button></li>
     </ul>
@@ -1250,10 +1251,10 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
 </div></section>
 <hr class="divider">
 
-<!-- PART 12 -->
+<!-- PART 13 -->
 <section id="part12"><div class="container">
   <div class="part-heading">
-    <div class="part-num">12</div>
+    <div class="part-num">13</div>
     <div class="part-meta">
       <div class="part-kicker">Synthesis</div>
       <div class="part-title">사고 흐름의 진화 &mdash; 종합 정리</div>
@@ -1333,7 +1334,7 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
 <!-- TECH STACK -->
 <section id="tech"><div class="container">
   <div class="part-heading">
-    <div class="part-num">13</div>
+    <div class="part-num">14</div>
     <div class="part-meta">
       <div class="part-kicker">Stack</div>
       <div class="part-title">기술 스택</div>
@@ -1356,7 +1357,7 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
 <!-- NEXT -->
 <section id="next"><div class="container">
   <div class="part-heading">
-    <div class="part-num">14</div>
+    <div class="part-num">15</div>
     <div class="part-meta">
       <div class="part-kicker">Future Work</div>
       <div class="part-title">다음 단계</div>
@@ -1386,10 +1387,15 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
 </div></section>
 <hr class="divider">
 
-<!-- Closing -->
-<section id="closing"><div class="container narrow">
-  <div class="section-label">Closing</div>
-  <h2 class="section-title">한 문단으로 닫기</h2>
+<!-- Closing — final Part -->
+<section id="closing"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">16</div>
+    <div class="part-meta">
+      <div class="part-kicker">Closing</div>
+      <div class="part-title">한 문단으로 닫기</div>
+    </div>
+  </div>
   <div class="body-text">
     <p>학부 시절 4단 사고 흐름 — <em>① 결과 라벨링 → ② 통계 검증 → ③ 가중 인코딩 → ④ R&sup2; 재검증</em> — 은 6개 실험 모두에서 살아남았습니다. v1의 51.6% 정확도는 손흥민의 클럽 승률을 모방한 환상이었고, 누수와 과소피처와 accuracy 기준 GridSearch의 3중 조합이 그 환상을 만들었습니다. v2는 같은 사고 흐름을 fold 안으로 옮겨 macro F1을 +66.4% 끌어올렸고, venue 직관은 Ablation, SHAP, Bayesian, Counterfactual OLS의 4중 검증으로 인과적 효과임이 확정되었습니다. 다만 이 모델이 학습한 것은 <em>손흥민의 영향력</em>이 아니라 <em>팀 결과의 macro 패턴</em>이었고, 적응 시간 차이는 표본 크기 안에서 통계적으로 동등합니다. 회고는 회고의 대상이 되었고, 회고 위에 회고가 한 층 더 쌓였습니다.</p>
   </div>
