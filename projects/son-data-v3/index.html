@@ -208,7 +208,7 @@
       </tbody>
     </table></div>
 
-    <p style="margin-top:1.2rem;">표만 봐도 <strong>76+분 23.1%</strong>로 압도적으로 많습니다. v3 통계 모델은 이 패턴을 *정확히 얼마나 강한 효과인지* 신뢰구간과 함께 답합니다.</p>
+    <p class="mt-1-2">표만 봐도 <strong>76+분 23.1%</strong>로 압도적으로 많습니다. v3 통계 모델은 이 패턴을 *정확히 얼마나 강한 효과인지* 신뢰구간과 함께 답합니다.</p>
 
     <h3 class="h3-sub">v2 데이터와 join 후 모델 입력</h3>
     <p>이벤트 → 시간대 집계 → v2 클럽 데이터(626 클럽 경기)와 (date, opponent) 키로 join. 결과: <strong>3,780 row</strong> (626 × 6).</p>
@@ -785,11 +785,11 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
         <tr><td>31-45</td><td class="num" class="ta-r">-0.280</td><td class="num">[-0.763, +0.222]</td><td class="num">0.94x</td></tr>
         <tr><td>46-60</td><td class="num" class="ta-r">-0.035</td><td class="num">[-0.508, +0.451]</td><td class="num">1.20x</td></tr>
         <tr><td>61-75</td><td class="num" class="ta-r">+0.169</td><td class="num">[-0.294, +0.647]</td><td class="num pos">1.48x</td></tr>
-        <tr><td><strong>76+</strong></td><td class="num pos" style="text-align:right; font-weight:700;">+0.358</td><td class="num">[-0.103, +0.828]</td><td class="num pos" style="font-weight:700;">1.78x</td></tr>
+        <tr><td><strong>76+</strong></td><td class="num pos" class="ta-r-bold">+0.358</td><td class="num">[-0.103, +0.828]</td><td class="num pos" style="font-weight:700;">1.78x</td></tr>
       </tbody>
     </table></div>
 
-    <div class="viz-insight" style="margin-top:1.5rem;">
+    <div class="viz-insight" class="mt-1-5">
       <div class="viz-insight-label">개별 빈 HDI는 0 포함이지만, *상대 ratio*는 강함</div>
       <p>각 β_bin의 절대 HDI가 0을 포함하는 것은 mu_alpha와의 trade-off 때문입니다. <strong>중요한 건 빈 *간* 차이</strong>: 76+ 평균(+0.358) - 0-15 평균(-0.221) = <strong>+0.579 log scale 차이 = 1.78x hazard ratio</strong>. 이게 단조 증가 패턴이며 골 분포의 주요 신호.</p>
     </div>
@@ -888,7 +888,7 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
 </svg>
     </div>
 
-    <div class="viz-insight green" style="margin-top:1.5rem;">
+    <div class="viz-insight green" class="mt-1-5">
       <div class="viz-insight-label">핵심 contrast — 첫 통계적으로 유의한 효과</div>
       <p>이전 분석에서 개별 β_bin HDI는 0을 포함했지만 <em>contrast posterior</em>를 직접 뽑으면 76+ vs 0-15가 0(즉 HR=1)을 95% HDI 안에 포함하지 않습니다. p(HR &gt; 1) = 99.7%. <strong>v3에서 처음으로 통계적으로 유의한 효과</strong>입니다.</p>
     </div>
@@ -977,7 +977,7 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
       </tbody>
     </table></div>
 
-    <div class="viz-insight green" style="margin-top:1.5rem;">
+    <div class="viz-insight green" class="mt-1-5">
       <div class="viz-insight-label">PPC 결과 — 모델 합치도 양호</div>
       <p>모든 6 시간대에서 실제 골(흰 원)이 예측 95% HDI(연한 막대) 안에 위치합니다. 예측 평균(채운 점)도 실제와 거의 일치 — 가장 큰 차이도 1골 미만 (예: 31-45 빈에서 obs 27 vs pred 28.4). <strong>모델이 데이터의 구조적 패턴을 잘 재현</strong>하며, 시스템적 bias 없음.</p>
     </div>
@@ -1023,10 +1023,10 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
           <div style="position:absolute; top:77%; left:55.4%; width:8px; height:14px; background:#15803d; border-radius:50%;"></div>
         </div>
         <div style="position:absolute; left:0; width:130px; top:24px; font-size:0.78rem; color:var(--text-primary); font-family:monospace;">
-          <div style="position:absolute; top:8%; right:10px; text-align:right;">Hamburg <span style="color:var(--text-muted); font-size:0.7rem;">-2.93</span></div>
-          <div style="position:absolute; top:31%; right:10px; text-align:right;">LAFC <span style="color:var(--text-muted); font-size:0.7rem;">-2.84</span></div>
-          <div style="position:absolute; top:54%; right:10px; text-align:right;">Leverkusen <span style="color:var(--text-muted); font-size:0.7rem;">-2.88</span></div>
-          <div style="position:absolute; top:77%; right:10px; text-align:right;">Tottenham <span style="color:var(--text-muted); font-size:0.7rem;">-2.78</span></div>
+          <div style="position:absolute; top:8%; right:10px; text-align:right;">Hamburg <span class="label-tiny">-2.93</span></div>
+          <div style="position:absolute; top:31%; right:10px; text-align:right;">LAFC <span class="label-tiny">-2.84</span></div>
+          <div style="position:absolute; top:54%; right:10px; text-align:right;">Leverkusen <span class="label-tiny">-2.88</span></div>
+          <div style="position:absolute; top:77%; right:10px; text-align:right;">Tottenham <span class="label-tiny">-2.78</span></div>
         </div>
       </div>
       <p class="footnote" style="margin-top:0.6rem;">막대 = 95% HDI, 점 = posterior mean. 4 클럽 HDI가 거의 완전히 겹침 → 통계적으로 baseline 골 hazard가 같다고 봐야.</p>
@@ -1040,7 +1040,7 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
       <li>Tottenham이 약간 높지만 (mean -2.78), Hamburg 95% HDI 안에 들어감</li>
     </ul>
 
-    <div class="viz-insight green" style="margin-top:1.2rem;">
+    <div class="viz-insight green" class="mt-1-2">
       <div class="viz-insight-label">v2의 a_club 발견과 일관</div>
       <p>v2 Bayesian (Part 10)에서도 클럽별 a_club는 mean이 다르지만 HDI가 겹쳤습니다. v3에서는 더 많은 sample(3000 draws)로 동일한 결론 — <strong>"클럽이 손흥민의 base 골 hazard에 통계적으로 의미 있는 차이를 만들지 못한다."</strong> Hamburg 약체 시기와 Tottenham 전성기를 baseline에서 구분 못 함은 직관과 다르지만 데이터가 그렇게 말함.</p>
     </div>
@@ -1087,7 +1087,7 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
       </tbody>
     </table></div>
 
-    <p style="margin-top:1.2rem;">세 효과 모두 95% HDI가 0을 포함합니다. <strong>골 hazard에는 venue, form, opponent strength 어느 것도 통계적으로 견고한 영향을 주지 못합니다.</strong></p>
+    <p class="mt-1-2">세 효과 모두 95% HDI가 0을 포함합니다. <strong>골 hazard에는 venue, form, opponent strength 어느 것도 통계적으로 견고한 영향을 주지 못합니다.</strong></p>
 
     <h3 class="h3-major">개별 해석</h3>
 
@@ -1135,7 +1135,7 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
       <div class="qbox-text">slider/select로 입력 → 모든 6 시간대에 대한 λ 곡선 + P(goal) 막대가 즉시 갱신. 1.78x 후반 패턴이 어떻게 영향을 주는지 직접 확인.</div>
     </div>
 
-    <div class="predictor-grid" style="margin-top:1.5rem;">
+    <div class="predictor-grid" class="mt-1-5">
       <div class="predictor-card">
         <div class="predictor-title">변수 입력</div>
         <div class="predictor-row">
@@ -1149,10 +1149,10 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
         </div>
         <div class="predictor-row">
           <span class="predictor-label">Venue</span>
-          <div class="toggle-group" id="v3-venue-group">
-            <button class="toggle-btn active" data-venue="0">Home</button>
-            <button class="toggle-btn" data-venue="1">Away</button>
-            <button class="toggle-btn" data-venue="2">Neutral</button>
+          <div class="toggle-group" role="radiogroup" aria-label="venue 선택" id="v3-venue-group">
+            <button class="toggle-btn active" data-venue="0" aria-label="홈 경기">Home</button>
+            <button class="toggle-btn" data-venue="1" aria-label="원정 경기">Away</button>
+            <button class="toggle-btn" data-venue="2" aria-label="중립 경기">Neutral</button>
           </div>
         </div>
         <div class="predictor-row">
@@ -1241,7 +1241,7 @@ log(λ_i) = α_club[c]<sub>club_idx</sub> + β_bin[t]<sub>bin_idx</sub>
       </tbody>
     </table></div>
 
-    <div class="viz-insight" style="margin-top:1.5rem;">
+    <div class="viz-insight" class="mt-1-5">
       <div class="viz-insight-label">결정적 finding — 같은 변수, 다른 target, 다른 결론</div>
       <p>venue는 <strong>경기 결과(W/D/L)를 좌우</strong>하지만 (v2 finding) <strong>손흥민 본인의 골 시점에는 영향이 약</strong>합니다 (v3 finding). 이건 단순한 차이가 아니라 <em>의미 있는 분해</em>입니다.</p>
       <p><strong>해석</strong>: home advantage는 팀 차원의 변수 — 홈 관중, 익숙한 그라운드, 심판 편향 등 — 가 result에 누적 효과를 주지만, 손흥민 본인의 분당 골 가능성은 그것에 좀 덜 의존. 그의 골 hazard는 <em>경기 시간대(76+ → 1.78x)</em>에 더 강하게 결정됨.</p>
@@ -1400,7 +1400,7 @@ function v3UpdatePred() {
     row.className = 'prob-row-out';
     row.innerHTML = `
       <span class="prob-class-label" style="font-size:0.78rem;">${labels[i]}</span>
-      <div class="prob-bar-bg"><div class="prob-bar-fill win" style="width:${Math.min(pct*4, 100)}%; background:${i===5?'#15803d':(i===4?'#a16207':'#78716c')};"></div></div>
+      <div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${Math.min(pct*4, 100)}%; background:${i===5?'var(--accent-green)':(i===4?'var(--accent-amber)':'var(--text-secondary)')};"></div></div>
       <span class="prob-pct">${pct}%</span>
     `;
     out.appendChild(row);

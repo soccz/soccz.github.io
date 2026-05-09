@@ -241,7 +241,7 @@ driver.switch_to.window(driver.window_handles[<span class="cn">1</span>])
     </div>
   </div>
 
-  <div class="viz-insight" style="margin-top:1.5rem;">
+  <div class="viz-insight" class="mt-1-5">
     <div class="viz-insight-label">5가지 결정의 공통 패턴</div>
     <p>전부 <strong>"default가 아니라 한 단계 더 들어간다"</strong>는 패턴입니다. 통계학적 사고(p-value, 가중치, 회전)와 엔지니어링적 욕심(직접 구현, 페이지 파싱)이 둘 다 보입니다. 5가지 모두 의도는 옳았지만, 5가지 중 4가지가 ML 검증 위생 한 줄씩이 빠져 결과가 깨졌습니다. 다음 두 섹션에서 그 거리를 좁혀갑니다.</p>
   </div>
@@ -538,7 +538,7 @@ model_weighted = sm.OLS(y_result, X_weighted).fit()
   <h2 class="section-title">이 회고에도 두 가지 정정이 필요했습니다</h2>
   <p class="section-desc">v2 페이지(<a href="/projects/son-data-v2/">son-data-v2</a>)에서 6개 실험으로 같은 데이터에 v1과 v2를 동시에 적용했습니다. 그 측정 결과로 <strong>이 회고 페이지의 두 가지 framing이 정정 대상이 되었습니다.</strong> 회고도 회고의 대상이 됩니다.</p>
 
-  <div class="card-grid" style="margin-top:1.5rem;">
+  <div class="card-grid" class="mt-1-5">
     <div class="layer-card" style="border-top-color:var(--accent-red);">
       <div class="layer-num">정정 01</div>
       <div class="layer-title">"누수가 v1의 결함"이라는 단순화</div>
@@ -574,7 +574,7 @@ model_weighted = sm.OLS(y_result, X_weighted).fit()
 <section id="tech"><div class="container fade-in">
   <div class="section-label">Stack</div>
   <h2 class="section-title">기술 스택</h2>
-  <div class="tech-grid" style="margin-top:1.5rem;">
+  <div class="tech-grid" class="mt-1-5">
     <div class="tech-item"><div class="tech-cat">Data Collection</div><ul class="tech-list"><li>Selenium (Chrome / Edge)</li><li>fbref.com 매치 로그</li><li>매치별 이벤트 페이지 진입</li><li>JSON 통합 + 라벨 변환</li></ul></div>
     <div class="tech-item"><div class="tech-cat">Preprocessing</div><ul class="tech-list"><li>Custom KNN imputer</li><li>median / mode fallback</li><li>OLS 검증 (statsmodels)</li><li>Target weighted encoding</li></ul></div>
     <div class="tech-item"><div class="tech-cat">Feature Engineering</div><ul class="tech-list"><li>Correlation matrix</li><li>RF feature_importances_</li><li>t-test (scipy.stats)</li><li>3-stage 통과 변수 추출</li></ul></div>
