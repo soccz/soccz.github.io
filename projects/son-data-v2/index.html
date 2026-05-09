@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Son Data v2 — 회고를 측정 가능한 실험으로</title>
+  <title>Son Data v2 — 사고의 흐름을 측정 가능한 실험으로</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
 
@@ -19,6 +19,7 @@
       --accent: #44403c;
       --accent-dim: rgba(68, 64, 60, 0.07);
       --accent-red: #b91c1c;
+      --accent-amber: #b45309;
       --accent-green: #15803d;
       --border: #e7e5e4;
       --border-light: #d6d3d1;
@@ -27,85 +28,96 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
 
-    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.75; -webkit-font-smoothing: antialiased; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
     nav.scrolled { background: rgba(250,250,249,0.95); }
     .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
     .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: wrap; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; transition: color 0.2s; }
     .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); font-weight: 700; }
 
+    /* Hero */
     .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%); }
-    .hero-content { position: relative; max-width: 820px; }
+    .hero-content { position: relative; max-width: 880px; }
     .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem; }
     .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
     .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
-    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.4rem; flex-wrap: wrap; }
     .hero-stat { text-align: center; }
-    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
     .hero-stat-num.green { color: var(--accent-green); }
-    .hero-stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.04em; }
-    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.5rem; padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s; }
-    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-stat-num.amber { color: var(--accent-amber); }
+    .hero-stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.04em; }
     .hero-link-row { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem; border: 1px solid var(--border-light); border-radius: 4px; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s; }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
     .scroll-ind { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em; animation: float 2s ease-in-out infinite; }
     @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
-    section { padding: 6rem 2rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
+    /* Section */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1080px; margin: 0 auto; }
+    .container.narrow { max-width: 820px; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
     .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
-    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 760px; line-height: 1.8; margin-bottom: 3rem; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 760px; line-height: 1.85; margin-bottom: 2rem; }
     .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    /* Part heading */
+    .part-heading { display: grid; grid-template-columns: 110px 1fr; gap: 1.5rem; align-items: start; padding: 2rem 0 1rem; border-top: 2px solid var(--accent); margin-top: 1rem; }
+    .part-num { font-family: 'Noto Serif KR', serif; font-size: 2.4rem; font-weight: 700; color: var(--text-muted); line-height: 1; }
+    .part-meta { padding-top: 0.6rem; }
+    .part-kicker { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .part-title { font-family: 'Noto Serif KR', serif; font-size: 1.7rem; font-weight: 700; line-height: 1.3; letter-spacing: -0.02em; }
+
+    /* Body text */
+    .body-text { font-size: 0.95rem; color: var(--text-primary); line-height: 1.9; max-width: 760px; }
+    .body-text p { margin-bottom: 1.2rem; }
+    .body-text strong { font-weight: 700; color: var(--text-primary); }
+    .body-text em { color: var(--accent); font-style: italic; }
+    .body-text code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-secondary); padding: 0.1rem 0.4rem; border-radius: 3px; color: var(--accent); }
+
+    /* Question / Hypothesis box */
+    .qbox { background: var(--bg-card); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 1.1rem 1.4rem; margin: 1.2rem 0; max-width: 760px; }
+    .qbox-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 0.4rem; }
+    .qbox-text { font-size: 0.92rem; color: var(--text-primary); line-height: 1.75; font-style: italic; }
+
+    /* Cards */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.6rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .card:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .card-text { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.7; }
 
-    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.5rem 0; }
-    .flow-step { flex: 1; min-width: 180px; background: var(--bg-card); border: 1px solid var(--border); padding: 1.8rem 1.3rem; text-align: center; position: relative; }
-    .flow-step:first-child { border-radius: 8px 0 0 8px; }
-    .flow-step:last-child { border-radius: 0 8px 8px 0; }
-    .flow-step::after { content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1; }
-    .flow-step:last-child::after { display: none; }
-    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
-    .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
-    .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
-
+    /* Tags */
     .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
-    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
-    .tag.warn { background: rgba(180,83,9,0.08); color: #b45309; border-color: rgba(180,83,9,0.25); }
+    .tag { font-size: 0.66rem; padding: 0.18rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
     .tag.bad { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.25); }
+    .tag.warn { background: rgba(180,83,9,0.08); color: var(--accent-amber); border-color: rgba(180,83,9,0.25); }
     .tag.good { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.25); }
 
-    .layer-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
-    .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
-    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
-    .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
-
     /* Table */
-    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin: 1rem 0; }
     table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
     thead { background: var(--bg-card); }
-    th { padding: 0.85rem 1rem; text-align: left; font-weight: 500; color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); white-space: nowrap; }
-    td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+    th { padding: 0.85rem 1rem; text-align: left; font-weight: 500; color: var(--text-muted); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--border); }
     tr:hover { background: #f5f5f4; }
-    .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.72rem; font-weight: 500; background: #f5f5f4; color: #44403c; border: 1px solid #d6d3d1; }
-    .badge.bad { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.25); }
-    .badge.good { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.25); }
     .num { font-family: monospace; }
     .pos { color: var(--accent-green); font-weight: 600; }
     .neg { color: var(--accent-red); font-weight: 600; }
+    .amber { color: var(--accent-amber); font-weight: 600; }
+    .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.7rem; font-weight: 500; background: #f5f5f4; color: #44403c; border: 1px solid #d6d3d1; }
+    .badge.bad { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.25); }
+    .badge.good { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.25); }
+    .badge.warn { background: rgba(180,83,9,0.08); color: var(--accent-amber); border-color: rgba(180,83,9,0.25); }
 
     /* Code block */
-    .code-block { background: #292524; border-radius: 8px; padding: 1.3rem 1.5rem; overflow-x: auto; margin: 1.5rem 0; }
+    .code-block { background: #292524; border-radius: 8px; padding: 1.2rem 1.5rem; overflow-x: auto; margin: 1rem 0; }
     .code-block code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.78rem; color: #d6d3d1; line-height: 1.75; white-space: pre; }
     .code-block .cv { color: #78716c; font-style: italic; }
     .code-block .cs { color: #86efac; }
@@ -113,55 +125,78 @@
     .code-block .cf { color: #93c5fd; }
     .code-block .ck { color: #f9a8d4; }
 
-    /* Insight */
-    .viz-insight { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c; border-radius: 0 8px 8px 0; padding: 1.3rem 1.8rem; margin-top: 2rem; }
+    /* Insight panel */
+    .viz-insight { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c; border-radius: 0 8px 8px 0; padding: 1.2rem 1.7rem; margin: 1.5rem 0; max-width: 820px; }
     .viz-insight.green { border-left-color: var(--accent-green); }
+    .viz-insight.amber { border-left-color: var(--accent-amber); }
     .viz-insight.red { border-left-color: var(--accent-red); }
-    .viz-insight-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
-    .viz-insight p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
+    .viz-insight-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
+    .viz-insight p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.85; }
+    .viz-insight p + p { margin-top: 0.7rem; }
 
-    /* Bar chart */
-    .bar-chart { margin: 2rem 0; }
-    .bar-row { display: flex; align-items: center; margin-bottom: 0.5rem; gap: 0.8rem; }
-    .bar-label { width: 200px; flex-shrink: 0; font-size: 0.78rem; font-weight: 500; color: var(--text-primary); text-align: right; font-family: monospace; }
-    .bar-bg { flex: 1; max-width: 600px; height: 24px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 0.72rem; font-weight: 700; color: #fff; min-width: 40px; }
-    .bar-fill.high { background: var(--accent); }
-    .bar-fill.mid { background: #78716c; }
-    .bar-fill.low { background: #a8a29e; }
+    /* Step block */
+    .step-block { display: grid; grid-template-columns: 56px 1fr; gap: 1.2rem; align-items: start; margin-bottom: 1.5rem; }
+    .step-num-circle { width: 46px; height: 46px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700; color: var(--accent); flex-shrink: 0; }
+    .step-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.4rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .step-title { font-weight: 700; font-size: 0.96rem; margin-bottom: 0.4rem; }
+    .step-desc { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.8; }
 
     /* Mismatch */
-    .mismatch-example { background: var(--bg-secondary); border-radius: 6px; padding: 1.3rem 1.5rem; margin: 1rem 0; border-left: 3px solid #78716c; }
-    .mismatch-id { font-family: monospace; font-size: 0.78rem; font-weight: 700; color: var(--accent); margin-bottom: 0.6rem; }
-    .mismatch-line { font-size: 0.86rem; color: var(--text-primary); margin-bottom: 0.4rem; line-height: 1.7; }
+    .mismatch-example { background: var(--bg-secondary); border-radius: 6px; padding: 1.2rem 1.4rem; margin: 1rem 0; border-left: 3px solid #78716c; }
+    .mismatch-id { font-family: monospace; font-size: 0.76rem; font-weight: 700; color: var(--accent); margin-bottom: 0.6rem; }
+    .mismatch-line { font-size: 0.84rem; color: var(--text-primary); margin-bottom: 0.4rem; line-height: 1.7; }
     .mismatch-line .mtag { display: inline-block; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.14rem 0.5rem; border-radius: 3px; margin-right: 0.45rem; vertical-align: middle; }
     .mtag-v1 { background: rgba(185,28,28,0.12); color: var(--accent-red); }
     .mtag-v2 { background: rgba(21,128,61,0.12); color: var(--accent-green); }
     .mtag-truth { background: rgba(120,113,108,0.15); color: #57534e; }
+    .mtag-then { background: rgba(120,113,108,0.15); color: #57534e; }
+    .mtag-now { background: rgba(21,128,61,0.12); color: var(--accent-green); }
 
     /* Stat strip */
     .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0 2.5rem; }
-    .stat-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1rem; text-align: center; }
-    .stat-tile-num { font-family: 'Noto Serif KR', serif; font-size: 1.7rem; font-weight: 700; color: var(--accent); display: block; line-height: 1.2; }
+    .stat-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1rem; text-align: center; }
+    .stat-tile-num { font-family: 'Noto Serif KR', serif; font-size: 1.6rem; font-weight: 700; color: var(--accent); display: block; line-height: 1.2; }
     .stat-tile-num.green { color: var(--accent-green); }
     .stat-tile-num.red { color: var(--accent-red); }
-    .stat-tile-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .stat-tile-num.amber { color: var(--accent-amber); }
+    .stat-tile-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
 
-    /* Tech */
-    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
-    .tech-cat { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; }
+    /* Tech grid */
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .tech-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+    .tech-cat { font-size: 0.66rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
     .tech-list { list-style: none; }
-    .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
+    .tech-list li { font-size: 0.8rem; color: var(--text-secondary); padding: 0.22rem 0 0.22rem 1rem; position: relative; }
     .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
 
-    /* Confusion matrix-like grid */
-    .confusion { display: grid; grid-template-columns: 100px repeat(3, 1fr); gap: 2px; margin: 1.5rem 0; max-width: 520px; }
-    .conf-cell { background: var(--bg-card); border: 1px solid var(--border); padding: 0.7rem; text-align: center; font-family: monospace; font-size: 0.85rem; }
-    .conf-cell.head { background: var(--bg-secondary); font-weight: 700; font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }
+    /* Confusion grid */
+    .confusion { display: grid; grid-template-columns: 100px repeat(3, 1fr); gap: 2px; margin: 1rem 0; max-width: 480px; }
+    .conf-cell { background: var(--bg-card); border: 1px solid var(--border); padding: 0.65rem; text-align: center; font-family: monospace; font-size: 0.85rem; }
+    .conf-cell.head { background: var(--bg-secondary); font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }
     .conf-cell.diag { background: rgba(21,128,61,0.08); }
     .conf-cell.miss { background: rgba(185,28,28,0.08); color: var(--accent-red); }
     .conf-cell.zero { color: var(--text-muted); }
+
+    /* Bar chart */
+    .bar-chart { margin: 1.5rem 0; }
+    .bar-row { display: flex; align-items: center; margin-bottom: 0.42rem; gap: 0.7rem; }
+    .bar-label { width: 200px; flex-shrink: 0; font-size: 0.78rem; font-weight: 500; color: var(--text-primary); text-align: right; font-family: monospace; }
+    .bar-bg { flex: 1; max-width: 580px; height: 22px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 0.7rem; font-weight: 700; color: #fff; min-width: 40px; }
+    .bar-fill.high { background: var(--accent); }
+    .bar-fill.mid { background: #78716c; }
+    .bar-fill.low { background: #a8a29e; }
+    .bar-fill.bad { background: var(--accent-red); }
+    .bar-fill.good { background: var(--accent-green); }
+
+    /* Lineage table */
+    .lineage-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin: 1rem 0; }
+    .lineage-table th, .lineage-table td { padding: 0.85rem 1rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+    .lineage-table th { background: var(--bg-secondary); font-weight: 700; font-size: 0.75rem; }
+    .lineage-table .step-num { font-family: 'Noto Serif KR', serif; font-size: 1.3rem; color: var(--text-muted); font-weight: 700; }
+
+    /* Footnote */
+    .footnote { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 0.6rem; line-height: 1.7; }
 
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
@@ -169,10 +204,11 @@
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .flow { flex-direction: column; }
-      .flow-step { border-radius: 8px !important; }
-      .flow-step::after { display: none; }
-      section { padding: 4rem 1.5rem; }
+      section { padding: 4rem 1.3rem; }
+      .part-heading { grid-template-columns: 1fr; gap: 0.4rem; }
+      .part-num { font-size: 1.6rem; }
+      .step-block { grid-template-columns: 1fr; gap: 0.6rem; }
+      .step-num-circle { margin-bottom: 0.3rem; }
       .bar-label { width: 130px; font-size: 0.7rem; }
       .confusion { grid-template-columns: 70px repeat(3, 1fr); }
     }
@@ -184,31 +220,39 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
-      <li><a href="#overview">Overview</a></li>
-      <li><a href="#data">Data</a></li>
-      <li><a href="#meta">Meta</a></li>
-      <li><a href="#big-finding">Finding</a></li>
-      <li><a href="#adaptation">Adaptation</a></li>
-      <li><a href="#shap">SHAP</a></li>
-      <li><a href="/projects/son-data/">v1 회고</a></li>
+      <li><a href="#summary">Summary</a></li>
+      <li><a href="#part1">Why</a></li>
+      <li><a href="#part2">Data</a></li>
+      <li><a href="#part3">Lineage</a></li>
+      <li><a href="#part4">Meta</a></li>
+      <li><a href="#part5">Ablation</a></li>
+      <li><a href="#part6">Diagnosis</a></li>
+      <li><a href="#part7">Adapt</a></li>
+      <li><a href="#part8">Cross</a></li>
+      <li><a href="#part9">Causal</a></li>
+      <li><a href="#part10">Bayesian</a></li>
+      <li><a href="#part11">Targets</a></li>
+      <li><a href="#part12">Synthesis</a></li>
+      <li><a href="/projects/son-data/" style="color:var(--accent-amber);">v1 회고</a></li>
     </ul>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">Retrospective &times; Empirical Validation</span>
-    <h1>회고를 측정 가능한<br>실험으로</h1>
+    <span class="hero-label">Retrospective &times; Empirical Report</span>
+    <h1>사고의 흐름을<br>측정 가능한 실험으로</h1>
     <p class="hero-sub">
-      옛 파이프라인(v1)과 새 파이프라인(v2)을 같은 627경기에 동시에 적용해<br>
-      누수 제거가 실제 모델 성능에 미친 영향을 정량화합니다.<br>
-      Hamburg에서 LAFC까지 14.7년 손흥민 커리어 전체.
+      학부 시절 손흥민 데이터 프로젝트의 4단 사고 흐름이<br>
+      ML 검증 위생을 만나며 어떻게 살아남고 어떻게 진화했는지를,<br>
+      <strong>6개의 실험으로 정직하게 측정한 보고서</strong>입니다.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">627</span><span class="hero-stat-label">클럽 경기</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">클럽 / 3 리그</span></div>
-      <div class="hero-stat"><span class="hero-stat-num green">+66%</span><span class="hero-stat-label">F1 개선 (v1 &rarr; v2)</span></div>
       <div class="hero-stat"><span class="hero-stat-num">14.7년</span><span class="hero-stat-label">2011 &mdash; 2026</span></div>
+      <div class="hero-stat"><span class="hero-stat-num green">+66.4%</span><span class="hero-stat-label">F1 macro 개선</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">6</span><span class="hero-stat-label">검증 실험</span></div>
+      <div class="hero-stat"><span class="hero-stat-num amber">4 / 4</span><span class="hero-stat-label">사고 흐름 살아남음</span></div>
     </div>
     <div class="hero-link-row">
       <a href="/projects/son-data/" class="hero-link">
@@ -225,35 +269,115 @@
 </section>
 <hr class="divider">
 
-<section id="overview"><div class="container fade-in">
-  <div class="section-label">Overview</div>
-  <h2 class="section-title">회고를 가설로, 가설을 실험으로</h2>
-  <p class="section-desc">v1 회고 페이지에서 정리한 9가지 수정 사항이 실제로 모델 성능에 어떤 영향을 주는지 측정하기 위해, 같은 데이터에 v1과 v2 파이프라인을 동시에 적용했습니다. 결과는 예상보다 더 명확했습니다.</p>
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-title">가설</div>
-      <div class="card-text">"v1의 정확도(약 50%)는 데이터 누수가 만든 환상이며, 누수를 제거하면 정확도는 떨어지더라도 실제 분류 능력(macro F1)은 향상될 것이다."</div>
-    </div>
-    <div class="card">
-      <div class="card-title">측정 방법</div>
-      <div class="card-text">v1 파이프라인(target encoding 누수, 무작위 split, scaler leakage 모두 그대로)과 v2 파이프라인(sklearn Pipeline, TimeSeriesSplit, fold-aware target encoding, LGBM + Optuna)을 동일한 627경기에 적용. 같은 metric(accuracy, macro F1)으로 비교.</div>
-    </div>
-    <div class="card">
-      <div class="card-title">발견</div>
-      <div class="card-text">v1의 정확도 51.6%는 사실상 majority class baseline(승률 52%) 그대로였고, <strong>모든 테스트 경기를 "승리"로 예측</strong>하고 있었습니다. v2는 정확도가 48%로 비슷하지만 macro F1이 0.227 &rarr; 0.378로 <strong>+66.4%</strong> 개선되며 진짜 분류기가 되었습니다.</div>
-    </div>
+<!-- Executive Summary -->
+<section id="summary"><div class="container narrow">
+  <div class="section-label">Executive Summary</div>
+  <h2 class="section-title">한 페이지로 읽는 보고서</h2>
+  <div class="body-text">
+    <p>이 페이지는 학부 시절 작성한 손흥민 경기 데이터 분석 프로젝트(<a href="/projects/son-data/">v1 회고</a>)에서 정리한 9가지 회고 수정과 5가지 의도된 사고 흐름이 ML 모델 성능에 어떻게 반영되는지를, <strong>같은 데이터에 두 파이프라인을 동시에 적용해 정량적으로 측정한 결과</strong>입니다.</p>
+
+    <p><strong>핵심 결론 1 (정량 비교).</strong> v1은 <em>모든 테스트 경기를 "승리"로 예측</em>하고 있었습니다. 정확도 51.6%는 손흥민의 실제 클럽 승률 52%를 그대로 모방한 결과였고, F1 macro는 0.227에 머물렀습니다. v2는 같은 데이터에서 정확도 48.3% / F1 macro <strong>0.378 (+66.4%)</strong> 로, 단순 baseline 모방이 아닌 실제 분류기로 작동합니다.</p>
+
+    <p><strong>핵심 결론 2 (사고 흐름 검증).</strong> v1의 4단 사고 흐름 — ① 결과 라벨링, ② OLS p-value 통계 검증, ③ 가중 인코딩, ④ R² 재검증 — 은 v2에서 모두 살아남았고, 6개 실험으로 사후 재검증되었습니다. 특히 <strong>venue가 result에 미치는 영향</strong>은 SHAP 1위 (0.362) + Ablation per-feature 최대 기여 (-0.053) + Bayesian 95% HDI [-1.05, -0.47] + opponent strength 통제 후에도 변화 없음 (-0.287 → -0.288) 의 4중 검증으로 <em>인과적 효과</em>임이 확인되었습니다.</p>
+
+    <p><strong>핵심 결론 3 (예상치 못한 발견).</strong> v1의 collapse(모든 경기 W 예측)의 진짜 원인은 target encoding 누수가 아니라 <strong>RF top_k=6 feature selection</strong>이었습니다. 같은 v1을 11개 피처로 돌리면 W rate 100% → 62%로 떨어집니다. <em>"누수 = 나쁘다"는 단순 도식보다 "feature selection + class imbalance + accuracy 기준 GridSearch"의 조합이 진짜 결함</em>이었다는 발견.</p>
+
+    <p><strong>핵심 결론 4 (한계의 발견).</strong> 적응 곡선 분석에서 보였던 "LAFC 8경기 회복" 같은 frequentist finding은 Bayesian 계층 모델로 보면 <strong>클럽별 적응 시간 상수(tau)의 95% HDI가 모두 [0.2, 33] 범위로 겹쳐</strong> 통계적으로 구분되지 않습니다. 30경기 표본의 노이즈 가능성이 큽니다.</p>
+
+    <p><strong>핵심 결론 5 (모델의 진짜 능력).</strong> v2 피처는 W/D/L 결과 예측엔 의미 있는 신호를 잡지만, "손흥민이 이번 경기에 골을 넣을지" 같은 더 정교한 target에선 AUC 0.5 (random) 수준으로 무력합니다. 모델이 학습한 것은 손흥민의 영향력이 아니라 팀 결과 패턴입니다.</p>
+
+    <p><strong>한 줄로:</strong> 학부 시절 통계학자의 사고 흐름은 <em>전부 살아남았고</em>, 단지 적용 위치(fold 안 vs 밖)가 한 단계 옮겨졌을 뿐입니다. 이 페이지는 그 이동의 매 한 단계를 측정으로 기록합니다.</p>
   </div>
-  <div class="viz-insight" style="margin-top:2rem;">
-    <div class="viz-insight-label">한 줄 요약</div>
-    <p>v1이 보여준 "그럴듯한 정확도"는 손흥민의 승률 자체를 모방한 것이었고, <strong>누수를 제거한 v2가 비로소 분류를 시작</strong>했습니다. 같은 데이터, 같은 metric으로 측정된 정직한 회고.</p>
+
+  <div class="stat-strip">
+    <div class="stat-tile"><span class="stat-tile-num green">+66.4%</span><div class="stat-tile-label">F1 macro 개선</div></div>
+    <div class="stat-tile"><span class="stat-tile-num red">100%</span><div class="stat-tile-label">v1이 W로 예측한 비율</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">0.36</span><div class="stat-tile-label">venue SHAP 1위</div></div>
+    <div class="stat-tile"><span class="stat-tile-num amber">4</span><div class="stat-tile-label">venue 검증 방법</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">~0.5</span><div class="stat-tile-label">골 예측 AUC (random)</div></div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="data"><div class="container fade-in">
-  <div class="section-label">Data Re-collection</div>
-  <h2 class="section-title">완전한 커리어 스코프 재수집</h2>
-  <p class="section-desc">v1 회고에서 발견한 가장 큰 결함은 crawler가 <code>step=2</code>로 시즌의 절반을 건너뛴 것이었습니다. v2에서는 <code>step=1</code>로 모든 시즌을 빠짐없이 수집하고, MLS 시즌 형식(단일 연도)도 추가 지원합니다.</p>
+<!-- PART 1 -->
+<section id="part1"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">01</div>
+    <div class="part-meta">
+      <div class="part-kicker">Why this project</div>
+      <div class="part-title">왜 회고가 측정 가능한 실험으로 이어졌는가</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>학부 시절 손흥민 경기 데이터 프로젝트(<a href="/projects/son-data/">v1 회고 페이지</a>)에서 5가지 의도된 디자인 결정과 9가지 회고 수정을 정리했습니다. 그 회고에는 한 가지 검증되지 않은 가설이 깔려 있었습니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">v1 회고의 핵심 가설</div>
+      <div class="qbox-text">"학부 시절의 통계학적 사고는 폐기 대상이 아니라 ML 검증 위생을 더해 살릴 자산이다. venue 가중 인코딩의 직관은 살리되, 적용 위치를 train fold 안으로 옮기면 의도가 살아남는다."</div>
+    </div>
+
+    <p>이 가설은 글로 적기 쉽지만 검증하지 않으면 단순 신앙 고백이 됩니다. 정직한 회고가 되려면 같은 데이터에 옛 파이프라인과 새 파이프라인을 동시에 돌려서, <strong>"v1의 51.6% 정확도가 정말 누수가 만든 환상이었는가"</strong> 그리고 <strong>"venue 직관이 ML 위생 위에서도 살아남는가"</strong>를 숫자로 보여야 합니다.</p>
+
+    <p>그래서 6단계 작업을 잡았습니다.</p>
+
+    <div class="card-grid" style="margin: 1.5rem 0;">
+      <div class="card">
+        <div class="card-title">Phase 1 &mdash; 데이터 재수집</div>
+        <div class="card-text">v1 crawler의 <code>step=2</code> 버그를 고치고, MLS URL 형식까지 지원하도록 재작성. Hamburg → LAFC 풀 스코프.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Phase 2-4 &mdash; v1 vs v2 비교</div>
+        <div class="card-text">옛 파이프라인 그대로 재현 + Pipeline / TimeSeriesSplit / fold-aware target encoding / LightGBM + Optuna로 새로 작성. 같은 데이터에 동시 적용.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Phase 5 &mdash; 적응 곡선 + SHAP</div>
+        <div class="card-text">풀 스코프 데이터로만 가능한 새 질문: 4번의 클럽 전환에서 폼이 어떻게 변하는가. 그리고 v2 모델이 무엇을 보고 있는가.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Phase 6 &mdash; 보고서</div>
+        <div class="card-text">5가지 사고 흐름의 진화와 6개 실험 결과를 학술 보고서 형식으로 정리.</div>
+      </div>
+    </div>
+
+    <p>그 위에 6개 검증 실험(Ablation, v1 collapse 진단, Cross-league 전이, Counterfactual venue, Bayesian 계층 모델, 다른 prediction target)을 추가로 실행해, 각 사고 흐름이 어떻게 살아남는지를 다각도로 측정했습니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 2 -->
+<section id="part2"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">02</div>
+    <div class="part-meta">
+      <div class="part-kicker">Data Re-collection</div>
+      <div class="part-title">완전한 커리어 스코프 재수집</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v1 회고에서 발견한 가장 큰 결함은 crawler가 <code>range(2011, 2024, 2)</code>로 시즌의 <strong>절반을 건너뛴 것</strong>이었습니다. 손흥민 토트넘 전성기의 절반 시즌이 통째로 빠진 데이터로 모든 후속 분석이 진행됐습니다. 이 문제부터 해결합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">데이터 재수집의 두 가지 변경</div>
+      <div class="qbox-text">① <code>step=1</code>로 모든 시즌 빠짐없이 수집 (15개 EU 시즌 + 2개 MLS 시즌 = 17 시즌)<br>② MLS는 단일 연도 URL 형식(<code>/2025/</code>)을 지원하도록 크롤러 분기 추가</div>
+    </div>
+
+    <p>fbref 페이지가 cloudflare로 보호되어 있어 단순 requests는 403을 반환합니다. v1 코드처럼 Selenium을 쓰되 anti-detection 플래그를 추가해 "잠시만 기다리십시오" 챌린지를 통과합니다.</p>
+
+    <div class="code-block"><code><span class="cv"># v1 (학부 시절) — 시즌 절반 누락</span>
+<span class="cf">for</span> year <span class="cf">in</span> range(<span class="cn">2011</span>, <span class="cn">2024</span>, <span class="cn">2</span>):  <span class="cv"># step=2 BUG</span>
+    url = base + <span class="cs">f"/{year}-{year+1}/"</span>
+
+<span class="cv"># v2 — 모든 시즌 + MLS 단일 연도 + Cloudflare 우회</span>
+EU_SEASONS = [<span class="cs">f"{y}-{y+1}"</span> <span class="cf">for</span> y <span class="cf">in</span> range(<span class="cn">2010</span>, <span class="cn">2025</span>)]
+MLS_SEASONS = [<span class="cs">"2025"</span>, <span class="cs">"2026"</span>]
+ALL_SEASONS = EU_SEASONS + MLS_SEASONS  <span class="cv"># 17 seasons</span>
+
+opt.add_argument(<span class="cs">"--disable-blink-features=AutomationControlled"</span>)
+opt.add_experimental_option(<span class="cs">"excludeSwitches"</span>, [<span class="cs">"enable-automation"</span>])
+driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdriver', {get: () =&gt; undefined})"</span>)</code></div>
+
+    <p>raw 수집 후 클럽 prefix 정규화(<code>de Leverkusen</code> → <code>Leverkusen</code> 등)와 국가대표 분리(<code>kr Korea Republic</code> 123경기 제외)를 거쳐 <strong>627 클럽 경기</strong>가 분석 대상이 됩니다.</p>
+  </div>
 
   <div class="stat-strip">
     <div class="stat-tile"><span class="stat-tile-num">17</span><div class="stat-tile-label">시즌 (EU 15 + MLS 2)</div></div>
@@ -263,7 +387,7 @@
     <div class="stat-tile"><span class="stat-tile-num">14.7년</span><div class="stat-tile-label">2011-08 &mdash; 2026-05</div></div>
   </div>
 
-  <h3 style="font-size:0.95rem; margin: 2rem 0 0.8rem; font-weight:700;">클럽별 데이터 분포</h3>
+  <h3 style="font-size:0.95rem; margin: 1.5rem 0 0.6rem; font-weight:700;">클럽별 데이터 분포</h3>
   <div class="table-wrap"><table>
     <thead><tr><th>클럽</th><th>리그</th><th>기간</th><th class="num" style="text-align:right;">경기 수</th></tr></thead>
     <tbody>
@@ -274,300 +398,728 @@
     </tbody>
   </table></div>
 
-  <h3 style="font-size:0.95rem; margin: 2.5rem 0 0.8rem; font-weight:700;">크롤러 변화</h3>
-  <div class="code-block"><code><span class="cv"># v1 (학부 시절) — 시즌 절반 누락</span>
-<span class="cf">for</span> year <span class="cf">in</span> range(<span class="cn">2011</span>, <span class="cn">2024</span>, <span class="cn">2</span>):  <span class="cv"># step=2 BUG</span>
-    url = base + <span class="cs">f"/{year}-{year+1}/"</span>
-
-<span class="cv"># v2 — 모든 시즌 + MLS 단일 연도</span>
-EU_SEASONS = [<span class="cs">f"{y}-{y+1}"</span> <span class="cf">for</span> y <span class="cf">in</span> range(<span class="cn">2010</span>, <span class="cn">2025</span>)]  <span class="cv"># step=1</span>
-MLS_SEASONS = [<span class="cs">"2025"</span>, <span class="cs">"2026"</span>]
-ALL_SEASONS = EU_SEASONS + MLS_SEASONS  <span class="cv"># 17 seasons</span></code></div>
+  <p class="footnote">결과 분포 — 승: 326 (52.0%) / 무: 122 (19.5%) / 패: 179 (28.6%). 이 52% 승률이 뒤에서 v1의 정확도 51.6%와 거의 일치하는 사실이 핵심 finding의 시작이 됩니다.</p>
 </div></section>
 <hr class="divider">
 
-<section id="meta"><div class="container fade-in">
-  <div class="section-label">Meta Comparison</div>
-  <h2 class="section-title">v1 vs v2 정량 비교</h2>
-  <p class="section-desc">같은 627경기에 v1과 v2 두 파이프라인을 적용. v2는 default와 Optuna tuned 두 버전 모두 측정.</p>
-
-  <div class="table-wrap"><table>
-    <thead><tr><th>버전</th><th>특징</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 (macro)</th><th>Notes</th></tr></thead>
-    <tbody>
-      <tr>
-        <td><strong>v1</strong></td>
-        <td>SVM(rbf) + GridSearch<br>target encoding leak<br>random split</td>
-        <td class="num" style="text-align:right;">0.5159</td>
-        <td class="num" style="text-align:right; color:var(--accent-red);">0.2269</td>
-        <td><span class="badge bad">사실상 baseline</span></td>
-      </tr>
-      <tr>
-        <td><strong>v2 default</strong></td>
-        <td>LightGBM (default)<br>Pipeline + TimeSeriesSplit<br>fold-aware TE</td>
-        <td class="num" style="text-align:right;">0.4423</td>
-        <td class="num" style="text-align:right; color:var(--accent-green);">0.3452</td>
-        <td><span class="badge good">진짜 분류 시작</span></td>
-      </tr>
-      <tr>
-        <td><strong>v2 tuned</strong></td>
-        <td>LightGBM + Optuna 30 trials<br>Pipeline + TimeSeriesSplit<br>fold-aware TE</td>
-        <td class="num" style="text-align:right;">0.4827</td>
-        <td class="num" style="text-align:right; color:var(--accent-green); font-weight:700;">0.3775</td>
-        <td><span class="badge good">+66.4% F1</span></td>
-      </tr>
-    </tbody>
-  </table></div>
-
-  <div class="viz-insight red" style="margin-top:1.5rem;">
-    <div class="viz-insight-label">왜 정확도는 떨어지고 F1은 올라갔는가</div>
-    <p>v1의 정확도 0.5159는 손흥민 클럽 경기의 승률(326/627 = 0.5199)과 거의 동일합니다. 이게 "단순히 모든 경기를 승리로 예측"하는 자명한 baseline의 점수예요. <strong>v1은 사실상 분류를 하지 않고 있었습니다.</strong> v2는 진짜로 패배/무승부/승리를 구분하기 시작했고, 그 결과 정확도는 비슷하지만 macro F1이 0.227 &rarr; 0.378로 1.66배 좋아졌습니다.</p>
-  </div>
-</div></section>
-<hr class="divider">
-
-<section id="big-finding"><div class="container fade-in">
-  <div class="section-label">The Big Finding</div>
-  <h2 class="section-title">v1은 모든 경기를 "승리"로 예측하고 있었다</h2>
-  <p class="section-desc">v1의 51.6% 정확도가 분류 능력이 아니라는 가설을 검증하기 위해, v1 모델의 테스트셋(126경기) 예측 분포를 확인했습니다.</p>
-
-  <h3 style="font-size:0.95rem; margin: 2rem 0 0.8rem; font-weight:700;">v1 Confusion Matrix (test n=126)</h3>
-  <div class="confusion">
-    <div class="conf-cell head"></div>
-    <div class="conf-cell head">Pred L</div>
-    <div class="conf-cell head">Pred D</div>
-    <div class="conf-cell head">Pred W</div>
-    <div class="conf-cell head">True L (36)</div>
-    <div class="conf-cell zero">0</div>
-    <div class="conf-cell zero">0</div>
-    <div class="conf-cell miss">36</div>
-    <div class="conf-cell head">True D (25)</div>
-    <div class="conf-cell zero">0</div>
-    <div class="conf-cell zero">0</div>
-    <div class="conf-cell miss">25</div>
-    <div class="conf-cell head">True W (65)</div>
-    <div class="conf-cell zero">0</div>
-    <div class="conf-cell zero">0</div>
-    <div class="conf-cell diag">65</div>
-  </div>
-
-  <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.75; margin-top:1rem;">
-    126개 테스트 경기 모두 "승리"로 예측. 패배 36경기 중 0개 맞춤. 무승부 25경기 중 0개 맞춤. 승리 65경기는 100% 맞췄지만, 그건 모든 걸 승리로 예측했기 때문입니다.
-  </p>
-
-  <div class="mismatch-example">
-    <div class="mismatch-id">손흥민 클럽 경기 627건의 진짜 분포</div>
-    <div class="mismatch-line"><span class="mtag mtag-truth">Truth</span> 승: 326 (52.0%) / 무: 122 (19.5%) / 패: 179 (28.6%)</div>
-    <div class="mismatch-line"><span class="mtag mtag-v1">v1 예측</span> 승: 100% / 무: 0% / 패: 0%</div>
-    <div class="mismatch-line"><span class="mtag mtag-v2">v2 예측</span> 승: 71% recall / 무: 29% recall / 패: 17% recall (실제 분류)</div>
-  </div>
-
-  <div class="viz-insight" style="margin-top:1.5rem;">
-    <div class="viz-insight-label">왜 v1은 이렇게 됐는가</div>
-    <p>SVM(rbf)이 클래스 불균형 + target encoding 누수 + 무작위 split의 조합 안에서 "다 W로 예측"하는 게 손실 함수상 최적이었던 것으로 보입니다. <code>class_weight='balanced'</code>도 없었고, GridSearch도 accuracy 기준이라 majority class를 그대로 따라가는 모델이 best로 선정됨. <strong>v1의 장점이라고 믿었던 정확도 51.6%는, 사실 손흥민 본인의 승률을 그대로 출력한 것</strong>이었습니다.</p>
-  </div>
-</div></section>
-<hr class="divider">
-
-<section id="adaptation"><div class="container fade-in">
-  <div class="section-label">New Question</div>
-  <h2 class="section-title">리그 적응 곡선 &mdash; 4번의 전환</h2>
-  <p class="section-desc">데이터를 풀 스코프로 다시 모은 정당화. 손흥민의 4번 클럽 전환(Hamburg &rarr; Leverkusen &rarr; Tottenham &rarr; LAFC)에서 폼이 어떻게 변했는지를 측정합니다. 같은 리그 내 이적과 다른 리그 이적의 차이가 보입니다.</p>
-
-  <h3 style="font-size:0.95rem; margin: 2rem 0 0.8rem; font-weight:700;">첫 10경기 vs 다음 20경기 baseline</h3>
-  <div class="table-wrap"><table>
-    <thead>
-      <tr>
-        <th>전환</th>
-        <th>첫 10 승률</th>
-        <th>baseline 승률</th>
-        <th>첫 10 골/경기</th>
-        <th>baseline 골/경기</th>
-        <th>회복 시점</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Hamburg</strong> <span class="badge">데뷔</span></td>
-        <td class="num">0.300</td>
-        <td class="num">0.250</td>
-        <td class="num">0.300</td>
-        <td class="num">0.150</td>
-        <td class="num">match #1</td>
-      </tr>
-      <tr>
-        <td><strong>Leverkusen</strong> <span class="badge">Bundesliga &rarr; Bundesliga</span></td>
-        <td class="num pos">0.700</td>
-        <td class="num">0.400</td>
-        <td class="num">0.100</td>
-        <td class="num pos">0.350</td>
-        <td class="num">match #2</td>
-      </tr>
-      <tr>
-        <td><strong>Tottenham</strong> <span class="badge">Bundesliga &rarr; EPL</span></td>
-        <td class="num pos">0.700</td>
-        <td class="num">0.600</td>
-        <td class="num pos">0.300</td>
-        <td class="num">0.100</td>
-        <td class="num">match #3</td>
-      </tr>
-      <tr>
-        <td><strong>LAFC</strong> <span class="badge">EPL &rarr; MLS</span></td>
-        <td class="num">0.600</td>
-        <td class="num">0.600</td>
-        <td class="num pos" style="font-weight:700;">0.900</td>
-        <td class="num">0.250</td>
-        <td class="num neg">match #8</td>
-      </tr>
-    </tbody>
-  </table></div>
-
-  <div class="card-grid" style="margin-top:2rem;">
-    <div class="layer-card">
-      <div class="layer-num">Finding 01</div>
-      <div class="layer-title">LAFC 데뷔는 골 폭발</div>
-      <div class="layer-q">"첫 10경기 골/경기 0.90 &mdash; 다른 모든 클럽 데뷔 시기 압도. 그러나 그 후 baseline은 0.25로 빠르게 정상화."</div>
-      <div class="tags"><span class="tag good">+0.65 above baseline</span></div>
-    </div>
-    <div class="layer-card">
-      <div class="layer-num">Finding 02</div>
-      <div class="layer-title">Tottenham은 즉시 적응</div>
-      <div class="layer-q">"첫 10경기에 승률 70% + 골 0.30 동시 달성. Bundesliga &rarr; EPL 전환에도 폼 손실 거의 없음. 손흥민 전성기의 시작점."</div>
-      <div class="tags"><span class="tag good">3경기 회복</span></div>
-    </div>
-    <div class="layer-card">
-      <div class="layer-num">Finding 03</div>
-      <div class="layer-title">MLS 적응은 4-5배 더 걸림</div>
-      <div class="layer-q">"회복까지 8경기. EPL 데뷔(3경기), Leverkusen 이적(2경기), Hamburg 데뷔(1경기) 대비 명확히 더 오래. 골은 빠르지만 폼 안정화는 느림."</div>
-      <div class="tags"><span class="tag warn">8경기 회복</span></div>
+<!-- PART 3 -->
+<section id="part3"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">03</div>
+    <div class="part-meta">
+      <div class="part-kicker">Thought Lineage</div>
+      <div class="part-title">사고의 계보 &mdash; 4단 사고 흐름이 v2로 이어진 길</div>
     </div>
   </div>
+  <div class="body-text">
+    <p>v1 회고 페이지의 정체성은 <strong>"결과를 라벨링하고, 변수와의 관계를 통계로 검증한 뒤, 그 검증값을 가중치로 인코딩하고, 다시 검증한다"</strong>는 4단 사고 흐름이었습니다. 이 흐름은 통계 모델링의 정석이지만, ML 검증 관점에선 누수와 충돌하는 지점이 있었습니다.</p>
 
-  <div class="viz-insight" style="margin-top:2rem;">
-    <div class="viz-insight-label">왜 LAFC만 다른가 (가설)</div>
-    <p>표 자체로는 인과를 단정할 수 없지만, 가능한 설명: (1) MLS의 경기 강도 분포가 EPL과 매우 달라 폼 안정화 패턴이 다름, (2) LAFC가 손흥민에게 더 많은 공격 기회를 부여(Tottenham 시기 평균 0.10 골/경기 baseline과 LAFC 0.25 baseline 차이가 시사), (3) 적응 윈도우가 작아(30경기) 통계적 노이즈가 큼. <strong>이 질문은 풀 스코프 데이터(2026까지)가 없었으면 답할 수 없었습니다.</strong></p>
-  </div>
-</div></section>
-<hr class="divider">
+    <p>v2의 출발점은 이 4단 사고 흐름을 <em>폐기하지 않고</em> ML 위생 위에 다시 펼치는 것입니다. 각 단계가 어떻게 옮겨졌는지 정리합니다.</p>
 
-<section id="shap"><div class="container fade-in">
-  <div class="section-label">SHAP</div>
-  <h2 class="section-title">v2 모델은 무엇을 보고 있는가</h2>
-  <p class="section-desc">Tuned LightGBM의 SHAP 값(평균 절대값)으로 가장 영향력 있는 피처 15개를 추출. v1이 가중 인코딩으로 강조했던 venue가 1위인 것은 흥미로운 사후 검증입니다.</p>
-
-  <div class="bar-chart">
-    <div class="bar-row"><div class="bar-label">venue_int</div><div class="bar-bg"><div class="bar-fill high" style="width:100%;">0.362</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll3_minutes</div><div class="bar-bg"><div class="bar-fill high" style="width:49%;">0.177</div></div></div>
-    <div class="bar-row"><div class="bar-label">league_match_idx</div><div class="bar-bg"><div class="bar-fill high" style="width:46%;">0.166</div></div></div>
-    <div class="bar-row"><div class="bar-label">club_match_idx</div><div class="bar-bg"><div class="bar-fill high" style="width:45%;">0.164</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll5_shots</div><div class="bar-bg"><div class="bar-fill mid" style="width:45%;">0.163</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll5_minutes</div><div class="bar-bg"><div class="bar-fill mid" style="width:44%;">0.159</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll10_minutes</div><div class="bar-bg"><div class="bar-fill mid" style="width:39%;">0.143</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll5_shots_on_target</div><div class="bar-bg"><div class="bar-fill mid" style="width:38%;">0.137</div></div></div>
-    <div class="bar-row"><div class="bar-label">career_match_idx</div><div class="bar-bg"><div class="bar-fill mid" style="width:37%;">0.135</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll5_tackles_won</div><div class="bar-bg"><div class="bar-fill low" style="width:35%;">0.127</div></div></div>
-    <div class="bar-row"><div class="bar-label">form5_meanres</div><div class="bar-bg"><div class="bar-fill low" style="width:32%;">0.115</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll5_crosses</div><div class="bar-bg"><div class="bar-fill low" style="width:31%;">0.113</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll10_tackles_won</div><div class="bar-bg"><div class="bar-fill low" style="width:26%;">0.095</div></div></div>
-    <div class="bar-row"><div class="bar-label">roll5_fouled</div><div class="bar-bg"><div class="bar-fill low" style="width:26%;">0.094</div></div></div>
-    <div class="bar-row"><div class="bar-label">form10_winrate</div><div class="bar-bg"><div class="bar-fill low" style="width:25%;">0.092</div></div></div>
-  </div>
-
-  <div class="card-grid" style="margin-top:2rem;">
-    <div class="layer-card">
-      <div class="layer-num">SHAP 01</div>
-      <div class="layer-title">venue 1위 &mdash; v1 직관 검증됨</div>
-      <div class="layer-q">"옛 v1이 OLS p-value로 venue가 유의하다고 판단해 가중 인코딩까지 적용한 그 직관이, v2의 SHAP 분석으로도 가장 중요한 피처로 재확인됨. 통계학자의 옳음은 살아남았다."</div>
+    <div class="table-wrap" style="margin-top:1.2rem;">
+      <table class="lineage-table">
+        <thead>
+          <tr>
+            <th style="width:60px;">#</th>
+            <th>학부 시절 사고 (v1)</th>
+            <th>v2 구현</th>
+            <th>이 페이지에서 어떻게 검증됐는가</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="step-num">1</td>
+            <td><strong>결과를 1/0/-1로 라벨링</strong><br><span class="footnote">W/D/L의 부호를 살린 정수 라벨링. OLS에서 결과의 방향성이 자연스럽게 들어가게 함.</span></td>
+            <td>동일 (변경 없음). 모든 v2 모델이 같은 라벨 사용.</td>
+            <td><strong>Part 4</strong>: v1이 모든 테스트를 W로 예측 → "라벨링은 옳고, 모델이 잘못"임을 노출.</td>
+          </tr>
+          <tr>
+            <td class="step-num">2</td>
+            <td><strong>OLS p-value로 venue 유의성 검정</strong><br><span class="footnote">venue를 인코딩하기 전에 result에 정말 통계적으로 유의한지 확인. p-value 기반 결정.</span></td>
+            <td>fold-aware target encoder 안의 venue별 평균 계산이 OLS의 회귀 계수와 같은 정보. 매 fold의 train 부분만 사용.</td>
+            <td><strong>Part 9 (Counterfactual)</strong>: opponent strength 통제 후에도 venue OLS 계수는 -0.287 → -0.288 (변화 없음, p&lt;0.001 유지). v1 직관이 인과적 효과로 검증.</td>
+          </tr>
+          <tr>
+            <td class="step-num">3</td>
+            <td><strong>venue별 result 평균을 가중치로 매핑</strong><br><span class="footnote">전체 데이터의 venue별 result 평균(0.608/0.339/0.235)을 라벨값으로 치환. ML 관점에선 target encoding leakage.</span></td>
+            <td>매 fold의 <em>train만</em>으로 venue별 평균 계산해 매핑(<code>FoldAwareTargetEncoder</code>). 의도(가중 인코딩) 보존 + 누수 제거.</td>
+            <td><strong>Part 5 (Ablation)</strong>: venue 1개 제거 시 F1 -0.053 (rolling 33개 제거 시 -0.068과 거의 동일). per-feature 기여도 압도적 1위.</td>
+          </tr>
+          <tr>
+            <td class="step-num">4</td>
+            <td><strong>R² 비교로 인코딩 효과 재검증</strong><br><span class="footnote">정수 인코딩 vs 가중 인코딩의 R² 차이를 OLS로 측정해 가중 인코딩 채택.</span></td>
+            <td>TimeSeriesSplit 5-fold CV의 macro F1으로 재검증. R² 한 숫자가 아니라 fold별 분산까지.</td>
+            <td><strong>Part 4 + Part 10 (Bayesian)</strong>: F1 0.227 → 0.378 (+66.4%). 베이지안 b_venue 95% HDI [-1.05, -0.47]로 효과 크기 신뢰구간까지 추정.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="layer-card">
-      <div class="layer-num">SHAP 02</div>
-      <div class="layer-title">적응 인덱스 3, 4위</div>
-      <div class="layer-q">"league_match_idx, club_match_idx 두 피처는 v2에서 새로 만든 것. 모델이 '이 리그에서 몇 번째 경기인가'를 결과 예측의 핵심 정보로 사용한다는 발견. 적응 곡선 분석과 직접 연결됨."</div>
-    </div>
-    <div class="layer-card">
-      <div class="layer-num">SHAP 03</div>
-      <div class="layer-title">Rolling 폼 피처 강세</div>
-      <div class="layer-q">"roll3/5/10_minutes, roll5_shots, form5_meanres 등 모든 rolling 피처가 상위. v1의 'goal feature leakage' 대신 '직전 N경기 평균'으로 폼을 표현한 것이 모델에 의미 있는 신호로 작동."</div>
+
+    <div class="viz-insight green" style="margin-top: 2rem;">
+      <div class="viz-insight-label">사고 흐름의 4 / 4가 살아남았습니다</div>
+      <p>위 표의 각 행은 "v1의 사고가 v2 어디에 옮겨졌고, 그것이 이 페이지의 어떤 실험에서 검증됐는가"를 가리킵니다. 4단 모두 살아남은 채 ML 검증 위생을 통과했습니다. 통계학자의 옳음과 ML 모델러의 옳음은 충돌하는 게 아니라, 같은 사고를 다른 위치에서 펼치는 일이었습니다.</p>
     </div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="lessons"><div class="container fade-in">
-  <div class="section-label">Lessons</div>
-  <h2 class="section-title">통계학자의 옳음은 살아남았다</h2>
-  <p class="section-desc">v1의 5가지 의도된 결정 중 venue 가중 인코딩의 직관은 v2의 SHAP 분석으로 재검증됐고, 새로 추가된 적응 인덱스/rolling 폼 피처는 그 위에 ML 검증 위생을 더한 결과입니다.</p>
+<!-- PART 4 -->
+<section id="part4"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">04</div>
+    <div class="part-meta">
+      <div class="part-kicker">Meta Comparison</div>
+      <div class="part-title">v1 vs v2 정량 비교 &mdash; 세 버전</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>같은 627경기에 두 파이프라인을 동시에 적용해 metric을 측정합니다. v2는 default LightGBM과 Optuna 30 trial로 튜닝한 버전 둘 다 보여줍니다.</p>
 
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-title" style="color:var(--accent-green);">살아남은 것</div>
-      <div class="card-text">
-        <strong>venue가 result에 강한 영향을 준다</strong>는 v1의 OLS 검증 결과는 v2의 SHAP에서 1위로 재확인. 통계학적 사고로 옳았던 부분.
+    <div class="qbox">
+      <div class="qbox-label">실험 셋업</div>
+      <div class="qbox-text">v1: 옛 v1 코드 그대로 재현. SVM(rbf) + GridSearchCV + RF top_k=6 feature selection + target encoding leakage + StandardScaler 전체 fit + 무작위 80/20 split.<br>v2: sklearn Pipeline + 5-fold TimeSeriesSplit + FoldAwareTargetEncoder + LightGBM (default 또는 Optuna 30 trials).</div>
+    </div>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>버전</th><th>특징 (한 줄)</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>v1</strong></td>
+          <td>SVM + 누수 + 무작위 split</td>
+          <td class="num" style="text-align:right;">0.5159</td>
+          <td class="num neg" style="text-align:right;">0.2269</td>
+          <td><span class="badge bad">사실상 baseline</span></td>
+        </tr>
+        <tr>
+          <td><strong>v2 default</strong></td>
+          <td>LightGBM (default) + 위생</td>
+          <td class="num" style="text-align:right;">0.4423</td>
+          <td class="num pos" style="text-align:right;">0.3452</td>
+          <td><span class="badge good">진짜 분류 시작</span></td>
+        </tr>
+        <tr>
+          <td><strong>v2 tuned</strong></td>
+          <td>LightGBM + Optuna 30 trials</td>
+          <td class="num" style="text-align:right;">0.4827</td>
+          <td class="num pos" style="text-align:right; font-weight:700;">0.3775</td>
+          <td><span class="badge good">+66.4% F1</span></td>
+        </tr>
+      </tbody>
+    </table></div>
+
+    <p>표만 보면 "정확도는 떨어지고 F1만 올랐다"는 어색한 패턴입니다. 이걸 어떻게 해석해야 하는가가 이 보고서의 첫 큰 finding입니다.</p>
+
+    <h3 style="font-size:1.05rem; margin: 2rem 0 0.6rem; font-weight:700;">v1의 예측 분포 — 모든 경기를 W로 예측</h3>
+
+    <p>v1의 51.6% 정확도가 분류 능력이 아닐 수 있다는 의심에서, v1 모델이 실제로 어떤 클래스를 어떻게 예측했는지를 직접 확인했습니다. 테스트셋 126경기에 대한 confusion matrix:</p>
+
+    <div class="confusion">
+      <div class="conf-cell head"></div>
+      <div class="conf-cell head">Pred L</div>
+      <div class="conf-cell head">Pred D</div>
+      <div class="conf-cell head">Pred W</div>
+      <div class="conf-cell head">True L (36)</div>
+      <div class="conf-cell zero">0</div>
+      <div class="conf-cell zero">0</div>
+      <div class="conf-cell miss">36</div>
+      <div class="conf-cell head">True D (25)</div>
+      <div class="conf-cell zero">0</div>
+      <div class="conf-cell zero">0</div>
+      <div class="conf-cell miss">25</div>
+      <div class="conf-cell head">True W (65)</div>
+      <div class="conf-cell zero">0</div>
+      <div class="conf-cell zero">0</div>
+      <div class="conf-cell diag">65</div>
+    </div>
+
+    <div class="body-text">
+      <p>126개 테스트 경기 <strong>모두 "승리(W)"로 예측</strong>. 패배 36경기 중 0개 맞춤. 무승부 25경기 중 0개 맞춤. 승리 65경기는 100% 맞췄지만, 그건 모든 걸 W로 예측했기 때문입니다.</p>
+    </div>
+
+    <div class="mismatch-example">
+      <div class="mismatch-id">손흥민 클럽 경기 627건의 진짜 분포 vs v1/v2 예측</div>
+      <div class="mismatch-line"><span class="mtag mtag-truth">Truth</span> 승: 326 (52.0%) / 무: 122 (19.5%) / 패: 179 (28.6%)</div>
+      <div class="mismatch-line"><span class="mtag mtag-v1">v1 예측</span> 승: 100% / 무: 0% / 패: 0% — accuracy 51.6% = 단순히 클럽 승률 모방</div>
+      <div class="mismatch-line"><span class="mtag mtag-v2">v2 예측</span> 승: 71% recall / 무: 29% recall / 패: 17% recall — 실제 분류 시작</div>
+    </div>
+
+    <div class="viz-insight red">
+      <div class="viz-insight-label">왜 정확도가 떨어졌는데도 F1이 올랐는가</div>
+      <p>v1 정확도 0.5159는 손흥민 클럽 경기의 승률 0.5199와 거의 같습니다. 이는 "단순히 모든 경기를 승리로 예측"하는 자명한 baseline의 점수입니다. <strong>v1은 분류를 하지 않고 있었고, 정확도 51.6%는 분류 능력이 아니라 손흥민의 평균 승률 그 자체였습니다.</strong></p>
+      <p>v2는 진짜로 패배/무승부/승리를 구분하기 시작했습니다. 그 결과 정확도는 비슷하지만 macro F1이 0.227 → 0.378로 1.66배 좋아졌습니다. accuracy는 majority class에 편향된 metric이라 분류 collapse를 감지하지 못하고, F1 macro는 클래스별 균형을 평가하므로 collapse가 0.227로 명확히 드러납니다.</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 5 -->
+<section id="part5"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">05</div>
+    <div class="part-meta">
+      <div class="part-kicker">Experiment A &middot; Feature Ablation</div>
+      <div class="part-title">사고 흐름 검증 1 &mdash; 어떤 피처 그룹이 얼마나 기여하는가</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>SHAP는 모델 내부에서 각 피처가 출력에 얼마나 기여하는지를 알려줍니다. 하지만 SHAP는 "기여도"이지 "필요성"이 아닙니다. 어떤 피처가 진짜 모델 성능에 필요한지는 그 피처를 제거했을 때 F1이 얼마나 떨어지는지로 측정합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">실험 A의 질문</div>
+      <div class="qbox-text">"v2의 41개 피처는 venue / rolling / adaptation index / form 4 그룹으로 나뉜다. 각 그룹을 통째로 제거했을 때 F1 macro가 얼마나 떨어지는가? 학부 시절 강조했던 venue가 실제 성능 기여도에서도 1위인가?"</div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — 피처 그룹별 F1 변화</h3>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>제거된 그룹</th><th class="num" style="text-align:right;">피처 수</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">Delta</th><th>per-feature</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--bg-secondary);"><td><strong>(전체 유지)</strong></td><td class="num" style="text-align:right;">41</td><td class="num" style="text-align:right; font-weight:700;">0.3775</td><td class="num" style="text-align:right;">—</td><td>—</td></tr>
+        <tr><td><strong>venue</strong> 제거</td><td class="num" style="text-align:right;">1</td><td class="num" style="text-align:right;">0.3248</td><td class="num neg" style="text-align:right;">-0.0527</td><td class="num neg">-0.053 / 피처</td></tr>
+        <tr><td><strong>rolling</strong> 제거</td><td class="num" style="text-align:right;">33</td><td class="num" style="text-align:right;">0.3100</td><td class="num neg" style="text-align:right;">-0.0675</td><td class="num">-0.002 / 피처</td></tr>
+        <tr><td><strong>adaptation</strong> 제거</td><td class="num" style="text-align:right;">4</td><td class="num" style="text-align:right;">0.3455</td><td class="num neg" style="text-align:right;">-0.0320</td><td class="num">-0.008 / 피처</td></tr>
+        <tr><td><strong>form</strong> 제거</td><td class="num" style="text-align:right;">3</td><td class="num" style="text-align:right;">0.3542</td><td class="num neg" style="text-align:right;">-0.0233</td><td class="num">-0.008 / 피처</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">표를 천천히 읽으면 <strong>venue 1개의 영향력이 압도적</strong>입니다.</p>
+
+    <ul style="margin: 0.8rem 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li><strong>venue 1개 제거</strong> = F1 -0.053 → 단일 피처가 F1을 0.053 깎음</li>
+      <li><strong>rolling 33개 제거</strong> = F1 -0.068 → 33개를 통째로 빼도 venue 1개와 비슷</li>
+      <li>per-feature 기준으로 venue는 rolling보다 <strong>약 26배 더 강한 단일 영향력</strong></li>
+      <li>adaptation 4개 / form 3개도 의미 있는 기여 (각각 -0.032, -0.023)</li>
+    </ul>
+
+    <div class="viz-insight green">
+      <div class="viz-insight-label">사고 흐름 ②③ 재검증 — venue 직관은 SHAP뿐만 아니라 Ablation으로도 1위</div>
+      <p>학부 시절 OLS p-value로 "venue가 중요하다"고 판단해 가중 인코딩까지 적용한 그 직관이, v2의 두 가지 측정(SHAP 0.362 = 1위 / Ablation -0.053 = per-feature 1위)으로 모두 1위로 재확인됩니다. 풀어 말하면: <em>venue는 SHAP 내부 영향력으로도 1위, 모델 성능 기여도로도 압도적 1위</em>. 그 위에 v2가 추가한 rolling / adaptation / form은 양적으론 많지만 redundancy가 있어 단일 영향력은 venue 미달.</p>
+    </div>
+
+    <p>이 발견은 두 가지 해석을 가능하게 합니다. 첫째, v1이 venue 한 변수를 가중 인코딩으로 부스트한 것은 <em>가장 중요한 변수에 정확히 집중한</em> 좋은 선택이었습니다. 둘째, v2가 추가한 33개의 rolling 피처는 양적 기여보다 <em>"단일 venue로 못 잡는 잔차"를 잡는 보조 역할</em>이라고 봐야 합니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 6 -->
+<section id="part6"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">06</div>
+    <div class="part-meta">
+      <div class="part-kicker">Experiment B &middot; v1 Collapse Diagnosis</div>
+      <div class="part-title">v1이 모든 경기를 W로 예측한 진짜 원인은</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v1 회고에서는 "데이터 누수가 v1의 결함"이라고 적었습니다. 하지만 <strong>"누수 = 모든 경기 W 예측"이 자동으로 성립하는가</strong>는 검증되지 않았습니다. v1의 collapse를 만든 진짜 원인이 누수 자체인지, 아니면 다른 디자인 결정인지를 분리합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">실험 B의 질문</div>
+      <div class="qbox-text">"v1을 한 줄씩 변형해서 어떤 변경이 collapse를 깨는지 확인한다. (1) class_weight='balanced' 추가, (2) RF top_k=6 selection 제거, (3) target encoding 제거, (4) scaler를 train fold에서만 fit, (5) 모든 fix 동시 적용. 어느 변경이 가장 큰 효과인가?"</div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — v1을 한 줄씩 변형</h3>
+
+    <div class="table-wrap"><table>
+      <thead><tr><th>변형</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">Pred W</th><th class="num" style="text-align:right;">Pred D</th><th class="num" style="text-align:right;">Pred L</th></tr></thead>
+      <tbody>
+        <tr style="background:var(--bg-secondary);"><td><strong>v1 baseline (top_k=6)</strong></td><td class="num" style="text-align:right;">0.516</td><td class="num neg" style="text-align:right;">0.227</td><td class="num neg" style="text-align:right;">100%</td><td class="num" style="text-align:right;">0%</td><td class="num" style="text-align:right;">0%</td></tr>
+        <tr><td>v1 + scaler train fold만</td><td class="num" style="text-align:right;">0.516</td><td class="num neg" style="text-align:right;">0.227</td><td class="num neg" style="text-align:right;">100%</td><td class="num" style="text-align:right;">0%</td><td class="num" style="text-align:right;">0%</td></tr>
+        <tr><td>v1 &minus; target encoding</td><td class="num" style="text-align:right;">0.460</td><td class="num" style="text-align:right;">0.313</td><td class="num" style="text-align:right;">68%</td><td class="num" style="text-align:right;">2%</td><td class="num" style="text-align:right;">29%</td></tr>
+        <tr><td><strong>v1 &minus; top_k (11 piches 모두)</strong></td><td class="num" style="text-align:right;">0.571</td><td class="num pos" style="text-align:right;">0.401</td><td class="num" style="text-align:right;">62%</td><td class="num" style="text-align:right;">0%</td><td class="num" style="text-align:right;">38%</td></tr>
+        <tr><td><strong>v1 + class_weight='balanced'</strong></td><td class="num" style="text-align:right;">0.389</td><td class="num pos" style="text-align:right;">0.338</td><td class="num pos" style="text-align:right;">39%</td><td class="num pos" style="text-align:right;">19%</td><td class="num pos" style="text-align:right;">42%</td></tr>
+        <tr><td>v1 모든 fix (SVM 유지)</td><td class="num" style="text-align:right;">0.444</td><td class="num pos" style="text-align:right;">0.385</td><td class="num pos" style="text-align:right;">47%</td><td class="num pos" style="text-align:right;">19%</td><td class="num pos" style="text-align:right;">34%</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">결과 해석 4가지:</p>
+
+    <div class="step-block" style="margin-top:1.2rem;">
+      <div class="step-num-circle">1</div>
+      <div class="step-content">
+        <div class="step-title">scaler leakage 단독으로는 collapse에 영향 없음</div>
+        <div class="step-desc">v1 + scaler를 train fold에서만 fit해도 결과 동일 (acc 0.516, W 100%). <em>scaler 누수는 v1 collapse의 원인이 아니다.</em></div>
       </div>
     </div>
-    <div class="card">
-      <div class="card-title" style="color:var(--accent-red);">바뀐 것</div>
-      <div class="card-text">
-        v1의 venue <strong>가중 인코딩(target encoding)은 fold-aware 버전</strong>으로 옮겨졌습니다. 의도는 같지만 누수 없이. v1의 raw <code>goal</code> 피처는 rolling 평균으로 대체되어 leakage 제거.
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="color:var(--accent);">새로 추가된 것</div>
-      <div class="card-text">
-        <strong>league_match_idx, club_match_idx</strong> 같은 적응 인덱스 피처. 풀 스코프 데이터(4 클럽 14.7년)가 있어야만 의미 있는 새 피처. 학부 시절 데이터로는 만들 수 없었던 분석.
-      </div>
-    </div>
-  </div>
 
-  <div class="viz-insight green" style="margin-top:2rem;">
-    <div class="viz-insight-label">3년의 거리 &mdash; 측정된 결론</div>
-    <p>v1 회고 페이지에서 "사고 흐름은 옳았으니 위치만 옮긴다"고 적었던 가설은, 같은 데이터에 두 파이프라인을 동시에 돌린 결과로 검증됐습니다. <strong>venue 직관은 SHAP 1위로 살아남았고, 누수 제거는 macro F1을 +66.4% 끌어올렸습니다.</strong> 학부 시절의 통계학적 사고는 폐기 대상이 아니라 ML 위생을 더해 살릴 자산이었다는 것이, 숫자로 확인된 결론입니다.</p>
+    <div class="step-block">
+      <div class="step-num-circle">2</div>
+      <div class="step-content">
+        <div class="step-title">target encoding 제거도 부분 효과만</div>
+        <div class="step-desc">v1에서 venue 가중 인코딩만 빼고 raw venue_int를 쓰면 W rate 100% → 68%로 감소하지만, F1은 여전히 0.313 수준. target encoding은 영향이 있긴 하나 <em>collapse의 주요 원인은 아니다.</em></div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-num-circle">3</div>
+      <div class="step-content">
+        <div class="step-title">RF top_k=6 selection을 빼는 것이 큰 효과</div>
+        <div class="step-desc">v1에서 RF로 상위 6개만 고르지 않고 11개 모두 사용하면 W rate 100% → 62%, F1 0.227 → <strong>0.401</strong>. <em>collapse의 가장 큰 원인 중 하나는 과소피처 + RF selection의 조합.</em></div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-num-circle">4</div>
+      <div class="step-content">
+        <div class="step-title">class_weight='balanced'가 단일 가장 강력한 fix</div>
+        <div class="step-desc">v1에 <code>class_weight='balanced'</code>만 추가하고 GridSearch scoring을 f1_macro로 바꾸면 W/D/L 모두 19~42% 비율로 예측. F1 0.227 → 0.338. <em>collapse의 진짜 핵심은 클래스 불균형 + accuracy 기준 GridSearch의 조합이었음.</em></div>
+      </div>
+    </div>
+
+    <div class="viz-insight amber">
+      <div class="viz-insight-label">예상치 못한 발견 — 누수가 아니라 "feature selection + 불균형 + accuracy 기준"의 합주</div>
+      <p>v1 회고에서는 "누수가 v1의 핵심 결함"이라고 단순화했지만, 이 진단에 따르면 collapse를 만드는 진짜 chord는 <strong>RF top_k feature selection × 클래스 불균형 × accuracy 기준 GridSearch</strong>의 3중 조합입니다. target encoding leakage / scaler leakage 단독으로는 collapse가 일어나지 않습니다.</p>
+      <p>다시 말해 v2가 좋은 진짜 이유는 단순히 "누수를 제거해서"가 아니라 (a) <strong>피처 다양성</strong>(41개) + (b) <strong>class_weight 또는 LightGBM의 balanced loss</strong> + (c) <strong>Pipeline + TimeSeriesSplit 위생</strong>의 종합입니다. v1 회고의 "누수 = 핵심"이라는 단순 도식은 <em>한 단계 더 정교화</em>되어야 합니다.</p>
+    </div>
+
+    <p>이 발견은 회고 페이지의 9가지 수정 항목 우선순위도 약간 바꿉니다. "scaler leakage 제거"는 이론적으로 옳지만 실제 성능 기여도는 v1 데이터 셋업에서는 0이었습니다. "RF top_k 대신 모든 피처 사용" 또는 "class_weight='balanced'"가 같은 노력으로 더 큰 효과를 가져옵니다.</p>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="tech"><div class="container fade-in">
-  <div class="section-label">Stack</div>
-  <h2 class="section-title">기술 스택 (v2)</h2>
+<!-- PART 7 -->
+<section id="part7"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">07</div>
+    <div class="part-meta">
+      <div class="part-kicker">New Question 1 &middot; Adaptation Curves</div>
+      <div class="part-title">리그 적응 곡선 &mdash; 4번의 클럽 전환</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>풀 스코프 데이터 재수집의 정당화. 학부 시절 데이터로는 1-2 클럽 전환만 보였지만, v2의 4 클럽 데이터로는 <strong>같은 리그 내 이적, 다른 리그 이적, 다른 대륙 이적</strong>을 모두 비교할 수 있습니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">실험 7의 질문</div>
+      <div class="qbox-text">"손흥민의 4번 클럽 전환에서 폼 회복까지 얼마나 걸렸는가? 같은 리그 내 이적(Hamburg→Leverkusen)과 다른 리그 이적(EPL→MLS)에서 패턴이 다른가?"</div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">측정 정의</h3>
+    <ul style="margin: 0 0 1.5rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li><strong>첫 10경기</strong>: 각 클럽에서 손흥민이 뛴 처음 10경기. 적응 윈도우.</li>
+      <li><strong>baseline 20경기</strong>: 첫 10경기 직후의 다음 20경기. 안정화 후 평균.</li>
+      <li><strong>회복 시점</strong>: <code>form5_meanres</code>(직전 5경기 평균 결과)가 클럽의 baseline 평균에 처음 도달한 경기 인덱스.</li>
+    </ul>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 표 (frequentist 측정)</h3>
+    <div class="table-wrap"><table>
+      <thead>
+        <tr>
+          <th>전환</th><th class="num" style="text-align:right;">첫 10 승률</th><th class="num" style="text-align:right;">baseline 승률</th><th class="num" style="text-align:right;">첫 10 골/경기</th><th class="num" style="text-align:right;">baseline 골/경기</th><th>회복 시점</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Hamburg</strong> <span class="badge">데뷔</span></td><td class="num" style="text-align:right;">0.300</td><td class="num" style="text-align:right;">0.250</td><td class="num" style="text-align:right;">0.300</td><td class="num" style="text-align:right;">0.150</td><td class="num">match #1</td></tr>
+        <tr><td><strong>Leverkusen</strong> <span class="badge">Bundesliga &rarr; Bundesliga</span></td><td class="num pos" style="text-align:right;">0.700</td><td class="num" style="text-align:right;">0.400</td><td class="num" style="text-align:right;">0.100</td><td class="num pos" style="text-align:right;">0.350</td><td class="num">match #2</td></tr>
+        <tr><td><strong>Tottenham</strong> <span class="badge">Bundesliga &rarr; EPL</span></td><td class="num pos" style="text-align:right;">0.700</td><td class="num" style="text-align:right;">0.600</td><td class="num pos" style="text-align:right;">0.300</td><td class="num" style="text-align:right;">0.100</td><td class="num">match #3</td></tr>
+        <tr><td><strong>LAFC</strong> <span class="badge warn">EPL &rarr; MLS</span></td><td class="num" style="text-align:right;">0.600</td><td class="num" style="text-align:right;">0.600</td><td class="num pos" style="text-align:right; font-weight:700;">0.900</td><td class="num" style="text-align:right;">0.250</td><td class="num amber">match #8</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">표에서 직접 읽히는 패턴 4가지:</p>
+    <ul style="margin: 0 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li><strong>LAFC 데뷔는 골 폭발</strong> — 첫 10경기 골/경기 0.90으로 다른 모든 클럽 데뷔 시기 압도. 이후 baseline은 0.25로 정상화.</li>
+      <li><strong>Tottenham은 즉시 적응</strong> — 첫 10경기에 승률 70% + 골 0.30 동시 달성. Bundesliga → EPL 전환에도 폼 손실 거의 없음.</li>
+      <li><strong>Leverkusen은 팀이 강팀</strong> — 첫 10경기 승률 70%지만 골 0.10. 손흥민 본인 기여는 늦게 정착.</li>
+      <li><strong>회복 시간 차이</strong> — Hamburg 1경기 / Leverkusen 2경기 / Tottenham 3경기 / LAFC 8경기. 4-5배 차이.</li>
+    </ul>
+
+    <div class="viz-insight amber">
+      <div class="viz-insight-label">단, 이 frequentist 표는 통계적 유의성을 말해주지 못한다</div>
+      <p>위 회복 시점 표는 직관적이고 흥미롭지만 "8경기 vs 1경기" 차이가 통계적으로 견고한지에 대한 답은 아닙니다. LAFC는 30경기 표본인 반면 Tottenham은 454경기. 표본 크기 차이가 단순 노이즈를 만들 가능성도 있습니다. 이 답은 <strong>Part 10의 Bayesian 계층 모델</strong>에서 다룹니다.</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 8 -->
+<section id="part8"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">08</div>
+    <div class="part-meta">
+      <div class="part-kicker">Experiment C &middot; Cross-League Transfer</div>
+      <div class="part-title">새 질문 2 &mdash; 모델은 리그를 가로질러 일반화되는가</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>풀 스코프 데이터의 두 번째 정당화. 한 리그에서 학습한 v2 모델이 다른 리그에서도 작동한다면, 손흥민의 result 결정 패턴은 <em>리그-invariant</em>(범용 패턴)입니다. 작동 안 한다면 <em>리그-specific</em>(리그마다 다른 게임)입니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">실험 C의 질문</div>
+      <div class="qbox-text">"Bundesliga 데이터로만 학습한 v2 모델이 EPL/MLS에서도 잘 작동하는가? 반대 방향은? 모델의 학습된 패턴이 리그 invariant인지 specific인지를 6×6 cross-league matrix로 측정한다."</div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — Cross-league F1 매트릭스</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>학습 (Source)</th><th>평가 (Target)</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">target baseline</th><th>note</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bundesliga</strong></td><td>Bundesliga (in-domain)</td><td class="num" style="text-align:right;">0.360</td><td class="num" style="text-align:right;">0.228</td><td class="num" style="text-align:right;">0.520</td><td>n_test=25</td></tr>
+        <tr><td><strong>Bundesliga</strong></td><td>EPL</td><td class="num" style="text-align:right;">0.420</td><td class="num pos" style="text-align:right;">0.337</td><td class="num" style="text-align:right;">0.535</td><td>n_test=333</td></tr>
+        <tr><td><strong>Bundesliga</strong></td><td>MLS</td><td class="num" style="text-align:right;">0.591</td><td class="num" style="text-align:right;">0.255</td><td class="num" style="text-align:right;">0.591</td><td>n_test=22</td></tr>
+        <tr><td><strong>EPL</strong></td><td>Bundesliga</td><td class="num" style="text-align:right;">0.364</td><td class="num" style="text-align:right;">0.264</td><td class="num" style="text-align:right;">0.446</td><td>n_test=121</td></tr>
+        <tr><td><strong>EPL</strong></td><td>EPL (in-domain)</td><td class="num" style="text-align:right;">0.388</td><td class="num" style="text-align:right;">0.282</td><td class="num" style="text-align:right;">0.448</td><td>n_test=67</td></tr>
+        <tr><td><strong>EPL</strong></td><td>MLS</td><td class="num" style="text-align:right;">0.364</td><td class="num" style="text-align:right;">0.278</td><td class="num" style="text-align:right;">0.591</td><td>n_test=22</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">두 가지 finding이 보입니다.</p>
+
+    <div class="step-block">
+      <div class="step-num-circle">1</div>
+      <div class="step-content">
+        <div class="step-title">모든 cross-league가 baseline 미달 (F1 ≤ 0.34)</div>
+        <div class="step-desc">한 리그에서 학습한 모델은 다른 리그에서 baseline(majority class) 수준으로도 못 옴. <strong>모델이 학습한 패턴은 리그-specific.</strong> 같은 손흥민이라도 EPL의 결과 결정 패턴과 Bundesliga의 그것이 모델 입장에선 다른 분포.</div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-num-circle">2</div>
+      <div class="step-content">
+        <div class="step-title">Bundesliga → EPL이 Bundesliga in-domain보다 더 잘함 (역설)</div>
+        <div class="step-desc">Bundesliga로 학습 → EPL 평가 F1 0.337은 Bundesliga in-domain F1 0.228보다 높음. 이건 두 가지로 해석 가능: (a) Bundesliga 표본이 작아 in-domain split도 noise 큼 (n=25), (b) Bundesliga 데이터로 학습한 모델이 더 "general한" 패턴을 잡아 EPL의 큰 표본에서 베이스라인 정도는 잡음. 어느 쪽이든 <em>"리그 간 전이"는 거의 의미 없음</em>.</div>
+      </div>
+    </div>
+
+    <div class="viz-insight">
+      <div class="viz-insight-label">적응 곡선과 일관된 발견</div>
+      <p>Part 7에서 본 "리그마다 다른 적응 패턴"과 이 발견은 일관됩니다. <strong>v2 모델은 손흥민의 보편 능력치가 아니라 각 리그-특화 분포를 학습</strong>합니다. 이는 단순한 한계가 아니라 데이터의 본질적 특성: 같은 결과(W/D/L)이지만 그 결정 경로가 리그마다 다릅니다. EPL 모델을 MLS에 갖다 쓰는 건 의미 없고, MLS의 손흥민을 예측하려면 MLS 데이터로 학습해야 함.</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 9 -->
+<section id="part9"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">09</div>
+    <div class="part-meta">
+      <div class="part-kicker">Experiment E &middot; Counterfactual Venue</div>
+      <div class="part-title">사고 흐름 검증 3 &mdash; venue가 진짜 인과인가, confound인가</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>SHAP는 모델 내부 중요도, Ablation은 모델 성능 기여도. 하지만 두 측정 모두 <strong>"venue가 result에 인과적으로 영향을 주는가"</strong>는 답하지 못합니다. 가능성: (a) 진짜 home advantage, (b) home/away 일정이 opponent strength와 confound되어 venue 효과처럼 보임. 둘을 분리합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">실험 E의 질문</div>
+      <div class="qbox-text">"opponent strength(상대팀의 historical 승률)을 통제하고 OLS를 다시 추정했을 때, venue 회귀 계수는 변하는가? 만약 거의 변하지 않으면 venue effect는 confound가 아닌 진짜 home advantage."</div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">측정 — opponent strength 정의</h3>
+    <p>각 opponent에 대해 손흥민의 누적 winrate를 그 시점까지의 만남 기록으로 계산합니다. 미래 정보가 들어가지 않도록 <code>cumsum().shift(1) / cumcount()</code> 패턴.</p>
+
+    <div class="code-block"><code>opp_cumsum = df.groupby(<span class="cs">"opponent"</span>)[<span class="cs">"result_label"</span>].cumsum().shift(<span class="cn">1</span>).fillna(<span class="cn">0</span>)
+opp_count = df.groupby(<span class="cs">"opponent"</span>).cumcount()
+opp_avg = (opp_cumsum / opp_count.replace(<span class="cn">0</span>, np.nan)).fillna(<span class="cn">0</span>)
+df[<span class="cs">"opponent_winrate_so_far"</span>] = opp_avg
+df[<span class="cs">"overall_winrate_so_far"</span>] = df[<span class="cs">"result_label"</span>].expanding().mean().shift(<span class="cn">1</span>).fillna(<span class="cn">0</span>)
+df[<span class="cs">"opponent_relative_strength"</span>] = (
+    df[<span class="cs">"opponent_winrate_so_far"</span>] - df[<span class="cs">"overall_winrate_so_far"</span>]
+)</code></div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — OLS venue effect, 통제 전후</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>모델</th><th class="num" style="text-align:right;">venue coef</th><th class="num" style="text-align:right;">venue p-value</th><th class="num" style="text-align:right;">opp_rel coef</th><th class="num" style="text-align:right;">overall_wr coef</th><th class="num" style="text-align:right;">R²</th></tr></thead>
+      <tbody>
+        <tr><td>OLS uncontrolled (venue만)</td><td class="num" style="text-align:right;">-0.2873</td><td class="num pos" style="text-align:right;">2.18e-05</td><td class="num" style="text-align:right;">—</td><td class="num" style="text-align:right;">—</td><td class="num" style="text-align:right;">0.0285</td></tr>
+        <tr><td>OLS + opp strength 통제</td><td class="num" style="text-align:right; font-weight:700;">-0.2879</td><td class="num pos" style="text-align:right; font-weight:700;">2.10e-05</td><td class="num" style="text-align:right;">+0.0233</td><td class="num" style="text-align:right;">+0.3639</td><td class="num" style="text-align:right;">0.0318</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">결과는 단호합니다.</p>
+    <ul style="margin: 0 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li>venue coef: <strong>-0.2873 → -0.2879</strong> (변화 -0.0006, 사실상 같음)</li>
+      <li>venue p-value: 2.18e-05 → 2.10e-05 (둘 다 매우 유의, 변화 없음)</li>
+      <li>opponent strength coef: +0.0233 (p=0.54, <em>유의하지 않음</em>)</li>
+      <li>overall winrate coef: +0.3639 (p=0.19, 유의 살짝 못 미침)</li>
+    </ul>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">SHAP — opp strength 추가 후 venue 중요도 변화</h3>
+    <div class="bar-chart">
+      <div class="bar-row"><div class="bar-label">venue (base v2)</div><div class="bar-bg"><div class="bar-fill high" style="width:100%;">0.357</div></div></div>
+      <div class="bar-row"><div class="bar-label">venue (+opp 추가)</div><div class="bar-bg"><div class="bar-fill high" style="width:97%;">0.347</div></div></div>
+      <div class="bar-row"><div class="bar-label">opp_relative_strength</div><div class="bar-bg"><div class="bar-fill mid" style="width:64%;">0.228</div></div></div>
+      <div class="bar-row"><div class="bar-label">overall_winrate</div><div class="bar-bg"><div class="bar-fill low" style="width:37%;">0.131</div></div></div>
+    </div>
+
+    <p>SHAP에서도 venue 중요도는 0.357 → 0.347로 거의 변화 없음. opponent strength 추가가 venue를 explained away 시키지 못했습니다. opponent strength 자체는 SHAP 0.228로 추가된 변수 중에서는 의미 있게 작동하지만, venue의 자리를 빼앗지는 않습니다.</p>
+
+    <div class="viz-insight green">
+      <div class="viz-insight-label">사고 흐름 ② 인과 추론으로 재검증</div>
+      <p>학부 시절 OLS p-value로 "venue가 통계적으로 유의하다"고 판단했던 그 발견이, opponent strength 통제 후의 OLS에서도 그대로 살아남았습니다. <strong>venue effect = home advantage는 confound가 아닌 진짜 인과 효과</strong>입니다. 손흥민이 홈에서 뛸 때 result가 평균적으로 0.288 높아지는 것은 누구와 만나는지(opponent strength)와 거의 독립적입니다.</p>
+      <p>이 발견의 의미: v1의 가중 인코딩이 venue에 0.608/0.339의 다른 값을 부여한 것은 단순 통계적 직관이 아니라 <em>실제 인과적으로 다른 효과 크기를 반영한 정확한 변환</em>이었습니다. 학부생 시절의 옳은 사고가, 인과 추론의 언어로도 검증된 셈.</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 10 -->
+<section id="part10"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">10</div>
+    <div class="part-meta">
+      <div class="part-kicker">Experiment D &middot; Bayesian Hierarchical</div>
+      <div class="part-title">사고 흐름 검증 4 &mdash; 적응 곡선의 95% HDI</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>Part 7의 frequentist 적응 곡선은 직관적이지만 통계적 유의성을 말하지 못합니다. 베이지안 계층 모델로 같은 데이터에 클럽별 random effect를 부여해, <strong>각 클럽의 적응 시간 상수(tau) 95% HDI</strong>를 구합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">실험 D의 질문</div>
+      <div class="qbox-text">"Part 7에서 본 'LAFC 8경기 vs 다른 클럽 1-3경기' 회복 시간 차이가 통계적으로 유의한가? 표본 크기 차이로 인한 단순 노이즈일 가능성은? 베이지안 95% HDI로 답한다."</div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">모델 구조</h3>
+    <div class="code-block"><code><span class="cv"># y_i = 1 if Win else 0</span>
+<span class="cv"># logit(p_i) = a_club[c] + adapt_effect_c(match_in_club_i) + b_venue * venue_i</span>
+<span class="cv"># adapt_effect_c(m) = -b_adapt[c] * exp(-m / tau[c])</span>
+
+<span class="cf">with</span> pm.Model() <span class="cf">as</span> model:
+    a_club = pm.Normal(<span class="cs">"a_club"</span>, mu=<span class="cn">0</span>, sigma=<span class="cn">1</span>, shape=n_clubs)
+    b_adapt = pm.HalfNormal(<span class="cs">"b_adapt"</span>, sigma=<span class="cn">1</span>, shape=n_clubs)
+    log_tau = pm.Normal(<span class="cs">"log_tau"</span>, mu=<span class="cn">2</span>, sigma=<span class="cn">1</span>, shape=n_clubs)
+    tau = pm.math.exp(log_tau)
+    b_venue = pm.Normal(<span class="cs">"b_venue"</span>, mu=<span class="cn">0</span>, sigma=<span class="cn">1</span>)
+
+    logit = a_club[c] - b_adapt[c]*pm.math.exp(-m/tau[c]) + b_venue*v
+    pm.Bernoulli(<span class="cs">"y"</span>, p=pm.math.sigmoid(logit), observed=is_win)
+    idata = pm.sample(<span class="cn">1000</span>, tune=<span class="cn">1000</span>, chains=<span class="cn">2</span>)</code></div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — 클럽별 posterior</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>클럽</th><th class="num" style="text-align:right;">a (baseline) mean</th><th>a 95% HDI</th><th class="num" style="text-align:right;">tau mean (matches)</th><th>tau 95% HDI</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hamburger SV</strong></td><td class="num" style="text-align:right;">-0.133</td><td class="num">[-0.747, +0.448]</td><td class="num" style="text-align:right;">10.91</td><td class="num">[0.40, 32.94]</td></tr>
+        <tr><td><strong>Leverkusen</strong></td><td class="num pos" style="text-align:right;">+0.479</td><td class="num">[+0.015, +0.908]</td><td class="num" style="text-align:right;">11.48</td><td class="num">[0.28, 33.96]</td></tr>
+        <tr><td><strong>Tottenham</strong></td><td class="num pos" style="text-align:right;">+0.543</td><td class="num">[+0.290, +0.753]</td><td class="num" style="text-align:right;">10.22</td><td class="num">[0.18, 28.83]</td></tr>
+        <tr><td><strong>LAFC</strong></td><td class="num pos" style="text-align:right;">+0.851</td><td class="num">[+0.101, +1.535]</td><td class="num" style="text-align:right;">9.35</td><td class="num">[0.25, 28.33]</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem; font-size:0.9rem;"><strong>b_venue posterior:</strong> mean -0.759, 95% HDI [-1.053, -0.472]. 0에서 멀리 떨어져 강한 인과 효과 재확인.</p>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">해석 — 클럽별 baseline은 다르고, 적응 시간은 같다</h3>
+
+    <div class="step-block">
+      <div class="step-num-circle">1</div>
+      <div class="step-content">
+        <div class="step-title">a_club (클럽별 baseline 능력) — 의미 있게 다름</div>
+        <div class="step-desc">Tottenham [+0.290, +0.753]과 Leverkusen [+0.015, +0.908]은 0을 약간 포함하지만 양수 쪽으로 치우침. <strong>LAFC +0.85</strong>는 mean이 가장 높지만 HDI [0.10, 1.53]으로 매우 넓음 (30경기 표본의 한계). Hamburg는 mean -0.13 / HDI [-0.75, +0.45]로 약체 시기로 추정.</div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-num-circle">2</div>
+      <div class="step-content">
+        <div class="step-title">tau (적응 시간 상수) — 클럽 간 통계적으로 구분 안 됨</div>
+        <div class="step-desc">모든 클럽의 tau HDI가 [0.2~0.4, 28~34] 범위로 거의 완전히 겹침. Hamburg 10.91 / Leverkusen 11.48 / Tottenham 10.22 / <strong>LAFC 9.35</strong>로 mean은 약간씩 다르지만 HDI가 너무 넓어 <em>통계적으로 동일한 값으로 봐야</em>.</div>
+      </div>
+    </div>
+
+    <div class="step-block">
+      <div class="step-num-circle">3</div>
+      <div class="step-content">
+        <div class="step-title">b_venue 효과 = -0.759 (HDI [-1.05, -0.47])</div>
+        <div class="step-desc">베이지안 모델에서도 venue 효과 크고 명확. 0에서 매우 멀리. Part 9의 OLS 결과(-0.288)와 비교하면 척도가 다른데, 베이지안은 logit scale이고 OLS는 result_label scale(-1, 0, 1). 두 척도 모두 venue를 강한 인과 효과로 추정.</div>
+      </div>
+    </div>
+
+    <div class="viz-insight amber">
+      <div class="viz-insight-label">중요한 caveat — Part 7의 직관적 finding을 베이지안이 부분적으로 깎는다</div>
+      <p>Part 7에서 봤던 "Hamburg 1경기 / Leverkusen 2경기 / Tottenham 3경기 / LAFC 8경기"라는 회복 시간 차이는, 베이지안 계층 모델로 보면 통계적 신뢰구간이 [0.2, 33] 범위로 모두 겹쳐 <strong>"클럽마다 적응 시간이 다르다"고 단정 못 합니다.</strong> "LAFC가 4-5배 더 오래 걸렸다"는 직관적 finding은 30경기 표본의 노이즈 가능성이 크게 남아있습니다.</p>
+      <p>이건 frequentist 직관과 베이지안 신뢰구간이 서로를 보완하는 좋은 예시입니다. Part 7의 표는 점추정으로 패턴을 보여주고, Part 10의 베이지안은 그 패턴이 표본 크기 안에서 견고한지를 알려줍니다. <em>v2 페이지를 정직하게 쓰려면 두 가지를 모두 적어야 합니다.</em></p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 11 -->
+<section id="part11"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">11</div>
+    <div class="part-meta">
+      <div class="part-kicker">Experiment F &middot; Different Targets</div>
+      <div class="part-title">모델은 결과를 보는가, 손흥민의 영향력을 보는가</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>v2 모델은 W/D/L 결과 예측에서 의미 있는 신호를 보입니다 (F1 0.378). 그런데 <em>이 모델이 학습한 것이 정확히 무엇인가</em>를 알려면 다른 target에 같은 피처를 적용해봐야 합니다.</p>
+
+    <div class="qbox">
+      <div class="qbox-label">실험 F의 질문</div>
+      <div class="qbox-text">"v2 피처가 W/D/L 외의 더 정교한 target — 손흥민 본인의 골 여부, 골+어시 여부, 팀 2골 이상 여부 — 에서도 작동하는가? AUC와 F1이 결과 예측 수준만큼 나오는가?"</div>
+    </div>
+
+    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — target별 성능</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Target</th><th class="num" style="text-align:right;">Base rate</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">AUC</th><th>해석</th></tr></thead>
+      <tbody>
+        <tr><td><strong>W/D/L (기존 baseline)</strong></td><td class="num" style="text-align:right;">0.520</td><td class="num" style="text-align:right;">0.483</td><td class="num pos" style="text-align:right;">0.378</td><td class="num" style="text-align:right;">—</td><td>의미 있는 분류</td></tr>
+        <tr><td><strong>손흥민 골 여부</strong></td><td class="num" style="text-align:right;">0.284</td><td class="num" style="text-align:right;">0.614</td><td class="num" style="text-align:right;">0.497</td><td class="num neg" style="text-align:right;">0.479</td><td>AUC 0.5 = random</td></tr>
+        <tr><td><strong>손흥민 골 또는 어시</strong></td><td class="num" style="text-align:right;">0.374</td><td class="num" style="text-align:right;">0.539</td><td class="num" style="text-align:right;">0.476</td><td class="num neg" style="text-align:right;">0.459</td><td>AUC 0.5 = random</td></tr>
+        <tr><td><strong>팀 2골 이상</strong></td><td class="num" style="text-align:right;">0.522</td><td class="num" style="text-align:right;">0.523</td><td class="num" style="text-align:right;">0.514</td><td class="num neg" style="text-align:right;">0.517</td><td>AUC 0.5 = random</td></tr>
+      </tbody>
+    </table></div>
+
+    <p style="margin-top:1.2rem;">두 가지 finding이 보입니다.</p>
+
+    <ul style="margin: 0 0 1.2rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
+      <li><strong>모든 binary target에서 AUC ≈ 0.5 (random)</strong> — 골 여부 0.479, 골+어시 0.459, 팀 2골+ 0.517. v2 피처는 binary 정교 분류에 무력.</li>
+      <li><strong>높은 accuracy는 클래스 불균형의 거울</strong> — 손흥민 골 여부 acc 0.614는 base rate 0.284와 1-base rate 0.716 사이의 위치. "안 넣었다고 예측하면 자동 71% 맞추는" 자명한 baseline.</li>
+    </ul>
+
+    <div class="viz-insight red">
+      <div class="viz-insight-label">예상치 못한 발견 — 모델은 손흥민의 영향력이 아니라 팀 결과 패턴을 본다</div>
+      <p>v2가 W/D/L 예측에 어느 정도 작동하는데 손흥민 본인 골 예측엔 무력하다는 건 흥미롭습니다. <strong>v2 피처는 "이 경기가 어떤 종류의 경기인가"(상대 강도, 홈/어웨이, 손흥민 폼 / 팀 폼)를 잡지만, "손흥민이 이 특정 경기에서 골을 넣을지"는 잡지 못합니다.</strong></p>
+      <p>이건 단순한 한계가 아니라 모델이 학습한 것의 정체를 드러냅니다. v2가 잘 잡는 것은 "팀이 이길 것 같은 경기 / 질 것 같은 경기"의 macro 분포지, 손흥민 개인의 경기당 활약은 아닙니다. <em>"손흥민 데이터로 손흥민의 영향력을 모델링한다"는 학부 시절의 framing은, 실제로는 "손흥민 경기의 결과를 모델링한다"였던 것</em>으로 정정되어야 합니다.</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PART 12 -->
+<section id="part12"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">12</div>
+    <div class="part-meta">
+      <div class="part-kicker">Synthesis</div>
+      <div class="part-title">사고 흐름의 진화 &mdash; 종합 정리</div>
+    </div>
+  </div>
+  <div class="body-text">
+    <p>6개 실험을 거쳐 5가지 사고 흐름이 어떻게 검증되거나 수정되었는지를 한 표로 정리합니다. 이 표가 이 보고서의 가장 깊은 한 페이지입니다.</p>
+
+    <div class="table-wrap"><table>
+      <thead>
+        <tr><th>학부 시절 사고</th><th>v2 구현 위치</th><th>이 페이지의 검증 결과</th><th>상태</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>① 결과를 1/0/-1로 라벨링</strong><br><span class="footnote">W/D/L의 부호를 살린 정수 라벨링</span></td>
+          <td>v2 모든 모델이 동일 라벨 사용</td>
+          <td>Part 4: 라벨링은 정확. v1의 collapse는 라벨링 결함이 아니라 모델 결함을 노출.</td>
+          <td><span class="badge good">살아남음</span></td>
+        </tr>
+        <tr>
+          <td><strong>② OLS p-value로 venue 유의성 검정</strong><br><span class="footnote">통계적으로 유의한지 먼저 확인 후 인코딩</span></td>
+          <td>FoldAwareTargetEncoder 안의 venue별 평균 (p-value 검정 → fold 안에서)</td>
+          <td>Part 9: opponent strength 통제 후에도 OLS coef -0.287 → -0.288 (변화 없음, p&lt;0.001 유지). 인과 효과로 재검증.</td>
+          <td><span class="badge good">살아남음 + 인과 추론으로 격상</span></td>
+        </tr>
+        <tr>
+          <td><strong>③ venue별 result 평균을 가중치로 매핑</strong><br><span class="footnote">전체 데이터의 venue별 result 평균을 라벨값으로 치환</span></td>
+          <td>fold-aware: 매 fold의 train만으로 평균 계산</td>
+          <td>Part 5: venue 1개 제거 시 F1 -0.053 (per-feature 1위, rolling 33개와 동급).<br>Part 10: 베이지안 b_venue HDI [-1.05, -0.47].</td>
+          <td><span class="badge good">살아남음 + Ablation/SHAP/Bayesian 3중 검증</span></td>
+        </tr>
+        <tr>
+          <td><strong>④ R² 비교로 인코딩 효과 재검증</strong><br><span class="footnote">정수 인코딩 vs 가중 인코딩의 R² 차이로 채택 결정</span></td>
+          <td>TimeSeriesSplit 5-fold CV의 macro F1 + Bayesian HDI</td>
+          <td>Part 4: F1 0.227 → 0.378 (+66.4%). Part 10: 효과 크기 신뢰구간까지 추정.</td>
+          <td><span class="badge good">살아남음 + 위치 이동만</span></td>
+        </tr>
+        <tr>
+          <td><strong>⑤ "누수 = v1 결함의 핵심"이라는 회고 명제</strong><br><span class="footnote">v1 회고 페이지에서 단순화한 도식</span></td>
+          <td>Part 6: 한 줄씩 변형해 진단</td>
+          <td>scaler leakage 단독으로는 영향 없음. target encoding 제거도 부분 효과만. <strong>RF top_k + class imbalance + accuracy 기준 GridSearch 조합</strong>이 진짜 원인.</td>
+          <td><span class="badge warn">단순화 → 정교화</span></td>
+        </tr>
+      </tbody>
+    </table></div>
+
+    <h3 style="font-size:1.05rem; margin: 2rem 0 0.6rem; font-weight:700;">이 보고서가 회고 페이지에 기여하는 정정 사항</h3>
+
+    <div class="card-grid" style="margin: 1rem 0 1.5rem;">
+      <div class="card">
+        <div class="card-title" style="color:var(--accent-amber);">정정 1 &mdash; 누수의 단순화</div>
+        <div class="card-text">"누수가 v1의 결함"이라는 표현을 <strong>"RF top_k feature selection × 클래스 불균형 × accuracy 기준 GridSearch의 3중 조합"</strong>으로 정교화. scaler leakage 단독 영향은 0이었음.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent-amber);">정정 2 &mdash; 적응 곡선의 통계적 견고성</div>
+        <div class="card-text">"LAFC 8경기 회복" 같은 frequentist finding은 베이지안 95% HDI로 보면 모든 클럽 tau가 통계적으로 구분 안 됨. 표본 크기 차이로 인한 노이즈 가능성 명시 필요.</div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent);">발견 1 &mdash; venue 직관의 4중 검증</div>
+        <div class="card-text">venue가 SHAP 1위 + Ablation per-feature 1위 + 베이지안 HDI 0 멀리 + opponent 통제 후에도 변화 없음. <strong>학부 시절의 통계적 직관이 인과 추론까지 살아남음.</strong></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:var(--accent);">발견 2 &mdash; 모델이 본 것의 정체</div>
+        <div class="card-text">v2는 손흥민의 영향력이 아니라 팀 결과 패턴을 학습. 골 여부 등 binary 정교 target에선 AUC 0.5 (random). framing 정정: "손흥민의 결과 데이터를 모델링한다".</div>
+      </div>
+    </div>
+
+    <div class="viz-insight green">
+      <div class="viz-insight-label">3년의 거리 &mdash; 측정된 결론</div>
+      <p>v1 회고 페이지에서 "사고 흐름은 옳았으니 위치만 옮긴다"고 적었던 가설은, 같은 데이터에 두 파이프라인을 동시에 돌린 결과로 검증됐습니다. <strong>4단 사고 흐름은 모두 살아남았고, 각 단계는 v2의 다른 측정 도구로 재검증됐습니다.</strong> 학부 시절의 통계학적 사고는 폐기 대상이 아니라 ML 위생을 더해 살릴 자산이었다는 것이 — 6개 실험의 숫자로 — 확인된 결론입니다.</p>
+      <p>한 단계 더: <em>v1 회고 자체에도 한계가 있었습니다.</em> "누수 = 결함"이라는 단순 도식, "적응 곡선 회복 시간"의 직관적 단정 — 이 두 가지는 v2의 진단 / 베이지안 모델로 정정되었습니다. 회고도 회고의 대상이 됩니다.</p>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- TECH STACK -->
+<section id="tech"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">13</div>
+    <div class="part-meta">
+      <div class="part-kicker">Stack</div>
+      <div class="part-title">기술 스택</div>
+    </div>
+  </div>
   <div class="tech-grid" style="margin-top:1.5rem;">
-    <div class="tech-item"><div class="tech-cat">Data Collection</div><ul class="tech-list"><li>Selenium (anti-detection)</li><li>fbref step=1 (17 시즌 빠짐 없음)</li><li>MLS 단일 연도 URL 지원</li><li>시즌별 JSON (재시작 안전)</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Preprocessing</div><ul class="tech-list"><li>클럽 prefix 정규화 (de/eng/us 통합)</li><li>국가대표 분리 (123경기 제외)</li><li>리그 카테고리 6개로 정규화</li><li>중복 제거 (date+opponent+comp)</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Feature Engineering</div><ul class="tech-list"><li>shift(1).rolling 폼 피처</li><li>league_match_idx / club_match_idx</li><li>form5/10 winrate, meanres</li><li>career_match_idx 누적</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Validation Hygiene</div><ul class="tech-list"><li>sklearn Pipeline</li><li>TimeSeriesSplit (5-fold)</li><li>FoldAwareTargetEncoder</li><li>train fold 안에서만 fit</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Models</div><ul class="tech-list"><li>v1 재현: SVM(rbf) + GridSearch</li><li>v2: LightGBM (default + tuned)</li><li>Optuna 30 trials, F1-macro 최적화</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Interpretability</div><ul class="tech-list"><li>SHAP TreeExplainer</li><li>3-class 평균 절대 SHAP</li><li>Top-15 피처 중요도</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Data Collection</div><ul class="tech-list"><li>Selenium + anti-detection</li><li>fbref step=1 (17 시즌)</li><li>MLS 단일 연도 URL</li><li>시즌별 JSON</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Preprocessing</div><ul class="tech-list"><li>클럽 prefix 정규화</li><li>국가대표 분리 (123경기 제외)</li><li>리그 6 카테고리</li><li>중복 제거</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Feature Engineering</div><ul class="tech-list"><li>shift(1).rolling 폼 피처</li><li>league_match_idx</li><li>club_match_idx</li><li>form{5,10}_winrate</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Validation Hygiene</div><ul class="tech-list"><li>sklearn Pipeline</li><li>TimeSeriesSplit (5-fold)</li><li>FoldAwareTargetEncoder</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Models (v1 재현)</div><ul class="tech-list"><li>SVM(rbf) + GridSearch</li><li>RF top_k=6 selection</li><li>target encoding (그대로)</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Models (v2)</div><ul class="tech-list"><li>LightGBM (default + tuned)</li><li>Optuna 30 trials</li><li>F1-macro 최적화</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Interpretability</div><ul class="tech-list"><li>SHAP TreeExplainer</li><li>3-class 평균 절대 SHAP</li><li>Feature Ablation</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Statistical / Causal</div><ul class="tech-list"><li>statsmodels OLS</li><li>opponent strength 통제</li><li>p-value 재검정</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Bayesian</div><ul class="tech-list"><li>PyMC 5.28 (HMC sampling)</li><li>arviz HDI 추출</li><li>클럽별 random effect</li><li>적응 시간 상수 (tau)</li></ul></div>
   </div>
 </div></section>
 <hr class="divider">
 
-<section id="next"><div class="container fade-in">
-  <div class="section-label">Next</div>
-  <h2 class="section-title">남은 작업</h2>
-  <p class="section-desc">v2는 회고를 측정으로 만든 1차 결과입니다. 그 위에 다음이 가능합니다.</p>
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-title">Causal Inference</div>
-      <div class="card-text">SHAP는 모델 내부 중요도일 뿐. "venue가 정말 result를 인과적으로 얼마나 끌어올리는가"는 이중 차분 / propensity score matching으로 측정 가능.</div>
+<!-- NEXT -->
+<section id="next"><div class="container">
+  <div class="part-heading">
+    <div class="part-num">14</div>
+    <div class="part-meta">
+      <div class="part-kicker">Future Work</div>
+      <div class="part-title">다음 단계</div>
     </div>
-    <div class="card">
-      <div class="card-title">베이지안 계층 모델</div>
-      <div class="card-text">손흥민의 "참 능력치 + 경기별 변동성"을 PyMC 계층 모델로 분리. 클럽/리그별 random effect를 통해 적응 곡선의 통계적 유의성 검정.</div>
-    </div>
-    <div class="card">
-      <div class="card-title">Match-level Event 통합</div>
-      <div class="card-text">v1 시절에 만들었던 매치별 이벤트(분 단위 골/어시) 크롤링을 v2 폼 피처에 통합. 시간대별 영향력까지 분석 가능해짐.</div>
+  </div>
+  <div class="body-text">
+    <p>이 보고서는 v1 회고를 측정으로 만든 1차 결과입니다. 명확한 다음 질문 4가지가 남아있습니다.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Match-level Event 통합</div>
+        <div class="card-text">v1 시절 만든 매치별 이벤트 크롤(분 단위 골/어시) 데이터를 v2 폼 피처에 통합. 시간대별 영향력까지 분석 가능.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Per-league 모델 별도 학습</div>
+        <div class="card-text">Part 8에서 cross-league 일반화 안 됨이 확인됨. EPL / Bundesliga / MLS 각각 별도 모델 학습해 리그별 패턴 분리.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">베이지안 partial pooling</div>
+        <div class="card-text">Part 10의 클럽별 random effect를 hyperprior로 묶어 partial pooling. LAFC 30경기의 noise를 다른 클럽 정보로 보완.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Opponent fine-grained features</div>
+        <div class="card-text">Part 9의 opponent strength는 단순 historical winrate. fbref 팀 통계(squad_value, league position)를 추가해 더 정교한 통제.</div>
+      </div>
     </div>
   </div>
 </div></section>
 
 <footer><div class="footer-text">
-  Son Data v2 &mdash; 회고를 측정 가능한 실험으로<br>
+  Son Data v2 &mdash; 사고의 흐름을 측정 가능한 실험으로 (보고서판)<br>
   <a href="/projects/son-data/">v1 회고 페이지</a> &middot; <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="/">Home</a>
 </div></footer>
 
 <script>
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
