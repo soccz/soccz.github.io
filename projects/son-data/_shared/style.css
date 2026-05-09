@@ -208,7 +208,18 @@ tr:hover { background: var(--bg-secondary); }
 
 /* Code block */
 .code-block { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 8px; padding: 1.3rem 1.5rem; overflow-x: auto; margin: 1.5rem auto; max-width: 820px; }
-.code-block code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8rem; color: var(--code-fg); line-height: 1.8; white-space: pre; }
+.code-block code,
+.body-text .code-block code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: var(--code-fg);
+  line-height: 1.8;
+  white-space: pre;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+.code-block code span { background: transparent; }
 .code-block .ck { color: #c4b8b1; }
 .code-block .cv { color: var(--code-comment); font-style: normal; }
 .code-block .cs { color: var(--code-string); }
