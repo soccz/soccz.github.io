@@ -872,6 +872,15 @@ article.report h2, article.report h3 { scroll-margin-top: 80px; }
 .watchlist-table th.spark { width: 90px; text-align: left; }
 .watchlist-table th.change { width: 70px; text-align: right; }
 .watchlist-table th.mcap { width: 200px; text-align: right; }
+.watchlist-table th.sortable {
+  cursor: pointer; user-select: none;
+  transition: color 120ms;
+}
+.watchlist-table th.sortable:hover { color: var(--accent); }
+.watchlist-table th .sort-arrow {
+  font-size: 10px; color: var(--accent);
+  display: inline-block; min-width: 12px;
+}
 
 tr.stock-row td.spark { padding: 0 12px; vertical-align: middle; }
 tr.stock-row td.spark svg {

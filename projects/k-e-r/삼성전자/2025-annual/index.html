@@ -23,7 +23,82 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/projects/k-e-r/assets/k-e-r.css?v=88d4a429">
+  <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --paper: #fcfcfd;
+  --border: #dde2ea; --border-strong: #b8c0cc;
+  --text: #0a0e1a; --text-secondary: #2c3445; --text-muted: #6b7387;
+  --accent: #14213d; --accent-hover: #0a1228;
+  --rule: #1a2238;
+  --max-w: 1280px;
+  --radius-sm: 3px;
+  --serif: 'Source Serif 4', 'IBM Plex Serif', Georgia, serif;
+  --sans: 'Inter', 'Noto Sans KR', -apple-system, sans-serif;
+  --display: 'IBM Plex Sans', 'Inter', sans-serif;
+  --mono: 'IBM Plex Mono', 'JetBrains Mono', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --surface: #161b22; --paper: #161b22;
+    --border: #2a313c; --border-strong: #3a4250;
+    --text: #e6edf3; --text-secondary: #b3c0cf; --text-muted: #8b949e;
+    --accent: #58a6ff; --accent-hover: #79b8ff; --rule: #58a6ff;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --surface: #161b22; --paper: #161b22;
+  --border: #2a313c; --border-strong: #3a4250;
+  --text: #e6edf3; --text-secondary: #b3c0cf; --text-muted: #8b949e;
+  --accent: #58a6ff; --accent-hover: #79b8ff; --rule: #58a6ff;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); background: var(--bg); color: var(--text);
+  line-height: 1.7; padding-bottom: 80px;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 200ms, color 200ms;
+}
+::selection { background: var(--accent); color: #fff; }
+a { color: var(--accent); text-decoration: none; transition: color 0.15s; }
+a:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 2px; }
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  border-top: 3px solid var(--rule);
+  position: sticky; top: 0; z-index: 100;
+}
+.site-header .inner {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 16px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.site-header .brand {
+  font-family: var(--display); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 12px; color: var(--text);
+}
+.site-header .brand .divider { width: 1px; height: 18px; background: var(--border-strong); }
+.site-header .brand .badge {
+  background: transparent; color: var(--text-muted);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.site-header nav a {
+  color: var(--text-secondary); margin-left: 22px;
+  font-size: 13px; font-weight: 500;
+}
+.theme-toggle {
+  background: transparent; border: 1px solid var(--border);
+  width: 32px; height: 32px;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-secondary);
+  font-size: 14px; line-height: 1; border-radius: var(--radius-sm);
+}
+.container { max-width: var(--max-w); margin: 0 auto; padding: 36px 32px; }
+</style>
+  <link rel="preload" href="/projects/k-e-r/assets/k-e-r.css?v=d1f1e6b1" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/projects/k-e-r/assets/k-e-r.css?v=d1f1e6b1"></noscript>
   <script>
     // 테마 — localStorage > prefers-color-scheme 순. inline으로 첫 페인트 전 적용 (FOUC 방지).
     (function(){
@@ -3130,7 +3205,7 @@ OECD 주도의 국제조세 규정으로, 연매출 7.5억 유로 이상 다국�
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-09 04:40 </p>
+    <p style="margin-top:6px">생성: 2026-05-09 10:07 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
