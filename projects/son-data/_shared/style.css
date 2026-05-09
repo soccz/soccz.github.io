@@ -352,6 +352,15 @@ tr:hover { background: var(--bg-secondary); }
 /* Footnote */
 .footnote { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 0.6rem; line-height: 1.7; }
 
+/* SVG 다크모드 호환 — 하드코딩된 light colors override */
+[data-theme="dark"] svg line[stroke="#e7e5e4"] { stroke: #44403c; }
+[data-theme="dark"] svg line[stroke="#d6d3d1"] { stroke: #57534e; }
+[data-theme="dark"] svg line[stroke="#a8a29e"] { stroke: #78716c; }
+[data-theme="dark"] svg text[fill="#1c1917"] { fill: #f5f5f4; }
+[data-theme="dark"] svg text[fill="#57534e"] { fill: #b8b1aa; }
+[data-theme="dark"] svg text[fill="#a8a29e"] { fill: #78716c; }
+[data-theme="dark"] svg text tspan[fill="#a8a29e"] { fill: #78716c; }
+
 /* Tooltip (charts hover) */
 .sd-tooltip {
   position: fixed;
