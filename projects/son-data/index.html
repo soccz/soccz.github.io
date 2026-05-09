@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Son Data — 손흥민 경기 데이터 분석 및 승리 확률 예측</title>
+  <title>Son Data — 3년 전의 분석, 지금의 시선으로</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap');
 
@@ -59,7 +59,7 @@
       background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
                   radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
     }
-    .hero-content { position: relative; max-width: 780px; }
+    .hero-content { position: relative; max-width: 820px; }
     .hero-label {
       display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--text-secondary); border: 1px solid var(--border-light);
@@ -91,7 +91,7 @@
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
     .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
-    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 700px; line-height: 1.8; margin-bottom: 3rem; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 760px; line-height: 1.8; margin-bottom: 3rem; }
     .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -101,7 +101,7 @@
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
       padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
-    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
     .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
 
@@ -121,8 +121,11 @@
     .flow-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
     .flow-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
 
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
     .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+    .tag.warn { background: rgba(180,83,9,0.08); color: #b45309; border-color: rgba(180,83,9,0.25); }
+    .tag.bad { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.25); }
+    .tag.good { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.25); }
 
     .layer-card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
@@ -131,13 +134,16 @@
     .layer-num { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
     .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.6rem; }
     .layer-q { font-size: 0.85rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .layer-body { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 0.8rem; }
 
-    .verify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .verify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 2rem 0; }
     .verify-card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
       padding: 1.5rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .verify-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+    .verify-num.green { color: var(--accent-green); }
+    .verify-num.red { color: var(--accent-red); }
     .verify-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.3rem; }
     .verify-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem; }
 
@@ -148,6 +154,78 @@
     .tech-list li { font-size: 0.83rem; color: var(--text-secondary); padding: 0.25rem 0 0.25rem 1rem; position: relative; }
     .tech-list li::before { content: ''; position: absolute; left: 0; top: 50%; width: 4px; height: 4px; border-radius: 50%; background: var(--border-light); }
 
+    /* Code block */
+    .code-block {
+      background: #292524; border-radius: 8px; padding: 1.3rem 1.5rem; overflow-x: auto; margin: 1.5rem 0;
+    }
+    .code-block code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.78rem; color: #d6d3d1; line-height: 1.75; white-space: pre; }
+    .code-block .ck { color: #a8a29e; }
+    .code-block .cv { color: #78716c; font-style: italic; }
+    .code-block .cs { color: #86efac; }
+    .code-block .cn { color: #fcd34d; }
+    .code-block .cf { color: #93c5fd; }
+    .code-block .cr { color: #fca5a5; }
+
+    /* Insight panel */
+    .viz-insight { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c; border-radius: 0 8px 8px 0; padding: 1.3rem 1.8rem; margin-top: 2rem; }
+    .viz-insight.green { border-left-color: var(--accent-green); }
+    .viz-insight.red { border-left-color: var(--accent-red); }
+    .viz-insight-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .viz-insight p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
+
+    /* Step block (for venue 4-step) */
+    .step-block { display: grid; grid-template-columns: 60px 1fr; gap: 1.5rem; align-items: start; margin-bottom: 2rem; }
+    .step-num-circle { width: 50px; height: 50px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Noto Serif KR', serif; font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+    .step-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem 1.6rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+    .step-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; }
+    .step-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.75; }
+
+    /* Mismatch (당시 vs 지금) */
+    .mismatch-example {
+      background: var(--bg-secondary); border-radius: 6px; padding: 1.3rem 1.5rem; margin: 1rem 0;
+      border-left: 3px solid #78716c;
+    }
+    .mismatch-id { font-family: monospace; font-size: 0.78rem; font-weight: 700; color: var(--accent); margin-bottom: 0.6rem; }
+    .mismatch-line { font-size: 0.86rem; color: var(--text-primary); margin-bottom: 0.4rem; line-height: 1.7; }
+    .mismatch-line .mtag {
+      display: inline-block; font-size: 0.66rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 0.14rem 0.5rem; border-radius: 3px; margin-right: 0.45rem;
+      vertical-align: middle;
+    }
+    .mtag-then { background: rgba(120,113,108,0.15); color: #57534e; }
+    .mtag-now { background: rgba(21,128,61,0.12); color: var(--accent-green); }
+    .mtag-bug { background: rgba(185,28,28,0.12); color: var(--accent-red); }
+
+    /* Fix list */
+    .fix-list { display: flex; flex-direction: column; gap: 0.6rem; margin: 1.5rem 0; }
+    .fix-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 1rem 1.3rem; display: grid; grid-template-columns: 80px 1fr; gap: 1rem; align-items: start; }
+    .fix-severity { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border-radius: 3px; text-align: center; align-self: start; margin-top: 0.15rem; }
+    .fix-severity.critical { background: rgba(185,28,28,0.1); color: var(--accent-red); border: 1px solid rgba(185,28,28,0.25); }
+    .fix-severity.major { background: rgba(180,83,9,0.1); color: #b45309; border: 1px solid rgba(180,83,9,0.25); }
+    .fix-severity.minor { background: rgba(120,113,108,0.1); color: #57534e; border: 1px solid rgba(120,113,108,0.2); }
+    .fix-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+    .fix-detail { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.7; }
+    .fix-detail code { font-family: monospace; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.05rem 0.3rem; border-radius: 3px; color: var(--accent); }
+    .fix-meta { display: inline-block; font-size: 0.7rem; color: var(--text-muted); font-family: monospace; margin-top: 0.4rem; }
+
+    /* Stat strip */
+    .stat-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0 2.5rem; }
+    .stat-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1rem; text-align: center; }
+    .stat-tile-num { font-family: 'Noto Serif KR', serif; font-size: 1.7rem; font-weight: 700; color: var(--accent); display: block; line-height: 1.2; }
+    .stat-tile-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 2rem; margin: 2rem 0; }
+    .timeline::before { content: ''; position: absolute; left: 0.55rem; top: 0.5rem; bottom: 0.5rem; width: 2px; background: var(--border); }
+    .timeline-item { position: relative; padding-bottom: 1.8rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -1.6rem; top: 0.4rem; width: 12px; height: 12px; border-radius: 50%; background: var(--bg-primary); border: 2px solid var(--accent); }
+    .timeline-item.major::before { background: var(--accent); }
+    .timeline-version { font-family: monospace; font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; }
+    .timeline-title { font-weight: 700; font-size: 0.95rem; margin: 0.25rem 0 0.4rem; }
+    .timeline-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.7; }
+    .timeline-meta { font-size: 0.72rem; color: var(--text-muted); font-family: monospace; margin-top: 0.3rem; }
+
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
@@ -157,6 +235,9 @@
       .flow { flex-direction: column; }
       .flow-step { border-radius: 8px !important; }
       .flow-step::after { display: none; }
+      .step-block { grid-template-columns: 1fr; gap: 0.6rem; }
+      .step-num-circle { margin-bottom: 0.3rem; }
+      .fix-item { grid-template-columns: 1fr; gap: 0.5rem; }
       section { padding: 4rem 1.5rem; }
     }
   </style>
@@ -168,25 +249,29 @@
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
       <li><a href="#overview">Overview</a></li>
-      <li><a href="#methodology">Methodology</a></li>
+      <li><a href="#decisions">Decisions</a></li>
+      <li><a href="#venue">Venue</a></li>
       <li><a href="#models">Models</a></li>
-      <li><a href="#tech">Stack</a></li>
+      <li><a href="#retro">Retrospective</a></li>
+      <li><a href="#timeline">Timeline</a></li>
     </ul>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">Sports Analytics &times; ML</span>
-    <h1>손흥민 경기 데이터 분석 및<br>승리 확률 예측 모델</h1>
+    <span class="hero-label">Retrospective &times; Sports Analytics</span>
+    <h1>3년 전의 분석,<br>지금의 시선으로 다시 보기</h1>
     <p class="hero-sub">
-      웹 크롤링으로 수집한 손흥민 선수의 경기 데이터를 전처리하고,<br>
-      상관 관계 분석과 머신러닝으로 승리 확률을 예측하는 연구입니다.
+      손흥민 선수의 경기 데이터로 승리 확률을 예측한 학부 시절 프로젝트.<br>
+      당시의 통계학적 직관이 ML 검증 위생을 만나며,<br>
+      무엇이 살아남고 무엇이 깨졌는지를 정직하게 다시 풀어 씁니다.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">SVM</span><span class="hero-stat-label">최종 선정 모델</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">RF</span><span class="hero-stat-label">변수 선택</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">PCA</span><span class="hero-stat-label">차원 축소 시도</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">7</span><span class="hero-stat-label">노트북</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">고민의 흔적</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">9</span><span class="hero-stat-label">회고 수정</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">3년</span><span class="hero-stat-label">사이의 거리</span></div>
     </div>
     <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer" class="hero-link">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -199,44 +284,468 @@
 
 <section id="overview"><div class="container fade-in">
   <div class="section-label">Overview</div>
-  <h2 class="section-title">분석의 구조</h2>
-  <p class="section-desc">손흥민 선수의 경기 데이터를 크롤링하고, 전처리 과정을 거쳐 승리 확률을 예측하는 머신러닝 모델을 구축합니다. PCA와 랜덤 포레스트를 통한 변수 선택, SVM 모델 학습까지의 과정을 담고 있습니다.</p>
+  <h2 class="section-title">두 시점의 분석</h2>
+  <p class="section-desc">학부 시절의 분석 원칙은 분명했습니다. <strong>"결과를 먼저 라벨링하고, 변수들을 통계적으로 검증한 뒤, 그 검증값을 가중치로 인코딩에 반영한다."</strong> 지금 다시 보면, 이 사고 흐름은 통계학적으로는 옳았지만 ML 모델 검증 관점에서 누수와 충돌하는 지점이 있었습니다. 이 페이지는 그 충돌을 회피하지 않고 정면으로 기록합니다.</p>
   <div class="card-grid">
-    <div class="card"><div class="card-title">데이터 수집</div><div class="card-text">웹 크롤링을 통해 손흥민 선수의 경기별 세부 데이터를 수집합니다. JSON 형식으로 저장된 원시 데이터를 통합하고 정제합니다.</div></div>
-    <div class="card"><div class="card-title">전처리 및 변수 선택</div><div class="card-text">결측값 처리, 라벨링, 상관관계(corr) 분석으로 숫자 데이터로 변환합니다. 랜덤 포레스트로 결과와 연관성이 높은 핵심 변수를 추출합니다.</div></div>
-    <div class="card"><div class="card-title">예측 모델</div><div class="card-text">선택된 변수를 기반으로 SVM 모델을 학습하여 경기 승리 확률을 예측합니다. PCA 시도(실패)를 포함한 모델 선택 과정을 기록합니다.</div></div>
+    <div class="card">
+      <div class="card-title">당시의 의도</div>
+      <div class="card-text">"문자&rarr;숫자 인코딩은 <em>통계적으로 유의미한 관계</em>를 반영해야 한다." 결과 라벨을 기준으로 변수의 영향력을 OLS p-value로 측정하고, 그 값을 인코딩 가중치로 사용했습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">지금의 시선</div>
+      <div class="card-text">전체 데이터의 <code style="font-family:monospace;font-size:0.82rem;">result</code> 평균을 피처에 박아 넣은 그 인코딩이, ML 관점에선 가장 큰 데이터 누수였습니다. 통계학자의 옳음과 ML 모델러의 옳음이 갈라지는 지점.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">회고의 가치</div>
+      <div class="card-text">방향은 맞았습니다. 다만 검증 위생 한 줄씩이 빠졌습니다. 어떤 줄이 빠졌고, 어떻게 채우면 의도가 살아남는지를 9가지 수정 항목으로 정리합니다.</div>
+    </div>
+  </div>
+  <div class="viz-insight" style="margin-top:2rem;">
+    <div class="viz-insight-label">한 줄 요약</div>
+    <p>이 프로젝트의 사고 흐름은 <strong>통계학적으로는 정밀했지만, ML 검증 위생에서 한 단계가 빠졌습니다.</strong> 이 페이지는 5가지 의도된 선택과 9가지 회고 수정 사이의 거리를 기록합니다.</p>
   </div>
 </div></section>
 <hr class="divider">
 
 <section id="methodology"><div class="container fade-in">
   <div class="section-label">Methodology</div>
-  <h2 class="section-title">분석 프레임워크</h2>
-  <p class="section-desc">크롤링부터 모델 학습까지, 단계적으로 진행한 분석 과정입니다.</p>
+  <h2 class="section-title">분석 파이프라인</h2>
+  <p class="section-desc">7개 노트북으로 구성된 단계적 파이프라인. 크롤링부터 LSTM 시계열 분류까지의 흐름입니다.</p>
   <div class="flow">
-    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">웹 크롤링</div><div class="flow-desc">경기 데이터<br>JSON 수집</div></div>
-    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">전처리</div><div class="flow-desc">통합 &amp; 결측값<br>라벨링</div></div>
-    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">변수 선택</div><div class="flow-desc">RF 기반<br>중요 변수 추출</div></div>
-    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">모델 학습</div><div class="flow-desc">SVM 모델<br>승리 확률 예측</div></div>
-    <div class="flow-step"><div class="flow-num">05</div><div class="flow-title">시각화</div><div class="flow-desc">결과 분석<br>인사이트 도출</div></div>
+    <div class="flow-step"><div class="flow-num">01</div><div class="flow-title">크롤링</div><div class="flow-desc">fbref Selenium<br>경기 + 이벤트</div></div>
+    <div class="flow-step"><div class="flow-num">02</div><div class="flow-title">전처리</div><div class="flow-desc">KNN imputation<br>OLS 검증 + 가중 인코딩</div></div>
+    <div class="flow-step"><div class="flow-num">03</div><div class="flow-title">EDA</div><div class="flow-desc">시즌/대회/시간대<br>골·어시 분포</div></div>
+    <div class="flow-step"><div class="flow-num">04</div><div class="flow-title">차원 축소</div><div class="flow-desc">PCA + Varimax<br>(직접 구현)</div></div>
+    <div class="flow-step"><div class="flow-num">05</div><div class="flow-title">변수 선택</div><div class="flow-desc">corr + RF importance<br>+ t-test 3단</div></div>
+    <div class="flow-step"><div class="flow-num">06</div><div class="flow-title">모델 비교</div><div class="flow-desc">LR / RF / SVM<br>GridSearch</div></div>
+    <div class="flow-step"><div class="flow-num">07</div><div class="flow-title">시계열</div><div class="flow-desc">LSTM<br>seq_length=5</div></div>
   </div>
-  <div class="card-grid">
-    <div class="layer-card"><div class="layer-num">Attempt 1 &mdash; PCA</div><div class="layer-title">주성분 분석을 통한 변수 추출</div><div class="layer-q">"PCA로 차원 축소를 시도했으나, 통계값이 유의미하게 나오지 않아 해당 접근은 폐기했습니다."</div><div class="tags"><span class="tag">PCA</span><span class="tag">차원 축소</span><span class="tag" style="color:var(--accent-red);">실패</span></div></div>
-    <div class="layer-card"><div class="layer-num">Attempt 2 &mdash; Random Forest</div><div class="layer-title">상관 관계 분석 + 랜덤 포레스트</div><div class="layer-q">"모든 변수 중 결과와 연관성이 높은 변수를 랜덤 포레스트의 Feature Importance로 추출했습니다."</div><div class="tags"><span class="tag">Random Forest</span><span class="tag">Feature Importance</span><span class="tag">Correlation</span></div></div>
-    <div class="layer-card"><div class="layer-num">Final &mdash; SVM</div><div class="layer-title">서포트 벡터 머신 예측 모델</div><div class="layer-q">"선택된 핵심 변수로 SVM 분류기를 학습하여 최종 승리 확률 예측 모델을 구축했습니다."</div><div class="tags"><span class="tag">SVM</span><span class="tag">Classification</span><span class="tag">Prediction</span></div></div>
+</div></section>
+<hr class="divider">
+
+<section id="decisions"><div class="container fade-in">
+  <div class="section-label">고민의 흔적</div>
+  <h2 class="section-title">5가지 의도된 선택</h2>
+  <p class="section-desc">default 한 줄로 끝낼 수 있는 자리에서 한 단계 더 들어갔던 5가지 결정. 각각이 이 프로젝트의 정체성이자, 지금 다시 본다면 발목을 잡았던 지점이기도 합니다.</p>
+
+  <!-- Decision 1: Venue weighted encoding -->
+  <div class="layer-card" style="margin-bottom:1.5rem;">
+    <div class="layer-num">Decision 01 &middot; Centerpiece</div>
+    <div class="layer-title">venue 라벨을 "결과 평균 가중치"로 인코딩</div>
+    <div class="layer-q">"라벨값 0/1/2가 result에 미치는 영향은 동등하지 않다. 그렇다면 그 영향력 자체를 라벨값에 반영하자."</div>
+    <div class="layer-body">
+      Home/Away/Neutral을 단순 정수 0/1/2로 두지 않았습니다. 먼저 OLS로 venue가 result에 통계적으로 유의한지 검정한 뒤, venue별 result 평균(0.608 / 0.339 / 0.235)을 그 라벨의 값으로 매핑했습니다. 매핑 후 다시 OLS로 R&sup2; 향상을 확인하는 검증 루프까지 거쳤습니다.
+    </div>
+    <div class="code-block"><code><span class="cv"># 1단계: OLS로 venue의 통계적 유의성 검정</span>
+X_venue = sm.add_constant(data[[<span class="cs">'venue'</span>]])
+model = sm.OLS(y_result, X_venue).fit()
+<span class="cv"># &rarr; p-value 확인 후 "venue는 result에 유의미"</span>
+
+<span class="cv"># 2단계: venue별 result 평균을 가중치로 매핑</span>
+mean_result_by_venue = data.groupby(<span class="cs">'venue'</span>)[<span class="cs">'result'</span>].mean()
+venue_weights = {<span class="cn">0</span>: <span class="cn">0.608</span>, <span class="cn">1</span>: <span class="cn">0.339</span>, <span class="cn">2</span>: <span class="cn">0.235</span>}
+data[<span class="cs">'venue'</span>] = data[<span class="cs">'venue'</span>].map(venue_weights)</code></div>
+    <div class="tags">
+      <span class="tag">OLS</span><span class="tag">Target Encoding</span><span class="tag">통계 검증 우선</span>
+      <span class="tag bad">지금 시선: 데이터 누수</span>
+    </div>
+  </div>
+
+  <!-- Decision 2: Custom KNN imputer -->
+  <div class="layer-card" style="margin-bottom:1.5rem;">
+    <div class="layer-num">Decision 02</div>
+    <div class="layer-title">Custom KNN Imputer (sklearn 그대로 안 쓰고 직접 구현)</div>
+    <div class="layer-q">"라이브러리 한 줄로 끝나는 결측 처리에서, categorical을 어떻게 다룰지 직접 설계해보자."</div>
+    <div class="layer-body">
+      <code style="font-family:monospace;font-size:0.82rem;">KNNImputer</code> 한 줄로 끝낼 자리에서: categorical을 factorize&rarr;KNN&rarr;reverse-factor로 복원하는 흐름을 짜고, 그래도 남는 NaN은 <strong>numeric은 median, categorical은 mode</strong>로 채우는 fallback까지 설계했습니다. R의 <code style="font-family:monospace;font-size:0.82rem;">cluster::daisy</code> 패키지에서 본 방식을 파이썬으로 옮긴 흔적이 주석에 남아있습니다.
+    </div>
+    <div class="code-block"><code><span class="cf">def</span> central_value(column):
+    <span class="cf">if</span> column.dtype.kind <span class="cf">in</span> <span class="cs">'biufc'</span>:  <span class="cv"># numeric</span>
+        <span class="cf">return</span> np.nanmedian(column)
+    <span class="cf">else</span>:  <span class="cv"># categorical &rarr; mode</span>
+        <span class="cf">return</span> column.dropna().mode()[<span class="cn">0</span>]
+
+<span class="cf">def</span> knn_impute(data, k=<span class="cn">10</span>):
+    <span class="cv"># categorical은 factorize로 정수화 후 KNN, 다시 cat 복원</span>
+    <span class="cv"># 잔여 NaN은 central_value() fallback</span>
+    ...</code></div>
+    <div class="tags">
+      <span class="tag">KNNImputer</span><span class="tag">factorize</span><span class="tag">median + mode fallback</span>
+      <span class="tag warn">지금 시선: factorize 거리 의미 약함</span>
+    </div>
+  </div>
+
+  <!-- Decision 3: 3-stage feature selection -->
+  <div class="layer-card" style="margin-bottom:1.5rem;">
+    <div class="layer-num">Decision 03</div>
+    <div class="layer-title">변수 선택을 "선형 + 비선형 + 통계검정" 3단으로</div>
+    <div class="layer-q">"상관 관계는 선형만 본다. 비선형도 봐야지. 거기에 통계적 유의성까지 검정하자."</div>
+    <div class="layer-body">
+      한 가지 기준에 의지하지 않았습니다. (1) Correlation matrix로 선형 관계, (2) Random Forest <code style="font-family:monospace;font-size:0.82rem;">feature_importances_</code>로 비선형 관계, (3) t-test로 통계적 유의성. 세 단계를 모두 통과한 변수만 최종 모델에 투입했습니다.
+    </div>
+    <div class="code-block"><code><span class="cv"># Stage 1: 선형 — 상관 관계 매트릭스</span>
+correlation_matrix = data_clean.corr()
+result_corr = correlation_matrix[<span class="cs">'result'</span>].sort_values(ascending=<span class="cf">False</span>)
+
+<span class="cv"># Stage 2: 비선형 — Random Forest 중요도</span>
+rf = RandomForestClassifier(n_estimators=<span class="cn">100</span>, random_state=<span class="cn">42</span>)
+rf.fit(X_scaled, y)
+top_features = X.columns[rf.feature_importances_.argsort()[::-<span class="cn">1</span>]][:<span class="cn">6</span>]
+
+<span class="cv"># Stage 3: 통계 검정 — t-test (유의수준 5%)</span>
+<span class="cf">for</span> feature <span class="cf">in</span> top_features:
+    t_stat, p_value = ttest_ind(X[feature][y==<span class="cn">1</span>], X[feature][y!=<span class="cn">1</span>])
+    <span class="cf">if</span> p_value &lt; <span class="cn">0.05</span>:
+        significant_features.append(feature)</code></div>
+    <div class="tags">
+      <span class="tag">corr</span><span class="tag">RF importance</span><span class="tag">t-test</span>
+      <span class="tag warn">지금 시선: split 전 selection은 누수</span>
+    </div>
+  </div>
+
+  <!-- Decision 4: Match-level event crawling -->
+  <div class="layer-card" style="margin-bottom:1.5rem;">
+    <div class="layer-num">Decision 04</div>
+    <div class="layer-title">Match-level Event 크롤링 (fbref 기본 표를 넘어선 수집)</div>
+    <div class="layer-q">"매치 로그 표는 '골 1, 어시 0' 같은 집계만 준다. 시간대별 이벤트가 필요하면 직접 들어가야 한다."</div>
+    <div class="layer-body">
+      각 경기 페이지로 진입해 <strong>"손흥민 이름이 들어간 이벤트만"</strong> 시점(분)과 type을 추출했습니다. 어시는 다른 선수의 골 이벤트에 <code style="font-family:monospace;font-size:0.82rem;">'Assist: Son Heung-min'</code> small 텍스트로 붙어있다는 구조까지 파악해 분류 로직을 만들었습니다. 이 노력으로 visual.ipynb의 시간대별(0&ndash;15, 16&ndash;30, &hellip;) 기여 분석이 가능했습니다.
+    </div>
+    <div class="code-block"><code><span class="cv"># 매치 로그 행에서 match_ref 링크 따고 새 탭으로 열기</span>
+match_ref = row.find_element(By.CSS_SELECTOR, <span class="cs">"td.left.group_start &gt; a"</span>).get_attribute(<span class="cs">'href'</span>)
+driver.execute_script(<span class="cs">f"window.open('{match_ref}');"</span>)
+driver.switch_to.window(driver.window_handles[<span class="cn">1</span>])
+
+<span class="cf">for</span> element <span class="cf">in</span> match_data:
+    <span class="cf">if</span> <span class="cs">'Son Heung-min'</span> <span class="cf">in</span> element.text:
+        <span class="cv"># event_icon 클래스로 type 분류</span>
+        event_type = element.find_element(...).get_attribute(<span class="cs">'class'</span>)
+        small = element.find_element(By.CSS_SELECTOR, <span class="cs">'div:nth-child(2) &gt; small'</span>).text
+        <span class="cf">if</span> small == <span class="cs">'Assist: Son Heung-min'</span>:
+            event_type = <span class="cs">'assist'</span>
+        <span class="cf">elif</span> small == <span class="cs">'for Son Heung-min'</span>:
+            event_type = <span class="cs">'substitute_out'</span></code></div>
+    <div class="tags">
+      <span class="tag">Selenium</span><span class="tag">DOM 파싱</span><span class="tag">이벤트 타임라인</span>
+      <span class="tag bad">지금 시선: step=2 시즌 절반 누락 버그</span>
+    </div>
+  </div>
+
+  <!-- Decision 5: PCA + Varimax -->
+  <div class="layer-card" style="margin-bottom:1.5rem;">
+    <div class="layer-num">Decision 05</div>
+    <div class="layer-title">PCA에 Varimax 회전을 직접 구현해 적용</div>
+    <div class="layer-q">"PCA로 차원만 줄이지 말고 각 컴포넌트가 무슨 의미인지도 알자."</div>
+    <div class="layer-body">
+      <code style="font-family:monospace;font-size:0.82rem;">factor_analyzer.Rotator</code>가 있는데도 SVD 기반 Varimax 함수를 직접 짰습니다. 회전 후 |loading| &gt; 0.5인 변수만 골라 각 컴포넌트의 의미를 해석 가능한 그룹으로 만드는 시도. 보통 ML 입문자는 PCA &rarr; 그대로 모델에 넣지만, 여기선 EFA(탐색적 요인 분석)의 사고로 한 단계 더 들어갔습니다.
+    </div>
+    <div class="code-block"><code><span class="cf">def</span> varimax(Phi, gamma=<span class="cn">1.0</span>, q=<span class="cn">30</span>, tol=<span class="cn">1e-5</span>):
+    <span class="cv"># SVD 기반 Varimax 회전 직접 구현</span>
+    p, k = Phi.shape
+    R = np.eye(k)
+    <span class="cf">for</span> i <span class="cf">in</span> range(q):
+        Lambda = np.dot(Phi, R)
+        u, s, vh = np.linalg.svd(...)
+        R = np.dot(u, vh)
+    <span class="cf">return</span> np.dot(Phi, R)
+
+<span class="cv"># 회전된 로딩에서 |값| &gt; 0.5인 변수만 추출</span>
+<span class="cf">for</span> i, component <span class="cf">in</span> loading_df.iterrows():
+    significant_vars = component[component.abs() &gt; <span class="cn">0.5</span>]</code></div>
+    <div class="tags">
+      <span class="tag">PCA</span><span class="tag">Varimax</span><span class="tag">EFA 사고</span>
+      <span class="tag bad">지금 시선: result 컬럼 미제거로 PC 오염</span>
+    </div>
+  </div>
+
+  <div class="viz-insight" style="margin-top:1.5rem;">
+    <div class="viz-insight-label">5가지 결정의 공통 패턴</div>
+    <p>전부 <strong>"default가 아니라 한 단계 더 들어간다"</strong>는 패턴입니다. 통계학적 사고(p-value, 가중치, 회전)와 엔지니어링적 욕심(직접 구현, 페이지 파싱)이 둘 다 보입니다. 5가지 모두 의도는 옳았지만, 5가지 중 4가지가 ML 검증 위생 한 줄씩이 빠져 결과가 깨졌습니다. 다음 두 섹션에서 그 거리를 좁혀갑니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="venue"><div class="container fade-in">
+  <div class="section-label">Centerpiece</div>
+  <h2 class="section-title">Venue 가중치 인코딩 &mdash; 4단 사고흐름</h2>
+  <p class="section-desc">이 프로젝트의 핵심 디자인 결정. <strong>결과 라벨링 &rarr; 통계 검증 &rarr; 가중 매핑 &rarr; 재검증</strong>의 4단계로 구성됩니다. 한국 학부 교과 과정에서 보기 드문 사고 깊이이지만, 동시에 가장 큰 누수 원인이기도 했습니다.</p>
+
+  <div class="step-block">
+    <div class="step-num-circle">1</div>
+    <div class="step-content">
+      <div class="step-title">결과 라벨링 &mdash; Win/Drew/Loose &rarr; 1/0/-1</div>
+      <div class="step-desc">분석의 출발점. 결과 변수를 <strong>승부의 부호</strong>를 살린 정수 라벨로 바꿉니다. 단순 0/1/2가 아니라 -1/0/1로 둔 이유는, OLS 회귀 시 "결과의 방향성"이 자연스럽게 모델에 들어가기를 원했기 때문입니다.</div>
+      <div class="code-block"><code>result_mapping = {<span class="cs">'Drew'</span>: <span class="cn">0</span>, <span class="cs">'Loose'</span>: -<span class="cn">1</span>, <span class="cs">'Win'</span>: <span class="cn">1</span>}
+son_stats_df[<span class="cs">'result'</span>] = son_stats_df[<span class="cs">'result'</span>].map(result_mapping)</code></div>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-num-circle">2</div>
+    <div class="step-content">
+      <div class="step-title">통계 검증 &mdash; OLS p-value로 변수 영향력 측정</div>
+      <div class="step-desc">venue를 인코딩하기 <em>전에</em>, 그것이 result에 정말 통계적으로 유의한지 OLS로 먼저 검정합니다. 비교군으로 <code style="font-family:monospace;font-size:0.82rem;">game_started</code>도 같이 검정해 "유의하지 않다"는 결론을 직접 확인. <strong>인코딩 결정에 통계가 선행하는 구조</strong>입니다.</div>
+      <div class="code-block"><code><span class="cv"># venue 검증</span>
+X_venue = sm.add_constant(data[[<span class="cs">'venue'</span>]])
+model_venue = sm.OLS(y_result, X_venue).fit()
+<span class="cv"># &rarr; p-value 작음 &rarr; "유의미함" 판정</span>
+
+<span class="cv"># 비교: game_started 검증</span>
+X_gs = sm.add_constant(data[[<span class="cs">'game_started'</span>]])
+model_gs = sm.OLS(y_result, X_gs).fit()
+<span class="cv"># &rarr; p-value 큼 &rarr; "유의미하지 않음" 판정 &rarr; 가중치 매핑 적용 안 함</span></code></div>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-num-circle">3</div>
+    <div class="step-content">
+      <div class="step-title">가중 매핑 &mdash; 라벨값을 result 평균값으로 치환</div>
+      <div class="step-desc">venue별 result 평균을 구한 뒤, 그 평균값 자체를 라벨의 새로운 값으로 사용합니다. 0/1/2 정수가 아니라 0.608/0.339/0.235로 매핑되면, 이후 모든 모델은 venue 한 컬럼만 봐도 "그 venue에서의 평균 승률"을 직접 입력으로 받게 됩니다.</div>
+      <div class="code-block"><code>mean_result_by_venue = data.groupby(<span class="cs">'venue'</span>)[<span class="cs">'result'</span>].mean()
+<span class="cv"># Home: 0.608, Away: 0.339, Neutral: 0.235</span>
+
+venue_weights = {<span class="cn">0</span>: <span class="cn">0.608</span>, <span class="cn">1</span>: <span class="cn">0.339</span>, <span class="cn">2</span>: <span class="cn">0.235</span>}
+data[<span class="cs">'venue'</span>] = data[<span class="cs">'venue'</span>].map(venue_weights)</code></div>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-num-circle">4</div>
+    <div class="step-content">
+      <div class="step-title">재검증 &mdash; 매핑 후 R&sup2; 향상 확인</div>
+      <div class="step-desc">가중 매핑이 모델 적합도를 정말 개선하는지 다시 OLS를 돌려 R&sup2; 변화를 확인합니다. <strong>"검증 &rarr; 변환 &rarr; 검증"의 닫힌 루프</strong>를 만든 것이 이 프로젝트의 가장 정밀한 부분입니다.</div>
+      <div class="code-block"><code>X_weighted = sm.add_constant(data[[<span class="cs">'venue'</span>]])
+model_weighted = sm.OLS(y_result, X_weighted).fit()
+<span class="cv"># &rarr; R&sup2; 비교: 정수 인코딩 vs 가중 인코딩</span>
+<span class="cv"># &rarr; 가중 인코딩이 더 높은 R&sup2; &rarr; 인코딩 채택</span></code></div>
+    </div>
+  </div>
+
+  <div class="viz-insight red" style="margin-top:2.5rem;">
+    <div class="viz-insight-label">지금의 시선 &mdash; 통계학자의 옳음 vs ML 모델러의 옳음</div>
+    <p>이 4단 흐름은 <strong>통계 모델링 관점에선 정석</strong>입니다. 변수의 영향력을 측정하고 그것을 인코딩에 반영하는 건 회귀 분석의 정상적인 절차예요. 하지만 <strong>예측 모델 관점에선 이게 가장 큰 데이터 누수</strong>였습니다. <code>data.groupby('venue')['result'].mean()</code>은 train과 test를 가리지 않은 <em>전체 데이터의 result 평균</em>을 사용했고, 그 결과 venue 피처는 사실상 "이 venue에서의 정답 평균"이라는 답지에 가까운 값이 되었습니다. 모델은 이 답지를 보고 학습되었기 때문에, 정확도가 부풀려진 채로 나옵니다.</p>
+  </div>
+
+  <div class="mismatch-example">
+    <div class="mismatch-id">venue 가중치 인코딩 &mdash; 같은 코드, 두 시점</div>
+    <div class="mismatch-line"><span class="mtag mtag-then">3년 전</span> 전체 데이터로 venue별 result 평균 계산 후 모든 행에 매핑 (target encoding)</div>
+    <div class="mismatch-line"><span class="mtag mtag-now">지금</span> <strong>train fold 안에서만</strong> 평균 계산 후 그 매핑을 train/test에 적용 (CV 안에서 매 fold마다 재계산)</div>
+    <div class="mismatch-line" style="margin-top:0.6rem;"><span class="mtag mtag-bug">차이</span> 의도(통계 가중치)는 살리되, 누수만 제거하는 한 줄 위치 변경</div>
   </div>
 </div></section>
 <hr class="divider">
 
 <section id="models"><div class="container fade-in">
   <div class="section-label">Model Comparison</div>
-  <h2 class="section-title">모델 선택 과정</h2>
-  <p class="section-desc">여러 접근 방식을 시도하며 최적의 모델을 탐색한 과정입니다.</p>
-  <div class="verify-grid">
-    <div class="verify-card"><div class="verify-num" style="color:var(--accent-red);">PCA</div><div class="verify-label">주성분 분석</div><div class="verify-sub">통계값 미달로 폐기</div></div>
-    <div class="verify-card"><div class="verify-num" style="color:var(--accent-green);">RF</div><div class="verify-label">랜덤 포레스트</div><div class="verify-sub">변수 선택에 활용</div></div>
-    <div class="verify-card"><div class="verify-num" style="color:var(--accent-green);">SVM</div><div class="verify-label">서포트 벡터 머신</div><div class="verify-sub">최종 예측 모델</div></div>
-    <div class="verify-card"><div class="verify-num">VIZ</div><div class="verify-label">시각화</div><div class="verify-sub">결과 분석 및 해석</div></div>
+  <h2 class="section-title">시도한 모델들</h2>
+  <p class="section-desc">단일 모델로 끝내지 않고 PCA &rarr; LR/RF/SVM &rarr; LSTM 시계열까지 단계적으로 확장. 각 단계는 직전 단계의 한계에 대한 응답이었습니다.</p>
+
+  <div class="card-grid">
+    <div class="layer-card">
+      <div class="layer-num">Attempt 1 &middot; PCA + Varimax</div>
+      <div class="layer-title">탐색적 차원 축소</div>
+      <div class="layer-q">"100여 개 변수를 70개로 줄이고, Varimax 회전으로 의미 있는 그룹을 만들자."</div>
+      <div class="tags"><span class="tag">PCA</span><span class="tag">Varimax</span><span class="tag bad">result 미제거 &rarr; 컴포넌트 오염</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Attempt 2 &middot; RF + 3-stage Selection</div>
+      <div class="layer-title">선형/비선형/통계의 합산 변수 선택</div>
+      <div class="layer-q">"corr + RF importance + t-test 모두 통과한 변수만 다음 단계로."</div>
+      <div class="tags"><span class="tag">corr</span><span class="tag">RF</span><span class="tag">t-test</span><span class="tag warn">전체 데이터 selection bias</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Attempt 3 &middot; LR / RF / SVM 3-way</div>
+      <div class="layer-title">분류 알고리즘 비교</div>
+      <div class="layer-q">"선형(LR) / 트리(RF) / 커널(SVM) 세 패러다임을 같은 변수 위에서 5-fold CV로 비교한다."</div>
+      <div class="tags"><span class="tag">cross_validate</span><span class="tag">accuracy/precision/recall/f1</span><span class="tag good">CV는 정상 적용</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Final &middot; SVM + GridSearch</div>
+      <div class="layer-title">RBF 커널 SVM, C/gamma 그리드 탐색</div>
+      <div class="layer-q">"승리 확률 예측의 최종 모델로 RBF SVM을 선택하고 하이퍼파라미터를 튜닝한다."</div>
+      <div class="tags"><span class="tag">SVC(rbf)</span><span class="tag">GridSearchCV</span><span class="tag bad">target_names[result] 인덱싱 버그</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">Extension &middot; LSTM</div>
+      <div class="layer-title">시계열 시퀀스 분류 (seq_length=5)</div>
+      <div class="layer-q">"단일 경기가 아니라 직전 5경기 시퀀스로 다음 경기 결과를 예측해보자."</div>
+      <div class="tags"><span class="tag">Keras LSTM</span><span class="tag">categorical_crossentropy</span><span class="tag bad">venue를 np.random으로 덮어씀</span></div>
+    </div>
+    <div class="layer-card">
+      <div class="layer-num">EDA &middot; Visualization</div>
+      <div class="layer-title">시즌/대회/팀/포지션/시간대 분포</div>
+      <div class="layer-q">"수치 모델 외에, '어떤 손흥민이었는가'를 그림으로도 보여주자."</div>
+      <div class="tags"><span class="tag">seaborn</span><span class="tag">time_bin (0&ndash;15&hellip;76&ndash;90)</span><span class="tag good">PNG 저장</span></div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="retro"><div class="container fade-in">
+  <div class="section-label">Retrospective</div>
+  <h2 class="section-title">지금 다시 본다면 &mdash; 9가지 수정</h2>
+  <p class="section-desc">위 5가지 의도된 결정의 방향은 살리되, ML 검증 위생을 보강하는 9가지 수정. 우선순위는 결과의 신뢰도에 미치는 영향 순입니다.</p>
+
+  <div class="fix-list">
+    <div class="fix-item">
+      <span class="fix-severity critical">Critical</span>
+      <div>
+        <div class="fix-title">Crawler <code>step=2</code> &rarr; <code>step=1</code> (시즌 절반 누락)</div>
+        <div class="fix-detail">fbref URL <code>/{year}-{year+1}/</code>는 한 시즌(예: 2011-12)을 의미. 그런데 <code>range(2011, 2024, 2)</code>로 두면 2012-13, 2014-15, 2016-17, 2018-19, 2020-21, 2022-23 시즌이 통째로 빠집니다. <strong>손흥민 토트넘 전성기의 절반</strong>이 빠진 데이터로 모든 후속 분석이 진행된 셈. 모든 결과의 토대를 흔드는 가장 큰 결함.</div>
+        <div class="fix-meta">crawler.ipynb &middot; URL 패턴 재해석</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity critical">Critical</span>
+      <div>
+        <div class="fix-title">Venue Target Encoding &rarr; train fold 안에서만 평균 계산</div>
+        <div class="fix-detail">전체 데이터의 <code>result</code> 평균을 venue 라벨에 박아 넣은 인코딩은 데이터 누수. 의도(통계 가중치)는 살리되, CV 안에서 매 fold마다 train 부분만으로 평균을 다시 계산해 매핑하는 식으로 한 줄 위치만 변경하면 됩니다.</div>
+        <div class="fix-meta">data_preprocessing.ipynb &middot; sklearn Pipeline 권장</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity critical">Critical</span>
+      <div>
+        <div class="fix-title">LSTM의 venue 랜덤 덮어쓰기 라인 삭제</div>
+        <div class="fix-detail"><code>data['venue'] = np.random.choice([0, 1, 2], size=len(data))</code> 라인이 실제 venue 값을 통째로 노이즈로 교체합니다. LSTM의 venue 피처는 학습에 의미 없는 입력이 됨. 이 한 줄만 지우면 됩니다.</div>
+        <div class="fix-meta">LSTM.ipynb &middot; 한 줄 삭제</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity critical">Critical</span>
+      <div>
+        <div class="fix-title">SVM 예측 라벨 인덱싱 버그 (음수 인덱싱)</div>
+        <div class="fix-detail"><code>target_names = ['Defeat', 'Draw', 'Victory']</code>인데 SVM 출력은 -1/0/1. <code>target_names[-1]</code>은 파이썬 음수 인덱싱으로 'Victory'가 됨. 결과적으로 <strong>3개 클래스 모두 잘못된 라벨</strong>로 출력됩니다. <code>label_map = {-1:'Defeat', 0:'Draw', 1:'Victory'}</code> dict로 교체.</div>
+        <div class="fix-meta">svm.ipynb &middot; 단순 버그</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity major">Major</span>
+      <div>
+        <div class="fix-title">Scaler를 split 전에 fit_transform &rarr; train만 fit</div>
+        <div class="fix-detail"><code>StandardScaler().fit_transform(X)</code> 후에 train_test_split을 하면 스케일러가 테스트셋 평균/분산을 미리 봅니다. <code>scaler.fit(X_train)</code>으로 분리하거나 <code>Pipeline</code>으로 묶으면 해결.</div>
+        <div class="fix-meta">svm.ipynb / model2.ipynb / LSTM.ipynb 공통</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity major">Major</span>
+      <div>
+        <div class="fix-title">Feature Selection을 nested CV로 (selection bias 제거)</div>
+        <div class="fix-detail">전체 데이터로 RF importance &rarr; top 6 추출 &rarr; 그 6개로 CV 평가는 selection bias가 들어간 낙관적 점수. <code>Pipeline</code>에 <code>SelectFromModel</code>을 넣고 outer CV에서 평가하는 nested CV 구조로 바꿉니다.</div>
+        <div class="fix-meta">model2.ipynb &middot; sklearn Pipeline + nested CV</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity major">Major</span>
+      <div>
+        <div class="fix-title">PCA에 result 컬럼 포함 &rarr; drop 후 PCA</div>
+        <div class="fix-detail"><code>data.drop(columns='date')</code>만 하고 PCA를 돌리면 result(타겟)가 features에 섞인 채 분해됩니다. 한 컴포넌트가 거의 result 자체가 되어 회전 후 해석이 오염됨. <code>X = data.drop(columns=['date', 'result'])</code>로 시작.</div>
+        <div class="fix-meta">model.ipynb &middot; X와 y 분리 명확화</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity major">Major</span>
+      <div>
+        <div class="fix-title">시간순 split 도입 &mdash; <code>TimeSeriesSplit</code></div>
+        <div class="fix-detail">경기 데이터인데 어디서도 시간순 split을 하지 않았습니다. 특히 LSTM에선 무작위 <code>train_test_split</code>으로 미래 경기로 과거를 예측하는 시간 누설이 발생. <code>TimeSeriesSplit</code>으로 전환하면 됩니다.</div>
+        <div class="fix-meta">LSTM.ipynb 우선 / model2.ipynb도 권장</div>
+      </div>
+    </div>
+    <div class="fix-item">
+      <span class="fix-severity minor">Minor</span>
+      <div>
+        <div class="fix-title">goal 피처 누수 의심 &mdash; "직전까지 누적 골수"로 재정의</div>
+        <div class="fix-detail">손흥민이 골을 넣은 경기는 토트넘 승리율이 매우 높음. <code>goal</code> 피처가 result와 거의 1:1에 가까워 모델이 거의 동어반복으로 학습됩니다. "그 경기 골수" 대신 "그 경기 직전까지의 누적/롤링 골수"로 바꾸면 leakage 없이 폼(form) 피처가 됩니다.</div>
+        <div class="fix-meta">data_preprocessing.ipynb &middot; rolling 피처 재계산</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="viz-insight green" style="margin-top:2rem;">
+    <div class="viz-insight-label">수정의 원칙</div>
+    <p>9가지 수정 모두 <strong>5가지 의도된 결정을 폐기하지 않습니다.</strong> 통계 검증은 그대로, 가중 인코딩은 그대로, 3단 selection도 그대로, Varimax도 그대로 살립니다. 다만 그것을 적용하는 <em>위치</em>를 train fold 안으로 옮기고, 빠진 데이터를 채우고, 단순 버그를 제거합니다. "사고 흐름은 옳았으니 한 단계만 더 깊이"가 회고의 핵심입니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="timeline"><div class="container fade-in">
+  <div class="section-label">Three Years</div>
+  <h2 class="section-title">두 시점 사이의 거리</h2>
+  <p class="section-desc">학부 시절의 분석에서 지금의 회고까지, 사고가 어떻게 옮겨갔는지를 단계별로 기록합니다.</p>
+
+  <div class="stat-strip">
+    <div class="stat-tile"><span class="stat-tile-num">7</span><div class="stat-tile-label">노트북</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">5</span><div class="stat-tile-label">의도된 결정</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">9</span><div class="stat-tile-label">회고 수정</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">4</span><div class="stat-tile-label">Critical 이슈</div></div>
+    <div class="stat-tile"><span class="stat-tile-num">4</span><div class="stat-tile-label">Major 이슈</div></div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-version">v1 &mdash; 학부 시절</div>
+      <div class="timeline-title">"통계로 검증하고 가중치로 인코딩한다"</div>
+      <div class="timeline-desc">결과를 1/0/-1로 라벨링하고, 변수의 영향력을 OLS p-value로 검정한 뒤, venue별 result 평균을 가중치로 사용하는 4단 사고흐름을 설계. 통계학적으로 정밀한 출발.</div>
+      <div class="timeline-meta">data_preprocessing.ipynb &middot; venue weighted encoding</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-version">v1 &mdash; 학부 시절</div>
+      <div class="timeline-title">"라이브러리 그대로 안 쓰고 직접 짠다"</div>
+      <div class="timeline-desc">KNNImputer를 그대로 쓰지 않고 categorical 처리와 fallback을 직접 설계. Varimax도 라이브러리가 있는데 SVD 기반으로 직접 구현. 학습 의도가 뚜렷한 코드.</div>
+      <div class="timeline-meta">model.ipynb &middot; data_preprocessing.ipynb</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-version">v1 &mdash; 학부 시절</div>
+      <div class="timeline-title">"한 가지 기준에 의지하지 않는다"</div>
+      <div class="timeline-desc">변수 선택을 corr(선형) + RF importance(비선형) + t-test(통계 검정) 3단으로 구성. 모델 비교도 LR/RF/SVM 3-way 5-fold CV로 진행.</div>
+      <div class="timeline-meta">model2.ipynb &middot; 3-stage feature selection</div>
+    </div>
+    <div class="timeline-item major">
+      <div class="timeline-version">v2 &mdash; 지금의 시선</div>
+      <div class="timeline-title">"통계학자의 옳음과 ML 모델러의 옳음은 다르다"</div>
+      <div class="timeline-desc">전체 데이터로 가중치를 만들고, 전체 데이터로 selection을 하고, 전체 데이터로 scaler를 fit하는 모든 흐름이 ML 검증 관점에서는 데이터 누수임을 인식. 사고 흐름의 방향은 옳았지만 적용 위치가 한 단계 잘못 놓여있었음을 회고.</div>
+      <div class="timeline-meta">retrospective &middot; 4 Critical / 4 Major / 1 Minor</div>
+    </div>
+    <div class="timeline-item major">
+      <div class="timeline-version">v3 &mdash; 다음 단계</div>
+      <div class="timeline-title">"의도는 살리고 위치만 옮긴다"</div>
+      <div class="timeline-desc">9가지 수정을 적용해 5가지 의도된 결정을 모두 살린 채 검증 위생을 보강. crawler step=1 재크롤링, sklearn Pipeline + nested CV, TimeSeriesSplit 도입, target encoding을 fold 안으로 이동. 결과 수치가 어떻게 변하는지 측정.</div>
+      <div class="timeline-meta">예정 &middot; github 연동 후 단계적 적용</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="lesson"><div class="container fade-in">
+  <div class="section-label">Lesson</div>
+  <h2 class="section-title">통계학자의 사고 vs ML 모델러의 사고</h2>
+  <p class="section-desc">이 회고에서 배운 가장 큰 한 가지. 두 사고방식은 충돌하는 게 아니라, 적용되는 <em>층위</em>가 다릅니다.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title" style="color:var(--accent);">통계학자의 사고</div>
+      <div class="card-text">
+        주어진 데이터셋 안에서 변수 간의 관계를 추정하고 검정합니다. p-value, R&sup2;, OLS는 "이 데이터에서 이 가설이 얼마나 지지되는가"의 언어. 전체 데이터를 보는 것이 자연스럽고, 그것이 정상적인 추론 절차입니다.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--accent-red);">ML 모델러의 사고</div>
+      <div class="card-text">
+        보지 못한 데이터에서 모델이 얼마나 잘 작동하는지가 전부입니다. train/test, CV fold, time-series split은 "테스트셋이 정말 미래/외부의 데이터인가"를 보장하는 절차. 어떤 통계량도 fold 경계를 넘으면 누수가 됩니다.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--accent-green);">두 사고의 통합</div>
+      <div class="card-text">
+        이 프로젝트의 4단 사고흐름은 통계학자의 절차로는 정석입니다. 다만 그것을 ML 파이프라인에 옮길 때, <strong>모든 통계 연산을 train fold 안으로 가두면</strong> 의도가 살아남으면서 누수가 사라집니다. 둘 중 하나를 버리는 게 아니라, 위치를 한 단계 옮기는 일.
+      </div>
+    </div>
+  </div>
+
+  <div class="viz-insight" style="margin-top:2rem;">
+    <div class="viz-insight-label">3년의 거리</div>
+    <p>학부 시절의 사고 흐름을 폐기하지 않는 회고가 가능한 이유는, 그 흐름이 통계적으로 옳기 때문입니다. ML 검증 위생을 알게 된 지금, 그 옳음을 살리기 위해 필요한 것은 큰 재설계가 아니라 <strong>코드 한 줄의 위치 변경</strong>입니다. 이 단순한 차이를 인식하는 데 3년이 걸렸고, 다음 버전에서 그 거리를 좁힙니다.</p>
   </div>
 </div></section>
 <hr class="divider">
@@ -245,15 +754,19 @@
   <div class="section-label">Stack</div>
   <h2 class="section-title">기술 스택</h2>
   <div class="tech-grid" style="margin-top:1.5rem;">
-    <div class="tech-item"><div class="tech-cat">Data Collection</div><ul class="tech-list"><li>Web Crawling</li><li>JSON 데이터 통합</li><li>경기 데이터 수집</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Preprocessing</div><ul class="tech-list"><li>결측값 처리</li><li>라벨 인코딩</li><li>상관관계 분석 (corr)</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Machine Learning</div><ul class="tech-list"><li>PCA (차원 축소)</li><li>Random Forest (변수 선택)</li><li>SVM (분류 모델)</li></ul></div>
-    <div class="tech-item"><div class="tech-cat">Visualization</div><ul class="tech-list"><li>matplotlib</li><li>Feature Importance Plot</li><li>결과 시각화</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Data Collection</div><ul class="tech-list"><li>Selenium (Chrome / Edge)</li><li>fbref.com 매치 로그</li><li>매치별 이벤트 페이지 진입</li><li>JSON 통합 + 라벨 변환</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Preprocessing</div><ul class="tech-list"><li>Custom KNN imputer</li><li>median / mode fallback</li><li>OLS 검증 (statsmodels)</li><li>Target weighted encoding</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Feature Engineering</div><ul class="tech-list"><li>Correlation matrix</li><li>RF feature_importances_</li><li>t-test (scipy.stats)</li><li>3-stage 통과 변수 추출</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Dimensionality</div><ul class="tech-list"><li>PCA (sklearn)</li><li>Custom Varimax (SVD 기반)</li><li>Loading &gt; 0.5 변수 추출</li><li>스크리 플롯</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Models</div><ul class="tech-list"><li>Logistic Regression</li><li>Random Forest</li><li>SVM (RBF) + GridSearchCV</li><li>LSTM (Keras, seq=5)</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Evaluation</div><ul class="tech-list"><li>5-fold cross_validate</li><li>accuracy / precision / recall / f1</li><li>Confusion Matrix</li><li>classification_report</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Visualization</div><ul class="tech-list"><li>matplotlib + seaborn</li><li>시즌/대회/팀/포지션 분포</li><li>time_bin (0&ndash;15&hellip;76&ndash;90)</li><li>Heatmap (corr / report)</li></ul></div>
+    <div class="tech-item"><div class="tech-cat">Retrospective Tools</div><ul class="tech-list"><li>sklearn Pipeline</li><li>TimeSeriesSplit</li><li>SelectFromModel + nested CV</li><li>fold-aware target encoder</li></ul></div>
   </div>
 </div></section>
 
 <footer><div class="footer-text">
-  Son Data &mdash; 손흥민 경기 데이터 분석 및 승리 확률 예측<br>
+  Son Data &mdash; 손흥민 경기 데이터 분석 및 승리 확률 예측 (회고판)<br>
   <a href="https://github.com/soccz/son_data" target="_blank" rel="noopener noreferrer">GitHub</a> &middot; <a href="/">Home</a>
 </div></footer>
 
