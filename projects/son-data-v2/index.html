@@ -228,14 +228,14 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
     <div class="stat-tile"><span class="stat-tile-num">14.7년</span><div class="stat-tile-label">2011-08 &mdash; 2026-05</div></div>
   </div>
 
-  <h3 style="font-size:0.95rem; margin: 1.5rem 0 0.6rem; font-weight:700;">클럽별 데이터 분포</h3>
+  <h3 class="h3-sub">클럽별 데이터 분포</h3>
   <div class="table-wrap"><table>
-    <thead><tr><th>클럽</th><th>리그</th><th>기간</th><th class="num" style="text-align:right;">경기 수</th></tr></thead>
+    <thead><tr><th>클럽</th><th>리그</th><th>기간</th><th class="num" class="ta-r">경기 수</th></tr></thead>
     <tbody>
-      <tr><td><strong>Hamburger SV</strong></td><td>Bundesliga</td><td class="num">2011-08 &ndash; 2013-05</td><td class="num" style="text-align:right;">60</td></tr>
-      <tr><td><strong>Bayer Leverkusen</strong></td><td>Bundesliga</td><td class="num">2013-08 &ndash; 2015-08</td><td class="num" style="text-align:right;">83</td></tr>
-      <tr><td><strong>Tottenham Hotspur</strong></td><td>EPL + UEFA + DomCup</td><td class="num">2015-09 &ndash; 2025-05</td><td class="num" style="text-align:right;">454</td></tr>
-      <tr><td><strong>LAFC</strong></td><td>MLS</td><td class="num">2025-08 &ndash; 2026-05 (진행)</td><td class="num" style="text-align:right;">30</td></tr>
+      <tr><td><strong>Hamburger SV</strong></td><td>Bundesliga</td><td class="num">2011-08 &ndash; 2013-05</td><td class="num" class="ta-r">60</td></tr>
+      <tr><td><strong>Bayer Leverkusen</strong></td><td>Bundesliga</td><td class="num">2013-08 &ndash; 2015-08</td><td class="num" class="ta-r">83</td></tr>
+      <tr><td><strong>Tottenham Hotspur</strong></td><td>EPL + UEFA + DomCup</td><td class="num">2015-09 &ndash; 2025-05</td><td class="num" class="ta-r">454</td></tr>
+      <tr><td><strong>LAFC</strong></td><td>MLS</td><td class="num">2025-08 &ndash; 2026-05 (진행)</td><td class="num" class="ta-r">30</td></tr>
     </tbody>
   </table></div>
 
@@ -322,26 +322,26 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
     </div>
 
     <div class="table-wrap"><table>
-      <thead><tr><th>버전</th><th>특징 (한 줄)</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th>상태</th></tr></thead>
+      <thead><tr><th>버전</th><th>특징 (한 줄)</th><th class="num" class="ta-r">Accuracy</th><th class="num" class="ta-r">F1 macro</th><th>상태</th></tr></thead>
       <tbody>
         <tr>
           <td><strong>v1</strong></td>
           <td>SVM + 누수 + 무작위 split</td>
-          <td class="num" style="text-align:right;">0.5159</td>
-          <td class="num neg" style="text-align:right;">0.2269</td>
+          <td class="num" class="ta-r">0.5159</td>
+          <td class="num neg" class="ta-r">0.2269</td>
           <td><span class="badge bad">사실상 baseline</span></td>
         </tr>
         <tr>
           <td><strong>v2 default</strong></td>
           <td>LightGBM (default) + 위생</td>
-          <td class="num" style="text-align:right;">0.4423</td>
-          <td class="num pos" style="text-align:right;">0.3452</td>
+          <td class="num" class="ta-r">0.4423</td>
+          <td class="num pos" class="ta-r">0.3452</td>
           <td><span class="badge good">진짜 분류 시작</span></td>
         </tr>
         <tr>
           <td><strong>v2 tuned</strong></td>
           <td>LightGBM + Optuna 30 trials</td>
-          <td class="num" style="text-align:right;">0.4827</td>
+          <td class="num" class="ta-r">0.4827</td>
           <td class="num pos" style="text-align:right; font-weight:700;">0.3775</td>
           <td><span class="badge good">+66.4% F1</span></td>
         </tr>
@@ -350,7 +350,7 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
 
     <p>표만 보면 "정확도는 떨어지고 F1만 올랐다"는 어색한 패턴입니다. 이걸 어떻게 해석해야 하는가가 이 보고서의 첫 큰 finding입니다.</p>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — F1 macro 진화</h3>
+    <h3 class="h3-sub">시각화 — F1 macro 진화</h3>
     <div class="bar-chart" style="margin: 1rem 0 1.5rem;">
       <div class="bar-row"><div class="bar-label">v1 (SVM, 누수, 무작위)</div><div class="bar-bg"><div class="bar-fill bad" style="width:60%;">0.227</div></div></div>
       <div class="bar-row"><div class="bar-label">majority baseline</div><div class="bar-bg"><div class="bar-fill low" style="width:60%;">~0.23</div></div></div>
@@ -359,7 +359,7 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
     </div>
     <p class="footnote">x축은 macro F1 (0~0.4 범위로 정규화). v1과 majority baseline의 막대 길이가 거의 같다는 사실이 단순 시각으로 드러납니다.</p>
 
-    <h3 style="font-size:1.05rem; margin: 2rem 0 0.6rem; font-weight:700;">v1의 예측 분포 — 모든 경기를 W로 예측</h3>
+    <h3 class="h3-major">v1의 예측 분포 — 모든 경기를 W로 예측</h3>
 
     <p>v1의 51.6% 정확도가 분류 능력이 아닐 수 있다는 의심에서, v1 모델이 실제로 어떤 클래스를 어떻게 예측했는지를 직접 확인했습니다. 테스트셋 126경기에 대한 confusion matrix — <strong>'0' 셀은 빈 데이터가 아니라 "v1이 그 클래스로 예측한 경기가 0개"라는 사실 자체</strong>입니다:</p>
 
@@ -422,20 +422,20 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
       <div class="qbox-text">"v2의 41개 피처는 venue / rolling / adaptation index / form 4 그룹으로 나뉜다. 각 그룹을 통째로 제거했을 때 F1 macro가 얼마나 떨어지는가? 학부 시절 강조했던 venue가 실제 성능 기여도에서도 1위인가?"</div>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — 피처 그룹별 F1 변화</h3>
+    <h3 class="h3-sub">결과 — 피처 그룹별 F1 변화</h3>
 
     <div class="table-wrap"><table>
-      <thead><tr><th>제거된 그룹</th><th class="num" style="text-align:right;">피처 수</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">Delta</th><th>per-feature</th></tr></thead>
+      <thead><tr><th>제거된 그룹</th><th class="num" class="ta-r">피처 수</th><th class="num" class="ta-r">F1 macro</th><th class="num" class="ta-r">Delta</th><th>per-feature</th></tr></thead>
       <tbody>
-        <tr style="background:var(--bg-secondary);"><td><strong>(전체 유지)</strong></td><td class="num" style="text-align:right;">41</td><td class="num" style="text-align:right; font-weight:700;">0.3775</td><td class="num" style="text-align:right;">—</td><td>—</td></tr>
-        <tr><td><strong>venue</strong> 제거</td><td class="num" style="text-align:right;">1</td><td class="num" style="text-align:right;">0.3248</td><td class="num neg" style="text-align:right;">-0.0527</td><td class="num neg">-0.053 / 피처</td></tr>
-        <tr><td><strong>rolling</strong> 제거</td><td class="num" style="text-align:right;">33</td><td class="num" style="text-align:right;">0.3100</td><td class="num neg" style="text-align:right;">-0.0675</td><td class="num">-0.002 / 피처</td></tr>
-        <tr><td><strong>adaptation</strong> 제거</td><td class="num" style="text-align:right;">4</td><td class="num" style="text-align:right;">0.3455</td><td class="num neg" style="text-align:right;">-0.0320</td><td class="num">-0.008 / 피처</td></tr>
-        <tr><td><strong>form</strong> 제거</td><td class="num" style="text-align:right;">3</td><td class="num" style="text-align:right;">0.3542</td><td class="num neg" style="text-align:right;">-0.0233</td><td class="num">-0.008 / 피처</td></tr>
+        <tr style="background:var(--bg-secondary);"><td><strong>(전체 유지)</strong></td><td class="num" class="ta-r">41</td><td class="num" style="text-align:right; font-weight:700;">0.3775</td><td class="num" class="ta-r">—</td><td>—</td></tr>
+        <tr><td><strong>venue</strong> 제거</td><td class="num" class="ta-r">1</td><td class="num" class="ta-r">0.3248</td><td class="num neg" class="ta-r">-0.0527</td><td class="num neg">-0.053 / 피처</td></tr>
+        <tr><td><strong>rolling</strong> 제거</td><td class="num" class="ta-r">33</td><td class="num" class="ta-r">0.3100</td><td class="num neg" class="ta-r">-0.0675</td><td class="num">-0.002 / 피처</td></tr>
+        <tr><td><strong>adaptation</strong> 제거</td><td class="num" class="ta-r">4</td><td class="num" class="ta-r">0.3455</td><td class="num neg" class="ta-r">-0.0320</td><td class="num">-0.008 / 피처</td></tr>
+        <tr><td><strong>form</strong> 제거</td><td class="num" class="ta-r">3</td><td class="num" class="ta-r">0.3542</td><td class="num neg" class="ta-r">-0.0233</td><td class="num">-0.008 / 피처</td></tr>
       </tbody>
     </table></div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — F1 변화량 (per-feature)</h3>
+    <h3 class="h3-sub">시각화 — F1 변화량 (per-feature)</h3>
     <div class="bar-chart" style="margin: 1rem 0 1.5rem;">
       <div class="bar-row"><div class="bar-label">venue (1 feature)</div><div class="bar-bg"><div class="bar-fill bad" style="width:100%;">-0.0527 / 1 = -0.053</div></div></div>
       <div class="bar-row"><div class="bar-label">adaptation (4 features)</div><div class="bar-bg"><div class="bar-fill mid" style="width:15%;">-0.008</div></div></div>
@@ -480,69 +480,69 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
       <div class="qbox-text">"v1을 한 줄씩 변형해서 어떤 변경이 collapse를 깨는지 확인한다. (1) class_weight='balanced' 추가, (2) RF top_k=6 selection 제거, (3) target encoding 제거, (4) scaler를 train fold에서만 fit, (5) 모든 fix 동시 적용. 어느 변경이 가장 큰 효과인가?"</div>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — v1을 한 줄씩 변형</h3>
+    <h3 class="h3-sub">결과 — v1을 한 줄씩 변형</h3>
 
     <div class="table-wrap"><table>
-      <thead><tr><th>변형</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">Pred W</th><th class="num" style="text-align:right;">Pred D</th><th class="num" style="text-align:right;">Pred L</th></tr></thead>
+      <thead><tr><th>변형</th><th class="num" class="ta-r">Accuracy</th><th class="num" class="ta-r">F1 macro</th><th class="num" class="ta-r">Pred W</th><th class="num" class="ta-r">Pred D</th><th class="num" class="ta-r">Pred L</th></tr></thead>
       <tbody>
-        <tr style="background:var(--bg-secondary);"><td><strong>v1 baseline (top_k=6)</strong></td><td class="num" style="text-align:right;">0.516</td><td class="num neg" style="text-align:right;">0.227</td><td class="num neg" style="text-align:right;">100%</td><td class="num" style="text-align:right;">0%</td><td class="num" style="text-align:right;">0%</td></tr>
-        <tr><td>v1 + scaler train fold만</td><td class="num" style="text-align:right;">0.516</td><td class="num neg" style="text-align:right;">0.227</td><td class="num neg" style="text-align:right;">100%</td><td class="num" style="text-align:right;">0%</td><td class="num" style="text-align:right;">0%</td></tr>
-        <tr><td>v1 &minus; target encoding</td><td class="num" style="text-align:right;">0.460</td><td class="num" style="text-align:right;">0.313</td><td class="num" style="text-align:right;">68%</td><td class="num" style="text-align:right;">2%</td><td class="num" style="text-align:right;">29%</td></tr>
-        <tr><td><strong>v1 &minus; top_k (11 piches 모두)</strong></td><td class="num" style="text-align:right;">0.571</td><td class="num pos" style="text-align:right;">0.401</td><td class="num" style="text-align:right;">62%</td><td class="num" style="text-align:right;">0%</td><td class="num" style="text-align:right;">38%</td></tr>
-        <tr><td><strong>v1 + class_weight='balanced'</strong></td><td class="num" style="text-align:right;">0.389</td><td class="num pos" style="text-align:right;">0.338</td><td class="num pos" style="text-align:right;">39%</td><td class="num pos" style="text-align:right;">19%</td><td class="num pos" style="text-align:right;">42%</td></tr>
-        <tr><td>v1 모든 fix (SVM 유지)</td><td class="num" style="text-align:right;">0.444</td><td class="num pos" style="text-align:right;">0.385</td><td class="num pos" style="text-align:right;">47%</td><td class="num pos" style="text-align:right;">19%</td><td class="num pos" style="text-align:right;">34%</td></tr>
+        <tr style="background:var(--bg-secondary);"><td><strong>v1 baseline (top_k=6)</strong></td><td class="num" class="ta-r">0.516</td><td class="num neg" class="ta-r">0.227</td><td class="num neg" class="ta-r">100%</td><td class="num" class="ta-r">0%</td><td class="num" class="ta-r">0%</td></tr>
+        <tr><td>v1 + scaler train fold만</td><td class="num" class="ta-r">0.516</td><td class="num neg" class="ta-r">0.227</td><td class="num neg" class="ta-r">100%</td><td class="num" class="ta-r">0%</td><td class="num" class="ta-r">0%</td></tr>
+        <tr><td>v1 &minus; target encoding</td><td class="num" class="ta-r">0.460</td><td class="num" class="ta-r">0.313</td><td class="num" class="ta-r">68%</td><td class="num" class="ta-r">2%</td><td class="num" class="ta-r">29%</td></tr>
+        <tr><td><strong>v1 &minus; top_k (11 piches 모두)</strong></td><td class="num" class="ta-r">0.571</td><td class="num pos" class="ta-r">0.401</td><td class="num" class="ta-r">62%</td><td class="num" class="ta-r">0%</td><td class="num" class="ta-r">38%</td></tr>
+        <tr><td><strong>v1 + class_weight='balanced'</strong></td><td class="num" class="ta-r">0.389</td><td class="num pos" class="ta-r">0.338</td><td class="num pos" class="ta-r">39%</td><td class="num pos" class="ta-r">19%</td><td class="num pos" class="ta-r">42%</td></tr>
+        <tr><td>v1 모든 fix (SVM 유지)</td><td class="num" class="ta-r">0.444</td><td class="num pos" class="ta-r">0.385</td><td class="num pos" class="ta-r">47%</td><td class="num pos" class="ta-r">19%</td><td class="num pos" class="ta-r">34%</td></tr>
       </tbody>
     </table></div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — 변형별 W/D/L 예측 분포 (stacked)</h3>
-    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">각 막대는 100% 폭을 W (회색), D (호박), L (빨강) 비율로 분할. v1 baseline과 +scaler는 전부 W. class_weight 추가가 가장 큰 분포 변화를 만듦.</p>
+    <h3 class="h3-sub">시각화 — 변형별 W/D/L 예측 분포 (stacked)</h3>
+    <p class="note-light">각 막대는 100% 폭을 W (회색), D (호박), L (빨강) 비율로 분할. v1 baseline과 +scaler는 전부 W. class_weight 추가가 가장 큰 분포 변화를 만듦.</p>
     <div style="margin: 1rem 0 1.5rem;">
-      <div style="display:flex; align-items:center; margin-bottom:0.4rem; gap:0.7rem;">
-        <div style="width:230px; font-size:0.78rem; text-align:right; font-family:monospace; color:var(--text-secondary);">v1 baseline (top_k=6)</div>
+      <div class="bar-row-flex">
+        <div class="label-mono-r">v1 baseline (top_k=6)</div>
         <div style="flex:1; max-width:580px; height:22px; border-radius:4px; overflow:hidden; display:flex; font-size:0.66rem; font-weight:700; color:#fff;">
           <div style="width:100%; background:#a8a29e; padding-left:6px; display:flex; align-items:center;">W 100%</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; margin-bottom:0.4rem; gap:0.7rem;">
-        <div style="width:230px; font-size:0.78rem; text-align:right; font-family:monospace; color:var(--text-secondary);">+ scaler in fold</div>
+      <div class="bar-row-flex">
+        <div class="label-mono-r">+ scaler in fold</div>
         <div style="flex:1; max-width:580px; height:22px; border-radius:4px; overflow:hidden; display:flex; font-size:0.66rem; font-weight:700; color:#fff;">
           <div style="width:100%; background:#a8a29e; padding-left:6px; display:flex; align-items:center;">W 100% (변화 없음)</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; margin-bottom:0.4rem; gap:0.7rem;">
-        <div style="width:230px; font-size:0.78rem; text-align:right; font-family:monospace; color:var(--text-secondary);">&minus; target encoding</div>
+      <div class="bar-row-flex">
+        <div class="label-mono-r">&minus; target encoding</div>
         <div style="flex:1; max-width:580px; height:22px; border-radius:4px; overflow:hidden; display:flex; font-size:0.66rem; font-weight:700; color:#fff;">
           <div style="width:68%; background:#a8a29e; padding-left:6px; display:flex; align-items:center;">W 68%</div>
           <div style="width:2%; background:#b45309; display:flex; align-items:center;"></div>
           <div style="width:30%; background:#b91c1c; padding-left:6px; display:flex; align-items:center;">L 29%</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; margin-bottom:0.4rem; gap:0.7rem;">
-        <div style="width:230px; font-size:0.78rem; text-align:right; font-family:monospace; color:var(--text-secondary);">&minus; top_k (use all 11)</div>
+      <div class="bar-row-flex">
+        <div class="label-mono-r">&minus; top_k (use all 11)</div>
         <div style="flex:1; max-width:580px; height:22px; border-radius:4px; overflow:hidden; display:flex; font-size:0.66rem; font-weight:700; color:#fff;">
           <div style="width:62%; background:#a8a29e; padding-left:6px; display:flex; align-items:center;">W 62%</div>
           <div style="width:0%; background:#b45309;"></div>
           <div style="width:38%; background:#b91c1c; padding-left:6px; display:flex; align-items:center;">L 38%</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; margin-bottom:0.4rem; gap:0.7rem;">
-        <div style="width:230px; font-size:0.78rem; text-align:right; font-family:monospace; color:var(--text-secondary);">+ class_weight balanced</div>
+      <div class="bar-row-flex">
+        <div class="label-mono-r">+ class_weight balanced</div>
         <div style="flex:1; max-width:580px; height:22px; border-radius:4px; overflow:hidden; display:flex; font-size:0.66rem; font-weight:700; color:#fff;">
           <div style="width:39%; background:#78716c; padding-left:6px; display:flex; align-items:center;">W 39%</div>
           <div style="width:19%; background:#b45309; padding-left:4px; display:flex; align-items:center;">D 19%</div>
           <div style="width:42%; background:#b91c1c; padding-left:6px; display:flex; align-items:center;">L 42%</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; margin-bottom:0.4rem; gap:0.7rem;">
-        <div style="width:230px; font-size:0.78rem; text-align:right; font-family:monospace; color:var(--text-secondary);">v1 full fix (still SVM)</div>
+      <div class="bar-row-flex">
+        <div class="label-mono-r">v1 full fix (still SVM)</div>
         <div style="flex:1; max-width:580px; height:22px; border-radius:4px; overflow:hidden; display:flex; font-size:0.66rem; font-weight:700; color:#fff;">
           <div style="width:47%; background:#15803d; padding-left:6px; display:flex; align-items:center;">W 47%</div>
           <div style="width:19%; background:#b45309; padding-left:4px; display:flex; align-items:center;">D 19%</div>
           <div style="width:34%; background:#b91c1c; padding-left:6px; display:flex; align-items:center;">L 34%</div>
         </div>
       </div>
-      <div style="display:flex; align-items:center; margin-bottom:0.4rem; gap:0.7rem;">
-        <div style="width:230px; font-size:0.78rem; text-align:right; font-family:monospace; color:var(--text-secondary);">실제 분포 (truth)</div>
+      <div class="bar-row-flex">
+        <div class="label-mono-r">실제 분포 (truth)</div>
         <div style="flex:1; max-width:580px; height:22px; border-radius:4px; overflow:hidden; display:flex; font-size:0.66rem; font-weight:700; color:#fff; border:1px dashed var(--accent);">
           <div style="width:52%; background:#a8a29e; padding-left:6px; display:flex; align-items:center;">W 52%</div>
           <div style="width:19.5%; background:#b45309; padding-left:4px; display:flex; align-items:center;">D 19.5%</div>
@@ -614,14 +614,14 @@ driver.execute_script(<span class="cs">"Object.defineProperty(navigator, 'webdri
       <div class="qbox-text">"손흥민의 4번 클럽 전환에서 폼 회복까지 얼마나 걸렸는가? 같은 리그 내 이적(Hamburg→Leverkusen)과 다른 리그 이적(EPL→MLS)에서 패턴이 다른가?"</div>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">측정 정의</h3>
+    <h3 class="h3-sub">측정 정의</h3>
     <ul style="margin: 0 0 1.5rem 1.5rem; font-size: 0.9rem; line-height: 1.85;">
       <li><strong>첫 10경기</strong>: 각 클럽에서 손흥민이 뛴 처음 10경기. 적응 윈도우.</li>
       <li><strong>baseline 20경기</strong>: 첫 10경기 직후의 다음 20경기. 안정화 후 평균.</li>
       <li><strong>회복 시점</strong>: <code>form5_meanres</code>(직전 5경기 평균 결과)가 클럽의 baseline 평균에 처음 도달한 경기 인덱스.</li>
     </ul>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — 4 클럽 첫 30경기의 폼 곡선</h3>
+    <h3 class="h3-sub">시각화 — 4 클럽 첫 30경기의 폼 곡선</h3>
     <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.8;">각 클럽 데뷔 후 첫 30경기의 <code>form5_meanres</code>(직전 5경기 평균 결과). y=0이 무승부, +1이 5경기 모두 승, -1이 5경기 모두 패. LAFC가 30경기뿐이라 자연스러운 cutoff.</p>
 
     <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:1.2rem 1rem; margin:1.2rem 0; overflow-x:auto;">
@@ -679,18 +679,18 @@ Form5 over first 30 matches</title></path>
       <li><strong>LAFC (빨강)</strong>: match #10에서 form5=+1.0 도달. 데뷔 직후 매우 강한 시작 후 후반 28-30경기에서 약간 하락.</li>
     </ul>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 표 (frequentist 측정)</h3>
+    <h3 class="h3-sub">결과 표 (frequentist 측정)</h3>
     <div class="table-wrap"><table>
       <thead>
         <tr>
-          <th>전환</th><th class="num" style="text-align:right;">첫 10 승률</th><th class="num" style="text-align:right;">baseline 승률</th><th class="num" style="text-align:right;">첫 10 골/경기</th><th class="num" style="text-align:right;">baseline 골/경기</th><th>회복 시점</th>
+          <th>전환</th><th class="num" class="ta-r">첫 10 승률</th><th class="num" class="ta-r">baseline 승률</th><th class="num" class="ta-r">첫 10 골/경기</th><th class="num" class="ta-r">baseline 골/경기</th><th>회복 시점</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td><strong>Hamburg</strong> <span class="badge">데뷔</span></td><td class="num" style="text-align:right;">0.300</td><td class="num" style="text-align:right;">0.250</td><td class="num" style="text-align:right;">0.300</td><td class="num" style="text-align:right;">0.150</td><td class="num">match #1</td></tr>
-        <tr><td><strong>Leverkusen</strong> <span class="badge">Bundesliga &rarr; Bundesliga</span></td><td class="num pos" style="text-align:right;">0.700</td><td class="num" style="text-align:right;">0.400</td><td class="num" style="text-align:right;">0.100</td><td class="num pos" style="text-align:right;">0.350</td><td class="num">match #2</td></tr>
-        <tr><td><strong>Tottenham</strong> <span class="badge">Bundesliga &rarr; EPL</span></td><td class="num pos" style="text-align:right;">0.700</td><td class="num" style="text-align:right;">0.600</td><td class="num pos" style="text-align:right;">0.300</td><td class="num" style="text-align:right;">0.100</td><td class="num">match #3</td></tr>
-        <tr><td><strong>LAFC</strong> <span class="badge warn">EPL &rarr; MLS</span></td><td class="num" style="text-align:right;">0.600</td><td class="num" style="text-align:right;">0.600</td><td class="num pos" style="text-align:right; font-weight:700;">0.900</td><td class="num" style="text-align:right;">0.250</td><td class="num amber">match #8</td></tr>
+        <tr><td><strong>Hamburg</strong> <span class="badge">데뷔</span></td><td class="num" class="ta-r">0.300</td><td class="num" class="ta-r">0.250</td><td class="num" class="ta-r">0.300</td><td class="num" class="ta-r">0.150</td><td class="num">match #1</td></tr>
+        <tr><td><strong>Leverkusen</strong> <span class="badge">Bundesliga &rarr; Bundesliga</span></td><td class="num pos" class="ta-r">0.700</td><td class="num" class="ta-r">0.400</td><td class="num" class="ta-r">0.100</td><td class="num pos" class="ta-r">0.350</td><td class="num">match #2</td></tr>
+        <tr><td><strong>Tottenham</strong> <span class="badge">Bundesliga &rarr; EPL</span></td><td class="num pos" class="ta-r">0.700</td><td class="num" class="ta-r">0.600</td><td class="num pos" class="ta-r">0.300</td><td class="num" class="ta-r">0.100</td><td class="num">match #3</td></tr>
+        <tr><td><strong>LAFC</strong> <span class="badge warn">EPL &rarr; MLS</span></td><td class="num" class="ta-r">0.600</td><td class="num" class="ta-r">0.600</td><td class="num pos" style="text-align:right; font-weight:700;">0.900</td><td class="num" class="ta-r">0.250</td><td class="num amber">match #8</td></tr>
       </tbody>
     </table></div>
 
@@ -727,21 +727,21 @@ Form5 over first 30 matches</title></path>
       <div class="qbox-text">"Bundesliga 데이터로만 학습한 v2 모델이 EPL/MLS에서도 잘 작동하는가? 반대 방향은? 모델의 학습된 패턴이 리그 invariant인지 specific인지를 6×6 cross-league matrix로 측정한다."</div>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — Cross-league F1 매트릭스</h3>
+    <h3 class="h3-sub">결과 — Cross-league F1 매트릭스</h3>
     <div class="table-wrap"><table>
-      <thead><tr><th>학습 (Source)</th><th>평가 (Target)</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">target baseline</th><th>note</th></tr></thead>
+      <thead><tr><th>학습 (Source)</th><th>평가 (Target)</th><th class="num" class="ta-r">Accuracy</th><th class="num" class="ta-r">F1 macro</th><th class="num" class="ta-r">target baseline</th><th>note</th></tr></thead>
       <tbody>
-        <tr><td><strong>Bundesliga</strong></td><td>Bundesliga (in-domain)</td><td class="num" style="text-align:right;">0.360</td><td class="num" style="text-align:right;">0.228</td><td class="num" style="text-align:right;">0.520</td><td>n_test=25</td></tr>
-        <tr><td><strong>Bundesliga</strong></td><td>EPL</td><td class="num" style="text-align:right;">0.420</td><td class="num pos" style="text-align:right;">0.337</td><td class="num" style="text-align:right;">0.535</td><td>n_test=333</td></tr>
-        <tr><td><strong>Bundesliga</strong></td><td>MLS</td><td class="num" style="text-align:right;">0.591</td><td class="num" style="text-align:right;">0.255</td><td class="num" style="text-align:right;">0.591</td><td>n_test=22</td></tr>
-        <tr><td><strong>EPL</strong></td><td>Bundesliga</td><td class="num" style="text-align:right;">0.364</td><td class="num" style="text-align:right;">0.264</td><td class="num" style="text-align:right;">0.446</td><td>n_test=121</td></tr>
-        <tr><td><strong>EPL</strong></td><td>EPL (in-domain)</td><td class="num" style="text-align:right;">0.388</td><td class="num" style="text-align:right;">0.282</td><td class="num" style="text-align:right;">0.448</td><td>n_test=67</td></tr>
-        <tr><td><strong>EPL</strong></td><td>MLS</td><td class="num" style="text-align:right;">0.364</td><td class="num" style="text-align:right;">0.278</td><td class="num" style="text-align:right;">0.591</td><td>n_test=22</td></tr>
+        <tr><td><strong>Bundesliga</strong></td><td>Bundesliga (in-domain)</td><td class="num" class="ta-r">0.360</td><td class="num" class="ta-r">0.228</td><td class="num" class="ta-r">0.520</td><td>n_test=25</td></tr>
+        <tr><td><strong>Bundesliga</strong></td><td>EPL</td><td class="num" class="ta-r">0.420</td><td class="num pos" class="ta-r">0.337</td><td class="num" class="ta-r">0.535</td><td>n_test=333</td></tr>
+        <tr><td><strong>Bundesliga</strong></td><td>MLS</td><td class="num" class="ta-r">0.591</td><td class="num" class="ta-r">0.255</td><td class="num" class="ta-r">0.591</td><td>n_test=22</td></tr>
+        <tr><td><strong>EPL</strong></td><td>Bundesliga</td><td class="num" class="ta-r">0.364</td><td class="num" class="ta-r">0.264</td><td class="num" class="ta-r">0.446</td><td>n_test=121</td></tr>
+        <tr><td><strong>EPL</strong></td><td>EPL (in-domain)</td><td class="num" class="ta-r">0.388</td><td class="num" class="ta-r">0.282</td><td class="num" class="ta-r">0.448</td><td>n_test=67</td></tr>
+        <tr><td><strong>EPL</strong></td><td>MLS</td><td class="num" class="ta-r">0.364</td><td class="num" class="ta-r">0.278</td><td class="num" class="ta-r">0.591</td><td>n_test=22</td></tr>
       </tbody>
     </table></div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — Cross-league F1 매트릭스</h3>
-    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">행=학습 source, 열=평가 target. 셀의 색이 진할수록 F1이 낮음(나쁨). 대각선이 in-domain. 모든 cross-league(off-diagonal)가 어둡습니다.</p>
+    <h3 class="h3-sub">시각화 — Cross-league F1 매트릭스</h3>
+    <p class="note-light">행=학습 source, 열=평가 target. 셀의 색이 진할수록 F1이 낮음(나쁨). 대각선이 in-domain. 모든 cross-league(off-diagonal)가 어둡습니다.</p>
 
     <div style="margin: 1rem 0 1.5rem; display:grid; grid-template-columns: 110px repeat(3, 1fr); gap:2px; max-width: 580px;">
       <div style="background:var(--bg-secondary); padding:0.6rem; text-align:center; font-size:0.7rem; color:var(--text-muted); font-weight:700;"></div>
@@ -804,7 +804,7 @@ Form5 over first 30 matches</title></path>
       <div class="qbox-text">"opponent strength(상대팀의 historical 승률)을 통제하고 OLS를 다시 추정했을 때, venue 회귀 계수는 변하는가? 만약 거의 변하지 않으면 venue effect는 confound가 아닌 진짜 home advantage."</div>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">측정 — opponent strength 정의</h3>
+    <h3 class="h3-sub">측정 — opponent strength 정의</h3>
     <p>각 opponent에 대해 손흥민의 누적 winrate를 그 시점까지의 만남 기록으로 계산합니다. 미래 정보가 들어가지 않도록 <code>cumsum().shift(1) / cumcount()</code> 패턴.</p>
 
     <div class="code-block"><code>opp_cumsum = df.groupby(<span class="cs">"opponent"</span>)[<span class="cs">"result_label"</span>].cumsum().shift(<span class="cn">1</span>).fillna(<span class="cn">0</span>)
@@ -816,12 +816,12 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
     df[<span class="cs">"opponent_winrate_so_far"</span>] - df[<span class="cs">"overall_winrate_so_far"</span>]
 )</code></div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — OLS venue effect, 통제 전후</h3>
+    <h3 class="h3-sub">결과 — OLS venue effect, 통제 전후</h3>
     <div class="table-wrap"><table>
-      <thead><tr><th>모델</th><th class="num" style="text-align:right;">venue coef</th><th class="num" style="text-align:right;">venue p-value</th><th class="num" style="text-align:right;">opp_rel coef</th><th class="num" style="text-align:right;">overall_wr coef</th><th class="num" style="text-align:right;">R²</th></tr></thead>
+      <thead><tr><th>모델</th><th class="num" class="ta-r">venue coef</th><th class="num" class="ta-r">venue p-value</th><th class="num" class="ta-r">opp_rel coef</th><th class="num" class="ta-r">overall_wr coef</th><th class="num" class="ta-r">R²</th></tr></thead>
       <tbody>
-        <tr><td>OLS uncontrolled (venue만)</td><td class="num" style="text-align:right;">-0.2873</td><td class="num pos" style="text-align:right;">2.18e-05</td><td class="num" style="text-align:right;">—</td><td class="num" style="text-align:right;">—</td><td class="num" style="text-align:right;">0.0285</td></tr>
-        <tr><td>OLS + opp strength 통제</td><td class="num" style="text-align:right; font-weight:700;">-0.2879</td><td class="num pos" style="text-align:right; font-weight:700;">2.10e-05</td><td class="num" style="text-align:right;">+0.0233</td><td class="num" style="text-align:right;">+0.3639</td><td class="num" style="text-align:right;">0.0318</td></tr>
+        <tr><td>OLS uncontrolled (venue만)</td><td class="num" class="ta-r">-0.2873</td><td class="num pos" class="ta-r">2.18e-05</td><td class="num" class="ta-r">—</td><td class="num" class="ta-r">—</td><td class="num" class="ta-r">0.0285</td></tr>
+        <tr><td>OLS + opp strength 통제</td><td class="num" style="text-align:right; font-weight:700;">-0.2879</td><td class="num pos" style="text-align:right; font-weight:700;">2.10e-05</td><td class="num" class="ta-r">+0.0233</td><td class="num" class="ta-r">+0.3639</td><td class="num" class="ta-r">0.0318</td></tr>
       </tbody>
     </table></div>
 
@@ -833,8 +833,8 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       <li>overall winrate coef: +0.3639 (p=0.19, 유의 살짝 못 미침)</li>
     </ul>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">전체 SHAP top 15 — v2 모델이 무엇을 보고 있는가</h3>
-    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">Tuned LightGBM의 마지막 fold 테스트셋에서 측정한 SHAP 절대값 평균. 상위 15개 피처를 표시.</p>
+    <h3 class="h3-sub">전체 SHAP top 15 — v2 모델이 무엇을 보고 있는가</h3>
+    <p class="note-light">Tuned LightGBM의 마지막 fold 테스트셋에서 측정한 SHAP 절대값 평균. 상위 15개 피처를 표시.</p>
     <div class="bar-chart" style="margin: 1rem 0 1.5rem;">
       <div class="bar-row"><div class="bar-label">venue_int</div><div class="bar-bg"><div class="bar-fill high" style="width:100%;">0.362</div></div></div>
       <div class="bar-row"><div class="bar-label">roll3_minutes</div><div class="bar-bg"><div class="bar-fill high" style="width:49%;">0.177</div></div></div>
@@ -854,7 +854,7 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
     </div>
     <p class="footnote">venue 1위(0.362), 그 아래 폼/적응 인덱스 피처들이 차례로. v1의 venue 직관 + v2가 새로 만든 적응 피처(league_match_idx, club_match_idx)가 SHAP 상위에 모두 자리.</p>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">SHAP — opp strength 추가 후 venue 중요도 변화</h3>
+    <h3 class="h3-sub">SHAP — opp strength 추가 후 venue 중요도 변화</h3>
     <div class="bar-chart">
       <div class="bar-row"><div class="bar-label">venue (base v2)</div><div class="bar-bg"><div class="bar-fill high" style="width:100%;">0.357</div></div></div>
       <div class="bar-row"><div class="bar-label">venue (+opp 추가)</div><div class="bar-bg"><div class="bar-fill high" style="width:97%;">0.347</div></div></div>
@@ -890,7 +890,7 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       <div class="qbox-text">"Part 7에서 본 'LAFC 8경기 vs 다른 클럽 1-3경기' 회복 시간 차이가 통계적으로 유의한가? 표본 크기 차이로 인한 단순 노이즈일 가능성은? 베이지안 95% HDI로 답한다."</div>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">모델 구조</h3>
+    <h3 class="h3-sub">모델 구조</h3>
     <div class="code-block"><code><span class="cv"># y_i = 1 if Win else 0</span>
 <span class="cv"># logit(p_i) = a_club[c] + adapt_effect_c(match_in_club_i) + b_venue * venue_i</span>
 <span class="cv"># adapt_effect_c(m) = -b_adapt[c] * exp(-m / tau[c])</span>
@@ -906,21 +906,21 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
     pm.Bernoulli(<span class="cs">"y"</span>, p=pm.math.sigmoid(logit), observed=is_win)
     idata = pm.sample(<span class="cn">1000</span>, tune=<span class="cn">1000</span>, chains=<span class="cn">2</span>)</code></div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — 클럽별 posterior</h3>
+    <h3 class="h3-sub">결과 — 클럽별 posterior</h3>
     <div class="table-wrap"><table>
-      <thead><tr><th>클럽</th><th class="num" style="text-align:right;">a (baseline) mean</th><th>a 95% HDI</th><th class="num" style="text-align:right;">tau mean (matches)</th><th>tau 95% HDI</th></tr></thead>
+      <thead><tr><th>클럽</th><th class="num" class="ta-r">a (baseline) mean</th><th>a 95% HDI</th><th class="num" class="ta-r">tau mean (matches)</th><th>tau 95% HDI</th></tr></thead>
       <tbody>
-        <tr><td><strong>Hamburger SV</strong></td><td class="num" style="text-align:right;">-0.133</td><td class="num">[-0.747, +0.448]</td><td class="num" style="text-align:right;">10.91</td><td class="num">[0.40, 32.94]</td></tr>
-        <tr><td><strong>Leverkusen</strong></td><td class="num pos" style="text-align:right;">+0.479</td><td class="num">[+0.015, +0.908]</td><td class="num" style="text-align:right;">11.48</td><td class="num">[0.28, 33.96]</td></tr>
-        <tr><td><strong>Tottenham</strong></td><td class="num pos" style="text-align:right;">+0.543</td><td class="num">[+0.290, +0.753]</td><td class="num" style="text-align:right;">10.22</td><td class="num">[0.18, 28.83]</td></tr>
-        <tr><td><strong>LAFC</strong></td><td class="num pos" style="text-align:right;">+0.851</td><td class="num">[+0.101, +1.535]</td><td class="num" style="text-align:right;">9.35</td><td class="num">[0.25, 28.33]</td></tr>
+        <tr><td><strong>Hamburger SV</strong></td><td class="num" class="ta-r">-0.133</td><td class="num">[-0.747, +0.448]</td><td class="num" class="ta-r">10.91</td><td class="num">[0.40, 32.94]</td></tr>
+        <tr><td><strong>Leverkusen</strong></td><td class="num pos" class="ta-r">+0.479</td><td class="num">[+0.015, +0.908]</td><td class="num" class="ta-r">11.48</td><td class="num">[0.28, 33.96]</td></tr>
+        <tr><td><strong>Tottenham</strong></td><td class="num pos" class="ta-r">+0.543</td><td class="num">[+0.290, +0.753]</td><td class="num" class="ta-r">10.22</td><td class="num">[0.18, 28.83]</td></tr>
+        <tr><td><strong>LAFC</strong></td><td class="num pos" class="ta-r">+0.851</td><td class="num">[+0.101, +1.535]</td><td class="num" class="ta-r">9.35</td><td class="num">[0.25, 28.33]</td></tr>
       </tbody>
     </table></div>
 
     <p style="margin-top:1.2rem; font-size:0.9rem;"><strong>b_venue posterior:</strong> mean -0.759, 95% HDI [-1.053, -0.472]. 0에서 멀리 떨어져 강한 인과 효과 재확인.</p>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — 클럽별 tau (적응 시간 상수) 95% HDI</h3>
-    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">각 막대는 95% HDI 범위(점=평균). 이 막대들이 서로 거의 완전히 겹치면, "클럽마다 적응 시간이 다르다"고 통계적으로 단정 못 합니다.</p>
+    <h3 class="h3-sub">시각화 — 클럽별 tau (적응 시간 상수) 95% HDI</h3>
+    <p class="note-light">각 막대는 95% HDI 범위(점=평균). 이 막대들이 서로 거의 완전히 겹치면, "클럽마다 적응 시간이 다르다"고 통계적으로 단정 못 합니다.</p>
     <div style="margin: 1rem 0 1.5rem; max-width: 720px;">
       <div style="position:relative; height:220px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.6rem;">
         <!-- x-axis grid -->
@@ -967,7 +967,7 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       <p class="footnote" style="margin-top:0.6rem;">가로 막대 = 95% HDI, 점 = posterior mean. 4 클럽 모두 HDI가 [0.2, 33] 영역에서 거의 동일하게 펼쳐짐 → tau 차이는 통계적으로 구분 안 됨. Part 7의 frequentist 회복시간 차이(8 vs 1-3경기)는 점추정으로는 옳지만 신뢰구간 영역에서는 동등.</p>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — 클럽별 a (baseline) 95% HDI</h3>
+    <h3 class="h3-sub">시각화 — 클럽별 a (baseline) 95% HDI</h3>
     <div style="margin: 1rem 0 1.5rem; max-width: 720px;">
       <div style="position:relative; height:200px; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:0.4rem 0.6rem;">
         <div style="position:absolute; left:140px; right:30px; top:24px; bottom:34px;">
@@ -1008,7 +1008,7 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       <p class="footnote" style="margin-top:0.6rem;">a_club은 tau와 달리 클럽마다 의미 있게 다름. Hamburg는 0 양쪽에 걸친 약체 구간, Tottenham/Leverkusen은 양수 영역. LAFC는 평균이 가장 높지만 HDI 폭 넓어 30경기 표본의 한계 그대로 노출.</p>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">해석 — 클럽별 baseline은 다르고, 적응 시간은 같다</h3>
+    <h3 class="h3-sub">해석 — 클럽별 baseline은 다르고, 적응 시간은 같다</h3>
 
     <div class="step-block">
       <div class="step-num-circle">1</div>
@@ -1060,19 +1060,19 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       <div class="qbox-text">"v2 피처가 W/D/L 외의 더 정교한 target — 손흥민 본인의 골 여부, 골+어시 여부, 팀 2골 이상 여부 — 에서도 작동하는가? AUC와 F1이 결과 예측 수준만큼 나오는가?"</div>
     </div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">결과 — target별 성능</h3>
+    <h3 class="h3-sub">결과 — target별 성능</h3>
     <div class="table-wrap"><table>
-      <thead><tr><th>Target</th><th class="num" style="text-align:right;">Base rate</th><th class="num" style="text-align:right;">Accuracy</th><th class="num" style="text-align:right;">F1 macro</th><th class="num" style="text-align:right;">AUC</th><th>해석</th></tr></thead>
+      <thead><tr><th>Target</th><th class="num" class="ta-r">Base rate</th><th class="num" class="ta-r">Accuracy</th><th class="num" class="ta-r">F1 macro</th><th class="num" class="ta-r">AUC</th><th>해석</th></tr></thead>
       <tbody>
-        <tr><td><strong>W/D/L (기존 baseline)</strong></td><td class="num" style="text-align:right;">0.520</td><td class="num" style="text-align:right;">0.483</td><td class="num pos" style="text-align:right;">0.378</td><td class="num" style="text-align:right;">—</td><td>의미 있는 분류</td></tr>
-        <tr><td><strong>손흥민 골 여부</strong></td><td class="num" style="text-align:right;">0.284</td><td class="num" style="text-align:right;">0.614</td><td class="num" style="text-align:right;">0.497</td><td class="num neg" style="text-align:right;">0.479</td><td>AUC 0.5 = random</td></tr>
-        <tr><td><strong>손흥민 골 또는 어시</strong></td><td class="num" style="text-align:right;">0.374</td><td class="num" style="text-align:right;">0.539</td><td class="num" style="text-align:right;">0.476</td><td class="num neg" style="text-align:right;">0.459</td><td>AUC 0.5 = random</td></tr>
-        <tr><td><strong>팀 2골 이상</strong></td><td class="num" style="text-align:right;">0.522</td><td class="num" style="text-align:right;">0.523</td><td class="num" style="text-align:right;">0.514</td><td class="num neg" style="text-align:right;">0.517</td><td>AUC 0.5 = random</td></tr>
+        <tr><td><strong>W/D/L (기존 baseline)</strong></td><td class="num" class="ta-r">0.520</td><td class="num" class="ta-r">0.483</td><td class="num pos" class="ta-r">0.378</td><td class="num" class="ta-r">—</td><td>의미 있는 분류</td></tr>
+        <tr><td><strong>손흥민 골 여부</strong></td><td class="num" class="ta-r">0.284</td><td class="num" class="ta-r">0.614</td><td class="num" class="ta-r">0.497</td><td class="num neg" class="ta-r">0.479</td><td>AUC 0.5 = random</td></tr>
+        <tr><td><strong>손흥민 골 또는 어시</strong></td><td class="num" class="ta-r">0.374</td><td class="num" class="ta-r">0.539</td><td class="num" class="ta-r">0.476</td><td class="num neg" class="ta-r">0.459</td><td>AUC 0.5 = random</td></tr>
+        <tr><td><strong>팀 2골 이상</strong></td><td class="num" class="ta-r">0.522</td><td class="num" class="ta-r">0.523</td><td class="num" class="ta-r">0.514</td><td class="num neg" class="ta-r">0.517</td><td>AUC 0.5 = random</td></tr>
       </tbody>
     </table></div>
 
-    <h3 style="font-size:1rem; margin: 1.5rem 0 0.6rem; font-weight:700;">시각화 — AUC 비교 (random baseline 0.5 기준)</h3>
-    <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.8;">x축은 0.0~1.0 AUC. 점선이 random baseline 0.5. 모든 막대가 0.5 근처에서 멈춤 → binary 분류 무력.</p>
+    <h3 class="h3-sub">시각화 — AUC 비교 (random baseline 0.5 기준)</h3>
+    <p class="note-light">x축은 0.0~1.0 AUC. 점선이 random baseline 0.5. 모든 막대가 0.5 근처에서 멈춤 → binary 분류 무력.</p>
 
     <div style="margin: 1rem 0 1.5rem; max-width: 720px;">
       <div style="position:relative; padding-left:200px; padding-right:30px;">
@@ -1304,7 +1304,7 @@ df[<span class="cs">"opponent_relative_strength"</span>] = (
       </tbody>
     </table></div>
 
-    <h3 style="font-size:1.05rem; margin: 2rem 0 0.6rem; font-weight:700;">이 보고서가 회고 페이지에 기여하는 정정 사항</h3>
+    <h3 class="h3-major">이 보고서가 회고 페이지에 기여하는 정정 사항</h3>
 
     <div class="card-grid" style="margin: 1rem 0 1.5rem;">
       <div class="card">
