@@ -149,7 +149,7 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 <div class="page-hero">
   <span class="doc-tag">Issuer Coverage</span>
   <h1>현대차</h1>
-  <p class="subtitle">워치리스트 추적 종목 · 자동차 — 사업보고서 발행 예정</p>
+  <p class="subtitle">분기·연간 종합 진단 — 누적 1건</p>
   
 <div class="foreign-holding-chart">
   <div class="fhc-header">
@@ -169,18 +169,52 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 </div>
 </div>
 
-<div class="empty-coverage">
-  <p class="empty-coverage-title">아직 사업보고서 미발행</p>
-  <p class="empty-coverage-meta">
-    워치리스트 24종목 정기보고서 자동 발행 cron 진행 중. 발행 즉시 본 페이지에 노출.
-    상단 외인 보유 비중 추이는 KRX 일별 데이터 기반 실시간 갱신.
-  </p>
-  <a href="../index.html" class="empty-coverage-back">← 24종목 마스터 인덱스</a>
+<div class="list-controls">
+  <span class="list-controls-label">정렬</span>
+  <div class="sort-toggle" role="tablist">
+    <button class="sort-btn active" data-sort="newest" onclick="window.kerSort('newest')">최신순</button>
+    <button class="sort-btn" data-sort="oldest" onclick="window.kerSort('oldest')">과거순</button>
+  </div>
+  <span class="list-controls-count">1건</span>
 </div>
+
+<div class="report-grid" id="reportGrid">
+  
+<a href="2025-annual/index.html"
+   class="report-card-link"
+   data-period="2025-annual"
+   data-written="2026-05-13"
+   data-order="0">
+  <div class="report-card">
+    <span class="badge">2025-annual</span>
+    <h3>사업보고서 (2025)</h3>
+    <p class="desc">현대자동차는 1967년 설립, 2025년 연결기준 매출 186.3조원·영업이익 11.5조원의 한국 최대 자동차 제조사다. 전 세계 약 414만 대를 판매하며, 자동차 생산·판매(차량부문), 할부금융·신용카드(금융부문), 철도차량·방산(기타부문) 3개 사업군을 하나의 연결 지붕 아래 운영한다. 시총은 KRX 2026-05-12 기준 132.27조원. [KRX…</p>
+    <div class="meta">
+      <span>2026-05-13</span>
+      <span>→ 본문 보기</span>
+    </div>
+  </div>
+</a>
+</div>
+
+<script>
+  window.kerSort = function(mode) {
+    var grid = document.getElementById('reportGrid');
+    var items = Array.from(grid.querySelectorAll('.report-card-link'));
+    items.sort(function(a, b) {
+      var pa = a.dataset.period, pb = b.dataset.period;
+      return mode === 'oldest' ? pa.localeCompare(pb) : pb.localeCompare(pa);
+    });
+    items.forEach(function(el) { grid.appendChild(el); });
+    document.querySelectorAll('.sort-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.sort === mode);
+    });
+  };
+</script>
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-12 18:01 </p>
+    <p style="margin-top:6px">생성: 2026-05-13 00:27 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
