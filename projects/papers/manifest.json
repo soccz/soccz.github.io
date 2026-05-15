@@ -1,7 +1,137 @@
 {
-  "generated_at": "2026-05-13T01:35:18",
-  "count": 11,
+  "generated_at": "2026-05-15T00:32:27",
+  "count": 12,
   "papers": [
+    {
+      "slug": "2026-05-15_sparse-feature-circuits",
+      "date": "2026-05-15",
+      "weekday": "금",
+      "bucket": "원거리",
+      "title": "",
+      "title_ko": "",
+      "authors": "Samuel Marks¹, Can Rager², Eric J. Michaud¹, Yonatan Belinkov³, David Bau⁴, Aaron Mueller⁵",
+      "venue": "ICLR 2025 **Oral** (The 13th International Conference on Learning Representations)",
+      "identifier": "arXiv:2403.19647",
+      "code": "https://github.com/saprmarks/feature-circuits (MIT 라이선스, Python ≥3.10)",
+      "data": "재현 가능 (README에 HF 다운로드 명령 제공)",
+      "tags": [
+        "sae-features",
+        "causal-intervention"
+      ],
+      "verdict": "SAE 특징을 회로의 노드로 격상시켜, 기존 어텐션 헤드·뉴런 단위 회로보다 훨씬 해석 가능한 인과 그래프를 만들었다 — APF의 mech-interp 툴링 레이어에 직접 이식 가능한 귀환 경로다.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — Sparse Feature Circuits"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03 문제 지형도"
+        },
+        {
+          "file": "04_claims.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04 핵심 Claim 해체"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05a 방법론 — 전체 그림"
+        },
+        {
+          "file": "05_method_b_sae_features.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05b 방법론 — SAE 특징 추출"
+        },
+        {
+          "file": "05_method_c_attribution.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05c 방법론 — 간접 효과(IE) & 어트리뷰션 패칭"
+        },
+        {
+          "file": "05_method_d_circuit_eval.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "05d 방법론 — 회로 평가: 충실도와 완전도"
+        },
+        {
+          "file": "05_method_e_shift.md",
+          "num": "05",
+          "suffix": "e",
+          "title": "05e 방법론 — SHIFT: 희소 특징 트리밍으로 모델 편집"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08 이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09 내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "10a 사고 확장 — 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "10b 사고 확장 — Follow-up 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "10c 사고 확장 — 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11 한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-05-15_sparse-feature-circuits"
+    },
     {
       "slug": "2026-05-13_timesnet-temporal-2d-variation",
       "date": "2026-05-13",
