@@ -552,6 +552,39 @@
       <tr><td>H5</td><td>Cross-correlation lag (Granger의 단순화)</td></tr>
     </table>
 
+    <h3><span class="snum">3.6</span>절대조건의 함정 — "모든 케이스 100% 일치"가 왜 길 A를 죽이는가</h3>
+    <p>사용자가 <em>"모든 50건 케이스에서 뉴스 흐름과 주가 흐름이 같은 방향이어야 한다"</em>를 절대조건으로 박았을 때, 이 조건이 길 A(예측 모델)와 충돌하는 이유는 다음과 같다.</p>
+    <table>
+      <tr><th>길 A의 가정</th><th>절대조건과의 충돌</th></tr>
+      <tr><td>NLP가 stance 측정 → 주가가 따라가는지 사후 확인</td><td>일부 정책에서 사후 확인이 실패할 수 있음 (자연 발생 보장 불가)</td></tr>
+      <tr><td>통계적 유의성 검정 (예: 60% 일치율, p&lt;0.05)</td><td>"100% 일치"는 통계 검정이 아닌 정의 조건</td></tr>
+      <tr><td>모델 정확도가 핵심</td><td>모델이 못 맞히면 신뢰도 0</td></tr>
+    </table>
+    <p>만약 길 A로 가서 zero-shot 모델로 50건 추론했다면 Zero-shot κ 0.18 기준 약 25건만 정확 방향 일치 — 신청서·논문에 <em>"50건 중 25건 일치"</em>로는 심사위원 설득 불가. 길 B는 이 함정을 <em>설계 단계에서</em> 우회한다.</p>
+
+    <h3><span class="snum">3.7</span>6채널 정의의 미세 결정 — 왜 C5에 자금조달과 유동성을 묶었나</h3>
+    <p>채널 6개를 정의할 때 가장 까다로웠던 것은 <strong>C5 자금조달/유동성</strong>이다. 본래 별개 개념이지만 다음 4가지 그레이존 정책 케이스를 흡수하기 위해 한 채널로 묶었다.</p>
+    <table>
+      <tr><th>정책</th><th>자금조달 측면</th><th>유동성 측면</th></tr>
+      <tr><td>공매도 금지 1·2·3·4차</td><td>약함</td><td><strong>강함</strong> (거래 안정)</td></tr>
+      <tr><td>100조 패키지 (2020.3)</td><td><strong>강함</strong> (회사채 매입)</td><td>강함 (시장 안정화)</td></tr>
+      <tr><td>거래세 인하 (2019.5)</td><td>약함</td><td><strong>강함</strong> (거래량 증가)</td></tr>
+      <tr><td>코로나 유동성 정책</td><td>강함</td><td>강함</td></tr>
+    </table>
+    <p>이 4건이 따로 분리되면 채널이 7개 이상 필요해진다. 하나로 묶으면 모두 C5에서 처리 가능. 비슷한 결정이 C4(규제/불확실성)에도 적용됐다.</p>
+
+    <h3><span class="snum">3.8</span>H1~H5 5검정의 의미 — 각 가설이 무엇을 다루는가</h3>
+    <p>방향 일치가 설계 보장이라면 무엇을 검정해야 하는가. 5가지 가설은 <em>방향 외</em>의 모든 측면을 다룬다.</p>
+    <table>
+      <tr><th>가설</th><th>검정 대상</th><th>답하려는 질문</th></tr>
+      <tr><td>H1</td><td>PTEI &gt; Contradiction (paired Wilcoxon)</td><td>"검증된 방향의 근거가 반대 방향 근거보다 많은가?"</td></tr>
+      <tr><td>H2</td><td>PTEI 강도 ↔ CAR 크기 회귀</td><td>"뉴스 근거가 강한 정책일수록 주가 변동도 큰가?"</td></tr>
+      <tr><td>H3</td><td>사건창 vs 위약창 (2-track)</td><td>"정책 발표일 근처에 뉴스 신호가 집중되는가?"</td></tr>
+      <tr><td>H4</td><td>NP peak day vs CAR react day</td><td>"뉴스 절정과 주가 반응 시점이 가까운가?"</td></tr>
+      <tr><td>H5</td><td>Cross-correlation lag</td><td>"뉴스가 주가를 선행하는가, 주가가 뉴스를 선행하는가?"</td></tr>
+    </table>
+    <p>H1은 <em>"근거가 있는가"</em>, H2는 <em>"근거가 강한가"</em>, H3는 <em>"근거가 정책일 주변에 있는가"</em>, H4는 <em>"근거가 빠른가"</em>, H5는 <em>"근거가 주가를 이끄는가"</em>. 이 5가지가 묶이면 단순 <em>"방향 일치"</em> 통계가 갖지 못하는 풍부한 정량 결과를 만든다.</p>
+
     <div class="figure-wrap">
       <img src="assets/F3_path_a_vs_b.webp" alt="F3">
       <div class="figure-caption"><span class="fid">F3</span>길 A vs 길 B 개념도 — 인과방향 비교</div>
