@@ -659,6 +659,35 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
       <img src="assets/F6_subtype_matrix.webp" alt="F6">
       <div class="figure-caption"><span class="fid">F6</span>8 type_subtype × 5산업 정책 분포 (50건)</div>
     </div>
+    <h3><span class="snum">4.8</span>함정 사슬 — 한 함정이 다음 함정을 부른다</h3>
+    <p>7개 함정은 독립적으로 발견된 게 아니라 연쇄적이었다. 4.1에서 <em>"channel_match가 multiplier로 곱셈 인자에 들어 있다"</em>는 지적이 나오자, 사용자는 곧 4.2에서 <em>"novelty도 같은 패턴 아닌가"</em>를 확인했다.</p>
+    <table>
+      <tr><th>함정</th><th>부른 다음 함정</th><th>공통 진단</th></tr>
+      <tr><td>4.1 channel_match 이중반영</td><td>4.2 novelty 이중반영</td><td>"한 정보 두 번 반영 금지"</td></tr>
+      <tr><td>4.3 placebo 약점</td><td>4.5 sanity 분리</td><td>"통계 검정 신뢰도 강건성"</td></tr>
+      <tr><td>4.4 case별 가설</td><td>4.5 sanity 분리, 4.6 gate 4줄, 4.7 subtype 동결</td><td>"과적합 방지 원칙"</td></tr>
+    </table>
+    <p>즉 함정 7개는 사실상 <strong>3개 원칙의 7번 적용</strong>이다. (i) 정보 이중반영 금지, (ii) 검정 강건성, (iii) 과적합 방지.</p>
+
+    <h3><span class="snum">4.9</span>사용자/Claude 협업 패턴 — 누가 어떻게 짚었나</h3>
+    <table>
+      <tr><th>발견 주체</th><th>함정</th></tr>
+      <tr><td>사용자 지적</td><td>4.1, 4.2, 4.4, 4.5 (4건)</td></tr>
+      <tr><td>데이터 / Claude 분석</td><td>4.3, 4.6, 4.7 (3건)</td></tr>
+    </table>
+    <p>흥미로운 패턴: <em>"사용자가 짚는 함정은 추상적 원칙 위반"</em>이고 <em>"데이터·Claude가 짚는 함정은 구체적 검정 약점"</em>. 사용자는 <em>"이중반영"</em>·<em>"과적합"</em> 같은 메타 원칙으로 식을 검토했고, Claude는 <em>"random 14일 100회 분포 문제"</em>·<em>"숫자 단독 토큰"</em> 같은 데이터 디테일을 짚었다.</p>
+
+    <h3><span class="snum">4.10</span>7개 패치가 만든 PTEI 골격</h3>
+    <p>각 항이 어떤 함정과 연결되는지 보면 PTEI 식 자체가 <em>"7개 함정의 무덤"</em>이다.</p>
+    <table>
+      <tr><th>항</th><th>연결된 함정·결정</th></tr>
+      <tr><td><code>relevance</code></td><td>4.6 gate 4줄 원칙</td></tr>
+      <tr><td><code>I(channel_match ≥ τ_c)</code></td><td>4.1 channel_match 이중반영 → indicator 강등</td></tr>
+      <tr><td><code>p_support</code></td><td>길 B 채택 + 4.4 build_hypothesis 자동화</td></tr>
+      <tr><td><code>specificity</code></td><td>NER + 정규식으로 추가</td></tr>
+      <tr><td><code>novelty</code></td><td>4.2 이중반영 해소 (기사 PTEI에만)</td></tr>
+    </table>
+
     <div class="figure-wrap">
       <img src="assets/F18_traps_patches.webp" alt="F18">
       <div class="figure-caption"><span class="fid">F18</span>함정 7개 → 패치 매핑 — 사용자 지적이 식·원칙으로 박힌 순간들</div>
@@ -720,6 +749,39 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
       <iframe src="assets/F24_sanity_timeline.html" height="450"></iframe>
       <div class="figure-caption"><span class="fid">F24</span>Sanity 시리즈 timeline — 4번의 실험 + 라벨링 + Zero-shot baseline + 1차 추론 사슬 <span class="interactive-badge">Plotly</span></div>
     </div>
+    <h3><span class="snum">5.5</span>Sanity 4번이 만든 1개 원칙</h3>
+    <table>
+      <tr><th>Sanity</th><th>결과</th><th>원칙으로 추출된 것</th></tr>
+      <tr><td>v3.1</td><td>PASS</td><td>gate 4줄 동결</td></tr>
+      <tr><td>C-1</td><td>FAIL</td><td>"NLI는 stance만, gate가 채널" 책임 분리</td></tr>
+      <tr><td>D-2</td><td>PASS 3/4</td><td>hybrid gate 채택 (keyword + 임베딩)</td></tr>
+      <tr><td>v1.1</td><td>개선</td><td>"키워드 정제는 일반 원칙으로만, case별 추가 금지"</td></tr>
+    </table>
+    <p>이 4가지가 합쳐져 §12.12에 <em>sanity check는 디버깅 용도, 성능 평가는 별도 test 300건에서만</em>이라는 원칙이 박혔다.</p>
+
+    <h3><span class="snum">5.6</span>Zero-shot의 한계가 모두 드러난 시점</h3>
+    <table>
+      <tr><th>차원</th><th>Zero-shot 결과</th><th>함의</th></tr>
+      <tr><td>채널 분리 (C-1)</td><td>4/4 실패</td><td>미세 의미 추론 불가</td></tr>
+      <tr><td>표면 어휘 처리 (공매도 금지)</td><td>거래확대로 잘못 분류</td><td>도메인 지식 부재</td></tr>
+      <tr><td>키워드 매칭 보완 (D-2)</td><td>3/4 성공</td><td>gate가 보완 가능</td></tr>
+      <tr><td>정책 일반어 차단 (v1.1)</td><td>"금지" 단어 그대로 매칭</td><td>키워드 정제 한계</td></tr>
+    </table>
+    <p>종합 결론: <em>"Zero-shot은 stance만 가능, 채널은 gate, fine-tune이 필수"</em>. 이 결정이 Part 6의 라벨링 트랙·Train 500 라벨링 계획으로 직결됐다.</p>
+
+    <h3><span class="snum">5.7</span>공매도 금지 사례 — PPT-NLP 차별점의 증명</h3>
+    <table>
+      <tr><th>채널</th><th>C-1 (NLI dominant)</th><th>D-2 (hybrid gate)</th></tr>
+      <tr><td>C1 비용</td><td>0.17</td><td>0.17</td></tr>
+      <tr><td>C2 수요</td><td><strong>0.67 (잘못)</strong></td><td>0.17</td></tr>
+      <tr><td>C3 공급</td><td>0.00</td><td>0.00</td></tr>
+      <tr><td>C4 규제</td><td>0.17</td><td>1.00</td></tr>
+      <tr><td><strong>C5 유동성</strong></td><td>0.17</td><td><strong>1.00 ✓</strong></td></tr>
+      <tr><td><strong>C6 심리</strong></td><td>0.17</td><td><strong>0.67 ✓</strong></td></tr>
+    </table>
+    <p>C-1에서 NLI는 <em>"공매도 금지 → 거래 활동 증가"</em>를 0.67 dominant로 분류했다. <em>"금지"</em>라는 단어를 보고 <em>"규제"</em>로 가지 않고 오히려 <em>"거래 확대"</em>로 갔다는 점이 흥미롭다.</p>
+    <p>D-2의 hybrid gate는 <em>"공매도"</em>·<em>"유동성"</em>·<em>"안정"</em> 키워드를 직접 매칭해 C5(유동성)·C6(심리)를 정확히 활성화했다. <strong>이 한 사례가 PPT-NLP의 차별점을 가장 잘 보여주는 핵심이다.</strong> 5부작 기사·신청서에서 인용할 사례.</p>
+
     <div class="figure-wrap">
       <img src="assets/F20_policy_card_evolution.webp" alt="F20">
       <div class="figure-caption"><span class="fid">F20</span>정책 카드 v1.0 → v1.1 (D-4 C4 키워드 정제 + D-5 subtype 매핑 변화)</div>
