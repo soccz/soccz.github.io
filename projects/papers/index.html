@@ -616,8 +616,50 @@
     }
     .viz-block canvas {
       width: 100%;
-      height: 280px;
+      height: 320px;
       display: block;
+    }
+    .viz-controls {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 22px;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .viz-controls label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+    }
+    .viz-controls input[type="range"] {
+      width: 130px;
+      accent-color: var(--accent);
+    }
+    .viz-controls .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--accent);
+      min-width: 38px;
+      text-align: right;
+      font-weight: 600;
+    }
+    .viz-controls button {
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.82rem;
+    }
+    .viz-controls button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     /* ── Reader nav ── */
@@ -806,6 +848,15 @@
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
 <script src="viz/registry.js"></script>
+<script src="viz/rppca-util.js"></script>
+<script src="viz/rppca-phase-transition.js"></script>
+<script src="viz/rppca-signal-strengthening.js"></script>
+<script src="viz/rppca-mp-spectrum.js"></script>
+<script src="viz/rppca-sharpe-comparison.js"></script>
+<script src="viz/rppca-factor-path.js"></script>
+<script src="viz/rppca-eigenvalue-spectrum.js"></script>
+<script src="viz/rppca-corr-heatmap.js"></script>
+<script src="viz/rppca-one-factor-correlation.js"></script>
 <script>
 const BUCKET_CLASS = { '코어': 'core', '인접': 'near', '원거리': 'far', '기타': 'misc' };
 const BUCKET_LABEL = { '코어': 'CORE', '인접': 'NEAR', '원거리': 'FAR', '기타': 'MISC' };
@@ -993,8 +1044,17 @@ function activateViz(container) {
     const params = JSON.parse(canvas.dataset.vizParams || '{}');
     const fn = window.VIZ_REGISTRY && window.VIZ_REGISTRY[type];
     if (typeof fn === 'function') {
-      try { fn(canvas, params); }
-      catch (e) {
+      // Auto-add controls div for interactive viz (3-arg signature)
+      let controls = canvas.parentElement.querySelector('.viz-controls');
+      if (!controls) {
+        controls = document.createElement('div');
+        controls.className = 'viz-controls';
+        canvas.parentElement.appendChild(controls);
+      }
+      try {
+        if (fn.length >= 3) fn(canvas, controls, params);
+        else                fn(canvas, params);
+      } catch (e) {
         console.error('viz error', type, e);
         canvas.parentElement.querySelector('.viz-block-label').textContent =
           `viz error: ${type}`;
