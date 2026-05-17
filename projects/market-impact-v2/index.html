@@ -437,6 +437,10 @@
       <img src="assets/F2_surface_trap.webp" alt="F2">
       <div class="figure-caption"><span class="fid">F2</span>200자 본문의 한계와 표면 어휘 함정 — 공매도 금지·일본 수출규제·K칩스법 3개 사례</div>
     </div>
+    <div class="figure-wrap">
+      <img src="assets/F17_decision_tree.webp" alt="F17">
+      <div class="figure-caption"><span class="fid">F17</span>의사결정 트리 — v0.1에서 v2.11까지 14개 분기점. 사용자/Claude 협업으로 진화한 사고의 흐름</div>
+    </div>
   </section>
 
   <!-- ============ Part 3 ============ -->
@@ -500,6 +504,10 @@
       <img src="assets/F4_explanatory_model.webp" alt="F4">
       <div class="figure-caption"><span class="fid">F4</span>방향 고정 설명모델 다이어그램 — D_i 앵커 + PTEI 식 구조</div>
     </div>
+    <div class="figure-wrap">
+      <img src="assets/F21_ptei_components.webp" alt="F21">
+      <div class="figure-caption"><span class="fid">F21</span>PTEI 식 5항목 — 각 인자가 무엇을 가두는가 (relevance · channel_match · p_support · specificity · novelty)</div>
+    </div>
   </section>
 
   <!-- ============ Part 4 ============ -->
@@ -562,6 +570,10 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
       <img src="assets/F6_subtype_matrix.webp" alt="F6">
       <div class="figure-caption"><span class="fid">F6</span>8 type_subtype × 5산업 정책 분포 (50건)</div>
     </div>
+    <div class="figure-wrap">
+      <img src="assets/F18_traps_patches.webp" alt="F18">
+      <div class="figure-caption"><span class="fid">F18</span>함정 7개 → 패치 매핑 — 사용자 지적이 식·원칙으로 박힌 순간들</div>
+    </div>
   </section>
 
   <!-- ============ Part 5 ============ -->
@@ -614,6 +626,14 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
     <div class="figure-wrap">
       <img src="assets/F8_shortsell_comparison.webp" alt="F8">
       <div class="figure-caption"><span class="fid">F8</span>공매도 금지 사례 — C-1 (NLI) vs D-2 (hybrid gate) 채널 6개 활성률 비교</div>
+    </div>
+    <div class="figure-wrap">
+      <iframe src="assets/F24_sanity_timeline.html" height="450"></iframe>
+      <div class="figure-caption"><span class="fid">F24</span>Sanity 시리즈 timeline — 4번의 실험 + 라벨링 + Zero-shot baseline + 1차 추론 사슬 <span class="interactive-badge">Plotly</span></div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F20_policy_card_evolution.webp" alt="F20">
+      <div class="figure-caption"><span class="fid">F20</span>정책 카드 v1.0 → v1.1 (D-4 C4 키워드 정제 + D-5 subtype 매핑 변화)</div>
     </div>
   </section>
 
@@ -671,6 +691,10 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
     <div class="figure-wrap">
       <img src="assets/F10_dev100_label_dist.webp" alt="F10">
       <div class="figure-caption"><span class="fid">F10</span>Dev 100 라벨 분포 — relevance × stance × 5산업</div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F19_guide_evolution.webp" alt="F19">
+      <div class="figure-caption"><span class="fid">F19</span>라벨링 가이드 v1 → v1.1 — 파일럿 30 불일치 2건이 §3.6·3.7 룰로 흡수</div>
     </div>
   </section>
 
@@ -733,6 +757,14 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
     <div class="figure-wrap">
       <img src="assets/F14_gate_levels.webp" alt="F14">
       <div class="figure-caption"><span class="fid">F14</span>Relevance gate level 분포 — 99,539건 기사</div>
+    </div>
+    <div class="figure-wrap">
+      <iframe src="assets/F23_data_flow_sankey.html" height="640"></iframe>
+      <div class="figure-caption"><span class="fid">F23</span>데이터 흐름 sankey — 99,539건이 PTEI로 가는 단계별 통과 <span class="interactive-badge">Plotly</span></div>
+    </div>
+    <div class="figure-wrap">
+      <iframe src="assets/F22_ptei_contra_scatter.html" height="700"></iframe>
+      <div class="figure-caption"><span class="fid">F22</span>정책별 PTEI vs Contradiction 산점 — 거품 크기 = active 기사 수, 색 = subtype <span class="interactive-badge">Plotly</span></div>
     </div>
   </section>
 
