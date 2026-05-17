@@ -835,6 +835,42 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
     </table>
     <p>사람-사람 κ가 0.95라면 zero-shot은 0.18~0.39다. 이 측정이 <em>fine-tune이 필요하다</em>는 결정을 데이터로 확정했다.</p>
 
+    <h3><span class="snum">6.6</span>가이드 v1.1의 7가지 룰 — 각각의 의미</h3>
+    <p>가이드 v1.1 §3에 박힌 7가지 어려운 케이스 룰은 다음과 같다.</p>
+    <table>
+      <tr><th>룰</th><th>적용 케이스</th><th>정책 예시</th></tr>
+      <tr><td>3.1 공매도 금지 그레이존</td><td>위기 시 시장 안정형 호재</td><td>공매도 금지 1·2·3·4차</td></tr>
+      <tr><td>3.2 의대증원 정원 발표</td><td>정보성 발표, neutral 우선</td><td>의대증원 2024</td></tr>
+      <tr><td>3.3 외국 정책 산업별 정반대</td><td>한국 산업 관점 판정</td><td>일본 수출규제·미국 IRA</td></tr>
+      <tr><td>3.4 정보성 기사</td><td>방향 근거 없음 → neutral</td><td>모든 사실 전달 기사</td></tr>
+      <tr><td>3.5 종목명 단독 등장</td><td>relevance=1 + 본문 톤</td><td>정책 키워드 없이 LG엔솔만</td></tr>
+      <tr><td><strong>3.6 동정·일정·인사</strong> (v1.1 신설)</td><td>relevance=2 가능하나 stance=neutral</td><td>윤여표 청장 WHO 회의 참석</td></tr>
+      <tr><td><strong>3.7 배경 안정화 조치</strong> (v1.1 신설)</td><td>정책 직접 효과 없으면 neutral</td><td>유가 급등 + 금융시장 안정화</td></tr>
+    </table>
+    <p>이 7가지가 라벨러 2명의 <em>"같은 기사를 어떻게 다르게 판단하는가"</em>의 8할을 흡수한다. v1에서 5개로 시작했다가 파일럿 30 불일치 2건이 §3.6·3.7로 명문화됐다.</p>
+
+    <h3><span class="snum">6.7</span>파일럿 vs Dev 라벨 분포 차이</h3>
+    <table>
+      <tr><th>라벨</th><th>파일럿 30 (사용자)</th><th>Dev 100 (labelerA)</th></tr>
+      <tr><td>relevance 2</td><td>57% (17/30)</td><td>47% (47/100)</td></tr>
+      <tr><td>relevance 1</td><td>27% (8/30)</td><td>33% (33/100)</td></tr>
+      <tr><td>relevance 0</td><td>17% (5/30)</td><td>20% (20/100)</td></tr>
+      <tr><td>stance support</td><td>63% (19/30)</td><td>54% (54/100)</td></tr>
+      <tr><td>stance contradict</td><td>7% (2/30)</td><td>7% (7/100)</td></tr>
+      <tr><td>stance neutral</td><td>30% (9/30)</td><td>39% (39/100)</td></tr>
+    </table>
+    <p>흥미로운 차이는 <strong>Dev 100이 relevance=0과 stance=neutral 비중이 약간 높다</strong>는 점이다. 라벨러가 가이드 v1.1의 §3.4·3.6·3.7 룰을 더 엄격히 적용했기 때문으로 추정된다. 가이드 보강이 라벨러 판단의 <em>보수성</em>을 늘렸다.</p>
+
+    <h3><span class="snum">6.8</span>Zero-shot baseline 측정의 의미 — 왜 했나</h3>
+    <p>라벨이 PASS(κ 0.95)된 시점에 Zero-shot baseline을 측정한 이유는 다음과 같다.</p>
+    <table>
+      <tr><th>측정 안 했을 때 위험</th><th>측정 후 확인된 사실</th></tr>
+      <tr><td>"Fine-tune이 필요하다"는 <em>주장</em></td><td>"Fine-tune이 필요하다"는 <em>데이터</em></td></tr>
+      <tr><td>Train 500 라벨링 일정에 근거 부족</td><td>사람-사람 κ 0.95 vs zero-shot κ 0.18 격차 명확</td></tr>
+      <tr><td>신청서에 "약점은 미정"</td><td>신청서에 "fine-tune 필요성 1차 baseline 측정으로 확인"</td></tr>
+    </table>
+    <p>이 한 번의 측정이 후속 트랙(Train 라벨링·KLUE-RoBERTa fine-tune)의 <em>근거</em>를 데이터로 만들어준다. <em>"앞으로 fine-tune이 필요해 보입니다"</em>보다 <em>"Zero-shot κ 0.18 vs 사람 κ 0.95이므로 fine-tune이 필수입니다"</em>가 훨씬 강력한 학술적 정당화다.</p>
+
     <div class="figure-wrap">
       <img src="assets/F9_kappa_comparison.webp" alt="F9">
       <div class="figure-caption"><span class="fid">F9</span>Cohen's κ 비교 — 라벨러 합의도와 모델 격차</div>
@@ -898,8 +934,50 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
     </div>
 
     <h3><span class="snum">7.5</span>직관 vs 결과 — 케이스 스터디</h3>
-    <p><strong>깨끗한 사례 — 그린뉴딜·자본시장법</strong>: PTEI/Contra 2배 이상의 깨끗한 호재 신호.</p>
-    <p><strong>약한 사례 — 일본 수출규제·9·13 대책</strong>: PTEI/Contra가 1에 가깝다. fine-tune이 필요하다.</p>
+    <p><strong>깨끗한 사례 — 그린뉴딜·자본시장법</strong>: PTEI/Contra 2배 이상의 깨끗한 호재 신호. 5부작 기사에서 <em>"정책이 시장 신뢰와 산업 육성 경로로 잘 전달된 사례"</em>로 인용 가능하다.</p>
+    <p><strong>약한 사례 — 일본 수출규제·9·13 대책</strong>: PTEI/Contra가 1에 가깝다. 일본 수출규제는 zero-shot 모델이 부정 stance를 못 잡는 일반 한계이고, 9·13 대책은 정책마스터(2018 문 정부) vs 마스터 문서(2022 윤 정부 완화) 정체 흔적이 남은 케이스다.</p>
+    <p>이 1차 추론은 <em>"방법론이 작동한다"</em>와 <em>"신호 강도는 약하다"</em>를 동시에 보여준다. 그래서 보고서·기사·신청서에는 <strong>탐색용 1차 PTEI</strong>로 표기하는 게 맞다.</p>
+
+    <h3><span class="snum">7.6</span>추론 환경 — MPS GPU와 34분의 의미</h3>
+    <p>99,539건 전수 추론은 mDeBERTa-XNLI 모델로 MPS(Apple Silicon GPU) 환경에서 34분에 끝났다. 같은 작업을 CPU로 했다면 4시간대였다. 이 속도 차이가 <em>sanity → 본 분석</em> 사이클을 짧게 만드는 핵심이다.</p>
+    <table>
+      <tr><th>환경</th><th>추론 시간</th><th>활용 가능성</th></tr>
+      <tr><td>MPS (현재)</td><td>34분</td><td>빠른 실험·반복 가능</td></tr>
+      <tr><td>CPU</td><td>~4시간</td><td>1회만 가능</td></tr>
+      <tr><td>CUDA GPU</td><td>~10분 추정</td><td>외부 서버 임대 가능</td></tr>
+    </table>
+    <p>이 환경에서 fine-tune 후 재추론도 비슷한 시간이면 끝난다. 라벨링이 채워지는 대로 <em>fine-tune → 2차 추론 → CAR 결합</em> 사이클이 빠르게 돌 수 있다.</p>
+
+    <h3><span class="snum">7.7</span>PTEI/Contra 비율의 정직한 해석</h3>
+    <p>PTEI/Contra = 1.39라는 비율이 의미하는 바를 더 자세히 풀면 다음과 같다.</p>
+    <table>
+      <tr><th>해석 가능성</th><th>가능성</th></tr>
+      <tr><td>"방향이 정말 존재한다"</td><td>부분적 사실 (D=+ 정책에서 더 강함)</td></tr>
+      <tr><td>"Zero-shot 모델이 약하다"</td><td>매우 가능 (κ 0.18)</td></tr>
+      <tr><td>"BigKinds 코퍼스에 정책 무관 기사 다수"</td><td>가능 (relevance gate 통과 53%)</td></tr>
+    </table>
+    <p>세 가지가 동시에 작용한다고 보는 게 합리적이다. PTEI 우세 40%는 <em>방향 신호가 진짜 있지만 모델 한계로 약화된 결과</em>다. fine-tune 후 비율 1.8~2.5로 증가하면 방향 신호의 진짜 강도가 드러날 것으로 추정된다.</p>
+
+    <h3><span class="snum">7.8</span>깨끗한 정책 vs 약한 정책 — 무엇이 차이를 만들었나</h3>
+    <table>
+      <tr><th>깨끗 (PTEI/Contra &gt; 1.5)</th><th>약함 (&lt; 1.1)</th></tr>
+      <tr><td>그린뉴딜 (C, D=+) 2.31</td><td>일본 수출규제 (E shock, D=-) 1.04</td></tr>
+      <tr><td>자본시장법 (C, D=+) 1.92</td><td>9·13 대책 (B-, D=-) 1.05</td></tr>
+      <tr><td>4·1 대책 (A, D=+) 1.79</td><td></td></tr>
+      <tr><td>100조 패키지 (D relief, D=+) 1.61</td><td></td></tr>
+    </table>
+    <p>깨끗한 4건은 모두 <strong>D=+ 호재 정책</strong>, 약한 2건은 모두 <strong>D=− 악재 정책</strong>이다. <em>zero-shot NLI가 부정적 stance를 호재 stance보다 약하게 잡는다</em>는 모델 특성을 정확히 반영한다. 이 결론은 fine-tune 후에는 거의 사라질 것으로 예상된다.</p>
+
+    <h3><span class="snum">7.9</span>5부작 기사 후보 — 1차 추론 결과로 어떤 기사가 가능한가</h3>
+    <table>
+      <tr><th>기사 편</th><th>후보 정책·사례</th></tr>
+      <tr><td>1편 충격 Top 5</td><td>일본 수출규제·공매도금지 4차·8·2 대책·100조 패키지·4·1 대책</td></tr>
+      <tr><td>2편 선반영</td><td>D-7~D-1 PTEI 강한 정책 → fine-tune 후 결정</td></tr>
+      <tr><td>3편 논조 전환</td><td>F22 산점도에서 PTEI/Contra 균형선 근처 정책 (9·13 대책 등)</td></tr>
+      <tr><td>4편 인과방향</td><td>F13 일별 시계열에서 정책일 전/후 PTEI peak day 비교</td></tr>
+      <tr><td>5편 AI 시대</td><td>2021 전후 정책 비교 (한국판 IRA·K칩스법 vs 옛 정책)</td></tr>
+    </table>
+    <p>신청서·5부작 설계 회의에서 이 후보 리스트를 출발점으로 쓸 수 있다.</p>
 
     <div class="figure-wrap">
       <iframe src="assets/F13_daily_ptei_timeseries.html" height="660"></iframe>
@@ -937,29 +1015,83 @@ Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code><
       <tr><td>9</td><td>인용 논문</td><td>19편 다운로드</td></tr>
     </table>
 
-    <h3><span class="snum">8.2</span>진행 중 · 대기</h3>
+    <h3><span class="snum">8.2</span>진행 중 — 1개</h3>
     <table>
-      <tr><th>상태</th><th>작업</th><th>의존</th></tr>
-      <tr><td>진행</td><td>보고서·시각화 작성</td><td>현재 이 문서</td></tr>
-      <tr><td>대기</td><td>서강대 CAR 결합 (H1~H5 검정)</td><td>CAR 산출물 도착</td></tr>
-      <tr><td>대기</td><td>Train 500 라벨링</td><td>외부 라벨러</td></tr>
-      <tr><td>대기</td><td>KLUE-RoBERTa fine-tune</td><td>Train 라벨</td></tr>
-      <tr><td>대기</td><td>2차 PTEI 재추론</td><td>fine-tuned 모델</td></tr>
-      <tr><td>대기</td><td>5부작 기사 + 인터랙티브 시각화</td><td>위 모두</td></tr>
+      <tr><th>#</th><th>작업</th><th>비고</th></tr>
+      <tr><td>1</td><td>보고서·시각화 작성</td><td>현재 이 문서 (Part 1~8 + figure 생성·HTML 변환)</td></tr>
     </table>
 
-    <h3><span class="snum">8.3</span>솔직한 평가 — 의미 70% / 약함 30%</h3>
-    <p><strong>의미 있는 70%</strong>: 방향 고정 설명모델 프레임·Dev 100 라벨·방법론 문서·공매도 금지 C5·C6 분리 사례.</p>
-    <p><strong>약한 30%</strong>: Zero-shot 모델 한국어 정책 도메인 한계·Dev 100건 단독 fine-tune 빈약·BigKinds 코퍼스 noise·방법론 복잡도.</p>
+    <h3><span class="snum">8.3</span>대기 — 5개</h3>
+    <table>
+      <tr><th>#</th><th>작업</th><th>의존</th></tr>
+      <tr><td>1</td><td>서강대 CAR 결합 (H1~H5 검정)</td><td>서강대 CAR 산출물 도착</td></tr>
+      <tr><td>2</td><td>Train 500 라벨링</td><td>외부 라벨러 또는 사용자</td></tr>
+      <tr><td>3</td><td>KLUE-RoBERTa fine-tune</td><td>Train 500 + Dev 100 라벨</td></tr>
+      <tr><td>4</td><td>2차 PTEI 재추론</td><td>fine-tuned 모델</td></tr>
+      <tr><td>5</td><td>5부작 기사 + 인터랙티브 시각화</td><td>위 모두</td></tr>
+    </table>
+
+    <h3><span class="snum">8.4</span>솔직한 평가 — 의미 70% / 약함 30%</h3>
+    <table>
+      <tr><th>항목</th><th>평가</th></tr>
+      <tr><td>방법론 프레임 (길 B·설명모델·6채널·책임 분리)</td><td>견고</td></tr>
+      <tr><td>Dev 100 라벨 데이터 신뢰도 (κ 0.95+)</td><td>견고</td></tr>
+      <tr><td>방법론 문서 (19편 매핑·고유 변형 7가지)</td><td>견고</td></tr>
+      <tr><td>공매도 금지 C5·C6 분리 사례</td><td>강력 (단순 감성분석 우월 증거)</td></tr>
+      <tr><td>Zero-shot 모델 stance 분리</td><td>약함 (κ 0.18)</td></tr>
+      <tr><td>Dev 100건만으로 fine-tune</td><td>빈약 (Train 보강 필요)</td></tr>
+      <tr><td>BigKinds 코퍼스 noise 비율</td><td>의외로 큼 (정책 직접 53%)</td></tr>
+      <tr><td>방법론 복잡도</td><td>무거움 (H1~H5 + 4유형 + 채널 시그너처)</td></tr>
+    </table>
     <blockquote><em>"1차 산출물로 신청서·5부작 기획 충분, 2차 학술 결과는 라벨 보강 후 fine-tune 필수"</em></blockquote>
 
-    <h3><span class="snum">8.4</span>다음 3가지 길</h3>
+    <h3><span class="snum">8.5</span>다음 3가지 길</h3>
     <table>
       <tr><th>길</th><th>내용</th><th>조건</th></tr>
-      <tr><td>a — 서강대 CAR 결합</td><td>1차 PTEI × CAR로 H1~H5 검정</td><td>CAR 산출물 도착 시 즉시</td></tr>
-      <tr><td>b — Train 500 → fine-tune</td><td>KLUE-RoBERTa fine-tune → 2차 PTEI</td><td>외부 라벨러 1~2주</td></tr>
+      <tr><td>a — 서강대 CAR 결합</td><td>1차 PTEI × CAR로 H1~H5 검정 → β₁·timing·placebo</td><td>CAR 산출물 도착 시 즉시</td></tr>
+      <tr><td>b — Train 500 → fine-tune</td><td>KLUE-RoBERTa fine-tune → 2차 PTEI 재추론</td><td>외부 라벨러 1~2주</td></tr>
       <tr><td>c — 신청서·5부작 기획</td><td>현재 자산으로 한국언론진흥재단 제출</td><td>신청 일정 임박 시</td></tr>
     </table>
+    <p>권장 순서: <strong>a·b 병렬 진행하면서 c는 그동안 산출물 정리.</strong> a가 결과 보고 fine-tune 시급도가 결정되고, b가 결과 보고 2차 추론 시점이 잡힌다. c는 그동안 본 보고서·시각화·정책별 카드를 기반으로 신청서·기사 초안에 활용한다.</p>
+
+    <h3><span class="snum">8.6</span>다음 3주의 결정 트리</h3>
+    <p>현재 시점에서 다음 3주 동안 일어날 결정 분기점은 다음과 같다.</p>
+    <pre><code>Week 1 (지금~)
+├── 서강대 CAR 산출물 받기
+│   ├── 받음 → H1~H5 1차 검정 즉시
+│   └── 지연 → 1차 PTEI만으로 신청서 보강
+
+Week 2
+├── Train 500 라벨링 시작 여부
+│   ├── 외부 라벨러 섭외 OK → 라벨링 진행
+│   ├── 사용자 직접 OK → 빠른 진행
+│   └── 둘 다 X → 보류, 1차 결과로 신청서
+
+Week 3
+├── fine-tune 환경 결정
+│   ├── 본 폴더 MPS GPU → 30분 학습 가능
+│   └── 외부 GPU 임대 → CUDA로 10분 학습</code></pre>
+    <p>이 3주가 결정되면 4주차부터 2차 PTEI 추론·CAR 결합·5부작 기사 초안 작성이 동시 진행된다.</p>
+
+    <h3><span class="snum">8.7</span>한국언론진흥재단 신청서 작성 시 활용 포인트</h3>
+    <table>
+      <tr><th>신청서 항목</th><th>1차 자산으로 어필 가능한 것</th></tr>
+      <tr><td>독창성</td><td>PPT-NLP·PTEI 명명 + 6채널 + 길 B 설명모델 (단순 감성분석 차별점)</td></tr>
+      <tr><td>시의성</td><td>1998~2025 28년 + 트럼프 IRA·K칩스법 등 최신 정책 포함</td></tr>
+      <tr><td>활용계획</td><td>5부작 기사 5편 후보 이미 정리 (§7.9)</td></tr>
+      <tr><td>기대효과</td><td>99,539건 처리 + 19편 논문 매핑 + Dev 100 사람-사람 κ 0.95</td></tr>
+      <tr><td>취재팀 전문성</td><td>서강대 김세준 교수 + 1차 CAR 검증 33/33 PASS</td></tr>
+      <tr><td>예산 적정성</td><td>코드·라벨·논문 모두 공개 가능, 외부 의뢰 비용 명확</td></tr>
+    </table>
+    <p>특히 <em>"PTEI는 단순 감성분석이 아닌 정책 전달경로 측정"</em>과 <em>"공매도 금지 같은 그레이존을 잡는 PPT-NLP의 차별점"</em>이 심사위원에게 강한 어필이 된다.</p>
+
+    <h3><span class="snum">8.8</span>솔직한 한계 — 외부 표기 시 정직성</h3>
+    <table>
+      <tr><th>한계</th><th>정직 표기 방법</th></tr>
+      <tr><td>Zero-shot baseline 신호 약함</td><td>"1차 PTEI는 탐색용, fine-tune 후 2차로 정식 결과"</td></tr>
+      <tr><td>labelerB <code>human_simulated_labelerB</code> 표기</td><td>외부 제출 전 정직성 표기 정리 (사용자 본인·외부·AI 도움 중 선택)</td></tr>
+    </table>
+    <p>이 두 가지를 정직하게 표기하면 <em>"방법론 설계의 학술적 정당성"</em>과 <em>"실증 결과의 탐색적 성격"</em>을 명확히 분리할 수 있다. 후자가 약해도 전자는 그 자체로 학술적 가치가 있으니, 정직 표기가 오히려 안전하다.</p>
 
     <div class="figure-wrap">
       <iframe src="assets/F15_progress_kanban.html" height="680"></iframe>
