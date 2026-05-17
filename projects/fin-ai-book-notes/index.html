@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>금융 AI의 이해 — Deep Dive Study Guide (Kim 2024)</title>
-  <meta name="description" content="《금융 AI의 이해》 (김태헌, 제이펍 2024) 한국어 해설집. 6장 38절 28,000줄, PyWhy 4단계 + 200+ 1차 자료 + SVG 시각화.">
-  <meta property="og:title" content="금융 AI의 이해 — Deep Dive Study Guide">
+  <title>Financial AI Deep Dive — Study Guide</title>
+  <meta name="description" content="금융 AI 한국어 학습 가이드. 6장 38절 28,000줄, PyWhy 4단계 + 200+ 1차 자료 + SVG 시각화.">
+  <meta property="og:title" content="Financial AI Deep Dive — Study Guide">
   <meta property="og:description" content="6 Chapters × 38 Sections × 28K lines. 일상 비유 → 1차 자료까지.">
   <meta property="og:type" content="website">
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/marked/marked.min.js" as="script">
@@ -73,6 +73,33 @@
     .progress-legend{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
     .legend-item{display:flex;align-items:center;gap:.4rem;font-size:.66rem;color:var(--text-muted)}
     .legend-dot{width:8px;height:8px;border-radius:50%}
+
+    /* Book Mindmap */
+    .book-mindmap-section{max-width:760px;margin:0 auto 2rem;padding:2rem 2rem 1rem;text-align:center}
+    .mindmap-title{font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:1rem;letter-spacing:-.01em}
+    .book-mindmap{width:100%;max-width:760px;height:auto;display:block;margin:0 auto}
+    .book-mindmap .mm-node circle{transition:transform .25s,filter .25s,stroke-width .25s;transform-origin:center;transform-box:fill-box}
+    .book-mindmap .mm-node:hover circle{transform:scale(1.08);filter:drop-shadow(0 4px 12px rgba(0,0,0,.15));stroke-width:3.5}
+    .book-mindmap .mm-node text{transition:font-weight .15s}
+    .mindmap-hint{font-size:.72rem;color:var(--text-muted);margin-top:.5rem;letter-spacing:.02em}
+
+    /* Chapter group accent strip — 각 챕터별 색 코딩 */
+    .part-group{position:relative;padding-left:.8rem}
+    .part-group::before{content:'';position:absolute;left:0;top:.4rem;bottom:.4rem;width:3px;border-radius:2px;opacity:.5}
+    .part-group[data-book="ch1"]::before{background:var(--ch1)}
+    .part-group[data-book="ch2"]::before{background:var(--ch2)}
+    .part-group[data-book="ch3"]::before{background:var(--ch3)}
+    .part-group[data-book="ch4"]::before{background:var(--ch4)}
+    .part-group[data-book="ch5"]::before{background:var(--ch5)}
+    .part-group[data-book="ch6"]::before{background:var(--ch6)}
+
+    /* Section read indicator (localStorage) */
+    .chapter-item .read-mark{font-size:.7rem;color:var(--ch6);margin-left:.4rem;opacity:0;transition:opacity .2s}
+    .chapter-item.read .read-mark{opacity:1}
+    .chapter-item.read .chapter-title{color:var(--text-secondary)}
+
+    /* Reader topbar 챕터 색 strip */
+    .topbar-strip{position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transition:background .3s}
 
     /* Search */
     .search-bar{max-width:660px;margin:0 auto 2rem;padding:0 2rem}
@@ -197,11 +224,11 @@
     <div class="hero-inner">
       <span class="hero-badge">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-        김태헌 《금융 AI의 이해》 (제이펍 2024)
+        Financial AI · Deep Dive · 2026
       </span>
-      <h1>금융 AI의 이해<br><span>Deep Dive Study Guide</span></h1>
+      <h1>Financial AI<br><span>Deep Dive Study Guide</span></h1>
       <p class="hero-subtitle">
-        350페이지 원서를 28,000줄 한국어 해설집으로.<br>
+        금융 AI 6대 영역을 28,000줄 한국어로.<br>
         일상 비유 &rarr; 1차 자료 인용 &rarr; SVG 시각화 &rarr; 한국 시장 보강.
       </p>
       <div class="hero-stats">
@@ -236,6 +263,82 @@
       <span class="legend-item"><span class="legend-dot" style="background:var(--ch5)"></span>Ch5 MLOps (4)</span>
       <span class="legend-item"><span class="legend-dot" style="background:var(--ch6)"></span>Ch6 GenAI (3)</span>
     </div>
+  </div>
+
+  <!-- Book Mindmap — 6 챕터 방사형 지도 -->
+  <div class="book-mindmap-section">
+    <div class="mindmap-title">📍 책의 큰 그림 — 6개 챕터, 한눈에</div>
+    <svg class="book-mindmap" viewBox="0 0 760 560" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="mmCenter" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fdf0ea"/>
+          <stop offset="100%" stop-color="#f5f5f4"/>
+        </radialGradient>
+      </defs>
+      <g stroke="#d6d3d1" stroke-width="1.5" fill="none" opacity="0.6">
+        <line x1="380" y1="280" x2="200" y2="120"/>
+        <line x1="380" y1="280" x2="560" y2="120"/>
+        <line x1="380" y1="280" x2="640" y2="280"/>
+        <line x1="380" y1="280" x2="560" y2="440"/>
+        <line x1="380" y1="280" x2="200" y2="440"/>
+        <line x1="380" y1="280" x2="120" y2="280"/>
+      </g>
+      <circle cx="380" cy="280" r="65" fill="url(#mmCenter)" stroke="#1c1917" stroke-width="2"/>
+      <text x="380" y="270" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="14" font-weight="700" fill="#1c1917">금융 AI</text>
+      <text x="380" y="290" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="14" font-weight="700" fill="#1c1917">의 이해</text>
+      <text x="380" y="310" text-anchor="middle" font-size="9" fill="#a8a29e">김태헌 · 2024</text>
+
+      <g class="mm-node" data-ch="1.1" style="cursor:pointer">
+        <circle cx="200" cy="120" r="55" fill="#fdf0ea" stroke="#c4724e" stroke-width="2.5"/>
+        <text x="200" y="108" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="13" font-weight="700" fill="#c4724e">Ch1</text>
+        <text x="200" y="125" text-anchor="middle" font-size="11" font-weight="600" fill="#1c1917">금융 도메인</text>
+        <text x="200" y="140" text-anchor="middle" font-size="9" fill="#57534e">8 sections</text>
+        <text x="200" y="155" text-anchor="middle" font-size="8" fill="#a8a29e">PV/FV · 6 functions · 6 Pillars</text>
+      </g>
+
+      <g class="mm-node" data-ch="2.1" style="cursor:pointer">
+        <circle cx="560" cy="120" r="55" fill="#eaf2f8" stroke="#5a7a96" stroke-width="2.5"/>
+        <text x="560" y="108" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="13" font-weight="700" fill="#5a7a96">Ch2</text>
+        <text x="560" y="125" text-anchor="middle" font-size="11" font-weight="600" fill="#1c1917">양적 투자</text>
+        <text x="560" y="140" text-anchor="middle" font-size="9" fill="#57534e">9 sections</text>
+        <text x="560" y="155" text-anchor="middle" font-size="8" fill="#a8a29e">퀀트 · LSTM · BloombergGPT</text>
+      </g>
+
+      <g class="mm-node" data-ch="3.1" style="cursor:pointer">
+        <circle cx="640" cy="280" r="55" fill="#f5e6f0" stroke="#7a6a9a" stroke-width="2.5"/>
+        <text x="640" y="268" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="13" font-weight="700" fill="#7a6a9a">Ch3</text>
+        <text x="640" y="285" text-anchor="middle" font-size="11" font-weight="600" fill="#1c1917">신용 리스크</text>
+        <text x="640" y="300" text-anchor="middle" font-size="9" fill="#57534e">7 sections</text>
+        <text x="640" y="315" text-anchor="middle" font-size="8" fill="#a8a29e">FICO · NICE · WoE · XGB</text>
+      </g>
+
+      <g class="mm-node" data-ch="4.1" style="cursor:pointer">
+        <circle cx="560" cy="440" r="55" fill="#fdf0ea" stroke="#c4724e" stroke-width="2.5"/>
+        <text x="560" y="428" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="13" font-weight="700" fill="#c4724e">Ch4</text>
+        <text x="560" y="445" text-anchor="middle" font-size="11" font-weight="600" fill="#1c1917">사기 탐지</text>
+        <text x="560" y="460" text-anchor="middle" font-size="9" fill="#57534e">7 sections</text>
+        <text x="560" y="475" text-anchor="middle" font-size="8" fill="#a8a29e">Alipay · GNN · 보이스피싱</text>
+      </g>
+
+      <g class="mm-node" data-ch="5.1" style="cursor:pointer">
+        <circle cx="200" cy="440" r="55" fill="#edf4ec" stroke="#5a8a6a" stroke-width="2.5"/>
+        <text x="200" y="428" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="13" font-weight="700" fill="#5a8a6a">Ch5</text>
+        <text x="200" y="445" text-anchor="middle" font-size="11" font-weight="600" fill="#1c1917">MLOps</text>
+        <text x="200" y="460" text-anchor="middle" font-size="9" fill="#57534e">4 sections</text>
+        <text x="200" y="475" text-anchor="middle" font-size="8" fill="#a8a29e">Airflow · K8s · 모니터링</text>
+      </g>
+
+      <g class="mm-node" data-ch="6.1" style="cursor:pointer">
+        <circle cx="120" cy="280" r="55" fill="#edf7ef" stroke="#3a7d44" stroke-width="2.5"/>
+        <text x="120" y="268" text-anchor="middle" font-family="Noto Serif KR,serif" font-size="13" font-weight="700" fill="#3a7d44">Ch6</text>
+        <text x="120" y="285" text-anchor="middle" font-size="11" font-weight="600" fill="#1c1917">생성형 AI</text>
+        <text x="120" y="300" text-anchor="middle" font-size="9" fill="#57534e">3 sections</text>
+        <text x="120" y="315" text-anchor="middle" font-size="8" fill="#a8a29e">LLM · RAG · Prompt</text>
+      </g>
+
+      <text x="380" y="40" text-anchor="middle" font-size="11" fill="#a8a29e" font-style="italic">시작 ↓ Ch1 (기초) → Ch2 (응용) → Ch3·4 (실전) → Ch5 (운영) → Ch6 (최신) ↑</text>
+    </svg>
+    <div class="mindmap-hint">💡 챕터 원을 클릭하면 해당 챕터 시작 절로 이동합니다</div>
   </div>
 
   <!-- Search -->
@@ -467,8 +570,41 @@
   // Popstate
   window.addEventListener('popstate',e=>{if(e.state&&e.state.ch)open(e.state.ch);else goToToc()});
 
+  // Mindmap 클릭 — 챕터 시작 절로 이동
+  document.querySelectorAll('.mm-node').forEach(node=>{
+    node.addEventListener('click',()=>{
+      const ch=node.dataset.ch;
+      if(idx(ch)>=0)open(ch);
+    });
+  });
+
+  // 읽기 진척 트래커 (localStorage)
+  const READ_KEY='fin-ai-book-read-v1';
+  function getRead(){try{return new Set(JSON.parse(localStorage.getItem(READ_KEY)||'[]'))}catch(e){return new Set()}}
+  function setRead(s){try{localStorage.setItem(READ_KEY,JSON.stringify([...s]))}catch(e){}}
+  function markRead(id){const s=getRead();s.add(String(id));setRead(s);updateReadMarks()}
+  function updateReadMarks(){
+    const s=getRead();
+    document.querySelectorAll('.chapter-item').forEach(el=>{
+      const r=s.has(el.dataset.ch);
+      el.classList.toggle('read',r);
+      let m=el.querySelector('.read-mark');
+      if(!m&&el.querySelector('.chapter-title')){m=document.createElement('span');m.className='read-mark';m.textContent='✓';el.querySelector('.chapter-title').appendChild(m)}
+    });
+  }
+
+  // 절 열기 후 1.5초 머무르면 읽음 표시
+  let readTimer;
+  const originalOpen=open;
+  open=async function(id){
+    await originalOpen(id);
+    clearTimeout(readTimer);
+    readTimer=setTimeout(()=>markRead(id),1500);
+  };
+  window.openCh=open;
+
   // Init
-  buildToc();buildDrawer();
+  buildToc();buildDrawer();updateReadMarks();
   const p=new URLSearchParams(location.search).get('ch');
   if(p!==null&&idx(p)>=0)open(p);
 })();

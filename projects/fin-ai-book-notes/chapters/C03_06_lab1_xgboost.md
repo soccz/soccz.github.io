@@ -1,7 +1,5 @@
 # 실습 1: 밑바닥부터 시작하는 ML 신용평가 모델 — *Lab 1: XGBoost-Based Credit Model*
 
-> **원서 위치**: 김태헌, 《금융 AI의 이해》(제이펍, 2024), 실습 1 (pp.161~)
-> **원서 분량**: 약 20쪽
 > **해설 분량**: 약 25쪽
 > **데이터**: Kaggle American Express Default Prediction
 > **소요 시간**: 6~10시간

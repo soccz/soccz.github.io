@@ -1,7 +1,5 @@
 # 실습 2: 머신러닝 기반 신용카드 사기 탐지 — *Lab 2: ML-Based Fraud Detection*
 
-> **원서 위치**: 김태헌, 《금융 AI의 이해》(제이펍, 2024), 실습 2 (pp.223~)
-> **원서 분량**: 약 30쪽
 > **해설 분량**: 약 28쪽
 > **데이터**: Kaggle Credit Card Fraud Detection
 > **소요 시간**: 6~10시간

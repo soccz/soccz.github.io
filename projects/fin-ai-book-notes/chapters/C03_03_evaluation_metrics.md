@@ -1,7 +1,5 @@
 # 3.5 신용 평가 모델 평가 지표 — *Credit Model Evaluation Metrics*
 
-> **원서 위치**: 김태헌, 《금융 AI의 이해》(제이펍, 2024), §3.5 (pp.130–135)
-> **원서 분량**: 약 6쪽 (KS, PSI, Precision/Recall, AUC-ROC)
 > **해설 분량**: 약 25쪽
 > **읽는 데 걸리는 시간**: 약 45분
 
