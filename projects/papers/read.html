@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep Dive — paper · soccz</title>
+  <meta name="theme-color" content="#faf7f2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+  <style>
+    :root {
+      --bg: #faf7f2;
+      --bg-warm: #f5f0e8;
+      --bg-dot: rgba(196,114,78,0.06);
+      --surface: #ffffff;
+      --surface-warm: #fefcf9;
+      --surface-hover: #fffdfb;
+      --border: #e5ddd3;
+      --border-light: #eee7de;
+      --border-hover: #d4c8b8;
+      --text: #1a1410;
+      --text-secondary: #5c4f42;
+      --text-muted: #96887a;
+      --text-light: #b5a898;
+      --accent: #c4724e;
+      --accent-light: #fdf0ea;
+      --accent-hover: #b06240;
+      --accent-soft: #e8a98a;
+      --accent-glow: rgba(196,114,78,0.08);
+      --color-good: #5a8a64;
+      --color-bad: #c45a4e;
+      --color-warn: #d4a04c;
+      --color-info: #4e7ec4;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --shadow-sm: 0 1px 2px rgba(26,20,16,0.05);
+      --shadow-md: 0 4px 16px rgba(26,20,16,0.07);
+      --shadow-lg: 0 8px 32px rgba(26,20,16,0.09);
+      --font-display: 'Space Grotesk', 'Pretendard', sans-serif;
+      --font-body: 'Inter', 'Noto Sans KR', 'Pretendard', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      --content-max: 760px;
+      --sidebar-w: 280px;
+      --header-h: 64px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur: 220ms;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(var(--header-h) + 16px);
+    }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(var(--bg-dot) 1px, transparent 1px);
+      background-size: 28px 28px;
+      background-attachment: fixed;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.15s; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+    /* Header */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      height: var(--header-h);
+      display: flex; align-items: center;
+      padding: 0 28px;
+      background: rgba(250,247,242,0.88);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+    .brand a { color: inherit; }
+    .brand .dot { color: var(--accent); }
+    .crumbs {
+      margin-left: 18px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .crumbs a { color: var(--text-secondary); }
+    .actions {
+      margin-left: auto;
+      display: flex; gap: 10px;
+    }
+    .icon-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 1.05rem;
+    }
+    .icon-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent-soft); }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: calc(100vh - var(--header-h));
+    }
+    @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
+
+    .sidebar {
+      position: sticky; top: var(--header-h);
+      height: calc(100vh - var(--header-h));
+      overflow-y: auto;
+      border-right: 1px solid var(--border-light);
+      padding: 28px 22px 60px 28px;
+      background: var(--bg);
+    }
+    @media (max-width: 980px) {
+      .sidebar {
+        position: fixed; inset: var(--header-h) auto 0 0;
+        width: 280px; z-index: 40;
+        transform: translateX(-100%);
+        transition: transform var(--dur) var(--ease);
+        background: var(--surface);
+        box-shadow: var(--shadow-lg);
+      }
+      .sidebar.open { transform: translateX(0); }
+    }
+
+    .sidebar-title {
+      font-family: var(--font-display);
+      font-size: 0.74rem; font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+    .sidebar-meta {
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .paper-title-sb {
+      font-family: var(--font-display);
+      font-size: 1.0rem; font-weight: 600;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .paper-authors-sb {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .chapter-list { list-style: none; }
+    .chapter-list li { margin: 1px 0; }
+    .chapter-list a {
+      display: block;
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+      line-height: 1.4;
+    }
+    .chapter-list a:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .chapter-list a.active {
+      background: var(--accent);
+      color: white;
+      font-weight: 500;
+    }
+    .chapter-list .num {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-right: 6px;
+    }
+    .chapter-list a.active .num { color: rgba(255,255,255,0.8); }
+
+    /* Content */
+    .content {
+      padding: 40px 56px 120px;
+      max-width: 900px;
+    }
+    @media (max-width: 980px) { .content { padding: 32px 24px 100px; } }
+
+    .paper-hero {
+      margin-bottom: 50px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .paper-hero .eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.74rem; font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .paper-hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.4rem; font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    @media (max-width: 600px) { .paper-hero h1 { font-size: 1.75rem; } }
+    .paper-hero .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+    .paper-hero .meta-row {
+      display: flex; flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .chip {
+      font-family: var(--font-display);
+      font-size: 0.74rem; font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-light);
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .chip.muted {
+      background: var(--bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .one-line {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-style: italic;
+    }
+
+    /* Markdown body */
+    .md-body { font-size: 1.0rem; line-height: 1.75; color: var(--text); }
+    .md-body h1 {
+      font-family: var(--font-display);
+      font-size: 2rem; font-weight: 600;
+      margin: 2em 0 0.6em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.25;
+    }
+    .md-body h1:first-child { margin-top: 0; }
+    .md-body h2 {
+      font-family: var(--font-display);
+      font-size: 1.45rem; font-weight: 600;
+      margin: 2em 0 0.5em;
+      line-height: 1.25;
+    }
+    .md-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 600;
+      margin: 1.6em 0 0.4em;
+    }
+    .md-body h4 {
+      font-family: var(--font-display);
+      font-size: 1.0rem; font-weight: 600;
+      margin: 1.3em 0 0.4em;
+      color: var(--text-secondary);
+    }
+    .md-body p { margin: 0.9em 0; }
+    .md-body strong { color: var(--text); font-weight: 600; }
+    .md-body em { color: var(--text-secondary); }
+    .md-body ul, .md-body ol { margin: 0.7em 0 0.9em 1.3em; padding-left: 0.5em; }
+    .md-body li { margin: 0.3em 0; }
+    .md-body blockquote {
+      margin: 1.2em 0;
+      padding: 12px 18px;
+      background: var(--surface-warm);
+      border-left: 3px solid var(--accent-soft);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+    }
+    .md-body blockquote p:first-child { margin-top: 0; }
+    .md-body blockquote p:last-child { margin-bottom: 0; }
+    .md-body hr {
+      margin: 2.5em 0;
+      border: 0;
+      border-top: 1px dashed var(--border);
+    }
+    .md-body table {
+      width: 100%;
+      margin: 1.4em 0;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .md-body th, .md-body td {
+      padding: 9px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+    .md-body th {
+      background: var(--bg-warm);
+      font-family: var(--font-display);
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .md-body tr:last-child td { border-bottom: 0; }
+    .md-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+      margin: 1.3em 0;
+      box-shadow: var(--shadow-md);
+      background: white;
+    }
+    .md-body :not(pre) > code {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      font-size: 0.88em;
+      font-family: var(--font-mono);
+    }
+    .md-body pre {
+      background: var(--surface-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      overflow-x: auto;
+      font-size: 0.86em;
+      line-height: 1.55;
+      margin: 1.2em 0;
+      font-family: var(--font-mono);
+    }
+    .md-body .katex { font-size: 1.02em; }
+    .md-body .katex-display { margin: 1.2em 0; overflow-x: auto; overflow-y: hidden; }
+
+    .md-body h1, .md-body h2 { scroll-margin-top: calc(var(--header-h) + 24px); }
+
+    /* viz block */
+    .viz-block {
+      margin: 2em 0;
+      padding: 22px 22px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+    }
+    .viz-block-label {
+      font-family: var(--font-display);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex; align-items: center;
+      gap: 8px;
+    }
+    .viz-block-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .viz-block canvas {
+      width: 100%;
+      height: 320px;
+      display: block;
+      background: var(--bg-warm);
+      border-radius: var(--radius-md);
+    }
+    .viz-controls {
+      margin-top: 14px;
+      display: flex; flex-wrap: wrap;
+      gap: 14px 22px; align-items: center;
+      font-size: 0.85rem;
+    }
+    .viz-controls label {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--text-secondary);
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+    }
+    .viz-controls input[type="range"] {
+      width: 130px;
+      accent-color: var(--accent);
+    }
+    .viz-controls .val {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--accent);
+      min-width: 38px;
+      text-align: right;
+      font-weight: 600;
+    }
+    .viz-controls button {
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.82rem;
+    }
+    .viz-controls button:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Loading */
+    .loading-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+    }
+    .spinner {
+      display: inline-block;
+      width: 28px; height: 28px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 14px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand"><a href="../../">soccz<span class="dot">·</span></a></div>
+  <div class="crumbs">/ <a href="./">papers</a> / <span id="paperCrumb">…</span> · <strong style="color:var(--accent)">deep dive</strong></div>
+  <div class="actions">
+    <button class="icon-btn" id="sbToggle" title="목차" aria-label="목차">☰</button>
+    <a class="icon-btn" href="./" title="컬렉션으로 돌아가기">←</a>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-meta">
+      <div class="sidebar-title">현재 논문</div>
+      <div class="paper-title-sb" id="paperTitle">…</div>
+      <div class="paper-authors-sb" id="paperAuthors"></div>
+    </div>
+    <div class="sidebar-title">차례</div>
+    <ul class="chapter-list" id="chapterList">
+      <li><a>로딩 중…</a></li>
+    </ul>
+  </aside>
+
+  <main class="content" id="content">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <div>논문 데이터 로딩 중…</div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script src="viz/registry.js"></script>
+<script src="viz/rppca-util.js"></script>
+<script src="viz/rppca-phase-transition.js"></script>
+<script src="viz/rppca-signal-strengthening.js"></script>
+<script src="viz/rppca-mp-spectrum.js"></script>
+<script src="viz/rppca-sharpe-comparison.js"></script>
+<script src="viz/rppca-factor-path.js"></script>
+<script src="viz/rppca-eigenvalue-spectrum.js"></script>
+<script src="viz/rppca-corr-heatmap.js"></script>
+<script src="viz/rppca-one-factor-correlation.js"></script>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('slug') || '2026-05-17_lettau-pelger-rppca';
+
+  const contentEl  = document.getElementById('content');
+  const listEl     = document.getElementById('chapterList');
+  const titleEl    = document.getElementById('paperTitle');
+  const authorsEl  = document.getElementById('paperAuthors');
+  const crumbEl    = document.getElementById('paperCrumb');
+  const sidebarEl  = document.getElementById('sidebar');
+  document.getElementById('sbToggle').addEventListener('click', () => sidebarEl.classList.toggle('open'));
+
+  /* Marked setup — code block renderer with viz: handler (same as sister) */
+  function setupMarked() {
+    const renderer = new marked.Renderer();
+    renderer.code = function (code, lang) {
+      if (lang && lang.startsWith('viz:')) {
+        const spec = lang.slice(4);
+        const [type, ...rest] = spec.split(':');
+        const par = {};
+        rest.join(':').split(',').forEach(kv => {
+          const i = kv.indexOf('=');
+          if (i > 0) par[kv.slice(0, i).trim()] = kv.slice(i + 1).trim();
+        });
+        const id = 'viz_' + Math.random().toString(36).slice(2, 9);
+        return `<div class="viz-block">
+          <div class="viz-block-label">interactive · ${type}</div>
+          <canvas id="${id}" data-viz-type="${type}" data-viz-params='${JSON.stringify(par).replace(/'/g,'&#39;')}'></canvas>
+        </div>`;
+      }
+      return `<pre><code class="lang-${lang||''}">${escapeHtml(code)}</code></pre>`;
+    };
+    marked.setOptions({ renderer, breaks: false, gfm: true });
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  /* Robust markdown render — protect $...$ from marked, render via KaTeX */
+  function renderMarkdown(md) {
+    const blocks = [];
+    let pre = md.replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) => {
+      blocks.push({ display: true, expr });
+      return `\n\n@@MATH${blocks.length - 1}@@\n\n`;
+    });
+    pre = pre.replace(/(?<!\\)\$([^\$\n]+?)(?<!\\)\$/g, (_, expr) => {
+      blocks.push({ display: false, expr });
+      return `@@MATH${blocks.length - 1}@@`;
+    });
+    let html = marked.parse(pre);
+    html = html.replace(/@@MATH(\d+)@@/g, (_, i) => {
+      const b = blocks[parseInt(i, 10)];
+      try { return katex.renderToString(b.expr, { displayMode: b.display, throwOnError: false }); }
+      catch (e) { return `<span style="color:#c45858">[math: ${escapeHtml(b.expr)}]</span>`; }
+    });
+    return html;
+  }
+
+  /* Viz activation — same as sister, supports 2-arg and 3-arg signatures */
+  function activateViz(container) {
+    container.querySelectorAll('canvas[data-viz-type]').forEach(canvas => {
+      const type = canvas.dataset.vizType;
+      const par = JSON.parse(canvas.dataset.vizParams || '{}');
+      const fn = window.VIZ_REGISTRY && window.VIZ_REGISTRY[type];
+      if (typeof fn === 'function') {
+        let controls = canvas.parentElement.querySelector('.viz-controls');
+        if (!controls) {
+          controls = document.createElement('div');
+          controls.className = 'viz-controls';
+          canvas.parentElement.appendChild(controls);
+        }
+        try {
+          if (fn.length >= 3) fn(canvas, controls, par);
+          else                fn(canvas, par);
+        } catch (e) {
+          console.error('viz error', type, e);
+          canvas.parentElement.querySelector('.viz-block-label').textContent =
+            `viz error: ${type}`;
+        }
+      } else {
+        canvas.parentElement.querySelector('.viz-block-label').textContent =
+          `unknown viz type: ${type}`;
+      }
+    });
+  }
+
+  async function load() {
+    setupMarked();
+    let manifest;
+    try {
+      const r = await fetch('manifest.json', { cache: 'no-cache' });
+      manifest = await r.json();
+    } catch (e) {
+      contentEl.innerHTML = `<div class="loading-state">manifest 로드 실패: ${escapeHtml(String(e))}</div>`;
+      return;
+    }
+    const paper = manifest.papers.find(p => p.slug === slug);
+    if (!paper) {
+      contentEl.innerHTML = `<div class="loading-state">논문을 찾을 수 없습니다: ${escapeHtml(slug)}</div>`;
+      return;
+    }
+    document.title = `${paper.title_ko || paper.title} · Deep Dive`;
+    titleEl.textContent = paper.title_ko || paper.title || paper.slug;
+    authorsEl.textContent = paper.authors || '';
+    crumbEl.textContent = paper.title_ko || paper.title || paper.slug;
+
+    const sections = (paper.sections || []).filter(s => s.file !== '00_README.md');
+
+    /* Fetch all sections in parallel */
+    const fetched = await Promise.all(
+      sections.map(async (sec) => {
+        try {
+          const r = await fetch(`${paper.data_path}/${sec.file}`, { cache: 'no-cache' });
+          if (!r.ok) throw new Error('404');
+          return { sec, md: await r.text() };
+        } catch (e) {
+          return { sec, md: `# ${sec.title}\n\n*로드 실패*` };
+        }
+      })
+    );
+
+    /* Hero */
+    const hero = `
+      <header class="paper-hero">
+        <div class="eyebrow">${escapeHtml(paper.date || '')} · ${escapeHtml(paper.venue || '')}</div>
+        <h1>${escapeHtml(paper.title_ko || paper.title || '')}</h1>
+        <p class="subtitle">${escapeHtml(paper.title || '')}</p>
+        <div class="meta-row">
+          ${(paper.tags || []).map(t => `<span class="chip">${escapeHtml(t)}</span>`).join('')}
+          ${paper.identifier ? `<span class="chip muted">${escapeHtml(paper.identifier)}</span>` : ''}
+        </div>
+        ${paper.verdict ? `<div class="one-line">${escapeHtml(paper.verdict)}</div>` : ''}
+      </header>
+    `;
+
+    /* Concatenate all sections into longform body */
+    const bodies = fetched.map(({ sec, md }) => {
+      const html = renderMarkdown(md);
+      const id = `sec-${sec.num}${sec.suffix || ''}`;
+      return `<section id="${id}" data-num="${escapeHtml(sec.num)}">${html}</section>`;
+    });
+
+    contentEl.innerHTML = hero + `<article class="md-body">${bodies.join('\n')}</article>`;
+
+    activateViz(contentEl);
+
+    /* Sidebar chapter list */
+    listEl.innerHTML = sections.map((s) => {
+      const id = `sec-${s.num}${s.suffix || ''}`;
+      const title = String(s.title || '').replace(/^\d+[a-z]?\.\s*/, '');
+      return `<li><a href="#${id}" data-target="${id}">
+        <span class="num">${escapeHtml(s.num + (s.suffix || ''))}</span>${escapeHtml(title)}
+      </a></li>`;
+    }).join('');
+
+    /* Scrollspy */
+    const links = Array.from(listEl.querySelectorAll('a[data-target]'));
+    const targets = sections
+      .map(s => document.getElementById(`sec-${s.num}${s.suffix || ''}`))
+      .filter(Boolean);
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (!visible.length) return;
+      const id = visible[0].target.id;
+      links.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.1, 0.5] });
+    targets.forEach(t => observer.observe(t));
+
+    links.forEach(a => a.addEventListener('click', (e) => {
+      const id = a.dataset.target;
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (sidebarEl.classList.contains('open')) sidebarEl.classList.remove('open');
+        history.replaceState(null, '', `?slug=${encodeURIComponent(slug)}#${id}`);
+      }
+    }));
+  }
+
+  load();
+</script>
+
+</body>
+</html>

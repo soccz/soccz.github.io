@@ -396,8 +396,8 @@
 (function(){
   'use strict';
 
-  // 로컬 chapters/ 폴더에서 md fetch (같은 도메인이라 raw 불필요, private repo 회피)
-  const RAW='./chapters/';
+  // FIN_AI_book public repo에서 raw fetch
+  const RAW='https://raw.githubusercontent.com/soccz/FIN_AI_book/main/chapters/';
   const CACHE_BUST='v='+Date.now();
 
   const CHAPTERS=[
