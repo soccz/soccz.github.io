@@ -1377,6 +1377,8 @@ async function pinInput(d) {
       const h = await pinDerive(pinValue);
       if (h === PIN_HASH) {
         pinResetFails();
+        // Master token: PIN-게이트가 있는 자식 페이지가 자동 통과할 수 있도록
+        try { sessionStorage.setItem('soccz-pin-master', h); } catch(e) {}
         const dest = pinPendingUrl;
         pinClose();
         window.location.href = dest;
