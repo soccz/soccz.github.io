@@ -49,9 +49,9 @@
   VIZ_REGISTRY['rppca-phase-transition'] = function (canvas, controls, params) {
     let sigma_e2 = parseFloat(params.sigma_e2 || '1');
     let c = parseFloat(params.c || '0.5');
-    let gamma = parseFloat(params.gamma || '0');
-    let sigmaF2_true = parseFloat(params.sigma_f2 || '0.1');  // true factor variance
-    let muF = parseFloat(params.mu_f || '0.2');                // true factor mean
+    let gamma = parseFloat(params.gamma || '5');
+    let sigmaF2_true = parseFloat(params.sigma_f2 || '0.05'); // weak factor variance (true)
+    let muF = parseFloat(params.mu_f || '0.4');               // strong mean (high SR)
 
     const sliderGamma = U.addSlider(controls, {
       label: 'γ', min: -1, max: 50, step: 0.5, value: gamma,
@@ -159,15 +159,21 @@
       const theta_PCA = sigmaF2_true + c * sigma_e2;
       const theta_RP  = sigmaF2_true * (1 + (1 + gamma) * SR2) + c * sigma_e2;
 
-      // PCA dot
+      // PCA dot — when ρ²=0, label says "검출 실패"
       {
         const x = theta_PCA, y = rho2(theta_PCA, sigma_e2, c);
+        const px = xToPix(x), py = yToPix(y);
         ctx.fillStyle = U.textMuted();
         ctx.beginPath();
-        ctx.arc(xToPix(x), yToPix(y), 5, 0, 2 * Math.PI);
+        ctx.arc(px, py, 6, 0, 2 * Math.PI);
         ctx.fill();
-        U.text(ctx, `PCA: ρ²=${y.toFixed(2)}`, xToPix(x) + 8, yToPix(y) - 8,
-               { color: U.textMuted(), size: 11 });
+        ctx.strokeStyle = U.bg();
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        const failTag = y < 0.001 ? ' (검출 실패)' : '';
+        const labelY = y < 0.001 ? py - 14 : py - 10;
+        U.text(ctx, `PCA: ρ²=${y.toFixed(2)}${failTag}`, px + 10, labelY,
+               { color: y < 0.001 ? U.bad() : U.textMuted(), size: 11, bold: y < 0.001 });
       }
       // RP-PCA dot
       {

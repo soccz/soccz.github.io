@@ -619,28 +619,31 @@
       height: 320px;
       display: block;
     }
-    .deep-dive-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 14px;
-      padding: 7px 12px;
-      border-radius: var(--radius-sm);
-      background: var(--accent);
-      color: white !important;
+    .paper-card--deep {
+      border-color: var(--accent-soft);
+      background: linear-gradient(180deg, var(--surface) 0%, #fefaf5 100%);
+    }
+    .paper-card--deep:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 28px rgba(196,114,78,0.16);
+    }
+    .paper-card--deep::after {
+      content: '→ deep dive';
+      position: absolute;
+      top: 16px; right: 18px;
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.78rem;
+      font-size: 11px;
       font-weight: 600;
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: all 0.15s;
-      align-self: flex-start;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      opacity: 0.7;
+      transition: all 0.18s;
     }
-    .deep-dive-link:hover {
-      background: var(--accent-hover, #b06240);
+    .paper-card--deep:hover::after {
+      opacity: 1;
       transform: translateX(2px);
-      text-decoration: none !important;
     }
+    .paper-card { position: relative; }
     .viz-controls {
       margin-top: 14px;
       display: flex;
@@ -1142,10 +1145,13 @@ function renderPapersGrid() {
     const deepBadge = hasDeep
       ? `<span class="bucket-badge" style="background:#fdf0ea;color:#c4724e;font-weight:600">DEEP DIVE</span>`
       : '';
-    const deepLink = hasDeep
-      ? `<a class="deep-dive-link" href="deep.html?slug=${encodeURIComponent(p.slug)}" onclick="event.stopPropagation()">Deep Dive 보기 →</a>`
-      : '';
-    return `<div class="paper-card" onclick="openPaper('${p.slug}')">
+    // Deep-dive papers: clicking anywhere on the card goes to deep.html landing.
+    // Regular papers: stay on the inline standard reader.
+    const cardClick = hasDeep
+      ? `location.href='deep.html?slug=${encodeURIComponent(p.slug)}'`
+      : `openPaper('${p.slug}')`;
+    const cardClass = hasDeep ? 'paper-card paper-card--deep' : 'paper-card';
+    return `<div class="${cardClass}" onclick="${cardClick}">
       <div class="paper-card-top">
         <span class="bucket-badge ${bucketCls}">${bucketLbl}</span>
         ${deepBadge}
@@ -1158,7 +1164,6 @@ function renderPapersGrid() {
       </div>
       ${p.verdict ? `<div class="paper-verdict">${escapeHtml(p.verdict)}</div>` : ''}
       ${tags ? `<div class="paper-tags">${tags}</div>` : ''}
-      ${deepLink}
     </div>`;
   }).join('');
 }

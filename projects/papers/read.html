@@ -563,6 +563,7 @@
       return `<pre><code class="lang-${lang||''}">${escapeHtml(code)}</code></pre>`;
     };
     marked.setOptions({ renderer, breaks: false, gfm: true });
+    marked.use({ tokenizer: { del() { return undefined; } } }); // strikethrough 비활성 (~숫자 패턴 방지)
   }
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
