@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>금융 AI의 이해 — Deep Dive Study Guide (Kim 2024)</title>
+  <meta name="description" content="《금융 AI의 이해》 (김태헌, 제이펍 2024) 한국어 해설집. 6장 38절 28,000줄, PyWhy 4단계 + 200+ 1차 자료 + SVG 시각화.">
+  <meta property="og:title" content="금융 AI의 이해 — Deep Dive Study Guide">
+  <meta property="og:description" content="6 Chapters × 38 Sections × 28K lines. 일상 비유 → 1차 자료까지.">
+  <meta property="og:type" content="website">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/marked/marked.min.js" as="script">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" as="script">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-toc:#fafaf9;--bg-reader:#fff;--bg-tint:#f5f5f4;
+      --text-primary:#1c1917;--text-secondary:#57534e;--text-muted:#a8a29e;
+      --accent:#c4724e;--accent-light:#fdf0ea;--accent-hover:#b06240;
+      --border:#e7e5e4;--border-light:#d6d3d1;
+      --code-bg:#292524;--code-text:#e7e5e4;
+      /* Ch1~Ch6 색 코딩 — 금융 AI 시그니처 */
+      --ch1:#c4724e;  /* 금융 도메인 — 차분한 베이지/번트오렌지 */
+      --ch2:#5a7a96;  /* 양적투자 — 차분한 파랑 */
+      --ch3:#7a6a9a;  /* 신용 리스크 — 보라빛 */
+      --ch4:#c4724e;  /* 사기 탐지 — accent와 통합 */
+      --ch5:#5a8a6a;  /* MLOps — 차분한 청록 */
+      --ch6:#3a7d44;  /* 생성형 AI — 깊은 녹색 */
+    }
+    *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+    body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-toc);color:var(--text-primary);-webkit-font-smoothing:antialiased}
+
+    /* Progress */
+    #progress-bar{position:fixed;top:0;left:0;height:2px;z-index:9999;background:var(--accent);width:0%;transition:width 80ms linear;opacity:0;pointer-events:none}
+    #progress-bar.visible{opacity:1}
+
+    /* TOC */
+    #toc-view{min-height:100vh;transition:opacity .35s,transform .35s}
+    #toc-view.hidden{opacity:0;pointer-events:none;position:absolute;transform:translateY(-20px)}
+    .toc-home-link{position:fixed;top:1.5rem;left:1.5rem;z-index:30;font-size:.78rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+    .toc-home-link:hover{color:var(--text-primary)}
+
+    /* Hero */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;position:relative;background:linear-gradient(180deg,var(--bg-toc) 0%,#f0ece4 100%)}
+    .hero-inner{max-width:660px}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:.4rem 1rem;border-radius:20px;margin-bottom:2.5rem}
+    .hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(2.2rem,5vw,3.2rem);font-weight:700;line-height:1.35;letter-spacing:-.03em;margin-bottom:1.2rem}
+    .hero h1 span{color:var(--accent)}
+    .hero-subtitle{font-size:1rem;color:var(--text-secondary);font-weight:300;line-height:1.9;margin-bottom:3rem}
+    .hero-stats{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+    .hero-stat{background:var(--bg-reader);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1.8rem;min-width:120px;transition:transform .2s,box-shadow .2s}
+    .hero-stat:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,114,78,.12)}
+    .hero-stat-num{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:700;color:var(--text-primary);display:block;line-height:1.1}
+    .hero-stat-label{font-size:.72rem;color:var(--text-muted);letter-spacing:.06em;margin-top:.3rem;display:block}
+    .hero-cta{display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#fff;padding:.8rem 2rem;border-radius:8px;font-size:.9rem;font-weight:500;text-decoration:none;transition:background .2s,transform .2s;cursor:pointer;border:none}
+    .hero-cta:hover{background:var(--accent-hover);transform:translateY(-1px)}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:.6rem;letter-spacing:.15em;animation:drift 2.5s ease-in-out infinite}
+    @keyframes drift{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+    /* Book Progress — Ch1-Ch6 6단 색코딩 */
+    .book-progress{max-width:660px;margin:0 auto;padding:0 2rem 2rem}
+    .progress-bar-visual{display:flex;gap:3px;margin-bottom:.6rem;height:6px;border-radius:3px;overflow:hidden}
+    .progress-seg{transition:flex .3s}
+    .progress-seg.b1{background:var(--ch1);flex:8}
+    .progress-seg.b2{background:var(--ch2);flex:9}
+    .progress-seg.b3{background:var(--ch3);flex:7}
+    .progress-seg.b4{background:var(--ch4);flex:7}
+    .progress-seg.b5{background:var(--ch5);flex:4}
+    .progress-seg.b6{background:var(--ch6);flex:3}
+    .progress-legend{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+    .legend-item{display:flex;align-items:center;gap:.4rem;font-size:.66rem;color:var(--text-muted)}
+    .legend-dot{width:8px;height:8px;border-radius:50%}
+
+    /* Search */
+    .search-bar{max-width:660px;margin:0 auto 2rem;padding:0 2rem}
+    .search-input{width:100%;padding:.7rem 1rem .7rem 2.5rem;border:1px solid var(--border);border-radius:8px;font-size:.9rem;background:var(--bg-reader) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23a8a29e' stroke-width='2'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='M16 16l-3.5-3.5'/%3E%3C/svg%3E") no-repeat .8rem center;outline:none;transition:border-color .2s,box-shadow .2s;font-family:inherit;color:var(--text-primary)}
+    .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(196,114,78,.1)}
+    .search-input::placeholder{color:var(--text-muted)}
+
+    /* Chapter List */
+    .chapter-list-section{max-width:660px;margin:0 auto;padding:0 2rem 5rem}
+    .part-group{margin-bottom:2.5rem}
+    .part-label{display:flex;justify-content:space-between;align-items:center;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
+    .part-count{font-size:.65rem;color:var(--border-light);letter-spacing:.05em}
+    .part-color{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:.5rem}
+    .chapter-item{display:flex;align-items:baseline;gap:1.2rem;padding:.85rem 0;cursor:pointer;transition:padding-left .2s,background .15s;border-radius:6px}
+    .chapter-item:hover{padding-left:.6rem;background:rgba(196,114,78,.03)}
+    .chapter-item:hover .chapter-title{color:var(--accent)}
+    .chapter-item:hover .chapter-num{color:var(--text-secondary)}
+    .chapter-num{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:500;color:var(--border-light);min-width:3rem;text-align:right;transition:color .2s}
+    .chapter-info{flex:1}
+    .chapter-title{font-size:.95rem;font-weight:500;color:var(--text-primary);line-height:1.5;transition:color .2s}
+    .chapter-desc{font-size:.78rem;color:var(--text-muted);margin-top:.2rem;line-height:1.5}
+    .chapter-item.hidden{display:none}
+
+    /* TOC Footer */
+    .toc-footer{max-width:660px;margin:0 auto;padding:3rem 2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--text-muted)}
+    .toc-footer a{color:var(--text-secondary);text-decoration:none;transition:color .2s}
+    .toc-footer a:hover{color:var(--accent)}
+    .toc-footer-count{letter-spacing:.05em}
+
+    /* Reader */
+    #reader-view{display:none;background:var(--bg-reader);min-height:100vh}
+    #reader-view.active{display:block}
+    .reader-topbar{position:fixed;top:0;left:0;right:0;z-index:40;background:var(--bg-reader);border-bottom:1px solid var(--border);padding:.7rem 1.5rem;display:flex;align-items:center;gap:1rem;font-size:.8rem}
+    .topbar-back,.topbar-toc-btn{background:none;border:none;cursor:pointer;color:var(--text-secondary);padding:.4rem;border-radius:4px;transition:background .15s,color .15s;display:flex;align-items:center;justify-content:center}
+    .topbar-back:hover,.topbar-toc-btn:hover{background:var(--bg-tint);color:var(--text-primary)}
+    .topbar-title{flex:1;font-weight:500;color:var(--text-primary);font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .topbar-home{font-size:.75rem;color:var(--text-muted);text-decoration:none;transition:color .2s;padding:0 .8rem}
+    .topbar-home:hover{color:var(--text-primary)}
+    .topbar-chapter-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);padding:0 .5rem}
+
+    /* Drawer */
+    .toc-drawer-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+    .toc-drawer-overlay.open{opacity:1;pointer-events:auto}
+    .toc-drawer{position:fixed;top:0;right:-340px;width:320px;height:100vh;background:var(--bg-reader);box-shadow:-10px 0 30px rgba(0,0,0,.1);z-index:60;padding:1.5rem 1.2rem;overflow-y:auto;transition:right .3s}
+    .toc-drawer.open{right:0}
+    .toc-drawer-title{font-family:'Noto Serif KR',serif;font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
+    .toc-drawer-sep{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin:1.2rem 0 .5rem;padding-top:.6rem;border-top:1px solid var(--border-light)}
+    .toc-drawer-sep:first-of-type{border-top:none;padding-top:0;margin-top:0}
+    .toc-drawer-item{display:flex;align-items:baseline;gap:.7rem;padding:.5rem .4rem;cursor:pointer;border-radius:4px;transition:background .15s,color .15s;font-size:.8rem}
+    .toc-drawer-item:hover{background:var(--bg-tint)}
+    .toc-drawer-item.active{background:var(--accent-light);color:var(--accent)}
+    .toc-drawer-num{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted);min-width:2.5rem}
+    .toc-drawer-item.active .toc-drawer-num{color:var(--accent)}
+
+    /* Reader column */
+    .reader-column{max-width:760px;margin:0 auto;padding:70px 2rem 4rem;font-size:1rem;line-height:1.8;color:var(--text-primary)}
+    .reader-content h1{font-family:'Noto Serif KR',serif;font-size:2.2rem;font-weight:700;line-height:1.3;letter-spacing:-.02em;margin:2.5rem 0 1.2rem}
+    .reader-content h2{font-family:'Noto Serif KR',serif;font-size:1.7rem;font-weight:700;line-height:1.35;margin:2.5rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+    .reader-content h3{font-family:'Noto Serif KR',serif;font-size:1.3rem;font-weight:700;margin:2rem 0 .8rem;color:var(--text-primary)}
+    .reader-content h4{font-size:1.1rem;font-weight:600;margin:1.6rem 0 .6rem;color:var(--text-primary)}
+    .reader-content h5{font-size:.95rem;font-weight:600;margin:1.4rem 0 .5rem;color:var(--text-secondary)}
+    .reader-content p{margin:0 0 1.2rem}
+    .reader-content ul,.reader-content ol{margin:0 0 1.2rem 1.5rem}
+    .reader-content li{margin-bottom:.4rem}
+    .reader-content blockquote{border-left:3px solid var(--accent);padding:.6rem 1.2rem;margin:1.2rem 0;background:var(--accent-light);color:var(--text-secondary);font-style:normal;border-radius:0 6px 6px 0}
+    .reader-content blockquote p:last-child{margin:0}
+    .reader-content code{font-family:'JetBrains Mono',monospace;font-size:.88em;background:var(--bg-tint);padding:.15rem .4rem;border-radius:3px;color:var(--text-primary)}
+    .reader-content pre{background:var(--code-bg);color:var(--code-text);padding:1rem 1.2rem;border-radius:8px;overflow-x:auto;margin:1.2rem 0;font-size:.85rem;line-height:1.65}
+    .reader-content pre code{background:none;padding:0;color:inherit;font-size:inherit}
+    .reader-content table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.9rem}
+    .reader-content th,.reader-content td{padding:.5rem .8rem;border:1px solid var(--border);text-align:left;vertical-align:top}
+    .reader-content th{background:var(--bg-tint);font-weight:600;color:var(--text-primary)}
+    .reader-content hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
+    .reader-content svg{display:block;margin:1.5rem auto;max-width:100%;height:auto}
+    .reader-content a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+    .reader-content a:hover{border-bottom-color:var(--accent)}
+    .reader-content strong{font-weight:600;color:var(--text-primary)}
+
+    /* Reader Nav Bottom */
+    .reader-nav-bottom{display:flex;gap:1rem;max-width:760px;margin:3rem auto 0;padding:0 2rem}
+    .reader-nav-card{flex:1;background:var(--bg-toc);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+    .reader-nav-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 12px rgba(196,114,78,.08)}
+    .reader-nav-card.empty{opacity:0;pointer-events:none}
+    .reader-nav-card.next{text-align:right}
+    .reader-nav-label{font-size:.7rem;color:var(--text-muted);letter-spacing:.08em;margin-bottom:.3rem}
+    .reader-nav-title{font-size:.9rem;color:var(--text-primary);font-weight:500;line-height:1.4}
+
+    /* Loading */
+    .loading-indicator{display:flex;justify-content:center;gap:.5rem;padding:4rem 0}
+    .loading-dot{width:8px;height:8px;border-radius:50%;background:var(--text-muted);animation:pulse 1.4s ease-in-out infinite}
+    .loading-dot:nth-child(2){animation-delay:.16s}
+    .loading-dot:nth-child(3){animation-delay:.32s}
+    @keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+
+    /* Scroll to Top */
+    .scroll-top{position:fixed;bottom:2rem;right:2rem;z-index:50;width:40px;height:40px;border-radius:50%;background:var(--bg-reader);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s,box-shadow .2s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+    .scroll-top.visible{opacity:1;pointer-events:auto}
+    .scroll-top:hover{box-shadow:0 4px 16px rgba(0,0,0,.12);transform:translateY(-2px)}
+
+    @media(max-width:640px){
+      .hero-stats{gap:.6rem}
+      .hero-stat{padding:.8rem 1.2rem;min-width:90px}
+      .hero-stat-num{font-size:1.6rem}
+      .chapter-item{gap:.8rem}
+      .reader-column{padding:70px 1.2rem 3rem}
+      .reader-nav-bottom{flex-direction:column}
+      .reader-nav-card.next{text-align:left}
+      .toc-drawer{width:280px}
+      .progress-legend{gap:.6rem;font-size:.6rem}
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- TOC -->
+<div id="toc-view">
+  <a class="toc-home-link" href="/">&larr; Home</a>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        김태헌 《금융 AI의 이해》 (제이펍 2024)
+      </span>
+      <h1>금융 AI의 이해<br><span>Deep Dive Study Guide</span></h1>
+      <p class="hero-subtitle">
+        350페이지 원서를 28,000줄 한국어 해설집으로.<br>
+        일상 비유 &rarr; 1차 자료 인용 &rarr; SVG 시각화 &rarr; 한국 시장 보강.
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-num">6</span><span class="hero-stat-label">Chapters</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">38</span><span class="hero-stat-label">Sections</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">28K</span><span class="hero-stat-label">Lines</span></div>
+        <div class="hero-stat"><span class="hero-stat-num">200+</span><span class="hero-stat-label">Citations</span></div>
+      </div>
+      <button class="hero-cta" onclick="document.querySelector('.book-progress').scrollIntoView({behavior:'smooth'})">
+        Start Reading
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="scroll-hint">SCROLL &darr;</div>
+  </section>
+
+  <!-- Chapter Progress -->
+  <div class="book-progress">
+    <div class="progress-bar-visual">
+      <div class="progress-seg b1"></div>
+      <div class="progress-seg b2"></div>
+      <div class="progress-seg b3"></div>
+      <div class="progress-seg b4"></div>
+      <div class="progress-seg b5"></div>
+      <div class="progress-seg b6"></div>
+    </div>
+    <div class="progress-legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--ch1)"></span>Ch1 도메인 (8)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--ch2)"></span>Ch2 양적투자 (9)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--ch3)"></span>Ch3 신용리스크 (7)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--ch4)"></span>Ch4 사기탐지 (7)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--ch5)"></span>Ch5 MLOps (4)</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--ch6)"></span>Ch6 GenAI (3)</span>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar">
+    <input type="text" class="search-input" id="search-input" placeholder="절 검색... (예: BloombergGPT, 신용평가, LSTM)">
+  </div>
+
+  <div class="chapter-list-section" id="chapter-list"></div>
+
+  <footer class="toc-footer">
+    <a href="/" rel="noopener">Home</a>
+    <span class="toc-footer-count">6 chapters &middot; 38 sections &middot; 28K lines</span>
+  </footer>
+</div>
+
+<!-- Reader -->
+<div id="reader-view">
+  <div class="reader-topbar">
+    <button class="topbar-back" onclick="goToToc()" aria-label="Back">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </button>
+    <span class="topbar-title" id="topbar-title"></span>
+    <a class="topbar-home" href="/" rel="noopener">Home</a>
+    <span class="topbar-chapter-num" id="topbar-num"></span>
+    <button class="topbar-toc-btn" onclick="toggleDrawer()" aria-label="Sections">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+
+  <div class="toc-drawer-overlay" id="drawer-overlay" onclick="toggleDrawer()"></div>
+  <div class="toc-drawer" id="toc-drawer">
+    <div class="toc-drawer-title">Sections</div>
+    <div id="drawer-list"></div>
+  </div>
+
+  <div class="reader-column">
+    <div class="reader-content" id="reader-content"></div>
+    <div class="reader-nav-bottom" id="reader-nav"></div>
+  </div>
+</div>
+
+<!-- Scroll to Top -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  // 로컬 chapters/ 폴더에서 md fetch (같은 도메인이라 raw 불필요, private repo 회피)
+  const RAW='./chapters/';
+  const CACHE_BUST='v='+Date.now();
+
+  const CHAPTERS=[
+    {label:'Chapter 1 — 금융 AI 도메인 입문',color:'ch1',sections:[
+      {id:'1.1',file:'C01_01_what_is_finance.md',title:'금융이란 무엇인가?',desc:'PV/FV, Merton-Bodie 6 functions, 정보 비대칭과 AI'},
+      {id:'1.2',file:'C01_02_financial_institutions.md',title:'금융을 다루는 기관들',desc:'은행/증권/보험 7 기관, Glass-Steagall, Basel III'},
+      {id:'1.3',file:'C01_03_ai_terminology.md',title:'AI와 그 주변 용어들',desc:'AI/ML/DL/GenAI, PAC Learning, Transformer 계보'},
+      {id:'1.4',file:'C01_04_finance_and_ai.md',title:'금융과 AI',desc:'17가지 활용 사례, FSC 4대 가치, SR 11-7, EU AI Act'},
+      {id:'1.5',file:'C01_05_ai_applications.md',title:'금융 AI의 주요 활용 분야',desc:'6 Pillars — 신용평가·사기·고객서비스·투자·준법·자동화'},
+      {id:'1.6',file:'C01_06_problem_definition.md',title:'금융 AI 핵심 문제 정의',desc:'CRISP-DM, Oliver Wyman 16 problems, 문제 정의 프레임'},
+      {id:'1.7',file:'C01_07_challenges.md',title:'전망과 도전적 과제',desc:'데이터·규제·레거시·윤리 4대 장벽, Apple Card 차별'},
+      {id:'1.8',file:'C01_08_summary.md',title:'마무리',desc:'Ch1 종합 + Ch2 이행. 학술 지형도'},
+    ]},
+    {label:'Chapter 2 — 양적 투자 (Quantitative Investing)',color:'ch2',sections:[
+      {id:'2.1',file:'C02_01_investment_methods.md',title:'대표적인 금융 투자 방식',desc:'5가지 자산군, 퀀트 5단계 진화, 알고리즘 트레이딩 시장'},
+      {id:'2.2',file:'C02_02_why_ai_pros_cons.md',title:'AI가 각광받는 이유 + 장점과 단점',desc:'컴퓨팅·데이터·오픈소스 3가지 동력, BloombergGPT, Quant Quake 2007'},
+      {id:'2.3',file:'C02_03_data_types_sources.md',title:'금융 투자 데이터 유형과 소스',desc:'마켓·펀더멘털·대체 3유형, 6 평가 기준, 위성 데이터'},
+      {id:'2.4',file:'C02_04_traditional_vs_ai_quant.md',title:'전통 퀀트 vs. AI 퀀트',desc:'8가지 차이, 5대 전통 전략, 6대 AI 영역'},
+      {id:'2.5',file:'C02_05_cautions_use_cases.md',title:'주의사항 + 실제 응용 사례',desc:'4가지 함정 (편향·시계열·과적합·해석), MAN AHL, 위성 페어'},
+      {id:'2.6',file:'C02_06_summary.md',title:'마무리',desc:'Ch2 종합 + 한국 시장 한계, 실습 진입'},
+      {id:'2.7',file:'C02_07_lab1_traditional_quant.md',title:'실습 1 — 전통 퀀트 (Python)',desc:'yfinance, TA-Lib, backtrader, 볼린저밴드 백테스트'},
+      {id:'2.8',file:'C02_08_lab2_ml_strategy.md',title:'실습 2 — ML 투자 전략',desc:'XGBoost/RF, 시계열 CV, 팩터 모델 ML 적용'},
+      {id:'2.9',file:'C02_09_lab3_dl_strategy.md',title:'실습 3 — DL 투자 전략',desc:'LSTM/Transformer, FinGPT, 시계열 예측 한계'},
+    ]},
+    {label:'Chapter 3 — 신용 리스크 (Credit Risk)',color:'ch3',sections:[
+      {id:'3.1',file:'C03_01_credit_risk_overview.md',title:'신용 리스크 관리 + 신용평가 모델 활용',desc:'FICO/NICE/KCB, 6개국 비교, BNPL, 대안 데이터 신용평가'},
+      {id:'3.2',file:'C03_02_risk_system.md',title:'신용 리스크 관리 체계 + AI 적용',desc:'Application/Behavioral/Collection/Recovery, XAI 의무'},
+      {id:'3.3',file:'C03_03_evaluation_metrics.md',title:'신용 평가 모델 평가 지표',desc:'KS·PSI·Precision/Recall·AUC-ROC, NICE 검증 기준'},
+      {id:'3.4',file:'C03_04_prerequisites.md',title:'사전 지식',desc:'Basel default 90일, vintage 분석, reject inference'},
+      {id:'3.5',file:'C03_05_ml_credit_model.md',title:'ML 기반 신용평가 모델 개발',desc:'7단계 파이프라인, WoE/IV, 스코어카드, EU AI Act High-Risk'},
+      {id:'3.6',file:'C03_06_lab1_xgboost.md',title:'실습 1 — XGBoost 신용평가',desc:'Kaggle AmEx 데이터, SHAP 해석, 모델 검증'},
+      {id:'3.7',file:'C03_07_lab2_optbinning.md',title:'실습 2 — OptBinning + Scorecard',desc:'OptimalBinning, BinningProcess, Scorecard 자동화'},
+    ]},
+    {label:'Chapter 4 — 사기 거래 탐지 (Fraud Detection)',color:'ch4',sections:[
+      {id:'4.1',file:'C04_01_fraud_intro.md',title:'사기 거래 탐지 도입',desc:'5가지 사기 특성, 9가지 유형, FATF, 보이스피싱 1,965억'},
+      {id:'4.2',file:'C04_02_evolution_market.md',title:'AI 진화 + 시장 규모',desc:'알리페이 AlphaRisk, 글로벌 $479억 시장, 3가지 접근법'},
+      {id:'4.3',file:'C04_03_strategy_summary.md',title:'리스크 관리 전략 + 마무리',desc:'5단계 전략, 차단 vs 고객경험, 카뱅 FDS 87.7~385억'},
+      {id:'4.4',file:'C04_04_lab1_rule_based.md',title:'실습 1 — 규칙 기반 사기 탐지',desc:'Faker, 합성 데이터, IF-THEN 규칙 엔진'},
+      {id:'4.5',file:'C04_05_lab2_ml.md',title:'실습 2 — ML 신용카드 사기 탐지',desc:'Kaggle 284K, SMOTE, Isolation Forest, AE, XGBoost'},
+      {id:'4.6',file:'C04_06_lab3_dl.md',title:'실습 3 — DL 신용카드 사기 탐지',desc:'LSTM, Transformer, 시계열 사기 패턴'},
+      {id:'4.7',file:'C04_07_lab4_graph.md',title:'실습 4 — 그래프 사기 탐지',desc:'NetworkX, Community Detection, GNN (PyTorch Geometric)'},
+    ]},
+    {label:'Chapter 5 — MLOps (모델 운영)',color:'ch5',sections:[
+      {id:'5.1',file:'C05_01_data_pipeline.md',title:'데이터 파이프라인 구축',desc:'Batch vs Streaming, Airflow, Kafka, 카뱅 EKS'},
+      {id:'5.2',file:'C05_02_sql_packaging_deploy.md',title:'SQL 배치 + 모델 패키징/배포',desc:'pickle/joblib/ONNX, Flask/FastAPI/Docker/K8s'},
+      {id:'5.3',file:'C05_03_testing_monitoring.md',title:'테스트 + 모니터링 + 재학습',desc:'데이터 드리프트, PSI/KS/JSD, A/B 테스트, 6가지 배포 전략'},
+      {id:'5.4',file:'C05_04_performance_summary.md',title:'프로덕트 성과 측정 + 마무리',desc:'Chip Huyen 4특성, SLA/SLO/SLI, 비즈니스 KPI'},
+    ]},
+    {label:'Chapter 6 — 생성형 AI (Generative AI)',color:'ch6',sections:[
+      {id:'6.1',file:'C06_01_genai_principles.md',title:'GenAI 원리 + LLM 도구',desc:'Prompt 6종, RAG 4단계, LangChain, Vector DB, BloombergGPT'},
+      {id:'6.2',file:'C06_02_finance_applications.md',title:'금융 생성형 AI 활용 방안',desc:'OECD 분류, 11개 글로벌 사례, JP모건 LLM Suite, McKinsey 9-15%'},
+      {id:'6.3',file:'C06_03_misconceptions_summary.md',title:'GenAI 오해와 진실 + 마무리',desc:'Chip Huyen 4 misconceptions, 환각, 학술적 재검토'},
+    ]},
+  ];
+
+  // Flatten sections
+  const CH=[];CHAPTERS.forEach(b=>b.sections.forEach(r=>CH.push({...r,bookLabel:b.label,bookColor:b.color})));
+  const T=CH.length,cache=new Map();let curId=null;
+
+  const $=id=>document.getElementById(id);
+  const tocV=$('toc-view'),readV=$('reader-view'),readC=$('reader-content'),readN=$('reader-nav'),
+        pBar=$('progress-bar'),tTitle=$('topbar-title'),tNum=$('topbar-num'),
+        dOverlay=$('drawer-overlay'),drawer=$('toc-drawer'),dList=$('drawer-list'),
+        scrollBtn=$('scroll-top');
+
+  marked.setOptions({gfm:true,breaks:false});
+
+  // KaTeX와 marked 충돌 방지: 수식 블록을 먼저 보호
+  const mathStore=[];
+  function protectMath(md){
+    md=md.replace(/\$\$[\s\S]*?\$\$/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    md=md.replace(/(?<![\\$])\$(?!\$)([^\n$]+?)\$(?!\$)/g,m=>{mathStore.push(m);return `%%MATH${mathStore.length-1}%%`});
+    return md;
+  }
+  function restoreMath(html){
+    return html.replace(/%%MATH(\d+)%%/g,(_,i)=>mathStore[i]);
+  }
+
+  function idx(id){return CH.findIndex(c=>c.id===String(id))}
+
+  function buildToc(){
+    $('chapter-list').innerHTML=CHAPTERS.map(b=>`
+      <div class="part-group" data-book="${b.color}">
+        <div class="part-label">
+          <span><span class="part-color" style="background:var(--${b.color})"></span>${b.label}</span>
+          <span class="part-count">${b.sections.length} sections</span>
+        </div>
+        ${b.sections.map(r=>`
+          <div class="chapter-item" data-ch="${r.id}" data-search="${r.id} ${r.title} ${r.desc}">
+            <span class="chapter-num">§${r.id}</span>
+            <div class="chapter-info">
+              <div class="chapter-title">${r.title}</div>
+              <div class="chapter-desc">${r.desc}</div>
+            </div>
+          </div>`).join('')}
+      </div>`).join('');
+    $('chapter-list').addEventListener('click',e=>{const i=e.target.closest('.chapter-item');if(i)open(i.dataset.ch)});
+  }
+
+  function buildDrawer(){
+    let h='';
+    CHAPTERS.forEach(b=>{
+      h+=`<div class="toc-drawer-sep">${b.label.split('—')[0].trim()}</div>`;
+      b.sections.forEach(r=>{h+=`<div class="toc-drawer-item" data-ch="${r.id}"><span class="toc-drawer-num">§${r.id}</span><span>${r.title}</span></div>`});
+    });
+    dList.innerHTML=h;
+    dList.addEventListener('click',e=>{const i=e.target.closest('.toc-drawer-item');if(i){open(i.dataset.ch);toggleD()}});
+  }
+
+  function toggleD(){dOverlay.classList.toggle('open');drawer.classList.toggle('open')}
+
+  async function open(id){
+    id=String(id);const i=idx(id),ch=CH[i];if(!ch)return;curId=id;
+    tocV.classList.add('hidden');readV.classList.add('active');pBar.classList.add('visible');
+    window.scrollTo({top:0,behavior:'instant'});
+    tTitle.textContent=`§${ch.id}. ${ch.title}`;tNum.textContent=`${i+1} / ${T}`;
+    dList.querySelectorAll('.toc-drawer-item').forEach(el=>el.classList.toggle('active',el.dataset.ch===id));
+    history.pushState({ch:id},'',`?ch=${id}`);
+    if(cache.has(id)){render(cache.get(id))}
+    else{
+      readC.innerHTML=`<div class="loading-indicator"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>`;
+      try{const r=await fetch(RAW+encodeURIComponent(ch.file)+'?'+CACHE_BUST);if(!r.ok)throw 0;const md=await r.text();cache.set(id,md);if(curId===id)render(md)}
+      catch(e){readC.innerHTML=`<p style="color:var(--text-muted);text-align:center;padding:4rem 0">불러올 수 없습니다.</p>`}
+    }
+    nav(i);
+  }
+
+  function render(md){
+    mathStore.length=0;
+    const safemd=protectMath(md);
+    let html=marked.parse(safemd);
+    html=restoreMath(html);
+    readC.innerHTML=html;
+    renderMathInElement(readC,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  }
+
+  function nav(i){
+    const p=i>0?CH[i-1]:null,n=i<T-1?CH[i+1]:null;
+    readN.innerHTML=`
+      <div class="reader-nav-card prev ${p?'':'empty'}" ${p?`onclick="openCh('${p.id}')"`:''}>${p?`<div class="reader-nav-label">&larr; Previous</div><div class="reader-nav-title">§${p.id}. ${p.title}</div>`:''}</div>
+      <div class="reader-nav-card next ${n?'':'empty'}" ${n?`onclick="openCh('${n.id}')"`:''}>${n?`<div class="reader-nav-label">Next &rarr;</div><div class="reader-nav-title">§${n.id}. ${n.title}</div>`:''}</div>`;
+  }
+
+  window.goToToc=function(){readV.classList.remove('active');tocV.classList.remove('hidden');pBar.classList.remove('visible');pBar.style.width='0%';curId=null;history.pushState(null,'',location.pathname)};
+  window.openCh=open;window.toggleDrawer=toggleD;
+
+  // Scroll progress + scroll-to-top
+  window.addEventListener('scroll',()=>{
+    if(readV.classList.contains('active')){const h=document.documentElement.scrollHeight-innerHeight;pBar.style.width=h>0?(scrollY/h*100)+'%':'0%'}
+    scrollBtn.classList.toggle('visible',scrollY>400);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown',e=>{
+    if(!readV.classList.contains('active'))return;const i=idx(curId);
+    if(e.key==='ArrowRight'&&i<T-1)open(CH[i+1].id);
+    if(e.key==='ArrowLeft'&&i>0)open(CH[i-1].id);
+    if(e.key==='Escape'){if(drawer.classList.contains('open'))toggleD();else goToToc()}
+  });
+
+  // Search
+  $('search-input').addEventListener('input',e=>{
+    const q=e.target.value.toLowerCase().trim();
+    document.querySelectorAll('.chapter-item').forEach(el=>{
+      el.classList.toggle('hidden',q&&!el.dataset.search.toLowerCase().includes(q));
+    });
+    document.querySelectorAll('.part-group').forEach(g=>{
+      const visible=g.querySelectorAll('.chapter-item:not(.hidden)').length;
+      g.style.display=q&&!visible?'none':'';
+    });
+  });
+
+  // Popstate
+  window.addEventListener('popstate',e=>{if(e.state&&e.state.ch)open(e.state.ch);else goToToc()});
+
+  // Init
+  buildToc();buildDrawer();
+  const p=new URLSearchParams(location.search).get('ch');
+  if(p!==null&&idx(p)>=0)open(p);
+})();
+</script>
+</body>
+</html>
