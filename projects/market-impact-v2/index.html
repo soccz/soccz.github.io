@@ -379,6 +379,25 @@
     <blockquote><strong>정책이 주가에 영향을 미친 "어떤 경로"가 뉴스 안에서 형성됐는지를 측정한다.</strong></blockquote>
     <p>이 측정 단위가 본 보고서가 다루는 <strong>PTEI (Policy Transmission Evidence Index)</strong> 다. 뉴스 감성 점수가 아니라, 정책 전달경로 증거의 양이다.</p>
 
+    <h3><span class="snum">1.6</span>"전달경로"라는 단어의 의미</h3>
+    <p>처음 이 용어를 쓸 때 사용자가 다음과 같이 정의를 제안했다.</p>
+    <blockquote>"감성을 측정하는 게 아니라, 정책이 주가에 영향을 미친 경로를 측정하자. 예를 들어 K칩스법은 '비용 절감 → 투자 확대 → 이익 기대 상승 → 주가 상승'의 경로가 뉴스에서 형성됐는지를 본다."</blockquote>
+    <p>이 발상의 핵심은 정책 효과를 <em>단일 sentiment</em>가 아니라 <em>연쇄적 경로</em>로 분해하는 데 있다. 같은 정책도 산업·시기에 따라 다른 경로로 시장에 전달되며, 그 경로의 종류를 추적해야 정책의 다층 효과를 잡을 수 있다.</p>
+    <p>이 사고가 Part 3에서 6채널(C1~C6)로 표준화되고, Part 4에서 정책 카드 type_subtype 8개로 정착하는 흐름이 본 보고서가 따라가는 길이다.</p>
+
+    <h3><span class="snum">1.7</span>첫 데이터 EDA — 무엇이 보였나</h3>
+    <p>NLP 트랙의 첫 작업은 99,539건 코퍼스의 EDA였다. 이 단계에서 드러난 분포는 다음과 같다.</p>
+    <table>
+      <tr><th>지표</th><th>값</th></tr>
+      <tr><td>총 기사</td><td>99,539건</td></tr>
+      <tr><td>언론사</td><td>102종 (top 5: 머니투데이·한국경제·서울경제·이데일리·파이낸셜뉴스)</td></tr>
+      <tr><td>rel_day 범위</td><td>[-30, +29] (총 60일 윈도우)</td></tr>
+      <tr><td>본문 평균 길이</td><td>198.9자 (cap 200자)</td></tr>
+      <tr><td>정책별 평균 기사 수</td><td>약 2,000건</td></tr>
+    </table>
+    <p>이 EDA 한 표가 NLP 방법론의 거의 모든 제약 조건을 결정했다. <em>200자cap</em>은 NLI 단문 구조를 강제했고, <em>102 언론사</em>는 매체별 편향 가중치(<code>diffusion</code>)를 도입하게 했으며, <em>60일 윈도우</em>는 시간창 설계(D-7~D+5)의 출발점이 됐다.</p>
+    <p>이 코퍼스 자체가 1차 트랙의 NLP 작업(1,553건 sentiment)을 64배로 확장한 규모다. 그러나 <em>규모만 큰</em> 데이터로는 의미가 없다. 어떻게 분석할지가 핵심이며, 그 답이 Part 2부터의 함정·결정·전환의 이야기다.</p>
+
     <div class="figure-wrap">
       <img src="assets/F1_three_tracks.webp" alt="F1">
       <div class="figure-caption"><span class="fid">F1</span>프로젝트 3트랙 다이어그램 — 1차 CAR 검증 → 2차 NLP (PTEI) → 3차 통합 보도</div>
@@ -432,6 +451,43 @@
     <h3><span class="snum">2.5</span>명명 — Policy-to-Price Transmission NLP</h3>
     <blockquote><strong>PPT-NLP: Policy-to-Price Transmission NLP</strong><br><em>정책이 주가로 번역되는 전달경로를 측정하는 계량 텍스트 분석 프레임워크</em></blockquote>
     <p>핵심은 측정 단위가 다르다는 점이다. 기존 연구의 측정 단위가 <em>뉴스 감성·뉴스 빈도·토픽 비중</em>이었다면, PPT-NLP의 측정 단위는 <strong>정책 전달경로 증거량</strong>이다.</p>
+
+    <h3><span class="snum">2.6</span>19편 논문 매핑 — 왜 다양한 출처가 필요했나</h3>
+    <p>방법론 설계와 동시에 19편의 선행 연구를 다운로드해 정리했다. 단순 인용이 아니라 <em>PPT-NLP의 각 인자가 어느 논문의 어떤 기법에서 왔는지</em>를 명시한다.</p>
+    <table>
+      <tr><th>인자</th><th>출처</th></tr>
+      <tr><td>감성 분석 베이스라인</td><td>회계학연구 2022 (KoBERT 한국 기업뉴스 85.7%)</td></tr>
+      <tr><td>도메인 적응 BERT</td><td>Araci 2019, Yang 2020 (FinBERT)</td></tr>
+      <tr><td>NLI 채널별 가설</td><td>Yin·Hay·Roth 2019 (zero-shot entailment)</td></tr>
+      <tr><td>Stance detection 베이스</td><td>Mohammad et al. 2016 (SemEval)</td></tr>
+      <tr><td>정책 불확실성 지수</td><td>Baker·Bloom·Davis 2016 (QJE EPU)</td></tr>
+      <tr><td>뉴스→주가 인과 표준</td><td>Tetlock 2007 (JF), Bollen 2011 (Twitter)</td></tr>
+      <tr><td>채널 키워드 추출</td><td>Grootendorst 2022 (BERTopic c-TF-IDF)</td></tr>
+      <tr><td>변화점 탐지</td><td>Adams·MacKay 2007</td></tr>
+      <tr><td>한국어 NLU 벤치마크</td><td>Park 2021 (KLUE)</td></tr>
+      <tr><td>한국어 금융 임베딩</td><td>TWICE 2025</td></tr>
+    </table>
+    <p>이 매핑이 <em>"우리가 새로 만든 것"</em> vs <em>"기존 방법을 결합한 것"</em>을 명확히 분리한다. PPT-NLP가 무에서 발명한 알고리즘이 아니라 기존 방법의 재구성임을 학술적으로 명시한 결과다.</p>
+
+    <h3><span class="snum">2.7</span>200자 본문이 강점으로 바뀐 순간</h3>
+    <p>본문 200자cap은 처음 부정적인 제약으로 보였다. 그러나 NLI 구조와 결합하면서 오히려 강점이 됐다.</p>
+    <table>
+      <tr><th>장문 의미 추론 (포기)</th><th>단문 stance 판단 (채택)</th></tr>
+      <tr><td>한 기사에서 정책의 다층 영향 종합</td><td>한 기사가 정책의 <em>한 채널</em> 지지 여부만 판단</td></tr>
+      <tr><td>모델·라벨링 부담 큼</td><td>모델·라벨링 부담 작음</td></tr>
+      <tr><td>복잡 추론 필요</td><td>NLI 가설로 단순 분류</td></tr>
+    </table>
+    <p>이 발견이 <em>PTEI 식의 채널 분해 구조</em>로 직결됐다. 즉 한 기사가 6채널 모두에서 점수를 갖되 각 채널에서는 단문 stance만 판단한다. 채널이 단위가 되니 본문 200자로 충분하다.</p>
+
+    <h3><span class="snum">2.8</span>BigKinds 코퍼스의 노이즈 — 첫 신호</h3>
+    <p>99,539건을 BigKinds가 정책 키워드로 수집했지만, 본문을 읽어보면 <em>정책 직접 기사</em>는 절반 정도였다.</p>
+    <table>
+      <tr><th>정책</th><th>코퍼스</th><th>정책 직접 기사 추정</th></tr>
+      <tr><td>K칩스법 1차</td><td>5,000건</td><td>약 30~40% (나머지는 반도체 일반·세제 일반)</td></tr>
+      <tr><td>일본 수출규제</td><td>5,000건</td><td>약 70% (직접 보도 비중 높음)</td></tr>
+      <tr><td>8·2 부동산 대책</td><td>5,000건</td><td><strong>추정 5~10%</strong> (다른 부동산 정책·시장 일반 기사 다수)</td></tr>
+    </table>
+    <p>이 비율의 차이가 후에 PPT-NLP 파이프라인의 첫 단계인 <strong>relevance gate</strong>로 이어졌다. 단순히 BigKinds 키워드로 수집된 거라고 정책 관련이라고 가정하면 안 된다는 발견이 v3.1 gate의 출발점이다.</p>
 
     <div class="figure-wrap">
       <img src="assets/F2_surface_trap.webp" alt="F2">
