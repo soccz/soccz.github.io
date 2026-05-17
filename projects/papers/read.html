@@ -406,6 +406,21 @@
       background: var(--bg-warm);
       border-radius: var(--radius-md);
     }
+    .viz-block-title {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 4px 0 12px;
+      letter-spacing: -0.005em;
+    }
+    .viz-block-caption {
+      margin-top: 12px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding: 0 4px;
+    }
     .viz-controls {
       margin-top: 14px;
       display: flex; flex-wrap: wrap;
@@ -550,14 +565,18 @@
         const spec = lang.slice(4);
         const [type, ...rest] = spec.split(':');
         const par = {};
-        rest.join(':').split(',').forEach(kv => {
+        rest.join(':').split(/[,;]/).forEach(kv => {
           const i = kv.indexOf('=');
           if (i > 0) par[kv.slice(0, i).trim()] = kv.slice(i + 1).trim();
         });
         const id = 'viz_' + Math.random().toString(36).slice(2, 9);
+        const title = par.title ? `<div class="viz-block-title">${escapeHtml(par.title)}</div>` : '';
+        const caption = par.caption ? `<div class="viz-block-caption">${escapeHtml(par.caption)}</div>` : '';
         return `<div class="viz-block">
-          <div class="viz-block-label">interactive · ${type}</div>
-          <canvas id="${id}" data-viz-type="${type}" data-viz-params='${JSON.stringify(par).replace(/'/g,'&#39;')}'></canvas>
+          <div class="viz-block-label">interactive · ${escapeHtml(type)}</div>
+          ${title}
+          <canvas id="${id}" data-viz-type="${escapeHtml(type)}" data-viz-params='${JSON.stringify(par).replace(/'/g,'&#39;')}'></canvas>
+          ${caption}
         </div>`;
       }
       return `<pre><code class="lang-${lang||''}">${escapeHtml(code)}</code></pre>`;

@@ -619,6 +619,20 @@
       height: 320px;
       display: block;
     }
+    .viz-block-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 4px 0 12px;
+    }
+    .viz-block-caption {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding: 0 4px;
+    }
     .paper-card--deep {
       border-color: var(--accent-soft);
       background: linear-gradient(180deg, var(--surface) 0%, #fefaf5 100%);
@@ -906,14 +920,18 @@ function setupMarked() {
       const spec = lang.slice(4);
       const [type, ...paramParts] = spec.split(':');
       const params = {};
-      paramParts.join(':').split(',').forEach(kv => {
-        const [k, v] = kv.split('=');
-        if (k) params[k.trim()] = (v || '').trim();
+      paramParts.join(':').split(/[,;]/).forEach(kv => {
+        const i = kv.indexOf('=');
+        if (i > 0) params[kv.slice(0, i).trim()] = kv.slice(i + 1).trim();
       });
       const id = 'viz_' + Math.random().toString(36).slice(2, 9);
+      const titleHtml = params.title ? `<div class="viz-block-title">${escapeHtml(params.title)}</div>` : '';
+      const captionHtml = params.caption ? `<div class="viz-block-caption">${escapeHtml(params.caption)}</div>` : '';
       return `<div class="viz-block">
-        <div class="viz-block-label">interactive · ${type}</div>
-        <canvas id="${id}" data-viz-type="${type}" data-viz-params='${JSON.stringify(params).replace(/'/g, '&#39;')}'></canvas>
+        <div class="viz-block-label">interactive · ${escapeHtml(type)}</div>
+        ${titleHtml}
+        <canvas id="${id}" data-viz-type="${escapeHtml(type)}" data-viz-params='${JSON.stringify(params).replace(/'/g, '&#39;')}'></canvas>
+        ${captionHtml}
       </div>`;
     }
     let highlighted = code;
