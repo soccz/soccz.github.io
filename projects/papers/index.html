@@ -944,6 +944,17 @@ function setupMarked() {
     } catch (e) { highlighted = escapeHtml(code); }
     return `<pre><code class="hljs ${lang || ''}">${highlighted}</code></pre>`;
   };
+  /* Resolve relative ![](figures/...) against current paper's data_path. */
+  renderer.image = function (href, title, text) {
+    let src = href || '';
+    if (src && !/^([a-z]+:)?\/\//i.test(src) && !src.startsWith('/') && !src.startsWith('data:')) {
+      const base = (currentPaper && currentPaper.data_path) ? currentPaper.data_path : '';
+      if (base) src = `${base}/${src}`;
+    }
+    const t = title ? ` title="${escapeHtml(title)}"` : '';
+    const a = text ? ` alt="${escapeHtml(text)}"` : '';
+    return `<img src="${escapeHtml(src)}"${a}${t} loading="lazy">`;
+  };
   marked.setOptions({ renderer, breaks: false, gfm: true });
 }
 function escapeHtml(s) {
