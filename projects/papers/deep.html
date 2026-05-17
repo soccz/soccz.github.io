@@ -451,6 +451,9 @@
 <script src="viz/rppca-eigenvalue-spectrum.js"></script>
 <script src="viz/rppca-corr-heatmap.js"></script>
 <script src="viz/rppca-one-factor-correlation.js"></script>
+<script src="viz/autoencoder-sharpe-table.js"></script>
+<script src="viz/autoencoder-r2-comparison.js"></script>
+<script src="viz/autoencoder-sim-table6.js"></script>
 
 <script>
   const params = new URLSearchParams(location.search);
@@ -462,6 +465,42 @@
 
   /* Per-paper landing config — extend as more deep dives land */
   const LANDING = {
+    '2026-05-17_gu-kelly-xiu-autoencoder': {
+      eyebrow: 'Paper Deep Dive · 자산가격결정 × ML',
+      hero: 'IPCA의 선형 가정을 부수면, 60년 OOS Sharpe 1.53.',
+      subtitle: '<span class="accent">Gu, Kelly, Xiu (2021)</span> 의 conditional autoencoder는 β-network만 신경망으로, ' +
+                'f-network는 단일 선형층으로 유지해 r = β·f의 no-arbitrage 형태를 보존한다. ' +
+                '본 deep dive는 18개 챕터·Tables 1–6 완전 재현·Propositions 1, 2 증명·PyTorch 코드까지 정확하게 해체한다.',
+      stats: [
+        { num: '18', label: '챕터' },
+        { num: '6',  label: 'Figure 발췌' },
+        { num: '94', label: 'firm characteristics' },
+        { num: '1.53', label: 'CA2 VW Sharpe' }
+      ],
+      what: {
+        title: '"신경망 = black box" 비판이 끝나는 지점.',
+        body: '본 논문은 ML 도구(autoencoder)를 자산가격결정 이론(no-arbitrage)에 맞춰 재설계하는 모범. ' +
+              'Proposition 1 = "1-layer 선형 AE = PCA". Proposition 2 = "1-layer 선형 conditional AE = IPCA". ' +
+              '두 동치성으로 ML과 기존 계량경제학의 다리를 건넌다. 본 deep dive는 모든 수식·표·증명을 paper와 한 줄씩 대조해 검증.',
+        verdict: 'ML은 자산가격결정을 대체하지 않는다. ML은 자산가격결정을 완성한다 — ' +
+                 '이론(no-arbitrage)을 강제하고, 데이터(94 anomaly)의 비선형을 발견하고, 30년 OOS에서 검증되는 통합 framework.'
+      },
+      tour: [
+        { num: '01–04', ttl: '문제와 모델',           desc: 'KPS의 선형 IPCA에서 출발 — β(z) = z\'Γ의 한계와 conditional factor model 설정.',         link: 'read.html?slug=' + encodeURIComponent('2026-05-17_gu-kelly-xiu-autoencoder') + '#sec-03',   text: '문제 지형도 →' },
+        { num: '05a–d', ttl: '방법론 4부작',          desc: 'Standard AE = PCA (Prop 1) → Conditional AE → IPCA 특수 케이스 (Prop 2) → 5중 정규화.',   link: 'read.html?slug=' + encodeURIComponent('2026-05-17_gu-kelly-xiu-autoencoder') + '#sec-05a',  text: '방법론 해부 →' },
+        { num: '06–08', ttl: '실증 3부작',            desc: 'CRSP 60년 · Tables 1–4 (Total R²/Pred R²/Sharpe/Tangency) · 95 portfolios α 검정 · Variable importance.', link: 'read.html?slug=' + encodeURIComponent('2026-05-17_gu-kelly-xiu-autoencoder') + '#sec-07',   text: '결과 보기 →' },
+        { num: '09',    ttl: '인과적 검증',           desc: 'Monte Carlo (N=200, T=180, Student-t 잔차) — Linear vs Nonlinear DGP에서 CA1이 IPCA의 2.7× Total R².', link: 'read.html?slug=' + encodeURIComponent('2026-05-17_gu-kelly-xiu-autoencoder') + '#sec-09',   text: '시뮬 보기 →' },
+        { num: '11',    ttl: '두 Proposition 증명',   desc: 'Appendix A의 정확한 proof outline — Eckart-Young-Mirsky, Kronecker product FOC.',           link: 'read.html?slug=' + encodeURIComponent('2026-05-17_gu-kelly-xiu-autoencoder') + '#sec-11',   text: '증명 따라가기 →' },
+        { num: '14',    ttl: 'PyTorch 구현',          desc: 'β-net (1 hidden, 32 ReLU) + f-net (단일 선형) + dot product. paper Algorithm 1–3 일치.', link: 'read.html?slug=' + encodeURIComponent('2026-05-17_gu-kelly-xiu-autoencoder') + '#sec-14',   text: '코드 보기 →' }
+      ],
+      preview: {
+        title: '맛보기 — Sharpe Ratio 비교 (Table 3)',
+        subtitle: 'paper Table 3의 정확한 OOS 1987–2016 long-short decile Sharpe ratios. ' +
+                  'K (요인 수) · EW/VW · 7개 모델을 비교. ' +
+                  'FF는 K가 커질수록 악화 (시간 불변 β의 한계), CA2가 K=6 VW에서 1.53으로 IPCA 0.96을 압도.',
+        vizType: 'autoencoder-sharpe-table'
+      }
+    },
     '2026-05-17_lettau-pelger-rppca': {
       eyebrow: 'Paper Deep Dive · 자산가격결정',
       hero: '평균을 무시하는 60년의 PCA, 한 줄 페널티로 끝낸다.',

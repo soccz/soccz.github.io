@@ -1,7 +1,51 @@
 {
-  "generated_at": "2026-05-17T04:36:41",
-  "count": 13,
+  "generated_at": "2026-05-17T22:30:00",
+  "count": 14,
   "papers": [
+    {
+      "slug": "2026-05-17_gu-kelly-xiu-autoencoder",
+      "date": "2026-05-17",
+      "weekday": "토",
+      "bucket": "원거리",
+      "title": "Autoencoder Asset Pricing Models",
+      "title_ko": "오토인코더 자산가격결정 모델 — IPCA의 비선형 일반화",
+      "authors": "Shihao Gu¹, Bryan Kelly², Dacheng Xiu¹",
+      "venue": "Journal of Econometrics 222 (2021) 429–450",
+      "identifier": "10.1016/j.jeconom.2020.07.009",
+      "code": "",
+      "data": "CRSP 개별 주식 1957/03–2016/12 (60년, 약 30,000 unique stocks, 월평균 6,200), 94 firm characteristics + 1 market portfolio (Gu, Kelly, Xiu 2019 RFS 데이터셋)",
+      "tags": [
+        "asset-pricing",
+        "machine-learning",
+        "autoencoder",
+        "nonlinear-factor-model",
+        "IPCA-generalization"
+      ],
+      "verdict": "IPCA (Kelly·Pruitt·Su 2019) 의 선형성 가정을 β-network 만 신경망으로 풀고 f-network 는 단일 선형층으로 유지한 자연스러운 일반화. β(z)·f 의 dot product 로 r = β'f 형태 유지 — no-arbitrage 보존. 실증에서 long-short VW Sharpe (K=6) — FF −0.53 / PCA −0.08 / IPCA 0.96 / CA2 1.53. autoencoder 가 PCA 의 ML 시대 후예라는 사실을 자산가격결정에 결정적으로 적용한 사례.",
+      "private": false,
+      "sections": [
+        { "file": "00_README.md",                       "num": "00", "suffix": null, "title": "00 README — Autoencoder Asset Pricing Models" },
+        { "file": "01_intro.md",                        "num": "01", "suffix": null, "title": "01. 시작하기 전에 — 미리 알아둘 개념" },
+        { "file": "02_abstract.md",                     "num": "02", "suffix": null, "title": "02. 제목과 Abstract 풀어 읽기" },
+        { "file": "03_motivation.md",                   "num": "03", "suffix": null, "title": "03. Section 1 — 왜 비선형 자산가격결정 모델이 필요한가" },
+        { "file": "04_factor_model.md",                 "num": "04", "suffix": null, "title": "04. KPS factor model — 출발점 (Eq. 1, 2)" },
+        { "file": "05_method_a_standard_AE.md",         "num": "05", "suffix": "a",  "title": "05a. Section 2.1 — 표준 Autoencoder + PCA 등가성 (Prop 1)" },
+        { "file": "05_method_b_conditional_AE.md",      "num": "05", "suffix": "b",  "title": "05b. Section 2.2 — Conditional Autoencoder (메인 모델)" },
+        { "file": "05_method_c_IPCA_special.md",        "num": "05", "suffix": "c",  "title": "05c. Section 2.2.1 — IPCA 가 특수 케이스 (Prop 2)" },
+        { "file": "05_method_d_regularization.md",      "num": "05", "suffix": "d",  "title": "05d. Section 2.3 — Regularization & Training (LASSO, Adam, BN)" },
+        { "file": "06_empirical_data_models.md",        "num": "06", "suffix": null, "title": "06. 실증 (Part A) — 데이터와 비교 모델" },
+        { "file": "07_empirical_R2_sharpe_alpha.md",    "num": "07", "suffix": null, "title": "07. 실증 (Part B) — R², Sharpe, Pricing Errors" },
+        { "file": "08_empirical_characteristics.md",    "num": "08", "suffix": null, "title": "08. 실증 (Part C) — 어떤 특성이 중요한가? Robustness" },
+        { "file": "09_simulation.md",                   "num": "09", "suffix": null, "title": "09. Monte Carlo 시뮬레이션 — 실증 결과의 인과적 검증" },
+        { "file": "10_conclusion.md",                   "num": "10", "suffix": null, "title": "10. 결론" },
+        { "file": "11_appendix_proofs.md",              "num": "11", "suffix": null, "title": "11. 부록 — Proposition 1, 2 증명" },
+        { "file": "12_glossary.md",                     "num": "12", "suffix": null, "title": "12. 용어 사전" },
+        { "file": "13_insights.md",                     "num": "13", "suffix": null, "title": "13. 메타 통찰 (12가지)" },
+        { "file": "14_code.md",                         "num": "14", "suffix": null, "title": "14. 코드 — PyTorch 구현" },
+        { "file": "15_diagrams.md",                     "num": "15", "suffix": null, "title": "15. 다이어그램 & 시각화 가이드" }
+      ],
+      "data_path": "data/2026/2026-05-17_gu-kelly-xiu-autoencoder"
+    },
     {
       "slug": "2026-05-17_lettau-pelger-rppca",
       "date": "2026-05-17",
