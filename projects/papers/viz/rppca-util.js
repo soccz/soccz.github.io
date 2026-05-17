@@ -18,18 +18,28 @@
 
   // Shared utilities used by all viz modules
   global.VIZ_UTIL = {
-    /* DPR-aware canvas sizing */
+    /* DPR-aware canvas sizing — CSS controls layout; JS only sets pixel buffer.
+       Do NOT touch canvas.style.* (it overrides explicit px sizes in CSS). */
     setupCanvas(canvas) {
       const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.parentElement.getBoundingClientRect();
-      const w = Math.max(rect.width || 600, 200);
-      const h = Math.max(rect.height || (w * 9 / 16), 160);
-      canvas.style.width = '100%';
-      canvas.style.height = '100%';
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
+      let w = canvas.clientWidth;
+      let h = canvas.clientHeight;
+      if (!w || !h) {
+        const r = canvas.getBoundingClientRect();
+        w = w || r.width || 600;
+        h = h || r.height || 320;
+      }
+      w = Math.max(w, 200);
+      h = Math.max(h, 160);
+      const tw = Math.round(w * dpr);
+      const th = Math.round(h * dpr);
+      if (canvas.width !== tw || canvas.height !== th) {
+        canvas.width = tw;
+        canvas.height = th;
+      }
       const ctx = canvas.getContext('2d');
-      ctx.scale(dpr, dpr);
+      // Reset to identity then apply dpr (avoid cumulative scaling across redraws).
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       return { ctx, w, h, dpr };
     },
 
