@@ -88,8 +88,9 @@
         if(h===PIN_HASH){
           resetFails();
           try{sessionStorage.setItem(STORE_KEY,h)}catch(e){}
-          document.body.classList.remove('pin-locked');
-          gate.remove();
+          // 페이지 reload — body class 제거만으론 일부 상태에서 화면 복구 안 됨.
+          // sessionStorage 토큰이 있으므로 reload 후 즉시 자동 통과.
+          location.reload();
         }else{
           const f=registerFail();
           const r=lockRemain();
