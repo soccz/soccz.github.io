@@ -930,7 +930,7 @@ A가 50만 대출받음:
 
 - **머신러닝 신용 위험 (2020~)**: Bracke, P., Datta, A., Jung, C., & Sen, S. (2019). Machine learning explainability in finance: An application to default risk analysis. *Bank of England Staff Working Paper* No. 816. → Stiglitz-Weiss credit rationing의 ML 시대 적용.
 - **대안 데이터로 정보 비대칭 축소**: Berg, T., Burg, V., Gombović, A., & Puri, M. (2020). On the rise of FinTechs: Credit scoring using digital footprints. *Review of Financial Studies*, 33(7), 2845–2897. [DOI: 10.1093/rfs/hhz099](https://doi.org/10.1093/rfs/hhz099) — 디지털 발자취로 차주 식별 가능성 향상 → 역선택 문제 일부 해소.
-- **자본구조 ML 예측**: Amini, S., et al. (2022). Machine learning prediction of corporate capital structure. *Journal of Corporate Finance*, 77, 102282. — MM 가정 위반 요인들을 ML로 정량화.
+- **자본구조 ML 예측**: Amini, S., Elmore, R., Öztekin, Ö., & Strauss, J. (2021). Can machines learn capital structure dynamics? *Journal of Corporate Finance*, 70, 102073. [DOI: 10.1016/j.jcorpfin.2021.102073](https://doi.org/10.1016/j.jcorpfin.2021.102073) — MM 가정 위반 요인들을 ML로 정량화. (⚠ 정정: 초기 작성본의 "(2022), 77, 102282, *Machine learning prediction…*" 인용은 실제 paper와 저자·연도·권·제목 모두 다름. 위가 정확.)
 
 #### 5. 한국 적용 시 주의점
 

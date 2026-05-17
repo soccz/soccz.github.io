@@ -491,14 +491,14 @@ ML에서 이 원칙이 가장 중요.
 
 #### 비판·검증 문헌
 
-- **Mukherjee 등 (2025), "Institutional trading and satellite data," *Finance Research Letters* 71** — 위성 데이터의 수익률 예측력 향상은 **비-헤지펀드(non-hedge fund) 기관 거래**가 주도하며, 정보비대칭이 큰 소형주·낮은 애널리스트 커버리지 종목에서 효과가 강하다. **헤지펀드 자체의 incremental 알파는 통계적으로 약하다**고 보고. ([sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S1544612324013709))
+- **Ha, JinGi (2025), "Institutional trading and satellite data," *Finance Research Letters* 71(C), 106341, DOI: 10.1016/j.frl.2024.106341** — 위성 데이터의 수익률 예측력 향상은 **비-헤지펀드(non-hedge fund) 기관 거래**가 주도하며, 정보비대칭이 큰 소형주·낮은 애널리스트 커버리지 종목에서 효과가 강하다. **헤지펀드 자체의 incremental 알파는 통계적으로 약하다**고 보고. ([sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S1544612324013709))
 - **Da, Engelberg, Gao (2011), "In Search of Attention," *Journal of Finance* 66(5), 1461–1499. DOI: 10.1111/j.1540-6261.2011.01679.x** — Google SVI(Search Volume Index) 가 개인투자자 관심을 측정하며, SVI 상승 → 2주 단기 가격 상승 후 1년 내 반전. **alpha decay 가 12개월 내 발생**한다는 핵심 증거. ([wiley.com](https://onlinelibrary.wiley.com/doi/10.1111/j.1540-6261.2011.01679.x))
 
 > ⚠️ **검증 노트**: "Froot & Kang (2019) 신용카드 거래 데이터" 인용은 *공개 SSRN 원문이 확인되지 않아* 본 해설집에서 제외했다. 대신 동일 주제(신용카드 거래 → 매출 예측)는 학계에서 **Agarwal & Qian (2014, AER)**, **Baker, Bloom, Davis, Kost, Sammon, Viratyosin (2020)** 등으로 후속 연구가 이어지고 있다.
 
 #### 후속 연구 동향 (2020~)
 
-- Mukherjee 등 (2025), *Institutional trading and satellite data*, *Finance Research Letters* 71. — 위성 데이터 효과의 **소형주 한정성**. [sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S1544612324013709)
+- Ha, JinGi (2025), *Institutional trading and satellite data*, *Finance Research Letters* 71(C), 106341, DOI: 10.1016/j.frl.2024.106341. — 위성 데이터 효과의 **소형주 한정성**. [sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S1544612324013709)
 - *Eye in outer space: satellite imageries of container ports can predict world stock returns* (2023), *Humanities and Social Sciences Communications*. 컨테이너 항만 위성 이미지가 **글로벌 주식 수익률**을 예측. [nature.com](https://www.nature.com/articles/s41599-023-01891-9)
 - "Displaced by Big Data? Evidence from Active Fund Managers" (AEA 2025 세션). 위성 데이터 도입 후 **액티브 펀드 매니저의 종목 선정 능력 하락** — 정보가 가격에 빨리 반영되어 전통 펀드 매니저의 알파가 침식. [aeaweb.org](https://www.aeaweb.org/conference/2025/program/paper/44sGrR3h)
 

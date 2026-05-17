@@ -243,7 +243,7 @@ exp.show_in_notebook()
 
 #### 1.1 책 본문 사례
 > "Pairs Trading Strategy with Geolocation Data—The Battle between Under Armour and Nike"
-> *Journal of Financial Data Science* (2021)
+> *Journal of Financial Data Science* 2(1), 126–143 (2020) — Liew et al.
 
 #### 1.2 방법론
 
@@ -483,9 +483,9 @@ $$ \text{PBO} = \frac{|\{n : R^*_n < \tilde{R}^*_n\}|}{N} $$
 
 ### 4. Satellite Data in Finance
 
-> 📄 Mukherjee, A., et al. (2021). Pairs trading strategy with geolocation data—The battle between Under Armour and Nike. *Journal of Financial Data Science*, 3(1), 126–135.
+> 📄 Liew, J. K.-S., Budavári, T., Kang, Z., Li, F., Wang, X., Ma, S., & Fremin, B. (2020). Pairs trading strategy with geolocation data — The battle between Under Armour and Nike. *Journal of Financial Data Science*, 2(1), 126–143.
 
-위성 + 페어 트레이딩의 학술적 검증.
+위성 + 페어 트레이딩의 학술적 검증. (⚠ 정정: 초기 작성본의 "Mukherjee, A., et al. (2021), 3(1), 126–135" 인용은 저자·연도·권·페이지 모두 잘못. 위가 정확한 1차 자료.)
 
 > 📄 Katona, Z., et al. (2018). On the capital market consequences of alternative data: Evidence from outer space. *Journal of Financial Economics*.
 
@@ -685,7 +685,7 @@ Bayesian 접근의 효과성. 사전 정보 (이론) + 데이터 결합.
 - Bailey, D. H., & López de Prado, M. (2014). The deflated Sharpe ratio. *JPM*.
 
 ### 위성 데이터
-- Mukherjee, A., et al. (2021). Pairs trading strategy with geolocation data. *JFDS*.
+- Liew, J. K.-S., et al. (2020). Pairs trading strategy with geolocation data — The battle between Under Armour and Nike. *Journal of Financial Data Science*, 2(1), 126–143.
 - Katona, Z., et al. (2018). On the capital market consequences of alternative data. *JFE*.
 
 ### BloombergGPT
