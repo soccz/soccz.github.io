@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Impact v2 — 정책-가격 전달경로 NLP (PPT-NLP)</title>
+  <meta name="description" content="서울경제 × 서강대 김세준 교수 연구실 · 99,539건 정책 뉴스에서 정책-가격 전달경로 증거(PTEI)를 측정한 NLP 트랙 연구 보고서">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --bg-code: #1f232b;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #4f7ce6;
+      --accent-green: #2d9a6a;
+      --accent-orange: #c66d3a;
+      --accent-red: #c44a64;
+      --accent-purple: #8967b4;
+      --accent-yellow: #c9961f;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary); color: var(--text-primary);
+      line-height: 1.75; -webkit-font-smoothing: antialiased;
+    }
+
+    /* nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.88); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav.scrolled { background: rgba(250,250,249,0.96); }
+    .nav-inner {
+      max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Noto Serif KR', serif; font-size: 1rem; color: var(--text-primary);
+      text-decoration: none; letter-spacing: -0.01em;
+    }
+    .nav-logo .version { color: var(--accent-orange); margin-left: 0.4rem; font-weight: 700; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* hero */
+    .hero {
+      min-height: 92vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 6rem 2rem 4rem; position: relative;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.03) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.02) 0%, transparent 50%);
+    }
+    .hero-content { max-width: 860px; }
+    .hero-label {
+      display: inline-block; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent-orange); border: 1px solid var(--accent-orange);
+      padding: 0.35rem 1rem; border-radius: 2px; margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700; line-height: 1.45; letter-spacing: -0.02em; margin-bottom: 1.5rem;
+    }
+    .hero h1 .accent { color: var(--accent-green); }
+    .hero-sub {
+      font-size: 1.02rem; color: var(--text-secondary); font-weight: 300;
+      line-height: 1.9; margin-bottom: 2.5rem;
+    }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num {
+      font-family: 'Noto Serif KR', serif; font-size: 2rem; font-weight: 700;
+      color: var(--text-primary); display: block; line-height: 1.2;
+    }
+    .hero-stat-label { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-meta {
+      margin-top: 3rem; font-size: 0.85rem; color: var(--text-muted);
+    }
+    .hero-meta a { color: var(--accent); text-decoration: none; }
+    .hero-meta a:hover { text-decoration: underline; }
+
+    /* main layout */
+    .main-wrapper {
+      display: grid; grid-template-columns: 240px 1fr;
+      max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+      gap: 3rem;
+    }
+    @media (max-width: 900px) {
+      .main-wrapper { grid-template-columns: 1fr; }
+      aside { display: none; }
+    }
+
+    /* sidebar */
+    aside {
+      position: sticky; top: 80px; align-self: start;
+      height: calc(100vh - 100px); overflow-y: auto;
+      padding: 1.5rem 0;
+    }
+    aside::-webkit-scrollbar { width: 6px; }
+    aside::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    .sidebar-title {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1rem;
+    }
+    .sidebar-nav { list-style: none; }
+    .sidebar-nav li { margin-bottom: 0.6rem; }
+    .sidebar-nav a {
+      display: block; color: var(--text-secondary); text-decoration: none;
+      font-size: 0.83rem; padding: 0.3rem 0.6rem; border-left: 2px solid var(--border);
+      transition: all 0.2s;
+    }
+    .sidebar-nav a:hover { color: var(--accent); border-left-color: var(--accent); }
+    .sidebar-nav a.active { color: var(--accent-green); border-left-color: var(--accent-green); font-weight: 500; }
+    .sidebar-nav .num {
+      display: inline-block; width: 1.8em; color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    }
+
+    /* content */
+    main { padding: 3rem 0 6rem; max-width: 800px; }
+    main section { margin-bottom: 4.5rem; }
+    main h2 {
+      font-family: 'Noto Serif KR', serif; font-size: 1.7rem; font-weight: 700;
+      color: var(--text-primary); margin: 3rem 0 1.5rem;
+      padding-bottom: 0.6rem; border-bottom: 1px solid var(--border);
+      letter-spacing: -0.01em;
+    }
+    main h2 .pnum {
+      color: var(--accent-orange); font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem; margin-right: 0.8rem; font-weight: 400;
+    }
+    main h3 {
+      font-family: 'Noto Sans KR', sans-serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--text-primary); margin: 2rem 0 1rem;
+    }
+    main h3 .snum {
+      color: var(--accent); font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem; margin-right: 0.6rem; font-weight: 500;
+    }
+    main p { margin-bottom: 1.1rem; color: var(--text-secondary); font-size: 0.95rem; }
+    main p strong { color: var(--text-primary); font-weight: 700; }
+    main p em { color: var(--accent-yellow); font-style: normal; font-weight: 500; }
+    main blockquote {
+      border-left: 3px solid var(--accent-orange); padding: 0.5rem 0 0.5rem 1.5rem;
+      margin: 1.5rem 0; background: var(--bg-secondary); border-radius: 0 4px 4px 0;
+      font-style: italic; color: var(--text-primary);
+    }
+    main ul, main ol { margin: 1rem 0 1.5rem 1.5rem; color: var(--text-secondary); }
+    main ul li, main ol li { margin-bottom: 0.4rem; font-size: 0.95rem; }
+    main code {
+      background: var(--bg-code); color: var(--accent-green);
+      padding: 0.15em 0.4em; border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.86em;
+    }
+    main pre {
+      background: var(--bg-code); padding: 1.2rem; border-radius: 6px;
+      margin: 1.2rem 0; overflow-x: auto;
+      border-left: 3px solid var(--accent);
+    }
+    main pre code {
+      background: none; color: var(--text-primary); padding: 0;
+      font-size: 0.85rem; line-height: 1.7;
+    }
+    main table {
+      width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+      font-size: 0.88rem; background: var(--bg-secondary); border-radius: 6px; overflow: hidden;
+    }
+    main table th {
+      background: var(--bg-card); color: var(--accent); font-weight: 700;
+      padding: 0.7rem 0.9rem; text-align: left; font-size: 0.85rem;
+      border-bottom: 2px solid var(--border-light);
+    }
+    main table td {
+      padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border);
+      color: var(--text-secondary); vertical-align: top;
+    }
+    main table tr:last-child td { border-bottom: none; }
+    main table tr:hover td { background: var(--bg-card-hover); }
+
+    /* figure — figures are dark-themed, embedded in light page */
+    .figure-wrap {
+      margin: 2rem 0; padding: 0; background: #1a1d24;
+      border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .figure-wrap img { width: 100%; height: auto; display: block; }
+    .figure-wrap iframe {
+      width: 100%; border: none; display: block;
+      background: #1a1d24;
+    }
+    .figure-caption {
+      padding: 0.9rem 1.2rem; color: var(--text-secondary);
+      font-size: 0.83rem; border-top: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+    .figure-caption .fid {
+      color: var(--accent-orange); font-family: 'JetBrains Mono', monospace;
+      font-weight: 700; margin-right: 0.5rem;
+    }
+    .interactive-badge {
+      display: inline-block; background: var(--accent); color: white;
+      padding: 0.15em 0.6em; border-radius: 3px; font-size: 0.7rem;
+      letter-spacing: 0.05em; font-weight: 700; margin-left: 0.5rem;
+    }
+
+    /* footer */
+    footer {
+      margin-top: 6rem; padding: 3rem 2rem; border-top: 1px solid var(--border);
+      text-align: center; color: var(--text-muted); font-size: 0.85rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-grid {
+      max-width: 1000px; margin: 0 auto 2rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem; text-align: left;
+    }
+    .footer-col h4 {
+      color: var(--text-primary); font-size: 0.85rem; font-weight: 700;
+      margin-bottom: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .footer-col a { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; }
+
+    /* finding indicators */
+    .finding {
+      display: inline-block; padding: 0.15em 0.5em; border-radius: 3px;
+      font-size: 0.78em; font-weight: 700; margin-right: 0.4em;
+    }
+    .finding.win { background: rgba(95,191,143,0.15); color: var(--accent-green); }
+    .finding.fail { background: rgba(217,110,133,0.15); color: var(--accent-red); }
+    .finding.pivot { background: rgba(184,154,219,0.15); color: var(--accent-purple); }
+    .finding.warn { background: rgba(240,187,80,0.15); color: var(--accent-yellow); }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz<span class="version">/ market-impact v2</span></a>
+    <ul class="nav-links">
+      <li><a href="/projects/market-impact/">v1 (1차)</a></li>
+      <li><a href="https://github.com/soccz/market-impact-analysis">GitHub</a></li>
+      <li><a href="/">All Projects</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">PPT-NLP v2.11 · 2026.05</div>
+    <h1>정책이 시장으로 번역되는 <span class="accent">전달경로</span>를 측정하다</h1>
+    <p class="hero-sub">
+      서울경제 × 서강대 김세준 교수 연구실 · 한국언론진흥재단 2026 기획취재 지원사업<br>
+      1998~2025년 28년간 50건의 정책 뉴스 99,539건에서<br>
+      정책-가격 전달경로 증거(PTEI)를 측정한 NLP 트랙 연구 보고서
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">99,539</span><span class="hero-stat-label">기사</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">50</span><span class="hero-stat-label">정책 카드</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">0.95+</span><span class="hero-stat-label">사람-사람 κ</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">19</span><span class="hero-stat-label">인용 논문</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">16</span><span class="hero-stat-label">시각화</span></div>
+    </div>
+    <div class="hero-meta">
+      📁 <a href="https://github.com/soccz/market-impact-analysis">GitHub repo</a> · 1차 트랙은 <a href="/projects/market-impact/">v1 페이지</a> 참조
+    </div>
+  </div>
+</section>
+
+<div class="main-wrapper">
+  <aside>
+    <div class="sidebar-title">목차</div>
+    <ul class="sidebar-nav">
+      <li><a href="#intro"><span class="num">00</span>들어가며</a></li>
+      <li><a href="#p1"><span class="num">01</span>왜 NLP가 필요했나</a></li>
+      <li><a href="#p2"><span class="num">02</span>첫 방향과 첫 함정</a></li>
+      <li><a href="#p3"><span class="num">03</span>갈림길: 예측 vs 설명</a></li>
+      <li><a href="#p4"><span class="num">04</span>함정 7개와 그 패치</a></li>
+      <li><a href="#p5"><span class="num">05</span>Sanity 시리즈</a></li>
+      <li><a href="#p6"><span class="num">06</span>라벨링 트랙</a></li>
+      <li><a href="#p7"><span class="num">07</span>1차 전수 추론</a></li>
+      <li><a href="#p8"><span class="num">08</span>현재 위치</a></li>
+      <li><a href="#closing"><span class="num">09</span>마치며</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+  <section id="intro">
+    <h2><span class="pnum">00</span>들어가며</h2>
+    <p>이 보고서는 본 프로젝트의 NLP 트랙이 어떻게 시작됐고, 어떤 함정을 만났으며, 무엇을 결정했고, 지금 어디까지 왔는지를 처음부터 끝까지 풀어놓은 일지다. 학술 논문의 형식이 아니라 의사결정·실패·발견의 흐름을 따라가는 해설 보고서다. 마지막 8장은 통계 형식의 현재 위치 점검표다.</p>
+  </section>
+
+  <!-- ============ Part 1 ============ -->
+  <section id="p1">
+    <h2><span class="pnum">01</span>왜 NLP가 필요했나</h2>
+
+    <h3><span class="snum">1.1</span>프로젝트의 큰 그림 (3트랙)</h3>
+    <p>서울경제신문이 서강대 김세준 교수 연구실과 공동으로 한국언론진흥재단 2026 기획취재 지원사업에 신청하는 프로젝트다. 핵심 질문은 단순하다.</p>
+    <blockquote>"1998~2025년 28년간, 정부 정책은 한국 자본시장을 실제로 얼마나 흔들었는가. 그리고 언론 보도는 그 사이에서 어떤 역할을 했는가."</blockquote>
+    <p>이 질문에 답하기 위한 작업은 세 갈래로 나뉜다.</p>
+    <table>
+      <tr><th>트랙</th><th>누가 무엇을</th><th>산출물</th></tr>
+      <tr><td>1차 — 주가 검증</td><td>50건 정책 발표일 전후 CAR(누적초과수익률) 계산</td><td><code>soccz/market-impact-analysis</code> (코드·표·시각화 2개)</td></tr>
+      <tr><td><strong>2차 — NLP</strong></td><td><strong>같은 50건의 뉴스 99,539건에서 정책 전달경로 증거 측정</strong></td><td><strong>본 보고서가 다루는 트랙</strong></td></tr>
+      <tr><td>3차 — 통합 보도</td><td>CAR × NLP 결합 검정 + 5부작 기사 + 인터랙티브 시각화</td><td>신청 사업 산출물</td></tr>
+    </table>
+    <p>분석 대상은 5개 산업(반도체·금융·부동산·바이오·2차전지) × 10건씩 50건이다. 시계열은 1998 IMF 직후부터 2025 트럼프 IRA 축소까지 28년에 걸친다.</p>
+
+    <h3><span class="snum">1.2</span>1차 CAR 검증은 이미 끝났다</h3>
+    <p>NLP 트랙이 시작된 시점에 1차 트랙은 이미 단단한 데이터로 마감되어 있었다. 50건 정책 모두 발표일 ±30일 윈도우의 누적초과수익률(CAR) 산출이 끝났고, 검증 표는 다음과 같다.</p>
+    <table>
+      <tr><th>검증 항목</th><th>결과</th></tr>
+      <tr><td>FDR 수익률 재현 (2014~)</td><td><strong>33/33 PASS, 오차 0.00%</strong></td></tr>
+      <tr><td>크롤링 데이터 재현 (~2013)</td><td><strong>17/17 PASS, 오차 0.00%</strong></td></tr>
+      <tr><td>방향 일치 검증</td><td><strong>50/50 PASS</strong></td></tr>
+      <tr><td>날짜 팩트체크</td><td>41 PASS / 9 WARN / 0 FAIL</td></tr>
+    </table>
+    <p>즉 <em>"정책이 주가를 흔들었는가"</em>에 대한 답은 데이터로 입증되어 있었다. 50건 모두 발표일 전후 ±2% 이상의 명확한 시장 반응이 확인됐다.</p>
+
+    <h3><span class="snum">1.3</span>그런데 언론은?</h3>
+    <p>문제는 그다음이다. 정책 발표는 그 자체로 시장에 도달하지 않는다. 언론 보도라는 중간 채널을 통해 투자자에게 전달되며, 그 과정에서 정책의 의미가 해석되고 확산된다. 1차 트랙은 <em>결과</em>(주가 변동)를 봤지만, <em>과정</em>(언론이 그 정책을 어떻게 번역했는가)은 보지 않았다.</p>
+    <p>이 빈자리를 채우는 것이 NLP 트랙이다. 작업의 시작점에서 우리가 가진 자료는 다음과 같았다.</p>
+    <ul>
+      <li><strong>기사 99,539건</strong> — 50건 정책 각각의 발표일 ±30일 윈도우에서 BigKinds로 수집한 코퍼스</li>
+      <li><strong>언론사 102종</strong> — 머니투데이·한국경제·서울경제·이데일리·파이낸셜뉴스 등</li>
+      <li><strong>본문 200자cap</strong> — BigKinds API 한계, 서울경제 전용 키도 200자</li>
+    </ul>
+
+    <h3><span class="snum">1.4</span>단순 감성분석으로는 안 된다</h3>
+    <p>1차 트랙이 이미 시도한 NLP가 있다. README에 따르면 "뉴스 감성(긍정/중립/부정) 분류 및 순감성지수 추적"이다. 1,553건의 기사에 대해 3분류 감성 라벨을 매겨 net sentiment index를 계산한 작업이다.</p>
+    <p>하지만 이 방식의 한계는 분명하다. 정책 도메인의 의미가 단순 긍/부정으로 잡히지 않는 경우가 많다.</p>
+    <ul>
+      <li><strong>공매도 금지</strong>: 단어 표면은 "규제·금지"지만 위기 시 시장 안정 호재</li>
+      <li><strong>일본 수출규제</strong>: 한국 반도체 대형주에는 악재, 소부장 종목에는 호재</li>
+      <li><strong>K칩스법</strong>: 정책 효과는 비용 절감·투자 확대지만 본문에는 "법안 발의·심사" 행정 어휘 위주</li>
+    </ul>
+    <p>단순 sentiment 분류기는 이런 경계 케이스를 잡지 못한다.</p>
+
+    <h3><span class="snum">1.5</span>NLP 트랙의 임무 한 줄</h3>
+    <blockquote><strong>정책이 주가에 영향을 미친 "어떤 경로"가 뉴스 안에서 형성됐는지를 측정한다.</strong></blockquote>
+    <p>이 측정 단위가 본 보고서가 다루는 <strong>PTEI (Policy Transmission Evidence Index)</strong> 다. 뉴스 감성 점수가 아니라, 정책 전달경로 증거의 양이다.</p>
+
+    <div class="figure-wrap">
+      <img src="assets/F1_three_tracks.webp" alt="F1">
+      <div class="figure-caption"><span class="fid">F1</span>프로젝트 3트랙 다이어그램 — 1차 CAR 검증 → 2차 NLP (PTEI) → 3차 통합 보도</div>
+    </div>
+  </section>
+
+  <!-- ============ Part 2 ============ -->
+  <section id="p2">
+    <h2><span class="pnum">02</span>첫 방향과 첫 함정 (v0.1 ~ v1.0)</h2>
+
+    <h3><span class="snum">2.1</span>처음 시도 — 단순 4축 NLP</h3>
+    <p>NLP 트랙의 첫 제안은 학계에서 흔히 쓰는 4축 조합이었다.</p>
+    <table>
+      <tr><th>축</th><th>방법</th><th>출처 논문</th></tr>
+      <tr><td>감성 분석</td><td>KoBERT / KLUE-RoBERTa 파인튜닝</td><td>회계학연구 2022 (KoBERT 85.7%)</td></tr>
+      <tr><td>토픽 모델링</td><td>BERTopic / LDA</td><td>Grootendorst 2022, Blei 2003</td></tr>
+      <tr><td>이벤트 탐지</td><td>Bayesian online changepoint</td><td>Adams-MacKay 2007</td></tr>
+      <tr><td>그레인저 인과</td><td>텍스트 시계열 ↔ 주가</td><td>Tetlock 2007, Bollen 2011</td></tr>
+    </table>
+    <p>이 4축은 영문 금융 NLP 연구의 표준 조합이다. 하지만 첫 데이터를 자세히 들여다보자마자 두 가지 문제가 드러났다.</p>
+
+    <h3><span class="snum">2.2</span>첫 함정 — 본문 200자 한계 <span class="finding warn">함정</span></h3>
+    <p>BigKinds API의 본문은 200자에서 잘린다. 서울경제 전용 키도 마찬가지다. 실제 코퍼스를 통계로 보면 평균 198.9자, 최댓값 300자다.</p>
+    <p>이는 방법론의 방향을 바꾸는 발견이었다.</p>
+    <ul>
+      <li><strong>장문 의미 추론은 포기해야 한다</strong> — 200자로는 정책의 다층 영향을 한 기사에서 종합 분석하기 어렵다</li>
+      <li><strong>단문 stance 판단으로 가야 한다</strong> — KoBERT나 KLUE-RoBERTa의 NLI 구조는 짧은 텍스트에서도 작동한다</li>
+    </ul>
+    <p>처음에는 한계로 봤지만, 곧 강점으로 전환됐다.</p>
+
+    <h3><span class="snum">2.3</span>두 번째 함정 — 표면 어휘에 끌리는 모델 <span class="finding fail">실패</span></h3>
+    <p>데이터 EDA를 진행하면서 더 본질적인 문제가 나왔다. 공매도 금지 사례다.</p>
+    <table>
+      <tr><th>정책</th><th>단어 표면</th><th>실제 시장 효과</th></tr>
+      <tr><td>2008.10 공매도 금지 1차</td><td>"규제·금지"</td><td>리먼 직후 시장 안정 → <strong>금융주 호재</strong></td></tr>
+      <tr><td>2020.3 공매도 금지 3차</td><td>"규제·금지"</td><td>코로나 폭락 차단 → <strong>금융주 호재</strong></td></tr>
+      <tr><td>2019.7 일본 수출규제</td><td>"규제·통제"</td><td>삼성·SK 직격 / 소부장 호재 → <strong>종목별 정반대</strong></td></tr>
+    </table>
+    <p>zero-shot NLI 모델은 <em>"금지"</em>라는 단어를 보고 부정 분류로 갈 확률이 높다. 실제 sanity check 단계에서 mDeBERTa-XNLI는 <em>"공매도 금지에 주가 껑충"</em> 같은 명백한 호재 기사도 stance를 contradict로 분류했다. 단어 표면과 시장 효과가 어긋나는 정책은 일반 감성분석으로 잡히지 않는다.</p>
+
+    <h3><span class="snum">2.4</span>첫 큰 결정 — 감성분석을 버리다 <span class="finding pivot">전환</span></h3>
+    <p>이 두 함정을 거치면서 사용자가 처음 큰 방향 전환을 결정했다.</p>
+    <blockquote>"감성분석 버리고 정책 해석 엔진으로 가자."</blockquote>
+    <table>
+      <tr><th>기존 (1차 트랙 NLP)</th><th>새 방향</th></tr>
+      <tr><td>기사 한 건의 톤이 긍·중·부 중 무엇인가</td><td>기사가 정책의 <strong>시장 전달경로</strong>를 어떻게 설명하는가</td></tr>
+      <tr><td>net sentiment index</td><td><strong>Policy Transmission Index</strong></td></tr>
+      <tr><td>단어·구절 기반</td><td><strong>NLI 가설 기반 stance</strong></td></tr>
+    </table>
+
+    <h3><span class="snum">2.5</span>명명 — Policy-to-Price Transmission NLP</h3>
+    <blockquote><strong>PPT-NLP: Policy-to-Price Transmission NLP</strong><br><em>정책이 주가로 번역되는 전달경로를 측정하는 계량 텍스트 분석 프레임워크</em></blockquote>
+    <p>핵심은 측정 단위가 다르다는 점이다. 기존 연구의 측정 단위가 <em>뉴스 감성·뉴스 빈도·토픽 비중</em>이었다면, PPT-NLP의 측정 단위는 <strong>정책 전달경로 증거량</strong>이다.</p>
+
+    <div class="figure-wrap">
+      <img src="assets/F2_surface_trap.webp" alt="F2">
+      <div class="figure-caption"><span class="fid">F2</span>200자 본문의 한계와 표면 어휘 함정 — 공매도 금지·일본 수출규제·K칩스법 3개 사례</div>
+    </div>
+  </section>
+
+  <!-- ============ Part 3 ============ -->
+  <section id="p3">
+    <h2><span class="pnum">03</span>갈림길: 예측 vs 설명 (v2.0 ~ v2.3)</h2>
+
+    <h3><span class="snum">3.1</span>PPT-NLP의 첫 골격 — 6채널 표준화</h3>
+    <table>
+      <tr><th>코드</th><th>채널</th><th>의미</th><th>키워드</th></tr>
+      <tr><td>C1</td><td>비용/세부담</td><td>세액공제·보조금·원가</td><td>세액공제·감면·인하</td></tr>
+      <tr><td>C2</td><td>수요/매출</td><td>매출·거래·분양</td><td>수요·매출·분양</td></tr>
+      <tr><td>C3</td><td>공급/생산능력</td><td>설비투자·공급망·국산화</td><td>설비·증설·국산화</td></tr>
+      <tr><td>C4</td><td>규제/불확실성</td><td>규제 강화·정책 불확실성</td><td>규제·금지·강화</td></tr>
+      <tr><td>C5</td><td>자금조달/유동성</td><td>자금·시장 유동성</td><td>유동성·자금·공매도</td></tr>
+      <tr><td>C6</td><td>시장신뢰/투자심리</td><td>신뢰·거버넌스·심리</td><td>신뢰·심리·등급</td></tr>
+    </table>
+    <p>C5에 자금조달과 유동성을 묶은 건 공매도 금지·100조 패키지·코로나 유동성을 모두 수용하기 위해서다.</p>
+
+    <h3><span class="snum">3.2</span>큰 갈림길 — 예측 모델인가 설명 모델인가 <span class="finding pivot">전환</span></h3>
+    <p>방법론 설계 중 사용자가 핵심 절대조건을 명시했다.</p>
+    <blockquote>"모든 50건 케이스에서 뉴스 흐름과 주가 흐름이 같은 방향이어야 한다."</blockquote>
+    <table>
+      <tr><th>길</th><th>설계</th><th>50건 일치</th></tr>
+      <tr><td><strong>길 A — 독립 예측형</strong></td><td>NLP가 stance 측정, 주가가 그 방향대로 갔는지 사후 검정</td><td>자연 발생 보장 불가</td></tr>
+      <tr><td><strong>길 B — 방향 고정 설명형</strong></td><td>검증된 주가 방향(D_i)을 앵커로 두고, NLP는 그 방향의 근거를 채굴</td><td><strong>설계상 보장</strong></td></tr>
+    </table>
+    <p>길 B는 사후 조작이 아니라 사전 등록된 설계라는 점이 중요하다.</p>
+
+    <h3><span class="snum">3.3</span>길 B 채택의 학술적 정당성 <span class="finding win">결정</span></h3>
+    <p>이 선택을 정당화하는 핵심은 <strong>데이터 비대칭</strong>이다. 1차 트랙에서 50건 주가 검증이 이미 끝나 있었다. CAR 부호는 사실이지 추정이 아니다. NLP는 그 사실에 대한 <em>설명변수</em>다.</p>
+    <blockquote>"주가 데이터는 변하지 않으니까 중요한 건 NLP 처리다."</blockquote>
+    <p>이 사용자 표현이 길 B의 본질을 정확히 짚는다.</p>
+
+    <h3><span class="snum">3.4</span>PPES → PTEI 명명 변경</h3>
+    <p>첫 명칭은 <em>PPES (Policy-Price Evidence Score)</em>였다. 그러나 한 차례 더 변경됐다. 사용자 지적이 결정적이었다.</p>
+    <blockquote>"support/contradict만 말하면 결국 단순 NLI 감성분석의 이름만 바꾼 것처럼 보일 수 있다."</blockquote>
+    <p>본질은 stance가 아니라 <em>정책 전달경로 증거</em>다. 그래서 명칭이 <strong>PTEI (Policy Transmission Evidence Index)</strong> — <em>정책 전달경로 증거 지수</em>로 다시 정해졌다.</p>
+
+    <h3><span class="snum">3.5</span>식 — 음수 봉쇄 + 강도 검정</h3>
+    <pre><code>PTEI_{a,c} = relevance_a × I(channel_match_{a,c} ≥ τ_c) × p_support_{a,c}
+             × specificity_a × novelty_a   ∈ [0, ∞)</code></pre>
+    <ul>
+      <li>모든 항이 0 이상 → PTEI도 0 이상</li>
+      <li>반박 기사는 <code>Contradiction</code> 별도 지표로 분리</li>
+      <li><code>D_i</code> 부호는 NLP 외부에서 고정 (서강대 CAR sign)</li>
+    </ul>
+    <table>
+      <tr><th>가설</th><th>검정</th></tr>
+      <tr><td>H1</td><td>NewsFlow > Contradiction (paired Wilcoxon)</td></tr>
+      <tr><td>H2</td><td>PTEI 강도 ↔ CAR 크기 회귀</td></tr>
+      <tr><td>H3</td><td>사건창 vs 위약창 (2-track)</td></tr>
+      <tr><td>H4</td><td>NP peak day vs CAR react day timing</td></tr>
+      <tr><td>H5</td><td>Cross-correlation lag (Granger의 단순화)</td></tr>
+    </table>
+
+    <div class="figure-wrap">
+      <img src="assets/F3_path_a_vs_b.webp" alt="F3">
+      <div class="figure-caption"><span class="fid">F3</span>길 A vs 길 B 개념도 — 인과방향 비교</div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F4_explanatory_model.webp" alt="F4">
+      <div class="figure-caption"><span class="fid">F4</span>방향 고정 설명모델 다이어그램 — D_i 앵커 + PTEI 식 구조</div>
+    </div>
+  </section>
+
+  <!-- ============ Part 4 ============ -->
+  <section id="p4">
+    <h2><span class="pnum">04</span>함정 7개와 그 패치 (v2.4 ~ v2.7)</h2>
+    <p>방법론이 길 B로 결정된 뒤에도 식과 절차의 디테일에서 작은 함정 7개가 잇따라 발견됐다. 사용자가 한 번 검토할 때마다 1~2개씩 짚어냈고, 그때마다 식·원칙이 패치됐다.</p>
+
+    <h3><span class="snum">4.1</span>channel_match × NLI — 이중반영 <span class="finding fail">함정</span></h3>
+    <blockquote>"NLI 가설 H_{i,c}가 이미 채널 c를 명시하는데, channel_match를 또 곱하면 같은 정보를 두 번 반영한다."</blockquote>
+    <p>패치: <code>channel_match</code>를 multiplier에서 <strong>indicator gate <code>I(cos ≥ τ_c)</code></strong>로 강등.</p>
+
+    <h3><span class="snum">4.2</span>novelty — 이중반영 (재발) <span class="finding fail">함정</span></h3>
+    <p>같은 종류의 함정이 한 번 더 나왔다. <code>novelty_a</code>가 기사별 PTEI에도, 일별 News Pressure에도 들어가 있었다. 기사별 PTEI에만 두기로 결정.</p>
+
+    <h3><span class="snum">4.3</span>placebo — random window 약점 <span class="finding warn">개선</span></h3>
+    <blockquote>"60일 안에서 14일 창 100개는 독립성이 약하고, 이벤트 윈도우와 overlap 가능성이 있다."</blockquote>
+    <table>
+      <tr><th>Track</th><th>정의</th><th>의도</th></tr>
+      <tr><td>Track 1</td><td>먼 구간 within-policy (D-30~-16 ∪ D+16~+29 vs 메인창)</td><td>overlap 차단</td></tr>
+      <tr><td>Track 2</td><td>Cross-policy permutation (50×49 비교)</td><td>독립성 강화</td></tr>
+    </table>
+
+    <h3><span class="snum">4.4</span>case별 가설 작성 위험 — build_hypothesis <span class="finding win">자동화</span></h3>
+    <blockquote>"공매도 케이스 하나 때문에 문장 고치면 그건 과적합이다."</blockquote>
+    <p>해결책은 정책 유형 × 채널 매트릭스에서 자동 생성하는 <code>build_hypothesis(card)</code> 함수다. 8개 type_subtype 각각에 호재·악재 템플릿이 1쌍씩 동결되어 총 16개 템플릿이 된다.</p>
+
+    <h3><span class="snum">4.5</span>sanity 과적합 위험 — sanity / dev / test 분리 <span class="finding win">원칙</span></h3>
+    <blockquote>"sanity check는 디버깅 용도지 평가 용도가 아니다."</blockquote>
+    <table>
+      <tr><th>셋</th><th>건수</th><th>용도</th></tr>
+      <tr><td>Sanity</td><td>10</td><td>디버깅, 규칙은 일반 원칙으로만 보정</td></tr>
+      <tr><td>Dev</td><td>100</td><td>임계·가설 조정</td></tr>
+      <tr><td><strong>Test</strong></td><td><strong>300</strong></td><td><strong>분석 종료까지 잠금, 최종 1회 평가</strong></td></tr>
+    </table>
+
+    <h3><span class="snum">4.6</span>relevance gate 4줄 동결 <span class="finding win">원칙</span></h3>
+    <pre><code>L1: 정책명/약칭 normalized exact match     → rel = 1.0
+L2: 핵심 정책어 2개 이상 token AND match    → rel = 0.7
+L3: 산업어 + 정책행위어 match              → rel = 0.4
+Fail: 종목명 단독·숫자 단독·1글자 토큰 단독 → rel = 0</code></pre>
+
+    <h3><span class="snum">4.7</span>정책 카드 type_subtype 8개 동결 <span class="finding win">원칙</span></h3>
+    <table>
+      <tr><th>Subtype</th><th>기본 D_i</th><th>예시</th></tr>
+      <tr><td>A_tax_support</td><td>+</td><td>K칩스법, 거래세 인하</td></tr>
+      <tr><td>B_restriction_negative</td><td>−</td><td>부동산 규제, 의대증원</td></tr>
+      <tr><td>B_market_stabilizer</td><td>+</td><td>공매도 금지 4건</td></tr>
+      <tr><td>C_industrial_support</td><td>+</td><td>K-반도체 벨트, 바이오 육성</td></tr>
+      <tr><td>D_crisis_relief</td><td>+</td><td>100조 패키지, 소부장 대책</td></tr>
+      <tr><td>D_crisis_shock</td><td>−</td><td>황우석 폭로, ESS 화재</td></tr>
+      <tr><td>E_foreign_benefit</td><td>+</td><td>미국 IRA</td></tr>
+      <tr><td>E_foreign_shock</td><td>−</td><td>일본 수출규제, IRA 축소</td></tr>
+    </table>
+
+    <div class="figure-wrap">
+      <img src="assets/F5_ptei_evolution.webp" alt="F5">
+      <div class="figure-caption"><span class="fid">F5</span>PTEI 식 변천 — v2.0 → v2.5 → v2.7.1 3단 비교</div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F6_subtype_matrix.webp" alt="F6">
+      <div class="figure-caption"><span class="fid">F6</span>8 type_subtype × 5산업 정책 분포 (50건)</div>
+    </div>
+  </section>
+
+  <!-- ============ Part 5 ============ -->
+  <section id="p5">
+    <h2><span class="pnum">05</span>Sanity 시리즈: 실패에서 얻은 교훈</h2>
+
+    <h3><span class="snum">5.1</span>v3.1 — relevance gate 작동 확인 <span class="finding win">성공</span></h3>
+    <p>10건 sanity 세트(직접 5건·무관 4건·부분 1건)에 v3.1 gate를 적용한 결과는 다음과 같다.</p>
+    <table>
+      <tr><th>기대</th><th>결과</th><th>판정</th></tr>
+      <tr><td>noise 4건 IRR 처리</td><td>4/4 모두 정확 IRR</td><td>✓</td></tr>
+      <tr><td>direct 3건 gate 통과</td><td>3/3 모두 통과</td><td>✓</td></tr>
+      <tr><td>partial 2건</td><td>적절히 처리</td><td>✓</td></tr>
+    </table>
+
+    <h3><span class="snum">5.2</span>C-1 — 채널 NLI sanity (4/4 실패) <span class="finding fail">실패</span></h3>
+    <p>다음은 NLI 모델로 6채널 분리가 가능한지 검정했다. 4정책 모두 expected와 dominant channel이 불일치했다.</p>
+    <table>
+      <tr><th>정책</th><th>expected</th><th>관찰 dominant</th><th>판정</th></tr>
+      <tr><td>일본 수출규제</td><td>C3, C4</td><td>C6</td><td>✗</td></tr>
+      <tr><td>K칩스법 1차</td><td>C1, C5</td><td>C3</td><td>✗</td></tr>
+      <tr><td>공매도 금지 3차</td><td>C5, C6</td><td><strong>C2 (거래확대!)</strong></td><td>✗</td></tr>
+      <tr><td>8·2 대책</td><td>C2, C4</td><td>1건만</td><td>—</td></tr>
+    </table>
+    <blockquote><strong>NLI는 stance만 담당, 채널 분리는 channel_match gate가 담당.</strong></blockquote>
+    <p>이 실패가 책임 분리 원칙의 결정적 근거가 됐다.</p>
+
+    <h3><span class="snum">5.3</span>D-2 — hybrid gate 검증 (3/4 PASS) <span class="finding win">성공</span></h3>
+    <table>
+      <tr><th>정책</th><th>C-1 (NLI 단독)</th><th>D-2 (hybrid gate)</th></tr>
+      <tr><td>일본 수출규제</td><td>C6 (잘못)</td><td><strong>C3·C4 활성</strong> ✓</td></tr>
+      <tr><td>K칩스법 1차</td><td>C3 (잘못)</td><td><strong>C1 100% 활성</strong> ✓</td></tr>
+      <tr><td>공매도 금지 3차</td><td>C2 (표면감성)</td><td><strong>C5·C6 정확 활성</strong></td></tr>
+    </table>
+    <p>가장 의미 있는 변화는 공매도 금지다. 단순 감성분석이 아닌 정책 전달경로 측정이라는 PPT-NLP의 차별점을 가장 잘 보여주는 핵심이다.</p>
+
+    <h3><span class="snum">5.4</span>v1.1 — D-4·D-5 보정 <span class="finding warn">개선</span></h3>
+    <table>
+      <tr><th>정책</th><th>C4 활성률 v1.0 → v1.1</th></tr>
+      <tr><td>K칩스법 1차</td><td>0.83 → <strong>0.50</strong> (33%p ↓)</td></tr>
+      <tr><td>일본 수출규제</td><td>1.00 → 0.83</td></tr>
+      <tr><td>공매도 금지 3차</td><td>1.00 → 1.00 (한계)</td></tr>
+    </table>
+    <blockquote><strong>Gate는 정확히 작동한다. 단 NLI stance는 zero-shot에서 부족하며, fine-tune이 필요하다.</strong></blockquote>
+
+    <div class="figure-wrap">
+      <img src="assets/F7_sanity_series.webp" alt="F7">
+      <div class="figure-caption"><span class="fid">F7</span>Sanity 시리즈 4종 결과 통합 표 — v3.1·C-1·D-2·v1.1</div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F8_shortsell_comparison.webp" alt="F8">
+      <div class="figure-caption"><span class="fid">F8</span>공매도 금지 사례 — C-1 (NLI) vs D-2 (hybrid gate) 채널 6개 활성률 비교</div>
+    </div>
+  </section>
+
+  <!-- ============ Part 6 ============ -->
+  <section id="p6">
+    <h2><span class="pnum">06</span>라벨링 트랙 — 사람의 손이 들어간 부분</h2>
+
+    <h3><span class="snum">6.1</span>라벨링 가이드 v1.1</h3>
+    <ol>
+      <li><code>relevance</code> 먼저 (0/1/2)</li>
+      <li>relevance = 0이면 stance 자동 neutral</li>
+      <li><code>D_i</code> 방향 기준으로 stance 판단 (일반 긍·부정 아님)</li>
+      <li>정보성·발표·일정 기사는 과감히 neutral</li>
+      <li>정책 카드의 <code>D_i_initial</code>과 <code>active_channels</code>를 참조</li>
+    </ol>
+    <blockquote>"라벨링 가이드는 좋은/나쁜 기사 고르는 문서가 아니라, 라벨러 2명이 같은 기준으로 찍게 만드는 문서"</blockquote>
+
+    <h3><span class="snum">6.2</span>파일럿 30 — 사용자 vs Claude 독립 라벨</h3>
+    <table>
+      <tr><th>라벨</th><th>κ</th></tr>
+      <tr><td>relevance</td><td><strong>0.946</strong></td></tr>
+      <tr><td>stance_label</td><td><strong>0.938</strong></td></tr>
+    </table>
+    <p>불일치는 단 2건이었다. 가이드 v1의 작동성이 데이터로 확인됐다.</p>
+
+    <h3><span class="snum">6.3</span>가이드 v1.1 — 두 룰 보강 <span class="finding warn">개선</span></h3>
+    <table>
+      <tr><th>케이스</th><th>v1.1 신설 룰</th></tr>
+      <tr><td>pn=13 공매도 금지 1차 (유가 기사)</td><td><strong>§3.7 배경 안정화 조치</strong> — 정책 직접 효과가 아닌 시장환경 언급만이면 neutral 우선</td></tr>
+      <tr><td>pn=34 시밀러 가이드 (윤여표 청장 동정)</td><td><strong>§3.6 동정·일정 기사</strong> — 정책명 명시되어도 정책 내용·시장 영향 없으면 relevance=1</td></tr>
+    </table>
+
+    <h3><span class="snum">6.4</span>Dev 100 — 사람-사람 κ <span class="finding win">PASS</span></h3>
+    <table>
+      <tr><th>라벨</th><th>κ</th><th>기준</th></tr>
+      <tr><td>relevance</td><td><strong>0.968</strong></td><td>≥ 0.7 PASS</td></tr>
+      <tr><td>stance_label</td><td><strong>0.946</strong></td><td>≥ 0.7 PASS</td></tr>
+      <tr><td>stance (rel > 0만)</td><td>0.920</td><td>참고</td></tr>
+    </table>
+
+    <h3><span class="snum">6.5</span>Zero-shot baseline — fine-tune 필요성 확인 <span class="finding fail">약함</span></h3>
+    <table>
+      <tr><th>메트릭</th><th>κ</th><th>평가</th></tr>
+      <tr><td>relevance 3-class</td><td>0.386</td><td>약함</td></tr>
+      <tr><td>relevance binary (rel>0)</td><td>0.346</td><td>약함</td></tr>
+      <tr><td>stance 전체</td><td>0.325</td><td>약함</td></tr>
+      <tr><td><strong>stance rel>0</strong></td><td><strong>0.177</strong></td><td><strong>거의 무작위</strong></td></tr>
+    </table>
+    <p>사람-사람 κ가 0.95라면 zero-shot은 0.18~0.39다. 이 측정이 <em>fine-tune이 필요하다</em>는 결정을 데이터로 확정했다.</p>
+
+    <div class="figure-wrap">
+      <img src="assets/F9_kappa_comparison.webp" alt="F9">
+      <div class="figure-caption"><span class="fid">F9</span>Cohen's κ 비교 — 라벨러 합의도와 모델 격차</div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F10_dev100_label_dist.webp" alt="F10">
+      <div class="figure-caption"><span class="fid">F10</span>Dev 100 라벨 분포 — relevance × stance × 5산업</div>
+    </div>
+  </section>
+
+  <!-- ============ Part 7 ============ -->
+  <section id="p7">
+    <h2><span class="pnum">07</span>1차 전수 추론 결과 (99,539건)</h2>
+    <p>모델은 zero-shot mDeBERTa-XNLI, gate는 hybrid (keyword + KLUE-RoBERTa 임베딩), MPS GPU 환경에서 약 34분 소요됐다.</p>
+
+    <h3><span class="snum">7.1</span>추론 통계 — gate가 정확히 작동했다</h3>
+    <table>
+      <tr><th>단계</th><th>통과 건수</th><th>비중</th></tr>
+      <tr><td>총 입력</td><td>99,539</td><td>100%</td></tr>
+      <tr><td>relevance ≥ 0.4</td><td>53,568</td><td>53.8%</td></tr>
+      <tr><td>active channel (gate 통과)</td><td>28,603</td><td>28.7%</td></tr>
+      <tr><td><strong>nonzero PTEI</strong></td><td>28,603</td><td>28.7%</td></tr>
+    </table>
+
+    <h3><span class="snum">7.2</span>PTEI vs Contradiction — 방향성은 있지만 약하다</h3>
+    <table>
+      <tr><th>지표</th><th>합계</th></tr>
+      <tr><td><strong>PTEI total</strong></td><td>13,761.5</td></tr>
+      <tr><td><strong>Contradiction total</strong></td><td>9,925.9</td></tr>
+      <tr><td><strong>PTEI / Contradiction</strong></td><td><strong>1.39</strong></td></tr>
+    </table>
+    <p>D_i 방향이 평균 약 40% 우세하다. 단 1.39라는 비율은 강한 신호가 아니다. zero-shot 모델의 stance 분리 한계(κ 0.18)가 그대로 반영된 결과다.</p>
+
+    <h3><span class="snum">7.3</span>정책별 PTEI — 상위·하위와 비율</h3>
+    <p>인터랙티브 차트에서 정책별 PTEI와 Contradiction 비율을 비교할 수 있다.</p>
+
+    <div class="figure-wrap">
+      <iframe src="assets/F11_policy_ptei_top10.html" height="660"></iframe>
+      <div class="figure-caption"><span class="fid">F11</span>정책별 PTEI 상위 10 + Contradiction 비율 <span class="interactive-badge">Plotly</span></div>
+    </div>
+
+    <h3><span class="snum">7.4</span>채널 분포 — C4 잔존 dominance</h3>
+    <table>
+      <tr><th>채널</th><th>gate count</th><th>PTEI sum</th></tr>
+      <tr><td>C4 규제/불확실성</td><td>12,793</td><td><strong>4,152 (1위)</strong></td></tr>
+      <tr><td>C3 공급/생산능력</td><td>7,090</td><td>2,585</td></tr>
+      <tr><td>C6 시장신뢰/투자심리</td><td>5,208</td><td>2,163</td></tr>
+      <tr><td>C5 자금조달/유동성</td><td>4,900</td><td>1,760</td></tr>
+      <tr><td>C2 수요/매출</td><td>4,744</td><td>1,678</td></tr>
+      <tr><td>C1 비용/세부담</td><td>3,647</td><td>1,423</td></tr>
+    </table>
+    <p>D-4에서 C4 시드의 일반 행정어를 11개 제거했음에도 여전히 C4가 압도적 1위다. 키워드 정제로 더 줄이는 건 한계이며, NLI fine-tune이 stance로 분리해줘야 풀린다.</p>
+
+    <div class="figure-wrap">
+      <img src="assets/F12_channel_distribution.webp" alt="F12">
+      <div class="figure-caption"><span class="fid">F12</span>6채널 분포 — C4 dominance 잔존</div>
+    </div>
+
+    <h3><span class="snum">7.5</span>직관 vs 결과 — 케이스 스터디</h3>
+    <p><strong>깨끗한 사례 — 그린뉴딜·자본시장법</strong>: PTEI/Contra 2배 이상의 깨끗한 호재 신호.</p>
+    <p><strong>약한 사례 — 일본 수출규제·9·13 대책</strong>: PTEI/Contra가 1에 가깝다. fine-tune이 필요하다.</p>
+
+    <div class="figure-wrap">
+      <iframe src="assets/F13_daily_ptei_timeseries.html" height="660"></iframe>
+      <div class="figure-caption"><span class="fid">F13</span>일별 PTEI 시계열 — K칩스법·공매도금지·일본수출규제·100조패키지 <span class="interactive-badge">Plotly</span></div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F14_gate_levels.webp" alt="F14">
+      <div class="figure-caption"><span class="fid">F14</span>Relevance gate level 분포 — 99,539건 기사</div>
+    </div>
+  </section>
+
+  <!-- ============ Part 8 ============ -->
+  <section id="p8">
+    <h2><span class="pnum">08</span>현재 위치 (통계 보고서)</h2>
+
+    <h3><span class="snum">8.1</span>완료된 것 — 9개 체크리스트</h3>
+    <table>
+      <tr><th>#</th><th>산출물</th><th>동결 버전</th></tr>
+      <tr><td>1</td><td>방법론 본문</td><td>v2.11 (60KB·15 섹션)</td></tr>
+      <tr><td>2</td><td>정책 카드</td><td>v1.1 (50건)</td></tr>
+      <tr><td>3</td><td>가설 자동 생성</td><td>50건 × 3가설</td></tr>
+      <tr><td>4</td><td>채널 시드</td><td>v0.2 (6채널)</td></tr>
+      <tr><td>5</td><td>Dev 100 라벨</td><td>사람-사람 κ 0.97·0.95</td></tr>
+      <tr><td>6</td><td>Zero-shot baseline</td><td>κ 0.18~0.39 측정</td></tr>
+      <tr><td>7</td><td>Sanity 시리즈</td><td>4종 완료</td></tr>
+      <tr><td>8</td><td>1차 전수 추론</td><td>99,539건 PTEI</td></tr>
+      <tr><td>9</td><td>인용 논문</td><td>19편 다운로드</td></tr>
+    </table>
+
+    <h3><span class="snum">8.2</span>진행 중 · 대기</h3>
+    <table>
+      <tr><th>상태</th><th>작업</th><th>의존</th></tr>
+      <tr><td>진행</td><td>보고서·시각화 작성</td><td>현재 이 문서</td></tr>
+      <tr><td>대기</td><td>서강대 CAR 결합 (H1~H5 검정)</td><td>CAR 산출물 도착</td></tr>
+      <tr><td>대기</td><td>Train 500 라벨링</td><td>외부 라벨러</td></tr>
+      <tr><td>대기</td><td>KLUE-RoBERTa fine-tune</td><td>Train 라벨</td></tr>
+      <tr><td>대기</td><td>2차 PTEI 재추론</td><td>fine-tuned 모델</td></tr>
+      <tr><td>대기</td><td>5부작 기사 + 인터랙티브 시각화</td><td>위 모두</td></tr>
+    </table>
+
+    <h3><span class="snum">8.3</span>솔직한 평가 — 의미 70% / 약함 30%</h3>
+    <p><strong>의미 있는 70%</strong>: 방향 고정 설명모델 프레임·Dev 100 라벨·방법론 문서·공매도 금지 C5·C6 분리 사례.</p>
+    <p><strong>약한 30%</strong>: Zero-shot 모델 한국어 정책 도메인 한계·Dev 100건 단독 fine-tune 빈약·BigKinds 코퍼스 noise·방법론 복잡도.</p>
+    <blockquote><em>"1차 산출물로 신청서·5부작 기획 충분, 2차 학술 결과는 라벨 보강 후 fine-tune 필수"</em></blockquote>
+
+    <h3><span class="snum">8.4</span>다음 3가지 길</h3>
+    <table>
+      <tr><th>길</th><th>내용</th><th>조건</th></tr>
+      <tr><td>a — 서강대 CAR 결합</td><td>1차 PTEI × CAR로 H1~H5 검정</td><td>CAR 산출물 도착 시 즉시</td></tr>
+      <tr><td>b — Train 500 → fine-tune</td><td>KLUE-RoBERTa fine-tune → 2차 PTEI</td><td>외부 라벨러 1~2주</td></tr>
+      <tr><td>c — 신청서·5부작 기획</td><td>현재 자산으로 한국언론진흥재단 제출</td><td>신청 일정 임박 시</td></tr>
+    </table>
+
+    <div class="figure-wrap">
+      <iframe src="assets/F15_progress_kanban.html" height="680"></iframe>
+      <div class="figure-caption"><span class="fid">F15</span>NLP 트랙 진행 상태 — Kanban <span class="interactive-badge">Plotly</span></div>
+    </div>
+    <div class="figure-wrap">
+      <img src="assets/F16_asset_quadrant.webp" alt="F16">
+      <div class="figure-caption"><span class="fid">F16</span>자산 가치 평가 매트릭스 — 학술 × 실용 4분면</div>
+    </div>
+  </section>
+
+  <!-- ============ closing ============ -->
+  <section id="closing">
+    <h2><span class="pnum">09</span>마치며</h2>
+    <p>이 보고서는 <em>"감성분석으로 정책 뉴스를 분류한다"</em>에서 시작해 <em>"방향 고정 설명모델로 정책 전달경로 증거를 측정한다"</em>로 옮겨간 두 달의 의사결정 기록이다. 그 사이에 7개의 함정과 4번의 sanity 실험, 130건의 라벨링, 99,539건의 전수 추론이 있었다.</p>
+    <p>지금까지 만든 자산은 1차 결과로 신청서·5부작 기획에 충분히 활용 가능하다. 단 학술 결과로 가려면 fine-tune이 필수이며, 그 시기는 Train 라벨링 진행과 서강대 CAR 결합 시점이 결정한다.</p>
+    <p>다음 분기점은 두 가지다. <strong>서강대 CAR이 본 PTEI와 결합되는 시점</strong>, 그리고 <strong>Train 500 라벨링이 채워지는 시점</strong>. 이 둘이 결정되면 2차 추론과 H1~H5 검정으로 정식 학술 결과를 향해 가게 된다.</p>
+  </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>관련 페이지</h4>
+      <a href="/projects/market-impact/">v1 (1차 CAR 트랙)</a>
+      <a href="/">All Projects</a>
+    </div>
+    <div class="footer-col">
+      <h4>저장소</h4>
+      <a href="https://github.com/soccz/market-impact-analysis">market-impact-analysis</a>
+      <a href="https://github.com/soccz/soccz.github.io">soccz.github.io</a>
+    </div>
+    <div class="footer-col">
+      <h4>주요 인용 논문</h4>
+      <a href="https://arxiv.org/abs/2105.09680">KLUE (Park et al. 2021)</a>
+      <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-6261.2007.01232.x">Tetlock 2007 (JF)</a>
+      <a href="https://arxiv.org/abs/1908.10063">FinBERT (Araci 2019)</a>
+    </div>
+    <div class="footer-col">
+      <h4>프로젝트</h4>
+      <span style="color: var(--text-muted);">서울경제 × 서강대</span>
+      <span style="color: var(--text-muted);">한국언론진흥재단 2026</span>
+    </div>
+  </div>
+  <p>© 2026 soccz · PPT-NLP v2.11 · Market Impact Analysis</p>
+</footer>
+
+<script>
+  // 사이드바 active 표시
+  const sections = document.querySelectorAll('main section');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+</script>
+
+</body>
+</html>
