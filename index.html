@@ -908,7 +908,7 @@ const CATEGORIES = {
     desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper','papers','paper-deep']
+    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper','papers']
   },
   project: {
     label: 'Project',
@@ -1000,8 +1000,7 @@ const DESCS = {
   'python-why': 'PyWhy \u2014 컴퓨터가 어떻게 생각하는가. 4레벨 15주 본 강의 + 30주 알고리즘 심화 커리큘럼',
   'bigdata-analyst-notes': '빅데이터 분석기사 필기 완벽 가이드 \u2014 4과목 14,000줄 Deep Dive. 전공 제로에서 합격까지',
   'papers': 'Paper Deconstructions \u2014 \ub9e4\uc8fc \uc6d4/\uc218/\uae08 \ud55c \ud3b8\uc529, Source Lock \ud1b5\uacfc \ub17c\ubb38\uc744 11\uac1c \uc139\uc158\uc73c\ub85c \ud574\uccb4. KaTeX \uc218\uc2dd + \uc778\ud130\ub799\ud2f0\ube0c viz (grokking \uacf1\uc120 / attention motif / phase transition)',
-  'fin-ai-book-notes': 'Financial AI Deep Dive \u2014 6\uc7a5 38\uc808 28K\uc904 \ud55c\uad6d\uc5b4 \ud559\uc2b5 \uac00\uc774\ub4dc. PyWhy 4\ub2e8\uacc4 + 200+ 1\ucc28 \uc790\ub8cc + SVG \uc2dc\uac01\ud654 + \ud55c\uad6d \uc2dc\uc7a5 \ubcf4\uac15',
-  'paper-deep': 'Paper Deep Dive \u2014 \ubc1c\ud45c\u00b7\uc2dc\ud5d8\u00b7\uc2e4\ubb34 \uc218\uc900\uc758 \uc218\uc81c \uc2ec\ud654 \ub17c\ubb38 \ud574\uccb4 \ucef4\ub809\uc158. \ud55c \ud3b8\ub2f9 18\uac1c \ucc55\ud130 + \uc778\ud130\ub799\ud2f0\ube0c \uc2dc\uac01\ud654 8\uc885 + \ud1b5\ucc30\u00b7\ucd94\ub860 + \uc2e4\ud589 \uac00\ub2a5 \ucf54\ub4dc. \uccab \ud56d\ubaa9: Lettau & Pelger (2020) RP-PCA.'
+  'fin-ai-book-notes': 'Financial AI Deep Dive \u2014 6\uc7a5 38\uc808 28K\uc904 \ud55c\uad6d\uc5b4 \ud559\uc2b5 \uac00\uc774\ub4dc. PyWhy 4\ub2e8\uacc4 + 200+ 1\ucc28 \uc790\ub8cc + SVG \uc2dc\uac01\ud654 + \ud55c\uad6d \uc2dc\uc7a5 \ubcf4\uac15'
 };
 
 // Synthetic entry for the (private) papers repo \u2014 surfaced as a research project card
@@ -1015,12 +1014,6 @@ const STATIC_PROJECTS = [{
   name: 'fin-ai-book-notes',
   description: DESCS['fin-ai-book-notes'],
   language: 'Markdown',
-  pushed_at: new Date().toISOString(),
-  __static: true
-},{
-  name: 'paper-deep',
-  description: DESCS['paper-deep'],
-  language: 'JavaScript',
   pushed_at: new Date().toISOString(),
   __static: true
 }];
@@ -1174,8 +1167,7 @@ function renderPosts(catKey) {
       'prelude': '/projects/prelude/',
       'python-why': 'https://soccz.github.io/python-why/',
       'papers': '/projects/papers/',
-      'fin-ai-book-notes': '/projects/fin-ai-book-notes/',
-      'paper-deep': '/paper-deep/'
+      'fin-ai-book-notes': '/projects/fin-ai-book-notes/'
     };
     const page = PROJECT_PAGES[r.name];
     const url = page || `https://github.com/soccz/${r.name}`;

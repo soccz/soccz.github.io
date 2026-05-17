@@ -667,6 +667,7 @@
   marked.setOptions({
     gfm: true, breaks: false,
   });
+  marked.use({tokenizer:{del(){return undefined}}}); // strikethrough 비활성 (~숫자 패턴 방지)
 
   function getIdx(id) { return CHAPTERS.findIndex(c => c.id === String(id)); }
 

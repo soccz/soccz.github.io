@@ -1232,6 +1232,7 @@
   marked.setOptions({
     gfm: true, breaks: false,
   });
+  marked.use({tokenizer:{del(){return undefined}}}); // strikethrough 비활성 (~숫자 패턴 방지)
 
   // mermaid config (한 번만)
   if (window.mermaid) {

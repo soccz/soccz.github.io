@@ -464,6 +464,7 @@
         scrollBtn=$('scroll-top');
 
   marked.setOptions({gfm:true,breaks:false});
+  marked.use({tokenizer:{del(){return undefined}}}); // strikethrough 비활성 (~숫자 패턴 방지)
 
   // KaTeX와 marked 충돌 방지: 수식 블록을 먼저 보호
   const mathStore=[];
