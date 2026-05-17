@@ -194,6 +194,11 @@
 
 ## 11.5 Figure 8 — $\gamma$의 효과
 
+![Figure 8 — γ 효과 (SR, RMS α, Idio Var × K)](figures/page27_Figure8.png)
+
+*원문 p.27 Figure 8 발췌 — K=5 에서 γ ↑ 따라 SR 이 급격히 증가, K=6 추가 효과 미미 → K=5 권장.*
+
+
 > **원문**: "Figure 8 analyzes the effect of $\gamma$ and the number of factors on the three criteria maximum Sharpe-ratio, pricing error and variation."
 
 ### Figure 8 구조
@@ -272,6 +277,11 @@
 ---
 
 ## 11.7 Figure 9 — Eigenvalue 비교
+
+![Figure 9 — γ 별 정규화된 고유값 곡선](figures/page28_Figure9.png)
+
+*원문 p.28 Figure 9 발췌 — γ=10, 20 에서 5번째 고유값이 PCA 대비 약 1.5배 증폭 (signal-strengthening).*
+
 
 > **원문**: "The left plot in Figure 9 shows the eigenvalues of the matrix $\frac{1}{N}\left(\frac{1}{T}X^\top X + \gamma \bar X \bar X^\top\right)$ normalized by the average idiosyncratic variance."
 

@@ -151,6 +151,11 @@
 
 ## 10.5 결과 1 — Figure 1: 시계열 path
 
+![Figure 1 — 4-요인 시뮬 시계열 path](figures/page19_Figure1.png)
+
+*원문 p.19 Figure 1 발췌 — 4번째 weak+high-SR factor 는 PCA / 작은 γ 의 RP-PCA 로는 거의 0 으로 추정되고, γ=10, 20 에서만 진짜 path 를 추적한다.*
+
+
 > "Figure 1 provides some intuition for our estimator. It illustrates the sample path estimates for different values of $\gamma$. If the fourth factor is weak with a high Sharpe-ratio, then conventional PCA or RP-PCA with a too small value of $\gamma$ cannot detect it while RP-PCA with a sufficiently large $\gamma$ is able to detect the factor."
 
 ### 풀어 설명
@@ -215,6 +220,15 @@
 ---
 
 ## 10.7 결과 3 — Figures 4, 5: 이론 vs Monte-Carlo
+
+![Figure 4 — 이론 vs Monte-Carlo 상관계수](figures/page22_Figure4.png)
+
+*원문 p.22 Figure 4 발췌 — 통계 모델 예측(상)과 Monte-Carlo 시뮬(하)이 거의 완벽히 일치.*
+
+![Figure 5 — ρ² 곡선](figures/page23_Figure5.png)
+
+*원문 p.23 Figure 5 발췌 — 잔차 종속 vs i.i.d. 가정 별 임계값 차이.*
+
 
 > "Figure 4 compares the prediction of our weak factor model theory with the Monte-Carlo simulation for the empirical and the band-diagonal residual correlation matrix."
 
