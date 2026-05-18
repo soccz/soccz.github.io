@@ -178,6 +178,124 @@ Encoder = trend 버림. Decoder = trend 누적. **두 경로 분리** 가 핵심
 
 ---
 
+## ASCII 도식 7 — 점진적 trend 누적의 수식 시각화
+
+paper Eq 4 의 마지막 줄:
+$$
+\mathcal{T}_{de}^l = \mathcal{T}_{de}^{l-1} + W_{l,1} * \mathcal{T}_{de}^{l,1} + W_{l,2} * \mathcal{T}_{de}^{l,2} + W_{l,3} * \mathcal{T}_{de}^{l,3}
+$$
+
+ASCII 로 layer-by-layer accumulation:
+
+```
+   l=0:  T^0    (initial trend from decoder input X_det)
+            │
+            ↓ +
+   l=1:  T^1  =  T^0 + W₁·trend_from(self-attn) + W₂·trend_from(cross-attn) + W₃·trend_from(FFN)
+            │      ↑─── accumulator                    ↑─── 3 new contributions per layer
+            ↓ + 
+   l=M:  T^M  =  T^{M-1} + W₁·T^{M,1} + W₂·T^{M,2} + W₃·T^{M,3}
+            
+            
+   Final:  Y = W_S · X_de^M (seasonal)  +  T^M (trend)
+```
+
+→ **trend 가 layer 를 지나며 단조 누적** — seasonal 처럼 refine 이 아니라 building up.
+
+---
+
+## ASCII 도식 8 — Eq 6 의 Auto-Correlation 흐름
+
+```
+   Step 1: 자기상관 계산 (FFT)
+   ────────────────────────────
+   Q ∈ R^L  ─┐
+            ├──→ R_{Q,K}(τ)  for τ = 0, 1, ..., L-1
+   K ∈ R^L  ─┘     (Eq 8)
+   
+   
+   Step 2: Top-k 선택
+   ────────────────────
+   R_{Q,K}(τ) ──→ argTopk ──→ τ_1, τ_2, ..., τ_k     (k = ⌊c·log L⌋)
+                              ↓ Softmax
+                              ↓
+                            R̂(τ_1), ..., R̂(τ_k)
+   
+   
+   Step 3: 가중 합 (Aggregation)
+   ────────────────────────────
+                V ∈ R^L
+                 │
+                 ├──→ Roll(V, τ_1)  ─×─ R̂(τ_1)  ─┐
+                 ├──→ Roll(V, τ_2)  ─×─ R̂(τ_2)  ─┤
+                 │     ...                       │ Σ
+                 └──→ Roll(V, τ_k)  ─×─ R̂(τ_k)  ─┘
+                                                 │
+                                                 ↓
+                                          Auto-Correlation(Q,K,V) ∈ R^L
+```
+
+---
+
+## ASCII 도식 9 — Wiener-Khinchin 의 FFT 우회
+
+```
+   직접 정의 (Eq 5):
+   ────────────────
+   R(τ) = (1/L) Σ_{t=0}^{L-1-τ} X_t · X_{t-τ}
+   복잡도: τ 마다 L 곱 → 모든 τ 의 R: O(L²)
+   
+   
+   FFT 우회 (Eq 8):
+   ────────────────
+                  ┌── FFT (O(L log L)) ──→ F(X)
+   X ∈ R^L  ──────┤
+                  └── FFT (O(L log L)) ──→ F(X)
+                                              │
+                                              ↓
+                                       F(X) × F(X)*   (point-wise, O(L))
+                                              │
+                                              ↓
+                                          S(f) ∈ C^L  (power spectrum)
+                                              │
+                                              ↓ IFFT (O(L log L))
+                                              │
+                                          R(τ) ∈ R^L  (모든 τ 동시에)
+                                              
+   총 복잡도: O(L log L) — L^2 의 절감.
+```
+
+---
+
+## ASCII 도식 10 — Self-attention vs Auto-Correlation 의 dot-product 형식 비교
+
+```
+   Self-Attention 의 [i, j] 셀:
+   ────────────────────────────
+                  d_model
+                    ↓
+        Q_i  ────·────  K_j          ← 두 점 사이의 내적
+                    
+   score[i, j] = Q_i · K_j   (scalar)
+   매트릭스: L × L 의 score → softmax → V 의 weighted sum
+   
+   
+   Auto-Correlation 의 τ 값:
+   ─────────────────────────
+                  L
+                  ↓                   (sliding window correlation)
+        Q   ────·····────  K_{shifted by τ}
+                    
+   R_{Q,K}(τ) = (1/L) Σ_t Q_t · K_{t-τ}   (scalar)
+   벡터: L 개의 τ 의 R → Top-k → V 의 Roll 가중합
+```
+
+→ **점-단위 internal 곱** vs **시리즈-단위 shifted 곱**. 두 paradigm.
+
+---
+
+---
+
 ## 그 외 useful figures from paper (본 deep dive 포함된 발췌)
 
 | 그림 | paper 위치 | 본 deep dive 의 위치 |

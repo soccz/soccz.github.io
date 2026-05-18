@@ -115,4 +115,54 @@ paper Appendix H 의 robustness statement 외에 본 deep dive 의 추가 해석
 2. **두 contribution 의 직교성**: Decomposition 과 Auto-Correlation 이 각각 독립적으로 효과 → ablation 이 명료.
 3. **공개 + 검증 가능**: github.com/thuml/Autoformer, 데이터 모두 공개 → 학계의 빠른 수용.
 
+---
+
+## 1년 후 — 본 paper 의 학술적 영향 (2026 시점 회고)
+
+NeurIPS 2021 출판 이후:
+- **Google Scholar 인용**: 2000+ (2026 기준 추정)
+- **공식 GitHub stars**: 2000+ (THUML repo)
+- **PapersWithCode**: Long-term forecasting leaderboard 의 출발점
+
+후속 paper 와 의 line of descent:
+```
+                Transformer (2017)
+                       ↓
+               Informer (2021)
+                       ↓
+              Autoformer (2021) ← 본 paper
+                       ↓
+       ┌───────────────┼───────────────┐
+       ↓               ↓               ↓
+   FEDformer       PatchTST       TimesNet
+   (ICML 2022)    (ICLR 2023)   (ICLR 2023)
+                                       ↓
+                                  iTransformer
+                                  (ICLR 2024)
+                                       ↓
+                                   ...
+```
+
+Autoformer 가 시계열 분야의 **paradigm shift 의 진원지**. NLP 의 Transformer 처럼, 시계열의 표준 baseline 으로 자리잡음.
+
+---
+
+## 본 paper 가 가르치는 4 가지 ML 디자인 원칙
+
+1. **점이 아닌 process 로 생각하라.** 시계열은 시점의 sequence 가 아닌 process 의 sample. Process 의 structure (주기, trend) 가 모델 디자인의 시작점.
+
+2. **고전 수학을 신뢰하라.** Wiener-Khinchin (90년), FFT (60년) 가 오늘날 deep learning 에서 여전히 SOTA backbone 으로 작동. 새로운 trick 만 보지 말고 **검증된 도구를 deep learning 에 가져오는 것** 의 가치.
+
+3. **단순 + 미분가능 > 정교 + 외부.** AvgPool 의 단순함이 STL/HP filter 의 정교함을 압도. **end-to-end gradient flow** 가 정교함보다 중요.
+
+4. **두 contribution 을 직교로 설계하라.** Decomposition 과 Auto-Correlation 이 독립적으로 효과 → ablation 이 명료 + 각 contribution 의 가치 분리 가능. Coupling 된 paper 는 reviewer 의 ablation 요구에 약함.
+
+이 4가지는 **시계열 ML 을 넘어 모든 deep learning 디자인** 에 적용 가능.
+
+---
+
+## 마지막 한 줄
+
+> "Autoformer 는 self-attention 의 시대를 끝낸 것이 아니라, self-attention 이 모든 도메인에 그대로 적용되지 않는다 는 사실을 가장 우아하게 입증한 paper. 시계열은 서로 다른 attention 을 요구한다 — series-wise, periodicity-aware, FFT-based. 이 메시지가 paper 의 영원한 가치."
+
 다음 [16_glossary.md](16_glossary.md) 에서 용어집.

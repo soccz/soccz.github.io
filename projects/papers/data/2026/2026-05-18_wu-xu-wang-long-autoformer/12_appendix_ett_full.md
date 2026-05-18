@@ -92,4 +92,72 @@ Informer 와 비교:
 
 의 정량적 근거.
 
+---
+
+## 4 variants 의 horizon-robustness 비교
+
+### MSE growth ratio (predict-X / predict-24)
+
+| Variant | I=24 | I=48 | I=168 | I=336 | I=720 | growth (720/24) |
+|---------|------|------|-------|-------|-------|-----------------|
+| ETTh1 | 0.384 | 0.392 (×1.02) | 0.490 (×1.28) | 0.505 (×1.32) | 0.498 (×1.30) | **×1.30** |
+| ETTh2 | 0.261 | 0.312 (×1.20) | 0.457 (×1.75) | 0.471 (×1.80) | 0.474 (×1.82) | **×1.82** |
+| ETTm1 | 0.383 | 0.454 (×1.19) | (no 168) | (288: ×1.66) | (672: ×1.58) | **×1.58** |
+| ETTm2 | 0.153 | 0.178 (×1.16) | (no 168) | (288: ×2.24) | (672: ×2.84) | **×2.84** |
+
+→ **horizon-robustness 의 순서**: ETTh1 > ETTm1 > ETTh2 > ETTm2.
+
+**해석**:
+- **ETTh1** (hourly load + oil temperature) 이 가장 안정. 강한 일별 주기성 + 더 많은 데이터 (hourly).
+- **ETTm2** (15분 단위) 가 가장 가파른 증가. 짧은 sample interval → 더 많은 noise + 약한 주기.
+
+비교: Informer 의 ETTh1 24→720 = 0.577 → 1.215 = **×2.11**. Autoformer ×1.30 보다 약 1.6배 더 가파름.
+
+### 한 그림으로 — horizon scaling 비교
+
+```
+Autoformer ETTh1:
+  24 ─── 48 ─── 168 ──── 336 ──── 720
+  0.38   0.39   0.49     0.51     0.50    ← plateau 가까움
+  ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+  
+Informer ETTh1:
+  24 ─── 48 ─── 168 ──── 336 ──── 720
+  0.58   0.69   0.93     1.13     1.22    ← 단조 증가
+  ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+```
+
+→ Autoformer 의 **plateau 효과** 가 finance / policy planning 에 큰 의미. 6개월 vs 1년 forecast 의 quality 가 비슷 → planning horizon 을 유연하게 결정 가능.
+
+---
+
+## ETTm1 short-horizon 의 예외 — Informer 가 best
+
+paper Table 5 row 1173: ETTm1 predict-24: Informer **0.323** < Autoformer 0.383.
+
+이 한 예외의 의미:
+- **단기 (24 step = 6 hours of 15-min data)** 에서는 Informer 의 sparse attention 이 더 유리할 수 있음.
+- 이유: Autoformer 의 decomposition + Auto-Correlation 은 **장기 패턴** 추출에 특화. 6시간 정도의 짧은 horizon 에서는 그 advantage 가 활용 안 됨.
+- Informer 의 ProbSparse 는 가장 informative 한 점을 선택 — 단기에서 효과적.
+
+**Practical 시사**: forecasting tool 선택 시 horizon 을 먼저 고려:
+- horizon ≤ I/2: Informer / sparse Transformer
+- horizon ≥ I: **Autoformer**
+- horizon ≫ I (e.g. COVID 7→30): Autoformer 의 압도적 영역.
+
+---
+
+## Sample interval 의 영향
+
+ETT 의 4 variants 가 hourly (h1, h2) 와 15min (m1, m2) 으로 나뉨. paper 가 명시하지 않지만 본 deep dive 의 관찰:
+
+| Sample interval | 변수 데이터 수 (2 years) | Predict-336 의 실제 시간 |
+|----------------|------------------------|----------------------|
+| Hourly (ETTh) | ~17,500 points | 14 일 (≈2주) |
+| 15-min (ETTm) | ~70,000 points | 3.5 일 |
+
+→ 같은 predict-336 라도 ETTh 는 **2주**, ETTm 은 **3.5일** 의 미래를 예측.
+→ ETTm 은 더 많은 데이터 + 더 짧은 절대 horizon → 평균 MSE 더 낮음 (실제로 ETTm2-336: 0.342 < ETTh1-336: 0.505).
+→ 그러나 ETTm 의 growth ratio 가 더 가파른 이유: 15분 단위는 noise/cycle 비율이 hourly 보다 높음.
+
 다음 [13_appendix_hyper_input.md](13_appendix_hyper_input.md) 에서 hyperparameter & input 관련 4개 Table.

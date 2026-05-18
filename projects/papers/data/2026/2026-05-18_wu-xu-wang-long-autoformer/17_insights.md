@@ -134,6 +134,68 @@ paper Tables 1-2 의 작은 예외들 (Exchange-96 의 ARIMA, ETTm1-24 의 Infor
 
 ---
 
+## 13. Autoformer 가 가능하게 한 후속 연구
+
+NeurIPS 2021 출판 이후 약 4년 (2026 기준) 의 후속 연구 흐름:
+
+| 후속 | 출처 | Autoformer 와의 관계 |
+|------|------|-------------------|
+| **FEDformer** | Zhou et al. (ICML 2022) | Autoformer 의 FFT-based mixing 을 frequency domain attention 으로 확장. Top-k frequency 선택. |
+| **DLinear** | Zeng et al. (AAAI 2023) | Autoformer 의 분해를 극단까지 단순화 — Linear regressor 두 개 (trend + seasonal). "Transformer 가 필요한가?" 의 question 제기. |
+| **PatchTST** | Nie et al. (ICLR 2023) | Token 을 점이 아닌 **patch** 로. Auto-Correlation 의 series-level 정신을 token-level 로. |
+| **ITransformer** | Liu et al. (ICLR 2024, Tsinghua THUML — Autoformer 와 같은 lab) | Variable-wise attention. Autoformer 의 channel-independent 한계 극복. |
+| **TimesNet** | Wu et al. (ICLR 2023, Autoformer 와 같은 저자 1저자) | Multi-period 2D representation. Autoformer 의 단일 주기 가정 확장. |
+
+→ **Autoformer 가 시계열 forecasting 의 paradigm shift 의 출발점**. 그 정신:
+- "Transformer 를 시계열 도메인 특성에 맞춰 재설계"
+- "분해 + series-wise structure"
+
+이 정신이 후속 연구 모두에 계승.
+
+---
+
+## 14. 본 paper 가 절대 다루지 않는 것 — 한계의 명시
+
+paper Section H Broader Impact 에서 명시한 단 하나의 한계:
+> If the data is random or with extremely weak temporal coherence, Autoformer and any other models may degenerate because the series is with poor predictability [14].
+
+**즉**: Autoformer 가 작동하는 가정은 **시계열에 어떤 형태의 patterns** 가 있다는 것. 완전 random walk 이나 white noise 에서는 의미 없음.
+
+paper 가 **암묵적으로 다루지 않는** 4 가지 (본 deep dive 의 추론):
+
+1. **Multivariate cross-channel dependency**: Auto-Correlation 은 각 channel 독립적으로 계산. cross-channel 은 FFN 의 hidden mixing 에만 의존. → ITransformer 가 이를 직접 다룸.
+
+2. **Multi-period 동시 학습**: paper 는 Top-k τ 를 단일 시리즈에서 학습. 실제 시계열은 multi-scale period (intraday + weekly + monthly + yearly). → TimesNet 의 multi-period 2D 가 답.
+
+3. **Non-stationary regimes**: Autoformer 의 분해는 stationary 가정 약함. Regime change (financial crisis, COVID shock) 에서는 distribution shift. → DLinear / NHiTS 가 단순 모델로 robust.
+
+4. **Anomaly detection / extreme events**: peak forecasting (COVID Fig 14) 는 다루지만 anomaly 자체의 별도 metric 없음. → Anomaly Transformer (Xu et al. 2022) 등이 보완.
+
+---
+
+## 15. paper 의 정신을 다른 분야에 transfer 한다면?
+
+Autoformer 의 두 디자인 원칙:
+
+**원칙 1**: "Process structure 가 있다면, 점 단위 attention 대신 process 의 lag-similarity 를 직접 사용."
+
+다른 분야 적용:
+- **Speech signal**: phoneme 의 cyclical 구조 → speech transformer 의 효율화
+- **EEG / fMRI**: brainwave 의 dominant period 학습 → 신경 신호 분류 정확도 ↑
+- **Genome sequence**: codon repetition 의 periodicity → 단백질 구조 예측
+- **Music**: rhythm + chord progression 의 period → music generation
+
+**원칙 2**: "정교한 분해 알고리즘을 외부에서 적용하기보다, 단순 분해를 model 내부에 끼워넣어 end-to-end 학습."
+
+다른 분야 적용:
+- **Image**: foreground/background 분리를 inner block 으로
+- **Video**: motion / appearance 분리
+- **NLP**: syntactic / semantic 분리
+
+→ Autoformer 의 design pattern 은 시계열을 넘어 **general representation learning** 의 한 template.
+
+---
+
 ## 마무리
 
 Autoformer 는 단순한 트릭 모음이 아니다. **시계열 분석의 고전 수학을 deep learning 으로 다시 가져온** 첫 paper 중 하나. 이후의 연구 (PatchTST, ITransformer, TimesNet) 는 이 정신을 다양한 방향으로 확장 — patch-level, variable-wise, multi-period 등. Autoformer 의 영향은 NeurIPS 2021 인용수 (2000+ 이상) 를 넘어, 시계열 분야의 **paradigm shift** 의 시작점.

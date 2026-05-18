@@ -93,4 +93,62 @@ COVID 의 daily 사망자 패턴은 finance 의 daily volatility 와 구조적 �
 - 긴 horizon (정책 결정 위한 한 달치 outlook)
 - Peak detection 의 중요성 (crisis, default cluster)
 
+---
+
+## COVID case 의 추가 통찰
+
+### Country 1 vs Country 2 의 MSE 격차
+
+paper Table 11 정확 인용:
+- **Country 1** MSE: 0.110 / 0.168 / 0.261 (predict 7/15/30)
+- **Country 2** MSE: 1.747 / 1.749 / 1.749 (predict 7/15/30)
+
+Country 2 의 MSE 가 Country 1 의 **약 7-15배** 큼. 또한 Country 2 의 predict 7/15/30 MSE 가 거의 같음 — 매우 평평.
+
+**해석**:
+- Country 2 는 **wave pattern 의 진폭이 크고 noise 가 많은** 데이터일 가능성. 절대 MSE 가 큰 이유.
+- predict 길이를 늘려도 MSE 가 거의 안 변함 — 모델이 **trend 만 잡고 peak/trough 의 정확한 타이밍 못 잡음**. 그래도 다른 baseline 보다 잘함.
+- Country 1 은 더 작은 진폭 + 명확한 패턴 → 더 정확한 prediction.
+
+### Cross-country generalization 의 가능성
+
+paper 가 두 country 를 **anonymized** 으로 처리. 본 deep dive 의 추측:
+- 두 country 는 European Union (paper text: "two anonymous countries in Europe")
+- COVID wave 는 transboundary 현상 — Country 1 wave 가 Country 2 wave 의 leading indicator 일 수 있음.
+- 그러나 paper 는 두 country 를 독립적으로 학습 — joint multi-country model 은 future work.
+
+### 정책 응용 — Peak forecasting
+
+paper p.16:
+> The forecasting of extreme values and long-term trends are essential to epidemic prevention and control.
+
+**peak forecasting** 이 핵심:
+- 단순 trend prediction 만으로 부족 — 의료 시스템 capacity, lockdown timing 결정엔 peak height + timing 둘 다 필요.
+- Autoformer 의 Auto-Correlation 이 **process-similarity** 를 잡아 — 비슷한 wave pattern 을 재배치 → peak 위치 예측에 자연.
+
+### Financial stress 와 매핑
+
+| COVID 응용 | Finance 응용 (analogy) |
+|----------|---------------------|
+| 일별 사망자 | 일별 default rate / VIX |
+| Wave pattern | Volatility regime |
+| Peak timing | Crisis onset |
+| Country 1 vs 2 | Sector / Country 별 stress |
+| 7-day history | 단기 trading data |
+| 30-day horizon | Quarterly planning |
+| Transboundary spread | Contagion effect |
+
+→ **Autoformer 의 COVID 결과** 가 **finance stress forecasting** 의 직접 transfer 가능성 시사. 정확한 finance dataset (Exchange) 의 결과도 Section 4.1 에서 강력 (61% MSE 감소) → 두 응용의 일관성.
+
+### 한계
+
+paper 가 명시 안 한 COVID 의 한계:
+- **2 country 만** — 일반화 어려움
+- **Single dimensional** (사망자만) — multi-dimensional (cases + deaths + recoveries + hospitalizations) 더 complex
+- **No exogenous variables** (정책, vaccination rate, mobility) — real-world forecasting 에 필수
+
+본 case study 는 **proof-of-concept** 로 valuable 하지만 production 응용엔 추가 작업 필요.
+
+---
+
 다음 [15_conclusion.md](15_conclusion.md) 에서 paper 결론.

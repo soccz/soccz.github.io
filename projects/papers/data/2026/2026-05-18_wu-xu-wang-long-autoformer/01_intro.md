@@ -101,4 +101,64 @@ $$
 | Transformer 한계 | Auto-Correlation 으로 point-wise → series-wise, $O(L^2) \to O(L\log L)$ |
 | Encoder-Decoder | 두 경로 (trend 누적 + seasonal refinement) 로 분리 → 점진적 |
 
+---
+
+## 6. Roll 연산 (cyclic shift)
+
+paper Eq 6 의 핵심 도구:
+$$
+\text{Roll}(\mathcal{X}, \tau)
+$$
+
+- $\mathcal{X}$ 의 원소를 $\tau$ 만큼 옮김 (cyclic shift).
+- 끝으로 밀려난 원소는 처음으로 되돌아옴.
+
+예 (L=6, τ=2):
+```
+원본:    [x_0, x_1, x_2, x_3, x_4, x_5]
+Roll +2: [x_4, x_5, x_0, x_1, x_2, x_3]   ← 마지막 2개가 앞으로
+Roll -2: [x_2, x_3, x_4, x_5, x_0, x_1]   ← 처음 2개가 뒤로
+```
+
+**왜 cyclic? 왜 truncate 가 아닌가?**:
+- 시계열은 보통 periodic 가정 — 끝과 처음이 연결.
+- Truncate 하면 길이가 줄어들어 attention output dimension 안 맞음.
+- Cyclic shift 는 length-preserving + 주기성을 자연스럽게 활용.
+
+**torch 구현**:
+```python
+rolled = torch.roll(values, shifts=tau, dims=-1)
+```
+
+paper 의 Auto-Correlation 에서 $\text{Roll}(V, \tau_i)$ 는 "시간 지연 $\tau_i$ 의 sub-series 를 현재 위치로 가져온다" 는 의미.
+
+---
+
+## 7. Cross-Correlation (Q와 K 의 자기상관 일반화)
+
+Eq 6 의 $R_{Q,K}(\tau)$ 는 Eq 5 의 $R_{\mathcal{X}\mathcal{X}}(\tau)$ 를 **두 시리즈 (Q, K)** 로 확장:
+
+$$
+R_{Q,K}(\tau) = \lim_{L \to \infty} \frac{1}{L} \sum_{t=1}^{L} Q_t \, K_{t-\tau}
+$$
+
+- $Q = K$ 라면 → autocorrelation (Eq 5).
+- $Q \neq K$ 라면 → cross-correlation (Eq 6).
+
+**Auto-Correlation 의 두 모드**:
+1. **Self mode**: encoder/decoder 의 self-attention 자리 → $Q = K = V$ from same source. $R_{Q,K}$ = autocorrelation.
+2. **Cross mode**: decoder 의 cross-attention 자리 → $Q$ from decoder, $K, V$ from encoder. $R_{Q,K}$ = cross-correlation.
+
+**FFT 적용**:
+$$
+R_{Q,K}(\tau) = \mathcal{F}^{-1}\big(\mathcal{F}(Q) \cdot \mathcal{F}^*(K)\big)
+$$
+
+- $\mathcal{F}^*(K)$ = K 의 FFT 의 conjugate. Q=K 일 때는 $|\mathcal{F}(Q)|^2$ 가 power spectrum.
+- 동일한 $O(L \log L)$ 복잡도. cross 도 single FFT pair 로 끝.
+
+→ Auto-Correlation 의 unified framework: **모든 attention 자리 (self + cross) 가 같은 형식으로 작동**.
+
+---
+
 이제 다음 chapter 의 Abstract 를 한 문장씩 풀어 읽을 준비가 되었다.

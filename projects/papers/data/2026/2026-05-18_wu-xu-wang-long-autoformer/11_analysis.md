@@ -107,6 +107,76 @@ paper p.10:
 
 ---
 
+## Section 4.3 의 4 subsections 깊이 분석
+
+### Time series decomposition (Fig 4) — 점진성의 진짜 의미
+
+paper p.9 의 핵심 문장:
+> Without our series decomposition block, the forecasting model cannot capture the increasing trend and peaks of the seasonal part.
+
+**왜 한 번의 분해로는 안 되는가?**
+
+한 번에 분해 (pre-processing) 의 문제:
+- 입력에서만 trend 분리 → 모델 내부 layer 가 trend 를 다시 만들어내거나 leak.
+- Future 에서 분해 불가능 (미래 모름).
+
+**점진적 (progressive) 분해의 메커니즘**:
+- 각 layer 가 residual 의 약간만 trend 로 추출 → 다음 layer 가 더 정교한 residual 다시 분해.
+- 마치 **boosting** — 각 step 이 이전의 error 의 일부 잡음.
+- decoder 의 trend accumulator $\mathcal{T}_{de}^l = \mathcal{T}_{de}^{l-1} + \sum_i W \cdot \mathcal{T}^{l,i}$ 가 이 boosting 의 sum.
+
+**왜 layer 수가 작아도 (M=1) 효과적인가?**
+- M=1 decoder 라도 그 안에 3개 SeriesDecomp block 존재 (after self-attn, cross-attn, FFN).
+- 즉 사실 **3-pass decomposition**.
+- Figure 4 의 (d) 3 decomp blocks 가 이 셋업.
+
+### Dependencies learning (Fig 5) — Top-6 의 의미
+
+paper select **top-6** lag (k=6 in Figure 5).
+
+**왜 6?**:
+- $k = \lfloor c \log L \rfloor$, ETT predict-336 의 $L = I/2 + O = 48 + 336 = 384$.
+- $c=3, \log 384 = 5.95$, $k = 17$. 그러나 Figure 5 는 visualization 단순화 위해 top-6 만 표시.
+
+**Figure 5 의 (a) Auto-Corr 가 다른 attention 들과 다른 점**:
+- (a) Auto-Corr: 6개 점이 **다양한 시간 지연** 에 분산 — past 의 여러 시점에 정보 받음
+- (b) Full attention: 6개 점이 **최근 시점에 집중** — past 무시
+- (c) LSH: 6개 점이 random hashing 으로 분산되지만 **의미 없는 위치**
+- (d) ProbSparse: KL-divergence 기반 선택 — local pattern 위주
+
+→ Auto-Correlation 의 **진정한 차별점**: 시간 지연 자체가 **의미 있는 process structure** 의 신호.
+
+### Complex seasonality modeling (Fig 6) — paper 의 강한 주장
+
+paper p.10:
+> Autoformer can capture the complex seasonalities of real-world series from deep representations and further provide a **human-interpretable prediction**.
+
+"Human-interpretable" 의 의미:
+- 모델의 internal state (top-k τ) 가 **도메인 expert 가 즉시 검증 가능**.
+- Electricity hourly + top τ = {24, 168} → expert 가 "맞다, daily + weekly" 라고 확인.
+- Exchange daily + top τ = {22, 66, 252} → expert 가 "Monthly, Quarterly, Yearly" 라고 확인.
+
+이건 **post-hoc interpretation** 이 아닌 **inherent interpretability** — 모델의 메커니즘 자체가 해석 가능.
+
+**Finance 에서의 가치**:
+- 금융 규제 (MiFID II, Basel) 가 ML 모델 explanation 요구.
+- Autoformer 의 top-k τ 는 **regulator 가 즉시 이해** — black-box critique 해소.
+
+### Efficiency analysis (Fig 7) — 실측의 가치
+
+paper 가 단순히 $O(L \log L)$ 이라 주장하지 않고 **실측 (wall-clock + memory)** 을 제공:
+
+**왜 같은 $O(L\log L)$ 인 Reformer / Informer 보다 더 빠른가?**
+- Reformer LSH: hashing + 정렬 overhead.
+- Informer ProbSparse: KL divergence 계산 + softmax + log-softmax — 무거움.
+- Autoformer Auto-Corr: FFT + Top-k. **FFT 가 GPU 에서 cuFFT 로 highly optimized**.
+
+→ "이론 vs 실제 wall-clock" 의 차이. 같은 빅O 라도 **실용에서 차이 큼**.
+
+**Figure 7 의 가장 중요한 한 점**: predict-3072 에서 Full Attention (Transformer) 이 OOM 인 동안 Auto-Correlation 은 ~5GB. **24GB GPU 한 장으로 학습 가능한 영역** 의 확대.
+
+---
+
 ## Figs 8-11 — ETT Multivariate Prediction Showcases (Appendix E.1)
 
 ![Figs 8-11 predictions](figures/page15_Figs8-11_predictions.png)

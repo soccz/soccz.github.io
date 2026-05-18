@@ -128,25 +128,99 @@ $$
 
 ---
 
-## 참고할 referenced works (paper 의 reference 번호)
+## paper References [1]–[48] 전체 (paper p.11–12)
 
-| 번호 | 저자 | 본 paper 에서의 역할 |
-|------|------|--------------------|
-| [1] | Anderson-Kendall (1976) | 시계열 분해 표준 |
-| [9] | Chatfield (1981) | stochastic process 이론 |
-| [15] | Dong-Du-Gardner (2020) | COVID-19 dataset |
-| [17] | Hochreiter-Schmidhuber (1997) | LSTM |
-| [22] | Kingma-Ba (2015) | Adam optimizer |
-| [23] | Kitaev (2020) | Reformer (LSH) |
-| [25] | Lai (2018) | LSTNet, Exchange dataset |
-| [26] | Li (2019) | LogTrans (LogSparse) |
-| [29] | Oreshkin (2019) | N-BEATS |
-| [30] | Papoulis-Saunders (1989) | stochastic process 이론 |
-| [33] | Cleveland (1990) | STL |
-| [34] | Salinas (2020) | DeepAR |
-| [39] | Taylor-Letham (2018) | Prophet |
-| [41] | Vaswani (2017) | Transformer (self-attention) |
-| [43] | Wiener (1930) | Wiener-Khinchin theorem |
-| [48] | Zhou (2021) | Informer, ETT dataset |
+48개 reference 모두를 본 paper 에서의 **역할** 과 함께 정리. paper text 의 어떤 부분 (Sec/Eq/Table/Fig) 에서 인용되는지 명시.
+
+### 시계열 / 분해 관련 (고전 + 현대)
+
+| 번호 | 저자 (연도) | 종류 | 본 paper 에서의 역할 |
+|------|-----------|------|--------------------|
+| **[1]** | Anderson, Kendall (1976) | 통계 textbook | 시계열 분해 표준 (Sec 2.2, 3.1) + ARIMA implementation (Sec 4 baseline) |
+| [2] | Asadi, Regan (2020) | App. Soft Comput. | spatio-temporal decomposition pre-processing — Sec 2.2 |
+| [6] | Box, Jenkins (1970) | textbook | ARIMA 의 고전 — Sec 2.1 |
+| [7] | Box, Jenkins (1968) | JR Stat Soc | ARIMA 의 출발 — Sec 2.1 |
+| [9] | Chatfield (1981) | textbook | stochastic process 이론 (Auto-Corr의 이론적 근거) — Sec 1, 3.2 |
+| [11] | Christiano, Fitzgerald (2003) | Int. Econ. Rev. | band-pass filter — Appendix D Table 9 |
+| [18] | Hodrick, Prescott (1997) | J. Money Credit Bank | business cycle filter — Appendix D Table 9 |
+| **[20]** | Hyndman, Athanasopoulos (2018) | textbook | "Forecasting: principles and practice" — Sec 1, 2.2, 3.1 의 핵심 인용 |
+| [30] | Papoulis, Saunders (1989) | textbook | "Probability, random variables, stochastic processes" — Sec 1, 3.2 이론 |
+| **[33]** | Cleveland et al. (1990) | J. Off. Stat | STL (Seasonal-Trend Loess decomposition) — Sec 2.2, 3.1, Table 9 |
+| [38] | Sorjamaa et al. (2007) | Neurocomputing | long-term prediction methodology — Sec 2.1 |
+| [44] | Woitek (1998) | working paper | Baxter-King filter — Appendix D Table 9 |
+| **[43]** | Wiener (1930) | Acta Math | Wiener-Khinchin theorem — Eq 8 의 근거 |
+
+### Deep Forecasting Baselines (본 paper 비교 대상)
+
+| 번호 | 저자 (연도) | 모델 / 종류 | 본 paper 에서의 역할 |
+|------|-----------|------------|--------------------|
+| [4] | Bai, Kolter, Koltun (2018) | **TCN** | Tables 1, 5 baseline (multivariate) |
+| [5] | Borovykh, Bohte, Oosterlee (2017) | CNN forecasting | Sec 2.1 surveying |
+| [10] | Chen, Tao (2021) | symplectic Hamiltonian | Sec 2.1 classic tools |
+| [12] | de Bézenac et al. (2020) | normalizing Kalman | Sec 2.1 filtering |
+| **[17]** | Hochreiter, Schmidhuber (1997) | **LSTM** | Tables 1, 10 baseline |
+| [24] | Kurle et al. (2020) | Rao-Blackwellised particles | Sec 2.1 |
+| **[25]** | Lai et al. (2018, SIGIR) | **LSTNet** | Tables 1, 5 baseline + Exchange dataset 출처 |
+| **[26]** | Li et al. (2019, NeurIPS) | **LogTrans (LogSparse)** | Tables 1-4 baseline, $O(L(\log L)^2)$ |
+| [28] | Maddix, Wang, Smola (2018) | Deep Gaussian factors | Sec 2.1 |
+| **[29]** | Oreshkin et al. (2019, ICLR) | **N-BEATS** | Sec 2.2 + Table 2 univariate baseline |
+| [31] | Paszke et al. (2019) | PyTorch | implementation framework |
+| [32] | Rangapuram et al. (2018) | deep state space | Sec 2.1 |
+| **[34]** | Salinas et al. (2020) | **DeepAR** | Sec 2.1 + Table 2 univariate baseline |
+| **[35]** | Sen, Yu, Dhillon (2019) | **DeepGLO (matrix decomp)** | Sec 2.2 — pre-processing decomp |
+| [36] | Shih, Sun, Lee (2019) | temporal pattern attention | Sec 2.1 |
+| [37] | Song et al. (2018, AAAI) | Attend and Diagnose | Sec 2.1 |
+| **[39]** | Taylor, Letham (2018) | **Prophet (trend-seasonality)** | Sec 2.2 + Table 2 univariate baseline |
+| [40] | van den Oord et al. (2016) | WaveNet | Sec 2.1 TCN ancestor |
+| [42] | Wen et al. (2017, NeurIPS) | multi-horizon quantile | Sec 2.1 |
+| [45] | Wu et al. (2020, NeurIPS) | adversarial sparse transformer | Sec 2.1 |
+| [46] | Yao et al. (2017, IJCAI) | dual-stage attention RNN | Sec 2.1 |
+| [47] | Yu et al. (2017) | tensor-train RNN | Sec 2.1 |
+
+### Transformer 계보 (본 paper 의 직접 비교)
+
+| 번호 | 저자 (연도) | 모델 | 본 paper 에서의 역할 |
+|------|-----------|------|--------------------|
+| [3] | Bahdanau, Cho, Bengio (2015) | attention NMT | Sec 2.1 + Table 5 LSTMa baseline |
+| [8] | Brown et al. (2020) | GPT-3 | Sec 1 — big Transformer 사례 |
+| [13] | Devlin et al. (2019) | BERT | Sec 1 — Transformer 응용 |
+| [16] | Dosovitskiy et al. (2021) | ViT | Sec 1 — vision 응용 |
+| [19] | Huang et al. (2019) | Music Transformer | Sec 1 — audio 응용 |
+| **[23]** | Kitaev, Kaiser, Levskaya (2020, ICLR) | **Reformer (LSH)** | Tables 1-4 baseline, $O(L \log L)$ |
+| [27] | Liu et al. (2021, ICCV) | Swin Transformer | Sec 1 |
+| **[41]** | Vaswani et al. (2017, NeurIPS) | **Transformer** | Sec 1, 3.1 baseline + Eq 7 multi-head 형식 |
+| **[48]** | Zhou et al. (2021, AAAI) | **Informer (ProbSparse)** | Tables 1-4 baseline + **ETT dataset 출처** |
+
+### Misc 도구
+
+| 번호 | 저자 (연도) | 의미 | 본 paper 에서의 역할 |
+|------|-----------|------|--------------------|
+| [14] | Diebold, Kilian (2001) | predictability theory | Sec H Broader Impact 의 robustness 한계 |
+| **[15]** | Dong, Du, Gardner (2020, Lancet) | COVID dashboard | **COVID dataset (Appendix F)** 출처 |
+| [21] | Ioffe, Szegedy (2015) | batch normalization | Sec G.1 — Algorithm 3/4 의 BN-style speedup 의 inspiration |
+| **[22]** | Kingma, Ba (2015) | **Adam** | Sec 4 optimizer |
+
+→ **합계: 48 references, 모두 paper 본문 / Appendix 에서 인용 위치 확인**. 
+
+### Reference 의 분포 분석
+
+```
+시계열/분해 (고전): [1, 2, 6, 7, 9, 11, 18, 20, 30, 33, 38, 43, 44] — 13개
+Deep Forecasting baselines: [4, 5, 10, 12, 17, 24, 25, 26, 28, 29, 31, 32, 34, 35, 36, 37, 39, 40, 42, 45, 46, 47] — 22개
+Transformer 계보: [3, 8, 13, 16, 19, 23, 27, 41, 48] — 9개
+Misc: [14, 15, 21, 22] — 4개
+```
+
+**Bold (●)** = 본 paper 가 가장 빈번히 인용 / 핵심 baseline. 총 17개.
+
+→ paper 의 학문적 lineage 가 명확:
+- **Time series 의 고전** (Box-Jenkins, STL, Hyndman) 위에
+- **Stochastic process 이론** (Chatfield, Papoulis, Wiener) 으로 자기상관 정당화
+- **Transformer 의 efficient 변형** (Informer, Reformer, LogTrans) 을 baseline
+- **분해 기반 forecasting** (Prophet, N-BEATS, DeepGLO) 와 차별화
+
+이 3 학문적 흐름의 통합이 본 paper 의 contribution.
+
+---
 
 다음 [17_insights.md](17_insights.md) 에서 메타 통찰.

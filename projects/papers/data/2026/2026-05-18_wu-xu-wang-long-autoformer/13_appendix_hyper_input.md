@@ -111,4 +111,81 @@ paper p.14:
 
 이 4가지 design choice 가 paper 의 기본 setting. 본 deep dive 의 코드 ([18_code.md](18_code.md)) 가 이 default 를 사용.
 
+---
+
+## 4 Tables 의 종합 해석 — design choice 가 의미하는 것
+
+### 1. $c$ 의 robustness 의 의미 (Table 6)
+
+$c \in [1, 5]$ 에서 MSE 변화가 10% 이내 — **모델이 hyperparameter 에 둔감**. 이것은:
+- **장점**: real-world deployment 에서 hyperparameter tuning 부담 ↓.
+- **메커니즘**: Top-k 의 k 가 충분히 크면 (≥ log L) 주요 주기가 다 잡힘.
+- **반례**: ILI 에서 c=5 가 급격히 악화 — **비주기 데이터** 에서는 큰 k 가 noise 학습.
+
+→ **Practitioner 권장**: 알려진 주기 데이터는 $c=3$, 비주기/노이즈는 $c=2$.
+
+### 2. Input 길이 의 dataset-specific 특성 (Table 7)
+
+| Dataset | 최적 I | 의미 |
+|---------|--------|------|
+| ETT | 96 (24h hourly / 24h 15-min) | **1일 = 1 cycle** — 충분 |
+| Electricity | 192 (8일) | **1주 cycle 학습 필요** |
+| ILI | 48 (1년) | 약한 yearly cycle, 더 긴 history 필요 |
+
+→ paper Table 7 결과는 **각 데이터의 dominant period 에 따라 I 가 결정** 됨.
+
+**Practitioner formula**: $I \approx 2 \times$ (가장 긴 잠재 주기). Electricity 의 weekly period (168h) → I≈192 가 합리.
+
+### 3. Decoder past length $I/2$ 의 함의 (Table 8)
+
+$O$, $I/2 + O$, $I + O$ 의 trade-off:
+- $O$ (no past) → MSE 0.360, memory 3029 MB
+- **$I/2 + O$** → MSE 0.339, memory 3271 MB (**+8% mem, -5.8% MSE**)
+- $I + O$ → MSE 0.333, memory 3599 MB (+19% mem, -7.5% MSE)
+
+→ $I/2$ → $I$ 의 추가 memory 가 marginal benefit. **diminishing returns** 의 명확한 예.
+
+이것은 architecture 디자인의 일반 원칙: **첫 1/2 가 가장 많은 정보 제공, 후반 1/2 는 보너스**. 이건 attention head 수, layer 수 등에도 비슷한 패턴.
+
+### 4. 분해 algorithm 비교 (Table 9) — 가장 도발적
+
+```
+STL [33] / HP [18] / CF [11] / BK [44] 4개 정교한 분해 + 2 Transformers
+  ↓
+Autoformer (단순 AvgPool inner block + 1 Transformer)
+
+predict-720 MSE:
+  STL: 3.678
+  HP:  2.181
+  CF:  2.462
+  BK:  2.150
+  → 평균 ~2.6
+  
+  Autoformer: 0.422
+  → ~6배 개선
+```
+
+→ **단순 + 미분가능 + inner block** 이 **정교 + 외부 + pre-processing** 을 압도. 
+
+이 결과의 일반적 교훈:
+- 1990–2000 통계 분해 알고리즘 (STL/HP/CF/BK) 은 시계열 ML 의 표준이었으나, deep learning 시대에는 그 정교함이 **gradient flow 의 단절** 로 손해.
+- "**미분가능 단순 < 정교한 외부**" 라는 ML 디자인 원칙의 한 확인.
+- 후속 paper (PatchTST, ITransformer, TimesNet) 가 모두 분해를 inner block 으로 다루는 이유.
+
+---
+
+## 4 Tables 의 시너지
+
+```
+Table 6 (c robust)  +  Table 7 (I dataset-specific)
+        +
+Table 8 (I/2 past)  +  Table 9 (AvgPool 우위)
+        ↓
+"hyperparameter 에 둔감 + I 만 데이터별 튜닝 + 메모리 절감 + 정교한 분해 불필요"
+        ↓
+       Practical Autoformer 의 설정 룰
+```
+
+이 4개 ablation 이 함께 — **practitioner 가 default 만 써도 거의 SOTA 보장**.
+
 다음 [14_appendix_covid.md](14_appendix_covid.md) 에서 COVID-19 case study.
