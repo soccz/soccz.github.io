@@ -35,13 +35,15 @@
 
 ## 코드·데이터 공개
 
-- **공식 코드**: 별도 공개 패키지 — Pelger lab Stanford (요청). 본 해체에 PyTorch 동작 코드 포함.
-- **데이터**:
+- **공식 데이터 (paper footnote 48)**: **https://mpelger.people.stanford.edu/research** — Pelger 가 공식적으로 데이터 공개.
+- **공식 코드**: paper Appendix C.A.C (line 2840+) — "We have estimated our models on two GPU clusters where each cluster has two Intel Xeon E5-2698 v3 CPUs, 1TB memory and 8 Nvidia Titan V GPUs. We have used TensorFlow with Python 3.6 for the model fitting. A complete estimation of the GAN model with hyperparameter tuning takes around 3 days." 코드는 별도 공개 미명시 (요청 시 사용 가능 가능성).
+- **데이터 구성**:
   - CRSP 개별 주식 1967/01–2016/12 (50년)
   - 약 10,000 stocks (모든 firm characteristic 가용한 sample)
-  - 46 firm characteristics (Freyberger-Neuhierl-Weber 2020 + Kenneth French Data Library)
+  - 46 firm characteristics (Freyberger-Neuhierl-Weber 2020 의 2017 version, footnote 27) + Kenneth French Data Library
   - 178 macroeconomic time series (FRED-MD 124 + 46 cross-sectional medians + Welch-Goyal 8)
-- **재현성**: 공개 데이터 (CRSP 학술 라이센스 + FRED + Ken French). 본 해체의 PyTorch 코드로 GAN baseline 재현 가능.
+- **Internet Appendix**: 본 paper 가 자주 reference — "additional empirical robustness results" 포함 (FN 35, 47). 별도 file (본 deep dive 폴더에 없음).
+- **재현성**: 공식 데이터 URL + 본 해체의 PyTorch 코드로 GAN baseline 재현 가능. 단 full hyperparameter search 는 GPU cluster 에서 weeks 단위.
 
 ---
 

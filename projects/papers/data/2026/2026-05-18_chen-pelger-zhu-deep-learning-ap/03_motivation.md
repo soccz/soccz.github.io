@@ -134,16 +134,33 @@ paper p.4–5 본문 (Related Literature section).
 
 | 논문 | 본 논문과의 관계 |
 |------|------|
-| **Gu, Kelly, Xiu (2020) "Empirical Asset Pricing via Machine Learning"** | Benchmark — best FFN forecasting model. 본 논문이 no-arbitrage 추가하여 능가. |
+| **Gu, Kelly, Xiu (2020) "Empirical Asset Pricing via Machine Learning"** RFS | Benchmark — best FFN forecasting model. 본 논문이 no-arbitrage 추가하여 능가. |
 | **Kelly, Pruitt, Su (2019) IPCA** | 선형 conditional factor model. 본 논문 Section III.J 에서 결합. |
-| **Gu, Kelly, Xiu (2021) Autoencoder** | IPCA 의 비선형 일반화 (autoencoder). 본 논문과 평행한 ML 접근. |
-| **Kozak, Nagel, Santosh (2020) "Shrinking the Cross Section"** | Mean-variance optimization + elastic net. 본 논문의 linear EN benchmark. |
-| **Lettau & Pelger (2020) RP-PCA** | 본 논문 저자 (Pelger) 의 이전 작업. PCA 의 risk-premium 일반화. 본 논문 footnote 13, 22 에 언급. |
+| **Gu, Kelly, Xiu (2019) Autoencoder Asset Pricing Models** JoE | IPCA 의 비선형 일반화. 본 논문과 평행한 ML 접근. |
+| **Kozak, Nagel, Santosh (2020) "Shrinking the Cross Section"** JFE | Mean-variance optimization + elastic net. 본 논문의 linear EN benchmark (5가지 차이 footnote 22). |
+| **Lettau & Pelger (2020) RP-PCA** JoE | 본 논문 저자 (Pelger) 의 이전 작업. PCA 의 risk-premium 일반화. footnote 13, 22 에 언급. |
 | **Hansen & Jagannathan (1997)** | Minimax SDF estimation 의 이론적 기반. 본 논문 adversarial 의 motivation. |
-| **Bansal & Viswanathan (1993)** | Neural network 으로 SDF 비모수 추정 (선구자). |
-| **Goodfellow et al. (2014) GAN** | Adversarial NN 의 원조. 본 논문은 finance 응용. |
+| **Hansen (1982) GMM** | Generalized Method of Moments 의 원조. paper Section I.B 의 framework. |
+| **Bansal & Viswanathan (1993)** JoF | Neural network 으로 SDF 비모수 추정 (선구자). |
+| **Hochreiter & Schmidhuber (1997) LSTM** Neural Comp. | LSTM 원조. 본 논문 RNN+LSTM 의 ML 기반. |
+| **Goodfellow, Bengio, Courville (2016) Deep Learning** MIT Press | Deep learning textbook reference. |
+| **Kingma & Ba (2014) Adam** | Adam optimizer 원조 (footnote 49). |
+| **Srivastava et al. (2014) Dropout** | Dropout regularization 원조 (Section II.E). |
+| **Arjovsky, Chintala, Bottou (2017) Wasserstein GAN** | Adversarial NN 의 발전 (paper references). |
+| **Lewis & Syrgkanis (2018) Adversarial GMM** | Adversarial 의 GMM 응용 (paper references). |
+| **Bryzgalova, Pelger, Zhu (2020) "Forest through the Trees"** | Pelger 공동저자. Cross-sections building with decision trees. footnote 22, Section III.I. |
+| **Pelger (2020) "Understanding Systematic Risk"** JoF | Pelger 의 high-frequency factor model. |
+| **Pelger & Xiong (2019) "Proximate Factors"** | Extreme portfolio 의 SR vs loading 차이 (footnote 26). |
+| **Nagel & Singleton (2011)** | Conditional GMM 의 optimal moments. paper Section I.B 의 contrast. |
+| **Sirignano, Sadhwani, Giesecke (2020)** JoF | Mortgage risk + neural network. Variable importance 측정법의 reference (Section III.F). |
+| **Horel & Giesecke (2020)** | Neural network significance test. Variable importance reference. |
 | **McCracken & Ng (2016) FRED-MD** | 본 논문의 124 macro 변수 출처. |
 | **Welch & Goyal (2007)** | 본 논문의 8 추가 macro 예측 변수 출처. |
+| **Ludvigson & Ng (2007)** | Macro factor analysis (PCA). 본 논문 LSTM 의 대조 (Section II.C). |
+| **Cong, Tang, Wang, Zhang (2020) AlphaPortfolio** | Reinforcement learning portfolio (Section III.I). |
+| **Avramov, Cheng, Metzker (2020)** | ML × economic restrictions. 본 논문이 데이터 공유 (footnote 4). |
+| **Martin & Nagel (2020)** | Big data 시대 market efficiency. paper Section III.C 인용. |
+| **Pesaran & Timmermann (1996)** | Time-varying risk premia 의 reference (footnote 33). |
 
 ---
 

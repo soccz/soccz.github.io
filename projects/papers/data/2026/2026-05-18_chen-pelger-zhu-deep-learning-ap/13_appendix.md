@@ -17,28 +17,43 @@ paper p.47–55 본문.
 - Output: $y = W^{(L)\top} x^{(L)} + w_0^{(L)}$.
 - Loss: Adam optimizer.
 
-### A.B Recurrent Neural Network (LSTM)
-paper p.49–54 — LSTM cells 의 정확한 수식:
+### A.B Recurrent Neural Network (LSTM) — paper Appendix B (journal p.49–51) 정확한 수식
+
+paper opening:
+> "The LSTM is composed of a cell (the memory part of the LSTM unit) and three 'regulators', called gates, of the flow of information inside the LSTM unit: an input gate, a forget gate, and an output gate."
+
+**Candidate cell** (current input $x_t = I_t$, previous hidden state $h_{t-1}$):
 $$
-i_t = \sigma(W_i [h_{t-1}, x_t] + b_i) \quad \text{(input gate)}
-$$
-$$
-f_t = \sigma(W_f [h_{t-1}, x_t] + b_f) \quad \text{(forget gate)}
-$$
-$$
-o_t = \sigma(W_o [h_{t-1}, x_t] + b_o) \quad \text{(output gate)}
-$$
-$$
-\tilde C_t = \tanh(W_C [h_{t-1}, x_t] + b_C) \quad \text{(candidate cell state)}
-$$
-$$
-C_t = f_t \odot C_{t-1} + i_t \odot \tilde C_t \quad \text{(cell state)}
-$$
-$$
-h_t = o_t \odot \tanh(C_t) \quad \text{(hidden state)}
+\tilde c_t = \tanh(W_h^{(c)} h_{t-1} + W_x^{(c)} x_t + w_0^{(c)})
 $$
 
-→ **3 gates (input, forget, output) + cell state + hidden state**.
+**3 gates** (sigmoid):
+$$
+\mathrm{input}_t = \sigma(W_h^{(i)} h_{t-1} + W_x^{(i)} x_t + w_0^{(i)})
+$$
+$$
+\mathrm{forget}_t = \sigma(W_h^{(f)} h_{t-1} + W_x^{(f)} x_t + w_0^{(f)})
+$$
+$$
+\mathrm{out}_t = \sigma(W_h^{(o)} h_{t-1} + W_x^{(o)} x_t + w_0^{(o)})
+$$
+
+**Memory cell update** ($\circ$ = element-wise product):
+$$
+c_t = \mathrm{forget}_t \circ c_{t-1} + \mathrm{input}_t \circ \tilde c_t
+$$
+
+**Hidden state output**:
+$$
+h_t = \mathrm{out}_t \circ \tanh(c_t)
+$$
+
+paper 본문 (p.50):
+> "We use the state processes $h_t$ instead of the macroeconomic variables $I_t$ as input to our SDF network."
+
+→ **3 gates (input, forget, output) + memory cell $c_t$ + hidden state $h_t$**.
+
+**기호 차이 주의**: paper 는 input/forget/output gate 의 weights 를 $h$ vs $x$ 의 **별도 행렬** ($W_h^{(i)}, W_x^{(i)}$) 로 명시. Standard textbook LSTM 의 concatenated form $W^{(i)} [h_{t-1}, x_t]$ 와 수학적으로 동등.
 
 ### A.C Implementation
 paper p.54–55 — 구체적 코드 detail, batch size, learning rate schedule, validation 절차.
@@ -47,32 +62,76 @@ paper p.54–55 — 구체적 코드 detail, batch size, learning rate schedule,
 
 ## 13.3 Appendix B — Simulation Example
 
-paper p.55–58 본문 + Table B.1.
+paper p.52–55 (Appendix B 전체) + Table A.I.
 
-### B.1 Setup
-- N = 100 stocks, T = 200 months simulated.
-- True SDF: $M_{t+1} = 1 - \omega^\top R^e$ with **nonlinear $\omega = f(I, c)$**.
-- 2 macroeconomic states 동학.
+### 13.3.1 Setup (paper p.52)
 
-### B.2 핵심 결과 (Table from paper)
-paper Table B.1 (시뮬 결과 일부):
-| Model | SR | EV | XS-R² |
-|-------|-----|-----|-------|
-| GAN | 높음 | 높음 | 높음 |
-| FFN | 높음 (extreme portfolio loading) | 중간 | **낮음** |
-| Linear | 중간 | **낮음** | 낮음 |
-| No macro | **낮음** | 중간 | 중간 |
+paper 본문:
+> "We illustrate with simulations that (1) the no-arbitrage condition in GAN is necessary to find the SDF in a low signal-to-noise setup, (2) the flexible form of GAN is necessary to correctly capture the interactions between characteristics, and (3) the RNN with LSTM is necessary to correctly incorporate macroeconomic dynamics in the pricing kernel."
+
+**Model**: $R^e_{t+1,i} = \beta_{t,i} F_{t+1} + \epsilon_{t+1,i}$
+- $F_t \sim \mathcal{N}(\mu_F, \sigma_F^2)$ iid
+- $\epsilon_{t,i} \sim \mathcal{N}(0, \sigma_\epsilon^2)$ iid
+
+**Parameters** (paper Table A.I note):
+- $N = 500$, $T = 600$
+- $T_{train} = 250$, $T_{valid} = 100$, $T_{test} = 250$
+- SDF SR = 1, $\sigma_F^2 = 0.1$, $\sigma_\epsilon^2 = 1$
+- $\mu_M = 0.05$ (macro trend)
+
+**Two setups**:
+
+**Setup 1 — Two characteristics (multiplicative interaction)**:
+$$
+\beta_{t,i} = C^{(1)}_{t,i} \cdot C^{(2)}_{t,i}, \quad C^{(1)}, C^{(2)} \sim \mathcal{N}(0, 1)
+$$
+
+**Setup 2 — One char + macro state**:
+$$
+\beta_{t,i} = C_{t,i} \cdot b(h_t), \quad b(h) = \begin{cases} 1 & h > 0 \\ -1 & \text{otherwise} \end{cases}
+$$
+$$
+h_t = \sin(\pi t / 24) + \tilde h_t, \quad \tilde h_t \sim \mathcal{N}(0, 0.25)
+$$
+관측: $Z_t = \mu_M t + h_t$ (non-stationary, trend + cyclical).
+
+### 13.3.2 Table A.I — Simulation Results (paper p.53, 정확한 수치)
+
+**Setup 1 — Two characteristics (no macro)**:
+| Model | Train SR | Valid SR | Test SR | Train EV | Test EV | Train XS-R² | Test XS-R² |
+|-------|----------|----------|---------|----------|---------|-------------|------------|
+| **Population** | 0.96 | 1.09 | 0.94 | 0.16 | 0.17 | 0.17 | 0.17 |
+| **GAN** | 0.98 | 1.11 | 0.94 | 0.12 | 0.13 | 0.10 | 0.07 |
+| **FFN** | 0.94 | 1.04 | 0.89 | 0.05 | 0.05 | **-0.30** | **-0.33** |
+| **LS** | 0.07 | -0.10 | 0.01 | 0.00 | 0.00 | 0.00 | 0.01 |
+
+paper 본문 (p.52-53):
+> "The GAN model outperforms the forecasting approach and the linear model in all categories. Note, that it is not necessary to include the elastic net approach as the number of covariates is only two and hence the regularization does not help. The Sharpe Ratio of the estimated GAN SDF reaches the same value as the population SDF used to generate the data. ... Note, that the simple forecasting approach can generate a high Sharpe Ratio but fails in explaining the systematic component."
+
+**핵심**: 
+- **GAN SR = Population SR** (0.94) — 진짜 SDF 회복.
+- **FFN SR 높지만 XS-R² 음수 (-0.33)** — extreme portfolio 만 잡고 loading 못 잡음.
+- **LS = 거의 0** — multiplicative interaction 못 잡음.
+
+**Setup 2 — One char + macro state**:
+| Model | Train SR | Valid SR | Test SR | Test EV | Test XS-R² |
+|-------|----------|----------|---------|---------|------------|
+| **Population** | 0.89 | 0.92 | 0.86 | 0.17 | 0.15 |
+| **GAN** | 0.79 | 0.77 | 0.64 | 0.17 | 0.15 |
+| **FFN** | 0.05 | -0.05 | 0.06 | 0.02 | 0.02 |
+| **LS** | 0.12 | -0.05 | 0.10 | 0.15 | 0.14 |
 
 paper 본문:
 > "Appendix B includes a simulation that illustrates that all three evaluation metrics (SR, EV and XS-R²) are necessary to assess the quality of an SDF."
 
-**메시지**:
-- FFN: SR 만 높을 수 있다 — XS-R² 낮음.
-- Linear: SR 높지만 EV 낮음 — interaction 못 잡음.
-- No macro: SR 최저 — business cycle 손실.
-- **GAN: 세 지표 모두 좋음**.
+**핵심**:
+- **GAN 만 macro state 잡음** — Test SR 0.64 vs FFN/LS ~0.1.
+- **LS 도 EV/XS-R² 잡음** — 우연이 아니라 cross-section 의 linear 효과는 잘 잡지만 macro 동학 못 잡아 SR 낮음.
 
-→ paper Table I 의 실증 결과가 우연이 아닌 **구조적 차이**.
+paper Fig A.2 (p.54): GAN 의 SDF surface 가 Population 의 multiplicative pattern 정확히 재현. FFN 은 diffuse, LS 는 flat.
+paper Fig A.3 (p.56): LSTM 의 hidden state 가 true 의 sin(πt/24) cyclical pattern 정확히 추출.
+
+→ Simulation 은 **paper Table I 의 실증 결과가 architectural choices 의 구조적 효과** 임을 입증.
 
 ---
 
