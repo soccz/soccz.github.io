@@ -473,6 +473,45 @@
 
   /* Per-paper landing config — extend as more deep dives land */
   const LANDING = {
+    '2026-05-18_wu-xu-wang-long-autoformer': {
+      eyebrow: 'Paper Deep Dive · 시계열 × Transformer',
+      hero: 'Self-attention 을 FFT 기반 Auto-Correlation 으로. 분해는 inner block 으로.',
+      subtitle: '<span class="accent">Wu, Xu, Wang &amp; Long (NeurIPS 2021)</span> 의 Autoformer 는 두 번의 도약을 한다. ' +
+                '(1) 시계열 분해 (seasonal/trend-cyclical) 를 사전처리에서 모델의 inner block 으로 끌어와 점진적 (progressive) 으로 적용. ' +
+                '(2) Self-attention 의 point-wise dot-product 를 series-wise Auto-Correlation 으로 교체 — ' +
+                'FFT 로 자기상관 R(τ) 를 O(L log L) 에 계산, Top-k 시간 지연에서 sub-series 를 Roll 후 가중합. ' +
+                '6 datasets × 4 horizons 에서 평균 MSE 38% 감소. ETTm2 predict-336: 1.334 → 0.339.',
+      stats: [
+        { num: '20', label: '챕터' },
+        { num: '8',  label: 'Figure 발췌' },
+        { num: '38%', label: '평균 MSE 감소' },
+        { num: 'O(L log L)', label: 'Complexity' }
+      ],
+      what: {
+        title: '"점-점 attention 의 시대를 끝낸다. Series 가 단위다."',
+        body: '본 논문은 Transformer 가 시계열 forecasting 에서 두 가지 한계 (sparse attention 의 정보 병목 + 분해의 사전처리 한정) ' +
+              '를 동시에 깨는 디자인이다. **Wiener-Khinchin 정리 (1930)** 로 자기상관을 FFT 두 번 + 곱 + IFFT 한 번에 모든 lag 에서 계산. ' +
+              '**Top-k τ 의 Roll(V, τ)** 가 모든 점을 결과에 기여하게 만들어 sparse attention 의 정보 손실을 회피. ' +
+              '결과: ETT, Electricity, Exchange (FX), Traffic, Weather, ILI 의 6 dataset × 4 horizon = 24 setting 에서 SOTA.',
+        verdict: '시계열 forecasting 의 시대 구분점. 이후 PatchTST, ITransformer, TimesNet 의 출발점 — ' +
+                 'series-wise 가 forecasting Transformer 의 표준이 된 이유.'
+      },
+      tour: [
+        { num: '01–04', ttl: '시작 + 동기',          desc: '5개 준비 개념 (분해, autocorrelation, FFT, Wiener-Khinchin, Transformer) + Section 1-2 풀이.',                          link: 'read.html?slug=' + encodeURIComponent('2026-05-18_wu-xu-wang-long-autoformer') + '#sec-03',  text: '준비하기 →' },
+        { num: '05–07', ttl: '방법론 핵심',           desc: 'Section 3.1 architecture + 3.2 Auto-Correlation + FFT 기반 O(L log L) 효율 (Eq 1-8).',                                   link: 'read.html?slug=' + encodeURIComponent('2026-05-18_wu-xu-wang-long-autoformer') + '#sec-05',  text: '방법론 해부 →' },
+        { num: '08–11', ttl: '실증 4부작',           desc: '6 datasets · 10 baselines · Tables 1-4 (multivariate/univariate/decomp/attention) · Figs 4-7 시각화 분석.',           link: 'read.html?slug=' + encodeURIComponent('2026-05-18_wu-xu-wang-long-autoformer') + '#sec-09',  text: '결과 보기 →' },
+        { num: '12–14', ttl: 'Appendix',             desc: 'Table 5 ETT 4 variants (평균 60% 감소) · c/I/decoder 의 robustness · COVID-19 case (input 7 → predict 30).',           link: 'read.html?slug=' + encodeURIComponent('2026-05-18_wu-xu-wang-long-autoformer') + '#sec-12',  text: 'Appendix 읽기 →' },
+        { num: '17',    ttl: '12 메타 통찰',          desc: 'AvgPool 의 충분성, 두 contribution 의 직교, plateau 효과, interpretability, finance 응용 시사.',                       link: 'read.html?slug=' + encodeURIComponent('2026-05-18_wu-xu-wang-long-autoformer') + '#sec-17',  text: '통찰 읽기 →' },
+        { num: '18',    ttl: 'PyTorch 구현',          desc: 'SeriesDecomp + AutoCorrelation + Encoder/Decoder Layers + Full Autoformer — 단일 파일 재현 가능.',                       link: 'read.html?slug=' + encodeURIComponent('2026-05-18_wu-xu-wang-long-autoformer') + '#sec-18',  text: '코드 보기 →' }
+      ],
+      preview: {
+        title: '맛보기 — Table 1 (Multivariate, 6 datasets × 4 horizons)',
+        subtitle: 'paper Table 1 의 정확한 MSE/MAE. 6 datasets (ETT/Electricity/Exchange/Traffic/Weather/ILI) × 4 horizons × 7 models. ' +
+                  'Autoformer 가 모든 row 에서 SOTA — ETTm2 predict-336: 1.334 → 0.339 (74% ↓). ' +
+                  '평균 38% MSE 감소. 38% 가 abstract 의 핵심 수치의 출처.',
+        vizType: 'autoformer-mse-table1'
+      }
+    },
     '2026-05-18_chen-pelger-zhu-deep-learning-ap': {
       eyebrow: 'Paper Deep Dive · 자산가격결정 × Deep Learning',
       hero: 'No-arbitrage 를 신경망 loss 로. SDF 와 test asset 이 minimax 로 경쟁.',
