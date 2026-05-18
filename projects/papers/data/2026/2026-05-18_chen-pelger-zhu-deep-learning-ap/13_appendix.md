@@ -78,30 +78,70 @@ paper 본문:
 
 ## 13.4 Appendix C — Conditional SDF Models 의 통합
 
-paper p.59–66 본문.
+paper p.55–66 (Appendix C 전체).
 
-### C.A Characteristic Projection & Unconditional Models
-- 모든 unconditional model 은 **characteristic managed portfolios** 의 mean-variance optimization 으로 환원 가능.
-- Fama-French, PCA, RP-PCA 등.
+paper Appendix C opening:
+> "We survey the most recent advances of relevant machine learning methods in asset pricing and explain their differences. All asset pricing models are captured by the general framework introduced in Section I.A, which is based on the fundamental moment equation $\mathbb{E}_t[M_{t+1} R^e_{t+1,i}] = 0$, which implies the factor representation $R^e_{t+1,i} = \beta^{SDF}_{t,i} F_{t+1} + \epsilon_{t+1,i}$. Different asset pricing model impose different structures on the SDF weights $\omega$ and SDF loadings $\beta^{SDF}$."
 
-### C.B Inversion of Unconditional Models
-- Unconditional model → SDF representation.
+### C.A Characteristic Projection & Unconditional Models (paper p.57+)
+paper:
+> "The most common way is to translate the problem into an unconditional asset pricing model on sorted portfolios. Under additional assumptions one could obtain a valid SDF $M_{t+1}$ conditional on a set of asset-specific characteristics $I_{t,i}$ by its projection on the return space: $M_{t+1} = 1 - \omega_t^\top R^e_t$ with $\omega_{t,i} = f(I_{t,i})$ ..."
 
-### C.C Unconditional Factor Models
-- PCA, RP-PCA 의 정확한 SDF 형식.
+→ Fama-French 등의 unconditional model 은 characteristic-managed portfolio 의 mean-variance optimization 으로 환원.
 
-### C.D Conditional Factor Models
+### C.B Inversion of Unconditional Models (paper p.59)
+paper:
+> "In order to use an SDF, which is estimated as an unconditional model from conditional portfolio sorts or projections, we need to invert the conditional projection. ... We need to estimate the conditional covariance of each stock with the SDF portfolios"
+
+핵심 식 (paper):
+$$
+\beta^{SDF}_{t,i} = \frac{\mathrm{Cov}_t(R^e_{t+1,i}, F_{t+1})}{\mathrm{Var}_t(F_{t+1})} = \frac{\mathrm{Cov}_t(R^e_{t+1,i}, \tilde w^\top \tilde R_t)}{\mathrm{Var}_t(\tilde w^\top \tilde R_t)}
+$$
+
+→ Unconditional SDF 를 individual stocks 에 mapping 하려면 conditional covariance 필요. **Stationary portfolio sort 가 individual stocks 에는 conditional model 임**.
+
+### C.C Unconditional Factor Models (paper p.59 Eq A.3, A.4)
+paper:
+> "The linear factor model literature imposes the additional assumption that a small number of risk factors based on characteristic managed portfolios should span the SDF."
+
+Factor structure (Eq A.3):
+$$
+\tilde R_{t,i} = \tilde F_t \tilde \beta_i^\top + e_{t,i}
+$$
+
+Tangency portfolio weights (Eq A.4):
+$$
+\tilde \omega^{\tilde F} = \Sigma_{\tilde F}^{-1} \mu_{\tilde F}
+$$
+
+→ **PCA, RP-PCA (Lettau-Pelger 2020), Fama-French** 등이 이 framework.
+
+paper 핵심:
+> "The factors can be observed fundamental factors, for example the Fama-French factor model of Fama and French (2015), or latent asset pricing factors estimated from the unconditional moments of $\tilde R_t$ by PCA or its improvement RP-PCA (Lettau and Pelger (2020))."
+
+### C.D Conditional Factor Models (paper p.62)
 - KPS / IPCA 의 conditional 일반화.
 - Linear conditioning: $\omega_{t,i} = \theta^\top I_{t,i}$.
+- 본 논문 의 LS, EN benchmark 와 직접 대응.
 
-### C.E Adversarial Estimation & MVE
+### C.E Adversarial Estimation & Mean-Variance Optimization (paper p.65)
 - Hansen-Jagannathan (1997) 의 minimax 와 본 논문의 adversarial 의 연결.
 - Mean-Variance Optimization 의 dual.
+- Bryzgalova-Pelger-Zhu (2020) 의 robust SDF 와 연결.
 
-paper 핵심 메시지:
+paper 핵심 메시지 (p.13, Section I.C):
 > "Appendix C provides a detailed overview of the various models for conditional SDFs and their relationship to our framework."
 
 → **모든 기존 SDF 모델 (Fama-French, PCA, IPCA, KNS, RP-PCA)** 이 본 논문 framework 의 special case 로 표현 가능.
+
+### Figure A.3 — Macroeconomic State Dynamics (Appendix C)
+paper Fig A.3 (p.56): LSTM 의 hidden state 가 어떻게 추출되는지 시각적 illustration.
+- (a) Observed macro variable
+- (b) First-order difference (stationary)
+- (c) True hidden state (시뮬)
+- (d) LSTM-fitted hidden state
+
+→ paper Appendix B simulation 과 함께 LSTM 의 동학 학습 능력 입증.
 
 ---
 
@@ -349,7 +389,9 @@ paper 본문 (Section III.H):
 - **결과 매우 robust** — different tuning 으로도 같은 economic model 발견.
 
 paper 핵심 결론 (Section III.H):
-> "Our results are robust to the time periods under consideration, small capitalization stocks, the choice of the tuning parameters, and limits to arbitrage. **The SDF structure is surprisingly stable over time.**"
+> "Our findings are robust to small cap stocks, the choice of the tuning parameters, the time period under consideration and are not exploiting limits to arbitrage." (paper Section III.H opening, journal p.38) 
+> 
+> 그리고 Introduction p.4: "Our findings are robust to the time periods under consideration, small capitalization stocks, the choice of the tuning parameters, and limits to arbitrage. The SDF structure is surprisingly stable over time."
 
 → **결과 매우 robust**. Different tuning 으로도 같은 economic model 발견.
 

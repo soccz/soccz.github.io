@@ -8,9 +8,27 @@ GAN 의 SDF 에 가장 중요한 firm chars: **ST_REV, SUV, r12_2 (momentum)** �
 
 ---
 
-## 11.2 Variable Importance — 측정법
+## 11.2 GAN factor vs Fama-French 5 (Table A.V)
 
-paper p.32:
+paper Section III.F opening (journal p.32):
+> "What is the structure of the SDF factor? As a first step in Table A.V we compare the GAN factor with the Fama-French 5 factor model. None of the five factors has a high correlation with our factor with the profitability factor having the highest correlation with 17%. The market factor has only a correlation of 10%. Next, we run a time series regression to explain the GAN factor portfolio with the Fama-French 5 factors. Only the profitability factor is significant. The strongly significant pricing error indicates that these factors fail to capture the pricing information in our SDF portfolio."
+
+**핵심 수치**:
+| FF5 factor | Correlation with GAN factor |
+|------------|-----------------------------|
+| Market | 10% |
+| SMB | (low) |
+| HML | (low) |
+| RMW (Profitability) | **17%** (highest) |
+| CMA | (low) |
+
+**해석**: GAN factor 가 Fama-French 5 factors 와 거의 무관 — **새로운 risk dimension** 을 잡고 있음. 회귀에서 profitability 만 유의 + 강한 pricing error → FF5 가 GAN 의 정보 못 잡음.
+
+---
+
+## 11.3 Variable Importance — 측정법
+
+paper p.32 본문 (Section III.F):
 $$
 \mathrm{Sensitivity}(x_j) = \frac{1}{C} \sum_i \sum_t \left| \frac{\partial \omega(x_i)}{\partial x_j} \right|
 $$
@@ -28,7 +46,7 @@ paper 본문:
 
 ---
 
-## 11.3 Figure 11 — GAN Variable Importance
+## 11.4 Figure 11 — GAN Variable Importance
 
 ![Fig. 11 — Characteristic Importance for GAN SDF](figures/page33_var_importance_GAN.png)
 
@@ -58,7 +76,7 @@ paper 본문 (p.33):
 
 ---
 
-## 11.4 Figure 12 — FFN Variable Importance (대비)
+## 11.5 Figure 12 — FFN Variable Importance (대비)
 
 ![Fig. 12 — Characteristic Importance for FFN SDF](figures/page34_var_importance_FFN.png)
 
@@ -75,7 +93,7 @@ paper 본문 (p.33–34):
 
 ---
 
-## 11.5 Variable Importance — Conditioning $g$ (Fig A.7, Appendix)
+## 11.6 Variable Importance — Conditioning $g$ (Fig A.7, Appendix)
 
 paper p.34:
 > "Figure A.7 shows the variable importance ranking for the conditioning vector g. **The GAN test assets depend on all six major anomaly categories.** These test assets ensure that the GAN SDF also reflects this information."
@@ -84,7 +102,7 @@ paper p.34:
 
 ---
 
-## 11.6 Macro Variable Importance (Fig A.4, Appendix)
+## 11.7 Macro Variable Importance (Fig A.4, Appendix)
 
 paper p.34 본문:
 > "Figure A.4 shows the importance of the macroeconomic variables for the GAN model. These variables are first summarized into the four hidden states processes before they enter the weights of the SDF. First, it is apparent that **most macroeconomic variables have a very similar importance**. This is in line with a model where there is a strong dependency between the macroeconomic time series which is driven by a low dimensional non-linear factor structure."
@@ -96,7 +114,7 @@ paper 본문:
 
 ---
 
-## 11.7 Figure 13 — LSTM Hidden States 와 NBER Recession
+## 11.8 Figure 13 — LSTM Hidden States 와 NBER Recession
 
 ![Fig. 13 — Macroeconomic Hidden State Processes (LSTM)](figures/page36_LSTM_hidden.png)
 
@@ -112,21 +130,66 @@ paper:
 
 ---
 
-## 11.8 SDF Structure (Section III.G)
+## 11.9 SDF Structure (Section III.G)
 
-paper p.36 본문:
+paper p.36 본문 두 핵심 발견:
 > "Surprisingly, **individual characteristics have an almost linear effect on the pricing kernel and the risk loadings**, i.e. non-linearities matter less than expected for individual characteristics. Second, **the better performance of GAN is explained by non-linear interaction effects**, i.e. the general functional form of our model is necessary for capturing the dependency between multiple characteristics."
 
-paper Figure 14 (위 본문에 인용된 plot):
-- $\omega$ as function of single char: 거의 linear.
-- $\omega$ as function of two chars (예: ST_REV × r12_2, LME × BEME): saddle/dome — **multiplicative interaction**.
+### 11.9.1 Figure 14 — Pairwise Interaction (2D line plot)
 
-paper 본문:
+paper Fig 14 (journal p.36) — 2 sub-panels, **각 panel 안에 5개 line (10%, 25%, 50%, 75%, 90% quantile of 2nd variable)**:
+
+**(a) ST_REV × r12_2 (momentum)**:
+- 좌측: $\omega$ vs ST_REV, conditioned on quantile of r12_2.
+- 우측: $\omega$ vs r12_2, conditioned on quantile of ST_REV.
+
+**(b) LME × BEME (size × value)**:
+- 좌측: $\omega$ vs LME, conditioned on quantile of BEME.
+- 우측: $\omega$ vs BEME, conditioned on quantile of LME.
+
+paper Fig 14 note:
+> "These figures show the SDF weight ω as function of short-term reversal, momentum, size and book-to-market ratio for different quantiles of the second variable while keeping the remaining variables at their mean level."
+
+paper 본문 (p.37):
+> "In an additive model without interaction all lines would be parallel shifts. This is exactly what we see for the two linear models. Interestingly, for size and value, the FFN model also has almost parallel shifts in the SDF weights, implying that it does not capture interactions. However, for GAN small stocks have a very different exposure to value than large cap stocks. The line plots for GAN reveal more complex interaction patterns than for the other models."
+
+→ **Key test**: parallel shifts = additive (no interaction). GAN 만 non-parallel → **interaction 만 잡음**.
+
+### 11.9.2 Figure 15 — Full 2D Contour + Triple Interaction
+
+paper Fig 15 (journal p.37) — 4 sub-panels, **2D contour heatmap**:
+
+**(a)** ST_REV × r12_2 interaction (2D contour)
+**(b)** LME × BEME interaction (2D contour)
+**(c)** ST_REV, r12_2, SUV triple interaction
+**(d)** LME, BEME, ST_REV triple interaction
+
+paper Fig 15 note:
+> "These figures show the SDF weight ω as two- and three-dimensional function of characteristics keeping the remaining variables at their mean level."
+
+paper 본문 (p.37):
+> "Instead of conditioning on only five quantiles for the second characteristic, we plot the two-dimensional pricing kernel for GAN in Figure 15. It confirms that the combined size and book-to-market characteristics have a highly non-linear effect on the GAN pricing kernel. The triple interaction in Figure 15 shows that **low short-term reversal, high momentum and high explained volume has the highest positive weight while high reversal, low momentum and low unexplained volume has the largest negative weight in the kernel** when conditioning on these three characteristics. Low reversal and low momentum or high reversal and high momentum have an almost neutral effect independent of unexplained volume. The interaction effect for size, book-to-market and short-term reversal is even more complicated."
+
+→ **3-way interaction** 의 구체적 해석:
+- Low ST_REV + High momentum + High SUV → **highest positive weight**.
+- High ST_REV + Low momentum + Low SUV → **largest negative weight**.
+- 다른 조합 → 거의 neutral.
+
+### 11.9.3 Figure A.9 — Univariate (1D) Relationships
+
+paper p.36 본문:
+> "Figure A.9 plots the one-dimensional relationship between the SDF weights ω and one specific characteristic. ... **It is striking how close the functional form of the SDF for GAN and FFN is to a linear function.** This explains why linear models are actually so successful in explaining single-sorted characteristics. For a small number of characteristics, for example short-term reversal, GAN has some non-linearities around the median. These are exactly the decile sorted portfolios for which GAN performs better than FFN and EN."
+
+→ **개별 char → ω 의 1D 관계가 거의 linear**. 비선형은 ST_REV 등 일부 char 의 median 근처에서만 약간.
+
+→ Linear model (LS) 의 single-sorted 성공 설명 + GAN 우위의 정확한 위치 (interaction) 명시.
+
+paper figure note:
 > "The figures show the variable importance and functional form of the SDF estimated on a rolling window of 240 months. The sensitivities and SDF weights $\omega$ are the average over those rolling window estimates."
 
 ---
 
-## 11.9 정리
+## 11.10 정리
 
 ```
 [ Variable Importance — GAN (Fig 11) ]
