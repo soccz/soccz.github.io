@@ -59,6 +59,31 @@ paper p.6–7 의 Datasets paragraph 정확 인용:
 | Encoder layers | $N = 2$ |
 | Decoder layers | $M = 1$ |
 
+### paper Appendix G.2 — Fair Comparison & Embedding (p.18)
+
+paper 가 baseline 들의 공평한 비교를 위해 두 가지 통일:
+
+> All these transformer-based models are built with two encoder layers and one decoder layer for the sake of the fair comparison in performance and efficiency, including Informer [48], Reformer [23], LogTrans [26] and canonical Transformer [41]. Besides, all these models adopt the embedding method and the one-step generation strategy as Informer [48]. (paper p.18 G.2)
+
+→ **모든 Transformer baselines (Informer/Reformer/LogTrans/Transformer) 도 N=2, M=1**. 동일 architecture depth 에서 메커니즘만 비교.
+
+→ **임베딩 + one-step generation 도 Informer 방식 통일**. Autoformer 만의 advantage 가 아님 — 공평.
+
+### Embedding 의 차이 — Autoformer 만의 변형
+
+> Note that our proposed series-wise aggregation can provide enough sequential information. Thus, we do not employ the position embedding as other baselines but keep the value embedding and time stamp embedding. (G.2)
+
+표준 Transformer / Informer 의 embedding 3종:
+1. **Value embedding** — input value → d_model 차원
+2. **Position embedding** — 시점 i → d_model 차원 (Transformer의 sinusoidal/learnable)
+3. **Time stamp embedding** — calendar feature (hour-of-day, day-of-week 등) → d_model 차원
+
+**Autoformer**: value + time stamp embedding **만 사용**. Position embedding **생략**.
+
+**이유**: Auto-Correlation 의 series-wise aggregation 이 이미 시점 간 관계를 학습 — position 정보가 별도 embedding 으로 주입될 필요 없음.
+
+→ 본 deep dive 의 ch18 PyTorch 코드는 단순화를 위해 value embedding 만 (Linear). time stamp + position 둘 다 생략. paper repo 는 time stamp 까지 포함.
+
 ---
 
 ## Baselines (10개)

@@ -4,7 +4,7 @@ paper Section 4.1 (p.7–8). Multivariate / Univariate 두 setting 에서 Autofo
 
 ## 인터랙티브 시각화
 
-```viz:autoformer-mse-table1:title=paper Table 1 — Multivariate MSE (interactive),caption=Dataset 토글 (ETT/Electricity/Exchange/Traffic/Weather/ILI) + Horizon 토글 (96/192/336/720, ILI 는 24/36/48/60). 모든 24 settings 에서 Autoformer 가 MSE 최저 (Exchange-720 의 Reformer 1.510 vs Autoformer 1.447 가 가장 가까움).
+```viz:autoformer-mse-table1:title=paper Table 1 — Multivariate MSE (interactive),caption=Dataset 토글 (ETT / Electricity / Exchange / Traffic / Weather / ILI) + Horizon 토글 (96 / 192 / 336 / 720 — ILI 는 24 / 36 / 48 / 60). 모든 24 settings 에서 Autoformer 가 MSE 최저. Exchange-720 의 Reformer 1.510 vs Autoformer 1.447 이 가장 가까움.
 ```
 
 ---

@@ -4,10 +4,10 @@ paper p.8–9. 본 paper 의 두 contribution 을 각각 따로 검증.
 
 ## 인터랙티브 시각화 — 두 ablation 결합
 
-```viz:autoformer-decomp-ablation:title=paper Table 3 — Decomposition architecture ablation (interactive),caption=Backbone 토글 (Transformer / Informer / LogTrans / Reformer) 로 Origin vs Sep vs Ours 의 MSE 비교. 모든 4 backbones × 4 horizons 에서 Ours (progressive inner-block) 가 압승. 사전 분해 (Sep) 는 종종 악영향 (Transformer-720, Informer-336).
+```viz:autoformer-decomp-ablation:title=paper Table 3 — Decomposition architecture ablation (interactive),caption=Backbone 토글 (Transformer / Informer / LogTrans / Reformer) 로 Origin vs Sep vs Ours 의 MSE 비교. 모든 4 backbones × 4 horizons 에서 Ours (progressive inner-block) 가 압승. 사전 분해 (Sep) 는 종종 악영향 — Transformer-720 과 Informer-336 이 대표적.
 ```
 
-```viz:autoformer-attention-ablation:title=paper Table 4 — Auto-Correlation vs Self-Attention (interactive),caption=I → O setting 토글 (9 combinations). Auto-Correlation 이 9/9 settings 에서 MSE best. predict-1440 에서 Full/LogSparse/LSH 모두 OOM, Auto-Correlation 만 학습 가능.
+```viz:autoformer-attention-ablation:title=paper Table 4 — Auto-Correlation vs Self-Attention (interactive),caption=I → O setting 토글 (9 combinations). Auto-Correlation 이 9/9 settings 에서 MSE best. predict-1440 에서 Full/LogSparse/LSH 모두 OOM. Auto-Correlation 만 학습 가능.
 ```
 
 ---

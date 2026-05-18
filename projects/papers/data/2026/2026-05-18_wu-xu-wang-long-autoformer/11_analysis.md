@@ -69,7 +69,7 @@ paper p.10:
 
 ## 인터랙티브 시각화 — Figure 6 lag 분포
 
-```viz:autoformer-lag-histogram:title=paper Figure 6 — Learned lag distributions (interactive),caption=Dataset 토글 (Electricity/Exchange/Traffic/Weather). 각 dataset 의 학습된 top-10 lag 분포가 도메인 실제 주기와 일치 — Electricity 24h+168h, Exchange 22d/66d/252d (Monthly/Quarterly/Yearly), Traffic 24h+168h, Weather 144 (10min × 144 = 24h). **주의**: paper Fig 6 의 정확 histogram 수치 미공개 — paper 명시 peak 위치 + 합리적 σ 의 gaussian 합성.
+```viz:autoformer-lag-histogram:title=paper Figure 6 — Learned lag distributions (interactive),caption=Dataset 토글 (Electricity / Exchange / Traffic / Weather). 각 dataset 의 학습된 top-10 lag 분포가 도메인 실제 주기와 일치. Electricity 와 Traffic 은 24h + 168h. Exchange 는 22d / 66d / 252d (Monthly + Quarterly + Yearly). Weather 는 144 (10min × 144 = 24h). **주의** — paper Fig 6 의 정확 histogram 수치 미공개. paper 명시 peak 위치 + 합리적 σ 의 gaussian 합성.
 ```
 
 ---

@@ -71,7 +71,7 @@ $$
 ```viz:autoformer-fft-acorr:title=Auto-Correlation R(τ) FFT 계산 step-by-step,caption=Period 슬라이더로 잠재 주기 P 를 조작. (1) 합성 시계열 X(t) — 두 harmonics + noise. (2) FFT 로 모든 lag 의 R(τ) 계산. Top-k τ (빨강) 가 실제 주기 P 와 2P 에 위치하는 것 확인.
 ```
 
-```viz:autoformer-topk-delays:title=Top-k τ + Roll(V, τ) Aggregation (Eq 6),caption=Top-k 슬라이더로 k=1~5 조작. (1) Synthetic V(t). (2) R(τ) 의 Top-k 시간 지연. (3) softmax 가중합 = Σᵢ wᵢ · Roll(V, τᵢ). k 가 작을수록 더 단순, 크면 더 부드러운 aggregation.
+```viz:autoformer-topk-delays:title=Top-k τ + Roll(V τ) Aggregation (Eq 6),caption=Top-k 슬라이더로 k=1~5 조작. (1) Synthetic V(t). (2) R(τ) 의 Top-k 시간 지연. (3) softmax 가중합 = Σᵢ wᵢ · Roll(V τᵢ). k 가 작을수록 더 단순. k 가 클수록 더 부드러운 aggregation.
 ```
 
 ---
