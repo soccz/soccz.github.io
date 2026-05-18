@@ -16,12 +16,14 @@ paper p.6–7 의 Datasets paragraph 정확 인용:
 
 | Dataset | 변수 수 | 빈도 | 기간 | 응용 카테고리 | 본 paper 의 split |
 |---------|--------|------|------|--------------|------------------|
-| ETT (ETTm2 main) | 7 | 15min/h | 2016/07–2018/07 | energy | 6:2:2 |
-| Electricity | 321 | hourly | 2012–2014 | energy | 7:1:2 |
-| Exchange | 8 (8 countries) | daily | 1990–2016 | economics (FX) | 7:1:2 |
-| Traffic | 862 (sensors) | hourly | California DOT | traffic | 7:1:2 |
-| Weather | 21 indicators | 10min | 2020 전체 | weather | 7:1:2 |
-| ILI | 7 | weekly | 2002–2021 | disease | 7:1:2 |
+| ETT (ETTm2 main) | 7† | 15분 (m) / 1시간 (h) | 2016/07–2018/07 | energy | 6:2:2 |
+| Electricity | **321** (paper) | hourly | 2012–2014 | energy | 7:1:2 |
+| Exchange | **8** countries (paper) | daily | 1990–2016 | economics (FX) | 7:1:2 |
+| Traffic | 862† (sensors) | hourly | California DOT | traffic | 7:1:2 |
+| Weather | **21** indicators (paper) | 10min | 2020 전체 | weather | 7:1:2 |
+| ILI | 7† | weekly | 2002–2021 | disease | 7:1:2 |
+
+† 표시 = paper Section 4 본문에 정확한 변수 수 미명시. ETT 의 7 (oil temperature + 6 power loads), Traffic 의 862 sensors, ILI 의 7 feature 는 **공식 repo (github.com/thuml/Autoformer) 의 dataset preprocessing 기준**. paper 의 인용 가능한 변수 수는 **굵게** 표시한 것만 (Electricity 321, Exchange 8, Weather 21).
 
 **Split 룰**:
 > We follow standard protocol and split all datasets into training, validation and test set in chronological order by the ratio of 6:2:2 for the ETT dataset and 7:1:2 for the other datasets. (p.7)

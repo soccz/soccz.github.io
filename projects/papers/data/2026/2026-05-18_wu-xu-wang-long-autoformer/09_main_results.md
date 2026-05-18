@@ -25,7 +25,7 @@ paper Section 4.1 (p.7–8). Multivariate / Univariate 두 setting 에서 Autofo
 | **Exchange** | 96 | **0.197** | 0.847 | 0.968 | 1.065 | 1.551 | 1.453 | 3.004 |
 |          | 192 | **0.300** | 1.204 | 1.040 | 1.188 | 1.477 | 1.846 | 3.048 |
 |          | 336 | **0.509** | 1.672 | 1.659 | 1.357 | 1.507 | 2.136 | 3.113 |
-|          | 720 | 1.447 | 2.478 | 1.941 | **1.510** | 2.285 | 2.984 | 3.150 |
+|          | 720 | **1.447** | 2.478 | 1.941 | 1.510 | 2.285 | 2.984 | 3.150 |
 | **Traffic** | 96 | **0.613** | 0.719 | 0.684 | 0.732 | 1.107 | 0.843 | 1.438 |
 |          | 192 | **0.616** | 0.696 | 0.685 | 0.733 | 1.157 | 0.847 | 1.463 |
 |          | 336 | **0.622** | 0.777 | 0.733 | 0.742 | 1.216 | 0.853 | 1.479 |
@@ -41,7 +41,14 @@ paper Section 4.1 (p.7–8). Multivariate / Univariate 두 setting 에서 Autofo
 
 **Bold** = best per row.
 
-→ **24/24 settings 에서 Autoformer 가 SOTA** (Exchange predict-720 만 Reformer 가 1.510 < 1.447 ... 하지만 paper text 는 Autoformer 도 SOTA 로 분류). 실제로 Reformer 의 1.510 이 약간 낮음 — paper Table 1 bold 는 Autoformer 의 1.447 로 보이지만 사실 best 가 어디인지 확인 필요. PDF 원문 확인 결과 Autoformer 1.447 < Reformer 1.510, 따라서 **모든 24 settings 에서 Autoformer 가 SOTA**.
+→ **MSE 는 24/24 settings 모두 Autoformer 가 best**. Exchange predict-720 의 두 경쟁자가 가장 가까움 (Autoformer 1.447 < Reformer 1.510, ≈4% gap).
+
+⚠️ **MAE 는 21/24** — Traffic dataset 의 3 row 에서 다른 모델이 살짝 앞섬:
+- Traffic predict-96 MAE: Autoformer 0.388 vs LogTrans **0.384**
+- Traffic predict-192 MAE: Autoformer 0.382 vs Informer **0.379**
+- Traffic predict-720 MAE: Autoformer 0.408 vs LogTrans **0.396**
+
+paper text 는 MSE 기준으로만 "consistent SOTA" 라고 표현. MAE 의 작은 격차는 본문에서 언급 없음.
 
 ### 개선율 (paper p.7 본문에서 명시)
 
@@ -87,7 +94,7 @@ paper Section 4.1 (p.7–8). Multivariate / Univariate 두 setting 에서 Autofo
 |         | 336 | **0.154** | 0.226 | 0.180 | 0.201 | 0.220 | 0.277 | 0.331 | 0.317 |
 |         | 720 | **0.182** | 0.188 | 0.300 | 0.268 | 0.267 | 0.332 | 0.534 | 0.366 |
 | **Exchange** | 96 | 0.241 | 0.156 | 0.591 | 0.279 | 1.327 | 0.417 | 0.828 | **0.112** |
-|         | 192 | 0.273 | 0.669 | 1.183 | 1.950 | 1.258 | 0.813 | 0.909 | **0.304** |
+|         | 192 | **0.273** | 0.669 | 1.183 | 1.950 | 1.258 | 0.813 | 0.909 | 0.304 |
 |         | 336 | **0.508** | 0.611 | 1.367 | 2.438 | 2.179 | 1.331 | 1.304 | 0.736 |
 |         | 720 | **0.991** | 1.111 | 1.872 | 2.010 | 1.280 | 1.894 | 3.238 | 1.871 |
 

@@ -71,9 +71,28 @@
 
 ---
 
+## Appendix H — Broader Impact (paper p.18)
+
+paper 가 **별도로 Broader Impact section** 을 두어 다음 3가지를 명시:
+
+### Real-world applications
+> Our method achieves consistent state-of-the-art performance in five real-world applications: energy, traffic, economics, weather and disease. (paper p.18)
+
+→ 본문 abstract 의 "5 practical applications" 의 출처. Finance/economics 는 Exchange dataset 으로 cover.
+
+### Academic research
+> In this paper, we take the ideas from classic time series analysis and stochastic process theory. We innovate a general deep decomposition architecture with a novel Auto-Correlation mechanism, which is a worthwhile addition to time series forecasting models. (p.18)
+
+### Model Robustness
+> Based on the extensive experiments, we do not find exceptional failure cases. ... But if the data is random or with extremely weak temporal coherence, Autoformer and any other models may degenerate because the series is with poor predictability [14]. Our work only focuses on the scientific problem, so there is no potential ethical risk. (p.18)
+
+→ paper 가 명시한 단 하나의 robustness 한계: **random / 시간 일관성 거의 없는 데이터**. paper [14] = Diebold-Kilian 의 "Measuring predictability" — 이론적 predictability 한계 reference.
+
+---
+
 ## 한계와 후속 연구
 
-paper 가 명시한 한계는 없지만, 본 deep dive 의 해석:
+paper Appendix H 의 robustness statement 외에 본 deep dive 의 추가 해석:
 
 1. **무주기 데이터**: Exchange 는 작동하지만, Top-k $\tau$ 의 의미가 약화. paper 의 Auto-Correlation interpretability 가 무주기에서는 떨어짐.
 2. **Trend extraction = AvgPool**: 단순 moving average. STL/HP 같은 정교한 알고리즘은 inner block 으로 통합 가능할 텐데, paper 는 검증하지 않음.

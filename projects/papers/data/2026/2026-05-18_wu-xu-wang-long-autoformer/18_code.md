@@ -1,8 +1,10 @@
 # 18 PyTorch Code — Autoformer 핵심 모듈
 
-paper Appendix G 의 Algorithm 1, 2 + 공식 repo (https://github.com/thuml/Autoformer) 의 모듈 구조를 따른다.
+paper Appendix G 의 Algorithm 1 (전체 Autoformer), Algorithm 2 (standard multi-head Auto-Correlation), Algorithm 3 (speedup training phase), Algorithm 4 (speedup inference phase) + 공식 repo (https://github.com/thuml/Autoformer) 의 모듈 구조를 따른다.
 
-본 chapter 의 코드는 **재현 가능한 단일 파일** — 그대로 복붙해서 ETT predict-336 setting 을 학습 가능.
+**중요한 paper note (G.1)**: "All the experiment results of this paper are from the speedup version." — paper 의 모든 실험 수치는 Algorithm 3/4 (batch normalization style, channel/head 차원 축소) 결과. Algorithm 2 의 standard 버전은 reference. 본 chapter 의 코드는 **명료성을 위해 Algorithm 2 의 standard 버전을 단순 구현** — 실제 학습엔 official repo 의 speedup 버전 권장.
+
+본 chapter 의 코드는 **재현 가능한 단일 파일** — 그대로 복붙해서 ETT predict-336 setting 을 학습 가능 (단, standard 버전이므로 속도는 official repo 보다 느림).
 
 ---
 
