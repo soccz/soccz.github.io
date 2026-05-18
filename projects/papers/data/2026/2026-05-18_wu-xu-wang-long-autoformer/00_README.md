@@ -59,7 +59,7 @@ School of Software, BNRist, Tsinghua University, China
 
 | 파일 | 섹션 |
 |------|------|
-| [01_intro.md](01_intro.md) | 시작하기 전에 — 미리 알아둘 5개 개념 (시계열 분해, 자기상관, FFT, Wiener–Khinchin, Transformer) |
+| [01_intro.md](01_intro.md) | 시작하기 전에 — 미리 알아둘 7개 개념 (시계열 분해, 자기상관, FFT, Wiener–Khinchin, Transformer, Roll, Cross-correlation) |
 | [02_abstract.md](02_abstract.md) | 제목과 Abstract 풀어 읽기 |
 | [03_motivation.md](03_motivation.md) | Section 1 — 장기 예측의 두 challenge 와 본 논문의 답 |
 | [04_related_work.md](04_related_work.md) | Section 2 — Forecasting 모델 + 시계열 분해의 기존 사용법 |
@@ -69,13 +69,13 @@ School of Software, BNRist, Tsinghua University, China
 | [08_data_baselines.md](08_data_baselines.md) | Section 4 — 6 datasets + 10 baselines + 학습 셋업 |
 | [09_main_results.md](09_main_results.md) | Section 4.1 — Multivariate (Table 1) + Univariate (Table 2) |
 | [10_ablation.md](10_ablation.md) | Section 4.2 — Decomposition (Table 3) + Auto-Correlation vs Self-Attention (Table 4) |
-| [11_analysis.md](11_analysis.md) | Section 4.3 — Figs 4–6 visualization (decomposition · dependencies · seasonality) |
+| [11_analysis.md](11_analysis.md) | Section 4.3 — Figs 4–7 + Figs 8–13 (decomposition · dependencies · seasonality · efficiency · predictions) |
 | [12_appendix_ett_full.md](12_appendix_ett_full.md) | Appendix A — Table 5, 4개 ETT variant 전체 벤치마크 |
 | [13_appendix_hyper_input.md](13_appendix_hyper_input.md) | Appendix B–D — Table 6 (c), Table 7 (input length), Table 8 (decoder input), Table 9 (decomp algorithms) |
 | [14_appendix_covid.md](14_appendix_covid.md) | Appendix F — COVID-19 case study (Table 11, Fig 14) |
 | [15_conclusion.md](15_conclusion.md) | Section 5 — 결론과 종합 |
 | [16_glossary.md](16_glossary.md) | 용어집과 표기법 |
-| [17_insights.md](17_insights.md) | 메타 통찰 12개 — "이해를 넘어서" |
+| [17_insights.md](17_insights.md) | 메타 통찰 15개 — "이해를 넘어서" + 후속 paper 흐름 + transfer learning |
 | [18_code.md](18_code.md) | 실행 코드 (PyTorch Autoformer 핵심 모듈) |
 | [19_diagrams.md](19_diagrams.md) | ASCII 도식 + 인터랙티브 viz 카탈로그 |
 
