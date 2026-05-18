@@ -74,7 +74,7 @@ paper 의 한 줄 강조 (p.6):
 
 ## 인터랙티브 시각화 — Figure 7 재현
 
-```viz:autoformer-efficiency:title=paper Figure 7 — Memory & Time vs predict length (interactive),caption=Metric 토글 (Memory GB / Time per step ms). Auto-Correlation 이 모든 길이에서 최저. Full Attention (Transformer) 은 predict-3072 OOM. ProbSparse 와 LSH 는 $O(L\log L)$ 같은 클래스지만 Auto-Correlation 보다 큼. **주의** — paper Fig 7 의 정확 수치 미발표. 본 viz 는 paper 그래프 trend band 에서 추정.
+```viz:autoformer-efficiency:title=paper Figure 7 — Memory & Time vs predict length (interactive),caption=Metric 토글 (Memory GB / Time per step ms). Auto-Correlation 이 모든 길이에서 최저. Full Attention (Transformer) 은 predict-3072 OOM. ProbSparse 와 LSH 는 O(L log L) 같은 클래스지만 Auto-Correlation 보다 큼. **주의** — paper Fig 7 의 정확 수치 미발표. 본 viz 는 paper 그래프 trend band 에서 추정.
 ```
 
 ## Figure 7 — 실측 Memory & Time
