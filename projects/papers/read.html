@@ -641,27 +641,40 @@
   /* Viz activation — same as sister, supports 2-arg and 3-arg signatures */
   function activateViz(container) {
     container.querySelectorAll('canvas[data-viz-type]').forEach(canvas => {
-      const type = canvas.dataset.vizType;
-      const par = JSON.parse(canvas.dataset.vizParams || '{}');
-      const fn = window.VIZ_REGISTRY && window.VIZ_REGISTRY[type];
-      if (typeof fn === 'function') {
-        let controls = canvas.parentElement.querySelector('.viz-controls');
-        if (!controls) {
-          controls = document.createElement('div');
-          controls.className = 'viz-controls';
-          canvas.parentElement.appendChild(controls);
-        }
+      try {
+        const type = canvas.dataset.vizType;
+        let par = {};
         try {
-          if (fn.length >= 3) fn(canvas, controls, par);
-          else                fn(canvas, par);
-        } catch (e) {
-          console.error('viz error', type, e);
+          par = JSON.parse(canvas.dataset.vizParams || '{}');
+        } catch (jsonErr) {
+          console.error('viz params JSON parse failed', type, jsonErr);
           canvas.parentElement.querySelector('.viz-block-label').textContent =
-            `viz error: ${type}`;
+            `viz params error: ${type}`;
+          return; // skip this viz, continue forEach
         }
-      } else {
-        canvas.parentElement.querySelector('.viz-block-label').textContent =
-          `unknown viz type: ${type}`;
+        const fn = window.VIZ_REGISTRY && window.VIZ_REGISTRY[type];
+        if (typeof fn === 'function') {
+          let controls = canvas.parentElement.querySelector('.viz-controls');
+          if (!controls) {
+            controls = document.createElement('div');
+            controls.className = 'viz-controls';
+            canvas.parentElement.appendChild(controls);
+          }
+          try {
+            if (fn.length >= 3) fn(canvas, controls, par);
+            else                fn(canvas, par);
+          } catch (e) {
+            console.error('viz error', type, e);
+            canvas.parentElement.querySelector('.viz-block-label').textContent =
+              `viz error: ${type}`;
+          }
+        } else {
+          canvas.parentElement.querySelector('.viz-block-label').textContent =
+            `unknown viz type: ${type}`;
+        }
+      } catch (outerErr) {
+        // outer catch — never let one viz break the rest of the forEach
+        console.error('activateViz outer error', outerErr);
       }
     });
   }
