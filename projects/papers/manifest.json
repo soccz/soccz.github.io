@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-18T05:44:59",
-  "count": 16,
+  "generated_at": "2026-05-18T07:54:32",
+  "count": 17,
   "papers": [
     {
       "slug": "2026-05-18_chen-pelger-zhu-deep-learning-ap",
@@ -276,6 +276,154 @@
         }
       ],
       "data_path": "data/2026/2026-05-18_jain-wallace-attention-is-not-explanation"
+    },
+    {
+      "slug": "2026-05-18_wu-xu-wang-long-autoformer",
+      "date": "2026-05-18",
+      "weekday": "월",
+      "bucket": "코어",
+      "title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+      "title_ko": "오토포머 — 분해 트랜스포머 + 자기상관 메커니즘으로 장기 시계열을 예측한다",
+      "authors": "Haixu Wu, Jiehui Xu, Jianmin Wang, Mingsheng Long (Corresponding)",
+      "venue": "NeurIPS 2021 (35th Conference on Neural Information Processing Systems)",
+      "identifier": "arXiv:2106.13008v5",
+      "code": "",
+      "data": "",
+      "tags": [
+        "time-series-forecasting",
+        "transformer",
+        "decomposition",
+        "auto-correlation",
+        "FFT",
+        "long-term-forecasting",
+        "seasonal-trend",
+        "series-wise-attention"
+      ],
+      "verdict": "장기 시계열 예측을 위해 self-attention 을 series-level Auto-Correlation 으로 교체하고, 시계열 분해(seasonal/trend-cyclical)를 deep network 의 inner block 으로 통합. FFT 로 자기상관 R(τ) 를 $O(L \\log L)$ 에 계산 → Top-k 시간 지연으로 sub-series 를 정렬·집계. 6개 dataset (ETT/Electricity/Exchange/Traffic/Weather/ILI) 에서 평균 MSE 38% 감소. ETTm2 predict-336 에서 1.334 → 0.339 (74% 감소). Transformer 의 forecasting 적합화 — \"point-wise → series-wise, pre-decomposition → progressive decomposition\".",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — Autoformer"
+        },
+        {
+          "file": "01_intro.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01 시작하기 전에 — 미리 알아둘 5개 개념"
+        },
+        {
+          "file": "02_abstract.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02 Abstract 풀어 읽기"
+        },
+        {
+          "file": "03_motivation.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03 Motivation — Section 1 Introduction"
+        },
+        {
+          "file": "04_related_work.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04 Related Work — Section 2"
+        },
+        {
+          "file": "05_architecture.md",
+          "num": "05",
+          "suffix": null,
+          "title": "05 Decomposition Architecture — Section 3.1"
+        },
+        {
+          "file": "06_auto_correlation.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06 Auto-Correlation Mechanism — Section 3.2"
+        },
+        {
+          "file": "07_complexity_efficiency.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07 Complexity & Efficiency — FFT 와 Wiener–Khinchin"
+        },
+        {
+          "file": "08_data_baselines.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08 Datasets, Baselines, Setup — Section 4 (p.6–7)"
+        },
+        {
+          "file": "09_main_results.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09 Main Results — Tables 1 & 2"
+        },
+        {
+          "file": "10_ablation.md",
+          "num": "10",
+          "suffix": null,
+          "title": "10 Ablation Studies — Tables 3 & 4 (Section 4.2)"
+        },
+        {
+          "file": "11_analysis.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11 Model Analysis — Figs 4, 5, 6, 7 (Section 4.3)"
+        },
+        {
+          "file": "12_appendix_ett_full.md",
+          "num": "12",
+          "suffix": null,
+          "title": "12 Appendix A — Full ETT Benchmark (Table 5)"
+        },
+        {
+          "file": "13_appendix_hyper_input.md",
+          "num": "13",
+          "suffix": null,
+          "title": "13 Appendix B–D — Hyperparameters & Input"
+        },
+        {
+          "file": "14_appendix_covid.md",
+          "num": "14",
+          "suffix": null,
+          "title": "14 Appendix F — COVID-19 Case Study"
+        },
+        {
+          "file": "15_conclusion.md",
+          "num": "15",
+          "suffix": null,
+          "title": "15 Conclusion — Section 5 (paper p.10)"
+        },
+        {
+          "file": "16_glossary.md",
+          "num": "16",
+          "suffix": null,
+          "title": "16 Glossary & Notation"
+        },
+        {
+          "file": "17_insights.md",
+          "num": "17",
+          "suffix": null,
+          "title": "17 메타 통찰 12개 — \"이해를 넘어서\""
+        },
+        {
+          "file": "18_code.md",
+          "num": "18",
+          "suffix": null,
+          "title": "18 PyTorch Code — Autoformer 핵심 모듈"
+        },
+        {
+          "file": "19_diagrams.md",
+          "num": "19",
+          "suffix": null,
+          "title": "19 Diagrams & Interactive Visualizations"
+        }
+      ],
+      "data_path": "data/2026/2026-05-18_wu-xu-wang-long-autoformer"
     },
     {
       "slug": "2026-05-17_gu-kelly-xiu-autoencoder",
