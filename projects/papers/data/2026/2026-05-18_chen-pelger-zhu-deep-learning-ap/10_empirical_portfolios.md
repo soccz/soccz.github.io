@@ -49,9 +49,6 @@ paper 핵심 결론:
 
 → GAN 의 우위 = (선형 → 비선형) + (no-no-arb → no-arb) 의 **곱**.
 
-```viz:dlap-table3-portfolios:title=paper Table III — 46 anomaly deciles (interactive),caption=Metric 토글로 EV / XS-R² 전환. Sort by GAN / FFN / EN / Category. GAN (빨강) 이 거의 모든 anomaly 에서 best. XS-R² 에서는 모두 > 90%. 카테고리 색 dot 으로 (Past Returns / Trading Frictions / Investment / Profitability / Value / Intangibles) 구분.
-```
-
 ---
 
 ## 10.3 Figure 9–10 — Predicted vs Actual
@@ -93,9 +90,6 @@ paper p.36 (Section G):
 2. **특성 간 interaction → SDF**: 본질적으로 비선형. GAN 만 잡음.
 
 paper Figure 14 (Section G 의 시각화): SDF weight $\omega$ as function of two characteristics (예: ST_REV × r12_2, LME × BEME). **multiplicative interaction** 패턴 명확.
-
-```viz:dlap-sdf-surface:title=paper Fig 15 — SDF weight ω surface (interactive),caption=Pair 토글로 ST_REV × r12_2 (momentum) 또는 LME × BEME (size × value) 전환. 2D contour 가 saddle / multiplicative pattern 보임. 파랑 = negative weight, 빨강 = positive. **주의**: paper 가 정확 함수형 미발표 — 본 viz 의 함수형은 본문 텍스트 ('low ST_REV + high momentum → highest positive weight') + Fig 15 시각 reading 기반의 정성 재현.
-```
 
 ---
 

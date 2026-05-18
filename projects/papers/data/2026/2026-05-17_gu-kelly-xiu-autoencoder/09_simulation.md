@@ -162,11 +162,8 @@ paper 본문 (968–972):
 - **CA1 과 CA2 가 거의 동등** — 1-hidden-layer NN 으로 충분.
 - **CA3 가 K 증가에서 악화** — 너무 깊은 NN 이 finite sample 에서 손해.
 
-paper 본문 (journal p.446):
+paper 본문 (979–984):
 > "For model (a), IPCA delivers the best OOS total and predictive R² s. This is not surprising given that the true model is sparse and linear in the input covariates. More advanced methods such as CA1, CA2 and CA3 tend to overfit ... By contrast, for model (b), these methods clearly beat IPCA, because the latter cannot capture the nonlinearity in the model."
-
-```viz:autoencoder-sim-table6:title=paper Table 6 — Monte Carlo R² (interactive),caption=DGP 토글로 Linear (a) / Nonlinear (b) 전환. R² type 으로 Total / Predictive 전환. true K=3 표시. Linear DGP 에서는 IPCA 1위, Nonlinear DGP 에서는 CA1≈CA2 가 IPCA 의 2.7× Total R² 달성. → 실증 격차가 noise 가 아닌 nonlinearity 의 진짜 신호임을 인과적 검증.
-```
 
 ---
 

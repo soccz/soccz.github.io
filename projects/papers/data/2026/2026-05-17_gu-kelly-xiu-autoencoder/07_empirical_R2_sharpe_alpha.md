@@ -110,9 +110,6 @@ paper 본문 (p.13, 639–644):
 
 → **본 논문의 결정적 메시지**: Total R² 에서는 IPCA 와 CA 가 막상막하지만, **자산가격결정의 본질인 expected return 예측에서는 nonlinearity 가 결정적**.
 
-```viz:autoencoder-r2-comparison:title=paper Tables 1, 2 — R² across K (interactive),caption=R² type 토글로 Total / Predictive 전환. 모델 toggle 로 비교 그룹 조절. Total R² 에서는 IPCA K=6 = 14.5% 1위, Predictive R² 에서는 CA2 K=6 = 0.58% 가 IPCA 0.30% 의 거의 2배.
-```
-
 ---
 
 ## 7.5 Table 3 — Long-Short Decile Sharpe Ratios
@@ -153,9 +150,6 @@ paper 본문 (p.14, 688–695):
 > "The overall best performing portfolio is that based on the conditional autoencoder with two hidden beta layers, CA2. This model achieves a Sharpe ratio of 2.63 for the equal-weighted portfolio, and 1.53 with value weights. The performance of CA1 and CA3 is only slightly lower."
 
 → **운용 관점**: CA2 의 VW Sharpe 1.53 은 헤지펀드 업계 기준 "매우 우수" (SR > 1).
-
-```viz:autoencoder-sharpe-table:title=paper Table 3 — Long-Short Decile Sharpe (interactive),caption=Portfolio 토글로 EW / VW 전환. K 슬라이더로 요인 수 조절. FF 는 K 가 커질수록 악화 (시간 불변 β 의 한계). CA2 K=6 VW = 1.53 이 best. 시장 평균 SR ≈ 0.5 와 비교.
-```
 
 ---
 

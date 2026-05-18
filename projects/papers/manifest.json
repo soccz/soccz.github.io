@@ -1,51 +1,158 @@
 {
-  "generated_at": "2026-05-18T12:30:00",
-  "count": 15,
+  "generated_at": "2026-05-18T14:53:37",
+  "count": 16,
   "papers": [
     {
       "slug": "2026-05-18_chen-pelger-zhu-deep-learning-ap",
       "date": "2026-05-18",
       "weekday": "월",
-      "bucket": "원거리",
+      "bucket": "코어",
       "title": "Deep Learning in Asset Pricing",
       "title_ko": "자산가격결정의 딥러닝 — No-arbitrage 를 학습 알고리즘에 직접 통합",
       "authors": "Luyang Chen¹, Markus Pelger², Jason Zhu²",
-      "venue": "arXiv:1904.00745v6 (2021/08/12); Management Science (forthcoming)",
+      "venue": ", Management Science (forthcoming)",
       "identifier": "arXiv:1904.00745v6",
       "code": "",
-      "data": "CRSP 개별 주식 1967/01–2016/12 (50년, 약 10,000 stocks with complete characteristics), 46 firm chars (Freyberger-Neuhierl-Weber 2020 + Kenneth French), 178 macro time series (FRED-MD 124 + 46 cross-sectional medians + Welch-Goyal 8)",
+      "data": "",
       "tags": [
         "asset-pricing",
         "machine-learning",
         "deep-learning",
         "no-arbitrage",
+        "GMM",
         "GAN-adversarial",
-        "LSTM"
+        "LSTM",
+        "SDF"
       ],
-      "verdict": "Asset pricing 의 fundamental no-arbitrage 조건 (E[M·R^e·g] = 0) 을 deep neural network 의 loss function 으로 직접 통합. SDF network (FFN+LSTM) 와 conditioning function network (FFN+LSTM) 두 신경망이 minimax 게임으로 경쟁 — adversary 가 가장 mispriced 한 test asset 을 자동 생성하면 SDF network 가 그것을 학습. 50년 OOS (1992–2016) SR = 0.75 (vs FFN 0.44, EN 0.50, LS 0.42), EV = 8%, XS-R² = 23%. 'ML × 이론' 통합의 새 표준.",
+      "verdict": "Asset pricing 의 fundamental no-arbitrage 조건 ($\\mathbb{E}[M_{t+1} R^e_{t+1,i} g(I_t, I_{t,i})] = 0$) 을 deep neural network 의 loss function 으로 직접 통합. SDF network (FFN+LSTM) 와 conditioning function network (FFN+LSTM) 두 신경망이 minimax 게임으로 경쟁 (GAN 방식) — adversary 가 가장 mispriced 한 test asset 을 자동 생성하면 SDF network 가 그것을 학습. 50년 OOS (1992–2016) SR = 0.75 (vs FFN 0.44, EN 0.50, LS 0.42), EV = 8% (2배), XS-R² = 23%. 'ML × 이론' 통합의 새 표준.",
       "private": false,
       "sections": [
-        { "file": "00_README.md",                        "num": "00", "suffix": null, "title": "00 README — Deep Learning in Asset Pricing" },
-        { "file": "01_intro.md",                         "num": "01", "suffix": null, "title": "01. 시작하기 전에 — 미리 알아둘 5개 개념 (SDF, no-arbitrage, GMM, GAN, LSTM)" },
-        { "file": "02_abstract.md",                      "num": "02", "suffix": null, "title": "02. 제목과 Abstract 풀어 읽기" },
-        { "file": "03_motivation.md",                    "num": "03", "suffix": null, "title": "03. Introduction — 4가지 도전과 본 논문의 답" },
-        { "file": "04_sdf_framework.md",                 "num": "04", "suffix": null, "title": "04. SDF Framework — Section I (No-arbitrage, adversarial GMM)" },
-        { "file": "05_method_a_loss.md",                 "num": "05", "suffix": "a",  "title": "05a. Section II.A — Loss Function & Model Architecture (Eq 4)" },
-        { "file": "05_method_b_FFN.md",                  "num": "05", "suffix": "b",  "title": "05b. Section II.B — Feedforward Network (4가지 활용)" },
-        { "file": "05_method_c_LSTM.md",                 "num": "05", "suffix": "c",  "title": "05c. Section II.C — RNN with LSTM (macro hidden states)" },
-        { "file": "05_method_d_GAN.md",                  "num": "05", "suffix": "d",  "title": "05d. Section II.D–E — Generative Adversarial Network + ensemble" },
-        { "file": "06_alternative_models.md",            "num": "06", "suffix": null, "title": "06. Alternative Models — LS, EN, FFN benchmarks" },
-        { "file": "07_metrics.md",                       "num": "07", "suffix": null, "title": "07. Evaluation Metrics — Section II.F (SR, EV, XS-R²)" },
-        { "file": "08_data_illustrative.md",             "num": "08", "suffix": null, "title": "08. Data & Illustrative GAN Example — Section III.A–B" },
-        { "file": "09_empirical_individual.md",          "num": "09", "suffix": null, "title": "09. Empirical Results — Individual Stocks (Section III.C–D)" },
-        { "file": "10_empirical_portfolios.md",          "num": "10", "suffix": null, "title": "10. Characteristic Sorted Portfolios — Section III.E" },
-        { "file": "11_var_importance_macro.md",          "num": "11", "suffix": null, "title": "11. Variable Importance & Macro States — Section III.F–G" },
-        { "file": "12_conclusion.md",                    "num": "12", "suffix": null, "title": "12. Conclusion — Section IV" },
-        { "file": "13_appendix.md",                      "num": "13", "suffix": null, "title": "13. Appendix — Section A–I" },
-        { "file": "14_glossary.md",                      "num": "14", "suffix": null, "title": "14. 용어 사전 (Glossary)" },
-        { "file": "15_insights.md",                      "num": "15", "suffix": null, "title": "15. 메타 통찰 (12가지)" },
-        { "file": "16_code.md",                          "num": "16", "suffix": null, "title": "16. 코드 — PyTorch GAN Baseline" },
-        { "file": "17_diagrams.md",                      "num": "17", "suffix": null, "title": "17. 다이어그램 & 시각화 가이드" }
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — Deep Learning in Asset Pricing"
+        },
+        {
+          "file": "01_intro.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01. 시작하기 전에 — 미리 알아둘 개념"
+        },
+        {
+          "file": "02_abstract.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02. 제목과 Abstract 풀어 읽기"
+        },
+        {
+          "file": "03_motivation.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03. Introduction — 4가지 도전과 본 논문의 답"
+        },
+        {
+          "file": "04_sdf_framework.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04. SDF Framework — Section I (Model)"
+        },
+        {
+          "file": "05_method_a_loss.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05a. Section II.A — Loss Function & Model Architecture"
+        },
+        {
+          "file": "05_method_b_FFN.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05b. Section II.B — Feedforward Network (FFN)"
+        },
+        {
+          "file": "05_method_c_LSTM.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05c. Section II.C — RNN with LSTM (Macroeconomic Hidden States)"
+        },
+        {
+          "file": "05_method_d_GAN.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "05d. Section II.D–E — GAN & Hyperparameters"
+        },
+        {
+          "file": "06_alternative_models.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06. Alternative Models — Section I.C"
+        },
+        {
+          "file": "07_metrics.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07. Evaluation Metrics — Section II.F"
+        },
+        {
+          "file": "08_data_illustrative.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08. Data & Illustrative GAN Example — Section III.A–B"
+        },
+        {
+          "file": "09_empirical_individual.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09. Empirical Results — Individual Stocks (Section III.C–D)"
+        },
+        {
+          "file": "10_empirical_portfolios.md",
+          "num": "10",
+          "suffix": null,
+          "title": "10. Characteristic Sorted Portfolios — Section III.E"
+        },
+        {
+          "file": "11_var_importance_macro.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11. Variable Importance & Macro States — Section III.F–G"
+        },
+        {
+          "file": "12_conclusion.md",
+          "num": "12",
+          "suffix": null,
+          "title": "12. Conclusion — Section IV"
+        },
+        {
+          "file": "13_appendix.md",
+          "num": "13",
+          "suffix": null,
+          "title": "13. Appendix — Section A-I"
+        },
+        {
+          "file": "14_glossary.md",
+          "num": "14",
+          "suffix": null,
+          "title": "14. 용어 사전 (Glossary)"
+        },
+        {
+          "file": "15_insights.md",
+          "num": "15",
+          "suffix": null,
+          "title": "15. 메타 통찰 (Meta Insights)"
+        },
+        {
+          "file": "16_code.md",
+          "num": "16",
+          "suffix": null,
+          "title": "16. 코드 — PyTorch GAN Baseline 구현"
+        },
+        {
+          "file": "17_diagrams.md",
+          "num": "17",
+          "suffix": null,
+          "title": "17. 다이어그램 & 시각화 가이드"
+        }
       ],
       "data_path": "data/2026/2026-05-18_chen-pelger-zhu-deep-learning-ap"
     },
@@ -169,6 +276,147 @@
         }
       ],
       "data_path": "data/2026/2026-05-18_jain-wallace-attention-is-not-explanation"
+    },
+    {
+      "slug": "2026-05-17_gu-kelly-xiu-autoencoder",
+      "date": "2026-05-17",
+      "weekday": "토",
+      "bucket": "원거리",
+      "title": "Autoencoder Asset Pricing Models",
+      "title_ko": "오토인코더 자산가격결정 모델 — IPCA의 비선형 일반화",
+      "authors": "Shihao Gu¹, Bryan Kelly², Dacheng Xiu¹",
+      "venue": "Journal of Econometrics 222 (2021) 429-450 (Available online 29 July 2020)",
+      "identifier": "10.1016/j.jeconom.2020.07.009",
+      "code": "",
+      "data": "CRSP 개별 주식 1957/03–2016/12 (60년), 94개 firm characteristics — Gu, Kelly, Xiu (2019, RFS) 데이터셋과 동일",
+      "tags": [
+        "asset-pricing",
+        "machine-learning",
+        "autoencoder",
+        "nonlinear-factor-model",
+        "IPCA-generalization",
+        "neural-networks",
+        "conditional-beta"
+      ],
+      "verdict": "IPCA (Kelly·Pruitt·Su 2019) 의 선형성 가정을 β-network 만 신경망으로 풀고 f-network 는 단일 선형층으로 유지한 자연스러운 일반화. β(z)·f 의 dot product 로 r = β'f 형태 유지 — no-arbitrage 보존. 실증에서 long-short VW Sharpe (K=6) — FF −0.53 / PCA −0.08 / IPCA 0.96 / CA1 1.40 / CA2 1.53 / CA3 1.51. autoencoder 가 PCA 의 ML 시대 후예라는 사실을 자산가격결정에 결정적으로 적용한 사례.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — Autoencoder Asset Pricing Models"
+        },
+        {
+          "file": "01_intro.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01. 시작하기 전에 — 미리 알아둘 개념"
+        },
+        {
+          "file": "02_abstract.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02. 제목과 Abstract 풀어 읽기"
+        },
+        {
+          "file": "03_motivation.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03. Section 1 (Introduction) — 왜 비선형 자산가격결정 모델이 필요한가"
+        },
+        {
+          "file": "04_factor_model.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04. KPS factor model — 출발점 (Eq. 1, 2)"
+        },
+        {
+          "file": "05_method_a_standard_AE.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05a. Section 2.1 — 표준 Autoencoder + PCA 등가성"
+        },
+        {
+          "file": "05_method_b_conditional_AE.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05b. Section 2.2 — Conditional Autoencoder (메인 모델)"
+        },
+        {
+          "file": "05_method_c_IPCA_special.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "C. 방법론 (Part C) — IPCA 는 Conditional Autoencoder 의 특수 케이스"
+        },
+        {
+          "file": "05_method_d_regularization.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "D. 방법론 (Part D) — Regularization & Training"
+        },
+        {
+          "file": "06_empirical_data_models.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06. 실증 (Part A) — 데이터와 비교 모델"
+        },
+        {
+          "file": "07_empirical_R2_sharpe_alpha.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07. 실증 (Part B) — R², Sharpe, Pricing Errors"
+        },
+        {
+          "file": "08_empirical_characteristics.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08. 실증 (Part C) — 어떤 특성이 중요한가? Robustness."
+        },
+        {
+          "file": "09_simulation.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09. Monte Carlo 시뮬레이션 — 실증 결과의 인과적 검증"
+        },
+        {
+          "file": "10_conclusion.md",
+          "num": "10",
+          "suffix": null,
+          "title": "10. 결론"
+        },
+        {
+          "file": "11_appendix_proofs.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11. 부록 — 두 Proposition 의 증명"
+        },
+        {
+          "file": "12_glossary.md",
+          "num": "12",
+          "suffix": null,
+          "title": "12. 용어 사전 (Glossary)"
+        },
+        {
+          "file": "13_insights.md",
+          "num": "13",
+          "suffix": null,
+          "title": "13. 메타 통찰 (Meta Insights)"
+        },
+        {
+          "file": "14_code.md",
+          "num": "14",
+          "suffix": null,
+          "title": "14. 코드 — PyTorch 구현"
+        },
+        {
+          "file": "15_diagrams.md",
+          "num": "15",
+          "suffix": null,
+          "title": "15. 다이어그램 & 시각화 가이드"
+        }
+      ],
+      "data_path": "data/2026/2026-05-17_gu-kelly-xiu-autoencoder"
     },
     {
       "slug": "2026-05-17_lettau-pelger-rppca",

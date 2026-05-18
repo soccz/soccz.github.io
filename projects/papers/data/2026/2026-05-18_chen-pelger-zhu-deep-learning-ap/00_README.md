@@ -2,16 +2,16 @@
 
 ## 원문 정보
 
-**제목 (영문)**: Deep Learning in Asset Pricing
+**제목**: Deep Learning in Asset Pricing
 
-**제목 (한국어)**: 자산가격결정의 딥러닝 — No-arbitrage 를 학습 알고리즘에 직접 통합
+**한국어 제목**: 자산가격결정의 딥러닝 — No-arbitrage 를 학습 알고리즘에 직접 통합
 
 **저자**: Luyang Chen¹, Markus Pelger², Jason Zhu²
 ¹Stanford ICME · ²Stanford MS&E
 
-**발표처·연도**: arXiv:1904.00745v6 (2021/08/12), Management Science (forthcoming)
+**발표처**: arXiv:1904.00745v6 (2021/08/12), Management Science (forthcoming)
 
-**Canonical identifier**: arXiv:1904.00745v6 · https://arxiv.org/abs/1904.00745
+**Canonical identifier**: arXiv:1904.00745v6
 
 ---
 
