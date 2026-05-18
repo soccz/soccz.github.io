@@ -57,6 +57,9 @@ paper p.26–27 본문:
 paper 결론:
 > "It is not only important to include all characteristics and the hidden states in the weights and loadings of SDF but also in the conditioning function g to identify the assets and times that matter for pricing."
 
+```viz:dlap-macro-ablation:title=paper Fig 6 — Macro inclusion effect (interactive),caption=Sample 토글로 Train/Valid/Test 전환. LSTM hidden states (baseline) vs No macro vs All macro raw vs UNC (g=const). All macro raw 는 collapses — 178 raw 차분이 너무 noisy. UNC 는 ~20% SR 낮음 — adversarial 의 효과. **주의**: paper Fig 6 본문은 정확 수치 미발표 — 본 viz 의 일부 값은 paper 텍스트 표현 ('completely collapses', '~10% lower') + Table I baseline 기반의 추정.
+```
+
 ---
 
 ## 9.4 Section III.D — β-Sorted Portfolios
@@ -97,6 +100,9 @@ paper 본문:
 > "The systematic return difference of the β-sorted portfolios is not explained by the market or Fama-French factors. Table II reports the time series pricing errors with corresponding t-statistics for the 10 decile-sorted portfolios for the three factor models. Obviously, the pricing errors are highly significant and expected returns of almost all decile portfolios are not explained by the Fama-French factors. The **GRS test clearly rejects the null-hypothesis** that either of the factor models prices this cross-section."
 
 → **GAN β-sorted portfolios 는 FF3/FF5/CAPM 으로 설명 안 됨** — 진짜 risk 정보를 잡고 있음.
+
+```viz:dlap-beta-sorted:title=paper Fig 8 — β-sorted portfolios linear fit (interactive),caption=Quantile 토글로 5 / 10 / 20 quantile 전환. β-mean linear relation 의 R² (paper 의 0.98 / 0.97 / 0.95) 재현. **주의**: paper 가 β 의 정확한 decile 값을 본문 미발표 — 본 viz 의 β 값은 Table II 의 avg return 단조성 + R²=0.97 조건에 맞춘 추정.
+```
 
 ---
 

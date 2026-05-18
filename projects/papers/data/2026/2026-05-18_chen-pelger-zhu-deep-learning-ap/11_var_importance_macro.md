@@ -53,6 +53,9 @@ paper 본문:
 paper 본문 (p.33):
 > "Figure 11 ranks the variable importance of the 46 firm-specific characteristics for GAN. The sum of all sensitivities is normalized to one. ... All three models GAN, FFN and EN select trading frictions and past returns as being the most relevant categories. **The most important variables for GAN are Short-Term Reversal (ST_REV), Standard Unexplained Volume (SUV) and Momentum (r12_2). Importantly, for GAN all 6 categories are represented among the first 20 variables**, which includes value, intangibles, investment and profitability characteristics."
 
+```viz:dlap-var-importance:title=paper Fig 11 / 12 — 46 chars variable importance (interactive),caption=Model 토글로 GAN vs FFN 전환. Top-K 슬라이더로 표시 개수 조절. GAN 은 6 카테고리 모두 top 20, FFN 은 trading friction + past return 만 집중. paper Section III.F 가 FFN 의 'penny stock 의존 의심' 으로 해석. **주의**: paper 가 정확한 sensitivity 수치 본문 미발표 — viz 값은 Fig 11/12 막대 길이의 시각 reading 기반.
+```
+
 ---
 
 ## 11.4 Figure 12 — FFN Variable Importance (대비)

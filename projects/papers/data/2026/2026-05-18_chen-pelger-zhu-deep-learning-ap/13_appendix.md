@@ -171,22 +171,182 @@ paper p.73–74 (Fig 14 + functional form).
 
 ---
 
-## 13.9 Appendix H — Machine Learning Investment
+## 13.9 Appendix H — Machine Learning Investment (paper Section III.I 추가 detail)
 
-paper p.74:
-- ML 기반 portfolio 의 실제 운용 성과.
-- Transaction cost 고려 시 SR 보정.
+paper p.41–42 Section III.I 본문 + Appendix H:
+
+### 13.9.1 GAN SDF 의 risk-return trade-off
+paper Table A.VI: monthly Sharpe ratios, max 1-month loss (정규화), max drawdown — GAN 이 SR 최고, drawdown 다른 model 과 comparable.
+
+### 13.9.2 Fig 16 — Cumulative SDF Returns
+paper p.41 Fig 16: GAN, FFN, EN, LS 의 cumulative excess returns (vol-normalized). GAN 이 최대 + variance 최소 + drawdown 적음.
+
+### 13.9.3 Trading Friction Cutoffs (paper Fig 17)
+paper p.42 본문 — trading friction stocks 제외 시 GAN annualized SR:
+- **40% smallest stocks 제외 (by LME)**: SR 1.73
+- **40% highest bid-ask spread 제외 (by Spread)**: SR 2.07
+- **40% lowest turnover 제외 (by LTurnover)**: SR 1.87
+
+paper 인용 (p.42):
+> "Note that these are all lower bounds as GAN has not been re-estimated without these stocks, but we have just set the portfolio weights of the stocks below the cutoffs to zero."
+
+→ **Trading friction 고려 시에도 GAN 의 SR 견고**. Avramov-Cheng-Metzker (2020) 의 "ML portfolio 가 transaction cost 로 deteriorate" 우려에 대응.
+
+### 13.9.4 ML Investment 의 새 paradigm
+paper p.42 본문:
+> "most paper have separated the construction of profitable machine learning portfolios into two steps. In the first step, machine learning methods extract signals for predicting future returns. In a second step, these signals are used to form profitable portfolios... However, we argue that these two steps should be merged together, that is machine learning techniques should extract the signals that are the most relevant for the overall portfolio design."
+
+→ **본 논문 framework 가 이 통합** — SDF (= conditional mean-variance efficient portfolio) 직접 추정.
+
+---
+
+## 13.9.5 Section III.J — SDF of Multi-Factor Models (paper Table VI)
+
+paper p.42–45 본문 + Table VI.
+
+### IPCA (KPS 2019) 와의 결합
+
+paper Section III.J 의 framework:
+- IPCA model: $R^e_{t+1,i} = a_{t,i} + b_{t,i}^\top f^{IPCA}_{t+1} + \epsilon_{t+1,i}$ with $b_{t,i} = I_{i,t}^\top \Gamma_b$.
+- SDF as linear combination of IPCA factors: $F = \sum_k \omega^f_k(I_{k,t}, I_t) f^{IPCA}_{t+1,k}$ (Eq 5).
+
+### Table VI — GAN + IPCA 결과 (정확한 수치, OOS Test)
+
+K (IPCA factors): 3 ~ 10. 핵심 K=10 결과:
+
+| Model | SR | EV | XS-R² |
+|-------|-----|-----|-------|
+| **IPCA GAN** ($\omega^{I-GAN}, \beta^{I-GAN}$) | 0.81 | 0.05 | **0.21** |
+| IPCA Max SR FFN Beta | 0.94 | 0.03 | 0.14 |
+| IPCA Max SR | 0.94 | 0.01 | -0.04 |
+| IPCA Max EV | 0.16 | 0.04 | -0.03 |
+| IPCA Max XS-R² | 0.41 | -0.02 | 0.14 |
+| IPCA Multifactor | 0.94 | 0.07 | -0.02 |
+
+paper 본문 (p.44):
+> "We can replicate the high Sharpe ratios of Kelly, Pruitt, and Su (2019) by forming the unconditional mean variance efficient combination of the IPCA factors."
+
+**핵심 발견**:
+- IPCA Max SR (SR 0.94): 높지만 XS-R² **-0.04** — pricing error 못 잡음.
+- IPCA Multifactor (SR 0.94): XS-R² **-0.02** — 같은 한계.
+- **IPCA GAN (SR 0.81, XS-R² 0.21)**: SR 약간 낮지만 **XS-R² 5배 향상**.
+
+→ **GAN 의 conditioning 이 IPCA framework 와 결합 시 pricing error 까지 잡음**. paper 본문 (p.44):
+> "Here we show that using the additional economic structure of spanning the SDF with IPCA factors and combining it with the GAN framework can lead to an even better asset pricing model."
+
+→ 본 논문 framework 가 **multi-factor model 과 complementary** — 두 paradigm 결합 가능.
 
 ---
 
 ## 13.10 Appendix I — Implementation & Robustness
 
-paper p.74–75:
-- **Table A.IX**: Tuning parameters 의 best 4 GAN models (independent re-estimation).
-- **Robustness**:
-  - 다른 hyperparameter 조합으로도 거의 같은 SDF 학습 (correlation > 80%).
-  - Rolling window estimation (240 month) — benchmark 와 70% correlation.
-  - Trading friction 제외 — benchmark 와 78% correlation.
+paper p.74–75 + paper Section III.H (본문 robustness):
+
+### 13.10.1 Table IV — Large Market Cap Stocks
+
+paper Table IV (정확한 수치, OOS Test):
+
+**Estimated on all stocks, evaluated on size ≥ 0.001% of total market cap (≈ top 1,500 stocks)**:
+| Model | Test SR | Test EV | Test XS-R² |
+|-------|---------|---------|------------|
+| LS    | 0.13    | 0.03    | 0.10       |
+| EN    | 0.15    | 0.06    | 0.14       |
+| FFN   | 0.30    | 0.05    | 0.18       |
+| **GAN** | **0.41** | **0.14** | **0.26**  |
+
+**Evaluated on size ≥ 0.01% (≈ top 550 stocks ≈ S&P 500)**:
+| Model | Test SR | Test EV | Test XS-R² |
+|-------|---------|---------|------------|
+| LS    | -0.06   | 0.04    | 0.09       |
+| EN    | 0.23    | 0.07    | 0.14       |
+| FFN   | 0.24    | 0.09    | 0.26       |
+| **GAN** | **0.26** | **0.18** | **0.32**  |
+
+paper p.38–39:
+> "an annual out-of-sample Sharpe ratio of 1.4 using only the 1,500 largest stocks. In contrast, the linear models collapse."
+
+→ Monthly 0.41 × √12 ≈ 1.42 annualized — paper 본문과 일치.
+
+### 13.10.2 Table V — Alternative GAN Models (Robustness)
+
+paper Table V (정확한 수치):
+| Model | Test SR | Test EV | Test XS-R² | 비고 |
+|-------|---------|---------|------------|------|
+| GAN 1 | 0.72    | 0.07    | 0.21       | best valid, alt 1 |
+| GAN 2 | 0.77    | 0.07    | 0.22       | best valid, alt 2 |
+| GAN 3 | 0.74    | 0.09    | 0.25       | best valid, alt 3 |
+| GAN 4 | 0.77    | 0.07    | 0.22       | best valid, alt 4 |
+| GAN Rolling | **0.88** | 0.08 | 0.24 | 240-month rolling window |
+| GAN No Frict | 0.77 | 0.08 | 0.23 | trading friction 제외 |
+
+paper 본문 (p.40):
+> "the rolling window GAN SDF has a correlation of 70% with our benchmark SDF... a time-varying estimate of GAN does not lead to major improvements and fits a similar economic structure."
+
+paper 본문 (Section III.H):
+> "Our findings are robust to the time periods under consideration, small capitalization stocks, the choice of the tuning parameters, and limits to arbitrage. The SDF structure is surprisingly stable over time."
+
+### 13.10.3 Robustness 요약
+- 다른 hyperparameter 조합으로도 거의 같은 SDF (correlation > 80%, paper Section III.H).
+- Rolling window — benchmark 와 70% correlation.
+- Trading friction 제외 — benchmark 와 78% correlation.
+- Large cap subset 에서도 GAN > 다른 모델.
+- **결과 매우 robust** — different tuning 으로도 같은 economic model 발견.
+
+---
+
+## 13.10 Appendix I — Implementation & Robustness
+
+paper p.74–75 + paper Section III.H (본문 robustness):
+
+### 13.10.1 Table IV — Large Market Cap Stocks
+
+paper Table IV (정확한 수치, OOS Test):
+
+**Estimated on all stocks, evaluated on size ≥ 0.001% of total market cap (≈ top 1,500 stocks)**:
+| Model | Test SR | Test EV | Test XS-R² |
+|-------|---------|---------|------------|
+| LS    | 0.13    | 0.03    | 0.10       |
+| EN    | 0.15    | 0.06    | 0.14       |
+| FFN   | 0.30    | 0.05    | 0.18       |
+| **GAN** | **0.41** | **0.14** | **0.26**  |
+
+**Evaluated on size ≥ 0.01% (≈ top 550 stocks ≈ S&P 500)**:
+| Model | Test SR | Test EV | Test XS-R² |
+|-------|---------|---------|------------|
+| LS    | -0.06   | 0.04    | 0.09       |
+| EN    | 0.23    | 0.07    | 0.14       |
+| FFN   | 0.24    | 0.09    | 0.26       |
+| **GAN** | **0.26** | **0.18** | **0.32**  |
+
+paper p.38–39:
+> "an annual out-of-sample Sharpe ratio of 1.4 using only the 1,500 largest stocks. In contrast, the linear models collapse."
+
+→ Monthly 0.41 × √12 ≈ 1.42 annualized — paper 본문과 일치.
+
+### 13.10.2 Table V — Alternative GAN Models (Robustness)
+
+paper Table V (정확한 수치):
+| Model | Test SR | Test EV | Test XS-R² | 비고 |
+|-------|---------|---------|------------|------|
+| GAN 1 | 0.72    | 0.07    | 0.21       | best valid, alt 1 |
+| GAN 2 | 0.77    | 0.07    | 0.22       | best valid, alt 2 |
+| GAN 3 | 0.74    | 0.09    | 0.25       | best valid, alt 3 |
+| GAN 4 | 0.77    | 0.07    | 0.22       | best valid, alt 4 |
+| GAN Rolling | **0.88** | 0.08 | 0.24 | 240-month rolling window |
+| GAN No Frict | 0.77 | 0.08 | 0.23 | trading friction 제외 |
+
+paper 본문 (p.40):
+> "the rolling window GAN SDF has a correlation of 70% with our benchmark SDF... a time-varying estimate of GAN does not lead to major improvements and fits a similar economic structure."
+
+paper 본문 (Section III.H):
+> "Our findings are robust to the time periods under consideration, small capitalization stocks, the choice of the tuning parameters, and limits to arbitrage. The SDF structure is surprisingly stable over time."
+
+### 13.10.3 Robustness 요약
+- 다른 hyperparameter 조합으로도 거의 같은 SDF (correlation > 80%, paper Section III.H).
+- Rolling window — benchmark 와 70% correlation.
+- Trading friction 제외 — benchmark 와 78% correlation.
+- Large cap subset 에서도 GAN > 다른 모델.
+- **결과 매우 robust** — different tuning 으로도 같은 economic model 발견.
 
 paper 핵심 결론 (Section III.H):
 > "Our results are robust to the time periods under consideration, small capitalization stocks, the choice of the tuning parameters, and limits to arbitrage. **The SDF structure is surprisingly stable over time.**"
