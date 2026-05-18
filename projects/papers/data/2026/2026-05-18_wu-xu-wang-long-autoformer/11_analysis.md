@@ -67,6 +67,11 @@ paper p.10:
 
 **해석 가능성(Interpretability)** 의 강조 — finance 같은 분야에서 **"왜 이 예측?" 답이 가능**.
 
+## 인터랙티브 시각화 — Figure 6 lag 분포
+
+```viz:autoformer-lag-histogram:title=paper Figure 6 — Learned lag distributions (interactive),caption=Dataset 토글 (Electricity/Exchange/Traffic/Weather). 각 dataset 의 학습된 top-10 lag 분포가 도메인 실제 주기와 일치 — Electricity 24h+168h, Exchange 22d/66d/252d (Monthly/Quarterly/Yearly), Traffic 24h+168h, Weather 144 (10min × 144 = 24h). **주의**: paper Fig 6 의 정확 histogram 수치 미공개 — paper 명시 peak 위치 + 합리적 σ 의 gaussian 합성.
+```
+
 ---
 
 ## Figure 7 — Memory / Time Efficiency
@@ -102,19 +107,31 @@ paper p.10:
 
 ---
 
-## 예측 시각화 (Figs 8–11)
+## Figs 8-11 — ETT Multivariate Prediction Showcases (Appendix E.1)
 
 ![Figs 8-11 predictions](figures/page15_Figs8-11_predictions.png)
 
-(Figures 8–11, paper p.15. ETT 의 predict-96/192/336/720, 마지막 dimension 만)
+paper p.15. ETT 의 4가지 horizon prediction (Blue = ground truth, Orange = model):
+- **Fig 8**: input-96-predict-96 setting
+- **Fig 9**: input-96-predict-192 setting
+- **Fig 10**: input-96-predict-336 setting
+- **Fig 11**: input-96-predict-720 setting
 
-각 figure 가 **input 96 길이 + predict O 길이** 의 ground truth (blue) vs prediction (orange). Autoformer 가 periodicity 와 amplitude 모두 가장 정확하게 추적.
+각 panel 의 첫 96 시점은 input. 그 뒤 O 시점이 prediction. Autoformer 가 periodicity 와 amplitude 모두 가장 정확. paper Section E.1:
+> Our model gives the best performance among different models. Moreover, we observe that Autoformer can accurately predict the periodicity and long-term variation.
 
-### Exchange (무주기 데이터)
+## Figs 12-13 — Exchange (Appendix E.2) + ETT Univariate (Appendix E.3)
 
-![Fig. 12 Exchange](figures/page16_Figs12-13_exchange.png)
+![Figs 12-13 Exchange + ETT univariate](figures/page16_Figs12-13_exchange.png)
 
-(Figure 12, paper p.16. Exchange predict-192)
+paper p.16:
+- **Fig 12**: Exchange dataset input-96-predict-192 — **무주기** 시계열에서도 Autoformer 가 trend 추적.
+- **Fig 13**: ETT dataset input-96-predict-720 **univariate** setting.
+
+paper Section E.3:
+> Compared to Informer, Autoformer can precisely capture the periods of the future horizon. Besides, our model provides better prediction in the center area than LogTrans. ... Also, the fluctuation of DeepAR prediction is getting smaller as prediction length increases and suffers from the over-smoothing problem, which does not happen in our Autoformer.
+
+### Exchange (Fig 12) 의 의미
 
 > Compared to other models, Autoformer can still predict the exact long-term variations. It is verified the robustness of our model performance among various data characteristics. (p.16, Appendix E.2)
 

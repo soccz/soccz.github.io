@@ -8,6 +8,86 @@ paper Appendix G 의 Algorithm 1 (전체 Autoformer), Algorithm 2 (standard mult
 
 ---
 
+## paper Algorithm 1 — Overall Autoformer (pseudo-code, p.18)
+
+paper 가 제공하는 high-level pseudo-code:
+
+```
+Input: X (length-I past), I, O, d, d_model=512, N=2, M=1, k=25
+
+# Decoder init (Eq 2)
+1.  X_ens, X_ent = SeriesDecomp(X[I/2:I])
+2.  X_0, X_mean = Zeros([O, d]), Repeat(Mean(X[I/2:I]), O)
+3.  X_des, X_det = Concat(X_ens, X_0), Concat(X_ent, X_mean)
+
+# Encoder (N layers, Eq 3)
+4.  X_en^0 = Embed(X)
+5.  for l in {1, ..., N}:
+6.     S_en^{l,1}, _ = SeriesDecomp(AutoCorrelation(X_en^{l-1}) + X_en^{l-1})
+7.     S_en^{l,2}, _ = SeriesDecomp(FeedForward(S_en^{l,1}) + S_en^{l,1})
+8.     X_en^l = S_en^{l,2}
+
+# Decoder (M layers, Eq 4)
+9.  X_de^0 = Embed(X_des), T_de^0 = X_det
+10. for l in {1, ..., M}:
+11.    S_de^{l,1}, T_de^{l,1} = SeriesDecomp(AutoCorrelation(X_de^{l-1}) + X_de^{l-1})
+12.    S_de^{l,2}, T_de^{l,2} = SeriesDecomp(AutoCorrelation(S_de^{l,1}, X_en^N) + S_de^{l,1})
+13.    S_de^{l,3}, T_de^{l,3} = SeriesDecomp(FeedForward(S_de^{l,2}) + S_de^{l,2})
+14.    T_de^l = T_de^{l-1} + MLP(T_de^{l,1}) + MLP(T_de^{l,2}) + MLP(T_de^{l,3})
+15.    X_de^l = S_de^{l,3}
+
+# Final prediction
+16. X_pred = MLP(X_de^M) + T_de^M
+17. Return X_pred[I/2 : I/2+O]
+```
+
+→ 아래 `class Autoformer` 가 이 Algorithm 1 의 PyTorch 구현.
+
+---
+
+## paper Algorithm 2 — Auto-Correlation Standard (p.18)
+
+```
+Input: Q ∈ R^{B×L×d_model}, K, V ∈ R^{B×S×d_model}, h=8, c∈[1,3]
+
+1.  K, V = Resize(K), Resize(V)                    # to length L (truncate or zero-fill)
+2.  Q, K, V = Reshape to [L, h, d_model/h]         # split heads
+3.  Q = FFT(Q, dim=0), K = FFT(K, dim=0)           # → C^{B×L×h×(d_model/h)}
+4.  Corr = IFFT(Q × Conj(K), dim=0)                # autocorrelation
+5.  W_topk, I_topk = Topk(Corr, ⌊c·log L⌋, dim=0)  # top-k lags + weights
+6.  W_topk = Softmax(W_topk, dim=0)
+7.  Index = Repeat(arange(L))                      # base indices
+8.  V = Repeat(V)                                  # double length for cyclic gather
+9.  R = Σᵢ W_topk[i] × gather(V, I_topk[i] + Index) for i ∈ range(⌊c·log L⌋)
+10. R = Sum(Stack(R, dim=0), dim=0)
+11. Return R
+```
+
+→ 아래 `class AutoCorrelation` 의 구현. Line 9 가 `time_delay_agg` 의 핵심.
+
+---
+
+## paper Algorithm 3/4 — Speedup version (실제 실험에 사용)
+
+**Algorithm 3 (training)** 의 핵심 차이 (paper line 1595-1596 G.1):
+```
+5.  Corr = Mean(Corr, dim=0, 2, 3)   # batch + head + channel 축으로 평균 → simplify lags
+6.  W_topk, I_topk = Topk(Corr, ⌊c·log L⌋, dim=0)
+...
+8.  R = Σᵢ W_topk[i] × Roll(V, I_topk[i], dim=1)  # gather 대신 Roll
+```
+
+**Algorithm 4 (inference)** 는 Mean 한 lags 를 시점별로 gather (메모리 효율).
+
+paper text (G.1):
+> Because of the property of the linear layer, the channels of deep representations are equivalent. Thus, we reduce the channel and head dimension for both the training and inference phases. Especially for the training phase, we average the autocorrelation within a batch to simplify the learned lags. This design speeds up Auto-Correlation and performs as normalization to obtain a global judgment of the learned lags because the series within a batch are samples from the same time-series dataset.
+
+→ batch-norm 스타일로 batch 전체 평균을 하면 lag 가 simplify → memory access friendly.
+
+→ **paper 의 모든 실험 수치 (Tables 1-11) 는 Algorithm 3/4 결과**. 본 chapter 의 Algorithm 2 standard 코드는 교육용 / reference.
+
+---
+
 ## 의존성
 
 ```bash

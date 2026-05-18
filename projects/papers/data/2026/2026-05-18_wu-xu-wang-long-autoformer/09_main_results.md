@@ -2,6 +2,11 @@
 
 paper Section 4.1 (p.7–8). Multivariate / Univariate 두 setting 에서 Autoformer 의 SOTA.
 
+## 인터랙티브 시각화
+
+```viz:autoformer-mse-table1:title=paper Table 1 — Multivariate MSE (interactive),caption=Dataset 토글 (ETT/Electricity/Exchange/Traffic/Weather/ILI) + Horizon 토글 (96/192/336/720, ILI 는 24/36/48/60). 모든 24 settings 에서 Autoformer 가 MSE 최저 (Exchange-720 의 Reformer 1.510 vs Autoformer 1.447 가 가장 가까움).
+```
+
 ---
 
 ## Table 1 — Multivariate (paper p.7)
@@ -112,17 +117,47 @@ paper text 는 MSE 기준으로만 "consistent SOTA" 라고 표현. MAE 의 작�
 
 ---
 
-## 표준편차 — Table 10 (Appendix E.4)
+## 표준편차 — Table 10 (Appendix E.4, paper p.17)
 
 > All experiments are repeated three times. ... Table 10 shows the standard deviations. (p.10, Appendix E.4)
 
-Autoformer 의 std 예시 (Table 10, p.17):
-- ETT predict-336: $0.339 \pm 0.018$
-- Exchange predict-336: $0.509 \pm 0.041$
-- Traffic predict-336: $0.622 \pm 0.016$
-- ILI predict-48: $2.669 \pm 0.151$
+### Autoformer 의 24 settings × MSE/MAE 표준편차 (paper Table 10 인용, mean±std)
 
-→ std/mean 비율이 5–8% 수준. 안정적.
+| Dataset | O | MSE | MAE |
+|---------|---|-----|-----|
+| ETT | 96  | 0.255±0.020 | 0.339±0.020 |
+|     | 192 | 0.281±0.027 | 0.340±0.025 |
+|     | 336 | 0.339±0.018 | 0.372±0.015 |
+|     | 720 | 0.422±0.015 | 0.419±0.010 |
+| Electricity | 96  | 0.201±0.003 | 0.317±0.004 |
+|             | 192 | 0.222±0.003 | 0.334±0.004 |
+|             | 336 | 0.231±0.006 | 0.338±0.004 |
+|             | 720 | 0.254±0.007 | 0.361±0.008 |
+| Exchange | 96  | 0.197±0.019 | 0.323±0.012 |
+|          | 192 | 0.300±0.020 | 0.369±0.016 |
+|          | 336 | 0.509±0.041 | 0.524±0.016 |
+|          | 720 | 1.447±0.084 | 0.941±0.028 |
+| Traffic | 96  | 0.613±0.028 | 0.388±0.012 |
+|         | 192 | 0.616±0.042 | 0.382±0.020 |
+|         | 336 | 0.622±0.016 | 0.337±0.011 |
+|         | 720 | 0.660±0.025 | 0.408±0.015 |
+| Weather | 96  | 0.266±0.007 | 0.336±0.006 |
+|         | 192 | 0.307±0.024 | 0.367±0.022 |
+|         | 336 | 0.359±0.035 | 0.395±0.031 |
+|         | 720 | 0.419±0.017 | 0.428±0.014 |
+| ILI | 24 | 3.483±0.107 | 1.287±0.018 |
+|     | 36 | 3.103±0.139 | 1.148±0.025 |
+|     | 48 | 2.669±0.151 | 1.085±0.037 |
+|     | 60 | 2.770±0.085 | 1.125±0.019 |
+
+### 관찰
+
+- **std/mean 비율**: 대부분 2–10% 수준. Exchange-720 의 std 0.084 / mean 1.447 ≈ 5.8%.
+- **가장 안정**: Electricity MSE 96–720 std ≈ 0.003–0.007 (1.5% 이하). Hourly + 321 stocks 의 큰 sample size 에서 stable.
+- **가장 noisy**: ILI predict-36 std 0.139 (mean 3.103 의 4.5%). 작은 dataset (weekly) + 단기 학습 데이터.
+- **3 reruns 의 limit**: paper 가 3 회만 반복 — std 추정에 한계 있음. 보통 ML papers 는 5+ reps.
+
+paper 의 다른 baselines (Informer/LogTrans/Reformer) 의 std 도 함께 비교 (Table 10 전체) — Autoformer 가 일관되게 더 안정 (예: ETT-720 Autoformer 0.015 vs Informer 0.143).
 
 ---
 

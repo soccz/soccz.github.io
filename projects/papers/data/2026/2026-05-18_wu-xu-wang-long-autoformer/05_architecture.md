@@ -40,6 +40,11 @@ paper p.3–4 의 Section 3.1 — 본 paper 가 propose 하는 architecture 의 
 
 **Important nuance**: `AvgPool` 만으로 분해라 부르는 건 STL 등 정교한 알고리즘에 비하면 매우 단순. 그러나 paper 의 주장 — *progressive iteration 으로 layer 가 쌓이며 정교화* — 이 Table 9 ablation 으로 입증됨 (단순 AvgPool inner block 이 STL pre-processing 보다 우수).
 
+## 인터랙티브 시각화 — 점진적 분해
+
+```viz:autoformer-seasonal-trend:title=Progressive Series Decomposition (Eq 1),caption=Decomp passes 토글 (0/1/2/3) 로 점진성 시각화. Pass 가 늘수록 Trend 가 매끄러워지고 Seasonal 이 깨끗한 주기 잔여물로 분리. Regenerate 버튼으로 새 합성 시계열 생성.
+```
+
 ---
 
 ## Model Inputs (Eq 2)
