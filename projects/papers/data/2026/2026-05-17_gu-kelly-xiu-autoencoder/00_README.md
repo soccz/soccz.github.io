@@ -2,16 +2,16 @@
 
 ## 원문 정보
 
-**제목 (영문)**: Autoencoder Asset Pricing Models
+**제목**: Autoencoder Asset Pricing Models
 
-**제목 (한국어)**: 오토인코더 자산가격결정 모델 — IPCA의 비선형 일반화
+**한국어 제목**: 오토인코더 자산가격결정 모델 — IPCA의 비선형 일반화
 
 **저자**: Shihao Gu¹, Bryan Kelly², Dacheng Xiu¹
 ¹Booth School of Business, University of Chicago · ²Yale University, AQR Capital Management, NBER
 
-**발표처·연도**: Journal of Econometrics 222 (2021) 429-450 (Available online 29 July 2020)
+**발표처**: Journal of Econometrics 222 (2021) 429-450 (Available online 29 July 2020)
 
-**Canonical identifier**: DOI: 10.1016/j.jeconom.2020.07.009
+**Canonical identifier**: DOI:10.1016/j.jeconom.2020.07.009
 
 ---
 
