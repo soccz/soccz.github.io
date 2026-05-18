@@ -128,6 +128,9 @@ paper:
 
 → **LSTM 이 명시적 supervision 없이 business cycle 학습**. NBER recession indicator 를 사후에 비교하니 peak 시점이 일치. 4 hidden state 가 서로 다른 macro risk 잡음.
 
+```viz:dlap-lstm-states:title=paper Fig 13 — 4 LSTM hidden states + NBER (interactive),caption=State 1-4 buttons toggle on/off. 회색 음영 = NBER 경기침체 7개 (1969, 1973, 1980, 1981, 1990, 2001, 2008). State 3, 4 가 recession 기간에 peak. **주의**: paper 가 정확 state 값 미발표 — 본 viz 의 시계열은 paper 본문 ("cyclical + recession peak") 와 NBER 데이터 기반의 정성 재현.
+```
+
 ---
 
 ## 11.9 SDF Structure (Section III.G)
