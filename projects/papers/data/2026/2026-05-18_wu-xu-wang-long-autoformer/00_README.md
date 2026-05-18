@@ -109,6 +109,6 @@ School of Software, BNRist, Tsinghua University, China
 | `figures/page6_Fig3_attention_compare.png` | p.6 | Fig. 3 — Full / Sparse / LogSparse / Auto-Correlation 4가지 attention 비교 | ch06 |
 | `figures/page9_Fig4_decomp_steps.png` | p.9 | Fig. 4 — Decomposition block 0/1/2/3개 누적 시각화 (ETT predict-720) | ch11 |
 | `figures/page10_Figs5-7_deps_lags_efficiency.png` | p.10 | Figs 5–7 — 학습된 dependencies / lag 분포 / memory·time 효율 | ch11, ch07 |
-| `figures/page15_Figs8-11_predictions.png` | p.15 | Figs 8–11 — ETT 96/192/336/720 prediction showcases | ch12 |
-| `figures/page16_Figs12-13_exchange.png` | p.16 | Figs 12–13 — Exchange 비주기 + ETT univariate showcase | ch12 |
+| `figures/page15_Figs8-11_predictions.png` | p.15 | Figs 8–11 — ETT 96/192/336/720 prediction showcases | ch11 |
+| `figures/page16_Figs12-13_exchange.png` | p.16 | Figs 12–13 — Exchange 비주기 + ETT univariate showcase | ch11 |
 | `figures/page17_Fig14_covid.png` | p.17 | Fig 14 — COVID-19 입력 7일 → 예측 15일 (Country 2) | ch14 |
