@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-19T02:35:02",
-  "count": 18,
+  "generated_at": "2026-05-19T06:36:22",
+  "count": 19,
   "papers": [
     {
       "slug": "2026-05-19_shao-quantileformer-vae-decomp",
@@ -149,6 +149,144 @@
         }
       ],
       "data_path": "data/2026/2026-05-19_shao-quantileformer-vae-decomp"
+    },
+    {
+      "slug": "2026-05-19_tang-matteson-protran-probabilistic-transformer",
+      "date": "2026-05-19",
+      "weekday": "화",
+      "bucket": "인접",
+      "title": "Probabilistic Transformer for Time Series Analysis",
+      "title_ko": "확률적 트랜스포머 — State-Space Model + Transformer 의 결합으로 다변량 시계열 생성 모델링",
+      "authors": "Binh Tang, David S. Matteson",
+      "venue": "NeurIPS 2021 (35th Conference on Neural Information Processing Systems)",
+      "identifier": "NeurIPS 2021 paper",
+      "code": "",
+      "data": "",
+      "tags": [
+        "time-series-forecasting",
+        "probabilistic-forecasting",
+        "state-space-model",
+        "transformer",
+        "VAE",
+        "hierarchical-latent",
+        "human-motion-prediction",
+        "non-autoregressive",
+        "attention-mechanism",
+        "NeurIPS-2021"
+      ],
+      "verdict": "State-space model (SSM) + Transformer 결합. 기존 SSM 의 Markovian 한계를 attention 으로 깨고, RNN 없이 latent space 전체에 self-attention. Hierarchical 확장으로 multi-layer stochastic latent 학습. 시계열 forecasting + human motion prediction 양쪽 모두 SOTA. CRPS_sum 5 datasets 중 3 dataset 에서 압도 (Solar 0.194 vs TimeGrad 0.287, Traffic 0.028 vs 0.044, Taxi 0.084 vs 0.114). Probabilistic Transformer 의 시초.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — ProTran (Probabilistic Transformer)"
+        },
+        {
+          "file": "01_intro.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01 시작하기 전에 — 미리 알아둘 7개 개념"
+        },
+        {
+          "file": "02_abstract.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02 Abstract 풀어 읽기"
+        },
+        {
+          "file": "03_motivation.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03 Motivation — Section 1 Introduction"
+        },
+        {
+          "file": "04_preliminaries_ssm.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04 Preliminaries — Variational State-Space Models (Section 2.1)"
+        },
+        {
+          "file": "05_preliminaries_transformer.md",
+          "num": "05",
+          "suffix": null,
+          "title": "05 Preliminaries — Transformer Architectures (Section 2.2)"
+        },
+        {
+          "file": "06_single_layer_generative.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06 Single-Layered ProTran — Generative Model (Section 3.1)"
+        },
+        {
+          "file": "07_single_layer_inference.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07 Single-Layered ProTran — Inference Model (Section 3.1 part 2)"
+        },
+        {
+          "file": "08_multi_layer.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08 Multi-Layered ProTran (Section 3.2)"
+        },
+        {
+          "file": "09_related_work.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09 Related Work — Section 4"
+        },
+        {
+          "file": "10_data_baselines.md",
+          "num": "10",
+          "suffix": null,
+          "title": "10 Datasets + Baselines + Metrics (Section 5)"
+        },
+        {
+          "file": "11_forecasting_results.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11 Time Series Forecasting Results — Section 5.1"
+        },
+        {
+          "file": "12_motion_results.md",
+          "num": "12",
+          "suffix": null,
+          "title": "12 Human Motion Prediction Results — Section 5.2"
+        },
+        {
+          "file": "13_conclusion.md",
+          "num": "13",
+          "suffix": null,
+          "title": "13 Conclusion & Discussion — Section 6"
+        },
+        {
+          "file": "14_glossary.md",
+          "num": "14",
+          "suffix": null,
+          "title": "14 Glossary + Notation + References"
+        },
+        {
+          "file": "15_insights.md",
+          "num": "15",
+          "suffix": null,
+          "title": "15 메타 통찰 15개 — \"이해를 넘어서\""
+        },
+        {
+          "file": "16_code.md",
+          "num": "16",
+          "suffix": null,
+          "title": "16 PyTorch Code — ProTran 핵심 모듈"
+        },
+        {
+          "file": "17_diagrams.md",
+          "num": "17",
+          "suffix": null,
+          "title": "17 Diagrams & Interactive Visualizations"
+        }
+      ],
+      "data_path": "data/2026/2026-05-19_tang-matteson-protran-probabilistic-transformer"
     },
     {
       "slug": "2026-05-18_chen-pelger-zhu-deep-learning-ap",
