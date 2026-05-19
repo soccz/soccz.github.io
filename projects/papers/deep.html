@@ -493,6 +493,49 @@
 
   /* Per-paper landing config — extend as more deep dives land */
   const LANDING = {
+    '2026-05-19_nie-patchtst-time-series-64-words': {
+      eyebrow: 'Paper Deep Dive · 시계열 × Transformer × Patching × Channel-indep',
+      hero: '시계열을 64개 단어로 — Vanilla Transformer + Patching + Channel-independence = SOTA.',
+      subtitle: '<span class="accent">Nie, Nguyen, Sinthong, Kalagnanam (Princeton + IBM, ICLR 2023)</span> 의 PatchTST 는 ' +
+                'DLinear 의 "Transformer 는 시계열에 효과적이지 않다" 도전에 vanilla Transformer + 두 trick 으로 응답. ' +
+                '(1) Patching: 시계열을 P=16 길이 patch 로 자르고 stride S=8 → ViT 스타일 토큰화 (L=336 → N=42 tokens). ' +
+                '(2) Channel-independence: M 변수 모두 같은 Transformer weight 로 독립 forward. ' +
+                '8 datasets supervised 에서 21% MSE reduction vs FEDformer/Autoformer. ' +
+                'Self-supervised pre-training + transfer learning 도 SOTA — 시계열 foundation model 의 building block.',
+      stats: [
+        { num: '17', label: '챕터' },
+        { num: '4',  label: 'Figure / Table 발췌' },
+        { num: '21%', label: 'MSE reduction vs Transformer' },
+        { num: 'ICLR 2023', label: '발표처' }
+      ],
+      what: {
+        title: '"Vanilla Transformer + 두 단순 변경 = SOTA, 시계열 foundation model 의 길."',
+        body: '본 논문은 복잡한 시계열-specific attention 변형 (Informer ProbSparse / Autoformer auto-correlation / FEDformer Fourier) 보다 ' +
+              '단순한 입력 reshaping (patching) + 독립 forward (channel-indep) 가 더 효과적임을 증명. ' +
+              'ViT (Dosovitskiy 2021) 의 16x16 patching 정신을 시계열에 transfer. ' +
+              'Patching 으로 attention 복잡도 22× 감소 + longer L 가능. ' +
+              'Channel-indep 으로 overfitting 방지 (cross-channel spurious correlation 회피). ' +
+              'Self-supervised masked reconstruction (40% mask) 으로 representation learning + transfer learning SOTA.',
+        verdict: 'iTransformer / Chronos / TimesFM / Moirai 등 후속 시계열 foundation model 의 출발점. ' +
+                 'DLinear 의 도전에 Transformer 가 정직하게 응답한 결정적 paper.'
+      },
+      tour: [
+        { num: '01–03', ttl: '문제와 동기',     desc: '7개 개념 (Long-term forecasting / Transformer / ViT patching / Channel-indep / MAE / Instance Norm / DLinear 도전).',                                  link: 'read.html?slug=' + encodeURIComponent('2026-05-19_nie-patchtst-time-series-64-words') + '#sec-03',  text: '동기 보기 →' },
+        { num: '04–08', ttl: '방법론 5부작',     desc: 'Patching (L→N=42 tokens) + Channel-indep (M streams, shared weights) + Transformer encoder (vanilla + BatchNorm) + Instance Norm + Self-supervised (40% mask).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-19_nie-patchtst-time-series-64-words') + '#sec-04',  text: '방법 해부 →' },
+        { num: '10–12', ttl: '실증 결과',       desc: '8 datasets × 4 horizons × 8 models supervised (Table 3, 256 cells). Self-supervised + transfer learning (Tables 4-6). Ablation P+CI / CI / P / Original (Table 7).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-19_nie-patchtst-time-series-64-words') + '#sec-10',  text: '결과 →' },
+        { num: '13',    ttl: '결론 + 한계',      desc: 'Cross-channel dependency 미모델링 한계. Foundation model building block 가능성. 5 ML design principles.',                                          link: 'read.html?slug=' + encodeURIComponent('2026-05-19_nie-patchtst-time-series-64-words') + '#sec-13',  text: '결론 →' },
+        { num: '15',    ttl: '15 메타 통찰',     desc: 'ViT 의 transfer / Simplicity wins / Inductive bias / Foundation model 시대 / iTransformer 와의 관계 / Quant finance transfer.',                              link: 'read.html?slug=' + encodeURIComponent('2026-05-19_nie-patchtst-time-series-64-words') + '#sec-15',  text: '통찰 →' },
+        { num: '16',    ttl: 'PyTorch 구현',     desc: 'Patching 함수 (unfold) + Channel-indep loop (reshape B*M) + Instance Norm + Vanilla Transformer + Linear head + Pre-training + Fine-tune protocol.',     link: 'read.html?slug=' + encodeURIComponent('2026-05-19_nie-patchtst-time-series-64-words') + '#sec-16',  text: '코드 보기 →' }
+      ],
+      preview: {
+        title: '맛보기 — Table 3 Multivariate supervised forecasting',
+        subtitle: 'paper Table 3 의 정확한 수치. 8 datasets × 4 horizons × 8 models = 256 cells. ' +
+                  'PatchTST/64 가 거의 모든 cell 에서 best. ' +
+                  'Traffic T=96 에서 PatchTST 0.360 vs FEDformer 0.576 = 37% MSE reduction. ' +
+                  'Electricity T=96 에서 PatchTST 0.129 vs FEDformer 0.186 = 31% reduction.',
+        vizType: 'pat-table3-supervised'
+      }
+    },
     '2026-05-19_tang-matteson-protran-probabilistic-transformer': {
       eyebrow: 'Paper Deep Dive · 시계열 × Probabilistic × SSM × Transformer',
       hero: 'State-Space Model + Transformer 의 결합. RNN 완전 거부. Hierarchical latents.',
