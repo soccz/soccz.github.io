@@ -10,12 +10,22 @@
       "title": "A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
       "title_ko": "패치 트랜스포머 — 시계열을 64개 단어로 보고 long-term 예측",
       "authors": "Yuqi Nie¹, Nam H. Nguyen², Phanwadee Sinthong², Jayant Kalagnanam²",
-      "venue": "",
-      "identifier": "",
+      "venue": "ICLR 2023 (Published as conference paper)",
+      "identifier": "arXiv:2211.14730v2",
       "code": "",
       "data": "",
-      "tags": [],
-      "verdict": "",
+      "tags": [
+        "time-series-forecasting",
+        "transformer",
+        "patching",
+        "channel-independence",
+        "self-supervised",
+        "representation-learning",
+        "transfer-learning",
+        "long-term-forecasting",
+        "ICLR-2023"
+      ],
+      "verdict": "Vanilla Transformer 에 ViT-style 두 가지 단순 변경 = SOTA. (1) Patching: 시계열을 P=16, stride S=8 의 패치로 잘라 토큰화 — L=336 → N=42 토큰, attention 복잡도 O(L²) → O((L/S)²) 약 22배 단축 + longer look-back window 활용. (2) Channel-independence: M 개 변수 각각을 동일 weight 의 Transformer 에 독립 통과 (channel-mixing 아님). 추가로 40% masked self-supervised reconstruction 도입 → fine-tune / linear probing / transfer 전부 SOTA. 21.0% MSE / 16.7% MAE reduction vs FEDformer · Autoformer · Informer. ViT 의 시계열판이자 self-supervised TS foundation model 의 출발점.",
       "private": false,
       "sections": [
         {

@@ -1,6 +1,6 @@
 # 00 README — PatchTST (A Time Series is Worth 64 Words)
 
-## 메타
+## 원문 정보
 
 **제목**: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers
 
@@ -9,22 +9,31 @@
 **저자**: Yuqi Nie¹, Nam H. Nguyen², Phanwadee Sinthong², Jayant Kalagnanam²
 ¹ Princeton University · ² IBM Research
 
-**발표**: ICLR 2023 (Published as conference paper)
+**발표처**: ICLR 2023 (Published as conference paper)
 
-**arXiv**: 2211.14730v2 (5 Mar 2023)
-
-**한 줄 요약**: 시계열을 patch (subseries) 로 잘라서 Transformer token 으로 입력 + channel-independence 로 multivariate 를 동일 weight 의 univariate 들로 분해 → long-term forecasting + self-supervised representation learning 양쪽 SOTA.
+**Canonical identifier**: arXiv:2211.14730v2
 
 **원본 PDF**: [PatchTST-Nie-ICLR-2023-time-series-64-words.pdf](/home/soccz/22tb/study/교수님/deep_dive/PatchTST-Nie-ICLR-2023-time-series-64-words.pdf)
 
 ---
 
+## 태그
+
+- **주 태그**: `time-series-forecasting` · `transformer` · `patching` · `channel-independence`
+- **보조 태그**: `self-supervised` · `representation-learning` · `transfer-learning` · `long-term-forecasting` · `ICLR-2023`
+
+---
+
 ## 분류
 
-- **주 태그**: `time-series-forecasting` · `transformer` · `patching` · `channel-independence` · `self-supervised`
-- **부 태그**: `representation-learning` · `transfer-learning` · `long-term-forecasting`
 - **분야**: 시계열 deep learning, 특히 long-term multivariate forecasting + masked autoencoder
 - **수준**: 중상 — vanilla Transformer + ViT-style patching 이해 필요
+
+---
+
+## 한 줄 판결
+
+> **Vanilla Transformer 에 ViT-style 두 가지 단순 변경 = SOTA. (1) Patching: 시계열을 P=16, stride S=8 의 패치로 잘라 토큰화 — L=336 → N=42 토큰, attention 복잡도 O(L²) → O((L/S)²) 약 22배 단축 + longer look-back window 활용. (2) Channel-independence: M 개 변수 각각을 동일 weight 의 Transformer 에 독립 통과 (channel-mixing 아님). 추가로 40% masked self-supervised reconstruction 도입 → fine-tune / linear probing / transfer 전부 SOTA. 21.0% MSE / 16.7% MAE reduction vs FEDformer · Autoformer · Informer. ViT 의 시계열판이자 self-supervised TS foundation model 의 출발점.**
 
 ---
 
