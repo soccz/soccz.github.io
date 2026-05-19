@@ -34,7 +34,7 @@
 
 ---
 
-## Chapter 가이드 (18개)
+## Chapter 가이드 (19개)
 
 | 챕터 | 내용 |
 |------|------|
@@ -55,6 +55,7 @@
 | [15_insights.md](15_insights.md) | 15 메타 통찰 — DLinear 대 PatchTST, ViT 의 transfer, Foundation model 방향 |
 | [16_code.md](16_code.md) | PyTorch 구현 — Patching 함수, Channel-indep loop, Loss, Training step |
 | [17_diagrams.md](17_diagrams.md) | ASCII diagrams + viz catalog |
+| [18_appendix.md](18_appendix.md) | Appendix A.1–A.7 — 모델 hyperparameter, robustness, channel-indep 분석 (Figs 5-7, Tables 8-15) |
 
 ---
 
@@ -66,6 +67,9 @@
 | `figures/Fig2_lookback_window.png` | p.9 | Fig. 2 — Look-back window vs MSE (3 datasets, 2 horizons) | ch10 |
 | `figures/Fig3_forecast_viz.png` | p.14 | Fig. 3 — 192-step forecasting on Weather/Traffic | ch10 |
 | `figures/Fig4_patch_length.png` | p.15 | Fig. 4 — Patch length ablation P=[2,4,8,12,16,24,32,40] | ch12 |
+| `figures/Fig5_model_size.png` | p.20 | Fig. 5 — Model size sensitivity (6 hyperparameter combinations) | ch18 |
+| `figures/Fig6_attention_maps.png` | p.23 | Fig. 6 — Attention maps (Electricity series 11/25/81) | ch18 |
+| `figures/Fig7_channel_curves.png` | p.24 | Fig. 7 — Channel-indep vs mixing (train size / epoch) | ch18 |
 
 ---
 
