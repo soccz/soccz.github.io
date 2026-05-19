@@ -1,7 +1,134 @@
 {
-  "generated_at": "2026-05-19T07:58:48",
-  "count": 19,
+  "generated_at": "2026-05-19T09:10:08",
+  "count": 20,
   "papers": [
+    {
+      "slug": "2026-05-19_nie-patchtst-time-series-64-words",
+      "date": "2026-05-19",
+      "weekday": "화",
+      "bucket": "인접",
+      "title": "A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
+      "title_ko": "패치 트랜스포머 — 시계열을 64개 단어로 보고 long-term 예측",
+      "authors": "Yuqi Nie¹, Nam H. Nguyen², Phanwadee Sinthong², Jayant Kalagnanam²",
+      "venue": "",
+      "identifier": "",
+      "code": "",
+      "data": "",
+      "tags": [],
+      "verdict": "",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — PatchTST (A Time Series is Worth 64 Words)"
+        },
+        {
+          "file": "01_intro.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01 시작하기 전에 — 7개 개념"
+        },
+        {
+          "file": "02_abstract.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02 Abstract — 6 문장 해부"
+        },
+        {
+          "file": "03_motivation.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03 Motivation — DLinear 의 도전과 PatchTST 의 응답"
+        },
+        {
+          "file": "04_patching.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04 Patching — 시계열 → patch sequence"
+        },
+        {
+          "file": "05_channel_independence.md",
+          "num": "05",
+          "suffix": null,
+          "title": "05 Channel-independence — M 변수 모두 같은 weight"
+        },
+        {
+          "file": "06_transformer_encoder.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06 Transformer Encoder — vanilla 그대로"
+        },
+        {
+          "file": "07_instance_norm_loss.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07 Instance Normalization + Loss"
+        },
+        {
+          "file": "08_representation_learning.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08 Self-Supervised Representation Learning"
+        },
+        {
+          "file": "09_data_baselines.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09 Datasets + Baselines"
+        },
+        {
+          "file": "10_supervised_results.md",
+          "num": "10",
+          "suffix": null,
+          "title": "10 Supervised Forecasting Results — Table 3 + Figure 2"
+        },
+        {
+          "file": "11_repr_transfer.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11 Self-supervised + Transfer Learning Results"
+        },
+        {
+          "file": "12_ablation.md",
+          "num": "12",
+          "suffix": null,
+          "title": "12 Ablation Study — Table 7 + Figure 4"
+        },
+        {
+          "file": "13_conclusion.md",
+          "num": "13",
+          "suffix": null,
+          "title": "13 Conclusion + Future Work"
+        },
+        {
+          "file": "14_glossary.md",
+          "num": "14",
+          "suffix": null,
+          "title": "14 Glossary + References"
+        },
+        {
+          "file": "15_insights.md",
+          "num": "15",
+          "suffix": null,
+          "title": "15 메타 통찰"
+        },
+        {
+          "file": "16_code.md",
+          "num": "16",
+          "suffix": null,
+          "title": "16 PyTorch 구현"
+        },
+        {
+          "file": "17_diagrams.md",
+          "num": "17",
+          "suffix": null,
+          "title": "17 Diagrams + Viz Catalog"
+        }
+      ],
+      "data_path": "data/2026/2026-05-19_nie-patchtst-time-series-64-words"
+    },
     {
       "slug": "2026-05-19_shao-quantileformer-vae-decomp",
       "date": "2026-05-19",
