@@ -478,6 +478,10 @@
 <script src="viz/qf-gmm-decomp.js"></script>
 <script src="viz/qf-vae-graph.js"></script>
 <script src="viz/qf-quantile-prediction.js"></script>
+<script src="viz/pt-crps-table1.js"></script>
+<script src="viz/pt-ablation-table2.js"></script>
+<script src="viz/pt-motion-table3.js"></script>
+<script src="viz/pt-graphical-models.js"></script>
 
 <script>
   const params = new URLSearchParams(location.search);
@@ -489,6 +493,46 @@
 
   /* Per-paper landing config — extend as more deep dives land */
   const LANDING = {
+    '2026-05-19_tang-matteson-protran-probabilistic-transformer': {
+      eyebrow: 'Paper Deep Dive · 시계열 × Probabilistic × SSM × Transformer',
+      hero: 'State-Space Model + Transformer 의 결합. RNN 완전 거부. Hierarchical latents.',
+      subtitle: '<span class="accent">Tang &amp; Matteson (NeurIPS 2021)</span> 의 ProTran 은 ' +
+                'SSM (latent + observation, probabilistic) framework 에 Transformer attention 을 latent space 에 적용. ' +
+                'RNN 완전 제거 (paper 의 강조). Single-layer + Multi-layer (L=1, 2, 3) hierarchical 확장. ' +
+                '시계열 forecasting (Solar / Electricity / Traffic / Taxi / Wikipedia) 5 dataset 중 4 best ' +
+                '+ Human motion prediction (Human3.6M / HumanEva-I) 3/4 cells best.',
+      stats: [
+        { num: '17', label: '챕터' },
+        { num: '5',  label: 'Figure / Table 발췌' },
+        { num: '4/5', label: '시계열 dataset best' },
+        { num: 'NeurIPS 2021', label: '발표처' }
+      ],
+      what: {
+        title: '"RNN 없이 SSM 의 확률성과 Transformer 의 표현력 모두."',
+        body: '본 논문은 단순한 모델 결합이 아닌 **probabilistic 시계열 generative modeling 의 새 paradigm**. ' +
+              'Latent space attention (Eq 6-7) 으로 non-Markovian dynamics. ' +
+              'Variational inference 의 smoothing (Eq 10-11) 으로 training time 미래 활용. ' +
+              'Multi-layer hierarchy (Eq 16-20) 로 capacity scaling. ' +
+              '2 task (forecasting + motion) 의 unified framework.',
+        verdict: 'TimeGrad / CSDI / TMDM 등 후속 diffusion 시계열 모델의 spiritual ancestor. ' +
+                 'NeurIPS 2021 의 시계열 Cambrian explosion 의 핵심 작품 중 하나.'
+      },
+      tour: [
+        { num: '01–03', ttl: '문제와 동기',     desc: '7개 개념 (SSM / LDS / Kalman / VAE / ELBO / Transformer / CRPS) + 4 challenges + 3 contributions.',                                              link: 'read.html?slug=' + encodeURIComponent('2026-05-19_tang-matteson-protran-probabilistic-transformer') + '#sec-03',  text: '도전 보기 →' },
+        { num: '04–08', ttl: '방법론 5부작',     desc: 'Variational SSM (Eq 1-3) + Transformer attention (Eq 4) + Single-layer generation (Eq 5-9) + Inference smoothing (Eq 10-11) + Multi-layer (Eq 12-20).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-19_tang-matteson-protran-probabilistic-transformer') + '#sec-04',  text: '방법론 해부 →' },
+        { num: '10–12', ttl: '실증 2 task',     desc: '5 datasets time series + 2 datasets motion. 11+9 baselines. CRPS_sum (Table 1) + ablation (Table 2) + ADE/FDE (Table 3) + Figs 1-3.',                  link: 'read.html?slug=' + encodeURIComponent('2026-05-19_tang-matteson-protran-probabilistic-transformer') + '#sec-10',  text: '결과 보기 →' },
+        { num: '13',    ttl: '결론 + 한계',      desc: 'O(T²) attention 한계 명시. Sparse Transformer 와 결합 가능성. 5 ML design principles.',                                                            link: 'read.html?slug=' + encodeURIComponent('2026-05-19_tang-matteson-protran-probabilistic-transformer') + '#sec-13',  text: '결론 읽기 →' },
+        { num: '15',    ttl: '15 메타 통찰',     desc: 'Latent attention > observation attention / Smoothing vs Filtering / NeurIPS 2021 Cambrian explosion / Finance transfer.',                              link: 'read.html?slug=' + encodeURIComponent('2026-05-19_tang-matteson-protran-probabilistic-transformer') + '#sec-15',  text: '통찰 읽기 →' },
+        { num: '16',    ttl: 'PyTorch 구현',     desc: 'Position embedding + Multi-head attention + ProTran single-layer (Eq 5-11) + Loss + Training step + Sample prediction.',                              link: 'read.html?slug=' + encodeURIComponent('2026-05-19_tang-matteson-protran-probabilistic-transformer') + '#sec-16',  text: '코드 보기 →' }
+      ],
+      preview: {
+        title: '맛보기 — Table 1 CRPS_sum (5 datasets × 12 models)',
+        subtitle: 'paper Table 1 의 정확한 CRPS_sum 수치. ProTran 이 Solar 0.194 / Traffic 0.028 / Taxi 0.084 / Wikipedia 0.047 에서 best. ' +
+                  'Electricity 는 NKF 와 tie (0.016). 11 baselines 와 비교 — 가장 강한 경쟁자 TimeGrad (diffusion model). ' +
+                  '4/5 datasets 에서 outright SOTA.',
+        vizType: 'pt-crps-table1'
+      }
+    },
     '2026-05-19_shao-quantileformer-vae-decomp': {
       eyebrow: 'Paper Deep Dive · 시계열 × Probabilistic × VAE',
       hero: '확률 forecasting 의 새 표준 — Pattern-Mixture Decomposition + VAE + Fusion Transformer.',
