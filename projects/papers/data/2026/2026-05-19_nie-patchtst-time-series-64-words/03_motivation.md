@@ -95,6 +95,9 @@ paper Table 1 (Traffic dataset, T=96):
 
 → 0.518 → 0.349 = **33% reduction** 의 진화.
 
+```viz:pat-table1-evolution:title=paper Table 1 — Case study on Traffic (T=96 interactive),caption=5 PatchTST 진화 stage + 2 baseline (FEDformer / DLinear) 비교 bar chart. 0.518 (L=96 short window) → 0.447 (downsampled) → 0.397 (full L=336) → 0.367 (patching) → 0.349 (self-supervised) 의 33% MSE reduction 시각화. paper 의 narrative arc 가 한 눈에.
+```
+
 ---
 
 ## 또 다른 motivation — running time
@@ -145,5 +148,8 @@ paper Fig 1 caption:
 - (a) **Model overview**: M channels → 같은 Transformer backbone, 독립 forward
 - (b) **Supervised backbone**: Instance Norm + Patching → Projection + Position → Transformer Encoder → Flatten + Linear Head → output
 - (c) **Self-supervised backbone**: 같은 구조, prediction head 대신 Linear Layer 로 patch reconstruction
+
+```viz:pat-architecture:title=Fig 1 (a)(b)(c) — PatchTST architecture (interactive),caption=토글로 paper Fig 1 의 3 panel 모두 인터랙티브. (a) Multivariate 가 M channel 로 split → shared Transformer 통과. (b) Supervised: Instance Norm + Patching → Encoder → Flatten + Linear head → output. (c) Self-supervised: 40% masked patches → 같은 encoder → Linear D→P reconstruction head → MSE loss on masked.
+```
 
 다음 [04_patching.md](04_patching.md) 에서 Patching 메커니즘 수식 + 시각화.

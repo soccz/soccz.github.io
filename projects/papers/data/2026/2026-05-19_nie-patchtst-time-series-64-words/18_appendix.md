@@ -278,6 +278,9 @@ paper p.21:
 
 → **Channel-indep 추가만으로 다른 Transformer 들도 개선**. PatchTST 가 여전히 best 이지만 Channel-indep 는 universal technique.
 
+```viz:pat-table15-ci-universal:title=paper Table 15 — Channel-indep universality (interactive),caption=Dataset 토글 (Weather/Traffic/Electricity) + Horizon 토글 + Metric (MSE/MAE) 토글. 각 model 의 (Original vs +CI) bar 비교 — Informer/Autoformer/FEDformer 모두 CI 추가로 일관 개선. PatchTST/42 가 reference (left=n/a 표시). Channel-indep 는 PatchTST 만의 trick 아닌 universal technique.
+```
+
 ---
 
 ## 종합 — Appendix 의 5 가지 핵심 추가 발견

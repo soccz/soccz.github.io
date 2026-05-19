@@ -177,6 +177,11 @@ Overlap = P - S = 4 timestep
 | `pat-ablation-table7` | 12 | paper Table 7 ablation (P+CI/CI/P/Orig) | exact paper values | dataset + horizon toggle |
 | `pat-masked-recon` | 08 | Self-supervised masked reconstruction | schematic | mask ratio slider |
 
+| `pat-table1-evolution` | 03 | paper Table 1 evolution 0.518→0.349 case study | exact paper values | (static) |
+| `pat-fig4-patch-length` | 12 | paper Fig 4 patch length sensitivity | approximate paper values | dataset toggle |
+| `pat-architecture` | 03 | Fig 1 (a)(b)(c) interactive architecture | schematic | panel toggle |
+| `pat-table15-ci-universal` | 18 | paper Table 15 channel-indep on other models | exact paper values | dataset + horizon + metric toggle |
+
 → 각 viz 의 구현은 site repo `viz/pat-*.js`.
 
 ---

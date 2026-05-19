@@ -90,6 +90,9 @@ paper p.27 분석:
 
 → Patching 의 효과는 정확한 P 값에 민감하지 않음. 더 robust 한 design.
 
+```viz:pat-fig4-patch-length:title=paper Figure 4 — Patch length sensitivity (interactive),caption=Dataset 토글 (8 datasets). Patch length P ∈ {2 4 8 12 16 24 32 40} 8개 값 별 MSE. 모든 dataset 에서 곡선이 거의 평평 (flat) — P 선택 robust. paper 권장 P=16 의 hyperparameter 안정성 확인.
+```
+
 ---
 
 ## Look-back window 영향 (Figure 2 와 보완)

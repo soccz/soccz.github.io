@@ -84,6 +84,10 @@
 | `pat-lookback-window` | 10 | paper Figure 2 의 look-back vs MSE 라인 차트 |
 | `pat-ablation-table7` | 12 | paper Table 7 ablation — P+CI / CI / P / Original 4 cases × 3 datasets |
 | `pat-masked-recon` | 08 | Masked self-supervised reconstruction 시각화 (40% mask ratio) |
+| `pat-table1-evolution` | 03 | paper Table 1 의 case study — 0.518→0.349 evolution bars |
+| `pat-fig4-patch-length` | 12 | paper Fig 4 의 patch length sensitivity — 8 datasets toggle |
+| `pat-architecture` | 03 | Fig 1 (a)(b)(c) interactive architecture — 3 panel toggle |
+| `pat-table15-ci-universal` | 18 | paper Table 15 — channel-indep applied to Informer/Autoformer/FEDformer |
 
 → 전체 카탈로그는 [17_diagrams.md](17_diagrams.md).
 
