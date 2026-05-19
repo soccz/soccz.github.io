@@ -34,7 +34,7 @@
 
 ---
 
-## Chapter 가이드 (20개)
+## Chapter 가이드 (21개)
 
 | 챕터 | 내용 |
 |------|------|
@@ -57,6 +57,7 @@
 | [17_diagrams.md](17_diagrams.md) | ASCII diagrams + viz catalog |
 | [18_appendix.md](18_appendix.md) | Appendix A.1–A.7 — 모델 hyperparameter, robustness, channel-indep 분석 (Figs 5-7, Tables 8-15) |
 | [19_related_work.md](19_related_work.md) | Paper Section 2 — Patch in Transformer / TS Transformer baseline 5종 / TS representation learning 두 학파 |
+| [20_analysis.md](20_analysis.md) | 결과 deep 해석 — 21% MSE reduction 분해 + Fig 6 attention 의미 + 한계 (DLinear vs ETTh1) + foundation model 위치 |
 
 ---
 
@@ -88,6 +89,10 @@
 | `pat-fig4-patch-length` | 12 | paper Fig 4 의 patch length sensitivity — 8 datasets toggle |
 | `pat-architecture` | 03 | Fig 1 (a)(b)(c) interactive architecture — 3 panel toggle |
 | `pat-table15-ci-universal` | 18 | paper Table 15 — channel-indep applied to Informer/Autoformer/FEDformer |
+| `pat-table14-seeds` | 20 | paper Table 14 — random seed variance with error bars (5 seeds × 7 datasets) |
+| `pat-fig5-model-size` | 20 | paper Fig 5 — model size sensitivity (6 hyperparameter combos × 8 datasets) |
+| `pat-fig7-channel-curves` | 20 | paper Fig 7 — channel-indep vs mixing curves (train size + epoch panels) |
+| `pat-table11-instance-norm` | 20 | paper Table 11 — Instance Norm with/without (+in vs -in) |
 
 → 전체 카탈로그는 [17_diagrams.md](17_diagrams.md).
 

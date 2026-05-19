@@ -340,3 +340,272 @@ paper 의 공식 implementation: https://github.com/yuqinie98/PatchTST
 본 구현은 paper 의 정신을 단순화한 버전. 실제 fine details (random seed, learning rate scheduler) 는 공식 repo 참조.
 
 다음 [17_diagrams.md](17_diagrams.md) 에서 ASCII diagrams + viz catalog.
+
+---
+
+## 11. Full Training Loop
+
+```python
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+import numpy as np
+
+
+def train_patchtst(
+    model: PatchTST,
+    train_loader: DataLoader,
+    val_loader: DataLoader,
+    epochs: int = 100,
+    lr: float = 1e-4,
+    patience: int = 10,
+    device: str = 'cuda',
+) -> dict:
+    """
+    Standard supervised training loop with early stopping.
+    """
+    model = model.to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(
+        optimizer, max_lr=lr, epochs=epochs,
+        steps_per_epoch=len(train_loader),
+        pct_start=0.3,
+    )
+
+    best_val_loss = float('inf')
+    patience_counter = 0
+    history = {'train_loss': [], 'val_loss': []}
+
+    for epoch in range(epochs):
+        # Train
+        model.train()
+        train_losses = []
+        for x, y in train_loader:
+            x, y = x.to(device), y.to(device)
+            pred = model(x)
+            loss = ((pred - y) ** 2).mean()
+            optimizer.zero_grad()
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            optimizer.step()
+            scheduler.step()
+            train_losses.append(loss.item())
+
+        # Validate
+        model.eval()
+        val_losses = []
+        with torch.no_grad():
+            for x, y in val_loader:
+                x, y = x.to(device), y.to(device)
+                pred = model(x)
+                loss = ((pred - y) ** 2).mean()
+                val_losses.append(loss.item())
+
+        train_loss = np.mean(train_losses)
+        val_loss = np.mean(val_losses)
+        history['train_loss'].append(train_loss)
+        history['val_loss'].append(val_loss)
+
+        # Early stopping
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            patience_counter = 0
+            torch.save(model.state_dict(), 'best_model.pt')
+        else:
+            patience_counter += 1
+            if patience_counter >= patience:
+                print(f"Early stop at epoch {epoch}")
+                break
+
+        print(f"Epoch {epoch}: train={train_loss:.4f}, val={val_loss:.4f}")
+
+    model.load_state_dict(torch.load('best_model.pt'))
+    return history
+```
+
+---
+
+## 12. Evaluation Loop — MSE + MAE
+
+```python
+def evaluate(model: PatchTST, loader: DataLoader, device: str = 'cuda') -> dict:
+    """
+    Compute MSE and MAE on test set.
+    Paper standard: 7 datasets ETTh1/h2/m1/m2, Electricity, Traffic, Weather
+                    + ILI dataset (smaller, weekly).
+    """
+    model.eval()
+    all_pred = []
+    all_y = []
+    with torch.no_grad():
+        for x, y in loader:
+            x, y = x.to(device), y.to(device)
+            pred = model(x)
+            all_pred.append(pred.cpu().numpy())
+            all_y.append(y.cpu().numpy())
+    
+    pred = np.concatenate(all_pred, axis=0)  # (N, M, T)
+    y = np.concatenate(all_y, axis=0)
+    
+    mse = np.mean((pred - y) ** 2)
+    mae = np.mean(np.abs(pred - y))
+    
+    return {'MSE': float(mse), 'MAE': float(mae)}
+```
+
+---
+
+## 13. Dataset Loader (sliding window)
+
+```python
+class TimeSeriesDataset(torch.utils.data.Dataset):
+    """
+    Sliding window dataset for time series forecasting.
+    
+    Args:
+        data: (T_total, M) numpy array, total timesteps × channels
+        seq_len: L (look-back window)
+        pred_len: T (prediction horizon)
+        split: 'train' | 'val' | 'test'
+    """
+    def __init__(self, data: np.ndarray, seq_len: int, pred_len: int,
+                 split: str = 'train', split_ratios: tuple = (0.7, 0.1, 0.2)):
+        T_total, M = data.shape
+        self.seq_len = seq_len
+        self.pred_len = pred_len
+        
+        # Chronological train/val/test split
+        train_end = int(T_total * split_ratios[0])
+        val_end = int(T_total * (split_ratios[0] + split_ratios[1]))
+        
+        if split == 'train':
+            self.data = data[:train_end]
+        elif split == 'val':
+            # Include last L from train for sliding window continuity
+            self.data = data[train_end - seq_len:val_end]
+        else:  # test
+            self.data = data[val_end - seq_len:]
+        
+        # Number of valid windows
+        self.n_windows = len(self.data) - seq_len - pred_len + 1
+
+    def __len__(self):
+        return self.n_windows
+
+    def __getitem__(self, idx: int):
+        # Window: [t, t+L) input, [t+L, t+L+T) target
+        x = self.data[idx : idx + self.seq_len]  # (L, M)
+        y = self.data[idx + self.seq_len : idx + self.seq_len + self.pred_len]  # (T, M)
+        # Transpose to (M, L) / (M, T) for channel-first
+        x = torch.from_numpy(x.T).float()  # (M, L)
+        y = torch.from_numpy(y.T).float()  # (M, T)
+        return x, y
+
+
+# Example usage
+def load_electricity():
+    """Load Electricity dataset (321 customers × 26,304 hourly steps)."""
+    import pandas as pd
+    df = pd.read_csv('electricity.csv', index_col=0)
+    data = df.values.astype(np.float32)  # (T_total, M)
+    return data
+
+data = load_electricity()
+train_ds = TimeSeriesDataset(data, seq_len=336, pred_len=96, split='train')
+val_ds   = TimeSeriesDataset(data, seq_len=336, pred_len=96, split='val')
+test_ds  = TimeSeriesDataset(data, seq_len=336, pred_len=96, split='test')
+
+train_loader = DataLoader(train_ds, batch_size=32, shuffle=True, num_workers=4)
+val_loader   = DataLoader(val_ds, batch_size=32, shuffle=False, num_workers=4)
+test_loader  = DataLoader(test_ds, batch_size=32, shuffle=False, num_workers=4)
+
+print(f"Train: {len(train_ds)} windows, Val: {len(val_ds)}, Test: {len(test_ds)}")
+```
+
+---
+
+## 14. End-to-end example — Full pipeline
+
+```python
+def run_patchtst_experiment(
+    dataset_name: str = 'electricity',
+    seq_len: int = 336,
+    pred_len: int = 96,
+    epochs: int = 100,
+):
+    """Full PatchTST experiment from dataset → training → evaluation."""
+    # 1. Load data
+    if dataset_name == 'electricity':
+        data = load_electricity()
+        M = 321
+    elif dataset_name == 'traffic':
+        data = load_traffic()
+        M = 862
+    # ... other datasets
+    
+    # 2. Build datasets
+    train_ds = TimeSeriesDataset(data, seq_len, pred_len, split='train')
+    val_ds   = TimeSeriesDataset(data, seq_len, pred_len, split='val')
+    test_ds  = TimeSeriesDataset(data, seq_len, pred_len, split='test')
+    train_loader = DataLoader(train_ds, batch_size=32, shuffle=True)
+    val_loader   = DataLoader(val_ds, batch_size=32, shuffle=False)
+    test_loader  = DataLoader(test_ds, batch_size=32, shuffle=False)
+    
+    # 3. Build model (paper default: D=128, H=16, 3 layers)
+    model = PatchTST(
+        n_vars=M,
+        seq_len=seq_len,
+        pred_len=pred_len,
+        patch_len=16,
+        stride=8,
+        d_model=128,
+        n_heads=16,
+        n_layers=3,
+        d_ff=256,
+        dropout=0.2,
+    )
+    
+    # 4. Train
+    history = train_patchtst(model, train_loader, val_loader, epochs=epochs)
+    
+    # 5. Evaluate
+    test_metrics = evaluate(model, test_loader)
+    print(f"Test {dataset_name} T={pred_len}: MSE={test_metrics['MSE']:.4f}, MAE={test_metrics['MAE']:.4f}")
+    
+    return model, history, test_metrics
+
+
+# Reproduce paper Table 3 Electricity T=96 → expected MSE 0.130
+model, history, metrics = run_patchtst_experiment(
+    dataset_name='electricity',
+    seq_len=336,
+    pred_len=96,
+    epochs=100,
+)
+# Expected: MSE ≈ 0.130, MAE ≈ 0.222 (paper PatchTST/42)
+```
+
+---
+
+## 15. Reproducing paper Tables
+
+| Table | Setup | Run |
+|-------|-------|-----|
+| Table 3 (supervised) | L=336 or 512, P=16, S=8 | `run_patchtst_experiment(seq_len=336, pred_len=T)` |
+| Table 4 (self-sup) | L=512, P=12, S=12, 40% mask | Pre-train then fine-tune |
+| Table 5 (transfer) | Pre-train on Electricity, fine-tune others | Same as above with frozen encoder |
+| Table 7 (ablation) | Toggle P / CI / both / neither | Modify model class flags |
+
+---
+
+## 16. Performance tips
+
+1. **Mixed precision**: `torch.cuda.amp.autocast()` for 2× speedup with minimal accuracy loss
+2. **Compile**: `torch.compile(model)` (PyTorch 2.0+) for additional 10-30% speedup
+3. **Larger batch**: bigger M (channels) batch via reshape — channel-indep enables huge effective batch
+4. **Gradient accumulation**: for large M (Traffic 862 channels) on small GPU
+5. **Caching**: dataset windows can be cached as memmap for fast iteration
+
+---
+
+다음 [17_diagrams.md](17_diagrams.md) 에서 ASCII diagrams + viz catalog.
