@@ -134,7 +134,7 @@ paper p.3:
 
 ## 인터랙티브 시각화 — Fig 1 graphical models
 
-```viz:pt-graphical-models:title=Fig 1 — LDS vs ProTran graphical model (interactive),caption=Model 토글 (LDS / ProTran 1-layer / ProTran 3-layer). LDS 는 Markovian (z_t 가 z_{t-1} 만 의존). ProTran 1-layer 는 non-Markovian (z_t 가 z_{1:t-1} 전체 attention). ProTran 3-layer 는 hierarchical stack.
+```viz:pt-graphical-models:title=Fig 1 (a)(b)(c)(d) — LDS vs ProTran graphical model (interactive),caption=Paper Fig 1 의 4 panel 모두 토글. (a) LDS — Markovian z_t depends only on z_{t-1}. (b) ProTran 1-layer — non-Markovian via attention. (c) 3-layer Generation — black arrows top-down emission. (d) 3-layer Inference — red arrows observations → latents (smoothing). Generation 과 Inference 의 분리는 paper Fig 1 caption 의 'separation for readability' 와 일치.
 ```
 
 ## SSM framework 의 일반화 정도
