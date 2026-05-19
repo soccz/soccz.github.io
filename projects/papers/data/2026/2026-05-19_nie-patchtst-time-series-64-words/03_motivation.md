@@ -111,16 +111,24 @@ paper Table 1 running time gain (L=336):
 
 ---
 
-## 3 contributions (paper Section 1 끝)
+## 3 advantages (paper Section 1 의 정리)
 
-paper Section 1:
-> To summarize, our contributions are: (i) we propose a channel-independent patch time series Transformer (PatchTST) that can capture the local semantic information and benefit from longer look-back windows; (ii) we apply our PatchTST for self-supervised representation learning, where we demonstrate that the model can learn abstract representation of the data beyond forecasting; (iii) our model outperforms SOTA Transformer-based models on multivariate time series forecasting and self-supervised representation learning tasks.
+paper p.2 "Our model has several advantages" 를 3 항목으로 정리:
 
-| # | Contribution |
+paper p.2:
+> 1. Reduction on time and space complexity: The original Transformer has $O(N^2)$ complexity on both time and space, where $N$ is the number of input tokens. ... By applying patching, we can reduce $N$ by a factor of the stride: $N \approx L/S$, thus reducing the complexity quadratically.
+
+paper p.2:
+> 2. Capability of learning from longer look-back window: Table 1 shows that by increasing look-back window $L$ from 96 to 336, MSE can be reduced from 0.518 to 0.397. ... Patching is a good answer to it.
+
+paper p.2:
+> 3. Capability of representation learning: With the emergence of powerful self-supervised learning techniques, sophisticated models with multiple non-linear layers of abstraction are required to capture abstract representation of the data.
+
+| # | Advantage (paraphrased) |
 |---|---|
-| 1 | **Method**: channel-indep + patching + longer window |
-| 2 | **Self-supervised**: representation learning capability |
-| 3 | **Empirical**: SOTA on forecasting + representation tasks |
+| 1 | **Complexity**: $O(L^2) \to O((L/S)^2)$ quadratic reduction via patching |
+| 2 | **Longer look-back**: 더 긴 $L$ 가 MSE 감소 (0.518 → 0.397) |
+| 3 | **Representation learning**: Self-supervised pre-training capability |
 
 ---
 
