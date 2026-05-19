@@ -192,7 +192,7 @@ ASCII 도식 + interactive viz 카탈로그.
 | `pt-crps-table1` | 11 | Table 1 의 5 datasets × 12 models CRPS | paper exact values | dataset toggle |
 | `pt-ablation-table2` | 11 | Table 2 의 4 settings ablation on Traffic | paper exact values | (static bar chart) |
 | `pt-motion-table3` | 12 | Table 3 의 11 models × 2 datasets × 2 metrics | paper exact values | dataset + metric toggle |
-| `pt-graphical-models` | 04 | Fig 1 의 LDS / 1-layer / 3-layer 비교 graph | (schematic) | mode toggle |
+| `pt-graphical-models` | 04 | Fig 1 의 (a) LDS / (b) 1-layer / (c) 3-layer Gen / (d) 3-layer Inf 4-panel | (schematic) | 4-mode toggle (gen=black arrows, inf=red arrows) |
 | `pt-attention-flow` | 06 | Eq 5-9 의 generative process step-by-step | (synthetic) | time slider |
 | `pt-hierarchical-stack` | 08 | Multi-layer (L=1, 2, 3) hierarchy 시각화 | (schematic) | L slider |
 
