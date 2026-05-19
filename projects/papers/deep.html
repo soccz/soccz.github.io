@@ -470,6 +470,14 @@
 <script src="viz/autoformer-seasonal-trend.js"></script>
 <script src="viz/autoformer-topk-delays.js"></script>
 <script src="viz/autoformer-lag-histogram.js"></script>
+<script src="viz/qf-qrisk-table1.js"></script>
+<script src="viz/qf-cpaw-table3.js"></script>
+<script src="viz/qf-ablation-table4.js"></script>
+<script src="viz/qf-hyperparam-k.js"></script>
+<script src="viz/qf-drift-divergence.js"></script>
+<script src="viz/qf-gmm-decomp.js"></script>
+<script src="viz/qf-vae-graph.js"></script>
+<script src="viz/qf-quantile-prediction.js"></script>
 
 <script>
   const params = new URLSearchParams(location.search);
@@ -481,6 +489,47 @@
 
   /* Per-paper landing config — extend as more deep dives land */
   const LANDING = {
+    '2026-05-19_shao-quantileformer-vae-decomp': {
+      eyebrow: 'Paper Deep Dive · 시계열 × Probabilistic × VAE',
+      hero: '확률 forecasting 의 새 표준 — Pattern-Mixture Decomposition + VAE + Fusion Transformer.',
+      subtitle: '<span class="accent">Shao, Li, Xia, Lin, Lin, Lu (IJCAI 2025)</span> 의 QuantileFormer 는 ' +
+                '시계열을 (1) Quantile drift (2) Divergence pattern (3) Gaussian mixture 세 컴포넌트로 분해 → ' +
+                'Transformer encoder (drift) + VAE (distribution) + cross-attention fusion 으로 처리 → ' +
+                'joint quantile loss 로 학습. Autoformer 의 trend-seasonal 분해를 quantile-aware + distribution-aware 로 일반화. ' +
+                '6 dataset 평균 q-risk 0.5/0.7/0.9 에서 24%/27%/22% 감소.',
+      stats: [
+        { num: '20', label: '챕터' },
+        { num: '4',  label: 'Figure 발췌' },
+        { num: '24%', label: 'q=0.5 평균 감소' },
+        { num: 'IJCAI 2025', label: '발표처' }
+      ],
+      what: {
+        title: '"Probabilistic forecasting × Decomposition × VAE 의 3-way 결합"',
+        body: '본 논문은 단순한 새 모델이 아닌 **확률적 시계열 예측 분야의 새 방법론**. ' +
+              '시계열의 quantile-aware 분해 (Eq 4) 와 Gaussian Mixture 의 VAE 기반 inference (Eq 8-15) 를 결합. ' +
+              'Fusion Transformer (Eq 16-17) 가 drift path 와 divergence path 를 cross-attention 으로 결합. ' +
+              '새 metric cpaw (Eq 21) 도입 — 단순 quantile 정확도가 아닌 prediction interval 의 tightness 도 평가. ' +
+              '본 deep dive 는 20 챕터로 Eq 1-21, Tables 1-4, Figs 1-4 모두 정확히 해체.',
+        verdict: 'Autoformer (2021) 가 deterministic forecasting 에 분해를 가져왔다면, ' +
+                 'QuantileFormer (2025) 는 probabilistic forecasting 에 분해를 가져왔다. ' +
+                 '두 paper 의 정신적 후속 — 시계열 분해 의 application scope 가 단순 point prediction 에서 distribution prediction 으로 확장.'
+      },
+      tour: [
+        { num: '01–05', ttl: '문제와 동기',     desc: '7개 개념 (quantile regression / GMM / VAE / KL+ELBO / Transformer / cross-attention / IBP) + Eq 1-3 의 quantile regression 정의.',                                  link: 'read.html?slug=' + encodeURIComponent('2026-05-19_shao-quantileformer-vae-decomp') + '#sec-03',  text: '도전 보기 →' },
+        { num: '06–10', ttl: '방법론 5부작',     desc: 'Pattern-Mixture Decomposition (Eq 4-7) + VAE Inference (Eq 8-15) + Drift Encoder + Fusion Transformer (Eq 16-18) + Joint Quantile Loss (Eq 19).',          link: 'read.html?slug=' + encodeURIComponent('2026-05-19_shao-quantileformer-vae-decomp') + '#sec-06',  text: '방법론 해부 →' },
+        { num: '11–14', ttl: '실증 4부작',       desc: '6 datasets · 8 baselines · 2 metrics (q-risk + cpaw 의 새 metric) · Tables 1-4 정확 인용 · Fig 3 k tuning + Fig 4 visualization.',                       link: 'read.html?slug=' + encodeURIComponent('2026-05-19_shao-quantileformer-vae-decomp') + '#sec-12',  text: '결과 보기 →' },
+        { num: '15',    ttl: '결론 + ML 원칙',    desc: 'Autoformer → QuantileFormer 의 4년 진화. 3 ML design principles. 한계 (ETT 약점) 명시.',                                                                  link: 'read.html?slug=' + encodeURIComponent('2026-05-19_shao-quantileformer-vae-decomp') + '#sec-15',  text: '결론 읽기 →' },
+        { num: '17',    ttl: '15 메타 통찰',      desc: 'Quantile drift 의 진정한 의미 / VAE+GMM stack 의 이유 / cpaw 의 우아함 / Finance/Risk transfer / 후속 가능성.',                                          link: 'read.html?slug=' + encodeURIComponent('2026-05-19_shao-quantileformer-vae-decomp') + '#sec-17',  text: '통찰 읽기 →' },
+        { num: '18',    ttl: 'PyTorch 구현',     desc: 'Drift-Divergence Decomp + GMM + VAE + Encoder + Fusion + Joint Quantile Loss — 단일 파일 reference.',                                                   link: 'read.html?slug=' + encodeURIComponent('2026-05-19_shao-quantileformer-vae-decomp') + '#sec-18',  text: '코드 보기 →' }
+      ],
+      preview: {
+        title: '맛보기 — Table 1 q-risk (6 datasets × 5 quantiles × 9 models)',
+        subtitle: 'paper Table 1 의 정확한 q-risk 수치. QuantileFormer 가 30 cells 중 약 18-20개에서 best. ' +
+                  '평균 개선율 — 0.5q 24% / 0.7q 27% / 0.9q 22%. ' +
+                  'Wind 0.9 에서 0.3369 (vs 2위 PatchTST 0.3667). ETTm1 0.5 에서 0.1536 (vs 2위 TFT 0.4930).',
+        vizType: 'qf-qrisk-table1'
+      }
+    },
     '2026-05-18_wu-xu-wang-long-autoformer': {
       eyebrow: 'Paper Deep Dive · 시계열 × Transformer',
       hero: 'Self-attention 을 FFT 기반 Auto-Correlation 으로. 분해는 inner block 으로.',
