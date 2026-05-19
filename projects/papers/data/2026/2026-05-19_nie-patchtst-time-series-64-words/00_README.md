@@ -34,7 +34,7 @@
 
 ---
 
-## Chapter 가이드 (19개)
+## Chapter 가이드 (20개)
 
 | 챕터 | 내용 |
 |------|------|
@@ -56,6 +56,7 @@
 | [16_code.md](16_code.md) | PyTorch 구현 — Patching 함수, Channel-indep loop, Loss, Training step |
 | [17_diagrams.md](17_diagrams.md) | ASCII diagrams + viz catalog |
 | [18_appendix.md](18_appendix.md) | Appendix A.1–A.7 — 모델 hyperparameter, robustness, channel-indep 분석 (Figs 5-7, Tables 8-15) |
+| [19_related_work.md](19_related_work.md) | Paper Section 2 — Patch in Transformer / TS Transformer baseline 5종 / TS representation learning 두 학파 |
 
 ---
 
