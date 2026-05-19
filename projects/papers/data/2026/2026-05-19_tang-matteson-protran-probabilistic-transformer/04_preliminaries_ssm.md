@@ -32,6 +32,9 @@ paper:
 
 ## SSM Framework (Eq 1)
 
+paper p.2 (Section 2.1):
+> We are interested in probabilistic models parametrized by $\theta$ of the form
+
 paper Eq 1:
 $$
 p_\theta(x_{1:T} | x_{1:C}) = \int p_\theta(x_{1:T} | z_{1:T}) p_\theta(z_{1:T} | x_{1:C}) dz_{1:T}
