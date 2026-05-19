@@ -55,10 +55,10 @@
       const { ctx, w, h } = U.setupCanvas(canvas);
       ctx.clearRect(0, 0, w, h);
 
-      const padL = 40, padR = 40, padT = 50;
+      const padL = 40, padR = 40, padT = 30;
       const innerW = w - padL - padR;
       const patchW = innerW / N - 4;
-      const patchH = 50;
+      const patchH = 32;
 
       const maskedSet = getMaskedIndices(N, maskRatio);
       const nMasked = maskedSet.size;
@@ -67,10 +67,10 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText(`Masked Self-supervised Reconstruction · ${nMasked} of ${N} patches masked`, w/2, 10);
+      ctx.fillText(`Masked Self-supervised Reconstruction · ${nMasked} of ${N} patches masked`, w/2, 8);
 
       // Row 1: Original patches
-      const row1Y = padT + 20;
+      const row1Y = padT + 16;
       ctx.fillStyle = U.textMuted();
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
@@ -90,7 +90,7 @@
       }
 
       // Row 2: Masked
-      const row2Y = row1Y + patchH + 50;
+      const row2Y = row1Y + patchH + 32;
       ctx.fillStyle = U.textMuted();
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       ctx.fillText(`2. Random mask (${(maskRatio*100).toFixed(0)}% set to zero):`, padL, row2Y - 18);
@@ -118,16 +118,16 @@
       }
 
       // Arrow + Transformer label
-      const tfY = row2Y + patchH + 18;
+      const tfY = row2Y + patchH + 12;
       ctx.fillStyle = '#a78bfa';
-      ctx.fillRect(padL, tfY, innerW, 24);
+      ctx.fillRect(padL, tfY, innerW, 20);
       ctx.fillStyle = '#fff';
-      ctx.font = '600 13px ' + U.cssVar('--font-display', 'Inter, sans-serif');
+      ctx.font = '600 12px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('Transformer Encoder (vanilla, same as supervised)', w/2, tfY + 12);
+      ctx.fillText('Transformer Encoder (vanilla, same as supervised)', w/2, tfY + 10);
 
       // Row 3: Reconstructed
-      const row3Y = tfY + 24 + 18;
+      const row3Y = tfY + 20 + 28;
       ctx.fillStyle = U.textMuted();
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';

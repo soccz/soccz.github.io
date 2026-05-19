@@ -85,20 +85,35 @@
         ctx.restore();
       });
 
-      // Show 33% improvement annotation
+      // Show 33% improvement annotation — place ABOVE the first bar value label, BELOW the title
+      // Title is at y = padT - 24, so place line at padT + 6 to avoid overlap
       ctx.strokeStyle = '#ef4444';
       ctx.setLineDash([4, 3]);
       ctx.lineWidth = 1.5;
       const x1 = padL + groupW * 0.5, x5 = padL + groupW * 4.5;
+      const annY = padT + 4;
       ctx.beginPath();
-      ctx.moveTo(x1, yToPix(0.518) - 30);
-      ctx.lineTo(x5, yToPix(0.518) - 30);
+      ctx.moveTo(x1, annY);
+      ctx.lineTo(x5, annY);
+      ctx.stroke();
+      // Vertical drop ticks at start and end
+      ctx.beginPath();
+      ctx.moveTo(x1, annY); ctx.lineTo(x1, annY + 8);
+      ctx.moveTo(x5, annY); ctx.lineTo(x5, annY + 8);
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = '#ef4444';
       ctx.font = '600 11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
-      ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-      ctx.fillText('0.518 → 0.349 = 33% reduction', (x1+x5)/2, yToPix(0.518) - 35);
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      // White background for text to not blend with grid
+      const txt = '0.518 → 0.349 = 33% reduction';
+      const tw = ctx.measureText(txt).width;
+      ctx.fillStyle = U.cssVar('--surface', '#f3f4f6');
+      ctx.globalAlpha = 0.85;
+      ctx.fillRect((x1+x5)/2 - tw/2 - 4, annY - 5, tw + 8, 16);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = '#ef4444';
+      ctx.fillText(txt, (x1+x5)/2, annY - 4);
 
       ctx.strokeStyle = U.cssVar('--text-muted', '#6b7280');
       ctx.lineWidth = 1.2;
