@@ -1,335 +1,293 @@
-# 03. Introduction 풀이 — 왜 이런 연구가 필요한가
+# 03. 왜 이 연구가 필요했나 — 60년 학계 역사 (영어/수식 없이)
 
-> Section I (p.459 본문 시작) 의 7개 단락을 한 문단씩 풀이.
+> 무지식자가 이 논문의 *맥락* 을 이해할 수 있게, 1960년대부터 2024년까지의 학계 흐름을 친근하게.
 
 ---
 
 ## 3.1 챕터 한 줄 요약
 
-**Goyal-Welch (2008) 가 "수익률 예측은 사실상 불가능" 이라고 결론낸 후 15년간 학계는 비관 — 그러나 진실은 정반대로 "복잡 모델 + ridge 만 더하면 SR 단조 증가". 본 논문은 이 'virtue of complexity' 를 RMT 로 증명하고 RFF kernel 로 실증한다.**
+> **"60년 학계는 *시장 예측 불가능* 이라 결론냈지만, 머신러닝 시대에 새 진실 발견 — *적절한 방법론* 만 쓰면 같은 데이터로 정반대 결론. 본 논문이 그 진실의 *수학적 증명*."**
 
 ---
 
-## 3.2 첫 단락 — 분야의 최근 흐름
+## 3.2 1960-1980년대 — 시장 예측 시도의 시작
 
-> **원문 (p.459)**: "The finance literature has recently seen rapid advances in return prediction methods borrowing from the machine learning canon. The primary economic-use case of these predictions has been portfolio construction. While a number of papers document significant empirical gains in portfolio performance through the use of machine learning, there is little theoretical understanding of return forecasts and portfolios formed from heavily parameterized models."
+학자들이 처음 던진 질문:
 
-**풀어 설명**:
-- *Finance literature × ML canon* — 머신러닝 기법이 finance 에 빠르게 침투. 핵심 응용은 **portfolio construction (자산운용)**.
-- *Empirical gains* — Gu-Kelly-Xiu (2020 RFS), Chen-Pelger-Zhu (2023 MS), Freyberger-Neuhierl-Weber (2020), Kozak-Nagel-Santosh (2020) 등이 deep learning / ridge / LASSO 로 cross-section / time-series 모두 large improvement 보고.
-- *Little theoretical understanding* — 실증 효과는 명백하지만, **왜 heavily parameterized 모델이 작동하는지** 의 이론적 분석이 부족.
-- → **본 논문이 메우는 공백**: machine learning portfolio 의 **이론적 분석**.
+> "주식 시장이 다음 달 오를지 내릴지, *지금 보이는 정보* 로 예측할 수 있을까?"
 
-연결되는 이전 deep dive:
-- [Gu-Kelly-Xiu 2020 (Autoencoder Asset Pricing)](../2026-05-17_gu-kelly-xiu-autoencoder/) — conditional autoencoder
-- [Chen-Pelger-Zhu 2023 (DLAP)](../2026-05-18_chen-pelger-zhu-deep-learning-ap/) — GAN no-arbitrage
-- [Lettau-Pelger 2020 (RP-PCA)](../2026-05-17_lettau-pelger-rppca/) — RP-PCA 약한 요인 검출
+**보이는 정보 (예측 변수)**:
+- 배당률 (dividend-price ratio): 현재 주가 대비 배당이 얼마나 큰가
+- 이자율 (interest rate): 안전 자산 수익률
+- 인플레이션
+- 경기 지표
 
-이 세 편 모두 실증 효과를 보였지만, "왜 ML 이 그렇게 잘 되는지" 의 이론적 정당화는 없었다. 본 논문이 그 이론을 제공.
+**상식적 직관**: "*배당률이 높으면* (주가가 상대적으로 낮으면) *내년 시장이 오를 것* 같다."
 
----
-
-## 3.3 둘째 단락 — Thought Experiment (사고 실험)
-
-> **원문 (p.460)**: "We provide a theoretical analysis of such 'machine learning portfolios.' Our analysis can be summarized by the following thought experiment. Imagine there is a true predictive model of the form
->
-> R_{t+1} = f(G_t) + ε_{t+1}, (1)
->
-> where R is an asset return, G is a fixed set of predictive signals, and f is a smooth function. The predictors G may be known to the analyst, but the prediction function f is unknown. Rather than futile guess the functional form, the analyst relies on the universal approximation rationale (see, for example, Hornik, Stinchcombe, and White (1990)), that f can be approximated with a sufficiently wide neural network,
->
-> f(G_t) ≈ Σᵢ₌₁ᴾ S_{i,t} β_i,
->
-> where S_{i,t} = f̃(w_i' G_t) is a known nonlinear activation function with known weights w_i and P is sufficiently large."
-
-### Equation (1): True predictive model
-
-**기호 뜻**:
-- $R_{t+1}$ — 자산 (특히 시장 지수) 의 시점 $t+1$ 초과수익 (스칼라, 월간)
-- $G_t$ — 시점 $t$ 까지의 **predictive signals** (J-dimensional vector, 본 논문 J=15)
-- $f$ — *unknown* smooth function $\mathbb{R}^J \to \mathbb{R}$ (true conditional expectation $\mathbb{E}[R_{t+1} | G_t]$ 모양)
-- $\varepsilon_{t+1}$ — 잡음 (iid, $\mathbb{E}[\varepsilon]=0$, $\mathbb{E}[\varepsilon^2]=\sigma^2$)
-
-**일상 비유**:
-시장 수익률을 예측하는 진짜 함수 $f$ 가 존재한다고 가정하자 — 마치 자연법칙처럼. 학자는 그 함수의 **input** ($G_t$, 예: dividend-price ratio, term spread, default spread) 는 알지만, **함수 모양** ($f$ 의 형태) 은 모른다.
-
-**왜 이 형태**:
-- 자산가격결정의 **conditional expectation 패러다임** — Cochrane (2011) presidential address.
-- Smooth function 가정 — 일상 macro/finance 변수가 step 함수 같지 않다는 약한 가정.
-- 가산성 가정 ($+ \varepsilon$) — predictable + unpredictable 분리.
-
-**조심할 점**:
-- $f$ 가 **시간 변화** 하면 (regime change) 본 분석 무너짐. 본 논문은 stationary assumption.
-- $G_t$ 의 차원 J 가 finite 면 학습 가능; infinite 이면 nonparametric 문제.
-
-### Universal Approximation 식 (NN 등가)
-
-**핵심**:
-$$f(G_t) \approx \sum_{i=1}^{P} S_{i,t} \beta_i, \quad S_{i,t} = \tilde{f}(w_i' G_t)$$
-
-**기호 뜻**:
-- $P$ — **features 수 (모델 복잡도)**. 본 논문의 핵심 변수
-- $S_{i,t}$ — $i$번째 nonlinear feature (스칼라). $G_t$ 의 linear combination 을 nonlinear activation $\tilde{f}$ (예: tanh, sigmoid, ReLU) 에 통과
-- $w_i$ — 고정된 (학습 안 됨) random weights ($\mathbb{R}^J$ vector)
-- $\beta_i$ — 학습 대상 coefficient (선형)
-- $\tilde{f}$ — known activation function (본 논문 실증: $\sin$, $\cos$ — Random Fourier Features)
-
-**일상 비유**:
-$G_t$ (예: 15차원 macro vector) 를 **무작위로 P 개 방향** ($w_i$) 으로 사영하고 각 사영에 sigmoid 같은 비선형 함수를 씌운 **인공 변수 $S_{i,t}$** 를 만든다. 이 $S_{i,t}$ 들을 **선형 회귀** 의 regressor 로 쓴다.
-
-→ 이게 사실 **wide neural network 의 한 hidden layer 와 등가**. 첫 layer 의 weights ($w_i$) 가 고정 random 이고 마지막 layer 의 weights ($\beta_i$) 만 학습한다는 점이 표준 NN 과 다를 뿐. 그러나 Hornik-Stinchcombe-White (1990) 의 universal approximation 이 이 random weight version 에도 성립함 — Rahimi & Recht (2007, 2008).
-
-**왜 이 형태**:
-- ReLU/tanh 같은 nonlinear activation 이 있으니 P 키우면 어떤 smooth $f$ 도 임의 정확도로 근사 가능 (universal approximation).
-- 가중치 fixed random + linear final layer 라서 분석 가능 (linear ridge regression 의 RMT 활용).
-- 실제 NN 의 학습된 weights 는 random init 으로부터 약간만 움직임 (NTK 이론) — random fixed weights 가 deep NN 의 lazy regime 과 등가.
-
-**조심할 점**:
-- $\tilde{f}$ 가 polynomial 같이 한정된 차수 면 universal X — sigmoid/ReLU/tanh 같은 squashing function 또는 무한급수 표현 가능 함수 필요.
-- P → ∞ 일 때 sum 이 RKHS norm 같은 적분 형태로 수렴 (kernel regression).
-- $w_i$ 의 분포 가정 — iid Gaussian (RFF) / iid uniform (특정 activation) 등. 본 논문은 $w_i \sim N(0, I)$.
-
-### Equation (2): Approximation model
-
-$$R_{t+1} = \sum_{i=1}^P S_{i,t} \beta_i + \tilde\varepsilon_{t+1}$$
-
-여기서 $\tilde\varepsilon = \varepsilon + (f(G_t) - \sum S_i \beta_i)$ — 본래 잡음 + approximation error.
-
-→ 이게 **본 논문의 분석 대상** 모델. linear regression of $R_{t+1}$ on $S_t = (S_{1,t}, \ldots, S_{P,t})'$.
-
-각주 1: "Assuming known weights $w_i$ is innocuous, as the universal approximation result applies even if weights are randomly generated Rahimi and Recht (2007). Our empirical analysis uses the random Fourier feature (RFF) method of Rahimi and Recht (2007) to generate features as in (2)."
-
-→ 핵심: weights 가 random fixed 라는 가정이 약점 아님. NN 학습이 어차피 weights 의 작은 perturbation 이라는 NTK 결과로 정당화됨.
+**1980년대 발견**: 통계적으로 *어느 정도 맞아 보이는* 결과들 등장. 학계의 hope.
 
 ---
 
-## 3.4 셋째 단락 — 핵심 연구질문
+## 3.3 1990-2000년대 — 표준 *간단한* 모델
 
-> **원문 (p.460)**: "The training sample for this regression has a fixed number of data points, T, and the analyst must decide on the 'complexity,' or the number of features P, to use in their approximating model. A simple model, one with P ≪ T, will have low variance thanks to parsimonious parameterization but will be a coarse approximator of f, while a high-complexity model (P > T) has better approximation potential but may be poorly behaved and will require shrinkage/bias. Our central research question therefore is, which level of model complexity (i.e., which P) should the analyst opt for? Does the approximation improvement from large P justify the statistical costs (higher variance and/or higher bias)?"
+학자들이 합의한 *표준 도구*: **선형 회귀** (단순한 통계 방법).
 
-**풀어 설명** — 본 논문의 **central research question**:
+**일상 비유**: "수익률 = a × 배당률 + b × 이자율 + ... + 잡음" 같은 단순한 *덧셈 모델*. 변수 5-15 개.
 
-| 옵션 | 특성 | 장점 | 단점 |
-|------|------|------|------|
-| **Simple** (P ≪ T) | Parsimonious | Low variance | Coarse approximation (bias 큼) |
-| **Complex** (P > T) | Heavy parameterization | Better approximation (bias 작음) | Poorly behaved, shrinkage 필요 |
+이런 모델을 **simple model (간단한 모델)** 이라 부름. *Occam's razor (오컴의 면도날)* — 통계학자 George Box (1976) 의 영향 — "*모델은 단순할수록 좋다*" 의 철학.
 
-→ trade-off 의 균형점은? **이게 본 논문의 핵심 질문**.
-
-전통적 답: parsimony 우선 → Goyal-Welch 의 simple model.
-본 논문 답: complexity 우선 → "Use the largest model you can compute."
+**그러나 결과**: 학자들 사이에서 *반신반의*. 일부 데이터에선 잘 되고, 다른 데이터에선 안 되고.
 
 ---
 
-## 3.5 넷째 단락 — Answer (핵심 주장)
+## 3.4 2008년 — 학계 거의 무너짐 (Goyal-Welch shock)
 
-> **원문 (p.460)**: "Answer: We prove that expected out-of-sample forecast accuracy and portfolio performance are *strictly increasing* in model complexity when appropriate shrinkage is applied (indeed, we derive the optimal degree of shrinkage to maximize expected out-of-sample model performance). The analyst should always use the largest approximating model that she can compute. In other words, when the true data-generating process (DGP) is unknown, the approximation gains achieved through model complexity dominate the statistical costs of heavy parameterization. The interpretation is not necessarily that asset returns are subject to a large number of fundamental driving forces. Rather, even when the driving variables (G_t) have low dimension, complex models better leverage the information content of G_t by more accurately approximating the unknown and likely nonlinear prediction function."
+두 학자 (Amit Goyal, Ivo Welch) 가 *Review of Financial Studies* 에 충격의 논문 발표:
 
-**핵심 한 줄**: "**Use the largest model you can compute.**"
+> **"우리가 다 해봤다. 안 된다."**
 
-**왜 그게 가능한가**:
-- 적절한 ridge shrinkage 와 함께 — OOS forecast accuracy 와 portfolio performance 모두 **strictly increasing in P**.
-- 직관: $G_t$ (15 차원) 의 정보를 충분히 활용하려면 nonlinear function $f$ 의 풍부한 expression 이 필요. P 가 작으면 그 표현이 거칠어서 (coarse) **approximation bias** 가 큼. P 키우면 그 bias 가 줄어드는 효과가 P 큰 모델의 variance 증가 비용보다 큼.
+### Goyal-Welch (2008) 가 한 것
 
-**오해 방지** (각주 + 본문):
-- "*Interpretation is not necessarily that asset returns are subject to a large number of fundamental driving forces.*"
-- 즉 **fundamental driver 수가 많다는 뜻 아님**. driver 는 적을 수 있음 (15개 macro 변수). 단지 그 driver 들의 nonlinear interaction 이 풍부할 뿐.
+15 개의 *대표적 macro 변수* (배당률, 이자율, 인플레, ...) 로:
+1. 1926-2005 의 *80년 데이터* 사용.
+2. 다양한 모델 (단변량, 다변량, kitchen sink) 시도.
+3. 모두 *Out-of-sample* (실전 모의) 평가.
 
----
+### 결과 (충격)
 
-## 3.6 다섯째 단락 — 단순화 가정
+> **"가장 단순한 *과거 평균* 으로 예측하는 것 (즉 *no prediction*) 이 어떤 정교한 모델보다도 *낫다*."**
 
-> **원문 (p.461)**: "To provide intuitive characterizations of forecast and portfolio behavior in complex models, our theoretical environment has two simplifying aspects. First, the machine learning models we study are restricted to high-dimensional linear models. As suggested by equation (2), this sacrifices little generality as a number of recent papers establish an equivalence between high-dimensional linear models and more sophisticated models such as deep neural networks (Jacot, Gabriel, and Hongler (2018), Allen-Zhu, Li, and Song (2019), Hastie et al. (2022)). In fact, equation (2) is a neural network with one hidden layer with P neurons and fixed input weights. Second, we focus on a single risky asset. Prediction is therefore isolated to the time-series dimension, and the portfolio optimization problem reduces to market timing."
+**예측 정확도 (OOS R²)**: 대부분 *음수*. 즉 모델이 *과거 평균보다 더 나쁨*.
 
-**두 단순화**:
+### 학계 반응
 
-1. **High-dimensional linear model** — 마지막 layer 만 학습. Deep NN 와 equivalence 는 Neural Tangent Kernel (NTK, Jacot-Gabriel-Hongler 2018) 으로 보장. 즉 "NN 라는 부르지만 사실 linear regression on high-dim features".
-2. **Single asset (market index)** — cross-section 무시. 시간 차원만 — **market timing problem**. 본 분석을 single asset 으로 한정해도 결론 의의는 일반.
+이 논문이 *완전 게임체인저*. 약 10년간 학계 분위기:
+- "*시장 수익률 예측은 사실상 불가능* — 받아들이자"
+- "*Bayesian 평균 / 모델 평균* 같은 더 정교한 통계만 약간 효과"
+- "*머신러닝 도 안 될 거*"
 
-각주 2: "The single-asset time-series case is economically important in its own right. It coincides with predictive regression for the market return, which has been the primary method for investigating a central organizing question of asset pricing: How much do discount rates vary over time? While our analysis can be applied to a panel of many assets, the roles of covariances in asset returns and signals across stocks complicate the theory."
+### 본 논문 (2024) 의 도전
 
-→ 시장 timing 자체가 finance 의 핵심 질문 (할인율 변화). cross-section panel 로 확장은 가능하지만 covariance complication 발생.
+본 논문이 정확히 이 *Goyal-Welch (2008) 의 결론* 을 **정면 반박**. 같은 데이터 + 같은 변수로 *정반대* 결론.
 
----
-
-## 3.7 여섯째 단락 — OLS 의 결함 (Baseline)
-
-> **원문 (p.461)**: "To provide a baseline for our findings, consider the well-known deficiency of ordinary least squares (OLS) prediction in high dimensions. As the number of regressors, P, approaches the number of data points, T, the expected out-of-sample R² tends to negative infinity. An immediate implication is that a portfolio strategy attempting to use OLS return forecasts in such a setting will have divergent variance. In turn, its expected out-of-sample Sharpe ratio collapses to zero. The intuition behind this is simple: When the number of regressors is similar to the number of data points, the regressor covariance matrix is unstable and its inversion induces wild variation in coefficient estimates and forecasts. This is commonly interpreted as overfitting: With P = T, the regression exactly fits the training data and performs poorly out-of-sample."
-
-**핵심**: P → T- 에서 OLS 의 OOS 가 **모두 망함**:
-- $R^2_{\text{OOS}} \to -\infty$
-- Portfolio strategy variance divergent → SR → 0
-- 이유: $(X'X)^{-1}$ 가 singular 에 가까워짐 — 작은 데이터 변동이 coefficient 의 거대 변동 야기.
-
-이게 통념의 출발점. P=T 가 "interpolation boundary" — 학습 데이터에 정확히 fit 하지만 OOS 망함.
-
-각주 3 (각주가 깊이 추가): "*The statistics and machine learning community often refer to P > T as the 'high-dimensional' or 'overparameterized' regime. We avoid terminology like 'overparameterized' and 'overfit' as it suggests the model uses too many parameters, which is not necessarily the case. For example, the true DGP may be highly complex (i.e., P is large relative to T) and thus a correctly specified model would require P > T. When an empirical model has the same specification as the true model, we prefer to call it correctly parameterized as opposed to overparameterized.*"
-
-→ **terminology 주의**: P > T 를 "overparameterized" 라고 부르는 통념이 잘못. 본 논문은 "high-complexity" 또는 "correctly parameterized" (true DGP 가 그렇게 복잡한 경우) 라는 용어 사용.
+→ **왜?** 답: *방법론* 이 잘못이었다. *R² 가 잘못된 metric* 이었고, *간단한 모델 + ridgeless* 가 가장 *나쁜 조합* 이었다. 본 논문 [Table I (07 챕터)](07_empirical.md) 에서 정량.
 
 ---
 
-## 3.8 일곱째 단락 — Ridgeless 의 마법
+## 3.5 2010년대 — 머신러닝 등장
 
-> **원문 (p.461)**: "We are particularly interested in the behavior of portfolios in the *high model complexity* regime, where the number of predictors exceeds the number of observations (P > T). In this case, standard regression logic no longer holds because the regressor inverse covariance matrix is not defined. However, the pseudo-inverse is defined and it corresponds to a limiting ridge regression with infinitesimal shrinkage, or the 'ridgeless' limit. An emerging statistics and machine learning literature shows that, in the high-complexity regime, ridge-less regression can achieve accurate out-of-sample forecasts despite fitting the training data perfectly."
+같은 시기, 컴퓨터 과학 분야에서 머신러닝 (특히 neural network) 이 *모든 곳에서 잘 됨*:
+- 이미지 인식 (ImageNet 2012)
+- 자연어 처리 (GPT 2018+)
+- 알파고 (Go 게임 2016)
 
-**핵심**: P > T 에서 OLS 는 정의 불가지만 **Moore-Penrose pseudo-inverse** 가 정의됨. 이게 **z → 0+ 의 ridge regression** 과 같음 → "ridgeless regression".
+**일부 자산가격 학자들**: "혹시 우리 분야에서도?"
 
-놀랍게도 ridgeless 가 OOS 예측을 정확하게 한다 — **despite fitting training data perfectly (zero training error)**.
+### 2018-2023 머신러닝 wave
 
-각주 4: "*This seemingly counterintuitive phenomenon is sometimes called 'benign overfit' (Bartlett et al. (2020), Tsigler and Bartlett (2023)).*"
+자산가격 분야에 *empirical (실증) 결과* 들이 쏟아짐:
+- **Gu, Kelly, Xiu (2020)**: 머신러닝으로 cross-section 자산 예측 → 잘 됨. [Deep dive ✓](../2026-05-17_gu-kelly-xiu-autoencoder/)
+- **Chen, Pelger, Zhu (2023)**: GAN (no-arbitrage 제약) 으로 더 잘. [Deep dive ✓](../2026-05-18_chen-pelger-zhu-deep-learning-ap/)
+- **Freyberger, Neuhierl, Weber (2020)**: nonparametric characteristic.
+- **Kozak, Nagel, Santosh (2020)**: ridge regression on anomaly portfolios.
+- **Lettau, Pelger (2020) RP-PCA**: weak factor 검출. [Deep dive ✓](../2026-05-17_lettau-pelger-rppca/)
+- **Dong, Li, Rapach, Zhou (2022)**: 100 anomaly portfolios → 시장 예측.
 
-→ **benign overfit (자비로운 과적합)** — 통계학·머신러닝의 최근 (2019+) 발견. P > T 에서 zero training error 임에도 OOS 정확.
+### 학계의 미스터리
 
-본 논문은 이 benign overfit 이 **return prediction + market timing** 에서도 작동함을 finance 응용으로 가져옴.
+> "머신러닝 (변수 수천 개) 이 *왜 잘 되는지* 모름."
 
----
+상식: "*변수 > 데이터 면 과적합 → 망한다*" 인데 *실제로는* 잘 됨. 학자들 *empirically 잘 됨을 보임*, but *왜* 는 답 없음.
 
-## 3.9 여덟째 단락 — 추가 결론들 (3가지)
-
-> **원문 (p.462)**: "We analyze related phenomena in the context of return prediction and portfolio optimization. We establish the striking theoretical result that market timing strategies based on ridgeless least-squares predictions generate positive Sharpe ratio improvements for arbitrarily high levels of model complexity. Stated more plainly, when the true DGP is highly complex (i.e., has many more parameters than there are training data observations), one might think that a timing strategy based on ridgeless regression is bound to fail. After all, it *exactly* fits the training data with zero error. Surprisingly, this intuition is wrong. We prove that strategies based on extremely high-dimensional models can thrive out-of-sample and outperform strategies based on simpler models under fairly general conditions."
-
-**첫 번째 결과**: Ridgeless ML timing 의 OOS Sharpe ratio 가 **임의로 큰 P 에서도 양수**.
-
-> **원문 (p.462)**: "Our theoretical analysis delivers a number of additional conclusions. First, it shows that the out-of-sample R² from a prediction model is an incomplete measure of its economic value. A market timer can generate significant economic profits even when the predictive R² is negative."
-
-**둘째 결과**: **OOS R² 는 economic value 의 incomplete measure**. 음의 R² 임에도 timing 이 양의 profit. 이유: R² 는 forecast variance 에 heavy하게 영향 받음 — 매우 변동성 큰 timing 전략이 양의 expected return 갖더라도 R² 가 음수일 수 있음.
-
-각주 5: "*That is, R² is not just about predictive correlation. Consider a simple model with a single predictor and a coefficient estimate many times larger than the true value. This scale error will tend to drive the R² negative, but it will not affect the correlation between the model fits and the true conditional expectation. The R² is negative only because the variance of the fits is off. Related, Rapach, Strauss, and Zhou (2010) show that mean square forecast error (MSE) decomposes into a scale-free (correlation) component and a scale-dependent component. It is the scale-free component that is important for trading strategy performance.*"
-
-→ R² 음수가 곧 "예측 무능" 이 아니라 "scale error" 일 수 있음. correlation 만 잘 잡으면 timing 은 됨.
-
-> **원문 (p.462)**: "Second, we study two theoretical cases, one for correctly specified models and one for misspecified models. The correctly specified case develops the behavior of timing portfolios when the true DGP varies from simple to complex, holding the data size fixed. This is valuable for developing a general understanding of machine learning portfolios for various DGPs. But the correct model specification is unrealistic — it is unlikely that we ever have a predictor data set that nests all relevant conditioning information, and it is also unlikely that we use information in the proper functional form. Our main theoretical results pertain to misspecified models, and this analysis coincides with the thought experiment above."
-
-**셋째 결과**: Correctly specified (Section III) vs **Misspecified** (Section IV). 후자가 더 현실적 — predictor 가 true DGP 의 일부만 capture. 본 논문의 **main result** 가 misspecified case (Theorem 1).
-
-> **원문 (p.463)**: "Third, while the results discussed so far refer primarily to the case of ridgeless regression, we show that machine learning portfolios tend to incrementally benefit from moving away from the ridgeless limit by introducing nontrivial shrinkage. The bias induced by heavier ridge shrinkage lowers the expected returns to market timing, but the associated variance reduction reins in the volatility of the strategy. The Sharpe ratio tends to benefit from higher shrinkage because the variance reduction overwhelms the deterioration in expected timing returns. This is especially true when P ≈ T, where the behavior of ridgeless regression is most vulnerable."
-
-**넷째 결과**: Ridgeless 보다 **nontrivial ridge (z > 0)** 가 더 좋다. Bias 가 변동성을 더 크게 줄여 SR 향상. 특히 P ≈ T 부근 (variance explosion 영역) 에서 효과 큼.
+이 미스터리 위에 본 논문이 등장 (2024).
 
 ---
 
-## 3.10 아홉째 단락 — 분석 도구 + 실증 예고
+## 3.6 본 논문의 핵심 발견 — 미스터리의 답
 
-> **원문 (p.463)**: "From a technical standpoint, we characterize the behavior of portfolios in the high-complexity regime using asymptotic analysis, as the model's size grows with the number of observations at a fixed rate (T → ∞ and P/T → c > 0). When P → ∞, the regular asymptotic results, such as laws of large numbers and central limit theorems, do not hold. Such analysis requires the apparatus of random matrix theory, on which we draw heavily to derive our results. Conceptually, this delivers an approximation of how a machine learning model behaves as we gradually increase the number of parameters holding the amount of data fixed."
+> **"적절한 안정장치 (ridge shrinkage) 만 더하면, 모델이 *복잡할수록* (변수 많을수록) *예측 성능 단조 증가*. 통상 직관과 정반대."**
 
-**분석 framework**: **High-complexity asymptotics** — T → ∞, P/T → c > 0 의 limit (regular asymptotic 안 통함). **Random Matrix Theory (RMT)** 가 도구.
+**증명 도구**: Random Matrix Theory (RMT) + Marchenko-Pastur 정리. 60년 된 *순수 수학 분야* 의 결과를 *자산가격* 에 처음 적용.
 
-> **원문 (p.463)**: "We conduct an extensive empirical analysis that demonstrates the virtues of model complexity in a canonical asset pricing problem: predicting the aggregate U.S. equity market return. In particular, we study market timing strategies based on predictions from very simple models with a single parameter to extremely complex models with over 10,000 parameters (applied to training samples as few as 12 monthly observations). The data inputs to our models are 15 standard predictor variables from the finance literature compiled by Goyal and Welch (2008). To map our data analysis to the theory, we require a method that smoothly transitions from low- to high-complexity models while holding the underlying information set fixed. The random feature method of Rahimi and Recht (2007) is ideal for this. We use it to construct expanding neural network architectures that take the Goyal and Welch (2008) predictors as inputs and maintain the core ridge regression structure of our theory."
-
-**실증**:
-- 데이터: 1926-2020 CRSP, **Goyal-Welch (2008) 의 15 predictor**.
-- Model 복잡도: P = 2 → 12,000 (5,000 paris of sin/cos).
-- 학습 표본: T = 12, 60, 120 (1년 / 5년 / 10년 rolling).
-- 방법: **Random Feature method (Rahimi-Recht 2007)** — RFF — 가 low-complexity 부터 high-complexity 까지 smooth transition 가능.
-
-> **원문 (p.463)**: "We find extraordinary agreement between empirical patterns and our theoretical predictions. Over the standard Center for Research in Security Prices (CRSP) sample from 1926 to 2020, out-of-sample market timing Sharpe ratio improvements (relative to market buy-and-hold) reach roughly 0.47 per annum with t-statistics near 3.0. This is despite the fact that the out-of-sample predictive R² is substantially negative for the vast majority of models, consistent with the theoretical argument that predictive R² is inappropriate for judging the economic benefit of a machine learning model."
-
-**핵심 수치**:
-- **OOS Sharpe ratio improvement ≈ 0.47/year** vs market buy-and-hold.
-- **t-statistic ≈ 3.0** (statistically significant).
-- **그럼에도 OOS R² 는 거의 모두 음수** — 직관적 충돌.
-
-> **원문 (p.464)**: "Timing positions from high-complexity models are remarkable. They behave similarly to long-only strategies, following the Campbell and Thompson (2008) recommendation to impose a nonnegativity constraint on expected market returns. But our models learn this behavior as opposed to being handed a constraint. Moreover, machine learning strategies learn to divest leading up to National Bureau of Economic Research (NBER) recessions, successfully doing so in 14 out of 15 recessions in our test sample on a purely out-of-sample basis."
-
-**경이로운 발견**:
-- ML timing 이 **long-only-ish** 로 자동 학습 (Campbell-Thompson 의 nonnegativity 권고 와 일치).
-- **14 out of 15 NBER recessions** 에서 자동 divest. Purely out-of-sample.
-
-이 두 가지 발견이 본 논문의 가장 강력한 실증.
-
-각주 6: "*Surveys of this large literature include Koijen and Van Nieuwerburgh (2011), Cochrane (2011), and Rapach and Zhou (2022). For early machine learning approaches to market return prediction, see Rapach, Strauss, and Zhou (2010) and Kelly and Pruitt (2013).*"
-
-→ 시장 수익률 예측 문헌의 4개 핵심 survey: (i) Koijen-Van Nieuwerburgh (2011 *Annual Review*) — predictability of returns and cash flows. (ii) Cochrane (2011 *JF* presidential address) — discount rates 변화. (iii) Rapach-Zhou (2022 *Oxford Research Encyclopedia*) — asset pricing time-series predictability. ML 의 first wave: Rapach-Strauss-Zhou (2010), Kelly-Pruitt (2013).
+**구체적 정리**: **Theorem 1 (Virtue of Complexity)** — 본 논문의 최고 정리. [05c 챕터](05_method_c_misspec.md) 에서 풀이.
 
 ---
 
-## 3.11 열번째 단락 — 관련 문헌 (이론 + 실증)
+## 3.7 본 논문의 사고 실험 — *가상의 세계*
 
-> **원문 (p.464)**: "This paper relates most closely to emerging literature that studies the theoretical properties of machine learning models. A number of recent papers show that linear models combined with random matrix theory help characterize the behavior of neural networks trained by gradient descent. In particular, wide neural networks (many nodes in each layer) are effectively kernel regressions, and 'early stopping' in neural network training is closely related to ridge regularization (Ali, Kolter, and Tibshirani (2019)). Recent research also emphasizes the phenomenon of benign overfit and 'double descent,' in which expected forecast error drops in the high-complexity regime."
+논문 본문은 *thought experiment* (사고 실험) 으로 시작:
 
-**연결되는 이론 문헌** (각주 7):
-- Jacot-Gabriel-Hongler (2018) — Neural Tangent Kernel
-- Hastie-Montanari-Rosset-Tibshirani (2022) — *Annals of Statistics* benchmark on ridgeless
-- Du-Lee-Li-Wang-Zhai (2019) — gradient descent for over-parameterized NN
-- Ali-Kolter-Tibshirani (2019) — early stopping ≈ ridge
+> **"진짜 시장 수익률 = 어떤 함수 f(macro 변수들) + 잡음"**
 
-각주 8: **Double descent** 현상 — OOS error 가 P/T=1 에서 peak 후 다시 감소. Spigler et al (2019), Belkin et al (2019), Bartlett et al (2020).
+여기서:
+- *macro 변수들* = 15개 (Goyal-Welch 의 dy, dp, dfy, ...).
+- *함수 f* = 우리가 모르는 *진짜 자연 법칙*. 비선형 (단순 덧셈 아닌 복잡한 모양).
+- *잡음* = 예측 불가능한 random noise.
 
-> **원문 (p.464)**: "In this literature, the paper closest to ours is Hastie et al. (2022), who derive nearly optimal error bounds in finite samples for bias and risk in the ridge(less) regression under very general conditions. They are also the first to introduce misspecified models in which some of the signals may be unobservable. In this paper, we focus on the (easier) asymptotic regime. We use a different method of proof and relax some of the technical conditions on the distributions of signals, using recent results of Yaskov (2016). In particular, we allow for nonuniformly positive-definite covariance matrices."
+학자의 역할: **함수 f 를 데이터로 추정**.
 
-**Hastie et al (2022) 와의 차이**:
-- 동일: misspecified, ridge(less) regression.
-- 본 논문 차이:
-  - (i) Asymptotic limit (T,P→∞), Hastie 는 finite-sample.
-  - (ii) Method of proof — Yaskov (2016) 기반.
-  - (iii) Ψ 의 nonuniform positive-definite 허용.
-  - (iv) **Focus 가 forecast accuracy variance 가 아닌 OOS expected return / Sharpe ratio** — finance 관점.
+**핵심 질문**: 학자가 모델 *어떻게 만들까*?
 
-각주 9: "*See also Richards, Mourtada, and Rosasco (2021), who obtain less general results in an asymptotic setting (as in our paper).*"
+### 옵션 A — 간단한 모델 (전통)
 
-→ Richards-Mourtada-Rosasco (2021 *AISTATS*) 도 본 논문과 같은 asymptotic regime (T, P → ∞). 다만 Gaussian iid signals 요구 — RFF 같은 nonlinear feature 에는 적용 불가. 본 논문이 이 가정을 relax (Assumption 2 의 4-point moment condition).
+- 변수 5-15개 의 *덧셈 모델*. 
+- 장점: *과적합 위험 적음*.
+- 단점: *진짜 f 가 복잡하면* 그 복잡함을 못 잡음 — **거친 근사** (coarse approximation).
 
-> **원문 (p.464)**: "Most importantly, instead of focusing on the prediction model forecast error variance, we characterize expected out-of-sample expected returns, volatility, and Sharpe ratios of market timing strategies based on machine learning predictions."
+### 옵션 B — 복잡한 모델 (본 논문 권장)
 
-**본 논문의 finance-specific 기여**: 통계 metric (R², MSE) 이 아닌 **economic metric (expected return, volatility, Sharpe ratio)** 의 high-complexity asymptotic 도출.
+- 변수 12,000개 의 *비선형 결합* (Random Fourier Features).
+- 단점 (통상 직관): *과적합 위험 큼*.
+- 장점 (본 논문 발견): *진짜 f 를 정확히 근사* + *ridge 안정장치* 로 과적합 막음.
 
-> **원문 (p.464)**: "Our paper also relates closely to a growing empirical literature that uses machine learning methods to analyze stock returns. The state-of-the-art market return prediction uses high-dimensional models with shrinkage and demonstrates robust out-of-sample predictive power. Rapach, Strauss, and Zhou (2010) use predictors from Goyal and Welch (2008) and forecast combination methods (which they show exert a strong shrinkage effect). Ludvigson and Ng (2007) and Kelly and Pruitt (2013) use principal components regression and partial least squares, respectively, to leverage large predictor sets for market return prediction and achieve shrinkage through dimension reduction."
-
-**실증 문헌** (시장 수익률 예측):
-- Rapach-Strauss-Zhou (2010) — forecast combination = implicit shrinkage
-- Ludvigson-Ng (2007) — PCA on macro
-- Kelly-Pruitt (2013) — PLS on present value identity
-- Dong et al (2022) — 100 long-short anomaly portfolios → market
-
-**실증 문헌** (cross-section):
-- Rapach-Zhou (2020) — survey
-- Kozak-Nagel-Santosh (2020) — shrinking cross-section
-- Freyberger-Neuhierl-Weber (2020) — nonparametric characteristics
-- Gu-Kelly-Xiu (2020) — ML asset pricing baseline
-- Chen-Pelger-Zhu (2023) — DLAP
-
-→ 본 논문이 이 모든 흐름의 **이론적 정당화**.
+→ **본 논문 답**: 옵션 B 가 항상 우월. *"can compute" 한 가장 큰 모델 써라*.
 
 ---
 
-## 3.12 마지막 단락 — 논문 구조 안내
+## 3.8 OLS — *전통 추정의 한계* 의 이유
 
-> **원문 (p.465)**: "The paper is organized as follows. In Section I, we lay out the theoretical environment. Section II presents the foundational results from random matrix theory from which we derive our main theoretical results. Section III characterizes the behavior of machine learning portfolios in the correctly specified setting and emphasizes the intuition behind the portfolio benefits of high-complexity prediction models. Section IV extends these results to the more practically relevant setting of misspecified models. We present our main empirical results in Section V. Section VI concludes. The Internet Appendix contains a variety of supplementary theoretical results and empirical robustness analyses. We invite readers that are primarily interested in the qualitative theoretical points and the empirical analysis to skip the technical material of Sections I and II."
+자, 옵션 B (복잡한 모델) 의 *통상 문제* 가 뭐냐?
 
-**구조 매핑** (논문 → 본 deep dive):
+### 데이터 수 < 변수 수
 
-| 논문 Section | Pages | Deep dive 챕터 |
-|--------------|-------|----------------|
-| I. Environment | 465–470 | [04_environment.md](04_environment.md) |
-| II. ML + RMT | 470–474 | [05_method_a_rmt.md](05_method_a_rmt.md) |
-| III. Correctly specified | 474–481 | [05_method_b_correct.md](05_method_b_correct.md) |
-| IV. Misspecification | 481–487 | [05_method_c_misspec.md](05_method_c_misspec.md) |
-| V. Empirical | 487–498 | [07_empirical.md](07_empirical.md) |
-| VI. Conclusion | 499–500 | [08_conclusion.md](08_conclusion.md) |
-| Internet Appendix | 별도 | [09_appendix_proof.md](09_appendix_proof.md) 에 핵심 발췌 |
+**일상 비유**: 학생 10명 데이터로 12 과목 시험 점수를 예측하는 회귀? *12 변수 > 10 데이터* — 통상의 *최소 자승 (OLS)* 가 무너짐.
 
-저자 가이드: "Sections I, II 의 기술적 내용을 건너뛰고 III–V 만 봐도 핵심 메시지 이해 가능."
+수학적으로: $(X'X)^{-1}$ 가 *역행렬 안 됨*. 추정값 *폭발*.
 
-본 deep dive 는 **모든 정리·가정·각주·equation 풀어쓰기** 원칙이므로 I, II 도 전부 풀이.
+**결과**: OOS R² → -∞, Sharpe ratio → 0.
 
-각주 10: "*The Internet Appendix is available in the online version of the article on The Journal of Finance website.*"
-
-→ Internet Appendix 는 *JF* 웹사이트 (Wiley Online Library) 의 article 페이지에서 다운로드 가능. 본 deep dive 는 Internet Appendix 의 핵심 결과 (Theorem 1A — Marchenko-Pastur generalization, Theorem 2 — Stieltjes 변환의 정확한 관계, IA1 — non-iid signals 의 일반화, IA1-IA12 의 robustness checks) 를 [05a_method_rmt](05_method_a_rmt.md) 와 [09_appendix_proof](09_appendix_proof.md) 에 발췌·풀이.
+이게 *Goyal-Welch (2008) 가 본 것*. 15 변수 + 12개월 데이터 = *interpolation boundary* 부근 (변수 ≈ 데이터). 이 영역이 *최악*.
 
 ---
 
-## 자기점검 (이 챕터)
+## 3.9 본 논문의 *놀라운 발견* — Ridgeless
+
+### Ridgeless regression 이 뭐예요?
+
+**일상 비유**: 12 변수 > 10 데이터 인데도 *추정 가능* 한 trick. 무한히 많은 *완벽 fit* 해 중에서 *가장 작은* 해 선택.
+
+수학적으로: *Moore-Penrose pseudo-inverse* (ridge 의 z=0 limit).
+
+### 왜 작동?
+
+**놀라운 발견** (통계학 2019+): 변수가 *훨씬* 많으면 (P >> T), ridgeless 가 *implicit regularization* 으로 작동 — 즉 *과적합 같이 보이지만 OOS 잘 됨*. 
+
+학자들이 이걸 **benign overfit (자비로운 과적합)** 이라 부름 — Bartlett et al (2020), Belkin et al (2019).
+
+본 논문이 이 *통계학 발견* 을 *자산가격 timing* 에 처음 적용.
+
+---
+
+## 3.10 본 논문의 4가지 추가 결론
+
+본 논문이 이론으로 보이는 4가지:
+
+### 추가 결론 1 — Ridgeless 가 *모든* 복잡도에서 양의 Sharpe
+
+> **"변수 수가 *임의로 커도* (1만, 10만, 100만), ridgeless regression 이 *양의 Sharpe ratio 향상* 을 만든다."**
+
+직관: "변수 100만, 데이터 12 면 *완전 과적합 zero training error* → 망해야 할 것 같은데" — *아니다*. **Surprisingly, this intuition is wrong**. 
+
+### 추가 결론 2 — R² ≠ 경제적 가치
+
+> **"OOS R² 가 *마이너스 100%* 이하 일지라도 *Sharpe ratio 는 양수* 가능."**
+
+직관: "예측 정확도 (R²) 가 나쁘면 돈 못 번다" — *아니다*. R² 는 *forecast variance* 에 heavy 하게 영향받음 — *방향은 맞지만 scale 이 큰* 예측이 R² 음수 + Sharpe 양수 가능.
+
+본 논문 결론: **finance 분야가 R² 비관에서 벗어나서 *Sharpe / IR* 같은 *경제 measure* 로 evaluate 해야**.
+
+### 추가 결론 3 — Correctly specified vs Misspecified
+
+- *Correctly specified*: empirical model = true DGP (이상적, 비현실).
+- *Misspecified*: empirical model 이 true 의 *일부만* capture (현실적).
+
+본 논문 *main result* 는 **misspecified case** 에 대한 것 (Theorem 1). Correctly specified 는 *비교 baseline*. [05b, 05c 챕터](05_method_b_correct.md).
+
+### 추가 결론 4 — Ridge 가 ridgeless 보다 더 좋다
+
+> **"Ridgeless 도 양의 Sharpe; 거기에 *약간의 ridge (z > 0)*  더하면 *더* 좋다."**
+
+특히 *interpolation boundary (변수 ≈ 데이터)* 부근에서 효과 크다. Ridge 가 *variance 감소* 가 *bias 증가* 능가.
+
+---
+
+## 3.11 본 논문의 *분석 도구* — Random Matrix Theory
+
+### 왜 새 도구 필요?
+
+전통 통계 (1900-1960): "*데이터 무한대로 늘리면* (T → ∞) 추정값이 진짜 값에 *수렴* 한다."
+
+본 논문 환경: *변수 (P) 도 무한대로 늘림*. 그것도 *데이터와 같은 속도* (P/T → 상수 c).
+
+이 영역에서 *전통 통계가 깨짐*. 추정값 ≠ 진짜 값 even as T → ∞.
+
+### Random Matrix Theory (RMT) 의 역할
+
+> **"P, T 둘 다 무한대로 가는 영역의 통계 — 1967년 우크라이나 수학자 Marchenko-Pastur 가 발명."**
+
+**일상 비유**: 거대한 표 (P × P) 의 *전체 패턴 (eigenvalue 분포)* 이 어떻게 행동하는지 한 *함수* (Stieltjes transform) 로 압축.
+
+본 논문이 이 RMT 결과를 *자산가격 timing 의 Sharpe ratio limit* 도출에 활용. **Section II 가 그 도구 chapter**. [05a 챕터](05_method_a_rmt.md).
+
+---
+
+## 3.12 실증 결과 미리보기
+
+본 논문의 실증 (Section V, [07 챕터](07_empirical.md)):
+
+### 데이터
+- **CRSP value-weighted index 월간 수익**: 1926-2020 (94년).
+- **15 개 macro 변수**: Goyal-Welch 의 정확히 그 dy, dp, dfy, infl, lty, ... + lag market return.
+- **학습 window**: T = 12, 60, 120 개월 (1년 / 5년 / 10년 rolling).
+- **변수 수 P**: 2 → 12,000 (Random Fourier Features 로 확장).
+
+### 결과 1 — Sharpe ratio
+- **Linear ridgeless (Goyal-Welch 의 정확한 setting)**: SR = -0.11 (망함, 확정).
+- **Linear + ridge (z=10³)**: SR = 0.46 (*ridge 만 추가했는데* 극적 향상).
+- **Nonlinear ML (P=12k + ridge)**: SR = **0.47 (t=4.5)** — 본 논문 main result.
+
+→ 같은 데이터로 *3배 다른 결론*.
+
+### 결과 2 — Recession divestment
+- 1926-2020 의 **NBER 침체 15개** 중 **14개** 에서 ML timing 이 *침체 전 시장 비중 자동 감소*.
+- 유일 예외: 1945 (WWII 직후).
+- **Purely out-of-sample** — 미래 정보 0 사용.
+
+이건 **macro economics 의 holy grail** (real-time recession detection). ML 이 *Goyal-Welch 15 변수* 만으로 자동 달성.
+
+### 결과 3 — Low downside risk
+- *Max loss*: 1.2 표준편차 (vs Linear ridgeless 의 98.5).
+- *Skewness*: +2.5 (positive — 우상향 fat tail).
+
+→ ML 모델이 *극단 손실 회피* + *극단 수익 잘 잡음*.
+
+---
+
+## 3.13 본 논문이 *반박* 하는 학계 통념 정리
+
+| 학계 통념 (1960-2010) | 본 논문 발견 |
+|---------------------|------------|
+| 단순한 모델이 좋다 (Occam's razor) | 복잡한 모델 + ridge 가 *Theorem 1 monotone 증가* |
+| 변수 > 데이터 면 망함 | Benign overfit 으로 *오히려 잘 됨* |
+| OOS R² 가 economic value 측정 | R² ≠ Sharpe — *경제 measure* 로 evaluate |
+| Goyal-Welch (2008) "예측 불가능" | 같은 데이터로 *극적 성공* |
+| Campbell-Thompson nonnegativity 가 필요 | ML 이 *constraint 없이* 자동 학습 |
+| Box 의 *parsimony* (Box 1976) | *Occam's razor may be Occam's blunder* |
+
+---
+
+## 3.14 자기점검
 
 ### 핵심 3가지
-1. **본 논문의 "central research question" 은?**
-2. **OLS 가 P → T 에서 망하는데 P > T 에서는 왜 작동하는가?**
-3. **"이론적 분석" 과 "실증 분석" 의 핵심 결과 한 줄씩?**
+1. **Goyal-Welch (2008) 가 학계에 미친 영향?**
+2. **머신러닝 시대 자산가격의 *미스터리* 가 뭐였나?**
+3. **본 논문이 그 미스터리에 준 답?**
 
 ### 답변
-1. **모델 복잡도 P 를 어디로 정해야 OOS forecast + portfolio 성능이 최대화되는가?** 단순 (P≪T) vs 복잡 (P>T) 의 bias-variance trade-off 결정. 본 논문 답: **P 를 가능한 한 크게 (largest you can compute), 적절한 ridge shrinkage 와 함께**.
-2. P → T- 에서 $(X'X)^{-1}$ 의 singularity 가 OLS 계수를 발산시킴. 그러나 P > T 에서는 **Moore-Penrose pseudo-inverse** 가 정의되고 이게 **z → 0+ ridge** 와 같음. P 커질수록 ridgeless 의 implicit regularization 이 강해져서 $\hat\beta$ norm 이 작은 (smallest-norm) solution 으로 가는 **benign overfit**.
-3. **이론**: Theorem 1 — sufficiently mixed signals 의 misspecified 환경에서, optimal shrinkage $z_*$ 와 함께 Sharpe ratio $SR(z_*; cq; q)$ 가 $q \in [0,1]$ 에서 **strictly monotone increasing and concave** (Section IV). **실증**: CRSP 1926-2020, Goyal-Welch 15 predictor + RFF P=12,000, T=12: **OOS Sharpe ratio improvement ≈ 0.47/year (t≈3.0)** vs market buy-and-hold, **14/15 NBER recessions 자동 divest** purely OOS.
+1. **"시장 수익률 예측은 사실상 불가능"** 결론. 80년 데이터로 15 macro 변수 모두 OOS R² 음수. 학계 약 10년 비관기. **그러나 같은 데이터로 본 논문이 정반대 결론 (Sharpe 0.47)** — 즉 GW 의 데이터 문제 아니라 *방법론 (linear ridgeless + R² metric)* 의 한계였다.
+2. **2018-2023 머신러닝 (변수 수천 개) 이 자산가격 예측에 *empirically 잘 됨* 이 보였지만, *왜 잘 되는지* 의 *이론* 이 없었다**. 통상 통계 직관 ("변수 > 데이터 → 과적합 → 망함") 과 정반대 결과. *이론적 black box*.
+3. **Random Matrix Theory (RMT) + ridge regression 의 *Theorem 1 (Virtue of Complexity)***. *Sufficiently mixed signals* + *적절한 ridge shrinkage* 만 만족하면 SR 가 모델 복잡도의 monotone 증가. *Benign overfit* 의 통계학 발견을 자산가격 timing 에 *처음 정리*. 학자들이 머신러닝을 *empirically* 만 쓰던 시대 → *이론적 정당화* 의 시대로 전환.
 
 ---
 
-다음 파일 [04_environment.md](04_environment.md) — Section I (Environment) 의 Assumptions 1-4, timing 전략, Proposition 1 풀이.
+다음 챕터: [04_environment.md](04_environment.md) — 본 논문의 *수학적 설정* 을 친근하게.

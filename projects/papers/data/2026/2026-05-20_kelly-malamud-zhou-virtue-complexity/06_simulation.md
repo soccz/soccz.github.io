@@ -1,216 +1,304 @@
-# 06. 이론 시뮬레이션 — Figures 1–6 calibrated VoC curves
+# 06. 이론을 그래프로 — Figures 1-6 시각적 풀이
 
-> 논문 Section III/IV 의 Figures 1–6 가 모두 같은 calibration 하에 그려짐. $\Psi = I$ (identity), $b_* = 0.2$, $\sigma^2 = 1$, $c = 10$ (Figures 4-6). 이 챕터는 그 시뮬을 한 곳에 모아 deep dive 의 viz 카탈로그와 연결.
+> 본 논문이 *이론 시뮬* 로 그린 6 개 그래프 를 무지식자 친화로. 각 figure 의 *직관* 위주, 수식 없이.
 
 ---
 
 ## 6.1 챕터 한 줄 요약
 
-**같은 calibration ($\Psi = I, b_* = 0.2$) 하에 Figures 1-3 (correctly specified) 과 Figures 4-6 (misspecified, $c = 10$) 의 VoC curves 를 비교. 두 setting 모두 ridgeless $c = 1$ 부근에서 R² 발산 + Sharpe dip. 그러나 misspecified 에서는 Sharpe 가 단조 증가 (Theorem 1) — 이게 본 논문 모든 후속 실증의 이론적 backdrop.**
+> **"6 개 그래프 가 본 논문 이론을 *눈으로 확인*. *Correctly specified* (Fig 1-3) 에서는 SR 가 c=1 부근 dip. *Misspecified* (Fig 4-6) 에서는 SR 가 *단조 증가* (Theorem 1 의 시각화). 이 두 행동의 차이가 본 논문의 *핵심 메시지*."**
 
 ---
 
-## 6.2 Calibration setup
+## 6.2 공통 설정 — 무엇이 *기준*?
 
-**공통 parameters**:
+본 논문의 모든 figure 가 같은 *calibration* (가상 데이터):
 
-| 기호 | 값 | 의미 |
+| 변수 | 값 | 의미 |
 |------|-----|------|
-| $\Psi$ | $I$ (identity) | 가장 단순한 covariance (eigenvalue 모두 1) |
-| $b_*$ | $0.2$ | $\beta$ scale, $\|\beta\|^2/P = 0.2$ |
-| $\sigma^2$ | $1$ | noise variance (normalization) |
-| $\psi_{*,1}$ | $1$ | $\Psi$ 의 first moment ($\text{tr}(I)/P = 1$) |
-| $b_* \psi_{*,1}$ | $0.2$ | predictive power composite |
+| $\Psi$ | $I$ (identity 행렬) | 모든 변수 *균등 분포*, no covariance 구조 |
+| $b_*$ | $0.2$ | 진짜 함수의 *signal scale* (작음) |
+| $\sigma^2$ | $1$ | 잡음 분산 (normalize) |
 
-**Infeasible benchmark** (Proposition 1):
-- Untimed asset SR = 0 (normalization).
-- $E[\pi R] = b_* \psi_{*,1} = 0.2$.
-- $E[(\pi R)^2] = 3 \cdot 0.04 + 0.2 = 0.32$.
-- $SR_\infty = 1/\sqrt{3 + 1/0.2} = 1/\sqrt{8} \approx 0.354$.
-- $R^2_\infty = 0.2 / 1.2 \approx 0.167$.
+이 calibration 의 *기준점* (infeasible 신의 Sharpe):
 
-→ 이 값들이 모든 그래프의 reference (점선).
+> **신의 Sharpe ratio ≈ 0.354** (이상적 최대).
+
+모든 그래프의 *빨간 점선* 이 이 값. 학자의 모든 선이 *이 점선 아래*.
 
 ---
 
-## 6.3 Figure 1 — Correctly specified R² + ‖β‖
+## 6.3 Figure 1 — *이상적 환경* 의 R²
 
-![Figure 1 — Expected out-of-sample R² + norm of least-squares coefficient](figures/page18_Fig1_R2_norm.png)
+![Figure 1](figures/page18_Fig1_R2_norm.png)
 
-*원문 p.476 Figure 1 — Correctly specified case. Left: $R^2$ vs $c \in [0, 10]$ for $\log_{10}(z) \in \{-2, -1, 0, 1, 1.7\}$ + ridgeless (black). Right: $\|\hat\beta\|$ vs $c$. infeasible $R^2(0;0) = 0.167$ red dashed.*
+*paper p.476 Figure 1 — Left: R² vs c. Right: ‖β̂‖.*
 
-**Left panel (R²)**:
-- Ridgeless (black): $c < 1$ 부드러운 감소; $c = 1$ 양쪽에서 $-\infty$ 발산; $c > 1$ 회복.
-- $z = 0.01$: ridgeless 와 거의 동일 (작은 shrinkage 효과).
-- $z = 0.1, 1$: $c = 1$ 발산 완화, 그러나 c < 1 에서 약간 손실.
-- $z = 10$: 거의 모든 $c$ 에서 $R^2 \approx 0$ (heavy shrinkage 의 bias).
-- $z = 50$: $R^2$ 거의 0 (over-shrunk).
+### 친근 풀이 — Left panel
 
-**Right panel (‖β̂‖)**:
-- Ridgeless 가 $c = 1$ 에서 약 6 까지 spike.
-- $z$ 클수록 $\|\hat\beta\|$ 작음 (shrinkage).
-- $c > 1$ 에서 ridgeless 의 $\|\hat\beta\|$ 가 0 쪽으로 떨어짐 (smallest-norm).
+**x-axis** = $c = P/T$ = 모델 복잡도. *오른쪽 = 복잡함*.
 
-```viz:voc-r2-curve:title=Figure 1 — Correctly specified R² (interactive),caption=c 슬라이더로 complexity 변화, z 슬라이더로 ridge shrinkage. b_* 슬라이더로 signal-to-noise. 모든 z 에서 c=1 발산 + 회복 패턴. 적절한 z_* = c/b_* 가 max R².
+**y-axis** = OOS R² (예측 정확도). *위쪽 = 정확*.
+
+**색상**: 각 ridge shrinkage 값.
+- *검정*: ridgeless (z ≈ 0).
+- 노랑·빨강·보라: $z = 0.01, 0.1, 1, 10, 50$.
+
+### 핵심 패턴
+
+1. **빨간 점선 (infeasible)**: R² = 0.167.
+2. **검정 (ridgeless)**: c < 1 점차 감소; **c → 1 에서 -∞** (catastrophe!); c > 1 회복.
+3. **z > 0**: catastrophe 완화. 가장 부드러운: $z = 1$ (or $z = 10$).
+4. **$z = 50$**: R² 거의 0 — over-shrunken.
+
+**메시지**: *변수 ≈ 데이터* 영역이 *통상 통계의 무덤*. Ridge 가 살림.
+
+### Right panel — ‖β̂‖
+
+학자의 *추정 계수 크기* 가 c=1 부근에서 *6+* 까지 spike (= 폭발). Ridge 가 *normal range* 로 끌어내림.
+
+```viz:voc-r2-curve:title=Figure 1 — R² (interactive),caption=c 슬라이더 + z 슬라이더. ridgeless 의 c=1 catastrophe + c>1 회복. 적절한 z 가 catastrophe 완화. infeasible 빨간 점선이 reference.
 ```
 
 ---
 
-## 6.4 Figure 2 — Correctly specified Expected Return + Volatility
+## 6.4 Figure 2 — *이상적 환경* 의 기대 수익 + 변동성
 
-![Figure 2 — Expected out-of-sample risk and return of market timing](figures/page20_Fig2_E_Vol.png)
+![Figure 2](figures/page20_Fig2_E_Vol.png)
 
-*원문 p.478 Figure 2 — Left: Expected return $\mathcal{E}(z; c)$. Right: Volatility $\sqrt{\mathcal{V}(z; c)}$. Calibration: $\Psi = I, b_* = 0.2$. Ridgeless (black) 의 $c < 1$ expected return constant ($\mathcal{E} = b_*\psi_{*,1} = 0.2$), $c > 1$ 감소. Volatility 는 $c = 1$ 부근 spike (~6 까지).*
+*paper p.478 Figure 2.*
 
-**Left panel (Expected return)**:
-- Ridgeless: $c < 1$ 에서 $\mathcal{E} = 0.2$ (constant, infeasible 동일). $c > 1$ 에서 감소.
-- $z > 0$: $\mathcal{E}$ 감소 (heavier shrinkage → smaller expected return). Monotone decreasing in $z$ (Proposition 4 (i)).
-- $z = 50$: $\mathcal{E} \approx 0$.
+### Left panel — Expected return (기대 수익)
 
-**Right panel (Volatility)**:
-- Ridgeless: $c = 1$ 부근 spike (~6+).
-- $z = 1$: volatility 가 infeasible 보다도 낮음 (excessive shrinkage → too conservative).
-- 모든 $z, c$ 에서 volatility ↑ as $c$ ↑ (forecast variance 증가).
+**검정 (ridgeless)**: c < 1 에서 *constant 0.2* (infeasible 동일). OLS 의 unbiasedness 덕분. c > 1 에서 감소.
+
+**z > 0**: 모든 c 에서 *기대 수익 감소* (heavier shrinkage 의 bias).
+
+**핵심 메시지**: *Ridgeless 의 c < 1 에서 기대 수익 perfect* — 그러나 *Sharpe ratio* 는 다른 얘기 (Figure 3).
+
+### Right panel — Volatility
+
+**검정 (ridgeless)**: c = 1 에서 *6+ spike*. 좌우 부드럽게 회복.
+
+**z > 0**: *모든 c 에서 안정* (특히 c=1 부근).
+
+**일상 비유**: 학자의 timing 전략의 *변동성* 이 c=1 에서 *폭발*. Ridge 가 *안정장치*.
 
 ---
 
-## 6.5 Figure 3 — Correctly specified Sharpe Ratio
+## 6.5 Figure 3 — *이상적 환경* 의 Sharpe ratio ★
 
-![Figure 3 — Expected out-of-sample Sharpe ratio of market timing](figures/page21_Fig3_sharpe.png)
+![Figure 3](figures/page21_Fig3_sharpe.png)
 
-*원문 p.479 Figure 3 — Sharpe ratio vs $c$ for various $z$. 모든 $c$ 에서 ridgeless SR > 0. $c = 1$ dip but 양수. $z = 1$ 최고 SR ~0.35 c < 0.5 영역. ridgeless 도 $c$ 크면 0.04 수준 SR 유지.*
+*paper p.479 Figure 3 — 이 챕터의 *가장 중요한* 그림.*
 
-**핵심 관찰**:
-- Ridgeless SR > 0 **everywhere** — 통념과 충돌.
-- $c = 1$ 에서 SR 가 가장 낮지만 여전히 양수.
-- $z > 0$ ridge 가 ridgeless 보다 잘함 (특히 $c \approx 1$).
-- $z_*$ 가 SR 도 최적화 (correctly specified 의 우연한 일치).
+### 친근 풀이
 
-```viz:voc-sharpe-curve:title=Figure 3 — Correctly specified Sharpe ratio (interactive),caption=c 슬라이더 + z 슬라이더. 모든 c 에서 ridgeless SR > 0 (negative R² 임에도). z 가 너무 크면 (50) SR 감소. z_* = c/b_* 에서 max SR.
+**y-axis** = Sharpe ratio.
+- *빨간 점선* = 0.354 (infeasible 신).
+- 모든 선 *이 점선 아래*.
+
+### 핵심 발견 1 — *모든* c 에서 SR > 0
+
+검정 (ridgeless) 부터 z=50 까지 *모든* 선이 *0 위*. 즉 **timing 전략이 *어디서나* 양의 SR 향상**.
+
+→ **통상 직관 ("변수 > 데이터 → 망함") 의 정면 반박**.
+
+### 핵심 발견 2 — c = 1 부근 dip
+
+모든 선 의 SR 가 c = 1 부근 *최소*. 그러나 *양수 유지*.
+
+**일상 비유**: 학자가 *interpolation boundary 근처* 에서 timing 한다 해도 *근거 약함* 정도 — 망하진 않음.
+
+### 핵심 발견 3 — *Ridge 가 ridgeless 보다 우월*
+
+$z = 1$ 같은 *적당한 ridge* 가 *모든 c 에서 ridgeless 위*.
+
+→ **본 논문 권장**: *적당한 ridge 항상 사용*.
+
+### 핵심 발견 4 — 비대칭 회복
+
+c > 1 에서 ridgeless 의 SR 가 *영원히* 양수 유지. **Theorem 1 의 *precursor* (correctly specified case)**.
+
+```viz:voc-sharpe-curve:title=Figure 3 — Sharpe ratio (interactive),caption=c 슬라이더 + z 슬라이더. 모든 c 에서 ridgeless SR > 0 (R² 음수 임에도). c=1 dip 그러나 양수 유지. z=1 가장 robust.
 ```
 
 ---
 
-## 6.6 Figures 4–6 — Misspecified VoC
+## 6.6 *Correctly* vs *Misspecified* — 패러다임 전환
 
-**Setup 추가**: 
-- True DGP complexity $c = 10$ (고정).
-- Empirical model 의 complexity $cq \in [0, 10]$ (x-axis).
-- $q$ 가 0 → 1 로 갈수록 misspecification 감소.
-- $q = 1/c = 0.1$ 에서 empirical complexity $cq = 1$ (interpolation boundary).
+이제 *misspecified* 결과 (Figure 4-6) 로 가는데, 그 전에 *왜 misspecified 분석이 필요* 한지.
 
-### Figure 4 (p.485) — R²
+### Correctly specified — 비현실의 baseline
 
-![Figure 4 — Expected out-of-sample prediction accuracy from misspecified models](figures/page27_Fig4_R2_misspec.png)
+지금까지 본 Figure 1-3 는 모두 *학자의 model = 진짜 자연* 의 가정. 즉 *이상적*.
 
-*원문 p.485 Figure 4 — Misspecified $R^2$ + $\|\hat\beta\|$ vs $cq$. Same calibration but true DGP $c = 10$. Patterns 와 magnitudes 가 Fig 1 과 유사하지만 simple model 의 $R^2$ 가 더 낮음 (approximation gap). $cq = 1$ 발산 + $cq > 1$ ridgeless 회복.*
+**현실**: 학자가 *진짜 자연 전체* 를 capture 못 함. *부족한 모델*.
 
-**핵심 차이** (vs Figure 1):
-- *Simple $cq$* 영역: misspecified 의 $R^2$ 가 correctly specified 보다 더 낮음 (approximation gap).
-- *$cq = 1$*: 동일하게 발산.
-- *Large $cq$*: 비슷한 회복.
+### Misspecified — 현실
 
-### Figure 5 (p.485) — Expected Return + Volatility
+학자가 *진짜 자연의 일부* (예: 15개 macro 변수) 만 사용. 자연이 *훨씬 더 많은 변수* 에 의존한다면 *학자 모델 ≠ 자연*.
 
-![Figure 5 — Expected out-of-sample risk and return from misspecified models](figures/page27_Fig5_E_Vol_misspec.png)
+### 새 변수 — q (학자/자연 비율)
 
-*원문 p.485 Figure 5 — Left: $\mathcal{E}(z; cq; q)$ vs $cq$. Right: Volatility vs $cq$. **Left panel 이 가장 큰 차이 (vs Fig 2)** — Expected return 이 $cq$ 의 monotone increasing (Equation 19). Ridgeless 의 $cq = 1$ 에서 peak $\mathcal{E} = b_*\psi_{*,1} c^{-1} = 0.02$, 그 이후 flat.*
+- $q = 1$: 학자 = 자연 (correctly specified).
+- $q < 1$: 학자 < 자연 (misspecified).
 
-**Left panel (가장 중요)**:
-- Simple $cq$ 영역: $\mathcal{E}$ 가 매우 낮음 (approximation 안 됨).
-- $cq$ 증가 → $\mathcal{E}$ **monotone increasing**.
-- Ridgeless: $cq = 1$ 에서 $\mathcal{E}$ peak ($b_* \psi_{*,1} c^{-1} = 0.02$), 그 이후 **flat** (Equation 19).
-- Ridge $z > 0$: $\mathcal{E}$ 가 $cq$ 의 monotone increasing, 더 천천히.
+본 논문 misspecified Figure 의 calibration: *true c = 10*, *학자의 cq* 가 [0, 10] 범위 sweep.
 
-**Right panel (Volatility)**:
-- Fig 2 와 유사: $cq = 1$ spike.
-- $z > 0$ 으로 mitigate.
+---
 
-### Figure 6 (p.486) — Sharpe Ratio (★ 본 논문 핵심)
+## 6.7 Figure 4 — *현실 환경* 의 R²
 
-![Figure 6 — Expected out-of-sample Sharpe ratio from misspecified models](figures/page28_Fig6_misspec_monotone.png)
+![Figure 4](figures/page27_Fig4_R2_misspec.png)
 
-*원문 p.486 Figure 6 — Misspecified $SR$ vs $cq$. **모든 $z$ 에서 SR monotone increasing in $cq$** (Theorem 1 의 시각화). Ridgeless 에서 $cq = 1$ 약한 dip 있지만 단조 증가. $z = 1, 10, 50$ 에서 smooth monotone (permanent ascent).*
+*paper p.485 Figure 4 — Left: R². Right: ‖β̂‖.*
 
-**핵심 관찰** (Theorem 1):
-- **모든 $z$**: SR 가 $cq$ 의 monotone increasing.
-- Ridgeless ($z = 0$): $cq = 1$ 부근 약한 dip — *double ascent*.
-- $z > 0$: dip 사라짐 — *permanent ascent*.
-- $cq \to 10$ (q=1, correctly specified) 에서 SR ≈ 0.05.
+### 친근 풀이
 
-```viz:voc-misspec-monotone:title=Figure 6 — Theorem 1 (Virtue of Complexity) (interactive),caption=cq 슬라이더로 empirical complexity 변화, z 슬라이더로 shrinkage. 모든 z 에서 SR monotone increasing (Theorem 1). Ridgeless 에서 cq=1 dip (double ascent), z>0 에서 smooth (permanent ascent). 본 논문 핵심 그림.
+**x-axis** = $cq$ (학자 모델의 복잡도). True c = 10 고정.
+
+**y-axis** = OOS R².
+
+### 패턴 (Figure 1 과 비교)
+
+- *전체적 모양 비슷*: cq → 1 catastrophe + cq > 1 회복.
+- *다른 점*: simple model (cq 작음) 의 R² 가 *Figure 1 보다 더 낮음* — **approximation gap**.
+
+**메시지**: 학자가 *진짜 자연의 일부* 만 보면 *예측 정확도 손실*. 이게 *misspecified cost*. 그러나 cq 늘리면 손실 줄어듦.
+
+---
+
+## 6.8 Figure 5 — *현실 환경* 의 기대 수익 + 변동성
+
+![Figure 5](figures/page27_Fig5_E_Vol_misspec.png)
+
+*paper p.485 Figure 5.*
+
+### Left panel — Expected return (가장 큰 차이)
+
+**Figure 2 와 비교**:
+- Figure 2 (correctly specified): ridgeless 의 기대 수익 *c < 1 constant* (no decrease).
+- **Figure 5 (misspecified)**: ridgeless 의 기대 수익 *cq 의 monotone increasing*! 
+
+**핵심 발견**:
+- Simple model (cq 작음): 기대 수익 낮음 (approximation gap).
+- cq ↗: 기대 수익 *단조 증가*.
+- *cq = 1 에서 peak* ($b_*\psi_{*,1} \cdot c^{-1} = 0.02$).
+- *cq > 1 에서 flat* (Equation 19 의 정확한 식).
+
+이게 **본 논문의 가장 강력한 발견**: *Misspecified 에서 기대 수익이 복잡도와 함께 증가*.
+
+### Right panel — Volatility
+
+Figure 2 와 유사: cq = 1 spike + 회복.
+
+---
+
+## 6.9 Figure 6 — Theorem 1 의 시각적 statement ★★
+
+![Figure 6](figures/page28_Fig6_misspec_monotone.png)
+
+*paper p.486 Figure 6 — **본 논문 의 가장 중요한 그림**.*
+
+### 친근 풀이
+
+**y-axis** = Sharpe ratio.
+
+**핵심 발견 1 — *모든* z 에서 monotone 증가**
+
+검정 (ridgeless) 부터 $z = 50$ 까지 **모든 선이 cq 의 monotone increasing 함수**.
+
+→ **Theorem 1 의 시각적 statement**.
+
+### 핵심 발견 2 — Ridgeless 의 *double ascent*
+
+검정 (ridgeless) 에서 *cq = 1 부근 약한 dip*. 그러나 *그 후 다시 증가*. 즉:
+- *cq < 1*: 증가.
+- *cq = 1*: 약한 감소.
+- *cq > 1*: 다시 증가.
+
+→ **Double ascent** 패턴.
+
+### 핵심 발견 3 — *Permanent ascent* (적절한 z)
+
+$z > 0$ 의 선들 (특히 $z = 10$, $50$): *dip 없이 부드럽게 monotone 증가* — **Permanent ascent**.
+
+→ Theorem 1 의 정확한 statement: *적절한 ridge 면 dip 사라짐*.
+
+### 의미
+
+**Use the largest model you can compute** — *수학적 명령*.
+
+```viz:voc-misspec-monotone:title=Figure 6 — Theorem 1 (Virtue of Complexity) (interactive),caption=★ 본 논문의 가장 중요한 시각화. cq 슬라이더 + z 슬라이더. 모든 z 에서 SR monotone increasing — Theorem 1. Ridgeless 의 cq=1 dip (double ascent), z > 0 에서 smooth (permanent ascent).
 ```
 
-→ **이 viz 가 본 deep dive 의 preview viz** (deep.html LANDING 의 preview).
+→ **이 viz 가 본 deep dive 의 preview** (LANDING 페이지의 preview).
 
 ---
 
-## 6.7 Correctly specified vs Misspecified 비교
+## 6.10 정리 — Correctly vs Misspecified 한 표
+
+| 항목 | Correctly Specified | Misspecified |
+|------|--------------------|--------------|
+| **R² (vs c or cq)** | catastrophe at c=1 + 회복 | 같은 패턴 + approximation gap |
+| **기대 수익 (vs c or cq)** | ridgeless c<1 constant | **monotone increasing** ★ |
+| **Sharpe ratio (vs c or cq)** | c=1 dip 후 회복 | **monotone increasing (Theorem 1)** ★ |
+| **Optimal $z_*$** | $c/b_*$ — R² 와 SR 동시 최적 | $c(1+b_*(\psi(1-q)))/b_*$ |
+| **Implication** | simple model 도 OK | **complex model better** |
+
+---
+
+## 6.11 본 챕터의 *visual 흐름*
 
 ```
-                  Correctly Specified                   Misspecified
-                  ────────────────                       ────────────
-
-  R²    ridgeless ↘ (c < 1)                          모두 ↘ then ↗
-              divergence at c = 1                     similar (slightly worse)
-              ridgeless ↗ (c > 1, benign overfit)         
-                                                                
-  E[R^π]  ridgeless constant (c < 1)                  monotone ↗ in cq ★
-              decreases (c > 1)                       (Eq 19: min{q, 1/c})
-                                                                
-  Vol     ridgeless ↗ in c                             similar spike at cq = 1
-              spike at c = 1                          (similar magnitudes)
-                                                                
-  SR    ridgeless dip at c = 1                        ★ monotone ↗ in cq (Theorem 1)
-              z_* maximizes                           "permanent ascent" with z_*
-              (declining or flat trend)                "use the largest model"
+   Figure 1 (R²)            →   c=1 catastrophe + 회복
+        ↓
+   Figure 2 (E + Vol)       →   ridgeless E constant c<1
+        ↓
+   Figure 3 (SR)            →   모든 c 에서 SR > 0, c=1 dip
+        ↓
+        |
+   [Correctly Specified ↑]
+   ─────────────────────────────────────────────
+   [Misspecified ↓]
+        |
+        ↓
+   Figure 4 (R²)            →   Figure 1 + approximation gap
+        ↓
+   Figure 5 (E + Vol)       →   ★ E monotone increasing
+        ↓
+   Figure 6 (SR)            →   ★★ Theorem 1 visualization
+                                 monotone increasing (Permanent ascent)
 ```
 
 ---
 
-## 6.8 시뮬레이션의 메시지 (3가지)
+## 6.12 *실증과의 mapping* — 미리보기
 
-### (1) Identification 의 직접 검증
+Figure 1-6 가 *이론* 시뮬. 그러나 본 논문 Section V (Chapter 07) 의 *실증* 이 정확히 같은 패턴을 *CRSP 1926-2020 + RFF* 로 보임:
 
-같은 framework 하에서 correctly specified 와 misspecified 의 결정적 차이를 보임:
-- Correctly specified: simple > complex (simple model 이 충분).
-- Misspecified: **complex > simple** (approximation gain 우세).
+- **Figure 7** (실증, T=12) = Figure 4 의 empirical version.
+- **Figure 8** (실증, Sharpe) = Figure 6 의 empirical version — *monotone increasing in c*.
 
-### (2) Ridge 의 universal benefit
+저자 표현: **"Extraordinary agreement between empirical patterns and our theoretical predictions"** (놀라울 정도의 이론↔실증 일치).
 
-모든 setting 에서 $z > 0$ 이 $z = 0$ 보다 SR 면에서 일관되게 우월:
-- Bias 도입 < variance 감소 효과.
-- Optimal $z_*$ exists, $c$ 의 함수.
-
-### (3) Sharpe ratio decoupled from R²
-
-- R² 가 매우 음수 (-100% 이하) 인 영역에서도 SR > 0.
-- Campbell-Thompson mapping 의 limitation 입증.
+다음 챕터 [07_empirical](07_empirical.md) 가 이 *실증* 부분.
 
 ---
 
-## 6.9 실증과의 mapping
-
-Figures 7-11 (Section V, [07_empirical.md](07_empirical.md)) 이 정확히 같은 패턴을 CRSP 데이터 + RFF 로 보여줌:
-- Figure 7 (T=12) 이 Figure 4 의 empirical version.
-- Figure 8 의 Sharpe Panel A 가 Figure 6 의 empirical version — **monotone increasing in $c$**.
-
-→ 이론과 실증의 **extraordinary agreement** (저자 표현).
-
----
-
-## 자기점검 (이 챕터)
+## 6.13 자기점검
 
 ### 핵심 3가지
-1. **$\Psi = I$, $b_* = 0.2$ calibration 의 infeasible benchmark 값?**
-2. **Figure 1 (correctly) vs Figure 4 (misspecified) 의 가장 큰 차이?**
-3. **Figure 6 의 "double ascent" vs "permanent ascent" 의 구분?**
+1. **Figure 1 (correctly) 와 Figure 4 (misspecified) 의 가장 큰 차이?**
+2. **Figure 3 의 *놀라운* 발견?**
+3. **Figure 6 의 의미 — 본 논문 main statement?**
 
 ### 답변
-1. $b_* \psi_{*,1} = 0.2$. Infeasible expected return $\mathcal{E}_\infty = 0.2$. Infeasible second moment $\mathcal{V}_\infty = 3(0.2)^2 + 0.2 = 0.32$. **Infeasible Sharpe ratio $SR_\infty = 1/\sqrt{3 + 1/0.2} = 1/\sqrt{8} \approx 0.354$**. Infeasible $R^2 = 0.2/1.2 \approx 0.167$. 모든 Figure 의 red dashed reference.
-2. Figure 4 (misspecified) 의 $R^2$ 가 simple $cq$ 영역에서 Figure 1 보다 **더 낮음** — approximation gap (misspecified 의 cost). 둘 다 $cq = 1$ 부근 발산 및 ridgeless 회복은 유사. 본질적 차이는 Expected return (Figure 5 vs Figure 2) — **misspecified 에서 monotone increasing**, correctly specified 에서 constant or decreasing.
-3. **Double ascent** — ridgeless ($z = 0$) 의 Sharpe ratio 가 $cq = 1$ 부근에서 dip 후 양쪽 증가 (hump pattern). 통계학의 double descent (MSE) 의 거울 이미지. **Permanent ascent** — optimal shrinkage $z_*$ 와 함께 Sharpe ratio 가 $cq$ 의 monotone increasing (hump 없음, smooth). Theorem 1 의 의미: **충분한 ridge $z$ 만 더하면 double ascent 가 permanent ascent 로 변형**. 본 논문이 ridgeless 가 아닌 *optimal-shrinkage* 를 권장하는 이유.
+1. **R²**의 전체 모양 (c=1 catastrophe + 회복) 은 양쪽 비슷. **결정적 차이는 *기대 수익***: Figure 2 (correctly) 에서는 ridgeless 기대 수익이 *c < 1 에서 constant* (no decrease), Figure 5 (misspecified) 에서는 *cq 의 monotone increasing* — *복잡할수록 기대 수익 증가*. 이게 *misspecified 환경의 본질적 차이*.
+2. **Ridgeless (검정) 의 Sharpe ratio 가 *모든 c 에서 양수***. 즉 통상 직관 "변수 > 데이터 → overfit → 망함" 의 정면 반박. R² 가 *마이너스 100% 이하* 인 영역 (Figure 1) 에서도 Sharpe > 0 — *R² 와 Sharpe 의 분리*. 또한 *Ridge z > 0 가 모든 c 에서 ridgeless 보다 우월*.
+3. **모든 z 에서 Sharpe ratio 가 cq 의 monotone increasing** — Theorem 1 의 시각적 statement. Ridgeless 에서 *cq = 1 근처 약한 dip (double ascent)*, $z > 0$ 에서 *smooth monotone (permanent ascent)*. 의미: *Use the largest model you can compute* + *적절한 ridge 사용*. 이게 본 논문 의 *Use the largest model* 권장의 *수학적 근거*.
 
 ---
 
-다음 파일 [07_empirical.md](07_empirical.md) — Section V (Empirical) 의 CRSP 1926-2020 + RFF + Figures 7-11 + Table I 모든 결과 풀이.
+다음 챕터: [07_empirical.md](07_empirical.md) — 실제 미국 시장 1926-2020 결과 — *가장 흥미로운* 챕터.
