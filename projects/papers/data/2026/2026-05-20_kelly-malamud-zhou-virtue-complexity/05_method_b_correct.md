@@ -10,7 +10,7 @@
 
 ---
 
-## 5b.2 *Correctly specified* 가 뭐예요?
+## 5b.2 *Correctly specified* 가 뭐예요? — **Section III 의 모든 내용**
 
 ### 정의
 
@@ -34,7 +34,9 @@
 
 ---
 
-## 5b.3 첫 번째 그림 — Figure 1 (R² vs c)
+## 5b.3 첫 번째 그림 — Figure 1 (R² vs c, **Section III.A**)
+
+**Equation 11 (식 11)**: $MSE(z;c) = \lim E[(R - S'\hat\beta(z))^2 | \hat\beta(z)]$ — 본 논문 *OOS MSE* 의 정확한 정의.
 
 ![Figure 1 — 이상적 환경의 R²](figures/page18_Fig1_R2_norm.png)
 
@@ -91,7 +93,25 @@
 
 ---
 
-## 5b.4 Proposition 3 — 무엇이 모든 결과를 결정?
+## 5b.4 **Proposition 3 (정리 3) — 무엇이 모든 결과를 결정?**
+
+**Section III.A** 의 핵심 정리.
+
+**Equation 12 (식 12)**: Proposition 3 의 식 set — $\mathcal{E}, \mathcal{L}, R^2$ 의 closed form. 또한 $\nu, \nu', \hat\nu$ trace identity 정의.
+
+**Equation 13 (식 13)**: $R^2(0;c) = R^2(0;0) - (1+b_*\psi_{*,1})^{-1} \cdot \{c<1: (c^{-1}-1)^{-1}, c>1: \mu(c)\}$ — ridgeless 의 closed form.
+
+**Equation 14 (식 14)**: $\lim_{c \to \infty} R^2(0;c) = 0 > \lim_{c \to 1} R^2(0;c) = -\infty$ — ridgeless 의 limit behavior.
+
+**각주 27 (Cross-validation 권장)**: $z_*$ 는 *unknown* $b_*$ 의 추정 필요. 본 논문 결과는 *$z$ 에 둔감* — *cross-validation* 같은 simple methods 가 잘 작동.
+
+**각주 28 (Benign overfitting 명명)**: 통계학에서 *benign overfitting* 으로 불림.
+
+**각주 29 (Zero training error)**: $\beta'S_t = R_{t+1}$ for all $t$ — interpolation.
+
+**각주 30 (Benign overfit references)**: Spigler 2019, Belkin 2019, Belkin-Rakhlin-Tsybakov 2019, Belkin-Hsu-Xu 2020, Hastie 2022 — 통계학의 *2019-2022 wave*.
+
+**각주 31 (R²<0 + SR>0 의 simple example)**: 한 predictor + 추정 계수가 *true의 large multiple* — R² 음수 but 예측과 진짜 expected return 의 *correlation 완벽* — timing SR 양수.
 
 본 논문의 *공식 정리*:
 
@@ -180,7 +200,13 @@ z = 1 같은 *moderate ridge* 선이 *모든 c* 에서 ridgeless 보다 *위에 
 
 ---
 
-## 5b.7 Proposition 4 — Sharpe ratio 의 정확한 형식
+## 5b.7 **Proposition 4 (정리 4) — Sharpe ratio 의 정확한 형식**
+
+**Section III.B** 의 핵심 정리.
+
+**Equation 15 (식 15)**: $SR(z;c) = 1/\sqrt{2 + (1 + b_*\psi_{*,1}) \mathcal{L}/\mathcal{E}^2}$ — Proposition 4 의 식.
+
+**Equation 16 (식 16)**: $SR(z_*;c) = 1/\sqrt{2 + (1+b_*\psi_{*,1})/(b_*\nu(z_*;c))} < SR(0,0)$ — 최대 SR (infeasible 보다 작음).
 
 본 논문 정리:
 

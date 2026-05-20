@@ -10,7 +10,7 @@
 
 ---
 
-## 5a.2 도입 — 왜 새 도구 필요?
+## 5a.2 도입 — 왜 새 도구 필요? (**Section II 의 모든 내용**)
 
 ### 전통 통계의 *황금률*
 
@@ -166,9 +166,27 @@ P > T 면 z = 0 정확히는 안 되지만 *z → 0+* limit 정의 가능. 이�
 - 즉 *상당한 ridge shrinkage* 가 좋다.
 - 그러나 *z = 0 (ridgeless)* 도 *나쁘지 않음* — c = P/T 가 충분히 크면.
 
+**Section II.A — Least Squares Estimation**: 위 모든 내용 (OLS limit, ridge, ridgeless) 이 본 논문 Section II.A.
+
+**각주 22 (sparse vs ridge)**: 본 논문이 *LASSO* (sparse) 대신 *ridge* 선택의 이유 — (i) Giannone-Lenza-Primiceri (2021): 경제 데이터의 sparsity 는 illusion. (ii) RFF 같은 generated feature 는 sparsity 불명확. (iii) $\ell_1$ analysis 가 이론적으로 더 어려움.
+
+**각주 23 (Moore-Penrose pseudo-inverse 정의)**: $A^+ = \lim_{z \to 0+} (zI + A'A)^{-1} A' = \lim_{z \to 0+} A'(zI + AA')^{-1}$ — ridgeless 의 정확한 정의.
+
 ---
 
-## 5a.8 Proposition 2 — 본 챕터의 *핵심 정리*
+## 5a.8 **Proposition 2 (정리 2) — 본 챕터의 *핵심 정리***
+
+**Section II.B** — Random Matrix Theory connection.
+
+**Equation 9 (식 9)**: $m_\Psi(z) = \int 1/(x - z) dH(x) = \lim P^{-1} \text{tr}((\Psi - zI)^{-1})$ — *Stieltjes transform* 의 정의.
+
+**Equation 10 (식 10)**: $\xi(z;c) = (1 - z m(-z;c))/(c^{-1} - 1 + z m(-z;c))$ — Proposition 2 의 핵심 식.
+
+**각주 24 (Marchenko-Pastur 의 정확한 식)**: $\Psi = I$ 의 case 에서 $m(-z;c) = (-((1-c)+z) + \sqrt{((1-c)+z)^2 + 4cz})/(2cz)$ — explicit closed form. 또한 *$P > T$ ($c > 1$) 면 $\hat\Psi$ 가 $P-T$ 개의 zero eigenvalue 가짐 → singular part $(1-1/c)z^{-1}$*.
+
+**각주 25 (Nonlinear shrinkage)**: Ledoit-Wolf (2020) 의 nonlinear shrinkage estimator 사용 가능 — but 진짜 eigenvalue 분포 필요. 본 논문은 ridge 만.
+
+**각주 26 (Heuristic on E[Ψ̂])**: $E[\hat\Psi] = \Psi$ 이므로 *heuristically* $\text{tr} E[(zI+\hat\Psi)^{-1}\Psi] \approx \text{tr} E[(zI+\hat\Psi)^{-1}\hat\Psi]$. 그러나 random matrix corrections 가 *nonlinear* 관계로 만듦.
 
 > **"본 논문 분석의 모든 결과 (R², Sharpe ratio, 기대 수익, leverage) 가 *단일 함수 m(-z; c)* 로 결정. 이 함수가 *표본에서 직접 계산 가능* — 진짜 모집단 정보 필요 없음."**
 

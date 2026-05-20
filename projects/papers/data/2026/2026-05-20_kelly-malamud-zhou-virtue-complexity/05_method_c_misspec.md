@@ -10,7 +10,7 @@
 
 ---
 
-## 5c.2 *Misspecified* 가 뭐예요?
+## 5c.2 *Misspecified* 가 뭐예요? — **Section IV 의 모든 내용**
 
 ### 정의
 
@@ -68,6 +68,20 @@ George Box (1976) 의 명언: **"모든 모델은 틀렸지만 일부는 유용�
 
 ## 5c.5 *두 가지 효과* 의 새 trade-off
 
+**Assumption 5 (가정 5)** — sufficiently mixed signals: $H(x; q)$ 가 $q$-independent.
+
+**Equation 17 (식 17)**: $\xi_{2,1}(z; cq; q)$ + $\widehat\xi_{2,1}(z; cq; q)$ — observed-unobserved cross-correlation traces.
+
+**Equation 18 (식 18)**: $R^2(z; cq; q) = (2\mathcal{E} - \mathcal{L})/(1 + b_* \psi_{*,1}(1))$ — misspecified R² closed form.
+
+**Equation 19 (식 19)**: $\Psi = I$ 의 ridgeless limit 에서 $\mathcal{E}(0; cq; q) = b_*\psi_{*,1} \min\{q, c^{-1}\}$ — Figure 5 의 *flat* 패턴의 정확한 식.
+
+**Proposition 5 (정리 5)**: misspecified case 의 모든 limit.
+
+**Proposition 6 (정리 6)**: $\text{tr}(\Psi_{1,2}\Psi_{2,1}) = o(P)$ 의 경우 simplification.
+
+**각주 32 (finite-dim factor structure)**: $\Psi_P = D_P + Q_P$ where $\text{rank}(Q_P) < \infty$ — factor model 형태. 그 경우 cross-correlation 무시 가능 + Proposition 6 simplification 적용.
+
 본 챕터의 핵심 *trade-off*. 이걸 이해하면 본 논문 다 이해.
 
 ### 효과 1 — Approximation gain (근사 이득)
@@ -94,7 +108,9 @@ q ↗ 하면 *둘 다* 변화:
 
 ---
 
-## 5c.6 Theorem 1 — *복잡함의 미덕*
+## 5c.6 **Theorem 1 (정리 1) — *복잡함의 미덕***
+
+**본 논문 main result**. **Section IV** 의 결정적 정리.
 
 본 논문의 **가장 중요한 정리**:
 

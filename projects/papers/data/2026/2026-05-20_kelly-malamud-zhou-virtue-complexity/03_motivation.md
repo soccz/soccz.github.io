@@ -103,6 +103,10 @@
 
 ---
 
+**각주 3 (Terminology 주의)**: 통계학 + ML 분야가 *P > T* 를 *"overparameterized"* 또는 *"overfit"* 이라 부르지만 본 논문은 이 용어 피함. 이유: *true DGP 가 highly complex* 면 *correctly specified* model 도 *P > T* 필요. 본 논문이 사용하는 용어: *"high-complexity"* 또는 *"correctly parameterized"*.
+
+**각주 10 (Internet Appendix 위치)**: *Internet Appendix* 는 *Journal of Finance* 웹사이트 (Wiley) 의 article 페이지에서 다운로드 가능.
+
 ## 3.6 본 논문의 핵심 발견 — 미스터리의 답
 
 > **"적절한 안정장치 (ridge shrinkage) 만 더하면, 모델이 *복잡할수록* (변수 많을수록) *예측 성능 단조 증가*. 통상 직관과 정반대."**

@@ -10,7 +10,13 @@
 
 ---
 
-## 7.2 데이터 — 어떤 데이터를 썼나?
+## 7.2 데이터 — 어떤 데이터를 썼나? — **Section V.A**
+
+**각주 33 (Goyal-Welch 15 변수 + inflation timing)**: 15 변수 list = dfy, infl, svar, de, lty, tms, tbl, dfr, dp, dy, ltr, ep, b/m, ntis + lag market return. *Inflation* 의 timing convention 은 Goyal-Welch-Zafirov (2023) 동일. *Inflation 제외 시 결과 거의 동일* (Internet Appendix Figure IA2, Table IA2).
+
+**각주 34 (Volatility standardization)**: returns 를 *uncentered second moment* 로 표준편차 계산 — short window 의 *mean estimation noise* 회피.
+
+**각주 35 (Intercept 제외)**: 본 분석은 intercept 없는 regression. *Intercept 포함시* (Internet Appendix Figure IA12, Table IA1) intercept 가 *heavily shrunken* — 결과 동일.
 
 ### 시장 수익률
 - **CRSP value-weighted index** (Center for Research in Security Prices) 의 월간 *초과수익률* (excess return = 시장 - 무위험 자산).
@@ -47,7 +53,13 @@
 
 ---
 
-## 7.3 핵심 trick — 15 변수를 12,000 변수로
+## 7.3 핵심 trick — 15 변수를 12,000 변수로 — **Section V.B**
+
+**Equation 20 (식 20)**: $S_{i,t} = [\sin(\gamma \omega_i' G_t), \cos(\gamma \omega_i' G_t)]'$, $\omega_i \sim N(0, I)$ — Random Fourier Features 의 정확한 정의.
+
+**각주 36 (RFF approximation accuracy)**: Rahimi-Recht (2007) — RFF accuracy 는 *모델 복잡도 증가* 와 함께 향상. Zero complexity limit ($P/T \to 0$) 에서 *임의 smooth nonlinear function* arbitrarily well 근사. Non-zero complexity 의 경우 Mei-Misiakiewicz-Montanari (2022), Ghorbani et al (2020).
+
+**각주 37 (γ + RFF functional form)**: $\gamma$ 는 Gaussian kernel bandwidth. Random features 생성 방식 다양 (Liu 2021 survey). 본 논문 form 은 Sutherland-Schneider (2015) 의 tighter error bound 형식. Robust to alternative schemes.
 
 ### 문제
 
@@ -82,7 +94,13 @@ RFF + 선형 회귀 = **wide neural network with random fixed weights**.
 
 ---
 
-## 7.4 머신러닝 timing — *순서 *
+## 7.4 머신러닝 timing — *순서* — **Section V.C**
+
+**각주 38 (γ 값 선택)**: $\gamma = 2$. 본 논문 결과는 $\gamma$ 에 대체로 *insensitive* — Section V.F 의 robustness check.
+
+**각주 39 (Volatility standardization 순서)**: training 표본의 RFF + OOS RFF 를 *training sample* 표준편차로 정규화.
+
+**각주 40 (Empirical R², SR 계산)**: $R^2$ = 1 - (OOS forecast error variance / OOS realized return variance). SR = mean / centered std × √12.
 
 본 논문이 한 것:
 
@@ -163,6 +181,8 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 
 ## 7.7 Figure 9 — Longer training windows (T=60, 120)
 
+**각주 41 (Position scale 차이)**: T 길수록 *position scale (leverage)* 작음 — *β norm* 이 T 큰 경우 작아져서.
+
 ![Figure 9](figures/page34_Fig9_T60_120.png)
 
 *paper p.492 Figure 9.*
@@ -178,6 +198,8 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 ---
 
 ## 7.8 Figure 10 — Market Timing Positions ★★★
+
+**각주 42 (Campbell-Thompson constraint boost)**: CT constraint 명시적 부과 시 SR 0.47 → 0.54 (T=12), 0.42 → 0.50 (T=60), 0.41 → 0.49 (T=120). *명시적 부과의 추가 가치*.
 
 ![Figure 10](figures/page35_Fig10_positions_recession.png)
 
@@ -218,7 +240,11 @@ ML timing 의 position 이 *거의 항상 양*. 음의 position (short) 드물�
 
 ---
 
-## 7.9 *Table I* — Goyal-Welch 2008 와의 정면 비교 ★
+## 7.9 *Table I* — Goyal-Welch 2008 와의 정면 비교 ★ — **Section V.D**
+
+**각주 43 (Goyal-Welch-Zafirov 2023 update)**: Goyal-Welch (2008) 의 update. *timing-strategy performance* 일부 다룸.
+
+**각주 44 (Volatility standardization 의 robustness)**: Forecast target 은 *rolling 12-month volatility-standardized* market return. Raw return vs vol-standardized — 결과 동일.
 
 본 논문이 *Goyal-Welch (2008) 의 비관 결론* 을 *어떻게 정면 반박* 하는지 가장 명확한 표.
 
@@ -268,7 +294,11 @@ Linear ridge (SR 0.46) → Nonlinear ML (SR 0.47) — 약간 추가.
 
 ---
 
-## 7.10 Figure 11 — *어떤 변수가 가장 중요?*
+## 7.10 Figure 11 — *어떤 변수가 가장 중요?* — **Section V.E**
+
+**각주 45 (12-month variation)**: Internet Appendix Figure IA4 — 각 predictor 의 12-month window 내 *평균 variation*. Top 3 (lag mkt / ltr / dfr) 가 가장 *variable*.
+
+**각주 46 (ML vs "all 15 univariate" IR)**: ML 의 IR vs *15 univariate timing 의 tangency portfolio* (out-of-sample 기준) = 0.32 (t=2.9). *In-sample tangency 를 benchmark 로 안 쓰는 이유*: ML 이 OOS 이므로 *동일 OOS benchmark* 필요.
 
 ![Figure 11](figures/page38_Fig11_var_importance.png)
 
@@ -296,7 +326,15 @@ Linear ridge (SR 0.46) → Nonlinear ML (SR 0.47) — 약간 추가.
 
 ---
 
-## 7.11 *비선형성 정확히 무엇이 도움?*
+## 7.11 *비선형성 정확히 무엇이 도움?* — **Section V.F**
+
+**Equation 21 (식 21)**: $\sin(\gamma\omega'G) = \gamma\omega'G + O(\gamma^2)$, $\cos(\gamma\omega'G) = 1 - \gamma\omega'G + O(\gamma^2)$ — γ → 0 limit 에서 RFF 가 *linear* feature.
+
+**각주 47 (Internet Appendix IA Proposition 1)**: γ → 0 limit 에서 RFF model 이 *random linear features* 모델과 같음. Sin features only 의 case 의 정량.
+
+**각주 48 (Linear + Nonlinear ensemble)**: ML 과 Linear ridge ($z = 10^3$) 의 *equal-weighted average* — SR 0.53, IR vs market 0.37 — *추가 향상*.
+
+**각주 49 (Editor 의 momentum 지적)**: Editor 가 *time-series momentum* 와의 비교 제안. Internet Appendix Section VII 에 자세히 — ML signal ≠ momentum.
 
 본 논문 Section V.F:
 
