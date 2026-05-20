@@ -237,6 +237,10 @@ $$R_{t+1} = \sum_{i=1}^P S_{i,t} \beta_i + \tilde\varepsilon_{t+1}$$
 
 이 두 가지 발견이 본 논문의 가장 강력한 실증.
 
+각주 6: "*Surveys of this large literature include Koijen and Van Nieuwerburgh (2011), Cochrane (2011), and Rapach and Zhou (2022). For early machine learning approaches to market return prediction, see Rapach, Strauss, and Zhou (2010) and Kelly and Pruitt (2013).*"
+
+→ 시장 수익률 예측 문헌의 4개 핵심 survey: (i) Koijen-Van Nieuwerburgh (2011 *Annual Review*) — predictability of returns and cash flows. (ii) Cochrane (2011 *JF* presidential address) — discount rates 변화. (iii) Rapach-Zhou (2022 *Oxford Research Encyclopedia*) — asset pricing time-series predictability. ML 의 first wave: Rapach-Strauss-Zhou (2010), Kelly-Pruitt (2013).
+
 ---
 
 ## 3.11 열번째 단락 — 관련 문헌 (이론 + 실증)
@@ -260,6 +264,10 @@ $$R_{t+1} = \sum_{i=1}^P S_{i,t} \beta_i + \tilde\varepsilon_{t+1}$$
   - (ii) Method of proof — Yaskov (2016) 기반.
   - (iii) Ψ 의 nonuniform positive-definite 허용.
   - (iv) **Focus 가 forecast accuracy variance 가 아닌 OOS expected return / Sharpe ratio** — finance 관점.
+
+각주 9: "*See also Richards, Mourtada, and Rosasco (2021), who obtain less general results in an asymptotic setting (as in our paper).*"
+
+→ Richards-Mourtada-Rosasco (2021 *AISTATS*) 도 본 논문과 같은 asymptotic regime (T, P → ∞). 다만 Gaussian iid signals 요구 — RFF 같은 nonlinear feature 에는 적용 불가. 본 논문이 이 가정을 relax (Assumption 2 의 4-point moment condition).
 
 > **원문 (p.464)**: "Most importantly, instead of focusing on the prediction model forecast error variance, we characterize expected out-of-sample expected returns, volatility, and Sharpe ratios of market timing strategies based on machine learning predictions."
 
@@ -303,6 +311,10 @@ $$R_{t+1} = \sum_{i=1}^P S_{i,t} \beta_i + \tilde\varepsilon_{t+1}$$
 저자 가이드: "Sections I, II 의 기술적 내용을 건너뛰고 III–V 만 봐도 핵심 메시지 이해 가능."
 
 본 deep dive 는 **모든 정리·가정·각주·equation 풀어쓰기** 원칙이므로 I, II 도 전부 풀이.
+
+각주 10: "*The Internet Appendix is available in the online version of the article on The Journal of Finance website.*"
+
+→ Internet Appendix 는 *JF* 웹사이트 (Wiley Online Library) 의 article 페이지에서 다운로드 가능. 본 deep dive 는 Internet Appendix 의 핵심 결과 (Theorem 1A — Marchenko-Pastur generalization, Theorem 2 — Stieltjes 변환의 정확한 관계, IA1 — non-iid signals 의 일반화, IA1-IA12 의 robustness checks) 를 [05a_method_rmt](05_method_a_rmt.md) 와 [09_appendix_proof](09_appendix_proof.md) 에 발췌·풀이.
 
 ---
 

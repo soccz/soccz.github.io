@@ -242,6 +242,14 @@ $\beta' \Psi \beta \to b_* \psi_{*,1}$ — **expected return** 등 핵심 quanti
 
 각주 17: "*Define $\widetilde{SR} = E[R^\pi]/\sqrt{Var[R^\pi]}$. Direct calculation yields $SR = \frac{1}{\sqrt{1 + \widetilde{SR}^{-2}}}$.*"
 
+각주 19: "*In particular, the Sharpe ratio in equation (5) is less than one due to the Cauchy-Schwarz inequality. We show that the difference in Sharpe ratios for $\pi_t$ versus $\pi_t^{\text{Uncond. MV}}$ is on the order of the Sharpe ratio cubed.*"
+
+→ Eq (5) 의 *uncentered* SR 는 Cauchy-Schwarz 부등식에 의해 1 미만. 또한 본 논문이 사용하는 conditional MV timing $\pi_t = S_t'\beta$ 와 *true* unconditional MV optimizer $\pi_t^{\text{Uncond. MV}} = S_t'\beta / (1 + (S_t'\beta)^2)$ 의 SR 차이가 **SR 의 세제곱 order** — 즉 small SR (예: 0.1) 의 경우 0.001 정도로 무시 가능. 본 분석을 $\pi_t = S_t'\beta$ 의 linear form 으로 simplify 해도 결과 동일.
+
+각주 20: "*By a version of Lemma 1, $1 + (S_t'\beta)^2 \to 1 + b_*\psi_{*,1}$.*"
+
+→ $P \to \infty$ limit 에서 $(S_t'\beta)^2 = \beta'(S_tS_t')\beta$ 가 Lemma 1 적용으로 $b_* P^{-1}\text{tr}(\mathbb{E}[S_tS_t']) = b_*\psi_{*,1}$ 로 수렴. 따라서 $\pi_t^{\text{Uncond. MV}}$ 의 분모 $1 + (S_t'\beta)^2$ 가 **deterministic constant** $1 + b_*\psi_{*,1}$ 로 수렴 → $\pi_t = S_t'\beta$ 와 *동일 scaling* 의 timing 전략. 분석 simplification 의 핵심.
+
 ### Timing strategy functional form (Equation 6)
 
 > **원문 (p.468)**: "Our analysis centers on the following timing-strategy functional form:
