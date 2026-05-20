@@ -1,7 +1,132 @@
 {
-  "generated_at": "2026-05-19T16:50:42",
-  "count": 20,
+  "generated_at": "2026-05-20T00:35:23",
+  "count": 21,
   "papers": [
+    {
+      "slug": "2026-05-20_master-market-guided-stock-transformer",
+      "date": "2026-05-20",
+      "weekday": "수",
+      "bucket": "인접",
+      "title": "MASTER: Market-Guided Stock Transformer for Stock Price Forecasting",
+      "title_ko": "시장 정보 유도 주가 예측 트랜스포머",
+      "authors": "Tong Li, Zhaoyang Liu, Yanyan Shen, Xue Wang, Haokun Chen, Sen Huang",
+      "venue": "AAAI 2024 (Proceedings of the AAAI Conference on Artificial Intelligence, Vol. 38, No. 1)",
+      "identifier": "arXiv:2312.15235",
+      "code": "MIT 라이선스로 공개 (SJTU-DMTai/MASTER)",
+      "data": "CSI300/CSI800 오픈소스 버전 OneDrive/MEGA/Baidu 제공",
+      "tags": [
+        "fin-ts-dl",
+        "ts-transformer-baseline",
+        "probabilistic-forecast"
+      ],
+      "verdict": "주가 예측에서 \"어느 종목이 언제 상관되는가\"를 시장 지수로 동적 필터링하는 5단계 교번 어텐션은, APF의 attention motif × 금융 도메인 버전으로 읽히며 ProTran-TFA의 feature selection 모듈에 직접 이식 가능한 설계 원리를 제공한다.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00_README — MASTER: Market-Guided Stock Transformer for Stock Price Forecasting"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01_meta — 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02_tldr — 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03_problem — 문제 지형도"
+        },
+        {
+          "file": "04_claims.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04_claims — 핵심 Claim 해체"
+        },
+        {
+          "file": "05_method_a_intuition.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05_method_a_intuition — 방법론 전체 구조 (큰 그림)"
+        },
+        {
+          "file": "05_method_b_gating.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05_method_b_gating — 방법론: 시장 유도 게이팅 (Market-Guided Gating)"
+        },
+        {
+          "file": "05_method_c_intra_inter.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05_method_c_intra_inter — 방법론: 주내·주간 어텐션 집계"
+        },
+        {
+          "file": "05_method_d_temporal.md",
+          "num": "05",
+          "suffix": "d",
+          "title": "05_method_d_temporal — 방법론: 시간 집계·예측·학습 설정"
+        },
+        {
+          "file": "06_experiments.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06_experiments — 실험 해부"
+        },
+        {
+          "file": "07_limits.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07_limits — 가정·한계·반박"
+        },
+        {
+          "file": "08_lineage.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08_lineage — 이론적 계보"
+        },
+        {
+          "file": "09_my_research.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09_my_research — 내 연구와의 연결"
+        },
+        {
+          "file": "10_extensions_a_questions.md",
+          "num": "10",
+          "suffix": "a",
+          "title": "10_extensions_a_questions — 사고 확장: 자문 질문 5개"
+        },
+        {
+          "file": "10_extensions_b_followups.md",
+          "num": "10",
+          "suffix": "b",
+          "title": "10_extensions_b_followups — 사고 확장: 후속 논문 3편"
+        },
+        {
+          "file": "10_extensions_c_ideas.md",
+          "num": "10",
+          "suffix": "c",
+          "title": "10_extensions_c_ideas — 사고 확장: 실험 아이디어 2개"
+        },
+        {
+          "file": "11_verdict.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11_verdict — 한 줄 판결"
+        }
+      ],
+      "data_path": "data/2026/2026-05-20_master-market-guided-stock-transformer"
+    },
     {
       "slug": "2026-05-19_nie-patchtst-time-series-64-words",
       "date": "2026-05-19",
