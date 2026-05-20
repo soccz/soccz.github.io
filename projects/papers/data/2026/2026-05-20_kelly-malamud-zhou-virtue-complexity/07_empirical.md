@@ -132,20 +132,43 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 
 *paper p.490 Figure 7 — T=12 의 OOS performance.*
 
-### 4 panels
+### 어떻게 읽나? (Step-by-step)
 
-- **Panel A**: OOS R².
-- **Panel B**: $\|\hat\beta\|$ norm (계수 크기).
-- **Panel C**: Expected return.
-- **Panel D**: Volatility.
+**Step 1 — 4 panel 구조**
 
-### 핵심 발견
+- **Panel A**: OOS R² — *예측 정확도*.
+- **Panel B**: $\|\hat\beta\|$ norm — *계수 크기*.
+- **Panel C**: Expected return — *기대 수익*.
+- **Panel D**: Volatility — *변동성*.
 
-**Panel C (Expected return) 가 가장 흥미**:
-- *c 작음*: 기대 수익 거의 0 (simple model 못 학습).
-- *c ↗*: 기대 수익 *단조 증가*. *c=1 에서 peak*, 그 후 *flat*.
+**Step 2 — 축 + X-axis break**
 
-→ 이론 (Figure 5) 와 *놀라운 일치*. 본 논문 메시지의 *실증 검증*.
+- **X-axis**: $c = P/T$ (T = 12, P = 2 → 12,000). Break: $[0, 50] + [990, 1000]$.
+- **Y-axes**: 각 metric.
+
+**Step 3 — Panel C (Expected return) 가장 중요**
+
+이게 *Figure 5 (이론 misspecified) 의 실증 버전*.
+
+- $c < 1$: 기대 수익 *거의 0*. Simple model 못 학습.
+- $c = 0.5 \sim 1$: 점차 *상승*.
+- $c \approx 1$: *peak* (약 0.03/월).
+- $c > 1$: *flat 또는 약간 감소* — Eq 19 의 정확한 패턴.
+
+→ **이론 (Eq 19) 의 실증 검증** — 놀라운 일치.
+
+**Step 4 — 4 panel 종합**
+
+| Panel | $c < 1$ | $c \approx 1$ | $c > 1$ |
+|-------|---------|---------------|---------|
+| A (R²) | 감소 → -∞ | 발산 | 회복 (Fig 1 패턴) |
+| B (β norm) | 정상 | spike | 감소 |
+| C (E[return]) | 0 → 0.03 | peak | flat |
+| D (Vol) | 정상 | spike | 감소 |
+
+**핵심**: 이론 (Figures 1, 4) 의 *모든 패턴* 이 실증에서 확인.
+
+### Figure 7 panels (T=12) — 상세
 
 ---
 
@@ -155,24 +178,61 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 
 *paper p.491 Figure 8 — T=12 의 Sharpe / α / IR / t-stat.*
 
-### 4 panels
+### 어떻게 읽나? (Step-by-step)
 
-- **A**: Sharpe ratio.
-- **B**: Alpha (시장 대비 초과 수익).
-- **C**: Information Ratio (alpha / 잔차 변동성).
-- **D**: Alpha t-statistic (통계 유의성).
+**Step 1 — 그래프 구조**
 
-### 핵심 발견
+이건 *4 panel* (2×2 격자). 각 panel 이 *다른 metric* 를 c 의 함수로.
 
-**Panel A (Sharpe)**:
-- *모든 z 에서 c 의 monotone increasing*.
-- 고복잡도 (c → 1000): SR > 0.4.
+**Step 2 — 4 panel 의미**
 
-**Panel D (t-stat)**:
-- 고복잡도: t-stat > 2.5.
-- *Statistically significant*.
+- **Panel A (좌상)**: **Sharpe ratio**. Range $[0, 0.5]$. *가장 중요한 그래프*.
+- **Panel B (우상)**: **Alpha** (월간). Range $[0, 0.04]$. 시장 buy-and-hold 보다 *얼마나 더* 수익.
+- **Panel C (좌하)**: **Information Ratio**. Range $[0, 0.35]$. *Alpha / 잔차 변동성* — *시장 위의 risk-adjusted 알파*.
+- **Panel D (우하)**: **Alpha t-statistic**. Range $[0, 3.5]$. *통계 유의성*. **t > 2 = significant**, **t > 3 = robust**.
 
-→ **Theorem 1 의 실증 검증**. 이론과 실증의 일치.
+**Step 3 — X-axis 의 특별한 break**
+
+X-axis 가 *두 부분으로 분할*: 
+- 왼쪽: $c \in [0, 50]$.
+- 오른쪽: $c \in [990, 1000]$.
+
+이유: T=12 + P=2-12,000 = c 최대 1000. *대부분 변화* 가 $c < 50$ 에서, *최종 stabilization* 이 $c \approx 1000$ 에서.
+
+**Step 4 — 어떻게 읽나? (모든 panel 공통 패턴)**
+
+1. **$c < 1$**: 모든 metric *낮음* (거의 0). Simple model 잘 안 됨.
+2. **$c = 1$ 근처**: *작은 dip* (ridgeless 만, $z = 10^{-3}$).
+3. **$c = 5 \sim 50$**: 모든 metric *급격히 상승*.
+4. **$c \approx 1000$**: 모든 metric *최고점 + 안정*.
+
+**Step 5 — 핵심 수치 (오른쪽 부분, $c \approx 1000$)**
+
+- **Panel A**: 고복잡도 SR ≈ **0.40-0.47** (z 별 약간 차이).
+- **Panel B**: 고복잡도 alpha ≈ **0.025/월** (= 30 bps/월, 연환산 3.6%).
+- **Panel C**: 고복잡도 IR ≈ **0.31** (시장 buy-and-hold 위에 alpha-like 정도).
+- **Panel D**: 고복잡도 t-stat ≈ **2.5-2.9** (statistically significant).
+
+**Step 6 — 핵심 발견 3가지**
+
+#### ★ 발견 1 — *모든 metric 이 c 의 monotone increasing*
+
+Theorem 1 (이론) 의 *실증 검증*. 이론과 실증의 *놀라운 일치* — 본 논문 표현: *"extraordinary agreement"*.
+
+#### 발견 2 — *통계 유의성 (t > 2.5)*
+
+자산가격결정 학계에서 *t > 3 = robust new anomaly* 기준. 본 논문 t = 4.5 (Table I, T=12, Nonlinear ML) — **매우 robust**.
+
+#### 발견 3 — *Buy-and-hold 위의 alpha 0.025/월*
+
+ML timing 이 *시장 buy-and-hold 위에 추가 3.6%/year alpha*. *Real economic value*.
+
+### 일상 비유 — Quant 펀드의 ML 운용
+
+이게 *AQR, Two Sigma 같은 quant 펀드* 의 *실제 운용 결과 와 유사*. 90년 backtest 에서 *시장 위에 3.6%/year* — 펀드 업계에서 *극도로 매력적*.
+
+```viz:voc-empirical-sharpe:title=Figure 8 — 실증 SR / α / IR / t-stat (interactive),caption=T 토글 (12/60/120). c, z 슬라이더. 모든 setting 에서 Sharpe 단조 증가, IR 약 0.3, t-stat > 2.5 고복잡도. Theorem 1 의 실증 일치.
+```
 
 ```viz:voc-empirical-sharpe:title=Figure 8 — 실증 SR / α / IR / t-stat (interactive),caption=T 토글 (12/60/120). c, z 슬라이더. 모든 setting 에서 Sharpe 단조 증가, IR 약 0.3, t-stat > 2.5 고복잡도. Theorem 1 의 실증 일치.
 ```
@@ -187,19 +247,110 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 
 *paper p.492 Figure 9.*
 
-### 결과
+### 어떻게 읽나?
+
+**Step 1 — 4 panel 구조**
+
+- *Top row (T=60)*: Panel A IR, B alpha t-stat.
+- *Bottom row (T=120)*: Panel C IR, D alpha t-stat.
+
+**Step 2 — X-axis break**
+
+X-axis: T=60 의 경우 $c \in [0, 12] + [195, 200]$ (P/T 에서 c 최대 200). T=120 의 경우 $c \in [0, 12] + [95, 100]$.
+
+**Step 3 — 결과**
 
 - T = 60 (5년): 같은 monotone increasing 패턴. IR ≈ 0.25, t-stat > 2.0.
 - T = 120 (10년): 같은 패턴. IR ≈ 0.25.
-- **Magnitude 약간 감소** — T 길수록 leverage 작아져서.
+- **Magnitude 약간 감소** (vs T=12 의 IR 0.31). T 길수록 *leverage 작아져서*.
 
-**메시지**: *결과가 T 에 *robust***. 정성 패턴 모두 동일.
+**메시지**: *결과가 T 에 robust*. *정성 패턴 모두 동일*.
 
 ---
 
 ## 7.8 Figure 10 — Market Timing Positions ★★★
 
 **각주 42 (Campbell-Thompson constraint boost)**: CT constraint 명시적 부과 시 SR 0.47 → 0.54 (T=12), 0.42 → 0.50 (T=60), 0.41 → 0.49 (T=120). *명시적 부과의 추가 가치*.
+
+### 어떻게 읽나? (Step-by-step) — *가장 흥미로운 그림*
+
+**Step 1 — 그래프 구조**
+
+이건 *시계열 그래프*. X-axis 가 *시간 (1930-2020)* — 약 90년.
+
+**Step 2 — 축 의미**
+
+- **X-axis**: 시간. 1930년부터 2020년까지. *90년 시계열*.
+- **Y-axis**: *Market timing position $\hat\pi_t$*. 시점 $t$ 의 *시장 비중*.
+  - $\hat\pi = 0.1$ → 시장 10% 매수.
+  - $\hat\pi = 0.5$ → 시장 50% 매수.
+  - $\hat\pi = -0.05$ → 시장 5% short.
+- **회색 음영**: **NBER recessions (15 침체)**.
+
+**Step 3 — 3 색 선 의 의미**
+
+- **파랑**: T = 12 (1년 학습 window).
+- **빨강**: T = 60 (5년).
+- **주황**: T = 120 (10년).
+
+세 색이 *비슷한 패턴* — *robust*.
+
+**Step 4 — 어떻게 읽나? (놀라운 패턴 찾기)**
+
+#### Pattern 1: *Long-only at heart*
+
+전체 시계열에서:
+- 파랑 (T=12): 거의 항상 *0 위* (양의 position). 가끔 *0.1-0.5 양의 spike*.
+- 빨강 (T=60), 주황 (T=120): 항상 *0 위*, 변동 작음.
+- **음의 position (short) 드물고 작음** — 거의 *0 또는 약간 음의 0.05*.
+
+**놀라운 의미**: ML 이 *constraint 없이* *long-only* 학습. Campbell-Thompson (2008) 의 *nonnegativity constraint* 와 일치.
+
+#### Pattern 2: *NBER recession 직전 자동 비중 감소*
+
+회색 음영 (recessions) 직전 몇 개월:
+- 1929-33 (대공황): 파랑 선 *큰 spike 하강* (거의 0 으로) 직전. 회색 음영 동안 *낮은 position*.
+- 1973-75 (오일쇼크): 1972 부터 파랑 선 *낮은 position*. 1975 회복 후 다시 증가.
+- 1981-82 (Volcker): 1980 부터 *낮은 position*.
+- 1990-91: 1989 부터 *낮은 position*.
+- 2001 (닷컴): 2000 부터 *낮은 position*.
+- 2007-09 (GFC): 2007 부터 *낮은 position*.
+- 2020 (COVID): 2019 부터 *낮은 position*.
+
+→ **14/15 침체에서 *자동 divest***.
+
+#### Pattern 3: *1945 예외*
+
+회색 음영 1945 부근: 파랑 선이 *높은 position 유지* — 즉 *divest 안 함*.
+
+이게 본 논문 표현: *"the eight-month recession of 1945"*.
+
+이유: WWII 직후 *구조적 break* — 학습 데이터 (1930-44) 가 *전쟁기* + *예측 어려움*.
+
+**Step 5 — 3가지 *놀라운 발견***
+
+#### ★ 발견 1 — *Long-only at heart*
+
+ML 이 *constraint 없이* *long-only 학습*. Campbell-Thompson (2008) 의 *manual constraint* 의 *자동 학습*.
+
+#### ★★ 발견 2 — *14/15 NBER recessions 자동 divest*
+
+90년 데이터 + 15 침체. *14개* 침체에서 ML 이 *직전 자동 비중 감소*. *Real-time signal*. *Purely out-of-sample*.
+
+**Macro economics 의 *holy grail***. NBER 침체를 *real-time 으로 detect* 하는 게 50년 학자들의 dream — ML 이 *Goyal-Welch 15 변수* 만으로 달성.
+
+#### 발견 3 — *T 무관 robustness*
+
+3 색 (T = 12, 60, 120) 모두 *비슷한 timing 패턴*. 학습 window 길이 무관 — *signal 이 견고*.
+
+### 일상 비유 — 의사의 진단
+
+의사가 환자의 *심박수, 혈압, 체온, ...* 보고 *위험* 인지 판단. 위험하면 *처방 약화* (시장 비중 감소), 안전하면 *처방 강화* (시장 비중 증가).
+
+ML 이 이걸 *자동 학습* — *학자 사전 지식 없이*, *NBER 침체 직전* 의 *macro 패턴* 인식 + *비중 감소*.
+
+```viz:voc-empirical-positions:title=Figure 10 — Market timing + NBER recessions (interactive),caption=T 토글 (12/60/120). 1930-2020 시계열. 회색 음영 = NBER recessions 15개. 14개에서 자동 비중 감소.
+```
 
 ![Figure 10](figures/page35_Fig10_positions_recession.png)
 
@@ -270,6 +421,95 @@ ML timing 의 position 이 *거의 항상 양*. 음의 position (short) 드물�
 | Linear + ridge | -3.8% | 0.46 (t = 4.4) | 2.4 SD | -0.1 |
 | **Nonlinear ML** | **+0.6%** | **0.47 (t = 4.5)** | **1.2 SD** | **+2.5** |
 
+### Table I 의 row-by-row 해석 가이드
+
+**Step 1 — Table 구조**
+
+이 표는 *3 panel × 3 model = 9 행*. 
+
+- *Panel A (T=12)*: 1년 학습 window.
+- *Panel B (T=60)*: 5년 학습 window.
+- *Panel C (T=120)*: 10년 학습 window.
+
+각 panel 에 *3 model*:
+- *Linear ridgeless*: GW (2008) 의 정확한 setting — *역사 비관 결론 확인*.
+- *Linear + ridge*: 같은 15 변수 + ridge 만 추가 — *방법론 변화의 효과*.
+- *Nonlinear ML*: RFF 12,000 + ridge — *본 논문 main result*.
+
+**Step 2 — 각 column 의미 (T=12 panel 기준)**
+
+| Column | 의미 | 좋은 방향 |
+|--------|------|---------|
+| OOS R² | 예측 정확도 | 위 (양수 좋음) |
+| Sharpe ratio | 위험 대비 수익 | 위 (1+ 최고) |
+| t-stat (Sharpe) | 통계 유의성 | $|t| > 2$ significant |
+| Max Loss (SD) | 최대 월간 손실 | 아래 (작을수록 좋음) |
+| Skewness | 분포 모양 | 위 (양수 = 우상향 꼬리) |
+
+**Step 3 — Row-by-row 해석**
+
+#### Row 1: Linear ridgeless (T=12, GW 2008 의 setting)
+
+- **R² < -100%** (정확히 -9764%): 예측 *완전 망함*.
+- **SR = -0.11** (t = -1.0): timing 전략이 시장보다 *나쁨*, 통계 유의성 *없음*.
+- **Max Loss = 98.5 SD**: 한 달에 *98 표준편차 손실* — 실용 불가.
+- **Skewness = -0.9**: 좌상향 꼬리 (큰 손실 가능).
+
+→ **이게 Goyal-Welch (2008) 의 결론** — *시장 예측 불가능*.
+
+#### Row 2: Linear + ridge ($z = 10^3$, 같은 15 변수)
+
+- **R² = -3.8%**: 여전히 음수 — *예측 정확도는 여전히 나쁨*.
+- **SR = 0.46** (t = 4.4): **극적 변신**. 시장 위에 +0.46 SR, 매우 robust.
+- **Max Loss = 2.4 SD**: 정상 범위.
+- **Skewness = -0.1**: 거의 symmetric.
+
+→ **놀라운 발견**: *Ridge 만 추가했는데 SR -0.11 → 0.46*. **방법론의 한계** 였다는 증명.
+
+#### Row 3: Nonlinear ML (RFF 12,000 + ridge, 본 논문 main)
+
+- **R² = +0.6%**: **양수**. 다른 두 model 보다 우월.
+- **SR = 0.47** (t = 4.5): Linear ridge 와 거의 같음. 그러나:
+- **Max Loss = 1.2 SD**: *가장 안전*. Tail risk 최소.
+- **Skewness = +2.5**: **우상향 fat tail** — *큰 수익 가능, 큰 손실 안전*.
+
+→ **비선형 ML 의 *진짜 이점***: *Sharpe ratio 약간 + Max Loss 매우 감소 + Skewness positive*. 종합 *risk-adjusted 우월*.
+
+#### IR vs Linear (추가 column)
+
+본 논문이 *Nonlinear ML 의 alpha vs Linear ridge* 계산:
+- **IR = 0.26 (t = 2.5)**: 비선형성의 *추가 alpha* — significant.
+
+→ **비선형성이 단순 ridge 위에 +0.26 IR 의 *진짜 추가 가치***.
+
+**Step 4 — 3가지 핵심 발견 (Table I 전체)**
+
+#### ★ 발견 1 — *Ridge 만으로 GW 결론 reversal*
+
+Linear ridgeless (망함) → Linear ridge (SR 0.46). *같은 15 변수* 로 *180° 결론 변화*.
+
+→ **Goyal-Welch (2008) 의 비관은 *데이터의 한계가 아닌 방법론의 한계*** 였다는 명확한 증명.
+
+#### 발견 2 — *Nonlinear ML 의 tail risk 우월*
+
+Max Loss: 98.5 → 2.4 → **1.2 SD**. Skewness: -0.9 → -0.1 → **+2.5**. 즉 *비선형 ML 이 가장 안전 + 가장 우상향*.
+
+#### 발견 3 — *T 무관 robustness*
+
+Panel A (T=12), B (T=60), C (T=120) 모두 같은 정성적 패턴. *Nonlinear ML 의 SR ≈ 0.41-0.47*. *학습 window 길이 무관*.
+
+### 일상 비유 — 의사의 진단법 비교
+
+3 의사:
+- *Linear ridgeless* (의사 1): 환자 증상 15개 보고 *과도하게 confident 처방*. *처방 effect 폭발*.
+- *Linear + ridge* (의사 2): 같은 15 증상 + *적당히 conservative* 처방. *효과 좋음 + 안전*.
+- *Nonlinear ML* (의사 3): 15 증상의 *비선형 interaction* 까지 봄 + *적당히 conservative*. *효과 비슷 + 가장 안전 + risk on/off 자동*.
+
+본 논문 권장: *의사 3 의 방식*.
+
+```viz:voc-comparison-table1:title=Table I — Goyal-Welch 비교 (interactive),caption=T 토글 + metric 토글 (SR/R²/MaxLoss/Skew). 3 모델 막대 비교. 비선형 ML 의 tail risk 우수.
+```
+
 ### 핵심 발견
 
 #### Finding 1 — Ridge 만으로 *완전 변신*
@@ -304,22 +544,45 @@ Linear ridge (SR 0.46) → Nonlinear ML (SR 0.47) — 약간 추가.
 
 *paper p.496 Figure 11 — Variable importance.*
 
-### 친근 풀이
+### 어떻게 읽나? (Step-by-step)
 
-각 변수의 *변수 중요도 (VI)* = "이 변수 *없으면* 모델 성능 *얼마나 떨어지나?".
+**Step 1 — 그래프 구조**
 
-**Top 3 (가장 중요)**:
-1. **`lag mkt`** (전월 시장 수익률): R² 1.9% 감소.
-2. **`ltr`** (장기 채권 수익률): R² 1.3% 감소.
+이 그림은 *bar chart + line chart 결합*. 15 predictor 가 X-axis 에 배치.
+
+**Step 2 — 축 의미**
+
+- **X-axis**: 15 predictor (lag mkt, ltr, dfr, svar, infl, ...).
+- **Y-axis (Left)**: VI in R² — bar 형태. *높은 bar = 중요한 변수*.
+- **Y-axis (Right)**: VI in Sharpe — line 형태. *높은 line = 중요한 변수*.
+
+**Step 3 — VI 계산법**
+
+각 변수의 *변수 중요도 (VI)* = "이 변수 *없으면* 모델 성능 *얼마나 떨어지나?". 
+
+방법: 15 변수 model 의 성능 - 14 변수 model (한 변수 제거) 의 성능.
+
+**Step 4 — Top 3 식별 (왼쪽부터)**
+
+1. **`lag mkt`** (전월 시장 수익률): **R² 1.9% 감소**, Sharpe 0.12 감소.
+2. **`ltr`** (장기 채권 수익률): R² 1.3% 감소, Sharpe 0.09 감소.
 3. **`dfr`** (default 채권 수익률): R² 0.8% 감소.
 
-### *왜* 이 3개?
+→ **Top 3 가 ML 의 핵심 정보원**.
 
-세 변수 모두 *12개월 window 내에서 변동 큰* 변수.
+**Step 5 — 왜 이 3개?**
 
-**대비**: `dp` (배당-가격), `dy` (배당 수익률) 같은 *느린* 변수는 VI 작음.
+세 변수 모두 *12개월 window 내에서 변동 큰* 변수 (각주 45, Internet Appendix IA4 의 확인).
 
-**메시지**: ML 이 *short-horizon 변동* 을 효과적으로 활용 (느린 변수 X, 빠른 변수 O).
+**대비**:
+- *느린 변수* (`dp` 배당-가격, `dy` 배당 수익률, `b/m`): VI 0 근처.
+- *빠른 변수* (lag mkt, ltr, dfr): VI 큼.
+
+**메시지**: **ML 이 *short-horizon 변동* 을 효과적으로 활용**.
+
+### 일상 비유
+
+의사가 환자의 *fast-changing 증상* (체온, 심박, 혈압) 이 *slow-changing 증상* (키, 체질) 보다 *current 위험 판단* 에 더 유용. ML 이 같은 원리로 *빠른 변수* (lag mkt) 가 *느린 변수* (배당률) 보다 *current market 위험* 판단에 더 유용.
 
 ```viz:voc-variable-importance:title=Figure 11 — 15 predictor VI (interactive),caption=R² (bars) + Sharpe (line) VI. Top 3: lag mkt / ltr / dfr — 12-month window 에서 가장 변동 큰 변수.
 ```

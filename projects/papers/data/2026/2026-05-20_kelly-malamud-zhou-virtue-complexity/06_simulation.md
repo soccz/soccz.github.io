@@ -34,28 +34,63 @@
 
 *paper p.476 Figure 1 — Left: R² vs c. Right: ‖β̂‖.*
 
-### 친근 풀이 — Left panel
+### 어떻게 읽나? (Step-by-step)
 
-**x-axis** = $c = P/T$ = 모델 복잡도. *오른쪽 = 복잡함*.
+**Step 1 — 그래프 구조 파악**
 
-**y-axis** = OOS R² (예측 정확도). *위쪽 = 정확*.
+이 그림은 *두 panel* (왼쪽 + 오른쪽). 각 panel 은 *6개의 곡선* 이 같은 axes 위에 그려짐.
 
-**색상**: 각 ridge shrinkage 값.
-- *검정*: ridgeless (z ≈ 0).
-- 노랑·빨강·보라: $z = 0.01, 0.1, 1, 10, 50$.
+**Step 2 — Left panel 의 축 의미**
 
-### 핵심 패턴
+- **X-axis (가로)**: $c = P/T$ = "모델 복잡도". $c = 0$ (왼쪽 끝) = 데이터 무한히 많음. $c = 10$ (오른쪽 끝) = 변수가 데이터의 10배.
+- **Y-axis (세로)**: OOS R² (out-of-sample 예측 정확도). Range $[-0.3, 0.3]$. **+0.3 = 매우 정확, 0 = 평균 정도, -0.3 = 평균보다 나쁨**. *y < 0 = 모델 망함*.
 
-1. **빨간 점선 (infeasible)**: R² = 0.167.
-2. **검정 (ridgeless)**: c < 1 점차 감소; **c → 1 에서 -∞** (catastrophe!); c > 1 회복.
-3. **z > 0**: catastrophe 완화. 가장 부드러운: $z = 1$ (or $z = 10$).
-4. **$z = 50$**: R² 거의 0 — over-shrunken.
+**Step 3 — 6개 곡선 의 의미** (각 색)
 
-**메시지**: *변수 ≈ 데이터* 영역이 *통상 통계의 무덤*. Ridge 가 살림.
+- **검정** (Ridgeless): $z \approx 0$ — *안정장치 없음*.
+- **노랑** ($z = 0.01$): 매우 약한 ridge.
+- **빨강** ($z = 0.1$): 약한 ridge.
+- **보라** ($z = 1$): 중간 ridge.
+- **하늘색** ($z = 10$): 강한 ridge.
+- **연두** ($z = 50$): 매우 강한 ridge.
 
-### Right panel — ‖β̂‖
+**빨간 점선** (`True`): Infeasible upper bound = 0.167 (신의 R²). *모든 선이 이 점선 아래여야* 함.
 
-학자의 *추정 계수 크기* 가 c=1 부근에서 *6+* 까지 spike (= 폭발). Ridge 가 *normal range* 로 끌어내림.
+**Step 4 — 어떻게 읽나? (왼쪽 → 오른쪽 순서)**
+
+1. **$c = 0$ 근처** (그래프 가장 왼쪽): 모든 선이 *빨간 점선 (0.167) 근처*. 즉 *데이터 무한대면 모든 모델이 infeasible 에 가까움*.
+2. **$c = 0.1 \sim 0.8$**: 검정 선이 점차 *떨어짐* (위에서 아래로). 다른 선들은 *비슷한 수준 유지* (z > 0 이 안정).
+3. **$c = 1$ 근처 (★ 가장 중요한 지점)**: 검정 선이 *수직으로 떨어짐* — *Y축 -0.3 아래로 사라짐* (실제는 -∞ 발산). 이게 **catastrophe** — interpolation boundary.
+4. **$c = 1.5 \sim 3$**: 검정 선이 *다시 올라옴* — $c > 1$ ridgeless 의 *implicit regularization* 작동.
+5. **$c = 5 \sim 10$**: 모든 선이 *대체로 0 근처* — 충분히 큰 c 에서 모든 모델이 *infeasible 보다 약간 손실* 정도.
+
+**Step 5 — 주목할 패턴 3가지**
+
+1. **$c = 1$ 부근 catastrophe** (검정 선) — *interpolation boundary* 의 끔찍한 결과.
+2. **$c > 1$ 회복** (검정 선) — 통상 직관 ("$c > 1$ → 망함") 반박. **Benign overfit**.
+3. **Ridge 가 catastrophe 완화** (보라 / 하늘 선) — 적당한 $z$ 가 *interpolation boundary 통과* 안전.
+
+### Right panel — ‖β̂‖ (계수 크기)
+
+**축 의미**:
+- X-axis: 같은 c.
+- Y-axis: 학자가 *추정한 계수의 크기* (norm). Range $[0, 6]$.
+
+**Step 6 — 어떻게 읽나?**
+
+1. **$c = 0$ 근처**: 모든 선 *낮은 위치* (norm ≈ 1). 정상.
+2. **$c = 1$ 부근**: **검정 선 (ridgeless) 가 6 까지 *spike***. 계수가 *비정상적으로 커짐* — 폭발.
+3. **$c > 1$**: 검정 선 norm 다시 감소. ridgeless 의 *smallest norm property*.
+4. **다른 ridge 선들**: $c = 1$ 부근 spike *완화* (작게 0-2 사이).
+
+**연결**: Left panel 의 *R² catastrophe* = Right panel 의 *norm spike* — 같은 현상의 두 측면. *계수 폭발 → forecast 폭발 → R² → -∞*.
+
+### 핵심 메시지
+
+> **"$c = 1$ 부근 = ridgeless 의 catastrophe. Ridge 가 이걸 막아주는 *안정장치*. $c > 1$ 에서 ridgeless 가 다시 회복하는 게 benign overfit."**
+
+```viz:voc-r2-curve:title=Figure 1 — R² (interactive),caption=c 슬라이더 + z 슬라이더. ridgeless 의 c=1 catastrophe + c>1 회복. 적절한 z 가 catastrophe 완화. infeasible 빨간 점선이 reference.
+```
 
 ```viz:voc-r2-curve:title=Figure 1 — R² (interactive),caption=c 슬라이더 + z 슬라이더. ridgeless 의 c=1 catastrophe + c>1 회복. 적절한 z 가 catastrophe 완화. infeasible 빨간 점선이 reference.
 ```
@@ -68,21 +103,50 @@
 
 *paper p.478 Figure 2.*
 
-### Left panel — Expected return (기대 수익)
+### 어떻게 읽나? (Step-by-step)
 
-**검정 (ridgeless)**: c < 1 에서 *constant 0.2* (infeasible 동일). OLS 의 unbiasedness 덕분. c > 1 에서 감소.
+**Step 1 — 두 panel 구조**
 
-**z > 0**: 모든 c 에서 *기대 수익 감소* (heavier shrinkage 의 bias).
+이 그림은 *두 panel* (Expected Return + Volatility). 같은 *6 색* 곡선 + *infeasible 점선*.
 
-**핵심 메시지**: *Ridgeless 의 c < 1 에서 기대 수익 perfect* — 그러나 *Sharpe ratio* 는 다른 얘기 (Figure 3).
+**Step 2 — Left panel 의 축 의미**
 
-### Right panel — Volatility
+- **X-axis**: $c = P/T$.
+- **Y-axis**: Expected return $\mathcal{E}(z; c)$. Range $[0, 0.20]$. **0.2 = 신 (infeasible) 의 기대 수익**.
 
-**검정 (ridgeless)**: c = 1 에서 *6+ spike*. 좌우 부드럽게 회복.
+**Step 3 — Left panel 읽는 방법**
 
-**z > 0**: *모든 c 에서 안정* (특히 c=1 부근).
+1. **$c = 0$ 근처**: 모든 선이 *0.2 근처* (infeasible 와 같음).
+2. **$c < 1$, 검정 선**: 거의 *constant 0.2* (수평). 즉 *ridgeless 의 기대 수익이 c 와 무관*. 이게 *OLS 의 unbiasedness*.
+3. **$c < 1$, ridge 선들**: 점차 *감소*. Ridge 가 *bias 도입* — 기대 수익 손실.
+4. **$c = 1$ 부근**: 모든 선이 *complex 행동*. 검정은 spike 없음 (변동성은 spike).
+5. **$c > 1$**: 모든 선이 *감소*. Ridgeless 도 *implicit shrinkage* 로 기대 수익 감소.
 
-**일상 비유**: 학자의 timing 전략의 *변동성* 이 c=1 에서 *폭발*. Ridge 가 *안정장치*.
+**주목할 패턴**: 
+- **검정 선의 $c < 1$ flat 0.2** = ridgeless 의 *기대 수익 perfect*.
+- **다른 ridge 선의 감소** = *bias cost*.
+
+### Right panel — Volatility (변동성)
+
+**축 의미**:
+- X-axis: 같은 c.
+- Y-axis: timing 전략의 *변동성 (표준편차)*. Range $[0, 6]$.
+
+**Step 4 — 어떻게 읽나?**
+
+1. **$c < 0.5$**: 모든 선 *낮음* (변동성 1-2). 정상.
+2. **$c = 1$ 부근**: **검정 선이 6 까지 spike** — *변동성 폭발*.
+3. **$c > 1$**: 검정 선 *감소*. Ridgeless 의 implicit regularization 효과.
+4. **Ridge 선들**: 모든 c 에서 *낮은 변동성* (특히 $z = 10$ 가 가장 낮음).
+
+**주목할 패턴**:
+- **$c = 1$ 검정 선 spike** = *catastrophe* 의 두 번째 측면 (Figure 1 의 R² 발산 + Figure 2 의 vol spike).
+
+### 핵심 통찰 — Figure 1 + Figure 2 결합
+
+> **"$c = 1$ 부근 *ridgeless 의 두 가지 문제*: (i) R² 음의 발산 (Figure 1 left), (ii) 변동성 spike (Figure 2 right). 두 문제 모두 *Sharpe ratio = E/Vol* 를 *영향*: 분자 (기대 수익) 유지, 분모 (변동성) 폭발 → Sharpe ratio = $0.2/6 \approx 0.03$ — 거의 0."**
+
+다음 Figure 3 가 이 결합 결과를 보여줌.
 
 ---
 
@@ -92,33 +156,67 @@
 
 *paper p.479 Figure 3 — 이 챕터의 *가장 중요한* 그림.*
 
-### 친근 풀이
+### 어떻게 읽나? (Step-by-step)
 
-**y-axis** = Sharpe ratio.
-- *빨간 점선* = 0.354 (infeasible 신).
-- 모든 선 *이 점선 아래*.
+**Step 1 — 그래프 구조**
 
-### 핵심 발견 1 — *모든* c 에서 SR > 0
+이건 *단일 panel*. 6개 색 + 빨간 점선.
 
-검정 (ridgeless) 부터 z=50 까지 *모든* 선이 *0 위*. 즉 **timing 전략이 *어디서나* 양의 SR 향상**.
+**Step 2 — 축 의미**
+
+- **X-axis**: $c = P/T$. Range $[0, 10]$.
+- **Y-axis**: **Sharpe ratio**. Range $[0, 0.4]$. **0.354 (빨간 점선) = infeasible 신의 Sharpe**.
+
+**Step 3 — 어떻게 읽나? (왼쪽 → 오른쪽)**
+
+1. **$c = 0$ 근처**: 모든 선 *infeasible 점선 (0.354) 근처* — 신과 같음.
+2. **$c = 0.1 \sim 0.7$**: 검정 (ridgeless) 가 *점차 감소* (0.354 → 약 0.20). 다른 선들은 *덜 감소* 또는 *비슷 유지*.
+3. **$c = 0.8 \sim 1.2$ (★ 가장 중요한 영역)**: 모든 선 *최저점 도달*. 검정 선 = *0.02 까지 떨어짐* (거의 0). 그러나 *양수 유지* — 즉 *망하진 않음*.
+4. **$c = 1.5 \sim 3$**: 모든 선 *점차 회복*. 검정 선이 *0.05 정도로 stabilize*.
+5. **$c = 5 \sim 10$**: 모든 선 *거의 비슷한 수준* (0.04 ~ 0.10).
+
+**Step 4 — 4가지 핵심 발견**
+
+#### 발견 1 — *모든 c 에서 모든 선 > 0*
+
+가장 *놀라운* 결과. *Ridgeless* (검정) 라도 *어떤 c 에서도* SR > 0. 
+
+**일상 비유**: 학자의 timing 전략이 *어디서도 시장 buy-and-hold 보다 나쁘진 않음*. *최소한 *동등 또는 약간 향상*.
 
 → **통상 직관 ("변수 > 데이터 → 망함") 의 정면 반박**.
 
-### 핵심 발견 2 — c = 1 부근 dip
+#### 발견 2 — $c = 1$ 부근 dip
 
-모든 선 의 SR 가 c = 1 부근 *최소*. 그러나 *양수 유지*.
+모든 선의 SR 최저점이 $c = 1$ 부근. 검정 선이 *가장 깊이 dip*.
 
-**일상 비유**: 학자가 *interpolation boundary 근처* 에서 timing 한다 해도 *근거 약함* 정도 — 망하진 않음.
+**일상 비유**: 학자가 *interpolation boundary 근처* (변수 ≈ 데이터) 에서 timing 하면 *근거 약한 결과* — 망하진 않음, but 가장 *약함*.
 
-### 핵심 발견 3 — *Ridge 가 ridgeless 보다 우월*
+#### 발견 3 — Ridge 가 ridgeless 보다 우월
 
-$z = 1$ 같은 *적당한 ridge* 가 *모든 c 에서 ridgeless 위*.
+$z = 1$ 같은 *적당한 ridge* (보라 선) 가 *모든 c* 에서 *검정 (ridgeless) 위*.
+
+**일상 비유**: 학자가 *항상 안정장치 추가* 하면 *항상 좋다*.
 
 → **본 논문 권장**: *적당한 ridge 항상 사용*.
 
-### 핵심 발견 4 — 비대칭 회복
+#### 발견 4 — 비대칭 회복 + benign overfit
 
-c > 1 에서 ridgeless 의 SR 가 *영원히* 양수 유지. **Theorem 1 의 *precursor* (correctly specified case)**.
+$c > 1$ 에서 검정 선이 *영원히 양수 유지* + *대체로 0.05 근처에서 stabilize*. *변수 무한대로 늘려도* SR > 0.
+
+**일상 비유**: *변수 12,000개 + 데이터 12* 같은 *극단적 high-dimensional* 환경에서도 ridgeless 가 *작동*.
+
+### 핵심 메시지 + R² 와의 관계
+
+**Figure 1 + 3 결합**:
+- $c = 1$ 부근: Figure 1 의 R² = $-\infty$ (catastrophe), Figure 3 의 SR ≈ 0 (dip).
+- $c > 5$: Figure 1 의 R² ≈ 0, Figure 3 의 SR ≈ 0.05 (양수).
+
+> **"R² 가 *음수 ($-100\%$ 이하)* 임에도 SR > 0 가능 — 즉 *경제 가치 와 통계 정확도 의 분리*."**
+
+이게 본 논문의 *가장 강력한 메시지* 중 하나.
+
+```viz:voc-sharpe-curve:title=Figure 3 — Sharpe ratio (interactive),caption=c 슬라이더 + z 슬라이더. 모든 c 에서 ridgeless SR > 0 (R² 음수 임에도). c=1 dip 그러나 양수 유지. z=1 가장 robust.
+```
 
 ```viz:voc-sharpe-curve:title=Figure 3 — Sharpe ratio (interactive),caption=c 슬라이더 + z 슬라이더. 모든 c 에서 ridgeless SR > 0 (R² 음수 임에도). c=1 dip 그러나 양수 유지. z=1 가장 robust.
 ```
@@ -154,18 +252,30 @@ c > 1 에서 ridgeless 의 SR 가 *영원히* 양수 유지. **Theorem 1 의 *pr
 
 *paper p.485 Figure 4 — Left: R². Right: ‖β̂‖.*
 
-### 친근 풀이
+### 어떻게 읽나? (Step-by-step)
 
-**x-axis** = $cq$ (학자 모델의 복잡도). True c = 10 고정.
+**Step 1 — Setup**
 
-**y-axis** = OOS R².
+이 그림은 *Figure 1 의 misspecified 버전*. Same 6 색 + 빨간 점선 + 2 panel.
 
-### 패턴 (Figure 1 과 비교)
+**Step 2 — 축 의미**
 
-- *전체적 모양 비슷*: cq → 1 catastrophe + cq > 1 회복.
-- *다른 점*: simple model (cq 작음) 의 R² 가 *Figure 1 보다 더 낮음* — **approximation gap**.
+- **X-axis**: **$cq$** (학자 모델의 *empirical 복잡도*, not c). True DGP $c = 10$ 고정.
+- **Y-axis (Left)**: OOS R². Range $[-0.3, 0.2]$.
+- **Y-axis (Right)**: $\|\hat\beta\|$ norm.
 
-**메시지**: 학자가 *진짜 자연의 일부* 만 보면 *예측 정확도 손실*. 이게 *misspecified cost*. 그러나 cq 늘리면 손실 줄어듦.
+**Step 3 — Figure 1 과 비교 (가장 빠르게 의미 파악)**
+
+- *전체 모양 비슷*: $cq = 1$ catastrophe + $cq > 1$ 회복.
+- **결정적 차이**: Simple $cq$ 영역의 R² 가 *Figure 1 보다 약 50% 더 낮음* — **approximation gap** (학자가 진짜 자연의 *일부만* capture 해서 손실).
+
+**Step 4 — 핵심 발견**
+
+1. **$cq = 0.1$**: Figure 1 의 약 0.16 대비 *0.05 정도* — *misspecification cost*.
+2. **$cq \to 10$ (= q = 1 = correctly specified)**: Figure 1 의 $c = 10$ 과 같은 수준 — *cost 사라짐*.
+3. **$cq = 1$ catastrophe**: Figure 1 과 동일.
+
+**메시지**: 학자가 *진짜 자연의 일부* 만 보면 *예측 정확도 손실*. 이게 *misspecified cost*. 그러나 *cq 늘리면 cost 줄어듦*.
 
 ---
 
@@ -175,23 +285,37 @@ c > 1 에서 ridgeless 의 SR 가 *영원히* 양수 유지. **Theorem 1 의 *pr
 
 *paper p.485 Figure 5.*
 
-### Left panel — Expected return (가장 큰 차이)
+### 어떻게 읽나? (Step-by-step)
 
-**Figure 2 와 비교**:
-- Figure 2 (correctly specified): ridgeless 의 기대 수익 *c < 1 constant* (no decrease).
-- **Figure 5 (misspecified)**: ridgeless 의 기대 수익 *cq 의 monotone increasing*! 
+**Step 1 — Setup**
 
-**핵심 발견**:
-- Simple model (cq 작음): 기대 수익 낮음 (approximation gap).
-- cq ↗: 기대 수익 *단조 증가*.
-- *cq = 1 에서 peak* ($b_*\psi_{*,1} \cdot c^{-1} = 0.02$).
-- *cq > 1 에서 flat* (Equation 19 의 정확한 식).
+Figure 2 (correctly specified) 의 *misspecified 버전*. 같은 2 panel + 6 색.
 
-이게 **본 논문의 가장 강력한 발견**: *Misspecified 에서 기대 수익이 복잡도와 함께 증가*.
+**Step 2 — Left panel — Expected return (★ Figure 2 와 가장 큰 차이)**
+
+- **X-axis**: $cq$. **Y-axis**: $\mathcal{E}$. Range $[0, 0.025]$.
+- **결정적 차이 (vs Figure 2)**:
+  - Figure 2: ridgeless 의 E *c < 1 에서 constant 0.2*.
+  - Figure 5: ridgeless 의 E *cq 의 monotone increasing*!
+
+**Step 3 — Left panel 어떻게 읽나?**
+
+1. **$cq = 0.1$**: 모든 선 *0 근처* (학자가 변수 적음).
+2. **$cq = 0.5$**: 검정 선 *0.01 까지 상승*.
+3. **$cq = 1$**: 검정 선 *0.02 peak*.
+4. **$cq > 1$**: 검정 선 *flat 0.02 유지* (Eq 19 의 식 $b_*\psi_{*,1} \min\{q, c^{-1}\}$ 의 정확한 패턴).
+
+**Step 4 — 가장 강력한 발견**
+
+**기대 수익이 *cq 의 monotone increasing*** — Figure 2 (correctly specified) 의 *constant* 와 정반대.
+
+→ 이게 **misspecified case 의 핵심**: *학자가 더 많은 변수 사용할수록 기대 수익 단조 증가*.
 
 ### Right panel — Volatility
 
-Figure 2 와 유사: cq = 1 spike + 회복.
+Figure 2 와 유사: $cq = 1$ spike + 회복. *변동성 행동* 은 misspecification 무관.
+
+**메시지**: *Figure 5 left panel 이 Theorem 1 의 *경제적* 의미*. Expected return 단조 증가 → Sharpe ratio 단조 증가 (Figure 6).
 
 ---
 
@@ -199,36 +323,87 @@ Figure 2 와 유사: cq = 1 spike + 회복.
 
 ![Figure 6](figures/page28_Fig6_misspec_monotone.png)
 
-*paper p.486 Figure 6 — **본 논문 의 가장 중요한 그림**.*
+*paper p.486 Figure 6 — **본 논문 의 가장 중요한 그림**. Deep dive 의 *preview viz* 도 이 figure 의 interactive 버전.*
 
-### 친근 풀이
+### 어떻게 읽나? (Step-by-step) — *가장 중요한 그림*
 
-**y-axis** = Sharpe ratio.
+**Step 1 — 그래프 구조**
 
-**핵심 발견 1 — *모든* z 에서 monotone 증가**
+이건 *단일 panel*. **모든 곡선이 *위로 올라간다*** 가 핵심 패턴.
 
-검정 (ridgeless) 부터 $z = 50$ 까지 **모든 선이 cq 의 monotone increasing 함수**.
+**Step 2 — 축 의미**
 
-→ **Theorem 1 의 시각적 statement**.
+- **X-axis**: $cq$ = 학자 모델 의 *empirical 복잡도*. Range $[0, 10]$. 
+  - $cq = 0$: 학자가 *변수 거의 못 봄* (가장 simple model).
+  - $cq = 10$: 학자가 *진짜 자연의 모든 변수* 봄 (correctly specified).
+- **Y-axis**: **Sharpe ratio**. Range $[0, 0.06]$. *위쪽 = timing 잘함*.
+- **Calibration**: True DGP complexity $c = 10$ 고정.
 
-### 핵심 발견 2 — Ridgeless 의 *double ascent*
+**Step 3 — 6개 곡선 의 의미**
 
-검정 (ridgeless) 에서 *cq = 1 부근 약한 dip*. 그러나 *그 후 다시 증가*. 즉:
-- *cq < 1*: 증가.
-- *cq = 1*: 약한 감소.
-- *cq > 1*: 다시 증가.
+같은 색상 코드 (Figure 1 과 동일):
+- 검정 (Ridgeless), 노랑·빨강·보라·하늘·연두 = $z = 10^{-3}, 10^{-2}, 10^{-1}, 1, 10, 50$.
 
-→ **Double ascent** 패턴.
+**Step 4 — 어떻게 읽나? (왼쪽 → 오른쪽)**
 
-### 핵심 발견 3 — *Permanent ascent* (적절한 z)
+1. **$cq = 0$ 근처** (가장 왼쪽): 모든 선 *0 근처* (학자가 변수 거의 못 보니 timing 안 됨).
+2. **$cq = 0.1 \sim 0.9$**: 모든 선이 *점차 위로 상승*. *Approximation gain* 의 직접 시각화.
+3. **$cq = 1$ 근처** (★ 주목 지점): 검정 선이 *약한 dip*. 다른 선들은 *부드러운 증가*.
+4. **$cq = 1.5 \sim 5$**: 모든 선이 *계속 상승*. 점차 *기울기 둔화* (concave 성질).
+5. **$cq = 10$ (correctly specified)**: 모든 선이 *최고점 도달* (SR ≈ 0.05).
 
-$z > 0$ 의 선들 (특히 $z = 10$, $50$): *dip 없이 부드럽게 monotone 증가* — **Permanent ascent**.
+**Step 5 — 4가지 핵심 발견 (이 그림의 모든 의미)**
 
-→ Theorem 1 의 정확한 statement: *적절한 ridge 면 dip 사라짐*.
+#### ★ 발견 1 — *모든* 곡선 monotone 증가
 
-### 의미
+검정 (ridgeless) 부터 $z = 50$ 까지 *모두* — *cq 의 함수로 단조 증가*. 
 
-**Use the largest model you can compute** — *수학적 명령*.
+→ **이게 Theorem 1 의 시각적 statement**: *복잡함이 미덕*.
+
+#### 발견 2 — Ridgeless 의 *double ascent*
+
+검정 선만 *$cq = 1$ 부근 약한 dip*. 그러나 *dip 후 다시 증가*. 즉:
+- $cq < 1$: 증가.
+- $cq = 1$ 근처: 약한 감소 (dip).
+- $cq > 1$: 다시 증가.
+
+이게 **double ascent** — *증가-dip-증가*.
+
+#### 발견 3 — *Permanent ascent* ($z > 0$)
+
+보라/하늘/연두 선 (z ≥ 1): *dip 없이 부드러운 monotone 증가* — **Permanent ascent**.
+
+→ **Theorem 1 의 정확한 statement**: *적절한 ridge 면 dip 사라지고 부드럽게 단조 증가*.
+
+#### 발견 4 — Concavity (기울기 둔화)
+
+모든 선이 *왼쪽에서 가파르게 상승*, *오른쪽으로 갈수록 기울기 감소*. **Concave** — *추가 변수의 효과 점차 감소*. Diminishing returns to complexity.
+
+### 일상 비유 — 학생 시험 점수
+
+학생이 *공부 시간 vs 시험 점수*. 
+
+- *공부 1시간*: 점수 거의 0 (못 배움).
+- *공부 5시간*: 점수 60.
+- *공부 10시간*: 점수 75.
+- *공부 20시간*: 점수 85.
+
+→ 공부 시간 늘릴수록 *점수 단조 증가*, but *추가 효과 점차 감소* (concave).
+
+본 논문 비유: 학자가 *변수 수 늘릴수록 timing 단조 좋아지지만 추가 효과 점차 감소*. **Theorem 1 의 *기울기 둔화* 의 의미**.
+
+### 의미 — *Use the largest model you can compute*
+
+이 그림이 본 논문 결론의 *수학적 명령*:
+
+> **"학자는 계산 가능한 가장 큰 모델을 사용해야 한다. 더 많이 일수록 SR 더 좋다 (단, 적절한 ridge 와 함께)."**
+
+이게 *자산가격결정 분야의 새 권장 사항*.
+
+```viz:voc-misspec-monotone:title=Figure 6 — Theorem 1 (Virtue of Complexity) (interactive),caption=★ 본 논문의 가장 중요한 시각화. cq 슬라이더 + z 슬라이더. 모든 z 에서 SR monotone increasing — Theorem 1. Ridgeless 의 cq=1 dip (double ascent), z > 0 에서 smooth (permanent ascent).
+```
+
+→ **이 viz 가 본 deep dive 의 preview** (LANDING 페이지의 preview).
 
 ```viz:voc-misspec-monotone:title=Figure 6 — Theorem 1 (Virtue of Complexity) (interactive),caption=★ 본 논문의 가장 중요한 시각화. cq 슬라이더 + z 슬라이더. 모든 z 에서 SR monotone increasing — Theorem 1. Ridgeless 의 cq=1 dip (double ascent), z > 0 에서 smooth (permanent ascent).
 ```
