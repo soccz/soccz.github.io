@@ -1,10 +1,43 @@
-# 19 Diagrams & Interactive Visualizations
+# 19. Diagrams & Interactive Visualizations
+
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 핵심 개념을 **ASCII 도식 7 개** 로 정리
+- **인터랙티브 viz 카탈로그 8 개** — 챕터별 어느 viz 가 어디 inline 됐는지
+- Eq 1-21 의 한 줄 요약 summary
+- 발표용 추천 그림 3 개
+
+---
 
 ASCII 도식 + interactive viz 카탈로그.
 
 ---
 
+## ★ 본 chapter 의 사용법
+
+본 deep dive 의 모든 시각적 자료를 한 곳에 정리. 두 종류:
+
+1. **ASCII 도식 (7개)**: 종이/터미널에서도 볼 수 있는 정적 도식. 본 chapter 전체.
+2. **인터랙티브 viz (8개)**: `qf-*` 식별자로 deep.html / read.html 에 렌더링. 슬라이더·토글 가능.
+
+| 용도 | 추천 자료 |
+|------|---------|
+| 전체 architecture 이해 | ASCII 도식 1 (전체 architecture) |
+| 분해 단계 따라가기 | ASCII 도식 2 (2-stage decomp) + `qf-drift-divergence` viz |
+| VAE 내부 변수 흐름 | ASCII 도식 3 (VAE graph) + `qf-vae-graph` viz |
+| Fusion attention 이해 | ASCII 도식 4 (fusion flow) |
+| Loss 모양 이해 | ASCII 도식 5 (pinball V-shape) |
+| Metric 직관 | ASCII 도식 6 (cpaw 의 두 component) |
+| 4년 진화 이해 | ASCII 도식 7 (Autoformer→QuantileFormer) |
+| Table 분석 | `qf-qrisk-table1`, `qf-cpaw-table3`, `qf-ablation-table4` viz |
+| Hyperparameter k 영향 | `qf-hyperparam-k` viz (Fig 3 재현) |
+| Probabilistic interval 비교 | `qf-quantile-prediction` viz (Fig 4 재현) |
+
+---
+
 ## ASCII 도식 1 — 전체 architecture
+
+> **🎯 한 줄 메시지**: "**본 paper 의 architecture 한 그림** — 시계열 입력 → 두 path 로 분리 (drift / divergence) → 각각 처리 (Transformer / VAE) → fusion 으로 결합 → quantile 예측".
 
 ```
    원본 시계열 χ
@@ -46,6 +79,8 @@ ASCII 도식 + interactive viz 카탈로그.
 
 ## ASCII 도식 2 — Pattern-Mixture Decomposition 의 2-stage
 
+> **🎯 한 줄 메시지**: "**시계열을 2 단계로 분해**: (1) drift + divergence (Eq 4), (2) divergence → K Gaussian mixture (Eq 7). Autoformer (1-stage) 의 일반화".
+
 ```
    Stage 1: Drift-Divergence Decomposition (Eq 4)
    ──────────────────────────────────────────────
@@ -67,6 +102,8 @@ ASCII 도식 + interactive viz 카탈로그.
 ---
 
 ## ASCII 도식 3 — VAE 의 변수 그래프 (Eq 9)
+
+> **🎯 한 줄 메시지**: "**VAE 의 잠재 변수 의존 관계** — Beta-Bernoulli prior + Gaussian prior 의 결합으로 mixture weight $\pi$ 학습".
 
 ```
    priors (encoder ϕ 가 추정):
@@ -100,6 +137,8 @@ ASCII 도식 + interactive viz 카탈로그.
 ---
 
 ## ASCII 도식 4 — Fusion Transformer 의 흐름
+
+> **🎯 한 줄 메시지**: "**Cross-attention 의 정보 흐름** — Query=divergence (모름), Key/Value=drift (앎) → divergence 가 drift 에서 정보 추출 → fusion".
 
 ```
         χ^Q_eout (drift)             χ^d_out (divergence)
@@ -138,6 +177,8 @@ ASCII 도식 + interactive viz 카탈로그.
 
 ## ASCII 도식 5 — Pinball Loss 의 모양
 
+> **🎯 한 줄 메시지**: "**비대칭 V-shape loss** — $\tau=0.9$ 일 때 왼쪽 (under-pred) 경사 0.9 vs 오른쪽 (over-pred) 경사 0.1 → 모델이 위로 치우친 예측 학습 = 90 percentile".
+
 ```
    τ = 0.5 (median):
        ↑
@@ -163,6 +204,8 @@ ASCII 도식 + interactive viz 카탈로그.
 
 ## ASCII 도식 6 — cpaw 의 두 component
 
+> **🎯 한 줄 메시지**: "**PINAW (폭) × PICP (coverage) 의 결합** — 좁 + 정확 = best, 넓 + 정확 = useless, 좁 + 부정확 = 위험. cpaw 가 한 metric 으로 다 평가".
+
 ```
    prediction
    ─────────────────────
@@ -184,6 +227,8 @@ ASCII 도식 + interactive viz 카탈로그.
 ---
 
 ## ASCII 도식 7 — Autoformer (2021) vs QuantileFormer (2025) 의 진화
+
+> **🎯 한 줄 메시지**: "**4 년 진화** — 2 분해 (trend+seasonal) → 3 분해 (drift+divergence+GMM), Auto-Correlation → Cross-Attention, deterministic → probabilistic".
 
 ```
    ┌─────────────────── 2021 Autoformer ───────────────────┐
@@ -249,6 +294,24 @@ ASCII 도식 + interactive viz 카탈로그.
 ```
 
 → Sweet spot: **multi-modal + multi-quantile + decomposable** 시계열.
+
+---
+
+## ★ 7개 ASCII 도식의 핵심 통찰 — 한 줄씩
+
+각 도식이 왜 존재하는지, 무엇을 시각화하는지:
+
+| 도식 # | 무엇을 보여주나 | 왜 중요한가 |
+|--------|--------------|----------|
+| 1. 전체 architecture | 입력 → 분해 → 두 path → fusion → output 의 정신적 모델 | paper Fig 2 를 단순화 — **5초 안에 전체 흐름 파악** |
+| 2. 2-stage decomp | drift-divergence (Stage 1) + GMM (Stage 2) 의 순차 | 분해가 **2 stage** 임을 시각적으로 강조 — 기존 1 stage 분해 (Autoformer) 와 차별 |
+| 3. VAE 변수 graph | priors (ν, ζ, ς, κ) → samples (b, λ, c) → latent z → output | 가장 복잡한 chapter (ch07) 의 변수들 관계를 한 그림으로 |
+| 4. Fusion 흐름 | drift K/V, divergence Q 의 비대칭 cross-attention | Q/K/V 의 source 차이를 시각화 — ch09 의 ★ 통찰과 sync |
+| 5. Pinball V-shape | $\tau = 0.5$ 대칭, $\tau = 0.9$ 비대칭 | "**왜 quantile 학습되는가**" 의 시각적 직관 |
+| 6. cpaw component | PINAW (width) + PICP (coverage) 의 결합 | metric 의 두 측면을 한 그림으로 |
+| 7. Autoformer→QuantileFormer 진화 | 4년 사이의 5가지 진화 | paper 의 **역사적 위치** 명확화 |
+
+→ 7개 도식이 본 deep dive 의 7 chapter 핵심을 시각화 (ch06, 06, 07, 09, 10, 11, 15).
 
 ---
 

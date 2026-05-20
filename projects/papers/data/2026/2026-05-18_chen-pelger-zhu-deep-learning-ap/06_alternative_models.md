@@ -132,3 +132,43 @@ paper p.19:
 1. LS 의 FOC: $\mathbb{E}[(1 - \theta^\top \tilde F) \tilde F^\top] = 0$ ⇔ $\theta = (\mathbb{E}[\tilde F \tilde F^\top])^{-1} \mathbb{E}[\tilde F]$. 이는 정확히 **conditional MVE portfolio weights** on $\tilde F$ — second moment matrix 역행렬 × first moment. Markowitz tangency portfolio formula.
 2. **(1) Ridge form**: KNS 는 Bayesian prior 기반 modified ridge; 본 논문은 standard ridge. **(2) Interaction**: KNS 는 cross-product terms 포함; 본 논문 EN 은 raw factors only. **(3) Demeaning**: KNS demeaned; 본 논문 non-demeaned (paper footnote 22 의 5가지 차이 중 핵심).
 3. paper 인용: "the best performing feedforward network from Gu, Kelly, and Xiu (2020)'s comparison study. Within their framework this model outperforms tree learning approaches and other linear and non-linear prediction models." — GKX (2020) 가 RF, XGBoost 등을 모두 비교 후 FFN 이 최우수라고 결론. 본 논문은 그 FFN 의 architecture (hyperparameter 포함) 를 그대로 채택.
+
+---
+
+## 6.7 4 모델의 Test SR 분해 — 각 element 의 효과 (Table I 기반)
+
+paper Table I 의 Test SR:
+- LS 0.42 → EN 0.50 → FFN 0.44 → GAN 0.75.
+
+### Element 별 기여 분해
+
+| 변화 | SR 효과 | 의미 |
+|------|---------|------|
+| LS → EN | +0.08 (+19%) | **L1/L2 정규화** 효과 (selection + shrinkage) |
+| EN → FFN | -0.06 (-12%) | Linear → Nonlinear 하지만 no-arb 잃음 = **net 손해** |
+| EN → GAN | +0.25 (+50%) | Linear → Nonlinear + adversarial + LSTM (모두 추가) |
+| FFN → GAN | +0.31 (+70%) | No-arb + adversarial + LSTM 추가 효과 |
+
+→ **No-arbitrage 가 가장 큰 contribution** (EN → FFN 의 음의 효과, FFN → GAN 의 큰 양의 효과).
+
+### 4 element 의 ablation (paper Fig 6 + Table I)
+
+| Setting | Components | Test SR |
+|---------|-----------|---------|
+| LS (no macro) | linear + no-arb (only chars) | 0.42 |
+| EN (no macro) | + L1/L2 | 0.50 |
+| FFN (no macro) | + nonlinear (but no no-arb) | 0.44 |
+| GAN (no macro) | + adversarial + no-arb + nonlinear | ~0.65 |
+| GAN (full) | + LSTM macro | 0.75 |
+| GAN (all macro raw) | + macro raw (no LSTM) | collapse (~0.10) |
+| UNC (no adv) | LSTM + no-arb but g=const | ~0.55 |
+
+### 결론
+
+**4 element 가 모두 필요**:
+1. Nonlinear (FFN) — without 시 EN 보다 0.50 → ~0.40 정도.
+2. No-arbitrage — without 시 FFN 의 0.44 정도.
+3. Adversarial — without 시 UNC 의 0.55 정도.
+4. LSTM macro — without 시 0.65 정도.
+
+→ **GAN 0.75** 는 4 element 의 **곱적 효과**.

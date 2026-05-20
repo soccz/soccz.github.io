@@ -130,3 +130,49 @@ $$
 1. SR 은 **extreme portfolio** 의 weight 만 잘 잡으면 높을 수 있음. 그러나 실제 자산가격결정은 **모든** 자산을 잘 가격결정해야 함 — middle quintile 도. paper Pelger-Xiong (2019) 의 "proximate factor" 결과: extreme factor weight 만 정확해도 SR 비슷하지만 loading 자체는 틀릴 수 있음. → EV, XS-R² 가 보완.
 2. **EV** 는 **시계열 R²** — 개별 stock 의 cross-sectional regression residual $\epsilon$ 의 분산 비율 (non-demeaned). **XS-R²** 는 **횡단면 mean R²** — $\hat\alpha_i = \bar\epsilon_{T_i}$ 의 분산 비율. EV 는 "stock 변동 설명", XS-R² 는 "stock 평균 설명". 자산가격결정의 본질은 **mean** 이므로 XS-R² 가 더 중요.
 3. β 의 정의는 SDF model 의 implications 와 일관해야 함. GAN 은 **second moment** $\mathbb{E}[F R^e]$ 를 직접 추정 (no-arbitrage 의 정확한 표현). FFN 은 conditional mean μ ∝ β (Eq $\mu = \beta E[F]$). EN/LS 는 같은 second moment 의 regression. 모델의 SDF representation 에 맞춰 일관성 유지.
+
+---
+
+## 7.8 paper Appendix B simulation 의 자세한 결과
+
+paper Appendix B 의 simulation 이 3 metric 의 보완성 입증:
+
+### Simulation setup
+- Synthetic stock returns + known SDF.
+- 4 models (LS, EN, FFN, GAN) 적용.
+
+### 결과 1: SR 만 평가하면 위험
+
+| Model | True SDF 일치 | SR |
+|-------|-------------|-----|
+| Model A (extreme weight 모델) | ✗ | 높음 |
+| Model B (correct loading) | ✓ | 비슷 |
+
+→ **두 모델의 SR 비슷하지만 loading 은 완전히 다름**. SR 만으로는 구별 불가.
+
+### 결과 2: EV 가 함수형 정확도 판별
+
+| Model | Functional form | EV |
+|-------|---------------|-----|
+| Linear | Wrong (true is nonlinear) | 낮음 |
+| Nonlinear | Correct | 높음 |
+
+→ EV 가 **시계열 변동 설명** = functional form 정확도.
+
+### 결과 3: XS-R² 가 risk premium 정확도 판별
+
+| Model | Risk premium | XS-R² |
+|-------|------------|-------|
+| No no-arbitrage | Inflated by noise | 낮음 |
+| No-arbitrage (small alpha) | Correct | 높음 |
+
+→ XS-R² 가 **횡단면 mean 정확도** = risk premium 정확도.
+
+### 결론
+
+**3 metric 모두 평가 필요**:
+- SR: SDF 운용 효율.
+- EV: 함수형 (interaction) 정확도.
+- XS-R²: risk premium (no-arbitrage) 정확도.
+
+GAN 이 3 metric 모두 best = 모든 측면에서 우수.

@@ -1,12 +1,48 @@
 # 07. Instance Normalization + MSE Loss
 
-> 본 논문의 *마이너 trick* — input/output 의 *각 시계열을 개별 정규화* + MSE loss.
+> 본 논문의 **"마이너" trick 같지만 사실 핵심** — Table 11 (ch18) 의 정확한 수치로 **17% MSE reduction** 기여.
 
 ---
 
 ## 7.1 챕터 한 줄 요약
 
-> **"각 시계열 (channel) 을 *개별 normalize* 한 후 forecasting. 입력 마지막 값으로 *de-mean + de-var* → forecast 후 *복원*. 이게 *distribution shift* 의 효과. 평범한 MSE loss 사용."**
+> **"각 시계열 (channel) 을 개별 normalize 한 후 forecasting. 입력 마지막 값으로 de-mean + de-var → forecast 후 복원. 평범한 MSE loss 사용. ★ Table 11 의 입증으로 17% reduction 단독 기여 — Patching, CI 외의 hidden 3번째 trick."**
+
+---
+
+## ★ 본 chapter 의 가장 중요한 한 가지
+
+> **"Instance Norm 이 paper 의 'two tricks (P + CI)' 메시지의 그늘에 가려진 hidden 3번째 trick"**.
+
+### Table 11 (Appendix, ch18) 의 정확한 수치 — Weather
+
+| Setting | T=96 MSE | T=192 MSE | T=336 MSE | T=720 MSE |
+|---------|---------|----------|----------|----------|
+| PatchTST **+in** (Norm 사용) | **0.149** | **0.194** | **0.245** | **0.314** |
+| PatchTST **-in** (Norm 안 사용) | 0.183 | 0.235 | 0.293 | 0.370 |
+| **개선율** | **18.6%** | **17.4%** | **16.4%** | **15.1%** |
+
+→ **Instance Norm 단독 contribution = 평균 17% MSE reduction**.
+
+### Table 1 (ch03) 의 첫 step 과 연결 (★ 핵심 발견)
+
+Table 1 의 evolution (0.665 → 0.349):
+- vanilla Transformer: 0.665
+- → **+Instance Norm**: 0.518 (**22.1% reduction**) ← **첫 큰 jump**
+- → +Patching: 0.430 (17% 추가)
+- → +CI: 0.349 (19% 추가) = PatchTST
+
+→ **Instance Norm 이 첫 22% 의 jump 기여**. paper 의 "two tricks (P + CI)" 메시지가 이 trick 을 잘 안 강조하지만 실제 **첫 contributor**.
+
+### ★ "왜 Instance Norm 이 중요한가" 의 일반 원칙
+
+> **"시계열은 distribution shift 가 잦다"** (train 분포 ≠ test 분포). Instance Norm 이 sample 별 통계 정규화로 보정 → 모델이 **상대 패턴** 만 학습.
+
+**일상 비유**: 학생 시험 점수를 **각 학생의 평균·분산으로 정규화** 한 후 비교 → "절대 점수" 대신 "상대 위치" 학습. 학생 간 비교 가능 + distribution shift 보정.
+
+→ **다른 시계열 paper 들이 Instance Norm 의 importance 를 underrate** 함. RevIN (Kim et al., 2022) paper 가 separately 입증.
+
+
 
 ---
 

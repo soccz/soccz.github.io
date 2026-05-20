@@ -170,14 +170,88 @@ paper p.4–5 본문 (Related Literature section).
 
 ---
 
-## 자기점검 (이 챕터)
+## 3.9 자산가격결정 60년 역사에서 본 논문의 위치
 
-### 핵심 3가지
-1. 자산가격결정의 4가지 challenge 와 본 논문의 4가지 답?
-2. 본 논문이 ML 일반 prediction 모델 (FFN) 보다 좋은 이유는?
-3. "Risk premium 의 low SNR" 문제를 본 논문이 어떻게 해결?
+### 1960s-1990s — CAPM 과 single factor 시대
+
+- **CAPM** (Sharpe-Lintner 1964): single factor (market).
+- "모든 자산의 risk premium = market beta × market risk premium".
+- 단순하지만 cross-section 의 많은 부분 설명 못함.
+
+### 1990s-2010s — Multi-factor 시대
+
+- **Fama-French 3 factor** (1992): market + size + value.
+- **Fama-French 5 factor** (2015): + profitability + investment.
+- **Carhart 4 factor**: + momentum.
+- 점점 더 많은 factor 추가 → "Factor zoo".
+
+### 2010s — Factor zoo 문제
+
+- **Cochrane (2011)** 대통령 연설: "factor zoo" 라는 표현.
+- 300+ 개의 anomaly 발견 — 어느 게 진짜 risk factor 인가?
+- 통계적으로 의미 있는 factor 가 너무 많음.
+
+### 2017-2020 — ML 도입
+
+- **Gu, Kelly, Xiu (2020) RFS**: FFN 으로 expected return 예측. ML 의 자산가격결정 적용 본격 시작.
+- **Kelly, Pruitt, Su (2019) IPCA**: conditional factor model.
+- **Kozak, Nagel, Santosh (2020)**: "Shrinking the Cross Section" — elastic net.
+- 그러나 모두 **prediction-based** — no-arbitrage 미사용.
+
+### 2021 — 본 paper
+
+- ML + no-arbitrage 통합.
+- GAN-based test asset selection.
+- LSTM 으로 macro dynamics 자동 추출.
+- → "ML × 이론" 통합의 새 표준.
+
+→ 본 paper 가 **factor zoo 시대의 종결자** + **ML × 이론 통합의 시조**.
+
+---
+
+## 3.10 본 paper 의 5 가지 메시지 — 학계 함의
+
+### 메시지 1: 이론 > flexibility
+
+- ML 의 flexibility 만으로는 부족.
+- No-arbitrage 같은 이론적 제약 필수.
+- → "ML 시대에 economic theory 가 더 중요" 의 선언.
+
+### 메시지 2: Single char linear, interaction nonlinear
+
+- 비선형의 본질이 **char 간 interaction** 에 있음.
+- Future research direction.
+
+### 메시지 3: Adversarial test asset 자동화
+
+- Hand-picked test asset (예: 25 FF portfolio) 의 한계.
+- Adversarial 로 가장 mispriced asset 자동 발견.
+- → 더 robust + comprehensive.
+
+### 메시지 4: Macro state 자동 추출
+
+- LSTM 이 명시적 supervision 없이 business cycle 학습.
+- 178 macro vars → 4 hidden state — 차원 축소 + dynamic 보존.
+
+### 메시지 5: 통합 framework
+
+- 본 paper 의 framework 가 기존 factor models, ML approaches 를 special case 로 포함.
+- → unified asset pricing framework.
+
+---
+
+## 3.11 자기점검 (이 챕터)
+
+### 핵심 5가지
+1. **자산가격결정의 4가지 challenge 와 본 논문의 4가지 답?**
+2. **본 논문이 ML 일반 prediction 모델 (FFN) 보다 좋은 이유는?**
+3. **"Risk premium 의 low SNR" 문제를 본 논문이 어떻게 해결?**
+4. **Factor zoo 문제와 본 paper 의 답?**
+5. **paper 의 5 가지 학계 메시지 중 가장 중요한 것은?**
 
 ### 답변
 1. (a) 고차원 → FFN, (b) 함수형 → deep NN, (c) 동적 구조 → LSTM, (d) 낮은 SNR → no-arbitrage loss + adversarial.
 2. 일반 ML 은 **variance** (second moment) 설명 최대화. 자산가격결정의 본질은 **risk premium** (first moment) 예측. No-arbitrage condition $\mathbb{E}[M R^e g]=0$ 을 loss 로 두면 모델이 first moment 에 직접 학습. 결과: GAN OOS SR 0.75 vs FFN 0.44.
 3. (a) **No-arbitrage condition** 을 loss 로 강제 — 평균 수익률에 직접 학습. (b) **Adversarial test assets** — 평균 (unpredictable component) 위에 conditioning 으로 signal 강화. paper: "When considering average returns the unpredictable component is diversified away over time and the predictable risk premium signal is strengthened."
+4. **Factor zoo** = 300+ 의 anomaly factor 발견, 어느 게 진짜인지 불분명. 본 paper 의 답: GAN 의 SDF factor 가 FF5 와 거의 무관 (max correlation 17%) 인 **새 dimension** — 그러면서도 OOS SR 0.75 로 최고 성능. 따라서 GAN factor 가 진짜 risk premium 잡고 있고, 기존 anomaly 들은 이 underlying factor 의 noisy 한 측면. → **factor zoo 의 한 가지 해결**.
+5. **"이론 > flexibility"** — ML 의 flexibility 만으로는 부족, no-arbitrage 같은 이론적 제약 필수. 이게 paper 의 핵심 메시지. 다른 4개도 중요하지만 이게 paradigm shift 의 본질. EN > FFN 의 발견이 직접 증명 (Table I).

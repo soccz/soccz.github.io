@@ -197,6 +197,29 @@ $$
 - Step 3: 그 $g$ 고정 → $\omega$ 최소화.
 - **3 step 만으로 수렴** (paper Internet Appendix Fig IA.1).
 
+### 5. SR (월간) vs SR (연간)
+- Paper Table I 는 **월간 SR** 보고 (예: GAN 0.75).
+- Paper 본문은 **연간 SR** 보고 (예: GAN 2.6).
+- 환산: 연간 = 월간 × √12.
+- 0.75 × √12 = 0.75 × 3.46 ≈ 2.6 ✓.
+
+### 6. EV vs Time-series R²
+- 일반 R² = $1 - SSE/SST$ (demeaned).
+- 본 paper EV = $1 - \frac{\sum \hat\epsilon^2}{\sum (R^e)^2}$ (**non-demeaned**, KPS 2019 convention).
+- 이유: $R^e$ 의 mean 추정이 noisy → demean 하면 noise 추가.
+- → EV 가 일반 R² 보다 약간 보수적 (낮음).
+
+### 7. 46 chars vs 178 macro
+- **46 chars**: firm-specific (size, value, momentum 등). $I_{t,i}$.
+- **178 macro**: economy-wide (inflation, GDP, federal funds 등). $I_t$.
+- 둘이 다른 dimension — 46 = cross-section, 178 = time series.
+
+### 8. ω (SDF weights) vs β (loadings)
+- **ω**: SDF portfolio 의 weights ($M = 1 - \omega^\top R^e$).
+- **β**: 자산이 SDF factor 에 노출되는 정도 ($R^e = \beta F + \epsilon$).
+- 관계: $\omega \propto$ tangency portfolio, $\beta = \text{Cov}(R^e, F)/\text{Var}(F)$.
+- 두 quantity 가 dual — 어느 하나 알면 다른 것 derive 가능.
+
 ---
 
 ## 자기점검 (이 챕터)

@@ -2,6 +2,50 @@
 
 > Section 3.1–3.2 (journal p.436–437) — 실증분석 setup.
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- **데이터 60년·6,200 주식·94 특성** 의 구체 모양 — 표 한 장으로 무지식자도 이해
+- 비교 모델 7개 (FF, PCA, IPCA, CA0~CA3) **각각이 뭐가 다른지** 한 표로
+- **OOS 30년 rolling** 평가 방식 — 왜 이렇게 엄격하게 하는지
+
+---
+
+## 📖 무지식자용 — 데이터 큰 그림 한 장으로
+
+본 논문이 다루는 데이터를 일상 비유로:
+
+```
+   60년 (1957~2016)          94 특성 (size, momentum, 등)
+   ┌─────────────────┐       ┌─────────────────────────┐
+   │ 매월 6,200 주식  │       │  애플 size  =  300조원   │
+   │ 30,000 회사 총  │  ×    │  애플 모멘텀 = +12% (1년) │
+   │ ≈ 4,500,000 obs │       │  애플 변동성 = 25%       │
+   └─────────────────┘       │  ...                     │
+                              └─────────────────────────┘
+   
+   각 행: "이 회사의 이번달 수익률은?" 한 점 (예: 애플 2020/3 = +6.3%)
+   각 열: "이 특성을 모든 회사에서 본다" (94 개)
+```
+
+**규모 비유**:
+- 학생-시험 비유로: "60년 동안 매월 시험 (총 718번), 매 시험에 평균 6,200명 학생, 학생마다 94 항 신상" — 즉 **거대한 학생-시험 패널**.
+- 데이터 양: **약 450 만 관측치**. ML 모델 학습에 충분.
+
+**왜 60년인가?**
+- 자산가격결정은 **regime change** (1970년대 스태그플레이션, 2000년대 닷컴, 2008 금융위기 등) 가 빈번.
+- 30년만 보면 운으로 좋은 결과 가능. **60년이면 4-5번의 위기·평시 사이클** 포함 → 진짜 검증.
+
+**왜 평균 6,200 주식 (매월)?**
+- 미국 NYSE+AMEX+NASDAQ 상장 보통주 전체. 시점에 따라 4,000-8,000 변동.
+- 작은 주식도 포함 (penny stock 도 거름 없음) — 가장 엄격한 universe.
+
+**왜 94 특성?**
+- 학계에서 1960s 이후 발견된 거의 모든 anomaly 변수 망라 (Gu, Kelly, Xiu 2019 데이터셋 재사용).
+- size, value, momentum, profitability, liquidity, volatility 등 **6 카테고리** 약 94 항.
+- 시그널이 약한 것·중복된 것 다 포함 → ML 이 자동으로 골라야 함.
+
+---
+
 ## 6.1 챕터 한 줄 요약
 
 1957/03–2016/12 (60년), CRSP 미국 보통주 (NYSE/AMEX/NASDAQ), **약 30,000 unique 주식** (월평균 6,200). **94 firm characteristics** (산업 더미 미포함 in main spec) + 1 market portfolio constant regressor. 비교 모델: **FF (K 별 점진 확장), PCA, IPCA (KPS), CA0–CA3 (본 논문)**.
@@ -151,6 +195,22 @@ paper 본문 (journal p.437):
 
 ## 6.4 비교 매트릭스 (Summary)
 
+### 📖 무지식자용 — 7개 모델을 한 줄로
+
+학생 약점 진단 비유로:
+
+| 모델 | 약점 진단법 | 일상 비유 |
+|------|-------------|-----------|
+| **FF** | 미리 정해진 4-6 개 안에 학생을 분류 | "수학형/영어형/암기형 ... 미리 정한 4 카테고리" |
+| **PCA** | 시험 점수 패턴에서 잠재 약점 추출 | "데이터에서 자동으로 그룹 찾기" (신상 무시) |
+| **IPCA** | 신상 (z) 의 **선형 결합** 으로 약점 산출 | "학습시간 × 0.3 + 성격 × 0.2 + ..." 의 선형 |
+| **CA0** | IPCA 와 같지만 SGD 로 학습 | "같은 결과지만 학습 방법만 ML 식" |
+| **CA1** | 신상 → 1층 신경망 → 약점 | "비선형 변환 1 단계" — 상호작용 약간 잡음 |
+| **CA2** | 신상 → 2층 신경망 → 약점 | "**본 논문 추천**. 비선형 2 단계, sweet spot" |
+| **CA3** | 신상 → 3층 신경망 → 약점 | "비선형 3 단계 — 자유도 너무 커 overfit 위험" |
+
+---
+
 | 모델 | β 함수 | covariates | 비선형 | 시간변동 β | 자유 모수 수 |
 |------|--------|-----------|--------|------------|-------------|
 | **FF (K)** | Pre-defined sort | ✗ | ✗ | ✗ | $\sim KN$ |
@@ -170,6 +230,35 @@ paper 본문 (journal p.437):
 ---
 
 ## 6.5 학습-검증-테스트 분할
+
+### 📖 무지식자용 — 왜 이렇게 엄격하게 분할?
+
+학생-시험 비유로:
+
+```
+   1957 ─── 1974 ─── 1986 ─── 1987 ─── ... ─── 2016
+   [ 18년 공부 ]  [ 12년 모의 ]  [ 본시험 1년 ]
+        ↓              ↓              ↓
+       학습         hyperparameter  실제 평가
+       데이터       튜닝, early stop  (절대 학습에 못 씀)
+
+   매년 1년씩 데이터 추가:
+   1988 평가  →  학습 19년 + 모의 12년
+   1989 평가  →  학습 20년 + 모의 12년
+   ...
+   2016 평가  →  학습 47년 + 모의 12년 
+```
+
+**왜 이렇게 복잡?**
+- ML 의 평소 방식 (random 80/20 split) 은 **시점이 섞임** → 미래 데이터로 과거 예측 가능 → 부당.
+- 금융에서는 **chronological split (시간 순)** 가 필수 — 1990 예측에 1991 이후 정보 절대 못 씀.
+- 매년 **재학습** 으로 모델이 최신 시장 환경 반영.
+
+**얼마나 엄격?**
+- 30년 OOS = 자산가격 분야에서 **가장 엄격한 표준**.
+- 학계 보통 5-10년 OOS. 본 논문은 그 3 배 이상.
+
+---
 
 paper 본문 (549–553):
 > "We divide the 60 years of data into 18 years of training sample (1957–1974), 12 years of validation sample (1975–1986), and the remaining 30 years (1987–2016) for out-of-sample testing. Because machine learning algorithms are computationally intensive, we **avoid recursively refitting models each month. Instead, we refit once every year** as most of our signals are updated once per year. **Each time we refit, we increase the training sample by one year. We maintain the same size of the validation sample, but roll it forward** to include the most recent twelve months."
@@ -227,6 +316,30 @@ paper 본문 (549–553):
 3. K=4 와 K=5 의 FF 모델 비교는 단순한 누적인가?
 
 ### 답변
-1. **β-network 의 hidden layer 수만** 차이: CA0=0, CA1=1 (32 neurons), CA2=2 (32, 16), CA3=3 (32, 16, 8). **f-network 는 모두 동일** (단일 선형 변환, $f = W_1 x$).
-2. (a) 모든 특성을 $[-1, 1]$ 균등 분포로 만들어 $Z'Z \approx \Sigma$ 상수 가정 (Proposition 2) 거의 충족. (b) 이상치 (outlier) 영향을 자동 제거 — 값이 아닌 rank 만 사용.
-3. **아님**. K=4 = Market + SMB + HML + UMD (4-factor 모델). K=5 = FF5 = Market + SMB + HML + CMA + RMW (UMD 빠지고 CMA/RMW 추가). K=6 = FF5 + UMD. 단순 누적이 아닌 학계 표준 FF 변형.
+
+1. **CA0 → CA3 의 정확한 차이**:
+   - **β-network 의 hidden layer 수만** 변동:
+     - CA0: hidden 0 (단일 선형 = IPCA, Prop 2)
+     - CA1: hidden 1 (32 neurons + ReLU)
+     - CA2: hidden 2 (32, 16 neurons + ReLU)
+     - CA3: hidden 3 (32, 16, 8 neurons + ReLU)
+   - **f-network 는 모든 모델 동일**: 단일 선형 변환, $f = W_1 x$, paper $L_f = 1$ 강제.
+   - **왜 f 만 안 깊게 하나?**: 요인이 portfolio (선형 결합) 라는 자산가격 해석 유지.
+   - **CA2 가 sweet spot** 인 이유: paper Table 3 에서 K=6 VW Sharpe = 1.53 (최고).
+
+2. **Cross-sectional rank normalization 의 2 효과**:
+   - **(a) Prop 2 가정 충족**: 모든 특성을 $[-1, 1]$ 균등 분포로 만들면 $Z_{t-1}'Z_{t-1}$ 가 시점에 거의 무관 ($\approx \Sigma$ 상수). → CA0 ≈ IPCA 보장.
+   - **(b) Outlier robustness**: 값이 아닌 **rank** 만 사용 → 극단치가 자동 제거. 예: 어떤 회사 시가총액이 100조원이든 1000조원이든 cross-sectional rank 상위 1% 면 같은 값 (1.0).
+   - **부수 효과**: cross-sectional 비교가 단위 무관 (size 도 dimensionless, mom 도 dimensionless) → 변수 간 비교 가능.
+
+3. **K=4 와 K=5 의 FF 모델 비교 — 단순 누적인가?**:
+   - **아님**. K 마다 FF 모델 구성 다름:
+     - K=1: Market 만
+     - K=2: Market + SMB
+     - K=3: Market + SMB + HML (FF3)
+     - K=4: Market + SMB + HML + **UMD** (Carhart 4-factor)
+     - K=5: **FF5** = Market + SMB + HML + **CMA + RMW** (UMD 빠짐!)
+     - K=6: FF5 + UMD
+   - K=4 → K=5 에서 UMD 가 **빠지고** CMA·RMW 가 추가 — **단순 누적이 아닌 학계 표준 FF 변형**.
+   - 이유: FF5 (2015) 가 학계의 표준 5-factor 모델. UMD 는 별도 추가.
+   - 본 논문이 이걸 그대로 사용 → 학계 비교 가능성 유지.

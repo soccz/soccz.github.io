@@ -10,6 +10,16 @@
 
 ---
 
+## ★ 한 마디로 — 이 paper 의 정신적 모델
+
+> **"ViT 가 이미지를 16×16 patch 로 보고 NLP Transformer 그대로 적용한 것처럼, 시계열을 16-step patch 로 보면 vanilla Transformer 가 그대로 잘 작동한다"**.
+
+**제목의 의미** = "**A Time Series is Worth 64 Words**" → "**한 시계열 (L=512) 은 64 단어 (patches) 의 가치**". ViT 의 "An Image is Worth 16×16 Words" 의 시계열 버전.
+
+→ 이 한 마디가 paper 의 모든 motivation. 자세한 진화는 ch03 의 lineage 참조.
+
+---
+
 ## 더 풀어 설명하면
 
 옛날부터 *시계열 예측* 은 학자들의 큰 도전. 예:

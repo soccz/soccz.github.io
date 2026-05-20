@@ -1,8 +1,36 @@
-# 18 PyTorch Code — QuantileFormer 핵심 모듈
+# 18. PyTorch Code — QuantileFormer 핵심 모듈
+
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- QuantileFormer 의 **PyTorch 핵심 8 모듈** — 직접 학습 가능한 reference implementation
+- paper Fig 2 의 architecture 를 정확히 코드로
+- Eq 4 (분해) → Eq 7 (GMM) → Eq 16 (fusion) → Eq 19 (loss) 의 코드 매핑
+- paper 미공개 hyperparameter 의 합리적 default 사용
+
+---
 
 paper 가 공식 코드 미공개. 본 deep dive 의 PyTorch 구현 — paper 의 architecture (Fig 2) + Eq 4-19 의 충실 구현.
 
 **Caveat**: 본 코드는 **reference implementation**. 정확한 학습 hyperparameter 는 paper text 가 명시 안 함 → 표준값 사용. paper repo 와 1:1 동일 보장 못함.
+
+---
+
+## ★ 본 구현의 8 모듈 매핑
+
+본 paper 의 Fig 2 의 4 모듈 + 학습 component 4개 = 총 8 PyTorch 모듈.
+
+| 모듈 | paper 위치 | PyTorch class | 비유 |
+|------|----------|--------------|------|
+| 1. Drift-Divergence | Eq 4 / ch06 | `DriftDivergenceDecomp` | "이동 분위수 + median 빼기" |
+| 2. GMM | Eq 5-7 / ch06 | `gaussian_mixture_decomp` (sklearn) | "EM 으로 K Gaussian fit" |
+| 3. VAE | Eq 8-15 / ch07 | `VAEDistInfer` | "encoder + decoder + KL" |
+| 4. Quantile Drift Encoder | Section 4.3 / ch08 | `QuantileDriftEncoder` | "5번 standard Transformer encoder" |
+| 5. Fusion Transformer | Eq 16-18 / ch09 | `FusionTransformerLayer` | "cross-attention + self-attention + FFN" |
+| 6. Full Model | (전체) | `QuantileFormer` | "1-5 모듈 조립" |
+| 7. Loss | Eq 19 / ch10 | `quantile_loss` | "pinball loss × 5 quantile × horizon" |
+| 8. Training loop | (학습) | `train_step`, `main` | "Adam + early stop" |
+
+→ **각 모듈이 paper 의 정확한 한 section 에 대응** — debug 시 paper 를 직접 참고 가능.
 
 ---
 
@@ -389,5 +417,60 @@ def main():
 4. **Multi-variate handling**: Electricity 321 features 처리 시 d_model 이 작으면 부족. d_model=512 권장.
 
 5. **GMM 의 동적 호출**: forward 마다 GMM 재학습은 비효율. Practical 학습에서는 sliding window 마다 GMM 사전 계산 + cache.
+
+---
+
+## ★ 본 코드의 5가지 단순화 (paper 와 다를 수 있는 부분)
+
+paper 의 implementation 이 공개 안 되어 본 코드가 paper 와 100% 일치 보장 못함. 본 deep dive 가 단순화한 부분 명시 (정직한 disclosure):
+
+| 단순화 | 본 코드 | paper 의 원래 가능성 | 영향 |
+|--------|---------|-------------------|------|
+| **GMM** | sklearn (non-differentiable) | custom EM in PyTorch | 학습 시 GMM gradient 흐름 없음 |
+| **Beta-Bernoulli prior** | Gaussian relaxation | stick-breaking + Gumbel-softmax | 분포 표현력 약간 ↓ |
+| **GMM 호출** | forward 마다 fit | 사전 계산 + cache | 학습 속도 ×10 느림 |
+| **Channel handling** | per-feature 독립 | per-feature 가능 (paper 미명시) | Electricity 321 변수 시 메모리 ↑ |
+| **VAE 의 latent z 계산** | 단순 sum | proper reparameterization | gradient 흐름 약간 약함 |
+
+→ **본 코드는 학습 + 작동 검증용**. paper 의 정확한 수치 재현은 corresponding author 의 repo 필요.
+
+---
+
+## ★ 빠른 시작 — 1분 안에 돌리기
+
+```bash
+# 1. 의존성 설치
+pip install torch numpy pandas scikit-learn
+
+# 2. 더미 데이터로 forward + loss 검증
+python -c "
+import torch
+from quantileformer import QuantileFormer, quantile_loss
+
+# 더미 데이터: batch 4, lookback 96, 1 feature
+x = torch.randn(4, 96, 1)
+y = torch.randn(4, 96)
+
+model = QuantileFormer(d_model=64, n_heads=4, encoder_layers=2, fusion_layers=1, K=4, output_len=96)
+y_hat, kl_loss = model(x)
+loss = quantile_loss(y, y_hat, model.quantiles, kl_loss=kl_loss)
+print(f'y_hat shape: {y_hat.shape}, loss: {loss.item():.4f}')
+"
+# 예상 출력: y_hat shape: torch.Size([4, 96, 5]), loss: 0.XXXX
+```
+
+→ **이 한 줄로 본 paper 의 핵심 architecture 가 작동함을 확인** 가능.
+
+---
+
+## ★ 응용 시 변경 가이드 (ch15 응용 가이드 참고)
+
+| 응용 | 변경 사항 |
+|------|----------|
+| **VaR (Value-at-Risk) forecasting** | `quantiles=[0.01, 0.05, 0.1, 0.5]`, `K=4` |
+| **재생에너지 (paper default)** | 그대로 사용 |
+| **의료 회복 시간 분포** | `quantiles=[0.5, 0.75, 0.95, 0.99]`, `K=5` |
+| **단순 cycle (ETT 류)** | **사용 안 권장** — 단순 Transformer 가 더 좋음 (ch13 ablation 참고) |
+| **고차원 multivariate (Electricity 321)** | `d_model=512`, `n_heads=8`, `K=10` |
 
 다음 [19_diagrams.md](19_diagrams.md) 에서 ASCII 도식 + interactive viz 카탈로그.

@@ -41,6 +41,23 @@
 
 ---
 
+## 🆚 자매 deep dive — RPPCA
+
+본 deep dive 는 **같은 날짜 (2026-05-17) 출간** + **같은 주제 (잠재 요인 자산가격결정)** 의 [RPPCA deep dive](../2026-05-17_lettau-pelger-rppca/00_README.md) 와 자매 작업.
+
+| | 본 논문 (Gu-Kelly-Xiu 2021) | RPPCA (Lettau-Pelger 2020) |
+|---|------------------------------|-------------------------------|
+| 핵심 도구 | Autoencoder (β = NN) | PCA + 평균 페널티 (γ) |
+| 공격 지점 | "IPCA 는 선형" | "PCA 는 평균 무시" |
+| 추가 prior | 비선형 NN 함수형 | 위험프리미엄 정규화 |
+| 잡는 요인 | 비선형 노출도 | 약한 + 높은 SR 요인 |
+
+두 paper 는 다른 각도에서 PCA/IPCA 한계를 풉니다. **결합 가능성** (RP-PCA + NN) 은 학계 후속 연구 방향.
+
+상세 비교는 [13_insights.md §13.13b](13_insights.md#13_13b) 참조.
+
+---
+
 ## 한 줄 판결
 
 > **IPCA (Kelly·Pruitt·Su 2019) 의 선형성 가정을 β-network 만 신경망으로 풀고 f-network 는 단일 선형층으로 유지한 자연스러운 일반화. β(z)·f 의 dot product 로 r = β'f 형태 유지 — no-arbitrage 보존. 실증에서 long-short VW Sharpe (K=6) — FF −0.53 / PCA −0.08 / IPCA 0.96 / CA1 1.40 / CA2 1.53 / CA3 1.51. autoencoder 가 PCA 의 ML 시대 후예라는 사실을 자산가격결정에 결정적으로 적용한 사례.**
@@ -72,22 +89,24 @@
 
 ---
 
-## 인터랙티브 시각화 (8종 인라인 + 카탈로그)
+## 인터랙티브 시각화 (8종 인라인 + 7 ASCII 다이어그램)
 
-본 해체는 다음 viz 를 챕터 안에 인라인:
+본 해체에 **실제로 작동하는 인터랙티브 viz 8종**:
 
 | viz type | 챕터 | 내용 |
 |----------|------|------|
-| `rppca-sharpe-comparison` | 07 | OOS Sharpe ratio 막대 (FF / PCA / IPCA / CA1-3, K=1-6) |
-| `rppca-corr-heatmap` | 07 | factor recovery — 추정 factor 와 진짜 factor 상관 |
-| `rppca-factor-path` | 09 | Monte Carlo 시뮬 path (linear vs nonlinear) |
-| `rppca-eigenvalue-spectrum` | 09 | factor signal strength (K=1-6) |
-| `rppca-one-factor-correlation` | 03 | static vs conditional factor model 비교 |
-| `rppca-phase-transition` | 09 | linear→nonlinear truth 에서 IPCA vs CA 검출 |
-| (신규 viz 후보) `nn-loss-landscape` | 05d | early stopping + LASSO 효과 |
-| (신규 viz 후보) `characteristic-importance` | 08 | Fig. 4·5 bar/heatmap 인터랙티브 |
+| `autoencoder-r2-comparison` | 07 | paper Table 1+2 — Total / Predictive R² (K=1~6, 7개 모델) |
+| `autoencoder-sharpe-table` | 07 | paper Table 3 — long-short decile Sharpe (EW/VW × K) |
+| `autoencoder-table4-tangency` | 07 | paper Table 4 — Tangency portfolio Sharpe (EW/VW × K) |
+| `autoencoder-fig3-alpha` | 07 | paper Fig. 3 — 95 portfolio α scatter (model toggle, |t|>3 highlight) |
+| `autoencoder-fig4-importance` | 08 | paper Fig. 4 — Top 20 variable importance bar (CA0~CA3 toggle, 카테고리 색) |
+| `autoencoder-fig5-heatmap` | 08 | paper Fig. 5 — 94 특성 heatmap (5 model × 94 var, Top 30 / All 94 toggle) |
+| `autoencoder-table5-robustness` | 08 | paper Table 5 — Odd/Even permno robustness (4 시나리오 × 4 지표) |
+| `autoencoder-sim-table6` | 09 | paper Table 6 — Monte Carlo Linear vs Nonlinear DGP |
 
-→ 전체 카탈로그는 [15_diagrams.md](15_diagrams.md).
+**보완**: ASCII 다이어그램 7개 ([15_diagrams.md](15_diagrams.md): PCA vs AE 비교 · CA1 전체 구조 · IPCA·CA0·CA1 위계 · Rolling OOS 파이프라인 · 1 epoch 학습 흐름 · 변수 중요도 카테고리 · 4모델 비교 매트릭스).
+
+**커버리지**: paper 본문의 모든 6 Figure + 6 Table 이 인터랙티브 또는 ASCII 로 재현됨. paper 본문 미발표 추정 viz 는 [15_diagrams.md §15.8](15_diagrams.md) 후보 목록에 별도 분리.
 
 ---
 

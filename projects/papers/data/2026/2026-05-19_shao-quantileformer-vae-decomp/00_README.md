@@ -47,35 +47,69 @@ Nanjing University
 
 ---
 
+## 🆚 자매 deep dive — 같은 시리즈
+
+본 deep dive 는 다음 deep dive 들과 같은 시리즈:
+
+| Deep dive | 분야 | 핵심 도구 | 본 paper 와의 관계 |
+|-----------|------|-----------|-------------------|
+| [RPPCA (Lettau-Pelger 2020)](../2026-05-17_lettau-pelger-rppca/00_README.md) | 자산가격 | PCA + 위험프리미엄 페널티 | 분포 modeling 안 함 — 점 예측 |
+| [Autoencoder Asset Pricing (Gu-Kelly-Xiu 2021)](../2026-05-17_gu-kelly-xiu-autoencoder/00_README.md) | 자산가격 | Autoencoder + no-arbitrage | β = NN(z) 의 비선형 일반화 |
+| [Autoformer (Wu et al. 2021)](../2026-05-18_wu-xu-wang-long-autoformer/00_README.md) | 시계열 | trend+seasonal decomp + Auto-Correlation | **본 paper 의 직접 전신** (분해 inner block) |
+| **QuantileFormer (Shao et al. 2025) ← 본 paper** | 시계열 | 3 단 분해 + VAE + cross-attention | Autoformer 의 quantile-aware 일반화 |
+
+**본 paper 의 학계 위치**:
+- **Autoformer 의 분해 paradigm** + **TFT 의 multi-quantile** + **VAE 의 distribution modeling** 의 **3-way 통합** (첫).
+- 자산가격 deep dive (RPPCA, AE) 와 다른 분야지만 **비슷한 paradigm** (분해 + 통합 framework + 새 metric).
+
+---
+
 ## 한 줄 판결
 
 > **확률적 시계열 예측을 위해 시계열을 (1) quantile drift + (2) divergence pattern + (3) Gaussian mixture 세 가지 패턴으로 분해 → 각각 Transformer encoder / VAE / cross-attention fusion 으로 처리 → joint quantile loss 로 학습. Autoformer 의 trend-seasonal 분해를 quantile-aware 분해로 일반화. 6 dataset 평균 q-risk 0.5/0.7/0.9 quantile 에서 24%/27%/22% 감소. cpaw (Coverage Probability × Normalized Averaged Width) 새 metric 도입. Probabilistic forecasting × Transformer × VAE 의 3-way 결합.**
 
 ---
 
-## 목차
+## 이 해설집의 약속
 
-| 파일 | 섹션 |
+- **영어를 못해도** 따라올 수 있게 — 모든 영어 단어 한국어 번역 + 비유 표.
+- **수식을 못 읽어도** 따라올 수 있게 — Eq 1~21 모두 기호 풀이 + Step 1·2·3 단계 유도.
+- **figure/table 한 picture 씩** 정밀 해석 — Fig 1·2·3·4 의 모든 panel, Table 1·3·4 의 셀 한 칸씩.
+- **★ 표시** = chapter 의 결정적 통찰 (paper text 에 없는 깊은 분석, 본 deep dive 의 contribution).
+- 매 chapter 끝에 **자기점검 Q&A 3개** — 핵심 이해 보장.
+
+---
+
+## 목차 (총 19 chapter, ~270KB)
+
+### 본문 (01~15) — 영어 / 수식 안 보고도 따라가는 lettau-pelger 양식 풀이
+
+| 파일 | 섹션 | 핵심 |
+|------|------|------|
+| [01_intro.md](01_intro.md) | 시작하기 전 — 길잡이 + 7개 개념 비유 | quantile, probabilistic, decomp, GMM, VAE, cross-attention, pinball |
+| [02_abstract.md](02_abstract.md) | 제목과 Abstract 풀어 읽기 | 6 문장 한국어 의역 + 비유 |
+| [03_motivation.md](03_motivation.md) | Section 1 — 왜 이런 연구가 필요한가 | **Fig 1 panel a/b/c 정밀 해석** + 3 challenge |
+| [04_related_work.md](04_related_work.md) | Section 2 — 기존 모델들과 어디가 다른가 | 11 referenced 모델 + 학문적 위치 |
+| [05_problem_formulation.md](05_problem_formulation.md) | Section 3 — Quantile Regression 수식 (Eq 1–3) | **★ Pinball loss 가 quantile 학습 수학적 증명** |
+| [06_pattern_mixture_decomp.md](06_pattern_mixture_decomp.md) | Section 4.1 — Drift-Divergence + GMM 분해 (Eq 4–7) | **★ Fig 2 전체 architecture 4 모듈 한 picture 씩** |
+| [07_vae_inference.md](07_vae_inference.md) | Section 4.2 — VAE 추론 (Eq 8–15) | **★ ELBO 유도 Step 1·2·3·4·5·6** (paper 미명시) |
+| [08_quantile_drift_extraction.md](08_quantile_drift_extraction.md) | Section 4.3 — Transformer encoder 의 역할 | 5번 encoder 호출의 design choice |
+| [09_fusion_transformer.md](09_fusion_transformer.md) | Section 4.4 — Cross-Attention 결합 (Eq 16–18) | **★ Q/K/V 비대칭의 정보론적 의미** |
+| [10_loss_function.md](10_loss_function.md) | Section 4.5 — Joint quantile loss (Eq 19) | **★ 응용에 따른 quantile set 변경 가이드** |
+| [11_data_baselines.md](11_data_baselines.md) | Section 5 — 6 datasets + 8 baselines + 2 metrics | **★ cpaw 의 exponential penalty 우아함** |
+| [12_main_results.md](12_main_results.md) | Section 5.1 — Tables 1, 3 정밀 해석 | **셀 한 칸씩** + multiplier 변환 (1.32× 등) |
+| [13_ablation.md](13_ablation.md) | Section 5.2 — Table 4 ablation | **★ Wind 0.9 ×5 악화의 일반 원칙** |
+| [14_hyperparam_viz.md](14_hyperparam_viz.md) | Section 5.3–5.4 — Fig 3, 4 정밀 해석 | **★ Fig 4 의 좁은+정확 vs 넓은+정확 trade-off** |
+| [15_conclusion.md](15_conclusion.md) | Section 6 — 결론과 4년 진화 | **5가지 핵심 발견 + 권장 hyperparameter 표 + 응용 가이드** |
+
+### 보조 자료 (16~19)
+
+| 파일 | 내용 |
 |------|------|
-| [01_intro.md](01_intro.md) | 시작하기 전에 — 미리 알아둘 7개 개념 (quantile regression, GMM, VAE, KL divergence, ELBO, Transformer, cross-attention) |
-| [02_abstract.md](02_abstract.md) | 제목과 Abstract 풀어 읽기 |
-| [03_motivation.md](03_motivation.md) | Section 1 — 3가지 challenge 와 본 논문의 답 |
-| [04_related_work.md](04_related_work.md) | Section 2 — Transformer + 시계열 분해 + 확률 forecasting 의 기존 접근 |
-| [05_problem_formulation.md](05_problem_formulation.md) | Section 3 — Quantile regression 수식 (Eq 1–3) |
-| [06_pattern_mixture_decomp.md](06_pattern_mixture_decomp.md) | Section 4.1 — Drift-Divergence + GMM 분해 (Eq 4–7) |
-| [07_vae_inference.md](07_vae_inference.md) | Section 4.2 — VAE 기반 distribution mixture inference (Eq 8–15) |
-| [08_quantile_drift_extraction.md](08_quantile_drift_extraction.md) | Section 4.3 — Quantile Drift Feature Extraction (Transformer encoder) |
-| [09_fusion_transformer.md](09_fusion_transformer.md) | Section 4.4 — Fusion Transformer with Cross-Attention (Eq 16–18) |
-| [10_loss_function.md](10_loss_function.md) | Section 4.5 — Joint quantile loss (Eq 19) |
-| [11_data_baselines.md](11_data_baselines.md) | Section 5 — 6 datasets + 8 baselines + 2 metrics (q-risk + cpaw, Eq 20–21) |
-| [12_main_results.md](12_main_results.md) | Section 5.1 — Tables 1, 3 (q-risk + cpaw) |
-| [13_ablation.md](13_ablation.md) | Section 5.2 — Table 4 (3가지 component ablation) |
-| [14_hyperparam_viz.md](14_hyperparam_viz.md) | Section 5.3–5.4 — Fig 3 (k tuning) + Fig 4 (visualization) |
-| [15_conclusion.md](15_conclusion.md) | Section 6 — 결론과 종합 |
-| [16_glossary.md](16_glossary.md) | 용어집 + 표기법 + References 전체 표 |
-| [17_insights.md](17_insights.md) | 메타 통찰 15개 — "이해를 넘어서" |
-| [18_code.md](18_code.md) | 실행 코드 (PyTorch QuantileFormer 핵심 모듈) |
-| [19_diagrams.md](19_diagrams.md) | ASCII 도식 + 인터랙티브 viz 카탈로그 |
+| [16_glossary.md](16_glossary.md) | 용어집 + 표기법 + 21개 핵심 수식 (모두 **비유 column** 포함) + References 분야별 정리 |
+| [17_insights.md](17_insights.md) | 메타 통찰 15개 — **표면적 / 진짜 이유 / 더 깊은 통찰 / 일반화 가능한 사상의 4 layer 분석** |
+| [18_code.md](18_code.md) | 실행 코드 (PyTorch QuantileFormer 핵심 모듈, 8 모듈 + 학습 loop) |
+| [19_diagrams.md](19_diagrams.md) | ASCII 도식 7개 + 인터랙티브 viz 카탈로그 8개 + Equations summary |
 
 ---
 

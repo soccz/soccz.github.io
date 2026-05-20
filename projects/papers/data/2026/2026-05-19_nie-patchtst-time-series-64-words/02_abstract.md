@@ -4,6 +4,18 @@
 
 ---
 
+## ★ 제목의 깊은 의미 — "64 Words"
+
+**"64 Words"** 의 정확한 의미:
+
+- Paper default: $L = 512$ (look-back window), $P = 16$ (patch length), $S = 8$ (stride).
+- Patches 개수: $N = \lfloor (L-P)/S \rfloor + 1 = \lfloor (512-16)/8 \rfloor + 1 = 63$ patches → 약 **64 words**.
+- 따라서 PatchTST/**64** 의 64 = "한 시계열 (L=512) 이 64 patches 의 token sequence"
+
+→ **ViT 의 "An Image is Worth 16×16 Words" (2020) 의 직접 오마주**. ViT 가 image 를 196 patches 로 본 것처럼, PatchTST 는 시계열을 64 patches 로 본다.
+
+---
+
 ## 2.1 제목 풀이 — "A Time Series is Worth 64 Words"
 
 **영어 제목**: "A Time Series is Worth 64 Words: Long-term Forecasting with Transformers"

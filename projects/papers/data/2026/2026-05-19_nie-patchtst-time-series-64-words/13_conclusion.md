@@ -10,6 +10,35 @@
 
 ---
 
+## ★ 본 paper 의 4년 후 평가 (2023 ICLR → 2025+)
+
+### 정량 임팩트
+
+- **Citations** (2024-05 시점): 1500+ (ICLR 2023 paper 중 top tier).
+- **후속 paper**: 시계열 forecasting paper 의 거의 모두가 PatchTST baseline 사용.
+
+### 학계 paradigm shift 의 정확한 그림
+
+| 항목 | Before PatchTST (2022) | After PatchTST (2023+) |
+|------|----------------------|---------------------|
+| 시계열 attention 변형 | 필수 (Informer/Auto/FED) | **불필요** (vanilla 충분) |
+| Channel handling | Mixing default | **Independence default** |
+| Long L 활용 | 불가능 (L>96 악화) | **가능** (L=720 까지) |
+| Self-supervised | 시도 없음 | **표준** (BERT moment) |
+| Foundation model | 불가능 | **가능** (Chronos, TimesFM, Moirai) |
+| Transfer learning | 어려움 | **자연스러움** |
+
+→ **6가지 분야의 동시 paradigm shift**.
+
+### 가장 큰 long-term impact
+
+> **본 paper 의 가장 큰 contribution = 21% MSE reduction 이 아니라 "시계열 BERT moment"**.
+
+NLP 의 BERT (2018) 가 NLP foundation model 시대를 시작한 것처럼, PatchTST (2023) 가 시계열 foundation model 시대를 시작.
+
+
+---
+
 ## 13.2 본 논문 *3대 기여*
 
 **일상 비유 — 한 권의 책의 3 부**: 본 논문이 학계에 *3 권* 의 책 같음:

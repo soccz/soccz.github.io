@@ -135,6 +135,227 @@ Cross-channel mixing (Informer/Autoformer) 가 *spurious correlation 학습* 가
 
 ---
 
+## 3.6-bis ★ Table 1 — Case Study (0.518 → 0.349 evolution, 정밀 해석)
+
+paper Table 1 (p.4) 이 paper 의 **명함 같은 표**. Traffic dataset 의 한 cell 에서 baseline 부터 PatchTST 까지의 진화를 보여줌.
+
+### Table 1 의 정확한 setup
+
+- **Dataset**: Traffic.
+- **Horizon**: $T = 96$.
+- **Metric**: MSE.
+
+### Table 1 의 정확한 수치
+
+| Step | Setting | MSE | Cumulative reduction | 추가된 trick |
+|------|---------|-----|---------------------|--------------|
+| 1 | **Original Transformer (vanilla)** | **0.665** | 0% (baseline) | — |
+| 2 | + Instance Normalization | 0.518 | 22.1% | Instance Norm 추가 |
+| 3 | + Patching (P=16, S=8) | 0.430 | **35.3%** | Patching 추가 |
+| 4 | + Channel-Independence | **0.349** | **47.5%** | CI 추가 = **PatchTST** |
+
+### Step 별 정밀 분석
+
+#### Step 1 → 2 (vanilla → Instance Norm): 22% 개선
+
+- **Instance Normalization** = sample 별 정규화 (RevIN 도 비슷).
+- **이유**: 시계열은 distribution shift (train 분포 ≠ test 분포) 가 잦음. Instance Norm 으로 sample 별 통계 정규화 → distribution shift 보정.
+- **★ paper 의 자주 무시되는 trick** — 모든 baseline 도 이걸 쓰는 게 fair 한 비교.
+
+#### Step 2 → 3 (Instance Norm → Patching): 17% 추가 개선
+
+- **Patching** = 시계열을 16 시간 patch 로 자르고 한 token 으로.
+- **이유**:
+  - Attention 복잡도 $O(L^2)$ → $O((L/S)^2)$ → 22배 감소.
+  - Local pattern 보존 (한 patch 안의 시간 정보 유지).
+  - Token 수 감소 → overfit 방지.
+- 17% 개선이 단순 trick 치고 큼.
+
+#### Step 3 → 4 (Patching → +CI): 19% 추가 개선
+
+- **Channel-Independence** = 변수마다 독립 처리, 같은 weight 공유.
+- **이유**:
+  - Channel-mixing 의 spurious correlation 회피.
+  - Cross-channel attention 의 overfit 방지.
+  - 변수 간 학습 자체를 안 함.
+- **★ Table 1 에서 가장 큰 single trick 개선**.
+
+### ★ Table 1 의 종합 메시지
+
+```
+   vanilla Transformer    0.665
+        ↓ +Instance Norm
+        0.518  (22% ↓)
+        ↓ +Patching
+        0.430  (17% ↓)
+        ↓ +Channel-Indep
+        0.349  (19% ↓)    ← PatchTST
+        ────────────────
+   Total: 47.5% MSE reduction
+```
+
+→ **3 trick 의 누적 = 47.5% reduction**. 각 trick 이 독립적으로 contribution.
+
+### ★ Table 1 vs Table 7 (ch12 의 ablation)
+
+| 측면 | Table 1 (case study) | Table 7 (ablation, ch12) |
+|------|---------------------|------------------------|
+| 비교 방식 | 누적 (Step 1 → 2 → 3 → 4) | 분리 (P only, CI only, P+CI) |
+| 사용 dataset | Traffic 만 | 3 datasets |
+| 가르치는 것 | "**모든 trick 함께 쓰면 최대**" | "**CI 가 major, P 가 minor**" |
+
+→ Table 1 + Table 7 함께 보면: **CI 가 가장 큰 single contribution, 모든 trick 함께 쓰면 누적 효과**.
+
+```viz:pat-table1-evolution:title=Table 1 — Evolution 시각화 (interactive),caption=0.665 → 0.518 → 0.430 → 0.349 의 4 step. 각 trick 의 cumulative MSE reduction.
+```
+
+---
+
+## 3.6-ter ★ Figure 1 — Architecture (3 panel) 정밀 element-level 해석
+
+![Figure 1 — PatchTST Architecture](figures/Fig1_architecture.png)
+
+(paper p.4 Figure 1)
+
+### paper caption (p.4)
+
+> "Figure 1: PatchTST architecture. (a) Multivariate time series data is divided into different channels. They share the same Transformer backbone, but the forward processes are independent. (b) Each channel univariate series is passed through instance normalization and segmented into patches. These patches are used as Transformer input tokens. (c) Masked self-supervised representation learning with PatchTST where patches are randomly selected and set to zero. The model will reconstruct the masked patches."
+
+### Figure 1 의 3 panel 구조
+
+```
+                Figure 1
+                ────────
+       (a) Model Overview (위)
+       ─────────────────────
+       Multivariate input → Channel-independence → Output
+
+       (b) Transformer Backbone (Supervised, 좌하)
+       ─────────────────────────────────────
+       Instance Norm + Patching → ... → Linear Head → Prediction
+
+       (c) Transformer Backbone (Self-supervised, 우하)
+       ───────────────────────────────────────────
+       Instance Norm + Patching → ... → Linear Layer → Reconstructed Masked Patches
+```
+
+### Panel (a) — Model Overview (★ Channel-Independence 시각화)
+
+#### 시각 요소
+
+| 요소 | 의미 |
+|------|------|
+| **좌측 입력** $\mathbf{x} \in \mathbb{R}^{M \times L}$ | M 변수 × L 시점의 시계열 (예: 321 가구 × 336 시간) |
+| **M 개의 color-coded 가로 bar** | 각 변수 (channel) 의 시계열 |
+| **3개의 화살표** (each channel → backbone) | 각 channel 이 **독립적으로** Transformer 통과 |
+| **중앙 박스** "Transformer Backbone" | 같은 backbone (= 같은 weight) |
+| **3개의 화살표 → 우측** | 각 channel 의 예측 출력 |
+| **우측 출력** $\hat{\mathbf{x}} \in \mathbb{R}^{M \times T}$ | M 변수 × T 미래 시점 |
+
+#### ★ Panel (a) 의 가장 중요한 메시지
+
+> **"M 변수가 같은 backbone 을 공유하지만 forward 는 독립"**. 이게 **Channel-Independence** 의 본질.
+
+대비 (Channel-mixing): 모든 변수가 한꺼번에 attention 계산. PatchTST 는 각 변수 별도 forward.
+
+**일상 비유**: 321 학생이 같은 시험 (같은 문제 = 같은 backbone) 을 보지만 **각자 따로 답안 작성** (= independent forward). 학생끼리 답을 공유 안 함 (= no cross-channel mixing).
+
+### Panel (b) — Transformer Backbone (Supervised)
+
+#### Pipeline (위 → 아래)
+
+```
+Input single channel x^(i) ∈ R^L
+       ↓
+Instance Norm + Patching
+       ↓
+N=42 patches × P=16 each
+       ↓
+Projection + Position Embedding
+       ↓
+N × D_model tensor
+       ↓
+Transformer Encoder × M_layers
+       ↓
+N × D_model tensor
+       ↓
+Flatten + Linear Head
+       ↓
+Output prediction T 시점 x̂^(i) ∈ R^T
+```
+
+#### 각 박스의 element-level 의미
+
+| Figure 박스 | 한국어 의미 | chapter |
+|------------|-----------|---------|
+| **Input** (맨 위) | Single channel 시계열 (예: 한 가구의 336 시간 전력) | ch04 |
+| **Instance Norm** (분홍 박스) | 평균·분산 정규화 (distribution shift 보정) | ch07 |
+| **Patching** | 길이 L → P 짜리 N patches | ch04 |
+| **Projection + Position Embedding** (파랑 박스) | Linear (P → D_model) + 위치 정보 | ch06 |
+| **Transformer Encoder** (녹색 박스, × M_layers) | Multi-head attention + FFN + LayerNorm | ch06 |
+| **Flatten + Linear Head** (분홍 박스) | N × D → T 차원 변환 | ch06 |
+| **Output prediction** (맨 아래) | T 미래 시점 예측 | - |
+
+### Panel (c) — Transformer Backbone (Self-supervised)
+
+#### Pipeline
+
+```
+Input single channel x^(i) ∈ R^L
+       ↓
+Instance Norm + Patching
+       ↓
+N patches, 40% mask 적용 (random)
+       ↓
+Projection + Position Embedding
+       ↓
+Transformer Encoder × M_layers
+       ↓
+Linear Layer (reconstruction head)
+       ↓
+Reconstructed Masked Patches (only masked positions)
+       ↓
+MSE loss with original patches
+```
+
+#### Panel (b) 와의 차이
+
+| 요소 | Panel (b) Supervised | Panel (c) Self-supervised |
+|------|---------------------|--------------------------|
+| Input | 원본 patches | 일부 patches mask (40%) → 0 |
+| Output | T 미래 시점 (forecasting) | 원본 patches (reconstruction) |
+| Output head | Flatten + Linear Head (large output) | Linear Layer (per-patch reconstruction) |
+| Loss | MSE forecasting | MSE reconstruction (masked positions only) |
+| 학습 후 | 바로 예측 | Fine-tune for forecasting |
+
+### ★ Figure 1 의 핵심 통찰
+
+#### 통찰 1: 같은 backbone 두 task
+
+Panel (b) 와 (c) 가 **같은 Transformer encoder** 사용. 차이는 input/output 만.
+
+→ **One backbone, two tasks** — supervised + self-supervised 둘 다 같은 모델로.
+
+#### 통찰 2: ViT 의 정신 그대로
+
+Patch + Projection + Position Embedding + Transformer Encoder + Linear Head 의 sequence = **ViT (Vision Transformer) 그대로**.
+
+→ paper 의 "**A Time Series is Worth 64 Words**" 제목의 의미 = **ViT 가 image 를 16×16 patches 로 본 것처럼, 시계열을 16-step patches 로 보자**.
+
+#### 통찰 3: Channel-Independence 는 시각적으로 panel (a) 만
+
+Panel (a) 만 channel-independence 표현. Panel (b), (c) 는 single channel 의 detail. 즉:
+
+- **Outer level (panel a)**: Channel-Independence.
+- **Inner level (panel b, c)**: 표준 Transformer (단순함).
+
+→ **계층적 단순함** — PatchTST 의 design philosophy.
+
+```viz:pat-architecture:title=Fig 1 (a)(b)(c) Architecture (interactive),caption=3 panel toggle. (a) Channel-indep, (b) Supervised backbone, (c) Self-supervised backbone.
+```
+
+---
+
 ## 3.7 본 논문의 의의 — 학계 흐름의 *turning point*
 
 ```

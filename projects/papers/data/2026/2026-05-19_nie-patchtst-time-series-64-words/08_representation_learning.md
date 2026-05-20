@@ -10,6 +10,28 @@
 
 ---
 
+## ★ 본 chapter 가 paper 의 가장 큰 long-term impact
+
+paper 의 supervised 결과 (21% MSE reduction) 는 **immediate impact**.
+본 chapter 의 self-supervised 결과는 **paradigm impact**.
+
+### 왜 더 큰가?
+
+| 측면 | Supervised (ch10) | Self-supervised (본 chapter + ch11) |
+|------|-----------------|----------------------------------|
+| Impact 종류 | Incremental SOTA | **Paradigm shift** |
+| 후속 paper | 시계열 Transformer 개선 | **Foundation model 시리즈 (Chronos, TimesFM, Moirai)** |
+| 학계 비교 | ResNet 50 → 101 | BERT (NLP foundation model 시작) |
+| 시간 horizon | 1~2년 영향 | 5~10년 영향 |
+
+→ paper 의 **abstract 가 supervised 결과 (21%) 만 강조** 하지만, **장기 영향은 self-supervised 부분이 더 큼**.
+
+Fig 1 panel (c) (ch03) 가 이 part 의 architecture 시각화.
+
+
+
+---
+
 ## 8.2 Self-Supervised Learning 이 뭐예요?
 
 ### 일상 비유 — *책 읽기*

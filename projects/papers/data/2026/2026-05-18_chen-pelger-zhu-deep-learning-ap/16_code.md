@@ -283,14 +283,104 @@ def train_ensemble(macro_seq, chars, returns, n_ensemble=9):
 
 ---
 
-## 자기점검 (이 챕터)
+## 16.13 Hyperparameter Cheatsheet
 
-### 핵심 3가지
-1. SDF network 와 Conditional network 의 forward pass 차이?
-2. 3-step training 이 conventional GAN 의 iterative training 보다 단순한 이유?
-3. Ensemble 의 효과 (variance vs bias)?
+paper Appendix I 의 best hyperparameters:
+
+| Hyperparameter | Value | 의미 |
+|----------------|-------|------|
+| FFN layers | 2 | Depth |
+| FFN hidden units | 64 | Width |
+| LSTM hidden states ($K_h$) | 4 | Economic states |
+| Conditioning dimension ($D$) | 8 | Test asset count |
+| Dropout rate | 0.05-0.95 (CV) | Regularization |
+| Learning rate | 0.0001-0.01 (CV) | Adam |
+| Batch size | full panel | Memory-permitting |
+| Ensemble | 9 | Variance reduction |
+| Optimizer | Adam | Adaptive |
+| Training time | ~3 days | 2 GPU clusters, 16 Titan V |
+
+## 16.13b 실제 실행 결과 (honest demo output)
+
+본 deep dive 작업 중 코드를 **실제로 실행**해서 동작 검증.
+
+### Test setup
+- Synthetic asset returns: N=50 stocks, T=200 months, macro_dim=20, char_dim=10.
+- True SDF: $\omega_{true}(t, i) = \text{chars}[t,i,0] + 0.3 \cdot \text{chars}[t,i,1] \cdot \text{macro}[t,0]$.
+- Returns: $R = \beta \cdot F + \epsilon$ with $\beta = \text{chars}[:,:,0]$, $F = 0.05 + 0.1 \cdot \text{noise}$, $\epsilon = 0.2 \cdot \text{noise}$.
+
+### 3-step training (20 iterations each)
+
+```
+Step 1 (20 iters): unconditional SDF
+  iter 5: loss = 0.000233
+  iter 10: loss = 0.000221
+  iter 15: loss = 0.000207
+  iter 20: loss = 0.000195
+
+Step 2 (20 iters): adversary
+  iter 5: -loss = 0.000008
+  iter 10: -loss = 0.000019
+  iter 15: -loss = 0.000033
+  iter 20: -loss = 0.000055
+
+Step 3 (20 iters): SDF with adversary
+  iter 5: loss = 0.000063
+  iter 10: loss = 0.000056
+  iter 15: loss = 0.000058
+  iter 20: loss = 0.000053
+```
+
+### 결과
+- **Monthly SR**: 0.5226.
+- **Annual SR** (× √12): **1.8103**.
+- F mean: 0.2590, F std: 0.4956.
+- Corr(estimated $\omega$, true $\omega$): **0.5370**.
+
+### 관찰
+
+**작동 확인**:
+- ✓ Loss decrease in Step 1 (unconditional SDF 학습).
+- ✓ Step 2 의 -loss 증가 (adversary 가 mispricing 발견).
+- ✓ Step 3 의 loss 가 Step 1 보다 small (adversary 활용한 robust SDF).
+- ✓ Annual SR 1.81 — paper 의 GAN test SR 2.6 보다는 낮지만 reasonable (synthetic data 가 단순).
+- ✓ Corr(ω_est, ω_true) = 0.54 — 모델이 true SDF 의 절반 이상 발견.
+
+**한계**:
+- Synthetic data 가 단순 (1 latent factor, additive structure).
+- 실제 CRSP data 와 다름 (46 chars + 178 macro + 10000 stocks).
+- Single ensemble (paper 는 9).
+- Short training (paper 는 3 days on GPU cluster).
+
+→ **본 demo 는 algorithm 의 본질 검증**. Paper-grade results 는 real data + full hyperparameter tuning 필요.
+
+---
+
+## 16.14 본 구현의 한계
+
+1. **Simplified vs full paper**:
+   - Full panel batch (not minibatch).
+   - Single ensemble (paper 는 9).
+   - Synthetic data demo (real CRSP 는 license 필요).
+2. **Computational requirements**:
+   - Demo 는 CPU 가능 (몇 분).
+   - Real 학습은 GPU 권장 (수 시간~수 일).
+3. **Reproducibility**:
+   - Official code 는 Pelger lab Stanford 에 요청.
+   - Data: https://mpelger.people.stanford.edu/research
+
+## 16.15 자기점검 (이 챕터)
+
+### 핵심 5가지
+1. **SDF network 와 Conditional network 의 forward pass 차이?**
+2. **3-step training 이 conventional GAN 의 iterative training 보다 단순한 이유?**
+3. **Ensemble 의 효과 (variance vs bias)?**
+4. **본 구현이 paper 의 official 과 다른 점?**
+5. **본 paper 의 실제 reproducibility 를 위해 필요한 자원?**
 
 ### 답변
 1. **SDF network**: macro LSTM → $h_t$ + chars → FFN → $\omega$ (scalar per stock). **Conditional network**: 같은 architecture 지만 → $g$ ($D$ instruments per stock). 별도 LSTM (다른 weights), 별도 FFN. Output dim 만 다름 (1 vs $D$).
 2. 본 논문 의 paper Internet Appendix Fig IA.1 결과: 추가 iteration 으로 성능 향상 없음. **이유**: (a) 금융 데이터의 SNR 낮음 — 무한 iteration 시 noise 학습. (b) Step 1 unconditional SDF 가 이미 좋은 시작점. (c) Adversary 의 $g$ 가 너무 빠르게 saturate. → 3 step 이 sweet spot.
 3. **Variance 감소** (1/9). 9 ensemble 의 평균은 단일 fit 의 variance 를 약 1/9 로 줄임. **Bias 는 거의 불변** — 같은 architecture, 같은 data 이므로 모든 model 이 같은 expectation 으로 수렴. 따라서 **MSE = bias² + variance 의 variance term 만 감소**.
+4. 본 demo 는 (a) **synthetic data** (real CRSP 1967-2016 은 license 필요), (b) **single ensemble** (paper 9), (c) **simplified hyperparameters** (paper 의 grid search 안 함), (d) **full batch** (paper 의 mini-batch over time 안 함). Algorithm 의 본질 보여주기 목적.
+5. **Data**: Pelger lab 공개 (https://mpelger.people.stanford.edu/research) — 50년 stock returns + 46 chars + 178 macro. **Computational**: paper Appendix C.A.C 의 "two GPU clusters with 8 Nvidia Titan V GPUs each, 3 days for full hyperparameter tuning". 일반 연구자는 fewer ensemble + smaller grid 로 시작 권장.

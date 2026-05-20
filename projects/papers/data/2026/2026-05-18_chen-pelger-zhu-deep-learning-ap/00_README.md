@@ -88,8 +88,12 @@
 |----------|------|------|
 | `dlap-sdf-performance` | 09 | Table I 재현 — SR/EV/XS-R² × {GAN, FFN, EN, LS} × {Train/Valid/Test} |
 | `dlap-macro-ablation` | 09 | Figure 6 재현 — macro 사용 방식 (hidden states / no macro / all macro raw) |
+| `dlap-cumulative-returns` | 09 | Figure 7 재현 — 10 decile β-sorted portfolio 의 50년 누적수익 |
 | `dlap-beta-sorted` | 09 | Figure 8 재현 — β-sorted decile portfolio 의 linear relation (R²=0.97) |
+| `dlap-table3-portfolios` | 10 | Table III 재현 — 46 anomaly decile EV/XS-R² (EN/FFN/GAN) |
 | `dlap-var-importance` | 11 | Figure 11/12 재현 — 46 firm characteristics 중요도 (GAN vs FFN) |
+| `dlap-lstm-states` | 11 | Figure 13 재현 — 4 LSTM hidden states + NBER recession bars |
+| `dlap-sdf-surface` | 11 | Figure 14/15 재현 — SDF weight 의 pairwise interaction (2D contour) |
 
 → 전체 카탈로그는 [17_diagrams.md](17_diagrams.md).
 

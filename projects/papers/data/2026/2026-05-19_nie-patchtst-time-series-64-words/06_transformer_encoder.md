@@ -10,6 +10,25 @@
 
 ---
 
+## ★ 본 chapter 의 가장 중요한 통찰
+
+> **"본 paper 의 negative contribution (= '추가 안 한 것') 도 contribution"**.
+
+paper 가 **명시적으로 거절**한 것:
+- Informer 의 ProbSparse self-attention.
+- Autoformer 의 Auto-correlation + Series Decomposition.
+- FEDformer 의 Fourier-enhanced attention.
+
+→ 모두 **시계열 specific 변형** = paper 이 "**우리 안 씁니다**" 라고 명시.
+
+**Fig 6 (attention maps, ch18) 이 정당화**: vanilla self-attention 만으로도 **local + periodic 패턴 학습** — 시계열 specific 변형 불필요.
+
+→ **paper 의 message**: "**시계열 분야에서 Auto-correlation/FFT 같은 architectural innovation 보다 patching + CI 같은 representation innovation 이 더 중요**".
+
+
+
+---
+
 ## 6.2 Vanilla Transformer 가 뭐예요?
 
 ### 일상 비유 — *ChatGPT 의 기본 부품*

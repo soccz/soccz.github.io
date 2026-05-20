@@ -49,7 +49,20 @@
 
 ---
 
-## 미리 알아둬야 하는 5가지 개념
+## 미리 알아둬야 하는 10가지 개념 (초등학생 버전)
+
+### 0. "자산가격결정" 이 뭐예요?
+
+**자산 (주식, 채권 등) 의 가격이 왜 그렇게 결정되는지 설명하는 학문**.
+
+비유 (식료품):
+- 사과 가격은 수요·공급으로 결정 — 학습할 게 별로 없음.
+- 그러나 주식 가격은 **미래 수익** 의 기대값으로 결정 — 미래는 모름.
+- → "어떤 주식이 비싼가 / 싼가" 의 답이 어려움.
+
+자산가격결정 = "미래의 위험과 보상을 어떻게 가격에 반영하나" 의 이론.
+
+
 
 ### 1. "Stochastic Discount Factor (SDF)" 이 뭐예요?
 
@@ -105,6 +118,53 @@ RNN (Recurrent Neural Network) 의 변형. **장기 시계열 의존성** 학습
 본 논문 사용: **178개 macroeconomic 시계열 → 4개 hidden state** 압축. business cycle 같은 long-range dynamics 자동 학습.
 
 비유: 단순 RNN 이 "최근 몇 달만 기억" 하면, LSTM 은 "기억할 가치 있는 것만 골라 장기 보관".
+
+### 6. "Sharpe Ratio (SR)" 이 뭐예요?
+
+**위험 단위당 수익**.
+
+수식: $SR = \mu / \sigma$ (mean return / standard deviation).
+
+- 큰 SR = 안전하면서도 수익이 좋다.
+- 작은 SR = 위험 대비 수익 약함.
+- 시장 SR ≈ 0.5 (연간) — 평균적인 portfolio.
+- GAN OOS SR = 2.6 (연간) — **시장의 5배** 수준.
+
+### 7. "Excess Return ($R^e$)" 이 뭐예요?
+
+**자산 수익 - 무위험 수익**.
+- $R^e = R - R^f$.
+- $R^f$ = US Treasury bill (3개월 만기) 같은 안전 자산 수익.
+- "위험을 감수해서 추가로 번 수익".
+
+→ Asset pricing 의 분석 대상.
+
+### 8. "Anomaly (이상현상)" 이 뭐예요?
+
+**CAPM 으로 설명 안 되는 평균 수익률 패턴**.
+
+대표적:
+- **Size effect**: 작은 회사 주식이 큰 회사보다 평균적으로 더 좋은 수익.
+- **Value effect**: 장부가/시가 비율 높은 주식이 좋은 수익.
+- **Momentum**: 최근 잘 오른 주식이 계속 잘 오름.
+- **Short-term reversal**: 지난 달 잘 오른 주식이 이번 달 약화.
+
+→ 본 paper 의 46 chars 가 모두 이런 anomalies.
+
+### 9. "Cross-sectional R² (XS-R²)" 이 뭐예요?
+
+**자산 간 평균 수익률 차이** 를 모델이 얼마나 예측하나의 비율.
+
+- 1.0 = 완벽 예측.
+- 0.0 = 평균만 예측 (자산 간 차이 못 잡음).
+- GAN test XS-R² = 0.23 → "자산 간 mean return 차이의 23% 예측".
+
+### 10. "Test Asset" 이 뭐예요?
+
+**모델 검증에 쓰는 portfolio**.
+- 전통: 25 Fama-French portfolios (5×5 size × value).
+- 본 paper: **adversarial 으로 자동 생성** — 가장 mispriced 한 portfolio 발견.
+- → "시험 문제 를 자동 출제".
 
 ---
 

@@ -41,6 +41,21 @@
 
 ---
 
+## 🆚 자매 deep dive — Autoencoder Asset Pricing
+
+같은 날짜 (2026-05-17) 출간된 [Autoencoder Asset Pricing (Gu-Kelly-Xiu 2021) deep dive](../2026-05-17_gu-kelly-xiu-autoencoder/00_README.md) 와 자매 작업.
+
+| | **RPPCA** (본 논문) | **AE-AP** (Gu-Kelly-Xiu 2021) |
+|---|----------------------|--------------------------------|
+| 핵심 도구 | PCA + 평균 페널티 (γ) | Autoencoder (β = NN) |
+| 공격 지점 | "PCA 는 평균 무시" | "IPCA 는 선형" |
+| 잡는 요인 | 약한 + 높은 SR 요인 | 비선형 노출도 |
+| 데이터 | KNS N=370 portfolios | CRSP 30K + 94 chars |
+
+두 paper 가 **다른 각도로 PCA/IPCA 한계 극복**. **결합 가능성** (RP-PCA + NN) 은 학계 후속 연구 방향.
+
+---
+
 ## 한 줄 판결
 
 > **통계학(보편 도구)과 자산가격이론(특수 prior)의 60년 분리를 끝낸 사례. PCA에 평균(위험프리미엄) 페널티를 더한 단순 변형으로 PCA가 영원히 못 잡는 약한+높은 SR 요인을 검출, 실증에서 Sharpe-ratio 2배. RP-PCA의 사상 — "도메인 prior를 정규화로 끼워넣기" — 은 자산가격을 넘어 모든 응용 분야에 일반화 가능.**

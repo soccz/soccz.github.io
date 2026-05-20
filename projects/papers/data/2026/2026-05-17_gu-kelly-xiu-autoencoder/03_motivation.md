@@ -1,5 +1,15 @@
 # 03. Section 1 (Introduction) — 왜 비선형 자산가격결정 모델이 필요한가
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- "Anomaly" vs "Risk factor" 의 60년 학계 대립이 뭔지
+- 본 논문이 출발하는 모델 (**KPS = IPCA**) 의 정확한 모양 + 한계 (선형성)
+- **왜 비선형성 이 필요한가** — 3가지 이론적 근거 (Campbell-Cochrane, Bansal-Yaron, Pohl-Schmedders-Wilms)
+- 본 논문이 정확히 어디서 KPS 를 일반화하는지 — "선형 한 군데만"
+- 결과 미리보기 (CA2 K=6 VW Sharpe = 1.53 등)
+
+---
+
 논문 1쪽 후반 ~ 2쪽 전체 (Section 1) 를 풀어본다.
 
 ---
@@ -77,16 +87,28 @@ $$
 **3개 이론적 근거**:
 
 ### (a) 비선형 자산가격결정 모델의 선례
+
+🌱 **일상 비유**: 학계 거장들도 이미 "비선형이 자연스럽다" 고 모델을 만들어 두었음. 본 논문은 그 통찰을 ML 도구로 구현.
+
 - **Campbell-Cochrane (1999)** — habit 모델: surplus consumption 의 비선형 효용
+  - 비유: "어제 좋게 먹은 사람과 굶주린 사람의 음식 한 입 가치가 다르다 — 비선형"
 - **Bansal-Yaron (2004)** — long-run risk: 위험 프리미엄이 분산의 비선형 함수
+  - 비유: "약한 비 (variance 작음) 우산 1개 vs 폭우 (variance 큼) 우산 100개 — 위험 보상이 비선형"
 - **He-Krishnamurthy (2013)** — intermediary asset pricing: 자본 제약의 비선형 효과
+  - 비유: "은행 자본 충분할 땐 정상 영업 → 자본 한계 근처에서 갑자기 위기 전염" — 임계점 비선형
 
 → 이론적으로 **수익 동학이 상태 변수의 비선형 함수**.
 
 ### (b) 일반 균형 모델에서의 비선형 risk exposure
+
+🌱 **일상 비유**: "회사의 위험 노출도가 시점에 따라 달라지고, 그 변화 자체도 비선형" — 거시 상태와 회사 특성의 곱항.
+
 - **Santos-Veronesi (2004)**: 시변 risk exposure 가 자산 가격에 비선형 영향
 
 ### (c) 선형 근사의 오차
+
+🌱 **일상 비유**: "곡선을 직선으로 근사하면 큰 영역에서 오차". 선형 IPCA 도 비슷한 위험.
+
 - **Pohl, Schmedders, Wilms (2018)**: 비선형 모델의 선형 근사가 equity premium·return predictability 의 크기 추정에서 **상당한 오차** 야기
 
 **핵심 메시지**: 선형성은 단지 편의를 위한 것. 이론은 비선형을 시사.
@@ -216,8 +238,31 @@ $$
 3. **이 모델이 "no-arbitrage" 를 강제하는 메커니즘은?**
 
 ### 답변
-1. KPS: β(z) = z'Γ 선형. 약점: 특성 간 상호작용 + threshold 효과 무시. 본 논문: β(z) = NN(z) 비선형 신경망 매핑. 단 r = β'f 형태는 유지.
-2. (도구 / 차원축소 / covariates 활용 / 선형비선형): PCA: 차원축소·없음·선형 / AE: 차원축소·없음·비선형 / IPCA: 차원축소·있음·선형 / **CA: 차원축소·있음·비선형 ← 본 논문이 메우는 빈 칸**.
-3. 모델 r = β'f + u 에 절편 α 없음. 모든 기대수익이 β·E[f] 로 강제됨. → α = 0 자동 충족 = no-arbitrage. 실증에서 |t(α)|>3 α 개수 (95 managed portfolios 중) FF5 37 → CA2 8.
+
+1. **KPS 선형성 가정의 약점 + 본 논문의 일반화**:
+   - **KPS (Eq. 2)**: $\beta(z)' = z'\Gamma$ — $\Gamma$ 는 $P \times K$ 매핑 행렬, 시간 무관, 모든 자산 공유.
+   - **3 가지 약점**:
+     - 특성 간 **상호작용** (size × momentum 같은 곱항) 무시
+     - **Threshold 효과** (어떤 값 이상에서만 효과) 무시
+     - **Saturation** (큰 값에서 효과 정체) 무시
+   - **이론적 근거**: Campbell-Cochrane (1999), Bansal-Yaron (2004) 등이 비선형 자산가격 모델 제시.
+   - **본 논문의 일반화**: $\beta(z) = \text{NN}(z)$ 비선형 신경망 매핑. NN 의 universal approximation 으로 위 3 효과 자동 발견. 다른 모든 것 (Eq. 1 conditional 구조, no-arbitrage, 추정 framework) 은 그대로.
+
+2. **4 가지 도구를 2 차원 표로**:
+
+   | 도구 | 차원 축소 | covariates 활용 | 선형/비선형 |
+   |------|-----------|-----------------|-------------|
+   | PCA | ✓ | ✗ | 선형 |
+   | Standard Autoencoder | ✓ | ✗ | **비선형** |
+   | IPCA (KPS) | ✓ | ✓ | 선형 |
+   | **본 논문 (Conditional AE)** | ✓ | ✓ | **비선형** |
+   
+   → **2 × 2 매트릭스 의 마지막 빈 칸 ("covariates + 비선형")** 을 본 논문이 메움.
+
+3. **No-arbitrage 강제 메커니즘**:
+   - **아키텍처 차원**: 모델 식 $r = \beta'f + u$ 에 **절편 (α) 가 명시적으로 없음** (즉 모델 구조 자체가 α=0 강제).
+   - **수학적**: 모든 기대수익이 $E[r] = \beta' E[f]$ 로 표현됨 → α = 0 자동 충족 = no-arbitrage 의 정확한 정의.
+   - **vs ML 표준**: ML 모델은 보통 절편 자유 (target 의 평균을 학습). 본 논문은 그걸 의도적으로 제거 — **이론을 손실이 아닌 아키텍처에 강제**.
+   - **실증 검증** (paper Fig. 3): 95 managed portfolios 중 $|t(\alpha)| > 3$ 개수가 FF5 37 → CA2 **8** (78% 감소). Bonferroni chance 기댓값 ≈ 12 보다 적음. 잔존 α 도 < 7 bps/월 (economically small).
 
 다음 [04_factor_model.md](04_factor_model.md) — KPS factor model 의 수학적 setup.

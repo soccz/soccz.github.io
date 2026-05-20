@@ -10,6 +10,19 @@
 
 ---
 
+## ★ Patching 의 4 가지 동시 이득
+
+| 이득 | 정량 | 어디 입증되는가 |
+|------|------|---------------|
+| **Attention 복잡도 감소** | $O(L^2) \to O((L/S)^2)$, S=8 → **64× 감소** | 본 chapter |
+| **실측 학습 속도 (Traffic)** | **22× speedup** (10040초 → 464초) | ch03 Table 1 |
+| **Longer L 가능** | L=336 → 512 → 720 까지 | ch10 Fig 2 |
+| **Local pattern 보존** | 한 patch 안의 시간 정보 한 token 으로 | 본 chapter |
+
+→ Patching 의 진짜 가치는 **하나의 trick 으로 4가지 동시 해결**.
+
+---
+
 ## 4.2 Patching 이 뭐예요? — 일상 비유
 
 ### 비유 1 — 책 읽기

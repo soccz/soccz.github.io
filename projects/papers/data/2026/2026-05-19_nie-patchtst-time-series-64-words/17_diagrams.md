@@ -1,6 +1,59 @@
 # 17. ASCII 도식 + Figure 1-7 + viz 카탈로그
 
-> 본 deep dive 의 모든 시각 자료를 한 곳에. *step-by-step 가이드 + viz block 카탈로그*.
+> 본 deep dive 의 모든 시각 자료를 한 곳에. step-by-step 가이드 + viz block 카탈로그.
+
+---
+
+## ★ 본 chapter 의 사용법
+
+본 deep dive 의 모든 시각적 자료를 한 곳에 정리. 3 종류:
+
+1. **ASCII 도식**: 종이/터미널에서도 볼 수 있는 정적 도식.
+2. **원본 Figure 발췌 (Fig 1-7)**: paper 에서 직접 발췌.
+3. **인터랙티브 viz (14 종)**: `pat-*` 식별자로 deep.html / read.html 에 렌더링.
+
+| 용도 | 추천 자료 |
+|------|---------|
+| 전체 architecture | ASCII 도식 1 + Fig 1 (a)(b)(c) |
+| Patching 메커니즘 | `pat-patching` viz |
+| Channel-Indep 차이 | `pat-channel-indep` viz + Fig 7 (curves) |
+| Look-back window 효과 | Fig 2 + `pat-lookback-window` viz |
+| Main result (Table 3) | `pat-table3-supervised` viz |
+| Ablation | Fig 4 + `pat-ablation-table7` viz |
+| Self-supervised | Fig 1 (c) + `pat-masked-recon` viz |
+| Attention 학습 | Fig 6 + (ASCII visualization) |
+| Robustness | Fig 5 + `pat-fig5-model-size` viz |
+| Seed variance | `pat-table14-seeds` viz |
+| Universal CI | `pat-table15-ci-universal` viz |
+
+---
+
+## ★ 본 deep dive 의 figure/table coverage
+
+| Figure | paper p. | 본 deep dive 해석 chapter | 형식 |
+|--------|----------|------------------------|------|
+| Fig 1 (architecture) | p.4 | **ch03 (element-level mapping)** | 3 panel × 박스/화살표/symbol |
+| Fig 2 (lookback) | p.9 | **ch10 (6 panel + 5 line)** | dataset × horizon × model |
+| Fig 3 (forecast viz) | p.14 | **ch10 (시각 요소)** | ILI 60-step 시각 |
+| Fig 4 (patch length) | p.15 | **ch12 (4 panel × 8 P)** | sensitivity 분석 |
+| Fig 5 (model size) | p.20 | **ch18 (8 panel × 6 combination)** | hyperparameter robustness |
+| Fig 6 (attention) | p.23 | **ch18 (3 series × diagonal/off-diagonal)** | attention pattern 의미 |
+| Fig 7 (CI curves) | p.24 | **ch18 (2 panel × train size + epoch)** | data-efficient + overfit-resistant |
+
+| Table | paper p. | 본 deep dive 해석 chapter | 형식 |
+|-------|----------|------------------------|------|
+| Table 1 (case study) | p.4 | **ch03 (0.665 → 0.349 step-by-step)** | evolution analysis |
+| Table 3 (supervised) | p.7 | **ch10 (32 cells best grid)** | cell-by-cell |
+| Table 4 (self-sup) | p.8 | **ch11 (4 datasets cell-by-cell)** | self-sup vs supervised |
+| Table 5 (transfer) | p.8 | **ch11 (Elec→Traffic 등 transfer pair)** | cross-dataset transfer |
+| Table 6 (repr) | p.9 | **ch11 (linear probe MSE)** | representation quality |
+| Table 7 (ablation) | p.15 | **ch12 (3 datasets × 2 horizons cell-by-cell)** | P + CI contribution 분해 |
+| Table 8 (univariate) | p.16 | **ch18 (ETT univariate)** | univariate vs multivariate |
+| Table 11 (Instance Norm) | p.17 | **ch18 (with/without)** | 17% reduction 입증 |
+| Table 14 (seed variance) | p.19 | **ch18 (5 seeds × 7 datasets)** | reproducibility |
+| Table 15 (CI universal) | p.18 | **ch18 (Informer/Auto/FED 에 CI 적용)** | universal trick 입증 |
+
+→ **7 Figures + 11 Tables 모두 한 picture/cell 씩 정밀 해석 완료**.
 
 ---
 

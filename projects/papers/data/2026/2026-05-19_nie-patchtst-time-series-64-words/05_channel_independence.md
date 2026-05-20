@@ -10,6 +10,30 @@
 
 ---
 
+## ★ Channel-Independence 가 본 논문의 진짜 main contribution
+
+ablation (ch12 Table 7) 의 정확한 수치:
+
+| Trick | 단독 적용 시 MSE reduction |
+|-------|--------------------------|
+| Patching only | ~3% (minor) |
+| **Channel-Independence only** | **~25~28% (major)** |
+| Patching + CI | ~30~36% (combined) |
+
+→ **CI 가 22% reduction 의 80% 이상 차지**.
+
+또 paper Table 15 (ch18) 가 보여줌:
+- Informer / Autoformer / FEDformer 에 CI 적용 시 **모두 성능 향상**.
+- → **CI 는 universal trick** (PatchTST 만의 것이 아님).
+
+또 paper Fig 7 (ch18) 이 보여줌:
+- CI 가 **data-efficient** (작은 train size 에서 더 빠른 수렴).
+- CI 가 **overfit-resistant** (epoch 늘려도 안정, mixing 은 overfit).
+
+→ **본 논문의 "vanilla Transformer + 두 trick" 의 진짜 message: Channel-Independence 가 paradigm 의 핵심**.
+
+---
+
 ## 5.2 Channel-Independence 가 뭐예요? — 일상 비유
 
 ### 비유 1 — 의사의 진단

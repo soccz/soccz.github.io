@@ -80,16 +80,14 @@ Department of Statistics and Data Science, Cornell University
 
 ---
 
-## 인터랙티브 시각화
+## 인터랙티브 시각화 (4종 — 현재 구현)
 
 | viz type | 챕터 | 내용 |
 |----------|------|------|
 | `pt-crps-table1` | 11 | Table 1 재현 — 5 datasets × 12 models CRPS_sum bar |
 | `pt-ablation-table2` | 11 | Table 2 재현 — 4 settings ablation on Traffic |
 | `pt-motion-table3` | 12 | Table 3 재현 — 11 models × 2 datasets × 2 metrics (ADE/FDE) |
-| `pt-graphical-models` | 04 | Fig 1 4-panel 재현 — (a) LDS / (b) ProTran 1-layer / (c) 3-layer Gen / (d) 3-layer Inf (black gen vs red inf arrows) |
-| `pt-attention-flow` | 06 | Single-layer generative process (Eq 5-9) 의 attention flow viz |
-| `pt-hierarchical-stack` | 08 | Multi-layer (L=1, 2, 3) hierarchy 시각화 |
+| `pt-graphical-models` | 03, 04, 06, 08 | Fig 1 4-panel 재현 — (a) LDS / (b) ProTran 1-layer / (c) 3-layer Gen / (d) 3-layer Inf |
 
 → 전체 카탈로그는 [17_diagrams.md](17_diagrams.md).
 

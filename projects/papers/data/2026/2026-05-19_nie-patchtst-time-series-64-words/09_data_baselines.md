@@ -1,12 +1,106 @@
 # 09. 데이터셋 + Baseline 모델 — 실험 setup
 
-> 본 논문이 사용한 *8 datasets* + *7 baseline 모델*. 무지식자 친화로.
+> 본 논문이 사용한 **8 datasets** + **8 baseline 모델**. 무지식자 친화로.
 
 ---
 
 ## 9.1 챕터 한 줄 요약
 
-> **"8 datasets (다양한 domain) + 7 baseline (전통 + Transformer + Linear) = *광범위 검증*. PatchTST 가 *거의 모든 cell 에서 best*."**
+> **"8 datasets (다양한 domain) + 8 baseline (전통 + Transformer + Linear) = 광범위 검증. PatchTST 가 32/32 cells 중 약 29 cells (91%) 에서 best."**
+
+---
+
+## ★ 본 chapter 의 핵심 결론 (미리 보기)
+
+| Dataset | PatchTST 적합도 | 결과 |
+|---------|---------------|------|
+| Weather, Traffic, Electricity, ILI, ETTm1, ETTm2 | **★ 강함** | 4/4 horizons best |
+| ETTh1, ETTh2 | **약함** | DLinear 와 격차 작음 |
+
+→ **PatchTST 의 sweet spot**: 고차원 multivariate + 강한 cycle + many samples.
+→ **약점**: 단순 cycle dataset (ETT h1/h2) — Linear baseline 으로도 충분.
+
+자세한 분석은 ch10.
+
+---
+
+## ★ Dataset 별 deep 특성 + PatchTST 적합도 매트릭스
+
+paper 가 명시 안 한 분석. 본 deep dive 의 정리.
+
+### 8 dataset 의 정확한 통계 (Table 1 + Appendix Table 2)
+
+| Dataset | M (변수) | Length | Frequency | Sample 수 |
+|---------|---------|--------|----------|----------|
+| Weather | 21 | - | 10 분 | 52,696 |
+| Traffic | 862 | - | 1 시간 | 17,544 |
+| Electricity | 321 | - | 1 시간 | 26,304 |
+| ILI | 7 | - | 1 주 | 966 |
+| ETTh1 | 7 | - | 1 시간 | 17,420 |
+| ETTh2 | 7 | - | 1 시간 | 17,420 |
+| ETTm1 | 7 | - | 15 분 | 69,680 |
+| ETTm2 | 7 | - | 15 분 | 69,680 |
+
+### Dataset 별 깊은 특성
+
+#### Weather (21 기상 변수, 10 분 단위)
+- **특성**: 강한 daily/seasonal cycle + 가끔 storm event.
+- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best, 37% reduction vs FED).
+- **이유**: 21 변수의 multi-scale pattern + longer L (PatchTST 의 강점).
+
+#### Traffic (862 도로 점유율, 시간당)
+- **특성**: 강한 시간·요일 cycle + 출퇴근 peak.
+- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best, 38% reduction).
+- **이유**: 862 변수의 spatial-temporal pattern + 22× speedup 가 가능 (Table 1).
+- **★ 특별**: Patching 의 가장 큰 computational benefit dataset.
+
+#### Electricity (321 가구, 시간당)
+- **특성**: 강한 일/주/연 cycle + 가구 다양성.
+- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best).
+- **이유**: 321 변수의 channel-independence 가 결정적 (Fig 7, ch18).
+
+#### ILI (7 인플루엔자 환자, 주별)
+- **특성**: Few-shot setting (966 weeks ≈ 18년).
+- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best, **72% reduction vs Informer**).
+- **이유**: Few-shot 에서도 channel-independence + patching 이 효과적 → **foundation model 방향 시사**.
+
+#### ETTm1 (변압기, 15분)
+- **특성**: 강한 일·계절 cycle, 15분 sub-hourly 변동.
+- **PatchTST 적합도**: ★ **강함** (4/4 horizons best).
+- **이유**: 69K samples + sub-hourly variation 으로 PatchTST 작동.
+
+#### ETTm2 (변압기 v2, 15분)
+- **특성**: ETTm1 와 유사.
+- **PatchTST 적합도**: **우수** (3/4 horizons best).
+- **이유**: PatchTST/42 가 일부 horizons 에서 더 좋음.
+
+#### ETTh1 (변압기, 시간) — **★ PatchTST 약점 dataset**
+- **특성**: 단순 일/계절 cycle, sub-hourly 변동 없음, 적은 samples (17K).
+- **PatchTST 적합도**: **약함** — DLinear 와 격차 작음.
+- **이유**: 단순 cycle 만 있는 dataset 에는 Linear model 도 충분. PatchTST 의 복잡함이 noise.
+
+#### ETTh2 (변압기 v2, 시간) — **★ PatchTST 약점 dataset**
+- **특성**: ETTh1 와 유사한 단순 cycle.
+- **PatchTST 적합도**: **약함** (PatchTST/42 가 일부 horizons best, /64 는 약함).
+- **이유**: ETTh1 와 같음.
+
+### ★ Dataset 별 종합 매트릭스
+
+| Dataset | M | Sample 수 | Complexity | PatchTST 적합도 | Best in 4 horizons |
+|---------|----|----------|----|--------------|----------|
+| Weather | 21 | 52,696 | High | ★★★ | **4/4** |
+| Traffic | 862 | 17,544 | **Very High** | ★★★ | **4/4** |
+| Electricity | 321 | 26,304 | High | ★★★ | **4/4** |
+| ILI | 7 | 966 | Medium (few-shot) | ★★★ | **4/4** |
+| ETTm1 | 7 | 69,680 | Medium | ★★ | **4/4** |
+| ETTm2 | 7 | 69,680 | Medium | ★★ | 3/4 |
+| ETTh1 | 7 | 17,420 | **Low (단순 cycle)** | ★ | **4/4 (격차 작음)** |
+| ETTh2 | 7 | 17,420 | **Low** | ★ | 2/4 |
+| **합계** | - | - | - | - | **29/32 (91%)** |
+
+→ **★ 일반 원칙**: **PatchTST 는 complex dataset 에서 빛난다**. 단순 cycle (ETTh1/h2) 에서는 Linear baseline (DLinear) 도 경쟁력.
+
+→ **응용 시사**: 새 dataset 적용 전에 **distribution complexity 분석** 필요. Multi-modal/high-variance/many-channel 이면 PatchTST 선택, 단순 cycle 이면 DLinear 부터 시도.
 
 ---
 
