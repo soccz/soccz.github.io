@@ -21,6 +21,8 @@
 | ILI | Influenza-Like Illness | CDC |
 | FFN | Feed-Forward Network | Transformer block |
 
+**일상 비유 — 용어집 의 역할**: *각 용어 가 영어 + 약어 + 출처* 의 *수학/통계 의 cheat sheet*. 본 deep dive 의 *다른 챕터* 에서 만난 용어 의 *빠른 참조*. 본 챕터 는 *순서 무관 + 사전 형식*.
+
 ---
 
 ## 표기법 (paper 의 표기 그대로)
@@ -220,6 +222,20 @@ Misc: [14, 15, 21, 22] — 4개
 - **분해 기반 forecasting** (Prophet, N-BEATS, DeepGLO) 와 차별화
 
 이 3 학문적 흐름의 통합이 본 paper 의 contribution.
+
+---
+
+## 자기점검
+
+### 핵심 3가지
+1. **본 deep dive 에서 가장 자주 쓰이는 *3 약어*?**
+2. **본 paper 의 핵심 *symbol notation*?**
+3. **48 references 의 *학문적 lineage*?**
+
+### 답변
+1. **(1) Auto-Correlation** — Eq 5-7 의 핵심 mechanism. **(2) SeriesDecomp** — Eq 1 의 핵심 block. **(3) FFT** — Eq 8 의 efficient computation 도구. 이 셋 이 *Autoformer 의 핵심 contribution* 의 3 축.
+2. **시계열**: $\mathcal{X} \in \mathbb{R}^{L \times d}$, $I$ (input length), $O$ (output length). **분해**: $\mathcal{X}_s$ (seasonal), $\mathcal{X}_t$ (trend). **Encoder/Decoder**: $\mathcal{S}_{en/de}^{l,i}$, $\mathcal{T}_{de}^{l,i}$ — *layer l 의 i-th 분해 후 seasonal/trend*. **Auto-Corr**: $R_{\mathcal{Q},\mathcal{K}}(\tau)$, $\tau_1, ..., \tau_k$, $\text{Roll}(\mathcal{V}, \tau)$. *Paper 의 표기 그대로*.
+3. **3 학문적 흐름의 통합**: (1) **시계열 의 고전 분석** (Box-Jenkins, STL, Hyndman) — 13개. (2) **Stochastic process 이론** (Chatfield, Papoulis, Wiener) — Auto-Correlation 의 *수학적 정당화*. (3) **Transformer 변형** (Informer, Reformer, LogTrans) — *baseline + 차별화 대상*. (4) **분해 기반 forecasting** (Prophet, N-BEATS) — *극복 대상*. 총 48 references — *시계열 + 통계 + Deep Learning* 의 *교차*.
 
 ---
 

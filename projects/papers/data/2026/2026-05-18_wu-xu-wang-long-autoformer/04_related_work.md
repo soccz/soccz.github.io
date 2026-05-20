@@ -12,6 +12,8 @@
 
 ## 4.2 Cluster 1 — 고전 통계 시계열 모델
 
+**일상 비유 — 시계열 forecasting 의 *학계 역사***: 마치 *수송 도구 의 진화* — 마차 (통계 모델) → 자전거 (RNN/CNN) → 자동차 (Transformer) → 비행기 (Autoformer). 각 시대 의 *기술 hierarchy*. 본 cluster 가 *가장 오래된 마차*.
+
 ### ARIMA (Box & Jenkins 1970, 1968)
 
 - **풀네임**: AutoRegressive Integrated Moving Average.
@@ -33,6 +35,8 @@
 ---
 
 ## 4.3 Cluster 2 — RNN / CNN / Attention 시계열 모델
+
+**일상 비유**: *마차 → 자전거*. *Deep learning 의 1세대* — 통계 모델 보다 *유연 + 강력*. RNN 의 *순환 기억* + CNN 의 *공간 인지* 적용.
 
 ### LSTM (Hochreiter & Schmidhuber 1997)
 
@@ -62,6 +66,8 @@
 ---
 
 ## 4.4 Cluster 3 — Transformer 시계열 변형 (★ 본 논문 의 main baseline)
+
+**일상 비유**: *자전거 → 자동차*. *Deep learning 의 2세대* — Attention 메커니즘 의 *long-range dependency* 처리. 그러나 *시계열 specific 변형* 의 *bounded improvement*.
 
 ### Transformer (Vaswani et al 2017)
 
@@ -109,6 +115,8 @@
 ---
 
 ## 4.5 Cluster 4 — 시계열 분해 (Decomposition)
+
+**일상 비유**: *재료 분리 학파*. 시계열을 *trend + seasonal* 같은 *기본 성분* 으로 분리 → 각 따로 처리 → 합치기. *공장 의 분업* 같은 정신. 그러나 *사전 처리* 한계 — *미래 의 분해 불가능*.
 
 ### STL (Cleveland 1990)
 

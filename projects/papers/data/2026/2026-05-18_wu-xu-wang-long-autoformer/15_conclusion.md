@@ -12,6 +12,12 @@
 
 ## 15.2 본 논문 *2 대 기여*
 
+**일상 비유 — 한 권의 책의 2 부**: 본 논문이 학계에 *2 권* 의 책 같음:
+1. *Architecture 책* — *어떤 모델 구조 만들었나*.
+2. *Mechanism 책* — *어떤 attention 만들었나*.
+
+두 권 *모두* 시계열 ML 분야 의 *paradigm shift*.
+
 ### 1. **Decomposition Architecture** — Inner Block
 
 > **시계열 분해를 *deep network 의 inner block* 으로 통합**.
