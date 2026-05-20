@@ -157,21 +157,53 @@ Autoformer 가 *거의 모든 cell 에서 best*:
 
 본 논문 *Appendix E.1, E.2, E.3*: prediction visualization.
 
-### Figure 8 (predict-96), 9 (predict-192), 10 (predict-336), 11 (predict-720)
+### Figures 8-11 — ETT 의 4 horizons (predict-96/192/336/720)
 
-ETT dataset 의 *4 horizons* 각각 의 *예측 vs 실제* 시각.
-- *Autoformer*: 예측 (orange) 이 *실제 (blue) 와 거의 일치*.
-- *Informer, LogTrans, Reformer*: *큰 편차*, *over-smoothing*, *peak 못 잡음*.
+![Figures 8-11 — ETT predictions (4 horizons)](figures/page15_Figs8-11_predictions.png)
 
-### Figure 12 — Exchange (비주기)
+*paper p.15 — ETT dataset 의 *4 horizons* 각각 의 *예측 vs 실제* 시각.*
 
-비주기 데이터 의 예측. Autoformer 만 *큰 변동* 잡음.
+**어떻게 읽나?**
+- 위 부터: Fig 8 (predict-96), Fig 9 (predict-192), Fig 10 (predict-336), Fig 11 (predict-720).
+- 각 row 의 4 model: Autoformer, Informer, LogTrans, Reformer.
+- *Blue* = ground truth, *Orange* = prediction.
 
-### Figure 13 — ETT Univariate
+**발견**:
+- *Autoformer*: 예측 (orange) 이 *실제 (blue) 와 거의 일치* — *모든 4 horizons*.
+- *Informer*: 짧은 horizon (96) 어느 정도, *720 에서 완전 over-smoothing* (직선).
+- *LogTrans, Reformer*: *큰 편차*, *peak/trough 못 잡음*.
 
-Univariate forecasting 의 시각. *Autoformer 의 정확도* + *over-smoothing 없음*.
+### Figure 12 — Exchange (비주기) predict-192
 
-→ *눈으로 확인* 가능한 SOTA.
+![Figure 12 — Exchange predictions](figures/page16_Figs12-13_exchange.png)
+
+*paper p.16 — Exchange dataset (비주기 random walk-like) 의 192-step prediction.*
+
+**어떻게 읽나?**
+- 4 panel = Autoformer, Informer, LogTrans, Reformer.
+- *Exchange 가 비주기* — 환율 의 *random walk* 같은 dynamics.
+
+**발견**:
+- *Autoformer*: *큰 변동 + trend 모두 잡음*.
+- *기존 모델*: *trend 못 잡음* + *over-smoothing*.
+- → **주기성 없는 데이터 에서도 SOTA**.
+
+### Figure 13 — ETT Univariate predict-720
+
+![Figure 13 — ETT Univariate](figures/page16_Figs12-13_exchange.png)
+
+*paper p.16 — ETT univariate (oil temperature 만) 의 720-step prediction.*
+
+**어떻게 읽나?**
+- 5 panel = Autoformer, Informer, LogTrans, Reformer, DeepAR.
+- *Univariate forecasting* = 1 변수만 예측.
+
+**발견**:
+- *Autoformer*: 진짜 와 일치 + *over-smoothing 없음*.
+- *DeepAR*: prediction length 늘면 *over-smoothing* (단조 곡선).
+- *Informer/LogTrans*: *큰 편차*.
+
+→ ***눈으로 확인 가능한 SOTA*** — 3 가지 setting (multivariate / 비주기 / univariate) 모두.
 
 ---
 

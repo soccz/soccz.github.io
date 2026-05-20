@@ -63,6 +63,22 @@ Transformer predict-720: Origin 2.672 → Sep 3.200 (*악화*).
 
 즉 *Autoformer specific 이 아닌 universal trick* — 후속 paper 의 *paradigm 영향*.
 
+### Figure 4 — Progressive Decomposition 의 시각적 증명
+
+![Figure 4 — Progressive Decomposition (0/1/2/3 blocks)](figures/page9_Fig4_decomp_steps.png)
+
+*paper p.9 Figure 4 — ETT predict-720 의 decomposition block 개수 의 누적 효과.*
+
+**어떻게 읽나? (Step-by-step)**:
+- **(a) No decomp**: trend + seasonal 분리 안 됨, prediction 의 peak 못 잡음.
+- **(b) 1 block**: trend 시작 정렬.
+- **(c) 2 blocks**: trend + seasonal 더 정확.
+- **(d) 3 blocks (Autoformer default)**: trend + seasonal 모두 *진짜 와 거의 일치*.
+
+→ **Progressive decomposition 의 시각적 증명** — *반복적 정제* 가 *근본*. Table 3 의 정량 결과 의 *qualitative 보강*.
+
+자세한 step-by-step 은 [11_analysis.md](11_analysis.md) 의 11.2 참조.
+
 ```viz:autoformer-decomp-ablation:title=Table 3 — Decomposition Ablation (interactive),caption=4 backbones × 3 setups (Origin/Sep/Ours) × 4 horizons. Inner decomp 이 모든 backbone 에서 압도적 best.
 ```
 

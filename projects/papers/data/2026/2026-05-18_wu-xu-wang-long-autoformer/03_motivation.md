@@ -99,6 +99,19 @@ NLP/CV 성공에 자극받은 학자들이 *시계열 Transformer 적용* 시도
 
 **Autoformer (Wu et al, NeurIPS 2021)** 가 두 벽 모두 깸.
 
+### Architecture 의 한 눈에 — Figure 1 미리 보기
+
+![Figure 1 — Autoformer Architecture (preview)](figures/page4_Fig1_architecture.png)
+
+*paper p.4 Figure 1 — Autoformer 의 *전체 구조*.*
+
+**핵심 시각 메시지**:
+- 위 *Encoder*: Auto-Correlation + Series Decomp 의 *반복*. *Trend 버림 + Seasonal 만 학습*.
+- 아래 *Decoder*: Auto-Correlation + Series Decomp 의 *반복*. *Trend 누적 + Seasonal refinement*.
+- 마지막 *합치기*: Seasonal + Trend = 최종 예측.
+
+자세한 step-by-step 은 [05_architecture.md](05_architecture.md) 참조.
+
 ### 핵심 메시지
 
 > **"Sparse self-attention 의 *효율 + 정확도 trade-off* 자체 가 *잘못된 framing*. Self-attention 을 *통째로 교체* + 분해를 *모델 내부* 로 끌어들임."**
