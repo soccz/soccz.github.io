@@ -1,4 +1,4 @@
-# 16 Glossary & Notation
+# 16. Glossary & Notation — 용어집 + 기호 사전
 
 ## 핵심 약어
 
