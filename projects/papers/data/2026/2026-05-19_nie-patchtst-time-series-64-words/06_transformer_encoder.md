@@ -42,7 +42,30 @@ ChatGPT, BERT, GPT 같은 *모든 NLP 모델* 의 *기본 부품*. 2017년 Googl
 
 **Multi-head**: *여러 관점* 동시 측정. 예: *head 1* 은 *short-term 관계*, *head 2* 는 *long-term 관계*, *head 3* 은 *주기성 관계*.
 
-본 논문 설정: **head 수 = 16** (Default).
+### Default hyperparameter (paper A.1.4)
+
+**큰 dataset (Weather, Traffic, Electricity, ETTm1, ETTm2)** 의 default:
+
+| 설정 | 값 | 의미 |
+|------|----|----|
+| Encoder layer 수 | **3** | Transformer block 의 깊이 |
+| Multi-head 수 H | **16** | 동시 학습 관점 수 |
+| Hidden dim D | **128** | Token embedding 크기 |
+| FFN dim F | **256** | FFN 내부 차원 = $2D$ |
+| Activation | **GELU** | (Hendrycks & Gimpel 2016) — ReLU 보다 부드러움 |
+| Dropout | **0.2** | Regularization |
+
+**작은 dataset (ILI, ETTh1, ETTh2)** 의 reduced setting:
+
+| 설정 | 값 |
+|------|----|
+| Multi-head 수 H | **4** (16 의 1/4) |
+| Hidden dim D | **16** (128 의 1/8) |
+| FFN dim F | **128** |
+
+**이유**: ILI 는 *966 timestep*, ETTh1/h2 는 *17,420* — 작은 dataset 에서 *큰 모델 (H=16, D=128)* 사용 시 *overfitting*. *Reduced 로 overfitting 방지*.
+
+**일상 비유**: 작은 시험 (10 문제) 에 *전문가 16명* 채용 = 과잉. *전문가 4명* 으로 충분. 큰 시험 (1만 문제) 에는 *16명 필요*.
 
 ### Self-attention 의 정확한 정의
 

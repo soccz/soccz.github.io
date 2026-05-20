@@ -140,17 +140,53 @@ PatchTST (arXiv 2022 / ICLR 2023): **2024-05 시점 약 1500+ citations**. 매�
 
 ## 20.7 *Variance Analysis* — Table 14
 
-본 논문 *Table 14 (Appendix)*: 5 seeds 의 결과 variance.
+본 논문 *Table 14 (Appendix A.6.1, p.20)*: 5 seeds 의 결과 variance.
+
+### Setup 정확히
+- **5 random seeds**: $\{2019, 2020, 2021, 2022, 2023\}$.
+- 두 setting:
+  - *Supervised PatchTST/42*: seed 변경 + 모든 학습 reset.
+  - *Self-supervised PatchTST/42*: 1번 pre-train + 5번 random batch fine-tune.
+- 8 datasets × 4 horizons = 32 cell × 2 metric (MSE, MAE) = 64 표시.
 
 ### 발견
-PatchTST 의 *결과가 robust* — seed 변경에도 *작은 variance*.
+PatchTST 의 *결과가 robust* — seed 변경에도 *작은 std*. 예시 (Weather T=96):
+- Supervised PatchTST: MSE = $0.1525 \pm 0.0024$ (std $\approx 1.6\%$).
+- Self-supervised PatchTST: MSE = $0.1450 \pm 0.0008$ (std $\approx 0.5\%$).
 
-대비: Informer/Autoformer 는 *seed 변경에 sensitive* — *학습 stability 부족*.
+대비: Informer/Autoformer 는 *seed 변경에 sensitive* — *학습 stability 부족* (본 논문 명시).
 
 → Channel-Indep 의 *training stability* 의 직접 증명.
 
-```viz:pat-table14-seeds:title=Table 14 — Seed variance (interactive),caption=5 seeds × 7 datasets. PatchTST robust, Informer/Autoformer sensitive.
+### 핵심 관찰 (paper 본문)
+> *"variance is insignificant especially on large datasets while higher variance can be seen on smaller datasets"*
+
+- Large dataset (Weather, Traffic, Electricity, ETTm): std *매우 작음* — *robust*.
+- Small dataset (ILI, ETTh1, ETTh2): std *상대적 큼* — 데이터 부족으로 *seed 영향 큼*. 그래도 *Informer/Autoformer 보다 안정*.
+
+```viz:pat-table14-seeds:title=Table 14 — Seed variance (interactive),caption=5 seeds {2019-2023} × 7 datasets. PatchTST robust (large dataset 0.1-1.5% std).
 ```
+
+### Figure 5 — Model parameter sensitivity (paper p.20)
+
+본 논문 *A.6.2 Figure 5*: PatchTST hyperparameter sensitivity. **6 combinations** of (#layers $L$, embed dim $D$):
+
+| 조합 # | (L, D) |
+|--------|--------|
+| 1 | (3, 128) |
+| 2 | (3, 256) |
+| 3 | (4, 128) |
+| 4 | (4, 256) |
+| 5 | (5, 128) |
+| 6 | (5, 256) |
+
+각 조합 의 FFN dim $F = 2D$. Supervised PatchTST/42, $T = 96$.
+
+### 발견
+- 7 dataset 중 6개: *MSE 가 6 조합 에서 비슷* (bar 의 높이 거의 같음).
+- **ILI 예외**: ILI 는 *높은 variance* — 작은 dataset 이라 hyperparameter 에 민감.
+
+→ **PatchTST 가 hyperparameter 에 robust** (ILI 같은 매우 작은 dataset 제외).
 
 ---
 

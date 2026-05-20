@@ -88,6 +88,31 @@
 
 ---
 
+## 9.2.5 *제외* 된 dataset — Exchange-rate
+
+본 논문이 *Exchange-rate dataset (8개국 일일 환율)* 을 *제외*:
+
+**이유 1 — Efficient Market Hypothesis (Fama 1970)**: *효율 시장* 에서 *환율의 best prediction* 은 단순히 *$x_t = x_{t-1}$* (직전 값). 즉 *random walk*. *예측 불가능* — *모든 모델 의 MSE 가 비슷*.
+
+**이유 2 — Rossi (2013) 의 분석**: Exchange-rate forecasting 은 *random walk with drift* 가 *toughest baseline*. 어떤 정교한 모델도 이걸 *현저히 능가 X*.
+
+**이유 3 — DLinear (Zeng et al 2022)**: *Look-back window 의 마지막 값 반복* 만으로 *MSE 가 best result 와 동등*. 즉 *모델 비교 의미 X*.
+
+→ 본 논문 결론: **Exchange-rate 는 *모델 비교 benchmark 부적합***.
+
+## 9.2.6 *제외* 된 baseline 종류 — Traditional models
+
+본 논문이 *전통 모델* (LSTM, TCN, DeepAR, ARIMA) 을 *baseline 에 포함 X*:
+
+| Model | Year | 종류 |
+|-------|------|------|
+| ARIMA | Box & Jenkins 1970 | 전통 통계 |
+| LSTM | Hochreiter & Schmidhuber 1997 | RNN |
+| TCN | Bai et al 2018 | CNN |
+| DeepAR | Salinas et al 2020 | Autoregressive RNN |
+
+**이유**: Informer (Zhou et al 2021) + Autoformer (Wu et al 2021) 가 *이미 입증* — *Transformer-based models 가 traditional models 보다 long-term forecasting 에서 능가*. 따라서 *Transformer baseline 5종* 만 비교하면 *충분*.
+
 ## 9.3 7 Baseline 모델
 
 본 논문이 비교한 *baseline*:

@@ -114,6 +114,97 @@ L = 96, 192, 336, 512 비교. Longer better (Figure 2, 10 챕터).
 
 ---
 
+## 18.7B A.3 — Univariate Forecasting (Table 8)
+
+본 논문 *A.3 (p.14, Table 8)*: **단일 변수 예측 결과**.
+
+### Setup
+- ETT dataset 의 *oil temperature* 만 target.
+- $T \in \{96, 192, 336, 720\}$.
+- **단일 변수** — 다른 변수 (전력 부하 등) 무시.
+
+### 어떻게 읽나?
+**Step 1**: ETTh1, ETTh2, ETTm1, ETTm2 × 4 horizons = 16 cell.
+
+**Step 2**: 8 models 비교 — PatchTST/64, PatchTST/42, DLinear, FEDformer, Autoformer, Informer, LogTrans.
+
+**Step 3 — 발견**:
+- *PatchTST/64 또는 /42 가 거의 모든 cell 에서 best*.
+- 즉 **multivariate (Table 3) + univariate (Table 8) *둘 다 SOTA***.
+
+### 의미
+**Channel-Indep 의 *완벽 정당화***: Channel-Indep 가 *각 channel 을 독립 univariate 처리* 하므로 *univariate 도 well-defined*. *Channel-mixing 모델* (Informer/FEDformer) 은 *univariate input* 도 *내부에서 cross-channel* 처리 → *불필요 복잡도*.
+
+**일상 비유**: 의사가 *심박수만* 분석 (단일 변수) 시, *모든 변수 함께 분석하는 모델* 보다 *심박수 전문 모델* 이 *더 정확*.
+
+---
+
+## 18.7C A.7.1 — Channel-Indep > Channel-Mixing 의 3 Key Factors (★ 중요)
+
+본 논문 *A.7.1 (p.21)* 가 *직접 명시* 한 **Channel-Independence 가 효과적인 3 핵심 이유**:
+
+### Factor 1 — **Adaptability** (적응성)
+
+각 시계열이 *Transformer 를 따로 통과* → 각자 *자신의 attention map* 생성.
+
+**대비 (Channel-Mixing)**: 모든 시계열 *same attention map 공유*. *서로 다른 패턴* 의 시계열 들에 *해로움*.
+
+**Figure 6 의 증거** (paper p.23): Electricity 의 *유사한 시계열 (가구 11, 25, 81)* 이 *유사한 attention map*, *다른 시계열 들* 은 *다른 map*. 즉 *각 시계열 의 특성 별 attention 자동 학습*.
+
+**일상 비유**: 학생들 별로 *학습 스타일 다름* — *시각형, 청각형, 운동감각형*. *각 학생 맞춤 가르침* (channel-indep) 이 *모두 한 방식* (channel-mixing) 보다 *효과적*.
+
+### Factor 2 — **Data Hunger of Channel-Mixing** (Channel-mixing 의 데이터 부족)
+
+Channel-mixing 의 *flexibility (cross-channel correlation 학습)* 가 *double-edged sword*:
+- *장점*: cross-channel info 활용 가능.
+- *단점*: *훨씬 더 많은 학습 데이터 필요*.
+
+**Figure 7 left panel 의 증거** (paper p.24): Weather dataset 에서 *train size* 의 함수로 test loss.
+- Channel-mixing: train size 작을 때 *high loss*, 전체 사용해도 *0.18 정도*.
+- Channel-indep: *적은 sample 부터 빠른 수렴*, 전체 사용 시 *0.16*.
+
+→ **현재 시계열 dataset 들 (Wu et al 2021) 의 size 가 channel-mixing 학습에 *부족***. Channel-indep 가 *훨씬 효율적 사용*.
+
+**일상 비유**: 100 학생 시험 점수 예측 모델 학습. *복잡한 모델 (channel-mixing)* 은 *10,000 example* 필요. *단순한 모델 (channel-indep)* 은 *1,000 example* 으로 *동등 성능*.
+
+### Factor 3 — **Channel-mixing 의 Overfitting** (과적합)
+
+**Figure 7 right panel 의 증거** (paper p.24): 전체 train data + *20 epoch* 학습.
+- Channel-mixing: 초기 epoch (1-3) 에서 *test loss 빠르게 감소*, 이후 *오르기 시작* — *overfitting*.
+- Channel-indep: *지속 감소* → *최저점 도달 + 안정*.
+
+→ Channel-mixing 의 *cross-channel param 폭증* 이 *train 잘 fit + test 망함*. Channel-indep 는 *param 적음 + robust*.
+
+**일상 비유**: 학생이 *많은 변수* 외워서 시험 보면 *그 시험 만 잘 봄* (overfitting). *적은 핵심 변수* 만 외우면 *어떤 시험 도 잘 봄* (generalization).
+
+### 추가 advantages (paper 명시 3가지)
+
+본 논문이 *future work* 로 언급:
+
+1. **Spatial correlation 학습 가능**: Channel-indep 의 기반 위에 *graph neural networks (Cao et al 2020, Chen et al 2021)* 결합 시 *cross-channel relationship 학습 가능*.
+2. **Multi-task learning**: 다른 channel 에 *다른 loss type* 적용 가능 (같은 Transformer 공유).
+3. **Noise robustness**: 한 channel 에 *큰 noise* 있어도 *channel-mixing 에선 다른 channel 에 전파*. Channel-indep 는 *noise 격리*.
+
+### 종합
+
+```
+   Channel-Indep > Channel-Mixing 의 3 이유 (paper A.7.1 직접)
+   ───────────────────────────────────────────────────────
+
+   (1) Adaptability         각 시계열 의 attention map 자동 학습
+                            (Figure 6: similar series → similar maps)
+
+   (2) Data Hunger          Channel-mixing 이 *훨씬 더 많은 data* 요구
+                            (Figure 7 left: train size 함수)
+
+   (3) Overfitting          Channel-mixing 이 *빠르게 overfit*
+                            (Figure 7 right: epoch 함수)
+```
+
+→ **3 이유 가 *channel-indep 의 universality* 의 *직접 증명***.
+
+---
+
 ## 18.8 A.7 — Table 14: Seed Variance
 
 이미 *Chapter 20 의 20.7* 에서 다룸.
