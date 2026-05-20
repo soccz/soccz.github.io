@@ -1,7 +1,133 @@
 {
-  "generated_at": "2026-05-20T00:35:23",
-  "count": 21,
+  "generated_at": "2026-05-20T08:30:46",
+  "count": 22,
   "papers": [
+    {
+      "slug": "2026-05-20_kelly-malamud-zhou-virtue-complexity",
+      "date": "2026-05-20",
+      "weekday": "수",
+      "bucket": "인접",
+      "title": "The Virtue of Complexity in Return Prediction",
+      "title_ko": "복잡함의 미덕 — 머신러닝 시대의 수익률 예측",
+      "authors": "Bryan Kelly¹²³, Semyon Malamud⁴⁵⁶, Kangying Zhou¹",
+      "venue": "*The Journal of Finance*, Vol. LXXIX, No. 1 (February 2024), pp. 459–503",
+      "identifier": "10.1111/jofi.13298",
+      "code": "",
+      "data": "CRSP value-weighted index 월별 초과수익 1926–2020. 15 predictor variables from Goyal & Welch (2008): dfy, infl, svar, de, lty, tms, tbl, dfr, dp, dy, ltr, ep, b/m, ntis + 1-lag market return. 모두 공개 데이터.",
+      "tags": [
+        "return-prediction",
+        "machine-learning",
+        "random-matrix-theory",
+        "ridge-regression",
+        "random-fourier-features",
+        "market-timing",
+        "benign-overfit",
+        "high-dimensional-regression",
+        "kelly-asset-pricing",
+        "JF-2024"
+      ],
+      "verdict": "Occam's razor 가 자산가격 예측에서는 Occam's blunder. 직관과 정반대로, 파라미터 수가 표본 크기를 훨씬 초과하는 (P ≫ T) ridgeless / ridge 회귀의 OOS Sharpe ratio 는 모델 복잡도 c=P/T 에 대해 단조 증가한다. Random Matrix Theory 의 Stieltjes transform + Marchenko-Pastur 분포로 이 'virtue of complexity' 를 일반 (misspecified) 환경에서 증명 (Theorem 1). Goyal-Welch 15 predictor 위에 Random Fourier Feature 로 P=12,000 까지 확장한 wide neural network 가 1926-2020 CRSP 시장수익 예측에서 buy-and-hold 대비 OOS Sharpe ratio ≈ 0.47/year (t ≈ 4.5), IR ≈ 0.31 (t ≈ 2.5) — Campbell-Thompson nonnegativity constraint 없이도 14/15 NBER recessions 에서 자동 divest. R² 가 음수 (-100% 이하) 라도 timing 전략이 양의 economic value 를 낼 수 있음을 이론·실증으로 정립한, 머신러닝 자산운용의 이론적 정당화.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — The Virtue of Complexity in Return Prediction"
+        },
+        {
+          "file": "01_intro.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01. 시작하기 전에 — 미리 알아둘 8개 개념"
+        },
+        {
+          "file": "02_abstract.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02. 제목과 Abstract 풀어 읽기"
+        },
+        {
+          "file": "03_motivation.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03. Introduction 풀이 — 왜 이런 연구가 필요한가"
+        },
+        {
+          "file": "04_environment.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04. Section I — 분석 환경 (Assumptions, Timing, Proposition 1)"
+        },
+        {
+          "file": "05_method_a_rmt.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05a. Section II — Machine Learning + Random Matrix Theory"
+        },
+        {
+          "file": "05_method_b_correct.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05b. Section III — Correctly Specified Models"
+        },
+        {
+          "file": "05_method_c_misspec.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05c. Section IV — Misspecification + Theorem 1 (Virtue of Complexity)"
+        },
+        {
+          "file": "06_simulation.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06. 이론 시뮬레이션 — Figures 1–6 calibrated VoC curves"
+        },
+        {
+          "file": "07_empirical.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07. Section V — Empirical: 1926–2020 CRSP + RFF + Figures 7–11 + Table I"
+        },
+        {
+          "file": "08_conclusion.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08. Section VI — Conclusion + Occam's Razor 의 역설"
+        },
+        {
+          "file": "09_appendix_proof.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09. Appendix — 핵심 증명 풀이"
+        },
+        {
+          "file": "10_glossary.md",
+          "num": "10",
+          "suffix": null,
+          "title": "10. 용어집 + 기호 사전"
+        },
+        {
+          "file": "11_insights.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11. 논문이 주는 통찰과 추론 — \"이해를 넘어서\""
+        },
+        {
+          "file": "12_code.md",
+          "num": "12",
+          "suffix": null,
+          "title": "12. Python 실행 코드 — RFF + Ridge Regression + Recursive OOS"
+        },
+        {
+          "file": "13_diagrams.md",
+          "num": "13",
+          "suffix": null,
+          "title": "13. ASCII 도식 + 인터랙티브 viz 카탈로그"
+        }
+      ],
+      "data_path": "data/2026/2026-05-20_kelly-malamud-zhou-virtue-complexity"
+    },
     {
       "slug": "2026-05-20_master-market-guided-stock-transformer",
       "date": "2026-05-20",
