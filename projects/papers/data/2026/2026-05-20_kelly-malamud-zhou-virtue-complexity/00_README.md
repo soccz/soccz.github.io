@@ -68,6 +68,7 @@
 | [11_insights.md](11_insights.md) | 메타 통찰 12개 |
 | [12_code.md](12_code.md) | Python 실행 — RFF + recursive ridge OOS + Sharpe 계산 |
 | [13_diagrams.md](13_diagrams.md) | ASCII 도식 + viz 카탈로그 |
+| [14_references.md](14_references.md) | References 풀이 — paper 가 인용하는 70+ 작품 |
 
 ---
 
