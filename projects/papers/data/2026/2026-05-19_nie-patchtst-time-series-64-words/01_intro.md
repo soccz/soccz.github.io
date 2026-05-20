@@ -117,7 +117,7 @@ ChatGPT 의 학습 방식과 *같은 원리*.
 | **12** | Ablation Study — *P+CI 의 효과 분해* |
 | **13** | Conclusion + Future Work |
 | **14** | Glossary (용어집) |
-| **15** | 메타 통찰 12개 |
+| **15** | 메타 통찰 12개 (DLinear 대 PatchTST, ViT transfer, Foundation model 등) |
 | **16** | PyTorch 코드 |
 | **17** | ASCII 도식 + viz 카탈로그 |
 | **18** | Appendix Deep Dive (옵션) |

@@ -107,6 +107,54 @@ PatchTST (arXiv 2022 / ICLR 2023): **2024-05 시점 약 1500+ citations**. 매�
 
 ---
 
+## 20.5.5 *PatchTST 의 한계 — DLinear 가 이기는 cell*
+
+본 논문 *Table 3* 의 *정직한 분석*: PatchTST 가 *거의 모든 cell best* 이지만, **일부 cell 에서 DLinear 가 이김**.
+
+### 구체적 발견
+
+**ETTh1 T=192**: 
+- PatchTST/64: MSE = 0.413, MAE = 0.421.
+- DLinear: MSE = **0.405**, MAE = **0.416**.
+- → DLinear 가 *근소하게* 이김.
+
+**ETTh2 T=336**:
+- PatchTST/64: MSE = 0.329, MAE = **0.380** (MAE best).
+- PatchTST/42: MSE = 0.329, MAE = 0.380.
+- DLinear: MSE = **0.331**, MAE = 0.417.
+- → MSE 거의 동등 (PatchTST/64 가 0.001 차이로 underlined, DLinear bold).
+
+**ETTm1 T=96, 192, 336**:
+- PatchTST 와 DLinear 가 *경합* (각각 1-2개 cell best).
+
+### 왜 DLinear 가 가끔 이기나? — *Small dataset effect*
+
+**ETT 가 작음** (~17,420 timestep, M=7). DLinear 의 *parameter 수 적음* + *linear 단순성* 이 *작은 dataset 에서 유리*.
+
+PatchTST 는 *Transformer (복잡) + 더 많은 parameter* — *큰 dataset 에서 진가*. 작은 dataset 에선 *overfitting 위험*.
+
+→ 본 논문 의 *reduced hyperparameter* (H=4, D=16, F=128 for ETT) 도 *이 문제 완화 시도*.
+
+### 본 논문 conclusion 의 메시지
+
+**(paper conclusion)**: 
+> *"PatchTST can still outperform [DLinear] in general, especially on large datasets (Weather, Traffic, Electricity)"*
+
+즉 *PatchTST 의 진정한 advantage* 는 **large dataset** 에서 *발휘*. 작은 dataset (ETT) 에서는 DLinear 의 *간단한 linear 모델* 도 *충분히 경쟁력*.
+
+### 실용적 권장
+
+| 데이터 | 권장 모델 |
+|--------|-----------|
+| 큰 dataset (M ≥ 100, timestep ≥ 25,000) | **PatchTST** |
+| 중간 dataset (M = 21, timestep ~ 50,000) | PatchTST (Weather 의 sweet spot) |
+| 작은 dataset (M = 7, ETT 류) | PatchTST + reduced hyperparameter, 또는 DLinear baseline 비교 |
+| 매우 작은 dataset (M = 7, ILI 의 966 timestep) | DLinear 도 시도 — *복잡 모델 overfitting 위험* |
+
+**일상 비유**: *Ferrari (PatchTST)* 가 *고속도로 (큰 dataset)* 에서 압도적. 하지만 *시내 골목 (작은 dataset)* 에서는 *작은 차 (DLinear)* 가 *더 편리*. *상황 맞춤*.
+
+---
+
 ## 20.6 *분야 paradigm shift* — 본 논문 의의
 
 ### Before PatchTST (2018-2022)

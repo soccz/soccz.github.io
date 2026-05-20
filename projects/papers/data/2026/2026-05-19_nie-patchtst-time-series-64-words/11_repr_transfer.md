@@ -42,34 +42,51 @@
 
 ## 11.3 *Transfer Learning* — Table 5
 
-### Setup
+### Setup (paper p.7)
 
-A dataset 으로 *pre-train* → B dataset 의 *forecasting 에 transfer*.
+**Source dataset (pre-train)**: **Electricity 만** (321 channels). 가장 큰 dataset 의 하나 — pre-train 의 풍부한 학습 신호.
 
-본 논문이 시도한 transfer:
-- *Electricity → Traffic*: 전력 데이터로 pre-train, 교통 forecast.
-- *Electricity → Weather*: 전력 → 날씨.
-- *Traffic → Electricity*: 교통 → 전력.
-- 등 여러 조합.
+**Target datasets (fine-tune)**: 6 개:
+- Weather (M=21)
+- Traffic (M=862)
+- ETTh1 (M=7)
+- ETTh2 (M=7)
+- ETTm1 (M=7)
+- ETTm2 (M=7)
+
+**핵심**: Channel-Indep 덕분에 *source 의 channel 수 (321) ≠ target 의 channel 수 (7-862)* 여도 *transfer 가능*. *encoder weight 가 channel 수 무관*.
 
 ### Table 5 의 어떻게 읽나?
 
-**Step 1 — 비교**: 
+**Step 1 — 3 column 비교** (각 target dataset 마다):
+- *Fine-tuning*: Electricity pre-train → target 에 fine-tune.
+- *Lin. Prob.*: Electricity pre-train → target 에 linear probing (head 만).
+- *Sup.*: target 의 *처음부터 supervised* 학습.
 
-| Setup | MSE |
-|-------|------|
-| Supervised on B (자체 학습) | X |
-| Pre-trained on A → Fine-tune on B | X × (0.95 ~ 1.05) |
+**Step 2 — 비교 의 의미**:
 
-**Step 2 — 발견**: *Transfer 가 거의 동등 또는 약간 우월*. 즉 *시계열 representation 이 cross-dataset transferable*.
+| 결과 | 해석 |
+|------|------|
+| Transfer fine-tuning < Sup | Transfer 가 *자체 학습 이김* (예상치 못한 결과) |
+| Transfer ≈ Sup | *동등* — transferable representation 확인 |
+| Transfer linear probe ≈ Sup | *encoder representation 자체 가 informative* (head 만으로 충분) |
+
+**Step 3 — 발견**: 
+- 대부분 cell 에서 *Transfer fine-tuning 이 Sup 와 거의 동등 또는 약간 우월*.
+- *Linear probe* 도 *상당히 경쟁력* — *encoder representation 자체* 가 *task-agnostic 시계열 representation*.
 
 ### 의미 — *Foundation Model 가능성*
 
 이 결과의 의미:
-- *한 큰 dataset 으로 pre-train* → *모든 시계열 task 에 적용 가능*.
+- *한 큰 dataset (Electricity)* 으로 *pre-train* → *6 다른 dataset 에 transfer* 가능.
 - *시계열 BERT / GPT 의 실증 가능성*.
+- *작은 dataset (M=7 의 ETT 4종)* 에서도 *transfer 가능* — *low-resource setting 의 가능성*.
 
 → **후속 시계열 foundation models** (Chronos 2024, TimesFM 2024, Moirai 2024) 의 *직접 motivation*.
+
+### 일상 비유
+
+영어 *책 많이 읽은 사람 (Electricity pre-train)* 이 *프랑스어 (Weather), 독일어 (Traffic), 라틴어 (ETT) 4종* 공부 시 *각 언어 처음부터 공부한 사람 보다 빠르고 잘함*. *언어 의 본질적 구조* (시계열의 trend, periodicity, autocorrelation) 가 *언어 (dataset) 무관 transferable*.
 
 ---
 

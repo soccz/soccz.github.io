@@ -61,7 +61,7 @@
 | [12_ablation.md](12_ablation.md) | Section 4.3 — Table 7 ablation (P+CI / CI / P / Original) + Figure 4 patch length |
 | [13_conclusion.md](13_conclusion.md) | Section 5 — Conclusion + limitations + future work (cross-channel) |
 | [14_glossary.md](14_glossary.md) | 핵심 용어 + reference [1]-[N] 정리 |
-| [15_insights.md](15_insights.md) | 15 메타 통찰 — DLinear 대 PatchTST, ViT 의 transfer, Foundation model 방향 |
+| [15_insights.md](15_insights.md) | 12 메타 통찰 — DLinear 대 PatchTST, ViT 의 transfer, Foundation model 방향 |
 | [16_code.md](16_code.md) | PyTorch 구현 — Patching 함수, Channel-indep loop, Loss, Training step |
 | [17_diagrams.md](17_diagrams.md) | ASCII diagrams + viz catalog |
 | [18_appendix.md](18_appendix.md) | Appendix A.1–A.7 — 모델 hyperparameter, robustness, channel-indep 분석 (Figs 5-7, Tables 8-15) |
