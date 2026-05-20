@@ -1,164 +1,194 @@
-# 01 시작하기 전에 — 미리 알아둘 7개 개념
+# 01. 시작하기 전에 — 진짜 쉬운 한 줄 소개
 
-Autoformer 를 읽기 전에 다음 7개를 머릿속에 채워두면 paper 의 모든 한 줄이 즉시 자기 자리에 들어간다.
-
----
-
-## 1. 시계열 분해(Time Series Decomposition) — STL, AvgPool
-
-시계열 $X_t$ 는 보통 세 성분으로 분해된다 (paper 가 인용하는 표준: Anderson-Kendall [1], Cleveland-STL [33], Hyndman-Athanasopoulos [20]):
-
-$$
-X_t = \text{Trend}_t + \text{Seasonal}_t + \text{Residual}_t
-$$
-
-- **Trend-cyclical**: 장기 progression. 본 paper 는 단순 moving-average 로 추출 — `AvgPool(Padding(X))`.
-- **Seasonal**: 주기성. residual 까지 합쳐서 $X_s = X - X_t$ 로 정의 (Eq 1).
-
-**기존 forecasting 의 관행**: 분해는 사전 처리(pre-processing) 만 가능. 미래는 모르니까 예측 후엔 분해 못함 — Prophet [39], N-BEATS [29], DeepGLO [35].
-
-**Autoformer 의 전환**: 분해를 deep network 의 **inner block** 으로 끌어들임. Decoder 의 hidden representation 단계마다 분해를 수행 → 점진적(progressive) 분해.
+> 영어 못 읽거나 수식 두려운 사람을 위한 entry. 여기를 읽으면 *Autoformer 가 뭔지* + *왜 중요한지* 가 한국어 + 일상 비유로 명확해집니다.
 
 ---
 
-## 2. 자기상관(Autocorrelation) R(τ)
+## 이 논문, 한 줄로 뭐예요?
 
-시계열 $\{X_t\}$ 의 시간 지연 $τ$ 에서의 자기상관(stationary 가정 하):
-
-$$
-R_{\mathcal{X}\mathcal{X}}(\tau) = \lim_{L\to\infty} \frac{1}{L} \sum_{t=1}^{L} X_t \, X_{t-\tau}
-$$
-
-(Eq 5, paper p.5)
-
-- $R(τ)$ 가 큰 $τ$ → 시계열이 시간 지연 $τ$ 만큼에서 자기 자신과 닮아있음 → **잠재 주기 길이**.
-- Self-attention 이 query-key의 내적 ($Q \cdot K^\top$) 으로 **점-사이의 관계**를 본다면, autocorrelation 은 **시간 지연 사이의 관계** 를 본다.
-
-**핵심 직관**: 매일 같은 시각의 traffic 데이터는 비슷한 모양(예: 출근시간대 peak). $\tau = 24$h 의 autocorrelation 이 크면 → "사용자야, 모델이 어제 같은 시간을 봐야 해" 라고 신호.
+> **"긴 시계열 (예: 다음 30일 의 전력 사용량) 을 예측할 때, *Transformer (GPT 같은 모델)* 의 *attention* 을 *자기상관 (autocorrelation)* 으로 *통째로 교체* 하고, *시계열 분해 (trend + seasonal)* 를 *모델 내부* 에 끌어들이면 평균 38% MSE 감소한다는 것을 증명한 논문."**
 
 ---
 
-## 3. FFT 와 Wiener–Khinchin 정리
+## 더 풀어 설명하면
 
-자기상관을 정의대로 모든 lag $\tau \in \{1, \dots, L\}$ 에서 계산하면 $O(L^2)$. 너무 느리다.
+옛날부터 *장기 시계열 예측* 은 큰 도전:
+- 한 달 후 전력 사용량?
+- 다음 주 도로 교통량?
+- 30일 후 환율?
+- 인플루엔자 환자 수 한 달 후?
 
-**Wiener–Khinchin 정리** [43]: 자기상관은 power spectral density 의 역 푸리에 변환과 같다.
+**2017년 — Transformer 등장**: NLP 의 ChatGPT 기본 구조. *Attention* 으로 *문장 안 단어 사이 관계* 학습.
 
-$$
-S_{\mathcal{XX}}(f) = \mathcal{F}(X_t) \cdot \mathcal{F}(X_t)^*, \qquad R_{\mathcal{XX}}(\tau) = \mathcal{F}^{-1}(S_{\mathcal{XX}}(f))
-$$
+**2019-2021 — 시계열 Transformer 변형**:
+- *LogTrans (2019)*: LogSparse attention.
+- *Reformer (2020)*: LSH attention.
+- *Informer (2021)*: ProbSparse attention.
 
-(Eq 8)
+→ 모두 *self-attention 의 sparse 버전*. 즉 *점 (point) 들 중 일부만 보고* 빠르게.
 
-- $\mathcal{F}$ = FFT, $\mathcal{F}^{-1}$ = IFFT, $*$ = complex conjugate.
-- FFT 의 복잡도 $O(L \log L)$ → 모든 lag 자기상관이 **한 번에** 계산됨.
-- 즉 "$\text{lag}\ 1, 2, \dots, L$ 의 R(τ) 를 한 번에 얻고 싶다" = FFT 두 번 + 곱 + IFFT 한 번.
+**2021년 — Autoformer 의 두 가지 큰 깨달음**:
 
-**Conjugate(공액)**: 복소수 $a + bi$ → $a - bi$. Power spectrum 이 실수가 되도록 만들기 위함.
+> **깨달음 1**: *Sparse attention 은 정보 손실*. *점만 보면 작은 패턴 못 잡음*.
+>
+> **깨달음 2**: *시계열 분해 (trend + seasonal)* 를 *사전 처리* 만 하지 말고 *모델 내부* 에서 *반복적* 으로 하자.
 
----
-
-## 4. Transformer 와 self-attention 의 한계
-
-Transformer [41] 의 self-attention:
-
-$$
-\text{Attention}(Q, K, V) = \text{Softmax}\left(\frac{QK^\top}{\sqrt{d}}\right) V
-$$
-
-복잡도 $O(L^2)$. 시간점 $i$ 와 시간점 $j$ 사이의 dot-product = **점-사이(point-wise)** 의 관계.
-
-장기 forecasting 의 두 한계 (Section 1):
-1. **Quadratic 복잡도**: $L=720$ predict 라면 $L^2 = 518,400$ 연산 per head.
-2. **Sparse attention 의 information bottleneck**: Informer [48] (ProbSparse), Reformer [23] (LSH), LogTrans [26] (LogSparse) 가 $L^2$ 를 줄였지만 모두 "선택된 점만 본다" → 정보 손실. 그리고 여전히 point-wise.
-
-**Autoformer 의 답**: point-wise dot-product → series-wise Auto-Correlation (시간 지연 sub-series aggregation).
+→ **결과**: *38% MSE 감소* (평균). ETTm2 dataset 의 *predict-336* 에서는 *74% 감소* (1.334 → 0.339).
 
 ---
 
-## 5. Encoder–Decoder 구조 (Seq2Seq)
+## 핵심 키워드 — 진짜 친근한 정의
 
-표준 Transformer:
-- **Encoder**: 입력 시계열 → 잠재 표현 $X_{en}^{N}$ (N layer 쌓음).
-- **Decoder**: encoder 의 잠재 + decoder 의 placeholder 를 입력으로 받아 미래 예측.
+이 논문 읽는 데 알아야 할 7개 단어.
 
-**Autoformer 의 변형**:
-- Encoder: 입력 length $I$ 의 과거 → 점진적 분해로 **trend 를 제거** (eliminated, paper 의 "$\_$" 기호) → 오직 seasonal 부분만 모델링.
-- Decoder: 두 초기 입력 (seasonal init = `[X_ens || X_0]`, trend init = `[X_ent || X_Mean]`) 를 받아, **각 layer 마다 trend 누적**.
-- 최종 예측 = `W_S × X_de^M (seasonal) + T_de^M (trend)`.
+### 1. 시계열 분해 (Time Series Decomposition)
 
-핵심: trend 는 "**누적**(progressive accumulation)" 으로, seasonal 은 "**refinement**" 로 — 두 path 가 분리.
+**일상 비유**: 한 달 의 *전력 사용량 그래프* 를 보면 *2가지 패턴* 섞임:
+- **추세 (Trend)**: *전체적으로 오르락내리락* 하는 *큰 흐름* (예: 여름 다가올수록 에어컨 ↑).
+- **계절성 (Seasonal)**: *매일 똑같이 반복되는 작은 패턴* (예: 아침/저녁 peak).
 
----
-
-## Wrap-up: 위 5개가 어떻게 결합되는가
-
-| 개념 | Autoformer 에서의 역할 |
-|------|----------------------|
-| 시계열 분해 | encoder/decoder 의 모든 sub-layer 뒤에 `SeriesDecomp` block 삽입 — Eq 1 |
-| 자기상관 R(τ) | self-attention 의 dot-product 대체 — Eq 5–6 |
-| FFT + Wiener-Khinchin | R(τ) 를 $O(L\log L)$ 에 계산 — Eq 8 |
-| Transformer 한계 | Auto-Correlation 으로 point-wise → series-wise, $O(L^2) \to O(L\log L)$ |
-| Encoder-Decoder | 두 경로 (trend 누적 + seasonal refinement) 로 분리 → 점진적 |
-
----
-
-## 6. Roll 연산 (cyclic shift)
-
-paper Eq 6 의 핵심 도구:
+수식으로:
 $$
-\text{Roll}(\mathcal{X}, \tau)
+X_t = \text{Trend}_t + \text{Seasonal}_t
 $$
 
-- $\mathcal{X}$ 의 원소를 $\tau$ 만큼 옮김 (cyclic shift).
-- 끝으로 밀려난 원소는 처음으로 되돌아옴.
+본 논문 trick: 시계열을 *trend + seasonal* 로 *분리* 한 후 *각각 따로 예측*. 마지막에 *합치기*.
 
-예 (L=6, τ=2):
+### 2. 자기상관 (Autocorrelation) — R(τ)
+
+**일상 비유**: 시계열 의 *어제 값* 과 *오늘 값* 이 *얼마나 비슷한지* 측정.
+
+- *τ = 24시간* 의 autocorrelation 이 크다 = *24시간 주기성* 강함 (예: 매일 같은 시간 출근).
+- *τ = 168시간 (1주일)* 의 autocorrelation 이 크다 = *주간 주기성* 강함 (예: 매주 월요일 출근).
+
+본 논문 trick: 시계열 의 *진짜 주기* 를 autocorrelation 으로 자동 발견.
+
+### 3. Attention vs Auto-Correlation — 점 vs 조각
+
+**일상 비유**:
+- **Self-Attention (기존 Transformer)**: *각 시간 점* 이 *다른 모든 시간 점* 과의 *관계* 측정 — *점 별 비교*.
+- **Auto-Correlation (본 논문)**: *24시간 주기* 의 *sub-series (조각)* 들이 *서로의 관계* 측정 — *조각 별 비교*.
+
+본 논문: *점 비교 (point-wise) → 조각 비교 (series-wise)* 의 *대전환*.
+
+### 4. FFT (Fast Fourier Transform) — *빠른 푸리에 변환*
+
+**일상 비유**: 시계열 의 *모든 주파수 성분* 을 *한꺼번에* 분석하는 *수학 도구*. 영상의 *압축 (MP4, JPEG)* 에 쓰이는 그 *주파수 분석*.
+
+본 논문 활용: autocorrelation $R(\tau)$ 를 *모든 lag* (24시간, 48시간, …) 에서 *동시* 계산 → $O(L \log L)$ 의 *초고속*.
+
+### 5. Wiener-Khinchin 정리
+
+**일상 비유**: *autocorrelation* (시간 영역) = *power spectrum* (주파수 영역) 의 *역 FFT*. 즉 *시간 ↔ 주파수* 의 *수학 다리*.
+
+본 논문: 이 정리로 *Eq 5 의 autocorrelation* 을 *FFT 두 번 + IFFT 한 번* 으로 *$O(L \log L)$* 에 계산.
+
+### 6. Encoder-Decoder
+
+**일상 비유**: ChatGPT 같은 모델 의 *두 부품*:
+- **Encoder**: *입력 (과거 시계열)* → *압축된 representation*.
+- **Decoder**: *압축된 representation + 시작 신호* → *미래 예측*.
+
+본 논문: 표준 Transformer 의 *encoder-decoder 구조* 유지 + *내부에 분해 block 삽입*.
+
+### 7. Roll 연산 (cyclic shift)
+
+**일상 비유**: 시계열을 *cyclic 으로* (끝과 처음 연결) *τ 만큼 옮김*. 시계 의 *시침* 처럼 *돌려도 같은 자리* 로 돌아옴.
+
+예 ($L=6$, $\tau=2$):
 ```
 원본:    [x_0, x_1, x_2, x_3, x_4, x_5]
-Roll +2: [x_4, x_5, x_0, x_1, x_2, x_3]   ← 마지막 2개가 앞으로
-Roll -2: [x_2, x_3, x_4, x_5, x_0, x_1]   ← 처음 2개가 뒤로
+Roll +2: [x_4, x_5, x_0, x_1, x_2, x_3]   ← 뒤 2개가 앞으로
 ```
 
-**왜 cyclic? 왜 truncate 가 아닌가?**:
-- 시계열은 보통 periodic 가정 — 끝과 처음이 연결.
-- Truncate 하면 길이가 줄어들어 attention output dimension 안 맞음.
-- Cyclic shift 는 length-preserving + 주기성을 자연스럽게 활용.
-
-**torch 구현**:
-```python
-rolled = torch.roll(values, shifts=tau, dims=-1)
-```
-
-paper 의 Auto-Correlation 에서 $\text{Roll}(V, \tau_i)$ 는 "시간 지연 $\tau_i$ 의 sub-series 를 현재 위치로 가져온다" 는 의미.
+본 논문: $\tau_i$ 의 *주기* 로 *Roll* 후 *aggregation* — *같은 phase 의 sub-series* 들을 *정렬*.
 
 ---
 
-## 7. Cross-Correlation (Q와 K 의 자기상관 일반화)
+## 이 deep dive 의 구성
 
-Eq 6 의 $R_{Q,K}(\tau)$ 는 Eq 5 의 $R_{\mathcal{X}\mathcal{X}}(\tau)$ 를 **두 시리즈 (Q, K)** 로 확장:
+본 deep dive 20 챕터의 역할:
 
-$$
-R_{Q,K}(\tau) = \lim_{L \to \infty} \frac{1}{L} \sum_{t=1}^{L} Q_t \, K_{t-\tau}
-$$
-
-- $Q = K$ 라면 → autocorrelation (Eq 5).
-- $Q \neq K$ 라면 → cross-correlation (Eq 6).
-
-**Auto-Correlation 의 두 모드**:
-1. **Self mode**: encoder/decoder 의 self-attention 자리 → $Q = K = V$ from same source. $R_{Q,K}$ = autocorrelation.
-2. **Cross mode**: decoder 의 cross-attention 자리 → $Q$ from decoder, $K, V$ from encoder. $R_{Q,K}$ = cross-correlation.
-
-**FFT 적용**:
-$$
-R_{Q,K}(\tau) = \mathcal{F}^{-1}\big(\mathcal{F}(Q) \cdot \mathcal{F}^*(K)\big)
-$$
-
-- $\mathcal{F}^*(K)$ = K 의 FFT 의 conjugate. Q=K 일 때는 $|\mathcal{F}(Q)|^2$ 가 power spectrum.
-- 동일한 $O(L \log L)$ 복잡도. cross 도 single FFT pair 로 끝.
-
-→ Auto-Correlation 의 unified framework: **모든 attention 자리 (self + cross) 가 같은 형식으로 작동**.
+| 챕터 | 무엇 |
+|------|------|
+| **01** (지금) | 진짜 entry. 7 개념 친근 정의 |
+| **02** | 논문 제목 / Abstract 풀이 |
+| **03** | 왜 Autoformer? 장기 예측의 두 challenge |
+| **04** | Related Work — 기존 모델 + 분해 사용 역사 |
+| **05** | Architecture — Encoder/Decoder + Series Decomp Block (Eq 1-4) |
+| **06** | Auto-Correlation 메커니즘 (Eq 5-7) — 핵심 |
+| **07** | Complexity — FFT 기반 $O(L\log L)$ (Eq 8) |
+| **08** | Datasets + Baselines + 실험 setup |
+| **09** | Main Results — Table 1 (multivariate) + Table 2 (univariate) |
+| **10** | Ablation — Table 3 (decomp) + Table 4 (Auto-Corr vs SA) |
+| **11** | Analysis — Figs 4-13 의 step-by-step 해석 |
+| **12** | Appendix A — ETT 4 variant 전체 벤치마크 |
+| **13** | Appendix B-D — Hyperparameter / input length / decoder input |
+| **14** | Appendix F — COVID-19 case study |
+| **15** | Conclusion + Future Work |
+| **16** | Glossary (용어집) |
+| **17** | 메타 통찰 — paradigm shifts |
+| **18** | PyTorch 코드 |
+| **19** | ASCII 도식 + viz 카탈로그 |
 
 ---
 
-이제 다음 chapter 의 Abstract 를 한 문장씩 풀어 읽을 준비가 되었다.
+## 처음 보는 사람의 추천 순서
+
+**시간 30분**: 01 → 02 → 03 → 09 (실증 결과) → 17 (통찰)
+
+**시간 1시간**: 위 + 05 (architecture) + 06 (Auto-Correlation) + 10 (ablation)
+
+**전체 (3시간)**: 01 → 02 → 03 → 04 → 05 → 06 → 07 → 08 → 09 → 10 → 11 → 15 → 17
+
+**수식 두렵다면**: 06, 07 의 *수식 박스* 건너뛰기. 일상 비유 + 본문 풀이만 보세요.
+
+---
+
+## 이 논문이 결국 뭘 가르치는가 — 한 그림으로
+
+```
+   2017-2021 시계열 Transformer 변형                 2021 Autoformer
+   ──────────────────────────                       ────────────────
+
+   LogTrans / Reformer / Informer                    "Sparse 는 정보 손실
+   "Sparse self-attention 으로                        + 분해 도 모델 안에서"
+    long-term forecasting"                                  ↓
+            ↓                                      Auto-Correlation (Eq 5-7)
+   여전히 point-wise 비교                            + Inner Decomp Block (Eq 1-4)
+   + 분해는 pre-processing 만                                ↓
+            ↓                                      38% MSE 감소 (평균)
+   Information bottleneck                          ETTm2-336: 1.334 → 0.339 (74%)
+                                                            ↓
+                                                   $O(L \log L)$ 효율 + 정확도
+                                                   (point → series 전환)
+```
+
+---
+
+## 한 가지 마음의 자세
+
+본 deep dive 는 *무지식자도 이해할 수 있게* 쓰여 있지만, 그래도 *어렵게 느껴지는 부분* 이 있을 거예요. 그럴 때:
+
+- **건너뛰세요**. 수식 박스 / "전공자용" 박스는 *옵션*.
+- **다음 챕터로 가세요**. 한 챕터를 100% 이해 못 해도 다음 챕터가 새 비유로 다시 설명.
+- **시각화 (19 챕터) 위주로 보세요**. 그림이 글보다 빠릅니다.
+- **결과 (09 챕터) 부터 보셔도 됩니다**. "38% MSE reduction" 의 정량 결과가 가장 흥미.
+
+---
+
+## 자기점검
+
+### 핵심 3가지
+1. **이 논문 한 줄 요약?**
+2. **"Auto-Correlation" 의 일상 비유?**
+3. **"분해 (decomposition) 를 모델 내부에서" 의 의미?**
+
+### 답변
+1. **"Transformer 의 attention 을 Auto-Correlation 으로 교체 + 시계열 분해를 모델 내부 block 으로 끌어들임 → 6 dataset 평균 38% MSE 감소"** 임을 증명한 논문. Informer/Reformer/LogTrans 같은 *sparse self-attention* 변형들 의 *information bottleneck* + *point-wise* 한계를 모두 극복. NeurIPS 2021.
+2. **시계열 의 *어제 값 vs 오늘 값* 이 *얼마나 비슷한지* 측정**. *τ = 24시간* 이면 *매일 같은 시간 의 패턴 유사성*. 본 논문이 이걸로 *진짜 주기* 자동 발견 + *같은 phase 의 sub-series 끼리 aggregation*. Self-attention 의 *점 별 dot product* 대비 *조각 별 series-wise 비교*.
+3. **기존 (Prophet, N-BEATS): 분해를 *사전 처리* 만 (학습 전 1회) + 본 논문: 매 layer 마다 hidden representation 에서 trend 추출 → 분리 → 다시 합침 (progressive decomposition)**. 즉 *반복적 정제*. 학생이 *문제 풀 때마다 답 점검* 하는 것과 같음 — *한 번 풀고 끝* (사전 처리) 이 아닌 *매 단계 점검* (inner block).
+
+---
+
+다음 챕터: [02_abstract.md](02_abstract.md) — 논문 제목 + Abstract 의 진짜 의미.

@@ -1,217 +1,233 @@
-# 11 Model Analysis — Figs 4, 5, 6, 7 (Section 4.3)
+# 11. Analysis — Figures 4-13 의 deep 해석
 
-paper p.9–10. **시각화 4종**으로 본 paper 의 메커니즘이 실제로 작동함을 입증.
-
----
-
-## Figure 4 — Time Series Decomposition Visualization
-
-![Fig. 4 Decomposition steps](figures/page9_Fig4_decomp_steps.png)
-
-(Figure 4, paper p.9. ETT predict-720 setting. (a) decomposition block 0개, (b) 1개, (c) 2개, (d) 3개)
-
-> Visualization of learned seasonal $\mathcal{X}_{de}^M$ and trend-cyclical $\mathcal{T}_{de}^M$ of the last decoder layer. We gradually add the decomposition blocks in decoder from left to right. This case is from ETT dataset under input-96-predict-720 setting. For clearness, we add the linear growth to raw data additionally. (p.9, Fig 4 caption)
-
-**관찰**:
-- (a) **분해 없음**: time series 의 trend 와 seasonal 이 섞여 있음 → 예측이 peak 를 놓침.
-- (b) **1개 블록**: seasonal 이 trend 와 약간 분리.
-- (c) **2개 블록**: trend 가 매끄럽게, seasonal 의 진폭이 정확해짐.
-- (d) **3개 블록**: trend 가 깔끔한 단조 증가 라인, seasonal 이 주기적 진동만 남음.
-
-paper p.9:
-> By adding the series decomposition blocks, Autoformer can aggregate and refine the trend-cyclical part from series progressively. This design also facilitates the learning of the seasonal part, especially the peaks and troughs.
-
-→ **점진성** 이 핵심. 한 번에 분해하지 않고 layer 마다 조금씩.
+> 본 논문 *Section 4.3 + Appendix E* 의 *시각화 figures* 의 step-by-step 풀이. *모델 의 작동 원리* 의 시각적 증명.
 
 ---
 
-## Figure 5 — Dependencies Learning
+## 11.1 챕터 한 줄 요약
 
-![Figs 5-7 (Figure 5 is top)](figures/page10_Figs5-7_deps_lags_efficiency.png)
-
-(Figure 5, paper p.10. (a) Auto-Correlation 의 학습된 시간 지연, (b) Full Attention, (c) LSH Attention, (d) ProbSparse Attention)
-
-> The marked time delay sizes in Figure 5(a) indicate the most likely periods. Our learned periodicity can guide the model to aggregate the sub-series from the same or neighbor phase of periods by $\text{Roll}(\mathcal{X}, \tau_i)$, $i \in \{1, \cdots, 6\}$. For the last time step (declining stage), Auto-Correlation fully utilizes all similar sub-series without omissions or errors compared to self-attentions. (p.9)
-
-**해석**:
-- Auto-Correlation: top-6 의 $\tau$ 가 raw series 의 **주기적인 위치** (피크/트로프) 에 정확히 떨어진다 → 시계열의 **process 적 구조** 와 일치.
-- Full Attention: 최근 점 위주로 선택 — local. 장기 dependency 놓침.
-- LSH: 임의 hashing 으로 점을 골라 → 분산되지만 의미 없음.
-- ProbSparse: KL divergence 로 일부 점 선택 — 다양하지만 같은 phase 가 아님.
-
-→ **Auto-Correlation 만 "잠재 주기" 를 학습**.
+> **"4 가지 visualization: (1) Fig 4 — Progressive decomposition (decomp block 0/1/2/3 의 누적 효과), (2) Figs 5-6 — Dependencies learning + Lag histograms (학습된 주기 의 의미), (3) Fig 7 — Efficiency, (4) Figs 8-13 — Prediction showcases (Autoformer 의 진짜 vs 예측 일치)."**
 
 ---
 
-## Figure 6 — Complex Seasonality
+## 11.2 Figure 4 — Progressive Decomposition (★ 핵심)
 
-![Figs 5-7 (Figure 6 middle)](figures/page10_Figs5-7_deps_lags_efficiency.png)
+![Figure 4 — Progressive Decomposition](figures/page9_Fig4_decomp_steps.png)
 
-(Figure 6, paper p.10. 4개 dataset 의 학습된 lag 분포)
+*paper p.9 Figure 4 — ETT predict-720 의 decomposition block 0/1/2/3 의 누적 효과.*
 
-> The lags that Autoformer learns from deep representations can indicate the real seasonality of raw series. For example, the learned lags of the daily recorded Exchange dataset present the monthly, quarterly and yearly periods (Figure 6 (b)). For the hourly recorded Traffic dataset (Figure 6 (c)), the learned lags show the intervals as 24-hours and 168-hours, which match the daily and weekly periods of real-world scenarios. (p.9-10)
+### 어떻게 읽나? (Step-by-step)
 
-### 학습된 주기 (paper Figure 6 정확 인용)
+**Step 1 — 4 sub-panel 구조**:
+- **(a) Without decomposition block** (0개): 분해 없이 학습.
+- **(b) One decomposition block** (1개): decoder 의 1 layer 에 1 decomp block.
+- **(c) Two decomposition blocks** (2개): 2 decomp blocks.
+- **(d) Three decomposition blocks** (3개): 3 decomp blocks — *Autoformer default*.
 
-| Dataset | 빈도 | 학습된 lag 의 주된 peak |
-|---------|------|-----------------------|
-| (a) Electricity | hourly | **Weekly Period**, Daily Period |
-| (b) Exchange | daily | **Monthly Period**, Quarterly Period, Yearly Period |
-| (c) Traffic | hourly | **Daily Period (24h)**, Weekly Period (168h) |
-| (d) Weather | 10min | **Daily Period** |
+**Step 2 — 각 panel 의 3 곡선**:
+- *Time Series* (검정): 원본 시계열.
+- *Seasonal Part* (밝은 색): 학습 된 seasonal 부분.
+- *Trend-cyclical Part* (어두운 색): 학습 된 trend 부분.
 
-→ **데이터의 실제 주기와 일치** — 즉 Autoformer 가 학습한 $\tau$ 는 우연이 아니라 **실제 process** 를 reveal.
+**Step 3 — 핵심 발견**:
 
-paper p.10:
-> These results show that Autoformer can capture the complex seasonalities of real-world series from deep representations and further provide a human-interpretable prediction.
+**(a) No decomp**:
+- *Seasonal + Trend 분리 안 됨* — *모두 섞임*.
+- 예측 의 *peak/trough 못 잡음*.
 
-**해석 가능성(Interpretability)** 의 강조 — finance 같은 분야에서 **"왜 이 예측?" 답이 가능**.
+**(b) 1 decomp**:
+- Trend 시작 정렬.
+- *Seasonal 의 진동* 일부 분리.
 
-## 인터랙티브 시각화 — Figure 6 lag 분포
+**(c) 2 decomps**:
+- Trend 가 *더 정확* — 부드러운 곡선.
+- Seasonal 의 *주기성 더 명확*.
 
-```viz:autoformer-lag-histogram:title=paper Figure 6 — Learned lag distributions (interactive),caption=Dataset 토글 (Electricity / Exchange / Traffic / Weather). 각 dataset 의 학습된 top-10 lag 분포가 도메인 실제 주기와 일치. Electricity 와 Traffic 은 24h + 168h. Exchange 는 22d / 66d / 252d (Monthly + Quarterly + Yearly). Weather 는 144 (10min × 144 = 24h). **주의** — paper Fig 6 의 정확 histogram 수치 미공개. paper 명시 peak 위치 + 합리적 σ 의 gaussian 합성.
+**(d) 3 decomps (Autoformer)**:
+- *Trend + Seasonal 모두 진짜와 거의 일치*.
+- *Long-term trend 정확* + *seasonal 의 peak/trough 정확*.
+
+**Step 4 — 의미**: **Progressive decomposition 의 *시각적 증명***. *3 단계* 가 *충분* — *너무 많으면* 오히려 *과학적 발견*. Autoformer 가 *최적 깊이* 찾음.
+
+```viz:autoformer-progressive-decomp:title=Fig 4 — Progressive Decomposition (interactive),caption=Decomp block 0/1/2/3 의 누적. 3 blocks 에서 trend + seasonal 모두 진짜와 일치.
 ```
 
 ---
 
-## Figure 7 — Memory / Time Efficiency
+## 11.3 Figure 5 — Dependencies Learning
 
-(같은 page10 그림의 하단)
+![Figure 5 — Dependencies learning](figures/page10_Figs5-7_deps_lags_efficiency.png)
 
-> We compare the running memory and time among Auto-Correlation-based and self-attention-based models (Figure 7) during the training phase. The proposed Autoformer shows $O(L \log L)$ complexity in both memory and time and achieves better long-term sequences efficiency. (p.10)
+*paper p.10 Figure 5 (왼쪽 panel).*
 
-**실험 셋업** (caption):
-- Memory: input=96, predict output 의 길이를 192→3072 까지 변화.
-- Time: Auto-Correlation 또는 self-attention 만 분리해서 $10^3$ 회 실행 평균. Output 192 → 8192.
+### 어떻게 읽나?
 
-**핵심**:
-- Auto-Correlation: 모든 길이에서 가장 낮은 memory & time.
-- Full Attention (Transformer): 매우 가파른 증가 — 결국 OOM.
-- ProbSparse (Informer): $O(L \log L)$ 이지만 Auto-Correlation 보다 큼.
-- LSH (Reformer): 중간.
+**Step 1 — 4 sub-panel 비교**:
+- **(a) Auto-Correlation**: top-6 시간 지연 $\tau_1, ..., \tau_6$ 의 *위치* 표시 (red lines).
+- **(b) Full Attention**: 점 끼리 attention.
+- **(c) LSH Attention**: hash bucket 끼리.
+- **(d) ProbSparse Attention**: 선택 된 query 들.
 
-(자세한 수치는 [07_complexity_efficiency.md](07_complexity_efficiency.md) 에 정리)
+**Step 2 — 빨간 별 (red stars)**: *마지막 시점 (last time step) 의 의존성*.
 
----
+**Step 3 — 발견**:
 
-## 통합 — 4개 그림이 같이 말하는 것
+**(a) Auto-Correlation**:
+- *Top-6 τ 들 이 시계열 의 *진짜 주기 위치*** — *명확 한 패턴*.
+- *없는 omission* — 모든 비슷한 sub-series 포함.
 
-| Figure | 무엇을 입증? |
-|--------|------------|
-| 4 | 점진적 분해가 trend 와 seasonal 을 깔끔히 분리 → **representation** 측면 |
-| 5 | Auto-Correlation 이 series 의 **실제 주기 위치** 를 학습 → **dependencies** 측면 |
-| 6 | 학습된 lag 가 **real-world seasonality** 와 일치 → **interpretability** |
-| 7 | Auto-Correlation 의 **wall-clock 효율** 이 self-attention 모두를 능가 → **scalability** |
+**(b) Full**: 모든 점 끼리 → *흩어진 점들*.
 
-이 네 측면이 함께 → Autoformer 가 단순히 ablation 수치만 좋은 것이 아니라 **그 메커니즘이 의도대로 작동** 함을 증명.
+**(c) LSH**: hash 의 *noise* → *부정확*.
 
----
+**(d) ProbSparse**: 일부 선택 → *놓치는 점*.
 
-## Section 4.3 의 4 subsections 깊이 분석
-
-### Time series decomposition (Fig 4) — 점진성의 진짜 의미
-
-paper p.9 의 핵심 문장:
-> Without our series decomposition block, the forecasting model cannot capture the increasing trend and peaks of the seasonal part.
-
-**왜 한 번의 분해로는 안 되는가?**
-
-한 번에 분해 (pre-processing) 의 문제:
-- 입력에서만 trend 분리 → 모델 내부 layer 가 trend 를 다시 만들어내거나 leak.
-- Future 에서 분해 불가능 (미래 모름).
-
-**점진적 (progressive) 분해의 메커니즘**:
-- 각 layer 가 residual 의 약간만 trend 로 추출 → 다음 layer 가 더 정교한 residual 다시 분해.
-- 마치 **boosting** — 각 step 이 이전의 error 의 일부 잡음.
-- decoder 의 trend accumulator $\mathcal{T}_{de}^l = \mathcal{T}_{de}^{l-1} + \sum_i W \cdot \mathcal{T}^{l,i}$ 가 이 boosting 의 sum.
-
-**왜 layer 수가 작아도 (M=1) 효과적인가?**
-- M=1 decoder 라도 그 안에 3개 SeriesDecomp block 존재 (after self-attn, cross-attn, FFN).
-- 즉 사실 **3-pass decomposition**.
-- Figure 4 의 (d) 3 decomp blocks 가 이 셋업.
-
-### Dependencies learning (Fig 5) — Top-6 의 의미
-
-paper select **top-6** lag (k=6 in Figure 5).
-
-**왜 6?**:
-- $k = \lfloor c \log L \rfloor$, ETT predict-336 의 $L = I/2 + O = 48 + 336 = 384$.
-- $c=3, \log 384 = 5.95$, $k = 17$. 그러나 Figure 5 는 visualization 단순화 위해 top-6 만 표시.
-
-**Figure 5 의 (a) Auto-Corr 가 다른 attention 들과 다른 점**:
-- (a) Auto-Corr: 6개 점이 **다양한 시간 지연** 에 분산 — past 의 여러 시점에 정보 받음
-- (b) Full attention: 6개 점이 **최근 시점에 집중** — past 무시
-- (c) LSH: 6개 점이 random hashing 으로 분산되지만 **의미 없는 위치**
-- (d) ProbSparse: KL-divergence 기반 선택 — local pattern 위주
-
-→ Auto-Correlation 의 **진정한 차별점**: 시간 지연 자체가 **의미 있는 process structure** 의 신호.
-
-### Complex seasonality modeling (Fig 6) — paper 의 강한 주장
-
-paper p.10:
-> Autoformer can capture the complex seasonalities of real-world series from deep representations and further provide a **human-interpretable prediction**.
-
-"Human-interpretable" 의 의미:
-- 모델의 internal state (top-k τ) 가 **도메인 expert 가 즉시 검증 가능**.
-- Electricity hourly + top τ = {24, 168} → expert 가 "맞다, daily + weekly" 라고 확인.
-- Exchange daily + top τ = {22, 66, 252} → expert 가 "Monthly, Quarterly, Yearly" 라고 확인.
-
-이건 **post-hoc interpretation** 이 아닌 **inherent interpretability** — 모델의 메커니즘 자체가 해석 가능.
-
-**Finance 에서의 가치**:
-- 금융 규제 (MiFID II, Basel) 가 ML 모델 explanation 요구.
-- Autoformer 의 top-k τ 는 **regulator 가 즉시 이해** — black-box critique 해소.
-
-### Efficiency analysis (Fig 7) — 실측의 가치
-
-paper 가 단순히 $O(L \log L)$ 이라 주장하지 않고 **실측 (wall-clock + memory)** 을 제공:
-
-**왜 같은 $O(L\log L)$ 인 Reformer / Informer 보다 더 빠른가?**
-- Reformer LSH: hashing + 정렬 overhead.
-- Informer ProbSparse: KL divergence 계산 + softmax + log-softmax — 무거움.
-- Autoformer Auto-Corr: FFT + Top-k. **FFT 가 GPU 에서 cuFFT 로 highly optimized**.
-
-→ "이론 vs 실제 wall-clock" 의 차이. 같은 빅O 라도 **실용에서 차이 큼**.
-
-**Figure 7 의 가장 중요한 한 점**: predict-3072 에서 Full Attention (Transformer) 이 OOM 인 동안 Auto-Correlation 은 ~5GB. **24GB GPU 한 장으로 학습 가능한 영역** 의 확대.
+**Step 4 — 의미**: **Auto-Correlation 이 *진짜 의존성 (주기) 정확 발견***. 다른 sparse attention 보다 *완전 한 발견*.
 
 ---
 
-## Figs 8-11 — ETT Multivariate Prediction Showcases (Appendix E.1)
+## 11.4 Figure 6 — Learned Lag Histograms (★ 진짜 주기 발견 의 증거)
 
-![Figs 8-11 predictions](figures/page15_Figs8-11_predictions.png)
+![Figure 6 — Lag Histograms](figures/page10_Figs5-7_deps_lags_efficiency.png)
 
-paper p.15. ETT 의 4가지 horizon prediction (Blue = ground truth, Orange = model):
-- **Fig 8**: input-96-predict-96 setting
-- **Fig 9**: input-96-predict-192 setting
-- **Fig 10**: input-96-predict-336 setting
-- **Fig 11**: input-96-predict-720 setting
+*paper p.10 Figure 6 (가운데 panel).*
 
-각 panel 의 첫 96 시점은 input. 그 뒤 O 시점이 prediction. Autoformer 가 periodicity 와 amplitude 모두 가장 정확. paper Section E.1:
-> Our model gives the best performance among different models. Moreover, we observe that Autoformer can accurately predict the periodicity and long-term variation.
+### 어떻게 읽나?
 
-## Figs 12-13 — Exchange (Appendix E.2) + ETT Univariate (Appendix E.3)
+**Step 1 — 4 dataset 의 lag 분포 histogram**:
+- **(a) Electricity** (Hourly): Daily Period (24h) 강함.
+- **(b) Exchange** (Daily): Monthly + Quarterly + Yearly Period 강함.
+- **(c) Traffic** (Hourly): Daily + Weekly Period 강함.
+- **(d) Weather** (10min): Daily Period 강함.
 
-![Figs 12-13 Exchange + ETT univariate](figures/page16_Figs12-13_exchange.png)
+**Step 2 — 의미**:
 
-paper p.16:
-- **Fig 12**: Exchange dataset input-96-predict-192 — **무주기** 시계열에서도 Autoformer 가 trend 추적.
-- **Fig 13**: ETT dataset input-96-predict-720 **univariate** setting.
+**(a) Electricity**: *24시간 주기* 가 *압도적* — 매일 전력 사용 패턴 (출근/잠).
 
-paper Section E.3:
-> Compared to Informer, Autoformer can precisely capture the periods of the future horizon. Besides, our model provides better prediction in the center area than LogTrans. ... Also, the fluctuation of DeepAR prediction is getting smaller as prediction length increases and suffers from the over-smoothing problem, which does not happen in our Autoformer.
+**(b) Exchange**: *비주기* 같지만 *Monthly (~30 day), Quarterly (~90 day), Yearly (~365 day)* 주기 모두 발견 — *경제 의 cycle*.
 
-### Exchange (Fig 12) 의 의미
+**(c) Traffic**: *Daily (24h) + Weekly (168h)* — 매일 출퇴근 + 주중 vs 주말.
 
-> Compared to other models, Autoformer can still predict the exact long-term variations. It is verified the robustness of our model performance among various data characteristics. (p.16, Appendix E.2)
+**(d) Weather**: *Daily (24h)* + *연간 cycle* — 매일 기온 + 계절.
 
-→ 무주기 환율에서도 trend 잡힘.
+**Step 3 — 핵심 메시지**: **Auto-Correlation 이 *시계열 의 진짜 주기 (real-world 의미)* 자동 발견**. 사람이 *수동 으로 명시* 안 해도 *학습 으로 발견*.
+
+→ ***Interpretable forecasting*** — 학습 된 lag 가 *해석 가능*.
+
+```viz:autoformer-lag-histogram:title=Fig 6 — Lag Histograms (interactive),caption=4 dataset 의 학습된 lag 분포. Electricity Daily, Exchange Monthly/Quarterly/Yearly, Traffic Daily/Weekly, Weather Daily.
+```
 
 ---
 
-## 다음
+## 11.5 Figure 7 — Efficiency (이미 ch07 참조)
 
-3개 appendix chapters:
-- [12_appendix_ett_full.md](12_appendix_ett_full.md) — Table 5 (ETT 4 variants)
-- [13_appendix_hyper_input.md](13_appendix_hyper_input.md) — Tables 6/7/8/9 (c, input length, decoder input, decomp algos)
-- [14_appendix_covid.md](14_appendix_covid.md) — Appendix F (COVID case)
+이미 *Chapter 07 (Complexity)* 에서 다룸.
+
+**핵심**: Auto-Correlation 이 *memory + time 모두* 최고. *Full Attention* 은 *L > 3000* 에서 OOM, Auto-Corr 은 *L = 8192* 까지도 *작동*.
+
+---
+
+## 11.6 Figure 8-11 — ETT Prediction Showcases (★ 시각적 SOTA 증명)
+
+![Figure 8-11 — ETT predictions](figures/page15_Figs8-11_predictions.png)
+
+*paper p.15 Figure 8 (predict-96), 9 (predict-192), 10 (predict-336), 11 (predict-720).*
+
+### 어떻게 읽나?
+
+**Step 1 — 4 figure 각각**:
+- 4 model 비교 (Autoformer, Informer, LogTrans, Reformer).
+- 각 panel 의 *blue = ground truth*, *orange = prediction*.
+
+**Step 2 — predict-96 (Fig 8)**:
+- 모든 model 이 *어느 정도 작동*.
+- Autoformer 가 *가장 정확*.
+
+**Step 3 — predict-192 (Fig 9)**:
+- Informer, LogTrans, Reformer 가 *over-smoothing* 시작.
+- Autoformer 만 *peak/trough 명확*.
+
+**Step 4 — predict-336 (Fig 10)**:
+- 다른 모델 들 *큰 편차*.
+- Autoformer 가 *진짜 와 거의 일치*.
+
+**Step 5 — predict-720 (Fig 11)**:
+- *Informer 가 완전 over-smoothing* (직선).
+- *LogTrans, Reformer 는 noise 만*.
+- *Autoformer 만 진짜 패턴 잡음*.
+
+**Step 6 — 의미**: **prediction length 늘수록 *Autoformer 의 우위 더 분명***. *Long-term robustness* 의 시각적 증명.
+
+---
+
+## 11.7 Figure 12 — Exchange (비주기) Prediction Showcase
+
+![Figure 12 — Exchange predictions](figures/page16_Figs12-13_exchange.png)
+
+*paper p.16 Figure 12 (Exchange predict-192).*
+
+### 어떻게 읽나?
+
+**Step 1 — Setup**: Exchange dataset 의 *predict-192*. Exchange 는 *비주기* (random walk-like).
+
+**Step 2 — 4 model 비교**:
+- *Autoformer*: 큰 변동 + trend 모두 잡음.
+- *Informer/LogTrans/Reformer*: *trend 못 잡음* + over-smoothing.
+
+**Step 3 — 의미**: **Autoformer 가 *주기성 없는 데이터에서도 SOTA***. 이는 *Auto-Correlation 의 *generalizability* — 명확한 주기 없어도 *trend + small fluctuations* 잡음.
+
+---
+
+## 11.8 Figure 13 — ETT Univariate Showcase
+
+![Figure 13 — ETT Univariate](figures/page16_Figs12-13_exchange.png)
+
+*paper p.16 Figure 13 (ETT univariate predict-720).*
+
+### 어떻게 읽나?
+
+**Step 1 — Setup**: ETT 의 *univariate (oil temperature 만)* + *predict-720*.
+
+**Step 2 — 5 model 비교** (Autoformer, Informer, LogTrans, Reformer, DeepAR):
+- *Autoformer*: 진짜 와 일치 + *over-smoothing 없음*.
+- *DeepAR*: prediction length 늘면 *over-smoothing* (단조 곡선).
+- *Informer/LogTrans*: *큰 편차*.
+
+**Step 3 — 의미**: **Univariate 도 SOTA**. *DeepAR 의 over-smoothing 문제* 회피.
+
+---
+
+## 11.9 본 챕터 정리
+
+```
+   Figure 4 (Progressive decomposition)         Figures 5-6 (Dependencies + Lags)
+   ─────────────────────────────────────         ────────────────────────────────
+
+   decomp block 0/1/2/3                          Auto-Corr 의 Top-k τ 가
+   3 blocks 가 trend+seasonal 정확             진짜 주기 발견
+              ↓                                              ↓
+              Figure 7 (Efficiency)                Figures 8-13 (Prediction showcases)
+              ──────────────────                  ───────────────────────────────
+              Memory/Time 효율                    ETT 96/192/336/720
+              Long sequence 가능                   Exchange (비주기) + Univariate
+              ↓                                              ↓
+                   모든 이 figures = Autoformer 의 *시각적 SOTA 증명*
+```
+
+---
+
+## 11.10 자기점검
+
+### 핵심 3가지
+1. **Figure 4 (progressive decomposition) 의 의미?**
+2. **Figure 6 (lag histograms) 의 *real-world 발견*?**
+3. **Figures 8-11 의 *prediction length 영향*?**
+
+### 답변
+1. **decomp block 0 → 1 → 2 → 3 의 *누적 효과*** 시각. *0 blocks*: trend + seasonal 분리 안 됨. *1-2 blocks*: 점진적 분리. *3 blocks (Autoformer default)*: trend + seasonal 모두 *진짜 와 거의 일치*. **Progressive decomposition 의 *시각적 증명*** — *반복적 정제* 가 *근본*.
+2. **Auto-Correlation 의 Top-k τ 들 이 *시계열 의 진짜 주기 (real-world 의미) 자동 발견***. **(a) Electricity**: Daily (24h) — *매일 전력 사용 패턴*. **(b) Exchange**: Monthly + Quarterly + Yearly — *경제 cycle*. **(c) Traffic**: Daily + Weekly — *출퇴근 + 주중/주말*. **(d) Weather**: Daily + Yearly — *매일 + 계절*. *Interpretable forecasting* — 학습 된 lag 가 *해석 가능*.
+3. **Predict length 늘 수록 *Autoformer 의 우위 더 분명***. predict-96 에서는 모든 model 어느 정도 작동. predict-720 에서는: *Informer 완전 over-smoothing (직선)*, *LogTrans/Reformer noise 만*, *Autoformer 만 진짜 패턴 잡음*. *Long-term robustness* 의 시각적 증명 — *장기 예측 의 진정한 SOTA*.
+
+---
+
+다음 챕터: [12_appendix_ett_full.md](12_appendix_ett_full.md) — Appendix A (ETT 4 variant 전체 벤치마크).

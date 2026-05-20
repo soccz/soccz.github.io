@@ -1,84 +1,235 @@
-# 03 Motivation — Section 1 Introduction
+# 03. 왜 Autoformer? — 장기 예측의 두 challenge + 본 논문의 답
 
-## 시계열 forecasting 의 새 압력: "장기"
-
-> Time series forecasting has been widely used in energy consumption, traffic and economics planning, weather and disease propagation forecasting. In these real-world applications, one pressing demand is to extend the forecast time into the far future. (p.1)
-
-**Long-term setting** 의 정의: input-$I$-predict-$O$ 에서 $O$ 가 크다 (paper 가 실험하는 값: 96, 192, 336, 720 / ILI 는 24, 36, 48, 60). 즉 한 step 이 아닌 수백 step.
-
-**Why now?** Transformer [41] 의 self-attention 이 시계열에 적용되며 (LogTrans [26], Reformer [23], Informer [48]) 큰 진전. 그러나 장기에서 두 종류 한계.
+> 본 논문이 *왜 나왔는지* 의 학계 역사. 2017년 Transformer 등장부터 2021년 Autoformer 까지.
 
 ---
 
-## 두 challenge — 본 paper 의 출발점
+## 3.1 챕터 한 줄 요약
 
-### Challenge 1: 신뢰할 수 없는 의존성
-> First, it is unreliable to discover the temporal dependencies directly from the long-term time series because the dependencies can be obscured by entangled temporal patterns. (p.1)
-
-장기에서는 trend (장기), seasonal (주기), noise (잡음) 가 모두 섞여있음 → self-attention 의 query-key 가 무엇과 무엇을 연결해야 할지 불분명.
-
-→ **답**: 분해(decomposition) — entangled 패턴을 풀어내어 각각 더 예측 가능한 component 로.
-
-### Challenge 2: Quadratic complexity → sparse → bottleneck
-> Second, canonical Transformers with self-attention mechanisms are computationally prohibitive for long-term forecasting because of the quadratic complexity of sequence length. (p.1)
-
-$O(L^2)$ memory & compute. 해결책으로 LogSparse, LSH, ProbSparse 등장:
-
-> Previous Transformer-based forecasting models [48, 23, 26] mainly focus on improving self-attention to a sparse version. While performance is significantly improved, these models still utilize the point-wise representation aggregation. Thus, in the process of efficiency improvement, they will sacrifice the information utilization because of the sparse point-wise connections, resulting in a bottleneck for long-term forecasting of time series. (p.1)
-
-→ Sparse 화 → 효율은 얻었지만 정보 손실 ↑. **여전히 point-wise**.
+> **"2017년 Transformer 등장 → 2019-2021 학자들이 *시계열 적용* 시도 → 두 가지 큰 벽 발견: (1) 장기 의 *intricate patterns* + (2) sparse attention 의 *information bottleneck*. Autoformer 가 *분해 + Auto-Correlation* 으로 두 벽 모두 깸."**
 
 ---
 
-## 본 paper 의 답 — 두 contribution
+## 3.2 2017년 — Transformer 등장 (NLP 의 혁명)
 
-### Contribution 1: Decomposition 을 inner block 으로
+**Vaswani et al "Attention is All You Need"** (NeurIPS 2017).
 
-> To reason about the intricate temporal patterns, we try to take the idea of decomposition, which is a standard method in time series analysis [1, 33]. ... However, under the forecasting context, it can only be used as the pre-processing of past series because the future is unknown [20]. (p.2)
+NLP 의 *완전 혁명*. Attention 메커니즘으로 *RNN/LSTM 의 long-term 의존성 문제* 해결.
 
-**관행**: Prophet [39] (trend-seasonality), N-BEATS [29] (basis expansion), DeepGLO [35] (matrix decomp) 모두 사전처리.
+이후:
+- **2018-2020**: BERT, GPT-2, GPT-3 — NLP 모델 의 *모든 SOTA*.
+- **2020**: ViT (Vision Transformer) — *이미지* 도 정복.
+- **2023+**: ChatGPT, GPT-4, Claude 등.
 
-**Autoformer 의 도약**:
-> We attempt to go beyond pre-processing usage of decomposition and propose a generic architecture to empower the deep forecasting models with immanent capacity of progressive decomposition. (p.2)
-
-- "Immanent capacity" = 내재적 능력.
-- 각 layer 가 hidden representation 에서 trend 를 뽑아냄 → decoder 의 step-by-step refinement 에서 trend 가 누적.
-- Encoder 는 trend 를 **제거** 하고 seasonal 만 모델링 (paper 의 "$\_$" 기호로 표시 — eliminated trend).
-
-### Contribution 2: Auto-Correlation — series-wise periodicity
-
-> Further, decomposition can ravel out the entangled temporal patterns and highlight the inherent properties of time series [20]. Benefiting from this, we try to take advantage of the series periodicity to renovate the point-wise connection in self-attention. We observe that the sub-series at the same phase position among periods often present similar temporal processes. Thus, we try to construct a series-level connection based on the process similarity derived by series periodicity. (p.2)
-
-핵심 관찰: **같은 phase 의 sub-series 는 비슷한 process**.
-- 예: 매주 월요일 9시의 traffic, 매년 1월의 ETT, 매 24h 의 hourly Electricity.
-- → 이 관찰을 self-attention 의 점-사이 dot-product 대신, series-level connection 으로.
-
-→ **Auto-Correlation 메커니즘**:
-- 의존성 발견 = autocorrelation $R(\tau)$ Top-k
-- 표현 집계 = `Roll(V, τ_i)` 로 sub-series 정렬 → softmax 가중 합
+**핵심 메시지**: Transformer 는 *sequence 다루는 universal 도구*. *시계열 도 sequence* → *자연스러운 적용 시도*.
 
 ---
 
-## 세 가지 기여 요약 (paper p.2 bullet)
+## 3.3 2019-2021 — 학자들의 시계열 Transformer 시도
 
-> • To tackle the intricate temporal patterns of the long-term future, we present Autoformer as a decomposition architecture and design the inner decomposition block to empower the deep forecasting model with immanent progressive decomposition capacity.
->
-> • We propose an Auto-Correlation mechanism with dependencies discovery and information aggregation at the series level. Our mechanism is beyond previous self-attention family and can simultaneously benefit the computation efficiency and information utilization.
->
-> • Autoformer achieves a 38% relative improvement under the long-term setting on six benchmarks, covering five real-world applications: energy, traffic, economics, weather and disease.
+NLP/CV 성공에 자극받은 학자들이 *시계열 Transformer 적용* 시도.
 
-이 셋이 paper 의 모든 챕터의 reference point.
+### LogTrans (Li et al, NeurIPS 2019)
+
+- **Trick**: *LogSparse attention* — 시간 점 사이 *log 간격* 으로 attention.
+- **장점**: $O(L (\log L)^2)$ 의 효율.
+- **단점**: 여전히 *point-wise*.
+
+### Reformer (Kitaev et al, ICLR 2020)
+
+- **Trick**: *LSH (Locality-Sensitive Hashing) attention* — *비슷한 query/key* 끼리 hash bucket.
+- **장점**: $O(L \log L)$ 의 효율.
+- **단점**: 여전히 *point-wise* + LSH 의 *noise*.
+
+### Informer (Zhou et al, AAAI 2021)
+
+- **Trick**: *ProbSparse attention* — KL divergence 로 *중요 query 선택*.
+- **장점**: $O(L \log L)$ 의 효율.
+- **단점**: 여전히 *point-wise* + sparse selection 의 *정보 손실*.
+
+### 공통 패턴
+
+이 *3 모델 모두* **시계열 specific self-attention 변형** — 즉 *sparse 한 self-attention*. 모두:
+
+1. *Point-wise* (점 별 비교).
+2. *Self-attention 의 변형* (대체 X).
+3. *분해 없음* (사전 처리 X, 모델 내부 X).
+
+**일상 비유**: 의사가 환자 *전체 검사* (full attention) 대신 *일부 검사* (sparse) 만 → *놓치는 정보*. 그래도 *검사 방식 자체* 는 같음.
+
+학계 가정: "*Self-attention 의 sparse 버전 = 답*". 그러나 실제 결과 는 *limited improvement*.
 
 ---
 
-## 본 motivation 의 미학
+## 3.4 본 논문이 본 *두 가지 큰 벽*
 
-Autoformer 가 도전한 두 한계는 **상호 직교(orthogonal)**:
-- Decomposition 은 **표현(representation)** 의 문제 — "무엇을 모델링할 것인가?"
-- Auto-Correlation 은 **연결(connection)** 의 문제 — "그것을 어떻게 연결할 것인가?"
+### 벽 1 — Intricate Temporal Patterns (복잡 시간 패턴)
 
-자연스럽게 두 contribution 이 **동시 적용** 가능 — Section 4.2 의 ablation 이 보여줄 것: decomposition 만 추가해도 promotion 있음, Auto-Correlation 만 비교해도 self-attention 우위. **둘 다** 일 때 최고.
+**문제**: 장기 미래 의 *시간 패턴* 이 *너무 복잡*. *trend + seasonal + noise* 가 *섞임*.
 
-또한 motivation 자체가 **이론 기반** — Auto-Correlation 은 stochastic process theory (Chatfield, Papoulis) 의 정의를 그대로 사용. 휴리스틱이 아닌, **수학적으로 동일한 양** 을 deep network 에 통합한 것.
+**예시 — Traffic dataset**:
+- *Trend* (큰 흐름): 1년 동안 도로 점유율 *서서히 증가*.
+- *Seasonal* (주기성): *매일 출근 시간 peak*, *주말 감소*, *공휴일 변동*.
+- *Noise*: 사고, 날씨, 이벤트.
 
-이제 [04_related_work.md](04_related_work.md) 에서 forecasting 의 historical landscape 를 빠르게.
+장기 예측 (336 timestep) 시 *이 모든 게 섞여* → *진짜 dependency vs noise* 구분 어려움.
+
+**기존 방법**: *Pre-processing decomposition* (사전 분해).
+- Prophet (Taylor 2018): Trend + Seasonal + Holiday 분해.
+- N-BEATS (Oreshkin 2019): Basis expansion 분해.
+- DeepGLO (Sen 2019): Matrix decomposition.
+
+**한계**: *사전 처리* 만 가능 — *학습 후 분해 다시 불가능*. *future 는 모르니* *그 future 에 대한 분해* 불가능.
+
+### 벽 2 — Information Utilization Bottleneck (정보 활용 병목)
+
+**문제**: Sparse attention (Informer, Reformer, LogTrans) 의 *점만 보기* → *정보 손실*.
+
+**예시 — 시계열 (1000 timestep)**:
+- *Full attention*: $O(L^2) = 1,000,000$ 연산 — 너무 느림.
+- *Sparse* (예: 100 점 만): $O(L \log L) \approx 10,000$ 연산 — 빠름. 그러나 *900 점 무시*.
+
+**일상 비유**: 책 1000 페이지 중 *100 페이지만 보고* 요약 → *주요 정보 손실 위험*.
+
+→ **Sparse 의 *효율* 와 *정확도* 사이 trade-off**.
+
+---
+
+## 3.5 본 논문의 답 — *두 벽 모두 깨기*
+
+**Autoformer (Wu et al, NeurIPS 2021)** 가 두 벽 모두 깸.
+
+### 핵심 메시지
+
+> **"Sparse self-attention 의 *효율 + 정확도 trade-off* 자체 가 *잘못된 framing*. Self-attention 을 *통째로 교체* + 분해를 *모델 내부* 로 끌어들임."**
+
+### 두 가지 *새 기법*
+
+#### 기법 1 — Auto-Correlation (벽 2 의 해법)
+
+**기존 self-attention** (point-wise, $O(L^2)$):
+
+$$
+\text{Attn}(Q,K,V) = \text{Softmax}\!\left(\frac{QK^T}{\sqrt{d}}\right) V
+$$
+
+**Autoformer 의 Auto-Correlation** (series-wise, $O(L \log L)$):
+
+$$
+\text{AutoCorr}(Q,K,V) = \sum_{i=1}^{k} \text{Roll}(V, \tau_i) \cdot \hat R(\tau_i)
+$$
+
+- $\tau_i$: Top-$k$ 의 *시간 지연* (period).
+- $\text{Roll}(V, \tau)$: $V$ 를 $\tau$ 만큼 cyclic shift.
+- $\hat R(\tau_i)$: $\tau_i$ 에서의 *autocorrelation* (FFT 로 계산).
+
+**일상 비유**: 의사가 환자의 *지난 24시간 (sub-series)* + *어제 같은 시간 24시간 (sub-series)* + *그저께 같은 시간 24시간* 들을 *주기 별 비교* — *조각 끼리 (series-wise)*.
+
+**기존**: *Sparse attention* 으로 점 일부만.
+
+**본 논문**: *Auto-Correlation* 으로 *전체 시계열의 주기성 활용* + *FFT 로 $O(L \log L)$*.
+
+#### 기법 2 — Inner Decomposition Block (벽 1 의 해법)
+
+**기존 분해 (Prophet, N-BEATS)**: 사전 처리 만.
+
+**본 논문**: 분해를 *encoder + decoder 의 매 layer 마다 inner block* 으로.
+
+**Series Decomposition Block** (Eq 1):
+
+$$
+X_t = \text{AvgPool}(\text{Padding}(X)), \quad X_s = X - X_t
+$$
+
+- $X_t$: trend (이동 평균 으로 *부드러운 큰 흐름* 추출).
+- $X_s$: seasonal (전체에서 trend 뺀 *나머지*).
+
+**일상 비유**: 학생이 *문제 풀 때* 마다 *답 점검 (trend 추출)* + *나머지 다시 풀기 (seasonal refinement)*. *매 단계 정제* — *반복적 향상*.
+
+#### 결과
+
+**6 datasets × 4 horizons 평균**:
+- **MSE reduction**: 38%.
+- 최대: ETTm2 predict-336 의 *74% MSE 감소* (1.334 → 0.339).
+
+---
+
+## 3.6 본 논문의 *핵심 발견 4가지*
+
+본 논문이 *empirically* 보인 것:
+
+### 발견 1 — Auto-Correlation > Self-Attention
+
+본 논문 *Table 4 ablation*:
+- Auto-Correlation vs Full / LogSparse / LSH / ProbSparse Attention 비교.
+- *Auto-Correlation 이 모든 baseline 능가*.
+
+### 발견 2 — Inner Decomposition > Pre-processing
+
+본 논문 *Table 3 + 9 ablation*:
+- Inner decomposition vs *Sep* (사전 분해 + 별도 학습).
+- *Inner decomposition 이 능가*.
+
+### 발견 3 — $O(L \log L)$ Complexity
+
+**Figure 7** (paper p.10): Memory + Time 측정.
+- Auto-Correlation 의 *$O(L \log L)$* 가 Full / LSH / ProbSparse 보다 *훨씬 효율적*.
+
+### 발견 4 — Long-Term Robustness
+
+**Figure 2, Figure 4**: prediction length 가 늘어도 *MSE 안정*.
+
+→ *장기 예측* 의 *robustness*.
+
+---
+
+## 3.7 본 논문의 의의 — 학계 흐름의 *turning point*
+
+```
+   2017 Transformer (NLP)
+              ↓
+   2019-2021 시계열 Transformer 시도
+   LogTrans, Reformer, Informer
+   "Sparse self-attention 으로 효율"
+              ↓
+   2021 Autoformer ★
+   "Self-attention 자체 를 교체 + 분해를 inner block 으로"
+              ↓
+   38% MSE reduction (평균)
+              ↓
+   2022-2023 후속 paper 들 영향
+   FEDformer (2022) — Fourier 분해
+   PatchTST (2023) — Patching
+   iTransformer (2024) — Channel attention
+```
+
+**메시지**: Autoformer 는 시계열 분야의 *paradigm shift*. *Sparse attention 변형* 의 *bounded improvement* 에서 *근본적 mechanism 교체* 로.
+
+---
+
+## 3.8 본 논문이 *재고* 시킨 통념
+
+| 학계 통념 (2019-2021) | Autoformer 발견 |
+|---------------------|----------------|
+| Self-attention 의 *sparse 버전* 이 답 | Self-attention 자체 를 *교체* (Auto-Correlation) |
+| 분해는 *사전 처리* 만 가능 | *모델 inner block* 으로 가능 |
+| Point-wise 비교 가 자연스러움 | *Series-wise (조각 별)* 가 *시계열 구조* 와 일치 |
+| $O(L \log L)$ + 정확도 trade-off | *둘 다 동시 달성 가능* |
+
+---
+
+## 3.9 자기점검
+
+### 핵심 3가지
+1. **장기 예측 의 *두 가지 벽* 의 의미?**
+2. **Autoformer 의 *두 가지 새 기법* 의 직관?**
+3. **본 논문 의 *paradigm shift* 의 의의?**
+
+### 답변
+1. **(벽 1) Intricate Temporal Patterns**: 장기 미래 의 *trend + seasonal + noise 가 섞임* → *진짜 dependency* 찾기 어려움. Prophet/N-BEATS 의 *사전 분해* 가 *future 에 적용 X* — 한계. **(벽 2) Information Bottleneck**: Informer/Reformer/LogTrans 의 *sparse self-attention* 이 *효율* 위해 *정보 손실*. 책 1000 페이지 중 100 페이지 만 보는 격.
+2. **(기법 1) Auto-Correlation**: Self-attention 의 *point-wise dot product* 를 *series-wise* Auto-Correlation 으로 *교체*. 24시간 주기 의 *매일 오전 9시* sub-series 들 끼리 *조각 별 비교*. FFT 로 $O(L \log L)$. **(기법 2) Inner Decomposition**: 분해 를 *매 layer 마다 inner block* — *progressive 분리*. 학생 이 *매 단계 답 점검* 같음.
+3. **Paradigm shift**: *sparse attention 변형* (효율-정확도 trade-off) → *근본 mechanism 교체* (둘 다 동시 달성). 후속 (FEDformer, PatchTST, iTransformer) 가 *Autoformer 의 방향* 위에 build. 38% MSE reduction 평균 + ETTm2-336 의 *74% 감소* — paradigm 의 *quantitative 증명*.
+
+---
+
+다음 챕터: [04_related_work.md](04_related_work.md) — Related Work 의 cluster 별 정리.

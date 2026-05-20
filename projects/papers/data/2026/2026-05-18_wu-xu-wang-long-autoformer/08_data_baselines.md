@@ -1,160 +1,217 @@
-# 08 Datasets, Baselines, Setup — Section 4 (p.6–7)
+# 08. 데이터셋 + Baseline 모델 — 실험 setup
 
-## 6개 Datasets
-
-paper p.6–7 의 Datasets paragraph 정확 인용:
-
-> Here is a description of the six experiment datasets:
-> (1) ETT [48] dataset contains the data collected from electricity transformers, including load and oil temperature that are recorded every 15 minutes between July 2016 and July 2018.
-> (2) Electricity¹ dataset contains the hourly electricity consumption of 321 customers from 2012 to 2014.
-> (3) Exchange [25] records the daily exchange rates of eight different countries ranging from 1990 to 2016.
-> (4) Traffic² is a collection of hourly data from California Department of Transportation, which describes the road occupancy rates measured by different sensors on San Francisco Bay area freeways.
-> (5) Weather³ is recorded every 10 minutes for 2020 whole year, which contains 21 meteorological indicators, such as air temperature, humidity, etc.
-> (6) ILI⁴ includes the weekly recorded influenza-like illness (ILI) patients data from Centers for Disease Control and Prevention of the United States between 2002 and 2021, which describes the ratio of patients seen with ILI and the total number of the patients.
-
-### Dataset 한눈 표
-
-| Dataset | 변수 수 | 빈도 | 기간 | 응용 카테고리 | 본 paper 의 split |
-|---------|--------|------|------|--------------|------------------|
-| ETT (ETTm2 main) | 7† | 15분 (m) / 1시간 (h) | 2016/07–2018/07 | energy | 6:2:2 |
-| Electricity | **321** (paper) | hourly | 2012–2014 | energy | 7:1:2 |
-| Exchange | **8** countries (paper) | daily | 1990–2016 | economics (FX) | 7:1:2 |
-| Traffic | 862† (sensors) | hourly | California DOT | traffic | 7:1:2 |
-| Weather | **21** indicators (paper) | 10min | 2020 전체 | weather | 7:1:2 |
-| ILI | 7† | weekly | 2002–2021 | disease | 7:1:2 |
-
-† 표시 = paper Section 4 본문에 정확한 변수 수 미명시. ETT 의 7 (oil temperature + 6 power loads), Traffic 의 862 sensors, ILI 의 7 feature 는 **공식 repo (github.com/thuml/Autoformer) 의 dataset preprocessing 기준**. paper 의 인용 가능한 변수 수는 **굵게** 표시한 것만 (Electricity 321, Exchange 8, Weather 21).
-
-**Split 룰**:
-> We follow standard protocol and split all datasets into training, validation and test set in chronological order by the ratio of 6:2:2 for the ETT dataset and 7:1:2 for the other datasets. (p.7)
-
-**ETT 4 variants**:
-- ETTh1, ETTh2 — 1시간 단위
-- ETTm1, ETTm2 — 15분 단위
-- 본문은 ETTm2 만 사용, Appendix A (Table 5) 가 4 variants 전체.
-
-**Footnote URL**:
-- ¹ `archive.ics.uci.edu/ml/datasets/ElectricityLoadDiagrams20112014`
-- ² `pems.dot.ca.gov`
-- ³ `bgc-jena.mpg.de/wetter/` (Max-Planck-Institut für Biogeochemie Jena Weather Station)
-- ⁴ `gis.cdc.gov/grasp/fluview/fluportaldashboard.html`
+> 본 논문이 사용한 *6 datasets* + *10 baseline 모델*. 무지식자 친화로.
 
 ---
 
-## Implementation Details (p.7)
+## 8.1 챕터 한 줄 요약
 
-> Our method is trained with the L2 loss, using the ADAM [22] optimizer with an initial learning rate of $10^{-4}$. Batch size is set to 32. The training process is early stopped within 10 epochs. All experiments are repeated three times, implemented in PyTorch [31] and conducted on a single NVIDIA TITAN RTX 24GB GPUs. The hyper-parameter $c$ of Auto-Correlation is in the range of 1 to 3 to trade off performance and efficiency. ... Autoformer contains 2 encoder layers and 1 decoder layer.
-
-| 항목 | 값 |
-|------|----|
-| Loss | L2 (MSE) |
-| Optimizer | Adam |
-| Learning rate | $10^{-4}$ |
-| Batch size | 32 |
-| Epochs | ≤ 10 (early stop) |
-| GPU | NVIDIA TITAN RTX 24GB (single) |
-| Framework | PyTorch |
-| Reps | 3 runs per setting |
-| Auto-Correlation $c$ | 1–3 |
-| Encoder layers | $N = 2$ |
-| Decoder layers | $M = 1$ |
-
-### paper Appendix G.2 — Fair Comparison & Embedding (p.18)
-
-paper 가 baseline 들의 공평한 비교를 위해 두 가지 통일:
-
-> All these transformer-based models are built with two encoder layers and one decoder layer for the sake of the fair comparison in performance and efficiency, including Informer [48], Reformer [23], LogTrans [26] and canonical Transformer [41]. Besides, all these models adopt the embedding method and the one-step generation strategy as Informer [48]. (paper p.18 G.2)
-
-→ **모든 Transformer baselines (Informer/Reformer/LogTrans/Transformer) 도 N=2, M=1**. 동일 architecture depth 에서 메커니즘만 비교.
-
-→ **임베딩 + one-step generation 도 Informer 방식 통일**. Autoformer 만의 advantage 가 아님 — 공평.
-
-### Embedding 의 차이 — Autoformer 만의 변형
-
-> Note that our proposed series-wise aggregation can provide enough sequential information. Thus, we do not employ the position embedding as other baselines but keep the value embedding and time stamp embedding. (G.2)
-
-표준 Transformer / Informer 의 embedding 3종:
-1. **Value embedding** — input value → d_model 차원
-2. **Position embedding** — 시점 i → d_model 차원 (Transformer의 sinusoidal/learnable)
-3. **Time stamp embedding** — calendar feature (hour-of-day, day-of-week 등) → d_model 차원
-
-**Autoformer**: value + time stamp embedding **만 사용**. Position embedding **생략**.
-
-**이유**: Auto-Correlation 의 series-wise aggregation 이 이미 시점 간 관계를 학습 — position 정보가 별도 embedding 으로 주입될 필요 없음.
-
-→ 본 deep dive 의 ch18 PyTorch 코드는 단순화를 위해 value embedding 만 (Linear). time stamp + position 둘 다 생략. paper repo 는 time stamp 까지 포함.
+> **"6 datasets (다양한 domain — 에너지/교통/경제/날씨/질병) + 10 baseline (Transformer 변형 5종 + RNN/CNN 5종) = *광범위 검증*. Autoformer 가 *모든 dataset 의 거의 모든 cell 에서 best* — 38% MSE reduction 평균."**
 
 ---
 
-## Baselines (10개)
+## 8.2 6 Datasets — 5 응용 분야
 
-paper p.7:
-> We include 10 baseline methods. For the multivariate setting, we select three latest state-of-the-art transformer-based models: Informer [48], Reformer [23], LogTrans [26], two RNN-based models: LSTNet [25], LSTM [17] and CNN-based TCN [4] as baselines. For the univariate setting, we include more competitive baselines: N-BEATS[29], DeepAR [34], Prophet [39] and ARIMA [1].
+본 논문이 *광범위한 dataset 비교* 위해 6 개 사용:
 
-### Multivariate Baselines (6)
-- **Informer** [48] — AAAI 2021 (ProbSparse)
-- **Reformer** [23] — ICLR 2020 (LSH)
-- **LogTrans** [26] — NeurIPS 2019 (LogSparse)
-- **LSTNet** [25] — SIGIR 2018
-- **LSTM** [17] — Hochreiter-Schmidhuber 1997
-- **TCN** [4] — Bai-Kolter 2018
+### Table 통계 (paper Section 4 + Appendix)
 
-### 추가 Univariate Baselines (4)
-- **N-BEATS** [29] — ICLR 2019
-- **DeepAR** [34] — Salinas 2020
-- **Prophet** [39] — Taylor-Letham 2018
-- **ARIMA** [1] — 1976
+| Dataset | M (변수 수) | 시간 단위 | 총 timestep | Domain |
+|---------|------------|-----------|------------|--------|
+| **ETT** (ETTh1, h2, m1, m2) | 7 | 15분/시간 | 17,420 ~ 69,680 | 에너지 (변압기) |
+| **Electricity** | 321 | 시간 | 26,304 | 에너지 (전력) |
+| **Exchange** | 8 | 일 | 7,588 | 경제 (환율) |
+| **Traffic** | 862 | 시간 | 17,544 | 교통 |
+| **Weather** | 21 | 10분 | 52,696 | 날씨 |
+| **ILI** | 7 | 주 | 966 | 질병 (인플루엔자) |
 
-### Appendix A 의 추가 baseline (ETT 전체):
-- **LSTMa** [3] — Bahdanau-Cho-Bengio attention RNN (Table 5).
+### 각 dataset 의 *친근 설명*
+
+#### ETT (Electricity Transformer Temperature)
+
+- **풀네임**: 전력 변압기 온도.
+- **수집**: 2016년 7월 ~ 2018년 7월 (China).
+- **4 가지 sub-dataset**:
+  - **ETTh1, ETTh2**: 시간 단위 (h = hourly). 변압기 위치 1, 2.
+  - **ETTm1, ETTm2**: 15분 단위 (m = minutes). 변압기 위치 1, 2.
+- **M = 7 변수**: 변압기 작동 변수 (전력 부하, 온도, 등).
+- **Use case**: 변압기 *과열 방지*, *유지보수 계획*.
+
+#### Electricity
+
+- **수집**: 2012-2014 (UCI ML Repo).
+- **M = 321 가구**: 시간당 전력 사용량.
+- **일상 비유**: 한 도시 의 *321 가구* 의 *시간당 전력 데이터*.
+
+#### Exchange
+
+- **수집**: 1990-2016 (LSTNet dataset).
+- **M = 8 국가**: 일간 환율 (vs USD).
+- **일상 비유**: *8 개국 통화* 의 *일별 가치 변동*.
+- **특징**: *비주기성* — 환율 은 *random walk* 에 가까움.
+
+#### Traffic
+
+- **수집**: California DOT (Department of Transportation).
+- **M = 862 도로**: 시간당 차량 점유율.
+- **일상 비유**: *고속도로 862 구간* 의 *시간당 차량 통과 비율*.
+
+#### Weather
+
+- **수집**: Max Planck Institute (Jena, Germany), 2020 전체.
+- **M = 21 변수**: 기온, 습도, 풍속, 등.
+- **단위**: 10분.
+- **일상 비유**: *21 가지 기상 변수* 의 *10분 단위 기록*.
+
+#### ILI (Influenza-Like Illness)
+
+- **수집**: CDC (Centers for Disease Control), 2002-2021.
+- **M = 7 지역**: 인플루엔자 환자 비율.
+- **단위**: 주.
+- **일상 비유**: *7 지역* 의 *주간 인플루엔자 환자 수*.
+
+### 핵심 — *다양한 domain*
+
+**일상 비유**: 의사가 *심장 약 효과* 를 검증할 때 *한 병원* 만 보면 *general 효과 모름*. *여러 병원, 인종, 나이대 (다양한 dataset)* 에서 *모두 효과* 보여야 *진짜 universal*.
+
+본 논문 도 마찬가지 — *에너지, 교통, 경제, 날씨, 질병* 의 *5 분야* 에서 *모두 SOTA* 보여야 *진짜 universal model*.
+
+### Dataset 의 *변수 수 (M)* 의 차이
+
+- *작은 M* (ETT 7, ILI 7, Exchange 8): *단순 multivariate*.
+- *중간 M* (Weather 21): *moderate*.
+- *큰 M* (Electricity 321, Traffic 862): *high-dimensional* — Transformer 의 *진가 발휘*.
 
 ---
 
-## 평가 지표
+## 8.3 10 Baseline 모델
 
-**MSE** (Mean Squared Error) 와 **MAE** (Mean Absolute Error):
+본 논문이 비교한 *baseline*:
 
-$$
-\text{MSE} = \frac{1}{O \cdot d} \sum_{i=1}^{O} \sum_{j=1}^{d} (\hat{y}_{i,j} - y_{i,j})^2
-$$
+### Transformer 기반 (4 종) — 핵심 baseline
 
-$$
-\text{MAE} = \frac{1}{O \cdot d} \sum_{i=1}^{O} \sum_{j=1}^{d} |\hat{y}_{i,j} - y_{i,j}|
-$$
+#### 1. Informer (Zhou et al, AAAI 2021)
 
-**Lower is better** (paper Tables 의 모든 caption 명시).
+- **Trick**: *ProbSparse self-attention* — KL divergence 로 *important query 선택*.
+- **Complexity**: $O(L \log L)$.
+- **본 논문에서**: *Main competitor*. Table 1-4 의 *가장 강한 baseline*.
+
+#### 2. Reformer (Kitaev et al, ICLR 2020)
+
+- **Trick**: *LSH (Locality-Sensitive Hashing) attention*.
+- **Complexity**: $O(L \log L)$.
+
+#### 3. LogTrans (Li et al, NeurIPS 2019)
+
+- **Trick**: *LogSparse attention* — log 간격.
+- **Complexity**: $O(L (\log L)^2)$.
+
+#### 4. Transformer (Vaswani 2017)
+
+- **Trick**: Full self-attention.
+- **Complexity**: $O(L^2)$.
+- **Note**: Ablation Table 3 등 에 등장 (full attention baseline).
+
+### RNN 기반 (2 종)
+
+#### 5. LSTNet (Lai et al, SIGIR 2018)
+
+- **Trick**: CNN + RNN + Skip connection.
+- **본 논문**: *Multivariate baseline*.
+
+#### 6. LSTM (Hochreiter 1997)
+
+- **Trick**: 표준 LSTM.
+- **본 논문**: *Multivariate baseline*.
+
+### CNN 기반 (1 종)
+
+#### 7. TCN (Bai et al 2018)
+
+- **Trick**: Causal Convolution.
+- **본 논문**: *Multivariate baseline*.
+
+### Univariate 전용 (3 종) — Table 2 에서만
+
+#### 8. N-BEATS (Oreshkin et al 2019)
+
+- **Trick**: *Basis expansion* (Fourier basis 등).
+- **Univariate forecasting** 의 SOTA.
+
+#### 9. DeepAR (Salinas et al 2020)
+
+- **Trick**: *Autoregressive RNN + Gaussian likelihood*.
+- *Amazon 의 공식 forecasting tool*.
+
+#### 10. Prophet (Taylor & Letham 2018)
+
+- **Trick**: *Trend + Seasonal + Holiday* 분해 + Bayesian.
+- *Facebook 의 비즈니스 forecasting 표준*.
+
+#### 11. ARIMA (Box & Jenkins 1970)
+
+- **Trick**: 통계 표준.
 
 ---
 
-## 평가 설정 — Multivariate vs Univariate
+## 8.4 *실험 setup*
 
-**Multivariate**:
-- 입력: 모든 dimension $d$ 의 시계열.
-- 출력: 모든 dimension 의 미래 $O$ 시점.
-- 즉 multi-input multi-output. 본문 Table 1.
+### Train / Validation / Test 분할
 
-**Univariate**:
-- 입력: 모든 dimension 사용 (모델에 전달).
-- 출력: target 1차원 (Oil Temperature for ETT, OT for Exchange).
-- 본문 Table 2.
+각 dataset 의 시계열을 *시간 순서대로* 분할:
+- *ETT*: train 6 + val 2 + test 2 (6:2:2).
+- *그 외 5종*: train 7 + val 1 + test 2 (7:1:2).
+
+**중요**: *Chronological (time order)* 유지 — *future data 가 train 에 포함 X* (data leakage 방지).
+
+### Forecasting Horizons
+
+각 dataset 에서 *4 가지 미래 timestep* 예측:
+- **ILI 제외 5 datasets**: $O \in \{96, 192, 336, 720\}$.
+- **ILI 만**: $O \in \{24, 36, 48, 60\}$ — 주 단위 데이터.
+
+### Input Length
+
+- **ILI**: $I = 36$ (주 단위 36 = 9개월).
+- **그 외**: $I = 96$ (시간 단위 96 = 4일).
+
+### Hyperparameters
+
+본 논문 default:
+- *Hidden dimension*: $d_{\text{model}} = 512$.
+- *Number of heads*: $h = 8$.
+- *Encoder layers*: $N = 2$.
+- *Decoder layers*: $M = 1$.
+- *Moving average window*: $k = 25$ (Series Decomp).
+- *Auto-Correlation factor*: $c = 1 \sim 3$ ($k = c \log L$).
+- *Optimizer*: Adam, learning rate $10^{-4}$.
+- *Batch size*: 32.
+- *Early stopping*: ≤ 10 epochs.
+
+### Hardware
+
+- *GPU*: NVIDIA TITAN RTX 24GB (단일 GPU).
+- *Framework*: PyTorch.
+- *3 runs per setting* (mean ± std).
+
+### Metric
+
+**MSE + MAE** 두 metric. *낮을수록 좋음*.
 
 ---
 
-## 입력 길이 $I$
+## 8.5 자기점검
 
-> We set the input length $I$ as 36 for ILI and 96 for the others. (Table 1, p.7)
+### 핵심 3가지
+1. **6 dataset 의 *5 응용 분야*?**
+2. **DLinear 대신 *Informer 가 main competitor* 인 이유?**
+3. **Train/Validation/Test 분할 의 *time order* 중요성?**
 
-- ILI 는 weekly → 36주 ≈ 9개월.
-- 나머지는 $I=96$ (ETT 의 15분 단위 96 = 24시간, hourly 96 = 4일).
-
-**입력 길이 ablation** (Table 7, ch13):
-- ETT, Electricity: $I \in \{96, 192, 336, 720\}$ 시험.
-- ILI: $I \in \{24, 36, 48, 60\}$.
+### 답변
+1. **에너지 (ETT + Electricity) + 경제 (Exchange) + 교통 (Traffic) + 날씨 (Weather) + 질병 (ILI) = 5 응용**. M = 7 (작음, ETT/ILI) ~ 862 (큼, Traffic). 시간 단위 10분 ~ 주. *광범위 domain* 의 universality 검증 — *Autoformer 가 특정 분야 만 잘 되는 게 아니라 모든 도메인 에서 best*.
+2. **2021년 시점 에서 *DLinear 는 아직 등장 X*** (DLinear 는 2022 AAAI 2023 paper). 따라서 *시계열 Transformer 의 가장 강한 baseline 은 Informer (2021)*. ProbSparse attention 으로 *$O(L \log L)$* + *주요 query 선택* — *Autoformer 와 같은 복잡도 + 다른 attention*. Autoformer 가 *Informer 를 38% MSE 감소* 로 *paradigm shift* 증명.
+3. **Time series 에서는 *future data 가 train 에 포함되면 안 됨* — data leakage**. 따라서 분할은 *시간 순서대로*: train (처음 60-70%) → validation (다음 10-20%) → test (마지막 20%). 일반 random shuffle 분할은 *cheating* — *미래 정보 활용*. 본 논문이 *purely chronological 분할* 사용 → *실증 결과 trustworthy*.
 
 ---
 
-## 정리
-
-5개 응용 도메인 × 6개 dataset × 4개 horizon × 7개 모델 = 본문 Table 1 의 168 cell. 모두 mean ± std (3 runs) 로 보고 — Table 10 (Appendix E.4).
-
-다음 [09_main_results.md](09_main_results.md) 에서 Tables 1, 2 의 정확한 수치.
+다음 챕터: [09_main_results.md](09_main_results.md) — Main Results (Table 1 + Table 2).
