@@ -94,7 +94,13 @@
 | 파일 | 페이지 (JF) | 내용 |
 |------|------------|------|
 | `figures/page18_Fig1_R2_norm.png` | p.476 | Fig 1 — 이론 OOS R² + ‖β‖ vs c (correctly specified, Ψ=I, b_*=0.2) |
+| `figures/page20_Fig2_E_Vol.png` | p.478 | Fig 2 — 이론 Expected return + Volatility vs c (correctly specified) |
 | `figures/page21_Fig3_sharpe.png` | p.479 | Fig 3 — 이론 OOS Sharpe ratio vs c |
+| `figures/page27_Fig4_R2_misspec.png` | p.485 | Fig 4 — 이론 R² + ‖β‖ vs cq (misspecified, c=10) |
+| `figures/page27_Fig5_E_Vol_misspec.png` | p.485 | Fig 5 — 이론 Expected return + Volatility vs cq (misspecified, monotone increasing in cq) |
 | `figures/page28_Fig6_misspec_monotone.png` | p.486 | Fig 6 — 이론 OOS Sharpe (misspecified, c=10) — **단조 증가, Theorem 1 의 시각화** |
+| `figures/page32_Fig7_T12_panels.png` | p.490 | Fig 7 — 실증 R² + ‖β̂‖ + Expected Return + Volatility (T=12, P up to 12,000) |
 | `figures/page33_Fig8_empirical_sharpe.png` | p.491 | Fig 8 — 실증 Sharpe / α / IR / t-stat (T=12) |
+| `figures/page34_Fig9_T60_120.png` | p.492 | Fig 9 — 실증 IR + t-stat (T=60, 120) |
 | `figures/page35_Fig10_positions_recession.png` | p.493 | Fig 10 — Market timing positions + NBER recessions (14/15 자동 divest) |
+| `figures/page38_Fig11_var_importance.png` | p.496 | Fig 11 — 15 predictor 의 Variable Importance (R² bars + Sharpe line) |

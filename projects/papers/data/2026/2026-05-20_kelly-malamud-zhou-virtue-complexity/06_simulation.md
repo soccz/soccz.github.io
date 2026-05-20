@@ -58,7 +58,9 @@
 
 ## 6.4 Figure 2 — Correctly specified Expected Return + Volatility
 
-*Figure 2 (p.478) — Left: Expected return $\mathcal{E}(z; c)$. Right: Volatility $\sqrt{\mathcal{V}(z; c)}$. Calibration 동일.*
+![Figure 2 — Expected out-of-sample risk and return of market timing](figures/page20_Fig2_E_Vol.png)
+
+*원문 p.478 Figure 2 — Left: Expected return $\mathcal{E}(z; c)$. Right: Volatility $\sqrt{\mathcal{V}(z; c)}$. Calibration: $\Psi = I, b_* = 0.2$. Ridgeless (black) 의 $c < 1$ expected return constant ($\mathcal{E} = b_*\psi_{*,1} = 0.2$), $c > 1$ 감소. Volatility 는 $c = 1$ 부근 spike (~6 까지).*
 
 **Left panel (Expected return)**:
 - Ridgeless: $c < 1$ 에서 $\mathcal{E} = 0.2$ (constant, infeasible 동일). $c > 1$ 에서 감소.
@@ -99,7 +101,9 @@
 
 ### Figure 4 (p.485) — R²
 
-*원문 Figure 4 — Misspecified $R^2$ vs $cq$. Same calibration but $c = 10$. Patterns 와 magnitudes 가 Fig 1 과 유사하지만 simple model 의 $R^2$ 가 더 낮음 (approximation gap).*
+![Figure 4 — Expected out-of-sample prediction accuracy from misspecified models](figures/page27_Fig4_R2_misspec.png)
+
+*원문 p.485 Figure 4 — Misspecified $R^2$ + $\|\hat\beta\|$ vs $cq$. Same calibration but true DGP $c = 10$. Patterns 와 magnitudes 가 Fig 1 과 유사하지만 simple model 의 $R^2$ 가 더 낮음 (approximation gap). $cq = 1$ 발산 + $cq > 1$ ridgeless 회복.*
 
 **핵심 차이** (vs Figure 1):
 - *Simple $cq$* 영역: misspecified 의 $R^2$ 가 correctly specified 보다 더 낮음 (approximation gap).
@@ -108,7 +112,9 @@
 
 ### Figure 5 (p.485) — Expected Return + Volatility
 
-*원문 Figure 5 — Left: $\mathcal{E}(z; cq; q)$ vs $cq$. Right: Volatility vs $cq$. **Left panel 이 가장 큰 차이** — Expected return 이 monotone increasing in $cq$.*
+![Figure 5 — Expected out-of-sample risk and return from misspecified models](figures/page27_Fig5_E_Vol_misspec.png)
+
+*원문 p.485 Figure 5 — Left: $\mathcal{E}(z; cq; q)$ vs $cq$. Right: Volatility vs $cq$. **Left panel 이 가장 큰 차이 (vs Fig 2)** — Expected return 이 $cq$ 의 monotone increasing (Equation 19). Ridgeless 의 $cq = 1$ 에서 peak $\mathcal{E} = b_*\psi_{*,1} c^{-1} = 0.02$, 그 이후 flat.*
 
 **Left panel (가장 중요)**:
 - Simple $cq$ 영역: $\mathcal{E}$ 가 매우 낮음 (approximation 안 됨).

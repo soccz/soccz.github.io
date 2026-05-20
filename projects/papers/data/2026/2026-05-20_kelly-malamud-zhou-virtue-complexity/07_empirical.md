@@ -134,6 +134,10 @@ $$\boxed{S_{i,t} = \begin{pmatrix} \sin(\gamma \omega_i' G_t) \\ \cos(\gamma \om
 
 **핵심 발견**: 실증 패턴이 misspecified 이론 (Figure 4) 과 **정확히 일치**.
 
+![Figure 7 — Out-of-sample market timing performance T=12 (R², ‖β̂‖, Expected Return, Volatility)](figures/page32_Fig7_T12_panels.png)
+
+*원문 p.490 Figure 7 — T=12, RFF count $P$ 2-12000, $\gamma = 2$. 4 panels: A (R²), B (‖β̂‖), C (Expected Return), D (Volatility). $c$ 의 함수로 plot, $c = 1$ 부근 break (양쪽 50, 990, 1000). 실증 패턴이 Figure 4 (misspecified 이론) 와 정확 일치.*
+
 **Figure 7 panels** (T=12):
 
 | Panel | Content | 패턴 |
@@ -191,7 +195,9 @@ $$\boxed{S_{i,t} = \begin{pmatrix} \sin(\gamma \omega_i' G_t) \\ \cos(\gamma \om
 
 ### Figure 9 (T=60, 120) — Longer training windows
 
-*Figure 9 (p.492) — IR + t-stat panels for T=60 (top) and T=120 (bottom). 같은 monotone increasing 패턴. IR ≈ 0.25, t-stat > 2.0 고복잡도. T=12 보다 작은 magnitude 지만 동일 정성적 패턴.*
+![Figure 9 — Out-of-sample market timing performance (T=60, 120)](figures/page34_Fig9_T60_120.png)
+
+*원문 p.492 Figure 9 — IR + t-stat panels for T=60 (top: A IR, B t-stat) and T=120 (bottom: C IR, D t-stat). $cT$ range: T=60 은 [0, 200], T=120 은 [0, 100]. 같은 monotone increasing 패턴. IR ≈ 0.25, t-stat > 2.0 고복잡도. T=12 보다 작은 magnitude (각주 41 의 "leverage 가 작아짐") 지만 동일 정성적 패턴.*
 
 ---
 
@@ -301,6 +307,10 @@ $$VI_i = \text{Performance}_{\text{full}} - \text{Performance}_{\text{without } 
 큰 양의 VI = 그 변수 중요. 작거나 음수 = 그 변수 안 도움.
 
 ### Figure 11 — VI bars (T=12, P=12000, z=10³, 1000 RFF draws averaged)
+
+![Figure 11 — Variable importance for 15 Goyal-Welch predictors](figures/page38_Fig11_var_importance.png)
+
+*원문 p.496 Figure 11 — 15 predictor 의 VI (변수 1개 제거 시 모델 성능 변화). Blue bars = VI(R²), red line = VI(Sharpe). T=12, P=12,000, z=10³, 1000 RFF draws 평균. Top 3: lag mkt / ltr / dfr (12-month window 에서 variation 가장 큰 변수들).*
 
 원문 (p.496) Figure 11:
 
