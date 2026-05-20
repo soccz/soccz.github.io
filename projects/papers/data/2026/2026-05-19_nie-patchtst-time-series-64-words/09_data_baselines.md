@@ -14,6 +14,21 @@
 
 본 논문이 *광범위한 dataset 비교* 위해 8 개 사용:
 
+### Table 2 — Dataset 통계 (paper p.6)
+
+| Dataset | Features (M) | Timesteps |
+|---------|-------------|-----------|
+| Weather | 21 | 52,696 |
+| Traffic | 862 | 17,544 |
+| Electricity | 321 | 26,304 |
+| ILI | 7 | 966 |
+| ETTh1 | 7 | 17,420 |
+| ETTh2 | 7 | 17,420 |
+| ETTm1 | 7 | 69,680 |
+| ETTm2 | 7 | 69,680 |
+
+→ *작은 dataset* (ILI 966 timestep) ~ *큰 dataset* (ETTm 69,680). **Weather, Traffic, Electricity 3 개** 가 *large datasets* — 본 논문이 *결과 안정 + overfitting 회피* 위해 강조.
+
 ### Weather (날씨)
 
 - **변수 수 (M)**: 21 (기온, 습도, 풍속 등).
@@ -129,10 +144,18 @@
 ### 4 Forecasting Horizons
 
 각 dataset 에서 *4 가지 미래 timestep* 예측:
-- T = 96 (단기).
-- T = 192.
-- T = 336.
-- T = 720 (장기).
+- **ILI 제외 7 datasets**: $T \in \{96, 192, 336, 720\}$ — 단기 (96) ~ 장기 (720).
+- **ILI 만**: $T \in \{24, 36, 48, 60\}$ — *주 단위* 데이터라 *짧은 horizon*.
+
+**일상 비유**: 시간 단위 데이터 (Traffic, Electricity 등) 는 *수십 일 앞* 예측. 주 단위 데이터 (ILI 인플루엔자) 는 *수십 주 앞* 예측 — *시간 척도 자체가 다름*.
+
+### Baseline result collection — 공정 비교
+
+본 논문이 *공정한 baseline 비교* 위한 protocol:
+- *원본 paper 의 result* 사용 (Zeng et al 2022 의 reproduction).
+- *Default L = 96* (Transformer baseline) 또는 *L = 336* (DLinear).
+- 추가: FEDformer/Autoformer/Informer 를 *6 가지 L* ($L \in \{24, 48, 96, 192, 336, 720\}$) 에서 *다시 실행* → *각 dataset 마다 best L 선택*.
+- 이유: baseline 들이 *L 의 영향* 으로 *과소평가* 되지 않도록 — *strong baseline* 만들기.
 
 ### Hyperparameters
 

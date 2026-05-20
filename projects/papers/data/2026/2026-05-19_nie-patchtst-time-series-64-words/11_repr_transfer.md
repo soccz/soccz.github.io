@@ -73,23 +73,50 @@ A dataset 으로 *pre-train* → B dataset 의 *forecasting 에 transfer*.
 
 ---
 
-## 11.4 *Representation 평가* — Table 6
+## 11.4 *Representation 평가* — Table 6 (Contrastive Baseline 과의 비교)
 
-본 논문이 추가로 *학습된 representation 의 quality* 평가:
+본 논문이 *PatchTST 의 self-supervised representation* 을 *전통 시계열 representation learning 방법들* 과 비교:
 
-### 방법 — Linear Probe
+### Baseline 들 — 4 종 (모두 contrastive learning 방법)
 
-Pre-trained encoder 의 output (representation) 을 *frozen* + *간단한 linear classifier* 학습 → *downstream task* 성능.
+| Method | Paper | 정신 |
+|--------|-------|------|
+| **BTSF** | Yang & Hong, ICML 2022 | Bilinear temporal-spectral fusion |
+| **TS2Vec** | Yue et al, AAAI 2022 | Universal time series representation, contrastive |
+| **TNC** | Tonekaboni et al, ICLR 2021 | Temporal Neighborhood Coding |
+| **TS-TCC** | Eldele et al, IJCAI 2021 | Temporal + Contextual Contrasting |
 
-### 결과
+→ 모두 *contrastive learning 학파* (유사 sample 가깝게, 다른 sample 멀게).
 
-| Encoder | Linear probe accuracy |
-|---------|----------------------|
-| Random init | Low |
-| Supervised | Medium |
-| **Self-supervised PatchTST** | **High** |
+### Setup — ETTh1 dataset
 
-→ *Self-supervised representation 이 supervised 보다 더 informative*.
+- *Linear probing* 만 사용 (encoder frozen + linear head 학습).
+- 두 PatchTST setup:
+  - **Transferred**: Traffic dataset 으로 pre-train → ETTh1 transfer.
+  - **Self-supervised**: ETTh1 자체로 pre-train + linear probing.
+- 4 horizons: $T \in \{24, 48, 168, 720\}$.
+
+### 결과 — Table 6 의 IMP 컬럼
+
+본 논문 *Table 6 의 IMP (improvement) 컬럼*: PatchTST 의 *best result* 가 *best baseline 보다 얼마나 좋은지* 정량.
+
+| Horizon T | IMP (%) |
+|-----------|---------|
+| 24 | **42.3%** |
+| 48 | **44.7%** |
+| 168 | **34.5%** |
+| 720 | **48.8%** |
+
+→ **PatchTST self-supervised 가 contrastive baseline 들 보다 *34.5% ~ 48.8% MSE 향상***. *Massive*.
+
+### 의미 — *Reconstruction 학파 > Contrastive 학파*
+
+본 논문 결과의 *학계 의미*:
+- *시계열 representation learning* 의 *주류* 는 contrastive (TS2Vec, TNC, TS-TCC, BTSF).
+- 본 논문이 *reconstruction (masked patch)* 으로 *주류 능가*.
+- 즉 *NLP 의 BERT (reconstruction) > GPT-3 contrastive* 와 같은 패턴 — *시계열 도 reconstruction 학파 우월*.
+
+**일상 비유**: 학생이 *외국어 공부* 시 *문장 만들기 (reconstruction)* 가 *비교 학습 (contrastive: 이건 비슷, 저건 다름)* 보다 *깊은 이해*.
 
 ---
 

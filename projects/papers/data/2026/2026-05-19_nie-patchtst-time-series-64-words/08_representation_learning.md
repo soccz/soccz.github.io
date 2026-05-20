@@ -97,23 +97,35 @@ Mask 된 patch 들이 *Transformer encoder* 통과. Self-attention 으로 *주�
 
 ## 8.5 Pre-training + Fine-tuning Pipeline
 
-### Phase 1 — Pre-training
+### Setup 정확히 (paper Section 4.2)
 
-1. 큰 시계열 dataset 으로 *Masked Patch Reconstruction* 학습.
-2. *수십 epoch* 동안 학습.
+- **Input length L = 512**, **patch length P = 12**, **stride S = 12** (non-overlapping) → **N = 42 patches**.
+- **Masking ratio = 40%** — 17 patches mask (zero values).
+
+### Phase 1 — Pre-training (100 epochs)
+
+1. 큰 시계열 dataset (예: Electricity 321 channels) 으로 *Masked Patch Reconstruction* 학습.
+2. **100 epoch** 동안 학습.
 3. 결과: *시계열의 일반 representation* 학습한 Transformer encoder.
 
-### Phase 2 — Fine-tuning
+### Phase 2a — Linear Probing (20 epochs, head only)
 
-1. Pre-trained encoder 를 *forecasting task* 에 사용.
-2. *Prediction head 만 새로 학습* 또는 *전체 fine-tune*.
-3. 결과: Specific task 의 *높은 정확도*.
+1. Pre-trained encoder *frozen* (parameter 고정).
+2. *Prediction head 만 20 epoch* 학습.
+3. 결과: *간단/빠름 + encoder representation quality* 직접 검증.
+
+### Phase 2b — End-to-end Fine-tuning (10 + 20 epochs, 2-step)
+
+1. **Step 1 — Linear probing 10 epoch**: head 만 학습 + encoder frozen.
+2. **Step 2 — Full fine-tune 20 epoch**: 전체 unfreeze + 모두 학습.
+3. **왜 2-step?**: *Kumar et al. 2022* 가 보임 — *fine-tuning directly* 보다 *linear probing 먼저* 가 *out-of-distribution robust*. 본 논문이 이 *2-step strategy* 채택.
 
 ### Phase 3 — Transfer
 
 Pre-trained encoder 를 *다른 dataset* 에 사용:
 - A dataset 에서 pre-train → B dataset 에 fine-tune.
 - 결과: B dataset 의 *processing 빠름 + 정확도 동등 또는 우월*.
+- **핵심**: Channel-Indep 덕분에 *A 의 channel 수 (321) ≠ B 의 channel 수 (7)* 여도 transfer 가능. *encoder 의 weight 가 channel 수 무관*.
 
 ---
 
