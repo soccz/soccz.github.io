@@ -390,6 +390,128 @@ $$VI_i = \text{Performance}_{\text{full}} - \text{Performance}_{\text{without } 
 
 → **Time-series momentum 으로 환원 안 됨**. ML 이 별도의 nonlinear signal.
 
+---
+
+## 7.11 Internet Appendix Results — Section V 의 보조 결과
+
+### IA Figure IA1 / IA2 — Longer training windows (T=60, 120)
+
+Section V.C 의 Figure 7 (T=12) 의 longer training windows 버전.
+
+**IA1 (T=60)**:
+- $c$ range [0, 200] (P up to 12,000).
+- Patterns 정성적으로 동일: R² 가 $cq=1$ 발산, 회복; $\|\hat\beta\|$ spike; Expected return monotone ↗.
+- Magnitude 약간 감소 — T 클수록 forecast variance 작아짐.
+
+**IA2 (T=120)**:
+- $c$ range [0, 100].
+- 동일 정성적 패턴, magnitude 더 감소.
+
+→ Section V.C 의 결론 "all training windows show same patterns" 의 정량 근거.
+
+### IA Figure IA3 — R² zoomed [-10%, 1%]
+
+본문 Figure 7 panel A 의 R² 가 $c \approx 1$ 부근에서 -100% 까지 발산해서 다른 영역의 detail 안 보임. IA3 가 [-10%, 1%] range 로 zoom-in.
+
+**핵심 발견** (Section V.C 의 본문 인용):
+- High $c$ + high $z$ → **positive R²**.
+- $z = 10^3$ 이면 거의 모든 $c$ 에서 R² > 0.
+- Regularization 의 두 form: explicit ($z$) + implicit (large $c$ smallest norm).
+
+### IA Figure IA4 — Predictor 의 12-month window variation
+
+Figure 11 의 VI 결과를 보조하는 측정. 15 predictor 의 12-month rolling window 내 표준편차.
+
+**Top 3 (most variable)**:
+- `lag mkt`: 가장 큰 month-over-month 변동.
+- `ltr` (long-term bond return): 큰 변동.
+- `dfr` (default return): 큰 변동.
+
+이게 Figure 11 의 VI top 3 와 정확 일치 — *high-frequency fluctuation* 변수가 모델 성능에 기여.
+
+### IA Figure IA5 — Nonlinear prediction pattern (per predictor)
+
+각 predictor 의 *partial dependence plot* 같은 시각화. 
+
+**Method**:
+1. Training sample 의 평균값으로 모든 변수 fix.
+2. Predictor $i$ 만 [-1, +1] range (full-sample min-max) 변동.
+3. ML model 의 prediction 변화 plot.
+
+**Key pattern**: "Risk on / Risk off" — predictor 가 *낮을 때* (risk indicator low) → positive return prediction; 어느 임계 이상이면 → drop to zero (cash).
+
+특히:
+- `svar` (stock variance) low → long market.
+- `dfy` (default spread) low → long market.
+- 일정 임계 이상 → 0.
+
+→ 모든 predictor 가 비슷한 *threshold-like* pattern. Section V.E 의 본문 인용.
+
+### IA Figure IA7 — $\gamma$ robustness
+
+본 분석 $\gamma = 2$. IA7 가 $\gamma \in \{0.5, 1, 2\}$ 비교.
+
+**결과**: 정성적 패턴 모두 동일. SR magnitude 약간 차이만 (γ=2 가 가장 큼).
+
+각주 37 의 robustness 주장의 정량 근거.
+
+### IA Figures IA9 / IA10 / IA11 — Subsample (1930-1974 vs 1975-2020)
+
+본문 V.F 에서 언급. 
+
+**Subsample 분할**:
+- Half 1: 1930-1974 (~45 years)
+- Half 2: 1975-2020 (~45 years)
+
+**핵심 발견**:
+- 정성적 패턴 양쪽 동일 (모든 $c, z$ 에서).
+- *Average return*: 후반부가 절반 수준 (시장 effiency 가설 일치).
+- *Volatility*: 비슷.
+- **IR**: 후반부가 절반 (return 작아져서).
+
+본문 Figure 10 의 "1968년 이후 timing 의 fewer buying opportunities" 와 일치.
+
+### IA Figure IA12 — Intercept 포함 시 robustness
+
+본 분석은 intercept 없는 regression (각주 35). IA12 가 intercept 포함시 결과 거의 동일 — intercept 가 heavily shrunken 되어 무영향.
+
+### IA Table IA1 — ML vs 15 univariate timing 의 IR
+
+본 ML model 의 IR 을 각 univariate (single-predictor) timing 전략 대비 계산.
+
+**핵심 결과**:
+- ML 의 IR 이 *모든 single-predictor strategy* 대비 large + significant.
+- ML 의 IR vs "all 15 combined tangency" = **0.32 (t=2.9)** (본문 Section V.E 인용).
+
+→ ML 의 *nonlinear interaction* 이 단순 linear combination 으로 환원 불가.
+
+### IA Table IA2 — Inflation 제외 시 robustness
+
+각주 33 의 inflation timing convention 의 문제. IA2 가 inflation 변수 제거시 결과 거의 동일 — convention 의 robustness.
+
+### IA Theorem 1A — Generalized Marchenko-Pastur
+
+각주 24 + Section 5a.5 에 statement. Bai-Zhou (2008) 의 generalization:
+
+**Statement**: For non-iid $S_t$ with finite 4-moments + bounded $\Psi$, the empirical Stieltjes $m(-z; c)$ satisfies fixed-point equation IA4. Furthermore, $m(-z; c) > m_\Psi(-z)$ for $c > 0$.
+
+증명 (sketch): Section 9.4 의 Step 3-4 에 풀이.
+
+### IA Theorem 2 — Sample-population spectra divergence
+
+각주 24 의 핵심 statement. **For $c > 0$, $\hat\Psi$ 와 $\Psi$ 의 spectra 가 $T \to \infty$ 에서도 systematically 다름**. Marchenko-Pastur 의 closed form 으로 정량화.
+
+### IA Proposition IA1 — Linear feature γ → 0 limit
+
+각주 47. RFF 의 $\gamma \to 0$ limit 이 linear regression of $G_t$ on random projections 와 같음.
+
+**Statement (sketch)**:
+$$\sin(\gamma \omega' G) \approx \gamma \omega' G + O(\gamma^2), \quad \cos(\gamma \omega' G) \approx 1 - \gamma \omega' G + O(\gamma^2).$$
+
+$\gamma$ 작을수록 linear, 클수록 nonlinear. 본 논문 $\gamma = 2$.
+
+→ Linear kitchen sink (Table I) 가 RFF model 의 limit case 임을 정량화.
+
 각주 49: "*We are grateful to the editor for pointing this out.*"
 
 ---

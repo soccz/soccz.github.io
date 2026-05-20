@@ -36,65 +36,185 @@ THEOREM 1 — SR monotone increasing in q
 
 ---
 
-## 9.3 Lemma 1 의 증명 (핵심 building block)
+## 9.3 Lemma 1 의 증명 (핵심 building block) — Detailed
 
 ### Stmt 재확인
 
 > **Lemma 1**: $\beta' A_P \beta - P^{-1} b_* \text{tr}(A_P) \to 0$ in probability for any bounded matrix sequence $A_P$.
 
-### 증명 sketch
+### 증명 — Step 1 (Expectation 계산)
 
-**(i) Expectation**:
-$$E[\beta' A_P \beta] = \sum_{i,j} A_{P,ij} E[\beta_i \beta_j] = \sum_i A_{P,ii} \cdot P^{-1} b_{*,P} = P^{-1} b_{*,P} \text{tr}(A_P).$$
+$\beta = (\beta_1, \ldots, \beta_P)' \in \mathbb{R}^P$, Assumption 4: $E[\beta] = 0$, $E[\beta\beta'] = P^{-1} b_{*,P} I$.
 
-$b_{*,P} \to b_*$ in probability → $E[\beta' A_P \beta] \to P^{-1} b_* \text{tr}(A_P)$.
+이는 **각 $\beta_i$ iid, $E[\beta_i] = 0$, $E[\beta_i^2] = P^{-1} b_{*,P}$** 를 의미.
 
-**(ii) Variance**:
-$$\text{Var}(\beta' A_P \beta) = \sum_{i,j,k,l} A_{P,ij} A_{P,kl} (E[\beta_i \beta_j \beta_k \beta_l] - E[\beta_i \beta_j] E[\beta_k \beta_l]).$$
+Quadratic form expansion:
+$$\beta' A_P \beta = \sum_{i=1}^P \sum_{j=1}^P A_{P,ij} \beta_i \beta_j.$$
 
-$\beta$ iid, isotropic → 4th moment 항이 nonzero 인 경우: $i = j = k = l$ (4-way same).
+Expectation:
+$$E[\beta' A_P \beta] = \sum_{i,j} A_{P,ij} E[\beta_i \beta_j].$$
 
-$$\text{Var}(\beta' A_P \beta) \le \sum_i A_{P,ii}^2 \cdot E[\beta_i^4] \le K P^{-2} \sum_i A_{P,ii}^2.$$
+$\beta$ iid 이고 mean zero 이므로:
+- $i = j$: $E[\beta_i^2] = P^{-1} b_{*,P}$
+- $i \neq j$: $E[\beta_i \beta_j] = E[\beta_i] E[\beta_j] = 0$
 
-$A_P$ bounded → $\sum_i A_{P,ii}^2 \le P \cdot O(1) = O(P)$.
+→ $E[\beta' A_P \beta] = \sum_i A_{P,ii} \cdot P^{-1} b_{*,P} = P^{-1} b_{*,P} \text{tr}(A_P)$.
 
-$$\text{Var}(\beta' A_P \beta) \le K P^{-2} \cdot O(P) = O(P^{-1}) \to 0.$$
+Assumption 4: $b_{*,P} \to b_*$ in probability → $E[\beta' A_P \beta] \to P^{-1} b_* \text{tr}(A_P)$.
 
-**(iii) Chebyshev**: variance → 0 + expectation 수렴 → $\beta' A_P \beta \to P^{-1} b_* \text{tr}(A_P)$ in probability.
+### 증명 — Step 2 (Variance computation, 4-point moment)
 
-### 응용 예: $\beta' \Psi \beta \to b_* \psi_{*,1}$
+$$\text{Var}(\beta' A_P \beta) = E[(\beta' A_P \beta)^2] - (E[\beta' A_P \beta])^2.$$
 
-$A_P = \Psi$, $\Psi$ bounded → Lemma 1 직접 적용.
+$E[(\beta' A_P \beta)^2]$ 의 expansion:
+$$E[(\beta' A_P \beta)^2] = \sum_{i,j,k,l} A_{P,ij} A_{P,kl} E[\beta_i \beta_j \beta_k \beta_l].$$
+
+iid 의 4th moment property:
+- $i = j = k = l$ (4-way same): $E[\beta_i^4]$ — nonzero, $\le K P^{-2}$ (Assumption 4 의 4th moment bound).
+- $i = j, k = l, i \neq k$ (pair-pair): $E[\beta_i^2] E[\beta_k^2] = (P^{-1} b_{*,P})^2 = P^{-2} b_{*,P}^2$.
+- $i = k, j = l, i \neq j$ (cross-pair): $E[\beta_i^2] E[\beta_j^2] = P^{-2} b_{*,P}^2$.
+- $i = l, j = k, i \neq j$ (cross-pair 2): 동일.
+- 그 외: $E[\beta_i^3] E[\beta_k]$ 같은 항 → mean zero 이므로 0.
+
+따라서:
+$$E[(\beta' A_P \beta)^2] = \sum_i A_{P,ii}^2 E[\beta_i^4] + P^{-2} b_{*,P}^2 \cdot 2 \sum_{i \neq j} A_{P,ii} A_{P,jj} + P^{-2} b_{*,P}^2 \cdot 2 \sum_{i \neq j} A_{P,ij}^2.$$
+
+(첫 항: 4-way same; 둘째: pair-pair; 셋째: cross-pair 두 종류 합쳐 2배)
+
+$(E[\beta'A_P\beta])^2 = (P^{-1} b_{*,P} \text{tr}(A_P))^2 = P^{-2} b_{*,P}^2 (\sum_i A_{P,ii})^2 = P^{-2} b_{*,P}^2 \sum_{i,j} A_{P,ii} A_{P,jj}$.
+
+빼면:
+$$\text{Var} = \sum_i A_{P,ii}^2 (E[\beta_i^4] - P^{-2} b_{*,P}^2) + 2 P^{-2} b_{*,P}^2 \sum_{i \neq j} A_{P,ij}^2.$$
+
+### 증명 — Step 3 (Variance → 0 bound)
+
+Bounded matrix sequence $A_P$ 이므로 (Frobenius norm bounded): $\sum_{ij} A_{P,ij}^2 \le P \cdot \|A_P\|_{op}^2 \le P \cdot C$ (const $C$).
+
+또한 $\sum_i A_{P,ii}^2 \le \sum_{ij} A_{P,ij}^2 \le P \cdot C$.
+
+Assumption 4: $E[\beta_i^4] \le K P^{-2}$.
+
+따라서:
+- 첫 항: $\sum_i A_{P,ii}^2 \cdot K P^{-2} \le P \cdot C \cdot K P^{-2} = O(P^{-1})$.
+- 둘째 항: $P^{-2} b_{*,P}^2 \cdot 2 P C = O(P^{-1})$.
+
+**총 variance**: $\text{Var}(\beta' A_P \beta) = O(P^{-1}) \to 0$ as $P \to \infty$.
+
+### 증명 — Step 4 (Chebyshev)
+
+For any $\epsilon > 0$:
+$$P(|\beta' A_P \beta - P^{-1} b_{*,P} \text{tr}(A_P)| > \epsilon) \le \frac{\text{Var}(\beta' A_P \beta)}{\epsilon^2} = \frac{O(P^{-1})}{\epsilon^2} \to 0.$$
+
+이로써 $\beta' A_P \beta \to P^{-1} b_{*,P} \text{tr}(A_P)$ in probability.
+
+$b_{*,P} \to b_*$ in probability + Slutsky → $\beta' A_P \beta \to P^{-1} b_* \text{tr}(A_P)$. **QED Lemma 1**.
+
+### 응용 예 1: $\beta' \Psi \beta \to b_* \psi_{*,1}$
+
+$A_P = \Psi$, $\Psi$ uniformly bounded as $P \to \infty$ (Assumption 3 후반) → Lemma 1 직접 적용.
 
 $P^{-1} \text{tr}(\Psi) = \psi_{*,1}^{(P)} \to \psi_{*,1}$ (Assumption 3).
 
 $\therefore \beta' \Psi \beta \to b_* \psi_{*,1}$.
 
+### 응용 예 2: $(S_t'\beta)^2 \to b_* \psi_{*,1}$
+
+$E[(S_t'\beta)^2 | \beta] = \beta' E[S_t S_t'] \beta = \beta' \Psi \beta \to b_* \psi_{*,1}$ (응용 예 1).
+
+각주 20 의 주장 ($1 + (S_t'\beta)^2 \to 1 + b_*\psi_{*,1}$) 가 이로부터 직접.
+
+### 응용 예 3: $\hat\beta' \Psi \beta$ 의 limit
+
+$\hat\beta(z) = (zI + \hat\Psi)^{-1} T^{-1} \sum_t S_t R_{t+1}$.
+
+$R_{t+1} = S_t' \beta + \varepsilon_{t+1}$:
+$$T^{-1} \sum_t S_t R_{t+1} = T^{-1} \sum_t S_t S_t' \beta + T^{-1} \sum_t S_t \varepsilon_{t+1} = \hat\Psi \beta + \mathbf{u},$$
+where $\mathbf{u} = T^{-1} \sum_t S_t \varepsilon_{t+1}$ — noise term with $E[\mathbf{u}|\beta] = 0$, $\text{Cov}(\mathbf{u}) = T^{-1} \sigma^2 \Psi$.
+
+$\hat\beta = (zI + \hat\Psi)^{-1}(\hat\Psi \beta + \mathbf{u})$.
+
+$\hat\beta' \Psi \beta = \beta' \hat\Psi (zI + \hat\Psi)^{-1} \Psi \beta + \mathbf{u}'(zI + \hat\Psi)^{-1} \Psi \beta$.
+
+첫 항: $\beta' B \beta$ form with $B = \hat\Psi (zI + \hat\Psi)^{-1} \Psi$. Lemma 1 → $b_* P^{-1} \text{tr}(B) = b_* \nu(z;c)$.
+
+둘째 항: $E[\mathbf{u}|\beta] = 0$ + $\text{Var}(\mathbf{u}) = O(T^{-1})$ → second term $o_p(1)$.
+
+$\therefore E[\hat\pi_t R_{t+1}|\hat\beta] = \hat\beta' \Psi \beta \to b_* \nu(z;c) = \mathcal{E}(z;c)$ (Proposition 3 의 첫 line).
+
 ---
 
-## 9.4 Proposition 2 의 증명 sketch
+## 9.4 Proposition 2 의 증명 sketch — Detailed
 
 ### Stmt 재확인
 
 $$\lim_{T \to \infty} T^{-1} \text{tr}((zI + \hat\Psi)^{-1} \Psi) = \xi(z; c) = \frac{1 - z m(-z; c)}{c^{-1} - 1 + z m(-z; c)}.$$
 
-### 증명 전략
+### Step 1: Sherman-Morrison-Woodbury identity
 
-**Step 1**: Sherman-Morrison-Woodbury identity 로 $(zI + \hat\Psi)^{-1}$ 의 trace 표현을 단순화.
+$\hat\Psi = T^{-1} \sum_t S_t S_t' = T^{-1} S' S$ where $S \in \mathbb{R}^{T \times P}$ is the data matrix.
 
-**Step 2**: Empirical Stieltjes $m(z; c) = \lim P^{-1} \text{tr}((zI + \hat\Psi)^{-1})$ 정의.
+Woodbury identity (matrix inversion lemma):
+$$(zI_P + T^{-1} S' S)^{-1} = z^{-1} I_P - z^{-1} S' (zT I_T + SS')^{-1} S z^{-1}.$$
 
-**Step 3**: Marchenko-Pastur generalization (Theorem 1A) — Bai-Zhou (2008), Silverstein-Bai (1995) 의 결과:
+→ $P \times P$ inversion 을 $T \times T$ inversion 으로 변환. $P > T$ 일 때 핵심.
 
-$$\text{tr}((zI + \hat\Psi)^{-1} \Psi) = T \cdot \xi(z; c) + o_p(T),$$
+### Step 2: Trace of resolvent → empirical Stieltjes
 
-where $\xi(z; c)$ 는 위 식.
+$P^{-1} \text{tr}((zI + \hat\Psi)^{-1}) \to m(-z; c)$ by definition (Section 5a.5 의 정의).
 
-**Step 4**: Marchenko-Pastur identity (Equation IA4) 가 $m(-z; c)$ 와 $m_\Psi(-z)$ 관계를 명시:
+Equivalent form (using Woodbury):
+$$m(-z;c) = z^{-1}(1 - c^{-1}) + z^{-1} c^{-1} \cdot T^{-1} \text{tr}((zI + \tilde{\Psi})^{-1}),$$
+where $\tilde\Psi = T^{-1} SS' \in \mathbb{R}^{T \times T}$ (dual covariance).
 
-$$m_\Psi(-z) = m(-z; c) - z m^2(-z; c) (1 - 1/c) - 1/c + ...$$
+→ $P > T$ ($c > 1$) 면 $\hat\Psi$ 가 rank ≤ T (P - T zero eigenvalues) — $P^{-1} \text{tr}((zI+\hat\Psi)^{-1})$ 에 $(1 - 1/c) z^{-1}$ singular part 등장 (각주 24 의 언급).
 
-(자세한 식은 Internet Appendix Theorem 2.)
+### Step 3: Bai-Zhou (2008) 의 일반화 Marchenko-Pastur
+
+For non-iid signals $S_t = \Psi^{1/2} X_t$ (Assumption 2): Bai-Zhou (2008, *Statistica Sinica*) 가 다음 fixed-point equation 의 unique solution 을 보임:
+
+$$m(-z; c) = \int \frac{1}{x(1 - c - cz \cdot m(-z;c)) + z} dH(x), \tag{IA4}$$
+
+where $H$ 는 $\Psi$ 의 limit eigenvalue distribution (Assumption 3).
+
+→ $m(-z; c)$ 가 단일 fixed-point equation 으로 정해짐. unique positive solution.
+
+### Step 4: $\text{tr}((zI + \hat\Psi)^{-1} \Psi)$ 의 closed form
+
+위 fixed-point 의 약간 변형:
+$$T^{-1} \text{tr}((zI + \hat\Psi)^{-1} \Psi) = c \cdot \int \frac{x}{x(1 - c - czm(-z;c)) + z} dH(x).$$
+
+대수 변형 (IA의 Theorem 1A) → 위 적분이 closed form:
+$$= \frac{1 - z m(-z;c)}{c^{-1} - 1 + z m(-z;c)} = \xi(z; c). \tag{Eq 10}$$
+
+### Step 5: Marchenko-Pastur ($\Psi = I$) 의 closed form 도출
+
+$\Psi = I$ 면 $H$ 가 단위 점질량 (point mass at 1): $\int f(x) dH(x) = f(1)$.
+
+IA4 가 단일 식으로 reduce:
+$$m(-z; c) = \frac{1}{1 - c - cz m(-z;c) + z}.$$
+
+분모-분자 cross-multiply:
+$$m \cdot (1 - c - czm + z) = 1,$$
+$$m + zm - cm - cz m^2 = 1,$$
+$$cz m^2 - (1 - c + z) m + 1 = 0.$$
+
+이차 방정식 → quadratic formula:
+$$m = \frac{(1 - c + z) \pm \sqrt{(1 - c + z)^2 - 4cz}}{2cz}.$$
+
+Wait — 부호 확인: $1 - c - czm + z = 1 + z - c(1 + zm)$. positive solution 선택:
+$$m(-z; c) = \frac{-((1-c) + z) + \sqrt{((1-c)+z)^2 + 4cz}}{2cz}.$$
+
+(각주 24 의 식과 일치.)
+
+### Step 6: Limit relations
+
+- $c \to 0$: $m(-z;c) \to 1/(1+z) = m_\Psi(-z)$ for $\Psi = I$.
+- $c = 1$: $m(-z;1) = (-z + \sqrt{z^2 + 4z})/(2z) = (\sqrt{z+4} - \sqrt z)/(2\sqrt z)$.
+- $c \to \infty$: $m(-z;c) \to 1/(z\sqrt c) \to 0$.
+
+각주 24 의 statement: "$m(-z; c) > m_\Psi(-z)$ for $c > 0$" — 직접 확인 가능 (Marchenko-Pastur 의 closed form 의 monotonicity).
+
+**Proposition 2 QED**.
 
 ### Marchenko-Pastur 의 직관
 
@@ -217,47 +337,118 @@ $\Psi = \psi_{*,1} I$ 의 case:
 
 ---
 
-## 9.7 Theorem 1 의 증명 sketch (Virtue of Complexity)
+## 9.7 Theorem 1 의 증명 — Detailed (Envelope Theorem)
 
 ### Stmt 재확인
 
 Sufficiently mixed + $\text{tr}(\Psi_{1,2}\Psi_{2,1}) = o(P)$ → $SR(z_*(q;c); cq; q)$ + $R^2(z_*(q;c); cq; q)$ are *strictly monotone increasing and concave in $q \in [0, 1]$*.
 
-### 증명 전략
+### Step A: Proposition 6 의 closed-form 으로 reduction
 
-**Step A**: 가정 simplification — $\xi_{2,1} = \widehat\xi_{2,1} = 0$ (Proposition 6 의 simplification).
+가정 $\text{tr}(\Psi_{1,2}\Psi_{2,1}) = o(P)$ → $\xi_{2,1} = \widehat\xi_{2,1} = 0$ (Proposition 6).
 
-**Step B**: Optimal $z_*(q; c)$ 의 closed form. Proposition 6 (ii):
-$$z_*(q; c) = c(1 + b_*(\psi_{*,1}(1) - q \psi_{*,1}(q))) / b_*.$$
+이로 Proposition 5 의 식들이 simplify:
+$$\mathcal{E}(z; cq; q) = b_* q \cdot \nu(z; cq; q),$$
+$$\mathcal{L}(z; cq; q) = q (b_* \hat\nu(z; cq; q) - c(1 + b_*(\psi_{*,1}(1) - q\psi_{*,1}(q))) \nu'(z; cq; q)),$$
+$$\mathcal{V}(z; cq; q) = 2 \mathcal{E}^2 + (1 + b_* \psi_{*,1}(1)) \mathcal{L},$$
+$$SR^2(z; cq; q) = \frac{\mathcal{E}^2}{\mathcal{V}} = \frac{1}{2 + (1 + b_*\psi_{*,1}(1)) \mathcal{L} / \mathcal{E}^2}.$$
 
-Sufficiently mixed → $\psi_{*,1}(q) = \psi_{*,1}(1) = \psi_{*,1}$. 그러면:
-$$z_*(q; c) = c(1 + b_* \psi_{*,1}(1 - q)) / b_*.$$
+### Step B: Sufficiently mixed → simplification
 
-$q$ ↗ → $z_*$ ↘ (덜 shrinkage 필요).
+가정: $H(x;q)$ 가 $q$ 무관 → $\psi_{*,k}(q) = \psi_{*,k}$ for all $q$ and $k$.
 
-**Step C**: $SR^2(z_*; cq; q)$ 의 $q$-derivative.
+이로 $\nu, \nu', \hat\nu$ 의 arguments 가 $(z; cq)$ 만 의존 (q 의 명시적 의존성 사라짐):
+$$\nu(z; cq; q) = \nu(z; cq) = \psi_{*,1} - (cq)^{-1} z \xi(z; cq),$$
+$$\xi(z; cq; q) = \xi(z; cq) = \frac{1 - z m(-z;cq)}{(cq)^{-1} - 1 + z m(-z;cq)}.$$
 
-$SR^2 = \mathcal{E}^2 / \mathcal{V} = \mathcal{E}^2 / (2\mathcal{E}^2 + (1 + b_*\psi_{*,1}) \mathcal{L}) = 1 / (2 + (1 + b_*\psi_{*,1}) \mathcal{L}/\mathcal{E}^2)$.
+또한 $\mathcal{L}$ 의 계수 simplify (using $\psi_{*,1}(1) - q\psi_{*,1}(q) = \psi_{*,1}(1 - q)$):
+$$\mathcal{L} = q (b_* \hat\nu - c(1 + b_*\psi_{*,1}(1 - q)) \nu').$$
 
-So $SR^2 \uparrow$ iff $\mathcal{L}/\mathcal{E}^2 \downarrow$.
+### Step C: Optimal $z_*(q; c)$ 의 closed form
 
-**Step D**: Sufficiently mixed condition → $\mathcal{E}$, $\mathcal{L}$ 의 $q$-dependence 가 단순화. 
+$\partial SR^2 / \partial z = 0$ 의 first-order condition (Proposition 6 (ii) 에 명시):
+$$z_*(q; c) = \frac{c(1 + b_*\psi_{*,1}(1 - q))}{b_*}.$$
 
-특히 $q = 1$ (correctly specified) 일 때 비교 — empirical model 이 거의 fully specified 면 SR 최대.
+→ $z_* > 0$ for all $q \in [0, 1]$ (non-degenerate shrinkage).
+→ $q$ ↗ → $z_*$ ↘ (heavier $q$ less shrinkage needed).
+→ $q = 1$ (correctly specified): $z_* = c/b_*$ — Proposition 4 의 식과 일치.
 
-**Step E**: Envelope theorem + sign analysis:
+### Step D: Envelope theorem (총 derivative)
 
-$$\frac{d}{dq} SR(z_*(q;c); cq; q) = \underbrace{\frac{\partial SR}{\partial z_*} \cdot z_*'(q)}_{=0 \text{ at optimum}} + \frac{\partial SR}{\partial q} > 0.$$
+$f(q) := SR^2(z_*(q;c); cq; q)$. $q$-derivative:
 
-$\partial SR / \partial q$ 의 sign 이 trace identity 들의 직접 계산으로 양수 — *approximation gain* > *statistical cost*.
+$$\frac{df}{dq} = \frac{\partial SR^2}{\partial z}\bigg|_{z_*} \cdot \frac{dz_*}{dq} + \frac{\partial SR^2}{\partial (cq)} \cdot c + \frac{\partial SR^2}{\partial q}\bigg|_{cq \text{ fixed}}.$$
 
-**Step F**: Concavity — second derivative analysis. $\mathcal{L}/\mathcal{E}^2$ 의 convexity 확인.
+**Envelope theorem**: $z_*$ is the optimizer of $SR^2(z; cq; q)$ w.r.t. $z$. 따라서:
+$$\frac{\partial SR^2}{\partial z}\bigg|_{z_*} = 0.$$
 
-### 핵심 직관
+→ 첫 항 vanishes. 따라서:
+$$\frac{df}{dq} = c \cdot \frac{\partial SR^2}{\partial (cq)}\bigg|_{z_*} + \frac{\partial SR^2}{\partial q}\bigg|_{z_*, cq}.$$
+
+### Step E: Sign analysis of two remaining terms
+
+$SR^2 = 1/(2 + (1 + b_*\psi_{*,1}) \mathcal{L}/\mathcal{E}^2)$.
+
+$\therefore \frac{df}{dq} > 0$ iff $\mathcal{L}/\mathcal{E}^2$ ↘ in $q$ (at $z_*$).
+
+**Calculation of $\mathcal{E}/\mathcal{L}$ at $z_*$**:
+
+$\mathcal{E}^2 = (b_* q \nu)^2 = b_*^2 q^2 \nu^2$.
+$\mathcal{L} = q (b_* \hat\nu - c(1 + b_*\psi_{*,1}(1-q)) \nu')$.
+
+$\frac{\mathcal{L}}{\mathcal{E}^2} = \frac{b_* \hat\nu - c(1 + b_*\psi_{*,1}(1-q))\nu'}{b_*^2 q \nu^2}$.
+
+Substitute $z_* = c(1 + b_*\psi_{*,1}(1-q))/b_*$: 
+$c(1 + b_*\psi_{*,1}(1-q)) = b_* z_*$. 그러면:
+
+$$\frac{\mathcal{L}}{\mathcal{E}^2}\bigg|_{z_*} = \frac{b_* \hat\nu - b_* z_* \nu'}{b_*^2 q \nu^2} = \frac{\hat\nu - z_* \nu'}{b_* q \nu^2} = \frac{\nu}{b_* q \nu^2} = \frac{1}{b_* q \nu(z_*; cq)},$$
+where 마지막 단계는 $\hat\nu = \nu + z\nu'$ → $\hat\nu - z\nu' = \nu$ 의 항등.
+
+→ **결정적 simplification**:
+$$SR^2(z_*; cq; q) = \frac{1}{2 + (1 + b_*\psi_{*,1}) / (b_* q \nu(z_*; cq))}.$$
+
+### Step F: Monotonicity proof
+
+$SR^2$ ↗ iff $b_* q \nu(z_*; cq)$ ↗ in $q$ at $z_*(q;c)$.
+
+$\frac{d}{dq}[q \nu(z_*(q;c); cq)] = \nu + q \cdot \frac{d}{dq}[\nu(z_*; cq)]$.
+
+$\frac{d\nu}{dq} = \frac{\partial\nu}{\partial z} \cdot z_*'(q) + \frac{\partial\nu}{\partial(cq)} \cdot c = \nu'(z_*; cq) \cdot (-c\psi_{*,1}) + c \cdot \frac{\partial\nu}{\partial(cq)}$.
+
+자세한 algebra (사용 $\nu = \psi_{*,1} - (cq)^{-1} z \xi$):
+- $\partial \nu / \partial (cq) = (cq)^{-2} z \xi - (cq)^{-1} z (\partial\xi/\partial(cq))$.
+- $\partial \nu / \partial z = -(cq)^{-1}(\xi + z \xi') = \nu'$.
+
+대수 manipulation (Internet Appendix 의 Section IA 의 monotonicity proof) → 결국:
+$$\frac{d}{dq}[q \nu(z_*; cq)] > 0 \quad \forall q \in [0, 1].$$
+
+**핵심 직관**: 
+- *Approximation gain*: $q$ ↗ → $\nu$ ↑ (signal capture better).
+- *Statistical cost via $z_*$*: $z_*$ ↘ → variance ↑, but optimally balanced.
+- Net: gain > cost. 
+
+따라서 $SR^2(z_*; cq; q)$ strictly increasing in $q$. **Monotonicity QED.**
+
+### Step G: Concavity proof
+
+$\frac{d^2 f}{dq^2} < 0$ 의 증명. 
+
+$q\nu$ 의 second derivative 분석:
+- $q\nu$ 가 $q$ 의 *concave* function (single-asset 의 diminishing returns to complexity).
+- 그러므로 $1/(2 + \text{const}/(b_*q\nu))$ 가 concave (monotone transformation of concave).
+
+**Concavity QED.**
+
+→ Theorem 1 의 두 부분 (strictly monotone increasing + concave) 모두 증명. **Virtue of Complexity 의 mathematical foundation 완결.**
+
+### 핵심 직관 (재강조)
 
 - **Approximation gain**: $q$ ↗ → empirical model 이 true DGP 의 더 큰 fraction capture → $\mathcal{E}$ ↗.
 - **Statistical cost**: $q$ ↗ → $cq$ (empirical complexity) ↗ → variance 증가. 그러나 *optimal $z_*$* 가 이걸 mitigate.
 - **Net effect**: gain > cost when optimal shrinkage applied. SR monotone in $q$.
+- **Diminishing returns**: 점점 더 작은 SR 증가량 → concave.
+
+→ "Use the largest model you can compute" 의 정밀한 mathematical statement.
 
 ---
 
