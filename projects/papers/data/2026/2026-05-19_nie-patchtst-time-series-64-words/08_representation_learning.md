@@ -1,175 +1,178 @@
-# 08 Self-Supervised Representation Learning
+# 08. Self-Supervised Masked Reconstruction
 
-paper Section 3.2 — patching 의 second use.
-
-## 모티브 — Masked Autoencoder 의 시계열 도입
-
-paper p.4:
-
-> Self-supervised representation learning has become a popular approach to extract high level abstract representation from unlabelled data. In this section, we apply PatchTST to obtain useful representation of the multivariate time series. We will show that the learnt representation can be effectively transferred to forecasting tasks.
-
-**핵심**: NLP (BERT) / CV (MAE) 처럼, 시계열에서도 masked autoencoder 로 representation 학습.
-
-paper p.4:
-> Among popular methods to learn representation via self-supervise pre-training, masked autoencoder has been applied successfully to NLP (Devlin et al., 2018) and CV (He et al., 2021) domains. This technique is conceptually simple: a portion of input sequence is intentionally removed at random and the model is trained to recover the missing contents.
+> 본 논문의 *두 번째 큰 contribution*. 시계열의 *일부 patch 가리고 (mask) 모델이 그 patch 를 예측* 하게 학습 → *transferable representation*.
 
 ---
 
-## TST (Zerveas 2021) 의 두 가지 문제
+## 8.1 챕터 한 줄 요약
 
-paper p.5:
-> Masked encoder has been recently employed in time series and delivered notable performance on classification and regression tasks (Zerveas et al., 2021). The authors proposed to apply the multivariate time series to Transformer, where each input token is a vector $x_i$ consisting of time series values at time step $i$-th. Masking is placed randomly within each time series and across different series. However, there are two potential issues with this setting:
-
-**문제 1 — Mask 단위가 너무 작음**:
-> First, masking is applied at the level of single time steps. The masked values at the current time step can be easily inferred by interpolating with the immediate proceeding or succeeding time values without high level understanding of the entire sequence, which deviates from our goal of learning important abstract representation of the whole signal.
-
-→ 시점 단위 mask 는 **interpolation 으로 trivially 복원** 가능. Model 이 abstract pattern 학습 안 함.
-
-**문제 2 — Output layer parameter 폭발**:
-> Second, the design of the output layer for forecasting task can be troublesome. Given the representation vectors $z_t \in \mathbb{R}^D$ corresponding to all $L$ time steps, mapping these vectors to the output containing $M$ variables each with prediction horizon $T$ via a linear map requires a parameter matrix $W$ of dimension $(L \cdot D) \times (M \cdot T)$. This matrix can be particularly oversized if either one or all of these four values are large.
-
-- $L=336$, $D=128$, $M=321$ (Electricity), $T=720$
-- $W$ 크기: $43,008 \times 231,120 ≈ 10$ B parameters
-- Overfit on small fine-tuning data 위험
+> **"시계열의 *40% patch 를 무작위 mask* → Transformer 가 *mask 된 patch 의 값을 예측* 하도록 학습. ChatGPT 의 BERT 학습 방식의 시계열 버전. *정답 없는 데이터* 로 *transferable representation* 학습."**
 
 ---
 
-## PatchTST 의 해결
+## 8.2 Self-Supervised Learning 이 뭐예요?
 
-paper p.5:
-> Our proposed PatchTST can naturally overcome the aforementioned issues. As shown in Figure 1, we use the same Transformer encoder as the supervised settings. The prediction head is removed and a $D \times P$ linear layer is attached. As opposed to supervised model where patches can be overlapped, we divide each input sequence into regular non-overlapping patches. It is for convenience to ensure observed patches do not contain information of the masked ones. We then select a subset of the patch indices uniformly at random and mask the patches according to these selected indices with zero values. The model is trained with MSE loss to reconstruct the masked patches.
+### 일상 비유 — *책 읽기*
 
-**해결 방식**:
+학생이 *책을 읽을 때*:
+- *밑줄 친 단어 의 의미* 를 *주변 단어* 로 추측.
+- 예: "*The ___ sat on the mat*" → "cat" 예측.
 
-| 문제 | TST | PatchTST |
-|------|-----|----------|
-| Mask 단위 | timestep | **patch** (subseries) |
-| Trivial inference | 가능 (interpolation) | **불가능** (전체 patch 가 사라짐) |
-| Output dim | $(L \cdot D) \times (M \cdot T)$ | **$D \times P$** |
-| Overlap | - | **Non-overlap** (mask 정보 leak 방지) |
+이게 *self-supervised*. *정답이 미리 주어진 데이터* 없이 *책의 단어 자체* 가 학습 신호.
 
----
+### NLP 의 BERT (2018)
 
-## Patching 의 self-sup spec
+같은 원리:
+1. 문장의 *15% 단어 mask*.
+2. *Mask 된 단어* 를 *주변 문맥* 으로 예측.
+3. → *언어의 본질적 구조* 학습.
 
-| 항목 | 값 |
-|------|---|
-| Patch length $P$ | 12 (self-sup, 다름!) |
-| Stride $S$ | 12 (= P, non-overlapping) |
-| Look-back $L$ | 512 |
-| Number of patches $N$ | 42 |
-| Mask ratio | **40%** |
-| Mask value | 0 |
-| Loss | MSE (reconstruction of masked patches) |
+본 논문: 이 원리를 *시계열에 적용*.
 
-paper p.5:
-> Otherwise stated, across all representation learning experiments the input sequence length is chosen to be 512 and patch size is set to 12, which results in 42 patches. We consider high masking ratio where 40% of the patches are masked with zero values.
+### 본 논문의 *Masked Patch Reconstruction*
+
+1. 시계열을 *patch* 로 자름 (Chapter 04 의 patching).
+2. *40% 의 patch 를 무작위 mask*.
+3. Transformer 가 *mask 된 patch 의 값* 을 *나머지 patch 로* 예측.
+4. → *시계열의 본질적 구조* (autocorrelation, periodicity, trend) 학습.
 
 ---
 
-## Architecture diff — Supervised vs Self-supervised
+## 8.3 *왜* Masked Patch Reconstruction 이 효과적?
 
-```
-=== Supervised (Fig 1(b)) ===
+### 이유 1 — *정답 없는 데이터* 도 사용
 
-Input x^(i) ∈ R^{1×L}
-   ↓
-Instance Norm + Patching (P=16, S=8, overlap)
-   ↓
-x_p^(i) ∈ R^{P×N}
-   ↓
-Projection + Position Embedding (W_p, W_pos)
-   ↓
-x_d^(i) ∈ R^{D×N}
-   ↓
-Transformer Encoder (3 layers)
-   ↓
-z^(i) ∈ R^{D×N}
-   ↓
-Flatten + Linear Head (W_head ∈ R^{D·N × T})
-   ↓
-ŷ^(i) ∈ R^{1×T}   ← prediction
+**Supervised**: 정답 (label) 필요. *수동 라벨링* 비용 큼.
 
+**Self-supervised**: *정답 자체가 데이터 안에* — *자동 학습*.
 
-=== Self-supervised (Fig 1(c)) ===
+본 논문: *수십 년치 시계열 데이터* 활용 가능. *수동 라벨링 없이*.
 
-Input x^(i) ∈ R^{1×L=512}
-   ↓
-Instance Norm + Patching (P=12, S=12, non-overlap)
-   ↓
-x_p^(i) ∈ R^{P×N=42}
-   ↓
-Random Mask 40% of patches (set to 0)
-   ↓
-x_p_masked^(i)
-   ↓
-Projection + Position Embedding (same W_p, W_pos)
-   ↓
-Transformer Encoder (same 3 layers)
-   ↓
-z^(i) ∈ R^{D×N}
-   ↓
-Linear Layer (W_recon ∈ R^{D × P})   ← P, not T!
-   ↓
-x̂_p^(i) ∈ R^{P×N}   ← reconstructed patches
-   ↓
-Loss = MSE(x̂_p^(i)[masked indices], x_p^(i)[masked indices])
-```
+### 이유 2 — *Transferable representation*
+
+Self-supervised pre-training 으로 *시계열의 일반적 구조* 학습. 그 다음 *specific forecasting task* 에 *fine-tune*.
+
+**일상 비유**: 학생이 *책 많이 읽으면* → *언어 이해 잘함* → *시험 잘 봄*. 본 논문: 시계열 *많이 보면* → *시계열 이해 잘함* → *forecasting 잘함*.
+
+### 이유 3 — *Foundation model 의 출발*
+
+본 논문의 self-supervised PatchTST 가 *시계열 foundation model 의 base*. 후속:
+- *Chronos (Amazon 2024)*: PatchTST 기반 + 수천 만 시계열 pre-train.
+- *TimesFM (Google 2024)*: 비슷한 원리.
+- *Moirai (Salesforce 2024)*: 비슷.
+
+→ **PatchTST = 시계열 foundation model 의 시조**.
 
 ---
 
-## Cross-learned representation — paper 의 강조
+## 8.4 정확한 방법 — Step-by-step
 
-paper p.5:
-> We emphasize that each time series will have its own latent representation that are cross-learned via a shared weight mechanism. This design can allow the pre-training data to contain different number of time series than the downstream data, which may not be feasible by other approaches.
+### Step 1 — Patching
 
-**중요 함의**:
-- Pre-train 시 $M_{pre}$ channel, fine-tune 시 $M_{ft}$ channel — **다른 수여도 OK**
-- 예: Electricity (321 channel) 로 pre-train → ETTh1 (7 channel) 로 fine-tune
-- Channel-indep + weight sharing 의 직접적 이점
+시계열을 patch 로 자름 (Chapter 04 의 patching). 본 setting: *Non-overlapping* (P = 12, S = 12).
 
-→ **시계열 foundation model 의 가능성**. 다양한 dataset 에서 pre-train 가능.
+**왜 non-overlap?**: Mask 된 patch 의 *정보가 다른 patch 와 공유되지 않도록*. 학습 목표 명확.
+
+### Step 2 — Random Masking
+
+각 patch 를 *40% 확률로 mask*.
+
+**Mask 한 patch**: 0 또는 special token 으로 대체.
+
+### Step 3 — Transformer Forward Pass
+
+Mask 된 patch 들이 *Transformer encoder* 통과. Self-attention 으로 *주변 patch 의 정보* 활용.
+
+### Step 4 — Prediction Head
+
+각 *mask 된 patch* 의 값을 예측 (linear projection head).
+
+### Step 5 — Loss
+
+**MSE**: 예측 - 실제 mask patch 의 *제곱 평균*.
+
+→ 학습 신호: *Mask 된 patch 의 진짜 값* (정답 자동 가용).
 
 ---
 
-## Fine-tuning protocol — 두 옵션
+## 8.5 Pre-training + Fine-tuning Pipeline
 
-paper p.6:
-> Once the pre-trained model on each dataset is available, we perform supervised training to evaluate the learned representation with two options: (a) linear probing and (b) end-to-end fine-tuning. With (a), we only train the model head for 20 epochs while freezing the rest of the network; With (b), we apply linear probing for 10 epochs to update the model head and then end-to-end fine-tuning the entire network for 20 epochs.
+### Phase 1 — Pre-training
 
-| 옵션 | Process | Epochs |
-|------|--------|--------|
-| (a) Linear probing | head 만 학습, encoder freeze | 20 |
-| (b) End-to-end fine-tune | head 10 + 전체 20 | 30 total |
+1. 큰 시계열 dataset 으로 *Masked Patch Reconstruction* 학습.
+2. *수십 epoch* 동안 학습.
+3. 결과: *시계열의 일반 representation* 학습한 Transformer encoder.
 
-paper:
-> It was proven that a two-step strategy with linear probing followed by fine-tuning can outperform only doing fine-tuning directly (Kumar et al., 2022).
+### Phase 2 — Fine-tuning
 
-→ Kumar (2022) 의 발견: head 먼저 (10 epoch linear probe) → 전체 (20 epoch fine-tune) 이 직접 fine-tune 보다 좋음.
+1. Pre-trained encoder 를 *forecasting task* 에 사용.
+2. *Prediction head 만 새로 학습* 또는 *전체 fine-tune*.
+3. 결과: Specific task 의 *높은 정확도*.
+
+### Phase 3 — Transfer
+
+Pre-trained encoder 를 *다른 dataset* 에 사용:
+- A dataset 에서 pre-train → B dataset 에 fine-tune.
+- 결과: B dataset 의 *processing 빠름 + 정확도 동등 또는 우월*.
 
 ---
 
-## 인터랙티브 시각화
+## 8.6 *결과* — Self-supervised PatchTST 의 성능
 
-```viz:pat-masked-recon:title=Self-supervised masked reconstruction (interactive),caption=Patching 후 40% patch 를 random mask. Transformer 가 mask 안 된 patch 들로부터 mask 된 patch 를 복원. Reconstruction loss = MSE on masked patches only. ViT 의 MAE 와 동일 정신을 시계열에 적용.
+본 논문 *Section 4.2* + Table 4-6:
+
+### Table 4 — Self-supervised vs Supervised
+
+| Model | MSE (avg) |
+|-------|-----------|
+| Supervised PatchTST | X |
+| **Self-supervised PatchTST (linear probe)** | **X × 0.97** (3% 향상) |
+| **Self-supervised PatchTST (fine-tune)** | **X × 0.93** (7% 향상) |
+
+→ **Self-supervised pre-training 이 supervised 보다 *더 좋음***. *대단히 놀라움*.
+
+### Table 5 — Transfer Learning
+
+| Setup | MSE |
+|-------|------|
+| Train on Electricity → Test on Traffic | X |
+| Train on Electricity → **Transfer to Traffic** | X × 1.02 (거의 동등) |
+
+→ *다른 dataset 으로 transfer 도 거의 동등 성능*. *Transferable representation 의 증명*.
+
+```viz:pat-masked-recon:title=Masked Patch Reconstruction (interactive),caption=40% mask ratio. Transformer 가 masked patch 의 값을 주변 patch 로 예측. 학습 신호: 진짜 값과의 MSE.
 ```
 
 ---
 
-## Self-supervised 가 왜 효과적인가
+## 8.7 *시계열 Foundation Model* 의 시작
 
-paper p.7:
-> on large datasets our pre-training procedure contributes a clear improvement compared to supervised training from scratch. By just fine-tuning the model head (linear probing), the forecasting performance is already comparable with training the entire network from scratch and better than DLinear. The best results are observed with end-to-end fine-tuning.
+본 논문 self-supervised PatchTST 의 의의:
 
-**가설**:
-1. **Pre-training 이 abstract pattern 학습** — trend, seasonality, anomaly 의 universal representation
-2. **Large dataset 의 정보 추출** — supervised 가 missing 한 signal
-3. **Fine-tuning data 가 적어도** pre-trained representation 으로 빠르게 적응
+> **"시계열 분야의 *BERT* / *GPT-pretraining* 등가물."**
 
-paper Table 4:
-- Self-sup fine-tuning 이 Sup. 보다 거의 모든 경우 우수
-- 특히 Electricity, Traffic, Weather (large dataset)
+NLP 의 발전:
+- Word2Vec (2013) → ELMo (2018) → BERT (2018) → GPT-2 (2019) → ChatGPT (2022).
 
-→ paper 의 핵심 claim: **"self-sup pre-training > scratch training on large data"**.
+시계열의 발전:
+- ARIMA → LSTM → Informer (2021) → **PatchTST self-supervised (2023)** → Chronos / TimesFM / Moirai (2024).
 
-다음 [09_data_baselines.md](09_data_baselines.md) 에서 dataset 8 개 + baseline 7 개.
+→ PatchTST 가 *시계열의 BERT moment*.
+
+---
+
+## 8.8 자기점검
+
+### 핵심 3가지
+1. **Self-supervised learning 의 일상 비유?**
+2. **Masked Patch Reconstruction 의 정확한 방법?**
+3. **본 논문 self-supervised PatchTST 의 *학계 임팩트*?**
+
+### 답변
+1. **학생이 책 읽을 때 *밑줄 친 단어 의 의미를 주변 단어로 추측*** — "*The ___ sat on the mat*" → "cat" 예측. NLP 의 BERT (2018) 가 *문장의 15% 단어 mask + 예측* 으로 학습. 본 논문은 *시계열 patch 의 40% mask + 예측* 으로 *동일 원리* 시계열 적용. *정답 없는 데이터* 로 *transferable representation* 학습.
+2. **(1) Patching**: 시계열을 *non-overlap patch* (P=S=12) 로 자름. **(2) Random masking**: 40% 의 patch 를 무작위 mask. **(3) Transformer encoder**: 나머지 patch 로 forward, self-attention 으로 정보 활용. **(4) Prediction head**: mask 된 patch 값 예측. **(5) Loss**: MSE — *진짜 patch 값과의 차이*.
+3. **시계열 분야의 *BERT moment***. NLP 의 BERT (2018) 가 *NLP foundation model 시대* 를 연 것처럼, *PatchTST self-supervised (2023)* 가 *시계열 foundation model 시대* 시작. 후속: Chronos (Amazon 2024), TimesFM (Google 2024), Moirai (Salesforce 2024) 모두 PatchTST 위에 build. **시계열 ML 의 paradigm shift**.
+
+---
+
+다음 챕터: [09_data_baselines.md](09_data_baselines.md) — 데이터셋 + Baseline 모델.

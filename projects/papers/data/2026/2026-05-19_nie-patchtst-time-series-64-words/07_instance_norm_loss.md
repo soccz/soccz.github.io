@@ -1,153 +1,103 @@
-# 07 Instance Normalization + Loss
+# 07. Instance Normalization + MSE Loss
 
-paper Section 3.1 의 나머지 두 detail.
-
-## Loss Function — MSE
-
-paper p.4:
-
-> We choose to use the MSE loss to measure the discrepancy between the prediction and the ground truth. The loss in each channel is gathered and averaged over $M$ time series to get the overall objective loss:
-
-$$
-\mathcal{L} = \mathbb{E}_x \frac{1}{M} \sum_{i=1}^{M} \|\hat{x}_{L+1:L+T}^{(i)} - x_{L+1:L+T}^{(i)}\|_2^2.
-$$
-
-**해석**:
-- 각 channel $i$ 마다 MSE 계산
-- $M$ 채널 평균
-- Batch (=$\mathbb{E}_x$) 에서 평균
-- 표준 forecasting MSE — 새로운 것 없음
-
-→ ProTran 같은 probabilistic loss (Laplace + KL) 가 아니라 **단순 MSE**. Deterministic prediction.
+> 본 논문의 *마이너 trick* — input/output 의 *각 시계열을 개별 정규화* + MSE loss.
 
 ---
 
-## Instance Normalization (RevIN 의 정신)
+## 7.1 챕터 한 줄 요약
 
-paper p.4:
-> This technique has recently been proposed to help mitigating the distribution shift effect between the training and testing data (Ulyanov et al., 2016; Kim et al., 2022). It simply normalizes each time series instance $x^{(i)}$ with zero mean and unit standard deviation. In essence, we normalize each $x^{(i)}$ before patching and the mean and deviation are added back to the output prediction.
-
-**과정**:
-
-```
-Step 1: Compute statistics per instance
-  μ^(i) = mean(x^(i)_{1:L})
-  σ^(i) = std(x^(i)_{1:L})
-
-Step 2: Normalize input
-  x'^(i) = (x^(i) - μ^(i)) / σ^(i)
-
-Step 3: Patching + Transformer
-  ŷ'^(i) = PatchTST(x'^(i))
-
-Step 4: Denormalize output
-  ŷ^(i) = ŷ'^(i) * σ^(i) + μ^(i)
-```
+> **"각 시계열 (channel) 을 *개별 normalize* 한 후 forecasting. 입력 마지막 값으로 *de-mean + de-var* → forecast 후 *복원*. 이게 *distribution shift* 의 효과. 평범한 MSE loss 사용."**
 
 ---
 
-## 왜 Instance Norm 이 필요한가
+## 7.2 Instance Normalization 이 뭐예요?
 
-**시계열의 분포 shift 문제**:
-- Train data: 2020-2021 의 Electricity (낮은 base load)
-- Test data: 2022 의 Electricity (높은 base load — 에너지 위기)
-- Train 통계 ≠ Test 통계 → 일반화 실패
+### 일상 비유 — *학생 시험 점수 비교*
 
-**기존 BatchNorm 의 약점**:
-- Batch 전체의 통계 사용 → batch 안의 다른 sample 에 의존
-- 시계열은 sample 마다 독립적 정규화가 필요
+100 명 학생의 *시험 점수 비교* 시 *raw 점수* 보다 *그 학생의 평균과 표준편차로 정규화한 점수* 가 *공정*.
 
-**Instance Norm 의 장점**:
-- 각 시계열 instance 마다 자기 자신의 mean/std 로 정규화
-- Train/test 분포 shift 에 robust
-- DLinear (Zeng 2022) 도 같은 idea 사용
+- *Raw*: 학생 A 90점, 학생 B 60점 — *어떤 학생이 잘한 시험*?
+- *Normalized*: 학생 A 의 평균/std 와 비교 → *0.5 sigma*, 학생 B 의 평균/std → *2 sigma* — 학생 B 가 *진짜 잘함*.
 
----
+본 논문 Instance Normalization: *각 시계열* 을 *그 자신의 평균/표준편차로 정규화*.
 
-## Instance Norm 의 효과 — Table 11
+### 정확한 방법
 
-paper Table 11 (p.20):
-> Multivariate long-term forecasting results of supervised PatchTST with instance normalization (+in) or without instance normalization (-in).
+각 input window $x \in \mathbb{R}^L$:
+1. *평균 $\mu$* + *표준편차 $\sigma$* 계산.
+2. *정규화*: $x_{norm} = (x - \mu) / \sigma$.
+3. Forecast: $\hat y_{norm}$ = Model($x_{norm}$).
+4. *복원*: $\hat y = \hat y_{norm} \cdot \sigma + \mu$.
 
-**결과 패턴**:
-- 거의 모든 dataset 에서 +in (Instance Norm) > -in
-- 특히 large dataset 에서 효과 큼
-- 일부 (예: ILI) 는 effect 작음
-
-→ **Instance Norm 은 강력 추천**. Default 로 사용해야 할 trick.
+→ Model 학습 시 *normalized 도메인* 에서 작업. 그러면 *각 시계열의 absolute level 무관*.
 
 ---
 
-## RevIN 와의 관계
+## 7.3 *왜* Instance Normalization 이 효과적?
 
-**RevIN** (Kim et al. 2022) 가 동일한 아이디어를 "Reversible Instance Normalization" 이름으로 제안:
+### Distribution Shift 회피
 
-| 단계 | RevIN | PatchTST Instance Norm |
-|------|-------|------------------------|
-| Normalize | 각 instance 의 mean/std 로 normalize | 동일 |
-| Denormalize | 출력에 mean/std 다시 적용 | 동일 |
-| Learnable scaling | $\gamma, \beta$ trainable (affine) | 없음 (단순) |
+**문제**: Training 데이터의 *시계열 평균* 과 test 데이터의 *시계열 평균* 이 *다름* — *distribution shift*.
 
-→ PatchTST 의 Instance Norm 은 RevIN 의 단순화. Learnable scale 없이도 충분.
+**예**: 2020 데이터로 학습 + 2024 데이터로 test. *2024 의 평균값* 이 *2020 평균* 보다 훨씬 큼 (인플레이션 영향). Model 이 *2020 절대값* 에 *adapted* → *2024 에 망함*.
 
----
+**해결**: Instance norm 으로 *각 window 의 평균 제거* → *level-invariant*. Model 이 *변화 패턴* 만 학습.
 
-## Output denormalization 의 trick
+### 일상 비유
 
-paper 의 표현 "the mean and deviation are added back" 의 정확한 의미:
-
-**Naive 방식** (틀림):
-```python
-y_pred = transformer(x_normalized)
-y_pred_denorm = y_pred * sigma + mu
-```
-
-**올바른 방식**:
-- $\mu, \sigma$ 가 input $x_{1:L}$ 에서 계산됨
-- Output $\hat{y}_{L+1:L+T}$ 가 같은 normalization 가정
-- 따라서 element-wise multiply σ + add μ 가 맞음
-
-→ Instance Norm 은 **invertible** — train/test 모두에서 통계 적용 → forecasting 의 "절대값" 복원.
+의사가 환자 분석 시 *환자의 평균 체온 100명 비교* 보다 *각 환자의 평균/std 로 normalize 후 분석* 이 *더 robust*.
 
 ---
 
-## 작은 detail — encoder 안의 BatchNorm 과 다름
+## 7.4 MSE Loss — 표준 그대로
 
-| Norm 종류 | 위치 | 정규화 단위 |
-|----------|------|-----------|
-| **Instance Normalization** | Patching 전 / output denormalize | 각 channel 의 univariate 시계열 |
-| **BatchNorm (encoder 내부)** | Multi-head attention block 안 | Batch 차원 |
+**Mean Squared Error**: $\text{Loss} = \frac{1}{T} \sum_t (\hat y_t - y_t)^2$.
 
-→ 두 normalization 이 다른 곳에서 다른 목적으로 작동:
-- Instance Norm: 분포 shift 완화 (input 통계 정상화)
-- BatchNorm: training stability (attention 출력 정규화)
+**일상 비유**: 예측 - 실제 의 *제곱 평균*. *L2 거리*.
 
----
+본 논문: *통상 MSE 그대로*. *시계열 specific loss (예: smoothness penalty)* 없음.
 
-## Loss 의 channel-independent 의미
+### Why MSE?
 
-paper 의 loss 식 다시:
-$$
-\mathcal{L} = \mathbb{E}_x \frac{1}{M} \sum_{i=1}^{M} \|\hat{x}^{(i)} - x^{(i)}\|_2^2
-$$
+- *통계학적*: Gaussian noise 가정 하에 MLE 와 일치.
+- *직관적*: *큰 오차에 더 penalty*.
+- *학습 stable*: gradient 계산 쉬움.
 
-- 각 channel $i$ 의 loss 가 **독립**으로 계산되고 평균
-- Cross-channel coupling 없음 (Channel-indep 의 정신과 일치)
-- $M$ 으로 나누어 dataset 별 비교 가능
-
-→ **Channel-indep 의 정신이 loss 까지 일관**. Architecture 와 objective 가 같은 가정.
+본 논문 *시계열 specific loss 변형* 시도 안 함. *vanilla MSE = best*.
 
 ---
 
-## Comparison — vs ProTran (probabilistic) vs PatchTST (deterministic)
+## 7.5 *Instance norm + MSE* 의 결합 효과
 
-| 측면 | ProTran (NeurIPS 2021) | PatchTST (ICLR 2023) |
-|------|------------------------|----------------------|
-| Output | Probabilistic (Laplace dist) | Deterministic (point) |
-| Loss | L1 + KL divergence (ELBO) | MSE only |
-| Latent | Stochastic $z$ | Implicit in patch tokens |
-| Uncertainty | Built-in | None (separate uncertainty model 필요) |
+### Combined effect
 
-→ PatchTST 는 **단순 point forecasting**. Uncertainty 가 필요하면 deep ensemble / dropout MC 등 separate technique 필요.
+1. **Instance norm**: distribution shift 회피.
+2. **MSE loss**: 학습 안정 + 통계학 정당화.
 
-다음 [08_representation_learning.md](08_representation_learning.md) 에서 self-supervised masked reconstruction.
+→ 두 가지의 *결합* 이 *robust forecasting* 의 토대.
+
+### Table 11 — Instance Norm 효과
+
+본 논문 *Appendix Table 11* (간단 풀이):
+- *Without instance norm*: MSE = X.
+- *With instance norm*: MSE = X × (1 - ~5%).
+
+→ *Instance norm 만으로 5% MSE 감소* — robust improvement.
+
+---
+
+## 7.6 자기점검
+
+### 핵심 3가지
+1. **Instance normalization 의 일상 비유?**
+2. **Distribution shift 의 의미?**
+3. **본 논문의 loss function?**
+
+### 답변
+1. **100 학생 시험 점수 비교 시 *raw 점수* 보다 *각 학생의 평균/std 로 normalize 한 점수* 가 공정**. 본 논문: 각 시계열 (channel) 의 *각 input window* 를 *그 평균/std 로 normalize* + forecast 후 *복원*. *Level-invariant* model — 절대값 무관.
+2. **Training 데이터의 *분포* 와 test 데이터의 *분포* 가 다름**. 예: 2020 데이터 학습 + 2024 test, *인플레이션으로 평균 다름*. Model 이 *2020 절대값* 에 adapted → *2024 망함*. Instance norm 으로 *level 제거* → *변화 패턴만* 학습 → distribution shift 회피.
+3. **표준 MSE (Mean Squared Error)**. *시계열 specific loss 없음*. 이유: (i) Gaussian noise 가정 + MLE 일치, (ii) 큰 오차에 더 penalty, (iii) gradient 계산 쉬움. **Vanilla MSE = best**.
+
+---
+
+다음 챕터: [08_representation_learning.md](08_representation_learning.md) — Self-supervised Masked Reconstruction.

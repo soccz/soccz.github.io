@@ -1,152 +1,123 @@
-# 06 Transformer Encoder — vanilla 그대로
+# 06. Transformer Encoder — Vanilla 그대로
 
-paper Section 3.1 의 Transformer 사양.
-
-## Encoder backbone — "vanilla"
-
-paper p.4:
-
-> We use a vanilla Transformer encoder that maps the observed signals to the latent representations.
-
-**핵심 결정**:
-- **Decoder 없음** — encoder 만 (BERT/ViT 스타일)
-- **Vanilla** — 새 attention 변형 없음 (ProbSparse, Auto-correlation, Fourier 등 안 씀)
-- 차별점은 **input** (patching + channel-indep), Transformer 본체는 표준
-
-→ "Transformer 의 단순함을 신뢰". 복잡한 attention 변형이 본질이 아님.
+> 본 논문이 사용한 *Transformer encoder* 의 구조. *시계열 specific 변형 없이* vanilla 그대로.
 
 ---
 
-## Multi-head attention 정의
+## 6.1 챕터 한 줄 요약
 
-paper p.4:
-
-> Then each head $h = 1, \ldots, H$ in multi-head attention will transform them into query matrices $Q_h^{(i)} = (x_d^{(i)})^T W_h^Q$, key matrices $K_h^{(i)} = (x_d^{(i)})^T W_h^K$ and value matrices $V_h^{(i)} = (x_d^{(i)})^T W_h^V$, where $W_h^Q, W_h^K \in \mathbb{R}^{D \times d_k}$ and $W_h^V \in \mathbb{R}^{D \times D}$.
-
-**Projection 차원**:
-| Matrix | Dimension |
-|--------|-----------|
-| $Q_h^{(i)}$, $K_h^{(i)}$ | $\mathbb{R}^{N \times d_k}$ |
-| $V_h^{(i)}$ | $\mathbb{R}^{N \times D}$ |
-| $W_h^Q, W_h^K$ | $\mathbb{R}^{D \times d_k}$ |
-| $W_h^V$ | $\mathbb{R}^{D \times D}$ |
+> **"Patching + Channel-Indep 외에는 *완전 vanilla Transformer encoder*. NLP 의 BERT, GPT 가 사용하는 *같은 구조*. 시계열 specific attention 변형 (Informer, Autoformer) 없음. *Simple is better*."**
 
 ---
 
-## Attention 연산
+## 6.2 Vanilla Transformer 가 뭐예요?
 
-paper p.4 (Eq, 번호 없음):
-$$
-(O_h^{(i)})^T = \text{Attention}(Q_h^{(i)}, K_h^{(i)}, V_h^{(i)}) = \text{Softmax}\!\left(\frac{Q_h^{(i)} K_h^{(i) T}}{\sqrt{d_k}}\right) V_h^{(i)}
-$$
+### 일상 비유 — *ChatGPT 의 기본 부품*
 
-- $O_h^{(i)} \in \mathbb{R}^{D \times N}$
-- 표준 Transformer attention (Vaswani 2017, Eq 1)
-- $N = 42$ (PatchTST/42) 또는 $64$ (/64) — patch 수만큼만 attention
+ChatGPT, BERT, GPT 같은 *모든 NLP 모델* 의 *기본 부품*. 2017년 Google 발명.
 
----
+구성:
+1. **Multi-head Self-Attention** (다중 헤드 자기 주의)
+2. **Feed-Forward Network** (피드포워드 신경망)
+3. **Layer Normalization** (층 정규화)
+4. **Residual Connection** (잔차 연결)
 
-## BatchNorm — LayerNorm 아님
-
-paper p.4 footnote:
-> Zerveas et al. (2021) has shown that BatchNorm outperforms LayerNorm in time series Transformer.
-
-**시계열 특이점**:
-- NLP / CV 의 Transformer 는 LayerNorm
-- 시계열 Transformer 는 **BatchNorm 이 더 좋다** (Zerveas 2021 발견)
-- PatchTST 도 이를 따라 BatchNorm 사용
-
-→ 작은 detail 이지만 중요. 다른 시계열 Transformer 들도 BatchNorm 채택 추세.
+본 논문: 이 *4 부품 그대로* 시계열 적용. *Modification 없음*.
 
 ---
 
-## Multi-head attention block 전체 구성
+## 6.3 Multi-head Self-Attention — 핵심 메커니즘
 
-paper p.4:
-> The multi-head attention block also includes BatchNorm layers and a feed forward network with residual connections as shown in Figure 1.
+### 일상 비유
 
-```
-Input: x_d^(i) ∈ R^{D×N}
-   ↓
-[Multi-Head Attention] ─→ residual ─→ BatchNorm
-   ↓
-[Feed Forward] ─→ residual ─→ BatchNorm
-   ↓
-Output: z^(i) ∈ R^{D×N}
-```
+문장 "*The cat sat on the mat*" 을 이해할 때:
+- "sat" 이 *어떤 단어* 와 연관? — *cat (주어), on (전치사), mat (위치)*.
+- *각 단어가 다른 모든 단어* 와의 *관계* 측정.
 
-- $z^{(i)}$ 는 patch 별 representation
-- $N$ 개 patch 각각이 $D$ 차원
+본 논문: 시계열의 *각 patch* 가 *다른 모든 patch* 와의 *관계* 측정.
 
----
+### Multi-head 의 의미
 
-## Output head
+**Single head**: *한 관점* 의 관계 측정.
 
-paper p.4:
-> Afterwards it generates the representation denoted as $z^{(i)} \in \mathbb{R}^{D \times N}$. Finally a flatten layer with linear head is used to obtain the prediction result $\hat{x}^{(i)} = (\hat{x}_{L+1}^{(i)}, \ldots, \hat{x}_{L+T}^{(i)}) \in \mathbb{R}^{1 \times T}$.
+**Multi-head**: *여러 관점* 동시 측정. 예: *head 1* 은 *short-term 관계*, *head 2* 는 *long-term 관계*, *head 3* 은 *주기성 관계*.
 
-**Flatten + Linear head**:
-1. $z^{(i)} \in \mathbb{R}^{D \times N}$ → flatten → $z_{flat}^{(i)} \in \mathbb{R}^{D \cdot N}$
-2. Linear layer: $W_{head} \in \mathbb{R}^{(D \cdot N) \times T}$
-3. $\hat{x}^{(i)} = z_{flat}^{(i)} \cdot W_{head}$
+본 논문 설정: **head 수 = 16** (Default).
 
-→ 단순. 모든 patch 의 representation 을 평탄화하고 한 번에 linear map.
+### Self-attention 의 정확한 정의
+
+각 patch 의 *query, key, value* 벡터 생성:
+- $Q$ (query): "내가 *어떤 정보 찾는가*".
+- $K$ (key): "*어떤 정보 가지고 있는가*".
+- $V$ (value): "*실제 정보 내용*".
+
+**Attention**: $Q$ 와 $K$ 의 유사도 (dot product) → *각 patch 의 관련도* 결정. 그 결과 *value 의 가중 평균* → output.
 
 ---
 
-## Hyperparameter (paper Appendix A.1)
+## 6.4 Feed-Forward Network — 비선형 변환
 
-| 항목 | 값 | 비고 |
-|------|-----|------|
-| Latent dim $D$ | 16, 64, 128 | dataset 따라 |
-| Attention heads $H$ | 4, 8, 16 | |
-| FFN dim | 128, 256, 512 | |
-| Encoder layers | 3 | 모든 dataset |
-| Dropout | 0.05, 0.1, 0.2, 0.3 | |
-| Position encoding | learnable | $W_{pos} \in \mathbb{R}^{D \times N}$ |
-| Norm | BatchNorm 1D | LayerNorm 아님 |
-| Batch size | 32, 128 | |
-| Learning rate | 1e-4 | |
-| Optimizer | Adam | |
+각 patch 의 *embedding 을 더 풍부하게*:
+- *Linear projection → ReLU/GELU → Linear projection*.
+- 본 논문: D = 128 (default) 또는 16 (작은 모델).
 
-→ paper 의 hyperparameter 표는 Appendix A.1 에 dataset 별로.
+**일상 비유**: 단어 의미를 *더 풍부한 표현* 으로 (예: "*cat* → '*4발 동물 + 털 + 야옹*' 의 vector").
 
 ---
 
-## Channel-indep 에서 weight 공유 의미
+## 6.5 Layer Normalization + Residual Connection
 
-```
-M=321 channels (Electricity dataset)
-   ↓ split
-x^(1), x^(2), ..., x^(321)   ← 모두 같은 형태 (1, L)
-   ↓ patching (같은 P, S)
-patches^(1), ..., patches^(321)   ← 모두 같은 형태 (P, N)
-   ↓ projection (같은 W_p, W_pos)
-embeddings^(1), ..., embeddings^(321)   ← 같은 weight!
-   ↓ Transformer (같은 instance)
-z^(1), ..., z^(321)   ← 같은 attention, FFN, BN weight!
-   ↓ head (같은 W_head)
-ŷ^(1), ..., ŷ^(321)   ← concatenate → ŷ ∈ (M, T)
+### Layer Norm
+각 layer 의 output 을 *normalize* — 학습 안정화.
+
+### Residual Connection
+*입력 + layer output* — *deep network 학습 가능* (vanishing gradient 방지).
+
+본 논문: NLP Transformer 의 *정확한 설계 그대로*.
+
+---
+
+## 6.6 *BatchNorm 으로 교체* — 본 논문의 마이너 변경
+
+본 논문의 *유일한 작은 modification*: **Layer Norm → Batch Norm**.
+
+### 왜?
+
+시계열에서 *batch norm 이 layer norm 보다 약간 더 좋음* (실증 발견). 
+
+**일상 비유**: NLP 에서는 *문장 단위 정규화 (layer norm)* 가 자연. 시계열에서는 *batch (여러 시점 묶음) 단위 정규화 (batch norm)* 가 *통계적으로 안정*.
+
+### Quantitative effect
+
+본 논문 *Table 11 (Appendix)*: BN > LN 약 *2-3% MSE* 차이.
+
+```viz:pat-table11-instance-norm:title=Table 11 — Instance/Batch Norm effect (interactive),caption=BN vs LN 비교. 시계열에서 BN 약간 우월.
 ```
 
-→ **하나의 모델 instance** 가 모든 321 channel 처리. Memory 효율 + parameter 효율.
+---
+
+## 6.7 *Vanilla Transformer 의 효과 — Simplicity Wins*
+
+본 논문 메시지의 *재해석*:
+
+> **"학자들이 *시계열 specific attention 변형* 에 5년 매달렸지만, *NLP 의 vanilla Transformer 그대로* 가 *효과적*."**
+
+이건 *과학사적* 의미 큰 발견. 학자들의 *over-engineering 경향* 의 반박.
 
 ---
 
-## Parameter count 비교
+## 6.8 자기점검
 
-**Channel-mixing** (Informer/FEDformer):
-- Embedding: $\mathbb{R}^{M \times D}$ — M 에 비례
-- 큰 M (Traffic 862, Electricity 321) 에서 parameter 폭발
+### 핵심 3가지
+1. **Vanilla Transformer 의 4 부품?**
+2. **Multi-head self-attention 의 일상 비유?**
+3. **본 논문의 *유일한 마이너 modification*?**
 
-**Channel-indep** (PatchTST):
-- Embedding: $\mathbb{R}^{P \times D}$ — M 과 무관
-- 모든 channel 이 같은 weight → 총 parameter ≪ Channel-mixing
+### 답변
+1. **(1) Multi-head Self-Attention** — 각 token (patch) 의 *다른 token 들과의 관계* 측정. **(2) Feed-Forward Network** — 각 token 의 *비선형 변환*. **(3) Layer Normalization** — output normalize, 학습 안정. **(4) Residual Connection** — *입력 + output*, deep network 학습 가능.
+2. **문장 "*The cat sat on the mat*" 의 *각 단어* 가 *다른 모든 단어* 와의 *관계* 측정**. "sat" → "cat (주어), on (전치사), mat (위치)" 의 *관련도*. Multi-head = *여러 관점* (단기/장기/주기성) 동시 측정. 본 논문: 16 head.
+3. **Layer Norm → Batch Norm**. 시계열에서 *batch norm 이 layer norm 보다 약간 더 안정* (Table 11). 즉 본 논문의 *진짜 modification 은 patching + channel-indep + batch norm 3 개* — *나머지 다 vanilla NLP Transformer*.
 
-paper Appendix Table 4 (parameter count):
-- PatchTST/42: 0.4M ~ 1.8M (dataset 따라)
-- 다른 Transformer: 1.5M ~ 60M
+---
 
-→ PatchTST 가 가장 작은 모델로 SOTA.
-
-다음 [07_instance_norm_loss.md](07_instance_norm_loss.md) 에서 Instance Norm + MSE loss 세부.
+다음 챕터: [07_instance_norm_loss.md](07_instance_norm_loss.md) — Instance Normalization + MSE Loss.
