@@ -1,5 +1,14 @@
 # 05. Channel-Independence — 변수 독립 처리
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Channel-Independence 의 정확한 정의
+- 본 논문의 결정적 design choice — M 변수를 같은 weight 로 독립 forward
+- 왜 cross-channel mixing 보다 좋은가
+- iTransformer 등 후속 모델과의 관계
+
+---
+
 > 본 논문의 *두 번째 trick*. M 개 변수 (예: 326 전력 가구) 가 있어도 *각 변수 따로* Transformer 통과 + *모두 같은 weight*.
 
 ---

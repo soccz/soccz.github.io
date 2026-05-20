@@ -1,6 +1,24 @@
 # 05_method_c_intra_inter — 방법론: 주내·주간 어텐션 집계
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Intra-stock attention (한 주식 내) vs Inter-stock attention (주식 간)
+- 두 attention 의 역할 분담
+- Self-attention 의 application
+
+---
+
 > **배경 사다리**: ① Multi-head Self-Attention = 트랜스포머의 핵심 연산. 각 원소가 Query(질문)를 만들고, 다른 원소의 Key(색인)와 비교해 어떤 원소의 Value(값)를 얼마나 가져올지 결정. ② 지역 임베딩 = 한 원소가 주변 원소들로부터 정보를 모아 만든 압축 표현. ③ Cross-time correlation = 종목 $i$의 시각 $t$와 종목 $j$의 시각 $t' \neq t$ 사이의 상관관계. 이 세 개념이면 이 절을 따라갈 수 있다.
+
+### 🌱 Intra/Inter Attention — 일상 비유
+
+**한 줄로**: "각 종목의 8일 일기를 먼저 자기 안에서 정리(Intra) → 그 정리본을 다른 종목들끼리 공유(Inter)".
+
+- **Intra (주내)**: 각 학생이 자기 일주일치 일기를 다시 읽고 핵심을 추림 → 8일분의 정보가 1개의 "압축 노트"로 정리
+- **Inter (주간)**: 학생들끼리 서로의 압축 노트를 보고 영향 주고받음 → 친구의 어제 노트엔 그 친구의 지난주가 다 들어있음
+- **숨겨진 트릭**: 노트가 이미 시간 압축이므로, "오늘끼리만 봤는데" 실제론 "지난주 친구 → 오늘 나"의 정보 흐름이 가능 (cross-time relay)
+
+**왜 이 순서**: 만약 Inter를 먼저 하면 N×T×N×T 어텐션이 필요 (4차 폭발). Intra로 T를 압축한 뒤 Inter 하면 N×N으로 절감되면서도 cross-time 효과는 보존.
 
 ---
 

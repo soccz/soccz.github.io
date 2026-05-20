@@ -1,5 +1,14 @@
 # 02. 제목과 Abstract — 4 문장의 진짜 의미
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 논문 제목 ("The Virtue of Complexity") 의 정확한 의미
+- 저자 3인 (Kelly·Malamud·Zhou) — Yale + AQR + Swiss Finance
+- Abstract 4 문장의 한국어 의역
+- 본 논문의 핵심 발견 (P=12000 / T=12 에서 SR 0.47/year)
+
+---
+
 > 영어 원문 abstract 의 4 문장을 *한국어로 쉽게* 풀이. 영어 못 읽어도 OK.
 
 ---

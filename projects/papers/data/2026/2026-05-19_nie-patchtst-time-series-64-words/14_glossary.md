@@ -1,5 +1,14 @@
 # 14. 용어집·표기법·References (비유 포함)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 시계열 forecasting 용어 (lookback / horizon / patching / channel-indep 등)
+- ML 용어 (Transformer / attention / BatchNorm / masking)
+- 수식 기호 사전
+- Reference list
+
+---
+
 > 본 논문에 등장하는 모든 약어·기호·핵심 용어·references 의 사전.
 
 각 entry 에 **비유** 추가 — 영어 못 읽어도 한국어 + 비유로 이해 가능.

@@ -1,5 +1,14 @@
 # 01. 시작하기 전에 — 이 해설집을 어떻게 읽으면 되나
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 한 문장으로 뭘 하는지 ("SSM + Transformer 결합으로 확률 시계열 예측")
+- 7 개 핵심 개념 (SSM / LDS / Kalman / VAE / ELBO / Transformer / CRPS)
+- 4 challenges + 3 contributions
+- RNN 완전 거부의 의미
+
+---
+
 ## 이 논문이 뭘 하는 논문인가요?
 
 한 문장으로 말하면:

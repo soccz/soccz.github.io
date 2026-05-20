@@ -1,5 +1,14 @@
 # 10. 용어집 + 기호 사전
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 자산가격 용어 (Sharpe / IR / α / R²)
+- ML 용어 (ridge / RFF / kernel / interpolation)
+- RMT 용어 (Marchenko-Pastur / Stieltjes / spectrum)
+- 수식 기호 사전
+
+---
+
 > 본 논문에 나오는 모든 기호·약어·핵심 용어를 사전 형태로.
 
 ---

@@ -1,5 +1,14 @@
 # 15. 메타 통찰 15개 — "이해를 넘어서"
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 던지는 **15 가지 메타 메시지**
+- Simplicity wins / Foundation model 시대
+- 4 year 진화 (Informer → Autoformer → FEDformer → PatchTST)
+- Quant finance transfer 가능성
+
+---
+
 > 이 chapter 는 **논문 원문에 직접 쓰여 있지 않지만, 논문을 깊이 읽으면 자연스럽게 얻을 수 있는 통찰·시사점·추론** 정리. multi-level 분석 (표면적 / 진짜 이유 / 더 깊은 통찰 / 일반화 가능한 사상).
 
 ---

@@ -1,5 +1,14 @@
 # 18. Appendix Deep Dive — A.1 ~ A.7
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Appendix A.1 ~ A.7 의 정밀 풀이
+- A.1.4 default hyperparameter
+- A.6 sensitivity analysis (Fig 5, Table 14)
+- 본 paper 의 supplementary 의 모든 결과
+
+---
+
 > Paper Appendix (p.13–24) 의 *7 sub-section* 정리. 친근 풀이 + step-by-step.
 
 ---

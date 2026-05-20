@@ -1,5 +1,13 @@
 # 16. 실행 코드 — PyTorch 로 ProTran 직접 만들기
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- PyTorch 구현 — Position embedding + Multi-head attention + Single-layer ProTran
+- ELBO loss + Training step
+- Sample prediction
+
+---
+
 이 파일은 **실제 동작하는 PyTorch 코드**로 ProTran single-layer 를 구현하고, 합성 데이터에서 학습·예측까지 보여준다.
 
 복붙해서 `.py` 파일로 저장 후 `python protran_demo.py` 로 실행 가능.

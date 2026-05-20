@@ -1,5 +1,14 @@
 # 12. Ablation Study — Patching + Channel-Independence 의 효과 분해
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- **Table 7** — Patching + Channel-Indep 의 각각의 효과
+- 4 setting 비교 (P+CI / CI / P / Original)
+- 각 부품의 contribution
+- Figure 4 patch length 의 sweet spot
+
+---
+
 > 본 논문 **Table 7** 의 ablation + **Figure 4** 의 patch length sensitivity. 두 trick 의 개별 contribution 정량.
 
 이 chapter 는 **Table 7 의 모든 cell + Figure 4 의 모든 panel** 을 정밀 해석한다.
@@ -27,6 +36,30 @@
 ---
 
 ## 12.3 Table 7 — 4 가지 경우 비교 (★ 정밀 cell-by-cell)
+
+### 📖 처음 보는 사람을 위한 — Table 7 읽는 법
+
+**이 표가 비교하는 것**: PatchTST 의 2 핵심 부품 (Patching, Channel-Indep) 의 각각의 효과. 4 settings 비교.
+
+**4 settings**:
+
+| Setting | Patching | Channel-Indep | 의미 |
+|---------|----------|---------------|------|
+| **P+CI** | ✓ | ✓ | full PatchTST (본 논문) |
+| **CI** | ✗ | ✓ | Channel-Indep 만 — patching 없이 |
+| **P** | ✓ | ✗ | Patching 만 — channel-mixing |
+| **Original** | ✗ | ✗ | vanilla Transformer (baseline) |
+
+**3 개만 보면 됨**:
+1. **CI 단독** = 25% MSE reduction → Channel-Indep 가 **메인 기여**.
+2. **P 단독** = 3% reduction → Patching 은 **마이너 기여** (but computational enabler).
+3. **P+CI** = 30~36% reduction → **시너지 효과**.
+
+**핵심 발견**: 본 논문 메시지가 "patching 의 효과" 인 줄 알지만, **사실 Channel-Indep 가 더 큰 효과**. Patching 은 longer L 가능하게 하는 enabler 역할.
+
+**원문 위치**: paper Table 7, journal p.15.
+
+---
 
 본 논문 Table 7 (p.15) 의 정확한 수치. 3 datasets × 2 horizons = 6 sub-tables × 4 models.
 

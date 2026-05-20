@@ -1,5 +1,14 @@
 # 07. 실제 미국 시장 1926-2020 — 가장 흥미로운 챕터
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- **★ CRSP 1926-2020** 실증 — 가장 흥미로운 챕터
+- Goyal-Welch 15 predictor + RFF P=12,000
+- **Table I**: Linear ridgeless SR=-0.11 vs Nonlinear ML SR=0.47
+- 14/15 NBER recessions 자동 divest
+
+---
+
 > 본 논문이 *이론* 으로 보인 것을 *실제 데이터* 로 검증. CRSP 1926-2020 + Goyal-Welch 15 변수 + 머신러닝 → SR 0.47/year, 14/15 NBER 침체 자동 비중 감소.
 
 ---
@@ -177,6 +186,34 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 ![Figure 8](figures/page33_Fig8_empirical_sharpe.png)
 
 *paper p.491 Figure 8 — T=12 의 Sharpe / α / IR / t-stat.*
+
+### 📖 처음 보는 사람을 위한 — Fig. 8 읽는 법 (★ 본 논문 핵심)
+
+**한 줄로**: "**복잡도 c 가 늘수록 4 metric 모두 향상** — Virtue of Complexity 의 시각적 입증".
+
+**그림 구조 (2×2 panel)**:
+
+| panel | metric | y-range | 의미 |
+|------|--------|---------|------|
+| **A (좌상)** | Sharpe Ratio | 0~0.5 | "위험 1 단위당 보상" — 가장 중요한 운용 지표 |
+| **B (우상)** | Alpha (월간) | 0~0.04 | "시장 buy-and-hold 위의 초과 수익" |
+| **C (좌하)** | Information Ratio | 0~0.35 | "α / 잔차 변동성 = risk-adjusted α" |
+| **D (우하)** | Alpha t-stat | 0~3.5 | "통계적 유의성" (t>2 유의, t>3 robust) |
+
+**X-axis 의 특별한 break**:
+- 왼쪽: c ∈ [0, 50] (저 ~ 중간 복잡도)
+- 오른쪽: c ∈ [990, 1000] (극단 복잡도)
+- → "c 가 모든 범위 에서 monotone 증가" 강조
+
+**3 개만 보면 됨**:
+1. **Panel A**: Sharpe 가 c 증가에 따라 **0 → 0.5** 로 증가. T=12 의 매우 작은 sample 에서도 SR 0.5 (= 연 ~1.7).
+2. **Panel D**: Alpha t-stat 이 **0 → 3.5** 로 증가. **모든 c 에서 통계 유의** (t>2).
+3. **모두 monotone** (Theorem 1 의 실증 입증).
+
+**한 줄 결론**:
+> "복잡함 = 미덕. P>>T 의 ridge 가 단순 모델 (Goyal-Welch) 을 완전히 능가."
+
+**원문 위치**: paper Fig. 8, journal p.491.
 
 ### 어떻게 읽나? (Step-by-step)
 
@@ -392,6 +429,31 @@ ML timing 의 position 이 *거의 항상 양*. 음의 position (short) 드물�
 ---
 
 ## 7.9 *Table I* — Goyal-Welch 2008 와의 정면 비교 ★ — **Section V.D**
+
+### 📖 처음 보는 사람을 위한 — Table I 읽는 법 (★ 본 논문 자랑 표)
+
+**이 표가 비교하는 것**: Goyal-Welch (2008) 의 비관적 결론 ("수익률 예측 불가") vs 본 논문 ML 모델. **모든 metric 에서 본 논문 압도**.
+
+**용어 풀이**:
+
+| 용어 | 의미 | 일상 비유 |
+|------|------|-----------|
+| **Linear ridgeless** | Goyal-Welch 의 단순 OLS | "공식 1 개로 답" |
+| **Nonlinear ML** | 본 논문 (RFF P=12,000 + ridge) | "복잡함의 미덕" |
+| **OOS SR** | Out-of-Sample Sharpe ratio | "한 번도 안 본 시점의 위험조정 수익" |
+| **IR** | Information Ratio (alpha / 잔차 std) | "시장 위 risk-adjusted 알파" |
+| **t-stat** | 통계적 유의성 | "t>2 유의, t>3 robust" |
+
+**3 개만 보면 됨**:
+1. **Linear ridgeless SR = -0.11** (Goyal-Welch 의 비관 정당화).
+2. **Nonlinear ML SR = 0.47** (60 percentile 압도, t=4.5).
+3. **연 50 bp ~ 연 7%** 의 운용 가치.
+
+**핵심 메시지**: **"수익률 예측 불가" 는 모델이 너무 단순했기 때문**. ML 의 P>>T 복잡도 + ridge regression 으로 정면 반박.
+
+**원문 위치**: paper Table I, journal p.480-490.
+
+---
 
 **각주 43 (Goyal-Welch-Zafirov 2023 update)**: Goyal-Welch (2008) 의 update. *timing-strategy performance* 일부 다룸.
 

@@ -1,5 +1,13 @@
 # 06. Single-Layered ProTran — Generative Model (Section 3.1 전반)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Single-layer ProTran 의 정확한 구조 (Eq 5-9)
+- Latent space attention 의 의미
+- Generative model 의 정의
+
+---
+
 paper p.4 (Section 3.1 의 generative model 부분). ProTran 의 가장 기본 architecture — Eq 5-9.
 
 이 챕터의 목표: **4 단계의 생성 과정을 step-by-step 으로 풀어 쓴다**. 각 단계가 무엇을 하고 왜 필요한가.

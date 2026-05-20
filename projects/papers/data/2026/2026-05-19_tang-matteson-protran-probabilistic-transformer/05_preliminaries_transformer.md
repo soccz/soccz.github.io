@@ -1,5 +1,14 @@
 # 05. Transformer Architectures — Section 2.2 풀이
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Transformer 의 attention mechanism
+- Self-attention vs cross-attention
+- 본 논문에서 Transformer 의 역할 — non-Markovian dynamics
+- 다른 시계열 Transformer (Informer / Autoformer) 와의 차이
+
+---
+
 paper p.3 (Section 2.2) 의 Eq 4 와 그 주변 텍스트를 풀어 쓴다.
 
 이 챕터의 목표: **Attention 메커니즘이 무엇이고, ProTran 이 어떻게 다르게 쓰는가**.

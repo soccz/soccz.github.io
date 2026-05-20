@@ -1,5 +1,14 @@
 # 05c. *현실적 환경* + Theorem 1 — 본 논문의 핵심
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 현실적 환경 (misspecified) 의 분석
+- **★ Theorem 1** — Virtue of Complexity 의 핵심 정리
+- Propositions 5, 6 의 의미
+- SR(z; cq; q) 의 monotone + concave 증명
+
+---
+
 > 본 챕터는 본 논문의 *main result* 인 **Theorem 1 (Virtue of Complexity)** 을 친근하게. *Figure 6* 가 시각적 statement.
 
 ---

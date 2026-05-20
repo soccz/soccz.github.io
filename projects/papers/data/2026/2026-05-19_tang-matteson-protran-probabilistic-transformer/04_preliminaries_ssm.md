@@ -1,5 +1,14 @@
 # 04. Variational State-Space Models — Section 2.1 풀이
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- State-Space Model (SSM) 의 정확한 정의
+- LDS (Linear Dynamical System) — SSM 의 특수 케이스
+- Kalman Filter 와 SSM 의 관계
+- 본 논문이 SSM 위에 Transformer 얹는 이유
+
+---
+
 paper p.2-3 (Section 2.1) 의 수식 Eq 1-3 을 한국어로 풀어 쓴다.
 
 이 챕터의 목표: **수식 한 줄 한 줄을 일상 언어로 다시 설명한다**. 처음 보는 기호는 모두 정의부터.

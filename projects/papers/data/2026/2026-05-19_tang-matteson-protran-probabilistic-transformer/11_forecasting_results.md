@@ -1,5 +1,13 @@
 # 11. 시계열 예측 결과 — Section 5.1
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- **★ Table 1** — 5 datasets × 12 models CRPS_sum
+- 4/5 datasets best
+- Solar 0.194 / Traffic 0.028 / Taxi 0.084 / Wikipedia 0.047 — 모두 best
+
+---
+
 paper p.7-8 (Section 5.1). **Table 1 (5 datasets × 12 models) + Fig 2 (Traffic 예측) + Table 2 (ablation)**.
 
 이 챕터의 목표: **표와 그림을 어떻게 읽고, 각 수치가 무슨 의미인지** 깊이 풀어 쓴다. 핵심: "왜 ProTran 이 이긴 게 의미 있는가" 를 baseline 별로 비교.
@@ -11,6 +19,32 @@ paper p.7-8 (Section 5.1). **Table 1 (5 datasets × 12 models) + Fig 2 (Traffic 
 ![Table 1 CRPS](figures/Table1_crps.png)
 
 (Table 1, paper p.7)
+
+### 📖 처음 보는 사람을 위한 — Table 1 읽는 법 (★ 본 논문 자랑 표)
+
+**이 표가 비교하는 것**: 12 모델 × 5 datasets 의 **CRPS_sum** (확률적 예측 정확도). **낮을수록 좋음**. 본 논문 **4/5 datasets best**.
+
+**용어 풀이**:
+
+| 용어 | 의미 | 일상 비유 |
+|------|------|-----------|
+| **CRPS_sum** | Continuous Ranked Probability Score 의 시계열 합 | "확률 분포 예측이 실제값과 얼마나 잘 맞나" — 낮을수록 ★ |
+| **5 datasets** | Solar / Electricity / Traffic / Taxi / Wikipedia | "확률 예측 표준 벤치마크" |
+| **12 모델** | VES → GP-Copula → ... → **ProTran** | 시간순 (오래된 → 최신) 정렬 |
+
+**3 개만 보면 됨**:
+1. **Solar 0.194** (ProTran best)
+2. **Traffic 0.028** (best) — 가장 큰 우위
+3. **Taxi 0.084** + **Wikipedia 0.047** — 둘 다 best
+4. Electricity 만 NKF 와 tie (0.016)
+
+**한 줄 결론**:
+> "ProTran 이 5 datasets 중 4 best — SSM + Transformer 결합의 정당화. TimeGrad (diffusion) 도 능가."
+
+**원문 위치**: paper Table 1, journal p.7.
+
+---
+
 
 ### Step 1 — 표의 구조 이해
 

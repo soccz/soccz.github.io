@@ -1,5 +1,13 @@
 # 03. 왜 PatchTST? DLinear 도전 + 본 논문 응답
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 시계열 forecasting 의 2022 위기 (DLinear 가 Transformer 패배)
+- 본 논문이 도전한 3 의문 — (a) 왜 vanilla Transformer 가 시계열에서 실패했나, (b) 어떻게 고치나, (c) self-supervised 가능한가
+- Autoformer / Informer / FEDformer 의 한계
+
+---
+
 > 본 논문이 *왜 나왔는지* 의 학계 역사. 2017년 Transformer 등장부터 2023년 PatchTST 까지.
 
 ---
@@ -216,6 +224,32 @@ paper Table 1 (p.4) 이 paper 의 **명함 같은 표**. Traffic dataset 의 한
 ![Figure 1 — PatchTST Architecture](figures/Fig1_architecture.png)
 
 (paper p.4 Figure 1)
+
+### 📖 처음 보는 사람을 위한 — Figure 1 (본 논문 심장) 읽는 법
+
+**한 줄로**: "**3 panel** — (a) Channel-Independence 의 구조 / (b) Patching + Transformer / (c) Masked self-supervised pre-training. 본 논문의 모든 핵심 design 한 그림".
+
+**3 panel 의미**:
+
+| panel | 무엇 | 일상 비유 |
+|------|------|-----------|
+| **(a) 위** | Multivariate → M channel 분리 → 각 channel 독립 Transformer | "여러 학생 각각 독립 시험 (서로 영향 X)" |
+| **(b) 좌하** | Instance Norm → Patching → Transformer → Linear Head | "한 학생 시험지: 정규화 → 패치 분할 → 신경망 → 예측" |
+| **(c) 우하** | Random masking → 빈칸 reconstruction (self-supervised) | "BERT 의 빈칸 맞히기 시계열 버전" |
+
+**그림에서 알아낼 것 3가지**:
+1. **(a) Channel-Independence**: M 변수 모두 **같은 Transformer weight** 로 독립 forward → overfit 방지.
+2. **(b) Patching**: 시계열을 P-length patch 로 → token. ViT 의 patching 정신.
+3. **(c) Self-supervised**: 40% mask + reconstruction → transfer learning 가능.
+
+**일상 비유**:
+- (a) = "**한 선생님이 학생 N 명 같은 방식으로 평가**"
+- (b) = "**책을 64-단어 patch 로 잘라 BERT 처리**"  
+- (c) = "**빈칸 채우기 연습** → 다른 시험에 transfer"
+
+**원문 위치**: paper Fig. 1, journal p.4.
+
+---
 
 ### paper caption (p.4)
 

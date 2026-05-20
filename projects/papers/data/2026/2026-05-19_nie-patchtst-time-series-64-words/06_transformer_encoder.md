@@ -1,5 +1,14 @@
 # 06. Transformer Encoder — Vanilla 그대로
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 쓰는 Transformer encoder — vanilla 그대로
+- Eq 2 (patch projection + position embedding)
+- Eq 3 (multi-head self-attention)
+- BatchNorm vs LayerNorm 의 minor modification
+
+---
+
 > 본 논문이 사용한 *Transformer encoder* 의 구조. *시계열 specific 변형 없이* vanilla 그대로.
 
 ---

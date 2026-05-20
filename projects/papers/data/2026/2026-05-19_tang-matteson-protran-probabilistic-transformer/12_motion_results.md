@@ -1,5 +1,13 @@
 # 12. 인간 동작 예측 결과 — Section 5.2
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Human motion prediction 결과 (Table 3)
+- Human3.6M / HumanEva-I 의 ADE / FDE metric
+- 4 cells 중 3 best
+
+---
+
 paper p.8-9 (Section 5.2). **Table 3 (11 models × 2 datasets) + Fig 3 (pose visualization)**.
 
 이 챕터의 목표: **모션 예측이 시계열 예측과 어떻게 다른지, 결과를 어떻게 읽는지, 그림이 말하는 게 무엇인지** 깊이 풀어 쓴다.

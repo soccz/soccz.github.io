@@ -1,5 +1,13 @@
 # 04. 논문의 가정 (수학 setup) — 친근한 비유로
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 논문의 수학적 setup — Assumptions 1-5
+- 5 가정의 의미 (single-asset DGP, signal, eigenvalue, random β, sufficiently mixed)
+- Random feature framework
+
+---
+
 > 본 챕터는 *논문의 분석 환경* (Assumptions 1-5 + Lemma 1 + Proposition 1) 을 *수식 거의 없이* 친근하게 풀이. 수식이 두려운 사람은 *비유 박스* 만 봐도 메시지 다 이해 가능.
 
 ---

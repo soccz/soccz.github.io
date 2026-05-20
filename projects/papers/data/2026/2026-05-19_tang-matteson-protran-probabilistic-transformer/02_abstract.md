@@ -1,5 +1,14 @@
 # 02. 제목과 Abstract — 한 줄씩 풀어 읽기
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 논문 제목 ("Probabilistic Transformer") 의 정확한 의미
+- 저자 (Cornell Univ) 의 학계 위치
+- Abstract 6 문장의 한국어 의역
+- 본 논문의 4 핵심 발견 (4/5 datasets best + RNN 없이)
+
+---
+
 ## 2.1 제목: "Probabilistic Transformer for Time Series Analysis"
 
 한국어로 풀면: **"시계열 분석을 위한 확률적 트랜스포머"**

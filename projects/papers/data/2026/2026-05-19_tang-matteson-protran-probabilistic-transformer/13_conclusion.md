@@ -1,5 +1,14 @@
 # 13. 결론과 의의 — Section 6 풀이
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 5 ML design principles
+- 한계 — O(T²) attention complexity
+- Sparse Transformer 결합 가능성
+- 후속 paper (TimeGrad, CSDI) 와의 관계
+
+---
+
 paper p.9-10 (Section 6). 짧은 결론과 솔직한 한계 명시.
 
 이 챕터의 목표: **paper 가 자신을 어떻게 평가하고, 무엇이 한계이고, 어떻게 발전 가능한지** 풀어 쓴다.

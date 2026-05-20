@@ -1,5 +1,12 @@
 # 04_claims — 핵심 Claim 해체
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 paper 의 핵심 claim 4 가지
+- 각 claim 의 정확한 의미
+
+---
+
 > **배경 사다리**: ① IC (Information Coefficient) = 예측값과 실제 수익률의 Spearman 상관계수, 값이 클수록 예측이 실제와 더 일치. ② Rank IC = IC의 순위 기반 버전 (outlier에 robust). ③ p-value < 0.01 = 1% 유의수준에서 통계적으로 의미 있는 차이. 이 세 가지를 알면 아래 Claim들의 증거 구조를 따라갈 수 있다.
 
 ---

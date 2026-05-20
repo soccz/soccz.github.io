@@ -1,5 +1,14 @@
 # 11. 메타 통찰 12개 — 논문이 진짜 가르치는 것
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 던지는 **12 가지 메타 메시지**
+- 60 년 simple model 통념의 mathematical regime
+- Box paradox / Occam's blunder
+- Kelly-Pelger 계보 (RP-PCA → AE-AP → DLAP → VOC)
+
+---
+
 > 이 챕터는 *논문 원문에 직접 안 쓰여 있는 통찰*. 깊이 읽으면 자연스럽게 얻는 *학문적 메시지*. 12개의 *깊은 통찰* 을 무지식자 친화로.
 
 ---

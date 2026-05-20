@@ -1,5 +1,14 @@
 # 08. Self-Supervised Masked Reconstruction
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Self-supervised masked reconstruction
+- 40% mask ratio — BERT (15%) 와의 차이
+- Pre-train → fine-tune 의 정확한 절차
+- Transfer learning 의 가능성
+
+---
+
 > 본 논문의 *두 번째 큰 contribution*. 시계열의 *일부 patch 가리고 (mask) 모델이 그 patch 를 예측* 하게 학습 → *transferable representation*.
 
 ---

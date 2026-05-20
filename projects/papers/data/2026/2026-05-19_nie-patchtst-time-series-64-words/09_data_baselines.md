@@ -1,5 +1,14 @@
 # 09. 데이터셋 + Baseline 모델 — 실험 setup
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 8 datasets — Weather, Traffic, Electricity, ETT (4 variants), ILI
+- 7 baselines — Transformer, Autoformer, FEDformer, Informer, Pyraformer, DLinear, LogTrans
+- 4 horizon (96, 192, 336, 720)
+- 평가 metric (MSE, MAE)
+
+---
+
 > 본 논문이 사용한 **8 datasets** + **8 baseline 모델**. 무지식자 친화로.
 
 ---

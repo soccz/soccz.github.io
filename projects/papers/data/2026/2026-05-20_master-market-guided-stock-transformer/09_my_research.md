@@ -1,5 +1,12 @@
 # 09_my_research — 내 연구와의 연결
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 내 연구와의 연결
+- 시그널 활용 방법
+
+---
+
 > 이 절은 `_profile.md`의 APF (Attention Pattern Fields), Grokking in TS Transformers, P1 ProTran-TFA 세 active/paused 트랙과의 구체적 연결을 다룬다. 일반론 나열 금지 — 구체적 mechanism, axis, 수식 요소를 지정한다.
 
 ---

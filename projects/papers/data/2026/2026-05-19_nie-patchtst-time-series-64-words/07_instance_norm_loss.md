@@ -1,5 +1,14 @@
 # 07. Instance Normalization + MSE Loss
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Instance Normalization 의 정확한 의미
+- Loss = MSE (단순)
+- distribution shift 해결 메커니즘
+- RevIN (2022) 과의 관계
+
+---
+
 > 본 논문의 **"마이너" trick 같지만 사실 핵심** — Table 11 (ch18) 의 정확한 수치로 **17% MSE reduction** 기여.
 
 ---

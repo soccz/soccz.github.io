@@ -1,5 +1,12 @@
 # 10_extensions_b_followups — 사고 확장: 후속 논문 3편
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 paper 이후의 follow-up 논문 3 편
+- 학계 동향
+
+---
+
 ---
 
 ## 선행 논문: Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting (Lim et al., IJF 2021, arXiv:1912.09363)

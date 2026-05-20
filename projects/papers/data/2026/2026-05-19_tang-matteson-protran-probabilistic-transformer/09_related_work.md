@@ -1,5 +1,13 @@
 # 09. 관련 연구 — Section 4 풀이 + 시계열 deep learning 전체 lineage
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 학문적 lineage
+- SSM literature (Linderman 2017, Krishnan 2017) + Transformer literature
+- DeepAR, TFT, MQRNN 과의 비교
+
+---
+
 paper p.6 (Section 4) 의 4 카테고리를 깊이 풀고, 거기서 더 나아가 **시계열 deep learning 의 전체 역사** 속에 ProTran 의 위치를 짚어본다.
 
 이 챕터의 목표: 단순 baseline 목록이 아닌, **각 baseline 이 왜 등장했고 어떤 한계가 ProTran 을 낳았는지** 의 흐름을 이해.

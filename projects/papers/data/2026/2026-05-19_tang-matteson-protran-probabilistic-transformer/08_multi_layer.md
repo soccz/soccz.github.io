@@ -1,5 +1,13 @@
 # 08. Multi-Layered ProTran (Section 3.2)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Multi-layer ProTran 의 확장 (L=1, 2, 3)
+- Hierarchical latent space
+- Capacity scaling 의 의미 (Eq 16-20)
+
+---
+
 paper p.5-6 (Section 3.2). Single-layer 를 잠재 변수의 hierarchy 로 확장.
 
 이 챕터의 목표: **"왜 잠재를 여러 층으로 쌓는가" 의 직관을 잡고, Eq 12-20 의 새 단계 (Eq 16) 만 추가됨을 이해**.

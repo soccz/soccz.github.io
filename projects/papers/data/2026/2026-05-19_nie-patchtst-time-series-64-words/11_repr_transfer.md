@@ -1,5 +1,14 @@
 # 11. Self-supervised + Transfer Learning 결과
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Self-supervised pre-train → fine-tune 의 정확한 setup
+- Source = Electricity → 6 target datasets
+- Lin. Prob. vs Fine-tuning vs Supervised 비교
+- Foundation model 시대의 출발
+
+---
+
 > 본 논문 Section 4.2 의 *self-supervised 결과* 와 *transfer learning 결과*.
 
 ---

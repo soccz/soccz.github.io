@@ -1,5 +1,13 @@
 # 10. Supervised 결과 — 21% MSE reduction (★ 본 논문의 핵심)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- **★ Table 3** — 8 datasets × 4 horizons × 8 models = 256 cells
+- 본 논문의 자랑 21% MSE reduction 의 정확한 분해
+- PatchTST/64 vs /42 의 의미
+
+---
+
 > 본 논문의 **실증 main result**. Table 3 (224 cells = 7 datasets × 4 horizons × 8 models) + Figure 2 (look-back window 6 panel) + Figure 3 (ILI forecasting viz) 의 정밀 풀이.
 
 이 chapter 는 **paper Table 3 의 모든 cell** 과 **Figure 2 의 모든 panel** 을 한 칸·한 picture 씩 해석한다.
@@ -27,6 +35,41 @@ paper Section 4.1 의 main result. 모든 후속 paper 가 이 표를 인용한�
 ---
 
 ## 10.3 Table 3 — 7 datasets × 4 horizons × 8 models
+
+### 📖 처음 보는 사람을 위한 — Table 3 읽는 법 (★ 본 논문의 자랑 표)
+
+**이 표가 비교하는 것**: 8 모델 × 7 datasets × 4 horizons = 224 cells. **PatchTST 가 대부분 cell 에서 best, 평균 21% MSE 감소**.
+
+**용어 풀이 — 이것만 알면 표 읽힘**:
+
+| 용어 | 의미 | 일상 비유 |
+|------|------|-----------|
+| **horizon T** | 미래 몇 시점 예측 (96 / 192 / 336 / 720) | "내일 / 일주일 / 한 달 / 일년 후 예측" |
+| **lookback L** | 과거 몇 시점 사용 (보통 96) | "오늘 점수 예측에 며칠치 점수 보나" |
+| **PatchTST/64** | patch length 64 의 PatchTST | "64-time-step 한 patch" |
+| **PatchTST/42** | patch length 42 (paper 권장 default) | "더 작은 patch" |
+| **MSE** | Mean Squared Error | "예측 오차 제곱 평균. **낮을수록 좋음**" |
+| **MAE** | Mean Absolute Error | "예측 오차 절댓값 평균" |
+| **굵게 표시** | best 모델 | 그 cell 의 1위 |
+
+**표 읽는 순서 — 3 단계**:
+1. **행** = 8 models (Transformer, Autoformer, FEDformer, PatchTST/64, PatchTST/42, ...)
+2. **열** = 8 datasets × 4 horizons = 32 column groups
+3. **각 cell** = MSE 값 (낮을수록 ★)
+
+**3 개만 보면 됨**:
+1. **Traffic T=96**: PatchTST 0.360 vs FEDformer 0.576 = **37% MSE reduction** (최대).
+2. **Electricity T=96**: PatchTST 0.129 vs FEDformer 0.186 = **31% reduction**.
+3. **224 cells 중 ~80% 에서 PatchTST best** — 우연 아닌 일관된 우위.
+
+**한 줄 결론**:
+> "vanilla Transformer + patching + channel-indep 의 단순 trick 으로 21% MSE 감소. 시계열 forecasting 시대 구분점."
+
+**놓치기 쉬운 한 가지**: ETTh1 일부 cell 에서 DLinear 가 PatchTST 이김 — small dataset effect (20.5.5 참조).
+
+**원문 위치**: paper Table 3, journal p.5-6.
+
+---
 
 본 논문 **가장 핵심 표**. ETT 4개 + Electricity + Traffic + Weather + ILI = 8 datasets (paper main + appendix). main paper Table 3 은 7개 (Weather, Traffic, Electricity, ILI, ETTh1, ETTh2, ETTm1, ETTm2 중 일부 main + 일부 appendix).
 

@@ -1,5 +1,14 @@
 # 02. 제목과 Abstract — 한국어로 쉽게
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 논문 제목 ("A Time Series is Worth 64 Words") 의 정확한 의미
+- 저자 4 인 (Princeton + IBM) 의 학계 위치
+- Abstract 의 문장별 의역 + 일상 비유
+- 본 논문의 4 핵심 발견 (21% MSE↓ + foundation model 시대 열림)
+
+---
+
 > Paper 의 영어 제목 + 영어 abstract 를 *한국어로 의역* + *한 문장씩 풀이*. 영어 못 읽어도 OK.
 
 ---

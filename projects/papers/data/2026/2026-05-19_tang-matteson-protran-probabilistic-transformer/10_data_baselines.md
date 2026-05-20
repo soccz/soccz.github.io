@@ -1,5 +1,13 @@
 # 10. 데이터셋 + Baseline + 평가 지표 — Section 5 시작
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 5 datasets — Solar, Electricity, Traffic, Taxi, Wikipedia
+- 11 baselines (RNN, SSM, Transformer 계열)
+- 평가 metric — CRPS (Continuous Ranked Probability Score)
+
+---
+
 paper p.6-7 (Section 5 의 두 task 셋업). **Table 1, Table 3 을 읽기 전에 알아야 할 사전 정보**.
 
 이 챕터의 목표: **각 dataset 이 어떤 데이터이고, 왜 그 baseline 들과 비교하고, 평가 지표가 정확히 무엇을 측정하는지** 깊이 풀어 쓴다.

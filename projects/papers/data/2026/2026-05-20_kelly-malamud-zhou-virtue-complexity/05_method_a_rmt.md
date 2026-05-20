@@ -1,5 +1,13 @@
 # 05a. Random Matrix Theory — 도구를 친근하게
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Random Matrix Theory (RMT) 의 핵심 도구
+- Marchenko-Pastur 분포 + Stieltjes transform
+- 본 논문에서 RMT 의 역할 — high-dim asymptotic
+
+---
+
 > 본 논문이 사용하는 *수학 도구* 인 Random Matrix Theory (RMT) 를 *수식 거의 없이* 시각화 + 일상 비유로. 이 도구 하나가 본 논문 모든 결과의 *기초*.
 
 ---

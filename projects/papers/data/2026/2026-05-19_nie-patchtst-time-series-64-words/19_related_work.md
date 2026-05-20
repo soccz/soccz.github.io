@@ -1,5 +1,13 @@
 # 19. Related Work — 본 논문이 인용하는 모든 prior 작품
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 인용하는 모든 prior 작품 (Transformer / Autoformer / DLinear / ViT / BERT)
+- 학계 lineage — NLP 의 patching → 시계열 적용
+- 본 논문의 학문적 위치
+
+---
+
 > Paper Section 2 의 *모든 인용 작품* 의 brief description + 본 논문과의 관계.
 
 ---

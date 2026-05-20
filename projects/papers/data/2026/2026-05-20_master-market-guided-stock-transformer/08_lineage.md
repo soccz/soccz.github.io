@@ -1,5 +1,13 @@
 # 08_lineage — 이론적 계보
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 paper 의 이론적 계보
+- Stock Transformer literature
+- Quant finance ML literature
+
+---
+
 > **배경 사다리**: ① 그래프 신경망(GNN) = 노드(예: 종목)와 엣지(예: 상관관계)로 이루어진 그래프 구조 데이터를 처리하는 신경망. ② Attention over sequences = 시퀀스의 각 원소가 다른 원소들에 가중치를 두는 메커니즘. ③ Factor investing = 주식 수익률을 설명하는 공통 요인(팩터)을 찾아 포트폴리오를 구성하는 투자 전략. 이 세 개념을 알면 계보의 흐름을 따라갈 수 있다.
 
 ---

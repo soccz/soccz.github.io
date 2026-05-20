@@ -1,5 +1,14 @@
 # 20. Analysis — 결과의 *deep 해석*
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 21% MSE reduction 의 source 분해
+- 본 논문의 분야 paradigm shift 의의
+- DLinear 가 이기는 cell 의 정직 분석 (20.5.5)
+- Table 14 (5 seeds) + Figure 5 sensitivity
+
+---
+
 > 본 논문 실증 결과 (Table 3, Figure 2, Table 7) 의 *표면 수치 너머* 의 분석.
 
 ---

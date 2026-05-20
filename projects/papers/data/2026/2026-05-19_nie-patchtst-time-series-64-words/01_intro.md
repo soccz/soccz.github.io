@@ -1,5 +1,14 @@
 # 01. 시작하기 전에 — 진짜 쉬운 한 줄 소개
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 한 문장으로 뭘 하는지 ("시계열을 64 단어로 → vanilla Transformer")
+- 미리 알아둘 7 개 개념 (Transformer / ViT patching / Channel-indep / Masked Autoencoder 등)
+- DLinear 의 도전과 본 논문의 응답
+- 본 deep dive 의 약속
+
+---
+
 > 영어 못 읽거나 수식 두려운 사람을 위한 entry. 여기를 읽으면 *PatchTST 가 뭔지* + *왜 중요한지* 가 한국어 + 일상 비유로 명확해집니다.
 
 ---

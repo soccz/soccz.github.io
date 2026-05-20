@@ -1,5 +1,14 @@
 # 01. 시작하기 전에 — 진짜 쉬운 한 줄 소개
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 한 문장으로 뭘 하는지 ("복잡함은 미덕 — P ≫ T 에서 ridge 가 잘함")
+- 미리 알아둘 8 개 개념 (Sharpe / ridge / RMT / Stieltjes / RFF / benign overfit / market timing 등)
+- Goyal-Welch 의 비관 vs ML 의 약속
+- 본 deep dive 의 약속
+
+---
+
 > 영어를 못 읽거나 수식이 두려운 사람을 위한 deep dive 의 entry. 여기를 읽으면 *이 논문이 뭐 하는 논문인지* + *왜 중요한지* 가 한국어와 일상 비유만으로 명확해집니다.
 
 ---

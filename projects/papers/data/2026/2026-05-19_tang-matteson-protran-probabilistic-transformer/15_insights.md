@@ -1,5 +1,14 @@
 # 15. ProTran 이 진짜 가르치는 것 — 메타 통찰 15개
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 던지는 **15 가지 메타 메시지**
+- Latent attention > observation attention
+- Smoothing vs Filtering 의 차이
+- NeurIPS 2021 의 Cambrian explosion 위치
+
+---
+
 00~14 챕터가 "**논문이 무엇을 말하는가**" 였다면, 이 파일은 "**이 논문이 우리에게 진짜로 가르치는 것은 무엇인가**".
 
 깊이 읽으면 자연스럽게 얻을 수 있는 **통찰·시사점·추론·발표용 Q&A** 정리.

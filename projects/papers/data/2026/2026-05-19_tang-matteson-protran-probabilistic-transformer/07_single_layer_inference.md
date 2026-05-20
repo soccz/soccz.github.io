@@ -1,5 +1,13 @@
 # 07. Single-Layered ProTran — Inference Model (Section 3.1 후반)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Variational inference (Eq 10-11)
+- Smoothing — training time 에 미래 활용
+- ELBO 의 정확한 유도
+
+---
+
 paper p.4-5 (Section 3.1 의 inference model 부분). 학습 시에만 작동하는 추가 단계 — Eq 10-11.
 
 이 챕터의 목표: **Smoothing 과 filtering 의 차이를 이해하고, 왜 ProTran 이 smoothing 을 가능하게 했는지 설명**.

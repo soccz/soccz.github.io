@@ -1,5 +1,14 @@
 # 13. Conclusion + Future Work — 무엇이 남았나
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 5 ML design principles
+- 한계 — cross-channel dependency 미모델링
+- Foundation model 시대의 building block
+- 후속 paper (iTransformer 등) 와의 관계
+
+---
+
 > 본 논문 *결론 + 의의 + 미래 연구 방향*.
 
 ---

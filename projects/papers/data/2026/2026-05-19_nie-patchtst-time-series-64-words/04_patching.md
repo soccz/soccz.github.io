@@ -1,5 +1,14 @@
 # 04. Patching — 시계열을 토큰으로
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Patching 의 정확한 메커니즘 — L → P × N 분해, padding
+- Eq 1 (patch projection) 의 의미
+- ViT 의 16x16 patching 정신을 시계열에
+- Patching 의 3 이점 (정보 압축·complexity ↓·long L 가능)
+
+---
+
 > 본 논문의 *첫 trick*. 긴 시계열을 *작은 조각 (patch)* 로 자르고 *조각 하나하나* 를 *한 단어* 처럼.
 
 ---

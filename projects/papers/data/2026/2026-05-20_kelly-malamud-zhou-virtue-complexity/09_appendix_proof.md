@@ -1,5 +1,13 @@
 # 09. Appendix — 핵심 증명 풀이
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Theorem 1 의 정확한 증명 단계
+- RMT 의 Marchenko-Pastur + Stieltjes 의 활용
+- 핵심 도구의 정밀 해석
+
+---
+
 > Internet Appendix 의 핵심 증명 (Proposition 2 의 Stieltjes identity + Theorem 1 의 monotonicity) 풀이. 본 deep dive 의 "직관적 종합" 위주 — 모든 디테일 풀어쓰지는 않고 *전략* 과 *핵심 단계* 만.
 
 ---

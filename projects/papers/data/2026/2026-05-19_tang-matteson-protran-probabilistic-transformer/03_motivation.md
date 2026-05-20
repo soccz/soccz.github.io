@@ -1,5 +1,13 @@
 # 03. 왜 이 연구가 필요했나 — Section 1 Introduction
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 확률적 시계열 forecasting 의 4 challenges
+- 본 논문이 도전한 3 의문
+- DeepAR (Gaussian 단일) 의 한계
+
+---
+
 paper p.1-2 (Section 1) 을 한국어로 풀어 쓴다.
 
 ---
@@ -143,6 +151,37 @@ paper:
 ![Fig. 1 Graphical models](figures/Fig1_graphical_models.png)
 
 (Figure 1, paper p.2)
+
+### 📖 처음 보는 사람을 위한 — Figure 1 (본 논문 심장) 읽는 법
+
+**한 줄로**: "**4 panel** — (a) LDS / (b) ProTran 1-layer / (c) 3-layer 생성 / (d) 3-layer 추론. SSM 의 한계와 ProTran 의 답을 한 그림에".
+
+**4 panel 의 의미**:
+
+| panel | 무엇 | 일상 비유 |
+|------|------|-----------|
+| **(a) LDS** | 표준 Linear Dynamical System | "$z_t$ 가 $z_{t-1}$ 만 봄 (Markov)" — 단기 기억만 |
+| **(b) ProTran 1-layer** | $z_t$ 가 $z_{1...t-1}$ **모두** 봄 | "**non-Markovian** — 모든 과거 기억" — attention 덕분 |
+| **(c) 3-layer 생성** | hierarchical latent | "3 단계 추상화 — low-level + high-level" |
+| **(d) 3-layer 추론** | hierarchical inference | "모든 layer 의 posterior 동시 추론" |
+
+**노드 색 규칙** (graphical model 표준):
+- **회색 (음영)**: 관측 변수 ($x_t$) — 우리가 보는 값
+- **흰색**: 잠재 변수 ($z_t$) — 추론 대상
+
+**(a) vs (b) 의 결정적 차이**:
+- (a) LDS: $z_t \leftarrow z_{t-1}$ (화살표 1 개) — Markov
+- (b) ProTran: $z_t \leftarrow z_1, z_2, ..., z_{t-1}$ (화살표 모두) — **non-Markovian**, attention
+- → "**기억력의 차이**" — LDS 는 어제만, ProTran 은 전체 과거 기억
+
+**일상 비유**: "오늘 시험 점수 예측"
+- (a) LDS: 어제 점수만 봄 (단기 기억)
+- (b) ProTran: **전체 점수 기록** 본 후 attention 으로 중요한 시점만 골라 봄
+
+**원문 위치**: paper Fig. 1, journal p.2.
+
+---
+
 
 이 그림은 paper 전체의 핵심을 한 페이지에 압축한 시각적 signature. **graphical model** notation 의 표준 — 자세히 읽는 법을 단계적으로.
 
