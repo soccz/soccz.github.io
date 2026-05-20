@@ -1,155 +1,188 @@
-# 03 Motivation — DLinear 의 도전과 PatchTST 의 응답
+# 03. 왜 PatchTST? DLinear 도전 + 본 논문 응답
 
-## 배경 — 2022 의 위기
-
-2017-2021 동안 Transformer 가 NLP, CV 를 차례로 정복.
-
-**시계열에도 적용**:
-- LogTrans (2019) — convolutional sparse attention
-- Informer (2021 AAAI Best) — ProbSparse attention
-- Autoformer (2021 NeurIPS) — auto-correlation
-- FEDformer (2022 ICML) — Fourier enhanced
-- Pyraformer (2022 ICLR) — pyramidal attention
-
-→ 모두 vanilla Transformer 의 $O(L^2)$ 복잡도를 해결하려는 attention 변형들.
+> 본 논문이 *왜 나왔는지* 의 학계 역사. 2017년 Transformer 등장부터 2023년 PatchTST 까지.
 
 ---
 
-## 2022 의 폭탄 — DLinear (Zeng et al.)
+## 3.1 챕터 한 줄 요약
 
-**DLinear** 가 정식 제목은 "Are Transformers Effective for Time Series Forecasting?".
-
-**도발적 주장**:
-- 단순 decomposition + linear 모델이 Informer/Autoformer/FEDformer/Pyraformer 를 **모두 outperform**
-- "Transformer 는 시계열 forecasting 에 효과적이지 않다"
-- 복잡한 attention 메커니즘 < 단순 linear
-
-→ 시계열 Transformer 전체 분야에 정체성 위기.
+> **"2017-2021 학자들이 *Transformer 를 시계열에 적용* 시도 → 2022년 DLinear 가 *간단한 선형 모델이 더 낫다* 도전 → 2023년 PatchTST 가 *Vanilla Transformer + 두 trick* 으로 응답 + SOTA 달성."**
 
 ---
 
-## PatchTST 의 응답 전략
+## 3.2 2017년 — Transformer 등장
 
-paper Section 1:
-> With our PatchTST model, we not only confirm that Transformer is actually effective for time series forecasting, but also demonstrate the representation capability that can further enhance the forecasting performance.
+**Vaswani et al "Attention is All You Need"** (NeurIPS 2017).
 
-"Transformer is actually effective" — DLinear 에 대한 정면 반박.
+NLP (자연어 처리) 의 *완전 혁명*. Attention 메커니즘으로 *RNN/LSTM 의 long-term 의존성 문제* 해결.
 
-**전략 3 가지**:
-1. **Patching**: 시계열을 patch 단위로 추상화 → 점단위 attention 의 한계 극복
-2. **Channel-independence**: DLinear 가 잘 작동하는 이유 (channel-by-channel 학습) 를 Transformer 에 이식
-3. **Longer look-back window**: $L=336$ 이상으로 늘려야 Transformer 가 강해짐
+이후:
+- **2018-2020**: BERT, GPT-2, GPT-3 — NLP 모델 의 *모든 SOTA*.
+- **2020**: ViT (Vision Transformer) — *이미지* 도 정복. *16x16 image patching* 으로 NLP Transformer 그대로 적용.
+- **2023+**: ChatGPT, GPT-4, Claude 등.
 
----
-
-## 왜 Patching 인가 — paper 의 직접 설명
-
-paper Section 1:
-> Channel-mixing refers to the latter case where the input token takes the vector of all time series features and projects it to the embedding space to mix information. On the other hand, channel-independence means that each input token only contains information from a single channel.
-
-paper Section 1:
-> Patch in Transformer-based Models. Transformer (Vaswani et al., 2017) has demonstrated a significant potential on different data modalities. Among all applications, patching is an essential part when local semantic information is important. In NLP, BERT (Devlin et al., 2018) considers subword-based tokenization (Schuster & Nakajima, 2012) instead of performing character-based tokenization. In CV, Vision Transformer (ViT) (Dosovitskiy et al., 2021) is a milestone work that splits an image into 16×16 patches before feeding into the Transformer model.
-
-→ **다른 modality 들의 lesson**: 점단위 token 보다 patch 단위가 잘 작동.
-- NLP: character → subword (BERT)
-- CV: pixel → 16×16 patch (ViT)
-- Speech: raw audio → conv subseq (Wav2Vec)
-- **시계열: timestep → patch (PatchTST)**
+**핵심 메시지**: Transformer 는 *시계열 sequence 다루는 universal 도구* 가 됨.
 
 ---
 
-## 왜 Channel-independence 인가
+## 3.3 2018-2022 — 학자들의 시계열 Transformer 시도
 
-paper p.2:
-> Channel-independence... was proven to work well with CNN (Zheng et al., 2014) and linear models (Zeng et al., 2022), but hasn't been applied to Transformer-based models yet.
+NLP / CV 성공에 자극받은 학자들이 *시계열에 Transformer 적용* 시도.
 
-**역설**:
-- DLinear (linear, channel-indep) — 잘 작동
-- Informer/Autoformer (Transformer, channel-mix) — 덜 작동
-- PatchTST 의 가설: **Transformer 가 약한 게 아니라, channel-mixing 이 문제**
+### 주요 변형 모델 들
 
-→ Channel-independence 를 Transformer 와 결합 = 가설 검증.
+#### Informer (Zhou et al, AAAI 2021)
+- **Trick**: *ProbSparse self-attention* — *sparse attention 으로 long-term forecasting 가능*.
+- **메시지**: "Transformer 가 시계열도 잘 할 수 있다".
+
+#### Autoformer (Wu et al, NeurIPS 2021)
+- **Trick**: *Series Decomposition* (trend + seasonal 분리) + *Auto-correlation* attention.
+- **메시지**: "시계열의 *seasonality* 를 명시적으로 모델링".
+
+#### FEDformer (Zhou et al, ICML 2022)
+- **Trick**: *Fourier domain* 의 sparse representation + *frequency-enhanced* attention.
+- **메시지**: "시계열의 *주파수 정보* 효과적 활용".
+
+### 공통 패턴
+
+이 *Informer / Autoformer / FEDformer* 모두 **시계열 specific attention 변형**. 즉:
+- Vanilla Transformer 의 *self-attention* 을 *시계열 specific* 으로 *복잡하게* 수정.
+
+**일상 비유**: 의사가 환자 모든 분야 *각각 specialized 의사* — 심장 specialist, 신경 specialist, 호흡기 specialist. *각 분야 특화*.
+
+학계 가정: "*시계열 = 특수 분야, 일반 Transformer (general physician) 안 됨, specialized 모델 필요*".
 
 ---
 
-## Table 1 의 case study — 한 dataset 의 진화
+## 3.4 2022 충격 — DLinear (Zeng et al, AAAI 2023)
 
-paper Table 1 (Traffic dataset, T=96):
+도전적 paper:
 
-| 구성 | look-back L | tokens N | patching | self-sup | MSE |
-|------|------------|---------|----------|---------|-----|
-| Channel-indep, no patch | 96 | 96 | × | × | 0.518 |
-| Channel-indep, downsampled | 380 | 96 | × | × | 0.447 |
-| Channel-indep, no patch | 336 | 336 | × | × | 0.397 |
-| Channel-indep, patch | 336 | 42 | **✓** | × | 0.367 |
-| Channel-indep, patch, self-sup | 336 | 42 | **✓** | **✓** | **0.349** |
-| Channel-mixing FEDformer | 96 | - | × | × | 0.597 |
-| DLinear | 336 | - | × | × | 0.410 |
+> **"Transformer 는 시계열 forecasting 에 효과적이지 않다."**
 
-**Story**:
-- 0.518 → 0.447 (longer L + downsampling) — longer history helps
-- 0.447 → 0.397 (no downsampling, more tokens) — full history > downsampling
-- 0.397 → 0.367 (patching) — patching > raw timestep tokens
-- 0.367 → 0.349 (self-supervised) — pre-training > scratch
-- vs FEDformer 0.597 / DLinear 0.410 — PatchTST 0.349 beats both
+### DLinear 모델
 
-→ 0.518 → 0.349 = **33% reduction** 의 진화.
+- 매우 *간단한 linear 모델*. *Decomposition + linear projection* 만.
+- *No Transformer, no attention, no nonlinearity*.
 
-```viz:pat-table1-evolution:title=paper Table 1 — Case study on Traffic (T=96 interactive),caption=5 PatchTST 진화 stage + 2 baseline (FEDformer / DLinear) 비교 bar chart. 0.518 (L=96 short window) → 0.447 (downsampled) → 0.397 (full L=336) → 0.367 (patching) → 0.349 (self-supervised) 의 33% MSE reduction 시각화. paper 의 narrative arc 가 한 눈에.
+### 충격적 결과
+
+- DLinear 가 *Informer, Autoformer, FEDformer 능가* — 8 datasets × 4 horizons 의 *대부분 cell* 에서.
+- *간단한 모델이 복잡한 Transformer 보다 낫다*.
+
+**학계 분위기**: "Transformer 시계열 X. *시계열 = inherently linear*."
+
+→ 이게 *위기*. 시계열 Transformer 의 *2-3년 노력 무력화*.
+
+---
+
+## 3.5 본 논문의 도전 — "vanilla Transformer + 두 trick"
+
+**2023년 PatchTST (Nie et al)** 가 DLinear 도전에 응답.
+
+### PatchTST 의 핵심 메시지
+
+> **"DLinear 가 옳다 — *시계열 specific 변형* 은 over-engineered. 그러나 *Vanilla Transformer + 두 단순 trick* 만으로 SOTA — DLinear 능가."**
+
+### 두 trick
+
+#### Trick 1 — Patching
+
+**일상 비유**: 시계열 (336 시간) 을 *16 시간 짜리 작은 조각 (patch)* 로 자름.
+
+수학적: $N = \lfloor (L-P)/S \rfloor + 2 = \lfloor (336-16)/8 \rfloor + 2 = 42$ patch.
+
+ViT 의 정신: *image 16x16 patch → 한 token*. PatchTST: *시계열 16 timestep → 한 token*.
+
+#### Trick 2 — Channel-Independence
+
+**일상 비유**: 326 가구 의 전력 데이터 가 있다면 *각 가구를 따로* Transformer 통과 + *모두 같은 weight* 공유.
+
+**대비 (Channel-mixing)**: Informer/Autoformer 가 *모든 channel 을 한꺼번에 처리* — *cross-channel mixing*.
+
+---
+
+## 3.6 본 논문의 *핵심 발견 4가지*
+
+본 논문이 *empirically* 보인 것:
+
+### 발견 1 — Patching + Channel-indep = SOTA
+
+8 datasets × 4 horizons 평균:
+- **MSE reduction**: 21.0% (PatchTST/64) vs FEDformer.
+- **MAE reduction**: 16.7% (PatchTST/64).
+
+→ DLinear 도 능가.
+
+### 발견 2 — Attention complexity 22× 감소
+
+Token 수 N = 42 (P=16, S=8, L=336):
+- Patching 없으면: attention $O(L^2) = O(112,896)$.
+- Patching: attention $O(N^2) = O(1,764)$.
+- Traffic dataset 의 실측: **22× 시간 단축** (10,040초 → 464초, Table 1).
+
+### 발견 3 — Self-supervised pre-training 가능
+
+*Masked patch reconstruction* 으로 사전 학습 → fine-tuning. 결과:
+- *Supervised PatchTST 보다 더 좋음*.
+- Transfer learning 가능 (한 dataset → 다른 dataset).
+
+→ **시계열 foundation model 의 출발점**.
+
+### 발견 4 — *Channel-independence* 가 *Channel-mixing* 보다 robust
+
+Cross-channel mixing (Informer/Autoformer) 가 *spurious correlation 학습* 가능. Channel-indep 가 *robust*.
+
+---
+
+## 3.7 본 논문의 의의 — 학계 흐름의 *turning point*
+
+```
+   2017 Transformer (NLP)
+              ↓
+   2018-2021 시계열 Transformer 시도
+   Informer, Autoformer, FEDformer
+   "시계열 specific 변형 필요"
+              ↓
+   2022 DLinear 도전
+   "Transformer 시계열 X"
+              ↓
+   2023 PatchTST ★
+   "Vanilla Transformer + 두 trick = SOTA"
+              ↓
+   2024+ 시계열 foundation model 폭증
+   iTransformer (2024), Chronos (2024), TimesFM (2024)
+   모두 PatchTST 위에 build
 ```
 
----
-
-## 또 다른 motivation — running time
-
-paper Table 1 running time gain (L=336):
-
-| Dataset | Patching ON (s) | Patching OFF (s) | Speedup |
-|---------|----------------|------------------|---------|
-| Traffic | 464 | 10040 | **22×** |
-| Electricity | 300 | 5730 | **19×** |
-| Weather | 156 | 680 | **4×** |
-
-→ Patching 은 정확도뿐 아니라 학습 속도도 22배 빠르게.
+**메시지**: PatchTST 는 시계열 분야의 *paradigm restoration*. *복잡한 attention 변형 X, Vanilla + 단순 trick* — *ViT 의 정신* 의 적용.
 
 ---
 
-## 3 advantages (paper Section 1 의 정리)
+## 3.8 본 논문이 *재고* 시킨 통념
 
-paper p.2 "Our model has several advantages" 를 3 항목으로 정리:
-
-paper p.2:
-> 1. Reduction on time and space complexity: The original Transformer has $O(N^2)$ complexity on both time and space, where $N$ is the number of input tokens. ... By applying patching, we can reduce $N$ by a factor of the stride: $N \approx L/S$, thus reducing the complexity quadratically.
-
-paper p.2:
-> 2. Capability of learning from longer look-back window: Table 1 shows that by increasing look-back window $L$ from 96 to 336, MSE can be reduced from 0.518 to 0.397. ... Patching is a good answer to it.
-
-paper p.2:
-> 3. Capability of representation learning: With the emergence of powerful self-supervised learning techniques, sophisticated models with multiple non-linear layers of abstraction are required to capture abstract representation of the data.
-
-| # | Advantage (paraphrased) |
-|---|---|
-| 1 | **Complexity**: $O(L^2) \to O((L/S)^2)$ quadratic reduction via patching |
-| 2 | **Longer look-back**: 더 긴 $L$ 가 MSE 감소 (0.518 → 0.397) |
-| 3 | **Representation learning**: Self-supervised pre-training capability |
+| 학계 통념 (2018-2022) | PatchTST 발견 |
+|---------------------|--------------|
+| 시계열 specific 변형 필요 | *Vanilla Transformer + 단순 trick* 으로 충분 |
+| DLinear: "Transformer 시계열 X" | *21% MSE reduction* 으로 반박 |
+| 단순 모델이 좋다 | *적절히 설계된 복잡 모델* 이 더 좋음 |
+| Channel-mixing 이 자연 | *Channel-indep 가 더 robust* |
+| 시계열 foundation model 불가능 | *PatchTST 가 첫 시도* |
 
 ---
 
-## Fig 1 — 핵심 그림
+## 3.9 자기점검
 
-![Fig 1 PatchTST architecture](figures/Fig1_architecture.png)
+### 핵심 3가지
+1. **2022년 DLinear 도전의 의미?**
+2. **PatchTST 의 두 trick 의 직관?**
+3. **본 논문의 핵심 수치?**
 
-(Figure 1, paper p.4)
+### 답변
+1. **"Transformer 가 시계열 forecasting 에 효과적이지 않다"** 라는 도전. *간단한 linear model* (DLinear) 이 *복잡한 Transformer 변형들 (Informer, Autoformer, FEDformer)* 보다 *낫다* 는 결론. *시계열 Transformer 의 2-3년 노력 무력화* — 학계 *위기*. 본 논문 PatchTST 가 이 도전에 정면 응답.
+2. **(1) Patching**: 긴 시계열 (336) 을 *16 짜리 작은 조각* 으로 자름 → *한 조각 = 한 단어* (ViT 의 정신). 효과: attention 복잡도 22× 감소 + longer history + local pattern 보존. **(2) Channel-Independence**: 326 변수 (전력 가구) 가 있어도 *각 변수 독립 Transformer 통과 + 같은 weight*. *Cross-channel mixing X*. 효과: overfitting 방지 + spurious correlation 회피.
+3. **21.0% MSE reduction + 16.7% MAE reduction (PatchTST/64)** vs FEDformer/Autoformer/Informer 의 8 datasets × 4 horizons 평균. *Attention 22× 빠름* (Traffic dataset). *Self-supervised pre-training* 우월 + *transfer learning* 가능. 시계열 foundation model 의 *출발점*.
 
-paper Fig 1 caption:
-> PatchTST architecture. (a) Multivariate time series data is divided into different channels. They share the same Transformer backbone, but the forward processes are independent. (b) Each channel univariate series is passed through instance normalization operator and segmented into patches. These patches are used as Transformer input tokens. (c) Masked self-supervised representation learning with PatchTST where patches are randomly selected and set to zero. The model will reconstruct the masked patches.
+---
 
-**3 sub-panels**:
-- (a) **Model overview**: M channels → 같은 Transformer backbone, 독립 forward
-- (b) **Supervised backbone**: Instance Norm + Patching → Projection + Position → Transformer Encoder → Flatten + Linear Head → output
-- (c) **Self-supervised backbone**: 같은 구조, prediction head 대신 Linear Layer 로 patch reconstruction
-
-```viz:pat-architecture:title=Fig 1 (a)(b)(c) — PatchTST architecture (interactive),caption=토글로 paper Fig 1 의 3 panel 모두 인터랙티브. (a) Multivariate 가 M channel 로 split → shared Transformer 통과. (b) Supervised: Instance Norm + Patching → Encoder → Flatten + Linear head → output. (c) Self-supervised: 40% masked patches → 같은 encoder → Linear D→P reconstruction head → MSE loss on masked.
-```
-
-다음 [04_patching.md](04_patching.md) 에서 Patching 메커니즘 수식 + 시각화.
+다음 챕터: [04_patching.md](04_patching.md) — Patching 메커니즘 *시계열 → 토큰* 변환.

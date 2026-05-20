@@ -1,148 +1,194 @@
-# 04 Patching — 시계열 → patch sequence
+# 04. Patching — 시계열을 토큰으로
 
-paper Section 3.1 의 핵심 컴포넌트.
-
-## 입력 / 출력 spec
-
-paper p.3:
-
-> Each input univariate time series $x^{(i)}$ is first divided into patches which can be either overlapped or non-overlapped. Denote the patch length as $P$ and the stride - the non overlapping region between two consecutive patches as $S$, then the patching process will generate the a sequence of patches $x_p^{(i)} \in \mathbb{R}^{P \times N}$ where $N$ is the number of patches, $N = \lfloor \frac{(L-P)}{S} \rfloor + 2$.
-
-**기호 정리**:
-| 기호 | 의미 | 일반 값 |
-|------|------|--------|
-| $L$ | look-back window | 336 또는 512 |
-| $P$ | patch length | 16 |
-| $S$ | stride | 8 |
-| $N$ | 토큰(patch) 수 | 42 (P=16, S=8, L=336 시) |
-| $x^{(i)}$ | $i$-th univariate 시계열 ($i = 1, \ldots, M$) | $\in \mathbb{R}^{1 \times L}$ |
-| $x_p^{(i)}$ | patched 결과 | $\in \mathbb{R}^{P \times N}$ |
+> 본 논문의 *첫 trick*. 긴 시계열을 *작은 조각 (patch)* 로 자르고 *조각 하나하나* 를 *한 단어* 처럼.
 
 ---
 
-## 수식 확인 — N 계산
+## 4.1 챕터 한 줄 요약
 
-$N = \lfloor (L-P)/S \rfloor + 2$.
-
-**Default 시나리오** (PatchTST/42, L=336, P=16, S=8):
-$$
-N = \lfloor (336 - 16)/8 \rfloor + 2 = \lfloor 40 \rfloor + 2 = 42
-$$
-
-**PatchTST/64** (L=512, P=16, S=8):
-$$
-N = \lfloor (512 - 16)/8 \rfloor + 2 = \lfloor 62 \rfloor + 2 = 64
-$$
-
-→ 이름의 유래! "**/42**" 와 "**/64**" 는 patch 수.
+> **"긴 시계열 (336 시간) → 16 시간 짜리 작은 조각 42개. 조각 하나 = Transformer 의 한 token. ViT (이미지 16x16 patch) 의 시계열 버전. 효과: attention 22× 빠름 + longer history + local pattern 보존."**
 
 ---
 
-## Padding 처리
+## 4.2 Patching 이 뭐예요? — 일상 비유
 
-paper p.3:
-> Here, we pad $S$ repeated numbers of the last value $x_L^{(i)} \in \mathbb{R}$ to the end of the original sequence before patching.
+### 비유 1 — 책 읽기
 
-- 마지막 timestep $x_L$ 의 값을 stride $S$ 번 반복해서 끝에 추가
-- L=336 → padding 후 길이 $L + S = 344$
-- $N = (L+S-P)/S + 1 = (336+8-16)/8 + 1 = 42$
+긴 책 (336 페이지) 을 읽을 때:
+- *한 글자씩* 읽는다? — 너무 느림 (336 = 336개 element).
+- *한 단어씩* 읽는다? — 빠름 (예: 42 단어).
 
-→ Pad 가 없으면 마지막 부분이 truncate 됨. Pad 로 마지막 P 시점도 포함.
+각 *단어* 가 *몇 글자 (P=16)* 의 *조각*. 단어 단위로 의미 파악.
 
----
+본 논문: 시계열을 *단어 단위* 로 봄. **한 단어 = 16 timestep 의 patch**.
 
-## Overlapped vs Non-overlapped
+### 비유 2 — 영상 압축
 
-| $P$ vs $S$ 관계 | 의미 |
-|---|---|
-| $S < P$ | **Overlapped** — 인접 patch 가 $P-S$ timestep 겹침 (Supervised default: P=16, S=8) |
-| $S = P$ | **Non-overlapped** — 인접 patch 가 정확히 인접 (Self-supervised default) |
-| $S > P$ | gap — 사용 안 됨 |
+긴 영상 (336 프레임) 을 *한 프레임씩* 처리 vs *짧은 클립 (16 프레임)* 단위로 처리. 후자가 더 *의미 있는 unit*.
 
-paper p.5 (Section 3.2):
-> As opposed to supervised model where patches can be overlapped, we divide each input sequence into regular non-overlapping patches. It is for convenience to ensure observed patches do not contain information of the masked ones.
+### 비유 3 — 음악 듣기
 
-→ **Supervised**: P=16, S=8 (50% overlap)
-→ **Self-supervised**: P=12, S=12 (non-overlap, masked patch 가 다른 patch 와 정보 공유 방지)
+긴 곡을 *한 음표씩* 분석 vs *마디 (measure)* 단위로 분석. 마디가 *local 패턴* (멜로디, 리듬) 보존.
 
 ---
 
-## Complexity 분석 — 왜 22× 빠른가
+## 4.3 Patching 의 정확한 정의
 
-paper p.3:
-> With the use of patches, the number of input tokens can reduce from $L$ to approximately $L/S$. This implies the memory usage and computational complexity of the attention map are quadratically decreased by a factor of $S$.
+### 입력 / 출력
 
-**No patching** (token = raw timestep):
-- Token 수 = $L = 336$
-- Attention complexity = $O(L^2) = O(336^2) = O(112,896)$
+- **입력**: 시계열 길이 $L = 336$ (예: 지난 336 시간 전력 사용량).
+- **Patch length**: $P = 16$ — 한 patch 의 길이.
+- **Stride**: $S = 8$ — 다음 patch 가 *얼마나 옮겨* 가는지.
+- **출력**: $N$ 개의 patch. **$N = 42$** (정확한 수치).
 
-**With patching** (P=16, S=8):
-- Token 수 = $N = 42$
-- Attention complexity = $O(N^2) = O(42^2) = O(1,764)$
-- 비율: $112896 / 1764 = 64×$ 이론적 감소
+### N 계산법
 
-paper Table 1 의 실제 측정:
-| Dataset | with patch (s) | without patch (s) | gain |
-|---------|----------------|-------------------|------|
-| Traffic | 464 | 10040 | **22×** |
-| Electricity | 300 | 5730 | **19×** |
-| Weather | 156 | 680 | **4×** |
+**Equation 1 (식 1)**: $N = \lfloor (L-P)/S \rfloor + 2$.
 
-→ 이론은 $S^2 = 64×$, 실제 4-22× — 다른 overhead (forward, IO) 가 있어서 dataset 마다 다름.
+**일상 비유**: 책 페이지 (336) 를 *한 단어 (16 페이지)* 씩 자르되 *옆 단어와 8 페이지 overlap*. 단어 수 = ?
 
----
+수치 대입:
+- $L = 336, P = 16, S = 8$.
+- $N = \lfloor (336-16)/8 \rfloor + 2 = 40 + 2 = 42$.
 
-## 왜 patching 이 효과적인가 — 3 이유
+**다른 setting** (PatchTST/64):
+- $L = 512$ (더 긴 history).
+- $N = \lfloor (512-16)/8 \rfloor + 2 = 64$.
 
-paper Section 1:
-> 1. Reduction on time and space complexity ... reducing the complexity quadratically.
-> 2. Capability of learning from longer look-back window: Table 1 shows that by increasing look-back window L from 96 to 336, MSE can be reduced from 0.518 to 0.397. ... Patching is a good answer to it.
-> 3. Capability of representation learning
+→ **이름의 유래**: "PatchTST**/42**" 의 42 = patch 수. "PatchTST**/64**" 의 64 도 patch 수.
 
-| 이유 | 설명 |
-|------|------|
-| **(1) Complexity** | $N$ 을 줄여서 attention 의 $N^2$ 부담 완화 |
-| **(2) Longer window** | 같은 compute 로 더 긴 $L$ 가능 → MSE ↓ |
-| **(3) Representation** | Subseries 가 semantic unit — local pattern 보존 |
-
-→ **(3) 가 가장 중요**. 한 patch 안의 P=16 timestep 이 한 token 으로 압축되면서 local temporal pattern (trend, periodicity) 보존.
+논문 제목 **"A Time Series is Worth 64 Words"** = "*시계열 = 64 개 patch (단어)*".
 
 ---
 
-## 인터랙티브 시각화
+## 4.4 Overlapping vs Non-overlapping
 
-```viz:pat-patching:title=Patching 메커니즘 — L → P×N 토큰화 (interactive),caption=시계열 길이 L 입력을 patch 길이 P stride S 로 자르는 슬라이딩 윈도우. 토글로 (P=16 S=8 overlapping vs P=12 S=12 non-overlapping) 비교. 점선 박스가 한 patch = 한 token. PatchTST/42 의 N=42 토큰 생성 과정 시각화.
+### Overlapping ($S < P$)
+
+- $P = 16$, $S = 8$. 인접 patch 가 $P - S = 8$ timestep *겹침*.
+- 본 논문 *Supervised* setting default.
+
+**일상 비유**: 책 단어 들이 *반씩 겹치는* 형태. 정보 유실 줄임.
+
+### Non-overlapping ($S = P$)
+
+- $P = 12$, $S = 12$. 인접 patch 가 *정확히 인접*, 겹침 X.
+- 본 논문 *Self-supervised* setting default.
+
+**일상 비유**: 책 단어 들이 *연속이지만 겹침 X*.
+
+**왜 self-supervised 에서 non-overlap?**: Mask 한 patch 가 *다른 patch 와 정보 공유 X* 보장. *학습 목표 명확*.
+
+---
+
+## 4.5 Padding 처리
+
+마지막 patch 가 *경계 밖* 으로 나갈 때:
+- 시계열 마지막 값 $x_L$ 을 *$S$ 번 반복* 해서 끝에 추가.
+- 효과: $L + S$ 길이가 되어 *마지막 patch 도 정상* 만들어짐.
+
+**예**: $L = 336$, $S = 8$. Padding 후 $L + S = 344$. 마지막 patch 가 *원래 마지막 시점* 도 포함.
+
+---
+
+## 4.6 Patching 의 *3가지 이점* — Step-by-step
+
+### 이점 1 — *Attention 22× 빠름*
+
+#### 어떻게?
+
+**전통 (No patching)**: Token = 각 timestep. $L = 336$ 개 token.
+- Attention 복잡도: $O(L^2) = O(336^2) = O(112,896)$.
+
+**Patching (P=16, S=8)**: Token = 각 patch. $N = 42$ 개 token.
+- Attention 복잡도: $O(N^2) = O(42^2) = O(1,764)$.
+
+**이론 비율**: $112,896 / 1,764 = 64\times$.
+
+**실제 측정 (Table 1)**:
+
+| Dataset | with patch | without patch | Speedup |
+|---------|-----------|---------------|---------|
+| Traffic | 464초 | 10,040초 | **22×** |
+| Electricity | 300초 | 5,730초 | **19×** |
+| Weather | 156초 | 680초 | **4×** |
+
+→ **이론 64×, 실제 4-22×** — 다른 overhead (forward, IO) 가 dataset 별로 다름.
+
+### 이점 2 — *Longer Look-back Window 가능*
+
+같은 *compute budget* 으로:
+- No patching: $L = 96$ 정도 까지 (그 이상 너무 느림).
+- Patching: $L = 336$ 또는 $512$ 까지 (충분히 빠름).
+
+#### 왜 longer $L$ 이 좋은가?
+
+**Table 1 의 결과 (Traffic dataset)**:
+- $L = 96$: MSE = 0.518.
+- $L = 336$: MSE = 0.397.
+- 즉 *longer L 로 MSE 23% 감소*.
+
+**일상 비유**: 학생 시험 예측에 *지난 1년* vs *지난 5년* 보면 정확도 다름. 정보 많을수록 좋다.
+
+### 이점 3 — *Local Semantic 정보 보존*
+
+**한 patch (16 timestep)** 안에 *local pattern* 통째로 포함:
+- *Trend* (오르락내리락).
+- *Periodicity* (주기적 변동).
+- *Spikes* (이상 값).
+
+**한 timestep** 만 보면 *이 patterns 안 보임*.
+
+**일상 비유**: 음악 마디 단위로 들으면 *멜로디* 보임. 한 음표만 들으면 *멜로디* 안 보임.
+
+---
+
+## 4.7 Patch → Token Embedding
+
+Patching 후 각 patch 를 *Transformer 가 이해하는 token* 으로 변환.
+
+### 방법 — Linear Projection
+
+각 patch (16 timestep) → *D 차원 vector* (예: D = 128).
+
+**일상 비유**: 책의 *각 단어* 를 *embedding vector* 로 변환. NLP 의 word embedding 과 동일.
+
+**+ Position Embedding**: 각 patch 의 *위치 정보* 도 더해줌 (Transformer 가 *순서* 알기 위해).
+
+```viz:pat-patching:title=Patching 메커니즘 (interactive),caption=시계열 L=336 → P=16, S=8 으로 자른 N=42 토큰. 토글로 overlap (P=16 S=8) vs non-overlap (P=12 S=12) 비교. 점선 박스가 한 patch.
 ```
 
 ---
 
-## Linear projection — Patch → Token embedding
+## 4.8 Patch Length 선택 — Robust?
 
-paper p.4:
-> The patches are mapped to the Transformer latent space of dimension $D$ via a trainable linear projection $W_p \in \mathbb{R}^{D \times P}$, and a learnable additive position encoding $W_{pos} \in \mathbb{R}^{D \times N}$ is applied to monitor the temporal order of patches: $x_d^{(i)} = W_p x_p^{(i)} + W_{pos}$, where $x_d^{(i)} \in \mathbb{R}^{D \times N}$ denote the input that will be fed into Transformer encoder in Figure 1.
+**Figure 4 (paper p.15)**: Patch length $P \in \{2, 4, 8, 12, 16, 24, 32, 40\}$ 의 MSE 비교.
 
-**한 patch 의 변환**:
-$$
-x_d^{(i)} = W_p \cdot x_p^{(i)} + W_{pos}
-$$
+### 어떻게 읽나? (Figure 4)
 
-- $x_p^{(i)} \in \mathbb{R}^{P \times N}$: patched 시계열 (P timestep × N patch)
-- $W_p \in \mathbb{R}^{D \times P}$: linear projection (한 patch 의 P timestep → D 차원 embedding)
-- $W_{pos} \in \mathbb{R}^{D \times N}$: learnable position embedding (각 patch 위치)
-- $x_d^{(i)} \in \mathbb{R}^{D \times N}$: Transformer input
+**Step 1 — Setup**: $L = 336$, prediction $= 96$.
 
-→ ViT 와 정확히 같은 형태. 한 patch 가 한 token 으로.
+**Step 2 — 발견**: MSE 가 *P 의 정확한 값에 둔감*. 즉 *P = 4 부터 P = 40 까지* 거의 *비슷한 성능*.
+
+**Step 3 — 의미**: *P = 16 의 선택은 robust*. *정확한 P 값 튜닝 불필요*.
+
+```viz:pat-fig4-patch-length:title=Fig 4 — Patch length P 의 effect (interactive),caption=P=2-40 sweep. MSE 가 P 에 둔감. P=16 의 robust 선택 정량.
+```
 
 ---
 
-## Patch length / stride 의 선택 — Fig 4 ablation
+## 4.9 자기점검
 
-paper Figure 4 (p.15):
-> MSE scores with varying patch lengths $P = [2, 4, 8, 12, 16, 24, 32, 40]$ where the lookback window is 336 and the prediction length is 96.
+### 핵심 3가지
+1. **Patching 의 일상 비유?**
+2. **"PatchTST/42" 의 42 의 의미?**
+3. **Patching 의 3가지 이점?**
 
-paper p.27 결론:
-> One observation from Figure 4 is that MSE scores don't vary significantly with different patch length.
+### 답변
+1. **긴 책 (336 페이지) 을 *한 단어 (16 페이지) 씩* 읽는 것**. 한 글자씩 (1 timestep) 이 아니라 *단어 단위* (16 timestep patch) 로. ViT (image 16x16 patching) 의 시계열 버전. 음악 *마디* 단위로 듣는 것과 같음.
+2. **시계열을 *42개 patch* 로 자른 setting**. $L = 336, P = 16, S = 8$ → $N = (336-16)/8 + 2 = 42$. PatchTST/**64** 는 $L = 512$ 의 setting → $N = 64$. 논문 제목 *"A Time Series is Worth 64 Words"* 의 *64 = 64 patch*.
+3. **(1) Attention 22× 빠름**: token 수 $L = 336$ → $N = 42$ → attention 복잡도 $O(N^2)$ 만. **(2) Longer history**: 같은 compute 로 $L = 336$ 또는 512 가능 (vs no patching 의 96 만). $L$ 늘릴수록 MSE 감소 (Table 1: 0.518 → 0.397). **(3) Local pattern 보존**: 한 patch 안에 *trend, periodicity* 통째로 — semantic unit.
 
-→ **P=16 의 선택은 robust**. P=4 부터 P=40 까지 거의 비슷한 성능 — patching 의 효과가 P 의 정확한 값에 민감하지 않음.
+---
 
-다음 [05_channel_independence.md](05_channel_independence.md) 에서 channel-independence 의 메커니즘.
+다음 챕터: [05_channel_independence.md](05_channel_independence.md) — Channel-Independence 메커니즘.

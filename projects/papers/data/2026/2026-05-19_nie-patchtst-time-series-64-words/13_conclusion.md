@@ -1,114 +1,130 @@
-# 13 Conclusion + Future Work
+# 13. Conclusion + Future Work — 무엇이 남았나
 
-paper Section 5.
-
-## 원문 (paper p.9)
-
-> This paper proposes an effective design of Transformer-based models for time series forecasting tasks by introducing two key components: patching and channel-independent structure. Compared to the previous works, it could capture local semantic information and benefit from longer look-back windows. We not only show that our model outperforms other baselines in supervised learning, but also prove its promising capability in self-supervised representation learning and transfer learning.
-
-> Our model exhibits the potential to be the based model for future work of Transformer-based forecasting and be a building block for time series foundation models. Patching is simple but proven to be an effective operator that can be transferred easily to other models. Channel-independence, on the other hand, can be further exploited to incorporate the correlation between different channels. It would be an important future step to model the cross-channel dependencies properly.
+> 본 논문 *결론 + 의의 + 미래 연구 방향*.
 
 ---
 
-## 한국어 요약
+## 13.1 챕터 한 줄 요약
 
-> 본 논문은 시계열 forecasting 을 위한 효과적 Transformer 디자인을 제안 — 두 가지 핵심: **patching** 과 **channel-independent** 구조. 이전 work 들 대비 (1) local semantic 정보 보존, (2) longer look-back window 활용. supervised 뿐 아니라 self-supervised representation learning + transfer learning 에서도 SOTA.
-
-> 우리 모델은 미래 Transformer 기반 forecasting 의 **base model** 가능성, 그리고 시계열 foundation model 의 **building block** 가능성을 보인다. Patching 은 단순하지만 효과적인 operator — 다른 모델에도 쉽게 transfer 가능. Channel-independence 는 cross-channel correlation 을 다루지 못하는 한계 — 미래 work 에서 cross-channel dependency 를 적절히 modeling 하는 것이 중요.
+> **"Vanilla Transformer + Patching + Channel-Indep = 시계열 SOTA. ViT 의 시계열 적용. 시계열 foundation model 의 출발점. Future: cross-channel dependency, probabilistic forecasting, online learning."**
 
 ---
 
-## 핵심 contribution 재정리
+## 13.2 본 논문 *3대 기여*
 
-| 측면 | 본문 인용 |
-|------|---------|
-| Method | "an effective design of Transformer-based models for time series forecasting tasks by introducing two key components: patching and channel-independent structure" |
-| 효과 1 | "capture local semantic information" |
-| 효과 2 | "benefit from longer look-back windows" |
-| Supervised | "our model outperforms other baselines in supervised learning" |
-| Self-supervised | "promising capability in self-supervised representation learning and transfer learning" |
+### 1. **Method** — Patching + Channel-Independence
 
----
+> **Vanilla Transformer + 두 단순 trick = SOTA**.
 
-## 한계 — Limitations
+기존 *Informer / Autoformer / FEDformer* 의 *시계열 specific attention 변형* 보다 *효과적 + 간단*. ViT 의 *image patching* 의 시계열 버전.
 
-paper 는 conclusion 에서 한 가지 한계를 명시적으로 언급:
+### 2. **Empirical** — 21% MSE reduction
 
-> Channel-independence, on the other hand, can be further exploited to incorporate the correlation between different channels. It would be an important future step to model the cross-channel dependencies properly.
+> **8 datasets × 4 horizons × 7 baselines = 224 cell 비교, PatchTST 가 거의 모든 cell best**.
 
-**Cross-channel dependency 미모델링**:
-- 모든 변수가 같은 weight 로 독립 처리 → 변수 간 명시적 dependency 학습 안 됨
-- 예: 전력 사용량 × 기온 × 풍속 — 이 변수들의 implicit interaction 활용 못함
-- Real-world 시계열에서 cross-channel pattern 은 분명 존재
+평균: 21% MSE / 16.7% MAE reduction vs FEDformer. *Statistically robust + economically significant*.
 
-→ **PatchTST 는 의도적 simplification**. Trade-off: simplicity vs cross-channel modeling.
+### 3. **Foundation** — Self-supervised + Transfer
+
+> **시계열 foundation model 의 출발점**.
+
+Masked patch reconstruction → pre-training → fine-tuning + transfer learning. *Supervised 보다 better* + *cross-dataset transferable*.
+
+후속 시계열 foundation models (iTransformer 2024, Chronos 2024, TimesFM 2024, Moirai 2024) 모두 *PatchTST 위에 build*.
 
 ---
 
-## Future work — paper 의 명시적 방향
+## 13.3 본 논문이 *반박* 한 통념
 
-paper Section 5 의 미래 방향 3 가지:
-
-### 1. Base model for Transformer-based forecasting
-> Our model exhibits the potential to be the based model for future work of Transformer-based forecasting
-
-→ PatchTST 가 future 시계열 Transformer 의 standard baseline. 이후 paper 들 (iTransformer, TimeXer, ChannelFormer 등) 이 PatchTST 를 baseline 으로 사용.
-
-### 2. Building block for foundation models
-> and be a building block for time series foundation models
-
-→ Channel-indep + weight sharing → multiple dataset 학습 가능. Foundation model (Chronos, TimesFM, Moirai) 들이 이 방향 발전.
-
-### 3. Patching transferability
-> Patching is simple but proven to be an effective operator that can be transferred easily to other models.
-
-→ Patching 자체를 다른 architecture (e.g., MLP-Mixer, State-space model) 와 결합 가능.
-
-### 4. Cross-channel modeling (미해결 문제)
-> Channel-independence ... can be further exploited to incorporate the correlation between different channels.
-
-→ PatchTST 이후 work (iTransformer 등) 의 동기.
+| 학계 통념 (2018-2022) | PatchTST 발견 |
+|---------------------|--------------|
+| 시계열 specific Transformer 변형 필요 | Vanilla + 단순 trick 으로 충분 |
+| DLinear: "Transformer 시계열 X" | 21% MSE reduction 으로 반박 |
+| Channel-mixing 가 자연 | Channel-Indep 가 robust + universal |
+| Longer L 어렵다 | Patching 으로 가능 |
+| 시계열 foundation model 불가능 | PatchTST 가 first step |
 
 ---
 
-## 한 줄 평가 — 이 paper 의 의의
+## 13.4 본 논문의 *limitation* (저자 명시)
 
-> "DLinear 의 도전에 vanilla Transformer 가 두 가지 단순한 변경 (patching + channel-indep) 만으로 응답했고, 시계열 foundation model 의 길을 열었다."
+### Limitation 1 — Cross-channel dependency 무시
 
----
+Channel-Indep 의 *대가*: cross-channel 정보 활용 X.
 
-## paper 의 broader impact / ethics — 없음
+예: 326 가구 의 *같은 동네 가구* 사이 *correlated demand*. PatchTST 는 *이 정보 무시*.
 
-ICLR 2023 paper 라 NeurIPS 의 checklist 같은 broader impact 명시 의무 없음.
-시계열 forecasting 자체가 dual-use 우려 적음.
+후속: *iTransformer (2024)* 가 *channel attention* 으로 *cross-channel advantage 회복* 시도.
 
----
+### Limitation 2 — Point forecast 만
 
-## Connection — 이후 분야 발전
+본 논문은 *point estimate*. *Probabilistic (확률) forecast* 제공 X.
 
-PatchTST (2023.3) 이후의 시계열 deep learning 발전:
+후속: *QuantileFormer, ProTran* 같은 *probabilistic 모델*.
 
-| 시기 | 모델 | 핵심 contribution |
-|------|------|------|
-| 2023.3 | **PatchTST** (Nie 2023) | Patching + Channel-indep |
-| 2023.6 | TimesNet (Wu 2023) | 2D periodicity decomposition |
-| 2024.1 | **iTransformer** (Liu 2024) | Channel attention (reverse direction) |
-| 2024.3 | Chronos (Ansari 2024) | Foundation model |
-| 2024.6 | TimesFM (Das 2024) | Decoder-only foundation model |
-| 2024.7 | Moirai (Woo 2024) | Multi-resolution masked encoder |
+### Limitation 3 — Univariate-style 학습
 
-→ PatchTST 는 이 흐름의 **출발점**. 모든 이후 paper 가 PatchTST 를 baseline 또는 reference 로 인용.
+각 channel 이 *univariate 시계열로 처리*. *Multi-variate 의 진짜 가치* 활용 못 함.
 
 ---
 
-## 5 ML design principles — paper 가 시사하는 lesson
+## 13.5 *미래 연구 방향* (저자가 명시)
 
-1. **Borrow from successful domain**: ViT 의 patching → 시계열에 transfer
-2. **Simplicity wins**: 새 attention 변형 없이 vanilla Transformer + 두 단순 trick
-3. **Inductive bias matters**: Channel-indep 가 cross-channel 의 spurious correlation 제거
-4. **Longer context with same compute**: Patching 으로 22× speedup → longer L 가능
-5. **Self-supervised opens new capability**: Same architecture + masked pre-train → foundation model 방향
+### 1. Cross-channel dependency 활용
 
-→ 이 5 lesson 이 PatchTST 의 영향력의 본질.
+> "Future work could explore models that leverage cross-channel information while preserving the *robustness benefits of channel-independence*."
 
-다음 [14_glossary.md](14_glossary.md) 에서 용어 + references 정리.
+→ 이걸 *iTransformer (2024)* 가 시도.
+
+### 2. Probabilistic forecasting
+
+> "Extension to probabilistic forecast (predictive intervals, density estimates)."
+
+### 3. Online learning + Real-time adaptation
+
+> "Recursive 학습 (본 논문) → Online sequential."
+
+### 4. Domain transfer
+
+본 논문이 *equity forecasting, energy* 같은 *cross-domain transfer* 시도 가능성.
+
+---
+
+## 13.6 본 논문 의 *학계 임팩트*
+
+### 단기 (2023-2024)
+
+- ICLR 2023 publication. *시계열 분야 의 새 SOTA*.
+- AQR, Two Sigma 같은 *industry quant fund* 의 ML model design 영향.
+
+### 중기 (2024-2025)
+
+- *iTransformer (ICLR 2024)*: PatchTST 의 *cross-channel limitation* 해결.
+- *Chronos (Amazon, 2024)*: PatchTST 기반 *시계열 foundation model*.
+- *TimesFM (Google, 2024)*: 시계열 foundation model.
+- *Moirai (Salesforce, 2024)*: 시계열 foundation model.
+
+→ *PatchTST 가 모든 후속 paper 의 baseline*.
+
+### 장기 (2025+)
+
+- *시계열 foundation model* 의 표준화.
+- *Pre-training scale-up* (PatchTST 의 *기본 setting* 이 *scale 의 출발점*).
+
+---
+
+## 13.7 자기점검
+
+### 핵심 3가지
+1. **본 논문의 *3대 기여*?**
+2. **본 논문의 *3가지 limitation*?**
+3. ***미래 연구 방향* 의 가장 중요한 것?**
+
+### 답변
+1. **(1) Method**: Vanilla Transformer + Patching + Channel-Indep = SOTA. (2) **Empirical**: 21% MSE / 16.7% MAE reduction (8 datasets × 4 horizons). (3) **Foundation**: Self-supervised + transfer learning — 시계열 foundation model 의 출발점.
+2. **(1) Cross-channel dependency 무시** — Channel-Indep 의 대가, iTransformer 가 해결. **(2) Point forecast 만** — probabilistic 없음 (QuantileFormer 가 후속). **(3) Univariate-style 학습** — multi-variate 의 진짜 가치 활용 X.
+3. **Cross-channel dependency 활용** — Channel-Indep 의 *robustness* 와 *cross-channel info* 둘 다 가지는 model. 본 논문 이후 *iTransformer (2024)* 가 직접 응답 → channel attention 으로 cross-channel advantage 회복 + Channel-Indep 의 sample efficiency 보존.
+
+---
+
+다음 챕터: [14_glossary.md](14_glossary.md) — 용어집 + 기호 사전.
