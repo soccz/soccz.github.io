@@ -51,11 +51,27 @@
 
 ## 7.4 MSE Loss — 표준 그대로
 
-**Mean Squared Error**: $\text{Loss} = \frac{1}{T} \sum_t (\hat y_t - y_t)^2$.
+**Equation 4 (paper p.5 Loss 식)** — Channel 별 MSE 를 M 개 channel 에 걸쳐 평균:
 
-**일상 비유**: 예측 - 실제 의 *제곱 평균*. *L2 거리*.
+$$
+\mathcal{L} = \mathbb{E}_x\, \frac{1}{M} \sum_{i=1}^{M} \| \hat x_{L+1:L+T}^{(i)} - x_{L+1:L+T}^{(i)} \|_2^2
+$$
 
-본 논문: *통상 MSE 그대로*. *시계열 specific loss (예: smoothness penalty)* 없음.
+- $\hat x_{L+1:L+T}^{(i)} \in \mathbb{R}^{T}$: channel $i$ 의 *예측 미래 T timestep*.
+- $x_{L+1:L+T}^{(i)} \in \mathbb{R}^{T}$: channel $i$ 의 *실제 미래 T timestep*.
+- $\| \cdot \|_2^2$: L2 norm 제곱 = *각 timestep 의 (예측 - 실제)² 의 합*.
+- $\frac{1}{M} \sum_{i=1}^{M}$: M 개 channel 평균 — Channel-Indep 의 *통합 학습 목표*.
+
+**일상 비유**: 326 가구 의 전력 예측 → 가구마다 *예측 - 실제 의 제곱 평균* → 326 가구의 *평균 오차* 가 최종 loss. 즉 *모든 가구가 동등하게 중요*.
+
+**왜 이 형태?**:
+- *통계학적*: Gaussian noise 가정 하에 MLE (maximum likelihood estimate) 와 일치.
+- *직관적*: *큰 오차에 더 penalty* (L2 의 quadratic 성질).
+- *학습 stable*: gradient 계산 쉬움 + smooth.
+
+**조심할 점**: 본 논문은 *channel 별 normalize* (Instance Norm) 후 loss 계산. 즉 *raw 값 차이* 아닌 *normalized 차이*. 그래서 *channel 의 scale 무관* — 한 가구가 100kW, 다른 가구 1kW 여도 *동등하게 학습*.
+
+본 논문: *통상 MSE 그대로*. *시계열 specific loss (예: smoothness penalty, autocorrelation loss)* 없음.
 
 ### Why MSE?
 

@@ -51,7 +51,32 @@ ChatGPT, BERT, GPT 같은 *모든 NLP 모델* 의 *기본 부품*. 2017년 Googl
 - $K$ (key): "*어떤 정보 가지고 있는가*".
 - $V$ (value): "*실제 정보 내용*".
 
-**Attention**: $Q$ 와 $K$ 의 유사도 (dot product) → *각 patch 의 관련도* 결정. 그 결과 *value 의 가중 평균* → output.
+**Equation 2 (paper p.4 식)** — Patch projection + position embedding:
+
+$$
+x_d^{(i)} = W_p\, x_p^{(i)} + W_{pos}
+$$
+
+- $x_p^{(i)} \in \mathbb{R}^{P \times N}$: 한 channel 의 patch 시계열.
+- $W_p \in \mathbb{R}^{D \times P}$: patch → token 의 linear projection. *학습되는 weight*.
+- $W_{pos} \in \mathbb{R}^{D \times N}$: 각 patch 의 *순서* 정보 (learnable). NLP 의 position embedding.
+- $x_d^{(i)} \in \mathbb{R}^{D \times N}$: D 차원 token N 개.
+
+**일상 비유**: 책의 각 *단어 (patch)* 를 *embedding vector* 로 변환 + *몇 번째 단어인지 (position)* 표시. 그래야 Transformer 가 *순서* 알고 attention 계산.
+
+**Equation 3 (paper p.5 Attention 식)** — Multi-head self-attention output:
+
+$$
+(O_h^{(i)})^T = \text{Attention}(Q_h^{(i)}, K_h^{(i)}, V_h^{(i)}) = \text{softmax}\!\left(\frac{Q_h^{(i)} (K_h^{(i)})^T}{\sqrt{d_k}}\right) V_h^{(i)}
+$$
+
+- $Q_h^{(i)} = (x_d^{(i)})^T W_h^Q$, $K_h^{(i)} = (x_d^{(i)})^T W_h^K$, $V_h^{(i)} = (x_d^{(i)})^T W_h^V$.
+- $W_h^Q, W_h^K \in \mathbb{R}^{D \times d_k}$, $W_h^V \in \mathbb{R}^{D \times D}$ 가 *head h 의 학습 weight*.
+- $\sqrt{d_k}$ 로 나누는 이유: dot product 가 너무 커지면 softmax 의 gradient *vanish* — *scaled* dot product.
+
+**왜 이 형태?**: softmax 안의 $QK^T$ 는 *각 patch 쌍 의 유사도*. 유사도 큰 patch 의 value 가 *큰 weight* 로 합쳐짐 → 각 patch 가 *관련 있는 다른 patch 정보* 흡수.
+
+**조심할 점**: *Self-attention* 이라 부르는 이유 — $Q, K, V$ 모두 *같은 input* $x_d^{(i)}$ 로부터. 즉 *자기 자신과의 비교*. NLP 에서 *cross-attention* (decoder 에 encoder 의 output 을 query 로) 은 본 논문에서 *사용 안 함*.
 
 ---
 

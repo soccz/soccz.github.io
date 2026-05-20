@@ -12,6 +12,11 @@
 
 ## 13.2 본 논문 *3대 기여*
 
+**일상 비유 — 한 권의 책의 3 부**: 본 논문이 학계에 *3 권* 의 책 같음:
+1. *Method 책* — *어떤 도구 만들었나*.
+2. *Empirical 책* — *얼마나 효과 있나*.
+3. *Foundation 책* — *미래 분야 가능성 열었나*.
+
 ### 1. **Method** — Patching + Channel-Independence
 
 > **Vanilla Transformer + 두 단순 trick = SOTA**.
