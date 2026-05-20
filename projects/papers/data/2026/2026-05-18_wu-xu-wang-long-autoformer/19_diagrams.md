@@ -310,3 +310,21 @@ ASCII 로 layer-by-layer accumulation:
 | Fig 14 COVID showcase | p.17 | ch14 |
 
 전체 figures 폴더: `figures/page{4,5,6,9,10,15,16,17}_*.png`.
+
+---
+
+## 자기점검
+
+### 핵심 3가지
+1. **Autoformer 의 *전체 구조* (Encoder + Decoder + Series Decomp Block) 의 흐름?**
+2. **Auto-Correlation 의 *3 step* (FFT R(τ) → Top-k → Roll+가중합) 의 의미?**
+3. **Encoder vs Decoder 의 *trend 처리* 차이?**
+
+### 답변
+1. **Encoder (N=2 layer)**: Auto-Corr → Series Decomp (trend 버림) → FFN → Series Decomp (trend 버림). *Seasonal 만 학습*. **Decoder (M=1 layer)**: Init S/T (encoder 후반부 분해) → Self Auto-Corr → Series Decomp (trend 누적) → Cross Auto-Corr (encoder 출력 사용) → Series Decomp (trend 누적) → FFN → Series Decomp (trend 누적). *Seasonal refine + Trend accumulate*. **최종 = $W_S \cdot S^M + T^M$**.
+2. **(Step 1) FFT R(τ)**: FFT(Q) × Conj(FFT(K)) → IFFT → *모든 lag τ ∈ {0, …, L-1} 의 autocorrelation* 한 번에. *$O(L \log L)$*. **(Step 2) Top-k**: $R(\tau)$ 의 *가장 큰 k 개 τ* 선택 — *진짜 주기 만*. $k = c \log L$ 의 log-scale. Softmax 로 *normalization*. **(Step 3) Roll + 가중합**: 각 $\tau_i$ 만큼 *V 를 cyclic shift* + *Softmax weight 로 합산* — *같은 phase 의 sub-series aggregation*.
+3. **Encoder**: *trend 무시 (`_`)* — seasonal 만 forward 전달. *과거 시계열 의 변동 패턴* 만 학습. **Decoder**: *세 trend 모두 보존 + 누적* — $T^{l} = T^{l-1} + W_{l,1} T_1 + W_{l,2} T_2 + W_{l,3} T_3$. *Trend 가 매 layer 마다 building up*. *Seasonal 은 refinement, Trend 는 accumulation* — *두 분리 path*.
+
+---
+
+다음: 본 deep dive 의 모든 챕터 완료. 메인 [00_README.md](00_README.md) 또는 [01_intro.md](01_intro.md) 로 돌아가기.
