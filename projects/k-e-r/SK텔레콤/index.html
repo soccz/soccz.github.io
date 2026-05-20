@@ -149,7 +149,7 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 <div class="page-hero">
   <span class="doc-tag">Issuer Coverage</span>
   <h1>SK텔레콤</h1>
-  <p class="subtitle">워치리스트 추적 종목 · 통신 — 사업보고서 발행 예정</p>
+  <p class="subtitle">분기·연간 종합 진단 — 누적 1건</p>
   
 <div class="foreign-holding-chart">
   <div class="fhc-header">
@@ -169,18 +169,52 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 </div>
 </div>
 
-<div class="empty-coverage">
-  <p class="empty-coverage-title">아직 사업보고서 미발행</p>
-  <p class="empty-coverage-meta">
-    워치리스트 24종목 정기보고서 자동 발행 cron 진행 중. 발행 즉시 본 페이지에 노출.
-    상단 외인 보유 비중 추이는 KRX 일별 데이터 기반 실시간 갱신.
-  </p>
-  <a href="../index.html" class="empty-coverage-back">← 24종목 마스터 인덱스</a>
+<div class="list-controls">
+  <span class="list-controls-label">정렬</span>
+  <div class="sort-toggle" role="tablist">
+    <button class="sort-btn active" data-sort="newest" onclick="window.kerSort('newest')">최신순</button>
+    <button class="sort-btn" data-sort="oldest" onclick="window.kerSort('oldest')">과거순</button>
+  </div>
+  <span class="list-controls-count">1건</span>
 </div>
+
+<div class="report-grid" id="reportGrid">
+  
+<a href="2025-annual/index.html"
+   class="report-card-link"
+   data-period="2025-annual"
+   data-written="2026-05-20"
+   data-order="0">
+  <div class="report-card">
+    <span class="badge">2025-annual</span>
+    <h3>사업보고서 (2025)</h3>
+    <p class="desc">SK텔레콤은 1984년 설립된 한국 최대 이동통신사(MNO · Mobile Network Operator, 이동통신 네트워크를 직접 보유·운영하는 사업자)다. 연결 기준 2025년 매출 17조 992억원, 영업이익 1조 732억원, 시가총액 21.07조원(KRX 2026-05-20 종가 98,100원 × DART 발행주식수 2억 1,479만주). [XBRL…</p>
+    <div class="meta">
+      <span>2026-05-20</span>
+      <span>→ 본문 보기</span>
+    </div>
+  </div>
+</a>
+</div>
+
+<script>
+  window.kerSort = function(mode) {
+    var grid = document.getElementById('reportGrid');
+    var items = Array.from(grid.querySelectorAll('.report-card-link'));
+    items.sort(function(a, b) {
+      var pa = a.dataset.period, pb = b.dataset.period;
+      return mode === 'oldest' ? pa.localeCompare(pb) : pb.localeCompare(pa);
+    });
+    items.forEach(function(el) { grid.appendChild(el); });
+    document.querySelectorAll('.sort-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.sort === mode);
+    });
+  };
+</script>
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-20 23:34 </p>
+    <p style="margin-top:6px">생성: 2026-05-21 00:36 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
