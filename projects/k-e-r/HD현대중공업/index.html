@@ -149,7 +149,7 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 <div class="page-hero">
   <span class="doc-tag">Issuer Coverage</span>
   <h1>HD현대중공업</h1>
-  <p class="subtitle">워치리스트 추적 종목 · 조선·중공업 — 사업보고서 발행 예정</p>
+  <p class="subtitle">분기·연간 종합 진단 — 누적 1건</p>
   
 <div class="foreign-holding-chart">
   <div class="fhc-header">
@@ -169,18 +169,52 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 </div>
 </div>
 
-<div class="empty-coverage">
-  <p class="empty-coverage-title">아직 사업보고서 미발행</p>
-  <p class="empty-coverage-meta">
-    워치리스트 24종목 정기보고서 자동 발행 cron 진행 중. 발행 즉시 본 페이지에 노출.
-    상단 외인 보유 비중 추이는 KRX 일별 데이터 기반 실시간 갱신.
-  </p>
-  <a href="../index.html" class="empty-coverage-back">← 24종목 마스터 인덱스</a>
+<div class="list-controls">
+  <span class="list-controls-label">정렬</span>
+  <div class="sort-toggle" role="tablist">
+    <button class="sort-btn active" data-sort="newest" onclick="window.kerSort('newest')">최신순</button>
+    <button class="sort-btn" data-sort="oldest" onclick="window.kerSort('oldest')">과거순</button>
+  </div>
+  <span class="list-controls-count">1건</span>
 </div>
+
+<div class="report-grid" id="reportGrid">
+  
+<a href="2025-annual/index.html"
+   class="report-card-link"
+   data-period="2025-annual"
+   data-written="2026-05-20"
+   data-order="0">
+  <div class="report-card">
+    <span class="badge">2025-annual</span>
+    <h3>사업보고서 (2025)</h3>
+    <p class="desc">HD현대중공업㈜는 울산 동구에 자리한 세계 최대 규모 조선소 중 하나다. 2019년 6월 HD한국조선해양㈜로부터 물적분할되어 신설되었으며, 2021년 9월 유가증권시장(KOSPI)에 상장했다. 최대주주는 HD한국조선해양㈜(지분율 69.28%)다. [사업보고서 I.1.나·다, 2026-03-20, HD현대중공업]</p>
+    <div class="meta">
+      <span>2026-05-20</span>
+      <span>→ 본문 보기</span>
+    </div>
+  </div>
+</a>
+</div>
+
+<script>
+  window.kerSort = function(mode) {
+    var grid = document.getElementById('reportGrid');
+    var items = Array.from(grid.querySelectorAll('.report-card-link'));
+    items.sort(function(a, b) {
+      var pa = a.dataset.period, pb = b.dataset.period;
+      return mode === 'oldest' ? pa.localeCompare(pb) : pb.localeCompare(pa);
+    });
+    items.forEach(function(el) { grid.appendChild(el); });
+    document.querySelectorAll('.sort-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.sort === mode);
+    });
+  };
+</script>
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-05-20 19:41 </p>
+    <p style="margin-top:6px">생성: 2026-05-20 23:34 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
