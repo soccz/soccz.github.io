@@ -496,6 +496,14 @@
 <script src="viz/pat-fig5-model-size.js"></script>
 <script src="viz/pat-fig7-channel-curves.js"></script>
 <script src="viz/pat-table11-instance-norm.js"></script>
+<script src="viz/voc-r2-curve.js"></script>
+<script src="viz/voc-sharpe-curve.js"></script>
+<script src="viz/voc-misspec-monotone.js"></script>
+<script src="viz/voc-rff-mechanism.js"></script>
+<script src="viz/voc-empirical-sharpe.js"></script>
+<script src="viz/voc-empirical-positions.js"></script>
+<script src="viz/voc-variable-importance.js"></script>
+<script src="viz/voc-comparison-table1.js"></script>
 
 <script>
   const params = new URLSearchParams(location.search);
@@ -507,6 +515,51 @@
 
   /* Per-paper landing config — extend as more deep dives land */
   const LANDING = {
+    '2026-05-20_kelly-malamud-zhou-virtue-complexity': {
+      eyebrow: 'Paper Deep Dive · 자산가격 × Machine Learning × Random Matrix Theory',
+      hero: '"복잡함은 미덕이다" — Occam\'s razor 가 자산가격 예측에서는 Occam\'s blunder.',
+      subtitle: '<span class="accent">Bryan Kelly, Semyon Malamud, Kangying Zhou (JF 2024)</span> 가 ' +
+                'Random Matrix Theory 로 증명: 모델 파라미터 수 P 가 표본 크기 T 를 훨씬 초과해도 (P ≫ T) ' +
+                '적절한 ridge shrinkage 와 함께 OOS Sharpe ratio 는 모델 복잡도와 함께 <span class="accent">단조 증가 (Theorem 1)</span>. ' +
+                'Goyal-Welch 15 predictor + Random Fourier Features (P=12,000) 로 CRSP 1926-2020 시장 timing → ' +
+                'SR ≈ 0.47/year vs buy-and-hold, 14/15 NBER recessions 자동 divest — purely OOS.',
+      stats: [
+        { num: '19', label: '챕터' },
+        { num: '9',  label: '인터랙티브 viz' },
+        { num: '5',  label: 'Figure 발췌' },
+        { num: '0.47', label: 'OOS Sharpe / year (T=12)' }
+      ],
+      what: {
+        title: '"머신러닝 자산운용의 이론적 정당화 — Box 의 parsimony 권고를 RMT 로 반박."',
+        body: '본 논문은 단순한 새 estimator 제안이 아니다. ' +
+              'Goyal-Welch (2008) 이후 굳어진 "수익률 예측 불가" 학계 통념을 *같은 데이터* 로 정면 반박. ' +
+              'Random Matrix Theory 의 Marchenko-Pastur 분포 + Stieltjes transform 으로 ridge regression 의 ' +
+              'high-complexity asymptotic (P, T → ∞, P/T → c) 을 closed form 으로 풀어 portfolio 의 expected return / leverage / Sharpe ratio 를 ' +
+              '단일 함수 m(-z; c) 로 표현 (Proposition 2). 그 위에 sufficiently mixed signals + finite-dim cross-covariance 조건의 ' +
+              'misspecified case 에서 SR(z_*; cq; q) 가 q 의 monotone increasing + concave 임을 증명 (Theorem 1). ' +
+              'Hastie et al (2022) 의 finite-sample bounds 대비 약한 조건 (PSD Ψ 허용) — RFF 같은 nonlinear feature 에 적용 가능.',
+        verdict: 'Occam\'s razor 가 자산가격 예측에서는 Occam\'s blunder. P ≫ T 의 ridge regression 이 ' +
+                 'OOS Sharpe ratio 를 모델 복잡도와 함께 단조 증가시킨다. ' +
+                 'RFF + 15 Goyal-Welch predictor 로 SR ≈ 0.47/year, IR ≈ 0.31 (t=2.9), 14/15 NBER recessions ' +
+                 '자동 divest — Campbell-Thompson constraint 없이도. Kelly-Pelger 계보 (RP-PCA → AE-AP → DLAP) 의 이론적 capstone.'
+      },
+      tour: [
+        { num: '01–03', ttl: '문제와 동기',  desc: '8개 사전 개념 (Sharpe / ridge / OLS interpolation / RMT / Stieltjes / RFF / benign overfit / market timing) + Introduction 7 단락 — Goyal-Welch 비관 vs ML 약속.',                                                  link: 'read.html?slug=' + encodeURIComponent('2026-05-20_kelly-malamud-zhou-virtue-complexity') + '#sec-03',  text: '동기 보기 →' },
+        { num: '04–05', ttl: '환경 + RMT + 정리',  desc: 'Assumptions 1-5 (single-asset DGP, signal structure, eigenvalue limit, random β, sufficiently mixed) + Lemma 1 + Proposition 1 (infeasible SR < 1/√3) + Proposition 2 (RMT identity).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-20_kelly-malamud-zhou-virtue-complexity') + '#sec-04',  text: '이론 해부 →' },
+        { num: '05c',    ttl: 'Theorem 1 (VoC)',     desc: 'Misspecified case + Propositions 5·6 + ★ **Theorem 1 (Virtue of Complexity)** — sufficiently mixed signals + bounded cross-covariance 의 조건 하에서 SR(z_*; cq; q) 가 q ∈ [0,1] 에서 strictly monotone increasing + concave.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-20_kelly-malamud-zhou-virtue-complexity') + '#sec-05c',  text: 'Theorem 1 →' },
+        { num: '07',    ttl: '실증 (Table I + Figs)', desc: 'CRSP 1926-2020 + Goyal-Welch 15 + RFF P=12,000 + recursive OOS (T=12/60/120). Figures 7-11 + **Table I**: Linear ridgeless SR=-0.11 vs Nonlinear ML SR=0.47 (t=4.5). 14/15 NBER recessions auto-divest.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-20_kelly-malamud-zhou-virtue-complexity') + '#sec-07',  text: '실증 →' },
+        { num: '11',    ttl: '메타 통찰 12개',  desc: '60년 simple model 통념의 mathematical regime / Goyal-Welch 비관의 진짜 의미 / R² ≠ economic value / Risk on/off ML 자동 학습 / Box paradox / Occam\'s blunder.',                                              link: 'read.html?slug=' + encodeURIComponent('2026-05-20_kelly-malamud-zhou-virtue-complexity') + '#sec-11',  text: '통찰 →' },
+        { num: '12',    ttl: 'Python 코드',  desc: 'RFF generation (Equation 20) + ridge regression + recursive OOS + Sharpe / IR / α / R² 계산 + Marchenko-Pastur closed form. NumPy + Pandas only.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-20_kelly-malamud-zhou-virtue-complexity') + '#sec-12',  text: '코드 →' }
+      ],
+      preview: {
+        title: '맛보기 — Theorem 1 (Virtue of Complexity) 의 시각화',
+        subtitle: 'Figure 6 (misspecified case, true DGP c=10). cq (empirical complexity) 슬라이더 + z (ridge) 슬라이더. ' +
+                  '모든 z 에서 Sharpe ratio 가 cq 의 monotone increasing — Theorem 1 의 시각적 statement. ' +
+                  'Ridgeless 에서 cq=1 근처 약한 dip (double ascent), z > 0 에서 smooth permanent ascent. ' +
+                  '★ 본 논문의 가장 핵심 그림.',
+        vizType: 'voc-misspec-monotone'
+      }
+    },
     '2026-05-19_nie-patchtst-time-series-64-words': {
       eyebrow: 'Paper Deep Dive · 시계열 × Transformer × Patching × Channel-indep',
       hero: '시계열을 64개 단어로 — Vanilla Transformer + Patching + Channel-independence = SOTA.',
