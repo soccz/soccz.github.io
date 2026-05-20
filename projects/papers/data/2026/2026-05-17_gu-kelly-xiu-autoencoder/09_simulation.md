@@ -165,6 +165,9 @@ paper 본문 (968–972):
 paper 본문 (979–984):
 > "For model (a), IPCA delivers the best OOS total and predictive R² s. This is not surprising given that the true model is sparse and linear in the input covariates. More advanced methods such as CA1, CA2 and CA3 tend to overfit ... By contrast, for model (b), these methods clearly beat IPCA, because the latter cannot capture the nonlinearity in the model."
 
+```viz:autoencoder-sim-table6:title=paper Table 6 — Monte Carlo Linear vs Nonlinear DGP (interactive),caption=DGP 토글 (a Linear / b Nonlinear) + Metric 토글 (Total / Predictive). Linear 에서는 IPCA 가 약간 우위 (Total 40.7 K=3) — CA1+ 가 과적합 손해. Nonlinear 에서 CA1/CA2 가 IPCA 압도 (Total 31.8 vs 11.9, K=3, 약 2.7×). **실증의 CA > IPCA 격차가 진짜 비선형 신호** 임을 인과적으로 검증.
+```
+
 ---
 
 ## 9.5 두 DGP 의 통찰

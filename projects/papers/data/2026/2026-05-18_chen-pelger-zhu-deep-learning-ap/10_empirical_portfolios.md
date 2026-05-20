@@ -49,6 +49,9 @@ paper 핵심 결론:
 
 → GAN 의 우위 = (선형 → 비선형) + (no-no-arb → no-arb) 의 **곱**.
 
+```viz:dlap-table3-portfolios:title=paper Table III — 46 anomaly decile portfolios (interactive),caption=Metric 토글로 EV / XS-R² 전환. Sort 슬라이더로 차이가 큰 anomaly 우선 정렬. 46개 anomaly 전부에서 GAN 의 EV 가 EN/FFN 보다 best, XS-R² 는 거의 모두 > 90%. ST_REV / momentum / IdioVol 에서 GAN 우위 가장 크게 벌어짐 — 비선형 + interaction 효과. paper Table III 정확 수치.
+```
+
 ---
 
 ## 10.3 Figure 9–10 — Predicted vs Actual

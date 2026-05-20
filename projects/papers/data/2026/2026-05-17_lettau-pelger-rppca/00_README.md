@@ -2,9 +2,9 @@
 
 ## 원문 정보
 
-**제목 (영문)**: Estimating Latent Asset-Pricing Factors
+**제목**: Estimating Latent Asset-Pricing Factors
 
-**제목 (한국어)**: 잠재 자산가격결정 요인 추정 — RP-PCA
+**한국어 제목**: 잠재 자산가격결정 요인 추정 — RP-PCA
 
 **저자**: Martin Lettau¹, Markus Pelger²
 ¹UC Berkeley Haas School of Business · ²Stanford University, Management Science & Engineering

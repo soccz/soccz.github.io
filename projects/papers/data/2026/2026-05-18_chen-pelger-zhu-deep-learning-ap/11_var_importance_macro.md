@@ -182,6 +182,9 @@ paper 본문 (p.37):
 - High ST_REV + Low momentum + Low SUV → **largest negative weight**.
 - 다른 조합 → 거의 neutral.
 
+```viz:dlap-sdf-surface:title=paper Figs 14, 15 — SDF weight ω 의 pairwise interaction (interactive),caption=Pair 토글로 (a) ST_REV × r12_2 (Fig 15a) vs (b) LME × BEME (Fig 15b) 전환. 2D contour 로 ω(char1, char2) ∈ [-0.5, 0.5] quantile 평면. GAN 의 contour 가 **non-parallel** — interaction 만 잡힘. linear/FFN 은 parallel shift 만 (interaction 없음). 비선형성의 진짜 위치는 'individual char' 가 아니라 'pairwise interaction'.
+```
+
 ### 11.9.3 Figure A.9 — Univariate (1D) Relationships
 
 paper p.36 본문:

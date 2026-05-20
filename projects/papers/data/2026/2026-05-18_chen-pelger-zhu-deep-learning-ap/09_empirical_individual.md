@@ -73,6 +73,9 @@ paper 결론:
 paper p.27–28 본문:
 > "We test the predictive power of our model by sorting stocks into decile portfolios based on their risk loadings. In Figure 7 we plot the cumulative excess return of decile sorted portfolios based on risk loadings β's. Portfolios based on higher β's have higher subsequent returns. This clearly indicates that risk loadings predict future stock returns. In particular, the highest and lowest deciles clearly separate."
 
+```viz:dlap-cumulative-returns:title=paper Fig 7 — Decile portfolio cumulative excess returns (interactive),caption=GAN β 기준 10 decile portfolio 의 OOS Test 1992–2016 (300 months) 누적수익 시계열. Decile 토글로 보고 싶은 분위 on/off. Decile 10 (highest β) 가 가장 가파르게 상승, Decile 1 가장 약함 — risk loading 이 future return 을 단조롭게 예측. **주의**: paper 가 정확 시계열 미발표 — 본 viz 의 series 는 Table II avg returns + Fig 7 shape 기반의 calibrated 재현.
+```
+
 ### 9.4.2 β-Mean Linear Relation (Figure 8)
 
 ![Fig. 8 — Expected excess returns of β-sorted portfolios as function of β](figures/page29_beta_sorted.png)

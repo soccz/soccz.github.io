@@ -9,7 +9,7 @@
 **저자**: Luyang Chen¹, Markus Pelger², Jason Zhu²
 ¹Stanford ICME · ²Stanford MS&E
 
-**발표처**: arXiv:1904.00745v6 (2021/08/12), Management Science (forthcoming)
+**발표처**: Management Science (forthcoming) — online 2021/08/12
 
 **Canonical identifier**: arXiv:1904.00745v6
 
