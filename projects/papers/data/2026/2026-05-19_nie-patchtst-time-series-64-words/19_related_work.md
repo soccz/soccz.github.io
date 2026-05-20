@@ -1,174 +1,146 @@
-# 19 Related Work — Paper Section 2 deep dive
+# 19. Related Work — 본 논문이 인용하는 모든 prior 작품
 
-paper Section 2 의 3 sub-section 을 chapter 단위로 정리.
-
-paper Section 2 (p.2):
-> **Patch in Transformer-based Models.** Transformer (Vaswani et al., 2017) has demonstrated a significant potential on different data modalities. Among all applications, patching is an essential part when local semantic information is important.
-
-paper Section 2 (p.2):
-> **Transformer-based Long-term Time Series Forecasting.** There is a large body of work that tries to apply Transformer models to forecast long-term time series in recent years.
-
-paper Section 2 (p.2):
-> **Time Series Representation Learning.** Besides supervised learning, self-supervised learning is also an important research topic since it has shown the potential to learn useful representations for downstream tasks.
+> Paper Section 2 의 *모든 인용 작품* 의 brief description + 본 논문과의 관계.
 
 ---
 
-## 2.1 Patch in Transformer-based Models
+## 19.1 챕터 한 줄 요약
 
-paper:
-> Among all applications, patching is an essential part when local semantic information is important. In NLP, BERT (Devlin et al., 2018) considers subword-based tokenization (Schuster & Nakajima, 2012) instead of performing character-based tokenization. In CV, Vision Transformer (ViT) (Dosovitskiy et al., 2021) is a milestone work that splits an image into 16×16 patches before feeding into the Transformer model. The following influential works such as BEiT (Bao et al., 2022) and masked autoencoders (He et al., 2021) are all using patches as input. Similarly, in speech researchers are using convolutions to extract information in sub-sequence levels from raw audio input (Baevski et al., 2020; Hsu et al., 2021).
-
-### Patching evolution across modalities
-
-| Modality | Pre-patching | Patching paper | Patch unit |
-|----------|-------------|----------------|-----------|
-| NLP | Character tokens | **BERT** (Devlin 2018) | Subword (3-7 char) |
-| Vision | Pixel (224×224 = 50,176) | **ViT** (Dosovitskiy 2021) | 16×16 patch (196 tokens) |
-| Vision (self-sup) | - | **BEiT** (Bao 2022), **MAE** (He 2021) | 16×16 patch + mask |
-| Speech | Raw audio | **Wav2Vec 2.0** (Baevski 2020) | Conv sub-sequences |
-| Speech | - | **HuBERT** (Hsu 2021) | Conv sub-sequences |
-| **Time Series** | timestep tokens | **PatchTST** (Nie 2023) | Subseries (P=16) |
-
-→ **PatchTST 가 시계열의 ViT 모먼트**. NLP 의 BERT, CV 의 ViT 처럼 patching 패러다임 도입.
-
-### Why patching works (universal principle)
-
-paper 의 함축적 메시지:
-- **Character / Pixel / Timestep 단위 token 은 의미 단위가 아님**
-- Subword / Patch / Subseries 가 진정한 의미 단위
-- Local semantic 정보를 보존하면서 attention 의 token 수를 줄임
-
-→ "Multi-modality lesson 의 시계열 도착". Cross-domain transfer 의 정수.
+> **"본 논문이 인용하는 30+ prior paper 의 cluster 별 정리. (1) Transformer 의 patch 활용 prior (NLP, CV) — ViT 등, (2) 시계열 Transformer baseline 5종 — Informer, Autoformer, FEDformer, Pyraformer, LogTrans, (3) 시계열 representation learning 두 학파 — Contrastive vs Reconstruction."**
 
 ---
 
-## 2.2 Transformer-based Long-term Time Series Forecasting
+## 19.2 Cluster 1 — Transformer 의 Patch 활용 Prior
 
-paper:
-> There is a large body of work that tries to apply Transformer models to forecast long-term time series in recent years. We here summarize some of them. LogTrans (Li et al., 2019) uses convolutional self-attention layers with LogSparse design to capture local information and reduce the space complexity. Informer (Zhou et al., 2021) proposes a ProbSparse self-attention with distilling techniques to extract the most important keys efficiently. Autoformer (Wu et al., 2021) borrows the ideas of decomposition and auto-correlation from traditional time series analysis methods. FEDformer (Zhou et al., 2022) uses Fourier enhanced structure to get a linear complexity. Pyraformer (Liu et al., 2022) applies pyramidal attention module with inter-scale and intra-scale connections which also get a linear complexity.
+본 논문 *patching* idea 의 origin.
 
-### 5 prior Transformer 시계열 모델 — 정확한 차별점
+### ViT (Vision Transformer)
 
-| Model | Year/Venue | Attention 변형 | Complexity | PatchTST 와 차이 |
-|-------|-----------|---------------|------------|--------------|
-| **LogTrans** | NeurIPS 2019 | Convolutional sparse + LogSparse | $O(L \log L)$ | 점단위 attention, locality 부족 |
-| **Informer** | AAAI 2021 (Best) | ProbSparse + Distilling | $O(L \log L)$ | 점단위 attention, 가장 중요한 key 만 |
-| **Autoformer** | NeurIPS 2021 | Auto-correlation + decomposition | $O(L \log L)$ | Auto-correlation 이 patch-level 시도 |
-| **FEDformer** | ICML 2022 | Fourier-enhanced | $O(L)$ | 주파수 domain, patch 개념 없음 |
-| **Pyraformer** | ICLR 2022 | Pyramidal attention | $O(L)$ | Multi-scale, patch 개념 없음 |
+**Dosovitskiy et al, ICLR 2021** — "An Image is Worth 16x16 Words"
 
-### Paper 의 critique — 점단위 attention 의 한계
+- **Idea**: 이미지를 *16x16 patch* 로 자르고 *NLP Transformer 그대로* 적용.
+- **본 논문과 관계**: PatchTST 의 직접 prior. *"A Time Series is Worth 64 Words"* 제목의 ViT 변형.
 
-paper:
-> Most of these models focus on designing novel mechanisms to reduce the complexity of original attention mechanism, thus achieving better performance on forecasting, especially when the prediction length is long. However, most of the models use point-wise attention, which ignores the importance of patches.
+### Swin Transformer
 
-paper:
-> LogTrans (Li et al., 2019) avoids a point-wise dot product between the key and query, but its value is still based on a single time step.
+**Liu et al, ICCV 2021** — "Hierarchical Vision Transformer using Shifted Windows"
 
-paper:
-> Autoformer (Wu et al., 2021) uses auto-correlation to get patch level connections, but it is a handcrafted design which doesn't include all the semantic information within a patch.
+- **Idea**: ViT 의 변형. *Hierarchical patch + sliding window attention*.
+- **본 논문과 관계**: Hierarchical patching 의 ablation reference.
 
-paper:
-> Triformer (Cirstea et al., 2022) proposes patch attention, but the purpose is to reduce complexity by using a pseudo timestamp as the query within a patch, thus it neither treats a patch as a input unit, nor reveals the semantic importance behind it.
+### BERT
 
-### Triformer — 가장 가까운 prior work
+**Devlin et al, NAACL 2019** — "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
 
-| 측면 | Triformer (2022) | PatchTST (2023) |
-|------|-----------------|-----------------|
-| Patch idea | ✓ (pseudo timestamp query) | ✓ (proper patch token) |
-| Patch as input unit | ✗ | ✓ |
-| Local semantic 보존 | ✗ | ✓ |
-| Purpose | Complexity reduction | Local semantic + complexity |
-
-→ Triformer 가 가장 가까운 prior work 지만 patch 를 **complexity reduction 목적** 으로만 사용. PatchTST 는 patch 를 **input unit + semantic carrier** 로 격상.
+- **Idea**: *Masked Language Modeling (MLM)* 로 *self-supervised* pre-train.
+- **본 논문과 관계**: PatchTST 의 *masked patch reconstruction* 의 직접 prior.
 
 ---
 
-## 2.3 Time Series Representation Learning
+## 19.3 Cluster 2 — 시계열 Transformer Baseline 5종
 
-paper:
-> Besides supervised learning, self-supervised learning is also an important research topic since it has shown the potential to learn useful representations for downstream tasks. There are many non-Transformer-based models proposed in recent years to learn representations in time series (Franceschi et al., 2019; Tonekaboni et al., 2021; Yang & Hong, 2022; Yue et al., 2022). Meanwhile, Transformer is known to be an ideal candidate towards foundation models (Bommasani et al., 2021) and learning universal representations. However, although people have made attempts on Transformer-based models like time series Transformer (TST) (Zerveas et al., 2021) and TS-TCC (Eldele et al., 2021), the potential is still not fully realized yet.
+본 논문이 *비교* 한 *prior 시계열 Transformer*.
 
-### Time Series Repr Learning 의 두 학파
+### Informer (Zhou et al, AAAI 2021)
 
-**학파 A — Contrastive (non-Transformer)**:
-| Model | Year | Mechanism | Encoder |
-|-------|------|-----------|---------|
-| **CPC** (Franceschi 2019) | NeurIPS | Contrastive Predictive Coding | RNN/conv |
-| **TNC** (Tonekaboni 2021) | ICLR | Temporal Neighborhood Coding | RNN |
-| **BTSF** (Yang & Hong 2022) | ICML | Bilinear Temporal-Spectral Fusion | RNN |
-| **TS2Vec** (Yue 2022) | AAAI | Hierarchical contrastive | TCN |
+- **Trick**: *ProbSparse self-attention* — *sparse attention 으로 long-term forecasting 가능*.
+- **Limitation**: *복잡한 attention 변형* — 본 논문이 *vanilla 가 더 좋음* 으로 반박.
 
-**학파 B — Masked (Transformer-based)**:
-| Model | Year | Mechanism | Mask unit |
-|-------|------|-----------|-----------|
-| **TST** (Zerveas 2021) | KDD | Masked autoencoder | timestep |
-| **TS-TCC** (Eldele 2021) | IJCAI | Time-series TCC | augmented sub-seq |
-| **PatchTST** (Nie 2023) | ICLR | Masked autoencoder | **patch (subseries)** |
+### Autoformer (Wu et al, NeurIPS 2021)
 
-paper p.5:
-> the potential is still not fully realized yet.
+- **Trick**: *Series Decomposition* (trend + seasonal) + *Auto-correlation* attention.
+- **Limitation**: *시계열 specific* — over-engineered.
 
-→ paper 의 자체 평가: TST/TS-TCC 가 시도했지만 **잠재력 미실현**. PatchTST 가 timestep → patch 단위 mask 로 잠재력 실현.
+### FEDformer (Zhou et al, ICML 2022)
 
-### Foundation models 의 시계열 trajectory
+- **Trick**: *Fourier domain* + *frequency-enhanced* attention.
+- **Limitation**: 마찬가지 *over-engineered*.
 
-paper:
-> Transformer is known to be an ideal candidate towards foundation models (Bommasani et al., 2021) and learning universal representations.
+### Pyraformer (Liu et al, ICLR 2022)
 
-**Bommasani 2021** ("On the Opportunities and Risks of Foundation Models"): Foundation model 의 정의 + 가능성.
+- **Trick**: *Pyramidal attention* (hierarchical).
+- **본 논문 결과**: PatchTST 능가.
 
-PatchTST 가 시계열 foundation model 의 **prerequisites** 충족:
-- Universal architecture (channel-indep enables cross-dataset transfer)
-- Self-supervised pre-training 가능 (masked patches)
-- Scalable (vanilla Transformer)
+### LogTrans (Li et al, NeurIPS 2019)
 
-→ 이후 paper 들 (Chronos / TimesFM / Moirai / Lag-Llama) 이 모두 PatchTST 의 자취 따라감.
+- **Trick**: *LogSparse* attention.
+- **Early Transformer 시계열**.
 
 ---
 
-## 종합 — PatchTST 의 분야적 위치
+## 19.4 Cluster 3 — 시계열 Representation Learning 두 학파
 
-```
-2017 ─ Transformer (Vaswani) ─────────────────
-                                              
-2018 ─ BERT (subword tokenization)            
-       └─→ NLP self-sup paradigm              
-                                              
-2021 ─ ViT (16×16 patches) ─────────────────  ┐
-       └─→ CV self-sup paradigm                │
-       │                                       │ Cross-modality
-       Informer / Autoformer ── 시계열 Transformer 시작
-       LogTrans, TST                                       │
-                                                           │
-2022 ─ FEDformer / Pyraformer ── 점단위 attention 한계 →   │
-       DLinear ── "Transformers are not effective"        │
-       BTSF / TS2Vec / TNC / TS-TCC ── 시계열 contrastive │
-                                                           │
-2023 ─ ★ PatchTST ★ ←── 답: patch + channel-indep + vanilla
-       시계열 ViT 모먼트                                   │
-                                                           │
-2024 ─ iTransformer / Chronos / TimesFM / Moirai ── PatchTST 자취
-       시계열 foundation model 시대                       
-```
+### 학파 A — Contrastive Learning
 
-**PatchTST 의 4 가지 분야 contribution**:
+**TS2Vec (Yue et al, AAAI 2022)**: Contrastive learning 으로 *시계열 representation* 학습. Anchor + positive + negative samples.
 
-1. **Patching paradigm 의 시계열 transfer** (Section 2.1) — NLP/CV/Speech 의 patching 성공을 시계열에 적용
-2. **점단위 attention 의 한계 극복** (Section 2.2) — Informer/Autoformer/FEDformer/Pyraformer 모두 point-wise attention 이라는 공통 약점 공격
-3. **DLinear 도전에 대한 응답** (paper Section 1) — "Transformer is actually effective"
-4. **Foundation model 시대 개막** (Section 2.3) — Channel-indep + masked pre-train + transfer learning 의 3 요소
+**TNC (Tonekaboni et al, ICLR 2021)**: Temporal Neighborhood Coding.
 
-→ paper 가 **종합한** 4 가지 contribution. 단순한 새 모델 paper 아닌 **분야 paradigm 정리** paper.
+→ **Contrastive 학파**: *유사한 sample끼리 가깝게, 다른 sample 끼리 멀게* 학습.
+
+### 학파 B — Reconstruction (본 논문 학파)
+
+**SimMTM (Dong et al)**: Masked time series modeling.
+
+**TimeMAE (Cheng et al)**: TS version of Masked AutoEncoder.
+
+→ **Reconstruction 학파**: *masked 부분을 reconstruction* 학습.
+
+본 논문 PatchTST 가 *후자 학파* — *masked patch reconstruction*.
 
 ---
 
-## Paper Section 2 vs deep dive coverage
+## 19.5 Cluster 4 — DLinear 도전
 
-| Sub-section | paper page | Deep dive 위치 |
-|------------|-----------|--------|
-| Patch in Transformer-based Models | p.2 | ch01 intro #3 (ViT) + ch19 (현재) |
-| Transformer-based Long-term TS Forecasting | p.2 | ch09 (baselines) + ch19 (현재) |
-| Time Series Representation Learning | p.2 | ch08 (self-sup) + ch11 (Table 6) + ch19 (현재) |
+### DLinear (Zeng et al, AAAI 2023)
 
-→ ch19 가 paper Section 2 의 **dedicated chapter** — paper 의 분야적 맥락 정리.
+**"Are Transformers Effective for Time Series Forecasting?"**
+
+- **Idea**: 매우 단순한 *linear 모델*. Decomposition + linear projection.
+- **결과**: Informer/Autoformer/FEDformer 능가.
+- **본 논문과 관계**: 본 논문이 *정면 반박* 대상.
+
+---
+
+## 19.6 Cluster 5 — Forecasting Foundation
+
+### Goyal & Welch (2008) — for return prediction (다른 도메인)
+
+자산가격 분야의 시장 수익률 예측 prior. 본 논문에서는 *간접 reference*.
+
+### Hyndman + Athanasopoulos — 시계열 예측의 *bible*
+
+표준 forecasting 교과서. 본 논문에서는 *간접 reference*.
+
+---
+
+## 19.7 본 논문이 cover 한 References 분류
+
+| 클러스터 | 개수 | 본 논문에서의 역할 |
+|----------|------|-------------------|
+| Transformer patch (ViT, BERT) | 5+ | PatchTST 의 *직접 prior* |
+| 시계열 Transformer (Informer 등) | 5 | *비교 대상* |
+| Representation learning | 5+ | *Self-supervised 의 prior* |
+| DLinear | 1 | *정면 반박 대상* |
+| 시계열 foundation | 5+ | *간접 reference* |
+| 기타 (Hornik, attention 등) | 10+ | *기술적 reference* |
+
+→ 약 30-40 references, 본 deep dive 가 *cluster classified*.
+
+---
+
+## 19.8 자기점검
+
+### 핵심 3가지
+1. **PatchTST 의 *직접 prior*?**
+2. **DLinear 와 본 논문의 관계?**
+3. **시계열 self-supervised 의 두 학파?**
+
+### 답변
+1. **(i) ViT (Dosovitskiy 2020)**: *image patching → Transformer*. PatchTST 제목 *"A Time Series is Worth 64 Words"* 의 직접 변형 (*"An Image is Worth 16x16 Words"*). **(ii) BERT (Devlin 2019)**: *Masked Language Modeling*. PatchTST 의 *masked patch reconstruction* 의 prior.
+2. **DLinear (2023)**: "*Transformer 시계열 X*" 도전. *간단한 linear 모델이 Informer/Autoformer 능가*. **PatchTST 의 응답**: *Vanilla Transformer + Patching + CI* 로 *DLinear 도 능가*. 21% MSE reduction. 학계 *위기 → restoration*.
+3. **(A) Contrastive Learning**: TS2Vec (2022), TNC (2021) — *유사 sample 끼리 가깝게, 다른 sample 끼리 멀게*. **(B) Reconstruction**: SimMTM, TimeMAE, **PatchTST**. *masked 부분 reconstruction*. 본 논문은 *후자 학파* — *시계열 의 BERT 등가물*.
+
+---
+
+다음 챕터: [20_analysis.md](20_analysis.md) — Analysis (결과의 deep 해석).
