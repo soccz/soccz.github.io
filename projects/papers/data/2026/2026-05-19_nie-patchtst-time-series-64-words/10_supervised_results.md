@@ -433,6 +433,48 @@ PatchTST 의 답:
 
 (paper p.14 Figure 3 — ILI dataset 60-step 예측 시각화. paper caption 정확 명시.)
 
+### 📖 Figure 3 (Forecasting Visualization) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **Multi-panel**: 3 datasets (Weather, Electricity, ILI) × 4-5 models 비교
+- **X축**: 시간 (future timesteps)
+- **Y축**: forecast value
+- **색**:
+  - **검정 선**: Ground truth (실제 미래값)
+  - **빨강 선**: PatchTST/42 prediction
+  - **보라 선**: DLinear prediction
+  - **주황 선**: FEDformer prediction
+  - **녹색 선**: Autoformer prediction
+- **Forecast horizon**: Weather/Electricity = 192 steps, ILI = 60 steps
+
+**5 단계 분석**:
+1. **빨강 선 (PatchTST) 의 정답 따라가기**: 검정 선과 거의 일치? → YES
+2. **Peak/valley 의 정확한 위치**: PatchTST 가 다른 모델보다 정확한가? → YES
+3. **진폭 (amplitude)**: PatchTST 가 진폭 잘 잡는가? → YES (다른 모델은 진폭 약함)
+4. **장기 (192 steps) 정확도**: 후반 부분도 잘 따라가는가? → YES
+5. **ILI 의 작은 sample 의 어려움**: ILI 18년 (작음) 인데 PatchTST 압도 → few-shot capability
+
+**핵심 발견**:
+- **PatchTST 예측 (빨강) 이 ground truth (검정) 와 거의 일치**
+- 특히 **peak/valley** 의 정확한 위치 + 진폭 잡음
+- **Baseline 들** (보라/주황/녹색): peak 위치 미스 또는 진폭 약함
+- **수치 (Table 3) 의 21% MSE reduction 의 직접적 시각 증명**
+
+**ILI dataset 의 특별 의미**:
+- ILI 는 sample 수 매우 적음 (966 weeks ≈ 18년)
+- 작은 sample 에 큰 model 은 overfit 위험
+- 그럼에도 PatchTST 가 압도 → **few-shot learning capability** 시사
+- → Foundation model 가능성의 초기 증거
+
+**숨은 함정**:
+- 어떤 sample 의 forecast 를 보여줬는지 (random? best?) — 가능한 cherry-pick
+- 시각적 일치가 항상 수치 우월 보장 X — formal evaluation 은 Table 3 가 결정적
+- 다른 sample 들도 비슷한 quality 인지 확인 필요
+
+### 🔑 핵심 통찰
+
+> Figure 3 는 **PatchTST 의 시각적 smoking gun**. 사람이 그림만 봐도 PatchTST 가 정답에 가까움을 확인 가능 → Table 3 의 수치 우위를 직관적으로 검증.
+
 ### paper caption (p.14)
 
 > "Figure 3 visualize the long-term forecasting results of supervised PatchTST/42 and other baselines on Weather and Electricity datasets and 60 steps ahead on ILI dataset. Here, we predict 192 steps on Weather and Electricity and 60 steps on ILI."

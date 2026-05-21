@@ -238,12 +238,50 @@ PatchTST 는 *Transformer (복잡) + 더 많은 parameter* — *큰 dataset 에�
 
 본 논문 *Table 14 (Appendix A.6.1, p.20)*: 5 seeds 의 결과 variance.
 
-### Setup 정확히
-- **5 random seeds**: $\{2019, 2020, 2021, 2022, 2023\}$.
+### 📖 Table 14 (5 seeds robustness) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **행**: 8 datasets (Weather, Traffic, Electricity, ETTh1/h2, ETTm1/m2, ILI)
+- **열**: 4 horizons × 2 setting (Supervised, Self-supervised) × 2 metric (MSE, MAE) = 16 columns
+- **셀**: 평균값 ± 표준편차 (5 seeds 평균)
+- **5 random seeds**: {2019, 2020, 2021, 2022, 2023}
+
+**5 단계 분석**:
+1. **각 셀의 ± 값 크기**: 작으면 robust, 크면 seed sensitive
+2. **Large vs Small dataset 차이**: Weather/Traffic/Electricity (large) vs ILI/ETTh (small)
+3. **Sup vs Self-sup**: Self-sup 의 std 가 더 작은가? (pre-train shared 라서) → YES
+4. **Long horizon (720) 의 variance**: 더 큰가? → 약간 ↑
+5. **다른 모델 (Informer, Autoformer) 의 variance**: 본 논문 명시 "PatchTST 가 더 안정"
+
+**Setup**:
 - 두 setting:
-  - *Supervised PatchTST/42*: seed 변경 + 모든 학습 reset.
-  - *Self-supervised PatchTST/42*: 1번 pre-train + 5번 random batch fine-tune.
-- 8 datasets × 4 horizons = 32 cell × 2 metric (MSE, MAE) = 64 표시.
+  - **Supervised PatchTST/42**: seed 변경 + 모든 학습 reset
+  - **Self-supervised PatchTST/42**: 1번 pre-train + 5번 random batch fine-tune
+- 총 8 datasets × 4 horizons × 2 setting × 2 metric = 128 cells
+
+**예시 수치** (Weather T=96):
+- Supervised PatchTST: MSE = **0.1525 ± 0.0024** (std ≈ 1.6%)
+- Self-supervised PatchTST: MSE = **0.1450 ± 0.0008** (std ≈ 0.5%)
+
+**핵심 발견**:
+- **PatchTST 의 결과가 robust** — seed 변경에도 작은 std
+- **Large dataset**: std 매우 작음 (~1% 미만) — robust
+- **Small dataset** (ILI, ETTh1/h2): std 상대적 큼 but 여전히 Informer/Autoformer 보다 안정
+- **Self-sup < Sup variance**: pre-train weight shared → variance ↓
+
+**왜 PatchTST 가 안정**:
+- Channel-Indep → sample 수 effectively M 배 → seed 영향 ↓
+- Patching → token 수 ↓ → optimization 안정
+- Instance Norm → distribution shift 영향 ↓
+
+**숨은 함정**:
+- "Variance insignificant" 라고 모든 setting 이 그런 것 아님 — small dataset 에선 여전히 일부 std ↑
+- 5 seed 만으로 충분한 statistical evidence? — 더 많은 seed (10-20) 가 더 robust 결과
+- Confidence interval 보고 안 됨
+
+### 🔑 핵심 통찰
+
+> Table 14 는 PatchTST 의 **실무 배포 가치 의 핵심 증거**. SOTA 모델도 seed sensitive 면 production 어려움. PatchTST 의 low variance = predictable performance → 운영 부담 ↓.
 
 ### 발견
 PatchTST 의 *결과가 robust* — seed 변경에도 *작은 std*. 예시 (Weather T=96):

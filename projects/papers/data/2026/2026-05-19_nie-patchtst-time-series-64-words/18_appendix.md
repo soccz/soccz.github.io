@@ -189,19 +189,42 @@ L = 96, 192, 336, 512 비교. Longer better (Figure 2, 10 챕터).
 
 본 논문 *A.3 (p.14, Table 8)*: **단일 변수 예측 결과**.
 
-### Setup
-- ETT dataset 의 *oil temperature* 만 target.
-- $T \in \{96, 192, 336, 720\}$.
-- **단일 변수** — 다른 변수 (전력 부하 등) 무시.
+### 📖 Table 8 (Univariate Forecasting) 정밀 읽는 법
 
-### 어떻게 읽나?
-**Step 1**: ETTh1, ETTh2, ETTm1, ETTm2 × 4 horizons = 16 cell.
+**무엇이 표시되나**:
+- **행**: 4 ETT datasets (ETTh1, ETTh2, ETTm1, ETTm2)
+- **열**: 4 horizons (96, 192, 336, 720) × 7-8 models = 28-32 columns
+- **셀**: MSE / MAE (낮을수록 좋음)
+- **8 models 비교**: PatchTST/64, PatchTST/42, DLinear, FEDformer, Autoformer, Informer, LogTrans, (+vanilla Transformer)
+- **Setup**: ETT dataset 의 oil temperature 만 target (단일 변수)
 
-**Step 2**: 8 models 비교 — PatchTST/64, PatchTST/42, DLinear, FEDformer, Autoformer, Informer, LogTrans.
+**5 단계 분석**:
+1. **각 셀에서 PatchTST 가 best?**: 거의 모든 셀 (16/16 또는 15/16)
+2. **PatchTST/64 vs /42**: longer L 일수록 /64 우월
+3. **DLinear 와의 격차**: ETTh1 에선 작고, ETTm 에선 큼
+4. **Informer/LogTrans 의 약점**: univariate input 도 내부 cross-channel 처리 → 불필요 복잡도
+5. **Horizon 의존성**: long horizon (720) 에서 격차 ↑
 
-**Step 3 — 발견**:
-- *PatchTST/64 또는 /42 가 거의 모든 cell 에서 best*.
-- 즉 **multivariate (Table 3) + univariate (Table 8) *둘 다 SOTA***.
+**Setup 의 의미**:
+- ETT dataset 의 oil temperature **만** target (단일 변수, 다른 변수 무시)
+- 즉 **univariate forecasting** — 가장 simple 한 setting
+- PatchTST 가 multivariate (Table 3) + univariate (Table 8) **둘 다 SOTA**
+
+**핵심 발견**:
+- **PatchTST/64 또는 /42 가 거의 모든 cell 에서 best**
+- **Channel-Indep 의 완벽 정당화**: Channel-Indep 가 각 channel 을 독립 univariate 처리 → univariate 도 well-defined
+- **Channel-mixing 모델** (Informer/FEDformer) 은 univariate input 도 내부에서 cross-channel 처리 → 불필요 복잡도
+
+**일상 비유**:
+- 의사가 심박수만 분석 (단일 변수) 시, 모든 변수 함께 분석하는 모델 보다 심박수 전문 모델이 더 정확
+
+**숨은 함정**:
+- Univariate setting 의 결과가 multivariate 에도 적용되는지 별도 확인 필요 (Table 3 가 입증)
+- ETT 의 oil temperature 가 특수한 시계열이라 일반화 어려울 수 있음 (다른 univariate dataset 으로 검증 권장)
+
+### 🔑 핵심 통찰
+
+> Table 8 은 **PatchTST 의 architectural simplicity 의 정당화**. Univariate setting 에서도 SOTA → Channel-Indep 의 inductive bias 가 simple setting 에도 효과적. Channel-mixing 모델은 univariate 에선 over-engineered.
 
 ### 의미
 **Channel-Indep 의 *완벽 정당화***: Channel-Indep 가 *각 channel 을 독립 univariate 처리* 하므로 *univariate 도 well-defined*. *Channel-mixing 모델* (Informer/FEDformer) 은 *univariate input* 도 *내부에서 cross-channel* 처리 → *불필요 복잡도*.

@@ -441,6 +441,48 @@ paper p.7:
 | Deterministic (no z) | ✗ | ✗ | ✗ | ✓ |
 | **CRPS_sum on Traffic** | **0.028** | 0.031 | 0.033 | 0.041 |
 
+### 📖 Table 2 (ProTran Ablation) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **행**: 4 component 의 on/off + 결과 (CRPS_sum on Traffic)
+- **열**: 4 setting (A, B, C, D)
+- **셀**: ✓ (component 켜짐) / ✗ (꺼짐) / 마지막 행은 CRPS 수치
+
+**5 단계 분석**:
+1. **A 가 best (0.028, bold)**: full ProTran (multi-layer + context attn + stochastic)
+2. **A → B (2 layers → 1 layer)**: 0.028 → 0.031, **+11% 악화** = layer 효과
+3. **B → C (context attention 제거)**: 0.031 → 0.033, **+6% 악화** = context attn 효과
+4. **B → D (stochastic latent 제거)**: 0.031 → 0.041, **+32% 악화** = stochastic 효과 ★
+5. **순위**: stochastic latent (32%) > layer 수 (11%) > context attn (6%)
+
+**4 setting 정확한 구성**:
+
+| Setting | $L$ | Context Attn | Stochastic? | 한 줄 |
+|---------|-----|------------|-----------|------|
+| **A** | 2 | ✓ | ✓ | **Full ProTran** (best) |
+| **B** | 1 | ✓ | ✓ | Single-layer ProTran |
+| **C** | 1 | ✗ | ✓ | Single-layer, no context attn |
+| **D** | 1 | ✓ | ✗ | Single-layer, **deterministic** |
+
+**핵심 발견 (component 중요도 순위)**:
+- **★ Stochastic latent (z) 가 가장 critical** — 제거 시 32% 악화
+- Multi-layer (L=2) 가 중간 — 11% 악화
+- Context attention 가 marginal — 6% 악화
+
+**Stochastic 의 32% 가 왜 큰가**:
+- Deterministic = 단순 Transformer + smoothing 같은 효과
+- Stochastic = probabilistic + uncertainty → 진짜 distribution 모델링
+- 확률 예측 task 에서 분포 표현 능력이 결정적
+
+**숨은 함정**:
+- Traffic 한 dataset 결과 — 다른 dataset 에선 순위 다를 수 있음
+- ✓/✗ 표기가 약간 confusing — 행 1, 행 2 가 상보적 (layer 수 한 변수)
+- 더 많은 component 조합 (예: L=3, no smoothing 등) 미확인
+
+### 🔑 핵심 통찰
+
+> Table 2 의 32% stochastic effect 가 ProTran 의 **paper title 의 정당화**. "Probabilistic Transformer" 의 probabilistic 부분이 핵심 contribution. Deterministic transformer 만으론 부족.
+
 ### Step 1 — 표의 구조 이해
 
 **축**:

@@ -73,6 +73,56 @@ paper 의 핵심 주장: **둘 다 "context 주고 미래 sequence 예측" 의 c
 
 (Table 3, paper p.9)
 
+### 📖 Table 3 (Motion Prediction Results) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **행**: 11 models (ERD, acLSTM, MT-VAE, Pose-Knows, HP-GAN, Best-Many, GMVAE, DeliGAN, DSP, DLow, **ProTran**)
+- **열**: 2 datasets × 2 metrics = 4 columns
+  - Human3.6M ADE↓
+  - Human3.6M FDE↓
+  - HumanEva-I ADE↓
+  - HumanEva-I FDE↓
+- **셀**: 거리 metric (meter 단위)
+- **↓ 화살표**: lower is better
+- **Bold**: 각 column 의 best
+
+**5 단계 분석**:
+1. **ProTran 의 4 cells**: 3/4 best (Human3.6M ADE/FDE, HumanEva-I FDE), 1/4 가까운 2위 (HumanEva-I ADE: ProTran 0.258 vs DLow 0.251)
+2. **Dataset 별 강도**: Human3.6M (large) 에서 압도, HumanEva-I (small) 에서 동등
+3. **ADE vs FDE 균형**: ProTran 이 둘 다 best (balanced)
+4. **Worst case 비교**: ProTran 0.381 vs HP-GAN 0.858 → 2.3배 차이 = 모델 선택의 중요성
+5. **Architecture 진화**: ERD/acLSTM (deterministic RNN) → MT-VAE/Pose-Knows (cVAE) → DLow (diversity) → ProTran (Transformer)
+
+**Table 3 핵심 수치** (ProTran):
+- Human3.6M ADE: **0.381** (best, DLow 0.425 대비 10% 향상)
+- Human3.6M FDE: **0.491** (best, DLow 0.518 대비 5%)
+- HumanEva-I ADE: 0.258 (DLow 0.251 가 약간 우월)
+- HumanEva-I FDE: **0.255** (best, DLow 0.268 대비 5%)
+
+**Metric 의 의미**:
+- **ADE** (Average Displacement Error): 모든 시점의 거리 평균 → 전체 trajectory 정확도
+- **FDE** (Final Displacement Error): 마지막 시점만의 거리 → long-term 끝점 정확도 (오류 누적 척도)
+- 단위: meter (3D 좌표 공간), scale ~0.3-0.9 → sub-meter 정확도
+
+**왜 100 samples best-of-N 평가**:
+- 사람 동작은 multi-modal (걷기/멈추기/방향 전환)
+- 모델이 다양한 plausible future 중 하나라도 ground truth 근처면 OK
+- Single sample 평가는 stochastic model 에 불공정
+
+**ProTran 이 Human3.6M 에서 더 강한 이유**:
+- Human3.6M (3.6M frames) >> HumanEva-I (3 subjects, ~30K frames)
+- L=3 layer + 풍부한 latent 의 capacity 활용
+- 작은 dataset (HumanEva-I) 은 overfit 위험 → ProTran capacity 활용 X
+
+**숨은 함정**:
+- DLow 가 HumanEva-I ADE 에서 약간 우월 — DLow 는 별도 diversity-promoting model
+- ProTran 의 100 samples 는 random — DLow + ProTran 결합 가능성 (paper 명시)
+- Best-of-N 평가가 항상 fair 한 것 아님 — N 클수록 운에 의한 결과
+
+### 🔑 핵심 통찰
+
+> Table 3 가 ProTran 의 **architectural universality** 결정적 증명. 시계열 (Table 1) + 모션 (Table 3) 모두 SOTA = task-agnostic. 같은 architecture 가 1D (트래픽) + 51D (관절) 둘 다 처리.
+
 ### Step 1 — 표의 구조 이해
 
 **축**:

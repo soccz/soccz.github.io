@@ -292,6 +292,40 @@ $c > 1$ 에서 검정 선이 *영원히 양수 유지* + *대체로 0.05 근처�
 
 *paper p.485 Figure 4 — Left: R². Right: ‖β̂‖.*
 
+### 📖 Figure 4 (Misspecified R²) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **Figure 1 의 misspecified 버전** (구조 동일)
+- **2 panel**: Left = R², Right = ‖β̂‖ norm
+- **X축**: $cq$ (학자 empirical complexity, not c) — True DGP $c = 10$ 고정
+- **Y축 Left**: OOS R² (range $[-0.3, 0.2]$)
+- **Y축 Right**: $\|\hat\beta\|$ norm
+- **6 색 곡선**: ridgeless (검정), z=0.01 (노랑), z=0.1 (빨강), z=1 (보라), z=10 (하늘), z=50 (연두)
+- **빨간 수평 점선**: Infeasible upper bound
+
+**5 단계 분석 (Left panel R²)**:
+1. **Figure 1 과 모양 비교**: 비슷한가? → YES — cq=1 catastrophe + cq>1 회복
+2. **★ 결정적 차이**: simple cq 영역의 R² 가 Figure 1 보다 **약 50% 더 낮음** → approximation gap
+3. **cq = 0.1**: Figure 1 의 0.16 → Figure 4 의 0.05 정도 (misspecification cost)
+4. **cq → 10** (= q=1 = correctly specified): Figure 1 의 c=10 과 같은 수준 (cost 사라짐)
+5. **cq = 1 catastrophe**: Figure 1 과 동일 (specification 무관)
+
+**Right panel (β norm)**:
+- Figure 1 right 와 거의 동일한 패턴
+- cq=1 부근 norm spike (catastrophe 의 직접 원인)
+
+**핵심 발견 (3)**:
+- **Approximation gap**: misspec 의 cost = simple cq 영역의 R² 50% 손실
+- **cq → 10 에서 gap 사라짐**: 학자가 더 많은 변수 capture 할수록 손실 ↓
+- **catastrophe specification 무관**: cq=1 에서 R² 발산은 항상
+
+**메시지**: 학자가 진짜 자연의 일부만 보면 예측 정확도 손실 (misspecification cost). cq 늘리면 cost 줄어듦.
+
+**숨은 함정**:
+- "cq → 10 에서 correctly specified" 는 calibration 가정 (true c=10 가정) — 다른 calibration 에선 다름
+- approximation gap 의 50% 가 universal 아님 — calibration 의존
+- Figure 4 보고 즉시 "complex 가 좋다" 결론 X — Figure 6 (SR) 가 결정적
+
 ### 어떻게 읽나? (Step-by-step)
 
 **Step 1 — Setup**
@@ -324,6 +358,39 @@ $c > 1$ 에서 검정 선이 *영원히 양수 유지* + *대체로 0.05 근처�
 ![Figure 5](figures/page27_Fig5_E_Vol_misspec.png)
 
 *paper p.485 Figure 5.*
+
+### 📖 Figure 5 (Misspecified E + Vol) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **Figure 2 의 misspecified 버전** (구조 동일)
+- **2 panel**: Left = Expected return E, Right = Volatility √V
+- **X축**: cq (학자 empirical complexity), True DGP c=10 고정
+- **Y축 Left**: $\mathcal{E}$ (range [0, 0.025])
+- **Y축 Right**: Vol (range [0, 6])
+- **6 색 곡선** + 빨간 점선
+
+**5 단계 분석 (Left panel E)**:
+1. **Figure 2 와 가장 큰 차이**: Figure 2 ridgeless E 가 c<1 에서 constant, Figure 5 는 cq monotone **increasing**!
+2. **cq=0.1**: 모든 선 0 근처 (학자가 변수 적음)
+3. **cq=0.5**: 검정 (ridgeless) 0.01 까지 상승
+4. **cq=1**: 검정 0.02 peak
+5. **cq>1**: 검정 flat 0.02 유지 (Eq 19 의 $b_*\psi_{*,1} \min\{q, c^{-1}\}$ 패턴)
+
+**가장 강력한 발견**:
+- **기대 수익이 cq 의 monotone increasing** — Figure 2 (correctly specified) 의 constant 와 정반대
+- → **misspecified case 의 핵심**: 학자가 더 많은 변수 사용할수록 기대 수익 단조 증가
+- Theorem 1 의 SR monotone 증가의 직접 원인 (분자 ↑)
+
+**Right panel (Vol)**:
+- Figure 2 의 right 와 유사: cq=1 spike + 회복
+- **변동성 행동은 misspecification 무관** (specification 영향 ↓)
+
+**메시지**: Figure 5 left panel 이 Theorem 1 의 경제적 의미. Expected return 단조 증가 → Sharpe ratio 단조 증가 (Figure 6).
+
+**숨은 함정**:
+- "ridgeless E 가 monotone" 는 cq → ∞ 에서 saturate (Eq 19 의 min{q, c⁻¹})
+- 변동성 패턴이 비슷 = "Vol 무관 학자 선택" 아님 — 단지 magnitude 비슷
+- Figure 5 만 보면 "변수 ↑ = 항상 좋다" 결론 X — 더 큰 그림 Figure 6 (SR) 가 결정적
 
 ### 어떻게 읽나? (Step-by-step)
 
