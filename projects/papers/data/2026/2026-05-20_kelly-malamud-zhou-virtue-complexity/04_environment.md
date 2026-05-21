@@ -343,10 +343,13 @@ $SR_{\infty} = \frac{1}{\sqrt{3 + 1/(b_* \psi_{*,1})}}$
 
 ## 4.13 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **본 논문이 시장 수익률을 어떻게 모델링?**
 2. **Lemma 1 의 의미와 왜 중요?**
 3. **신의 Sharpe ratio 가 0.577 미만인 이유?**
+4. **Sufficiently mixed signals (Assumption 5) 의 의미와 RFF 만족?**
+5. **R² 와 Sharpe 의 infeasible vs feasible 관계?**
 
 ### 답변
 

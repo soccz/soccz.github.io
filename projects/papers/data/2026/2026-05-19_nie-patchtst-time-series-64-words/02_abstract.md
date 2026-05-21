@@ -231,15 +231,25 @@ ViT (Vision Transformer, 2020) 의 *"An Image is Worth 16x16 Words"* 제목의 *
 
 ## 2.7 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **이 논문의 제목 "A Time Series is Worth 64 Words" 의 의미?**
 2. **Abstract 6 문장의 핵심?**
 3. **본 논문 실증의 핵심 수치?**
+4. **저자 4인 (Princeton + IBM) 의 협업 의의?**
+5. **ICLR 2023 게재의 학술적 위상?**
 
 ### 답변
-1. **"시계열 = 64개 단어 (token). NLP Transformer 그대로 시계열에 적용"**. ViT (2020) 의 *"An Image is Worth 16x16 Words"* 의 시계열 버전. *시계열 specific Transformer 변형 (Informer, Autoformer, FEDformer)* 필요 없다 — *Vanilla Transformer + 두 trick (patching, channel-indep)* 만으로 SOTA.
-2. (1) Multivariate 시계열 예측 + self-supervised representation learning 모델 제안. (2) 두 trick: patching + channel-indep. (3) 세 이점: local semantic + complexity 감소 + longer history. (4) PatchTST 가 long-term forecasting SOTA. (5) Self-supervised pre-training 우월. (6) Transfer learning 가능.
-3. **21% MSE reduction (PatchTST/64) + 16.7% MAE reduction** vs FEDformer/Autoformer/Informer 의 8 datasets × 4 horizons 평균 (Table 3). Self-supervised + transfer learning 도 SOTA. *시계열 foundation model 의 출발점*.
+
+1. **"시계열 = 64개 단어 (token). NLP Transformer 그대로 시계열에 적용"**. ViT (2020) 의 *"An Image is Worth 16x16 Words"* 의 시계열 버전. *시계열 specific Transformer 변형 (Informer, Autoformer, FEDformer)* 필요 없다 — *Vanilla Transformer + 두 trick (patching, channel-indep)* 만으로 SOTA. **64 의 정확한 의미**: L=512, P=16, S=8 → N=64 patches. **제목 메시지**: paradigm transfer 의 정신 — ViT/BERT 가 image/text 적용한 paradigm 을 시계열에 그대로.
+
+2. (1) Multivariate 시계열 예측 + self-supervised representation learning 모델 제안. (2) 두 trick: patching + channel-indep. (3) 세 이점: local semantic + complexity 감소 + longer history. (4) PatchTST 가 long-term forecasting SOTA. (5) Self-supervised pre-training 우월. (6) Transfer learning 가능. **6 문장 의 구조**: motivation (1) → method (2) → benefits (3) → main result (4) → 추가 (5, 6). 본 paper 전체의 micro-version.
+
+3. **21% MSE reduction (PatchTST/64) + 16.7% MAE reduction** vs FEDformer/Autoformer/Informer 의 8 datasets × 4 horizons 평균 (Table 3). Self-supervised + transfer learning 도 SOTA. **시계열 foundation model 의 출발점**. **추가 수치**: Traffic dataset L=336 → L=720 시 MSE 추가 감소 (다른 모델은 악화), 32/32 cells 의 91% best, 통계적 유의성 5 seeds 평균.
+
+4. **Yuqi Nie (Princeton 박사과정, lead)**: 시계열 + Transformer 전문가. **Nam H Nguyen (IBM Research)**: 산업 응용. **Phanwadee Sinthong (IBM Research)**: probabilistic forecasting. **Jayant Kalagnanam (IBM Research)**: industry research director. **협업 의의**: 학계 (Princeton) × 산업 (IBM) 결합. (i) 학계의 깊이 + (ii) 산업의 실무 데이터 + (iii) 4 expert 의 multi-perspective. IBM 의 시계열 데이터 access (수백만 시계열) 가 self-supervised pre-training 의 검증 가능성에 기여.
+
+5. **ICLR 2023 spotlight** (top venue). **분야**: machine learning 의 top 3 conference (NeurIPS, ICML, ICLR). **2023 acceptance**: about 1,500/4,000+ submissions, 본 논문 spotlight 는 top 25% 이내. **수상/recognition**: oral presentation 가능성, citation 폭발 (1,500+ 1년 내). **분야 영향**: 2024 의 거의 모든 시계열 transformer paper 가 PatchTST 인용 — **paradigm capstone**. **후속 series**: Chronos (NeurIPS 2024), TimesFM (ICML 2024), Moirai (ICML 2024) — 모두 PatchTST 의 building block 위에 build. **5-10년 영향**: ViT (2020) 의 CV 분야, BERT (2018) 의 NLP 분야 와 비슷한 분야 reset 의 catalyst.
 
 ---
 

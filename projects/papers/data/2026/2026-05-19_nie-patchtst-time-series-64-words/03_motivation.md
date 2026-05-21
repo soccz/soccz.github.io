@@ -428,15 +428,25 @@ Panel (a) 만 channel-independence 표현. Panel (b), (c) 는 single channel 의
 
 ## 3.9 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **2022년 DLinear 도전의 의미?**
 2. **PatchTST 의 두 trick 의 직관?**
 3. **본 논문의 핵심 수치?**
+4. **시계열 Transformer 의 5년 (2018-2022) 진화와 PatchTST 의 위치?**
+5. **DLinear 가 PatchTST 의 어느 부분에서 여전히 우월한가?**
 
 ### 답변
-1. **"Transformer 가 시계열 forecasting 에 효과적이지 않다"** 라는 도전. *간단한 linear model* (DLinear) 이 *복잡한 Transformer 변형들 (Informer, Autoformer, FEDformer)* 보다 *낫다* 는 결론. *시계열 Transformer 의 2-3년 노력 무력화* — 학계 *위기*. 본 논문 PatchTST 가 이 도전에 정면 응답.
-2. **(1) Patching**: 긴 시계열 (336) 을 *16 짜리 작은 조각* 으로 자름 → *한 조각 = 한 단어* (ViT 의 정신). 효과: attention 복잡도 22× 감소 + longer history + local pattern 보존. **(2) Channel-Independence**: 326 변수 (전력 가구) 가 있어도 *각 변수 독립 Transformer 통과 + 같은 weight*. *Cross-channel mixing X*. 효과: overfitting 방지 + spurious correlation 회피.
-3. **21.0% MSE reduction + 16.7% MAE reduction (PatchTST/64)** vs FEDformer/Autoformer/Informer 의 8 datasets × 4 horizons 평균. *Attention 22× 빠름* (Traffic dataset). *Self-supervised pre-training* 우월 + *transfer learning* 가능. 시계열 foundation model 의 *출발점*.
+
+1. **"Transformer 가 시계열 forecasting 에 효과적이지 않다"** 라는 도전. *간단한 linear model* (DLinear) 이 *복잡한 Transformer 변형들 (Informer, Autoformer, FEDformer)* 보다 *낫다* 는 결론. *시계열 Transformer 의 2-3년 노력 무력화* — 학계 *위기*. 본 논문 PatchTST 가 이 도전에 정면 응답. **DLinear 의 strong point**: 단순함 + decomposition 의 inductive bias 가 작은 dataset 에 robust. **그러나 PatchTST 가 능가하는 부분**: 고차원 + multi-modal cycle dataset (Traffic, Electricity, Weather).
+
+2. **(1) Patching**: 긴 시계열 (336) 을 *16 짜리 작은 조각* 으로 자름 → *한 조각 = 한 단어* (ViT 의 정신). 효과: attention 복잡도 22× 감소 + longer history + local pattern 보존. **(2) Channel-Independence**: 326 변수 (전력 가구) 가 있어도 *각 변수 독립 Transformer 통과 + 같은 weight*. *Cross-channel mixing X*. 효과: overfitting 방지 + spurious correlation 회피. **Hidden 3rd trick**: Instance Normalization (paper 강조 안 했지만 ablation 으로 17% 효과).
+
+3. **21.0% MSE reduction + 16.7% MAE reduction (PatchTST/64)** vs FEDformer/Autoformer/Informer 의 8 datasets × 4 horizons 평균. *Attention 22× 빠름* (Traffic dataset). *Self-supervised pre-training* 우월 (+7% vs supervised) + *transfer learning* 가능. 시계열 foundation model 의 *출발점*. **통계 유의성**: 5 seeds 평균, std ~1% (large dataset) — robust.
+
+4. **5년 진화 경로**: **2018 Vanilla Transformer (NLP)**: 시계열에 적용 가능 but L 큰 경우 비효율. **2020 Informer (ProbSparse)**: $O(L \log L)$ sparse attention. **2021 Autoformer (Auto-correlation + Series Decomposition)**: 명시적 trend/seasonal 분해. **2022 FEDformer (Fourier-enhanced)**: 주파수 도메인 attention. **2022 DLinear 도전**: "Transformer 시계열 X". **2023 PatchTST**: vanilla + patching + CI 로 모든 변형 능가. **메시지**: 학자들이 5년간 specific 변형에 매달렸지만 paradigm transfer (ViT → 시계열) 가 답. **분야 reset 의 catalyst**.
+
+5. **DLinear 가 PatchTST 와 동등 or 약간 우월한 영역**: ETTh1/h2 (저차원 M=7, 단순 일/계절 cycle). **이유**: (i) DLinear 의 inductive bias (trend + seasonal decomposition) 가 dataset 구조와 match, (ii) 작은 dataset 에서 단순 모델이 overfit 회피, (iii) PatchTST 의 attention 의 추가 가치 ↓. **교훈**: 모델 복잡도가 데이터 복잡도와 match 해야 — 항상 더 복잡한 모델이 좋은 게 아님. **실무 권장**: 저차원 단순 dataset (ETTh 같은) → DLinear, 고차원 multi-modal → PatchTST. PatchTST 가 universal SOTA 인 건 아니지만 *대부분 dataset 에서 best*.
 
 ---
 

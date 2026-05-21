@@ -571,15 +571,25 @@ Figure 1-6 가 *이론* 시뮬. 그러나 본 논문 Section V (Chapter 07) 의 
 
 ## 6.13 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **Figure 1 (correctly) 와 Figure 4 (misspecified) 의 가장 큰 차이?**
 2. **Figure 3 의 *놀라운* 발견?**
 3. **Figure 6 의 의미 — 본 논문 main statement?**
+4. **6 figures 의 전체 흐름과 각 figure 의 contribution?**
+5. **이론 시뮬 (Figures 1-6) vs 실증 (Figures 7-11) 의 관계?**
 
 ### 답변
-1. **R²**의 전체 모양 (c=1 catastrophe + 회복) 은 양쪽 비슷. **결정적 차이는 *기대 수익***: Figure 2 (correctly) 에서는 ridgeless 기대 수익이 *c < 1 에서 constant* (no decrease), Figure 5 (misspecified) 에서는 *cq 의 monotone increasing* — *복잡할수록 기대 수익 증가*. 이게 *misspecified 환경의 본질적 차이*.
-2. **Ridgeless (검정) 의 Sharpe ratio 가 *모든 c 에서 양수***. 즉 통상 직관 "변수 > 데이터 → overfit → 망함" 의 정면 반박. R² 가 *마이너스 100% 이하* 인 영역 (Figure 1) 에서도 Sharpe > 0 — *R² 와 Sharpe 의 분리*. 또한 *Ridge z > 0 가 모든 c 에서 ridgeless 보다 우월*.
-3. **모든 z 에서 Sharpe ratio 가 cq 의 monotone increasing** — Theorem 1 의 시각적 statement. Ridgeless 에서 *cq = 1 근처 약한 dip (double ascent)*, $z > 0$ 에서 *smooth monotone (permanent ascent)*. 의미: *Use the largest model you can compute* + *적절한 ridge 사용*. 이게 본 논문 의 *Use the largest model* 권장의 *수학적 근거*.
+
+1. **R² 의 전체 모양 (c=1 catastrophe + 회복) 은 양쪽 비슷**. **결정적 차이는 기대 수익**: Figure 2 (correctly) 에서는 ridgeless 기대 수익이 c<1 에서 constant (no decrease), Figure 5 (misspecified) 에서는 cq 의 monotone increasing — 복잡할수록 기대 수익 증가. 이게 **misspecified 환경의 본질적 차이**. **함의**: correctly specified 의 경우 simple model 도 기대수익 충분, misspecified 의 경우 (모든 현실 모델) complex model 이 더 좋음. Box paradox 의 해결.
+
+2. **Ridgeless (검정) 의 Sharpe ratio 가 모든 c 에서 양수**. 즉 통상 직관 "변수 > 데이터 → overfit → 망함" 의 정면 반박. R² 가 마이너스 100% 이하 인 영역 (Figure 1) 에서도 Sharpe > 0 — **R² 와 Sharpe 의 분리**. 또한 Ridge z > 0 가 모든 c 에서 ridgeless 보다 우월. **추가 발견**: C → ∞ 에서도 SR > 0 유지 → 극단적 high-complexity 도 timing 가치 있음. **함의**: Campbell-Thompson (2008) 의 R² → SR mapping 의 한계 입증.
+
+3. **모든 z 에서 Sharpe ratio 가 cq 의 monotone increasing** — Theorem 1 의 시각적 statement. Ridgeless 에서 cq=1 근처 약한 dip (**double ascent**), z>0 에서 smooth monotone (**permanent ascent**). 의미: **Use the largest model you can compute + 적절한 ridge 사용**. 이게 본 논문의 **Use the largest model 권장의 수학적 근거**. **실무 응용**: AQR, Two Sigma 같은 quant 펀드의 ML 전략 정당화 — 가장 큰 모델 + ridge 사용.
+
+4. **6 figures 의 흐름**: **Fig 1 (R², correctly)**: c=1 catastrophe + 회복 → ridgeless 의 위험성. **Fig 2 (E + Vol, correctly)**: ridgeless E 가 c<1 constant. **Fig 3 (SR, correctly)**: 모든 c 에서 SR > 0 (놀라움). **Fig 4 (R², misspec)**: Fig 1 + approximation gap. **Fig 5 (E + Vol, misspec)**: ★ E monotone 증가 (vs Fig 2 constant). **Fig 6 (SR, misspec)**: ★★ Theorem 1 의 시각적 statement (monotone 증가). **3-6 순서**: correctly → misspecified 의 패러다임 전환을 시각화.
+
+5. **이론 시뮬 (Figures 1-6) → 실증 (Figures 7-11) 의 일치**: 저자 표현 "**extraordinary agreement**". 이론은 가상 데이터 (calibration: $b_*=0.2, c=10, \Psi=I$), 실증은 CRSP 1926-2020 진짜 데이터. **검증된 일치**: (i) Fig 7 (실증 R², norm, E, Vol) = Fig 1, 2 의 패턴 재현, (ii) Fig 8 (실증 SR) = Fig 6 의 monotone increasing 재현, (iii) ridgeless catastrophe 도 실증에서 확인. **의의**: 이론적 prediction 이 90년 실제 시장 데이터에서 검증 → 본 논문의 robustness 압도적.
 
 ---
 
