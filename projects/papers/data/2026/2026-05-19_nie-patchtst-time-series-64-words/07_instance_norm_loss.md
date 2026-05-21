@@ -11,6 +11,45 @@
 
 > 본 논문의 **"마이너" trick 같지만 사실 핵심** — Table 11 (ch18) 의 정확한 수치로 **17% MSE reduction** 기여.
 
+### 🌱 Instance Normalization — 일상 비유
+
+**한 줄로**: "각 시계열별로 평균/분산 빼고 정규화 → forecasting → 다시 복원. **Distribution shift** 해결의 마이너 같지만 결정적인 trick".
+
+| 처리 | 일상 비유 |
+|------|----------|
+| Instance Norm | "각 학생 점수를 자기 평균/분산으로 표준화 후 비교" → 학생간 공정 비교 |
+| No Norm | "학생들 점수 그대로 비교" → 점수 스케일 다른 학생끼리 불공정 |
+
+**왜 시계열에 결정적**: 
+- 같은 변수도 시기별 평균/분산 다름 (예: 여름 전력 ≠ 겨울 전력)
+- 정규화 안 하면 모델이 매 시점마다 다른 데이터 분포에 적응해야 함
+- 정규화 후 → 분포 일정 → 모델이 패턴에 집중 가능
+
+### 🔣 Instance Norm 4-단 풀이
+
+| 단계 | 의미 |
+|------|------|
+| **Step 1**: $\mu = \text{mean}(X_\text{input})$ | 입력 평균 |
+| **Step 2**: $\sigma = \text{std}(X_\text{input})$ | 입력 표준편차 |
+| **Step 3**: $X_\text{norm} = (X - \mu) / \sigma$ | 정규화 |
+| **Step 4**: Forecast on $X_\text{norm}$ → $\hat{Y}_\text{norm}$ | 모델 통과 |
+| **Step 5**: $\hat{Y} = \hat{Y}_\text{norm} \cdot \sigma + \mu$ | 복원 |
+| **Step 6**: MSE loss on $\hat{Y}$ | 학습 |
+
+### 🎯 구체 증거 — Table 11
+
+| Setting | T=96 | T=720 |
+|---------|------|-------|
+| PatchTST **+IN** | **0.149** | **0.314** |
+| PatchTST **-IN** | 0.183 | 0.370 |
+| **개선율** | **18.6%** | **15.1%** |
+
+→ **단독 17% reduction**. Patching + CI + IN = three tricks (paper 가 IN 강조 안 하지만 ablation 으로 결정적).
+
+### 🔑 핵심 통찰
+
+> RevIN (2022, ICLR) 이 정확히 같은 idea. PatchTST 가 이걸 활용했지만 "two tricks" 메시지로 가림. 실제는 **three tricks**.
+
 ---
 
 ## 7.1 챕터 한 줄 요약

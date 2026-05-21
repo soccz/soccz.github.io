@@ -12,6 +12,37 @@ paper p.8-9 (Section 5.2). **Table 3 (11 models × 2 datasets) + Fig 3 (pose vis
 
 이 챕터의 목표: **모션 예측이 시계열 예측과 어떻게 다른지, 결과를 어떻게 읽는지, 그림이 말하는 게 무엇인지** 깊이 풀어 쓴다.
 
+### 🌱 모션 예측 — 일상 비유
+
+**한 줄로**: "0.25-0.5초의 사람 자세 → 1-2초 미래 자세 예측. 같은 ProTran 으로 시계열 + 모션 둘 다 SOTA = task-agnostic 의 증명".
+
+| 시계열 | 모션 |
+|--------|------|
+| 트래픽 측정 (1D) | 17 관절 × 3D = 51차원 |
+| 다음 시점 측정값 | 다음 시점 자세 |
+| CRPS_sum (분포) | ADE/FDE (거리) |
+| 통계학/ML 분야 | CV/그래픽스 분야 |
+
+**왜 같은 framework 로 가능**:
+- 둘 다 "context 주고 미래 sequence 예측" → conditional prediction
+- ProTran 은 emission MLP 의 출력 차원만 바꿔 적용
+- 하나 architecture 로 두 분야 SOTA = **architectural universality**
+
+### 🔣 모션 예측 metric 4-단 풀이
+
+| metric | 의미 |
+|--------|------|
+| **ADE** (Average Displacement Error) | 모든 시점의 자세 거리 평균 |
+| **FDE** (Final Displacement Error) | 마지막 시점의 자세 거리 |
+| **Human3.6M** | 7 actors × 15 action × 30fps |
+| **HumanEva-I** | 4 actors × 5 action × 60fps |
+| **표 셀**: ADE/FDE × 2 datasets | 4 cells |
+| **ProTran 의 3/4 best** | 다른 모델은 한 분야만 강함 |
+
+### 🔑 핵심 통찰
+
+> 모션 예측 + 시계열 예측 모두 SOTA → ProTran 은 **single-domain 모델이 아닌 universal sequence-to-sequence latent model**. 후속 연구의 baseline.
+
 ---
 
 ## 12.1 모션 예측 — 시계열과 다른 점

@@ -12,6 +12,39 @@ paper p.4 (Section 3.1 의 generative model 부분). ProTran 의 가장 기본 a
 
 이 챕터의 목표: **4 단계의 생성 과정을 step-by-step 으로 풀어 쓴다**. 각 단계가 무엇을 하고 왜 필요한가.
 
+### 🌱 Single-Layer ProTran — 일상 비유
+
+**한 줄로**: "Context (과거 데이터) 와 이전 잠재 들의 attention 을 통해 시점 별로 latent (잠재) 생성 + 관측 emit. **단순 RNN 보다 강력**".
+
+| ProTran 단계 | 작가의 소설 비유 |
+|--------------|----------------|
+| **Step 0**: Context embedding | 작가가 1-5장 (과거) 읽고 머릿속 정리 |
+| **Step 1**: Self-attention on past latents | 6장 쓸 때 5장의 흐름 참고 |
+| **Step 2**: Cross-attention to context | "1-5장 어느 장면이 6장과 관련?" 다시 봄 |
+| **Step 3**: Sample new latent | 6장의 핵심 idea 결정 (probabilistic) |
+| **Step 4**: Hidden update | 6장 완성 + 다음 7장 준비 |
+| Final: Emit observation | 6장 출판 (관측 $x_t$) |
+
+**왜 단순 RNN 보다 강력**: 
+- RNN은 hidden state 만 → 멀리 떨어진 정보 vanish
+- ProTran은 self-attention 으로 모든 과거 직접 참고 + Gaussian sampling 으로 uncertainty 표현
+
+### 🔣 수식 4-단 풀이
+
+| 기호 | 의미 | 차원 |
+|------|------|------|
+| $x_{1:C}$ | Context (과거 관측) | $(C, N)$ |
+| $h_{1:C}$ | Context embedding (Step 0 출력) | $(C, d)$ |
+| $w_{1:T}$ | 잠재 hidden state | $(T, d)$ |
+| $\bar{w}_t$ | Self-attention 출력 (Step 1) | $(d,)$ |
+| $\hat{w}_t$ | Cross-attention 출력 (Step 2) | $(d,)$ |
+| $z_t \sim \mathcal{N}(\mu, \sigma^2)$ | Sampled latent (Step 3) | $(d,)$ |
+| $x_t = \text{MLP}(w_t)$ | 관측 (최종 emission) | $(N,)$ |
+
+### 🔑 핵심 통찰
+
+> **5개 식 (Eq 5-9) 의 묘수**: Self-attention (past latents) + Cross-attention (context) + Gaussian sampling. 이 셋의 결합이 **probabilistic + non-Markovian + long-range** 동시 달성.
+
 ---
 
 ## 6.1 큰 그림 — Generative model 의 4 step

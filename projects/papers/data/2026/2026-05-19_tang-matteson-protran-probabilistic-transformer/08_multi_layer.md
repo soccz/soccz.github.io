@@ -12,6 +12,39 @@ paper p.5-6 (Section 3.2). Single-layer 를 잠재 변수의 hierarchy 로 확�
 
 이 챕터의 목표: **"왜 잠재를 여러 층으로 쌓는가" 의 직관을 잡고, Eq 12-20 의 새 단계 (Eq 16) 만 추가됨을 이해**.
 
+### 🌱 Multi-Layer — 일상 비유
+
+**한 줄로**: "잠재를 여러 층 쌓아서 다른 시간 스케일·다른 추상화 수준 동시 모델링".
+
+```
+임원층 (z^(3)):  계절 trend (여름/겨울)
+   ↓
+부장층 (z^(2)):  주간 패턴 (평일/주말)
+   ↓
+사원층 (z^(1)):  분 단위 트래픽 변동
+   ↓
+관측 (x_t):     실제 트래픽 수치
+```
+
+**왜 hierarchical**:
+- Single-layer 는 모든 패턴을 한 잠재에 압축 → 표현력 제한
+- Multi-layer 는 각 층이 다른 시간 스케일 → 복잡한 데이터 (Human3.6M, electricity) 에 결정적
+
+### 🔣 Hierarchical 4-단 풀이
+
+| 기호 | 의미 |
+|------|------|
+| $L$ | 층 수 (보통 1, 2, 3) |
+| $z^{(1)}_t, z^{(2)}_t, \ldots, z^{(L)}_t$ | 각 층의 잠재 |
+| $z^{(l)}_t$ depends on $z^{(l-1)}_t$ + $z^{(l)}_{<t}$ | 위 층은 아래 층 + 자기 층 과거 사용 |
+| **Eq 16 (신규)** | Inter-layer connection | "위 층의 정보가 어떻게 들어오는가" |
+| $L = 1$: single-layer | 기본 모델 | |
+| $L = 2, 3$: hierarchical | Forecasting + motion 에서 사용 | 표현력 ↑ |
+
+### 🔑 핵심 통찰
+
+> Hierarchical VAE (이미지 분야) 의 영감 → 시계열에 적용. **Eq 16 한 줄만 추가** 하면 single-layer 가 multi-layer 로 자연 확장. 우아한 design.
+
 ---
 
 ## 8.1 왜 multi-layer 인가 — 직관

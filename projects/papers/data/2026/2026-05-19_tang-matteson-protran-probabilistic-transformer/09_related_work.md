@@ -12,6 +12,49 @@ paper p.6 (Section 4) 의 4 카테고리를 깊이 풀고, 거기서 더 나아�
 
 이 챕터의 목표: 단순 baseline 목록이 아닌, **각 baseline 이 왜 등장했고 어떤 한계가 ProTran 을 낳았는지** 의 흐름을 이해.
 
+### 🌱 ProTran 의 계보 — 일상 비유
+
+ProTran 의 4 lineage:
+
+```
+1960  Kalman LDS       ─┐
+                        │
+1990s  HMM, RNN         │
+                        │
+2014   VAE              ├─ Probabilistic + Latent
+                        │
+2017   DKF, Linderman   │
+2018   DeepAR (RNN)     │
+2019   Transformer-MAF  │
+2020   TimeGrad         │
+                        ▼
+2021   ★ ProTran ★ ←── Transformer + Latent + Smoothing
+```
+
+**4 카테고리**:
+1. **Deep SSM** (Linderman 2017): SSM 의 deep 화
+2. **Attentive Recurrent** (DeepAR + attention): Attention 을 RNN 에
+3. **Time Series Forecasting** (TimeGrad 2021): 일반 시계열 예측
+4. **Human Motion Prediction**: 동작 예측
+
+**ProTran 의 위치**: 4 lineage 의 **교차점**. 각 분야의 강점 통합.
+
+### 🔣 ProTran vs Baselines 4-단 풀이
+
+| 모델 | 잠재 (latent)? | Attention? | Smoothing? | Probabilistic? |
+|------|---------------|------------|------------|----------------|
+| DeepAR (2017) | ✗ | ✗ | ✗ | ✓ |
+| Transformer-MAF (2019) | ✗ | ✓ | ✗ | ✓ |
+| Linderman SSM (2017) | ✓ | ✗ | ✓ | ✓ |
+| TimeGrad (2021) | ✗ (diffusion) | ✓ | ✗ | ✓ |
+| **ProTran (2021)** | **✓** | **✓** | **✓** | **✓** |
+
+→ ProTran 만 4개 모두 ✓.
+
+### 🔑 핵심 통찰
+
+> ProTran 의 가치는 single innovation 이 아닌 **4 lineage 의 통합**. 각 lineage 가 강점 하나씩 → ProTran 이 모두 흡수.
+
 ---
 
 ## 9.1 paper 가 정리한 4 카테고리

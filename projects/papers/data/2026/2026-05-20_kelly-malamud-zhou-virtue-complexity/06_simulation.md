@@ -10,6 +10,38 @@
 
 > 본 논문이 *이론 시뮬* 로 그린 6 개 그래프 를 무지식자 친화로. 각 figure 의 *직관* 위주, 수식 없이.
 
+### 🌱 6 Figure 흐름 — 일상 비유
+
+**한 줄로**: "Correctly specified (Fig 1-3) → Misspecified (Fig 4-6) 의 6 그래프가 본 논문 전체 이론을 한눈에".
+
+| Figure | 보여주는 것 | 결정적 메시지 |
+|--------|------------|-------------|
+| Fig 1 (R²) | c 함수로 R² | **c=1 catastrophe** + c>1 회복 |
+| Fig 2 (E, Vol) | c 함수로 기대수익/변동성 | E 는 c<1 constant, Vol c=1 spike |
+| **Fig 3 (SR)** | c 함수로 Sharpe | 모든 c 에서 SR > 0 (놀라움) |
+| Fig 4 (R² misspec) | cq 함수로 R² | Fig 1 + approximation gap |
+| Fig 5 (E misspec) | cq 함수로 E | **E monotone 증가** (vs Fig 2 constant) |
+| **★ Fig 6 (SR misspec)** | cq 함수로 SR | **Theorem 1 시각화: monotone 증가** |
+
+**가장 중요한 발견** (Fig 3 + Fig 6):
+- **Fig 3**: R² 가 음수 (-100% 이하) 임에도 SR > 0 → **R² ≠ 경제 가치**
+- **Fig 6**: SR 가 cq 의 monotone 증가 → **"Use the largest model" 의 시각적 증명**
+
+### 🔣 핵심 기호 4-단 풀이
+
+| 기호 | 의미 | Figure 별 사용 |
+|------|------|--------------|
+| **c** | 진짜 자연의 complexity (P/T) | Fig 1-3 의 x축 |
+| **cq** | 학자가 본 empirical complexity | Fig 4-6 의 x축 |
+| **q** | 학자/자연 변수 비율 | Misspec 의 핵심 |
+| **z** | Ridge 강도 | 모든 figure 의 6 색 곡선 |
+| **빨간 점선** | Infeasible (신의 값) | 모든 figure 의 상한 |
+| **수평 점선 (Fig 6)** | Theorem 1 의 baseline | "ridge 없는 simple model" |
+
+### 🔑 핵심 통찰
+
+> 6 figure 의 핵심 메시지: **"단순한 모델은 함정. 복잡한 모델 + ridge 가 진짜"**. 학계 60년 통념 ("simple is best") 의 6 그래프 반박.
+
 ---
 
 ## 6.1 챕터 한 줄 요약

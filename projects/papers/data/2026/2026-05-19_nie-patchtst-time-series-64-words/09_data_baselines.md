@@ -11,6 +11,43 @@
 
 > 본 논문이 사용한 **8 datasets** + **8 baseline 모델**. 무지식자 친화로.
 
+### 🌱 실험 setup — 일상 비유
+
+**한 줄로**: "8 dataset × 8 baseline × 4 horizon = 32 cells 의 광범위 검증. PatchTST 29/32 best (91%)".
+
+| 비유 | 본 논문 |
+|------|--------|
+| 8 dataset | 8 다른 환경 (학교, 회사, 도시, ...) |
+| 8 baseline | 8 다른 학생 (FEDformer, DLinear, ...) |
+| 4 horizon | 4 다른 시험 (96, 192, 336, 720일 후) |
+| 32 cells | 32 종합 평가 |
+
+### 🔣 8 dataset 4-단 풀이
+
+| Dataset | 차원 M | 특징 |
+|---------|-------|------|
+| Weather | 21 | 중간 차원, 다양한 cycle |
+| Traffic | **862** | 고차원, 강한 cycle |
+| Electricity | 321 | 고차원, 강한 cycle |
+| ETTh1 (Electricity Transformer Temperature) | 7 | 저차원, 단순 |
+| ETTh2 | 7 | 저차원, 단순 |
+| ETTm1 | 7 | 저차원, 분 단위 |
+| ETTm2 | 7 | 저차원, 분 단위 |
+| ILI (Influenza-Like Illness) | 7 | 저차원, 의료 |
+
+**Sweet spot**:
+- ★ 강함: 고차원 (M ≥ 21) + 강한 cycle → Weather, Traffic, Electricity, ETTm1/2
+- 약함: 저차원 단순 cycle → ETTh1/2 (DLinear 도 잘함)
+
+### 🎯 구체 증거
+
+- PatchTST/64 vs FEDformer: 평균 **21% MSE reduction**
+- DLinear vs PatchTST: 단순 dataset (ETTh1/2) 에서 격차 작음, 복잡한 dataset (Traffic, Electricity) 에서 PatchTST 압도
+
+### 🔑 핵심 통찰
+
+> PatchTST 의 진짜 강점은 **고차원 + 강한 cycle** dataset. 저차원 단순 dataset 은 Linear baseline 으로도 충분 → 모델 선택 시 dataset 특성 고려해야.
+
 ---
 
 ## 9.1 챕터 한 줄 요약

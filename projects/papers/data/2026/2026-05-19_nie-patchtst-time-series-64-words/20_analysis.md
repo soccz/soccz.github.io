@@ -11,6 +11,45 @@
 
 > 본 논문 실증 결과 (Table 3, Figure 2, Table 7) 의 *표면 수치 너머* 의 분석.
 
+### 🌱 21% MSE Reduction 의 진짜 source — 일상 비유
+
+**한 줄로**: "Paper 가 자랑하는 21% MSE 개선은 patching + CI 의 결합이라고 함. 그러나 ablation 으로 분해하면 **CI 가 96% 차지**".
+
+| 분해 | 비유 |
+|------|------|
+| Patching only | 빵을 4조각으로 자름 (3% 향상) |
+| **CI only** | 가구별 따로 처리 (23% 향상) ★ |
+| Both | 합쳐서 24% 향상 |
+| Paper 자랑 | "두 trick 의 결합" (실제는 CI 가 본질) |
+
+### 🔣 분해 4-단 풀이
+
+| Component | 단독 MSE reduction | Source |
+|-----------|-------------------|--------|
+| Vanilla Transformer | baseline 0% | — |
+| + Instance Norm | **17-22%** | ch07 (hidden 3rd trick) |
+| + Patching | 3% | ch04 |
+| + Channel-Independence | **23%** | ch05 (★ 진짜 main) |
+| + Longer L (336) | additional 5% | enabled by patching |
+
+→ **3+1 tricks**: IN (hidden) + Patching + CI + longer L. 합쳐서 21% reduction.
+
+### 🎯 Figure 5 (Sensitivity) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- x축: 하이퍼파라미터 (P, S, mask ratio 등)
+- y축: MSE
+- 곡선: PatchTST 의 sensitivity
+
+**어디를 봐야**:
+1. **곡선이 평탄한가?**: 평탄 → robust (= 좋은 모델), 변동 ↑ → 민감
+2. **최적값의 폭**: 넓은 sweet spot → 실무 적용 쉬움
+3. **다른 dataset 에서 같은 추세?**: 일관성 = 일반화
+
+### 🔑 핵심 통찰
+
+> Paper 의 "two tricks (P+CI)" 메시지는 **마케팅**. 실제 ablation 은 **IN + CI + longer L** 가 결정적. Patching 자체는 computational enabler 역할.
+
 ---
 
 ## 20.1 챕터 한 줄 요약

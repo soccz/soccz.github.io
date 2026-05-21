@@ -11,6 +11,35 @@
 
 > 본 논문이 사용한 *Transformer encoder* 의 구조. *시계열 specific 변형 없이* vanilla 그대로.
 
+### 🌱 Vanilla Transformer — 일상 비유
+
+**한 줄로**: "ChatGPT/BERT 와 똑같은 부품. 시계열 specific 변형 (Informer, Autoformer 등) 다 빼고 **vanilla 그대로**".
+
+| Negative Contribution | 거절한 것 |
+|----------------------|---------|
+| **Informer 의 ProbSparse** | "안 씁니다" |
+| **Autoformer 의 Auto-correlation** | "안 씁니다" |
+| **FEDformer 의 Fourier attention** | "안 씁니다" |
+
+**왜 거절했나**: 
+- Patching + CI 의 representation 변경만으로 충분
+- Vanilla self-attention 이 이미 local + periodic 패턴 학습 (Fig 6 증명)
+- Simpler is better
+
+### 🔣 Vanilla Transformer 부품 4-단 풀이
+
+| 부품 | 의미 | 수식 |
+|------|------|------|
+| **Patch Projection** (Eq 2) | Patch → token embedding | $z_p = W_p x_p + b_p$ |
+| **Position Embedding** | 순서 정보 | $z_p \mathrel{+}= \text{PE}_p$ |
+| **Multi-Head Self-Attn** (Eq 3) | 모든 patch 끼리 비교 | $\text{Attn}(Q,K,V)$ |
+| **Feed-Forward** | 비선형 변환 | $\text{FFN}(z) = W_2 \sigma(W_1 z)$ |
+| **BatchNorm** (paper choice) | 정규화 | vs LayerNorm |
+
+### 🔑 핵심 통찰
+
+> 본 논문 message: **"시계열 분야에서 architectural innovation (변형 attention) 보다 representation innovation (patching, CI) 이 더 중요"**. 패러다임 전환.
+
 ---
 
 ## 6.1 챕터 한 줄 요약

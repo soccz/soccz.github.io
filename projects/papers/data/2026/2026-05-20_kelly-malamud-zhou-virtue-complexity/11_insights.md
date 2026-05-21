@@ -11,6 +11,29 @@
 
 > 이 챕터는 *논문 원문에 직접 안 쓰여 있는 통찰*. 깊이 읽으면 자연스럽게 얻는 *학문적 메시지*. 12개의 *깊은 통찰* 을 무지식자 친화로.
 
+### 🌱 12 통찰 한눈에 — 일상 비유
+
+학자가 60년 함정에 빠졌다가 깨어나는 이야기:
+
+| 통찰 | 비유 | 핵심 메시지 |
+|------|------|-----------|
+| 1. 60년 도구 부재 | 망원경 없이 별 봄 | RMT 부재 → simple model 고수 |
+| 2. Goyal-Welch 의 진짜 의미 | "공식 5개로 안 됨" 이지 "예측 불가" 아님 | Tool 한계 ≠ 과제 한계 |
+| 3. Occam's blunder | "단순함이 미덕" 의 함정 | Complexity is virtue |
+| 4. R² vs SR 분리 | 시험 점수 ≠ 학생 인생 | Statistical ≠ Economic value |
+| 5. Ridge 의 진짜 의미 | 안정장치, 두려워하지 마라 | Don't fear regularization |
+| 6. Box paradox 해소 | "모든 모델 틀림" 의 새 의미 | 틀린 모델도 가치 ↑ |
+| 7. Implicit regularization | Ridgeless 도 자동 안정 | $c > 1$ 의 benign overfit |
+| 8. Kelly-Pelger 계보 | 한 family 의 진화 | RP-PCA → AE → DLAP → VOC |
+| 9. 무한 변수의 한계 | 무한대 좋다? | Concavity (diminishing returns) |
+| 10. Cross-section vs Time-series | 두 영역의 다른 결론 | 본 논문은 time-series, AE 는 cross |
+| 11. Theory + Empirics | "Extraordinary agreement" | 이론과 실증의 일치 |
+| 12. Future research | 후속 방향 | Macro time-series 의 ML 시대 |
+
+### 🔑 메타 통찰
+
+> 본 논문은 **새 추정량 제안이 아니라 패러다임 전환**. 자산가격결정 분야에서 "statistical 표준 (R²) ≠ 경제 가치 (SR)" 라는 분리를 처음 명시. 후속 연구의 출발점.
+
 ---
 
 ## 11.1 메타 통찰 — 한 줄로

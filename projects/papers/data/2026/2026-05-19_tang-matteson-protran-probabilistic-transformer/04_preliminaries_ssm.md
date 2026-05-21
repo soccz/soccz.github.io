@@ -13,6 +13,39 @@ paper p.2-3 (Section 2.1) 의 수식 Eq 1-3 을 한국어로 풀어 쓴다.
 
 이 챕터의 목표: **수식 한 줄 한 줄을 일상 언어로 다시 설명한다**. 처음 보는 기호는 모두 정의부터.
 
+### 🌱 State-Space Model — 일상 비유
+
+**한 줄로**: "관측 (보이는 것) 뒤에 잠재 상태 (숨겨진 것) 가 있다 가정 → Markov 진화 + Gaussian noise = Kalman filter".
+
+| 비유 | SSM |
+|------|-----|
+| 학생의 시험 점수 (관측 $x_t$) | 일별 측정값 |
+| 학생의 실력 (잠재 $z_t$) | 시간에 따라 변하는 latent state |
+| 실력 변화 (Eq 1: $z_t = f(z_{t-1})$) | Transition equation |
+| 점수 잡음 (Eq 2: $x_t = g(z_t)$) | Emission equation |
+| Bayes inference | Kalman filter |
+
+**왜 SSM 이 표준**: 1960년 (Kalman) 부터 시계열의 산업 표준. Tracking, control, signal processing 모두에 사용.
+
+**왜 ProTran 이 이걸 위에 transformer 얹는가**: 
+- 표준 SSM은 Markovian (current state 만) → 멀리 떨어진 정보 손실
+- Transformer 의 attention → 모든 과거 직접 참고 → SSM 의 장점 + transformer 의 장점 결합
+
+### 🔣 SSM 핵심 기호 4-단 풀이
+
+| 기호 | 의미 |
+|------|------|
+| $z_t \in \mathbb{R}^d$ | 잠재 상태 (hidden) |
+| $x_t \in \mathbb{R}^N$ | 관측 (observed) |
+| **Transition** $p(z_t \mid z_{t-1})$ | Markov: 어제 상태 → 오늘 상태 |
+| **Emission** $p(x_t \mid z_t)$ | 오늘 상태 → 오늘 관측 |
+| **LDS**: 둘 다 linear Gaussian | Kalman filter 풀이 가능 |
+| **Variational** SSM | Gradient-based 학습 가능 |
+
+### 🔑 핵심 통찰
+
+> SSM 의 **Markovian 가정** 이 약점. Transformer 의 self-attention 이 이 약점 보완 → ProTran 이 두 paradigm 의 결합. 1960 + 2017 의 만남.
+
 ---
 
 ## 4.1 표기법 — 기호 사전 먼저

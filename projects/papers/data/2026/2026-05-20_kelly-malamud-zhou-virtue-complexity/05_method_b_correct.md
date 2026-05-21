@@ -10,6 +10,35 @@
 
 > 본 챕터는 본 논문의 *Propositions 3, 4* (correctly specified model 의 결과) 를 *그래프 위주* 로 무지식자 친화로. *Figures 1, 2, 3* 의 친근 풀이.
 
+### 🌱 Correctly Specified — 일상 비유
+
+**한 줄로**: "학자의 모델이 진짜 자연 법칙과 정확히 일치하는 이상적 경우 → 그래도 c=1 근처에서 catastrophe 발생 + R² 음수에도 SR 양수라는 놀라운 결과".
+
+| 상황 | 비유 |
+|------|------|
+| **Correctly specified** | 학자가 "키 = 유전 + 영양 + 잡음" 라는 자연 법칙을 알고, 그대로 모델링 |
+| **Misspecified** | 학자가 일부 요인만 알고 (유전만 사용), 영양 무시 |
+| **본 챕터** | Correctly specified — 이상적이지만 분석 baseline |
+
+**왜 이상적인 경우도 분석?**: (i) Misspecified 경우와 비교 baseline, (ii) c=1 catastrophe 가 specification 무관하게 발생함 입증, (iii) R² vs SR 분리의 깔끔한 사례.
+
+### 🔣 핵심 기호 4-단 풀이
+
+| 기호 | 의미 | 범위 |
+|------|------|------|
+| **c** = P/T | 모델 복잡도 (변수/데이터 비율) | $[0, \infty)$ |
+| **z** | Ridge regularization 강도 | $[0, \infty)$, 0 = ridgeless |
+| **R²** | Out-of-sample 예측 정확도 | $(-\infty, 1]$ |
+| **E** | Expected return (timing 전략 기대 수익) | $\mathbb{R}$ |
+| **Vol** | Volatility (변동성, std) | $[0, \infty)$ |
+| **SR = E/Vol** | Sharpe ratio | $\mathbb{R}$ |
+| **빨간 점선** | Infeasible (신의) 값 | "신만 도달 가능한 상한" |
+
+**6개 색 코드** (모든 figure 공통):
+- 검정 (z≈0, ridgeless), 노랑 (z=0.01), 빨강 (z=0.1), 보라 (z=1), 하늘색 (z=10), 연두 (z=50)
+
+→ 색이 진할수록 ridge ↑, 안정장치 ↑.
+
 ---
 
 ## 5b.1 챕터 한 줄 요약

@@ -11,6 +11,43 @@
 
 > 본 논문의 *두 번째 trick*. M 개 변수 (예: 326 전력 가구) 가 있어도 *각 변수 따로* Transformer 통과 + *모두 같은 weight*.
 
+### 🌱 Channel-Independence — 일상 비유
+
+**한 줄로**: "326 가구를 한 번에 다 보지 말고, **각 가구 따로 처리 + 같은 분석가가 모든 가구 담당**".
+
+| 처리 방식 | 비유 |
+|----------|------|
+| **Cross-channel mixing** (기존) | 326 가구 회의실에 모아 한 번에 의논. → 가짜 상관 (spurious) 학습 |
+| **Channel-Independence** (PatchTST) | 1 가구씩 따로 분석 + 같은 매뉴얼 적용. → 일반화 ↑ |
+
+**왜 좋은가**:
+- **Sample 효율 ↑**: M=326 가구 = 326개 학습 샘플 (mixing 은 1개 = 326차원 벡터)
+- **Spurious correlation 회피**: 우연히 상관된 가구쌍에 휘둘리지 X
+- **Universal**: 다른 transformer (Informer, Autoformer) 에 적용해도 성능 ↑
+
+### 🔣 Channel-Independence 4-단 풀이
+
+| 기호 | 의미 |
+|------|------|
+| $X \in \mathbb{R}^{L \times M}$ | 입력: L 시점 × M 변수 |
+| **Mixing**: $f(X) \in \mathbb{R}^{H \times M}$ | 모든 M 변수를 한 번에 처리 |
+| **CI**: $f(X_{:,m}) \in \mathbb{R}^H$ for each $m$ | 각 변수 $m$ 따로 처리, 같은 $f$ |
+| 학습 신호 | Mixing = 1 batch, CI = M batch |
+| **Test 시** | M 개 출력 합쳐 최종 예측 |
+
+### 🎯 구체 증거 — CI 의 contribution
+
+Ablation (Table 7):
+- Patching only: ~3% MSE reduction
+- **CI only: ~25-28%** (압도적)
+- Patching + CI: ~30-36% (combined)
+
+→ **CI 가 PatchTST 성능의 80% 차지**. Patching 은 부차.
+
+### 🔑 핵심 통찰
+
+> PatchTST 의 진짜 main contribution 은 **Channel-Independence**. 제목의 "patching" 이 강조되지만, 실제 ablation 으로는 CI 가 결정적.
+
 ---
 
 ## 5.1 챕터 한 줄 요약

@@ -13,6 +13,32 @@ paper p.3 (Section 2.2) 의 Eq 4 와 그 주변 텍스트를 풀어 쓴다.
 
 이 챕터의 목표: **Attention 메커니즘이 무엇이고, ProTran 이 어떻게 다르게 쓰는가**.
 
+### 🌱 Attention — 일상 비유
+
+**한 줄로**: "RNN 의 hidden state 통과 방식 (vanish 문제) vs Attention 의 모든 과거 직접 참고 (long-range)".
+
+| 모델 | 비유 |
+|------|------|
+| **RNN** | 학생이 책 100권을 *하나씩 순서대로* 읽음. 마지막엔 첫 책 거의 잊음. |
+| **Transformer** | 학생이 책 100권 모두에 *동시에* 질문 → 관련 책 강조. 거리 무관. |
+
+**왜 시계열에 좋은가**: 시계열은 멀리 떨어진 정보 (예: 작년 같은 날) 가 중요할 수 있음. RNN 은 못 잡지만 attention 은 잡음.
+
+### 🔣 Attention 4-단 풀이
+
+| 기호 | 의미 |
+|------|------|
+| $Q \in \mathbb{R}^{T \times d_k}$ | Query (질문) |
+| $K \in \mathbb{R}^{T \times d_k}$ | Key (색인) |
+| $V \in \mathbb{R}^{T \times d_v}$ | Value (실제 정보) |
+| $\text{softmax}(QK^\top / \sqrt{d_k})$ | 어텐션 가중치 (합 1) |
+| $\text{Attn}(Q,K,V) = \text{softmax}(\cdot)V$ | 가중합 출력 |
+| **Multi-head**: $h$ 개 병렬 + concat | 다양한 패턴 동시 |
+
+### 🔑 핵심 통찰
+
+> ProTran 의 묘수: Attention 을 **관측에 직접 쓰는 게 아니라 잠재 (latent) 에 쓴다**. 이게 SSM (latent 모델링) + Transformer (long-range) 의 결합.
+
 ---
 
 ## 5.1 Attention 이 뭔가요 — 일상 비유로 먼저

@@ -12,6 +12,38 @@ paper p.4-5 (Section 3.1 의 inference model 부분). 학습 시에만 작동하
 
 이 챕터의 목표: **Smoothing 과 filtering 의 차이를 이해하고, 왜 ProTran 이 smoothing 을 가능하게 했는지 설명**.
 
+### 🌱 Inference Model — 일상 비유
+
+**한 줄로**: "학습 시에만 미래 정보 사용 (smoothing) → 학습 신호 ↑ → test 시 prior 만으로도 잘 작동".
+
+| 단계 | 학생 시험 비유 |
+|------|--------------|
+| **Training (smoothing)** | 학생이 *답안지 보면서* 풀이 학습. 답 알고 학습. |
+| **Test (filtering/prior only)** | 학생이 *답안지 없이* 실전 시험. 진짜 능력 평가. |
+
+**Smoothing vs Filtering**:
+- **Filtering** (RNN 표준): 현재까지의 정보만 사용 → 모든 시점에서 future-blind
+- **Smoothing** (ProTran 의 묘수): training 시 전체 sequence 사용 → 학습 신호 강화
+
+### 🔣 ELBO 의 4-단 풀이
+
+| 기호 | 의미 |
+|------|------|
+| $\log p_\theta(x \mid x_{1:C})$ | 진짜 likelihood (계산 어려움) |
+| **Prior** $p_\theta(z_t \mid z_{<t}, x_{1:C})$ | Context 만 사용 — test 시 쓰는 분포 |
+| **Posterior** $q_\phi(z_t \mid z_{<t}, x_{1:T})$ | 전체 sequence 사용 — training 시 쓰는 분포 |
+| $D_{KL}(q \| p)$ | 두 분포의 차이 (penalty) |
+| **ELBO** | $\geq \log p$ 의 lower bound, 학습 목표 |
+
+**왜 ELBO 가 학습 신호 ↑**:
+- $\log p$ 직접 최적화 X (intractable)
+- ELBO 최대화 = (i) reconstruction 잘 함 + (ii) $q$ 가 $p$ 와 비슷해짐
+- 결과: $p$ 가 informative 해짐 → test 시 잘 작동
+
+### 🔑 핵심 통찰
+
+> **Prior/Posterior 분리** 가 VAE 류 모델의 핵심. ProTran 은 이 패러다임을 transformer 에 적용 + smoothing 으로 학습 신호 강화.
+
 ---
 
 ## 7.1 큰 그림 — Inference model 이 무엇이고 왜 필요한가

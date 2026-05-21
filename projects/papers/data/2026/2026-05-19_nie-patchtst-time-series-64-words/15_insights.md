@@ -11,6 +11,32 @@
 
 > 이 chapter 는 **논문 원문에 직접 쓰여 있지 않지만, 논문을 깊이 읽으면 자연스럽게 얻을 수 있는 통찰·시사점·추론** 정리. multi-level 분석 (표면적 / 진짜 이유 / 더 깊은 통찰 / 일반화 가능한 사상).
 
+### 🌱 15 통찰 한눈에 — 일상 비유
+
+PatchTST 가 학계에 던진 메시지:
+
+| 통찰 | 학생 비유 |
+|------|----------|
+| 1. Over-engineering 위험 | "특별한 학생" 가정 전에 일반 학생부터 충분히 가르쳐라 |
+| 2. Vanilla > Specific | 기본 도구로 충분히 잘함 → 특별 변형 의심 |
+| 3. Patching = ViT idea | 다른 분야 (NLP/CV) 의 paradigm 적용 |
+| 4. CI 가 진짜 main | Paper 가 patching 강조 but CI 가 96% 기여 |
+| 5. Self-supervised → Foundation | BERT moment for time series |
+| 6. Simple is better | Occam's razor |
+| 7. Longer L 가능 | Patching 이 enable |
+| 8. RevIN / Instance Norm | Hidden 3rd trick |
+| 9. Paradigm transfer | NLP → CV → 시계열 |
+| 10. Future: Multimodal | 텍스트 + 시계열 결합 |
+| 11. Quant finance applicable | PatchTST 가 stock 에도? |
+| 12. Cross-channel | iTransformer 가 후속 (인버전) |
+| 13. Foundation model 시대 | Chronos, TimesFM, Moirai 가 build on |
+| 14. Robustness vs Sharpness | 평탄 sensitivity 가 좋음 |
+| 15. Academic marketing | "Two tricks" 메시지의 마케팅 vs 실제 |
+
+### 🔑 가장 큰 통찰
+
+> **"분야 specific 변형 가정 전에 general tool 의 단순 적용 가능성 의심해야"**. ViT 가 이미지의 특수성을 부정한 것처럼, PatchTST 가 시계열의 특수성을 부정. **분야 transfer 사고법**.
+
 ---
 
 ## 15.1 메타 통찰 — 한 줄로
