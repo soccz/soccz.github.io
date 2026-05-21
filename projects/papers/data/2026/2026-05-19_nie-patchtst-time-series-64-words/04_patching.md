@@ -186,13 +186,33 @@ Patching 후 각 patch 를 *Transformer 가 이해하는 token* 으로 변환.
 
 **Figure 4 (paper p.15)**: Patch length $P \in \{2, 4, 8, 12, 16, 24, 32, 40\}$ 의 MSE 비교.
 
-### 어떻게 읽나? (Figure 4)
+### 📖 Figure 4 (Patch length P sensitivity) 정밀 읽는 법
 
-**Step 1 — Setup**: $L = 336$, prediction $= 96$.
+**무엇이 표시되나**:
+- **단일 panel** (or 여러 dataset)
+- **X축**: Patch length $P$ ∈ {2, 4, 8, 12, 16, 24, 32, 40} (대수 스케일 가능)
+- **Y축**: MSE (forecasting error)
+- **곡선**: 다양한 dataset (Weather, Traffic, ETT 등)
 
-**Step 2 — 발견**: MSE 가 *P 의 정확한 값에 둔감*. 즉 *P = 4 부터 P = 40 까지* 거의 *비슷한 성능*.
+**4 단계 분석**:
+1. **곡선의 모양 확인**: 평탄한가? U자 형태인가? → 평탄하면 robust, U자면 민감
+2. **P=16 의 위치**: 곡선의 최저점 또는 평탄 영역? → 논문 default 가 합리적인지 확인
+3. **P=2 (가장 작음)**: token 수 ↑ (계산 ↑) but 정보 분산 → 보통 약간 나쁨
+4. **P=40 (가장 큼)**: token 수 ↓ (계산 ↓) but 정보 응축 ↑ → 보통 약간 나쁨
 
-**Step 3 — 의미**: *P = 16 의 선택은 robust*. *정확한 P 값 튜닝 불필요*.
+**핵심 발견**:
+- MSE 가 P 의 정확한 값에 **둔감** (P=4 부터 P=40 까지 거의 비슷)
+- **P=16 의 선택은 robust** — 정확한 P 값 튜닝 불필요
+- 다른 dataset 에서도 같은 패턴 → universal robustness
+
+**숨은 함정**:
+- "P=16 권장" 이지만 dataset 별로 약간 다를 수 있음 → 실무에선 빠른 sweep 권장
+- 매우 짧은 시계열 (L=96) 에선 P=4 가 더 적합할 수 있음
+- 매우 긴 시계열 (L=720) 에선 P=24 도 가능
+
+### 🔑 핵심 통찰
+
+> Figure 4 의 발견 (P robustness) 가 **PatchTST 실무 배포의 핵심**. 다른 시계열 transformer 모델 (Informer, FEDformer) 은 hyperparameter sensitive — PatchTST 는 robust. 운영 부담 ↓.
 
 ```viz:pat-fig4-patch-length:title=Fig 4 — Patch length P 의 effect (interactive),caption=P=2-40 sweep. MSE 가 P 에 둔감. P=16 의 robust 선택 정량.
 ```

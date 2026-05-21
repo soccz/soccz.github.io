@@ -286,6 +286,49 @@ paper 의 평가 방식:
 
 (Figure 3, paper p.9)
 
+### 📖 Figure 3 (Pose Prediction 시각화) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **6 columns × 2 rows = 12 panels**: 6 activity × (ground truth, prediction)
+- **6 columns 의 activity**: Smoking, Walk Together, Phoning, Walking, Discussion, Walk Dog
+- **각 column 의 2 rows**:
+  - **1행 (녹색)**: Ground truth (실제 동작)
+  - **2행 (빨강)**: ProTran 의 예측
+- **색 진하기**: 시간 진행 표현
+  - **흐린 색**: 과거 시점
+  - **진한 색**: 미래 시점
+
+**5 단계 분석 (각 column)**:
+1. **자세 모양 유사성**: 녹색 vs 빨강 의 윤곽 비슷한가? → YES → ProTran 이 자세 학습
+2. **시간 흐름 자연스러움**: 흐린 → 진한 전환 자연스러운가? → YES → 학습된 motion prior 유효
+3. **Variation**: 완전히 같지 않은가? → YES (의도된 stochastic 다양성)
+4. **Activity 특성 capture**: Smoking 의 손→입, Walking 의 걸음 cycle → 모두 학습됨
+5. **Multi-modal**: 같은 input 으로 다른 sample 생성 가능 → multiple plausible futures
+
+**Activity 별 핵심 패턴**:
+| Activity | 핵심 신호 | ProTran 학습 |
+|---------|---------|-------------|
+| Smoking | 손목·팔꿈치 좁은 영역 반복 | ✓ 손 → 입 근처 유지 |
+| Walk Together | 두 발 alternating + 팔 swing | ✓ 걷기 cycle |
+| Phoning | 한 손 귀 근처 정적 | ✓ 한쪽 팔 안정 |
+| Walking | 좌우 다리 alternating | ✓ 보행 동학 |
+| Discussion | 손짓 + 자세 변화 | ✓ 자연스러운 변화 |
+| Walk Dog | 걷기 + 줄 당기기 | ✓ 복합 동작 |
+
+**왜 stochastic 모델이 적합**:
+- 사람의 미래 동작은 multiple plausible (걸을 수도, 멈출 수도, 방향 바꿀 수도)
+- ProTran 의 stochastic latent → 여러 가능성 표현
+- Best-of-N sampling 으로 평가 (ground truth 와 가장 가까운 sample)
+
+**숨은 함정**:
+- 12 panel 만 보여줌 — 다른 actions 도 잘 되는가? (paper 가 best samples 선택했을 가능성)
+- "완전히 같지 않음" 이 자연스러운 것인지 모델 한계인지 모호
+- Pose-level 평가 — 미세한 손가락 동작 등은 평가 안 됨
+
+### 🔑 핵심 통찰
+
+> Figure 3 가 ProTran 의 **architectural universality** 입증. 같은 architecture 가 시계열 (Fig 2) + 모션 (Fig 3) 둘 다 SOTA. Emission MLP 의 출력 차원만 바꿔 적용 — task-agnostic.
+
 ### 어떻게 읽는 그림인가
 
 **구조**:

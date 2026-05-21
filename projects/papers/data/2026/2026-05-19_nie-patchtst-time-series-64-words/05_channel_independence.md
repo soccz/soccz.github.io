@@ -190,6 +190,35 @@ ablation (ch12 Table 7) 의 정확한 수치:
 본 논문 *Table 15* (Appendix): Informer, Autoformer, FEDformer 같은 다른 모델에도 *Channel-Independence* 적용 시:
 - **모든 모델 성능 향상** — universal trick.
 
+### 📖 Table 15 (CI universal applicability) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **행**: 3개 baseline 모델 (Informer, Autoformer, FEDformer)
+- **열**: 각 dataset (Weather, Traffic, Electricity, ETT)
+- **셀**: 원본 MSE / CI 적용 시 MSE / 개선율 %
+
+**어디를 봐야**:
+1. **모든 셀이 개선?**: YES → CI 가 universal trick 입증
+2. **개선폭이 가장 큰 모델?**: 보통 Informer (가장 over-engineered) → CI 가 most help
+3. **Dataset 별 차이?**: 고차원 (Traffic M=862) 에서 개선 ↑
+
+**핵심 발견**:
+- **모든 모델 × 모든 dataset 에서 CI 적용 시 성능 향상**
+- **CI 의 universality 입증** — PatchTST specific 이 아닌 general trick
+- 평균 개선폭: ~10-20% (model 따라 다름)
+
+**숨은 함정**:
+- "CI 적용으로 PatchTST 와 동등 성능?" — 아니. CI 가 universal but PatchTST 의 patching + vanilla architecture 결합이 추가 효과
+- Table 15 가 ablation 의 강력한 증거 but Table 7 (PatchTST 자체 ablation) 과 함께 봐야
+
+### 📖 Figure 7 (Channel-indep 시각화 가능) 정밀 읽는 법
+
+**무엇이 표시되나** (paper Appendix A.6):
+- M 차원 (channel) vs Sample efficiency
+- CI 의 sample 증가 효과 visualize
+
+**핵심 메시지**: M ↑ 할수록 CI 의 sample efficiency ↑ → high-dim dataset (Traffic) 에서 CI 효과 극대.
+
 즉 *Channel-Independence 가 모델 specific X*. *모든 Transformer 시계열 모델* 의 *universal improvement*.
 
 ```viz:pat-table15-ci-universal:title=Table 15 — Channel-indep universal (interactive),caption=Informer/Autoformer/FEDformer 에 Channel-indep 적용 시 모두 성능 향상. Universal trick.

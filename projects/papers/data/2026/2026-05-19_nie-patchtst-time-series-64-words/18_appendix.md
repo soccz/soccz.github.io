@@ -89,17 +89,43 @@ L = 96, 192, 336, 512 비교. Longer better (Figure 2, 10 챕터).
 
 *paper p.20 Figure 5.*
 
-### 어떻게 읽나? (Step-by-step)
+### 📖 Figure 5 (Model Size Sensitivity) 정밀 읽는 법
 
-**Step 1**: 6 sub-plot (3 datasets × 2 horizons).
+**무엇이 표시되나**:
+- **6 sub-panel (3 datasets × 2 horizons)**
+- Datasets: Weather, Traffic, Electricity
+- Horizons: T=96 (short), T=720 (long)
+- **X축**: Model size 변형 (6 combinations)
+- **Y축**: MSE
+- **점/막대**: 각 model size 별 MSE
 
-**Step 2**: 각 sub-plot 에 *model size 6 combination* 의 MSE.
+**Model size 6 combinations 의 의미**:
+- (D=16, layer=2, head=4): 매우 작음 — small/embedded device
+- (D=64, layer=2, head=8): 작음
+- (D=128, layer=3, head=16): 중간 (default)
+- (D=256, layer=4, head=16): 큼
+- (D=512, layer=6, head=32): 매우 큼
+- (D=1024, layer=8, head=32): 거대
 
-**Step 3**: Model size = (D, layer, head) 조합. 예: 작은 (D=16, layer=2, head=4), 중간 (D=128, layer=3, head=16), 큰 (D=512, layer=6, head=32).
+**4 단계 분석**:
+1. **모든 size 에서 MSE 비슷?** → YES → robust to model size
+2. **최적 size 의 위치?**: 보통 중간 (D=128) — over-fit/under-fit 의 균형
+3. **거대 model (D=1024)** 의 MSE: 비슷 or 약간 악화 → diminishing returns
+4. **작은 model (D=16)** 의 MSE: 비슷 or 약간 악화 → 충분히 작아도 OK
 
-**Step 4 — 발견**: 
-- *모든 model size 에서 비슷한 MSE*.
-- PatchTST 가 *hyperparameter 에 robust*.
+**핵심 발견**:
+- **PatchTST 가 hyperparameter 에 robust** — model size 정확한 튜닝 불필요
+- 작은 model (D=16) 도 acceptable → resource-constrained 환경 적합
+- 거대 model 의 추가 가치 ↓ → over-parameterization 무의미
+
+**숨은 함정**:
+- "Robust = 항상 같은 성능" 아님 — 작은 model 은 약간 손실 (~5%) 일 수 있음
+- 매우 작은 dataset (ETTh) 에선 small model 더 좋음 (overfit 회피)
+- Production 시 D=64 or 128 권장 (효율 vs 정확도 균형)
+
+### 🔑 핵심 통찰
+
+> Figure 5 의 robustness 가 PatchTST 의 **실무 배포 가치** 핵심. Hyperparameter 정확한 튜닝 부담 ↓ → 다양한 dataset 에 빠른 deployment 가능. Edge device 부터 cloud 까지 다양한 환경 대응.
 
 ```viz:pat-fig5-model-size:title=Fig 5 — Model size sensitivity (interactive),caption=6 size combinations × 3 datasets. PatchTST robust to model size.
 ```
@@ -112,19 +138,37 @@ L = 96, 192, 336, 512 비교. Longer better (Figure 2, 10 챕터).
 
 *paper p.23 Figure 6.*
 
-### 어떻게 읽나?
+### 📖 Figure 6 (Attention Maps) 정밀 읽는 법
 
-**Step 1**: 3 시계열 (Electricity 의 가구 11, 25, 81) 의 *attention map*.
+**무엇이 표시되나**:
+- **3 시계열의 attention map** (Electricity 의 가구 11, 25, 81)
+- 각 attention map = **N × N matrix** (N=64 patches)
+- **행**: Query patch 의 시점
+- **열**: Key patch 의 시점
+- **색 강도**: attention weight (0 = 없음, 1 = 최대)
 
-**Step 2**: 각 attention map = $N \times N$ matrix. 행 = 시점 (patch), 열 = 시점 (patch). 색 강도 = *두 patch 간 attention weight*.
+**5 단계 분석**:
+1. **Diagonal 진하기**: 인접 patch 끼리 강한 attention → **local pattern 학습**
+2. **Off-diagonal spots**: 일정 간격 (예: 24 patch = 1일) 의 patch 끼리 진함 → **periodic 학습**
+3. **장거리 weight**: 멀리 떨어진 patch 도 일부 진함 → **long-range capture**
+4. **3 가구 비교**: 비슷한 가구는 비슷한 map → 시계열 특성 자동 학습
+5. **Multi-head**: 다른 head 는 다른 패턴 (head 1 = local, head 2 = periodic, ...)
 
-**Step 3 — 발견**:
-- *Diagonal*: 진한 색 — *인접 patch 의 attention 강함* → *local temporal pattern* 학습.
-- *Off-diagonal specific spots*: 진한 색 — *먼 patch 간 attention* → *periodicity (예: 24시간 주기)* 학습.
+**핵심 발견**:
+- **Vanilla Transformer 가 시계열의 multi-scale 패턴 자동 학습**:
+  - Local: 인접 patch (diagonal)
+  - Periodic: 24/168 patch 간격 (일/주 cycle)
+  - Long-range: 멀리 떨어진 patch
+- Autoformer 의 명시적 auto-correlation, FEDformer 의 Fourier decomposition — **모두 자연 학습됨**
+- **시계열 specific 변형 불필요** 의 시각적 입증
 
-**Step 4 — 의미**: 
-- Transformer 가 *시계열의 진짜 패턴* (local + periodic) *자동 학습*.
-- *시계열 specific attention (Autoformer auto-correlation)* 변형 없이도 *충분*.
+**숨은 함정**:
+- "Attention map 이 의미 있다 = 모델이 좋다" 는 아닐 수 있음 (Jain-Wallace 2019 의 논쟁)
+- Causal intervention 으로 검증 필요 (attention 가중치 변형 시 예측 변화?)
+
+### 🔑 핵심 통찰
+
+> Figure 6 가 본 논문의 **mechanism 의 smoking gun**. Patching + vanilla Transformer 의 학습 패턴이 시계열의 진짜 구조 (local + periodic + long-range) 와 일치 → "**representation 변경만으로 충분**" 의 직접 증거. Autoformer 의 600+ citation 의 명시적 decomposition 이 본질적으로 불필요.
 
 ---
 

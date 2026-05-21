@@ -192,9 +192,33 @@ $$
 
 **일상 비유**: NLP 에서는 *문장 단위 정규화 (layer norm)* 가 자연. 시계열에서는 *batch (여러 시점 묶음) 단위 정규화 (batch norm)* 가 *통계적으로 안정*.
 
-### Quantitative effect
+### 📖 Table 11 (BatchNorm vs LayerNorm) 정밀 읽는 법
 
-본 논문 *Table 11 (Appendix)*: BN > LN 약 *2-3% MSE* 차이.
+**무엇이 표시되나** (paper Appendix):
+- **행**: 8 dataset (Weather, Traffic, Electricity, ETT 등)
+- **열**: 4 horizon (96, 192, 336, 720)
+- **셀**: BN MSE / LN MSE / Improvement %
+- **추가**: Instance Norm 적용 vs 미적용 비교
+
+**어디를 봐야**:
+1. **BN vs LN**: 모든 cell 에서 BN ≤ LN? → YES → BN choice 정당화
+2. **개선폭**: 약 2-3% 평균 → marginal but consistent
+3. **Instance Norm 효과**: +IN vs -IN → 17-22% 큰 차이 (BN-LN 차이 보다 훨씬 큼)
+
+**핵심 발견**:
+- **BatchNorm 약간 우월** (~2-3% MSE 감소)
+- **Instance Norm 효과 ↑↑** (~17-22% MSE 감소, hidden 3rd trick)
+- 두 normalization 의 결합 = PatchTST 의 statistical advantage
+
+**숨은 함정**:
+- BN vs LN 차이는 marginal — 운영상 LN 도 acceptable
+- Instance Norm 이 진짜 게임체인저 — paper 가 "two tricks" 라고 했지만 IN 이 hidden 3rd trick
+
+### 🔑 핵심 통찰
+
+> Table 11 가 보여주는 진짜 메시지: **BatchNorm choice 는 작은 차이 (2-3%), Instance Norm 은 큰 차이 (17-22%)**. Paper marketing 의 "two tricks (P+CI)" 가 실제론 **three tricks (P+CI+IN)**. Ablation 자세히 보기.
+
+
 
 ```viz:pat-table11-instance-norm:title=Table 11 — Instance/Batch Norm effect (interactive),caption=BN vs LN 비교. 시계열에서 BN 약간 우월.
 ```

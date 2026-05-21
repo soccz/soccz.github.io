@@ -298,6 +298,40 @@ paper Section 4.1 (p.7):
 
 (paper p.9 Figure 2 — Look-back window L 의 MSE 효과)
 
+### 📖 Figure 2 (Look-back window effect) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **6 panel (3 datasets × 2 horizons)**: 
+  - 행: Electricity, Traffic, Weather (3 large datasets)
+  - 열: T=96 (short forecast), T=720 (long forecast)
+- **X축**: Look-back window L ∈ {24, 48, 96, 192, 336, 720}
+- **Y축**: MSE (낮을수록 좋음)
+- **5 색 곡선**: PatchTST (빨강), FEDformer (보라), Autoformer (주황), Informer (회색), Transformer (녹색)
+
+**5 단계 분석 (각 panel)**:
+1. **PatchTST (빨강) 모양**: L 증가에 따라 monotone **감소** 인가? → YES → patching 의 효과
+2. **다른 모델 모양**: L > 96 에서 **상승** (worse) 인가? → YES → over-engineering 의 함정
+3. **격차**: L=720 에서 PatchTST vs Informer 의 차이? → 클수록 paper main 결과 강력
+4. **Dataset 차이**: Traffic 에서 격차 더 큰가? → Traffic 이 high-dim (M=862) → PatchTST 가장 효과적
+5. **Horizon 차이**: T=720 에서 효과 더 큰가? → YES → long-term 에서 longer L 더 유용
+
+**가장 충격적 발견**:
+- **PatchTST 만 monotone 감소** — 다른 모델은 longer L 가 오히려 해롭다
+- 예: Electricity T=96 의 빨강 선: L=24 에서 0.18 → L=720 에서 0.13 (28% 감소)
+- 같은 setting 의 Informer: L=24 에서 0.20 → L=720 에서 0.30 (50% 증가) — **catastrophe**
+
+**왜 그런가**:
+- Informer/Autoformer/FEDformer: token = timestep → L=720 이면 720 tokens → attention $O(L^2) = 518400$ pairs → overfit + 계산 부담
+- PatchTST: token = patch → L=720 + P=16, S=8 이면 N=88 tokens → attention $O(N^2) = 7744$ pairs → 67배 효율 + longer history 정보 활용
+
+**숨은 함정**:
+- "PatchTST 가 longer L 가능" 의 paper claim 의 본질
+- 다른 모델도 patching 적용하면 똑같이 향상? — Table 15 의 결과: YES, but PatchTST 가 가장 통합적
+
+### 🔑 핵심 통찰
+
+> Figure 2 가 본 논문의 **smoking gun**. Patching + Channel-Indep 가 단순 trick 처럼 보이지만, 6 panel 모두에서 "PatchTST 만 monotone 감소" 의 일관된 패턴 → 우연 아닌 본질적 차이. ICLR 2023 reviewer 가 reject 못 한 결정적 증거.
+
 ### Figure 2 의 정확한 structure (paper caption)
 
 paper caption:

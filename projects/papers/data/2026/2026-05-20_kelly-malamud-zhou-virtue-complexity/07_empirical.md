@@ -411,24 +411,39 @@ ML timing 이 *시장 buy-and-hold 위에 추가 3.6%/year alpha*. *Real economi
 
 *paper p.492 Figure 9.*
 
-### 어떻게 읽나?
+### 📖 Figure 9 (Longer T robustness) 정밀 읽는 법
 
-**Step 1 — 4 panel 구조**
+**무엇이 표시되나**:
+- **4 panel (2 × 2 grid)**:
+  - Top row: T=60 (5년 training window) — Panel A (IR), B (alpha t-stat)
+  - Bottom row: T=120 (10년 training window) — Panel C (IR), D (alpha t-stat)
+- **X축 with break**: T=60 의 경우 c ∈ [0, 12] + [195, 200], T=120 의 경우 c ∈ [0, 12] + [95, 100]
+- **Y축**: IR (0-0.35) 또는 t-stat (0-3.5)
+- **6 색 곡선**: 다양한 z 값
 
-- *Top row (T=60)*: Panel A IR, B alpha t-stat.
-- *Bottom row (T=120)*: Panel C IR, D alpha t-stat.
+**5 단계 분석**:
+1. **모양 비슷한가?** (T=12 의 Fig 8 과 비교): YES → robust to T
+2. **Magnitude 변화**: T 길수록 IR 약간 ↓ (T=12 의 0.31 → T=60 의 0.25 → T=120 의 0.25)
+3. **t-stat 변화**: 약간 감소 but 여전히 > 2 (significant)
+4. **Monotone increasing 유지?**: YES → Theorem 1 의 모든 T 에서 성립
+5. **C max 변화**: T 길수록 P/T 작음 → c max ↓ (T=12: 1000, T=60: 200, T=120: 100)
 
-**Step 2 — X-axis break**
+**핵심 발견**:
+- **결과가 T 에 robust** — 정성 패턴 모두 동일
+- Magnitude 약간 감소 (leverage 작아져서) but statistically significant 유지
+- 짧은 T (=12) 가 가장 강력 but 긴 T (=120) 도 의미 있는 결과
 
-X-axis: T=60 의 경우 $c \in [0, 12] + [195, 200]$ (P/T 에서 c 최대 200). T=120 의 경우 $c \in [0, 12] + [95, 100]$.
+**왜 짧은 T 가 더 강력**:
+- T=12 = 매월 다시 학습 → 최신 환경 적응 ↑
+- T=120 = 10년 데이터 = 더 많은 정보 but 환경 변화 따라가기 느림
+- **trade-off**: 적응성 (짧은 T) vs 안정성 (긴 T)
 
-**Step 3 — 결과**
+**숨은 함정**:
+- "T=12 가 best" 는 short sample 의 high variance 문제 (한 seed 의 잡음 가능성)
+- 운영 시 T=60 정도가 안정-적응 균형 권장
+- 매우 짧은 T (T=1 매일 학습) 는 noise 가 신호를 압도
 
-- T = 60 (5년): 같은 monotone increasing 패턴. IR ≈ 0.25, t-stat > 2.0.
-- T = 120 (10년): 같은 패턴. IR ≈ 0.25.
-- **Magnitude 약간 감소** (vs T=12 의 IR 0.31). T 길수록 *leverage 작아져서*.
-
-**메시지**: *결과가 T 에 robust*. *정성 패턴 모두 동일*.
+**메시지**: 결과가 T 에 robust. 정성 패턴 모두 동일.
 
 ---
 
@@ -783,29 +798,36 @@ Linear ridge (SR 0.46) → Nonlinear ML (SR 0.47) — 약간 추가.
 
 이 그림은 *bar chart + line chart 결합*. 15 predictor 가 X-axis 에 배치.
 
-**Step 2 — 축 의미**
+### 📖 Figure 11 (Variable Importance) 정밀 읽는 법
 
-- **X-axis**: 15 predictor (lag mkt, ltr, dfr, svar, infl, ...).
-- **Y-axis (Left)**: VI in R² — bar 형태. *높은 bar = 중요한 변수*.
-- **Y-axis (Right)**: VI in Sharpe — line 형태. *높은 line = 중요한 변수*.
+**무엇이 표시되나**:
+- **Bar + line combo chart**
+- **X축**: 15 predictor (lag mkt, ltr, dfr, svar, infl, dy, tms, tbl, ...)
+- **Y축 (Left, bar)**: VI in R² — 높은 bar = 중요한 변수
+- **Y축 (Right, line)**: VI in Sharpe — 높은 line = 중요한 변수
+- **VI 계산법**: 15 변수 model 성능 - 14 변수 (한 변수 제거) 성능
 
-**Step 3 — VI 계산법**
+**5 단계 분석**:
+1. **Bar 의 ranking 확인**: Top 3 = lag mkt, ltr, dfr (왼쪽 3 개)
+2. **Bar vs Line align**: R² 와 Sharpe 의 VI 가 일치? → 대체로 YES, 일부 차이
+3. **꼬리 (느린 변수)**: dp, dy, b/m 등 → VI 0 근처
+4. **Mid-rank 변수**: svar, infl, tms — 약간의 영향
+5. **12-month variation 와 일치?**: IA4 의 12개월 내 변동 큰 변수 = VI 큰 변수 — YES
 
-각 변수의 *변수 중요도 (VI)* = "이 변수 *없으면* 모델 성능 *얼마나 떨어지나?". 
+**Top 3 핵심 정보원** (왼쪽부터):
+1. **`lag mkt`** (전월 시장 수익률): **R² 1.9% 감소**, Sharpe 0.12 감소
+2. **`ltr`** (장기 채권 수익률): R² 1.3% 감소, Sharpe 0.09 감소
+3. **`dfr`** (default 채권 수익률): R² 0.8% 감소
 
-방법: 15 변수 model 의 성능 - 14 변수 model (한 변수 제거) 의 성능.
+**왜 이 3개**:
+- 모두 **12개월 window 내 변동 큰 변수** (각주 45, IA4 확인)
+- ML 이 **short-horizon 변동을 효과적으로 활용**
+- 대비: 느린 변수 (dp, dy, b/m): 12개월 내 변동 작음 → VI 작음
 
-**Step 4 — Top 3 식별 (왼쪽부터)**
-
-1. **`lag mkt`** (전월 시장 수익률): **R² 1.9% 감소**, Sharpe 0.12 감소.
-2. **`ltr`** (장기 채권 수익률): R² 1.3% 감소, Sharpe 0.09 감소.
-3. **`dfr`** (default 채권 수익률): R² 0.8% 감소.
-
-→ **Top 3 가 ML 의 핵심 정보원**.
-
-**Step 5 — 왜 이 3개?**
-
-세 변수 모두 *12개월 window 내에서 변동 큰* 변수 (각주 45, Internet Appendix IA4 의 확인).
+**숨은 함정**:
+- VI 가 작다고 "중요하지 않다" 아님 — 다른 변수와의 interaction 으로 기여 가능
+- VI 가 큰 변수만 사용하면 (top 3 만) 성능 ↓ — 합성 효과 손실
+- VI 계산법 (one-out) 이 정확한 measure 아닐 수 있음 — Shapley value 가 더 정확
 
 **대비**:
 - *느린 변수* (`dp` 배당-가격, `dy` 배당 수익률, `b/m`): VI 0 근처.

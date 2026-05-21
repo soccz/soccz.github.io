@@ -265,6 +265,50 @@ paper Table 1 의 정확한 값:
 
 (Figure 2, paper p.8)
 
+### 📖 Figure 2 (Traffic 예측 시각화) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **16 panels (4 × 4 grid)**: Traffic dataset 의 963 시계열 중 첫 16개
+- 각 panel:
+  - **X축**: 시간 (예: 06-15-08 ~ 06-16-08)
+  - **Y축**: 트래픽 값 (×10⁻² 스케일)
+  - **파란 선**: Ground truth (실제 관측)
+  - **녹색 음영**: ProTran 의 예측 분포 (양쪽 quantile band)
+  - **녹색 점/선**: 예측 평균 (또는 sample)
+
+**5 단계 분석 (각 panel)**:
+1. **녹색 음영 vs 파란 선 align**: 음영이 파란 선을 잘 cover 하는가? → YES → calibration 좋음
+2. **음영 폭 (불확실성)**: 시간 갈수록 넓어지는가? → YES → 먼 미래 = 더 불확실
+3. **Magnitude 효과**: 큰 값일 때 음영 더 넓은가? → YES → heteroscedastic 학습
+4. **Panel 별 변화**: 16 panel 모두 비슷한 quality? → YES → robust generalization
+5. **Spike 처리**: 갑작스런 spike 도 음영에 포함? → 부분적 — extreme event 는 여전히 어려움
+
+**4 행별 패턴**:
+| 행 | Y-axis 스케일 | 패턴 | 음영 폭 | 해석 |
+|----|--------------|------|---------|------|
+| 1 | 0-5 | 명확한 daily seasonal | 좁음 | confident |
+| 2 | 0-15 | 평일 출퇴근 spike | 중간 | 패턴 따라감 |
+| 3 | 5-25 | 강한 spike + 변동 | 넓음 | heteroscedastic |
+| 4 | 0-35 | 매우 큰 spike, irregular | 가장 넓음 | 진짜 불확실 인식 |
+
+**핵심 발견 (2가지)**:
+- **관찰 1: 예측이 정답을 잘 따라감** — 16 panel 모두 일관됨
+- **관찰 2: 불확실성 calibration 정확** — 큰 값/먼 미래에 음영 넓어짐
+
+**왜 중요한가** (확률 예측의 2 quality):
+- **Calibration**: 예측 분산이 실제 불확실성 반영? → Fig 2 가 입증
+- **Sharpness**: 분포가 너무 넓지 않게 집중? → CRPS_sum 이 입증
+- 둘 다 만족해야 진짜 좋은 probabilistic forecast
+
+**숨은 함정**:
+- 16 panel 만 보여줌 — 다른 947 series 도 비슷한가? (paper 가 random sample 이라 가정)
+- Quantile band 의 좁기 정확한 width 는 정해지지 않음 (90%? 95%?)
+- Cherry-picked panel 가능성 (논문이 자주)
+
+### 🔑 핵심 통찰
+
+> Figure 2 의 가치는 **probabilistic forecasting 의 시각적 검증**. Point prediction 만으론 평가 어려운 calibration 을 16 panel 의 다양한 패턴에서 일관성 있게 보임. ProTran 의 ELBO + smoothing 이 자동으로 calibration 학습.
+
 ### 어떻게 읽는 그림인가
 
 **구조**:
