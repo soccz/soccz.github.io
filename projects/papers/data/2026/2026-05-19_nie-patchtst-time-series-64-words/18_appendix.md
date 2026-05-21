@@ -1,33 +1,6 @@
 # 18. Appendix Deep Dive — A.1 ~ A.7
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- Appendix A.1 ~ A.7 의 정밀 풀이
-- A.1.4 default hyperparameter
-- A.6 sensitivity analysis (Fig 5, Table 14)
-- 본 paper 의 supplementary 의 모든 결과
-
----
-
 > Paper Appendix (p.13–24) 의 *7 sub-section* 정리. 친근 풀이 + step-by-step.
-
-### 🌱 Appendix 7 sub-section — 일상 비유
-
-PatchTST appendix 의 보조 결과들:
-
-| Sub-section | 내용 | 본 paper 강화 |
-|-------------|------|--------------|
-| A.1 Implementation | PyTorch 코드, hyperparameters | 재현성 |
-| A.2 Hyperparameter | sweep results | Sensitivity 입증 |
-| A.3 Robustness | seed variation | Statistical reliability |
-| A.4 Model size (Fig 5) | model size sensitivity | Architecture robustness |
-| A.5 Attention maps (Fig 6) | 학습된 attention 시각화 | Mechanism 해석 |
-| A.6 CI universal (Table 15) | CI 가 다른 model 에도 적용 | Universality 입증 |
-| A.7 Seed variance (Table 14) | 5 seed 결과 | Statistical significance |
-
-### 🔑 핵심 통찰
-
-> Appendix 는 **main paper 의 모든 claim 의 입증 backup**. 학계 논문의 robust 성 = main + appendix 모두 살펴봐야 검증.
 
 ---
 
@@ -89,43 +62,17 @@ L = 96, 192, 336, 512 비교. Longer better (Figure 2, 10 챕터).
 
 *paper p.20 Figure 5.*
 
-### 📖 Figure 5 (Model Size Sensitivity) 정밀 읽는 법
+### 어떻게 읽나? (Step-by-step)
 
-**무엇이 표시되나**:
-- **6 sub-panel (3 datasets × 2 horizons)**
-- Datasets: Weather, Traffic, Electricity
-- Horizons: T=96 (short), T=720 (long)
-- **X축**: Model size 변형 (6 combinations)
-- **Y축**: MSE
-- **점/막대**: 각 model size 별 MSE
+**Step 1**: 6 sub-plot (3 datasets × 2 horizons).
 
-**Model size 6 combinations 의 의미**:
-- (D=16, layer=2, head=4): 매우 작음 — small/embedded device
-- (D=64, layer=2, head=8): 작음
-- (D=128, layer=3, head=16): 중간 (default)
-- (D=256, layer=4, head=16): 큼
-- (D=512, layer=6, head=32): 매우 큼
-- (D=1024, layer=8, head=32): 거대
+**Step 2**: 각 sub-plot 에 *model size 6 combination* 의 MSE.
 
-**4 단계 분석**:
-1. **모든 size 에서 MSE 비슷?** → YES → robust to model size
-2. **최적 size 의 위치?**: 보통 중간 (D=128) — over-fit/under-fit 의 균형
-3. **거대 model (D=1024)** 의 MSE: 비슷 or 약간 악화 → diminishing returns
-4. **작은 model (D=16)** 의 MSE: 비슷 or 약간 악화 → 충분히 작아도 OK
+**Step 3**: Model size = (D, layer, head) 조합. 예: 작은 (D=16, layer=2, head=4), 중간 (D=128, layer=3, head=16), 큰 (D=512, layer=6, head=32).
 
-**핵심 발견**:
-- **PatchTST 가 hyperparameter 에 robust** — model size 정확한 튜닝 불필요
-- 작은 model (D=16) 도 acceptable → resource-constrained 환경 적합
-- 거대 model 의 추가 가치 ↓ → over-parameterization 무의미
-
-**숨은 함정**:
-- "Robust = 항상 같은 성능" 아님 — 작은 model 은 약간 손실 (~5%) 일 수 있음
-- 매우 작은 dataset (ETTh) 에선 small model 더 좋음 (overfit 회피)
-- Production 시 D=64 or 128 권장 (효율 vs 정확도 균형)
-
-### 🔑 핵심 통찰
-
-> Figure 5 의 robustness 가 PatchTST 의 **실무 배포 가치** 핵심. Hyperparameter 정확한 튜닝 부담 ↓ → 다양한 dataset 에 빠른 deployment 가능. Edge device 부터 cloud 까지 다양한 환경 대응.
+**Step 4 — 발견**: 
+- *모든 model size 에서 비슷한 MSE*.
+- PatchTST 가 *hyperparameter 에 robust*.
 
 ```viz:pat-fig5-model-size:title=Fig 5 — Model size sensitivity (interactive),caption=6 size combinations × 3 datasets. PatchTST robust to model size.
 ```
@@ -138,37 +85,19 @@ L = 96, 192, 336, 512 비교. Longer better (Figure 2, 10 챕터).
 
 *paper p.23 Figure 6.*
 
-### 📖 Figure 6 (Attention Maps) 정밀 읽는 법
+### 어떻게 읽나?
 
-**무엇이 표시되나**:
-- **3 시계열의 attention map** (Electricity 의 가구 11, 25, 81)
-- 각 attention map = **N × N matrix** (N=64 patches)
-- **행**: Query patch 의 시점
-- **열**: Key patch 의 시점
-- **색 강도**: attention weight (0 = 없음, 1 = 최대)
+**Step 1**: 3 시계열 (Electricity 의 가구 11, 25, 81) 의 *attention map*.
 
-**5 단계 분석**:
-1. **Diagonal 진하기**: 인접 patch 끼리 강한 attention → **local pattern 학습**
-2. **Off-diagonal spots**: 일정 간격 (예: 24 patch = 1일) 의 patch 끼리 진함 → **periodic 학습**
-3. **장거리 weight**: 멀리 떨어진 patch 도 일부 진함 → **long-range capture**
-4. **3 가구 비교**: 비슷한 가구는 비슷한 map → 시계열 특성 자동 학습
-5. **Multi-head**: 다른 head 는 다른 패턴 (head 1 = local, head 2 = periodic, ...)
+**Step 2**: 각 attention map = $N \times N$ matrix. 행 = 시점 (patch), 열 = 시점 (patch). 색 강도 = *두 patch 간 attention weight*.
 
-**핵심 발견**:
-- **Vanilla Transformer 가 시계열의 multi-scale 패턴 자동 학습**:
-  - Local: 인접 patch (diagonal)
-  - Periodic: 24/168 patch 간격 (일/주 cycle)
-  - Long-range: 멀리 떨어진 patch
-- Autoformer 의 명시적 auto-correlation, FEDformer 의 Fourier decomposition — **모두 자연 학습됨**
-- **시계열 specific 변형 불필요** 의 시각적 입증
+**Step 3 — 발견**:
+- *Diagonal*: 진한 색 — *인접 patch 의 attention 강함* → *local temporal pattern* 학습.
+- *Off-diagonal specific spots*: 진한 색 — *먼 patch 간 attention* → *periodicity (예: 24시간 주기)* 학습.
 
-**숨은 함정**:
-- "Attention map 이 의미 있다 = 모델이 좋다" 는 아닐 수 있음 (Jain-Wallace 2019 의 논쟁)
-- Causal intervention 으로 검증 필요 (attention 가중치 변형 시 예측 변화?)
-
-### 🔑 핵심 통찰
-
-> Figure 6 가 본 논문의 **mechanism 의 smoking gun**. Patching + vanilla Transformer 의 학습 패턴이 시계열의 진짜 구조 (local + periodic + long-range) 와 일치 → "**representation 변경만으로 충분**" 의 직접 증거. Autoformer 의 600+ citation 의 명시적 decomposition 이 본질적으로 불필요.
+**Step 4 — 의미**: 
+- Transformer 가 *시계열의 진짜 패턴* (local + periodic) *자동 학습*.
+- *시계열 specific attention (Autoformer auto-correlation)* 변형 없이도 *충분*.
 
 ---
 
@@ -189,42 +118,19 @@ L = 96, 192, 336, 512 비교. Longer better (Figure 2, 10 챕터).
 
 본 논문 *A.3 (p.14, Table 8)*: **단일 변수 예측 결과**.
 
-### 📖 Table 8 (Univariate Forecasting) 정밀 읽는 법
+### Setup
+- ETT dataset 의 *oil temperature* 만 target.
+- $T \in \{96, 192, 336, 720\}$.
+- **단일 변수** — 다른 변수 (전력 부하 등) 무시.
 
-**무엇이 표시되나**:
-- **행**: 4 ETT datasets (ETTh1, ETTh2, ETTm1, ETTm2)
-- **열**: 4 horizons (96, 192, 336, 720) × 7-8 models = 28-32 columns
-- **셀**: MSE / MAE (낮을수록 좋음)
-- **8 models 비교**: PatchTST/64, PatchTST/42, DLinear, FEDformer, Autoformer, Informer, LogTrans, (+vanilla Transformer)
-- **Setup**: ETT dataset 의 oil temperature 만 target (단일 변수)
+### 어떻게 읽나?
+**Step 1**: ETTh1, ETTh2, ETTm1, ETTm2 × 4 horizons = 16 cell.
 
-**5 단계 분석**:
-1. **각 셀에서 PatchTST 가 best?**: 거의 모든 셀 (16/16 또는 15/16)
-2. **PatchTST/64 vs /42**: longer L 일수록 /64 우월
-3. **DLinear 와의 격차**: ETTh1 에선 작고, ETTm 에선 큼
-4. **Informer/LogTrans 의 약점**: univariate input 도 내부 cross-channel 처리 → 불필요 복잡도
-5. **Horizon 의존성**: long horizon (720) 에서 격차 ↑
+**Step 2**: 8 models 비교 — PatchTST/64, PatchTST/42, DLinear, FEDformer, Autoformer, Informer, LogTrans.
 
-**Setup 의 의미**:
-- ETT dataset 의 oil temperature **만** target (단일 변수, 다른 변수 무시)
-- 즉 **univariate forecasting** — 가장 simple 한 setting
-- PatchTST 가 multivariate (Table 3) + univariate (Table 8) **둘 다 SOTA**
-
-**핵심 발견**:
-- **PatchTST/64 또는 /42 가 거의 모든 cell 에서 best**
-- **Channel-Indep 의 완벽 정당화**: Channel-Indep 가 각 channel 을 독립 univariate 처리 → univariate 도 well-defined
-- **Channel-mixing 모델** (Informer/FEDformer) 은 univariate input 도 내부에서 cross-channel 처리 → 불필요 복잡도
-
-**일상 비유**:
-- 의사가 심박수만 분석 (단일 변수) 시, 모든 변수 함께 분석하는 모델 보다 심박수 전문 모델이 더 정확
-
-**숨은 함정**:
-- Univariate setting 의 결과가 multivariate 에도 적용되는지 별도 확인 필요 (Table 3 가 입증)
-- ETT 의 oil temperature 가 특수한 시계열이라 일반화 어려울 수 있음 (다른 univariate dataset 으로 검증 권장)
-
-### 🔑 핵심 통찰
-
-> Table 8 은 **PatchTST 의 architectural simplicity 의 정당화**. Univariate setting 에서도 SOTA → Channel-Indep 의 inductive bias 가 simple setting 에도 효과적. Channel-mixing 모델은 univariate 에선 over-engineered.
+**Step 3 — 발견**:
+- *PatchTST/64 또는 /42 가 거의 모든 cell 에서 best*.
+- 즉 **multivariate (Table 3) + univariate (Table 8) *둘 다 SOTA***.
 
 ### 의미
 **Channel-Indep 의 *완벽 정당화***: Channel-Indep 가 *각 channel 을 독립 univariate 처리* 하므로 *univariate 도 well-defined*. *Channel-mixing 모델* (Informer/FEDformer) 은 *univariate input* 도 *내부에서 cross-channel* 처리 → *불필요 복잡도*.

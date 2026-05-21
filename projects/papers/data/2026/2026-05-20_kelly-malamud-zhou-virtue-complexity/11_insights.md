@@ -1,38 +1,6 @@
 # 11. 메타 통찰 12개 — 논문이 진짜 가르치는 것
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문이 던지는 **12 가지 메타 메시지**
-- 60 년 simple model 통념의 mathematical regime
-- Box paradox / Occam's blunder
-- Kelly-Pelger 계보 (RP-PCA → AE-AP → DLAP → VOC)
-
----
-
 > 이 챕터는 *논문 원문에 직접 안 쓰여 있는 통찰*. 깊이 읽으면 자연스럽게 얻는 *학문적 메시지*. 12개의 *깊은 통찰* 을 무지식자 친화로.
-
-### 🌱 12 통찰 한눈에 — 일상 비유
-
-학자가 60년 함정에 빠졌다가 깨어나는 이야기:
-
-| 통찰 | 비유 | 핵심 메시지 |
-|------|------|-----------|
-| 1. 60년 도구 부재 | 망원경 없이 별 봄 | RMT 부재 → simple model 고수 |
-| 2. Goyal-Welch 의 진짜 의미 | "공식 5개로 안 됨" 이지 "예측 불가" 아님 | Tool 한계 ≠ 과제 한계 |
-| 3. Occam's blunder | "단순함이 미덕" 의 함정 | Complexity is virtue |
-| 4. R² vs SR 분리 | 시험 점수 ≠ 학생 인생 | Statistical ≠ Economic value |
-| 5. Ridge 의 진짜 의미 | 안정장치, 두려워하지 마라 | Don't fear regularization |
-| 6. Box paradox 해소 | "모든 모델 틀림" 의 새 의미 | 틀린 모델도 가치 ↑ |
-| 7. Implicit regularization | Ridgeless 도 자동 안정 | $c > 1$ 의 benign overfit |
-| 8. Kelly-Pelger 계보 | 한 family 의 진화 | RP-PCA → AE → DLAP → VOC |
-| 9. 무한 변수의 한계 | 무한대 좋다? | Concavity (diminishing returns) |
-| 10. Cross-section vs Time-series | 두 영역의 다른 결론 | 본 논문은 time-series, AE 는 cross |
-| 11. Theory + Empirics | "Extraordinary agreement" | 이론과 실증의 일치 |
-| 12. Future research | 후속 방향 | Macro time-series 의 ML 시대 |
-
-### 🔑 메타 통찰
-
-> 본 논문은 **새 추정량 제안이 아니라 패러다임 전환**. 자산가격결정 분야에서 "statistical 표준 (R²) ≠ 경제 가치 (SR)" 라는 분리를 처음 명시. 후속 연구의 출발점.
 
 ---
 
@@ -392,25 +360,15 @@ Box 의 parsimony 가 60년 통계학을 dominate 했지만, 본 논문이 *Box 
 
 ## 11.15 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **본 논문의 *메타 메시지* 한 줄?**
 2. **Goyal-Welch (2008) 비관과 본 논문 낙관의 차이가 *데이터* 가 아니라 *방법론* 인 점의 의미?**
 3. **"Box 의 paradox" 의 정확한 self-contradiction?**
-4. **Kelly-Pelger 계보 (RP-PCA → AE → DLAP → VOC) 의 의미?**
-5. **본 논문 이후 후속 연구가 풀어야 할 5 빈 공간?**
 
 ### 답변
-
-1. **"Misspecified ML asset pricing 에서는 *Occam's razor 가 blunder*. Complex nonlinear model + optimal shrinkage 가 simple model 보다 OOS Sharpe ratio 단조 우월 (Theorem 1). R² 가 아닌 Sharpe/IR 로 evaluate 해야 economic value 가 보인다. Goyal-Welch 의 원본 데이터 + RMT + RFF 만으로 같은 데이터에서 정반대 결론 — methodology 의 진보가 동일 information set 에서 새 insight 추출."** **3 단계 메시지**: (i) 통념 반박 (Occam's blunder), (ii) 이론 (Theorem 1), (iii) 실증 (Goyal-Welch reversal).
-
-2. Goyal-Welch 의 결론은 **데이터의 한계가 아니라 분석의 한계**. 같은 1926-2020 CRSP + 같은 15 predictor 로 본 논문이 정반대 SR 결과. **Methodology 가 empirical reality 보다 학자 conclusion 을 더 강하게 결정**. 다른 분야의 established conclusion 도 methodology improvement 로 reversal 가능. **함의**: (i) Negative finding 도 영구적이 아닌 *methodology-dependent*, (ii) 학계 통념의 fragility, (iii) 새 도구 (RMT 같은) 가 같은 데이터에서 새 진실 추출 — *Kuhn 의 paradigm shift* 의 사례.
-
-3. Box (1976): (i) **All models are wrong** — universal misspecification 인정. (ii) **Overparameterization is mediocrity** — parsimony 권고. 그러나 본 논문 Theorem 1: **misspecified 에서는 complex > simple**. (i) 의 universality 가 (ii) 의 권고를 self-contradict. (i) 의 logical conclusion 은 (ii) 의 반대. **Box 가 자기 자신의 logical implication 을 끝까지 follow 안 함**. **본 논문이 그 implication 을 follow**: 모든 모델이 misspecified 라면 (i), 가장 안 misspecified 한 모델 (즉 complex 모델) 이 좋아야 (반대 (ii)). 14세기 William of Occam 의 razor 가 21세기 ML 에선 blunder.
-
-4. **Kelly-Pelger 계보** (자산가격결정 분야의 ML 진화): **(1) Lettau-Pelger 2020 RP-PCA**: PCA + risk premium adjustment, cross-sectional. **(2) Gu-Kelly-Xiu 2020 AE**: Autoencoder asset pricing, nonlinear factor. **(3) Chen-Pelger-Zhu 2023 DLAP**: Deep learning asset pricing, GAN-based SDF. **(4) Kelly-Malamud-Zhou 2024 VOC (본 논문)**: Theory of complexity, time-series timing. **공통 trajectory**: (i) ML 의 자산가격 적용, (ii) 점진적 깊이 증가 (PCA → AE → DL → theory), (iii) cross-sectional → time-series 확장. **VOC 의 위치**: **이론적 backbone 제공** — 앞 3 paper 의 empirical success 의 "왜" 답.
-
-5. **후속 연구 5 빈 공간**: **(1) 다른 시장 검증** (US 외 China, Japan, Europe, Korea) — 본 논문 universal 입증. **(2) 다른 asset class** (채권, 외환, 원자재) — stock 외에도? **(3) Cross-sectional VOC** (time-series → 종목 선택) — Fama-French anomaly 와의 결합. **(4) Foundation model + VOC** (GPT/Chronos + RFF 결합) — 더 큰 scale. **(5) Online learning + regime change** — cq 동적 조정. **현재 진행** (2024-2025): 일부 후속 연구 가 (1), (2) 시도 — 결과 mixed but promising. **가장 시급**: 다른 시장 검증 (US-only 한계 극복).
+1. **"Misspecified ML asset pricing 에서는 *Occam's razor 가 blunder*. Complex nonlinear model + optimal shrinkage 가 simple model 보다 OOS Sharpe ratio 단조 우월 (Theorem 1). R² 가 아닌 Sharpe/IR 로 evaluate 해야 economic value 가 보인다. Goyal-Welch 의 원본 데이터 + RMT + RFF 만으로 같은 데이터에서 정반대 결론 — methodology 의 진보가 동일 information set 에서 새 insight 추출."**
+2. Goyal-Welch 의 결론은 *데이터의 한계* 가 아니라 *분석의 한계*. 같은 1926-2020 CRSP + 같은 15 predictor 로 본 논문이 *정반대* SR 결과. **Methodology 가 *empirical reality* 보다 *학자 conclusion* 을 더 강하게 결정**. 다른 분야의 *established conclusion* 도 *methodology improvement* 로 reversal 가능.
+3. Box (1976): (i) *All models are wrong* — universal misspecification 인정. (ii) *Overparameterization is mediocrity* — parsimony 권고. 그러나 본 논문 Theorem 1: *misspecified* 에서는 *complex > simple*. (i) 의 universality 가 (ii) 의 권고를 *self-contradict*. *(i) 의 logical conclusion* 은 *(ii) 의 반대*. Box 가 자기 자신의 logical implication 을 끝까지 follow 안 함.
 
 ---
 

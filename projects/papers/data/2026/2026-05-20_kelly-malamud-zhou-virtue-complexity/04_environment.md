@@ -1,44 +1,6 @@
 # 04. 논문의 가정 (수학 setup) — 친근한 비유로
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 논문의 수학적 setup — Assumptions 1-5
-- 5 가정의 의미 (single-asset DGP, signal, eigenvalue, random β, sufficiently mixed)
-- Random feature framework
-
----
-
 > 본 챕터는 *논문의 분석 환경* (Assumptions 1-5 + Lemma 1 + Proposition 1) 을 *수식 거의 없이* 친근하게 풀이. 수식이 두려운 사람은 *비유 박스* 만 봐도 메시지 다 이해 가능.
-
-### 🌱 5 Assumptions — 일상 비유
-
-학자가 학생 시험 점수 분석할 때 깔아두는 전제들:
-
-| Assumption | 비유 | 의미 |
-|-----------|------|------|
-| **A1 (Single-asset DGP)** | "한 학생만 분석" | 시장 전체 수익률만 (개별 종목 X) |
-| **A2 (Signal)** | "어떤 패턴은 있다" | 진짜 함수 + 잡음 존재 |
-| **A3 (Eigenvalue)** | "분산이 잘 퍼져있다" | 데이터의 통계적 정규성 |
-| **A4 (Random β)** | "관계가 미리 정해진 게 X" | 함수 자체가 random 분포 |
-| **A5 (Mixed)** | "데이터가 충분히 다양" | 모든 영역의 정보 포함 |
-
-→ 5 가정은 **technical** but **표준적**. 본 논문의 main result 가 이 가정 아래 성립.
-
-### 🔣 핵심 기호 4-단 풀이
-
-| 기호 | 의미 | 직관 |
-|------|------|------|
-| $R_{t+1}$ | $t+1$ 시점 시장 수익률 | 예측 대상 |
-| $S_t \in \mathbb{R}^P$ | $t$ 시점 macro 신호 벡터 | 15 변수 또는 RFF 확장 |
-| $\beta \in \mathbb{R}^P$ | 진짜 자연의 회귀 계수 (random) | 신만 아는 정답 |
-| $b_*$ | signal 의 강도 | 본 논문 calibration = 0.2 |
-| $\sigma$ | 잡음 standard deviation | 1 (normalize) |
-| **신의 SR** | $b_* \sqrt{\text{tr}(\Psi)/(σ^2 + b_*^2 \text{tr}(\Psi))}$ | 이상적 상한 (≈ 0.35-0.58) |
-| **학자의 SR** | timing 전략의 실제 성과 | $\leq$ 신의 SR |
-
-### 🔑 핵심 통찰
-
-> **신의 Sharpe ratio** (infeasible upper bound) 가 모든 그래프의 빨간 점선. 약 0.35-0.58 범위. 학자의 모든 ridge 변형이 이 점선 아래에 있어야 함 (있으면 → 데이터 누출).
 
 ---
 
@@ -343,25 +305,15 @@ $SR_{\infty} = \frac{1}{\sqrt{3 + 1/(b_* \psi_{*,1})}}$
 
 ## 4.13 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **본 논문이 시장 수익률을 어떻게 모델링?**
 2. **Lemma 1 의 의미와 왜 중요?**
 3. **신의 Sharpe ratio 가 0.577 미만인 이유?**
-4. **Sufficiently mixed signals (Assumption 5) 의 의미와 RFF 만족?**
-5. **R² 와 Sharpe 의 infeasible vs feasible 관계?**
 
 ### 답변
-
-1. **시장 수익률 = (현재 macro 정보의 함수) + (random 잡음)**. 함수는 우리가 모르는 진짜 자연 법칙. 잡음은 평균 0, 시간 독립, 평범한 분포. **Single asset (시장 지수) 만 분석** — cross-section 종목 선택 무시. 함의: (i) 본 논문은 **time-series prediction** (시장 timing) 이지 cross-sectional (종목 선택) 아님, (ii) Fama-French 의 cross-sectional anomalies 와 다른 영역. 학자가 분석 단순화 위해 single-asset 가정.
-
-2. **Random β 의 quadratic form 이 deterministic limit 로 수렴 (LLN)**. 즉 변수 수 P 가 매우 커지면 random β 의 어떤 sum 도 예측 가능한 값에 가까워짐. **구체적**: $\beta^\top A \beta / P \to \text{tr}(A)/P$ as $P \to \infty$. **덕분에**: 학자가 "이 β 의 경우" 가 아니라 "평균적 β" 의 결과를 분석 가능. **본 논문 모든 정리 (Proposition 1-6, Theorem 1) 의 building block**. 직관: 코인 1000번 던지면 비율이 0.5 에 수렴 — 같은 원리를 random β 의 quadratic form 에 적용.
-
-3. **신이 잘 예측하는 만큼 베팅 크기도 큼. 큰 베팅 = 큰 변동성. Sharpe = 평균/변동성 이므로 변동성 증가로 bounded**. 야구의 최고 타자도 모든 공 홈런 못 침 비유 — 강한 swing 은 strikeout 위험 ↑. **수학적**: $SR_\infty = 1/\sqrt{3 + 1/(b_*\psi_{*,1})}$, $b_*\psi_{*,1} \to \infty$ limit 에서 $1/\sqrt{3} \approx 0.577$. **본 논문 calibration**: $b_*=0.2$, $\psi_{*,1}=1$ → $SR_\infty \approx 0.354$. **의의**: 모든 그래프의 빨간 점선 (infeasible bound) 이 이 값. 학자의 모든 ridge 변형이 이 점선 아래 (있으면 → look-ahead bias).
-
-4. **Sufficiently mixed signals (Assumption 5)**: 학자의 모든 변수가 비슷한 정도의 정보 제공. 어떤 변수가 특별히 결정적이 아니라 모두 균등 분포. **자연 만족 case**: (i) RFF (Random Fourier Features) — Gaussian random projection 이라 statistically 비슷, (ii) Wide neural network — random first layer 가 자동 만족. **실증 함의**: 본 논문 실증의 RFF 선택이 단순히 표현력 강화가 아니라 **Theorem 1 의 조건 만족** + analytical tractability 의 묘수.
-
-5. **R² (infeasible)**: $b_* \psi_{*,1} / (1 + b_* \psi_{*,1})$ — predictive power 합성의 monotone 증가. **SR (infeasible)**: $1/\sqrt{3 + 1/(b_*\psi_{*,1})}$ — 같은 합성의 monotone 증가. 둘 다 $b_* \psi_{*,1}$ 의 함수 → **일대일 대응**. 즉 R² 크면 SR 크다 (infeasible case). **그러나 feasible (estimated) 의 경우 이 관계가 깨진다** (Proposition 4 의 발견). R² 음수 임에도 SR 양수 가능. 의의: 본 논문의 가장 놀라운 발견 — **R² ≠ economic value**. Campbell-Thompson (2008) 의 R² → SR mapping 의 한계. Finance 분야의 evaluation paradigm 전환.
+1. **시장 수익률 = (현재 macro 정보의 함수) + (random 잡음)**. 함수는 우리가 *모르는* 진짜 자연 법칙. 잡음은 평균 0, 시간 독립, 평범한 분포. *Single asset (시장 지수)* 만 분석 — cross-section 종목 선택 무시.
+2. **Random β 의 *quadratic form* 이 *deterministic limit* 로 수렴 (LLN)**. 즉 변수 수 P 가 매우 커지면 *random* β 의 어떤 sum 도 *예측 가능한 값* 에 가까워짐. 덕분에 학자가 *"이 β 의 경우" 가 아니라 "평균적 β" 의 결과* 를 분석 가능 — 본 논문 모든 정리 (Proposition 1-6, Theorem 1) 의 *building block*.
+3. **신이 잘 예측하는 만큼 *베팅 크기도 큼*. 큰 베팅 = 큰 변동성. Sharpe = 평균/변동성 이므로 변동성 증가로 *bounded*.** 야구의 *최고 타자도 모든 공 홈런 못 침* 비유. 수학적: $SR_\infty = 1/\sqrt{3 + 1/(b_*\psi_{*,1})}$, $b_*\psi_{*,1} \to \infty$ limit 에서 $1/\sqrt{3} \approx 0.577$.
 
 ---
 

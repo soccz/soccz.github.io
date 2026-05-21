@@ -1,46 +1,6 @@
 # 06. 이론을 그래프로 — Figures 1-6 시각적 풀이
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문의 시뮬레이션 setup
-- **Figures 1-6** 의 정밀 풀이
-- 이론과 시뮬의 일치 검증
-
----
-
 > 본 논문이 *이론 시뮬* 로 그린 6 개 그래프 를 무지식자 친화로. 각 figure 의 *직관* 위주, 수식 없이.
-
-### 🌱 6 Figure 흐름 — 일상 비유
-
-**한 줄로**: "Correctly specified (Fig 1-3) → Misspecified (Fig 4-6) 의 6 그래프가 본 논문 전체 이론을 한눈에".
-
-| Figure | 보여주는 것 | 결정적 메시지 |
-|--------|------------|-------------|
-| Fig 1 (R²) | c 함수로 R² | **c=1 catastrophe** + c>1 회복 |
-| Fig 2 (E, Vol) | c 함수로 기대수익/변동성 | E 는 c<1 constant, Vol c=1 spike |
-| **Fig 3 (SR)** | c 함수로 Sharpe | 모든 c 에서 SR > 0 (놀라움) |
-| Fig 4 (R² misspec) | cq 함수로 R² | Fig 1 + approximation gap |
-| Fig 5 (E misspec) | cq 함수로 E | **E monotone 증가** (vs Fig 2 constant) |
-| **★ Fig 6 (SR misspec)** | cq 함수로 SR | **Theorem 1 시각화: monotone 증가** |
-
-**가장 중요한 발견** (Fig 3 + Fig 6):
-- **Fig 3**: R² 가 음수 (-100% 이하) 임에도 SR > 0 → **R² ≠ 경제 가치**
-- **Fig 6**: SR 가 cq 의 monotone 증가 → **"Use the largest model" 의 시각적 증명**
-
-### 🔣 핵심 기호 4-단 풀이
-
-| 기호 | 의미 | Figure 별 사용 |
-|------|------|--------------|
-| **c** | 진짜 자연의 complexity (P/T) | Fig 1-3 의 x축 |
-| **cq** | 학자가 본 empirical complexity | Fig 4-6 의 x축 |
-| **q** | 학자/자연 변수 비율 | Misspec 의 핵심 |
-| **z** | Ridge 강도 | 모든 figure 의 6 색 곡선 |
-| **빨간 점선** | Infeasible (신의 값) | 모든 figure 의 상한 |
-| **수평 점선 (Fig 6)** | Theorem 1 의 baseline | "ridge 없는 simple model" |
-
-### 🔑 핵심 통찰
-
-> 6 figure 의 핵심 메시지: **"단순한 모델은 함정. 복잡한 모델 + ridge 가 진짜"**. 학계 60년 통념 ("simple is best") 의 6 그래프 반박.
 
 ---
 
@@ -292,40 +252,6 @@ $c > 1$ 에서 검정 선이 *영원히 양수 유지* + *대체로 0.05 근처�
 
 *paper p.485 Figure 4 — Left: R². Right: ‖β̂‖.*
 
-### 📖 Figure 4 (Misspecified R²) 정밀 읽는 법
-
-**무엇이 표시되나**:
-- **Figure 1 의 misspecified 버전** (구조 동일)
-- **2 panel**: Left = R², Right = ‖β̂‖ norm
-- **X축**: $cq$ (학자 empirical complexity, not c) — True DGP $c = 10$ 고정
-- **Y축 Left**: OOS R² (range $[-0.3, 0.2]$)
-- **Y축 Right**: $\|\hat\beta\|$ norm
-- **6 색 곡선**: ridgeless (검정), z=0.01 (노랑), z=0.1 (빨강), z=1 (보라), z=10 (하늘), z=50 (연두)
-- **빨간 수평 점선**: Infeasible upper bound
-
-**5 단계 분석 (Left panel R²)**:
-1. **Figure 1 과 모양 비교**: 비슷한가? → YES — cq=1 catastrophe + cq>1 회복
-2. **★ 결정적 차이**: simple cq 영역의 R² 가 Figure 1 보다 **약 50% 더 낮음** → approximation gap
-3. **cq = 0.1**: Figure 1 의 0.16 → Figure 4 의 0.05 정도 (misspecification cost)
-4. **cq → 10** (= q=1 = correctly specified): Figure 1 의 c=10 과 같은 수준 (cost 사라짐)
-5. **cq = 1 catastrophe**: Figure 1 과 동일 (specification 무관)
-
-**Right panel (β norm)**:
-- Figure 1 right 와 거의 동일한 패턴
-- cq=1 부근 norm spike (catastrophe 의 직접 원인)
-
-**핵심 발견 (3)**:
-- **Approximation gap**: misspec 의 cost = simple cq 영역의 R² 50% 손실
-- **cq → 10 에서 gap 사라짐**: 학자가 더 많은 변수 capture 할수록 손실 ↓
-- **catastrophe specification 무관**: cq=1 에서 R² 발산은 항상
-
-**메시지**: 학자가 진짜 자연의 일부만 보면 예측 정확도 손실 (misspecification cost). cq 늘리면 cost 줄어듦.
-
-**숨은 함정**:
-- "cq → 10 에서 correctly specified" 는 calibration 가정 (true c=10 가정) — 다른 calibration 에선 다름
-- approximation gap 의 50% 가 universal 아님 — calibration 의존
-- Figure 4 보고 즉시 "complex 가 좋다" 결론 X — Figure 6 (SR) 가 결정적
-
 ### 어떻게 읽나? (Step-by-step)
 
 **Step 1 — Setup**
@@ -358,39 +284,6 @@ $c > 1$ 에서 검정 선이 *영원히 양수 유지* + *대체로 0.05 근처�
 ![Figure 5](figures/page27_Fig5_E_Vol_misspec.png)
 
 *paper p.485 Figure 5.*
-
-### 📖 Figure 5 (Misspecified E + Vol) 정밀 읽는 법
-
-**무엇이 표시되나**:
-- **Figure 2 의 misspecified 버전** (구조 동일)
-- **2 panel**: Left = Expected return E, Right = Volatility √V
-- **X축**: cq (학자 empirical complexity), True DGP c=10 고정
-- **Y축 Left**: $\mathcal{E}$ (range [0, 0.025])
-- **Y축 Right**: Vol (range [0, 6])
-- **6 색 곡선** + 빨간 점선
-
-**5 단계 분석 (Left panel E)**:
-1. **Figure 2 와 가장 큰 차이**: Figure 2 ridgeless E 가 c<1 에서 constant, Figure 5 는 cq monotone **increasing**!
-2. **cq=0.1**: 모든 선 0 근처 (학자가 변수 적음)
-3. **cq=0.5**: 검정 (ridgeless) 0.01 까지 상승
-4. **cq=1**: 검정 0.02 peak
-5. **cq>1**: 검정 flat 0.02 유지 (Eq 19 의 $b_*\psi_{*,1} \min\{q, c^{-1}\}$ 패턴)
-
-**가장 강력한 발견**:
-- **기대 수익이 cq 의 monotone increasing** — Figure 2 (correctly specified) 의 constant 와 정반대
-- → **misspecified case 의 핵심**: 학자가 더 많은 변수 사용할수록 기대 수익 단조 증가
-- Theorem 1 의 SR monotone 증가의 직접 원인 (분자 ↑)
-
-**Right panel (Vol)**:
-- Figure 2 의 right 와 유사: cq=1 spike + 회복
-- **변동성 행동은 misspecification 무관** (specification 영향 ↓)
-
-**메시지**: Figure 5 left panel 이 Theorem 1 의 경제적 의미. Expected return 단조 증가 → Sharpe ratio 단조 증가 (Figure 6).
-
-**숨은 함정**:
-- "ridgeless E 가 monotone" 는 cq → ∞ 에서 saturate (Eq 19 의 min{q, c⁻¹})
-- 변동성 패턴이 비슷 = "Vol 무관 학자 선택" 아님 — 단지 magnitude 비슷
-- Figure 5 만 보면 "변수 ↑ = 항상 좋다" 결론 X — 더 큰 그림 Figure 6 (SR) 가 결정적
 
 ### 어떻게 읽나? (Step-by-step)
 
@@ -571,25 +464,15 @@ Figure 1-6 가 *이론* 시뮬. 그러나 본 논문 Section V (Chapter 07) 의 
 
 ## 6.13 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **Figure 1 (correctly) 와 Figure 4 (misspecified) 의 가장 큰 차이?**
 2. **Figure 3 의 *놀라운* 발견?**
 3. **Figure 6 의 의미 — 본 논문 main statement?**
-4. **6 figures 의 전체 흐름과 각 figure 의 contribution?**
-5. **이론 시뮬 (Figures 1-6) vs 실증 (Figures 7-11) 의 관계?**
 
 ### 답변
-
-1. **R² 의 전체 모양 (c=1 catastrophe + 회복) 은 양쪽 비슷**. **결정적 차이는 기대 수익**: Figure 2 (correctly) 에서는 ridgeless 기대 수익이 c<1 에서 constant (no decrease), Figure 5 (misspecified) 에서는 cq 의 monotone increasing — 복잡할수록 기대 수익 증가. 이게 **misspecified 환경의 본질적 차이**. **함의**: correctly specified 의 경우 simple model 도 기대수익 충분, misspecified 의 경우 (모든 현실 모델) complex model 이 더 좋음. Box paradox 의 해결.
-
-2. **Ridgeless (검정) 의 Sharpe ratio 가 모든 c 에서 양수**. 즉 통상 직관 "변수 > 데이터 → overfit → 망함" 의 정면 반박. R² 가 마이너스 100% 이하 인 영역 (Figure 1) 에서도 Sharpe > 0 — **R² 와 Sharpe 의 분리**. 또한 Ridge z > 0 가 모든 c 에서 ridgeless 보다 우월. **추가 발견**: C → ∞ 에서도 SR > 0 유지 → 극단적 high-complexity 도 timing 가치 있음. **함의**: Campbell-Thompson (2008) 의 R² → SR mapping 의 한계 입증.
-
-3. **모든 z 에서 Sharpe ratio 가 cq 의 monotone increasing** — Theorem 1 의 시각적 statement. Ridgeless 에서 cq=1 근처 약한 dip (**double ascent**), z>0 에서 smooth monotone (**permanent ascent**). 의미: **Use the largest model you can compute + 적절한 ridge 사용**. 이게 본 논문의 **Use the largest model 권장의 수학적 근거**. **실무 응용**: AQR, Two Sigma 같은 quant 펀드의 ML 전략 정당화 — 가장 큰 모델 + ridge 사용.
-
-4. **6 figures 의 흐름**: **Fig 1 (R², correctly)**: c=1 catastrophe + 회복 → ridgeless 의 위험성. **Fig 2 (E + Vol, correctly)**: ridgeless E 가 c<1 constant. **Fig 3 (SR, correctly)**: 모든 c 에서 SR > 0 (놀라움). **Fig 4 (R², misspec)**: Fig 1 + approximation gap. **Fig 5 (E + Vol, misspec)**: ★ E monotone 증가 (vs Fig 2 constant). **Fig 6 (SR, misspec)**: ★★ Theorem 1 의 시각적 statement (monotone 증가). **3-6 순서**: correctly → misspecified 의 패러다임 전환을 시각화.
-
-5. **이론 시뮬 (Figures 1-6) → 실증 (Figures 7-11) 의 일치**: 저자 표현 "**extraordinary agreement**". 이론은 가상 데이터 (calibration: $b_*=0.2, c=10, \Psi=I$), 실증은 CRSP 1926-2020 진짜 데이터. **검증된 일치**: (i) Fig 7 (실증 R², norm, E, Vol) = Fig 1, 2 의 패턴 재현, (ii) Fig 8 (실증 SR) = Fig 6 의 monotone increasing 재현, (iii) ridgeless catastrophe 도 실증에서 확인. **의의**: 이론적 prediction 이 90년 실제 시장 데이터에서 검증 → 본 논문의 robustness 압도적.
+1. **R²**의 전체 모양 (c=1 catastrophe + 회복) 은 양쪽 비슷. **결정적 차이는 *기대 수익***: Figure 2 (correctly) 에서는 ridgeless 기대 수익이 *c < 1 에서 constant* (no decrease), Figure 5 (misspecified) 에서는 *cq 의 monotone increasing* — *복잡할수록 기대 수익 증가*. 이게 *misspecified 환경의 본질적 차이*.
+2. **Ridgeless (검정) 의 Sharpe ratio 가 *모든 c 에서 양수***. 즉 통상 직관 "변수 > 데이터 → overfit → 망함" 의 정면 반박. R² 가 *마이너스 100% 이하* 인 영역 (Figure 1) 에서도 Sharpe > 0 — *R² 와 Sharpe 의 분리*. 또한 *Ridge z > 0 가 모든 c 에서 ridgeless 보다 우월*.
+3. **모든 z 에서 Sharpe ratio 가 cq 의 monotone increasing** — Theorem 1 의 시각적 statement. Ridgeless 에서 *cq = 1 근처 약한 dip (double ascent)*, $z > 0$ 에서 *smooth monotone (permanent ascent)*. 의미: *Use the largest model you can compute* + *적절한 ridge 사용*. 이게 본 논문 의 *Use the largest model* 권장의 *수학적 근거*.
 
 ---
 

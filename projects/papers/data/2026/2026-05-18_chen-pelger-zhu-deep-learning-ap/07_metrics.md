@@ -1,13 +1,5 @@
 # 07. Evaluation Metrics — Section II.F
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 3 가지 evaluation metrics — Sharpe Ratio (SR), Explained Variation (EV), Cross-Sectional R² (XS-R²)
-- 각 metric 의 정확한 정의 + 일상 비유
-- 왜 3 개 모두 필요한가
-
----
-
 > Section II.F (paper p.19–20) — SR, EV, XS-R² 세 지표의 정의와 의미.
 
 ## 7.1 챕터 한 줄 요약
@@ -17,18 +9,6 @@
 ---
 
 ## 7.2 Sharpe Ratio (SR)
-
-### 🔣 4-단 기호 풀이 (SR)
-
-| 기호 | 한국어 | 일상 비유 | 조심할 점 |
-|------|--------|-----------|-----------|
-| $F_t$ | SDF factor (= $\omega^\top R^e$) | "SDF portfolio 의 t 시점 수익" | tangency portfolio return |
-| $\widehat\mathbb{E}[F_t]$ | sample mean | "평균 수익률" | $\frac{1}{T}\sum_t F_t$ |
-| $\widehat\mathrm{Var}(F_t)$ | sample variance | "수익 변동 정도" | $\frac{1}{T}\sum_t (F_t - \bar F)^2$ |
-| $\sqrt{\widehat\mathrm{Var}}$ | sample std | "변동성" | volatility |
-| **SR** | risk-adjusted return | "위험 한 단위당 수익" | 월간 → 연간 = × √12 |
-
-**🌱**: "**평균 수익 ÷ 변동성** — 같은 위험으로 더 많이 벌면 SR 높음".
 
 paper p.19:
 $$
@@ -58,18 +38,6 @@ $$
 \mathrm{EV} = 1 - \frac{\frac{1}{T}\sum_{t=1}^{T} \frac{1}{N_t}\sum_{i=1}^{N_t} (\hat\epsilon_{t+1,i})^2}{\frac{1}{T}\sum_{t=1}^{T} \frac{1}{N_t}\sum_{i=1}^{N_t} (R^e_{t+1,i})^2}
 $$
 
-### 🔣 4-단 기호 풀이 (EV)
-
-| 기호 | 한국어 | 일상 비유 | 조심할 점 |
-|------|--------|-----------|-----------|
-| $\hat\epsilon_{t+1,i}$ | residual | "모델이 못 잡은 부분" | $R^e - \beta F$ |
-| $(R^e_{t+1,i})^2$ | total variation | "원본 수익률 제곱" | demean 안 함 (KPS convention) |
-| 분자 | residual variance | "잔여 변동" | 작을수록 좋음 |
-| 분모 | total variance | "전체 변동" | 정규화 기준 |
-| $1 - \text{ratio}$ | 설명된 비율 | "시계열 R² 같은 것" | 0 ~ 1 |
-
-**🌱**: "**잔여 변동 / 전체 변동 의 1-비율** — 시계열 R² (단 mean 안 빼기, KPS)".
-
 **기호 뜻**:
 - $\hat\epsilon_{t+1,i}$ — cross-sectional regression of $R^e$ on $\hat\beta$ 의 잔차.
 - 분자: 잔차 제곱 평균.
@@ -90,18 +58,6 @@ paper p.19:
 $$
 \mathrm{XS\text{-}R}^2 = 1 - \frac{\frac{1}{N}\sum_{i=1}^N \frac{T_i}{T} \left( \frac{1}{T_i}\sum_{t \in T_i} \hat\epsilon_{t+1,i} \right)^2}{\frac{1}{N}\sum_{i=1}^N \frac{T_i}{T} \left( \frac{1}{T_i}\sum_{t \in T_i} R^e_{t+1,i} \right)^2}
 $$
-
-### 🔣 4-단 기호 풀이 (XS-R²)
-
-| 기호 | 한국어 | 일상 비유 | 조심할 점 |
-|------|--------|-----------|-----------|
-| $\frac{1}{T_i}\sum_t \hat\epsilon_{t+1,i}$ | 자산 i 평균 잔차 (α_i) | "i 학생의 평균 오답 점수" | pricing error |
-| $\frac{1}{T_i}\sum_t R^e_{t+1,i}$ | 자산 i 평균 수익률 | "i 학생의 평균 실제 점수" | 평균 (mean) |
-| $T_i / T$ | unbalanced weighting | "오래 관측된 학생 weight ↑" | $T_i$ 짧으면 noisy |
-| 분자 | weighted mean residual² | "평균 오답의 분산" | 횡단면 average squared α |
-| 분모 | weighted mean return² | "평균 점수의 분산" | 정규화 기준 |
-
-**🌱**: "**횡단면 평균 점수 의 R²** — 자산 i 의 평균 (mean) 을 모델이 얼마나 예측".
 
 **기호 뜻**:
 - 분자: 자산 $i$ 의 평균 잔차 ($\hat\alpha_i$) 의 제곱, weighted by $T_i/T$.
@@ -174,49 +130,3 @@ $$
 1. SR 은 **extreme portfolio** 의 weight 만 잘 잡으면 높을 수 있음. 그러나 실제 자산가격결정은 **모든** 자산을 잘 가격결정해야 함 — middle quintile 도. paper Pelger-Xiong (2019) 의 "proximate factor" 결과: extreme factor weight 만 정확해도 SR 비슷하지만 loading 자체는 틀릴 수 있음. → EV, XS-R² 가 보완.
 2. **EV** 는 **시계열 R²** — 개별 stock 의 cross-sectional regression residual $\epsilon$ 의 분산 비율 (non-demeaned). **XS-R²** 는 **횡단면 mean R²** — $\hat\alpha_i = \bar\epsilon_{T_i}$ 의 분산 비율. EV 는 "stock 변동 설명", XS-R² 는 "stock 평균 설명". 자산가격결정의 본질은 **mean** 이므로 XS-R² 가 더 중요.
 3. β 의 정의는 SDF model 의 implications 와 일관해야 함. GAN 은 **second moment** $\mathbb{E}[F R^e]$ 를 직접 추정 (no-arbitrage 의 정확한 표현). FFN 은 conditional mean μ ∝ β (Eq $\mu = \beta E[F]$). EN/LS 는 같은 second moment 의 regression. 모델의 SDF representation 에 맞춰 일관성 유지.
-
----
-
-## 7.8 paper Appendix B simulation 의 자세한 결과
-
-paper Appendix B 의 simulation 이 3 metric 의 보완성 입증:
-
-### Simulation setup
-- Synthetic stock returns + known SDF.
-- 4 models (LS, EN, FFN, GAN) 적용.
-
-### 결과 1: SR 만 평가하면 위험
-
-| Model | True SDF 일치 | SR |
-|-------|-------------|-----|
-| Model A (extreme weight 모델) | ✗ | 높음 |
-| Model B (correct loading) | ✓ | 비슷 |
-
-→ **두 모델의 SR 비슷하지만 loading 은 완전히 다름**. SR 만으로는 구별 불가.
-
-### 결과 2: EV 가 함수형 정확도 판별
-
-| Model | Functional form | EV |
-|-------|---------------|-----|
-| Linear | Wrong (true is nonlinear) | 낮음 |
-| Nonlinear | Correct | 높음 |
-
-→ EV 가 **시계열 변동 설명** = functional form 정확도.
-
-### 결과 3: XS-R² 가 risk premium 정확도 판별
-
-| Model | Risk premium | XS-R² |
-|-------|------------|-------|
-| No no-arbitrage | Inflated by noise | 낮음 |
-| No-arbitrage (small alpha) | Correct | 높음 |
-
-→ XS-R² 가 **횡단면 mean 정확도** = risk premium 정확도.
-
-### 결론
-
-**3 metric 모두 평가 필요**:
-- SR: SDF 운용 효율.
-- EV: 함수형 (interaction) 정확도.
-- XS-R²: risk premium (no-arbitrage) 정확도.
-
-GAN 이 3 metric 모두 best = 모든 측면에서 우수.

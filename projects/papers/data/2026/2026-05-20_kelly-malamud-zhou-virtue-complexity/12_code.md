@@ -1,14 +1,5 @@
 # 12. Python 실행 코드 — RFF + Ridge Regression + Recursive OOS
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- Python 구현 — RFF generation + ridge regression
-- Recursive OOS (T=12 / 60 / 120)
-- Sharpe / IR / α / R² 계산
-- Marchenko-Pastur closed form
-
----
-
 > 본 논문의 모든 방법을 동작 보장 Python 코드로. NumPy + Pandas 만으로 의존성 최소화. 복사-붙여서 즉시 실행 가능.
 
 ---

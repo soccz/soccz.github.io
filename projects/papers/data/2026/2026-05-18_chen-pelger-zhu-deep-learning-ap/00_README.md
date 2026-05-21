@@ -88,12 +88,8 @@
 |----------|------|------|
 | `dlap-sdf-performance` | 09 | Table I 재현 — SR/EV/XS-R² × {GAN, FFN, EN, LS} × {Train/Valid/Test} |
 | `dlap-macro-ablation` | 09 | Figure 6 재현 — macro 사용 방식 (hidden states / no macro / all macro raw) |
-| `dlap-cumulative-returns` | 09 | Figure 7 재현 — 10 decile β-sorted portfolio 의 50년 누적수익 |
 | `dlap-beta-sorted` | 09 | Figure 8 재현 — β-sorted decile portfolio 의 linear relation (R²=0.97) |
-| `dlap-table3-portfolios` | 10 | Table III 재현 — 46 anomaly decile EV/XS-R² (EN/FFN/GAN) |
 | `dlap-var-importance` | 11 | Figure 11/12 재현 — 46 firm characteristics 중요도 (GAN vs FFN) |
-| `dlap-lstm-states` | 11 | Figure 13 재현 — 4 LSTM hidden states + NBER recession bars |
-| `dlap-sdf-surface` | 11 | Figure 14/15 재현 — SDF weight 의 pairwise interaction (2D contour) |
 
 → 전체 카탈로그는 [17_diagrams.md](17_diagrams.md).
 
@@ -114,25 +110,3 @@
 | `figures/page33_var_importance_GAN.png` | p.33 | Fig. 11 — Characteristic importance for GAN SDF (46 chars) |
 | `figures/page34_var_importance_FFN.png` | p.34 | Fig. 12 — Characteristic importance for FFN SDF |
 | `figures/page36_LSTM_hidden.png` | p.36 | Fig. 13 — Macroeconomic Hidden State Processes (LSTM outputs) |
-
----
-
-## 🆚 자매 deep dive — 같은 시리즈
-
-본 deep dive 는 다음 deep dive 들과 같은 시리즈 (모두 자산가격 결정 + ML):
-
-| Deep dive | 분야 | 핵심 도구 | 본 paper 와의 관계 |
-|-----------|------|-----------|-------------------|
-| [RPPCA (Lettau-Pelger 2020)](../2026-05-17_lettau-pelger-rppca/00_README.md) | 자산가격 | PCA + risk-premium penalty | **Pelger 동일 저자** — PCA → GAN 의 진화 |
-| [Autoencoder (Gu-Kelly-Xiu 2021)](../2026-05-17_gu-kelly-xiu-autoencoder/00_README.md) | 자산가격 | Autoencoder + IPCA 일반화 | β = NN(z) 의 비선형 — no-arbitrage 다른 방식 |
-| [VOC (Kelly-Malamud-Zhou 2024)](../2026-05-20_kelly-malamud-zhou-virtue-complexity/00_README.md) | 자산가격 | Random Fourier Features + ridge | Complexity > simplicity, 다른 ML 정신 |
-
-**3-way 비교 (핵심 차이)**:
-
-| 측면 | RPPCA | Autoencoder | **GAN (본 paper)** |
-|------|-------|-------------|-------------------|
-| Loss | variance + α penalty | reconstruction + no-arb | **no-arbitrage GMM (Eq 3)** |
-| ω 의 형태 | linear (PC factor weight) | nonlinear (NN of z) | **nonlinear (NN of chars+macro)** |
-| Test asset | fixed (40 anomalies) | fixed (sorted portfolios) | **adversarial (자동 발견)** |
-| Macro | 미사용 | 미사용 | **LSTM hidden states** |
-| OOS SR (월간) | ~0.5 | ~0.6 | **0.75 (best)** |

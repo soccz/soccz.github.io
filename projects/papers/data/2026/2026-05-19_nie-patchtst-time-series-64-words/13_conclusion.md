@@ -1,67 +1,12 @@
 # 13. Conclusion + Future Work — 무엇이 남았나
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문의 5 ML design principles
-- 한계 — cross-channel dependency 미모델링
-- Foundation model 시대의 building block
-- 후속 paper (iTransformer 등) 와의 관계
-
----
-
 > 본 논문 *결론 + 의의 + 미래 연구 방향*.
-
-### 🌱 본 논문이 남긴 것 — 일상 비유
-
-PatchTST 의 6가지 paradigm shift:
-
-| 항목 | Before (2022) | After (2023+) |
-|------|--------------|--------------|
-| 시계열 specific attention 변형 | 필수 (Informer/Auto/FED) | **불필요** (vanilla 충분) |
-| Channel handling | Mixing default | **Independence default** |
-| Long L 활용 | 불가능 (L>96 악화) | **가능** (L=720 까지) |
-| Self-supervised | 시도 없음 | **표준** (BERT moment) |
-| Foundation model | 불가능 | **가능** (Chronos, TimesFM, Moirai) |
-| Transfer learning | 어려움 | **자연스러움** |
-
-### 🔑 핵심 통찰
-
-> PatchTST 가 **6가지 paradigm shift 를 한 번에**. 일반적으로 paper 가 1-2 shift 만 만들지만 본 논문은 6개. 이게 1500+ citation 의 이유.
 
 ---
 
 ## 13.1 챕터 한 줄 요약
 
 > **"Vanilla Transformer + Patching + Channel-Indep = 시계열 SOTA. ViT 의 시계열 적용. 시계열 foundation model 의 출발점. Future: cross-channel dependency, probabilistic forecasting, online learning."**
-
----
-
-## ★ 본 paper 의 4년 후 평가 (2023 ICLR → 2025+)
-
-### 정량 임팩트
-
-- **Citations** (2024-05 시점): 1500+ (ICLR 2023 paper 중 top tier).
-- **후속 paper**: 시계열 forecasting paper 의 거의 모두가 PatchTST baseline 사용.
-
-### 학계 paradigm shift 의 정확한 그림
-
-| 항목 | Before PatchTST (2022) | After PatchTST (2023+) |
-|------|----------------------|---------------------|
-| 시계열 attention 변형 | 필수 (Informer/Auto/FED) | **불필요** (vanilla 충분) |
-| Channel handling | Mixing default | **Independence default** |
-| Long L 활용 | 불가능 (L>96 악화) | **가능** (L=720 까지) |
-| Self-supervised | 시도 없음 | **표준** (BERT moment) |
-| Foundation model | 불가능 | **가능** (Chronos, TimesFM, Moirai) |
-| Transfer learning | 어려움 | **자연스러움** |
-
-→ **6가지 분야의 동시 paradigm shift**.
-
-### 가장 큰 long-term impact
-
-> **본 paper 의 가장 큰 contribution = 21% MSE reduction 이 아니라 "시계열 BERT moment"**.
-
-NLP 의 BERT (2018) 가 NLP foundation model 시대를 시작한 것처럼, PatchTST (2023) 가 시계열 foundation model 시대를 시작.
-
 
 ---
 
@@ -175,25 +120,15 @@ Channel-Indep 의 *대가*: cross-channel 정보 활용 X.
 
 ## 13.7 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **본 논문의 *3대 기여*?**
 2. **본 논문의 *3가지 limitation*?**
-3. **미래 연구 방향의 가장 중요한 것?**
-4. **PatchTST 가 시계열 ML 의 paradigm shift 인 6가지 측면?**
-5. **PatchTST 후속 연구 (iTransformer, Chronos, TimesFM, Moirai) 와의 관계?**
+3. ***미래 연구 방향* 의 가장 중요한 것?**
 
 ### 답변
-
-1. **(1) Method**: Vanilla Transformer + Patching + Channel-Indep = SOTA. (2) **Empirical**: 21% MSE / 16.7% MAE reduction (8 datasets × 4 horizons). (3) **Foundation**: Self-supervised + transfer learning — 시계열 foundation model 의 출발점. **각 기여의 1500+ citation 의 source**: Method (architectural template), Empirical (benchmark reference), Foundation (paradigm capstone).
-
-2. **(1) Cross-channel dependency 무시** — Channel-Indep 의 대가, iTransformer 가 해결. **(2) Point forecast 만** — probabilistic 없음 (QuantileFormer 가 후속). **(3) Univariate-style 학습** — multi-variate 의 진짜 가치 활용 X. **추가 limitation**: 저차원 단순 dataset (ETTh) 에서 DLinear 와 격차 작음 — universal SOTA 아님.
-
-3. **Cross-channel dependency 활용** — Channel-Indep 의 *robustness* 와 *cross-channel info* 둘 다 가지는 model. 본 논문 이후 *iTransformer (2024)* 가 직접 응답 → channel attention 으로 cross-channel advantage 회복 + Channel-Indep 의 sample efficiency 보존. **다른 방향**: (i) Foundation model 확장 (Chronos, TimesFM 의 mega-scale pre-training), (ii) Probabilistic forecasting 추가 (uncertainty 표현), (iii) Multi-modal (텍스트 + 시계열 결합), (iv) Domain-specific application (finance, healthcare, IoT).
-
-4. **6 측면 paradigm shift**: (i) **시계열 specific attention 변형 → 불필요** (vanilla 충분), (ii) **Channel-mixing → Channel-indep default**, (iii) **Long L 활용 불가능 → 가능** (L=720 까지), (iv) **Self-supervised 시도 없음 → 표준** (BERT moment), (v) **Foundation model 불가능 → 가능** (Chronos, TimesFM, Moirai), (vi) **Transfer learning 어려움 → 자연스러움**. 일반적으로 paper 가 1-2 shift 만 만들지만 **본 논문은 6개 동시** — 분야 reset 의 catalyst.
-
-5. **PatchTST 의 4 후속 lineage**: **iTransformer (2024)**: Channel attention (CI 의 inverse). 본 논문의 Channel-Indep 가설 위에 cross-channel 추가. **Chronos (Amazon 2024)**: T5 architecture + tokenization, mega-scale pre-training (수십만 시계열). 본 논문의 patching 직접 차용. **TimesFM (Google 2024)**: Patch-based decoder + GPT 결합. **Moirai (Salesforce 2024)**: Multi-variate handling + in-context learning. **모두 PatchTST 위에 build**: (a) patching, (b) vanilla transformer, (c) self-supervised pre-training. **PatchTST 의 위치**: 3세대 (vanilla + patching) → 4세대 (foundation model) 의 직접 prerequisite.
+1. **(1) Method**: Vanilla Transformer + Patching + Channel-Indep = SOTA. (2) **Empirical**: 21% MSE / 16.7% MAE reduction (8 datasets × 4 horizons). (3) **Foundation**: Self-supervised + transfer learning — 시계열 foundation model 의 출발점.
+2. **(1) Cross-channel dependency 무시** — Channel-Indep 의 대가, iTransformer 가 해결. **(2) Point forecast 만** — probabilistic 없음 (QuantileFormer 가 후속). **(3) Univariate-style 학습** — multi-variate 의 진짜 가치 활용 X.
+3. **Cross-channel dependency 활용** — Channel-Indep 의 *robustness* 와 *cross-channel info* 둘 다 가지는 model. 본 논문 이후 *iTransformer (2024)* 가 직접 응답 → channel attention 으로 cross-channel advantage 회복 + Channel-Indep 의 sample efficiency 보존.
 
 ---
 

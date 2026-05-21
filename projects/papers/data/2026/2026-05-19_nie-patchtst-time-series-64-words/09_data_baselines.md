@@ -1,152 +1,12 @@
 # 09. 데이터셋 + Baseline 모델 — 실험 setup
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 8 datasets — Weather, Traffic, Electricity, ETT (4 variants), ILI
-- 7 baselines — Transformer, Autoformer, FEDformer, Informer, Pyraformer, DLinear, LogTrans
-- 4 horizon (96, 192, 336, 720)
-- 평가 metric (MSE, MAE)
-
----
-
-> 본 논문이 사용한 **8 datasets** + **8 baseline 모델**. 무지식자 친화로.
-
-### 🌱 실험 setup — 일상 비유
-
-**한 줄로**: "8 dataset × 8 baseline × 4 horizon = 32 cells 의 광범위 검증. PatchTST 29/32 best (91%)".
-
-| 비유 | 본 논문 |
-|------|--------|
-| 8 dataset | 8 다른 환경 (학교, 회사, 도시, ...) |
-| 8 baseline | 8 다른 학생 (FEDformer, DLinear, ...) |
-| 4 horizon | 4 다른 시험 (96, 192, 336, 720일 후) |
-| 32 cells | 32 종합 평가 |
-
-### 🔣 8 dataset 4-단 풀이
-
-| Dataset | 차원 M | 특징 |
-|---------|-------|------|
-| Weather | 21 | 중간 차원, 다양한 cycle |
-| Traffic | **862** | 고차원, 강한 cycle |
-| Electricity | 321 | 고차원, 강한 cycle |
-| ETTh1 (Electricity Transformer Temperature) | 7 | 저차원, 단순 |
-| ETTh2 | 7 | 저차원, 단순 |
-| ETTm1 | 7 | 저차원, 분 단위 |
-| ETTm2 | 7 | 저차원, 분 단위 |
-| ILI (Influenza-Like Illness) | 7 | 저차원, 의료 |
-
-**Sweet spot**:
-- ★ 강함: 고차원 (M ≥ 21) + 강한 cycle → Weather, Traffic, Electricity, ETTm1/2
-- 약함: 저차원 단순 cycle → ETTh1/2 (DLinear 도 잘함)
-
-### 🎯 구체 증거
-
-- PatchTST/64 vs FEDformer: 평균 **21% MSE reduction**
-- DLinear vs PatchTST: 단순 dataset (ETTh1/2) 에서 격차 작음, 복잡한 dataset (Traffic, Electricity) 에서 PatchTST 압도
-
-### 🔑 핵심 통찰
-
-> PatchTST 의 진짜 강점은 **고차원 + 강한 cycle** dataset. 저차원 단순 dataset 은 Linear baseline 으로도 충분 → 모델 선택 시 dataset 특성 고려해야.
+> 본 논문이 사용한 *8 datasets* + *7 baseline 모델*. 무지식자 친화로.
 
 ---
 
 ## 9.1 챕터 한 줄 요약
 
-> **"8 datasets (다양한 domain) + 8 baseline (전통 + Transformer + Linear) = 광범위 검증. PatchTST 가 32/32 cells 중 약 29 cells (91%) 에서 best."**
-
----
-
-## ★ 본 chapter 의 핵심 결론 (미리 보기)
-
-| Dataset | PatchTST 적합도 | 결과 |
-|---------|---------------|------|
-| Weather, Traffic, Electricity, ILI, ETTm1, ETTm2 | **★ 강함** | 4/4 horizons best |
-| ETTh1, ETTh2 | **약함** | DLinear 와 격차 작음 |
-
-→ **PatchTST 의 sweet spot**: 고차원 multivariate + 강한 cycle + many samples.
-→ **약점**: 단순 cycle dataset (ETT h1/h2) — Linear baseline 으로도 충분.
-
-자세한 분석은 ch10.
-
----
-
-## ★ Dataset 별 deep 특성 + PatchTST 적합도 매트릭스
-
-paper 가 명시 안 한 분석. 본 deep dive 의 정리.
-
-### 8 dataset 의 정확한 통계 (Table 1 + Appendix Table 2)
-
-| Dataset | M (변수) | Length | Frequency | Sample 수 |
-|---------|---------|--------|----------|----------|
-| Weather | 21 | - | 10 분 | 52,696 |
-| Traffic | 862 | - | 1 시간 | 17,544 |
-| Electricity | 321 | - | 1 시간 | 26,304 |
-| ILI | 7 | - | 1 주 | 966 |
-| ETTh1 | 7 | - | 1 시간 | 17,420 |
-| ETTh2 | 7 | - | 1 시간 | 17,420 |
-| ETTm1 | 7 | - | 15 분 | 69,680 |
-| ETTm2 | 7 | - | 15 분 | 69,680 |
-
-### Dataset 별 깊은 특성
-
-#### Weather (21 기상 변수, 10 분 단위)
-- **특성**: 강한 daily/seasonal cycle + 가끔 storm event.
-- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best, 37% reduction vs FED).
-- **이유**: 21 변수의 multi-scale pattern + longer L (PatchTST 의 강점).
-
-#### Traffic (862 도로 점유율, 시간당)
-- **특성**: 강한 시간·요일 cycle + 출퇴근 peak.
-- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best, 38% reduction).
-- **이유**: 862 변수의 spatial-temporal pattern + 22× speedup 가 가능 (Table 1).
-- **★ 특별**: Patching 의 가장 큰 computational benefit dataset.
-
-#### Electricity (321 가구, 시간당)
-- **특성**: 강한 일/주/연 cycle + 가구 다양성.
-- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best).
-- **이유**: 321 변수의 channel-independence 가 결정적 (Fig 7, ch18).
-
-#### ILI (7 인플루엔자 환자, 주별)
-- **특성**: Few-shot setting (966 weeks ≈ 18년).
-- **PatchTST 적합도**: ★ **매우 강함** (4/4 horizons best, **72% reduction vs Informer**).
-- **이유**: Few-shot 에서도 channel-independence + patching 이 효과적 → **foundation model 방향 시사**.
-
-#### ETTm1 (변압기, 15분)
-- **특성**: 강한 일·계절 cycle, 15분 sub-hourly 변동.
-- **PatchTST 적합도**: ★ **강함** (4/4 horizons best).
-- **이유**: 69K samples + sub-hourly variation 으로 PatchTST 작동.
-
-#### ETTm2 (변압기 v2, 15분)
-- **특성**: ETTm1 와 유사.
-- **PatchTST 적합도**: **우수** (3/4 horizons best).
-- **이유**: PatchTST/42 가 일부 horizons 에서 더 좋음.
-
-#### ETTh1 (변압기, 시간) — **★ PatchTST 약점 dataset**
-- **특성**: 단순 일/계절 cycle, sub-hourly 변동 없음, 적은 samples (17K).
-- **PatchTST 적합도**: **약함** — DLinear 와 격차 작음.
-- **이유**: 단순 cycle 만 있는 dataset 에는 Linear model 도 충분. PatchTST 의 복잡함이 noise.
-
-#### ETTh2 (변압기 v2, 시간) — **★ PatchTST 약점 dataset**
-- **특성**: ETTh1 와 유사한 단순 cycle.
-- **PatchTST 적합도**: **약함** (PatchTST/42 가 일부 horizons best, /64 는 약함).
-- **이유**: ETTh1 와 같음.
-
-### ★ Dataset 별 종합 매트릭스
-
-| Dataset | M | Sample 수 | Complexity | PatchTST 적합도 | Best in 4 horizons |
-|---------|----|----------|----|--------------|----------|
-| Weather | 21 | 52,696 | High | ★★★ | **4/4** |
-| Traffic | 862 | 17,544 | **Very High** | ★★★ | **4/4** |
-| Electricity | 321 | 26,304 | High | ★★★ | **4/4** |
-| ILI | 7 | 966 | Medium (few-shot) | ★★★ | **4/4** |
-| ETTm1 | 7 | 69,680 | Medium | ★★ | **4/4** |
-| ETTm2 | 7 | 69,680 | Medium | ★★ | 3/4 |
-| ETTh1 | 7 | 17,420 | **Low (단순 cycle)** | ★ | **4/4 (격차 작음)** |
-| ETTh2 | 7 | 17,420 | **Low** | ★ | 2/4 |
-| **합계** | - | - | - | - | **29/32 (91%)** |
-
-→ **★ 일반 원칙**: **PatchTST 는 complex dataset 에서 빛난다**. 단순 cycle (ETTh1/h2) 에서는 Linear baseline (DLinear) 도 경쟁력.
-
-→ **응용 시사**: 새 dataset 적용 전에 **distribution complexity 분석** 필요. Multi-modal/high-variance/many-channel 이면 PatchTST 선택, 단순 cycle 이면 DLinear 부터 시도.
+> **"8 datasets (다양한 domain) + 7 baseline (전통 + Transformer + Linear) = *광범위 검증*. PatchTST 가 *거의 모든 cell 에서 best*."**
 
 ---
 
@@ -339,25 +199,15 @@ paper 가 명시 안 한 분석. 본 deep dive 의 정리.
 
 ## 9.5 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **8 dataset 의 *다양성* 의의?**
 2. **DLinear 가 *가장 강한 baseline* 인 이유?**
 3. **Train/Validation/Test 분할 의 *time order* 중요성?**
-4. **PatchTST 의 sweet spot dataset 과 약점 dataset?**
-5. **4 horizon (96, 192, 336, 720) 평가의 의미와 trade-off?**
 
 ### 답변
-
-1. **8 dataset = 날씨 (Weather) + 교통 (Traffic) + 전력 (Electricity, ETT) + 의료 (ILI)**. M = 7 (작음, ETT) ~ 862 (큼, Traffic). 시간 단위 10분 ~ 주. **광범위한 domain 의 universality 검증** — PatchTST 가 특정 분야만 잘 되는 게 아니라 모든 도메인에서 best. **categorization**: (i) 고차원 multivariate: Traffic (862), Electricity (321), Weather (21) — PatchTST 강점, (ii) 저차원 단순: ETTh1-2, ETTm1-2 (7), ILI (7) — DLinear 도 잘함. 다양성이 selection bias 회피.
-
-2. **DLinear (2023) 가 "Transformer 시계열 X" 도전 + *간단한 linear 모델 로 Informer/Autoformer/FEDformer 능가***. 즉 *가장 강한 baseline* — *복잡한 Transformer 변형* 보다도. PatchTST 가 *DLinear 도 능가* 함으로써 *진짜 universal SOTA* 증명. **DLinear 의 강점**: (i) 단순함 = generalization, (ii) Decomposition (trend + seasonal) 명시적, (iii) 작은 dataset 에 robust. **PatchTST 가 능가하는 영역**: 고차원 + 강한 cycle (Traffic, Electricity). **DLinear 와 비슷한 영역**: 저차원 단순 (ETTh1-2).
-
-3. **Time series 에서는 *future data 가 train 에 포함되면 안 됨* — data leakage**. 따라서 분할은 *시간 순서대로*: train (처음 70%) → validation (다음 10%) → test (마지막 20%). **일반 random shuffle 분할은 cheating** — 미래 정보 활용. 본 논문이 purely time-ordered 분할 사용 → 실증 결과 trustworthy. **Look-ahead bias 회피**: (i) Feature engineering 도 train 데이터만 사용, (ii) Normalization 통계도 train 만, (iii) Hyperparameter tuning 도 validation 만. **금융 시계열에서 특히 critical**: future 정보 누출 시 backtest 결과 완전 부정확.
-
-4. **Sweet spot**: Weather (M=21), Traffic (M=862), Electricity (M=321), ETTm1/m2 (분 단위, longer L 효과 ↑), ILI — PatchTST 의 4 horizons 모두 best. **약점**: ETTh1, ETTh2 — DLinear 와 격차 작음. **이유 분석**: PatchTST 의 강점인 (i) Channel-Indep (M ↑ 에서 sample 효율), (ii) Patching (longer L 에서 효과), (iii) Self-attention (multi-scale 패턴) — 모두 **고차원 + 다양한 cycle dataset 에서 발현**. 저차원 단순 cycle (ETTh) 은 linear 모델로 충분 → PatchTST 의 복잡도 이점 ↓.
-
-5. **4 horizon**: 96 (1일 = 24시간 × 4 = 96 patches if hourly), 192 (2일), 336 (3.5일), 720 (1주). **의미**: (i) **Short-term (96)**: 단기 trading 또는 운영 결정, (ii) **Mid-term (192-336)**: 일주일 단위 plan, (iii) **Long-term (720)**: 전략적 결정. **Trade-off**: 호라이즌 ↑ 면 정확도 ↓ (당연), 그러나 PatchTST 의 longer L 덕분에 720 같은 긴 호라이즌에서도 robust. **PatchTST vs baseline**: 720 horizon 에서 가장 큰 격차 — patching 의 장기 정보 활용 효과. **실무 함의**: 다른 horizon 별로 다른 모델 선택 가능 — short term 은 linear, long term 은 PatchTST.
+1. **8 dataset = 날씨 (Weather) + 교통 (Traffic) + 전력 (Electricity, ETT) + 의료 (ILI)**. M = 7 (작음, ETT) ~ 862 (큼, Traffic). 시간 단위 10분 ~ 주. *광범위한 domain 의 universality* 검증 — *PatchTST 가 특정 분야만 잘 되는 게 아니라 *모든 도메인* 에서 best*.
+2. **DLinear (2023) 가 "Transformer 시계열 X" 도전 + *간단한 linear 모델 로 Informer/Autoformer/FEDformer 능가***. 즉 *가장 강한 baseline* — *복잡한 Transformer 변형* 보다도. PatchTST 가 *DLinear 도 능가* 함으로써 *진짜 universal SOTA* 증명.
+3. **Time series 에서는 *future data 가 train 에 포함되면 안 됨* — data leakage**. 따라서 분할은 *시간 순서대로*: train (처음 70%) → validation (다음 10%) → test (마지막 20%). 일반 random shuffle 분할은 *cheating* — *미래 정보 활용*. 본 논문이 *purely time-ordered* 분할 사용 → *실증 결과 trustworthy*.
 
 ---
 

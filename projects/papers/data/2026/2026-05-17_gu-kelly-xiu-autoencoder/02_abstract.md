@@ -1,14 +1,5 @@
 # 02. 제목과 Abstract 풀어 읽기
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 논문 제목 ("Autoencoder Asset Pricing Models") 의 정확한 의미
-- 저자 3인 (Gu·Kelly·Xiu) 의 학계 위치
-- Abstract 7 문장 의 정확한 한국어 + 풀이
-- 본 논문의 4가지 핵심 발견 (Total R²·Predictive R²·Sharpe·α 모두 우위)
-
----
-
 ## 2.1 제목 — "Autoencoder Asset Pricing Models"
 
 한국어: **"오토인코더 자산가격결정 모델"**
@@ -46,8 +37,6 @@
 
 **의역**: "새 잠재요인 조건부 자산가격결정 모델을 제안한다."
 
-🌱 **일상 비유**: "새로운 학생 약점 진단법을 제안" — 약점이 학생 신상에 따라 달라지는 (조건부) + 약점 자체는 관측 못 함 (잠재).
-
 **풀이**:
 - **잠재요인** (latent factor): 데이터에서 추론하는 관측 안 되는 요인
 - **조건부** (conditional): 노출도 β가 시간에 따라 변함 (특성 z 의 함수)
@@ -58,16 +47,12 @@
 
 **의역**: "KPS (2019) 처럼 잠재요인과 노출도가 covariates (자산 특성) 에 의존하게 한다."
 
-🌱 **일상 비유**: "약점이 학생 신상 (학습시간·성격·과외 여부 등) 에 따라 달라진다" — KPS 의 핵심 아이디어를 그대로 받음.
-
 **풀이**: KPS = Kelly, Pruitt, Su 2019, RFS — **Instrumented PCA (IPCA)**. 본 논문의 직접 선조.
 
 ### 셋째 문장
 > **원문**: "But, unlike the linearity assumption of KPS, we model factor exposures as a flexible nonlinear function of covariates."
 
 **의역**: "그러나 KPS 의 선형성 가정과 달리, 노출도를 covariates 의 **유연한 비선형 함수**로 모델링한다."
-
-🌱 **일상 비유**: "약점 = 0.3×학습시간 + 0.2×성격" 같은 선형 진단 → "**학습시간과 야간형의 곱**" 같은 상호작용까지 잡는 신경망 진단으로 업그레이드.
 
 **풀이**:
 - **핵심 차이점**: KPS 는 $\beta(z) = z'\Gamma$ 선형. 본 논문은 $\beta(z) = \text{NN}(z)$ 비선형.
@@ -77,8 +62,6 @@
 > **원문**: "Our model retrofits the workhorse unsupervised dimension reduction device from the machine learning literature — autoencoder neural networks — to incorporate information from covariates along with returns themselves."
 
 **의역**: "ML 분야의 표준 비지도 차원축소 도구인 **오토인코더 신경망** 을 가져와 covariates 와 수익률 자체의 정보를 함께 활용하도록 변형한다."
-
-🌱 **일상 비유**: "AI 가 책 한 권을 요약했다가 다시 복원하는 도구 (autoencoder)" 를 자산가격에 갖다 씀. 단순히 가져온 게 아니라 **신상 정보 (covariates) 도 입력으로** 받게 개조.
 
 **풀이**:
 - **Autoencoder** = ML 의 표준 비지도 차원축소
@@ -90,8 +73,6 @@
 
 **의역**: "이로써 **비선형 조건부 노출도** 와 그에 따른 **잠재요인** 의 추정값을 얻는다."
 
-🌱 **일상 비유**: "최종 결과는 ① 학생별 약점 진단 (noninear, conditional) + ② 시험별 난이도 (잠재요인). 두 가지를 동시에 학습".
-
 **풀이**:
 - 출력 1: $\beta_{i,t-1}(z_{i,t-1})$ — 주식 $i$ 의 시점 $t-1$ 특성을 noninear NN 으로 처리한 노출도
 - 출력 2: $f_t$ — 시점 $t$ 의 K 개 잠재요인 (수익률의 선형결합)
@@ -101,8 +82,6 @@
 
 **의역**: "더해서, 우리 ML 프레임워크는 **무차익거래** 경제적 제약을 부과한다."
 
-🌱 **일상 비유**: "AI 가 마음대로 예측 못 함. '학생 점수는 약점 × 난이도 로만 결정' 이라는 자산가격 절대 규칙을 모델 구조에 박았다".
-
 **풀이**:
 - ML 모델이 보통 빠뜨리는 economic discipline. 본 모델은 r = β'f + u 구조로 **α (절편) 없음**.
 - → α = 0 가 강제됨. 모든 기대수익은 위험노출 × 위험프리미엄으로만 설명.
@@ -111,8 +90,6 @@
 > **원문**: "Our autoencoder asset pricing model delivers out-of-sample pricing errors that are far smaller (and generally insignificant) compared to other leading factor models."
 
 **의역**: "우리 모델은 다른 주요 요인모델 대비 **훨씬 작고 (대개 통계적으로 무의미한) OOS 가격결정오차**를 산출한다."
-
-🌱 **일상 비유**: "학습 안 한 기간 (1987-2016, 30년) 에 시험을 봤더니 — 우리 모델이 못 설명하는 부분이 다른 모델보다 5 배 적다 (FF5 37 → CA2 **8** out of 95)".
 
 **풀이**:
 - **OOS = out-of-sample** (학습 안 한 기간)
@@ -178,21 +155,6 @@ KPS (IPCA, 2019)              본 논문 (CA, 2021)
 3. **Sharpe ratio 1.53 vs FF -0.53 의 의미?**
 
 ### 답변
-
-1. **본 논문의 핵심 차별점 한 문장**:
-   - IPCA 의 선형 매핑 $\beta(z) = z'\Gamma$ 를 신경망으로 **비선형 일반화**, 단 **β-network 만 비선형** (f-network 는 모든 CA0~CA3 에서 단일 선형층, $L_f = 1$).
-   - 형태 $r = \beta'f + u$ (절편 없음) 유지 → no-arbitrage 보존.
-   - 결과: ML 의 표현력 + 자산가격이론의 제약 두 가지 동시 만족.
-
-2. **No-arbitrage 가 모델 구조에서 강제되는 메커니즘**:
-   - 모델 식 $r = \beta'f + u$ 에 **절편 (α) 가 명시적으로 없음**.
-   - 결과: 학습된 β, f 가 어떤 형태든 모든 기대수익 $E[r] = E[\beta'f]$ 가 강제됨.
-   - α = 0 이 자동 충족 = no-arbitrage 정확한 정의.
-   - **paper Fig. 3 의 실증 검증**: 95 managed portfolios 중 $|t(\alpha)| > 3$ 개수가 FF5 = **37** → CA2 = **8** (78% 감소). 잔존 α 도 < 7 bps/월로 economically small.
-
-3. **Sharpe ratio 1.53 vs FF -0.53 의 의미**:
-   - **계산법**: 같은 60 년 OOS 데이터에서 long-short decile 포트폴리오 수익률을 위험 (변동성) 으로 정규화. 연환산.
-   - **FF VW = -0.53**: Fama-French 6-factor 모델로 만든 portfolio 가 **30 년 동안 음수 Sharpe** = 손실. 거래비용 빼면 더 나쁨.
-   - **CA2 VW = 1.53**: CA2 로 만든 portfolio 가 위험 1 단위당 1.53 단위 초과수익 = 헤지펀드 업계 기준 "매우 우수" (SR > 1).
-   - **갭의 의미**: 같은 데이터·같은 universe 에서 -0.53 → 1.53 (Δ = 2.06). 단순 모델 차이로 어마어마한 운용 가치 차이.
-   - **EW 도 비슷**: FF EW = -0.21 vs CA2 EW = 2.63 — equal weight 에서는 더 큰 격차.
+1. IPCA 의 선형 β(z) = z'Γ 를 신경망으로 비선형 일반화 (β-net 만 비선형, f-net 은 모든 CA 에서 단일 선형층). 단 r = β'f + u 형태 유지 (no-arbitrage 보존).
+2. 모델에 절편 (α) 없음. r = β'f 만 두면 모든 수익이 위험 보상으로만 설명됨. → no-arbitrage 자동 충족.
+3. 같은 60년 OOS 데이터에서 long-short decile 포트폴리오 수익률을 위험으로 정규화. FF VW=−0.53 (FF 로 만든 portfolio 가 손실), CA2 VW=1.53 (CA2 로 만든 portfolio 가 위험 한 단위당 1.53 단위 초과수익). 헤지펀드 업계 기준 SR > 1 = "매우 우수".

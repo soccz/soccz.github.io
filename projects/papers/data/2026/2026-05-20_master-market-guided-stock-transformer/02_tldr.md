@@ -1,26 +1,5 @@
 # 02_tldr — 3층 TL;DR
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 paper 의 3 층 TL;DR (초등 / 학부 / 전문가)
-- 1 줄·1 문단·3 문단 요약 점진적 깊이
-
----
-
-### 🌱 3층 TL;DR — 일상 비유
-
-**한 줄로**: "주식 가격 예측에 시간 가로지른 종목 관계 + 시장 분위기 게이팅. CSI300 SOTA + 47% portfolio 개선".
-
-| 수준 | 누구를 위해 | 핵심 메시지 |
-|------|-----------|-----------|
-| 🧒 초등 | 일반인 | "삼성전자 3일 전 → SK하이닉스 오늘 예측 가능" |
-| 🎓 학부 | CS/Finance 학생 | "5단계 파이프라인 (게이팅 → Intra → Inter → Temporal → Pred)" |
-| 🔬 전문가 | 연구자 | "3 contributions: cross-time relay + market gating + intra/inter 분해" |
-
-### 🔑 핵심 통찰
-
-> 본 논문의 강점은 **single innovation 이 아닌 두 묘수의 결합**. Cross-time relay (Intra → Inter 순서) + Market gating (158 팩터 동적 가중치). 이 둘이 곱하기 효과로 +13% statistical, +47% portfolio 개선.
-
 ---
 
 ## 🧒 초등학생 수준

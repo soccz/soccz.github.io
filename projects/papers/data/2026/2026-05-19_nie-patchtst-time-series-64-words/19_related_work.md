@@ -1,28 +1,6 @@
 # 19. Related Work — 본 논문이 인용하는 모든 prior 작품
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문이 인용하는 모든 prior 작품 (Transformer / Autoformer / DLinear / ViT / BERT)
-- 학계 lineage — NLP 의 patching → 시계열 적용
-- 본 논문의 학문적 위치
-
----
-
 > Paper Section 2 의 *모든 인용 작품* 의 brief description + 본 논문과의 관계.
-
-### 🌱 PatchTST 의 학술 lineage — 일상 비유
-
-PatchTST 가 인용하는 30+ prior paper 의 3 cluster:
-
-| Cluster | 대표 paper | PatchTST 관계 |
-|---------|----------|--------------|
-| **Patch 활용 (NLP/CV)** | ViT (2021), BERT (2018), Swin (2021) | Patching idea 의 origin |
-| **시계열 Transformer baseline** | Informer, Autoformer, FEDformer, Pyraformer, LogTrans | 비교 대상 + 정신적 반박 |
-| **Representation learning** | TS2Vec, BTSF, TNC, TS-TCC vs PatchTST self-supervised | Contrastive vs Reconstruction |
-
-### 🔑 핵심 통찰
-
-> PatchTST 의 학문적 가치는 **30+ prior paper 의 통합 + paradigm 전환**. ViT (CV) + BERT (NLP) + Informer (시계열) → 시계열에 vanilla Transformer 의 가치 입증.
 
 ---
 

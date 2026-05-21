@@ -1,13 +1,5 @@
 # 14. References 풀이 — paper 가 인용하는 70+ 작품
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문이 인용하는 70+ 작품
-- 자산가격 + ML + RMT 의 3 lineage
-- 본 논문의 학문적 위치
-
----
-
 > Paper p.501-503 의 모든 references 의 *brief description* + 본 논문과의 관계. 클러스터별로 정리.
 
 ---

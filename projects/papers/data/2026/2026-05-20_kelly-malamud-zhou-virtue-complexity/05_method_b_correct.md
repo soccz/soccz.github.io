@@ -1,43 +1,6 @@
 # 05b. *이상적 환경* 의 결과 — 그림으로 이해
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 이상적 환경 (well-specified) 에서의 결과
-- Lemma 1, Proposition 1 의 의미
-- Infeasible SR < 1/√3 의 의미
-
----
-
 > 본 챕터는 본 논문의 *Propositions 3, 4* (correctly specified model 의 결과) 를 *그래프 위주* 로 무지식자 친화로. *Figures 1, 2, 3* 의 친근 풀이.
-
-### 🌱 Correctly Specified — 일상 비유
-
-**한 줄로**: "학자의 모델이 진짜 자연 법칙과 정확히 일치하는 이상적 경우 → 그래도 c=1 근처에서 catastrophe 발생 + R² 음수에도 SR 양수라는 놀라운 결과".
-
-| 상황 | 비유 |
-|------|------|
-| **Correctly specified** | 학자가 "키 = 유전 + 영양 + 잡음" 라는 자연 법칙을 알고, 그대로 모델링 |
-| **Misspecified** | 학자가 일부 요인만 알고 (유전만 사용), 영양 무시 |
-| **본 챕터** | Correctly specified — 이상적이지만 분석 baseline |
-
-**왜 이상적인 경우도 분석?**: (i) Misspecified 경우와 비교 baseline, (ii) c=1 catastrophe 가 specification 무관하게 발생함 입증, (iii) R² vs SR 분리의 깔끔한 사례.
-
-### 🔣 핵심 기호 4-단 풀이
-
-| 기호 | 의미 | 범위 |
-|------|------|------|
-| **c** = P/T | 모델 복잡도 (변수/데이터 비율) | $[0, \infty)$ |
-| **z** | Ridge regularization 강도 | $[0, \infty)$, 0 = ridgeless |
-| **R²** | Out-of-sample 예측 정확도 | $(-\infty, 1]$ |
-| **E** | Expected return (timing 전략 기대 수익) | $\mathbb{R}$ |
-| **Vol** | Volatility (변동성, std) | $[0, \infty)$ |
-| **SR = E/Vol** | Sharpe ratio | $\mathbb{R}$ |
-| **빨간 점선** | Infeasible (신의) 값 | "신만 도달 가능한 상한" |
-
-**6개 색 코드** (모든 figure 공통):
-- 검정 (z≈0, ridgeless), 노랑 (z=0.01), 빨강 (z=0.1), 보라 (z=1), 하늘색 (z=10), 연두 (z=50)
-
-→ 색이 진할수록 ridge ↑, 안정장치 ↑.
 
 ---
 
@@ -110,28 +73,6 @@
 
 같은 *학생 10명 + 1000 과목 변수* (c=100) — *변수 훨씬 많지만* ridgeless 의 *smallest norm* 성질로 *부드러운 모델* 만듦 → OOS 회복.
 
-### 📖 Figure 1 (R² vs c) 정밀 읽는 법
-
-**무엇이 표시되나**:
-- **2 panel**: Left = R² vs c, Right = $\|\hat\beta\|$ norm vs c
-- **6 색 곡선**: ridgeless (검정), z=0.01 (노랑), z=0.1 (빨강), z=1 (보라), z=10 (하늘), z=50 (연두)
-- **빨간 수평 점선**: Infeasible upper bound (= 0.167, 신의 R²)
-
-**5 단계 분석**:
-1. **c=0 근처**: 모든 선이 빨간 점선 근처 → 데이터 무한 → 신과 같음
-2. **c < 1 범위**: 검정 선이 점차 떨어짐, ridge 선들은 안정 유지
-3. **★ c = 1 근처**: 검정 선이 수직 하강 (catastrophe), y축 -0.3 아래로 사라짐 (실제 -∞)
-4. **c > 1 회복**: 검정 선이 다시 올라옴 → benign overfit 시작
-5. **c → ∞**: 모든 선이 0 근처 → 충분히 큰 c 에서 모델 약간 손실
-
-**Right panel 의 핵심**:
-- 검정 선이 c=1 에서 6까지 spike → 계수 폭발 (= R² catastrophe 의 직접 원인)
-- ridge 선들은 spike 완화 (안정장치 효과)
-
-**숨은 함정**:
-- c=1 catastrophe 의 -∞ 는 그래프엔 -0.3 까지만 보임 → 실제는 더 큰 발산
-- "z = 50 이 가장 안정" 처럼 보이지만 R² 너무 낮아 (over-shrink)
-
 ### 핵심 패턴 2 — Ridge 의 효과
 
 **z > 0 의 선들**: 모두 *catastrophe 완화*.
@@ -190,30 +131,6 @@
 - $R^2(z; c) = (2 \mathcal{E} - \mathcal{L}) / (1 + b_* \psi_{*,1})$
 
 → 위 식 *외워야 할 필요 없음*. 핵심은 **모든 quantity 가 $m(-z; c)$ 하나로 derived** — Proposition 2 의 *마법* 의 구체화.
-
-### 🔣 Proposition 3 식 4-단 풀이
-
-| 기호 | 의미 | 직관 |
-|------|------|------|
-| $\nu(z; c)$ | 기대 수익 의 building block | "신호 강도 component" |
-| $\hat\nu(z; c)$ | leverage 의 building block | "추정 계수 크기 component" |
-| $\nu'(z; c)$ | $\nu$ 의 미분 (음수) | "분산 component" |
-| $\mathcal{E}(z; c) = b_* \nu$ | Expected return | $b_*$ scale × signal |
-| $\mathcal{L}(z; c) = b_* \hat\nu - c \nu'$ | Loss / 비용 | bias + variance |
-| $R^2(z; c) = (2\mathcal{E} - \mathcal{L}) / (1 + b_* \psi_{*,1})$ | OOS R² | 신호 vs 잡음 비율 |
-
-**모든 식의 공통점**: $\nu, \hat\nu, \nu'$ 가 모두 **$m(-z; c)$ 함수** → Proposition 2 의 마법 의 직접 응용.
-
-### 🎯 구체 증거 — 최적 z 의 explicit form
-
-> **$z_*(c) = c / b_*$** (Proposition 3 의 결론)
-
-**의미**:
-- c=10 (변수 10배), $b_*=0.2$ → $z_* = 50$
-- c=100, $b_*=0.2$ → $z_* = 500$
-- 변수 ↑ → 안정장치 ↑ 비례
-
-**실증 확인**: 본 논문 실증의 최적 $z_* \approx 1000$ → c ≈ 200, $b_* \approx 0.2$ 추정.
 
 ### Optimal shrinkage z* 의 존재
 
@@ -280,30 +197,6 @@ c = 1 부근에서 *모든* 선의 SR 가 최소 (그러나 양수 유지).
 z = 1 같은 *moderate ridge* 선이 *모든 c* 에서 ridgeless 보다 *위에 있음*.
 
 → *Ridgeless 양수 SR 양수* 인데 *Ridge 가 항상 더 좋다*. 본 논문의 권장: *moderate ridge 사용*.
-
----
-
-### 📖 Figure 3 (Sharpe ratio) 정밀 읽는 법
-
-**무엇이 표시되나**:
-- **단일 panel**: x축 = c, y축 = Sharpe ratio
-- **6 색 곡선** + **빨간 수평 점선** (infeasible ≈ 0.354)
-
-**5 단계 분석**:
-1. **c=0 근처**: 모든 선이 빨간 점선 근처 (infeasible 수준)
-2. **c = 0.1-0.7**: 검정 (ridgeless) 점차 감소 (0.35 → 0.20)
-3. **★ c = 0.8-1.2**: 모든 선 최저점, 검정 ≈ 0.02 (거의 0이지만 **양수 유지**)
-4. **c = 1.5-3**: 모든 선 회복 (검정 ≈ 0.05 stabilize)
-5. **c = 5-10**: 모든 선 0.04-0.10 범위 stabilize
-
-**3 핵심 발견**:
-- **모든 c 에서 SR > 0** (놀라운 결과)
-- **c=1 dip but 양수** (망하진 않음)
-- **Ridge z=1 이 ridgeless 보다 모든 c 에서 우월**
-
-**숨은 함정**:
-- "모든 c 에서 SR > 0" 는 R² 가 음수임에도 성립 → **R² vs SR 의 분리** 가 본 논문 핵심 메시지
-- y축 scale 작음 (0-0.4) → 작은 변화도 의미 큼
 
 ---
 
@@ -418,25 +311,15 @@ Campbell-Thompson 의 mapping: "R² > 0 이면 양의 timing return".
 
 ## 5b.11 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **Figure 1 의 R² 의 c=1 catastrophe 와 c>1 회복의 이유?**
 2. **Figure 3 의 가장 놀라운 발견?**
 3. **R² ≠ Sharpe ratio 의 의미?**
-4. **Proposition 3 의 식이 모두 m(-z;c) 의 함수인 이유?**
-5. **최적 z* = c/b* 의 직관적 의미와 실증의 z*=1000?**
 
 ### 답변
-
-1. **C = 1 catastrophe**: 변수 ≈ 데이터 에서 OLS 의 *역행렬 singularity* → 계수 폭발 → forecast 폭발 → R² → -∞. 수학적으로 $(X^\top X)^{-1}$ 가 정의 불가능 (matrix 거의 singular). **c > 1 회복**: ridgeless 의 *smallest-norm solution* 성질이 *implicit regularization* 으로 작동 — 변수가 많을수록 *더 작은 norm* 해 선택 가능 (Moore-Penrose pseudo-inverse 의 minimum norm property) → forecast variance 감소 → R² 회복. 이게 **benign overfit** (통계학 2019-2022 wave 의 핵심 발견).
-
-2. **Ridgeless 가 *모든 c* 에서 SR > 0**. 즉 통상 통계 직관 ("변수 > 데이터 → overfit → 망함") 과 정반대. Ridgeless 라도 *implicit regularization* 덕분에 *양의 Sharpe ratio 향상* 보장. C = 1 dip 도 *작아질 뿐 양수 유지*. **추가 발견**: 모든 z > 0 곡선이 ridgeless 위 → 항상 ridge 사용 권장. C → ∞ 에서도 SR > 0 유지 → 극단적 high-complexity 도 timing 가치 있음.
-
-3. **R²** 는 forecast 의 *variance 정합* (통계 metric, Pearson 상관 제곱). **Sharpe ratio** 는 *trading 성능* (경제 metric, return/risk). Correctly specified case 에서는 *대체로 align* (Proposition 4 의 우연으로 둘 다 같은 $z^*$), but 일반 case 에서 *분리*. Implication: *R² 가 -100% 이하 임에도 SR > 0 가능* — 예측이 절대값으론 망해도 **방향성**만 맞으면 timing 으로 돈 벌 수 있음. Campbell-Thompson (2008) 의 R² → SR mapping 은 *c = 0 special case*; 일반 c > 0 case 에선 **invalid**. *Finance 분야의 evaluation paradigm 전환*.
-
-4. **Proposition 2 의 마법의 직접 응용**: Proposition 2 가 "모든 portfolio limit = $m(-z;c)$ 의 함수" 입증 → Proposition 3 가 구체적으로 $\nu, \hat\nu, \nu'$ 세 trace 함수로 표현하고 이들이 $m(-z;c)$ 의 미분·적분 변환. $\mathcal{E} = b_* \nu$, $\mathcal{L} = b_* \hat\nu - c\nu'$, $R^2 = (2\mathcal{E} - \mathcal{L})/(1 + b_* \psi_{*,1})$. **장점**: (i) Closed-form 분석 가능, (ii) 데이터에서 직접 계산 ($m$ 만 알면), (iii) Analytical bounds 도출 가능. 본 논문 elegance 의 핵심.
-
-5. **$z_* = c / b_*$ 의 직관**: 변수 $c$ 가 많을수록 안정장치 $z_*$ 강함 (비례). 신호 $b_*$ 가 강할수록 안정장치 약함 (반비례). **본 논문 calibration**: $b_*=0.2$, c=12 (실증) → $z_* = 60$ but 실증 sweep 결과 $z_* \approx 1000$ 이 최적 → 실제 c 가 더 클 가능성 (P=12,000, T=1140 면 c ≈ 10.5 이지만 effective 더 클 수도). **실무 의미**: cross-validation 으로 $z_*$ 찾되, 정확한 값에 둔감 (Proposition 4 footnote) — robust.
+1. **C = 1 catastrophe**: 변수 ≈ 데이터 에서 OLS 의 *역행렬 singularity* → 계수 폭발 → forecast 폭발 → R² → -∞. **c > 1 회복**: ridgeless 의 *smallest-norm solution* 성질이 *implicit regularization* 으로 작동 — 변수가 많을수록 *더 작은 norm* 해 선택 가능 → forecast variance 감소 → R² 회복. 이게 *benign overfit*.
+2. **Ridgeless 가 *모든 c* 에서 SR > 0**. 즉 통상 통계 직관 ("변수 > 데이터 → overfit → 망함") 과 정반대. Ridgeless 라도 *implicit regularization* 덕분에 *양의 Sharpe ratio 향상* 보장. C = 1 dip 도 *작아질 뿐 양수 유지*.
+3. **R²** 는 forecast 의 *variance 정합* (통계 metric). **Sharpe ratio** 는 *trading 성능* (경제 metric). Correctly specified case 에서는 *대체로 align* (Proposition 4 의 우연), but 일반 case 에서 *분리*. Implication: *R² 가 -100% 이하 임에도 SR > 0 가능*. Campbell-Thompson (2008) 의 R² → SR mapping 은 *c = 0 special case*; 일반 case 에선 invalid. *Finance 분야의 evaluation paradigm 전환*.
 
 ---
 

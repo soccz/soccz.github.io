@@ -1,13 +1,5 @@
 # 12. Conclusion — Section IV
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문의 4 conclusions
-- Theory 와 ML 의 통합 — "이론 > ML flexibility"
-- 본 논문 이후의 학계 방향
-
----
-
 > Section IV (paper p.45–46) — 본 논문의 4가지 결론 + 후속 연구 함의.
 
 ## 12.1 챕터 한 줄 요약
@@ -165,44 +157,3 @@ IPCA factor 와 GAN SDF 결합 — paper Section III.J 가 시작.
 1. **결론 4** — "Asset pricing is actually surprisingly 'linear'" 가 가장 surprising. 통념 (그리고 본 논문 의 motivation): "복잡한 비선형 필요". 실제 발견: **개별 특성** 의 SDF 효과는 거의 linear. 비선형은 **특성 간 interaction** 에서. 이는 linear FF model 의 60년 성공을 설명하면서 동시에 비선형의 정확한 위치 (multi-dim) 를 지정.
 2. paper 본문: GAN > EN > FFN > LS. 즉 **EN (linear + no-arb) > FFN (nonlinear + no-no-arb)**. 단순 ML "데이터 던지면 deep network 가 답 줘" approach 가 linear 의 이론 제약 모델 보다 못함. **Domain knowledge (no-arbitrage) + ML technique 둘 다** 필요. ML 만 으로는 자산가격결정 안 됨.
 3. **새 benchmark test asset**. β-sorted GAN portfolio 와 GAN SDF portfolio 자체. 향후 새 자산가격결정 모델은 single-char anomaly 만 설명해서는 안 되고, **GAN portfolio 도 설명** 해야 함. 본 논문 자체가 "explaining portfolios sorted on a single characteristic is not a high hurdle to pass" 라고 명시. 학계의 새 standard.
-
----
-
-## 12.8 paper Section IV 의 정확한 한 단락 정리
-
-paper Section IV (Conclusion) 의 문장 구조:
-
-### 단락 1: Architecture 설명
-"We propose a new way to estimate asset pricing models... combine three different deep neural network structures in a novel way: A feedforward network to capture non-linearities, a recurrent (LSTM) network to find a small set of economic state processes, and a generative adversarial network to identify the portfolio strategies with the most unexplained pricing information. Our crucial innovation is the use of the no-arbitrage condition as part of the neural network algorithm."
-
-### 단락 2: 4 primary conclusions
-"Our primary conclusions are four-fold. First, we demonstrate the potential of machine learning methods in asset pricing. ... Second, we show and quantify the importance of including a no-arbitrage condition... Third, financial data have a time dimension... Fourth, asset pricing is actually surprisingly 'linear'."
-
-### 단락 3: 실용적 contribution
-"Our results have direct practical benefits for asset pricing researchers... we provide a new set of benchmark test assets... we provide a set of macroeconomic time series of hidden states... our model is directly valuable for investors and portfolio managers."
-
-### 단락 4: Future work
-- IPCA 와 결합 시작 (Section III.J).
-- 다른 asset class.
-- Causal mechanism.
-
----
-
-## 12.9 본 paper 의 5 가지 시각으로 본 가치
-
-### 시각 1 — Asset Pricing 전공자
-"60년 factor zoo 시대의 종결자 + GAN 의 자산가격결정 적용 첫 본격적 paper. New benchmark 와 새 risk dimension 제공."
-
-### 시각 2 — ML 전공자
-"GAN 의 새 application domain. Adversarial test asset = adversarial training 의 finance 응용. No-arbitrage loss = physics-informed NN 의 정신."
-
-### 시각 3 — Practitioner (Portfolio Manager)
-"GAN SDF portfolio 가 OOS 50년 SR 2.6 — 시장의 5배. β, ω 가 char + macro 의 함수 — short history 자산도 가능. 다만 GPU cluster 필요."
-
-### 시각 4 — Econometrician
-"GMM 의 새 일반화 (adversarial). LSTM 의 시계열 dynamic 처리. Cross-section + time series + nonlinear 통합 framework."
-
-### 시각 5 — Methodology Reviewer
-"3 NN + 1 이론 제약 의 우아한 design. 4 design dimension 각각 ablation 으로 분리 검증. Robust 한 hyperparameter, time period, sample subset 모두."
-
-→ **5 시각 모두 가치 있음** = 진짜 well-rounded paper.

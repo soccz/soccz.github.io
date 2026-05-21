@@ -1,32 +1,6 @@
 # 03. 왜 이 연구가 필요했나 — 60년 학계 역사 (영어/수식 없이)
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 자산가격결정의 **60년 학계 역사** — CAPM → Fama-French → Goyal-Welch
-- 본 논문이 깬 통념 — "수익률 예측 불가" (2008 Goyal-Welch) 의 반박
-- ML 도구 (ridge + RFF) 가 학계 통념 무너뜨림
-
----
-
 > 무지식자가 이 논문의 *맥락* 을 이해할 수 있게, 1960년대부터 2024년까지의 학계 흐름을 친근하게.
-
-### 🌱 60년 학계 역사 — 일상 비유
-
-자산가격결정 학계의 60년을 학생 시험 예측 이야기로:
-
-| 시기 | 학계 사건 | 학생 시험 비유 |
-|------|----------|--------------|
-| 1960-1980 | 시장 예측 시도 시작 | "내년 시험 점수 예측 가능?" 질문 |
-| 1990-2000 | 단순 선형 회귀 표준 | "공식 5개로 예측" 시도 |
-| **2008 Goyal-Welch** | **"예측 불가능!" 충격 발표** | "공식 5개로 안 됨" 결론 → 학계 비관 |
-| 2010-2020 | ML 도구 부상 (ridge, neural net) | 새 방법론 등장 |
-| **2024 본 논문** | **수학적 증명: 변수 ↑ → 예측 가능** | "공식 5,000개로 가능" 발견 |
-
-**핵심 반전**: Goyal-Welch 의 "예측 불가" 결론은 **simple model 의 한계**. 본 논문이 같은 데이터에 ML 적용 → 정반대 결론.
-
-### 🔑 핵심 통찰
-
-> 학계가 60년 동안 "simple is best" (Occam's razor) 의 함정에 빠짐. 본 논문이 보여줌: **complexity is virtue** when paired with proper regularization (ridge).
 
 ---
 
@@ -308,25 +282,15 @@
 
 ## 3.14 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **Goyal-Welch (2008) 가 학계에 미친 영향?**
 2. **머신러닝 시대 자산가격의 *미스터리* 가 뭐였나?**
 3. **본 논문이 그 미스터리에 준 답?**
-4. **학계가 60년간 simple model 고수한 이유 — tool 부재 vs 철학?**
-5. **Occam's razor → Occam's blunder 의 패러다임 전환?**
 
 ### 답변
-
-1. **"시장 수익률 예측은 사실상 불가능"** 결론. 80년 데이터 + 15 macro 변수 → 모두 OOS R² 음수. **학계 약 14년 비관기**. 후속 연구 다 GW 의 negative finding 인용. **그러나 같은 데이터로 본 논문이 정반대 결론 (SR=0.47, t=4.5)** — 즉 GW 의 데이터 문제가 아니라 **방법론 (linear ridgeless + R² metric)** 의 한계. 이 의미: (i) 학계 통념 14년 무너뜨림, (ii) 모든 후속 negative finding 재검토 필요, (iii) finance 분야 evaluation paradigm 전환 (R² → Sharpe).
-
-2. **2018-2023 머신러닝 (변수 수천 개) 이 자산가격 예측에 empirically 잘 됨이 보였지만, 왜 잘 되는지의 이론이 없었다**. 통상 통계 직관 ("변수 > 데이터 → 과적합 → 망함") 과 정반대 결과. **이론적 black box** — AQR, Two Sigma 같은 quant 펀드가 ML 활용해서 돈 벌지만 "왜?" 답 없음. 학자들이 explanatory power 의 갭. 본 논문이 그 갭을 채움.
-
-3. **Random Matrix Theory (RMT) + ridge regression 의 Theorem 1 (Virtue of Complexity)**. Sufficiently mixed signals + 적절한 ridge shrinkage 만 만족하면 SR 가 모델 복잡도의 monotone 증가. **Benign overfit** 의 통계학 발견 (Belkin 2019 등) 을 자산가격 timing 에 처음 정리. **3 contribution**: (i) 이론 — m(-z; c) 의 단일 함수로 모든 결과, (ii) Theorem 1 — monotone increasing SR, (iii) 실증 — CRSP 1926-2020 으로 검증. 학자들이 머신러닝을 empirically 만 쓰던 시대 → 이론적 정당화의 시대로 전환.
-
-4. **표면적 이유 (철학)**: Box (1976) "All models are wrong but some are useful" + Occam's razor (parsimony 권고). **진짜 이유 (tool 부재)**: 학자들이 수천 변수의 통계를 분석할 수 있는 수학 도구 부재. **전통 통계 (1900-2000)**: T → ∞, P fixed. 변수 < 데이터 영역만. **RMT 영역 (변수 > 데이터)**: 1967 발명되었지만 finance 에 적용 안 됨. 본 논문이 처음 적용. 의의: **학문 분야의 dominant tool 은 그 분야의 수학 도구에 의해 결정된다** — Tool 이 새로 생기면 paradigm 도 변한다. Finance 의 60년 simple model 고수가 mathematical regime 의 분리 결과.
-
-5. **Box paradox**: "모든 모델은 틀렸다 → 단순함이 미덕"의 **순서가 잘못됨**. **본 논문의 답**: 모든 모델이 틀렸기 *때문에* 복잡함이 미덕. **이유**: (i) Misspecified case 에서 추가 변수 = 더 많은 진짜 정보 capture = approximation gain, (ii) Ridge 가 statistical cost 통제, (iii) 결과적으로 monotone SR 증가. **격언 갱신**: "Occam's razor may be Occam's blunder" (본 논문 표현). 학계 60년 통념의 정리. **실무 의미**: 자산운용에서 "더 복잡한 모델 + 적절한 ridge" 가 표준이 됨. AQR, Two Sigma 의 ML 전략의 이론적 backbone.
+1. **"시장 수익률 예측은 사실상 불가능"** 결론. 80년 데이터로 15 macro 변수 모두 OOS R² 음수. 학계 약 10년 비관기. **그러나 같은 데이터로 본 논문이 정반대 결론 (Sharpe 0.47)** — 즉 GW 의 데이터 문제 아니라 *방법론 (linear ridgeless + R² metric)* 의 한계였다.
+2. **2018-2023 머신러닝 (변수 수천 개) 이 자산가격 예측에 *empirically 잘 됨* 이 보였지만, *왜 잘 되는지* 의 *이론* 이 없었다**. 통상 통계 직관 ("변수 > 데이터 → 과적합 → 망함") 과 정반대 결과. *이론적 black box*.
+3. **Random Matrix Theory (RMT) + ridge regression 의 *Theorem 1 (Virtue of Complexity)***. *Sufficiently mixed signals* + *적절한 ridge shrinkage* 만 만족하면 SR 가 모델 복잡도의 monotone 증가. *Benign overfit* 의 통계학 발견을 자산가격 timing 에 *처음 정리*. 학자들이 머신러닝을 *empirically* 만 쓰던 시대 → *이론적 정당화* 의 시대로 전환.
 
 ---
 

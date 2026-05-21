@@ -1,13 +1,5 @@
 # 16 PyTorch 구현
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- PyTorch 구현 — Patching + Channel-Indep + Vanilla Transformer
-- 약 200 줄로 본 논문 핵심 재현
-- 학습 protocol (pre-train + fine-tune)
-
----
-
 PatchTST 의 핵심 컴포넌트를 PyTorch 로.
 
 ## 1. Patching — L → P × N

@@ -2,14 +2,6 @@
 
 > Section 2.2.1 (journal p.434–435) — **Proposition 2** 와 그 의의.
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- **Proposition 2** — "1층 선형 conditional autoencoder = IPCA" 의 정확한 statement
-- 이게 왜 본 논문의 **학술적 깨끗함** 의 핵심인지 (IPCA 를 죽이지 않고 자기 모델 안에 포함)
-- CA0 와 IPCA 의 **수학적 동치 + 실증적 미세 차이** 가 어디서 오는지
-
----
-
 ## 5C.1 챕터 한 줄 요약
 
 조건부 오토인코더 (CA) 의 **β 네트워크와 f 네트워크를 둘 다 1-layer 선형 (활성화 없음)** 으로 만들면, 그 모델은 **KPS (2019) 의 IPCA 추정량과 정확히 동일**해진다. 따라서 IPCA 는 CA 의 **선형 특수 케이스 = CA0** 이다.
@@ -26,19 +18,13 @@ $$
 \min_{\Gamma, F} \; \sum_{t=1}^{T} \big\| r_t - Z_{t-1}\, \Gamma'\, f_t \big\|^2 \tag{17}
 $$
 
-### 🔣 식이 말하는 것 한 줄
-
-"모든 시점과 자산에 걸쳐, 실제 수익률과 모델 예측 (특성 × Γ × 요인) 의 오차 제곱합을 최소화" — 표준 least squares 의 conditional 버전.
-
-### 🔣 4-단 기호 풀이
-
-| 기호 | 한국어 | 일상 비유 | 조심할 점 |
-|------|--------|-----------|-----------|
-| $r_t$ | 시점 $t$ 의 N 개 주식 수익률 ($N \times 1$) | "오늘 모든 학생의 점수표" | 매월 6,200 개 정도 |
-| $Z_{t-1}$ | 주식별 특성 행렬 ($N \times P$) | "모든 학생의 신상카드 모음" | 94 특성 |
-| $\Gamma$ | 특성→요인 매핑 ($K \times P$ in proof) | "신상→약점" 전체 환산표 | **추정 대상**, 시간 불변 |
-| $f_t$ | 잠재요인 ($K \times 1$) | "오늘의 시험별 난이도" | **추정 대상**, 매월 다름 |
-| $Z_{t-1}\Gamma'$ | 베타 행렬 ($N \times K$) | "오늘 모든 학생의 약점 5 항" | 두 추정 대상의 곱 |
+| 기호 | 의미 | 차원 |
+|------|------|------|
+| $r_t$ | 시점 $t$ 의 N개 주식 수익률 | $N \times 1$ |
+| $Z_{t-1}$ | 주식별 특성 행렬 ($i$ 행이 $z_{i,t-1}'$) | $N \times P$ |
+| $\Gamma$ | 특성→요인 매핑 행렬 (시간 불변) | $K \times P$ (paper Appendix A convention) |
+| $f_t$ | 잠재요인 | $K \times 1$ |
+| $Z_{t-1} \Gamma'$ | 베타 행렬: $\beta_i = \Gamma\, z_{i,t-1}$ | $N \times K$ |
 
 **해석**: 각 주식 $i$ 의 노출도는 $\beta_{i,t-1} = \Gamma\, z_{i,t-1}$ — **특성 $z$ 에 $\Gamma$ 를 적용한 선형 함수**. 그 노출도와 시점별 요인 $f_t$ 의 내적이 기대수익률.
 
@@ -68,19 +54,6 @@ $$
 \min_{W_0, W_1} \; \sum_{t=1}^{T} \big\| r_t - Z_{t-1}\, W_0'\, W_1\, x_t \big\|^2 \tag{18}
 $$
 
-### 🔣 식이 말하는 것 한 줄
-
-IPCA Eq. 17 과 같은 손실인데, **$f_t$ 가 직접 추정 대상이 아니라 $W_1 x_t$ 로 자동 계산**됨. $x_t$ 는 관측 가능 (managed portfolio), $W_1$ 는 학습 가중치.
-
-### 🔣 4-단 기호 풀이
-
-| 기호 | 한국어 | 일상 비유 | 조심할 점 |
-|------|--------|-----------|-----------|
-| $W_0$ | β-network 가중치 ($K \times P$) | "신상→약점" 환산 신경망 가중치 | KPS 의 $\Gamma'$ 와 **같은 역할** |
-| $W_1$ | f-network 가중치 ($K \times P$) | "관측 가능 portfolio → 잠재 요인" 변환 | 단일 선형 (CA0~CA3 모두 동일) |
-| $x_t$ | managed portfolio ($P \times 1$) | "특성으로 만든 94 개 mini-펀드의 오늘 수익" | 데이터로 계산 (Eq 16) |
-| $W_0' W_1$ | 두 가중치의 곱 | "약점 환산 × 요인 변환" 합성기 | **β 와 f 가 곱으로 결합되는 부분** |
-
 **구조 비교**:
 
 ```
@@ -105,22 +78,7 @@ CA0 (Eq. 18):     r_t ≈ Z_{t-1} · W_0' · W_1 · x_t
 paper 본문 추가 (412–413):
 > "In the general case where $Z'_t Z_t$ is non-constant, the two estimators are similar but no longer equivalent (as we can see from the proof). We find that the empirical performance of (17) and (18) is similar in our data."
 
-### 📖 무지식자용 — Prop 2 가 결국 뭘 말하는가
-
-**한 줄로**: "1층 선형 conditional autoencoder = IPCA — 즉 두 모델은 사실 같은 일을 하는 다른 표기".
-
-**가정 ($Z'Z$ 가 상수)** 이 뭐길래 이렇게 중요한가?
-- 의미: 특성 행렬을 자기 자신과 곱한 결과 ($Z'_t Z_t$) 가 매월 똑같음.
-- 일상 비유: "**매월 학생 신상의 '평균적 분포' 가 같음**" — 학생 인구의 통계적 성질이 시간 따라 안 변함.
-- 실제로는: 매월 cross-sectional rank normalization 으로 특성을 $[-1, 1]$ 균등 분포 → $Z'Z$ 가 거의 일정 → 가정 거의 만족 → 두 추정량 거의 동일.
-
-**왜 이게 본 논문의 핵심?**
-- "신경망은 black box, 기존 모델과 단절" 비판에 대한 답:
-- "우리 모델의 **가장 단순한 케이스 = 학계 표준 IPCA**" → 본 논문은 IPCA 의 **자연스러운 일반화**.
-- CA0 = IPCA (학계 익숙) → CA1 (1층 NN) → CA2 (2층) → CA3 (3층) 의 **연속체**.
-- 데이터가 비선형이면 → CA1+ 가 IPCA 보다 잘함. 선형이면 → CA0 ≈ IPCA.
-
-**한국어 statement**: $Z_{t-1}'Z_{t-1}$ 이 시점에 따라 변하지 않는 (시간 불변) 가정 하에서 (18) 의 해 = (17) 의 해. 일반적 경우 두 추정량은 "유사하지만 동일하지 않음".
+**한국어**: $Z_{t-1}'Z_{t-1}$ 이 시점에 따라 변하지 않는 (시간 불변) 가정 하에서 (18) 의 해 = (17) 의 해. 일반적 경우 두 추정량은 "유사하지만 동일하지 않음".
 
 ### Why "회전을 제외하고" 인가?
 
@@ -252,23 +210,6 @@ CA0 (선형) → CA1 (1-layer NN) → CA2 (2-layer NN) → CA3 (3-layer NN) 이 
 3. CA0 와 IPCA 의 OOS 차이가 작을 것으로 예상되는 이유는?
 
 ### 답변
-
-1. **Proposition 2 의 정확한 주장**:
-   - **주장**: β-network 와 f-network 를 모두 1-layer 선형 (활성화 없음, hidden 0) 으로 두면 (=CA0), 그 추정량은 IPCA 의 추정량과 **회전을 제외하고 동일**.
-   - **가정**: $Z_{t-1}'Z_{t-1} = \Sigma$ — 즉 특성 행렬의 자기곱이 **시점에 따라 변하지 않음** (시간 불변).
-   - **증명 도구**: FOC 로 변수 제거 (IPCA 는 $f_t$, CA0 는 $W_1$) → reduced objective 가 동일 → 같은 최적해.
-   - **실증적 의미**: $Z'Z$ 가 매월 rank normalize 로 거의 상수 → 실제로도 CA0 ≈ IPCA (paper Table 1 의 K=6 에서 IPCA 14.5 vs CA0 12.4 미세 차이).
-   - **함의**: CA0 = IPCA → CA1+ 가 IPCA 의 **자연스러운 비선형 확장**임을 수학적으로 보장.
-
-2. **"회전 동치" 의 의미**:
-   - 요인 모델 $r = \beta'f$ 는 임의의 가역 행렬 $A$ 에 대해 $\beta \to \beta A^{-1}$, $f \to A f$ 로 회전해도 **같은 적합값** ($r$) 을 줌:
-     $$r = \beta' f = (\beta A^{-1})' (A f) = \beta' f$$
-   - 따라서 잠재요인 추정량은 **회전 동치류 (equivalence class)** 안에서만 유일.
-   - 일상 비유: "북동 방향 5km" 와 "회전한 좌표계의 동쪽 5km" — 같은 점, 다른 표현.
-   - **해결**: KPS 는 $\Gamma'\Gamma = I_K$ + $FF'$ 대각 + $F\bar\iota \geq 0$ 의 3 조건 부과 → unique 식별 (paper footnote 11).
-
-3. **CA0 와 IPCA 의 OOS 차이가 작은 이유**:
-   - (a) **함수형 동일**: 둘 다 $\beta = \Gamma' z$ 선형 매핑. Proposition 2 보장.
-   - (b) **데이터 처리 거의 동일**: 매월 rank normalize 로 $Z'Z \approx \Sigma$ 상수 → Prop 2 가정 거의 만족.
-   - (c) **차이의 원천 — regularization 만**: CA0 는 SGD + LASSO + early stopping + ensemble, IPCA 는 ALS 없이.
-   - 실증 결과 (paper Table 1, K=6): IPCA Total R² 14.5 vs CA0 12.4 → **2.1% 갭만**. 이게 regularization 효과 + finite-sample SGD 차이.
+1. β 네트워크와 f 네트워크를 모두 선형 1-layer 로 두면 (즉 CA0), CA 의 추정량은 IPCA 의 추정량과 회전을 제외하고 동일. 가정: $Z_{t-1}'Z_{t-1}$ 시간 불변.
+2. 요인모델 $r = \beta'f$ 는 임의 가역행렬 $A$ 로 $\beta \to \beta A^{-1}$, $f \to A f$ 회전해도 같은 적합치를 가짐. 따라서 모든 잠재요인 추정량은 회전 동치류 안에서 유일.
+3. 함수형 (선형) 이 같고, 실제 데이터에서 $Z'Z$ 가 cross-sectional rank normalization 으로 거의 상수에 가까움. 차이는 regularization (LASSO, ensemble) 에서만 발생.

@@ -1,60 +1,12 @@
 # 01. 시작하기 전에 — 진짜 쉬운 한 줄 소개
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문이 한 문장으로 뭘 하는지 ("시계열을 64 단어로 → vanilla Transformer")
-- 미리 알아둘 7 개 개념 (Transformer / ViT patching / Channel-indep / Masked Autoencoder 등)
-- DLinear 의 도전과 본 논문의 응답
-- 본 deep dive 의 약속
-
----
-
 > 영어 못 읽거나 수식 두려운 사람을 위한 entry. 여기를 읽으면 *PatchTST 가 뭔지* + *왜 중요한지* 가 한국어 + 일상 비유로 명확해집니다.
-
-### 🌱 이 논문 — 일상 비유 (가장 쉽게)
-
-**한 줄로**: "ChatGPT 의 부품 (Transformer) + 두 단순 trick (patching + channel-indep) → 시계열 SOTA. ViT 의 시계열 버전".
-
-| 비유 | 본 논문 |
-|------|--------|
-| 책 한 권 (336 페이지) | 시계열 (336 timesteps) |
-| 한 글자씩 읽기 (RNN/old) | 매 timestep 처리 |
-| **단어 단위 읽기 (16 페이지)** | **Patching (16 timesteps)** |
-| ChatGPT 의 attention | Vanilla Transformer 그대로 |
-| 한 모델로 326 가구 따로 | Channel-Independence |
-| BERT 의 빈칸 학습 | Masked patch reconstruction |
-
-### 🔣 7 개 핵심 개념 4-단 풀이
-
-| 개념 | 한 줄 설명 |
-|------|----------|
-| **Transformer** | Attention 기반 신경망 (2017 Vaswani) |
-| **ViT (Vision Transformer)** | 이미지를 16x16 patch 로 → NLP Transformer 직접 적용 |
-| **Patching** | 시계열을 작은 조각 (patch) 으로 자름 |
-| **Channel-Independence (CI)** | M 개 channel 을 각각 따로 처리 + 같은 weight |
-| **Self-supervised** | 정답 없는 데이터로 학습 (BERT 스타일) |
-| **Masked patch reconstruction** | 40% patch 가리고 모델이 예측 |
-| **CRPS / MSE** | 예측 정확도 metric |
-
-### 🔑 핵심 통찰
-
-> PatchTST 의 핵심 = **paradigm transfer** (ViT → 시계열). 분야 specific 변형 가정 전에 general tool (vanilla Transformer) 의 직접 적용 시도. 시계열 분야의 60% over-engineering 함정 회피.
 
 ---
 
 ## 이 논문, 한 줄로 뭐예요?
 
 > **"긴 시계열 (몇 년치 일별 데이터 같은 것) 의 미래를 예측할 때, *Transformer (GPT 같은 모델)* 에 *두 가지 단순한 trick* 만 더하면 *최고 성능* 이 된다는 걸 증명한 논문."**
-
----
-
-## ★ 한 마디로 — 이 paper 의 정신적 모델
-
-> **"ViT 가 이미지를 16×16 patch 로 보고 NLP Transformer 그대로 적용한 것처럼, 시계열을 16-step patch 로 보면 vanilla Transformer 가 그대로 잘 작동한다"**.
-
-**제목의 의미** = "**A Time Series is Worth 64 Words**" → "**한 시계열 (L=512) 은 64 단어 (patches) 의 가치**". ViT 의 "An Image is Worth 16×16 Words" 의 시계열 버전.
-
-→ 이 한 마디가 paper 의 모든 motivation. 자세한 진화는 ch03 의 lineage 참조.
 
 ---
 
@@ -222,25 +174,15 @@ ChatGPT 의 학습 방식과 *같은 원리*.
 
 ## 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **이 논문 한 줄 요약?**
 2. **"Patching" 의 일상 비유?**
 3. **"Channel-independence" 의 의미?**
-4. **본 논문이 거절한 시계열 specific 변형들과 그 의미?**
-5. **시계열 foundation model 시대의 출발점 의의?**
 
 ### 답변
-
-1. **"Vanilla Transformer + 두 단순 trick (patching, channel-indep) = 시계열 SOTA"** 임을 증명한 논문. DLinear (2022) 의 *"Transformer 시계열 X"* 도전에 정면 반박. 21% MSE reduction vs 기존 Transformer 변형 (FEDformer, Autoformer, Informer). 후속 시계열 foundation model (iTransformer, Chronos, TimesFM 등) 의 building block. **ICLR 2023, 1,500+ citation (2024.05)** — 시계열 ML 의 paradigm capstone.
-
-2. **긴 시계열 (336 시간) 을 *16 시간 짜리 작은 조각* 으로 자르고 *조각 하나하나* 를 *문장의 한 단어* 처럼 다룸**. ViT (2020) 의 *16x16 image patching* 의 시계열 버전. 책 한 권을 글자 단위 (timestep) vs 단어 단위 (patch) 로 읽는 비유. 효과: (i) attention 복잡도 22× 감소 (token 수 ↓), (ii) longer look-back 가능 (L=720), (iii) local pattern (trend, periodicity) 보존 — 한 patch 안에 의미 있는 구조 유지.
-
-3. **M 개 변수 (예: 326 전력 가구) 가 있을 때 *각 변수를 독립적으로* Transformer 통과 + *모두 같은 weight* 공유**. *Cross-channel mixing 없음*. 의사가 환자의 *심박, 혈압, 체온 각각 따로* 보는 것과 같음. 효과: (i) overfitting 방지 (parameter 수 M 무관), (ii) cross-channel spurious correlation 회피, (iii) sample efficiency × M (각 channel = 학습 sample), (iv) 병렬화 쉬움. **Ablation 으로 main contributor 입증** (25% MSE reduction 단독, vs patching 3%).
-
-4. **거절한 변형들**: Informer 의 ProbSparse self-attention, Autoformer 의 Auto-correlation + Series Decomposition, FEDformer 의 Fourier-enhanced attention. **거절 이유**: (i) Patching + CI 의 representation 변경만으로 충분, (ii) Vanilla self-attention 이 이미 local + periodic 패턴 학습 (Fig 6), (iii) Simpler is better — 가정 적을수록 generalization ↑. **메시지**: "**시계열 분야에서 architectural innovation (변형 attention) 보다 representation innovation (patching, CI) 이 더 중요**" — 시계열 분야 over-engineering 의 5년 반박.
-
-5. **시계열의 BERT moment** (2023). NLP 의 BERT (2018) 가 NLP foundation model 시대 시작한 것처럼, PatchTST 의 self-supervised 가 **시계열 foundation model 시대 시작**. 후속: Chronos (Amazon 2024), TimesFM (Google 2024), Moirai (Salesforce 2024) — 모두 PatchTST 의 patching + self-supervised pre-training 위에 build. **5-10년 영향**: Supervised result (21% MSE) = incremental SOTA, Self-supervised = paradigm shift. **분야 reset 의 catalyst** — ViT (2020) 의 CV 분야, BERT (2018) 의 NLP 분야 와 비슷한 영향.
+1. **"Vanilla Transformer + 두 단순 trick (patching, channel-indep) = 시계열 SOTA"** 임을 증명한 논문. DLinear (2022) 의 *"Transformer 시계열 X"* 도전에 정면 반박. 21% MSE reduction vs 기존 Transformer 변형 (FEDformer, Autoformer, Informer). 후속 시계열 foundation model (iTransformer, Chronos, TimesFM 등) 의 building block.
+2. **긴 시계열 (336 시간) 을 *16 시간 짜리 작은 조각* 으로 자르고 *조각 하나하나* 를 *문장의 한 단어* 처럼 다룸**. ViT (2020) 의 *16x16 image patching* 의 시계열 버전. 효과: (i) attention 복잡도 22× 감소, (ii) longer look-back 가능, (iii) local pattern (trend, periodicity) 보존.
+3. **M 개 변수 (예: 326 전력 가구) 가 있을 때 *각 변수를 독립적으로* Transformer 통과 + *모두 같은 weight* 공유**. *Cross-channel mixing 없음*. 의사가 환자의 *심박, 혈압, 체온 각각 따로* 보는 것과 같음. 효과: (i) overfitting 방지, (ii) cross-channel spurious correlation 회피, (iii) channel 간 *완전 독립 forward* 로 병렬화 쉬움.
 
 ---
 

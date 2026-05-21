@@ -1,14 +1,5 @@
 # 04. Patching — 시계열을 토큰으로
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- Patching 의 정확한 메커니즘 — L → P × N 분해, padding
-- Eq 1 (patch projection) 의 의미
-- ViT 의 16x16 patching 정신을 시계열에
-- Patching 의 3 이점 (정보 압축·complexity ↓·long L 가능)
-
----
-
 > 본 논문의 *첫 trick*. 긴 시계열을 *작은 조각 (patch)* 로 자르고 *조각 하나하나* 를 *한 단어* 처럼.
 
 ---
@@ -16,19 +7,6 @@
 ## 4.1 챕터 한 줄 요약
 
 > **"긴 시계열 (336 시간) → 16 시간 짜리 작은 조각 42개. 조각 하나 = Transformer 의 한 token. ViT (이미지 16x16 patch) 의 시계열 버전. 효과: attention 22× 빠름 + longer history + local pattern 보존."**
-
----
-
-## ★ Patching 의 4 가지 동시 이득
-
-| 이득 | 정량 | 어디 입증되는가 |
-|------|------|---------------|
-| **Attention 복잡도 감소** | $O(L^2) \to O((L/S)^2)$, S=8 → **64× 감소** | 본 chapter |
-| **실측 학습 속도 (Traffic)** | **22× speedup** (10040초 → 464초) | ch03 Table 1 |
-| **Longer L 가능** | L=336 → 512 → 720 까지 | ch10 Fig 2 |
-| **Local pattern 보존** | 한 patch 안의 시간 정보 한 token 으로 | 본 chapter |
-
-→ Patching 의 진짜 가치는 **하나의 trick 으로 4가지 동시 해결**.
 
 ---
 
@@ -186,33 +164,13 @@ Patching 후 각 patch 를 *Transformer 가 이해하는 token* 으로 변환.
 
 **Figure 4 (paper p.15)**: Patch length $P \in \{2, 4, 8, 12, 16, 24, 32, 40\}$ 의 MSE 비교.
 
-### 📖 Figure 4 (Patch length P sensitivity) 정밀 읽는 법
+### 어떻게 읽나? (Figure 4)
 
-**무엇이 표시되나**:
-- **단일 panel** (or 여러 dataset)
-- **X축**: Patch length $P$ ∈ {2, 4, 8, 12, 16, 24, 32, 40} (대수 스케일 가능)
-- **Y축**: MSE (forecasting error)
-- **곡선**: 다양한 dataset (Weather, Traffic, ETT 등)
+**Step 1 — Setup**: $L = 336$, prediction $= 96$.
 
-**4 단계 분석**:
-1. **곡선의 모양 확인**: 평탄한가? U자 형태인가? → 평탄하면 robust, U자면 민감
-2. **P=16 의 위치**: 곡선의 최저점 또는 평탄 영역? → 논문 default 가 합리적인지 확인
-3. **P=2 (가장 작음)**: token 수 ↑ (계산 ↑) but 정보 분산 → 보통 약간 나쁨
-4. **P=40 (가장 큼)**: token 수 ↓ (계산 ↓) but 정보 응축 ↑ → 보통 약간 나쁨
+**Step 2 — 발견**: MSE 가 *P 의 정확한 값에 둔감*. 즉 *P = 4 부터 P = 40 까지* 거의 *비슷한 성능*.
 
-**핵심 발견**:
-- MSE 가 P 의 정확한 값에 **둔감** (P=4 부터 P=40 까지 거의 비슷)
-- **P=16 의 선택은 robust** — 정확한 P 값 튜닝 불필요
-- 다른 dataset 에서도 같은 패턴 → universal robustness
-
-**숨은 함정**:
-- "P=16 권장" 이지만 dataset 별로 약간 다를 수 있음 → 실무에선 빠른 sweep 권장
-- 매우 짧은 시계열 (L=96) 에선 P=4 가 더 적합할 수 있음
-- 매우 긴 시계열 (L=720) 에선 P=24 도 가능
-
-### 🔑 핵심 통찰
-
-> Figure 4 의 발견 (P robustness) 가 **PatchTST 실무 배포의 핵심**. 다른 시계열 transformer 모델 (Informer, FEDformer) 은 hyperparameter sensitive — PatchTST 는 robust. 운영 부담 ↓.
+**Step 3 — 의미**: *P = 16 의 선택은 robust*. *정확한 P 값 튜닝 불필요*.
 
 ```viz:pat-fig4-patch-length:title=Fig 4 — Patch length P 의 effect (interactive),caption=P=2-40 sweep. MSE 가 P 에 둔감. P=16 의 robust 선택 정량.
 ```
@@ -221,25 +179,15 @@ Patching 후 각 patch 를 *Transformer 가 이해하는 token* 으로 변환.
 
 ## 4.9 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **Patching 의 일상 비유?**
 2. **"PatchTST/42" 의 42 의 의미?**
 3. **Patching 의 3가지 이점?**
-4. **Overlap (S<P) vs Non-overlap (S=P) 의 선택 기준?**
-5. **Patching 의 robustness — 왜 P 값에 둔감한가?**
 
 ### 답변
-
-1. **긴 책 (336 페이지) 을 *한 단어 (16 페이지) 씩* 읽는 것**. 한 글자씩 (1 timestep) 이 아니라 *단어 단위* (16 timestep patch) 로. ViT (image 16x16 patching) 의 시계열 버전. 음악 *마디* 단위로 듣는 것과 같음. **NLP 와의 유사성**: BERT, GPT 가 word/subword 단위, PatchTST 가 patch 단위 — 같은 패러다임. **CV 와의 유사성**: ViT (2020) 가 image 를 16x16 patch 로 나눠 transformer 적용. PatchTST 가 시계열에 그대로 transfer.
-
-2. **시계열을 *42개 patch* 로 자른 setting**. $L = 336, P = 16, S = 8$ → $N = \lfloor (336-16)/8 \rfloor + 2 = 42$. PatchTST/**64** 는 $L = 512$ 의 setting → $N = 64$. **논문 제목 "A Time Series is Worth 64 Words" 의 64 = 64 patch**. **이름의 의미**: 모델 size 가 아니라 **token 수** 표기 — NLP 의 transformer 분류 (BERT-base, GPT-3.5 등) 와 다른 표기 convention.
-
-3. **(1) Attention 22× 빠름**: token 수 $L = 336$ → $N = 42$ → attention 복잡도 $O(L^2) \to O(N^2)$ = $112,896 \to 1,764$, 이론 64× 효율, 실측 22× (Traffic). **(2) Longer history**: 같은 compute 로 $L = 336$ 또는 512 가능 (vs no patching 의 96 만). $L$ 늘릴수록 MSE 감소 (Table 1: 0.518 → 0.397, 23% 향상). **(3) Local pattern 보존**: 한 patch 안에 *trend, periodicity, spike* 통째로 — semantic unit. RNN/CNN 의 step-by-step 처리는 이 패턴 분산.
-
-4. **Overlap ($S < P$, supervised default)**: P=16, S=8 → 인접 patch 50% 겹침. **장점**: 정보 유실 ↓, 경계 패턴 보존. **단점**: 토큰 수 ↑ → 계산 약간 ↑. **Non-overlap ($S = P$, self-supervised default)**: P=12, S=12 → 정확히 인접, 겹침 X. **장점**: Mask 한 patch 가 다른 patch 와 정보 공유 X → 학습 목표 명확 (BERT masked language modeling 처럼). **선택 기준**: Supervised forecasting → overlap (정보 보존), Masked pre-training → non-overlap (학습 신호 명확).
-
-5. **Figure 4 의 발견**: P ∈ {2, 4, 8, 12, 16, 24, 32, 40} sweep → MSE 가 P 값에 **거의 둔감**. P=4 부터 P=40 까지 비슷한 성능. **이유**: (i) Attention 이 patch 내부 정보를 자동으로 결합 → P 의 정확한 크기보다 attention 패턴이 더 중요, (ii) Linear projection 이 다양한 P 에 robust 한 representation 학습, (iii) 시계열의 시간 patterns 가 multiple 시간 척도에 존재 — 어느 P 선택해도 일부 패턴 capture. **실무 의미**: P=16 권장 but 정확한 튜닝 불필요 — robust 한 hyperparameter.
+1. **긴 책 (336 페이지) 을 *한 단어 (16 페이지) 씩* 읽는 것**. 한 글자씩 (1 timestep) 이 아니라 *단어 단위* (16 timestep patch) 로. ViT (image 16x16 patching) 의 시계열 버전. 음악 *마디* 단위로 듣는 것과 같음.
+2. **시계열을 *42개 patch* 로 자른 setting**. $L = 336, P = 16, S = 8$ → $N = (336-16)/8 + 2 = 42$. PatchTST/**64** 는 $L = 512$ 의 setting → $N = 64$. 논문 제목 *"A Time Series is Worth 64 Words"* 의 *64 = 64 patch*.
+3. **(1) Attention 22× 빠름**: token 수 $L = 336$ → $N = 42$ → attention 복잡도 $O(N^2)$ 만. **(2) Longer history**: 같은 compute 로 $L = 336$ 또는 512 가능 (vs no patching 의 96 만). $L$ 늘릴수록 MSE 감소 (Table 1: 0.518 → 0.397). **(3) Local pattern 보존**: 한 patch 안에 *trend, periodicity* 통째로 — semantic unit.
 
 ---
 

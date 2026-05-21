@@ -1,47 +1,6 @@
 # 07. 실제 미국 시장 1926-2020 — 가장 흥미로운 챕터
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- **★ CRSP 1926-2020** 실증 — 가장 흥미로운 챕터
-- Goyal-Welch 15 predictor + RFF P=12,000
-- **Table I**: Linear ridgeless SR=-0.11 vs Nonlinear ML SR=0.47
-- 14/15 NBER recessions 자동 divest
-
----
-
 > 본 논문이 *이론* 으로 보인 것을 *실제 데이터* 로 검증. CRSP 1926-2020 + Goyal-Welch 15 변수 + 머신러닝 → SR 0.47/year, 14/15 NBER 침체 자동 비중 감소.
-
-### 🌱 실증 결과 — 일상 비유
-
-**한 줄로**: "94년간 미국 시장 데이터 + 15개 기본 변수 + ML (12,000 변수로 확장) → 시장 buy-and-hold 대비 큰 폭 향상".
-
-| 비유 | 본 논문 |
-|------|--------|
-| 가르치는 책 (= 학자의 모델) | Goyal-Welch 15 변수 (기본) |
-| 책 + 보충 자료 5,000개 (= RFF) | 12,000 변수로 확장 |
-| 학생 시험 점수 (= 학자의 timing) | Sharpe ratio 0.47/year |
-| 학생이 위험 회피 (= 침체 자동 감지) | 14/15 NBER 침체 자동 비중 감소 |
-| Baseline 학생 (= 단순 모델) | SR = -0.11 (시장보다 나쁨) |
-
-**핵심 반전**: Goyal-Welch 2008 의 같은 데이터·같은 변수로 **정반대 결론**. ML 의 힘.
-
-### 🔣 핵심 기호 4-단 풀이
-
-| 기호 | 의미 | 수치 |
-|------|------|------|
-| 데이터 기간 | 분석 기간 | 1926-07 ~ 2020, 약 94년 |
-| 15 변수 | Goyal-Welch standard | dfy, infl, svar, ... |
-| **P = 12,000** | RFF 확장된 변수 수 | T (=1140) 대비 약 10배 |
-| **c = P/T** | empirical complexity | ≈ 10 |
-| **SR** | Sharpe ratio (timing 전략) | 0.47 (vs benchmark -0.11) |
-| **t-stat** | 통계적 유의성 | 4.5 (p < 0.001) |
-| **MDD** | 최대 낙폭 | 1.2 std (vs 98.5 std for simple) |
-| **NBER recession** | 미국 공식 침체 기간 | 1926-2020 중 15회 |
-| **자동 감지** | timing 전략이 침체 시 비중 감소 | **14/15** (93%) |
-
-### 🔑 핵심 통찰
-
-> 본 챕터의 실증 결과는 [[05_method_c_misspec]] 의 Theorem 1 의 **현실 입증**. 이론과 실증의 "extraordinary agreement" (저자 표현). 학계의 60년 통념 ("예측 불가") 의 결정적 반박.
 
 ---
 
@@ -135,33 +94,6 @@ RFF + 선형 회귀 = **wide neural network with random fixed weights**.
 
 ---
 
-### 🔣 RFF 4-단 풀이
-
-| 기호 | 의미 | 차원 |
-|------|------|------|
-| $G_t \in \mathbb{R}^{15}$ | 원본 macro 변수 (15차원) | $(15,)$ |
-| $\omega_i \sim \mathcal{N}(0, I)$ | Random projection direction (15차원) | $(15,)$ |
-| $\gamma$ | Bandwidth parameter (Gaussian kernel) | scalar (논문: γ=2) |
-| $\omega_i' G_t$ | scalar 내적 | scalar |
-| $S_{i,t} = [\sin(\gamma \omega_i' G_t), \cos(\gamma \omega_i' G_t)]$ | 2개의 새 변수 (한 random direction 당) | $(2,)$ |
-| $i = 1, \ldots, P/2$ (P=12,000) | 6,000개 다른 random ω | total 12,000 변수 |
-
-**왜 sin/cos 둘 다**: 위상 정보 보존. cos 만 쓰면 phase 0 vs π 구분 X.
-
-**왜 random + fixed**: 학습 안 함 (frozen). 학습은 ridge regression 의 계수만.
-
-### 🎯 구체 증거 — RFF 의 universal approximation
-
-**Rahimi-Recht 2007 정리**: P → ∞ 일 때 RFF + linear regression 은 **any smooth nonlinear function** 을 arbitrarily well 근사.
-
-본 논문: P = 12,000 (finite but large) → universal approximation 의 finite case → 강력한 표현력.
-
-### 🔑 핵심 통찰
-
-> RFF = **wide neural network with frozen random first layer + learnable ridge final layer**. 비선형 NN 의 효과를 **선형 회귀처럼 분석 가능** → 본 논문 RMT 분석이 RFF 와 결합되는 묘수.
-
----
-
 ## 7.4 머신러닝 timing — *순서* — **Section V.C**
 
 **각주 38 (γ 값 선택)**: $\gamma = 2$. 본 논문 결과는 $\gamma$ 에 대체로 *insensitive* — Section V.F 의 robustness check.
@@ -236,28 +168,7 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 
 **핵심**: 이론 (Figures 1, 4) 의 *모든 패턴* 이 실증에서 확인.
 
-### 📖 Figure 7 (Empirical R², norm, E, Vol) 정밀 읽는 법
-
-**무엇이 표시되나**:
-- **4 panel (2×2)**: Panel A = R², B = β norm, C = E[return], D = Vol
-- **X축**: c (with break) — 저복잡도 + 고복잡도 동시 표시
-- **이론 vs 실증 검증**: Figures 1, 2, 4 의 패턴을 실증에서 재현
-
-**핵심 발견**:
-- Panel A: c=1 catastrophe + c>1 회복 ← Figure 1 의 실증 검증
-- Panel B: c=1 norm spike ← Figure 1 right panel
-- Panel C: c<1 거의 0 → c=1 peak → c>1 flat ← Figure 5 의 misspec 패턴
-- Panel D: c=1 spike → 회복 ← Figure 2 right panel
-
-→ **"Extraordinary agreement"** — 저자 표현. 이론과 실증의 일치.
-
-### 🔑 핵심 통찰
-
-> Figure 7 은 **이론 (Figures 1-2) 의 실증 입증**. 가상 데이터 시뮬이 아닌 **CRSP 1926-2020 의 진짜 데이터** 에서 이론 패턴 재현 → 본 논문 결과의 robustness 증명.
-
----
-
-## 7.6 Figure 8 — 실증 결과 2 (★ 가장 중요)
+### Figure 7 panels (T=12) — 상세
 
 ---
 
@@ -266,34 +177,6 @@ RFF 가 *random* 이므로 *random seed* 마다 다른 결과. 본 논문이 **1
 ![Figure 8](figures/page33_Fig8_empirical_sharpe.png)
 
 *paper p.491 Figure 8 — T=12 의 Sharpe / α / IR / t-stat.*
-
-### 📖 처음 보는 사람을 위한 — Fig. 8 읽는 법 (★ 본 논문 핵심)
-
-**한 줄로**: "**복잡도 c 가 늘수록 4 metric 모두 향상** — Virtue of Complexity 의 시각적 입증".
-
-**그림 구조 (2×2 panel)**:
-
-| panel | metric | y-range | 의미 |
-|------|--------|---------|------|
-| **A (좌상)** | Sharpe Ratio | 0~0.5 | "위험 1 단위당 보상" — 가장 중요한 운용 지표 |
-| **B (우상)** | Alpha (월간) | 0~0.04 | "시장 buy-and-hold 위의 초과 수익" |
-| **C (좌하)** | Information Ratio | 0~0.35 | "α / 잔차 변동성 = risk-adjusted α" |
-| **D (우하)** | Alpha t-stat | 0~3.5 | "통계적 유의성" (t>2 유의, t>3 robust) |
-
-**X-axis 의 특별한 break**:
-- 왼쪽: c ∈ [0, 50] (저 ~ 중간 복잡도)
-- 오른쪽: c ∈ [990, 1000] (극단 복잡도)
-- → "c 가 모든 범위 에서 monotone 증가" 강조
-
-**3 개만 보면 됨**:
-1. **Panel A**: Sharpe 가 c 증가에 따라 **0 → 0.5** 로 증가. T=12 의 매우 작은 sample 에서도 SR 0.5 (= 연 ~1.7).
-2. **Panel D**: Alpha t-stat 이 **0 → 3.5** 로 증가. **모든 c 에서 통계 유의** (t>2).
-3. **모두 monotone** (Theorem 1 의 실증 입증).
-
-**한 줄 결론**:
-> "복잡함 = 미덕. P>>T 의 ridge 가 단순 모델 (Goyal-Welch) 을 완전히 능가."
-
-**원문 위치**: paper Fig. 8, journal p.491.
 
 ### 어떻게 읽나? (Step-by-step)
 
@@ -356,53 +239,6 @@ ML timing 이 *시장 buy-and-hold 위에 추가 3.6%/year alpha*. *Real economi
 
 ---
 
-### 📖 Figure 8 (Empirical SR/α/IR/t-stat) 정밀 읽는 법 — ★ 본 논문 핵심 figure
-
-**무엇이 표시되나**:
-- **4 panel (2×2)**: A=SR, B=Alpha, C=IR, D=t-stat
-- **X축 break**: [0, 50] + [990, 1000] — 저복잡도 + 극단 복잡도
-- **곡선**: 6개 z 값 (z=10⁻³ ~ 50)
-
-**5 단계 분석**:
-1. **c < 1**: 모든 metric 0 근처 → simple model 못 잡음
-2. **c = 1 근처**: ridgeless 만 작은 dip (다른 z 부드러움)
-3. **c = 5-50**: 모든 metric 급격 상승 → main growth phase
-4. **c ≈ 1000**: 최고점 + 안정 (extreme complexity 이득)
-5. **Monotone**: 모든 z 에서 SR/α/IR/t-stat 단조 증가
-
-**핵심 수치** (c ≈ 1000):
-- SR ≈ **0.40-0.47** (연 1.4-1.6 환산)
-- Alpha ≈ **0.025/월** (= 30 bps/월, 연 3.6%)
-- IR ≈ **0.31**
-- t-stat ≈ **2.5-2.9** (statistically significant, t>2)
-
-**3 핵심 발견**:
-- ★ **Monotone increasing** in c → Theorem 1 의 실증 입증
-- **통계 유의성**: t-stat > 2 → 운에 의한 결과가 아님
-- **Buy-and-hold 대비 +3.6%/year alpha** → 실무 가치 ↑
-
-**숨은 함정**:
-- T=12 small sample → variance 큼 → 신뢰구간 넓음
-- RFF 의 1,000번 평균이라 robust but seed 별 분산 존재
-- Trading cost 미반영 (실제 운용 시 일부 잠식)
-
-### 🎯 구체 증거 — t-stat 4.5 (Table I 의 정확한 수치)
-
-**자산가격결정 학계 기준**:
-- t > 2: significant
-- t > 3: robust new anomaly
-- **본 논문: t = 4.5** (T=12, Nonlinear ML, Table I) — **매우 robust**
-
-**비교**:
-- Fama-French 3-factor (1992): t ≈ 3-5 (각 factor)
-- 본 논문 ML timing: t = 4.5 — **새 anomaly 수준 강도**
-
-### 🔑 핵심 통찰
-
-> Figure 8 은 본 논문의 **smoking gun**. Theorem 1 (이론) 의 **monotone increasing in c** 를 **실증 데이터에서 4가지 metric 모두 입증**. Goyal-Welch (2008) 의 비관적 결론을 같은 데이터로 정반대 결론으로 뒤집음.
-
----
-
 ## 7.7 Figure 9 — Longer training windows (T=60, 120)
 
 **각주 41 (Position scale 차이)**: T 길수록 *position scale (leverage)* 작음 — *β norm* 이 T 큰 경우 작아져서.
@@ -411,39 +247,24 @@ ML timing 이 *시장 buy-and-hold 위에 추가 3.6%/year alpha*. *Real economi
 
 *paper p.492 Figure 9.*
 
-### 📖 Figure 9 (Longer T robustness) 정밀 읽는 법
+### 어떻게 읽나?
 
-**무엇이 표시되나**:
-- **4 panel (2 × 2 grid)**:
-  - Top row: T=60 (5년 training window) — Panel A (IR), B (alpha t-stat)
-  - Bottom row: T=120 (10년 training window) — Panel C (IR), D (alpha t-stat)
-- **X축 with break**: T=60 의 경우 c ∈ [0, 12] + [195, 200], T=120 의 경우 c ∈ [0, 12] + [95, 100]
-- **Y축**: IR (0-0.35) 또는 t-stat (0-3.5)
-- **6 색 곡선**: 다양한 z 값
+**Step 1 — 4 panel 구조**
 
-**5 단계 분석**:
-1. **모양 비슷한가?** (T=12 의 Fig 8 과 비교): YES → robust to T
-2. **Magnitude 변화**: T 길수록 IR 약간 ↓ (T=12 의 0.31 → T=60 의 0.25 → T=120 의 0.25)
-3. **t-stat 변화**: 약간 감소 but 여전히 > 2 (significant)
-4. **Monotone increasing 유지?**: YES → Theorem 1 의 모든 T 에서 성립
-5. **C max 변화**: T 길수록 P/T 작음 → c max ↓ (T=12: 1000, T=60: 200, T=120: 100)
+- *Top row (T=60)*: Panel A IR, B alpha t-stat.
+- *Bottom row (T=120)*: Panel C IR, D alpha t-stat.
 
-**핵심 발견**:
-- **결과가 T 에 robust** — 정성 패턴 모두 동일
-- Magnitude 약간 감소 (leverage 작아져서) but statistically significant 유지
-- 짧은 T (=12) 가 가장 강력 but 긴 T (=120) 도 의미 있는 결과
+**Step 2 — X-axis break**
 
-**왜 짧은 T 가 더 강력**:
-- T=12 = 매월 다시 학습 → 최신 환경 적응 ↑
-- T=120 = 10년 데이터 = 더 많은 정보 but 환경 변화 따라가기 느림
-- **trade-off**: 적응성 (짧은 T) vs 안정성 (긴 T)
+X-axis: T=60 의 경우 $c \in [0, 12] + [195, 200]$ (P/T 에서 c 최대 200). T=120 의 경우 $c \in [0, 12] + [95, 100]$.
 
-**숨은 함정**:
-- "T=12 가 best" 는 short sample 의 high variance 문제 (한 seed 의 잡음 가능성)
-- 운영 시 T=60 정도가 안정-적응 균형 권장
-- 매우 짧은 T (T=1 매일 학습) 는 noise 가 신호를 압도
+**Step 3 — 결과**
 
-**메시지**: 결과가 T 에 robust. 정성 패턴 모두 동일.
+- T = 60 (5년): 같은 monotone increasing 패턴. IR ≈ 0.25, t-stat > 2.0.
+- T = 120 (10년): 같은 패턴. IR ≈ 0.25.
+- **Magnitude 약간 감소** (vs T=12 의 IR 0.31). T 길수록 *leverage 작아져서*.
+
+**메시지**: *결과가 T 에 robust*. *정성 패턴 모두 동일*.
 
 ---
 
@@ -570,57 +391,7 @@ ML timing 의 position 이 *거의 항상 양*. 음의 position (short) 드물�
 
 ---
 
-### 📖 Figure 10 (Market timing positions) 정밀 읽는 법 — ★ 가장 흥미로운 figure
-
-**무엇이 표시되나**:
-- **시계열 그래프** (X = 시간 1930-2020, 약 90년)
-- **Y축**: $\hat\pi_t$ = ML timing 의 시장 비중 (0.1 = 10% 매수)
-- **3 색 선**: T=12 (파랑), T=60 (빨강), T=120 (주황)
-- **회색 음영**: NBER recessions (15 침체)
-
-**4 핵심 패턴**:
-1. **Long-only at heart**: 거의 항상 0 위 (양의 position). 음의 short 드물고 작음 → ML 이 constraint 없이 long-only 학습
-2. **NBER recession 직전 자동 감소**: 1929 대공황, 1973-75 오일쇼크, 1981-82 Volcker, 1990-91, 2001 닷컴, 2007-09 GFC, 2020 COVID — 모두 직전 비중 감소
-3. **14/15 침체에서 자동 divest** (1945 만 예외)
-4. **T 무관 robustness**: T=12, 60, 120 모두 비슷한 패턴
-
-**왜 이게 holy grail**:
-- NBER Business Cycle Dating Committee 자체도 침체를 **6-12개월 lag 후** dating
-- 50년 학자들이 real-time recession detection 시도 → 대부분 실패
-- ML 이 Goyal-Welch 15 변수 만으로 **purely OOS** 로 달성
-
-### 🔑 핵심 통찰
-
-> Figure 10 의 14/15 recession divest 는 **실증의 가장 강력한 evidence**. 단순히 statistical 유의성 (Figure 8) 을 넘어 **경제적으로 의미 있는 timing 신호** 임을 입증.
-
----
-
 ## 7.9 *Table I* — Goyal-Welch 2008 와의 정면 비교 ★ — **Section V.D**
-
-### 📖 처음 보는 사람을 위한 — Table I 읽는 법 (★ 본 논문 자랑 표)
-
-**이 표가 비교하는 것**: Goyal-Welch (2008) 의 비관적 결론 ("수익률 예측 불가") vs 본 논문 ML 모델. **모든 metric 에서 본 논문 압도**.
-
-**용어 풀이**:
-
-| 용어 | 의미 | 일상 비유 |
-|------|------|-----------|
-| **Linear ridgeless** | Goyal-Welch 의 단순 OLS | "공식 1 개로 답" |
-| **Nonlinear ML** | 본 논문 (RFF P=12,000 + ridge) | "복잡함의 미덕" |
-| **OOS SR** | Out-of-Sample Sharpe ratio | "한 번도 안 본 시점의 위험조정 수익" |
-| **IR** | Information Ratio (alpha / 잔차 std) | "시장 위 risk-adjusted 알파" |
-| **t-stat** | 통계적 유의성 | "t>2 유의, t>3 robust" |
-
-**3 개만 보면 됨**:
-1. **Linear ridgeless SR = -0.11** (Goyal-Welch 의 비관 정당화).
-2. **Nonlinear ML SR = 0.47** (60 percentile 압도, t=4.5).
-3. **연 50 bp ~ 연 7%** 의 운용 가치.
-
-**핵심 메시지**: **"수익률 예측 불가" 는 모델이 너무 단순했기 때문**. ML 의 P>>T 복잡도 + ridge regression 으로 정면 반박.
-
-**원문 위치**: paper Table I, journal p.480-490.
-
----
 
 **각주 43 (Goyal-Welch-Zafirov 2023 update)**: Goyal-Welch (2008) 의 update. *timing-strategy performance* 일부 다룸.
 
@@ -763,25 +534,6 @@ Linear ridge (SR 0.46) → Nonlinear ML (SR 0.47) — 약간 추가.
 
 ---
 
-### 🎯 Table I 의 정확한 수치 (T=12 panel A)
-
-| Model | OOS R² (%) | OOS SR | Alpha (월%) | IR | t-stat | Max Loss (SD) | Skewness |
-|-------|------------|--------|-------------|-----|--------|---------------|----------|
-| **Linear ridgeless** (GW 2008) | -98 | **-0.11** | -0.1 | -0.05 | -0.4 | **98.5** | -0.9 |
-| **Linear + ridge** (z=10³) | 0.5 | 0.46 | 0.022 | 0.30 | 2.7 | 2.4 | -0.1 |
-| **★ Nonlinear ML** (RFF) | 0.6 | **0.47** | 0.025 | 0.31 | **4.5** | **1.2** | **+2.5** |
-
-**3 핵심 비교**:
-1. **Ridgeless → Ridge**: 같은 변수, 같은 데이터, **ridge 만 추가로 SR -0.11 → 0.46** — 180° 반전
-2. **Linear → Nonlinear**: SR 거의 같지만 **Max Loss 2.4 → 1.2 SD**, **Skewness -0.1 → +2.5** (tail risk 우월)
-3. **t-stat 4.5**: robust new anomaly 수준 (t > 3 기준)
-
-### 🔑 핵심 통찰
-
-> **Goyal-Welch (2008) 의 비관 결론은 데이터 한계가 아닌 방법론 한계**. 같은 데이터 + ridge 만으로 결론 정반대. 본 논문이 학계 14년 통념을 단 한 표로 무너뜨림.
-
----
-
 ## 7.10 Figure 11 — *어떤 변수가 가장 중요?* — **Section V.E**
 
 **각주 45 (12-month variation)**: Internet Appendix Figure IA4 — 각 predictor 의 12-month window 내 *평균 variation*. Top 3 (lag mkt / ltr / dfr) 가 가장 *variable*.
@@ -798,36 +550,29 @@ Linear ridge (SR 0.46) → Nonlinear ML (SR 0.47) — 약간 추가.
 
 이 그림은 *bar chart + line chart 결합*. 15 predictor 가 X-axis 에 배치.
 
-### 📖 Figure 11 (Variable Importance) 정밀 읽는 법
+**Step 2 — 축 의미**
 
-**무엇이 표시되나**:
-- **Bar + line combo chart**
-- **X축**: 15 predictor (lag mkt, ltr, dfr, svar, infl, dy, tms, tbl, ...)
-- **Y축 (Left, bar)**: VI in R² — 높은 bar = 중요한 변수
-- **Y축 (Right, line)**: VI in Sharpe — 높은 line = 중요한 변수
-- **VI 계산법**: 15 변수 model 성능 - 14 변수 (한 변수 제거) 성능
+- **X-axis**: 15 predictor (lag mkt, ltr, dfr, svar, infl, ...).
+- **Y-axis (Left)**: VI in R² — bar 형태. *높은 bar = 중요한 변수*.
+- **Y-axis (Right)**: VI in Sharpe — line 형태. *높은 line = 중요한 변수*.
 
-**5 단계 분석**:
-1. **Bar 의 ranking 확인**: Top 3 = lag mkt, ltr, dfr (왼쪽 3 개)
-2. **Bar vs Line align**: R² 와 Sharpe 의 VI 가 일치? → 대체로 YES, 일부 차이
-3. **꼬리 (느린 변수)**: dp, dy, b/m 등 → VI 0 근처
-4. **Mid-rank 변수**: svar, infl, tms — 약간의 영향
-5. **12-month variation 와 일치?**: IA4 의 12개월 내 변동 큰 변수 = VI 큰 변수 — YES
+**Step 3 — VI 계산법**
 
-**Top 3 핵심 정보원** (왼쪽부터):
-1. **`lag mkt`** (전월 시장 수익률): **R² 1.9% 감소**, Sharpe 0.12 감소
-2. **`ltr`** (장기 채권 수익률): R² 1.3% 감소, Sharpe 0.09 감소
-3. **`dfr`** (default 채권 수익률): R² 0.8% 감소
+각 변수의 *변수 중요도 (VI)* = "이 변수 *없으면* 모델 성능 *얼마나 떨어지나?". 
 
-**왜 이 3개**:
-- 모두 **12개월 window 내 변동 큰 변수** (각주 45, IA4 확인)
-- ML 이 **short-horizon 변동을 효과적으로 활용**
-- 대비: 느린 변수 (dp, dy, b/m): 12개월 내 변동 작음 → VI 작음
+방법: 15 변수 model 의 성능 - 14 변수 model (한 변수 제거) 의 성능.
 
-**숨은 함정**:
-- VI 가 작다고 "중요하지 않다" 아님 — 다른 변수와의 interaction 으로 기여 가능
-- VI 가 큰 변수만 사용하면 (top 3 만) 성능 ↓ — 합성 효과 손실
-- VI 계산법 (one-out) 이 정확한 measure 아닐 수 있음 — Shapley value 가 더 정확
+**Step 4 — Top 3 식별 (왼쪽부터)**
+
+1. **`lag mkt`** (전월 시장 수익률): **R² 1.9% 감소**, Sharpe 0.12 감소.
+2. **`ltr`** (장기 채권 수익률): R² 1.3% 감소, Sharpe 0.09 감소.
+3. **`dfr`** (default 채권 수익률): R² 0.8% 감소.
+
+→ **Top 3 가 ML 의 핵심 정보원**.
+
+**Step 5 — 왜 이 3개?**
+
+세 변수 모두 *12개월 window 내에서 변동 큰* 변수 (각주 45, Internet Appendix IA4 의 확인).
 
 **대비**:
 - *느린 변수* (`dp` 배당-가격, `dy` 배당 수익률, `b/m`): VI 0 근처.
@@ -940,25 +685,15 @@ ML 의 시그널 ≠ 단순 *과거 수익률 따라가기*. 본 논문이 robus
 
 ## 7.15 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **본 논문 실증의 *핵심 trick* 은?**
 2. **Table I 의 *3 model* 의 핵심 차이?**
 3. **Figure 10 의 *놀라운 발견*?**
-4. **Figure 11 의 Variable Importance — Top 3 가 lag mkt, ltr, dfr 인 이유?**
-5. **subsample (1930-1974 vs 1975-2020) 결과 차이의 의미?**
 
 ### 답변
-
-1. **Random Fourier Features (RFF)** — 15 macro 변수 → 무작위 방향 사영 ($\omega \sim \mathcal{N}(0, I)$) + sin/cos 변환 → 12,000 개의 인공 변수. **Wide neural network with random fixed first-layer weights** 와 같은 효과. 본 논문 RMT 분석이 linear regression of RFF 형태에 적용 가능 — 이론이 실증과 직접 연결. **Universal approximation** (Rahimi-Recht 2007): P → ∞ 일 때 RFF 가 any smooth nonlinear function 근사 가능. **Bandwidth γ=2**: robustness check (Section V.F) 로 γ ∈ [0.5, 2] insensitive.
-
-2. **Linear ridgeless** (GW 2008): SR=-0.11, R²<-100%, max loss **98.5 SD** — 완전 망함. ridgeless 의 catastrophe 가 실증에서 확인. **Linear ridge** ($z=10^3$): *같은 15 변수* + ridge 만 추가 → SR=**0.46** (t=4.4) — ridge 안정장치 만으로 180° 반전. **Nonlinear ML** (RFF + ridge): SR=**0.47** + *max loss **1.2 SD*** (98.5 → 1.2, 약 82배 감소) + *skewness **+2.5*** (negative → positive tail) + *IR vs linear **0.26 (t=2.5)*** — 비선형성의 tail risk 감소 + alpha 추가. **결론**: **GW 2008 의 비관은 데이터의 한계가 아니라 방법론의 한계**. Goyal-Welch 의 같은 데이터로 정반대 결론.
-
-3. **1926-2020 의 15 NBER 침체 중 14 개에서 ML timing 이 침체 직전 시장 비중 자동 감소 — Campbell-Thompson nonnegativity constraint 없이, purely OOS**. 유일 예외: 1945 (WWII 직후 8개월 침체). **이건 macro economics 의 holy grail** (real-time recession detection) 의 달성. NBER Business Cycle Dating Committee 자체도 침체 dating 에 6-12개월 lag. 50년 학자들이 시도해도 못 한 것을 ML 이 Goyal-Welch 15 변수만으로 비선형 결합 + risk on/off 패턴 자동 학습. **Long-only at heart**: 음의 short 거의 없음 — Campbell-Thompson 의 manual constraint 를 ML 이 unconditionally 학습.
-
-4. **Top 3: lag mkt (전월 시장 수익률), ltr (장기 채권 수익률), dfr (default 채권 수익률)**. 공통점: **12-month window 내 변동이 가장 큰 변수**. **메커니즘**: ML 이 short-horizon 변동을 효과적으로 활용 → "fast-changing 증상" (체온, 심박) 이 "slow-changing 증상" (키, 체질) 보다 current 위험 판단에 유용한 것과 같음. **대비 (느린 변수)**: dp (배당-가격), dy (배당 수익률), b/m (장부-시가) 의 VI 0 근처 — 변동 작은 변수는 ML 이 무시. **VI 계산법**: 15 변수 모델 성능 - 14 변수 (한 변수 제거) 모델 성능. Top 3 가 R² 1.9%, 1.3%, 0.8% 차지.
-
-5. **Subsample (1930-1974 vs 1975-2020) 모두 동일한 정성적 패턴 + magnitude 후반부 약 절반**. **해석**: (i) **시장 efficiency 가설** — 시간 지날수록 알고리즘 어려워짐. ML 기법 보편화 → arbitrage 효과 감소. (ii) **데이터 환경 변화** — 1980년대 이후 컴퓨터 거래 등장, market microstructure 변화. (iii) **그러나 후반부에도 SR 0.2+ 유지 — 여전히 의미 있음**. 의의: 본 논문 결과가 단순히 historical artifact 가 아니라 **현대 시장에서도 작동**. 후속 연구 방향: 더 최근 데이터 (2020+) 에서의 robustness, decay rate 정량화.
+1. **Random Fourier Features (RFF)** — 15 macro 변수 → *무작위 방향 사영 + sin/cos 변환* → 12,000 개의 *인공 변수*. *Wide neural network with random fixed first-layer weights* 와 같은 효과. 본 논문 RMT 분석이 *linear regression of RFF* 형태에 적용 가능 — 이론이 실증과 직접 연결.
+2. **Linear ridgeless** (Goyal-Welch 2008 의 정확한 setting): SR=-0.11, R²<-100%, max loss 98.5 SD — 망함. **Linear ridge** ($z=10^3$): *같은 15 변수* + ridge 만 추가 → SR=0.46 (t=4.4) — *ridge 만으로 극적 변신*. **Nonlinear ML** (RFF + ridge): SR=0.47 + *max loss 1.2 SD* + *skewness +2.5* + *IR vs linear 0.26 (t=2.5)* — *비선형성의 tail risk 감소 + alpha 추가*. 결론: **GW 2008 의 비관은 데이터의 한계가 아니라 방법론의 한계**.
+3. **1926-2020 의 *15 NBER 침체* 중 14 개에서 ML timing 이 *침체 직전 시장 비중 자동 감소* — *Campbell-Thompson nonnegativity constraint 없이*, *purely OOS***. 유일 예외: 1945 (WWII 직후). 이건 *macro economics 의 holy grail* (real-time recession detection) 의 달성. ML 이 *Goyal-Welch 15 변수* 만으로 *비선형 결합* 으로 *risk on/off* 패턴 자동 학습.
 
 ---
 

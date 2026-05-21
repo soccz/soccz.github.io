@@ -1,69 +1,12 @@
 # 06. Transformer Encoder — Vanilla 그대로
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 본 논문이 쓰는 Transformer encoder — vanilla 그대로
-- Eq 2 (patch projection + position embedding)
-- Eq 3 (multi-head self-attention)
-- BatchNorm vs LayerNorm 의 minor modification
-
----
-
 > 본 논문이 사용한 *Transformer encoder* 의 구조. *시계열 specific 변형 없이* vanilla 그대로.
-
-### 🌱 Vanilla Transformer — 일상 비유
-
-**한 줄로**: "ChatGPT/BERT 와 똑같은 부품. 시계열 specific 변형 (Informer, Autoformer 등) 다 빼고 **vanilla 그대로**".
-
-| Negative Contribution | 거절한 것 |
-|----------------------|---------|
-| **Informer 의 ProbSparse** | "안 씁니다" |
-| **Autoformer 의 Auto-correlation** | "안 씁니다" |
-| **FEDformer 의 Fourier attention** | "안 씁니다" |
-
-**왜 거절했나**: 
-- Patching + CI 의 representation 변경만으로 충분
-- Vanilla self-attention 이 이미 local + periodic 패턴 학습 (Fig 6 증명)
-- Simpler is better
-
-### 🔣 Vanilla Transformer 부품 4-단 풀이
-
-| 부품 | 의미 | 수식 |
-|------|------|------|
-| **Patch Projection** (Eq 2) | Patch → token embedding | $z_p = W_p x_p + b_p$ |
-| **Position Embedding** | 순서 정보 | $z_p \mathrel{+}= \text{PE}_p$ |
-| **Multi-Head Self-Attn** (Eq 3) | 모든 patch 끼리 비교 | $\text{Attn}(Q,K,V)$ |
-| **Feed-Forward** | 비선형 변환 | $\text{FFN}(z) = W_2 \sigma(W_1 z)$ |
-| **BatchNorm** (paper choice) | 정규화 | vs LayerNorm |
-
-### 🔑 핵심 통찰
-
-> 본 논문 message: **"시계열 분야에서 architectural innovation (변형 attention) 보다 representation innovation (patching, CI) 이 더 중요"**. 패러다임 전환.
 
 ---
 
 ## 6.1 챕터 한 줄 요약
 
 > **"Patching + Channel-Indep 외에는 *완전 vanilla Transformer encoder*. NLP 의 BERT, GPT 가 사용하는 *같은 구조*. 시계열 specific attention 변형 (Informer, Autoformer) 없음. *Simple is better*."**
-
----
-
-## ★ 본 chapter 의 가장 중요한 통찰
-
-> **"본 paper 의 negative contribution (= '추가 안 한 것') 도 contribution"**.
-
-paper 가 **명시적으로 거절**한 것:
-- Informer 의 ProbSparse self-attention.
-- Autoformer 의 Auto-correlation + Series Decomposition.
-- FEDformer 의 Fourier-enhanced attention.
-
-→ 모두 **시계열 specific 변형** = paper 이 "**우리 안 씁니다**" 라고 명시.
-
-**Fig 6 (attention maps, ch18) 이 정당화**: vanilla self-attention 만으로도 **local + periodic 패턴 학습** — 시계열 specific 변형 불필요.
-
-→ **paper 의 message**: "**시계열 분야에서 Auto-correlation/FFT 같은 architectural innovation 보다 patching + CI 같은 representation innovation 이 더 중요**".
-
-
 
 ---
 
@@ -192,33 +135,9 @@ $$
 
 **일상 비유**: NLP 에서는 *문장 단위 정규화 (layer norm)* 가 자연. 시계열에서는 *batch (여러 시점 묶음) 단위 정규화 (batch norm)* 가 *통계적으로 안정*.
 
-### 📖 Table 11 (BatchNorm vs LayerNorm) 정밀 읽는 법
+### Quantitative effect
 
-**무엇이 표시되나** (paper Appendix):
-- **행**: 8 dataset (Weather, Traffic, Electricity, ETT 등)
-- **열**: 4 horizon (96, 192, 336, 720)
-- **셀**: BN MSE / LN MSE / Improvement %
-- **추가**: Instance Norm 적용 vs 미적용 비교
-
-**어디를 봐야**:
-1. **BN vs LN**: 모든 cell 에서 BN ≤ LN? → YES → BN choice 정당화
-2. **개선폭**: 약 2-3% 평균 → marginal but consistent
-3. **Instance Norm 효과**: +IN vs -IN → 17-22% 큰 차이 (BN-LN 차이 보다 훨씬 큼)
-
-**핵심 발견**:
-- **BatchNorm 약간 우월** (~2-3% MSE 감소)
-- **Instance Norm 효과 ↑↑** (~17-22% MSE 감소, hidden 3rd trick)
-- 두 normalization 의 결합 = PatchTST 의 statistical advantage
-
-**숨은 함정**:
-- BN vs LN 차이는 marginal — 운영상 LN 도 acceptable
-- Instance Norm 이 진짜 게임체인저 — paper 가 "two tricks" 라고 했지만 IN 이 hidden 3rd trick
-
-### 🔑 핵심 통찰
-
-> Table 11 가 보여주는 진짜 메시지: **BatchNorm choice 는 작은 차이 (2-3%), Instance Norm 은 큰 차이 (17-22%)**. Paper marketing 의 "two tricks (P+CI)" 가 실제론 **three tricks (P+CI+IN)**. Ablation 자세히 보기.
-
-
+본 논문 *Table 11 (Appendix)*: BN > LN 약 *2-3% MSE* 차이.
 
 ```viz:pat-table11-instance-norm:title=Table 11 — Instance/Batch Norm effect (interactive),caption=BN vs LN 비교. 시계열에서 BN 약간 우월.
 ```
@@ -237,25 +156,15 @@ $$
 
 ## 6.8 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **Vanilla Transformer 의 4 부품?**
 2. **Multi-head self-attention 의 일상 비유?**
 3. **본 논문의 *유일한 마이너 modification*?**
-4. **왜 Informer/Autoformer 의 specific attention 변형을 거절했나?**
-5. **Fig 6 (attention maps) 의 발견 — vanilla self-attention 의 학습 패턴?**
 
 ### 답변
-
-1. **(1) Multi-head Self-Attention** — 각 token (patch) 의 *다른 token 들과의 관계* 측정. Q, K, V 변환 + softmax. **(2) Feed-Forward Network** — 각 token 의 *비선형 변환* ($W_2 \sigma(W_1 z)$). **(3) Layer Normalization** — output normalize, 학습 안정. **(4) Residual Connection** — *입력 + output*, deep network 학습 가능. **유래**: "Attention is All You Need" (Vaswani et al. 2017) 의 표준 구조. NLP/CV/시계열 다양한 분야 standard.
-
-2. **문장 "*The cat sat on the mat*" 의 *각 단어* 가 *다른 모든 단어* 와의 *관계* 측정**. "sat" → "cat (주어), on (전치사), mat (위치)" 의 *관련도*. **Multi-head = 여러 관점** (head 1: 문법 관계, head 2: 의미 관계, head 3: 위치 관계) 동시 측정 후 concat. 본 논문: 16 head. **시계열 적용**: head 별로 다른 시간 척도 자동 학습 (예: head 1 = 일일 cycle, head 2 = 주간 cycle).
-
-3. **Layer Norm → Batch Norm**. 시계열에서 *batch norm 이 layer norm 보다 약간 더 안정* (Table 11). 즉 본 논문의 *진짜 modification 은 patching + channel-indep + batch norm 3 개* — *나머지 다 vanilla NLP Transformer*. **Batch Norm vs Layer Norm**: BatchNorm 은 batch 차원 평균/std, LayerNorm 은 feature 차원. 시계열은 같은 거리/같은 sensor 의 패턴이 batch 별로 일정 → BatchNorm 적합. NLP 는 문장 길이/단어 다름 → LayerNorm 적합. **결과**: BatchNorm + dropout 0.2 = 적당한 regularization.
-
-4. **Architectural innovation 의 over-engineering 함정 회피**. **Informer (ProbSparse)**: $O(L \log L)$ 효율, 그러나 시계열 specific. **Autoformer (Auto-correlation + Series Decomposition)**: 명시적 trend/seasonal 분해, 그러나 가정 강함. **FEDformer (Fourier-enhanced)**: 주파수 도메인 attention, 가정 강함. **PatchTST 의 선택**: 모두 거절 → vanilla self-attention. **이유**: (i) Patching + CI 의 representation 변경만으로 충분, (ii) Vanilla attention 이 이미 local + periodic 패턴 학습 (Fig 6 증명), (iii) Simpler is better — 가정 적을수록 generalization ↑. **Fig 6 의 입증**: 학습된 attention map 이 local cluster + periodic 패턴 자동 발견 → specific 변형 불필요.
-
-5. **Fig 6 (attention map heatmap) 의 발견**: 학습된 attention weight 가 (i) **Local cluster**: 인접 patch 끼리 높은 attention (자연스러운 local 패턴), (ii) **Periodic 패턴**: 일정 간격 (예: 24 patch = 1 day) 의 patch 끼리 높은 attention (cycle 자동 학습), (iii) **장기 의존성**: 멀리 떨어진 patch 도 일부 강한 attention (long-range capture). **의미**: vanilla self-attention 이 시계열의 **multi-scale 패턴 자동 학습** — Autoformer 의 명시적 decomposition 없어도 됨. **paper message**: "Representation innovation > Architectural innovation" — 시계열 분야 패러다임 전환.
+1. **(1) Multi-head Self-Attention** — 각 token (patch) 의 *다른 token 들과의 관계* 측정. **(2) Feed-Forward Network** — 각 token 의 *비선형 변환*. **(3) Layer Normalization** — output normalize, 학습 안정. **(4) Residual Connection** — *입력 + output*, deep network 학습 가능.
+2. **문장 "*The cat sat on the mat*" 의 *각 단어* 가 *다른 모든 단어* 와의 *관계* 측정**. "sat" → "cat (주어), on (전치사), mat (위치)" 의 *관련도*. Multi-head = *여러 관점* (단기/장기/주기성) 동시 측정. 본 논문: 16 head.
+3. **Layer Norm → Batch Norm**. 시계열에서 *batch norm 이 layer norm 보다 약간 더 안정* (Table 11). 즉 본 논문의 *진짜 modification 은 patching + channel-indep + batch norm 3 개* — *나머지 다 vanilla NLP Transformer*.
 
 ---
 

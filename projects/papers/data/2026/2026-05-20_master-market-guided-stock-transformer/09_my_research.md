@@ -1,28 +1,6 @@
 # 09_my_research — 내 연구와의 연결
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- 내 연구와의 연결
-- 시그널 활용 방법
-
----
-
 > 이 절은 `_profile.md`의 APF (Attention Pattern Fields), Grokking in TS Transformers, P1 ProTran-TFA 세 active/paused 트랙과의 구체적 연결을 다룬다. 일반론 나열 금지 — 구체적 mechanism, axis, 수식 요소를 지정한다.
-
-### 🌱 4 연구 트랙과의 연결 — 일상 비유
-
-내 연구와 MASTER 의 연결을 강도별로:
-
-| 연결 강도 | 트랙 | 핵심 mechanism |
-|----------|------|---------------|
-| ★★★★☆ (강함) | **APF (Attention Pattern Fields)** | Inter-stock attention 의 2D motif 분석 |
-| ★★★☆☆ (중간) | **P1 ProTran-TFA** | Market-guided gating 이식 |
-| ★★☆☆☆ (약함) | **Grokking TS Transformers** | 비정상 시계열 학습 동역학 |
-| ★★☆☆☆ (약함) | **§C Attention as Explanation** | 어텐션 해석 가능성 논쟁 |
-
-### 🔑 핵심 통찰
-
-> MASTER 는 내 연구의 **3 active/paused 트랙과 동시 연결되는 희귀한 논문**. 특히 APF (§D) 의 직접 테스트베드 + ProTran-TFA (§E) 의 design reference. 시간 투자 가치 ↑.
 
 ---
 

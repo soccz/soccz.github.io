@@ -1,84 +1,12 @@
 # 08. Self-Supervised Masked Reconstruction
 
-## 📌 이 챕터 다 읽으면 알 수 있는 것
-
-- Self-supervised masked reconstruction
-- 40% mask ratio — BERT (15%) 와의 차이
-- Pre-train → fine-tune 의 정확한 절차
-- Transfer learning 의 가능성
-
----
-
 > 본 논문의 *두 번째 큰 contribution*. 시계열의 *일부 patch 가리고 (mask) 모델이 그 patch 를 예측* 하게 학습 → *transferable representation*.
-
-### 🌱 Masked Reconstruction — 일상 비유
-
-**한 줄로**: "시계열의 40% patch 를 가리고 → 모델이 그 부분 예측. **시계열의 BERT moment**".
-
-| 비유 | Self-supervised |
-|------|----------------|
-| **빈칸 문제** | "오늘 ___ 의 트래픽은?" 모델이 추측 |
-| 학생이 책 읽기 | 밑줄 친 단어를 주변 단어로 추측 |
-| 정답 없는 학습 | label 없이 자기 자신을 예측 |
-
-**왜 NLP 의 BERT 와 다른가**:
-- BERT: 15% mask
-- **PatchTST: 40% mask** — 시계열의 redundancy 가 NLP 보다 ↑ → 더 강한 corruption 가능
-
-### 🔣 Masked Reconstruction 4-단 풀이
-
-| 단계 | 의미 |
-|------|------|
-| 입력 | $X \in \mathbb{R}^{L \times M}$ |
-| Patching | $N$ patches per channel |
-| **Mask 40%**: 랜덤 patch 0 으로 대체 | corrupted version |
-| Transformer | 전체 patches 처리 |
-| **Reconstruction head**: 원본 예측 | MSE loss on masked patches |
-| Pre-train 완료 | encoder weight 저장 |
-| **Fine-tune**: forecasting head 만 새로 학습 | downstream task |
-
-### 🎯 구체 증거 — 장기 임팩트
-
-**Supervised result** (ch10): 21% MSE reduction — incremental SOTA
-
-**Self-supervised result** (본 chapter): 
-- Linear probing supervised 대비 +3% 개선
-- Fine-tune: +7% 개선
-- **Transfer**: Electricity pre-train → 6 datasets transfer 거의 동등
-
-**후속 임팩트**: Chronos (Amazon 2024), TimesFM (Google 2024), Moirai (Salesforce 2024) — 모두 PatchTST 의 self-supervised 위에 build.
-
-### 🔑 핵심 통찰
-
-> Paper 의 abstract 는 supervised 21% 만 강조. 그러나 **장기 임팩트는 self-supervised** — 시계열 foundation model 시대의 출발점.
 
 ---
 
 ## 8.1 챕터 한 줄 요약
 
 > **"시계열의 *40% patch 를 무작위 mask* → Transformer 가 *mask 된 patch 의 값을 예측* 하도록 학습. ChatGPT 의 BERT 학습 방식의 시계열 버전. *정답 없는 데이터* 로 *transferable representation* 학습."**
-
----
-
-## ★ 본 chapter 가 paper 의 가장 큰 long-term impact
-
-paper 의 supervised 결과 (21% MSE reduction) 는 **immediate impact**.
-본 chapter 의 self-supervised 결과는 **paradigm impact**.
-
-### 왜 더 큰가?
-
-| 측면 | Supervised (ch10) | Self-supervised (본 chapter + ch11) |
-|------|-----------------|----------------------------------|
-| Impact 종류 | Incremental SOTA | **Paradigm shift** |
-| 후속 paper | 시계열 Transformer 개선 | **Foundation model 시리즈 (Chronos, TimesFM, Moirai)** |
-| 학계 비교 | ResNet 50 → 101 | BERT (NLP foundation model 시작) |
-| 시간 horizon | 1~2년 영향 | 5~10년 영향 |
-
-→ paper 의 **abstract 가 supervised 결과 (21%) 만 강조** 하지만, **장기 영향은 self-supervised 부분이 더 큼**.
-
-Fig 1 panel (c) (ch03) 가 이 part 의 architecture 시각화.
-
-
 
 ---
 
@@ -247,25 +175,15 @@ NLP 의 발전:
 
 ## 8.8 자기점검
 
-### 핵심 5가지
-
+### 핵심 3가지
 1. **Self-supervised learning 의 일상 비유?**
 2. **Masked Patch Reconstruction 의 정확한 방법?**
 3. **본 논문 self-supervised PatchTST 의 *학계 임팩트*?**
-4. **40% mask ratio — BERT 의 15% 와 다른 이유?**
-5. **Transfer learning 결과 (Electricity → 6 targets) 의 의미?**
 
 ### 답변
-
-1. **학생이 책 읽을 때 *밑줄 친 단어 의 의미를 주변 단어로 추측*** — "*The ___ sat on the mat*" → "cat" 예측. NLP 의 BERT (2018) 가 *문장의 15% 단어 mask + 예측* 으로 학습. 본 논문은 *시계열 patch 의 40% mask + 예측* 으로 *동일 원리* 시계열 적용. **정답 없는 데이터로 transferable representation 학습**. **장점**: (i) Label 불필요 — 대량 unlabeled 시계열 활용, (ii) downstream task 에 generic 표현, (iii) Foundation model 가능성.
-
-2. **(1) Patching**: 시계열을 *non-overlap patch* (P=S=12) 로 자름. **(2) Random masking**: 40% 의 patch 를 무작위 mask (0 으로 대체). **(3) Transformer encoder**: 나머지 patch 로 forward, self-attention 으로 정보 활용. **(4) Prediction head**: mask 된 patch 값 예측 (separate decoder). **(5) Loss**: MSE — *진짜 patch 값과의 차이*. **Fine-tune 단계**: encoder weight 고정 or 학습 가능, prediction head 만 forecasting 으로 교체.
-
-3. **시계열 분야의 *BERT moment***. NLP 의 BERT (2018) 가 *NLP foundation model 시대* 를 연 것처럼, *PatchTST self-supervised (2023)* 가 *시계열 foundation model 시대* 시작. **후속**: Chronos (Amazon 2024), TimesFM (Google 2024), Moirai (Salesforce 2024) 모두 PatchTST 위에 build. **시계열 ML 의 paradigm shift**. **장기 임팩트 vs 단기**: Supervised result (21% MSE) = incremental SOTA. Self-supervised = paradigm shift. 후자가 5-10년 영향.
-
-4. **시계열 redundancy ↑** vs NLP 의 word redundancy. **NLP 의 15% mask**: 문장 의미가 sparse — 15% 가리면 충분히 어려움. **시계열 40% mask**: 인접 patch 가 시간적으로 연속 → 정보 중복 ↑ → 강한 corruption 가능. **너무 낮은 mask (5%)**: 너무 쉬움 → 학습 신호 약함. **너무 높은 mask (70%+)**: 너무 어려움 → 학습 불가. **40% sweet spot**: 시계열의 inductive bias 와 일치 — 인접 patch 의 정보로 mask patch 충분히 예측 가능.
-
-5. **Setup**: Electricity (P=321 가구) pre-train → 6 targets (Weather, Traffic, ETTh1-h2, ETTm1-m2) fine-tune. **결과**: **Transfer fine-tuning ≈ Sup** (대부분 cell), 일부 Sup 능가. **의미**: (i) **Channel-Indep 의 universality** — 다른 channel 수 (321 → 7-862) 도 transfer 가능, (ii) **시계열의 generic 표현 존재** — trend, periodicity, autocorrelation 이 dataset 무관, (iii) **Low-resource setting 가능** — 작은 dataset 도 transfer 로 활용. **후속 임팩트**: Chronos/TimesFM/Moirai 의 *시계열 foundation model* 의 직접 motivation. "한 큰 dataset 으로 pre-train → 모든 시계열 task 적용" 의 실증.
+1. **학생이 책 읽을 때 *밑줄 친 단어 의 의미를 주변 단어로 추측*** — "*The ___ sat on the mat*" → "cat" 예측. NLP 의 BERT (2018) 가 *문장의 15% 단어 mask + 예측* 으로 학습. 본 논문은 *시계열 patch 의 40% mask + 예측* 으로 *동일 원리* 시계열 적용. *정답 없는 데이터* 로 *transferable representation* 학습.
+2. **(1) Patching**: 시계열을 *non-overlap patch* (P=S=12) 로 자름. **(2) Random masking**: 40% 의 patch 를 무작위 mask. **(3) Transformer encoder**: 나머지 patch 로 forward, self-attention 으로 정보 활용. **(4) Prediction head**: mask 된 patch 값 예측. **(5) Loss**: MSE — *진짜 patch 값과의 차이*.
+3. **시계열 분야의 *BERT moment***. NLP 의 BERT (2018) 가 *NLP foundation model 시대* 를 연 것처럼, *PatchTST self-supervised (2023)* 가 *시계열 foundation model 시대* 시작. 후속: Chronos (Amazon 2024), TimesFM (Google 2024), Moirai (Salesforce 2024) 모두 PatchTST 위에 build. **시계열 ML 의 paradigm shift**.
 
 ---
 
