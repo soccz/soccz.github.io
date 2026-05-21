@@ -1,5 +1,13 @@
 # 03. Introduction — 4가지 도전과 본 논문의 답
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 자산가격결정의 **4 challenges** — 고차원성·함수형·시변·낮은 SNR
+- 본 논문이 각 challenge 에 어떻게 답하는지 (GAN + LSTM + adversarial test asset)
+- 본 논문이 60년 학계 흐름에서의 위치 (Hansen-Singleton 1982 → Fama-French → ML 시대)
+
+---
+
 > Introduction (journal p.1–6) — 자산가격결정의 4 challenges 와 본 논문이 어떻게 풀었는지.
 
 ## 3.1 첫 단락 — 자산가격결정의 fundamental question

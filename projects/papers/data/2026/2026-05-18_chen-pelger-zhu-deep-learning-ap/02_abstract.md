@@ -1,5 +1,14 @@
 # 02. 제목과 Abstract 풀어 읽기
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 논문 제목 ("Deep Learning in Asset Pricing") 의 정확한 의미
+- 저자 3인 (Chen·Pelger·Zhu) 의 학계 위치
+- Abstract 7 문장의 한국어 의역 + 일상 비유
+- 본 논문의 4 가지 핵심 발견 (Sharpe 0.75 / EV 8% / XS-R² 23% / 178 macro)
+
+---
+
 ## 2.1 제목 — "Deep Learning in Asset Pricing"
 
 한국어: **"자산가격결정의 딥러닝"**

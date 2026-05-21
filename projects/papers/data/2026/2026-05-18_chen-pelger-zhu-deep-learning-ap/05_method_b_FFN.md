@@ -1,5 +1,14 @@
 # 05b. Section II.B — Feedforward Network (FFN)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Feedforward Network (FFN) 의 정확한 구조
+- 본 논문에서 FFN 의 역할 — β estimation
+- LSTM 과 FFN 의 역할 분담
+- FFN baseline 의 한계 — no-arb 무시
+
+---
+
 > Section II.B (paper p.14–15) — FFN 의 4가지 활용.
 
 ## 5b.1 챕터 한 줄 요약
@@ -46,6 +55,20 @@ $$
 y = W^{(1)\top} x^{(1)} + w_0^{(1)}
 $$
 
+### 🔣 4-단 기호 풀이 (FFN 수식)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $x^{(0)}$ | 입력 vector | "재료들" (50 = macro 4 + chars 46) | $K^{(0)} = 50$ |
+| $W^{(0)}$ | 1st layer weight | "재료 → 중간 변환 행렬" | learnable, $K^{(1)} \times K^{(0)}$ |
+| $w_0^{(0)}$ | 1st bias | "추가 보정" | learnable |
+| $\mathrm{ReLU}(\cdot)$ | 비선형 활성 | "음수면 0, 양수면 그대로" | gradient 명확 (vanishing 적음) |
+| $x^{(1)}$ | hidden vector | "중간 결과" | $K^{(1)}$ unit (예: 64) |
+| $W^{(1)}, w_0^{(1)}$ | 2nd layer | "중간 → 최종 변환" | output 차원 만큼 |
+| $y$ | output | "최종 답" (ω 또는 g) | scalar (ω) 또는 8-dim (g) |
+
+**🌱 한 줄**: "**입력 50 → 가중치 곱 + bias → ReLU 비선형 → 가중치 곱 + bias → 출력**".
+
 **기호 뜻**:
 - $W^{(0)} \in \mathbb{R}^{K^{(1)} \times K^{(0)}}$
 - $W^{(1)} \in \mathbb{R}^{K^{(1)}}$
@@ -66,6 +89,37 @@ paper footnote 16:
 ![Fig. 2 — Feedforward Network with Single Hidden Layer](figures/page14_FFN_illustration.png)
 
 (Figure 2, paper p.14)
+
+### 📖 처음 보는 사람을 위한 — Figure 2 읽는 법
+
+**이 그림이 보여주는 것**: **신경망 (Feed-Forward Network, FFN)** 의 가장 단순한 형태 — 1 layer hidden. "정보가 어떻게 입력 → 변환 → 출력 으로 흐르나" 시각화.
+
+**일상 비유 (요리)**:
+- **왼쪽 (Input)**: 재료들 (macro 데이터 + 자산 특성).
+- **가운데 (Hidden)**: 요리사의 손 — 여러 재료를 섞고 비선형 변환 (ReLU = "맛 없는 부분 빼기").
+- **오른쪽 (Output)**: 완성된 요리 (SDF weight ω, 또는 test asset g).
+- **화살표**: 재료가 요리사 손에 가는 길 (가중치 W — 학습 가능).
+
+**그림의 3 컬럼 (좌→우)**:
+- **Input layer** (녹색 동그라미): 거시 + 자산 특성 입력.
+- **Hidden layer** (파랑 동그라미): 64 개 unit, 모두 ReLU 비선형.
+- **Output** (분홍 동그라미): 1 개 scalar (SDF weight 또는 g instrument).
+
+**입력의 grouping** (paper Fig 2 의 두 묶음):
+- **Macroeconomic Input** (위): LSTM 의 hidden state (4 차원).
+- **Firm specific characteristics** (아래): 46 firm chars.
+
+**화살표 = fully connected** (모든 input → 모든 hidden, 모든 hidden → output):
+- 각 화살표 = weight (학습 가능 parameter).
+
+**어디부터 보면 되나**:
+1. 왼쪽 그룹 두 개 (macro + chars) → 모두 합쳐서 입력.
+2. 가운데 hidden — 비선형 변환 (ReLU = max(0, x)).
+3. 오른쪽 output 한 점.
+
+**왜 hidden layer 가 1 개만? 실제는?**: Figure 는 illustration 목적으로 1 layer. 실제 best model 은 **2 layer** stack.
+
+---
 
 ### Step 1 — 그림의 구조 이해
 

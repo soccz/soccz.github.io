@@ -1,5 +1,13 @@
 # 12. Conclusion — Section IV
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 4 conclusions
+- Theory 와 ML 의 통합 — "이론 > ML flexibility"
+- 본 논문 이후의 학계 방향
+
+---
+
 > Section IV (paper p.45–46) — 본 논문의 4가지 결론 + 후속 연구 함의.
 
 ## 12.1 챕터 한 줄 요약

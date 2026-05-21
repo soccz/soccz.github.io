@@ -1,5 +1,13 @@
 # 06. Alternative Models — Section I.C
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 비교한 4 alternative models — LS, EN, FFN, GAN
+- 각 모델의 핵심 차이 (linear vs nonlinear, no-arb vs no-no-arb)
+- 왜 이 4개로 비교했나
+
+---
+
 > Section I.C (paper p.11–13) — Linear (LS), Elastic Net (EN), FFN forecasting benchmark.
 
 ## 6.1 챕터 한 줄 요약
@@ -29,6 +37,22 @@ $$
 
 where $\tilde F_{t+1} = \frac{1}{N}\sum_{i=1}^N I_{t,i} R^e_{t+1,i}$ — **q characteristic managed factors**.
 
+### 🔣 4-단 기호 풀이 (LS)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\theta \in \mathbb{R}^q$ | 선형 가중치 | "재료별 일정한 비율" | $\omega = \theta^\top I_{t,i}$ (단순 곱) |
+| $I_{t,i} \in \mathbb{R}^q$ | firm chars | "자산 i 의 46 특성" | $q = 46$ |
+| $\tilde F_{t+1}$ | char-managed factor | "각 특성으로 weighted 한 portfolio 의 return" | $q$ 차원 vector |
+| $\mathbb{E}[\tilde F \tilde F^\top]$ | factor second moment | "factor 간 같이 움직이는 정도" | $q \times q$ matrix |
+| $\mathbb{E}[(1-\theta^\top \tilde F) \tilde F^\top] = 0$ | moment condition | "factor 와 SDF 가 직교" | $\theta$ 의 해는 closed form |
+
+**🌱**: "**linear special case** — $\omega$ 가 char 의 단순 선형결합 → Markowitz tangency on factor space".
+
+### 🆚 vs Kozak-Nagel-Santosh (2020)
+- LS = KNS 의 simplest version. Cross-product 없음, ridge 없음, demean 없음.
+- KNS 가 더 sophisticated 하지만 본질적으로 같은 linear factor model space.
+
 ### Solution (closed form)
 $$
 \theta = \mathbb{E}[\tilde F_{t+1} \tilde F_{t+1}^\top]^{-1} \mathbb{E}[\tilde F_{t+1}]
@@ -47,6 +71,18 @@ paper p.20–21:
 $$
 \hat\theta_{EN} = \arg\min_\theta \frac{1}{T}\left\| \bar{\tilde F} - \widehat{\Sigma}_{\tilde F} \theta \right\|^2 + \lambda_2 \|\theta\|_2^2 + \lambda_1 \|\theta\|_1
 $$
+
+### 🔣 4-단 기호 풀이 (Elastic Net)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\bar{\tilde F}$ | factor 평균 | "각 factor 의 평균 수익률" | $\frac{1}{T}\sum_t \tilde F_t$ |
+| $\widehat\Sigma_{\tilde F}$ | factor cov | "factor 간 같이 움직이는 정도 (sample)" | $\frac{1}{T}\sum_t \tilde F \tilde F^\top$ |
+| $\lambda_2 \|\theta\|_2^2$ | ridge penalty | "weight 크기 제한 (smooth)" | overfit 방지 |
+| $\lambda_1 \|\theta\|_1$ | lasso penalty | "weight = 0 강제 (sparse)" | 일부 factor 자동 선택 |
+| $\lambda_1, \lambda_2$ | tuning params | "regularization 강도" | validation 으로 선택 |
+
+**🌱**: "**LS + 두 종류 penalty** — overfit 방지 + sparse feature selection".
 
 where $\bar{\tilde F} = \frac{1}{T}\sum_t \tilde F_{t+1}$, $\widehat{\Sigma}_{\tilde F} = \frac{1}{T}\sum_t \tilde F_{t+1} \tilde F^\top_{t+1}$.
 

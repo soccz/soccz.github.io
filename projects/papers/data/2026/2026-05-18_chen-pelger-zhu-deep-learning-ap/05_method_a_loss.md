@@ -1,5 +1,13 @@
 # 05a. Section II.A — Loss Function & Model Architecture
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 핵심 — **no-arbitrage 를 신경망 loss 로 변환**
+- Eq 의 loss function 정의 + 정확한 의미
+- 다른 ML paper 와의 결정적 차이 (이론 제약을 architecture 가 강제)
+
+---
+
 > Section II.A (paper p.12–14) — 신경망 학습의 loss function 과 전체 아키텍처.
 
 ## 5a.1 챕터 한 줄 요약
@@ -15,6 +23,20 @@ paper Eq (4):
 $$
 L(\omega \mid \hat g, I_t, I_{t,i}) = \frac{1}{N} \sum_{i=1}^{N} \frac{T_i}{T} \left| \frac{1}{T_i} \sum_{t \in T_i} M_{t+1} R^e_{t+1,i}\, \hat g(I_t, I_{t,i}) \right|^2 \tag{4}
 $$
+
+### 🔣 4-단 기호 풀이 (Eq 4, 학습 loss)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $L$ | empirical loss | "전체 학생 평균 오답 점수" | 학습 objective (낮을수록 좋음) |
+| $N$ | 자산 수 | "학생 수 (≈ 10,000)" | unbalanced panel |
+| $T_i$ | 자산 i 관측 시점 수 | "i 학생의 응시 횟수" | 자산마다 다름 (IPO 신규 등) |
+| $T_i / T$ | weighting | "오래 관측된 학생 weight ↑" | $\sqrt{T_i / T}$ 의 standard GLS |
+| $M_{t+1}$ | SDF | "공정한 채점자" | $1 - \omega \cdot R^e$ |
+| $R^e_{t+1,i}$ | 자산 i 의 t+1 excess return | "i 학생의 t+1 시점 점수" | risk-free 초과 |
+| $\hat g(I_t, I_{t,i})$ | test asset weight | "i 자산의 시험 문제 가중치" | adversary network 의 출력 |
+
+**🌱 한 줄**: "**N 자산 × T_i 시점 의 squared pricing error 의 weighted 평균** — weighting 은 관측 시점 비율".
 
 **기호 뜻**:
 - $N$ — 총 자산 수 (≈ 10,000).
@@ -54,6 +76,37 @@ paper 본문:
 ![Fig. 1 — GAN Model Architecture](figures/page13_GAN_architecture.png)
 
 *paper p.13 Fig. 1 — 본 논문의 핵심 그림. 좌측 SDF network, 우측 Conditional network. 각각 LSTM (macro → hidden state) + FFN (chars + hidden state → output). 두 네트워크가 minimax 로 경쟁.*
+
+### 📖 처음 보는 사람을 위한 — Fig. 1 (본 논문 심장) 읽는 법
+
+**한 줄로**: "**두 신경망이 minimax 게임** — 좌측 SDF 가 pricing error 최소화, 우측 Conditional 이 mispriced asset 최대화. 둘이 수렴 = 최선의 SDF".
+
+**그림 구조 — 좌·우 두 큰 박스**:
+
+| 위치 | 무엇 | 일상 비유 |
+|------|------|-----------|
+| **좌측 — SDF Network** | M 만드는 신경망 | "정답지 만드는 학생" |
+| **├ LSTM** | 178 macro 시계열 → 4 hidden state | "경제 환경 (호황/불황) 자동 파악" |
+| **├ FFN** | (firm chars + hidden) → ω | "회사 신상 + 경제 환경 → 자산 가중치" |
+| **└ 출력 M** | candidate SDF | "이번 시점의 정답지" |
+| **우측 — Conditional Network** | g 만드는 adversarial 신경망 | "최악 시험 문제 만드는 출제자" |
+| **├ LSTM** | 자체 macro → hidden state (h^g) | "출제자의 경제 분석" |
+| **├ FFN** | (chars + h^g) → g | "최악 mispricing 자산 자동 발견" |
+| **└ 출력 g** | mispriced test asset | "이 자산이 가장 안 맞춰지지!" |
+
+**왜 두 네트워크 minimax?**
+- SDF 혼자: 자기가 만든 test asset 으로만 검증 → 편향.
+- Conditional adversarial: SDF 가 못 푸는 worst-case 자동 생성 → SDF 가 더 강해질 수밖에.
+- 수렴 = 둘 다 못 개선 = best SDF + most challenging test 발견.
+
+**그림에서 알아낼 것 3가지**:
+1. **두 네트워크의 대칭성** — 같은 (LSTM + FFN) 구조지만 다른 역할.
+2. **LSTM 의 중요성** — 둘 다 macro hidden state 사용 → business cycle 학습.
+3. **두 LSTM 이 별도** ($h_t$ vs $h_t^g$) — 같은 macro 데이터라도 다른 hidden state 학습.
+
+**원문 위치**: paper Fig. 1, journal p.13.
+
+---
 
 paper Fig. 1 note:
 > "This figures shows the model architecture of GAN (Generative Adversarial Network) with RNN (Recurrent Neural Network) with LSTM cells. The SDF network has two parts: (1) A LSTM estimates a small number of macroeconomic states. (2) These states together with the firm-characteristics are used in a FFN to construct a candidate SDF for a given set of test assets. The conditioning network also has two networks: (1) It creates its own set of macroeconomic states, (2) which it combines with the firm-characteristics in a FFN to find mispriced test assets for a given SDF M. These two networks compete until convergence, that is neither the SDF nor the test assets can be improved."

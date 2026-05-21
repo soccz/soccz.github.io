@@ -1,5 +1,13 @@
 # 11. Variable Importance & Macro States — Section III.F–G
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Variable Importance 측정 방법 — sensitivity analysis
+- 178 macro 시계열 중 top 변수들
+- LSTM 의 4 hidden state 가 학습한 economic regime
+
+---
+
 paper p.32-37 (Section III.F, III.G). **Table A.V (GAN vs FF5) + Fig 11 (GAN var imp) + Fig 12 (FFN var imp) + Fig 13 (LSTM hidden states) + Fig A.7/A.4 (g + macro) + SDF structure (Sec III.G)**.
 
 이 챕터의 목표: paper 가 model 의 **내부** 를 어떻게 들여다보는지 — variable importance 의 측정법, Fig 11/12 의 막대 그래프 읽는 법, Fig 13 의 hidden state 시계열의 NBER recession 매칭, SDF structure 의 nonlinear interaction.
@@ -77,6 +85,19 @@ $$
 \text{Sensitivity}(x_j) = \frac{1}{C} \sum_{i=1}^N \sum_{t=1}^T \left| \frac{\partial w(I_t, I_{t,i})}{\partial x_j} \right|
 $$
 
+### 🔣 4-단 기호 풀이 (Sensitivity)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $w$ | SDF weight (NN output) | "학생의 답안" | $\omega$ 와 같음 |
+| $x_j$ | j-번째 characteristic | "재료 j (예: ST_REV)" | $j \in \{1, ..., 46\}$ |
+| $\partial w / \partial x_j$ | partial derivative | "x_j 살짝 바꾸면 w 가 얼마나 변하나" | gradient (NN 의 backprop) |
+| $|\cdot|$ | absolute value | "방향 무시, magnitude 만" | + 효과와 - 효과 합쳐서 |
+| $\sum_i \sum_t$ | N × T 합계 | "모든 자산 × 모든 시점" | average gradient magnitude |
+| $C$ | normalization const | "합이 1 되도록 조정" | $\sum_j \text{Sens}(x_j) = 1$ |
+
+**🌱**: "**x_j 를 흔들면 모델 답안 (w) 이 얼마나 흔들리나** 의 평균 → 중요도".
+
 ### Step 1 — 수식의 의미 풀이
 
 | 기호 | 의미 |
@@ -119,11 +140,55 @@ paper 가 인용한 선행 연구:
 
 ---
 
+### 🆚 자매 paper 와의 char importance 비교
+
+| Paper | Top char | char importance 측정 | 발견 |
+|-------|---------|------------------|------|
+| **본 paper (GAN)** | ST_REV, SUV, r12_2 | gradient ∂ω/∂x | 6 카테고리 모두 top 20 |
+| [Autoencoder (Gu-Kelly-Xiu)](../2026-05-17_gu-kelly-xiu-autoencoder/00_README.md) | LME, MOM | network sensitivity (Fig 4) | 비슷한 ranking |
+| [RPPCA](../2026-05-17_lettau-pelger-rppca/00_README.md) | (factor 분해) | n/a (PCA factor) | factor 자체가 ranking |
+
+→ 두 ML paper (GAN, Autoencoder) 가 **비슷한 top chars** 식별 — robust finding.
+
+---
+
 ## 11.4 Figure 11 — GAN Variable Importance (paper p.33)
 
 ![Fig. 11 — Characteristic Importance for GAN SDF](figures/page33_var_importance_GAN.png)
 
 (Figure 11, paper p.33)
+
+### 📖 처음 보는 사람을 위한 — Figure 11 읽는 법
+
+**이 그림이 보여주는 것**: GAN 의 SDF 가 **어떤 firm chars 를 가장 많이 사용하는지** 순위. 46 chars 의 importance ranking.
+
+**일상 비유 (요리 재료)**:
+- 46 chars = "46 가지 재료".
+- 각 재료의 importance = "이 재료를 빼면 음식 맛이 얼마나 변하나" 의 민감도.
+- GAN = "균형 잡힌 셰프" — 6 카테고리 (재료 종류) 골고루 사용.
+
+**그림 구조**:
+- **세로 (46 줄)**: 46 firm chars, importance 내림차순 (top = 가장 중요).
+- **가로 (X축)**: Sensitivity 값 (0.000-0.040, 합 = 1).
+- **막대 색**: 6 anomaly category 별 색.
+  - **빨강**: Past Returns (momentum, reversal).
+  - **주황**: Trading Frictions (size, liquidity).
+  - **보라**: Value.
+  - **회색**: Profitability.
+  - **녹색**: Investment.
+  - **분홍**: Intangibles.
+
+**어디부터 보면 되나**:
+1. Top 3: ST_REV (빨강), SUV (주황), r12_2 (빨강) — 가장 중요한 3 chars.
+2. **다양한 색이 골고루 섞여 있나** — GAN 의 강점은 6 카테고리 모두 사용.
+3. Top 20 안에 모든 6 색이 다 있나 — 본 paper 의 핵심 발견.
+
+**핵심 발견**:
+- Top: ST_REV (~0.040), SUV (~0.030), r12_2 (~0.027).
+- **6 카테고리 모두 top 20**: diversified.
+- Distribution shape: gradual decay (top 과 bottom 차이 작음).
+
+---
 
 ### Step 1 — 그림의 구조 이해
 
@@ -212,6 +277,33 @@ Bottom 의 변수들:
 ---
 
 ## 11.5 Figure 12 — FFN Variable Importance (paper p.34)
+
+### 📖 처음 보는 사람을 위한 — Figure 12 읽는 법 (Fig 11 과 비교)
+
+**이 그림이 보여주는 것**: **FFN 모델** (no-arbitrage 없는 ML) 이 어떤 chars 를 사용하는지. **Fig 11 (GAN) 과 비교 위한 그림**.
+
+**일상 비유 (요리 재료 비교)**:
+- 같은 46 재료 중 FFN 셰프는 **3 가지 (빨강 + 주황) 만 집중 사용**.
+- GAN 셰프는 6 카테고리 골고루.
+- FFN = **편식 셰프** — 한 두 카테고리에만 의존.
+
+**Fig 11 (GAN) vs Fig 12 (FFN) 의 결정적 차이**:
+
+| 측면 | Fig 11 (GAN) | Fig 12 (FFN) |
+|------|------|------|
+| Top 1 sensitivity | ~0.040 (ST_REV) | **~0.080 (ST_REV)** — 2배! |
+| Distribution | Gradual (top → bottom 작은 차이) | Concentrated (top 매우 큼, sharp drop) |
+| Top 20 의 색 | 6 색 모두 | 빨강 + 주황 위주 |
+| 해석 | Diversified — 다양한 risk source | Penny stock illiquid 의존 의심 |
+
+**어디부터 보면 되나**:
+1. Top 1 ST_REV 의 막대 길이 — GAN ~0.04, FFN **~0.08** (2 배).
+2. Top 14 의 색 — FFN 은 거의 다 빨강 + 주황.
+3. **paper 본문 (p.34): "raises the suspicion that a simple forecasting approach might focus mainly on illiquid penny stocks"**.
+
+→ Fig 11 vs Fig 12 의 시각 비교가 paper 의 핵심 메시지: **No-arbitrage 가 diversity 강제**.
+
+---
 
 ![Fig. 12 — Characteristic Importance for FFN SDF](figures/page34_var_importance_FFN.png)
 
@@ -430,6 +522,37 @@ paper p.34 (footnote 36):
 
 ## 11.8 Figure 13 — LSTM Hidden States 와 NBER Recession (paper p.36)
 
+### 📖 처음 보는 사람을 위한 — Figure 13 읽는 법 (★ 가장 놀라운 발견)
+
+**이 그림이 보여주는 것**: LSTM 이 178 개 거시경제 데이터 (실업률·금리·물가 등) 를 압축한 **4 개 hidden state** 의 50 년 시계열. 회색 = NBER 경기침체 기간.
+
+**일상 비유 (체온계)**:
+- LSTM 의 hidden state = "경제의 체온".
+- 정상이면 0 근처, 이상이면 ±1 근처.
+- 회색 음영 = "실제 경기침체 (NBER 공식)" 시점.
+- **놀라움**: LSTM 에게 "지금 경기침체인지 알려줘" 라고 한 번도 안 했는데 → state 가 자동으로 recession 에서 peak.
+
+**그림 구조**:
+- **4 sub-panel** (세로 배치): Macro_0, Macro_1, Macro_2, Macro_3 — 4 hidden state.
+- **각 panel 의 축**:
+  - X축: 1970-2020 (50 년).
+  - Y축: state 값 (-1.0 ~ +1.0).
+  - 파란 점: 각 시점의 state 값.
+- **회색 음영**: NBER recession 7 개 (1970, 1973-75, 1980, 1981-82, 1990-91, 2001, 2007-09).
+
+**어디부터 보면 되나**:
+1. **회색 음영** (recession 시점) 을 먼저 본다 — 7 개.
+2. **각 state 가 회색에서 peak** 인지 — 특히 State 3, 4 가 명확.
+3. **State 들이 cyclical** 한가 — 모두 그렇다 = business cycle pattern.
+4. **State 들이 다른 phase** 인가 — 그렇다 = 서로 다른 macro risk.
+
+**핵심 발견**:
+- paper 본문: "State variables, in particular for the third and fourth state, **peak during times of recessions**."
+- **LSTM 이 자율적으로 business cycle 학습** — supervision 없음.
+- 가장 큰 peak: 2007-2009 (Lehman crisis).
+
+---
+
 ![Fig. 13 — Macroeconomic Hidden State Processes (LSTM)](figures/page36_LSTM_hidden.png)
 
 (Figure 13, paper p.36)
@@ -537,6 +660,48 @@ paper footnote 37:
 
 ## 11.9 SDF Structure — Section III.G (paper p.36-37)
 
+### 📖 처음 보는 사람을 위한 — Figure 14/15 읽는 법
+
+**이 그림이 보여주는 것**: SDF weight ω 가 firm chars 의 **어떤 함수** 인지 시각화. **개별 char 는 거의 linear** + **char × char interaction 은 nonlinear** 발견.
+
+**일상 비유 (수입 ≒ 양념)**:
+- ω = "음식의 맛".
+- char 1 = "소금 양".
+- char 2 = "설탕 양".
+- 만약 ω = 0.5 × 소금 + 0.3 × 설탕 → linear (덧셈만).
+- 만약 ω = 0.5 × 소금 × 설탕 → multiplicative interaction (곱셈) — nonlinear.
+- **본 paper 발견**: 소금 자체는 linear, 설탕 자체도 linear, **그러나 소금 × 설탕 은 nonlinear**.
+
+**Figure 14 (line plot, 2x2)**:
+- 4 sub-panel:
+  - (a top): ω vs ST_REV, **5 lines = momentum 의 5 quantile**.
+  - (a bottom): ω vs momentum, **5 lines = ST_REV 의 5 quantile**.
+  - (b top): ω vs size (LME), 5 lines = BEME quantile.
+  - (b bottom): ω vs BEME, 5 lines = LME quantile.
+- **검증법**: 5 lines 가 **평행 (parallel)** 이면 interaction 없음. **non-parallel** 이면 interaction.
+- 결과: GAN 의 5 lines = **non-parallel** → interaction 있음.
+
+**Figure 15 (heatmap/contour, 2x2)**:
+- 4 sub-panel:
+  - (a): ST_REV × momentum 2D contour.
+  - (b): size × BEME 2D contour.
+  - (c): triple interaction ST_REV × momentum × SUV (3D).
+  - (d): triple interaction size × BEME × ST_REV (3D).
+- **검증법**: contour 가 **smooth gradient + curve** → nonlinear interaction.
+- 결과: 모두 saddle/dome shape → 강한 interaction.
+
+**어디부터 보면 되나**:
+1. Fig 14 (a)(b) 의 5 lines 가 평행한지 vs 교차하는지.
+2. Fig 15 의 contour 모양 — flat 이면 linear, curve 면 nonlinear.
+3. Fig 15 (c)(d) 의 3D triple interaction 의 색 변화.
+
+**핵심 발견**:
+- **개별 char**: 거의 linear (Fig A.9 에서 확인) → Fama-French linear 60년 성공 설명.
+- **Interaction**: 강한 nonlinear (Fig 14, 15) → **GAN 의 진짜 차별점**.
+- 가장 강한 interaction: ST_REV × momentum (paper p.37 의 triple 발견).
+
+---
+
 paper p.36 본문 두 핵심 발견:
 > "Surprisingly, **individual characteristics have an almost linear effect on the pricing kernel and the risk loadings**, i.e. non-linearities matter less than expected for individual characteristics. Second, **the better performance of GAN is explained by non-linear interaction effects**, i.e. the general functional form of our model is necessary for capturing the dependency between multiple characteristics."
 
@@ -557,6 +722,20 @@ paper p.36 본문 두 핵심 발견:
 - 한 char fix 시 다른 char 의 효과가 달라짐.
 
 → Linear/additive 못 잡고 GAN 만 잡음.
+
+### 🔣 4-단 기호 풀이 (Fig 14/15 의 핵심 5 characteristics)
+
+| 기호 | 한국어 (paper 약자) | 일상 비유 | 조심할 점 |
+|------|---------------------|-----------|-----------|
+| **ST_REV** | short-term reversal (지난 1개월 수익 반전) | "지난달 폭락한 학생 → 이번달 반등" | sign 반대로 해석 (high ST_REV = 지난달 많이 오른 = 이번달 떨어질 확률 ↑) |
+| **r12_2** | 12-2 month momentum (지난 12개월 수익, 직전 1개월 제외) | "최근 1년 꾸준히 잘한 학생" | ST_REV 와 부호 반대 (반전 vs 추세) |
+| **LME** | log Market Equity (시가총액 로그) | "회사 크기" | small cap (low LME) 에서 비선형 강함 |
+| **BEME** | Book-to-Market Equity (장부가/시장가) | "장부상 가치 ÷ 주가" | high BEME = value stock, low = growth |
+| **SUV** | Standardized Unexplained Volume (예상 외 거래량) | "평소보다 갑자기 거래 많이 된 학생" | 정보 비대칭 proxy |
+
+**🌱**: paper 가 발견한 **3-way interaction "low ST_REV + high r12_2 + high SUV"** 의 해석:
+- "**최근 한 달 별로였지만** (반등 후보) + **1년 추세는 강하고** (모멘텀 살아있음) + **거래량 갑자기 폭증** (뭔가 정보 있음)" = **highest SDF weight** → SDF 가 가장 좋게 평가하는 조합.
+- 이 3-way 조합은 linear/additive 모델로 **절대 못 잡음** — char1×char2×char3 곱 term 이 필요.
 
 ### Step 2 — Figure 14 — Pairwise Interaction (Line plot)
 

@@ -1,5 +1,13 @@
 # 07. Evaluation Metrics — Section II.F
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 3 가지 evaluation metrics — Sharpe Ratio (SR), Explained Variation (EV), Cross-Sectional R² (XS-R²)
+- 각 metric 의 정확한 정의 + 일상 비유
+- 왜 3 개 모두 필요한가
+
+---
+
 > Section II.F (paper p.19–20) — SR, EV, XS-R² 세 지표의 정의와 의미.
 
 ## 7.1 챕터 한 줄 요약
@@ -9,6 +17,18 @@
 ---
 
 ## 7.2 Sharpe Ratio (SR)
+
+### 🔣 4-단 기호 풀이 (SR)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $F_t$ | SDF factor (= $\omega^\top R^e$) | "SDF portfolio 의 t 시점 수익" | tangency portfolio return |
+| $\widehat\mathbb{E}[F_t]$ | sample mean | "평균 수익률" | $\frac{1}{T}\sum_t F_t$ |
+| $\widehat\mathrm{Var}(F_t)$ | sample variance | "수익 변동 정도" | $\frac{1}{T}\sum_t (F_t - \bar F)^2$ |
+| $\sqrt{\widehat\mathrm{Var}}$ | sample std | "변동성" | volatility |
+| **SR** | risk-adjusted return | "위험 한 단위당 수익" | 월간 → 연간 = × √12 |
+
+**🌱**: "**평균 수익 ÷ 변동성** — 같은 위험으로 더 많이 벌면 SR 높음".
 
 paper p.19:
 $$
@@ -38,6 +58,18 @@ $$
 \mathrm{EV} = 1 - \frac{\frac{1}{T}\sum_{t=1}^{T} \frac{1}{N_t}\sum_{i=1}^{N_t} (\hat\epsilon_{t+1,i})^2}{\frac{1}{T}\sum_{t=1}^{T} \frac{1}{N_t}\sum_{i=1}^{N_t} (R^e_{t+1,i})^2}
 $$
 
+### 🔣 4-단 기호 풀이 (EV)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\hat\epsilon_{t+1,i}$ | residual | "모델이 못 잡은 부분" | $R^e - \beta F$ |
+| $(R^e_{t+1,i})^2$ | total variation | "원본 수익률 제곱" | demean 안 함 (KPS convention) |
+| 분자 | residual variance | "잔여 변동" | 작을수록 좋음 |
+| 분모 | total variance | "전체 변동" | 정규화 기준 |
+| $1 - \text{ratio}$ | 설명된 비율 | "시계열 R² 같은 것" | 0 ~ 1 |
+
+**🌱**: "**잔여 변동 / 전체 변동 의 1-비율** — 시계열 R² (단 mean 안 빼기, KPS)".
+
 **기호 뜻**:
 - $\hat\epsilon_{t+1,i}$ — cross-sectional regression of $R^e$ on $\hat\beta$ 의 잔차.
 - 분자: 잔차 제곱 평균.
@@ -58,6 +90,18 @@ paper p.19:
 $$
 \mathrm{XS\text{-}R}^2 = 1 - \frac{\frac{1}{N}\sum_{i=1}^N \frac{T_i}{T} \left( \frac{1}{T_i}\sum_{t \in T_i} \hat\epsilon_{t+1,i} \right)^2}{\frac{1}{N}\sum_{i=1}^N \frac{T_i}{T} \left( \frac{1}{T_i}\sum_{t \in T_i} R^e_{t+1,i} \right)^2}
 $$
+
+### 🔣 4-단 기호 풀이 (XS-R²)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\frac{1}{T_i}\sum_t \hat\epsilon_{t+1,i}$ | 자산 i 평균 잔차 (α_i) | "i 학생의 평균 오답 점수" | pricing error |
+| $\frac{1}{T_i}\sum_t R^e_{t+1,i}$ | 자산 i 평균 수익률 | "i 학생의 평균 실제 점수" | 평균 (mean) |
+| $T_i / T$ | unbalanced weighting | "오래 관측된 학생 weight ↑" | $T_i$ 짧으면 noisy |
+| 분자 | weighted mean residual² | "평균 오답의 분산" | 횡단면 average squared α |
+| 분모 | weighted mean return² | "평균 점수의 분산" | 정규화 기준 |
+
+**🌱**: "**횡단면 평균 점수 의 R²** — 자산 i 의 평균 (mean) 을 모델이 얼마나 예측".
 
 **기호 뜻**:
 - 분자: 자산 $i$ 의 평균 잔차 ($\hat\alpha_i$) 의 제곱, weighted by $T_i/T$.

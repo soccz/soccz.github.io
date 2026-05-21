@@ -114,3 +114,25 @@
 | `figures/page33_var_importance_GAN.png` | p.33 | Fig. 11 — Characteristic importance for GAN SDF (46 chars) |
 | `figures/page34_var_importance_FFN.png` | p.34 | Fig. 12 — Characteristic importance for FFN SDF |
 | `figures/page36_LSTM_hidden.png` | p.36 | Fig. 13 — Macroeconomic Hidden State Processes (LSTM outputs) |
+
+---
+
+## 🆚 자매 deep dive — 같은 시리즈
+
+본 deep dive 는 다음 deep dive 들과 같은 시리즈 (모두 자산가격 결정 + ML):
+
+| Deep dive | 분야 | 핵심 도구 | 본 paper 와의 관계 |
+|-----------|------|-----------|-------------------|
+| [RPPCA (Lettau-Pelger 2020)](../2026-05-17_lettau-pelger-rppca/00_README.md) | 자산가격 | PCA + risk-premium penalty | **Pelger 동일 저자** — PCA → GAN 의 진화 |
+| [Autoencoder (Gu-Kelly-Xiu 2021)](../2026-05-17_gu-kelly-xiu-autoencoder/00_README.md) | 자산가격 | Autoencoder + IPCA 일반화 | β = NN(z) 의 비선형 — no-arbitrage 다른 방식 |
+| [VOC (Kelly-Malamud-Zhou 2024)](../2026-05-20_kelly-malamud-zhou-virtue-complexity/00_README.md) | 자산가격 | Random Fourier Features + ridge | Complexity > simplicity, 다른 ML 정신 |
+
+**3-way 비교 (핵심 차이)**:
+
+| 측면 | RPPCA | Autoencoder | **GAN (본 paper)** |
+|------|-------|-------------|-------------------|
+| Loss | variance + α penalty | reconstruction + no-arb | **no-arbitrage GMM (Eq 3)** |
+| ω 의 형태 | linear (PC factor weight) | nonlinear (NN of z) | **nonlinear (NN of chars+macro)** |
+| Test asset | fixed (40 anomalies) | fixed (sorted portfolios) | **adversarial (자동 발견)** |
+| Macro | 미사용 | 미사용 | **LSTM hidden states** |
+| OOS SR (월간) | ~0.5 | ~0.6 | **0.75 (best)** |

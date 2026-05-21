@@ -1,5 +1,13 @@
 # 09. 실증 결과 — Individual Stocks (Section III.C–D)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Table I (4 models 비교) — 본 논문의 가장 중요한 표
+- Tables II, III, IV — 다른 robustness 검정
+- 정확한 수치 + 해석
+
+---
+
 paper p.25-29 (Section III.C, III.D). **Table I + Figure 6 (macro inclusion) + Figure 7 (cumulative returns) + Figure 8 (β linear fit) + Table II (pricing errors)**.
 
 이 챕터의 목표: **표/그림을 어떻게 읽고 무엇을 봐야 하는지**, 그리고 paper 의 핵심 주장 "GAN 이 모든 metric 에서 압도" 가 무엇을 의미하는지.
@@ -16,6 +24,56 @@ paper Table I: **GAN 이 SR/EV/XS-R² 모든 지표에서 압도** (OOS test 199
 ---
 
 ## 9.2 Table I — 4 Model Performance (paper p.26)
+
+### 📖 처음 보는 사람을 위한 — Table I 읽는 법 (★ 본 논문의 가장 중요한 표)
+
+**이 표가 비교하는 것**: 4 모델 (LS, EN, FFN, **GAN**) × 3 metric (SR, EV, XS-R²) × 3 sample (Train, Valid, **Test**) = 36 cells. **GAN (본 논문) 이 Test 의 모든 metric 에서 1 위**.
+
+**용어 풀이 — 이것만 알면 표 읽힘**:
+
+| 용어 | 의미 | 일상 비유 |
+|------|------|-----------|
+| **LS** | Least Squares (가장 단순 선형) | "공식 1 개로 답 찾기" |
+| **EN** | Elastic Net (선형 + 정규화) | "공식 + 변수 선택" |
+| **FFN** | Feedforward Network (비선형, no-arb 무시) | "ML 자유롭게, 이론 무시" |
+| **GAN** | 본 논문 (비선형 + no-arbitrage + adversarial test asset) | "ML + 이론 결합 + 최악 test 자동 생성" |
+| **SR** | Sharpe Ratio (위험 1 단위당 초과수익) | "롤러코스터 강도 1 단위당 보너스" |
+| **EV** | Explained Variation (변동 설명력) | "오늘 일어난 일 얼마나 설명?" |
+| **XS-R²** | Cross-Sectional R² (횡단면 평균 설명력) | "이 자산 평균 수익 예측?" |
+| **Test** | OOS 1992-2016 (25 년) | "**한 번도 안 본** 본시험" |
+
+**Test 만 봐도 충분 — Train/Valid 는 fit 검증용**.
+
+### 🔣 4-단 기호 풀이 (Table I 의 핵심 7 용어)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| **LS** | Ordinary Least Squares (선형 OLS) | "모든 학생 평균만 보고 답하기" | 정규화 X → overfit 심함 (Train SR 1.80 vs Test 0.42) |
+| **EN** | Elastic Net (L1+L2 regularized linear) | "공식 + 중요 변수만 골라쓰기" | linear+no-arb → strongest baseline |
+| **FFN** | Feedforward Network (nonlinear, mean-MSE loss) | "ML 자유롭게, 이론 무시" | no-no-arbitrage → EN 보다 못함 (★ 핵심 발견) |
+| **GAN** | 본 논문 (nonlinear + no-arb + adversarial g) | "ML + 이론 + 최악 시험 자동생성" | 모든 cell 굵게 (best) |
+| **SR (Sharpe Ratio)** | 위험 1 단위당 초과수익 (monthly) | "롤러코스터 강도 1 단위당 보너스" | annualize × √12 (월간 0.75 → 연간 2.6 — 천문학적) |
+| **EV (Explained Variation)** | $1 - \mathrm{Var}(\text{residual})/\mathrm{Var}(R)$ | "오늘 일어난 일 얼마나 설명?" | time-series 변동성 설명 (R² 와 다름) |
+| **XS-R² (Cross-Sectional)** | 횡단면 평균 수익 설명력 | "이 회사의 장기 평균 예측?" | overall asset pricing 의 핵심 지표 |
+
+**🌱**: **EN Test SR 0.50 > FFN Test SR 0.44** 가 본 논문의 가장 큰 발견 — "linear+이론 (EN) 이 nonlinear+이론없음 (FFN) 보다 낫다". 즉 "**ML flexibility 보다 도메인 이론 (no-arbitrage) 이 더 중요**". GAN 은 둘 다 결합 → 0.75 압도.
+
+**3 개만 보면 됨 (Test 기준)**:
+1. **GAN Test SR = 0.75** — FFN (0.44), EN (0.50), LS (0.42) 압도. **모두 50%~78% 이상 우위**.
+2. **GAN Test EV = 0.08** — 다른 모델 (~0.03-0.04) 의 2배.
+3. **GAN Test XS-R² = 0.23** — 다른 모델 (~0.14-0.19) 보다 우위.
+
+**핵심 발견 — 본 논문의 메시지**:
+- **EN (linear, no-arb) Test SR = 0.50** > **FFN (nonlinear, no-no-arb) = 0.44**.
+- 즉 "비선형성 보다 **no-arbitrage 이론 제약** 이 더 결정적"!
+- → ML 자유도 만으로는 부족. **도메인 이론** 이 필수.
+
+**한 줄 결론**:
+> "GAN 이 모든 metric 에서 압도 + EN > FFN 의 의미로 **이론 > ML flexibility** 입증. 본 논문의 핵심 메시지."
+
+**원문 위치**: paper Table I, journal p.26.
+
+---
 
 paper Table I 의 정확한 수치:
 
@@ -176,6 +234,32 @@ GAN 의 우위 = (선형 → 비선형) + (no-no-arb → no-arb) 의 **곱**.
 
 (Figure 6, paper p.27)
 
+### 📖 처음 보는 사람을 위한 — Figure 6 읽는 법
+
+**이 그림이 비교하는 것**: "거시경제 데이터 (실업률·금리·물가 등 178개) 를 모델에 **어떻게 넣어야** 가장 좋은가?".
+
+세 가지 방법을 비교:
+1. **LSTM hidden state** (똑똑하게 압축) — 본 논문 권장.
+2. **No macro** (안 쓰기) — 안 쓰는 게 차라리 나음?
+3. **All macro raw** (날것 다 넣기) — 직접 다 넣음.
+
+**일상 비유 (요리)**:
+- LSTM hidden state = "양념 미리 잘 섞어 두기" — 맛 좋음.
+- No macro = "양념 빼고 재료만" — 평범하지만 안전.
+- All macro raw = "양념 178가지를 다 한꺼번에 넣기" — 망함.
+
+**X-axis (가로)**: Sharpe ratio (높을수록 좋음). Test panel 의 가로 길이를 비교.
+**Y-axis (세로)**: 9 가지 모델 setup (위가 좋고 아래가 나쁨, 색깔별로 그룹).
+
+**막대 색깔의 의미**:
+- **빨간 (top)**: GAN (hidden state) — 본 논문 baseline.
+- **주황**: GAN/FFN/EN/LS (no macro) — macro 안 씀.
+- **노랑 (bottom)**: 모든 모델 (all macro raw) — 다 망함.
+
+**어디부터 보면 되나**: Test panel 의 **GAN (hidden state) 막대 (top, 빨강) 가 가장 길고**, **All macro raw (bottom, 노랑) 가 가장 짧음** → 결론.
+
+---
+
 ### Step 1 — 그림의 구조 이해
 
 **축**:
@@ -280,17 +364,56 @@ paper 결론 (p.27):
 
 ---
 
+### 🆚 자매 paper 와의 OOS Sharpe 비교 (월간 SR, Test)
+
+| Paper | Test SR (월간) | Test SR (연간) | 비고 |
+|-------|--------------|-------------|------|
+| **본 paper (GAN)** | **0.75** | **2.60** | 본 논문 최고 |
+| [RPPCA (Lettau-Pelger)](../2026-05-17_lettau-pelger-rppca/00_README.md) | ~0.50 | ~1.73 | 5 factor RP-PCA |
+| [Autoencoder (Gu-Kelly-Xiu)](../2026-05-17_gu-kelly-xiu-autoencoder/00_README.md) | ~0.60 | ~2.08 | CA2 6-factor |
+| [VOC (Kelly-Malamud-Zhou)](../2026-05-20_kelly-malamud-zhou-virtue-complexity/00_README.md) | ~0.47 | ~1.63 | RFF + ridge |
+| Fama-French 5 | ~0.23 | ~0.80 | benchmark |
+
+→ **본 paper GAN 이 모든 동시기 ML 모델 압도**. 핵심 차이: **no-arbitrage adversarial GMM**.
+
+---
+
 ## 9.4 Figure 7 — Cumulative Excess Returns (paper p.28)
 
 ![Fig. 7 — Cumulative excess return of decile sorted portfolios](figures/page28_cumulative_returns.png)
 
 (Figure 7, paper p.28)
 
+### 📖 처음 보는 사람을 위한 — Figure 7 읽는 법
+
+**이 그림이 보여주는 것**: "GAN 이 추정한 위험 노출도 (β) 기준으로 주식을 **10 그룹** (decile) 으로 나누고, 각 그룹에 1968 년 \$1 씩 투자하면 50년 후 얼마가 되나"의 시계열.
+
+**일상 비유 (마라톤)**:
+- 10 명의 마라톤 주자 (decile 1 부터 10 까지).
+- X축 = 시간 (50년 = 1968-2018).
+- Y축 = 누적 거리 (= 누적 수익).
+- **GAN 이 "발 빠를 사람" (high β = decile 10) 을 미리 식별**.
+- 결과: decile 10 가 가장 멀리, decile 1 이 가장 못 옴 → GAN 의 예측 능력 증명.
+
+**축 설명**:
+- **X축 (1968-2018)**: 50년 시간.
+- **Y축 (-75 ~ +125)**: \$1 투자의 누적 수익 (cumulative excess return).
+
+**색 (10 lines)**:
+- **Decile 1** (가장 낮은 β): 가장 아래 (50년 후 약 -50, 손실).
+- **Decile 10** (가장 높은 β): 가장 위 (50년 후 약 +110).
+
+**어디부터 보면 되나**: **decile 1 (아래) 과 decile 10 (위) 사이 spread** 가 크게 벌어지는지 — 벌어질수록 GAN 의 β 가 미래 수익 예측 잘함.
+
+**핵심 발견**: 10 lines 가 **순서대로** 분리 (단조성) + spread 매우 큼 → **위험 노출이 미래 수익을 예측한다** 의 시각적 증명.
+
+---
+
 ### Step 1 — 그림의 구조 이해
 
 **축**:
 - **X-axis**: 시간 (1968 → 2018, 50년).
-- **Y-axis**: Cumulative excess return ($, scale -75 to +125).
+- **Y-axis**: Cumulative excess return (\$, scale -75 to +125).
 - **색**: 10 deciles (decile 1 가장 어두운/아래 → decile 10 가장 밝은/위).
 - 각 시점에 10 line.
 
@@ -337,6 +460,34 @@ paper p.27-28:
 ![Fig. 8 — Expected excess returns of β-sorted portfolios as function of β](figures/page29_beta_sorted.png)
 
 (Figure 8, paper p.28)
+
+### 📖 처음 보는 사람을 위한 — Figure 8 읽는 법
+
+**이 그림이 검증하는 것**: 자산가격결정의 **이론적 예측**:
+$$\text{기대 수익률} = \text{위험 노출도} \times \text{위험 가격}$$
+이 **실제 데이터에서 직선** 으로 나타나는지.
+
+**일상 비유 (월급)**:
+- 월급 = 근무시간 × 시급 ← linear (직선) 관계.
+- 만약 점들이 직선 위에 잘 찍히면 → 식이 맞음 (R² = 0.97 등).
+- 점들이 흩어지면 → 식이 안 맞음.
+
+**3 sub-panel**:
+- **(a) 5 quintiles**: 주식을 5 그룹으로 나눔, 5 점.
+- **(b) 10 deciles**: 10 그룹, 10 점.
+- **(c) 20 quantiles**: 20 그룹, 20 점.
+
+**각 sub-panel 의 축**:
+- **X축**: β (위험 노출도, 평균).
+- **Y축**: Excess return (월간 평균 수익률).
+- **점**: 각 그룹.
+- **직선**: 점들에 fit 한 회귀선.
+
+**어디부터 보면 되나**: 모든 점이 직선 위에 얼마나 잘 위치하는지 → **R² > 0.95** (paper) → 거의 perfect 한 linear.
+
+**핵심 발견**: 5/10/20 quantile 모두 **R² = 0.98 / 0.97 / 0.95** → 무 arbitrage 의 이론적 예측이 **실증으로 거의 perfect 하게 확인**.
+
+---
 
 ### Step 1 — 그림의 구조 이해
 
@@ -403,6 +554,50 @@ paper p.28-29:
 ---
 
 ## 9.6 Table II — Time Series Pricing Errors (paper p.29)
+
+### 🔣 4-단 기호 풀이 (Table II columns)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| Average Returns | 평균 수익 | "그 decile 의 평균 월간 점수" | full vs test sample 다름 |
+| $\alpha$ | factor model α (intercept) | "factor model 이 설명 못한 잔여" | 0 이어야 좋은 model |
+| $t$ | t-statistic | "α 가 0 과 통계적으로 다른가" | $|t| > 2$ → 유의 |
+| **CAPM α** | market factor 제외한 잔여 | "시장 (1 factor) 빼고도 남음" | single factor |
+| **FF3 α** | market+size+value 제외한 잔여 | "Fama-French 3 factor 빼고도 남음" | 3 factor |
+| **FF5 α** | + profit+investment 제외한 잔여 | "FF5 factor 빼고도 남음" | 5 factor |
+| **GRS test** | 모든 α=0 검정 (F-stat) | "factor model 이 진짜 fit 하나?" | p<0.05 reject |
+
+**🌱**: "**factor model 의 α (잔여) 가 유의 → factor model 이 부족**".
+
+### 📖 처음 보는 사람을 위한 — Table II 읽는 법
+
+**이 표가 보여주는 것**: GAN 의 β 로 만든 10 decile portfolio 의 평균 수익률이 **기존 factor model (CAPM, FF3, FF5) 로 설명되는가**.
+
+**일상 비유 (성적 책임)**:
+- 10 decile portfolio = 10 학생의 시험 점수.
+- CAPM/FF3/FF5 = 3 가지 "선생님" 의 평가 모델.
+- α (alpha) = "이 선생님이 설명 못 한 잔여 점수" — 0 이어야 좋은 모델.
+- **본 paper 결과**: α 가 모두 매우 유의 (t > 6) → CAPM/FF3/FF5 **모두 GAN 의 β-portfolio 못 설명**.
+- 즉 **GAN 이 진짜 새 risk dimension 발견**.
+
+**표 구조**:
+- **행 (12)**: 10 decile + 10-1 spread + GRS test.
+- **열**: Average Returns (Full/Test) | Market-Rf α | FF3 α | FF5 α — 각각 Full + Test sub-column.
+
+**값 의미**:
+- **Average Returns**: 그 decile 의 평균 월간 excess return.
+- **α (alpha)**: factor model 의 절편 — 0 이면 factor model 이 설명.
+- **t-stat**: α 가 0 과 통계적으로 다른지 (|t| > 2 이면 유의).
+- **GRS test p-value**: 모든 α = 0 검정 (p < 0.05 이면 reject = factor model 부적합).
+
+**어디부터 보면 되나**:
+1. **10-1 row** (가장 중요): decile 10 minus decile 1 의 spread. **Test 0.39**, α 들도 0.38, 0.38, 0.39 → spread 의 거의 100% 가 unexplained.
+2. **GRS test 의 p**: 0.00 (모든 모델) → **factor model 모두 fail**.
+3. **decile 별 α 의 t**: extreme decile (1, 10) 에서 가장 큼 (절댓값 4-10).
+
+**핵심 발견**: CAPM/FF3/FF5 모두 GAN β 의 risk dimension 못 잡음 → **GAN factor 는 진짜 새로움**.
+
+---
 
 paper Table II 정확 일부 수치 (β-sorted decile portfolios):
 

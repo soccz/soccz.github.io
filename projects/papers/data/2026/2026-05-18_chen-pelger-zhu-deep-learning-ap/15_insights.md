@@ -1,5 +1,13 @@
 # 15. 메타 통찰 (Meta Insights)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문이 주는 **12 가지 메타 메시지**
+- 단순 결과를 넘어 학계 전체에 대한 함의
+- Domain knowledge > ML flexibility 의 원칙
+
+---
+
 > 본 논문이 던지는 **12 가지 메타 메시지** — 단순 결과를 넘어, 자산가격결정과 ML 학계 전체에 대한 함의.
 
 ## 15.1 통찰 1: "Domain knowledge > ML flexibility"

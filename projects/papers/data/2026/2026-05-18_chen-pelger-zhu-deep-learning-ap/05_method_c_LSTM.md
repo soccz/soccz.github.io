@@ -1,5 +1,14 @@
 # 05c. Section II.C — RNN with LSTM (Macroeconomic Hidden States)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- LSTM (Long Short-Term Memory) 의 정확한 구조
+- 본 논문에서 LSTM 의 역할 — 178 macro 시계열 → 4 hidden state 압축
+- LSTM 이 자동 학습하는 것 — business cycle dynamics
+- LSTM 의 cell state vs hidden state 차이
+
+---
+
 > Section II.C (paper p.15–17) — 178 macro 시계열 → 4 hidden state.
 
 ## 5c.1 챕터 한 줄 요약
@@ -22,6 +31,38 @@ paper p.15:
 ![Fig. 3 — Examples of Macroeconomic Variables](figures/page16_macro_examples.png)
 
 *paper p.16 Fig. 3 — 3가지 macro 시계열 (Unemployment, S&P 500, Oil Price). 위 행: 원자료 (non-stationary). 아래 행: McCracken-Ng (2016) 변환 후 (stationary increments).*
+
+### 📖 처음 보는 사람을 위한 — Figure 3 읽는 법
+
+**이 그림이 보여주는 것**: 거시경제 시계열의 **원자료** vs **변환 후** 차이. 변환하면 stationary 되지만 **business cycle 정보 손실**.
+
+**일상 비유 (체온 vs 체온 변화)**:
+- 원자료 (top row) = "오늘의 체온 38도" — 절대값.
+- 변환 후 (bottom row) = "어제 대비 +0.3도" — 변화량만.
+- 만약 "지난 1주일 체온 변화량" 만 본다면 → 지금 절대 체온 모름 (아프나 정상인가?).
+- LSTM = "1주일 변화량 sequence 를 보고 절대 상태 추론".
+
+**그림 구조 (3 columns × 2 rows)**:
+- **Columns** (3): Unemployment Rate / S&P 500 / Oil Price.
+- **Top row**: 원자료 (raw, 1970-2020).
+- **Bottom row**: 변환 후 (McCracken-Ng 표준 변환).
+
+**각 panel 의 패턴**:
+- (a-top) Unemployment: 2-12% range, cyclical (peak 1980, 2009).
+- (a-bot) Δ Unemployment: -1 ~ +1, **stationary noise** — cycle 사라짐.
+- (b-top) S&P 500: 10 ~ 2500, **exponential growth**.
+- (b-bot) Δ log(S&P 500): -0.3 ~ +0.2, stationary returns.
+- (c-top) Oil: 0 ~ 140, 큰 regime shifts (1973, 2008).
+- (c-bot) Δ² log(Oil): stationary noise.
+
+**어디부터 보면 되나**:
+1. Top row 의 cyclical/trend pattern.
+2. Bottom row 의 무 pattern (random noise 같은).
+3. → "**raw 의 풍부한 정보가 변환 후 잃어버림**".
+
+**핵심 메시지**: 단순 last increment 만 사용 (GKX 2020) = **business cycle 정보 손실**. LSTM 으로 sequence 전체 활용 필요.
+
+---
 
 paper Fig. 3 note:
 > "This figure shows examples of macroeconomic time series with standard transformations proposed by McCracken and Ng (2016)."
@@ -67,6 +108,19 @@ paper p.17:
 $$
 h^{RNN}_t = \sigma(W_h h^{RNN}_{t-1} + W_x x_t + w_0)
 $$
+
+### 🔣 4-단 기호 풀이 (Vanilla RNN)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $h^{RNN}_t$ | t 시점 hidden state | "현재 경제 상황 요약" | $K_h$ 차원 (예: 4) |
+| $h^{RNN}_{t-1}$ | 이전 시점 hidden | "어제까지의 경제 상황" | recurrent (자기 참조) |
+| $W_h$ | recurrent weight | "어제 → 오늘 변환 행렬" | $K_h \times K_h$ |
+| $x_t$ | 입력 vector | "오늘의 새 macro 데이터 (178 변수)" | $p = 178$ |
+| $W_x$ | input weight | "새 데이터 → 상태 변환" | $K_h \times p$ |
+| $\sigma$ | 비선형 활성 | "tanh / sigmoid 등" | RNN 의 vanishing gradient 원인 |
+
+**🌱 한 줄**: "**어제까지의 상태 + 오늘 새 데이터 → 오늘 상태** — 단순 자기 참조 (그러나 long-range 약함)".
 
 **기호 뜻**:
 - $\sigma$ — activation function.
@@ -233,7 +287,7 @@ paper Fig 3 의 6 sub-panel (3 columns × 2 rows):
 |--------|---------|----------------------|------|
 | Unemployment | "현재 실업률 8%" | "지난 달 +0.2%p" | **현재 level 손실** |
 | S&P 500 | "현재 index 2500" | "지난 달 +1.5%" | **trend 손실** |
-| Oil Price | "현재 $80/bbl" | "지난 달 변화" | **regime 손실** |
+| Oil Price | "현재 \$80/bbl" | "지난 달 변화" | **regime 손실** |
 
 → Raw 의 (level + trend + cycle) 정보 → 변환 후 (last change) 만.
 
@@ -270,6 +324,44 @@ paper 인용:
 ## 5c.11 LSTM 의 내부 구조 — Gate 자세히
 
 paper Appendix A.B 의 LSTM 정의:
+
+### 🔣 paper Appendix B 의 정확한 LSTM 수식 (paper p.50)
+
+paper 의 정확한 형식:
+
+$$
+\tilde{c}_t = \tanh(W_h^{(c)} h_{t-1} + W_x^{(c)} x_t + w_0^{(c)})
+$$
+$$
+\text{input}_t = \sigma(W_h^{(i)} h_{t-1} + W_x^{(i)} x_t + w_0^{(i)})
+$$
+$$
+\text{forget}_t = \sigma(W_h^{(f)} h_{t-1} + W_x^{(f)} x_t + w_0^{(f)})
+$$
+$$
+\text{out}_t = \sigma(W_h^{(o)} h_{t-1} + W_x^{(o)} x_t + w_0^{(o)})
+$$
+$$
+c_t = \text{forget}_t \circ c_{t-1} + \text{input}_t \circ \tilde{c}_t
+$$
+$$
+h_t = \text{out}_t \circ \tanh(c_t)
+$$
+
+### 🔣 4-단 기호 풀이 (LSTM cell)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\tilde c_t$ | candidate cell | "후보 메모리" | $\tanh$ 로 [-1, +1] |
+| $c_t$ | actual cell state | "실제 메모리 (장기 저장)" | LSTM 의 핵심 ★ |
+| $h_t$ | hidden state | "current output 신호" | 다음 layer 입력 |
+| $\text{input}_t$ | input gate | "새 정보 흡수 정도 (0-1)" | sigmoid |
+| $\text{forget}_t$ | forget gate | "이전 메모리 유지 정도 (0-1)" | sigmoid |
+| $\text{out}_t$ | output gate | "메모리에서 신호 출력 정도 (0-1)" | sigmoid |
+| $W_h^{(\cdot)}, W_x^{(\cdot)}$ | 4 set of weights | "각 gate 의 학습 행렬" | 4 sets × 2 matrices |
+| $\circ$ | element-wise 곱 | "Hadamard 곱" | tensor 곱 아님 |
+
+**🌱**: "**메모리 셀 ($c_t$) 을 3 gate (input/forget/output) 로 조절** — vanishing gradient 해결".
 
 ### Step 1 — 3 gate 의 역할
 

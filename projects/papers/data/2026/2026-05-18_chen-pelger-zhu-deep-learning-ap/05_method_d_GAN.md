@@ -1,5 +1,14 @@
 # 05d. Section II.D–E — GAN & Hyperparameters
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- GAN (Generative Adversarial Network) 의 minimax framework
+- 본 논문에서 GAN 의 정확한 구조 — SDF network vs Conditional network
+- 3-step training algorithm 의 정확한 의미
+- Ensemble 9 의 design choice
+
+---
+
 > Section II.D–E (paper p.17–19) — Generative Adversarial Network 와 학습 setup.
 
 ## 5d.1 챕터 한 줄 요약
@@ -46,6 +55,19 @@ paper p.18 (footnote 18 위):
 $$
 \{\hat\omega, \hat h_t, \hat g, \hat h^g_t\} = \min_{\omega, h_t} \max_{g, h^g_t} L(\omega \mid \hat g, h^g_t, h_t, I_{t,i})
 $$
+
+### 🔣 4-단 기호 풀이 (GAN 의 4 quantity 동시 최적화)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\hat\omega$ | SDF weights (학습값) | "학생의 최종 답안" | NN parameter, 학습으로 결정 |
+| $\hat h_t$ | SDF LSTM state (학습값) | "학생의 경제 환경 이해" | 별도 LSTM weight 학습 |
+| $\hat g$ | conditioning function | "출제자의 최종 시험 문제" | adversary NN parameter |
+| $\hat h^g_t$ | adversary LSTM state | "출제자의 경제 분석" | 별도 LSTM (SDF 와 다름) |
+| $\min_{\omega, h_t}$ | SDF 측 최소화 | "학생이 답안 + 경제이해 모두 최소화" | 외부 |
+| $\max_{g, h^g_t}$ | adversary 측 최대화 | "출제자가 문제 + 자기분석 모두 최대화" | 내부 |
+
+**🌱 한 줄**: "**학생 (SDF) 측 2 quantity 와 출제자 (adversary) 측 2 quantity 가 minimax 게임** — 4 NN parameter 동시 학습".
 
 → **4가지 quantity 동시 최적화**: SDF weights $\omega$, SDF LSTM state $h_t$, conditioning $g$, adversary LSTM state $h^g_t$.
 

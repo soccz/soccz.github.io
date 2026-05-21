@@ -1,5 +1,13 @@
 # 08. Data & Illustrative GAN Example — Section III.A–B
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 데이터 — 50 년 (1967-2016), 약 10,000 US stocks, 50 firm characteristics
+- Macroeconomic 시계열 178 개의 소스
+- Illustrative GAN Example 의 의미
+
+---
+
 > Section III.A–B (paper p.20–25) — 50년 데이터 + GAN 의 작동 원리를 size-value-investment example 로 보여주기.
 
 ## 8.1 챕터 한 줄 요약
@@ -109,11 +117,59 @@ paper p.22:
 
 ---
 
+### 🔣 4-단 기호 풀이 (SVI illustrative example 의 setup)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| **SV** | size + value (2 chars) | "2 가지 재료" | LME + BEME |
+| **SVI** | + investment (3 chars) | "3 가지 재료" | LME + BEME + Investment |
+| **SV 25** | 5×5 = 25 portfolios | "두 axis sort, 25 cells" | Fama-French 의 25 |
+| **SVI 35** | 25 + 10 investment deciles | "Fama-French 25 + 추가 10" | total 35 |
+| **GAN (SVI-SVI)** | ω uses SVI, g uses SVI | "양쪽 다 3 chars" | adversarial 활성 |
+| **UNC (SVI)** | ω uses SVI, g = constant | "ω 만 학습, g 고정" | no adversarial |
+
+**🌱**: "**시뮬 setup 으로 GAN 의 핵심 4 component (chars 수, g 의 정보, adversarial, full vs subset) 효과 분리**".
+
+---
+
 ## 8.4 Figure 4 — Illustration Results (paper p.24)
 
 ![Fig. 4 — GAN Illustration](figures/page24_GAN_illustration.png)
 
 (Figure 4, paper p.24)
+
+### 📖 처음 보는 사람을 위한 — Figure 4 읽는 법
+
+**이 그림이 보여주는 것**: "GAN 의 부품 (SDF weight + g) 을 다르게 조합하면 성능이 얼마나 달라지나" 의 작은 setup 비교.
+
+**일상 비유 (요리 vs ingredient)**:
+- 6 가지 setup = "양념 6 가지 조합".
+- 5 panel = "5 가지 평가 기준" (맛 1, 양 1, 양 2, 모양 1, 모양 2).
+- **GAN (top)** = 모든 양념 다 쓴 풀 레시피.
+- **UNC (bottom)** = 양념 거의 안 쓴 단순 레시피.
+
+**그림의 구조**:
+- **5 panel** (가로): SR / EV (SV 25) / EV (SVI 35) / XS-R² (SV 25) / XS-R² (SVI 35). 모두 **높을수록 좋음**.
+- **각 panel 의 세로 (6 줄)**: 6 가지 모델 setup.
+- **막대 색**: GAN 류 = 빨강/주황, UNC 류 = 노랑.
+
+**6 setup 의 의미**:
+
+| Setup | SDF $\omega$ | Test asset $g$ | 한 줄 |
+|-------|-------------|---------------|------|
+| **GAN** (top) | 46 chars + macro 다 | 같음 | Full benchmark |
+| **GAN (SVI-SVI)** | size, value, invest | 같음 | 3 chars 만 |
+| **GAN (SVI-SV)** | SVI | size, value | g 가 invest 안 봄 |
+| **GAN (SV-SV)** | size, value | 같음 | SV 양쪽 |
+| **UNC (SVI)** | SVI | constant | Adversarial 없음 |
+| **UNC (SV)** | SV | constant | 가장 단순 |
+
+**어디부터 보면 되나**:
+1. 맨 위 (GAN, 빨강) 막대가 5 panel 모두에서 **가장 길다** → full benchmark 최고.
+2. 맨 아래 (UNC) 가 가장 짧다 → adversarial 없으면 약함.
+3. paper 본문: "**GAN (SVI-SVI) ≈ 2 × UNC (SVI)**" — adversarial 의 가치.
+
+---
 
 ### Step 1 — 그림의 구조 이해
 
@@ -245,6 +301,42 @@ paper Fig 4 의 5 panels × 6 models 의 정확한 값 (시각 reading 기반):
 ![Fig. 5 — Conditioning function g + portfolio pricing](figures/page25_g_function.png)
 
 (Figure 5, paper p.25)
+
+### 📖 처음 보는 사람을 위한 — Figure 5 읽는 법
+
+**이 그림이 보여주는 것**: "Adversary (g) 가 자동으로 어떤 test asset 을 만드는가?" + "GAN vs UNC 의 pricing 정확도 차이".
+
+**일상 비유 (출제자)**:
+- (a) (b) = "출제자가 어떤 시험 문제를 출제하는가" 의 시각화.
+- (c) (d) = "학생이 실제 시험에서 얼마나 정답에 가까이 답했는가" scatter.
+
+**4 sub-panel 의 의미**:
+
+| Panel | 무엇 | 일상 비유 |
+|-------|------|---------|
+| **(a) Heatmap** (좌위) | g 의 2D map (size × value 만) | 출제자가 어떤 portfolio 강조 |
+| **(b) 3D plot** (우위) | g 의 3D map (+ investment) | 더 복잡한 시험 문제 |
+| **(c) Scatter** (좌아래) | GAN 의 예측 vs 실제 | 학생 답안의 정확도 |
+| **(d) Scatter** (우아래) | UNC 의 예측 vs 실제 | (a) 의 비교 |
+
+**(a) 와 (b) 의 색 의미** (heatmap):
+- **주황 (high g)**: 출제자가 "이 portfolio 가 mispriced" 라 강조.
+- **보라 (low g)**: "이 portfolio 는 무시".
+
+**(c) (d) 읽는 법**:
+- X축: 실제 평균 수익률.
+- Y축: 모델 예측 수익률.
+- **45° line**: 완벽 일치 (perfect prediction).
+- 점이 line 가까이 → 잘 맞춤.
+- 점이 line 에서 멀리 → 못 맞춤.
+
+**핵심 발견**:
+- (a): 출제자가 "small + value" 강조 (top-left 가 가장 orange) → Fama-French 식 portfolio 를 자동 발견.
+- (b): 추가 investment 정보 → "small + conservative value" 더 정밀.
+- (c) GAN: 점이 line 근처 → 잘 맞춤.
+- (d) UNC: 점이 흩어짐 → 못 맞춤 → adversarial 의 가치.
+
+---
 
 ### Step 1 — 그림의 구조 이해
 

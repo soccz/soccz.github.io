@@ -1,5 +1,13 @@
 # 16. 코드 — PyTorch GAN Baseline 구현
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- 본 논문의 GAN baseline PyTorch 구현
+- SDF network + Conditional network + 3-step training
+- 약 200 줄로 본 논문 핵심 재현
+
+---
+
 > 본 논문의 GAN model 을 PyTorch 로 self-contained 예제.
 
 ## 16.1 챕터 한 줄 요약
@@ -71,6 +79,19 @@ class FFN(nn.Module):
 
 ## 16.5 SDF Network
 
+### 🔣 4-단 기호 풀이 (SDFNetwork code 변수)
+
+| 코드 변수 | 한국어 | 일상 비유 | paper 매칭 |
+|-----------|--------|-----------|-----------|
+| `macro_seq` | macro time series | "지금까지의 거시 history" | $I_1, ..., I_t$ (178 vars) |
+| `chars` | firm characteristics | "각 자산의 특성" | $I_{t,i}$ (46 vars) |
+| `h_t` | LSTM hidden state | "경제 상황 요약" | $h_t \in \mathbb{R}^4$ |
+| `omega` | SDF weights | "각 자산 weight" | $\omega(I_t, I_{t,i})$ |
+| `self.lstm` | LSTM module | "State RNN" | paper Fig 1 좌위 |
+| `self.ffn` | FFN module | "공식 적용기" | paper Fig 1 좌위 |
+
+**🌱**: "**macro → LSTM 으로 압축 → chars 와 결합 → FFN 으로 ω 출력**".
+
 ```python
 class SDFNetwork(nn.Module):
     """SDF network: macro LSTM + chars → ω.
@@ -101,6 +122,30 @@ class SDFNetwork(nn.Module):
 ---
 
 ## 16.6 Conditional (Adversary) Network
+
+### 🔣 4-단 기호 풀이 (ConditionalNetwork code 변수)
+
+| 코드 변수 | 한국어 | 일상 비유 | paper 매칭 |
+|-----------|--------|-----------|-----------|
+| `macro_seq` | 같은 macro history | "출제자도 같은 경제 자료" | $I_1, ..., I_t$ |
+| `chars` | 같은 firm chars | "각 자산 특성" | $I_{t,i}$ |
+| `h_g_t` | adversary LSTM hidden | "출제자의 경제 분석" | $h^g_t \in \mathbb{R}^4$ |
+| `num_instruments` | g 출력 차원 | "시험 문제 개수" | $D = 8$ |
+| `g` | conditioning function | "mispriced test asset weight" | $g(I_t, I_{t,i})$ |
+| `torch.tanh(g)` | 정규화 | "weight 을 [-1, 1] 로" | paper 명시 |
+
+**🌱**: "**SDFNetwork 와 같은 구조, 다만 (1) 별도 weight (2) 출력 차원 D=8 (3) tanh 정규화**".
+
+**🆚 SDFNetwork vs ConditionalNetwork (code 비교)**:
+
+| 부분 | SDF | Conditional |
+|------|-----|-------------|
+| LSTM | $h_t$ (학습) | $h^g_t$ (별도 학습) |
+| FFN output | 1 dim (ω scalar) | D=8 dim (g vector) |
+| 최종 activation | linear | tanh ([-1,1]) |
+| Loss 방향 | minimize | maximize (negative loss) |
+
+
 
 ```python
 class ConditionalNetwork(nn.Module):

@@ -1,5 +1,13 @@
 # 10. Characteristic Sorted Portfolios — Section III.E
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- Characteristic-Sorted Portfolios — Decile 1 vs Decile 10
+- Sharpe Ratio 의 정확한 분해
+- Long-short portfolio 의 운용 의미
+
+---
+
 paper p.29-32 (Section III.E). **Table III (46 anomaly deciles) + Figure 9/10 (predicted vs actual scatter) + Table A.IV (double-sorted) + SDF structure (Section III.G)**.
 
 이 챕터의 목표: **Table III 의 각 cell 이 무엇을 의미하는지** 깊이 풀고, Figure 9/10 의 4 subpanel scatter plot 을 어떻게 읽는지, double-sorted 결과의 함의를 자세히.
@@ -42,6 +50,51 @@ paper p.29 본문:
 ---
 
 ## 10.3 Table III — 46 Decile Portfolios (paper p.30)
+
+### 🔣 4-단 기호 풀이 (Table III columns)
+
+| 열 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| **Charact.** | anomaly 이름 | "시험 과목" | 46개 |
+| **EN EV** | EN 모델의 EV | "EN 학생의 변동 설명력" | 0-1 (높을수록 좋음) |
+| **FFN EV** | FFN 모델의 EV | "FFN 학생의 변동 설명력" | EN 과 비슷한 수준 |
+| **GAN EV** | GAN 모델의 EV | "GAN 학생의 변동 설명력" | **거의 모두 best** |
+| **EN XS-R²** | EN 모델의 XS-R² | "EN 의 평균 수익 설명력" | 단조성 |
+| **FFN XS-R²** | FFN 모델의 XS-R² | "FFN 의 평균 수익 설명력" | |
+| **GAN XS-R²** | GAN 모델의 XS-R² | "GAN 의 평균 수익 설명력" | **거의 모두 > 0.90** |
+
+**🌱**: "**6 column = 3 모델 × 2 metric (EV, XS-R²) 의 가로 layout** — 46 anomaly 모두 동시 비교".
+
+### 📖 처음 보는 사람을 위한 — Table III 읽는 법 (★ 본 논문 가장 큰 표)
+
+**이 표가 보여주는 것**: 46 개 anomaly (size, value, momentum, ...) 각각으로 주식을 10 그룹 (decile) 으로 나눠 portfolio 만들고, **3 모델 (EN/FFN/GAN)** 이 그 portfolio 의 (변동 + 평균 수익률) 을 얼마나 설명하나.
+
+**일상 비유 (학생-시험)**:
+- 46 anomaly = "46 가지 다른 시험 과목" (size 시험, value 시험, ..., momentum 시험).
+- 3 모델 = "3 명의 학생" (EN, FFN, GAN).
+- 2 metric (EV / XS-R²) = "2 가지 채점 기준" (변동 설명력 / 평균 설명력).
+- **GAN 이 거의 모든 과목에서 1 등** + **XS-R² > 90% 거의 모두**.
+
+**표 구조**:
+- **행 (46 개)**: 각 anomaly (paper 2 column layout — 표가 가로로 두 묶음, 각 23 anomaly).
+- **열**: 각 anomaly 별로 6 cell — (EN/FFN/GAN) × (EV/XS-R²). **GAN 굵게**.
+
+**값의 의미**:
+- **EV (Explained Variation)**: 0-1 사이, 높을수록 좋음. "그 anomaly 의 시계열 변동의 몇 %를 모델이 설명".
+- **XS-R² (Cross-Sectional R²)**: 0-1 사이, 높을수록 좋음. "10 그룹의 평균 수익률 차이를 얼마나 예측".
+
+**어디부터 보면 되나**:
+1. **GAN 열 (굵게)** 를 먼저 본다 — 거의 모든 row 에서 **EN/FFN 보다 큼**.
+2. **XS-R² > 0.90** 인 row 개수 — 거의 46 개 모두.
+3. **EN vs FFN** 비교 — 둘이 비슷하지만 GAN 이 둘 다 압도.
+
+**핵심 발견**:
+- GAN 의 EV: 46 개 모두 1 등.
+- GAN 의 XS-R²: 거의 모두 > 90% (paper "all 46 ... cross-sectional R² higher than 90%").
+- 가장 큰 격차 (GAN 우위): ST_REV (r12_2 momentum), IdioVol, Variance (Past Returns + Trading Frictions).
+- 가장 작은 격차 (모든 모델 잘): size (LME), value (BEME) — well-known easy.
+
+---
 
 paper Table III 의 **정확한 수치** (46 chars 전부):
 
@@ -214,7 +267,43 @@ GAN EV / EN EV 비율 (카테고리 평균):
 
 ---
 
-## 10.4 Figure 9 — Predicted vs Actual (Value Weighted, paper p.31)
+## 10.4 Figure 9/10 — Predicted vs Actual (paper p.31, 32)
+
+### 📖 처음 보는 사람을 위한 — Figure 9/10 읽는 법
+
+**이 그림이 보여주는 것**: 460 portfolios (46 anomaly × 10 decile) 의 **모델 예측 vs 실제** 비교. 점들이 45° line 가까이 있으면 모델 정확.
+
+**일상 비유 (체중계)**:
+- 460 portfolios = "460 사람의 진짜 체중".
+- 모델 예측 = "체중계의 측정값".
+- 45° line = "예측 = 실제" 라인.
+- 점이 line 가까이 → 체중계 정확.
+- 점이 흩어짐 → 체중계 부정확.
+
+**그림의 구조**:
+- **2×2 sub-panel**: (a) GAN / (b) FFN / (c) EN / (d) LS.
+- **각 panel 의 축**:
+  - X축: actual mean excess return (실제 평균).
+  - Y축: projected excess return (모델 예측).
+  - 검은 직선: 45° line (perfect fit).
+- **점 색**: 6 anomaly category (Trading Frictions, Value, Intangibles, Profitability, Investment, Past Returns).
+
+**Fig 9 (Value-weighted, VW) vs Fig 10 (Equally-weighted, EW)**:
+- 동일한 4 sub-panel.
+- VW = 시가총액 비례 가중 / EW = 모든 stock 동일 가중.
+- EW 가 약간 더 좋음 (small stock noise 약화).
+- 그러나 모델 ranking 동일: GAN > EN ≈ FFN > LS.
+
+**어디부터 보면 되나**:
+1. **(a) GAN**: 점들이 line 가까이 집중 — best.
+2. **(d) LS**: 점들이 흩어짐 + 일부 음수 — worst.
+3. 6 색 (category) 별로 어디에 위치하나 — 모든 category 가 잘 위치하면 모델이 robust.
+
+**핵심 발견**:
+- GAN: 점들이 line 따라 monotonic, 약간 mean 으로 bias (regularization 효과).
+- LS: scatter 가장 큼.
+
+---
 
 (paper Fig. 9, p.31)
 
@@ -322,6 +411,32 @@ paper p.31:
 ---
 
 ## 10.6 Double-Sorted Portfolios (Table A.IV)
+
+### 📖 처음 보는 사람을 위한 — Table A.IV 읽는 법
+
+**이 표가 보여주는 것**: Single-sort (한 char 만) 대신 **두 char 동시 sort** (5×5 grid = 25 portfolios) — interaction effect 검증.
+
+**일상 비유 (조합 시험)**:
+- Single sort = "수학 시험 점수만" 으로 분류.
+- Double sort = "수학 + 영어 점수" 조합 분류 (5×5 grid).
+- Corner cell (e.g., 수학 1등 × 영어 1등) = extreme combination.
+- Linear 모델 = "두 점수 합" 만 봄 → corner 의 곱 효과 못 잡음.
+- GAN = "두 점수 모든 조합" 학습 → corner 도 정확.
+
+**4 portfolio sets** (paper):
+- ST_REV × momentum (reversal + 가속도)
+- size × BEME (well-known easy)
+- size × momentum
+- size × ST_REV
+
+**핵심 발견**:
+- Single sort 에서는 EN 도 OK.
+- **Double sort, 특히 momentum 관련**: **EN collapse** — corner portfolio 못 잡음.
+- GAN 만 잘함 — interaction 학습.
+
+→ 본 paper 의 가장 중요한 비선형성 증거 중 하나.
+
+---
 
 paper p.30:
 > "Table A.IV repeats the same analysis on short-term reversal and momentum double-sorted and size and book-to-market double-sorted portfolios. The takeaways are similar to the decile sorted portfolios. **GAN outperforms FFN and EN on the momentum related portfolios, while all three models are able to explain the size and value double-sorted portfolios. Importantly, the linear EN becomes worse on the double-sorted reversal and momentum portfolios. This is due to the extreme corner portfolios, which are in particular low momentum and high short-term reversal stocks. This implies that the linear model cannot capture the interaction between characteristics, while the GAN model successfully identifies the potentially non-linear interaction effects.**"

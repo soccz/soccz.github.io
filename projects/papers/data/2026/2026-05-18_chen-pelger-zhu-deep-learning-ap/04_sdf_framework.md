@@ -1,5 +1,14 @@
 # 04. SDF Framework — Section I (Model)
 
+## 📌 이 챕터 다 읽으면 알 수 있는 것
+
+- SDF (Stochastic Discount Factor) framework — 자산가격결정의 fundamental equation
+- Eq 1 의 정확한 의미 — $\mathbb{E}[M_{t+1} R^e_{t+1,i}] = 0$
+- No-arbitrage 의 수학적 정의
+- KPS·IPCA·본 논문의 SDF 관계
+
+---
+
 paper p.6-12 (Section I). **No-arbitrage condition + SDF + adversarial GMM (Eq 1-3)**.
 
 이 챕터의 목표: paper 의 모든 수식 (Eq 1, 2, 3) 을 한 줄씩 풀이 + no-arbitrage 의 이론적 토대 + adversarial 의 동기.
@@ -19,12 +28,34 @@ paper 의 framework:
 
 ## 4.2 Section I.A — No-Arbitrage Asset Pricing 의 토대
 
+### 🌱 일상 비유 — "학생-시험" 패러다임
+
+본 paper 의 framework 를 학생-시험 비유로 통일:
+- **자산 (stock)** = "학생" — 각자 다른 위험과 수익.
+- **SDF $M$** = "공정한 채점자" — 모든 학생을 공정하게 평가.
+- **No-arbitrage** = "공정 채점 조건" — 모든 학생의 평균 점수가 0 이어야 (위험만큼 수익 = balance).
+- **Test asset $g$** = "시험 문제" — 채점자를 평가.
+- **GAN minimax** = "출제자 vs 채점자" — 둘이 경쟁해서 최선의 채점자 발견.
+
+이 비유가 본 paper 전체에 일관 적용.
+
+---
+
 ### Step 1 — Fundamental no-arbitrage equation
 
 paper p.7:
 $$
 \mathbb{E}_t [M_{t+1} R^e_{t+1,i}] = 0
 $$
+
+### 🔣 4-단 기호 풀이 (Eq 1, 가장 fundamental)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $M_{t+1}$ | Stochastic Discount Factor (SDF) | "공정한 채점자" — 시나리오마다 다른 가중치 | $M > 0$ (positive) 필수 — paper 의 주요 가정 |
+| $R^e_{t+1,i}$ | 자산 $i$ 의 excess return | "$i$ 학생의 시험 점수 - 평균" | risk-free $R^f$ 빼야 함 (gross return 아님) |
+| $\mathbb{E}_t[\cdot]$ | 시점 $t$ 조건부 기댓값 | "지금 정보 기준 평균 예상" | $t$ 시점 (now) 의 정보만 사용 — no look-ahead |
+| $= 0$ | 균형 조건 | "공정한 채점자 의 평균 점수 = 0" | 모든 자산 $i$ 에 대해 동시 성립 |
 
 #### 기호의 의미
 
@@ -93,6 +124,15 @@ $$
 \omega_t = \mathbb{E}_t[R^e_{t+1} R^{e\top}_{t+1}]^{-1} \mathbb{E}_t[R^e_{t+1}]
 $$
 
+### 🔣 4-단 기호 풀이 (Eq 1, Markowitz tangency)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\omega_t$ | SDF portfolio weights | "자산별 투자 비율 (long/short)" | 음수 OK (short selling 가능) |
+| $\mathbb{E}_t[R^e R^{e\top}]$ | second moment matrix | "자산 간 같이 움직이는 정도 + 자기 분산" | $N \times N$ matrix (자산 수) |
+| $\mathbb{E}_t[R^e]$ | expected excess return vector | "각 자산의 평균 초과 수익률" | $N \times 1$ vector |
+| $[\cdot]^{-1}$ | 역행렬 | "공분산 효과 풀기" | 역행렬 존재 = 자산이 redundant 안 함 |
+
 #### 이 식이 의미하는 것
 
 **Markowitz mean-variance optimization 의 해**.
@@ -158,6 +198,19 @@ $$
 
 ---
 
+### 🆚 자매 paper 와의 SDF 비교
+
+| Paper | SDF 형태 | $\omega$ 학습 | No-arbitrage |
+|-------|---------|--------------|------|
+| **본 paper (GAN)** | $M = 1 - \omega^\top R^e$, $\omega$ = NN | Adversarial GMM | ✓ (loss 자체) |
+| [RPPCA (Lettau-Pelger)](../2026-05-17_lettau-pelger-rppca/00_README.md) | PCA factor + premium penalty | PCA + penalty | 간접 (penalty) |
+| [Autoencoder (Gu-Kelly-Xiu)](../2026-05-17_gu-kelly-xiu-autoencoder/00_README.md) | factor model, $\beta = NN(z)$ | Autoencoder | ✓ (Prop 2 IPCA 호환) |
+| [VOC (Kelly-Malamud-Zhou)](../2026-05-20_kelly-malamud-zhou-virtue-complexity/00_README.md) | ridge on RFF | ridge + complexity | ✗ (단순 prediction) |
+
+→ 본 paper 가 **유일하게 minimax adversarial** 으로 SDF + test asset 동시 학습.
+
+---
+
 ## 4.3 Section I.B — Adversarial GMM
 
 ### Step 1 — Eq (2): Conditional Moments 의 무한 family
@@ -166,6 +219,18 @@ paper Eq (2):
 $$
 \mathbb{E}[M_{t+1} R^e_{t+1,i} g(I_t, I_{t,i})] = 0
 $$
+
+### 🔣 4-단 기호 풀이 (Eq 2)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $I_t \in \mathbb{R}^p$ | 거시경제 정보 (시점 t) | "오늘 경제 환경 (실업률·금리 등 178 변수)" | $p = 178$ |
+| $I_{t,i} \in \mathbb{R}^q$ | 자산 i 의 firm-specific 정보 | "회사 i 의 특성 (size, momentum 등 46 변수)" | $q = 46$ |
+| $g(I_t, I_{t,i})$ | conditioning function (instrument) | "시험 문제" — 어느 상황·자산에 weight 줄지 | $g: \mathbb{R}^{p+q} \to \mathbb{R}^D$ |
+| $D$ | g 의 출력 차원 | "한 자산당 만들 시험 문제 개수" | 본 paper: $D = 8$ |
+| $\mathbb{E}[\cdot] = 0$ | unconditional 평균이 0 | "어떤 g 를 곱해도 평균 점수 = 0" | 모든 $g$ 에 대해 성립 (무한 family) |
+
+---
 
 for **any** function $g : \mathbb{R}^p \times \mathbb{R}^q \to \mathbb{R}^D$.
 
@@ -212,6 +277,21 @@ paper Eq (3):
 $$
 \min_\omega \max_g \frac{1}{N} \sum_{j=1}^{N} \left| \mathbb{E}\left[ \left(1 - \sum_{i=1}^{N} \omega(I_t, I_{t,i}) R^e_{t+1,i} \right) R^e_{t+1,j}\, g(I_t, I_{t,j}) \right] \right|^2
 $$
+
+### 🔣 4-단 기호 풀이 (Eq 3, ★ 본 논문 핵심 식)
+
+| 기호 | 한국어 | 일상 비유 | 조심할 점 |
+|------|--------|-----------|-----------|
+| $\min_\omega$ | 최소화 (SDF) | "학생: 내 답안 (ω) 의 오답률 최소화" | 외부 optimization |
+| $\max_g$ | 최대화 (adversary) | "출제자: 학생이 가장 못 푸는 문제 (g) 찾기" | 내부 optimization (게임 반대편) |
+| $\frac{1}{N} \sum_j$ | N 자산 평균 | "N 명의 채점 평균" | $N \approx 10,000$ |
+| $1 - \sum_i \omega R^e$ | SDF $M$ | "공정한 채점자" | $M_{t+1}$ 의 정의 (affine) |
+| $\omega(I_t, I_{t,i})$ | SDF weight function | "자산 i 의 가중치 = f(경제 + 자산 특성)" | NN 으로 학습 |
+| $R^e_{t+1,j}$ | 자산 j 의 다음 시점 수익 | "j 학생 다음 시험 점수" | $j$ 는 test asset 인덱스 (≠ $i$) |
+| $g(I_t, I_{t,j})$ | test asset weight | "j 학생을 시험 문제로 만들 weight" | adversarial NN 으로 학습 |
+| $|\cdot|^2$ | squared deviation | "오답 정도의 제곱" | L2 loss |
+
+**🌱 한 줄 일상 비유**: "**학생 (SDF) 이 어떤 시험 문제 (g) 에서도 정답에 가깝게 풀게 학습** — 출제자 (adversary) 가 가장 어려운 문제 자동 출제 + 학생이 그것도 풀게 반복".
 
 #### 구조 분해
 
