@@ -3,9 +3,29 @@
 ## 📌 이 챕터 다 읽으면 알 수 있는 것
 
 - 본 paper 이후의 follow-up 논문 3 편
-- 학계 동향
+- MASTER 의 학계 위치 (선행 + 경쟁 + 후속)
+- 각 후속 논문이 MASTER 의 어떤 한계를 보완하는가
 
 ---
+
+### 🌱 MASTER 의 학계 생태계 — 일상 비유
+
+MASTER 의 family:
+
+| 관계 | 논문 | 의의 |
+|------|------|------|
+| **선행 (조상)** | TFT (Lim et al. 2021) | Variable Selection Network 의 정신적 전신 |
+| **경쟁 (siblings)** | FinMamba (2025) | Mamba 로 attention 대체 + 양 시장 |
+| **후속 (자손)** | Concept Bottleneck TS (2024) | 해석 가능성 보완 |
+
+**3 관계의 의미**:
+- 선행 → MASTER 의 design 출처 추적
+- 경쟁 → MASTER 의 architectural choice (attention) 의 대안 비교  
+- 후속 → MASTER 의 한계 (해석 가능성, 단일 시장) 보완
+
+### 🔑 핵심 통찰
+
+> MASTER 는 **단독 작품이 아닌 학계 lineage 의 한 결과**. TFT (2021) → MASTER (2024) → FinMamba (2025) 의 점진적 진화. 본 챕터의 가치는 이 lineage 안에서 MASTER 의 정확한 위치 파악.
 
 ---
 

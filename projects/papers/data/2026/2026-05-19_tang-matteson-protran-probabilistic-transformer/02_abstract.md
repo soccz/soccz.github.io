@@ -9,6 +9,35 @@
 
 ---
 
+### 🌱 제목 + Abstract — 일상 비유
+
+**한 줄로**: "RNN 없이 Transformer + 잠재 변수 + smoothing 으로 시계열 + 모션 둘 다 SOTA. 4 lineage (SSM + RNN + Transformer + VAE) 의 통합".
+
+| 본 논문 design | 비유 |
+|---------------|------|
+| Transformer | 학생들끼리 직접 채팅 (RNN 의 1대1 전달 X) |
+| Latent variables | 학생 머릿속 생각 (보이는 답 X) |
+| Smoothing | 학습 때 답안지 보면서 공부 |
+| Multi-layer | 사원-팀장-부장 계층 추상화 |
+| Universal | 시계열 + 모션 둘 다 SOTA = task-agnostic |
+
+### 🔣 Abstract 핵심 기호 4-단 풀이
+
+| 기호 | 의미 |
+|------|------|
+| $z_t$ | 잠재 변수 (시점별 hidden state) |
+| Self-attention | 과거 잠재끼리 attention (Eq 6) |
+| Cross-attention | 잠재 → context attention (Eq 7) |
+| Smoothing | training-only future-aware inference (Eq 10-11) |
+| **CRPS_sum** | 확률 예측 정확도 metric (낮을수록 좋음) |
+| ADE/FDE | 모션 예측 metric (모든 시점 평균 / 마지막 시점 거리) |
+
+### 🔑 핵심 통찰
+
+> ProTran 은 single innovation 이 아닌 **4 lineage 통합** (Deep SSM + Attentive RNN + Transformer + Hierarchical VAE). 시계열 deep learning 의 2-3 세대 전환점.
+
+---
+
 ## 2.1 제목: "Probabilistic Transformer for Time Series Analysis"
 
 한국어로 풀면: **"시계열 분석을 위한 확률적 트랜스포머"**

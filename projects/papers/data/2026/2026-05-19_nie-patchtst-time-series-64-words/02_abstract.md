@@ -11,6 +11,33 @@
 
 > Paper 의 영어 제목 + 영어 abstract 를 *한국어로 의역* + *한 문장씩 풀이*. 영어 못 읽어도 OK.
 
+### 🌱 제목 + Abstract — 일상 비유
+
+**한 줄로**: "ViT 의 시계열 버전. 시계열을 64 단어로 자르고 vanilla Transformer 적용 → 21% MSE 향상 + BERT-style 학습으로 foundation model 시대 개막".
+
+| 본 논문 메시지 | 비유 |
+|--------------|------|
+| Title: "A Time Series is Worth 64 Words" | ViT 의 "An Image is Worth 16x16 Words" 오마주 |
+| Patching + CI | 두 단순 trick |
+| 21% MSE reduction | 5% 도 significant 한 학계 기준에서 압도적 |
+| Self-supervised | BERT 시계열 버전 → foundation model 가능성 |
+
+### 🔣 Abstract 핵심 기호 4-단 풀이
+
+| 기호 | 의미 | 값 |
+|------|------|-----|
+| L | Lookback window (시계열 길이) | 336 또는 512 |
+| P | Patch length | 16 |
+| S | Stride | 8 (overlap) 또는 12 (non-overlap) |
+| **N** | Patch 수 (token 수) | **42 (L=336) 또는 64 (L=512)** |
+| M | Variate 수 (channel) | 7-862 (dataset 따라) |
+| **MSE reduction** | 평균 MSE 감소율 | **21%** (vs FEDformer) |
+| **Mask ratio** | Self-supervised mask 비율 | **40%** (vs BERT 15%) |
+
+### 🔑 핵심 통찰
+
+> PatchTST 의 제목 "64 Words" 가 ViT 의 오마주. **Paradigm transfer** 의 정신 — NLP 의 Transformer 가 image (ViT 2020) → 시계열 (PatchTST 2023). 시계열의 "BERT moment".
+
 ---
 
 ## ★ 제목의 깊은 의미 — "64 Words"

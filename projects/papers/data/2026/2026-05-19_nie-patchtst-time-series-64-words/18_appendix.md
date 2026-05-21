@@ -11,6 +11,24 @@
 
 > Paper Appendix (p.13–24) 의 *7 sub-section* 정리. 친근 풀이 + step-by-step.
 
+### 🌱 Appendix 7 sub-section — 일상 비유
+
+PatchTST appendix 의 보조 결과들:
+
+| Sub-section | 내용 | 본 paper 강화 |
+|-------------|------|--------------|
+| A.1 Implementation | PyTorch 코드, hyperparameters | 재현성 |
+| A.2 Hyperparameter | sweep results | Sensitivity 입증 |
+| A.3 Robustness | seed variation | Statistical reliability |
+| A.4 Model size (Fig 5) | model size sensitivity | Architecture robustness |
+| A.5 Attention maps (Fig 6) | 학습된 attention 시각화 | Mechanism 해석 |
+| A.6 CI universal (Table 15) | CI 가 다른 model 에도 적용 | Universality 입증 |
+| A.7 Seed variance (Table 14) | 5 seed 결과 | Statistical significance |
+
+### 🔑 핵심 통찰
+
+> Appendix 는 **main paper 의 모든 claim 의 입증 backup**. 학계 논문의 robust 성 = main + appendix 모두 살펴봐야 검증.
+
 ---
 
 ## 18.1 챕터 한 줄 요약

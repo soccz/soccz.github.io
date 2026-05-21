@@ -13,6 +13,32 @@
 
 깊이 읽으면 자연스럽게 얻을 수 있는 **통찰·시사점·추론·발표용 Q&A** 정리.
 
+### 🌱 15 통찰 한눈에 — 일상 비유
+
+ProTran 이 시계열 학계에 던진 메시지:
+
+| 통찰 | 학생 비유 |
+|------|----------|
+| 1. SSM "principled" | "수학적 토대 있는 학습법" |
+| 2. Latent attention > Observation attention | "raw 점수 비교 X, 정제된 의미 비교 ✓" |
+| 3. Smoothing > Filtering | "답안지 보며 공부 → 시험 잘 봄" |
+| 4. RNN 거부 | "한 줄 읽기 학습 버림" |
+| 5. Hierarchical VAE 시계열 적용 | "이미지 분야 trick 을 시계열로" |
+| 6. NeurIPS 2021 Cambrian | "한 학기에 학생들이 모두 새 학습법 시도" |
+| 7. Universal (시계열 + 모션) | "한 도구로 여러 시험 합격" |
+| 8. CRPS 우월 | "확률 분포 평가의 표준" |
+| 9. ELBO 의 가치 | "lower bound 도 좋은 목표" |
+| 10. Probabilistic > Point | "분포가 점보다 풍부" |
+| 11. Long-range capture | "멀리 떨어진 정보 직접 참고" |
+| 12. Reparameterization | "stochastic 도 학습 가능" |
+| 13. Latent space efficiency | "고차원 입력 매번 안 해도 됨" |
+| 14. Foundation model 가능성 | "한 모델 → 여러 task" |
+| 15. 시계열 ML 2-3 세대 전환점 | "한 paper 가 분야 바꿈" |
+
+### 🔑 메타 통찰
+
+> ProTran 의 핵심 = **잠재 표현 위에서의 attention** (latent attention) 이라는 새 정신. 단순 architecture trick 이 아닌 정보 처리의 새 패러다임 — noise raw 대신 정제된 의미 직접 비교. 시계열 분야의 paradigm shift.
+
 ---
 
 ## 15.0 메타 통찰 — 한 줄로

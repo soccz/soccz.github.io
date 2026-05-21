@@ -13,6 +13,21 @@ paper p.9-10 (Section 6). 짧은 결론과 솔직한 한계 명시.
 
 이 챕터의 목표: **paper 가 자신을 어떻게 평가하고, 무엇이 한계이고, 어떻게 발전 가능한지** 풀어 쓴다.
 
+### 🌱 본 논문이 남긴 것 — 일상 비유
+
+ProTran 의 4 contribution:
+
+| 본 논문이 한 것 | 일상 비유 |
+|----------------|---------|
+| SSM + Transformer 결합 | 1960 Kalman + 2017 Vaswani 의 60년 도구 통합 |
+| RNN 거부 | "낡은 학습법 (한 줄 읽기) 버리고 새 방법 (모두 동시 보기)" |
+| Hierarchical latent | 사원-팀장-부장 계층 표현 |
+| 시계열 + 모션 둘 다 SOTA | 한 도구로 다양 task 해결 (universal) |
+
+### 🔑 핵심 통찰
+
+> ProTran 의 contribution 의 본질은 **single innovation 아닌 통합**. 4 lineage (SSM + RNN + Transformer + VAE) 의 강점 흡수 + cross-domain universal 적용. 시계열 deep learning 의 2-3 세대 전환점.
+
 ---
 
 ## 13.1 원문 — Conclusion

@@ -11,6 +11,23 @@
 
 > 본 논문 *결론 + 의의 + 미래 연구 방향*.
 
+### 🌱 본 논문이 남긴 것 — 일상 비유
+
+PatchTST 의 6가지 paradigm shift:
+
+| 항목 | Before (2022) | After (2023+) |
+|------|--------------|--------------|
+| 시계열 specific attention 변형 | 필수 (Informer/Auto/FED) | **불필요** (vanilla 충분) |
+| Channel handling | Mixing default | **Independence default** |
+| Long L 활용 | 불가능 (L>96 악화) | **가능** (L=720 까지) |
+| Self-supervised | 시도 없음 | **표준** (BERT moment) |
+| Foundation model | 불가능 | **가능** (Chronos, TimesFM, Moirai) |
+| Transfer learning | 어려움 | **자연스러움** |
+
+### 🔑 핵심 통찰
+
+> PatchTST 가 **6가지 paradigm shift 를 한 번에**. 일반적으로 paper 가 1-2 shift 만 만들지만 본 논문은 6개. 이게 1500+ citation 의 이유.
+
 ---
 
 ## 13.1 챕터 한 줄 요약

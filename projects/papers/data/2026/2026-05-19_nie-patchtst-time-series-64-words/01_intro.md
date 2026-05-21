@@ -11,6 +11,35 @@
 
 > 영어 못 읽거나 수식 두려운 사람을 위한 entry. 여기를 읽으면 *PatchTST 가 뭔지* + *왜 중요한지* 가 한국어 + 일상 비유로 명확해집니다.
 
+### 🌱 이 논문 — 일상 비유 (가장 쉽게)
+
+**한 줄로**: "ChatGPT 의 부품 (Transformer) + 두 단순 trick (patching + channel-indep) → 시계열 SOTA. ViT 의 시계열 버전".
+
+| 비유 | 본 논문 |
+|------|--------|
+| 책 한 권 (336 페이지) | 시계열 (336 timesteps) |
+| 한 글자씩 읽기 (RNN/old) | 매 timestep 처리 |
+| **단어 단위 읽기 (16 페이지)** | **Patching (16 timesteps)** |
+| ChatGPT 의 attention | Vanilla Transformer 그대로 |
+| 한 모델로 326 가구 따로 | Channel-Independence |
+| BERT 의 빈칸 학습 | Masked patch reconstruction |
+
+### 🔣 7 개 핵심 개념 4-단 풀이
+
+| 개념 | 한 줄 설명 |
+|------|----------|
+| **Transformer** | Attention 기반 신경망 (2017 Vaswani) |
+| **ViT (Vision Transformer)** | 이미지를 16x16 patch 로 → NLP Transformer 직접 적용 |
+| **Patching** | 시계열을 작은 조각 (patch) 으로 자름 |
+| **Channel-Independence (CI)** | M 개 channel 을 각각 따로 처리 + 같은 weight |
+| **Self-supervised** | 정답 없는 데이터로 학습 (BERT 스타일) |
+| **Masked patch reconstruction** | 40% patch 가리고 모델이 예측 |
+| **CRPS / MSE** | 예측 정확도 metric |
+
+### 🔑 핵심 통찰
+
+> PatchTST 의 핵심 = **paradigm transfer** (ViT → 시계열). 분야 specific 변형 가정 전에 general tool (vanilla Transformer) 의 직접 적용 시도. 시계열 분야의 60% over-engineering 함정 회피.
+
 ---
 
 ## 이 논문, 한 줄로 뭐예요?

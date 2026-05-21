@@ -10,6 +10,22 @@
 
 > 본 논문이 *자산가격결정* 분야에 *무엇을 남겼는지* 한 페이지에 정리. *Occam's blunder* 의 의미.
 
+### 🌱 본 논문이 남긴 것 — 일상 비유
+
+학생 (자산가격결정 학계) 의 깨달음 5가지:
+
+| 결론 | 학생 비유 |
+|------|----------|
+| 1. 복잡함의 미덕 | "내가 50년간 단순 학습법 고수해왔는데, 사실 복잡한 학습법이 더 효과적" |
+| 2. R² ≠ 경제가치 | "시험 점수만 보지 말고 실생활 응용 능력도 보자" |
+| 3. Misspecified > Simple | "모든 모델은 틀렸으니 차라리 복잡하게" |
+| 4. RMT 도구 | "새 수학 도구 (RMT) 가 finance 에도 적용 가능" |
+| 5. Risk on/off 자동 | "ML 이 사전 지식 없이 자동 위험 감지" |
+
+### 🔑 핵심 통찰
+
+> 본 논문은 단순 *새 추정량 제안* 이 아닌 **자산가격결정 분야의 paradigm shift**. Box (1976) 의 60년 권고 (simple 우선) 의 정면 반박. 향후 finance ML 연구의 새 출발점.
+
 ---
 
 ## 8.1 챕터 한 줄 요약
@@ -217,15 +233,25 @@ AQR (Bryan Kelly 본인이 head of ML), Two Sigma, Renaissance 같은 *ML 자산
 
 ## 8.8 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **본 논문이 학계에 남긴 5가지?**
 2. **"Occam's razor may be Occam's blunder" 의 의미?**
 3. **저자의 practical recommendation 4가지?**
+4. **후속 연구의 5가지 자연스러운 방향?**
+5. **본 논문이 시장 효율성 가설 (EMH) 에 도전하는가?**
 
 ### 답변
-1. **(i) Theorem 1 (Virtue of Complexity)** — Sharpe ratio 가 complexity 의 monotone 증가. **(ii) R² ≠ economic value** — R² 음수 임에도 Sharpe 양수 가능. **(iii) Misspecified > correctly specified** — 모든 현실 모델 misspecified, complex 가 더 좋다. **(iv) RMT 의 finance 적용** — 1967년 도구의 자산가격결정 응용. **(v) ML 자산운용의 이론적 정당화** — 실증 효과의 *왜* 의 답.
-2. Box (1976) 의 두 명언의 *내부 모순*: "(1) 모든 모델은 틀렸다 + (2) parsimony 가 좋다". (1) 의 universality 가 (2) 의 권고와 *충돌*. 본 논문이 (1) 의 logical conclusion 까지 밀고 가면 *(2) 가 틀림* — *misspecified + optimal ridge → complex > simple* (Theorem 1). 14세기 William of Occam 의 *간단함의 원칙* 이 21세기 misspecified ML 에서는 *실수 (blunder)*.
-3. **(i) All plausibly relevant predictors 포함** — arbitrary 가 아닌 relevant. **(ii) Rich nonlinear models** — 단순 선형이 아닌 비선형 (RFF, NN, kernel). **(iii) Prudent shrinkage** — 적절한 ridge ($z = 10^3$ 정도). **(iv) Small raw predictors 도 OK** — 15 변수라도 *비선형 확장 (RFF 12,000)* 으로 high-dim 만들면 됨. → 실증의 *Goyal-Welch 15 + RFF + $z = 10^3$* 가 이 4 권고의 구현.
+
+1. **(i) Theorem 1 (Virtue of Complexity)** — Sharpe ratio 가 complexity 의 monotone 증가. **(ii) R² ≠ economic value** — R² 음수 임에도 Sharpe 양수 가능. **(iii) Misspecified > correctly specified** — 모든 현실 모델 misspecified, complex 가 더 좋다. **(iv) RMT 의 finance 적용** — 1967년 도구의 자산가격결정 응용. **(v) ML 자산운용의 이론적 정당화** — 실증 효과의 *왜* 의 답. **종합 영향**: 자산가격결정 분야 60년 통념 (simple is best) 의 정리, finance ML 의 이론적 backbone.
+
+2. Box (1976) 의 두 명언의 *내부 모순*: "(1) 모든 모델은 틀렸다 + (2) parsimony 가 좋다". (1) 의 universality 가 (2) 의 권고와 *충돌*. 본 논문이 (1) 의 logical conclusion 까지 밀고 가면 *(2) 가 틀림* — *misspecified + optimal ridge → complex > simple* (Theorem 1). 14세기 William of Occam 의 *간단함의 원칙* 이 21세기 misspecified ML 에서는 *실수 (blunder)*. **함의**: Occam's razor 는 절대 진리 아닌 specific 가정 (correctly specified) 에서만 valid. 현실 환경에선 그 가정 거의 만족 안 됨 → **practical reversal**.
+
+3. **(i) All plausibly relevant predictors 포함** — arbitrary 가 아닌 relevant. **(ii) Rich nonlinear models** — 단순 선형이 아닌 비선형 (RFF, NN, kernel). **(iii) Prudent shrinkage** — 적절한 ridge ($z = 10^3$ 정도). **(iv) Small raw predictors 도 OK** — 15 변수라도 *비선형 확장 (RFF 12,000)* 으로 high-dim 만들면 됨. → 실증의 *Goyal-Welch 15 + RFF + $z = 10^3$* 가 이 4 권고의 구현. **실무 적용**: AQR, Two Sigma 같은 quant 펀드의 ML 전략이 이미 이 4 권고 충족. 본 논문이 academic justification 제공.
+
+4. **(i) 다른 시장 검증**: 미국 외 (중국 CSI, 일본 Nikkei, 한국 KOSPI, 유럽 STOXX) — 본 논문 결과의 universal 성. **(ii) 다른 asset class**: 채권, 외환, 원자재 — 본 논문 결과가 stock 외에도 적용? **(iii) Cross-sectional version**: 본 논문은 time-series (market timing), cross-sectional (종목 선택) 적용 가능? **(iv) Online learning + regime change**: 시간 따라 cq 동적 조절. **(v) Foundation model integration**: GPT/Chronos 같은 시계열 foundation model 과 RFF 결합. **현재 진행**: 일부 후속 연구 (2024-2025) 가 (i), (ii) 시도 — 결과 mixed but promising.
+
+5. **EMH (Efficient Market Hypothesis) 도전 여부**: **약한 도전**. EMH 의 weak form (과거 가격으로 미래 예측 불가) → 본 논문 결과 (SR 0.47) 가 정면 반박. EMH 의 semi-strong (public info 사용 불가) → 본 논문이 macro 정보 사용 → 약한 도전. **그러나**: (i) 결과 (SR 0.47) 의 magnitude 가 거래 비용·세금 후 실현 가능? — 불명, (ii) Half 2 (1975-2020) 의 magnitude 감소 = 시장 efficiency 강화 시사, (iii) ML 기법 보편화 시 arbitrage 효과 감소. **균형 관점**: 본 논문 = "EMH 의 절대 형태는 틀렸다" 입증 + "그러나 alpha 가 시간 따라 감소" 도 함께. EMH 완전 반박 아닌 **시장 efficiency 의 dynamic version** 제시.
 
 ---
 

@@ -9,6 +9,37 @@
 
 ---
 
+### 🌱 이 논문 — 일상 비유 (가장 쉽게)
+
+**한 줄로**: "도로 트래픽 같은 시계열 미래 예측 — '한 답' 이 아닌 '여러 가능성 분포'. Transformer + 잠재 변수 결합".
+
+| 비유 | 본 논문 |
+|------|--------|
+| 일기 예보 (한 줄: 26°C) | Point forecast (구식) |
+| 일기 예보 (분포: 60% 25-27°C, 30% 23-25°C, 10% 28+°C) | **Probabilistic forecast (ProTran)** |
+| 학생들이 channel chat | RNN (1대1 전달) |
+| 학생들이 모두 회의실 모임 | **Transformer (모든 과거 직접 참고)** |
+| 학생 머릿속 생각 | 잠재 변수 $z_t$ |
+| 시험 전 답안지 보며 공부 | Smoothing (training-only) |
+
+### 🔣 7 개 핵심 개념 4-단 풀이
+
+| 개념 | 한 줄 설명 |
+|------|----------|
+| **SSM (State-Space Model)** | 잠재 상태 + 관측의 시계열 모델 (Kalman 1960 부터) |
+| **LDS (Linear Dynamical System)** | SSM 의 linear 특수 case |
+| **Kalman filter** | LDS 의 inference 알고리즘 |
+| **VAE (Variational Autoencoder)** | 잠재 변수 + ELBO 최적화 (2014 Kingma) |
+| **ELBO** | $\log p(x)$ 의 lower bound, 학습 목표 |
+| **Transformer** | Attention 기반 신경망 (2017 Vaswani) |
+| **CRPS_sum** | 확률 예측 정확도 metric (낮을수록 좋음) |
+
+### 🔑 핵심 통찰
+
+> 본 논문 = **2017 (Transformer) + 2014 (VAE) + 1960 (SSM)** 의 60년 도구 통합. 60년 전 Kalman 이 만든 SSM 의 정신을 21세기 Transformer 로 부활.
+
+---
+
 ## 이 논문이 뭘 하는 논문인가요?
 
 한 문장으로 말하면:
@@ -221,14 +252,24 @@ ProTran 의 paper 는 **6개 섹션** 으로 되어 있다 (Introduction → Pre
 
 ## 자기점검 (이 챕터)
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **ProTran 이 "RNN 을 안 쓴다" 고 강조하는 이유는?**
 2. **잠재 변수 $z$ 와 관측값 $x$ 의 차이는?**
 3. **확률적 forecasting 과 point forecasting 의 차이는?**
+4. **SSM (Kalman 1960) + Transformer (2017) + VAE (2014) 의 결합 의미?**
+5. **ProTran 의 4 lineage 통합 (Deep SSM + Attentive RNN + Time Series + Motion) 의 의의?**
 
 ### 답변
-1. RNN(LSTM) 은 한 줄로 순차 읽기 때문에 멀리 떨어진 시점 사이 의존성을 잘 못 잡는다 (gradient vanishing). Attention 은 모든 시점을 동시에 보므로 long-range dependency 학습이 훨씬 효과적. ProTran 은 이 한계를 정면 돌파.
-2. $x$ = 우리가 측정한 값 (트래픽, 전력, 관절 위치). $z$ = 그 뒤에 숨은 의미 (출근 시간대 여부, 사고 발생 등). SSM 은 $z$ 를 모델링해서 $x$ 를 설명한다.
-3. Point = 한 개 숫자 ("내일 25도"). Probabilistic = 분포 ("평균 25도, 90% 구간 22~28"). 실제 의사결정에는 분포가 훨씬 정확.
+
+1. **RNN(LSTM) 은 한 줄로 순차 읽기 때문에 멀리 떨어진 시점 사이 의존성을 잘 못 잡는다 (gradient vanishing)**. Attention 은 모든 시점을 동시에 보므로 long-range dependency 학습이 훨씬 효과적. ProTran 은 이 한계를 정면 돌파. **2021 시점의 학계 trend**: NLP/CV 에서 Transformer 가 RNN 압도 (BERT, GPT, ViT) → 시계열도 마찬가지일 것이라는 가설. ProTran 이 이를 실증. **부수 효과**: parallel training (RNN 의 sequential bottleneck X) → 학습 시간 ↓.
+
+2. **$x$ = 우리가 측정한 값** (트래픽, 전력, 관절 위치) — 관측 가능. **$z$ = 그 뒤에 숨은 의미** (출근 시간대 여부, 사고 발생 등) — 학습으로 발견. **SSM 은 $z$ 를 모델링해서 $x$ 를 설명**. **Plato 의 동굴 비유**: $x$ = 동굴 벽의 그림자, $z$ = 진짜 객체. 그림자만 보고 진짜 객체 추론. **ProTran 의 묘수**: Attention 을 $x$ 가 아닌 $z$ 에 적용 — 의미 있는 패턴 attention.
+
+3. **Point = 한 개 숫자** ("내일 25도"). **Probabilistic = 분포** ("평균 25도, 90% 구간 22~28"). 실제 의사결정에는 분포가 훨씬 정확. **실무 예**: (i) 수요 예측 시 안전재고 = 99% 분위수 → point 만으론 결품 위험, (ii) 자율주행 보행자 trajectory = multiple plausible paths → point 만 보면 사고 위험, (iii) 발전 계획 = 90% 신뢰구간 → backup 용량. **CRPS_sum 의 의미**: probabilistic forecast 의 정확도 metric.
+
+4. **3 도구의 60년 진화 결합**: **SSM (1960 Kalman)**: 잠재 + 관측의 시계열 모델, 미사일 추적 표준. **VAE (2014 Kingma)**: 잠재 변수 + ELBO 학습, image generation 표준. **Transformer (2017 Vaswani)**: Attention, NLP 표준. **ProTran 의 결합**: SSM 의 잠재 정신 + VAE 의 ELBO 학습 + Transformer 의 attention. **결과**: 각 도구의 강점 + 약점 보완 — SSM 의 Markov 한계 → Transformer 가 해결, VAE 의 단일 latent → SSM 의 sequential latent.
+
+5. **4 lineage 의 통합**: **(i) Deep SSM (Linderman 2017, Krishnan 2017)**: SSM 의 deep 화 — ProTran 의 latent 정신. **(ii) Attentive RNN (DeepAR + attention)**: Attention 시계열 적용 — ProTran 의 attention 정신. **(iii) Time Series Forecasting (TimeGrad 2021)**: probabilistic forecasting — ProTran 의 분포 출력. **(iv) Human Motion Prediction (DLow, MT-VAE)**: 모션 sequence 생성 — ProTran 의 universal 적용. **의의**: 4 lineage 각각의 강점 흡수 + cross-domain (시계열 + 모션) 적용. **연구 패러다임**: single innovation 이 아닌 **통합** 의 가치 — 시계열 ML 의 architectural universality 입증.
 
 자, 그러면 **02 번 파일** 로 가서 논문의 초록부터 만나보자.

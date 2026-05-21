@@ -11,6 +11,30 @@
 
 > 영어 원문 abstract 의 4 문장을 *한국어로 쉽게* 풀이. 영어 못 읽어도 OK.
 
+### 🌱 제목 + Abstract — 일상 비유
+
+**한 줄로**: "60년 학계 통념 ('단순함이 미덕') 의 정면 반박. **변수 많을수록 좋다 + 적절한 ridge** 와 함께면 시장 timing 가능".
+
+| 학계 통념 | 본 논문 |
+|----------|--------|
+| Occam's razor: 단순함이 미덕 | **Occam's blunder: 복잡함이 미덕** |
+| 변수 > 데이터 → 망함 | 변수 ≫ 데이터 + ridge → 잘 됨 |
+| 시장 예측 불가능 (GW 2008) | 같은 데이터로 SR 0.47 (정반대) |
+| R² 음수 → 의미 없음 | R² 음수 + SR 양수 가능 (분리) |
+
+### 🔣 Abstract 핵심 기호 4-단 풀이
+
+| 기호 | 의미 | 값 |
+|------|------|-----|
+| P | 변수 (predictor) 수 | 12,000 (RFF 확장) |
+| T | 데이터 수 (training window) | 12 (개월) |
+| **c = P/T** | 모델 복잡도 | **1000** (놀라움) |
+| z | Ridge regularization | 최적 약 10³ |
+| **SR** | Out-of-sample Sharpe ratio | **0.47** (vs benchmark -0.11) |
+| t-stat | 통계적 유의성 | **4.5** (robust anomaly) |
+
+→ 본 논문의 5 key terms 이 abstract 안에 다 있음.
+
 ---
 
 ## 2.1 제목 풀이 — "복잡함의 미덕"
@@ -184,15 +208,25 @@
 
 ## 2.7 자기점검 — 이 챕터를 이해했나?
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **이 논문의 제목 "Virtue of Complexity" 이 도전하는 통념?**
 2. **Abstract 4 문장의 핵심 메시지?**
 3. **본 논문의 실증 결과 한 줄?**
+4. **저자 3인 (Kelly, Malamud, Zhou) 의 학술 배경과 협업 의의?**
+5. **Journal of Finance 2024 게재의 학술적 의미?**
 
 ### 답변
-1. **"단순한 모델이 좋다" (Occam's razor)**. 통상 통계학자 + 자산가격결정 학자들이 *변수 많으면 과적합 → 망한다* 고 믿어왔음. 본 논문이 *변수가 많을수록* (P > T 영역) *적절한 안정장치 (ridge) 와 함께* *오히려 잘 된다* 는 것을 수학적으로 증명. *복잡함이 미덕* — 통념의 정반대.
-2. **"단순 모델은 예측가능성을 심각하게 과소평가; 복잡 모델 + ridge 가 우월; 실제 미국 시장에서 증명; 머신러닝 자산운용의 이론적 정당화"**. 4 문장 각각 (현재 학계 상태 / 이론 증명 / 실증 / 의의) 의 메시지를 한 단어 단위로 분해 가능.
-3. **CRSP 1926-2020 + Goyal-Welch 15 변수 + Random Fourier Features 12,000 변수 → Sharpe ratio 향상 0.47/year (t≈4.5), 14/15 NBER 침체 자동 비중 감소 (purely out-of-sample)**. 같은 데이터로 Goyal-Welch 2008 의 *"불가능"* 결론을 *정반대* 결론 (극적 성공) 으로 변환.
+
+1. **"단순한 모델이 좋다" (Occam's razor)**. 통상 통계학자 + 자산가격결정 학자들이 *변수 많으면 과적합 → 망한다* 고 믿어왔음. 본 논문이 *변수가 많을수록* (P > T 영역) *적절한 안정장치 (ridge) 와 함께* *오히려 잘 된다* 는 것을 수학적으로 증명. **복잡함이 미덕** — 통념의 정반대. **Box (1976) 의 "All models are wrong but some are useful"** 의 정확한 의미: 모델이 항상 misspecified 이므로 복잡함이 가치 ↑.
+
+2. **"단순 모델은 예측가능성을 심각하게 과소평가; 복잡 모델 + ridge 가 우월; 실제 미국 시장에서 증명; 머신러닝 자산운용의 이론적 정당화"**. 4 문장 각각 (현재 학계 상태 / 이론 증명 / 실증 / 의의) 의 메시지를 한 단어 단위로 분해 가능. **각 문장의 contribution**: (1) 문제 진단 — GW 2008 의 비관, (2) 이론 — Theorem 1 monotone SR, (3) 실증 — CRSP 1926-2020, (4) implication — Use the largest model. 논문 전체의 mini-version.
+
+3. **CRSP 1926-2020 + Goyal-Welch 15 변수 + Random Fourier Features 12,000 변수 → Sharpe ratio 향상 0.47/year (t≈4.5), 14/15 NBER 침체 자동 비중 감소 (purely out-of-sample)**. 같은 데이터로 Goyal-Welch 2008 의 "불가능" 결론을 정반대 결론 (극적 성공) 으로 변환. **3 가지 비범한 결과**: (i) Same data 정반대 결론, (ii) Real-time recession detection (macro economics 의 holy grail), (iii) statistical significance (t=4.5 = robust new anomaly).
+
+4. **Bryan Kelly (Yale + AQR)**: 머신러닝 × 자산가격 분야의 세계적 권위자. Gu-Kelly-Xiu 2020 (Autoencoder), Chen-Pelger-Zhu 2023 (DLAP) 등 다수 논문. AQR Capital ($150B AUM) 의 실무 직접 영향. **Semyon Malamud (Swiss Finance Institute + EPFL)**: 수학/RMT 전문가. Kelly 와 다수 협업. **Kangying Zhou (Yale 박사과정)**: 박사학위 핵심 논문. **협업 의의**: 머신러닝 (Kelly) + 수학 RMT (Malamud) + 실증 (Zhou) 의 3 expert 결합 → 단일 expert 가 불가능한 분야 통합 논문. AQR 실무 데이터 access + Yale/EPFL 학술 깊이.
+
+5. **Journal of Finance 2024 Vol. 79 No. 1, pp. 459-503**: 자산가격결정 분야 **세계 3대 학술지 중 하나** (다른 둘: Journal of Financial Economics, Review of Financial Studies). 게재 = peer-reviewed top venue 의 인정. **본 논문의 위상**: (i) Editors 4인 (Stefan Nagel, Philip Bond, Amit Seru, Wei Xiong) — 모두 세계적 권위, (ii) 다수 학회 발표 (NBER, EFA, AFA, SFS Cavalcade), (iii) 2022 제출 → 2022.12 accepted → 2024 출판 = 빠른 academic recognition. **분야 영향**: Journal of Finance 의 lead article 가 자주 paradigm shift 일으킴 — 본 논문도 그 사례.
 
 ---
 
