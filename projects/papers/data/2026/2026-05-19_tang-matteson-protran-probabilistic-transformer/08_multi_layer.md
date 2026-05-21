@@ -367,14 +367,24 @@ paper:
 
 ## 8.10 자기점검 (이 챕터)
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **Multi-layer 가 single-layer 와 비교해서 새로 추가된 수식은?**
 2. **Emission 이 top layer ($z^{(L)}$) 만 의존하는 이유는?**
 3. **데이터 복잡도에 따라 layer 수 ($L$) 를 어떻게 선택하나?**
+4. **각 layer 의 시간 스케일 차이가 어떻게 학습되는가?**
+5. **Hierarchical VAE 의 이미지 분야 영감과 시계열 적용의 차이?**
 
 ### 답변
-1. Eq 16 — cross-layer attention. 위 layer ($\ell$) 가 아래 layer ($\ell-1$) 의 **모든 시점 ($1:T$)** 에 attention. Eq 17-20 은 single-layer 의 Eq 6-9 와 동일.
-2. Bottom-up 정신: $z^{(1)} \to z^{(2)} \to \ldots \to z^{(L)} \to x$ 흐름. 가장 추상적 layer 가 모든 정보를 종합한 상태이므로, emission 은 거기서만 발생. 사원-팀장-부장 비유: 회사 행동은 임원(top) 의 결정에서 나옴.
-3. paper 의 실험: 단순한 데이터 (Solar, Electricity) 는 $L=1$, 중간 (Traffic, Taxi, Wikipedia, HumanEva-I) 은 $L=2$, 가장 복잡한 (Human3.6M, 3.6M frames × 17 joints) 는 $L=3$. 데이터의 multi-modal 성, 시간 길이가 클수록 $L$ 늘림.
+
+1. **Eq 16 — cross-layer attention**. 위 layer ($\ell$) 가 아래 layer ($\ell-1$) 의 **모든 시점 ($1:T$)** 에 attention. Q = $w_{t-1}^{(\ell)}$, K, V = $w_{1:T}^{(\ell-1)}$. **Eq 17-20** 은 single-layer 의 Eq 6-9 와 동일. **즉 한 식 (Eq 16) 만 추가하면 single → multi**. 우아한 design — 기존 architecture 의 자연 확장.
+
+2. **Bottom-up 정신**: $z^{(1)} \to z^{(2)} \to \ldots \to z^{(L)} \to x$ 흐름. 가장 추상적 layer 가 모든 정보를 종합한 상태이므로, emission 은 거기서만 발생. **사원-팀장-부장-임원 비유**: 회사 행동은 임원 (top) 의 결정에서 나옴, 임원은 부장의 보고를 종합. **이점**: (i) Layer 별 표현 분리 — 각 layer 가 자기 시간 스케일 책임, (ii) 정보 흐름 단방향 (계산 효율), (iii) Single-layer 와 같은 emission 구조 유지.
+
+3. **paper 의 실험**: 단순한 데이터 (Solar, Electricity) 는 $L=1$, 중간 (Traffic, Taxi, Wikipedia, HumanEva-I) 은 $L=2$, 가장 복잡한 (Human3.6M, 3.6M frames × 17 joints) 는 $L=3$. **선택 기준**: 데이터의 (i) multi-modal 성 (여러 패턴 동시), (ii) 시간 길이, (iii) 차원 — 클수록 $L$ ↑. **실무 권장**: $L=1$ 부터 시작, validation 으로 $L$ 늘려 가며 효과 확인. Overhead: $L$ 배 학습 시간 + 메모리.
+
+4. **자동 학습 — 명시적 강제 없음**. Layer 별로 다른 attention head 학습 → 자연스럽게 다른 시간 스케일 포착. **관찰 결과** (학습 후): 아래 layer = 단기 변동 (minute 단위), 위 layer = 장기 trend (day, week, season). **이유**: (i) 아래 layer 가 raw observation 가까움 → 미세 패턴, (ii) 위 layer 가 합성 정보 → 추상 패턴. **유사 사례**: CNN 의 layer 별 receptive field 자동 분화 (low layer = edge, high layer = object).
+
+5. **Hierarchical VAE (이미지)**: NVAE (Vahdat-Kautz 2020), VDVAE (Child 2020) 등이 image generation 에 hierarchical latent. **영감**: 다양한 추상 수준의 latent → 표현력 ↑. **시계열 적용 (ProTran)**: 시간 차원에 latent hierarchy 적용. **차이**: (i) 이미지는 spatial hierarchy (큰 영역 → 작은 영역), 시계열은 temporal hierarchy (장기 → 단기), (ii) 이미지는 동시 처리, 시계열은 sequential. **ProTran 의 contribution**: image domain 의 hierarchical idea 를 시계열로 처음 transfer + transformer attention 결합.
 
 다음 [09_related_work.md](09_related_work.md) 에서 paper Section 4 의 4 부류 관련 연구.

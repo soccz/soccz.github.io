@@ -349,9 +349,16 @@ $SR_{\infty} = \frac{1}{\sqrt{3 + 1/(b_* \psi_{*,1})}}$
 3. **신의 Sharpe ratio 가 0.577 미만인 이유?**
 
 ### 답변
-1. **시장 수익률 = (현재 macro 정보의 함수) + (random 잡음)**. 함수는 우리가 *모르는* 진짜 자연 법칙. 잡음은 평균 0, 시간 독립, 평범한 분포. *Single asset (시장 지수)* 만 분석 — cross-section 종목 선택 무시.
-2. **Random β 의 *quadratic form* 이 *deterministic limit* 로 수렴 (LLN)**. 즉 변수 수 P 가 매우 커지면 *random* β 의 어떤 sum 도 *예측 가능한 값* 에 가까워짐. 덕분에 학자가 *"이 β 의 경우" 가 아니라 "평균적 β" 의 결과* 를 분석 가능 — 본 논문 모든 정리 (Proposition 1-6, Theorem 1) 의 *building block*.
-3. **신이 잘 예측하는 만큼 *베팅 크기도 큼*. 큰 베팅 = 큰 변동성. Sharpe = 평균/변동성 이므로 변동성 증가로 *bounded*.** 야구의 *최고 타자도 모든 공 홈런 못 침* 비유. 수학적: $SR_\infty = 1/\sqrt{3 + 1/(b_*\psi_{*,1})}$, $b_*\psi_{*,1} \to \infty$ limit 에서 $1/\sqrt{3} \approx 0.577$.
+
+1. **시장 수익률 = (현재 macro 정보의 함수) + (random 잡음)**. 함수는 우리가 모르는 진짜 자연 법칙. 잡음은 평균 0, 시간 독립, 평범한 분포. **Single asset (시장 지수) 만 분석** — cross-section 종목 선택 무시. 함의: (i) 본 논문은 **time-series prediction** (시장 timing) 이지 cross-sectional (종목 선택) 아님, (ii) Fama-French 의 cross-sectional anomalies 와 다른 영역. 학자가 분석 단순화 위해 single-asset 가정.
+
+2. **Random β 의 quadratic form 이 deterministic limit 로 수렴 (LLN)**. 즉 변수 수 P 가 매우 커지면 random β 의 어떤 sum 도 예측 가능한 값에 가까워짐. **구체적**: $\beta^\top A \beta / P \to \text{tr}(A)/P$ as $P \to \infty$. **덕분에**: 학자가 "이 β 의 경우" 가 아니라 "평균적 β" 의 결과를 분석 가능. **본 논문 모든 정리 (Proposition 1-6, Theorem 1) 의 building block**. 직관: 코인 1000번 던지면 비율이 0.5 에 수렴 — 같은 원리를 random β 의 quadratic form 에 적용.
+
+3. **신이 잘 예측하는 만큼 베팅 크기도 큼. 큰 베팅 = 큰 변동성. Sharpe = 평균/변동성 이므로 변동성 증가로 bounded**. 야구의 최고 타자도 모든 공 홈런 못 침 비유 — 강한 swing 은 strikeout 위험 ↑. **수학적**: $SR_\infty = 1/\sqrt{3 + 1/(b_*\psi_{*,1})}$, $b_*\psi_{*,1} \to \infty$ limit 에서 $1/\sqrt{3} \approx 0.577$. **본 논문 calibration**: $b_*=0.2$, $\psi_{*,1}=1$ → $SR_\infty \approx 0.354$. **의의**: 모든 그래프의 빨간 점선 (infeasible bound) 이 이 값. 학자의 모든 ridge 변형이 이 점선 아래 (있으면 → look-ahead bias).
+
+4. **Sufficiently mixed signals (Assumption 5)**: 학자의 모든 변수가 비슷한 정도의 정보 제공. 어떤 변수가 특별히 결정적이 아니라 모두 균등 분포. **자연 만족 case**: (i) RFF (Random Fourier Features) — Gaussian random projection 이라 statistically 비슷, (ii) Wide neural network — random first layer 가 자동 만족. **실증 함의**: 본 논문 실증의 RFF 선택이 단순히 표현력 강화가 아니라 **Theorem 1 의 조건 만족** + analytical tractability 의 묘수.
+
+5. **R² (infeasible)**: $b_* \psi_{*,1} / (1 + b_* \psi_{*,1})$ — predictive power 합성의 monotone 증가. **SR (infeasible)**: $1/\sqrt{3 + 1/(b_*\psi_{*,1})}$ — 같은 합성의 monotone 증가. 둘 다 $b_* \psi_{*,1}$ 의 함수 → **일대일 대응**. 즉 R² 크면 SR 크다 (infeasible case). **그러나 feasible (estimated) 의 경우 이 관계가 깨진다** (Proposition 4 의 발견). R² 음수 임에도 SR 양수 가능. 의의: 본 논문의 가장 놀라운 발견 — **R² ≠ economic value**. Campbell-Thompson (2008) 의 R² → SR mapping 의 한계. Finance 분야의 evaluation paradigm 전환.
 
 ---
 

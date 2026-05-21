@@ -201,15 +201,25 @@ Patching 후 각 patch 를 *Transformer 가 이해하는 token* 으로 변환.
 
 ## 4.9 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **Patching 의 일상 비유?**
 2. **"PatchTST/42" 의 42 의 의미?**
 3. **Patching 의 3가지 이점?**
+4. **Overlap (S<P) vs Non-overlap (S=P) 의 선택 기준?**
+5. **Patching 의 robustness — 왜 P 값에 둔감한가?**
 
 ### 답변
-1. **긴 책 (336 페이지) 을 *한 단어 (16 페이지) 씩* 읽는 것**. 한 글자씩 (1 timestep) 이 아니라 *단어 단위* (16 timestep patch) 로. ViT (image 16x16 patching) 의 시계열 버전. 음악 *마디* 단위로 듣는 것과 같음.
-2. **시계열을 *42개 patch* 로 자른 setting**. $L = 336, P = 16, S = 8$ → $N = (336-16)/8 + 2 = 42$. PatchTST/**64** 는 $L = 512$ 의 setting → $N = 64$. 논문 제목 *"A Time Series is Worth 64 Words"* 의 *64 = 64 patch*.
-3. **(1) Attention 22× 빠름**: token 수 $L = 336$ → $N = 42$ → attention 복잡도 $O(N^2)$ 만. **(2) Longer history**: 같은 compute 로 $L = 336$ 또는 512 가능 (vs no patching 의 96 만). $L$ 늘릴수록 MSE 감소 (Table 1: 0.518 → 0.397). **(3) Local pattern 보존**: 한 patch 안에 *trend, periodicity* 통째로 — semantic unit.
+
+1. **긴 책 (336 페이지) 을 *한 단어 (16 페이지) 씩* 읽는 것**. 한 글자씩 (1 timestep) 이 아니라 *단어 단위* (16 timestep patch) 로. ViT (image 16x16 patching) 의 시계열 버전. 음악 *마디* 단위로 듣는 것과 같음. **NLP 와의 유사성**: BERT, GPT 가 word/subword 단위, PatchTST 가 patch 단위 — 같은 패러다임. **CV 와의 유사성**: ViT (2020) 가 image 를 16x16 patch 로 나눠 transformer 적용. PatchTST 가 시계열에 그대로 transfer.
+
+2. **시계열을 *42개 patch* 로 자른 setting**. $L = 336, P = 16, S = 8$ → $N = \lfloor (336-16)/8 \rfloor + 2 = 42$. PatchTST/**64** 는 $L = 512$ 의 setting → $N = 64$. **논문 제목 "A Time Series is Worth 64 Words" 의 64 = 64 patch**. **이름의 의미**: 모델 size 가 아니라 **token 수** 표기 — NLP 의 transformer 분류 (BERT-base, GPT-3.5 등) 와 다른 표기 convention.
+
+3. **(1) Attention 22× 빠름**: token 수 $L = 336$ → $N = 42$ → attention 복잡도 $O(L^2) \to O(N^2)$ = $112,896 \to 1,764$, 이론 64× 효율, 실측 22× (Traffic). **(2) Longer history**: 같은 compute 로 $L = 336$ 또는 512 가능 (vs no patching 의 96 만). $L$ 늘릴수록 MSE 감소 (Table 1: 0.518 → 0.397, 23% 향상). **(3) Local pattern 보존**: 한 patch 안에 *trend, periodicity, spike* 통째로 — semantic unit. RNN/CNN 의 step-by-step 처리는 이 패턴 분산.
+
+4. **Overlap ($S < P$, supervised default)**: P=16, S=8 → 인접 patch 50% 겹침. **장점**: 정보 유실 ↓, 경계 패턴 보존. **단점**: 토큰 수 ↑ → 계산 약간 ↑. **Non-overlap ($S = P$, self-supervised default)**: P=12, S=12 → 정확히 인접, 겹침 X. **장점**: Mask 한 patch 가 다른 patch 와 정보 공유 X → 학습 목표 명확 (BERT masked language modeling 처럼). **선택 기준**: Supervised forecasting → overlap (정보 보존), Masked pre-training → non-overlap (학습 신호 명확).
+
+5. **Figure 4 의 발견**: P ∈ {2, 4, 8, 12, 16, 24, 32, 40} sweep → MSE 가 P 값에 **거의 둔감**. P=4 부터 P=40 까지 비슷한 성능. **이유**: (i) Attention 이 patch 내부 정보를 자동으로 결합 → P 의 정확한 크기보다 attention 패턴이 더 중요, (ii) Linear projection 이 다양한 P 에 robust 한 representation 학습, (iii) 시계열의 시간 patterns 가 multiple 시간 척도에 존재 — 어느 P 선택해도 일부 패턴 capture. **실무 의미**: P=16 권장 but 정확한 튜닝 불필요 — robust 한 hyperparameter.
 
 ---
 

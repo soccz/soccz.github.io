@@ -341,14 +341,26 @@ $$
 
 ## 6.10 자기점검 (이 챕터)
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **왜 stochastic $z_t$ 를 직접 attention query 로 쓰지 않고 $w_t$ 를 따로 두나?**
 2. **Eq 6 (self-attn) 과 Eq 7 (cross-attn) 의 차이는?**
 3. **Eq 8 의 Softplus 가 왜 필요한가?**
+4. **Reparameterization trick 의 역할?**
+5. **ProTran 이 latent space 에서 모든 처리하는 design 의 효율 의의?**
 
 ### 답변
-1. $z_t$ 는 매 시점 Gaussian sample 이라 확률적 — attention query 로 쓰면 정보 유지가 어려움 (매번 다른 값). $w_t$ 는 deterministic component 를 포함한 hybrid hidden 이라 안정적인 attention 기반이 됨. $z$ 는 $w$ 안에 encapsulate.
-2. Eq 6 = Self-attention: Q, K, V 가 모두 $w_{1:t-1}$ (과거 잠재끼리). "현재 잠재가 과거 잠재 어디에 의존" 결정. Eq 7 = Cross-attention: Q 는 $\bar{w}_t$ (Step 1 결과), K, V 는 $h_{1:C}$ (context). "잠재가 context 의 어느 시점 정보를 참고" 결정.
-3. 분산 $\sigma^2$ 는 항상 양수여야 함. MLP 출력은 음수 가능. Softplus(x) = log(1 + e^x) 가 음수도 양수로 부드럽게 변환 (미분 가능). 모든 양수 보장.
+
+1. $z_t$ 는 매 시점 Gaussian sample 이라 **확률적** — attention query 로 쓰면 정보 유지가 어려움 (매번 다른 값). $w_t$ 는 **deterministic component (hat{w}_t, position) + stochastic component (MLP(z_t)) 의 hybrid hidden** 이라 안정적인 attention 기반이 됨. $z$ 는 $w$ 안에 encapsulate → 매 시점 sampling 의 효과는 유지하되, attention 의 입력은 안정.
+
+2. **Eq 6 (Self-attention)**: Q, K, V 가 모두 $w_{1:t-1}$ (과거 잠재끼리). "현재 잠재가 과거 잠재 어디에 의존" 결정. **시간 내 패턴 학습**. **Eq 7 (Cross-attention)**: Q 는 $\bar{w}_t$ (Step 1 결과), K, V 는 $h_{1:C}$ (context). "잠재가 context 의 어느 시점 정보를 참고" 결정. **context-target 연결 학습**. 비유: Eq 6 = "내 일기들 중 어떤 페이지 참고", Eq 7 = "친구 일기들 중 어떤 페이지 참고".
+
+3. 분산 $\sigma^2$ 는 **항상 양수**여야 함 (분산은 음수일 수 없음). MLP 출력은 음수 가능 → 직접 사용 X. **Softplus(x) = log(1 + e^x)** 가 음수도 양수로 **부드럽게 변환 (미분 가능)**. 모든 양수 보장 + 0 부근에서 smooth. 대안: ReLU(x) = max(0, x) — 0 에서 미분 불가, exp(x) — 큰 x 에서 overflow. Softplus 가 standard.
+
+4. **Reparameterization trick**: $z_t = \mu_t + \sigma_t \odot \epsilon$, $\epsilon \sim \mathcal{N}(0, I)$. Sampling 도 미분 가능 → backprop 가능. 모든 VAE 의 표준 trick. 직접 $z_t \sim \mathcal{N}(\mu_t, \sigma_t^2)$ 라고 쓰면 gradient flow 안 됨 (sampling 은 discrete op). reparameterization 으로 stochastic 부분 ($\epsilon$) 을 input 으로 분리 + 학습 가능한 부분 ($\mu, \sigma$) 만 forward pass.
+
+5. **paper Section 3.1 강조**: "Generation procedure in the latent space is more efficient than others in the observation space, which requires encoding and decoding high-dimensional inputs repeatedly". 의미: 매 시점 고차원 입력 ($x_t$, 예: 963차원 트래픽) 을 encode/decode 안 함. **모든 처리가 latent space ($w_t \in \mathbb{R}^d$, $d$ 보통 64-256) 에서**. 마지막에만 emission ($w_t \to x_t$ via MLP). 결과: 계산량 ↓, attention complexity ↓ (latent 차원 작음).
+
+---
 
 다음 [07_single_layer_inference.md](07_single_layer_inference.md) 에서 학습 시에만 쓰는 inference model (Eq 10-11).

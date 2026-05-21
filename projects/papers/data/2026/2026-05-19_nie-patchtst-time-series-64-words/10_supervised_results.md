@@ -479,17 +479,25 @@ PatchTST 의 답:
 
 ## 10.12 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
 
 1. **Table 3 의 32 cells 중 PatchTST 가 best 인 비율은? 가장 큰 reduction 은?**
 2. **Figure 2 가 보여주는 paper 의 핵심 직관은? 왜 PatchTST 만 longer L 활용 가능?**
 3. **ETTh1/h2 에서 PatchTST 의 격차가 작은 이유는?**
+4. **PatchTST/42 vs PatchTST/64 의 차이와 trade-off?**
+5. **21% MSE reduction 의 paradigm shift 의의?**
 
 ### 답변
 
-1. **PatchTST/64 가 29/32 cells (91%) best, PatchTST/42 까지 합치면 32/32 (100%) — 두 변형 중 하나는 항상 best**. 가장 큰 reduction: **ILI T=24 에서 Informer 대비 72%** (4.657 → 1.319). 평균 21% MSE reduction. 학계에서 5% 도 significant 한데 21% 는 **paradigm shift 수준**.
-2. **PatchTST 만 L 늘릴수록 MSE monotone 감소**. 다른 모델 (FEDformer, Autoformer, Informer) 은 L > 96 부터 오히려 악화. **이유**: Patching 으로 token 수 L/S 로 축소 (S=8 면 64배) → attention 복잡도 $O(L^2)$ → $O((L/S)^2)$ → longer L 가능 + overfit 방지. 다른 모델은 token 수 = L 이라 L 늘리면 attention 무거워지고 overfit.
-3. **ETTh1/h2 는 단순 일/계절 cycle dataset** (7 변수, hourly). Multi-modal 없음, extreme event 적음, 변수 간 복잡한 상호작용 없음. → 단순 모델 (DLinear = linear regression 약간 변형) 로 충분. **모델 복잡도가 데이터 복잡도와 match 해야 한다**는 일반 원칙. PatchTST 의 복잡한 patching + Transformer 가 ETT 의 단순 cycle 에는 추가 가치가 적음.
+1. **PatchTST/64 가 29/32 cells (91%) best, PatchTST/42 까지 합치면 32/32 (100%) — 두 변형 중 하나는 항상 best**. 가장 큰 reduction: **ILI T=24 에서 Informer 대비 72%** (4.657 → 1.319). 평균 21% MSE reduction. 학계에서 5% 도 significant 한데 21% 는 **paradigm shift 수준**. **세부 결과**: Weather, Traffic, Electricity, ETTm1, ETTm2 — 4/4 horizons best, ETTh1/h2 — DLinear 와 격차 작음. 4/8 dataset 에서 압도, 4/8 에서 marginal.
+
+2. **PatchTST 만 L 늘릴수록 MSE monotone 감소**. 다른 모델 (FEDformer, Autoformer, Informer) 은 L > 96 부터 오히려 악화. **이유**: Patching 으로 token 수 L/S 로 축소 (S=8 면 64배) → attention 복잡도 $O(L^2) \to O((L/S)^2)$ → longer L 가능 + overfit 방지. 다른 모델은 token 수 = L 이라 L 늘리면 attention 무거워지고 overfit. **수치 예** (Traffic): L=96 MSE 0.518, L=336 MSE 0.397, L=512 MSE 0.376 — **PatchTST 만 monotone 감소**.
+
+3. **ETTh1/h2 는 단순 일/계절 cycle dataset** (7 변수, hourly). Multi-modal 없음, extreme event 적음, 변수 간 복잡한 상호작용 없음. → 단순 모델 (DLinear = linear regression 약간 변형) 로 충분. **모델 복잡도가 데이터 복잡도와 match 해야 한다**는 일반 원칙. PatchTST 의 복잡한 patching + Transformer 가 ETT 의 단순 cycle 에는 추가 가치가 적음. **bias-variance trade-off**: 단순 dataset 에 복잡한 모델 = variance ↑ (overfit), 격차 ↓.
+
+4. **PatchTST/42**: L=336, P=16, S=8 → N=42 patches. **PatchTST/64**: L=512, P=16, S=8 → N=64 patches. **차이**: /64 가 longer history → 일반적으로 더 정확. **/42 의 이점**: (i) 메모리 ↓, (ii) 학습 시간 ↓, (iii) Small dataset 에서 overfit 위험 ↓. **/64 의 이점**: (i) 더 긴 history 활용, (ii) Big dataset 에서 더 강력, (iii) Longer cycle 포착 (예: 주간 패턴). **선택 기준**: dataset 크기 (작으면 /42, 크면 /64), horizon (긴 horizon 은 /64), 계산 자원.
+
+5. **21% MSE reduction 의 의의**: (i) **학계 기준**: 5% 도 significant 한데 21% 는 압도적. ICLR/NeurIPS 의 강한 paper 도 보통 5-10%. (ii) **분야 영향**: Informer (2021) → Autoformer (2021) → FEDformer (2022) 의 점진적 5% 개선 → PatchTST (2023) 의 21% 한 번에. (iii) **Paradigm shift 의미**: "architectural innovation" 시대 → "representation innovation" 시대. 시계열 specific attention 변형 (Informer 등) 의 효용 의심 → vanilla transformer + 단순 trick (patching, CI) 우세. (iv) **후속 영향**: PatchTST 후의 시계열 transformer (iTransformer, TimesFM 등) 모두 영향. **단점**: 모든 dataset 우위 아님 — ETTh 처럼 단순 dataset 에선 marginal.
 
 ---
 

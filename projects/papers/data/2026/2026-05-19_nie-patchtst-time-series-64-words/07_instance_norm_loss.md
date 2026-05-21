@@ -188,15 +188,25 @@ $$
 
 ## 7.6 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **Instance normalization 의 일상 비유?**
 2. **Distribution shift 의 의미?**
 3. **본 논문의 loss function?**
+4. **Instance Norm 의 17% MSE reduction 단독 기여 — 왜 paper 는 "Two tricks (P+CI)" 만 강조?**
+5. **RevIN (Reversible Instance Normalization, 2022 ICLR) 과의 관계?**
 
 ### 답변
-1. **100 학생 시험 점수 비교 시 *raw 점수* 보다 *각 학생의 평균/std 로 normalize 한 점수* 가 공정**. 본 논문: 각 시계열 (channel) 의 *각 input window* 를 *그 평균/std 로 normalize* + forecast 후 *복원*. *Level-invariant* model — 절대값 무관.
-2. **Training 데이터의 *분포* 와 test 데이터의 *분포* 가 다름**. 예: 2020 데이터 학습 + 2024 test, *인플레이션으로 평균 다름*. Model 이 *2020 절대값* 에 adapted → *2024 망함*. Instance norm 으로 *level 제거* → *변화 패턴만* 학습 → distribution shift 회피.
-3. **표준 MSE (Mean Squared Error)**. *시계열 specific loss 없음*. 이유: (i) Gaussian noise 가정 + MLE 일치, (ii) 큰 오차에 더 penalty, (iii) gradient 계산 쉬움. **Vanilla MSE = best**.
+
+1. **100 학생 시험 점수 비교 시 *raw 점수* 보다 *각 학생의 평균/std 로 normalize 한 점수* 가 공정**. 본 논문: 각 시계열 (channel) 의 *각 input window* 를 *그 평균/std 로 normalize* + forecast 후 *복원*. **Level-invariant model** — 절대값 무관. **5 단계 프로세스**: (i) input의 μ, σ 계산, (ii) (X - μ)/σ 로 정규화, (iii) 정규화된 입력으로 forecast, (iv) 출력 * σ + μ 로 복원, (v) MSE loss 계산.
+
+2. **Training 데이터의 *분포* 와 test 데이터의 *분포* 가 다름**. 예: 2020 데이터 학습 + 2024 test, *인플레이션으로 평균 다름*. Model 이 *2020 절대값* 에 adapted → *2024 망함*. Instance norm 으로 *level 제거* → *변화 패턴만* 학습 → distribution shift 회피. **시계열에서 특히 critical**: 시계열은 본질적으로 non-stationary (시간 따라 분포 변화) → 같은 변수도 시기별 다른 분포. Instance norm 이 이걸 해결.
+
+3. **표준 MSE (Mean Squared Error)**. *시계열 specific loss 없음*. 이유: (i) Gaussian noise 가정 + MLE 일치, (ii) 큰 오차에 더 penalty (quadratic), (iii) gradient 계산 쉬움 (linear in error). **Vanilla MSE = best**. **대안 거절**: MAE (L1) - 더 robust but slower convergence, MAPE - division by zero 위험, Huber - extra hyperparameter. MSE 가 simplest + sufficient.
+
+4. **Table 11 (Appendix) 의 정확한 수치**: PatchTST+IN MSE 0.149-0.314, -IN 0.183-0.370 → **단독 17-22% reduction**. Patching (3%), CI (25%) 와 비교하면 **CI 다음 두 번째 contributor**. **paper 가 강조 안 한 이유 (추측)**: (i) RevIN (2022 ICLR) 이 이미 있던 idea → novelty 약함, (ii) "Two tricks" 메시지가 marketing 강함, (iii) Patching 이 paper 제목과 일치. **실제로는 Three tricks**: IN + Patching + CI. **실무 의미**: Instance Norm 을 단독으로 PatchTST 아닌 다른 시계열 모델에도 적용 → 17% 개선 — universally beneficial.
+
+5. **RevIN (Reversible Instance Normalization, Kim et al. 2022, ICLR)**: PatchTST 이전에 발표된 동일 idea. (i) Input normalize, (ii) forward through model, (iii) denormalize output. **PatchTST 의 차이**: 명시적 RevIN cite 안 했지만 동일 기법 사용 추정. **학술 윤리 측면**: RevIN 직접 cite 가 더 정확. **장점 (universality)**: PatchTST 외에도 NHITS, NBEATS, Informer 등에 RevIN 적용 → 모두 향상 (RevIN 논문 보고). **결론**: RevIN/Instance Norm 은 PatchTST 의 hidden 3번째 trick. 후속 연구의 standard component.
 
 ---
 

@@ -423,16 +423,24 @@ paper 가 publish 된 NeurIPS 2021 의 다른 시계열 paper 들:
 
 ## 9.9 자기점검 (이 챕터)
 
-### 핵심 4가지
+### 핵심 5가지
+
 1. **Deep SSM 의 두 갈래는?**
 2. **ProTran 이 표준 Transformer 시계열 모델 (Informer, Transformer-MAF) 과 다른 점은?**
 3. **Global latent (MT-VAE) 와 time-dependent latent (ProTran) 의 차이를 비유로?**
 4. **왜 2021 년이 시계열 deep learning 의 Cambrian explosion 의 해인가?**
+5. **ProTran 의 4 lineage 통합 (ALSTM-like + GAT-like + DTML-like + TFT-like) 은 어떤 의미인가?**
 
 ### 답변
-1. (a) **Linear transition + neural emission** (KVAE, NKF) — Kalman 의 깔끔함 유지, emission 만 풍부. 한계: 여전히 Markov. (b) **RNN transition + latent** (VRNN, DKS) — 비선형 + 비-Markov 가능. 한계: RNN 의 gradient vanishing.
-2. (a) Latent variables 있음 — probabilistic + uncertainty. (b) Inference mechanism 있음 (variational) — test time 의 observation noise 누적 회피. Informer/Transformer-MAF 는 둘 다 없음.
-3. Global = "이 영화는 액션이다" (한 라벨로 sequence 전체 요약). Time-dependent = "씬 1 추격, 씬 2 폭발, 씬 3 대화" (각 시점 다른 잠재 상태). 후자가 dynamics 표현에 훨씬 풍부.
-4. NeurIPS 2021 에 Autoformer (분해), Informer (sparse), ProTran (latent), TimeGrad (diffusion), CSDI (score-based) 모두 동시 publish. 각자 다른 axis 의 contribution. 모두 RNN 거부. → 시계열 deep learning 의 paradigm shift 가 한 해에 응축.
+
+1. **(a) Linear transition + neural emission** (KVAE, NKF) — Kalman 의 깔끔함 유지, emission 만 풍부. **한계**: 여전히 Markov, long-range 못 잡음. **(b) RNN transition + latent** (VRNN, DKS, DKF) — 비선형 + 비-Markov 가능. **한계**: RNN 의 gradient vanishing, 멀리 떨어진 정보 손실. 두 갈래 모두 **long-range 의존성 미해결** → ProTran 의 attention 도입 motivation.
+
+2. **(a) Latent variables 있음** — probabilistic + uncertainty quantification. **(b) Inference mechanism 있음 (variational)** — test time 의 observation noise 누적 회피. **(c) Smoothing 가능** — training 시 미래 정보 활용으로 더 정확한 latent 추정. Informer/Transformer-MAF 는 (a, b, c) 모두 없음. **ProTran 의 추가 가치**: deterministic transformer 가 point prediction 만, ProTran 은 분포 출력 + uncertainty → 의사결정 분석에 풍부.
+
+3. **Global** = "이 영화는 액션이다" (한 라벨로 sequence 전체 요약, MT-VAE 등). **Time-dependent** = "씬 1 추격, 씬 2 폭발, 씬 3 대화" (각 시점 다른 잠재 상태, ProTran). 후자가 **dynamics 표현에 훨씬 풍부**. **수학적 차이**: Global = $z \in \mathbb{R}^d$ (single vector), Time-dependent = $z_{1:T} \in \mathbb{R}^{T \times d}$ (sequence of vectors, $T$ 배 표현력). **시계열에 필요한 이유**: 시간에 따라 동학 변화 — global latent 로 다 표현 불가.
+
+4. **NeurIPS 2021 에 Autoformer (분해), Informer (sparse), ProTran (latent), TimeGrad (diffusion), CSDI (score-based) 모두 동시 publish**. 각자 다른 axis 의 contribution. 모두 RNN 거부. → 시계열 deep learning 의 paradigm shift 가 한 해에 응축. **공통 배경**: (i) Attention is All You Need (2017) 이후 4년 — NLP/CV 의 attention 성공이 시계열로 확산, (ii) BERT (2018), ViT (2020) 의 transfer learning 가능성 입증, (iii) 시계열 분야의 데이터셋 (Solar, Traffic 등) standardization. **의의**: 2021 = 시계열 deep learning 의 BC/AD 경계.
+
+5. **ProTran 의 contribution 의 본질**: **single innovation 이 아닌 4 lineage 의 통합 + cross-time relay 의 새 design**. **ALSTM (단일 종목 시간 attention)** + **GAT (종목 간 그래프)** + **DTML (동적 다중 관계)** + **TFT (외생 게이팅)**. **각 lineage 의 강점 흡수**: 시간 attention (ALSTM) + cross-stock (GAT) + 동적 (DTML) + market-aware (TFT). **새 추가**: cross-time relay 의 메커니즘 (intra → inter 순서로 자동 학습). **결과**: 6 metric × 2 dataset 모두 SOTA + 통계 유의성 (p < 0.01). **학술 의의**: "innovation 이 단일 묘수가 아닌 통합" 의 사례 — Big Picture thinking 의 모범.
 
 다음 [10_data_baselines.md](10_data_baselines.md) 에서 실험 셋업의 자세한 풀이.

@@ -114,6 +114,20 @@
 
 ---
 
+### 🎯 구체 증거 — c=12 의 실제 시나리오
+
+본 논문 실증: T=12 (12개월 데이터) × P=144 (Goyal-Welch 15 + RFF 확장) → c=12.
+
+| 통상 통계의 답 | 본 논문의 답 |
+|---------------|-------------|
+| "12 데이터로 144 변수? 불가능" | RMT + ridge 로 가능 |
+| "Overfit 으로 망함" | Benign overfit, SR > 0 |
+| "예측 불가" | SR = 0.47 (실증) |
+
+→ **통상 통계의 직관 정면 반박**.
+
+---
+
 ## 5a.5 *Marchenko-Pastur* 분포
 
 본 논문 핵심 그림 중 하나가 *Marchenko-Pastur distribution*. 
@@ -169,6 +183,12 @@ $$m(-z; c) = \frac{-((1-c) + z) + \sqrt{((1-c) + z)^2 + 4cz}}{2cz}$$
 
 ---
 
+### 🔑 핵심 통찰 — Stieltjes 의 마법
+
+> 분포 자체는 "1000개 숫자의 시각화" — 비교 어려움. 분포를 **한 함수 $m$** 로 압축하면 (i) 비교 쉬움 (함수 vs 함수), (ii) 미적분 가능 (analytical 결과 도출), (iii) 정보 손실 0 (역변환 가능). 본 논문이 m(-z; c) 한 함수로 모든 결과 도출 가능한 이유.
+
+---
+
 ## 5a.7 Ridge Regression — 안정장치
 
 이제 본 논문이 사용하는 *회귀 방법*. 
@@ -206,6 +226,25 @@ P > T 면 z = 0 정확히는 안 되지만 *z → 0+* limit 정의 가능. 이�
 **각주 22 (sparse vs ridge)**: 본 논문이 *LASSO* (sparse) 대신 *ridge* 선택의 이유 — (i) Giannone-Lenza-Primiceri (2021): 경제 데이터의 sparsity 는 illusion. (ii) RFF 같은 generated feature 는 sparsity 불명확. (iii) $\ell_1$ analysis 가 이론적으로 더 어려움.
 
 **각주 23 (Moore-Penrose pseudo-inverse 정의)**: $A^+ = \lim_{z \to 0+} (zI + A'A)^{-1} A' = \lim_{z \to 0+} A'(zI + AA')^{-1}$ — ridgeless 의 정확한 정의.
+
+---
+
+### 🔣 Ridge 4-단 풀이
+
+| 기호 | 의미 | 직관 |
+|------|------|------|
+| $\beta_{OLS}$ | OLS 추정값 (변수 ≤ 데이터) | 표준 회귀 |
+| $\beta_{ridge}(z) = (X^\top X + zI)^{-1} X^\top y$ | Ridge 추정 | z 가 안정장치 |
+| $z$ | Ridge 강도 | 0 = OLS, ∞ = 0 추정 |
+| $\beta_{ridgeless} = \lim_{z \to 0^+} \beta_{ridge}(z)$ | Ridgeless | P > T 의 OLS 대체 |
+| **Implicit regularization** | Ridgeless 도 자동 안정 효과 | benign overfit 의 핵심 |
+
+### 🎯 구체 증거 — 본 논문의 z 선택
+
+- 실증 sweep: $z \in \{10^{-3}, 10^{-2}, 10^{-1}, 1, 10, 1000\}$
+- 최적 $z^* \approx 10^3 = 1000$ — **놀라울 만큼 큰 값**
+- 의미: 강한 shrinkage 가 필요 — over-confidence 회피
+- 그러나 $z = 0$ (ridgeless) 도 acceptable — implicit regularization
 
 ---
 
@@ -301,15 +340,25 @@ Proposition 2 가 **본 논문 모든 후속 결과 (Proposition 3, 4, 5, 6 + Th
 
 ## 5a.11 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **왜 본 논문이 *Random Matrix Theory* 라는 새 도구 필요?**
 2. **Stieltjes transform 의 *역할*?**
-3. **Proposition 2 가 본 논문에 *왜 핵심*?**
+3. **Marchenko-Pastur 가 sample covariance 에 대해 알려주는 것?**
+4. **Ridge regression 의 z 가 작동하는 메커니즘 (bias-variance)?**
+5. **Proposition 2 가 본 논문에 *왜 핵심*?**
 
 ### 답변
-1. **전통 통계는 *T → ∞, P fixed* 의 영역만 다룸**. 본 논문은 *P, T 둘 다 무한대 + P/T → c > 0* 의 영역 — *새 통계* 필요. 1967년 Marchenko-Pastur 의 RMT 가 그 도구. 본 논문이 *자산가격에 처음 적용*.
-2. **분포의 *압축 표현*** — 1000개 숫자의 분포를 *한 함수* 로 표현. 정보 손실 0. 분포 비교 (sample vs population) 에 사용. 본 논문의 *m_Ψ(z)* (진짜 모집단) vs *m(z; c)* (표본) 의 비교가 RMT 의 핵심 결과.
-3. **모든 portfolio limit (R², Sharpe, 기대 수익, leverage) 이 *단일 함수 m(-z; c)* 로 결정**. 이 함수는 *데이터에서 직접 계산 가능*. 즉 *unknown 진짜 모집단의 디테일* 알 필요 없음. 본 논문 분석을 *practical* 하게 만든 마법. Proposition 3-6 + Theorem 1 모두 이 정리 위에 build.
+
+1. **전통 통계는 *T → ∞, P fixed* 의 영역만 다룸**. 본 논문은 *P, T 둘 다 무한대 + P/T → c > 0* 의 영역 — *새 통계* 필요. 1967년 Marchenko-Pastur 의 RMT 가 그 도구. 본 논문이 *자산가격에 처음 적용*. 실증의 c=12 같은 환경에선 통상 통계로 분석 불가능.
+
+2. **분포의 *압축 표현*** — 1000개 숫자의 분포를 *한 함수 $m(z) = \int (x - z)^{-1} dF(x)$* 로 표현. 정보 손실 0 (Stieltjes inversion formula 로 복원 가능). 분포 비교 (sample vs population) 에 사용. 본 논문의 *$m_\Psi(z)$* (진짜 모집단) vs *$m(z; c)$* (표본) 의 비교가 RMT 의 핵심. **마법의 핵심**: 분포 자체는 비교 어렵지만, 함수 vs 함수는 미적분 가능 → analytical 결과 도출 가능.
+
+3. **Sample covariance $\hat\Sigma = X^\top X / T$ 의 eigenvalue 분포가 진짜 $\Sigma$ 의 eigenvalue 분포와 systematic 하게 다름**. 그 차이의 정확한 closed-form 이 MP distribution. c → 0 면 두 분포 같음 (전통 통계의 한계). c > 0 면 sample eigenvalue 가 spread out (작은 eigenvalue → 더 작아짐, 큰 eigenvalue → 더 커짐). 본 논문이 이 변형을 정확히 분석.
+
+4. **OLS** ($z=0$): variance ↑ (overfit), bias = 0. **Ridge** ($z>0$): variance ↓ (계수 0 쪽으로 끌어당김), bias ↑ (truth 와 다름). 최적 $z$ 에서 **bias² + variance** 합이 최소 → MSE 최소화. **메커니즘**: 변수 > 데이터 면 OLS 계수가 부정확 (variance 무한대) → ridge 가 작은 bias 대가로 큰 variance 감소 → 전체 정확도 ↑. 본 논문 실증 최적 $z \approx 1000$ — 강한 shrinkage 필요.
+
+5. **모든 portfolio limit (R², Sharpe, 기대 수익, leverage) 이 *단일 함수 m(-z; c)* 로 결정**. 이 함수는 *데이터에서 직접 계산 가능* (unknown 진짜 모집단의 디테일 알 필요 없음). **마법의 의미**: (i) 진짜 자연 법칙을 모르더라도 portfolio 결과 예측 가능, (ii) 분석을 practical 하게 만듬, (iii) Proposition 3-6 + Theorem 1 모두 이 정리 위에 build. 한 함수에 모든 정보 응축 → 본 논문의 elegance 핵심.
 
 ---
 

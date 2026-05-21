@@ -412,14 +412,24 @@ Section 1 의 논리 흐름:
 
 ## 자기점검 (이 챕터)
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **"Markov 한계" 가 왜 ProTran 의 출발점이 되었나?**
 2. **왜 attention 을 잠재 $z$ 에 적용하지 관측 $x$ 에 적용하지 않았나?**
 3. **Figure 1 의 (b) 와 (a) 의 가장 큰 차이는?**
+4. **Smoothing 이 RNN/DKF 에서 어려운 이유와 ProTran 의 해결?**
+5. **시계열 분야에 attention 적용이 늦었던 이유 (NLP 대비)?**
 
 ### 답변
-1. 기존 SSM 의 두 갈래 (Markov 유지 / RNN 사용) 모두 long-range dependency 를 못 잡는다는 공통 한계. ProTran 은 이 벽을 직접 깨려고 attention 을 도입.
-2. 관측 $x$ 는 노이즈가 많은 raw data. 잠재 $z$ 는 정제된 추상 상태. Attention 을 잠재에 적용하면 "의미 있는 정보들끼리 비교" 가 되고, 노이즈 전파를 회피.
-3. (a) LDS 는 $z_t$ 가 $z_{t-1}$ 만 의존하는 단순 체인. (b) ProTran 은 $z_{t+1}$ 이 $z_1, \ldots, z_t$ 모두에 직접 화살표 — 즉 attention 으로 전체 과거를 동시에 본다.
+
+1. **기존 SSM 의 두 갈래 (Markov 유지 / RNN 사용) 모두 long-range dependency 를 못 잡는다는 공통 한계**. ProTran 은 이 벽을 직접 깨려고 attention 을 도입. **Markov 한계의 정확한 의미**: $z_t$ 가 $z_{t-1}$ 만 의존 → 지난 주의 정보 → 이번 주 영향 못 갈 수도. **RNN 의 vanishing gradient**: 멀리 떨어진 정보가 hidden state 통과하며 손실. **둘 다 long-range 미해결** → attention 의 등장 motivation.
+
+2. 관측 $x$ 는 **노이즈가 많은 raw data**. 잠재 $z$ 는 **정제된 추상 상태** (모델이 학습). Attention 을 잠재에 적용하면 "의미 있는 정보들끼리 비교" 가 되고, **노이즈 전파를 회피**. **계산 효율**: 잠재 차원 $d$ ≪ 관측 차원 $N$ (예: $d$=128, $N$=963 Traffic). $O(T^2 d)$ vs $O(T^2 N)$ — 약 7배 효율. **표현력**: 의미적 패턴이 잠재에 압축 → 더 의미 있는 attention.
+
+3. **(a) LDS** 는 $z_t$ 가 $z_{t-1}$ 만 의존하는 단순 체인 → **first-order Markov**. **(b) ProTran** 은 $z_{t+1}$ 이 $z_1, \ldots, z_t$ 모두에 직접 화살표 → **non-Markovian**, 전체 과거를 동시에 본다. **시각적 차이**: (a) 의 화살표는 chain, (b) 의 화살표는 fan-out (한 노드에서 여러 노드로). **의미**: (a) 는 작년 정보 손실 가능, (b) 는 작년 정보 직접 참고 가능.
+
+4. **RNN 의 어려움**: Hidden state 가 정보 압축. Bidirectional RNN 사용해도 forward + backward 결합 만 → mixed signal. **DKF (Deep Kalman Filter)** 같은 deep SSM 도 마찬가지. **ProTran 의 해결**: (i) **bidirectional self-attention** ($k_t$ 생성) 으로 전체 sequence 의 정보 균등 접근, (ii) Posterior 가 prior 와 분리 학습 (KL term 으로 align), (iii) Smoothing 시 미래 정보 활용 → 더 정확한 latent 추정. **결과**: training-only smoothing 이 inference 시 prior 의 quality 향상 → test 시 강력.
+
+5. **NLP 대비 시계열의 늦은 attention 적용 이유**: (i) **dimensionality**: NLP 는 word-level (낮은 차원), 시계열은 multivariate (높은 차원). Attention $O(T^2 N)$ 의 비용. (ii) **noise**: 시계열은 fat-tail noise + non-stationary, NLP 는 비교적 stable. (iii) **interpretation**: NLP 의 token = 의미 단위 명확, 시계열의 timestep = 의미 모호. (iv) **community gap**: NLP 가 transformer 적극 채택 (BERT 2018, GPT 2019) → 시계열 분야는 RNN 고수 (DeepAR 2017). **ProTran (2021)** 이 시계열에서 latent attention 의 길을 염. PatchTST (2023) 가 그 후속.
 
 다음 [04_preliminaries_ssm.md](04_preliminaries_ssm.md) 에서 SSM 의 수학적 정의 (Eq 1-3) 를 풀어본다.

@@ -397,14 +397,24 @@ paper:
 
 ## 10.11 자기점검 (이 챕터)
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **CRPS_sum 이 0.028 vs 0.044 인 경우, 어느 쪽이 더 좋은 모델인가?**
 2. **ADE/FDE 계산 시 "100 sample 중 가장 가까운 것" 만 쓰는 이유는?**
 3. **왜 ProTran 은 dataset 마다 layer 수 ($L$) 가 다른가?**
+4. **5 datasets (Solar, Electricity, Traffic, Taxi, Wikipedia) 의 차원별 특징과 비교 의의?**
+5. **11 baseline 들의 진화 경로와 ProTran 의 위치?**
 
 ### 답변
-1. **0.028 이 더 좋음**. CRPS_sum 은 lower = better — 예측 분포의 CDF 와 실제 step function 사이 거리. 작을수록 예측 분포가 실제와 가까움. 0.028 vs 0.044 = 36% 개선.
-2. 사람의 미래 동작은 multiple plausible (걸을 수도, 멈출 수도, 방향 바꿀 수도). Stochastic 모델은 여러 가능성을 sample 로 표현. "그 중 하나라도 ground truth 와 가깝다면 모델이 그 가능성을 포착했다" 는 합리적 평가. Best-of-N 평가는 multi-modal prediction 의 표준.
-3. 데이터 복잡도에 비례. Solar/Electricity (137~370 변수) 는 $L=1$ 충분. Traffic/Taxi/Wikipedia (963~2000 변수) 는 $L=2$. Human3.6M (매우 복잡 + multi-modal, 17 관절 동작) 는 $L=3$. paper 의 ablation (Table 2) 도 단순 dataset 에서는 multi-layer 의 marginal gain 만 보임을 확인.
+
+1. **0.028 이 더 좋음**. CRPS_sum 은 **lower = better** — 예측 분포의 CDF 와 실제 step function 사이 거리. 작을수록 예측 분포가 실제와 가까움. 0.028 vs 0.044 = **36% 개선**. **CRPS 의 직관**: 확률 분포 예측의 표준 metric. 점 예측의 MSE 와 비슷한 역할이지만 분포에 대해. **계산**: $\text{CRPS}(F, y) = \int (F(z) - 1\{z \geq y\})^2 dz$. **sum**: 시계열의 모든 시점 CRPS 의 합.
+
+2. **Multi-modal prediction 의 표준 평가**. 사람의 미래 동작은 multiple plausible (걸을 수도, 멈출 수도, 방향 바꿀 수도). Stochastic 모델은 여러 가능성을 sample 로 표현. "그 중 하나라도 ground truth 와 가깝다면 모델이 그 가능성을 포착했다" 는 합리적 평가. **Best-of-N 평가는 multi-modal prediction 의 표준**. **대안 (단점)**: Mean prediction 만 평가 → multi-modal 의 가치 무시. 모드 평균 = 의미 없는 average pose 가 됨 (예: 왼쪽 걷기 + 오른쪽 걷기 평균 = 정지 자세).
+
+3. **데이터 복잡도에 비례**. Solar/Electricity (137-370 변수) 는 $L=1$ 충분 — 비교적 simple cycle. Traffic/Taxi/Wikipedia (963-2000 변수) 는 $L=2$ — multi-modal cycle + cross-correlation. Human3.6M (매우 복잡 + multi-modal, 17 관절 동작) 는 $L=3$. **paper 의 ablation (Table 2)**: 단순 dataset 에서는 multi-layer 의 marginal gain 만 보임. **선택 원리**: validation set 으로 L 결정, complexity ↓ 면 $L$ ↓ (overfitting 회피).
+
+4. **차원 별 정렬** (low → high): **Solar (137)**: 단일 모달, 단순 cycle. **Electricity (370)**: 단순 cycle but noise ↑. **Traffic (963)**: complex spatial correlation. **Taxi (1214)**: spatial-temporal multi-modal. **Wikipedia (2000)**: 매우 high-dim, 다양한 패턴. **비교 의의**: 차원 ↑ 할수록 ProTran 의 우위 ↑ (Traffic 36% 개선 vs Wikipedia 4% 개선). Why: high-dim 에서 attention 의 가치 ↑. **단**: Wikipedia 도 best — universality 입증.
+
+5. **진화 경로**: **VES (2017)**: ETS (exponential smoothing) — 통계 기반, univariate. **VAR (1980s)**: vector autoregression — multivariate linear. **Vec-GARCH, KVAE**: nonlinear 추가. **DeepAR (Amazon 2017)**: deep RNN, point prediction. **GP-Copula (Salinas 2019)**: probabilistic GP. **Transformer-MAF (2019)**: attention + Mixture-of-Affine flow. **TimeGrad (2021, NeurIPS)**: diffusion-based, 같은 venue 의 SOTA. **★ ProTran (2021)**: 4 lineage 통합 + latent space + smoothing — 모든 차원 ✓. **NKF (Neural Kalman Filter)**: 별도 line, Kalman + flow.
 
 다음 [11_forecasting_results.md](11_forecasting_results.md) 에서 **Table 1 (CRPS_sum) + Fig 2 (Traffic) + Table 2 (ablation) 의 자세한 해석**.

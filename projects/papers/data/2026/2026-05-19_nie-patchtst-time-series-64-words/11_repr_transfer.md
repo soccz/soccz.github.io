@@ -148,15 +148,25 @@
 
 ## 11.5 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **Table 4 의 *self-supervised vs supervised* 결과?**
 2. **Transfer learning 의 의의?**
 3. **본 논문 self-supervised 결과의 *학계 임팩트*?**
+4. **Table 6 의 contrastive baseline (TS2Vec, BTSF) 대비 34-48% 향상의 의미?**
+5. **시계열 foundation model 의 후속 진화 (Chronos, TimesFM, Moirai) 와 PatchTST 의 위치?**
 
 ### 답변
-1. **Self-supervised + Linear Probe: supervised 보다 3% MSE 향상. Self-supervised + Fine-tune: 7% 향상**. 즉 *정답 없는 데이터의 pre-training* 이 *직접 정답 학습* 보다 *효과적*. 학생이 *책 많이 읽고 시험* > *책 안 읽고 시험만 본* 학생.
-2. **Pre-train on A → Transfer to B 가 *거의 동등 성능***. 즉 *시계열 representation 의 cross-dataset transferability* 증명. *한 큰 dataset 으로 pre-train → 모든 시계열 task 적용* 가능성. *시계열 foundation model 의 직접 motivation*.
-3. **시계열 분야의 *BERT moment***. NLP 의 BERT (2018) 가 *NLP foundation model 시대* 시작한 것처럼, *PatchTST self-supervised (2023)* 가 *시계열 foundation model 시대 시작*. 후속: Chronos (Amazon 2024), TimesFM (Google 2024), Moirai (Salesforce 2024) — 모두 PatchTST 위에 build.
+
+1. **Self-supervised + Linear Probe: supervised 보다 3% MSE 향상. Self-supervised + Fine-tune: 7% 향상**. 즉 **정답 없는 데이터의 pre-training 이 직접 정답 학습보다 효과적**. 학생이 *책 많이 읽고 시험* > *책 안 읽고 시험만 본* 학생. **놀라운 결과**: 보통 self-supervised < supervised (NLP, CV 에서도). 시계열에서 self-supervised > supervised 의 발견은 **시계열의 sequential 구조가 self-supervised 와 자연 적합** 함을 시사. **메커니즘**: Masked patch reconstruction 이 시계열의 inherent 구조 (cycle, trend) 학습 강제 → forecasting 에도 유용한 표현.
+
+2. **Pre-train on A → Transfer to B 가 *거의 동등 성능***. 즉 **시계열 representation 의 cross-dataset transferability 증명**. *한 큰 dataset 으로 pre-train → 모든 시계열 task 적용* 가능성. **Channel-Indep 의 universality 덕분**: source M=321 (Electricity) → target M=7 (ETT) 또는 M=862 (Traffic) 도 같은 encoder 사용 가능. **시계열 foundation model 의 직접 motivation**. **실무 의미**: low-resource setting (M=7 의 ETT) 에서도 transfer 로 활용 가능 — 작은 시계열 dataset 도 deep learning 의 혜택.
+
+3. **시계열 분야의 *BERT moment***. NLP 의 BERT (2018) 가 *NLP foundation model 시대* 시작한 것처럼, *PatchTST self-supervised (2023)* 가 *시계열 foundation model 시대 시작*. 후속: Chronos (Amazon 2024), TimesFM (Google 2024), Moirai (Salesforce 2024) — 모두 PatchTST 위에 build. **5-10년 영향**: Supervised result (21% MSE) 는 incremental, self-supervised 는 paradigm shift. **연구 영향**: PatchTST 후 self-supervised 시계열 연구 폭증, 2024-2025 foundation model 시리즈.
+
+4. **Table 6 의 결과**: PatchTST self-supervised vs 4 contrastive baseline (BTSF, TS2Vec, TNC, TS-TCC) **MSE 34.5-48.8% 향상**. **의의**: (i) **Reconstruction > Contrastive** for time series — NLP 의 BERT (reconstruction) > GPT-3 contrastive 패턴과 일치. (ii) **시계열 representation learning 의 학계 주류 (contrastive) 능가**. (iii) **PatchTST 의 representation 가치** — supervised 결과 만이 아니라 representation 자체도 우수. **메커니즘 차이**: Contrastive = "이건 비슷, 저건 다름" 학습 → 시계열의 sequential 구조 일부 손실. Reconstruction = "구체적 값 예측" → sequential 구조 보존.
+
+5. **PatchTST 후속 시계열 foundation models**: **Chronos (Amazon 2024)**: T5 architecture + tokenization, 시계열 → token sequence 변환. **TimesFM (Google 2024)**: Patch-based decoder, PatchTST 의 patching 직접 차용. **Moirai (Salesforce 2024)**: Multi-variate handling, in-context learning. **공통점**: PatchTST 의 patching + 시계열 specific tokenization + masked pre-training. **PatchTST 의 위치**: 4세대 시계열 foundation model 의 **direct prerequisite**. **현재 (2026)**: 이 foundation models 가 zero-shot/few-shot forecasting 의 standard — finance, energy, retail 등 다양한 domain. PatchTST 가 시계열 ML 의 ImageNet+ResNet moment 였다면, Chronos/TimesFM 이 시계열의 GPT moment.
 
 ---
 

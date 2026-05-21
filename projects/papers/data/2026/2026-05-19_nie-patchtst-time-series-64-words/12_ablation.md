@@ -301,17 +301,25 @@ $P$ 가 커질수록 (예: 32, 40) 약간 더 좋은 경향 (Weather, Traffic).
 
 ## 12.8 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
 
 1. **Table 7 의 4 setting 의 정확한 평균 개선율은? 가장 큰 contributor 는?**
 2. **Figure 4 가 입증하는 PatchTST 의 강점은? 일반 원칙은?**
 3. **CI 가 P 보다 큰 contribution 인 이유 3 가지?**
+4. **Table 11 의 Instance Norm + BatchNorm choices 의 의미?**
+5. **Ablation 의 결론으로 "Three tricks" (P + CI + IN) 이 맞는가?**
 
 ### 답변
 
-1. **Original (vanilla TST)** = baseline 0%. **P only** = ~**3%** 개선 (minor). **CI only** = ~**25~28%** 개선 (major). **P + CI** = ~**30~36%** 개선 (최대). **가장 큰 contributor = Channel-Independence (CI)**. 본 논문의 진짜 source of improvement. Patching 은 computational benefit 의 간접 효과.
-2. **PatchTST 가 hyperparameter $P$ 에 robust** — $P = 2$ 부터 $P = 40$ 까지 sweep 해도 MSE 거의 안 변함. **Hyperparameter tuning 거의 안 필요**. **일반 원칙**: 좋은 model 은 hyperparameter 에 robust 해야 함. 본 paper 의 강점 — QuantileFormer 의 K (dataset-specific tuning 필요) 와 대비.
-3. (1) **변수마다 다른 dynamics** (Electricity 321 가구 각각 다른 패턴) — channel-mixing 은 averaging artifact 만 학습. (2) **Overfitting 방지** — channel-mixing parameter 가 M (변수 수) 에 비례, CI 는 M 무관. (3) **Spurious correlation 차단** — CI 는 변수 간 학습 자체를 안 함. → "**Less is more**" — paper 가 시계열 분야에 가져온 가장 큰 교훈.
+1. **Original (vanilla TST)** = baseline 0%. **P only** = ~**3%** 개선 (minor). **CI only** = ~**25~28%** 개선 (major). **P + CI** = ~**30~36%** 개선 (최대). **가장 큰 contributor = Channel-Independence (CI)**. 본 논문의 진짜 source of improvement. Patching 은 computational benefit 의 간접 효과. **CI 의 80% 기여** vs Patching 의 10% 직접 + 10% 간접 (enabler). **Paper marketing**: Patching 강조 (제목 "64 Words"), 실제로는 CI 가 핵심.
+
+2. **PatchTST 가 hyperparameter $P$ 에 robust** — $P = 2$ 부터 $P = 40$ 까지 sweep 해도 MSE 거의 안 변함. **Hyperparameter tuning 거의 안 필요**. **일반 원칙**: 좋은 model 은 hyperparameter 에 robust 해야 함. 본 paper 의 강점 — QuantileFormer 의 K (dataset-specific tuning 필요) 와 대비. **실무 의미**: P=16 권장 but 8, 24 도 비슷한 성능 → 실무 배포 시 부담 ↓.
+
+3. **(1) 변수마다 다른 dynamics** (Electricity 321 가구 각각 다른 패턴) — channel-mixing 은 averaging artifact 만 학습. **(2) Overfitting 방지** — channel-mixing parameter 가 M (변수 수) 에 비례, CI 는 M 무관. M=862 (Traffic) 도 같은 모델 크기. **(3) Spurious correlation 차단** — CI 는 변수 간 학습 자체를 안 함. 우연히 상관된 변수쌍에 휘둘리지 X. → "**Less is more**" — paper 가 시계열 분야에 가져온 가장 큰 교훈. **추가 4번째 이유 (Sample efficiency)**: M=326 가구 = 326개 학습 샘플로 카운트 → 데이터 ↑ → 학습 안정.
+
+4. **Table 11 의 결과**: PatchTST+IN vs -IN → 17-22% 차이. **BatchNorm vs LayerNorm**: BatchNorm 약간 우월. **의미**: Instance Norm (시계열 별 정규화) 은 distribution shift 해결, BatchNorm vs LayerNorm 은 normalization granularity choice. **PatchTST 의 normalization 조합**: (i) Instance Norm (chart-level, distribution shift), (ii) BatchNorm (layer-level, 학습 안정), (iii) Patch Projection (input-level, representation). **3-level normalization** 이 효율적.
+
+5. **Three tricks 가 더 정확한 표현**: (1) Patching (representation enabler), (2) Channel-Independence (main contributor), (3) Instance Norm (distribution shift). **paper 의 "Two tricks" 메시지**는 marketing 측면 — Patching 이 제목과 일치, 직관적. **그러나 ablation 으로는**: IN 단독 17%, CI 단독 25%, Patching 3%. **세 trick 의 결합** 이 진짜 source. **후속 연구의 교훈**: (i) Paper claim 보다 ablation 자세히 보기, (ii) "Hidden contributor" 찾기, (iii) Simple tricks 의 가치 무시 X. **iTransformer (2024)**: CI 의 inverse (channel attention) 적용 — 이것도 ablation 으로 specific dataset 에서 효과 입증.
 
 ---
 

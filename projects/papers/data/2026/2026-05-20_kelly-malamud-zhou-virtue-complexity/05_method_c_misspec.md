@@ -128,6 +128,21 @@ George Box (1976) 의 명언: **"모든 모델은 틀렸지만 일부는 유용�
 
 본 챕터의 핵심 *trade-off*. 이걸 이해하면 본 논문 다 이해.
 
+### 🔣 misspecified 핵심 기호 4-단 풀이
+
+| 기호 | 의미 | 직관 |
+|------|------|------|
+| $P_1$ | 학자가 본 변수 수 | empirical model 의 변수 |
+| $P_2$ | 학자가 못 본 변수 수 | unobserved variables |
+| $P = P_1 + P_2$ | 진짜 자연 변수 수 | true DGP complexity |
+| $q = P_1 / P$ | 학자/자연 비율 | "학자가 본 비율" |
+| $c = P/T$ | true complexity | 데이터 환경의 고유 어려움 |
+| $cq = P_1/T$ | empirical complexity | 학자 모델의 복잡도 |
+| $\xi_{2,1}$ | observed-unobserved cross-correlation | 학자가 본 vs 못 본 의 상관 |
+| **Sufficiently mixed signals** | 모든 변수가 균등 정보 | RFF 가 자연 만족 |
+
+→ **Eq 18-19 의 핵심**: $\mathcal{E}(0; cq; q) = b_* \psi_{*,1} \min\{q, c^{-1}\}$ — Figure 5 의 monotone 증가 패턴의 explicit form.
+
 ### 효과 1 — Approximation gain (근사 이득)
 
 > **"q ↗ (학자가 더 많은 진짜 변수 capture) → *진짜 자연 에 더 가까운 모델* → 더 나은 예측."**
@@ -219,6 +234,41 @@ Ridgeless 에서 *$cq = 1$ 부근 약한 dip*. 그러나 *그 후 다시 증가*
 $z > 0$ 의 선들은 *dip 없이 부드럽게 monotone 증가* — *permanent ascent*.
 
 → **Theorem 1 의 정확한 statement**: *적절한 ridge 면 dip 사라짐*.
+
+---
+
+### 📖 Figure 6 (Theorem 1 시각화) 정밀 읽는 법
+
+**무엇이 표시되나**:
+- **단일 panel**: x축 = cq (학자 empirical complexity), y축 = Sharpe ratio
+- **6 색 곡선**: ridgeless (검정), z=0.001~50 (5색)
+- **Calibration**: True DGP c=10 고정, cq sweep 0-10
+
+**5 단계 분석**:
+1. **cq=0 근처**: 모든 선 0 근처 (학자가 변수 거의 못 봄, timing X)
+2. **cq = 0.1-0.9**: 모든 선 점차 상승 (approximation gain 발현)
+3. **★ cq = 1 근처**: 검정 (ridgeless) 약한 dip, 다른 선은 부드럽게 증가
+4. **cq = 1.5-5**: 모든 선 계속 상승, 기울기 점차 둔화 (concave)
+5. **cq = 10 (correctly specified)**: 모든 선 최고점, SR ≈ 0.05
+
+**4 핵심 발견**:
+- ★ **모든 z 에서 monotone 증가** = Theorem 1 의 시각적 statement
+- **Ridgeless 의 double ascent** (cq=1 dip but 결국 증가)
+- **z > 0 의 permanent ascent** (dip 없이 부드럽게)
+- **Concavity** (diminishing returns to complexity)
+
+**숨은 함정**:
+- "모든 z 에서 증가" 라고 모든 dataset 에 적용은 X — calibration 가정 필요
+- y축 scale (0-0.06) 작음 → 작은 변화도 의미
+
+### 🎯 구체 증거 — Theorem 1 의 strength
+
+| 발견 | 의미 |
+|------|------|
+| Monotone 증가 | 학자가 변수 ↑ 할수록 SR ↑ — "Use the largest model" |
+| Concave (둔화) | 추가 변수의 marginal gain ↓ — 무한대로 좋지 않음 |
+| ridgeless 의 dip | $cq = 1$ 의 catastrophe 는 statistical metric (R²) 에선 큰 영향, SR 에선 약함 |
+| z > 0 의 robust | 적절한 ridge 면 catastrophe 회피 |
 
 ---
 
@@ -335,15 +385,25 @@ $\text{tr}(\Psi_{1,2}\Psi_{2,1}) = o(P)$ — observed 변수 와 unobserved 변�
 
 ## 5c.12 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. ***Correctly specified* vs *Misspecified* 의 본질적 차이?**
 2. **Theorem 1 의 정확한 statement?**
 3. **Double descent vs Double ascent vs Permanent ascent 의 구분?**
+4. **Approximation gain vs Statistical cost trade-off + 균형점?**
+5. **Theorem 1 의 두 조건 (sufficiently mixed + bounded cross-correlation) 의 의미?**
 
 ### 답변
-1. **Correctly specified**: 학자의 model = 진짜 자연 (q = 1). 이론적 baseline, 비현실. *Simple > complex*. **Misspecified**: 학자의 model ⊂ 진짜 자연 (q < 1). 현실적 — 모든 실제 model 이 이 경우. *두 효과 trade-off*: (+) approximation gain + (-) statistical cost. **본 논문 main result 인 Theorem 1 이 후자에서만 성립**.
-2. **Sufficiently mixed signals + bounded cross-correlation 조건 하에서, optimal shrinkage $z_*$ 와 함께 Sharpe ratio $SR(z_*; cq; q)$ 가 q ∈ [0, 1] 에서 *strictly monotone increasing + concave***. 즉 *학자가 empirical model 의 복잡도를 증가시킬수록 SR 단조 증가* (단, 추가 효과 감소). Implication: *Use the largest model you can compute*.
-3. **Double descent (Belkin 2019)**: MSE 의 *cq 함수* — 증가 → cq=1 spike → 감소 (benign overfit). 통계학 발견. **Double ascent (본 논문 ridgeless)**: Sharpe ratio 의 *cq 함수* — 증가 → cq=1 dip → 증가. MSE 의 거울 이미지. **Permanent ascent (본 논문 optimal ridge)**: 모든 cq 에서 단조 증가, dip 없음. Theorem 1 의 정확한 statement — *적절한 ridge 가 dip 사라지게*.
+
+1. **Correctly specified**: 학자의 model = 진짜 자연 (q = 1). 이론적 baseline, 비현실. *Simple > complex*. **Misspecified**: 학자의 model ⊂ 진짜 자연 (q < 1). 현실적 — 모든 실제 model 이 이 경우. *두 효과 trade-off*: (+) approximation gain (변수 ↑ = 진짜에 가까움) + (-) statistical cost (변수 ↑ = 추정 잡음 ↑). **본 논문 main result 인 Theorem 1 이 후자에서만 성립**. Box (1976) "All models are wrong, but some are useful" → 본 논문이 이 격언의 정확한 수학적 의미 부여.
+
+2. **Sufficiently mixed signals + bounded cross-correlation 조건 하에서, optimal shrinkage $z_*$ 와 함께 Sharpe ratio $SR(z_*; cq; q)$ 가 q ∈ [0, 1] 에서 *strictly monotone increasing + concave***. 즉 *학자가 empirical model 의 복잡도를 증가시킬수록 SR 단조 증가* (단, 추가 효과 감소). **Implication: Use the largest model you can compute** — 실무 명령. 단 "+ proper ridge" 가 핵심 — 무차별 복잡도 ↑ 는 catastrophe 위험. 자산운용 업계 (AQR, Two Sigma) 의 ML 활용의 학문적 정당화.
+
+3. **Double descent (Belkin 2019, 통계학)**: MSE 의 *cq 함수* — 증가 → cq=1 spike → 감소 (benign overfit). **Double ascent (본 논문 ridgeless)**: Sharpe ratio 의 *cq 함수* — 증가 → cq=1 dip → 증가. MSE 의 거울 이미지. **Permanent ascent (본 논문 optimal ridge)**: 모든 cq 에서 단조 증가, dip 없음. Theorem 1 의 정확한 statement — *적절한 ridge 가 dip 사라지게*. 의미: 통계학자가 발견한 double descent 가 finance 에선 double ascent → optimal ridge 면 permanent ascent. 세 단계 학문적 진화.
+
+4. **Approximation gain**: $q$ ↑ (학자가 더 많은 진짜 변수 capture) → 진짜 자연에 더 가까운 모델 → 더 나은 예측 → SR ↑. 의사가 환자 증상 5 → 50 → 500 개 보면 진단 정확도 ↑. **Statistical cost**: $cq$ ↑ (학자 모델 복잡도) → 추정 variance ↑ → 더 안 좋은 추정 → SR ↓. 의사가 변수 많을수록 각 변수의 효과 정확히 추정 어려움. **균형점**: Theorem 1 의 발견 — *적절한 ridge* 와 함께면 **approximation gain > statistical cost**. 결과: 균형점이 항상 "더 많은 변수 쪽" → monotone 증가.
+
+5. **Sufficiently mixed signals (Assumption 5)**: 학자의 모든 변수가 *비슷한 정도의 정보* 제공. 어떤 변수가 특별히 결정적이 아니라 모두 균등 분포. RFF (Random Fourier Features) 가 자연 만족 — Gaussian random projection 이라 statistically 비슷. **Bounded cross-correlation** ($\text{tr}(\Psi_{1,2}\Psi_{2,1}) = o(P)$): 학자가 본 변수와 못 본 변수의 상관이 *너무 강하지 않음*. 만약 강하면 학자가 일부만 봐도 모두 본 것 같은 효과 (information leakage). 본 조건은 *그렇지 않음* 가정. RFF + finite-dim factor structure 가 자연 만족. **의의**: 두 조건이 *RFF 사용 시 자연 만족* → 본 논문 실증의 RFF 선택이 *조건 만족 + analytical tractability* 의 묘수.
 
 ---
 

@@ -291,15 +291,25 @@ PatchTST 의 inductive bias:
 
 ## 15.15 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **본 논문의 *메타 메시지* 한 줄?**
 2. ***ViT 의 정신* 의 transfer 의 의미?**
 3. **Channel-Indep 가 *진짜 source* 라는 발견의 implication?**
+4. **Self-supervised vs Supervised — 어느 게 paper 의 *진짜* main contribution?**
+5. **PatchTST 후 시계열 ML 의 진화 (iTransformer, Chronos 등) — 본 논문이 catalyst 인 이유?**
 
 ### 답변
-1. **"Vanilla Transformer + 두 단순 trick (Patching, Channel-Indep) = 시계열 SOTA. 학자들이 시계열 specific 변형 (Informer, Autoformer, FEDformer) 에 매달리던 5년 동안 over-engineered. ViT 의 paradigm transfer 의 시계열 적용. Simple wins."**
-2. **ViT (2020) 가 *image patching* 으로 *NLP Transformer 를 image 에 그대로 적용*. PatchTST (2023) 가 *시계열 patching* 으로 *NLP Transformer 를 시계열에 그대로 적용*. 즉 *paradigm transfer*. 새 분야 진입 시 *분야 specific 변형* 가정 전에 *기존 paradigm 의 직접 적용* 시도 우선해야 한다는 통찰.**
-3. **Ablation (Table 7) 가 보임: Channel-Indep 단독 = 23% MSE reduction; Patching 단독 = 17%; P+CI = 24%. 즉 *CI 가 메이저, P 는 마이너 (그러나 computational enabler)*. Implication: 향후 *시계열 ML 의 priority* = *Channel-Independence* 가 기본. Patching 은 *함께 사용 권장* (longer L 가능하게 만들어주는 enabler).**
+
+1. **"Vanilla Transformer + 두 단순 trick (Patching, Channel-Indep) = 시계열 SOTA. 학자들이 시계열 specific 변형 (Informer, Autoformer, FEDformer) 에 매달리던 5년 동안 over-engineered. ViT 의 paradigm transfer 의 시계열 적용. Simple wins."** **3-line 확장**: (i) 기존 학자들의 함정 — "시계열 = 특수 분야" 가정으로 specific 변형 만듦, (ii) PatchTST 의 깨달음 — "분야 특수성 가정 의심, general tool 의 직접 적용", (iii) 결과 — 21% MSE reduction + foundation model 시대 개막.
+
+2. **ViT (2020) 가 *image patching* 으로 *NLP Transformer 를 image 에 그대로 적용***. PatchTST (2023) 가 *시계열 patching* 으로 *NLP Transformer 를 시계열에 그대로 적용*. 즉 **paradigm transfer**. **새 분야 진입 시 분야 specific 변형 가정 전에 기존 paradigm 의 직접 적용 시도 우선해야 한다는 통찰**. **다른 분야 적용 사례**: (i) Quant finance — PatchTST 가 stock prediction 에도 효과적?, (ii) Healthcare — EEG, ECG 시계열, (iii) IoT sensor data. 이 정신이 다양한 신호처리 분야에 transfer 가능.
+
+3. **Ablation (Table 7) 가 보임: Channel-Indep 단독 = 23% MSE reduction; Patching 단독 = 17%; P+CI = 24%. 즉 CI 가 메이저, P 는 마이너 (그러나 computational enabler)**. Implication: 향후 시계열 ML 의 priority = **Channel-Independence 가 기본**. Patching 은 함께 사용 권장 (longer L 가능하게 만들어주는 enabler). **paper marketing 함정 회피**: Paper claim 보다 ablation 자세히 보기. **iTransformer (2024)** 의 등장: CI 의 inverse (channel attention) — dataset specific 효과. 두 방향 모두 valid.
+
+4. **Self-supervised 가 paper 의 진짜 main contribution**. **Supervised 결과 (21% MSE)**: incremental SOTA, 1-2년 영향. **Self-supervised**: paradigm shift, 5-10년 영향. **이유**: (i) Self-supervised representation 이 transfer 가능 → 시계열 foundation model 가능성, (ii) Chronos/TimesFM/Moirai 모두 PatchTST 의 self-supervised 위에 build, (iii) 시계열 분야의 BERT moment — paradigm 의 전환점. **paper 의 marketing**: abstract 가 supervised 강조 but 진짜 가치는 self-supervised. 후속 인용 분석 시 self-supervised 부분 cite 가 더 많을 가능성.
+
+5. **PatchTST 가 catalyst (촉매) 인 이유**: (i) **iTransformer (2024)**: CI 의 inverse 시도 — PatchTST 의 CI 가 첫 가설 던졌기에 inverse 가설 가능, (ii) **Chronos (Amazon 2024)**: Patching idea 직접 차용 + T5 architecture, (iii) **TimesFM (Google 2024)**: Patch-based decoder, PatchTST + GPT 결합, (iv) **Moirai (Salesforce 2024)**: Multi-variate handling, in-context learning. **공통점**: 모두 PatchTST 의 (a) patching, (b) vanilla transformer, (c) self-supervised pre-training 차용. **paper 의 영향력**: 시계열 ML 의 **3세대 → 4세대 전환점**. 1세대 (LSTM), 2세대 (시계열 specific transformer), 3세대 (vanilla + patching, **PatchTST**), 4세대 (foundation models).
 
 ---
 

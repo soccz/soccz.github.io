@@ -288,15 +288,25 @@ PatchTST 의 *결과가 robust* — seed 변경에도 *작은 std*. 예시 (Weat
 
 ## 20.8 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **21% MSE reduction 의 *source 분해*?**
 2. **Channel-Indep 의 *universal trick* 의의?**
 3. **본 논문의 *분야 paradigm shift*?**
+4. **DLinear (단순 linear) 와 PatchTST 의 honest 비교 — ETTh 에서 DLinear 가 이기는 이유?**
+5. **Figure 5 (sensitivity) 의 robustness 입증 — 좋은 모델의 조건?**
 
 ### 답변
-1. **3 source: (i) Channel-Indep ~50%, (ii) Patching + Longer L ~30%, (iii) Vanilla Transformer (no specific 변형) ~20%**. Ablation (Table 7) 가 정량. Channel-Indep 이 *가장 큰 single contributor*, Patching 은 *computational enabler*.
-2. **Channel-Indep 가 *PatchTST specific 이 아닌 universal*** (Table 15 — Informer/Autoformer/FEDformer 에 적용해도 모두 성능 향상). **본 논문 이후 *모든 시계열 ML 의 새 standard***: Channel-Indep default. 미래 model design first principle: Channel-Indep 부터 + 그 위에 cross-channel 옵션.
-3. **Before PatchTST**: 시계열 specific 변형 + channel-mixing + long L 불가능 + foundation model 없음. **After PatchTST**: Vanilla Transformer + channel-indep + longer L + foundation model 시대. *21% MSE reduction 만이 아니라 *모든 paradigm shift**. 2024 의 모든 시계열 SOTA paper 가 PatchTST 인용 — *paradigm capstone*.
+
+1. **3 source 분해**: **(i) Channel-Indep ~50%**, **(ii) Patching + Longer L ~30%**, **(iii) Vanilla Transformer (no specific 변형) ~20%**. Ablation (Table 7) 가 정량. **CI 가 가장 큰 single contributor**, Patching 은 computational enabler. **추가 contributor (hidden)**: Instance Norm 17% 단독 — paper 강조 안 했지만 ablation 으로 확인. **결론**: PatchTST 의 21% reduction 은 "two tricks" 가 아니라 **CI + Patching enabler + IN + vanilla simplicity 의 결합**.
+
+2. **Channel-Indep 가 *PatchTST specific 이 아닌 universal*** (Table 15 — Informer/Autoformer/FEDformer 에 적용해도 모두 성능 향상). **본 논문 이후 모든 시계열 ML 의 새 standard**: Channel-Indep default. 미래 model design first principle: Channel-Indep 부터 + 그 위에 cross-channel 옵션. **Cross-domain 영향**: NLP 의 Transformer (2017) 가 universal trick 되었듯, PatchTST 의 CI 가 시계열의 universal trick. **iTransformer (2024)** 가 CI 의 inverse (channel attention) 시도 — dataset 따라 두 방식 모두 valid.
+
+3. **Before PatchTST (2022 이전)**: 시계열 specific 변형 (Informer, Autoformer, FEDformer) + channel-mixing + long L 불가능 + foundation model 없음. **After PatchTST (2023+)**: Vanilla Transformer + channel-indep + longer L + foundation model 시대 (Chronos, TimesFM, Moirai). **21% MSE reduction 만이 아니라 모든 paradigm shift**. **2024-2026 의 모든 시계열 SOTA paper 가 PatchTST 인용** — paradigm capstone. **의의**: 단일 paper 가 분야 reset — 흔치 않음. ViT (2020) 의 CV 분야, BERT (2018) 의 NLP 분야 와 비슷한 영향.
+
+4. **DLinear 가 ETTh1/h2 에서 PatchTST 와 격차 작거나 약간 우월한 이유**: ETTh1/h2 는 **단순 일/계절 cycle dataset** (7 변수, hourly). Multi-modal 없음, extreme event 적음, 변수 간 복잡한 상호작용 없음. → **단순 모델로 충분**. **DLinear 의 구조**: Series decomposition (trend + seasonal) + linear regression — 명시적 cycle 모델링. **단순 dataset 에서**: DLinear 의 inductive bias (cycle decomposition) 가 데이터 구조와 match → variance ↓ → 작은 dataset 에서 더 robust. **PatchTST 의 attention**: 더 강력하지만 단순 dataset 에서 추가 가치 ↓ + overfit 위험. **교훈**: **모델 복잡도가 데이터 복잡도와 match 해야** — 항상 더 복잡한 모델이 좋은 게 아님.
+
+5. **Figure 5 (sensitivity sweep)** 의 입증: P, S, mask ratio, learning rate 등 hyperparameter sweep 시 **평탄한 성능 곡선** — robust to hyperparameter choice. **좋은 모델의 조건**: (i) **Hyperparameter robust** — 정확한 값 미세 조정 불필요, (ii) **Dataset robust** — 여러 dataset 에서 일관 성능, (iii) **Architecture robust** — 일부 component 제거/변경 시 graceful degradation. PatchTST 가 (i)-(iii) 모두 만족. **대비 (Bad)**: 일부 paper 의 hyperparameter sensitive — 특정 값 외 성능 급락 → 실무 배포 어려움. **실무 의미**: PatchTST 를 default P=16 으로 deploy 가능, 데이터별 별도 튜닝 부담 ↓. **연구 의미**: Robustness 가 SOTA 의 진짜 조건 — 절대값 우위뿐 아니라 안정성.
 
 ---
 

@@ -199,15 +199,25 @@ ablation (ch12 Table 7) 의 정확한 수치:
 
 ## 5.7 자기점검
 
-### 핵심 3가지
+### 핵심 5가지
+
 1. **Channel-Independence 의 일상 비유?**
 2. **Channel-mixing 대비 3가지 이점?**
 3. **Channel-Independence 의 limitation?**
+4. **Ablation 에서 CI 의 25-28% MSE reduction 기여 — Patching (3%) 보다 큰 이유?**
+5. **iTransformer (2024) 가 CI 의 inverse 로 channel-mixing 부활 — 왜 둘 다 valid 한가?**
 
 ### 답변
-1. **의사가 환자의 *심박, 혈압, 체온* 을 *각각 따로* 분석 + *모두 같은 진단 방식***. M 개 channel (326 전력 가구) 이 있어도 *각 가구를 독립* Transformer 통과 + *모두 같은 weight*. Cross-channel mixing X.
-2. **(1) Overfitting 방지**: M channel 이 *같은 weight* → parameter 수 일정 → 학습 안정. **(2) Spurious correlation 회피**: 각 channel 독립 → 허위 cross-channel correlation 학습 X. **(3) Sample efficiency**: 학습 데이터 *M 배 효과* (한 channel = 한 sample 이 아니라 한 timestep = 한 sample, 그러면 $T \times M$ samples).
-3. **Cross-channel dependency 못 활용**. 예: 326 가구 중 *같은 동네 가구들* 의 *시간 패턴 유사성* 이 있다면, Channel-mixing 은 *그 정보 활용 가능* but Channel-Independence 는 *무시*. 본 논문 conclusion 의 limitation. 후속 iTransformer (2024) 가 *cross-channel advantage* 회복.
+
+1. **의사가 환자의 *심박, 혈압, 체온* 을 *각각 따로* 분석 + *모두 같은 진단 방식***. M 개 channel (326 전력 가구) 이 있어도 *각 가구를 독립* Transformer 통과 + *모두 같은 weight* (shared parameters). Cross-channel mixing X. **vs 표준 (Channel-Mixing)**: 326 가구를 한 번에 한 Transformer 가 처리, 모든 가구의 시간 패턴 동시 학습. CI 는 이걸 거절.
+
+2. **(1) Overfitting 방지**: M channel 이 *같은 weight* → parameter 수 일정 → 학습 안정. M=862 (Traffic) 도 같은 모델 크기. **(2) Spurious correlation 회피**: 각 channel 독립 → 허위 cross-channel correlation 학습 X. Traffic 의 두 거리가 우연히 비슷한 패턴이라도 모델이 그 spurious 관계 학습 X. **(3) Sample efficiency**: 학습 데이터 *M 배 효과* — 한 batch 에 1 sample (multivariate) 가 아니라 M samples (각 channel 독립). M=326 면 sample 수 326배.
+
+3. **Cross-channel dependency 못 활용**. 예: 326 가구 중 *같은 동네 가구들* 의 *시간 패턴 유사성* 이 있다면, Channel-mixing 은 *그 정보 활용 가능* but Channel-Independence 는 *무시*. 본 논문 conclusion 의 limitation. **후속 iTransformer (2024)** 가 *cross-channel advantage* 회복 — 시계열의 inverted view (channel 차원에 attention). **실무 영향**: 만약 dataset 의 cross-channel 정보가 강하면 (예: stock prediction, ECG multi-lead) iTransformer 가 PatchTST 능가 가능.
+
+4. **Ablation (Table 7) 의 정확 수치**: Patching only ~3%, CI only ~25-28%, Both ~30-36%. **CI 가 80% 차지하는 이유**: (i) **Sample efficiency** — M=326 가구가 326 sample 로 카운트됨 → 데이터 ↑ → overfit ↓ → MSE ↓. (ii) **Inductive bias** — 시계열의 temporal pattern 이 channel 무관 → CI 가 이걸 강제 → 일반화 ↑. (iii) **Regularization 효과** — Shared weight 가 implicit regularization 처럼 작동. **Patching 의 진짜 역할**: Computational enabler (longer L 가능하게 함) — direct MSE 기여는 작지만 enabling effect 큼.
+
+5. **CI vs Channel-Mixing 의 dataset 의존성**: **CI 가 좋은 case**: (i) Cross-channel correlation 약함 (Traffic 의 다른 도로), (ii) Channel 간 패턴 다양 (다른 종류 측정), (iii) Sample 부족. **Mixing 이 좋은 case**: (i) Cross-channel 강함 (stock prediction 의 sector 동조), (ii) Channel 간 패턴 유사 (multi-sensor 같은 quantity), (iii) Channel 수 많음 (충분한 학습 데이터). **iTransformer 의 발견**: Channel attention 이 시간 attention 보다 더 효과적인 dataset 도 존재. **결론**: 둘 다 valid, **dataset 별 선택** 이 핵심. CI = "channel = noise", Mixing = "channel = signal".
 
 ---
 
