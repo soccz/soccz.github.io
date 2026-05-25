@@ -864,6 +864,89 @@
 
 <hr class="divider">
 
+<!-- POLICY EVOLUTION — narrative 진입점 (2026-05-25 추가 layer) -->
+<section>
+  <div class="container">
+    <div class="section-label">POLICY EVOLUTION · 2026-05-25</div>
+    <h2 class="section-title">기존이 안 됐다 — 그래서 이런 layer 를 추가했다</h2>
+    <p class="section-desc">
+      위 결과들이 보여주듯 5/8 → 5/20 라이브 paper 12 일 동안 누적 PnL <strong style="color:var(--red)">-52%</strong> (dist) /
+      <strong style="color:var(--red)">-45%</strong> (pre). 표본 늘리면 회복 가능성이 아니라 — bear regime
+      89% 알림 + EV 음수 룰의 *수학적 보장*. 데이터가 그렇게 가르쳤다.<br><br>
+
+      5/25 시점에 정책 layer 를 새로 얹었다. 모델은 그대로, *알람을 어떻게 분류하느냐*만 바꿈.
+      candidate generation → policy layer → ACTIVE / WATCH / SILENCE 분류 →
+      shadow ledger 누적 (걸러진 후보까지) → meta-label 학습 → idea validation report →
+      policy gate (자동 promotion 차단). 이 페이지 아래 카드 3 개에 그 결과가 차례대로 나온다.<br><br>
+
+      *추천이 좋으면 ACTIVE 로 보내고, 좋지 않으면 침묵하되 그 결정 자체를 attribution 으로
+      남긴다.* 그게 portfolio grade 시스템의 핵심 — 결과보다 결정의 정합성이 먼저.
+    </p>
+    <div class="alpha-card" id="policyEvolutionCard">
+      <div class="ac-row"><div class="ac-label">policy id</div><div class="ac-num" id="policyId" style="font-size:0.95rem">—</div><div class="ac-sub" id="policyVersion">—</div></div>
+      <div class="ac-row"><div class="ac-label">policy_gate</div><div class="ac-num" id="policyGateStatus" style="font-size:0.95rem">—</div><div class="ac-sub">automation 보수적 — 사용자 명시 컨펌 후 swap</div></div>
+      <div class="ac-row"><div class="ac-label">timeline</div><div class="ac-num" id="policyTimeline" style="font-size:0.95rem">5/8 → 5/25</div><div class="ac-sub">결과 진단 + layer 추가 사이클</div></div>
+    </div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">rule set</h3>
+    <div id="policyRuleSet"><div class="loading-state">loading…</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- META MODEL CARD — 메타 모델 학습 결과 -->
+<section class="compact">
+  <div class="container">
+    <div class="section-label">META MODEL CARD</div>
+    <h2 class="section-title">meta-label 모델 — *어떤 추천이 net-win 할지* 학습</h2>
+    <p class="section-desc">
+      과거 paper_ledger + shadow_ledger 의 closed row 로 meta-label 모델 (recommendation_quality_meta_label_v1)
+      을 학습. 입력 = 채널 / setup_quality / btc_regime / calibrated_hit / expected_edge / evidence_n_closed
+      등. 타겟 = <code>net_win</code> (TP 또는 EOD close - 비용 > 0). 표본이 충분히 모이면 낮은
+      품질 추천을 자동 강등할 채비. 현재는 holdout 표본 부족으로 <em>shadow scoring 상태</em>
+      (자동 배포 X).
+    </p>
+    <div class="alpha-card" id="metaModelCard">
+      <div class="ac-row"><div class="ac-label">model</div><div class="ac-num" id="metaModelId" style="font-size:0.95rem">—</div><div class="ac-sub" id="metaModelVersion">—</div></div>
+      <div class="ac-row"><div class="ac-label">deployable</div><div class="ac-num" id="metaDeployable" style="font-size:0.95rem">—</div><div class="ac-sub" id="metaDeployReason">—</div></div>
+      <div class="ac-row"><div class="ac-label">threshold</div><div class="ac-num" id="metaThreshold">—</div><div class="ac-sub">net-win probability cutoff</div></div>
+      <div class="ac-row"><div class="ac-label">n_samples</div><div class="ac-num" id="metaSamples">—</div><div class="ac-sub" id="metaSplit">—</div></div>
+      <div class="ac-row"><div class="ac-label">date range</div><div class="ac-num" id="metaDates" style="font-size:0.85rem">—</div><div class="ac-sub">training span</div></div>
+    </div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">학습 metric (holdout)</h3>
+    <div id="metaMetrics"><div class="loading-state">loading…</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- RECOMMENDATION QUALITY — idea attribution / policy replay / gate -->
+<section>
+  <div class="container">
+    <div class="section-label">RECOMMENDATION QUALITY</div>
+    <h2 class="section-title">정책이 만든 추천 — 결과 attribution</h2>
+    <p class="section-desc">
+      *어떤 idea 가 돈을 벌고 못 벌었는가* 의 정량. idea_id 별 (channel × setup_quality × regime)
+      그룹 누적. policy replay 는 현재 룰을 *과거에 적용했을 때* 의 결과 — 정책 변경의 retrospective
+      효과. policy gate 는 *이번 정책 변경을 자동 promotion 해도 되는가* 의 판단 (현재 보수적 — 사용자 명시 컨펌 필요).
+    </p>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.4rem 0 0.6rem">idea attribution</h3>
+    <div id="ideaAttribution"><div class="loading-state">loading…</div></div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy replay (retrospective)</h3>
+    <div id="policyReplay"><div class="loading-state">loading…</div></div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy gate (자동 promotion 판단)</h3>
+    <div id="policyGate"><div class="loading-state">loading…</div></div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy recommendations (다음 정책 후보)</h3>
+    <div id="policyRecommendations"><div class="loading-state">loading…</div></div>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- 알림 히스토리 -->
 <section>
   <div class="container">
@@ -2074,6 +2157,95 @@ function renderNotesVsSystem(summary) {
   `;
 }
 
+/* ───────── Policy Evolution ───────── */
+function renderPolicyEvolution(summary) {
+  const pe = summary.policy_evolution || {};
+  const idea = summary.idea_validation || {};
+  const gate = (idea.policy_gate || {});
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('policyId', pe.policy_id || '—');
+  set('policyVersion', pe.version || '—');
+  set('policyGateStatus', (gate.rows || []).length ? `${gate.rows.length} rule(s) evaluated` : '—');
+  set('policyTimeline', '5/8 결과 → 5/13 timer fix → 5/20 bear silence → 5/25 정책 layer');
+
+  const root = document.getElementById('policyRuleSet');
+  if (!root) return;
+  const rules = pe.rule_set || [];
+  if (!rules.length) { root.innerHTML = '<div class="loading-state">no rules</div>'; return; }
+  const trs = rules.map(r => `<tr><td>${escapeHtml(r.channel || '—')}</td><td>${escapeHtml(r.regime || '—')}</td><td><strong>${escapeHtml(r.decision || '—')}</strong></td></tr>`).join('');
+  root.innerHTML = `<table class="strat-table"><thead><tr><th>channel</th><th>BTC regime</th><th>decision</th></tr></thead><tbody>${trs}</tbody></table>`;
+}
+
+/* ───────── Meta Model Card ───────── */
+function renderMetaModel(summary) {
+  const m = summary.meta_model || {};
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('metaModelId', m.model_id || '—');
+  set('metaModelVersion', m.model_version || '—');
+  set('metaDeployable', m.deployable === true ? 'YES' : 'NO (shadow only)');
+  set('metaDeployReason', m.reason || '—');
+  set('metaThreshold', m.threshold != null ? fmt(m.threshold, 3) : '—');
+  set('metaSamples', m.n_samples != null ? String(m.n_samples) : '—');
+  set('metaSplit', (m.n_train != null && m.n_holdout != null) ? `train ${m.n_train} / holdout ${m.n_holdout}` : '—');
+  set('metaDates', Array.isArray(m.date_range) ? `${m.date_range[0]} ~ ${m.date_range[1]}` : '—');
+
+  const metricRoot = document.getElementById('metaMetrics');
+  if (!metricRoot) return;
+  const train = m.train_metrics || {};
+  const hold = m.holdout_metrics || {};
+  if (!Object.keys(train).length && !Object.keys(hold).length) {
+    metricRoot.innerHTML = '<div class="loading-state">metric 산출 부족 (표본 작음)</div>';
+    return;
+  }
+  const fmtKv = obj => Object.entries(obj).map(([k, v]) => `<tr><td>${escapeHtml(k)}</td><td>${typeof v === 'number' ? fmt(v, 4) : escapeHtml(String(v ?? '—'))}</td></tr>`).join('');
+  metricRoot.innerHTML = `
+    <div class="two-col" style="gap:1rem">
+      <div><div class="strat-block sb-title">train</div>
+        <table class="strat-table"><tbody>${fmtKv(train) || '<tr><td colspan=2>—</td></tr>'}</tbody></table></div>
+      <div><div class="strat-block sb-title">holdout</div>
+        <table class="strat-table"><tbody>${fmtKv(hold) || '<tr><td colspan=2>—</td></tr>'}</tbody></table></div>
+    </div>`;
+}
+
+/* ───────── Recommendation Quality ───────── */
+function _ideaAttributionTable(rows) {
+  if (!rows || !rows.length) return '<div class="loading-state">표본 없음 — idea attribution 산출 부족</div>';
+  const keys = Object.keys(rows[0]);
+  const head = keys.map(k => `<th>${escapeHtml(k)}</th>`).join('');
+  const body = rows.slice(0, 20).map(r => '<tr>' + keys.map(k => {
+    const v = r[k];
+    if (typeof v === 'number') {
+      const cls = (k.includes('pnl') || k.includes('return') || k.includes('edge')) ? sgnClass(v) : '';
+      return `<td class="${cls}">${fmt(v, 3)}</td>`;
+    }
+    return `<td>${escapeHtml(v ?? '—')}</td>`;
+  }).join('') + '</tr>').join('');
+  return `<table class="strat-table" style="font-size:0.78rem"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function renderRecommendationQuality(summary) {
+  const idea = summary.idea_validation || {};
+  // idea attribution = tables.summary
+  const attribRows = (idea.tables && idea.tables.summary) || [];
+  const root = document.getElementById('ideaAttribution');
+  if (root) root.innerHTML = _ideaAttributionTable(attribRows);
+
+  // policy replay
+  const replay = (idea.policy_replay && idea.policy_replay.rows) || [];
+  const replayRoot = document.getElementById('policyReplay');
+  if (replayRoot) replayRoot.innerHTML = _ideaAttributionTable(replay);
+
+  // policy gate
+  const gateRows = (idea.policy_gate && idea.policy_gate.rows) || [];
+  const gateRoot = document.getElementById('policyGate');
+  if (gateRoot) gateRoot.innerHTML = _ideaAttributionTable(gateRows);
+
+  // recommendations
+  const recRows = idea.policy_recommendations || [];
+  const recRoot = document.getElementById('policyRecommendations');
+  if (recRoot) recRoot.innerHTML = _ideaAttributionTable(recRows);
+}
+
 /* ───────── CSV download ───────── */
 function downloadCsv() {
   if (!HISTORY_ROWS.length) return;
@@ -2292,6 +2464,10 @@ window.addEventListener('scroll', () => {
     renderBestWorst(summary);
     renderStratification(summary);
     renderScatter();
+    // 2026-05-25 정책 layer 추가 (narrative 톤, 기존 다 유지)
+    renderPolicyEvolution(summary);
+    renderMetaModel(summary);
+    renderRecommendationQuality(summary);
     attachSort();
     attachFilters();
     renderHistory();
