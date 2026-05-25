@@ -337,6 +337,8 @@
       <li><a href="#ops-reality">Ops Reality</a></li>
       <li><a href="#f1-unified">F1 Unified</a></li>
       <li><a href="#automation">Automation</a></li>
+      <li><a href="#cost-reality">Cost Reality</a></li>
+      <li><a href="#audit-summary">Audit</a></li>
       <li><a href="#status">Status</a></li>
     </ul>
   </div>
@@ -378,12 +380,12 @@
 <section id="summary" class="compact"><div class="container fade-in">
   <div class="section-label">Executive Summary</div>
   <h2 class="section-title">핵심 결과</h2>
-  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발. 절대 수익률 예측을 버리고 크로스섹션 상대 랭킹으로 전환한 결과.</p>
+  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발해 크로스섹션 랭킹으로 전환 → 3개 페이즈(연구·운영 재설계·비용 차감 결산)의 결과. 아래 4개는 <strong>2026-05-25 시점 live 수치</strong> (수수료 차감 후 net 기준).</p>
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos">+0.189</span><div class="metric-label">Short Holdout IC</div><div class="metric-sub">6h horizon, lag=1<br>t-stat = 11.3</div></div>
-    <div class="metric-card"><span class="metric-val pos">+0.216</span><div class="metric-label">Long Holdout IC</div><div class="metric-sub">12h horizon, bull only<br>t-stat = 4.2</div></div>
-    <div class="metric-card"><span class="metric-val neutral">82%</span><div class="metric-label">Short L/S Hit Rate</div><div class="metric-sub">67 holdout periods<br>5 long / 5 short</div></div>
-    <div class="metric-card"><span class="metric-val amber">watch</span><div class="metric-label">Long Status</div><div class="metric-sub">WATCH_LONG<br>승격 조건 미충족</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=20.1 · n=281<br>오늘 promoted</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=16.9 · n=280<br>이전 모델 유지</div></div>
+    <div class="metric-card"><span class="metric-val neg">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=625 · win 52.6%<br>after 0.30% fees</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.10%</span><div class="metric-label">LONG 30d net</div><div class="metric-sub">n=285 · win 50.9%<br>after 0.20% fees</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -1147,18 +1149,191 @@
 </div></section>
 <hr class="divider">
 
+<!-- ============================================== -->
+<!-- PART 3 (2026-05-25): Cost-aware reality       -->
+<!-- 운영 3주 후 정직한 결산 + 자동화 감사         -->
+<!-- ============================================== -->
+
+<div class="part-divider fade-in">
+  <span class="part-label">Part III · Cost-Aware Reality · 2026-05-25</span>
+  <h2>비용 차감하면 진짜 양수인가</h2>
+  <div class="part-ornament"></div>
+</div>
+
+<section id="cost-reality"><div class="container fade-in">
+  <div class="section-label">Cost-Aware Reality</div>
+  <h2 class="section-title">SHORT는 gross 양수, net 음수 — 솔직한 그림</h2>
+  <p class="section-desc">
+    F1 배포 후 3주 (n=625 SHORT / 285 WATCH_LONG) 표본이 쌓이자 평균이 0에서 흔들리지 않게 됐다.
+    그런데 <strong>수수료를 빼면 SHORT는 적자</strong>. 그동안 페이지는 gross 숫자만 보여줬다.
+    Codex / 클로드 세션을 통해 ledger 스키마에 <code class="c">gross_return / fee_bps / slippage_bps / short_extra_cost_bps / net_return</code> 5개 컬럼을 추가하고 1273행 전부 backfill.
+  </p>
+
+  <div class="three-col" style="margin-bottom:2.5rem;">
+    <div class="card" style="border-top: 3px solid var(--red);">
+      <div class="card-title">SHORT 30d (n=625)</div>
+      <div class="card-text">
+        gross <strong>+0.02%</strong> per trade → <strong style="color:var(--red);">net &minus;0.28%</strong>.
+        Bitget USDT-perp 수수료 가정 <code class="c">2×6bps + 2×4bps + 10bps funding = 30bps</code>.
+        t_clustered = 0.07 → <strong>0과 구분 안 됨</strong>. Win rate 52.6%로 동전 던지기 수준.
+      </div>
+      <span class="badge badge-fail">net 음수</span>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--green);">
+      <div class="card-title">WATCH_LONG 30d (n=285)</div>
+      <div class="card-text">
+        gross <strong>+0.30%</strong> per trade → <strong style="color:var(--green);">net +0.10%</strong>.
+        Upbit 현물 가정 <code class="c">2×6bps + 2×4bps = 20bps</code> (funding 없음).
+        net 양수지만 t=0.45로 여전히 약함. 표본 더 필요.
+      </div>
+      <span class="badge badge-pivot">paper 양수, 통계 부족</span>
+    </div>
+    <div class="card" style="border-top: 3px solid var(--amber);">
+      <div class="card-title">Long+Short 통합 포트폴리오</div>
+      <div class="card-text">
+        <code class="c">portfolio_experiment.py</code> 60일 55-window 백테스트:
+        <strong>long_short5 t=+1.62 Sharpe=+8.4 win 61%</strong>.
+        한쪽 단독보다 두 쪽 합치는 게 cost 분산 + Beta 중립 측면 모두 우월.
+      </div>
+      <span class="badge badge-ok">실험 후보</span>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">gross vs net per side · 30일 paper ledger</div>
+    <div class="chart-subtitle">막대 길이 = 평균 per-trade % · 위는 gross, 아래는 net (수수료 차감)</div>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">SHORT gross</div>
+        <div class="bar-track"><div class="bar-fill" style="width:0.5%; background:var(--green);"></div></div>
+        <div class="bar-val" style="color:var(--green)">+0.02%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">SHORT net</div>
+        <div class="bar-track"><div class="bar-fill" style="width:6.5%; background:var(--red); margin-left: calc(50% - 6.5%);"></div></div>
+        <div class="bar-val" style="color:var(--red)">&minus;0.28%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">LONG gross</div>
+        <div class="bar-track"><div class="bar-fill" style="width:7%; background:var(--green);"></div></div>
+        <div class="bar-val" style="color:var(--green)">+0.30%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">LONG net</div>
+        <div class="bar-track"><div class="bar-fill" style="width:2.5%; background:var(--green);"></div></div>
+        <div class="bar-val" style="color:var(--green)">+0.10%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>왜 그동안 못 봤는가:</strong> ledger 스키마에 <em>fee/slippage 컬럼이 없었다</em>.
+      매주 IC + 적중률만 보던 운영자 입장에서 "수익은 어디갔지?"라는 질문 자체가 안 떠올랐다.
+      이제 textangelegram heartbeat는 추천만 보여주고, <strong>비용/근거/누적은 모두 ledger·dashboard에 기록</strong>되도록 layer 분리.
+    </p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Telegram heartbeat policy change -->
+<section id="telegram-rebuild"><div class="container fade-in">
+  <div class="section-label">Telegram Surface Rebuild</div>
+  <h2 class="section-title">텔레그램은 결정만, 진단은 ledger</h2>
+  <p class="section-desc">
+    이전 텔레그램은 <code class="c">format_compact</code>로 sigma 미달 추천이 0건이면 <em>메시지 자체를 안 보냈다</em> →
+    "오늘 안 왔는데 시스템이 죽은 건가, 아니면 추천이 없는 건가?"가 구분 불가.
+    재설계: 항상 발사하되 추천 vs heartbeat 두 분기로 명확히.
+  </p>
+
+  <div class="two-col" style="margin-bottom:2rem;">
+    <div class="card" style="border-top:3px solid var(--green);">
+      <div class="card-title">A: 추천 있음</div>
+      <div class="card-text" style="font-family:'JetBrains Mono', monospace; font-size:0.78rem; line-height:1.7;">
+        📌 xsec 추천 · 2026-05-25 20:08 UTC<br>
+        <br>
+        🔴 SHORT 6h<br>
+        🔥 DOGE ↓ &minus;1.5% 2.1σ ⭐<br>
+        🔥 XLM ↓ &minus;1.2% 1.8σ<br>
+        <br>
+        <span style="color:var(--text-muted);">세부 근거·비용·성과는 대시보드/ledger</span>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber);">
+      <div class="card-title">B: 실행 추천 없음 (heartbeat)</div>
+      <div class="card-text" style="font-family:'JetBrains Mono', monospace; font-size:0.78rem; line-height:1.7;">
+        📌 xsec 추천 · 2026-05-25 20:08 UTC<br>
+        <br>
+        ⏸ 실행 추천 없음<br>
+        pre-flight/gate로 전체 watch-only<br>
+        후보 10개 · actionable 0개<br>
+        <br>
+        <span style="color:var(--text-muted);">세부 근거·비용·성과는 대시보드/ledger</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>설정값:</strong> <code class="c">XSEC_TELEGRAM_MIN_SIGMA=1.5</code> · <code class="c">XSEC_TELEGRAM_MIN_EXPECTED_ABS_PCT=0.20</code> · <code class="c">XSEC_TELEGRAM_HIDE_UNTRUSTED=1</code> — env override 가능.
+      verify_telegram regression test가 텔레그램에 표시된 숫자와 ledger 행 100% 일치 보장 (현재 200/200 통과).
+    </p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- 20-loop audit summary -->
+<section id="audit-summary"><div class="container fade-in">
+  <div class="section-label">20-Loop Strict Audit · 2026-05-25</div>
+  <h2 class="section-title">엄격 감사 20루프 — 발견과 수정</h2>
+  <p class="section-desc">
+    F1 운영 3주 후 +Codex 큰 리팩터 직후 시점에서 전체 시스템을 한 번 더 엄격 검증.
+    DB·feature·model·gate·drift·calibration·cost·ledger·telegram·dashboard·auto-push·portfolio harness·retrain·Flask API 까지 20개 layer를 따로 검증.
+  </p>
+
+  <div class="three-col" style="margin-bottom:2rem;">
+    <div class="metric-card"><span class="metric-val pos">19 / 20</span><div class="metric-label">루프 PASS</div><div class="metric-sub">데이터·모델·게이트·렌더<br>전 layer 정상 작동</div></div>
+    <div class="metric-card"><span class="metric-val neg">1</span><div class="metric-label">발견된 결함</div><div class="metric-sub">MAX_DATA_AGE_HOURS<br>boundary</div></div>
+    <div class="metric-card"><span class="metric-val pos">즉시 수정</span><div class="metric-label">조치</div><div class="metric-sub">4→6 hours<br>commit <code class="c">bc1f1f6</code></div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:2rem;">
+    <div class="card-title">L18 발견: retrain preflight 4h boundary</div>
+    <div class="card-text">
+      <code class="c">xsec-alpha.timer</code>는 6h 주기로 fetch. 수동으로 retrain 돌리면 마지막 fetch 후 5~6h 됐을 때
+      <code class="c">data stale (4.0h old, limit 4h)</code>로 거부됨. 이전에도 <strong>2026-05-03 일요일 정시 retrain</strong>이
+      3.005h boundary에 걸려 실패했었음 (그건 4h로 올려서 해결). 이번엔 6h 주기와 정렬해 <strong>4→6h로 재상향</strong>.
+      hard staleness (>6h)는 진짜 fetch 실패 signal로 남김.
+    </div>
+    <span class="badge badge-fail">deterministic boundary</span>
+    <span class="badge badge-ok">resolved</span>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>이번 감사에서 새로 확인된 운영 사실:</strong>
+      ① feature_health (kimchi/binance 18% NaN은 구조적, dashboard section F에 자동 표시) ·
+      ② dashboard auto-push (매 6h commit, 24시간 6개 정시 commit 체인 확인) ·
+      ③ verify_telegram 200/200 통과 ·
+      ④ DB 0 NULL / 0 dup / 1.51M rows ·
+      ⑤ 모델 predict std/mean gate 둘 다 통과 (CLAUDE.md §8 신규 기준 0.001~0.50).
+    </p>
+  </div>
+</div></section>
+<hr class="divider">
+
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
   <div class="section-label">Current Status · F1 Production</div>
-  <h2 class="section-title">현재 운영 상태 (최근 갱신 2026-05-08)</h2>
-  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중. 매 주 일요일 자동 재학습 + promotion gate 통과 시 모델 갱신. 최신 수치는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a>에서 확인.</p>
+  <h2 class="section-title">현재 운영 상태 (최근 갱신 2026-05-25)</h2>
+  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중. 매 주 일요일 자동 재학습 + promotion gate 통과 시 모델 갱신. <strong>실시간 수치는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a></strong>에서 확인 (asof 매 6h 갱신).</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--green);">
-      <div class="layer-num">Live · F1</div>
-      <div class="layer-title">xsec_6h (6h horizon)</div>
+      <div class="layer-num">Live · 2026-05-25</div>
+      <div class="layer-title">xsec_6h (6h horizon · 오늘 promoted)</div>
       <div class="card-text">
-        <strong>Holdout IC:</strong> +0.176 (t=22.2, n=281) · 2σ+ 적중 62.1%<br>
+        <strong>Holdout IC:</strong> +0.152 (t=20.1, n=281) — 직전 모델 +0.150 대비 +0.002 promoted<br>
         <strong>피처:</strong> 10개 통합 (reversal, vol_inv, order_flow, range_contraction, binance_lead, kimchi, kimchi_z, calendar)<br>
         <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
         <strong>출력:</strong> 전체 100 코인 · 방향 + 확률 + 기대% + 95% CI + 사이즈<br>
@@ -1166,23 +1341,23 @@
       </div>
     </div>
     <div class="layer-card" style="border-top-color: var(--amber);">
-      <div class="layer-num">Live · F1</div>
-      <div class="layer-title">xsec_12h (12h horizon)</div>
+      <div class="layer-num">Live · 2026-05-18</div>
+      <div class="layer-title">xsec_12h (12h horizon · 후보 reject)</div>
       <div class="card-text">
-        <strong>Holdout IC:</strong> +0.138 (t=14.4, n=280) · 2σ+ 적중 67.8%<br>
+        <strong>Holdout IC:</strong> +0.126 (t=16.9, n=280) — 후보 +0.120이라 promotion gate에서 자동 기각<br>
         <strong>피처:</strong> xsec_6h와 동일 (10개) — 호라이즌 타겟만 다름<br>
         <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
-        <strong>방향 합의:</strong> 6h와 92%, rank correlation +0.908 (배포 시점 측정)<br>
+        <strong>방향 합의:</strong> 6h와 92%, rank correlation +0.908<br>
         <strong>리밸런스:</strong> 12h (오프사이클 carry)
       </div>
     </div>
   </div>
 
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos">+0.176</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=22.2 · n=281<br>2σ+ hit 62.1%</div></div>
-    <div class="metric-card"><span class="metric-val pos">+0.138</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=14.4 · n=280<br>2σ+ hit 67.8%</div></div>
-    <div class="metric-card"><span class="metric-val pos">92%</span><div class="metric-label">방향 합의</div><div class="metric-sub">6h ↔ 12h direction<br>(rank corr +0.91)</div></div>
-    <div class="metric-card"><span class="metric-val neutral">5/5</span><div class="metric-label">Promotion 이력</div><div class="metric-sub">2026-05-08 KST 14:03<br>마지막 promotion</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=20.1 · n=281<br>2026-05-25 promoted</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=16.9 · n=280<br>이전 모델 유지</div></div>
+    <div class="metric-card"><span class="metric-val neg">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=625 · win 52.6%<br>gross +0.02% · fees 0.30%</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.10%</span><div class="metric-label">WATCH_LONG 30d net</div><div class="metric-sub">n=285 · win 50.9%<br>gross +0.30% · fees 0.20%</div></div>
   </div>
 
   <div class="callout">
