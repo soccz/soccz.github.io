@@ -295,4 +295,22 @@ def predict(model, x_context, n_samples=100, target_len=24):
 
 4. **Multivariate emission**: Laplace 가정은 univariate. Multivariate 는 component-wise independent Laplace 또는 Gaussian copula 사용.
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **`ProTranSingleLayer` 의 `bidir_attn` (Eq 10) 은 왜 inference time 에만 호출되는가?**
+2. **`reparameterization trick` (Eq 8 의 `z_t = mu + sigma * eps`) 가 backpropagation 에 결정적인 이유는?**
+3. **KL term 계산이 두 Gaussian 사이 closed-form 인 이유와 식의 의미는?**
+
+### 답변
+
+1. `bidir_attn` 은 $h_{1:T}$ (전체 sequence) 를 입력으로 받음 — **target observation 필요**. Training time 에는 ground truth 미래 있으니 OK. **Test time 에는 미래 모름** → `k_all = None` → Eq 8 (prior only) 사용.
+2. **Sample 은 본래 미분 불가** — random 결과라서. `z_t = mu + sigma * eps` 형태로 쓰면 randomness (`eps`) 가 leaf node 가 되고, `mu`, `sigma` 는 deterministic — gradient 가 `mu`, `sigma` 통과해 backprop 가능. 이 trick (Kingma 2013) 이 VAE 학습 가능하게 한 핵심.
+3. 두 diagonal Gaussian $q = \mathcal{N}(\mu_q, \sigma_q^2)$, $p = \mathcal{N}(\mu_p, \sigma_p^2)$ 사이 KL: $\frac{1}{2}\left[\frac{\sigma_q^2}{\sigma_p^2} + \frac{(\mu_q - \mu_p)^2}{\sigma_p^2} - 1 + 2\log\frac{\sigma_p}{\sigma_q}\right]$. **Closed-form 인 이유**: 두 분포 모두 분석적 형태 (Gaussian) → 적분 명시적. **의미**: 첫 두 term = 평균/분산 차이, 마지막 term = 분산 비율의 log entropy 보정.
+
+---
+
 다음 [17_diagrams.md](17_diagrams.md) 에서 ASCII 도식 + viz 카탈로그.

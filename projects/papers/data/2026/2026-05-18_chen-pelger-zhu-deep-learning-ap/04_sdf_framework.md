@@ -111,7 +111,34 @@ $$
 \min_\omega \max_g \frac{1}{N} \sum_{j=1}^{N} \left| \mathbb{E}\left[ \left(1 - \sum_{i=1}^{N} \omega(I_t, I_{t,i}) R^e_{t+1,i} \right) R^e_{t+1,j}\, g(I_t, I_{t,j}) \right] \right|^2 \tag{3}
 $$
 
+### 수식 4줄 풀이 — Eq (3) Adversarial GMM
+
 **기호 뜻**:
+- $\omega(I_t, I_{t,i})$: SDF network — 자산 $i$ 의 SDF portfolio weight (입력: macro $I_t$ + firm chars $I_{t,i}$)
+- $g(I_t, I_{t,j})$: Conditional network — adversary 의 instrument (test asset condition)
+- $R^e_{t+1,i}$: 자산 $i$ 의 excess return
+- $1 - \sum_i \omega R^e$ = $M_{t+1}$ — SDF
+- Inner $|\mathbb{E}[\cdot]|^2$: portfolio $j$ 의 squared pricing error
+- $\min_\omega \max_g$: SDF 가 worst case adversary 에 대해 최소화
+
+**일상 비유**:
+- **가격 책정자 vs 아비트라저 게임**:
+  - 가격 책정자 (SDF $\omega$): "이 가격으로 책정하면 모두 만족할까?"
+  - 아비트라저 ($g$): "가격이 틀린 곳 찾기!"
+- 가격 책정자가 아비트라저의 worst attack 에서도 정확하면 → robust SDF.
+
+**왜 이 형태인가**:
+- **무한 GMM** (모든 함수 $g$ 에 대한 조건) → 직접 풀 수 없음.
+- **Adversarial reformulation**: $g$ 도 신경망으로 학습 → "가장 informative 한 $g$ 자동 발견".
+- $\min\max$: zero-sum game — Hansen-Jagannathan (1997) 의 minimax SDF 의 NN 일반화.
+- 단순 $\min$ (no adversary) → SDF 가 특정 일부 asset 만 잘 가격결정.
+
+**조심할 점**:
+- Minimax 학습 불안정 — GAN 류와 같은 학습 어려움 (mode collapse, oscillation).
+- $\omega$ 와 $g$ 의 capacity 균형 중요 — 한쪽이 너무 강하면 학습 발산.
+- 본 paper: ensemble + 신중한 hyperparameter tuning (Appendix B-D).
+
+**기호 뜻** (요약):
 - $\omega, g$ — 둘 다 신경망으로 학습되는 함수.
 - 외부 $\min_\omega$ — SDF 가 pricing error 최소화.
 - 내부 $\max_g$ — adversary 가 가장 mispriced 한 test asset 선택.

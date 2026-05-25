@@ -114,4 +114,20 @@ paper p.7 의 결론.
 
 > "Probabilistic forecasting 의 시대 — point prediction 이 아닌 distribution prediction. QuantileFormer 는 그 시대의 첫 번째 분해-기반 Transformer." 
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **paper 가 명시 안 한 본 deep dive 의 4 한계 (ETT 약점 / K-tuning / 학습 셋업 불투명 / 코드 미공개) 중 가장 큰 재현성 위험은?**
+2. **본 deep dive 제안 후속 4 방향 중 가장 가능성 있는 것은?**
+3. **Autoformer (2021) → QuantileFormer (2025) 의 4년 진화에서 핵심 추가 contribution 은?**
+
+### 답변
+
+1. **코드 미공개**. 학습 셋업 (epoch, batch, optimizer, lr) 도 명시 안 됨 + 코드도 없음 → 정확한 재현 불가능. 본 deep dive 의 PyTorch 코드 (ch18) 가 reference impl 으로 사용 가능하지만 paper repo 와 1:1 동일 보장 못함.
+2. **Diffusion-QuantileFormer (VAE → Diffusion)**. TMDM (2024) 의 diffusion 진영이 이미 활발 + paper 의 framework 가 plug-in 형태로 diffusion 결합 가능. **Adaptive-K** 도 가능하지만 nonparametric Bayesian 의 학습 복잡도가 부담.
+3. **Probabilistic 측면 + cpaw metric**. Autoformer 의 분해는 deterministic forecasting 만 다룸. QuantileFormer = 같은 분해 정신을 **probabilistic** 으로 가져옴 + **PINAW 와 PICP 결합 metric** 으로 평가 차원 확장. 단순 architecture 발전이 아닌 **probabilistic forecasting 분야의 새 표준 제안**.
+
 다음 [16_glossary.md](16_glossary.md) 에서 용어 + References 전체.

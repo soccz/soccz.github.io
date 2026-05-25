@@ -140,6 +140,24 @@ paper text:
 
 ---
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Hyperparameter $k$ (GMM components) 의 U-shape 곡선 ($k \leq 4$ underfit / $k \geq 12$ overfit) 의 의미는?**
+2. **Fig 4 의 6 panel 에서 QuantileFormer 의 "narrower PI + lower q-risk" 가 어느 metric 의 효과와 일치하는가?**
+3. **paper 가 dataset 마다 다른 $k$ 권장 (Electricity [8,10], Wind [6,10], ETTm1 [8,11]) — 이게 modeling 부담 인가 advantage 인가?**
+
+### 답변
+
+1. **너무 작은 $k$**: Gaussian component 수 부족 → distribution 의 multi-modality 못 잡음 (예: 평상시 + 이벤트 + 야간 = 3 modes 인데 $k=2$). **너무 큰 $k$**: noise 를 component 로 잘못 학습 → overfit + VAE latent space 너무 커져 학습 불안정. **Sweet spot $k \approx 8$**: 데이터 distribution 의 자연스러운 mode 수와 match.
+2. **cpaw metric 의 효과**: PINAW (좁은 폭) × penalty(PICP) (정확한 coverage). QuantileFormer 가 "narrower PI + 정확한 trend 추적" → 정확히 cpaw 의 design 의도와 일치. paper 의 claim ("verifies effectiveness of pattern-mixture decomposed Transformer") 의 시각적 확인.
+3. **양면**: **단점 (modeling 부담)**: 사용자가 매 dataset 마다 $k$ tuning 필요 — Autoformer 의 robust $c$ 와 비교 시 약점. **장점 (정확한 표현력)**: 데이터마다 distribution complexity 가 다르니 $k$ 도 달라야 합리적 — fixed $k$ 보다 정확한 적합. **균형**: 본 deep dive 권장 = 일반적 시작점 $k=8$, 복잡 데이터 (Wind, Traffic) 는 $k=8-10$, 단순 (ETT) 는 $k=10-11$.
+
+---
+
 ## 다음
 
 - [15_conclusion.md](15_conclusion.md) — Section 6 결론

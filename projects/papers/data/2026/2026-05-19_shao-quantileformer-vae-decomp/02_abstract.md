@@ -82,4 +82,31 @@ QuantileFormer 는 시계열을 quantile drift + divergence pattern + Gaussian m
 
 → Autoformer 가 deterministic forecasting 에 분해를 가져왔다면, QuantileFormer 는 **probabilistic forecasting** 에 분해를 가져왔다. 두 paper 의 정신적 후속.
 
+---
+
+## 단어별 풀이 — 제목 "QuantileFormer"
+
+| 영어 | 뜻 | 풀어 설명 |
+|------|----|---------|
+| Quantile | 분위수 | 분포의 특정 % 경계값 (0.5 = median, 0.9 = 상위 10% 경계) |
+| Former | Transformer 의 짧은 형 | 기본 backbone 이 Transformer 임을 시사 |
+
+→ "Quantile 예측에 특화된 Transformer". Autoformer / Informer / PatchTST 등의 family 명.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Probabilistic forecasting 이 deterministic forecasting 과 다른 점은?**
+2. **Pattern-mixture decomposition 의 3 component 와 각각의 후속 처리는?**
+3. **Autoformer (2021) 와 QuantileFormer (2025) 의 정신적 후속 관계는?**
+
+### 답변
+
+1. **Deterministic**: 한 점 (예: "내일 전력 8.5 MW") 예측. **Probabilistic**: 분포 또는 분위수 (예: "내일 전력 70% 확률 7.8~9.2 MW"). uncertainty-aware decision making 에 본질적 — 전력 수급, 풍력 발전, 의료 진단 등 응용에 결정적.
+2. **Quantile drift $\chi^Q$**: Transformer encoder 처리. **Divergence pattern $\chi^d$**: GMM 분해 → VAE 추론. **GMM components $D$**: VAE 의 입력 → global distribution mixture 학습. 마지막 fusion Transformer 가 3 path 결합.
+3. **Autoformer**: deterministic forecasting 에 inner block 분해 (trend-seasonal) 도입. **QuantileFormer**: 같은 정신을 **probabilistic forecasting** 에 가져옴 — quantile drift + divergence + GMM 로 일반화. AvgPool → QuantileFilt 의 generalization 이 핵심.
+
 이제 [03_motivation.md](03_motivation.md) 의 Introduction 으로.

@@ -132,4 +132,20 @@ paper 가 "typically 6 layers" 라고 명시. 일반적 Transformer 권장. 본 
 
 paper Section 4.3 자체가 짧음 (약 1/4 페이지). Quantile drift 는 표준 Transformer encoder 의 단순 적용 → paper 의 주된 새로움은 **분해 (Section 4.1)** 와 **VAE (4.2)** 와 **Fusion (4.4)** 에 있음.
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Cross-time drift 와 cross-quantile drift 의 차이와 각각이 어떻게 학습되는가?**
+2. **paper 가 표준 Multi-Head Self-Attention 사용 (Autoformer 의 Auto-Correlation 아님) 의 이유 추정?**
+3. **Quantile drift 가 5개 quantile 별 별도 encoder 호출 vs batched 처리 — 효율 차이?**
+
+### 답변
+
+1. **Cross-time**: 시간 축 dependency (예: $t=10$ 과 $t=20$). Encoder 의 self-attention 으로 학습. **Cross-quantile**: quantile 축 dependency (예: $q=0.5$ 와 $q=0.9$). Encoder 자체는 단일 quantile 처리 — cross-quantile 은 후속 fusion (ch09) 에서 학습.
+2. paper 는 명시 안 함. 본 deep dive 추론: **분해 부담을 사전에 끝냄** (decomp + GMM 이 distribution 정보 추출) → encoder 는 표준 attention 으로 충분. Autoformer 는 분해를 layer 마다 진행 → Auto-Correlation 의 series-wise attention 으로 효율적. QuantileFormer 의 design choice = "분해 사전 + 표준 encoder".
+3. **별도 호출**: 5번의 forward — 명확하지만 5배 시간. **Batched**: 5 quantile 을 batch dim 으로 합쳐 한 번 forward — 효율 ↑ 하지만 코드 복잡. Paper 가 명시 안 함 — 본 deep dive PyTorch 코드 (ch18) 에서는 별도 호출 사용 (단순성 우선).
+
 다음 [09_fusion_transformer.md](09_fusion_transformer.md) 에서 두 path (drift + divergence) 의 결합 — Fusion Transformer with Cross-Attention (Eq 16–18).

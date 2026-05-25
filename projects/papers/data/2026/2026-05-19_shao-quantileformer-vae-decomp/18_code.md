@@ -390,4 +390,20 @@ def main():
 
 5. **GMM 의 동적 호출**: forward 마다 GMM 재학습은 비효율. Practical 학습에서는 sliding window 마다 GMM 사전 계산 + cache.
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **`quantile_filt` 함수의 `unfold` + `torch.quantile` 조합이 Autoformer 의 AvgPool 과 어떻게 다른가?**
+2. **sklearn GMM 사용의 한계와 production 대안은?**
+3. **Reparameterization trick (Eq 9 의 sampling) 이 VAE 학습에 결정적인 이유는?**
+
+### 답변
+
+1. **AvgPool**: window 의 평균 — 한 값. **QuantileFilt**: `unfold` 로 window 추출 → `torch.quantile(windows, q, dim=-1)` 로 각 window 의 q-분위수. 5 quantile 별 별도 호출 (5배 시간) 또는 `quantiles=[0.5, 0.6, ..., 0.9]` batch 호출. Quantile 계산은 sorting 기반 → AvgPool 보다 약간 무겁지만 distribution-aware.
+2. **sklearn 한계**: (a) **CPU only** — GPU 활용 불가. (b) **Non-differentiable** — gradient backprop 안 됨. (c) **Per-forward 호출** — 매 batch GMM 재학습. **Production 대안**: `torchgmm` (PyTorch 호환) 또는 differentiable Gaussian Mixture layer 직접 구현. 본 코드는 reference 용 단순화.
+3. **Sampling 자체는 미분 불가**. `z_t = mu + sigma * eps` (with `eps ~ N(0,1)`) 형태로 쓰면 randomness 가 `eps` (leaf node) 에, `mu/sigma` 는 deterministic — gradient 가 `mu/sigma` 통과해 backprop 가능. Kingma 2013 의 VAE 학습 가능성 핵심.
+
 다음 [19_diagrams.md](19_diagrams.md) 에서 ASCII 도식 + interactive viz 카탈로그.

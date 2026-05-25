@@ -4,6 +4,74 @@ paper 의 한 줄 한 줄을 따라간 뒤 비로소 보이는 deeper points.
 
 ---
 
+## 메타 통찰 — 한 줄로
+
+> **"좋은 모델은 두 줄기의 우아함을 결합한다 — Decomposition 의 representation + Probabilistic 의 uncertainty."**
+
+QuantileFormer 는 단순 새 모델이 아닌, **두 분야 (Autoformer 의 decomp + DeepAR 의 probabilistic) 의 융합 패러다임**. 그 결합 방식 자체가 transfer 가능한 사상.
+
+---
+
+## 15 통찰의 5 그룹
+
+```
+   GROUP 1 — Decomposition (통찰 1, 2, 8)
+   ──────────────────────────────────────
+   "분해의 quantile-aware 일반화 의미"
+   #1 Quantile drift 는 단순 trend 가 아니다
+   #2 Divergence pattern 의 의미 (median-centered)
+   #8 Decomposition × Probabilistic 시너지
+   
+   GROUP 2 — Probabilistic Architecture (통찰 3, 4, 9)
+   ──────────────────────────────────────────────────
+   "GMM + VAE + Cross-attention 의 디자인 결정"
+   #3 GMM 만 부족, VAE 추가 이유
+   #4 Cross-attention 의 비대칭 (drift K/V, divergence Q)
+   #9 IBP / Stick-breaking 의 흥미로운 사용
+   
+   GROUP 3 — Evaluation (통찰 5, 7)
+   ─────────────────────────────────
+   "metric 디자인의 의미"
+   #5 cpaw 의 우아함 (PICP × PINAW)
+   #7 "consistently outperforms" 의 한계
+   
+   GROUP 4 — Trade-offs (통찰 6, 13)
+   ──────────────────────────────────
+   "디자인 선택의 trade-off"
+   #6 5개 quantile vs 분포 전체
+   #13 단순성 vs 표현력
+   
+   GROUP 5 — Lineage + Future (통찰 10, 11, 12, 14, 15)
+   ────────────────────────────────────────────────────
+   "Paper 의 위치와 영향, transfer 가능성"
+   #10 ETT 약점 — paper 의 honest 한계
+   #11 Channel-independent 한계
+   #12 학문적 lineage 그림
+   #14 후속 변형 가능성
+   #15 Finance / Risk 응용
+```
+
+---
+
+## 단계적 깊이 — 표면에서 네 층까지
+
+### 표면 메시지
+"QuantileFormer 는 시계열을 quantile drift + divergence + GMM 으로 분해 + Transformer + VAE 결합. 6 dataset 평균 q-risk 24% 감소."
+
+### 한 층 들어간 메시지
+"단순 architecture 가 아닌 **probabilistic + decomposition** 두 분야의 결합. Autoformer 의 trend-seasonal 을 quantile-aware 로 일반화 + DeepAR 의 parametric Gaussian 을 GMM + VAE 로 확장."
+
+### 두 층 들어간 메시지
+"분해와 확률 학습의 시너지는 **분해 자체가 distribution 학습을 더 쉽게 만든다** 는 통찰. Drift (smooth) → distribution shape 추정 안정. Divergence (complex) → mixture modeling 의 데이터. 두 path 가 cross-attention 으로 결합 = **decomposition 이 probabilistic learning 의 inductive bias**."
+
+### 세 층 들어간 메시지
+"분해는 단순 pre-processing 이 아닌 **inductive bias 의 명시화**. Autoformer 가 deterministic forecasting 에 이 통찰을 도입, QuantileFormer 가 probabilistic 으로 확장. 이 정신은 **다른 시계열 task (anomaly detection, imputation, classification) 에도 transfer 가능** — 분야의 inductive bias 를 inner block 으로 명시화."
+
+### 네 층 들어간 메시지
+"좋은 paper 는 새 알고리즘이 아닌 **새 framework** 를 제안한다. QuantileFormer 의 framework = **'분해를 통한 분야 inductive bias 명시화 + probabilistic learning 의 안정화'**. 이 정신이 Autoformer 의 progressive decomposition 의 자연스러운 확장이자 후속 paper 의 출발점 — TimeGrad 의 diffusion, TMDM 의 transformer-modulated 등이 같은 정신의 다른 표현."
+
+---
+
 ## 1. "Quantile drift" 는 단순 trend 가 아니다
 
 Autoformer 의 AvgPool 은 **mean trend** 하나만 추출. QuantileFormer 의 QuantileFilt 는 **5개 quantile trend** 추출. 의미적 차이:
@@ -250,5 +318,23 @@ paper 가 직접 다루지 않지만 framework 의 finance transfer 잠재력 �
 QuantileFormer 는 단순한 새 모델이 아닌 **probabilistic forecasting 분야의 새 방법론**. 3 학문적 line (decomposition + probabilistic + VAE) 의 첫 통합. IJCAI 2025 의 출판이 후속 paper 들의 출발점이 될 것.
 
 paper 의 한계 (ETT 약점, K tuning 부담, 코드 미공개) 가 있지만 **framework 의 generalizability** 가 강함. 본 deep dive 의 PyTorch 구현 (ch18) 으로 재현 + 변형 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 4가지
+
+1. **15 통찰을 5 그룹 (Decomp / Probabilistic / Eval / Trade-off / Lineage+Future) 으로 묶은 의의는?**
+2. **단계적 깊이의 "네 층" 메시지 — 좋은 paper 의 본질은 무엇인가?**
+3. **15 통찰 중 가장 transfer 가능한 사상은?**
+4. **Finance 응용 (VaR, Volatility regime, Credit default) 잠재력의 공통 핵심은?**
+
+### 답변
+
+1. 15 통찰이 무작위 나열이 아닌 **5 가지 관점에서 본 같은 paper**. Decomp (representation), Probabilistic (architecture), Evaluation (metric design), Trade-off (design choice), Lineage+Future (papers 위치/영향). 발표 시 그룹별 묶음 → 청중 이해 ↑.
+2. **"새 framework 제안"**. 좋은 paper 는 새 알고리즘이 아닌 **새 framework**. QuantileFormer 의 framework = "분해를 통한 분야 inductive bias 명시화 + probabilistic learning 의 안정화". 이게 후속 paper 들 (TimeGrad, TMDM) 의 출발점.
+3. **"분해를 통한 inductive bias 의 명시화"**. Autoformer 의 trend-seasonal → QuantileFormer 의 quantile-aware. 다른 분야 (anomaly, imputation, classification) 에도 transfer 가능 + 다른 시계열 외 분야 (audio, video) 에도 가능.
+4. **분포 + 시간 + 이중 모드 (regime)**. Finance 의 핵심 특성 = (a) heavy-tailed distribution (VaR), (b) multi-modal regime (calm vs crisis), (c) time-varying volatility. QuantileFormer 의 GMM (mixture) + cross-attention (시간 의존) + quantile drift (분포 envelope) 가 이 셋과 정확히 match.
 
 다음 [18_code.md](18_code.md) 에서 PyTorch 구현.

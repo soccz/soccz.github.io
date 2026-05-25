@@ -17,6 +17,22 @@ paper p.5:
 
 **목표**: 표현력 ↑.
 
+### Layer 의 의미 — 친근한 비유
+
+**비유**: 글쓰기에 비유. 
+- **1층 (lowest)**: 글자 단위 ("이", "건", "글") — local 디테일
+- **2층**: 단어 단위 ("이건", "글이다") — 짧은 의미 단위
+- **3층 (top)**: 문장 의미 ("이건 글이다", 전체 맥락) — global structure
+
+각 층이 다른 **추상화 단계**. ProTran 의 multi-layer latents 도 같은 정신:
+- 1층: short-term 패턴 (예: 시간 단위 변동)
+- 2층: medium-term 패턴 (예: 일 단위 패턴)
+- 3층: long-term 패턴 (예: 주간/계절)
+
+**Generation 시 흐름**: bottom-up. 1층이 디테일 결정 → 2층이 그것들 모아 의미 → 3층이 큰 그림.
+
+**Inference 시 흐름**: 모든 층 동시 (parameter sharing).
+
 ---
 
 ## L-Layer Latent Structure
@@ -106,9 +122,27 @@ $$
 ## 단계별 의미
 
 ### Eq 16 — Cross-layer attention (NEW vs single-layer)
-- **Query**: $w_{t-1}^{(\ell)}$ (현재 layer 의 이전 시점)
-- **Key/Value**: $w_{1:T}^{(\ell-1)}$ (**아래 layer 의 모든 시점**)
-- **결과**: $\tilde{w}_t^{(\ell)}$
+
+**수식 4줄 풀이**:
+
+**기호 뜻**:
+- $w_{t-1}^{(\ell)}$ — Query: "현재 layer $\ell$ 의 이전 시점 hidden"
+- $w_{1:T}^{(\ell-1)}$ — Key/Value: "**아래 layer ($\ell-1$) 의 모든 시점**"
+- 결과 $\tilde{w}_t^{(\ell)}$: 아래 layer 정보를 끌어올린 representation
+
+**일상 비유**:
+- "단어 layer (2층) 가 글자 layer (1층) 의 모든 시점을 보고, 어느 글자 조합이 현재 단어 의미에 중요한지 attention".
+- 아래 layer 가 더 디테일한 정보, 위 layer 가 그것들 종합.
+
+**왜 이 형태인가**:
+- 시간 self-attention (Eq 17) + context cross-attention (Eq 18) 만으로는 layer 간 정보 전달 불가.
+- **Eq 16 이 hierarchical 의 핵심** — 위 layer 가 아래 layer 의 전체 시간 ($w_{1:T}^{(\ell-1)}$) 에 attention.
+- $w_{1:T}^{(\ell-1)}$ 가 이미 결정된 후 ($\ell-1$ 층 generation 완료 후) 위 layer 에 입력 → causal.
+
+**조심할 점**:
+- Bottom layer ($\ell = 1$) 에서는 $\ell - 1 = 0$ — 이건 input embedding (context $h$).
+- $w^{(\ell-1)}$ 는 모든 시점 ($1{:}T$) — causal mask 아님. 다음 시점 ($t+1, ..., T$) 정보도 위 layer 가 참고.
+- Memory: $O(LT^2 d)$ — layer 수만큼 attention 비용.
 
 → Hierarchical 구조에서 추가된 단계. **아래 layer 정보를 위로 전달**.
 
@@ -195,6 +229,20 @@ paper:
 
 ---
 
-## 다음
+## 자기점검 (이 챕터)
 
-[09_related_work.md](09_related_work.md) 에서 paper Section 4 의 4 카테고리 related work.
+### 핵심 3가지
+
+1. **Multi-layer 의 단일 새 step (Eq 16) 의 정확한 역할은? 그 이전 / 이후 step 과의 차이는?**
+2. **Multi-layer ELBO (Eq 14-15) 가 single-layer ELBO (Eq 3) 와 다른 두 가지는?**
+3. **paper experiments 의 L 값 선택 (L=1 / 2 / 3) 이 어떤 dataset 특성에 따라 결정되는가?**
+
+### 답변
+
+1. **Eq 16**: cross-layer attention — 현재 layer 의 query 가 **아래 layer 의 모든 시점** key/value 에 attention. 새로 추가된 유일한 step. **이전 layer ($\ell-1$)** 가 완료된 후 그 정보를 끌어올리는 역할. **이후 step (Eq 17-20)** 은 single-layer 와 동일 — 같은 layer 내 self-attn / context cross-attn / sample / update.
+2. (a) **Reconstruction term 위치**: emission 이 **top layer ($L$) 만** 에서 — $\mathbb{E}_q[\log p(x_t | z_t^{(L)})]$. (b) **KL term 합**: 모든 layer 의 KL 합산 — $\sum_\ell \text{KL}(q^{(\ell)} \| p^{(\ell)})$. Single-layer 의 generalization.
+3. **데이터 복잡도 + 차원**: Solar/Electricity (137-370 series) → L=1 충분. Traffic/Taxi/Wikipedia (963-2000 series) → L=2 필요. Human3.6M (multi-modal, long sequence) → L=3 (최대). HumanEva-I (smaller) → L=2.
+
+---
+
+다음 [09_related_work.md](09_related_work.md) 에서 paper Section 4 의 4 카테고리 related work.

@@ -83,4 +83,22 @@ VAE 의 hierarchy 가 image 에 효과적 (VDVAE, NVAE). 시계열에도 그대�
 
 > "RNN 없는 probabilistic 시계열 모델링의 첫 번째 본격 시도. State-space 의 우아함과 Transformer 의 표현력을 모두 가진 generative framework."
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **paper 가 명시한 한계 ($O(T^2)$ complexity) 의 해결 방향과 paper 가 언급한 후속 접근은?**
+2. **본 deep dive 가 정리한 5 가지 디자인 원칙 중 NLP 의 BERT 와 정신 동일한 것은?**
+3. **NeurIPS 2021 동시기 시계열 paper 4-5개 중 ProTran 의 contribution 축은?**
+
+### 답변
+
+1. **한계**: $O(T^2)$ 의 time + memory — long sequence (language, music) 에 부담. **해결**: Sparse Transformer 변형 — Longformer [9], Sparse Transformer [18], Reformer [50], Informer-style [55]. paper 가 future work 로 명시.
+2. **Smoothing > Filtering** 원칙. BERT 의 **bidirectional attention** 이 NLP 의 unidirectional GPT 모델 한계 (filtering 같은 unidirectional) 를 깬 것과 동일 — Eq 10 의 $h_{1:T}$ 에 self-attention 이 시계열 inference 에 bidirectional 도입.
+3. **Probabilistic axis** (latent + variational + non-autoregressive). Autoformer = "representation (분해)", Informer = "efficiency (sparse)", TimeGrad = "generation (diffusion)", ProTran = "probabilistic (SSM + latent)". 각 paper 가 다른 contribution 축에서 SOTA.
+
+---
+
 다음 [14_glossary.md](14_glossary.md) 에서 용어집 + References.

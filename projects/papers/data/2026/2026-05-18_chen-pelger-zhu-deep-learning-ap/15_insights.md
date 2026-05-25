@@ -2,6 +2,73 @@
 
 > 본 논문이 던지는 **12 가지 메타 메시지** — 단순 결과를 넘어, 자산가격결정과 ML 학계 전체에 대한 함의.
 
+---
+
+## 메타 통찰 — 한 줄로
+
+> **"좋은 ML 응용 = Domain knowledge + State-of-the-art technique. 어느 하나 빠지면 약함. No-arbitrage 같은 이론 제약을 loss 에 직접 통합 + adversarial GMM 으로 무한 GMM 을 학습 가능하게 만들기."**
+
+paper 의 핵심 paradigm = **"이론 제약 + ML capacity"**. Hansen-Jagannathan (1997) 의 minimax SDF idea 가 30년 뒤 deep learning 으로 실현된 사례.
+
+---
+
+## 12 통찰의 5 그룹
+
+```
+   GROUP 1 — Domain × ML Synergy (통찰 1, 2, 3)
+   ───────────────────────────────────────────
+   "Domain knowledge 와 ML 의 결합 방식"
+   #1 Domain knowledge > ML flexibility
+   #2 No-arbitrage 는 loss 에 직접 통합 가능
+   #3 Test asset 선택은 학습 과정의 일부 (adversarial)
+   
+   GROUP 2 — Nonlinearity Insights (통찰 4, 5)
+   ──────────────────────────────────────────
+   "Asset pricing 의 nonlinearity 의 위치"
+   #4 개별 linear, interaction nonlinear
+   #5 Macro states 의 4 차원 압축 (LSTM)
+   
+   GROUP 3 — Empirical Surprises (통찰 6, 7, 8)
+   ─────────────────────────────────────────────
+   "결과 의 놀라운 함의"
+   #6 SR 0.75 의 실용적 의미
+   #7 50년 OOS 의 robustness
+   #8 SDF structure 의 interpretability
+   
+   GROUP 4 — Methodological Contributions (통찰 9, 10)
+   ──────────────────────────────────────────────────
+   "Paper 의 methodological 기여"
+   #9 Variable importance 의 새 정의
+   #10 Adversarial + ensemble + LSTM 통합
+   
+   GROUP 5 — Lineage + Future (통찰 11, 12)
+   ────────────────────────────────────────
+   "Paper 의 위치와 영향"
+   #11 Hansen-Jagannathan (1997) 의 deep learning 실현
+   #12 Asset pricing × ML 의 future direction
+```
+
+---
+
+## 단계적 깊이 — 표면에서 네 층까지
+
+### 표면 메시지
+"Deep learning + No-arbitrage 결합 모델 (GAN). 50년 OOS SR 0.75 — FFN 0.44 의 2배 가까이."
+
+### 한 층 들어간 메시지
+"단순 deep learning 응용이 아닌, **이론 제약 (no-arbitrage) 의 loss 직접 통합** + **adversarial 로 무한 GMM 학습 가능화**. 두 가지 architectural innovation 의 결합."
+
+### 두 층 들어간 메시지
+"이 결합이 가능한 이유는 **Hansen-Jagannathan (1997) 의 minimax SDF idea** 의 deep learning 실현. 30년 전 이론적 idea 가 GPU + deep learning 시대에 처음으로 practical 실현. **이론과 implementation 의 timing**."
+
+### 세 층 들어간 메시지
+"Domain knowledge + ML 의 결합 패러다임. paper p.45: '*successful use of machine learning methods in finance requires both subject specific domain knowledge and a state-of-the-art technical implementation*'. 이 정신이 **모든 ML 응용 분야의 일반 원칙** — Physics-informed neural net, Fairness-constrained learning 등도 같은 정신."
+
+### 네 층 들어간 메시지
+"좋은 paper 는 새 알고리즘이 아닌 **새 paradigm** 을 제안한다. 본 paper 의 paradigm = '**이론 제약을 loss 에 직접 + adversarial 로 무한을 유한으로**'. 이게 후속 paper 들 (AIPT, Virtue of Complexity, AlphaPortfolio 등) 의 출발점. 더 일반화하면 'theory-informed deep learning' 의 자산가격 사례."
+
+---
+
 ## 15.1 통찰 1: "Domain knowledge > ML flexibility"
 
 **증거**: EN (linear + no-arb) > FFN (nonlinear + no-no-arb). paper Table I:

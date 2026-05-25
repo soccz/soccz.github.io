@@ -96,4 +96,30 @@ paper 의 bullet 인용:
 
 → Autoformer 의 "분해를 inner block 으로" 정신을 **확률적 setting** 에 확장. AvgPool 의 quantile-aware 일반화 = QuantileFilt.
 
+---
+
+## 3 가지 challenge 의 친근한 비유
+
+**Challenge 1 (entangled patterns)** = "시계열에 여러 음악이 동시 흐름" — 멜로디 (trend), 반주 (seasonal), 잡음 (noise) 가 섞임. 단순 trend 만 분리하면 멜로디 안에 다른 quantile level 의 envelope (예: forte vs piano) 못 잡음.
+
+**Challenge 2 (mixed distribution)** = "방 안의 사람들 키 분포" — 남자 + 여자 + 어린이 = 3 modes. 단일 Gaussian 으로 표현 불가. K Gaussian mixture 필요.
+
+**Challenge 3 (multivariate)** = "오케스트라" — 바이올린 · 첼로 · 플룻 각각이 다른 통계 특성 (음역대 · 음량). 한 모델로 모든 악기의 음정 예측 어려움 — 통합 fusion 필요.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Probabilistic vs deterministic forecasting 의 결정적 차이가 의사결정에 미치는 영향은?**
+2. **paper 의 3 challenge 가 각각 어느 component 로 해결되는가?**
+3. **본 paper 가 도입한 새 metric "cpaw" 의 두 component 와 의의는?**
+
+### 답변
+
+1. **Deterministic**: 단일 점 예측 → 의사결정자가 worst case 모름. 예: "내일 전력 8.5 MW" 만 알면 안전 마진 설정 불가. **Probabilistic**: 분위수 + 신뢰 구간 → "내일 전력 90% 확률로 7~10 MW" 알면 보수적 운영 가능. 재생에너지 · 교통 · 헬스케어 응용에서 결정적.
+2. **Challenge 1 (entangled patterns)** → **Quantile drift 분해** (각 quantile level 마다 별도 trend). **Challenge 2 (mixed distribution)** → **GMM + VAE** (K Gaussian 의 mixture). **Challenge 3 (multivariate)** → **Fusion Transformer cross-attention** (drift + divergence + distribution 3 path 통합).
+3. **PICP** (Prediction Interval Coverage Probability): 실제값이 신뢰 구간 안에 들어갈 확률 — 클수록 좋음. **PINAW** (PI Normalized Averaged Width): 신뢰 구간 평균 폭 — 작을수록 좋음. cpaw = PINAW × penalty(PICP) → **정확한 좁은 구간** 만 좋은 점수. 단순 q-risk 의 "구간 폭 무시" 한계 보강.
+
 다음 [04_related_work.md](04_related_work.md) 에서 paper 의 3 학문적 흐름 (Transformer + 분해 + 확률 forecasting) 정리.

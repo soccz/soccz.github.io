@@ -5,11 +5,16 @@
 paper p.1:
 > Generative modeling of multivariate time series is a challenging problem with wide-ranging applications in demand forecasting [15, 76], autonomous driving [2, 16], robotics [29, 67], and health care [20, 21, 59].
 
-4가지 응용:
-- Demand forecasting (재고/수요 예측)
-- Autonomous driving (자율주행 — 미래 trajectory)
-- Robotics (로봇 control)
-- Health care (병의 진행, 진단)
+4가지 응용 — 구체적 예시까지:
+
+| 분야 | 구체 task | 왜 probabilistic 이 필요? |
+|------|----------|------|
+| **Demand forecasting** | 마트의 다음 주 우유 판매량 예측 | "정확한 한 숫자" 보다 "범위" 가 재고 결정에 결정적 |
+| **Autonomous driving** | 보행자의 다음 1초 trajectory | 보행자가 길을 건널지 멈출지 — 다양한 가능성 모두 평가 필요 |
+| **Robotics** | 로봇 팔의 다음 동작 | 환경 noise + 센서 noise → 단일 prediction 위험 |
+| **Health care** | 환자의 혈압 패턴, 병의 진행 | 다양한 임상 시나리오에 대한 확률 평가 |
+
+→ 4 분야 모두 **확률 분포 출력** 이 단일 point prediction 보다 가치 있음. ProTran 의 출발점.
 
 ProTran 자체는 forecasting + motion 만 실험. 그러나 framework 는 위 4 영역 모두 transfer 가능.
 
@@ -61,6 +66,14 @@ paper p.1:
 > Despite differences, both Markovian transitions and RNNs are often not capable of capturing long-range dependencies in highly structured sequential inputs [36, 100], limiting the capacity of the corresponding SSMs.
 
 → Markovian 도 한계, RNN 도 한계 (gradient vanishing). 둘 다 long-range dependency 약점.
+
+### "Gradient vanishing" 이 뭔가요?
+
+**비유**: RNN 학습 시 gradient 가 시간 거꾸로 전달되는데, 매 step 마다 **곱셈** 으로 줄어듦. 예를 들어 매 step gradient 가 0.5 배 줄면, 10 step 뒤엔 $0.5^{10} \approx 0.001$ — 사실상 0.
+
+**결과**: 100 step 떨어진 과거 정보가 현재 학습에 거의 영향 못 줌. **장기 의존성 학습 불가능**.
+
+**LSTM/GRU 가 부분 해결**했지만 완전히 못 끝냄. ProTran 의 답: "**RNN 자체를 버리고 attention 으로 모든 시점 직접 연결**" → gradient 가 시간 따라 곱셈 누적되지 않음.
 
 ---
 
@@ -133,5 +146,21 @@ paper caption:
 또한 paper 의 자기 평가가 정직:
 - "non-autoregressive **in a similar fashion to LDSs**" — LDS 의 정신을 따른다고 명시.
 - Transformer-based + SSM-based 양쪽의 한계를 동시에 인정.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **"High-dimensional + Long-distance + Non-deterministic" 3중 trouble 이 인간 motion 의 예에서 각각 어떻게 나타나는가?**
+2. **기존 deep SSM 의 두 갈래와 각각의 한계는?**
+3. **paper 가 RNN 을 완전히 제거하는 두 가지 정당화는?**
+
+### 답변
+
+1. **High-dimensional**: 17-joint skeleton (각 joint 3D × 17 = 51 차원 / frame). **Long-distance**: 50Hz × 수 초 = 수백 frame. **Non-deterministic**: 같은 motion start 에서 다음 1초가 multiple plausible (걷기 → 멈춤 / 회전 / 가속, ...). 학습 시 ground truth 는 하나만 관측되는데 모델은 multiple 을 internally 표현해야.
+2. (a) **Linear transition + neural emission** (KVAE, NKF): linear 가 nonlinearity 제약. (b) **RNN nonlinear transition** (VRNN, DKS): gradient vanishing 으로 장거리 의존성 약함. → 둘 다 long-range dependency 약점.
+3. (a) **Long-range dependency**: RNN 의 gradient vanishing 으로 장거리 학습 어려움 — attention 으로 모든 시점 직접 연결. (b) **Information leakage**: autoregressive observation feeding 이 test time error accumulation 야기 — non-autoregressive latent-based generation 으로 회피.
 
 다음 [04_preliminaries_ssm.md](04_preliminaries_ssm.md) 에서 Variational SSM 의 수식 (Eq 1-3).

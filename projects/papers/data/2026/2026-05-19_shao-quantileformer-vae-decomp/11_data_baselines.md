@@ -150,6 +150,30 @@ cpaw 의 답:
 
 ---
 
+## 자기점검 (이 챕터) — Block 1
+
+### 핵심 3가지
+
+1. **6 datasets 중 가장 고차원 (Electricity 321 / Traffic 861) 과 저차원 (Wind 3) 의 모델 학습 부담 차이는?**
+2. **5개 deterministic Transformer baseline 을 quantile loss 로 adapt 한 이유와 그 의의는?**
+3. **cpaw 가 q-risk 보다 honest 한 metric 인 이유는?**
+
+### 답변
+
+1. **고차원 (Electricity 321)**: 각 시점에 321 series 동시 처리 → attention $O(L^2 \cdot 321^2)$ 또는 channel-independent 시 batch 321배 — memory 부담. **저차원 (Wind 3)**: 단순. 따라서 고차원에서 paper 의 advantage 더 큼 (Table 1 의 Electricity 결과 우위 확인).
+2. **이유**: fair comparison — 모든 baseline 을 같은 output 형식 (5 quantile) 으로 통일. 단순 deterministic 모델도 quantile loss 로 학습 → quantile prediction 가능. **의의**: QuantileFormer 의 우위가 단순 architecture 차이가 아닌 **probabilistic design** (decomp + GMM + VAE) 때문임을 입증.
+3. **q-risk**: quantile accuracy 만 측정 — 매우 넓은 interval 출력해도 coverage 100% 가능. **cpaw = PINAW × penalty(PICP)**: 넓은 interval 출력하면 PINAW ↑ → cpaw ↑ (페널티). **결과**: cpaw 는 "**정확하고 좁은 interval**" 만 좋은 점수 → useful forecasting 만 보상.
+
+---
+
+## 5.1 Main Results 예고
+
+paper Table 1 (q-risk) 과 Table 3 (cpaw) 의 두 metric 모두에서 비교.
+
+→ 다음 [12_main_results.md](12_main_results.md) 에서 정확한 수치 분석.
+
+---
+
 ## 5.1 Main Results 예고
 
 paper Table 1 (q-risk) 과 Table 3 (cpaw) 의 두 metric 모두에서 비교.

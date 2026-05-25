@@ -107,6 +107,22 @@ QuantileFormer 의 contribution = **"decomposition × probabilistic"** 의 교�
 
 ---
 
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **paper 의 3 lineage (Transformer / 분해 / 확률 forecasting) 중 본 paper 가 가장 직접 영향 받은 paper 는?**
+2. **Channel-independent (PatchTST) vs variable-wise token (iTransformer) — 본 paper 가 어느 쪽에 가까운가?**
+3. **확률 forecasting 의 3 분기 (parametric / nonparametric / Bayesian) 중 QuantileFormer 는?**
+
+### 답변
+
+1. **Autoformer** (Wu 2021) — paper 가 본인의 분해를 Autoformer 의 trend-seasonal 분해의 **quantile-aware + distribution-aware 일반화** 로 명시. AvgPool → QuantileFilt 직접 매핑.
+2. **iTransformer 도 PatchTST 도 아닌 channel-mixed 가 default** — paper 가 channel-independence 명시 안 함. 다만 baseline 5개 (Transformer / Autoformer / FEDformer / PatchTST / iTransformer) 모두 quantile loss 로 adapt 한 fair comparison.
+3. **Nonparametric**: 5개 quantile direct prediction (DeepAR 의 Gaussian parametric 과 대비). 다만 GMM/VAE 가 distribution 학습에 사용 → **nonparametric quantile + parametric mixture** 의 hybrid.
+
+---
+
 ## Fig 2 — 본 paper 가 어떻게 모든 component 를 통합하는가
 
 ![Fig. 2 Architecture](figures/Fig2_architecture.png)

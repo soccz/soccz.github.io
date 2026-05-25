@@ -110,6 +110,30 @@ $$
 \mathbb{E}_{q_\phi(z_t | D)}\!\left[\log \frac{p_\theta(z_t, D)}{q_\phi(z_t | D)}\right] = \mathbb{E}_{q_\phi}\!\left[\log \frac{p(z_t)}{q_\phi(z_t | D)}\right] + \mathbb{E}_{q_\phi}[\log p_\theta(D | z_t)]
 $$
 
+### 수식 4줄 풀이
+
+**기호 뜻**:
+- $\mathbb{E}_{q_\phi}$: variational posterior 에서 $z_t$ sample 한 평균
+- $p(z_t)$: prior (Beta-Bernoulli stick-breaking)
+- $q_\phi(z_t | D)$: variational posterior — 학습된 encoder 가 출력
+- $p_\theta(D | z_t)$: emission — 학습된 decoder 가 $z_t$ 에서 $D$ 복원
+
+**일상 비유**:
+- 학생이 시험 답 추측에 비유 (lettau-style):
+  - **Reconstruction**: "내가 찍은 답이 정답에 얼마나 가까운가" — 높을수록 좋음
+  - **KL** (negative term): "내 풀이가 정해진 풀이법 (prior) 에서 얼마나 벗어났나" — 벗어날수록 페널티
+- ELBO 최대화 = 두 가지 균형.
+
+**왜 이 형태인가**:
+- 진짜 $\log p(D)$ 는 적분 $\int p(D | z) p(z) dz$ — intractable.
+- Jensen 부등식: $\log \mathbb{E} \geq \mathbb{E} \log$ → **lower bound** 만듦.
+- ELBO 최대화 ↔ true likelihood 최대화 + posterior 정확화.
+
+**조심할 점**:
+- KL 너무 크면 **posterior collapse** — $q_\phi$ 가 prior 와 같아져 $D$ 정보 잃음.
+- KL 너무 작으면 **deterministic AE** 와 같아져 — generative 능력 없음.
+- $\beta$-VAE 처럼 가중치 조절 가능 — paper 가 명시적 $\beta$ 사용 안 함.
+
 **두 term**:
 1. $\mathbb{E}_{q_\phi}\!\left[\log \frac{p(z_t)}{q_\phi(z_t | D)}\right]$ = negative KL (prior vs posterior) — **regularization**.
 2. $\mathbb{E}_{q_\phi}[\log p_\theta(D | z_t)]$ = **reconstruction** likelihood.
@@ -172,5 +196,21 @@ D̂ = Σ π_k D_k (Eq 8) — target global distribution
 ```
 
 → **VAE 가 GMM 의 local components 를 결합해 global distribution 을 추정**. 결과 $\chi^d_{out}$ 이 fusion Transformer 의 입력 중 하나.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **GMM (local distributions) 와 VAE (global mixture) 의 역할 분담은?**
+2. **Stick-breaking prior (Eq 9) 가 IBP 정신에서 따온 의미는?**
+3. **$\chi^d_{out} = \text{VAE}(\chi^d, D)$ 의 두 입력 ($\chi^d$ + $D$) 이 왜 둘 다 필요한가?**
+
+### 답변
+
+1. **GMM (Eq 7)**: 각 시점의 **local** distribution 추정 — $K$ Gaussian 의 $(\mu_k, \Sigma_k)$. EM 으로 학습. **VAE (Eq 8-15)**: GMM 의 local components 결합 → **global** distribution mixture weight $\pi_k$ + allocation $c_t$ + contribution $b_t$ 학습. 둘 stacked: local fit → global integration.
+2. **IBP 정신**: 무한 component 가능성 + 데이터에서 active 만 학습 → **자동 sparse selection**. **Stick-breaking**: $\lambda_t \sim \text{Beta}$ 누적곱 = $c_t$ 의 Bernoulli 확률 → 첫 component 는 자주 active, 뒤로 갈수록 sparse. paper 는 $K$ fix 했지만 prior 의 sparse 정신 유지.
+3. **$\chi^d$ (divergence)**: residual 신호 자체 — distribution-enriched representation 만들기 위한 input. **$D$ (GMM components)**: local statistical landscape. **둘 다 필요**: $\chi^d$ 만으로는 어떤 distribution 에서 sample 됐는지 모름. $D$ 만으로는 시간 정보 없음. 둘 결합 → "어느 시점이 어떤 distribution 에서 왔는가" 정확.
 
 다음 [08_quantile_drift_extraction.md](08_quantile_drift_extraction.md) 에서 quantile drift $\chi^Q$ 의 Transformer encoder 처리 (Section 4.3).

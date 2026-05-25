@@ -109,6 +109,22 @@ paper Section 5 의 두 task 가 사실 같은 framework:
 
 ---
 
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Table 3 에서 ProTran 이 HumanEva-I ADE 에서 DLow 에게 진 (0.258 vs 0.251) 이유와 그 의미는?**
+2. **ProTran 의 "random samples" 평가 vs DLow 의 "diversity-promoting sample selection" — 어느 게 fair 한 평가?**
+3. **Fig 3 에서 ProTran 의 prediction 이 ground truth 와 visually similar 함을 보여주는 6 activity 의 의미는?**
+
+### 답변
+
+1. **HumanEva-I 는 작은 dataset** (3 subjects, 60Hz, 15-joint) — 단순한 motion. DLow 가 별도 diversity-promoting model 로 sample selection 하면 작은 데이터에서 우위 가능. 의미: ProTran 단독으로도 거의 동등 (0.258 vs 0.251), 더 큰 Human3.6M 에서는 ProTran 압도. **DLow 의 trick 결합** 시 ProTran 더 좋아질 가능성 (paper 명시).
+2. **ProTran 의 random samples 평가가 더 fair** — 모델 자체의 distribution quality 직접 평가. DLow 는 별도 model 의 sample selection trick 효과까지 포함. 다만 두 방식의 비교 자체는 같은 task 에서 합리적 — paper 가 honest 하게 명시.
+3. **6 activities**: Smoking / Walk Together / Phoning / Walking / Discussion / Walk Dog. 다양한 motion 패턴 (정적 vs 동적, 단순 vs 복잡, 일상 vs 사회적). 모든 activity 에서 ProTran prediction 이 ground truth 와 시각적으로 유사 → framework 의 **multi-modal generality** 입증.
+
+---
+
 ## 다음
 
 [13_conclusion.md](13_conclusion.md) 에서 paper 결론 + limitations.

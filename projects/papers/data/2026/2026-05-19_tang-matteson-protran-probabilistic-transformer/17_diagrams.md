@@ -233,3 +233,102 @@ ASCII 도식 + interactive viz 카탈로그.
 | **Eq 16-20** | Per-layer generation steps | ch08 |
 
 총 20 equations 모두 cover.
+
+---
+
+## ASCII 도식 추가 — 6, 7, 8, 9 번
+
+### ASCII 도식 6 — Eq 1 의 적분 시각화
+
+```
+   진짜 likelihood: p(x_{1:T} | x_{1:C}) — 직접 계산 불가능
+        │
+        │ 적분으로 분해
+        ↓
+   p(x_{1:T} | x_{1:C}) = ∫ p(x_{1:T} | z) · p(z | x_{1:C}) dz
+                            ↑                ↑
+                         emission        transition
+                         "의도→손동작"     "context→의도"
+        │
+        │ 적분 계산 불가능 → variational
+        ↓
+   ELBO = E_q[log p(x|z)] - KL(q || p) ≤ log p(x | x_{1:C})
+                                        ↑
+                                  진짜 likelihood 의 lower bound
+```
+
+### ASCII 도식 7 — Smoothing vs Filtering 비교
+
+```
+   FILTERING (RNN-based methods)
+   ─────────────────────────────
+   x_1 → x_2 → x_3 → x_4
+    │     │     │     │
+    ↓     ↓     ↓     ↓
+   z_1 → z_2 → z_3 → z_4
+   "z_t 는 x_{1:t} 만 봄"
+   
+   SMOOTHING (ProTran Eq 10)
+   ─────────────────────────
+   x_1   x_2   x_3   x_4
+    ↘   ↓     ↓    ↙
+     ↘  ↓     ↓   ↙
+      ↘ ↓     ↓  ↙
+       ↘↓     ↓ ↙
+        z_t (전체 attention)
+   "z_t 는 x_{1:T} 전체 봄"
+```
+
+### ASCII 도식 8 — Reparameterization Trick
+
+```
+   Without reparameterization:
+   ──────────────────────────
+   μ, σ → Sample(N(μ, σ²)) = z_t
+   "Sample 자체가 미분 불가능"
+   gradient ✗ backprop 못 함
+   
+   With reparameterization:
+   ────────────────────────
+   eps ~ N(0, 1)  ← random, leaf node
+        │
+        ↓
+   z_t = μ + σ · eps
+        ↑     ↑
+     deterministic computation
+        │
+   gradient ✓ μ, σ 통과해서 backprop 가능
+```
+
+### ASCII 도식 9 — 7 Dataset 의 차원 비교
+
+```
+   Dataset      Series   Layers L   특징
+   ──────────────────────────────────────
+   Solar          137       1       단순, regular
+   Electricity    370       1       seasonal
+   Traffic        963       2       복잡, hourly
+   Taxi          1214       2       다양 패턴
+   Wikipedia     2000       2       매우 고차원
+   HumanEva-I     15        2       motion, small
+   Human3.6M      17        3       motion, large
+   
+   → 차원/복잡도 ↑ → L ↑
+   → Multi-layer 가 고차원/multi-modal 에서 결정적
+```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **ASCII 도식 1 (Single-Layer flow) 에서 training vs test 의 분기점은 어디인가?**
+2. **인터랙티브 viz 카탈로그 6 개 중 paper Fig 1 을 재현한 것은?**
+3. **Equations Summary 표에서 ProTran 의 "RNN-free + non-Markovian" 정신을 가장 잘 보여주는 Eq 는?**
+
+### 답변
+
+1. **z_t sampling 단계** — training: Eq 11 (`z_t ~ N(MLP([ŵ_t, k_t]), σ)` with target info), test: Eq 8 (`z_t ~ N(MLP(ŵ_t), σ)` with context only). 이전 단계 (Eq 5, 6, 7) 는 동일.
+2. `pt-graphical-models` (ch04) — Fig 1 의 4 panel (LDS / 1-layer / 3-layer Gen / 3-layer Inf) 재현. 4-mode toggle 로 black arrows (gen) vs red arrows (inf) 전환.
+3. **Eq 6** ($\bar{w}_t = \text{LN}(w_{t-1} + \text{Attn}(w_{t-1}, w_{1:t-1}, w_{1:t-1}))$): self-attention over ALL past latents. **Non-Markovian** ($w_{1:t-1}$ 전체 의존, $w_{t-1}$ 만 아님) + **RNN-free** (recurrent 대신 attention).

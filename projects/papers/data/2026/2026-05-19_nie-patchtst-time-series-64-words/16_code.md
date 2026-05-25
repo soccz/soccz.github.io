@@ -608,4 +608,20 @@ model, history, metrics = run_patchtst_experiment(
 
 ---
 
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **`patching` 함수의 `unfold(dim=-1, size=P, step=S)` 한 줄이 paper Eq 1 의 patch 수 공식과 어떻게 일치하는가?**
+2. **InstanceNorm 의 mean/std 가 forward 마다 재계산되는 이유는?**
+3. **Channel-independent 학습이 PyTorch 구현에서 어떤 형태로 실현되는가?**
+
+### 답변
+
+1. **`unfold(dim, size, step)`**: tensor 를 sliding window 로 잘라 새 차원 생성. `size=P, step=S` → patch 마다 P 길이 + 인접 patch 가 S 만큼 떨어짐. 결과 차원 수 = $\lfloor (L_{padded} - P)/S \rfloor + 1$ = paper Eq 1 의 $N$ 과 정확히 일치. L=336, P=16, S=8, padded 344 → N=42.
+2. **Test time distribution shift 대응**. 학습 데이터의 분포가 test 데이터와 다를 수 있음 (예: Electricity 의 계절 변동). 각 instance 별 mean/std 정규화 → **distribution drift 에 robust**. RevIN (Reversible Instance Normalization) 의 simplified version — forecast 후 다시 denormalize 가능.
+3. **`(B, M, L)` shape 을 `(B*M, L)` 로 reshape** → batch dimension 에 channel 도 흡수 → Transformer 한 번 forward 로 모든 channel 처리 + **같은 weight 공유**. Cross-channel attention 없음 → 완벽한 channel-independence. 추론 후 다시 `(B, M, ...)` 으로 reshape.
+
+---
+
 다음 [17_diagrams.md](17_diagrams.md) 에서 ASCII diagrams + viz catalog.

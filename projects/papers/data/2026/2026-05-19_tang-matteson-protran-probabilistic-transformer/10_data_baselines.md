@@ -162,6 +162,22 @@ paper:
 
 ---
 
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **CRPS_sum 이 "proper scoring rule" 이라는 게 모델 평가에서 어떤 의미?**
+2. **paper 가 dataset 차원 (Solar 137 vs Wikipedia 2000) 에 따라 L (layer 수) 를 다르게 한 이유는?**
+3. **Human3.6M 에서 "target-only inference" mode 를 쓴 이유는?**
+
+### 답변
+
+1. **Proper scoring rule** (Gneiting-Raftery 2007): 모델이 **진실된 분포를 보고할 때 최적 score** 받음. 즉 모델이 "솔직한 분포" 를 출력해야 좋은 점수 — 거짓 (overconfident) 또는 회피 (지나치게 넓은) 분포는 페널티. 점 추정 (MAE/MSE) 으로는 분포의 진실성 평가 불가.
+2. 고차원 dataset (Traffic 963, Taxi 1214, Wikipedia 2000) 은 **복잡한 latent 구조** 필요 → 더 깊은 hierarchy (L=2) 가 도움. 저차원 (Solar 137, Electricity 370) 은 L=1 충분 — overkill 회피.
+3. Human3.6M 은 **3.6M frames + 매우 긴 sequence**. 모든 시점에 inference 진행 시 메모리·시간 부담. **Target-only inference** ($t = C+1, \ldots, T$): context 부분은 prior 만, target 부분만 ELBO 계산. 학습 효율 ↑.
+
+---
+
 ## 다음
 
 [11_forecasting_results.md](11_forecasting_results.md) 에서 Table 1 + Fig 2 + Table 2 ablation.

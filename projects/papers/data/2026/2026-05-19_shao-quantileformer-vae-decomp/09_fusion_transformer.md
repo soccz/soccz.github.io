@@ -27,6 +27,30 @@ $$
 Q = \chi^d_{out} \cdot W_a \cdot W_Q, \quad K = \chi^Q_{eout} \cdot W_K, \quad V = \chi^Q_{eout} \cdot W_V
 $$
 
+### 수식 4줄 풀이
+
+**기호 뜻**:
+- $\chi^d_{out}$: VAE 의 출력 — divergence 의 distribution-enriched representation
+- $W_a$: alignment 행렬 — divergence 와 drift 의 차원 맞춤
+- $W_Q, W_K, W_V$: 표준 Transformer 의 projection matrices
+- $\chi^Q_{eout}$: drift Transformer encoder 출력
+
+**일상 비유**:
+- **번역기**: 영어 ($K, V$) 를 한국어 ($Q$) 로 번역.
+- divergence (한국어 화자) 가 "지금 알고 싶은 것" 을 query 로.
+- drift (영어 데이터베이스) 가 "알고 있는 정보" 의 key/value.
+- Cross-attention 으로 divergence 가 drift 에서 정보 가져옴.
+
+**왜 이 형태인가**:
+- **Encoder-decoder 의 cross-attention 과 동일**: 표준 Transformer 의 검증된 패턴.
+- **Divergence 가 query, drift 가 key/value 의 이유**: drift = smooth, predictable, **알고 있는** 정보. divergence = complex, **알고 싶은** 정보. Query (모름) 가 key/value (앎) 에서 정보 추출.
+- $W_a$ 가 필요한 이유: 두 path 의 차원이 다를 수 있음 (VAE output 의 latent dim 이 encoder output 의 dim 과 다름) → alignment 필요.
+
+**조심할 점**:
+- $W_a, W_Q, W_K, W_V$ 가 4개 별도 학습 파라미터 — overparameterization 위험. Regularization (dropout) 필요.
+- Multi-head 형태 (paper 가 multi-head 라고 명시) → 위 식이 head 별로 별도 계산 후 concat.
+- Soft alignment 의 한계: drift 가 매우 sparse 할 때 attention weight 가 너무 집중될 수 있음 → entropy regularization 가능 (paper 명시 안 함).
+
 **각 source**:
 - **Query** $Q$: $\chi^d_{out}$ (divergence path, VAE output)
   - 먼저 $W_a$ 로 dimension align
@@ -170,5 +194,19 @@ paper Fig 2 의 우측 column:
 → 3개 module 이 Eq 17 의 세 항 (SelfAtt + CrossAtt + FFN) 에 대응.
 
 ---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Fusion 의 3 component (SelfAtt + CrossAtt + FFN) 가 각각 어느 역할인가?**
+2. **paper Eq 17 의 합 + LayerNorm 구조가 표준 Transformer decoder 와 다른 점은?**
+3. **Output $\hat{y} \in \mathbb{R}^{O \times |Q|}$ 의 차원 의미는?**
+
+### 답변
+
+1. **SelfAtt(Q, Q, Q)**: divergence path 내부의 self-context. **CrossAtt(Input, K, V)**: divergence (Q) 가 drift (K, V) 에서 정보 추출. **FFN**: 비선형 변환 + 표현력 ↑. 세 component 가 합쳐져 fusion representation.
+2. **표준 decoder**: 각 sublayer (self-attn → cross-attn → FFN) 가 sequential, residual connection 별도. **paper Eq 17**: 3 component 의 **합** 을 한 번에 LayerNorm — 더 compact 한 형식. 동일 효과지만 implementation 단순.
+3. **$O$**: forecasting horizon 길이 (예: 96 step). **$|Q|$**: quantile 개수 (5 = 0.5, 0.6, 0.7, 0.8, 0.9). 각 시점에 5개 quantile 동시 출력 → uncertainty interval 표현.
 
 다음 [10_loss_function.md](10_loss_function.md) 에서 joint quantile loss (Eq 19).

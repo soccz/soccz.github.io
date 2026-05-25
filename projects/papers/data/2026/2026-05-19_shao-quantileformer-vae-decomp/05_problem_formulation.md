@@ -47,6 +47,31 @@ $Q(0.1)$ 과 $Q(0.9)$ 사이의 길이 = 80% 신뢰 구간의 폭.
 >
 > (paper Eq 3)
 
+### 수식 4줄 풀이 — Quantile Regression Optimization
+
+**기호 뜻**:
+- $y_t$: 실제 관측값 (시점 $t$)
+- $X_t$: 입력 변수들 (lookback window)
+- $\beta_\tau$: $\tau$-th quantile 의 회귀 coefficient (학습 대상)
+- $u = y_t - X_t\beta_\tau$: residual (실제 - 예측)
+- $\rho_\tau(u)$: pinball loss
+
+**일상 비유**:
+- "활쏘기에서 과녁 중앙 (median) 이 아닌 **9시 방향 1cm** 지점 맞추기 학습".
+- $\tau = 0.9$ 면 "90% 확률로 화살이 표적의 X 이하" 가 되는 X 학습.
+- $\rho_\tau$ 의 **asymmetric V-shape** 가 학습 방향 결정.
+
+**왜 이 형태인가**:
+- **Pinball loss**: $\tau$ 와 $1-\tau$ 의 다른 weight → asymmetric → 모델이 정확히 $\tau$-quantile 학습.
+- $\tau = 0.5$ → symmetric V-shape (절대값 / 2) → median 학습.
+- $\tau \neq 0.5$ → asymmetric → 다른 quantile.
+- 다른 loss (MSE) 는 평균만 학습 — quantile 표현 불가.
+
+**조심할 점**:
+- Pinball loss 는 $u=0$ 에서 비미분 → subgradient 사용 (PyTorch 자동 처리).
+- 여러 $\tau$ 동시 학습 시 quantile crossing (예: $\hat Q(0.7) > \hat Q(0.8)$) 가능 — paper 가 명시적 보정 안 함.
+- $\tau$ 가 양 극단 (0.01 또는 0.99) 일 때 data 부족 — extreme tail estimation 어려움.
+
 ### Pinball Loss $\rho_\tau$
 
 paper text 에서 정의하지 않았지만 표준 pinball loss:
@@ -100,5 +125,21 @@ optimization (Eq 3)        →   min Σ ρ_τ(y_t - X_t β_τ)
                                           ↓ 단순 linear → DNN 으로 확장
                               QuantileFormer
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Quantile $Q(p)$ 의 정의 (Eq 1) 에서 $\inf$ 가 필요한 이유는?**
+2. **Pinball loss 가 $\tau = 0.5$ vs $\tau = 0.9$ 일 때 모양이 어떻게 다른가?**
+3. **paper 가 5개 quantile (0.5, 0.6, 0.7, 0.8, 0.9) 만 사용하는 trade-off 는?**
+
+### 답변
+
+1. CDF $P(X \leq x)$ 가 **점프 (discontinuity)** 있을 수 있어 (이산형 분포). 그래서 "$P(X \leq x_p) \geq p$ 만족하는 가장 작은 $x$" = $\inf$ 가 필요. 연속형 분포에서는 단순 inverse CDF 와 동일.
+2. **$\tau = 0.5$**: symmetric V-shape ($0.5 |u|$) — 절대값 절반. **$\tau = 0.9$**: asymmetric — under-prediction ($u > 0$) 은 기울기 0.9 (큰 페널티), over-prediction ($u < 0$) 은 기울기 0.1 (작은 페널티). 결과: 모델이 90% 확률로 실제값 $\leq$ 예측 이도록 학습.
+3. **장점**: 단순, 학습 안정, pinball loss 직접 호환. **단점**: 5점 표본 — 분포의 mode 가 quantile 사이에 있으면 놓침. 전체 distribution (TMDM 의 diffusion) 보다 정밀도 낮음. **Trade-off**: 단순성 우선.
 
 다음 [06_pattern_mixture_decomp.md](06_pattern_mixture_decomp.md) 에서 본 paper 의 첫 번째 핵심 contribution — pattern-mixture decomposition (Eq 4–7).

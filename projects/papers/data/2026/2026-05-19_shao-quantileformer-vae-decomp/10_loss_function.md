@@ -14,11 +14,31 @@ $$
 \mathcal{L}(\Omega, W) = \sum_{y_t \in \Omega} \sum_{q \in Q} \sum_{\tau = 1}^{\tau_{max}} \frac{q(y - \hat{y})_+ + (1 - q)(\hat{y} - y)_+}{M \tau_{max}}
 $$
 
-where:
-- $\Omega$ = training data domain ($M$ samples)
-- $Q$ = quantile set ($\{0.5, 0.6, 0.7, 0.8, 0.9\}$)
-- $\tau_{max}$ = forecasting horizon length
-- $(\cdot)_+ = \max(0, \cdot)$
+### 수식 4줄 풀이
+
+**기호 뜻**:
+- $\Omega$: training data domain ($M$ samples)
+- $Q$: quantile set ($\{0.5, 0.6, 0.7, 0.8, 0.9\}$)
+- $\tau_{max}$: forecasting horizon length
+- $(\cdot)_+ = \max(0, \cdot)$ — ReLU
+- 3중 sum: samples × quantiles × horizon
+- Normalize: $1/(M \tau_{max})$
+
+**일상 비유**:
+- **3 영역에서 동시 활쏘기 학습**: 여러 표적 ($Q$ = 5개 quantile 위치) × 여러 거리 (horizon) × 여러 학생 (samples).
+- 각 표적 위치의 정확도 (pinball loss) 를 모두 합산 → 균형 학습.
+- 한 quantile (예: 0.5 median) 만 잘 맞으면 안 됨, 모든 quantile 잘 맞춰야.
+
+**왜 이 형태인가**:
+- **Pinball loss** ($q(y-\hat y)_+ + (1-q)(\hat y - y)_+$): asymmetric — quantile 학습의 표준.
+- **Multi-quantile sum**: 단일 quantile 학습보다 quantile crossing 위험 ↓.
+- **Multi-horizon sum**: 모든 시점 균등 학습 — 후반 timestep 도 학습.
+- **Normalize**: sample 수 + horizon 길이로 평균 → batch / horizon length 독립.
+
+**조심할 점**:
+- $|Q| = 5$ → quantile loss 가 quantile 수에 비례 (normalize 안 함). 다른 loss term (KL 등) 과 균형 주의.
+- $u = 0$ 에서 non-differentiable → subgradient 사용 (PyTorch 자동 처리).
+- Quantile crossing — paper 명시 안 함, 후속 보정 가능.
 
 ---
 
@@ -142,5 +162,21 @@ paper text 가 hyperparameter 명시 안 함. 본 deep dive 의 추론 (DeepAR/T
 - Batch size: 32~64
 - Epochs: 10~20 with early stopping
 - $\tau_{max}$ (horizon): 96 (paper text 의 96-step prediction implied by Fig 3 x-axis "20-96")
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Multi-quantile 합 학습이 단일 quantile 학습보다 좋은 두 가지 이유는?**
+2. **Pinball loss 의 $u=0$ 에서 비미분 — 학습 시 어떻게 처리되는가?**
+3. **paper "3 parts" 의 정확한 정의 미명시 — 본 deep dive 의 두 가지 해석은?**
+
+### 답변
+
+1. (a) **Quantile crossing 회피**: $\hat Q(0.7) > \hat Q(0.8)$ 같은 모순 자연 감소. (b) **Distribution shape 학습**: 5개 점 동시 학습 → 분포의 형태 (skewness, tail) 정보 더 풍부.
+2. **Subgradient 사용**: $u > 0$ 일 때 gradient = $q$, $u < 0$ 일 때 gradient = $-(1-q)$. PyTorch 의 `max(0, u)` 가 자동으로 subgradient 처리. $u = 0$ 정확히 일 때는 사실상 발생 거의 없음 (continuous data).
+3. **해석 1**: (i) drift path quantile loss, (ii) divergence/VAE path ELBO, (iii) final fusion quantile loss. **해석 2**: (i) quantile loss (Eq 19), (ii) KL divergence (Eq 13), (iii) reconstruction error. paper 본문 명시 안 — implementation 의존.
 
 다음 [11_data_baselines.md](11_data_baselines.md) 에서 6 datasets + 8 baselines + 2 metrics (q-risk + cpaw).

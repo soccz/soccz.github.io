@@ -12,10 +12,33 @@ $$
 paper text:
 > Central to our models and other transformer-based approaches [48, 85] is the notion of attention [5], which allows the models to focus on important parts within a context.
 
-**표기**:
-- $Q \in \mathbb{R}^{\ell_q \times d}$ — queries (길이 $\ell_q$, dimension $d$)
-- $K, V \in \mathbb{R}^{\ell_k \times d}$ — key/value pairs (길이 $\ell_k$)
-- $O = [O_1, \ldots, O_H] \in \mathbb{R}^{\ell_q \times d}$ — multi-head output
+### 수식 4줄 풀이
+
+**기호 뜻**:
+- $Q \in \mathbb{R}^{\ell_q \times d}$ — queries: "지금 알고 싶은 것 $\ell_q$ 개, 각각 $d$ 차원 벡터"
+- $K, V \in \mathbb{R}^{\ell_k \times d}$ — key/value pairs: "정보 데이터베이스 $\ell_k$ 개의 (태그, 내용) 쌍"
+- $h$ 첨자: $H$ 개 attention head 중 $h$ 번째
+- $\sqrt{d}$ 나눔: scale factor — 큰 $d$ 에서 softmax 너무 sharp 해지는 거 방지
+- $O_h$: head $h$ 의 output, 최종 $O$ 는 모든 head concat
+
+**일상 비유**:
+- $QK^T$ = "각 query 가 각 key 와 얼마나 잘 맞는가" 매트릭스 (예: 학생 질문 vs 책 인덱스 매칭)
+- softmax: 매칭 점수를 비율로 변환 (sum = 1)
+- $\times V$: 비율대로 책 내용 섞기
+- Multi-head = 여러 관점에서 동시 검색 (head 1 = 'who', head 2 = 'when', head 3 = 'why', ...)
+
+**왜 이 형태인가**:
+- **Dot product** ($QK^T$): 두 벡터의 cosine similarity 와 비례 — 유사한 방향이면 큰 값.
+- **Softmax**: 가중치 합이 정확히 1 — 깨지지 않는 weighted average 보장.
+- **$\sqrt d$ 나눔**: $Q, K$ 가 $d$ 차원 random 벡터면 $QK^T$ 의 분산이 $d$ 만큼 커짐 → softmax 가 단일 값에 너무 집중되는 것 방지.
+- **Multi-head**: single attention 의 단조로움 회피 → 여러 의미축 동시 학습.
+
+**조심할 점**:
+- $O(\ell_q \ell_k d)$ time, $O(\ell_q \ell_k)$ memory — long sequence 부담.
+- Softmax 의 sharpness 가 학습 안정성 영향 — gradient explosion 가능.
+- Position encoding 필수 — attention 자체는 순서 정보 없음.
+
+### Multi-head 분해
 
 **Multi-head 분해**:
 $$
@@ -23,6 +46,8 @@ Q_h = Q W^Q_h, \quad K_h = K W^K_h, \quad V_h = V W^V_h
 $$
 
 learning parameters $W^Q_h, W^K_h, W^V_h$ for each head $h \in [1, H]$.
+
+→ 각 head 가 다른 projection 으로 다른 의미 측면 학습.
 
 ---
 
@@ -93,6 +118,22 @@ paper Section 2.2 (Eq 4) 가 standard Transformer preliminaries. paper Section 3
 - Eq 5: ProTran 의 context preprocessing — $h_t = \text{LayerNorm}(\text{MLP}(x_t) + \text{Position}(t))$.
 
 → ProTran 은 **context observations 를 가볍게 전처리** (full encoder 안 함). 무거운 작업은 latent 부분에.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Self-attention vs Cross-attention 의 차이? ProTran 의 어느 Eq 가 각각 해당?**
+2. **$\sqrt d$ 로 나누는 이유는?**
+3. **Sinusoidal position embedding 이 왜 attention 에 필수인가?**
+
+### 답변
+
+1. **Self-attention** ($Q = K = V$): 같은 source 내부 dependency 학습 — ProTran 의 Eq 6 ($w_{1:t-1}$ 의 self-attention) 과 Eq 10 ($h_{1:T}$ 의 bidirectional self-attention). **Cross-attention** ($Q \neq K = V$): 다른 source 에서 정보 추출 — ProTran 의 Eq 7 (latent → context).
+2. $Q, K$ 가 $d$ 차원 벡터일 때 dot product $QK^T$ 의 표준편차가 $\sqrt d$ 에 비례 → 큰 $d$ 에서 softmax 가 단일 값에 너무 집중 (gradient vanishing). $\sqrt d$ 나눔으로 변환 후 분산 일정하게 유지 → 학습 안정.
+3. Attention 식은 **순서 정보 자체 없음** ($x_1, x_2, x_3$ 와 $x_3, x_2, x_1$ 동일 처리). Position embedding 이 시간 순서 정보를 더해줘야 시계열 의미 유지. ProTran 의 Eq 5 에서 $\text{Position}(t)$ 가 LayerNorm 전에 합산.
 
 ---
 

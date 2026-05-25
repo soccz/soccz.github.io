@@ -113,4 +113,20 @@ Conditional VAE Motion
                        ProTran: time-dependent + hierarchical
 ```
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Deep SSM 의 두 갈래 (linear transition + neural emission / RNN nonlinear transition) 의 대표 모델과 한계는?**
+2. **paper 가 "attention 으로 latent 사이 의존성 모델링" 한 차별점이 기존 attention 시계열 모델 (Transformer-MAF 등) 과 다른 점은?**
+3. **Human motion 의 conditional VAE (MT-VAE, DLow) 와 ProTran 의 핵심 차이는?**
+
+### 답변
+
+1. **Linear + neural emission**: KVAE (Fraccaro 2017), NKF (de Bézenac 2020) — Kalman filter 활용 가능. **한계**: linear transition 이 nonlinear dynamics 표현 못함. **RNN nonlinear**: VRNN, DKS, DSSM — nonlinearity OK. **한계**: gradient vanishing 으로 장거리 의존성 약함.
+2. 기존 Transformer 시계열 모델 (Transformer-MAF, Informer 등): **latent + inference mechanism 결여** → observation 에 attention. Test time 에 observation noise 가 dynamics 에 누적. ProTran: **latent 에 attention** + variational inference framework — observation noise 직접 영향 없음.
+3. **MT-VAE / DLow**: **global latent** 하나 (시간 무관). **ProTran**: **time-dependent + hierarchical** latents — 각 시점 + 각 layer 별 latent. 표현력 훨씬 큼.
+
 다음 [10_data_baselines.md](10_data_baselines.md) 에서 실험 셋업.

@@ -309,3 +309,19 @@ ASCII 도식 + interactive viz 카탈로그.
 | **Eq 21** | **cpaw** | ch11 |
 
 **Bold** = paper 의 핵심 contribution. 본 deep dive 의 8 chapter (06-11) 에서 각각 깊이 해체.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **ASCII 도식 1 (전체 architecture) 에서 두 path (drift / divergence) 가 합쳐지는 지점은?**
+2. **paper 의 21 equation 중 본 deep dive 가 "**bold = 핵심**" 으로 표시한 9개의 공통점은?**
+3. **Interactive viz 카탈로그 8 개 중 Fig 2 architecture 의 4 component 모두 가시화한 viz 는?**
+
+### 답변
+
+1. **Fusion Transformer (Eq 16-17)** — drift 의 $\chi^Q_{eout}$ 이 K, V 로, divergence 의 $\chi^d_{out}$ 이 Q 로 들어가 cross-attention. 그 전까지는 두 path 가 완전 별도 모듈 (encoder vs GMM+VAE).
+2. **모두 paper 의 새 contribution 또는 핵심 design choice**. Eq 4 (decomp), 7 (GMM), 8 (global mixture), 14 (ELBO), 16-17 (fusion), 19 (joint quantile loss), 20-21 (metrics). 표준 (Gaussian PDF, KL divergence, Multi-head attention) 은 bold 안 함 — paper 의 contribution 식별 명확화.
+3. **`qf-drift-divergence` + `qf-gmm-decomp` + `qf-vae-graph` + (전체 흐름은 ASCII 도식 1 만)** — 단일 viz 가 4 component 모두 가시화하지는 않음. ASCII 도식 1 (architecture) 이 전체 흐름 한 눈에. Interactive viz 는 각 component 별 (Fig 1 mixture patterns, Fig 2 architecture, Fig 3 hyperparam, Fig 4 visualization).

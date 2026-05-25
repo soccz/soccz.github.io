@@ -138,4 +138,20 @@ paper p.6:
 ```viz:qf-cpaw-table3:title=paper Table 3 — cpaw (interactive),caption=6 datasets × 7 models (Transformer 일부 OOM). cpaw = PINAW × (1 + γ·exp(-(PICP-μ))). lower = better. QuantileFormer 가 Electricity / Wind / Solar / Traffic 에서 best. ETT 에서는 Transformer / FEDformer 가 우수.
 ```
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Table 1 의 30 cells 중 QuantileFormer 가 best 인 비율과 paper text 의 "consistently outperforms" 표현의 한계는?**
+2. **Table 3 cpaw 에서 ETT (m1, h1) 가 다른 모델 (Transformer, FEDformer) 이 더 좋은 이유 추정은?**
+3. **0.5 (median) vs 0.7 vs 0.9 quantile 에서 paper 의 가장 큰 평균 개선 (~27%) 이 0.7 quantile 인 의의는?**
+
+### 답변
+
+1. **30/30 best 아닌 ~18-20 best (60-67%)** — paper text 의 "consistently" 는 marketing 수준. 정확히는 "**대부분 best, 일부 dataset 에서 baseline 비등**". 본 deep dive 가 honest 하게 정리 → 미래 사용자가 ETT 에서 실망 안 함.
+2. **ETT 는 단순한 일/계절 cycle 만** 있는 데이터 → multi-modal distribution 적음. QuantileFormer 의 GMM/VAE 부담이 advantage 보다 큼. **모델의 복잡도가 데이터의 복잡도와 match 해야** 한다는 원칙 — 단순 deterministic Transformer 가 단순 데이터에 더 효율적.
+3. **0.7 quantile 의 의미**: median 과 extreme upper bound 사이 — 가장 정보 풍부한 영역. 0.5 (median) 은 모든 모델이 잘함, 0.9 (extreme) 은 데이터 부족으로 모두 어려움. **0.7 부근이 모델 차이가 가장 잘 드러남**. probabilistic forecasting 의 sweet spot.
+
 다음 [13_ablation.md](13_ablation.md) 에서 Table 4 ablation.

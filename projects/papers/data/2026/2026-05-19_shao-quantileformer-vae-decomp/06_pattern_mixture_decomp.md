@@ -35,6 +35,30 @@ $$
 \chi^d = \chi - \chi^{0.5}
 $$
 
+### 수식 4줄 풀이
+
+**기호 뜻**:
+- $\chi$: 원본 시계열 ($T \times d$)
+- $\chi^q$: $q$-quantile drift — 각 시점의 sliding window q-분위수
+- $\text{Padding}$: 양쪽 끝 보강 (output length = input length 유지)
+- $\text{QuantileFilt}$: sliding window 의 q-th quantile 계산 (AvgPool 의 generalization)
+- $\chi^d$: divergence — 원본에서 median drift 뺀 residual
+
+**일상 비유**:
+- $\chi^q$ = "각 시점의 envelope" — 예: $q=0.9$ 면 "최근 window 의 상위 10% 경계값" 시계열로.
+- $\chi^d$ = "median 으로부터의 편차" — 평상시 vs 이상시.
+- AvgPool 이 "한 곡의 평균 음량" 추출이라면, QuantileFilt 는 "한 곡의 forte vs piano level 별 envelope" 추출.
+
+**왜 이 형태인가**:
+- **AvgPool 의 한계**: 단일 trend 만 추출 → distribution 정보 손실. 평균에 outlier 영향.
+- **QuantileFilt 의 답**: 여러 quantile level 의 envelope → distribution shape 보존. Median 은 outlier robust.
+- $\chi^d = \chi - \chi^{0.5}$ (median 빼기): **outlier robust residual** (mean 빼기는 outlier 가 transmitted).
+
+**조심할 점**:
+- Window size 가 quantile 추정 정확도 결정 — 너무 작으면 noisy, 너무 크면 smooth 너무 강함.
+- $\chi^d$ 는 deterministic computation — VAE 의 stochastic input 으로 사용되기 전 단계.
+- 5개 quantile drift 사용 시 계산 비용 5배 (각 quantile 별 별도 sliding window).
+
 ### 핵심 도구 — `QuantileFilt`
 
 paper text:
@@ -171,5 +195,21 @@ $$
 | 확률 측면 | 없음 | GMM 으로 distribution 추정 |
 
 → Autoformer 의 단순 분해를 **2 stage + probability-aware** 로 확장. 
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **QuantileFilt vs AvgPool — 어느 데이터에서 가장 큰 차이가 보일까?**
+2. **$\chi^d = \chi - \chi^{0.5}$ 가 **median 빼기** 인 이유 (mean 빼기 아닌)?**
+3. **2-stage decomposition (Drift-Divergence + GMM) 가 왜 1-stage 보다 강한가?**
+
+### 답변
+
+1. **Heavy-tailed / skewed 데이터** (예: 풍속, 전력 peak, 금융 returns). 평균은 outlier 에 끌리지만 quantile 은 robust → AvgPool 의 trend 가 outlier 로 왜곡되는 곳에서 QuantileFilt 가 정확. Wind dataset 에서 QuantileFormer 의 큰 우위 (Table 1) 가 이 효과.
+2. **Outlier robust**: median 은 outlier 영향 거의 없음. **Mean 빼기**: outlier 가 mean 끌어서 residual 에 transmitted. 또 **distribution morphology 보존**: median 은 분포의 중심, mean 은 평균 — median 빼면 분포의 비대칭성 (skewness) 가 residual 에 더 깨끗하게 남음.
+3. **1-stage (trend-seasonal)**: 단일 trend 와 seasonal 만 분리 — distribution 정보 무시. **2-stage**: drift-divergence 가 **smooth 성분 분리** + GMM 이 **divergence 의 distribution 학습**. 두 stage 가 다른 정보 capture → 시너지 (paper Table 4 ablation 의 모든 component 기여 확인).
 
 다음 [07_vae_inference.md](07_vae_inference.md) 에서 GMM components $D$ 의 VAE 처리 (Eq 8–15).

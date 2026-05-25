@@ -49,19 +49,50 @@ $$
 z_t = \text{Sample}(\mathcal{N}(z_t; \text{MLP}([\hat{w}_t, k_t]), \text{Softplus}(\text{MLP}([\hat{w}_t, k_t]))))
 $$
 
-**해석**:
+### Eq 10 수식 4줄 풀이 — Bidirectional Self-Attention
 
-### Eq 10 — Bidirectional self-attention over $h_{1:T}$
-- Query = Key = Value = $h_{1:T}$ (전체 sequence 의 embedding)
-- 결과 $k_t$: 시점 $t$ 에서 **전체 시퀀스의 정보** 를 모은 hidden representation
+**기호 뜻**:
+- $h_{1:T}$: 전체 sequence (context + target) 의 embedding — training time 에만 가능
+- $\text{Attention}(h_{1:T}, h_{1:T}, h_{1:T})$: $Q = K = V = h_{1:T}$ — self-attention
+- 결과 $k_t \in \mathbb{R}^d$: 시점 $t$ 에서 **전체 sequence 의 정보** 를 모은 hidden representation
 
-→ 표준 transformer encoder 의 self-attention 과 비슷, 다만 길이 $T$ 의 sequence over all time.
+**일상 비유**:
+- "**운전이 다 끝난 영상을 다시 돌려보며**, 시점 $t$ 에서의 운전자 의도를 영상 전체 맥락에서 재해석".
+- $h_{1:T}$ = 전체 영상, $k_t$ = "시점 $t$ 의 의도, 전체 맥락에서 본 것".
+- BERT 의 bidirectional attention 과 정신 동일 (NLP 의 2019 advances 가 시계열에 도착).
 
-### Eq 11 — Concatenate + Sample
-- Generative 의 $\hat{w}_t$ (현재까지의 latent + context 정보)
-- Inference 의 $k_t$ (전체 sequence 정보, target 포함)
-- 둘을 **concat** → MLP → Gaussian 의 평균 + 분산
-- Sample $z_t$
+**왜 이 형태인가**:
+- 표준 RNN inference 는 **filtering** 만 가능 — unidirectional 한계.
+- Attention 은 모든 시점이 모든 시점에 접근 가능 → **smoothing** 자연스럽게.
+- $k_t$ 가 target 정보 ($x_{C+1:T}$) 까지 포함 → posterior 가 prior 보다 정확.
+
+**조심할 점**:
+- $k_t$ 는 **training time only** — test time 에는 미래 모름.
+- Test time 에는 Eq 11 대신 Eq 8 (prior) 사용.
+- KL term 이 train 의 정확한 posterior 와 test 의 prior 사이를 좁히는 역할.
+
+### Eq 11 수식 4줄 풀이 — Concatenate + Sample
+
+**기호 뜻**:
+- $[\hat{w}_t, k_t]$: 두 hidden 의 **concatenation** ($\mathbb{R}^{2d}$ 차원)
+- $\hat{w}_t$: generative 의 step 7 output (현재까지의 latent + context 정보, $\mathbb{R}^d$)
+- $k_t$: inference 의 step (target 정보 포함, $\mathbb{R}^d$)
+- 둘 concat → MLP → Gaussian 의 평균 + 분산 → sample
+
+**일상 비유**:
+- $\hat{w}_t$ = "내가 시점 $t$ 까지 알게 된 것" (context only)
+- $k_t$ = "전체 맥락에서 본 시점 $t$ 의 의도" (target 포함)
+- Concat = "두 정보를 합쳐서 더 정확한 의도 추정"
+- Sample = "그 정확한 정보로 latent $z_t$ 결정"
+
+**왜 concat?**:
+- 만약 $k_t$ 만 사용하면 generative 와 parameter share 안 됨.
+- $\hat w_t$ 도 같이 사용 → MLP layer 만 다르고 attention 은 공유.
+- "Generative + Inference parameter sharing" 의 표준 trick.
+
+**조심할 점**:
+- Eq 8 (generative) → Eq 11 (inference) 의 차이: input 이 $\hat w_t$ vs $[\hat w_t, k_t]$.
+- 결과적으로 posterior $q_\phi$ 는 prior $p_\theta$ 보다 더 sharp 한 분포 (정보 많으니).
 
 paper:
 > Here, we replace Equation (8) in the generative model with Equation (11), where the hidden representation $k_t$ summarizing all information relevant to the current timestep $t$ has been concatenated to the latent-and-context-aware representation $\hat{w}_t$ preceding the Gaussian parametrization.
@@ -151,5 +182,25 @@ For each t:
 | Sample (inf) | 11 | $\hat{w}_t, k_t$ | $z_t$ (posterior) | Train only |
 | Update hidden | 9 | $\hat{w}_t, z_t$ | $w_t$ | Both |
 | Emission | (Eq 1) | $w_t$ | $x_t$ | Both |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 4가지
+
+1. **Filtering vs Smoothing — 두 inference 방식의 차이와 ProTran 이 smoothing 처럼 작동하는 이유는?**
+2. **Eq 10 의 $k_t = \text{Attn}(h_{1:T}, h_{1:T}, h_{1:T})$ 에서 $h_{1:T}$ 가 세 번 들어가는 의미는?**
+3. **Training 의 Eq 11 vs Test 의 Eq 8 — 어느 부분이 다르고, 왜 그 비대칭이 학습에 핵심인가?**
+4. **Generative + Inference parameter share 의 이점은?**
+
+### 답변
+
+1. **Filtering**: $p(z_t | x_{1:t})$ — 과거만. RNN 의 unidirectional 한계로 강제됨. **Smoothing**: $p(z_t | x_{1:T})$ — 과거 + 미래. Training 시 ground truth 미래 있을 때 활용. ProTran 의 Eq 10 이 $h_{1:T}$ 전체에 attention → smoothing 처럼 작동 (BERT 의 bidirectional 정신).
+2. Self-attention 의 $Q = K = V$ 형식 — "전체 sequence 의 각 시점이 전체 sequence 의 모든 시점에 attention". 결과 $k_t$ 는 시점 $t$ 에서 "전체 맥락에서 본 의도".
+3. **Eq 11 (training)**: $z_t \sim \mathcal{N}(\text{MLP}([\hat{w}_t, k_t]), \cdot)$ — $k_t$ 가 target 정보 포함, posterior. **Eq 8 (test)**: $z_t \sim \mathcal{N}(\text{MLP}(\hat{w}_t), \cdot)$ — context only, prior. 비대칭의 핵심: training KL term 이 prior 를 posterior 흉내내도록 학습 → test time 에 prior 만으로도 좋은 generation 가능.
+4. **Computational**: 동일 attention/LN/MLP block 재사용 — 학습 + inference 파라미터 절반 절약. **Statistical**: posterior 와 prior 가 비슷한 representation 공간 사용 → KL 최소화 자연스러움. **Practical**: VDVAE, NVAE 등 modern VAE 의 표준 기법.
+
+---
 
 다음 [08_multi_layer.md](08_multi_layer.md) 에서 hierarchical extension (Eq 12-20).

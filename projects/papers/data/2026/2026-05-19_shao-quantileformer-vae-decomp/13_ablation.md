@@ -126,4 +126,20 @@ paper 의 ablation 설계는 정확:
 
 각 ablation 이 다른 component 를 정확히 isolate. Paper design 의 우수성.
 
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Wind 0.9 에서 D-D Decomposition 제거 시 ×5 악화 의미는?**
+2. **모든 12 cells 에서 Full model 이 best 인 사실의 의의는?**
+3. **Autoformer Table 3 (backbone variations) vs QuantileFormer Table 4 (component variations) 의 ablation 철학 차이는?**
+
+### 답변
+
+1. **Wind 의 90% upper bound** (extreme value) 예측에서 **drift-divergence 분해가 거의 결정적**. 풍속 데이터의 extreme value 가 quantile drift 의 envelope 정보에 강하게 의존. AvgPool 의 단일 trend 로는 부족 — multi-quantile envelope 가 extreme tail 학습에 결정적.
+2. **3 contribution 의 시너지 명확** — 각 component 가 독립적 효과 + 함께 쓰면 최고. paper 의 claim (3 가지 contribution) 의 실증 확인. 한 component 라도 빠지면 어딘가 약화 = 모두 균형 잡힌 design.
+3. **Autoformer Table 3**: backbone 4종 (Transformer, Informer, LogTrans, Reformer) 에 분해 도입 효과 → **분해의 backbone-agnostic transfer 가능성** 입증. **QuantileFormer Table 4**: 자체 framework 의 3 internal component 검증 — **각 component 의 independent contribution** 확인. 두 철학: "design 의 generalizability" vs "design 의 internal coherence".
+
 다음 [14_hyperparam_viz.md](14_hyperparam_viz.md) 에서 hyperparameter $k$ 분석 + Figure 4 시각화 (Section 5.3–5.4).

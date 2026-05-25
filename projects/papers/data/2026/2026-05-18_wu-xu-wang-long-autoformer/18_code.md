@@ -477,4 +477,20 @@ if __name__ == "__main__":
 
 ---
 
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **`SeriesDecomp` 의 `moving_avg = AvgPool1d` 가 paper Eq 1 의 분해와 어떻게 일치하는가?**
+2. **`AutoCorrelation` 클래스의 `torch.fft.rfft` + `topk` 조합이 paper Eq 6-7 의 어느 step 에 해당?**
+3. **Encoder-Decoder 구조에서 progressive decomposition 이 코드의 어느 부분에 구현되는가?**
+
+### 답변
+
+1. **`moving_avg`**: kernel size 25 AvgPool1d → window 평균 = trend. 입력 - trend = seasonal. paper Eq 1 (`X_t = X_trend + X_seasonal`) 의 직접 구현. Padding 으로 length 유지.
+2. **Eq 5 (autocorrelation via FFT)**: `rfft → freq * conj(freq) → irfft` = $R(\tau)$. **Eq 6 (topk delays)**: `topk(corr, k)` 로 가장 큰 lag $\tau_1, \ldots, \tau_k$ 선택. **Eq 7 (time-delay aggregation)**: 각 lag 만큼 `roll` 후 가중 합 — 여기서는 `softmax` weight × `gather`.
+3. **각 EncoderLayer / DecoderLayer 안의 SeriesDecomp 호출**. EncoderLayer 의 `x, _ = self.decomp1(x + attn)` 형태 — attention 후 즉시 trend 분리, seasonal 만 다음 layer 로 전달. Decoder 는 trend 를 누적 (residual connection) — paper Fig 1 의 progressive trend accumulation.
+
+---
+
 다음 [19_diagrams.md](19_diagrams.md) 에서 ASCII 도식 + interactive viz 카탈로그.

@@ -115,6 +115,22 @@ paper p.8:
 
 ---
 
+## 자기점검 (이 챕터)
+
+### 핵심 3가지
+
+1. **Table 1 에서 ProTran 이 5/5 SOTA 가 아닌 "4/5 outright best + 1/5 tie" 인 데이터셋과 이유는?**
+2. **Table 2 의 ablation 에서 가장 큰 손해를 보는 component 와 그 시사점은?**
+3. **Fig 2 (Traffic predictions) 에서 ProTran 의 uncertainty calibration 이 잘 되었다는 두 가지 증거는?**
+
+### 답변
+
+1. **Electricity 에서 NKF 와 tie at 0.016**. 이유: Electricity 가 상대적으로 **regular/seasonal** dataset — linear SSM 으로 충분 (NKF 가 normalizing flow + Kalman 결합). Solar/Traffic/Taxi 처럼 nonlinear/multimodal 한 dataset 에서는 ProTran 의 attention 기반 nonlinear transition 이 결정적.
+2. **Setting D (Deterministic, no stochastic z): 0.028 → 0.041, +46% 악화**. 시사점: "**stochastic latent 자체가 가장 중요**" — multi-layer 와 context attention 은 marginal. 이는 paper 의 핵심 주장 ("probabilistic 이 deterministic 보다 결정적") 의 실증 확인.
+3. (a) **큰 magnitude → 큰 variance**: 절대값 큰 series 의 prediction interval 이 더 넓음 — 적절한 uncertainty 표현. (b) **먼 미래 → 큰 variance**: target 의 후반부일수록 prediction interval 확대 — 자연스러운 epistemic uncertainty 증가.
+
+---
+
 ## 다음
 
 [12_motion_results.md](12_motion_results.md) 에서 human motion prediction (Table 3 + Fig 3).
