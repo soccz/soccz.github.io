@@ -2365,7 +2365,8 @@ function renderIdeaPnl(summary) {
   const ctx = document.getElementById('chartIdeaPnl');
   if (!ctx) return;
   Chart.getChart(ctx)?.destroy();
-  const rows = (summary.idea_validation?.tables?.summary || []).filter(r => r.dimension === 'idea_id');
+  // tables.summary 의 dimension = 'idea' (idea_id 별 group). 자동 검증 시 발견.
+  const rows = (summary.idea_validation?.tables?.summary || []).filter(r => r.dimension === 'idea' || r.dimension === 'idea_id');
   if (!rows.length) { ctx.parentElement.innerHTML = '<div class="loading-state">idea_id 분류 표본 부족</div>'; return; }
   // sort by net_pnl_sum_pct
   const sorted = rows.slice().sort((a, b) => (b.net_pnl_sum_pct || 0) - (a.net_pnl_sum_pct || 0));
