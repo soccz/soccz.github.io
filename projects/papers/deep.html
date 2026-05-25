@@ -565,6 +565,50 @@
         vizType: 'voc-misspec-monotone'
       }
     },
+    '2026-05-26_rasul-timegrad-diffusion-time-series': {
+      eyebrow: 'Paper Deep Dive · 시계열 × Diffusion × Multivariate Probabilistic Forecasting',
+      hero: 'Image diffusion 의 시계열 도착 — DDPM 으로 다변량 확률 forecasting SOTA.',
+      subtitle: '<span class="accent">Kashif Rasul, Calvin Seward, Ingmar Schuster, Roland Vollgraf (Zalando Research, ICML 2021)</span> 의 TimeGrad 는 ' +
+                'DDPM (Ho 2020 의 image diffusion) 을 RNN-conditioned autoregressive 시계열 forecasting 으로 확장한 첫 paper. ' +
+                '매 시점 $t$ 의 다변량 분포 $\\mathbf{x}^0_t \\in \\mathbb{R}^D$ 를 $N=100$ step diffusion + Langevin dynamics 로 sampling. ' +
+                '6 datasets (Exchange 8 / Solar 137 / Electricity 370 / Traffic 963 / Taxi 1,214 / Wikipedia 2,000) 중 ' +
+                '<span class="accent">5개에서 CRPS_sum SOTA</span> — Vec-LSTM-Copula 와 Transformer-MAF 능가. ' +
+                'EBM 의 functional 자유 + Langevin 의 generality 가 multivariate joint distribution 학습의 새 표준.',
+      stats: [
+        { num: '18', label: '챕터' },
+        { num: '6',  label: 'Figure 발췌' },
+        { num: '5/6', label: 'datasets SOTA' },
+        { num: 'ICML 2021', label: '발표처' }
+      ],
+      what: {
+        title: '"Image generation 의 SOTA tool 을 시계열에 직접 transfer — Domain-specific variation 안 만들고 paradigm transfer 만으로 SOTA."',
+        body: 'TimeGrad 는 단순한 새 모델이 아닌 <strong>image domain 의 generative SOTA (DDPM, Ho 2020) 의 시계열 paradigm transfer</strong>. ' +
+              'RNN (LSTM 2-layer, hidden=40) 이 시계열 history → hidden state $\\mathbf{h}_{t-1}$ 인코딩 + ' +
+              'Conditional diffusion ($\\epsilon_\\theta(\\mathbf{x}^n_t, \\mathbf{h}_{t-1}, n)$) 이 다음 시점 multivariate 분포 학습. ' +
+              '학습 = $\\epsilon$-prediction MSE (Algorithm 1, random $n$ + random $\\epsilon$). ' +
+              'Sampling = annealed Langevin dynamics (Algorithm 2, $N=100$ reverse loop). ' +
+              'Vec-LSTM 의 low-rank Gaussian (second-order only) 한계 + Transformer-MAF 의 flow Jacobian 제약 모두 회피 — EBM 의 functional form 자유.',
+        verdict: 'Image diffusion 의 시계열 SOTA. DDPM 의 noise prediction + Langevin sampling 을 RNN conditioning 으로 확장 → 6 datasets 중 5개 SOTA. ' +
+                 'Diffusion 시계열 forecasting 의 시초 — 후속 paper (CSDI, TMDM, Diffusion-TS, TSDiff) 의 출발점. ' +
+                 'ProTran (NeurIPS 2021) 의 Table 1 baseline 으로 등장 — 2021 NeurIPS/ICML 의 시계열 Cambrian explosion 의 핵심 paper.'
+      },
+      tour: [
+        { num: '01–03', ttl: '문제와 동기',  desc: '7개 사전 개념 (시계열 / multivariate / probabilistic / DDPM / Langevin dynamics / EBM / CRPS) — 일상 비유 (일기예보, 사진 복원, 언덕 위 공 굴리기, 에너지 표면).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-26_rasul-timegrad-diffusion-time-series') + '#sec-03',  text: '동기 보기 →' },
+        { num: '04',    ttl: 'DDPM 배경 (Eq 1-7)',  desc: 'Diffusion probabilistic model 의 정확한 수식. Forward (fixed Markov chain) + Reverse (learned). Eq 3 의 closed-form sampling + Eq 7 의 noise prediction loss (NCSN-equivalent).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-26_rasul-timegrad-diffusion-time-series') + '#sec-04',  text: 'Diffusion 이론 →' },
+        { num: '05a–c', ttl: 'TimeGrad architecture',  desc: 'Multivariate setup (Eq 8) + RNN + conditional diffusion (Eq 9, 10) + scaling/covariates. Fig 1 schematic + Fig 2 network (8 residual blocks, Gated Activation, dilated Conv1d).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-26_rasul-timegrad-diffusion-time-series') + '#sec-05a',  text: '모델 해부 →' },
+        { num: '06',    ttl: 'Algorithms',  desc: 'Algorithm 1 (training): random $n$ + random $\\epsilon$ → MSE. Algorithm 2 (sampling): annealed Langevin $N=100$ reverse loop. Training vs inference 의 부담 비대칭.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-26_rasul-timegrad-diffusion-time-series') + '#sec-06',  text: 'Algorithms →' },
+        { num: '07–09', ttl: '실험 (Table 2 + Figs)',  desc: '6 datasets × 11 baselines CRPS_sum. TimeGrad 5/6 SOTA — Taxi 36%, Wikipedia 23%, Traffic 21% 개선. N ablation (Fig 3): N≈100 sweet spot. Traffic predictions (Fig 4): well-calibrated intervals.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-26_rasul-timegrad-diffusion-time-series') + '#sec-07',  text: '실증 →' },
+        { num: '13',    ttl: '메타 통찰 12개',  desc: 'General tool > Domain-specific variation / EBM 의 functional 자유 / Image → Time Series paradigm transfer / OOD detection 의 likelihood paradox / High-D dataset 의 diffusion 우월성.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-26_rasul-timegrad-diffusion-time-series') + '#sec-13',  text: '통찰 →' }
+      ],
+      preview: {
+        title: '맛보기 — TimeGrad architecture flow',
+        subtitle: 'RNN + Diffusion 의 우아한 결합. ' +
+                  '왼쪽: 시계열 history $\\mathbf{x}^0_{1:t-1}$ + covariates → RNN (LSTM 2-layer, hidden=40) → $\\mathbf{h}_{t-1}$. ' +
+                  '오른쪽: $\\mathbf{x}^N_t \\sim \\mathcal{N}(0, \\mathbf{I})$ → N=100 reverse Langevin loop → $\\mathbf{x}^0_t$ (clean prediction). ' +
+                  '★ Image domain 의 DDPM 의 시계열 directly transfer.',
+        vizType: 'pt-graphical-models'
+      }
+    },
     '2026-05-19_nie-patchtst-time-series-64-words': {
       eyebrow: 'Paper Deep Dive · 시계열 × Transformer × Patching × Channel-indep',
       hero: '시계열을 64개 단어로 — Vanilla Transformer + Patching + Channel-independence = SOTA.',
