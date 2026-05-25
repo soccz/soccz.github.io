@@ -380,12 +380,12 @@
 <section id="summary" class="compact"><div class="container fade-in">
   <div class="section-label">Executive Summary</div>
   <h2 class="section-title">핵심 결과</h2>
-  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발해 크로스섹션 랭킹으로 전환 → 3개 페이즈(연구·운영 재설계·비용 차감 결산)의 결과. 아래 4개는 <strong>2026-05-25 시점 live 수치</strong> (수수료 차감 후 net 기준).</p>
+  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발해 크로스섹션 랭킹으로 전환 → 3개 페이즈(연구·운영 재설계·비용 차감 결산)의 결과. 아래 4개는 <strong>live 수치</strong> (수수료 차감 후 net 기준) — 매 6h 자동 갱신, <span data-live-asof>2026-05-25 기준</span>.</p>
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=20.1 · n=281<br>오늘 promoted</div></div>
-    <div class="metric-card"><span class="metric-val pos">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=16.9 · n=280<br>이전 모델 유지</div></div>
-    <div class="metric-card"><span class="metric-val neg">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=625 · win 52.6%<br>after 0.30% fees</div></div>
-    <div class="metric-card"><span class="metric-val pos">+0.10%</span><div class="metric-label">LONG 30d net</div><div class="metric-sub">n=285 · win 50.9%<br>after 0.20% fees</div></div>
+    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.short_6h.holdout" data-live-fmt="signed-3">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.short_6h.holdout_tstat" data-live-fmt="fixed-1">20.1</span> · n=<span data-live-key="ic.short_6h.holdout_n" data-live-fmt="int">281</span><br><span data-live-key="ic.short_6h.gate" data-live-fmt="text">OK</span></div></div>
+    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.long_12h.holdout" data-live-fmt="signed-3">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.long_12h.holdout_tstat" data-live-fmt="fixed-1">16.9</span> · n=<span data-live-key="ic.long_12h.holdout_n" data-live-fmt="int">280</span><br><span data-live-key="ic.long_12h.gate" data-live-fmt="text">OK</span></div></div>
+    <div class="metric-card"><span class="metric-val neg" data-live-key="realized_30d.SHORT.net_pct" data-live-fmt="signed-pct-2">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.SHORT.n" data-live-fmt="int">625</span> · win <span data-live-key="realized_30d.SHORT.win_pct" data-live-fmt="fixed-1">52.6</span>%<br>after <span data-live-key="realized_30d.SHORT.cost_pct" data-live-fmt="fixed-2">0.30</span>% fees</div></div>
+    <div class="metric-card"><span class="metric-val pos" data-live-key="realized_30d.WATCH_LONG.net_pct" data-live-fmt="signed-pct-2">+0.10%</span><div class="metric-label">LONG 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.WATCH_LONG.n" data-live-fmt="int">285</span> · win <span data-live-key="realized_30d.WATCH_LONG.win_pct" data-live-fmt="fixed-1">50.9</span>%<br>after <span data-live-key="realized_30d.WATCH_LONG.cost_pct" data-live-fmt="fixed-2">0.20</span>% fees</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -1354,10 +1354,10 @@
   </div>
 
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=20.1 · n=281<br>2026-05-25 promoted</div></div>
-    <div class="metric-card"><span class="metric-val pos">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=16.9 · n=280<br>이전 모델 유지</div></div>
-    <div class="metric-card"><span class="metric-val neg">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=625 · win 52.6%<br>gross +0.02% · fees 0.30%</div></div>
-    <div class="metric-card"><span class="metric-val pos">+0.10%</span><div class="metric-label">WATCH_LONG 30d net</div><div class="metric-sub">n=285 · win 50.9%<br>gross +0.30% · fees 0.20%</div></div>
+    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.short_6h.holdout" data-live-fmt="signed-3">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.short_6h.holdout_tstat" data-live-fmt="fixed-1">20.1</span> · n=<span data-live-key="ic.short_6h.holdout_n" data-live-fmt="int">281</span><br>last <span data-live-key="model_age_days.xsec_6h.pkl" data-live-fmt="fixed-1">0</span>d</div></div>
+    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.long_12h.holdout" data-live-fmt="signed-3">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.long_12h.holdout_tstat" data-live-fmt="fixed-1">16.9</span> · n=<span data-live-key="ic.long_12h.holdout_n" data-live-fmt="int">280</span><br>last <span data-live-key="model_age_days.xsec_12h.pkl" data-live-fmt="fixed-1">7</span>d</div></div>
+    <div class="metric-card"><span class="metric-val neg" data-live-key="realized_30d.SHORT.net_pct" data-live-fmt="signed-pct-2">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.SHORT.n" data-live-fmt="int">625</span> · gross <span data-live-key="realized_30d.SHORT.gross_pct" data-live-fmt="signed-pct-2">+0.02%</span><br>fees 0.30%</div></div>
+    <div class="metric-card"><span class="metric-val pos" data-live-key="realized_30d.WATCH_LONG.net_pct" data-live-fmt="signed-pct-2">+0.10%</span><div class="metric-label">WATCH_LONG 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.WATCH_LONG.n" data-live-fmt="int">285</span> · gross <span data-live-key="realized_30d.WATCH_LONG.gross_pct" data-live-fmt="signed-pct-2">+0.30%</span><br>fees 0.20%</div></div>
   </div>
 
   <div class="callout">
@@ -1388,6 +1388,59 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ─────────────────────────────────────────────────────────────
+ * Auto-refresh: pull plaintext public_summary.json on load and
+ * inject into any element marked with data-live-key. Headline
+ * numbers (Executive Summary, Current Status) stay fresh after
+ * every 6h fetch_and_rank run without manual editing.
+ *
+ * Format hints:
+ *   signed-3     →  "+0.152"  (3 decimals, leading sign)
+ *   signed-pct-2 →  "-0.28%"  (2 decimals, % suffix, leading sign)
+ *   fixed-1      →  "20.1"
+ *   fixed-2      →  "0.30"
+ *   int          →  "281"
+ *   text         →  raw string
+ *
+ * Fails silent: if fetch errors or a key is missing, the hardcoded
+ * fallback stays.
+ * ───────────────────────────────────────────────────────────── */
+(async function liveInject() {
+  const lookup = (obj, path) => path.split('.').reduce((o, k) => o == null ? null : o[k], obj);
+  const fmt = (v, hint) => {
+    if (v == null || (typeof v === 'number' && !isFinite(v))) return null;
+    switch (hint) {
+      case 'signed-3':     return (v > 0 ? '+' : '') + Number(v).toFixed(3);
+      case 'signed-pct-2': return (v > 0 ? '+' : '') + Number(v).toFixed(2) + '%';
+      case 'fixed-1':      return Number(v).toFixed(1);
+      case 'fixed-2':      return Number(v).toFixed(2);
+      case 'int':          return String(Math.round(Number(v)));
+      case 'text':         return String(v);
+      default:             return String(v);
+    }
+  };
+  try {
+    const r = await fetch('public_summary.json?t=' + Date.now(), { cache: 'no-cache' });
+    if (!r.ok) return;
+    const data = await r.json();
+    document.querySelectorAll('[data-live-key]').forEach(el => {
+      const key = el.dataset.liveKey;
+      const hint = el.dataset.liveFmt || 'fixed-2';
+      const val = lookup(data, key);
+      const text = fmt(val, hint);
+      if (text != null) el.textContent = text;
+    });
+    if (data.asof) {
+      const date = new Date(data.asof);
+      const kst = new Date(date.getTime() + 9 * 3600 * 1000);
+      const stamp = kst.toISOString().slice(0, 16).replace('T', ' ') + ' KST';
+      document.querySelectorAll('[data-live-asof]').forEach(el => {
+        el.textContent = stamp + ' 기준';
+      });
+    }
+  } catch (_) { /* keep hardcoded fallback */ }
+})();
 
 // Hero countup animation
 function animateCountup(el) {

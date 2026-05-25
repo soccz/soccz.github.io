@@ -312,6 +312,7 @@
       <li><a href="#distribution">distribution</a></li>
       <li><a href="#monthly">monthly</a></li>
       <li><a href="#rolling">rolling</a></li>
+      <li><a href="#shadow">shadow</a></li>
       <li><a href="#bestworst">best/worst</a></li>
       <li><a href="#reliability">reliability</a></li>
       <li><a href="#architecture">architecture</a></li>
@@ -685,6 +686,34 @@
         <div class="viz-title">LONG (h=12)</div>
         <div class="viz-sub" id="rollLongMeta">—</div>
         <svg class="roll-svg" id="rollLongSvg" viewBox="0 0 800 180"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Shadow strategy comparison: current vs long_short5 (live head-to-head) -->
+<section id="shadow" class="compact">
+  <div class="container">
+    <div class="section-label">live strategy shadow</div>
+    <h2 class="section-title">현재 운영 vs long_short5 후보 — net 누적 비교</h2>
+    <p class="section-desc">
+      portfolio_experiment 60d 백테스트에서 long_short5가 SHORT-only보다 우월(t=+1.62). 단, 통계적 유의(t&gt;2) 미달이라
+      <strong>운영 스위치 대신 live shadow로 평행 추적</strong>. 같은 ledger 두 가지 aggregation 룰만 다름 — 새 paper 거래 없음.
+    </p>
+    <div class="card">
+      <div class="card-meta" id="shadowMeta"></div>
+      <svg class="cum-svg" id="shadowSvg" preserveAspectRatio="none"></svg>
+      <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem;">
+        <div style="padding: 0.8rem 1rem; background: var(--bg-secondary); border-radius: 6px; border-left: 3px solid var(--red);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">current SHORT-only (운영)</div>
+          <div id="shadowCurStats" style="font-family:'JetBrains Mono', monospace; font-size: 0.82rem; margin-top: 0.3rem; line-height: 1.7;">—</div>
+        </div>
+        <div style="padding: 0.8rem 1rem; background: var(--bg-secondary); border-radius: 6px; border-left: 3px solid var(--blue);">
+          <div style="font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">shadow long_short5 (후보)</div>
+          <div id="shadowShaStats" style="font-family:'JetBrains Mono', monospace; font-size: 0.82rem; margin-top: 0.3rem; line-height: 1.7;">—</div>
+        </div>
       </div>
     </div>
   </div>
@@ -2087,6 +2116,76 @@ function _renderReliability(svgId, metaId, points) {
   }
 }
 
+/* ───────── Shadow strategy comparison (SHORT-only vs long_short5) ───────── */
+function renderShadowCompare(accuracy) {
+  const sc = accuracy.shadow_strategy_compare || {};
+  const cur = sc.current_short_only || [];
+  const sha = sc.shadow_long_short5 || [];
+  const summary = sc.summary || {};
+  const svg = document.getElementById('shadowSvg');
+  const metaEl = document.getElementById('shadowMeta');
+  const curEl = document.getElementById('shadowCurStats');
+  const shaEl = document.getElementById('shadowShaStats');
+  if (!svg) return;
+  if (!cur.length && !sha.length) {
+    svg.innerHTML = '<text x="50%" y="50%" text-anchor="middle">표본 없음</text>';
+    return;
+  }
+
+  const { W, H } = _svgDims(svg, 1000, 200);
+  const PL = 44, PR = 18, PT = 12, PB = 26;
+  const dates = sha.map(r => r.date);
+  const allCum = [...cur.map(r => r.cum_net), ...sha.map(r => r.cum_net), 0];
+  const yMin = Math.min(...allCum);
+  const yMax = Math.max(...allCum);
+  const yPad = Math.max(0.5, (yMax - yMin) * 0.08);
+  const yLo = yMin - yPad, yHi = yMax + yPad;
+  const x = i => PL + (W - PL - PR) * (i / Math.max(1, dates.length - 1));
+  const y = v => PT + (H - PT - PB) * (1 - (v - yLo) / (yHi - yLo || 1));
+
+  const path = (rows) =>
+    rows.map((r, i) => `${i === 0 ? 'M' : 'L'} ${x(dates.indexOf(r.date)).toFixed(2)} ${y(r.cum_net).toFixed(2)}`).join(' ');
+
+  let grid = '';
+  for (let i = 0; i <= 4; i++) {
+    const v = yLo + (yHi - yLo) * (i / 4);
+    const yy = y(v);
+    grid += `<line class="grid" x1="${PL}" x2="${W - PR}" y1="${yy.toFixed(1)}" y2="${yy.toFixed(1)}"/>`;
+    grid += `<text x="${PL - 4}" y="${(yy + 3).toFixed(1)}" text-anchor="end">${v.toFixed(1)}%</text>`;
+  }
+  const zeroY = y(0);
+  const zeroLine = (yLo < 0 && yHi > 0)
+    ? `<line class="zero" x1="${PL}" x2="${W - PR}" y1="${zeroY.toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="${COLORS.text}" stroke-dasharray="3,3" stroke-width="1"/>`
+    : '';
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = `
+    ${grid}
+    ${zeroLine}
+    <path d="${path(cur)}" class="line" stroke="${COLORS.short}" fill="none" stroke-width="1.8"/>
+    <path d="${path(sha)}" class="line" stroke="${COLORS.long}"  fill="none" stroke-width="1.8"/>
+    <text x="${W - PR}" y="${PT + 12}" text-anchor="end" style="font-size:9px; fill: ${COLORS.short}">— SHORT-only (운영)</text>
+    <text x="${W - PR}" y="${PT + 24}" text-anchor="end" style="font-size:9px; fill: ${COLORS.long}">— long_short5 (shadow)</text>
+  `;
+
+  const fmtSummary = (s, color) => {
+    if (!s || !s.n_days) return '<span style="color:var(--text-muted)">no data</span>';
+    const sign = v => v == null ? '—' : (v > 0 ? '+' : '') + v.toFixed(2);
+    return `cum net <strong style="color:${color}">${sign(s.final_cum_net)}%</strong> · ` +
+      `daily ${sign(s.daily_mean_net)}% · ` +
+      `MDD ${sign(s.max_drawdown_net)}% · ` +
+      `sharpe ${s.daily_sharpe_net != null ? s.daily_sharpe_net.toFixed(2) : '—'} · ` +
+      `${s.n_days}d`;
+  };
+  if (curEl) curEl.innerHTML = fmtSummary(summary.current_short_only, COLORS.short);
+  if (shaEl) shaEl.innerHTML = fmtSummary(summary.shadow_long_short5, COLORS.long);
+  if (metaEl) {
+    const diff = (summary.shadow_long_short5?.final_cum_net ?? 0) - (summary.current_short_only?.final_cum_net ?? 0);
+    const sign = diff >= 0 ? '+' : '';
+    metaEl.innerHTML = `<span style="font-family:'JetBrains Mono', monospace;font-size:0.78rem;color:var(--text-muted)">spread: ${sign}${diff.toFixed(2)}%p (shadow − current). ${dates.length}d window.</span>`;
+  }
+}
+
 function renderReliability(accuracy) {
   const rel = accuracy.calibration_reliability || {};
   _renderReliability('reliShortSvg', 'reliShortMeta', rel.short_6h || []);
@@ -2119,6 +2218,7 @@ async function boot() {
   renderDistributions(accuracy);
   renderMonthlyHeatmaps(accuracy);
   renderRolling(accuracy);
+  renderShadowCompare(accuracy);
   renderBestWorst(accuracy);
   renderReliability(accuracy);
   renderHistory(history);

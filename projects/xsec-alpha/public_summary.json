@@ -1,0 +1,49 @@
+{
+  "asof": "2026-05-25T16:04:54+00:00",
+  "ic": {
+    "short_6h": {
+      "live_30d_mean": 0.188963,
+      "holdout": 0.1519,
+      "holdout_tstat": 20.11,
+      "holdout_n": 281,
+      "gate": "OK"
+    },
+    "long_12h": {
+      "live_30d_mean": 0.157263,
+      "holdout": 0.1258,
+      "holdout_tstat": 16.88,
+      "holdout_n": 280,
+      "gate": "OK"
+    }
+  },
+  "realized_30d": {
+    "SHORT": {
+      "n": 625,
+      "win_pct": 52.6,
+      "gross_pct": 0.0201,
+      "net_pct": -0.2799,
+      "cost_pct": 0.3,
+      "tstat_clustered": 0.073,
+      "sharpe": 0.003
+    },
+    "WATCH_LONG": {
+      "n": 285,
+      "win_pct": 50.9,
+      "gross_pct": 0.3012,
+      "net_pct": 0.1012,
+      "cost_pct": 0.2,
+      "tstat_clustered": 1.046,
+      "sharpe": 0.075
+    }
+  },
+  "model_age_days": {
+    "xsec_6h.pkl": 0.07,
+    "xsec_12h.pkl": 0.83
+  },
+  "cost_assumptions": {
+    "SHORT": 0.3,
+    "LONG": 0.2,
+    "WATCH_LONG": 0.2
+  },
+  "_note": "public sibling of encrypted dashboard data. Aggregates only — no individual picks."
+}
