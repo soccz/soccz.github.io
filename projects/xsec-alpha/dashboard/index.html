@@ -214,14 +214,20 @@
     .bw-block .bw-title { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
     .bw-block .bw-title.win { color: var(--green); }
     .bw-block .bw-title.loss { color: var(--red); }
-    .bw-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; margin-bottom: 0.5rem; min-width: 0; overflow: hidden; }
+    .bw-card { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem 0.7rem 1rem; margin-bottom: 0.5rem; min-width: 0; overflow: hidden; transition: transform 0.18s, box-shadow 0.18s; }
+    .bw-card:hover { transform: translateY(-1px); box-shadow: 0 4px 12px -4px rgba(0,0,0,0.1); }
     .bw-card .bw-head { display: flex; gap: 0.6rem; align-items: baseline; margin-bottom: 0.25rem; flex-wrap: wrap; }
-    .bw-card .bw-coin { font-weight: 700; color: var(--text-primary); font-size: 0.88rem; }
+    .bw-card .bw-coin { font-weight: 700; color: var(--text-primary); font-size: 0.95rem; letter-spacing: -0.01em; }
     .bw-card .bw-date { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
-    .bw-card .bw-pnl { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.92rem; margin-left: auto; flex-shrink: 0; }
+    .bw-card .bw-pnl { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 1.25rem; margin-left: auto; flex-shrink: 0; letter-spacing: -0.02em; }
     .bw-card .bw-pnl.pos { color: var(--green); }
     .bw-card .bw-pnl.neg { color: var(--red); }
-    .bw-card .bw-meta { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; line-height: 1.55; word-break: break-word; }
+    .bw-card .bw-meta { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; line-height: 1.55; word-break: break-word; margin-bottom: 0.5rem; }
+    /* magnitude bar showing this trade's |return%| relative to max in the column */
+    .bw-card .bw-bar-track { position: relative; height: 4px; background: var(--bg-secondary); border-radius: 2px; overflow: hidden; }
+    .bw-card .bw-bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; transition: width 0.4s ease-out; }
+    .bw-card .bw-bar.pos { background: linear-gradient(90deg, rgba(22,163,74,0.4), var(--green)); }
+    .bw-card .bw-bar.neg { background: linear-gradient(90deg, rgba(220,38,38,0.4), var(--red)); }
 
     /* Monthly heatmap (year × month) */
     .mh-section { display: grid; gap: 1.2rem; }
@@ -431,10 +437,7 @@
     <div class="section-label">realized — net of fees</div>
     <h2 class="section-title">실현 손익이 0과 구분되는가</h2>
     <p class="section-desc">
-      <strong>중요한 지표 먼저</strong>: 30일 동안 paper trade 원장(<code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">recommendation_ledger.csv</code>)에 기록된
-      모든 entry→exit 가격 차이 → 비용 차감 후 평균 / Sharpe / t-stat. 비용은 SHORT 0.13% (Bitget perp 0.06%×2 + 평균 funding 0.01%/6h),
-      WATCH_LONG 0.10% (Upbit spot 0.05%×2). <strong>t &lt; 1.0이면 0과 구분 안 됨</strong> — 더 많은 표본이 필요한 상태.
-      Sharpe는 per-trade 기준 (annualize 안 함, 표본이 IID 아닌 cross-sectional).
+      30일 paper ledger의 entry→exit 차이를 <strong>비용 차감 후</strong> 평균/Sharpe/t-stat으로 요약. SHORT 0.13% / WATCH_LONG 0.10% 수수료 가정. <strong>t&lt;1.0이면 0과 구분 안 됨</strong>.
     </p>
     <div class="two-col" id="realizedHeroGrid"></div>
   </div>
@@ -448,9 +451,7 @@
     <div class="section-label">holdout vs live</div>
     <h2 class="section-title">학습 시 holdout IC와 live IC 일치 검사</h2>
     <p class="section-desc">
-      Phase 3 게이트(<code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">IC_live ≥ IC_holdout − 0.03</code>) 만족 여부.
-      live IC가 holdout보다 <em>높으면</em> leakage / look-ahead 가능성, <em>낮으면</em> 신호 약화 또는 distribution shift.
-      holdout IC는 학습 시점(2026-04-25 F1)에 봉인된 값.
+      <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">IC_live ≥ IC_holdout − 0.03</code> 통과 여부. live가 더 높으면 leakage 의심, 더 낮으면 distribution shift.
     </p>
     <div class="card">
       <div class="scroll-x"><table class="data" id="holdoutTable"></table></div>
@@ -467,9 +468,7 @@
     <div class="section-label">latest picks</div>
     <h2 class="section-title">최근 추천 — SHORT 5 / WATCH LONG 5</h2>
     <p class="section-desc">
-      <strong>SHORT</strong>는 Bitget USDT-perp tradable 종목으로 5개. <strong>WATCH LONG</strong>은 Upbit 현물 또는 Bitget perp long으로 진입 가능한 5개 — 운영자가 수동 매매 기준이라 둘 다 actionable.
-      <code style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; background:var(--bg-secondary); padding:0.1rem 0.4rem; border-radius:3px">actionable=False</code>는 게이트가 watch-only로 전환된 상태(IC FREEZE 등).
-      "WATCH" 라벨은 자동 basket 실행이 SHORT 쪽에만 연결돼있다는 의미이지 신호 품질이 약하다는 뜻이 아님 — 12h 2σ+ 적중 70.6%로 6h 64.6%보다 오히려 강함.
+      SHORT 5 = Bitget USDT-perp 실행. WATCH LONG 5 = 수동 검토용 (자동 실행 미연결, 신호 품질은 SHORT 이상).
     </p>
     <div class="two-col">
       <div class="card">
@@ -494,9 +493,7 @@
     <div class="section-label">information coefficient</div>
     <h2 class="section-title">IC 시계열 — SHORT h6 · LONG h12</h2>
     <p class="section-desc">
-      매 6h(SHORT) / 12h(LONG) rebalance 직후 spearman(score, realized_return) 측정.
-      IC &gt; 0.05 = 신호 존재, &gt; 0.10 = 실용적, t-stat &gt; 2.0 = 통계 유의.
-      게이트는 last-3 IC 모두 &lt; 0.05면 <span class="gate-pill gate-FREEZE">FREEZE</span> (해당 사이드 watch-only로 강제 전환).
+      매 리밸 직후 spearman(score, realized). <strong>&gt;0.05=신호, &gt;0.10=실용, t&gt;2=유의</strong>. last-3 모두 &lt;0.05면 자동 <span class="gate-pill gate-FREEZE">FREEZE</span>.
     </p>
     <div class="card">
       <div class="chart-wrap"><canvas id="icChart"></canvas></div>
@@ -513,8 +510,7 @@
     <div class="section-label">realized</div>
     <h2 class="section-title">실현 손익 — recommendation_ledger 기준</h2>
     <p class="section-desc">
-      IC가 좋아도 실현 손익이 양수가 아닐 수 있다 (수수료, slippage, funding). 아래는 <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">recommendation_ledger.csv</code>에 기록된
-      paper trade의 entry → exit 차이로 계산한 순수익 (수수료/funding 미반영). SHORT는 -1 곱해서 short-side 실현.
+      entry→exit 가격차로 계산한 paper PnL (수수료 미반영, IC와 별개). SHORT는 -1 곱해서 short-side 실현으로 환산.
     </p>
     <div class="two-col">
       <div class="card">
@@ -537,8 +533,7 @@
     <div class="section-label">factor diagnostics</div>
     <h2 class="section-title">팩터 drift — 24h vs 7d IC</h2>
     <p class="section-desc">
-      각 팩터의 7일 평균 IC 대비 최근 24h IC 낙폭. <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">drop_pct &gt; 50%</code> 또는 부호 반전 시 WARN.
-      drift가 누적되면 다음 retrain 후 가중치 재조정 필요.
+      7d 평균 IC 대비 24h 낙폭. <strong>drop&gt;50% 또는 부호 반전</strong> 시 WARN — 다음 retrain에서 가중치 자동 재조정.
     </p>
     <div class="card">
       <div class="card-meta" id="driftMeta"></div>
@@ -555,8 +550,7 @@
     <div class="section-label">calibration</div>
     <h2 class="section-title">σ-bucket calibration</h2>
     <p class="section-desc">
-      각 사이드의 score 표준편차(σ) 구간별 적중률과 평균 수익. 우리가 관심있는 건 <strong>2σ 이상 구간의 hit_rate &gt; 60%</strong>로 진입.
-      historical holdout에서 측정. 라이브 picks가 어느 σ 구간에 떨어지는지를 actionable 판정 기준으로 사용.
+      σ 구간별 historical hit rate. <strong>2σ+에서 60%+이면 가치 있음</strong>. 라이브 pick의 σ가 어디 떨어지는지 actionable 판정 기준.
     </p>
     <div class="two-col">
       <div class="card">
@@ -579,8 +573,7 @@
     <div class="section-label">cumulative pnl</div>
     <h2 class="section-title">사이드별 누적 PnL — daily mean of pick returns</h2>
     <p class="section-desc">
-      매일 그날 마감된 picks의 평균 realized %를 누적. peak 대비 underwater(drawdown)도 같이 그려져
-      <strong>최악 구간이 얼마나 깊고 길었는지</strong>가 한 눈에 보임. 수수료 후 net이 아니라 pre-fee gross.
+      일별 평균 realized %를 누적. underwater 곡선이 <strong>최악 drawdown 깊이/길이</strong>를 즉시 보여줌. pre-fee gross.
     </p>
     <div class="viz-split">
       <div class="viz-card">
@@ -605,8 +598,7 @@
     <div class="section-label">daily heatmap</div>
     <h2 class="section-title">일별 평균 수익 — heatmap (week × weekday)</h2>
     <p class="section-desc">
-      각 셀은 그 날의 picks 평균 realized %. 녹색=양수 / 적색=음수, 절대값 클수록 진하다.
-      week 단위로 묶어 <strong>요일별 / 주차별 패턴</strong>이 드러남. 표본 없는 셀은 비어 있음.
+      셀=일별 picks 평균 realized %. 녹/적 색 강도로 크기 표시. <strong>요일별 패턴</strong>이 보임.
     </p>
     <div class="viz-split">
       <div class="viz-card">
@@ -631,8 +623,7 @@
     <div class="section-label">return distribution</div>
     <h2 class="section-title">개별 trade 수익률 분포 — histogram</h2>
     <p class="section-desc">
-      모든 closed picks의 realized % 히스토그램. 가운데 mean / median ·
-      양쪽 wing의 두께가 fat tail을 보여준다. <strong>positive skew</strong>면 가끔 큰 win이 손실을 상쇄하는 구조.
+      Realized % 히스토그램. <strong>positive skew</strong> = 큰 win이 손실 상쇄. wing 두께 = fat tail.
     </p>
     <div class="viz-split">
       <div class="viz-card">
@@ -659,8 +650,7 @@
     <div class="section-label">monthly returns</div>
     <h2 class="section-title">월별 합산 수익 — heatmap (year × month)</h2>
     <p class="section-desc">
-      institutional factsheet 표준. 각 셀 = 그 달의 daily mean 합 (%). 녹색 = 양수 / 적색 = 음수, 절대값 클수록 진하다.
-      현재는 표본이 짧아 cell 수가 적지만, 매주 retrain마다 자동으로 채워짐.
+      institutional factsheet 스타일. 셀=그 달 daily mean 합 (%). 매주 retrain마다 자동 누적.
     </p>
     <div class="mh-section">
       <div class="mh-side">
@@ -683,8 +673,7 @@
     <div class="section-label">rolling stats</div>
     <h2 class="section-title">7일 rolling — 평균 수익 · 적중률</h2>
     <p class="section-desc">
-      매일의 picks 평균을 7일 weighted-by-trades 윈도우로 smoothing. <strong>구조적 drift 감지용</strong> — 최근 일주일 수치가 장기 평균과 벌어지면 IC gate 발동 전에 먼저 보임.
-      좌축 = mean % · 우축 = hit rate %.
+      7d weighted-by-trades smoothing. <strong>구조적 drift 조기 감지</strong> — IC gate 발동 전에 먼저 보임. 좌축 mean% · 우축 hit%.
     </p>
     <div class="viz-split">
       <div class="viz-card">
@@ -709,8 +698,7 @@
     <div class="section-label">best · worst trades</div>
     <h2 class="section-title">최고 / 최악 trade — narrative</h2>
     <p class="section-desc">
-      realized % 기준 top 5 win / top 5 loss. <em>어떤 코인이 어떤 시점에 어디로 갔는가</em>의 case-study —
-      지표를 모두 더해도 결국 가장 기억에 남는 건 episode. 모델의 fat tail 양쪽 어떤 코인이 차지했는지 확인 가능.
+      Top 5 win / top 5 loss. 모델의 <strong>fat tail 양쪽</strong>이 어떤 코인/시점이었는지 case-study.
     </p>
     <div style="display:grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 1.4rem;">
       <div>
@@ -751,8 +739,7 @@
     <div class="section-label">reliability</div>
     <h2 class="section-title">σ-bucket reliability diagram — 예측 강도 vs 실제 적중률</h2>
     <p class="section-desc">
-      Quantopian 표준 reliability diagram의 σ-bucket 변형. x축 = predicted σ midpoint · y축 = empirical hit rate.
-      <strong>위로 갈수록 예측이 강할수록 더 잘 맞는 모델</strong>. 점 크기 = bucket 표본 수. 위 calibration 표를 시각화.
+      x=predicted σ · y=empirical hit rate. <strong>대각선 위로 올라갈수록 well-calibrated</strong>. 점 크기 = 표본 수.
     </p>
     <div class="viz-split">
       <div class="viz-card">
@@ -1128,6 +1115,23 @@ function fmtIcTail(arr) {
 }
 
 /* ────────── Mega-stats (first-fold visual punch) ────────── */
+function _countUp(el, target, opts = {}) {
+  if (target == null || isNaN(target)) return;
+  const dur  = opts.dur ?? 700;     // ms
+  const dp   = opts.dp ?? 2;        // decimal places
+  const sign = opts.sign ?? '';
+  const t0 = performance.now();
+  const ease = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
+  function step(now) {
+    const t = Math.min(1, (now - t0) / dur);
+    const v = target * ease(t);
+    el.textContent = `${sign}${v.toFixed(dp)}`;
+    if (t < 1) requestAnimationFrame(step);
+    else      el.textContent = `${target > 0 ? '+' : (target < 0 ? '-' : '')}${Math.abs(target).toFixed(dp)}`;
+  }
+  requestAnimationFrame(step);
+}
+
 function _megaSetVal(elId, valPct, unit) {
   const el = document.getElementById(elId);
   if (!el) return;
@@ -1137,10 +1141,12 @@ function _megaSetVal(elId, valPct, unit) {
   }
   const arrow = valPct > 0 ? '↑' : (valPct < 0 ? '↓' : '·');
   const cls = valPct > 0 ? 'pos' : (valPct < 0 ? 'neg' : 'muted');
-  const sign = valPct > 0 ? '+' : '';
   el.classList.remove('pos','neg','muted');
   el.classList.add(cls);
-  el.innerHTML = `<span class="mega-arrow ${cls}">${arrow}</span><span class="num">${sign}${Number(valPct).toFixed(2)}</span><span class="unit">${unit||''}</span>`;
+  el.innerHTML = `<span class="mega-arrow ${cls}">${arrow}</span><span class="num">0.00</span><span class="unit">${unit||''}</span>`;
+  // Animate the number from 0 to target
+  const numEl = el.querySelector('.num');
+  if (numEl) _countUp(numEl, valPct);
 }
 
 function _megaFootRow(items) {
@@ -1971,12 +1977,15 @@ function renderRolling(accuracy) {
 }
 
 /* ───────── Best / Worst trade narrative cards ───────── */
-function _bwCard(t) {
+function _bwCard(t, maxAbsPct) {
   const rp = (t.realized_pct == null || isNaN(t.realized_pct)) ? null : Number(t.realized_pct);
   const cls = rp == null ? 'muted' : (rp > 0 ? 'pos' : 'neg');
   const date = (t.entry_time || '').slice(0, 16).replace('T', ' ');
   const px = (p) => (p == null || isNaN(p)) ? '—' : fmtKrw(p);
   const pnlText = rp == null ? '—' : `${rp >= 0 ? '+' : ''}${rp.toFixed(2)}%`;
+  const widthPct = (rp != null && maxAbsPct > 0)
+    ? Math.min(100, (Math.abs(rp) / maxAbsPct) * 100)
+    : 0;
   return `
     <div class="bw-card">
       <div class="bw-head">
@@ -1985,14 +1994,21 @@ function _bwCard(t) {
         <span class="bw-pnl ${cls}">${pnlText}</span>
       </div>
       <div class="bw-meta">
-        h=${t.horizon_h ?? '?'}h · entry ${px(t.entry_price)}원 → exit ${px(t.exit_price)}원
+        h=${t.horizon_h ?? '?'}h · ${px(t.entry_price)}원 → ${px(t.exit_price)}원
         ${t.actionable ? ' · <span style="color:var(--green)">live</span>' : ' · <span style="color:var(--text-muted)">watch</span>'}
+      </div>
+      <div class="bw-bar-track">
+        <div class="bw-bar ${cls}" style="width: ${widthPct.toFixed(1)}%"></div>
       </div>
     </div>`;
 }
 
 function renderBestWorst(accuracy) {
   const bw = accuracy.best_worst || {};
+  const maxAbs = (list) => list.reduce((m, t) => {
+    const v = (t && t.realized_pct != null && !isNaN(t.realized_pct)) ? Math.abs(t.realized_pct) : 0;
+    return v > m ? v : m;
+  }, 0);
   const fill = (id, list) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -2000,7 +2016,8 @@ function renderBestWorst(accuracy) {
       el.innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;">표본 없음</div>';
       return;
     }
-    el.innerHTML = list.map(_bwCard).join('');
+    const m = maxAbs(list);
+    el.innerHTML = list.map(t => _bwCard(t, m)).join('');
   };
   fill('bwShortBest', bw.SHORT?.best || []);
   fill('bwShortWorst', bw.SHORT?.worst || []);
