@@ -1,7 +1,145 @@
 {
-  "generated_at": "2026-05-25T16:03:26",
-  "count": 24,
+  "generated_at": "2026-05-25T16:55:37",
+  "count": 25,
   "papers": [
+    {
+      "slug": "2026-05-26_rasul-timegrad-diffusion-time-series",
+      "date": "2026-05-26",
+      "weekday": "화",
+      "bucket": "인접",
+      "title": "Autoregressive Denoising Diffusion Models for Multivariate Probabilistic Time Series Forecasting",
+      "title_ko": "TimeGrad — 자기회귀 노이즈 제거 확산 모델로 다변량 확률적 시계열 예측",
+      "authors": "Kashif Rasul¹, Calvin Seward¹, Ingmar Schuster¹, Roland Vollgraf¹",
+      "venue": "ICML 2021 (Proceedings of the 38th International Conference on Machine Learning)",
+      "identifier": "arXiv:2101.12072v2",
+      "code": "",
+      "data": "",
+      "tags": [
+        "time-series-forecasting",
+        "diffusion-model",
+        "probabilistic-forecasting",
+        "multivariate",
+        "DDPM",
+        "Langevin-dynamics",
+        "energy-based-model",
+        "autoregressive",
+        "RNN-conditioning",
+        "ICML-2021"
+      ],
+      "verdict": "DDPM (Ho et al. 2020 의 이미지 diffusion) 를 RNN-conditioned autoregressive 시계열 forecasting 으로 확장한 첫 paper. 매 시점 $t$ 의 다변량 분포를 $N=100$ step diffusion + Langevin dynamics 로 sampling. 6 datasets 중 5개에서 CRPS_sum SOTA (Solar 0.301→0.287, Electricity 0.0207→0.0206, Traffic 0.056→0.044, Taxi 0.179→0.114, Wikipedia 0.063→0.0485) — Transformer-MAF (NormalizingFlow) 와 GP-Copula (Low-rank Gaussian) 능가. Diffusion-based 시계열 forecasting 의 시초로 후속 paper (CSDI, TMDM, Diffusion-TS 등) 의 출발점. 단 $N$ step sampling loop 가 inference 속도 부담 (Chen 2021 / Song-DDIM 2021 으로 후속 개선 가능 명시).",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00 README — TimeGrad (Autoregressive Denoising Diffusion for Multivariate Probabilistic Time Series Forecasting)"
+        },
+        {
+          "file": "01_intro.md",
+          "num": "01",
+          "suffix": null,
+          "title": "01 시작하기 전에 — 미리 알아둘 7개 개념"
+        },
+        {
+          "file": "02_abstract.md",
+          "num": "02",
+          "suffix": null,
+          "title": "02 Abstract 풀어 읽기"
+        },
+        {
+          "file": "03_motivation.md",
+          "num": "03",
+          "suffix": null,
+          "title": "03 Motivation — Section 1 (Introduction)"
+        },
+        {
+          "file": "04_diffusion_background.md",
+          "num": "04",
+          "suffix": null,
+          "title": "04 Diffusion Probabilistic Model — Section 2 배경"
+        },
+        {
+          "file": "05_method_a_problem.md",
+          "num": "05",
+          "suffix": "a",
+          "title": "05a Multivariate Forecasting Setup — Section 3 도입"
+        },
+        {
+          "file": "05_method_b_rnn_diffusion.md",
+          "num": "05",
+          "suffix": "b",
+          "title": "05b RNN + Conditional Diffusion — Section 3 본문 (Eq 9, 10)"
+        },
+        {
+          "file": "05_method_c_scaling_covariates.md",
+          "num": "05",
+          "suffix": "c",
+          "title": "05c Scaling + Covariates — Section 3.3–3.4"
+        },
+        {
+          "file": "06_algorithms.md",
+          "num": "06",
+          "suffix": null,
+          "title": "06 Algorithms — Training (Alg 1) + Sampling (Alg 2)"
+        },
+        {
+          "file": "07_data_baselines.md",
+          "num": "07",
+          "suffix": null,
+          "title": "07 Datasets + Baselines + Metric (Section 4.1–4.2)"
+        },
+        {
+          "file": "08_main_results.md",
+          "num": "08",
+          "suffix": null,
+          "title": "08 Main Results — Table 2 (Section 4.3)"
+        },
+        {
+          "file": "09_ablation_viz.md",
+          "num": "09",
+          "suffix": null,
+          "title": "09 Ablation + Visualization (Section 4.4)"
+        },
+        {
+          "file": "10_related_work.md",
+          "num": "10",
+          "suffix": null,
+          "title": "10 Related Work — Section 5"
+        },
+        {
+          "file": "11_conclusion.md",
+          "num": "11",
+          "suffix": null,
+          "title": "11 Conclusion + Future Work — Section 6"
+        },
+        {
+          "file": "12_glossary.md",
+          "num": "12",
+          "suffix": null,
+          "title": "12 Glossary + Notation + References"
+        },
+        {
+          "file": "13_insights.md",
+          "num": "13",
+          "suffix": null,
+          "title": "13 메타 통찰 12개 — \"이해를 넘어서\""
+        },
+        {
+          "file": "14_code.md",
+          "num": "14",
+          "suffix": null,
+          "title": "14 PyTorch Code — TimeGrad 핵심 모듈"
+        },
+        {
+          "file": "15_diagrams.md",
+          "num": "15",
+          "suffix": null,
+          "title": "15 Diagrams & Interactive Visualizations"
+        }
+      ],
+      "data_path": "data/2026/2026-05-26_rasul-timegrad-diffusion-time-series"
+    },
     {
       "slug": "2026-05-25_liu-effective-theory-grokking",
       "date": "2026-05-25",
