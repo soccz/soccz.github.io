@@ -887,8 +887,60 @@
       <div class="ac-row"><div class="ac-label">policy_gate</div><div class="ac-num" id="policyGateStatus" style="font-size:0.95rem">—</div><div class="ac-sub">automation 보수적 — 사용자 명시 컨펌 후 swap</div></div>
       <div class="ac-row"><div class="ac-label">timeline</div><div class="ac-num" id="policyTimeline" style="font-size:0.95rem">5/8 → 5/25</div><div class="ac-sub">결과 진단 + layer 추가 사이클</div></div>
     </div>
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">rule set</h3>
-    <div id="policyRuleSet"><div class="loading-state">loading…</div></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">timeline — 진단 → fix → layer 추가</h3>
+    <svg viewBox="0 0 980 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:980px;margin:0 auto 1.6rem;font-family:'JetBrains Mono', monospace" aria-hidden="true">
+      <defs>
+        <marker id="arrEvo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 Z" fill="#a8a29e"/>
+        </marker>
+      </defs>
+      <g font-size="11" fill="#44403c">
+        <g>
+          <circle cx="90" cy="55" r="14" fill="#dc2626"/>
+          <text x="90" y="59" text-anchor="middle" fill="#fff" font-weight="700">!</text>
+          <text x="90" y="92" text-anchor="middle" font-weight="700">2026-05-08</text>
+          <text x="90" y="107" text-anchor="middle" fill="#a8a29e">진단 시작</text>
+          <text x="90" y="122" text-anchor="middle" fill="#dc2626" font-weight="700">cum +8% → -52%</text>
+        </g>
+        <g>
+          <circle cx="360" cy="55" r="14" fill="#b45309"/>
+          <text x="360" y="59" text-anchor="middle" fill="#fff" font-weight="700">×</text>
+          <text x="360" y="92" text-anchor="middle" font-weight="700">2026-05-13</text>
+          <text x="360" y="107" text-anchor="middle" fill="#a8a29e">timer 사고</text>
+          <text x="360" y="122" text-anchor="middle" fill="#b45309" font-weight="700">window 막힘 fix</text>
+        </g>
+        <g>
+          <circle cx="630" cy="55" r="14" fill="#2563eb"/>
+          <text x="630" y="59" text-anchor="middle" fill="#fff" font-weight="700">↻</text>
+          <text x="630" y="92" text-anchor="middle" font-weight="700">2026-05-20</text>
+          <text x="630" y="107" text-anchor="middle" fill="#a8a29e">bear silence</text>
+          <text x="630" y="122" text-anchor="middle" fill="#2563eb" font-weight="700">학습 분포 align</text>
+        </g>
+        <g>
+          <circle cx="900" cy="55" r="14" fill="#16a34a"/>
+          <text x="900" y="59" text-anchor="middle" fill="#fff" font-weight="700">✓</text>
+          <text x="900" y="92" text-anchor="middle" font-weight="700">2026-05-25</text>
+          <text x="900" y="107" text-anchor="middle" fill="#a8a29e">정책 layer</text>
+          <text x="900" y="122" text-anchor="middle" fill="#16a34a" font-weight="700">ACTIVE/WATCH/SILENCE</text>
+        </g>
+        <line x1="106" y1="55" x2="344" y2="55" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#arrEvo)"/>
+        <line x1="376" y1="55" x2="614" y2="55" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#arrEvo)"/>
+        <line x1="646" y1="55" x2="884" y2="55" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#arrEvo)"/>
+      </g>
+    </svg>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">rule set + decision 분포</h3>
+    <div class="chart-split">
+      <div>
+        <div class="strat-block sb-title">rule by regime</div>
+        <div id="policyRuleSet"><div class="loading-state">loading…</div></div>
+      </div>
+      <div class="chart-wrap" style="margin-bottom:0">
+        <div class="chart-title">실제 decision 누적 분포</div>
+        <div class="chart-subtitle">전체 closed alert 의 ACTIVE / WATCH / SILENCE</div>
+        <canvas id="chartDecisionDonut" style="max-height:240px"></canvas>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -915,6 +967,14 @@
     </div>
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">학습 metric (holdout)</h3>
     <div id="metaMetrics"><div class="loading-state">loading…</div></div>
+
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">top coefficients — 모델이 보는 feature</h3>
+    <div class="chart-subtitle" style="font-family:'JetBrains Mono', monospace;font-size:0.78rem;color:var(--text-muted);margin-bottom:0.6rem">
+      logistic regression weight (|coef| 큰 순서 top 10). 양수 = net-win 확률 ↑, 음수 = ↓.
+    </div>
+    <div class="chart-wrap" style="margin-bottom:0">
+      <canvas id="chartMetaCoefficients" style="max-height:360px"></canvas>
+    </div>
   </div>
 </section>
 
@@ -931,11 +991,25 @@
       효과. policy gate 는 *이번 정책 변경을 자동 promotion 해도 되는가* 의 판단 (현재 보수적 — 사용자 명시 컨펌 필요).
     </p>
 
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.4rem 0 0.6rem">idea attribution</h3>
-    <div id="ideaAttribution"><div class="loading-state">loading…</div></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.4rem 0 0.6rem">idea attribution — best / worst 누적 PnL</h3>
+    <div class="chart-wrap" style="margin-bottom:1rem">
+      <div class="chart-subtitle">idea_id 별 net PnL 합계 (top 5 + bottom 5, signed colors)</div>
+      <canvas id="chartIdeaPnl" style="max-height:380px"></canvas>
+    </div>
+    <details>
+      <summary style="cursor:pointer;font-size:0.82rem;color:var(--text-secondary);margin-bottom:0.6rem">전체 attribution 표 보기 (21 rows)</summary>
+      <div id="ideaAttribution"><div class="loading-state">loading…</div></div>
+    </details>
 
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy replay (retrospective)</h3>
-    <div id="policyReplay"><div class="loading-state">loading…</div></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy replay — retrospective delta</h3>
+    <div class="chart-wrap" style="margin-bottom:1rem">
+      <div class="chart-subtitle">현재 정책을 과거에 적용했을 때 vs 실제 결과의 net_pnl_sum 차이</div>
+      <canvas id="chartPolicyReplay" style="max-height:240px"></canvas>
+    </div>
+    <details>
+      <summary style="cursor:pointer;font-size:0.82rem;color:var(--text-secondary);margin-bottom:0.6rem">replay 상세 표 보기</summary>
+      <div id="policyReplay"><div class="loading-state">loading…</div></div>
+    </details>
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy gate (자동 promotion 판단)</h3>
     <div id="policyGate"><div class="loading-state">loading…</div></div>
@@ -2223,6 +2297,141 @@ function _ideaAttributionTable(rows) {
   return `<table class="strat-table" style="font-size:0.78rem"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }
 
+/* ───────── Decision Distribution Donut ───────── */
+function renderDecisionDonut(summary) {
+  const ctx = document.getElementById('chartDecisionDonut');
+  if (!ctx) return;
+  Chart.getChart(ctx)?.destroy();
+  const rows = summary.idea_validation?.tables?.summary || [];
+  // group by decision (sum n_closed)
+  const agg = {};
+  for (const r of rows) {
+    if (r.dimension !== 'decision') continue;
+    const k = r.decision || '—';
+    agg[k] = (agg[k] || 0) + (r.n_closed || 0);
+  }
+  const labels = Object.keys(agg);
+  if (!labels.length) return;
+  const data = labels.map(k => agg[k]);
+  const colorMap = { ACTIVE: '#16a34a', WATCH_ONLY: '#b45309', SILENCE: '#a8a29e' };
+  const colors = labels.map(k => colorMap[k] || '#57534e');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 1, borderColor: '#fff' }] },
+    options: {
+      responsive: true,
+      cutout: '60%',
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { family: "'JetBrains Mono', monospace", size: 11 }, boxWidth: 14 } },
+        tooltip: { callbacks: { label: c => `${c.label}: ${c.parsed} closed` } },
+      },
+    },
+  });
+}
+
+/* ───────── Meta top coefficients ───────── */
+function renderMetaCoefficients(summary) {
+  const ctx = document.getElementById('chartMetaCoefficients');
+  if (!ctx) return;
+  Chart.getChart(ctx)?.destroy();
+  const m = summary.meta_model || {};
+  const coefs = m.top_coefficients || [];
+  if (!coefs.length) { ctx.parentElement.innerHTML = '<div class="loading-state">top_coefficients 산출 부족</div>'; return; }
+  // sort by abs, take top 10
+  const sorted = coefs.slice().sort((a, b) => Math.abs(b.coef || b.coefficient || 0) - Math.abs(a.coef || a.coefficient || 0)).slice(0, 10);
+  const labels = sorted.map(r => r.feature || r.name || '—');
+  const data = sorted.map(r => r.coef ?? r.coefficient ?? 0);
+  const colors = data.map(v => v >= 0 ? COLORS.green + 'cc' : COLORS.red + 'cc');
+  new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `coef = ${fmt(c.parsed.x, 4)}` } },
+      },
+      scales: {
+        x: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+        y: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+/* ───────── Idea PnL bar (best/worst 5) ───────── */
+function renderIdeaPnl(summary) {
+  const ctx = document.getElementById('chartIdeaPnl');
+  if (!ctx) return;
+  Chart.getChart(ctx)?.destroy();
+  const rows = (summary.idea_validation?.tables?.summary || []).filter(r => r.dimension === 'idea_id');
+  if (!rows.length) { ctx.parentElement.innerHTML = '<div class="loading-state">idea_id 분류 표본 부족</div>'; return; }
+  // sort by net_pnl_sum_pct
+  const sorted = rows.slice().sort((a, b) => (b.net_pnl_sum_pct || 0) - (a.net_pnl_sum_pct || 0));
+  const top = sorted.slice(0, 5);
+  const bottom = sorted.slice(-5).reverse();
+  const picked = [...top, ...bottom];
+  // de-dupe (small set 이라 idea_id 중복 가능)
+  const seen = new Set();
+  const filtered = picked.filter(r => { if (seen.has(r.idea_id)) return false; seen.add(r.idea_id); return true; });
+  const labels = filtered.map(r => `${r.idea_id} (n=${r.n_closed})`);
+  const data = filtered.map(r => r.net_pnl_sum_pct);
+  const colors = data.map(v => v >= 0 ? COLORS.green + 'cc' : COLORS.red + 'cc');
+  new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => `net PnL sum = ${fmtPct(c.parsed.x, 2)}` } },
+      },
+      scales: {
+        x: { ticks: { callback: v => v + '%', font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+        y: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 9 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+/* ───────── Policy Replay delta bar ───────── */
+function renderPolicyReplayBar(summary) {
+  const ctx = document.getElementById('chartPolicyReplay');
+  if (!ctx) return;
+  Chart.getChart(ctx)?.destroy();
+  const rows = summary.idea_validation?.policy_replay?.rows || [];
+  if (!rows.length) { ctx.parentElement.innerHTML = '<div class="loading-state">replay 표본 부족</div>'; return; }
+  const labels = rows.map(r => r.channel || '—');
+  const observed = rows.map(r => r.observed_net_pnl_sum_pct ?? null);
+  const replay = rows.map(r => r.replay_net_pnl_sum_pct ?? null);
+  // delta_net_pnl_sum_pct 도 있음
+  const delta = rows.map(r => r.delta_net_pnl_sum_pct ?? null);
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'observed', data: observed, backgroundColor: COLORS.red + 'aa', borderWidth: 0 },
+        { label: 'replay (current policy)', data: replay, backgroundColor: COLORS.green + 'aa', borderWidth: 0 },
+        { label: 'Δ (replay − observed)', data: delta, type: 'line', borderColor: COLORS.distribution, backgroundColor: 'transparent', borderWidth: 2, pointRadius: 5, fill: false },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: "'JetBrains Mono', monospace", size: 11 }, boxWidth: 16 } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${fmtPct(c.parsed.y, 2)}` } },
+      },
+      scales: {
+        y: { ticks: { callback: v => v + '%', font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+        x: { ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
 function renderRecommendationQuality(summary) {
   const idea = summary.idea_validation || {};
   // idea attribution = tables.summary
@@ -2468,6 +2677,11 @@ window.addEventListener('scroll', () => {
     renderPolicyEvolution(summary);
     renderMetaModel(summary);
     renderRecommendationQuality(summary);
+    // 시각화 강화 (2026-05-26)
+    renderDecisionDonut(summary);
+    renderMetaCoefficients(summary);
+    renderIdeaPnl(summary);
+    renderPolicyReplayBar(summary);
     attachSort();
     attachFilters();
     renderHistory();
