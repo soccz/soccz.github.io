@@ -70,6 +70,62 @@
     .hero-sub { font-size: 0.95rem; color: var(--text-secondary); font-weight: 300; line-height: 1.85; margin-bottom: 1.4rem; }
     .hero-meta { font-size: 0.78rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
 
+    /* ── MEGA stats hero — first thing under the fold ── */
+    .mega { padding: 0.6rem 1.6rem 3.4rem; position: relative; }
+    .mega::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+    .mega-inner { max-width: 1180px; margin: 0 auto; }
+    .mega-live { display: flex; align-items: center; justify-content: center; gap: 0.55rem; margin: 1.6rem 0 1.8rem; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; }
+    .mega-live .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(22,163,74,0.55); animation: pulse 1.8s infinite; }
+    .mega-live .dot.stale { background: var(--amber); animation: none; box-shadow: none; }
+    .mega-live .dot.dead  { background: var(--red);   animation: none; box-shadow: none; }
+    .mega-live strong { color: var(--text-primary); letter-spacing: 0.18em; font-weight: 700; }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(22,163,74,0.55); }
+      70%  { box-shadow: 0 0 0 10px rgba(22,163,74,0); }
+      100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
+    }
+    .mega-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+    @media (max-width: 880px) { .mega-grid { grid-template-columns: 1fr; } }
+    .mega-card { position: relative; padding: 1.7rem 1.8rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px -16px rgba(0,0,0,0.08); overflow: hidden; }
+    .mega-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--text-muted); }
+    .mega-card.side-short::before { background: var(--red); }
+    .mega-card.side-long::before  { background: var(--blue); }
+    .mega-card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.6rem; }
+    .mega-label-side { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+    .mega-label-side .badge { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.68rem; font-weight: 700; margin-right: 0.45rem; }
+    .mega-card.side-short .badge { background: var(--red-dim); color: var(--red); }
+    .mega-card.side-long  .badge { background: var(--blue-dim); color: var(--blue); }
+    .mega-trades { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
+    .mega-value { font-family: 'Noto Serif KR', serif; font-size: clamp(2.4rem, 5.4vw, 3.6rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 0.7rem; }
+    .mega-value.pos { color: var(--green); }
+    .mega-value.neg { color: var(--red); }
+    .mega-value.muted { color: var(--text-muted); }
+    .mega-value .unit { font-size: 0.5em; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+    .mega-arrow { font-size: 0.55em; }
+    .mega-arrow.pos { color: var(--green); }
+    .mega-arrow.neg { color: var(--red); }
+    .mega-foot { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; padding-top: 0.9rem; border-top: 1px dashed var(--border); flex-wrap: wrap; }
+    .mega-foot-item { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-secondary); }
+    .mega-foot-item .l { color: var(--text-muted); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 0.35rem; }
+    .mega-foot-item .v { color: var(--text-primary); font-weight: 700; }
+    .mega-foot-item .v.pos { color: var(--green); }
+    .mega-foot-item .v.neg { color: var(--red); }
+    .mega-spark { margin-top: 1rem; height: 56px; width: 100%; }
+    .mega-spark .area-pos { fill: var(--green); opacity: 0.12; }
+    .mega-spark .area-neg { fill: var(--red);   opacity: 0.12; }
+    .mega-spark .line-pos { stroke: var(--green); fill: none; stroke-width: 1.7; }
+    .mega-spark .line-neg { stroke: var(--red);   fill: none; stroke-width: 1.7; }
+    .mega-spark .zero     { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 2,3; }
+    .mega-spark text { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-muted); }
+
+    .mega-aux { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin-top: 1.1rem; }
+    @media (max-width: 880px) { .mega-aux { grid-template-columns: repeat(2, 1fr); } }
+    .mega-aux-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.95rem 1.1rem; text-align: left; }
+    .mega-aux-card .l { font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; }
+    .mega-aux-card .v { font-family: 'Noto Serif KR', serif; font-size: 1.55rem; font-weight: 700; line-height: 1.1; }
+    .mega-aux-card .v.pos { color: var(--green); } .mega-aux-card .v.neg { color: var(--red); }
+    .mega-aux-card .s { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
+
     /* KPI strip */
     .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
     .kpi-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem 1.3rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
@@ -272,6 +328,68 @@
     <p class="hero-meta" id="heroMeta">데이터 로드 중…</p>
   </div>
 </header>
+
+<!-- MEGA stats — first numbers visible without reading -->
+<section class="mega">
+  <div class="mega-inner">
+    <div class="mega-live">
+      <span class="dot" id="megaPulseDot"></span>
+      <span><strong id="megaPulseLabel">LIVE</strong></span>
+      <span>·</span>
+      <span id="megaAsof">—</span>
+      <span>·</span>
+      <span id="megaAsofRel">—</span>
+    </div>
+
+    <div class="mega-grid">
+      <div class="mega-card side-short">
+        <div class="mega-card-top">
+          <div class="mega-label-side"><span class="badge">SHORT</span>6h · 30d net of fees</div>
+          <div class="mega-trades" id="megaShortTrades">—</div>
+        </div>
+        <div class="mega-value" id="megaShortVal">
+          <span class="num">—</span><span class="unit">% / trade</span>
+        </div>
+        <div class="mega-foot" id="megaShortFoot"></div>
+        <svg class="mega-spark" id="megaShortSpark" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="mega-card side-long">
+        <div class="mega-card-top">
+          <div class="mega-label-side"><span class="badge">LONG</span>12h · 30d net (paper)</div>
+          <div class="mega-trades" id="megaLongTrades">—</div>
+        </div>
+        <div class="mega-value" id="megaLongVal">
+          <span class="num">—</span><span class="unit">% / trade</span>
+        </div>
+        <div class="mega-foot" id="megaLongFoot"></div>
+        <svg class="mega-spark" id="megaLongSpark" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+
+    <div class="mega-aux">
+      <div class="mega-aux-card">
+        <div class="l">SHORT IC (live · 30d)</div>
+        <div class="v" id="megaIcShort">—</div>
+        <div class="s" id="megaIcShortSub">—</div>
+      </div>
+      <div class="mega-aux-card">
+        <div class="l">LONG IC (live · 30d)</div>
+        <div class="v" id="megaIcLong">—</div>
+        <div class="s" id="megaIcLongSub">—</div>
+      </div>
+      <div class="mega-aux-card">
+        <div class="l">총 추적 신호 (60d)</div>
+        <div class="v" id="megaTotal">—</div>
+        <div class="s" id="megaTotalSub">SHORT + WATCH LONG</div>
+      </div>
+      <div class="mega-aux-card">
+        <div class="l">모델 / 자동화</div>
+        <div class="v" id="megaModel">—</div>
+        <div class="s" id="megaModelSub">—</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <hr class="divider">
 
@@ -1007,6 +1125,145 @@ function renderHero(summary) {
 
 function fmtIcTail(arr) {
   return (arr || []).filter(x => x != null && !isNaN(x)).map(x => x.toFixed(3)).join(' / ') || '—';
+}
+
+/* ────────── Mega-stats (first-fold visual punch) ────────── */
+function _megaSetVal(elId, valPct, unit) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (valPct == null || isNaN(valPct)) {
+    el.innerHTML = `<span class="num muted">—</span><span class="unit">${unit||''}</span>`;
+    return;
+  }
+  const arrow = valPct > 0 ? '↑' : (valPct < 0 ? '↓' : '·');
+  const cls = valPct > 0 ? 'pos' : (valPct < 0 ? 'neg' : 'muted');
+  const sign = valPct > 0 ? '+' : '';
+  el.classList.remove('pos','neg','muted');
+  el.classList.add(cls);
+  el.innerHTML = `<span class="mega-arrow ${cls}">${arrow}</span><span class="num">${sign}${Number(valPct).toFixed(2)}</span><span class="unit">${unit||''}</span>`;
+}
+
+function _megaFootRow(items) {
+  return items.map(it => {
+    const cls = it.cls ? ` ${it.cls}` : '';
+    return `<span class="mega-foot-item"><span class="l">${escapeHtml(it.l)}</span><span class="v${cls}">${escapeHtml(it.v)}</span></span>`;
+  }).join('');
+}
+
+function _megaSparkline(svgId, daily, kind) {
+  const svg = document.getElementById(svgId);
+  if (!svg) return;
+  const data = (daily || []).filter(d => d && typeof d.cum_pct === 'number');
+  svg.innerHTML = '';
+  if (data.length < 2) {
+    svg.innerHTML = '<text x="50%" y="50%" text-anchor="middle">표본 부족</text>';
+    return;
+  }
+  const W = svg.clientWidth || 600, H = 56;
+  const xs = data.map((_, i) => i);
+  const ys = data.map(d => d.cum_pct);
+  const xmin = 0, xmax = data.length - 1;
+  let ymin = Math.min(0, ...ys), ymax = Math.max(0, ...ys);
+  const ypad = (ymax - ymin) * 0.12 || 0.1;
+  ymin -= ypad; ymax += ypad;
+  const sx = i => (xmax === xmin ? 0 : ((i - xmin) / (xmax - xmin)) * (W - 2)) + 1;
+  const sy = v => (H - 2) - ((v - ymin) / (ymax - ymin) * (H - 2));
+  const path = ys.map((v, i) => `${i === 0 ? 'M' : 'L'} ${sx(i).toFixed(2)} ${sy(v).toFixed(2)}`).join(' ');
+  const last = ys[ys.length - 1];
+  const sign = last >= 0 ? 'pos' : 'neg';
+  const areaPath = path + ` L ${sx(xmax).toFixed(2)} ${sy(0).toFixed(2)} L ${sx(0).toFixed(2)} ${sy(0).toFixed(2)} Z`;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.innerHTML = `
+    <path class="area-${sign}" d="${areaPath}"/>
+    <line class="zero" x1="0" x2="${W}" y1="${sy(0).toFixed(2)}" y2="${sy(0).toFixed(2)}"/>
+    <path class="line-${sign}" d="${path}"/>
+    <text x="${W-2}" y="${H-2}" text-anchor="end">${data[data.length-1].date}</text>
+  `;
+}
+
+function _relativeTime(iso) {
+  try {
+    const t = new Date(iso).getTime();
+    const dt = (Date.now() - t) / 1000;
+    if (dt < 60)        return `${Math.floor(dt)}초 전`;
+    if (dt < 3600)      return `${Math.floor(dt/60)}분 전`;
+    if (dt < 86400)     return `${Math.floor(dt/3600)}시간 전`;
+    return `${Math.floor(dt/86400)}일 전`;
+  } catch (e) { return '—'; }
+}
+
+function renderMegaStats(summary, accuracy) {
+  // Live pulse
+  const asof = summary.asof || accuracy.asof;
+  document.getElementById('megaAsof').textContent = asof ? shortTime(asof) : '—';
+  const rel = asof ? _relativeTime(asof) : '—';
+  document.getElementById('megaAsofRel').textContent = rel;
+  const dot = document.getElementById('megaPulseDot');
+  const lab = document.getElementById('megaPulseLabel');
+  if (asof) {
+    const ageH = (Date.now() - new Date(asof).getTime()) / 3600000;
+    dot.classList.remove('stale','dead');
+    if (ageH > 12)      { dot.classList.add('dead');  lab.textContent = 'STALE'; }
+    else if (ageH > 8)  { dot.classList.add('stale'); lab.textContent = 'AGING'; }
+    else                { lab.textContent = 'LIVE'; }
+  } else {
+    dot.classList.add('dead'); lab.textContent = 'OFFLINE';
+  }
+
+  // SHORT card
+  const rs = (summary.realized_summary || {}).SHORT?.d30 || {};
+  const rl = (summary.realized_summary || {}).WATCH_LONG?.d30 || {};
+
+  _megaSetVal('megaShortVal', rs.avg_net != null ? rs.avg_net : null, '% / trade');
+  document.getElementById('megaShortTrades').textContent =
+    rs.n ? `n=${rs.n} · ${rs.win_pct?.toFixed(0) ?? '—'}% win` : '—';
+  document.getElementById('megaShortFoot').innerHTML = _megaFootRow([
+    { l: 'gross', v: rs.avg != null ? `${rs.avg > 0 ? '+' : ''}${rs.avg.toFixed(2)}%` : '—',
+      cls: rs.avg > 0 ? 'pos' : (rs.avg < 0 ? 'neg' : '') },
+    { l: 't_ac', v: rs.tstat_clustered != null ? rs.tstat_clustered.toFixed(2) : '—' },
+    { l: 'sharpe', v: rs.sharpe != null ? rs.sharpe.toFixed(2) : '—' },
+    { l: 'cost', v: rs.cost_pct != null ? `${rs.cost_pct.toFixed(2)}%` : '—' },
+  ]);
+  _megaSparkline('megaShortSpark', (accuracy.daily_series||{}).SHORT, 'short');
+
+  // LONG card
+  _megaSetVal('megaLongVal', rl.avg_net != null ? rl.avg_net : null, '% / trade');
+  document.getElementById('megaLongTrades').textContent =
+    rl.n ? `n=${rl.n} · ${rl.win_pct?.toFixed(0) ?? '—'}% win` : '—';
+  document.getElementById('megaLongFoot').innerHTML = _megaFootRow([
+    { l: 'gross', v: rl.avg != null ? `${rl.avg > 0 ? '+' : ''}${rl.avg.toFixed(2)}%` : '—',
+      cls: rl.avg > 0 ? 'pos' : (rl.avg < 0 ? 'neg' : '') },
+    { l: 't_ac', v: rl.tstat_clustered != null ? rl.tstat_clustered.toFixed(2) : '—' },
+    { l: 'sharpe', v: rl.sharpe != null ? rl.sharpe.toFixed(2) : '—' },
+    { l: 'cost', v: rl.cost_pct != null ? `${rl.cost_pct.toFixed(2)}%` : '—' },
+  ]);
+  _megaSparkline('megaLongSpark', (accuracy.daily_series||{}).WATCH_LONG, 'long');
+
+  // Aux row
+  const sIc = (summary.ic_summary || {}).short_h6?.last30 || {};
+  const lIc = (summary.ic_summary || {}).long_h12?.last30 || {};
+  const fmtIcLocal = v => v == null || isNaN(v) ? '—' : `${v > 0 ? '+' : ''}${v.toFixed(3)}`;
+  const sEl = document.getElementById('megaIcShort');
+  sEl.textContent = fmtIcLocal(sIc.mean);
+  sEl.classList.toggle('pos', sIc.mean >= 0.05);
+  sEl.classList.toggle('neg', sIc.mean < 0);
+  document.getElementById('megaIcShortSub').textContent =
+    `n=${sIc.n ?? '—'} · t_ac=${sIc.tstat_ac?.toFixed(1) ?? '—'}`;
+
+  const lEl = document.getElementById('megaIcLong');
+  lEl.textContent = fmtIcLocal(lIc.mean);
+  lEl.classList.toggle('pos', lIc.mean >= 0.05);
+  lEl.classList.toggle('neg', lIc.mean < 0);
+  document.getElementById('megaIcLongSub').textContent =
+    `n=${lIc.n ?? '—'} · t_ac=${lIc.tstat_ac?.toFixed(1) ?? '—'}`;
+
+  document.getElementById('megaTotal').textContent = (accuracy.n_total || 0).toLocaleString();
+  const mAge = (summary.model_age_days || {});
+  const m6 = mAge['xsec_6h.pkl']; const m12 = mAge['xsec_12h.pkl'];
+  document.getElementById('megaModel').textContent =
+    m6 != null && m12 != null ? `${m6.toFixed(0)}/${m12.toFixed(0)}일` : '—';
+  document.getElementById('megaModelSub').textContent =
+    'xsec_6h / xsec_12h · 매주 일요일 자동 retrain';
 }
 
 function renderKpi(summary) {
@@ -1833,6 +2090,7 @@ async function boot() {
   ]);
 
   renderHero(summary);
+  renderMegaStats(summary, accuracy);
   renderKpi(summary);
   renderPicks(summary);
   renderIcChart(history);
