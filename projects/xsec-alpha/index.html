@@ -339,6 +339,7 @@
       <li><a href="#automation">Automation</a></li>
       <li><a href="#cost-reality">Cost Reality</a></li>
       <li><a href="#audit-summary">Audit</a></li>
+      <li><a href="#hygiene">Hygiene</a></li>
       <li><a href="#status">Status</a></li>
     </ul>
   </div>
@@ -1322,11 +1323,102 @@
 </div></section>
 <hr class="divider">
 
+<!-- ============================================== -->
+<!-- PART 4 (2026-05-25): Engineering Hygiene      -->
+<!-- 면접 방어 5종 세트                              -->
+<!-- ============================================== -->
+
+<div class="part-divider fade-in">
+  <span class="part-label">Part IV · Engineering Hygiene · 2026-05-25</span>
+  <h2>면접관이 찌를 만한 5가지 — 메우기</h2>
+  <div class="part-ornament"></div>
+</div>
+
+<section id="hygiene"><div class="container fade-in">
+  <div class="section-label">Engineering Hygiene</div>
+  <h2 class="section-title">"테스트는요? 백업은요? 페이지 최신화는요?"</h2>
+  <p class="section-desc">
+    Part III 직후 같은 날 진행한 5종 보강. 운영은 이미 굴러가지만 "포트폴리오 면접관이 찌르면 곤란할 약점"으로
+    분류된 항목들 (테스트 0개, DB 백업 0개, 페이지 stale, research → ops 다리 없음)을 한 번에 메움.
+  </p>
+
+  <div class="three-col" style="margin-bottom:2.5rem;">
+    <div class="card" style="border-top:3px solid var(--green);">
+      <div class="card-title">① pytest invariant suite (19개)</div>
+      <div class="card-text">
+        ledger gross/net 등식, cost 공식 (2×6 + 2×4 + 10bps = 30bps), σ≥2 hit_rate &gt; 0.55, z-score clip,
+        drift 상수입력 가드, telegram heartbeat 양 분기, public_summary 누출 방지 (negative test) — 1.6초 실행.
+        큰 리팩터 후 회귀 잡는 안전망.
+      </div>
+      <span class="badge badge-ok">19/19 PASS</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green);">
+      <div class="card-title">② SQLite hot-backup + integrity</div>
+      <div class="card-text">
+        850MB DB. <code class="c">sqlite3 .backup</code> (atomic, writers 안 막음) + post-write
+        <code class="c">PRAGMA integrity_check</code> → 깨지면 즉시 폐기. 30일 retention.
+        <code class="c">xsec-backup.timer</code> 매일 KST 03:00 (fetch off-peak).
+      </div>
+      <span class="badge badge-ok">smoke 통과</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);">
+      <div class="card-title">③ public_summary.json + live-inject</div>
+      <div class="card-text">
+        대시보드는 PIN 암호화. 그런데 narrative HTML 메트릭은 hardcoded → 일주일이면 stale.
+        해결: <code class="c">public_summary.json</code> (aggregates only, 픽/calibration 제외) 평문으로 같이 push →
+        페이지가 <code class="c">data-live-key</code> 셀에 fetch + DOM 교체. 매 6h 자동 갱신.
+      </div>
+      <span class="badge badge-pivot">PIN paradox 해결</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue);">
+      <div class="card-title">④ Live shadow tracker (long_short5)</div>
+      <div class="card-text">
+        portfolio_experiment에서 long_short5가 t=+1.62로 best — 그런데 통계적 유의 (t&gt;2) 미달이라 운영 스위치는 위험.
+        같은 ledger 두 가지 aggregation 룰로 head-to-head 평행 추적 → 30-60일 더 모은 뒤 결정.
+        <strong>43일 라이브:</strong> 현재 SHORT-only cum_net &minus;13.10% vs shadow long_short5 &minus;10.42%
+        (spread +2.68%p, 둘 다 sharpe 음수).
+      </div>
+      <span class="badge badge-pivot">셔도우 검증 단계</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber);">
+      <div class="card-title">⑤ retrain MAX_DATA_AGE_HOURS 4 → 6</div>
+      <div class="card-text">
+        20-loop 감사에서 발견. xsec-alpha.timer는 6h 주기 fetch — 수동 retrain이 5~6h 됐을 때 4h boundary에 걸려 거부됨.
+        6h 주기와 정렬해 안전 margin 확보. hard staleness (&gt;6h)는 진짜 fetch 실패 signal로 남김.
+      </div>
+      <span class="badge badge-ok">resolved</span>
+    </div>
+    <div class="card" style="border-top:3px solid var(--text-muted); border-style: dashed;">
+      <div class="card-title">⑥ skip 의도적 — 명시</div>
+      <div class="card-text">
+        <strong>LONG paper-observation flag</strong> = 실거래 0이라 의미 없음. <br>
+        <strong>live 전략 SHORT-only → long_short5 직접 스위치</strong> = t=1.62는 통계적 유의 미달 — shadow로 더 보고 결정.
+      </div>
+      <span class="badge badge-fail">intentional skip</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>설계 원칙:</strong> ① 운영을 막지 않는 안전망 (테스트는 standalone, backup은 hot),
+      ② 통계 미달인 신호로는 운영 변경 안 함 (shadow 거쳐서 결정),
+      ③ 보안 trade-off 명확히 (개별 픽은 PIN 뒤, aggregate는 공개),
+      ④ 모든 자동화는 fail-soft (export 실패해도 fetch_and_rank END 도달).
+    </p>
+  </div>
+
+  <div class="two-col" style="margin-top:2rem;">
+    <div class="metric-card"><span class="metric-val pos">12ab93d</span><div class="metric-label">xsec_alpha commit</div><div class="metric-sub">backup + public_summary<br>+ shadow + 19 tests</div></div>
+    <div class="metric-card"><span class="metric-val pos">2b00ed6b</span><div class="metric-label">soccz.github.io commit</div><div class="metric-sub">live-inject + shadow viz<br>+ public_summary.json</div></div>
+  </div>
+</div></section>
+<hr class="divider">
+
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
   <div class="section-label">Current Status · F1 Production</div>
   <h2 class="section-title">현재 운영 상태 (최근 갱신 2026-05-25)</h2>
-  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중. 매 주 일요일 자동 재학습 + promotion gate 통과 시 모델 갱신. <strong>실시간 수치는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a></strong>에서 확인 (asof 매 6h 갱신).</p>
+  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중. 매 주 일요일 자동 재학습 + promotion gate 통과 시 모델 갱신. <strong>실시간 수치는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a></strong>에서 확인 (asof 매 6h 갱신, 페이지 헤드라인 숫자도 자동).</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--green);">
