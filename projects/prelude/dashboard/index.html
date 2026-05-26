@@ -222,18 +222,45 @@
       font-size: 0.78rem; color: var(--text-muted);
       margin-bottom: 0.7rem; font-family: 'JetBrains Mono', monospace;
     }
+    .strat-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; }
     .strat-table {
       width: 100%; border-collapse: collapse; font-size: 0.82rem;
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
-      overflow: hidden;
     }
-    .strat-table th, .strat-table td { padding: 0.55rem 0.85rem; text-align: right; border-bottom: 1px solid var(--border); }
+    .strat-table th, .strat-table td {
+      padding: 0.55rem 0.85rem; text-align: right; border-bottom: 1px solid var(--border);
+      max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
     .strat-table th { background: var(--bg-secondary); font-weight: 700; color: var(--text-secondary); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; }
     .strat-table th:first-child, .strat-table td:first-child { text-align: left; font-family: 'JetBrains Mono', monospace; color: var(--text-primary); font-weight: 700; }
     .strat-table td { color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
     .strat-table td.pos { color: var(--green); }
     .strat-table td.neg { color: var(--red); }
     .strat-table tr:last-child td { border-bottom: 0; }
+    .strat-table td[title] { cursor: help; }
+
+    /* policy gate / recommendations — 채널별 카드 */
+    .policy-card-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .policy-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.1rem 1.2rem; font-size: 0.82rem;
+    }
+    .policy-card .pc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; gap: 0.6rem; }
+    .policy-card .pc-channel { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.86rem; letter-spacing: 0.02em; color: var(--text-primary); }
+    .policy-card .pc-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; padding: 0.25rem 0.55rem; border-radius: 99px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; }
+    .policy-card .pc-badge.promote { background: rgba(22,163,74,0.13); color: var(--green); border: 1px solid rgba(22,163,74,0.25); }
+    .policy-card .pc-badge.demote { background: rgba(220,38,38,0.10); color: var(--red); border: 1px solid rgba(220,38,38,0.22); }
+    .policy-card .pc-badge.hold { background: rgba(180,121,9,0.10); color: var(--amber, #b45309); border: 1px solid rgba(180,121,9,0.22); }
+    .policy-card .pc-confidence { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .policy-card .pc-action { font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: var(--text-secondary); padding: 0.4rem 0.55rem; background: var(--bg-secondary); border-radius: 5px; margin-bottom: 0.7rem; word-break: break-all; }
+    .policy-card .pc-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 1rem; font-family: 'JetBrains Mono', monospace; }
+    .policy-card .pc-metric { display: flex; justify-content: space-between; padding: 0.2rem 0; }
+    .policy-card .pc-metric .pcm-label { color: var(--text-muted); font-size: 0.72rem; }
+    .policy-card .pc-metric .pcm-val { font-weight: 700; color: var(--text-primary); }
+    .policy-card .pc-metric .pcm-val.pos { color: var(--green); }
+    .policy-card .pc-metric .pcm-val.neg { color: var(--red); }
+    .policy-card .pc-reasons { margin-top: 0.8rem; padding-top: 0.7rem; border-top: 1px dashed var(--border); font-size: 0.74rem; color: var(--text-secondary); }
+    .policy-card .pc-reasons li { margin: 0.2rem 0 0.2rem 1.1rem; line-height: 1.5; }
 
     /* Alpha vs BTC */
     .alpha-card {
@@ -2282,19 +2309,114 @@ function renderMetaModel(summary) {
 }
 
 /* ───────── Recommendation Quality ───────── */
-function _ideaAttributionTable(rows) {
+function _cellFmt(k, v) {
+  if (v == null) return `<td>—</td>`;
+  if (typeof v === 'number') {
+    const cls = (k.includes('pnl') || k.includes('return') || k.includes('edge') || k.includes('delta')) ? sgnClass(v) : '';
+    return `<td class="${cls}">${fmt(v, 3)}</td>`;
+  }
+  if (Array.isArray(v)) {
+    const joined = v.map(x => (x == null ? '—' : String(x))).join('; ');
+    return `<td title="${escapeHtml(joined)}">${escapeHtml(joined)}</td>`;
+  }
+  if (typeof v === 'object') {
+    const s = JSON.stringify(v);
+    return `<td title="${escapeHtml(s)}">${escapeHtml(s)}</td>`;
+  }
+  const s = String(v);
+  return `<td title="${escapeHtml(s)}">${escapeHtml(s)}</td>`;
+}
+
+function _ideaAttributionTable(rows, opts) {
+  opts = opts || {};
   if (!rows || !rows.length) return '<div class="loading-state">표본 없음 — idea attribution 산출 부족</div>';
-  const keys = Object.keys(rows[0]);
-  const head = keys.map(k => `<th>${escapeHtml(k)}</th>`).join('');
-  const body = rows.slice(0, 20).map(r => '<tr>' + keys.map(k => {
-    const v = r[k];
-    if (typeof v === 'number') {
-      const cls = (k.includes('pnl') || k.includes('return') || k.includes('edge')) ? sgnClass(v) : '';
-      return `<td class="${cls}">${fmt(v, 3)}</td>`;
-    }
-    return `<td>${escapeHtml(v ?? '—')}</td>`;
-  }).join('') + '</tr>').join('');
-  return `<table class="strat-table" style="font-size:0.78rem"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+  const keyOrder = opts.columns || Object.keys(rows[0]);
+  const head = keyOrder.map(k => `<th>${escapeHtml(k)}</th>`).join('');
+  const body = rows.slice(0, opts.limit || 20).map(r => '<tr>' + keyOrder.map(k => _cellFmt(k, r[k])).join('') + '</tr>').join('');
+  return `<div class="strat-table-wrap"><table class="strat-table" style="font-size:0.78rem"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+
+/* ───────── Policy gate cards ───────── */
+function _stateBadge(state) {
+  const s = (state || '').toUpperCase();
+  if (s.startsWith('PROMOTE')) return `<span class="pc-badge promote">${escapeHtml(s)}</span>`;
+  if (s.startsWith('DEMOTE')) return `<span class="pc-badge demote">${escapeHtml(s)}</span>`;
+  return `<span class="pc-badge hold">${escapeHtml(s || '—')}</span>`;
+}
+function _metric(label, value, opts) {
+  opts = opts || {};
+  const isNum = typeof value === 'number';
+  let cls = '';
+  let txt = '—';
+  if (isNum) {
+    txt = (opts.pct ? fmt(value, 2) + '%' : fmt(value, opts.digits ?? 3));
+    if (opts.sign) cls = sgnClass(value);
+  } else if (value != null) {
+    txt = String(value);
+  }
+  return `<div class="pc-metric"><span class="pcm-label">${escapeHtml(label)}</span><span class="pcm-val ${cls}">${escapeHtml(txt)}</span></div>`;
+}
+function _renderPolicyGateCards(rows) {
+  if (!rows || !rows.length) return '<div class="loading-state">policy gate 표본 부족</div>';
+  const cards = rows.map(r => {
+    const reasons = Array.isArray(r.reasons) ? r.reasons : (r.reasons ? [r.reasons] : []);
+    const reasonsHtml = reasons.length
+      ? `<div class="pc-reasons"><ul>${reasons.map(t => `<li>${escapeHtml(t)}</li>`).join('')}</ul></div>` : '';
+    return `
+      <div class="policy-card">
+        <div class="pc-head">
+          <div>
+            <div class="pc-channel">${escapeHtml(r.channel || '—')}</div>
+            <div class="pc-confidence">confidence: ${escapeHtml(r.confidence || '—')}</div>
+          </div>
+          ${_stateBadge(r.state)}
+        </div>
+        <div class="pc-action" title="${escapeHtml(r.action || '')}">action: ${escapeHtml(r.action || '—')}</div>
+        <div class="pc-metrics">
+          ${_metric('replay net Σ', r.replay_net_pnl_sum_pct, { pct: true, sign: true })}
+          ${_metric('observed net Σ', r.observed_net_pnl_sum_pct, { pct: true, sign: true })}
+          ${_metric('Δ net pnl', r.delta_net_pnl_sum_pct, { pct: true, sign: true })}
+          ${_metric('replay avg / sample', r.replay_avg_net_pnl_pct, { pct: true, sign: true })}
+          ${_metric('CI95 low (avg)', r.replay_bootstrap_avg_ci95_low_pct, { pct: true, sign: true })}
+          ${_metric('late split avg', r.replay_late_avg_net_pnl_pct, { pct: true, sign: true })}
+          ${_metric('replay n closed', r.replay_n_closed, { digits: 0 })}
+          ${_metric('shadow closed', r.shadow_closed_for_confidence, { digits: 0 })}
+        </div>
+        ${reasonsHtml}
+      </div>`;
+  }).join('');
+  return `<div class="policy-card-grid">${cards}</div>`;
+}
+function _renderPolicyRecommendationCards(rows) {
+  if (!rows || !rows.length) return '<div class="loading-state">policy recommendation 표본 부족</div>';
+  const cards = rows.map(r => {
+    const actionText = String(r.action || '—');
+    const actionBadge = actionText.includes('ADOPT')
+      ? `<span class="pc-badge promote">ADOPT</span>`
+      : actionText.includes('DEMOTE')
+        ? `<span class="pc-badge demote">DEMOTE</span>`
+        : `<span class="pc-badge hold">${escapeHtml(actionText)}</span>`;
+    const metrics = [
+      _metric('observed net Σ', r.observed_net_pnl_sum_pct, { pct: true, sign: true }),
+      _metric('replay net Σ', r.replay_net_pnl_sum_pct, { pct: true, sign: true }),
+      _metric('Δ net pnl', r.delta_net_pnl_sum_pct, { pct: true, sign: true }),
+      _metric('avoided loss', r.avoided_loss_pct, { pct: true, sign: true }),
+      _metric('n closed', r.n_closed, { digits: 0 }),
+    ].join('');
+    return `
+      <div class="policy-card">
+        <div class="pc-head">
+          <div>
+            <div class="pc-channel">${escapeHtml(r.channel || '—')}</div>
+            <div class="pc-confidence">${escapeHtml(actionText)}</div>
+          </div>
+          ${actionBadge}
+        </div>
+        <div class="pc-action" title="${escapeHtml(r.reason || '')}">${escapeHtml(r.reason || '—')}</div>
+        <div class="pc-metrics">${metrics}</div>
+      </div>`;
+  }).join('');
+  return `<div class="policy-card-grid">${cards}</div>`;
 }
 
 /* ───────── Decision Distribution Donut ───────── */
@@ -2445,15 +2567,15 @@ function renderRecommendationQuality(summary) {
   const replayRoot = document.getElementById('policyReplay');
   if (replayRoot) replayRoot.innerHTML = _ideaAttributionTable(replay);
 
-  // policy gate
+  // policy gate (채널별 카드)
   const gateRows = (idea.policy_gate && idea.policy_gate.rows) || [];
   const gateRoot = document.getElementById('policyGate');
-  if (gateRoot) gateRoot.innerHTML = _ideaAttributionTable(gateRows);
+  if (gateRoot) gateRoot.innerHTML = _renderPolicyGateCards(gateRows);
 
-  // recommendations
+  // recommendations (채널별 카드)
   const recRows = idea.policy_recommendations || [];
   const recRoot = document.getElementById('policyRecommendations');
-  if (recRoot) recRoot.innerHTML = _ideaAttributionTable(recRows);
+  if (recRoot) recRoot.innerHTML = _renderPolicyRecommendationCards(recRows);
 }
 
 /* ───────── CSV download ───────── */
