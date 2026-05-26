@@ -1,5 +1,8 @@
 # 10 Related Work — Section 5
 
+> **🧒 한 줄 요약**: Related work. DeepAR, Gaussian Process, Score-based generative.
+
+
 paper p.7-8. **5.1 Energy-Based Methods** + **5.2 Time Series Forecasting** — TimeGrad 의 학문적 lineage.
 
 ---

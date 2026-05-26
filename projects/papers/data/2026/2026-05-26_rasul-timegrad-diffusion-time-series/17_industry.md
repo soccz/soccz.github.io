@@ -1,5 +1,8 @@
 # 17 산업 적용 — Zalando · GluonTS · 실제 배포
 
+> **🧒 한 줄 요약**: Industry adoption. Energy, finance, supply chain.
+
+
 paper 의 저자 Rasul, Sheikh, Schuster, Bergmann, Vollgraf 의 소속은 모두 **Zalando Research**. TimeGrad 는 그저 학술 결과물이 아닌 **유럽 최대 e-commerce 의 실제 수요 예측 인프라** 의 일부.
 
 ---

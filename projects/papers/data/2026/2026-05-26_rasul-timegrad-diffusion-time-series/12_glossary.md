@@ -1,5 +1,8 @@
 # 12 Glossary + Notation + References
 
+> **🧒 한 줄 요약**: 용어 사전. Diffusion / DDPM / score matching / CRPS 정리.
+
+
 ## 핵심 약어
 
 | 약어 | 풀이 | 출처 |
@@ -214,3 +217,21 @@ paper 의 References ~80 paper 중 본 deep dive 가 자주 cite 또는 brief me
 ## 다음
 
 [13_insights.md](13_insights.md) — 메타 통찰 12개 "이해를 넘어서".
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Diffusion forward process 의미?**
+2. **DDPM의 ELBO 직관?**
+3. **Score matching의 score function 정의?**
+
+### 답변
+
+1. **Gradual noise addition**. q(x_t | x_{t-1}) = N(x_t; √(1-β_t) x_{t-1}, β_t I). T-step noising 까지 *pure noise*.
+
+2. **Variational lower bound**. ELBO = E[log p(x_0|x_1)] - sum KL terms. Reverse process learning 의 objective.
+
+3. **Score = gradient of log density**. ∇_x log p(x). Score matching = denoising target. Generative process의 *direction signal*.

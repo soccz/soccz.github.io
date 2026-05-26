@@ -1,5 +1,8 @@
 # 06 Algorithms — Training (Alg 1) + Sampling (Alg 2)
 
+> **🧒 한 줄 요약**: Training + sampling algorithms.
+
+
 paper p.3-4. **Algorithm 1 (Training)** + **Algorithm 2 (Sampling via annealed Langevin)** — TimeGrad 의 execution loop.
 
 ---

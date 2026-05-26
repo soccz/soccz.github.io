@@ -1,5 +1,8 @@
 # 05a Multivariate Forecasting Setup — Section 3 도입
 
+> **🧒 한 줄 요약**: 문제 정의. Multivariate probabilistic forecasting setup.
+
+
 paper p.3. **Multivariate time series forecasting problem** 의 정확한 setup + DeepAR (Salinas 2019b) baseline 의 한계.
 
 ---

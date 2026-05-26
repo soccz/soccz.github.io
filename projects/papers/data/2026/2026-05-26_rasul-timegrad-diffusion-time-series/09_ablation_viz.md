@@ -1,5 +1,8 @@
 # 09 Ablation + Visualization (Section 4.4)
 
+> **🧒 한 줄 요약**: Ablation study + visualization.
+
+
 paper p.7. **Fig 3 (N ablation)** + **Fig 4 (Traffic prediction intervals)**. Hyperparameter $N$ 의 효과 + 시각적 검증.
 
 ---

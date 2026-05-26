@@ -1,5 +1,8 @@
 # 03 Motivation — Section 1 (Introduction)
 
+> **🧒 한 줄 요약**: Probabilistic forecasting의 한계. Diffusion model의 TS 적용.
+
+
 paper p.1. 시계열 forecasting 의 학계 역사 + 본 paper 의 답.
 
 ---

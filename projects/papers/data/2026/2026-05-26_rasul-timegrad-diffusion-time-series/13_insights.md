@@ -1,5 +1,8 @@
 # 13 메타 통찰 12개 — "이해를 넘어서"
 
+> **🧒 한 줄 요약**: 12 meta insights. TFM era connections.
+
+
 TimeGrad 의 한 줄 한 줄을 따라간 뒤 비로소 보이는 deeper points.
 
 ---

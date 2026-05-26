@@ -1,5 +1,8 @@
 # 00 README — TimeGrad (Autoregressive Denoising Diffusion for Multivariate Probabilistic Time Series Forecasting)
 
+> **🧒 한 줄 요약**: 본 deep dive 입구. TimeGrad = diffusion-based multivariate probabilistic forecasting first compelling.
+
+
 ## 원문 정보
 
 **제목**: Autoregressive Denoising Diffusion Models for Multivariate Probabilistic Time Series Forecasting
@@ -130,3 +133,21 @@
 | `figures/page6_Table2_CRPS_results.png` | p.6 | Table 2 — CRPS_sum on 6 datasets × 11 models (TimeGrad 5/6 SOTA) | ch08 |
 | `figures/page7_Fig3_ablation_N.png` | p.7 | Fig. 3 — Electricity CRPS_sum vs $N \in \{2,4,...,256\}$, optimal $N \approx 100$ | ch09 |
 | `figures/page7_Fig4_Traffic_predictions.png` | p.7 | Fig. 4 — Traffic 6/963 dimension prediction intervals (50%/90%) | ch09 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **TimeGrad의 diffusion TS 적용 의의?**
+3. **TFM era 에서 영향?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 04 → 05a-c → 08 → 16.
+
+2. **Diffusion + TS의 first compelling**. RNN encoder + diffusion decoder. Multivariate probabilistic SOTA.
+
+3. **Probabilistic specialist + TFM hybrid**. TFM의 zero-shot + TimeGrad의 high-precision multivariate uncertainty. Production stack.

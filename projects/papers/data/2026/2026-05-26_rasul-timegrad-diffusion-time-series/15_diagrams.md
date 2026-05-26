@@ -1,5 +1,8 @@
 # 15 Diagrams & Interactive Visualizations
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. Diffusion process, RNN+diffusion architecture.
+
+
 ASCII 도식 + interactive viz 카탈로그.
 
 ---

@@ -1,5 +1,8 @@
 # 04 Diffusion Probabilistic Model — Section 2 배경
 
+> **🧒 한 줄 요약**: Diffusion model 기초. DDPM, score matching, reverse process.
+
+
 paper p.2-3. **DDPM (Ho et al. 2020)** 의 정확한 수식 (Eq 1-7) — TimeGrad 의 핵심 도구.
 
 ---
@@ -342,3 +345,7 @@ paper:
 ---
 
 다음 [05_method_a_problem.md](05_method_a_problem.md) — TimeGrad 의 multivariate forecasting setup (Section 3 도입).
+
+
+```viz:timegrad-diffusion-process:title=paper §3.1 — Diffusion Process,caption=Step slider.
+```

@@ -1,5 +1,8 @@
 # 16 TimeGrad 이후 — Diffusion Time Series 의 계보
 
+> **🧒 한 줄 요약**: TimeGrad 후의 후속 연구. Diffusion TS variants.
+
+
 paper 가 ICML 2021 에서 발표된 이후, diffusion + time series 결합 분야는 폭발적으로 확장됨. 이 챕터는 **TimeGrad 의 직계 후속 논문들**을 시간 순서로 정리하고, 각자가 TimeGrad 의 어떤 한계를 어떻게 해결했는지 분석.
 
 ---

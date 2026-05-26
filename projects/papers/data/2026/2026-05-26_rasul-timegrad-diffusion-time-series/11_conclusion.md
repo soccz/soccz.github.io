@@ -1,5 +1,8 @@
 # 11 Conclusion + Future Work — Section 6
 
+> **🧒 한 줄 요약**: Conclusion. Diffusion-based probabilistic forecasting의 promise.
+
+
 paper p.7-8. 결론 + 4가지 future work direction.
 
 ---

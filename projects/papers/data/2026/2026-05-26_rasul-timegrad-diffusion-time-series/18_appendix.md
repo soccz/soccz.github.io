@@ -1,5 +1,8 @@
 # 18 Appendix — 전체 Hyperparameters · 상세 비교 · 보조 결과
 
+> **🧒 한 줄 요약**: Appendix. Hyperparameters, additional results.
+
+
 paper 의 Appendix A-D 와 supplementary material 의 핵심을 정리. 재현 가능성 (reproducibility) 의 모든 detail.
 
 ---

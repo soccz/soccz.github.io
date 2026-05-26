@@ -1,5 +1,8 @@
 # 08 Main Results — Table 2 (Section 4.3)
 
+> **🧒 한 줄 요약**: CRPS SOTA across 6 datasets. 10-30% improvement.
+
+
 paper p.6. **6 datasets × 11 baselines** CRPS_sum 결과. TimeGrad 가 5/6 SOTA.
 
 ---
@@ -147,3 +150,7 @@ ProTran (Tang-Matteson 2021) paper Table 1 에서 TimeGrad 가 baseline 으로 �
 3. **TimeGrad**: **diffusion 의 시계열 forecasting 첫 본격 적용** — 후속 (CSDI Tashiro 2021, TMDM Li 2024, Diffusion-TS Yuan 2024) 의 출발점. **ProTran**: latent attention + variational SSM 의 다른 axis — RNN 없는 시계열 probabilistic 의 출발점. **두 paper 다른 contribution**: TimeGrad = generative method (diffusion), ProTran = architectural innovation (SSM + Transformer). Concurrent works of NeurIPS/ICML 2021 의 시계열 Cambrian explosion.
 
 다음 [09_ablation_viz.md](09_ablation_viz.md) — Section 4.4 (Fig 3 N ablation, Fig 4 Traffic predictions).
+
+
+```viz:timegrad-results:title=paper Table 2 — CRPS Results,caption=Dataset selector.
+```

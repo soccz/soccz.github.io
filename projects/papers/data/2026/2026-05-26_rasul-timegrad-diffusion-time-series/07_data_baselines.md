@@ -1,5 +1,8 @@
 # 07 Datasets + Baselines + Metric (Section 4.1–4.2)
 
+> **🧒 한 줄 요약**: Datasets + baselines. DeepAR, GP, ARIMA, TFT.
+
+
 paper p.5. **6 real-world datasets + 11 baselines + CRPS_sum metric**. 실험 setup.
 
 ---

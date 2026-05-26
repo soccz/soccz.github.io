@@ -1,5 +1,8 @@
 # 14 PyTorch Code — TimeGrad 핵심 모듈
 
+> **🧒 한 줄 요약**: PyTorch TimeGrad 구현.
+
+
 paper 가 official 코드 미공개 (post-review). 본 deep dive 의 PyTorch 구현 — paper 의 architecture + Algorithm 1/2 의 충실 구현.
 
 **Caveat**: 본 코드는 **reference implementation**. paper 의 정확한 hyperparameter (8 residual blocks, 8 channels, dilated Conv1d) 동일. paper repo 와 1:1 동일 보장은 못 함 — paper text 가 일부 detail 미명시. GluonTS (https://github.com/awslabs/gluonts) 의 TimeGrad implementation 도 참고.

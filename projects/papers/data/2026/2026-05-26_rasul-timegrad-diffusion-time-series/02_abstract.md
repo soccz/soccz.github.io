@@ -1,5 +1,8 @@
 # 02 Abstract 풀어 읽기
 
+> **🧒 한 줄 요약**: Abstract. RNN + diffusion model = multivariate probabilistic forecasting.
+
+
 ## 제목: "Autoregressive Denoising Diffusion Models for Multivariate Probabilistic Time Series Forecasting"
 
 한국어로 풀면: **"다변량 확률적 시계열 예측을 위한 자기회귀 노이즈 제거 확산 모델"**

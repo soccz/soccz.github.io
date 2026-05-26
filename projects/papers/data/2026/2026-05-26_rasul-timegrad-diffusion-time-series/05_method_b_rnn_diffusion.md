@@ -1,5 +1,8 @@
 # 05b RNN + Conditional Diffusion — Section 3 본문 (Eq 9, 10)
 
+> **🧒 한 줄 요약**: RNN + diffusion architecture. Conditional denoising.
+
+
 paper p.3-4. **TimeGrad 의 architectural design**. RNN (LSTM/GRU) + conditional diffusion 의 결합.
 
 ---
@@ -268,3 +271,7 @@ paper p.5:
 4. **Importance sampling 의 variance reduction**: 모든 $n \in [1, N]$ + 모든 $\epsilon$ 을 한 step 에 다 학습하면 batch size 부담 ($N \times \text{batch}$). **Random sampling**: 매 step random $n$ + random $\epsilon$ → 한 step 에 한 노이즈 레벨 학습 → 평균적으로 모든 레벨 학습. 통계적으로 **unbiased gradient estimator**. Ho 2020 의 핵심 trick.
 
 다음 [05_method_c_scaling_covariates.md](05_method_c_scaling_covariates.md) — Scaling + Covariates (Section 3.3-3.4).
+
+
+```viz:timegrad-architecture:title=paper §3.2 — Architecture,caption=Phase selector.
+```

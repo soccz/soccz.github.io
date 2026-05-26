@@ -1,5 +1,8 @@
 # 05c Scaling + Covariates — Section 3.3–3.4
 
+> **🧒 한 줄 요약**: Scaling + covariate handling. Practical engineering.
+
+
 paper p.4. 실용적 detail — scaling (varying magnitudes 처리) + covariates (categorical embedding + time features + lag).
 
 ---
