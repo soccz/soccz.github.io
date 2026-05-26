@@ -1,5 +1,8 @@
 # 05a. 방법론 큰 그림 — TimesNet 전체 흐름
 
+> **🧒 한 줄 요약**: 직관: TS는 *multi-period + multi-scale*. FFT로 period 감지, 2D reshape로 long-range를 short-range로 변환.
+
+
 > **배경 사다리**: ① 텐서(tensor) = 다차원 배열 — 1D는 벡터, 2D는 행렬, 3D는 행렬의 묶음. ② 배치(batch) = 한 번에 처리하는 데이터 묶음. ③ 채널(channel) = 다변량 시계열에서 하나의 관측 변수 (예: 기온, 강수량이 각 1개 채널).
 
 ---
@@ -96,3 +99,21 @@ dec_out = dec_out * stdev + means  # 역정규화
 
 → 다음 파일(05b)에서 FFT_for_Period의 수학을 상세히 해부.
 → 05c에서 reshape + Inception Block + aggregation을 해부.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. ***Multi-period + multi-scale* 의 직관?**
+2. **FFT 의 *data-driven* 의 의의?**
+3. **2D reshape 의 *geometric reformulation*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

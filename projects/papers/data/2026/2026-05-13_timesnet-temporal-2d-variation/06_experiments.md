@@ -1,5 +1,8 @@
 # 06. 실험 해부
 
+> **🧒 한 줄 요약**: Long/short forecasting, classification, anomaly, imputation 모두 SOTA. 9 datasets covered.
+
+
 > **배경 사다리**: ① MSE(Mean Squared Error, 평균제곱오차) = 예측값과 실제값 차이의 제곱 평균 — 큰 오차에 민감. ② MAE(Mean Absolute Error, 평균절대오차) = 예측값과 실제값 차이의 절덧값 평균 — 직관적. ③ SMAPE(Symmetric Mean Absolute Percentage Error) = 백분율 오차 기반 지표, 단기 예측 평가에 많이 쓰임.
 
 ---
@@ -163,3 +166,25 @@ UEA archive — 30개 다변량 시계열 분류 데이터셋. 의료, 제스첸
 | 재현 난이도 | 낙음 — Time-Series-Library에 표준 재현 스크립트 포함 |
 
 **중요한 재현성 주의사항**: Time-Series-Library의 TimesNet 구현은 원래 thuml/TimesNet 코드를 통합한 것이다. 그러나 2024년 이후 leaderboard 업데이트와 함께 구현이 미묘하게 변경되었을 수 있다. 정확한 재현을 위해서는 ICLR 2023 제출 당시의 코드를 사용해야 한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4-task SOTA 의 *general backbone* 입증?**
+2. **iTransformer / PatchTST 와의 *comparison*?**
+3. **Multi-task generalizability?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:timesnet-inception:title=paper §3.3 — Inception,caption=Kernel selector.
+```

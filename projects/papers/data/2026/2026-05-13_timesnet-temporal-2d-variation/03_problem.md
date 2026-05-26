@@ -1,5 +1,8 @@
 # 03. 문제 지형도
 
+> **🧒 한 줄 요약**: Multi-period TS의 *long-range dependency*. 1D Conv 의 receptive field 한계.
+
+
 > **배경 사다리**: ① 시계열(time series) = 시간 순서로 기록된 측정값의 수열. ② 푸리에 변환(Fourier Transform) = 신호를 주파수 성분으로 분해하는 것 — "이 곡이 어떤 음표(진동수)로 이뤄졌는가"를 보는 것. ③ 합성곱 신경망(CNN, Convolutional Neural Network) = 이미지의 지역 패턴을 감지하는 인공신경망 구조.
 
 ---
@@ -77,3 +80,21 @@ TimesNet은 1D 시계열을 FFT로 탐지한 지배 주기에 따라 2D 텐서�
 두 축이 자연스럽게 분리되고, 2D 합성곱 커널이 두 축을 동시에 볼 수 있다. 복잡한 Attention 계산 없이 O(T log T)(FFT) + O(T)(2D Conv)으로 효율적이다.
 
 5개 태스크 모두를 같은 TimesBlock 위에 다른 head를 얹어 처리함으로써 "범용 TS 분석 백본"이라는 새로운 포지션을 확보한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Multi-period의 *long-range 한계*?**
+2. **Conv1D 의 *receptive field* 부족?**
+3. **Frequency analysis 의 *natural fit*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

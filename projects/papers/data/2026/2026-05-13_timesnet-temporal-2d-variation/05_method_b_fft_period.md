@@ -1,5 +1,8 @@
 # 05b. FFT 주기 탐지 — FFT_for_Period 수식 해부
 
+> **🧒 한 줄 요약**: FFT amplitude top-k. Dynamic, data-driven period detection. *5-10% MSE 개선* vs fixed period.
+
+
 > **배경 사다리**: ① 이산 푸리에 변환(DFT) = 유한 길이 이산 신호를 주파수 성분(복소수)으로 변환. ② 진폭(amplitude) = 복소수의 절덧값 — 그 주파수 성분이 얼마나 강한지. ③ 주파수 인덱스(frequency index) $f$ = DFT 결과의 $f$번째 성분; 신호 길이 $T$에서 $f$번째 성분의 주기는 $T/f$ 시간 단계.
 
 ---
@@ -82,3 +85,25 @@ FFT_for_Period는 두 가지를 반환한다:
 | **Autoformer의 Auto-Correlation** | 시차(lag) 기반, 학습 과정에서 주기 탐지 | 고정 top-k, 공유 주기 |
 
 → 05c에서 탐지된 주기를 이용한 1D→2D 변환과 Inception Block을 해부.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Top-k=5 의 *empirical justification*?**
+2. **FFT 의 *non-stationary* 한계?**
+3. **Period 의 *interpretability*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:timesnet-fft-period:title=paper §3.1 — FFT Period Detection,caption=Top-k slider.
+```

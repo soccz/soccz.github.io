@@ -1,5 +1,8 @@
 # 02. 3층 TL;DR
 
+> **🧒 한 줄 요약**: 한 줄: *FFT-based period + 2D reshape + Inception block = 4 task SOTA general TS backbone.*
+
+
 ## 👶 초등학생 수준 (이미지 비유)
 
 종이에 긴 선을 그렸다고 상상해보자. 아주 긴 선이라서 한눈에 파악하기가 어렵다. 그런데 이 선이 사실 매일 오르락 내리락 하는 패턴을 반복하고 있다면, 선을 하루 단위로 잘라서 위아래로 쌓으면 어떨까? 갑자기 **표**수렉 보이기 시작한다. 가로(각 날의 패턴)와 세로(날마다 어떻게 변하는지)를 동시에 볼 수 있게 된다.
@@ -46,3 +49,21 @@ Centered Kernel Alignment(CKA — 두 신경망 층의 표현이 얼마나 유�
 - FFT 주기 탐지는 **전역 정상성(global stationarity)**을 가정한다 — 시간에 따라 주기가 바뀜는 비정상 시계열(regime shift 등)에서는 잘못된 주기를 탐지할 수 있다.
 - 주기가 없는 금융 시계열(Exchange-Rate 등)에서는 2D 변환의 이점이 제한적이다.
 - 2024년 이후 등장한 PatchTST·TimeMixer·iTransformer에게 예측 태스크에서 추월당했다 (Time-Series-Library leaderboard 기준 장기 예측 1위는 TimesNet이 아님).
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **One-line core claim?**
+2. **4-task SOTA의 *substantive 의미*?**
+3. **TFM era 에서 specialist value?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

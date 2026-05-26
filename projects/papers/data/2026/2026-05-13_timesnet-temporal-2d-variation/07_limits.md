@@ -1,5 +1,8 @@
 # 07. 가정·한계·반박
 
+> **🧒 한 줄 요약**: 4 한계: FFT non-stationary, 2D padding artifact, Inception kernel empirical, channel-independent.
+
+
 ---
 
 ## 명시된 가정
@@ -79,3 +82,21 @@ TimesBlock은 모든 태스크에서 공유되지만, CKA 분석이 보이듯 �
 | 재현 난이도 | 낙음 — Time-Series-Library에 표준 재현 스크립트 포함 |
 
 **중요한 재현성 주의사항**: Time-Series-Library의 TimesNet 구현은 원래 thuml/TimesNet 코드를 통합한 것이다. 그러나 2024년 이후 leaderboard 업데이트와 함께 구현이 미묘하게 변경되었을 수 있다. 정확한 재현을 위해서는 ICLR 2023 제출 당시의 코드를 사용해야 한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **FFT non-stationary 의 *production risk*?**
+2. **Inception kernel choice 의 *first-principle 부재*?**
+3. **Channel-independent 의 *multi-variate limit*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

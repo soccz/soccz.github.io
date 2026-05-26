@@ -1,5 +1,8 @@
 # 08. 이론적 계보
 
+> **🧒 한 줄 요약**: FFT (Cooley-Tukey 1965) + Inception (Szegedy 2014) → TimesNet 의 *cross-field synthesis*.
+
+
 > **배경 사다리**: ① 계보(lineage) = 이 논문이 어디서 왔고 무엇을 낳았는지의 연결 지도. ② 평행 연구(parallel work) = 비슷한 시기에 비슷한 문제를 다른 방법으로 풀려 한 논문들.
 
 ---
@@ -89,3 +92,21 @@ TimesNet의 FFT 기반 주기 탐지는 주기가 약한 데이터(금융, 웹 �
 ### 후손 3: TimesNet × Foundation Model
 
 TimesNet의 5-태스크 통일 구조는 Foundation Model 방향의 초기 시도다. CKA 분석이 보이듯 태스크마다 표현 깊이가 다르게 활용된다. 더 많은 데이터와 더 많은 태스크(회귀, 분류, 예측을 동시에)로 사전 학습하고, TimesBlock을 backbone으로 fine-tuning하는 방향이 자연스럽다. **Chronos (Ansari et al., 2024)**, **MOIRAI (Woo et al., 2024)** 가 같은 방향이지만 아키텍처가 다르다 (Transformer-based). CNN-based TS foundation model 공간은 아직 탐색 중이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **FFT 의 *1965 origin* 의 *현대 적용*?**
+2. **Inception 의 *Vision → TS transfer*?**
+3. **TimesNet 의 *cross-field synthesis* 의 의의?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

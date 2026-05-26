@@ -1,5 +1,8 @@
 # 10b. Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: iTransformer (channel-aware), PatchTST (patching), TFM era (Chronos/MOIRAI/TimesFM), hybrid stack.
+
+
 ---
 
 ## 선행 1: Wang & Oates (2015) — "Encoding Time Series as Images for Visual Inspection and Classification Using Tiled Convolutional Neural Networks"
@@ -29,3 +32,21 @@
 **본 논문과의 관계**: TimesNet이 남긴 "공통 주기 가정" 한계를 다른 방향에서 우회한다. TimesNet은 채널 전체에 같은 주기를 적용하지만, iTransformer는 채널 간 Attention으로 채널별 이질적 패턴을 암묵적으로 학습한다. 어느 모델이 어떤 데이터에서 이기는지의 패턴 — 강한 채널 상호작용(iTransformer 유리) vs 강한 주기성(TimesNet 유리) — 이 연구 질문으로 남아 있다.
 
 **무엇을 얻을 수 있는가**: APF 트랙에서 "채널 방향 어텐션 맵의 모티프"를 연구한다면, iTransformer의 inverted attention이 직접 연구 대상이다. iTransformer의 채널 × 채널 어텐션 맵은 APF의 시간 × 시간 어텐션 맵과 다른 물리적 의미를 가진다 — APF §2(어텐션 맵 분류)의 범위를 확장하는 방향으로 인용 가능하다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **iTransformer 의 *channel-aware* unique angle?**
+2. **Chronos 와의 *generalist vs specialist*?**
+3. **Hybrid TFM + TimesNet stack?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

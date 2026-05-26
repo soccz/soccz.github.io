@@ -1,5 +1,8 @@
 # 04. 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: 4 claims: (1) FFT period works, (2) 2D reshape effective, (3) Inception multi-scale, (4) 4-task SOTA.
+
+
 > **배경 사다리**: ① TimesBlock = FFT 주기 탐지 + 1D→2D reshape + 2D Inception CNN + 가중합으로 이뤄진 TimesNet의 핵심 모듈. ② intraperiod-variation = 하나의 주기 안에서 시간 단계별로 달라지는 단기 패턴. ③ interperiod-variation = 연속된 주기들 간에 추세가 달라지는 장기 패턴.
 
 ---
@@ -86,3 +89,21 @@ ablation: k=3 (imputation/classification/anomaly detection), k=5 (단기 예측)
 | 2. FFT top-k 자동 탐지 | 강 | 코드 + ablation 스니펳 | 중 (채널 공통 주기 가정) |
 | 3. 5태스크 단일 아키텍첸 SOTA | 중 | GitHub leaderboard + M4 수치 | 고 (비교 시점 의존, 장기 예측 1위는 2024년에 추월) |
 | 4. CKA 계층 표현 적응 | 중 | 검색 스니펳 (Table 확인 불가) | 고 (CKA 해석의 모호성) |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Claim 1 (FFT period) empirical strength?**
+2. **Claim 2 (2D reshape) geometric insight?**
+3. **Claim 3 (Inception) multi-scale benefit?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

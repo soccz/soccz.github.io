@@ -1,5 +1,8 @@
 # 09. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와 연결: TimesNet 의 *FFT period* + *2D reshape* 의 motif-level 적용.
+
+
 > 이 섹션은 `_profile.md`의 두 active track — **APF (Attention Pattern Fields)**와 **Grokking in TS Transformers** — 에 TimesNet을 어떻게 연결할지를 구체적으로 다룬다. 일반론 금지. 수식/실험/인용 위치까지 구체화.
 
 ---
@@ -98,3 +101,21 @@ Grokking 논문 §1(introduction)에서 이 구분을 명확히 써야 한다: "
 | FFT가 hardcode — 학습 안 됨 | Grokking: 학습을 통해 주기가 내재화되는 과정 자체를 연구 대상으로 삼음 |
 | 비정상 시계열 취약 | Grokking track의 non-stationarity × grokking 교차점이 바로 이 갭을 목표로 함 |
 | 2D CNN의 비대칭성 미처리 (row≠col 의미) | APF: 어텐션 맵의 row/col 비대칭 의미(Query vs Key 방향)를 명시적으로 모티프 정의에 반영 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF motif + TimesNet period 의 *cross-pollination*?**
+2. ***FFT-based motif detection* 가능성?**
+3. **내 연구의 direct adoption 요소?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

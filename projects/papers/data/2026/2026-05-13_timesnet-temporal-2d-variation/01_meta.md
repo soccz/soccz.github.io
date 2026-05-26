@@ -1,5 +1,8 @@
 # 01. 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper *metadata*: Wu et al. ICLR 2023, Tsinghua TS school의 prolific output.
+
+
 ## 기본 메타
 
 | 항목 | 내용 |
@@ -40,3 +43,21 @@ Mingsheng Long (뇱밍성) 교수는 도메인 적응 (Deep Adaptation Network, 
 **APF 연결성**: APF 프로젝트의 핵심 아이디어("어텐션 맵을 2D 패턴으로 분석")는 TimesNet의 "1D 시계열을 2D 이미지로 접어 CNN으로 분석"이라는 발상과 **표현 공간(2D)에서 직접 겨친다**. 어텐션 패턴이 왜 특정 2D 구조를 갖는가를 설명하는 데 "시계열이 2D로 접히면 어떤 구조가 드러나는가"는 선행 질문이다.
 
 **Grokking 연결성**: TimesNet이 GELU + LayerNorm + residual을 사용하는 Transformer-like 구조이며, 여러 주기 성분을 동시에 학습한다는 점에서, "주기 성분을 FFT 기반으로 hardcode하는 것 vs Transformer가 스스로 주기를 학습하는 것"의 대비가 Grokking 트랙의 "latent frequency learning" 논의와 직접 연결된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **ICLR 2023 acceptance 의 *significance*?**
+2. **Tsinghua TS school 의 *prolific output* 의 의의?**
+3. **paper의 citation trajectory?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

@@ -1,5 +1,8 @@
 # TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis
 
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 16 + 7 chapters. TimesNet = pre-TFM specialist 시대 의 peak.
+
+
 ## 원문 정보
 
 | 항목 | 내용 |
@@ -58,3 +61,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. Follow-up 논문 3편 |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 실험 아이디어 2개 |
 | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 의 권장 학습 path?**
+2. **TimesNet 의 *pre-TFM specialist 시대 peak* 의 의미?**
+3. **2024 TFM era 에서 TimesNet 의 *enduring value*?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a→c → 06 → 17. 시간 부족 시 02 + 05b + 06 + 11 핵심.
+
+2. **Specialist 시대 4-task SOTA**. Pre-TimesNet의 task-specific architectures → TimesNet 의 *general backbone + task heads* 의 *first compelling demonstration*. 후속 TFM 의 generality 의 *direct precursor*.
+
+3. **Per-task fine-tuning 의 *production deployment* value**. TFM 의 zero-shot 좋지만 *critical accuracy* 에서는 *per-task specialist* 가 *수 percent 우위*. TimesNet 의 *small + flexible* = *cost-effective production*.

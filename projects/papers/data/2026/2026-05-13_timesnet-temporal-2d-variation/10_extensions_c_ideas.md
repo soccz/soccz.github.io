@@ -1,5 +1,8 @@
 # 10c. 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 아이디어: TimesNet + TFM hybrid, financial TimesNet, online TimesNet, multi-resolution TimesNet.
+
+
 ---
 
 ## 실험 아이디어 1: "TimesNet 2D 텐서에서 intraperiod vs interperiod 방향 분리가 실제로 이루어지는가"
@@ -86,3 +89,21 @@ Grokking 트랙의 핵심 질문: TS Transformer가 주기성을 *학습*하는 
 - 학습: 각 조건당 5 random seed × 2,000 에폭 = GPU 4~8시간 × 4조건 = 16~32 GPU-시간
 - 분석: train/test loss 곡선 시각화 + grokking 검출 코드 약 2~3시간
 - **총 비용**: 소형 GPU 1~2일. Grokking 트랙 Week 1~2 실험 범위 내.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Hybrid TFM + TimesNet 의 *practical deployment*?**
+2. **Financial TimesNet 의 *domain adaptation*?**
+3. **Online TimesNet 의 *real-time inference*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

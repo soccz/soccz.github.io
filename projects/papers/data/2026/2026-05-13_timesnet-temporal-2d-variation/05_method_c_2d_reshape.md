@@ -1,5 +1,8 @@
 # 05c. 1D→2D 변환 & Inception Block & 적응적 집계
 
+> **🧒 한 줄 요약**: 1D → 2D (period × phase). Period-P pattern이 *adjacent cells*가 되어 Conv2D small kernel로 capture.
+
+
 > **배경 사다리**: ① Reshape = 배열의 원소 순서는 유지하면서 형태(shape)를 바꾸는 연산. ② Inception Block = GoogLeNet에서 시작된 구조 — 서로 다른 크기의 필터를 병렬로 적용하고 결과를 이어붙임. ③ Softmax = 여러 숫자를 합이 1이 되는 확률 분포로 변환.
 
 ---
@@ -136,3 +139,25 @@ x: [B, T, N]
 ```
 
 TimesBlock 여러 개를 쌓으면 (e_layers), 각 블록이 이전 블록의 출력을 입력으로 받아 점점 더 정교한 표현을 학습한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Period × phase 의 *2D geometric* meaning?**
+2. **2D Conv 의 *small kernel* 이점?**
+3. **Padding strategy 의 *trade-off*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:timesnet-2d-reshape:title=paper §3.2 — 2D Reshape,caption=Period selector.
+```

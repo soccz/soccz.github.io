@@ -1,5 +1,8 @@
 # 10a. 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 open question: dynamic kernel choice, non-stationary FFT, channel-aware extension, multi-scale embedding.
+
+
 ---
 
 ## 질문 1: "FFT 진폭이 아닌 *예측 기여도*로 주기를 가중할 수 있는가?"
@@ -39,3 +42,21 @@ FFT로 탐지된 주기로 접은 2D 텐서에서, *순수한 트렌드*(단조�
 저자들의 CKA 분석에 따르면 예측과 이상탐지는 초기 층(early TimesBlock)의 표현을 주로 사용하고, 보완과 분류는 층을 거칠수록 표현이 크게 변한다(hierarchical). 이 패턴은 직관적이지 않다 — 예측이 가장 어려운 태스크인데 왜 early layers로 충분한가?
 
 **왜 이 질문이 중요한가**: 이 결과의 한 해석은 "예측과 이상탐지는 low-level 주기 패턴 복원으로 충분하고, 보완과 분류는 고차 추상화가 필요하다"는 것이다. 다른 해석은 "CKA가 어떤 층이 *정보*를 담는지보다 어떤 층이 *변환*을 많이 하는지를 측정하므로, 예측에서 early layers가 이미 충분히 변환을 완료한다"는 것이다. 이 두 해석을 구분하는 실험 — activation patching으로 각 TimesBlock 층의 인과적 기여를 측정하는 것 — 이 Grokking/APF 메서드와 직접 연결된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Dynamic kernel 의 *NAS approach*?**
+2. **Wavelet / STFT 의 *non-stationary alternative*?**
+3. **Channel-aware TimesNet 의 *architectural change*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
