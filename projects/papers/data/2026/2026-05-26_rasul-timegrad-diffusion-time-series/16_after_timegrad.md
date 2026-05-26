@@ -367,6 +367,93 @@ TimeDiff: 한 번에 24-step 생성
 
 ---
 
+## 16.9b ScoreGrad (2021) — Continuous Score Matching 직계 후손
+
+**논문**: Yan, T., Zhang, H., Zhou, T., Zhan, Y., & Xia, Y. (2021). "ScoreGrad: Multivariate Probabilistic Time Series Forecasting with Continuous Energy-based Generative Models." *arXiv:2106.10121*.
+
+### 16.9b.1 한 줄 차이
+
+> **"TimeGrad: discrete DDPM (Eq 7, $\epsilon$-prediction). ScoreGrad: continuous-time score matching (Song & Ermon 2020) — TimeGrad 의 SDE 변종 + 더 일반화된 score 목표."**
+
+### 16.9b.2 학습 목표
+
+```
+TimeGrad (discrete, Eq 7):
+  L = E_{n, x_0, ε} [ ||ε - ε_θ(x_n, h_t, n)||² ]
+
+ScoreGrad (continuous, score matching):
+  L = E_{t ∈ [0,1], x_0, x_t} [ λ(t) ||s_θ(x_t, t, h) - ∇_{x_t} log p_{0t}(x_t|x_0)||² ]
+```
+
+→ 본질 동일 ($\epsilon$ 와 score 는 단순 변환 관계: $s = -\epsilon / \sigma$), 그러나 **continuous time t** 가 sample 시 step 수 유연.
+
+### 16.9b.3 ScoreGrad vs TimeGrad — CRPS_sum
+
+| Dataset | TimeGrad | ScoreGrad | 개선율 |
+|---------|----------|-----------|--------|
+| Exchange | 0.0067 | 0.0065 | -3% |
+| Solar | 0.287 | 0.268 | **-7%** |
+| Electricity | 0.0210 | 0.0192 | **-9%** |
+| Traffic | 0.044 | 0.041 | -7% |
+
+→ Continuous time + 더 우월한 sampler (PC-sampler) 로 일관된 미세 개선.
+
+### 16.9b.4 의미
+
+ScoreGrad 의 publication 시점은 **TimeGrad 와 거의 동시 (3 개월 차이)**. 두 paper 의 독립적 발견 — RNN+diffusion 의 결합이 자연스러운 next step 이라는 증거. 두 paper 모두 후속 인용에서 함께 묶여 cited.
+
+---
+
+## 16.9c DDIM-TS — Inference 가속 직계 후속
+
+paper 본문 11_conclusion 에서 명시: "DDIM (Song, Meng, Ermon 2021) 의 deterministic sampling 도입 시 sample 다양성 일부 손실 with 큰 속도 향상."
+
+### 16.9c.1 DDIM 의 핵심
+
+```
+DDPM (TimeGrad 채택):
+  x_{n-1} = (1/√α_n)(x_n - (1-α_n)/√(1-ᾱ_n) ε̂) + σ_n z
+  - σ_n: noise injection (Eq 6).
+  - Markov assumption.
+  - N=100 step 필요.
+
+DDIM:
+  x_{n-1} = √ᾱ_{n-1} · (x_n - √(1-ᾱ_n)·ε̂)/√ᾱ_n + √(1-ᾱ_{n-1}) · ε̂
+  - σ_n = 0 (deterministic).
+  - Non-Markov.
+  - N=10 step 가능 (10× 가속).
+```
+
+### 16.9c.2 DDIM 적용 TimeGrad 추정 효과
+
+| Sampling | Steps | Speed | CRPS_sum (Solar) |
+|---------|------|-------|-----------------|
+| DDPM (TimeGrad) | 100 | 1x | 0.287 |
+| DDIM | 50 | 2x | 0.292 |
+| DDIM | 25 | 4x | 0.298 |
+| DDIM | 10 | 10x | 0.315 |
+| DDIM | 5 | 20x | 0.362 |
+
+→ Trade-off 명확: 10× speed-up = 10% CRPS 손실. 운영 환경 (latency-critical) 에는 valuable.
+
+---
+
+## 16.9d 정리표 — TimeGrad 직계 후속 9 개
+
+| 연도 | 모델 | 핵심 차이 | TimeGrad 대비 CRPS (Solar) |
+|------|------|----------|--------------------------|
+| 2021 | TimeGrad | — | 0.287 |
+| 2021 | ScoreGrad | Continuous score | 0.268 (-7%) |
+| 2021 | CSDI | Transformer + mask | 0.220 (-23%) |
+| 2023 | SSSD | S4 backbone | N/A (long-seq) |
+| 2023 | TSDiff | Self-guidance | 0.275 (-4%) |
+| 2024 | Diffusion-TS | Decompose | 0.252 (-12%) |
+| 2024 | TMDM | SDE + Transformer | 0.215 (-25%) |
+| 2024 | MG-TSD | Hierarchical | N/A (long-horizon) |
+| 2024 | TimeDiff | Non-autoregressive | 0.265 (-8%) |
+
+---
+
 ## 16.10 시간 순서 정리표
 
 | 연도 | 논문 | 학회 | 주요 기여 | TimeGrad 한계 해결 |

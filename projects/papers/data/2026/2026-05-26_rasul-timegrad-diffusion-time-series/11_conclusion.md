@@ -173,4 +173,13 @@ Nalisnick 2019 의 likelihood 모델 counterintuitive OOD 발견 → EBM 의 adv
 2. **Training**: 1 forward per step — fast. Normalizing flow 의 multiple bijections stack 보다 빠름. **Inference**: $N = 100$ loop — slow. 이유: training 은 noise prediction 한 random $n$ 만 학습 (Algorithm 1) → unbiased gradient. Inference 는 sample 생성 — Markov chain 의 정확한 sequential reverse process 필요. Random skip 불가. 이 비대칭이 DDPM 류 모든 모델의 특징.
 3. **TimeGrad**: **Generative method** (diffusion). EBM lineage 의 시계열 적용 — functional form 자유, high-D distribution 학습 표준. **ProTran**: **Architectural innovation** (SSM + Transformer). RNN 완전 제거 + latent space attention — 시계열 architecture 의 paradigm shift. 두 paper 가 같은 task (multivariate probabilistic forecasting) 의 다른 axis 공략. concurrent works of NeurIPS/ICML 2021 — 시계열 Cambrian explosion 의 다른 갈래.
 
+---
+
+## 11.X 인터랙티브 — TimeGrad 의 유산
+
+```viz:tg-vs-successors:title=TimeGrad 의 영향 — 후속 4 모델 (legacy view),caption=Dataset 셀렉터로 Solar / Electricity / Traffic / Wikipedia 전환. TimeGrad (2021) 대비 CSDI / Diffusion-TS / TMDM 의 CRPS 개선율. 후속 paper 들의 발전이 TimeGrad 의 RNN+DDPM 골격을 출발점으로 함. → ICML 2021 의 seminal contribution 확인.
+```
+
+---
+
 다음 [12_glossary.md](12_glossary.md) — 용어집 + 표기법 + References.

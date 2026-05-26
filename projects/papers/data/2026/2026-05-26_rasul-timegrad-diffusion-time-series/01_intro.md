@@ -204,6 +204,18 @@ paper Table 2 의 평가 metric. 6 datasets × 11 models 의 CRPS_sum 비교. **
 | EBM | 에너지 표면 (분포의 골짜기) | DDPM 의 이론적 토대 |
 | CRPS | 확률 예측 점수표 | 평가 metric (Table 2) |
 
+---
+
+## 인터랙티브 — 전체 Pipeline 미리보기
+
+```viz:tg-architecture-flow:title=TimeGrad 전체 Pipeline (intro preview),caption=Step 토글로 4 단계 (RNN encoding → h_{t-1} → Diffusion reverse loop → x^0_t) 단계별 highlight. 처음 보면 직관 안 잡힘 → 04_diffusion / 05b_rnn_diffusion 챕터 후 다시 보면 명료. RNN 의 hidden state 가 N=100 diffusion step 모두에 conditioning.
+```
+
+```viz:tg-diffusion-process:title=Diffusion Process 개념 미리보기 (intro),caption=n 슬라이더로 forward diffusion 진행 (1→100). n=1: 원본 데이터 거의 그대로. n=100: pure Gaussian noise. → DDPM 의 "양방향 변환" 직관 이해. 04_diffusion_background 에서 수식과 함께 자세히.
+```
+
+---
+
 이제 [02_abstract.md](02_abstract.md) — 제목 + Abstract 풀어 읽기.
 
 ---

@@ -367,4 +367,16 @@ paper 의 한계 (N loop sampling, RNN backbone, discrete data dequantization) �
 3. **"General tool > Domain-specific variation"**. 한 분야에서 검증된 SOTA tool 을 다른 분야에 직접 transfer + 최소한 조건화. ViT → Image, DDPM → Audio/Time Series, BERT → 모든 sequence domain. Future: foundation model 의 cross-domain 학습.
 4. **분포 학습**. Forecasting = 미래 시점 의 분포 sample. Anomaly = 학습된 분포의 likelihood/score 가 low → outlier. **같은 학습된 model 이 두 task 모두**. EBM 의 OOD 우월성 (Du-Mordatch 2019) 이 anomaly detection 의 자연 base. 한 model 두 task 의 효율 + 일관성.
 
+---
+
+## 13.X 인터랙티브 — Insight 시각화
+
+```viz:tg-loss-trajectory:title=Insight #4 시각화 — 학습 4 단계 dynamics,caption=Highlight 셀렉터로 4 phase 확인. Insight #4 ("학습이 4 단계로 진행됨") 의 직접 시각화. Phase 1 (mean fit) → 2 (variance fit) → 3 (multimodal) → 4 (refine). 각 phase 가 noise prediction 의 다른 측면을 학습 — DDPM 의 implicit curriculum.
+```
+
+```viz:tg-elbo-derivation:title=Insight #2 시각화 — ELBO 유도 체인,caption=Step 슬라이더로 5 단계. Insight #2 ("Eq 7 의 단순 MSE 가 강력한 이유") 의 수학적 근거. MLE 적분 불가능 → ELBO → Closed-form posterior → ε reparametrization → Simplified L₁. 이 chain 이 image diffusion 의 핵심 + 시계열에 직접 transfer 가능.
+```
+
+---
+
 다음 [14_code.md](14_code.md) — PyTorch TimeGrad 구현.

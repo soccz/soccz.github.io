@@ -291,6 +291,111 @@ Electricity (D=370):
 
 ---
 
+## 18.10b 학습 시 흔한 Failure Modes
+
+paper 가 직접 언급 안 하지만 GluonTS 의 TimeGrad 구현 디버깅 시 자주 발생:
+
+### 18.10b.1 Mode Collapse — 모든 sample 이 비슷한 trajectory
+
+**증상**: 100 sample 의 prediction 이 거의 동일 — uncertainty 0 으로 수렴.
+
+**원인**:
+- $\epsilon_\theta$ network capacity 부족 (residual layer < 8).
+- Diffusion N 너무 작음 (N < 50).
+- Beta schedule 의 $\beta_{end}$ 너무 작음 (< 0.05) — noise 가 부족하여 학습 시 진짜 분포 학습 X.
+
+**해결**:
+- Beta schedule $\beta_{end} = 0.1$ 또는 cosine schedule.
+- N=100 까지 늘리기.
+- $\epsilon_\theta$ channel 32 → 64 증가.
+
+### 18.10b.2 Long-range Drift — 24+ step 예측에서 trajectory 발산
+
+**증상**: 처음 12 step 은 정확, 18+ step 부터 비현실적 값 (음수 demand, 1000% peak).
+
+**원인**:
+- Autoregressive prediction 의 error accumulation.
+- 학습 데이터의 long-horizon coverage 부족.
+
+**해결**:
+- 학습 시 prediction window 길이 다양화 (curriculum learning).
+- Lag features 더 길게 (paper: 24, 168 → 한 달치 추가).
+- Output clipping (post-process).
+
+### 18.10b.3 Calibration Drift — 50% interval 이 실제로 30%만 cover
+
+**증상**: 예측 50% confidence interval 안에 실제 값이 30% 만 들어감.
+
+**원인**:
+- Variance underestimation — $\Sigma_\theta = \tilde\beta_n$ 의 한계.
+- 학습 데이터에 outlier 부족 (representative coverage X).
+
+**해결**:
+- Learned variance: $\Sigma_\theta = v_\theta(x_n, n)$ (Nichol & Dhariwal 2021).
+- Temperature scaling — sampling 시 noise 1.0 → 1.1× 증폭.
+
+### 18.10b.4 NaN Loss — 학습 도중 loss 폭발
+
+**증상**: epoch 7 부근에서 loss = NaN, 학습 정지.
+
+**원인**:
+- $\epsilon$ 의 scale 너무 큼 (per-entity scaling 안 함).
+- $1/\sqrt{1-\bar\alpha_n}$ 의 numerical issue (small $1-\bar\alpha_n$).
+
+**해결**:
+- Per-entity normalize: $x \to x/\mu_i$ (paper Section 3.3).
+- Gradient clipping `max_norm=1.0`.
+- $1-\bar\alpha_n$ 의 minimum clamp 1e-8.
+
+---
+
+## 18.10c 학습 가속 Tricks
+
+### 18.10c.1 Mixed Precision (fp16)
+
+```python
+from torch.cuda.amp import autocast, GradScaler
+
+scaler = GradScaler()
+for batch in loader:
+    optimizer.zero_grad()
+    with autocast():
+        loss = model(batch)
+    scaler.scale(loss).backward()
+    scaler.step(optimizer)
+    scaler.update()
+```
+
+→ V100 16GB → 2× 속도 + 메모리 절반.
+
+### 18.10c.2 Random Time Subsampling
+
+paper 의 batch_size=64 + sequence length=192 (Solar context) → 1 batch ~ 65K elements.
+
+```python
+# 학습 시 context window 의 random subset 만 사용
+def subsample(x, sub_len=96):
+    start = np.random.randint(0, x.shape[1] - sub_len)
+    return x[:, start:start+sub_len]
+```
+
+→ Effective batch size 4× 증가 — 메모리 효율.
+
+### 18.10c.3 Exponential Moving Average (EMA)
+
+```python
+ema_decay = 0.999
+ema_model = copy.deepcopy(model)
+for batch in loader:
+    train_step(model, batch)
+    for ep, p in zip(ema_model.parameters(), model.parameters()):
+        ep.data = ema_decay * ep.data + (1 - ema_decay) * p.data
+```
+
+→ Sampling 시 ema_model 사용 — CRPS 미세 개선 (1-3%).
+
+---
+
 ## 18.11 자주 묻는 질문
 
 ### 18.11.1 Q1: GluonTS 의 LSTM hidden=40 이 너무 작지 않나?

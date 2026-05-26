@@ -221,4 +221,16 @@ For each batch:                          For each rolling window:
 2. **Backbone**: Transformer-MAF = Transformer + Masked Autoregressive Flow. TimeGrad = RNN + DDPM diffusion. **Distribution**: MAF = invertible NN (Jacobian determinant 제약). Diffusion = score matching (functional form 자유). **결과**: paper Table 2 에서 TimeGrad 가 6 datasets 중 5개에서 best (Exchange tie at 0.005-0.006). **방향**: Zalando Research 의 동일 그룹의 후속 work — flow → diffusion.
 3. (a) **Compactness**: $D = 2,000$ entities 의 평균 CRPS 보다 $D$-sum CRPS 가 simpler scalar. (b) **Likelihood-free**: 모든 baseline (analytic Gaussian vs sample-based diffusion) 비교 가능 — likelihood 계산 안 됨. (c) **Proper scoring rule** (de Bézenac 2020): 진실된 sum distribution 출력 시 최소 — 모델이 dimension 간 합산 의미 학습 강제. (d) **단점**: dimension 간 cancellation 가능 (entity A 양수 + B 음수 → 합산 0). 이를 위해 paper Table 2 에 추가 per-dimension CRPS 결과 (Internet Appendix) 도 있음.
 
+---
+
+## 7.X 인터랙티브 — 6 Datasets 의 Dimension 분포
+
+```viz:tg-hyperparameter-grid:title=6 Datasets — Hyperparameter Identity + CRPS Scaling,caption=View 셀렉터로 두 시각화 전환. 'Hyperparameter identity': 6 dataset 모두 같은 hyperparameter (RNN cells, layers, N, β, batch, lr) — paper 의 robustness claim. 'CRPS_sum + D scaling': D=8 (Exchange) → D=2000 (Wikipedia) 의 250× 변화에도 같은 config 로 학습. dataset-specific tuning 불필요.
+```
+
+```viz:tg-crps-vs-d:title=CRPS_sum vs Dimension D (TimeGrad vs baselines),caption=Models 셀렉터로 표시 모델 전환. TimeGrad / Trans-MAF / GP-Copula 를 log-log scale 로 비교. D 가 8 → 2000 으로 증가해도 TimeGrad 의 CRPS 가 baseline 대비 안정. high-D 영역 (Traffic, Taxi, Wikipedia) 에서 차이 더 큼.
+```
+
+---
+
 다음 [08_main_results.md](08_main_results.md) — Table 2 정확 수치 분석.

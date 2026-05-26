@@ -113,6 +113,8 @@
 | (신규) `tg-loss-trajectory` | 14 | 학습 4단계 trajectory (Phase 1-4 loss curve) |
 | (신규) `tg-sampling-trajectory` | 06 | Inference 시 $x^N \to x^0$ 의 reverse trajectory 시각화 |
 | (신규) `tg-hyperparameter-grid` | 18 | 6 dataset × 6 hyperparameter heatmap |
+| (신규) `tg-elbo-derivation` | 04, 13 | Step-by-step ELBO 유도 (Eq 4 → Eq 7) |
+| (신규) `tg-crps-vs-d` | 03, 07 | CRPS_sum vs D log-log scatter (TimeGrad vs baselines) |
 
 → 전체 카탈로그는 [15_diagrams.md](15_diagrams.md).
 

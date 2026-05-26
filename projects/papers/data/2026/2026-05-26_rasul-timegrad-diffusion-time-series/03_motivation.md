@@ -149,4 +149,16 @@ paper:
 2. **Normalizing flow 한계**: invertible NN + Jacobian determinant 제약 → 모델 자유도 제한. 특정 architecture (RealNVP, MAF) 만 가능. **EBM 의 답**: $E_\theta(x)$ 가 임의 신경망 — functional form 완전 자유. 단점은 normalizing constant $Z$ intractable, but DDPM 이 variational bound 로 회피.
 3. (a) **Autoregressive 의 extrapolation power**: 시계열 history 를 명시적 모델링 → long-horizon 예측 안정. (b) **EBM 의 flexibility**: high-dimensional general distribution 학습 가능. Vec-LSTM (low-rank Gaussian) 의 covariance 제약 없음.
 
+---
+
+## 인터랙티브 — Motivation 의 결과 증거
+
+```viz:tg-crps-comparison:title=Motivation 의 실증 근거 — Table 2 (6 datasets, 11 models),caption=paper 의 motivation ("multivariate + probabilistic + flexible") 이 실제 결과로 입증됨. dataset 별 11 model bar 비교. TimeGrad 가 5/6 dataset SOTA. Trans-MAF (Normalizing Flow) / GP-Copula (Low-rank Gaussian) 대비 우월. → motivation 의 정당화.
+```
+
+```viz:tg-crps-vs-d:title=Motivation — D 의 250× 변화에 robust,caption=Models 셀렉터로 TimeGrad / Trans-MAF / GP-Copula 표시 전환. log-log scale 로 CRPS vs D scatter. TimeGrad 가 6 datasets 전체 (D=8 to D=2000) 에서 다른 모델 능가 또는 동등. → high-dimensional multivariate 의 EBM 우월성 입증.
+```
+
+---
+
 다음 [04_diffusion_background.md](04_diffusion_background.md) — Section 2 의 DDPM (Ho 2020) 배경.

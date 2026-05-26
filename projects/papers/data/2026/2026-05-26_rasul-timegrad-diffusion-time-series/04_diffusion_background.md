@@ -332,4 +332,13 @@ paper:
 3. **수치 안정성**: $\mu_\theta$ 는 $\mathbf{x}^0$ 와 $\mathbf{x}^n$ 의 weighted sum (Eq 5의 $\tilde\mu$) 학습 — 두 다른 scale 의 vector. $\epsilon_\theta$ 는 unit Gaussian noise 학습 — scale invariant + zero-centered. 추가로 **EBM lineage 와 호환** (Song-Ermon 2019 의 NCSN loss 동일 형태) — score matching 정신 직접 계승.
 4. **Reverse process 의 마지막 step**: $\mathbf{x}^1 \to \mathbf{x}^0$. $\mathbf{x}^0$ 는 **deterministic data** (원본) 이라야 함 — Langevin noise 추가하면 final output 이 noisy. 그래서 $\mathbf{z} = 0$ — pure deterministic prediction. 다른 step ($n = 2, \ldots, N$) 은 sampling diversity 위해 noise 유지.
 
+---
+
+## 4.X 인터랙티브 — ELBO 유도 체인
+
+```viz:tg-elbo-derivation:title=ELBO Derivation Chain (Eq 4 → Eq 7),caption=Step 슬라이더로 5 단계 진행. Step 0: Direct MLE 불가능 (적분 intractable). Step 1: ELBO (Eq 4) — variational lower bound. Step 2: Forward posterior closed-form Gaussian (Eq 5). Step 3: μ_θ 를 ε_θ 로 reparametrize (Eq 6). Step 4: ★ Simplified L₁ noise prediction loss (Eq 7) — TimeGrad 학습 목표.
+```
+
+---
+
 다음 [05_method_a_problem.md](05_method_a_problem.md) — TimeGrad 의 multivariate forecasting setup (Section 3 도입).
