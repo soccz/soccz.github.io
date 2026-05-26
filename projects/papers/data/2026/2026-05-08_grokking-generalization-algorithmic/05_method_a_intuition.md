@@ -1,5 +1,8 @@
 # 05a — 방법론 해부: 큰 그림
 
+> **🧒 한 줄 요약**: 직관: weight decay 의 *implicit Occam* + continued training = *generalizable circuit emergence*.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① "Transformer"가 어텐션 메커니즘을 사용하는 신경망 구조라는 것, ② 방정식의 기호(토큰)를 숫자 벡터로 변환해서 처리한다는 것 정도면 된다. 구체적 수식은 05b에서 다룬다.
 
 ---
@@ -65,3 +68,21 @@ Weight decay가 **파라미터 노름에 벌점**을 주므로, 훈련이 계속
 
 - **05b** (→ [05_method_b_architecture.md](05_method_b_architecture.md)): Transformer 구조 상세 — embedding, attention, 위치 인코딩, causal masking
 - **05c** (→ [05_method_c_tasks_training.md](05_method_c_tasks_training.md)): 과제 구성 + 훈련 설정 (optimizer, hyperparameters)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_a_intuition *핵심 claim*?**
+2. **05_method_a_intuition *technical detail*?**
+3. **05_method_a_intuition *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

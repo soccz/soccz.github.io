@@ -1,5 +1,8 @@
 # 09 — 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와 연결: grokking 현상이 *real reasoning model* 에 적용 가능성.
+
+
 > **이 절에서 참조하는 내 연구**: `_profile.md`의 §A (Grokking axis), §B (Mech interp), §C (Attention-PE geometry), §D (TS Transformer), §F (원거리). 주요 active 프로젝트: Grokking in TS Transformers (active §A/§B), APF (active §B/§C).
 
 ---
@@ -122,3 +125,21 @@ Power 2022의 공식 코드(`github.com/openai/grok`)는 내 Grokking 실험의 
 1. **Architecture 재사용 가능성**: `grok/transformer.py`의 2-layer decoder-only Transformer를 TS 예측 Transformer의 베이스라인으로 사용할 수 있다 (d_model, n_heads는 다르게 설정하더라도 구조는 동일)
 2. **Optimizer 참조**: `CustomAdamW`의 β₂=0.98 설정이 표준보다 최신 gradient에 민감하다는 것을 알고, 내 실험에서 같은 β₂=0.98을 쓸지 표준 0.999를 쓸지 결정해야 함
 3. **위상 다이어그램 코드**: 2D 파라미터 스윕(weight decay × 데이터 크기) 실험 설계를 참조해 나의 (weight decay × non-stationarity) 스윕을 설계할 수 있음
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **09_my_research *핵심 claim*?**
+2. **09_my_research *technical detail*?**
+3. **09_my_research *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

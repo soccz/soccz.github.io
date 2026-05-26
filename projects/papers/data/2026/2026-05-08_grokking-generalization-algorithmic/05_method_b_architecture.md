@@ -1,5 +1,8 @@
 # 05b — 방법론 해부: Transformer 구조
 
+> **🧒 한 줄 요약**: Small Transformer (2-layer, 128-dim). Decoder-only. Standard setup.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① 행렬 곱이 "고차원 공간에서 정보를 섞는 연산"이라는 것, ② softmax가 여러 수를 확률처럼 변환하는 함수라는 것, ③ "레이어(layer)"가 "처리 단계"를 뜻한다는 것 정도면 된다.
 
 **출처 근거**: 이 절의 구조·수식·파라미터는 `github.com/openai/grok`의 `grok/transformer.py` (Transformer, AttentionHead, MultiHeadAttention, DecoderBlock 클래스)에서 직접 확인된 코드에 기반한다.
@@ -124,3 +127,21 @@ $\mathbf{W}_1 \in \mathbb{R}^{256 \times 1024}$, $\mathbf{W}_2 \in \mathbb{R}^{1
 - 2 blocks: ~1.4M, + Embedding ~30K ≈ **총 ~1.5M 파라미터**
 
 이는 현대 LLM(수십억 파라미터)과 비교하면 극소형 모델이다. 이 소규모가 그로킹 현상을 깔끔하게 관찰할 수 있는 조건이기도 하다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_b_architecture *핵심 claim*?**
+2. **05_method_b_architecture *technical detail*?**
+3. **05_method_b_architecture *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

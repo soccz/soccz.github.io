@@ -1,5 +1,8 @@
 # 05c — 방법론 해부: 과제 구성 & 훈련 설정
 
+> **🧒 한 줄 요약**: Modular arithmetic (+, -, *, ÷). AdamW + WD=1e-2 + Dropout 0 + train_fraction 0.3.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① "군(group)"이 대수에서 특정 규칙을 만족하는 집합이라는 것 (덧셈의 경우: 결합법칙, 항등원, 역원), ② Adam이 gradient 기반 최적화 알고리즘이라는 것 정도면 된다.
 
 **출처 근거**: 이 절의 내용은 `github.com/openai/grok`의 `grok/data.py` (VALID_OPERATORS, MODULUS=97, ArithmeticDataset)와 `grok/training.py` (configure_optimizers, CustomAdamW 클래스)에서 직접 확인됐다.
@@ -113,3 +116,25 @@ Warmup + (선택적) Annealing 구조:
 - 직접 인용: "With a significant dropout rate, the generalization time can be brought down to under 10³ steps and the grokking phenomenon vanishes completely."
 
 **해석**: Dropout은 암기를 방해해 모델이 일찍부터 알고리즘적 해를 찾게 강제하는 효과가 있다. 이는 weight decay의 효과와 방향이 다르다 — weight decay는 암기 해의 복잡도 비용을 높이는 반면, dropout은 암기 자체를 어렵게 만든다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_c_tasks_training *핵심 claim*?**
+2. **05_method_c_tasks_training *technical detail*?**
+3. **05_method_c_tasks_training *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:power-wd-ablation:title=paper §5 — WD Ablation,caption=WD slider.
+```

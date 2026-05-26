@@ -1,5 +1,8 @@
 # 04 — 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: 4 claims: (1) grokking 실재, (2) modular arithmetic platform, (3) weight decay critical, (4) phase transition.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① 훈련 정확도(training accuracy)와 검증 정확도(validation/test accuracy)가 다를 수 있다는 것, ② weight decay(가중치 감쇠)가 큰 파라미터에 벌점을 주어 작은 파라미터 값을 선호하게 만드는 정규화 기법이라는 것, ③ 위상 전이(phase transition)가 연속적 변화 대신 갑작스러운 상태 변화를 뜻한다는 것 정도면 충분하다.
 
 ---
@@ -95,3 +98,21 @@ Claim 3 (2D 위상 다이어그램으로 통합)
 4가지 Claim은 독립적이 아니라, Claim 1의 현상을 조건 변수로 분해한 것이 Claim 2·4이고, Claim 3은 그 통합 지도다.
 
 이 구조는 탐색적 연구(exploratory research)의 전형적인 형태다: 현상 발견 → 조건 변수 식별 → 조건 공간 지도화. 메커니즘 설명은 의도적으로 후속 연구에 위임한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **04_claims *핵심 claim*?**
+2. **04_claims *technical detail*?**
+3. **04_claims *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

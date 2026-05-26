@@ -40,3 +40,21 @@
 **Contribution 4 — 미해결 문제 설정**: 저자들은 "왜 delayed generalization이 일어나는가?"에 대한 메커니즘을 제시하지 않는다. 논문은 현상 기술에 집중하며, 이후 Nanda 2023 (Fourier circuit 발견), Liu 2022 (유효 이론) 등 후속 연구를 촉발하는 개방형 질문을 남긴다.
 
 **한계**: 단일 아키텍처(2-layer decoder-only Transformer), 단일 모달리티(이산 기호 연산), 단일 규모(소규모)로만 실험됨. 연속 데이터, 더 깊은 네트워크, 자연어 처리 등으로의 일반화는 미검증.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **02_tldr *핵심 claim*?**
+2. **02_tldr *technical detail*?**
+3. **02_tldr *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

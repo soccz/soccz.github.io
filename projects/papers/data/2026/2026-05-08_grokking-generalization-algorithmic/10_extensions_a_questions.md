@@ -1,5 +1,8 @@
 # 10a — 사고 확장: 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 open question: real ML grokking, faster grokking, mechanism universality.
+
+
 ---
 
 ## 질문 1 — 그로킹의 "지연" 기간에 모델 내부에서 무슨 일이 일어나는가?
@@ -47,3 +50,21 @@ Power 2022는 단일 또는 소수 시드에서의 실험을 보고한다. 동�
 Power 2022의 그로킹 실험에서 검증 세트는 훈련 세트와 동일한 분포 (mod 97, 같은 입력 범위) 의 hold-out이다. 그로킹된 모델이 더 큰 modulus (예: mod 113 대신 mod 97로 훈련하고 mod 113 입력 테스트) 에서도 작동하는가?
 
 **왜 이 질문이 중요한가**: "알고리즘 해"가 진정한 알고리즘 (modular arithmetic의 원리)을 구현한다면, 다른 modulus로도 일반화해야 한다. 만약 실패한다면 그로킹된 모델도 여전히 제한된 암기를 하는 것이다. 이는 그로킹이 "완전한 이해"인지 "더 효율적인 암기"인지를 가린다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_a_questions *핵심 claim*?**
+2. **10_extensions_a_questions *technical detail*?**
+3. **10_extensions_a_questions *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

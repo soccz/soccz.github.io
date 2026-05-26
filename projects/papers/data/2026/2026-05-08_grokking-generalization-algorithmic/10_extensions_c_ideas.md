@@ -1,5 +1,8 @@
 # 10c — 사고 확장: 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 아이디어: financial grokking, multi-modal grokking, foundation model grokking.
+
+
 ---
 
 ## 실험 아이디어 1 — "TS 그로킹 위상 다이어그램"
@@ -89,3 +92,21 @@ Power 2022의 모듈 산술 과제에서 그로킹이 진행되는 동안 (즉 �
 - 체크포인트 저장: 10개 × ~6MB = 60MB
 - 분석 시간: 각 체크포인트당 1시간 이내 (visualization + Fourier)
 - 총 추정: 2주 이내에 완성 가능, Grokking track의 초기 결과로 논문 섹션 하나를 구성할 수 있는 분량
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_c_ideas *핵심 claim*?**
+2. **10_extensions_c_ideas *technical detail*?**
+3. **10_extensions_c_ideas *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

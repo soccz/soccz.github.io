@@ -1,5 +1,8 @@
 # 06 — 실험 해부
 
+> **🧒 한 줄 요약**: 5 operations × WD sweep × fraction sweep. 5M steps grokking, 100% val acc.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① "정확도 커브"가 훈련 스텝에 따라 정확도가 어떻게 변하는지 보여주는 그래프라는 것, ② "ablation 실험"이 특정 요소를 제거하거나 바꾸어서 그 요소의 효과를 측정하는 것이라는 것 정도면 된다.
 
 **수치 투명성 주의**: 이 논문의 원문 PDF를 직접 열람하지 못했으므로, 구체적 Figure/Table 번호는 직접 확인 불가. 수치는 검색 스니펫에서 원문 인용된 것만 사용하고, 나머지는 "원문에 수치 미보고"로 표기한다.
@@ -136,3 +139,25 @@ Power 2022는 훈련/검증 **정확도**를 주 지표로 사용한다. 이 선
 - 손실(cross-entropy loss)은 모델이 여전히 잘못된 토큰에 약한 확률을 주고 있어도 감소할 수 있어서, 정확도만큼 선명한 지표가 아님
 
 **다른 지표를 썼다면**: 검증 손실로 그로킹을 보면 전환점이 덜 선명하게 보일 수 있다. 이는 "그로킹이 얼마나 갑자기 일어나는가"를 과대평가할 수 있다는 비판 근거가 된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **06_experiments *핵심 claim*?**
+2. **06_experiments *technical detail*?**
+3. **06_experiments *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:power-grokking-curve:title=paper Fig 1 — Grokking Curve,caption=Scale toggle.
+```

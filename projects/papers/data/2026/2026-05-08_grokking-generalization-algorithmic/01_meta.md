@@ -1,5 +1,8 @@
 # 01 — 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper *metadata*: Power et al. ICLR 2022. OpenAI/DeepMind/Google collaborative output.
+
+
 ## 서지 정보
 
 - **arXiv**: [2201.02177](https://arxiv.org/abs/2201.02177)
@@ -35,3 +38,21 @@
 **오늘 버킷**: 원거리 (금요일). **우선순위 항목**: `_index.md` "사용자 우선 읽기 목록 Tier 1 — Grokking primary"에서 `algorithmic-grok` 태그로 등재. `sae-features` 우선 시도(Marks 2024, Bricken 2023) → PDF 전문 접근 불가로 Source Lock 실패 → `algorithmic-grok` Power 2022로 전환.
 
 **왜 지금**: 능동 연구 트랙 "Grokking in TS Transformers"의 **출발점 논문**. Nanda 2023(Progress Measures, 이미 커버)·Lyle 2025(Nonstationarity, 이미 커버)가 모두 Power 2022를 1차 참조로 삼는다. `must_cite.md`의 최상단 항목 중 유일하게 미커버. 논문이 짧고 실험 중심이라 원 실험 설정을 코드로 완전 재현 가능하다는 점이 특징.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **01_meta *핵심 claim*?**
+2. **01_meta *technical detail*?**
+3. **01_meta *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

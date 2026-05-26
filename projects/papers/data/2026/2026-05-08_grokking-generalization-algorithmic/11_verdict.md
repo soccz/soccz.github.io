@@ -1,5 +1,8 @@
 # 11 — 한 줄 판결
 
+> **🧒 한 줄 요약**: 평가: practical: ★★★ (toy), novelty (discovery): ★★★★★, impact (field-defining): ★★★★★, reproducibility ($60): ★★★★★.
+
+
 > **"그로킹"은 단순한 실험 관찰이 아니라, 정규화가 느린 회로에 복잡도 패널티를 가해 '알고리즘적 일반화' 회로를 강제 점화시키는 위상 전이다 — Grokking track의 출발점이자, Nanda 2023 Fourier 해석의 직접 전구체.**
 
 ---
@@ -16,3 +19,21 @@
 
 **태그**: `algorithmic-grok` (primary), `grokking-delayed-gen` (cross)  
 **다음 필독**: Nanda 2023 (Fourier 회로 — 이미 커버), Liu 2022 (유효 이론 — 미커버), Thilak 2023 Omnigrok (다양한 도메인 확장 — 미커버)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Practical (modular toy) 의 paradigm impact?**
+2. **Discovery novelty 의 priceless value?**
+3. **$60 reproduction의 학생 접근성?**
+
+### 답변
+
+1. **Paradigm-defining discovery**. Modular toy 자체 = *minor*. 발견된 *grokking phenomenon* = *field-defining*. ML community 의 *fundamental question* 변경. ★★★
+
+2. **Discovery 의 priceless value**. "*Right question identification*" 가 *technical depth* 보다 important. *Without phenomenon discovery, 후속 all research 불가능*. ★★★★★.
+
+3. **$60 reproduction**. 1× V100 × 24h. 학부 thesis 수준 reproduction 가능. Open-source code. ★★★★★.

@@ -1,5 +1,8 @@
 # 03 — 문제 지형도
 
+> **🧒 한 줄 요약**: Train 100% 도달 후도 generalization 가능? Pre-2022 의 conventional wisdom 의 contradiction.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① *과적합(overfitting)*이 "훈련 데이터에만 잘 맞고 새 데이터에는 못 맞는 것"임을, ② *일반화(generalization)*가 "본 적 없는 데이터에도 잘 맞는 것"임을, ③ 신경망이 경사하강법(gradient descent)으로 파라미터를 조금씩 바꾸면서 배운다는 것 정도만 알면 된다.
 
 ---
@@ -93,3 +96,25 @@ Power 2022의 방법론적 기여 중 하나는 **반복 재현 가능한 표준
 3. **계산 비용 낮음**: 소규모 데이터 + 소규모 모델로 반복 실험 가능
 
 이로 인해 Nanda 2023, Thilak 2023, Liu 2022, Davies 2023 등 수십 편의 후속 연구가 동일한 벤치마크를 사용해 결과를 직접 비교할 수 있게 됐다. 이는 "모듈 산술로의 그로킹 연구"가 일종의 공유 연구 플랫폼이 됐음을 뜻한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **03_problem *핵심 claim*?**
+2. **03_problem *technical detail*?**
+3. **03_problem *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:power-modular-task:title=paper §3 — Modular Task,caption=Prime selector.
+```

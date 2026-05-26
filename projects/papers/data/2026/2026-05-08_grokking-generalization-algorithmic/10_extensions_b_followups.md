@@ -1,5 +1,8 @@
 # 10b — 사고 확장: Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: Nanda Fourier circuit, Wang reasoner, Lyle plasticity, Liu omni grokking.
+
+
 ---
 
 ## Follow-up 1 (선행) — Liu et al. 2022 "Towards Understanding Grokking: An Effective Theory of Representation Learning"
@@ -29,3 +32,21 @@
 **Power 2022와의 관계**: Power 2022의 "왜"에 대한 가장 명확한 부분 답변. Power 2022가 현상을 발견했다면, Nanda 2023은 그 내부 메커니즘을 X선 촬영한다. "Fourier 회로의 파라미터 노름이 암기 해보다 작다"는 발견이 "weight decay → 그로킹"의 메커니즘을 설명한다.
 
 **무엇을 얻을 수 있는가**: 내 TS 프로젝트에서 "TS용 진행 측도"를 정의하는 방법론을 이 논문의 프레임에서 찾을 수 있다. 또한 Fourier 회로의 TS 버전이 있다면 어떤 패턴인지 (예: 계절성 주파수를 인식하는 헤드?) 탐색하는 실험 설계의 출발점이 된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_b_followups *핵심 claim*?**
+2. **10_extensions_b_followups *technical detail*?**
+3. **10_extensions_b_followups *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

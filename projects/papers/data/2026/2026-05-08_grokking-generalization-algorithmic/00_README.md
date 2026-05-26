@@ -1,5 +1,8 @@
 # 00 — 표지 및 네비게이션
 
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 16 + 7 chapters. Power 2022 = Grokking founding paper.
+
+
 ## 원문 정보
 
 | 항목 | 내용 |
@@ -48,3 +51,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 | ~1,500자 |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 | ~1,500자 |
 | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 | ~300자 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Power 2022 grokking founding paper 의 의의?**
+3. **4년 후 mech interp era 의 trigger?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a→c → 06 → 17. 시간 부족 시 02 + 06 + 11.
+
+2. **Grokking phenomenon 의 founding discovery**. Train 100% 후도 generalization 가능 — *기존 ML wisdom contradiction*. 후속 *all grokking research* 의 motivation.
+
+3. **Phenomenon → Mechanism → Application 의 trajectory trigger**. Power 2022 (discovery) → Nanda 2023 (Fourier mech) → Wang 2024 (reasoning) → 2025-2026 industry. 4년 systematic translation.
