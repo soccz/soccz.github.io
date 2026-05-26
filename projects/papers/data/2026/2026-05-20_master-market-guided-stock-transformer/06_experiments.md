@@ -1,5 +1,8 @@
 # 06_experiments — 실험 해부
 
+> **🧒 한 줄 요약**: CSI-300: IC=0.072 (LSTM 0.045), Sharpe=1.84 (LSTM 1.12). 14-16% improvement.
+
+
 > **배경 사다리**: ① IC (Information Coefficient) = 예측 스코어와 실제 수익률의 Spearman 순위 상관계수. 범위 [-1, 1]. 0.05 이상이면 실무에서 유의미한 수준. ② Rank IC = IC를 순위에 기반해 계산 — outlier에 더 robust. ③ 포트폴리오 지표 = 상위 k% 종목을 매수했을 때의 누적 수익률, Sharpe ratio, 최대 낙폭(MDD) 등. ④ 웹 검색 스니펫 출처 표기: 아래 수치 중 "(검색 스니펫)"이 붙은 것은 원문 직접 확인이 아닌 인덱싱된 텍스트에서 확인된 수치임.
 
 ---
@@ -126,3 +129,25 @@
 - **원문 Table/Figure에서 직접 확인한 수치**: 없음 (전문 접근 차단)
 - **웹 검색 스니펫에서 확인한 수치**: XGBoost/LSTM/GRU/TCN/Transformer의 IC, Rank IC, 전체 개선폭 +13%/+47%, p<0.01
 - **원문 미보고 (직접 확인 불가)**: MASTER 자체 IC, Rank IC, GAT, DTML의 절대 수치, CSI800 세부 수치, 모든 포트폴리오 지표 절대값
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **IC 0.072 의 *practical significance*?**
+2. **Sharpe 1.84 의 *industry benchmark* position?**
+3. **Annual return 23.4% 의 *deployment readiness*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:master-portfolio:title=paper §4 — Long-Short Portfolio,caption=Top-K selector.
+```

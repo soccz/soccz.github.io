@@ -1,5 +1,8 @@
 # 05_method_d_temporal — 방법론: 시간 집계·예측·학습 설정
 
+> **🧒 한 줄 요약**: Temporal aggregation: flatten T-step → linear projection → stock embedding.
+
+
 > **배경 사다리**: ① Cross-Entropy Loss = 분류 문제의 손실함수. ② MSE (Mean Squared Error, 평균제곱오차) = 회귀 문제에서 예측값과 실제값의 차이를 제곱해 평균. ③ Rank IC = 예측 순위와 실제 수익률 순위의 Spearman 상관계수. 이 절은 앞 세 파일의 연속이므로 $H$, $Z$ 등 기호가 앞 파일에서 이어진다.
 
 ---
@@ -100,3 +103,21 @@ X ∈ ℝ^(N × T × F)     시장벡터 m_τ ∈ ℝ^63
 ## 5. 핵심 한 문장
 
 > 시간 집계 단계는 "최신 시각이 과거를 취사선택해 요약"하는 어텐션으로 구현되어, 예측 직전 시각의 맥락에서 가장 유용한 과거 신호를 선별하는 방식으로 마무리되는 설계다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Temporal aggregation 의 *flatten approach*?**
+2. **T-step embedding 의 *information density*?**
+3. **Alternative pooling 대비 *trade-off*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

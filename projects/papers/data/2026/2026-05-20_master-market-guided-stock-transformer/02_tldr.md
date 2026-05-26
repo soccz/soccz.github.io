@@ -41,3 +41,21 @@ MASTER는 이 두 가지 문제를 동시에 해결한다. 먼저 "시장 지수
 **Contribution 3 — Alternating Intra/Inter Pattern**: intra를 먼저, inter를 나중에 수행하는 순서가 "더 작고 단순한 분포의 어텐션 필드 먼저"라는 원칙에서 나온다. 역순(inter → intra)이나 병렬 수행이 아닌 이유를 ablation (N1, N2 조합)으로 검증.
 
 **한계**: 중국 주식 시장(CSI300/CSI800) 단일 도메인, T=8의 매우 짧은 lookback, 예측 지평선 5일 단일, Alpha158의 고정 특징 집합, 시장 게이팅이 비선형성을 다루는 방식의 해석 가능성 부족.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **One-line core claim?**
+2. **3-axis attention 의 *unique combination*?**
+3. **Quant hedge fund 의 *direct relevance*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

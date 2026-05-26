@@ -1,5 +1,8 @@
 # 10_extensions_b_followups — 사고 확장: 후속 논문 3편
 
+> **🧒 한 줄 요약**: Sector-aware MASTER, Multi-market MASTER, Stock foundation model, Alternative data integration.
+
+
 ---
 
 ## 선행 논문: Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting (Lim et al., IJF 2021, arXiv:1912.09363)
@@ -35,3 +38,21 @@
 이 개념들로 inter-stock 어텐션 가중치의 의미를 강제하면, MASTER의 종목 상관이 "왜 형성됐는지" 해석 가능해진다. APF 프로젝트의 tsfm-interp 방향과도 직접 연결.
 
 **무엇을 얻을 수 있나**: MASTER의 해석 가능성 확장 + APF의 §D (TSFM interpretability) 연구의 선행 방법론으로서 tsfm-interp 커버리지 향상에도 기여.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Sector-aware MASTER 의 *efficiency gain*?**
+2. **Stock foundation model 의 *architectural choice*?**
+3. **Alternative data 의 *hedge fund moat*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

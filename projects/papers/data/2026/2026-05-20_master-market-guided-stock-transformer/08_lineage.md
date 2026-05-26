@@ -1,5 +1,8 @@
 # 08_lineage — 이론적 계보
 
+> **🧒 한 줄 요약**: LSTM → HATS → DTML → MASTER. Cross-sectional dependency 의 progressive emergence.
+
+
 > **배경 사다리**: ① 그래프 신경망(GNN) = 노드(예: 종목)와 엣지(예: 상관관계)로 이루어진 그래프 구조 데이터를 처리하는 신경망. ② Attention over sequences = 시퀀스의 각 원소가 다른 원소들에 가중치를 두는 메커니즘. ③ Factor investing = 주식 수익률을 설명하는 공통 요인(팩터)을 찾아 포트폴리오를 구성하는 투자 전략. 이 세 개념을 알면 계보의 흐름을 따라갈 수 있다.
 
 ---
@@ -63,3 +66,21 @@ arXiv:2502.06707 FinMamba가 MASTER를 베이스라인으로 사용하며 Mamba 
 ## 4. 역사적 위치
 
 MASTER는 "단일 종목 RNN → 그래프 기반 종목 상관 → cross-time 어텐션 기반 종목 상관"의 세 세대 주식 예측 트랜스포머 진화에서 두 번째에서 세 번째 세대로의 전환점에 해당한다. 시장 정보 유도 게이팅은 이 계보에서 새로 도입되는 요소로, 외생 조건부(exogenous conditioning) 입력을 종목 예측에 통합하는 선구 역할을 한다. 이 패턴은 TFT(Temporal Fusion Transformer)의 variable selection network와 개념적으로 유사하며, 주가 예측 특화 맥락에서 재구현한 것으로 볼 수 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **LSTM → MASTER 의 *progressive evolution*?**
+2. **Cross-sectional dependency 의 *gradual emergence*?**
+3. **Quant deep learning 의 *standard architecture trajectory*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

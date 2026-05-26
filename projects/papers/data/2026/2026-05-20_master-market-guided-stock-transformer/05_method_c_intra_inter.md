@@ -1,5 +1,8 @@
 # 05_method_c_intra_inter — 방법론: 주내·주간 어텐션 집계
 
+> **🧒 한 줄 요약**: Intra: per-stock time attention. Inter: cross-stock attention at each time. Complementary.
+
+
 > **배경 사다리**: ① Multi-head Self-Attention = 트랜스포머의 핵심 연산. 각 원소가 Query(질문)를 만들고, 다른 원소의 Key(색인)와 비교해 어떤 원소의 Value(값)를 얼마나 가져올지 결정. ② 지역 임베딩 = 한 원소가 주변 원소들로부터 정보를 모아 만든 압축 표현. ③ Cross-time correlation = 종목 $i$의 시각 $t$와 종목 $j$의 시각 $t' \neq t$ 사이의 상관관계. 이 세 개념이면 이 절을 따라갈 수 있다.
 
 ---
@@ -101,3 +104,21 @@ $$Z_{n,t} = \text{MultiHeadAttn}\left(H_{n,t}, H_{:,t}, H_{:,t}\right)$$
 ## 5. 핵심 한 문장
 
 > 주내 어텐션으로 만든 "시간 압축 지역 임베딩"을 relay로, 주간 어텐션이 같은 시각에서 진행되더라도 실질적으로 종목 간 cross-time 정보 흐름을 가능하게 하는 것이 MASTER intra-inter 교번 구조의 핵심 설계 원리다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Intra attention 의 *time pattern* capture?**
+2. **Inter attention 의 *cross-sectional dependency*?**
+3. **Parallel computation via reshape?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

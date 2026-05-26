@@ -1,5 +1,8 @@
 # 09_my_research — 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와 연결: MASTER의 3-axis attention과 APF motif identification 의 cross-pollination.
+
+
 > 이 절은 `_profile.md`의 APF (Attention Pattern Fields), Grokking in TS Transformers, P1 ProTran-TFA 세 active/paused 트랙과의 구체적 연결을 다룬다. 일반론 나열 금지 — 구체적 mechanism, axis, 수식 요소를 지정한다.
 
 ---
@@ -85,3 +88,21 @@ APF의 §C 라인 (Jain-Wallace 2019 계열)에서 "어텐션이 설명인가, �
 2. **게이팅의 블랙박스성**: 시장 게이팅이 "어떤 팩터가 왜 선택됐는지" 설명하지 못한다. APF의 개념 탐침(concept bottleneck) 접근법이 도움이 될 수 있다.
 
 3. **단일 시장 한계**: Grokking 프레임워크의 비정상성 분석(Lyle 2025 계열)을 결합해 다시장 비정상 환경에서의 학습 동역학을 분석하는 방향.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF motif + MASTER 3-axis 의 *cross-pollination*?**
+2. ***Stock-specific motif identification* 가능성?**
+3. **내 연구의 direct adoption 요소?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

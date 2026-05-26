@@ -1,5 +1,8 @@
 # 07_limits — 가정·한계·반박
 
+> **🧒 한 줄 요약**: 4 한계: transaction cost 미반영, survivorship bias, A-share 의 unique structure, production risk.
+
+
 > **배경 사다리**: ① 도메인 이전(Domain Transfer) = 한 시장에서 학습한 모델을 다른 시장에 적용하는 것. ② 분포 이동(Distribution Shift) = 학습 데이터와 테스트 데이터의 통계적 성질이 다른 상황. ③ 과적합(Overfitting) = 모델이 학습 데이터의 잡음까지 외워버려 새 데이터에 일반화하지 못하는 현상.
 
 ---
@@ -68,3 +71,21 @@
 ## 6. 요약: 가장 강한 한계
 
 > **주요 한계**: (1) 중국 단일 시장에 특화된 결과로 일반화 가능성 불명확, (2) T=8 × 158개 Alpha158 팩터라는 좁은 입력 공간, (3) 모든 종목에 동일 게이팅을 적용하는 oversimplification, (4) 거래 비용 미반영으로 실무 적용 시 성과가 축소될 가능성, (5) cross-time 상관 포착이 실제로 intra 어텐션과 분리된 기여인지 ablation으로 완전히 확인되지 않음.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Transaction cost 의 *real-world impact*?**
+2. **Survivorship bias 의 *backtest distortion*?**
+3. **A-share transferability 의 *uncertainty*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

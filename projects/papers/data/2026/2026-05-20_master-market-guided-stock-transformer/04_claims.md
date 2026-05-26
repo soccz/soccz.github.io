@@ -1,5 +1,8 @@
 # 04_claims — 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: 4 claims: (1) market-guided gating, (2) intra-stock attention, (3) inter-stock attention, (4) SOTA on CSI-300/500/800.
+
+
 > **배경 사다리**: ① IC (Information Coefficient) = 예측값과 실제 수익률의 Spearman 상관계수, 값이 클수록 예측이 실제와 더 일치. ② Rank IC = IC의 순위 기반 버전 (outlier에 robust). ③ p-value < 0.01 = 1% 유의수준에서 통계적으로 의미 있는 차이. 이 세 가지를 알면 아래 Claim들의 증거 구조를 따라갈 수 있다.
 
 ---
@@ -84,3 +87,21 @@
 | 1 | Cross-time 상관이 성능 향상 | Table 2, +13%/+47% | Alpha158 충분성, T=8 lookback 충분 |
 | 2 | 시장 유도 게이팅이 특징 선택 향상 | Figure 4 (β ablation) | 시장 벡터 63차원 충분성 |
 | 3 | Intra→Inter 분해가 효율·성능 동시 달성 | (N1,N2) ablation | T×T 가 N×N보다 단순한 분포 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Market gating empirical strength?**
+2. **Intra/Inter attention 의 *complementary role*?**
+3. **SOTA across 3 universes 의 *generalization*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

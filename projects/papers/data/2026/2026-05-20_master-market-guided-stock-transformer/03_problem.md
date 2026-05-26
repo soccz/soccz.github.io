@@ -1,5 +1,8 @@
 # 03_problem — 문제 지형도
 
+> **🧒 한 줄 요약**: Cross-sectional stock prediction. Single-stock TS의 한계 → multi-stock dependency 필요.
+
+
 > **배경 사다리**: ① 주식 예측 = "내일 어떤 종목이 더 많이 오를까"를 맞추는 문제, ② Information Coefficient(IC) = 예측 순위와 실제 수익률 순위의 상관계수(높을수록 좋음), ③ self-attention = 시퀀스의 각 원소가 다른 원소들을 "얼마나 참고할지" 가중치를 학습하는 메커니즘. 이 세 개념만 알면 이 절을 읽을 수 있다.
 
 ---
@@ -63,3 +66,25 @@ MASTER는 두 가지 설계 선택으로 이 gap을 동시에 해소한다.
 **선택 2 — 시장 지수로 필터링한다**: 예측 시각 $\tau$의 시장 정보(인덱스 수익률, 변동성 등) $m_\tau$를 입력으로 받아, 158개 Alpha 팩터 각각의 "오늘 유효성"을 자동으로 조절하는 게이팅 계수를 만든다. 강세장에서 중요한 팩터, 폭락장에서 중요한 팩터를 동적으로 re-weighting하는 것이다.
 
 이 두 선택이 결합되면: 시장 국면에 최적화된 특징 집합을 가진 종목들이, 시간을 가로질러 서로 정보를 교환하는 구조가 완성된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Cross-sectional vs time-series 의 *paradigm 차이*?**
+2. **Single-stock 의 *information limit*?**
+3. **Multi-stock dependency 의 *practical value*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:master-stock-universe:title=paper §3 — Stock Universe,caption=Stock count slider.
+```

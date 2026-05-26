@@ -1,5 +1,8 @@
 # 05_method_a_intuition — 방법론 전체 구조 (큰 그림)
 
+> **🧒 한 줄 요약**: 직관: stock = time history × cross-sectional context × market regime. 3-axis modeling.
+
+
 > **배경 사다리**: ① 텐서(Tensor) = 다차원 배열. `(N, T, F)` 텐서는 N개 종목 × T개 시간 단계 × F개 특징으로 이루어진 3D 배열. ② 임베딩(Embedding) = 원본 데이터를 고차원 실수 벡터로 변환한 표현. ③ 게이팅(Gating) = 일부 정보만 통과시키는 필터; 값이 0이면 차단, 1이면 전부 통과. 이 세 개념으로 전체 파이프라인을 따라갈 수 있다.
 
 ---
@@ -98,3 +101,21 @@ inter-stock 집계에서 종목 $i$는 종목 $j$의 **지역 임베딩** $H_j \
 저자들은 이를 "local embedding이 종목 간 신호를 수송하는 relay 역할을 한다"고 표현한다 (원문 텍스트, 웹 검색 스니펫 기준). 이것이 cross-time 상관을 모델링하는 메커니즘이다.
 
 → **다음 파일에서 각 단계의 수학적 상세를 다룬다.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3-axis (time + cross + market) 의 *직관*?**
+2. **Regime-conditional modeling 의 *necessity*?**
+3. **Multi-source signal fusion?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

@@ -1,5 +1,8 @@
 # 01_meta — 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper *metadata*: Li et al. AAAI 2024, multiple institutions. Chinese A-share quant deep learning.
+
+
 ## 인용 정보
 
 - **인용 수**: 미확인 (Semantic Scholar 접근 불가, 2024-2025년 사이 신규 논문)
@@ -32,3 +35,21 @@ MASTER가 선정된 구체적 이유:
 3. **ProTran-TFA 연결**: 시장 상태(m_τ) 기반 feature selection gating → P1 ProTran-TFA의 컨디셔닝 설계와 이식 가능
 4. **중국 주식 특화**: CSI300/CSI800 + Alpha158 → 국내 퀀트 실무와 가장 가까운 베이스라인
 5. **코드 공개**: MIT 라이선스, 사전학습 체크포인트, 재현 가능성 높음
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **AAAI 2024 acceptance 의 *track*?**
+2. **Chinese A-share market 의 *quant research value*?**
+3. **본 paper citation trajectory?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

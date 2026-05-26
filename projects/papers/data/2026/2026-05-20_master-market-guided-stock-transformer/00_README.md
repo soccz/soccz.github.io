@@ -1,5 +1,8 @@
 # 00_README — MASTER: Market-Guided Stock Transformer for Stock Price Forecasting
 
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 17 + 7 chapters. MASTER = cross-sectional stock prediction 시대 의 peak.
+
+
 ## 논문 정보
 
 | 항목 | 내용 |
@@ -60,3 +63,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 사고 확장 — 후속 논문 |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 사고 확장 — 실험 아이디어 |
 | [11_verdict.md](11_verdict.md) | 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 의 권장 학습 path?**
+2. **Cross-sectional paradigm shift 의 의의?**
+3. **2년 후 quant industry adoption?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a→d → 06 → 17. 시간 부족 시 02 + 05b/c + 06 + 11 핵심.
+
+2. **Single-stock TS → Cross-sectional ranking**. Quant hedge fund 의 standard strategy (long-short) 와 직접 fit. Academic paradigm shift trigger.
+
+3. **Open-source + industry moat**. MASTER 가 baseline → hedge fund 의 alternative data + proprietary features 추가 → real PnL strategy. *Symbiotic relationship*.

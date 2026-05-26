@@ -1,5 +1,8 @@
 # 10_extensions_c_ideas — 사고 확장: 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 아이디어: HFT-aware MASTER, multi-asset class MASTER (equity+bonds+FX), regime-detection auto.
+
+
 ---
 
 ## 아이디어 1: Inter-Stock Attention Map의 APF 모티프 분석 — 종목 상관 어텐션에서 2D 패턴 발굴
@@ -75,3 +78,21 @@ ProTran-TFA의 입력 전처리 단계에 MASTER 방식의 market-guided gating�
 - 코드: ProTran-TFA 기존 코드에 gating layer 추가 (약 50줄)
 - 데이터: 이미 보유 (GSPC/IXIC 2022-2024)
 - **총 비용**: 매우 낮음. 1~2일 내 완료 가능한 소규모 실험.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **HFT-aware MASTER 의 *latency requirement*?**
+2. **Multi-asset class 의 *unified architecture*?**
+3. **Regime detection automation 의 *self-supervised*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

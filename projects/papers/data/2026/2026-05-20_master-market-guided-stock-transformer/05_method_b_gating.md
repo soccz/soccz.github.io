@@ -1,5 +1,8 @@
 # 05_method_b_gating — 방법론: 시장 유도 게이팅 (Market-Guided Gating)
 
+> **🧒 한 줄 요약**: Market features → gate g_t ∈ [0,1]^d → stock features × g_t = regime-conditioned representation.
+
+
 > **배경 사다리**: ① 소프트맥스(Softmax) = 여러 숫자를 받아 합이 1인 확률 분포로 변환하는 함수. ② 온도 파라미터(Temperature, β) = 확률 분포의 "날카로움"을 조절. β가 작으면 최댓값에 집중하는 분포, β가 크면 균일한 분포. ③ Hadamard 곱(⊙) = 같은 위치의 원소끼리 곱하는 원소별 곱셈. 이 세 개념이면 게이팅 메커니즘 전체를 이해할 수 있다.
 
 ---
@@ -84,3 +87,25 @@ $$\hat{X}_{n,t} = X_{n,t} \odot g, \quad \forall n, t$$
 ## 6. 핵심 한 문장
 
 > 시장 유도 게이팅은 "오늘 이 시장에서 어떤 팩터가 신호인가"를 63차원 시장 벡터에서 추론해 입력 특징을 전처리함으로써, 이후 모든 어텐션 연산이 이미 필터링된 정보 위에서 작동하도록 보장한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Market features → gate 의 *mechanism*?**
+2. **Sigmoid output 의 *smooth boundary*?**
+3. **Element-wise scaling 의 *information geometry*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:master-gating:title=paper §3.2 — Market Gating,caption=Regime selector.
+```

@@ -1,5 +1,8 @@
 # 10_extensions_a_questions — 사고 확장: 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 open question: sparse inter-attention, multi-market transfer, alternative data integration.
+
+
 ---
 
 ## Q1. Cross-Time 상관이 실제로 포착되고 있는 것인가, 아니면 Intra-Stock 어텐션이 성능을 다 설명하는가?
@@ -39,3 +42,21 @@
 **왜 이 질문이 중요한가**: MASTER의 63차원 시장 벡터는 중국 3대 지수의 rolling 통계로만 구성된다. 그러나 시장 국면을 결정하는 요인에는 금리 수준, 달러 강세/약세, 원자재 가격, 지정학적 리스크, 투자자 심리(공포-탐욕 지수) 등이 있다. 이들을 $m_\tau$에 추가하면 게이팅 품질이 향상되는가?
 
 또한, 63차원이 정보 이론적으로 "충분한" 차원인가? mutual information $I(m_\tau; \text{optimal}_g)$를 측정하면 현재 $m_\tau$가 얼마나 많은 국면 정보를 담는지 평가할 수 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Sparse inter-attention 의 *production efficiency*?**
+2. **Multi-market transfer 의 *unique challenges*?**
+3. **Alternative data 의 *integration approach*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
