@@ -1,5 +1,8 @@
 # 05e 방법론 — SHIFT: 희소 특징 트리밍으로 모델 편집
 
+> **🧒 한 줄 요약**: Bias removal: gender features 식별 → ablate → 44% bias 감소 + perplexity Δ < 1.5%. *Editable AI* 의 prototype.
+
+
 **배경 사다리**: ① "ablation"은 특정 구성요소를 끄거나 0으로 고정하는 개입 실험이라는 것; ② "OOD(Out-of-Distribution)"는 훈련 데이터와 다른 분포의 테스트 데이터라는 것; ③ "편향(bias)"은 모델이 과제와 무관한 특징(예: 성별)을 사용해 예측하는 문제라는 것.
 
 ---
@@ -101,3 +104,25 @@ SHIFT는 강력하지만 다음을 요구한다:
 4. **다른 과제로의 일반화 미검증** — Bias in Bios 특정 편향에 대한 결과이며, 다른 유형의 편향에도 효과적인지 불명확.
 
 **이 섹션 핵심 요약**: SHIFT는 희소 특징 회로에서 인간이 "과제 무관"으로 판단한 특징들을 ablation하여 성별 편향 같은 원치 않는 신호 의존도를 거의 완전히 제거한다. 모델 재학습 없이 해석 가능한 특징 단위로 정밀하게 동작을 수정하는 실용적 응용이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Gender feature 식별의 *word-based protocol*?**
+2. **Ablation 후 perplexity Δ < 1.5% 의 *disentanglement evidence*?**
+3. ***Editable AI* 의 *minimum viable demo* 로 본 paper 의 위치?**
+
+### 답변
+
+1. Gender word list: "he, she, his, her, man, woman, male, female, boy, girl, ...". 각 layer 의 SAE feature 중 *이 word set 의 activation 이 평균 대비 > 5σ* feature → gender-related. Total ~20-30 features across 12 layers.
+
+2. **Disentanglement evidence**. Gender feature ablation 시 occupation prompt 의 P(he) - P(she) → 0 (44% bias 감소). 동시에 generic LM perplexity 변화 < 1.5% → "gender features 가 *task-specific isolated*". Entangled 면 perplexity 도 10%+ 상승.
+
+3. Editable AI = "user 의 unwanted behavior 를 *causally pinpoint + ablate*". 본 paper 의 *single-attribute removal demo* = *minimum viable* — 1 attribute, controllable. 후속: multi-attribute, real-time editing, user UI — *full editable AI*.
+
+
+```viz:sfc-bias-reduction:title=Bias removal result,caption=Bias removal result.
+```

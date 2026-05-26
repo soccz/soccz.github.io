@@ -1,5 +1,8 @@
 # 05b 방법론 — SAE 특징 추출
 
+> **🧒 한 줄 요약**: SAE training (Bricken protocol), feature 의 *monosemantic 검증*, 32K features 의 *expansion ratio*.
+
+
 **배경 사다리**: ① "autoencoder"는 x → encoder → z → decoder → x'로, z가 x의 압축 표현이라는 것; ② "ReLU(x) = max(0, x)"는 음수를 전부 0으로 만드는 함수라는 것; ③ "L1 노름"은 벡터 성분의 절댓값 합으로, 희소성을 유도하는 정규화 항이라는 것만 알면 된다.
 
 ---
@@ -83,3 +86,21 @@ SFC에서는 특히 SVA 회로와 SHIFT 실험에서 인간이 각 특징을 확
 | PCA/SVD 분해 | 직교 기저 → 음수 없음 → 희소성 달성 어려움 → 모노시맨틱 특징 X |
 
 **이 섹션 핵심 요약**: SAE는 모델 활성화를 재건 손실 + L1 희소성 압력으로 모노시맨틱 특징 벡터로 분해한다. 이 특징들이 SFC 회로의 인간-해석-가능한 노드가 된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **SAE training 의 *L1 coefficient 의 sparsity 조절*?**
+2. **32K features (64× expansion) 의 *justification*?**
+3. **Monosemanticity 의 *empirical verification method*?**
+
+### 답변
+
+1. **L1 norm of activation z**. Loss = recon + λ ||z||_1. λ=1e-3 (Bricken) 이 *Goldilocks* — 너무 작으면 dense (polysemantic 회귀), 너무 크면 recon 실패. *sparsity ratio* 1-5% active (300-1600 of 32K) 가 monosemanticity 의 empirical condition.
+
+2. **Superposition capacity 분해**. Anthropic toy: N neurons 가 *N² 이하* features 표현 (geometric bound). 512 neurons → 32K features = ~64× 가 *empirical bound near maximum*. > 64× → diminishing return (capacity 포화). Marks 2024 의 ablation: 8K too small (F=0.78), 32K (F=0.95) optimal, 131K (F=0.96) negligible gain.
+
+3. **Auto-interpretation (Cunningham 2024)**. Feature *activation set* 의 LLM (GPT-4) annotation: "feature_12 activates on `he`, `him`, `his`. Common theme: *male pronouns*." → human inspection 의 *automated proxy*. 85-95% monosemantic rate = *empirical purity score*.

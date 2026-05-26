@@ -1,5 +1,8 @@
 # 03 문제 지형도
 
+> **🧒 한 줄 요약**: Mech interp 의 *granularity 한계* — head-level 너무 coarse, neuron-level 너무 polysemantic. SAE feature 가 *Goldilocks*.
+
+
 **배경 사다리**: 이 섹션을 이해하려면 ① "신경망은 수많은 숫자(활성화)를 레이어별로 변환하는 함수"라는 것, ② "해석가능성 연구는 신경망이 왜 그런 출력을 내는지를 인간이 이해할 수 있게 설명하려는 시도"라는 것, ③ "회로(circuit)"가 특정 행동을 담당하는 신경망의 부분구조를 가리킨다는 것 정도면 충분하다.
 
 ---
@@ -60,3 +63,21 @@ SAE로 추출한 **특징(feature)**을 회로의 **노드**로 삼는다. 그�
 - 특정 노드를 ablation하면 모델 행동을 외과적으로 수정할 수 있다.
 
 회로와 특징이 마침내 하나의 언어로 대화하게 된 것이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Head-level circuit (Wang 2023) 의 *granularity 한계*?**
+2. **Neuron-level analysis 의 *polysemanticity 문제*?**
+3. **SAE feature 가 *Goldilocks middle* 인 mechanistic 근거?**
+
+### 답변
+
+1. **Functional opacity per head**. Wang 2023 IOI circuit 의 head 6.9 = "name mover" — 단어로 표현되나 *what exactly inside the head?* 불명. Head 가 *combinatorial computation* 수행 (e.g., 12 sub-functions) → *single-label* 부적절. Granularity 한계: head = 12-dim subspace, *not 1 concept*.
+
+2. **Superposition 의 결과**. Anthropic toy model superposition (2022): N neurons 가 *N 이상* features 표현 — N=512 neurons 가 32K features 압축. → 한 neuron activation 시 *어느 feature* 인지 ambiguous (polysemantic). Direct neuron 분석은 *noise + signal mix* — *clean causal inference 불가능*.
+
+3. **Capacity ↔ Sparsity 균형**. Head (coarse): 1 unit = 64-dim, capacity high but mixed. Neuron (fine): 1 unit = 1-dim, capacity low + polysemantic. SAE feature (mid): 1 unit = 1 concept (monosemantic) + total 32K capacity > raw 512 neuron capacity → *Goldilocks zone*: monosemanticity + expressivity 동시 만족.

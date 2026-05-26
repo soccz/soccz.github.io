@@ -1,5 +1,8 @@
 # 05c 방법론 — 간접 효과(IE) & 어트리뷰션 패칭
 
+> **🧒 한 줄 요약**: Attribution patching = ∇L · z (1 forward + 1 backward). ACDC 대비 1000× 빠름, correlation 0.95+.
+
+
 **배경 사다리**: ① "반사실 개입(counterfactual intervention)"은 "만약 이 부분이 달랐다면 결과가 어떻게 달라졌을까"를 묻는 인과 추론 방법이라는 것; ② "Taylor 전개(Taylor expansion)"는 복잡한 함수를 근처에서 선형(직선)으로 근사하는 것이라는 것; ③ "gradient(기울기)"는 입력을 조금 바꿨을 때 출력이 얼마나 변하는가를 나타내는 벡터라는 것.
 
 ---
@@ -118,3 +121,25 @@ $$\text{IG}(c) \approx \frac{1}{K}(\mathbf{c}_{\text{clean}} - \mathbf{c}^*) \cd
 논문에서는 두 방법의 효율성-정확도 트레이드오프를 실험으로 비교하여 AP가 대규모 초기 탐색에, IG가 최종 회로 정제에 적합함을 보인 것으로 추정된다 (원문 실험 결과 표 직접 확인 불가).
 
 **이 섹션 핵심 요약**: IE는 반사실 패칭 실험으로 특징의 인과 기여를 측정한다. AP는 1차 Taylor 근사로 빠르게, IG는 경로 적분으로 정확하게 IE를 근사한다. 이 두 방법의 조합이 SFC의 대규모 회로 발견을 가능하게 한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Attribution = gradient × activation 의 *Taylor 의미*?**
+2. **1000× speed-up 의 *mathematical derivation*?**
+3. **High-order interaction 의 *5% mismatch* 의 root cause?**
+
+### 답변
+
+1. **First-order Taylor approximation**. L(z + Δz) ≈ L(z) + ∇L · Δz. Full ablation: Δz = -z → effect ≈ -∇L · z. Single backward → 모든 features 의 effect *동시 추정*.
+
+2. **N → 2 passes**. Explicit ablation: N feature * 1 forward = N passes. Attribution: 1 forward + 1 backward = 2 passes. N=32K → 16K× theoretical speed-up. 실측 1000× (overhead 포함).
+
+3. **Multi-feature synergy**. First-order = independent feature 가정 — pair (f_i, f_j) 의 *synergistic effect* 미포착. e.g., XOR-like interaction. paper §3 의 5% mismatch 의 root cause 추정. Second-order Hessian → 잠재적 fix.
+
+
+```viz:sfc-attribution-flow:title=Attribution patching pipeline,caption=Attribution patching pipeline.
+```

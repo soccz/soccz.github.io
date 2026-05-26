@@ -1,5 +1,8 @@
 # 05a 방법론 — 전체 그림
 
+> **🧒 한 줄 요약**: *Direct intuition*: "neuron → SAE feature → circuit edge" 의 *2-step decomposition* 으로 polysemantic → monosemantic → causal.
+
+
 **배경 사다리**: ① "autoencoder"는 입력 → 압축(병목) → 복원하는 신경망으로, 병목에서 입력의 핵심 구조를 학습한다는 것; ② "sparse"는 대부분의 값이 0이고 소수만 0이 아님을 의미한다는 것; ③ "gradient(기울기)"는 함수를 약간 변경했을 때 출력이 얼마나 변하는지를 나타내는 값이라는 것만 알면 된다.
 
 ---
@@ -77,3 +80,21 @@ SFC는 SAE를 논문 안에서 새로 학습하지 않는다. 이미 학습된 S
 - **05_method_c_attribution.md**: IE, 어트리뷰션 패칭, 통합 기울기의 수식
 - **05_method_d_circuit_eval.md**: 충실도(F)·완전도(C) 계산과 해석
 - **05_method_e_shift.md**: SHIFT 편집 기법의 작동 원리
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **"neuron → SAE feature" 의 *transformation 의미*?**
+2. **"SAE feature → circuit edge" 의 *aggregation 의미*?**
+3. **2-step decomposition 의 *cumulative gain*?**
+
+### 답변
+
+1. **Polysemantic → Monosemantic mapping**. Raw neuron = "f_42 fires on `he`, `January`, `<code>`, `Mr.`" (4 concepts). SAE feature = "feature_12 fires only on `he`/`him`/`his`/`himself`" (1 concept). Transformation = *latent disentanglement* — superposition 에 압축된 concepts 를 *separately addressable* 변환.
+
+2. **Causal connection identification**. SAE feature 만으로는 "feature_12 가 `he` 에 fires" 만 알 수 있음 (*descriptive*). Circuit edge = "feature_12 (L3) → feature_847 (L6) → answer" (*causal flow*). Aggregation = *single feature → flow path* 의 *temporal causation*.
+
+3. **Multiplicative gain**. 단순 SAE: 1 feature 의 *isolated meaning*. 단순 circuit: head 의 *coarse function*. 결합: *(disentangled) feature × (causal) flow* = *fine-grained causal mechanism*. 1+1 > 2 — Marks 의 *core insight*.

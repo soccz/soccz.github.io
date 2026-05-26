@@ -1,5 +1,8 @@
 # 07 가정·한계·반박
 
+> **🧒 한 줄 요약**: 4 주요 한계: SAE non-uniqueness, attribution first-order, threshold τ arbitrariness, production scale 미증명.
+
+
 ---
 
 ## 명시된 가정 (논문이 대놓고 말한 것)
@@ -75,3 +78,21 @@ SHIFT 실험에서 "이 특징이 성별 관련이다"는 인간 판단에 의�
 | 인간 판단 병목 | 중간 | 자동 해석가능성 + SHIFT 연결 자동화 |
 | 비지도 파이프라인 검증 | 중간 | 자동 탐지 행동의 품질 정량화 기준 필요 |
 | 계산 비용 (IG) | 낮음 | AP-IG 하이브리드 방법 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **SAE non-uniqueness 의 *practical interpretability* 영향?**
+2. **Threshold τ=0.01 의 *task-dependent 가능성*?**
+3. **Production scale (Sonnet) 의 *open verification* 상태?**
+
+### 답변
+
+1. **Specific SAE 의 specific circuit 만 valid**. Seed 변경 → feature index shift → "*universal circuit*" claim 약화. Practical: *per-seed analysis* + *cross-seed alignment* 추가 필요. 본 paper 는 *single seed* 만 — *non-uniqueness 명시* 부족.
+
+2. **Task-dependent τ**. IOI: τ=0.01. SV: τ=0.01. Bias: τ=0.01 (운 좋게 동일). 다른 task 의 *optimal τ* 미증명. → *data-driven τ selection* (cross-validation) 후속 연구 필요.
+
+3. **Sonnet scale 의 open**. Templeton 2024 = SAE training 성공, 하지만 *full circuit discovery* 의 시간/효율 미공개. 1M features 의 *exponential interaction* 고려 시 *practical 가능성* 의문. → industry 가 production 사용 시 *효율 trick* 필요.

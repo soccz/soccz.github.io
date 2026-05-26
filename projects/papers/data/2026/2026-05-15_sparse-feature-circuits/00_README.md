@@ -1,5 +1,8 @@
 # 00 README — Sparse Feature Circuits
 
+> **🧒 한 줄 요약**: 본 deep dive 의 *입구* — 18 + 7 chapters 의 길찾기, 학습 path, 본 paper 의 핵심 주장 한 줄 요약.
+
+
 ## 원문 정보
 
 **제목 (영문)**: Sparse Feature Circuits: Discovering and Editing Interpretable Causal Graphs in Language Models
@@ -69,3 +72,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — Follow-up 3편 |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 2개 |
 | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 의 *읽는 순서* 의 권장 path?**
+2. **SFC 가 ACDC + SAE 의 *결합* 인 이유?**
+3. **본 paper 의 *practical 가치* 의 핵심?**
+
+### 답변
+
+1. **선형 path**: 02_tldr → 03_problem → 05a→e → 06_experiments → 11_verdict 의 *paper 흐름*. 즉 *문제 → 해결 → 평가* 의 3-step 가 *기본 트랙*. *시간 부족* 시 02 + 05c + 05d + 11 의 4 chapters 가 *핵심 요지* — 1시간 안에 완성 가능.
+
+2. **Granularity + speed 의 dual gain**. ACDC 의 *automated circuit search* + SAE 의 *interpretable unit* = *automated + interpretable circuit*. 단독 결합이 아닌 *각각의 한계를 상호 보완*. ACDC 의 slow speed → attribution patching 으로 1000× 가속, SAE 의 standalone use 의 *isolated feature → circuit context* 부여.
+
+3. **Industry production tool 의 academic ancestor**. 본 paper 의 ~50 features × 5 min 의 *practical efficiency* 가 Anthropic 의 Claude Sonnet feature steering 의 *direct foundation*. *Editable AI* 의 commercial reality 가 본 paper 의 bias removal demo 의 *direct scale-up*. 2 년 뒤 의 industry standard 의 *seed paper*.

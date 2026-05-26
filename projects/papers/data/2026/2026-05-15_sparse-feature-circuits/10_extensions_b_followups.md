@@ -1,5 +1,8 @@
 # 10b 사고 확장 — Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: *직접 후속*: Templeton scaling, Gemma Scope, SAE+RLHF integration, editable AI commercialization.
+
+
 ---
 
 ## Follow-up 1 (선행): Towards Monosemanticity — SAE의 기반
@@ -44,3 +47,21 @@ ROME은 "무엇이 저장됐는가(정적 지식)"에 집중하고, SFC는 "어�
 **무엇을 얻을 수 있는가**: (1) 대형 모델의 SAE 특징 수와 회로 크기의 스케일링 법칙 — 내 실험이 결국 더 큰 모델로 가야 할 때의 설계 기준; (2) 계산 효율화 방법 — 대형 모델에서 IE를 효율적으로 계산하는 기법들; (3) Gemma 9B에서 발견된 회로들이 Pythia-70M과 어떻게 다른지 — 보편성(universality) 증거.
 
 **한계 주의**: 이 논문의 정확한 arXiv ID를 확인하지 못했다 (LessWrong 포스트로 시작했을 수 있음). 이를 인용하기 전에 공식 논문 확인 필요.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Templeton scaling 의 *Sonnet 까지 확장* 의 *technical 핵심*?**
+2. **Gemma Scope 의 *democratization effect*?**
+3. **SAE + RLHF 결합의 *reward hacking 방지* 적용?**
+
+### 답변
+
+1. **Distributed SAE training + sparse attention**. Sonnet 의 layer 수 (~80) × SAE size (1M features) = *massive parameter*. Distributed across 100+ GPUs + *efficient sparse attention* 으로 expand. Anthropic 의 internal infrastructure 가 *key enabler*.
+
+2. **Reproduction barrier removal**. Gemma Scope = "SAE pre-trained, free download". 학계 + 학생이 *training step skip* → *circuit discovery 만* 수행 가능. *Cost*: A100 × 24h → 0 (just inference). → community 의 *SFC adoption* 폭발적 증가.
+
+3. **Reward model debugging**. RLHF reward 의 SAE feature 분해 → "reward hacking" features (e.g., "긴 답변 prefer", "특정 phrase repeat") 식별 → 선택적 ablation. → *better-aligned RLHF*.

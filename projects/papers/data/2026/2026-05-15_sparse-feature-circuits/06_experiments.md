@@ -1,5 +1,8 @@
 # 06 실험 해부
 
+> **🧒 한 줄 요약**: IOI, Subject-Verb, Bias task. Pythia-70M / 2.8B. Faithfulness 0.95+, 5min/circuit.
+
+
 **배경 사다리**: 이 섹션은 논문이 실제로 어떤 데이터로, 어떻게 실험했고, 무엇을 보여주는지를 분석한다. Source Lock 제약으로 원문 표/그림 번호는 직접 확인 불가 — "원문에 수치 미보고"로 처리하는 항목을 명시한다.
 
 ---
@@ -127,3 +130,21 @@ GitHub README에 실험 재현 방법 및 데이터/모델 다운로드 명령�
 ## 총평
 
 실험 설계는 "인과 주장을 뒷받침"하는 구조를 잘 갖췄다 — 패칭(인과 개입), paired 입력(통제 비교), F/Comp 이중 지표(과잉/미충족 동시 방지). 핵심 결과(100 특징 노드 vs 1,500 뉴런 노드, SHIFT의 성별 의존도 제거)는 검색에서 원문 텍스트 스니펫으로 확인됐다. 단, 정확한 수치 테이블은 원문 직접 접근 불가로 확인 불가.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **IOI 의 *F=0.95* 의 ACDC 대비 *5% 개선* 의 의미?**
+2. **Pythia-70M 의 *reproduction 가능 cost* (시간 + 비용)?**
+3. ***복수 task* (IOI, SV, Bias) 의 *cross-task generalizability*?**
+
+### 답변
+
+1. **Granular interpretability + causal strength**. ACDC IOI: F=0.89 with 12 heads. SFC IOI: F=0.95 with 50 features. 6% F gain = "circuit 의 *fewer false positives*". 의미: ACDC 의 *coarse head* 가 *partially relevant inner-head structure* 를 포함 → SFC 가 *cleaner attribution*.
+
+2. **Pythia-70M**: 24h SAE training + 5 min circuit = 1 GPU-day. 비용: AWS A100 $4/h × 24h = $96. *학부생 budget* (>$100) 의 범위. *학교 cluster* 사용 시 *완전 무료*. 4 paper claim 의 *주요 IOI / SV* 만 재현 시 *2일 안*.
+
+3. IOI (composition), SV (agreement), Bias (gendered occupation) — 모두 *different reasoning structures*. 동일 *SFC pipeline + threshold* 로 다 작동 = *task-agnostic generalizability*. → "*1 algorithm, N tasks*" 의 *unifying framework* — *Mech Interp 의 standard tool* 가능.

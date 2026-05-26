@@ -1,5 +1,8 @@
 # 09 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와의 연결: SAE feature ↔ motif identification, 3-fold evaluation ↔ H1/H2/H3 protocol.
+
+
 _`_profile.md`의 관심 영역 §A~F + 보유 자산 목록과 직접 연결. 구체적 mechanism/axis/수식 요소를 지정해 연결. 일반론 나열 금지._
 
 ---
@@ -72,3 +75,21 @@ Kalnāre et al. 2025 (Mechanistic Interpretability for TS Classification, arXiv:
 | **APF** §5 미래 작업 | SFC 스타일 특징 회로 확장 | "향후 SAE 기반 특징 회로 분석으로 발전 가능" |
 | **Grokking** 관련 작업 | 회로 변화 추적 방법론 | "Grokking 국면 전환 시 특징 회로 변화 추적 위해" |
 | **P1 ProTran-TFA** | 금융 특징 ablation 아이디어 | "원치 않는 편향 제거를 위한 SHIFT 유사 기법" (선택적) |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF 의 *motif identification* 과 SFC *feature identification* 의 *analogy*?**
+2. **3-fold evaluation 의 *time-series 적용 가능성*?**
+3. **내 연구 의 *direct adoption* 가능한 SFC 요소 3 가지?**
+
+### 답변
+
+1. **구조적 analogy**. APF: attention pattern 의 *motif* 식별 (RoPE × Q-sim plane). SFC: SAE feature 의 *concept* 식별. 둘 다 *latent space 의 interpretable unit decomposition*. APF 의 motif typology 가 SFC 의 SAE feature catalog 와 *동일 정신*.
+
+2. **잠재적 적용**. TS Transformer 의 SAE → 시계열 *behavior feature* 식별 → 3-fold evaluation 으로 *forecast circuit* identify. *Wilinski 2025 ICML* 가 이 방향 — 본 deep dive 의 *내 연구 적용* 가능성 입증.
+
+3. **Attribution patching (TS 적용 가능)**, **3-fold evaluation (motif validation 에 적용)**, **SAE feature concept (motif annotation 자동화)**. 3 가지 모두 APF 의 *direct 강화 도구*.

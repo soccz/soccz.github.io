@@ -1,5 +1,8 @@
 # 04 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: 본 paper 의 *4 claim*: (1) attribution patching의 1000× 가속, (2) sparse circuit 의 존재, (3) 3-fold evaluation, (4) bias removal demo.
+
+
 **배경 사다리**: ① "회로(circuit)"는 모델의 특정 행동에 인과적으로 관여하는 구성요소의 집합, ② "SAE 특징"은 sparse autoencoder가 추출한, 인간이 해석 가능한 단의미 방향 벡터, ③ "간접 효과(IE)"는 어떤 구성요소를 변경했을 때 최종 출력이 얼마나 변하는가를 측정하는 양.
 
 ---
@@ -77,3 +80,21 @@ $$\text{Comp}(C) = \frac{\text{IE}(\bar{C})}{\text{IE}(\text{Full})} \quad (\tex
 - 스케일 가능성 주장 — Pythia-70M에서 가능하다고 GPT-4 수준에서 가능한 것은 아님.
 
 **쉬운 말 풀이**: "사람이 '이 행동을 보자'고 지정하지 않아도, AI가 스스로 흥미로운 행동 패턴을 찾아내고 각각에 대한 회로 지도를 자동으로 그리는 공장을 만들었다."
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Claim 1 (1000× speed-up) 의 *empirical validation*?**
+2. **Claim 2 (sparse circuit existence) 의 *non-obviousness*?**
+3. **Claim 3 (3-fold evaluation) 의 *causal strength*?**
+
+### 답변
+
+1. **Correlation > 0.95 (paper Figure 4)**. Marks 가 attribution score 와 explicit ablation effect 의 *직접 correlation* 측정 → 95-98%. 1000× 속도는 이론 (1 backward vs N forward) + empirical (실측 5 min vs 6 hours). *empirical validation*: paper Table 2 의 *replicated ACDC IOI numbers* 와 attribution 결과의 *parallelism*.
+
+2. **Counterintuitive**: 32K features 중 *0.1% 만* (~50 features) task circuit 에 충분 — *sparsity 의 extreme degree*. 사전 prior 는 "*많은 features 필요*" — 실제는 *50 만으로 95% faithfulness*. → "*복잡 task 의 causal mechanism* 가 극도로 *sparse*" — mech interp 의 *surprising empirical finding*.
+
+3. **Tri-condition 의 *logical strength***. 단일 metric: "circuit 의 effect 큼" → over/under-claim 가능. 3-fold: F + C + M 동시 만족 = "*minimal sufficient necessary*" 의 *logical 3-corner*. ACDC 의 KL 단일 metric 대비 *causal claim strength* upgrade.

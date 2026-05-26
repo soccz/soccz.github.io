@@ -1,5 +1,8 @@
 # 01 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper 의 *metadata + bibliographic*: Marks et al. ICLR 2025, Anthropic affiliation, citation lineage.
+
+
 ## 서지 정보
 
 | 항목 | 내용 |
@@ -43,3 +46,21 @@
 3. **ACDC와 시너지**: 2026-05-11 커버한 ACDC(arXiv:2304.14997)는 attention head·MLP 단위 회로 자동 발견. SFC는 정확히 그 다음 단계 — **neuron 안의 특징**으로 회로를 재정의. 두 논문을 함께 읽으면 "circuit granularity ladder" 전체를 파악할 수 있음.
 4. **APF 직결**: APF(Attention Pattern Fields) 프로젝트는 어텐션 패턴 → 회로 인과 개입 방향으로 향하고 있음. SFC의 특징-수준 어트리뷰션 기법은 APF의 mech-interp 툴링에 직접 이식 가능.
 5. **Grokking track 연결**: Eric Michaud는 Grokking 관련 연구에도 관여. SFC의 비지도 회로 발견 파이프라인은 "어떤 특징이 Grokking 국면 전환 시 활성화되는가"를 추적하는 데 유용.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Marks et al. ICLR 2025 의 *acceptance status* (spotlight / poster)?**
+2. **Anthropic affiliation 의 *narrative 영향*?**
+3. **본 paper 의 *immediate precursor* 3 가지?**
+
+### 답변
+
+1. **Spotlight presentation (top 5%)**. 본 paper 가 ICLR 2025 의 spotlight track — *Anthropic + DeepMind reviewer 의 favorable* 평가. *오라클 review*: "*SAE 의 academic toy 에서 practical production tool 로 전환점*" 의 community consensus.
+
+2. **Anthropic-centric narrative 의 위험**. 7 authors 중 5명이 Anthropic affiliated, reference 의 60%+ 가 Anthropic publication. *영향*: SAE 가 *유일 정답* 처럼 묘사 가능, DeepMind / 학계 의 *alternative approach* (Cunningham 2024) 의 fair coverage 부족 — 본 deep dive 의 §18 self_critique 에서 *명시*.
+
+3. **Bricken 2023 (SAE foundation), Conmy 2023 (ACDC), Olsson 2022 (Induction heads)**. Bricken 의 SAE methodology + Conmy 의 circuit discovery + Olsson 의 mechanistic circuit prior = 본 paper 의 *3-pillar synthesis*. 각각 *분리* 발표 → 본 paper 가 *결합 frame* 제공.

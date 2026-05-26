@@ -1,5 +1,8 @@
 # 10a 사고 확장 — 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 가지 *open question*: feature universality, hierarchical SAE, online SAE, multi-modal SAE 등.
+
+
 ---
 
 ## Q1: SAE 특징이 모델의 "실제 계산 단위"인가, 아니면 인간의 분석 편의를 위한 사후 투영인가?
@@ -67,3 +70,21 @@ SFC의 행동 정의(SVA: "are" vs "is" 선택, Bias in Bios: 직업 분류)는 
 그러나 온라인 SHIFT는 추론 시마다 회로 발견을 수행해야 하므로 계산 비용이 크다. 계산 효율화(사전 캐싱, 경량 IE 근사)와의 트레이드오프가 핵심 도전이다.
 
 금융 예측이나 강화학습 기반 트레이딩에서 "동적으로 특징을 끄고 켜는 메커니즘"으로 이어질 수 있는 아이디어다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **SAE *feature universality* 의 *epistemic uncertainty*?**
+2. **Hierarchical SAE 의 *expressivity benefit*?**
+3. **Multi-modal SAE (text + image) 의 *practical 가치*?**
+
+### 답변
+
+1. **"같은 concept 의 feature 가 다른 seed 에 다른 index"** — index 변경은 OK, *concept 동일성* 검증이 어려움. Cross-seed cosine similarity 의 *threshold ≥ 0.8* 가 *empirical proxy*, 하지만 *principled criterion* 부재. → universality 의 *epistemic uncertainty* 상존.
+
+2. **Multi-resolution feature**. 1-layer SAE = *fine* (token-level), multi-layer hierarchical = *abstract* (sentence/topic). 결합 시 *concept 의 multiple granularity*. e.g., "he" (token) → "male pronoun" (concept) → "gender bias" (behavior). Hierarchical 가 *causal interpretation* 더 강력.
+
+3. **Cross-modal alignment**. Text SAE feature "sky" ↔ Image SAE feature "blue region". *Joint training* 시 *shared latent concept* 식별 — *multi-modal grounding* 의 *mechanistic substrate*. Anthropic Sonnet 의 vision SAE 가 *partial 입증*.

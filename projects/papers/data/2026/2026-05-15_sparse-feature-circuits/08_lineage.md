@@ -1,5 +1,8 @@
 # 08 이론적 계보
 
+> **🧒 한 줄 요약**: Bricken 2023 → Marks 2024 → Templeton 2024 → Production. SAE era 의 *foundational triangle*.
+
+
 ---
 
 ## 이론적 조상
@@ -72,3 +75,21 @@ Monosemanticity의 후속으로, 더 큰 모델(Claude 3 Sonnet 수준)에 SAE�
 
 ### 후손 3: 시계열 Transformer에 SAE + SFC 적용
 언어 모델에서 검증된 SAE 특징 + 회로 접근을 시계열 예측 Transformer(PatchTST, iTransformer 등)에 적용하면, "Grokking 국면 전환 시 어떤 특징이 등장하는가"를 추적할 수 있다. 이것이 내 Grokking track과의 핵심 교차점이다 — 아직 존재하지 않는 연구 방향.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Bricken 2023 의 *toy model* 에서 Marks 2024 의 *practical task* 로의 *bridge*?**
+2. **Templeton 2024 의 *Sonnet scaling* 이 *direct 후속* 인 이유?**
+3. ***Anthropic-axis* 외의 *DeepMind / 학계 contribution*?**
+
+### 답변
+
+1. **Methodology validation → Task application**. Bricken 2023: SAE 가 *작동 함* (1-layer toy). Marks 2024: SAE 가 *real task* (Pythia, IOI/SV/Bias). 동일 architecture, 동일 training, *task complexity* 만 upgrade. → Bricken 의 *feasibility* 가 Marks 의 *applicability* 의 *necessary precursor*.
+
+2. **Same authors + same methodology + scale**. Templeton et al. = Marks 의 후속 (Anthropic). Pythia-2.8B → Sonnet (1000× scale-up). 동일 SAE training, attribution patching — *scale 만 변경*. → *Direct continuation*, *not new method*.
+
+3. **DeepMind**: Cunningham 2024 (auto-interpretation), Lieberum 2024 (Gemma Scope), Rajamanoharan 2024 (Gated SAE). **학계**: MIT EleutherAI Pythia, Stanford CRFM. *fair coverage* 가 본 deep dive 의 §18 self_critique 에서 명시.

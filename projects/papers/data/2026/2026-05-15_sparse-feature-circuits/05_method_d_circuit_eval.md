@@ -1,5 +1,8 @@
 # 05d 방법론 — 회로 평가: 충실도와 완전도
 
+> **🧒 한 줄 요약**: 3-fold metric: Faithfulness × Completeness × Minimality. 단일 metric 보다 강한 *causal claim*.
+
+
 **배경 사다리**: ① 앞 파일들에서 정의한 IE를 알고 있어야 한다; ② "집합의 여집합(complement)"은 "전체에서 해당 집합을 뺀 나머지"를 의미한다는 것; ③ 이상적인 회로는 "충분히 행동을 설명하면서 동시에 불필요한 것을 포함하지 않는다"는 두 가지 조건을 동시에 만족해야 한다는 것.
 
 ---
@@ -88,3 +91,25 @@ $$F + \text{Comp} = ?$$
 SFC는 F와 Comp를 명시적 이중 지표로 설정하여 회로 품질을 양방향으로 측정한다. 또한 ACDC는 어텐션 헤드 단위(coarse-grained)인 반면, SFC는 SAE 특징 단위(fine-grained)다. 동일한 행동에 대해 SFC의 회로는 ACDC의 회로보다 더 작지만 더 해석 가능하다.
 
 **이 섹션 핵심 요약**: 충실도(F)와 완전도(C)는 각각 "회로가 행동을 잘 설명하는가"와 "회로 밖에 중요한 것이 없는가"를 측정한다. 이 이중 지표를 함께 쓰면 회로의 크기와 품질을 균형있게 평가할 수 있다. SFC의 특징 기반 회로는 이 지표에서 뉴런 기반 회로보다 더 경제적이고 해석 가능하다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Faithfulness vs Completeness 의 *complementary check*?**
+2. **Minimality 의 *proper subset check* algorithm?**
+3. **단일 metric 의 *false positive* 시나리오 2가지?**
+
+### 답변
+
+1. **Causal directionality 의 양방향**. Faithfulness = "circuit 충분" (ablate non-circuit → no effect). Completeness = "circuit 필요" (ablate circuit → big effect). 두 가지 *상보적 confirmation*.
+
+2. **Leave-one-out check**. For each f in circuit: drop = perf(circuit - {f}). If drop ≈ 0 → f 제거 가능 (redundant). Else → f critical. Final circuit = {f : critical}. 효율: O(|circuit|) — 50 features 의 경우 50 forward (5min).
+
+3. **False positive 1**: faithful but over-include — "circuit 충분" 인데 *외부도 충분* (parallel paths). False positive 2: complete but redundant — "circuit 영향 큼" 인데 *circuit 내부에 unnecessary parts*. 3-fold 가 둘 다 reject.
+
+
+```viz:sfc-circuit-evaluation:title=3-fold metric sweep,caption=3-fold metric sweep.
+```

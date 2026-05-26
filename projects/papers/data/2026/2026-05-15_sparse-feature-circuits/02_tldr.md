@@ -45,3 +45,21 @@ Bias in Bios 데이터셋 실험에서 직업 분류기가 성별 정보에 의�
 Pythia-70M에서 자동으로 행동을 탐지하고, 각 행동에 대한 희소 특징 회로를 발견하는 완전 비지도 파이프라인. 수천 개 회로를 자동 생성.
 
 **한계**: (a) Pythia-70M이라는 소형 모델에 한정; (b) SAE 품질에 의존 (SAE가 실패하면 회로도 실패); (c) 어트리뷰션 패칭은 선형 근사 — 비선형 상호작용 무시; (d) 충실도·완전도는 상관 측정이지 진짜 인과 측정이 아닐 수 있음.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 paper 의 *one-line core claim*?**
+2. **SAE features + circuit discovery 의 *결합 의의*?**
+3. **Bias removal 이 *side demo* 가 아닌 *core contribution* 인 이유?**
+
+### 답변
+
+1. **"Sparse Autoencoder features + attribution patching + 3-fold evaluation = automated, interpretable, causal circuit discovery, scaled to production-class behaviors (bias removal demonstrated)."** — 한 문장이 4 contribution 을 동시에 함축.
+
+2. **Granularity × Causality 의 dual upgrade**. SAE features 만으로는 *isolated descriptive* (Bricken 2023). Circuit 만으로는 *coarse opaque unit* (Conmy 2023). 결합 시 *granular + causal* — *interpretable causal circuit* 의 *first practical demonstration*.
+
+3. **Demonstrative practical value 의 입증**. SFC 의 academic contribution 만으로는 *toy methodology* 위험. Bias removal = "real LLM problem 에 실제 적용 가능" 의 *practical proof*. → 후속 *Anthropic feature steering*, *commercial editable AI* 의 *trigger demonstration*.

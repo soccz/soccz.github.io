@@ -1,5 +1,8 @@
 # 10c 사고 확장 — 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 *연구 아이디어*: TS-domain SAE, grokked + SAE, causal-loop SAE, multi-task circuit composition.
+
+
 ---
 
 ## 실험 아이디어 1: Grokking 국면 전환을 특징 회로 변화로 추적하기
@@ -78,3 +81,21 @@ Grokking 국면 전환 (memorization phase → generalization phase) 은 단순�
 - 총 추정: 20~30 GPU 시간. 주말 실험으로 실행 가능.
 
 **이 실험이 내 연구에서 하는 역할**: APF의 mech-interp 툴링 → SFC 이식 가능성 검증의 선행 실험. APF 논문의 "향후 작업" 섹션에 이 실험 결과를 포함하거나, Grokking track의 회로 분석 방법론 기반으로 활용.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **TS-domain SAE 의 *unique challenge* (no token boundary)?**
+2. **Grokked + SAE 의 *feature emergence trajectory* 추적?**
+3. **Causal-loop SAE (cross-attention) 의 *mechanistic implication*?**
+
+### 답변
+
+1. **Token boundary 부재**. TS Transformer 의 input = continuous values, not discrete tokens. SAE feature 의 *activation pattern* 이 *continuous attribute* (e.g., "uptrend", "high volatility") 형태 — *categorical concept 와 다른 nature*. → *feature visualization* 의 *protocol 재정의* 필요.
+
+2. **Phase-conditional feature**. Grokking 의 4 phases (random / memorize / transition / grokked) 각각의 SAE 적용. *Phase transition* 시 *어느 feature 가 emerge / disappear* 추적 → *circuit formation trajectory* 의 *temporal map*. → grokking 의 *mechanistic explanation* upgrade.
+
+3. **Cross-attention 의 SAE**. Encoder-decoder 의 cross-attn = *2-stream interaction*. SAE 적용 시 *cross-modal feature* (e.g., "source token X ↔ target token Y") 식별. → Translation, multi-modal 의 *causal mechanism* 분석.
