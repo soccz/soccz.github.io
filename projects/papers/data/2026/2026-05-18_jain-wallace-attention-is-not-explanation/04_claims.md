@@ -60,3 +60,10 @@ $$
 (C1 = attention 이 *다른 importance 측정* 과 *불일치*) **OR** (C2/C3 = 동일 출력의 *다른* attention 이 *존재*) → "**attention 은 *유일하고 신뢰할 만한 설명* 이 아니다**". 두 조건은 *합집합* — 둘 중 하나만 깨져도 "explanation" 주장이 무너진다. C4 는 *왜* 그런가에 대한 *부분적 메커니즘* 가설로 보조.
 
 따라서 본 논문의 결론은 *부정 명제* — "attention 은 *반드시* 설명이다 라는 주장은 정당화되지 않는다" — 이며, *어떤 의미에서도 설명이 아니다* 라는 강한 주장은 아니다. 이 미묘한 차이가 후속 Wiegreffe-Pinter 와의 논쟁의 핵심.
+
+---
+
+## 인터랙티브 — Claim 1 (Correlation) 시각화
+
+```viz:anie-datasets-summary:title=12 Datasets Summary — Claim 별 Heatmap,caption=Metric 셀렉터로 τ_g (BiLSTM) / τ_loo (BiLSTM) / τ_g (Average) / ∆ŷ (permute) / Adv JSD 전환. 12 dataset 전체에서 τ_g (BiLSTM) 가 일관 낮음 (대부분 < 0.5) — Claim 1 의 grid 증거. Average encoder 로 전환 시 일관 high (> 0.6) → Claim 4 (encoder mixing 의 효과) 의 증거.
+```

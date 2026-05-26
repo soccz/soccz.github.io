@@ -72,3 +72,10 @@ $$
 ## 핵심 한 문장
 
 > Attention 분포 와 *두 가지 독립* importance 측정 (gradient, LOO) 사이의 *순위 일치도* 를 Kendall τ 로 측정하여, "*같은 단어가 중요하다고 가리키는가*" 라는 질문을 정량적으로 답하는 모듈.
+
+---
+
+## 인터랙티브 — H1 결과 시각화
+
+```viz:anie-correlation-hist:title=Kendall τ Histogram — H1 결과 (Dataset 별),caption=Dataset 셀렉터로 SST / IMDB / Diabetes / bAbI 2 / SNLI 등 전환. Metric 토글 (τ_g / τ_loo). 모든 dataset 에서 BiLSTM 의 τ 분포가 0.5 이하 centered → H1 (attention 이 importance 와 강한 상관) *실패*. Average encoder 의 τ 분포는 0.6+ 로 시프트 → encoder mixing 의 효과 시각.
+```

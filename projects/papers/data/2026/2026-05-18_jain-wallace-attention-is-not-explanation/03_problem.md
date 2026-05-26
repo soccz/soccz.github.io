@@ -56,3 +56,10 @@ Jain & Wallace 는 이 gap 을 **두 단계 검증 protocol** 로 메운다:
 2. **H2 — Counterfactual test**: $\boldsymbol{\alpha}$ 와 *다른* 분포 $\boldsymbol{\alpha}^*$ 로 같은 예측을 만들 수 있는가? 만들 수 있다면 $\boldsymbol{\alpha}$ 가 그 예측의 *유일한 설명* 이라는 주장은 무너진다.
 
 두 시험을 *모두* 통과해야 "attention = explanation" 이 정당화될 수 있다는 입장. 본 논문은 둘 다 *대부분의 경우 실패* 함을 보임으로써 7년간 누적된 관행에 도전한다.
+
+---
+
+## 인터랙티브 — 문제 설정 시각화
+
+```viz:anie-correlation-hist:title=문제 설정 — H1 의 직관 시각화,caption=Dataset 셀렉터 + Metric 토글. BiLSTM (red) 의 τ 가 [0, 0.5] 안에 centered. *문제: 만약 attention 이 explanation 이라면 τ 가 1 에 가까워야 함*. 실제로는 ~0.3 → "attention 이 importance 와 약하게 상관" — H1 검증의 정량적 결과.
+```

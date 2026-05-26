@@ -57,3 +57,10 @@
 ## 핵심 한 문장
 
 > 본 논문의 결과는 *attention is NOT the unique explanation* 의 *증거* 이지 *attention has NO explanatory value* 의 *증거* 가 아니라는 미묘한 차이가 핵심이며, 이 차이를 둘러싼 후속 논쟁이 본 분야의 진보를 만든다.
+
+---
+
+## 인터랙티브 — Diabetes 의 예외 (한계의 정량 증거)
+
+```viz:anie-tvd-jsd-2d:title=Diabetes — Adversarial 어려움 (paper 자체 인정 limit),caption=Dataset 셀렉터로 Diabetes 선택. 다른 dataset 과 달리 점들이 diagonal 따라 분포 → high JSD requires high TVD. 즉 *Diabetes 에서 attention 이 부분적 explanation*. paper 의 한계 인정 — "attention 의 explanation 능력은 task-specific, high-precision token 의 존재가 결정 요인".
+```

@@ -113,3 +113,10 @@ for step in range(N_steps):
 ## 핵심 한 문장
 
 > 12 데이터셋 × 3 인코더 × 2 attention 격자에서 동일한 H1/H2 protocol 을 적용하기 위한 표준화된 PyTorch 파이프라인. 재현은 PyTorch master 의존으로 비-trivial 하지만 분석 protocol 자체는 *모델 무관* 하게 일반화 가능한 구조.
+
+---
+
+## 인터랙티브 — 3 Encoder × 9 Dataset Grid
+
+```viz:anie-encoder-comparison:title=Encoder Comparison Grid — Implementation 결과,caption=Highlight 셀렉터. 9 dataset × 3 encoder = 27 cell 의 τ_g 값. 본 챕터의 implementation 이 다루는 grid 의 정량적 결과 시각. BiLSTM (red) vs CNN (orange) vs Average (blue) 의 mixing continuum 효과 확인.
+```

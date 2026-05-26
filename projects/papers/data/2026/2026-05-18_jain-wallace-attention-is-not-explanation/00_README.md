@@ -52,3 +52,20 @@
     - [10_extensions_b_followups.md](10_extensions_b_followups.md) — Follow-up 3편
     - [10_extensions_c_ideas.md](10_extensions_c_ideas.md) — 실험 아이디어 2개
 11. [11_verdict.md](11_verdict.md) — 한 줄 판결
+12. [12_glossary.md](12_glossary.md) — 용어집 · 표기법 · References
+13. [13_insights.md](13_insights.md) — 메타 통찰 12개
+14. [14_code.md](14_code.md) — PyTorch 재현 코드 (H1, H2-a, H2-b)
+15. [15_diagrams.md](15_diagrams.md) — ASCII 도식 + viz 카탈로그
+16. [16_appendix.md](16_appendix.md) — paper Table 2 정확 수치 · 비교 결과 · reproduction
+
+## 인터랙티브 시각화 (7 viz JS, 22 viz blocks)
+
+| viz id | 챕터 | 내용 |
+|--------|------|------|
+| `anie-attention-heatmap` | 02, 08, 11, 15 | paper Figure 1 — original vs adversarial heatmap |
+| `anie-correlation-hist` | 02, 03, 05b | Kendall τ histogram (BiLSTM vs Average) |
+| `anie-permutation-scatter` | 05c | max α vs median ∆ŷ scatter (permutation) |
+| `anie-adversarial-search` | 05c, 14 | iter 별 JSD/TVD trajectory |
+| `anie-tvd-jsd-2d` | 05c, 07 | 2D plot (TVD, JSD) — adversarial region |
+| `anie-encoder-comparison` | 05a, 05d, 06, 13 | BiLSTM vs CNN vs Average τ 비교 |
+| `anie-datasets-summary` | 04, 06, 13 | 12 datasets × 5 metrics heatmap |

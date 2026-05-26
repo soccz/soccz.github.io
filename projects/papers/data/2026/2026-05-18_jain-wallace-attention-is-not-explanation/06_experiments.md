@@ -96,3 +96,13 @@
 ## 핵심 한 문장
 
 > 12 데이터셋 × 3 인코더 × 2 attention 격자에서 H1 (Kendall τ violin) + H2-a (permutation TVD) + H2-b (adversarial JSD-TVD 산점) 의 3 그림이 *encoder mixing 강도에 따라* 차등적으로 실패함을 보여, 발견이 *특정 case 의 우연* 이 아닌 *구조적 현상* 임을 입증.
+
+---
+
+## 인터랙티브 — Grid 실험 결과 종합
+
+```viz:anie-datasets-summary:title=12 Datasets × 5 Metrics — Grid 결과,caption=Metric 셀렉터로 5 지표 (τ_g, τ_loo, τ_g Average, ∆ŷ permute, Adv JSD) 전환. 12 dataset 의 한 화면 비교. BiLSTM 의 τ 가 일관 낮음 (red), Average 의 τ 가 일관 높음 (blue) — encoder mixing 의 효과 grid 전체 일관. → paper Table 2 의 핵심 발견을 단일 시각화에 압축.
+```
+
+```viz:anie-encoder-comparison:title=3 Encoders × 9 Datasets — τ_g 직접 비교,caption=Highlight 셀렉터. BiLSTM 의 contextualization 이 attention 의 explanation 능력 일관 파괴. CNN 은 local mixing 만이라 중간. Average (token-isolated) 가 attention-friendly. → encoder mixing strength 가 explanation 의 결정 인자라는 paper 핵심 mechanism 입증.
+```

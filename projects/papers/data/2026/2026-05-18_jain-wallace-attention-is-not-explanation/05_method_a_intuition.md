@@ -69,3 +69,10 @@
 ## 핵심 한 문장
 
 > Attention 의 "설명력" 을 *상관 검증* + *개입 검증* 의 두 축으로 *명시적으로* 시험하는 protocol 을 도입했고, BiLSTM 류의 강한 contextualization encoder 에서 두 검증 모두 *대부분 실패* 한다는 격자 실험 결과를 제시.
+
+---
+
+## 인터랙티브 — Encoder 비교
+
+```viz:anie-encoder-comparison:title=Encoder Mixing Continuum — BiLSTM vs CNN vs Average,caption=Highlight 셀렉터로 BiLSTM (high mixing) / CNN (mid) / Average (none) 의 τ_g 비교. 9 dataset 에서 *BiLSTM 의 mixing 이 attention 의 explanation 능력 가장 파괴*. CNN 은 중간 (local mixing 만), Average 가 가장 attention-friendly. paper 의 핵심 mechanism — "encoder mixing strength continuum".
+```

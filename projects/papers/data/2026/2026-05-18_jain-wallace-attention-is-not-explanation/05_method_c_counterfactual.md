@@ -97,3 +97,16 @@ Adversarial 결과가 더 강한 evidence. Permutation 결과는 *adversarial �
 ## 핵심 한 문장
 
 > 학습된 attention 분포를 *외부에서 강제 교체* — 무작위 순열 (약한 baseline) 과 gradient-기반 적대적 최적화 (강한 baseline) — 했을 때 예측이 보존되는 정도를 측정함으로써, "attention 분포가 예측의 *유일한* 결정자" 라는 *원인 주장* 을 실증적으로 반증.
+
+---
+
+## 인터랙티브 — H2-a Permutation Test
+
+```viz:anie-permutation-scatter:title=Max Attention vs Median ∆ŷ (Permutation Test),caption=Dataset 셀렉터로 SST / IMDB / Diabetes / bAbI 1 전환. 점선 ("faithful" reference) = "큰 attention 위치 변경 시 큰 ∆ŷ 기대". 관찰: 대부분 dataset 에서 max α > 0.6 인 instance 도 ∆ŷ < 0.05 — *attention 위치 무관, 같은 prediction*. Diabetes 만 예외 (high-precision medical token).
+```
+
+```viz:anie-adversarial-search:title=Adversarial Attention 최적화 Trajectory,caption=Iter 슬라이더 (0 → 500). JSD (blue, max 목표) 가 점차 증가하면서 TVD (red, ε=0.10 constraint 유지) 가 ε 아래에 머무름. iter=500 에서 JSD ≈ 0.45 (distinct distributions) + TVD < 0.10 (same prediction). → "다른 attention, 같은 prediction" 의 explicit optimization 결과.
+```
+
+```viz:anie-tvd-jsd-2d:title=Adversarial Feasible Region — TVD vs JSD 2D,caption=Dataset 셀렉터로 SST / IMDB / Diabetes / Anemia / SNLI 전환. 녹색 영역 = TVD < 0.10 (constraint 만족). 대부분 dataset 에서 high JSD (> 0.30) + low TVD (< 0.10) 의 점 다수 → adversarial attention 광범위 존재. Diabetes 만 점들이 diagonal 따라 분포 (adversarial 어려움).
+```

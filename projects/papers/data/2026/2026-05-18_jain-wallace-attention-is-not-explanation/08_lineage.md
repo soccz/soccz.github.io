@@ -59,3 +59,10 @@
 ## 핵심 한 문장
 
 > Bahdanau 의 attention 발명 + saliency-attribution 의 검증 정신 + Brunner 의 identifiability 이론이 합류한 *해석 가능성의 메타-검증* 분야의 *시조* 논문 중 하나로, ERASER · rollout · mechanistic interpretability 모두에 *DNA* 를 남겼다.
+
+---
+
+## 인터랙티브 — 본 논문의 핵심 visual
+
+```viz:anie-attention-heatmap:title=paper Figure 1 — Lineage 의 출발점,caption=Example 셀렉터. 본 논문이 *7년 영향력의 시작* 인 단일 visual: 두 매우 다른 attention 으로 *같은 prediction*. 이 visual 이 (a) Wiegreffe-Pinter rebuttal 의 출발점, (b) ERASER 의 plausibility metric 의 motivation, (c) Mechanistic Interpretability paradigm shift 의 ideological 토대 — 모두를 만들었다.
+```

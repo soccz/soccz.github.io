@@ -44,3 +44,13 @@
 - 단일-head, 단일-layer attention 만 다룸. Transformer 의 multi-head·multi-layer attention 으로 직접 일반화되지 않음 (이 점은 본 논문 ≠ Transformer interpretability 논문이라는 사실로 자주 오해됨).
 - Adversarial 최적화가 "*존재 가능* 하다" 만 보일 뿐, 그 분포가 *학습 시 자연 발생* 하는가는 별개 문제 (Wiegreffe-Pinter 의 *plausibility* 반론의 기반).
 - "Explanation" 의 정의를 *faithfulness* 의 강한 형태로 한정. Plausibility (사람이 보기에 그럴듯) 또는 사후 합리화 (post-hoc rationalization) 로서의 가치는 부정하지 않음.
+
+---
+
+## 인터랙티브 — 핵심 결과 한 눈에
+
+```viz:anie-attention-heatmap:title=paper Figure 1 — Original vs Adversarial Attention,caption=Example 셀렉터로 paper 의 movie review / medical note / news 예시. 왼쪽 = original attention (직관적 — "waste" 강조), 오른쪽 = adversarial attention (무관 — "was" 강조). 두 prediction 이 *같다* — ★ paper 의 가장 압축된 visual evidence.
+```
+
+```viz:anie-correlation-hist:title=Kendall τ Histogram — BiLSTM vs Average Encoder,caption=Dataset 셀렉터 + Metric 토글 (τ_g, τ_loo). BiLSTM (red, contextualized) 분포는 τ ~ 0.3 centered. Average (blue, token-isolated) 분포는 τ ~ 0.7 centered. → encoder mixing 의 단일 변경 → attention 의 explanation 능력 일관 회복. paper Figure 2 의 핵심 패턴.
+```
