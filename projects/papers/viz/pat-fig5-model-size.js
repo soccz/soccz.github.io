@@ -10,14 +10,15 @@
   // dataset → 6-array of MSE values across (L,D) combinations
   // Approximate from paper Fig 5 — emphasize narrow variance (robustness)
   const FIG5 = {
-    'ETTh1':       [0.378, 0.380, 0.376, 0.375, 0.378, 0.378],
-    'ETTh2':       [0.286, 0.282, 0.280, 0.278, 0.280, 0.280],
-    'Weather':     [0.144, 0.143, 0.141, 0.140, 0.142, 0.143],
-    'ILI':         [2.15, 2.05, 2.18, 2.22, 2.10, 2.08],  // ILI has high variance per paper
-    'ETTm1':       [0.288, 0.285, 0.290, 0.288, 0.286, 0.290],
-    'ETTm2':       [0.165, 0.164, 0.163, 0.165, 0.164, 0.166],
-    'Traffic':     [0.373, 0.370, 0.372, 0.368, 0.370, 0.371],
-    'Electricity': [0.130, 0.128, 0.127, 0.128, 0.129, 0.130]
+    // paper Fig 5 visual estimates with peak structure per dataset
+    'ETTh1':       [0.370, 0.373, 0.370, 0.376, 0.386, 0.380],   // peak at combo 5
+    'ETTh2':       [0.275, 0.276, 0.278, 0.278, 0.300, 0.290],   // peak at combo 5
+    'Weather':     [0.155, 0.155, 0.150, 0.143, 0.143, 0.145],   // high at combos 1-2
+    'ILI':         [2.20, 2.00, 2.30, 2.05, 2.10, 2.05],          // ILI noisy (paper noted)
+    'ETTm1':       [0.288, 0.288, 0.290, 0.290, 0.275, 0.290],   // dip at combo 5
+    'ETTm2':       [0.167, 0.167, 0.165, 0.166, 0.165, 0.170],   // peak at combo 6
+    'Traffic':     [0.378, 0.378, 0.380, 0.380, 0.378, 0.378],   // nearly flat ~0.378
+    'Electricity': [0.130, 0.128, 0.130, 0.128, 0.130, 0.130]    // zigzag ~0.13
   };
 
   // (L, D) combinations

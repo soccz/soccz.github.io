@@ -8,13 +8,14 @@
 
   VIZ_REGISTRY['it-lookback-paradox'] = function (canvas, controls, params) {
     const lookbacks = [48, 96, 192, 336, 720];
+    // paper Fig 6 ECL — visual estimates with T=96 anchors matching Table 2
     const dataLines = {
-      'iTransformer': { values: [0.198, 0.178, 0.169, 0.163, 0.158], color: '#16a34a' },
-      'iInformer': { values: [0.230, 0.216, 0.208, 0.201, 0.195], color: '#2563eb' },
-      'iFlowformer': { values: [0.226, 0.210, 0.203, 0.197, 0.192], color: '#9333ea' },
-      'Transformer (vanilla)': { values: [0.265, 0.277, 0.286, 0.298, 0.312], color: '#dc2626' },
-      'Informer (vanilla)': { values: [0.298, 0.311, 0.320, 0.328, 0.341], color: '#ea580c' },
-      'Flowformer (vanilla)': { values: [0.255, 0.267, 0.275, 0.284, 0.295], color: '#ca8a04' },
+      'iTransformer': { values: [0.195, 0.178, 0.165, 0.158, 0.150], color: '#16a34a' },
+      'iInformer': { values: [0.235, 0.216, 0.215, 0.215, 0.215], color: '#2563eb' },
+      'iFlowformer': { values: [0.225, 0.210, 0.205, 0.200, 0.200], color: '#9333ea' },
+      'Transformer (vanilla)': { values: [0.235, 0.277, 0.295, 0.330, 0.380], color: '#dc2626' },
+      'Informer (vanilla)': { values: [0.300, 0.311, 0.330, 0.355, 0.385], color: '#ea580c' },
+      'Flowformer (vanilla)': { values: [0.245, 0.267, 0.275, 0.285, 0.295], color: '#ca8a04' },
     };
 
     let showModels = ['iTransformer', 'iInformer', 'iFlowformer', 'Transformer (vanilla)', 'Informer (vanilla)', 'Flowformer (vanilla)'];
