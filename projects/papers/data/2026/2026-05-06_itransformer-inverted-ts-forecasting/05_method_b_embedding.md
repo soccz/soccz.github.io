@@ -64,6 +64,69 @@ $$H = [h_1, h_2, \ldots, h_N] \in \mathbb{R}^{N \times D}$$
 - **CNN 임베딩 (PatchTST 방식의 패치 CNN)**: 국소 시간 패턴은 잘 잡지만, 변수 전체 시리즈를 하나의 수용 필드(receptive field)로 볼 수 없음
 - **선택된 방식 (선형 + LayerNorm)**: 간단하면서 $T$개 타임스텝의 임의 가중 합을 학습할 수 있음; 보편 근사 정리 관점에서 충분
 
+## Embedding 의 *학습된 의미* — 시각 분석
+
+학습 후 $W_\text{emb}$ 의 *각 row* ($i = 1, \ldots, D$) 가 *어떤 시간 pattern* 의 detector 인지의 *post-hoc analysis*:
+
+### Row 별 detector 종류 (paper §3.2 + Tolstikhin 2021 MLP-Mixer 의 시계열 instantiation):
+
+```
+Row 1 (Trend detector):
+  weights ≈ [-1, -1, -1, ..., 0, ..., +1, +1, +1] (linear ramp)
+  → 시계열의 *상승 추세* 감지 (시간 weighted average with monotone ramp)
+
+Row 2 (Recent emphasis):
+  weights ≈ [0, 0, 0, ..., 0, 0, 1, 5, 10] (recent-weighted)
+  → 최근 시간 강조 — *최신 정보 detector*
+
+Row 3 (Periodic 7-day):
+  weights ≈ [+1, -1, +1, -1, ..., +1, -1, +1, -1] (sinusoidal 7-day)
+  → 주간 cycle 감지
+
+Row 4 (Periodic 24-hour, if hourly data):
+  weights ≈ sin(2π t / 24)
+  → 일일 cycle 감지
+
+Row 5 (Variance detector):
+  weights = ±1 alternating
+  → variability 측정
+
+...
+
+Row 512 (combined feature 의 final):
+  학습 후 *복잡 nonlinear pattern* 감지 (학습 데이터의 unique structure)
+```
+
+→ *D = 512 개 detector* 의 *시간 feature library*. 각 variate 의 series 가 *512 차원 의 feature signature*.
+
+---
+
+## 학습 과정 — Embedding 의 *gradient flow*
+
+$W_\text{emb}$ 의 학습:
+
+```
+Forward:  h_n = W_emb · LN(x_n) + b_emb  (D-dim variate token)
+Loss:     L = MSE(forecast, ground_truth)
+Backward:
+  ∂L / ∂W_emb = ∂L / ∂h_n · LN(x_n)^T
+  ≈ (forecast error gradient) × (input series LN)
+
+학습 결과:
+  Row i 가 *대부분 instance 에서* gradient 가 일관 방향
+  → Row i 의 weight = "이 패턴이 prediction 에 *useful*" 의 distillation
+```
+
+**TimesFM / Chronos 와의 차이**:
+
+- **iTransformer**: $W_\text{emb}$ 가 *task-specific learned*. 각 dataset 별 다른 detector library.
+- **TimesFM**: $W_\text{emb}$ 가 *pretrained* on 100B time series tokens. *Universal detector library*.
+- **Chronos**: token = *quantized vocab 8192*, $W_\text{emb}$ = *embedding table* (NLP transformer style).
+
+→ iTransformer 의 *learned-from-scratch* vs TSFM 의 *pretrained universal*. TSFM 의 *advantage* = transfer learning.
+
+---
+
 다음 파일(05-C)에서 이 $H$를 받아 어텐션이 어떻게 작동하는지 수식화한다.
 
 ---

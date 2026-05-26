@@ -48,6 +48,13 @@ FT-iTransformer(MDPI 2025)처럼 주가 예측에 iTransformer를 적용한 사�
 
 ---
 
+## 인터랙티브 — Lineage 의 결정 visual
+
+```viz:it-datasets-summary:title=Lineage 의 정량 증거 — 7 datasets × 11 models,caption=Highlight 셀렉터로 ancestor (PatchTST, Crossformer) vs descendant (iTransformer) 비교. iTransformer 의 6/7 SOTA 가 ancestors 의 *합성 효과* 의 정량 증거.
+```
+
+---
+
 ## 자기점검 (이 챕터)
 
 ### 핵심 3 가지

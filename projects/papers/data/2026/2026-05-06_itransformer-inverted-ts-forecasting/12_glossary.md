@@ -179,6 +179,51 @@ $$\text{LayerNorm}(H) = \left\{\frac{h_n - \text{Mean}(h_n)}{\sqrt{\text{Var}(h_
 
 ---
 
+## 12.3b References Cross-Reference Table
+
+각 reference 의 본 deep dive 내 *첫 인용 챕터* + *재사용 챕터* 의 매핑:
+
+| Reference | 첫 인용 | 재사용 |
+|-----------|--------|--------|
+| Vaswani et al. 2017 (Transformer) | 03_problem | 08_lineage, 12_glossary, 17_aftermath |
+| Ba et al. 2016 (LayerNorm) | 05b/c/d | 12_glossary |
+| Hornik 1991 (UAT) | 05d | 12_glossary, 13_insights |
+| **Liu et al. 2024 (iTransformer, *this paper*)** | 00_README | **모든 챕터 인용** |
+| **PatchTST (Nie 2023)** | 02_tldr | **03_problem, 05a, 08_lineage, 13_insights, 16_appendix, 17_aftermath** (8 챕터) |
+| **DLinear (Zeng 2023)** | 02_tldr | 03_problem, 04_claims, 08_lineage, 16_appendix |
+| **Crossformer (Zhang-Yan 2023)** | 03_problem | 08_lineage, 13_insights, 16_appendix, 17_aftermath |
+| Autoformer (Wu 2021) | 03_problem | 08_lineage, 16_appendix |
+| Informer (Li 2021) | 03_problem | 08_lineage, 16_appendix |
+| FEDformer (Zhou 2022) | 03_problem | 08_lineage, 16_appendix |
+| TimesNet (Wu 2023) | 03_problem | 04_claims, 16_appendix |
+| RLinear (Li 2023) | 16_appendix | 11_verdict |
+| TiDE (Das 2023) | 16_appendix | 05d, 13_insights |
+| SCINet (Liu 2022a) | 16_appendix | — |
+| Stationary / NSTransformer (Liu 2022b) | 05b | 12_glossary, 13_insights |
+| Reformer (Kitaev 2020) | 13_insights | 16_appendix, 17_aftermath |
+| Flowformer (Wu 2022) | 13_insights | 16_appendix |
+| FlashAttention (Dao 2022) | 05c | 13_insights, 16_appendix |
+| RevIN (Kim 2021) | 05b | 14_code, 12_glossary |
+| MLP-Mixer (Tolstikhin 2021) | 05d | 13_insights |
+| **MOIRAI (Salesforce 2024)** | 13_insights | 16_appendix, 17_aftermath, 18_self_critique |
+| **TimesFM (Google 2024)** | 13_insights | 17_aftermath |
+| **Chronos (Amazon 2024)** | 13_insights | 16_appendix, 17_aftermath |
+| **TimeMixer (Wang ICLR 2024)** | 13_insights | 17_aftermath |
+| UniTST (Liu 2024) | 13_insights | 17_aftermath |
+| TimeXer (NeurIPS 2024) | 13_insights | 17_aftermath |
+| Wilinski 2025 (TSFM mech interp) | 17_aftermath | 09_my_research |
+| CKA (Kornblith 2019) | 02_tldr | 06_experiments, 13_insights |
+| **Datasets** | | |
+| LSTNet (Lai 2018) — Solar | 03_problem | 16_appendix |
+| ECL / ETT / Exchange | 16_appendix | — |
+| PEMS (SCINet derived) | 16_appendix | — |
+
+**관찰**: PatchTST (8 챕터 인용) + Liu 2024 self (모든 챕터) 가 *가장 cross-referenced*. PatchTST 가 iTransformer 의 *direct upstream* 의 정량 증거.
+
+---
+
+---
+
 ## 12.4 약어집
 
 | 약어 | 풀이 |

@@ -74,6 +74,105 @@ iTransformer의 N×N 어텐션이 변수(자산) 간 상관을 학습한다는 �
 
 ---
 
+## APF 의 *iTransformer 적용* 의 *5 axis*
+
+### Axis 1: N×N attention map 의 *2D motif typology*
+
+iTransformer 의 Fig 9 attention map = *learned multivariate correlation matrix*. APF 의 *T×T motif typology* (diagonal / stripe / block / spike / checker / edge) 를 *N×N* 에 *re-instantiation*:
+
+```
+APF T×T motif typology (vanilla Transformer 의 attention):
+  - Diagonal: 인접 시점 강한 attention
+  - Stripe: 시간 cycle pattern
+  - Block: 시간 segment 의 강한 의존
+  - Spike: 단일 시점 의 강한 의존
+  - Checker: alternating pattern
+  - Edge: 시퀀스 시작/끝의 강조
+
+iTransformer N×N motif typology (variate-axis):
+  - Block (∝ cluster): variate group 의 강한 mutual attention
+  - Diagonal (self-attention): identity-like
+  - Stripe: 한 variate 가 *다른 모든 variates* 에 강하게 영향
+  - Spike: 특정 variate pair 의 *uniquely* 강한 correlation
+  - Outlier (low-row): isolated variate
+  - Hub-and-spoke: 한 hub variate + 다른 모든 variates
+```
+
+→ APF 의 *parallel framework* (T×T vs N×N) — *paper main contribution* 후보.
+
+### Axis 2: Head-level analysis
+
+paper Fig 9 는 *head-aggregated* attention map. APF 의 *head-by-head 분리* 분석:
+
+```
+APF Head Analysis:
+  Head 1 = "regional cluster detector" (geographic)
+  Head 2 = "temporal pattern detector" (cycle)
+  Head 3 = "outlier identifier"
+  Head 4-8 = other roles
+
+iTransformer Specific to study:
+  Q: 8 heads 가 *redundant* 인가, *distinct role* 인가?
+  Q: Head pruning 시 *어떤 task* 가 *robust*?
+```
+
+→ Voita 2019 / Clark 2019 의 NLP head pruning 의 *시계열 instantiation*.
+
+### Axis 3: Pre-grok vs Post-grok attention dynamics
+
+Grokking 트랙: *modular arithmetic Transformer* 의 phase transition. iTransformer 에 적용:
+
+```
+Setup:
+  - iTransformer 학습 on Solar-Energy
+  - 매 epoch 의 attention map 저장
+  - Phase 1 (epoch 1-5): random-like attention
+  - Phase 2 (epoch 5-50): cluster emerge
+  - Phase 3 (epoch 50+): stable cluster
+
+Q: Cluster emergence epoch = *generalization onset*?
+```
+
+→ Nanda 2023 의 *progress measure* 의 *attention dynamics* version.
+
+### Axis 4: Multivariate correlation faithfulness
+
+Jain-Wallace 2019 의 *attention not explanation* 의 iTransformer 적용:
+
+```
+H1 (Correlation): iTransformer 의 attention vs gradient/LOO
+  → Variate axis 라 *interpretation 자연*
+  → Kendall τ 높을 가능성
+
+H2 (Counterfactual): adversarial attention 가능?
+  → variate token 의 *임의 분포* 가 prediction 보존?
+  → 학습된 cluster 의 robustness 검증
+```
+
+→ ANIE 의 *NLP only* 결과를 *TS 도메인* 으로 확장. APF 의 *cross-domain faithfulness* 의 *bridge*.
+
+### Axis 5: TSFM era 의 mech interp
+
+Wilinski 2025 (ICML) 의 TSFM mech interp 의 *iTransformer instantiation*:
+
+```
+Probing:
+  iTransformer 의 layer-wise variate token activation
+  → "이 layer 가 어떤 future value 예측"
+
+Ablation:
+  Specific head 또는 layer 의 *role 분리*
+  → "Trend head" / "Seasonal head" / "Regime shift head"
+
+Causal intervention:
+  Specific variate token 의 *값 강제 변경* → prediction 영향
+  → variate cluster 의 *causal sufficiency*
+```
+
+→ APF 의 *mechanistic interpretability methodology* 의 *5 axis sequence*.
+
+---
+
 ## 자기점검 (이 챕터)
 
 ### 핵심 3 가지

@@ -65,6 +65,67 @@ Traffic과 ECL이 많은 변수를 가지며 iTransformer가 이에 특화된 �
 
 ---
 
+## 한계 의 *후속 해결 timeline*
+
+paper 발표 (ICLR 2024) 후 *각 한계의 해결 시점*:
+
+### 한계 1: Low-N (Exchange N=8) 의 약함 → *未해결*
+
+- DLinear (2023) 가 N=8 에서 *충분* — *간단한 모델이 적합한 영역*.
+- 후속 paper 들도 *low-N* 에 *특별 design 없음*.
+- → "iTransformer 는 *N > 50* 의 dataset 에 권장" — *practical guideline*.
+
+### 한계 2: O(N²) memory → *부분 해결* (2024-2025)
+
+- Flowformer / FlashAttention 의 *linear attention plug-in* (paper §3.1)
+- S-Mamba (2025): *selective state-space* 로 *O(N) memory*
+- TimeMoE (2025): *mixture-of-experts* 로 *sparse activation*
+
+### 한계 3: Pretraining 부재 → *해결* (2024)
+
+- MOIRAI (Salesforce 2024-02): masked variate token pretraining
+- Chronos (Amazon 2024-03): T5-style pretraining
+- TimesFM (Google 2024-04): decoder-only pretraining
+
+### 한계 4: Foundation model 검증 X → *해결* (2024-2025)
+
+- MOIRAI / Chronos / TimesFM 모두 *zero-shot foundation model* 입증
+- iTransformer 의 *variate generalization* (Fig 5) 의 *foundation model 형식 확장*
+
+### 한계 5: Long-context (T > 720) → *부분 해결*
+
+- TimesFM (2024) 의 *2048 context length* 학습
+- *T = 10K+* 의 *true long-context* 는 *未해결*
+
+---
+
+## Anti-pattern — iTransformer 를 *잘못 쓰는* 3 가지
+
+### Anti-pattern 1: N 무관하게 iTransformer 사용
+
+```
+Bad: ETT (N=7) 에 iTransformer 사용 → DLinear 보다 약함
+Good: ETT 에 DLinear / RLinear, ECL/Traffic 에 iTransformer
+```
+
+### Anti-pattern 2: Variate ordering 가정
+
+```
+Bad: variate 순서를 *meaningful* 가정 → permutation invariance 위반
+Good: variate 순서 임의 — model 이 자동 학습
+```
+
+### Anti-pattern 3: PE 강제 추가
+
+```
+Bad: "PE 가 있어야 더 좋겠지" → 실험 결과 worse (paper 명시)
+Good: PE 제거 — paper § 3.1 의 explicit decision
+```
+
+→ paper 의 *implicit warnings* — *casual user 의 흔한 실수*.
+
+---
+
 ## 자기점검 (이 챕터)
 
 ### 핵심 3 가지

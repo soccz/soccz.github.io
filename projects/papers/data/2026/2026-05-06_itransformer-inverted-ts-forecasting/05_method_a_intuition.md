@@ -49,6 +49,68 @@ iTransformer:
 
 ---
 
+## 구체 예시 — Solar Energy dataset (N=137, T=96)
+
+paper Table 1 의 Solar-Energy 의 정확 시나리오:
+
+```
+Input:  X ∈ R^{96 × 137}   (지난 96 시간 × 137 solar plants)
+
+Vanilla Transformer view:
+  token_t = X[t, :] ∈ R^137  (시점 t 의 137 plants 의 power)
+  token 갯수: 96 (시간)
+  Attention map: 96 × 96
+  → "시점 t1 와 시점 t2 의 power 분포가 얼마나 비슷한가"
+  → MSE: 0.885 (Autoformer, paper Table 1 — *fail*)
+
+iTransformer view:
+  token_n = X[:, n] ∈ R^96   (plant n 의 96 시간 power series)
+  token 갯수: 137 (plants)
+  Attention map: 137 × 137
+  → "plant n1 과 plant n2 가 얼마나 비슷한 패턴"
+  → 예: 같은 지역 plants 가 cluster
+  → MSE: 0.233 (paper Table 1 SOTA, -74% from Autoformer)
+```
+
+→ 같은 input, *axis 만 swap* — *4x improvement* (Autoformer 0.885 → iTransformer 0.233).
+
+---
+
+## Why now? — 2024 시점의 *왜 이전엔 안 했나*
+
+iTransformer 의 *단순 변경* 이 *왜 2024 까지 늦었나* 의 학술사적 분석:
+
+### 2017-2021: NLP / Vision 패러다임 follow
+
+```
+NLP token = word, Vision token = patch.
+시계열 token = ? → "time step" 으로 *직관적 transfer*.
+```
+
+NLP / Vision 의 *sequence = 시간 sequence* 라는 *implicit assumption*. 시계열도 "시간 sequence" 라 *시간 token* 이 *natural*.
+
+### 2022-2023: 문제 인식 시작
+
+```
+DLinear (2023): "Are Transformers Effective?" → 시간 token 의 inefficiency 시사.
+PatchTST (2023): Channel Independence + Patch — 변수 *분리* + 시간 *grouping*.
+Crossformer (2023): cross-variate attention — 변수 *인식* but heavy.
+```
+
+→ *시간 token 부적합* 문제는 인식, 그러나 *해결책 partial*.
+
+### 2024.01: iTransformer
+
+```
+완전한 *axis swap* 의 *명시 적용*. PatchTST 의 Channel Independence 의 extreme + Crossformer 의 cross-variate 의 architectural integration.
+```
+
+**Why now**: (a) DLinear 의 *전조* 가 *시간 token 회의* 만듦, (b) PatchTST 의 *channel independence 부분 성공* 이 *full inversion* 의 *수사적 stepping stone*, (c) Crossformer 의 *cross-variate* 가 *변수 attention 의 정당성* 증명.
+
+→ *4 년 sequential* + *3 prior works 의 합성* — iTransformer 의 *우연적 timing*.
+
+---
+
 ## 컴포넌트 수정 없음: "패러다임은 바꾸되 부품은 그대로"
 
 iTransformer의 핵심 메시지는 "트랜스포머 컴포넌트(어텐션, LayerNorm, FFN) 자체는 완벽하다 — 단지 잘못된 방향으로 쓰이고 있었다"는 것이다. 따라서:

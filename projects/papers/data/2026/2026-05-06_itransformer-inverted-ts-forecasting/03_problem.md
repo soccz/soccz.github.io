@@ -68,6 +68,65 @@ iTransformer의 답은 단순하고 대담하다: **토큰화 방향을 90도 �
 
 ---
 
+## 본 문제의 *학술사적 시점* — 왜 2024 인가
+
+iTransformer 가 *2024 1월 ICLR Spotlight* — 다음 *조건들의 정확한 우연*:
+
+```
+2023.04: PatchTST (ICLR 2023) — Channel Independence 의 standard 채택
+2023.05: DLinear (AAAI 2023) — "Transformer 무용론" 의 학계 충격
+2023.06: TimesNet (ICLR 2023) — 2D decomposition 의 alternative path
+2023.07: Crossformer (ICLR 2023) — cross-variate attention 의 *부분 실험*
+2023.10: iTransformer arXiv v1 (2310.06625) — *모든 prior 의 합성 응답*
+2024.01: ICLR 2024 Spotlight 결정
+
+★ 학계 의 *3 압력* 동시 성숙:
+   (1) "Transformer 무용 의문" (DLinear)
+   (2) "Channel Independence 부분 해결" (PatchTST)
+   (3) "Multivariate attention 의 필요" (Crossformer)
+   → iTransformer 의 *4 번째 category* (no component, only architecture inversion) 의 timing.
+```
+
+→ "*Why now*" 의 학술사적 답: *3 prior 의 limit 동시 인식* + *minimalist solution* 의 학계 readiness.
+
+---
+
+## 문제 의 *3 layer* — paper §1-§2 의 정리
+
+paper 의 problem statement 의 *3 layer*:
+
+### Layer 1: 토큰화 의 부적합성 (technical)
+
+```
+Time step token = N-dim heterogeneous vector
+→ attention 의 *수학적 의미* 손실
+→ Wiped out multivariate correlation
+```
+
+### Layer 2: Attention 의 *낭비 사용* (functional)
+
+```
+Vanilla attention 의 permutation invariance:
+→ Time axis 에 적용 시 *부적합* (시간 순서 정보 필요)
+→ Variate axis 에 적용 시 *natural* (variate 순서 임의)
+```
+
+### Layer 3: FFN 의 *역할 미정* (architectural)
+
+```
+Vanilla FFN 의 *각 time token 의 nonlinear transform*:
+→ 한 timestamp 의 mixed vector 의 처리
+→ FFN 의 *universal approximation* 능력 underutilized
+
+iTransformer FFN:
+→ 각 variate token 의 *T-length series* 의 nonlinear transform
+→ Universal approximator 의 *natural fit* (Tolstikhin 2021 / Das 2023 의 MLP-on-series 정신)
+```
+
+→ *3 layers 합쳐* "타임스텝 토큰화의 *systemic* failure" — iTransformer 의 *3-fold solution*.
+
+---
+
 ## 자기점검 (이 챕터)
 
 ### 핵심 3 가지

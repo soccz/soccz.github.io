@@ -310,4 +310,19 @@ iTransformer 발표 후 1 년 (2024-2025) 의 후속 papers:
 
 ---
 
+---
+
+## 인터랙티브 — 12 통찰의 종합 visual
+
+```viz:it-multivariate-correlation:title=Insight #4 — Multivariate Correlation Map (Fig 9),caption=Insight #4 (permutation invariance natural fit) 의 직접 증거. 학습된 attention map 의 *interpretable cluster*. Dataset 셀렉터.
+```
+
+```viz:it-lookback-paradox:title=Insight #8 — Lookback Paradox Resolution (Fig 6),caption=Highlight 셀렉터. Insight #8 의 정량 시각. Vanilla (paradox) vs iTransformer (monotone improvement).
+```
+
+```viz:it-variate-generalization:title=Insight #9 + #12 — Variate Generalization + TSFM enabler,caption=Insight #9 (20% 학습 → 100% 추론) + #12 (TSFM direct enabler) 의 결합 visual. Dataset 셀렉터.
+```
+
+---
+
 다음 [14_code.md](14_code.md) — PyTorch 재현 코드.

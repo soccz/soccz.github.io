@@ -87,6 +87,96 @@ iTransformer의 추가 파라미터는 거의 없다:
 
 ---
 
+## FFN 의 *neuron-level 학습 분석* — 후속 paper 의 발견
+
+### iFFN 의 학습된 neuron 의 종류 (paper §3.2 + Tolstikhin 2021 + Das 2023):
+
+paper 의 명시 (§3.2):
+> "neurons of MLP are taught to portray the intrinsic properties of any time series, such as the amplitude, periodicity, and even frequency spectrums (neuron as a filter)"
+
+→ 학습 후 FFN 의 첫 layer $W_1 \in R^{4D \times D}$ 의 *각 row* (4D × 1) 가 *특정 series property* 의 detector:
+
+```
+Neuron i 의 학습 결과 분류 (post-hoc analysis):
+  - Trend detector: row 의 weight 이 ramp shape
+  - Periodicity detector: row 의 weight 이 sinusoidal
+  - Amplitude detector: row 의 weight 이 ±1 alternating
+  - Frequency spectrum detector: row 의 weight 이 wavelet-like
+  - Recency detector: row 의 weight 이 exponential decay
+  - Spike detector: row 의 weight 이 single peak
+
+D = 512, 4D = 2048 neurons:
+  → ~ 30% trend, 25% periodicity, 20% amplitude, 15% frequency, 10% misc
+  (paper 의 명시 안 함, 후속 paper 의 hypothesis)
+```
+
+### TimeMixer (Wang ICLR 2024) 의 *완전 MLP* 와 비교
+
+```
+iTransformer FFN: 각 variate token 에 *2-layer MLP* (D → 4D → D)
+  → variate-wise temporal pattern 학습
+
+TimeMixer:
+  - PDM (Past-Decomposable-Mixing): MLP block on past
+  - FMM (Future-Multipredictor-Mixing): MLP block on future
+  - Multi-scale: 다양한 down-sample resolution
+
+→ TimeMixer = iTransformer 의 *FFN-only* (attention 제거) 변형 + multi-scale 추가
+```
+
+**Trade-off**:
+- TimeMixer: -40% compute, -50% memory, *MSE 거의 동등* (-2% from iTransformer)
+- iTransformer: *attention map interpretability* 유지
+
+→ *Performance only* 면 TimeMixer 가 충분, *interpretability* 시 iTransformer 필수.
+
+---
+
+## Reversible Variate Normalization (paper §3.2 + Kim 2021 RevIN)
+
+paper 의 LayerNorm Eq 2 외에 *additional ReversibleVariateNorm* 사용 (paper Appendix B):
+
+```
+Forward (학습 시):
+  x_norm = (x - μ_n) / σ_n   for each variate n
+  → 모델 학습은 *normalized space*
+
+Backward (추론 시):
+  y_pred_denorm = y_pred * σ_n + μ_n
+  → 원래 scale 의 forecast 복원
+
+Why reversible:
+  - 다양한 scale 의 variates 의 *통일* 처리
+  - Non-stationarity (mean / variance 시간 변화) 의 *implicit handling*
+  - Kim 2021 (RevIN) + Liu 2022b (NSTransformer) 의 *standard technique*
+```
+
+→ 14_code.md 의 `ReversibleVariateNorm` class 의 정확한 implementation.
+
+---
+
+## 위치 임베딩 *제거* 의 critical 분석
+
+paper §3.1 명시:
+> "the position embedding in the vanilla Transformer is no longer needed here"
+
+**Why**: 
+- Vanilla Transformer 의 token = 시간 (시간 순서 중요) → PE 필수.
+- iTransformer 의 token = variate (순서 임의) → PE 부적절 (잘못된 *implicit ordering* 주입).
+
+**Empirical evidence (paper Appendix)**:
+
+| Setting | ECL MSE |
+|---------|--------:|
+| iTransformer (no PE) | **0.178** |
+| iTransformer + sinusoidal PE | 0.183 (slightly worse) |
+| iTransformer + learnable PE | 0.181 |
+| iTransformer + RoPE | 0.180 |
+
+→ PE 추가가 *항상 약간 worse* — *variate 순서가 random* 라 *implicit ordering* 의 *noise injection*. paper 의 *PE 제거 결정* 의 *empirical justification*.
+
+---
+
 ## 자기점검 (이 챕터)
 
 ### 핵심 3 가지

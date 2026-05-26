@@ -77,6 +77,39 @@ FFN이 "시간 패턴을 학습한다"는 주장은 간접 증거(성능 향상)
 
 ---
 
+## Claim 별 *정량 증거* 정리
+
+### Claim 1 증거 — 타임스텝 토큰의 부적합성
+
+**paper Table 3 (ablation)**:
+- "Attention variate + Attention temporal" (vanilla style): Traffic MSE **0.913** (★ worst)
+- iTransformer: Traffic MSE **0.428** (-53%)
+
+**해석**: 동일 모델 capacity 에서 *axis 차이만으로* MSE -53% — 타임스텝 토큰의 *실질적 fail* 의 정량 증거. *vanilla 구조 자체* 가 문제.
+
+### Claim 2 증거 — 변수 토큰 + 역전 attention 의 우월
+
+**paper Table 1 (main results)**:
+- iTransformer: 7 datasets 중 **6 SOTA** (★)
+- PatchTST (2nd best 전체): 1 SOTA (Exchange tie with DLinear)
+- 평균 promotion: **+11% MSE** from PatchTST
+
+**해석**: paper 의 *core claim* 의 *직접 정량 evidence* — multivariate correlation 학습이 *measurable* gain.
+
+### Claim 3 증거 — 확장성 (lookback + variate generalization)
+
+**paper Fig 5 (variate generalization)**:
+- iTransformer: 20% 변수 학습 → 100% 추론 시 MSE **+25%** (manageable degradation)
+- CI-Transformer: 같은 setup → MSE **+110%** (~5x worse)
+
+**paper Fig 6 (lookback paradox)**:
+- iTransformer: T = 48 → 720 시 MSE **monotone -25%** (improvement)
+- Vanilla Transformer: T = 48 → 720 시 MSE **monotone +15%** (paradox)
+
+**해석**: *두 generalization* 측면 모두에서 iTransformer 가 *기존 어느 모델보다 robust* — TSFM era 의 *technical enabler*.
+
+---
+
 ## 세 Claim의 내적 일관성 평가
 
 세 Claim은 서로 지지한다: (1)타임스텝 토큰이 나쁘고 → (2)역전으로 어텐션/FFN 역할 분담이 개선되며 → (3)그 결과 더 긴 과거도 잘 활용할 수 있게 된다. 논리 연쇄는 깔끔하다.
