@@ -1,5 +1,7 @@
 # 05-D. 방법론 — FFN + 전체 아키텍처 & 구현 디테일
 
+> **🧒 한 줄 요약**: paper §3.2 의 FFN 역할 — 각 variate token 의 *series representation* 추출. Universal approximation (Hornik 1991) 의 시계열 적용. FFN neurons = *amplitude / periodicity / frequency* 의 filter.
+
 > **배경 사다리**: ① FFN(Feed-Forward Network, 피드포워드 네트워크)은 각 토큰에 독립적으로 적용되는 2-레이어 MLP로, 표준 트랜스포머 블록의 절반을 차지한다. ② 선형 프로젝션(linear projection)은 행렬 곱으로 차원을 변환하는 연산이다.
 
 ---
@@ -82,3 +84,28 @@ iTransformer의 추가 파라미터는 거의 없다:
 ## 핵심 한 줄 요약
 
 > iTransformer는 "$X$를 $X^\top$으로 보라"는 단 하나의 관점 전환으로, 동일한 트랜스포머 컴포넌트를 사용하면서 다변량 시계열 예측의 근본적 어려움(이종 변수 혼합, 위치-기반 어텐션 낭비)을 해결한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **FFN 의 *4×D hidden* 의 의미 — *왜 expansion*?**
+2. **FFN 이 *neuron 별로 filter* 학습 — *주기/진폭/frequency* 의 정확한 mapping?**
+3. **L (block 수) 의 *최적값* 과 *trade-off*?**
+
+### 답변
+
+1. **Universal approximation 의 *practical* 충족 + nonlinearity 의 expressive power**. Hornik 1991: single hidden layer MLP 가 임의 continuous function 근사 가능 — *충분한 hidden width* 조건. *D = 512, hidden = 2048 (4D)* 의 *capacity* = 모든 variate 의 *series pattern* 학습 가능. *4D* = NLP transformer (Vaswani 2017) 의 standard ratio — 시계열에 *직접 transfer*.
+
+2. **Neuron $i$ 가 학습 후 *frequency filter* 또는 *temporal pattern detector***. paper §3.2 명시: "FFN can extract complicated representations to describe a time series... neurons of MLP are taught to portray the intrinsic properties of any time series, such as the amplitude, periodicity, and even frequency spectrums (neuron as a filter)". 학습 후 neuron $i$ 의 weight vector = *특정 주기 또는 trend 의 detector*. Tolstikhin 2021 (MLP-Mixer) + Das 2023 (TiDE) 의 *MLP-as-time-series-feature-extractor* 의 *iTransformer 형식*.
+
+3. **L = 2 (paper default)**. L = 1 의 representation 부족, L = 4+ 의 *overfitting* + 비용 증가. *2 block* 의 balance — *attention + FFN* 의 두 번 반복 = *변수 correlation + 시간 representation* 의 *2 단계 refinement*. paper 의 Hyperparameter table (Appendix B) 의 *empirical sweet spot*.
+
+---
+
+## 인터랙티브 — Full Architecture Flow
+
+```viz:it-architecture-flow:title=iTransformer 전체 Architecture — 6 Step Flow,caption=Step slider 로 6 단계 (Input → Embedding → Attention → FFN → LayerNorm → Loop → Projection). 본 챕터의 *모듈 구성* 의 단일 visual. paper §3 의 *complete pipeline* compressed.
+```

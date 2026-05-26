@@ -1,5 +1,7 @@
 # 01. 메타 & 선정 이유
 
+> **🧒 본 챕터는 "왜 이 paper 인가"**: iTransformer 의 *서지 정보* + *저자 권위 배경* (Tsinghua thuml 랩의 Mingsheng Long 그룹) + *3 가지 선정 이유* (APF 직접 연결 / Grokking 연결 / priority 등재). 본 paper 가 *2024-2026 시계열 분야의 paradigm shifter* 인 이유의 *명시 좌표*.
+
 ## 서지 정보
 
 | 항목 | 내용 |
@@ -24,3 +26,54 @@ Mingsheng Long 교수(thuml 랩)는 Autoformer(NeurIPS 2021), TimeMixer(ICLR 202
 둘째, **Grokking 연구 연결**: iTransformer에서 FFN이 각 변수의 시간 패턴(T-dim)을 학습한다. Grokking 연구는 "FFN이 어떤 회로로 주기 패턴을 암기→일반화하는가"를 추적하는 방향인데, iTransformer의 FFN은 정확히 그 역할(시간 방향 표현)을 명시적으로 맡는다.
 
 셋째, **ts-transformer-baseline priority 항목**: `_index.md` 우선 읽기 목록에 등재된 미커버 항목이다.
+
+---
+
+## 출판 background — 2023-2024 시계열 분야의 시점
+
+본 paper 의 ICLR 2024 발표 시 시계열 분야 시점:
+
+```
+2017: Transformer 발표 (Vaswani et al.) — NLP 표준
+2020-2022: Autoformer (NeurIPS 2021), Informer (AAAI 2021), FEDformer (ICML 2022)
+            — Transformer 의 *component 변형* 으로 시계열 적용
+2023: DLinear (AAAI 2023) — "Are Transformers Effective for Time Series Forecasting?"
+       → simple linear forecaster 가 복잡한 Transformer 능가 → 학계 충격
+2023: PatchTST (ICLR 2023) — *Channel Independence* + patch embedding 도입
+       → multivariate correlation 손실, 그러나 robust
+2023: Crossformer (ICLR 2023) — explicit cross-variate attention
+       → multivariate awareness, but heavy component modification
+
+★ 본 paper 의 timing (ICLR 2024 Spotlight):
+   "Transformer 가 시계열에 안 좋다" 분위기 의 *반박* 시기.
+   iTransformer 의 명제: "*Transformer 가 잘못 쓰여진 것 — architecture 정정으로 SOTA*".
+   → ICLR Spotlight 의 *paradigm reset* 평가.
+```
+
+## 본 deep dive 의 *목적*
+
+본 deep dive 의 명시 의도:
+1. **APF baseline** — APF / Grokking manuscript 의 iTransformer reference.
+2. **TSFM era 진입 추적** — MOIRAI / Chronos / TimesFM 의 *direct technical ancestor*.
+3. **Variate token paradigm 정리** — *de facto standard* 의 기원 명시.
+4. **재현 가능성** — PyTorch 코드 (§14) 의 *modular* 작성, ECL forecast (MSE ~ 0.18) 3 시간 재현.
+
+→ 본 deep dive 의 모든 챕터는 위 4 목적의 *최소 1 개* 를 직접 supports.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 paper 가 *왜 priority 코어 (월요일) 버킷* 인가?**
+2. **저자 그룹 (thuml 랩) 의 이전 작업 (Autoformer / TimesNet) 과 *방향 차이*?**
+3. **APF / Grokking 트랙과 본 paper 의 *연결 강도*?**
+
+### 답변
+
+1. **시계열 Transformer 의 *paradigm shift trigger***. DLinear 의 "Transformer 무용론" → iTransformer 의 "*architecture 정정으로 SOTA*". 시계열 분야의 *2023-2024 turning point*. ts-transformer-baseline tag 의 *시조 paper* — 다른 후속 paper (TimeMixer, UniTST 등) 모두 본 paper 의 후속 또는 변형.
+
+2. **Component 변형 → Architectural reinterpretation**. Autoformer (2021): *Auto-Correlation block* 추가. TimesNet (2023): *2D-period decomposition*. **iTransformer (2024)**: *no new component*, *dimension inversion only*. → 저자 그룹의 *방법론적 진화* — *new component 발명* 의 fatigue 인정 + *minimalist architectural choice* 의 가치 재발견.
+
+3. **§D (TS Transformer) 직격 + §B (Mech interp) 강함 + §A (Grokking) 중간**. **§D**: iTransformer 가 TS Transformer 의 *standard baseline* — APF / Grokking 의 *모든 TS work* 의 *baseline reference*. **§B**: paper Fig 9 의 attention map *interpretable* — mechanistic interpretability 의 *직접 case*. **§A**: paper §3.2 의 *FFN 의 universal approximation* — Grokking 의 *circuit-level analysis* 의 *FFN role* 의 직접 base.

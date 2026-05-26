@@ -1,5 +1,7 @@
 # 10-C. 사고 확장 — 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 본 paper 의 *닫지 못한 영역* 을 *내가 답할 2 실험*. (Aidea 1) ρ̄ × MSE 격자 — variate correlation 강도 vs iTransformer 성능. (Aidea 2) iTransformer 의 head-level motif typology. *NeurIPS / ICLR contribution figure* 후보.
+
 ---
 
 ## 아이디어 1: iTransformer vs 표준 Transformer — N×N 어텐션 모티프 분류 비교 실험
@@ -87,3 +89,21 @@ $\bar{\rho}$와 무관하게 iTransformer가 항상 우월하다면 — N×N 어
 - 실험 실행: GPU 2~3일 (소규모 데이터셋, 빠른 실험)
 - 분석 및 시각화: 1~2일
 - **총 1주 내, P1 ProTran-TFA 재개 시 "iTransformer 기반 금융 채널 어텐션"의 유효성을 미리 검증하는 파일럿 실험으로 활용 가능**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **2 idea 의 *공통 base* — 본 paper 의 어떤 *닫지 못한* 영역?**
+2. **Idea 1 (ρ̄ × MSE 격자) 의 *반증 조건*?**
+3. **Idea 2 (head motif) 가 *APF NeurIPS contribution* 인 이유?**
+
+### 답변
+
+1. **iTransformer 의 *interpretability gap* + *boundary condition gap***. 본 paper 의 Fig 9 (attention map) 가 *interpretable* 명시 — 그러나 *어떤 conditions* 에서 그렇게 되나의 *boundary* X. 2 idea 모두 *interpretability + boundary* 의 *empirical 격자 탐구*. Idea 1 = *domain boundary*, Idea 2 = *internal structure*.
+
+2. **모든 ρ̄ 에서 *similar MSE*** 시 idea fail. 만약 *ρ̄ 와 무관* (random scatter) 시 *iTransformer 의 advantage 가 *correlation 의 함수가 아님*. *Domain-agnostic* model — APF 의 *channel mixing assumption* 의 *invalidation*. 그러나 paper 의 *empirical pattern* (Exchange N=8 약함 / Traffic N=862 강함) 가 *이미 ρ̄-correlation 시그널* — *반증 likely X*.
+
+3. **APF 의 *2D motif typology* 의 *iTransformer 적용 base***. paper Fig 9 가 *full-head averaged* attention map 만 — *head 별 분리 X*. Idea 2 = *head-by-head N×N motif*. APF 의 *T×T motif typology* (vanilla Transformer) ↔ *N×N motif typology* (iTransformer) 의 *parallel framework*. → *NeurIPS / ICLR 2027 main contribution* — 본 paper 의 *direct next step* + APF 의 *unique novel methodology*.

@@ -37,3 +37,31 @@ iTransformer는 축을 뒤집는다. 각 **변수**($n$번째 센서의 $T$개 �
 **Contribution 4 — 기존 트랜스포머 변종과의 플러그-인 호환**: FlashAttention, Crossformer 등에 역전 구조를 적용하면 추가 개선이 나타나, "역전"이 범용 개선 기법임을 시사한다.
 
 **한계**: ETT(7개 변수)처럼 변수 수가 적은 데이터에서는 DLinear(단순 선형 분해) 대비 우위가 제한적이다. $N \times N$ 어텐션 복잡도가 변수 수에 이차적으로 증가한다.
+
+---
+
+## 인터랙티브 — 핵심 결과 한 눈에
+
+```viz:it-token-inversion:title=paper Figure 2 — Vanilla vs iTransformer Token View,caption=View 토글로 (a) Vanilla: time token (각 시점의 모든 variates 합쳐 token) vs (b) iTransformer: variate token (각 variate 의 전체 series 가 token). 두 view 의 차이 시각화. paper 의 core architectural choice.
+```
+
+```viz:it-architecture-flow:title=iTransformer 전체 Architecture (paper Figure 4),caption=Step 토글로 4 단계 (a) embedding (raw series → variate token), (b) multivariate attention, (c) FFN (series representation), (d) variate-wise LayerNorm 의 highlight. paper §3.1-3.2 의 module 구성 visual.
+```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 층 분리의 의의 — 초등생/학부생/전문가 의 *서로 다른 메시지*?**
+2. **Contribution 1-4 의 *논리적 의존성* — *순서가 의미하는 것*?**
+3. **한계 의 *두 가지* (low-N + O(N²)) 중 *후속 paper 가 다룬* 것?**
+
+### 답변
+
+1. **메시지의 *granularity 차이***. **초등생**: "센서 끼리 비교" — *결과 만*. **학부생**: 토큰화 방식 차이 + ECL/Traffic 의 정량 결과 — *방법론 + 결과*. **전문가**: CKA + plug-in compatibility + *4 contribution 의 정확 분류* — *학술 contribution claim*. 같은 paper 의 *3 다른 reading depth* — 친화도 + 정확성 동시 추구.
+
+2. **Contribution 1 → 2 → 3 → 4 의 *논리적 chain***. (1) *왜 vanilla 가 안 되나* (진단) → (2) *어떻게 고치나* (해결책) → (3) *얼마나 일반화 되나* (확장) → (4) *다른 variants 에도 적용 가능* (universality). *학술 paper 의 표준 narrative arc* — *problem → solution → generalization → universal applicability*.
+
+3. **O(N²) — Flowformer / FlashAttention 의 efficient attention 채택**. paper §3.1 명시: "a bundle of efficient attention mechanisms... can be the plugins, reducing the complexity when the variate number grows large". iTransformer + FlashAttention = Flashformer 의 promotion (Table 2). → *low-N* 한계 (ETT) 는 *후속 paper 도 미해결* (DLinear 가 단순 baseline 으로 충분).

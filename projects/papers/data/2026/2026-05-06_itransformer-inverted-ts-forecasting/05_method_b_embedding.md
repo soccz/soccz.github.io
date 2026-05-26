@@ -1,5 +1,7 @@
 # 05-B. 방법론 — 변수 토큰 임베딩
 
+> **🧒 한 줄 요약**: paper §3.1 의 Embedding 단계 — 각 변수 $n$ 의 $T$-length series 를 *D-dim variate token* 으로 변환. *선형 + LayerNorm* 의 단순 구조이지만 *변수 간 단위 차이* 제거 + *학습 가능한 시간 가중 합산*.
+
 > **배경 사다리**: ① MLP(다층 퍼셉트론)는 선형 변환(행렬 곱)과 비선형 함수(ReLU, GELU 등)를 번갈아 쌓은 함수로, 임의의 비선형 매핑을 근사할 수 있다. ② 임베딩(embedding)은 원래 데이터를 모델이 처리하기 좋은 고정 차원 벡터로 변환하는 과정이다.
 
 ---
@@ -63,3 +65,21 @@ $$H = [h_1, h_2, \ldots, h_N] \in \mathbb{R}^{N \times D}$$
 - **선택된 방식 (선형 + LayerNorm)**: 간단하면서 $T$개 타임스텝의 임의 가중 합을 학습할 수 있음; 보편 근사 정리 관점에서 충분
 
 다음 파일(05-C)에서 이 $H$를 받아 어텐션이 어떻게 작동하는지 수식화한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **선형 임베딩 $W_\text{emb}$ 의 *학습된 의미*?**
+2. **LayerNorm 의 *variate-wise* 적용의 *결정적 효과*?**
+3. **단순 선형 vs CNN/MLP 임베딩 의 *trade-off*?**
+
+### 답변
+
+1. **시간 가중 합산의 *학습된 weighting*$$. $W_\text{emb} \in R^{D \times T}$ 의 row $i$ = "특징 $i$ 를 만들기 위해 $T$ 개 timestamp 의 가중 합산". 예: row 1 가 *최근 24 시간 평균* (linear weight uniform on last 24), row 2 가 *주간 추세* (linear weight increasing 7-day), row 3 가 *분기 cycle* (sinusoidal weight 90-day). 학습 결과 $D$ 개 의 *temporal feature detector*. Universal approximation 의 *시계열 instantiation*.
+
+2. **단위 normalization + non-stationarity 처리**. 변수 의 *physical scale* 차이 (kWh 10^3 vs °C 10^1) 가 *embedding 전* 제거. 또 *non-stationarity* (mean / variance 시간 변화) 의 *implicit handling* — paper §3.2 의 LayerNorm Eq 2 와 일관. Kim 2021 의 RevIN + Liu 2022b 의 NSTransformer 의 정신 적용.
+
+3. **선형 = 단순함 + 보편 충분; CNN/MLP = 표현력 더 크지만 overhead**. **선형 + LayerNorm**: $D \times T$ 파라미터 (예: 512 × 96 = 49K). 단순, GPU friendly, 보편 근사 정리 충족 (단일 linear layer 가 임의 시간 weighting). **CNN**: local pattern 잘 잡지만 *변수 전체 receptive field 부족*. **MLP (2-layer)**: 표현력 더 크지만 *over-parameterization 위험* + *학습 데이터 많이 필요*. → paper choice = *minimalism 일관*.

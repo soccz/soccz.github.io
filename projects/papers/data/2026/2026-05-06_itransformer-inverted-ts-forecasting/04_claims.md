@@ -1,5 +1,7 @@
 # 04. 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: paper 의 3 main contribution — (C1) "타임스텝 토큰이 다변량 TS에 부적합". (C2) "변수 토큰 + 역전 attention 으로 multivariate correlation 학습". (C3) "확장성 + 일반화". 본 챕터는 각 Claim 의 *증거 + 숨은 가정 + 쉬운 풀이*.
+
 > **배경 사다리**: ① 어텐션(attention)은 "어느 토큰끼리 서로 참조해야 하는가"를 소프트맥스 가중치로 결정하는 메커니즘, ② MSE/MAE는 예측 오차를 나타내는 지표(작을수록 좋음), ③ 어블레이션(ablation)은 특정 컴포넌트를 제거하거나 바꿔 성능 변화를 관찰하는 실험을 말한다.
 
 ---
@@ -80,3 +82,28 @@ FFN이 "시간 패턴을 학습한다"는 주장은 간접 증거(성능 향상)
 세 Claim은 서로 지지한다: (1)타임스텝 토큰이 나쁘고 → (2)역전으로 어텐션/FFN 역할 분담이 개선되며 → (3)그 결과 더 긴 과거도 잘 활용할 수 있게 된다. 논리 연쇄는 깔끔하다.
 
 그러나 주의할 지점이 있다. Claim 2의 "역할 분담" 주장은 블랙박스 수준의 증거(성능 수치, 어텐션 맵 시각화)에 머문다. 회로 수준의 해석(어느 헤드가 어느 변수 클러스터를 포착하는가, FFN의 어느 뉴런이 어느 주기를 인코딩하는가)은 없다. 이것이 본 논문의 한계이자, APF/Grokking 연구가 파고들 수 있는 열린 공간이다.
+
+---
+
+## 인터랙티브 — Claim 별 시각화
+
+```viz:it-datasets-summary:title=Claim 1 증거 — 7 Datasets × 11 Models MSE (Table 1),caption=Highlight 셀렉터로 model 별 dataset 결과. iTransformer 의 6/7 SOTA — Claim 1 (vanilla 의 부적합) 의 반증 + Claim 2 (inverted 의 우월) 의 직접 증거.
+```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 Claim 의 *논리적 의존성* — 어느 Claim 이 *foundational*?**
+2. **Claim 2 의 *블랙박스 한계* 의 의미?**
+3. **Exchange (DLinear 2nd) 의 의미 — Claim 의 *boundary 신호*?**
+
+### 답변
+
+1. **Claim 1 (토큰화 부적합) 이 foundational**. Claim 2 (역전 해결) 와 Claim 3 (확장성) 모두 *Claim 1 의 진단이 정확* 한 위에 성립. 만약 vanilla 가 *다른 이유* (예: capacity 부족) 로 fail 한다면 *inverted* 가 아닌 *more capacity* 가 해결책. paper 의 *진단 정확성* 이 *해결책 정당화* 의 base.
+
+2. **회로 수준 해석 부재 = APF 의 *직접 contribution 좌표***. paper 의 attention map (Fig 9) 가 *interpretable* 이지만 *시각화* 만 — *어느 head 가 어느 motif 학습* 의 *circuit-level analysis* X. APF 의 *2D motif typology + PE × motif × faithfulness 격자* 가 *직접 답*. 본 paper 의 한계가 *APF 의 motivation*.
+
+3. **Low-N (N=8) 의 boundary**. iTransformer 의 *attention over variates* 가 *N 큰* dataset (Traffic 862, ECL 321) 에서 *결정적*. *N=8 의 Exchange* 에서는 *DLinear 의 단순 linear* 이 충분 → multivariate correlation 의 *less critical*. → "iTransformer 의 advantage 가 N 의 함수" 의 *empirical boundary*.

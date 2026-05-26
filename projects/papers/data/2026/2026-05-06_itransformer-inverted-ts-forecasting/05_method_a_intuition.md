@@ -1,5 +1,7 @@
 # 05-A. 방법론 — 큰 그림: 축 전환 직관
 
+> **🧒 한 줄 요약**: iTransformer 의 *전체 mechanism* 의 *직관적 그림*. Input X ∈ R^{T×N} 의 *axis 90° 회전* — 그게 전부. 본 챕터는 *왜 이 단순한 변경이 SOTA* 인가의 *큰 그림 설명*.
+
 > **배경 사다리**: ① 행렬(matrix)은 숫자가 행×열로 배열된 것, ② 전치(transpose)는 행과 열을 교환하는 연산($X$의 $(i,j)$ 원소가 $X^\top$의 $(j,i)$가 됨), ③ 토큰(token)은 트랜스포머가 처리하는 기본 단위(문장에서 단어, 이미지에서 패치 같은 것)다.
 
 ---
@@ -57,3 +59,31 @@ iTransformer의 핵심 메시지는 "트랜스포머 컴포넌트(어텐션, Lay
 이 논문의 실험적 강점은 여기서 나온다: iTransformer는 "또 다른 새 모델"이 아니라 기존 트랜스포머 변종(FlashAttention, Crossformer)에 역전 방식을 플러그-인하면 그것들도 함께 개선된다는 것을 보인다. 아키텍처 철학이 맞으면 구현 디테일은 상속된다.
 
 다음 세 파일에서 임베딩(B), 어텐션(C), FFN+전체 흐름(D)을 수식으로 해부한다.
+
+---
+
+## 인터랙티브 — 축 전환 직관 시각
+
+```viz:it-token-inversion:title=Vanilla vs iTransformer Token View (paper Fig 2),caption=View 토글. 같은 input X 에 *axis 90° 회전*. Vanilla = 시간 token, iTransformer = 변수 token. 본 챕터의 *핵심 직관* 의 단일 visual.
+```
+
+```viz:it-architecture-flow:title=iTransformer 전체 Architecture (paper Fig 4),caption=Step slider 로 6 단계 (embedding → attention → FFN → LayerNorm → loop → projection) 의 highlight. paper §3 의 전체 구조.
+```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **"90도 회전" 의 *진정한 mechanism* — 행렬 transpose 와 *차이*?**
+2. **3 가지 이유 (물리적 동질성 / 역할 분리 / PE 불필요) 중 *가장 critical*?**
+3. **"컴포넌트 수정 없음" 의 의미 — *방법론적 가치*?**
+
+### 답변
+
+1. **단순 transpose 가 아닌 *interpretive reframing***. Math 상으로는 X 와 X^T 의 차이지만, *모델 의미* 가 다름. Vanilla: token = $x_t \in R^N$ (시점 t 의 모든 변수). iTransformer: token = $X_{:,n} \in R^T$ (변수 n 의 전체 series). **embedding $R^T \to R^D$** 가 *변수 별로* 적용 — *transpose + variate-wise embedding* 의 combination. 단순 axis swap 이 아닌 *token semantic 의 재정의*.
+
+2. **이유 1 (물리적 동질성)**. 이유 2/3 는 *결과적 advantages*. 이유 1 이 *근본 원인*. 같은 단위 (kWh) 의 series 내적 = *meaningful correlation*. 다른 단위 (°C / kWh / 대/분) 의 *mixed token 의 내적* = *meaningless*. 이 *unit homogeneity* 가 attention 의 mathematical meaningfulness 의 base — 나머지 advantages (역할 분리, PE 불필요) 의 *origin*.
+
+3. **학술적 minimalism + practical plug-in**. *새 component 없음* → 학계의 *innovation-by-default* 압박 회피. *Practical*: FlashAttention / Reformer 등 *기존 efficient attention* 의 *직접 적용* → 5 variants 모두 promotion (paper Table 2). 만약 *새 component* 였다면 *각 variant 별 적응* 필요. → "*paradigm 변경 only*" 의 *generalizability*.

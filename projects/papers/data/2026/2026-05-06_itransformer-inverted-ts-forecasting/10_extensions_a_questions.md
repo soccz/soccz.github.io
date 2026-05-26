@@ -1,5 +1,7 @@
 # 10-A. 사고 확장 — 자문 질문 5개
 
+> **🧒 한 줄 요약**: paper 의 *닫지 못한 영역* 의 5 질문. (Q1) Multi-head 의 head 별 motif 다른가? (Q2) Lookback × N 의 trade-off? (Q3) Variate count 의 lower bound (low-N limit)? (Q4) Non-stationary 의 명시 처리? (Q5) Pretraining + zero-shot 의 base 가능?
+
 ---
 
 ### Q1. N×N 어텐션 맵에도 2D 모티프가 존재하는가?
@@ -39,3 +41,21 @@ iTransformer를 금융 포트폴리오(예: S&P 500 구성 주식 500개, N=500)
 PatchTST(채널 독립, 변수 간 어텐션 없음)와 iTransformer(채널 혼합, N×N 어텐션)는 정반대의 선택이다. 데이터셋의 "변수 간 상관 강도"를 정량화하면(예: 평균 절대 Pearson 상관계수 $\bar{\rho}$), $\bar{\rho}$가 높은 데이터에서는 iTransformer가, 낮은 데이터에서는 PatchTST(또는 DLinear)가 우월한가?
 
 **왜 중요한가**: 이 질문은 "어떤 데이터에 어떤 모델을 쓸 것인가"의 실용적 가이드라인을 만든다. 금융 TS($\bar{\rho}$ 낮음)에서 iTransformer가 실망스럽다면, 그것은 모델 실패가 아니라 "채널 혼합 가정이 맞지 않는 도메인"에 대한 자연스러운 결과다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **5 질문 중 *가장 빠르게* 답할 수 있는 것 (low-hanging fruit)?**
+2. **5 질문이 *본 paper 의 한계* 의 *순서 매핑*?**
+3. **APF / Grokking 트랙에 *가장 critical* 한 question?**
+
+### 답변
+
+1. **Q3 (low-N limit)**. *2-3 GPU-days* — 같은 dataset 의 *N 변형* (전체 → 일부 변수) 학습 + MSE 측정. ETT (N=7) 의 *baseline* + Solar (N=137) 의 *full* 비교. iTransformer 의 *N-threshold* 도출. **Q4 (non-stationary)** 가 *둘째* — Liu 2022b 의 NSTransformer 와 비교 실험.
+
+2. **Q1 (multi-head) ↔ paper 의 *interpretability gap* (Claim 2 의 회로 부재). Q2 (lookback × N) ↔ Fig 6 의 lookback 만 / Fig 5 의 variate 만 — *교차* 미실험. Q3 (low-N) ↔ Exchange limit. Q4 (non-stationary) ↔ LayerNorm 의 explicit treatment X. Q5 (foundation model) ↔ paper 의 *trained from scratch only***. → 5 질문이 *paper 의 5 한계* 와 1:1 매핑.
+
+3. **Q1 (head 별 motif)** — APF 의 *2D motif typology* 의 직접 base. 본 paper 가 *head-aggregated attention map* (Fig 9) 만 — *head 별 차이* 분석 X. APF 의 *head-by-head motif classification* 이 *직접 후속*. NeurIPS / ICLR contribution figure 후보.

@@ -1,5 +1,9 @@
 # 09. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: iTransformer 의 N×N attention 이 *APF 의 N×N motif typology 의 직접 base*. Vanilla 의 T×T motif 와 *대립 축*. Grokking 의 *FFN-only series learning* circuit 분석 출발점. 본 paper 가 *내 manuscript 의 §3 methodology baseline*.
+
+
+
 > **이 섹션은 `_profile.md`의 §A~F와 보유 자산(APF, Grokking)을 기준으로 작성한다. 일반론 금지 — 구체적 mechanism/axis/수식 연결만.**
 
 ---
@@ -67,3 +71,21 @@ iTransformer의 N×N 어텐션이 변수(자산) 간 상관을 학습한다는 �
 - Grokking (§A/§B): ⬛⬛⬛⬜⬜ (강)
 - ProTran-TFA (§E): ⬛⬛⬜⬜⬜ (중간, 재개 시 활용 가능)
 - 원거리 §F: ⬛⬜⬜⬜⬜ (약)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **iTransformer 의 *4 흡수 지점* 중 *APF manuscript main figure* 후보?**
+2. **§A (Grokking) ↔ iTransformer 연결의 *구체 mechanism*?**
+3. **§E (ProTran-TFA) 의 *iTransformer 결합* — *low-N 한계* 의 우회 가능?**
+
+### 답변
+
+1. **N×N attention motif typology** — 본 paper Fig 9 의 *interpretable multivariate correlation* 의 *2D motif 분류*. APF 의 T×T motif (vanilla Transformer) 와의 *대립 축* — same paper 의 N×N motif typology + comparison. *APF Figure 1 또는 2* 의 직접 candidate.
+
+2. **FFN 의 *temporal pattern learning* circuit 분석**. iTransformer 의 FFN = *T-length input* → *D-dim output* — *시간 패턴 학습 의 explicit module*. Grokking 트랙: "FFN 의 *어느 neuron 이 어느 frequency / amplitude 패턴 학습* 의 circuit-level analysis". Nanda 2023 의 *Fourier circuit* 의 시계열 instantiation — iTransformer 의 FFN 이 *직접 분석 대상*.
+
+3. ***부분 가능***. ProTran (Tang & Matteson 2022) = *probabilistic forecasting + Transformer*. *Low-N 금융* (S&P 500 의 ~10 sector) 에서 iTransformer 의 *direct multivariate* + ProTran 의 *probabilistic head* 결합. 그러나 N=10 의 limit (iTransformer 의 weakness) 가 *지속* — *full breakthrough* 어려움. **TFA (technical feature augmentation)** 추가 = *artificial N 증가* (e.g., RSI/MACD/Bollinger 의 *derived variates*) → *effective N* 50+ 도달 가능. *expanded multivariate* 에서 iTransformer 의 advantage 회복.

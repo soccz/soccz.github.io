@@ -1,5 +1,7 @@
 # 07. 가정·한계·반박
 
+> **🧒 한 줄 요약**: paper 의 *공정한 비판*. (a) Permutation invariance on variate axis 의 *implicit ordering* 손실, (b) O(N²) memory 의 *scalability* 한계, (c) Exchange (N=8) 의 *low-N* 약함, (d) component 수정 X 의 *innovation limit*. 본 챕터는 *4 한계 + 후속 paper 의 해결*.
+
 ---
 
 ## 명시된 가정
@@ -60,3 +62,28 @@ Traffic과 ECL이 많은 변수를 가지며 iTransformer가 이에 특화된 �
 
 1. **위치 임베딩 제거의 실제 영향**: 저자들은 "위치 임베딩이 불필요하다"고 주장하지만, 위치 임베딩을 추가했을 때 성능이 실제로 어떻게 변하는지 어블레이션이 없다.
 2. **훈련 시간 비교**: 파라미터 수가 같더라도 어텐션 계산 패턴이 달라지면 실제 GPU 시간이 달라진다. 특히 N이 클 때 N×N vs T×T 어텐션의 실제 시간 비교가 없다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 한계 중 *가장 critical* — 후속 paper 가 *해결한* 것?**
+2. **Exchange (N=8) 약함의 *진단적 의미*?**
+3. **"Component 수정 없음" 의 *trade-off*?**
+
+### 답변
+
+1. **O(N²) memory — Flowformer / FlashAttention 으로 부분 해결**. paper §3.1 "efficient attention plug-in" 명시 + Table 2 의 *Flashformer + inverted* 성공. *Variate-quadratic memory* = N=2000+ TSFM 의 한계 → MOIRAI 2024 의 *masked variate token* + Chronos 2024 의 *quantized variate* 가 *유연한 변형*. **두 번째 critical**: *low-N* (ETT 7) — *unsolved* (DLinear 가 단순 baseline 으로 충분).
+
+2. **"Multivariate correlation 의 critical 영역" 의 boundary**. iTransformer 의 advantage = *attention over variates*. N=8 = *correlation 학습 의 representation 부족* + *DLinear 의 linear 가 시간 패턴 sufficient*. → *iTransformer 의 advantage = N 의 함수* 의 *empirical evidence*. APF 의 *low-dim TSFM* 시 *fallback to DLinear* 가능성.
+
+3. **Innovation gap vs Plug-in compatibility**. **Loss**: *새 novel component* (Auto-Correlation, Cross-Attention 등) 의 *학술적 visibility* X. **Gain**: *FlashAttention / Reformer 등 efficient variants* 의 *직접 적용* — *5 paper 의 후속 개선 simultaneously*. *방법론적 minimalism* 의 *practical value* — 본 paper 는 *후자 우선*.
+
+---
+
+## 인터랙티브 — 한계 시각화
+
+```viz:it-variate-generalization:title=Variate Generalization 한계 (paper Fig 5),caption=Dataset 셀렉터. iTransformer 도 *20% → 100% 변수 학습* 시 25-35% MSE 증가 — *foundation model 의 true zero-shot* 까지 도달 X. MOIRAI / Chronos / TimesFM 의 후속 pretraining 이 *해결*.
+```

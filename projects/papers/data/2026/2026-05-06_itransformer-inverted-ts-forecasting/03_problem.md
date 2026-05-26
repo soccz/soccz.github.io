@@ -1,5 +1,7 @@
 # 03. 문제 지형도
 
+> **🧒 한 줄 요약**: 트랜스포머의 시계열 적용에 *근본적 토큰화 문제*. 기존 방식 = "타임스텝 토큰" — 한 시점의 모든 변수를 한 벡터로 압축 → 변수 간 의미 wiped out. 본 챕터는 이 문제의 *실세계 예시 3개* (전력망 / 교통 / 장기 예측) + *5 단계 lineage* (Informer → Autoformer → DLinear → PatchTST → TimesNet) + iTransformer 의 *gap-filling*.
+
 > **배경 사다리**: 이 섹션을 이해하려면 ① 트랜스포머가 "토큰 시퀀스"를 입력받아 어텐션으로 토큰 간 관계를 학습하는 모델이라는 것, ② 시계열 예측이 "과거 T개 값을 보고 미래 S개 값을 예측하는 문제"라는 것, ③ MSE(평균제곱오차)가 작을수록 예측이 더 정확하다는 것만 알면 된다.
 
 ---
@@ -63,3 +65,28 @@ Wu et al.의 TimesNet(ICLR 2023)은 1D 시계열을 2D 이미지처럼 재구성
 iTransformer의 답은 단순하고 대담하다: **토큰화 방향을 90도 회전한다.** 타임스텝 방향이 아니라 변수 방향으로 토큰을 만든다. 변수 $n$의 과거 $T$개 관측값 전체가 하나의 토큰이 된다. 이제 어텐션은 "$N$개 변수 토큰 중 어느 쌍이 서로 관련 있는가"를 학습한다 — 이것은 물리적으로 의미 있는 계산이다. FFN은 각 변수 토큰 내부에서 $T$개 시간 점의 비선형 패턴을 추출한다 — 이 역시 자연스러운 역할 분담이다.
 
 어텐션과 FFN의 컴포넌트 자체는 수정되지 않는다. 바뀌는 것은 오직 "입력 형상"이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 실세계 예시 (전력망 / 교통 / 장기 예측) 의 공통 근본 원인?**
+2. **5 단계 lineage 중 *가장 critical* 한 turning point?**
+3. **iTransformer 의 *gap-filling* 의 정확한 mechanism?**
+
+### 답변
+
+1. **"타임스텝 토큰화"의 부적합성**. 3 예시 모두 *high-dim multivariate* + *temporal pattern* 의 결합. 타임스텝 토큰은 (a) 변수 간 정보 mix (전력망), (b) 변수 쌍의 sparse correlation 손실 (교통), (c) 시간 위치 정보만 학습 (장기 예측). 토큰화 방향이 *문제의 근원*.
+
+2. **3 단계 — DLinear (AAAI 2023)**. "Are Transformers Effective?" 의 *도발적 질문*. 이전 Informer / Autoformer / FEDformer 의 *복잡 attention 변형* 노력 → DLinear 의 *2 linear layer* 가 능가 → *학계의 paradigm 의문 trigger*. iTransformer 의 출발점 — "*Transformer 자체* 가 아닌 *Transformer 의 *적용 방식*" 이 문제라는 *재해석* motivation.
+
+3. **(a) 토큰화 방향 90° 회전** (paper §3.1) — 변수 별 토큰. (b) **Attention 의 의미 변경** — multivariate correlation (paper §3.2). (c) **FFN 의 의미 변경** — series representation (paper §3.2 + Hornik 1991). (d) **LayerNorm 의 의미 변경** — variate-wise normalization (Eq 2). → *모든 컴포넌트 정체* 그대로, *역할만 reinterpretation*.
+
+---
+
+## 인터랙티브 — 문제 설정 시각화
+
+```viz:it-token-inversion:title=Vanilla vs iTransformer Token View (paper Fig 2),caption=View 토글. 기존 트랜스포머 (Vanilla) 의 token = column (시간) vs iTransformer 의 token = row (변수). 본 챕터의 *문제 설정 + 해결책* 의 *시각적 단일 contrast*.
+```

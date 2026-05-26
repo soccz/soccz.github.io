@@ -1,5 +1,7 @@
 # 08. 이론적 계보
 
+> **🧒 한 줄 요약**: iTransformer 의 *가계도* — Vaswani 2017 (Transformer 의 발명) + PatchTST 2023 (Channel Independence) + Crossformer 2023 (multivariate attention) 의 *합성*. 후손 = TimeMixer / UniTST / TSFM era (MOIRAI / Chronos / TimesFM). 본 챕터는 *학문적 위치 좌표*.
+
 ---
 
 ## 이론적 조상
@@ -43,3 +45,21 @@ N×N 어텐션 맵이 변수 간 상관을 반영한다면, 이를 활용해 Gra
 ### 후손 3 — 금융 응용
 
 FT-iTransformer(MDPI 2025)처럼 주가 예측에 iTransformer를 적용한 사례가 이미 나왔다. 변수 수가 적고(예: 10개 주식) 상관이 약한 금융 TS에서의 성능 한계와 개선 방향을 탐구하는 연구가 후속으로 나올 것이다. 특히 P1 ProTran-TFA 맥락에서 "확률적 예측 + 변수 어텐션"의 결합이 연구 가능하다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **iTransformer 의 *방법론적 빚 가장 큰* paper?**
+2. **TSFM 의 *channel 채택* — *기술적 base* vs *철학적 base*?**
+3. **금융 응용 (FT-iTransformer) 의 *low-N limit* 의 의미?**
+
+### 답변
+
+1. **PatchTST (Nie et al., ICLR 2023)**. PatchTST 의 *Channel Independence* + *Patch embedding* 의 정신 → iTransformer 의 *Channel-independent variate token* (CI 의 더 extreme version, *patch = entire series*). Crossformer (Zhang & Yan 2023): *multivariate attention* 정신 → iTransformer 의 attention over variates. **합성**: PatchTST 의 *CI ease* + Crossformer 의 *multivariate awareness*. Vaswani 2017 (Transformer self) 는 *component foundation* 이지만 *직접 lineage 빚* 은 PatchTST 가 most.
+
+2. **둘 다**. **기술적**: variate token + attention over variates 의 *direct architecture inheritance*. MOIRAI = *masked variate*, Chronos = *quantized variate*, TimesFM = *decoder variate-aware* — 모두 iTransformer 의 *variate-as-token* 핵심. **철학적**: "*시계열 token = variate*" 의 *paradigm shift* — TSFM 의 *foundation model 가능성* 의 enabling philosophy. 두 base 가 *combined* → TSFM era 의 *direct ancestor*.
+
+3. **iTransformer 의 limit 의 specific instance**. 금융 TS = *low-N* (10 stocks) + *weak correlation* (efficient market hypothesis). iTransformer 의 advantage = *high-N multivariate correlation* — 금융에서 *less applicable*. FT-iTransformer (MDPI 2025) 가 *변형 형식* (with TFA, technical features) 시도하지만 *significant improvement X*. → "iTransformer 의 universal domain X" — *engineering / sensor data* 에 강함, *financial / sparse-correlation* 에 약함.

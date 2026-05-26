@@ -1,5 +1,9 @@
 # 06. 실험 해부
 
+> **🧒 한 줄 요약**: paper 의 4 main experiments — (1) Main results (Table 1, 7 datasets × 11 models), (2) Promotion (Table 2, 5 variants × 3 datasets), (3) Ablation (Table 3, 6 configs), (4) Generalization (Fig 5 unseen variates, Fig 6 lookback). 본 챕터는 *각 experiment 의 design + 결과 해석 + 부록 신호*.
+
+
+
 > **배경 사다리**: ① MSE(Mean Squared Error, 평균제곱오차)는 예측값과 실제값의 차이를 제곱해 평균낸 것으로 작을수록 좋다. ② MAE(Mean Absolute Error, 평균절대오차)는 절대값 기반의 유사 지표다. ③ 어블레이션(ablation)은 특정 요소를 제거해 그 효과를 측정하는 실험이다.
 
 ---
@@ -89,3 +93,37 @@ Weather, ECL에서 $T \in \{96, 192, 336, 720\}$로 실험:
 
 - **CKA 분석**: 표준 트랜스포머의 레이어 간 CKA ≈ 0.95로 레이어를 거쳐도 표현이 거의 변하지 않는다. iTransformer는 레이어마다 CKA가 낮아져 실질적 표현 변환이 일어남을 시사한다. 이는 "어텐션이 실질적으로 작동한다"의 증거지만, 간접적이다.
 - **제로샷 변수 실험**: 훈련 시 사용한 변수의 70%만으로 학습 후, 나머지 30%를 제로샷 예측 → 유의미한 성능 유지. 이는 변수 토큰이 독립적임을 실증한다.
+
+---
+
+## 인터랙티브 — 실험 결과 종합
+
+```viz:it-datasets-summary:title=Table 1 — 7 Datasets × 11 Models MSE,caption=Highlight 셀렉터로 model 비교. iTransformer 6/7 SOTA. ★ best per dataset 표시.
+```
+
+```viz:it-promotion-grid:title=Table 2 — Promotion across 5 Variants × 3 Datasets,caption=View 셀렉터 (promotion% / original / inverted). 15 cell 모두 promotion ✓. Largest: Reformer + Weather -69.2%.
+```
+
+```viz:it-lookback-paradox:title=Lookback Paradox Resolution (Figure 6),caption=Highlight 셀렉터. Vanilla family vs iTransformer family. T ∈ {48, 96, 192, 336, 720} 의 MSE 변화. Vanilla: paradox. iTransformer: monotone improvement.
+```
+
+```viz:it-variate-generalization:title=Variate Generalization — 20% 학습 → 100% (Figure 5),caption=Dataset 셀렉터. iTransformer 의 작은 MSE 증가 (~25%) vs CI 의 큰 증가 (~110%). TSFM enabling property 의 직접 증거.
+```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Table 1 의 *결정적 단일 수치* — paper 의 핵심 claim 의 지지?**
+2. **Table 2 의 *15/15 promotion* 의 의미 — *어떤 generalizability*?**
+3. **Ablation Table 3 의 *worst design* (Attn-Attn) 의 *진단적 가치*?**
+
+### 답변
+
+1. **Traffic MSE 0.428 vs PatchTST 0.481 = -11% margin**. Traffic = highest-dim (N=862) dataset. PatchTST 의 *Channel Independence* 가 *N 큰* 경우 limit — variate correlation 손실. iTransformer 의 *attention over variates* 가 *결정적 vehicle* → "multivariate correlation matters at scale" 정량 증거. Exchange (N=8) 에서 DLinear 가 best 인 것과 *대비* — *low-N* 에서는 multivariate 덜 중요.
+
+2. **Universal applicability — *paradigm-level* generalization**. 5 variants (Transformer 2017, Reformer 2020, Informer 2021, Flowformer 2022, Flashformer 2022) × 3 datasets (ECL, Traffic, Weather) = 15 configurations 모두 promotion ✓. iTransformer 의 *inversion 이 *variant-agnostic* — *어떤 attention 형식*에도 적용 가능. → *5 paper 의 후속 개선* 을 *단일 paper* 가 제공.
+
+3. **"Attention-Attention" (vanilla style) = Traffic 0.913 — 최악**. iTransformer 의 0.428 의 *2 배 MSE*. paper §4.3 의 vanilla *진정 fail* 정량 — DLinear 2023 의 "Are Transformers Effective?" 의 *재확인*. iTransformer 의 "FFN on temporal" 결정의 *empirical 정당화* — *temporal axis 의 attention 은 noise*, *FFN 이 적합*.

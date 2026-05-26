@@ -1,5 +1,7 @@
 # 05-C. 방법론 — 변수 방향 어텐션 메커니즘
 
+> **🧒 한 줄 요약**: paper §3.2 의 self-attention — *N 개 variate token* 의 multivariate correlation 학습. Vanilla 의 *T×T temporal attention* 대신 *N×N variate attention*. 결과 attention map = *interpretable multivariate correlation* (paper Fig 9).
+
 > **배경 사다리**: ① 내적(dot product)은 두 벡터의 원소를 곱해 더한 스칼라 값으로, 두 벡터가 비슷할수록 크다. ② 소프트맥스(softmax)는 여러 실수 값을 받아 합이 1이 되는 확률 분포로 변환한다. ③ 멀티헤드 어텐션은 어텐션을 $H$개 독립 "헤드"로 병렬 실행해 서로 다른 관계 패턴을 포착하는 변종이다.
 
 ---
@@ -69,3 +71,28 @@ $$H' = \text{LN}(H + \tilde{H})$$
 $$H'' = \text{LN}(H' + \text{FFN}(H'))$$
 
 이 블록을 $L$번 쌓아 깊은 표현을 형성한다 (보통 $L = 3$ 또는 4).
+
+---
+
+## 인터랙티브 — Multivariate Correlation Map
+
+```viz:it-multivariate-correlation:title=iTransformer Attention Map — Multivariate Correlation (paper Fig 9),caption=Dataset 셀렉터로 Exchange / ECL / Weather. 학습된 attention map = N×N variate correlation matrix. Strong clusters (★) — economically / physically meaningful 그룹. paper §3.2 "interpretable multivariate correlations" 의 직접 증거.
+```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **N×N attention map 의 *물리적 의미* — Vanilla T×T 의 차이?**
+2. **Multi-head attention 의 *각 head 의 다른 학습 패턴* — iTransformer 에서의 의미?**
+3. **N=862 (Traffic) 의 O(N²) 메모리 — paper 의 *해결책*?**
+
+### 답변
+
+1. **Variate-pair similarity vs Time-step similarity**. **Vanilla T×T**: $A_{t_1,t_2}$ = "두 시점이 얼마나 비슷한가" — 대각 + nearby band 패턴이 일반적 (시간 인접성). **iTransformer N×N**: $A_{i,j}$ = "두 변수가 얼마나 같이 움직이는가" — *meaningful cluster* (paper Fig 9). 예: ECL 의 *같은 지역 전력망 cluster*, Exchange 의 *currency block* (oceania/europe/asia). **post-hoc interpretability 의 직접 도구**.
+
+2. **각 head 가 다른 *correlation aspect* 학습 — multi-faceted multivariate structure**. NLP 의 Voita 2019 / Clark 2019 finding (head 별 syntactic/coreference role) 의 시계열 instantiation. 예 (paper Fig 9 추정): Head 1 = *trend correlation* (장기), Head 2 = *seasonal correlation* (cyclic), Head 3 = *regime shift detector*. iTransformer 의 *multi-head* 의 *uniquely informative* 측면.
+
+3. **Efficient attention plug-in**. paper §3.1 명시: "a bundle of efficient attention mechanisms (Li 2021 / Wu 2022 / Dao 2022) can be the plugins". Traffic N=862 의 $O(N²) = 750K$ standard attention = 8GB GPU 한계. **FlashAttention (Dao 2022)** = $O(N \sqrt{N})$ practical memory. **Reformer (Kitaev 2020)** = LSH attention $O(N \log N)$. → paper Table 2 의 *Flashformer / Reformer + inverted* 의 *성공* — efficient attention 의 *직접 호환*.
