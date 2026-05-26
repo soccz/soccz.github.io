@@ -158,6 +158,48 @@ paper §2 의 표기 정리:
 
 ---
 
+## 12.3b References Cross-Reference Table
+
+각 reference 의 본 deep dive 내 *첫 인용 챕터* + *재사용 챕터* 의 매핑:
+
+| Reference | 첫 인용 | 재사용 |
+|-----------|--------|--------|
+| Bahdanau et al. 2014 | 02_tldr | 08_lineage, 10b_followups, 12_glossary, 15_diagrams |
+| Vaswani et al. 2017 | 12_glossary | 05_method_a (Scaled Dot-Product), 17_aftermath |
+| Lipton 2016 | 03_problem (간접) | 10b_followups, 17_aftermath |
+| Ross et al. 2017 (faithful) | 03_problem | 04_claims, 12_glossary, 17_aftermath |
+| Sundararajan et al. 2017 (IG) | 08_lineage | 12_glossary, 17_aftermath |
+| Li et al. 2016 (representation erasure) | 03_problem | 12_glossary |
+| Feng et al. 2018 (saliency 한계) | 07_limits | 12_glossary |
+| **Wiegreffe-Pinter 2019 (rebuttal)** | **02_tldr** | **04_claims, 07_limits, 08_lineage, 10b, 12_glossary, 13_insights, 17_aftermath** |
+| Serrano-Smith 2019 | 08_lineage | 10b_followups, 12_glossary, 17_aftermath |
+| Brunner et al. 2019 (identifiability) | 03_problem (lineage) | 04_claims, 07_limits, 08_lineage, 12_glossary, 13_insights, 17_aftermath |
+| Adebayo et al. 2018 (sanity check) | 08_lineage | 12_glossary |
+| Pruthi et al. 2020 (deceive) | 08_lineage | 12_glossary, 17_aftermath |
+| Vashishth et al. 2019 (cross-NLP) | 08_lineage | 10b_followups |
+| ERASER (DeYoung et al. 2020) | 07_limits (간접) | 08_lineage, 11_verdict, 17_aftermath |
+| Abnar-Zuidema 2020 (rollout) | 07_limits | 08_lineage, 12_glossary, 17_aftermath |
+| Clark et al. 2019 (BERT attention) | 03_problem (lineage) | 08_lineage, 12_glossary, 17_aftermath |
+| Voita et al. 2019 (heads) | 12_glossary | 17_aftermath |
+| Nanda 2023 (Grokking) | 09_my_research | 10c_ideas, 17_aftermath, 18_self_critique |
+| ACDC (Conmy et al. 2023) | 08_lineage | 17_aftermath |
+| Sparse Feature Circuits (Marks 2024) | 08_lineage | 17_aftermath, 18_self_critique |
+| Bricken et al. 2023 (Anthropic SAE) | 08_lineage | 17_aftermath |
+| Wilinski et al. 2025 (TSFM) | 09_my_research (간접) | 10b_followups, 17_aftermath, 18_self_critique |
+| Hewitt & Manning 2019 (probing) | 17_aftermath | — |
+| **Datasets** | | |
+| Socher 2013 (SST) | 05_method_d | 12_glossary, 16_appendix |
+| Maas 2011 (IMDB) | 05_method_d | 12_glossary, 16_appendix |
+| Bowman 2015 (SNLI) | 05_method_d | 12_glossary, 16_appendix |
+| Johnson 2016 (MIMIC-III) | 05_method_d (Diabetes/Anemia) | 12_glossary, 16_appendix |
+| Hermann 2015 (CNN QA) | 05_method_d | 12_glossary, 16_appendix |
+| Weston 2015 (bAbI) | 05_method_d | 12_glossary, 16_appendix |
+| Nikfarjam 2015 (ADR Twitter) | 05_method_d | 12_glossary, 16_appendix |
+
+**관찰**: Wiegreffe-Pinter 2019 (7 챕터에 등장) 이 본 deep dive 에서 *가장 cross-referenced* — *combined conclusion* 의 학계 표준화의 증거.
+
+---
+
 ## 12.4 약어집
 
 | 약어 | 풀이 |

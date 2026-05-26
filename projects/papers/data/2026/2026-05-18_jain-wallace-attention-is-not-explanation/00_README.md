@@ -1,5 +1,7 @@
 # 00 README — Attention is not Explanation
 
+> **🧒 한 줄 정리**: 본 deep dive 는 *Jain & Wallace 2019 (NAACL)* 의 24 챕터 + 23 viz blocks + 7 viz JS 의 *체계적 해체*. *APF / Grokking manuscript 의 H1/H2 protocol baseline* 으로 *직접 사용 가능*. 본 README 는 *전체 구조의 진입 페이지*.
+
 ## 표지
 
 | 항목 | 내용 |
@@ -71,3 +73,21 @@
 | `anie-tvd-jsd-2d` | 05c, 07 | 2D plot (TVD, JSD) — adversarial region |
 | `anie-encoder-comparison` | 05a, 05d, 06, 13 | BiLSTM vs CNN vs Average τ 비교 |
 | `anie-datasets-summary` | 04, 06, 13 | 12 datasets × 5 metrics heatmap |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 의 *대상 독자* 는 누구이며, 어떤 순서로 읽어야 하는가?**
+2. **24 챕터 + 7 viz JS 의 *최소 reading path* 는 무엇인가?**
+3. **본 paper 가 *NAACL 2019* 의 *Best Paper Honorable Mention* 까지 받았는데, *왜 후속 7 년이 *qualifying* 의 논쟁* 인가?**
+
+### 답변
+
+1. **APF / Grokking manuscript 의 *baseline reference* 작업자** (본 deep dive 작성자) + **APF / Grokking reviewer** + **interpretability 학부생/대학원생**. 순서: (a) 02_tldr (3-tier 진입) → (b) 04_claims (논리 구조) → (c) 05_method_b/c (H1/H2 자세히) → (d) 06_experiments + 16_appendix (정량 결과) → (e) 07_limits + 17_aftermath (논쟁 + 7년 진화) → (f) 09_my_research + 10_extensions (내 contribution 좌표).
+
+2. **02 → 04 → 05c → 16 → 11**. (a) 02_tldr 의 *초등학생 + 학부생* level 의 3-tier (5분), (b) 04_claims 의 C1-C4 합집합 논리 (5분), (c) 05_method_c 의 H2 counterfactual + adversarial 의 정확 algorithm (10분), (d) 16_appendix 의 Table 2 정확 수치 (5분), (e) 11_verdict 의 한 줄 판결 + 4 legacies (5분). **총 30분** 으로 paper 의 *모든 core knowledge*.
+
+3. **"strong negative claim" 의 *qualification*** — 본 paper 의 *strong rejection* 이 Wiegreffe-Pinter 의 *plausibility 옹호* 로 *부분 무력화* 되었으나 **완전 부정 아님**. 후속 7 년 (2019-2026) 의 논쟁 = "어떤 의미의 explanation 인가" 의 *taxonomy refinement* — *faithful / plausible / actionable* 의 *분리*. 본 paper 는 *faithfulness* 만 검증, *plausibility* 의 가치는 *후속 인정*. *학계 표준의 진화* = paper 의 핵심 영향력.

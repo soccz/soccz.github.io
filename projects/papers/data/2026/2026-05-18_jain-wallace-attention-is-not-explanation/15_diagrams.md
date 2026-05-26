@@ -426,17 +426,29 @@ Implication:                              Implication:
 
 ---
 
-## 15.15 Viz 카탈로그 (인터랙티브)
+## 15.15 Viz 카탈로그 (인터랙티브) + paper Figure 매핑
 
-| viz id | 챕터 | 내용 | 컨트롤 |
-|--------|------|------|--------|
-| `anie-attention-heatmap` | 01, 05c | paper Figure 1 — original vs adversarial heatmap | example 선택 |
-| `anie-correlation-hist` | 04, 05b, 06 | Kendall τ histogram (BiLSTM vs Average) | dataset + encoder 토글 |
-| `anie-permutation-scatter` | 05c, 06 | max α vs median ∆ŷ scatter | dataset 셀렉터 |
-| `anie-adversarial-search` | 05c | iter 별 JSD/TVD trajectory | iter slider |
-| `anie-tvd-jsd-2d` | 06 | 2D plot (TVD, JSD) — adversarial region | n_samples slider |
-| `anie-encoder-comparison` | 05a, 06 | BiLSTM vs Average vs CNN τ 분포 | dataset selector |
-| `anie-datasets-summary` | 06, 07 | 12 datasets τ + ∆ŷ summary heatmap | metric 토글 |
+| viz id | paper Figure | 챕터 사용처 | 컨트롤 |
+|--------|-------------|------------|--------|
+| `anie-attention-heatmap` | **Figure 1** (p.1, heatmap of attention weights — movie review example) | 02, 08, 11, 15 | example 선택 |
+| `anie-correlation-hist` | **Figure 2** (p.4, histogram of Kendall τ across instances) | 02, 03, 05b | dataset + metric 토글 |
+| `anie-permutation-scatter` | **Figure 6** (p.5, max attention vs median ∆ŷ over permutations) | 05c | dataset 셀렉터 |
+| `anie-adversarial-search` | **§4.2.2 algorithm** (p.5, gradient ascent for adversarial α̃) | 05c, 14 | iter slider |
+| `anie-tvd-jsd-2d` | **Figure 7** (p.6, 2D plot of Max JSD vs Max attention) | 05c, 07 | dataset 셀렉터 |
+| `anie-encoder-comparison` | **Figure 5** (p.4, mean correlation difference for Average vs BiLSTM) + Appendix CNN | 05a, 05d, 06, 13 | highlight 셀렉터 |
+| `anie-datasets-summary` | **Table 2** (p.4, summary statistics across 12 datasets) | 04, 06, 13 | metric 셀렉터 |
+
+**paper figure 커버리지**:
+- Figure 1 (heatmap): ✓ anie-attention-heatmap
+- Figure 2 (correlation histogram): ✓ anie-correlation-hist
+- Figure 3-5 (correlation 차이 분석): ✓ anie-encoder-comparison + anie-datasets-summary
+- Figure 6 (permutation): ✓ anie-permutation-scatter
+- Figure 7 (adversarial 2D): ✓ anie-tvd-jsd-2d
+- §4.2.2 algorithm: ✓ anie-adversarial-search
+- Table 1 (datasets): 본 deep dive 의 16_appendix §16.6 에 정확 수치 — viz JS 미작성 (정적 표가 더 적합)
+- Table 2 (Kendall τ): ✓ anie-datasets-summary + 16_appendix §16.2 정확 수치
+
+→ **paper 의 7 figures + 2 tables 중 viz JS 7 개로 모두 cover** (Table 1 은 정적 표만).
 
 ---
 

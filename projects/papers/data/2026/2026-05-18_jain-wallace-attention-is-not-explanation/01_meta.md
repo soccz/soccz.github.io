@@ -1,5 +1,7 @@
 # 01 메타 & 선정 이유
 
+> **🧒 본 챕터는 "왜 이 paper 인가"**: 본 deep dive 의 *선정 배경* + *서지 정보* + *covering bucket* (코어 월요일 §C). 본 paper 가 *APF / Grokking 트랙의 §C 시조* 이기 때문에 선정. 다른 §C 후보 paper (Wiegreffe-Pinter, Clark, Voita, Abnar-Zuidema, Chefer, Sundararajan) 모두 본 paper 의 *반응 또는 보완* — *시조* 부터 시작이 합리적.
+
 ## 서지 정보
 
 | 항목 | 내용 |

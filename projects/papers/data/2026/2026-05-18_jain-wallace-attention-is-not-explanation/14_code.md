@@ -336,6 +336,13 @@ Average encoder (control):
 
 ---
 
+## 14.X 인터랙티브 — Code 실행 결과 시각화
+
+```viz:anie-adversarial-search:title=Adversarial Search Trajectory — Code 14.5 의 실행,caption=Iter 슬라이더 (0 → 500). PyTorch optimizer (Adam, lr=0.1) 의 step 별 JSD/TVD 변화. 본 챕터의 `adversarial_attention` 함수의 정확한 dynamics 재현. iter=0 (initial: α̃ = α) → iter=500 (final: JSD 최대 + TVD constraint 만족).
+```
+
+---
+
 ## 14.9 자기점검 (이 챕터)
 
 ### 핵심 3 가지
@@ -351,15 +358,6 @@ Average encoder (control):
 2. **Encoder 의 h 고정 = "alternative explanation 가능한가" 의 핵심 질문**. h 를 재계산하면 새로운 model 학습 — 본 paper 의 hypothesis 와 다른 질문. paper 의 hypothesis = "*같은* encoder, *다른* attention 으로 *같은* prediction 가능한가?" → encoder 의 h 가 그대로여야 의미. 만약 h 도 변화한다면 "*다른* model 이 *다른* prediction" 의 trivial case.
 
 3. **Maximize JSD** = adversarial 의 목표. PyTorch optimizer 는 *minimize* 기본 → `-jsd` 로 변환. **Penalty** = TVD constraint enforcement. TVD < eps 만족 시 penalty = 0 (no effect). TVD > eps 시 large penalty (100×) 로 optimization 강하게 밀어냄. Soft Lagrangian — explicit constrained optimization 대안 (cvxpy 등) 보다 단순 + GPU friendly.
-
----
-
----
-
-## 14.X 인터랙티브 — Code 실행 결과 시각화
-
-```viz:anie-adversarial-search:title=Adversarial Search Trajectory — Code 14.5 의 실행,caption=Iter 슬라이더 (0 → 500). PyTorch optimizer (Adam, lr=0.1) 의 step 별 JSD/TVD 변화. 본 챕터의 `adversarial_attention` 함수의 정확한 dynamics 재현. iter=0 (initial: α̃ = α) → iter=500 (final: JSD 최대 + TVD constraint 만족).
-```
 
 ---
 

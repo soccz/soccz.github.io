@@ -1,5 +1,7 @@
 # 10-B Follow-up 논문 3편
 
+> **🧒 본 챕터는 "다음 읽을 5 paper"**: 본 paper 의 *upstream* (Bahdanau, Lipton) + *parallel* (Serrano-Smith, Wiegreffe-Pinter) + *downstream* (Wilinski 2025 TSFM) 의 *5 paper* 의 *간단 요약 + 본 paper 와의 관계 + 내 manuscript 인용 위치*. 본 deep dive 의 *다음 deep dive 후보*.
+
 ## (선행) Bahdanau et al. 2015 — *Neural Machine Translation by Jointly Learning to Align and Translate*
 
 **어떤 논문**: Attention mechanism 을 NLP 에 *최초로* 도입한 ICLR 2015 논문. Encoder-decoder seq2seq 모델 (RNN) 에서 source 문장의 각 position 에 대한 가중치를 *학습 가능한 alignment* 로 정의. *Bahdanau attention* 의 *additive (tanh)* scoring 함수가 본 논문의 testbed.

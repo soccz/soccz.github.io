@@ -270,6 +270,16 @@ ACDC (2023), Sparse Feature Circuits (2024) 의 protocol = ANIE 의 *interventio
 
 ---
 
+## 13.X 인터랙티브 — Insight 종합 시각화
+
+```viz:anie-datasets-summary:title=Insight #3 시각화 — 12 datasets × 5 metrics grid,caption=Metric 셀렉터로 5 metric 전환. Insight #3 ("Grid 의 power") 의 단일 view. 12 dataset 의 일관된 패턴 — 단일 case 의 우연이 아닌 *구조적 현상*. 모든 metric 에서 BiLSTM 의 attention 이 일관적으로 *fail*, Average 는 일관적으로 *success* (encoder mixing 의 핵심).
+```
+
+```viz:anie-encoder-comparison:title=Insight #4-5 시각화 — Encoder Mixing Continuum,caption=Highlight 셀렉터. Insight #4 ("BiLSTM contextualization 이 attention 파괴") + Insight #5 ("Average encoder = causal isolation = attention 작동 조건") 의 정량 시각. BiLSTM (high mixing) → CNN (mid) → Average (none) 의 단조 증가 패턴 — encoder mixing strength 의 continuum 가설 확정.
+```
+
+---
+
 ## 13.16 자기점검 (이 챕터)
 
 ### 핵심 3 가지
@@ -285,18 +295,6 @@ ACDC (2023), Sparse Feature Circuits (2024) 의 protocol = ANIE 의 *interventio
 2. **Transformer 에서는 *더 심함*** (Brunner et al. 2019). Multi-head 의 redundancy + multi-layer 의 residual mixing → 단일 attention head 의 weight 가 explanation 더 어려움. ACDC (2023) 의 "circuit-level attention" 으로 multi-component grouping 후에야 explanation 가능. 또 "attention head 마다 다른 function (Voita et al. 2019, Clark et al. 2019)" → 평균화 의미 X.
 
 3. **"Attention 은 *strongly faithful* 은 아니다 ($\to$ paper 인정), 그러나 *plausible* 은 가능 (Wiegreffe-Pinter 인정)"**. 두 paper 모두 강한 주장 (전혀 explanation X 또는 완전 explanation O) 보다 *neutral middle ground* 합의: attention 은 *limited, contextual* explanation. 이 distinction 이 후속 학계 (ERASER 2020 의 plausibility metrics, Sparse rationalization 의 strict faithful) 의 분기점.
-
----
-
----
-
-## 13.X 인터랙티브 — Insight 종합 시각화
-
-```viz:anie-datasets-summary:title=Insight #3 시각화 — 12 datasets × 5 metrics grid,caption=Metric 셀렉터로 5 metric 전환. Insight #3 ("Grid 의 power") 의 단일 view. 12 dataset 의 일관된 패턴 — 단일 case 의 우연이 아닌 *구조적 현상*. 모든 metric 에서 BiLSTM 의 attention 이 일관적으로 *fail*, Average 는 일관적으로 *success* (encoder mixing 의 핵심).
-```
-
-```viz:anie-encoder-comparison:title=Insight #4-5 시각화 — Encoder Mixing Continuum,caption=Highlight 셀렉터. Insight #4 ("BiLSTM contextualization 이 attention 파괴") + Insight #5 ("Average encoder = causal isolation = attention 작동 조건") 의 정량 시각. BiLSTM (high mixing) → CNN (mid) → Average (none) 의 단조 증가 패턴 — encoder mixing strength 의 continuum 가설 확정.
-```
 
 ---
 

@@ -1,5 +1,7 @@
 # 10-A 자문 질문 5개
 
+> **🧒 본 챕터는 "내가 던지는 5 질문"**: paper 의 *닫지 못한 영역* 을 *내 manuscript 가 답할 5 질문* 으로 명시. (Q1) Adversarial 의 학습 manifold? (Q2) Grokking transition 에서 faithfulness phase change? (Q3) Multi-head redundancy 의 system 효과? (Q4) PE choice 가 faithfulness 조절자? (Q5) TS domain 에서 attention 이 NLP 보다 faithful? *APF / Grokking manuscript 의 §6 Discussion* 의 *5 future work axis*.
+
 ## Q1. *Attention 분포의 학습 manifold* 를 직접 모델링할 수 있는가?
 
 Wiegreffe-Pinter 의 *반박* 의 핵심은 "adversarial attention 이 *학습 분포 밖* 의 점일 수 있다" 였다. 그러나 *학습 분포* 가 무엇인가는 명시적으로 정의되지 않은 채 남았다. 만약 우리가 *training trajectory* 의 모든 step 에서 attention 분포를 수집하고 그 *manifold* 를 (예: VAE, normalizing flow) 추정할 수 있다면, *adversarial 분포가 manifold 안인지 밖인지* 의 *수치적* 판정이 가능. 이는 본 논문의 결과를 *manifold-aware* version 으로 *refine* 한다.

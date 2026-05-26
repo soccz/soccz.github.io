@@ -1,5 +1,7 @@
 # 11 한 줄 판결
 
+> **🧒 본 챕터는 "최종 결론"**: 23 챕터의 *모든 분석* 의 한 줄 정리 + 4 가지 유산 + 5 가지 reviewer expectations + 본 deep dive 의 *manuscript position table*. paper 의 *결과* (BiLSTM 시대-specific) 가 아닌 *protocol* (H1/H2 + grid) 이 후속 7년 영향력의 *진짜 source* — 이를 *APF / Grokking 트랙의 발판* 으로 사용.
+
 > **APF (Attention Pattern Fields) 의 출발선에 박혀 있는 논문 — "attention weight 가 설명을 제공한다" 라는 7년치 관행을 두 가지 적대적 검증 (gradient 상관 H1 + counterfactual 동치 H2) 으로 명시 반박하여, 우리가 *motif causality 실험으로 반드시 넘어서야 할* benchmark 가 된다.**
 
 ## 보충 (2~3줄)
@@ -85,3 +87,21 @@ Causal inference 분야의 *do-operator* 정신을 NLP attention 에 *처음 pro
 
 ```viz:anie-datasets-summary:title=Final Visual — 12 Datasets Grid,caption=Metric 셀렉터. 본 논문의 핵심 결과를 단일 view 에 압축. τ_g (BiLSTM) — 일관 낮음. τ_g (Average) — 일관 높음. ★ encoder mixing 의 효과 grid 전체 일관성. paper Table 2 의 정량 핵심.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **"본 논문은 *반박 대상* 이 아닌 *발판*" 의 의미 — *실용* 적 차이?**
+2. **3 contribution 정밀화 (protocol / encoder mixing hypothesis / negative claim 정밀화) 중 *후속 7 년 영향력 가장 큰* 것?**
+3. **본 deep dive 가 reviewer 의 *5 expectations* 모두 cover — 다른 deep dive 와의 차이점?**
+
+### 답변
+
+1. **"반박 대상"** = paper 의 *결론을 뒤집기* 위한 작업. **"발판"** = paper 의 *protocol 을 사용* 하여 *새 contribution* 만들기 위한 작업. APF / Grokking 트랙은 *후자* — 본 paper 의 H1/H2 protocol *그대로* 채택 + *2D motif / PE conditioning / TS domain / circuit-level dynamics* 의 *4 새 axis* 추가. 실용적 차이: *각 챕터의 어조* — 비판적 (전자) vs 건설적 (후자). 본 deep dive 는 *건설적* 톤 일관.
+
+2. **#1 검증 protocol 도입**. *결과* (BiLSTM 에서 H1/H2 fail) 는 BiLSTM 시대-specific — Transformer 시대 직접 적용 X. *encoder mixing hypothesis* 는 *부분 해석* (paper 자체 인정). *negative claim 정밀화* 는 *Wiegreffe-Pinter combined* 의 결과. 그러나 **검증 protocol** (H1 correlation + H2 counterfactual + grid evaluation) 은 *universal* — ACDC, SFC, Mechanistic Interpretability 의 *모든 work* 의 *protocol baseline*. 결과적 영향력 최대.
+
+3. **18_self_critique 의 *명시적 한계 인정***. 다른 deep dive (lettau / virtue / TimeGrad) 는 paper 의 *내용* 만 다룸 — *deep dive 자체의 한계* 명시 X. 본 deep dive 만 *18_self_critique* 챕터로 (a) PDF line-by-line citation X, (b) repo source line 매칭 X, (c) citation real-time X, (d) 친화 톤 lettau-virtue 수준 X, (e) multi-head 변종 X, (f) Wilinski TS 정량 X 의 6 한계 명시. → reviewer 가 *anticipatable objection* 사전 대응. *self-aware academic work* 의 차별점.
