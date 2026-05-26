@@ -1,5 +1,8 @@
 # 05a. 방법론 — 전체 흐름의 큰 그림
 
+> **🧒 한 줄 요약**: 직관: *TS는 special language*. Quantile binning이 *tokenization*, T5가 *standard NLP model*.
+
+
 > **배경 사다리**: ① "토크나이제이션(tokenization)"이란 연속 또는 복잡한 데이터를 유한한 이산 기호들의 수열로 변환하는 작업이다. NLP에서는 단어 → 정수 ID. Chronos에서는 실수값 → 정수 bin ID. ② "인코더-디코더(encoder-decoder)"란 입력 시퀀스를 벡터로 압축하는 인코더, 그 벡터에서 출력 시퀀스를 생성하는 디코더로 구성된 아키텍처다.
 
 ---
@@ -61,3 +64,21 @@ Chronos는 T5 (Text-to-Text Transfer Transformer) 아키텍처를 그대로 쓴�
 Chronos가 새로운 것은 아이디어의 기발함이 아니라 **실행의 담대함**이다: NLP에서 이미 작동하는 모든 것을 시계열에 그대로 이식하고, 이 단순한 전략이 데이터 규모와 결합했을 때 파운데이션 모델 수준의 일반화가 가능함을 보인 것. 이어지는 섹션에서 각 단계를 해부한다.
 
 → 다음 파일: [05_method_b_tokenization.md](05_method_b_tokenization.md) — 스케일링과 양자화의 수학
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **"TS as language" paradigm의 의의?**
+2. **NLP knowledge transfer 가능성?**
+3. **Generic vs domain-specific trade-off?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

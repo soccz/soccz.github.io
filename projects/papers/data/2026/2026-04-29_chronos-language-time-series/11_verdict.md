@@ -1,5 +1,8 @@
 # 11. 한 줄 판결
 
+> **🧒 한 줄 요약**: 평가: practical: ★★★★★ (industry deployment), novelty: ★★★★ (tokenization+T5), impact: ★★★★★, reproducibility: ★★★ ($5K pretrain).
+
+
 > **판결**: Chronos는 "시계열을 언어로 치환하면 NLP 인프라 전체를 무료로 얻는다"는 발상의 실증 성공작이며, APF 시각에서는 "파운데이션 모델이 TS 토큰에서 형성하는 어텐션 패턴"이라는 미개척 해석 공간을 열어놓았고, Grokking 시각에서는 "이산 토큰 cross-entropy 학습이 만드는 지연 일반화" 가설의 자연 실험 대상이다.
 
 ---
@@ -11,3 +14,21 @@
 2. **APF/Grokking의 분석 대상**: 논문 자체는 어텐션 패턴을 전혀 분석하지 않는다. 이것은 공백이다. Chronos를 APF의 "파운데이션 모델 어텐션 패턴 분석" 확장 실험 대상으로 설정하면, APF의 기여를 소형 특화 모델을 넘어 파운데이션 모델 수준으로 확장할 수 있다.
 
 3. **금융 응용의 명확한 개선 방향**: 균등 bin의 꼬리 실패 → log-return 적응 bin으로의 수정이 ProTran-TFA의 기술 기여가 될 수 있다. Chronos-2가 다변량을 해결했다면, 금융 특화 토크나이제이션은 아직 열린 문제다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Industry deployment (AWS V2) 의 *commercial significance*?**
+2. **Tokenization+T5 combination novelty?**
+3. **$5K pretrain 의 reproducibility limit?**
+
+### 답변
+
+1. **AWS Forecast V2 = cloud forecasting commodity**. 중소기업 의 *foundation TS capability* 접근 enable. *Industry impact* = ★★★★★.
+
+2. **Quantile token + T5 backbone**. Each component 기존 — *synthesis 와 *empirical validation* 이 novelty. ★★★★.
+
+3. **$5K pretrain ($96 zero-shot)** — academic reproduce 어렵지만 *open-source weights* 가 *practical foundation*. ★★★.

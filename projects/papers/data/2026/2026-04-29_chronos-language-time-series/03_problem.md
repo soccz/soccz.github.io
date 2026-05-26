@@ -1,5 +1,8 @@
 # 03. 문제 지형도
 
+> **🧒 한 줄 요약**: Per-task fine-tuning의 *cost barrier*. 새 dataset마다 모델 재학습 → *generic capability* 필요.
+
+
 > **배경 사다리**: 이 섹션을 이해하려면 ① "사전학습(pretraining) — 대규모 데이터로 공통 표현을 먼저 배우는 단계"가 NLP에서 왜 혁신적이었는지, ② 시계열 예측이 왜 NLP와 다른 어려움을 갖는지 정도를 알면 충분하다. 아래에서 두 개념을 모두 풀어서 설명한다.
 
 ---
@@ -59,3 +62,21 @@ PromptCast, LLMTime 같은 연구가 GPT-3/4에 시계열 값을 텍스트 문�
 Chronos는 이 전제를 깬다: **"연속값을 억지로 보존할 필요 없다."** 값을 $B$개의 이산 범주로 매핑하면 cross-entropy 손실을 쓸 수 있고, T5·GPT2 같은 언어모델 아키텍처를 수정 없이 쓸 수 있으며, NLP의 거대 사전학습 인프라를 그대로 활용할 수 있다. 분포 예측은 소프트맥스 출력 자체에서 나온다 — 확률 분포를 출력하는 부가 헤드가 필요 없다.
 
 그리고 진짜 혁신은 아키텍처가 아니라 **스케일** 이다: 55개 공개 데이터셋에서 ~84B 토큰을, KernelSynth로 생성한 합성 데이터 100만 개를 얹어 학습한 최초의 대규모 TS 파운데이션 모델.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Per-task fine-tuning의 cost?**
+2. **Generic capability의 *practical need*?**
+3. **Foundation model paradigm for TS?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

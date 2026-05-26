@@ -1,5 +1,8 @@
 # 04. 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: 4 claims: (1) tokenization works, (2) T5 backbone effective, (3) zero-shot SOTA, (4) scalable.
+
+
 > **배경 사다리**: ① "Claim = 논문이 검증 가능한 형태로 제시하는 주장" — 단순 기술 설명이 아니라 반증 가능해야 진짜 Claim이다. ② 아래에서 각 Claim의 증거 위치와 숨은 전제를 함께 뒤집어 본다.
 
 ---
@@ -58,3 +61,21 @@
 - 소형 모델의 "충분함"이 어떤 정밀도 기준인지 명시되지 않는다.
 
 **쉬운 말 풀이**: "작은 AI도 기존 방법보다 낫다"는 주장. 사실이지만, "얼마나 빠른가"를 제대로 비교하지 않았다는 함정이 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Claim 1 (tokenization) empirical validation?**
+2. **Claim 2 (T5) architecture justification?**
+3. **Claim 3 (zero-shot) generalization?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

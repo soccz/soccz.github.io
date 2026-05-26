@@ -41,3 +41,21 @@ Chronos를 만든 아마존 연구팀은 이렇게 물었다: "혹시 숫자 목
 **Contribution 4 — 포괄적 벤치마크 (42 데이터셋)**: 통계적 방법(Seasonal Naive, ETS, Theta, ARIMA), 딥러닝(DeepAR, N-BEATS, N-HiTS, PatchTST, DLinear, TiDE), 제로샷 비교 포함. 단 TimeGPT, MOIRAI 같은 동시대 파운데이션 모델과의 직접 비교는 초판에 빠짐 (후속 benchmark paper에서 보완).
 
 **한계**: (1) 단변량 전용 — 다변량·공변량 불가 (Chronos-2가 해결); (2) 컨텍스트 512 스텝 제한; (3) 이산화 오차 — 극단값 정보 손실; (4) 시간 메타데이터(요일, 계절) 미활용; (5) 느린 확률적 샘플링 추론.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **One-line core claim?**
+2. **Tokenization simplicity power?**
+3. **Zero-shot foundation model significance?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

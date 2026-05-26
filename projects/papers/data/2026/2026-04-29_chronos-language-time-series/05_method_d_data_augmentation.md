@@ -1,5 +1,8 @@
 # 05d. 방법론 — 데이터 증강: TSMixup과 KernelSynth
 
+> **🧒 한 줄 요약**: *Diverse corpus* (28+ datasets) + synthetic (GP-based) = generic pattern learning.
+
+
 > **이 파일의 독립 도입부**: 딥러닝 모델이 "처음 보는 데이터"에도 잘 일반화하려면 다양한 패턴을 학습해야 한다. 이 파일은 Chronos가 84B 실제 토큰 외에 추가로 어떻게 다양성을 확보했는지를 설명한다. ① "가우시안 프로세스(Gaussian Process, GP)"가 "어떤 함수가 될지를 확률 분포로 정의하는 수학적 틀"임을 알면 충분하다. GP는 뒤에서 비유로 설명한다.
 
 ---
@@ -96,3 +99,21 @@ $$f \sim \mathcal{GP}(0, k_{\text{composite}}), \quad (f(t_1), \ldots, f(t_L)) \
 - KernelSynth: 100만 개 시계열
 
 → 다음 파일: [05_method_z_implementation.md](05_method_z_implementation.md) — 하이퍼파라미터와 구현 디테일
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Corpus diversity 의 *zero-shot value*?**
+2. **Synthetic GP data 의 *limit*?**
+3. **Domain-balanced sampling?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

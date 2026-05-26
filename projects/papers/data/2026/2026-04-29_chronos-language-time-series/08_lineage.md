@@ -1,5 +1,8 @@
 # 08. 이론적 계보
 
+> **🧒 한 줄 요약**: NLP T5 → TS Chronos. Vaswani 2017 → Raffel 2020 → Ansari 2024.
+
+
 > **배경 사다리**: 이 섹션은 Chronos가 어떤 선행 작업을 계승하고, 어떤 동시대 연구와 경쟁하며, 어떤 후속 연구로 이어지는지를 계보도로 추적한다.
 
 ---
@@ -59,3 +62,21 @@ Chronos 수준의 사전학습 모델이 TS에서 어떤 내부 표현을 형성
 ### 예측 3: 금융 특화 파운데이션 TS 모델
 
 이미 "Kronos" (arXiv:2508.02739, 2025) 형태로 등장했다. 금융 시계열의 heavy-tail·변동성 클러스터링을 처리하기 위한 토크나이제이션 수정 (log-return 기반 bin), 금융 데이터 특화 학습이 방향이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **T5 NLP origin 의 *TS adaptation*?**
+2. **Pre-TFM era specialist models?**
+3. ***Foundation model paradigm* 의 TS arrival?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

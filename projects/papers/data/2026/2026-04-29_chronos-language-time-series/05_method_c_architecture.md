@@ -1,5 +1,8 @@
 # 05c. 방법론 — T5 아키텍처와 학습
 
+> **🧒 한 줄 요약**: T5 encoder-decoder. Encoder = context, Decoder = autoregressive future generation.
+
+
 > **이 파일의 독립 도입부**: 앞 파일에서 토큰이 어떻게 만들어지는지 봤다. 이 파일은 그 토큰 시퀀스가 T5 신경망을 어떻게 통과하는지, 어떻게 학습되는지, 5가지 크기 변형이 어떻게 다른지를 다룬다. ① "자기 주의(self-attention)"가 "시퀀스 안의 모든 위치 쌍 사이의 관련성을 계산하는 것"임을 알면 충분하다.
 
 ---
@@ -76,3 +79,25 @@ $$\mathcal{L} = -\sum_{h=1}^{H} \log P(c_{T+h} \mid c_1, \ldots, c_{T+h-1})$$
 $N = 20$번 디코더 전체 패스가 필요하므로, 단일 예측(결정론적) 모델보다 추론 비용이 $N$배다. 이것이 실제 응용에서 가장 큰 병목이다.
 
 → 다음 파일: [05_method_d_data_augmentation.md](05_method_d_data_augmentation.md) — TSMixup과 KernelSynth
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **T5 encoder-decoder 의 *natural fit*?**
+2. **Causal vs bi-directional attention?**
+3. **Cross-attention 의 *forecasting role*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:chronos-forecast:title=paper §4 — Probabilistic Forecast,caption=Sample count slider.
+```

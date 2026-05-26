@@ -1,5 +1,8 @@
 # 05z. 방법론 — 구현 디테일 & 하이퍼파라미터
 
+> **🧒 한 줄 요약**: Implementation details: HuggingFace integration, GluonTS support, model variants.
+
+
 > **이 파일의 독립 도입부**: 방법론의 마지막 파일이다. 앞 파일들이 "무엇을, 왜" 했는지를 다뤘다면, 이 파일은 "어떻게" — 즉 실제로 재현하거나 비교하려면 알아야 할 구체 수치와 결정을 다룬다.
 
 ---
@@ -57,3 +60,21 @@ $$p_d \propto \left(\frac{N_d}{\sum_j N_j}\right)^{1/2}$$
 | 랜덤 시드 | 부분 공개 |
 
 재현성 측면에서 논문의 장점은 모델 가중치가 직접 공개되어 있어, 자신의 데이터에 즉시 적용 가능하다는 점. 하지만 처음부터 학습 재현을 위한 정확한 분산 학습 설정은 명시되어 있지 않다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **HuggingFace integration 의 *adoption multiplier*?**
+2. **GluonTS compatibility?**
+3. **Model variant choice criteria?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

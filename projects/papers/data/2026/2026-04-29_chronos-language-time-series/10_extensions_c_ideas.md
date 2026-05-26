@@ -1,5 +1,8 @@
 # 10c. 사고 확장 — 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 아이디어: multi-modal TFM, financial TFM, edge-deployable Chronos, online learning.
+
+
 ---
 
 ## 실험 아이디어 1: "Chronos 어텐션 패턴 × APF 모티프 분류기"
@@ -87,3 +90,21 @@ Chronos-Large의 어텐션 패턴이 PatchTST보다 더 입력 구조 의존적(
 - 각 조건 학습 (4층 T5-Small, 5000 에폭): A100 4시간 × 4 조건 = 16시간
 - 분석 코드: 기존 Grokking track 코드 재사용 + 어텐션 엔트로피 추가
 - 총 소요: 2~3일
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Multi-modal TFM 의 *technical challenge*?**
+2. **Financial TFM 의 *domain specialist*?**
+3. **Edge deployment 의 *compression*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

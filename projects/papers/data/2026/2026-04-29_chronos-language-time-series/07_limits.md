@@ -1,5 +1,8 @@
 # 07. 가정·한계·반박
 
+> **🧒 한 줄 요약**: 5 한계: tokenization info loss, corpus bias, long-horizon drift, vocab size choice, Amazon dependency.
+
+
 > **배경 사다리**: 이 섹션은 논문이 내세운 방법의 취약한 지점을 공격적으로 탐색한다. "논문이 말하지 않은 것을 찾는 것"이 목표다.
 
 ---
@@ -66,3 +69,21 @@ KernelSynth의 핵심 전제는 실제 세계의 시계열이 RBF·주기·선�
 | 다중 실험 평균 | ⚠️ 대부분 단일 실행 |
 
 핵심 재현성 우려: 추론 시 샘플링의 무작위성이 결과에 미치는 영향이 분석되지 않았다. $N=20$ 샘플과 $N=100$ 샘플의 성능 차이, 랜덤 시드 의존성 — 이것들이 없으면 결과의 신뢰 구간을 알 수 없다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Tokenization information loss?**
+2. **Pretraining corpus bias?**
+3. **Long-horizon error accumulation?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

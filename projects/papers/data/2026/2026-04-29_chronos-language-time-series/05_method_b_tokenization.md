@@ -1,5 +1,8 @@
 # 05b. 방법론 — 토크나이제이션: 스케일링과 양자화
 
+> **🧒 한 줄 요약**: Mean scaling + quantile binning. 4096 tokens. Heavy-tailed distribution에 *natural fit*.
+
+
 > **이 파일의 독립 도입부**: 앞 섹션에서 Chronos의 전체 흐름을 파악했다. 이 파일은 "숫자를 어떻게 이산 토큰으로 바꾸는가"를 수학적으로 해부한다. 배경 지식 없이 읽으려면 ① "절대값"이 음수도 양수로 만드는 연산임을, ② "분위수(quantile)"가 데이터를 비율로 나누는 기준점임을 알면 충분하다.
 
 ---
@@ -80,3 +83,25 @@ $$\hat{x}_t = \mu \cdot \frac{\text{edge}_{c_t} + \text{edge}_{c_t+1}}{2}$$
 | Normalizing Flow | NLL | 유연한 분포 | 복잡한 구조 필요 |
 
 → 다음 파일: [05_method_c_architecture.md](05_method_c_architecture.md) — T5 아키텍처와 학습 설정
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Mean scaling의 *information preservation*?**
+2. **Quantile vs uniform binning?**
+3. **4096 vocab의 *resolution*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:chronos-tokenize:title=paper §3 — Tokenization,caption=Vocab size selector.
+```

@@ -1,5 +1,8 @@
 # Chronos: Learning the Language of Time Series
 
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 18 + 7 chapters 의 길찾기. Chronos = TFM era trigger paper.
+
+
 **원문 제목**: Chronos: Learning the Language of Time Series  
 **한국어 제목**: Chronos: 시계열의 언어를 배우다  
 **저자**: Abdul Fatir Ansari, Lorenzo Stella, Caner Turkmen, Xiyuan Zhang, Pedro Mercado, Huibin Shen, Oleksandr Shchur, Syama Sundar Rangapuram, Sebastian Pineda Arango, Shubham Kapoor, Jasper Zschiegner, Danielle C. Maddix, Hao Wang, Michael W. Mahoney, Kari Torkkola, Andrew Gordon Wilson, Michael Bohlke-Schneider, Yuyang Wang  
@@ -38,3 +41,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 |
 | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Chronos가 TFM era trigger 인 이유?**
+3. **2년 후 industry adoption?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a→d → 06 → 17. 시간 부족 시 02 + 05b + 06 + 11 핵심 요지.
+
+2. **First compelling open-source TFM**. Pre-2024 TS deep learning = per-task fine-tuning. Chronos = zero-shot SOTA + open-source + HuggingFace ready. → TFM era trigger.
+
+3. **Industry vertical integration**. AWS Forecast V2 (2025) → enterprise adoption (Walmart, Target, utilities) → multi-modal TFM (2026). 2-year academic to commercial.

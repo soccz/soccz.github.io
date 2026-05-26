@@ -1,5 +1,8 @@
 # 10b. 사고 확장 — Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: Chronos-Bolt (efficiency), MOIRAI (variate), TimesFM (decoder-only), Time-LLM (LLM-based).
+
+
 ---
 
 ## Follow-up 1 (선행) — "Probabilistic Transformer for Time Series Analysis" (NeurIPS 2021)
@@ -29,3 +32,21 @@
 **본 논문(Chronos)과의 관계**: 동일 저자군(Amazon)의 직접 확장. Chronos의 핵심 설계(mean-scaling, bin quantization, T5)를 유지하면서 그룹 어텐션만 추가.
 
 **무엇을 얻을 수 있는가**: (1) 그룹 어텐션이 어떤 어텐션 패턴을 형성하는지 — APF에서 "관련 시계열 간의 Cross-Series Attention 패턴"이라는 새로운 분석 차원이 열린다. (2) 다변량 TS를 처리하는 Transformer의 채널 간 어텐션 패턴 — iTransformer가 "역전된 채널 어텐션"을 사용하는 것과 비교 가능. (3) Grokking track에서: 단변량 → 다변량 전환 학습 시 훈련 동학 변화가 있는가?
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Chronos-Bolt 의 *efficiency gain*?**
+2. **MOIRAI 의 *variate-aware* unique angle?**
+3. **Time-LLM 의 *LLM transfer*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

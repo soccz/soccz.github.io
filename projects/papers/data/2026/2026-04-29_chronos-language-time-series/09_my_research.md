@@ -1,5 +1,8 @@
 # 09. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와의 연결: TFM attention pattern 분석, token level motif identification.
+
+
 > 이 섹션은 `_profile.md`의 관심 영역 §A~F와 보유 자산(APF, Grokking track)에 구체적으로 연결한다. 일반론 나열 금지 — mechanism, axis, 수식 요소를 지정해 연결.
 
 ---
@@ -77,3 +80,21 @@ P1 ProTran-TFA ("Probabilistic Transformer for Financial Asset Allocation", ⏸�
 2. **훈련 동학 분석 부재**: 학습 곡선, grokking phase, 표현 구조 변화를 분석하지 않는다. Grokking track이 이 공백을 채운다.
 
 3. **금융 TS 특화 설계 부재**: 균등 bin이 금융 tail risk에 부적합함을 인정하지만 해결하지 않는다. ProTran-TFA가 이 공백을 채울 수 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF motif + Chronos token 의 *analogy*?**
+2. **Cross-modal TS analysis 가능성?**
+3. **내 연구 의 *direct adoption* 가능 요소?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

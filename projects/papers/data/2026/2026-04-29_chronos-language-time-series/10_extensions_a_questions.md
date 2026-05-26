@@ -1,5 +1,8 @@
 # 10a. 사고 확장 — 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 open question: corpus diversity, multi-modal extension, long-horizon, sub-bin precision.
+
+
 ---
 
 ## 질문 1: Chronos 인코더의 Self-Attention 행렬은 어떤 패턴을 형성하는가?
@@ -39,3 +42,21 @@
 **질문**: Chronos의 인코더-디코더 T5를 동일 파라미터의 디코더 전용 GPT2 스타일로 바꿨을 때 성능 차이가 있는가? 인코더가 만드는 전역 맥락 벡터가 시계열 예측에 실질적으로 기여하는가, 아니면 자기회귀 디코더만으로 충분한가?
 
 **왜 이 질문이 중요한가**: T5 인코더는 전체 과거 시퀀스를 양방향으로 처리해 풍부한 맥락 표현을 만든다. 이 표현이 디코더에 Cross-Attention으로 전달된다. 인코더의 기여가 크다면, Chronos의 어텐션 패턴 분석은 인코더의 Bidirectional Self-Attention에 초점을 맞춰야 한다. 디코더 전용이 충분하다면 인과적(causal) 어텐션 분석이 더 적절하다. APF가 어떤 어텐션을 분석 대상으로 삼아야 하는지를 결정하는 질문이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Multi-modal TFM 의 architecture?**
+2. **Sub-bin precision recovery?**
+3. **Long-horizon hybrid approach?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

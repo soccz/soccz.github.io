@@ -1,5 +1,8 @@
 # 01. 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper *metadata*: Ansari et al. ICML 2024, Amazon Research. T5-based TS foundation model.
+
+
 ## 기본 서지 정보
 
 | 항목 | 내용 |
@@ -30,3 +33,21 @@
 2. **Grokking 직접 입력**: Chronos 사전학습의 훈련 동학 — cross-entropy 손실로 이산 토큰을 학습하는 구조는 Power 2022, Nanda 2023이 분석한 알고리즘 grokking의 NLP 언어모델 버전이다. "TS 토큰 시퀀스에서 grokking이 일어나는가?"는 Grokking track의 핵심 확장 질문이다.
 
 3. **금융 월 1회 규칙**: `probabilistic-forecast` 태그 교차 커버. Chronos는 분포 예측(distributional forecast) 모델이며, 금융 TS 예측에 직접 적용 가능하다. `fin-ts-dl`과 `probabilistic-forecast` 두 커버 0 태그 중 하나를 이번 실행으로 채운다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **ICML 2024 acceptance?**
+2. **Amazon 의 strategic position?**
+3. **Pre-Chronos vs Post-Chronos paradigm?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

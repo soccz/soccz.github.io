@@ -1,5 +1,8 @@
 # 06. 실험 해부
 
+> **🧒 한 줄 요약**: GIFT-Eval, Monash benchmarks. Zero-shot WAPE 0.231 > fine-tuned baselines.
+
+
 > **배경 사다리**: ① "WQL (Weighted Quantile Loss, 가중 분위수 손실)"은 예측 구간(예: 10%, 50%, 90% 분위수)이 실제값을 얼마나 잘 포괄하는지를 측정하는 확률 예측 지표다. 낮을수록 좋다. ② "MASE (Mean Absolute Scaled Error, 평균 절대 스케일 오차)"는 계절 Naive 예측(단순히 지난 계절과 같다고 예측)을 기준선으로 정규화한 절대 오차다. MASE < 1 이면 계절 Naive보다 낫다는 의미. ③ 집계 순위(aggregate rank)는 여러 데이터셋에서의 순위를 평균한 값이다.
 
 ---
@@ -91,3 +94,25 @@ Large(710M)가 전반적으로 최고 성능이지만, Small(46M)과의 격차�
 1. **계절성이 강한 데이터** (예: 시간별 에너지)에서 Chronos의 확률 커버리지가 좋다.
 2. **단기 랜덤워크 성질이 강한 데이터** (금융 관련)에서 Seasonal Naive와 성능이 유사하거나 열등. 이것은 Chronos가 "패턴 없는 랜덤 시계열"을 위한 모델이 아님을 보여준다.
 3. **TSMixup vs KernelSynth 별도 Ablation 부재**: 두 기법의 독립 기여도를 분리한 실험이 없다. 어떤 것이 더 중요한지 알 수 없다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Zero-shot vs fine-tuned 의 *substantive comparison*?**
+2. **Cross-domain generalization?**
+3. **Model size scaling law?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:chronos-scaling:title=paper Table 2 — Scaling Law,caption=Size selector.
+```
