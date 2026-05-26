@@ -1,5 +1,7 @@
 # 04 핵심 Claim 해체
 
+> **🧒 paper 의 4 개 주장 한 줄 요약**: (C1) "attention 이 가리키는 단어 ≠ 진짜 중요한 단어" (상관 약함). (C2) "어텐션 위치 무작위로 섞어도 같은 답" (permutation OK). (C3) "어텐션 *일부러* 바꿔도 같은 답 가능" (adversarial 성공). (C4) "encoder 가 정보 *섞을수록* 1-3 더 심함" (BiLSTM 가장 나쁨, Average 괜찮음). 본 챕터는 각 claim 의 *증거* + *숨은 가정* + *쉬운 말 풀이*.
+
 > **배경 사다리**: 이 절은 ① "**feature importance**" 가 입력 token 하나하나가 예측에 미치는 영향의 측정량 (gradient $|\partial \hat{y}/\partial x_i|$ 또는 leave-one-out $\Delta\hat{y}|_{x_i \to 0}$) 이라는 것, ② "**Kendall τ**" 가 두 순위 매김 사이의 순서 일관성 척도 (-1 ~ +1) 라는 것, ③ "**JS divergence**" 가 두 확률 분포 사이의 대칭 거리 ($0$ = 동일, $\log 2$ = 완전 분리) 라는 것 — 이 3 개를 알면 본 절 의 모든 claim 이 이해된다.
 
 ## Claim 1 — 어텐션과 feature importance 의 *일관성* 은 약하다 (H1 실패)

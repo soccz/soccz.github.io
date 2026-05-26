@@ -1,5 +1,7 @@
 # 08 이론적 계보
 
+> **🧒 본 챕터는 "가계도"**: 본 paper 가 *어디에서* 왔고 *어디로* 갔는가의 *11 paper 매핑*. 4 ancestors (Bahdanau / Sundararajan / Brunner / Adebayo) + 4 parallels (Wiegreffe-Pinter / Serrano-Smith / Vashishth / Pruthi) + 3 descendants (ERASER / Abnar-Zuidema / Mechanistic Interp). 본 paper 의 *학문적 위치 좌표*.
+
 ## 이론적 조상 — 4 편
 
 ### (A1) Bahdanau et al. 2015 — Neural Machine Translation by Jointly Learning to Align and Translate

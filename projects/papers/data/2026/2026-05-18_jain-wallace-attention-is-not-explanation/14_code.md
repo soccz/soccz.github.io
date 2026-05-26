@@ -7,10 +7,10 @@ paper 의 official code 는 `github.com/successar/AttentionExplanation` (GPL-3.0
 **Caveat**: paper 의 정확한 hyperparameter (LSTM hidden 128, dropout 0.1, learning rate 1e-3) 는 official repo 의 config 파일 참조. 본 코드는 protocol 의 *구조* 재현 — paper Algorithm 1 (Feature Importance Computations) + Algorithm 2 (Permuting attention weights) + §4.2.2 (Adversarial) 와 1:1 매칭. Exact reproduction 은 official repo 사용 권장.
 
 **검증된 mapping** (paper ↔ 본 코드):
-- `compute_gradients()` ↔ Algorithm 1, lines 1-4 (`g_t ← |Σ_w 1[x_tw=1] · ∂ŷ/∂x_tw|`)
-- `compute_loo()` ↔ Algorithm 1, lines 5-6 (`∆ŷ_t ← TVD(ŷ(x_-t), ŷ(x))`)
-- `permutation_test()` ↔ Algorithm 2 (`α^p ← Permute(α̂)`, `∆ŷ^med ← Median_p`)
-- `adversarial_attention()` ↔ §4.2.2 (`max JSD s.t. TVD ≤ ε`, ε=0.10/0.05)
+- `compute_gradients()` ↔ Algorithm 1, lines 1-3 (`h ← Enc(x)` / `α̂ ← softmax(φ(h,Q))` / `g_t ← |Σ_w 1[x_tw=1] · ∂ŷ/∂x_tw|`)
+- `compute_loo()` ↔ Algorithm 1, line 5 (`∆ŷ_t ← TVD(ŷ(x_-t), ŷ(x))`)
+- `permutation_test()` ↔ Algorithm 2 전체 7 lines (`α^p ← Permute(α̂)`, 100 iterations, `∆ŷ^med ← Median_p`)
+- `adversarial_attention()` ↔ §4.2.2 (`max JSD s.t. TVD ≤ ε`, ε=0.10 classification / 0.05 QA, soft Lagrangian λ=100)
 
 ---
 

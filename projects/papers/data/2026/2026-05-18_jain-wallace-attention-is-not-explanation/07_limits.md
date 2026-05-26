@@ -1,5 +1,7 @@
 # 07 가정·한계·반박
 
+> **🧒 본 챕터는 "공정한 비판"**: paper 의 결론은 *결정적* 이지만 *완벽* 한 것은 아님. 본 챕터는 paper 가 (a) *명시한* 가정 3 + (b) *암묵* 한 가정 4 + (c) *반박 가능* 한 4 지점 + (d) 재현성 평가 6 의 *모든 약점* 의 의식적 명시. Reviewer 가 *언제든 던질 수 있는 objection* 의 사전 청사진.
+
 ## 명시된 가정 (논문이 대놓고 말한 것)
 
 1. **단일 attention layer**: 본 논문은 BiLSTM/CNN/avg encoder 위 *하나의* attention layer 만 분석. Multi-layer/multi-head Transformer attention 으로의 일반화는 *명시적으로* 본 논문 범위 밖. (이는 약점이 아닌 *scope* 의 honest 표시.)

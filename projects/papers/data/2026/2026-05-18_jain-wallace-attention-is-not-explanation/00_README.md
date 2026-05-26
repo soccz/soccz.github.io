@@ -57,6 +57,8 @@
 14. [14_code.md](14_code.md) — PyTorch 재현 코드 (H1, H2-a, H2-b)
 15. [15_diagrams.md](15_diagrams.md) — ASCII 도식 + viz 카탈로그
 16. [16_appendix.md](16_appendix.md) — paper Table 2 정확 수치 · 비교 결과 · reproduction
+17. [17_aftermath.md](17_aftermath.md) — 7년 Aftermath (2019-2026) · 4 paradigm shifts
+18. [18_self_critique.md](18_self_critique.md) — 본 deep dive 의 자기비판 + 추가 작업 명시
 
 ## 인터랙티브 시각화 (7 viz JS, 22 viz blocks)
 

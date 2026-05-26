@@ -55,5 +55,5 @@
 ```viz:anie-attention-heatmap:title=paper Figure 1 — Original vs Adversarial Attention,caption=Example 셀렉터로 paper 의 movie review / medical note / news 예시. 왼쪽 = original attention (직관적 — "waste" 강조), 오른쪽 = adversarial attention (무관 — "was" 강조). 두 prediction 이 *같다* — ★ paper 의 가장 압축된 visual evidence.
 ```
 
-```viz:anie-correlation-hist:title=Kendall τ Histogram — BiLSTM vs Average Encoder,caption=Dataset 셀렉터 + Metric 토글 (τ_g, τ_loo). BiLSTM (red, contextualized) 분포는 τ ~ 0.3 centered. Average (blue, token-isolated) 분포는 τ ~ 0.7 centered. → encoder mixing 의 단일 변경 → attention 의 explanation 능력 일관 회복. paper Figure 2 의 핵심 패턴.
+```viz:anie-correlation-hist:title=Kendall τ Histogram — BiLSTM vs Average Encoder,caption=Dataset 셀렉터 + Metric 토글 (τ_g, τ_loo). BiLSTM (red, contextualized) 분포는 τ ~ 0.32 centered (paper Table 2 평균). Average (blue, token-isolated) 분포는 τ ~ 0.69 centered. → encoder mixing 의 단일 변경 → attention 의 explanation 능력 일관 회복. paper Figure 2 의 핵심 패턴.
 ```

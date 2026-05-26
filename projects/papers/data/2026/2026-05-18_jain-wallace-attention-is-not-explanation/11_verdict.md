@@ -36,6 +36,46 @@
 
 다음 본 deep dive 의 우선 작업: APF 의 **motif-level H1+H2** + **PE × τ 격자 학습 dynamics** 를 본 protocol 위에 *2 dimension 추가* 하는 manuscript.
 
+## 본 paper 의 *4 가지 유산* (legacy)
+
+### 유산 1: "Empirical critique" 의 학계 행동 변화 power
+
+Lipton 2016 ("mythos of interpretability") 가 *conceptual critique* 만 했을 때 학계 행동 변화 미미. **본 paper 의 *empirical evidence* (12 dataset × 3 encoder × 2 attention 의 grid)** 가 학계의 *방어 동력* 을 만듦.
+
+→ Future paper 의 *negative claim* 도 *empirical formal evidence* 가 동반되어야 reception 가능 — 본 paper 가 만든 새 표준.
+
+### 유산 2: "Counterfactual attention" 의 protocol 화
+
+Causal inference 분야의 *do-operator* 정신을 NLP attention 에 *처음 protocol* 화. 학습 모델의 *내부 component* 를 *외부에서 강제 교체* (intervention) 하는 표준화된 절차.
+
+→ ACDC, ROME, IOI, SFC 등 *2022-2024 mechanistic interpretability 의 모든 work* 의 *intervention pattern* 의 출발점.
+
+### 유산 3: "Encoder mixing strength" 의 mechanism hypothesis
+
+본 paper 의 *Average < CNN < BiLSTM* 의 mixing 강도 → faithfulness 감소 순서. *왜* 이 패턴이 발생하는가의 *명시 가설*: encoder 의 contextualization 이 attention 의 *location 정보* 를 *흡수*.
+
+→ Brunner 2019 의 *identifiability* 이론으로 *수학적 formalization*. 후속 *Transformer rollout* (Abnar-Zuidema 2020) 도 같은 가설의 multi-layer 일반화.
+
+### 유산 4: "Plausibility vs Faithfulness" 의 분리 enforce
+
+본 paper 가 *faithfulness only* 의 강한 입장 → Wiegreffe-Pinter 의 *plausibility* 의 가치 옹호 → **ERASER 2020** 의 두 metric *공식 분리* + 후속 7년의 표준.
+
+→ Explanation 분야의 *taxonomy* 의 출발점. 단일 metric "interpretability" 시대 종료.
+
+---
+
+## Reviewer 가 본 deep dive 에서 *기대* 할 5 가지
+
+본 deep dive 가 *APF / Grokking manuscript 의 reference* 로 정확히 작동하려면:
+
+1. ✅ **Paper §-level cross-reference** — 모든 chapter 에 §4.1 / §4.2.1 / §4.2.2 / §6 등 정확 위치 인용.
+2. ✅ **Table 2 의 exact 수치** — 21 row × Mean/Std/Sig.Frac (16_appendix).
+3. ✅ **PyTorch reproduction** — H1 / H2-a / H2-b 의 modular code (14_code).
+4. ✅ **Wiegreffe-Pinter rebuttal 의 *combined conclusion* 명시** — "*faithful X, plausible O*" (07_limits + 17_aftermath).
+5. ✅ **APF 의 *3 새 axis* 의 본 paper 와 위치 관계** — motif level / PE conditioning / TS domain (09_my_research).
+
+본 deep dive 가 위 5 axis 모두 *명시적* 으로 다룸 — APF reviewer 의 *anticipatable objection* 대응 완료.
+
 ---
 
 ## 인터랙티브 — 본 논문의 최종 그림

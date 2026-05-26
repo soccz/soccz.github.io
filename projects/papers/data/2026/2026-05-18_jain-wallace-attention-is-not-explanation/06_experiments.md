@@ -1,5 +1,7 @@
 # 06 실험 해부
 
+> **🧒 본 챕터는 "실험 보고서"**: 12 dataset × 3 encoder × 2 attention 의 *grid 실험* 의 (a) 왜 *이 12 dataset* 인가, (b) 결과의 *5 핵심 figure* 가 무엇을 보여주는가, (c) ablation 의 *무엇 넣고 무엇 뺐는가*, (d) 부록 의 *숨은 신호* 의 6 분석. paper 의 정량 결과를 *큰 그림* 으로 정리.
+
 > **수치 출처**: paper Table 1 (12 dataset stats), Table 2 (Kendall τ correlations 의 BiLSTM/Average × τ_g/τ_loo, 21 row) — [16_appendix.md](16_appendix.md) §16.2-16.6 에 정확 수치 추출. Figure 1-7 의 정성적 패턴은 본 챕터 + 15_diagrams.md 의 viz block 에 재현.
 
 ## 데이터셋 — 산문 검토

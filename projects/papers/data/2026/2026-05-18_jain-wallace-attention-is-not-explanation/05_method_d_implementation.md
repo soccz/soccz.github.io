@@ -1,5 +1,7 @@
 # 05-D 방법론 — 구현 디테일
 
+> **🧒 본 챕터는 "엔지니어용 manual"**: H1/H2 시험을 *실제로* 코드로 돌리려면 어떤 hyperparameter / 어떤 모델 architecture / 어떤 platform 이 필요한가의 명세. paper Algorithm 1, 2 의 *수도-코드 위* 의 실제 PyTorch 구현 결정사항. 재현 시 12 dataset × 3 encoder × 2 attention = 72 configuration 의 *모든 setting*.
+
 > 본 절의 내용은 paper §2 (Preliminaries) + §3 (Datasets and Tasks) + §4 (Experiments) + 저자 공식 repo (`github.com/successar/AttentionExplanation`) 의 결합.
 
 ## 모델 아키텍처 격자

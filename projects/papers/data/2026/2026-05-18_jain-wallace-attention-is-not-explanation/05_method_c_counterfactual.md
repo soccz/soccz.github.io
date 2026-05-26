@@ -1,5 +1,7 @@
 # 05-C 방법론 — H2: Counterfactual attention (permutation + adversarial)
 
+> **🧒 H2 시험 한 줄 요약**: 두 단계 시험. **(B1) 순열**: attention 을 무작위로 *섞어* 다시 forward — 답 같은가? **(B2) 적대적**: gradient ascent 로 *최대한 다른* attention 을 *일부러 찾음* — 답 같은가? paper 결과: 대부분 instance 에서 *둘 다 답 거의 같음* — H2 *실패*. → "attention 이 답의 *유일한* 원인" 주장 무너짐.
+
 ## 이 부분이 왜 필요한가
 
 H1 은 *상관* 만 잰다. 그러나 상관이 약하더라도 — "attention 이 예측의 *원인* 이지만 *다른 측정과의 매핑은 비선형* 일 뿐" 이라고 변호 가능. *원인* 을 직접 검증하려면 *개입* 이 필요하다. Attention 을 *바꿨을 때* 예측이 *어떻게* 변하는가 — 이것이 H2.

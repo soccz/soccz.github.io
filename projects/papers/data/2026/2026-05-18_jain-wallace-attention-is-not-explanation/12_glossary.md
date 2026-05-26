@@ -40,7 +40,13 @@ $$\mathrm{TVD}(\hat{y}_1, \hat{y}_2) = \frac{1}{2} \sum_{i=1}^{|Y|} |\hat{y}_{1i
 **JSD — Jensen-Shannon Divergence**
 두 distribution 사이의 symmetric KL:
 $$\mathrm{JSD}(\alpha_1, \alpha_2) = \frac{1}{2}\mathrm{KL}(\alpha_1 \| M) + \frac{1}{2}\mathrm{KL}(\alpha_2 \| M)$$
-where $M = (\alpha_1 + \alpha_2)/2$. paper 가 attention distribution 변화 측정에 사용.
+where $M = (\alpha_1 + \alpha_2)/2$. paper 가 attention distribution 변화 측정에 사용. 값 ∈ $[0, \log 2]$.
+
+**ε (epsilon)**
+Adversarial search 의 TVD constraint 허용 한계. paper §4.2.2:
+- **ε = 0.10**: classification + NLI (이진/3-class output 분포의 max 10% 허용)
+- **ε = 0.05**: QA (multi-class entity prediction 의 더 엄격한 5%)
+JSD maximization 의 *prediction-preserving* 제약.
 
 **Faithful** (충실한)
 설명이 **모델 internal 작동** 과 일치. paper 의 핵심 검증 목표. Ross et al. 2017 의 정의 채택. Contrast with *plausible* (사람이 보기에 합리).
