@@ -1,5 +1,8 @@
 # 2026-04-20 · 월 · 코어 버킷 해체
 
+> **🧒 한 줄 요약**: 본 deep dive 의 *입구* — 12 + 7 chapters 의 길찾기. ContiFormer 가 *irregular TS 의 Transformer era* 를 연 이유.
+
+
 ## 대상 논문
 
 **ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling**
@@ -56,3 +59,21 @@ Chen, Ren, Wang, Fang, Sun, Li — NeurIPS 2023 (arXiv: 2402.10635)
 - `github.com/microsoft/physiopro` (소스 트리) → **성공**
 
 본 해체는 (a) 공식 구현 소스코드, (b) README에 명시된 하이퍼파라미터·데이터셋, (c) 공개된 NeurIPS 2023 프로시딩에 대한 선지식을 교차 검증해 작성. 수식 표기가 원문과 정확히 일치하지 않을 수 있으므로 인용 시 재확인 필요.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 의 권장 *읽는 순서*?**
+2. **ContiFormer 가 *paradigm shift* 인 이유?**
+3. **본 paper 의 *2년 후 clinical AI impact*?**
+
+### 답변
+
+1. **선형 path**: 02_tldr → 03_problem → 05_method → 06_experiments → 17_aftermath. *시간 부족* 시 02 + 05 + 11 의 *핵심 요지*.
+
+2. **Irregular TS 의 RNN → Transformer 전환**. 2018-2023 의 GRU-D/ODE-RNN 의 sequential 한계 → ContiFormer 의 parallel + long-range + continuous. Irregular TS field 의 trigger.
+
+3. **Clinical deployment trajectory**. 2024 academic SOTA → 2025 hospital pilots → 2026 EHR system integration (Epic, Cerner). 2년 만의 academic-to-production translation.

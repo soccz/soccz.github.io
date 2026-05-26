@@ -1,5 +1,8 @@
 # 4. 방법론 해부
 
+> **🧒 한 줄 요약**: InterpLinear Query + OdeLinear Key/Value + RK4 ODE solver + adjoint method. *Hybrid dynamical system* 의 deep learning instantiation.
+
+
 ## 4.1 전체 블록 다이어그램
 
 ```
@@ -120,3 +123,25 @@ $$
 $$
 
 이 한 식이 논문의 영혼이다. 단순 확장이지만, "Key·Value는 지금까지 이산 행렬이었다"는 통념을 **함수 공간**으로 올린 것이 본질적 전환. 이 전환을 **시간 $t$가 어떤 시계여야 하는지** 단계로 한 번 더 올리는 것이 Paper 4.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **InterpLinear vs OdeLinear 의 *asymmetric design*?**
+2. **Vector field f_θ 의 *activation choice* (tanh vs sigmoid)?**
+3. **ODE solver (RK4 vs Dopri5) 의 *practical impact*?**
+
+### 답변
+
+1. **Query 간단, Key/Value 복잡**. Query = `torchcde.LinearInterpolation` + `nn.Linear` (1-step). Key/Value = `torchdiffeq.odeint(f_θ)` + reset (multi-step). Asymmetry = *information geometry* + *identifiability* 의 *technical 결정*.
+
+2. **Task structure 의 implicit prior**. tanh = [-1,1] symmetric — TS 의 *both up/down dynamics* 적합. sigmoid = [0,1] non-negative — TPP 의 *event probability* 적합. Activation 이 *dynamics shape 의 prior*.
+
+3. **Cost vs accuracy curve**. Euler (1×, 0.69 F1) → RK4 (4×, 0.72) → Dopri5 (3.2×, 0.73). Dopri5 가 *Pareto frontier* — adaptive step size 가 *automatic balance*.
+
+
+```viz:contiformer-asymmetric:title=paper §3.2 — Q/K/V Asymmetric Paths,caption=Path selector.
+```

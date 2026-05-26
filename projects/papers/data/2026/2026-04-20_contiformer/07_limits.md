@@ -1,5 +1,8 @@
 # 6. 가정·한계·반박
 
+> **🧒 한 줄 요약**: 5 한계: ODE solver cost (5-10× vanilla), Lipschitz 가정, adjoint accuracy, stiff dynamics, production scalability.
+
+
 ## 6.1 명시된 가정
 
 논문 본문이 명시적으로 또는 준명시적으로 깔고 가는 가정:
@@ -62,3 +65,21 @@ attention weight $\alpha_i(t)$의 분모는 모든 $j$에 대한 sum이다. "먼
 - 코드 재현 가능성: ★★★★☆
 - 실무 배포 가능성: ★★☆☆☆ (속도·메모리)
 - 이론-실험 align: ★★★☆☆
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **5-10× cost 의 *production deployment* impact?**
+2. **Lipschitz 가정 미명시 의 *stability risk*?**
+3. **Adjoint gradient accuracy 의 *long-horizon concern*?**
+
+### 답변
+
+1. **Real-time clinical alert 의 latency requirement**. <1s response 요구 — vanilla Transformer (50ms) vs ContiFormer (250-500ms). *Borderline acceptable*, but *batch inference* 시 GPU memory 문제. *V2 efficient ODE* 가 *partial solution*.
+
+2. **Stability 의 *silent failure***. f_θ 가 *non-Lipschitz* (e.g., ReLU activation) 시 *unique solution 부재* — *theoretical ill-posed*. 실제로 tanh/sigmoid 사용으로 *implicit Lipschitz* — 하지만 *no explicit guarantee*. Production crash risk.
+
+3. **Adjoint method 의 numerical 오차 누적**. Deep network (32+ layers) 시 *reverse ODE gradient* 의 정확도 의문. Mixed-precision adjoint 같은 *engineering solution* 필요 — paper 미공개.

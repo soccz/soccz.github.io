@@ -1,5 +1,8 @@
 # 3. 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: ContiFormer 의 *4 claim*: (1) continuous attention, (2) Q/K/V asymmetry, (3) PhysioNet SOTA, (4) clinical applicable.
+
+
 논문의 주장은 4개로 압축된다. 각각 [주장 / 증거 / 전제] 형태로 해부하되, 전제가 흔들리는 지점을 끝에 표시한다.
 
 ---
@@ -86,3 +89,21 @@ Claim 1이 무너지면 전부 무너진다. Claim 2·3은 "대표성·통합성
 - 이론적 convergence rate 주장 없음.
 - Universal approximation 주장 없음 (Transformer·NODE 각각은 있지만 ContiFormer 고유의 정리는 없음).
 - **시간 축 왜곡(time change)에 대한 고려 없음** — 이것이 Paper 4의 지렛대.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Claim 1 (continuous attention) 의 *novelty*?**
+2. **Claim 2 (Q/K/V asymmetry) 의 *theoretical justification*?**
+3. **Claim 3 (SOTA) 의 *empirical strength*?**
+
+### 답변
+
+1. **ODE-driven attention novelty**. Vanilla attention = discrete query/key/value. Continuous attention = *연속시간 query at 임의 t* + ODE-driven *temporally varying key/value*. *First in field*.
+
+2. **Identifiability + simplicity**. Query 도 ODE 면 *query path + key path* 의 ambiguity. InterpLinear Query = *fixed reference* → OdeLinear Key/Value 의 *clear temporal role*. *Theoretical justification* + *practical training stability*.
+
+3. **PhysioNet F1 0.73 vs prior SOTA 0.70 (mTAND)**. +3%p gain. 모든 metric (F1, AUC, AP) 에서 우위. 6 baseline 비교 — *systematic strength*.

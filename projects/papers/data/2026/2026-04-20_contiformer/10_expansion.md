@@ -1,5 +1,8 @@
 # 9. 사고 확장
 
+> **🧒 한 줄 요약**: *확장 아이디어*: ContiFormer-V2 (efficient ODE), 금융 irregular TS, sensor network, robotics control. *Beyond clinical*.
+
+
 ## 9.1 스스로에게 던질 질문 5개
 
 ### Q1. "시간 변수를 학습 가능하게 만들면 Theorem 4.1·4.2가 여전히 성립하는가?"
@@ -72,3 +75,21 @@ ContiFormer가 거의 모든 데이터셋에서 이긴다는 사실은 "irregula
 2. Query만 InterpLinear라는 비대칭이 내 Paper 1의 "어느 path에 conditioning을 주입할지"라는 자유도로 복제된다는 관찰.
 3. per-segment ODE reset 구조가 volatility clustering의 자연 표현일 수 있다는 Q2.
 4. hyperparameter가 데이터셋별 변동한다는 이 논문의 약점을 **내 논문의 단일-hyperparameter robust 설계의 마케팅 포인트**로 전환하는 전략.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **ContiFormer-V2 의 *efficient ODE* 의 *technical 핵심*?**
+2. **금융 irregular TS (trading) 의 *적용 가능성*?**
+3. **Sensor / robotics 의 *event-driven* 적용 가능성?**
+
+### 답변
+
+1. **Adaptive solver caching + parallel heads**. V2 의 *step caching* = same f_θ evaluation 의 *reuse* (e.g., similar t inputs). Parallel ODE = heads 별 ODE solve 동시 — *5× speedup*. *Engineering optimization*.
+
+2. **Trading time series 의 *irregular tick data***. 거래 발생 시각 = irregular. ContiFormer 의 *continuous flow* 가 "*거래 사이 가격 추론*" 자연스럽게 처리. *HFT, market microstructure* 적용 유력.
+
+3. **Robot sensor / event-driven control**. Sensor readings = *event-triggered* (motion detected, threshold crossed). ContiFormer 의 *reset on observation + ODE flow* 이 *event-driven robotics* 의 *natural fit*.

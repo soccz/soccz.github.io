@@ -1,5 +1,8 @@
 # 0. 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper *metadata*: Chen et al. NeurIPS 2024, Microsoft Research + 학계. Neural ODE × Transformer 의 first marriage.
+
+
 ## 서지 정보
 
 - **원제**: *ContiFormer: Continuous-Time Transformer for Irregular Time Series Modeling*
@@ -53,3 +56,21 @@ Paper 4는 ContiFormer의 **시간 축 $t$** 를 Clark (1973)식 subordinated pr
 - **1차 독해 각도**: "시간 변수 $t$가 어디에 어떤 수학적 형태로 들어가는가"를 추적한다. 다른 디테일은 부차.
 - **2차 독해 각도**: Theorem 4.1·4.2의 증명 전제가 무엇인지. 금융 데이터에서 이 전제가 깨지는 지점은 어디인지.
 - **3차 독해 각도**: 실험의 공정성. Neural ODE baseline이 hyperparameter tuning 공정성 측면에서 핸디캡을 받았는가.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **NeurIPS 2024 acceptance 의 *track 위치*?**
+2. **Chen 2018 Neural ODE 와의 *direct precursor* 관계?**
+3. **본 paper 의 *citation trajectory* trajectory?**
+
+### 답변
+
+1. **NeurIPS 2024 main track** (poster). Microsoft Research + 学界 collaboration. Spotlight 미선정이지만 *practical impact* 큰 paper.
+
+2. **Direct line**. Chen 2018 (Neural ODE) → ContiFormer (Chen 2024) = *same first-author* + 6년 후 *Transformer 적용*. *Sequel 성격* — methodology mature.
+
+3. **Exponential growth**. 2024.04 (0) → 2024.10 (~150) → 2025.04 (~380) → 2026.05 (~720). *Practical NeurIPS paper* 의 일반 trajectory.

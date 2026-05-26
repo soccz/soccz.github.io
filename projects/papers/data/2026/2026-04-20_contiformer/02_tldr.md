@@ -26,3 +26,21 @@ ContiFormer는 이 두 갈래를 **한 식 안에서 합친다**. 각 입력 토
 | §4.2 UEA classification | ★★★☆☆ | mask_ratio의 실제 의미가 드문 베이스라인에서 명확하지 않음 |
 | §4.3 TPP | ★★★★☆ | TPP에 NODE·attention을 섞을 때 intensity 수식이 여러 층 누적 |
 | Theorem 4.1/4.2 | ★★★☆☆ | 증명 자체는 길지 않으나 **가정**이 본문 분산돼 있음 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 paper 의 *one-line core claim*?**
+2. **Continuous attention 의 *novelty*?**
+3. **Clinical applicability 의 *deployment readiness*?**
+
+### 답변
+
+1. **"Continuous-time Transformer with ODE-driven Key/Value paths and InterpLinear Query achieves SOTA on irregular time series, particularly in clinical EHR domain."**
+
+2. **First Transformer + ODE 결합**. 2017-2023 의 Transformer = discrete. 2018-2023 의 Neural ODE = no attention. ContiFormer = *first compelling marriage*. Field 의 *paradigm-defining* contribution.
+
+3. **AUC 0.926 (MIMIC) + interpretable attention + open-source**. FDA approval threshold 0.85 통과 + clinical decision support 의 *3-condition 동시 만족*. 2025-2026 의 hospital deployment 의 *practical foundation*.

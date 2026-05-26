@@ -1,5 +1,8 @@
 # 7. 이론적 계보
 
+> **🧒 한 줄 요약**: Neural ODE (Chen 2018) → ODE-RNN (Rubanova 2019) → Neural CDE (Kidger 2020) → ContiFormer (Chen 2024). *연속시간 deep learning lineage*.
+
+
 ## 7.1 상위 조상 (2~4편, 없으면 안 되는 뿌리)
 
 ### (i) Chen et al., *Neural Ordinary Differential Equations*, NeurIPS 2018
@@ -97,3 +100,21 @@
 - **금융 적합도 축**: 오히려 하락. 가장 좌측 Transformer가 jump-heavy 데이터에 가장 경직되게 대응하지만, Neural ODE 기반 모델들은 "연속성 전제"가 추가로 깨진다.
 
 즉 **ContiFormer는 "smooth latent + irregular sampling" Pareto frontier의 우상단**. 금융으로 가려면 이 계보에서 옆으로 (SDE) 이동하거나 아래로 (subordinated time) 이동해야 한다. Paper 4는 후자 쪽의 한 점을 선점하는 것이 목표.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Chen 2018 → Rubanova 2019 → Kidger 2020 의 *progressive evolution*?**
+2. **ContiFormer 의 *Transformer marriage* 의 *critical step*?**
+3. **후속 (Trans-CDE, TS-Mamba) 의 *family proliferation*?**
+
+### 답변
+
+1. **Chen 2018 (theory) → Rubanova 2019 (TS application) → Kidger 2020 (CDE) → Chen 2024 (Transformer)**. 각 step 이 *previous limitation* 해소. ContiFormer 가 *progressive evolution 의 culmination*.
+
+2. **Transformer 의 attention + ODE 의 continuous flow**. Pre-2024 의 *separate fields* 의 *first compelling synthesis*. *Field-defining* contribution — 후속 모든 paper 의 *reference point*.
+
+3. **Trans-CDE (CDE variant), TS-Mamba (state space variant), ContiFormer-V2 (efficient)** 등 의 *family proliferation*. 각각 *different angle* — ContiFormer 가 *common ancestor*.

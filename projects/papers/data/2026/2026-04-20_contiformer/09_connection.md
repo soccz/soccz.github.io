@@ -1,5 +1,8 @@
 # 8. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와의 연결: continuous attention 의 *pattern 분석*, irregular TS 의 *motif identification* 적용 가능성.
+
+
 이 섹션은 `_profile.md`의 Paper 1~4 각각에 대해 "이 논문이 무엇을 주는가 / 무엇을 막는가 / 어떻게 인용할 것인가"를 구체적으로 매핑한다. 일반론을 피하고 실제 드래프트 섹션과 문장 단위로 연결한다.
 
 ---
@@ -130,3 +133,21 @@ Paper 4는 **ContiFormer를 직접 대체·확장**하는 논문이 된다. 공�
 ## 8.5 통합 정리
 
 ContiFormer는 내 연구의 **기준점이자 공격 대상**이다. Paper 1·2·3에서는 baseline으로, Paper 4에서는 **직접적 선행**으로 인용된다. 따라서 이 해체는 단발성이 아니라 **4편의 드래프트에 네 번 참조**될 기초 자산이다. 특히 Paper 4는 이 논문 없이는 동기 자체가 성립하지 않으므로, 오늘 이 해체를 먼저 끝내둔 것이 본 프로젝트의 논리적 선후 순서에 정확히 맞는다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF *motif* + ContiFormer *continuous attention* 의 *cross-pollination*?**
+2. **Irregular TS 에서의 *motif identification* 가능성?**
+3. **내 연구 의 *direct adoption* 가능 요소?**
+
+### 답변
+
+1. **Continuous attention 의 *pattern 분석***. APF 의 motif typology 가 discrete attention 대상 — *continuous attention* 으로 *natural extension*. ContiFormer 의 continuous Q/K/V 가 *pattern field* 의 *more rich substrate*.
+
+2. **Irregular TS 의 motif**. APF 의 motif identification 이 *uniformly sampled* 가정 — ContiFormer 가 *irregular sampling* 처리하면 *clinical motif* (e.g., "*sepsis prodrome pattern*") 식별 가능. *Cross-pollination*.
+
+3. **OdeLinear architecture, adjoint method, RK4 solver**. 3 elements 모두 *cross-domain transferable* — APF 의 *time-series motif* 분석 에 *direct adopt*.

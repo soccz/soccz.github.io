@@ -1,5 +1,8 @@
 # 2. 문제 지형도
 
+> **🧒 한 줄 요약**: Irregular TS = 비균일 간격 + sparse measurements. RNN/Transformer 의 *discrete assumption* 한계 → 연속시간 representation 필요.
+
+
 ## 2.1 풀고자 하는 문제
 
 공식적으로는 "**불규칙 샘플링된 시계열에 대한 표현 학습**"이다. 입력은 시각-값 쌍의 가변 길이 집합
@@ -77,3 +80,25 @@ ContiFormer:   K(t), V(t) = ODESolve(K_0, V_0, f_K, f_V, t)
 ## 2.6 도메인 scope의 암묵적 경계
 
 저자가 고른 실험 도메인은 — 나선 궤적 / EEG-계열 / Mimic ICU / StackOverflow / BookOrder / Traffic — 모두 **"부드러운 latent dynamics + noise"** 가정이 성립하기 좋은 도메인이다. 금융 log-return은 이 가정이 가장 깨지기 쉬운 영역 (점프, 두꺼운 꼬리, volatility clustering). 이 간극이 내 연구의 출발점이자, 논문이 주장하지 않은 부분을 내가 주장할 수 있는 근거다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Irregular TS 의 *RNN/Transformer 한계*?**
+2. **Continuous representation 의 *advantage*?**
+3. **EHR / clinical domain 의 *natural fit*?**
+
+### 답변
+
+1. **Discrete assumption 의 *temporal misalignment***. RNN/Transformer 가 *uniformly-spaced sequence* 가정 → irregular interval 시 *padding/masking* hack 필요 (정보 손실). ContiFormer = *continuous time axis* 직접 처리 → *natural fit*.
+
+2. **Inter-observation reasoning**. Discrete: t_i 와 t_{i+1} 사이 시각의 representation 없음 (interpolation manual). Continuous: ODE flow 가 자연스럽게 *임의 t* 의 representation 제공. → "*무관측 구간 추론* 직접 지원".
+
+3. **Visit interval irregularity**. EHR = 1주, 1개월, 6개월 가변 visit. Vital sign sparse measurements. Lab tests rare. ContiFormer 의 *continuous-time representation* 이 "*clinical irregular structure* 의 native handler".
+
+
+```viz:contiformer-ode-flow:title=paper §3 — Irregular Obs + ODE Flow,caption=Obs pattern selector.
+```
