@@ -10,13 +10,15 @@
 
 ## 정량 요약 — 본 논문의 7 년 영향력
 
-| 지표 | 수치 (2026 기준) | 의미 |
+| 지표 | 수치 (2026 추정) | 출처 |
 |------|-----------------|------|
-| Citation (Google Scholar) | 1,500+ | NAACL 2019 best paper 후보 |
-| Direct rebuttal (Wiegreffe-Pinter) | 600+ citation | 정제된 "not not" 입장 |
-| Indirect followups | 50+ papers | Serrano-Smith / Brunner / ERASER / ACDC |
-| ICML/NeurIPS/NAACL session 발표 | 30+ | "interpretability skeptic" 영역의 표준 ref |
-| Mechanistic interpretability ideological 토대 | 모든 후속 work | Bricken 2023, Nanda 2023 ↑ |
+| Citation (Google Scholar) | **1,500+** (합리적 estimate) | 본 작업 시점 실시간 추출 X — 학계 통용 + NAACL 2019 영향력 추정 |
+| Direct rebuttal (Wiegreffe-Pinter) | **600+** (추정) | EMNLP 2019 발표 후 7 년 누적, attention interpretability 분야 표준 ref |
+| Indirect followups | 50+ papers | Serrano-Smith / Brunner / ERASER / ACDC / SFC 등 |
+| ICML/NeurIPS/NAACL session | 30+ | "interpretability skeptic" 영역의 표준 ref |
+| Mechanistic interpretability ideological 토대 | 모든 후속 work | Bricken 2023, Nanda 2023, Marks 2024 등 |
+
+> **수치 정확성 면책**: 위 citation count 는 본 작업 시점 (2026-05) 의 *합리적 추정*. Google Scholar / Semantic Scholar 의 *실시간 정확 값* 은 별도 query 로 확인 권장. 본 deep dive 의 다른 chapter (특히 Table 2 수치) 는 paper PDF 의 *exact* 인용이지만, 본 표의 citation 만 추정.
 
 ## 본 논문의 **3 가지 핵심 contribution** (정밀화)
 

@@ -15,40 +15,41 @@ paper 발표 (NAACL 2019) 후 **7년간** attention interpretability 의 진화�
 ## 17.2 Timeline (2019-2026)
 
 ```
-2019    NAACL ─── ★ JAIN-WALLACE (this paper)
+2019    NAACL ─── ★ JAIN-WALLACE (this paper, Feb 2019 arXiv v1)
         │
-        ├─ 2019.06  Serrano-Smith (ACL) — independent confirm
-        ├─ 2019.08  Brunner et al. — identifiability theory
-        └─ 2019.10  Wiegreffe-Pinter (EMNLP) — direct rebuttal
-        
-2020    │
-        ├─ 2020.05  ERASER (DeYoung et al., ACL) — plausibility metrics
-        ├─ 2020.07  Abnar-Zuidema (ACL) — attention flow rollout
-        ├─ 2020.08  Clark et al. — BERT attention analysis
-        └─ 2020.11  Voita et al. — multi-head head pruning
+        ├─ ACL 2019   Serrano-Smith — "Is Attention Interpretable?" (independent confirm)
+        ├─ arXiv 1908 Brunner et al. — identifiability theory (Aug 2019)
+        └─ EMNLP 2019 Wiegreffe-Pinter — "Attention is not not Explanation" (direct rebuttal)
 
-2021    │
-        ├─ 2021.03  Hewitt et al. — probing as classifier accuracy
-        └─ 2021.06  Pruthi et al. — attention 의 learnable manipulation
+2020    │
+        ├─ ACL 2020   ERASER (DeYoung et al.) — plausibility/faithfulness benchmark
+        ├─ ACL 2020   Abnar-Zuidema — "Quantifying Attention Flow in Transformers"
+        ├─ BlackboxNLP Clark et al. — "What Does BERT Look At?" BERT attention analysis
+        └─ ACL 2019/20 Voita et al. — multi-head head pruning + role analysis
+
+2020    │
+        └─ ACL 2020   Pruthi et al. — "Learning to Deceive with Attention" (deception training)
 
 2022    │
-        ├─ 2022.07  Anthropic dictionary learning (Bricken et al.) — sparse features
-        └─ 2022.12  Nanda — modular arithmetic transformer reverse engineering
+        └─ arXiv 2022 Nanda — "Progress Measures for Grokking via Mechanistic Interpretability" (arXiv 2301; ICLR 2023)
 
 2023    │
-        ├─ 2023.05  ACDC (Conmy et al.) — automated circuit discovery
-        └─ 2023.10  TSDiff (Kollovieh et al.) — diffusion guidance
+        ├─ Transformer Circuits 2023 Bricken et al. (Anthropic) — "Toward Monosemanticity" (SAE feature discovery)
+        ├─ NeurIPS 2023 Conmy et al. — ACDC: Automated Circuit Discovery
+        └─ NeurIPS 2023 Kollovieh et al. — TSDiff (diffusion forecasting guidance)
 
 2024    │
-        ├─ 2024.05  Sparse Feature Circuits (Marks et al., ICLR) — feature-level explanation
-        └─ 2024.10  Diffusion-TS (Yuan-Qiao, ICLR) — interpretable diffusion
+        ├─ ICLR 2024  Marks et al. — Sparse Feature Circuits (feature-level explanation)
+        └─ ICLR 2024  Yuan & Qiao — Diffusion-TS (interpretable diffusion)
 
 2025    │
-        └─ 2025.05  TSFM mechanistic interpretability (Wilinski et al., ICML)
+        └─ ICML 2025  Wilinski et al. — TSFM mechanistic interpretability (Time Series)
 
 2026    │
-        └─ 본 deep dive (this) + APF (in progress)
+        └─ 본 deep dive (May 2026) + APF (in progress)
 ```
+
+> **Note**: 위 timeline 의 일부 month-level 정확도는 합리적 estimate. Venue (ACL / EMNLP / NeurIPS / ICLR) 와 year 는 정확하나 arXiv 첫 등장 vs proceedings publication 의 차이는 일부 paper 에서 적용. 각 paper 의 정확한 publication date 는 venue 사이트 또는 arXiv ID 의 첫 4자리 (YYMM) 로 확인 가능.
 
 ---
 
@@ -191,34 +192,35 @@ $$A_l^{\text{eff}} = 0.5 (A_l + I)$$
 
 ## 17.7 본 paper 의 영향력 — 정량 분석
 
-### 17.7.1 Citation trajectory
+### 17.7.1 Citation trajectory (추정)
 
 ```
-2019.02 (paper 발표): 0
-2019.12: 53
-2020.06: 174
-2020.12: 320
-2021.06: 488
-2021.12: 670
-2022.06: 837
-2022.12: 1,015
-2023.06: 1,185
-2023.12: 1,344
-2024.06: 1,452
-2024.12: 1,529
-2025.12: 1,580
-2026.05: 1,610 (this deep dive 작성 시점)
+2019.02 (paper 발표):     0
+2019 말:                  ~50
+2020 말:                  ~300
+2021 말:                  ~650
+2022 말:                  ~1,000
+2023 말:                  ~1,300
+2024 말:                  ~1,500
+2025 말:                  ~1,580
+2026.05 (deep dive 시점): ~1,610  (← 본 추정값)
 ```
+
+> **수치 정확성 면책**: 위 trajectory 는 본 작업 시점의 *합리적 estimate*. 학계 통용 + NAACL 2019 best paper 후보의 일반적 citation pattern (논문 첫 해 ~50, 5 년 차 ~1k, long tail) 기반. *실시간 Google Scholar* 값과 ±10-20% 차이 가능.
 
 **관찰**: 6 년차 (2025) 까지도 citation 증가. *seminal* paper 의 long tail.
 
-### 17.7.2 Citation breakdown (1,610 의 분류, 추정)
+### 17.7.2 Citation breakdown (추정 분류)
 
-- **Direct continuation** (attention interpretability): ~450
-- **Faithfulness/plausibility metric (ERASER, RAP)**: ~280
-- **Multi-head transformer analysis**: ~300
-- **Mechanistic interpretability foundational**: ~150
-- **Application papers** (medical NLP, code, sentiment): ~430
+본 paper 인용의 의미적 분류 (학계 통용 패턴 추정):
+
+- **Direct continuation** (attention interpretability): ~30%
+- **Faithfulness/plausibility metric (ERASER, RAP)**: ~18%
+- **Multi-head transformer analysis**: ~20%
+- **Mechanistic interpretability foundational**: ~10%
+- **Application papers** (medical NLP, code, sentiment 분야의 사용 예시): ~22%
+
+> **분류 정확성 면책**: 위 % 분류는 학계 통용 *대략적 추정* — paper-by-paper 정밀 코딩 X. 정확한 분류는 Semantic Scholar 의 "citation context" 분석 필요.
 
 ---
 
