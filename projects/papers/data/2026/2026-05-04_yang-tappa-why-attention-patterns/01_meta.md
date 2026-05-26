@@ -1,44 +1,11 @@
-# 01. 메타 & 선정 이유
-
-> **🧒 한 줄 요약**: paper 서지 + 선정 이유 — *attention pattern theory* 의 first unified framework.
-
-
-## 인용·발표 정보
-
-- **인용 수**: 미확인 (Semantic Scholar 접근 차단). 2026-01-29 등록 → 4월 말 기준 3개월 미만이므로 정식 인용은 적을 것이나, 동시기 follow-up arXiv 가 빠르게 누적되는 영역 (KV cache, attention head 분류) 임은 분명.
-- **DOI**: 미확인 (ICLR 2026 proceedings DOI 미발급 단계 가능)
-- **저자 권위 배경**:
-  - **Jie Wang** (USTC MIRA Lab 책임자, corresponding 추정): 강화학습·조합최적화·LLM 효율성 분야 다수. MIRA Lab 은 KV cache / inference acceleration 으로 NeurIPS·ICLR 다수 출판.
-  - **Mingxuan Yuan, Jianye HAO** (Huawei Noah's Ark): RL · LLM scaling 권위. Hao 는 multi-agent RL 의 중국권 대표 그룹.
-  - **Bin Li** (USTC, info theory / signal processing 백그라운드): "temporal continuous perspective" 라는 framing 의 출처일 가능성. APF 가 "PE → 2D motif" 로 가는 경로와 닮은 발상은 이쪽 영향.
-- **컨텍스트**: MIRA Lab 에서 같은 시기 KV cache 압축 논문이 다수 나옴 (예: 같은 1월 내 arXiv:2510.00636 "Expected Attention", arXiv:2601.08297 "Demystifying the Slash Pattern" 등). TAPPA 는 그 흐름의 **이론적 우산** 으로 위치.
-
-## 선정 이유 (왜 오늘, 왜 이 논문)
-
-세 가지가 겹쳤다.
-
-1. **Axis balance 강제** — `_coverage.md` 코어 §C (pe-attention-geometry / attention-as-explanation) 가 0회 커버. §A (grokking) 는 최근 Nanda(04-27) + Lyle(05-01) 연속 2회로 과대표현. 오늘 §C 를 안 채우면 5주 연속 §A 편향 가능성. axis balance 규칙(최대 5주)이 깨지진 않지만 "최소 3주 단위 교대" 권고를 따라 §C 차례.
-
-2. **Priority 매칭이 사용자 active 트랙의 직접 concurrent work** — `_profile.md` 에 "Concurrent work 2개 식별: arXiv:2511.21514 (Kalnāre 2025), **arXiv:2601.21709 (Yang ICLR 2026)**" 라고 명시되어 있다. 이는 사용자의 APF (Attention Pattern Fields) 프로젝트가 motif sweep / PE intervention 을 진행 중인데, 정확히 같은 framing ("attention 패턴이 왜 그렇게 생기는가, PE 가 어떻게 결정하는가") 으로 ICLR 2026 에 먼저 도착한 논문. **읽지 않고 APF 를 쓰면 reviewer 가 제일 먼저 던질 비교 논문**. 우선순위 1.
-
-3. **"내 가설" 의 사전검정 가치** — APF 는 (a) PE 별 motif 분포, (b) motif → CNN probe → 분류, (c) causal intervention (motif swap) 의 3단 사다리. TAPPA 가 (a)~(b) 사이의 **이론적 다리**(q-similarity × RoPE-frequency → motif type) 를 이미 깔았다면, APF 는 (a) 대신 그들의 다리를 인용하고 (c) 단계 — causal intervention 과 시계열 도메인 — 에 자원을 몰아야 한다. 이 판단을 위해 본 논문을 실제로 읽고 비교점을 명문화할 필요가 있다.
-
-부수적 이유: ICLR 2026 게재라는 경량 권위, RoPE 주파수 분해라는 sub-mechanism 이 사용자의 "Spectral PE" (현재 shelved) 발상과 표면적으로 겹쳐 재개 신호가 될 수 있는지 검토 필요.
-
----
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **paper 코어 이유?**
-2. **저자 그룹 MIRA Lab?**
-3. **ICLR 2026 acceptance 의의?**
-
-### 답변
-
-1. paper §-references + 본 deep dive 의 cross-reference 기반.
-
-2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
-
-3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "hMCbwskeGXv+82kTIou1ig==",
+  "iv": "fBHpe+/hvSHrLhPzFD9K/A==",
+  "ct": "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",
+  "mac": "JXHc47wjiRrxrXa2xC2OlaH68mTEX4SdeNW075dMwDs="
+}

@@ -1,42 +1,11 @@
-# 10. 사고 확장 — Part A: 자문 5 질문
-
-> **🧒 한 줄 요약**: 5 자문 질문 — multi-modal, dynamic, cross-arch unification, alternative PE, pattern manipulation.
-
-
-## Q1. q-similarity 의 measurement noise 는 task / context length 에 어떻게 의존하는가?
-
-저자들이 layer-wise $S_l$ 을 단일 metric 으로 쓰지만, window size $w$ 와 sequence length $T$ 의 비율, 그리고 prompt domain (code / chat / QA / multilingual) 에 따라 $S_l$ 의 estimation variance 가 크게 달라질 수 있다. 만약 $S_l$ 의 noise 가 layer 간 차이보다 크다면 budget allocation 의 신뢰성이 무너진다. **이 질문이 중요한 이유**: 본 framework 의 실용성은 $S_l$ 이 robust signal 임에 달려 있고, robustness 의 한계가 어디인지 모르면 production 적용이 위험.
-
-## Q2. Theorem 5.2 의 bound 가 sharp 한가, 단지 monotonic 한가?
-
-증명 스케치에서 Cauchy-Schwarz 만 쓰면 bound 가 sharp 하지 않다. monotonic (q-sim 높을수록 score deviation 작음) 만 보장되면 ranking metric 으로는 OK 지만 quantitative budget 결정에는 부족. **이 질문이 중요한 이유**: monotonic 만으로 KV cache budget 을 inverse-proportional 로 정하는 게 정당한가? 더 precise allocation function (e.g., $B_l \propto (1-S_l)^\alpha$ with $\alpha$ task-tuned) 이 있을 수 있고, sharp bound 가 있어야 $\alpha$ 도 이론적으로 정해진다.
-
-## Q3. Re-access pattern 과 retrieval head (Wu 2025) 의 set 가 정확히 일치하는가?
-
-TAPPA 가 re-access pattern 을 retrieval head 의 시각적 manifestation 으로 가정했는데, retrieval head 의 인과적 정의 (특정 head ablation 시 long-context recall accuracy drop) 와 re-access pattern (visual motif of attention map) 이 정확히 같은 head set 을 식별하는지 검증 안 됨. **이 질문이 중요한 이유**: 만약 set 가 다르면 (e.g., re-access pattern 은 보이지만 retrieval 에 critical 하지 않은 head 존재) "패턴 → 기능" 의 mediation 이 약해지고, framework 가 functional explanation 이 아니라 단순 visual classification 에 머문다.
-
-## Q4. q-similarity 가 학습 중 어떻게 evolve 하는가? Grokking 과의 관계는?
-
-본 논문은 학습이 끝난 모델의 inference time 만 분석. 그러나 q-similarity 는 학습 중 step-by-step 측정 가능하고, 그것의 trajectory 가 grokking phase transition (Nanda 2023, Lyle 2025) 과 동기되는지 시험할 수 있다. 가설: 학습 초기 (memorization phase) 는 q-sim 이 낮고 (random query), grokking 직전 sharp jump, 후반에 안정. **이 질문이 중요한 이유**: TAPPA 의 inference metric 을 training signature 로 확장하면 사용자 grokking track 과 직접 연결되고, "왜 attention pattern 이 학습 후 그런 모양이 되는가" 의 근원 (학습 dynamics) 까지 설명 가능.
-
-## Q5. NoPE / ALiBi / Learned PE 모델에서 q-similarity 가 같은 역할을 하는가?
-
-Theorem 5.2 가 RoPE 의 simultaneous-shift invariance 에 의존. NoPE 는 PE 가 없으니 invariance 의 algebraic 성질이 다름. ALiBi 는 additive bias 라 곱셈적 회전이 아님. Learned PE 는 학습 dependent. q-similarity 가 PE-agnostic metric 으로 작동하면 framework 의 universality 가 격상, 작동 안 하면 RoPE-specific framework 로 한정. **이 질문이 중요한 이유**: 사용자 APF 가 정확히 multi-PE 비교를 main contribution 으로 삼고 있어 이 질문의 답이 APF 의 niche 크기를 결정.
-
----
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **low-hanging fruit?**
-2. **5 한계 매핑?**
-3. **NeurIPS contribution?**
-
-### 답변
-
-1. paper §-references + 본 deep dive 의 cross-reference 기반.
-
-2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
-
-3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "YXhNJYmwOPHedC8RxdfLTA==",
+  "iv": "DnNZ6JRyWhqhbxRaISwdVQ==",
+  "ct": "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",
+  "mac": "VIIvPSEWw4t4arIyjavqkcYEicuDdye1wq+O+UdENyc="
+}

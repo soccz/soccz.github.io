@@ -1,91 +1,11 @@
-# 17 Aftermath — Attention Pattern Analysis 의 진화 (2026-)
-
-> **🧒 본 챕터는 "그 후의 이야기"**: TAPPA 2026 의 영향 — *attention pattern theory* 의 분야 paradigm shift.
-
-## 17.1 챕터 한 줄 요약
-
-> **"TAPPA = empirical 'what' 에서 theoretical 'why' 로의 paradigm shift. 2026 이후 모든 attention pattern paper 가 *Q-sim × RoPE framework* 의 *baseline* 으로 인용."**
-
-## 17.2 Timeline
-
-```
-2019-2023: Empirical phase
-  - Clark 2019: BERT attention heads (qualitative)
-  - Voita 2019: head functions (categorical)
-  - Olsson 2022: induction heads
-
-2024: Mech interp maturation
-  - Wang 2024: Grokked Transformers
-  - SAE (Bricken 2023)
-
-2026.01: ★ TAPPA — first theoretical framework
-2026+: Follow-ups (predicted):
-  - Multi-modal attention pattern theory
-  - Dynamic pattern over training
-  - Cross-architecture unification
-```
-
-## 17.3 Direct Impact (예측 — 2026 이후)
-
-### 17.3.1 APF (Attention Pattern Fields, in progress)
-
-```
-APF 의 출발점 = TAPPA:
-  - 2D motif typology (TAPPA pattern types)
-  - PE × motif 격자 (TAPPA의 Q-sim × RoPE)
-  - Training-time pattern evolution
-  
-→ APF 가 TAPPA 의 *direct child*
-```
-
-### 17.3.2 Mechanistic Interpretability scaling
-
-```
-TAPPA 가 *theoretical baseline*:
-  - 새 model (Qwen-2, LLaMA-4) 의 attention 분석 시
-  - "Pattern X at layer Y, head Z" 의 *predictive* claim 가능
-  - Empirical case study 의 quotability ↑
-```
-
-### 17.3.3 Architecture Design
-
-```
-TAPPA 의 *insights* 가 *architecture choice* guide:
-  - "어떤 pattern 이 desired" → *RoPE freq 설계*
-  - "Block pattern 강화" → *theta_base 증가*
-  - "Sparse spike" → *low-rank attention*
-```
-
-## 17.4 4 Paradigm Shifts (TAPPA trigger)
-
-### Shift 1: "What → Why"
-- 2019-2023: "Pattern X exists" (Clark, Voita)
-- 2026 TAPPA: "Pattern X exists *because* of Q-sim × RoPE"
-
-### Shift 2: "Case-by-case → Unified"
-- Pre-TAPPA: 각 head 의 *separate analysis*
-- TAPPA: *all patterns* 의 *single framework*
-
-### Shift 3: "Empirical → Mathematical"
-- Pre-TAPPA: empirical observation 중심
-- TAPPA: theorem with mathematical derivation
-
-### Shift 4: "Static → Dynamic"
-- Pre-TAPPA: trained model 의 *snapshot*
-- TAPPA: training dynamics 도 *framework 내* 분석
-
-## 17.5 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **TAPPA 의 *2026* 의 시점 의의?**
-2. **APF 와의 *direct relation*?**
-3. **Architecture design 에 *practical impact*?**
-
-### 답변
-
-1. **2019-2023 empirical 의 *7년 누적* 의 *theoretical 정리*. Clark 2019 부터 Olsson 2022 까지 *case study* 가 누적되었으나 *unified framework* 부재. TAPPA = *first systematic theory* — 7년치 empirical findings 의 *encyclopedic 정리*.
-
-2. **APF 가 *TAPPA 의 architectural successor***. TAPPA = *static framework*, APF = *dynamic (training time) framework*. APF 의 *PE × motif × training-time* = TAPPA 의 *Q-sim × RoPE* 의 *3rd axis* 추가.
-
-3. **RoPE theta_base 의 *task-aware tuning***. LLaMA-3 의 *500K theta* (long context) 같은 design choice 가 *TAPPA theory* 기반. *Pattern desired* → *theta tuning* 의 reverse engineering 가능.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "6p3r3o2PgcbazmsRZbWkiw==",
+  "iv": "S/dDp2Twbxa+zivouQTwJw==",
+  "ct": "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",
+  "mac": "Hz2tvbS6xXzGX2BKYqxj2UuRlfbp3H4AL5rbFegKTEU="
+}

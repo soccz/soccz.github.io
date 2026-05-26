@@ -1,61 +1,11 @@
-# 02. 3층 TL;DR
-
-## 🧒 초등학생 수준
-
-수백 개의 머리(head)를 가진 거대한 책 읽는 로봇(LLM, 거대언어모델 — 사람처럼 글을 쓰는 인공지능)이 있다고 생각해 보자. 각 머리는 책장의 어떤 줄을 어디에 연결할지 결정하는데, 그 연결선들을 모아 그리면 묘하게 같은 모양이 자꾸 반복해서 나타난다. 어떤 머리는 **대각선** 모양 (바로 앞 단어만 본다), 어떤 머리는 **첫 단어만 빨아들이는 막대** 모양 (이 첫 단어는 "쓰레기통" 처럼 쓰인다고 알려져 있다), 또 어떤 머리는 **드문드문 다시 같은 자리로 돌아가는 점선** 모양이다.
-
-지금까지 과학자들은 이 모양들을 하나씩 따로 발견했고 ("아, 대각선이 있네", "아, 흡인구가 있네") 각각 다른 이유로 설명했다. 이 논문은 한 번에 묻는다. **"세 모양 모두 같은 한 가지 원리에서 나오는 게 아닐까?"**
-
-저자들의 답은 두 가지 재료의 조합이다. (1) 로봇이 단계마다 던지는 "질문 벡터" 가 시간이 지나도 비슷한지 (= **질문 자기유사도**, q-similarity). (2) 위치 정보를 회전으로 표현하는 트릭 (RoPE) 의 **빠른 회전 부분이냐 느린 회전 부분이냐**. 이 두 다이얼만 돌리면 세 모양이 자동으로 튀어나온다는 것이다. 게다가 이 발견을 써서 메모리 절약(KV cache 압축) 과 모델 가지치기(pruning) 도 더 잘 된다는 걸 보여줬다.
-
-## 🎓 학부생 수준
-
-Transformer (자가어텐션 기반 신경망 모델) 의 attention map (어떤 토큰이 어떤 토큰을 얼마나 보는가의 행렬) 은 layer × head 단위로 들여다보면 **재현되는 시각적 motif** 가 있다 — diagonal stripe, attention sink, retrieval/reaccess pattern 같은 것들. 기존 연구는 이 motif 들을 각각 (i) 위치 인코딩의 고주파 성분 (Press et al. ALiBi 2022, Su et al. RoPE 2024), (ii) 첫 토큰의 큰 norm (Xiao et al. 2023 attention sink), (iii) 특정 retrieval head 의 학습 결과 (Wu et al. ICLR 2025) 등 **개별 메커니즘** 으로 설명해 왔다.
-
-TAPPA (Temporal Attention Pattern Predictability Analysis) 는 이걸 하나의 우산 아래에 둔다. 핵심 가설은:
-
-> **"step 단위 query 벡터의 시계열 $\{q_t\}_{t=1}^T$ 의 자기유사도 $S(\Delta t) = \cos(q_t, q_{t+\Delta t})$ 가 높을수록 attention 확률 분포 $\alpha_t$ 도 시간 차원에서 예측 가능 (predictable) 하다."**
-
-여기서 $q_t \in \mathbb{R}^d$ 는 step $t$ 의 query, $\cos$ 은 코사인 유사도. 이 $S$ 가 1에 가까우면 다음 step 의 attention 도 직전 step 과 거의 같다는 결론. 거기에 RoPE (Rotary Position Embedding — 위치 $m,n$ 의 쌍에 회전행렬을 곱해 상대거리만 의존하게 만드는 PE) 의 **저주파 채널** 이 결합하면 멀리 떨어진 동일 토큰이 안정적으로 재참조 (retrieval/reaccess) 되고, **고주파 채널** 이 결합하면 인접 토큰만 보는 diagonal/slash 패턴이 된다는 정리(Theorem 5.2 등) 를 제시한다.
-
-응용으로 (a) KV cache 압축 시 **q-similarity 가 낮은** 레이어에 더 많은 메모리를 할당 (불안정한 query 일수록 더 많은 과거 정보 필요), (b) pruning 시 **q-similarity 가 높은** 영역을 우선 잘라낸다 (예측 가능 = redundant 가능성 높음). Qwen2.5 와 Llama-3.1-8B 에서 EA(NVIDIA 2025), ShortGPT(Baichuan 2024) 대비 각각 +11.34, +5.60 평균 점수 향상.
-
-## 🔬 전문가 수준
-
-Contributions (필자가 본 4개):
-
-1. **통합 framing 제안**: attention pattern 을 (predictable, unpredictable) 의 이항 분류로 환원하고, predictable 영역 안에서 (re-access, sink, slash/diagonal) 세 patterns 을 query temporal continuity × RoPE frequency-channel response 의 **2축 격자** 로 위치시킨다. 이 framing 은 종래의 "head-typology" (induction head, copy head, retrieval head, sink head ... 의 categorical labeling) 를 **연속적 phase diagram** 으로 바꾸려는 시도다.
-
-2. **이론적 결과**: 핵심은 Theorem 5.2 (Sequential Patterns under High Self-similarity). RoPE 의 회전 행렬 $R_\theta$ 는 query/key 의 simultaneous shift $(q_t, k_n) \to (q_{t+1}, k_{n+1})$ 에 대해 $q_t^\top R_{\theta(n-t)} k_n$ 형태의 attention score 를 보존 (translation-equivariant) 한다. $q_t, k_n$ 모두 self-similarity 가 높으면 score 가 $(+1,+1)$ 대각선 방향으로 propagate → slash/diagonal pattern. Re-access 와 sink 는 RoPE 저주파 channel 의 alignment-preserving 성질로 별도 조건으로 유도. 
-
-3. **실용 metric 제안**: layer-wise q-similarity $S_l = \frac{1}{|W|} \sum_{(t,t') \in W} \cos(q_t^{(l)}, q_{t'}^{(l)})$ (recent window $W$ 내). 이 $S_l$ 을 KV cache budget allocation 의 **inverse** 로 (낮은 $S_l$ → 큰 budget), pruning probability 의 **proportional** 로 사용.
-
-4. **경험적 검증**: KVCache 압축에서 EA(Expected Attention, NVIDIA 2025) 대비 Qwen2.5 budget 512 setting 에서 +11.34 점, structural pruning 에서 ShortGPT(Baichuan 2024) 대비 Llama-3.1-8B 에서 +5.60 점. 이론 → 실용 다리가 끊기지 않았음을 보여준다.
-
-방어 가능한 핵심: q-similarity 를 측정하는 데 추가 학습이 필요 없다 (run-time metric). 한계: (i) "두 축 격자" 가 정말 모든 head 를 커버한다는 보장은 없다 (induction head, K-V copy 등은 미언급), (ii) RoPE 가 아닌 PE (NoPE, ALiBi, learned) 에 대해서는 직접 확장하지 않음, (iii) 검색 스니펫 한계로 정확한 ablation matrix 미확인. 섹션 06·07 참조.
-
----
-
-
----
-
-## 인터랙티브 시각화
-
-```viz:tappa-pattern-types:title=5 Attention Pattern Types,caption=Pattern selector. 5 visual types of attention patterns.
-```
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **3 층 의의?**
-2. **Q-sim × RoPE 2-axis 의 power?**
-3. **5 pattern types 의 exhaustive?**
-
-### 답변
-
-1. paper §-references + 본 deep dive 의 cross-reference 기반.
-
-2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
-
-3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "X7nJLQ7nBGKpUdEEXaCoeg==",
+  "iv": "hU6Zed9dNTUYO0yALwDUsA==",
+  "ct": "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",
+  "mac": "hdsr5WLPL4RfJ974bGIVH69iLNDSnlwbJnr9LGAoBPM="
+}

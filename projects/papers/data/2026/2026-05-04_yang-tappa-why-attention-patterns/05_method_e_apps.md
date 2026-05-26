@@ -1,106 +1,11 @@
-# 05. 방법론 해부 — Part E: 응용으로의 번역 (KV cache & pruning)
-
-> **🧒 한 줄 요약**: Applications — pattern *prediction*, *architecture design*, *interpretation*.
-
-
-## 왜 이 부분이 필요한가
-
-이론이 옳아도 그것이 실용 metric 으로 매끄럽게 환산되지 않으면 ICLR reviewer 는 "interesting framing, weak engineering" 으로 본다. 본 절은 q-similarity 가 KV cache 압축 / structural pruning 의 두 응용에 어떻게 직접 입력되는지 정리.
-
-## 응용 1 — KV cache budget allocation
-
-### 표준 setting
-
-LLM inference 시 모든 layer × 모든 token 의 (key, value) 를 메모리에 보관하는 KV cache 의 메모리 사용량은:
-$$M = 2 \cdot L \cdot T \cdot H \cdot d_h \cdot \text{bytes}$$
-($L$ = layer 수, $T$ = context length, $H$ = head 수, $d_h$ = head dim, factor 2 = K + V). 64K context 의 Llama-3-70B 추정 → 수십 GB. 압축 필수.
-
-전형적 KV cache 압축 framework:
-1. **Layer 별 budget** $B_l$ 결정 (총합 = target budget)
-2. **각 layer 내** 보존할 token 선택 (heavy hitter / recent / sink anchor 등)
-3. 나머지 token 의 K/V 폐기
-
-전통적으로는 **모든 layer 에 균등 budget** 또는 **layer importance 휴리스틱** (e.g. layer-wise attention entropy) 사용.
-
-### TAPPA 의 layer-wise budget rule
-
-**핵심 직관**: q-similarity $S_l$ 이 **낮은** layer 는 query 가 step 마다 크게 바뀌므로 **다양한 과거 token 이 매번 새로 필요** → budget 더 줘야 함. q-similarity 가 높은 layer 는 query 가 거의 동일 → 매번 같은 소수 token 만 필요 → budget 적게.
-
-수식 (필자 재구성):
-$$B_l = B_\text{total} \cdot \frac{f(1 - S_l)}{\sum_{l'} f(1 - S_{l'})}$$
-
-$f$ 는 단조증가 normalization (softmax-with-temp 또는 단순 linear). 검색 스니펫: *"q-similarity is instantiated using cosine similarity, which is used to compute the layer-wise score for KV cache compression."*
-
-**4줄 해석**
-
-- **기호 뜻**: $B_l$ = layer $l$ 이 받는 token 보유 quota. $B_\text{total}$ = 전체 budget (예: 평균 token 당 N 개).
-- **일상 비유**: 회사가 부서마다 사무실 면적을 배정할 때, 일이 매번 새로운 부서 (R&D, low $S_l$) 에 큰 사무실, 일이 반복적 부서 (회계, high $S_l$) 에 작은 사무실. TAPPA 는 layer 의 "일 변동성" 으로 면적 정하기.
-- **왜 이 형태**: theoretical framing 에서 직접 — predictable layer 는 redundant 가 많아 큰 budget 불필요. unpredictable layer 가 over-truncate 되면 정보 손실 큼.
-- **조심할 점**: $S_l$ 이 input prompt 의존 (long-context QA 와 short chat 에서 같은 layer 의 $S_l$ 다를 수 있음). 따라서 **dynamic per-prompt** 측정인지 **static profiling** 인지가 디테일.
-
-### 결과
-
-스니펫 직접 인용: *"For KV cache compression, lower q-similarity is assigned more budget (token retention), achieving up to +11.34 average gain over EA (NVIDIA, 2025) on Qwen2.5 at budget 512."*
-
-EA (Expected Attention, NVIDIA arXiv:2510.00636 2025) 는 KV cache 압축의 강한 baseline. +11.34 가 어떤 metric 인지 (LongBench 평균 점수 추정) 명확치 않으나, 휴리스틱 baseline 대비 두 자릿수 개선이면 의미 있는 발전.
-
-## 응용 2 — Structural pruning
-
-### 표준 setting
-
-LLM 의 layer 수를 줄이는 structural pruning. ShortGPT (Baichuan 2024) 는 layer importance 를 probe (e.g., perplexity drop after layer skip) 로 측정하고 importance 낮은 layer 를 drop.
-
-### TAPPA 의 pruning probability
-
-**핵심 직관**: q-similarity 가 **높은** layer 는 query 가 step 간 거의 동일 → 그 layer 가 더 add 하는 information 이 작음 → drop 해도 큰 손실 없음. (Reverse of KV: 거기선 high-$S$ 가 redundant token 보유, 여기선 high-$S$ 가 redundant layer 자체.)
-
-수식 (필자 재구성):
-$$p_l^\text{prune} = \frac{g(S_l)}{\sum_{l'} g(S_{l'})}$$
-
-$g$ 는 단조증가. 보다 단순하게는 **top-$k$ layers by $S_l$** 를 drop.
-
-### 결과
-
-스니펫: *"for LLM structural pruning, higher q-similarity corresponds to a higher pruning probability, achieving up to +5.60 average gain over ShortGPT (Baichuan 2024) on Llama-3.1-8B."*
-
-ShortGPT 가 강한 baseline 인데 +5.60 평균 (downstream task accuracy 추정) 향상이면 robust.
-
-## 두 응용의 대칭성 — 본 framework 의 우아함
-
-같은 metric $S_l$ 이 두 응용에서 **반대 방향** 으로 쓰인다:
-- KV cache: **low** $S_l$ → **more** budget (token 을 보존)
-- Pruning: **high** $S_l$ → **more** pruning prob (layer 자체를 제거)
-
-두 방향 모두 "redundancy" 의 같은 정의 — high $S_l$ 면 그 layer 의 query 가 시간적으로 redundant → (a) 그 layer 가 보존할 token 도 적어도 됨 (KV), (b) 그 layer 자체를 빼도 됨 (pruning). 한 metric 으로 양 방향 응용 가능한 점이 framework 의 진짜 가치.
-
-## 다른 응용으로 갈 수 있다면
-
-대안 1: **Adaptive computation** — high $S_l$ layer 는 sparse attention (top-k key) 로 전환, low $S_l$ layer 는 full attention. 본 논문 미언급.
-
-대안 2: **Speculative decoding 의 verification** — q-similarity 높은 layer 는 draft 모델 prediction 을 그대로 신뢰, 낮은 layer 만 verify. 미언급.
-
-대안 3: **Continual learning 의 plasticity 신호** — high $S_l$ layer 는 stale, fine-tune 시 그 layer 에 더 큰 LR. 미언급.
-
-본 논문이 KV/pruning 두 vertical 만 다룬 건 ICLR scope 한계 (한 paper 에 모든 응용 못 담음). 후속 연구 여지 큼.
-
-## 핵심 한 문장
-
-> **단일 metric q-similarity 가 추가 학습 없이 inference 시간에 측정 가능하면서 KV cache 와 structural pruning 두 다른 vertical 에 (방향 반대로) 적용 가능하다는 사실이 TAPPA framework 의 실용 layer 의 본질적 가치다 — metric 한 개가 두 응용에서 SOTA 를 갱신했다는 점에서 framework 의 robustness 를 간접 증명한다.**
-
----
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **Pattern prediction?**
-2. **Architecture design?**
-3. **Interpretation tool?**
-
-### 답변
-
-1. paper §-references + 본 deep dive 의 cross-reference 기반.
-
-2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
-
-3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "NmdIvNKFW7G0A5jUJ3WXsQ==",
+  "iv": "IgDhOiMyGIycVFBGofRAZg==",
+  "ct": "1pnY6ZRZUVRH5HvjEfkzxRtDhxh8wmh5v++RCXgvL/oxU+MujJ8RD/wVaSb9vL7o5hpM6iE9+QPnhn5vN7SBjA3lHTsR5d5da0F8WCXJiwrft05mHilc4UBmEN6/fEOhWYAnZB3Y7YY1ff2Rgr7FphxG1Jn5lbgHIRBYGSPI5jyCcLKfDEyP9n+B7LyYzhdwwvtVXsLZoVJwdWhxdeMyNkthj5Lpm2Snk3UIdeRmCjiKPL9sOBJW/r+QErIHW9+/NcJz1kmESWhrytinvbFpRbGPz4IWCcPW+HCTIdMIsoVlsVBQuyfuwLgltIVxhpXLI+H1hiXQGdKEjUfpFd8VhNLDNfFlzyEFqfV+JrzFC7hKOOY/zNk/3UqetsEjAHjW5pNT8jro+CEhTcUvKF78sJoVy3YQnfEaCiVNAumByzkaAFcQrw0VQKwlTc9xEr/9yXMRWEwKX76UiRB+9PJxmUKpPCHQshIgDvdP6zVY4Z81Z/z2C0670y7TU8YbZzS9b5kNBSKN4KI0qjDARVjKE0wAfjR87Qm5huIS1vDuETimaOMb1m/YdBEjGBCB7ltx74+0C+NF8LTdpUhXVl1IAZJ3NiLuqu/DdRVeUzm4DUICvMcKQLpolnCN713yzgoe7D14ounyh+tFOHXZTb9P5SZ/NlgL1LElUN72fXlRkdG1rbB9oUNwLlyjgdgBO4VL5CrbFLsTkfoBqJU6ExXv9EwXvhv/uwFsaaR1xJb/7V9pppVTnDUwTztS/YrnS5NaluGU0qQGtI2bCSNlgNNw1Z05gTS0SxyGI0t0K5t4pKTfWETcrfv3izhcHtjhMvP2iU6OoN7IwxsyIhzOjFL599svn8LBrtb2LV3FtpbP51X6hSHZk3WRzMo2jxzL9WOwqsWbCipgGvPi8U9vbCL2nrS0fDavR0mwRx8NAzzD+4agWh3+KXWWWVjUcG2aBiDm126f1gzAs3RJdJ7UQzWQAJVs5pgBUXeEWGPqXnJAQYO7paG+4CaDcLY/E1XQgrJEfNk2lrhyHoVZaYi4FydFFLN2P7EmmZwmJjJrv1YL2faailViQ0crUEvS5fjByqUlZP11Nmv0YvUsrPh9xjv47BIxS0cbk7HOj6A0GuZOXXd7H8v+Oy5tIotyCmVVidZahz5EZfZBMU6a/sT4stiV+oI2knN23HnMST5BeRD9THXn/uOCxM9zDLBsel9VsGPTuYeP0TI7V8Nqg5zvkKiQZDHEDardr/jG4TEvFF7rynZCdIk+FAhKafBFrwqkSRxuD8LskfarTIXzxoavgnSXQLvydA5FQtoIGDmMvLBKg+PLn4XKHBN/u4LyNuiGnAI6bOXYCqkSKg65kmwLPwy4cGgUOSxANrARoLHdQZTR8PEnmijbwtqmpp7SnEkUxaAz4b8bT7LCyHP9/OMwkx43Ua3GcNhlrhBn0mRfBRIIXn9BjFeuOROFGFaKu88T2Mibi/VtKAVG4sRZCnCBxaYXZHex5dOdhl5j9qmymeUZYNHSizJKM79Izvo/LxkdZMA348CQAMl3SQXY52jxQHdp8AGCdiqKLyycO9PGJ2JkJ/nn4TL099T79QXUVHdmRFeooMvi+njylgndwKtwLxJ5uqsfkzOsrUEtqlqCvPgYthRSG8XZ3hfKnxfMupLNDDkBOFAEBIlJr3dvfW1yr42KjXpa8aSx5yIp81FtT/EQkezFDGr50byeRRLGYStGtnmzuhaAFkwzGBVI8bF6LrtyaGn4j+Rfx6p7OUGRFghxSCONId3wOthJbfevMx5zdifKPXa+RVAHVphdYdioFxAZPIO9UsiEfk3prYCHPk0mMsaxtSJFC33xucMs1Q62go0pQIJrD/FoptYAAPtIEJLnkoy4mBLFGGZBvwmD5DDmHP/yiyjwgSm4H8sdUO7XfmbC8eMsENJvFsuP8iSSHcX9HcomtJzAokU7g3fRcVQGJrgnAQ0NrBO2BL0Q0nYKGoUO3g/7deeYyoZUQF5ZV+cf81ZKghBLgAb50b+IEirTR1NhhOjOINKDa7XFIIrQuONPo8WnAvjiXGNq+zChtdym/Pogv47rGJJLJrt0FI4dsGZDe1dc1XTROvdTs7EwdoxVT8DcRG2mBJWDxekyeD/OWTjxh91TP7h0OqBVqQi47RP7ifhFJKv/EoQkrkpGCETB+9go7QLp691kcW085eichCADBoy6kdiHFcvXWrv1/+YLsA4F37TDROcate+yc76QUk8DZJELGZ3PneAQhQbq0DBC17Zw0jeoP+czIaMKD74aJqLEO23tHjR5ccDqZl7fT75q7EgqbLiYNQeY8cphk1goyxMGCADDwaavhjj+uGjmSl7ZXOOs25dDtFrNi+GU0aS2VXDjFsFfmcxzpGD+MCA8LVDJRqF1OhNssaZyQafZC9PYqzXMklDsml5lAvA6Wlcv+r7IEYdtFkHN+tieE8ABkol+RckdPvfsIvZ4HSEme6/Ul5F/FBQIVoxpRTW/XDSdfp1mBENP8uP1LbtILLRJ0YIFdft7ZfSu8PTm2btSw+OTslMk8D6ZREfPBOdIXtyX9q3FLu5lZ6P9gcAHYFoKWVwKC85dcNiZQn+AHSPROdbQEs5FNW1TmEWXbk8VwreEdfuwR7FWUM5s6BfVl4ezb6kB/HwazLvoSMIjAavAXP+zpgUJNJJAYk0qpVQE0g90NJ0BlUtOoBs+VX1daLs3xYA13E2HMy6t2ulgN+cYhsbhR8HSOEyG3btPPXlxBOPjkBGxnJJO9wXnhxqEWqLNLDYeRvSclwBmwOXR7UFsqQng5q5Ru8QvkyZzabFjCvkwEZ+EzZw+SEIPhwZLTA/HqtXSnK3U9W03FeiJsaQUmK8eHTDKZz6z7WxTrkayIycPT2BO64m7EumzJJdTVE68vL2bkALGQflQESjD0A47IB8yWBBJRdZe1GDlJ4Axw4Pm4TFe/aRdPr+l0zyx9EfnxVIUh92GtvfxM89kbGUn1pd3kJQ2Om/04MFXo2yenIwg9Bferxnh6CzolvCtUQx3pA/szOzOOjzR9fsohy2vI+Zu85Z1ZJVrcTiwYXXOpSn+QDaWvnvPg7UEhKFlETtvPgn3Kpw4iEZ7T5eyPaUXUQ+Q1Rfk9CrA3YYzlt4GLKH1rt4kmx1KAmI9Vx30CcDjq7tXrvRMYlCZciKmjSABrRpr7b3+OMjd2Hjx+B3vED/eu9TfMXlxUkpoERRXlGP/lLxu7KJz/DYpuBlUFZDvDXekjtLW0jZkia06MczhIVZp1mJnELNXWqG9TLCYxs3zupIVla+VEyvAZ++0Q9CqlpqHMw5M62FtNd/VQGkSfqrmfa7ss54R/V2dQ6j+oZ4RLJ3rtsFDKieih0GmxqLVmKTGpVj5YCnx1WYeaU03SZ+leS1daBcgWO2WzQNOQaDyzFMJZJXWzHOVUhieq62HY4rqOhZ3z9wRZfnkT8A8f9WcZRSS6BcU4mkUCJ6CS/EVOysz4wsfv9O9g99AeClC+8hkmMpZ/lboMRZVXz6E3yRWQhUM/trNvMyU3zcR/kwCn/8xX2AaILHd0YzyxFBGI3aWUlx38giVVV55u6U9FvrzH9XHziyt4keMHYnl9lQh+N7SNgFdWpIU90dKAzZYcwoU5rIiVBayh7TRRZ68Dsi0+iCunp8FM8Pvs6k0znNrvYSeDnFsaBEHAVIsyAofGPPXjPHvIH23oOAoaWJy0I1R5Dtw/xeIjY0XtHlP9WxcUbgBTimZpNJ65vXQQCM6gZkroCC2mOwuSr7MYWoMHsCShSZzaUJy4bN8NDxCLVEkuVAJJvQxpncBTKqcYGg6O7o5PgoGA68i+GuUJD0eeoZzYxan9Xp3o8MwDKRiRasTwMaKE5YK8+emCSzw+fQs43je4iuL62pNZJpkL6oWl5C02XukdDJVfyueif8vCQ5f+I6UZiZYReMkqkcQ0Iz0M4v5fs8xGn/IjaQtCfDGVfmHj9mqilnNyE0wKfirBQ9xBIiFTLf5uaepRQA275yWhogq+ZbL2HTJA6uNdKqMUaMtZyGStZ4oP/zlqLVWvHvIlrig5Xn+ks1THH2NeUrU5/erY0Oa0pnpBvFs9bnosqDrUAegb+vMbaeIWEncdPw9mwhDDfjI8qJhsL0+i1eBuYCL5G9G/gzpID98vCztXObY3a93eTpEm9vNDjXeonf6Q1nk0YS3K9y72R15mLK3sB1dvJa8PVt9dd9G/rhRReNZ4FOjfIZ1+YsgwItXZ8OVwhsRK+lzy5Le6+BORtY1dNE8F1DhzD7Fy7PtwA1kZIvBiV1tN+XkK++5DzqmZaYOQukhSzB9yn5+1cqGLhQbQGom4uhgyg1VUSCxlhUrhO6UT133557KJAwsDa9Ygvi7doVnn8AQyVUTrRSdgUWvlpI8GN2rNFsd/bvP7GX8LHya5ndseeBbhbfSplRZMIw3fCSrBulPR0EvdHSkunpglDWCPqPDT4PiKrCV9R9ayze01UyxuKaTAWqJGI5laJtOE6+lQ5fTNL89HoZ9A2HzeOXKU5Y44F7kt9WA098gByMn2G7UVFSaBtkAEAFxLcZXfaFXlpBO6CkC1Og36lzgh04uIMXv+LEh6vav589jpQiLs3vGIa1/7eMTJGFU6lbZnrgk06pBplzvcqcMr2MhUDnOBeVyjriI2VsY4vfh5Ag2sgj+WWyqkvpp59t5BV6fiG9SlvXtqY0qCL25aOu7uC/oxIcvKLVyaRP3aiSLgNy/0A1mpw1utFleZcqJHKj+TnabsKJPDGDJuzRhZlbII3PTRdiUin9onPMKjwqg/1vDPm7iCc0q+AKyb9SS9xov7IsBPrFQYrvvkjdGEhLQLbtD3LnCFTa8WmOEwpebw6pigb2bztw6jEE+ROUFJLNr0lHo9/C46LZUyJkChD1Y68PGR0glSwrB+1iQGSyIRmvty8CwA/j00BjcUvGbT4MmLUA3sZeXLKXrPRRCvWvSuidA14IIii4nuMAcikkJtFp3U3+sEeuPhC+T1PV7NORLRlBHz485UJMPFzlXnSTvQidTLu/DLtzmYO1GLS6dkuBJrZoAtOW8tD/mKpqZBafkcg37y2Ye+NiG65EMPjAI5aGWNiNNNQZck3FmK2z9exoonPKyDdI56MK1jpQMETahAHg56cPDZ7BfQUH05e1bkaMgDhR3CkgJE9sYl8xIPXx9+2qmBwdk7qGcSCNqWd9lZamIf1pmA4RCBmB1XeI1XeTtqA0K0gUBxfFmgXsa+aIYGaGrpu5lQOBnKEQXF1gttQs3Oy/HLoXAe13rRLkWKauhdPddcxzq/ilxgOyHLj4DglglGSeUc3d8zfXFgWOiRPLNTZXngsiWVhoBQySX6ynPxEYKwSRjJcCnsUGiwwblGzrWs/kEXN61WjIm9slF3hsXWr3cl72i5UNqZ9gADiDQs12jnDc2rfGN9YF8uhKW/bfNFtgyaw7k5sWtC9+DYdSlXfaDbxpQd5GEe/+cGxLnsQ2ZVHAtncj5Sob5L5Q29AhKdXr8dMRY6qndw0g2t1KpOmPfaSPQNGyicONQ83H0mcfDYp5MsMauhOt6qvtIpWtZyxwiaEMEl81SmgL9qKlf4hdfMR9w+NNDb5qeK9aKPGaThksz+1jIb/XB/BhjLA5ai5lXdQl864KjdpnVkc6doJp17Hp3g/Zu5zmRLi3Gj9GO9gYlz4tvPAl2pWglKa1MQmmZIwbdB6qXOQn34XI31/mJA61OmFgcvtQcwXGxnF+7X8mUxxO7D+QOMOPqG+nEn+2aVx/T9SFOQru1LXAbqdjHYSv2j/t3IqSLeqq5g/WydrxIIPCtDuNnKRFc7IicnW//qUmc0J0CpZ1/Aa4rqQamu4Djp89wEN3SWmHt/q+OZ45CBXpfCbpLf3Retc+nZyn9PjEeImdBxIYgnSdB5sVctpzZE4t9bNcrG+xkjcipWDJRSnJEHdswbrFSktq8b8fqTEs3HUZHh9pBJhlhu2B6QIxQ63SEztR2EsXM2kUgDvzDwZHiV1ASKwvUysIU/YcmV89Odpkz/rO911Zh6vkwZzYeDSE//315LYdEPnI0C/6ltgR84qFQGKMFqA9HR3QQNDlS2jgdSc7VIXbYIKrkF6LAGReF0lIUf0D/6Jvegpej881yOKpKsiuX1BmMw/pEU78o7x0bEnBC8xu8goIrQUszvBJV6GvLn4gSEP/DlYZUv3llDe+FUnqe5n058i9eH8IkNlRG4WI2WEK6MH7erSYPH056VMP2EEfUWZSyTv8U+YbbinvpD1vTEgKiIqmsIZeOdaKD12IiG4QpfUc5c7jmp7DFBEpePRFdjAhlwCc9SUKCQLoXdz5PavG7Yo3SPfF9OaSVVWtlBDJrpJsgD6/2rJiNorzbv1lnMVEqqohaSwNEnPn0gBEn21Zhaxj8h5TnW6cCDyUd4J755aE+bF8dHX9megx0O/927WF3srgQYMxeC5Wx98hnxJt4hIdM9jg41O4mRkoZrDw5nToYXjnyNVeUpAdTgCb66cnlpZEIENV+3B3ysBMlYu/xbNEswtAamppzvn31StAOHNvREENYhwSUAmW7f9Uw3Bvm+dyt2i/EEOnhVdSrjZj8TkT9kS2tlajCee9dAou4d4O20oPDI7TVEO/jnRJBO0x2eEfvEK0wAqmWREDjleMpxR+jYbiRHTCQndD4h/1mlSf1h4Kk2/SP+say8kO/w5Q8J8j/hGUemBm+r+IVbZIi7uyIWplf5Yr7d6wEoY3nzbsLFXwwLFHLjjNE2vIeTsmpqDUBY9JSO7uk5QILuln2/wGQ6oWTPxz55PwNK75Z5rO5SmSkj/wfyTUrJXiRjmccDs/Vj7kLo6t7q+fiO0CGQVH3Q60/SpYiks1mhQaMBNhpQchRPqLz4LnpYGGJhOXwWlX0+zn7Pjwo9IGjbNWdjQC0xIW8KqE3h7mCHHjtfCT829eo6jCTK4njPq8VctJ344rGv1MDkW0Rn6a1Yc1DVby2iy+Ri68375veyrgx4waZe6cEgn03AyPTEYHhBpvGhoNP6c1HCEpmCu6EeyuX4pKcXI7x0Tp0HLSHxpaxiTYyo79/f75yQenmXcPiu3pFto778kpDlzDj0bs001nqRh870f54KYLYkU/vwz2tObiAef4Qmhq6q/yvlX90fComKdTcP6CvBQbGTENZ9Np68VFLqP3H1/QutNbA4V89mePXpdu9JQEFpC2hG3eQ6iJXLoNOZ2i48VrSa1UIJOb7ZkDg8Tt3L4tM6ZwuFfg5JHYGR1hnU6aGm2RaBSKRn6CdqPzTCkNnLJJm0deNN4/b3N8Ug0qTkk5uxJ/ejW3o6NXI19RG+bUWVOu0112DbMF2zrYuZ8etYq3M4ESFLLEOFsjWh7IT8DjzV66C2a5dFn7vLhpSQrDmFt6evrFzo+6jmrZqhjvR5cjxNupYAQuzf+3QkzC4imiIOHMSp4z74Tx5GofPaYGELEYRgjzFLgsvxpGVsfG4tARTR88ioqV0N7+2i9hAD8WwW4t/JRmq+L/LxfDeLyUMOubFy4VypxNr2BcNY526wC87PARxsaWi1cusOTo+mgXAiQhWs+UoTsYHlPNX4PzUEvJ1NwFokRADAUCPF0ENrgcbYNgsq5ZAeCkRkgZ8B1QdiyrRwLfpJi9zlguJrim9eOc8JS5RShICrzPeRXeI1qjDFeqx27dBi6EzA30OZ3OUpVj/jfBkuyttPgcIExnAG7O+VZiusDG1bCi+DRwS1sB3lRcrl+5YCqmzfsvgn/91LzxQt76cfofoS59wKF7XEnscjkhDT0s3iAt58ONjq0LJTfmq69kMOuvxX5bXJaQ7x8nu5pz+BM/h/gmdcEtpZ/yeTmnr9J6BlGfx9SKYdZSsG46T4BbFDliOtDbSjmIj1pRibY4yFqAHPdoQ4KYeuVDTIAkQdTL5vNQyOpnUZOBJSP/d9hct1HGa7x37yGiIheQLGAZjHRI+2zpWGS807ao71La6H2g2jf6UiZZGo7zK/WH9YTSna7PniRrnHOI1mfnYjQifCItXCX9unECpIYjmMPVaaFQVsbntCo9dBCit6yl0rJDIHmNiJg05NiENvqeQTjIV2LTqsa1BsfcfWUYfFyIj6s9KhhnxJnLk79eyTcSYEtrzsF1u0dmMJEs9zyESDhzf/oDpcmyUgCrxFJRMdA7FcRjw/2BQ9DLn94RAFGKmnjXBahLRxnCs4waCT5Zy4saz22km4Ocky+P3gQY5aeE86PFXIWp4Y+wNPuK+EFl6f5SV9pzxSe7tAsPzVBgvJZIw14rqXuHu6K+t5DZmrTysTTK8JIcTwnvT5qGhz9miU5eeS9iITIbF7NEORiUnTlGy0AZXCgJrEWV4qgk7qfb8JsQ+a/90420FzuigRGulX594e7PVv1tr7pkQMC9zbUkNF6pULjLJH2WSkoju3m42qa/d3Xn3loCnQaGhx3h6x8aGDGMJXqqpHRb2JxpkaIuVP4VXDWCahpqdF5X1jXRGtfpiEqup7rdYLyvLv+DUtTAbUagj8vHcjEnpSOaPKhiX6giG6RmvWzfogkA=",
+  "mac": "NmyB6+yILr2F4NnQM83AUWX4ne9BtX2yU6iYkh2bkCw="
+}
