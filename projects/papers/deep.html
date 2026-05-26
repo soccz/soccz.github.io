@@ -508,6 +508,13 @@
 <script src="viz/voc-empirical-sharpe.js"></script>
 <script src="viz/voc-empirical-positions.js"></script>
 <script src="viz/voc-variable-importance.js"></script>
+<script src="viz/tg-diffusion-process.js"></script>
+<script src="viz/tg-ablation-N.js"></script>
+<script src="viz/tg-langevin-sampling.js"></script>
+<script src="viz/tg-crps-comparison.js"></script>
+<script src="viz/tg-architecture-flow.js"></script>
+<script src="viz/tg-noise-prediction.js"></script>
+<script src="viz/tg-traffic-predictions.js"></script>
 <script src="viz/voc-comparison-table1.js"></script>
 
 <script>
@@ -601,12 +608,11 @@
         { num: '13',    ttl: '메타 통찰 12개',  desc: 'General tool > Domain-specific variation / EBM 의 functional 자유 / Image → Time Series paradigm transfer / OOD detection 의 likelihood paradox / High-D dataset 의 diffusion 우월성.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-26_rasul-timegrad-diffusion-time-series') + '#sec-13',  text: '통찰 →' }
       ],
       preview: {
-        title: '맛보기 — TimeGrad architecture flow',
-        subtitle: 'RNN + Diffusion 의 우아한 결합. ' +
-                  '왼쪽: 시계열 history $\\mathbf{x}^0_{1:t-1}$ + covariates → RNN (LSTM 2-layer, hidden=40) → $\\mathbf{h}_{t-1}$. ' +
-                  '오른쪽: $\\mathbf{x}^N_t \\sim \\mathcal{N}(0, \\mathbf{I})$ → N=100 reverse Langevin loop → $\\mathbf{x}^0_t$ (clean prediction). ' +
-                  '★ Image domain 의 DDPM 의 시계열 directly transfer.',
-        vizType: 'pt-graphical-models'
+        title: '맛보기 — Diffusion Forward Process (Eq 1 + Eq 3)',
+        subtitle: 'n 슬라이더로 diffusion step 진행 (1 → 100). View 토글로 noisy sample x^n_t vs β schedule vs ᾱ_n 누적 확인. ' +
+                  'n=1: 거의 clean (점선 x^0 와 일치). n=100: pure Gaussian noise. ' +
+                  'ᾱ_n = ∏(1-βi) 가 1 → 0 으로 변하면서 신호 보존 비율 감소. ★ DDPM 의 핵심 형식.',
+        vizType: 'tg-diffusion-process'
       }
     },
     '2026-05-19_nie-patchtst-time-series-64-words': {
