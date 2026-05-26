@@ -1,5 +1,8 @@
 # 9-B. 사고 확장 — Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: 직접 후속: Marks SFC, Templeton Sonnet scaling, Cunningham auto-interp, Gao Top-K, Lieberum Gemma Scope.
+
+
 ---
 
 ## Follow-up 1 — 선행: "Toy Models of Superposition" (Elhage et al. 2022)
@@ -29,3 +32,21 @@
 **본 논문(Monosemanticity)과의 관계**: 직접적 후속이며 스케일링 검증. 1-layer에서 성립한 SAE 방법론이 실제 대형 모델에서도 통함을 보인다. 단 대형 모델에서 추가로 발견된 복잡한 특징들 ("다중 모달", "추상적 개념")은 단순 단의미성을 넘어서는 구조를 보여준다.
 
 **얻을 수 있는 것**: SAE 특징이 "시계열 모델에서도 비슷하게 풍부하게 나오는가?"라는 내 연구 질문에 대한 기대치를 설정해준다. 또한 특징 조작(steering) 기술이 APF에서 "원하는 attention motif를 유발하는 방향으로 모델을 조종"하는 데 사용될 수 있는 가능성도 제시한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Marks SFC 의 *direct 결합* 의 technical 핵심?**
+2. **Templeton Sonnet scaling 의 *technical challenge*?**
+3. **Lieberum Gemma Scope 의 *democratization effect*?**
+
+### 답변
+
+1. **Attribution patching 의 *SAE-aware extension***. Marks 의 SFC = "*SAE feature 의 attribution patching*" — Bricken 의 SAE 가 *direct prerequisite*. Marks 의 *novel contribution* = "*attribution patching 의 feature-level*" + "*3-fold evaluation*" — Bricken 의 *infrastructure* 위에 *circuit discovery*.
+
+2. **Architecture scaling + Engineering**. Sonnet (~70B params) 의 SAE = *distributed training* (multiple GPUs), *sparse attention* 의 efficient computation. Same Bricken recipe, but *engineering challenge* — *Anthropic 의 internal infrastructure* 가 critical. *Methodology unchanged*, *scale 만 1000×*.
+
+3. **Reproduction barrier 大幅 감소**. Pre-Gemma: SAE training = A100 × 12h ($50+). Post-Gemma: "*pre-trained SAE 무료 download + inference 만*" — *cost 0*. → 학부생 / 학교 cluster / 1 GPU desktop 도 *SFC pipeline 사용 가능*. *Field 의 폭발적 growth* 의 *enabling factor*.

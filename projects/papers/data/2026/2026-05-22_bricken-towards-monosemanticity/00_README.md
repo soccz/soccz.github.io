@@ -1,5 +1,8 @@
 # 네비게이션 — Towards Monosemanticity
 
+> **🧒 한 줄 요약**: 본 deep dive 의 *입구* — 17 + 7 chapters 의 길찾기, 학습 path, 본 paper 가 SAE era 의 *founding paper* 인 이유.
+
+
 **원문 제목**: Towards Monosemanticity: Decomposing Language Models With Dictionary Learning
 **한국어 번역**: 단의미성을 향하여: 딕셔너리 러닝으로 언어 모델 해체하기
 
@@ -64,3 +67,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9-B. Follow-up 논문 3편 |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9-C. 실험 아이디어 2개 |
 | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 의 *읽는 순서* 의 권장 path?**
+2. **Bricken 2023 이 *founding paper* 인 이유?**
+3. **본 paper 의 *3년 후 industry impact* 의 핵심?**
+
+### 답변
+
+1. **선형 path**: 02_tldr → 03_problem → 05a→c → 06_experiments → 17_aftermath 의 *paper 흐름 + 3년 후속*. *시간 부족* 시 02 + 05b + 06 + 11 의 4 chapters 가 *핵심 요지* — 1시간 안에 완성.
+
+2. **Methodology + result 의 *first compelling marriage***. Olah / Olsson / Elhage 가 *각각 partial* (artisanal circuits, induction heads, superposition theory). Bricken = *integrated empirical case* (real text + SAE + monosemanticity) — Anthropic interp era 의 *foundational anchor*. 후속 모든 paper 의 reference.
+
+3. **Academic toy → Production tool → Commercial reality**. 본 paper 의 1-layer SAE → Templeton 의 Sonnet scaling → Anthropic feature steering → 2026 commercial editable AI. 3년 만의 *academic to commercial* trajectory — Anthropic vertical integration 의 *accelerated translation*.

@@ -1,5 +1,8 @@
 # 3-A. 핵심 Claim 해체 — Claim 1 & 2: 폴리시맨틱성과 슈퍼포지션
 
+> **🧒 한 줄 요약**: Raw neuron 의 *복수 concept activation* (polysemanticity) 의 *empirical reality* + *compression 의 결과* 논증.
+
+
 > **배경 사다리**: ① 선형대수에서 "직교(orthogonal)"란 두 벡터가 서로 전혀 정보를 공유하지 않는다는 뜻이고, ② 고차원에서는 랜덤 벡터들이 거의 항상 서로 직교에 가깝다는 기하학적 사실, ③ "ReLU 활성화"는 음수 값을 0으로 자르는 단순한 함수 ($\max(0, x)$). 이 세 가지를 전제로 읽는다.
 
 ---
@@ -46,3 +49,21 @@ $$x_\text{model} \approx \sum_{i=1}^{n} f_i \cdot \mathbf{d}_i$$
 스위스 군용 칼에는 칼, 가위, 드라이버, 코르크스크류가 다 들어 있다. 모두 하나의 도구 슬롯에 집어넣었는데, 한 번에 하나씩만 쓰므로 서로 많이 방해하지 않는다. AI 모델의 뉴런이 딱 이와 같다 — 대부분의 순간에는 DNA 서열과 히브리어가 동시에 나오지 않으므로, 두 개념을 하나의 "방향"에 겹쳐 저장해도 큰 문제가 없다.
 
 → [Claim 3 & 4는 04_claims_b_sae_evidence.md에서 계속]
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Polysemanticity 의 *empirical demonstration* 방법?**
+2. **Raw neuron 의 *top-activating contexts* 의 *mixed concept* 증거?**
+3. **Polysemanticity 의 *unavoidability* 의 archtectural reason?**
+
+### 답변
+
+1. **Top-context inspection + clustering**. Raw neuron 의 top-100 activating tokens 수집 → Human / LLM 으로 *concept clustering* → 2+ distinct clusters 면 polysemantic. Bricken paper §1 Figure 1 의 *예시*: "neuron 42 fires on `he`, `January`, `<code>`, `Mr.`" — 4 concepts.
+
+2. **Concept distance 의 quantitative metric**. Top contexts 의 *semantic embedding* (e.g., GloVe, BERT) → cluster coherence (silhouette score). Monosemantic: high coherence (single tight cluster). Polysemantic: low coherence (multiple loose clusters). *Quantitative threshold* 가 *polysemanticity 의 objective signature*.
+
+3. **Capacity > demand 의 architectural compulsion**. Transformer 가 *N latent concepts* 학습 + d neurons (N > d) → *minimum description length* 가 *sharing 강제*. Without sharing → information loss → task performance hurt → loss penalty → gradient pressure to *share*. → "*polysemanticity 는 학습된 게 아닌 architecture 강제*".

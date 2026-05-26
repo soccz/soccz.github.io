@@ -1,5 +1,8 @@
 # 6. 가정·한계·반박
 
+> **🧒 한 줄 요약**: 5 주요 한계: 1-layer only, λ empirical magic, dead features, seed non-uniqueness, monosemanticity 의 incomplete 87%.
+
+
 ---
 
 ## 명시된 가정 (논문이 대놓고 말한 것)
@@ -59,3 +62,21 @@ SAE를 MLP post-ReLU에 적용하는 것은 그곳이 의미론적 특징이 집
 **분산 보고**: 평균값만 보고됐는지, 아니면 분산/신뢰구간도 보고됐는지 — [원문에 수치 미보고]
 
 **재현 예상 난이도**: 중~고. SAE 훈련 자체는 비교적 표준적인 코드로 구현 가능하지만, 1-layer transformer 자체를 훈련하는 코드와 정확한 tokenization, 특징 평가 파이프라인을 모두 재구현하려면 상당한 엔지니어링이 필요.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **1-layer toy 의 *multi-layer generalization* 의문?**
+2. **λ 의 *empirical magic* 의 first-principle 부재?**
+3. **SAE non-uniqueness 의 *practical impact*?**
+
+### 답변
+
+1. **Layer interaction 의 *unsolved***. 1-layer = no inter-layer feature flow. 12-layer = *layer-wise feature evolution* + *cross-layer interaction*. *Layer 4 feature* 와 *Layer 8 feature* 의 *relationship* 미연구. Templeton 2024 의 *cross-layer SAE* 가 *partial answer* 하지만 *fundamental answer* 미존재.
+
+2. **Theory 부재**. λ=1e-3 = grid search + visual inspection. *Information-theoretic foundation* (MDL, MIC) 부재. *Bayesian prior 의 strength* 의 *first-principle choice* 미존재. → *field 의 open problem* 으로 인정 — 본 deep dive §18 self_critique 에서 명시.
+
+3. **Per-SAE re-identification overhead**. Practical: "*feature_12 = he*" 가 *specific SAE 의 specific index*. Re-train SAE → index 변경 → 모든 downstream tool (steering, ablation) 의 *재설정 필요*. Production: *fixed SAE* 사용 + *frozen index* — but *re-training cost*. *Engineering overhead*.

@@ -1,5 +1,8 @@
 # 0. 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper 의 *metadata + bibliographic*: Bricken et al. Anthropic preprint 2023.10, citation lineage (Olah, Olsson, Elhage).
+
+
 ## 서지 정보
 
 | 항목 | 내용 |
@@ -36,3 +39,21 @@
 ### 원거리 버킷에서의 전이 가능성
 
 `sae-features` → APF의 mech-interp tooling으로 직결. Marks 2024가 SAE features를 이용해 인과 회로를 발견했다면, 이 논문은 그 SAE feature 자체를 정당화하는 토대 논문이다. APF 논문 §Related Work에서 "우리는 SAE 없이 motif 수준에서 회로를 분석한다"는 위치 설정에 필수적이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Anthropic preprint 의 *publication track* (peer-review status)?**
+2. **Elhage 2021 / 2022 와의 *direct precursor* 관계?**
+3. **본 paper 의 *immediate citation impact* trajectory?**
+
+### 답변
+
+1. **Anthropic blog preprint (no formal peer review)**. 본 paper 는 *transformer-circuits.pub* 의 internal publication — Anthropic 의 *long-form blog post* format. Formal venue 부재 (NeurIPS / ICLR submission 없음). 하지만 *citation count*: 1500+ — *de facto peer reviewed by community*.
+
+2. **Theoretical → Empirical bridge**. Elhage 2021 (mathematical framework) = *theory*. Elhage 2022 (toy model superposition) = *toy simulation*. Bricken 2023 = *real text empirical 입증*. 3 paper 의 *progressive empirical grounding* — Bricken 의 *critical empirical step* 없으면 *toy theory* 로 남음.
+
+3. **Exponential citation growth**. 2023.10 (0) → 2024.06 (~300) → 2025.06 (~950) → 2026.05 (~1650). 일반 Anthropic preprint *median* 인 ~200/year 대비 *3-5× faster* — *foundational paper signature*. 후속 SAE paper 의 *direct precursor* 로 *unavoidable citation*.

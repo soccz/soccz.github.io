@@ -1,5 +1,8 @@
 # 8. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와의 연결: SAE feature ↔ motif identification, monosemanticity ↔ motif purity.
+
+
 ---
 
 ## APF (Attention Pattern Fields) — 직접 연결: mech-interp tooling
@@ -75,3 +78,21 @@ Monosemanticity는 MLP 레이어에만 SAE를 적용한다. 하지만 APF 연구
 | APF 4-라인 증거 구조 | **중간** | Monosemanticity 프로토콜 → APF 주장 강화 |
 | Grokking + SAE feature tracking | **강함** | Phase transition 전후 SAE 특징 비교 → 진화 메커니즘 |
 | AutoInterp in TS domain | **중간** | 새 도메인에서 자동화 해석가능성 구축 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF *motif* 와 SAE *feature* 의 *structural analogy*?**
+2. **TS-domain 에서의 SAE *adaptation challenge* (no token boundary)?**
+3. **내 연구 에 *direct adoption* 가능한 SAE 요소 3가지?**
+
+### 답변
+
+1. **Latent space 의 *interpretable unit decomposition***. APF: attention pattern 의 *motif* 식별 (RoPE × Q-sim plane). SAE: residual 의 *feature* 식별. 둘 다 *high-dim latent → low-dim interpretable unit*. APF 의 motif typology = SAE 의 feature catalog 의 *시계열 analog*.
+
+2. **No discrete token boundary**. TS Transformer 의 input = *continuous values* (price, volume, etc), not discrete tokens. SAE feature 의 *activation pattern* 이 *continuous attribute* (e.g., "uptrend strength", "volatility level") 형태. → *categorical feature* 와 다른 *quantitative feature* — *interpretation protocol 재정의* 필요. Cunningham 의 auto-interp 도 *text-specific* — TS 에는 *visualization-heavy* alternative 필요.
+
+3. **L1 SAE training**, **monosemanticity verification protocol**, **decoder normalization**. 3 가지 모두 TS / vision 도메인 의 *직접 adoption* 가능 — *architecture-agnostic*.

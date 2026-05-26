@@ -1,5 +1,8 @@
 # 4-A. 방법론 해부 — 큰 그림
 
+> **🧒 한 줄 요약**: Sparse coding (Olshausen 1996) 의 *transformer 적용*: overcomplete dictionary + L1 sparsity = decompression.
+
+
 > **배경 사다리**: ① "오토인코더(autoencoder)"란 입력을 압축했다가 다시 복원하는 신경망이다 — 마치 이미지를 JPEG로 압축한 뒤 다시 열어 보는 것처럼. ② "희박성(sparsity)"이란 출력 벡터에서 대부분의 값이 0이고 소수만 0이 아닌 상태를 말한다 — 마치 스위치 1000개 중 한 번에 10개만 켜진 것처럼. ③ 선형대수에서 "딕셔너리(dictionary)"는 기저 벡터들의 집합으로, 임의 벡터를 이 기저들의 조합으로 표현하는 데 쓴다.
 
 ---
@@ -69,3 +72,21 @@ Post-ReLU를 선택한 이유: ReLU가 음수 값을 이미 0으로 만들었으
 ```
 
 → [SAE 수학적 상세 내용은 05_method_b_sae_architecture.md에서 계속]
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Olshausen 1996 sparse coding 의 *28년 후 회귀*?**
+2. **Overcomplete dictionary 의 *expressivity vs uniqueness* trade-off?**
+3. **L1 sparsity 의 *Bayesian interpretation* (Laplace prior)?**
+
+### 답변
+
+1. **Sparse coding 의 *substrate universality***. Olshausen 1996 의 V1 cortex sparse coding + Bricken 2023 의 transformer SAE = *동일 algorithm + 동일 result*. 28년 격차 = "*independent biological + artificial 도달*" — *sparse coding 가 representation 의 universal principle*. AI ↔ neuroscience 의 *unifying insight*.
+
+2. **Expressivity 좋음, uniqueness 나쁨**. Overcomplete (N > d) → dictionary 가 *over-parametrized* → 임의 input 의 *infinite many sparse representations*. 일반적 *L1 regularization* 으로 *unique sparse solution* 유도. 그러나 *seed-dependent specific* uniqueness — *practical issue*.
+
+3. **Laplace prior on z**. p(z) ∝ exp(-λ ||z||_1) = Laplace distribution. MAP estimate = argmin (||x - decode(z)||² + λ ||z||_1) = recon + L1. 즉 L1 = *Laplace prior 의 Bayesian* MAP. → *λ tuning* 이 *prior strength* tuning — *Bayesian interpretation*.

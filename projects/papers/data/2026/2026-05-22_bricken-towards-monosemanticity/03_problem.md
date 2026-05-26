@@ -1,5 +1,8 @@
 # 2. 문제 지형도
 
+> **🧒 한 줄 요약**: Superposition 의 *압축 결과로 polysemanticity 불가피*. SAE = 그 *압축의 inverse decompression*.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① 신경망이 입력을 수치 벡터로 변환하는 "활성화(activation)" 개념, ② 하나의 뉴런이 여러 입력에 각기 다른 세기로 반응할 수 있다는 것, ③ 고등학교 수준의 행렬 곱셈 개념 정도만 있으면 된다. 이 세 가지를 먼저 짚고 시작한다.
 
 ---
@@ -62,3 +65,25 @@ Bricken et al. (2023)은 이 gap을 세 가지 방식으로 메운다:
 **셋째**, 슈퍼포지션 이론의 직접적 실증 증거를 제공한다 — 512 뉴런에서 4,096개 이상의 특징을 추출함으로써 "실제 모델도 슈퍼포지션을 활용한다"는 것을 확인한다.
 
 이 논문이 중요한 이유는 방법론 기여 이상으로, **"우리가 뉴런이 아닌 특징을 회로 분석의 기본 단위로 삼아야 한다"**는 패러다임 전환을 실증적으로 정당화했기 때문이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Superposition 이 *압축 결과* 인 mathematical reason?**
+2. **Polysemanticity 의 *측정 가능 signature*?**
+3. **SAE 가 superposition 의 *inverse* 인 근거?**
+
+### 답변
+
+1. **Channel capacity 의 Shannon-style argument**. d neurons 의 *capacity* ≈ d log(precision) bits. N features 의 *required capacity* ≈ N log(precision) bits. N > d → *unavoidable compression* → 일부 features 가 *동일 neuron direction* 공유 (collision). Elhage 2022 의 *mathematical formalization*.
+
+2. **Top-activating contexts 의 *mixed concept* signature**. Raw neuron 의 top-10 activating tokens 가 *2+ concepts* 의 *seemingly unrelated* tokens 포함 → polysemantic. *Quantitative measure*: token clustering 의 *inter-cluster distance*. Cunningham 2024 의 *systematic measurement* protocol.
+
+3. **Compression = inverse of expansion**. Transformer 가 *N latent concepts* 를 *d 차원 hidden* 으로 encode 시 *N > d* 면 *information loss* 없이는 *unique decode* 불가능 — 일부 *shared neurons*. SAE = *overcomplete decode 학습* → "*N concepts 의 separate addressing*" 회복.
+
+
+```viz:bricken-superposition:title=paper §1 — Superposition Geometry,caption=Feature count slider.
+```

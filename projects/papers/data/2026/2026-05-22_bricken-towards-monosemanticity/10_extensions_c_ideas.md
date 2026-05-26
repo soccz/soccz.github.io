@@ -1,5 +1,8 @@
 # 9-C. 사고 확장 — 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 *연구 아이디어*: TS-domain SAE, grokked + SAE, hierarchical SAE, online SAE, SAE-based reward model debugging.
+
+
 ---
 
 ## 아이디어 1 — "SAE Motif Attribution": 시계열 Transformer에서 Attention Motif의 SAE 특징 원인 규명
@@ -82,3 +85,21 @@ SAE가 Grokking 전후에 동일한 특징 분포를 보인다면: Grokking의 �
 - 분석: 하루
 - **총**: GPU-day 기준 약 3일
 - **Grokking 논문의 §3 메커니즘 분석의 핵심 기여**가 될 수 있음 (Nanda 2023을 넘어서는 새로운 방법론)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **TS-domain SAE 의 *unique challenge*?**
+2. **Grokked + SAE 의 *feature emergence trajectory* 추적?**
+3. **SAE-based reward model debugging 의 *practical 가치*?**
+
+### 답변
+
+1. **Token boundary 의 부재**. TS = continuous, no semantic tokens. SAE 의 input = *per-time-step residual* (or per-variate, in iTransformer). Feature 의미 = *temporal attribute* (e.g., "trending up", "high volatility regime") 형태. *Visualization* = *time series highlight* (어느 time interval 에서 activate) — 새 protocol 필요.
+
+2. **Phase-wise SAE**. Grokking 의 4 phases (random / memorize / transition / grokked) 각각의 SAE 학습 → feature 의 *emergence / disappearance* 추적. Phase transition 시 *어느 features 가 새로 나타남* → *circuit formation trajectory* 의 *temporal map*. Grokking 의 *mechanistic explanation* 강화.
+
+3. **Reward model 의 internal feature 분석**. RLHF reward model 의 residual → SAE → feature 별 의미. *"Reward hacking" features* (e.g., "긴 답변 prefer", "특정 phrase repeat") 식별 → 선택적 ablation → *better-aligned reward*. *Practical safety value*.

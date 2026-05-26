@@ -1,5 +1,8 @@
 # 4-B. 방법론 해부 — SAE 아키텍처 & 손실함수
 
+> **🧒 한 줄 요약**: W_enc / W_dec / b_enc / b_dec 의 *4-parameter SAE*, decoder column normalization, L1 sparsity loss.
+
+
 > **배경 사다리**: ① 행렬 곱셈 $Wx$는 입력 $x$를 선형 변환하는 연산. ② ReLU($z$) = $\max(0, z)$는 음수를 0으로 자르는 함수 — 비선형성의 역할은 "이 방향이 활성화됐나?" 판단. ③ L1 정규화는 벡터 원소들의 절댓값 합으로, 많은 원소를 0으로 만드는 희박성을 유도한다. L2(제곱합)와 달리 L1은 정확한 0을 선호한다.
 
 ---
@@ -68,3 +71,25 @@ $$\mathcal{L}(x) = \underbrace{\|x - \hat{x}(x)\|_2^2}_{\text{재구성 손실}}
 주요 발견 (§Feature Properties): 딕셔너리가 클수록 (a) 더 많은 특징이 발견되고, (b) 개별 특징의 활성화 빈도가 낮아지며(더 희박), (c) 해석가능성이 대체로 유지된다. 이것은 슈퍼포지션이 실제로 존재하며, 더 큰 딕셔너리일수록 더 많은 개념을 분리할 수 있음을 시사한다.
 
 → [해석가능성 평가 프로토콜은 05_method_c_evaluation.md에서 계속]
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Encoder W_enc / Decoder W_dec 의 *4-param 구조*?**
+2. **Decoder column normalization 의 *목적*?**
+3. **b_enc / b_dec 의 *각각 역할*?**
+
+### 답변
+
+1. **Encoder + Decoder + 2 biases** (paper §2). W_enc ∈ R^{d×n}: residual → feature space. W_dec ∈ R^{n×d}: feature → residual. b_enc: encoder offset. b_dec: *pre-centering* of input (x - b_dec). 4-param 의 *minimal SAE*.
+
+2. **L1 의 정상화**. Decoder column ||w_dec_i|| 이 *임의 scale* 이면 z 의 magnitude 도 *임의 scale* → L1 penalty 의 *effective strength* 가 *feature-dependent*. Normalization (||w_dec_i|| = 1) → z 의 *true magnitude* 만 penalize → *fair sparsity* across features.
+
+3. **b_enc = bias 의 ReLU shift**. ReLU(x_centered @ W_enc + b_enc) 의 b_enc = *activation threshold*. b_enc > 0 → feature *easier to activate*. b_dec = decoder의 *additive offset* — residual 의 *baseline value*. 각각 *encode threshold* + *decode baseline*.
+
+
+```viz:bricken-sae-training:title=paper §3 — SAE Training Dynamics,caption=Resample on/off toggle.
+```

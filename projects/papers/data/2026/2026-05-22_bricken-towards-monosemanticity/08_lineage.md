@@ -1,5 +1,8 @@
 # 7. 이론적 계보
 
+> **🧒 한 줄 요약**: Olshausen 1996 → Elhage 2022 (toy) → Bricken 2023 (real) → Marks 2024 (circuit) → Templeton 2024 (Sonnet).
+
+
 ---
 
 ## 이론적 조상 — 이 논문을 낳은 4개의 뿌리
@@ -47,3 +50,21 @@ SAE 특징을 기반으로 인과 회로를 발견하고 편집하는 방법. Mo
 ### 후손 3 — SAE 비판 논문: "Sparse Autoencoders Do Not Find Canonical Features" (ICLR 2025)
 
 검색 결과에서 발견된 논문. SAE가 독립적이고 유일한 특징 기저를 찾는다는 보장이 없다는 이론적·실험적 비판. 이것은 Monosemanticity의 "고유성 부재" 한계를 직접 공격한다. 이 계통의 비판이 SAE 방법론 전체에 어떤 영향을 미칠지가 2025-2026년의 핵심 논쟁이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Olshausen 1996 의 *neuroscience origin* 의 의의?**
+2. **Elhage 2022 (toy) → Bricken (real) 의 *bridge 의 critical step*?**
+3. **Templeton 2024 의 *scaling 후속* 의 direct continuation?**
+
+### 답변
+
+1. **Biological substrate 의 algorithmic discovery**. Olshausen 의 *V1 sparse coding* = *biological observation*. Bricken 의 *transformer SAE* = *artificial mimicry*. 동일 algorithm 의 *biological & artificial 양쪽 emergence* = "*sparse coding 가 universal representation principle*". → AI ↔ neuroscience 의 *unifying principle*.
+
+2. **Toy → Real 의 *empirical viability* 입증**. Elhage 2022 = "*superposition 가능 in toy*" — 하지만 real model 미증명. Bricken 2023 = "*SAE decompression 가능 in real transformer*" — *critical empirical bridge*. Without Bricken, *all subsequent SAE work* (Marks SFC, Templeton scaling) 의 *empirical premise* 부재.
+
+3. **Same method, scaling only**. Templeton 의 Sonnet SAE = *동일 architecture* (encoder + decoder + L1), *동일 training* (Adam + resample), *동일 evaluation* (auto-interp). *유일 차이* = *model size + training data scale*. → "*Bricken methodology 의 1000× scaling*" — *direct continuation*, not new method.

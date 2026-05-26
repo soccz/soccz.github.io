@@ -39,3 +39,21 @@ $$\mathcal{L}(x) = \|x - \hat{x}\|_2^2 + \lambda\|f(x)\|_1$$
 **기여 4 — SAE 특징 기반 회로 분석 (Circuit Analysis)**: SAE 특징을 이용해 뉴런 수준보다 더 명확한 회로 분석이 가능함을 시연. 특징 절제(ablation)가 의미 있는 기능적 효과를 낳음.
 
 **핵심 한계**: 1-layer transformer에 한정되어 대형 모델로의 스케일링 불명확. L1 페널티가 특징 분리/합병을 인위적으로 유발할 수 있음. SAE가 "진정한 특징"을 찾는다는 보장 없음 (non-uniqueness).
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 paper 의 *one-line core claim*?**
+2. **SAE 의 *practical viability* 의 의의?**
+3. **87% monosemanticity 의 *strong vs weak* claim 위치?**
+
+### 답변
+
+1. **"1-layer transformer + Sparse Autoencoder = ~87% monosemantic features (auto-interpretation verified) — providing empirical evidence that superposition is decompressible by an overcomplete sparse dictionary."** — 단일 문장이 3 contribution 함축.
+
+2. **Theoretical possibility → Empirical reality**. Olshausen 1996 의 *sparse coding* + Elhage 2022 의 *toy superposition theory* = *theoretically possible*. Bricken 의 *real transformer 의 SAE training success* = *practically viable*. → *후속 모든 SAE work* 의 *necessary precondition*.
+
+3. **Strong claim, moderate epistemic certainty**. 87% = *auto-interp success rate* — *LLM 의 자동 라벨링 success*. Human evaluation 더 *strict* 면 70-80%. 즉 "*monosemanticity 는 spectrum*" — 87% 가 *upper-realistic estimate*. *Strong claim* (대다수 monosemantic) + *epistemic moderation* (perfect 미달).

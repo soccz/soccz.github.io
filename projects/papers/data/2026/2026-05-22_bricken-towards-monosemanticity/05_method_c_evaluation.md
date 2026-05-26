@@ -1,5 +1,8 @@
 # 4-C. 방법론 해부 — 해석가능성 평가 프로토콜 & 구현 세부
 
+> **🧒 한 줄 요약**: Monosemanticity 의 *3-fold verification*: top-context inspection, auto-interpretation (LLM 라벨), activation distribution.
+
+
 > **배경 사다리**: 이 절은 "특징이 해석 가능하다"는 주장을 어떻게 엄밀하게 검증하는지를 다룬다. 기본 전제: 해석가능성은 주관적이므로 여러 독립적 측정 방법으로 교차 검증해야 한다.
 
 ---
@@ -92,3 +95,25 @@ $$\mathbf{d}_i \leftarrow \mathbf{d}_i / \|\mathbf{d}_i\|_2$$
 이 재정규화 없이는 SAE가 큰 크기를 가진 소수의 특징에 의존하는 해로 수렴할 수 있다.
 
 **죽은 특징 처리**: 학습 중 일부 특징 유닛이 항상 0 활성화를 보이는 "죽은 특징" 문제가 발생. 이를 해결하기 위해 주기적 재초기화 또는 auxiliary loss(죽은 유닛에 페널티 부여) 등의 기법을 사용한다 [구체 방법: 원문에 수치 미보고].
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3-fold verification (context, auto-interp, distribution) 의 *complementary roles*?**
+2. **Auto-interpretation 의 *87% rate* 의 *epistemic limitation*?**
+3. **"Monosemanticity 는 binary 가 아닌 spectrum" 의 의미?**
+
+### 답변
+
+1. **Context = qualitative direct evidence**. Auto-interp = quantitative + scalable. Distribution = mathematical signature (sparse + heavy-tailed). Context: human reads top-K activating sentences → 직관적 judgement. Auto-interp: LLM 으로 자동 → 4096 features 모두 가능. Distribution: power-law tail = monosemantic signature. *3-fold cross-confirmation*.
+
+2. **LLM ability + concept familiarity limit**. GPT-4 의 87% success = "GPT-4 가 alabel 가능한 features 의 87%". Rare concept, domain-specific (e.g., legal Latin), multi-lingual feature 등 *GPT-4 cover 부족* → "fail" — 하지만 *actually monosemantic* 가능. → 87% 가 *under-estimate* possible.
+
+3. **Spectrum interpretation**. Bricken 의 87% = "*single dominant concept* 의 feature 비율". 13% polysemantic = "*2+ concepts of comparable weight*". 하지만 monosemantic 의 *내부* 도 *weak secondary concept* 가 있을 수 있음 (e.g., feature 12 가 "*he/his/him* (strong) + *boy/man* (weak)"). → *binary categorization* 보다 *purity spectrum* (0-1) 가 *more accurate*.
+
+
+```viz:bricken-feature-activation:title=paper §4 — Feature Activation Distribution,caption=Mono/poly feature selector.
+```

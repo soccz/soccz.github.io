@@ -1,5 +1,8 @@
 # 9-A. 사고 확장 — 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 open question: feature universality, λ first-principle, multi-modal SAE, hierarchical SAE 등.
+
+
 ---
 
 ## Q1. SAE 특징은 유일한가? 만약 아니라면 "진짜" 특징이 무엇인지 어떻게 알 수 있는가?
@@ -46,3 +49,21 @@
 더 구체적으로: SAE가 65% 분산을 설명한다면, 나머지 35%를 담당하는 계산이 있다. 이 35%가 단순 노이즈인가, 아니면 "해석 불가능하지만 기능적으로 중요한" 계산인가? 만약 후자라면, SAE 기반 해석가능성은 시스템의 일부만 보여주는 것이다.
 
 이 질문은 APF 연구에서도 중요하다 — APF가 attention motif를 분석하는데, 만약 motif의 기능 중 일부가 "SAE 포착 불가능한 분산 연산"에서 나온다면 motif 분석의 completeness에 의문이 생긴다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Feature universality 의 *cross-seed alignment* 평가 방법?**
+2. **λ first-principle 의 *MDL / information-theoretic* 접근?**
+3. **Multi-modal SAE 의 *cross-domain alignment* 어려움?**
+
+### 답변
+
+1. **Cosine similarity matrix**. N seed 의 SAE 의 feature embedding 들 사이 *pairwise cosine similarity* → matrix. 각 feature 가 *다른 seed 의 어떤 feature* 와 가장 닮음 → 해당 *concept alignment*. Threshold > 0.8 면 *robust feature* — universal. 그렇지 않으면 *seed-specific*. → "*universal feature*" 의 empirical 정의.
+
+2. **MDL / BIC objective**. Minimum description length: λ = "*model complexity penalty*" 의 information-theoretic version. *Cross-validation* 으로 *task generalization performance* maximize. BIC = "*Bayesian model selection*". 모두 *principled choice* — but *active research* 상태.
+
+3. **Modality 의 *concept space mismatch***. Text concept ("dog") vs Image concept ("dog image") 가 *동일 latent direction* 일지? *Joint training* 이 *shared concept latent* 학습 가능하나 *modality-specific bias* 존재. Anthropic Sonnet 의 *vision feature* = *partial 입증* — *cross-modal alignment* 의 *active question*.

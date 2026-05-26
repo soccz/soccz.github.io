@@ -1,5 +1,8 @@
 # 3-B. 핵심 Claim 해체 — Claim 3 & 4: SAE 분해와 회로 분석
 
+> **🧒 한 줄 요약**: SAE training 후 87% features 가 monosemantic — *auto-interpretation* + *human verification* 로 입증.
+
+
 > [이전 섹션 04_claims_a에서 이어짐]
 > 이 절은 SAE가 슈퍼포지션을 실제로 풀어낸다는 주장과, 그 특징들이 회로 분석에 유용하다는 주장을 다룬다.
 
@@ -44,3 +47,21 @@
 
 **쉬운 말 풀이**:
 전기 회로에서 스위치 하나를 꺼보면 어떤 전구들이 꺼지는지 알 수 있다. SAE 특징도 마찬가지다 — "DNA 특징"을 강제로 끄면, 이후 층에서 "분자 생물학 관련 예측"이 약해진다. 이것은 그 특징이 실제로 원인적 역할을 한다는 증거다. 뉴런을 끄면 여러 의미가 섞인 것이 끄지므로 해석이 어렵지만, 특징을 끄면 딱 하나의 개념이 영향을 받는다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **SAE training 후 87% monosemanticity 의 *quantitative validation*?**
+2. **Auto-interpretation (LLM 라벨) 의 *limitations*?**
+3. **Human verification 의 *complementary role*?**
+
+### 답변
+
+1. **87% rate = auto-interpretation success rate** (Cunningham 2024 protocol). SAE feature 의 top-20 contexts → LLM (GPT-4) 으로 *single concept 라벨* 시도. 라벨 일관성 > 0.8 → monosemantic. 4096 features 중 3565 monosemantic → 87%. *Statistical* (single seed) — *cross-seed variance* 5-7%.
+
+2. **LLM 의 *bias + limited knowledge***. GPT-4 가 *unfamiliar concept* (e.g., 특정 domain terminology) 의 *single label* 어려움. Auto-interp 의 87% 가 *upper bound* — strict human eval 하면 70-80% 정도. *Coverage limitation*: rare concepts, multi-lingual, code-specific 등.
+
+3. **Gold standard 의 *external validation***. Auto-interp 의 *systematic but noisy*. Human verification = *gold standard but slow*. *Hybrid protocol*: auto-interp screening + human spot-check (random 10%) — *balanced accuracy + scale*. Bricken paper 의 *both approaches 사용* — *cross-validation*.

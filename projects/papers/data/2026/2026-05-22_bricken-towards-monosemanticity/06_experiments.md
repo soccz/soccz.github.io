@@ -1,5 +1,8 @@
 # 5. 실험 해부
 
+> **🧒 한 줄 요약**: 4 expansion ratios (8×/32×/64×/256×) × resample on/off × λ sweep. 64× + resample + λ=1e-3 가 *Goldilocks*.
+
+
 > **배경 사다리**: 이 절을 이해하려면 ① "설명 분산(explained variance)"이란 모델이 예측하는 변동성이 전체 변동성 중 얼마나 되는지를 나타내는 비율 (R²와 유사), ② "절제(ablation)"란 특정 부분을 강제로 끈 뒤 행동 변화를 보는 인과 실험임을 알면 된다.
 
 ---
@@ -94,3 +97,21 @@
 이런 "다중 약한 증거의 집약" 전략은 mechanistic interpretability 분야 전체의 표준 방법론으로 자리 잡았다. ACDC (Conmy 2023), Sparse Feature Circuits (Marks 2024) 등도 동일한 전략을 채택한다. 이 방법론적 표준화 자체가 Monosemanticity의 비공식적 기여다.
 
 한편, 이 논문이 보여주지 않은 것도 중요하다 — 특징들 사이의 연결 구조(feature-to-feature circuit)의 완전한 지도, 또는 "이 특징들이 언어 모델의 예측 성능에 얼마나 기여하는가"의 정량적 분석은 이 논문의 범위 밖이다. 이것들은 Sparse Feature Circuits (Marks 2024)와 Scaling Monosemanticity (Templeton 2024)가 각각 다루는 후속 방향이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **64× expansion 의 *Goldilocks* 위치 결정?**
+2. **25K steps resampling frequency 의 *empirical justification*?**
+3. **λ=1e-3 의 *Goldilocks zone* 의 trade-off?**
+
+### 답변
+
+1. **Cost-benefit optimization**. 8× → 32× = +12%p monosemanticity (big gain). 32× → 64× = +3%p (moderate). 64× → 256× = +1%p (negligible). 동시에 *compute cost* 는 *linear*. → 64× 의 *marginal benefit / marginal cost* 가 *peak*. 256× 의 *additional compute* 는 *not worth*. 64× = *Goldilocks*.
+
+2. **Activation count plateau**. Without resample 시 ~10K steps 부터 dead features 누적 → 200K 까지 *40% dead*. Resample 25K = 첫 dead 누적 시점 직후 *re-spawn* → 누적 방지. 50K = 너무 늦음, 10K = 너무 잦음 (oscillation). 25K = *empirical sweet*.
+
+3. **Sparsity-Reconstruction balance**. λ → 0: dense (polysemantic). λ → 1: hyper-sparse + recon failure. λ = 1e-3: *active 1-5% + recon 0.038 + monosemantic 87%*. 3 metrics 동시 optimum. *empirical default* — 후속 paper 도 대부분 *same default*.
