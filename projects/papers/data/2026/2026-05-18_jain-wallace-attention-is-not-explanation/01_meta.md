@@ -83,3 +83,21 @@ paper 가 NAACL 2019 best paper 후보 (acclaim 받음). 발표 후 1 년 안에
 4. **재현 가능성** — H1/H2 PyTorch 코드 (§14) 의 *모든 components* 를 *modular* 로 작성하여, APF / Grokking 의 *attention-faithfulness probe* 의 base implementation 으로 *직접 활용* 가능.
 
 → 본 deep dive 의 모든 챕터는 위 4 목적의 *최소 1 개* 를 직접 supports.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 paper 가 *왜 코어 (월요일) 버킷* 인가?**
+2. **본 deep dive 의 4 목적 중 *가장 critical* 한 것은?**
+3. **APF/Grokking 트랙과 본 paper 의 *연결 강도* 가 §C/§B/§A/§D 별로 다른 이유?**
+
+### 답변
+
+1. **§C (Attention-as-Explanation) 의 *시발점* 이기 때문**. 다른 코어 axis (§A Grokking / §B Mech Interp) 의 직격 paper 는 이미 cover (TAPPA / Nanda / ACDC). §C 만 단 한 paper (TAPPA 5/4) 만 cover — 본 paper 가 *시조 paper* 로 가장 합리적 선택. Axis balance 의 명시적 정당화.
+
+2. **#3 PE / Multi-head / TS-domain 좌표 명시**. *#1 protocol baseline*, *#2 rebuttal 정밀화*, *#4 PyTorch 재현* 은 다른 deep dive 에서도 흔한 패턴. 그러나 *#3 본 paper 의 *limitation 의 직접 인용* 으로 *내 contribution* 의 *새 axis* 가 *그 limit 해결* 임을 명확화* 는 본 deep dive 의 *unique* 가치 — APF / Grokking manuscript 의 *수사적 정당성* 의 base.
+
+3. **§C (직격)**: 본 paper 의 core message = attention explanation 검증 → APF 의 출발 가설. **§B (강함)**: H2 (intervention) 의 mechanism interp paradigm 공유 — Nanda / ACDC 의 intervention 의 ancestor. **§A (중간)**: Grokking 의 *training dynamics* 가 attention 에 영향 — 본 paper 의 *static* analysis 의 *dynamic version*. **§D (약→중)**: 본 paper 의 *NLP only* 결과를 TS Transformer 에 *직접 generalize* 는 *boundary 미확정* — 약함; 그러나 *내 산업 진로의 핵심* 이라 *중간* 으로 승격.

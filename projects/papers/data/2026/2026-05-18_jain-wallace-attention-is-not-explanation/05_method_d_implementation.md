@@ -123,3 +123,21 @@ for step in range(N_steps):
 
 ```viz:anie-encoder-comparison:title=Encoder Comparison Grid — Implementation 결과,caption=Highlight 셀렉터. 9 dataset × 3 encoder = 27 cell 의 τ_g 값. 본 챕터의 implementation 이 다루는 grid 의 정량적 결과 시각. BiLSTM (red) vs CNN (orange) vs Average (blue) 의 mixing continuum 효과 확인.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **PyTorch master branch 의존이 *2026 재현* 에 미치는 영향?**
+2. **3 encoder 의 *mixing 강도 정량* 은 어떻게 측정?**
+3. **Hyperparameter 의 *task-shared* 인가 *task-specific* 인가?**
+
+### 답변
+
+1. ***literal 재현* 불가능, *protocol 재현* 가능**. 2019 nightly PyTorch master 의 *특정 기능* (당시 stable 미배포) 에 의존 — 현재 PyTorch 2.x 와 *API 차이*. 그러나 H1/H2 알고리즘 자체는 *model-agnostic* — torch / numpy / scipy 의 standard API 만 사용. 본 14_code 의 *modern PyTorch* 재구현이 *protocol equivalent*. *수치 1:1 일치* 어렵지만 *방향 일치* (BiLSTM τ < Average τ) 는 확보 가능.
+
+2. **Paper 가 명시 측정 X — *정성적 분류*만**. Average: $h_i = \text{ReLU}(W x_i)$ — *각 token 만* 함수. CNN: $h_i = \text{Conv}(x_{i-k:i+k})$ — *local window* 만. BiLSTM: $h_i = \text{LSTM}(x_{1:T})$ — *전체 sequence*. → mixing *range* (token 수) 가 *명시*. 정량 측정 (예: $\text{rank}(\partial h_i / \partial x_j)$) 은 paper 본문 X. Brunner 2019 의 *effective attention* + ROME-style probing 이 *quantitative* 형식.
+
+3. ***Task-shared* (paper Table 1)**. 12 dataset 모두 동일 hyperparameter: LSTM hidden=128, CNN filter=64, batch=64, lr=1e-3. 단 *입력 dimension* (vocab size, sequence length) 만 dataset-specific. → *robustness* 증거 — encoder mixing 효과가 *hyperparameter tuning* 의 함수 X. → APF 의 *PE × motif* grid 도 *task-shared* hyperparameter 권장 (overfitting 회피).

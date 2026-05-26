@@ -87,3 +87,21 @@
 ## 핵심 한 문장
 
 > 본 논문은 *APF 의 H1·H2 통과* 라는 분명한 reviewer 기대선을 만들어주며, 동시에 *motif level / population level / PE-anchored / TS-domain* 의 4개 차원에서 APF + Grokking 이 *본 논문이 닫지 못한 미발견 영역* 을 *명시적으로 차지* 할 수 있는 *수사적 기회* 를 제공한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF 의 *4 흡수 지점* 중 *manuscript 의 main figure* 후보는?**
+2. **2 충돌 (motif H2 통과 / faithfulness 정의) 중 *reviewer 가 더 자주 공격* 할 곳?**
+3. **반면교사 4 영역 중 *가장 publishable* 한 새 contribution?**
+
+### 답변
+
+1. **(3) Encoder mixing 강도 → PE 로 확장** — *PE × faithfulness 격자* 의 *quantitative correlation figure*. 본 paper 의 *3-encoder 비교* 의 *PE 변형* — 직접적 *visual continuation*. APF manuscript 의 *Figure 1 / Figure 2* 의 강력한 후보. (1) motif causality 의 2D 적대적은 *intermediate result*, (2) Grokking transition tracker 는 *별 트랙*, (4) TS boundary 는 *future work*.
+
+2. **(2) Faithfulness 정의 충돌** — *population-level distributional* (APF) vs *instance-level token attribution* (본 paper). Reviewer 의 *흔한 confusion*: "*motif* 라 부르나 사실 *attention 분포의 합쳐진 형태* 인데, instance-level 의 attention 분포가 *faithful 아니다* (paper 결론) → motif 도 *faithful 아니다*". 이 *추론 오류* 를 *논문 §1 의 명시 distinction* 으로 사전 차단 필수. APF manuscript 가 *항상 위험* — 마침내 *명료한 wording* 의 critical 작업.
+
+3. **(4) Faithfulness 의 *circuit-level* 정의 부재** — *Grokking 트랙의 novel methodology contribution*. Nanda 의 *progress measure* (correlation) 에 *Jain-Wallace 의 faithfulness probe* 를 *시간 축* 으로 추가. *circuit-attention joint* 검증 protocol = *현재 어떤 paper 도 cover X*. NeurIPS / ICML 의 *methodology figure 1* 후보. (1) Multi-head H1/H2 는 *Abnar-Zuidema 2020 의 부분 cover*, (2) PE 격자는 *APF 가 cover*, (3) TS 도메인은 *Wilinski 2025 의 부분 cover* — 가장 *공간 비어 있음*.

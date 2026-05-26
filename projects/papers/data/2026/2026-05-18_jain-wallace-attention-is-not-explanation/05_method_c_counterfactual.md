@@ -112,3 +112,21 @@ Adversarial 결과가 더 강한 evidence. Permutation 결과는 *adversarial �
 
 ```viz:anie-tvd-jsd-2d:title=Adversarial Feasible Region — TVD vs JSD 2D,caption=Dataset 셀렉터로 SST / IMDB / Diabetes / Anemia / SNLI 전환. 녹색 영역 = TVD < 0.10 (constraint 만족). 대부분 dataset 에서 high JSD (> 0.30) + low TVD (< 0.10) 의 점 다수 → adversarial attention 광범위 존재. Diabetes 만 점들이 diagonal 따라 분포 (adversarial 어려움).
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Adversarial 최적화의 *non-convex* 한계가 결론 약화?**
+2. **ε 의 값 (0.10/0.05) 의 *왜 dataset 별 다른가*?**
+3. **h 를 *고정* 하고 attention 만 변경하는 *근본적 이유*?**
+
+### 답변
+
+1. **결론 약화 X — *오히려 보강***. Non-convex local maxima 도달 → 발견된 adversarial JSD 는 *진짜 최대* 의 *하한*. 즉 *실제 가능한* adversarial 은 *더 strong*. paper 의 결론 "adversarial 가능" 은 *최소* 명제 — *non-convex* 가 *결론을 약화* 하는 게 아니라 *결론을 더 conservatively* 보고하는 것. *upper bound* 가 아닌 *lower bound* 이라 결론 견고.
+
+2. **Output 분포의 *information density* 차이**. **Classification / NLI** (binary or 3-class): output 분포의 *max change* = 0.5 (binary), 0.67 (3-class). ε = 0.10 의 *상대 비율* = 20% (binary) — 큰 허용. **QA** (multi-class entity choice): output 의 *각 class 확률* 이 *훨씬 작음* (1/100, 1/1000 등). ε = 0.10 는 *과도하게 큰 허용* → 의미 X. ε = 0.05 가 *동등 수준 strict*. paper 가 dataset 의 *output 분포 dimension* 에 맞춘 *task-aware* ε choice.
+
+3. **"같은 모델 + 다른 attention" 의 *진정한* 검증**. h 도 변경 시 → *다른 모델* 이 *다른 prediction* — 일반적인 trivial 결론. h 고정 시 → "*같은* encoder + *같은* hidden + *다른* attention 만으로 *같은* prediction" — 이것이 *놀라움*. paper hypothesis 의 *exact form*: "다른 attention 만으로 prediction 보존 가능하다면 attention 이 *유일한 결정자* 아님". h 고정이 *그 명제의 testable form*.

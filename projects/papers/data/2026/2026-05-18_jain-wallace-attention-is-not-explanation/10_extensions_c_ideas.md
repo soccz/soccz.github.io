@@ -60,3 +60,21 @@ Nanda 2023 의 *Fourier circuit* 발견은 *embedding 단계의 Fourier feature*
 **반증 조건**: TVD 가 학습 step 에 *무관* (constant). 이 경우 attention 의 faithfulness 가 *학습 dynamics 와 무관* 한 *입력-구조의 함수* 만이라는 의미 → Grokking 분석에서 *attention 은 무관* 한 component 라는 결론. APF 와 Grokking 트랙의 *연결 가설* (PE → motif → faithfulness over training) 이 *부분 무력화*.
 
 **비용 추정**: Modular arithmetic Transformer 는 단일 GPU 에서 *수 시간* 학습. 50 checkpoint × 다중 seed (5) × 2-3 task = 약 **10-20 GPU-시간**. Nanda 의 기존 코드 베이스 (`https://github.com/neelnanda-io/Grokking`) 위에 *faithfulness probe* 만 추가하면 됨. **1-2 주** 실험 완료 가능. **NeurIPS 2027 Grokking 논문의 자체 contribution figure** 후보.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **2 idea 모두 *본 paper 의 H2 protocol* 을 재사용 — *어떤 새 발견* 가능?**
+2. **Idea 1 (PE × faithfulness) 의 *예상 결과 1-4* 중 *가장 risky* 한 예측?**
+3. **Idea 2 (Grokking transition) 의 *반증 조건* 이 *왜* critical 한 publication 요건?**
+
+### 답변
+
+1. **Idea 1**: *PE 가 attention 의 faithfulness 의 quantitative 조절자* — 본 paper 의 *encoder mixing* 가설을 *PE-anchored 기하학적 prior* 로 *변형*. 새 발견 = *position-anchored PE (RoPE/ALiBi/FIRE) 가 NoPE/sinusoidal 보다 faithful*. **Idea 2**: *Grokking transition 의 attention faithfulness phase change* — *static* (본 paper) → *dynamic* (training-time). 새 발견 = *generalization circuit 의 attention-mediated vs bypass* 분류.
+
+2. **예상 결과 #4: PE 의 *기하학적 anchor 강도* 와 faithfulness 의 *quantitative correlation***. *#1-3* 은 직관적 (각 PE 별 정성적 차이); *#4 만* *quantitative law* 주장 — *대수적 상관 함수* (e.g., faithfulness ∝ √anchor strength). 만약 *correlation 자체 발견 안 되면* APF 의 *PE 가 motif causal* 주장의 *empirical 약화*. *4* 가 *논문 main result figure* 의 *all-or-nothing* 도박.
+
+3. **"falsifiable hypothesis"** — 학계의 *publication 요건*. Karl Popper 의 *반증 가능성*. "TVD 가 학습 step 에 *무관*" 의 *명시적 반증 조건* 이 있어야 paper 의 *scientific* contribution 인정. *없다* 면 *post-hoc rationalization* 으로 reduce. 본 idea 가 *반증 조건 명시* 함으로써 *진정한 hypothesis* 자격 — NeurIPS / ICML 의 reviewer 가 *requires*.

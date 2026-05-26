@@ -78,3 +78,21 @@
 
 ```viz:anie-encoder-comparison:title=Encoder Mixing Continuum — BiLSTM vs CNN vs Average,caption=Highlight 셀렉터로 BiLSTM (high mixing) / CNN (mid) / Average (none) 의 τ_g 비교. 9 dataset 에서 *BiLSTM 의 mixing 이 attention 의 explanation 능력 가장 파괴*. CNN 은 중간 (local mixing 만), Average 가 가장 attention-friendly. paper 의 핵심 mechanism — "encoder mixing strength continuum".
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **갈래 A (H1) 와 갈래 B (H2) 의 *상호 보완성* — 왜 둘 다 필요한가?**
+2. **B1 (permutation) 과 B2 (adversarial) 의 *역할 분담*?**
+3. **본 논문이 *하지 않는 것* 3 가지 중 *가장 자주 오해* 되는 것?**
+
+### 답변
+
+1. **H1 = *관찰 기반*, H2 = *개입 기반* — *서로 다른 인과 증거*.** H1 만으로는 "attention 이 *다른 importance 와 다른 것* 일 뿐 *원인 X* 라고 단정 X" — 다른 metric 이 *틀린* 가능성. H2 만으로는 "*어떤 대안 attention 도 prediction 보존* 시 attention 이 *원인 X*" — 그러나 *대안의 자연 발생* X 가능. **둘 다 fail** 이 *진정한* "*attention is not explanation*" — 관찰 + 개입의 *triangulation*.
+
+2. **B1 = *lower bound* (약), B2 = *upper bound* (강)**. B1 (permutation) = *무작위 대안* — 통과 어려운 베이스라인 (예측 보존하는 *random* 대안 흔치 않음). B2 (adversarial) = *최악 대안* — *최대* 노력 (gradient ascent) 으로도 prediction 보존. *둘 다 보존* 이 "*어떤 대안에서도 동일*" 의 *empirical 상한*. 학술적으로 B2 가 *결정적*, B1 은 *sanity check*.
+
+3. **"Transformer multi-head·multi-layer 에 대한 직접 검증 X"**. 흔한 오해: "본 paper 가 *transformer attention 도 explanation 이 아니다*". 사실: paper 의 결과는 BiLSTM 단일 attention layer 만. Transformer 의 multi-head + multi-layer + residual stream 의 *complex interaction* 은 paper 범위 밖. 후속 (Abnar-Zuidema 2020, ACDC 2023) 가 이 영역 cover. **이 오해가 7 년간 광범위 — 본 paper 인용 시 reviewer 주의 필요.**

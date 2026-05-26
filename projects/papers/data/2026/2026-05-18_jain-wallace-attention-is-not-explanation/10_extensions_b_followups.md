@@ -67,3 +67,21 @@
 ```
 
 본 paper 의 **upstream** (Bahdanau, Lipton) 과 **downstream** (Serrano-Smith, Wiegreffe-Pinter, Wilinski) 의 4 paper 가 *모두* 본 deep dive 의 cross-reference. APF / Grokking reviewer 가 *기대* 하는 *full citation network* 의 명시.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 follow-up paper 중 *next deep dive 최우선* 은?**
+2. **Wiegreffe-Pinter 의 4 modules 의 *combined conclusion* 의 한 줄 정리?**
+3. **Bahdanau 2015 의 alignment 시각화의 *책임* 정도?**
+
+### 답변
+
+1. **Wiegreffe-Pinter 2019 (EMNLP, the rebuttal)**. 본 paper 의 *직접 후속* + *APF 의 reviewer 가 가장 자주 던질 objection 의 청사진*. *plausibility vs faithfulness* 의 정밀화 + adversarial *학습 가능성* 검증 — APF 의 *adversarial constraint* 의 *수사적 청사진*. **둘째**: Wilinski 2025 (TSFM mech interp) — *TS 도메인 generalization* 의 정확한 base. **셋째**: Bahdanau 2015 (선행) — *alignment vs explanation* 등식의 출발점, *concept-level* deep dive.
+
+2. **"attention 은 *strictly faithful* 은 아니지만 *plausible* explanation 으로는 가치 있음"** — 본 paper 의 strong rejection 의 *qualified caveat*. (1) uniform attention baseline 의 성능 저하 → attention 이 *어떤 정보* 담음, (2) variance test 의 재현성 견고 → attention 의 *robust 신호*, (3) BoW + attention 의 진단 분류기 → attention 의 *useful prior*, (4) adversarial 의 *학습 어려움* → original 의 *plausibility* 옹호. *4 modules 의 합* = "*어떤 의미* 의 explanation 으로는 가치 있다".
+
+3. ***문화적 등식의 출발점* 이지만 *명시적 주장은 alignment*. 직접적 *책임* X, *간접적 책임* O**. Bahdanau 의 *original 주장* = "*soft alignment 의 학습 가능성*". 그러나 paper Fig 3 의 영-불 alignment matrix 의 *시각적 직관성* 이 *alignment → explanation* 의 *문화적 등식* 의 *trigger*. 본 paper 가 그 등식을 *명시적 검증·반박* — Bahdanau 가 *틀린* 게 아니라 *후속 학계가 잘못 사용* 한 책임. paper §5 의 "*Bahdanau 의 영-불 alignment heatmap (논문 Fig. 3) 이 attention = alignment = explanation 의 문화적 등식의 가장 강력한 시각화*" 의 정확한 기록.

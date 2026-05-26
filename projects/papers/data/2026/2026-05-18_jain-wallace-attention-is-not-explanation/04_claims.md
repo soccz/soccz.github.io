@@ -72,3 +72,21 @@ $$
 
 ```viz:anie-datasets-summary:title=12 Datasets Summary — Claim 별 Heatmap,caption=Metric 셀렉터로 τ_g (BiLSTM) / τ_loo (BiLSTM) / τ_g (Average) / ∆ŷ (permute) / Adv JSD 전환. 12 dataset 전체에서 τ_g (BiLSTM) 가 일관 낮음 (대부분 < 0.5) — Claim 1 의 grid 증거. Average encoder 로 전환 시 일관 high (> 0.6) → Claim 4 (encoder mixing 의 효과) 의 증거.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **C1 의 *증거*가 Table 2 라면, 그 *결정적 단일 수치* 는?**
+2. **C2 (permutation) 와 C3 (adversarial) 의 *논리적 강도* 차이는?**
+3. **C4 (encoder mixing) 가 *증거가 아닌 해석* 인 이유?**
+
+### 답변
+
+1. **bAbI 2 의 BiLSTM τ_g = 0.17 → Average τ_g = 0.84 (+0.67p)**. 가장 극단적 차이. *complex reasoning task* (2-fact chained) 에서 BiLSTM 의 contextualization 이 attention 을 거의 *완전히 무의미* 하게 만듦. Average encoder 로 전환 시 attention 의 explanation 능력 *완전 회복*. C1 + C4 의 *동시* 증거 — *encoder mixing 의 효과* 의 가장 strong evidence.
+
+2. **C3 가 *strictly 강함***. C2 (permutation) = "*무작위* 대안에서도 prediction 보존" — 약한 검증. C3 (adversarial) = "*최악* 대안 *명시 탐색* 에서도 prediction 보존" — 강한 검증. C2 통과는 C3 통과의 *필요* but *충분 X* 조건 (C2 fail 시 C3 도 fail; C2 pass 라도 C3 fail 가능). 본 paper 가 *둘 다* 보여 *완전한* causal sufficiency 반박. Permutation 은 *sanity check* 역할 (adversarial 이 noise 가 아님을 확인).
+
+3. **C4 = paper 가 *관측한 패턴* 의 *메커니즘 가설*. 검증 X**. C1-C3 는 *empirical 결과* — *그 결과로부터 직접 증명*. C4 는 *왜 BiLSTM 에서 더 심한가* 의 *가설*: "encoder 가 정보 *섞을수록* attention 의 *위치 정보* 가 *흡수*". paper 는 *Average / CNN / BiLSTM* 의 *3-point 패턴* 으로 가설 *지지*, 그러나 *layer-wise mixing 직접 측정* (Brunner 2019 의 effective attention) 또는 *ROME-style causal probing* 까지 X. → *수사적* 으로 강력하지만 *empirical 증명* X — C4 의 미묘한 위치.

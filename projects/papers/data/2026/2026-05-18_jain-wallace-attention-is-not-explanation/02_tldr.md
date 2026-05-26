@@ -57,3 +57,21 @@
 
 ```viz:anie-correlation-hist:title=Kendall τ Histogram — BiLSTM vs Average Encoder,caption=Dataset 셀렉터 + Metric 토글 (τ_g, τ_loo). BiLSTM (red, contextualized) 분포는 τ ~ 0.32 centered (paper Table 2 평균). Average (blue, token-isolated) 분포는 τ ~ 0.69 centered. → encoder mixing 의 단일 변경 → attention 의 explanation 능력 일관 회복. paper Figure 2 의 핵심 패턴.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 층 (초등생/학부생/전문가) 의 *분리* 가 의미하는 것?**
+2. **C1-C4 의 *논리적 관계* — 왜 C1, C2, C3 의 *합집합* 이 결론을 만드나?**
+3. **"한계" 의 3 가지 중 *어느 것* 이 *후속 7 년 학계 논쟁* 의 출발점인가?**
+
+### 답변
+
+1. **독자별 *진입 깊이* 의 명시**. 초등생 = 비유 만 (수식 X). 학부생 = 수식 + 정성 직관. 전문가 = 4 contribution 의 정확한 분류 + 한계 명시. *같은 paper 가 다른 reader 에게 다른 의미* — *친화성* + *정확성* 의 *동시* 보장. lettau-virtue 의 표준 패턴.
+
+2. **합집합 (OR)** 구조. C1 = correlation fail OR C2 = permutation fail OR C3 = adversarial exist → 셋 중 *하나만* 깨져도 "attention = unique explanation" 무너짐. C4 (encoder mixing) 는 *mechanism* hypothesis — *왜* 위 3 가지가 발생하나의 *부분 설명*. 따라서 C4 는 *증거* 가 아닌 *해석*. paper 의 결론은 **C1 OR C2 OR C3** — necessary condition violation.
+
+3. **"Adversarial 의 *학습 가능성*"** — Wiegreffe-Pinter 2019 (EMNLP) 가 직접 다룬 점. 본 paper: "adversarial α̃ *존재 가능*". W-P: "*학습 가능* 한지 별 검증". → 결과: *adversarial 존재* OK, *학습 가능* X → original attention 이 *plausible* 으로는 가치. 7 년 학계 논쟁의 출발점이자 *plausibility vs faithfulness* 분리의 trigger.

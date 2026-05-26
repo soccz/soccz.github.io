@@ -66,3 +66,21 @@
 
 ```viz:anie-tvd-jsd-2d:title=Diabetes — Adversarial 어려움 (paper 자체 인정 limit),caption=Dataset 셀렉터로 Diabetes 선택. 다른 dataset 과 달리 점들이 diagonal 따라 분포 → high JSD requires high TVD. 즉 *Diabetes 에서 attention 이 부분적 explanation*. paper 의 한계 인정 — "attention 의 explanation 능력은 task-specific, high-precision token 의 존재가 결정 요인".
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 반박 중 *가장 strong* 한 것 — Wiegreffe-Pinter 의 *manifold* 논점이 *왜* 결정적?**
+2. **암묵 가정 4 가지 중 *후속 학계가 직접 해결* 한 것?**
+3. **재현성 6 항목 중 *현재 (2026) 가장 큰 obstacle*?**
+
+### 답변
+
+1. **"학습 manifold 안의 분포 vs 밖의 분포"** 의 분리. paper 의 adversarial α̃ 은 *gradient ascent* 로 simplex 임의 점 도달 가능 — 그러나 *모델이 학습 시 만나본 분포* 인지 별 검증 X. 만약 *학습 manifold 밖* 이라면 모델이 그 영역에서 *무관한* prediction 만드는 것은 *over-parameterization 의 자연 결과* — *attention 의 비-설명성* 의 증거 X. **Wiegreffe-Pinter (EMNLP 2019)** 가 이 논점으로 본 paper 의 결론을 *부분 무력화* — *7 년 학계 논쟁의 핵심 좌표*.
+
+2. **#1 (학습 manifold) — Wiegreffe-Pinter 가 직접 해결**. *adversarial α̃ 을 frozen 으로 처음부터 모델 재학습* — *수렴 fail* 시 α̃ 은 *unnatural*. 결론: *original attention 이 plausible* (학습 가능 분포 manifold 안). **#2 (h 고정)** 은 *부분 해결* (Brunner 의 effective attention 으로). **#3 (token-level)** 는 *미해결* — APF 의 *motif-level* contribution 이 *직접 답*. **#4 (test typicality)** 도 *미해결* — 모든 후속 paper 가 *median statistics* 만.
+
+3. **PyTorch master branch 의존**. 6 항목 중 코드/데이터 공개는 ✓. 정확한 *2019 nightly* PyTorch + torchtext 0.4.0 source build 의 *재구축* 이 *historical reconstruction* 작업 — 1 일 노력 필요. *Protocol 재구현* (modern PyTorch 2.x 로) 은 쉬움 — *수치 1:1 일치* 보장 X 이지만 *방향 일치* (BiLSTM τ < Average τ) 는 robust.

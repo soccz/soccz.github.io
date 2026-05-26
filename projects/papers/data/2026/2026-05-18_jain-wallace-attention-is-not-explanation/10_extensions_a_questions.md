@@ -69,3 +69,21 @@ Q3 (multi-head) ─┐
 - **Q5**: TS domain 의 일반화 → 본 논문의 *NLP only* 를 *cross-domain* 으로 옮김.
 
 5 질문 모두 본 논문의 *protocol* 을 *발판* 으로 사용. **본 논문이 *제거* 되거나 *대체* 되는 reference 아닌, *확장* 되는 baseline**.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **5 질문 중 *가장 빠르게* 답할 수 있는 (low-hanging fruit) 은?**
+2. **5 질문 모두 *본 paper 의 limitation* 을 다루지만, *완전히 새로운* 측면은?**
+3. **5 질문 간 *논리적 dependency* — 어느 것이 *선행* 해야 하나?**
+
+### 답변
+
+1. **Q4 (PE × faithfulness)** — *1 GPU-week* 로 완료. 단일 task, 단일 architecture, 6 PE variants 의 grid sweep. APF 의 *기존 motif sweep* pipeline 위에 *faithfulness probe* 만 add — *최소 추가 작업*. Q2 (Grokking transition) 가 *둘째*, Q5 (TS domain) 가 *셋째 — 큰 비용*.
+
+2. **Q5 (TS domain)** — 본 paper 의 *NLP only* 한계를 *직접* attack. 다른 4 질문 (manifold / Grokking / multi-head / PE) 은 NLP 안에서의 *확장*. **Q5 만** *cross-domain* 일반화 — *industrial relevance 직격* (시계열 forecasting / financial ML 의 *interpretability* 표준). 본 deep dive 작성자의 *산업 진로* 의 *핵심 가치 source*.
+
+3. **Q1 → Q2, Q5; Q3 → Q4, Q5**. Q1 (manifold 모델링) 의 result 가 Q2 (Grokking transition) 의 *manifold 정의*, Q5 (TS) 의 *cross-domain manifold 비교* base. Q3 (multi-head redundancy) 의 result 가 Q4 (PE × multi-head 격자), Q5 (TSFM 의 multi-head) base. Q2 와 Q4 는 *독립적* — 병렬 실행 가능. **3-phase sequence**: Phase 1 (Q4) → Phase 2 (Q2) → Phase 3 (Q1, Q3, Q5).

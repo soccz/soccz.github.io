@@ -81,3 +81,21 @@ $$
 
 ```viz:anie-correlation-hist:title=Kendall τ Histogram — H1 결과 (Dataset 별),caption=Dataset 셀렉터로 SST / IMDB / Diabetes / bAbI 2 / SNLI 등 전환. Metric 토글 (τ_g / τ_loo). 모든 dataset 에서 BiLSTM 의 τ 분포가 0.5 이하 centered → H1 (attention 이 importance 와 강한 상관) *실패*. Average encoder 의 τ 분포는 0.6+ 로 시프트 → encoder mixing 의 효과 시각.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Gradient 와 LOO 두 reference 의 *각자 약점* 은?**
+2. **왜 Kendall τ 를 Pearson / Spearman 대신 선택?**
+3. **격자 sweep 의 power — 왜 72 condition 인가?**
+
+### 답변
+
+1. **Gradient**: *국소 측정* — 큰 변화 (token 제거) 의 non-linear 효과 X; ReLU 의 *gradient saturation*. **LOO**: *T forward pass* 의 계산 비용; PAD 치환 후 *distribution shift* — 모델이 비-학습 영역에서 비정상 동작; *compositional 효과 무시* (token 들 *함께* 제거 시너지). 두 약점이 *서로 다른 noise pattern* → 두 measure 가 *일치* 하면 noise 가 아닌 *signal*. paper 가 두 measure 모두 사용한 이유.
+
+2. **Attention 의 *sparse distribution* 강건성**. attention 은 보통 *한두 위치에 집중* — Pearson 의 *값 자체* 비교가 outlier (큰 attention 값) 에 민감. Kendall τ 는 *순위 만* — sparse distribution 견고. Spearman ρ 도 ranking-based 이나 *tie 처리* + *small T* 안정성에서 Kendall τ 가 우월. paper 의 표준 metric choice.
+
+3. **12 dataset × 3 encoder × 2 attention = 72 condition**. 한 condition 의 결과가 *우연* 일 수 있으나 *72 전체* 의 *방향 일관* 은 *통계적 inference power*. 72 모두에서 BiLSTM τ < Average τ → "cherry-picking" 반론 차단. *robust pattern* 인지 *isolated finding* 인지의 grid 검증 — 학계 표준.

@@ -65,3 +65,21 @@ Jain & Wallace 는 이 gap 을 **두 단계 검증 protocol** 로 메운다:
 
 ```viz:anie-correlation-hist:title=문제 설정 — H1 의 직관 시각화,caption=Dataset 셀렉터 + Metric 토글. BiLSTM (red) 의 τ 가 [0, 0.5] 안에 centered. *문제: 만약 attention 이 explanation 이라면 τ 가 1 에 가까워야 함*. 실제로는 ~0.3 → "attention 이 importance 와 약하게 상관" — H1 검증의 정량적 결과.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 가지 실세계 예시 (의료/콘텐츠/NLI) 의 공통 패턴은?**
+2. **5 단계 lineage (2014-2018) 중 *가장 critical* 한 turning point 는?**
+3. **본 paper 의 H1 + H2 가 *왜* gap 을 메우는가?**
+
+### 답변
+
+1. **"attention heatmap → 모델 결정의 이유"** 의 *증거 없이 받아들여진* 인과 추론. 의료: 환자 안전. 콘텐츠: 검토자 시간 낭비. NLI: 잘못된 해석. 세 도메인 모두 *plausibility (그럴듯) ≠ faithfulness (진짜 원인)* 의 *동일 위험*. paper 의 가장 강한 *motivational* 예시 — 의료 reviewer 의 즉시 공감.
+
+2. **(i) Bahdanau 2015 의 alignment 시각화**. 이 시각화가 *plausibility 의 직관성* → *해석적 정당성* 의 *잘못된 등식* 의 출발점. 후속 7 년 동안 모든 (HAN / RETAIN / CAML / Clark BERT) 가 *같은 등식* 을 무비판 사용. paper 가 *그 turning point* 를 직접 공격 — Bahdanau attention 형식 위에 H1/H2 protocol.
+
+3. **gap = "attention = explanation 의 명시적 검증 기준 부재"**. H1 (상관) = "*다른 importance 측정과 일치하는가*" 의 *필요* 조건. H2 (counterfactual) = "*유일한* 분포인가" 의 *필요* 조건. 둘 다 *명시 측정 가능* → 학계가 처음으로 *empirical pass/fail* 판정 가능. 단순 *plausibility* (직관) 대신 *quantitative* protocol → 학계 표준 변경.

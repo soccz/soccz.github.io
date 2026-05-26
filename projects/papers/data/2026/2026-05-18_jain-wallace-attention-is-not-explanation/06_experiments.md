@@ -108,3 +108,21 @@ paper 본문 (§4, §6) 에는 미보고 — 후속 분석 후보 (Wiegreffe-Pin
 
 ```viz:anie-encoder-comparison:title=3 Encoders × 9 Datasets — τ_g 직접 비교,caption=Highlight 셀렉터. BiLSTM 의 contextualization 이 attention 의 explanation 능력 일관 파괴. CNN 은 local mixing 만이라 중간. Average (token-isolated) 가 attention-friendly. → encoder mixing strength 가 explanation 의 결정 인자라는 paper 핵심 mechanism 입증.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **12 dataset 선택의 *meta 논리* — 도메인 × 길이 × 라벨 명확성 격자의 효과?**
+2. **5 핵심 figure 중 *가장 정량 strong* 한 것?**
+3. **부록 의 *숨은 신호* 3 가지 (문장 길이 / 학습 종료 시점 / seed 변동) 중 *후속 paper 가 다룬* 것?**
+
+### 답변
+
+1. **결과의 *외부 일반화 가능성* 검증**. 한 도메인 의 결과가 *우연* 인지 *구조적* 인지의 grid 검증. 본 paper 의 결론 (BiLSTM 에서 H1/H2 fail) 이 *모든* 도메인 (감성/의료/뉴스/QA/NLI) × *모든* 길이 (8 ~ 2188 token) × *모든* 라벨 명확성 (binary easy ~ chained reasoning) 에서 일관 → *paper-specific 우연* 반박. *robust 패턴* 증거의 *최강 형태*.
+
+2. **Figure 2 (Kendall τ histogram)** — 21 row 의 instance 분포 + encoder 별 *명료한 shift*. Figure 7 (adversarial) 도 strong 하지만 Figure 2 가 *직관적 explainability + 정량 분리* 동시. *learn-paper-in-one-figure* 의 단일 image — APF / Grokking 의 *intro figure* 의 *직접 표본*.
+
+3. **Wiegreffe-Pinter 가 *random seed 변동* 일부 다룸**. 본 paper 의 single seed 만의 한계를 *seed 별 attention 분산* 분석으로 보강. *문장 길이별* + *학습 종료 시점별* breakdown 은 후속 paper 들도 아직 *완전 cover X* — APF / Grokking 의 *post-grok phase* 트랙이 *학습 시점별 attention faithfulness* 의 시작점.

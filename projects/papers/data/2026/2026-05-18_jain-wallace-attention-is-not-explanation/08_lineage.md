@@ -68,3 +68,21 @@
 
 ```viz:anie-attention-heatmap:title=paper Figure 1 — Lineage 의 출발점,caption=Example 셀렉터. 본 논문이 *7년 영향력의 시작* 인 단일 visual: 두 매우 다른 attention 으로 *같은 prediction*. 이 visual 이 (a) Wiegreffe-Pinter rebuttal 의 출발점, (b) ERASER 의 plausibility metric 의 motivation, (c) Mechanistic Interpretability paradigm shift 의 ideological 토대 — 모두를 만들었다.
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 ancestors 중 *방법론적 빚 가장 큰* paper 는?**
+2. **4 parallels (Wiegreffe-Pinter / Serrano-Smith / Vashishth / Pruthi) 중 *가장 인용되는* 이유?**
+3. **3 descendants 중 *현재 (2026) 활발* 한 movement?**
+
+### 답변
+
+1. **Adebayo et al. 2018 (Sanity Checks for Saliency Maps)** — *검증 protocol 의 정신* 의 직접 ancestor. Bahdanau 는 *attention* 자체의 발명, Brunner 는 *동시기* 의 *이론 짝*. Sundararajan 은 *attribution method* 의 ancestor. **Adebayo** 만 *"검증되지 않은 해석은 신뢰될 수 없다"* 의 *meta-level* 정신 — paper 의 *H1·H2 protocol* 의 *직접 영감*. paper 가 *attention 에 sanity check 를 명시 적용* 한 첫 작업.
+
+2. **Wiegreffe-Pinter** — *direct rebuttal* + *유일한 reframing*. Serrano-Smith 는 *independent confirm* (동일 방향), Vashishth 는 *부분 반대* (seq-to-seq 에서 attention 의미), Pruthi 는 *adversarial training* 으로 *방향 확장*. **W-P 만** *plausibility vs faithfulness* 분리의 *학계 표준* 을 만듦 — 본 paper 와 *합쳐* attention interpretability 의 *cited together* 표준.
+
+3. **(C3) Mechanistic Interpretability**. (C1) ERASER 는 *benchmark 완성*, (C2) Abnar-Zuidema rollout 은 *부분 사용* (Llama-Index 등 implementation 있으나 *최첨단 아님*). **(C3) Mech Interp** = Anthropic SAE (2023) / Nanda Modular arithmetic (2023) / ACDC (2023) / SFC (2024) — *2022-2024* 의 *가장 활발 movement*. 본 paper 의 *intervention paradigm* 의 *직계 후손*. 본 deep dive 의 09 챕터가 *이 movement 내 APF 의 위치* 명시.
