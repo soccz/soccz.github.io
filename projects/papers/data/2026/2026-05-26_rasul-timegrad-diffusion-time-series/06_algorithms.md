@@ -189,6 +189,9 @@ paper:
 ```viz:tg-langevin-sampling:title=Algorithm 2 — Annealed Langevin Sampling (interactive),caption=n 슬라이더 (N=100 → 1) 로 reverse step 진행. n=100: pure noise 시작점. n=50: 점차 형태 보임. n=1: clean prediction. seed 슬라이더로 다른 sample trajectory 보기 — Langevin 의 stochastic 다양성. target x^0 (점선) 와 current x^n (실선) 비교.
 ```
 
+```viz:tg-sampling-trajectory:title=Reverse Sampling 다차원 Trajectory (D=6),caption=n 슬라이더 (100 → 0) 로 6 개 dimension 동시 reverse process. n=100 단계: pure Gaussian noise — 어떤 구조도 X. n=80: noisy 구조 emerging. n=40: 점차 sin/cos 패턴 보임. n=10: clean 신호 거의 복원. n=0: final prediction. 각 dim 의 다른 주기·진폭이 어떻게 동시에 학습되는지 확인.
+```
+
 ---
 
 ## 6.5 Training vs Inference 비교

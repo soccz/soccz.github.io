@@ -454,6 +454,13 @@ def crps_sum(samples: torch.Tensor, ground_truth: torch.Tensor) -> torch.Tensor:
 
 ---
 
+## 8b. 인터랙티브 — 학습 Loss Trajectory
+
+```viz:tg-loss-trajectory:title=학습 4 단계 Loss Trajectory,caption=Highlight 셀렉터로 4 phases 강조. Phase 1 (0-15 epoch): 평균 fit — Loss 1.0→0.5 급락. Phase 2 (15-40): 분산 fit — Loss 0.5→0.25. Phase 3 (40-70): 다중 모드 학습 — 0.25→0.12. Phase 4 (70-100): refine — 0.12→0.09. 각 phase 의 transition 이 noise prediction 의 다른 측면 학습.
+```
+
+---
+
 ## 9. 재현 시 주의
 
 1. **Variance schedule**: paper 가 linear schedule 명시. cosine schedule (Nichol-Dhariwal 2021) 시도 가능 — 가속.

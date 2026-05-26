@@ -68,7 +68,7 @@
 
 ---
 
-## Chapter 가이드 (16개)
+## Chapter 가이드 (19개)
 
 | 챕터 | 내용 |
 |------|------|
@@ -89,6 +89,9 @@
 | [13_insights.md](13_insights.md) | 메타 통찰 12개 — "이해를 넘어서" |
 | [14_code.md](14_code.md) | 실행 코드 (PyTorch TimeGrad 핵심 모듈) |
 | [15_diagrams.md](15_diagrams.md) | ASCII 도식 + 인터랙티브 viz 카탈로그 |
+| [16_after_timegrad.md](16_after_timegrad.md) | TimeGrad 이후 — CSDI / TSDiff / Diffusion-TS / TMDM / MG-TSD / SSSD / TimeDiff 후속 계보 |
+| [17_industry.md](17_industry.md) | 산업 적용 — Zalando / GluonTS / AWS / 실제 배포 사례 |
+| [18_appendix.md](18_appendix.md) | Appendix — 전체 hyperparameter / 학습 비용 / NLL full / 코드 재현 가이드 |
 
 ---
 
@@ -102,6 +105,14 @@
 | (신규) `tg-diffusion-process` | 04 | $N=100$ step forward/reverse process step-by-step (alpha-bar schedule) |
 | (신규) `tg-ablation-N` | 09 | Fig 3 재현 — $N \in \{2,4,...,256\}$ 에서 CRPS_sum 변화 |
 | (신규) `tg-langevin-sampling` | 06 | Algorithm 2 step-by-step (annealed Langevin) |
+| (신규) `tg-crps-comparison` | 08 | Table 2 의 11 모델 × 6 dataset stacked-bar |
+| (신규) `tg-architecture-flow` | 15 | 전체 pipeline 4-단계 flowchart |
+| (신규) `tg-noise-prediction` | 04 | $\epsilon_\theta$ 의 noise prediction 분포 비교 |
+| (신규) `tg-traffic-predictions` | 09 | Fig 4 재현 — Traffic 6/963 dim 의 50%/90% interval |
+| (신규) `tg-vs-successors` | 16 | TimeGrad vs CSDI vs Diffusion-TS vs TMDM CRPS 비교 |
+| (신규) `tg-loss-trajectory` | 14 | 학습 4단계 trajectory (Phase 1-4 loss curve) |
+| (신규) `tg-sampling-trajectory` | 06 | Inference 시 $x^N \to x^0$ 의 reverse trajectory 시각화 |
+| (신규) `tg-hyperparameter-grid` | 18 | 6 dataset × 6 hyperparameter heatmap |
 
 → 전체 카탈로그는 [15_diagrams.md](15_diagrams.md).
 
