@@ -1,5 +1,8 @@
 # 05c. *현실적 환경* + Theorem 1 — 본 논문의 핵심
 
+> **🧒 한 줄 요약**: Misspecified model. Robust empirical regime.
+
+
 > 본 챕터는 본 논문의 *main result* 인 **Theorem 1 (Virtue of Complexity)** 을 친근하게. *Figure 6* 가 시각적 statement.
 
 ---

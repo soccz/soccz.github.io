@@ -1,5 +1,8 @@
 # 08. 결론과 의의 — 무엇이 남았나
 
+> **🧒 한 줄 요약**: Conclusion. Complexity virtue + ridge regularization.
+
+
 > 본 논문이 *자산가격결정* 분야에 *무엇을 남겼는지* 한 페이지에 정리. *Occam's blunder* 의 의미.
 
 ---

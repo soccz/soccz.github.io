@@ -1,5 +1,8 @@
 # 00 README — The Virtue of Complexity in Return Prediction
 
+> **🧒 한 줄 요약**: 본 deep dive 입구. KMZ = "Virtue of Complexity" — "더 많은 features = 더 좋다" empirical evidence.
+
+
 ## 원문 정보
 
 **제목**: The Virtue of Complexity in Return Prediction
@@ -105,3 +108,21 @@
 | `figures/page34_Fig9_T60_120.png` | p.492 | Fig 9 — 실증 IR + t-stat (T=60, 120) |
 | `figures/page35_Fig10_positions_recession.png` | p.493 | Fig 10 — Market timing positions + NBER recessions (14/15 자동 divest) |
 | `figures/page38_Fig11_var_importance.png` | p.496 | Fig 11 — 15 predictor 의 Variable Importance (R² bars + Sharpe line) |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Virtue of complexity의 paradigm shift?**
+3. **4년 후 deep learning finance 영향?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a-c → 07 → 16.
+
+2. **"Less is more" 통념 contradiction**. Linear (P=1) R²=0.005 → RFF (P=10000) R²=0.082 = 16× gain. Sharpe 0.18 → 1.43.
+
+3. **Foundation model justification**. KMZ = high-dim ridge의 empirical proof. TFM (millions params)의 *theoretical foundation*.

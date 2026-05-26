@@ -1,5 +1,8 @@
 # 05b. *이상적 환경* 의 결과 — 그림으로 이해
 
+> **🧒 한 줄 요약**: Correctly specified model. Theoretical guarantees.
+
+
 > 본 챕터는 본 논문의 *Propositions 3, 4* (correctly specified model 의 결과) 를 *그래프 위주* 로 무지식자 친화로. *Figures 1, 2, 3* 의 친근 풀이.
 
 ---

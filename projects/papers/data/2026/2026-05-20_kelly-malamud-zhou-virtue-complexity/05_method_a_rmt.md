@@ -1,5 +1,8 @@
 # 05a. Random Matrix Theory — 도구를 친근하게
 
+> **🧒 한 줄 요약**: Random matrix theory. High-dim asymptotic analysis.
+
+
 > 본 논문이 사용하는 *수학 도구* 인 Random Matrix Theory (RMT) 를 *수식 거의 없이* 시각화 + 일상 비유로. 이 도구 하나가 본 논문 모든 결과의 *기초*.
 
 ---
@@ -279,3 +282,7 @@ Proposition 2 가 **본 논문 모든 후속 결과 (Proposition 3, 4, 5, 6 + Th
 ---
 
 다음 챕터: [05_method_b_correct.md](05_method_b_correct.md) — *이상적 환경* 의 결과를 *그림* 위주로.
+
+
+```viz:kmz-double-descent:title=paper Fig 2 — Double Descent,caption=λ slider.
+```

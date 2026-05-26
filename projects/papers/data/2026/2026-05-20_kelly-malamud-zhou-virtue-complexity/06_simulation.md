@@ -1,5 +1,8 @@
 # 06. 이론을 그래프로 — Figures 1-6 시각적 풀이
 
+> **🧒 한 줄 요약**: Monte Carlo simulation. Phase transition verification.
+
+
 > 본 논문이 *이론 시뮬* 로 그린 6 개 그래프 를 무지식자 친화로. 각 figure 의 *직관* 위주, 수식 없이.
 
 ---

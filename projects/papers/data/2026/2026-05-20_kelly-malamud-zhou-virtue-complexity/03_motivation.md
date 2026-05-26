@@ -1,5 +1,8 @@
 # 03. 왜 이 연구가 필요했나 — 60년 학계 역사 (영어/수식 없이)
 
+> **🧒 한 줄 요약**: Traditional "less is more" 통념 challenge. ML double descent의 finance 적용.
+
+
 > 무지식자가 이 논문의 *맥락* 을 이해할 수 있게, 1960년대부터 2024년까지의 학계 흐름을 친근하게.
 
 ---

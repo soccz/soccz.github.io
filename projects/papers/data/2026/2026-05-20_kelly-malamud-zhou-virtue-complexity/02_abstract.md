@@ -1,5 +1,8 @@
 # 02. 제목과 Abstract — 4 문장의 진짜 의미
 
+> **🧒 한 줄 요약**: Abstract. "More complex models predict returns better".
+
+
 > 영어 원문 abstract 의 4 문장을 *한국어로 쉽게* 풀이. 영어 못 읽어도 OK.
 
 ---

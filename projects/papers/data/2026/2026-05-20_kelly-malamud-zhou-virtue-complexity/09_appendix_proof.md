@@ -1,5 +1,8 @@
 # 09. Appendix — 핵심 증명 풀이
 
+> **🧒 한 줄 요약**: Mathematical proofs. Theorem 1-4.
+
+
 > Internet Appendix 의 핵심 증명 (Proposition 2 의 Stieltjes identity + Theorem 1 의 monotonicity) 풀이. 본 deep dive 의 "직관적 종합" 위주 — 모든 디테일 풀어쓰지는 않고 *전략* 과 *핵심 단계* 만.
 
 ---

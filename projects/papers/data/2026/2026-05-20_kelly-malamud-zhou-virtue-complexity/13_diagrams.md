@@ -1,5 +1,8 @@
 # 13. ASCII 도식 + 인터랙티브 viz 카탈로그
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. Complexity curves, phase transition.
+
+
 > 본 deep dive 의 모든 시각 자료를 한 곳에 — ASCII 도식 (텍스트로 직관적 그림) + 인터랙티브 viz block 카탈로그 (슬라이더로 만지기).
 
 ---

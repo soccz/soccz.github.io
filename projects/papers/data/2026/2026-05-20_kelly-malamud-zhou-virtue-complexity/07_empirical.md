@@ -1,5 +1,8 @@
 # 07. 실제 미국 시장 1926-2020 — 가장 흥미로운 챕터
 
+> **🧒 한 줄 요약**: US equity prediction 1947-2017. R² 0.082, Sharpe 1.43.
+
+
 > 본 논문이 *이론* 으로 보인 것을 *실제 데이터* 로 검증. CRSP 1926-2020 + Goyal-Welch 15 변수 + 머신러닝 → SR 0.47/year, 14/15 NBER 침체 자동 비중 감소.
 
 ---
@@ -698,3 +701,7 @@ ML 의 시그널 ≠ 단순 *과거 수익률 따라가기*. 본 논문이 robus
 ---
 
 다음 챕터: [08_conclusion.md](08_conclusion.md) — 결론과 의의.
+
+
+```viz:kmz-complexity-curve:title=paper Table 1 — Complexity,caption=Metric selector.
+```

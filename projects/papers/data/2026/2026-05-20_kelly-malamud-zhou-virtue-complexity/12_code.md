@@ -1,5 +1,8 @@
 # 12. Python 실행 코드 — RFF + Ridge Regression + Recursive OOS
 
+> **🧒 한 줄 요약**: PyTorch ridge + RFF 구현.
+
+
 > 본 논문의 모든 방법을 동작 보장 Python 코드로. NumPy + Pandas 만으로 의존성 최소화. 복사-붙여서 즉시 실행 가능.
 
 ---

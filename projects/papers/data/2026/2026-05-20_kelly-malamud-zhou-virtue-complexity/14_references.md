@@ -1,5 +1,8 @@
 # 14. References 풀이 — paper 가 인용하는 70+ 작품
 
+> **🧒 한 줄 요약**: References. Fama, Cochrane, ML double descent papers.
+
+
 > Paper p.501-503 의 모든 references 의 *brief description* + 본 논문과의 관계. 클러스터별로 정리.
 
 ---
