@@ -1,5 +1,8 @@
 # 2. 문제 지형도
 
+> **🧒 한 줄 요약**: Grokking 의 *mechanism understanding*. Physics 의 *effective theory* 적용.
+
+
 > **배경 사다리**: 이 섹션을 이해하려면 ① "일반화"가 '훈련 때 안 본 새 데이터에서도 잘 작동하는 것'이라는 점, ② "과적합"(overfitting)이 '훈련 데이터만 잘 맞추고 새 데이터에서는 실패하는 것'이라는 점, ③ 보통 과적합은 일반화의 *적*이지 일반화의 *전 단계*가 아니라는 상식 정도만 알면 된다.
 
 ---
@@ -66,3 +69,21 @@ Liu et al.의 핵심 발상은 **grokking을 물리학의 상전이(phase transi
 3. **질서 변수**(order parameter) — 임베딩이 얼마나 구조화되었는지 측정하는 양. 물리학에서 자화(magnetization)가 강자성/상자성 경계를 표시하듯, 표현의 구조성이 일반화/암기 경계를 표시.
 
 이 프레임워크가 성공하면, grokking은 "신비로운 돌발 현상"에서 "예측 가능한 위상 경계 근처의 느린 전이"로 격하된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **03_problem *핵심 claim*?**
+2. **03_problem *technical detail*?**
+3. **03_problem *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

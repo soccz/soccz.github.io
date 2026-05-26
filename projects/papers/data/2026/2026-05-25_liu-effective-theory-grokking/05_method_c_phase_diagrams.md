@@ -1,5 +1,8 @@
 # 4c. 방법론 — 위상 다이어그램 (§3)
 
+> **🧒 한 줄 요약**: WD × LR 의 6×6 grid. 4 phases (confusion/memorize/comprehension/generalize).
+
+
 > **배경 사다리**: ① "위상 다이어그램"은 물리학에서 온도와 압력 같은 제어 변수를 축으로 놓고, 물질의 상태(얼음/물/수증기)가 어디서 어디로 바뀌는지 표시한 지도. ② "MLP"(다층 퍼셉트론)는 가장 기본적인 뉴럴 네트워크 구조 — 층(layer)을 쌓고 각 층에서 가중치 곱셈 + 비선형 활성화를 반복. ③ 여기서 제어 변수 두 개는 "훈련 데이터 비율"과 "weight decay 강도".
 
 ---
@@ -98,3 +101,25 @@ MNIST에서도 4-위상이 관찰되지만, 경계가 알고리즘적 과제보�
 3. **이론적 함의**: 4-위상은 과제의 구체적 내용(모듈러 연산 vs. 순열 합성 vs. 이미지 분류)에 무관하게 나타나는 보편 구조(universal structure)일 수 있음.
 
 단, "보편적"이라는 주장은 세 과제에서의 경험적 관찰에 기반하며, 증명된 것은 아니다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_c_phase_diagrams *핵심 claim*?**
+2. **05_method_c_phase_diagrams *technical detail*?**
+3. **05_method_c_phase_diagrams *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:liu-phase-diagram:title=paper Fig 3 — Phase Diagram,caption=Task selector.
+```

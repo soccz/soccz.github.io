@@ -1,5 +1,8 @@
 # 8. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와 연결: phase diagram framework 의 *attention pattern emergence* 분석.
+
+
 > **이 섹션의 규칙**: `_profile.md`의 관심 영역 §A~F 및 보유 자산(APF, Grokking track) 양쪽과 연결한다. 본 논문은 §A (Grokking/Delayed Generalization) 직격이므로 §A를 중심으로, §B (Mech interp)와의 교차, §C (Attention-PE)로의 전이 가능성 순서로 기술한다.
 
 ---
@@ -62,3 +65,21 @@ Liu (2022)의 "구조화 표현의 출현"은 mechanistic interpretability의 �
 2. **Causal intervention 부재**: Liu는 "구조화 임베딩 → 일반화"의 인과 관계를 개입 실험으로 검증하지 않았다. Grokking track에서 APF의 motif intervention 방법론(학습된 attention 패턴을 인위적으로 변형)을 차용하여, 임베딩 구조화와 일반화 사이의 인과를 검증하는 실험을 설계할 수 있음.
 
 3. **Progress measure의 범용화**: Liu의 "시각적 확인"(PCA 투영으로 원형 배치를 눈으로 확인)은 범용적이지 않다. Nanda의 Fourier progress measure도 모듈러 연산에 특화되어 있다. TS 예측에서의 progress measure — 예를 들어 임베딩의 시간적 부드러움(temporal smoothness), 주파수 스펙트럼 집중도, 또는 어트랙터 재구성 품질 — 를 제안하는 것이 필요.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **09_my_research *핵심 claim*?**
+2. **09_my_research *technical detail*?**
+3. **09_my_research *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

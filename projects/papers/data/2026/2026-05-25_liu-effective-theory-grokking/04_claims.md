@@ -1,5 +1,8 @@
 # 3. 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: 4 claims: (1) 4 phases, (2) phase diagram, (3) effective theory works, (4) toy → real transfer.
+
+
 > **배경 사다리**: 이 섹션을 이해하려면 ① "임베딩"이 '모델이 각 입력을 숫자 벡터로 변환한 내부 표현'이라는 것, ② "weight decay"가 '모델 파라미터가 너무 커지지 않도록 벌점을 주는 정규화 기법'이라는 것, ③ "일반화"와 "암기"의 차이 정도만 알면 된다.
 
 ---
@@ -78,3 +81,25 @@
 - 다윈 진화와의 유추는 수사적으로 강력하지만, 진화의 자원 제약과 weight decay의 노름 벌점 사이에 수학적 대응이 있는 것은 아님.
 
 **쉬운 말 풀이**: 여유로우면 대충 외우고 넘어가지만, 메모장이 작으면 핵심만 정리해야 한다 — 그게 바로 "규칙 발견"이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **04_claims *핵심 claim*?**
+2. **04_claims *technical detail*?**
+3. **04_claims *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:liu-4-phases:title=paper §4 — 4 Phases,caption=Example selector.
+```

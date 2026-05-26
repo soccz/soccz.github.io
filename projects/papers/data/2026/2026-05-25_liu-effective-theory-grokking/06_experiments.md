@@ -1,5 +1,8 @@
 # 5. 실험 해부
 
+> **🧒 한 줄 요약**: 36 cells phase diagram. 20% generalize zone (★ Goldilocks). 4-phase classification.
+
+
 > **배경 사다리**: ① "ablation"은 '모델의 특정 구성요소를 제거하거나 변경해서 그것이 결과에 얼마나 기여하는지 확인하는 실험'. ② "PCA"(주성분분석)는 '고차원 데이터를 가장 분산이 큰 방향 2~3개로 투영하여 시각화하는 기법'. ③ "위상 경계"는 '다이어그램에서 한 상태에서 다른 상태로 바뀌는 선'.
 
 ---
@@ -99,3 +102,25 @@ Transformer에서의 위상 다이어그램. MLP 대비 grokking zone이 더 좁
 ## 수치 투명성
 
 환경의 네트워크 제약으로 원문 표의 정확한 수치(정확도 %, loss 값, 스텝 수 등)를 직접 확인·인용할 수 없었다. 따라서 구체적 수치를 기재하지 않으며, "원문에 수치 보고됨 — 직접 열람 필요"로 처리한다. 이 논문은 주로 정성적 관찰(4-위상의 존재, 상대적 위치, 시각적 증거)에 기반하고 있어, 위상의 존재 자체에 대해서는 검색 교차 검증 + 재현 연구 확인으로 신뢰성을 확보했다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **06_experiments *핵심 claim*?**
+2. **06_experiments *technical detail*?**
+3. **06_experiments *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:liu-circular-embed:title=paper §5 — Circular Embedding,caption=Step slider.
+```

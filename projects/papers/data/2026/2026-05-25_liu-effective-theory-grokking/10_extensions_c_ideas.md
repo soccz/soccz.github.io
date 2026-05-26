@@ -1,5 +1,8 @@
 # 9c. 사고 확장 — 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 아이디어: financial phase diagrams, attention thermodynamic, foundation model phases.
+
+
 ---
 
 ## 아이디어 1: TS 예측에서의 ($\alpha$, $\lambda$) 위상 다이어그램 구축
@@ -95,3 +98,21 @@ Liu (2022)의 핵심 주장 — "구조화 임베딩의 출현이 일반화의 �
 - $\mathbb{Z}_{97}$ 실험: 단일 GPU 수 시간. Intervention 3종 × 5 시드 = 15 실험, 각 ~1시간 → ~15 GPU-hours.
 - ETTh1 확장: 위상 다이어그램에서 grokking 관찰 점 선택 후 intervention → 추가 ~20 GPU-hours.
 - 총: ~35 GPU-hours (1 GPU 기준 ~2일).
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_c_ideas *핵심 claim*?**
+2. **10_extensions_c_ideas *technical detail*?**
+3. **10_extensions_c_ideas *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

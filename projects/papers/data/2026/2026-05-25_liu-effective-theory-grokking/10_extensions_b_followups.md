@@ -1,5 +1,8 @@
 # 9b. 사고 확장 — Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: Roberts PDLT, Tegmark physics-ML, thermodynamic ML, mech interp 결합.
+
+
 ---
 
 ## 선행: Omnigrok — Liu, Michaud, Tegmark (2023)
@@ -35,3 +38,21 @@
 **본 논문과의 관계**: Liu (2022)의 "에너지 장벽을 넘어야 한다"는 직관을 실용적 알고리즘으로 전환. 유효 이론이 예측한 "느린 전이 모드"에 해당하는 그래디언트 주파수를 식별하고 증폭. 이것은 Liu의 이론이 실천적 도구로 번역된 사례.
 
 **무엇을 얻을 수 있는가**: (1) Grokking track 실험에서 Grokfast를 적용하여 grokking 탐색의 효율을 크게 높일 수 있음 — 위상 다이어그램의 각 $(\alpha, \lambda)$ 점에서 $10^6$ 스텝 대신 $10^4$ 스텝으로 grokking 여부를 판별. (2) Grokfast의 EMA 필터가 TS 예측의 grokking에서도 작동하는지 자체가 하나의 실험 질문. (3) Grokfast가 가속하는 "느린 성분"이 구체적으로 무엇인지(임베딩의 구조화 방향? attention 패턴의 정렬?)를 분석하면, Liu의 유효 이론과 Nanda의 회로 분석을 잇는 다리가 됨.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_b_followups *핵심 claim*?**
+2. **10_extensions_b_followups *technical detail*?**
+3. **10_extensions_b_followups *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

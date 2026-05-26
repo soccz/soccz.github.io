@@ -1,5 +1,8 @@
 # 4a. 방법론 — 큰 그림: 세 단계 분석 전략
 
+> **🧒 한 줄 요약**: 직관: Physics 의 *macroscopic emergence* → ML 의 *learning phase*.
+
+
 > **배경 사다리**: 이 섹션을 이해하려면 ① "유효 이론"(effective theory)이 물리학에서 '복잡한 시스템의 핵심 동학만 뽑아 단순화한 모형'이라는 것 (예: 날씨를 예측할 때 분자 하나하나를 추적하지 않고 기온·기압 같은 거시 변수만 쓰는 것), ② "위상 다이어그램"(phase diagram)이 '제어 변수를 축으로 놓고 시스템의 상태가 어떻게 달라지는지 표시한 지도'라는 것 정도만 알면 된다.
 
 ---
@@ -49,3 +52,21 @@ Grokking은 이 경쟁의 특수 사례다: 네트워크가 처음에는 외우�
 | 3 (§4) | Transformer의 극적 지연은 같은 프레임워크로 설명되는가? | Transformer 실험 (경험적) |
 
 다음 섹션들에서 각 단계를 순서대로 해부한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_a_intuition *핵심 claim*?**
+2. **05_method_a_intuition *technical detail*?**
+3. **05_method_a_intuition *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

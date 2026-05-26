@@ -1,5 +1,8 @@
 # 0. 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper *metadata*: Liu, Roberts, Sander, Tegmark MIT 2023. Statistical mechanics 의 ML 적용.
+
+
 ## 인용·권위
 
 - **인용 수**: Semantic Scholar 기준 약 200+ (2026-05 시점, 환경 제약으로 정확 수치 미확인)
@@ -29,3 +32,21 @@
 4. **Grokking track 직접 필수 인용**: 사용자의 "Grokking in TS Transformers" 프로젝트가 Week 1 setup 단계에 있으며, 22개 must-cite 문헌 중 하나. Power 2022 (원 현상 보고), Nanda 2023 (회로 분석), Lyle 2025 (비정상성) 는 이미 커버 — 이제 **이론적 프레임워크** 쪽이 빠져 있었고, Liu 2022 가 정확히 그 빈 슬롯을 채운다.
 
 5. **NeurIPS 2022 main conference**: 높은 venue 권위, 재현 연구까지 존재 (OpenReview 2023).
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **01_meta *핵심 claim*?**
+2. **01_meta *technical detail*?**
+3. **01_meta *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

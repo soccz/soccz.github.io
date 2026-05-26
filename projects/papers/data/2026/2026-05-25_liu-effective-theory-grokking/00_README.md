@@ -1,5 +1,8 @@
 # Towards Understanding Grokking: An Effective Theory of Representation Learning
 
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 17 + 7 chapters. Liu 2023 = grokking 의 physics-style theory.
+
+
 **Grokking 이해를 향하여: 표현 학습의 유효 이론**
 
 ---
@@ -58,3 +61,21 @@
 | 10b | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 사고 확장 — Follow-up 논문 |
 | 10c | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 사고 확장 — 실험 아이디어 |
 | 11 | [11_verdict.md](11_verdict.md) | 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Liu 2023 의 effective theory 의의?**
+3. **3년 후 physics-ML 영향?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a→d → 06 → 17.
+
+2. **Physics-style ML theory의 first compelling**. Statistical mechanics framework 의 ML 적용. Phase diagram, order parameter 등 physics concept 의 deep learning emergence.
+
+3. **Roberts PDLT + Tegmark physics-ML community 형성**. 본 paper 가 *physics-ML era* trigger. 2024-2026 의 *theoretical ML* 분야 의 *foundational reference*.

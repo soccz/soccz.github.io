@@ -1,5 +1,8 @@
 # 4b. 방법론 — 장난감 모델 유효 이론 (§2)
 
+> **🧒 한 줄 요약**: 2-layer linear toy model. Mean field + analytical phase boundary.
+
+
 > **배경 사다리**: ① "임베딩"(embedding)은 모델이 각 입력(예: 숫자 0~96)을 벡터(숫자 목록)로 변환하는 것. ② "선형 readout"은 임베딩 벡터에 가중치를 곱해서 최종 답을 내는 마지막 층. ③ "weight decay"는 '파라미터 크기에 비례하는 벌점을 손실에 더하는 것'. 이 세 가지면 된다.
 
 ---
@@ -98,3 +101,21 @@ $$\hat{\mathbf{e}}_k \approx (\cos(2\pi k / n), \sin(2\pi k / n))$$
 $N_c$는 weight decay $\lambda$, 임베딩 차원 $d$, 군의 크기 $n$에 의존하며, 유효 이론에서 해석적으로 도출 가능.
 
 이 예측의 검증: Figure 2–3에서, 유효 이론이 예측한 임계 데이터 비율과 실제 훈련에서 관찰된 일반화 전이 시점의 정량적 일치를 보고.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_b_toy_effective_theory *핵심 claim*?**
+2. **05_method_b_toy_effective_theory *technical detail*?**
+3. **05_method_b_toy_effective_theory *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

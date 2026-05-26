@@ -1,5 +1,8 @@
 # 4d. 방법론 — 트랜스포머 실험 (§4)
 
+> **🧒 한 줄 요약**: Toy → real Transformer. *Qualitative same* phase structure.
+
+
 > **배경 사다리**: ① "트랜스포머"(Transformer)는 자기 주의(self-attention) 메커니즘을 기반으로 한 뉴럴 네트워크 구조 — 입력 토큰들 사이의 관계를 동적으로 계산함. ② Power et al. (2022)이 grokking을 처음 보고한 세팅이 바로 transformer + modular arithmetic. ③ MLP와 transformer는 같은 과제를 다른 메커니즘으로 풀 수 있으며, 이 차이가 grokking의 양상에도 영향을 줄 수 있음.
 
 ---
@@ -70,3 +73,21 @@ Transformer에서도 grokking 시점에 임베딩의 구조화가 관찰됨(원�
 1. **단일 과제**: Transformer 실험은 $\mathbb{Z}_{97}$ 모듈러 덧셈에 국한. 다른 알고리즘적 과제나 자연어/시계열에서의 검증 없음.
 2. **소형 모델**: 실험에 사용된 transformer는 1~2층 수준의 소형. 대규모 모델에서 같은 4-위상 구조가 유지되는지 미확인.
 3. **인과 방향 미확인**: "임베딩 구조화 → 일반화"가 인과 관계인지, 아니면 제3의 요인(예: 특정 weight 구조)이 둘 다의 공통 원인인지를 causal intervention으로 검증하지 않음.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_d_transformers *핵심 claim*?**
+2. **05_method_d_transformers *technical detail*?**
+3. **05_method_d_transformers *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

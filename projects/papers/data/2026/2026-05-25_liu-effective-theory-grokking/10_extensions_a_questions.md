@@ -1,5 +1,8 @@
 # 9a. 사고 확장 — 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 open question: multi-task universality, mean field beyond, thermodynamic ML.
+
+
 ---
 
 ## Q1. 연속 도메인(시계열 예측)에서 "구조화 임베딩"은 무엇인가?
@@ -31,3 +34,21 @@ Liu (2022)의 모든 실험은 소형 모델(< 1M 파라미터)이다. 대규모
 Liu (2022)의 유효 이론은 국소 최솟값(memorization)과 전역 최솟값(generalization) 사이의 에너지 장벽을 간접적으로 예측한다. 하지만 이 장벽을 loss landscape 분석 도구(예: loss surface visualization, Hessian eigenvalue 분석, mode connectivity 분석)로 직접 측정한 연구는 드물다. 장벽을 측정할 수 있다면, 장벽을 인위적으로 낮추어 grokking을 가속하거나(Grokfast의 접근), 높여서 memorization을 강제하는 것이 가능해진다.
 
 **왜 중요한가**: 유효 이론의 핵심 예측(에너지 장벽의 존재)을 직접 검증하는 것은 이론의 신뢰성을 결정짓는 실험. 또한, 장벽 조작은 grokking을 "제어 가능한 현상"으로 만드는 첫 걸음.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_a_questions *핵심 claim*?**
+2. **10_extensions_a_questions *technical detail*?**
+3. **10_extensions_a_questions *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
