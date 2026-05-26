@@ -1,5 +1,8 @@
 # 13 Conclusion & Discussion — Section 6
 
+> **🧒 한 줄 요약**: Conclusion. Probabilistic Transformer의 structured approach.
+
+
 paper p.9-10.
 
 ## 원문

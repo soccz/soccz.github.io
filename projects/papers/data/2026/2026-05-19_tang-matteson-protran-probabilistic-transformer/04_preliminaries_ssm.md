@@ -1,5 +1,8 @@
 # 04 Preliminaries — Variational State-Space Models (Section 2.1)
 
+> **🧒 한 줄 요약**: State-space model 기초. Latent dynamics z_t = A z_{t-1} + ε.
+
+
 paper p.2-3. SSM 의 수학적 정의 + ELBO.
 
 ## 표기법
@@ -228,3 +231,7 @@ paper p.3 의 한 줄:
 4. **Training-test asymmetry**: training 시에는 ground truth 미래 있음 → posterior 가 그것 활용해 더 정확한 latent 추정. KL term 이 prior 를 posterior 흉내내도록 학습 → test time 에 prior 만으로도 좋은 generation.
 
 다음 [05_preliminaries_transformer.md](05_preliminaries_transformer.md) 에서 Transformer attention preliminaries.
+
+
+```viz:protran-ssm:title=paper §3.1 — SSM Dynamics,caption=Noise slider.
+```

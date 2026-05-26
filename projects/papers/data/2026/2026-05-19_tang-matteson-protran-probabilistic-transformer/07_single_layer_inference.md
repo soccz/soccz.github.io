@@ -1,5 +1,8 @@
 # 07 Single-Layered ProTran — Inference Model (Section 3.1 part 2)
 
+> **🧒 한 줄 요약**: Variational inference. q(z|x) encoder. ELBO.
+
+
 paper p.4-5. Training time 에만 사용되는 inference model. Generative model 과 parameter share.
 
 ---

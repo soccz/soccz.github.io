@@ -1,5 +1,8 @@
 # 01 시작하기 전에 — 미리 알아둘 7개 개념
 
+> **🧒 한 줄 요약**: Paper intro. Probabilistic Transformer with hierarchical SSM.
+
+
 ProTran 은 SSM + Transformer 의 결합. 다음 7개를 머릿속에 채워두면 paper 의 모든 한 줄이 자기 자리에 들어간다.
 
 각 개념은 **친근한 비유 → 정확한 정의 → ProTran 에서의 역할** 순서로 풀어 설명한다.

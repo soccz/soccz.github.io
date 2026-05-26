@@ -1,5 +1,8 @@
 # 12 Human Motion Prediction Results — Section 5.2
 
+> **🧒 한 줄 요약**: Motion prediction (Human3.6M). Trajectory forecasting.
+
+
 paper p.8-9. Table 3 + Fig 3.
 
 ![Table 3 Motion](figures/Table3_motion.png)

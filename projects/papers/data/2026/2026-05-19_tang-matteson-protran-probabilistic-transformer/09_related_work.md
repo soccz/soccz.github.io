@@ -1,5 +1,8 @@
 # 09 Related Work — Section 4
 
+> **🧒 한 줄 요약**: DeepAR, TFT, classical probabilistic forecasting.
+
+
 paper p.6. 4 카테고리로 정리된 lineage.
 
 ## 4.1 Deep State Space Models

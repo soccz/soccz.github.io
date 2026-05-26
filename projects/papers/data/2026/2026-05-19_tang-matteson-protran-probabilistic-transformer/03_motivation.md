@@ -1,5 +1,8 @@
 # 03 Motivation — Section 1 Introduction
 
+> **🧒 한 줄 요약**: Deterministic forecasting의 한계 → probabilistic + structured approach.
+
+
 ## 적용 분야
 
 paper p.1:

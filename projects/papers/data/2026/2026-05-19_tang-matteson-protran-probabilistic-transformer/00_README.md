@@ -1,5 +1,8 @@
 # 00 README — ProTran (Probabilistic Transformer)
 
+> **🧒 한 줄 요약**: 본 deep dive 입구. ProTran = SSM + Transformer + VAE의 probabilistic forecasting.
+
+
 ## 원문 정보
 
 **제목**: Probabilistic Transformer for Time Series Analysis
@@ -104,3 +107,21 @@ Department of Statistics and Data Science, Cornell University
 | `figures/Fig2_traffic_predictions.png` | p.8 | Fig. 2 — Prediction intervals on Traffic (first 16 of 963 series) | ch11 |
 | `figures/Fig3_human_poses.png` | p.9 | Fig. 3 — Ground-truth vs predicted poses (Smoking/Walk Together/etc) | ch12 |
 | `figures/Table3_motion.png` | p.9 | Table 3 — Motion prediction ADE/FDE (11 models × 2 datasets) | ch12 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **SSM + Transformer 결합 의의?**
+3. **3년 후 TFM era 영향?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 04→07 → 08 → 11 → 19.
+
+2. **SSM + Transformer + VAE의 structured probabilistic**. Pre-ProTran ad hoc → structured framework. CRPS 0.218 SOTA.
+
+3. **TFM era foundation + specialist**. TFM의 probabilistic output이 ProTran DNA. Motion prediction, risk forecasting specialist value.

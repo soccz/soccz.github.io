@@ -1,5 +1,8 @@
 # 16 PyTorch Code — ProTran 핵심 모듈
 
+> **🧒 한 줄 요약**: PyTorch ProTran 구현.
+
+
 paper 가 공식 코드 미공개. 본 deep dive 의 PyTorch 구현 — single-layer ProTran 의 충실한 구현.
 
 ---

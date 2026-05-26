@@ -1,5 +1,8 @@
 # 06 Single-Layered ProTran — Generative Model (Section 3.1)
 
+> **🧒 한 줄 요약**: Generative model. p(x|z) with Transformer decoder.
+
+
 paper p.4. ProTran 의 가장 기본 architecture.
 
 ![Fig. 1(b) ProTran 1 layer](figures/Fig1_graphical_models.png)

@@ -1,5 +1,8 @@
 # 17 Diagrams & Interactive Visualizations
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. SSM + Transformer architecture.
+
+
 ASCII 도식 + interactive viz 카탈로그.
 
 ---

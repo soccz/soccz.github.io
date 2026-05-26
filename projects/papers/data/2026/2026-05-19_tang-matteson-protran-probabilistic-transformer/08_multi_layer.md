@@ -1,5 +1,8 @@
 # 08 Multi-Layered ProTran (Section 3.2)
 
+> **🧒 한 줄 요약**: Multi-layer hierarchical SSM. Layered uncertainty.
+
+
 paper p.5-6. Single-layer 를 stochastic latent 의 hierarchy 로 확장.
 
 ![Fig. 1(c)(d) ProTran 3 layers](figures/Fig1_graphical_models.png)
@@ -246,3 +249,7 @@ paper:
 ---
 
 다음 [09_related_work.md](09_related_work.md) 에서 paper Section 4 의 4 카테고리 related work.
+
+
+```viz:protran-multi-layer:title=paper §3.3 — Multi-layer SSM,caption=Layer slider.
+```

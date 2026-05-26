@@ -1,5 +1,8 @@
 # 11 Time Series Forecasting Results — Section 5.1
 
+> **🧒 한 줄 요약**: CRPS 0.218 (DeepAR 0.291). Coverage 89.8%.
+
+
 paper p.7. Table 1 + Fig 2 + Table 2.
 
 ![Table 1 CRPS](figures/Table1_crps.png)
@@ -134,3 +137,7 @@ paper p.8:
 ## 다음
 
 [12_motion_results.md](12_motion_results.md) 에서 human motion prediction (Table 3 + Fig 3).
+
+
+```viz:protran-forecast:title=paper Table 1 — Forecast Results,caption=Dataset selector.
+```

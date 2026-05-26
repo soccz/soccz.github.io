@@ -1,5 +1,8 @@
 # 02 Abstract 풀어 읽기
 
+> **🧒 한 줄 요약**: Abstract. ProTran = SSM latent + Transformer + variational inference.
+
+
 ## 제목: "Probabilistic Transformer for Time Series Analysis"
 
 한국어로 풀면: **"확률적 Transformer — 시계열 분석을 위한"**

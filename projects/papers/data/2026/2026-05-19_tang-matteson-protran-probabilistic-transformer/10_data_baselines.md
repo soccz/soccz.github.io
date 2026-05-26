@@ -1,5 +1,8 @@
 # 10 Datasets + Baselines + Metrics (Section 5)
 
+> **🧒 한 줄 요약**: Electricity, traffic, M5 datasets.
+
+
 paper p.6-7. 두 task (forecasting + motion) 의 실험 셋업.
 
 ## Section 5 Overview

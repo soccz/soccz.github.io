@@ -1,5 +1,8 @@
 # 14 Glossary + Notation + References
 
+> **🧒 한 줄 요약**: 용어 사전. SSM / VAE / CRPS / NLL 정리.
+
+
 ## 핵심 약어
 
 | 약어 | 풀이 | 출처 |
@@ -191,3 +194,21 @@ paper References 가 [1]-[101] 총 101개. 본 deep dive 의 핵심 referenced (
 ---
 
 다음 [15_insights.md](15_insights.md) 에서 메타 통찰.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **SSM의 latent dynamics interpretation?**
+2. **CRPS vs MSE 차이?**
+3. **ELBO의 KL term 역할?**
+
+### 답변
+
+1. **Temporal state evolution**. z_t = function(z_{t-1}). Latent state가 time에 따라 evolve. Kalman filter의 NN 확장.
+
+2. **Distribution distance**. CRPS = "*forecast distribution과 true distribution의 distance*". MSE = "*point forecast의 squared error*". CRPS = full distribution evaluation.
+
+3. **Posterior와 prior의 distance**. ELBO = reconstruction - β·KL. KL term이 *latent를 prior에 가까이* — *generalization 유도*.

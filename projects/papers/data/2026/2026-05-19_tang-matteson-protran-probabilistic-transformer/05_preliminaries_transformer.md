@@ -1,5 +1,8 @@
 # 05 Preliminaries — Transformer Architectures (Section 2.2)
 
+> **🧒 한 줄 요약**: Transformer encoder. Self-attention, positional encoding.
+
+
 paper p.3. 표준 Transformer attention 복습 + ProTran 만의 사용 방식.
 
 ## Multi-Head Attention 표준 형식
