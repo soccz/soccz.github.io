@@ -1,11 +1,68 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "CbaCYxlj1VSvp0De8stDGA==",
-  "iv": "j219rSGKAAczCTuzOFTxGQ==",
-  "ct": "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",
-  "mac": "XfMUE/dz84HTPB9dMeXqaxY3e6Ite2IndZkz5LZuwhg="
-}
+# 00. 표지 — Why Attention Patterns Exist (TAPPA)
+
+> **🧒 한 줄 요약**: TAPPA (Yang et al. ICLR 2026) "Why Attention Patterns Exist" 의 26 챕터 전체 진입. APF (Attention Pattern Fields) 의 *direct theoretical precursor*.
+
+
+## 원문 정보
+
+- **원제**: *Why Attention Patterns Exist: A Unifying Temporal Perspective Analysis*
+- **한국어 번역**: *왜 어텐션 패턴은 존재하는가: 통합적 시간 관점 분석*
+- **저자**: Qingyue Yang, Jie Wang, Xing Li, Yinqi Bai, Xialiang Tong, Huiling Zhen, Jianye HAO, Mingxuan Yuan, Bin Li
+- **소속**: MIRA Lab @ USTC (중국과학기술대) + Huawei Noah's Ark Lab
+- **발표처**: ICLR 2026 (poster/conference)
+- **arXiv ID**: [2601.21709](https://arxiv.org/abs/2601.21709) (2026-01-29 등록)
+- **코드**: [github.com/MIRALab-USTC/LLM-TAPPA](https://github.com/MIRALab-USTC/LLM-TAPPA) (2026-02-04 KVCache 모듈 공개, Prune/Visualization 모듈은 예정)
+
+## 태그
+
+- 1차: `pe-attention-geometry` (코어 §C — 0회 → 1회)
+- 보조: `mech-interp-circuits`, `attention-as-explanation`
+
+## 한 줄 판결
+
+> **"어텐션 패턴 통합 이론" 의 가장 야심찬 ICLR 2026 시도. APF 의 직접 concurrent work — 우리 motif sweep 의 모든 motif (diagonal/sink/reaccess) 를 q-similarity × RoPE-frequency 두 축으로 환원한다. 우리 framework 의 "PE → motif → CNN probe" 사다리 중 첫 두 칸을 닫는 정리(Theorem 5.2) 가 이미 존재한다는 사실은 충격이지만, 그들은 CNN probe 와 causal intervention 단계가 비어 있어 우리에게 niche 가 남아 있다."**
+
+## 목차
+
+1. [01_meta.md](01_meta.md) — 메타 & 선정 이유
+2. [02_tldr.md](02_tldr.md) — 3층 TL;DR (초·학·전)
+3. [03_problem.md](03_problem.md) — 문제 지형도: "패턴은 왜 존재하는가" 라는 무거운 질문
+4. [04_claims_a_predictability.md](04_claims_a_predictability.md) — Claim 1: 예측가능/불가능 이분법
+5. [04_claims_b_three_patterns.md](04_claims_b_three_patterns.md) — Claim 2~4: re-access/sink/slash 통합 설명
+6. [05_method_a_intuition.md](05_method_a_intuition.md) — 큰 그림: 시간연속 관점
+7. [05_method_b_qsim.md](05_method_b_qsim.md) — q-similarity 정의 & 측정
+8. [05_method_c_rope_decomposition.md](05_method_c_rope_decomposition.md) — RoPE 주파수 분해
+9. [05_method_d_theorem.md](05_method_d_theorem.md) — Theorem 5.2 분해
+10. [05_method_e_apps.md](05_method_e_apps.md) — KV cache / pruning 으로의 번역
+11. [06_experiments.md](06_experiments.md) — 실험 해부
+12. [07_limits.md](07_limits.md) — 가정·한계·반박
+13. [08_lineage.md](08_lineage.md) — 이론적 계보
+14. [09_my_research.md](09_my_research.md) — APF 와의 연결 (정면 충돌 + 활용)
+15. [10_extensions_a_questions.md](10_extensions_a_questions.md) — 자문 5문
+16. [10_extensions_b_followups.md](10_extensions_b_followups.md) — 후속 3편
+17. [10_extensions_c_ideas.md](10_extensions_c_ideas.md) — 실험 아이디어 2개
+18. [11_verdict.md](11_verdict.md) — 한 줄 판결
+
+## 본문 접근 메모
+
+- arXiv abs/html/pdf, ar5iv, alphaxiv, Semantic Scholar 모두 403 차단
+- GitHub README + 다중 검색 스니펫 + 관련 동시기 논문 (arXiv:2601.08297 "Demystifying the Slash Pattern: The Role of RoPE", arXiv:2404.15574 "Retrieval Head", arXiv:2502.00919 "Attention Sinks: Catch-Tag-Release") 으로 보완
+- 따라서 본 해체는 **공개 스니펫 + 관련 표준 수학 + 동시기 논문 cross-reference** 로 구성. 정량 표 일부는 검색 스니펫에 노출된 헤드라인 숫자 (+11.34, +5.60) 외엔 정확 재현 불가. 섹션 06·07 에서 그 제약 명시.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **대상 독자?**
+2. **최소 reading path?**
+3. **TAPPA 가 paradigm shift 의 의미?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

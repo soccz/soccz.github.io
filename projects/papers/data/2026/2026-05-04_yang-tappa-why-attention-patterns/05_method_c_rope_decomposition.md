@@ -1,11 +1,88 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "ApfTN8u937fKP9xHdRmA8A==",
-  "iv": "pFK3KTVQcGpQk1Uv/6jCeA==",
-  "ct": "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",
-  "mac": "L/JejAQihzhzo/4fFGjHOQ2pmVUuDuiUwf7Rdz5sDJc="
-}
+# 05. 방법론 해부 — Part C: RoPE 의 주파수 채널 분해
+
+> **🧒 한 줄 요약**: RoPE 의 *spectral form* + dominant frequencies 식별.
+
+
+## 왜 이 부분이 필요한가
+
+q-similarity 가 attention 의 시간 변동을 통제한다 해도, 그 변동이 **공간적으로 어디로 propagate** 하는지 (대각선 / 첫 토큰 / 멀리 떨어진 같은 위치) 는 PE 가 결정한다. RoPE 의 회전이 dimension 에 따라 다른 주파수를 갖는 사실이 그 분해의 출발.
+
+## RoPE 표준식 복습 (배경 사다리)
+
+RoPE (Su et al. 2024) 는 query/key 를 **2차원 쌍** 으로 묶어 위치 의존 회전을 곱한다. dimension index $i = 0, 1, \dots, d/2 - 1$ 에 대해 회전 각속도를:
+
+$$\theta_i = b^{-2i/d}, \quad b = 10000$$
+
+으로 정한다. 위치 $m$ 의 query 의 $i$-번째 2D-쌍은 회전행렬:
+
+$$R(m\theta_i) = \begin{pmatrix} \cos(m\theta_i) & -\sin(m\theta_i) \\ \sin(m\theta_i) & \cos(m\theta_i) \end{pmatrix}$$
+
+으로 곱해진다. 핵심 성질: $q_m^\top k_n$ 의 RoPE-version 은 상대거리 $n - m$ 에만 의존:
+
+$$\langle q_m, k_n \rangle_\mathrm{RoPE} = \sum_{i=0}^{d/2-1} \big[\, q_m^{[i]\top} R((n-m)\theta_i) k_n^{[i]} \,\big]$$
+
+**4줄 해석**
+
+- **기호 뜻**: $q_m^{[i]} \in \mathbb{R}^2$ 는 $i$-번째 2D 쌍 (channel). $\theta_i$ 는 그 channel 의 회전 각속도. $b = 10000$ 은 base — Vaswani 2017 sinusoidal PE 에서 물려받음.
+- **일상 비유**: 시계의 초침/분침/시침이 다른 속도로 회전하듯, RoPE 의 dim 별 회전이 다른 주파수. 초침 (high $\theta_i$) 은 1초만 지나도 크게 회전 → 인접 위치 정보 민감, 시침 (low $\theta_i$) 은 1시간 가야 1/12 만 회전 → 멀리 떨어져도 정렬 보존.
+- **왜 이 형태**: 기하수열 $\theta_i = b^{-2i/d}$ 는 multi-scale 을 가장 효율적으로 cover. $b = 10000$ 은 max context length 의 log 와 비례하도록 tuned (Vaswani 의 "long enough" heuristic).
+- **조심할 점**: $\theta_i$ 가 너무 작으면 (low-freq) 거의 정적 → query/key 가 변할 때 회전이 noise 에 가려짐. $\theta_i$ 가 너무 크면 (high-freq) 인접 token 도 정렬 깨짐. 그래서 **multi-band 이 본질**.
+
+## TAPPA 의 분해 — Low-freq vs High-freq 채널
+
+저자들의 분해 핵심은 channel 들을 두 group 으로:
+
+$$\underbrace{i \in I_\mathrm{low} = \{i : \theta_i < \theta_*\}}_{\text{slow rotation}}, \quad \underbrace{i \in I_\mathrm{high} = \{i : \theta_i \ge \theta_*\}}_{\text{fast rotation}}$$
+
+threshold $\theta_*$ 는 ablation 으로 결정 (본문 미확인). 그리고 attention score 를 두 group 의 기여 합으로 분해:
+
+$$\langle q_m, k_n \rangle_\mathrm{RoPE} = A_\mathrm{low}(m, n) + A_\mathrm{high}(m, n)$$
+
+검색 스니펫 직접: *"the low-frequency components of RoPE preserve alignment between queries and fixed keys even as time progresses"* + *"High-frequency components in RoPE have been demonstrated to be responsible for the formation of diagonal or previous-token patterns."*
+
+### 수학적 직관
+
+- **Low-freq channel**: $|n - m| \theta_i$ 가 작아서 $R((n-m)\theta_i) \approx I + (n-m)\theta_i J$ ($J = \begin{pmatrix} 0 & -1 \\ 1 & 0\end{pmatrix}$). 즉 회전이 거의 identity → 멀리 떨어진 $m, n$ 도 정렬 보존. 결과: 멀리서 retrieval/sink 가능.
+- **High-freq channel**: $|n - m| \theta_i$ 가 $2\pi$ 를 빠르게 넘김. $|n - m|$ 이 작을 때만 $R$ 이 identity 근처. 즉 **인접 위치만** 정렬. 결과: diagonal/slash pattern.
+
+이 분해는 본 논문의 **핵심 메커니즘 한 그림** 이다. 사실 같은 직관은 Su 2024 부터 (long-term decay 분석) 있었으나, TAPPA 는 그걸 **head 별 motif typology 와 직접 매핑** 한다.
+
+## 다른 접근으로 했다면
+
+대안 1: **NTK / fourier feature 분석** (Tancik 2020). RoPE 의 frequency band 를 NTK 식으로 학습 ‑ 일반화 영향까지 분석. 더 깊지만 실용 metric 추출은 어려움.
+
+대안 2: **PE 를 학습 가능 (learned)** 으로 두고 channel response 자체를 학습. 그러면 motif 분석이 모델별로 다 달라져 **일반 framework** 라는 강점 사라짐.
+
+대안 3: **NoPE (PE 없이) 만 사용**. Kazemnejad 2023 이 보였듯 retrieval / induction 일부 head 는 PE 없이도 학습됨. 그러나 motif 의 기하학적 구조 (정확한 slash 위치) 는 약화. TAPPA 는 RoPE 에 한정해 분석이 깊어짐.
+
+저자가 RoPE 만 다룬 이유는 **모던 LLM 의 사실상 표준** (Llama-2/3, Qwen, Mistral, GPT-4 추정 모두 RoPE 변종) 이기 때문. 실용성 측면에서 합리적.
+
+## 핵심 한 문장
+
+> **RoPE 의 dimension-별 기하수열 주파수 분포는 자연스럽게 multi-band 응답을 만들고, low-freq 가 long-range alignment 를 (re-access/sink), high-freq 가 short-range alignment 를 (slash/diagonal) 담당하므로, motif typology 가 PE 의 spectrum 안에 이미 인코딩되어 있다.**
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:tappa-spectral:title=RoPE Spectral Decomposition (paper §5),caption=Model selector. Frequency periods.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Spectral decomposition 방법?**
+2. **Dominant frequency 선택?**
+3. **theta_base sensitivity?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

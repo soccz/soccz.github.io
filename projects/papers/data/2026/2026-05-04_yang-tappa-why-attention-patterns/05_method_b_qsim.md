@@ -1,11 +1,60 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "tNLMX/ZmqJpReYP5T0euRw==",
-  "iv": "/yK4EEtd+OmfqioJhkhMhQ==",
-  "ct": "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",
-  "mac": "v/SyKDWWzhxKHKF20DYE2WLbfbfe01ck7EYQSffNRxg="
-}
+# 05. 방법론 해부 — Part B: q-similarity 의 정의와 측정
+
+> **🧒 한 줄 요약**: Q-similarity *정확 수식* + computation 방법.
+
+
+## 왜 이 부분이 필요한가
+
+(Q1) "attention 의 시간 변화를 설명하는 단일 변수가 있는가" 에 대한 답이 q-similarity. 이 변수가 이론적 분석 (Theorem 5.2) 의 기둥이자 실용 metric (KV/pruning 의 직접 입력) 이다. 정의를 정확히 박아야 (i) 통계적 추정의 안정성, (ii) 응용에서의 layer-wise scoring 이 의미를 가진다.
+
+## 수식과 해석
+
+### 정의 (저자 framing 으로부터 재구성)
+
+$$S_l(W) := \frac{1}{|W| (|W|-1)} \sum_{\substack{(t, t') \in W \\ t \ne t'}} \cos\big(q^{(l)}_t,\ q^{(l)}_{t'}\big)$$
+
+검색 스니펫 직접 인용: *"S_l is the cosine similarity among queries within a recent window, which instantiates q-similarity in TAPPA."*
+
+**4줄 해석**
+
+- **기호 뜻**: $q^{(l)}_t \in \mathbb{R}^{d_h}$ 는 layer $l$ (head 도 인덱스 가능, head 평균/concat 인지는 본문 디테일) 의 step $t$ query. $W \subseteq \{t-w, \dots, t\}$ 는 최근 window (size $w$). $\cos(\cdot, \cdot)$ 는 표준 코사인 유사도 $\frac{q^\top q'}{\|q\| \|q'\|}$. $S_l \in [-1, 1]$.
+- **일상 비유**: "최근 $w$ 개 step 동안 묻는 질문들이 서로 얼마나 닮았나" 의 평균. 30분짜리 강의 중 마지막 5분간 학생 질문 3개가 모두 "이 부분 다시 설명해 주세요" 였다면 $S_l \approx 1$, "수식 / 비유 / 활용" 식으로 다른 영역이었다면 $S_l \approx 0$.
+- **왜 이 형태**: 코사인 유사도는 norm 의 변동성 (token 별 $\|q_t\|$ 가 layer norm 의 영향으로 변할 수 있음) 을 normalize 해 방향성만 비교. dot-product $q_t^\top q_{t'}$ 만 쓰면 norm 이 큰 step 의 영향이 과대. 그렇다고 Pearson correlation 으로 가면 mean-centering 이 RoPE 회전과 충돌 (회전 후 mean 이 의미 변동). 그래서 **non-centered cosine** 이 자연 선택.
+- **조심할 점**: (i) $w$ 가 너무 작으면 noise, 너무 크면 long-context 변동 평균돼서 "현재 phase" 신호가 흐려짐. 적정 $w$ 가 hyperparameter (논문에 ablation 가야 함). (ii) layer 간 $q^{(l)}_t$ 의 scale 이 다르면 layer 간 비교가 무의미 — 코사인이라 norm-free 라 큰 문제 없을 듯하지만 세밀한 layer-wise allocation 시 주의. (iii) head 별로 다 다른 패턴인데 layer 평균 $S_l$ 로 묶으면 head 다양성이 사라짐.
+
+### 변종 (논문이 직접 다뤘는지 미확인 — 필자 추정)
+
+대안 정의 후보:
+- **Lag-$\Delta$ 자기상관**: $S_l(\Delta) = \mathbb{E}_t[\cos(q_t, q_{t+\Delta})]$. 단일 lag 값. window 내 평균보다 시간 상관 구조 보존.
+- **Spectral measure**: $\{q_t\}$ 의 power spectral density 의 low-freq mass. 시계열 분석 표준이지만 LLM head 에는 과한 도구.
+- **Top-k similarity**: 윈도우 내 가장 닮은 k 쌍의 평균. 이상치 (outlier query) 에 robust.
+
+저자가 cosine-window 평균을 택한 이유는 **계산 비용** 일 가능성 — KV cache decision 마다 O($w^2 d_h$) 면 충분하나 spectral 은 FFT 비용 추가.
+
+## 측정 시 실무 디테일
+
+- **Layer-wise averaging**: 한 layer 의 모든 head 를 평균낼 수도 있고 head-wise 별도 score 를 가질 수도 있다. 본 논문 KV cache 적용은 layer-level allocation 이라 head 평균 사용 추정.
+- **Window 슬라이딩**: 매 step 새 query 가 들어오면 oldest query 를 drop 하고 새로 추가 — incremental 계산 가능 (online cosine sums).
+- **GQA / MQA 호환**: Llama-3 / Qwen2.5 처럼 grouped-query attention 인 모델은 그룹당 query 한 set 만 있어 상대적으로 깨끗.
+
+## 핵심 한 문장
+
+> **q-similarity 는 "query 시계열의 최근 window cosine 평균" 이라는 단순한 한 줄짜리 측도이지만, attention 패턴 예측가능성의 sufficient signal 이라는 본 논문의 강한 가설의 무게가 그 위에 모두 실려 있다.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Cosine vs dot product?**
+2. **Layer-wise vs head-wise?**
+3. **Computation cost?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

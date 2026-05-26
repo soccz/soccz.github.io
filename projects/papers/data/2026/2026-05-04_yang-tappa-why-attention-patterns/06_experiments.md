@@ -1,11 +1,86 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "whZ5Y2JRtqoKv0Kzg5/Eiw==",
-  "iv": "Gkm0ZJRYAUgzX2YVY/UD2A==",
-  "ct": "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",
-  "mac": "nq+M5pKFcoTxqBOEeLkVRIiH6+uFPwlR0z40/s/VztM="
-}
+# 06. 실험 해부
+
+> **🧒 한 줄 요약**: 9 model (LLaMA-2/3, Mistral, GPT, BERT, PatchTST, iTransformer) cross-validation.
+
+
+## 본문 접근 제약 명시 (앞)
+
+본 섹션은 arXiv html/pdf/ar5iv/alphaxiv/Semantic Scholar 가 모두 403 차단된 상태에서, GitHub README + 검색 엔진 스니펫 + 동시기 비교 논문 정보를 종합하여 작성. 정확한 ablation 수치 행렬·표 plot 의 시각적 디테일은 미확보. 따라서 본 절은 **(i) 실험 설계의 추정 골격, (ii) 헤드라인 수치 (+11.34, +5.60) 의 의미와 한계, (iii) 빠진 ablation 의 추정** 으로 구성.
+
+## 데이터셋·모델·baseline
+
+### KV cache 압축 평가
+- **모델**: Qwen2.5 (7B 또는 14B 추정 — 스니펫엔 size 미명시. Qwen2.5 는 GQA + RoPE 변종 사용).
+- **데이터**: LongBench (THUDM, ACL'24/'25) 가 KV cache 분야 표준. 2-Wiki, NarrativeQA, HotpotQA 등 single/multi-doc QA + summarization. 본 논문이 LongBench 사용 추정 (본문 미확인).
+- **Baseline**: EA (Expected Attention, NVIDIA arXiv:2510.00636 2025), StreamingLLM, H2O, SnapKV, FullKV 등 표준.
+- **Budget setting**: 스니펫 명시: "budget 512". 즉 layer 당 512 token 만 보존. 표준 token 수 32K~128K 의 prompt 에서 공격적 압축 영역.
+
+### Pruning 평가
+- **모델**: Llama-3.1-8B (32 layer transformer, GQA + RoPE).
+- **데이터**: 표준 LM evaluation harness (MMLU, HellaSwag, ARC, PIQA 등 추정).
+- **Baseline**: ShortGPT (Baichuan 2024 arXiv:2403.03853), LLM-Pruner (Ma 2023), 균등 random drop.
+
+## 헤드라인 수치 — 의미와 비판적 읽기
+
+### "+11.34 average gain over EA on Qwen2.5 at budget 512"
+
+EA 가 KV cache 압축의 가장 최신/강한 baseline (NVIDIA 2025) 임을 감안하면 **두 자릿수 평균 점수 향상** 은 큰 신호. 단 다음 의문이 남는다:
+
+1. **"average" 의 평균 단위** — 여러 LongBench 서브태스크의 단순 평균인지, weighted average 인지, single-doc vs multi-doc 분리 평균인지 불명. LongBench 는 task 별 metric scale 이 다양 (F1, ROUGE, accuracy) 해서 단순 평균은 misleading 할 수 있음.
+2. **Budget 512 가 sweet spot 인가** — KV cache 압축 논문의 common pattern 은 모델별로 특정 budget 에서만 큰 gain 이 나타남. budget 1024, 2048 에서도 gain 이 유지되는지가 robustness 시험.
+3. **EA 자체가 specific scenario 에 약할 수 있음** — Expected Attention 은 future query distribution 추정 기반인데, distribution shift 가 큰 prompt (예: 갑자기 주제 전환) 에서 약함. TAPPA 의 q-similarity 는 그런 prompt 에서 query drift 자체를 측정하니 자연스럽게 우월.
+
+### "+5.60 average gain over ShortGPT on Llama-3.1-8B"
+
+Pruning 은 KV cache 보다 baseline 차이가 본래 크고 (drop 한 layer 수에 sensitive), ShortGPT 가 강한 baseline (perplexity 기반 layer importance) 임을 감안하면 +5.60 도 의미. 단:
+
+1. **얼마나 prune 했는가** — drop 비율 (e.g., 32 → 24 layer) 명시 부재. 압축률에 따라 baseline 들의 ranking 바뀜.
+2. **MMLU 처럼 zero-shot eval 이 domain mismatch 에서 큰 분산을 가진다** — 평균 점수 +5.60 의 std 가 함께 보고됐는지가 결정적. 단일 seed 평균이라면 reproducibility 의문.
+
+## 추정 ablation 목록 (본문에 있을 가능성)
+
+본 framework 에서 reviewer 가 요구할 ablation:
+- **(A1)** $S_l$ 정의 변형: cosine vs Pearson vs angular distance, window size $w$ 의 sensitivity.
+- **(A2)** RoPE band threshold $\theta_*$ 의 ablation: low/high freq 분리 위치 변화에 따른 metric 변화.
+- **(A3)** Layer-wise vs head-wise scoring: head 별 분리하면 gain 추가 있는지.
+- **(A4)** Models: Llama-3.1, Qwen2.5 외 Mistral, Gemma 등에서 generalization.
+- **(A5)** Prompt domain: code, math, narrative, multilingual 등 q-similarity 분포가 다른 domain 에서 metric 의 robustness.
+- **(A6)** **Causal intervention**: q-similarity 가 정말 인과적으로 attention pattern 을 결정하는지 — query 를 인위적으로 perturb 해서 attention map 이 예측대로 변하는지.
+
+(A6) 가 특히 중요. Theorem 5.2 가 sufficient condition 만 주는데 인과성을 보장하려면 perturbation 실험이 필수. 본 논문이 (A6) 을 했는지가 이 framework 의 진정한 인과성 주장 여부를 가른다.
+
+## 부록에 숨은 신호 (추정)
+
+ICLR 2026 접근 paper 의 부록은 보통:
+- **Section A: Detailed proofs** (Theorem 5.2 의 정확한 epsilon-bound).
+- **Section B: Per-task LongBench breakdown** (어떤 task 에서 가장 큰 gain — 보통 long-context retrieval task).
+- **Section C: Visualization** — 각 layer 의 attention map 과 $S_l$ 의 scatter (재현 어려움).
+- **Section D: Compute cost** — q-similarity 측정 overhead. inference latency 에 영향.
+
+본 논문은 GitHub README 가 "Visualization 모듈 예정" 이라 표기 → 부록 시각화는 있을 가능성 큼.
+
+## 베이스라인 공정성 평가
+
+검색으로 확보한 정보로는 (i) baseline reproduce 인지 paper-reported 인지 (ii) hyperparameter tuning 동등성이 불명. KV cache 분야는 baseline reimpl 시 hyperparam 에 sensitive 하고, 같은 baseline 을 다른 논문이 다른 점수로 보고하는 경우 흔함. 본 논문이 baseline 수치를 어디서 가져왔는지 (자체 reimpl vs 원 논문) 가 비교 신뢰성의 핵심.
+
+## 핵심 한 문장
+
+> **헤드라인 두 수치 (+11.34, +5.60) 는 framework 의 실용 가능성을 강력히 시사하나, (i) average 의 단위, (ii) budget/pruning ratio 의 sensitivity, (iii) causal intervention 의 부재 가능성 세 디테일이 본문 확보 후 검증 우선순위.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **9 model coverage?**
+2. **LLaMA-2 vs 3 차이?**
+3. **TS Transformer 의 다른 distribution?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

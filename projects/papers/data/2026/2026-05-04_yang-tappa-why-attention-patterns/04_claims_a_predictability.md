@@ -1,11 +1,60 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "IbFW4DJEjk4MTFNdDoefVw==",
-  "iv": "PxYoxOucX3XrQxgfKoeJ/Q==",
-  "ct": "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",
-  "mac": "ibg/rFW3xycntoLySIVb6NP9a5udfBy0LGzeYsp2Yww="
-}
+# 04. 핵심 Claim 해체 — Part A (예측가능 / 불가능 이분법)
+
+> **🧒 한 줄 요약**: Claim 1-2: pattern *predictability* (Q-sim × RoPE 로 결정) + 5 pattern types 의 *exhaustive* coverage.
+
+
+## 배경 사다리
+
+본 절을 이해하려면 ① 시계열의 **자기유사도** (autocorrelation 또는 cosine similarity 의 lag 함수) 가 "신호가 시간이 지나도 자기 자신과 닮은 정도" 라는 것, ② attention 확률 분포 $\alpha_t = \mathrm{softmax}(q_t^\top K / \sqrt{d})$ 가 step 마다 새로 계산된다는 것 — 두 개면 충분.
+
+---
+
+## Claim 1 — 예측가능 / 불가능 이분법 (Predictability dichotomy)
+
+### 주장
+
+**모든 attention 패턴은 두 부류로 나뉜다: (a) clear regularity 가 있어 다음 step 의 패턴을 직전 step 들로부터 예측할 수 있는 "predictable patterns", (b) effectively random 으로 보여 그런 예측이 의미 없는 "unpredictable patterns".**
+
+### 증거
+
+저자들의 framing 글 (abstract + intro 추정 본문) 에서 직접: *"Attention patterns can be characterized as predictable patterns with clear regularities and unpredictable patterns that appear effectively random, and this distinction can be explained by the degree of query self-similarity along the temporal dimension."* 정량적으로는 layer × head 단위 attention map 시퀀스 $\{\alpha^{(l,h)}_t\}_{t=1}^T$ 에 대해 예측가능성 척도 (필자 추정: time-series 자기상관 또는 next-step KL 거리) 를 측정한 후, 이를 query self-similarity $S(\Delta t)$ 와 회귀하는 그림이 본문에 있을 것 (스니펫 미확보).
+
+### 숨은 전제
+
+- **Query 시계열이 충분히 길다** — 짧은 seq (예: $T < 64$) 에서는 자기유사도 추정 noise 가 신호를 압도. 본 논문은 LLM long-context 가정 (수천~수만 token).
+- **Attention 패턴이 "stationary 또는 slowly varying" 하다** — predictable / unpredictable 이분법 자체가 패턴이 단일 구조를 유지한다는 가정. 만약 head 가 phase 마다 다른 패턴을 띠면 (multi-modal) 이 분류가 무너짐.
+- **Self-similarity 가 충분 통계량 (sufficient statistic) 으로 본다** — 사실 query 시계열의 통계량은 자기유사도 외에도 (variance, drift, burstiness 등) 많은데, 저자는 self-similarity 한 차원으로 환원.
+
+### 쉬운 말 풀이
+
+말하자면 "이 head 는 비슷한 일을 계속 반복하나? 아니면 매번 새로운 일을 하나?" 라는 질문에 한 줄짜리 점수를 매기면, 그 점수가 높으면 attention 모양이 늘 비슷해 (predictable), 낮으면 매번 들쭉날쭉 (unpredictable) 이라는 주장. 그리고 "비슷한 일을 반복하는" head 는 패턴이 정해진 모양으로 수렴하기 때문에 그 모양을 이론적으로 도출할 수 있다 — 이것이 Claim 2~4 로 이어진다.
+
+### 비판 지점
+
+이 이분법이 **완전 이항** 인지 **연속 spectrum** 인지 본문이 어떻게 정리하는지가 관건. 만약 spectrum 이라면 "어디부터가 predictable 인가" 의 threshold 가 hyperparameter 가 되고, 그 hyperparameter 가 task/model 의존이라면 metric 의 일반성이 약해진다. KV cache 응용에서 layer-wise score $S_l$ 을 직접 budget 함수로 쓰는 것을 보면 저자들은 spectrum 으로 다루는 것 같으나, 그렇다면 "이분법" 이라는 강한 framing 이 marketing 에 가까워진다.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:tappa-qsim-rope-plane:title=Q-sim × RoPE Plane (paper main framework),caption=Model selector. 2D plane 의 head distribution.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Pattern predictability 의 의미?**
+2. **5 pattern coverage?**
+3. **Mathematical exact?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

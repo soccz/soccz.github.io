@@ -1,11 +1,81 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "aTY9WOtuaw9rl8b235QjeA==",
-  "iv": "9P+Hf6phJEkQd1G13xMb/A==",
-  "ct": "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",
-  "mac": "jV0aTJp8D93qKZ6qSSC+7P0WI0p9g628KCvCaBMgFvU="
-}
+# 05. 방법론 해부 — Part A: 큰 그림 (시간 연속 관점)
+
+> **🧒 한 줄 요약**: *큰 그림* — Q-similarity 측정 → RoPE spectral decomposition → pattern classification.
+
+
+## 배경 사다리
+
+이 절을 이해하려면 ① **causal LLM inference** 가 step $t = 1, 2, \dots, T$ 에서 한 token 씩 생성하면서 매 step query $q_t$ 를 새로 만들고 모든 과거 key $k_1, \dots, k_t$ 와 inner product 한다는 것, ② 그 결과 attention vector $\alpha_t \in \Delta^{t-1}$ (확률 simplex) 가 매 step 길이가 늘어나는 시계열을 이룬다는 것 — 이 둘만 알면 된다.
+
+## 큰 그림
+
+기존 연구들은 attention map 을 **공간적 (한 시점의 $T \times T$ 행렬)** 객체로 본다. TAPPA 의 발상 전환은 이걸 **시간적 (step 마다 길어지는 시퀀스)** 객체로 본다는 데 있다. 즉 같은 head 의 attention 을:
+
+$$\{\alpha_t\}_{t=1}^T, \quad \alpha_t \in \Delta^{t-1}$$
+
+으로 쓰고, 이 시퀀스의 **시간 차원의 자기상관** 을 분석 대상으로 삼는다.
+
+이렇게 보면 자연스럽게 두 질문이 나온다:
+- **(Q1)** $\alpha_t$ 와 $\alpha_{t+1}$ 가 얼마나 닮았는가? — predictability
+- **(Q2)** 닮음의 패턴은 어떤 구조를 가지는가? — re-access (멀리 떨어진 같은 위치 반복) / sink (첫 위치 고정) / slash (인접 위치)
+
+저자들의 핵심 발상은 (Q1) 이 **거의 전적으로 query 시퀀스 $\{q_t\}$ 의 자기유사도** 에 의해 결정된다는 것이다. 왜? attention 은 $\alpha_t = \mathrm{softmax}(q_t^\top K_t / \sqrt{d})$ 이고 (causal mask), key matrix $K_t = [k_1, \dots, k_t]$ 는 한 step 에 한 column 만 추가될 뿐 기존 columns 는 불변. 따라서 $\alpha_{t+1} - \alpha_t$ 의 변동성의 source 는 (i) $q_{t+1} - q_t$ 의 변화, (ii) $k_{t+1}$ 의 새 column 추가. (ii) 는 새 query 와의 dot-product 한 항의 추가로 통제 가능하므로, 본질적으로 (i) 가 지배. 그러므로:
+
+> **"Query 자기유사도 = attention 패턴 예측가능성의 sufficient signal"**
+
+이라는 가설이 그럴듯해진다.
+
+(Q2) 는 (Q1) 의 미시구조다. attention map 의 두 정보소스가 query 내적에 어떻게 들어가는가:
+- query 의 방향성 (semantic 정보)
+- RoPE 가 query/key 위치 정보로 곱하는 회전 (positional 정보)
+
+전자는 학습된 representation 에 의존, 후자는 PE 메커니즘에 의존. RoPE 는 dimension 별로 주파수가 정해진 회전이므로 channel 마다 다른 주파수 응답을 갖는다. 저주파 (느린 회전) channel 은 멀리 떨어진 query-key pair 의 정렬을 보존, 고주파 (빠른 회전) channel 은 작은 위치 차이만 정렬 보존 — 이 사실로부터 자연스럽게 (re-access ↔ low-freq, slash ↔ high-freq) 의 매핑이 나온다.
+
+## 다이어그램 지문 (본문 그림 추정)
+
+본문 Figure 1 (저자 framing 그림) 은 대략 이런 구조일 것이다:
+
+```
+              high q-similarity     low q-similarity
+            +------------------+------------------+
+low-freq    |    re-access /   |   sink (residual)|
+RoPE 우세   |    sink          |    or noise      |
+            +------------------+------------------+
+high-freq   |    slash /       |    unpredictable |
+RoPE 우세   |    diagonal      |    (random-look) |
+            +------------------+------------------+
+```
+
+(2 × 2 phase diagram. 실제 본문에 phase diagram 표기로 등장하는지는 미확인 — 검색 스니펫엔 직접 안 나옴. 그러나 framing 의 논리상 이 구조가 자연스럽다.)
+
+## 다른 접근으로 했다면
+
+대안 1: **공간적 통계 (e.g. attention entropy, top-k mass)** 만으로 motif 를 분류 — 기존 SnapKV / H2O 노선. 한계: head 의 시간 진화를 무시. TAPPA 가 우월한 이유는 시간 통계량 (q-similarity) 이 단일 시점 통계량이 잡지 못하는 head 동학을 잡음.
+
+대안 2: **PE 만 보고 attention motif 를 예측** — Press 2022 ALiBi · Su 2024 RoPE 의 분석. 한계: 같은 PE (RoPE) 라도 head 마다 다른 motif 가 나오는 사실을 설명 못함 (PE 는 head-invariant, motif 는 head-variant).
+
+대안 3: **head representation 만 보고 motif 분류** — Wu 2025 retrieval head 같은 학습 후 head probe. 한계: PE 를 갈아끼우면 motif 가 어떻게 바뀌는지 예측 불가.
+
+TAPPA 의 의의는 **세 대안의 공집합** — query 동학 (alternative 3 의 일부) 과 PE 메커니즘 (alternative 2) 을 곱한다. 이게 새 framing 인지 단순한 양 노선의 합인지는 reviewer 가 가를 부분.
+
+## 핵심 한 문장
+
+> **TAPPA 의 method 1차 contribution 은 attention 패턴의 인과 변수를 (query 자기유사도, RoPE channel 주파수) 의 곱으로 환원한 데 있고, 그 곱이 충분 통계량으로 기능하면 (Theorem 5.2) 패턴의 형태가 강제되며, 그 metric (q-similarity) 이 학습 없이 inference 시간에 측정 가능하므로 즉시 KV/pruning 에 응용된다.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Pipeline 결정?**
+2. **Q-sim 계산 단계?**
+3. **RoPE spectral 단계?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

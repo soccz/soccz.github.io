@@ -1,11 +1,42 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "uafLrQ313Ygj00eipQwryg==",
-  "iv": "y5t80JCszmHAOYgxTNU1iw==",
-  "ct": "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",
-  "mac": "JU9SSd9AKls7lFYtD+4ga+2GB7KUiZ79+Vjx14WWvRE="
-}
+# 10. 사고 확장 — Part A: 자문 5 질문
+
+> **🧒 한 줄 요약**: 5 자문 질문 — multi-modal, dynamic, cross-arch unification, alternative PE, pattern manipulation.
+
+
+## Q1. q-similarity 의 measurement noise 는 task / context length 에 어떻게 의존하는가?
+
+저자들이 layer-wise $S_l$ 을 단일 metric 으로 쓰지만, window size $w$ 와 sequence length $T$ 의 비율, 그리고 prompt domain (code / chat / QA / multilingual) 에 따라 $S_l$ 의 estimation variance 가 크게 달라질 수 있다. 만약 $S_l$ 의 noise 가 layer 간 차이보다 크다면 budget allocation 의 신뢰성이 무너진다. **이 질문이 중요한 이유**: 본 framework 의 실용성은 $S_l$ 이 robust signal 임에 달려 있고, robustness 의 한계가 어디인지 모르면 production 적용이 위험.
+
+## Q2. Theorem 5.2 의 bound 가 sharp 한가, 단지 monotonic 한가?
+
+증명 스케치에서 Cauchy-Schwarz 만 쓰면 bound 가 sharp 하지 않다. monotonic (q-sim 높을수록 score deviation 작음) 만 보장되면 ranking metric 으로는 OK 지만 quantitative budget 결정에는 부족. **이 질문이 중요한 이유**: monotonic 만으로 KV cache budget 을 inverse-proportional 로 정하는 게 정당한가? 더 precise allocation function (e.g., $B_l \propto (1-S_l)^\alpha$ with $\alpha$ task-tuned) 이 있을 수 있고, sharp bound 가 있어야 $\alpha$ 도 이론적으로 정해진다.
+
+## Q3. Re-access pattern 과 retrieval head (Wu 2025) 의 set 가 정확히 일치하는가?
+
+TAPPA 가 re-access pattern 을 retrieval head 의 시각적 manifestation 으로 가정했는데, retrieval head 의 인과적 정의 (특정 head ablation 시 long-context recall accuracy drop) 와 re-access pattern (visual motif of attention map) 이 정확히 같은 head set 을 식별하는지 검증 안 됨. **이 질문이 중요한 이유**: 만약 set 가 다르면 (e.g., re-access pattern 은 보이지만 retrieval 에 critical 하지 않은 head 존재) "패턴 → 기능" 의 mediation 이 약해지고, framework 가 functional explanation 이 아니라 단순 visual classification 에 머문다.
+
+## Q4. q-similarity 가 학습 중 어떻게 evolve 하는가? Grokking 과의 관계는?
+
+본 논문은 학습이 끝난 모델의 inference time 만 분석. 그러나 q-similarity 는 학습 중 step-by-step 측정 가능하고, 그것의 trajectory 가 grokking phase transition (Nanda 2023, Lyle 2025) 과 동기되는지 시험할 수 있다. 가설: 학습 초기 (memorization phase) 는 q-sim 이 낮고 (random query), grokking 직전 sharp jump, 후반에 안정. **이 질문이 중요한 이유**: TAPPA 의 inference metric 을 training signature 로 확장하면 사용자 grokking track 과 직접 연결되고, "왜 attention pattern 이 학습 후 그런 모양이 되는가" 의 근원 (학습 dynamics) 까지 설명 가능.
+
+## Q5. NoPE / ALiBi / Learned PE 모델에서 q-similarity 가 같은 역할을 하는가?
+
+Theorem 5.2 가 RoPE 의 simultaneous-shift invariance 에 의존. NoPE 는 PE 가 없으니 invariance 의 algebraic 성질이 다름. ALiBi 는 additive bias 라 곱셈적 회전이 아님. Learned PE 는 학습 dependent. q-similarity 가 PE-agnostic metric 으로 작동하면 framework 의 universality 가 격상, 작동 안 하면 RoPE-specific framework 로 한정. **이 질문이 중요한 이유**: 사용자 APF 가 정확히 multi-PE 비교를 main contribution 으로 삼고 있어 이 질문의 답이 APF 의 niche 크기를 결정.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **low-hanging fruit?**
+2. **5 한계 매핑?**
+3. **NeurIPS contribution?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. TAPPA (Yang 2026) 의 핵심 mechanism (Q-similarity + RoPE spectral) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct precursor — manuscript §1-§6 + Appendix 의 모든 explicit reference position.
