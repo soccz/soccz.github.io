@@ -1,5 +1,7 @@
 # 16 Appendix — 정확한 Table 2 수치 · 보조 결과 · Reproduction
 
+> **🧒 본 챕터는 "디테일 창고"**: 다른 챕터가 *narrative* 를 위해 수치를 일부만 보였다면, 본 챕터는 *모든 표 + 모든 수치* 의 원본. paper 의 Table 1 (12 dataset 통계) + Table 2 (Kendall τ correlations 의 21 row × Mean/Std/Sig.Frac.) 의 *정확한 정수* 까지. APF reviewer 가 "Diabetes 의 정확한 τ_g 는 얼마인가?" 라고 물으면 본 챕터의 표 셀 한 칸으로 즉답 가능.
+
 paper 의 Table 1/2 정확 수치 + Figure 3-7 정량 분석 + reproduction 시나리오 + 후속 paper 비교.
 
 ---

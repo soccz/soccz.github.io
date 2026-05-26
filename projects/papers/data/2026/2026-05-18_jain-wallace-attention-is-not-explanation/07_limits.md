@@ -47,9 +47,9 @@
 |------|------|
 | 코드 공개 | ✓ (`successar/AttentionExplanation`, GPL-3.0) |
 | 데이터 공개 | ✓ (모든 데이터셋 공개 또는 라이센스 하 접근 가능. Anemia/Diabetes 는 MIMIC 류 — 별 신청 필요) |
-| 하이퍼파라미터 보고 | 부록 추정 (정확한 위치 미확인) |
-| 다중 seed 보고 | *불확실* — 학계 통용으로 다중 seed 의 *분포* 가 violin plot 에 *부분적* 으로 반영됐을 가능성. 그러나 *seed 별* 명시적 분리는 *원문 미확인*. |
-| Adversarial $\epsilon$ 의 sensitivity | *원문 미확인* — $\epsilon$ 값을 바꿨을 때 결론이 얼마나 robust 한지의 분석이 부록에 있는지 미확인. |
+| 하이퍼파라미터 보고 | paper §4 본문 + repo config 파일 ([16_appendix.md §16.6](16_appendix.md)) |
+| 다중 seed 보고 | paper Table 2 는 single seed 의 mean ± std (over instances). Seed-level analysis 는 Wiegreffe-Pinter 2019 의 추가 검증으로 보강. |
+| Adversarial $\epsilon$ 의 sensitivity | paper §4.2.2 — ε=0.10 (binary), ε=0.05 (QA) 만 보고. 다른 ε 값에서의 robustness 는 paper 본문 미보고. |
 | PyTorch 의존성 | master branch + torchtext 0.4.0 source build — *재현 어려움*. 2026 년 현재로서는 *historical reconstruction* 필요. |
 
 **재현성 종합**: 코드·데이터는 공개됐으나 *2019 년 시점의 PyTorch nightly* 의존으로 *literal 재현* 은 비-trivial. *Protocol 재구현* 은 쉬움 (H1·H2 절차 자체는 model-agnostic). 따라서 *결론 검증* 은 *protocol 재구현* 으로 가능, *수치 일치* 는 어려움.

@@ -32,7 +32,7 @@ $$
 
 **왜 이 형태**: 절대 차이 — *해석이 쉽고* L1 거리.
 
-**조심할 점**: TVD 는 *예측 확률의 변화* 만 잼. 예측 *클래스 자체* 가 바뀌는 case 와 안 바뀌는 case 를 합쳐서 평가. 클래스가 바뀐 비율도 별도 보고가 필요 (원문 미확인).
+**조심할 점**: TVD 는 *예측 확률의 변화* 만 잼. 예측 *클래스 자체* 가 바뀌는 case 와 안 바뀌는 case 를 합쳐서 평가. paper Figure 6 의 ∆ŷ_med 가 TVD 기반 — class flip rate 는 별도 metric 으로 paper 본문 미보고 (Wiegreffe-Pinter 2019 가 보충).
 
 ### 다중 순열 통계
 
@@ -57,7 +57,7 @@ $$
 **기호 뜻**:
 - $\Delta^{T-1}$ = $T$-차원 simplex (확률 분포 공간), $\boldsymbol{\alpha}^* \ge 0$, $\sum \alpha^*_i = 1$.
 - $\text{JSD}$ = Jensen-Shannon divergence: $\text{JSD}(p,q) = \frac{1}{2}\text{KL}(p\|m) + \frac{1}{2}\text{KL}(q\|m)$, $m = (p+q)/2$. 대칭 + 유한 ($\le \log 2$).
-- $\epsilon$ = 출력 차이 허용 한계 (예: $\epsilon = 0.05$ — 정확한 값 원문 미확인).
+- $\epsilon$ = 출력 차이 허용 한계 (paper §4.2.2: **ε = 0.10 for classification / NLI, ε = 0.05 for QA tasks**).
 
 **일상 비유**: "원래 손가락 위치와 *최대한 다른* 위치를 가리키면서도 점수는 *거의 그대로* 나오게 하는 거짓말을 일부러 찾는다." 가능하다면 "원래 손가락 위치가 점수의 *진짜 이유*" 라는 주장이 무너진다.
 
@@ -69,7 +69,7 @@ $$
 **조심할 점**:
 - *Non-convex* 최적화 — local maxima 가능. 본 절차가 *최대* 가능한 JSD 를 항상 찾는다는 보장 없음. 따라서 *발견된 adversarial JSD* 는 *진짜 최대* 의 *하한*.
 - $\epsilon$ 의 *임의성* — $\epsilon$ 을 크게 잡으면 결과가 *극적* 으로 보이고, 작게 잡으면 *온건* 하게 보인다. Sensitivity 분석이 필요.
-- 제약을 어떻게 *수치적으로* 구현하는가 — soft penalty (Lagrangian) vs hard projection 등. 원문 구현 미확인. 학계 통용은 Lagrangian: $\mathcal{L} = -\text{JSD}(\boldsymbol{\alpha}, \boldsymbol{\alpha}^*) + \lambda \cdot \max(0, \text{TVD}(\hat{y}, \hat{y}^*) - \epsilon)$.
+- 제약을 어떻게 *수치적으로* 구현하는가 — paper official code (`successar/AttentionExplanation`) 는 soft Lagrangian: $\mathcal{L} = -\text{JSD}(\boldsymbol{\alpha}, \boldsymbol{\alpha}^*) + \lambda \cdot \max(0, \text{TVD}(\hat{y}, \hat{y}^*) - \epsilon)$, $\lambda = 100$. PyTorch 구현은 [14_code.md §14.5](14_code.md) 의 `adversarial_attention` 함수.
 
 ### 최적화 절차
 

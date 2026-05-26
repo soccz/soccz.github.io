@@ -1,8 +1,16 @@
 # 14 PyTorch Code — H1/H2 핵심 모듈 재현
 
+> **🧒 이 챕터는 "직접 해보기"**: 다른 챕터가 *왜* 와 *어떻게* 를 설명했다면, 본 챕터는 그 *코드 형태*. PyTorch 만 알면 GPU 한 대로 SST dataset 의 paper 결과 (τ_g ~ 0.40) 를 *3 시간 안에* 재현 가능. 코드를 *직접 돌리지 않아도*, "이 알고리즘이 실제로 어떻게 컴퓨터에서 작동하나" 의 직관 형성에 도움.
+
 paper 의 official code 는 `github.com/successar/AttentionExplanation` (GPL-3.0). 본 챕터는 paper 의 H1 (correlation) + H2 (counterfactual) 핵심 protocol 의 minimal PyTorch 재현.
 
-**Caveat**: paper 의 정확한 hyperparameter (LSTM hidden, dropout, learning rate) 는 official repo 의 config 파일 참조. 본 코드는 protocol 의 *구조* 재현 — exact reproduction 은 official repo 사용 권장.
+**Caveat**: paper 의 정확한 hyperparameter (LSTM hidden 128, dropout 0.1, learning rate 1e-3) 는 official repo 의 config 파일 참조. 본 코드는 protocol 의 *구조* 재현 — paper Algorithm 1 (Feature Importance Computations) + Algorithm 2 (Permuting attention weights) + §4.2.2 (Adversarial) 와 1:1 매칭. Exact reproduction 은 official repo 사용 권장.
+
+**검증된 mapping** (paper ↔ 본 코드):
+- `compute_gradients()` ↔ Algorithm 1, lines 1-4 (`g_t ← |Σ_w 1[x_tw=1] · ∂ŷ/∂x_tw|`)
+- `compute_loo()` ↔ Algorithm 1, lines 5-6 (`∆ŷ_t ← TVD(ŷ(x_-t), ŷ(x))`)
+- `permutation_test()` ↔ Algorithm 2 (`α^p ← Permute(α̂)`, `∆ŷ^med ← Median_p`)
+- `adversarial_attention()` ↔ §4.2.2 (`max JSD s.t. TVD ≤ ε`, ε=0.10/0.05)
 
 ---
 

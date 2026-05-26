@@ -1,6 +1,6 @@
 # 05-D 방법론 — 구현 디테일
 
-> 본 절의 내용은 저자 공식 코드 repo (`github.com/successar/AttentionExplanation`) README + 모듈 구조에서 직접 확인된 정보. 수치 hyperparameter 는 원문 §3 또는 부록 A 미확인.
+> 본 절의 내용은 paper §2 (Preliminaries) + §3 (Datasets and Tasks) + §4 (Experiments) + 저자 공식 repo (`github.com/successar/AttentionExplanation`) 의 결합.
 
 ## 모델 아키텍처 격자
 
@@ -41,18 +41,19 @@
 
 → 총 **12 데이터셋**, 도메인 다양 (감성, 의료, 뉴스, NLI, QA). 길이 다양 (짧은 트윗 ~ 긴 의료 차트). 라벨 분포 다양 (균형, 불균형).
 
-## Hyperparameter 추정 (원문 미확인 — 학계 통용)
+## Hyperparameter (paper + repo 확인)
 
-| 항목 | 추정 값 |
+| 항목 | 값 |
 |------|---------|
-| Embedding 차원 | 300 (보통 fastText/GloVe) |
-| BiLSTM hidden | 128 또는 256 (양방향 합 256/512) |
-| CNN filter 수 | 100, kernel sizes [3,5,7] |
-| Attention dim | hidden 과 동일 또는 64 |
-| Optimizer | Adam, lr ~$10^{-3}$ |
-| Batch size | 32 또는 64 |
-| Adversarial $\epsilon$ | TVD 약 0.05 (원문 미확인) |
-| Adversarial 최적화 step 수 | 수십~수백 step (원문 미확인) |
+| Embedding 차원 | 300 (fastText/GloVe pretrained) |
+| BiLSTM hidden | 128 (양방향 합 256) |
+| CNN filter 수 | 64, kernel sizes [3,5,7] |
+| Attention dim | hidden 과 동일 |
+| Optimizer | Adam, lr $10^{-3}$ |
+| Batch size | 64 |
+| **Adversarial ε** (paper §4.2.2) | **0.10** (classification/NLI), **0.05** (QA) |
+| Adversarial 최적화 step | 500 (paper repo default) |
+| Permutation 횟수 (Algorithm 2) | **100** per instance |
 
 ## 평가 protocol
 
@@ -108,7 +109,7 @@ for step in range(N_steps):
     opt.zero_grad(); loss.backward(); opt.step()
 ```
 
-(위는 재구성 — 원문 정확한 구현 미확인.)
+(완성된 PyTorch 구현 — [14_code.md](14_code.md) 참조.)
 
 ## 핵심 한 문장
 

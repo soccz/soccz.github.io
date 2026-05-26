@@ -1,5 +1,7 @@
 # 17 7 년 Aftermath — Attention Interpretability 의 진화 (2019-2026)
 
+> **🧒 본 챕터는 "그 후의 이야기"**: 영화에서 주인공 (= paper) 이 한 충격적 행동 (= "attention 은 explanation 이 아니다" 라는 폭로) 을 한 뒤, *세상이 어떻게 바뀌었는가* 의 7 년치 epilogue. 직접 반박 (Wiegreffe-Pinter) → methodology 정제 (ERASER) → paradigm shift (Mechanistic Interpretability) 의 sequence. 본 paper 가 만든 *지속적 영향력* 의 timeline.
+
 paper 발표 (NAACL 2019) 후 **7년간** attention interpretability 의 진화를 추적. 본 paper 의 *결과* 가 학계 행동을 어떻게 바꿨는지의 timeline.
 
 ---

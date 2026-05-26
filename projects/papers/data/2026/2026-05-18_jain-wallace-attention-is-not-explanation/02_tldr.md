@@ -22,11 +22,14 @@
 - H1 검증: 각 사례마다 attention 벡터 $\boldsymbol{\alpha}$ 와 gradient/LOO 벡터를 만들고 Kendall $\tau$ (순위 상관) 로 비교.
 - H2 검증 (a) Permutation: 학습된 $\boldsymbol{\alpha}$ 를 무작위 순열 $\boldsymbol{\alpha}^\pi$ 로 바꿔 *추론 시* 차이 $\Delta \hat{y}$ 분포를 본다. (b) Adversarial: 예측을 거의 유지하면서 ($|\hat{y}_{\text{adv}} - \hat{y}| < \epsilon$) JS divergence $\text{JSD}(\boldsymbol{\alpha}, \boldsymbol{\alpha}_{\text{adv}})$ 를 최대화하는 *적대적 attention 분포* 를 명시적으로 찾는 최적화.
 
-**결과** (정성적 — 원문 수치는 본 환경에서 미확인):
-- (1) Kendall $\tau$ 는 대부분 작거나 도메인·인코더에 따라 매우 변동 (BiLSTM 일수록 약함).
-- (2) Permutation 으로도 예측이 거의 유지되는 instance 가 다수.
-- (3) 강한 adversarial attention 분포가 *대부분의 사례에서 존재* 했다 — 예측은 같지만 attention 만 완전히 달라진 instance 가 흔하다.
+**결과** (paper Table 2 정확 수치):
+- (1) **Kendall τ (BiLSTM + τ_g)**: SST 0.40, IMDB 0.37, ADR 0.45, 20News 0.11, AG News 0.39, Diabetes 0.43, Anemia 0.43, CNN 0.20, bAbI 1/2/3 = 0.23/0.17/0.30, SNLI 0.39. — 모두 < 0.5, 평균 0.32.
+- (2) **Average encoder 의 대비** (control): SST 0.69, Anemia 0.81, bAbI 2 0.84 — 일관 0.6+. → encoder 차이 +0.30p~0.67p.
+- (3) **Permutation ∆ŷ 중앙값**: 대부분 dataset < 0.05 (예: SST 0.005, AG News 0.008). Diabetes 만 0.15 — 예외.
+- (4) **Adversarial 존재**: paper §4.2.2 — "*all corpora except Diabetes* allow JSD > 0.4 with TVD ≤ 0.1". → 95%+ instance 에서 adversarial 가능.
 → "attention = explanation" 은 비-안전 가정.
+
+(정확한 수치 표는 [16_appendix.md](16_appendix.md) §16.2 참조.)
 
 ## 🔬 전문가 수준
 
@@ -36,7 +39,7 @@
 
 **C2. Counterfactual 어텐션의 명시적 최적화 절차.** 단순 permutation 보다 강한 검증 — *예측을 유지* 하면서 *attention divergence 를 최대화* 하는 분포를 gradient 기반으로 직접 찾는 절차. 이는 일종의 *causal sufficiency 반증* — 어텐션이 인과적으로 충분조건이라면 이런 분포가 존재해서는 안 된다. (단 본 절차가 BiLSTM 내부의 contextualization 으로 인해 *encoder state* 가 이미 입력 정보를 흡수해버린 점을 *반박* 으로 활용 가능하다는 점이 Wiegreffe-Pinter 의 핵심 재반론).
 
-**C3. 인코더 의존성 정량화.** Attention 의 "설명력" 은 인코더가 token-level 정보를 얼마나 *섞는가* (contextualization 강도) 에 직접 의존. Average encoder (섞지 않음) 와 CNN 은 attention 과 feature importance 가 강하게 일치 (Kendall τ 큼) 하지만 BiLSTM 처럼 강하게 mixing 하는 encoder 에서는 일치가 약하다는 차등 패턴 — 이는 attention 의 정보가 *해당 위치의 입력* 이 아닌 *해당 위치까지의 context summary* 를 가리키기 때문이라는 메커니즘 가설로 연결된다. (원문 §6 또는 §7 의 논의 — 정확한 위치 원문 미확인).
+**C3. 인코더 의존성 정량화.** Attention 의 "설명력" 은 인코더가 token-level 정보를 얼마나 *섞는가* (contextualization 강도) 에 직접 의존. Average encoder (섞지 않음) 와 CNN 은 attention 과 feature importance 가 강하게 일치 (Kendall τ 큼) 하지만 BiLSTM 처럼 강하게 mixing 하는 encoder 에서는 일치가 약하다는 차등 패턴 — 이는 attention 의 정보가 *해당 위치의 입력* 이 아닌 *해당 위치까지의 context summary* 를 가리키기 때문이라는 메커니즘 가설로 연결된다. (paper §6 Discussion: "the encoder induces representations that may encode arbitrary interactions between individual inputs; presenting heatmaps of attention weights placed over these inputs can then be misleading.")
 
 **C4. 다중-도메인 + 다중-인코더 검증.** 12 개 데이터셋 × 3 인코더 (BiLSTM/CNN/avg) × 2 attention (tanh/dot) 의 격자를 일관된 파이프라인으로 돌려, 발견이 *특정 데이터셋 우연* 이 아닌 *구조적 현상* 임을 보임. 결과는 의료(Anemia/Diabetes)·감성·뉴스·QA 전반에 걸쳐 일관된 패턴.
 

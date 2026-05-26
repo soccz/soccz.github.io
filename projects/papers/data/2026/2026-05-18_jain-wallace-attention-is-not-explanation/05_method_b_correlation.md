@@ -21,7 +21,7 @@ $$
 **조심할 점**:
 - *국소* 측정이라 거대 변화 (단어 완전 제거) 는 비선형 효과를 놓침.
 - ReLU 류 비선형성에서 *gradient saturation* → 작은 값으로 collapse 가능 (saliency literature 의 잘 알려진 문제).
-- 두 형태 ($|\partial \hat{y}/\partial e|$ vs $e \odot \partial \hat{y}/\partial e$) 가 다른 *해석* 을 제공 — 후자는 *baseline 0* 을 가정한 first-order Taylor 근사, 전자는 *국소 민감도*. 본 논문이 둘 다 보고하는지 한 쪽만 보고하는지 — 원문 §4 미확인. 학계 통용은 둘 다 보고하고 robust 한 형태를 강조.
+- 두 형태 ($|\partial \hat{y}/\partial e|$ vs $e \odot \partial \hat{y}/\partial e$) 가 다른 *해석* 을 제공 — 후자는 *baseline 0* 을 가정한 first-order Taylor 근사, 전자는 *국소 민감도*. paper Algorithm 1 의 정확한 form 은 `g_t = |Σ_w 1[x_tw=1] · ∂ŷ/∂x_tw|` — one-hot input 의 vocab-summed magnitude. Table 2 는 single τ_g 만 보고.
 
 ### (2) Leave-one-out (LOO) importance
 
@@ -60,7 +60,7 @@ $$
 
 ## 격자 sweep
 
-위 측정을 **(데이터셋 12) × (인코더 3) × (attention 종류 2)** = **72 조건** 에 대해 instance-wise 로 모아 분포로 보고. 보고 형태는 violin / box plot 으로 추정 (원문 미확인). 각 조건의 *median Kendall τ* 또는 *Kendall τ < 0 인 instance 비율* 등이 핵심 수치.
+위 측정을 **(데이터셋 12) × (인코더 3) × (attention 종류 2)** = **72 조건** 에 대해 instance-wise 로 모아 분포로 보고. paper 의 보고 형태는 **histogram** (Figure 2 - 8 panel) + **Table 2** (mean ± std + Sig. Frac. per dataset × class). 핵심 수치 = mean τ_g 와 Sig. Frac. (통계적 유의성 도달 instance 비율).
 
 ## 대안 — 다른 접근으로 했다면?
 

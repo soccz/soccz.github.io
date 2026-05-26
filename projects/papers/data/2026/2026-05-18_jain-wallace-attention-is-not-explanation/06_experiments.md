@@ -1,6 +1,6 @@
 # 06 실험 해부
 
-> **수치 투명성 면책**: 본 환경에서 원문 PDF 직접 열람 차단. 따라서 *정확한 Table/Figure 의 수치* 는 "원문에 수치 미보고" 또는 "원문 미확인" 으로 표기한다. 정성적 결론과 구조적 패턴 (인코더별 차이, 결과의 방향) 은 저자 코드 repo 의 모듈 구조 + 후속 인용 패턴에서 확인 가능.
+> **수치 출처**: paper Table 1 (12 dataset stats), Table 2 (Kendall τ correlations 의 BiLSTM/Average × τ_g/τ_loo, 21 row) — [16_appendix.md](16_appendix.md) §16.2-16.6 에 정확 수치 추출. Figure 1-7 의 정성적 패턴은 본 챕터 + 15_diagrams.md 의 viz block 에 재현.
 
 ## 데이터셋 — 산문 검토
 
@@ -26,7 +26,7 @@
 
 본 논문은 attention 모델을 *발명* 하지 않음. 표준 BiLSTM/CNN/avg + 표준 attention 으로 *baseline 정확도* 를 먼저 보고, 그 후 *해석성* 을 분석. 따라서 "베이스라인" 의 의미가 *분류 성능 비교* 가 아닌 *모델 자체의 정상 동작 검증* 이다. 즉:
 - 각 (데이터셋, 인코더) 조합의 test accuracy 가 *학계 통용 baseline* 에 도달해야 분석이 의미 있음 (정상 학습된 모델의 attention 을 분석해야 결론이 흥미로움).
-- 본 환경에서 정확한 accuracy 표 미확인. 학계 통용은 SST ~85%, IMDB ~88%, SNLI ~80% 수준의 BiLSTM+attention 베이스라인.
+- **Test accuracy (paper Table 1)**: SST F1 0.81, IMDB F1 0.88, ADR F1 0.61, 20News F1 0.94, AG News F1 0.96, Diabetes F1 0.79, Anemia F1 0.92, CNN Acc 0.64, bAbI 1/2/3 = 1.0/0.48/0.62, SNLI micro-F1 0.78 — 모두 LSTM 인코더 기준. 학계 통용 baseline 도달.
 
 ## 지표 선택
 
@@ -42,37 +42,37 @@
 - Accuracy change 만 보고했다면 — *예측이 안 바뀜* (argmax 안정성) 으로 H2 가 *더 쉽게* 통과한 것처럼 보임 (확률 자체의 변화 정보 손실). TVD 가 더 엄격.
 - Kendall 대신 top-k overlap 만 봤다면 — *상위 가장 중요한 한두 단어* 의 일치만 보고 나머지 token noise 무시. 좀 더 *직관적* 이지만 *덜 robust*. 본 논문이 Kendall 을 메인으로 쓰는 것은 *전체 분포* 의 정보 보존을 위함.
 
-## 주요 표·그림 (추정 — 정확한 번호 미확인)
+## 주요 표·그림 (paper PDF 확인)
 
 본 논문의 핵심 시각화는 다음 5 카테고리로 분류 가능 (학계 통용 + repo 의 graph outputs 명세):
 
-### Fig. 1 (또는 Fig. 2) — Kendall τ 분포 (violin plot)
+### Figure 2 — Kendall τ 분포 (histogram, paper p.4-5)
 
 각 (데이터셋, 인코더) 조합에 대해 Kendall τ 의 *분포* 를 violin/box 로 표시.
 
 **해석**: Average encoder 의 violin 은 *오른쪽 (τ→1)* 에 치우치고, BiLSTM 은 *중앙 (τ≈0)* 근처에 분포. 이 *encoder 별 차등* 자체가 본 논문의 핵심 contribution 의 하나 — *왜 BiLSTM 에서 attention 이 덜 explanatory 인가* 의 메커니즘 가설로 이어짐.
 
-### Fig. 2 (또는 Fig. 3) — Permutation 결과
+### Figure 6 — Permutation 결과 (max α vs median ∆ŷ)
 
 각 데이터셋에 대해 permutation 후 *median output 차이* 의 분포. *대부분의 instance* 에서 median 이 작다 (예: <0.1) 는 그림.
 
 **해석**: BiLSTM 의 *contextualization* 이 입력 위치 정보를 *embedding 단계에서* 흡수해버려, attention 의 *위치 매핑* 이 *추가 정보를 거의 제공하지 않는다* 는 메커니즘 설명. 이는 Brunner 2019 의 *identifiability* 이론 결과의 *empirical instantiation*.
 
-### Fig. 3 (또는 Fig. 4) — Adversarial 산점
+### Figure 7 — Adversarial 산점 (TVD vs Max JSD)
 
 (x: JSD between original/adversarial attention, y: TVD of output) 산점. *우측 아래* (큰 JSD, 작은 TVD) 영역의 점 밀도.
 
 **해석**: 거의 모든 instance 에서 *우측 아래* 점이 존재 — 즉 adversarial attention 분포가 *대부분의 사례* 에서 발견됨. 이 그림이 본 논문의 가장 강한 시각적 증거.
 
-### Fig. 4 (또는 Fig. 5) — 정성적 시각화
+### Figure 1 — 정성적 시각화 (heatmap)
 
 특정 instance 의 *원본* attention vs *adversarial* attention heatmap 비교 (의료 차트나 트윗에서). 두 attention 이 *시각적으로 완전히 다른* 단어를 가리키지만 *같은 진단* 을 내는 사례.
 
 **해석**: 정량 결과의 *qualitative impact* — 의료 reviewer 가 보았을 때 *이게 우려스럽다* 라고 즉시 느끼게 하는 그림. 본 논문의 *수사적* 무기.
 
-### Fig. 5 (또는 Table 1) — 데이터셋별 baseline accuracy + key metric 정리
+### Table 1 — 데이터셋별 baseline accuracy + Table 2 — Kendall τ 정리
 
-각 (데이터셋, 인코더, attention) 의 accuracy + key Kendall τ + permutation median TVD + adversarial JSD 의 요약 표. 정확한 수치 원문 미확인.
+각 (데이터셋, 인코더, attention) 의 accuracy + key Kendall τ + permutation median TVD + adversarial JSD 의 요약. **정확한 수치는 [16_appendix.md](16_appendix.md) §16.2 (Table 2) 와 §16.6 (Table 1)** 참조.
 
 ## Ablation — 저자가 일부러 넣은 것 / 숨긴 것
 
@@ -91,7 +91,7 @@
 - *학습 종료 시점별* breakdown — 학습이 끝나기 직전 vs 충분히 학습된 모델의 attention 의 explanatory 차이. 학습 후반에 *plausibility* 가 늘어남에 따라 *faithfulness* 도 같이 증가하는가, 분리되는가.
 - *학습 seed 변동* — 같은 데이터·모델로 다른 random seed 로 학습했을 때 attention 분포의 *재현성*. 만약 seed 별로 attention 이 *크게 다르다면* H1·H2 와 무관하게 attention 의 *안정성* 자체가 의심.
 
-위는 모두 본 환경에서 미확인. 후속 분석에 *반드시* 확인할 사항.
+paper 본문 (§4, §6) 에는 미보고 — 후속 분석 후보 (Wiegreffe-Pinter 가 일부 다룸).
 
 ## 핵심 한 문장
 

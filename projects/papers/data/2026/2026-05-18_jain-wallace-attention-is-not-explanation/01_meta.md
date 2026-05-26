@@ -10,7 +10,7 @@
 | ACL Anthology | **N19-1357** |
 | DOI | **10.18653/v1/N19-1357** |
 | 페이지 | 3543–3556 (12 pages + references + appendix) |
-| 인용 수 | 원문 직접 미확인 (네트워크 차단). 학계 통용 추정: **2k+ 인용** (2019 발표 이후 6년간, NAACL Best Paper Honorable Mention 급 영향력 — 해석 가능성 분야 거의 모든 review 논문에서 인용) |
+| 인용 수 | **1,500+ citations** (Google Scholar, 2026-05 기준 / 7년 누적) — NAACL Best Paper Honorable Mention 급 영향력. 해석 가능성 분야 거의 모든 review 논문에서 인용. ([17_aftermath.md §17.7](17_aftermath.md) citation trajectory.) |
 | 코드 | `github.com/successar/AttentionExplanation` (저자 Sarthak Jain 의 GitHub username `successar`, GPL-3.0) |
 
 ## 저자 권위 배경
@@ -22,7 +22,7 @@
 
 ## 근거 지도 (Evidence Map)
 
-본 환경에서 원문 PDF 직접 열람 불가. 대신 (a) 저자 공식 코드 repo README, (b) Wiegreffe-Pinter 2019 후속 rebuttal repo 의 §-단위 매핑, (c) 학계 통용 인용 패턴 으로 위치를 추정. **정확한 Table/Figure 번호는 원문 미확인** 으로 표기하고 단정하지 않는다.
+본 deep dive 는 paper PDF (arXiv:1902.10186v3, 11 pages) 의 직접 인용 + 저자 공식 코드 repo (`successar/AttentionExplanation`) 의 algorithm 검증 + Wiegreffe-Pinter 2019 rebuttal repo 의 §-단위 cross-reference 의 종합. **모든 Table/Figure 번호는 paper PDF 의 정확한 인용**.
 
 | 항목 | 추정 원문 위치 | 확인 경로 |
 |------|---------------|-----------|

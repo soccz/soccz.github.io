@@ -46,9 +46,9 @@
 학습 완료된 모델의 attention 값을 *외부에서 강제* — 즉 $\boldsymbol{\alpha} \to \boldsymbol{\alpha}^*$ 로 바꿔서 추론. 두 sub-test:
 
 - **(B1) 순열 (permutation)**: $\boldsymbol{\alpha}^\pi = \text{permute}(\boldsymbol{\alpha})$. 무작위 순열한 분포로 forward → 출력 차이 $\Delta \hat{y}$ 측정. 다중 순열을 모아 median 분포로 보고.
-- **(B2) 적대적 (adversarial)**: gradient ascent 로 다음 목적함수를 최대화하는 분포 $\boldsymbol{\alpha}_{\text{adv}}$ 를 명시적으로 탐색:
+- **(B2) 적대적 (adversarial)**: paper §4.2.2 — gradient ascent 로 다음 제약 최적화:
   $$\max_{\boldsymbol{\alpha}_{\text{adv}} \in \Delta^{T-1}} \; \text{JSD}(\boldsymbol{\alpha}, \boldsymbol{\alpha}_{\text{adv}}) \quad \text{s.t.} \quad \text{TVD}(\hat{y}(\boldsymbol{\alpha}), \hat{y}(\boldsymbol{\alpha}_{\text{adv}})) < \epsilon$$
-  (정확한 lagrangian/제약 형태는 원문 §5.4 — 본 환경에서 미확인. 위는 학계 표준 정형화.)
+  paper 의 ε = 0.10 (binary classification), 0.05 (QA). PyTorch 구현은 [14_code.md](14_code.md) §14.5 의 soft Lagrangian.
   
   - $\Delta^{T-1}$: $T$-차원 simplex (확률 분포 공간).
   - $\text{JSD}$: Jensen-Shannon divergence.

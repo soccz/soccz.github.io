@@ -1,5 +1,7 @@
 # 15 Diagrams & Interactive Visualizations
 
+> **🧒 한 그림이 천 마디 가치**: 본 챕터는 *그림으로만* paper 의 모든 핵심 mechanism 을 설명. ASCII 도식 15+ 와 7 개 인터랙티브 viz 로 attention 의 input→output 흐름 / H1 의 검증 절차 / H2 의 counterfactual 탐색 / paper Figure 1 의 결정적 visual 까지 모두 시각 형태로 압축. "그림으로 먼저 본 뒤 다른 챕터의 본문 으로 들어가는" 진입 경로.
+
 paper 의 핵심 mechanism 을 ASCII 도식 + 인터랙티브 viz 로 시각화.
 
 ---

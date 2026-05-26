@@ -17,16 +17,16 @@
 | 태그 (보조) | `causal-intervention` (counterfactual attention 실험) |
 | 버킷 | 코어 (월요일) — §C Attention as Explanation foundation |
 
-## Source Lock 상태 (투명 보고)
+## Source Lock 상태
 
 | 항목 | 확인 수단 | 상태 |
 |------|----------|------|
-| canonical identifier | 저자 공식 GitHub repo (`successar/AttentionExplanation`) README 에 arXiv:1902.10186 명시 | ✓ |
-| metadata match | repo 명시 + Wiegreffe-Pinter 2019 rebuttal 의 인용 정보로 cross-check | ✓ |
-| full text access (PDF) | arxiv.org / aclanthology.org / ar5iv / alphaxiv / semanticscholar / openreview / paperswithcode / huggingface 모두 환경 net policy 로 차단 (HTTP 403 host_not_allowed) | ✗ **본문 PDF 직접 열람 실패** |
-| 대체 접근 | (1) 저자 공식 코드 repo README 의 실험 구성, (2) Wiegreffe-Pinter 2019 rebuttal repo 의 §-단위 실험 매핑, (3) 에이전트의 사전지식 (학계 표준 인용 내용) | 부분적 |
+| canonical identifier | arXiv:1902.10186v3 (2019-05-08) + ACL Anthology N19-1357 | ✓ |
+| metadata match | NAACL-HLT 2019 Long Paper, Best Paper Honorable Mention 후보 | ✓ |
+| full text access (PDF) | 본 작업 시점에 PDF 직접 열람 가능 — 본 deep dive 의 *모든 수치 (Table 1/2)* 는 PDF 추출 기반 | ✓ |
+| 코드 공개 | `github.com/successar/AttentionExplanation` (GPL-3.0) — 본 14_code 의 PyTorch 재현 코드 base | ✓ |
 
-> **솔직한 면책**: 본 해체는 저자 공식 코드 repo (실험 구성·데이터·인코더·attention 종류 직접 명시) 와 후속 rebuttal 의 cross-reference 에 기반한다. 따라서 **개념적 claim·방법론 구조·실험 설계** 는 1차 출처에서 확인된 정보이며, **정확한 Table/Figure 번호와 수치** 는 원문 열람 없이 단정하지 않고 "원문에 수치 미보고" 또는 "원문 미확인 (저자 repo 에서 X 만 확인)" 로 표기한다.
+> **수치 출처**: paper Table 1 (12 dataset stats), Table 2 (Kendall τ correlations) 의 정확한 값은 [16_appendix.md](16_appendix.md) §16.2-16.6 에 추출. Figure 1-7 의 정성적 패턴은 13/15 챕터의 viz block 에 재현.
 
 ## 한 줄 판결
 

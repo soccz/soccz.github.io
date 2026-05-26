@@ -18,7 +18,7 @@
 
 ## (후속) Wilinski et al. ICML 2025 — *Exploring Representations and Interventions in Time Series Foundation Models*
 
-**어떤 논문**: 2024-2025 의 *TSFM (Time Series Foundation Model)* 에 *mechanistic interpretability* 를 적용. *Internal representation analysis* (probing) + *intervention experiments* (특정 head/layer 의 *ablation/replacement*) 의 결합. Chronos/MOIRAI/TimesFM 류 모델에서 *어떤 component 가 어떤 forecasting subtask 를 담당* 하는지 분해. (정확한 venue: ICML 2025 — 본 환경에서 원문 미확인.)
+**어떤 논문**: 2024-2025 의 *TSFM (Time Series Foundation Model)* 에 *mechanistic interpretability* 를 적용. *Internal representation analysis* (probing) + *intervention experiments* (특정 head/layer 의 *ablation/replacement*) 의 결합. Chronos/MOIRAI/TimesFM 류 모델에서 *어떤 component 가 어떤 forecasting subtask 를 담당* 하는지 분해.
 
 **본 논문과의 관계**: *후손*. 본 논문의 *intervention 패러다임* (H2 의 attention 강제 교체) 이 7년 후 TSFM 의 *layer/head/circuit ablation* 으로 *확장 + 도메인 이동* 한 사례. 본 논문이 *attention 단일 layer 의 1D 분포* 만 perturb 한 것을 Wilinski 가 *층-단위 representation* 으로 일반화.
 

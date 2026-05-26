@@ -1,5 +1,9 @@
 # 10-C 실험 아이디어 2개
 
+> **🧒 본 챕터는 "내가 실제로 할 실험 시나리오"**: 위 챕터의 *질문* 과 *follow-up* 을 받아, 구체적으로 *어떤 setup* 에서 *어떤 결과* 를 보면 본 paper 의 결론이 *부분 무효화* 또는 *강화* 될 수 있는지의 2 개 실험 시나리오. 비용 추정 + 반증 조건까지 명시 — *NeurIPS 2027 manuscript* 에 들어갈 자체 contribution figure 후보.
+
+
+
 ## 아이디어 1 — *PE × Faithfulness 격자* (APF 의 H1·H2 격자)
 
 **가설**: PE choice 는 attention 의 faithfulness 의 *큰 조절자*. 특히 *position-anchored* PE (RoPE, ALiBi, FIRE) 가 NoPE 와 sinusoidal 보다 *더 faithful*. 이유: position-anchored PE 는 query/key 의 *기하학적 구조* 를 *강제* 하여 attention 의 *임의 분포 적합성* 을 제약 → adversarial 분포의 *가능성 공간* 이 작아짐 → H2 통과.

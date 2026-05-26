@@ -6,7 +6,7 @@
 
 **주장 (한 문장)**: 학습된 attention 분포 $\boldsymbol{\alpha}$ 와 gradient·LOO 기반 feature importance 사이의 순위 상관 (Kendall τ) 은 대부분의 데이터셋·BiLSTM 조합에서 *낮음* — 즉 attention 이 큰 위치와 모델 출력에 *실제로* 큰 영향을 주는 위치가 잘 일치하지 않는다.
 
-**증거**: §4 (또는 §4.1 — 정확한 위치 원문 미확인). 12 데이터셋 × 3 인코더 × 2 attention 격자에서 instance-wise Kendall τ 의 분포가 보고됨 (논문에는 violin plot / box plot 형태로 추정). BiLSTM 인코더에서 가장 약함, average encoder 에서 가장 강함이라는 *encoder 의존성* 패턴.
+**증거**: paper **§4.1 (Correlation Between Attention and Feature Importance Measures)** — Table 2 (mean ± std + Sig. Frac.) + Figure 2 (Kendall τ histogram). 21 row (12 datasets × class) 의 instance-wise Kendall τ. BiLSTM 의 mean τ_g 평균 ~ 0.32 (Anemia 0.43 — Diabetes 0.43 의 medical 이 *높은* 편), Average encoder 의 mean τ_g 평균 ~ 0.69 (+0.37p). → [16_appendix.md §16.2](16_appendix.md).
 
 **숨은 전제** (저자가 당연시한 것):
 - gradient $|\partial \hat{y}/\partial x_i|$ 와 LOO 가 "*ground truth* feature importance" 의 신뢰할 만한 대리. (이 자체가 saliency literature 에서 논쟁적 — Adebayo 2018 sanity check 등). 만약 gradient 자체가 noisy 면 *낮은* τ 는 attention 결함이 아니라 *gradient 결함* 일 수도.
@@ -18,7 +18,7 @@
 
 **주장**: 학습 후 attention 분포 $\boldsymbol{\alpha}$ 를 *임의 순열* $\boldsymbol{\alpha}^\pi$ 로 무작위 섞어 추론에 사용해도, 많은 instance 에서 예측 $\hat{y}^\pi$ 가 원래 $\hat{y}$ 와 거의 같다 (output JS divergence 작음).
 
-**증거**: §5 또는 §4.2 — instance 별로 1 회 또는 다중 permutation 의 median output difference 분포 보고. BiLSTM 에서 이 효과가 가장 강함 (즉, BiLSTM 의 hidden state 들이 이미 충분히 *섞여 있어서* 어디에 attention 을 주든 비슷한 결과를 낸다는 메커니즘 가설로 연결).
+**증거**: paper **§4.2.1 (Attention Permutation)** — Algorithm 2 (100 permutations per instance, median TVD recorded). Figure 6 (max α vs median ∆ŷ scatter). 대부분 dataset 에서 median ∆ŷ < 0.05 — large max α 인 instance 도 minimal change. Diabetes 만 예외 (medical high-precision token).
 
 **숨은 전제**:
 - *Inference-time* 만 permutation. 모델은 학습 때 본 attention 으로 훈련됐고, 추론 시 다른 분포를 강제. 이 setting 이 *학습 일관성* 을 깨므로 "그래도 예측이 같다" 가 더 충격적인 결과로 해석됨. 그러나 *모델이 permutation 에 강건하도록 학습되지 않았는데도 강건* 한 것이 어텐션 본질의 비-필요성을 의미하는지, 또는 BiLSTM encoder 의 contextualization 이 입력 위치 정보를 이미 흡수해버려 attention 이 무관해진 것인지 — 두 해석이 가능.
@@ -30,7 +30,10 @@
 
 **주장**: Gradient 기반 최적화로 *예측을 거의 보존* 하면서 ($\text{TVD}(\hat{y}, \hat{y}_{\text{adv}}) < \epsilon$) 동시에 *attention 분포 distance 를 최대화* 하는 적대적 분포 $\boldsymbol{\alpha}_{\text{adv}}$ 가 대부분의 instance 에서 구성 가능. 이는 단순 random permutation 보다 강한 검증 — *최악의* 대안 분포를 *명시적으로* 찾아낸다.
 
-**증거**: §5.4 또는 §6 — Adversarial attention 의 JS divergence 분포 + output difference 분포 산점도. 핵심 도식은 (x: $\text{JSD}(\boldsymbol{\alpha}, \boldsymbol{\alpha}_{\text{adv}})$, y: $\text{TVD}(\hat{y}, \hat{y}_{\text{adv}})$) 산점에서 *오른쪽 아래* (어텐션 차이 큼, 출력 차이 작음) 영역이 채워져 있는가가 관건. 대부분 채워짐.
+**증거**: paper **§4.2.2 (Adversarial Attention)**. Figure 7 — 2D plot (x: Max JSD, y: Max attention; with eps=0.10 for binary, 0.05 for QA). paper 인용 (§4.2.2):
+> "For all the corpora except for Diabetes, we are able to find adversarial attention distributions that achieve a JSD divergence larger than 0.4 yielding a TVD of at most 0.1 from the original prediction with relatively high frequency."
+
+→ 95%+ instance 에서 adversarial 가능. Diabetes 만 예외 (medical high-precision token).
 
 **숨은 전제**:
 - 적대적 최적화의 *수렴 보장* — gradient descent 가 local minima 에 갇히지 않고 진짜 distance maximizer 를 찾는다는 보장 없음. 따라서 "*최대* 가능한 차이" 이지 *상한* 은 아님.

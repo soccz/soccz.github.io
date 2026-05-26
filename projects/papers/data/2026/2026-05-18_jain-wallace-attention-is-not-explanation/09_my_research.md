@@ -1,5 +1,7 @@
 # 09 내 연구와의 연결 (APF + Grokking)
 
+> **🧒 본 챕터는 "내 manuscript 의 base 정의서"**: 다른 챕터가 *paper 자체의 해석* 이라면, 본 챕터는 *내 연구 트랙 (APF, Grokking) 이 본 paper 의 어디에 *직접 의지* 하는지* 의 명시. 본 paper 가 *baseline reference* 인 4 곳 + *내 contribution 의 *3 가지 새 axis* 의 좌표. 따라서 본 챕터는 *제 3 자 review* 가 아닌 *내 작업 노트* 의 톤.
+
 > **연결 강도 우선 표시**: 본 논문 ↔ **§C (Attention-as-Explanation / PE-Attention Geometry)** = **매우 강함 (APF 의 출발 명제 직격)**. ↔ **§B (Mech interp / Circuit)** = **강함 (intervention 패러다임 공유)**. ↔ **§A (Grokking)** = **중간 (학습 dynamics 와 attention 의 변화 — 간접)**. ↔ **§D (TS Transformer)** = **약함 → 중간 (BiLSTM → Transformer 확장 + TS 도메인 attention 의 explanatory)**.
 
 ## 흡수할 기법 — 4 가지
