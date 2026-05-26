@@ -242,3 +242,7 @@ $$
 
 ```viz:chen-sdf-framework:title=paper §3 — SDF+GAN Architecture,caption=Component selector.
 ```
+
+
+```viz:dlap-no-arbitrage:title=paper Eq 1 — No-Arbitrage Pricing,caption=Asset count slider.
+```

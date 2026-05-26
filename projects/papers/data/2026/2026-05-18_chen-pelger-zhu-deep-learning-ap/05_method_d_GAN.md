@@ -179,3 +179,7 @@ SDF Network                         Conditional Network
 1. (a) 본 논문은 **금융 데이터 SNR 이 낮음** — 무한 iteration 하면 noise 학습. (b) Step 1 (unconditional) 으로 SDF 의 큰 그림을 먼저 잡고, step 2-3 으로 fine-tune. (c) paper Internet Appendix Fig IA.1 에서 추가 iteration 의 성능 향상 없음 확인.
 2. (a) **Implicit ensemble** — 각 dropout pattern 이 다른 sub-network 학습. (b) **No tuning required** — l1/l2 의 $\lambda$ 같은 strength parameter 가 dropout rate 하나로 충분. (c) **NN 의 highly non-linear interaction** 에서는 dropout 이 더 잘 generalization (Srivastava et al. 2014 의 실증).
 3. (a) Ensemble 의 variance reduction 효과는 $\sim 1/\sqrt{n}$. 9 에서 이미 충분히 작음. (b) paper 가 더 큰 ensemble 시도했지만 성능 변동 없음 ("available upon request"). (c) Computational cost 와 trade-off — 9 가 sweet spot.
+
+
+```viz:dlap-gan-game:title=paper §3.3 — GAN Min-Max,caption=Training step slider.
+```

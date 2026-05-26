@@ -133,3 +133,7 @@ $$
 1. SR 은 **extreme portfolio** 의 weight 만 잘 잡으면 높을 수 있음. 그러나 실제 자산가격결정은 **모든** 자산을 잘 가격결정해야 함 — middle quintile 도. paper Pelger-Xiong (2019) 의 "proximate factor" 결과: extreme factor weight 만 정확해도 SR 비슷하지만 loading 자체는 틀릴 수 있음. → EV, XS-R² 가 보완.
 2. **EV** 는 **시계열 R²** — 개별 stock 의 cross-sectional regression residual $\epsilon$ 의 분산 비율 (non-demeaned). **XS-R²** 는 **횡단면 mean R²** — $\hat\alpha_i = \bar\epsilon_{T_i}$ 의 분산 비율. EV 는 "stock 변동 설명", XS-R² 는 "stock 평균 설명". 자산가격결정의 본질은 **mean** 이므로 XS-R² 가 더 중요.
 3. β 의 정의는 SDF model 의 implications 와 일관해야 함. GAN 은 **second moment** $\mathbb{E}[F R^e]$ 를 직접 추정 (no-arbitrage 의 정확한 표현). FFN 은 conditional mean μ ∝ β (Eq $\mu = \beta E[F]$). EN/LS 는 같은 second moment 의 regression. 모델의 SDF representation 에 맞춰 일관성 유지.
+
+
+```viz:dlap-test-assets:title=paper Fig 3 — Test Assets Pricing,caption=Model selector.
+```

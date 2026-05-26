@@ -252,3 +252,7 @@ paper figure note:
 
 ```viz:chen-macro-importance:title=paper §6 — Macro Importance,caption=Top-N slider.
 ```
+
+
+```viz:dlap-feature-importance:title=paper Table 5 — Char Importance,caption=Top-N slider.
+```

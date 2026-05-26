@@ -149,3 +149,7 @@ paper 본문:
 1. **Unbalanced panel weighting**. 자산 $i$ 가 더 오래 관측되었으면 (큰 $T_i$) moment 추정이 정확하므로 weight 높임. $\sqrt{T_i}/\sqrt{T}$ — GLS-type. 짧게 관측된 자산 (예: 신생 IPO 직후 만 보임) 의 noise 영향 차단.
 2. **SDF network**: $\omega(I_t, I_{t,i})$ 학습 → portfolio weights for SDF. **Conditional network**: $g(I_t, I_{t,i})$ 학습 → test asset conditioning. 둘 다 LSTM (macro → hidden state) + FFN (full) 구조지만 **다른 LSTM, 다른 FFN**.
 3. (a) **LSTM 없음** — macro 는 raw 차분만. (b) **Adversarial 없음** — conditioning $g$ 학습 없음. (c) **No-arbitrage 없음** — loss 가 conditional mean MSE.
+
+
+```viz:dlap-network-architecture:title=paper Fig 1 — Network Architecture,caption=Component selector.
+```

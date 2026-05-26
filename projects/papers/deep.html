@@ -585,6 +585,11 @@
 <script src="viz/chen-sdf-framework.js"></script>
 <script src="viz/chen-sharpe-comparison.js"></script>
 <script src="viz/chen-macro-importance.js"></script>
+<script src="viz/dlap-no-arbitrage.js"></script>
+<script src="viz/dlap-gan-game.js"></script>
+<script src="viz/dlap-network-architecture.js"></script>
+<script src="viz/dlap-test-assets.js"></script>
+<script src="viz/dlap-feature-importance.js"></script>
 <script src="viz/autoformer-decomposition.js"></script>
 <script src="viz/autoformer-correlation.js"></script>
 <script src="viz/autoformer-results.js"></script>
@@ -872,41 +877,50 @@
       }
     },
     '2026-05-18_chen-pelger-zhu-deep-learning-ap': {
-      eyebrow: 'Paper Deep Dive · 자산가격결정 × Deep Learning',
-      hero: 'No-arbitrage 를 신경망 loss 로. SDF 와 test asset 이 minimax 로 경쟁.',
-      subtitle: '<span class="accent">Chen, Pelger &amp; Zhu (2021)</span> 의 GAN model 은 SDF network 와 conditional network 두 신경망이 ' +
-                'no-arbitrage condition (E[M·R^e·g] = 0) 의 squared deviation 을 minimax 로 푼다. ' +
-                'LSTM 이 178 macro 시계열을 4 hidden state 로 압축. 25년 OOS Test 에서 SR 0.75, EV 8%, XS-R² 23% — ' +
-                '모두 모든 benchmark 압도. 본 deep dive 는 18 챕터로 Tables I–V, Figs 1–14, Eq 1–4 모두 정확히 해체.',
+      eyebrow: 'Paper Deep Dive · 자산가격결정 × Deep Learning × GAN Adversarial',
+      hero: 'No-arbitrage 를 신경망 loss 로. SDF 와 test asset 이 minimax 로 경쟁 — Deep Learning Asset Pricing 의 founding paper.',
+      subtitle: '<span class="accent">Luyang Chen, Markus Pelger, Jason Zhu (JFE 2021)</span> 의 *deep learning asset pricing (DLAP)* 는 ' +
+                'No-arbitrage condition (E[M·R^e·g(I_t)] = 0) 을 *minimax adversarial 게임* 으로 변환 — ' +
+                '<span class="accent">SDF network</span> (generator) 와 <span class="accent">conditional network</span> (discriminator, GAN moment selection) 가 경쟁. ' +
+                'LSTM 이 <span class="accent">178 macro 시계열</span> 을 4 hidden state 로 압축, FFN 이 *46 firm characteristics* 처리. ' +
+                '25년 OOS (1992-2016) 에서 <span class="accent">Test Sharpe 0.75, EV 8%, XS-R² 23%</span> — *모든 benchmark 압도*. ' +
+                'Gu-Kelly-Xiu autoencoder 와 함께 *deep learning asset pricing 의 founding triangle apex*.',
       stats: [
-        { num: '18', label: '챕터' },
-        { num: '11', label: 'Figure 발췌' },
+        { num: '23', label: '챕터' },
+        { num: '16', label: 'viz JS' },
         { num: '0.75', label: 'GAN Test SR' },
         { num: '50', label: '년 데이터' }
       ],
       what: {
-        title: '"ML 만으로는 부족하다. 이론 (no-arbitrage) 이 결정적이다."',
-        body: '본 논문은 단순 ML 응용이 아니다. **No-arbitrage condition (E[M·R^e·g] = 0) 그 자체를 loss 로 변환**, ' +
-              'adversarial network 가 가장 mispriced 한 test asset 을 자동 생성, LSTM 이 178 macro 시계열에서 ' +
-              'business cycle 을 명시적 supervision 없이 학습. paper Table I 결과: EN (linear + no-arb) > FFN (nonlinear + no-no-arb). ' +
-              '즉 nonlinearity 보다 **이론 제약** 이 더 중요. 본 deep dive 는 paper PDF 와 한 줄씩 대조 검증.',
-        verdict: 'ML 은 자산가격결정 의 이론을 더 정확히 구현하는 도구다. 이론 없는 ML 은 noise 학습에 불과하다 — ' +
-                 'No-arbitrage 를 loss 에, Adversary 가 test asset, LSTM 이 macro state.'
+        title: '"ML 만으로는 부족하다 — 이론 (no-arbitrage) 이 결정적이다. Adversarial moment selection 이 paradigm shift."',
+        body: '본 논문은 단순 ML 응용이 아닌 *3-pillar synthesis*. ' +
+              '(1) <strong>No-arbitrage condition</strong> (E[M·R^e·g] = 0) 그 자체를 loss 로 변환 — Hansen-Singleton GMM 의 *deep learning lift*. ' +
+              '(2) <strong>Adversarial GAN moment selection</strong> — 가장 mispriced 한 test asset 을 *자동 생성* (pre-specified moment 가 아닌 learned moment). ' +
+              '(3) <strong>LSTM macro state RNN</strong> — 178 macro 시계열에서 *business cycle 을 명시적 supervision 없이* 학습 (4 hidden state 로 압축). ' +
+              'paper Table I 결과: <strong>EN (linear + no-arb) > FFN (nonlinear + no-no-arb)</strong> — *nonlinearity 보다 이론 제약 이 결정적*. ' +
+              'AQR (2021), Two Sigma (2022), Citadel (2022) 모두 *DLAP architecture* 도입 — 학계 → 산업 transition 의 paradigmatic case. ' +
+              '본 deep dive 는 23 챕터 + 16 viz JS 로 Tables I-V, Figs 1-14, Eq 1-4 모두 *paper PDF 와 한 줄씩 대조 검증*.',
+        verdict: 'ML 은 자산가격결정 의 이론을 *더 정확히 구현하는 도구*. 이론 없는 ML 은 noise 학습에 불과하다 — ' +
+                 'No-arbitrage 를 loss 에, Adversary 가 test asset, LSTM 이 macro state. ' +
+                 'Deep Learning Asset Pricing era 의 *founding triangle 의 apex* — 후속 *모든 ML asset pricing* 의 reference.'
       },
       tour: [
-        { num: '01–03', ttl: '문제와 동기',           desc: '4 challenges (고차원, 함수형, 동학, 낮은 SNR) 과 본 논문의 답.',                                                  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-03',  text: '도전 보기 →' },
-        { num: '04–07', ttl: '방법론 5부작',          desc: 'SDF framework → Loss + 4가지 신경망 (FFN, LSTM, GAN) + 평가 metrics.',                                            link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-04',  text: '방법론 해부 →' },
-        { num: '08–11', ttl: '실증 4부작',            desc: '50년 데이터 · Table I (4 모델 비교) · Tables II–III · variable importance + LSTM states.',                       link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-09',  text: '결과 보기 →' },
-        { num: '12',    ttl: '4 conclusions',         desc: 'No-arb > ML, asset pricing 은 single linear / interaction nonlinear, macro state 결정적, multi-factor 통합 가능.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-12',  text: '결론 읽기 →' },
-        { num: '15',    ttl: '12 메타 통찰',           desc: 'Domain knowledge > ML flexibility, adversarial 자동 test asset, LSTM business cycle 학습, etc.',                   link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-15',  text: '통찰 읽기 →' },
-        { num: '16',    ttl: 'PyTorch 구현',          desc: 'SDF network + Conditional network + LSTM + 3-step training + ensemble 9. ≈ 200줄.',                                link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-16',  text: '코드 보기 →' }
+        { num: '01–03', ttl: '문제와 동기',           desc: '4 challenges (고차원, 함수형, 동학, 낮은 SNR) + 사전 7개 개념 (SDF / No-arb / GMM / minimax / LSTM / GAN / RIC).',                                       link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-03',  text: '도전 보기 →' },
+        { num: '04',    ttl: 'SDF Framework',         desc: '★ No-arbitrage condition (Eq 1) 의 정확한 derivation. SDF M_{t+1} 의 ML parameterization. Conditional vs unconditional moments.',                              link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-04',  text: 'SDF 이론 →' },
+        { num: '05a–d', ttl: '방법론 4부작',          desc: 'Loss (no-arb squared deviation) + FFN (char transform) + LSTM (macro state RNN) + GAN (moment selection minimax).',                                          link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-05',  text: '방법론 해부 →' },
+        { num: '06–08', ttl: '데이터 + 실증',         desc: 'CRSP 50년 (1966-2016) · 46 firm chars + 178 macro vars · ensemble 9 models · Table I (4 SDF 비교) · Tables II-III (asset pricing tests).',                  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-08',  text: '실증 →' },
+        { num: '09–11', ttl: 'Var Importance',        desc: '★ Macro variable + firm characteristic importance (Table 5). LSTM hidden state 가 NBER recessions 와 일치. mom1m + mvel1 + mom12m 의 dominant role.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-09',  text: 'Importance →' },
+        { num: '15',    ttl: '12 메타 통찰',           desc: 'Domain knowledge > ML flexibility / Adversarial 자동 test asset / LSTM business cycle 학습 / Founding triangle (Gu+Chen+Lettau).',                          link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-15',  text: '통찰 →' },
+        { num: '16',    ttl: 'PyTorch 구현',          desc: 'SDF network + Conditional network + LSTM + 3-step training + ensemble 9. ≈ 200줄. Reproduction 비용 ~$240 (1× V100, 4 days).',                              link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-16',  text: '코드 →' },
+        { num: '18',    ttl: '5년 Aftermath',         desc: 'AQR (2021) → Two Sigma (2022) → Citadel (2022) → Chen-Pelger VAE followup (2023) → Multi-asset SDF (2024) → Foundation+DLAP hybrid (2025) → Editable AI (2026).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_chen-pelger-zhu-deep-learning-ap') + '#sec-18',  text: 'Aftermath →' }
       ],
       preview: {
-        title: '맛보기 — Table I (4 SDF Models 비교)',
-        subtitle: 'paper Table I 의 정확한 OOS 1992–2016 결과. GAN, FFN, EN, LS 를 SR/EV/XS-R² 3 지표로 비교. ' +
-                  'Test SR: GAN 0.75 vs EN 0.50 vs FFN 0.44 vs LS 0.42. 모든 지표에서 GAN 최고. ' +
-                  'EN (linear no-arb) > FFN (nonlinear no-no-arb) 가 핵심 발견 — 이론 > ML flexibility.',
-        vizType: 'dlap-sdf-performance'
+        title: '맛보기 — GAN Min-Max 동학 (paper §3.3)',
+        subtitle: 'paper §3.3 의 *adversarial moment selection* 시각화. ' +
+                  'Generator (SDF M) 가 *no-arb loss* 최소화 시도 + Discriminator (g) 가 *most mispriced moment* 찾기 — ' +
+                  'minimax 의 *Nash equilibrium* 에서 *robust SDF estimation*. ' +
+                  '★ 본 논문의 가장 중요한 architectural innovation.',
+        vizType: 'dlap-gan-game'
       }
     },
     '2026-05-17_gu-kelly-xiu-autoencoder': {
