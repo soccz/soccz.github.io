@@ -31,7 +31,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Virtue of Complexity / Double Descent (paper Fig 2)', w/2, 22);
+      ctx.fillText('Virtue of Complexity / Double Descent (paper Fig 7 Panel A)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
       ctx.fillText(`OOS R² vs P/T (parameters/samples), λ=${regParam}`, w/2, 40);

@@ -1,25 +1,26 @@
-/* viz: patchtst-comparison - long-term forecasting comparison */
+/* viz: patchtst-comparison - paper Table 3 ETTh1 long-term forecasting (MSE) */
 (function () {
   const U = window.VIZ_UTIL;
   VIZ_REGISTRY['patchtst-comparison'] = function (canvas, controls, params) {
     let horizon = 96;
     U.addSelect(controls, {
-      label: 'Horizon',
+      label: 'Horizon T',
       options: [
-        { value: '96',  label: '96 steps (short)' },
+        { value: '96',  label: '96 steps' },
         { value: '192', label: '192 steps' },
         { value: '336', label: '336 steps' },
-        { value: '720', label: '720 steps (long)' }
+        { value: '720', label: '720 steps' }
       ],
       value: '96',
       onChange: (v) => { horizon = parseInt(v); draw(); }
     });
 
+    // paper Table 3 — ETTh1 row, MSE values across 4 horizons
     const results = {
-      96:  { LSTM: 0.385, Informer: 0.298, Autoformer: 0.241, FEDformer: 0.221, PatchTST: 0.198, DLinear: 0.205 },
-      192: { LSTM: 0.412, Informer: 0.342, Autoformer: 0.284, FEDformer: 0.265, PatchTST: 0.232, DLinear: 0.241 },
-      336: { LSTM: 0.451, Informer: 0.385, Autoformer: 0.331, FEDformer: 0.308, PatchTST: 0.269, DLinear: 0.282 },
-      720: { LSTM: 0.512, Informer: 0.421, Autoformer: 0.384, FEDformer: 0.352, PatchTST: 0.305, DLinear: 0.331 }
+      96:  { 'PatchTST/64': 0.370, 'PatchTST/42': 0.375, DLinear: 0.375, FEDformer: 0.376, Autoformer: 0.435, Informer: 0.941, Pyraformer: 0.664, LogTrans: 0.878 },
+      192: { 'PatchTST/64': 0.413, 'PatchTST/42': 0.414, DLinear: 0.405, FEDformer: 0.423, Autoformer: 0.456, Informer: 1.007, Pyraformer: 0.790, LogTrans: 1.037 },
+      336: { 'PatchTST/64': 0.422, 'PatchTST/42': 0.431, DLinear: 0.439, FEDformer: 0.444, Autoformer: 0.486, Informer: 1.038, Pyraformer: 0.891, LogTrans: 1.238 },
+      720: { 'PatchTST/64': 0.447, 'PatchTST/42': 0.449, DLinear: 0.472, FEDformer: 0.469, Autoformer: 0.515, Informer: 1.144, Pyraformer: 0.963, LogTrans: 1.135 }
     };
 
     function draw() {
@@ -28,25 +29,26 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText(`Long-term Forecasting MSE (paper Table 1)`, w/2, 22);
+      ctx.fillText(`paper Table 3 — ETTh1 MSE (T=${horizon})`, w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
-      ctx.fillText(`ETT dataset, horizon = ${horizon} steps`, w/2, 40);
+      ctx.fillText(`PatchTST best on 6 of 8 datasets (paper §4.1)`, w/2, 40);
 
-      const padL = 130, padR = 60, padT = 60, padB = 40;
+      const padL = 140, padR = 60, padT = 60, padB = 40;
       const plotW = w - padL - padR, plotH = h - padT - padB;
       const data = results[horizon];
       const models = Object.keys(data);
       const barH = plotH / models.length * 0.7;
       const gap = plotH / models.length * 0.3;
       const maxV = Math.max(...Object.values(data)) * 1.15;
+      const minV = Math.min(...Object.values(data));
 
       models.forEach((m, i) => {
         const y = padT + i * (barH + gap);
         const v = data[m];
         const barLen = plotW * (v / maxV);
-        const isBest = (m === 'PatchTST');
-        ctx.fillStyle = isBest ? '#16a34a' : (m === 'DLinear' ? '#ca8a04' : '#94a3b8');
+        const isBest = (Math.abs(v - minV) < 1e-9);
+        ctx.fillStyle = isBest ? '#16a34a' : (m.startsWith('PatchTST') ? '#ef4444' : (m === 'DLinear' ? '#ca8a04' : '#94a3b8'));
         ctx.fillRect(padL, y, barLen, barH);
         ctx.strokeStyle = U.text();
         ctx.lineWidth = 0.5;

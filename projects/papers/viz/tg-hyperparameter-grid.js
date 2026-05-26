@@ -17,7 +17,7 @@
       { name: 'Learning rate', values: [1e-3, 1e-3, 1e-3, 1e-3, 1e-3, 1e-3], unit: '' },
     ];
     const dimensions = [8, 137, 370, 963, 1214, 2000];
-    const crps = [0.0067, 0.287, 0.0210, 0.044, 0.114, 0.0485];
+    const crps = [0.006, 0.287, 0.0206, 0.044, 0.114, 0.0485];
 
     let viewMode = 'identical'; // identical, results
 

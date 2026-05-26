@@ -11,7 +11,7 @@
     const datasets = ['Solar', 'Electricity', 'Traffic', 'Wikipedia'];
     // CRPS_sum values: [model][dataset]
     const data = [
-      [0.287, 0.0210, 0.044, 0.0485],  // TimeGrad
+      [0.287, 0.0206, 0.044, 0.0485],  // TimeGrad
       [0.220, 0.0186, 0.041, 0.0440],  // CSDI
       [0.252, 0.0185, 0.039, 0.0421],  // Diffusion-TS
       [0.215, 0.0163, 0.036, 0.0398],  // TMDM

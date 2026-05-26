@@ -1,28 +1,21 @@
 /* viz: pat-fig4-patch-length
  * PatchTST Figure 4 — MSE vs patch length P ∈ {2, 4, 8, 12, 16, 24, 32, 40}
- * Look-back L=336, prediction T=96. Values are read approximately from Figure 4 plots.
+ * Look-back L=336, prediction T=96. Paper Figure 4 shows 3 datasets only.
+ * Values are approximations from Figure 4 plots (paper does not provide exact numbers).
  */
 
 (function () {
   const U = window.VIZ_UTIL;
 
-  // Figure 4 shows roughly flat curves across 8 datasets — small variation
-  // Values approximate from paper plot (P=4..40 mostly stable, P=2 slightly higher for some)
+  // Paper Figure 4 visual estimates — narrow y-axes prove robustness
   const DATA = {
-    'ETTh1': [0.385, 0.382, 0.378, 0.375, 0.375, 0.377, 0.380, 0.382],
-    'ETTh2': [0.290, 0.282, 0.276, 0.274, 0.274, 0.276, 0.280, 0.283],
-    'ETTm1': [0.305, 0.298, 0.293, 0.291, 0.290, 0.291, 0.293, 0.295],
-    'ETTm2': [0.175, 0.170, 0.167, 0.166, 0.165, 0.166, 0.168, 0.170],
-    'Weather': [0.140, 0.135, 0.132, 0.130, 0.130, 0.131, 0.133, 0.135],
-    'Traffic': [0.385, 0.378, 0.372, 0.368, 0.367, 0.370, 0.373, 0.376],
-    'Electricity': [0.138, 0.134, 0.131, 0.130, 0.130, 0.131, 0.133, 0.135],
-    'ILI': [1.65, 1.58, 1.55, 1.52, 1.522, 1.55, 1.60, 1.65]
+    'Weather':     [0.156, 0.155, 0.151, 0.150, 0.150, 0.150, 0.151, 0.152],
+    'Electricity': [0.135, 0.134, 0.130, 0.133, 0.131, 0.133, 0.131, 0.133],
+    'Traffic':     [0.470, 0.405, 0.385, 0.380, 0.380, 0.400, 0.385, 0.385]
   };
   const P_VALUES = [2, 4, 8, 12, 16, 24, 32, 40];
   const COLORS = {
-    'Weather':'#06b6d4', 'Traffic':'#ef4444', 'Electricity':'#a78bfa',
-    'ILI':'#fbbf24', 'ETTh1':'#10b981', 'ETTh2':'#84cc16',
-    'ETTm1':'#60a5fa', 'ETTm2':'#fb7185'
+    'Weather':'#06b6d4', 'Traffic':'#ef4444', 'Electricity':'#a78bfa'
   };
 
   VIZ_REGISTRY['pat-fig4-patch-length'] = function (canvas, controls, params) {
@@ -53,8 +46,8 @@
       const innerH = h - padT - padB;
 
       const vals = DATA[dataset];
-      const yMin = Math.min(...vals) * 0.95;
-      const yMax = Math.max(...vals) * 1.05;
+      const yMin = Math.min(...vals) * 0.97;
+      const yMax = Math.max(...vals) * 1.03;
       const xToPix = (i) => padL + (i / (P_VALUES.length - 1)) * innerW;
       const yToPix = (v) => padT + (1 - (v - yMin) / (yMax - yMin)) * innerH;
 
@@ -89,7 +82,6 @@
       ctx.fillText('MSE', 0, 0);
       ctx.restore();
 
-      // Line + points
       ctx.strokeStyle = COLORS[dataset];
       ctx.lineWidth = 2.5;
       ctx.beginPath();
@@ -115,11 +107,10 @@
       ctx.moveTo(padL, padT); ctx.lineTo(padL, h-padB); ctx.lineTo(w-padR, h-padB);
       ctx.stroke();
 
-      // Footer note
       ctx.fillStyle = U.textMuted();
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
-      ctx.fillText('MSE flat across P ∈ {4..40} — patch length is robust hyperparameter', w/2, h - 8);
+      ctx.fillText('Narrow y-axis range — MSE robust to patch length choice', w/2, h - 8);
     }
 
     draw();

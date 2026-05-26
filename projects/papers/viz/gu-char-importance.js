@@ -1,4 +1,4 @@
-/* viz: gu-char-importance - top characteristics importance */
+/* viz: gu-char-importance - paper Figure 4 top 20 characteristics for CA2 (K=5) */
 (function () {
   const U = window.VIZ_UTIL;
   VIZ_REGISTRY['gu-char-importance'] = function (canvas, controls, params) {
@@ -9,27 +9,29 @@
       fmt: (v) => `N=${v}`
     });
 
+    // paper Figure 4 — CA2 (K=5) top 20 characteristics by variable importance
+    // (values approximate from Figure 4 bar lengths; CA0–CA3 share the same top order)
     const chars = [
-      { name: 'Size (mvel1)', importance: 1.00 },
-      { name: 'BM (Book/Market)', importance: 0.94 },
-      { name: 'Momentum (mom12)', importance: 0.91 },
-      { name: 'Op profitability', importance: 0.83 },
-      { name: 'Investment', importance: 0.77 },
-      { name: 'Idio volatility', importance: 0.72 },
-      { name: 'Beta market', importance: 0.68 },
-      { name: 'Asset growth', importance: 0.65 },
-      { name: 'ROA', importance: 0.61 },
-      { name: 'Accruals', importance: 0.58 },
-      { name: 'Cashflow/Price', importance: 0.55 },
-      { name: 'Sales growth', importance: 0.52 },
-      { name: 'Earnings yield', importance: 0.49 },
-      { name: 'Mom 36-month', importance: 0.46 },
-      { name: 'Mom 6-month', importance: 0.44 },
-      { name: 'Leverage', importance: 0.42 },
-      { name: 'Dividend yield', importance: 0.40 },
-      { name: 'Share turnover', importance: 0.38 },
-      { name: 'Earnings volatility', importance: 0.36 },
-      { name: 'R&D/Sales', importance: 0.34 }
+      { name: 'mvel1 (size)',                importance: 0.165 },
+      { name: 'mom1m (short-term reversal)', importance: 0.140 },
+      { name: 'idiovol (idiosync vol)',      importance: 0.090 },
+      { name: 'retvol (return vol)',         importance: 0.080 },
+      { name: 'mom6m',                       importance: 0.070 },
+      { name: 'beta',                        importance: 0.060 },
+      { name: 'mom12m',                      importance: 0.050 },
+      { name: 'turn (turnover)',             importance: 0.048 },
+      { name: 'ill (Amihud illiquidity)',    importance: 0.042 },
+      { name: 'baspread (bid-ask)',          importance: 0.040 },
+      { name: 'betasq',                      importance: 0.038 },
+      { name: 'mom36m',                      importance: 0.035 },
+      { name: 'dolvol',                      importance: 0.032 },
+      { name: 'std_turn',                    importance: 0.030 },
+      { name: 'dy (dividend yield)',         importance: 0.028 },
+      { name: 'maxret',                      importance: 0.026 },
+      { name: 'zerotrade',                   importance: 0.024 },
+      { name: 'indmom',                      importance: 0.022 },
+      { name: 'nincr',                       importance: 0.020 },
+      { name: 'bm (book/market)',            importance: 0.018 }
     ];
 
     function draw() {
@@ -38,24 +40,24 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Characteristics Importance (paper §6)', w/2, 22);
+      ctx.fillText('paper Fig 4 — CA2 (K=5) Top Characteristics', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
-      ctx.fillText(`Top ${topN} of 94 characteristics by importance`, w/2, 40);
+      ctx.fillText(`Top ${topN} of 94 characteristics — normalized variable importance (sum=1)`, w/2, 40);
 
-      const padL = 160, padR = 40, padT = 60, padB = 30;
+      const padL = 200, padR = 40, padT = 60, padB = 30;
       const plotW = w - padL - padR, plotH = h - padT - padB;
       const visible = chars.slice(0, topN);
       const barH = plotH / visible.length * 0.7;
       const gap = plotH / visible.length * 0.3;
+      const maxV = Math.max(...visible.map(c => c.importance));
 
       visible.forEach((c, i) => {
         const y = padT + i * (barH + gap);
-        const barLen = plotW * c.importance;
-        // Color gradient
-        const r = Math.round(220 - c.importance * 100);
-        const g = Math.round(38 + c.importance * 100);
-        const b = Math.round(38 + c.importance * 100);
+        const barLen = plotW * (c.importance / maxV);
+        const r = Math.round(220 - (c.importance/maxV) * 100);
+        const g = Math.round(38 + (c.importance/maxV) * 100);
+        const b = Math.round(38 + (c.importance/maxV) * 100);
         ctx.fillStyle = `rgb(${r},${g},${b})`;
         ctx.fillRect(padL, y, barLen, barH);
         ctx.strokeStyle = U.text();
@@ -70,13 +72,13 @@
         ctx.fillStyle = '#fff';
         ctx.font = '600 10px ' + U.cssVar('--font-display', 'Inter, sans-serif');
         ctx.textAlign = 'right';
-        if (barLen > 30) ctx.fillText(c.importance.toFixed(2), padL + barLen - 6, y + barH/2 + 3);
+        if (barLen > 35) ctx.fillText(c.importance.toFixed(3), padL + barLen - 6, y + barH/2 + 3);
       });
 
       ctx.fillStyle = U.text();
       ctx.font = '12px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Normalized importance', padL + plotW/2, h - 5);
+      ctx.fillText('Variable importance (CA2, K=5)', padL + plotW/2, h - 5);
     }
     draw();
     window.addEventListener('resize', draw, { passive: true });

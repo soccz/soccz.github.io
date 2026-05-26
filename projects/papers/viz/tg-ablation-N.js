@@ -10,8 +10,8 @@
   VIZ_REGISTRY['tg-ablation-N'] = function (canvas, controls, params) {
     // Approximate values from paper Fig 3 trend (log-scale)
     const Ns = [2, 4, 8, 16, 32, 64, 100, 128, 192, 256];
-    const crps = [0.18, 0.082, 0.045, 0.028, 0.0215, 0.0208, 0.0206, 0.0207, 0.0210, 0.0212];
-    const stdErr = [0.025, 0.012, 0.007, 0.003, 0.0015, 0.0010, 0.0008, 0.0009, 0.0011, 0.0013];
+    const crps = [0.45, 0.20, 0.06, 0.025, 0.0215, 0.0208, 0.0206, 0.0207, 0.0210, 0.0212];
+    const stdErr = [0.06, 0.025, 0.008, 0.002, 0.0015, 0.0010, 0.0008, 0.0009, 0.0011, 0.0013];
 
     let highlightIdx = 6; // N=100 default
 

@@ -9,12 +9,12 @@
   VIZ_REGISTRY['tg-crps-vs-d'] = function (canvas, controls, params) {
     // 6 datasets
     const datasets = [
-      { name: 'Exchange', D: 8, freq: 'Day', timegrad: 0.0067, transmaf: 0.0050, gpcop: 0.0070 },
+      { name: 'Exchange', D: 8, freq: 'Day', timegrad: 0.006, transmaf: 0.005, gpcop: 0.007 },
       { name: 'Solar', D: 137, freq: 'Hour', timegrad: 0.287, transmaf: 0.301, gpcop: 0.337 },
-      { name: 'Electricity', D: 370, freq: 'Hour', timegrad: 0.0210, transmaf: 0.0207, gpcop: 0.0245 },
+      { name: 'Electricity', D: 370, freq: 'Hour', timegrad: 0.0206, transmaf: 0.0207, gpcop: 0.0245 },
       { name: 'Traffic', D: 963, freq: 'Hour', timegrad: 0.044, transmaf: 0.056, gpcop: 0.078 },
       { name: 'Taxi', D: 1214, freq: '30min', timegrad: 0.114, transmaf: 0.179, gpcop: 0.208 },
-      { name: 'Wikipedia', D: 2000, freq: 'Day', timegrad: 0.0485, transmaf: 0.063, gpcop: 0.075 },
+      { name: 'Wikipedia', D: 2000, freq: 'Day', timegrad: 0.0485, transmaf: 0.063, gpcop: 0.086 },
     ];
 
     let showModel = 'all';

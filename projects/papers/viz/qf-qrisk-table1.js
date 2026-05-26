@@ -8,7 +8,7 @@
 
   const QRISK = {
     Electricity: {
-      0.5: { DeepAR:1.0002, MQRNN:1.1648, TFT:1.5547, Transformer:1.3703, Autoformer:1.0584, FEDformer:1.9429, PatchTST:1.8354, iTransformer:1.3430, QuantileFormer:0.7469 },
+      0.5: { DeepAR:1.0002, MQRNN:1.1648, TFT:1.1547, Transformer:1.3703, Autoformer:1.0584, FEDformer:1.9429, PatchTST:1.8354, iTransformer:1.3430, QuantileFormer:0.7469 },
       0.6: { DeepAR:1.1177, MQRNN:1.5772, TFT:1.0037, Transformer:0.8873, Autoformer:0.9191, FEDformer:1.0447, PatchTST:1.3134, iTransformer:1.0348, QuantileFormer:0.8136 },
       0.7: { DeepAR:1.9544, MQRNN:1.6336, TFT:1.0440, Transformer:1.0098, Autoformer:1.0301, FEDformer:0.9669, PatchTST:1.0657, iTransformer:1.2174, QuantileFormer:0.3330 },
       0.8: { DeepAR:1.2077, MQRNN:1.8193, TFT:0.8772, Transformer:0.9005, Autoformer:0.8786, FEDformer:3.0007, PatchTST:0.8800, iTransformer:0.9072, QuantileFormer:0.4340 },
@@ -17,7 +17,7 @@
     Wind: {
       0.5: { DeepAR:1.0205, MQRNN:2.1937, TFT:0.9526, Transformer:1.0011, Autoformer:1.4353, FEDformer:1.1361, PatchTST:1.4666, iTransformer:1.5983, QuantileFormer:0.8403 },
       0.6: { DeepAR:0.9987, MQRNN:4.4670, TFT:0.8611, Transformer:1.0585, Autoformer:1.6054, FEDformer:1.0831, PatchTST:0.9831, iTransformer:1.0314, QuantileFormer:0.9105 },
-      0.7: { DeepAR:0.7805, MQRNN:5.5987, TFT:0.7978, Transformer:0.9898, Autoformer:1.3345, FEDformer:1.2615, PatchTST:1.1394, iTransformer:0.8091, QuantileFormer:0.7346 },
+      0.7: { DeepAR:0.7805, MQRNN:5.5987, TFT:0.9778, Transformer:0.9898, Autoformer:1.3345, FEDformer:1.2615, PatchTST:1.1398, iTransformer:0.8091, QuantileFormer:0.7346 },
       0.8: { DeepAR:1.0182, MQRNN:5.9560, TFT:0.6568, Transformer:0.9006, Autoformer:0.9921, FEDformer:0.6544, PatchTST:0.9008, iTransformer:0.6814, QuantileFormer:0.5842 },
       0.9: { DeepAR:1.4419, MQRNN:1.8574, TFT:0.4658, Transformer:0.9750, Autoformer:0.6361, FEDformer:0.3876, PatchTST:0.3667, iTransformer:0.9900, QuantileFormer:0.3369 }
     },

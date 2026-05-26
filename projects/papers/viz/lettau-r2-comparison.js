@@ -1,27 +1,27 @@
-/* viz: lettau-r2-comparison - R² OOS model comparison */
+/* viz: lettau-r2-comparison - paper Table 1 정확 수치 (RP-PCA vs PCA, K=3/5) */
 (function () {
   const U = window.VIZ_UTIL;
   VIZ_REGISTRY['lettau-r2-comparison'] = function (canvas, controls, params) {
-    let metric = 'r2';
+    let metric = 'SR_OOS';
     U.addSelect(controls, {
       label: 'Metric',
       options: [
-        { value: 'r2',     label: 'OOS R²' },
-        { value: 'sharpe', label: 'Sharpe' },
-        { value: 'error',  label: 'Pricing error' }
+        { value: 'SR_IS',     label: 'In-Sample Sharpe' },
+        { value: 'SR_OOS',    label: 'Out-of-Sample Sharpe (★ paper main)' },
+        { value: 'RMSa_OOS',  label: 'OOS RMS α (lower better)' },
+        { value: 'Idio_OOS',  label: 'OOS Idio. Variation %' }
       ],
-      value: 'r2',
+      value: 'SR_OOS',
       onChange: (v) => { metric = v; draw(); }
     });
 
-    const models = [
-      { name: 'CAPM',         r2: 0.018, sharpe: 0.32, error: 0.234, color: '#94a3b8' },
-      { name: 'Fama-French 3F', r2: 0.038, sharpe: 0.55, error: 0.197, color: '#94a3b8' },
-      { name: 'Fama-French 5F', r2: 0.052, sharpe: 0.71, error: 0.165, color: '#94a3b8' },
-      { name: 'PCA (5F)',     r2: 0.041, sharpe: 0.62, error: 0.183, color: '#0891b2' },
-      { name: 'IPCA',         r2: 0.063, sharpe: 0.89, error: 0.142, color: '#0891b2' },
-      { name: 'RP-PCA ★',     r2: 0.078, sharpe: 1.12, error: 0.105, color: '#dc2626' }
-    ];
+    // paper Table 1 exact values (γ=10, 37 anomaly × N=370 portfolios, 07/1963-12/2017)
+    const data = {
+      'PCA (K=3)':    { SR_IS: 0.17, SR_OOS: 0.14, RMSa_OOS: 0.15, Idio_OOS: 14.66, color: '#94a3b8' },
+      'RP-PCA (K=3)': { SR_IS: 0.23, SR_OOS: 0.18, RMSa_OOS: 0.15, Idio_OOS: 14.57, color: '#0891b2' },
+      'PCA (K=5)':    { SR_IS: 0.24, SR_OOS: 0.17, RMSa_OOS: 0.14, Idio_OOS: 12.56, color: '#94a3b8' },
+      'RP-PCA (K=5) ★': { SR_IS: 0.53, SR_OOS: 0.45, RMSa_OOS: 0.12, Idio_OOS: 12.70, color: '#dc2626' },
+    };
 
     function draw() {
       const { ctx, w, h } = U.setupCanvas(canvas);
@@ -29,24 +29,30 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('RP-PCA vs Baselines (paper Table 1)', w/2, 22);
+      ctx.fillText('paper Table 1 — RP-PCA vs PCA (37 anomalies, N=370, T=650)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
-      const metricName = metric === 'r2' ? 'OOS R²' : metric === 'sharpe' ? 'Sharpe ratio' : 'Pricing error';
-      ctx.fillText(`Metric: ${metricName} (US equities 1963-2018)`, w/2, 40);
+      const metricNames = {
+        SR_IS: 'In-sample maximum Sharpe ratio',
+        SR_OOS: 'Out-of-sample Sharpe ratio',
+        RMSa_OOS: 'OOS root-mean-squared α (pricing error)',
+        Idio_OOS: 'OOS idiosyncratic variation (%)'
+      };
+      ctx.fillText(`${metricNames[metric]} — γ=10 (paper의 main spec)`, w/2, 40);
 
-      const padL = 140, padR = 50, padT = 60, padB = 40;
+      const padL = 200, padR = 60, padT = 60, padB = 50;
       const plotW = w - padL - padR, plotH = h - padT - padB;
+      const models = Object.keys(data);
       const barH = plotH / models.length * 0.7;
       const gap = plotH / models.length * 0.3;
-      const values = models.map(m => m[metric]);
+      const values = models.map(m => data[m][metric]);
       const maxV = Math.max(...values) * 1.15;
 
       models.forEach((m, i) => {
         const y = padT + i * (barH + gap);
-        const v = m[metric];
+        const v = data[m][metric];
         const barLen = plotW * (v / maxV);
-        ctx.fillStyle = m.color;
+        ctx.fillStyle = data[m].color;
         ctx.fillRect(padL, y, barLen, barH);
         ctx.strokeStyle = U.text();
         ctx.lineWidth = 0.5;
@@ -55,20 +61,27 @@
         ctx.fillStyle = U.text();
         ctx.font = '11px ' + U.cssVar('--font-mono', 'monospace');
         ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
-        ctx.fillText(m.name, padL - 8, y + barH/2);
+        ctx.fillText(m, padL - 8, y + barH/2);
 
         ctx.fillStyle = '#fff';
         ctx.font = '600 11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
         ctx.textAlign = 'right';
-        if (barLen > 40) ctx.fillText(metric === 'error' ? v.toFixed(3) : v.toFixed(metric === 'sharpe' ? 2 : 3),
-                                        padL + barLen - 6, y + barH/2 + 3);
+        const display = metric === 'Idio_OOS' ? v.toFixed(2) + '%' : v.toFixed(2);
+        if (barLen > 40) ctx.fillText(display, padL + barLen - 6, y + barH/2 + 3);
       });
+
+      // RP-PCA K=5 vs PCA K=5 ratio annotation
+      const rpOver = data['RP-PCA (K=5) ★'][metric] / data['PCA (K=5)'][metric];
+      ctx.fillStyle = '#dc2626';
+      ctx.font = '600 11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
+      ctx.textAlign = 'left';
+      ctx.fillText(`★ RP-PCA / PCA ratio = ${rpOver.toFixed(2)}× (K=5)`,
+                   padL + plotW * 0.4, padT + plotH - 8);
 
       ctx.fillStyle = U.text();
       ctx.font = '12px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText(metric === 'error' ? 'Pricing error (lower better)' : `${metricName} (higher better)`,
-                   padL + plotW/2, h - 10);
+      ctx.fillText('higher = better (RMS α 제외)', padL + plotW/2, h - 15);
     }
     draw();
     window.addEventListener('resize', draw, { passive: true });

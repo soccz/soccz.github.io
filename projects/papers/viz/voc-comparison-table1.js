@@ -16,7 +16,7 @@
     60: {
       'Linear ridgeless': { R2: -96.6, SR: 0.00, IRm: -0.07, MaxLoss: 35.8, Skew: -11.1 },
       'Linear ridge':     { R2: -0.5,  SR: 0.44, IRm: 0.10,  MaxLoss: 1.4,  Skew: -0.3  },
-      'Nonlinear ML':     { R2: 0.5,   SR: 0.42, IRm: 0.25,  MaxLoss: 0.5,  Skew: 1.7   }
+      'Nonlinear ML':     { R2: 0.5,   SR: 0.44, IRm: 0.25,  MaxLoss: 0.5,  Skew: 1.7   }
     },
     120: {
       'Linear ridgeless': { R2: -26.6, SR: 0.20, IRm: 0.14, MaxLoss: 15.4, Skew: -6.5 },

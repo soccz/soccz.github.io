@@ -2,21 +2,21 @@
 (function () {
   const U = window.VIZ_UTIL;
   VIZ_REGISTRY['gu-ca-architecture'] = function (canvas, controls, params) {
-    let model = 'CA3';
+    let model = 'CA2';
     U.addSelect(controls, {
       label: 'Model',
       options: [
-        { value: 'AE',  label: 'Standard AE (no chars)' },
+        { value: 'CA0', label: 'CA0 (no char layer)' },
         { value: 'CA1', label: 'CA1 (1 char layer)' },
-        { value: 'CA2', label: 'CA2 (2 char layers)' },
-        { value: 'CA3', label: 'CA3 (3 char layers) ★' }
+        { value: 'CA2', label: 'CA2 (2 char layers) ★' },
+        { value: 'CA3', label: 'CA3 (3 char layers)' }
       ],
-      value: 'CA3',
+      value: 'CA2',
       onChange: (v) => { model = v; draw(); }
     });
 
-    const r2Values = { 'AE': 0.026, 'CA1': 0.045, 'CA2': 0.058, 'CA3': 0.072 };
-    const sharpeValues = { 'AE': 0.58, 'CA1': 0.71, 'CA2': 0.84, 'CA3': 0.96 };
+    // paper Table 3 VW K=5 annualized Sharpe ratios
+    const sharpeValues = { 'CA0': 0.83, 'CA1': 1.48, 'CA2': 1.53, 'CA3': 1.51 };
 
     function draw() {
       const { ctx, w, h } = U.setupCanvas(canvas);
@@ -27,7 +27,7 @@
       ctx.fillText(`${model} Architecture (paper §3)`, w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
-      ctx.fillText(`R² OOS = ${r2Values[model]}, Sharpe = ${sharpeValues[model]}`, w/2, 40);
+      ctx.fillText(`VW Sharpe (K=5) = ${sharpeValues[model].toFixed(2)} — paper Table 3`, w/2, 40);
 
       const padL = 60, padR = 40, padT = 60, padB = 60;
       const plotW = w - padL - padR, plotH = h - padT - padB;

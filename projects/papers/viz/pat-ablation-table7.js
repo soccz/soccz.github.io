@@ -1,31 +1,37 @@
 /* viz: pat-ablation-table7
- * PatchTST Table 7 — Patching + Channel-independence ablation.
- * 4 cases: P+CI (full PatchTST/42), CI only, P only, Original (vanilla TST).
- * paper exact values.
+ * PatchTST Table 10 (full version of main-text Table 7) — Patching + Channel-independence ablation.
+ * 4 cases: P+CI (full PatchTST/42), CI only, P only, Original (vanilla TST) + FEDformer baseline.
+ * paper exact values. "-" = OOM (out of GPU memory).
  */
 
 (function () {
   const U = window.VIZ_UTIL;
 
-  // dataset → horizon → case → [MSE, MAE]
+  // dataset → horizon → case → [MSE, MAE] | null (OOM)
   const T7 = {
-    Electricity: {
+    Weather: {
       96:  { 'P+CI':[0.152,0.199], 'CI':[0.164,0.213], 'P':[0.168,0.223], 'Original':[0.177,0.236], 'FEDformer':[0.238,0.314] },
       192: { 'P+CI':[0.197,0.243], 'CI':[0.205,0.250], 'P':[0.213,0.262], 'Original':[0.221,0.270], 'FEDformer':[0.275,0.329] },
       336: { 'P+CI':[0.249,0.283], 'CI':[0.255,0.289], 'P':[0.266,0.300], 'Original':[0.271,0.306], 'FEDformer':[0.339,0.377] },
       720: { 'P+CI':[0.320,0.335], 'CI':[0.327,0.343], 'P':[0.351,0.359], 'Original':[0.340,0.353], 'FEDformer':[0.389,0.409] }
     },
     Traffic: {
-      96:  { 'P+CI':[0.367,0.251], 'CI':[0.397,0.271], 'P':[0.595,0.376], 'Original':[0.205,0.318], 'FEDformer':[0.576,0.359] },
-      192: { 'P+CI':[0.385,0.259], 'CI':[0.411,0.276], 'P':[0.612,0.387], 'Original':null,              'FEDformer':[0.610,0.380] },
-      336: { 'P+CI':[0.398,0.265], 'CI':[0.423,0.282], 'P':[0.651,0.391], 'Original':null,              'FEDformer':[0.608,0.375] },
-      720: { 'P+CI':[0.434,0.287], 'CI':[0.457,0.309], 'P':null,           'Original':null,              'FEDformer':[0.621,0.375] }
+      96:  { 'P+CI':[0.367,0.251], 'CI':[0.397,0.271], 'P':[0.595,0.376], 'Original':null,           'FEDformer':[0.576,0.359] },
+      192: { 'P+CI':[0.385,0.259], 'CI':[0.411,0.276], 'P':[0.612,0.387], 'Original':null,           'FEDformer':[0.610,0.380] },
+      336: { 'P+CI':[0.398,0.265], 'CI':[0.423,0.282], 'P':[0.651,0.391], 'Original':null,           'FEDformer':[0.608,0.375] },
+      720: { 'P+CI':[0.434,0.287], 'CI':[0.457,0.309], 'P':null,           'Original':null,           'FEDformer':[0.621,0.375] }
     },
-    Weather: {
-      96:  { 'P+CI':[0.130,0.222], 'CI':[0.136,0.231], 'P':[0.196,0.307], 'Original':null,             'FEDformer':[0.186,0.302] },
-      192: { 'P+CI':[0.148,0.240], 'CI':[0.164,0.263], 'P':[0.215,0.323], 'Original':null,             'FEDformer':[0.197,0.311] },
-      336: { 'P+CI':[0.167,0.261], 'CI':[0.168,0.262], 'P':[0.228,0.338], 'Original':null,             'FEDformer':[0.213,0.328] },
-      720: { 'P+CI':[0.202,0.291], 'CI':[0.219,0.312], 'P':[0.244,0.345], 'Original':null,             'FEDformer':[0.233,0.344] }
+    Electricity: {
+      96:  { 'P+CI':[0.130,0.222], 'CI':[0.136,0.231], 'P':[0.196,0.307], 'Original':[0.205,0.318], 'FEDformer':[0.186,0.302] },
+      192: { 'P+CI':[0.148,0.240], 'CI':[0.164,0.263], 'P':[0.215,0.323], 'Original':null,           'FEDformer':[0.197,0.311] },
+      336: { 'P+CI':[0.167,0.261], 'CI':[0.168,0.262], 'P':[0.228,0.338], 'Original':null,           'FEDformer':[0.213,0.328] },
+      720: { 'P+CI':[0.202,0.291], 'CI':[0.219,0.312], 'P':[0.244,0.345], 'Original':null,           'FEDformer':[0.233,0.344] }
+    },
+    ETTh1: {
+      96:  { 'P+CI':[0.375,0.399], 'CI':[0.365,0.395], 'P':[0.416,0.438], 'Original':[0.455,0.459], 'FEDformer':[0.376,0.415] },
+      192: { 'P+CI':[0.414,0.421], 'CI':[0.403,0.415], 'P':[0.459,0.464], 'Original':[0.503,0.486], 'FEDformer':[0.423,0.446] },
+      336: { 'P+CI':[0.431,0.436], 'CI':[0.430,0.433], 'P':[0.484,0.480], 'Original':[0.514,0.503], 'FEDformer':[0.444,0.462] },
+      720: { 'P+CI':[0.449,0.466], 'CI':[0.449,0.454], 'P':[0.500,0.494], 'Original':[0.531,0.520], 'FEDformer':[0.469,0.492] }
     }
   };
 
@@ -40,7 +46,7 @@
   const HORIZONS = [96, 192, 336, 720];
 
   VIZ_REGISTRY['pat-ablation-table7'] = function (canvas, controls, params) {
-    let dataset = params.dataset || 'Electricity';
+    let dataset = params.dataset || 'Weather';
     let horizon = parseInt(params.horizon, 10) || 96;
     let metric  = params.metric || 'MSE';
 
@@ -112,7 +118,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 13px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText(`paper Table 7 · ${dataset} · T=${horizon} · ${metric}`, w/2, padT - 24);
+      ctx.fillText(`paper Table 10 (ablation) · ${dataset} · T=${horizon} · ${metric}`, w/2, padT - 24);
 
       const groupW = innerW / CASES.length;
       const barW = groupW * 0.55;
@@ -139,7 +145,6 @@
           ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
           ctx.fillText(v.toFixed(3), cx, top - 8);
         }
-        // labels
         ctx.fillStyle = U.text();
         ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
         ctx.textAlign = 'center'; ctx.textBaseline = 'top';

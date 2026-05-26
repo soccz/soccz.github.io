@@ -1,19 +1,19 @@
 /* viz: pat-table1-evolution
- * PatchTST Table 1 — Case study evolution on Traffic (T=96).
- * Shows the narrative 0.518 → 0.447 → 0.397 → 0.367 → 0.349 across 5 configurations.
+ * PatchTST narrative — Traffic (T=96) ablation progression.
+ * Combines paper Table 7 (patching/CI ablation) + Table 4 (self-supervised) + Table 3 (baselines).
  */
 
 (function () {
   const U = window.VIZ_UTIL;
 
+  // All values are paper-exact (Table 3, 4, 7/10 for Traffic, T=96)
   const STAGES = [
-    { label:'(1) L=96, N=96',                  detail:'Channel-indep, no patch, short window', L:96,  N:96,  patch:false, selfSup:false, mse:0.518, color:'#94a3b8' },
-    { label:'(2) L=380→N=96 downsampled',      detail:'Channel-indep, no patch, downsampled to 96 tokens', L:380, N:96,  patch:false, selfSup:false, mse:0.447, color:'#fbbf24' },
-    { label:'(3) L=336, N=336',                detail:'Channel-indep, no patch, full L=336 tokens', L:336, N:336, patch:false, selfSup:false, mse:0.397, color:'#60a5fa' },
-    { label:'(4) PatchTST/42 supervised',      detail:'Channel-indep + PATCHING (P=16, S=8) → N=42', L:336, N:42,  patch:true,  selfSup:false, mse:0.367, color:'#a78bfa' },
-    { label:'(5) PatchTST/42 self-supervised', detail:'Same + self-supervised pre-training', L:336, N:42,  patch:true,  selfSup:true,  mse:0.349, color:'#ef4444' },
-    { label:'FEDformer (channel-mixing)',      detail:'Channel-mixing, L=96', L:96,  N:96,  patch:false, selfSup:false, mse:0.597, color:'#9ca3af' },
-    { label:'DLinear',                          detail:'Linear baseline, L=336', L:336, N:0,   patch:false, selfSup:false, mse:0.410, color:'#9ca3af' }
+    { label:'Original TST',                detail:'channel-mixing, no patch (Table 10) — OOM on Traffic; show vanilla Informer instead', mse:0.733, color:'#94a3b8', note:'Informer (Table 3)' },
+    { label:'FEDformer',                   detail:'channel-mixing baseline (Table 3)', mse:0.576, color:'#9ca3af' },
+    { label:'DLinear',                     detail:'Linear baseline, L=336 (Table 3)', mse:0.410, color:'#cbd5e1' },
+    { label:'Only CI',                     detail:'Channel-indep, no patch (Table 10)', mse:0.397, color:'#fbbf24' },
+    { label:'P+CI (PatchTST/42 sup.)',     detail:'Channel-indep + patching (Table 7)', mse:0.367, color:'#a78bfa' },
+    { label:'Self-sup PatchTST/42',        detail:'Self-supervised pre-training (Table 4)', mse:0.352, color:'#ef4444' }
   ];
 
   VIZ_REGISTRY['pat-table1-evolution'] = function (canvas, controls, params) {
@@ -25,10 +25,9 @@
       const innerH = h - padT - padB;
 
       const yMin = 0;
-      const yMax = 0.65;
+      const yMax = 0.85;
       const yToPix = (y) => padT + (1 - (y - yMin) / (yMax - yMin)) * innerH;
 
-      // Grid
       ctx.strokeStyle = U.cssVar('--border', '#e5e7eb');
       ctx.lineWidth = 1;
       for (let i = 0; i <= 5; i++) {
@@ -57,7 +56,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 13px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText('paper Table 1 — Case study on Traffic (5 PatchTST stages + 2 baselines)', w/2, padT - 24);
+      ctx.fillText('Traffic T=96 — Baselines → CI → Patch+CI → Self-supervised', w/2, padT - 24);
 
       const groupW = innerW / STAGES.length;
       const barW = groupW * 0.65;
@@ -74,7 +73,6 @@
         ctx.font = '600 11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(s.mse.toFixed(3), cx, top - 10);
-        // labels
         ctx.fillStyle = U.text();
         ctx.font = '10px ' + U.cssVar('--font-display', 'Inter, sans-serif');
         ctx.textAlign = 'right'; ctx.textBaseline = 'top';
@@ -85,35 +83,31 @@
         ctx.restore();
       });
 
-      // Show 33% improvement annotation — place ABOVE the first bar value label, BELOW the title
-      // Title is at y = padT - 24, so place line at padT + 6 to avoid overlap
+      // 0.733 → 0.352 annotation
       ctx.strokeStyle = '#ef4444';
       ctx.setLineDash([4, 3]);
       ctx.lineWidth = 1.5;
-      const x1 = padL + groupW * 0.5, x5 = padL + groupW * 4.5;
+      const x1 = padL + groupW * 0.5, xL = padL + groupW * 5.5;
       const annY = padT + 4;
       ctx.beginPath();
       ctx.moveTo(x1, annY);
-      ctx.lineTo(x5, annY);
+      ctx.lineTo(xL, annY);
       ctx.stroke();
-      // Vertical drop ticks at start and end
       ctx.beginPath();
       ctx.moveTo(x1, annY); ctx.lineTo(x1, annY + 8);
-      ctx.moveTo(x5, annY); ctx.lineTo(x5, annY + 8);
+      ctx.moveTo(xL, annY); ctx.lineTo(xL, annY + 8);
       ctx.stroke();
       ctx.setLineDash([]);
-      ctx.fillStyle = '#ef4444';
+      const txt = '0.733 → 0.352 = 52% MSE reduction';
       ctx.font = '600 11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
-      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      // White background for text to not blend with grid
-      const txt = '0.518 → 0.349 = 33% reduction';
       const tw = ctx.measureText(txt).width;
       ctx.fillStyle = U.cssVar('--surface', '#f3f4f6');
       ctx.globalAlpha = 0.85;
-      ctx.fillRect((x1+x5)/2 - tw/2 - 4, annY - 5, tw + 8, 16);
+      ctx.fillRect((x1+xL)/2 - tw/2 - 4, annY - 5, tw + 8, 16);
       ctx.globalAlpha = 1;
       ctx.fillStyle = '#ef4444';
-      ctx.fillText(txt, (x1+x5)/2, annY - 4);
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.fillText(txt, (x1+xL)/2, annY - 4);
 
       ctx.strokeStyle = U.cssVar('--text-muted', '#6b7280');
       ctx.lineWidth = 1.2;
