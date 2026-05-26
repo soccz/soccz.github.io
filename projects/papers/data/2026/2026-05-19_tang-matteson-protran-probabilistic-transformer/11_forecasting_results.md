@@ -141,3 +141,7 @@ paper p.8:
 
 ```viz:protran-forecast:title=paper Table 1 — Forecast Results,caption=Dataset selector.
 ```
+
+
+```viz:protran-coverage-calibration:title=paper Fig 2 — Calibration,caption=Model selector.
+```

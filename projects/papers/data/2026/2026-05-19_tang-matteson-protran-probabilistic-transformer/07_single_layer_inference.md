@@ -207,3 +207,11 @@ For each t:
 ---
 
 다음 [08_multi_layer.md](08_multi_layer.md) 에서 hierarchical extension (Eq 12-20).
+
+
+```viz:protran-elbo:title=paper Eq 10 — ELBO,caption=β slider.
+```
+
+
+```viz:protran-smoothing-vs-filtering:title=paper §3.2 — Smoothing vs Filtering,caption=Mode selector.
+```

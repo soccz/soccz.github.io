@@ -131,3 +131,7 @@ paper Section 5 의 두 task 가 사실 같은 framework:
 ## 다음
 
 [13_conclusion.md](13_conclusion.md) 에서 paper 결론 + limitations.
+
+
+```viz:protran-motion-trajectory:title=paper Fig 3 — Motion Prediction,caption=Sample count slider.
+```

@@ -143,3 +143,7 @@ paper Section 2.2 (Eq 4) 가 standard Transformer preliminaries. paper Section 3
 ## 다음
 
 [06_single_layer_generative.md](06_single_layer_generative.md) 에서 single-layered ProTran 의 generative model (Eq 5-9).
+
+
+```viz:protran-attention-pattern:title=paper §3.2 — Attention Pattern,caption=Head slider.
+```
