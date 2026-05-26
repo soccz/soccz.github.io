@@ -1,5 +1,8 @@
 # 16. 실행 코드와 시뮬레이션 — "두 줄이면 된다"는 말의 증명
 
+> **🧒 한 줄 요약**: PyTorch RP-PCA 구현. Self-contained.
+
+
 이 파일은 **실제 동작하는 Python 코드**로 RP-PCA를 구현하고, 논문의 시뮬레이션 결과를 재현.
 
 복붙해서 `.py` 파일로 저장 후 `python rppca_demo.py` 로 실행 가능.

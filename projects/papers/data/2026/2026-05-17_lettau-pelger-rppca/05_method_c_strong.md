@@ -1,5 +1,8 @@
 # 06. Section 4 (Strong Factor Model) — 강한 요인 모델 이론
 
+> **🧒 한 줄 요약**: Strong factor case. Identification conditions.
+
+
 논문 7쪽 후반 ~ 11쪽 초반 (Section 4 전체)을 풀어본다.
 
 ---

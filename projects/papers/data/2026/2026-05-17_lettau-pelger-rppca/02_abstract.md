@@ -1,5 +1,8 @@
 # 01. 제목과 Abstract 풀어 읽기
 
+> **🧒 한 줄 요약**: Abstract. RP-PCA = PCA + risk premium penalty.
+
+
 ## 1.1 제목: "Estimating Latent Asset-Pricing Factors"
 
 한국어로 풀면: **"숨어 있는 자산가격결정 요인을 추정하기"**

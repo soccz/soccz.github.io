@@ -1,5 +1,8 @@
 # 07. Section 5 전반 — 약한 요인 모델: 랜덤 행렬 이론 기초
 
+> **🧒 한 줄 요약**: Random matrix theory. Spike eigenvalues, threshold.
+
+
 논문 11쪽 ~ 14쪽 초반 (Section 5 도입부 + Subsection 5.1, 5.2 전반)을 풀어본다.
 
 이 파트는 **수학적으로 가장 어렵다**. 천천히 풀어가자.
@@ -410,3 +413,7 @@ $$
 1. Bulk = 잡음 고유값의 군집 (Marchenko-Pastur 분포로 수렴). Spike = bulk 위로 분리된 큰 고유값 (진짜 신호).
 2. $G(z) = \lim \frac{1}{N}\sum \frac{1}{z-\lambda_i}$. 표본 고유값이 어디 위치할지(=$G^{-1}(1/\theta_i)$) 예측.
 3. $M_{\text{PCA}}$: $K \times K$ 대각. $M_{\text{RP-PCA}}$: $(K+1) \times (K+1)$ 비대각 — 평균 정보가 비대각 항으로 끼어듦.
+
+
+```viz:lettau-rppca-spectrum:title=paper §3 — Eigenvalue Spectrum,caption=γ slider.
+```

@@ -1,5 +1,8 @@
 # 02. Section 1 (Introduction) — 왜 이런 연구가 필요한가
 
+> **🧒 한 줄 요약**: Standard PCA의 한계 — variance만 보고 risk premium 무시.
+
+
 논문 1쪽 ~ 3쪽의 도입부 전체를 풀어본다.
 
 ---

@@ -1,5 +1,8 @@
 # 08. Section 5 중반 — Theorem 2와 Lemma 2
 
+> **🧒 한 줄 요약**: Main theorem (paper §3.3). Consistency, asymptotic.
+
+
 논문 14쪽 ~ 16쪽 (Theorem 2, Lemma 2, 그리고 관련 해설)을 풀어본다.
 
 이 파트가 약한 요인 모델 이론의 **핵심**이다.

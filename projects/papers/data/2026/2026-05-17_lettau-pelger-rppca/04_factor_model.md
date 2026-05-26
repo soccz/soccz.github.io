@@ -1,5 +1,8 @@
 # 03. Section 2 (Factor Model) — 요인 모델이란 무엇인가
 
+> **🧒 한 줄 요약**: Factor model framework. K latent factors + idiosyncratic noise.
+
+
 논문 3쪽 후반부 ~ 5쪽 초반부의 Section 2 전체를 풀어본다.
 
 ---

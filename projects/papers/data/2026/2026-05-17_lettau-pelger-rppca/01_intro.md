@@ -1,5 +1,8 @@
 # 00. 시작하기 전에 — 이 해설집을 어떻게 읽으면 되나
 
+> **🧒 한 줄 요약**: Paper intro. Latent asset pricing factor estimation.
+
+
 ## 이 논문이 뭘 하는 논문인가요?
 
 한 문장으로 말하면:

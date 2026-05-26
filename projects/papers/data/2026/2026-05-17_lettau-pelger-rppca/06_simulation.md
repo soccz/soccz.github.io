@@ -1,5 +1,8 @@
 # 10. Section 6 (Simulation) — 시뮬레이션으로 이론 검증
 
+> **🧒 한 줄 요약**: Monte Carlo simulation. Convergence + finite sample.
+
+
 논문 18쪽 ~ 24쪽 (Section 6 전체)을 풀어본다.
 
 이 섹션은 **가짜 데이터로 RP-PCA의 우수성을 보여주는** 파트.

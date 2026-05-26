@@ -1,5 +1,8 @@
 # 17. 핵심 도식 모음 — 그림으로 보는 RP-PCA
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. RP-PCA mechanism.
+
+
 ASCII/박스 도식으로 핵심 개념을 시각화. 텍스트 100줄보다 한 그림이 직관적.
 
 ---

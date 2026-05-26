@@ -1,5 +1,8 @@
 # 04. Section 3 전반 — 목적함수와 RP-PCA의 정의
 
+> **🧒 한 줄 요약**: RP-PCA objective. Variance + γ×|risk_premium|².
+
+
 논문 5쪽 ~ 7쪽 (Section 3 앞부분)을 풀어본다.
 
 ---
@@ -319,3 +322,7 @@ $$
 1. $\frac{1}{T}X^\top X + \gamma \bar X \bar X^\top$ — 2차 모멘트 + γ 가중 평균 외적.
 2. $\gamma=-1$: 평균 빼는 효과 = 표준 PCA. $\gamma=0$: 분산과 평균제곱 동등 가중. $\gamma\to\infty$: 가격결정 오차 우선.
 3. 자산별 표준편차의 역수 대각행렬 적용 → 변동성 큰 자산이 분석을 지배하지 않게 함. $\gamma=-1$에선 상관행렬 PCA와 동치.
+
+
+```viz:lettau-gamma-sweep:title=paper Fig 3 — γ Sweep,caption=γ selector.
+```

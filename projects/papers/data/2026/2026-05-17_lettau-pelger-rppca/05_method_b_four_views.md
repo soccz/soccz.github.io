@@ -1,5 +1,8 @@
 # 05. Section 3 후반 — RP-PCA의 4가지 해석
 
+> **🧒 한 줄 요약**: 4 가지 perspective: PCA, factor model, GMM, ML.
+
+
 논문 7쪽 (Section 3 마지막 부분)을 풀어본다.
 
 같은 식을 4가지 다른 각도에서 해석하는 것. 발표에서 가장 직관적인 부분.

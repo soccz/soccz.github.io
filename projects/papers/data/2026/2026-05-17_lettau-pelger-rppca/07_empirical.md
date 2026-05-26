@@ -1,5 +1,8 @@
 # 11. Section 7 (Empirical Application) — 진짜 주식 데이터로 검증
 
+> **🧒 한 줄 요약**: Empirical: US equities 1963-2018. RP-PCA vs PCA + FF3/FF5.
+
+
 논문 25쪽 ~ 28쪽 (Section 7 전체)을 풀어본다.
 
 이 섹션은 **실제 주식 데이터에서 RP-PCA의 우수성**을 확인하는 부분.
@@ -390,3 +393,7 @@
 1. N=370 (37 anomaly × 10 decile), T=650 (1963/07~2017/12 월간), K=5 권장, γ=10 권장.
 2. In-sample: RP-PCA 0.53 vs PCA 0.24 (2.2배). OOS: RP-PCA 0.45 vs PCA 0.17 (2.6배). Idio Var는 거의 동일.
 3. 시뮬 디자인의 "weak factor" 영역과 정확히 일치 → 시뮬과 실증이 같은 구조를 묘사. RP-PCA만이 이 요인을 활용 가능.
+
+
+```viz:lettau-r2-comparison:title=paper Table 1 — Model Comparison,caption=Metric selector.
+```

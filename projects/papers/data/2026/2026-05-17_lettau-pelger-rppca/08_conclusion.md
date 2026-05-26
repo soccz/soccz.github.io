@@ -1,5 +1,8 @@
 # 12. Section 8 (Conclusion) — 결론과 종합 정리
 
+> **🧒 한 줄 요약**: Conclusion. RP-PCA의 risk-premium-aware factor extraction.
+
+
 논문 28쪽 (Section 8) 을 풀어본다.
 
 이 섹션은 매우 짧다 (단 한 문단). 그래서 **논문 전체를 한눈에 정리하는 종합 파트**로 만들어본다.

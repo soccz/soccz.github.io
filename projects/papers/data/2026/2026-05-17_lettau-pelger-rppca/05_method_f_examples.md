@@ -1,5 +1,8 @@
 # 09. Section 5 후반 — 예제들 (Example 2, 3 + Corollaries)
 
+> **🧒 한 줄 요약**: Concrete examples. 2-factor, 3-factor cases.
+
+
 논문 16쪽 ~ 18쪽 (Section 5.3 전체)을 풀어본다.
 
 추상적인 Theorem 2 를 **구체적 두 예시**로 직관 잡기.

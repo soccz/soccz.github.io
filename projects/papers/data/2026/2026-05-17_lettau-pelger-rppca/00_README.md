@@ -1,5 +1,8 @@
 # 00 README — Estimating Latent Asset-Pricing Factors (RP-PCA)
 
+> **🧒 한 줄 요약**: 본 deep dive 입구. Lettau-Pelger RP-PCA = risk-premium-aware factor extraction의 founding paper.
+
+
 ## 원문 정보
 
 **제목**: Estimating Latent Asset-Pricing Factors
@@ -100,3 +103,21 @@
 | `figures/page23_Figure5.png` | p.23 | ρ² 곡선 (Figure 5) |
 | `figures/page27_Figure8.png` | p.27 | 실증 γ 효과 (Figure 8) |
 | `figures/page28_Figure9.png` | p.28 | 실증 eigenvalue (Figure 9) |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **RP-PCA의 risk-premium-aware 의의?**
+3. **6년 후 DL era 영향?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 04 → 05a-b → 07 → 15.
+
+2. **Risk-premium-aware factor framework의 founding**. PCA variance-only → RP-PCA = variance + risk premium. Pricing-relevant factors 직접 추출.
+
+3. **DL extensions의 theoretical ancestor**. Gu-Kelly-Xiu AE, Chen-Pelger-Zhu의 risk-premium 핵심 인사이트 = RP-PCA에서 유래.
