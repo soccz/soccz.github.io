@@ -1,5 +1,8 @@
 # 10. Supervised 결과 — 21% MSE reduction (★ 가장 흥미)
 
+> **🧒 한 줄 요약**: Long-term forecasting SOTA. MSE -20-30% reduction.
+
+
 > 본 논문의 *실증 main result*. Table 3 (256 cell 정량) + Figure 2 (look-back window effect) 의 step-by-step 풀이.
 
 ---
@@ -204,3 +207,7 @@ Patching 의 *진짜 이점*: 같은 compute 로 *longer L 가능* → *MSE 감�
 ---
 
 다음 챕터: [11_repr_transfer.md](11_repr_transfer.md) — Self-supervised + Transfer Learning 결과.
+
+
+```viz:patchtst-comparison:title=paper Table 1 — Results,caption=Horizon selector.
+```

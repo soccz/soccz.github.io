@@ -1,5 +1,8 @@
 # 18. Appendix Deep Dive — A.1 ~ A.7
 
+> **🧒 한 줄 요약**: Appendix. Hyperparameters, additional datasets.
+
+
 > Paper Appendix (p.13–24) 의 *7 sub-section* 정리. 친근 풀이 + step-by-step.
 
 ---

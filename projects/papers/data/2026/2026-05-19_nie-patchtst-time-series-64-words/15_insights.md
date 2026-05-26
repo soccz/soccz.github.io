@@ -1,5 +1,8 @@
 # 15. 메타 통찰 12개 — 논문이 진짜 가르치는 것
 
+> **🧒 한 줄 요약**: 12 meta insights. iTransformer paradigm debate, TFM era.
+
+
 > 이 챕터는 *논문 원문에 직접 안 쓰여 있는 통찰*. 무지식자 친화로.
 
 ---

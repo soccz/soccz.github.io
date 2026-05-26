@@ -1,5 +1,8 @@
 # 20. Analysis — 결과의 *deep 해석*
 
+> **🧒 한 줄 요약**: Attention pattern analysis. Patch-level interpretation.
+
+
 > 본 논문 실증 결과 (Table 3, Figure 2, Table 7) 의 *표면 수치 너머* 의 분석.
 
 ---

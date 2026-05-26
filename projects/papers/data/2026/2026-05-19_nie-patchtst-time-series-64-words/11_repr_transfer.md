@@ -1,5 +1,8 @@
 # 11. Self-supervised + Transfer Learning 결과
 
+> **🧒 한 줄 요약**: Pre-trained representation transfer. Cross-dataset effective.
+
+
 > 본 논문 Section 4.2 의 *self-supervised 결과* 와 *transfer learning 결과*.
 
 ---

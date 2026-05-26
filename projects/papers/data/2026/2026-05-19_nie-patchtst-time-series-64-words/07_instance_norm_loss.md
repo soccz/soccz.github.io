@@ -1,5 +1,8 @@
 # 07. Instance Normalization + MSE Loss
 
+> **🧒 한 줄 요약**: Instance normalization + MSE loss. RevIN technique.
+
+
 > 본 논문의 *마이너 trick* — input/output 의 *각 시계열을 개별 정규화* + MSE loss.
 
 ---

@@ -1,5 +1,8 @@
 # 08. Self-Supervised Masked Reconstruction
 
+> **🧒 한 줄 요약**: Self-supervised pre-training. Mask + reconstruction.
+
+
 > 본 논문의 *두 번째 큰 contribution*. 시계열의 *일부 patch 가리고 (mask) 모델이 그 patch 를 예측* 하게 학습 → *transferable representation*.
 
 ---

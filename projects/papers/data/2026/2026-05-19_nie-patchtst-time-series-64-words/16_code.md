@@ -1,5 +1,8 @@
 # 16 PyTorch 구현
 
+> **🧒 한 줄 요약**: PyTorch PatchTST 구현. Self-contained.
+
+
 PatchTST 의 핵심 컴포넌트를 PyTorch 로.
 
 ## 1. Patching — L → P × N

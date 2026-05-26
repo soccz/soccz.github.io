@@ -1,5 +1,8 @@
 # 13. Conclusion + Future Work — 무엇이 남았나
 
+> **🧒 한 줄 요약**: Conclusion. PatchTST의 simplicity + effectiveness.
+
+
 > 본 논문 *결론 + 의의 + 미래 연구 방향*.
 
 ---

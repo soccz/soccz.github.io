@@ -1,5 +1,8 @@
 # 06. Transformer Encoder — Vanilla 그대로
 
+> **🧒 한 줄 요약**: Standard Transformer encoder. Off-the-shelf attention.
+
+
 > 본 논문이 사용한 *Transformer encoder* 의 구조. *시계열 specific 변형 없이* vanilla 그대로.
 
 ---

@@ -1,5 +1,8 @@
 # 12. Ablation Study — P + CI 의 효과 분해
 
+> **🧒 한 줄 요약**: Patch length, channel mixing, normalization 등 ablation.
+
+
 > 본 논문 *Table 7* 의 ablation. *Patching* 과 *Channel-Independence* 각각의 contribution 정량.
 
 ---

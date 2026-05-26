@@ -1,5 +1,8 @@
 # 17. ASCII 도식 + Figure 1-7 + viz 카탈로그
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. Patching, channel-independent flow.
+
+
 > 본 deep dive 의 모든 시각 자료를 한 곳에. *step-by-step 가이드 + viz block 카탈로그*.
 
 ---

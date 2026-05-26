@@ -1,5 +1,8 @@
 # 04. Patching — 시계열을 토큰으로
 
+> **🧒 한 줄 요약**: Patching: TS → sequence of patches. ViT for TS analog.
+
+
 > 본 논문의 *첫 trick*. 긴 시계열을 *작은 조각 (patch)* 로 자르고 *조각 하나하나* 를 *한 단어* 처럼.
 
 ---
@@ -192,3 +195,7 @@ Patching 후 각 patch 를 *Transformer 가 이해하는 token* 으로 변환.
 ---
 
 다음 챕터: [05_channel_independence.md](05_channel_independence.md) — Channel-Independence 메커니즘.
+
+
+```viz:patchtst-patching:title=paper §3.1 — Patching,caption=Patch length slider.
+```

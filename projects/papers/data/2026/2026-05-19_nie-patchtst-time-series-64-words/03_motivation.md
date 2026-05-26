@@ -1,5 +1,8 @@
 # 03. 왜 PatchTST? DLinear 도전 + 본 논문 응답
 
+> **🧒 한 줄 요약**: Long-term TS forecasting의 efficient architecture 필요성.
+
+
 > 본 논문이 *왜 나왔는지* 의 학계 역사. 2017년 Transformer 등장부터 2023년 PatchTST 까지.
 
 ---

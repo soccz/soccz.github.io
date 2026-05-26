@@ -1,5 +1,8 @@
 # 00 README — PatchTST (A Time Series is Worth 64 Words)
 
+> **🧒 한 줄 요약**: 본 deep dive 입구. PatchTST = channel-independent + patching의 TS forecasting paradigm.
+
+
 ## 원문 정보
 
 **제목**: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers
@@ -131,3 +134,21 @@
 - 빠른 핵심: [03_motivation.md](03_motivation.md) → [10_supervised_results.md](10_supervised_results.md) → [15_insights.md](15_insights.md)
 - 구현 관심: [04_patching.md](04_patching.md) → [05_channel_independence.md](05_channel_independence.md) → [16_code.md](16_code.md)
 - Self-supervised 관심: [08_representation_learning.md](08_representation_learning.md) → [11_repr_transfer.md](11_repr_transfer.md)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Channel-independent + patching paradigm 의의?**
+3. **3년 후 TFM era 영향?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 04 → 05 → 10 → 21.
+
+2. **Channel-independent + patching의 first compelling**. "TS = sequence of patches" = ViT for TS. 단순 + effective + SOTA.
+
+3. **TFM era foundation**. MOIRAI, Chronos 등 TFM이 patching DNA inherit. Architectural standard.

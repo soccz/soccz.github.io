@@ -1,5 +1,8 @@
 # 05. Channel-Independence — 변수 독립 처리
 
+> **🧒 한 줄 요약**: Channel-independent: each variate processed separately. Simpler training.
+
+
 > 본 논문의 *두 번째 trick*. M 개 변수 (예: 326 전력 가구) 가 있어도 *각 변수 따로* Transformer 통과 + *모두 같은 weight*.
 
 ---
@@ -142,3 +145,7 @@
 ---
 
 다음 챕터: [06_transformer_encoder.md](06_transformer_encoder.md) — Transformer Encoder (Vanilla 그대로).
+
+
+```viz:patchtst-channel-indep:title=paper §3.2 — Channel-Independent,caption=Strategy selector.
+```
