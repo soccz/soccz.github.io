@@ -1,5 +1,8 @@
 # 13 Ablation Study — Table 4 (Section 5.2)
 
+> **🧒 한 줄 요약**: Component ablation. VAE / decomposition / fusion 각각 contribution.
+
+
 paper p.7 의 Section 5.2. 3 component 의 개별 기여 분석.
 
 ## Table 4 — Component Ablation (paper p.7)

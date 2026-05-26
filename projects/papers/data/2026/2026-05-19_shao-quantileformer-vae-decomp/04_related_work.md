@@ -1,5 +1,8 @@
 # 04 Related Work — Section 2
 
+> **🧒 한 줄 요약**: Related work. DeepAR, TFT, classical quantile regression.
+
+
 paper p.2 의 Section 2 는 3 subsection 으로 본 paper 의 lineage 를 정리.
 
 ## 2.1 Transformer-based Models

@@ -1,5 +1,8 @@
 # 00 README — QuantileFormer
 
+> **🧒 한 줄 요약**: 본 deep dive 입구. QuantileFormer = VAE decomposition + quantile + Transformer fusion.
+
+
 ## 원문 정보
 
 **제목**: QuantileFormer: Probabilistic Time Series Forecasting with a Pattern-Mixture Decomposed VAE Transformer
@@ -106,3 +109,21 @@ Nanjing University
 | `figures/Fig2_architecture.png` | p.3 | Fig. 2 — QuantileFormer architecture (4 components: decomp / drift extraction / VAE / fusion) | ch04, ch06–09 |
 | `figures/Fig3_hyperparam_k.png` | p.7 | Fig. 3 — k (Gaussian components 수) 의 q-risk 영향 (Electricity / Wind / ETTm1) | ch14 |
 | `figures/Fig4_visualization.png` | p.7 | Fig. 4 — Probabilistic forecasting visualization (6 models, Electricity) | ch14 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **QuantileFormer의 probabilistic paradigm 의의?**
+3. **2년 후 TFM probabilistic adoption?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 06 → 07 → 09 → 12 → 20.
+
+2. **Probabilistic forecast의 first compelling Transformer**. VAE decomposition + quantile drift + fusion. Multi-quantile output의 industry-relevant approach.
+
+3. **TFM era의 probabilistic foundation**. Chronos / MOIRAI 의 probabilistic output이 QuantileFormer DNA. Risk forecasting industry standard.

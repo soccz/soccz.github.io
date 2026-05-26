@@ -1,5 +1,8 @@
 # 09 Fusion Transformer with Cross-Attention — Section 4.4
 
+> **🧒 한 줄 요약**: Transformer fusion. Combine all components.
+
+
 paper p.4 의 Section 4.4. **두 path 의 결합** — drift ($\chi^Q_{eout}$) 와 divergence ($\chi^d_{out}$) 을 cross-attention 으로 fusion.
 
 ![Fig. 2 architecture — 우측 부분](figures/Fig2_architecture.png)
@@ -210,3 +213,7 @@ paper Fig 2 의 우측 column:
 3. **$O$**: forecasting horizon 길이 (예: 96 step). **$|Q|$**: quantile 개수 (5 = 0.5, 0.6, 0.7, 0.8, 0.9). 각 시점에 5개 quantile 동시 출력 → uncertainty interval 표현.
 
 다음 [10_loss_function.md](10_loss_function.md) 에서 joint quantile loss (Eq 19).
+
+
+```viz:shao-vae-flow:title=paper §3 — VAE+Fusion Architecture,caption=Component selector.
+```

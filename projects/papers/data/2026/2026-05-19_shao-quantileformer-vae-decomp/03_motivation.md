@@ -1,5 +1,8 @@
 # 03 Motivation — Section 1 Introduction
 
+> **🧒 한 줄 요약**: Point forecast 한계 → probabilistic forecasting + decomposition.
+
+
 ## Probabilistic Forecasting 의 정의
 
 > The primary objective of probabilistic time series forecasting is to provide probability distribution information regarding uncertainty for predicting values at future time points. Unlike traditional time series forecasting, probabilistic forecasting aims to comprehensively describe the potential range of future values, which is achieved by estimating various quantiles (including median and percentiles) to offer a range of potential outcomes, thereby enhancing decision-making under uncertainty. (paper p.1)

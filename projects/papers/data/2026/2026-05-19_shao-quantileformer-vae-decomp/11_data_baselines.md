@@ -1,5 +1,8 @@
 # 11 Datasets, Baselines, Metrics — Section 5
 
+> **🧒 한 줄 요약**: Energy, finance, weather datasets.
+
+
 paper p.5–6 의 Section 5. 6 datasets + 8 baselines + 2 metrics.
 
 ## 6 Datasets (paper Table 2)

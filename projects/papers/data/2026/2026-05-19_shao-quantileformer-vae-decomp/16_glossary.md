@@ -1,5 +1,8 @@
 # 16 Glossary + Notation + References
 
+> **🧒 한 줄 요약**: 용어 사전. VAE / quantile / pattern-mixture 정리.
+
+
 ## 핵심 약어
 
 | 약어 | 풀이 | 출처 |
@@ -233,3 +236,21 @@ paper 는 Nanjing University 의 Wenzhong Li (corresponding) 그룹의 작품. �
    - Cross (paper Eq 16): Q from divergence, K, V from drift.
 
 다음 [17_insights.md](17_insights.md) 에서 메타 통찰.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **VAE의 KL divergence intuition?**
+2. **Quantile loss vs MSE 차이?**
+3. **Pattern-mixture decomposition의 components?**
+
+### 답변
+
+1. **Posterior와 prior의 distance**. VAE의 KL term = "*encoder posterior가 prior gaussian과 얼마나 다른가*". KL minimize = "smooth latent space" 유도.
+
+2. **Asymmetric vs symmetric**. Pinball loss = quantile-specific asymmetric penalty (over-predict vs under-predict 다른 cost). MSE = symmetric squared. Quantile = *distribution-aware loss*.
+
+3. **Level (mean) + Trend (slope) + Seasonal (period)**. Classical TS의 3-component decomposition. QuantileFormer = *VAE-learned* version of this structure.

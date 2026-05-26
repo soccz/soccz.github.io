@@ -1,5 +1,8 @@
 # 19 Diagrams & Interactive Visualizations
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. Architecture, decomposition, quantile output.
+
+
 ASCII 도식 + interactive viz 카탈로그.
 
 ---

@@ -1,5 +1,8 @@
 # 15 Conclusion — Section 6
 
+> **🧒 한 줄 요약**: Conclusion. Structured probabilistic forecasting.
+
+
 paper p.7 의 결론.
 
 ## 원문

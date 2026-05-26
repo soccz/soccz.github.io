@@ -1,5 +1,8 @@
 # 14 Hyperparameter Analysis + Visualization — Section 5.3–5.4
 
+> **🧒 한 줄 요약**: Hyperparameter analysis + visualization.
+
+
 paper p.7 의 Section 5.3 (Fig 3) 와 Section 5.4 (Fig 4).
 
 ---

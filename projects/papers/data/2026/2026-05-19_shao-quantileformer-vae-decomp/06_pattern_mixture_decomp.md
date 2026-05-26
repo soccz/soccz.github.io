@@ -1,5 +1,8 @@
 # 06 Pattern-Mixture Decomposition — Section 4.1
 
+> **🧒 한 줄 요약**: Level + trend + seasonal mixture. Pattern-aware decomposition.
+
+
 paper p.3–4 의 Section 4.1. 본 paper 의 가장 깊은 contribution — **시계열 분해의 quantile-aware + distribution-aware 일반화**.
 
 ![Fig. 2 architecture — 좌측 부분](figures/Fig2_architecture.png)
@@ -213,3 +216,7 @@ $$
 3. **1-stage (trend-seasonal)**: 단일 trend 와 seasonal 만 분리 — distribution 정보 무시. **2-stage**: drift-divergence 가 **smooth 성분 분리** + GMM 이 **divergence 의 distribution 학습**. 두 stage 가 다른 정보 capture → 시너지 (paper Table 4 ablation 의 모든 component 기여 확인).
 
 다음 [07_vae_inference.md](07_vae_inference.md) 에서 GMM components $D$ 의 VAE 처리 (Eq 8–15).
+
+
+```viz:shao-decomposition:title=paper §3 — Decomposition,caption=Component selector.
+```

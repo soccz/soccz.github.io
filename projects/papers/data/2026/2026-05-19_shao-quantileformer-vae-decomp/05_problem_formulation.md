@@ -1,5 +1,8 @@
 # 05 Problem Formulation — Section 3
 
+> **🧒 한 줄 요약**: 문제 정의. Multi-quantile TS forecasting.
+
+
 paper p.2–3 의 Section 3. Quantile regression 의 수학적 정의 (Eq 1–3).
 
 ## Quantile 의 정의 (Eq 1)

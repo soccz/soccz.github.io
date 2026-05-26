@@ -1,5 +1,8 @@
 # 10 Loss Function — Section 4.5
 
+> **🧒 한 줄 요약**: Quantile loss + KL divergence + reconstruction.
+
+
 paper p.4 의 Section 4.5. 짧지만 모델 학습의 핵심.
 
 ---

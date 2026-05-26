@@ -1,5 +1,8 @@
 # 07 VAE-based Distribution Mixture Inference — Section 4.2
 
+> **🧒 한 줄 요약**: VAE inference of latent patterns. ELBO loss.
+
+
 paper p.3–4 의 Section 4.2. GMM components $D$ 를 받아 **global distribution** 의 mixture parameter 를 VAE 로 추론.
 
 ---

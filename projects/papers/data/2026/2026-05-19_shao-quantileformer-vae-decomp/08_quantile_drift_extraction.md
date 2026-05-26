@@ -1,5 +1,8 @@
 # 08 Quantile Drift Feature Extraction — Section 4.3
 
+> **🧒 한 줄 요약**: Quantile drift extraction. Multi-quantile output.
+
+
 paper p.4 의 Section 4.3. 짧지만 핵심적인 모듈 — quantile drift $\chi^Q$ 를 Transformer encoder 로 변환.
 
 ---

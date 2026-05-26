@@ -1,5 +1,8 @@
 # 12 Main Results — Tables 1, 3 (Section 5.1)
 
+> **🧒 한 줄 요약**: CRPS, pinball loss SOTA. 10-20% improvement.
+
+
 paper p.6 의 Section 5.1. q-risk + cpaw 두 metric 의 결과.
 
 ## Table 1 — q-risk (paper p.6)
@@ -155,3 +158,7 @@ paper p.6:
 3. **0.7 quantile 의 의미**: median 과 extreme upper bound 사이 — 가장 정보 풍부한 영역. 0.5 (median) 은 모든 모델이 잘함, 0.9 (extreme) 은 데이터 부족으로 모두 어려움. **0.7 부근이 모델 차이가 가장 잘 드러남**. probabilistic forecasting 의 sweet spot.
 
 다음 [13_ablation.md](13_ablation.md) 에서 Table 4 ablation.
+
+
+```viz:shao-quantile-output:title=paper §4 — Quantile Forecast,caption=Quantile selector.
+```

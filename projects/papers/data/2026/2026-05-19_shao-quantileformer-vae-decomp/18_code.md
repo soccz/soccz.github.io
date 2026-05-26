@@ -1,5 +1,8 @@
 # 18 PyTorch Code — QuantileFormer 핵심 모듈
 
+> **🧒 한 줄 요약**: PyTorch QuantileFormer 구현.
+
+
 paper 가 공식 코드 미공개. 본 deep dive 의 PyTorch 구현 — paper 의 architecture (Fig 2) + Eq 4-19 의 충실 구현.
 
 **Caveat**: 본 코드는 **reference implementation**. 정확한 학습 hyperparameter 는 paper text 가 명시 안 함 → 표준값 사용. paper repo 와 1:1 동일 보장 못함.
