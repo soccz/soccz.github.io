@@ -1,5 +1,8 @@
 # 09. Empirical Results — Individual Stocks (Section III.C–D)
 
+> **🧒 한 줄 요약**: 개별 stock 의 SDF pricing 결과.
+
+
 > Section III.C–D (paper p.25–29) — Table I, Figure 6, β-sorted portfolios.
 
 ## 9.1 챕터 한 줄 요약

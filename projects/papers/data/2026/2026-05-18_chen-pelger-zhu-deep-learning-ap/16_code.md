@@ -1,5 +1,8 @@
 # 16. 코드 — PyTorch GAN Baseline 구현
 
+> **🧒 한 줄 요약**: PyTorch GAN SDF 구현. Self-contained example.
+
+
 > 본 논문의 GAN model 을 PyTorch 로 self-contained 예제.
 
 ## 16.1 챕터 한 줄 요약

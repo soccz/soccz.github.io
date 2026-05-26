@@ -1,5 +1,8 @@
 # 13. Appendix — Section A-I
 
+> **🧒 한 줄 요약**: Appendix A-I. FFN/LSTM detail, simulation, SDF overview.
+
+
 > Appendix A-I (paper p.47–75+) — FFN/LSTM detail, simulation, SDF overview, characteristics list.
 
 ## 13.1 챕터 한 줄 요약

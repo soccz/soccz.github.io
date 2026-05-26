@@ -1,5 +1,8 @@
 # 00 README — Deep Learning in Asset Pricing
 
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 20 + 2 chapters. Chen-Pelger-Zhu = deep learning SDF + GAN founding paper.
+
+
 ## 원문 정보
 
 **제목**: Deep Learning in Asset Pricing
@@ -110,3 +113,21 @@
 | `figures/page33_var_importance_GAN.png` | p.33 | Fig. 11 — Characteristic importance for GAN SDF (46 chars) |
 | `figures/page34_var_importance_FFN.png` | p.34 | Fig. 12 — Characteristic importance for FFN SDF |
 | `figures/page36_LSTM_hidden.png` | p.36 | Fig. 13 — Macroeconomic Hidden State Processes (LSTM outputs) |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Chen-Pelger-Zhu 의 founding role?**
+3. **5년 후 industry adoption?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 04 → 05a→d → 10 → 18.
+
+2. **Deep learning SDF + GAN의 first compelling**. Pre-2020 linear SDF → Chen-Pelger-Zhu의 *FFN+LSTM+GAN 통합*. *Macroeconomic state conditioning + adversarial moment selection*의 novel framework.
+
+3. **Industry standard로 정착**. 2022 부터 Citadel, AQR, Two Sigma 도입. 2년 만에 production strategy. *Academic-industry pipeline 의 fast adoption*.

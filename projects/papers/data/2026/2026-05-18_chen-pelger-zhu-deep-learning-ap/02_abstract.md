@@ -1,5 +1,8 @@
 # 02. 제목과 Abstract 풀어 읽기
 
+> **🧒 한 줄 요약**: Abstract. Deep learning + GAN moment selection for asset pricing.
+
+
 ## 2.1 제목 — "Deep Learning in Asset Pricing"
 
 한국어: **"자산가격결정의 딥러닝"**

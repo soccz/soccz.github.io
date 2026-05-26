@@ -1,5 +1,8 @@
 # 05c. Section II.C — RNN with LSTM (Macroeconomic Hidden States)
 
+> **🧒 한 줄 요약**: LSTM for sequential state encoding. Macro indicator time series.
+
+
 > Section II.C (paper p.15–17) — 178 macro 시계열 → 4 hidden state.
 
 ## 5c.1 챕터 한 줄 요약

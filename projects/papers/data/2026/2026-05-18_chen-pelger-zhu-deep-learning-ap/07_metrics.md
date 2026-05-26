@@ -1,5 +1,8 @@
 # 07. Evaluation Metrics — Section II.F
 
+> **🧒 한 줄 요약**: Sharpe ratio, R², alpha, max drawdown.
+
+
 > Section II.F (paper p.19–20) — SR, EV, XS-R² 세 지표의 정의와 의미.
 
 ## 7.1 챕터 한 줄 요약

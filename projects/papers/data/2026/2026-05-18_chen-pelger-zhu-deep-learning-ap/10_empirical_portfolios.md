@@ -1,5 +1,8 @@
 # 10. Characteristic Sorted Portfolios — Section III.E
 
+> **🧒 한 줄 요약**: Portfolio sort + SDF + GAN의 Sharpe 1.5+.
+
+
 > Section III.E (paper p.29–32) — 46 anomaly decile portfolios + double-sorted pricing.
 
 ## 10.1 챕터 한 줄 요약
@@ -136,3 +139,7 @@ paper Figure 14 (Section G 의 시각화): SDF weight $\omega$ as function of tw
 1. **ST_REV (1-month reversal)**: 짧은 시계열 reversal 은 **size 와 interaction** 강함 (small stocks 의 reversal 효과가 더 큼). EN 은 size×ST_REV 곱항 못 잡음. **IdioVol**: lottery-like preference 의 비선형 — 매우 낮은 IdioVol 영역에서만 효과 큼. GAN 의 비선형 FFN 이 이를 잡음. EN/FFN 모두 못 잡음.
 2. **Single-sorted**: 한 특성 quantile 만. EN 의 선형 weights 로도 monotonic 효과 잘 잡음. **Double-sorted**: 두 특성 quantile cross. extreme corner (예: small + low momentum) 이 가장 mispriced. EN 은 두 특성의 선형 합만 잡고 곱은 못 잡음 → corner portfolio underfit.
 3. paper Section III.G 의 발견. **개별 char × SDF**: SDF weight $\omega$ 와 한 char 의 관계가 거의 선형 (Fig 14 의 각 char 별 plot). → linear model 도 single-sorted 잘함. **char × char × SDF**: 두 char 의 contour 가 saddle/dome shape — 강한 nonlinearity. → linear 못 잡고 GAN 만 잡음. **이게 GAN 의 진짜 차별점**.
+
+
+```viz:chen-sharpe-comparison:title=paper Table 2 — Sharpe Comparison,caption=Model comparison.
+```

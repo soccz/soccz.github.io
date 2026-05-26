@@ -1,5 +1,8 @@
 # 06. Alternative Models — Section I.C
 
+> **🧒 한 줄 요약**: Comparison. Fama-French, PCA, IPCA, LSTM-only.
+
+
 > Section I.C (paper p.11–13) — Linear (LS), Elastic Net (EN), FFN forecasting benchmark.
 
 ## 6.1 챕터 한 줄 요약

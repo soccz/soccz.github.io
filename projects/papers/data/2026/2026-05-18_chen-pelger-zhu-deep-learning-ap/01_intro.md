@@ -1,5 +1,8 @@
 # 01. 시작하기 전에 — 미리 알아둘 개념
 
+> **🧒 한 줄 요약**: Paper intro. SDF + macro state + adversarial moments framework.
+
+
 ## 이 논문이 뭘 하는 논문인가요?
 
 한 문장으로:

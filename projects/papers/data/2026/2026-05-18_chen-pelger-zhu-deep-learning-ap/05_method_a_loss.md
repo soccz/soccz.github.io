@@ -1,5 +1,8 @@
 # 05a. Section II.A — Loss Function & Model Architecture
 
+> **🧒 한 줄 요약**: Loss function. Moment-based + adversarial penalty.
+
+
 > Section II.A (paper p.12–14) — 신경망 학습의 loss function 과 전체 아키텍처.
 
 ## 5a.1 챕터 한 줄 요약

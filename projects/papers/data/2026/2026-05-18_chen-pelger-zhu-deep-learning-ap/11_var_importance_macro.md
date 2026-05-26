@@ -1,5 +1,8 @@
 # 11. Variable Importance & Macro States — Section III.F–G
 
+> **🧒 한 줄 요약**: Macro variable importance. Inflation, unemployment dominant.
+
+
 > Section III.F–G (paper p.32–37) — 46 firm chars + 178 macro 의 중요도 + LSTM hidden states 의 의미.
 
 ## 11.1 챕터 한 줄 요약
@@ -245,3 +248,7 @@ paper figure note:
 1. **GAN**: 6 anomaly 카테고리 모두 활용 — 다양한 risk source 학습. **FFN**: trading friction + past return 만 집중 — 이는 penny stock 의 illiquid mispricing 에 의존하는 의심. 본 논문 (paper p.34): "raises the suspicion that a simple forecasting approach might focus mainly on illiquid penny stocks." No-arbitrage condition 이 다양한 risk premium 발견 강제 (한 카테고리의 noise 대신).
 2. **명시적 supervision 없이 business cycle 학습**. LSTM 은 178 macro 시계열의 다이내믹을 4 hidden state 로 압축. 본 논문은 NBER recession indicator 를 input 으로 주지 않음. 그러나 학습된 hidden state 의 시계열 peak 가 NBER recession 시점과 일치. → **LSTM 이 자율적으로 economic regime 발견**. 후속 연구에서 explicit regime indicator 없이도 cyclical pattern 학습 가능 증명.
 3. **학계 함의 2가지**: (1) **Linear models 의 강점 설명** — 왜 단순 Fama-French linear 가 single-sorted 에서 잘하는지 — 개별 특성의 SDF 효과가 진짜 거의 linear 라서. (2) **비선형의 본질** — 비선형은 **interaction 에서** 발현. 따라서 future research 는 single char 보다 **char × char interaction** (또는 char × macro) 발견에 집중해야. 본 논문 paper Fig 14 의 SDF surface plots 가 이 메시지의 시각적 증명.
+
+
+```viz:chen-macro-importance:title=paper §6 — Macro Importance,caption=Top-N slider.
+```

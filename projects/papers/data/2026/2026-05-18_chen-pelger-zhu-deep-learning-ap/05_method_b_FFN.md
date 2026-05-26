@@ -1,5 +1,8 @@
 # 05b. Section II.B — Feedforward Network (FFN)
 
+> **🧒 한 줄 요약**: Feed-forward network. State → SDF weight mapping.
+
+
 > Section II.B (paper p.14–15) — FFN 의 4가지 활용.
 
 ## 5b.1 챕터 한 줄 요약

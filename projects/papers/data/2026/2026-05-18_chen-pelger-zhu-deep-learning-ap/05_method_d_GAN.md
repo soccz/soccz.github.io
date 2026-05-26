@@ -1,5 +1,8 @@
 # 05d. Section II.D–E — GAN & Hyperparameters
 
+> **🧒 한 줄 요약**: GAN architecture. Generator (SDF) + Discriminator (moment selection).
+
+
 > Section II.D–E (paper p.17–19) — Generative Adversarial Network 와 학습 setup.
 
 ## 5d.1 챕터 한 줄 요약

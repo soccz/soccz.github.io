@@ -1,5 +1,8 @@
 # 12. Conclusion — Section IV
 
+> **🧒 한 줄 요약**: Conclusion. Deep learning SDF + GAN의 *industry-leading 성과*.
+
+
 > Section IV (paper p.45–46) — 본 논문의 4가지 결론 + 후속 연구 함의.
 
 ## 12.1 챕터 한 줄 요약

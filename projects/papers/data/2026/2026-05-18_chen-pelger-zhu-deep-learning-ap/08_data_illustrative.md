@@ -1,5 +1,8 @@
 # 08. Data & Illustrative GAN Example — Section III.A–B
 
+> **🧒 한 줄 요약**: CRSP + macro indicators. 1967-2016 sample.
+
+
 > Section III.A–B (paper p.20–25) — 50년 데이터 + GAN 의 작동 원리를 size-value-investment example 로 보여주기.
 
 ## 8.1 챕터 한 줄 요약

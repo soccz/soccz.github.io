@@ -1,5 +1,8 @@
 # 03. Introduction — 4가지 도전과 본 논문의 답
 
+> **🧒 한 줄 요약**: Empirical asset pricing의 *deep learning + adversarial revolution* 필요성.
+
+
 > Introduction (journal p.1–6) — 자산가격결정의 4 challenges 와 본 논문이 어떻게 풀었는지.
 
 ## 3.1 첫 단락 — 자산가격결정의 fundamental question

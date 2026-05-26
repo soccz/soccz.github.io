@@ -1,5 +1,8 @@
 # 04. SDF Framework — Section I (Model)
 
+> **🧒 한 줄 요약**: SDF framework. Stochastic discount factor 의 *neural network parameterization*.
+
+
 > Section I (paper p.6–12) — No-arbitrage, SDF, adversarial GMM.
 
 ## 4.1 Section I.A — No-Arbitrage Asset Pricing
@@ -235,3 +238,7 @@ $$
 1. SDF 가 자산 수익률의 **affine 함수** (상수 1 + 선형결합). $\omega$ 가 tangency portfolio weights 와 동일 (Eq 1). Cochrane (2003) 의 표준 normalization — risk-free rate 의 자유도 처리.
 2. Eq (1) 은 unconditional moment ($g = $ 상수) 의 특수 케이스. 일반 conditional moment 는 임의 함수 $g$ 에 대해 $\mathbb{E}[M R^e g] = 0$. 무한 family — $g$ 의 선택에 따라 무한히 많은 모멘트 조건.
 3. SDF 는 pricing error 최소화, adversary 는 최대화 — 한쪽이 이기면 다른 쪽이 짐 (정확히 반대). Hansen-Jagannathan (1997) 의 minimax: 가장 mispriced 한 portfolio 까지 잘 가격결정해야 robust SDF.
+
+
+```viz:chen-sdf-framework:title=paper §3 — SDF+GAN Architecture,caption=Component selector.
+```

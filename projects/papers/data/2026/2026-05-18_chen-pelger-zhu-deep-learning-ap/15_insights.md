@@ -1,5 +1,8 @@
 # 15. 메타 통찰 (Meta Insights)
 
+> **🧒 한 줄 요약**: 12 meta insights. Industry adoption pattern. Foundation era connections.
+
+
 > 본 논문이 던지는 **12 가지 메타 메시지** — 단순 결과를 넘어, 자산가격결정과 ML 학계 전체에 대한 함의.
 
 ---
