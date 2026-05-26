@@ -15,7 +15,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Attention Pattern on Latent z_t (paper Fig 2)', w/2, 22);
+      ctx.fillText('Attention Pattern on Latent z_t (ProTran §3.2 illustrative)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
       ctx.fillText('Head ${head+1}: T×T attention matrix on z_t (SSM latent)'.replace('${head+1}', head+1), w/2, 40);

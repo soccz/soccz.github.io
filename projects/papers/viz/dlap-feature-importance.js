@@ -12,15 +12,17 @@
     // paper Figure 11 정확 ranking — GAN SDF variable importance
     // 6 categories: trading frictions (orange), value (purple), intangibles (pink),
     //                profitability (gray), investment (green), past returns (red)
+    // Paper Table III/Fig 11 categories: past returns / trading frictions / value /
+    // intangibles / profitability / investment
     const chars = [
       { name: 'ST_REV (Short-Term Reversal)', group: 'past returns' },
       { name: 'SUV (Std Unexplained Vol)',    group: 'trading frictions' },
       { name: 'r12_2 (Momentum 12-2)',         group: 'past returns' },
+      { name: 'NOA (Net Op Assets)',           group: 'investment' },
       { name: 'SGA2S',                         group: 'profitability' },
-      { name: 'NOA (Net Op Assets)',           group: 'intangibles' },
       { name: 'RNA',                           group: 'profitability' },
       { name: 'LTurnover',                     group: 'trading frictions' },
-      { name: 'Lev (Leverage)',                group: 'investment' },
+      { name: 'Lev (Leverage)',                group: 'trading frictions' },
       { name: 'Resid_Var',                     group: 'trading frictions' },
       { name: 'ROA',                           group: 'profitability' },
       { name: 'E2P (Earnings/Price)',          group: 'value' },
@@ -30,7 +32,7 @@
       { name: 'BEME (Book/Market)',            group: 'value' },
       { name: 'Variance',                      group: 'trading frictions' },
       { name: 'A2ME (Assets/Market)',          group: 'value' },
-      { name: 'AT (Asset Turnover)',           group: 'profitability' },
+      { name: 'AT (Asset Turnover)',           group: 'intangibles' },
       { name: 'Rel2High',                      group: 'trading frictions' },
       { name: 'CF (Cashflow)',                 group: 'value' },
       { name: 'Q (Tobin Q)',                   group: 'value' },
@@ -39,15 +41,16 @@
       { name: 'DPI2A',                         group: 'investment' },
       { name: 'ROE',                           group: 'profitability' },
       { name: 'S2P (Sales/Price)',             group: 'value' },
-      { name: 'FC2Y',                          group: 'value' },
-      { name: 'AC (Accruals)',                 group: 'profitability' },
+      { name: 'FC2Y',                          group: 'profitability' },
+      { name: 'AC (Accruals)',                 group: 'investment' },
       { name: 'CTO',                           group: 'profitability' },
       { name: 'LT_Rev',                        group: 'past returns' },
     ];
-    // Importance 값: paper Figure 11 의 *roughly* exponential decay
+    // Importance values: paper Fig 11 approximate exponential decay (deterministic)
     chars.forEach((c, i) => {
-      c.imp = 0.039 - i * 0.0005 - Math.pow(i / 30, 1.5) * 0.02;
-      if (c.imp < 0.018) c.imp = 0.018 + 0.001 * Math.random();
+      const base = 0.039 - i * 0.0005 - Math.pow(i / 30, 1.5) * 0.02;
+      // Deterministic floor with mild per-index variation (sin-based, no randomness)
+      c.imp = Math.max(base, 0.018 + 0.001 * Math.abs(Math.sin(i * 1.7)));
     });
     const groupColors = {
       'trading frictions': '#f97316',

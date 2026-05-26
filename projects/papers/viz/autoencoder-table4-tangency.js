@@ -1,14 +1,14 @@
 /* viz: autoencoder-table4-tangency
- * paper Table 4 재현 — Tangency Portfolio Sharpe Ratio (OOS 1987–2016).
- * 7 models × 6 K. EW + VW.
+ * paper Table 4 — Factor tangency Portfolio Sharpe Ratio (OOS 1987–2016).
+ * 7 models × 6 K. Paper reports a single (volatility-scaled to 1% monthly) set.
  * Gu, Kelly, Xiu (2021).
  */
 
 (function () {
   const U = window.VIZ_UTIL;
 
-  /* paper Table 4 정확한 수치 (annualized tangency Sharpe) */
-  const DATA_EW = {
+  /* paper Table 4 exact values (annualized tangency Sharpe, scaled to 1%/mo vol) */
+  const DATA = {
     'FF':    [0.51, 0.41, 0.53, 0.71, 0.71, 0.82],
     'PCA':   [0.35, 0.23, 0.25, 0.38, 0.48, 0.55],
     'IPCA':  [0.39, 0.44, 1.81, 3.14, 3.71, 3.72],
@@ -18,17 +18,6 @@
     'CA3':   [0.54, 0.77, 3.94, 4.75, 4.94, 4.37]
   };
 
-  /* paper Table 4 의 VW 부분 (Tangency, value-weighted) — paper 내 별도 보고 */
-  const DATA_VW = {
-    'FF':    [0.45, 0.36, 0.46, 0.62, 0.62, 0.71],
-    'PCA':   [0.30, 0.20, 0.22, 0.33, 0.42, 0.48],
-    'IPCA':  [0.34, 0.38, 1.57, 2.73, 3.22, 3.23],
-    'CA0':   [0.37, 0.42, 1.28, 1.53, 1.69, 1.71],
-    'CA1':   [0.49, 0.79, 2.76, 3.32, 3.15, 3.98],
-    'CA2':   [0.47, 0.65, 3.09, 3.70, 4.10, 2.41],
-    'CA3':   [0.47, 0.67, 3.42, 4.13, 4.29, 3.80]
-  };
-
   const MODELS = ['FF', 'PCA', 'IPCA', 'CA0', 'CA1', 'CA2', 'CA3'];
   const COLORS = {
     'FF': '#9ca3af', 'PCA': '#94a3b8', 'IPCA': '#60a5fa',
@@ -36,31 +25,7 @@
   };
 
   VIZ_REGISTRY['autoencoder-table4-tangency'] = function (canvas, controls, params) {
-    let weight = params.weight || 'EW';
     let K = parseInt(params.K || '5', 10);
-
-    /* weight 토글 */
-    const wrap1 = document.createElement('label');
-    const lab1 = document.createElement('span');
-    lab1.textContent = 'Portfolio';
-    wrap1.appendChild(lab1);
-    ['EW', 'VW'].forEach(w => {
-      const b = document.createElement('button');
-      b.textContent = w;
-      b.style.cssText = 'margin-left:6px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text-secondary);cursor:pointer;font-family:inherit;font-size:0.82rem;';
-      if (w === weight) {
-        b.style.background = U.accent(); b.style.color = '#fff'; b.style.borderColor = U.accent();
-      }
-      b.addEventListener('click', () => {
-        wrap1.querySelectorAll('button').forEach(x => {
-          x.style.background = 'var(--surface)'; x.style.color = 'var(--text-secondary)'; x.style.borderColor = 'var(--border)';
-        });
-        b.style.background = U.accent(); b.style.color = '#fff'; b.style.borderColor = U.accent();
-        weight = w; draw();
-      });
-      wrap1.appendChild(b);
-    });
-    controls.appendChild(wrap1);
 
     /* K slider */
     U.addSlider(controls, {
@@ -73,7 +38,7 @@
       const { ctx, w, h } = U.setupCanvas(canvas);
       ctx.clearRect(0, 0, w, h);
 
-      const data = weight === 'EW' ? DATA_EW : DATA_VW;
+      const data = DATA;
 
       const padL = 64, padR = 28, padT = 36, padB = 64;
       const innerW = w - padL - padR;

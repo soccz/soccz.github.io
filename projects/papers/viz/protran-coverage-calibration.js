@@ -6,8 +6,8 @@
     U.addSelect(controls, {
       label: 'Model',
       options: [
-        { value: 'DeepAR',  label: 'DeepAR' },
-        { value: 'TFT',     label: 'TFT' },
+        { value: 'DeepAR',  label: 'DeepAR (paper baseline)' },
+        { value: 'TransMAF', label: 'Transformer-MAF' },
         { value: 'ProTran', label: 'ProTran (★ paper)' }
       ],
       value: 'ProTran',
@@ -15,9 +15,9 @@
     });
 
     const config = {
-      DeepAR:  { color: '#94a3b8', shift: 0.08 },
-      TFT:     { color: '#0891b2', shift: 0.04 },
-      ProTran: { color: '#16a34a', shift: 0.005 },
+      DeepAR:   { color: '#94a3b8', shift: 0.08, label: 'DeepAR' },
+      TransMAF: { color: '#0891b2', shift: 0.04, label: 'Transformer-MAF' },
+      ProTran:  { color: '#16a34a', shift: 0.005, label: 'ProTran' }
     };
 
     function draw() {
@@ -26,7 +26,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Calibration Plot (paper Fig 2)', w/2, 22);
+      ctx.fillText('Calibration Plot — illustrative (ProTran §4)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
       const c = config[model];

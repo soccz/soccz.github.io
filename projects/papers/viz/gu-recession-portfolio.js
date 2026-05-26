@@ -33,7 +33,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Long-Short Portfolio Cumulative Return (paper Fig 4)', w/2, 22);
+      ctx.fillText('Long-Short Portfolio Cumulative Return — illustrative (SR per paper Table 3)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
       const c = config[model];

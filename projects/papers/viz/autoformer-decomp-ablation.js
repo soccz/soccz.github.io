@@ -27,9 +27,9 @@
       720: { Origin:3.048, Sep:2.601, Ours:0.539 }
     },
     Reformer: {
-      96:  { Origin:0.658, Sep:0.445, Ours:0.218 },
+      96:  { Origin:0.658, Sep:0.510, Ours:0.218 },
       192: { Origin:1.078, Sep:0.510, Ours:0.336 },
-      336: { Origin:1.549, Sep:1.028, Ours:0.366 },
+      336: { Origin:1.549, Sep:1.188, Ours:0.366 },
       720: { Origin:2.631, Sep:2.845, Ours:0.502 }
     }
   };
