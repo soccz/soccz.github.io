@@ -1,5 +1,8 @@
 # 04. KPS factor model — 출발점 (Eq. 1, 2)
 
+> **🧒 한 줄 요약**: Static linear factor (Fama-French) → conditional nonlinear autoencoder.
+
+
 이 챕터는 본 논문이 시작하는 **출발 모델**인 KPS (2019) 의 conditional factor model 을 정밀히 살펴본다. 본 논문이 어디서 이 모델을 일반화하는지를 보면 차이점이 명확해진다.
 
 ---

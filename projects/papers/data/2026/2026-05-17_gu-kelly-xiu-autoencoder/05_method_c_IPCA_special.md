@@ -1,5 +1,8 @@
 # 05-C. 방법론 (Part C) — IPCA 는 Conditional Autoencoder 의 특수 케이스
 
+> **🧒 한 줄 요약**: IPCA (Kelly et al. 2019) 의 *special case* 관계. AE = IPCA generalization.
+
+
 > Section 2.2.1 (journal p.434–435) — **Proposition 2** 와 그 의의.
 
 ## 5C.1 챕터 한 줄 요약

@@ -1,5 +1,8 @@
 # 05b. Section 2.2 — Conditional Autoencoder (메인 모델)
 
+> **🧒 한 줄 요약**: Characteristics-conditional AE. CA1/CA2/CA3 variants. Conditioning power.
+
+
 이 챕터가 본 논문의 **심장**. 두 개의 신경망 + dot product 로 구성된 conditional autoencoder.
 
 ---
@@ -262,3 +265,7 @@ $$
 3. (a) **자산 수**: 30,000 stocks → 94 특성 → weight 수 폭발 방지. (b) **불균형 panel**: 매월 다른 stocks 활성 → managed portfolio 는 항상 P 개 안정.
 
 다음 [05_method_c_IPCA_special.md](05_method_c_IPCA_special.md) — IPCA 가 본 모델의 특수 케이스.
+
+
+```viz:gu-ca-architecture:title=paper §3 — CA Architecture,caption=Model selector.
+```

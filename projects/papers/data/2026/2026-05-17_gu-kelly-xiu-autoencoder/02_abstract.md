@@ -1,5 +1,8 @@
 # 02. 제목과 Abstract 풀어 읽기
 
+> **🧒 한 줄 요약**: Paper abstract. Autoencoder + characteristics conditioning + factor extraction.
+
+
 ## 2.1 제목 — "Autoencoder Asset Pricing Models"
 
 한국어: **"오토인코더 자산가격결정 모델"**

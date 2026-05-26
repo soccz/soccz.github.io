@@ -1,5 +1,8 @@
 # 03. Section 1 (Introduction) — 왜 비선형 자산가격결정 모델이 필요한가
 
+> **🧒 한 줄 요약**: Empirical asset pricing 의 *deep learning revolution* 필요성. Pre-DL factor models 한계.
+
+
 논문 1쪽 후반 ~ 2쪽 전체 (Section 1) 를 풀어본다.
 
 ---

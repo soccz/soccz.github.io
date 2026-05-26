@@ -1,5 +1,8 @@
 # 12. 용어 사전 (Glossary)
 
+> **🧒 한 줄 요약**: 용어 사전. AE / IPCA / factor / characteristics / Sharpe ratio 정리.
+
+
 > 본 논문에서 자주 등장하는 **용어** 와 **수식 기호** 의 정의 모음.
 
 ## 12.1 자산가격결정 (Asset Pricing) 용어

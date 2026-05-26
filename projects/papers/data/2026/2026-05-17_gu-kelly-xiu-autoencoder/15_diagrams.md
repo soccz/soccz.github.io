@@ -1,5 +1,8 @@
 # 15. 다이어그램 & 시각화 가이드
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. AE architecture, factor structure, R² curves.
+
+
 > 본 논문의 핵심 개념을 **ASCII 다이어그램** 으로 정리 + **인터랙티브 시각화 카탈로그**.
 
 ## 15.1 다이어그램 1 — 표준 PCA vs 표준 Autoencoder

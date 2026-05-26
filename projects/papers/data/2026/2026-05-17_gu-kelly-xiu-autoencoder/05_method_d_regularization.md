@@ -1,5 +1,8 @@
 # 05-D. 방법론 (Part D) — Regularization & Training
 
+> **🧒 한 줄 요약**: Weight decay + L1 sparsity. Overfit prevention. Hyperparameter tuning.
+
+
 > Section 2.3 (journal p.435–436) — 신경망 학습의 **overfitting 방지 5가지 장치**.
 
 ## 5D.1 챕터 한 줄 요약

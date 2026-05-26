@@ -1,5 +1,8 @@
 # 14. 코드 — PyTorch 구현
 
+> **🧒 한 줄 요약**: PyTorch CA1 구현. Self-contained example. Simulation validation.
+
+
 > 본 논문의 **CA1** 모델을 PyTorch 로 구현한 self-contained 예제 + 시뮬레이션 데이터 검증.
 
 ## 14.1 챕터 한 줄 요약

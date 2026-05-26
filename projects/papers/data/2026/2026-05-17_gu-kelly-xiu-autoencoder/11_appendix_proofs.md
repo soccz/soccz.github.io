@@ -1,5 +1,8 @@
 # 11. 부록 — 두 Proposition 의 증명
 
+> **🧒 한 줄 요약**: Mathematical proofs. AE generalization to IPCA. Identifiability conditions.
+
+
 > Appendix A (journal p.447–449) — Proposition 1, 2 의 수학적 증명.
 
 ## 11.1 챕터 한 줄 요약

@@ -1,5 +1,8 @@
 # 01. 시작하기 전에 — 미리 알아둘 개념
 
+> **🧒 한 줄 요약**: Paper introduction. Linear factor models 의 한계 → deep learning approach 필요성.
+
+
 ## 이 논문이 뭘 하는 논문인가요?
 
 한 문장으로:

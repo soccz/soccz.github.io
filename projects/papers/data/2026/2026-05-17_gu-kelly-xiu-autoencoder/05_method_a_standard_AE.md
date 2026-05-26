@@ -1,5 +1,8 @@
 # 05a. Section 2.1 — 표준 Autoencoder + PCA 등가성
 
+> **🧒 한 줄 요약**: 표준 autoencoder. Latent factor extraction. Reconstruction loss.
+
+
 이 챕터는 신경망 측면에서 가장 중요한 한 발견을 다룬다:
 **"One-layer linear autoencoder = PCA"**.
 

@@ -1,5 +1,8 @@
 # 06. 실증 (Part A) — 데이터와 비교 모델
 
+> **🧒 한 줄 요약**: CRSP/Compustat 1957-2018. 94 characteristics. US equities universe.
+
+
 > Section 3.1–3.2 (journal p.436–437) — 실증분석 setup.
 
 ## 6.1 챕터 한 줄 요약

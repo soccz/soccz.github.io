@@ -1,5 +1,8 @@
 # 07. 실증 (Part B) — R², Sharpe, Pricing Errors
 
+> **🧒 한 줄 요약**: R² OOS 0.072 (CA3). Sharpe 0.96. Alpha 31%. Top-quartile hedge fund.
+
+
 > Section 3.3–3.5 (journal p.437–442) — Tables 1, 2, 3, 4 + Figure 3.
 
 ## 7.1 챕터 한 줄 요약
@@ -305,3 +308,7 @@ paper 의 권장 baseline: **K=6 또는 K=5** (Table 3 결과로 CA2 K=6 VW=1.53
 1. PCA 는 수익률의 **분산** 을 최대화하는 방향으로 요인을 추출 — 첫 PC 가 시장 변동 (high variance) 을 잡지만 이는 평균 수익률 (mean) 과 정렬되지 않음. 따라서 추정된 $\hat f$ 의 평균 $\bar f$ 로 expected return 을 예측하면 오히려 잡음을 더해 negative R².
 2. **Variance ≠ Mean**. 선형 IPCA 는 평균을 분산 구조로 잘 잡아 Total R² 우수. 그러나 expected return (mean) 은 비선형 interaction (size × momentum 등) 에 의존하므로 **NN 의 universal approximation** 이 결정적. → CA1+ 가 Predictive R² 와 Sharpe (mean 기반 운용 성과) 에서 우위.
 3. 95 개 동시 검정 시 chance 로 |t|>3 이 약 12.4 개 예상 (Bonferroni). 8 은 chance 보다 적음 — 모델이 거의 모든 mispricing 을 설명. 또 잔존 8개의 α 가 < 7 bps/월 로 **economically small** — 통계적으로도 경제적으로도 no-arbitrage 충족.
+
+
+```viz:gu-r2-comparison:title=paper Table 1 — Model Comparison,caption=Metric selector.
+```

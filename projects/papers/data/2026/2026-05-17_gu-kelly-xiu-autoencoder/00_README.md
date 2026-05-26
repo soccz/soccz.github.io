@@ -1,5 +1,8 @@
 # 00 README — Autoencoder Asset Pricing Models
 
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 19 + 3 chapters (16-18). Gu-Kelly-Xiu = deep learning asset pricing trigger.
+
+
 ## 원문 정보
 
 **제목**: Autoencoder Asset Pricing Models
@@ -101,3 +104,21 @@
 | `figures/page14_Fig4_top20_chars.png` | p.442 | Fig. 4 — Top 20 variable importance (CA0–CA3 별, K=5). price trend + liquidity + risk | ch08 |
 | `figures/page15_Fig5_all94_heatmap.png` | p.443 | Fig. 5 — 94 특성 전체 ranking heatmap (IPCA + CA0–CA3) | ch08 |
 | `figures/page17_Fig6_separate_importance.png` | p.445 | Fig. 6 — β-net vs factor-net 분리 importance. 두 panel 의 ranking 거의 일치 | ch08 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Gu-Kelly-Xiu 의 deep learning asset pricing trigger 의의?**
+3. **5년 후 industry adoption?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 04 → 05a→d → 06-08 → 17. 시간 부족 시 02 + 05b + 07.
+
+2. **First compelling deep learning asset pricing**. Linear factor models의 한계 → AE + conditional embedding. R² OOS 0.014 → 0.072 (5×). JFE acceptance = finance mainstream validation.
+
+3. **Industry adoption 의 trigger**. 2021 paper → 2022 Citadel/AQR/Two Sigma 도입. 학계 → 산업 의 *fast pipeline*. 2026 foundation era 까지 *enduring relevance*.

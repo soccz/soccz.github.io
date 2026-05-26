@@ -1,5 +1,8 @@
 # 08. 실증 (Part C) — 어떤 특성이 중요한가? Robustness.
 
+> **🧒 한 줄 요약**: 94 characteristics 의 *importance ranking*. Size, BM, momentum dominant.
+
+
 > Section 3.6–3.7 (journal p.441–444) — Figures 4, 5, 6 + Table 5.
 
 ## 8.1 챕터 한 줄 요약
@@ -242,3 +245,7 @@ paper 본문 (3.6 절 끝) 의 명시: 변수의 **상호작용 (interaction)** 
 1. **Counterfactual**: 한 특성의 모든 값을 0 으로 두고 R² 감소량 측정. Partial derivative (한 지점의 기울기) 가 아닌 "그 특성이 없다고 생각하면 얼마나 못 푸나" 의 NN 비선형 효과 직접 포착. K=5 고정.
 2. (a) **Sparsity 의 실증 증거** — 94 변수 중 대부분이 noise/중복. (b) Cochrane 의 "Factor Zoo" 비판에 대한 답 (학계가 새 factor 보다 정리 필요). (c) 모든 CA 모델 (CA0-CA3) 이 같은 top 변수 선정 → 모델 우연 아닌 데이터의 진짜 구조 반영.
 3. **횡단면 generalizability**: 자산을 완전히 분리 (학습 = odd, 평가 = even) 해도 CA2 성능이 거의 변동 없음 (Total R² 13.5–13.7 등). → 학습된 비선형 매핑이 자산 특이 (asset-specific) 가 아닌 **데이터 전체의 보편 구조** 반영. 다른 자산군 (다른 시장, 채권 등) 으로의 확장 가능성 시사.
+
+
+```viz:gu-char-importance:title=paper §6 — Char Importance,caption=Top-N slider.
+```

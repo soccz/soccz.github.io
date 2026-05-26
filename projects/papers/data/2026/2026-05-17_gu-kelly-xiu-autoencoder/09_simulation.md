@@ -1,5 +1,8 @@
 # 09. Monte Carlo 시뮬레이션 — 실증 결과의 인과적 검증
 
+> **🧒 한 줄 요약**: Synthetic data simulation. Method validation. Convergence study.
+
+
 > Section 4 (journal p.444–446) — Table 6.
 
 ## 9.1 챕터 한 줄 요약

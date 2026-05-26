@@ -1,5 +1,8 @@
 # 10. 결론
 
+> **🧒 한 줄 요약**: Conclusion. Deep learning + asset pricing 의 *empirical SOTA*.
+
+
 > Section 5 (journal p.446–447) — 종합 메시지와 향후 연구 방향.
 
 ## 10.1 챕터 한 줄 요약
