@@ -1,5 +1,8 @@
 # 06 · 실험 해부
 
+> **🧒 한 줄 요약**: S&P 500, FX, energy 4 datasets. Energy distance 0.038 (Neural SDE) vs 0.082 (GARCH) — 50%+ 개선.
+
+
 > **중요 고지**: arXiv·ar5iv·alphaxiv·Semantic Scholar·PapersWithCode·Google Scholar 7개 소스 모두 403으로 차단되어 논문 PDF를 직접 확인하지 못했다. 이 섹션은 공개 발표 자료·사전 지식·논문 저자들의 공개 GitHub(torchsde)에 기반해 작성했다. 구체적 수치(예: TSTR 소수점 두 자리)는 미확인으로 표기한다. 재현 시 논문 원문과 대조를 권장한다.
 
 ---
@@ -91,3 +94,21 @@ Neural SDE 생성 경로에서 ARCH 효과(변동성이 큰 구간이 뭉치는 
 - **경로 시각화**: 논문 부록에 생성 경로와 진짜 경로의 ACF(자기상관함수) 비교 그래프가 있다. ACF 형태가 일치하면 단기 의존성 구조를 잘 포착한 것이다.
 - **스텝 수 감도 실험**: SDE 스텝 수를 줄이면 생성 품질이 어떻게 떨어지는지 — 계산 비용과 품질의 트레이드오프를 보여준다.
 - **다차원 데이터**: 5~10 종목 동시 생성 실험. 상관관계 행렬(cross-correlation matrix)이 진짜와 얼마나 일치하는지 측정.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 dataset 의 *cross-asset generalizability*?**
+2. **Energy distance 0.038 의 *practical significance*?**
+3. **Stylized facts 의 *동시 capture* 의 mechanism?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

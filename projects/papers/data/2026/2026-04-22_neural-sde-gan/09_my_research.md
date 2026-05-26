@@ -1,5 +1,8 @@
 # 09 · 내 연구와의 연결
 
+> **🧒 한 줄 요약**: 내 연구 (APF) 와의 연결: continuous path generation 의 attention pattern 분석.
+
+
 > 이 섹션은 `_profile.md`의 Paper 1–4 라인과 구체적으로 연결한다. 일반론("참고 가능하다")은 쓰지 않는다.
 
 ---
@@ -80,3 +83,21 @@ Paper 2의 "Representation Utility Gap"은 서로 다른 조건화 방식이 만
 ## 반면교사
 
 이 논문이 명확히 못한 것: **"경로 생성 품질이 좋은 것"과 "예측에 유용한 것"이 같지 않다.** 좋은 통계적 생성자(낮은 discriminative score)가 미래 예측력이 좋은 표현을 만들지 않는다. 내 연구(Paper 4)는 *예측*에 목표가 있으므로, 이 논문의 생성 중심 프레임워크에서 예측 중심 프레임워크로 이동하는 근거를 Paper 4 §1에서 명확히 서술해야 한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Continuous path + APF motif 의 *cross-pollination*?**
+2. **SDE-generated synthetic data 의 *attention analysis*?**
+3. **내 연구의 direct adoption 가능 요소?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

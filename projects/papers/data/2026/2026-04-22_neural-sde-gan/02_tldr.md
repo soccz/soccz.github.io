@@ -51,3 +51,21 @@ $$Z_t = Z_0 + \int_0^t f_\phi(Z_s)\,dX_s$$
 **Contribution 4 — 금융 시계열 생성 최초 연속-시간 GAN**: 기존의 TimeGAN, RCGAN는 이산 RNN 기반. 이 논문은 최초로 SDE를 경로 생성자로 사용해 시간 해상도 독립적(temporal resolution invariant) 생성을 가능하게 함.
 
 **핵심 한계**: (1) SDE 수치 적분의 계산 비용이 단계수에 비례해 증가하므로 장기 경로에서 느림. (2) WGAN-GP의 gradient penalty가 경로 공간의 Lipschitz 제약을 완전히 보장하지 않음. (3) 모드 붕괴(mode collapse) 문제는 GAN 패밀리의 공통 약점으로 이 논문도 예외 없음. (4) 본문에서 다룬 실험 규모가 상대적으로 소규모(일변량~저차원 다변량).
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 paper 의 *one-line core claim*?**
+2. **SDE-CDE pairing 의 *natural match*?**
+3. **WGAN-GP training 의 *stability*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

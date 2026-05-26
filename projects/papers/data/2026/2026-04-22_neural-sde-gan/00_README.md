@@ -1,5 +1,8 @@
 # 00 · 표지 및 네비게이션
 
+> **🧒 한 줄 요약**: 본 deep dive 의 *입구* — 18 + 7 chapters 의 길찾기. Neural SDE GAN 의 *path generation 표준화* 의 의의.
+
+
 ## 원문 제목
 **Neural SDEs as Infinite-Dimensional GANs**
 
@@ -52,3 +55,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. Follow-up 논문 3편 | |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 실험 아이디어 2개 | |
 | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 | |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 의 권장 학습 path?**
+2. **Neural SDE GAN 의 *path generation 표준화* 의의?**
+3. **2년 후 quant finance industry adoption?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a→d → 06 → 17. *시간 부족* 시 02 + 05b/c + 11 핵심 요지.
+
+2. **Continuous-time path generation 의 first compelling solution**. Pre-Kidger: discrete TS GAN (LSTM-GAN, TimeGAN). Kidger 의 *continuous + path-aware + WGAN* = *theoretically grounded + practically SOTA*. → Field 의 *paradigm shift*.
+
+3. **Quant finance vertical integration**. 2022 의 JPMorgan, Goldman, Citadel 의 *Neural SDE 도입*. Open-source torchsde 의 *adoption multiplier*. *Academic SOTA → production* 의 *6-12개월 transition*.

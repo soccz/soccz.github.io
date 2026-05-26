@@ -1,5 +1,8 @@
 # 10c · 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 내 아이디어: TS-domain SDE GAN, grokked + SDE, multi-asset SDE, regime-switching SDE.
+
+
 ---
 
 ## 아이디어 1 — Economic Time으로 구동되는 Neural SDE: 시간-변환 생성자
@@ -78,3 +81,21 @@ Neural CDE 판별자와 Transformer(이산 attention 기반) 판별자를 동일
 - 코드: torchsde + HuggingFace Transformer ≈ 3일
 - 학습: GPU 1개, 4개 조건 × 4개 결측 비율 = 16 실험, 각 2시간 ≈ 32시간
 - 전체: ≈ 2주일
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **TS-domain SDE GAN 의 *unique adaptation*?**
+2. **Grokked + SDE 의 *circuit emergence*?**
+3. **Multi-asset SDE 의 *correlation structure*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

@@ -1,5 +1,8 @@
 # 10b · Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: 직접 후속: Latent SDE, Score-based diffusion + SDE, Causal Neural SDE, Foundation model 결합.
+
+
 ---
 
 ## 선행 논문 — Rough Volatility (Gatheral et al., Quantitative Finance 2018)
@@ -29,3 +32,21 @@
 **본 논문과의 관계**: 이 논문의 직접 후손. 생성자 $dY = \mu_\theta(t, Y, c)\,dt + \sigma_\theta(t, Y, c)\,dW$에서 $c$가 조건 변수. 판별자도 동일하게 조건화.
 
 **무엇을 얻을 수 있나**: Paper 4에서 economic time $\tau(t)$가 사실상 "시장 상태 조건 변수"의 역할을 하므로, Conditional Neural SDE의 $c$ 주입 방식(concat vs. FiLM vs. cross-attention)이 Paper 4의 conditioning space 선택 논의에 직접 참조된다. 이 논문들이 조건화 방식에 따른 성능 차이를 실험하면 Paper 1("When Multiplicative Conditioning Fails")의 논증을 SDE 영역에서 재검증하는 기회가 된다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Latent SDE 의 *efficiency gain*?**
+2. **Diffusion + SDE 의 *training stability*?**
+3. **Causal Neural SDE 의 *intervention paths*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

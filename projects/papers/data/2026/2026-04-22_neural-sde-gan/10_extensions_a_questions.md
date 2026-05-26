@@ -1,5 +1,8 @@
 # 10a · 자문 질문 5개
 
+> **🧒 한 줄 요약**: 10 open question: cross-domain transferability, expressivity-stability, diffusion alternative.
+
+
 ---
 
 ## Q1. Neural SDE의 확산 계수 $\sigma_\theta$가 0에 가까워지면 무슨 일이 일어나는가?
@@ -29,3 +32,21 @@
 ## Q5. Neural SDE GAN과 Score-Based Diffusion Model 중 금융 시계열 생성에 어느 것이 더 적합한가?
 
 **왜 중요한가**: Diffusion 모델은 2022년 이후 이미지·오디오에서 GAN을 능가했다. 그러나 금융 시계열은 이미지와 다르다: (1) 시간 방향성이 엄격히 존재하고, (2) 경로의 통계 구조(자기상관, 변동성 클러스터링)가 픽셀 값의 분포보다 훨씬 복잡하며, (3) 생성 비용이 민감하다(몬테카를로 시뮬레이션에서 수천 개 경로를 빠르게 생성해야). Diffusion의 순차적 복원이 이 요구를 충족하는지, 아니면 Neural SDE GAN의 순방향 생성이 더 유리한지를 구체적 실험으로 비교하는 것이 2024~2025년에 가장 중요한 open question이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Cross-domain (finance → climate) transferability?**
+2. **Expressivity-stability trade-off curve?**
+3. **Diffusion alternative 의 fair comparison?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

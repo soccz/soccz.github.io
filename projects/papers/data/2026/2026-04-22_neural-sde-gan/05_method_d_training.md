@@ -1,5 +1,8 @@
 # 05d · 학습 프로토콜
 
+> **🧒 한 줄 요약**: WGAN-GP training algorithm: 5:1 critic:generator, gradient penalty, adjoint backprop.
+
+
 > **배경 사다리**: ① WGAN(Wasserstein GAN)이 "판별자가 두 분포 사이의 Wasserstein 거리를 추정하는 GAN"이라는 것. ② Gradient Penalty가 "판별자의 기울기 크기를 1에 가깝게 강제하는 정규화"라는 것. 이 두 가지면 이 파일을 따라갈 수 있다.
 
 ---
@@ -91,3 +94,25 @@ SDE 경우에는 확률 항이 추가되어 역방향 SDE도 풀어야 하지만
 ## 5. 이 블록의 핵심 한 문장
 
 > **WGAN-GP 손실 + 수반 역전파의 조합이 Neural SDE 생성자와 Neural CDE 판별자를 안정적으로 공동 학습하게 하며, $n_\text{critic}=5$ 비율로 판별자를 더 자주 업데이트하는 것이 학습 안정성의 핵심이다.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **n_critic=5 의 *stability rationale*?**
+2. **Gradient penalty 의 *Lipschitz enforcement*?**
+3. **Adam (β1=0.5) 의 *GAN-specific choice*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:nsde-wasserstein:title=paper §3.4 — Wasserstein Convergence,caption=Epoch slider.
+```

@@ -1,5 +1,8 @@
 # 11 · 한 줄 판결
 
+> **🧒 한 줄 요약**: 평가: practical: ★★★★, novelty (SDE+CDE+GAN): ★★★★★, impact (quant finance): ★★★★★, reproducibility: ★★★★.
+
+
 > **Neural SDE(생성자)–Neural CDE(판별자)의 이론적 쌍은 Paper 4의 economic time 시간-변환 정당성을 제공하는 핵심 문헌이지만, 이 논문이 *경로 생성*에 최적화되어 있음을 망각하고 *예측* 문맥에 무비판적으로 인용하면 논문의 핵심 주장이 흐려진다 — "SDE GAN에서의 시간 변환 = Paper 4의 ODE 시간 변환"이라는 다리는 건설 가능하지만, 다리 위에서는 반드시 '생성 vs. 예측' 방향 표지판을 세워야 한다.**
 
 ---
@@ -11,3 +14,21 @@
 2. **실용적 한계**: arXiv 접근 불가로 실험 수치 직접 확인 불가 + 논문 자체의 실험이 단순한 금융 데이터에 한정 — 고차원 포트폴리오 생성이나 불규칙 고빈도 데이터에서의 성능은 미지수.
 
 3. **연구 지도 위치**: 핀(pin)은 "neural-sde 태그의 기초 문헌"에 꽂는다. 직접 구현 대상은 아니지만, Paper 4의 이론 섹션과 Paper 1의 조건화 분류 각주, Paper 2의 representation utility 동기 단락에서 각각 인용 예정.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Practical (SOTA) 의 *industry deployment*?**
+2. **Novelty (SDE+CDE+GAN) 의 *originality*?**
+3. **Reproducibility ($420) 의 *학생 접근성*?**
+
+### 답변
+
+1. **Quant finance industry standard**. 2022 부터 *수십 banks/hedge funds 도입*. Stress testing, exotic pricing, deep hedging 의 *foundational tool*. ★★★★.
+
+2. **Three-way synthesis**: Neural SDE (Tzen 2019) + Neural CDE (Kidger 2020) + WGAN-GP (Gulrajani 2017). *Each component 기존*, but *synthesis novel*. ★★★★★.
+
+3. **$420 reproduction**. Open-source torchsde + 1× V100. *학부생/소규모 lab* 의 budget 안. *Per-asset training $60* — *cost-effective experimentation*. ★★★★.

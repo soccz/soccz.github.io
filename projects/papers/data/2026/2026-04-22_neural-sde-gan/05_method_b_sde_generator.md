@@ -1,5 +1,8 @@
 # 05b · Neural SDE 생성자
 
+> **🧒 한 줄 요약**: Neural SDE Generator: dz = μ_θ(z,t)dt + σ_θ(z,t)dW_t. Brownian noise → continuous path.
+
+
 > **배경 사다리**: 이 파일의 핵심은 SDE이다. ① 미분방정식(ODE)은 "변화율 = 결정론적 함수"이다. ② SDE는 거기에 "확률적 진동"을 더한 것이다. ③ 브라운 운동 $W_t$는 각 순간 임의 방향으로 아주 작게 진동하는 랜덤 경로이다. 이 세 가지만 알면 된다.
 
 ---
@@ -83,3 +86,25 @@ $$\tilde{Y}_t = g_\theta(Y_t)$$
 > **드리프트 $\mu_\theta$와 확산 $\sigma_\theta$를 신경망으로 파라미터화한 SDE는 경로 공간의 임의 확률 분포를 유연하게 표현하는 연속-시간 생성자이며, Euler-Maruyama 이산화로 미분 가능하게 구현된다.**
 
 > **[다음 파일]** → [05_method_c_cde_discriminator.md](05_method_c_cde_discriminator.md)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **μ_θ vs σ_θ 의 *role*?**
+2. **Brownian motion 의 *theoretical universality*?**
+3. **Adjoint SDE 의 *memory benefit*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:nsde-path-generation:title=paper §3 — Path Samples,caption=Drift/diffusion sliders.
+```

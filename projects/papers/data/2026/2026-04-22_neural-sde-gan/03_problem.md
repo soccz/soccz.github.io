@@ -1,5 +1,8 @@
 # 03 · 문제 지형도
 
+> **🧒 한 줄 요약**: Path generation = irregular TS 의 *진짜 같은 가짜 path*. 금융 / 의료 / 기상 의 *합성 데이터* 필요.
+
+
 > **배경 사다리**: 이 섹션을 읽으려면 ① 확률과정(랜덤하게 시간에 따라 변하는 숫자)이 뭔지, ② GAN이 "위조꾼 vs 감별사" 게임이라는 것, ③ 미분방정식이 "변화율 = 함수"의 형태로 쓰인다는 것만 알면 된다. 아래에서 이 세 개념 각각을 충분히 풀어낸다.
 
 ---
@@ -107,3 +110,25 @@ SDE에 역전파를 가능하게 하는 수반(adjoint) 방법을 개발. 이를
 1. **생성자 = Neural SDE**: 드리프트 $\mu_\theta$와 확산 $\sigma_\theta$를 신경망으로 파라미터화한 SDE가 경로 공간에서 최적의 분포 표현자다.
 2. **판별자 = Neural CDE**: 경로 공간의 Lipschitz-1 함수들을 충분히 근사하는 클래스가 CDE이므로, Neural CDE가 WGAN의 최적 판별자 클래스다.
 3. **이 둘의 결합** = "무한차원 GAN" — 양쪽이 모두 연속 시간 미분방정식 언어로 통합되어, 이론적 정당성과 실용성을 동시에 달성한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Path generation 의 *3 application*?**
+2. **Irregular TS 의 *challenge*?**
+3. ***Synthetic data* 의 *practical need*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:nsde-volatility-cluster:title=paper §4 — Volatility Clustering,caption=Path source selector.
+```

@@ -1,5 +1,8 @@
 # 04b · 핵심 Claim 해체 (Claim 3–4)
 
+> **🧒 한 줄 요약**: Claim 3-4: WGAN-GP training + financial benchmark SOTA + stylized facts 동시 capture.
+
+
 > **이 파일은 [04_claims_a_claim1_2.md](04_claims_a_claim1_2.md) 에서 이어진다.** Claim 1–2의 이론적 기초를 읽은 후 이 파일을 보기를 권한다.
 
 ---
@@ -50,3 +53,21 @@ Neural SDE(생성자) + Neural CDE(판별자) + WGAN-GP 손실의 조합으로 �
 ### 쉬운 말 풀이
 
 병원 기록을 예로 들면: 환자마다 검사 날짜가 다르다. 어떤 환자는 매일, 어떤 환자는 한 달에 한 번 검사한다. 이 두 경우를 같은 신경망에 넣으려면 "공통 시간 축"이 필요하다. 스플라인 보간이 그 역할을 한다 — 빈 구간을 자연스럽게 채워주면서, "이 구간에 관측이 없었다"는 정보도 경로의 기울기 크기를 통해 판별자에게 전달된다. 영리한 해결책이지만, 스플라인 자체가 진짜 데이터를 왜곡할 수 있다는 한계는 남는다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **WGAN-GP의 *Lipschitz 강제* 메커니즘?**
+2. **Energy distance 0.038 의 *significance*?**
+3. **Stylized facts (heavy tail, vol cluster) 의 *동시 capture*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

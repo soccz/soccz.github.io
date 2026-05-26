@@ -1,5 +1,8 @@
 # 04a · 핵심 Claim 해체 (Claim 1–2)
 
+> **🧒 한 줄 요약**: Claim 1-2: Neural SDE 가 *natural path generator*, Neural CDE 가 *natural path discriminator*.
+
+
 > **배경 사다리**: Claim 1–2를 이해하려면 ① Wasserstein 거리가 "두 확률 분포 사이의 이동 비용"이라는 것, ② GAN의 판별자가 분포 간 거리를 측정하는 함수라는 것, ③ 보편 근사 정리(Universal Approximation Theorem, UAT)가 신경망이 임의의 연속 함수를 근사할 수 있다는 주장임을 알면 된다.
 
 ---
@@ -60,3 +63,21 @@ $$dY_t = \mu_\theta(t, Y_t)\,dt + \sigma_\theta(t, Y_t)\,dW_t, \quad Y_0 \sim p_
 주식 가격 경로를 비유로 들면: "드리프트(평균적 방향)와 확산(랜덤 진동의 세기)만 잘 설계하면 어떤 경로 패턴도 만들 수 있다."는 주장. 신경망으로 이 두 함수를 유연하게 학습하니, 이론적으로 모든 현실 경로 분포를 흉내낼 수 있다. 단, 이 "이론적으로"가 "유한 망 크기·이산화·학습 수렴"의 세 가지 현실적 장벽에 막힌다는 점이 Claim 2의 약점이다.
 
 > **[04b 파일로 계속]** → [04_claims_b_claim3_4.md](04_claims_b_claim3_4.md)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Neural SDE 의 *natural fit* 의 이유?**
+2. **Neural CDE 의 *natural fit* 의 이유?**
+3. **SDE-CDE pairing 의 *information-theoretic 의의*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

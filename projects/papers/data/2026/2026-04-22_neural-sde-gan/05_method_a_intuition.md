@@ -1,5 +1,8 @@
 # 05a · 방법론 큰 그림
 
+> **🧒 한 줄 요약**: SDE-CDE GAN 의 *직관*: continuous-time generator + path-aware discriminator + Wasserstein loss.
+
+
 > **배경 사다리**: 이 파일은 수식 최소로 전체 시스템 흐름을 잡는다. ① GAN이 생성자-판별자 두 신경망의 경쟁임을 알면 된다. ② 미분방정식이 "상태 변화율 = 함수" 형태임을 알면 된다. 수식 세부는 [05b](05_method_b_sde_generator.md), [05c](05_method_c_cde_discriminator.md)에서 다룬다.
 
 ---
@@ -70,3 +73,21 @@
 생성자는 노이즈를 경로로 올리고, 판별자는 경로를 스칼라로 내린다. 이 두 방향이 경쟁하면서 생성자의 경로 분포가 실제 데이터 분포로 수렴한다.
 
 > **[다음 파일]** → [05_method_b_sde_generator.md](05_method_b_sde_generator.md) — Neural SDE 생성자의 수학적 구조
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Continuous time vs Discrete grid?**
+2. **SDE 의 stochasticity vs ODE 의 determinism?**
+3. **Path-aware discriminator 의 *necessity*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

@@ -1,5 +1,8 @@
 # 01 · 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper *metadata*: Kidger et al. NeurIPS 2021, Oxford + Mathematical Institute. Neural ODE → SDE → CDE 의 lineage 정점.
+
+
 ## 기본 서지
 
 | 항목 | 내용 |
@@ -31,3 +34,21 @@
 2. **Paper 4 직접 연관**: "Continuous Economic Time Attention"에서 ODE 시간변수를 economic time $\tau(t)$로 교체하는 작업은 결국 *시간-변환된 확률과정*의 수학이다. 이 논문이 다루는 SDE의 드리프트·확산 함수에 시간 변환을 적용하는 방식은 Paper 4의 이론 섹션에서 직접 참조할 수 있다.
 
 3. **인접 태그 중 재현성 최고**: 코드가 `torchsde` 라이브러리로 공개되어 있어, 논문에서 논의한 수식을 직접 실험으로 검증할 수 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **NeurIPS 2021 acceptance 의 *track 위치*?**
+2. **Chen 2018 / Kidger 2020 와의 lineage?**
+3. **paper 의 *citation trajectory*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

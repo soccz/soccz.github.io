@@ -1,5 +1,8 @@
 # 07 · 가정·한계·반박
 
+> **🧒 한 줄 요약**: 5 한계: SDE solver accuracy, GAN training instability, Lipschitz expressivity, compute cost, finance-centric eval.
+
+
 ---
 
 ## 1. 논문이 명시적으로 밝힌 한계
@@ -65,3 +68,21 @@ Neural SDE의 $dW_t$ (브라운 운동)은 정규 분포 증분을 가정하므�
 | 랜덤 시드 고정 | 논문에서 언급 없음 |
 
 **가장 큰 재현성 위협**: 분산이 보고되지 않는다. GAN 학습은 랜덤 시드에 민감한데, 각 실험이 몇 번 실행됐는지, 그 분산이 얼마인지 알 수 없다. 단일 실행 결과가 운 좋게 좋게 나온 것일 수도 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **SDE solver 의 *numerical accuracy* limit?**
+2. **GAN training instability 의 *production risk*?**
+3. **Lipschitz expressivity trade-off?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

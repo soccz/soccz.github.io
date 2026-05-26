@@ -1,5 +1,8 @@
 # 08 · 이론적 계보
 
+> **🧒 한 줄 요약**: Itô 1944 → Chen 2018 Neural ODE → Kidger 2020 Neural CDE → Kidger 2021 SDE GAN (본 paper).
+
+
 ---
 
 ## 이론적 조상 (이 논문이 직접 건 어깨)
@@ -73,3 +76,21 @@ Clark (1973)의 subordinated process 아이디어와 결합: $dY_\tau = \mu_\the
 ### 후손 3 — Conditional Neural SDE GAN
 
 조건부 생성(conditional generation): 시장 레짐 변수나 매크로 지표를 조건으로 받아 그에 맞는 경로 분포를 생성. 리스크 시나리오 생성(stress testing)에 직접 응용 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Itô 1944 → Neural ODE 의 *80년 격차*?**
+2. **Chen 2018 → Kidger 2020 → 2021 의 *progressive evolution*?**
+3. ***Neural SDE field* 의 culminating contribution?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

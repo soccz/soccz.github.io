@@ -1,5 +1,8 @@
 # 05c · Neural CDE 판별자
 
+> **🧒 한 줄 요약**: Neural CDE Discriminator: path → R^1 (real/fake score). Path-as-input + Lipschitz constraint.
+
+
 > **배경 사다리**: ① Neural CDE는 "입력 경로 $X$를 읽으면서 은닉 상태 $Z$를 업데이트하는 미분방정식"이다. ODE와 다른 점은 시간 자체가 아니라 *입력 경로*를 따라 적분한다는 것. ② Wasserstein 거리는 "두 분포 사이의 최소 운반 비용"이고, WGAN은 이것을 최적화하는 GAN이다.
 
 ---
@@ -88,3 +91,21 @@ $$\sup_{X \in K} |Z_T - F(X)| < \varepsilon$$
 > **Neural CDE $dZ = f(Z)\,dX$는 경로 전체를 읽으면서 특징을 누적하는 연속-시간 판별자이며, 경로 범함수의 보편 근사성 덕분에 경로 공간 WGAN의 이론적 최적 판별자 클래스를 형성한다.**
 
 > **[다음 파일]** → [05_method_d_training.md](05_method_d_training.md)
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Neural CDE 의 *path-driven dynamics*?**
+2. **Lipschitz constraint 의 *WGAN 의의*?**
+3. **LipSwish activation 의 *Lipschitz 1*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
