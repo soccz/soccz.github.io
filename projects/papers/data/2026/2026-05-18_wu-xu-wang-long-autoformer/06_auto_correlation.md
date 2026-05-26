@@ -1,5 +1,8 @@
 # 06. Auto-Correlation 메커니즘 (★ 가장 핵심) — Eq 5-7
 
+> **🧒 한 줄 요약**: FFT-based auto-correlation. Self-attention 의 series-aware variant.
+
+
 > 본 논문의 *두 번째 큰 contribution*. Self-attention 의 *완전 대체*. *Point-wise → series-wise* 의 paradigm shift.
 
 ---
@@ -235,3 +238,7 @@ Decoder 의 *cross-attention 자리* 에서:
 ---
 
 다음 챕터: [07_complexity_efficiency.md](07_complexity_efficiency.md) — FFT 기반 $O(L \log L)$ + Figure 7.
+
+
+```viz:autoformer-correlation:title=paper §3.2 — Auto-Correlation,caption=Period selector.
+```

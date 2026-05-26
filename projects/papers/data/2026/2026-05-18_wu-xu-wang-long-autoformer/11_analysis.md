@@ -1,5 +1,8 @@
 # 11. Analysis — Figures 4-13 의 deep 해석
 
+> **🧒 한 줄 요약**: Attention pattern analysis. Periodicity capture verification.
+
+
 > 본 논문 *Section 4.3 + Appendix E* 의 *시각화 figures* 의 step-by-step 풀이. *모델 의 작동 원리* 의 시각적 증명.
 
 ---

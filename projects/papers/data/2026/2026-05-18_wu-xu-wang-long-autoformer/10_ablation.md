@@ -1,5 +1,8 @@
 # 10. Ablation Study — Decomp (Table 3) + Auto-Corr (Table 4)
 
+> **🧒 한 줄 요약**: Series decomposition + auto-correlation 각각 contribution.
+
+
 > 본 논문 의 *두 contribution* 의 효과 를 *각각* 검증.
 
 ---

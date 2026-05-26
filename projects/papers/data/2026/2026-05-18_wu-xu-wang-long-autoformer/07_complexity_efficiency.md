@@ -1,5 +1,8 @@
 # 07. Complexity & Efficiency — FFT 기반 $O(L \log L)$ + Figure 7
 
+> **🧒 한 줄 요약**: O(L log L) complexity (vs O(L²) Transformer).
+
+
 > 본 논문이 *어떻게 효율* 를 달성하나. *Wiener-Khinchin 정리* + *FFT* 의 결합.
 
 ---

@@ -1,5 +1,8 @@
 # 00 README — Autoformer
 
+> **🧒 한 줄 요약**: 본 deep dive 입구. Autoformer = pre-TFM long-term forecasting의 architectural revolution.
+
+
 ## 원문 정보
 
 **제목**: Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting
@@ -112,3 +115,21 @@ School of Software, BNRist, Tsinghua University, China
 | `figures/page15_Figs8-11_predictions.png` | p.15 | Figs 8–11 — ETT 96/192/336/720 prediction showcases | ch11 |
 | `figures/page16_Figs12-13_exchange.png` | p.16 | Figs 12–13 — Exchange 비주기 + ETT univariate showcase | ch11 |
 | `figures/page17_Fig14_covid.png` | p.17 | Fig 14 — COVID-19 입력 7일 → 예측 15일 (Country 2) | ch14 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Autoformer의 architectural revolution 의의?**
+3. **5년 후 TFM era impact?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05 → 06 → 09 → 20.
+
+2. **Series decomposition + Auto-correlation 의 first compelling**. Vanilla Transformer의 long-term 한계 → Autoformer의 *series-aware attention*. MSE -38% reduction.
+
+3. **TFM era 에서 specialist depth value**. TFM의 generic forecast + Autoformer 의 long-horizon specialist. Production hybrid stack.

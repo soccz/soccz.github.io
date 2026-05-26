@@ -1,5 +1,8 @@
 # 08. 데이터셋 + Baseline 모델 — 실험 setup
 
+> **🧒 한 줄 요약**: ETT, Weather, Traffic, ECL 5 datasets. 7 baselines.
+
+
 > 본 논문이 사용한 *6 datasets* + *10 baseline 모델*. 무지식자 친화로.
 
 ---

@@ -1,5 +1,8 @@
 # 04. Related Work — 본 논문이 인용하는 모든 prior 작품
 
+> **🧒 한 줄 요약**: Informer, Reformer, Performer 등 *long-sequence Transformer*.
+
+
 > Paper Section 2 의 *모든 인용 작품* 의 brief description + 본 논문과의 관계.
 
 ---

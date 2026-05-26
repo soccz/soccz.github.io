@@ -1,5 +1,8 @@
 # 01. 시작하기 전에 — 진짜 쉬운 한 줄 소개
 
+> **🧒 한 줄 요약**: Paper intro. Long-term TS forecasting의 challenges.
+
+
 > 영어 못 읽거나 수식 두려운 사람을 위한 entry. 여기를 읽으면 *Autoformer 가 뭔지* + *왜 중요한지* 가 한국어 + 일상 비유로 명확해집니다.
 
 ---

@@ -1,5 +1,8 @@
 # 12. Appendix A — ETT 4 Variant 전체 벤치마크 (Table 5)
 
+> **🧒 한 줄 요약**: ETT dataset full results.
+
+
 > Paper *Appendix A (p.13)*. 4 ETT variant (h1, h2, m1, m2) 의 *전체 6 horizon* 결과.
 
 ---

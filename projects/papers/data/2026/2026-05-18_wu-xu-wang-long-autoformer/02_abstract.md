@@ -1,5 +1,8 @@
 # 02. 제목과 Abstract — 한국어로 쉽게
 
+> **🧒 한 줄 요약**: Abstract. Series decomposition + auto-correlation = long-term SOTA.
+
+
 > Paper 의 영어 제목 + 영어 abstract 를 *한국어로 의역* + *한 문장씩 풀이*. 영어 못 읽어도 OK.
 
 ---

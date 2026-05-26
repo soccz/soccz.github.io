@@ -1,5 +1,8 @@
 # 16. Glossary & Notation — 용어집 + 기호 사전
 
+> **🧒 한 줄 요약**: 용어 사전. Series decomposition / auto-correlation / FFT 정리.
+
+
 ## 핵심 약어
 
 | 약어 | 풀이 | 출처 |

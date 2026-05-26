@@ -1,5 +1,8 @@
 # 05. Architecture — Encoder/Decoder + Series Decomp Block (Eq 1-4)
 
+> **🧒 한 줄 요약**: Encoder-Decoder + Series Decomposition Block + Auto-Correlation.
+
+
 > 본 논문의 *첫 번째 큰 contribution*. *시계열 분해를 모델 내부 inner block 으로* 통합한 새 architecture.
 
 ---
@@ -296,3 +299,7 @@ ETT predict-720 에서:
 ---
 
 다음 챕터: [06_auto_correlation.md](06_auto_correlation.md) — Auto-Correlation 메커니즘 (Eq 5-7).
+
+
+```viz:autoformer-decomposition:title=paper §3.1 — Series Decomposition,caption=Kernel slider.
+```

@@ -1,5 +1,8 @@
 # 18. PyTorch Code — Autoformer 핵심 모듈
 
+> **🧒 한 줄 요약**: PyTorch Autoformer 구현.
+
+
 paper Appendix G 의 Algorithm 1 (전체 Autoformer), Algorithm 2 (standard multi-head Auto-Correlation), Algorithm 3 (speedup training phase), Algorithm 4 (speedup inference phase) + 공식 repo (https://github.com/thuml/Autoformer) 의 모듈 구조를 따른다.
 
 **중요한 paper note (G.1)**: "All the experiment results of this paper are from the speedup version." — paper 의 모든 실험 수치는 Algorithm 3/4 (batch normalization style, channel/head 차원 축소) 결과. Algorithm 2 의 standard 버전은 reference. 본 chapter 의 코드는 **명료성을 위해 Algorithm 2 의 standard 버전을 단순 구현** — 실제 학습엔 official repo 의 speedup 버전 권장.

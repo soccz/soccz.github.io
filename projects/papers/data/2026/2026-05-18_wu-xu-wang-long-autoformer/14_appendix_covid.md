@@ -1,5 +1,8 @@
 # 14. Appendix F — COVID-19 Case Study (Table 11 + Figure 14)
 
+> **🧒 한 줄 요약**: COVID period의 robustness test.
+
+
 > Paper *Appendix F*. *제한 된 데이터* + *짧은 input* 의 *극단 setting* 에서 Autoformer 의 robustness.
 
 ---

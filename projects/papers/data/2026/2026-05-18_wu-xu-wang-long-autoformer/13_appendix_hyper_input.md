@@ -1,5 +1,8 @@
 # 13. Appendix B-D — Hyperparameter / Input Length / Decoder Input / Decomp Algorithm (Table 6-9)
 
+> **🧒 한 줄 요약**: Hyperparameter + input length analysis.
+
+
 > Paper *Appendix B (Table 6), C.1 (Table 7), C.2 (Table 8), D (Table 9)*. 4 가지 sensitivity 분석.
 
 ---

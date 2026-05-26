@@ -1,5 +1,8 @@
 # 03. 왜 Autoformer? — 장기 예측의 두 challenge + 본 논문의 답
 
+> **🧒 한 줄 요약**: Long-term forecasting의 vanilla Transformer 한계. *Series structure aware* approach 필요.
+
+
 > 본 논문이 *왜 나왔는지* 의 학계 역사. 2017년 Transformer 등장부터 2021년 Autoformer 까지.
 
 ---

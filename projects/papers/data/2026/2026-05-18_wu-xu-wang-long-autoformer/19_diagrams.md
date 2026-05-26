@@ -1,5 +1,8 @@
 # 19. Diagrams & Interactive Visualizations — ASCII 도식 + viz 카탈로그
 
+> **🧒 한 줄 요약**: ASCII + interactive viz. Architecture, decomposition, auto-correlation.
+
+
 본 deep dive 에서 inline 으로 삽입한 ASCII 도식과 인터랙티브 viz 카탈로그.
 
 ---

@@ -1,5 +1,8 @@
 # 09. Main Results — 38% MSE reduction (★ 가장 흥미)
 
+> **🧒 한 줄 요약**: Long-term forecasting MSE -38% reduction. SOTA across datasets.
+
+
 > 본 논문의 *실증 main result*. Table 1 (multivariate) + Table 2 (univariate) 의 step-by-step 풀이.
 
 ---
@@ -243,3 +246,7 @@ Autoformer 가 *거의 모든 cell 에서 best*:
 ---
 
 다음 챕터: [10_ablation.md](10_ablation.md) — Ablation Study (Table 3 + 4).
+
+
+```viz:autoformer-results:title=paper Table 1 — Results,caption=Dataset selector.
+```
