@@ -1,11 +1,95 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "fMlGucuBiYq/rfeSI7aizg==",
-  "iv": "7ai+aSawRMmaC8y/cRiEeQ==",
-  "ct": "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",
-  "mac": "7BDBkHgDlMQvYY+dZjPO4xMj4aKqyb+GfQxOGUU5V2s="
-}
+# 04 — 핵심 Claim 해체
+
+> **🧒 한 줄 요약**: 4 claims: (1) plasticity 실재, (2) ELR이 metric, (3) Re-warm 효과, (4) NAP surgical.
+
+
+> **배경 사다리**: 이 절을 이해하려면 ① '레이어 정규화(Layer Normalization)'가 각 층의 출력을 평균 0, 분산 1로 맞추는 연산이라는 것, ② '스케일-불변(scale-invariant)'이란 입력을 상수 배 해도 출력이 변하지 않는 성질이라는 것을 알면 된다. 나머지는 아래에서 차근차근 설명한다.
+
+---
+
+## Claim 1 — ELR 붕괴가 지연된 일반화(Grokking)의 핵심 메커니즘이다
+
+### 주장
+LayerNorm이 있는 네트워크에서 훈련이 진행될수록 파라미터 노름이 커지고, 이로 인해 **유효학습률(ELR)이 점진적으로 붕괴**한다. 이 붕괴가 네트워크를 '게으른 regime'에 가두어 일반화를 지연시킨다. Weight decay가 grokking을 가속하는 이유는 ELR을 높게 유지하기 때문이다.
+
+### 증거
+- NeurIPS 2024 NaP 논문(Lyle et al. 2024, arXiv:2407.01800)의 이론적 분석: 레이어 노름이 있는 네트워크에서 파라미터 노름 성장이 ELR 붕괴와 정확히 동치임을 수학적으로 보임.
+- 이 논문(2507.20057)의 Figure: weight decay를 없애면 grokking이 발생하지 않거나 훨씬 늦어지는 반면, ELR re-warming을 적용하면 weight decay 없이도 grokking이 빠르게 달성됨.
+
+### 숨은 전제
+(a) 실험 대상 네트워크가 LayerNorm 또는 이와 유사한 정규화 층을 사용한다는 가정 — 정규화 없는 순수 MLP에서는 ELR 정의 자체가 달라짐.  
+(b) 파라미터 노름이 "자연히" 증가한다는 가정 — L2 정규화가 있으면 다를 수 있음.
+
+### 쉬운 말 풀이
+수도꼭지에서 물이 나온다고 상상해봐. 학습률 $\eta$는 수압이고, 파라미터 노름 $\|\theta\|$는 호스 길이야. 호스가 길어질수록(노름이 커질수록) 수압이 같아도 수압이 점점 약해져. 결국 거의 물이 안 나오는 상태가 되는데, 이때 네트워크는 더 이상 새 표현을 배우지 못하고 기존 것만 쓴다. Weight decay는 호스 길이를 강제로 짧게 유지해준 거고, ELR re-warming은 주기적으로 호스를 짧은 걸로 바꿔주는 거다.
+
+---
+
+## Claim 2 — Grokking, Primacy Bias, Plasticity Loss는 구조적으로 동일하다
+
+### 주장
+세 현상은 모두 **같은 임상적 패턴**을 보인다: (1) 초기에는 좋은 성능, (2) 이후 새로운 태스크나 분포 변화에 적응 실패, (3) 충분히 강한 최적화 개입(weight decay, 리셋, ELR 재가열) 후 성능 회복. 이 구조적 동일성은 공통 메커니즘을 시사한다.
+
+### 증거
+- Grokking: 훈련 정확도 100% 도달 후 테스트 정확도 한참 뒤처짐 → weight decay 후 갑자기 일반화.
+- Primacy Bias(Nikishin 2022): 초기 RL 경험에 과적합 → 주기적 파라미터 리셋 후 회복.
+- Plasticity Loss(Kumar 2021; Lyle 2023): 장기 훈련 후 새 태스크 학습 속도 감소 → 정규화/리셋 후 회복.
+- 이 논문: 동일한 ELR re-warming이 세 설정 모두에서 효과를 보임.
+
+### 숨은 전제
+(a) 세 실험 설정이 "충분히 비슷한" 네트워크 아키텍처와 최적화기를 사용한다는 가정.  
+(b) Primacy Bias의 원인이 ELR 붕괴 외에 다른 요소(예: 경험 재현 버퍼 편향)가 없다는 단순화 — 실제로 RL에는 다른 요인도 많다.
+
+### 쉬운 말 풀이
+어떤 수영선수가 처음에는 평영만 연습했어. 나중에 자유형을 배우려 하니 평영 근육이 방해가 돼. 하지만 충분히 훈련하면 결국 자유형도 잘해. 이게 grokking이야. 이 논문은 이 패턴이 RL 에이전트나 계속 새 임무를 맡는 로봇에서도 똑같이 나타난다고 말하는 거야.
+
+---
+
+## Claim 3 — ELR Re-warming은 weight decay 없이도 grokking을 유발한다
+
+### 주장
+전통적인 grokking 설정에서 weight decay를 제거하고 ELR re-warming만 적용해도 일반화가 달성된다. 이것은 weight decay가 grokking을 촉진하는 이유가 **ELR 유지** 때문이었음을 역으로 확인한다.
+
+### 증거
+Ablation 실험: (a) weight decay O, ELR re-warming X → grokking 느림; (b) weight decay X, ELR re-warming O → grokking 빠름; (c) 둘 다 O → 가장 빠름. 이 비교가 논문의 핵심 실험.
+
+### 숨은 전제
+Weight decay의 유일한 역할이 ELR 유지라는 가정 — 실제로 weight decay는 implicit regularization 효과(flat minima 유도, generalization 이론과 연결)도 있어, ELR 이외의 경로로도 일반화에 기여할 수 있다.
+
+### 쉬운 말 풀이
+마치 "사과를 먹으면 건강해진다"는 말을 들었는데, 실험해보니 사과의 어떤 성분(비타민C)이 핵심이었다는 걸 알게 된 것과 같다. 비타민C만 따로 먹어도 같은 효과가 난다면, 진짜 원인은 비타민C다. 여기서 weight decay = 사과, ELR 유지 = 비타민C다.
+
+---
+
+## Claim 4 — ELR Re-warming은 비정상 RL에서 소성(Plasticity)을 보존한다
+
+### 주장
+비정상성(nonstationarity)이 있는 RL 환경 — 보상 함수나 환경 역학이 바뀌는 설정 — 에서 ELR re-warming을 적용하면 주기적 완전 리셋(Nikishin 2022)보다 적은 파라미터 손실로 비슷하거나 더 좋은 소성 유지 효과를 얻는다.
+
+### 증거
+벤치마크 비교: 완전 리셋(=학습한 모든 내용 폐기), NaP(ELR 일정), ELR re-warming(ELR 주기적 증가)를 Atari류 환경에서 비교. ELR re-warming이 완전 리셋 없이도 competitive한 성능을 보임.
+
+### 숨은 전제
+(a) 실험한 RL 환경이 nonstationarity의 "전형적인" 구조를 대표한다는 가정.  
+(b) ELR 재가열 주기 $T$가 환경 변화 주기와 잘 맞게 설정됐다는 가정 — $T$ 선택이 민감할 수 있음.
+
+### 쉬운 말 풀이
+새 언어를 배울 때, 예전 언어 기억을 완전히 지우면(완전 리셋) 새 언어는 빨리 배우지만 모국어를 잃는다. ELR re-warming은 모국어를 유지하면서 새 언어도 배울 수 있는 '뇌 운동'에 비유할 수 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **04_claims *핵심 claim*?**
+2. **04_claims *technical detail*?**
+3. **04_claims *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

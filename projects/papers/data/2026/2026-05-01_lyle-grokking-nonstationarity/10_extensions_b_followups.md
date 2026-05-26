@@ -1,11 +1,70 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "HTnC75TsNmtHTIDE4RlMzw==",
-  "iv": "5zfsVDYIJgZ2eLD4okuEEw==",
-  "ct": "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",
-  "mac": "GzHaxZaslyzwgC/Fbh0WAZiruchYSdIJJekEMPlUKbw="
-}
+# 10b — 사고 확장: 후속 논문 3편
+
+> **🧒 한 줄 요약**: RL foundation plasticity, streaming robotics, LLM continual pre-training, plasticity-aware LLMs.
+
+
+---
+
+## 선행 논문 — Lyle et al. (2024): "Normalization and Effective Learning Rates in RL"
+
+**식별자**: arXiv:2407.01800 (NeurIPS 2024)  
+**저자**: Clare Lyle, Zeyu Zheng, Khimya Khetarpal, James Martens, Hado van Hasselt, Razvan Pascanu, Will Dabney
+
+**어떤 논문인가?**  
+이 논문(2507.20057)의 직접적 선행 작업이다. LayerNorm이 있는 네트워크에서 ELR = $\eta / \|\theta\|$를 수학적으로 정의하고, 이 ELR이 훈련 중 자동으로 붕괴한다는 것을 이론적으로 보인다. 해결책으로 NaP(Normalize-and-Project)를 제안해 ELR을 일정하게 유지.
+
+**본 논문과 어떤 관계인가?**  
+기반이 되는 이론 전체가 이 논문에서 온다. ELR 정의, 스케일-불변 조건, LayerNorm 삽입 방식, NaP 알고리즘 모두 여기서 처음 제시됐다. 2507.20057은 이 토대 위에 "ELR을 일정하게 유지"에서 "ELR을 주기적으로 재가열"로 한 단계 전진하고, grokking 연결을 추가한다.
+
+**무엇을 얻을 수 있는가?**  
+ELR 이론의 수학적 기반을 완전히 이해하려면 이 논문을 먼저 읽어야 한다. 특히 "스케일-불변 레이어에서 그래디언트가 파라미터에 수직임"에 대한 Euler 동차 함수 정리 기반 증명, NaP의 Adam 호환성 분석, RL 소성 실험의 상세 결과를 제공한다. 2507.20057은 기반 논문으로 arXiv:2407.01800을 전제하므로 먼저 읽는 것을 권장.
+
+---
+
+## 경쟁 논문 — Nanda et al. (2023): "Progress Measures for Grokking"
+
+**식별자**: arXiv:2301.05217 (ICLR 2023)  
+**저자**: Neel Nanda, Lawrence Chan, Tom Lieberum, Jess Smith, Jacob Steinhardt
+
+**어떤 논문인가?**  
+[2026-04-27에 이미 해체 완료] Grokking을 메커니즘 해석 가능성 관점에서 분석. 훈련 중 내부 표현(restricted weight norm, excluded loss 등)의 진행 측도를 정의하고, 모듈러 산수에서 푸리에 회로가 형성되는 과정을 추적한다.
+
+**본 논문과 어떤 관계인가?**  
+Nanda 2023은 "grokking 후 무엇이 생기는가(내부 표현)"를 보고, Lyle 2025는 "왜 grokking이 늦게 일어나는가(ELR 역학)"를 본다. 둘은 서로 다른 관점에서 같은 현상을 설명한다 — 상호보완적이면서, 한편으로는 경쟁적이다. Nanda의 "restricted weight norm" 진행 측도가 Lyle의 "ELR = 1/노름"과 역수 관계임을 발견하면 두 프레임워크가 동치임을 보일 수 있다.
+
+**무엇을 얻을 수 있는가?**  
+Grokking 실험을 설계할 때, Nanda의 진행 측도를 로깅하는 동시에 Lyle의 ELR을 로깅하면 두 관점을 하나의 실험에서 통합할 수 있다. 내 Grokking TS 논문에서 "훈련 동학 분석" 절에 두 측도를 모두 포함해 선행 문헌을 포괄적으로 커버할 수 있다.
+
+---
+
+## 후속 논문 — Lyle et al. (2025): "The State of Plasticity in 2025" (Survey)
+
+**URL**: https://clarelyle.com/posts/2025-09-06-plasticity-survey.html (블로그 버전)  
+**연도**: 2025년 9월 (논문 전문 접근 미확인)
+
+**어떤 논문인가?**  
+Clare Lyle의 2025년 9월 블로그 포스트 "The state of plasticity in 2025"는 신경망 소성 연구의 현황을 정리한 서베이 성격의 글이다. 소성 상실의 원인들(ELR 붕괴, dead neurons, rank collapse, gradient interference)과 해결책들을 망라한다.
+
+**본 논문과 어떤 관계인가?**  
+2507.20057의 결과를 확장하고 소성 연구 전체를 조망하는 상위 개념 문서다. 2507.20057이 "ELR re-warming"이라는 한 가지 해결책에 집중했다면, 이 서베이는 다른 해결책들과의 관계를 정리한다.
+
+**무엇을 얻을 수 있는가?**  
+소성 상실 문제의 전체 지도를 얻을 수 있다. 내 Grokking TS 논문에서 소성 관련 내용을 쓸 때 이 서베이를 참조하면 관련 문헌을 체계적으로 커버할 수 있다. 특히 "내 비정상 시계열 설정에서 ELR 붕괴 이외에 어떤 소성 문제가 있을 수 있는가"를 진단하는 데 유용.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_b_followups *핵심 claim*?**
+2. **10_extensions_b_followups *technical detail*?**
+3. **10_extensions_b_followups *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

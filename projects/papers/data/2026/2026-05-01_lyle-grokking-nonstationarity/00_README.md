@@ -1,11 +1,68 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "XzmWDOLkv9UXEqLLmYrBaQ==",
-  "iv": "cSYCawoe80I96f7S+XDCWQ==",
-  "ct": "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",
-  "mac": "X20UDfNl+tOmFxdxrP/rfr2cOgumA9EQT/8f3p9NoHk="
-}
+# 00 — 표지 및 목차
+
+> **🧒 한 줄 요약**: 본 deep dive 입구 — 16 + 7 chapters. Lyle = plasticity research 의 founding paper.
+
+
+## 원문 제목
+**What Can Grokking Teach Us About Learning Under Nonstationarity?**
+
+## 한국어 번역
+그로킹(Grokking)은 비정상성(Nonstationarity) 하의 학습에 대해 무엇을 가르쳐주는가?
+
+## 저자 · 소속
+Clare Lyle · Ghada Sokar · Razvan Pascanu · András György  
+(Google DeepMind)
+
+## 발표처 · 연도 · 식별자
+- **발표처**: 4th Conference on Lifelong Learning Agents (CoLLAs 2025)
+- **arXiv**: [2507.20057](https://arxiv.org/abs/2507.20057)
+- **제출일**: 2025년 7월 26일
+
+## 주 태그
+`continual-learning` (primary) · `grokking-delayed-gen` (cross)
+
+## 코드 · 데이터 공개 여부
+별도 공개 저장소 미확인. 논문에서 표준 modular arithmetic 및 공개 RL 벤치마크(주로 Atari류)를 사용. 코드 부록 확인 불가(본문 접근 제한으로 추정).
+
+## 한 줄 판결
+> **Grokking = ELR(유효학습률) 붕괴의 역전**: 모든 지연된 일반화·원시 편향·소성 상실은 하나의 메커니즘(파라미터 노름 증가 → ELR 붕괴 → 게으른 regime 고착)으로 통합되며, ELR 재가열(Re-warming)이 그 보편 치료제임을 실증한다.
+
+---
+
+## 목차
+
+| 파일 | 섹션 |
+|------|------|
+| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 |
+| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR |
+| [03_problem.md](03_problem.md) | 2. 문제 지형도 |
+| [04_claims.md](04_claims.md) | 3. 핵심 Claim 해체 |
+| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 큰 그림 |
+| [05_method_b_elr.md](05_method_b_elr.md) | 4b. 방법론 — 유효학습률(ELR) |
+| [05_method_c_nap_rewarm.md](05_method_c_nap_rewarm.md) | 4c. 방법론 — NaP & ELR Re-warming |
+| [06_experiments.md](06_experiments.md) | 5. 실험 해부 |
+| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 |
+| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 |
+| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 |
+| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 사고 확장 — 자문 질문 |
+| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 |
+| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 |
+| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **본 deep dive 권장 학습 path?**
+2. **Lyle 2024 의 continual learning 시대 의의?**
+3. **plasticity tools 의 2 년 후 impact?**
+
+### 답변
+
+1. **선형 path**: 02 → 03 → 05a→c → 06 → 17. 시간 부족 시 02 + 05b + 06 + 11 핵심.
+
+2. **"Dynamic plasticity" paradigm 의 founding paper**. Pre-Lyle: static capacity assumption. Lyle: *plasticity 가 trainable + measurable + maintainable*. Continual learning era 의 *practical methodology*.
+
+3. **RL foundation model + LLM continual pre-training 의 enabler**. 2024-2026 의 *continual updating models* trend 의 *foundational tool*. RL specialists, robotics, streaming learning industry.

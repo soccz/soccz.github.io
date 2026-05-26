@@ -1,11 +1,152 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "ycNY1lbfMm5cxNAsG88EKA==",
-  "iv": "C/aBy23SpofDlY5f2C1uLg==",
-  "ct": "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",
-  "mac": "gfQZbDBtYza7t3+M/ePVSj3Iw6T1yHa1WpW9te3+2zU="
-}
+# 05c — 방법론: NaP와 ELR Re-warming 알고리즘
+
+> **🧒 한 줄 요약**: NAP: dormant neurons reset. Re-warm: periodic LR boost. Surgical capacity restoration.
+
+
+> **배경 사다리**: ① 이전 파일(05b)의 ELR 정의를 먼저 읽어야 한다. ② '투사(Projection)'는 벡터의 방향을 유지하면서 크기만 특정 값으로 조정하는 연산이다. ③ 'Adam'은 현대 딥러닝에서 가장 많이 쓰이는 옵티마이저로, 각 파라미터마다 개별 학습률을 적응형으로 조절하는 알고리즘이다.
+
+---
+
+## 1. 이 부분이 왜 필요한가?
+
+05b에서 ELR 붕괴의 이유를 이해했다. 이제 "어떻게 막느냐"가 문제다. 두 가지 방법을 순서대로 소개한다:
+1. **NaP** (기존, Lyle 2024): ELR을 일정하게 유지.
+2. **ELR Re-warming** (이 논문): ELR을 주기적으로 초기 수준으로 재가열(올려줌).
+
+---
+
+## 2. NaP (Normalize-and-Project): ELR 상수 유지
+
+### 개념
+LayerNorm을 추가하면 파라미터가 스케일-불변이 된다. 이 상태에서 파라미터를 매 스텝 후 **고정 노름 구면에 투사**하면, $\|\theta_t\| = \|\theta_0\|$를 항상 유지하고, 결과적으로:
+
+$$\text{ELR}_t = \frac{\eta}{\|\theta_t\|} = \frac{\eta}{\|\theta_0\|} = \text{상수}$$
+
+### 알고리즘 (의사코드)
+
+```
+NaP 훈련 루프:
+  for each step t:
+    1. 그래디언트 계산: g_t = ∇L(θ_t)
+    2. 옵티마이저 업데이트: θ_{t+1}' = θ_t - η * g_t   (or Adam step)
+    3. 노름 투사: for each layer l:
+          θ_{l, t+1} = θ_{l, t+1}' * (||θ_{l,0}|| / ||θ_{l,t+1}'||)
+```
+
+**수식으로**:
+
+$$\theta_{l, t+1} = \theta_{l, t+1}^{\text{raw}} \cdot \frac{\|\theta_{l,0}\|}{\|\theta_{l, t+1}^{\text{raw}}\|}$$
+
+**기호 뜻**:
+- $\theta_{l}$: 레이어 $l$의 파라미터 벡터 전체
+- $\theta_{l,0}$: 초기화 시 레이어 $l$의 파라미터 (고정된 참조값)
+- $\|\cdot\|$: L2 노름 (= 유클리드 크기)
+- $\theta_{l, t+1}^{\text{raw}}$: 투사 전의 업데이트된 파라미터
+
+**일상 비유**: 고무줄을 늘이면 늘어난다. 매 스텝 후 원래 길이로 되돌리는 작업이 투사다. 고무줄의 모양(방향)은 변하지만, 길이는 항상 같다.
+
+**왜 이 형태**: 스케일-불변 조건에서 함수 출력은 파라미터의 방향에만 의존하므로, 방향을 유지하면서 크기만 조정해도 기능적으로 동등하다. 단지 ELR이 바뀔 뿐.
+
+**조심할 점**: Adam 옵티마이저의 경우, 내부 모멘텀 상태($m_t, v_t$)가 이 투사를 모르므로, 실제로는 약간 부정확한 ELR 제어가 된다. 이 논문에서는 이 불일치를 허용하거나, 옵티마이저 상태도 함께 재조정하는 변형을 사용한다.
+
+---
+
+## 3. ELR Re-warming: 주기적 ELR 상승
+
+### 핵심 아이디어
+NaP가 ELR을 "일정하게 유지"했다면, Re-warming은 한 걸음 더 나아가 ELR을 **주기적으로 초기 수준 이상으로 올린다**. 이렇게 하면 훈련 중간에도 풍부한 feature-learning dynamics를 반복적으로 활성화할 수 있다.
+
+### 알고리즘 (의사코드)
+
+```
+ELR Re-warming 훈련 루프:
+  for each step t:
+    1. 표준 옵티마이저 업데이트: θ_t → θ_{t+1}'
+    
+    2. if t mod T == 0:   # 매 T 스텝마다
+          for each layer l:
+              θ_l = θ_l * (||θ_{l,0}|| / ||θ_l||)   # 노름을 초기값으로 재조정
+          
+          (선택적) 옵티마이저 상태 리셋 또는 재스케일링
+          (선택적) 학습률 η를 초기값으로 되돌리기
+```
+
+### 수식으로
+
+각 Re-warming 시점 $t = kT$ (k = 1, 2, 3, ...)에서:
+
+$$\theta_l^{(kT)} \leftarrow \theta_l^{(kT-)} \cdot \frac{\|\theta_{l,0}\|}{\|\theta_l^{(kT-)}\|}$$
+
+**기호 뜻**:
+- $\theta_l^{(kT-)}$: Re-warming 직전의 파라미터 ($kT-\epsilon$)
+- $\theta_l^{(kT)}$: Re-warming 직후의 파라미터
+- $\|\theta_{l,0}\|$: 초기화 시 노름 (목표 노름)
+- $T$: Re-warming 주기 (하이퍼파라미터)
+
+**결과**:
+$$\text{ELR}_{kT} = \frac{\eta}{\|\theta^{(kT)}\|} = \frac{\eta}{\|\theta_0\|} = \text{초기 ELR}$$
+
+Re-warming 직후 ELR이 초기 수준으로 복원되고, 이후 다시 천천히 붕괴하다가 $T$ 스텝 후 또 복원되는 패턴이 반복된다.
+
+**일상 비유**: 자동차 엔진 오일을 주기적으로 교환하는 것과 같다. 쓰다 보면 엔진 오일이 탁해지는데(ELR 붕괴), 정기적으로 교환해주면(Re-warming) 엔진(네트워크)이 계속 최적 상태를 유지한다.
+
+**왜 이 형태**: 완전 리셋(재초기화)은 학습 내용을 잃고, ELR 상수 유지(NaP)는 feature-learning 자극이 초기 수준에 그친다. Re-warming은 학습된 방향 정보를 보존하면서 주기적으로 강한 feature-learning 자극을 준다.
+
+**조심할 점**: 
+- **주기 $T$ 선택이 중요**: $T$가 너무 짧으면 네트워크가 안정적으로 학습할 시간이 없고, 너무 길면 ELR 붕괴 기간이 길어진다. 태스크·데이터셋에 따라 조율 필요.
+- **Adam 상태 처리**: Adam의 모멘텀($m_t$)과 분산 추정($v_t$)은 Re-warming과 별도로 처리 필요. 상태를 리셋하면 초기 몇 스텝이 불안정해진다.
+
+---
+
+## 4. 구현 핵심 디테일
+
+**어떤 파라미터에 적용하는가?**  
+NaP는 LayerNorm 이전에 오는 파라미터 — 즉 스케일-불변 조건이 성립하는 층 — 에만 의미 있게 적용된다. 실제로는 모든 가중치 행렬에 적용하는 경우도 있으며, 논문에 따라 세부 사항이 다르다.
+
+**LayerNorm은 어디에?**  
+NaP는 "레이어 정규화를 비선형 활성화 이전에 추가"한다. 즉 표준 MLP:
+- Before: `Linear → ReLU`  
+- After NaP: `Linear → LayerNorm → ReLU`
+
+이렇게 하면 `Linear`의 파라미터가 스케일-불변 조건을 만족한다.
+
+**편향(bias) 처리**:  
+스케일-불변 조건은 가중치 행렬에는 성립하지만 편향 벡터에는 성립하지 않는다 ($f(\theta + b, x) \neq f(\theta, x)$ 일반적으로). 편향은 NaP 투사에서 제외하거나 별도 처리한다.
+
+---
+
+## 5. 대안 접근들 (구현 관점)
+
+**대안 1 — Cyclical Learning Rate**: 학습률 $\eta$를 주기적으로 키우는 방법. 하지만 이것은 파라미터 노름 $\|\theta\|$와 독립적으로 $\eta$만 바꾸므로, ELR = $\eta/\|\theta\|$에서 분자만 바뀐다. 파라미터 노름이 크게 자라 있으면 효과가 제한적.
+
+**대안 2 — Sharpness-Aware Minimization (SAM)**: 파라미터를 주기적으로 "평평한 최솟값" 방향으로 밀어넣는 방법. Feature-learning을 촉진할 수 있지만, NaP보다 계산 비용이 2배 필요.
+
+**이 논문의 선택**: 파라미터 노름 재조정은 **O(P) 연산** ($P$: 파라미터 수)으로 추가 역전파 없이 구현 가능. 계산 오버헤드 거의 없음.
+
+---
+
+## 6. 이 부분의 핵심 한 문장
+
+> ELR Re-warming = 매 $T$ 스텝마다 파라미터를 초기 노름 구면으로 투사 — 이 단순한 두 줄의 코드가 grokking 가속, warm-starting 개선, RL 소성 유지 세 도메인 모두에서 효과를 낸다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_c_nap_rewarm *핵심 claim*?**
+2. **05_method_c_nap_rewarm *technical detail*?**
+3. **05_method_c_nap_rewarm *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:lyle-rewarm-cycle:title=paper §4 — Re-warm Schedule,caption=Cycle slider.
+```

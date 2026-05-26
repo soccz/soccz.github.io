@@ -1,11 +1,131 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "1SyZxq39ijmrrUaihGXTyA==",
-  "iv": "1C245pzz8oGD8oKDfguxMA==",
-  "ct": "EUfggqUAS9dwz2YMMUB6fP4rntyvV2xlTtohgdqrTRX+hf+lUHcdOaslPWBR3xnc3ppYicPRV9Gv5T3cJWm3jwWpuQgbe05BgiYthHGsWOO72i3OxeY6Ebf8v7Go54Rk+yxxGKO6NXTAXyQXPnynWMj0dG2KDsS+YqJbq6omagfcge9aXTXcNQSs6972hcmRiqHZkdNSu5fY+skLy0Ny9UIf61hkJWiwImdrw8GbYYwdVjtTnt4A0ROJOrYrDTP4HgmtqVl5bBkfdXKahUa9g3pw3zaVuQIS/4x18NU4DmXkruBpRhrnAgSfNsyNhurUZmMaV8LgoUd2nRZav7cus6GWvwTGQv+sFvDTWdyERhKNL/qzAIitwH1CvE7iL8UFYhspsOyJ90ky0CxnL7OCZSnRny/zisAeFGJUwwRTKakMgE4ry4p4Y2EsUbBLYDM0IJkK5o2Z1wOqWbjQe1mKMmdhHtCmrl4kzQAdFp3qpmjH3H8gRInNnszsBvFzxgwmwmH+p063ULEQwzxruf5xIkKeizr3Am9QhXonbTcxGjg8G9UZjO/EdUAvwzyv817qAEWXGVYCQlDMfg91dAvPSFn+paNbHEN3hRnq9Bgzx9RgfZ4HB/ziVuwP6MsD7XRSu08mukRgsyWXtAFimyoh9A8laQ4u7QPewb906V7xEz0lph9xsWe8541dDvqrLEBkAh19r/pyL66RggwIPpv38WrEWBH4hV0deAbWIFFbhHO0Z28bX9GsQj84n3q6jFm0PFXcvjnZyMynEyJFCz0zgso1P8hEFFZefoQhF55S8WW3ALl6bQJeJCIK69DQ5R65PNKlGZhPXz8S5Sv+4kLLNO+dAstk98Jy7eqiq5SLdZHKy6WGSfG0iVd3dgKiFIHhqP4zpzdv6tBWXksf6bEqHcGWo2QnmF1QYbwmuJ6AQ0YUNWcvxyUCgzgQp9CD6hlFdb7rwAnrs8hNslS+BLjE7FHZg4gYzrdeojb82L8tCw7uLWV15pJuHsxq97/hP7NGxmMafIIA8gyoLipkbdmRavCc8/ddukHx5aSyNS5JSR6XUDlLqYxWpTmgeTu5IF1GT7oRoFPGO5K1Ast5/0kNA+FPZy6JHBn6IGuUnm521EBeaazI2naXnYQTKbzaqwxfgkONg+rrxJVvNVWYJ52MyqPgzbVZV1WXaal3Gq/CzgWuh6k7AjnVLilFKHW8nsO965gpGCpWNrh2mtVZ0RgztmZvsLzEYXDaoN+K5Zt5adm+o+Del2O22xp6G+fgZydfCIevwI/nf7Nnk2OU4aV+xpkLI0tIRU3zlrHRLdYwAbUSvol3UvABlVDvcFhacPoQSAj9+ori/uDc3sTZyBWYW2n+BjMobjc1Z54JNcfGhe/JqZBT8gMuzqpsRtsWWzDDBkdR0S7IVwigMWWYS7gLKs1OajtBTAanJ69jA2DN9h5+6ERJsx0tSSRByYCq2JK9X1HUPuFihfOKkwiW2svd6oZpxoZfUy0/hgKWFbd2tPvzYvg7byfo4C81GxXunYeadbCIw+aF6SbUBFN2WTxlBdKoIVtsE7ya1GAHvbsJnTyrgx8jABnnYlgzh+WmAZ/5Td2BuBdCLlTg55Ms0H1F3HdteO3nSZ45PnhSZzFRUrDCySE2THDtVZPioFUeRY1MZk1pX8UKp6yqVOGuPWKnNJnVYTYvfFOdIFJnikmCYlgrUaykblNv8Wkzfql1FxhE9uWXIFnzpZpPJN15jUIwndtL1wGmgFaUFh1CNCVnuFDR7lP7yEqi5mhVOlr6k/rj/UzU64yX6EUny8NWfdQGBMmK4OlFWCeIGab2GlHY3pPKOiR3nAgqAi3/jz5ue0dg+RwDBC4klJdens92gLBNteR/h1YkGwcvlguvaXXu3//GCHEIDNDBAUl++SIhZ2lWYfzipIo4f8iImCc2xl2clDuK+eXoYkIvnO9fchnxWuLMviKq8NMdv7jAiexMj8AwjVSrUfx2Z7NR3cttQqnEDv1yChO567NVW1LKmtm7DTnOyFITAJT07yPr162mtcrflOtnDuLbZwxB4FbNFnl9dhv/P5YhTZrkR+kONMb4MkUZK72gDvnBaKE0FjzM5jWtsa2PqSI+lg8frqU62hwlobbHwDBBTcFByR1Nnfdq+Z1PnV8p3cpU1TuGUNmVF9YMvga1g9pZzKWe2p8ZeU962hUChMXuU98aWl/NgrmchkUvd5J2gQGoXnj8jA9ONMSngnp7riCmskpDtGHbSwMv7a9mErIBdVR0rTb4HiEc2gCYtWanmwXMswPbE2ewh05eGGq8h6ZQzKTYAhfu4rJn9SA3XYazxsjIRkIbJ8QgY7OSJm3arJIg2wbPT69IU/2peTKU1PZaOsBEFCOWNUMJqhxn6IM2REJk2R2LhnXq3Olxl3aNOV4YQXFb01CZ1LkYPawLlzL3U7cuV4sX6Bh60aFJO8VHau0U7HQj8aGglAVwcXpsBIa1f0wHPrrniGraRSywjYD0QYtw02cww7sb5YynAANRZjROXp1D3p1SpFYJv6T4BT8+BCphKQ9gtd8sk0l639xpOXznKxS/JePYIPQbfyKnWyVQbllN4YEPH+QD8SC0ueW4GVCoDGfGJ+7RyWe2+EUjjfK4H9LmH+yRzsoe740tNtnkPdSodFXQt5TQ6s82hkCkvSG440X3ngFKz/OzCAxSXiSEJ6BBFsZlSXgDHRPF0LVVE01GMpfnvo6B6rffzs6ryDVaGlcFQgT7DJvynCWf2bF/9weFD704/cC8ska39HlaxuRdeTZMvfrv3XxdbXpiIrY3ghhqiND69XQjT5byederF6YtqNqX0weH/wR9L3C+f4OmYnG50ijuDzBVq+gwUl5R0jWyLNGAciLFntxB0Y8qdpozttbBoejWiy9XCI4TAeIk/AkBusfjvqerbaJky2jHNaLn3D4O7Pmh9xoY0fR/gXwcUSvz9Mv65/LLNYsx8B9l3tpQaY7b/HP3Jw6AIYIxE7d3wk1jiykrsBzLcPPICbzFEnOL3+Wg7xAIvoc/mcV/lz7Je8lp69HQkpt4UJdX82xoZ1xcmW5Kyx/kk692M1eRyDdzg6T3YlUA84aasd2vkhUSvYALsKKfR5kcRqc85p52FoN4BEui8xZVHQYuRvlbbTDgGEP+YtRoznU90OlNQXFr1iZpX0x2mGql0/DqHTHUIxN2JlCzxAdUmEbnjO65/UySIf8HmbQ103lLqAfi8e4OJxGKbrF0xkV2LmPBN5RdCz0BFJY3jrL9F2Sc3WrIClcqhZwYowxo5h7OTVrmTcNB1/5mhpMYXJaI7/IBpQpPkKzN5lDl/kbg8rLzXIVv+uiiSXmESzAOC2cO8fKlfYkMxwnnJjIMEy7+OjRtrzwP4M0o1MlE8XDSnV9ZA7oa74aVPXFW8urUq0ta5Esj79K6iG2FGGOCkP18bzh46D2qYBPqLPMerWSC2zFePgM5JSm8fcXNL0V6WcG4dyrewbUuZ/75TybbmLCpWrXi71wBsKAtUR7N9Uubml7REGvsKKcNsqz1Ockjjyw9bumucM0ClbxoTxHuHwfNaEGDrZn3NpzdnnZmBIhb7L2A81OM58YDVe/n7JpoDx648sOgMkQ4YAkjENx9cLkbWcRLL1X6gYnhwOfneSR5uECetuE0BjxpcAJ9Surl7wghS3q8+PdqrNN9C7uwplPV8ORD1MnKqQaDuIe1gy9UB5rTvcVJlux+UMzzPQW854PxHSbqTIzRpv3LnU4tGkKzBk7EnJPdxb+Gnu5HaPdRkOVK3jtBcdH4fr1aU5daYLvlV7heyar7H9JrWGsNvYyU9kfF5UuIcP2rbL1b37ALUtgJunKW+ms30eIggQlst7eu8JgmHIQv4jzhnysI6bsg2lS2cK6ukV1rlpFr32J1JNKpTWw/hipFzv0FTv82sBT3Pwhk8vA8bLuqMaVRA6Ofjbxjfr5MLESIKng6aGUVT9EOMRmGiZxe6Hi98V8kKEyXc8Xbo6JUjvu1p4twZ963cGSCP6ZzEXm0tHsN+8vmp11TC4ydO13dB/QMhG+VVDKv+OoLfoB/ljC3DfplSA3A3zXijQp1DHcFrEYs1Ov61CSeBQSUmK3WXdEbSnkd7ZLqlYTUYQMlqVAPQwqU6QxCtOmn5/FBekeYI2C3oWmT2PzVGQjKTPfrEsSQfp5gfE5JGeKuk+uAOKhyA06QrazMnZR9cg9PwKWLx5kriP1kI7vtsz19AvUk1VwZz0CjbbDkO8ZrNl8FI2j3OH9eJT/A6LJF2LTb33TIWe0lB1r5VEJblO5X7LkBSCqRoj7a8mHrWMGarnCU4xDGaCWl8HLY/lcBE5U7mfEKOLsFAsaT6pWjKMn7CQrN0lbt5tEpStU/B12ZKL9XK1hDh6zg2LarR9tT7G9PCdgoukqua3eurW6zIhQ3GeCyQH6wJktns+WA6UCAM3fvvFRntU7iTTecz9wS3WJpsbeKzL+hXqCWJLbagOWJ/Ku2Xq3px8WNpl5vpj3DF8gRnXAFB0xVW+pwo38FmNqK5L+ziblhByy80MCoVW3VJMgvd1o7DQ1LlemRbDFHXjqVh9We8BBbm+phAd82rsmhinTEZkJ95WM1vM9b5aD6TCsRbmzDoAJ0WSeT7BUpLwL7fwS3rNzfVY0yk9ZjOBJvHQcqD9IZ2CzDvLcmyOH0tGsSFKIJY3cCBkSdR4vleWiZ+9Yt3XsAKmo3pwJLrkqMDi4xrhHE/7qUR9ZRO6HzU8Pg3Y6fc6hSCyIMYOQHwkOYBMtaRIs/ogIhORULee2MgWJuhwaillXFPiuqwEx8AapCg62rRKk59Nr2wS53kivf/4O6NFfNfdsthcICFtm5QuCAWLPtGDlCZbIKSEjRLD1xm2oxdMCOxKPF14SawSdXn2J8NnQ6xnFNnFbESA1JyUfjkxAAZzg3DZ7MIfWzo8HLMTstsgy22b3alZLCYr1W4B7+sT0iRotM7tSYBksLTVDmfkXYYBR7ZEvGwbb1lAeF76onJV7AB3e1dkGZ9jWXtv/6AXvLeEzAaxSyIAyLtVpSTooyskIEx40k+9PUdx9t7j1WFh9Qnc0cdeC0zv1vW70ZtCvG0f3urpPMc95klV3Kk+lUvIJDbYVAYn9gA9ixon8aKgFHQmQdWt0eZFyB4pVMnvzubS5ewGduxDCKao1PkdzLWCk9kCiHy/WGvBiVh9rIdMzWGoENpd+aLnHOSt0bYaM50oxvOP3zDD9U7A23+cFV7FUWgG7gYfQAln7CczLv/mUwlAr1dwnYIZ64pupM7Ue/1ibgEy8FHdBCgGWC3BPR2b1kmFxboOEuwewo+EWyDQXVq5KXTJVeSUpByFiwH2SMXG0RrVPtsqYi7IPj9pdmtRJVYR7E/jM1T/p+cvY3EgifmOh+yn4bQ5L3ETrjHJWIdmc8AoI/AvPqPydOfvF+uwn2dvNeJdez9LNvea/CmdkD6WJeiqMHfxqblB0BwigXr1Q6B3DMP4wTReirhCY6qrcSXjkcb7dT6Lxp1toDzpXz3kC8Aiwe7lu6CGlsvCgAq1e/UwJBwXdpQZHNTp+OYVSIEoIboqgkYqKUORN85rlRIFrTUktq9a4490jVfw7zWhTniOYm302b/LeFNU2Yh1+8C4BChGKwyoIUC0eVKM+WvquB07ia27ZdWQI9B27YEqrWbCG0N6JoHOjX0d49k62K8sTPbQU28YvXH0+PKtRwhS4QA0yRrVnvo3NxNXoZtZxFAnvxL9GKWZQfhjTnrOAw3inm2R/v96J9Be5tEO1CYwWBlVoZMvM3owhqxn26FCnLVM6XWA0t5N35784Xw5f14H5SvnSqWOqqo3flp468Y0fh47FfQCnIDjS72JdXfODa/YKQVhUGLFJAZGV2ToT7MtWjRn9/zmwTCmNpLVWBT8WTu+gjiTGbTho3vi4qaiGryIzOEIY4icL6QvBEZ37wTg+aIgb84jltgjA2grcyWdvtRps71nxgTa3GevCmtVH5uhrN/U2qcj1GIlTFrzEfX6K/fBR35E8jHEMaM1LbdZSlnn/ySWvtM2ROc2TVS5nGoCYTz7LtILtW8Wsc3lSe3nGWFRi4UoUFttugJqHOuZcqnwJL4rNx/zWcoZuziI18Oe0KRaa3tnyJ6J3MmbQV5ZrG+Sr8yMMZ7H7j2jhFv9KALTazRc3+CJMdtm5W7vjtZCtbdXD1rUeZ4VGf+KjYISyHlMH9osco8m6MYzIX/gDhG2auRY8NXPM9o3llwwg/eHMGhjFnKfiWlJWPVOtC8jfwO+yfDSs8GYjZ/rfv++U/OJWXX9BQ75sNPOSt575ehe/VXFwKJd6HEaM2YPR+mKqA+T6cJ79M1UQ4pmSFJB64fd1CV9GAb8NlNfeX/DoxNmO9AWIZGKU6SuOHLdphDNrxUG29wrGuVV0sMlJ3Qsk9iqmKxVBw/IcJ+8OBSY3N74Ens0UxHRVL/ThM0Ch1CLJPNXTcRFPuoNh+86muDbJL14J4FVzr9gsYETd5H1WSoMXoMJbsTHuwE0M5b3D4BEuOFL2MCZK/hEuED5a/wxdQhlUpbpv+2f4HO3vf12iXjazCgRYBN6aduNwhEEzleVCft/uWwbdcsBLGrVPVstoGTHlz0JAtPe1h7KOAoBnk7th5qj4eV2fnJDFWtowe+YzVThxrZP3qkvKX+08fX9qVRHPZ4EaMDoKQx50Va8pY5gmwtzKLzx2xI2NJAMsV/EaWap9TV2jSt3QifjX80CGm/tkLixOA4+cr18+gFfPNuOUFzFciOMTkYTjIrrZHMIpO0dQIsxa3485gd97YlHyXJ14I/DrahUvq8C0mG2cfjpr66T/g3H/7NM9GsAPEaykJgEwOrRIt0TDcxaaPflwACNQkd2wXvjMBFYxeavMQAikN8tD52YMW6teYqe88KVxzEOlMEx18gjlcND8Em2RJWjPWPPyrFD7mJX6PrQaOYKUW83qhsMkaqqYhIXP1yFfZw5eE8VJFMs3eDh+QgwKcurC5woAvrKt8jj/GIXPupXdJqoUqr+EfSISxCGPZ3+5s2rgXTI37WZNYtMouxjThpXs1d18SilWgoMbxj52eex18DpapE2a34nAnuVWxXfiuPP/QmbrGFD5CtW+VqLC5ISJZchbH0O8mvL/jdlCJcTCIdEQneCsMWUjowtWgvxmrLiHYCIqqLVEQII5seBBG+myOXD3CZ2P3Bai+1UfAHUIju/2VmYxTiopao1GoZAxXtdQEefF+0l2UDIIRNItNilRK0J7+tESwig5NTTvHTc1P1tltV2RXrnQDiqYEs96TWtYdUHalEWo9GidOu7JxYpkHmbDAjpSquu6qvXombySgsG2RnLAkL3r7/EcIkdo4KvFqR7VSFiK5JmZhdrawH4NspdxYimVUK7/soX+y6aB4ClS0PK29B3YMOKH4Nxqu9pgLGce9YB/koIw4vlW/H2FkxHg3IRka5LsCPYaqpPC9GdYS3H4KLKtjPJGZ/lYqXdTbv5DfiJq8b+77l9rZRyFIGZYHgimHbckW8PCIWsCB5aNKI/zCm3/Xvzu0JHmtAsYsFJx1d9PWDdHoBRF3lfxgappNjums9qeaASi4B0torvxGhG9rcWjvAyV14o/xOfxIqqHly8RjAr1IfQt7qkNZWIr3GS4ZyBuZt+vnAQn7xvCckG9UzF8WAJahw/5GPlNJTpcHyAuJOAPM8fdDqhHmjlnvqUWoo7SV9moP1wMmhcbYfwhQGeGV8B9N3jFyge+GDvLcdVktq10rb0y+fXLpjc7DyJ+PQI0Pyn2gn7QicIN17TteW72PvrxAbH5tiCj2Rmib20MBjEATJdDtWrZpYisF2ApIIAzEcfjCCUsXchu8W1rkpU1zp/KV0iGXHtvIY4RC2Y9X8Vz9q/QwRzlAyuQoxg5Fy7ihKLE3/gzMIYDQsebFPwURXxTV+NNAqmVXGLTZkXsD3PXYsVAFf7n3Oem7VITRZ3IXs4RgTn3YxSAEX3KdYMqiokz+nFS5bBdNCGEhENUiJEdCjNWaOE4NphqSWeRSYXk2ybHHOGk5vLn3z56/jMZspFc/LWzIfPOYLfzQbw==",
-  "mac": "FOBa0hcwSyVHn2K/6U7iVQFDXyptF/da9XrnHHzvqLo="
-}
+# 05b — 방법론: 유효학습률(ELR) 정의와 붕괴
+
+> **🧒 한 줄 요약**: ELR = LR × ||∇L|| / ||W||. Scale-invariant, layer-comparable plasticity metric.
+
+
+> **배경 사다리**: ① '그래디언트(gradient)'는 오류를 줄이는 방향으로 파라미터를 바꾸는 나침반, ② LayerNorm(레이어 정규화)은 각 층의 출력을 특정 범위로 조정하는 연산으로 현대 딥러닝에서 거의 표준으로 사용, ③ '스케일-불변 함수'란 입력을 2배로 해도 출력이 바뀌지 않는 함수 — LayerNorm이 있으면 네트워크는 스케일-불변이 된다.
+
+---
+
+## 1. 이 부분이 왜 필요한가?
+
+ELR Re-warming을 이해하려면 먼저 "유효학습률"이 무엇이고 왜 훈련 중에 자동으로 작아지는지 알아야 한다. 이것은 숨어있는 현상 — 명목 학습률 $\eta$를 0.001로 고정해도 실제 업데이트 효과는 훈련이 진행될수록 줄어든다. 이 절은 그 이유를 수식으로 설명한다.
+
+---
+
+## 2. 스케일-불변 네트워크의 특성
+
+**레이어 정규화(Layer Normalization)**는 다음을 수행한다:
+
+$$\text{LayerNorm}(x) = \frac{x - \mu}{\sigma} \cdot \gamma + \beta$$
+
+- $x$: 입력 벡터
+- $\mu$: 입력의 평균
+- $\sigma$: 입력의 표준편차
+- $\gamma, \beta$: 학습 가능한 스케일·편향 파라미터
+
+**기호 뜻**: $\text{LayerNorm}$은 입력 벡터의 각 원소를 "평균 0, 분산 1로 표준화"한 뒤, $\gamma$로 재조정하는 연산이다.
+
+**일상 비유**: 시험 점수를 "표준 점수(z-score)"로 변환하는 것과 같다. 반의 최고 점수가 100점이든 1000점이든, 표준 점수로 변환하면 비교 가능한 척도가 된다.
+
+LayerNorm이 있는 레이어는 **스케일-불변**하다:
+
+$$f(c\theta, x) = f(\theta, x) \quad \text{for all } c > 0$$
+
+즉, 파라미터를 상수 배 해도 함수의 출력이 바뀌지 않는다. LayerNorm이 그 상수 $c$를 나누어버리기 때문이다.
+
+---
+
+## 3. 유효학습률(ELR)의 정의
+
+스케일-불변 레이어에서 그래디언트 하강 스텝을 분석하면 흥미로운 현상이 드러난다.
+
+파라미터 $\theta$를 학습률 $\eta$로 업데이트하면:
+$$\theta_{t+1} = \theta_t - \eta \nabla L(\theta_t)$$
+
+스케일-불변 조건 $f(c\theta, x) = f(\theta, x)$을 $c$에 대해 미분하면(Euler의 동차 함수 정리):
+
+$$\nabla_\theta f(\theta, x) \cdot \theta = 0$$
+
+즉, 그래디언트는 파라미터에 수직이다. 함수 출력에 영향을 미치는 것은 파라미터의 **방향(unit vector $\hat{\theta} = \theta/\|\theta\|$)**이지 크기(노름 $\|\theta\|$)가 아니다.
+
+방향으로 표현하면:
+
+$$\hat{\theta}_{t+1} = \hat{\theta}_t - \underbrace{\frac{\eta}{\|\theta_t\|}}_{\text{ELR}_t} \cdot \nabla_{\hat{\theta}} L(\hat{\theta}_t) + O(\eta^2)$$
+
+$$\boxed{\text{ELR}_t = \frac{\eta}{\|\theta_t\|}}$$
+
+**기호 뜻**:
+- $\eta$: 명목 학습률 (하이퍼파라미터로 고정)
+- $\|\theta_t\|$: 시각 $t$에서의 파라미터 벡터 전체의 L2 노름 (= 파라미터의 "크기")
+- $\text{ELR}_t$: 시각 $t$에서의 유효학습률 — 파라미터 방향이 실제로 얼마나 바뀌는가
+
+**일상 비유**: 기어 변속기와 같다. 액셀(명목 학습률 $\eta$)은 같은데, 기어가 높아질수록(노름 $\|\theta\|$가 커질수록) 바퀴의 실제 회전 속도(ELR)는 줄어든다.
+
+**왜 이 형태**: 스케일-불변 조건에서 함수가 파라미터의 방향에만 의존하므로, 방향 변화를 기준으로 "실제" 학습률을 정의한다. 이것이 NTK 이론에서의 "feature learning"과 "kernel regime" 구분과 정확히 대응한다.
+
+**조심할 점**: 이 정의는 LayerNorm(또는 BatchNorm, SpectralNorm 등 스케일-불변성을 갖는 정규화) 이후에 있는 파라미터에만 정확히 성립한다. 정규화가 없는 순수 선형 레이어에서는 다른 분석이 필요하다.
+
+---
+
+## 4. 왜 ELR은 훈련 중에 붕괴하는가?
+
+L2 정규화(weight decay)가 없는 표준 훈련에서, 파라미터 노름 $\|\theta_t\|$는 단조 증가하는 경향이 있다:
+
+- SGD/Adam의 그래디언트 업데이트는 일반적으로 노름을 키운다.
+- 손실이 감소하면서 파라미터들이 더 큰 값으로 이동하는 경향.
+
+따라서:
+
+$$\|\theta_0\| < \|\theta_1\| < \|\theta_2\| < \cdots$$
+
+$$\text{ELR}_t = \frac{\eta}{\|\theta_t\|} \to 0 \quad \text{as } t \to \infty$$
+
+**ELR 붕괴 곡선의 전형적 모양**:
+- 초기: ELR ≈ $\eta/\|\theta_0\|$ (높음)
+- 수백~수천 스텝 후: ELR가 초기의 1/10 이하로 감소
+- 장기: 사실상 0에 수렴
+
+이 붕괴 속도는 데이터셋 크기와 weight decay에 따라 크게 달라진다:
+- **Weight Decay ($\lambda \|\theta\|^2$)**: L2 정규화 항이 파라미터 노름의 무한 성장을 억제 → ELR을 일정 수준 이상으로 유지 → Grokking 촉진 (Power 2022의 핵심 관찰).
+- **Weight Decay 없는 경우**: 노름이 무제한 성장 → ELR → 0 → 영구 lazy regime.
+
+---
+
+## 5. 대안 접근들
+
+**대안 1 — 학습률 스케줄링**: $\eta$를 시간에 따라 키우면 된다. 하지만 이 경우 실제 파라미터 노름 변화와 디커플(decouple)이 되어 있지 않아, 언제 얼마나 키워야 하는지 알기 어렵다.
+
+**대안 2 — Spectral Normalization**: 각 레이어의 스펙트럼 노름을 제어하는 방법. 하지만 이것은 ELR과 직접 연결이 약하고, 최적화 역학을 바꾸는 부작용이 크다.
+
+**대안 3 — Parameter Reset**: 파라미터를 아예 재초기화. ELR 문제를 "리셋"으로 해결하지만, 이미 배운 표현을 모두 잃는다.
+
+**이 논문의 선택 — NaP + Re-warming**: 파라미터의 노름만 조정하고 방향(= 학습된 내용)은 유지. ELR을 명시적으로 제어하면서 정보 손실을 최소화.
+
+---
+
+## 6. 이 부분의 핵심 한 문장
+
+> 유효학습률 ELR = $\eta/\|\theta\|$는 스케일-불변 네트워크에서 실제로 파라미터 방향이 변화하는 속도를 나타내며, 파라미터 노름이 자연 증가하면 아무 개입 없이도 ELR은 자동으로 붕괴한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **05_method_b_elr *핵심 claim*?**
+2. **05_method_b_elr *technical detail*?**
+3. **05_method_b_elr *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
+
+
+```viz:lyle-elr-trajectory:title=paper §3 — ELR Trajectory,caption=Method toggle.
+```

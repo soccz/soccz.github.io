@@ -1,11 +1,71 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "wr/pNCawPiD8Wkif7RKpEQ==",
-  "iv": "4tTioLQ5xOA0/+cGZKZixg==",
-  "ct": "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",
-  "mac": "Ll5o43kxWmCrMEzBRWuhT86+z68MMQAgljC2O4G8dSE="
-}
+# 10a — 사고 확장: 자문 질문 5개
+
+> **🧒 한 줄 요약**: 10 open question: cross-domain validation, LLM plasticity, plasticity-performance trade-off.
+
+
+---
+
+## Q1 — ELR Re-warming이 시계열 비정상성(non-stationarity)을 처리하는 범용 도구가 될 수 있는가?
+
+**왜 이 질문이 중요한가?**  
+이 논문은 ELR re-warming이 grokking·warm-starting·RL primacy bias에 효과를 보임을 보였다. 이 세 설정의 공통점은 "분포가 변하거나, 초기 경험에 과적합되는 문제"다. 시계열 예측에서의 concept drift는 구조적으로 동일한 문제다 — 2019년 데이터로 훈련된 모델이 COVID 이후의 새로운 volatility regime에서 작동하지 않는 것처럼. 만약 ELR re-warming이 시계열 모델의 "개념 드리프트 적응 속도"를 높인다는 것이 실증된다면, 이것은 금융 ML에서의 범용 도구가 된다.
+
+**더 깊은 질문**: Re-warming의 최적 주기 $T$가 데이터의 "비정상성 주기"와 어떤 관계에 있는가? 일 단위 변동성(intraday)에는 $T = 100$ 스텝이, 월 단위 regime 변화에는 $T = 10000$ 스텝이 적합할까?
+
+---
+
+## Q2 — Lazy vs Rich 이분법이 실제로 연속적 스펙트럼인가?
+
+**왜 이 질문이 중요한가?**  
+Lyle의 프레임워크는 "lazy regime"과 "rich regime"을 이분법적으로 제시하지만, 현실은 스펙트럼일 가능성이 높다. ELR이 "충분히 크면" rich, "충분히 작으면" lazy라면, 그 경계는 어디인가? 이 경계값이 태스크 복잡도, 네트워크 크기, 데이터셋 크기에 따라 어떻게 달라지는가?
+
+**더 깊은 질문**: Liu et al.(2022)의 유효 이론에서 lazy/rich 전환은 초기화 스케일의 함수였다. Lyle의 ELR 공식으로는, "ELR_threshold = C / (dataset_complexity × model_size)"와 같은 형태의 임계값을 유도할 수 있는가? 이것이 성립하면 Re-warming 주기 $T$를 자동으로 설정하는 이론이 된다.
+
+---
+
+## Q3 — ELR 관리가 Catastrophic Forgetting과 Grokking을 동시에 설명하는가?
+
+**왜 이 질문이 중요한가?**  
+Catastrophic Forgetting(파국적 망각)은 "새 태스크를 배우면서 이전 태스크를 잊는" 문제로, 지속학습의 핵심 문제다. 반면 Grokking은 "오랫동안 기억한 후 갑자기 일반화"하는 현상이다. 이 두 현상은 ELR 프레임워크에서 어떻게 통합되는가?
+
+**가설**: ELR이 높은 상태(rich regime)에서는 새 특징을 빨리 배우지만(grokking 촉진) 이전 특징을 덮어쓸 위험도 높다(forgetting 촉진). ELR이 낮은 상태(lazy regime)에서는 새 특징을 못 배우지만(grokking 억제, plasticity loss) 이전 특징은 보존된다(anti-forgetting). 이 trade-off를 ELR로 명시적으로 제어한다면, "언제 배울 것인가(high ELR)와 언제 기억을 보존할 것인가(low ELR)"를 인지적으로 분리할 수 있다.
+
+**더 깊은 질문**: Elastic Weight Consolidation(EWC)과 같은 catastrophic forgetting 방지 방법이 ELR 프레임워크에서 어떤 역할인가? EWC는 특정 파라미터의 변화를 억제하는데, 이것이 효과적으로 특정 파라미터의 ELR을 선택적으로 낮추는 것과 같은가?
+
+---
+
+## Q4 — 트랜스포머의 Attention Head는 Layer-별로 다른 ELR 역학을 갖는가?
+
+**왜 이 질문이 중요한가?**  
+현재 ELR 정의는 레이어 전체의 파라미터 노름을 사용한다. 그러나 트랜스포머의 Query, Key, Value, Output 행렬들은 각각 다른 역할을 하며, 서로 다른 속도로 훈련된다는 것이 알려져 있다(Clark 2019 등). Layer-wise ELR을 Head-wise ELR로 세분화하면 어떤 head가 먼저 rich regime에 진입하는가? 이것이 Induction Head(Olsson 2022)의 등장 시점과 관련이 있는가?
+
+**더 깊은 질문**: APF(Attention Pattern Fields) 연구에서 관찰하는 attention motif(diagonal, stripe, block 등)의 등장이 해당 head의 ELR과 상관관계를 보이는가? "Diagonal motif는 high-ELR head에서 먼저 등장한다"는 가설을 APF 실험에서 직접 테스트할 수 있다.
+
+---
+
+## Q5 — 그로킹이 불필요한가? 언제는 "lazy regime 유지"가 더 좋은가?
+
+**왜 이 질문이 중요한가?**  
+이 논문은 암묵적으로 "rich regime = 좋은 것"이라고 가정한다. 하지만 항상 그런가? 의료 AI나 금융 고빈도 거래처럼 안정성이 최우선인 응용에서는, 기존 학습을 손상시키지 않는 것이 새 특징을 빨리 배우는 것보다 중요할 수 있다. 
+
+**반대 가설**: Lazy regime(낮은 ELR, 높은 노름)은 이미 잘 학습된 표현을 "동결"하는 자연스러운 메커니즘일 수 있다. 이것이 모델의 "신뢰성"을 높이는 기능이라면, ELR re-warming은 오히려 해로울 수 있다.
+
+**더 깊은 질문**: Transfer Learning에서 ImageNet 사전훈련 모델을 파인튜닝할 때 흔히 "하위 레이어를 동결(freeze)"한다. 이것은 하위 레이어의 ELR을 0으로 만드는 것과 유사하다. 그렇다면 "선택적 ELR 관리" — 어떤 레이어는 re-warm하고 어떤 레이어는 동결 — 가 최적 전략인가?
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **10_extensions_a_questions *핵심 claim*?**
+2. **10_extensions_a_questions *technical detail*?**
+3. **10_extensions_a_questions *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).

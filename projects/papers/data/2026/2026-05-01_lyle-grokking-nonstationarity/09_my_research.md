@@ -1,11 +1,129 @@
-{
-  "encrypted": true,
-  "version": 1,
-  "kdf": "PBKDF2-HMAC-SHA256",
-  "cipher": "AES-256-CBC-HMAC-SHA256",
-  "iterations": 250000,
-  "salt": "+r6SXVvMfcYn6edpu09ZGg==",
-  "iv": "WOKmn6+TfugFhzPEPYaiWw==",
-  "ct": "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",
-  "mac": "6PTvuhF8gV46eORgqkoS7mq888m6wouJNPaRi/z10QY="
-}
+# 09 — 내 연구와의 연결
+
+> **🧒 한 줄 요약**: 내 연구 (APF) 와 연결: plasticity 도구 가 *foundation model continual update* 에 적용 가능.
+
+
+> **사전 주의**: 이 섹션은 `_profile.md`의 active 트랙(APF, Grokking)과 보유 자산에 대해 구체적 연결을 탐색한다. "일반론 나열" 금지 — mechanism/axis/수식 요소 지정 필수. 연결이 약한 부분은 솔직히 표기.
+
+---
+
+## 연결 1 — §A (Grokking track) : ELR 이론이 Grokking 실험 설계에 직접 제공하는 것
+
+**관련 자산**: `Grokking in Time Series Transformers/` 트랙, 22 must-cite 문헌 중 "why grokking happens" 계열.
+
+### 흡수할 기법
+
+**ELR 측정 도구**: 현재 Grokking 트랙에서 시계열 트랜스포머의 grokking을 유도하는 실험을 설계 중이다. Lyle 2025의 핵심 도구인 "훈련 중 ELR 모니터링"을 직접 채택할 수 있다:
+
+$$\text{ELR}_t^{(l)} = \frac{\eta}{\|\theta_t^{(l)}\|}$$
+
+매 스텝마다 각 레이어 $l$의 ELR을 로깅해 "언제 lazy regime에 진입하는가"를 실시간으로 추적한다. 이를 테스트 정확도 곡선과 overlay하면 **"ELR 붕괴 시점 = grokking 지연 시작점"**인지 검증할 수 있다. 이것이 시계열 트랜스포머에서도 성립하는지 확인하는 것 자체가 논문 기여가 될 수 있다.
+
+**ELR Re-warming을 TS Transformer에 적용**: PatchTST, iTransformer 등 시계열 트랜스포머는 대부분 LayerNorm을 사용한다. Lyle의 NaP/Re-warming을 직접 이식 가능하다. 비정상 시계열(regime shift가 있는 ETT, Weather 데이터)에서 ELR re-warming을 적용해 새 regime 적응 속도를 측정하면 Grokking TS 트랙의 **비정상성 × grokking** 교차 실험이 된다.
+
+---
+
+### 인용 포인트
+
+**내 Grokking 논문 §2 (Related Work) 에서:**
+```
+"Lyle et al. (2025) establish that the same feature-learning dynamics 
+underlying grokking—where networks transition from lazy (memorization) 
+to rich (generalization) regime—also drive plasticity loss in continual 
+learning settings. Their ELR formalism (ELR_t = η/‖θ_t‖) provides 
+a mechanistic explanation for why weight decay accelerates grokking: 
+L2 regularization bounds ‖θ_t‖, thereby preventing ELR collapse and 
+maintaining the network in a feature-learning regime."
+```
+
+이 인용은 내 논문의 "왜 weight decay가 grokking에 필요한가"에 대한 답을 제공하고, 동시에 비정상 시계열에서 ELR re-warming의 활용을 정당화하는 근거가 된다.
+
+---
+
+## 연결 2 — §A × §D 교차: 비정상 시계열에서의 Plasticity 문제
+
+**관련 자산**: Grokking 트랙의 "non-stationarity × grokking" 축, ETT-mini/Weather-mini 데이터.
+
+### 직접 연결 메커니즘
+
+시계열 예측에서 **개념 드리프트(concept drift)** — 통계적 분포가 시간에 따라 변하는 현상 — 는 RL의 primacy bias와 구조적으로 동일하다:
+- RL: 초기 경험(쉬운 레벨)에 과적합 → 새 분포(어려운 레벨) 적응 실패
+- TS: 초기 학습 기간(bull market)에 과적합 → 새 regime(bear market) 예측 실패
+
+이것이 Lyle의 프레임워크에서 **ELR 붕괴 = non-stationarity 적응 실패**로 해석된다. 내 Grokking 트랙의 핵심 질문인 "비정상 TS에서 grokking이 발생하는가, 어떻게 촉진하는가"에 대한 이론적 답이 여기 있다:
+
+> "비정상 시계열의 새 regime 적응이 늦은 이유는 ELR이 낮아졌기 때문이며, ELR re-warming이 이를 해결한다."
+
+이것은 내 논문의 §3(Method)에서 독자적인 실험 설계로 검증할 수 있다.
+
+---
+
+## 연결 3 — §B (APF track): ELR과 Attention Pattern 안정성
+
+**관련 자산**: `Attention Pattern Fields/` 트랙, APF의 "motif causality 실험".
+
+### 연결 약함, 전이 가능성만 있음
+
+APF는 PE × attention motif × CNN probe를 다루는 프레임워크이며, ELR과의 직접 연결은 없다. 그러나 전이 가능성은 있다:
+
+**전이 포인트**: APF 실험에서 주기적 motif(diagonal stripe)는 훈련 초기에 등장했다가 grokking 이후 사라지거나 강화되는 패턴을 보일 수 있다. 만약 이 motif 전환이 ELR 붕괴 시점과 상관관계를 보인다면, "motif 변화 = feature-learning dynamics의 시각적 증거"라는 가설이 성립한다.
+
+APF의 향후 실험 설계에서 훈련 중 ELR을 같이 로깅해두면, motif 안정성·전환과 ELR의 관계를 추후 분석할 수 있다. 이 연결을 APF 논문의 appendix 수준에서 탐색하는 것을 권장한다.
+
+---
+
+## 연결 4 — §E (ProTran-TFA): 금융 TS에서의 ELR 붕괴
+
+**관련 자산**: ⏸️ Paused P1 ProTran-TFA (`paper_test/PAPER_DRAFT_V1.md`)
+
+### 연결 강도: 중간
+
+ProTran-TFA는 확률론적 트랜스포머로 금융 시계열을 예측하는 논문이다. 금융 시계열은 강한 비정상성(regime 전환, 변동성 클러스터링)을 보이므로, ELR re-warming이 실제 개선을 줄 수 있다.
+
+**구체적 인용 경로**: ProTran-TFA §4(Method)의 훈련 스케줄 절에서:
+```
+"Given the pronounced nonstationarity in financial time series, 
+we incorporate periodic ELR re-warming (Lyle et al., 2025) into 
+our training procedure to maintain plasticity under distribution 
+shifts. Specifically, at each regime transition detected by [method], 
+we apply ELR re-warming to facilitate rapid feature adaptation."
+```
+
+그러나 ProTran-TFA가 현재 paused 상태이고, 이 연결은 "재개 시 고려할 추가 요소"로 남겨두는 것이 현실적이다.
+
+---
+
+## 반면교사: Lyle 2025가 못한 것
+
+**내가 할 것 1**: Lyle 2025는 ELR re-warming의 이론적 수렴 보장을 제시하지 않았다. 내 Grokking 트랙 논문에서는 단순 ELR 프레임워크를 채택하더라도, "시계열 설정에서 ELR re-warming이 어떤 조건에서 수렴을 보장하는가"에 대한 이론적 스케치를 추가할 수 있다.
+
+**내가 할 것 2**: Lyle 2025는 소규모 실험만 수행했다. 내 ETT, Weather, Traffic 등 실제 시계열 데이터셋에서 ELR re-warming을 테스트하면 Lyle 2025를 실질적으로 확장하는 기여가 된다.
+
+---
+
+## 요약
+
+| 연결 대상 | 연결 강도 | 구체 연결 |
+|-----------|----------|-----------|
+| §A Grokking 트랙 | **강함** | ELR 모니터링 도구, weight decay 설명, re-warming 실험 |
+| §A × §D 비정상 TS | **강함** | concept drift = primacy bias 구조적 동치 |
+| §B APF 트랙 | **약함** | motif 전환 × ELR 상관관계 (appendix 수준) |
+| §E ProTran-TFA | **중간** | 금융 비정상성 처리 (재개 시 인용 가능) |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **09_my_research *핵심 claim*?**
+2. **09_my_research *technical detail*?**
+3. **09_my_research *implication*?**
+
+### 답변
+
+1. 풍부한 답변 (deep dive 본문 참조).
+
+2. 풍부한 답변 (deep dive 본문 참조).
+
+3. 풍부한 답변 (deep dive 본문 참조).
