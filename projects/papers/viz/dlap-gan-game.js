@@ -16,7 +16,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('GAN Moment Selection — min-max game (paper §3.3)', w/2, 22);
+      ctx.fillText('GAN Moment Selection — min-max game (paper §I.B Eq 3)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
       ctx.fillText('min_M max_g E[M·R^e · g(I_t)]² — generator (SDF) vs discriminator (moment)', w/2, 40);

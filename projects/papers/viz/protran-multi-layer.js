@@ -15,7 +15,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Multi-Layer Hierarchical SSM (paper §3.3)', w/2, 22);
+      ctx.fillText('Multi-Layer Hierarchical SSM (paper §3.2 Eq 12-20)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
       ctx.fillText(`${numLayers} layers of SSM + Transformer encoders`, w/2, 40);

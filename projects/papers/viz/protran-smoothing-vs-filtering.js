@@ -20,7 +20,7 @@
       ctx.fillStyle = U.text();
       ctx.font = '600 14px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.textAlign = 'center';
-      ctx.fillText('Smoothing vs Filtering Inference (paper §3.2)', w/2, 22);
+      ctx.fillText('Smoothing vs Filtering Inference (paper §3.1 Inference Model, Eq 10-11)', w/2, 22);
       ctx.font = '11px ' + U.cssVar('--font-display', 'Inter, sans-serif');
       ctx.fillStyle = U.textMuted();
       ctx.fillText('Filtering: q(z_t | x_{1:t}) — uses past only. Smoothing: q(z_t | x_{1:T}) — uses full sequence.', w/2, 40);
