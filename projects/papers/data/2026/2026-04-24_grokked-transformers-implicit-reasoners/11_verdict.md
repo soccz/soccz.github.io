@@ -1,4 +1,6 @@
 # 11 — 한 줄 판결
+> **🧒 한 줄 요약**: 한 줄 판결 — *Grokking 의 practical 가치 입증* paper. APF / Grokking manuscript 의 *baseline reference*.
+
 
 ## 판결
 
@@ -14,3 +16,21 @@
 - **한계**: 합성 KG에 한정된 실험. 실제 TS 데이터 적용은 이 논문의 미검증 영역이며, 그것이 Grokking track의 기회다.
 
 **요약 한 줄**: 이 논문은 Grokking track의 이론적 뼈대고, 실험 설계 도구함이다 — 읽지 않고는 트랙을 시작할 수 없다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **"발판 vs 반박" 의 의미?**
+2. **3 contribution dominance?**
+3. ***unique* 특징?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

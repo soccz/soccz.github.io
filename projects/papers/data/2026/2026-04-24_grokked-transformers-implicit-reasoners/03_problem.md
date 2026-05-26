@@ -1,4 +1,6 @@
 # 03 — 문제 지형도
+> **🧒 한 줄 요약**: "Grokking 의 *mysterious delayed generalization*" 의 문제 정의. *5 단계 lineage* (Power → Nanda → Liu → Chughtai → Wang).
+
 
 > **배경 사다리**: 이 섹션을 이해하려면 ① 트랜스포머가 "입력 토큰 시퀀스를 받아 각 위치에 대한 출력을 생성하는 모델"이라는 것, ② 머신러닝 모델이 "훈련 데이터 정확도(training accuracy)와 새로운 데이터 정확도(generalization) 사이의 간극"을 가질 수 있다는 것, ③ "두 가지 사실을 연결해 제3의 결론을 도출하는" 2단계 추론이 무엇인지 정도만 알면 된다.
 
@@ -86,3 +88,21 @@
 2. **내부 해석 도구 적용**: Logit lens (각 레이어의 예측 변화 추적)와 Causal tracing (특정 입력 정보를 오염시켜 어느 레이어/헤드가 그 정보를 운반하는지 역추적).
 3. **OOD 설계**: 학습 시 "원자적 사실로만" 등장했던 관계를 추론 시 "합성 쿼리"로 제시 → 구조적 일반화 능력 테스트.
 4. **아키텍처 실험**: Parameter sharing(순환형 가중치)으로 비순환 구조의 한계 극복 가능성 탐색.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 실세계 예시?**
+2. **5 단계 lineage 의 turning point?**
+3. **gap-filling?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

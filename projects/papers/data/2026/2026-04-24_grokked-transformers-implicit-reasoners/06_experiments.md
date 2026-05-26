@@ -1,4 +1,6 @@
 # 06 — 실험 해부
+> **🧒 한 줄 요약**: 실험 결과 — Table 1 (Composition) / Table 2 (Comparison) / Table 3 (LLM 비교) + 4-phase grokking trajectory.
+
 
 > **배경 사다리**: 이 섹션을 이해하려면 ① "베이스라인"이 비교 대상이 되는 기존 방법임, ② "정확도(accuracy)"가 모델이 맞힌 비율임, ③ "ablation"이 특정 요소 하나를 제거했을 때 성능 변화를 보는 실험임을 알면 된다.
 
@@ -112,3 +114,21 @@ IND/OOD 정확도를 Composition·Comparison 양쪽에서 측정:
 - **LLM 비교 데이터**: GPT-4-Turbo / Gemini 출력이 캐시됨 → 재현 가능.
 - **분산 미보고 (우려)**: 메인 결과 정확도를 단일 시드로만 보고하는지, 여러 시드로 평균내는지 명확하지 않음. Grokking은 시드에 따라 발생 타이밍이 크게 달라질 수 있다.
 - **구체 수치 투명성**: 논문 접근 제한으로 정확한 OOD 정확도 숫자 확인 불가(본 해체 문서의 제약). 단, 방향성(Composition OOD ≈ 0%, Comparison OOD > 80%)은 다양한 출처에서 확인됨.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Table 1 의 *결정적 수치*?**
+2. **Grokking 의 *predictable transition*?**
+3. **4-phase trajectory?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

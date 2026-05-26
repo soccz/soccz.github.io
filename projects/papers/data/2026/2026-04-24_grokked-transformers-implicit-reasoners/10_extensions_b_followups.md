@@ -1,4 +1,6 @@
 # 10b — 사고 확장: Follow-up 논문 3편
+> **🧒 한 줄 요약**: *Follow-up 3 paper* — Power 2022 (선행), Chughtai 2024 (직접 후속, activation patching), Marks 2024 SFC (mech interp evolution).
+
 
 ---
 
@@ -36,3 +38,21 @@
 **무엇을 얻을 수 있는가**: 
 - 다양한 알고리즘 태스크에서 grokking의 기본 조건(데이터 크기, weight decay, 모델 크기 상호작용). TS Grokking track에서 어떤 hyperparameter 범위를 탐색해야 하는지 가이드.
 - "언제 grokking이 일어나는가"의 경험적 법칙: 훈련 데이터 크기가 충분히 작고, weight decay가 있고, 충분히 오래 훈련할 때. 이 조건이 TS 예측 설정에서 자연스럽게 충족되는가?
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 paper 중 *next deep dive 최우선*?**
+2. ***paper 의 4 modules*?**
+3. **책임도?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

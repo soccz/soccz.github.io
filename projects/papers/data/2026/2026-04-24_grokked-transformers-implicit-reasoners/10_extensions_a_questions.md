@@ -1,4 +1,6 @@
 # 10a — 사고 확장: 자문 질문 5개
+> **🧒 한 줄 요약**: *5 자문 질문* — (Q1) other task generalization, (Q2) Grokking ↔ Foundation model, (Q3) circuit transferability, (Q4) 학습 비용 줄이기, (Q5) LLM-with-grok-finetuning.
+
 
 ---
 
@@ -53,3 +55,21 @@ TS에서의 $\phi$ 정의가 가능하고, 이를 데이터 설계에 활용하�
 본 논문은 GPT-2 수준의 소형 트랜스포머를 처음부터 훈련한다. 실제로 연구자들이 LLM을 특정 추론 태스크에 파인튜닝할 때 grokking이 일어나는가? 사전학습된 representation이 $\mathcal{C}_\text{gen}$ 형성을 가속하는가, 오히려 방해하는가?
 
 이 질문은 "Foundation Model fine-tuning"이 grokking의 관점에서 어떻게 이해될 수 있는지를 묻는다. 실용적으로 중요한 것은, ProTran-TFA나 Chronos 같은 foundation TS 모델을 금융 데이터에 파인튜닝할 때 grokking이 일어나는지 여부다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **5 질문 중 *low-hanging fruit*?**
+2. **5 질문이 *5 한계* 매핑?**
+3. **paper 의 *후속 영향력*?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

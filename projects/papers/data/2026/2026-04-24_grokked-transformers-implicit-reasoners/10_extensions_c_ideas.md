@@ -1,4 +1,6 @@
 # 10c — 사고 확장: 실험 아이디어 2개
+> **🧒 한 줄 요약**: *실험 아이디어 2* — (1) PE × Grokking 격자, (2) TS 도메인의 Grokking.
+
 
 ---
 
@@ -72,3 +74,21 @@ $\phi_{TS}$는 훈련 배치 내 복합 패턴 시퀀스 비율로 조작 가능
 - GPU: A100 1장, $\phi_{TS} \in \{0, 0.3, 0.5, 0.8\}$ × 3 시드 = 12회 실험, 각 10만 스텝 = 약 30 GPU-hour.
 - 데이터 생성: 합성 TS generator 구현 (~100줄 Python).
 - 이 아이디어가 성공하면 Grokking track 논문의 §4 "Data Design for Grokking in TS"로 발전 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **2 idea 의 *공통 base*?**
+2. **반증 조건?**
+3. **NeurIPS contribution?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

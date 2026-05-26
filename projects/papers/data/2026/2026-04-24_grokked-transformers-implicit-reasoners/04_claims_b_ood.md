@@ -1,4 +1,6 @@
 # 04b — 핵심 Claim 해체 (Claim 4~5: OOD·아키텍처)
+> **🧒 한 줄 요약**: 핵심 Claim 4-5: *Composition OOD fail* (categorical) + *Comparison OOD partial* (continuous) + 아키텍처 lessons.
+
 
 > **이 파일은 [04_claims_a_main.md](04_claims_a_main.md)에서 이어집니다.** Claim 1~3을 먼저 읽으면 이해가 더 쉽습니다. 배경 사다리: ① 비순환(non-recurrent) 트랜스포머가 각 레이어를 "한 번씩만 통과"하는 구조임, ② OOD(Out-of-Distribution)가 "훈련 때 보지 못한 패턴"임을 알면 된다.
 
@@ -74,3 +76,21 @@ $$\mathbf{h}^{(l)} = \text{TransformerLayer}_\phi\bigl(\mathbf{h}^{(l-1)}\bigr),
 ---
 
 **→ 방법론 상세는 [05_method_a_intuition.md](05_method_a_intuition.md)부터 이어집니다.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Composition vs Comparison OOD 의 *근본 차이*?**
+2. **아키텍처 lessons?**
+3. **paper 의 *후속 영향력*?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

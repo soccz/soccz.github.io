@@ -1,4 +1,6 @@
 # 04a — 핵심 Claim 해체 (Claim 1~3: 주요 발견)
+> **🧒 한 줄 요약**: 핵심 Claim 1-3: *Grokking 발생* + *generalization circuit 의 mechanistic 존재* + *parametric memory 의 우월성*.
+
 
 > **배경 사다리**: 이 섹션을 이해하려면 ① "grokking"이 '훈련 손실이 0에 도달한 후에도 오래 훈련해야 검증 정확도가 오른다'는 현상임, ② 트랜스포머가 여러 레이어를 쌓은 구조임, ③ "회로(circuit)"가 뉴럴 네트워크 내부에서 특정 기능을 수행하는 서브그래프 구조임을 알면 된다.
 
@@ -74,3 +76,21 @@ $$\phi = \frac{N_\text{inferred}}{N_\text{atomic}}$$
 ---
 
 **→ Claim 4~5 (OOD 실패 메커니즘 + 아키텍처 교훈)는 [04_claims_b_ood.md](04_claims_b_ood.md) 참조.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 Claim 의 의존성?**
+2. **정량 증거?**
+3. **generalization circuit 의 *empirical proof*?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

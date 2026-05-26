@@ -1,4 +1,6 @@
 # 07 — 가정·한계·반박
+> **🧒 한 줄 요약**: paper 의 *한계*: dataset size 의 large requirement / 학습 비용 high / OOD 실패 (composition) / 후속 paper 의 보강.
+
 
 > **배경 사다리**: 이 섹션은 논문의 주장에 비판적으로 접근한다. "반박"은 논문을 폄하하는 것이 아니라, 주장이 성립하는 조건의 경계를 명확히 하는 것이다.
 
@@ -66,3 +68,21 @@ Comparison이 OOD에서 높은 정확도를 보인다고 해서 이것이 "체�
 | **분석 스크립트** | ✅ causal_tracing_*.py 공개 |
 
 가장 큰 재현성 우려: **Grokking 발생 타이밍의 확률적 성격**. 동일 하이퍼파라미터라도 랜덤 시드에 따라 grokking이 50만 스텝 vs 130만 스텝에서 일어날 수 있다. 단일 곡선 그래프가 이 분산을 숨기고 있다면 결과의 안정성이 과장됐을 수 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 한계 의 *후속 해결 timeline*?**
+2. **LLM 비교 의 *시점 한계*?**
+3. **학습 비용?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

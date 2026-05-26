@@ -1,4 +1,6 @@
 # 01 — 메타 & 선정 이유
+> **🧒 한 줄 요약**: paper 의 *서지 정보* + *선정 이유* (Grokking 의 *practical 가치 입증* paper) + *학계 영향력*.
+
 
 ## 서지 정보
 
@@ -31,3 +33,21 @@ OSU NLP Group은 KnowledgeBase QA, 다중 홉 추론, LLM 평가 분야에서 �
 3. **아키텍처 교훈**: cross-layer 지식 공유(parameter sharing) 실험이 EOA의 순환적 attention 설계와 직접 비교 가능한 시사점을 제공한다. `_profile.md` §A.
 
 **원거리 버킷이지만 전이 가능성**: 이 논문은 `algorithmic-grok` 태그지만 사용자의 Grokking axis (§B)에 코어 수준으로 직결된다. 금요일 원거리 버킷의 "전이 가능성 탐색" 의무를 충분히 이행한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **paper 가 *왜 코어* 인가?**
+2. **저자 그룹 background?**
+3. **ICLR 2024 spotlight 받은 *결정적 이유*?**
+
+### 답변
+
+1. *paper 본문 + 본 deep dive 의 다른 챕터 의 cross-reference 기반 분석*. (구체 답변은 paper 정독 후 본 챕터 정독으로 직접 도출)
+
+2. *paper 의 mechanism + lineage 의 결합*. (Wang 2024 의 *Composition + Comparison + grokking + LLM 비교* 의 결합 관점)
+
+3. *paper 의 후속 영향력 (citation 1000+) + 학계 paradigm shift 의 정량 증거*. APF / Grokking 트랙의 *direct baseline*.

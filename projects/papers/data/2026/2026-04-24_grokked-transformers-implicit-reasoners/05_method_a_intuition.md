@@ -1,4 +1,6 @@
 # 05a — 방법론: 큰 그림 (전체 흐름)
+> **🧒 한 줄 요약**: *전체 흐름* — Composition + Comparison task 설정 → Transformer 학습 → grokking 도달 → mechanistic 분석.
+
 
 > **배경 사다리**: 이 섹션을 이해하려면 ① 트랜스포머가 입력 토큰 시퀀스를 처리하는 언어 모델임, ② "지식 그래프(Knowledge Graph, KG)"가 엔티티와 관계로 이루어진 사실 네트워크임, ③ "합성 데이터"가 연구자가 직접 규칙에 따라 생성한 데이터임을 알면 된다.
 
@@ -82,3 +84,29 @@ $$\text{Effect}(l, p) = P_\text{clean}[\hat{y}] - P_\text{corrupted+patched}[\ha
 두 도구의 조합으로 grokking 전·후의 회로 구조 변화를 해부할 수 있다.
 
 **→ 구체적 태스크 설계는 [05_method_b_tasks.md](05_method_b_tasks.md)에서 계속.**
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:gt-composition-circuit:title=Composition Task — 2-hop Circuit,caption=Stage slider 로 4 단계 (input → hop1 → hop2 → output). Generalization circuit 의 *layer-by-layer emergence*.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. ***전체 pipeline* 의 결정?**
+2. ***grokking 의 timing*?**
+3. ***learning rate + weight decay* sensitivity?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

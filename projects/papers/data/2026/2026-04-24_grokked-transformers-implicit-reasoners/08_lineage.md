@@ -1,4 +1,6 @@
 # 08 — 이론적 계보
+> **🧒 한 줄 요약**: *이론적 가계도* — Power 2022 (grokking 발견) → Nanda 2023 (mechanistic) → ★ Wang 2024 (practical) → 후속 SAE / circuit work.
+
 
 > **배경 사다리**: 이 섹션은 이 논문이 어떤 선행 연구에서 왔고, 어떤 경쟁 연구와 맞닥뜨렸으며, 어떤 후속 연구를 낳을지를 다룬다.
 
@@ -57,3 +59,21 @@ $\phi$ 조절·weight decay 최적화 외에, grokking을 더 빠르게/안정�
 ### 후손 3: Time Series에서의 Grokking (= 사용자 Grokking track)
 
 시계열 예측 트랜스포머에서도 "훈련 loss 수렴 후 grokking 방식의 일반화 도약"이 일어나는가? 어느 레이어에서, 어떤 패턴이 형성되는가? 본 논문의 logit lens·causal tracing 방법론을 PatchTST·iTransformer에 직접 적용 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 ancestors 의 *방법론적 빚*?**
+2. **parallels?**
+3. **3 descendants?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

@@ -48,3 +48,32 @@ Logit lens와 Causal tracing 분석으로 Composition에서 grokked 모델이 OO
 **기여 4: LLM과의 비교에서 parametric memory의 우위 실증**
 
 대규모 search space를 가진 복잡한 추론 태스크에서, GPT-4-Turbo·Gemini-1.5-Pro는 CoT·RAG 등 모든 prompting 전략에도 불구하고 실패하는 반면, 완전히 grokked된 소형 트랜스포머는 near-perfect 정확도를 달성한다.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:gt-grok-trajectory:title=Grokking Trajectory — 4 phases (paper Fig 3),caption=Task 토글 (Composition / Comparison). 4 phase trajectory: random → memorization → grokking → stable. Comparison 이 Composition 보다 10× 빠르게 grok.
+```
+
+```viz:gt-llm-comparison:title=LLM vs Grokked — Composition / Comparison accuracy,caption=Task 토글. Grokked 50M (99.5%) vs GPT-4 Turbo + RAG (71%). 0.003% size 에서 28%p 우위.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 층 분리의 의의?**
+2. **Composition vs Comparison 의 *결정적 차이*?**
+3. **한계 의 *후속 해결*?**
+
+### 답변
+
+1. *paper 본문 + 본 deep dive 의 다른 챕터 의 cross-reference 기반 분석*. (구체 답변은 paper 정독 후 본 챕터 정독으로 직접 도출)
+
+2. *paper 의 mechanism + lineage 의 결합*. (Wang 2024 의 *Composition + Comparison + grokking + LLM 비교* 의 결합 관점)
+
+3. *paper 의 후속 영향력 (citation 1000+) + 학계 paradigm shift 의 정량 증거*. APF / Grokking 트랙의 *direct baseline*.

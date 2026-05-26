@@ -1,4 +1,6 @@
 # 05c — 방법론: 두 회로의 경쟁 메커니즘
+> **🧒 한 줄 요약**: *Generalization circuit* 의 mechanism — *two competing circuits* (memorization vs generalization).
+
 
 > **이 파일은 [05_method_b_tasks.md](05_method_b_tasks.md)에서 이어집니다.** 배경 사다리: ① "회로(circuit)"가 뉴럴 네트워크에서 특정 기능을 수행하는 뉴런·어텐션 헤드·레이어의 서브집합임, ② "L2 정규화(weight decay)"가 가중치의 크기를 작게 만드는 제약임을 알면 된다.
 
@@ -92,3 +94,21 @@ Grokking 이후에도 $\mathcal{C}_\text{mem}$이 완전히 사라지지 않는�
 > Grokking = 암기 회로($\mathcal{C}_\text{mem}$)의 파라미터 비효율성이 weight decay에 의해 불이익을 받는 동안, 파라미터 효율적인 일반화 회로($\mathcal{C}_\text{gen}$)가 점진적으로 상위 레이어에 형성되어 결국 지배권을 획득하는 과정이다.
 
 **→ Logit Lens와 Causal Tracing의 구체적 적용은 [05_method_d_analysis.md](05_method_d_analysis.md)에서 계속.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. ***Two competing circuits* 의 의미?**
+2. ***winner takes all* dynamic?**
+3. **paper 의 *후속 영향력*?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

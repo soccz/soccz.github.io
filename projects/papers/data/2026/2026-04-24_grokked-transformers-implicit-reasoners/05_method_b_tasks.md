@@ -1,4 +1,6 @@
 # 05b — 방법론: Composition vs Comparison 태스크 설계
+> **🧒 한 줄 요약**: *Composition vs Comparison* 의 정확한 task design — entity / relation / attribute 의 구체.
+
 
 > **이 파일은 [05_method_a_intuition.md](05_method_a_intuition.md)에서 이어집니다.** 배경 사다리: ① "엔티티(entity)"가 사람·장소·사물처럼 이름 붙여진 개체임, ② "관계(relation)"가 "의_수도는", "을_좋아함" 같이 두 엔티티를 연결하는 동사·형용사임을 알면 된다.
 
@@ -87,3 +89,21 @@ $\phi$를 체계적으로 변화시키면서 grokking 속도와 OOD 정확도를
 핵심 관찰: 데이터 총 사이즈를 고정하고 $\phi$만 바꿔도 grokking 타이밍이 크게 달라진다. 반대로 $\phi$를 고정하고 데이터 총 사이즈를 2배 늘려도 grokking에 미치는 영향은 작다.
 
 **→ 회로 경쟁 메커니즘 상세는 [05_method_c_circuits.md](05_method_c_circuits.md)에서 계속.**
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Composition vs Comparison 의 *task design rationale*?**
+2. **entity vs attribute 의 차이?**
+3. **paper 의 *후속 영향력*?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

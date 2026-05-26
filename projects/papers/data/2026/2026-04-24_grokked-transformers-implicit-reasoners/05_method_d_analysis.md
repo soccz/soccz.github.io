@@ -1,4 +1,6 @@
 # 05d — 방법론: Logit Lens·Causal Tracing 구체 적용
+> **🧒 한 줄 요약**: *Logit Lens + Causal Tracing* 의 적용 — *layer × position* 의 mechanistic localization.
+
 
 > **이 파일은 [05_method_c_circuits.md](05_method_c_circuits.md)에서 이어집니다.** 배경 사다리: ① "어텐션(attention)"이 각 토큰이 다른 토큰에 얼마나 "주목"하는지를 가중치로 표현하는 트랜스포머의 핵심 연산임, ② "intervention(개입)"이 실험에서 특정 변수를 인위적으로 바꿔 인과 효과를 측정하는 방법임을 알면 된다.
 
@@ -93,3 +95,32 @@ Parameter sharing에서 모델은 동일한 "레이어"를 여러 번 통과한�
 | **Weight norm tracking** | "$\mathcal{C}_\text{mem}$ vs $\mathcal{C}_\text{gen}$ 경쟁이 언제 전환되는가?" | 간접 증거, 직접 회로 분리 아님 |
 
 **→ 실험 설계와 결과 해석은 [06_experiments.md](06_experiments.md)에서 계속.**
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:gt-logit-lens:title=Logit Lens — Layer Confidence (paper Fig 4),caption=Task 토글. 각 layer 의 정답 prediction confidence. L4-L6 의 emerging signal + L7-L8 의 commitment.
+```
+
+```viz:gt-causal-tracing:title=Causal Tracing — Layer × Position Heatmap,caption=Activation patching 결과 heatmap. L4-L7 mid-positions 의 hot region = generalization circuit.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Logit Lens vs Causal Tracing 의 *상호 보완*?**
+2. ***generalization circuit 의 localization*?**
+3. **paper 의 *후속 영향력*?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.

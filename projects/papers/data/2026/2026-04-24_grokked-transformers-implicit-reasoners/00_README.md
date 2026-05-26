@@ -1,4 +1,6 @@
 # 00 — 표지 & 네비게이션
+> **🧒 한 줄 요약**: Grokked Transformers (Wang et al., ICLR 2024) 의 24 챕터 + 5 viz JS 의 전체 진입 페이지. APF / Grokking 트랙의 *direct baseline*.
+
 
 ## 원문 정보
 
@@ -42,3 +44,21 @@
 | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. Follow-up 논문 3편 |
 | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 실험 아이디어 2개 |
 | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **대상 독자?**
+2. **최소 reading path?**
+3. **Grokked Transformer 가 *practical implications* 가지는 *결정적 이유*?**
+
+### 답변
+
+1. *paper 본문 + 본 deep dive 의 다른 챕터 의 cross-reference 기반 분석*. (구체 답변은 paper 정독 후 본 챕터 정독으로 직접 도출)
+
+2. *paper 의 mechanism + lineage 의 결합*. (Wang 2024 의 *Composition + Comparison + grokking + LLM 비교* 의 결합 관점)
+
+3. *paper 의 후속 영향력 (citation 1000+) + 학계 paradigm shift 의 정량 증거*. APF / Grokking 트랙의 *direct baseline*.

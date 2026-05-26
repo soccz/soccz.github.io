@@ -1,4 +1,6 @@
 # 09 — 내 연구와의 연결
+> **🧒 한 줄 요약**: APF + Grokking 트랙과의 *직접 연결* — Composition circuit ↔ APF motif, Logit Lens ↔ APF H1/H2 protocol.
+
 
 > **이 섹션은 `_profile.md`의 관심 영역 §A~F 및 보유 자산과 직접 연결한다.** 일반론 나열 금지 — 구체적 메커니즘·수식·draft 섹션을 지칭한다.
 
@@ -86,3 +88,21 @@ AETHER는 암호화폐 시장 ML 프레임워크 설계다. 본 논문의 compos
 2. **분산 미보고 문제**: Grokking 발생 타이밍의 시드 의존성이 보고되지 않았다. Grokking track 논문에서는 **최소 5개 랜덤 시드**에서 grokking 발생 여부와 타이밍을 보고해야 한다.
 
 3. **$\phi$ 개념의 TS 적용**: KG의 inferred/atomic 비율 $\phi$ 개념을 TS 도메인에서 어떻게 정의할지 — 논문이 답하지 않은 이 질문이 Grokking track의 핵심 contribution 후보가 될 수 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. ***4 흡수 지점* 중 main figure 후보?**
+2. **2 충돌?**
+3. **반면교사?**
+
+### 답변
+
+1. paper 의 *§-references* + 본 deep dive 의 cross-reference 기반. 다른 챕터 (12-18) 의 정확 수치 + lineage 와 결합.
+
+2. *Wang 2024 의 핵심 mechanism* (Composition + Comparison + grokking + parametric memory) 의 통합 관점.
+
+3. APF / Grokking 트랙의 *direct baseline* — manuscript §1-§6 + Appendix 의 *모든 explicit reference position*.
