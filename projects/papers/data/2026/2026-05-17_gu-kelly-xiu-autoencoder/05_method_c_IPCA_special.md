@@ -216,3 +216,7 @@ CA0 (선형) → CA1 (1-layer NN) → CA2 (2-layer NN) → CA3 (3-layer NN) 이 
 1. β 네트워크와 f 네트워크를 모두 선형 1-layer 로 두면 (즉 CA0), CA 의 추정량은 IPCA 의 추정량과 회전을 제외하고 동일. 가정: $Z_{t-1}'Z_{t-1}$ 시간 불변.
 2. 요인모델 $r = \beta'f$ 는 임의 가역행렬 $A$ 로 $\beta \to \beta A^{-1}$, $f \to A f$ 회전해도 같은 적합치를 가짐. 따라서 모든 잠재요인 추정량은 회전 동치류 안에서 유일.
 3. 함수형 (선형) 이 같고, 실제 데이터에서 $Z'Z$ 가 cross-sectional rank normalization 으로 거의 상수에 가까움. 차이는 regularization (LASSO, ensemble) 에서만 발생.
+
+
+```viz:gu-ipca-vs-ca:title=paper §3.3 — Conditional β shape,caption=Model selector.
+```

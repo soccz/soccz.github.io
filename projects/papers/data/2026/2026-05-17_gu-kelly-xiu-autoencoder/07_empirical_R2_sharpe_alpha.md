@@ -312,3 +312,11 @@ paper 의 권장 baseline: **K=6 또는 K=5** (Table 3 결과로 CA2 K=6 VW=1.53
 
 ```viz:gu-r2-comparison:title=paper Table 1 — Model Comparison,caption=Metric selector.
 ```
+
+
+```viz:gu-sharpe-comparison:title=paper Table 4 — Sharpe,caption=Portfolio selector.
+```
+
+
+```viz:gu-recession-portfolio:title=paper Fig 4 — Recession Performance,caption=Model selector.
+```

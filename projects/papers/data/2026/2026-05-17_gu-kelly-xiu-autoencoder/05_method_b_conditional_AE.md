@@ -269,3 +269,7 @@ $$
 
 ```viz:gu-ca-architecture:title=paper §3 — CA Architecture,caption=Model selector.
 ```
+
+
+```viz:gu-conditional-beta:title=paper §3.2 — Conditional β,caption=Char Z slider.
+```

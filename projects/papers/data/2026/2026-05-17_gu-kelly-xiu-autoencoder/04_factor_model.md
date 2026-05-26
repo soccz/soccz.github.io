@@ -230,3 +230,7 @@ KPS (2019, JFE) 의 실증적 핵심 발견:
 1. $r_{i,t}$ 스칼라 (자산 $i$ 시점 $t$ 수익), $z_{i,t-1}$ $P\times1$ (특성), $\beta(z)$ $K\times1$ (노출도), $f_t$ $K\times1$ (잠재요인, 모든 자산 공유), $u$ 스칼라 (잡음). $\beta(z)$ 는 **함수**라는 점 — 본 논문이 그 함수를 신경망으로 일반화.
 2. $\beta(z)' = z' \Gamma$, $\Gamma$ $P\times K$ 매핑 행렬. **약점**: 특성 간 상호작용·threshold 효과·saturation 등 비선형 모두 무시.
 3. **선형성 (Eq. 2) 한 군데만**. 나머지 (conditional 구조 Eq. 1, no-arbitrage, 추정 framework) 는 그대로.
+
+
+```viz:gu-factor-extraction:title=paper §3 — Latent Factors,caption=# factors slider.
+```
