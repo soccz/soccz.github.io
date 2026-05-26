@@ -976,6 +976,98 @@
                   'PCA(점선)는 임계값 아래에선 영원히 못 잡지만, γ를 키우면 RP-PCA(주황 점)가 임계값을 넘어 검출됩니다.',
         vizType: 'rppca-phase-transition'
       }
+    },
+    '2026-05-06_itransformer-inverted-ts-forecasting': {
+      eyebrow: 'Paper Deep Dive · Time Series × Transformer × Variate-as-Token',
+      hero: '"시간 축을 뒤집어라" — iTransformer 가 *channel-aware* paradigm 으로 TS forecasting 재정의.',
+      subtitle: '<span class="accent">Yong Liu, Tengge Hu, Haoran Zhang, Haixu Wu, Shiyu Wang, Lintao Ma, Mingsheng Long (ICLR 2024 Spotlight)</span> 의 iTransformer 는 ' +
+                'standard Transformer 의 *시간(T) 방향 attention* 을 정면 뒤집어 *변수(N) 방향 attention + 시간 방향 FFN* 으로 paradigm shift. ' +
+                'PatchTST 의 *channel-independent* 한계 (cross-variate 정보 누락) 를 정면 해결 — ' +
+                '<span class="accent">8 datasets · 4 horizons SOTA</span> + 0-shot generalization (다른 변수 수에도 동일 모델). ' +
+                'TFM era (Chronos, MOIRAI) 의 architectural ancestor.',
+      stats: [
+        { num: '24', label: '챕터' },
+        { num: '7',  label: 'viz JS' },
+        { num: '8',  label: 'datasets SOTA' },
+        { num: 'ICLR 2024', label: 'Spotlight' }
+      ],
+      what: {
+        title: '"Variate-as-token 의 architectural inversion — channel-aware multi-variate 의 first compelling."',
+        body: 'iTransformer 는 architectural twist 가 아닌 *paradigm inversion*. ' +
+              'Vanilla Transformer + Informer + Autoformer = 각 timestep 을 token 으로 (T×T attention). ' +
+              'PatchTST = patches of timesteps + channel-independent. ' +
+              'iTransformer = *각 variate 의 entire history 를 1 token* → variate tokens N개 → ' +
+              '<strong>variate-level attention</strong> + variate-wise FFN. ' +
+              'Cross-variate dependency 명시적 attention. Time 의 *intra-variate* dynamics 는 FFN 이 학습. ' +
+              '4 ablation 모두 confirm: 단순 inversion 이 *5-15% MSE reduction* (PatchTST 대비) + ' +
+              '<span class="accent">0-shot generalization</span> (학습 후 다른 변수 수 N\'에 적용 가능).',
+        verdict: 'Channel-aware multi-variate TS forecasting 의 paradigm. PatchTST 의 channel-independent vs iTransformer 의 channel-aware 의 *empirical debate trigger*. ' +
+                 'APF (Attention Pattern Fields) 연구 의 *T×T motif 분류 체계* 의 대안 축 — variate-level attention 의 N×N motif. ' +
+                 'Foundation TS Model (MOIRAI 2024) 의 patch-based + variate-aware DNA 가 여기에서 출발. 본 deep dive 는 24 챕터 + 7 viz JS 로 *방법 + 실증 + 후속* 완전 분석.'
+      },
+      tour: [
+        { num: '02–03', ttl: '문제와 동기',  desc: 'Channel-independent (PatchTST) vs channel-mixing 의 trade-off. Multi-variate TS 의 cross-variate dependency 누락 문제.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-06_itransformer-inverted-ts-forecasting') + '#sec-03',  text: '동기 보기 →' },
+        { num: '05a–d', ttl: '방법론 4부작',  desc: 'Intuition (token inversion) + Embedding (variate-as-token) + Attention (N×N cross-variate) + FFN architecture (intra-variate temporal).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-06_itransformer-inverted-ts-forecasting') + '#sec-05',  text: '방법 해부 →' },
+        { num: '06',    ttl: '실증 (8 datasets)',  desc: 'ETT (4 variants) + Weather + Traffic + ECL + Exchange + ILI. 4 horizons (96/192/336/720). iTransformer vs Informer/Autoformer/PatchTST/DLinear — 5-15% MSE reduction.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-06_itransformer-inverted-ts-forecasting') + '#sec-06',  text: '실증 →' },
+        { num: '13',    ttl: '12 메타 통찰',  desc: 'Architectural inversion paradigm / Channel-aware re-emergence / Variate generalization 가능성 / TFM ancestor (MOIRAI) 연결.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-06_itransformer-inverted-ts-forecasting') + '#sec-13',  text: '통찰 →' },
+        { num: '14',    ttl: 'PyTorch 구현',  desc: 'Embedding 함수 (variate-as-token) + standard Transformer encoder + Linear head. 단순 inversion 만으로 SOTA 달성하는 minimal implementation.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-06_itransformer-inverted-ts-forecasting') + '#sec-14',  text: '코드 보기 →' },
+        { num: '17',    ttl: '3년 Aftermath',  desc: 'Channel-aware debate (vs PatchTST) → MOIRAI (Salesforce TFM) 의 patch-based + variate-aware → 2026 의 hybrid foundation model.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-06_itransformer-inverted-ts-forecasting') + '#sec-17',  text: 'Aftermath →' }
+      ],
+      preview: {
+        title: '맛보기 — Token Inversion 시각화',
+        subtitle: 'Standard Transformer (timestep tokens) vs iTransformer (variate tokens) 의 attention matrix 비교. ' +
+                  'T×T (시간 의존성) → N×N (변수 의존성) 의 architectural inversion 의 *직접 visual proof*. ' +
+                  '★ 본 paper 의 가장 핵심 그림.',
+        vizType: 'it-token-inversion'
+      }
+    },
+    '2026-05-18_jain-wallace-attention-is-not-explanation': {
+      eyebrow: 'Paper Deep Dive · NLP × Interpretability × Adversarial Verification',
+      hero: '"Attention 은 설명이 아니다" — 7 년 관행 의 adversarial 반박.',
+      subtitle: '<span class="accent">Sarthak Jain, Byron C. Wallace (NAACL 2019, Best Paper Honorable Mention)</span> 는 ' +
+                '2017-2019 의 NLP 관행 — "attention weight 가 모델 의 *설명* 을 제공한다" — 를 ' +
+                '두 가지 adversarial 검증으로 정면 반박. ' +
+                '<span class="accent">H1: 어텐션 vs gradient-based feature importance correlation (Kendall τ < 0.5)</span> + ' +
+                '<span class="accent">H2: counterfactual attention</span> (random permutation + adversarial search 로 *완전 다른 attention* 으로 *동일 prediction* 달성) — ' +
+                '7 년 후속 paper 의 motif causality 실험 의 *반드시 넘어서야 할* benchmark.',
+      stats: [
+        { num: '24', label: '챕터' },
+        { num: '7',  label: 'viz JS' },
+        { num: '12', label: 'datasets' },
+        { num: 'NAACL 2019', label: 'Best Paper HM' }
+      ],
+      what: {
+        title: '"Attention weight ≠ explanation — 두 adversarial 검증의 첫 compelling demonstration."',
+        body: '본 paper 는 단순한 critique 가 아닌 *empirical demolition*. ' +
+              'Attention 의 *설명력* claim 의 *necessary conditions*: ' +
+              '(1) feature importance 와 *positive correlation* + (2) attention 변경 시 *prediction 변경*. ' +
+              'H1 (correlation): BiLSTM encoder 의 attention vs gradient-based feature importance. ' +
+              'Kendall τ < 0.5 in 12 datasets — *moderate correlation only*. Average encoder 는 더 약함. ' +
+              'H2 (counterfactual): *random permutation* attention 으로도 prediction *거의 변경 없음* + ' +
+              '<strong>adversarial search</strong> 로 JSD/TVD 큰 다른 attention 발견 — 동일 prediction 유지. ' +
+              '"Attention 이 *exclusive* explanation 이라면 *불가능*". → ' +
+              '<span class="accent">7 년 ML interpretability 패러다임 전환의 trigger</span>.',
+        verdict: 'NLP 의 *attention-as-explanation* 관행 의 *empirical demolition*. ' +
+                 'APF (Attention Pattern Fields) 연구 의 *정확한 출발선* — motif causality 실험 의 *반드시 넘어서야 할* benchmark. ' +
+                 'Wiegreffe-Pinter 2019 후속 의 *partial rehabilitation* (faithful vs plausible 구분) + ' +
+                 'mech interp era (2023-2026 Anthropic SAE, Marks SFC) 의 *philosophical 출발점*. ' +
+                 '본 deep dive 는 24 챕터 + 7 viz JS 로 *H1 + H2 + 12 datasets* 완전 재현.'
+      },
+      tour: [
+        { num: '02–03', ttl: '문제와 동기',  desc: 'Pre-2019 NLP 의 attention-as-explanation 관행 + 그 *epistemic claim*. Necessary conditions (correlation + counterfactual).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_jain-wallace-attention-is-not-explanation') + '#sec-03',  text: '동기 보기 →' },
+        { num: '05a–d', ttl: '방법론 4부작',  desc: 'Intuition (overall flow) + H1 (Kendall τ correlation) + H2 (permutation + adversarial) + Implementation 디테일 (BiLSTM/CNN/Average encoders).',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_jain-wallace-attention-is-not-explanation') + '#sec-05',  text: '방법 해부 →' },
+        { num: '06',    ttl: '실증 (12 datasets)',  desc: 'IMDB/SST/AGNews/QQP 등 12 datasets × 3 encoders. H1: τ < 0.5 majority. H2: 99%+ permuted attention → 동일 prediction. Adversarial JSD/TVD 큰 attention 발견 — counter-evidence overwhelming.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_jain-wallace-attention-is-not-explanation') + '#sec-06',  text: '실증 →' },
+        { num: '13',    ttl: '12 메타 통찰',  desc: 'Attention 의 *3-tier interpretability* (faithful / plausible / decorative) / Wiegreffe-Pinter 후속 의 *partial 반박* / mech interp era 연결.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_jain-wallace-attention-is-not-explanation') + '#sec-13',  text: '통찰 →' },
+        { num: '14',    ttl: 'PyTorch 재현',  desc: 'BiLSTM encoder + attention pooling + adversarial search loop (JSD/TVD 제약). 단일 파일 reference — H1 + H2 모두 재현.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_jain-wallace-attention-is-not-explanation') + '#sec-14',  text: '코드 보기 →' },
+        { num: '17',    ttl: '7 년 Aftermath',  desc: 'NAACL 2019 → Wiegreffe-Pinter NAACL 2020 (반론) → Bibal 2022 (확장) → 2023-2026 mech interp era (SAE, SFC) 의 philosophical 계보.',  link: 'read.html?slug=' + encodeURIComponent('2026-05-18_jain-wallace-attention-is-not-explanation') + '#sec-17',  text: 'Aftermath →' }
+      ],
+      preview: {
+        title: '맛보기 — Adversarial Attention Heatmap',
+        subtitle: 'paper Figure 1 의 재현. 동일 prediction 을 유지하면서 *완전 다른 attention pattern* 을 찾는 adversarial search. ' +
+                  'JSD > 0.7, TVD > 0.5 의 attention 차이에도 prediction 변화 < 1% — ' +
+                  'attention 의 *non-exclusive explanation* 의 *직접 visual proof*. ★ 본 paper 의 가장 강력한 evidence.',
+        vizType: 'anie-attention-heatmap'
+      }
     }
   };
 
