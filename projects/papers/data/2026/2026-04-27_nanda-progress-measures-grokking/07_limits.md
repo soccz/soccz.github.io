@@ -1,5 +1,8 @@
 # 6. 가정·한계·반박
 
+> **🧒 한 줄 요약**: 한계 — toy task, single arch, seed sensitivity, LLM scalability.
+
+
 > 어떤 *조건이 깨질 때* 본 논문의 결론이 무너지는가. 사용자가 자기 연구로 옮길 때 반드시 고려해야 할 부분.
 
 ## 6.1 명시된 가정 (논문이 대놓고 말한 것)
@@ -80,3 +83,21 @@ Train fraction $\rho = 0.3$ 이 회로의 모든 frequency 를 학습할 수 있
 - 본 논문의 ablation 표 / 부록 figure 의 *세부 수치* 는 미확인.
 
 원문 접근이 가능해지면 본 해체의 §5–§6 부분을 *검증/수정* 할 것. 핵심 아이디어 (3-phase 동학 + Fourier circuit + 세 progress measure) 는 본 해체에서 정확히 capture 된 것으로 판단되지만, *세부 수치* 차이는 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 한계 후속 해결?**
+2. **LLM scalability 진짜 한계?**
+3. **Seed sensitivity 의의?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

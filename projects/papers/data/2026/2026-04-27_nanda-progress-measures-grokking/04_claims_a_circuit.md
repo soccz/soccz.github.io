@@ -1,5 +1,8 @@
 # 3. 핵심 Claim 해체 (a) — Fourier 회로의 발견
 
+> **🧒 한 줄 요약**: 핵심 Claim 1-2: *Fourier circuit 발견* + *Trigonometric identity implementation*.
+
+
 ## Claim 1. 1-layer transformer 가 modular addition 을 *Fourier basis 위의 합각 공식* 으로 푼다
 
 ### 주장 (한 문장)
@@ -48,3 +51,21 @@ $$\text{logit}(c \mid a, b) \approx \sum_{k \in K} w_k \cos\bigl(\omega_k (a + b
 본 논문은 이 가설들을 모두 *causal intervention* (관련 frequency 만 남기고 ablate, 또는 반대로 제거) 으로 검증한다. 이게 §4.4 의 progress measure 와 직접 연결된다.
 
 → 다음 파일 `04_claims_b_progress.md` 에서 Claim 2 (progress measure) 와 Claim 3 (3-phase 동학) 으로 이어진다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Fourier circuit 의 mathematical exactness?**
+2. **SVD 의 필요충분?**
+3. **Critical frequencies 의 의미?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

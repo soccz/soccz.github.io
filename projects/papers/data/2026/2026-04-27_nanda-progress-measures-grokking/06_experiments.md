@@ -1,5 +1,8 @@
 # 5. 실험 해부
 
+> **🧒 한 줄 요약**: 4-phase trajectory + WD sweep + Robustness (other primes).
+
+
 > 논문이 *어떤 실험으로* 자기 주장을 입증했는지 — 그리고 어디까지 입증했고 어디서 멈췄는지.
 
 ## 본문 차단의 정직한 고지
@@ -122,3 +125,21 @@
 본 논문의 실험은 **단일 task 위에서 매우 깊이 들어가는 type**. 일반 ML 논문의 *수십 dataset × 수십 baseline* 표와 정반대 — *하나의 toy task 의 mechanism 을 끝까지 닫는* style. 이 style 이 mech interp 분야의 표준 접근이 되었다 (cf. ROME, IOI Circuit, Induction Heads 모두 같은 style).
 
 이 style 의 강점: *깊고 닫힌 분석*. 약점: *일반화 불확실*. 본 논문이 주장하는 결론 — "그로킹은 cleanup 의 지연" — 이 *modular addition 외의 task 에서도* 성립한다는 보장이 없다. 후속 연구가 이를 부분적으로 확장 (Wang 2024 implicit reasoning, Merrill 2023 sparse parity, Lyle 2025 continual learning) 했지만 *완전한 일반화* 는 미해결.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4-phase exact boundaries?**
+2. **WD sweep Goldilocks?**
+3. **Other primes robustness?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

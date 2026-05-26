@@ -1,5 +1,8 @@
 # 2. 문제 지형도
 
+> **🧒 한 줄 요약**: Grokking *mystery* 의 문제 정의 — Power 2022 발견 후 *mechanism unknown*.
+
+
 > 그로킹은 어떤 종류의 미스터리였는가, 그리고 *왜 mech interp 가 답일 수밖에 없었는가*.
 
 ## 배경 사다리
@@ -87,3 +90,21 @@ Nanda 등은 두 단계로 gap 을 메운다:
 이 두 조합이 만들어내는 결론: **그로킹의 "지연" 은 측정 도구의 한계였다.** 적절한 척도로 보면 학습은 plateau 동안에도 *연속적이고 단조* 로 진행 중이고, "갑작스런 phase transition" 처럼 보이는 부분은 단지 *memorization weights 가 weight decay 에 의해 제거되는 시점* 일 뿐이다.
 
 이 재해석은 grokking 을 *별난 현상* 에서 *일반적 학습 동학의 special case* 로 끌어내린다. 동시에 **mech interp 의 효용** 을 입증한다 — "왜 모델이 이렇게 행동하는가" 라는 질문이, 적절한 회로 가설 + 회로 진행도 측정만 있으면 *경험적으로 답할 수 있다*.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Power 2022 의 mystery 의 핵심?**
+2. **Mech interp 의 needed tool?**
+3. **Nanda 의 gap-filling?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

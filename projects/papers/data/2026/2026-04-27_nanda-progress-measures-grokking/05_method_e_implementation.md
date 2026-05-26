@@ -1,5 +1,8 @@
 # 4. 방법론 ⑤ — 구현 디테일 & 재현 가능성
 
+> **🧒 한 줄 요약**: PyTorch 1-layer Transformer + grokking loop + Fourier analysis.
+
+
 > Hyperparameter 가 *극단값* 들로 가득하다. 일반 NLP/CV 의 directrionable 학습과는 매우 다른 setup — 이 distinct ness 자체가 grokking 을 *induce* 하는 데 필요.
 
 ## 5.E.1 핵심 hyperparameter 표
@@ -67,3 +70,21 @@ Mini-batch 면 noise 가 들어가 progress measure 의 *단조성* 이 깨질 �
 ---
 
 → 이제 §5 (방법론) 끝. `06_experiments.md` 로 넘어가 실험 결과를 해부한다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **1-layer transformer 충분성?**
+2. **WD=1.0 결정적?**
+3. **AdamW vs SGD?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

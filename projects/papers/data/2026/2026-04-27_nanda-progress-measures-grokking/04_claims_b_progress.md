@@ -1,5 +1,8 @@
 # 3. 핵심 Claim 해체 (b) — Progress measure & 3단계 동학
 
+> **🧒 한 줄 요약**: 핵심 Claim 3-4: *Progress measures 의 quantitative grokking* + *4-phase predictable*.
+
+
 ## Claim 2. 회로 진행도는 train/test loss 가 평탄한 plateau 구간에서도 *단조* 변화한다 — 적절한 척도로 보면 그로킹의 "지연" 은 환상이다
 
 ### 주장 (한 문장)
@@ -109,3 +112,21 @@ Plateau 동안 train loss 는 0 에 가깝고 test loss 는 평탄. *외부 관�
 > 그로킹 = (느린 회로 형성) + (그것보다 빠른 train loss 수렴) + (둘 사이의 weight cleanup 시간 비대칭)
 
 이 정의는 *측정 가능* 하며 *반증 가능* 하다. progress measure 가 단조가 아니거나, weight decay 를 0 으로 두면 grokking 이 사라지거나 — 모두 실험적으로 검증 가능. 그래서 이 논문이 후속 연구의 *기본 frame* 이 됐다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 measures 의 complementary axes?**
+2. **Restricted Loss 의 critical?**
+3. **4-phase predictable?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

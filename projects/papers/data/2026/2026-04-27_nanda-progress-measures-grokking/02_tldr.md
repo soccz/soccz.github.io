@@ -57,3 +57,29 @@ $$\text{logit}(c \mid a, b) \approx \sum_{k \in K} w_k \cos(\omega_k (a+b-c))$$
 이론적 기여: Power 2022 의 grokking 을 (a) 동학적으로는 weight decay 가 두 종류 해(memorization vs Fourier-sparse) 의 cleanup 시간 상수를 다르게 만드는 것으로, (b) 표현론적으로는 모듈러 덧셈의 character theory 가 transformer architecture 와 정렬한 결과로 환원.
 
 한계: (i) p=113 단일 모듈로 일반화 한계, (ii) 1-layer 에 한정, (iii) algorithmic data 의 *정확한* 대수 구조에 의존 — TS · vision 등 노이즈 있는 도메인에 그대로 옮길 수 없음. 본 해체 §6에서 상세.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:nanda-grok-phases:title=4-Phase Grokking Trajectory (paper Fig 1),caption=Seed slider. Modular arithmetic 의 4-phase trajectory — Phase 3 의 grokking transition.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 층 분리 의의?**
+2. **Fourier circuit 의 결정적 의미?**
+3. **4-phase predictable 의미?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

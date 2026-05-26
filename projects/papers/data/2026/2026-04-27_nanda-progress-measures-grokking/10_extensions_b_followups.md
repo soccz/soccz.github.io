@@ -1,5 +1,8 @@
 # 9. 사고 확장 (b) — Follow-up 논문 3편
 
+> **🧒 한 줄 요약**: Follow-up — Power 2022, Wang 2024, Chughtai 2024.
+
+
 > 본 논문 *전후* 의 paper 중 사용자가 다음으로 읽어야 할 3편.
 
 ---
@@ -63,3 +66,21 @@
 3. **Lyle 2025** (6–8시간) — non-stationarity 일반화.
 
 이 3편을 다 읽으면 Grokking track 의 *literature 척추* 가 완성된다 (총 22 must-cite 중 핵심 4편 + 본 논문). 다음 코어 버킷 월요일에 위 3편 중 하나가 후보.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **next deep dive 최우선?**
+2. **Wang 2024 practical extension?**
+3. **책임도?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

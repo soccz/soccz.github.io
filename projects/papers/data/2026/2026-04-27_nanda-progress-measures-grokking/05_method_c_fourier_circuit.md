@@ -1,5 +1,8 @@
 # 4. 방법론 ③ — Fourier 회로의 수식 유도
 
+> **🧒 한 줄 요약**: Fourier circuit 의 mathematical form — SVD → top-K → trigonometric.
+
+
 > 이 절은 *논문이 결과만 명시한 것* 을 손으로 유도해 본다. 끝까지 따라오면, 왜 transformer 가 modular addition 을 풀 때 *반드시* (해의 생성공간 안에서) Fourier 회로로 수렴할 수밖에 없는지 한 번에 보일 것이다.
 
 ## 배경 사다리
@@ -115,3 +118,29 @@ $\sum_{k=1}^{p-1} \cos(\omega_k(a+b-c))$ 는 $a+b-c \equiv 0$ 일 때 $p-1$, 아
 $\mathbb{Z}/p\mathbb{Z}$ 의 character theory 가 transformer 의 *embedding-bilinear-unembedding* 구조와 정렬되어, 학습이 자발적으로 발견한 회로는 *5-sparse Fourier representation* + *trig identity 합각 공식* + *cosine-distance logit* 의 합성. 이 회로는 weight decay + AdamW 의 implicit bias 아래에서 *유일* 하다.
 
 → 다음 파일 `05_method_d_progress_measures.md` 에서 이 회로를 어떻게 *측정* 하는지 (세 progress measure) 의 정확한 정의와 implementation 으로 들어간다.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:nanda-fourier-circuit:title=Fourier Basis Visualization (paper §3.2),caption=Frequency selector. critical k ∈ {14, 25, 36, 45, 62, 78} 의 cos/sin basis.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Critical freq 6 의 의미?**
+2. **Trig identity transformer 구현?**
+3. **SVD 효과적 이유?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

@@ -1,5 +1,8 @@
 # 0. 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper 의 *서지 정보* + *선정 이유* — Grokking *mystery → mechanism* paradigm shift trigger.
+
+
 ## 인용 / 권위
 
 - **인용 수**: 2026-04 시점 약 600+ (Semantic Scholar 직접 접근 차단 상태이지만 Wang et al. 2024, Merrill et al. 2023, Lyle et al. 2025, Doshi 2024 의 인용 그래프에서 must-cite 로 등장하는 빈도로 추정).
@@ -28,3 +31,21 @@
 - (b) 세 progress measure 가 *서로 다른 무엇을 재는지* 를 분리해 본다.
 - (c) **사용자가 logistic map / TS Transformer 환경에 그대로 옮기지 못하는 부분** 을 명시한다 (본 논문의 가장 큰 한계는 algorithmic data 의존).
 - (d) "circuit cleanup 의 지연" 가설이 TS non-stationarity 와 만났을 때 어떻게 깨질 수 있는지 의심해본다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **paper 가 코어 인 이유?**
+2. **저자 Neel Nanda background?**
+3. **ICLR 2023 accept 의 결정적 이유?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

@@ -1,5 +1,8 @@
 # Progress Measures for Grokking via Mechanistic Interpretability
 
+> **🧒 한 줄 요약**: Nanda 2023 (ICLR) "Progress Measures for Grokking" 의 26 챕터 + 3 viz JS 의 전체 진입 페이지. APF / Grokking 트랙의 *direct ancestor*.
+
+
 > 메커니즘 해석으로 그로킹의 진행도를 재는 법
 
 ## 메타
@@ -40,3 +43,21 @@
 - `10_extensions_b_followups.md` — 9. Follow-up 3편
 - `10_extensions_c_ideas.md` — 9. 후속 실험 아이디어 2개
 - `11_verdict.md` — 10. 한 줄 판결
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **대상 독자?**
+2. **최소 reading path?**
+3. **Nanda 가 paradigm shift trigger 인 이유?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

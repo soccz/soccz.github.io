@@ -1,5 +1,8 @@
 # 9. 사고 확장 (a) — 자문 질문 5개
 
+> **🧒 한 줄 요약**: 5 자문 질문 — task generalization, LLM scale, circuit transfer, 비용, WD theory.
+
+
 > 본 논문이 *닫지 않은* 부분, *사용자 연구의 hook* 이 될 수 있는 부분. 각 질문은 *왜 중요한가* 의 한 단락 동반.
 
 ---
@@ -56,3 +59,21 @@
 ## 종합
 
 이 5 개 질문은 본 논문이 *닫지 않은* 다섯 면이고, 그 중 Q1, Q3 가 사용자 *Grokking track* 의 직접 contribution 영역; Q4 가 사용자 *APF track* 영역; Q2, Q5 가 *generic methodology* 영역. 모두 동시에 풀 필요는 없고, 두 main track 결정 후 1–2 개에 집중하면 박사급 contribution 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **low-hanging fruit?**
+2. **5 한계 매핑?**
+3. **NeurIPS contribution 후보?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

@@ -1,5 +1,8 @@
 # 8. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: APF + Grokking 연결 — Fourier ↔ APF motif, Progress ↔ APF H1/H2.
+
+
 > 일반론 금지. 사용자의 *active 두 track* (APF + Grokking) 에 어떤 수식 / 발상 / 측정 도구를 *어떤 섹션* 에 *어떤 문장 형태* 로 흡수할지를 구체로 명시.
 
 ## 8.1 Grokking active track 과의 연결 (직접 — § Primary)
@@ -101,3 +104,21 @@ APF paper 의 *related work* 섹션:
 ## 8.5 한 줄 종합
 
 본 논문은 사용자의 *Grokking track 척추* 이고, *APF track 의 motif progress measure 의 원형* 이다. 두 track 모두에서 직접 인용 + 직접 흡수 + 직접 한계 차별화 가능. *연결 강도* 로 보면 본 해체에서 다룬 모든 paper 중 **최상위**.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 흡수 main figure 후보?**
+2. **2 충돌 reviewer objection?**
+3. **반면교사 novel contribution?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

@@ -1,5 +1,8 @@
 # 4. 방법론 ② — Modular addition setup
 
+> **🧒 한 줄 요약**: Modular Task setup — $p=113$ prime, 30% train, $p^2=12,769$ pairs.
+
+
 > 논문 전체가 *하나의 toy task* 위에서 작동한다. 이 task 의 selection 자체가 강한 가설이다.
 
 ## 배경 사다리
@@ -76,3 +79,21 @@ $d_{\text{model}}=128$, hidden=512 의 1-layer 면 약 $128 \cdot 114 + 4 \cdot 
 Modular addition modulo prime $p$ 라는 task 는 *cyclic group character theory 가 transformer 의 bilinear architecture 와 정렬되는 가장 단순한 setup* 이며, 본 논문 전체 방법론은 이 정렬 위에서 작동한다. 이 task 자체가 강한 가설이다.
 
 → 다음 파일 `05_method_c_fourier_circuit.md` 에서 character theory 와 trig identity 의 회로적 구현을 수식으로 풀어낸다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Prime p 중요성?**
+2. **Train ratio 30%?**
+3. **p^2 pairs 의미?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

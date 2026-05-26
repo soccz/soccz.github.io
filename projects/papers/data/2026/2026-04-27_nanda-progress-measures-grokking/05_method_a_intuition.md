@@ -1,5 +1,8 @@
 # 4. 방법론 해부 ① — 큰 그림
 
+> **🧒 한 줄 요약**: *큰 그림* — Modular task → Transformer → grokking → SVD + Fourier → measures.
+
+
 > 본 논문의 방법은 두 줄로 압축된다: **(1) 회로를 닫힌 형태로 reverse-engineer 하라. (2) 그 회로에 대한 진행도 척도를 train trajectory 에 적용하라.** 나머지 디테일은 모두 이 두 줄을 받쳐주는 보조 장치다.
 
 ## 배경 사다리
@@ -70,3 +73,21 @@
 - `05_method_e_implementation.md`: hyperparameter, optimizer, weight decay 값, 학습 step.
 
 각 파일은 독립적으로 읽을 수 있도록 자체 도입부를 갖는다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Pipeline 결정?**
+2. **Toy task strategy?**
+3. **Reverse engineering 5-step?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

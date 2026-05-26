@@ -1,5 +1,8 @@
 # 7. 이론적 계보
 
+> **🧒 한 줄 요약**: *가계도* — Power 2022 → ★ Nanda 2023 → ACDC/Wang/SFC 2024.
+
+
 > 이 논문은 *어디서 와서*, *동시기에 누구와 경쟁* 했고, *어디로 갔는가*.
 
 ## 7.1 이론적 조상 (직접 연결)
@@ -87,3 +90,21 @@ Nonabelian group ($S_5$ etc.) 에서의 grokking 회로. 본 논문의 character
 > Power 2022 (현상 발견) → Anthropic 2021 + Olsson 2022 (mech interp 방법론) → **Nanda 2023 (메커니즘 닫음 + progress measure)** → Conmy 2023 (자동화), Doshi 2024 (multi-task), Wang 2024 (implicit reasoning), Lyle 2025 (continual + non-stationarity)
 
 본 논문은 grokking 의 *현상학* 을 *메커니즘론* 으로 전환한 *축* 의 paper. 이 전환 이후 grokking 연구는 "왜 일어나는가" 가 아니라 "어떻게 측정/조작/예측하는가" 의 질문으로 옮겨갔다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 ancestors 방법론적 빚?**
+2. **parallels 방향 차이?**
+3. **3 descendants Nanda 영향력?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

@@ -1,5 +1,8 @@
 # 4. 방법론 ④ — 세 progress measure 의 정확한 정의와 implementation
 
+> **🧒 한 줄 요약**: *3 progress measures* — Restricted Loss, Gradient Symmetry, Trig Loss.
+
+
 > 회로를 알았다면, 이제 회로의 *진행도* 를 잰다. 본 절은 논문의 *방법론적 핵심*. 세 measure 가 각각 *무엇을* 재고 *어떻게 구현* 되는지를 분리.
 
 ## 배경 사다리
@@ -152,3 +155,29 @@ $G \to 1$ — 한 frequency 만 모든 energy. Sparse Fourier circuit 시그니�
 세 progress measure 는 (i) restricted loss 가 회로의 *output 측 충분성*, (ii) excluded loss 가 *output 측 필요성*, (iii) Gini 가 *weight 측 sparsity* 를 분리 측정하며, 셋이 동시에 단조 변화 + causal intervention 으로 검증되는 것이 본 논문의 *반증 가능* 한 epistemic claim 의 핵심.
 
 → 다음 파일 `05_method_e_implementation.md` 에서 hyperparameter, code, reproduction 디테일.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:nanda-progress-measures:title=3 Progress Measures Evolution (paper Fig 5),caption=Measure 토글. Restricted Loss + Gradient Symmetry + Trigonometric Loss 의 parallel evolution.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 measures complementary?**
+2. **Restricted Loss most direct?**
+3. **Gradient Symmetry earliest signal?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.

@@ -1,5 +1,8 @@
 # 9. 사고 확장 (c) — 후속 실험 아이디어 2개
 
+> **🧒 한 줄 요약**: 실험 아이디어 — Other primes scaling, Multi-task circuit interference.
+
+
 > 사용자가 *직접* 시도해볼 만한 실험 두 개. 각 아이디어는 가설 / 데이터 / 비교 조건 / 예상 결과 / 반증 조건 / 비용 추정.
 
 ---
@@ -112,3 +115,21 @@ APF 의 *motif causality* 다음 단계로 *motif 형성 dynamics* 를 측정 �
 - Idea 2 는 사용자 *APF track* 의 motif causality 후속. APF paper 의 §5 (motif dynamics) 에 추가.
 
 지도교수가 두 track 중 어느 쪽으로 좁히느냐에 따라 둘 중 하나에 집중. *둘 다 1.5–2 주 내 끝나는* 분량이라, 둘 다 시도해 보고 더 깔끔한 결과 쪽으로 paper 라인 결정 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **2 idea 공통 base?**
+2. **반증 조건?**
+3. **NeurIPS contribution?**
+
+### 답변
+
+1. paper 의 §-references + 본 deep dive 의 cross-reference 기반.
+
+2. Nanda 2023 의 핵심 mechanism (Fourier circuit + progress measures) 의 통합 관점.
+
+3. APF / Grokking 트랙의 direct baseline — manuscript §1-§6 + Appendix 의 모든 explicit reference position.
