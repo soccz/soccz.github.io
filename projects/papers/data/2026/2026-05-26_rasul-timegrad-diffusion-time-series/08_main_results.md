@@ -81,7 +81,7 @@ paper:
 
 ## 8.4 인터랙티브 시각화
 
-```viz:tg-crps-table2:title=paper Table 2 — CRPS_sum on 6 datasets (interactive),caption=Dataset 토글 (Exchange / Solar / Electricity / Traffic / Taxi / Wikipedia). 11 models 의 CRPS_sum bar 비교. TimeGrad 가 5/6 SOTA. Taxi 0.114 (vs 0.179 Transformer-MAF) 36% 개선이 가장 큰 차이. Exchange (smallest D=8) 만 baseline 과 tie.
+```viz:tg-crps-comparison:title=Table 2 — CRPS_sum on 6 datasets (interactive),caption=Dataset 슬라이더 (Exchange / Solar / Electricity / Traffic / Taxi / Wikipedia). 11 models 의 CRPS_sum bar 비교 (실제 paper 수치). TimeGrad 가 5/6 SOTA — Taxi 36%, Wikipedia 23%, Traffic 21% 개선이 가장 큰 차이. Exchange (smallest D=8) 만 VES/VAR 와 tie. ★ best 표시 + TimeGrad highlight.
 ```
 
 ---

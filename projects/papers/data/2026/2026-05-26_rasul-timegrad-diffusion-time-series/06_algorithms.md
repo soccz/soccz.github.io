@@ -186,7 +186,7 @@ paper:
 
 ## 6.4 인터랙티브 시각화 — Langevin Sampling
 
-```viz:tg-langevin-sampling:title=Algorithm 2 — Annealed Langevin Sampling (interactive),caption=N slider (1~100) 로 reverse step 진행. 시작 시점 N=100 의 pure noise → 점차 clean prediction 으로 수렴. z noise (stochastic part) 의 contribution 도 visualize. Mode 마다 다른 sample 도착하는 Langevin 의 다양성.
+```viz:tg-langevin-sampling:title=Algorithm 2 — Annealed Langevin Sampling (interactive),caption=n 슬라이더 (N=100 → 1) 로 reverse step 진행. n=100: pure noise 시작점. n=50: 점차 형태 보임. n=1: clean prediction. seed 슬라이더로 다른 sample trajectory 보기 — Langevin 의 stochastic 다양성. target x^0 (점선) 와 current x^n (실선) 비교.
 ```
 
 ---
@@ -217,5 +217,93 @@ paper:
 1. **Training**: 모든 noise step $n \in [1, N]$ 의 학습이 필요 — 한꺼번에 다 forward 하면 batch size $\times N$ 부담. **Random $n$**: 매 step random pick → unbiased gradient estimator (importance sampling). 평균적으로 모든 $n$ 학습. **Inference**: 분포에서 sample 추출 — Markov chain reverse process 의 **정확한 sequential 진행** 필요. $n = N \to 1$ 의 deterministic loop. random pick 하면 chain 안 됨.
 2. **마지막 step 의 의미**: $\mathbf{x}^1 \to \mathbf{x}^0$. $\mathbf{x}^0$ 가 final clean output 이어야 — Langevin noise 추가 시 noisy. 다른 step ($n \geq 2$) 은 다음 step 에서 다시 denoising → noise OK. 마지막 step 만 pure deterministic prediction 으로 마무리.
 3. (a) **Chen 2021 (WaveGrad)**: improved variance schedule + L1 loss → N step 줄여도 quality 유지. (b) **Song 2021 (DDIM)**: 일반화된 non-Markovian process → faster sampling 가능. **paper 본문**: "A possible strategy to improve sampling times introduced in (Chen et al., 2021) uses a combination of improved variance schedule and an L1 loss to allow sampling with fewer steps at the cost of a small reduction in quality if such a trade-off is required."
+
+---
+
+## 6.6 구체 학습 trajectory — D=10 toy 예시
+
+본 deep dive 의 추가 시뮬 — paper 결과 의 trajectory 직관.
+
+### Phase 1 — Random initialization (epoch 0)
+
+```
+ε_θ ≈ random output
+Loss ≈ 1.0  (≈ E[|ε - random|²] = E[|ε|²] = D = 10 / D = 1)
+```
+
+학습 시작: prediction 이 무작위. Loss = MSE of unit Gaussian ≈ 1.0.
+
+### Phase 2 — Easy steps 먼저 (epoch 1-3)
+
+```
+Loss curve:
+  Random n 의 분포 의 mean MSE
+  
+  큰 n (가까운 noise level):
+    x^n ≈ noise → ε_pred ≈ noise 자체 (학습 쉬움)
+    MSE 빨리 감소
+  
+  작은 n (noise level 작음):
+    x^n ≈ clean → ε 식별 어려움 (모든 noise 가 작음)
+    MSE 천천히 감소
+```
+
+→ 큰 n 부터 학습 완성. 작은 n 은 나중에.
+
+### Phase 3 — Hard steps 완성 (epoch 10-30)
+
+```
+Loss → 0.05-0.1 (typical converged value)
+Sampling quality:
+  - x^100 → x^50: 깔끔한 transition (학습 잘 됨)
+  - x^50 → x^10: 점점 디테일
+  - x^10 → x^0: 마지막 fine detail
+```
+
+### Phase 4 — Convergence (epoch 50+)
+
+```
+ε_θ(x^n, h, n) ≈ true ε (모든 n)
+
+학습 종료 신호:
+- Validation CRPS_sum plateau
+- Loss 0.05-0.1 정도 안정
+- Sample quality 시각적 OK
+```
+
+paper: V100 GPU 16GB 로 6 datasets 모두 학습 가능 (small batch=64 + N=100 steps).
+
+---
+
+## 6.7 Inference 비용 정량
+
+**가정**:
+- $S = 100$ sample paths
+- Horizon $= 24$ steps
+- $N = 100$ diffusion steps
+- 1 ε_θ forward = $\tau$ ms (V100 기준 약 1-5 ms)
+
+**총 inference 비용 (per series)**:
+```
+Total time = S × horizon × N × τ
+           = 100 × 24 × 100 × τ
+           = 240,000 × τ ms
+           = 240 ~ 1,200 seconds  (τ=1~5ms)
+           = 4 ~ 20 minutes
+```
+
+→ **한 series 의 forecasting 에 5-20분**. 1000 series 면 90+ 시간.
+
+**Sampling 가속 효과** (DDIM N=10):
+```
+Total time = 100 × 24 × 10 × τ
+           = 24,000 × τ
+           = 24 ~ 120 seconds
+           = 0.4 ~ 2 minutes per series
+```
+
+→ **10배 빠른 inference**. Production 에 결정적.
+
+---
 
 다음 [07_data_baselines.md](07_data_baselines.md) — 6 datasets + 11 baselines + CRPS_sum metric.

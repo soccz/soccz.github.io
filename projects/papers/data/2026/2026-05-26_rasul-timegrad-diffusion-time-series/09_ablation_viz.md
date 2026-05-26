@@ -54,7 +54,7 @@ paper 본문에서 명시 안 함, 본 deep dive 의 추가:
 
 ## 9.3 인터랙티브 시각화 — Fig 3 재현
 
-```viz:tg-ablation-N:title=paper Fig 3 — N ablation on Electricity (interactive),caption=N 슬라이더 (2~256, log scale) 로 CRPS_sum 변화 확인. N=2-4 는 매우 나쁨, N≈10 부터 plateau 시작, N≈100 sweet spot, N>100 marginal. paper 가 5 independent runs 의 mean + std.
+```viz:tg-ablation-N:title=Fig 3 — N ablation on Electricity (interactive),caption=N index 슬라이더로 10 데이터 포인트 (N=2,4,8,16,32,64,100,128,192,256) 사이 이동. log-log scale. paper 추정 수치: N=2 → 0.18, N=100 → 0.0206, N=256 → 0.0212. plateau 시작 N≈10 + sweet spot N≈100 + N>100 marginal/약간 worse. shaded band = ±std error.
 ```
 
 ---
@@ -83,6 +83,11 @@ paper caption:
 
 paper:
 > "To highlight the predictions of TimeGrad we show in Figure 4 the predicted median, 50% and 90% distribution intervals of the first 6 dimensions of the full 963 dimensional multivariate forecast of the Traffic benchmark."
+
+### 인터랙티브 시각화 — Fig 4 재현
+
+```viz:tg-traffic-predictions:title=Fig 4 — Traffic 6/963 dim prediction intervals (interactive),caption=Dimension 슬라이더 (1~6) 로 다른 도로 sensor 의 24-hour prediction 확인. 각 도로 scale 다름 (paper 명시: order of magnitude difference) — baseline 0.02-0.07, peak amplitude 0.05-0.45. observation (점선) vs median prediction (실선) + 50%/90% intervals. peak 시간 (8h/18h) 에 interval 더 넓음 — uncertainty calibration.
+```
 
 ---
 
@@ -156,5 +161,63 @@ paper:
 1. **Sohl-Dickstein 2015 의 핵심 결과**: forward process 의 step 이 충분히 작으면 ($\beta_n$ small) reverse process 가 **Gaussian 으로 approximation 가능**. $N$ 가 크면 → $\beta_n$ 가 작음 → Gaussian 가정 정당 → $\mu_\theta(\mathbf{x}^n, n)$ 학습 잘 됨. 너무 작은 $N$ (2-4) 에서는 $\beta_n$ 너무 커서 reverse process non-Gaussian → 학습 + sampling 실패. $N \approx 100$ 이 quality + computational cost 의 sweet spot.
 2. **Calibration check**: 다음 5 가지 시각 확인. (a) Median prediction 이 ground truth 근처. (b) 50% interval 에 약 50% 시점 들어옴. (c) 90% interval 에 약 90% 시점 들어옴. (d) Width 가 시점 별로 적절 변동 (peak 부근 넓고 평상시 좁음). (e) Anomaly 시 (대규모 사건) 의 ground truth 도 90% interval 안에 들어옴. Fig 4 의 6 도로 모두 이 5 조건 충족.
 3. **WaveGrad (Chen 2021)**: 기존 Markovian process **그대로** + **schedule + loss 개선**. $\beta_n$ cosine schedule + L1 loss → $N = 25-50$ 가능. **DDIM (Song 2021)**: process 자체 **non-Markovian 으로 일반화**. Forward 가 임의 step skip 가능 → deterministic sampling + $N = 10-25$ 가능. **차이**: WaveGrad = 기존 framework 의 hyperparameter tuning, DDIM = framework 자체 일반화.
+
+---
+
+## 9.8 N 의 정량 분석 — 본 deep dive 의 추가 계산
+
+paper Fig 3 의 추정 수치 ([tg-ablation-N viz](#) 참조):
+
+| N | CRPS_sum | vs N=100 | Inference time (relative) |
+|---|----------|----------|---------------------------|
+| 2 | ~0.180 | **+773%** | 0.02× |
+| 4 | ~0.082 | +298% | 0.04× |
+| 8 | ~0.045 | +118% | 0.08× |
+| 16 | ~0.028 | +36% | 0.16× |
+| 32 | ~0.022 | +6% | 0.32× |
+| 64 | ~0.021 | +1% | 0.64× |
+| **100** (paper default) | **0.0206** | (baseline) | **1.0×** |
+| 128 | ~0.021 | +1% | 1.28× |
+| 192 | ~0.021 | +2% | 1.92× |
+| 256 | ~0.021 | +3% | 2.56× |
+
+### Sweet spot 의 trade-off
+
+- **$N = 32$ 가 매우 효율적 sweet spot**: paper default 의 31% inference 시간 + +6% CRPS_sum.
+- **$N = 100$ 가 paper choice**: 최적이지만 inference cost 부담.
+- **$N = 256$**: marginal 또는 약간 worse (overfitting 의심).
+
+### WaveGrad 가속 비교 (paper future work)
+
+paper 본문 인용 (Chen 2021):
+- Improved variance schedule (cosine) + L1 loss → $N = 25-50$ 가능.
+- TimeGrad 의 표준 schedule + MSE 보다 sample quality 유지.
+
+→ **Practical 응용**: $N = 25$ 까지 가속 가능 + production-ready inference time (per series ~1 분).
+
+---
+
+## 9.9 CRPS_sum 의 정확한 의미 — 한번 더 정리
+
+```
+CRPS_sum = E_t[ CRPS( F̂_sum(t), Σ_i x^0_{i,t} ) ]
+```
+
+**해석 단계**:
+1. $F̂_sum(t)$ = predicted CDF of $\sum_i x^0_{i,t}$ (sum across $D$ dimensions).
+2. 실제 sum = $\sum_i x^0_{i,t}$ (ground truth).
+3. CRPS = predicted CDF 와 실제 step function 의 squared distance.
+4. $E_t$ = horizon 평균.
+
+**왜 sum 인가**:
+- $D = 2,000$ 의 per-dim CRPS 평균은 noisy.
+- Sum 의 CRPS 가 multivariate joint distribution 의 dimension 간 dependency 평가.
+- $\sum$ 이 dimension 간 cancellation 일어날 수 있지만 (entity A + vs B -) production metric.
+
+**TimeGrad 5/6 SOTA 의 의미**:
+- 5 dataset 에서 best CRPS_sum → multivariate joint distribution 의 sum 형태 정확 추정.
+- 1 dataset (Exchange) 에서 simple linear (VAR) 능가 — exchange 는 multivariate dependency 적은 (단순 currency pair) 데이터 의 limit.
+
+---
 
 다음 [10_related_work.md](10_related_work.md) — Section 5 (Energy-based methods + Time series forecasting lineage).

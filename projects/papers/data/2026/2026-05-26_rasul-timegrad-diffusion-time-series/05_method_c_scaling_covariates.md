@@ -131,4 +131,75 @@ paper footnote 1:
 2. **LSTNet 의 input→output residual**: point forecasting 에 효과적 — output 이 input 의 가까운 변형. **TimeGrad**: output 이 **noise prediction** ($\epsilon$) — input 시계열과 분포 완전 다름 ($\epsilon \sim \mathcal{N}(0, \mathbf{I})$). Residual connection 의 mismatched scale 가 학습 방해.
 3. (a) **Time features (deterministic by calendar)**: hour of day, day of week, day of month 등 — 미래 시점도 정확히 알 수 있음. (b) **Lag features (with appropriate lag ≥ prediction horizon)**: 예측 horizon = 24 라면 lag 24 이상만 사용 — leakage 회피. **categorical embedding** 은 time-invariant 라 항상 known.
 
+---
+
+## 5c.8 구체 예시 — D=10 toy multivariate 시뮬
+
+**문제 setup**: 10 개 entity (도로 sensor 흉내) 의 24-hour multivariate forecast.
+
+### 데이터 디자인
+
+| Entity i | Baseline | Peak amplitude | Peak time | Type |
+|---------|---------|----------------|-----------|------|
+| 0 | 0.05 | 0.15 | 8h | 출근 도로 |
+| 1 | 0.45 | 0.30 | 18h | 퇴근 도로 |
+| 2 | 0.08 | 0.10 | 12h | 점심 시간 |
+| 3 | 0.35 | 0.40 | 8h + 18h | rush hour |
+| 4 | 0.12 | 0.05 | (없음) | 야간 도로 |
+| 5-9 | (mixed) | (mixed) | (mixed) | 다양 |
+
+**Scaling 필요성**:
+- Entity 0: 점유율 0.05-0.20 (4배)
+- Entity 1: 0.45-0.75 (1.7배)
+- Entity 4: 0.12-0.17 (1.4배)
+
+→ Scale 차이 5-6배. Per-entity mean 으로 normalize 안 하면 RNN 이 entity 1 (큰 값) 에 편향.
+
+### Per-Entity Scaling 적용
+
+```
+1. Compute context mean per entity:
+   μ_i = mean(x^0_{i, 1:t₀-1})
+   
+   μ_0 = 0.08, μ_1 = 0.55, μ_4 = 0.14, ...
+
+2. Scale input:
+   x̃^0_{i,t} = x^0_{i,t} / μ_i
+   
+   Now all entities are in scale ~1.
+
+3. Train on x̃^0_t.
+
+4. Inference: predict x̃^0_t → multiply by μ_i to get x^0_t.
+```
+
+**효과**: 학습 후 모든 entity 에 동일한 model capacity 분배.
+
+### Covariates 디자인 (24-hour data)
+
+**Time-dependent**:
+- `hour_of_day` ∈ {0, 1, ..., 23} → learnable embedding (예: dim=8)
+- `day_of_week` ∈ {0, 1, ..., 6} → learnable embedding (예: dim=4)
+
+**Lag features** (24-step prediction → lag ≥ 24):
+- `x_{t-24}`: 24시간 전 동시간 값
+- `x_{t-168}`: 1주일 전 동시간 값
+
+**Concatenation**:
+```
+c_t = [hour_emb(t), dow_emb(t), x_{t-24}, x_{t-168}]
+     ∈ R^{8 + 4 + D + D} = R^{12 + 2D}
+```
+
+### RNN Input
+
+```
+rnn_input_t = concat(x̃^0_t, c_t)
+            ∈ R^{D + 12 + 2D} = R^{3D + 12}
+```
+
+D=10 → rnn_input ∈ R^{42}. RNN hidden=40 → 충분한 capacity.
+
+---
+
 다음 [06_algorithms.md](06_algorithms.md) — Algorithm 1 (Training) + Algorithm 2 (Sampling via annealed Langevin).

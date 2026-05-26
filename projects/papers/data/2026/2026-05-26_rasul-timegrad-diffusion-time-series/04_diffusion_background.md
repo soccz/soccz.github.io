@@ -230,6 +230,11 @@ $$
 \mathbb{E}_{\mathbf{x}^0, \epsilon}\left[\frac{\beta_n^2}{2\Sigma_\theta \alpha_n (1-\bar\alpha_n)} \| \epsilon - \epsilon_\theta(\sqrt{\bar\alpha_n}\mathbf{x}^0 + \sqrt{1-\bar\alpha_n}\epsilon, n) \|^2\right]
 $$
 
+### 인터랙티브 시각화 — ε prediction
+
+```viz:tg-noise-prediction:title=ε_θ Noise Prediction (Eq 7 학습 목표),caption=n 슬라이더로 noise step. 점선 = target x^0, 실선 = noisy x^n, 점점선 = ε_pred 로 reconstructed x^0_pred. n 작으면 (clean) prediction 거의 perfect. n 크면 (noisy) prediction error 누적. 학습 목표 = 모든 n 에서 ε 정확 예측.
+```
+
 ### 수식 4줄 풀이 — Eq 7
 
 **기호 뜻**:
@@ -253,6 +258,13 @@ $$
 - $\frac{\beta_n^2}{2\Sigma_\theta \alpha_n (1-\bar\alpha_n)}$ weight 는 paper Ho 2020 가 **1 로 무시** 하는 경우 더 잘 됨 (simplified loss).
 - $\Sigma_\theta$ 도 fixed (Ho 2020 default $= \tilde\beta_n$) — paper 가 $\Sigma_\theta = \tilde\beta_n$ 선택.
 - noise prediction이 잘 안 되면 sampling 시 mode collapse 또는 발산.
+
+---
+
+## 인터랙티브 시각화 — Eq 1 + Eq 3 Forward Process
+
+```viz:tg-diffusion-process:title=Forward Diffusion Process (Eq 1, Eq 3),caption=n 슬라이더로 diffusion step 진행 (1→100). View 토글로 noisy sample x^n vs β schedule vs ᾱ_n 누적 확인. n=1 에서 거의 clean (점선 x^0 와 일치). n=100 에서 pure Gaussian noise. ᾱ_n 가 1→0 으로 변하면서 신호 보존 비율 감소. ★ DDPM 의 핵심 형식.
+```
 
 ---
 

@@ -262,18 +262,216 @@ ASCII 도식 + interactive viz 카탈로그.
 
 ---
 
-## 15.10 인터랙티브 시각화 카탈로그
+## 15.10 인터랙티브 시각화 카탈로그 (신규 7개)
 
-| viz id | 챕터 | 무엇 | 입력 | 상호작용 |
-|--------|------|------|------|---------|
-| `tg-crps-table2` | 08 | Table 2 의 6 datasets × 11 models CRPS_sum | paper exact values | dataset toggle |
-| `tg-ablation-N` | 09 | Fig 3 의 N ∈ {2, 4, ..., 256} ablation on Electricity | paper Fig 3 trend | N slider (log scale) |
-| `tg-diffusion-process` | 04 | Forward/reverse Markov chain step-by-step | β_n schedule, synthetic data | N slider + n slider |
-| `tg-langevin-sampling` | 06 | Algorithm 2 의 annealed Langevin step | trained ε_θ output | n slider + replay button |
-| `tg-traffic-predictions` (재사용) | 09 | Fig 4 의 6/963 dimensions prediction intervals | Traffic-like synthetic | dimension toggle |
-| `pt-crps-table1` (재사용) | 08 | ProTran 의 Table 1 형식으로 TimeGrad 와 baseline 동시 비교 | combined Table 2 + ProTran Table 1 | model + dataset toggle |
+| viz id | 챕터 | 무엇 | 상호작용 |
+|--------|------|------|---------|
+| `tg-diffusion-process` | 04 (preview) | Forward Markov chain (Eq 1, Eq 3) — noisy sample x^n + β schedule + ᾱ_n | n 슬라이더 + view 토글 |
+| `tg-noise-prediction` | 04 | ε_θ noise prediction — noisy x^n vs predicted x^0_pred | n 슬라이더 |
+| `tg-architecture-flow` | 05b | Full architecture — RNN encoding + diffusion reverse loop | 4-step 토글 |
+| `tg-langevin-sampling` | 06 | Algorithm 2 — annealed Langevin trajectory | n 슬라이더 + seed |
+| `tg-crps-comparison` | 08 | Table 2 의 6 datasets × 11 models CRPS_sum | dataset 슬라이더 |
+| `tg-ablation-N` | 09 | Fig 3 의 N ablation on Electricity | N index 슬라이더 (log) |
+| `tg-traffic-predictions` | 09 | Fig 4 의 6/963 dim 의 50%/90% intervals | dimension 슬라이더 |
 
-→ 각 viz 의 구현은 site repo `viz/tg-*.js` (신규 작성 또는 ProTran/QuantileFormer 의 viz 재사용).
+→ 각 viz 의 구현은 site repo `viz/tg-*.js` 신규 작성. paper exact values + paper trend 기반 reproduction. ★ deep.html preview 의 default 는 `tg-diffusion-process`.
+
+---
+
+## 15.10b ASCII 도식 10 — Loss Landscape (학습 phase 별 변화)
+
+```
+   Phase 0 (초기): Loss ≈ 1.0
+   ─────────────────────────
+   ε_θ output: random
+   학습 신호: 모든 n 에서 strong gradient
+   
+   ↓ epoch 1-3
+   
+   Phase 1 (빠른 학습):
+   ────────────────────
+   Loss ≈ 0.3-0.5
+   큰 n (noisy) 부터 학습 — ε 식별 쉬움
+                 │
+                 ↓
+   Loss curve:   ╲
+                  ╲
+                   ╲___    (큰 n)
+                       ╲___
+   
+   ↓ epoch 4-10
+   
+   Phase 2 (꾸준한 개선):
+   ────────────────────
+   Loss ≈ 0.1-0.2
+   작은 n 도 학습 시작 — fine detail
+   
+   ↓ epoch 11-30
+   
+   Phase 3 (수렴):
+   ──────────────
+   Loss ≈ 0.05-0.1 (plateau)
+   Sample quality 시각적 OK
+   Validation CRPS_sum stable
+```
+
+---
+
+## 15.10c ASCII 도식 11 — Audio vs Time Series Diffusion 비교
+
+```
+   Audio Diffusion (WaveGrad/DiffWave)        Time Series Diffusion (TimeGrad)
+   ──────────────────────────────────         ─────────────────────────────────
+
+   x ∈ R^L (single waveform)                  x ∈ R^{T × D} (multivariate)
+   length L = thousands                       D = 8 ~ 2000 (paper)
+                                              T = horizon (24 steps)
+
+   Neighbors strongly correlated              Neighbors arbitrary order
+   (sound wave continuity)                    (Wikipedia page IDs ≠ semantic order)
+
+   Uniform scale [-1, +1]                     Order-of-magnitude scale 차이
+                                              (Traffic per-road occupancy)
+
+   Conditioning: mel-spectrogram              Conditioning: RNN hidden h_{t-1}
+   (frequency representation)                 (autoregressive history)
+
+   Output: single waveform                    Output: multivariate vector at next t
+   (1 time scale)                             (1 + autoregressive next t+1, t+2, ...)
+```
+
+---
+
+## 15.10d ASCII 도식 12 — Forward Posterior 의 Mean (Eq 5) 시각화
+
+```
+   q(x^{n-1} | x^n, x^0) = N(x^{n-1}; μ̃_n, β̃_n I)
+   
+   Mean μ̃_n 의 두 contribution:
+   
+              √ᾱ_{n-1} β_n            √α_n (1 - ᾱ_{n-1})
+   μ̃_n = ─────────────────── x^0 + ─────────────────── x^n
+               1 - ᾱ_n                  1 - ᾱ_n
+              └────┬────┘             └────┬────┘
+                  weight on x^0          weight on x^n
+   
+   극한:
+   - n=1 일 때: weight on x^0 ≈ 1 (clean original 거의 그대로)
+   - n=N 일 때: weight on x^0 ≈ 0 (pure noise contribution 없음)
+                weight on x^n ≈ 1 (pure noise 가 dominate)
+   
+   → DDPM 의 reverse process 가 시점별 다른 weight 로
+     x^0 의 기여 점점 줄이고 x^n 의 (noisy) input 점점 늘림
+```
+
+---
+
+## 15.10e ASCII 도식 13 — Inference 비용의 정량
+
+```
+   Single forward (ε_θ at N=100):
+   ─────────────────────────────
+   V100 GPU 16GB, batch 1, D=370 (Electricity):
+   1 ε_θ forward ≈ 2-3 ms
+   
+   Single time-step prediction (one x^0_t):
+   ──────────────────────────────────────
+   N=100 × 2.5 ms = 250 ms
+   
+   Single trajectory (horizon=24):
+   ─────────────────────────────
+   24 × 250 ms = 6 seconds
+   
+   Distribution (S=100 samples):
+   ────────────────────────────
+   100 × 6 sec = 10 minutes
+   
+   Production (1000 series):
+   ──────────────────────────
+   1000 × 10 min = 167 hours ≈ 7 days  (!!)
+   
+   With DDIM (Song 2021, N=10):
+   ────────────────────────────
+   10x faster → 17 hours
+   
+   With DDIM + parallel inference:
+   ───────────────────────────────
+   10 GPU → 1.7 hours per 1000 series
+```
+
+---
+
+## 15.10f ASCII 도식 14 — Diffusion vs 기존 generative model
+
+```
+                        Approach Family
+                              │
+      ┌───────────┬───────────┼───────────┬───────────┐
+      ↓           ↓           ↓           ↓           ↓
+   [GAN]      [VAE]       [Flow]      [EBM]      [Diffusion]
+   생성+      Encoder+     Invertible  Energy     Forward+
+   판별기     Decoder      함수 + Jac.  function   Reverse Markov
+      │         │           │           │           │
+   adversarial KL constr.  Jacobian    Z intractable variational
+   mode collapse Constraint  determinant  MCMC slow  bound 안정
+   학습 어려움  posterior   on dim       sampling   학습 안정
+                 collapse   functional             + sample 가능
+                            제약                    + flexible
+      │         │           │           │           │
+   GAN-TS     KVAE       NKF/MAF     ─          TimeGrad
+   (Yoon 2019) (Fraccaro)  (Rasul 2021)           (Rasul 2021)
+      │         │           │                       │
+   Mode       Posterior  Jacobian                  GAN의 안정 +
+   collapse   collapse   constraint                EBM의 자유 +
+                                                   Flow의 학습
+```
+
+---
+
+## 15.10g ASCII 도식 15 — Cambrian Explosion 2021 (시계열 Generative)
+
+```
+                  NeurIPS / ICML 2021 의 시계열 generative paper
+
+   Sept 2020 ──── DDPM (Ho et al.) 의 image SOTA
+                              ↓
+                              ↓ "1년 안에 시계열에 적용"
+                              ↓
+   ──────── 2021 ────────────────────────────────────────
+   
+   ICML 2021 ──── TimeGrad (Rasul) ★ 이 paper
+                  RNN + DDPM diffusion
+                  6 datasets 중 5 SOTA
+                              │
+                              ↓ "확장 + 변형 + 가속"
+                              ↓
+   
+   NeurIPS 2021 ── ProTran (Tang-Matteson)
+                   Variational SSM + Transformer
+                   TimeGrad 의 Table 1 baseline 으로 등장
+                   (TimeGrad 의 5/5 dataset 능가)
+                              │
+                              ↓
+   
+   NeurIPS 2021 ── Autoformer (Wu)
+                   Auto-Correlation + decomposition
+                              │
+                              ↓
+   
+   NeurIPS 2021 ── CSDI (Tashiro)
+                   Conditional score-based imputation
+                              │
+                              ↓
+   ──────── 2022-2024 ─────────────────────────────────────
+   
+   2022     ──── Improved DDPM (Nichol-Dhariwal) for time series
+   2024     ──── TMDM (Li, ICLR) Transformer-modulated diffusion
+   2024     ──── Diffusion-TS (Yuan)
+```
+
+---
+
+## 15.11 그 외 useful figures (paper 발췌)
 
 ---
 

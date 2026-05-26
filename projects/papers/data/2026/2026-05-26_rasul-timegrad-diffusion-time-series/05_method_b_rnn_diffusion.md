@@ -70,6 +70,13 @@ paper:
 
 ---
 
+## 인터랙티브 시각화 — TimeGrad Architecture Flow
+
+```viz:tg-architecture-flow:title=TimeGrad Architecture Flow (Eq 9 + Eq 10),caption=Step 토글로 (1) RNN encoding (2) h_{t-1} (3) Diffusion reverse loop (4) x^0_t output 단계별 highlight. RNN 의 hidden state 가 N=100 diffusion step 모두에 conditioning. 한 시점 t 의 prediction = N forward of ε_θ.
+```
+
+---
+
 ## 5b.4 Figure 1 — TimeGrad Schematic
 
 ![Fig. 1 — TimeGrad schematic](figures/page4_Fig1_TimeGrad_schematic.png)
