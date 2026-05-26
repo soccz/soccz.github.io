@@ -48,3 +48,38 @@
 추가로 **`_coverage.md`** 기준 `attention-as-explanation` 태그 커버 수 = 1 (오직 TAPPA 의 cross-cover 만 존재). 직격 다이브 논문이 없었음. 또 `_index.md` 의 priority "APF — Attention as Explanation foundation" Tier 의 미커버 항목 중 **시발점** 이 본 논문 — 동일 Tier 의 다른 6편(Wiegreffe-Pinter, Clark, Voita, Abnar-Zuidema, Chefer, Sundararajan) 모두 본 논문에 대한 반응 또는 보완. 시발점부터 시작하는 게 합리적.
 
 Axis balance 측면에서도 최근 5회 코어 출현 = TAPPA(§C) / Nanda(§A·§B) / ACDC(§B) / Power(원거리 §A) / SFC(원거리 §B). **§C 직격이 5월 4일 TAPPA 한 번뿐** 으로 §B 대비 부족 → §C 보강 정당.
+
+---
+
+## 출판 background — 2019 NLP 분야의 시점
+
+본 paper 가 발표된 NAACL 2019 의 NLP 분야 시점:
+
+```
+2017: Transformer 발표 (Vaswani et al., "Attention is All You Need")
+2018: BERT 발표 (Devlin et al.) — pre-training paradigm.
+2019: BERT 후속 — attention 시각화 의 도구화 보편화.
+       │
+       ├─→ 학계 일반 가정: "attention 은 model 의 reasoning 의 *증거*"
+       ├─→ Heatmap 시각화의 표준화 — paper / blog / demo 의 흔한 visual.
+       └─→ "interpretability" 의 default tool 로 자주 사용.
+
+★ 본 paper 의 timing:
+   BERT post-training era 시작 + interpretability hype 정점
+   + Lipton (2016) 의 "mythos" critique 의 *empirical 후속*.
+```
+
+paper 가 NAACL 2019 best paper 후보 (acclaim 받음). 발표 후 1 년 안에 후속 reaction 폭발:
+- Wiegreffe-Pinter 2019 (EMNLP, 5 개월 후 발표)
+- Serrano-Smith 2019 (ACL, 동월)
+- Brunner et al. 2019 (arXiv, 4 개월 후)
+
+## 본 deep dive 의 *목적*
+
+본 deep dive 의 명시 의도:
+1. **Protocol baseline** — APF / Grokking manuscript 의 H1·H2 baseline 으로 사용.
+2. **Wiegreffe-Pinter rebuttal 의 정밀화** — *combined* 결론을 명확화하여 reviewer 의 *premature* objection 회피.
+3. **PE / Multi-head / TS-domain 의 generalization 좌표** — 본 논문의 *limitation* 을 명시 인용하여 *내 contribution* 이 *그 limitation 의 해결* 임을 명확화.
+4. **재현 가능성** — H1/H2 PyTorch 코드 (§14) 의 *모든 components* 를 *modular* 로 작성하여, APF / Grokking 의 *attention-faithfulness probe* 의 base implementation 으로 *직접 활용* 가능.
+
+→ 본 deep dive 의 모든 챕터는 위 4 목적의 *최소 1 개* 를 직접 supports.

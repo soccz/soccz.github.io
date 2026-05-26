@@ -29,3 +29,43 @@ Wiegreffe-Pinter 의 *반박* 의 핵심은 "adversarial attention 이 *학습 �
 TS 는 *연속 시간 신호*. Token = time-step or patch. NLP token (단어) 과 *대칭 단위* 가 아님. TS attention 이 (a) 주기적 신호의 *spectral component* 를 cover 하는가, (b) trend 와 seasonality 를 *분리* 하는가, (c) regime shift 에 *반응* 하는가 의 측면에서 *faithful* 한가. 본 논문의 NLP 결과가 TS 도메인의 *기본 가설* 로 직접 옮겨가는 것이 *위험한 추론* 임을 보일 수 있는가?
 
 **왜 중요한가**: 내 *금융 시계열 ML* 산업 진로의 핵심 — *해석 가능한 TS 모델* 의 *진짜* explanation tool 후보. 만약 TS attention 이 *더 faithful* 임을 보일 수 있다면 *산업 응용에 의미 있는 contribution*. 반대로 *덜 faithful* 이라면 *대안 explanation tool* (예: TimesNet 의 2D-period decomposition) 의 우월성 증거.
+
+---
+
+## 5 질문 간의 의존성 — 어떻게 묶일 수 있는가?
+
+```
+Q1 (manifold) ─┐
+                ├─→ Q2 (Grokking transition) 의 *학습 manifold* 정의
+                │   ├─ Q1 의 manifold model 을 Grokking trajectory 위에 적용.
+                │   └─ Faithfulness 의 *phase change* 가 manifold 의 *변형* 으로 해석 가능.
+                │
+                └─→ Q5 (TS domain) 의 *NLP-vs-TS manifold* 비교 framework
+                    └─ NLP manifold 의 학습된 모델을 TS 의 attention 분포에 *transfer*
+                    
+Q3 (multi-head) ─┐
+                  ├─→ Q4 (PE choice) 의 *head × PE 격자* 확장
+                  │   └─ 다른 PE 별 head 의 *role 분포* 의 faithfulness 측정.
+                  └─→ Q5 의 TS Transformer 의 multi-head 일반화
+```
+
+**3 단계 실험 sequence**:
+1. **Phase 1 (low-hanging fruit)**: Q4 (PE × faithfulness) — 단일 task / 단일 architecture / multiple PE — 1 GPU-week.
+2. **Phase 2 (mechanistic)**: Q2 (Grokking transition × faithfulness) — modular arithmetic + Nanda baseline + faithfulness probe — 2-3 GPU-weeks.
+3. **Phase 3 (industrial)**: Q5 (TS attention faithfulness) — TimesNet / PatchTST / Autoformer × Solar/Traffic/Wikipedia — 4-6 GPU-weeks.
+
+3 phase 통합 시 NeurIPS 2027 본문 + Appendix 의 6 figure + 4 table 자료.
+
+---
+
+## Q1-Q5 의 메타 메시지
+
+본 논문은 *2019 BiLSTM NLP* 의 결과. 5 질문은 모두 *7년 후의 후속 형태*:
+
+- **Q1**: Wiegreffe-Pinter 의 *plausibility* 정밀화 → 본 논문의 negative claim 을 *qualitative ↔ quantitative* 로 옮김.
+- **Q2**: Training dynamics 의 도입 → 본 논문의 *static* analysis 를 *dynamic* 으로 옮김.
+- **Q3**: Multi-head 의 일반화 → 본 논문의 *single-head* 를 *system-level* 로 옮김.
+- **Q4**: Modern PE 의 도입 → 본 논문의 *2019 sinusoidal* 시대를 *2025 era* 로 옮김.
+- **Q5**: TS domain 의 일반화 → 본 논문의 *NLP only* 를 *cross-domain* 으로 옮김.
+
+5 질문 모두 본 논문의 *protocol* 을 *발판* 으로 사용. **본 논문이 *제거* 되거나 *대체* 되는 reference 아닌, *확장* 되는 baseline**.

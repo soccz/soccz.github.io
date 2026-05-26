@@ -25,3 +25,45 @@
 **무엇을 얻을 수 있는가**: (1) *TS 도메인 + intervention* 의 *현재 학계 최신 표준* — 내 Grokking + APF 트랙이 *비교 ground* 으로 삼아야 할 paper. (2) *Foundation model 의 attention faithfulness* 가 *task-specific* 일 수 있다는 발견 — APF 의 *motif typology × task* 격자의 정당화. (3) *Causal sufficiency 검증* 의 *modern* 절차 (logit-difference, indirect effect) 의 학습 — 본 논문의 *naive* TVD/JSD 보다 *세련된* metric 채택 가능. (4) *내 논문의 baseline* 으로 *명시 인용* 필요.
 
 → 이 논문은 `_index.md` 의 priority "APF — TSFM Interpretability" Tier 에 있으나 아직 미커버. 차기 수요일 (인접 버킷) 또는 다음 월요일 (코어 cross) 에 우선 다이브 후보.
+
+---
+
+## (보조) Serrano & Smith 2019 — *Is Attention Interpretable?*
+
+**어떤 논문**: ACL 2019 (Jain-Wallace 와 *동월* 발표). 본 논문과 독립적으로 동일 문제 검증. 주요 실험: *top-k attention token* 의 제거가 prediction 에 미치는 영향. 결론: **"top-k attention 의 제거가 prediction 을 크게 바꾸지 않는 경우 多" → attention 의 high weight ≠ prediction 의 primary cause**.
+
+**본 논문과의 관계**: *Independent confirmation*. 같은 negative claim, 다른 methodology. Jain-Wallace 의 *Kendall τ + adversarial* 와 다른 *top-k ablation* 접근. 두 paper 합쳐서 *attention is not explanation* 의 *empirical case* 가 robust.
+
+**무엇을 얻을 수 있는가**:
+- *Independent replication* 의 power 의 학습. 같은 결론을 *다른 method* 로 재도달 = 결과의 noise-robust 증명.
+- *Top-k ablation* 이 본 paper 의 *adversarial* 보다 *간단* 한 alternative — APF 에서 *시간 부족* 시 fallback option.
+- 두 paper 의 *combined* 인용이 reviewer 의 *single paper objection* 차단.
+
+## (사상) Lipton 2016 — *The Mythos of Model Interpretability*
+
+**어떤 논문**: arXiv 2016. *Conceptual critique* of "interpretability" — interpretability 의 정의가 모호하고, 다양한 stakeholder (사용자 / engineer / 정책결정자) 의 다른 요구가 *한 단어로 합쳐짐*.
+
+**본 논문과의 관계**: *Ideological foundation*. Lipton 의 conceptual critique 의 *empirical 후속*. Lipton: "interpretability 의 정의 모호" → Jain-Wallace: "*specific empirical test (H1, H2)* 로 'interpretation' 의 *충분 조건* 검증 → fail". Conceptual claim 의 empirical 형식화.
+
+**무엇을 얻을 수 있는가**:
+- *Conceptual critique → empirical formalization* 의 학술 진보 model 학습.
+- APF reviewer 의 *"interpretability 가 정확히 무엇인가"* 질문에 대한 *Lipton 인용 + Jain-Wallace 정의* 의 답변 template.
+- *Multiple sufficient conditions* 의 framework: faithful + plausible + actionable + ... 의 *분리* 의식.
+
+---
+
+## 4 paper 의 위치 관계 — 시간 순서
+
+```
+2014    Bahdanau ─── Attention 발명
+                  │
+2016    Lipton ───── Interpretability 의 conceptual critique
+                  │
+2019    ★ JAIN-WALLACE ─ "Attention is not Explanation" (NAACL, this paper)
+        ├─ Serrano-Smith (ACL, independent confirm)
+        └─ Wiegreffe-Pinter (EMNLP, direct rebuttal)
+                  │
+2025    Wilinski ── TSFM mechanistic interpretability (Bahdanau + JW 의 후손)
+```
+
+본 paper 의 **upstream** (Bahdanau, Lipton) 과 **downstream** (Serrano-Smith, Wiegreffe-Pinter, Wilinski) 의 4 paper 가 *모두* 본 deep dive 의 cross-reference. APF / Grokking reviewer 가 *기대* 하는 *full citation network* 의 명시.
