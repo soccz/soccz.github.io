@@ -1,5 +1,8 @@
 # 9. 사고 확장 (c) — 실험 아이디어 2 개
 
+> **🧒 한 줄 요약**: 실험 아이디어 — TS Transformer circuit identification, Cross-architecture comparison.
+
+
 ## 아이디어 1 — PE-conditional ACDC: motif 가 회로 분포를 어떻게 바꾸는가 (APF direct)
 
 ### 가설
@@ -96,3 +99,21 @@ $\Delta E = E_{t_2} \setminus E_{t_1}$ (없어진 edge) 와 $E_{t_2} \setminus E
 ## 두 아이디어의 *동일 backbone*
 
 두 아이디어 모두 *ACDC 의 알고리즘 자체를 그대로 차용* 하고, *입력 차원 (PE 변종 / training checkpoint)* 만 다르게 한다. 즉 ACDC 가 *비교 인터페이스* 라는 본 해체의 핵심 통찰을 정확히 활용 — APF 는 *PE 축에서 회로를 비교*, Grokking-TS 는 *time/checkpoint 축에서 회로를 비교*. 두 axis 모두 ACDC 의 *single hyperparameter τ* 덕분에 *Pareto frontier* 라는 단일 비교 언어로 정량화 가능.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **2 idea base?**
+2. **반증 조건?**
+3. **contribution figure?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

@@ -1,5 +1,8 @@
 # 9. 사고 확장 (a) — 자문 질문 5 개
 
+> **🧒 한 줄 요약**: 5 질문 — Multi-task circuit overlap, dynamic during training, etc.
+
+
 알고리즘을 *내가 이해했는가* 를 검증하기 위한 자문 질문. 각 질문은 단순 사실 확인이 아니라 *논문의 가정이 깨질 때 무엇이 일어날지* 를 시뮬레이션하는 질문.
 
 ---
@@ -41,3 +44,21 @@
 **왜 이 질문이 중요한가**: ROC AUC 는 *과거 손작업과의 일치율*. 두 회로가 *완전히 다른 head 집합* 임에도 *같은 metric* 을 만들 수 있다면 (degenerate solution), ACDC 의 *재현 가능성* 과 *해석 가능성* 이 분리됨. 운이 좋아 손작업 회로와 일치한 것이 아니라 *해석 가능 회로 가 유일* 하다는 보증이 없으면 ACDC 의 가치가 줄어든다.
 
 **예측**: (a) *Small task / 작은 모델* (tracr, induction) 에선 회로가 유일에 가까움 — 모듈성이 강제됨. (b) *큰 모델 / 자연 task* (IOI, Greater-Than on GPT-2 small) 에선 backup mechanism + polysemantic head 때문에 *여러 회로* 가 같은 metric 을 줄 수 있음. 즉 ACDC 의 회로는 *one of many*. 이걸 검증하려면 seed (corrupted prompt sampling) 를 바꿔 가며 ACDC 의 회로를 여러 번 추출하고 *Jaccard similarity* 를 측정. 낮으면 degenerate, 높으면 unique.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **low-hanging fruit?**
+2. **5 한계 매핑?**
+3. **NeurIPS contribution?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

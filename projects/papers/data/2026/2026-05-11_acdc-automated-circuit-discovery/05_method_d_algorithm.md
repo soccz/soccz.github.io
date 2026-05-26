@@ -1,5 +1,8 @@
 # 4. 방법론 해부 (d) — ACDC 알고리즘 본체
 
+> **🧒 한 줄 요약**: ACDC algorithm 의 *step-by-step* + iteration order.
+
+
 ## 배경 사다리
 
 이 파일은 ACDC 의 *유사 코드 (pseudocode)* 를 재구성한다. 이걸 이해하려면 ① "topological sort" 가 DAG 의 노드를 *모든 화살표가 한 방향* 으로 가도록 정렬하는 절차라는 것 — Transformer 의 forward pass 순서가 그대로 위상정렬임 ②, "역위상정렬" 이 그 순서를 뒤집은 것 — 즉 *출력에 가까운 노드부터* 처리하는 것, 이 둘만 알면 된다.
@@ -73,3 +76,29 @@ mask 를 SGD 로 학습. ACDC 의 직접 baseline. 비교 표 결과는 평균 A
 ## 핵심 한 문장
 
 > ACDC 의 알고리즘 본체는 *역위상정렬 + edge-by-edge greedy + 단일 τ* 의 19 줄 짜리 pseudocode 로 환원되며, 그 단순함이 비교 기준으로의 가치를 결정한다.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:acdc-algorithm-flow:title=Algorithm Pipeline,caption=Step slider.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Step-by-step iteration?**
+2. **Edge removal 결정?**
+3. **Convergence criterion?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

@@ -1,5 +1,8 @@
 # 7. 이론적 계보
 
+> **🧒 한 줄 요약**: *가계도* — Olsson 2022 / Wang 2022 → ★ ACDC 2023 → SFC / Patchscopes 2024.
+
+
 ## 배경 사다리
 
 이 절을 이해하려면 ① 회로 발견의 *수작업 시기* (2021–2022) 가 Anthropic 의 *transformer-circuits.pub* + OpenAI 의 induction 작업으로 시작됐다는 점, ② 그 작업이 *path patching / activation patching* 이라는 인과적 개입 도구를 만들었다는 점, ③ ACDC 가 그 도구를 *알고리즘화* 한 첫 작업이라는 위치만 알면 된다.
@@ -96,3 +99,21 @@ Elhage 2021 (Mathematical Framework)
   EAP-IG (Hanna 2024)                              ── 후손 (cost 해결)
   HyperDAS (Wu 2025)                                ── 후손 (자동화 확장)
 ```
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **4 ancestors?**
+2. **parallels?**
+3. **3 descendants?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

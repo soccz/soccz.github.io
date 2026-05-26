@@ -1,5 +1,8 @@
 # 0. 메타 & 선정 이유
 
+> **🧒 한 줄 요약**: paper 서지 + 선정 이유 — mech interp 의 *automated discovery* milestone.
+
+
 ## 배경 사다리
 
 - 이 절을 이해하려면 ① "circuit" 이 신경망 안에서 특정 행동을 만들어내는 **연결의 부분그래프** 라는 mech interp 의 기본 단어, ② 정답 회로를 "이미 알고 있는" 벤치마크 (IOI 회로 — Wang et al. 2023) 가 존재한다는 점, ③ activation patching (개입을 통해 컴포넌트 영향을 분리하는 절차) 의 기본 개념 정도만 알면 된다.
@@ -39,3 +42,21 @@
 ## 처음 본 사람이 받을 첫 인상
 
 "회로를 자동으로 찾는다" 는 표현은 두 방향으로 해석된다. (a) 신경망 안에서 "회로" 라고 부를 만한 임의의 구조를 발견한다 — 이건 ACDC 가 못 한다. (b) **이미 알려진 회로 (예: IOI, Greater-Than) 를 사람 손 없이 자동 추출한다** — 이건 ACDC 의 정확한 주장. 차이가 중요한 이유: ACDC 는 발견 (discovery) 보다는 **검증·재발견 (rediscovery)** 도구다. 발견 (de novo) 까지 가는 사다리에는 후속 작업 (HyperDAS, SFC, AutoCircuit) 이 필요하다. APF 도 motif 가 사전에 typology 로 지정되어 있고 그 motif 의 인과성을 검증하는 단계라는 점에서 같은 "검증" 입장에 가깝다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **paper 코어 이유?**
+2. **저자 Conmy background?**
+3. **NeurIPS 2023 Spotlight 의의?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

@@ -44,3 +44,29 @@ ACDC 는 (M3) 단계만 자동화한다. 절차는 단순하다. 모델을 계�
 - **계산 비용**: 32K 엣지 GPT-2 Small 도 분~시간 단위. 더 큰 모델 (GPT-Neo, Llama) 에서는 forward pass 수가 폭발.
 - **KL 메트릭의 한계**: 클래스 평탄화 효과. logit-diff 가 더 sharp 한 신호 (특히 binary 분류 - 풍 task).
 - **후속 비판 (Syed 2023, EAP-IG 2024)**: gradient 기반 attribution patching 이 거의 같은 회로를 *한 번의* backward pass 로 추출 — ACDC 의 cost-quality trade-off 가 attribution patching 에 의해 압도된다.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:acdc-algorithm-flow:title=ACDC Algorithm Step-by-step,caption=Step slider.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **3 층 의의?**
+2. **Edge-by-edge granularity 의 power?**
+3. **Resampling 의 중요성?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

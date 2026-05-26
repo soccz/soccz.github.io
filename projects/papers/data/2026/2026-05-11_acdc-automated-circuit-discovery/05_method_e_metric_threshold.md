@@ -1,5 +1,8 @@
 # 4. 방법론 해부 (e) — 메트릭 $H$ 와 임계값 $\tau$
 
+> **🧒 한 줄 요약**: KL divergence metric + threshold τ 선택.
+
+
 ## 배경 사다리
 
 이 파일은 "이 edge 가 중요한가?" 의 판단이 어떻게 *수치 하나* 로 환원되는지를 다룬다. 이걸 이해하려면 ① 모델 출력이 *logit 분포* 라는 점, ② 두 분포가 얼마나 다른지를 재는 KL divergence 의 기본 의미, ③ task 마다 *진짜 중요한 logit 차원* 이 다르다는 점, 이 셋만 알면 된다.
@@ -85,3 +88,29 @@ layer 별·edge-type 별로 $\tau$ 를 calibrate. 단일 $\tau$ 의 scale 문제
 ## 핵심 한 문장
 
 > ACDC 의 "단일 hyperparameter τ" 라는 매력 뒤에는 (metric 종류, ablation 종류, τ scale) 의 3 차원 암묵 hyperparam 공간이 숨어 있으며, 보고된 ROC AUC 의 우열은 이 공간의 *측정 위치* 에 따라 0.05–0.30 흔들린다.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:acdc-threshold-sweep:title=Threshold τ Sweep (paper §5),caption=Threshold slider — Goldilocks zone visualization.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **KL vs accuracy?**
+2. **τ = 0.06 의 empirical?**
+3. **Goldilocks zone?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

@@ -1,5 +1,8 @@
 # 4. 방법론 해부 (c) — 부패(corruption)·ablation 분포
 
+> **🧒 한 줄 요약**: Resampling ablation 의 *clean vs corrupt run* design.
+
+
 ## 배경 사다리
 
 이 파일은 *어떤 값으로 edge 를 끄는가* 의 선택을 다룬다. 이걸 이해하려면 ① "ablation" 이 *어떤 활성을 *대체값* 으로 바꿔치기* 하는 개입이라는 점, ② 대체값으로 0, 평균, 또는 다른 prompt 의 같은 위치 활성을 쓸 수 있다는 점, ③ 대체값 선택이 *결과의 의미* 를 바꾼다는 점, 이 셋만 알면 된다.
@@ -61,3 +64,21 @@ ablation 없이 *0 활성 → clean 활성* 의 경로 integral 로 edge 기여 
 ## 핵심 한 문장
 
 > ACDC 의 정확도는 "edge 를 끈다" 의 의미를 *어떤 활성으로 대체했느냐* 가 결정하며, 자연 데이터 task 에선 *task-domain 안의 corrupted prompt* 가 zero 보다 sound 한 baseline 이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Resampling vs random?**
+2. **Clean / Corrupt design?**
+3. **In-distribution preservation?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

@@ -1,5 +1,8 @@
 # 5. 실험 해부
 
+> **🧒 한 줄 요약**: 5 tasks (IOI, Greater-than, Induction, Subject-Verb, Docstring) + 4 model sizes.
+
+
 ## 배경 사다리
 
 이 절을 이해하려면 ① ACDC 의 평가가 *알고리즘이 뽑은 회로* 와 *사전 알려진 ground-truth 회로* 의 일치도라는 점, ② "edge-level ROC AUC" 는 모든 가능한 edge 를 1/0 의 binary label 로 두고 ACDC 의 점수 (또는 τ-threshold 순위) 가 그 binary label 을 얼마나 잘 맞추는가의 척도라는 점, ③ baseline 인 SP/HISP 가 ACDC 와 *완전히 다른 메커니즘* (학습 mask vs 개입) 으로 같은 비교에 놓인다는 점, 이 셋만 알면 된다.
@@ -125,3 +128,32 @@ Syed et al. 2024 BlackboxNLP 의 재측정: 6 task 평균 SP 0.692 vs ACDC 0.596
 | τ 기본값 (induction 데모) | 저자 코드 `--threshold 0.71` | 0.71 (KL nat 기준) |
 
 본 해체는 표의 *cross-source* 수치에 대해 정확성을 보장하지 않는다. 원문 부록의 정확한 수치는 원문 본문 미열람으로 미확정.
+
+---
+
+
+---
+
+## 인터랙티브 시각화
+
+```viz:acdc-ioi-circuit:title=IOI 26-edge Circuit (paper Fig 2),caption=Highlight selector.
+```
+
+```viz:acdc-threshold-sweep:title=Threshold Sweep,caption=τ slider.
+```
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **5 tasks coverage?**
+2. **Circuit size variation?**
+3. **Model scaling?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

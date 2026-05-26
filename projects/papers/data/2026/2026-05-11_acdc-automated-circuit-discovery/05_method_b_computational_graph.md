@@ -1,5 +1,8 @@
 # 4. 방법론 해부 (b) — 계산 그래프 정의
 
+> **🧒 한 줄 요약**: Computational graph 의 *정확 정의* — components + edges + topological order.
+
+
 ## 배경 사다리
 
 이 파일은 Transformer 의 *forward pass* 가 어떻게 *DAG (directed acyclic graph)* 로 표현되는지를 정의한다. 이걸 이해하려면 ① Vaswani 2017 의 Transformer 블록 = "multi-head self-attention + MLP" 가 residual connection 으로 더해지는 구조, ② residual stream 의 *bandwidth* (그 안에서 head 들이 정보를 *읽고 쓰는* 공간이라는 Anthropic 2021 의 framework) 정도면 충분.
@@ -54,3 +57,21 @@ residual stream 을 SAE 로 분해해 학습된 feature 단위로 노드를 둠.
 ## 핵심 한 문장
 
 > ACDC 의 그래프는 *head/MLP 단위* + *residual stream 의 linearity 가 만드는 직접 edge* 를 노드·엣지로 박은, mech interp 자동화의 *최소 단위 DAG* 다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Components 와 edges 분리?**
+2. **Topological order 의 필요?**
+3. **Edge count combinatorial?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

@@ -1,5 +1,8 @@
 # 6. 가정·한계·반박
 
+> **🧒 한 줄 요약**: 한계 — *node-level* approximation, threshold sensitivity, LLM scalability.
+
+
 ## 명시된 가정 (논문이 대놓고 말한 것 — cross-source 기준)
 
 ### 가정 1. 회로가 "head/MLP 단위" 의 부분그래프로 충분히 잘 표현된다
@@ -87,3 +90,21 @@ cross-source 표에서 평균 AUC 만 보고. *분산* (multiple seed) 는 미�
 ## 가장 큰 한계 한 줄
 
 > ACDC 는 *회로 발견* 의 알고리즘이 아니라 *회로 검증* 의 알고리즘이다. *de novo discovery* (모르는 회로 자동 발견) 의 한 걸음으로 박힌 가치는 *알고리즘 자체* 보다 *분야의 비교 인터페이스 정립* 에 있다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Threshold sensitivity?**
+2. **LLM scale 의 한계?**
+3. **Approximations 필요?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

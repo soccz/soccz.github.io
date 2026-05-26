@@ -1,5 +1,8 @@
 # 3. 핵심 Claim 해체
 
+> **🧒 한 줄 요약**: 핵심 Claim — Automated discovery + IOI 26-edge 자동 도출 + task generalization.
+
+
 논문의 주장은 (a) 방법론적 = "이게 회로 발견의 표준 절차다", (b) 알고리즘적 = "이렇게 자동화하면 작동한다", (c) 실험적 = "ground-truth 회로 를 재발견한다", (d) 비교적 = "기존 baseline 대비 어떤 위치인가" 의 4 갈래로 나뉘다. 5 개 Claim 으로 정리한다.
 
 ---
@@ -77,3 +80,21 @@
 - 정확도 비교가 노이즈 안에 있을 수 있음. ACDC 의 hyperparameter τ 와 SP 의 sparsity coefficient 가 서로 다른 축이라 같은 sparsity 에서 비교했는지 / 같은 정확도에서 비교했는지가 ROC 모양을 흔든다.
 
 **쉬운 말 풀이**: "정답률은 SP 가 조금 높지만, ACDC 는 *왜 그게 정답인지 설명할 수 있다* 는 안전 장치를 갖는다." 두 알고리즘은 같은 게임을 하는 게 아니다 — SP 는 *학습된 mask*, ACDC 는 *개입 검증* 이라는 다른 보증 종류.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Automated discovery 의 의미?**
+2. **IOI 26-edge 의 sparsity?**
+3. **Task generalization?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

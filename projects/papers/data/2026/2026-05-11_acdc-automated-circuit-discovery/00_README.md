@@ -1,5 +1,8 @@
 # 2026-05-11 (월·코어) — ACDC: 회로 발견의 자동화
 
+> **🧒 한 줄 요약**: ACDC (Conmy et al. NeurIPS 2023 Spotlight) 의 25 챕터 + 3 viz JS 전체 진입.
+
+
 ## 원문 정보
 
 - **원제**: *Towards Automated Circuit Discovery for Mechanistic Interpretability*
@@ -42,3 +45,21 @@
 - [10_extensions_b_followups.md](10_extensions_b_followups.md) — Follow-up 논문 3 편
 - [10_extensions_c_ideas.md](10_extensions_c_ideas.md) — 실험 아이디어 2 개
 - [11_verdict.md](11_verdict.md) — 한 줄 판결
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **대상 독자?**
+2. **최소 reading path?**
+3. **ACDC 가 paradigm shift trigger 인 이유?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

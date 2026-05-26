@@ -1,5 +1,8 @@
 # 9. 사고 확장 (b) — Follow-up 논문 3 편
 
+> **🧒 한 줄 요약**: Follow-up — Olsson 2022 (manual ancestor), SFC 2024 (extension), Patchscopes.
+
+
 ## 선행 (Predecessor): Interpretability in the Wild — IOI Circuit in GPT-2 Small (Wang, Variengien, Conmy et al., ICLR 2023, arXiv:2211.00593)
 
 **어떤 논문인지**: GPT-2 small 의 IOI task ("Mary and John ... John gave a drink to ___" → Mary) 의 회로를 *손작업으로* 발견. 26 head 를 4 class (Duplicate Token Heads, Previous Token Heads, S-Inhibition Heads, Name Mover Heads) 로 묶고 인과 흐름을 정밀 추적. mech interp 의 *가장 정교한 사례 연구*.
@@ -56,3 +59,21 @@
 (텍스트 다이어그램, 정확한 좌표 아닌 정성 배치)
 
 ACDC 의 가치는 *비교 인터페이스 정립* 에 있고, *후속 작업이 ACDC 를 이긴* 영역들이 정확히 ACDC 의 *기여를 검증* 하는 방식이다. 즉 ACDC 는 *최종 algorithm of choice* 가 아니라 *비교 기준점*. APF / Grokking-TS 의 인과 검증도 이 *비교 기준점* 으로서 ACDC 를 인용하면 reviewer 가 *왜 더 새 알고리즘 (EAP, SFC) 을 안 썼는가* 를 물을 것 — 그 답은 *우리는 인과 보증이 필요하고 입도가 motif 수준* 이므로 SFC (feature) 도 EAP (gradient approx) 도 *우리 입도* 와 안 맞고, ACDC 의 *intervention 보증* 이 가장 적합.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **next deep dive?**
+2. **SFC 의 direct extension?**
+3. **책임도?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

@@ -1,5 +1,8 @@
 # 2. 문제 지형도
 
+> **🧒 한 줄 요약**: *Manual circuit identification* 의 한계 — 수개월 expert effort 필요.
+
+
 ## 배경 사다리
 
 이 절을 이해하려면 ① Transformer 의 **residual stream** 이 "모든 layer 의 출력이 누적되어 흐르는 1 차원 wire" 라는 점, ② mech interp 의 핵심 가정 — "특정 행동은 모델 안 **소수의 컴포넌트** (attention head 몇 개 + MLP 몇 개) 가 협력해 만든다" — 이라는 점, ③ "회로 (circuit)" 가 그 컴포넌트들 + 그 사이 연결의 **sub-graph** 라는 점, 이 세 가지만 알면 된다. circuit 이 발견된 가장 유명한 예 = IOI (Indirect Object Identification, Wang et al. 2023): "Mary and John went to the store. John gave a drink to ___" 에서 GPT-2 small 이 *Mary* 를 예측하는 26 개 attention head 의 4 클래스 회로.
@@ -63,3 +66,21 @@
 ## 이 논문이 그 gap 을 어떻게 메우나
 
 ACDC 는 (a) edge 단위 개입을 (b) 역위상정렬 greedy 라는 단일 알고리즘으로 (c) threshold τ 라는 단일 hyperparameter 로 묶고, (d) IOI / Greater-Than / Docstring / tracr-reverse / tracr-xproportion / Induction 6 개 태스크의 ground-truth 회로와 비교 가능한 ROC 벤치마크 패키지를 함께 푸다. 알고리즘의 weakness (greedy, 비용) 는 명시적이고, baseline (SP, HISP) 과의 비교에서 SP 가 평균 AUC 에서 약간 이긴다는 사실도 표에 노출한다. 이 솔직함이 후속 비판 (attribution patching, EAP) 의 진입을 용이하게 했다 — 즉 ACDC 는 자신을 일부러 **명확한 비교 기준** 으로 박은 작업이다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Manual era 의 burden?**
+2. **학계 진입 장벽?**
+3. **Reproducibility 의 약화?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

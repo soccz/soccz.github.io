@@ -1,5 +1,8 @@
 # 4. 방법론 해부 (a) — 큰 그림
 
+> **🧒 한 줄 요약**: *큰 그림* — full graph → edge ablation → KL measurement → threshold pruning.
+
+
 ## 배경 사다리
 
 이 파일을 이해하려면 ① "computational graph" 를 *layer 별 활성 사이의 화살표 그림* 으로 본다는 것, ② "ablation" 이 *어떤 화살표가 가져오는 값을 다른 값으로 바꿔치기 하는 개입* 이라는 것, ③ Transformer 의 residual stream 이 *모든 head/MLP 의 출력이 더해져 흐르는 공유 wire* 라는 것, 이 셋만 알면 된다. 자세한 식·코드는 (b)–(e) 분할 파일에서 다룬다.
@@ -51,3 +54,21 @@ $\tau$ 는 *유일한* 사용자 hyperparameter (ablation 방식 zero/random 의
 - 거짓 양성은 *후속에서 다시 평가될 수 있다* — 노드를 따라 내려가면서 그 위 노드의 출력 (현재 회로) 가 변하면 그 edge 의 중요도가 재평가될 수도 있음.
 
 이 비대칭은 ACDC 가 **보수적** (큰 회로) 일 때는 안전하지만 **공격적** (작은 회로) 일 때는 *cooperative edge pair* 를 모두 잃을 위험을 키운다. 이게 후속 attribution patching 이 *한 번의 backward pass 로 모든 edge 의 점수를 동시에* 추정해 ACDC 를 추월한 이유 — 동시성이 cooperative effect 를 깨지 않는다.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **Pipeline 결정?**
+2. **Reverse topological order 의 이유?**
+3. **Output → Input direction?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.

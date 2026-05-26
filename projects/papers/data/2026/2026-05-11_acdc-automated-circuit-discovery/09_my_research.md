@@ -1,5 +1,8 @@
 # 8. 내 연구와의 연결
 
+> **🧒 한 줄 요약**: APF + Grokking 연결 — ACDC 가 *circuit identification* baseline.
+
+
 ## 연결 강도 우선 매핑
 
 `_profile.md` 의 관심 영역 §A~F 기준:
@@ -109,3 +112,21 @@ Lyle 2025 (covered 2026-05-01) 는 grokking 의 *non-stationarity* 측면을 강
 ## 일반론이 아닌 한 줄 요약
 
 > APF §4 의 motif causal intervention 의 알고리즘 변종 + Grokking-TS §3 의 checkpoint-delta circuit isolation 의 알고리즘 backbone — 단, 두 응용 모두 ACDC 의 *greedy + 단일 τ* 한계를 *그대로 상속* 한다는 점은 limitation 절에서 정직하게 노출.
+
+---
+
+## 자기점검 (이 챕터)
+
+### 핵심 3 가지
+
+1. **APF 와의 integration?**
+2. **Circuit identification baseline?**
+3. **Reviewer expectation?**
+
+### 답변
+
+1. paper §-references + 본 deep dive 의 cross-reference 기반.
+
+2. ACDC (Conmy 2023) 의 핵심 mechanism (edge-by-edge ablation + KL metric) 의 통합 관점.
+
+3. APF / Grokking 트랙의 baseline — manuscript §1-§6 + Appendix.
