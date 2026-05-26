@@ -253,3 +253,7 @@ paper:
 
 ```viz:protran-multi-layer:title=paper §3.3 — Multi-layer SSM,caption=Layer slider.
 ```
+
+
+```viz:protran-layer-hierarchy:title=paper §3.3 — Multi-Layer SSM,caption=Layer count slider.
+```
