@@ -183,3 +183,7 @@ paper text 가 hyperparameter 명시 안 함. 본 deep dive 의 추론 (DeepAR/T
 3. **해석 1**: (i) drift path quantile loss, (ii) divergence/VAE path ELBO, (iii) final fusion quantile loss. **해석 2**: (i) quantile loss (Eq 19), (ii) KL divergence (Eq 13), (iii) reconstruction error. paper 본문 명시 안 — implementation 의존.
 
 다음 [11_data_baselines.md](11_data_baselines.md) 에서 6 datasets + 8 baselines + 2 metrics (q-risk + cpaw).
+
+
+```viz:qf-pinball-loss:title=paper Eq 1 — Pinball Loss,caption=Quantile slider.
+```
