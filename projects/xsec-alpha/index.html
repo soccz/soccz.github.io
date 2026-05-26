@@ -57,7 +57,10 @@
     .hero-content { position: relative; max-width: 860px; }
     .hero-label { display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); border: 1px solid var(--border-light); padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.5rem; }
     .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-    .hero-sub { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 3rem; }
+    .hero-sub { font-size: 1rem; color: var(--text-secondary); font-weight: 300; line-height: 1.9; margin-bottom: 1.2rem; }
+    .hero-sub strong { color: var(--text-primary); font-weight: 700; }
+    .hero-phases { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 0 0 2.4rem; }
+    .phase-chip { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.02em; color: var(--text-secondary); background: var(--bg-secondary); border: 1px solid var(--border-light); padding: 0.25rem 0.7rem; border-radius: 999px; }
     .hero-stats { display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .hero-stat { text-align: center; }
     .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
@@ -351,9 +354,17 @@
     <span class="hero-label">Cross-Sectional Ranking &middot; Crypto &middot; 2026</span>
     <h1>xsec_alpha</h1>
     <p class="hero-sub">
-      "떨어질 코인을 골라내고, 조용해진 코인에서 폭발을 기다린다."<br>
-      gan_t의 실패에서 출발해 크로스섹션 상대 랭킹으로 전환 — Short 6h + Long 12h 듀얼 모델.<br>
-      Part II (2026-04-25): 원장이 드러낸 구조적 결함 3가지, 60+ 에이전트 토론 3라운드, F1 통합 아키텍처 재설계.
+      <strong>크립토 200+개 마켓을 매 6시간 비교해서 어떤 게 떨어지고/오를지 줄세우는 시스템.</strong><br>
+      gan_t의 실패에서 출발해 크로스섹션 상대 랭킹으로 전환 — Short 6h + Long 12h 듀얼 모델, F1 통합 아키텍처.<br>
+      <strong>현재 단계:</strong> paper 운영 60일 — 신호 자체는 강함 (holdout IC 0.15-0.19, σ≥2 적중 59-63%),
+      평균 picks는 수수료 차감 후 0 근처라 <strong>강한 신호만 선별 거래 + shadow long_short5 평행 추적</strong>.
+      실거래는 30-60일 더 보고 결정.
+    </p>
+    <p class="hero-phases">
+      <span class="phase-chip">① 연구 — gan_t→F1</span>
+      <span class="phase-chip">② 운영 — 원장이 드러낸 실패 3</span>
+      <span class="phase-chip">③ 비용 결산 — gross vs net</span>
+      <span class="phase-chip">④ 엔지니어링 — 테스트·백업·shadow</span>
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.19" data-decimals="2">0</span><span class="hero-stat-label">Short Holdout IC</span></div>

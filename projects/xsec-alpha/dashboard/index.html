@@ -86,6 +86,9 @@
     .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.5rem, 3.8vw, 2.4rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1rem; }
     .hero-sub { font-size: 0.95rem; color: var(--text-secondary); font-weight: 300; line-height: 1.85; margin-bottom: 1.4rem; }
     .hero-meta { font-size: 0.78rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .hero-sub strong { color: var(--text-primary); font-weight: 700; }
+    .hero-tail { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin: 0.6rem 0 1.1rem; }
+    .hero-pill { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.04em; color: var(--text-secondary); background: var(--bg-secondary); border: 1px solid var(--border-light); padding: 0.18rem 0.6rem; border-radius: 999px; }
 
     /* ── MEGA stats hero — first thing under the fold ── */
     .mega { padding: 0.6rem 1.6rem 3.4rem; position: relative; }
@@ -355,11 +358,19 @@
 
 <header class="hero">
   <div class="hero-content">
-    <div class="hero-label">private dashboard · pin gated</div>
-    <h1>xsec_alpha — IC · gates · realized</h1>
+    <div class="hero-label">private dashboard · pin gated · paper observation</div>
+    <h1>Cross-sectional crypto signals — paper observation phase</h1>
     <p class="hero-sub">
-      Upbit KRW 200+ 마켓 cross-sectional ranking. SHORT 5 실행 / WATCH LONG 5 참고.<br>
-      systemd 6h/12h 타이머로 매번 갱신. 백테스트가 아니라 라이브 IC + 실현 손익.
+      Upbit KRW 200+ 마켓에서 6h / 12h 호라이즌 랭킹.
+      <strong>지금 단계:</strong> paper 운영, IC 강함 (0.15-0.19),
+      평균 net 0 근처 → <strong>강한 신호 (σ≥2)만 선별 거래 검토</strong>.
+      Bitget 실거래 wire-up은 30-60일 shadow 더 보고 결정.
+    </p>
+    <p class="hero-tail">
+      <span class="hero-pill">paper</span>
+      <span class="hero-pill">매 6h 자동 갱신</span>
+      <span class="hero-pill">cost-aware (net 표시)</span>
+      <span class="hero-pill">19 pytest invariants</span>
     </p>
     <p class="hero-meta" id="heroMeta">데이터 로드 중…</p>
   </div>
