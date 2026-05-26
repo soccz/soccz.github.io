@@ -239,6 +239,35 @@
     .strat-table tr:last-child td { border-bottom: 0; }
     .strat-table td[title] { cursor: help; }
 
+    /* Policy evolution timeline */
+    .policy-timeline-wrap { width: 100%; overflow-x: auto; margin: 0 auto 1.4rem; padding: 0.4rem 0; -webkit-overflow-scrolling: touch; }
+    .policy-timeline-wrap svg { min-width: 720px; height: auto; }
+    .policy-event-list { margin-bottom: 1.4rem; }
+    .policy-event-ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; }
+    .policy-event-item {
+      display: grid; grid-template-columns: 38px 1fr; gap: 0.9rem; align-items: stretch;
+      padding: 0.85rem 1rem; background: var(--bg-card); border: 1px solid var(--border);
+      border-left: 3px solid var(--pe-color, #a8a29e); border-radius: 8px;
+    }
+    .pe-marker {
+      display: flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--pe-color, #a8a29e); color: #fff; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; align-self: center;
+    }
+    .pe-body { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.2rem; }
+    .pe-head { display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: baseline; }
+    .pe-date { font-weight: 700; color: var(--text-primary); font-size: 0.84rem; }
+    .pe-label { font-size: 0.84rem; color: var(--text-primary); font-weight: 600; }
+    .pe-headline { color: var(--text-secondary); font-weight: 500; }
+    .pe-desc { color: var(--text-muted); font-size: 0.74rem; line-height: 1.55; margin-top: 0.15rem; }
+    .pe-metrics { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 0.35rem; font-size: 0.74rem; }
+    .pe-metric { display: inline-flex; gap: 0.3rem; align-items: baseline; }
+    .pe-metric .pem-label { color: var(--text-muted); }
+    .pe-metric .pem-val.pos { color: var(--green); font-weight: 700; }
+    .pe-metric .pem-val.neg { color: var(--red); font-weight: 700; }
+    .pe-window { color: var(--text-muted); font-size: 0.7rem; align-self: baseline; }
+
     /* policy gate / recommendations — 채널별 카드 */
     .policy-card-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
     .policy-card {
@@ -436,11 +465,33 @@
 
     @media (max-width: 720px) {
       .nav-inner { padding: 0 1rem; }
-      .hero-stats { gap: 1.2rem; }
-      .hero-stat-num { font-size: 1.5rem; }
+      .hero { padding: 4rem 1rem 3rem; }
+      .hero h1 { font-size: 2rem; line-height: 1.25; }
+      .hero-stats { gap: 1rem 1.4rem; }
+      .hero-stat { flex: 0 0 calc(50% - 0.7rem); }
+      .hero-stat-num { font-size: 1.4rem; }
+      .hero-stat-label { font-size: 0.7rem; }
       .two-col { grid-template-columns: 1fr; }
+      .alpha-card { grid-template-columns: 1fr; padding: 1rem 1.1rem; gap: 0.8rem; }
       section { padding: 3rem 1rem; }
-      table.tbl { font-size: 0.75rem; }
+      .section-title { font-size: 1.45rem; }
+      .section-desc { font-size: 0.86rem; line-height: 1.7; }
+      table.tbl { font-size: 0.72rem; }
+      .controls { flex-wrap: wrap; gap: 0.5rem; }
+      .controls label { font-size: 0.78rem; }
+      .policy-event-item { grid-template-columns: 32px 1fr; padding: 0.7rem 0.8rem; }
+      .pe-marker { width: 26px; height: 26px; font-size: 0.78rem; }
+      .pe-body { font-size: 0.74rem; }
+      .pe-desc { font-size: 0.7rem; }
+      .policy-card { padding: 0.95rem 1rem; }
+      .policy-card .pc-metrics { grid-template-columns: 1fr; gap: 0.25rem 1rem; }
+      footer { padding: 1.5rem 1rem; font-size: 0.72rem; }
+    }
+    @media (max-width: 460px) {
+      .hero-stat { flex: 0 0 calc(50% - 0.5rem); }
+      .hero-stats { gap: 0.7rem 1rem; }
+      .hero-stat-num { font-size: 1.2rem; }
+      .section-title { font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -891,70 +942,27 @@
 
 <hr class="divider">
 
-<!-- POLICY EVOLUTION — narrative 진입점 (2026-05-25 추가 layer) -->
+<!-- POLICY EVOLUTION — narrative 진입점 (events from policy_history.py) -->
 <section>
   <div class="container">
-    <div class="section-label">POLICY EVOLUTION · 2026-05-25</div>
+    <div class="section-label" id="policyEvolutionLabel">POLICY EVOLUTION</div>
     <h2 class="section-title">기존이 안 됐다 — 그래서 이런 layer 를 추가했다</h2>
-    <p class="section-desc">
-      위 결과들이 보여주듯 5/8 → 5/20 라이브 paper 12 일 동안 누적 PnL <strong style="color:var(--red)">-52%</strong> (dist) /
-      <strong style="color:var(--red)">-45%</strong> (pre). 표본 늘리면 회복 가능성이 아니라 — bear regime
-      89% 알림 + EV 음수 룰의 *수학적 보장*. 데이터가 그렇게 가르쳤다.<br><br>
-
-      5/25 시점에 정책 layer 를 새로 얹었다. 모델은 그대로, *알람을 어떻게 분류하느냐*만 바꿈.
-      candidate generation → policy layer → ACTIVE / WATCH / SILENCE 분류 →
-      shadow ledger 누적 (걸러진 후보까지) → meta-label 학습 → idea validation report →
-      policy gate (자동 promotion 차단). 이 페이지 아래 카드 3 개에 그 결과가 차례대로 나온다.<br><br>
-
-      *추천이 좋으면 ACTIVE 로 보내고, 좋지 않으면 침묵하되 그 결정 자체를 attribution 으로
-      남긴다.* 그게 portfolio grade 시스템의 핵심 — 결과보다 결정의 정합성이 먼저.
+    <p class="section-desc" id="policyEvolutionNarrative">
+      라이브 paper 결과가 학습 기대치와 어긋난다. 모델은 그대로 두고
+      <strong>알람을 어떻게 분류하느냐</strong> 만 바꿔서 layer 를 얹었다. candidate generation →
+      decision policy → ACTIVE / WATCH / SILENCE 분류 → shadow ledger 누적 (걸러진 후보까지) →
+      meta-label 학습 → idea validation → policy gate (자동 promotion 차단).<br><br>
+      추천이 좋으면 ACTIVE 로 보내고, 좋지 않으면 침묵하되 그 결정 자체를 attribution 으로 남긴다.
+      <em>결과보다 결정의 정합성이 먼저</em> — 포트폴리오 수준 시스템의 전제.
     </p>
     <div class="alpha-card" id="policyEvolutionCard">
       <div class="ac-row"><div class="ac-label">policy id</div><div class="ac-num" id="policyId" style="font-size:0.95rem">—</div><div class="ac-sub" id="policyVersion">—</div></div>
       <div class="ac-row"><div class="ac-label">policy_gate</div><div class="ac-num" id="policyGateStatus" style="font-size:0.95rem">—</div><div class="ac-sub">automation 보수적 — 사용자 명시 컨펌 후 swap</div></div>
-      <div class="ac-row"><div class="ac-label">timeline</div><div class="ac-num" id="policyTimeline" style="font-size:0.95rem">5/8 → 5/25</div><div class="ac-sub">결과 진단 + layer 추가 사이클</div></div>
+      <div class="ac-row"><div class="ac-label">timeline</div><div class="ac-num" id="policyTimeline" style="font-size:0.95rem">—</div><div class="ac-sub">진단 → fix → layer 추가 사이클</div></div>
     </div>
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">timeline — 진단 → fix → layer 추가</h3>
-    <svg viewBox="0 0 980 130" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:980px;margin:0 auto 1.6rem;font-family:'JetBrains Mono', monospace" aria-hidden="true">
-      <defs>
-        <marker id="arrEvo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M0,0 L10,5 L0,10 Z" fill="#a8a29e"/>
-        </marker>
-      </defs>
-      <g font-size="11" fill="#44403c">
-        <g>
-          <circle cx="90" cy="55" r="14" fill="#dc2626"/>
-          <text x="90" y="59" text-anchor="middle" fill="#fff" font-weight="700">!</text>
-          <text x="90" y="92" text-anchor="middle" font-weight="700">2026-05-08</text>
-          <text x="90" y="107" text-anchor="middle" fill="#a8a29e">진단 시작</text>
-          <text x="90" y="122" text-anchor="middle" fill="#dc2626" font-weight="700">cum +8% → -52%</text>
-        </g>
-        <g>
-          <circle cx="360" cy="55" r="14" fill="#b45309"/>
-          <text x="360" y="59" text-anchor="middle" fill="#fff" font-weight="700">×</text>
-          <text x="360" y="92" text-anchor="middle" font-weight="700">2026-05-13</text>
-          <text x="360" y="107" text-anchor="middle" fill="#a8a29e">timer 사고</text>
-          <text x="360" y="122" text-anchor="middle" fill="#b45309" font-weight="700">window 막힘 fix</text>
-        </g>
-        <g>
-          <circle cx="630" cy="55" r="14" fill="#2563eb"/>
-          <text x="630" y="59" text-anchor="middle" fill="#fff" font-weight="700">↻</text>
-          <text x="630" y="92" text-anchor="middle" font-weight="700">2026-05-20</text>
-          <text x="630" y="107" text-anchor="middle" fill="#a8a29e">bear silence</text>
-          <text x="630" y="122" text-anchor="middle" fill="#2563eb" font-weight="700">학습 분포 align</text>
-        </g>
-        <g>
-          <circle cx="900" cy="55" r="14" fill="#16a34a"/>
-          <text x="900" y="59" text-anchor="middle" fill="#fff" font-weight="700">✓</text>
-          <text x="900" y="92" text-anchor="middle" font-weight="700">2026-05-25</text>
-          <text x="900" y="107" text-anchor="middle" fill="#a8a29e">정책 layer</text>
-          <text x="900" y="122" text-anchor="middle" fill="#16a34a" font-weight="700">ACTIVE/WATCH/SILENCE</text>
-        </g>
-        <line x1="106" y1="55" x2="344" y2="55" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#arrEvo)"/>
-        <line x1="376" y1="55" x2="614" y2="55" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#arrEvo)"/>
-        <line x1="646" y1="55" x2="884" y2="55" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#arrEvo)"/>
-      </g>
-    </svg>
+    <div id="policyTimelineSvg" class="policy-timeline-wrap" aria-label="정책 진화 타임라인"><div class="loading-state">timeline — PIN 입력 후 표시</div></div>
+    <div id="policyEventList" class="policy-event-list" aria-label="정책 진화 이벤트 상세"></div>
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">rule set + decision 분포</h3>
     <div class="chart-split">
@@ -1214,7 +1222,7 @@
 <hr class="divider">
 
 <footer>
-  자동 갱신: 매일 KST 10:10 close cron 직후 ·
+  자동 갱신: 매일 KST 10:10 close cron 직후 (마지막 빌드 <span id="footerBuildAt">—</span>) ·
   소스 <code>scripts/build_dashboard.py</code> · 데이터 <code>output/paper_ledger*.csv</code> ·
   암호화 <code>PBKDF2-HMAC-SHA256 + AES-256-CBC + HMAC(salt‖iv‖ct)</code>
 </footer>
@@ -1383,6 +1391,18 @@ function renderHero(summary) {
   const liveStart = dist.first_alert_date || pre.first_alert_date || '—';
   document.getElementById('heroMeta').textContent =
     `데이터 기준 ${asofKst} (KST) · 라이브 시작 ${liveStart} · 가상 진입 룰 5% TP / horizon close, 비용 0.15% 차감`;
+
+  // footer build 시각
+  const footerEl = document.getElementById('footerBuildAt');
+  if (footerEl) {
+    const built = summary.generated_at_utc || summary.asof;
+    try {
+      const d = new Date(built);
+      footerEl.textContent = d.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'short', timeStyle: 'short' });
+    } catch (_) {
+      footerEl.textContent = String(built);
+    }
+  }
 }
 
 function channelKpiHtml(s, kind) {
@@ -1525,6 +1545,34 @@ function _baseLineOpts(yTickPct = true) {
   };
 }
 
+/** Chart.js inline plugin — y=0 강조 dashed line + label.
+ * %  단위 차트의 손익분기를 시각적으로 분리해 "오늘 plus/minus" 가독성 강화. */
+const ZeroLinePlugin = {
+  id: 'zeroLineDashed',
+  afterDraw(chart) {
+    const yScale = chart.scales?.y;
+    if (!yScale) return;
+    if (yScale.min > 0 || yScale.max < 0) return;
+    const y0 = yScale.getPixelForValue(0);
+    const { left, right } = chart.chartArea;
+    const c = chart.ctx;
+    c.save();
+    c.strokeStyle = '#78716c';
+    c.setLineDash([5, 4]);
+    c.lineWidth = 1;
+    c.beginPath();
+    c.moveTo(left, y0);
+    c.lineTo(right, y0);
+    c.stroke();
+    c.setLineDash([]);
+    c.fillStyle = '#78716c';
+    c.font = "10px 'JetBrains Mono', monospace";
+    c.textAlign = 'right';
+    c.fillText('손익분기', right - 6, y0 - 4);
+    c.restore();
+  },
+};
+
 function _renderCumChannel(canvasId, series, color, label, btcSeries) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
@@ -1564,6 +1612,7 @@ function _renderCumChannel(canvasId, series, color, label, btcSeries) {
     type: 'line',
     data: { labels: dates, datasets },
     options: _baseLineOpts(),
+    plugins: [ZeroLinePlugin],
   });
 }
 
@@ -1881,6 +1930,7 @@ function _renderRollingSharpe(canvasId, series, color) {
         x: { ticks: { maxTicksLimit: 8, autoSkip: true, font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false } },
       },
     },
+    plugins: [ZeroLinePlugin],
   });
 }
 
@@ -2259,22 +2309,146 @@ function renderNotesVsSystem(summary) {
 }
 
 /* ───────── Policy Evolution ───────── */
+function _shortDate(d) {
+  if (!d) return '—';
+  const s = String(d);
+  return s.length >= 10 ? `${parseInt(s.slice(5,7),10)}/${parseInt(s.slice(8,10),10)}` : s;
+}
+
+function _renderPolicyTimelineSvg(events) {
+  if (!events || !events.length) return '<div class="loading-state">timeline 데이터 없음</div>';
+  const n = events.length;
+  const W = 980, H = 150;
+  const padX = 70;
+  const stepX = n > 1 ? (W - padX * 2) / (n - 1) : 0;
+  const cy = 58;
+  const groups = events.map((ev, i) => {
+    const cx = n === 1 ? W / 2 : padX + stepX * i;
+    const color = ev.color || '#a8a29e';
+    const glyph = ev.glyph || '•';
+    const date = _shortDate(ev.date);
+    const cumDist = ev.dist_cum_pnl_pct;
+    const metricTxt = (typeof cumDist === 'number')
+      ? `cum ${cumDist >= 0 ? '+' : ''}${cumDist.toFixed(1)}%`
+      : '';
+    const metricColor = (typeof cumDist === 'number') ? (cumDist >= 0 ? '#16a34a' : '#dc2626') : color;
+    return `
+      <g>
+        <circle cx="${cx}" cy="${cy}" r="15" fill="${color}"/>
+        <text x="${cx}" y="${cy+4}" text-anchor="middle" fill="#fff" font-weight="700" font-size="12">${escapeHtml(glyph)}</text>
+        <text x="${cx}" y="${cy+34}" text-anchor="middle" font-weight="700" font-size="11" fill="#44403c">${escapeHtml(ev.date)}</text>
+        <text x="${cx}" y="${cy+50}" text-anchor="middle" font-size="10.5" fill="#78716c">${escapeHtml(ev.label || '')}</text>
+        <text x="${cx}" y="${cy+68}" text-anchor="middle" font-size="10.5" fill="${metricColor}" font-weight="700">${escapeHtml(metricTxt)}</text>
+      </g>`;
+  }).join('');
+  const lines = [];
+  for (let i = 0; i < n - 1; i++) {
+    const x1 = padX + stepX * i + 16;
+    const x2 = padX + stepX * (i + 1) - 16;
+    lines.push(`<line x1="${x1}" y1="${cy}" x2="${x2}" y2="${cy}" stroke="#a8a29e" stroke-width="1.5" marker-end="url(#arrEvo)"/>`);
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;font-family:'JetBrains Mono', monospace" role="img" aria-label="정책 진화 타임라인">
+      <defs>
+        <marker id="arrEvo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,0 L10,5 L0,10 Z" fill="#a8a29e"/>
+        </marker>
+      </defs>
+      ${groups}
+      ${lines.join('')}
+    </svg>`;
+}
+
+function _renderPolicyEventList(events) {
+  if (!events || !events.length) return '';
+  const items = events.map(ev => {
+    const dist = ev.dist_cum_pnl_pct, pre = ev.preopen_cum_pnl_pct;
+    const metricCells = [];
+    if (typeof dist === 'number') {
+      const cls = dist >= 0 ? 'pos' : 'neg';
+      metricCells.push(`<span class="pe-metric"><span class="pem-label">dist</span> <span class="pem-val ${cls}">${dist >= 0 ? '+' : ''}${dist.toFixed(2)}%</span></span>`);
+    }
+    if (typeof pre === 'number') {
+      const cls = pre >= 0 ? 'pos' : 'neg';
+      metricCells.push(`<span class="pe-metric"><span class="pem-label">preopen</span> <span class="pem-val ${cls}">${pre >= 0 ? '+' : ''}${pre.toFixed(2)}%</span></span>`);
+    }
+    return `
+      <li class="policy-event-item" style="--pe-color:${ev.color || '#a8a29e'}">
+        <div class="pe-marker" aria-hidden="true">${escapeHtml(ev.glyph || '•')}</div>
+        <div class="pe-body">
+          <div class="pe-head"><span class="pe-date">${escapeHtml(ev.date)}</span><span class="pe-label">${escapeHtml(ev.label || '')}</span></div>
+          ${ev.headline ? `<div class="pe-headline">${escapeHtml(ev.headline)}</div>` : ''}
+          ${ev.description ? `<div class="pe-desc">${escapeHtml(ev.description)}</div>` : ''}
+          ${metricCells.length ? `<div class="pe-metrics">${metricCells.join('')}<span class="pe-window">→ ${escapeHtml(ev.window_end || '')}</span></div>` : ''}
+        </div>
+      </li>`;
+  }).join('');
+  return `<ul class="policy-event-ul">${items}</ul>`;
+}
+
 function renderPolicyEvolution(summary) {
   const pe = summary.policy_evolution || {};
   const idea = summary.idea_validation || {};
   const gate = (idea.policy_gate || {});
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const setHtml = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+
   set('policyId', pe.policy_id || '—');
   set('policyVersion', pe.version || '—');
-  set('policyGateStatus', (gate.rows || []).length ? `${gate.rows.length} rule(s) evaluated` : '—');
-  set('policyTimeline', '5/8 결과 → 5/13 timer fix → 5/20 bear silence → 5/25 정책 layer');
+  const gateRows = gate.rows || [];
+  if (gateRows.length) {
+    const promote = gateRows.filter(r => String(r.state || '').toUpperCase().includes('PROMOTE')).length;
+    const demote = gateRows.filter(r => String(r.state || '').toUpperCase().includes('DEMOTE')).length;
+    set('policyGateStatus', `${gateRows.length} channels · promote ${promote} / demote ${demote}`);
+  } else {
+    set('policyGateStatus', '—');
+  }
 
+  const events = pe.events || [];
+  if (events.length) {
+    const first = events[0].date;
+    const last = events[events.length - 1].date;
+    set('policyTimeline', `${_shortDate(first)} → ${_shortDate(last)}`);
+    setHtml('policyTimelineSvg', _renderPolicyTimelineSvg(events));
+    setHtml('policyEventList', _renderPolicyEventList(events));
+  } else {
+    set('policyTimeline', '—');
+    setHtml('policyTimelineSvg', '<div class="loading-state">timeline 데이터 없음</div>');
+    setHtml('policyEventList', '');
+  }
+
+  // narrative — paper_ledger 첫 N 일 라이브 누적 PnL 동적 산출
+  const live = pe.live_summary;
+  const narrativeEl = document.getElementById('policyEvolutionNarrative');
+  if (live && narrativeEl) {
+    const distPnl = live.dist_cum_pnl_pct, prePnl = live.preopen_cum_pnl_pct;
+    const distTxt = (typeof distPnl === 'number')
+      ? `<strong style="color:${distPnl >= 0 ? 'var(--green)' : 'var(--red)'}">${distPnl >= 0 ? '+' : ''}${distPnl.toFixed(1)}%</strong> (dist)`
+      : '';
+    const preTxt = (typeof prePnl === 'number')
+      ? `<strong style="color:${prePnl >= 0 ? 'var(--green)' : 'var(--red)'}">${prePnl >= 0 ? '+' : ''}${prePnl.toFixed(1)}%</strong> (preopen)`
+      : '';
+    const range = `${_shortDate(live.first_date)} → ${_shortDate(live.last_date)} (라이브 paper ${live.n_days}일 · 알림 dist ${live.n_alerts_dist} / pre ${live.n_alerts_preopen})`;
+    const liveLine = (distTxt && preTxt) ? `${range} 동안 누적 ${distTxt} / ${preTxt}.` : range;
+    narrativeEl.innerHTML = `
+      ${liveLine} 표본을 늘려도 회복이 아니라 <em>학습 분포 (BTC bull conditional) 위반 + EV 음수 룰의 수학적 보장</em>.
+      데이터가 그렇게 가르쳤다.<br><br>
+      모델은 그대로 두고 <strong>알람을 어떻게 분류하느냐</strong> 만 바꿔서 layer 를 얹었다.
+      candidate generation → decision policy → ACTIVE / WATCH / SILENCE 분류 →
+      shadow ledger 누적 (걸러진 후보까지) → meta-label 학습 → idea validation → policy gate (자동 promotion 차단).<br><br>
+      추천이 좋으면 ACTIVE 로 보내고, 좋지 않으면 침묵하되 그 결정 자체를 attribution 으로 남긴다.
+      <em>결과보다 결정의 정합성이 먼저</em> — 포트폴리오 수준 시스템의 전제.
+    `;
+  }
+  const label = document.getElementById('policyEvolutionLabel');
+  if (label && pe.asof) label.textContent = `POLICY EVOLUTION · ${pe.asof}`;
+
+  // rule set table
   const root = document.getElementById('policyRuleSet');
   if (!root) return;
   const rules = pe.rule_set || [];
   if (!rules.length) { root.innerHTML = '<div class="loading-state">no rules</div>'; return; }
   const trs = rules.map(r => `<tr><td>${escapeHtml(r.channel || '—')}</td><td>${escapeHtml(r.regime || '—')}</td><td><strong>${escapeHtml(r.decision || '—')}</strong></td></tr>`).join('');
-  root.innerHTML = `<table class="strat-table"><thead><tr><th>channel</th><th>BTC regime</th><th>decision</th></tr></thead><tbody>${trs}</tbody></table>`;
+  root.innerHTML = `<div class="strat-table-wrap"><table class="strat-table"><thead><tr><th>channel</th><th>BTC regime</th><th>decision</th></tr></thead><tbody>${trs}</tbody></table></div>`;
 }
 
 /* ───────── Meta Model Card ───────── */
