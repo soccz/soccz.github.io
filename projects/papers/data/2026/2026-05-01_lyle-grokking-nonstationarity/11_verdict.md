@@ -1,50 +1,11 @@
-# 11 — 한 줄 판결
-
-> **🧒 한 줄 요약**: 평가: practical (85% performance): ★★★★★, novelty (ELR metric): ★★★★★, impact (continual learning era): ★★★★, reproducibility: ★★★★.
-
-
----
-
-## 판결
-
-> **Grokking의 "왜"를 비로소 최적화 역학으로 닫아주는 논문: ELR = η/‖θ‖ 하나로 지연된 일반화·원시 편향·소성 상실을 통합하고, 두 줄짜리 재가열(Re-warming)이 세 도메인 모두에서 효과를 낸다는 실험적 증거를 제시했다는 점에서, 내 Grokking TS 트랙의 "왜 weight decay가 필수였는가" 질문에 대한 권위 있는 답이 되며, 비정상 시계열 적응 실험의 이론적 토대로 직접 활용 가능하다.**
-
----
-
-## 판결 이유 (3줄 보충)
-
-1. **이론적 기여 중간, 실험적 기여 높음**: ELR 이론 자체는 선행 NaP 논문(arXiv:2407.01800)에서 온 것이지만, grokking·primacy bias·plasticity loss를 하나의 프레임으로 묶고 세 도메인에서 실증한 통합이 이 논문의 핵심 기여다.
-
-2. **내 연구 지도에서의 좌표**: §A Grokking 트랙의 "훈련 역학" 축 → Nanda 2023(표현 변화)과 함께 읽어야 완전한 그림이 나온다. 단독으로는 "왜"만 설명하고 "어떻게 보이는가"가 없다.
-
-3. **한계 인식**: 소규모 실험·이론적 수렴 증명 부재·$T$ 민감도 미검증. 대형 시계열 모델로의 전이 가능성은 내가 직접 실험으로 확인해야 한다.
-
----
-
-## 연구 지도 핀 위치
-
-```
-§A (Grokking dynamics 층)
-    │
-    ├── Power 2022: "무엇이 일어나는가" (현상 발견)
-    ├── Nanda 2023: "내부에 무엇이 생기는가" (메커니즘, 표현)
-    └── Lyle 2025: "왜 늦게 일어나는가" (최적화 역학, ELR)  ← 여기에 핀
-```
-
----
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **Practical (85% perf) 의 industry impact?**
-2. **ELR metric의 novelty?**
-3. **$380 reproduction의 학생 접근성?**
-
-### 답변
-
-1. **Continual learning enabler**. 32% → 85% performance = *continual learning unfeasible → feasible*. Industry impact = ★★★★★.
-
-2. **ELR 의 first principled plasticity metric**. Scale-invariant + layer-comparable. Field standard metric. ★★★★★.
-
-3. **$380 reproduction**. 1× V100 × 150h. *학생 + 소규모 lab budget 안*. Open-source code. ★★★★.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "r1DiN4MCxlBf84hSWQYfBA==",
+  "iv": "+42G3fK767M0MdqbiLpe6g==",
+  "ct": "Ctln1sRdhS535gqzibbYyKZwrp8VK06U/Hl3wP1tsHDvJQiQ7Cbsdc8V2EOZI9VgesNOpMJZZXzr887qy9Ze2ZPtm2wFklRGl77anD/Q7miAC369lmlA0/TShsMFNUpz40tLWJKZWNQWusb4AJTuECrSMJC55ut7SbwTxAOCqJufNaHlkz8G+LGp0txJA9NfR9Bu06m55zNVH0rDonOmDlvatSfe3B5vv+MBxUB2KSvts3XFPt3xFQOqbBDj4wKpk0RjYxaVJ4ve++WCjk4BX7+UJ5aTIC1g/tuQfAHD1lkBRSf5eN1DopoJk6ymu/94obgR0O8oLeBvMUJcz/9AIRZMU3W29dTPn5Na5aAped0tm6m7Zg1yAa5tmlVeYuDpyuLu68co70p8HbYCnewsRvZ6l/DU2M8/ztca82QuoCFx17lMq/nJ2Jc/yMmpAyerZba2V05jCPsW7yB2BPjL8gI/yXhfbDBO3UKrE+v1pW8qg1eaEG1nFKqgB1GQbeTk+VCrPeQKgjssLrtA5tl64ui/KApqEorbAWC4jeYVb5vDyaodKleeWVCuenvdrPOih2VFxVB+hG8qEZLDyDZgpugW/TByqzRX3uKNU+xM5e/pX4urFihouw8Br3GnmBPLrHRiRtPKB4jKzoEfefKe3RrUf99Q+8bWMWt0ov0ph93bAbz2GjlkYMNnp07BIj+7tXDtQxXdAmrtbr9HvfxoXzmoL8bfjN3eTzWwR7X1kpcergmW8fV4/57EzKry5nEJ3NW30A5PjaS1Bc6A59zZ9VdHPSmjiqOMK6ECWqAxE2Nc60ucqT0PuCqH2iqtlxncSz6sv4WQ5pfKBUZE9KNkT2mxGsqI+5jIkhGi56dgi838hQ/DvYzWfKNtLQKgVbUutWQZ6v6hJ0nkSN2u88D5hoOO2ZEMmpw4uTK+JvroQ9Zbxv0waV5CqfUfoVvn4y+zA/hlj5lJOpHKX6rhB9cUUJZexg2+JTVx0Xv9AeP8YbKThXsNKFsFYQ/f0qPlUwPvvn5y0CFwKafTnxKyXK1DBF5Uwi5aZjp9Xxaiblz0QFh0qp0XmNp3ZiTG6Mpt4IZ74Qh1OlWgmoKA35u0YFUkZzjlXdaKjiIbJGL5QBKlx1SIdmoLfeXp/SELDh6kVPN5limU6eXp8rnE+o3SWUzS3EBvX3+Axss5Xo83y+Q1WtE9f0mHYZHT8tYWapFz41R4sgKInssrtNIbGaWuHnxMsDoIAtF4CgiDd36lk1lnqFdQGHsh5KYIuXrex3xiymC+RivQ0NLU7BGbA8Z68nOIzvBu9pfdBIwCJRYV2n0JEu5USHOJiBSjP+EYGr8Le9lVV4pMCj+CVHD3j9gIVjSgyU9cIYe6JfpB/47Cmm5ShBgMbssnFdGvazub9Js5lZnGS7ej4FALqR/XtG1/cSr95lOtRq0gze5XGrLj2lPh7UmcH4x6Qeo1aa4K9DAHOwOkmYWj8RiDkvp7M4BWDJUJXB2Nr+FR9OiLYgaimExRhXUcWPyGDqHwDzAuYB3J16AXBtPkxp87JXnWrCTXA6nG0bUDs+2/Ka6JnE1N2TwOt4VVy/wZoGnkh7op9MaGzNMiLTKUyYEfIKcnggnvA8gJKUx67DKSSJgb5UNlB6DpgdRPz+K9JlbIPwPkjIFHS3PRO0I/ND1mulAKprZB3Fb+AsMOgmWL1TCDUpkrNwwpPGaCjL2gVLpwQqH/5Pn0Zk0v8tZqKme1z/ZINRBgU3GWjGIKoy3mch1gWXBCspkA9C52g4fnVrIYWE1W0SNnReiM+r0zaW7bBII/Rb2+tajmTtBPGBcO16N8ARIXv5lFtFt48dOlpjpwifo3E+GXaS4ITtLnF/LVem4QgAihYpu6TnuuK4TSwjrapVECcQiqu8S62BY34zVlNyYn3t2HJrc7fQoks0mKbj3qRdbbdzBFnryMSlET0ZZVqzQL1yy1O/GW8PXCEgvBTWwvFQOsSEUX/X0y1mPKDjlRMYnrX73ZISfpruEljZiZqL9/2txe1I/O4WXmeeTk08XIA/VWKV12bNTD8BeU1cZlciYADg8UVVV+HYDK+9T7+02+iz8C5+cGmhlK/+P6Y+Vy5Yz2c/IaSOBl1rmdpBcSfnf4SVYr7JxtnbBVBHzYVgELU3WoQjaipe1tWAk7l7Wogaqxy9JJzybjvxoQLz6Z5h6s94K6klclKCCT+VmDhPHkYDqXYocJPmKE7ILQ+rJ3ft5MPXba9dDUIVrH/GG/Dh9WkpNd3dwppz0VNN8IcXtOcL3O+J8PuRGxeaTpolLNdyIwDVuMhcDsONVwLrVG+PeWRF1pUchH7AH006TyMJgV/CkbchDLYj/sDSvHaH5kwI4fm12B/J3Xv6zHmuVNu6fsLjp2oczMwGxlCivH/JwMymFmAy4kPMoo0fb2UfB3lbtdAMrP6/34ZbjXhqKyeE3rbvrO/SgRYtkVkTRrlwoa/CACOru632vdRJyLblSDz8o+UUWgTUXf9Z0Lv9ya65c4MoFV6nfXnVybuehbGIKU+Hg7WxJaW7RNC35n7IBxata/RhP0+/Yfn8AbrSCqVS7/F0FZDKxbnnwipUe46xhkcJf/THS+1uLlkmAMTnN326kjA6iUjGK3d5kkcJuDiH9UPLGModlSjEGuxaUi6j8DrjshNJV+qRb0GEOC2/tBIxnBqMm/AE1vlNOSV29s+5hKj/QodLdwsUfT77k8i2EUP/qI2YXq7tzvvWyPBxFGsAmIQ213rjgTF8QjZlF0zEY2IjcPLLQU0ePlLI5JKnsNCyogJ+pBGAmyqflb0qH51YofNn2/NnGGvrdLZbnLDg93J1KV0pgZBXCEyaR0yZbOc9yEvWTyXfVS//MAxy5isfZm2Gt64HVFqKFrFQ9tVd3I/nx7RIsOtKEXYiP86V5MuRL0JH3xmUVqlFjbpDBA1AzHm+PDz6jsiBg6/I5siTdGUkM/IKPeWmuu/JhN/X5Tv7Qgt9LP6ZN5ChWZrGSBf58Ud8XpJBOoQP9bC9AOCe/yi4BevQyIV0auBQ7p2x1JTSRZUVfmqT2dXrjJHaWLQVLl7zA6RadjYW9bAVzqeeX6xufwIg3kBOz2dqmdiwDVvit+eIuTNaxY2CwSCGcdN13WWDkTqHqDZTN7z/zU//6lr1dl9ZY1Dy71wrl4ZXMj8q0TD2FLhQmjoF8Sdx2J59zvdDdZZXIOVfBmks/E2g5+SFZ5dw==",
+  "mac": "ku/FCcSomRC+DkFJ/yEys76XwcrMQbEw6Lr8dHN2dTk="
+}

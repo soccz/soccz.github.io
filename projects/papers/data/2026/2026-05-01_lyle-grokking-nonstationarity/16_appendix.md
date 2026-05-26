@@ -1,79 +1,11 @@
-# 16 Appendix — 정확한 수치 · 보조 결과 · Reproduction
-
-> **🧒 본 챕터는 "디테일 창고"**: Lyle 2024 정확 수치, hyperparams, reproduction.
-
-## 16.1 챕터 한 줄 요약
-
-> **"paper Table 1-4 (Atari continual RL results), Appendix B (hyperparams), reproduction guide."**
-
-## 16.2 Continual RL Results (paper Table 1)
-
-10 sequential Atari tasks:
-
-| Method | Avg final performance | Plasticity preserved |
-|--------|---------------------:|----------------------|
-| Baseline (Adam + fixed LR) | 32% | ✗ |
-| EWC | 54% | partial |
-| Continual Backprop (Dohare 2024) | 72% | ✓ |
-| Shrink-and-perturb (Ash 2020) | 68% | partial |
-| **Lyle (Re-warm + NAP)** | **85%** ★ | ✓ |
-
-## 16.3 ELR Trajectory (paper Figure 2)
-
-| Step | ELR (no intervention) | ELR (re-warm) |
-|------|--------------------:|---------------:|
-| 0 | 0.045 | 0.045 |
-| 50K | 0.022 | 0.024 |
-| 100K | 0.008 | 0.018 |
-| 200K | 0.0015 (loss) | 0.012 |
-| 300K | 0.0005 (severe) | 0.010 |
-
-→ Re-warm 이 ELR을 *healthy zone (>0.01)* 유지.
-
-## 16.4 NAP Results (paper Table 3)
-
-| Step | % dormant | % active | Performance |
-|------|----------:|---------:|------------:|
-| 100K (before NAP) | 38% | 62% | 78% |
-| 100K (after NAP) | 5% | 95% | 79% |
-| 200K (before) | 42% | 58% | 65% |
-| 200K (after NAP) | 8% | 92% | 81% (recovered!) |
-
-## 16.5 Hyperparameters
-
-| 항목 | 값 |
-|------|------|
-| Base LR | 1e-3 |
-| Max LR (re-warm) | 3e-3 (3× base) |
-| Warmup duration | 500 steps |
-| Cycle period | 10,000 steps |
-| NAP interval | 50,000 steps |
-| Dormancy threshold | 0.01 |
-| Reset fraction | per cycle: ~30-50% of dormant |
-| Optimizer | Adam |
-| Hardware | 1× V100 |
-
-## 16.6 Reproduction Cost
-
-| Atari task series (10 tasks) | 시간 | 비용 (V100 $2.5/h) |
-|--------------------------------|----:|------------------:|
-| Baseline (no plasticity tools) | 48h | $120 |
-| Re-warm only | 48h | $120 |
-| Re-warm + NAP | 50h | $125 |
-| **All methods comparison** | **~150h** | **~$380** |
-
-## 16.7 자기점검
-
-### 핵심 3 가지
-
-1. **85% vs 32% baseline 의 *substantive significance*?**
-2. **NAP 의 *200K step recovery* (65% → 81%) 의 mechanism?**
-3. **Lyle methods 의 *production cost* 의 reasonable 함?**
-
-### 답변
-
-1. **Plasticity tool 이 *continual learning 가능* enable**. 32% = baseline 의 *catastrophic failure* (task 1-10 의 평균). 85% = "*거의 single-task 수준 maintain*". 53%p 차이 = "*plasticity tool 이 continual learning 의 *fundamental enabler*". → Without plasticity tools, *continual RL impossible*.
-
-2. **Capacity restoration via dormant reset**. 200K step 에서 *42% neurons dormant* — *effective capacity 58%*. NAP 후 *active 92%* (5% 만 dormant 잔존). 새 신호로 dormant neurons 재초기화 → *new learning capacity*. 65% → 81% = *capacity restoration 이 performance gain* 으로 전환.
-
-3. **+$5 cost for plasticity tool**. Baseline $120 vs Re-warm + NAP $125 = *5% additional cost*. *85% vs 32% performance*. → *Cost-effective intervention*. *Engineering simplicity* (LR scheduler + activation hook) = *production-ready*.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "zRHNNPvlsLp7ApOOdmItFA==",
+  "iv": "lg06QOSa6ROu+61aTeIQhw==",
+  "ct": "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",
+  "mac": "1AphRFuIMNG+gsDhaQrBAxj18wEFxzzivH9aMvQor3c="
+}

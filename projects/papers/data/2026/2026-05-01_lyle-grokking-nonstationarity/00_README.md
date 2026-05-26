@@ -1,68 +1,11 @@
-# 00 — 표지 및 목차
-
-> **🧒 한 줄 요약**: 본 deep dive 입구 — 16 + 7 chapters. Lyle = plasticity research 의 founding paper.
-
-
-## 원문 제목
-**What Can Grokking Teach Us About Learning Under Nonstationarity?**
-
-## 한국어 번역
-그로킹(Grokking)은 비정상성(Nonstationarity) 하의 학습에 대해 무엇을 가르쳐주는가?
-
-## 저자 · 소속
-Clare Lyle · Ghada Sokar · Razvan Pascanu · András György  
-(Google DeepMind)
-
-## 발표처 · 연도 · 식별자
-- **발표처**: 4th Conference on Lifelong Learning Agents (CoLLAs 2025)
-- **arXiv**: [2507.20057](https://arxiv.org/abs/2507.20057)
-- **제출일**: 2025년 7월 26일
-
-## 주 태그
-`continual-learning` (primary) · `grokking-delayed-gen` (cross)
-
-## 코드 · 데이터 공개 여부
-별도 공개 저장소 미확인. 논문에서 표준 modular arithmetic 및 공개 RL 벤치마크(주로 Atari류)를 사용. 코드 부록 확인 불가(본문 접근 제한으로 추정).
-
-## 한 줄 판결
-> **Grokking = ELR(유효학습률) 붕괴의 역전**: 모든 지연된 일반화·원시 편향·소성 상실은 하나의 메커니즘(파라미터 노름 증가 → ELR 붕괴 → 게으른 regime 고착)으로 통합되며, ELR 재가열(Re-warming)이 그 보편 치료제임을 실증한다.
-
----
-
-## 목차
-
-| 파일 | 섹션 |
-|------|------|
-| [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 |
-| [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR |
-| [03_problem.md](03_problem.md) | 2. 문제 지형도 |
-| [04_claims.md](04_claims.md) | 3. 핵심 Claim 해체 |
-| [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 큰 그림 |
-| [05_method_b_elr.md](05_method_b_elr.md) | 4b. 방법론 — 유효학습률(ELR) |
-| [05_method_c_nap_rewarm.md](05_method_c_nap_rewarm.md) | 4c. 방법론 — NaP & ELR Re-warming |
-| [06_experiments.md](06_experiments.md) | 5. 실험 해부 |
-| [07_limits.md](07_limits.md) | 6. 가정·한계·반박 |
-| [08_lineage.md](08_lineage.md) | 7. 이론적 계보 |
-| [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 |
-| [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 사고 확장 — 자문 질문 |
-| [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 |
-| [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 |
-| [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |
-
----
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **본 deep dive 권장 학습 path?**
-2. **Lyle 2024 의 continual learning 시대 의의?**
-3. **plasticity tools 의 2 년 후 impact?**
-
-### 답변
-
-1. **선형 path**: 02 → 03 → 05a→c → 06 → 17. 시간 부족 시 02 + 05b + 06 + 11 핵심.
-
-2. **"Dynamic plasticity" paradigm 의 founding paper**. Pre-Lyle: static capacity assumption. Lyle: *plasticity 가 trainable + measurable + maintainable*. Continual learning era 의 *practical methodology*.
-
-3. **RL foundation model + LLM continual pre-training 의 enabler**. 2024-2026 의 *continual updating models* trend 의 *foundational tool*. RL specialists, robotics, streaming learning industry.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "jb6vtnGhOC9Mrqxw7v8LAw==",
+  "iv": "rpdxnl64RhG0FC/UeZaNrQ==",
+  "ct": "Ywgj3TG+YDEWE7zPkyJ/5Hm0ourr6MQZc7EG097ftiQkIIhIc3b1TwLbgADyKVUpmbUy9luZqiVM9nu71IeXgP6QFRMDD2aNMhQXMsbAgjCsS7I/ysRDlXQKOHUinCKpsAY687Cgx/Qx3+H5wRTOkXckjKaazuEunANSCV6kYETDwuU7JDiohjcL7SslaQA4sA9wU4hChRaz0qUMOauEM8ZrSn162lvV1QqiSLD+/mpsO7DBq4sKskBxwfMyFqsVCSFRNY04LxuhUJDjqatQJ4mF+656whgYBeiCEN7Jua3yo//En53CUCMIrko6RxhsXaFho5lLpWWc0y4iR6UT246UA9XWKuOODuQx4r+GJ4ejGZJOQWVK8OKP8nI24rXbCKiFj7SDuA7/fgBSi9fXOcdA4EX/Ciz9fQstICrJj15UQvYM+ggtbY+R5WTESWlyM7KE+02M71hqeZuIOprjjQ4JX/sAdp/3TijcfLAyngxGSPn4/czEq0Ahhx0J87FE6K+u6Y8ODNtT2qKE6PSzT6fNVFRJclkOIz4LUW6R1QwFex1/b9XTluhWhjyfVKqBDycH41F1xzwhxP4IU7A+DkwrVDUcEAfmDg5BKfJvCP5HhDiWHaYUJCAGjY6Dm7rdRG7BoO2n3NVWp6PDeCAt90L/8/qMHv+yE4u7LbudH2W9ShBhsTtMOomxHt2CznwhR/T9VscFg9LkHWgmhr1wG1fN6cCHPjyKQ3Jn+lpEnj0PfAs5qtDOFlNCggRAIJZ1z2mjlUicV2koMOZQtn/ZErD/CONIru9OWlVC5v4yUbHET0dW6Tv+Dw+zlL+c7vFIUz3tDh0r7IfEC5sgMbyUmG+sH8YQ/TwUr7RbsT2seTWowG9QOXJARCUnbCHRpAO8FjyLDY9FFR5M1RanI9jhNtqRUC+ce+kW/iyLvRTfwtxNOd8cTSklPVgjK+kKz65nqv4+9WZlGaCCix/XuhWRHMN1rBZrJ78GfLx0iP3qSyrr9Bk989ZSsjJkcGeKEfGq0tKf0aca8Q2m1ioxEb8brXB22IBsnLFZkqHT/yzRKpA+6ZQDJHCfblu+Vmw8UGbKkyjpcQddFJfppcN2GuuKLDThyUBfq55Q1tXJ3x0wTagzUylA6iCgXYBvHu3ml8wBPpuUxu/b+QUGHlXGySG0Y0n0KVBRFKBp/9Z6rzMt99Vbsyto7/gMCDUXqTlSbwEE3P1KHz/xlKusVOF6RhQiRLGwkTOeXWBWjS0lpuvt7+tNxpsN10VkwUQtiYUWWhxcpQbsMpd+LUzixBx0fSeW0ro03GC5am3hEMRoeNY7c76lREMBTwMSSDfVASnFPOGF6K6uMAMaOiMGU7hqlLgfcbqHZnvUyAifFR0rWl5qDPvvtC7VGulE6oNXgjrTBnMG+ReXUY+w5SSIXhY7JoEbPmSgV0ZP+0nJJuo+W3GEVUKv4Opz4ZFMYaFThavbfrtwiNd+wyyF6T6YxLm62Nn710nhvPNpm46LTk2IoDAnXFeJtbalt4M5QZ9rLLmUg16n7YA5SXqrLc+ycTjp4i1CKBtMWOSjiIJtwGhz5V3Dw4RoHzn1tp5GNsR2Y7d/sJJSq2+whHW3CBrsInpBitxwDIz8jZlJIPJ0jKGKfkYVmhdplLvXzOYLMyeTJ47GboRHHkcQ02kwqi2LE7OG0pKh4iabhRZnf2FVTHlurZh0Sw/rCzlQJ9tYdtzeMYzEtaGVebDwcUZHk8ajbUfq30fZjTxMSfvMkpLtr//SFFMuAMaE77D+kB0lonhT2aPs0ceyZnMj8lmMfQdSoM6/vHqh2WSkK0LKchhwJiQDv+fC7frMX1TXb0tsKMZIGkodM0axrjJjE6Uepn7skJu97pzmqOiJZ/7VRy913arCmZxOCOCrrkAM5wIhPC/t6wMOAAPpQXnfM61BdxjLMA8CFm8vT0VTGGq1aZVunOnfDwmyjrDs6f/NuzMh88pLhQWO1BmLCDBxeb3EPRaSfk+2KB9Nc7agGmVvTPs2Qil4lJYZBExn17kSJ7L8nTmq4zZl2+b8GJZ4flmQMFo9ehJddd2eRq3qT8gaNc63I3INQEX+IzaHFa2tU2Kim5fnFqx+eduRG85MQRZmYK4RKpm6v878K+U//0wmLsu4x6Srn119i79AJjgi9/ZRho4vycojQ4WUkqb/SDwjamRwXwjJ81MohV6PSanWl/sLmSz5yUuflE3Yq92xhGPvRQOMfxwiwJPKmq6wIi9SY+nm0uB4LU4EQhS+OzaDB8XJ0Kjp0nCZ+/SuAy9erVjRYM4g2aRJB2ZITEln7bOSt0SYalt/NabnIVs3K8B4paJb9XTdahMc8zo5+cCwPBM84026NAS4aVXGeIvTScMvxQ1O955vWAYY5L8BwCfx9JcTkDGjjXWNa8PAWRS7dMHA/y3XBDkDAb3bJXF0FoALT42M0o2xY43euirM9Tv8z4fF1k7QHV2hWUfg5xf5OgKH1vfIEpJ4w4pG2EyFxH3dz1cI4nlbCt17qLNhKnepQzrrwkz53hmfNIW6EqG52TlGLXZtseW/fjiqiAVvd5hs+gNPdWVhrGIMyUsRKeAfNctYfMYS+pSFMoadPmnSpPKWIY7nP+sUxn7r5bj+UE+xF5rwWgtQdRDcLRp7k92dwlAryQ7z+hQUQi2+ZW7MZhQxKPvT3KLimC8hkTQLmK4p2LdcWQAzueJHB17ld/gV6ekLYE00wJ5u4YeUFRlhZfVlJ6qKiC2PpGrgJeAB13API8N9/oVk7S73Jv4LBBCQwKP6/Hdyq8/T+QtmCCLHd25cy2G5YsYdmD98V20EqSGtGkF9hzKnyqOuVvIWKReI5vk7DQlJApBb3H8DlqBIoHzZ5Sh+JYTsZogYSEBty48fnyuDl8oFyJaCoAUBTnItD7dFd7qK8DdenzSJIhHTGfXOVE8RSH+q5uJjdSRpZzYvCka8E5iIRK80f1pRlNNTY1VxsQvyYNbHWRfqQLHf5MLNpwUxqJSQ92kVjnP+jG5H+B/GdMvX6eikZl6sd5+SVYXf7bqr9iVI1oOpW4fk287RGYDIHJ74gBl3mVXSODtSpJzhFFGLqvsjOuas32X1rLcRpNQ4aPv0U5J5T4JTKdmuzuIrAtpxmPoIDSg1lITZh+FJ14qFqUGtNFgO0rUlO1ASl4EUv8m16EBd/9l94ElhoOFuPCFj8wtev4emTqbdlgkSdOabIwj2RHHIdNoEwdZzQ/gaTMSndE8f9CBdgb80b1DbZGVnLt8M6MKwy4ELi76FvQNdH3y+mPCTxoRL5hVcZ3ZbuRWDW5/jaYYGGciHvoKCXjnVpHi34jDdsqzzcSArDnZB3IYUKKiq4H2yIMqJMKZ22+derTkkSX7zHBWNQs15qS7qI8wKBAi98IrsgKhAEMwX3crD/VXDZFNS+cd6jozHmkcE9+ySLXjP+ohhkETsjIcg6+BFV8Ofc6kfvl3Mexe84KRfOhb5cCTocMvvcXh42B6AmCKQnjXRUOXivtJp0v2bWXCdDTnqyj+gLVBejTS2k4YN3ar7ERmVxhnJaKT/nIWQGr/rJpgjtymawUEKxkwJeQpm+Axab/Ij0GxtQqvkW1bU56LrgKdQ10AQxEP+d+K2CDXzwyEM9/4xk7EzL3/pq/KgyiQfvW2kINaaVW/p//mj65D9+OXqty10ozx+YgVqA9jkA7RCcjqj+dXMm7QD++ZcPO6H0a5t0+quJXO9u1ZBPwbVKwy0of92epSlgo/XTMMeWwYYYOHf4FWsS02SMiAGs1/XQBn1IadUUXKgw7kBaP1cZKf3HNDcRjGa87uzyc0tFEOrSCgiKjU1yR3YLvC1xINGA2Bg+mAoT0JkjDTfejx463vog40jKnqaCvPvM+m4TtWw64/WlfNq3KDw1QrwL1a2iV1YWSgjVq0OlgKCJzUxNjkWjK9boZUh8pyLgt4+jbNnt0b1A9ONmNga+GxFapdEpgzqYmS7/MoxIJp7WbwYHEuvPkeKtfcUzQI38tcyn16kYpF25giaZvfKx31NVxjnwACm1KJuLnGaW1PUhINT4a30FfkNMyiA8Cmi9+RGMhCsrwWRISCyDooCfM6RFPanuhIxdhz2pzU79du5hSls9dlNt/e5e38w57GoC6Hk0+zZwZItaxuhMoeDG2vbzgTpI26J0yALlmAxznjT+XRA19DUNk1xCXXoDh6dEqa+X1YcC15AsCPVlrPyksUsBp6wZlFynONEy+CL5RKaGA==",
+  "mac": "xKBkQUhrT7WfI+Yggc34b75xWnR+HTTeJwb1zcxG6qg="
+}

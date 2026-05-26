@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-26T13:30:15",
+  "generated_at": "2026-05-26T13:38:48",
   "count": 25,
   "papers": [
     {
@@ -2933,7 +2933,7 @@
       "code": "",
       "data": "",
       "tags": [],
-      "verdict": "Grokking = ELR(유효학습률) 붕괴의 역전**: 모든 지연된 일반화·원시 편향·소성 상실은 하나의 메커니즘(파라미터 노름 증가 → ELR 붕괴 → 게으른 regime 고착)으로 통합되며, ELR 재가열(Re-warming)이 그 보편 치료제임을 실증한다.",
+      "verdict": "Grokking = ELR(유효학습률) 붕괴의 역전**: 모든 지연된 일반화·원시 편향·소성 상실은 하나의 메커니즘(파라미터 노름 증가 → ELR 붕괴 → 게으른 regime 고착)으로 통합되며, ELR 재가열(Re-warming)이 그 보편 치료제임을 실증한다.  ---  ## 목차  | 파일 | 섹션 | |------|------| | [01_meta.md](01_meta.md) | 0. 메타 & 선정 이유 | | [02_tldr.md](02_tldr.md) | 1. 3층 TL;DR | | [03_problem.md](03_problem.md) | 2. 문제 지형도 | | [04_claims.md](04_claims.md) | 3. 핵심 Claim 해체 | | [05_method_a_intuition.md](05_method_a_intuition.md) | 4a. 방법론 — 큰 그림 | | [05_method_b_elr.md](05_method_b_elr.md) | 4b. 방법론 — 유효학습률(ELR) | | [05_method_c_nap_rewarm.md](05_method_c_nap_rewarm.md) | 4c. 방법론 — NaP & ELR Re-warming | | [06_experiments.md](06_experiments.md) | 5. 실험 해부 | | [07_limits.md](07_limits.md) | 6. 가정·한계·반박 | | [08_lineage.md](08_lineage.md) | 7. 이론적 계보 | | [09_my_research.md](09_my_research.md) | 8. 내 연구와의 연결 | | [10_extensions_a_questions.md](10_extensions_a_questions.md) | 9a. 사고 확장 — 자문 질문 | | [10_extensions_b_followups.md](10_extensions_b_followups.md) | 9b. 사고 확장 — 후속 논문 | | [10_extensions_c_ideas.md](10_extensions_c_ideas.md) | 9c. 사고 확장 — 실험 아이디어 | | [11_verdict.md](11_verdict.md) | 10. 한 줄 판결 |  ---  ## 자기점검 (이 챕터)  ### 핵심 3 가지  1. **본 deep dive 권장 학습 path?** 2. **Lyle 2024 의 continual learning 시대 의의?** 3. **plasticity tools 의 2 년 후 impact?",
       "private": true,
       "sections": [
         {
@@ -3052,43 +3052,50 @@
           "file": "12_glossary.md",
           "num": "12",
           "suffix": null,
-          "title": "12 Glossary"
+          "title": "12 Glossary & References — Lyle 2024 (Grokking Nonstationarity)",
+          "encrypted": true
         },
         {
           "file": "13_insights.md",
           "num": "13",
           "suffix": null,
-          "title": "13 Insights"
+          "title": "13 Meta Insights — Lyle 2024 (Plasticity)",
+          "encrypted": true
         },
         {
           "file": "14_code.md",
           "num": "14",
           "suffix": null,
-          "title": "14 Code"
+          "title": "14 PyTorch Code — Plasticity Methods 재현",
+          "encrypted": true
         },
         {
           "file": "15_diagrams.md",
           "num": "15",
           "suffix": null,
-          "title": "15 Diagrams"
+          "title": "15 Diagrams & Interactive Visualizations",
+          "encrypted": true
         },
         {
           "file": "16_appendix.md",
           "num": "16",
           "suffix": null,
-          "title": "16 Appendix"
+          "title": "16 Appendix — 정확한 수치 · 보조 결과 · Reproduction",
+          "encrypted": true
         },
         {
           "file": "17_aftermath.md",
           "num": "17",
           "suffix": null,
-          "title": "17 Aftermath"
+          "title": "17 2 년 Aftermath — Plasticity Era (2024-2026)",
+          "encrypted": true
         },
         {
           "file": "18_self_critique.md",
           "num": "18",
           "suffix": null,
-          "title": "18 Self-Critique"
+          "title": "18 Self-Critique",
+          "encrypted": true
         }
       ],
       "data_path": "data/2026/2026-05-01_lyle-grokking-nonstationarity"

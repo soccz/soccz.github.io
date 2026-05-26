@@ -1,39 +1,11 @@
-# 18 Self-Critique
-
-> **🧒 본 챕터는 "자기 비판"**: 본 deep dive missing pieces.
-
-## 18.1 챕터 한 줄 요약
-
-> **"4 약점: (1) ELR threshold 의 task-dependence, (2) NAP reset 의 *new neuron 학습 시간*, (3) Re-warm cycle 의 hyperparameter sensitivity, (4) RL-centric evaluation 의 generalizability 의문."**
-
-## 18.2 약점 1 — ELR Threshold Task-Dependence
-
-ELR < 0.001 = "plasticity loss" — Atari 실험 에서 *empirical default*. 다른 task (LLM, robotics) 의 *optimal threshold* 미공개. *Task-specific tuning* 필요 — paper 미강조.
-
-## 18.3 약점 2 — NAP Reset 의 *Learning Time*
-
-NAP = dormant neurons 재초기화. 새 random initialization → *new learning 필요*. *Immediate post-NAP* 에 performance dip 가능 — paper 의 *recovery curve* 미공개.
-
-## 18.4 약점 3 — Re-warm Cycle Sensitivity
-
-Cycle period 10K = Atari 기준. *training dynamics, task structure 의존*. LLM 에서는 1M-10M steps 적합 가능 — *task-specific tuning*.
-
-## 18.5 약점 4 — RL-Centric Evaluation
-
-Paper 의 evaluation = Atari continual RL. *Vision, NLP, robotics* 에서의 *systematic study* 미충분. *Generalization claim* 의 *empirical support* limited.
-
-## 18.6 자기점검
-
-### 핵심 3 가지
-
-1. **본 deep dive 의 가장 critical missing piece?**
-2. **NAP 의 *short-term performance dip* 의 production impact?**
-3. **RL-centric evaluation 의 *cross-domain generalization* 평가?**
-
-### 답변
-
-1. **Cross-domain validation 부재**. Atari 외 *vision, NLP, robotics* 에서의 *systematic experiments* 부재. 본 paper 의 *general plasticity claim* 의 *empirical support* 가 *RL only*. Future work: vision continual learning, LLM continual pre-training, robotics streaming learning 의 *full ablation*. → *Generalization claim* 의 *epistemic uncertainty*.
-
-2. **Short-term degradation 가능**. NAP 직후 *new random neurons* = "*learning curve restart*". ~1000-5000 steps 동안 *performance dip* 가능. *Production critical system* (real-time RL) 에서 *acceptable downtime* 의문. Paper 의 *recovery curve* 정확 미공개 — *engineering question*.
-
-3. **Atari 에서 100% transferable 아닐 가능성**. Atari = small action space, discrete time, dense reward. Vision continual = large output space, supervised. NLP continual = sequence labels, structured outputs. Robotics = continuous control, sparse reward. *Each domain 의 unique plasticity dynamics* — Lyle methods 의 *adjustment 필요* 가능. → *Cross-domain replication study* 가 *open research direction*.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "CymGA+LsZw5WwBWzL+G1dg==",
+  "iv": "5Aw9zuE6kN319U2Fw3O7OQ==",
+  "ct": "Gq9vWfFCJlPqLEIAbN255jOIgTWpehe6rKjNxqi2Mwmixbs415xNyLOSAdwjn5vSt3k3lDNArvMZmUKAzd+tfKy/wqI/QIxZkf2k6nF8GsKqhDIrHZaeDHxK0MvdzIYg5FaLXjGBsHUORfKdFdb/bP6aDoNYTHjb/pTWX6smMXcEI25x9ldilyANGtJwz0vAesUgzA0+2/K95QQkmRiB3T4hSc9xQGlCFDwAwd8Mq+RObYeIHkE+AUPRXnQuE3KhgEELl3MzAeIZ3csHSyyb2IE1xMHXHg8fHI3FoV51r/qMZXhNse68/tE84DDQJ15gAoXZTAwzlcHTzvrVxD9FW0gZkq/IpndstOukgYp7f1Xy9Pv5KozYMzgK97hgZfNPKqarkI2zrFFOT8dhMYe0/AGDINjVO/Hyy+/d2ui1DH7+p1bJ/PP2xgIwtxEka2VSTy/4NlPNOWguXHV5HxmQliQ4Azg8wtSn6j/28M3WYaPsvzkaIALe8HJiR1hR6854iSkGR5ElMlDV/I5uBzlJ9xK0QPkgNtILyOQUTmgduaxpr/Z/QAA4aGu6Pr6e/upTRi1UwJMmDRd3V+bZVnnwM7AllD1MIuSYMLvLkxYNyRmSYPWYgKtZH/jg+nsGIQx+GUpUx7xnqrRdVZha6KKTiYF+1jVBnq974tzsuR5XUFWo44yPuNJaBMcuyDqn4hNkGfwQ20bWFoUNM21IcfZVqvLL7Pr27Z+s3kEzigTtlxGjeQ1pPnKqt2giFmYKCUKawoVLOZgiv1VzqReDOW1f8YDYy+hhQufyPAwdoPxTt/UCSrVXyppPzvPaASSyXML5CjUv7XIjgaie0Qvk7BTObz93nXG9g/JbiixDwD86wx+iTEFikM/Hz8Zy9mEuPtsNMqf4+OjLW62QQjV07tOJDEg6Y2PR8fEZgNPeVdyv+R4aiF6rsguyUQQUC2N/KFf4YTDGXlNae9d5QpYSe5ExpKy+w97LRQpKjK7n8OIntfN4ivBbc8I4ZqW8iCe/t6mHGzrgqVfNZiL+NMdU8hrh8HVA/0BMDkrkFbME+mPSXrOWzJlnWVJqc1NHLCiSX5iEeq6gLlENm4Yh7e/KXg9lXxU9fq8vh2ies4CFDmrDAUUr4Oyc7XotwkUAUnxN5iRJf47itWHQUoD1u093H0hctu/FDP6fGS3VeTG4I4v6PkwpjohFMA9rI1QtDSzwk3RmnXGovhtcVJ3fB973k24Iu/tHmdbaLbs4DtT5rdyjiM1pwvNPJmDjs3AkoVxHrA7oydKIN7c+G4bMCqYn5k/hKLPDZPPAYffuiZfB4XRVKLYhgS5booKzmcBbMXeNOV4iL2arD/HzOed01d6efkfPfvlJs646vkbLpm8Do8CHpBT1OrqONW2VC9TIHvSbEHTd/we43mrmrB1ARDcJbPNKsMa9wyT9uNxpNXBPn8aN6K94qLOXUP447syH762TpiC20DR+4qvZyOvWFC1ktrWLlfew+zI3wkFkgSQcXuCaVXbsZ/vD4GoOe9vjPgS+e+NFS6AyOEiknsZSktjGr6+bEZHnP/gqwgWDQL3iPhxP4BVvvTI9kNgU45ZmMj16dHFQd89MVLm7iAdSzuGEmK6Cnlp9JgzW0V4vNB1Y+6AT/YM3PHmWWwVWDWkHD7xXko8XRpGC984sc0nQAQbAg9inkc3F/ShswOn/mYS+DHn1zo3741H1czkp7lk3X9P9p+2J6RSJSh3COjAewUm17lMUPv3T+YNJY6RnMJi4hXQOyfQC1lsgfFCeV8oVszrY3v29MuwSBTr/jPkerB7X6LKhu+61tW/ZL5qc0Uc8peMEsO/ArbplWeuBsCm8PzG9ZfChefm28x7iK232oJ/xXgowwwpqmjSj8qN5RieRA2zCBffxNj/3KhsNUlBJZaIhJif3m+dvugjLqZhVP4x7anV0p8n4kLeo/WJXV9IgJnChQWFlZzGcFxeZwE31lbLMYe/loTGzfBqzTa8+Z3qOcOvzs0tMcK1YkANZoWgEeRGiHmRTKKfPkO7xs88Hbi+LLGmbBzvhPZ80jFlCTz1ApmE6DF8DTpH4VGrcXBLAtgn6IabLxQLYsR95TvWmpHutIqeZkIHYdbsVB4uZSL/OVhAvkBvKiXAVgry/pPGdlDLfhTj+IqkLffwBO8pKJx1WzY9XBSmY5poQjwfxTxo+nzs47sbxbq0nhyNhg1K5RbYxapO1cWce1mh36aNCkK1v7hWMno5xzdr192cjN1X9D9y9xaRGAfTFM1FTLbVS6mPp+/jMnqWXVCYjteqjh3zcqby67VTg5UIzaw9D9ETdiIpH5cL6LWWLDZLKxo70HLltCqwFYcL81rEG5ztvkZ3xE/JoFh0wWqDwbx1GTJftdaOZrdjYjVybclO1L3ESoWFkYRAAUvGsypa4kmjwMq+pXyiNIeQjOLwCatb0Hh5BTIwswmGDyt3d770fiID705U6DW4RrR7lEanDSRC94FDkOCxJ8SOBae0nyoXuL5VYOKfF38QHGwfuTCdVZnaCwzDQDxEauYeljVhv7oWAs7c1eeNiSytKdsNNX6iduaebbLtWvX7RHXy3rWmDXBvw4BM4l8RodWJo6Sin8Yan1X42rTr3cSUADxB4WJScmkL/cwHfuZXRZIgF6ExUML7UP+AuFSZCuCYqT5g9/bexMIDZnRka+tieLnjcGEMa3io0CMistVuvcwHmO/kRA+LNL0O0FkRJCQgBkaslKirvln33grX3W5e+4hah0FHp2HaAPR9wMUA1WNtWzeDenh/z4KPeh80Y0A1eFo0Y0ffOTlRuv3lmIyYUQulj28DSFr/igjjS8H4woOEmcAUztZu5ux34qz69M8m3wwH+3zflzwHUEcJUseH/y8yKvjsYbihWs99zQsitYIn+gkJsKEyriWTOgPEwxl3eDptsizzJLRFLeORCkOtwMtSQnkZYTkHInrqsizp4R1GYmx4RWxOGerJbDXi9XLix7VF5jks6cw/1KA8FBbK1KNKh3bsOBxJnAIJ7L9QomkT9J4idhTsbnVe1gLeoa3xrZDEVdMbzocdVQDeOUUrnPzYKUaSjjMEJdv3mY92lrlzfWKm8aK/iAcFns+Rkr7AQPs1hGhgy5ZO5YgGwIEWH+mLFCAtic8uHdtvPvkjVrLx+4PqqH68Gjg4/v8Sl1J1DAmTxDGNiKfEtB66OpwhXAd4giQ1JHM1LoIGq8iHpKBGiLOg9eLiLXq5IMF1vRNDaaVeNJAmdq558UEUrQJiw6uiptDItduMaGmjuflkr0lh9DzVXrpoTgJJP1ip9054zI8sj1Hx3OR45BzMvVVqZdSxQT4tjni22loflVSPllj8IebZFyyxbpWU4Rxk/fjqVaynatM3JjB6ZfDTYIe9LNTcvktR8lb3gzD7MkZgGbkPY/yHIAPhqRJS3kNc=",
+  "mac": "WW+Iv9TKXYvDVi/DBeZ2qeaZ40d413w3Ftagl90NCp4="
+}

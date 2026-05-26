@@ -1,66 +1,11 @@
-# 17 2 년 Aftermath — Plasticity Era (2024-2026)
-
-> **🧒 본 챕터는 "그 후의 이야기"**: Lyle 2024 발표 후 2년간 *plasticity research* 의 진화.
-
-## 17.1 챕터 한 줄 요약
-
-> **"ICML 2024 의 Lyle plasticity work 가 *continual learning era* trigger. 2024-2026 의 *RL foundation model plasticity*, *streaming learning industry adoption*, *plasticity-aware foundation models* 의 확장."**
-
-## 17.2 Timeline (2024-2026)
-
-```
-2024.07: Lyle et al. ICML 2024 ★
-2024.10: DeepMind RL foundation model plasticity
-2025.03: Industrial robotics streaming learning
-2025.07: Plasticity-aware LLM continual pre-training
-2026.05: 본 deep dive 작성
-```
-
-## 17.3 Phase 1 — RL Foundation Plasticity
-
-```
-DeepMind 의 후속:
-  - RL foundation model + Lyle plasticity tools
-  - Gato 같은 multi-task agent에 적용
-  - "Plasticity-aware foundation"
-```
-
-## 17.4 Phase 2 — Industrial Streaming Learning
-
-```
-Robotics, autonomous driving:
-  - Online learning critical
-  - Plasticity loss 가 deployment 한계
-  - Lyle methods 도입
-```
-
-## 17.5 Phase 3 — LLM Continual Pre-training
-
-```
-LLM 의 incremental knowledge update:
-  - Pre-training 후 new data 추가
-  - Plasticity 유지 필요
-  - Re-warm + NAP 적용
-```
-
-## 17.6 paradigm shifts
-
-### Shift 1: "Static capacity" → "Dynamic plasticity"
-### Shift 2: "Ad hoc continual learning" → "Principled ELR monitoring"
-### Shift 3: "Pre-train + fix" → "Continual updating"
-
-## 17.7 자기점검
-
-### 핵심 3 가지
-
-1. **Lyle 의 *2년 후 paradigm shift*?**
-2. **RL foundation model 에서 plasticity 의 *critical role*?**
-3. **LLM continual pre-training 의 *plasticity application*?**
-
-### 답변
-
-1. **"Dynamic plasticity" paradigm**. Pre-Lyle: *static network capacity* 가정. Post-Lyle: *plasticity 가 trainable + maintainable*. → "*Network 의 effective capacity 는 dynamic*" 의 *empirical recognition*. Continual learning era 의 *foundational shift*.
-
-2. **Foundation 의 *post-pretrain plasticity* enabler**. RL foundation = massive pre-training → 새 task fine-tune. Plasticity loss 가 *fine-tuning catastrophe*. Lyle methods = "*post-pretrain plasticity 유지*" 의 *practical methodology* — RL foundation era 의 *essential tool*.
-
-3. **LLM 의 knowledge update 의 *plasticity 제약***. Current LLM = static (pre-train fixed). Future LLM = continual update (new knowledge). Plasticity loss 가 *update bottleneck*. Lyle methods 도입 시 *clean continual update* 가능 — *2025-2026 LLM 의 active research direction*.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "LwwhEmDg/gIn82NOnMciLA==",
+  "iv": "6b8t/Szv2pEJ++Yt3A9ZxA==",
+  "ct": "k4pYMOOOoEgDlel+gdkdtok1IBuaQT09AOgq87QQgRlINK0rC4mfLMvAS874dD1VpvpQ4oPKLRK9wehilI6JjOprMly2E18I5CVIJqfs8NkmqfO9T0uZM3uDrX61PbvRoQf0sbDr104oF6gUlxTXzLlE95Y2IIO738Zc8ExHOrupRbu93/77sOUH5lTtjQLd995QE1f+7aAzu7z1T6GwOxeXL1LRKARcGY3UoDeWSFyIfj0XhbaPZZ6gXoQPa6rV9s/lAy7ISbnltXUIzfXDVi9qoV3nANS2G/3ZqNhtILNEwbi0y73OANmih1t2Kx+hOnqC2gVwphUDrrUycxwRN2VZ/OnvV5p8Lm1b4RkBnOjWw/NDrvqVGWmDARTu1ng4dNL/877il9B2ycXZu6MYzgytlDjDmlmz8xOJXWnH/+NeOBE8kWihdRzUrht/XH/BdNuJQnUJEcOccdQG2CxhJuFls+6YdSL5voBnUpWHGfiHhZCrfkFlKWJtyS0Fq++2qK+nhk5hoUuYEbdl55VrqHMVQfY1us4nZBW9lYQJYajWK6FWmp/f6hb49o/NembZVNKBUNq8Nj5D7raonrz9PNVtdvvXWfsY82ubawiCqithBmc/Z16YDq33JI5BwWamRszwoyL+i7ke9cYCoBaBhIAMAeX+UqjXiNLY+6rBOpCTJE8pQt+VxgURvvM+uLmEXUpRp316a9KUAkPWyI4PMxFPtTYH48tg5yGtqVACuAZTTxs39RiQF161/VFUFUcQXEFUVAaQBKo6PZnC+wdeZIdlv+EJre0Xf1jz+nbdNY9lDe1JCRO57VMFfblBzv6OfY+S5LTkcVTga6gTU1f1gkCiPEeIB9cRlCQFT0VYKdHcni8q+K/SuGhUZgopWU+q+88oqzOilAm1Csy0lS3C1qciaPBbhjXE4ZUIxWpKAsZgK+kh0FmiiapsrEA+jxedt9Hsjjs+SVPC0O681ym9aJun12FkqiJoCsCO1AbfeACQS34EbaeR+jUb7t66MCRBlDF2Ie71mfQ6OdbvOIm5C0GQGv2var52ovdMAKg2CGslxSETfWfWJO3sXWWJUxobO3knodLgxOcijLfHp9xZmjoSB7TVPI6ZMtNMbk8StmEEvLBNlInyUcbdN0MOU3t4mafb80nOvs4I5Hl7vg6yN0obJckdsbSH/EkB1FHVwWijmMtdRA1t7UbwYrSsI9dcYuTRP/RKq57zygYp9ZH2RhC223jAAFOGhnIC8w1VC9x9otRTeEaKmZYOYbrJECAVN/lt38kzsa2xMmvNcNB9AN/EVOcss8XgE7dtCznBnJIcZKCGu3JEhp4CTH6m1PlX0HN8rfS3MUGLXLc95AoorO7EZdo4CNQAq/dxaCLDJMaIr1pQQFHcwHcu8v7mIRprvDXG6LS7S5WvxIJHPNhDR1vtoMQBUA3IzST8DdaVPTFryHSmgVifxjB4P0HlF/rzhoUCJJbuu3LGslo0KtcRrMKn3ipy/N/4EZc24h3M+v+3+nibCgfktr7AM/W3dPsouQcF2ZGJoJcdctUGomboGjjewU0ULNegRXg85e9Pn3O6TFYnU4XpobWoA3olECC28Z7XlmwcdnZ9QsszUaB4KiNWcfOSdgw/0r2L8Gb4ePu6oIVvT8/e7u5wqGwIUFwv2m2bEGsvwc1D16ZqQpfj2nZXcq3FGgkGM/iXmzf4cDr/F+/x/wcmCheTCPQc0icy4z/KkyZutV8f3QBCcB6WXKFoK+C7CYFPbNFOua+TKYdVUKUGkiRcMq7R7y9/f978+ucxCHrvAZ5efCkitYyvaiVBCowUPZ1vbDi/Po3NsQZQEPUS/V8L/EVFYgf/cXfvbwHDAUZFO2/5nJ5X5P0r6M8Vlc7d8BQzDmuhtUnIhF9lTxmkDyZSzzS3TIKQrbU8EE2JLjj0dTbpKwPh8yULZhENeoRmmi8FIoqRxa+xQgudIcyEp7hTCEDWpMQo0GTaD7IFxuuN7ZoeX+gl52Q4ZR+zddnWCQUACrwrfsE6EUOae4jg1Lt/OVSatEWtXwBwzCNMdc600Mp/WLR0Ucs916vMP4YUu9TrhgaDMVGLmfHwhzVAKiBpz/6HoVNj4nunKbMHoxpcuL6OvIzOqrChF0B2hfxELQEd1iX48AiBf+6Uhe4IDjLA//zUg0rFzLqNHbc7/6wXHUzCd8L0t1E0Ul6VQSEcFXmOOykuirtIox3SedvpUXaxDzla8To2TL5n5gx1h0exyQ3hQC60+G2gPG3WZmxZrdeu5NELRxdisg/ti0VKihh03kcq1zYRedHvLvuY+hWVFaaa7m48Cz8g7922fUm3qXMS8lP6VMuF4QUBL6Bf7qj53RX7VgFA8xjrR675we78FK5fPJBCJsOqwPqR6hbZac9qeeQGyQkLfzu6c3RQAmK0zVtB9tv4l8HEnJfRaHOqXecbGjcw7t2emT0FFQR0lDhcigJwYthxHVg+DKNiCxg2TIJqHsvi+uejRJNZ7NKeyjYGJboQbxq82xSy95R6jgbK14iociMyvHI84vXo6Apua2uDhlnkFU9G9HhLLVf1x/ChGcHUP66BcCQ+Z8Fq8jZHY99olS/loeML5N44NfFzWvJZFoRiZrlFiOOTXKzQdBPJktiyqmhMGzsVRO2pLA2DL5ovmCz4o1tD7ccvYp6Pv8cox0121bDJgVnNOolqCyIs0CccNVPu+xzYhKJOViq/CiZDDe4PaMRDgvqN8WCrFXGMxuGF4jcNMB4u+7XabVtLdZqfif2aLa2ttc16y+00fvE0L6HjotIl3xNDYXNZCJOenvcqeJG0noySuxwrNeRj16VZLyWuiuCFZbjiowHzNMflWu4R2AJmQxMSeQ/qLydz2nBVKSPZaYBiUBIBJc9ryx6KoLj2zZOJJn1+wdqcZ9tOp51f2DGomPLv8XlHTy+McmXTioPvlHH/wwBDUy+R1Ir3bvrQuhonkTr4eGPwOrC5Ry9wNrP3tqrgMn2Qkgiu7GV/SQ8l1ziKswj/igge3EO9Ws0pUxWQH5kti+lw4GTnhsXX00XjByur1VNsPh10wXLJRv2JJVXr7U/QMTY90AN9dV5Qf95tCSnKk3gfB/L8/4BGgNdCbWfLnIuC0nlO/NunJxOp5/SfApXDVrvtGxDYCnmJrQ4nB3W8jHaczeN1eBJPIW6X2/JY0uo0MgXHObDjXVf4RAzyvE/v5S3RRluD8VPydjwPGoUzAcdOAoqDs3D0YF0Vqi/la8nYdfV3CcRWh8VOnRTHwiymcuIpVnAzCFpgB4Ad3UPPhR1IjZEFQJ9W5dL+Ugjg1p7KiJD/yWBsIM0iOjtIiZKUaNh3Y1Wa09XckEMG2aEhZORXdeOJ3ZfgZXQcKYo2dBfz9gaK4q4mxWfD",
+  "mac": "+GI8iifW1JBaiYmx2mZi1Q9kSa4NggO0JSiJZIOfP18="
+}

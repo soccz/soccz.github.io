@@ -1,58 +1,11 @@
-# 01 — 메타 & 선정 이유
-
-> **🧒 한 줄 요약**: paper *metadata*: Lyle et al. ICML 2024, DeepMind. Plasticity loss + ELR + NAP + Re-warm.
-
-
-## 서지 정보
-
-| 항목 | 내용 |
-|------|------|
-| **제목** | What Can Grokking Teach Us About Learning Under Nonstationarity? |
-| **저자** | Clare Lyle, Ghada Sokar, Razvan Pascanu, András György |
-| **소속** | Google DeepMind |
-| **발표처** | CoLLAs 2025 (4th Conference on Lifelong Learning Agents) |
-| **arXiv** | 2507.20057 (제출: 2025-07-26) |
-| **인용 수** | 미확인 (2025년 7월 제출, 접근 제한으로 Semantic Scholar 수치 불가) |
-| **선행 연구** | Lyle et al. NeurIPS 2024 "Normalization and effective learning rates in RL" (arXiv:2407.01800) |
-
-## 저자 권위 배경
-
-**Clare Lyle** (Google DeepMind): RL의 소성(plasticity) 상실 문제 전문가. "Disentangling the Causes of Plasticity Loss in Neural Networks" 등 지속학습·RL 표현 동학의 핵심 연구자. NeurIPS 2024 NaP 논문의 제1저자이기도 하며, 2025년 현재 가장 활발하게 grokking-continual learning 교차 영역을 개척하고 있다.
-
-**Razvan Pascanu** (Google DeepMind): RNN 그래디언트 소실/폭발 이론의 고전 논문 저자, DeepMind의 이론 ML 리서처. 다수의 딥러닝 동학(dynamics) 기반 논문에 참여.
-
-**Ghada Sokar** (Google DeepMind): 소성 상실 및 신경망 continual learning 전문. "The Dormant Neuron Phenomenon" 등 관련 작업.
-
-**András György** (Google DeepMind): 이론 ML, 온라인 학습, 최적화 전문.
-
-→ DeepMind plasticity/continual-learning 팀의 핵심 구성원이 직접 grokking-continual 연결을 분석한 논문이다.
-
-## 선정 이유
-
-1. **Priority Tier 1 매칭**: `_index.md`의 "사용자 우선 읽기 목록 Tier 1"에 "(2025) Grokking and Primacy Bias in Continual Learning | Lyle et al. (2025) | grokking-delayed-gen / continual-learning"으로 등재된 논문이다. 이것이 해당 논문의 완성된 형태임이 검색으로 확인됐다.
-
-2. **태그 커버리지**: `continual-learning` 태그 커버 수 0 — 가장 뒤처진 원거리 태그 중 하나.
-
-3. **Grokking 트랙 직결**: 현재 active track인 "Grokking in TS Transformers"에서 핵심 질문인 "왜 grokking이 일어나는가, 어떻게 촉진할 수 있는가"에 직접 답하는 논문이다. ELR 개념은 Grokking 실험 설계에서 weight decay의 역할을 이론적으로 설명해준다.
-
-4. **저자 권위 + 발표처**: CoLLAs는 지속학습 분야의 핵심 학회. DeepMind 팀의 논문은 재현성·실험 품질 면에서 신뢰도가 높다.
-
-5. **연결 폭**: Grokking(§A) × Continual Learning(§F) × RL(§E와 인접) × 소성 상실 이론을 모두 아우른다. 원거리 버킷이지만 APF·Grokking 두 active track과의 전이 가능성이 높다.
-
----
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **01_meta *핵심 claim*?**
-2. **01_meta *technical detail*?**
-3. **01_meta *implication*?**
-
-### 답변
-
-1. 풍부한 답변 (deep dive 본문 참조).
-
-2. 풍부한 답변 (deep dive 본문 참조).
-
-3. 풍부한 답변 (deep dive 본문 참조).
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "yc/PanK7nFgFegQqm37hKg==",
+  "iv": "uvy4MjXMCyAeVubgOqhXdA==",
+  "ct": "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",
+  "mac": "hM4AbBcZHevHQhcIh1QeLEvgKn6/+cmN60ux8zVh0KY="
+}

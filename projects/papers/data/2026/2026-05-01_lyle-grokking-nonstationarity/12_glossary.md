@@ -1,82 +1,11 @@
-# 12 Glossary & References — Lyle 2024 (Grokking Nonstationarity)
-
-> **🧒 본 챕터는 "용어와 참고문헌의 길잡이"**: Plasticity loss + Effective learning rate (ELR) + Network re-warming + Non-stationary learning 의 핵심 개념 + reference.
-
-## 12.1 챕터 한 줄 요약
-
-> **"Lyle et al. ICML 2024 의 *plasticity 회복* methodology 의 30+ terminology + 20+ references (continual learning, NAP, ELR, grokking) 의 1-stop dictionary."**
-
-## 12.2 Top-30 핵심 용어
-
-| 용어 | 정의 | 출처 |
-|------|------|------|
-| Plasticity | network capability to learn new tasks | Lyle 2024 ★ |
-| Plasticity loss | progressive degradation of plasticity | Lyle 2024 |
-| Effective LR (ELR) | LR × ||∇L|| / ||W|| | Lyle 2024 |
-| Re-warm | learning rate boost mid-training | Lyle 2024 |
-| NAP | Neural Activation Pruning | Lyle 2024 |
-| Non-stationary | task / distribution shift over time | RL classical |
-| Continual learning | sequential task learning | classical |
-| Catastrophic forgetting | losing old task on new task | French 1999 |
-| Concept drift | input distribution change | classical |
-| Dead neuron | always-zero activation | Lyle 2024 |
-| Dormant neuron | low-magnitude activation | Lyle 2024 |
-| Weight magnitude | ||W||_2 | classical |
-| Gradient magnitude | ||∇L||_2 | classical |
-| ELR threshold | minimum useful ELR | Lyle 2024 |
-| Warmup | LR ramping at training start | classical |
-| Re-warmup | LR ramping mid-training | Lyle 2024 |
-| L2 regularization | weight decay | classical |
-| Spectral normalization | layer-wise spectral bound | Miyato 2018 |
-| Layer norm | per-sample normalization | Ba 2016 |
-| Reset network | re-initialize partial weights | Dohare 2024 |
-| Shrink-and-perturb | small reset + perturb | Ash 2020 |
-| Streaming RL | online RL learning | classical |
-| TD learning | temporal difference | Sutton 1988 |
-| Distribution shift | input distribution change | ML |
-| Loss landscape | parameter space loss | NN |
-| Sharp minima | high-curvature minima | Keskar 2017 |
-| Flat minima | low-curvature minima | Keskar 2017 |
-| Grokking | delayed generalization | Power 2022 |
-| Phase transition | rapid behavior change | NN |
-| Recovery | post-loss plasticity restoration | Lyle 2024 |
-
-## 12.3 Notation
-
-```
-W_t ∈ R^d       parameters at step t
-L(W)           loss function
-ELR_t = lr_t × ||∇L(W_t)|| / ||W_t||
-T = task/dist shift event
-Plasticity = capability to reduce L on new T
-```
-
-## 12.4 References (20+)
-
-```
-Lyle et al. ICML 2024 — 본 paper (★)
-Dohare et al. 2024 — Continual backprop
-Sutton 1988 — TD learning
-Power et al. 2022 — Grokking
-Nanda et al. 2023 — Progress measures
-Keskar et al. 2017 — Sharp/flat minima
-Miyato et al. 2018 — Spectral normalization
-Ash & Adams 2020 — Shrink-and-perturb
-French 1999 — Catastrophic forgetting
-```
-
-## 12.5 자기점검
-
-### 핵심 3 가지
-
-1. **Effective LR (ELR) 의 *intuitive meaning*?**
-2. **NAP (Neural Activation Pruning) 의 *목적*?**
-3. **Re-warm 의 *plasticity restoration mechanism*?**
-
-### 답변
-
-1. **Relative gradient impact on weights**. ELR = LR × ||∇L|| / ||W||. *Relative weight update magnitude*. ELR ≈ 0 = "*gradient too small relative to weights*" → weights barely change → *plasticity loss*. ELR > 0.01 = "*meaningful update*" → *learning active*. → "*Network learning capacity*" 의 *quantitative metric*.
-
-2. **Dormant neuron 제거**. 학습 중 일부 neurons 의 activation 이 *always-zero* (dead) 또는 *near-zero* (dormant). 이들은 *effective capacity 차감* — *plasticity loss*. NAP = "*low-activation neurons 식별 + reinitialize*" → *capacity restoration*.
-
-3. **LR boost reactivates parameters**. Plasticity loss = *weights stuck in flat minima* + *small effective gradients*. Re-warm = "*LR 일시 증가*" → *weights 가 더 큰 update steps* → *new region 탐색* → *plasticity 회복*. Cosine warm-restart 의 *theoretical foundation*.
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "FtIDs4zCgWiJeXTURFSg9Q==",
+  "iv": "CjnQa69vJH3UoeBTZgDFwA==",
+  "ct": "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",
+  "mac": "v2pd8rzWL4A53w7WY7Kd+cuyC6KffW4Xcb3JFSDh/34="
+}

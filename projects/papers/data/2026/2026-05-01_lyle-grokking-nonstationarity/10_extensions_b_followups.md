@@ -1,70 +1,11 @@
-# 10b — 사고 확장: 후속 논문 3편
-
-> **🧒 한 줄 요약**: RL foundation plasticity, streaming robotics, LLM continual pre-training, plasticity-aware LLMs.
-
-
----
-
-## 선행 논문 — Lyle et al. (2024): "Normalization and Effective Learning Rates in RL"
-
-**식별자**: arXiv:2407.01800 (NeurIPS 2024)  
-**저자**: Clare Lyle, Zeyu Zheng, Khimya Khetarpal, James Martens, Hado van Hasselt, Razvan Pascanu, Will Dabney
-
-**어떤 논문인가?**  
-이 논문(2507.20057)의 직접적 선행 작업이다. LayerNorm이 있는 네트워크에서 ELR = $\eta / \|\theta\|$를 수학적으로 정의하고, 이 ELR이 훈련 중 자동으로 붕괴한다는 것을 이론적으로 보인다. 해결책으로 NaP(Normalize-and-Project)를 제안해 ELR을 일정하게 유지.
-
-**본 논문과 어떤 관계인가?**  
-기반이 되는 이론 전체가 이 논문에서 온다. ELR 정의, 스케일-불변 조건, LayerNorm 삽입 방식, NaP 알고리즘 모두 여기서 처음 제시됐다. 2507.20057은 이 토대 위에 "ELR을 일정하게 유지"에서 "ELR을 주기적으로 재가열"로 한 단계 전진하고, grokking 연결을 추가한다.
-
-**무엇을 얻을 수 있는가?**  
-ELR 이론의 수학적 기반을 완전히 이해하려면 이 논문을 먼저 읽어야 한다. 특히 "스케일-불변 레이어에서 그래디언트가 파라미터에 수직임"에 대한 Euler 동차 함수 정리 기반 증명, NaP의 Adam 호환성 분석, RL 소성 실험의 상세 결과를 제공한다. 2507.20057은 기반 논문으로 arXiv:2407.01800을 전제하므로 먼저 읽는 것을 권장.
-
----
-
-## 경쟁 논문 — Nanda et al. (2023): "Progress Measures for Grokking"
-
-**식별자**: arXiv:2301.05217 (ICLR 2023)  
-**저자**: Neel Nanda, Lawrence Chan, Tom Lieberum, Jess Smith, Jacob Steinhardt
-
-**어떤 논문인가?**  
-[2026-04-27에 이미 해체 완료] Grokking을 메커니즘 해석 가능성 관점에서 분석. 훈련 중 내부 표현(restricted weight norm, excluded loss 등)의 진행 측도를 정의하고, 모듈러 산수에서 푸리에 회로가 형성되는 과정을 추적한다.
-
-**본 논문과 어떤 관계인가?**  
-Nanda 2023은 "grokking 후 무엇이 생기는가(내부 표현)"를 보고, Lyle 2025는 "왜 grokking이 늦게 일어나는가(ELR 역학)"를 본다. 둘은 서로 다른 관점에서 같은 현상을 설명한다 — 상호보완적이면서, 한편으로는 경쟁적이다. Nanda의 "restricted weight norm" 진행 측도가 Lyle의 "ELR = 1/노름"과 역수 관계임을 발견하면 두 프레임워크가 동치임을 보일 수 있다.
-
-**무엇을 얻을 수 있는가?**  
-Grokking 실험을 설계할 때, Nanda의 진행 측도를 로깅하는 동시에 Lyle의 ELR을 로깅하면 두 관점을 하나의 실험에서 통합할 수 있다. 내 Grokking TS 논문에서 "훈련 동학 분석" 절에 두 측도를 모두 포함해 선행 문헌을 포괄적으로 커버할 수 있다.
-
----
-
-## 후속 논문 — Lyle et al. (2025): "The State of Plasticity in 2025" (Survey)
-
-**URL**: https://clarelyle.com/posts/2025-09-06-plasticity-survey.html (블로그 버전)  
-**연도**: 2025년 9월 (논문 전문 접근 미확인)
-
-**어떤 논문인가?**  
-Clare Lyle의 2025년 9월 블로그 포스트 "The state of plasticity in 2025"는 신경망 소성 연구의 현황을 정리한 서베이 성격의 글이다. 소성 상실의 원인들(ELR 붕괴, dead neurons, rank collapse, gradient interference)과 해결책들을 망라한다.
-
-**본 논문과 어떤 관계인가?**  
-2507.20057의 결과를 확장하고 소성 연구 전체를 조망하는 상위 개념 문서다. 2507.20057이 "ELR re-warming"이라는 한 가지 해결책에 집중했다면, 이 서베이는 다른 해결책들과의 관계를 정리한다.
-
-**무엇을 얻을 수 있는가?**  
-소성 상실 문제의 전체 지도를 얻을 수 있다. 내 Grokking TS 논문에서 소성 관련 내용을 쓸 때 이 서베이를 참조하면 관련 문헌을 체계적으로 커버할 수 있다. 특히 "내 비정상 시계열 설정에서 ELR 붕괴 이외에 어떤 소성 문제가 있을 수 있는가"를 진단하는 데 유용.
-
----
-
-## 자기점검 (이 챕터)
-
-### 핵심 3 가지
-
-1. **10_extensions_b_followups *핵심 claim*?**
-2. **10_extensions_b_followups *technical detail*?**
-3. **10_extensions_b_followups *implication*?**
-
-### 답변
-
-1. 풍부한 답변 (deep dive 본문 참조).
-
-2. 풍부한 답변 (deep dive 본문 참조).
-
-3. 풍부한 답변 (deep dive 본문 참조).
+{
+  "encrypted": true,
+  "version": 1,
+  "kdf": "PBKDF2-HMAC-SHA256",
+  "cipher": "AES-256-CBC-HMAC-SHA256",
+  "iterations": 250000,
+  "salt": "tYnBPCUoJCrDTYrieGRPSQ==",
+  "iv": "oUGEi15mAPTHDkdZ6Eu/Nw==",
+  "ct": "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",
+  "mac": "Iw0IPz2vnvJv+f/MOXuUZR3Y/TZwnnEIseLtIGeJEDo="
+}
