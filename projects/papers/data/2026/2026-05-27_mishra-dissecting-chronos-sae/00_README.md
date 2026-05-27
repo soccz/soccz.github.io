@@ -17,11 +17,12 @@
 
 | 항목 | 상태 |
 |------|------|
-| **Canonical identifier** | arXiv:2603.10071 |
+| **Canonical identifier** | arXiv:2603.10071 ✅ |
 | **공식 원문 URL** | https://arxiv.org/abs/2603.10071 (arXiv) |
 | **OpenReview** | https://openreview.net/pdf/1479ada95d2c8d2802f5018310e39961841eac21.pdf |
-| **본문 접근 여부** | ⚠️ 직접 접근 불가 — 실행 환경 네트워크 정책이 arxiv.org, openreview.net 등 모든 학술 소스에 HTTP 403 반환. 초록 전문·핵심 방법론 수치·실험 결과는 검색 엔진이 인덱싱한 직접 인용 스니펫(다중 쿼리 교차 확인)으로 검증. 수치 미확인 항목은 명시적으로 "원문에 수치 미보고"로 처리함 |
-| **확인한 정보** | 초록 전문, SAE 하이퍼파라미터(d_sae=8192, k=64, 50k steps), 6개 추출점, 392 ablation 결과(ΔCRPS=38.61), 레이어별 label coverage |
+| **GitHub (공식 코드)** | https://github.com/i-anuragmishra/temporal-monosemanticity (MIT license) ✅ |
+| **본문 접근 여부** | ✅ **Source Lock 통과** — arxiv/openreview PDF 직접 접근은 불가(HTTP 403)이나, 저자 공식 GitHub 리포지토리(temporal-monosemanticity)에서 초록 전문, LaTeX 논문 스켈레톤, 실험 데이터(ablation CSV, taxonomy counts), 방법론 코드 전체를 확인. 초록은 검색 스니펫으로 교차 검증. 수치는 raw JSON/CSV 데이터 파일에서 직접 확인. |
+| **확인한 정보** | 초록 전문(verbatim), SAE 하이퍼파라미터(d_sae=8,192, k=64, 50k steps, Adam lr=3×10⁻⁴), 6개 추출점 정확한 식별자, 392 ablation raw data(ΔCRPS 테이블 전체), 레이어별 feature taxonomy counts, progressive ablation 곡선, scaling(Mini/Small/Base/Large) |
 
 ### 분류
 
@@ -31,7 +32,7 @@
 
 ### 코드 · 데이터 공개
 
-- 원문에 GitHub 링크 명시 여부: 검색 스니펫에서 미확인 (원문 미접근으로 확인 불가)
+- **공개**: https://github.com/i-anuragmishra/temporal-monosemanticity — MIT 라이선스, Python 95.4%, 실험 raw data 포함
 
 ---
 
