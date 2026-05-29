@@ -1,7 +1,32 @@
 {
-  "generated_at": "2026-05-27T00:52:55",
-  "count": 26,
+  "generated_at": "2026-05-29T08:27:03",
+  "count": 27,
   "papers": [
+    {
+      "slug": "2026-05-29_deeplob-cnn-limit-order-books",
+      "date": "2026-05-29",
+      "weekday": "금",
+      "bucket": "원거리",
+      "title": "DeepLOB: Deep Convolutional Neural Networks for Limit Order Books",
+      "title_ko": "DeepLOB: 호가창을 위한 심층 합성곱 신경망",
+      "authors": "Zihao Zhang, Stefan Zohren, Stephen Roberts",
+      "venue": "",
+      "identifier": "10.1109/TSP.2019.2907260",
+      "code": "https://github.com/zcakhaa/DeepLOB-... — TensorFlow v1/v2 + PyTorch 1.9 노트북, FI-2010 데이터 zip 포함 (raw.githubusercontent.com 직접 다운로드)",
+      "data": "",
+      "tags": [],
+      "verdict": "\"호가창은 시간 × 가격레벨 2D 이미지다\" — DeepLOB 는 LOB 의 raw 40-dim × 100-tick 행렬을 1×2 → 4×1 → 1×10 으로 잘게 썰어 가격-거래량 짝과 다단계 가격레벨 의존성을 분리 추출하고, 그 위에 Inception 으로 다중 시간 스케일을, LSTM 으로 장기 의존을 얹는다. FI-2010 에서 75.35% 정확도 (3-class)·F1 0.7533 으로 동시기 SOTA 갱신했고, 학습에 한 번도 나오지 않은 종목에서도 작동하는 'universal features' 를 처음 실증해 마이크로구조 ML 의 표준 baseline 이 됐다.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "00_README — DeepLOB: Deep Convolutional Neural Networks for Limit Order Books"
+        }
+      ],
+      "data_path": "data/2026/2026-05-29_deeplob-cnn-limit-order-books"
+    },
     {
       "slug": "2026-05-27_mishra-dissecting-chronos-sae",
       "date": "2026-05-27",
