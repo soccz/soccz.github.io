@@ -332,6 +332,7 @@
     <ul class="nav-links">
       <li><a href="#summary">Summary</a></li>
       <li><a href="#journey">Journey</a></li>
+      <li><a href="#vnext">v-next</a></li>
       <li><a href="#thesis">Thesis</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#distribution">Distribution</a></li>
@@ -352,10 +353,10 @@
     <p class="hero-sub">
       "09:00 직전, 오늘 터질 코인을 두 번 묻는다."<br>
       08:55 pre-open trigger (15분 안 펌프) + 09:05 distribution beta (장중 setup 분포) 듀얼 알림.<br>
-      6-class softprob → ≥20% tail detector → multi-head distribution → pre-open 분리, <strong>5번의 재정의</strong> 끝에 운영 단계 도달.
+      6-class softprob → ≥20% tail detector → multi-head distribution → pre-open 분리 → 분포+하방 레이더, <strong>6번의 재정의</strong> 끝에 운영 단계 도달.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="5" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="6" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="9" data-decimals="0">0</span><span class="hero-stat-label">Total Heads</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">Optimistic Tiered Sharpe</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0</span></div>
@@ -399,8 +400,8 @@
 <!-- Project Journey -->
 <section id="journey"><div class="container fade-in">
   <div class="section-label">Project Journey</div>
-  <h2 class="section-title">5 단계 — 무엇을 부수고 무엇을 남겼나</h2>
-  <p class="section-desc">첫 모델은 "다중 클래스 펌프 분포 예측"이었다. 운영하니 ledger 가 음수로 무너졌고, task 정의 자체가 잘못이라는 진단으로 다시 시작했다. 이후 detector, distribution, pre-open 까지 구조 재정의가 4번 더 일어났다.</p>
+  <h2 class="section-title">6 단계 — 무엇을 부수고 무엇을 남겼나</h2>
+  <p class="section-desc">첫 모델은 "다중 클래스 펌프 분포 예측"이었다. 운영하니 ledger 가 음수로 무너졌고, task 정의 자체가 잘못이라는 진단으로 다시 시작했다. 이후 detector, distribution, pre-open, 그리고 "맞히는 모델 → 좁혀주는 레이더" 까지 구조 재정의가 5번 더 일어났다.</p>
 
   <div class="phase-flow">
     <div class="phase-chip legacy">
@@ -427,6 +428,11 @@
       <div class="pc-num">Phase X+1b</div>
       <div class="pc-name">Pre-open trigger v1</div>
       <div class="pc-status">LIVE · 08:55</div>
+    </div>
+    <div class="phase-chip pivot">
+      <div class="pc-num">Phase v-next</div>
+      <div class="pc-name">분포+하방 레이더</div>
+      <div class="pc-status">SHADOW · 좁혀주기</div>
     </div>
   </div>
 
@@ -496,6 +502,50 @@
       <span class="badge badge-pivot">21s latency</span>
     </div>
 
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- v-next redefinition -->
+<section id="vnext"><div class="container fade-in">
+  <div class="section-label">v-next · 2026-05-31</div>
+  <h2 class="section-title">v-next 재정의 — "맞히는 모델"에서 "좁혀주는 레이더"로</h2>
+  <p class="section-desc">단일 ✓/✗ 예측을 내려놓고, 코인별 <strong>다음날 상승/하락 확률 분포</strong>와 <strong>기대하방</strong>을 표기해 후보를 좁혀주는 레이더로 재정의. 검증은 전부 OOS(purged walk-forward), leak 4/4 PASS(독립 재검증). 모든 수치는 거래비용 0.15% 왕복 차감 후.</p>
+
+  <div class="callout win">
+    <p><strong>성공 — 남긴 것</strong></p>
+    <p style="margin-top:0.6rem;">
+      • 검증된 leak-free 선행패턴(qv_surge · bounce_off_7d_low · short-momentum · ATR/RV) <strong>OOS lift 2~3.5×</strong>. 5월(31일 전부 bear_quiet)에 top-3 가 BIO +64% · JTO +66% · SAHARA +42% · ID +39% · XLM +31% · IN +29% 포착.<br>
+      • 분포+하방 스캐너: 코인별 P(다음날 ≥5/10/20%) + 하락 리스크 P(≤-5/-10%) + 기대하방. risk-reward 랭킹이 하방을 <strong>절반(P(≤-5%) 53%→33%)</strong>으로 줄이며 상승확률 유지(NXPC: 상승 top급인데 하방 절반).<br>
+      • calibration 정직: 구 7-head 엔진의 +20% 과신(pred 60.3% vs 실제 11.6%, +48.7pp)을 <strong>pred 5.7% vs 실제 6.0%</strong>로 교정.<br>
+      • precision@3 ≈ <strong>12%(≥20%, base 1.7% 대비 약 7배)</strong>, 18%(≥15%), ~40%(≥5%). 모두 OOS · leak 4/4 PASS.
+    </p>
+  </div>
+
+  <div class="callout fail">
+    <p><strong>실패 — 부수고 버린 것</strong></p>
+    <p style="margin-top:0.6rem;">
+      • "bear regime 게이트를 풀면 된다" 가설 → 데이터로 반증. 완화 시 <strong>net -34%</strong>. 진짜 원인은 게이트가 아니라 유니버스 컷(큰 펌프의 44%가 top100 거래대금 밖) + setup 발화 희소.<br>
+      • 직관 3개 데이터 반전: ① range_contraction(조용→폭발) 역효과 ② 신고가 돌파 ≠ 선행(저점 반등이 선행) ③ low-cap 펌프 가설 반전(top50 대형이 base rate 1.5~3배 높음).<br>
+      • 하드 -5% 손절의 함정: 비용 포함 -5.15%로 실현돼 '깊은손실 빈도'를 오히려 늘림. <strong>-3% 손절이 진짜 하방 캡</strong>(거래당 worst -3.15%, 깊은붕괴 -10~-47%를 전부 절단).<br>
+      • cold 펌프(~54%, 첫 스파이크/신규상장)는 일봉으로 구조적 비예측. recall 천장 ~72%(top100).
+    </p>
+  </div>
+
+  <div class="four-col" style="margin:2rem 0;">
+    <div class="metric-card"><span class="metric-val pos">~7×</span><div class="metric-label">precision@3 농축 (≥20%)</div><div class="metric-sub">12% vs base 1.7%<br>OOS · leak 4/4 PASS</div></div>
+    <div class="metric-card"><span class="metric-val blue">53% → 33%</span><div class="metric-label">P(≤-5%) 하방 절감</div><div class="metric-sub">risk-reward 랭킹<br>상승확률은 유지</div></div>
+    <div class="metric-card"><span class="metric-val pos">+48.7pp → 정직</span><div class="metric-label">과신 교정</div><div class="metric-sub">pred 60.3%→5.7%<br>실제 11.6% / 6.0%</div></div>
+    <div class="metric-card"><span class="metric-val amber">-3% SL / +5% TP</span><div class="metric-label">위험 정책</div><div class="metric-sub">하방 위험 최소화<br>worst -3.15%/거래</div></div>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>정직한 결론</strong></p>
+    <p style="margin-top:0.6rem;">
+      • 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 기계적 청산 net 은 breakeven~음수. 예측력(base 대비 7배 농축 + 큰 펌프 포착 + 하방 관리)은 진짜지만, 수익은 사용자의 진입/청산 판단이 결정 → <strong>SHADOW 로 forward 표본 축적 중</strong>.<br>
+      • 상승폭은 데이터로 검증: "+20% 다음날"은 선행 최상위에서도 ~6%. 50% 적중은 +3% 임계에서만. 운영 의사결정 임계 = +5~15%. → 단일 ✓/✗ 대신 <strong>확률 분포로 표기</strong>.<br>
+      • 위험 정책: -3% 손절 + 5% 익절(하방 위험 최소화 우선).
+    </p>
   </div>
 </div></section>
 <hr class="divider">
@@ -1276,24 +1326,13 @@
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-05-05</div>
+  <div class="section-label">Current Status · 2026-05-31</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
-  <p class="section-desc">Stage 2 (텔레그램 ON) 진입. 1주 live paper ledger 누적 후 calibration / threshold / top-k 조정 + multi-scale v2 swap 결정.</p>
+  <p class="section-desc">정책 채택: distribution = PROMOTE_PAPER (ACTIVE), preopen = DEMOTED (WATCH_ONLY / shadow only). 신규 분포+하방 risk-reward 스캐너는 SHADOW 채널로 매일 기록만 (텔레그램 · cron 미연결).</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
-    <div class="layer-card" style="border-top-color: var(--amber);">
-      <div class="layer-num">Live · Stage 2</div>
-      <div class="layer-title">Pre-open Trigger v1</div>
-      <div class="card-text">
-        <strong>Heads:</strong> 6 binary (first15/30/1h × 3pct/5pct)<br>
-        <strong>피처:</strong> 19 (15m precursor only, 08:30 snapshot)<br>
-        <strong>Top1% lift:</strong> first15_3 8.23× / first15_5 9.26× / first1h_3 5.80×<br>
-        <strong>발사:</strong> 08:55 KST · 진입가 표시<br>
-        <strong>가드:</strong> 08:45-08:59 decision-window
-      </div>
-    </div>
     <div class="layer-card" style="border-top-color: var(--blue);">
-      <div class="layer-num">Live · Stage 2</div>
+      <div class="layer-num">ACTIVE · PROMOTE_PAPER</div>
       <div class="layer-title">Distribution Beta v1</div>
       <div class="card-text">
         <strong>Heads:</strong> 3 binary (h2 / h6 / h5)<br>
@@ -1303,23 +1342,34 @@
         <strong>Calibration:</strong> bucket decile 10 등분
       </div>
     </div>
+    <div class="layer-card" style="border-top-color: var(--text-muted);">
+      <div class="layer-num">DEMOTED · WATCH_ONLY</div>
+      <div class="layer-title">Pre-open Trigger v1</div>
+      <div class="card-text">
+        <strong>상태:</strong> shadow only · observed -40.8%<br>
+        <strong>Heads:</strong> 6 binary (first15/30/1h × 3pct/5pct)<br>
+        <strong>피처:</strong> 19 (15m precursor only)<br>
+        <strong>이력:</strong> Top1% lift 9.26× 였으나 forward 음수로 강등<br>
+        <strong>재활성:</strong> 정책 version bump + 사용자 컨펌 필요
+      </div>
+    </div>
   </div>
 
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos">4 timers</span><div class="metric-label">systemd 운영</div><div class="metric-sub">2 predict + 2 close<br>cron 미사용</div></div>
-    <div class="metric-card"><span class="metric-val neutral">2 ledgers</span><div class="metric-label">분리 paper ledger</div><div class="metric-sub">preopen / distribution<br>schema 호환</div></div>
-    <div class="metric-card"><span class="metric-val amber">1 week</span><div class="metric-label">Live 누적 목표</div><div class="metric-sub">calibrator 생성<br>v2 swap 결정</div></div>
-    <div class="metric-card"><span class="metric-val neutral">regime</span><div class="metric-label">BTC regime 표시</div><div class="metric-sub">bear 도 fire 가능<br>cap / threshold 우선</div></div>
+    <div class="metric-card"><span class="metric-val blue">ACTIVE</span><div class="metric-label">distribution 정책</div><div class="metric-sub">PROMOTE_PAPER<br>09:05 KST live</div></div>
+    <div class="metric-card"><span class="metric-val neutral">DEMOTED</span><div class="metric-label">preopen 정책</div><div class="metric-sub">WATCH_ONLY / shadow<br>observed -40.8%</div></div>
+    <div class="metric-card"><span class="metric-val amber">SHADOW</span><div class="metric-label">분포+하방 스캐너</div><div class="metric-sub">signals/recommend.py<br>top-3+분포 기록만</div></div>
+    <div class="metric-card"><span class="metric-val pos">-3% / +5%</span><div class="metric-label">위험 정책</div><div class="metric-sub">SL / TP<br>하방 위험 최소화</div></div>
   </div>
 
   <div class="callout">
     <p>
-      <strong>다음 단계:</strong>
-      1주 live 텔레그램 + paper ledger 누적 후 (1) BucketCalibrator pre-open 용 생성 — raw score 를 historical hit % 로 변환, (2) multi-scale v2 swap 검토 — common-period ablation 에서 head 별 best scale 다른 점 활용, (3) top-k / threshold 조정 — 실데이터 hit-rate 기반.
+      <strong>신규 SHADOW 채널:</strong>
+      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 기록한다. 아직 텔레그램 · cron 에 연결하지 않은 검증 단계 — forward 표본을 모아 PROMOTE 여부를 판단한다.
     </p>
     <p style="margin-top:0.7rem;">
       <strong>운영 원칙 유지:</strong>
-      매수 추천 X · 자동매매 X · 텔레그램 알림 + paper ledger 만 · BTC regime 표시 · raw probability 표기 금지 · 모든 코드 self-contained (gan_t / xsec_alpha import X).
+      매수 추천 X · 자동매매 X · 텔레그램 알림 + paper/shadow ledger 만 · BTC regime 표시 · raw probability 표기 금지 · threshold 고정값 사용(라이브 재계산 X) · 거래비용 0.15% 왕복 차감 · 모든 코드 self-contained (gan_t / xsec_alpha import X).
     </p>
   </div>
 </div></section>
