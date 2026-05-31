@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>prelude — 09:00 직전 펌프 레이더 · 운영 + 연구 보고서</title>
-  <meta name="description" content="업비트 KRW 일봉 펌프 레이더. 6-class softprob → ≥20% tail detector → multi-head distribution → 08:55 pre-open trigger 까지 5 단계 재정의. Bootstrap CI / Path-aware backtest / Multi-scale ablation / Bucket calibration 전 과정 공개.">
-  <meta property="og:title" content="prelude — 09:00 직전 펌프 레이더">
-  <meta property="og:description" content="단일 점수 detector 의 모호함을 multi-head 조건부 분포로 재정의. 5 phases · 6 experiments · 92.9% bootstrap edge · optimistic TP-tiered Sharpe · 진입가 표기까지.">
+  <title>prelude — 업비트 KRW 상승확률·하방리스크 레이더 · 정직 보고서</title>
+  <meta name="description" content="업비트 KRW 일봉 추천 레이더. 코인별 상승 확률분포 + 하락 리스크로 후보를 base 대비 ~6배 농축해 좁혀준다. 자동 net 전략이 아니라 사람이 청산하는 레이더 — preopen 은 DEMOTED(shadow only). 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 전 과정 공개.">
+  <meta property="og:title" content="prelude — 상승확률·하방리스크 레이더">
+  <meta property="og:description" content="맞히는 모델이 아니라 좁혀주는 레이더. 상승 확률분포 + 하락 리스크로 후보를 base 대비 ~6배 농축. 자동 net 전략 아님 · 사람이 청산 · preopen DEMOTED(shadow) · 정직한 결론은 §v-next.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="prelude — 09:00 직전 펌프 레이더">
-  <meta name="twitter:description" content="듀얼 알림 · 09:00 boundary · multi-scale ablation · bucket calibration · failures wall.">
+  <meta name="twitter:title" content="prelude — 상승확률·하방리스크 레이더">
+  <meta name="twitter:description" content="좁혀주는 레이더 · 상승 확률분포 + 하방 리스크 · base 대비 ~6배 농축 · 자동매매 아님 · preopen DEMOTED · 정직한 결론 §v-next.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -348,20 +348,21 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">Pre-Open Pump Radar &middot; Upbit KRW &middot; 2026</span>
+    <span class="hero-label">Upside-prob &middot; Downside-risk Radar &middot; Upbit KRW &middot; 2026</span>
     <h1>prelude</h1>
     <p class="hero-sub">
-      "09:00 직전, 오늘 터질 코인을 두 번 묻는다."<br>
-      08:55 pre-open trigger (15분 안 펌프) + 09:05 distribution beta (장중 setup 분포) 듀얼 알림.<br>
-      6-class softprob → ≥20% tail detector → multi-head distribution → pre-open 분리 → 분포+하방 레이더, <strong>6번의 재정의</strong> 끝에 운영 단계 도달.
+      "맞히는 모델이 아니라, 좁혀주는 레이더."<br>
+      코인별 <strong>다음날 상승 확률분포 + 하락 리스크</strong>로 후보를 base 대비 ~6배 농축. 09:05 distribution 은 ACTIVE, 08:50 preopen 은 <strong>DEMOTED(shadow only)</strong>.<br>
+      자동 net 전략이 아니라 추천 레이더 — 청산은 사람이 한다. 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 과정을 그대로 공개.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="6" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9" data-decimals="0">0</span><span class="hero-stat-label">Total Heads</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">Optimistic Tiered Sharpe</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">~6×</span><span class="hero-stat-label">precision@3 농축 (OOS)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">Optimistic Tiered Sharpe †</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0 †</span></div>
       <div class="hero-stat"><span class="hero-stat-num">21s</span><span class="hero-stat-label">Predict Latency</span></div>
     </div>
+    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">† optimistic upper-bound (단일전략 가정 · TP-tiered exit). 실제 운영 net 결과는 <a href="#vnext" style="color:var(--text-secondary); border-bottom:1px solid var(--border);">§v-next</a> 참조.</p>
     <div class="hero-links">
       <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer" class="hero-link">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -375,23 +376,30 @@
   </div>
   <div class="scroll-ind">SCROLL<br><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
+
+<!-- Honest-conclusion banner -->
+<div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
+  <div class="callout warn" style="margin:1.5rem 0;">
+    <p><strong>현재 정직한 결론 (2026-05-31):</strong> 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 OOS·leak 4/4 PASS 로 진짜지만, 기계적 청산 net 은 breakeven~음수 — 수익은 사용자의 진입/청산 판단이 결정한다. 아래 상단 지표 중 일부(†)는 단일전략 가정의 optimistic upper-bound 이며, 실제 운영 net 과 정직한 프레이밍은 <a href="#vnext" style="color:var(--amber); border-bottom:1px solid var(--amber);">§v-next 로 이동</a>.</p>
+  </div>
+</div>
 <hr class="divider">
 
 <!-- Executive Summary -->
 <section id="summary" class="compact"><div class="container fade-in">
   <div class="section-label">Executive Summary</div>
   <h2 class="section-title">핵심 결과 — 한 눈에</h2>
-  <p class="section-desc">단일 점수 모델이 던진 모호함을 multi-head 조건부 분포로 재정의. 09:05 timer 가 첫 15분 펌프를 못 잡는 한계를 인정하고 08:55 전용 모델로 분리. backtest 가 좋다는 이유로 넘어가지 않고 <strong>6 종류 audit 으로 edge 가 통계적으로 살아있는지 검증</strong>.</p>
+  <p class="section-desc">단일 점수 모델이 던진 모호함을 multi-head 조건부 분포로 재정의. backtest 가 좋다는 이유로 넘어가지 않고 <strong>6 종류 audit 으로 edge 가 통계적으로 살아있는지 검증</strong>. 단, 아래 †지표는 단일전략 가정의 optimistic upper-bound — 실제 운영 net 과 정직한 결론은 <a href="#vnext" style="color:var(--blue);">§v-next</a>.</p>
   <div class="four-col" style="margin-bottom:1.4rem;">
-    <div class="metric-card"><span class="metric-val pos">9.56</span><div class="metric-label">Optimistic TP-tiered Sharpe</div><div class="metric-sub">upper-bound exit<br>random 2.37 (4× gap)</div></div>
-    <div class="metric-card"><span class="metric-val amber">+9.26&times;</span><div class="metric-label">Pre-open Top1% Lift</div><div class="metric-sub">first15_5pct head<br>base 2.57% &rarr; 23.82%</div></div>
-    <div class="metric-card"><span class="metric-val blue">51.45%</span><div class="metric-label">first1h +3% Precision</div><div class="metric-sub">top0.5% bucket<br>(base 8.68%)</div></div>
+    <div class="metric-card"><span class="metric-val neutral">9.56 †</span><div class="metric-label">Optimistic TP-tiered Sharpe</div><div class="metric-sub">upper-bound, 단일전략 가정<br>실제 운영 net 은 §v-next</div></div>
+    <div class="metric-card"><span class="metric-val amber">+9.26&times; †</span><div class="metric-label">Pre-open Top1% Lift (DEMOTED)</div><div class="metric-sub">first15_5pct head, backtest<br>forward 음수로 강등</div></div>
+    <div class="metric-card"><span class="metric-val blue">~6×</span><div class="metric-label">precision@3 농축 (≥20%)</div><div class="metric-sub">전체 OOS ~10%/~6배<br>5월 11.8%/7배 · base 1.7%</div></div>
     <div class="metric-card"><span class="metric-val pos">21s</span><div class="metric-label">Predict Latency</div><div class="metric-sub">08:55 boundary safe<br>(was 4m 48s)</div></div>
   </div>
   <div class="four-col">
-    <div class="metric-card"><span class="metric-val purple">92.9%</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">5000 boot, sharpe diff<br>vs setup_momentum</div></div>
+    <div class="metric-card"><span class="metric-val neutral">92.9% †</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">optimistic upper-bound<br>5000 boot, 95% CI 0 걸침</div></div>
     <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>운영은 fractional</div></div>
-    <div class="metric-card"><span class="metric-val neutral">2 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">08:55 + 09:05 KST<br>regime shown, not advice</div></div>
+    <div class="metric-card"><span class="metric-val neutral">1 alert</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">09:05 텔레그램 (ACTIVE)<br>08:50 preopen = shadow</div></div>
     <div class="metric-card"><span class="metric-val neutral">4 timers</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">2 predict + 2 close<br>cron 미사용</div></div>
   </div>
 </div></section>
@@ -422,12 +430,12 @@
     <div class="phase-chip live">
       <div class="pc-num">Phase X+1a</div>
       <div class="pc-name">Distribution beta</div>
-      <div class="pc-status">LIVE · 09:05</div>
+      <div class="pc-status">ACTIVE · 09:05</div>
     </div>
-    <div class="phase-chip live">
+    <div class="phase-chip legacy">
       <div class="pc-num">Phase X+1b</div>
       <div class="pc-name">Pre-open trigger v1</div>
-      <div class="pc-status">LIVE · 08:55</div>
+      <div class="pc-status">DEMOTED · shadow</div>
     </div>
     <div class="phase-chip pivot">
       <div class="pc-num">Phase v-next</div>
@@ -490,16 +498,17 @@
       </div>
     </div>
 
-    <div class="timeline-item"><div class="timeline-dot ok"></div>
-      <div class="t-meta"><span class="t-date">Phase X+1b · Pre-open Trigger v1</span><span class="badge badge-ok">LIVE</span></div>
-      <div class="t-title">15m precursor only — train/live mismatch 0</div>
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">Phase X+1b · Pre-open Trigger v1</span><span class="badge badge-pivot">DEMOTED</span></div>
+      <div class="t-title">15m precursor only — backtest 강했으나 forward 음수로 강등</div>
       <div class="t-find">
         가설 1차: daily 47 features + 15m precursor 19 features 멀티스케일. → audit 에서 "daily 의 train (full closed) vs live (08:55 partial 5min) mismatch" 발견.<br>
-        v1 lock: 15m precursor only 19 features. 6 binary heads (first15/30/1h × 3pct/5pct). first15_5pct top1% precision 23.82% (base 2.57%) <strong>= lift 9.26×</strong>. predict latency 4m 48s → 21s.
+        v1 lock: 15m precursor only 19 features. 6 binary heads (first15/30/1h × 3pct/5pct). backtest first15_5pct top1% precision 23.82% (base 2.57%) <strong>= lift 9.26×</strong>. predict latency 4m 48s → 21s.<br>
+        결정: forward 표본에서 observed −40.8% → <strong>DEMOTED (WATCH_ONLY / shadow only, 08:50 기록만)</strong>. 재활성은 정책 version bump + 사용자 컨펌 필요.
       </div>
       <span class="badge badge-ok">19 ft / 6 heads</span>
       <span class="badge badge-blue">15m only</span>
-      <span class="badge badge-pivot">21s latency</span>
+      <span class="badge badge-fail">forward −40.8%</span>
     </div>
 
   </div>
@@ -510,41 +519,114 @@
 <section id="vnext"><div class="container fade-in">
   <div class="section-label">v-next · 2026-05-31</div>
   <h2 class="section-title">v-next 재정의 — "맞히는 모델"에서 "좁혀주는 레이더"로</h2>
-  <p class="section-desc">단일 ✓/✗ 예측을 내려놓고, 코인별 <strong>다음날 상승/하락 확률 분포</strong>와 <strong>기대하방</strong>을 표기해 후보를 좁혀주는 레이더로 재정의. 검증은 전부 OOS(purged walk-forward), leak 4/4 PASS(독립 재검증). 모든 수치는 거래비용 0.15% 왕복 차감 후.</p>
+  <p class="section-desc">단일 ✓/✗ 예측을 내려놓고, 코인별 <strong>다음날 상승 확률분포</strong>와 <strong>하락 리스크</strong>를 표기해 후보를 좁혀주는 레이더로 재정의. 검증은 전부 OOS(purged walk-forward), leak 4/4 PASS(독립 재검증). 모든 수치는 거래비용 0.15% 왕복 차감 후. 아래는 요약이 아니라 <strong>진단 → 발굴 → regime 라이브러리 → 청산 검증 → 추천기 → 하방 → 스캐너</strong> 로 이어진 개선 과정 단계다.</p>
 
-  <div class="callout win">
-    <p><strong>성공 — 남긴 것</strong></p>
+  <!-- Stage 1: 진단 (출발 문제) -->
+  <div class="callout fail">
+    <p><strong>① 진단 — 출발 문제: 레이더가 거의 침묵했다</strong></p>
     <p style="margin-top:0.6rem;">
-      • 검증된 leak-free 선행패턴(qv_surge · bounce_off_7d_low · short-momentum · ATR/RV) <strong>OOS lift 2~3.5×</strong>. 5월(31일 전부 bear_quiet)에 top-3 가 BIO +64% · JTO +66% · SAHARA +42% · ID +39% · XLM +31% · IN +29% 포착.<br>
-      • 분포+하방 스캐너: 코인별 P(다음날 ≥5/10/20%) + 하락 리스크 P(≤-5/-10%) + 기대하방. risk-reward 랭킹이 하방을 <strong>절반(P(≤-5%) 53%→33%)</strong>으로 줄이며 상승확률 유지(NXPC: 상승 top급인데 하방 절반).<br>
-      • calibration 정직: 구 7-head 엔진의 +20% 과신(pred 60.3% vs 실제 11.6%, +48.7pp)을 <strong>pred 5.7% vs 실제 6.0%</strong>로 교정.<br>
-      • precision@3 ≈ <strong>12%(≥20%, base 1.7% 대비 약 7배)</strong>, 18%(≥15%), ~40%(≥5%). 모두 OOS · leak 4/4 PASS.
+      구 엔진을 bear_quiet regime 에서 돌리면 거의 아무 것도 안 불렀다. bear_quiet 침묵 <strong>recall ~6%</strong>, top-3 중 ACTIVE 후보가 <strong>1/93 일</strong> 뿐. 그런데 같은 5월 시장에는 다음날 ≥15% 오른 코인이 <strong>84건</strong> 실제로 있었다. "안 부르는 게 안전"이 아니라 "기회를 통째로 놓치는" 상태 — 게이트가 아니라 task 정의를 다시 봐야 한다는 진단.
     </p>
+    <span class="badge badge-fail">recall ~6%</span>
+    <span class="badge badge-fail">top-3 ACTIVE 1/93일</span>
+    <span class="badge badge-pivot">시장엔 ≥15% 84건</span>
   </div>
 
-  <div class="callout fail">
-    <p><strong>실패 — 부수고 버린 것</strong></p>
+  <!-- Stage 2: 발굴 (선행패턴) -->
+  <div class="callout win">
+    <p><strong>② 발굴 — leak-free 선행패턴</strong></p>
     <p style="margin-top:0.6rem;">
-      • "bear regime 게이트를 풀면 된다" 가설 → 데이터로 반증. 완화 시 <strong>net -34%</strong>. 진짜 원인은 게이트가 아니라 유니버스 컷(큰 펌프의 44%가 top100 거래대금 밖) + setup 발화 희소.<br>
-      • 직관 3개 데이터 반전: ① range_contraction(조용→폭발) 역효과 ② 신고가 돌파 ≠ 선행(저점 반등이 선행) ③ low-cap 펌프 가설 반전(top50 대형이 base rate 1.5~3배 높음).<br>
-      • 하드 -5% 손절의 함정: 비용 포함 -5.15%로 실현돼 '깊은손실 빈도'를 오히려 늘림. <strong>-3% 손절이 진짜 하방 캡</strong>(거래당 worst -3.15%, 깊은붕괴 -10~-47%를 전부 절단).<br>
-      • cold 펌프(~54%, 첫 스파이크/신규상장)는 일봉으로 구조적 비예측. recall 천장 ~72%(top100).
+      • 검증된 선행패턴(qv_surge · bounce_off_7d_low · short-momentum · ATR/RV). 단일 precursor <strong>OOS lift 3.5~4.7×</strong>(caseC), 다운사이드 자가검증 up20 top-decile <strong>3.55×</strong>. 선행 lift 는 3.5~4.7× 대역으로 통일.<br>
+      • 직관 3개가 데이터로 반전: ① range_contraction(조용→폭발) 역효과 ② 신고가 돌파 ≠ 선행(저점 반등이 선행) ③ low-cap 펌프 가설 반전(top50 대형이 base rate 1.5~3배 높음).<br>
+      • cold 펌프(~54%, 첫 스파이크/신규상장)는 일봉으로 구조적 비예측. recall 천장 ~72%(top100). "bear 게이트만 풀면 된다"도 반증 — 완화 시 net −34%, 진짜 원인은 유니버스 컷(큰 펌프의 44%가 top100 거래대금 밖) + setup 희소.
     </p>
+    <span class="badge badge-ok">단일 precursor 3.5~4.7×</span>
+    <span class="badge badge-blue">up20 top-decile 3.55×</span>
+    <span class="badge badge-fail">게이트 완화 net −34%</span>
+  </div>
+
+  <!-- Stage 3: regime 라이브러리 (lift는 살아도 net이 뒤집힘) -->
+  <div class="callout warn">
+    <p><strong>③ regime 라이브러리 — lift 는 4 regime 모두 살아남으나, net 이 lift 를 뒤집는다</strong></p>
+    <p style="margin-top:0.6rem;">
+      선행 lift 는 4 regime(bull/bear × quiet/volatile) 전부에서 살아남았다. 그런데 <strong>net 이 lift 를 뒤집었다</strong>: lift 가 가장 큰 volatile-hit regime 이 net 은 최악(pump-then-dump — 펌프를 잡았다가 다시 토해냄), 반대로 lift 가 평범한 곳이 net 은 멀쩡. 즉 <strong>진짜 lever 는 "무엇을 맞히느냐(lift)"가 아니라 "언제 빠지느냐(청산)"</strong>였다. 이 발견이 다음 단계(15m 청산 검증)를 강제했다.
+    </p>
+    <span class="badge badge-ok">lift 4 regime 생존</span>
+    <span class="badge badge-fail">volatile hit↑ net↓ (pump-then-dump)</span>
+    <span class="badge badge-pivot">진짜 lever = 청산</span>
+  </div>
+
+  <!-- Stage 4: 15m 청산 검증 -->
+  <div class="callout warn">
+    <p><strong>④ 청산 검증 — 15m 경로로 손절/익절을 실증</strong></p>
+    <p style="margin-top:0.6rem;">
+      • 하드 손절은 net 을 깎지만 <strong>하방을 캡한다</strong>: 하드 −5% 손절은 비용 포함 −5.15%로 실현돼 '깊은손실 빈도'를 오히려 늘렸고, <strong>−3% 손절이 진짜 하방 캡</strong>(거래당 worst −3.15%, 깊은붕괴 −10~−47% 를 전부 절단).<br>
+      • 펌프의 수명: 잡은 펌프는 평균 <strong>15~20시간</strong> 안에 전개·소멸 — 하루 단위 보유가 합당.<br>
+      • regime별로 청산이 net 을 살린 곳은 <strong>bear_quiet 만 marginal</strong>, 그조차 <strong>CI95 가 0 을 포함</strong> → 통계적으로 reject 못함. 그래서 자동 채택이 아니라 <strong>SHADOW</strong> 로 forward 표본을 더 모은다.
+    </p>
+    <span class="badge badge-pivot">−3% SL = 하방 캡</span>
+    <span class="badge badge-blue">펌프 수명 15~20h</span>
+    <span class="badge badge-fail">bear_quiet marginal · CI95 0 포함 → SHADOW</span>
+  </div>
+
+  <!-- Stage 5: 추천기 (정직 calibration) -->
+  <div class="callout win">
+    <p><strong>⑤ 추천기 — 단일 ✓/✗ 대신 정직한 확률 분포</strong></p>
+    <p style="margin-top:0.6rem;">
+      • precision@3 농축: <strong>전체 OOS(rank-mean, 765일) ≈ 10%</strong>(base 1.67%, lift 5.9× ≈ 6배), <strong>5월 backtest 11/93 = 11.8%</strong>(base 1.7%, ~7×). 둘 다 실측 — 윈도우를 함께 표기한다(전체 OOS ~10%/~6배, 5월 11.8%/7배).<br>
+      • calibration 정직: 구 7-head 엔진의 +20% 과신(<strong>pred 60.3% vs 실제 11.6%, +48.7pp</strong>)을 새 스캐너에서 <strong>pred 5.7% vs 실제 6.0%</strong>(거의 일치)로 교정. (cal_xgb 7.5% 는 과신으로 탈락한 모델이라 헤드라인 아님.)<br>
+      • 상승폭 magnitude(데이터로 검증): base rate up5 23% · up10 7.5% · up20 1.8% · up30 0.67%; 선행 top-decile up5 40.8% · up10 18.5% · up20 5.8%. → "+20% 다음날"은 선행 최상위에서도 ~6%, 50% 적중은 +3% 임계에서만, 운영 의사결정 임계 = +5~15%.
+    </p>
+    <span class="badge badge-ok">OOS ~10%/~6배 · 5월 11.8%/7배</span>
+    <span class="badge badge-blue">과신 +48.7pp → 정직</span>
+  </div>
+
+  <!-- Stage 6: 하방 (risk-reward 랭킹) -->
+  <div class="callout win">
+    <p><strong>⑥ 하방 — 상승확률은 유지하고 리스크만 절반으로</strong></p>
+    <p style="margin-top:0.6rem;">
+      upside-only 랭킹의 함정(상승확률만 보면 P(≤−5%) 44~67% 짜리 폭탄을 top 에 올림)을 risk-reward 랭킹으로 교정. P(≤−5%) <strong>0.53 → R1_ratio 0.33 → R2(λ=1) 0.16</strong> 으로 단계적 축소, deep-dump(≤−10%)는 <strong>0.15 → 0.02~0.07</strong>. 상승 확률은 유지하면서 하방만 깎는다. 위험 정책은 <strong>−3% 손절 + 5% 익절</strong>(하방 위험 최소화 우선).
+    </p>
+    <span class="badge badge-blue">P(≤−5%) 0.53→0.16</span>
+    <span class="badge badge-blue">deep-dump 0.15→0.02~0.07</span>
+    <span class="badge badge-amber" style="background:var(--amber-dim); color:var(--amber); border:1px solid rgba(180,83,9,0.2);">−3% SL / +5% TP</span>
   </div>
 
   <div class="four-col" style="margin:2rem 0;">
-    <div class="metric-card"><span class="metric-val pos">~7×</span><div class="metric-label">precision@3 농축 (≥20%)</div><div class="metric-sub">12% vs base 1.7%<br>OOS · leak 4/4 PASS</div></div>
-    <div class="metric-card"><span class="metric-val blue">53% → 33%</span><div class="metric-label">P(≤-5%) 하방 절감</div><div class="metric-sub">risk-reward 랭킹<br>상승확률은 유지</div></div>
+    <div class="metric-card"><span class="metric-val pos">~6×</span><div class="metric-label">precision@3 농축 (≥20%)</div><div class="metric-sub">전체 OOS ~10%/~6배<br>5월 11.8%/7배 · base 1.7%</div></div>
+    <div class="metric-card"><span class="metric-val blue">0.53 → 0.16</span><div class="metric-label">P(≤-5%) 하방 절감</div><div class="metric-sub">R1 0.33 → R2(λ=1) 0.16<br>상승확률은 유지</div></div>
     <div class="metric-card"><span class="metric-val pos">+48.7pp → 정직</span><div class="metric-label">과신 교정</div><div class="metric-sub">pred 60.3%→5.7%<br>실제 11.6% / 6.0%</div></div>
     <div class="metric-card"><span class="metric-val amber">-3% SL / +5% TP</span><div class="metric-label">위험 정책</div><div class="metric-sub">하방 위험 최소화<br>worst -3.15%/거래</div></div>
+  </div>
+
+  <!-- Stage 7: 스캐너 (오늘 출력) + 5월 포착 -->
+  <div class="chart-wrap">
+    <div class="chart-title">⑦ 스캐너 — 5월 backtest top-3 가 포착한 펌프 (일중 최고가 기준)</div>
+    <div class="chart-subtitle">아래는 레이더가 잡은 <strong>일중 최고가 = 펌프 크기</strong>(high/open−1)지 <strong>실현 수익이 아니다</strong>. 운영 청산은 +5% TP — 이 폭의 일부만 실제로 가져간다. 5월 31일 전부 bear_quiet.</div>
+    <table class="tbl">
+      <thead><tr><th>날짜</th><th>코인</th><th>포착한 펌프 (일중 high/open−1)</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">05-07</td><td><strong>JTO</strong></td><td class="mono pos">+65.9%</td><td>포착 = 펌프 크기 (실현 수익 아님)</td></tr>
+        <tr><td class="mono">05-02</td><td><strong>BIO</strong></td><td class="mono pos">+63.6%</td><td>청산 +5% TP 가정 시 실현은 그 일부</td></tr>
+        <tr><td class="mono">05-09</td><td><strong>SAHARA</strong></td><td class="mono pos">+42.1%</td><td>포착</td></tr>
+        <tr><td class="mono">05-30</td><td><strong>ID</strong></td><td class="mono pos">+38.7%</td><td>포착</td></tr>
+        <tr><td class="mono">05-29</td><td><strong>XLM</strong></td><td class="mono pos">+30.6%</td><td>포착</td></tr>
+        <tr><td class="mono">05-25</td><td><strong>IN</strong></td><td class="mono pos">+29.2%</td><td>포착</td></tr>
+        <tr><td class="mono">05-18</td><td><strong>OPEN</strong></td><td class="mono pos">+22.3%</td><td>포착</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p><strong>오늘(05-31, bear_quiet) 스캐너 출력 예:</strong> NXPC P(≥10%) 28% / P(≤−5%) 28%, ZK 동급, VET 은 저하방 P(≤−5%) 15%. ← risk-reward 랭킹이 상승확률은 살리면서 하방을 함께 본다. 반대로 <strong>upside-only 의 함정</strong>: POKT · IN 은 P(≥10%) 28% 로 같아 보여도 P(≤−5%) 가 44~67% — 상승확률만 보면 이런 폭탄을 top 에 올린다.</p>
   </div>
 
   <div class="callout warn">
     <p><strong>정직한 결론</strong></p>
     <p style="margin-top:0.6rem;">
-      • 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 기계적 청산 net 은 breakeven~음수. 예측력(base 대비 7배 농축 + 큰 펌프 포착 + 하방 관리)은 진짜지만, 수익은 사용자의 진입/청산 판단이 결정 → <strong>SHADOW 로 forward 표본 축적 중</strong>.<br>
-      • 상승폭은 데이터로 검증: "+20% 다음날"은 선행 최상위에서도 ~6%. 50% 적중은 +3% 임계에서만. 운영 의사결정 임계 = +5~15%. → 단일 ✓/✗ 대신 <strong>확률 분포로 표기</strong>.<br>
-      • 위험 정책: -3% 손절 + 5% 익절(하방 위험 최소화 우선).
+      • 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 기계적 청산 net 은 breakeven~음수. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 진짜지만, 수익은 사용자의 진입/청산 판단이 결정 → <strong>SHADOW 로 forward 표본 축적 중</strong>. leak 4/4 PASS.<br>
+      • 현 정책: <strong>distribution = PROMOTE_PAPER (ACTIVE, 09:05)</strong>, <strong>preopen = DEMOTED (WATCH_ONLY / shadow, observed −40.8%, 08:50 기록만)</strong>.<br>
+      • 단일 ✓/✗ 대신 확률 분포로 표기하고, 위험 정책은 −3% 손절 + 5% 익절(하방 위험 최소화 우선).
     </p>
   </div>
 </div></section>
@@ -590,7 +672,7 @@
 <section id="architecture"><div class="container fade-in">
   <div class="section-label">Architecture</div>
   <h2 class="section-title">시스템 구조</h2>
-  <p class="section-desc">두 모델이 KST 09:00 boundary 를 사이에 두고 다른 입력 (15m precursor / daily) 위에서 다른 horizon 을 예측. systemd 4 timer 가 모든 일정 무인 운영.</p>
+  <p class="section-desc">두 모델이 KST 09:00 boundary 를 사이에 두고 다른 입력 (15m precursor / daily) 위에서 다른 horizon 을 예측. systemd 4 timer 가 모든 일정 무인 운영. 현 정책: 09:05 distribution = ACTIVE, 08:50 preopen = <strong>DEMOTED (shadow only, 텔레그램 X)</strong>.</p>
 
   <div class="flow">
     <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit KRW d1 / 15m / 1h<br>Binance d1 (BTC reference)</div></div>
@@ -604,17 +686,17 @@
     <div class="dual-card pre">
       <div class="dual-header">
         <div class="dual-icon pre-icon">P</div>
-        <div><div class="dual-name">Pre-open Trigger</div><div class="dual-sub">09:00 직후 첫 15분 펌프</div></div>
+        <div><div class="dual-name">Pre-open Trigger <span style="font-size:0.7rem; color:var(--text-muted); font-weight:400;">(DEMOTED · shadow)</span></div><div class="dual-sub">09:00 직후 첫 15분 펌프</div></div>
       </div>
-      <div class="dual-row"><span class="dual-key">발사 시각</span><span class="dual-val a">KST 08:55</span></div>
+      <div class="dual-row"><span class="dual-key">상태</span><span class="dual-val a">DEMOTED · shadow only</span></div>
+      <div class="dual-row"><span class="dual-key">발사 시각</span><span class="dual-val a">KST 08:50 (기록만)</span></div>
       <div class="dual-row"><span class="dual-key">입력</span><span class="dual-val a">15m precursor 19 ft</span></div>
       <div class="dual-row"><span class="dual-key">Heads</span><span class="dual-val">6 (15/30/60m × 3/5%)</span></div>
-      <div class="dual-row"><span class="dual-key">Top1% lift (first15_5)</span><span class="dual-val a">9.26×</span></div>
-      <div class="dual-row"><span class="dual-key">Latency</span><span class="dual-val">21s (8:30 snapshot)</span></div>
-      <div class="dual-row"><span class="dual-key">Decision window</span><span class="dual-val">08:45 ~ 08:59</span></div>
+      <div class="dual-row"><span class="dual-key">Top1% lift (backtest)</span><span class="dual-val a">9.26× †</span></div>
+      <div class="dual-row"><span class="dual-key">Forward</span><span class="dual-val">observed −40.8%</span></div>
       <div class="dual-philosophy pre-phil">
-        <strong>철학: 직전 3시간 정보가 첫 15분을 가른다</strong><br>
-        08:30 까지의 closed 15m bar 만 입력. daily 의 partial-close mismatch 제거. 연구는 daily+1h+15m 멀티스케일이 강했지만 운영은 15m only 로 좁혀 train/live 일치 우선.
+        <strong>철학: 직전 3시간 정보가 첫 15분을 가른다 — 단, forward 가 못 따라왔다</strong><br>
+        08:30 까지의 closed 15m bar 만 입력. backtest top1% lift 9.26× 였으나 forward 표본 observed −40.8% → <strong>DEMOTED(WATCH_ONLY)</strong>. 텔레그램 발사 X, 08:50 shadow ledger 에 기록만. 재활성은 정책 version bump + 사용자 컨펌.
       </div>
     </div>
     <div class="dual-vs"><span>+</span></div>
@@ -638,12 +720,12 @@
 
   <div class="cadence-wrap">
     <div class="cadence-title">하루 운영 타이밍 (KST)</div>
-    <div class="cadence-sub">systemd 4 timer. 텔레그램 2 (사용자 알림) + close-out 2 (자동 ledger 마감, 텔레그램 X).</div>
+    <div class="cadence-sub">systemd 4 timer. 텔레그램 1 (09:05 distribution, ACTIVE) + preopen 08:50 (DEMOTED · shadow 기록만, 텔레그램 X) + close-out 2 (자동 ledger 마감).</div>
     <div class="cadence-row">
-      <div class="cadence-label a">08:55</div>
+      <div class="cadence-label a">08:50</div>
       <div class="cadence-bar">
         <div class="cadence-slot inactive">~08:30</div>
-        <div class="cadence-slot fire-a">08:55 PRE</div>
+        <div class="cadence-slot inactive">08:50 PRE · SHADOW</div>
         <div class="cadence-slot inactive">09:00</div>
         <div class="cadence-slot inactive">09:30</div>
         <div class="cadence-slot inactive">10:05</div>
@@ -653,8 +735,8 @@
       <div class="cadence-label b">09:05</div>
       <div class="cadence-bar">
         <div class="cadence-slot inactive">~08:30</div>
-        <div class="cadence-slot inactive">08:55</div>
-        <div class="cadence-slot fire-b">09:05 DIST</div>
+        <div class="cadence-slot inactive">08:50</div>
+        <div class="cadence-slot fire-b">09:05 DIST · ACTIVE</div>
         <div class="cadence-slot inactive">09:30</div>
         <div class="cadence-slot inactive">10:05</div>
       </div>
@@ -670,8 +752,8 @@
       </div>
     </div>
     <div class="cadence-legend">
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.35)"></div>Pre-open trigger (텔레그램)</div>
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>Distribution beta (텔레그램)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(168,162,158,0.35)"></div>Pre-open trigger (DEMOTED · shadow, 텔레그램 X)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>Distribution beta (ACTIVE · 텔레그램)</div>
       <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(22,163,74,0.3)"></div>Paper ledger close-out (자동)</div>
     </div>
   </div>
@@ -1200,10 +1282,10 @@
   <p class="section-desc">cron 대신 systemd timer (xsec_alpha 패턴 차용). install <code class="c">sudo bash deploy/install_systemd.sh</code> 한 줄. 모든 unit 은 <code class="c">deploy/</code> 에서 버전 관리.</p>
 
   <div style="margin: 2rem 0;">
-    <div class="auto-timer amber-acc">
+    <div class="auto-timer muted-acc">
       <div class="auto-name">prelude-preopen.timer<span class="mono-small">scripts/daily_run_preopen.sh</span></div>
-      <div class="auto-role">15m DB incremental update + health_check + pre-open trigger predict + 텔레그램 1번. decision-window 08:45-08:59 가드.</div>
-      <div class="auto-when"><strong>매일</strong>08:55 KST</div>
+      <div class="auto-role"><strong>DEMOTED · shadow only.</strong> 15m DB incremental update + health_check + pre-open trigger predict → shadow ledger 기록만 (텔레그램 X, forward observed −40.8%). decision-window 가드 유지.</div>
+      <div class="auto-when"><strong>매일</strong>08:50 KST<br><span style="color:var(--text-muted);">shadow</span></div>
     </div>
     <div class="auto-timer blue-acc">
       <div class="auto-name">prelude-distribution.timer<span class="mono-small">scripts/daily_run_distribution.sh</span></div>
@@ -1376,7 +1458,7 @@
 
 <footer>
   <p class="footer-text">
-    prelude &middot; Pre-Open Pump Radar · Upbit KRW &middot; 2026<br>
+    prelude &middot; Upside-prob &middot; Downside-risk Radar · Upbit KRW &middot; 2026<br>
     개인 트레이딩용. 투자 조언이 아님. &middot; <a href="https://github.com/soccz/prelude">GitHub</a>
   </p>
 </footer>

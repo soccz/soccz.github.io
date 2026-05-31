@@ -538,6 +538,63 @@
 
 <hr class="divider">
 
+<!-- 이번 세션 새 발견 (2026-05-31) — 레이더 정직성 차트 (수익기 아님) -->
+<section>
+  <div class="container">
+    <div class="section-label">SESSION FINDINGS · 2026-05-31</div>
+    <h2 class="section-title">새 발견 — 분포·하방·정직성 레이더</h2>
+    <p class="section-desc" id="findingsCaption">
+      레이더 정직성 차트. 큰 펌프 <b>포착</b> 능력 + 하방 관리 + 정직한 확률을 보인다.
+      <b>수익기 아님</b> — 일중 최고가는 포착 크기지 실현수익이 아니다 (사람이 +5% TP 청산).
+      자동 net 전략이 아니라 base 대비 ~6배 농축 추천 레이더 · SHADOW · leak 4/4 PASS.
+    </p>
+
+    <!-- ①② magnitude curve + risk-reward -->
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title">① 상승 확률분포 곡선</div>
+        <div class="chart-subtitle">base rate vs 선행 top-decile P(≥X%) — magnitude decay (+20%는 최상위도 ~6%, 50%는 +3%만)</div>
+        <canvas id="chartMagnitudeCurve"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">② risk-reward 하방 축소</div>
+        <div class="chart-subtitle">upside-only → R1 → R2 — P(≤−5%) 0.53→0.16 · deep-dump(≤−10%) 0.15→0.02</div>
+        <canvas id="chartRiskReward"></canvas>
+      </div>
+    </div>
+
+    <!-- ③④ calibration + backtest pumps -->
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title">③ calibration reliability</div>
+        <div class="chart-subtitle">구 엔진 과신(+20% pred 60%/실제 11.6%) vs 새 스캐너 정직(pred 5.7%/실제 6.0%) — y=x 가 완벽</div>
+        <canvas id="chartCalibFindings"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">④ 5월 backtest — top-3 가 포착한 펌프</div>
+        <div class="chart-subtitle">일중 최고가 = 포착 크기 (실현수익 X · +5% TP 청산) · precision@3 5월 11.8%/~7배</div>
+        <canvas id="chartBacktestPumps"></canvas>
+      </div>
+    </div>
+
+    <!-- ⑤⑥ precursor lift + regime base rate -->
+    <div class="chart-split">
+      <div class="chart-wrap">
+        <div class="chart-title">⑤ 선행패턴 OOS lift</div>
+        <div class="chart-subtitle">단일 precursor 2.5~3.6x (caseC 최대 4.7x) — lift=1.0 = base rate 무능 참조선</div>
+        <canvas id="chartPrecursorLift"></canvas>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">⑥ regime 별 펌프 base rate</div>
+        <div class="chart-subtitle">volatile &gt; quiet — pump-rich day 비율 + breadth(15%) 둘 다</div>
+        <canvas id="chartRegimeBaserate"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- Alpha vs BTC HODL -->
 <section class="compact">
   <div class="container">
@@ -2729,6 +2786,196 @@ function renderPolicyReplayBar(summary) {
   });
 }
 
+/* ───────── 이번 세션 새 발견 (2026-05-31) — 레이더 정직성 차트 ─────────
+   수익기 아님: 일중 최고가는 포착 크기지 실현수익 X. 전부 findings.json (DB 검증값). */
+const MONO = "'JetBrains Mono', monospace";
+
+function renderFindings(findings) {
+  if (!findings) return;
+  if (findings.honest_caption) {
+    const cap = document.getElementById('findingsCaption');
+    if (cap) cap.textContent = findings.honest_caption;
+  }
+  renderMagnitudeCurve(findings.magnitude_curve);
+  renderRiskRewardFindings(findings.risk_reward);
+  renderCalibFindings(findings.calibration);
+  renderBacktestPumps(findings.backtest_pumps);
+  renderPrecursorLift(findings.precursor_lift);
+  renderRegimeBaserate(findings.regime_baserate);
+}
+
+// ① 상승 확률분포 곡선 — base rate vs 선행 top-decile (magnitude decay)
+function renderMagnitudeCurve(m) {
+  const ctx = document.getElementById('chartMagnitudeCurve');
+  if (!ctx || !m) return;
+  Chart.getChart(ctx)?.destroy();
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: m.thresholds_pct.map(t => `≥+${t}%`),
+      datasets: [
+        { label: '선행 top-decile', data: m.top_decile_pct, borderColor: COLORS.green, backgroundColor: COLORS.green + '22', borderWidth: 2, pointRadius: 4, fill: true, tension: 0.2 },
+        { label: 'base rate', data: m.base_rate_pct, borderColor: COLORS.text, borderDash: [6, 4], borderWidth: 1.6, pointRadius: 3, fill: false, tension: 0.2 },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: MONO, size: 11 }, boxWidth: 18 } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${fmtPct(c.parsed.y, 1)} P(달성)` } },
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '%', font: { family: MONO, size: 10 } }, grid: { color: COLORS.border }, title: { display: true, text: 'P(달성)', font: { family: MONO, size: 10 } } },
+        x: { ticks: { font: { family: MONO, size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+// ② risk-reward 하방 축소 — P(≤−5%) + deep-dump(≤−10%)
+function renderRiskRewardFindings(r) {
+  const ctx = document.getElementById('chartRiskReward');
+  if (!ctx || !r) return;
+  Chart.getChart(ctx)?.destroy();
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: r.labels,
+      datasets: [
+        { label: 'P(≤−5%)', data: r.p_down5_pct, backgroundColor: COLORS.red + 'cc', borderWidth: 0 },
+        { label: 'deep-dump P(≤−10%)', data: r.p_deepdump_pct, backgroundColor: COLORS.preopen + 'cc', borderWidth: 0 },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: MONO, size: 11 }, boxWidth: 16 } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${fmtPct(c.parsed.y, 1)}` } },
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '%', font: { family: MONO, size: 10 } }, grid: { color: COLORS.border }, title: { display: true, text: '하방 확률 (낮을수록 좋음)', font: { family: MONO, size: 10 } } },
+        x: { ticks: { font: { family: MONO, size: 11 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+// ③ calibration reliability — 구 엔진 과신 vs 새 스캐너 정직 (scatter + y=x)
+function renderCalibFindings(c) {
+  const ctx = document.getElementById('chartCalibFindings');
+  if (!ctx || !c) return;
+  Chart.getChart(ctx)?.destroy();
+  new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [
+        { label: '완벽 보정 (y=x)', type: 'line', data: c.ideal_line.map(p => ({ x: p[0], y: p[1] })), borderColor: COLORS.text, borderDash: [5, 5], borderWidth: 1.3, pointRadius: 0, fill: false },
+        { label: c.old_engine.label + ' — 과신', data: [{ x: c.old_engine.pred_pct, y: c.old_engine.actual_pct }], backgroundColor: COLORS.red, pointRadius: 8, pointStyle: 'triangle' },
+        { label: c.new_scanner.label + ' — 정직', data: [{ x: c.new_scanner.pred_pct, y: c.new_scanner.actual_pct }], backgroundColor: COLORS.green, pointRadius: 8 },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'start', labels: { font: { family: MONO, size: 10 }, boxWidth: 14 } },
+        tooltip: { callbacks: { label: c2 => `pred ${fmtPct(c2.parsed.x, 1)} → 실제 ${fmtPct(c2.parsed.y, 1)}` } },
+      },
+      scales: {
+        x: { min: 0, max: 70, ticks: { callback: v => v + '%', font: { family: MONO, size: 10 } }, grid: { color: COLORS.border }, title: { display: true, text: '모델이 외친 확률 (pred)', font: { family: MONO, size: 10 } } },
+        y: { min: 0, max: 70, ticks: { callback: v => v + '%', font: { family: MONO, size: 10 } }, grid: { color: COLORS.border }, title: { display: true, text: '실제 적중 (actual)', font: { family: MONO, size: 10 } } },
+      },
+    },
+  });
+}
+
+// ④ 5월 backtest — top-3 가 포착한 펌프 (막대, 큰 순)
+function renderBacktestPumps(b) {
+  const ctx = document.getElementById('chartBacktestPumps');
+  if (!ctx || !b) return;
+  Chart.getChart(ctx)?.destroy();
+  const pumps = b.pumps || [];
+  if (!pumps.length) { ctx.parentElement.innerHTML = '<div class="loading-state">backtest 표본 없음</div>'; return; }
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: pumps.map(p => `${p.coin} ${p.date.slice(5)}`),
+      datasets: [
+        { label: '포착 펌프 (일중 high/open−1)', data: pumps.map(p => p.pump_pct), backgroundColor: COLORS.green + 'cc', borderWidth: 0 },
+      ],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: MONO, size: 10 }, boxWidth: 16 } },
+        tooltip: { callbacks: { label: c => `포착 +${fmt(c.parsed.x, 1)}% (실현수익 아님)` } },
+      },
+      scales: {
+        x: { beginAtZero: true, ticks: { callback: v => '+' + v + '%', font: { family: MONO, size: 10 } }, grid: { color: COLORS.border } },
+        y: { ticks: { font: { family: MONO, size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+// ⑤ 선행패턴 OOS lift (막대 + lift=1 참조선)
+function renderPrecursorLift(p) {
+  const ctx = document.getElementById('chartPrecursorLift');
+  if (!ctx || !p) return;
+  Chart.getChart(ctx)?.destroy();
+  const feats = p.features || [];
+  const base = p.base_line ?? 1.0;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: feats.map(f => f.name),
+      datasets: [
+        { label: 'OOS lift (×base)', data: feats.map(f => f.oos_lift), backgroundColor: COLORS.distribution + 'cc', borderWidth: 0 },
+        { label: 'lift = 1.0 (무능 참조선)', type: 'line', data: feats.map(() => base), borderColor: COLORS.red, borderDash: [5, 5], borderWidth: 1.4, pointRadius: 0, fill: false },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: MONO, size: 10 }, boxWidth: 16 } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${fmt(c.parsed.y, 2)}×` } },
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '×', font: { family: MONO, size: 10 } }, grid: { color: COLORS.border }, title: { display: true, text: 'OOS lift (base 대비 농축)', font: { family: MONO, size: 10 } } },
+        x: { ticks: { maxRotation: 35, minRotation: 0, font: { family: MONO, size: 9 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
+// ⑥ regime 별 펌프 base rate (volatile > quiet)
+function renderRegimeBaserate(g) {
+  const ctx = document.getElementById('chartRegimeBaserate');
+  if (!ctx || !g) return;
+  Chart.getChart(ctx)?.destroy();
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: g.regimes,
+      datasets: [
+        { label: 'pump-rich day 비율', data: g.pump_rich_rate_pct, backgroundColor: COLORS.distribution + 'cc', borderWidth: 0 },
+        { label: 'breadth(≥+15%) 평균', data: g.pump15_breadth_pct, backgroundColor: COLORS.green + 'cc', borderWidth: 0 },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', align: 'end', labels: { font: { family: MONO, size: 10 }, boxWidth: 16 } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${fmtPct(c.parsed.y, 1)}`, afterLabel: c => `n=${g.n_days?.[c.dataIndex] ?? '—'}일` } },
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '%', font: { family: MONO, size: 10 } }, grid: { color: COLORS.border } },
+        x: { ticks: { font: { family: MONO, size: 10 } }, grid: { display: false } },
+      },
+    },
+  });
+}
+
 function renderRecommendationQuality(summary) {
   const idea = summary.idea_validation || {};
   // idea attribution = tables.summary
@@ -2944,9 +3191,15 @@ window.addEventListener('scroll', () => {
       decryptPayload(historyEnc, pin),
       decryptPayload(accuracyEnc, pin),
     ]);
+    // findings.json — 이번 세션 새 발견 차트 (없거나 실패해도 나머지 대시보드는 표시)
+    let findings = null;
+    try {
+      findings = await decryptPayload(await fetchJson('findings.json'), pin);
+    } catch (_) { /* optional payload */ }
 
     HISTORY_ROWS = history.rows || [];
     renderHero(summary);
+    renderFindings(findings);  // 이번 세션 새 발견 차트 (2026-05-31)
     renderAlphaCard(summary, accuracy);
     renderBenchmark(summary);
     renderConfidence(summary);
