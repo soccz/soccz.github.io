@@ -272,6 +272,7 @@
     .auto-timer.amber-acc { border-left: 3px solid var(--amber); }
     .auto-timer.blue-acc { border-left: 3px solid var(--blue); }
     .auto-timer.muted-acc { border-left: 3px solid var(--text-muted); }
+    .auto-timer.green-acc { border-left: 3px solid var(--green); }
     .auto-name { font-weight: 700; font-size: 0.88rem; }
     .auto-name .mono-small { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-top: 0.15rem; }
     .auto-role { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
@@ -352,7 +353,7 @@
     <h1>prelude</h1>
     <p class="hero-sub">
       "맞히는 모델이 아니라, 좁혀주는 레이더."<br>
-      코인별 <strong>다음날 상승 확률분포 + 하락 리스크</strong>로 후보를 base 대비 ~6배 농축. 09:05 distribution 은 ACTIVE, 08:50 preopen 은 <strong>DEMOTED(shadow only)</strong>.<br>
+      코인별 <strong>다음날 상승 확률분포 + 하락 리스크</strong>로 후보를 base 대비 ~6배 농축. 텔레그램은 <strong>R1 risk-reward 레이더</strong>가 매일 08:50 예고 + 09:05 확정 2통 발송(champion만), 구 모델은 record-only.<br>
       자동 net 전략이 아니라 추천 레이더 — 청산은 사람이 한다. 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 과정을 그대로 공개.
     </p>
     <div class="hero-stats">
@@ -399,8 +400,8 @@
   <div class="four-col">
     <div class="metric-card"><span class="metric-val neutral">92.9% †</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">optimistic upper-bound<br>5000 boot, 95% CI 0 걸침</div></div>
     <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>운영은 fractional</div></div>
-    <div class="metric-card"><span class="metric-val neutral">1 alert</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">09:05 텔레그램 (ACTIVE)<br>08:50 preopen = shadow</div></div>
-    <div class="metric-card"><span class="metric-val neutral">4 timers</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">2 predict + 2 close<br>cron 미사용</div></div>
+    <div class="metric-card"><span class="metric-val neutral">2 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">R1 레이더 08:50 예고<br>+ 09:05 확정</div></div>
+    <div class="metric-card"><span class="metric-val neutral">7 timers</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">2 predict + 2 close<br>+ publish/backup/heartbeat</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -672,7 +673,7 @@
 <section id="architecture"><div class="container fade-in">
   <div class="section-label">Architecture</div>
   <h2 class="section-title">시스템 구조</h2>
-  <p class="section-desc">두 모델이 KST 09:00 boundary 를 사이에 두고 다른 입력 (15m precursor / daily) 위에서 다른 horizon 을 예측. systemd 4 timer 가 모든 일정 무인 운영. 현 정책: 09:05 distribution = ACTIVE, 08:50 preopen = <strong>DEMOTED (shadow only, 텔레그램 X)</strong>.</p>
+  <p class="section-desc">두 모델이 KST 09:00 boundary 를 사이에 두고 다른 입력 (15m precursor / daily) 위에서 다른 horizon 을 예측. systemd 7 timer 가 모든 일정 무인 운영. 텔레그램은 <strong>R1 risk-reward 레이더가 08:50/09:05 발송(champion만)</strong> — 이 두 모델(distribution/preopen)은 평가·대시보드용 <strong>record-only</strong>.</p>
 
   <div class="flow">
     <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit KRW d1 / 15m / 1h<br>Binance d1 (BTC reference)</div></div>
@@ -720,12 +721,12 @@
 
   <div class="cadence-wrap">
     <div class="cadence-title">하루 운영 타이밍 (KST)</div>
-    <div class="cadence-sub">systemd 4 timer. 텔레그램 1 (09:05 distribution, ACTIVE) + preopen 08:50 (DEMOTED · shadow 기록만, 텔레그램 X) + close-out 2 (자동 ledger 마감).</div>
+    <div class="cadence-sub">systemd 7 timer. R1 레이더 텔레그램 2통 (08:50 예고 + 09:05 확정, champion만) + close-out 2 + publish/backup/heartbeat. 구 distribution/preopen 모델은 record-only(텔레그램 X).</div>
     <div class="cadence-row">
       <div class="cadence-label a">08:50</div>
       <div class="cadence-bar">
         <div class="cadence-slot inactive">~08:30</div>
-        <div class="cadence-slot inactive">08:50 PRE · SHADOW</div>
+        <div class="cadence-slot fire-a">08:50 R1 예고</div>
         <div class="cadence-slot inactive">09:00</div>
         <div class="cadence-slot inactive">09:30</div>
         <div class="cadence-slot inactive">10:05</div>
@@ -736,7 +737,7 @@
       <div class="cadence-bar">
         <div class="cadence-slot inactive">~08:30</div>
         <div class="cadence-slot inactive">08:50</div>
-        <div class="cadence-slot fire-b">09:05 DIST · ACTIVE</div>
+        <div class="cadence-slot fire-b">09:05 R1 확정</div>
         <div class="cadence-slot inactive">09:30</div>
         <div class="cadence-slot inactive">10:05</div>
       </div>
@@ -752,8 +753,8 @@
       </div>
     </div>
     <div class="cadence-legend">
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(168,162,158,0.35)"></div>Pre-open trigger (DEMOTED · shadow, 텔레그램 X)</div>
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>Distribution beta (ACTIVE · 텔레그램)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(168,162,158,0.35)"></div>R1 레이더 08:50 예고 (텔레그램 · champion)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>R1 레이더 09:05 확정 (텔레그램 · champion)</div>
       <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(22,163,74,0.3)"></div>Paper ledger close-out (자동)</div>
     </div>
   </div>
@@ -1278,29 +1279,44 @@
 <!-- Automation -->
 <section id="automation"><div class="container fade-in">
   <div class="section-label">Automation</div>
-  <h2 class="section-title">systemd 4 timer — 무인 운영</h2>
-  <p class="section-desc">cron 대신 systemd timer (xsec_alpha 패턴 차용). install <code class="c">sudo bash deploy/install_systemd.sh</code> 한 줄. 모든 unit 은 <code class="c">deploy/</code> 에서 버전 관리.</p>
+  <h2 class="section-title">systemd 7 timer — 무인 운영</h2>
+  <p class="section-desc">cron 대신 systemd timer (xsec_alpha 패턴 차용). install <code class="c">sudo bash deploy/install_systemd.sh</code> 한 줄. 모든 unit 은 <code class="c">deploy/</code> 에서 버전 관리. 텔레그램 발송은 <strong>R1 레이더(08:50/09:05)가 담당</strong> — 아래 predict timer 들은 구 모델을 record-only 로 돌리고 그 끝에서 R1 을 발송한다.</p>
 
   <div style="margin: 2rem 0;">
-    <div class="auto-timer muted-acc">
+    <div class="auto-timer blue-acc">
       <div class="auto-name">prelude-preopen.timer<span class="mono-small">scripts/daily_run_preopen.sh</span></div>
-      <div class="auto-role"><strong>DEMOTED · shadow only.</strong> 15m DB incremental update + health_check + pre-open trigger predict → shadow ledger 기록만 (텔레그램 X, forward observed −40.8%). decision-window 가드 유지.</div>
-      <div class="auto-when"><strong>매일</strong>08:50 KST<br><span style="color:var(--text-muted);">shadow</span></div>
+      <div class="auto-role">15m DB update + health_check(<strong>stale 면 중단 → 발송 X</strong>) + 구 pre-open predict 는 record-only(observed −40.8%) → 그 끝에서 <strong>R1 레이더가 08:50 예고 텔레그램 발송(champion)</strong>. decision-window 가드 유지.</div>
+      <div class="auto-when"><strong>매일</strong>08:50 KST<br><span style="color:var(--blue);">R1 예고</span></div>
     </div>
     <div class="auto-timer blue-acc">
       <div class="auto-name">prelude-distribution.timer<span class="mono-small">scripts/daily_run_distribution.sh</span></div>
-      <div class="auto-role">d1 update + setup detection + h2/h6/h5 score + bucket calibration lookup + 텔레그램 2번. decision-window 09:00-09:20 가드.</div>
-      <div class="auto-when"><strong>매일</strong>09:05 KST</div>
+      <div class="auto-role">d1 update + health_check(stale 면 중단) + 구 distribution score 는 record-only → <strong>R1 레이더가 09:05 확정 텔레그램 발송(champion)</strong> + shadow ledger 기록. decision-window 09:00-09:20 가드.</div>
+      <div class="auto-when"><strong>매일</strong>09:05 KST<br><span style="color:var(--blue);">R1 확정</span></div>
     </div>
-    <div class="auto-timer muted-acc">
-      <div class="auto-name">prelude-close.timer<span class="mono-small">scripts/close_paper_ledger.py</span></div>
-      <div class="auto-role">distribution paper ledger close-out — 4h SL-first + 15m path-aware 두 모드 결과 자동 채움. 텔레그램 X.</div>
-      <div class="auto-when"><strong>매일</strong>09:30 KST</div>
+    <div class="auto-timer green-acc">
+      <div class="auto-name">prelude-close.timer<span class="mono-small">scripts/daily_close_distribution.sh</span></div>
+      <div class="auto-role">paper ledger close-out + <strong>R1 SHADOW ledger 실현</strong>(−3%SL/+5%TP 15m 경로) + <strong>champion_selector 재선정</strong>(forward 갱신 후 → 다음날 08:50/09:05 챔피언 결정). 텔레그램 X.</div>
+      <div class="auto-when"><strong>매일</strong>09:30 KST<br><span style="color:var(--green);">champion 재선정</span></div>
     </div>
     <div class="auto-timer muted-acc">
       <div class="auto-name">prelude-preopen-close.timer<span class="mono-small">scripts/daily_close_preopen.sh</span></div>
       <div class="auto-role">15m DB update wrapper + pre-open ledger close-out. first1h 4 bars 모두 closed 일 때만 status=closed, 부족하면 pending 으로 retry.</div>
       <div class="auto-when"><strong>매일</strong>10:05 KST</div>
+    </div>
+    <div class="auto-timer green-acc">
+      <div class="auto-name">prelude-publish-dashboard.timer<span class="mono-small">scripts/publish_dashboard.sh</span></div>
+      <div class="auto-role">findings.json(암호화) 빌드 + <strong>champion/challenger 리더보드</strong> + 6 차트 → soccz.github.io 대시보드 push. close 2개 끝난 후.</div>
+      <div class="auto-when"><strong>매일</strong>10:10 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-backup.timer<span class="mono-small">DB 백업</span></div>
+      <div class="auto-role">upbit_d1.db 스냅샷 백업 — 데이터 유실 방어(방치 운영 안전 레일).</div>
+      <div class="auto-when"><strong>매일</strong>04:00 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-heartbeat.timer<span class="mono-small">freshness · 발송 감시</span></div>
+      <div class="auto-role">데이터 freshness + 당일 발송 여부 heartbeat 점검 — 조용한 실패(stale·미발송)를 운영자가 알 수 있게.</div>
+      <div class="auto-when"><strong>매일</strong>10:30 KST</div>
     </div>
   </div>
 
@@ -1410,17 +1426,45 @@
 <section id="status"><div class="container fade-in">
   <div class="section-label">Current Status · 2026-06-01</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
-  <p class="section-desc">정책 채택: distribution = PROMOTE_PAPER (ACTIVE), preopen = DEMOTED (WATCH_ONLY / shadow only). R1 risk-reward 레이더 라이브 발송 시작 — 매일 08:50 예고 / 09:05 확정 2통, champion/challenger 자동선정(unattended, 하방 우선). 현재는 SHADOW(검증중) — 가상 ledger·대시보드로 성과 추적, 자동 주문 없음.</p>
+  <p class="section-desc"><strong>텔레그램 발송은 R1 risk-reward 레이더로 일원화</strong>됐다 — 매일 08:50 예고 / 09:05 확정 2통. 구 distribution · pre-open 모델은 평가·대시보드용으로 계속 돌지만 <strong>record-only(텔레그램 X)</strong>다. 챔피언은 forward 성과로 자동 선정(unattended · 하방 우선), 현재 R1 이 SHADOW fallback. 자동 주문 없음 — 사람이 청산한다.</p>
+
+  <!-- ▼ v-next 운영 그림: champion/challenger + 매일 시간표 (2026-06-01) -->
+  <div class="two-col" style="margin-bottom:2rem; align-items:stretch;">
+    <!-- 박스 ① champion/challenger 운영 방식 -->
+    <div class="layer-card" style="border-top-color: var(--amber);">
+      <div class="layer-num">UNATTENDED · 자동 선정</div>
+      <div class="layer-title">champion / challenger — 어떻게 굴러가나</div>
+      <div class="card-text">
+        여러 모델(R1 open · R1 pre-open · distribution)이 매일 <strong>shadow 로 동시 실행</strong> → 다음날 −3%SL/+5%TP 로 청산해 <strong>forward 성과를 적립</strong>한다.<br>
+        <code class="c">ops/champion_selector.py</code> 가 <strong>하방 우선</strong>으로 자동 채점 — 1순위 P(≤−5%)↓, 2순위 net(0.15% 차감)↑, 3순위 hit↑.<br>
+        교체 = 게이트(<strong>forward 30거래일</strong> + leak-free) 통과 + 히스테리시스(챌린저가 <strong>연속 5거래일</strong> 마진 이상 우위 → flip-flop 방지) 일 때만. 교체 시 <strong>텔레그램 1줄 통보</strong>.<br>
+        <strong>챔피언만 발송</strong>한다. 지금은 forward 30거래일 미달이라 R1 이 <strong>SHADOW fallback 챔피언</strong>(백테스트-최선).
+      </div>
+    </div>
+    <!-- 박스 ② 매일 시간표 -->
+    <div class="layer-card" style="border-top-color: var(--green);">
+      <div class="layer-num">매일 · KST · 무인</div>
+      <div class="layer-title">하루 시간표 (08:50 → 10:10)</div>
+      <div class="card-text">
+        <strong>08:50</strong>&nbsp; R1 <strong>예고</strong> 발송 (진입가 09:00 확정)<br>
+        <strong>09:05</strong>&nbsp; R1 <strong>확정</strong> 발송 + shadow ledger 기록<br>
+        <strong>09:30</strong>&nbsp; 전일 청산(−3%SL/+5%TP) + <strong>champion 재선정</strong><br>
+        <strong>10:05</strong>&nbsp; pre-open ledger 청산<br>
+        <strong>10:10</strong>&nbsp; 대시보드 + 챔피언 리더보드 publish<br>
+        <span style="color:var(--text-muted);">+ 04:00 DB 백업 · 10:30 heartbeat — 총 <strong>systemd 7 timer</strong>. stale DB 면 freshness 게이트가 발송을 막는다.</span>
+      </div>
+    </div>
+  </div>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--blue);">
-      <div class="layer-num">ACTIVE · PROMOTE_PAPER</div>
+      <div class="layer-num">PROMOTE_PAPER · record-only</div>
       <div class="layer-title">Distribution Beta v1</div>
       <div class="card-text">
         <strong>Heads:</strong> 3 binary (h2 / h6 / h5)<br>
         <strong>피처:</strong> 47 (Daily + BTC regime z-scores)<br>
         <strong>Setup:</strong> S01-S03 primary + S04 BTC bull context<br>
-        <strong>발사:</strong> 09:05 KST · 진입가 + decile 표시<br>
+        <strong>기록:</strong> 09:05 record-only · 발송은 R1 레이더<br>
         <strong>Calibration:</strong> bucket decile 10 등분
       </div>
     </div>
@@ -1438,16 +1482,16 @@
   </div>
 
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val blue">ACTIVE</span><div class="metric-label">distribution 정책</div><div class="metric-sub">PROMOTE_PAPER<br>09:05 KST live</div></div>
-    <div class="metric-card"><span class="metric-val neutral">DEMOTED</span><div class="metric-label">preopen 정책</div><div class="metric-sub">WATCH_ONLY / shadow<br>observed -40.8%</div></div>
-    <div class="metric-card"><span class="metric-val amber">SHADOW</span><div class="metric-label">분포+하방 스캐너</div><div class="metric-sub">signals/recommend.py<br>top-3+분포 기록만</div></div>
+    <div class="metric-card"><span class="metric-val blue">R1 레이더</span><div class="metric-label">텔레그램 발송</div><div class="metric-sub">08:50 예고 + 09:05 확정<br>챔피언만 발송</div></div>
+    <div class="metric-card"><span class="metric-val neutral">DEMOTED</span><div class="metric-label">구 preopen 모델</div><div class="metric-sub">WATCH_ONLY / record-only<br>observed -40.8%</div></div>
+    <div class="metric-card"><span class="metric-val amber">SHADOW</span><div class="metric-label">분포+하방 스캐너</div><div class="metric-sub">signals/recommend.py<br>R1 레이더로 발송중</div></div>
     <div class="metric-card"><span class="metric-val pos">-3% / +5%</span><div class="metric-label">위험 정책</div><div class="metric-sub">SL / TP<br>하방 위험 최소화</div></div>
   </div>
 
   <div class="callout">
     <p>
-      <strong>신규 SHADOW 채널:</strong>
-      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 기록한다. 아직 텔레그램 · cron 에 연결하지 않은 검증 단계 — forward 표본을 모아 PROMOTE 여부를 판단한다.
+      <strong>SHADOW 채널 (라이브 연결됨):</strong>
+      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 발사한다. <strong>이제 R1 레이더로 08:50/09:05 텔레그램 + systemd 7-timer 에 연결됨</strong> — SHADOW(검증중)로 forward 표본을 모아 PROMOTE 여부를 판단한다.
     </p>
     <p style="margin-top:0.7rem;">
       <strong>운영 원칙 유지:</strong>
