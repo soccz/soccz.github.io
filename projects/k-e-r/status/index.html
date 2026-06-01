@@ -149,14 +149,23 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
 <div class="page-hero">
   <span class="doc-tag">System Health</span>
   <h1>Status</h1>
-  <p class="subtitle">자동 실행 결과 + validator 부분 통과 섹션 추적.</p>
+  <p class="subtitle">자동 실행 결과 + PERIOD 발행률 + validator 부분 통과 섹션 추적.</p>
 </div>
 
 <div class="container" style="margin-top:32px">
-  <h2 style="font-size:14px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:14px;">최근 자동 실행</h2>
+  <h2 style="font-size:14px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:14px;">PERIOD 발행률 (24종목 기준)</h2>
+  <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">
+    "진행X" 또는 정체 시 코드 버그 가능성 (DART 매치 fail 등). 사이트 첫 페이지에서 즉시 인지.
+  </p>
+  <table class="status-table">
+    <thead><tr><th>상태</th><th>PERIOD</th><th>발행</th><th>마감일</th></tr></thead>
+    <tbody><tr><td class="status-cell"><span class="stat-ok">●</span> 완성</td><td><strong>2025-annual</strong></td><td>24/24 (100%)</td><td class="status-detail">마감 2026-03-31</td></tr><tr><td class="status-cell"><span class="stat-fail">●</span> 진행X</td><td><strong>2026-q1</strong></td><td>0/24 (0%)</td><td class="status-detail">마감 2026-05-15</td></tr><tr><td class="status-cell"><span class="stat-flat">●</span> 대기</td><td><strong>2026-h1</strong></td><td>0/24 (0%)</td><td class="status-detail">마감 2026-08-14</td></tr><tr><td class="status-cell"><span class="stat-flat">●</span> 대기</td><td><strong>2026-q3</strong></td><td>0/24 (0%)</td><td class="status-detail">마감 2026-11-14</td></tr><tr><td class="status-cell"><span class="stat-flat">●</span> 대기</td><td><strong>2026-annual</strong></td><td>0/24 (0%)</td><td class="status-detail">마감 2027-03-31</td></tr><tr><td class="status-cell"><span class="stat-flat">●</span> 대기</td><td><strong>2027-q1</strong></td><td>0/24 (0%)</td><td class="status-detail">마감 2027-05-15</td></tr></tbody>
+  </table>
+
+  <h2 style="font-size:14px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin:40px 0 14px;">최근 자동 실행</h2>
   <table class="status-table">
     <thead><tr><th>상태</th><th>Timer</th><th>마지막 실행</th><th>상세</th></tr></thead>
-    <tbody><tr><td class="status-cell"><span class="stat-ok">●</span> ok</td><td>daily</td><td><code>2026-06-01T16:05:08+0900</code></td><td class="status-detail">trigger_hits=0</td></tr><tr><td class="status-cell"><span class="stat-ok">●</span> ok</td><td>publish_site</td><td><code>2026-06-01T16:05:06+0900</code></td><td class="status-detail"></td></tr><tr><td class="status-cell"><span class="stat-fail">●</span> fail</td><td>weekday</td><td><code>2026-05-31T23:22:56+0900</code></td><td class="status-detail">ticker=005930, period=2026-q1, rc=1</td></tr><tr><td class="status-cell"><span class="stat-ok">●</span> ok</td><td>weekend</td><td><code>2026-05-31T21:03:17+0900</code></td><td class="status-detail"></td></tr></tbody>
+    <tbody><tr><td class="status-cell"><span class="stat-ok">●</span> ok</td><td>daily</td><td><code>2026-06-01T16:05:08+0900</code></td><td class="status-detail">trigger_hits=0</td></tr><tr><td class="status-cell"><span class="stat-ok">●</span> ok</td><td>publish_site</td><td><code>2026-06-01T18:02:28+0900</code></td><td class="status-detail"></td></tr><tr><td class="status-cell"><span class="stat-fail">●</span> fail</td><td>weekday</td><td><code>2026-05-31T23:22:56+0900</code></td><td class="status-detail">ticker=005930, period=2026-q1, rc=1</td></tr><tr><td class="status-cell"><span class="stat-ok">●</span> ok</td><td>weekend</td><td><code>2026-05-31T21:03:17+0900</code></td><td class="status-detail"></td></tr></tbody>
   </table>
 
   <h2 style="font-size:14px; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin:40px 0 14px;">Best-effort 섹션 (수동 review 권장)</h2>
@@ -171,7 +180,7 @@ a:hover { color: var(--accent-hover); text-decoration: underline; text-underline
   </div>
   <footer class="site-footer">
     <p>K_E_R · DART 기반 자동 생성 · 출처 검증 + 추론 명시 + XBRL ground truth</p>
-    <p style="margin-top:6px">생성: 2026-06-01 18:02 </p>
+    <p style="margin-top:6px">생성: 2026-06-01 22:39 </p>
   </footer>
   <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="맨 위로">↑</button>
   <script>
