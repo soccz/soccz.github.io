@@ -590,6 +590,17 @@
         <canvas id="chartRegimeBaserate"></canvas>
       </div>
     </div>
+
+    <!-- ⑦ champion/challenger 리더보드 (forward 하방-우선 성과 + 현 champion) -->
+    <div class="chart-wrap" style="margin-top:2rem">
+      <div class="chart-title">⑦ champion / challenger 리더보드</div>
+      <div class="chart-subtitle" id="leaderboardNote">
+        하방-우선 자동선정(unattended) — forward CLOSED 거래일로 평가. ★현 champion 표시.
+      </div>
+      <div id="championLeaderboard" style="overflow-x:auto">
+        <div class="loading-state">loading…</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2802,6 +2813,49 @@ function renderFindings(findings) {
   renderBacktestPumps(findings.backtest_pumps);
   renderPrecursorLift(findings.precursor_lift);
   renderRegimeBaserate(findings.regime_baserate);
+  renderChampionLeaderboard(findings.champion_leaderboard);
+}
+
+// ⑦ champion/challenger 리더보드 — forward 하방-우선 성과 표 + 현 champion 마킹.
+function renderChampionLeaderboard(lb) {
+  const el = document.getElementById('championLeaderboard');
+  if (!el) return;
+  if (!lb || !lb.rows || !lb.rows.length) {
+    el.innerHTML = '<div class="loading-state">리더보드 데이터 없음</div>';
+    return;
+  }
+  const noteEl = document.getElementById('leaderboardNote');
+  if (noteEl && lb.note) noteEl.textContent = lb.note;
+  const fmt = (v, suf) => (v === null || v === undefined) ? '—' : (v + (suf || ''));
+  const champOpen = (lb.current_champion && lb.current_champion.open) || null;
+  const champPre = (lb.current_champion && lb.current_champion.preopen) || null;
+  let html = '<table style="width:100%;border-collapse:collapse;font-size:0.85rem;font-family:' + MONO + '">';
+  html += '<thead><tr style="text-align:right;border-bottom:1px solid rgba(255,255,255,0.2)">'
+        + '<th style="text-align:left;padding:6px 8px">모델</th>'
+        + '<th style="padding:6px 8px">slots</th>'
+        + '<th style="padding:6px 8px">forward 거래일</th>'
+        + '<th style="padding:6px 8px">P(≤-5%)</th>'
+        + '<th style="padding:6px 8px">net (비용차감)</th>'
+        + '<th style="padding:6px 8px">hit</th>'
+        + '<th style="padding:6px 8px">gate</th></tr></thead><tbody>';
+  lb.rows.forEach(r => {
+    const isChamp = (r.is_champion_slots && r.is_champion_slots.length) > 0;
+    const star = isChamp ? ' ★champion' : (r.challenger_only ? ' (challenger)' : '');
+    const rowStyle = isChamp ? 'background:rgba(120,200,140,0.10);font-weight:600' : '';
+    html += '<tr style="text-align:right;border-bottom:1px solid rgba(255,255,255,0.06);' + rowStyle + '">'
+          + '<td style="text-align:left;padding:6px 8px">' + r.model_id + star + '</td>'
+          + '<td style="padding:6px 8px">' + (r.slots || []).join('/') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.n_days) + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.deep_loss_freq_pct, '%') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.net_mean_pct, '%') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.hit_rate_pct, '%') + '</td>'
+          + '<td style="padding:6px 8px">' + (r.gate_pass ? 'PASS' : '—') + '</td></tr>';
+  });
+  html += '</tbody></table>';
+  html += '<div class="chart-subtitle" style="margin-top:8px">현 champion — open: <b>'
+        + (champOpen || '—') + '</b> · preopen: <b>' + (champPre || '—')
+        + '</b> · 게이트 미달 시 R1 SHADOW fallback</div>';
+  el.innerHTML = html;
 }
 
 // ① 상승 확률분포 곡선 — base rate vs 선행 top-decile (magnitude decay)
