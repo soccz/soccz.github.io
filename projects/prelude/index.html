@@ -1435,10 +1435,10 @@
       <div class="layer-num">UNATTENDED · 자동 선정</div>
       <div class="layer-title">champion / challenger — 어떻게 굴러가나</div>
       <div class="card-text">
-        여러 모델(R1 open · R1 pre-open · distribution)이 매일 <strong>shadow 로 동시 실행</strong> → 다음날 −3%SL/+5%TP 로 청산해 <strong>forward 성과를 적립</strong>한다.<br>
+        <strong>챔피언 R1</strong> + <strong>챌린저 3</strong>(R2 하방패널티 · A1 sustainability · 구 distribution)가 매일 <strong>shadow 로 동시 실행</strong> → 다음날 −3%SL/+5%TP 로 청산해 <strong>forward 성과를 적립</strong>한다.<br>
         <code class="c">ops/champion_selector.py</code> 가 <strong>하방 우선</strong>으로 자동 채점 — 1순위 P(≤−5%)↓, 2순위 net(0.15% 차감)↑, 3순위 hit↑.<br>
-        교체 = 게이트(<strong>forward 30거래일</strong> + leak-free) 통과 + 히스테리시스(챌린저가 <strong>연속 5거래일</strong> 마진 이상 우위 → flip-flop 방지) 일 때만. 교체 시 <strong>텔레그램 1줄 통보</strong>.<br>
-        <strong>챔피언만 발송</strong>한다. 지금은 forward 30거래일 미달이라 R1 이 <strong>SHADOW fallback 챔피언</strong>(백테스트-최선).
+        교체 게이트 = forward 30거래일 + leak-free + 히스테리시스(연속 5거래일 마진 우위 → flip-flop 방지).<br>
+        <strong>챔피언만 발송</strong>한다. 현재 챌린저는 전부 <code class="c">challenger_only</code>(발송 절대 X, forward 비교·리더보드용) — 승급은 사람이 명시할 때만. 그래서 <strong>발송은 항상 R1 단일</strong> 보장.
       </div>
     </div>
     <!-- 박스 ② 매일 시간표 -->
@@ -1454,6 +1454,12 @@
         <span style="color:var(--text-muted);">+ 04:00 DB 백업 · 10:30 heartbeat — 총 <strong>systemd 7 timer</strong>. stale DB 면 freshness 게이트가 발송을 막는다.</span>
       </div>
     </div>
+  </div>
+
+  <!-- 연구 결론: 12실험 exhaustive (2026-06-01) -->
+  <div class="callout warn" style="margin-bottom:2rem;">
+    <p><strong>연구 결론 (2026-06-01 · 12실험 exhaustive):</strong> 챔피언/챌린저로 <em>net 흑자</em> 모델을 찾으려 <strong>후처리 5축</strong>(랭킹 R2 · 청산 6룰 · 진입필터 A1 · regime · 발사 · 멀티데이 홀딩) + <strong>새 신호</strong>(sustained 라벨 · dip-buy) + <strong>R1 엔진 sweep</strong>까지 12개 가설을 OOS·net(0.15% 차감)·거래일블록 bootstrap 으로 검증했다. <strong>net-positive 는 단 하나도 없었다</strong> — 전부 leak 4/4 PASS, R1 byte-재현 negative control. 이 데이터(업비트 KRW 일봉 · 1일 청산)에서 net 흑자는 <strong>구조적으로 도달불가</strong>가 통계적으로 확정됐다(어느 lever 든 하방을 줄이면 변동성=상방이 같이 깎임). 멀티데이로 천장을 풀자 손실꼬리가 오히려 더 깊어졌다(deep-loss 33%·worst −63%).</p>
+    <p style="margin-top:0.7rem;"><strong>재현되는 유일한 lever = 하방규율.</strong> A1(sustainability)이 deep-loss 를 <strong>13.5% → 6.0%</strong>(bootstrap 유의)로 절반 낮춰 사용자 1순위(하락위험 최소화)에 부합 — SHADOW 로 forward 검증 중. 결론: 이 시스템은 <strong>자동 수익기가 아니라 하방-규율 추천 레이더</strong>다. 진입엣지(base 대비 ~6배 농축 · 큰 펌프 포착)는 진짜지만 <strong>수익은 사용자의 진입/청산 판단이 결정</strong>한다. net 흑자를 노리려면 데이터/타임프레임 자체(인트라데이 · 선물 · 더 긴 보유)를 바꾸는 별도 연구가 필요.</p>
   </div>
 
   <div class="two-col" style="margin-bottom:2rem;">
