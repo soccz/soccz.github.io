@@ -601,6 +601,17 @@
         <div class="loading-state">loading…</div>
       </div>
     </div>
+
+    <!-- ⑧ model + send-policy competition (forward CLOSED + pump recall) -->
+    <div class="chart-wrap" style="margin-top:1rem">
+      <div class="chart-title">⑧ model + send-policy competition</div>
+      <div class="chart-subtitle" id="policyCompetitionNote">
+        CLOSED forward row 로 모델과 발송정책을 같이 평가 — 텔레그램 승격 전 record-only 감사.
+      </div>
+      <div id="policyCompetition" style="overflow-x:auto">
+        <div class="loading-state">loading…</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2814,6 +2825,7 @@ function renderFindings(findings) {
   renderPrecursorLift(findings.precursor_lift);
   renderRegimeBaserate(findings.regime_baserate);
   renderChampionLeaderboard(findings.champion_leaderboard);
+  renderPolicyCompetition(findings.policy_competition);
 }
 
 // ⑦ champion/challenger 리더보드 — forward 하방-우선 성과 표 + 현 champion 마킹.
@@ -2855,6 +2867,54 @@ function renderChampionLeaderboard(lb) {
   html += '<div class="chart-subtitle" style="margin-top:8px">현 champion — open: <b>'
         + (champOpen || '—') + '</b> · preopen: <b>' + (champPre || '—')
         + '</b> · 게이트 미달 시 R1 SHADOW fallback</div>';
+  el.innerHTML = html;
+}
+
+function renderPolicyCompetition(pc) {
+  const el = document.getElementById('policyCompetition');
+  if (!el) return;
+  if (!pc || !pc.rows || !pc.rows.length) {
+    el.innerHTML = '<div class="loading-state">policy competition 데이터 없음</div>';
+    return;
+  }
+  const noteEl = document.getElementById('policyCompetitionNote');
+  if (noteEl && pc.note) noteEl.textContent = pc.note;
+  const fmt = (v, suf) => (v === null || v === undefined) ? '—' : (v + (suf || ''));
+  const best = pc.best_pump_recall || {};
+  let html = '<table style="width:100%;border-collapse:collapse;font-size:0.84rem;font-family:' + MONO + '">';
+  html += '<thead><tr style="text-align:right;border-bottom:1px solid rgba(255,255,255,0.2)">'
+        + '<th style="text-align:left;padding:6px 8px">participant</th>'
+        + '<th style="padding:6px 8px">objective</th>'
+        + '<th style="padding:6px 8px">closed</th>'
+        + '<th style="padding:6px 8px">days</th>'
+        + '<th style="padding:6px 8px">net avg</th>'
+        + '<th style="padding:6px 8px">deep loss</th>'
+        + '<th style="padding:6px 8px">pump precision</th>'
+        + '<th style="padding:6px 8px">pump recall</th>'
+        + '<th style="padding:6px 8px">captured</th></tr></thead><tbody>';
+  pc.rows.slice(0, 16).forEach(r => {
+    const isBest = r.participant_id === best.participant_id;
+    const rowStyle = isBest ? 'background:rgba(37,99,235,0.08);font-weight:600' : '';
+    html += '<tr style="text-align:right;border-bottom:1px solid rgba(255,255,255,0.06);' + rowStyle + '">'
+          + '<td style="text-align:left;padding:6px 8px">' + r.participant_id + (isBest ? ' ★pump-recall' : '') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.objective) + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.n_closed) + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.n_days) + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.net_mean_pct, '%') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.deep_loss_freq_pct, '%') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.pump20_precision_pct, '%') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.pump20_recall_pct, '%') + '</td>'
+          + '<td style="padding:6px 8px">' + fmt(r.pump20_captured) + '/' + fmt(r.pump20_actual) + '</td></tr>';
+  });
+  html += '</tbody></table>';
+  const db = pc.database || {};
+  html += '<div class="chart-subtitle" style="margin-top:8px">asof: <b>' + (pc.asof || '—')
+        + '</b> · DB latest: <b>' + (db.latest_asof || '—')
+        + '</b> · best pump recall: <b>' + (best.participant_id || '—')
+        + '</b></div>';
+  if (pc.diagnosis && pc.diagnosis.message) {
+    html += '<div class="chart-subtitle" style="margin-top:4px">' + pc.diagnosis.message + '</div>';
+  }
   el.innerHTML = html;
 }
 
