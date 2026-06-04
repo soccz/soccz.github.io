@@ -239,6 +239,58 @@
     .strat-table tr:last-child td { border-bottom: 0; }
     .strat-table td[title] { cursor: help; }
 
+    /* Idea expansion banner */
+    .idea-expansion-banner {
+      display: inline-flex; flex-direction: column; gap: 0.45rem; max-width: 760px;
+      margin: 1rem auto 1.6rem; padding: 0.8rem 1.1rem;
+      background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.22);
+      border-radius: 8px; text-align: left;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.6;
+    }
+    .idea-expansion-banner .banner-tag {
+      font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #2563eb; font-weight: 700;
+    }
+    .idea-expansion-banner .banner-text { color: var(--text-secondary); }
+    .idea-expansion-banner .banner-text a { color: #2563eb; text-decoration: underline; }
+
+    /* PUMP hunter section */
+    .pump-badge {
+      display: inline-block; margin-left: 0.5rem; padding: 0.15rem 0.55rem;
+      background: rgba(180,121,9,0.13); color: var(--amber, #b45309);
+      border: 1px solid rgba(180,121,9,0.25);
+      border-radius: 99px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700;
+      vertical-align: middle;
+    }
+    .pump-stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.7rem; margin: 0.9rem 0 1.2rem;
+    }
+    .pump-stats .ps-cell {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.7rem 0.9rem;
+      display: flex; flex-direction: column; gap: 0.2rem;
+    }
+    .pump-stats .ps-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.66rem;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);
+    }
+    .pump-stats .ps-val {
+      font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700;
+      color: var(--text-primary);
+    }
+    .pump-h {
+      font-family: 'Noto Serif KR', serif; font-size: 0.95rem; font-weight: 700;
+      margin: 1.4rem 0 0.6rem;
+    }
+    .pump-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; }
+    .pump-table th, .pump-table td { padding: 0.45rem 0.7rem; border-bottom: 1px solid var(--border); text-align: right; }
+    .pump-table th { background: var(--bg-secondary); font-weight: 700; color: var(--text-secondary); font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .pump-table th:first-child, .pump-table td:first-child { text-align: left; }
+    .pump-table td.coin { font-weight: 700; color: var(--text-primary); }
+    .pump-table .rule-id { color: var(--text-muted); font-size: 0.72rem; }
+
     /* Policy evolution timeline */
     .policy-timeline-wrap { width: 100%; overflow-x: auto; margin: 0 auto 1.4rem; padding: 0.4rem 0; -webkit-overflow-scrolling: touch; }
     .policy-timeline-wrap svg { min-width: 720px; height: auto; }
@@ -514,9 +566,18 @@
     <span class="hero-label">PRELUDE LIVE DASHBOARD · 회고 · 누적</span>
     <h1>어제 샀으면 어땠나.</h1>
     <p class="hero-sub">
-      08:55 pre-open trigger + 09:05 distribution beta 의 모든 알림을 매일 가격 결과와 함께 누적.<br>
-      가상 진입 룰 (5% TP / EOD close, 비용 0.15% 차감) 기준 사후 PnL · rolling hit rate · 알림 히스토리.
+      08:50 pre-open + 09:05 distribution + 2026-06-04 신규 PUMP hunter SHADOW.<br>
+      매일 가격 결과 누적 — 가상 진입 룰 (5% TP / EOD close, 0.15% 비용 차감) 기준 사후 PnL · rolling hit rate · 알림 히스토리. <em>자동 매매 없음 — 사용자 직접 판단.</em>
     </p>
+    <div class="idea-expansion-banner" role="note" aria-label="아이디어 확장 안내">
+      <span class="banner-tag">아이디어 확장 · 2026-06-04</span>
+      <span class="banner-text">
+        기존 R1/R2/A1 의 +20% capture 0% 천장 진단 → 별도 <strong>PUMP detector</strong>
+        (shadow only · 매일 15 watchlist · ACTIVE 승격 코드 차단) + model × send-policy
+        25 조합 record-only 감사 추가. 아래 <a href="#policyCompetition">⑧ competition</a> /
+        <a href="#pumpHunterSection">⑨ PUMP hunter</a> 참고.
+      </span>
+    </div>
     <div class="hero-stats" id="heroStats">
       <div class="hero-stat"><span class="hero-stat-num" id="statTotal">—</span><span class="hero-stat-label">총 알림</span></div>
       <div class="hero-stat"><span class="hero-stat-num" id="statClosed">—</span><span class="hero-stat-label">closed</span></div>
@@ -610,6 +671,30 @@
       </div>
       <div id="policyCompetition" style="overflow-x:auto">
         <div class="loading-state">loading…</div>
+      </div>
+    </div>
+
+    <!-- ⑨ PUMP hunter SHADOW (2026-06-04 신규) -->
+    <div class="chart-wrap" id="pumpHunterSection" style="margin-top:1.4rem">
+      <div class="chart-title">⑨ PUMP hunter SHADOW <span class="pump-badge">shadow only</span></div>
+      <div class="chart-subtitle" id="pumpHunterNote">
+        pump_rule_discovery 의 D-1 leak-free rule (roc_7d_rank &gt; 0.85 + ATR/momentum gate) 을 daily detector 로 배선.
+        매일 max 20 후보 watchlist 를 shadow_ledger 에만 기록 — Telegram/ACTIVE 승격 코드 레벨 차단.
+        충분한 forward 표본 + evaluator 판정 + 사용자 컨펌 전까지 record-only.
+      </div>
+      <div class="pump-stats" id="pumpHunterStats">
+        <div class="ps-cell"><span class="ps-label">latest</span><span class="ps-val" id="pumpLatestDate">—</span></div>
+        <div class="ps-cell"><span class="ps-label">rows total</span><span class="ps-val" id="pumpRowsTotal">—</span></div>
+        <div class="ps-cell"><span class="ps-label">closed</span><span class="ps-val" id="pumpRowsClosed">—</span></div>
+        <div class="ps-cell"><span class="ps-label">+20% capture</span><span class="ps-val" id="pumpCapturePct">—</span></div>
+      </div>
+      <h4 class="pump-h">오늘의 watchlist (Telegram 발송 X)</h4>
+      <div id="pumpWatchlist" style="overflow-x:auto">
+        <div class="loading-state">loading…</div>
+      </div>
+      <h4 class="pump-h">일별 capture — pump_hunter 의 매일 +20% 적중 비율</h4>
+      <div class="chart-wrap" style="margin:0">
+        <canvas id="chartPumpDaily" style="max-height:240px"></canvas>
       </div>
     </div>
   </div>
@@ -2918,6 +3003,92 @@ function renderPolicyCompetition(pc) {
   el.innerHTML = html;
 }
 
+/* ───────── PUMP hunter SHADOW (2026-06-04) ───────── */
+function renderPumpHunter(ph) {
+  const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const wlEl = document.getElementById('pumpWatchlist');
+  const noteEl = document.getElementById('pumpHunterNote');
+
+  if (!ph || ph.status === 'pending_first_cron') {
+    setText('pumpLatestDate', '—');
+    setText('pumpRowsTotal', '0');
+    setText('pumpRowsClosed', '0');
+    setText('pumpCapturePct', '—');
+    if (wlEl) wlEl.innerHTML = '<div class="loading-state">pump_hunter ledger 아직 생성 전 — 내일 09:05 cron 후 첫 row 표시</div>';
+    if (noteEl && ph?.note) noteEl.textContent = noteEl.textContent + ' · ' + ph.note;
+    Chart.getChart(document.getElementById('chartPumpDaily'))?.destroy();
+    return;
+  }
+  if (ph.status === 'empty') {
+    setText('pumpLatestDate', '—');
+    setText('pumpRowsTotal', '0');
+    setText('pumpRowsClosed', '0');
+    setText('pumpCapturePct', '—');
+    if (wlEl) wlEl.innerHTML = '<div class="loading-state">ledger 가 비어 있음</div>';
+    return;
+  }
+  setText('pumpLatestDate', ph.latest_date || '—');
+  setText('pumpRowsTotal', String(ph.rows_total ?? '—'));
+  setText('pumpRowsClosed', String(ph.rows_closed ?? '—'));
+  setText('pumpCapturePct', ph.pump20_capture_pct != null
+    ? fmt(ph.pump20_capture_pct, 1) + '%'
+    : '— (closed 대기)');
+
+  // 오늘의 watchlist 표
+  if (wlEl) {
+    const rows = ph.watchlist || [];
+    if (!rows.length) {
+      wlEl.innerHTML = '<div class="loading-state">오늘 후보 없음 (rule fire 0)</div>';
+    } else {
+      const head = '<thead><tr>'
+        + '<th>rank</th><th>coin</th><th>score</th><th>pump_prob</th>'
+        + '<th>roc_7d_rank</th><th>atr_pct_14</th><th>log_ret_1d</th>'
+        + '<th>rule</th><th>status</th></tr></thead>';
+      const body = rows.map(r => '<tr>'
+        + `<td>${r.rank ?? '—'}</td>`
+        + `<td class="coin">${escapeHtml(r.coin || '—')}</td>`
+        + `<td>${r.score != null ? fmt(r.score, 4) : '—'}</td>`
+        + `<td>${r.pump_prob_pct != null ? fmt(r.pump_prob_pct, 2) + '%' : '—'}</td>`
+        + `<td>${r.roc_7d_rank != null ? fmt(r.roc_7d_rank, 3) : '—'}</td>`
+        + `<td>${r.atr_pct_14 != null ? fmt(r.atr_pct_14, 4) : '—'}</td>`
+        + `<td>${r.log_return_1d != null ? fmt(r.log_return_1d, 4) : '—'}</td>`
+        + `<td class="rule-id" title="${escapeHtml(r.rule_id || '')}">${escapeHtml((r.rule_id || '').slice(0, 30))}</td>`
+        + `<td>${escapeHtml(r.status || '—')}</td></tr>`).join('');
+      wlEl.innerHTML = `<table class="pump-table">${head}<tbody>${body}</tbody></table>`;
+    }
+  }
+
+  // 일별 capture 시계열
+  const ctx = document.getElementById('chartPumpDaily');
+  Chart.getChart(ctx)?.destroy();
+  const daily = ph.daily_capture || [];
+  if (ctx && daily.length) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: daily.map(d => d.date),
+        datasets: [
+          { label: 'picks (n)', data: daily.map(d => d.n_picks), backgroundColor: '#a8a29e88', borderWidth: 0, yAxisID: 'y1' },
+          { label: '+20% hit (n)', data: daily.map(d => d.n_pump20_hit), backgroundColor: '#16a34acc', borderWidth: 0, yAxisID: 'y1' },
+          { label: 'capture %', type: 'line', data: daily.map(d => d.capture_pct), borderColor: '#2563eb', backgroundColor: '#2563eb22', borderWidth: 1.8, pointRadius: 2.5, tension: 0.2, fill: false, yAxisID: 'y2' },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top', align: 'end', labels: { font: { family: "'JetBrains Mono', monospace", size: 11 } } },
+          tooltip: { callbacks: { label: c => `${c.dataset.label}: ${typeof c.parsed.y === 'number' ? fmt(c.parsed.y, 1) : c.parsed.y}` } },
+        },
+        scales: {
+          y1: { type: 'linear', position: 'left', ticks: { font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { color: COLORS.border } },
+          y2: { type: 'linear', position: 'right', ticks: { callback: v => v + '%', font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false }, suggestedMin: 0, suggestedMax: 100 },
+          x: { ticks: { maxTicksLimit: 12, autoSkip: true, font: { family: "'JetBrains Mono', monospace", size: 10 } }, grid: { display: false } },
+        },
+      },
+    });
+  }
+}
+
 // ① 상승 확률분포 곡선 — base rate vs 선행 top-decile (magnitude decay)
 function renderMagnitudeCurve(m) {
   const ctx = document.getElementById('chartMagnitudeCurve');
@@ -3346,6 +3517,8 @@ window.addEventListener('scroll', () => {
     renderMetaCoefficients(summary);
     renderIdeaPnl(summary);
     renderPolicyReplayBar(summary);
+    // PUMP hunter SHADOW (2026-06-04)
+    renderPumpHunter(summary.pump_hunter);
     attachSort();
     attachFilters();
     renderHistory();
