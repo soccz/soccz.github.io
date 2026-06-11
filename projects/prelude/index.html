@@ -633,6 +633,98 @@
 </div></section>
 <hr class="divider">
 
+<!-- ═══════════ 검증 사슬 · 2026-06-04 → 06-11 ═══════════ -->
+<section id="validation-chain"><div class="container fade-in">
+  <div class="section-label">Adversarial Validation Chain · 2026-06-04 → 06-11</div>
+  <h2 class="section-title">검증 사슬 — 가짜 양수를 죽이고 진짜 엣지만 내보내는 구조</h2>
+  <p class="section-desc">
+    12실험 천장 확정 후의 질문은 "더 좋은 모델" 이 아니라 <strong>"무엇을 믿어도 되는가"</strong> 였다.
+    그래서 단일 백테스트 대신 <strong>3단 적대 사슬</strong>을 만들었다:
+    <strong>researcher</strong>(가설·룰 채굴) → <strong>evaluator</strong>(적대 감사 — 부수는 게 목적)
+    → <strong>15m 실경로 재계산</strong>(일봉 근사 금지). 이 사슬이 1주 사이에 가설 4개를 처리했고,
+    그 중 1개에서 가짜 양수를 적발했으며, 살아남은 hit 엣지 1개만 텔레그램에 도달했다.
+  </p>
+
+  <!-- 사슬이 실제로 작동한 사건 -->
+  <div class="callout fail">
+    <p><strong>사슬이 작동한 사건 — "+1.24%" 적발 (Binance lead-lag)</strong></p>
+    <p style="margin-top:0.6rem;">
+      researcher 가 이 프로젝트 최초의 양수 net 을 보고했다: Upbit 7d 모멘텀 + <strong>Binance D-1 거래량 surge</strong>
+      융합 룰이 lift 4.34×(5/5 fold) + <strong>net +1.24%/trade</strong>. 들뜨기 전에 evaluator 를 붙였다.
+      판정: <strong>net 은 환상</strong> — 일봉 근사 시뮬이 low 를 안 보고 SL 을 "바닥"으로만 적용해
+      (종가 −5.9% 인 날을 −3% 로 기록) 이중 낙관. 정직한 종가청산 net 은 −0.05%.
+      이어서 15m 실경로로 재계산: 전기간 −0.11%(CI 0 포함) → Binance DB 갱신 후
+      <strong>최근 7개월 순수 OOS −0.36%(CI 0 제외)</strong>. 양수는 죽었다.
+      <strong>그러나 hit 는 살았다</strong>: pump20 적중 8.1% vs baseline 5.6% vs base 1.4% — 전 fold·전 기간 일관.
+    </p>
+    <span class="badge badge-fail">"+1.24%" = 시뮬 낙관 편향</span>
+    <span class="badge badge-ok">hit 8.1% (base 6×) 생존</span>
+    <span class="badge badge-pivot">net 추정은 15m 실경로만 신뢰</span>
+  </div>
+
+  <!-- exit lab 이론 -->
+  <div class="callout win">
+    <p><strong>exit lab — 청산 논쟁을 가정이 아니라 병렬 기록으로 결판</strong></p>
+    <p style="margin-top:0.6rem;">
+      "진짜 lever 는 청산" 진단 이후에도 어느 청산이 맞는지는 백테스트마다 답이 달랐다
+      (bear_quiet 연구는 TP+10%/SL없음이 유일 양수라 했다). 그래서 <strong>같은 15m 경로에
+      청산 잣대 7개를 매일 병렬 가상 평가</strong>해 ledger 에 나란히 기록한다 — noSL 3종 + 비대칭 bracket 3종 + EOD.
+      라이브 192 픽 소급 결과가 백테스트를 뒤집었다: <strong>noSL 군 전부 악화</strong>
+      (pump_hunter −1.26% → −3.72%, deep-loss 0 → 37건). 라이브 진입 집합에선 SL 이 하방을 지키고 있었고,
+      gradient 는 오히려 <strong>더 타이트한 SL</strong>(tp5_sl2 −0.91%, 현행 대비 +0.35pp) 쪽.
+      이제 어느 잣대를 채택할지는 누적되는 forward 데이터가 결정한다 — 사람이 백테스트로 다투지 않는다.
+    </p>
+    <span class="badge badge-fail">백테스트 최적(noSL) 라이브 비전이</span>
+    <span class="badge badge-ok">tp5_sl2 개선 후보 (+0.35pp)</span>
+    <span class="badge badge-blue">7 잣대 매일 자동 기록</span>
+  </div>
+
+  <!-- 3 연구 판정 표 -->
+  <div class="table-wrap" style="margin:1.6rem 0;">
+    <table>
+      <thead><tr><th>가설 (1주 · 3 연구)</th><th>방법</th><th>결과</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>cold-start 장중 포착</strong><br><span style="color:var(--text-muted);">첫 15~60분 미세동학으로 D-1 모멘텀 없는 펌프(6/7)를 당일 포착</span></td>
+          <td>15m bar · 결정 09:30/10:00 · purged WF · 30.6K coin-days</td>
+          <td>OOS allpick net 전부 음수 · robust root 0 · 양수 leaf 는 전부 단일-fold overfit</td>
+          <td><span class="badge badge-fail">REJECT</span></td>
+        </tr>
+        <tr>
+          <td><strong>day-quality gate</strong><br><span style="color:var(--text-muted);">죽은 날을 D-1 시장 정보로 식별해 그날 침묵</span></td>
+          <td>~700일 daily · 27 룰 · ledger replay + permutation test</td>
+          <td>전제 거짓 — 죽은 날 2.8% 뿐. 개선 +0.04~0.18%p 는 p=0.43 (noise). 단 펌프 클러스터링(corr 0.52) 자체는 진짜</td>
+          <td><span class="badge badge-fail">REJECT</span></td>
+        </tr>
+        <tr>
+          <td><strong>Binance lead-lag</strong><br><span style="color:var(--text-muted);">거래소간 D-1 선행 신호 — 유일하게 안 써본 새 정보원</span></td>
+          <td>경계검증(corr 0.962) · 매핑 99.6% · 5-fold + 최근 7개월 순수 OOS</td>
+          <td>독립 룰 경제성 미달(net −0.36%) · <strong>hit 엣지는 전 구간 생존 (8.1% vs base 1.4%)</strong></td>
+          <td><span class="badge badge-pivot">hit 만 채택 → 🎯 v2</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- v2 radar 결론 -->
+  <div class="callout">
+    <p><strong>🎯 PUMP 레이더 v2 — 사슬을 통과한 것만 텔레그램에 도달한다</strong></p>
+    <p style="margin-top:0.6rem;">
+      살아남은 hit 엣지를 radar 로 배선했다 (2026-06-11 사용자 컨펌):
+      <code class="c">roc_7d_rank &gt; 0.85 AND b_vol_surge &gt; 1.5</code> — 매일 최대 5 후보,
+      <strong>후보 있는 날만</strong> 발사. 메시지 안에 정직 고지를 박았다:
+      "+20% 도달 8.1% ≈ 12건 중 1건 / <strong>자동 룰 net 은 음수 — 진입·청산은 본인 판단</strong>".
+      champion 승격은 <code class="c">challenger_only</code> 로 코드 차단 — radar 와 자동 전략을 섞지 않는다.
+      Binance D-1 봉은 00:00 UTC = KST 09:00 마감이라 09:10 발사 시점에 막 확정된 데이터를 쓴다 (leak 0).
+      이것이 이 시스템의 운영 원칙이다: <strong>lift 는 알리고, net 은 약속하지 않는다.</strong>
+    </p>
+    <span class="badge badge-ok">hit 8.1% — 기존 레이더의 ~2.5×</span>
+    <span class="badge badge-blue">무소음 정책 (후보 없으면 침묵)</span>
+    <span class="badge badge-pivot">net 정직 고지 내장</span>
+  </div>
+</div></section>
+<hr class="divider">
+
 <!-- Thesis -->
 <section id="thesis"><div class="container fade-in">
   <div class="section-label">Thesis</div>
@@ -1194,6 +1286,24 @@
       <div class="f-desc">디버깅 중 manual rerun 으로 stale data + 잘못된 시각 ledger entry 가 들어간 incident 실제 발생. decision-window guard + <code class="c">--allow-late-*</code> escape hatch 추가.</div>
       <div class="f-takeaway">manual override 는 명시 플래그로만 가능하게</div>
     </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-06-11</div>
+      <div class="f-title">Cold-start 장중 미세동학</div>
+      <div class="f-desc">"첫 15~60분 거래량/가격으로 cold 펌프를 당일 포착" — 30.6K coin-days, purged WF. OOS net 전부 음수, cross-fold robust root 0. 양수 leaf 는 단일 fold overfit + 보수비용에서 소멸.</div>
+      <div class="f-takeaway">cold 펌프는 15m 해상도에서도 사전 신호가 없다 — 1m/체결강도가 남은 각도</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-06-11</div>
+      <div class="f-title">Day-quality gate (죽은 날 침묵)</div>
+      <div class="f-desc">죽은 날이 2.8% 뿐이라 전제부터 거짓. replay 개선 +0.04~0.18%p 는 permutation p=0.43 — 무작위 날짜 선택과 구분 불가. 단 펌프 클러스터링(D vs D-1 corr 0.52)은 진짜.</div>
+      <div class="f-takeaway">"개선처럼 보임" 은 permutation test 전까지 믿지 말 것</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-06-11</div>
+      <div class="f-title">"+1.24% net" — 일봉 근사의 낙관 편향</div>
+      <div class="f-desc">Binance 융합 룰의 첫 양수 net 보고. evaluator 가 적발 — 시뮬이 low 를 안 보고 SL 을 바닥으로만 적용 (종가 −5.9% 를 −3% 로 기록). 15m 실경로 재계산 후 최근 OOS −0.36%.</div>
+      <div class="f-takeaway">net 추정은 일봉 근사 금지 — 15m 실경로 + 동시터치 SL 우선만 신뢰</div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
@@ -1201,8 +1311,21 @@
 <!-- Operational Reality -->
 <section id="ops"><div class="container fade-in">
   <div class="section-label">Operational Reality</div>
-  <h2 class="section-title">실제로 매일 받는 두 통의 메시지</h2>
-  <p class="section-desc">두 알림 모두 진입가 ≈ 일봉 close 표시. paper ledger entry_price_proxy 와 매칭하여 close-out 시 실제 첫 15m bar 와 비교 = slippage / signal-quality 자동 추적 인프라.</p>
+  <h2 class="section-title">실제로 매일 받는 메시지</h2>
+  <p class="section-desc">진입가는 paper ledger entry_price 와 매칭되어 close-out 시 실제 15m 경로와 비교 — slippage / signal-quality 자동 추적 인프라.</p>
+
+  <!-- 현재 구성 (2026-06-11) -->
+  <div class="callout" style="margin-bottom:2rem;">
+    <p><strong>현재 구성 (2026-06-11) — 하루 최대 5통</strong></p>
+    <p style="margin-top:0.6rem;">
+      <strong>08:50</strong> ⚡ pre-open <span style="color:var(--text-muted);">(DEMOTED 정책 안내 1줄 — shadow only)</span> ·
+      🛰️ R1 레이더 <strong>예고</strong><br>
+      <strong>09:05</strong> ⚡ distribution <span style="color:var(--text-muted);">(A_TRIPLE 있을 때 추천 / bear 침묵)</span> ·
+      🛰️ R1 레이더 <strong>확정</strong><br>
+      <strong>09:10~15</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(Binance volsurge 융합 · 후보 있는 날만 · hit 8.1% + net 음수 정직 고지 내장)</span><br>
+      <span style="color:var(--text-muted);">+ 이상 시에만: backup/publish/heartbeat 경고. 아래 mockup 들은 초기 (Phase X+1) 형식 — 디자인 진화의 기록으로 보존.</span>
+    </p>
+  </div>
 
   <div class="two-col" style="gap:1.2rem;">
     <div>
@@ -1424,9 +1547,14 @@
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-06-01</div>
+  <div class="section-label">Current Status · 2026-06-11</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
-  <p class="section-desc"><strong>텔레그램 발송은 R1 risk-reward 레이더로 일원화</strong>됐다 — 매일 08:50 예고 / 09:05 확정 2통. 구 distribution · pre-open 모델은 평가·대시보드용으로 계속 돌지만 <strong>record-only(텔레그램 X)</strong>다. 챔피언은 forward 성과로 자동 선정(unattended · 하방 우선), 현재 R1 이 SHADOW fallback. 자동 주문 없음 — 사람이 청산한다.</p>
+  <p class="section-desc"><strong>발송 = R1 레이더 (08:50 예고 / 09:05 확정) + 🎯 PUMP v2 (09:10~, 후보 있는 날만)</strong>.
+  구 distribution · pre-open 은 record-only. 챔피언은 forward 성과로 자동 선정(하방 우선) — 현재 R1 fallback,
+  gate 진행 10/30일 (6월 말 첫 실전 판정). <strong>15실험</strong>까지 자동 net 흑자는 미달 — 시스템 정체성은
+  <strong>하방-규율 추천 레이더</strong>로 확정. 새로 추가된 두 축: <strong>exit lab</strong> (청산 잣대 7개 매일 병렬 기록 —
+  채택은 데이터가 결정) + <strong>검증 사슬</strong> (researcher → evaluator → 15m 재계산 — 가짜 양수 1건 실제 적발).
+  자동 주문 없음 — 사람이 청산한다.</p>
 
   <!-- ▼ v-next 운영 그림: champion/challenger + 매일 시간표 (2026-06-01) -->
   <div class="two-col" style="margin-bottom:2rem; align-items:stretch;">
