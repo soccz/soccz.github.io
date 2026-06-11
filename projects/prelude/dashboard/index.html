@@ -705,6 +705,21 @@
       <div class="chart-wrap" style="margin:0">
         <canvas id="chartPumpDaily" style="max-height:240px"></canvas>
       </div>
+      <h4 class="pump-h">🎯 v2 — Binance volsurge 융합 radar (2026-06-11 텔레그램 채택)</h4>
+      <div class="chart-subtitle">
+        rule: roc_7d_rank &gt; 0.85 + Binance D-1 거래량 surge &gt; 1.5× — 최근 7개월 OOS hit 8.1%
+        (base 1.4% 의 6배). 자동 룰 net 은 음수 — radar 용도, exit 은 수동. 후보 있는 날만 텔레그램.
+      </div>
+      <div class="pump-stats" id="pumpV2Stats">
+        <div class="ps-cell"><span class="ps-label">latest</span><span class="ps-val" id="pumpV2LatestDate">—</span></div>
+        <div class="ps-cell"><span class="ps-label">rows total</span><span class="ps-val" id="pumpV2RowsTotal">—</span></div>
+        <div class="ps-cell"><span class="ps-label">closed</span><span class="ps-val" id="pumpV2RowsClosed">—</span></div>
+        <div class="ps-cell"><span class="ps-label">+20% capture</span><span class="ps-val" id="pumpV2CapturePct">—</span></div>
+      </div>
+      <div id="pumpV2Watchlist" style="overflow-x:auto">
+        <div class="loading-state">loading…</div>
+      </div>
+
       <h4 class="pump-h">exit lab — 같은 경로, 청산 잣대 4 개 병렬 가상 평가</h4>
       <div class="chart-subtitle">
         bear_quiet 연구는 TP+10%/SL없음이 최적이라 했지만, 라이브 forward 에서는 어느 잣대가 맞는지
@@ -3107,6 +3122,42 @@ function renderPumpHunter(ph) {
   }
 }
 
+/* ───────── PUMP hunter v2 — Binance volsurge radar (2026-06-11) ───────── */
+function renderPumpHunterV2(ph) {
+  const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const wlEl = document.getElementById('pumpV2Watchlist');
+  if (!ph || ph.status === 'pending_first_cron' || ph.status === 'empty') {
+    setText('pumpV2LatestDate', '—');
+    setText('pumpV2RowsTotal', '0');
+    setText('pumpV2RowsClosed', '0');
+    setText('pumpV2CapturePct', '—');
+    if (wlEl) wlEl.innerHTML = '<div class="loading-state">v2 ledger 누적 전 — 첫 후보일에 표시</div>';
+    return;
+  }
+  setText('pumpV2LatestDate', ph.latest_date || '—');
+  setText('pumpV2RowsTotal', String(ph.rows_total ?? '—'));
+  setText('pumpV2RowsClosed', String(ph.rows_closed ?? '—'));
+  setText('pumpV2CapturePct', ph.pump20_capture_pct != null
+    ? fmt(ph.pump20_capture_pct, 1) + '%' : '— (closed 대기)');
+  if (wlEl) {
+    const rows = ph.watchlist || [];
+    if (!rows.length) {
+      wlEl.innerHTML = '<div class="loading-state">최근일 rule fire 없음</div>';
+    } else {
+      const head = '<thead><tr><th>rank</th><th>coin</th><th>Binance surge</th>'
+        + '<th>roc_7d_rank</th><th>score</th><th>status</th></tr></thead>';
+      const body = rows.map(r => '<tr>'
+        + `<td>${r.rank ?? '—'}</td>`
+        + `<td class="coin">${escapeHtml(r.coin || '—')}</td>`
+        + `<td>${r.b_vol_surge != null ? fmt(r.b_vol_surge, 1) + '×' : '—'}</td>`
+        + `<td>${r.roc_7d_rank != null ? fmt(r.roc_7d_rank, 2) : '—'}</td>`
+        + `<td>${r.score != null ? fmt(r.score, 3) : '—'}</td>`
+        + `<td>${escapeHtml(r.status || '—')}</td></tr>`).join('');
+      wlEl.innerHTML = `<table class="pump-table">${head}<tbody>${body}</tbody></table>`;
+    }
+  }
+}
+
 /* ───────── Champion gate 진행률 (2026-06-11) ───────── */
 function renderChampionGate(cg) {
   const el = document.getElementById('championGateProgress');
@@ -3598,6 +3649,7 @@ window.addEventListener('scroll', () => {
     renderPolicyReplayBar(summary);
     // PUMP hunter SHADOW (2026-06-04)
     renderPumpHunter(summary.pump_hunter);
+    renderPumpHunterV2(summary.pump_hunter_v2);
     // exit lab + champion gate 진행률 (2026-06-11)
     renderExitLab(summary.policy_competition);
     renderChampionGate(summary.champion_gate);
