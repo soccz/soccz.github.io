@@ -291,6 +291,14 @@
     .pump-table td.coin { font-weight: 700; color: var(--text-primary); }
     .pump-table .rule-id { color: var(--text-muted); font-size: 0.72rem; }
 
+    /* Champion gate progress */
+    .gate-progress { display: grid; gap: 0.55rem; margin: 0.8rem 0 1.1rem; }
+    .gate-row { display: grid; grid-template-columns: 88px 1fr 170px; gap: 0.8rem; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; }
+    .gate-row .g-slot { color: var(--text-primary); font-weight: 700; }
+    .gate-row .g-bar { height: 10px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 99px; overflow: hidden; }
+    .gate-row .g-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #16a34a); border-radius: 99px; }
+    .gate-row .g-label { color: var(--text-muted); text-align: right; }
+
     /* Policy evolution timeline */
     .policy-timeline-wrap { width: 100%; overflow-x: auto; margin: 0 auto 1.4rem; padding: 0.4rem 0; -webkit-overflow-scrolling: touch; }
     .policy-timeline-wrap svg { min-width: 720px; height: auto; }
@@ -658,6 +666,7 @@
       <div class="chart-subtitle" id="leaderboardNote">
         하방-우선 자동선정(unattended) — forward CLOSED 거래일로 평가. ★현 champion 표시.
       </div>
+      <div id="championGateProgress" class="gate-progress" aria-label="champion gate 검증 진행률"></div>
       <div id="championLeaderboard" style="overflow-x:auto">
         <div class="loading-state">loading…</div>
       </div>
@@ -695,6 +704,15 @@
       <h4 class="pump-h">일별 capture — pump_hunter 의 매일 +20% 적중 비율</h4>
       <div class="chart-wrap" style="margin:0">
         <canvas id="chartPumpDaily" style="max-height:240px"></canvas>
+      </div>
+      <h4 class="pump-h">exit lab — 같은 경로, 청산 잣대 4 개 병렬 가상 평가</h4>
+      <div class="chart-subtitle">
+        bear_quiet 연구는 TP+10%/SL없음이 최적이라 했지만, 라이브 forward 에서는 어느 잣대가 맞는지
+        데이터가 결정한다 — 운영 기본 (TP5/SL3) 과 변형들을 같은 15m 경로로 나란히 기록 (record-only).
+        보수 net = 슬리피지 편도 0.2% 가정.
+      </div>
+      <div id="pumpExitLab" style="overflow-x:auto">
+        <div class="loading-state">loading…</div>
       </div>
     </div>
   </div>
@@ -3089,6 +3107,65 @@ function renderPumpHunter(ph) {
   }
 }
 
+/* ───────── Champion gate 진행률 (2026-06-11) ───────── */
+function renderChampionGate(cg) {
+  const el = document.getElementById('championGateProgress');
+  if (!el) return;
+  if (!cg || !cg.slots || !cg.slots.length) { el.innerHTML = ''; return; }
+  const rows = cg.slots.map(s => {
+    const pct = s.progress_pct ?? 0;
+    const label = s.is_fallback
+      ? `${s.n_days}/${s.min_closed}일 · D-${s.days_remaining} (fallback)`
+      : `gate 통과 · champion=${escapeHtml(s.champion_id || '—')}`;
+    return `
+      <div class="gate-row">
+        <span class="g-slot">${escapeHtml(s.slot)}</span>
+        <div class="g-bar"><div class="g-fill" style="width:${pct}%"></div></div>
+        <span class="g-label">${label}</span>
+      </div>`;
+  }).join('');
+  el.innerHTML = rows + `<div class="chart-subtitle" style="margin:0.2rem 0 0">
+    forward CLOSED ${cg.min_closed}거래일 차야 첫 실전 champion 판정 — 그 전까지 백테스트-최선 (R1) fallback · SHADOW 표기.</div>`;
+}
+
+/* ───────── Exit lab — 청산 변형 비교 (2026-06-11) ───────── */
+function renderExitLab(pc) {
+  const el = document.getElementById('pumpExitLab');
+  if (!el) return;
+  const rows = (pc && pc.exit_lab) || [];
+  if (!rows.length) {
+    el.innerHTML = '<div class="loading-state">exit lab 데이터 없음 — 다음 close cron 후 누적</div>';
+    return;
+  }
+  const variantLabel = {
+    tp5_sl3: 'TP+5% / SL-3% (운영)', tp10_nosl: 'TP+10% / SL없음',
+    tp5_nosl: 'TP+5% / SL없음', eod: 'EOD hold',
+  };
+  const byModel = {};
+  rows.forEach(r => { (byModel[r.model_id] = byModel[r.model_id] || []).push(r); });
+  const fmtv = (v, suf) => (v === null || v === undefined) ? '—' : (fmt(v, 2) + (suf || ''));
+  let html = '';
+  Object.entries(byModel).forEach(([model, list]) => {
+    const best = list.reduce((a, b) => ((b.net_mean_pct ?? -1e9) > (a.net_mean_pct ?? -1e9) ? b : a), list[0]);
+    html += `<div class="strat-block sb-title" style="margin-top:0.8rem">${escapeHtml(model)}</div>`;
+    html += '<table class="pump-table"><thead><tr>'
+      + '<th>variant</th><th>n</th><th>net mean</th><th>net mean (보수비용)</th><th>deep loss</th><th>TP rate</th></tr></thead><tbody>';
+    list.forEach(r => {
+      const hl = r === best ? 'style="background:rgba(22,163,74,0.07);font-weight:700"' : '';
+      const cls = (r.net_mean_pct ?? 0) >= 0 ? 'style="color:var(--green)"' : 'style="color:var(--red)"';
+      html += `<tr ${hl}>`
+        + `<td>${escapeHtml(variantLabel[r.variant] || r.variant)}${r === best ? ' ★' : ''}</td>`
+        + `<td>${r.n ?? '—'}</td>`
+        + `<td ${cls}>${fmtv(r.net_mean_pct, '%')}</td>`
+        + `<td>${fmtv(r.net_mean_conservative_pct, '%')}</td>`
+        + `<td>${fmtv(r.deep_loss_freq_pct, '%')}</td>`
+        + `<td>${fmtv(r.tp_rate_pct, '%')}</td></tr>`;
+    });
+    html += '</tbody></table>';
+  });
+  el.innerHTML = html;
+}
+
 // ① 상승 확률분포 곡선 — base rate vs 선행 top-decile (magnitude decay)
 function renderMagnitudeCurve(m) {
   const ctx = document.getElementById('chartMagnitudeCurve');
@@ -3519,6 +3596,9 @@ window.addEventListener('scroll', () => {
     renderPolicyReplayBar(summary);
     // PUMP hunter SHADOW (2026-06-04)
     renderPumpHunter(summary.pump_hunter);
+    // exit lab + champion gate 진행률 (2026-06-11)
+    renderExitLab(summary.policy_competition);
+    renderChampionGate(summary.champion_gate);
     attachSort();
     attachFilters();
     renderHistory();
