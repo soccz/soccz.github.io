@@ -3140,6 +3140,8 @@ function renderExitLab(pc) {
   const variantLabel = {
     tp5_sl3: 'TP+5% / SL-3% (운영)', tp10_nosl: 'TP+10% / SL없음',
     tp5_nosl: 'TP+5% / SL없음', eod: 'EOD hold',
+    tp5_sl2: 'TP+5% / SL-2% (타이트)', tp10_sl5: 'TP+10% / SL-5% (와이드)',
+    tp8_sl3: 'TP+8% / SL-3% (승자 연장)',
   };
   const byModel = {};
   rows.forEach(r => { (byModel[r.model_id] = byModel[r.model_id] || []).push(r); });
