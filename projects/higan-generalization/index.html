@@ -36,6 +36,18 @@ code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:var(--bg2
 .tag{display:inline-block;font-size:.64rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.03em;}
 .tag.ok{background:rgba(21,128,61,.1);color:var(--grn);}.tag.fail{background:rgba(185,28,28,.09);color:var(--red);}
 .tag.mixed{background:rgba(180,83,9,.1);color:var(--amb);}.tag.live{background:rgba(21,128,61,.1);color:var(--grn);}.tag.dead{background:rgba(185,28,28,.09);color:var(--red);}.tag.weak{background:rgba(180,83,9,.1);color:var(--amb);}
+/* logical flow steps */
+.flow{margin:1.6rem 0;}
+.fstep{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.4rem 1.6rem;margin-bottom:.9rem;}
+.fstep .fhd{font-weight:700;color:var(--tx);font-size:1.02rem;margin-bottom:.9rem;display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;}
+.fstep .fn{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:#fff;background:var(--ac);padding:.16rem .55rem;border-radius:5px;letter-spacing:.04em;}
+.frow{display:grid;grid-template-columns:3.2rem 1fr;gap:.7rem;margin-bottom:.5rem;align-items:start;}
+.fk{font-size:.64rem;font-weight:700;letter-spacing:.06em;padding:.14rem 0;border-radius:4px;text-align:center;}
+.fk.think{color:var(--tx2);}.fk.try{color:var(--ac);}.fk.find{color:var(--amb);}
+.frow span:last-child{font-size:.9rem;color:var(--tx2);line-height:1.6;}
+.fnext{margin-top:.9rem;padding-top:.8rem;border-top:1px dashed var(--bdl);font-size:.88rem;font-weight:500;color:var(--grn);}
+.fnext::before{content:'→ ';font-weight:700;}
+.fstep.fail .fnext{color:var(--red);}
 /* tables */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--bd);border-radius:10px;margin:1.4rem 0;background:var(--card);}
 table.led{width:100%;border-collapse:collapse;font-size:.82rem;}
@@ -81,37 +93,125 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="nr"><a href="/projects/higan/">← HIGAN v2 보고서</a><a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub ↗</a></div></nav>
 
 <section class="hero"><div>
-<div class="hl">FULL EXPERIMENT RECORD · 전체 실험 기록</div>
-<h1>HIGAN을 <em>일반화</em>하려던 여정<br>— 시도한 것 전부, 과장 없이</h1>
-<p class="hsub">침실 saliency 한 장을 cross-architecture 미분기하 프레임워크로 키우려 했다.
-56개 분석 트랙, <strong>95개 control 검증 버전</strong>, 210개 결과 폴더 —
-성공과 실패가 끝없이 반복됐다. 강한 신호가 보일 때마다 스스로를 적대적으로 검증했고,
-대부분이 측정 artifact였다. 이 페이지는 그 전부를 데이터 그대로 남긴다.</p>
+<div class="hl">RESEARCH LOGIC · 연구의 논리 흐름</div>
+<h1>한 장의 saliency를 <em>이론</em>으로<br>키우려던 추론의 흐름</h1>
+<p class="hsub">"침실 GAN의 saliency가 1차 미분이면, 2차(곡률)는 무엇인가?" 이 한 질문에서 시작해
+곡률을 <strong>편집 위험을 재는 신호</strong>로 만들려 했다. 각 결과가 다음 수를 정했고 —
+시도 → 발견 → 후퇴 → 재시도가 한 줄로 이어진다. 이 페이지는 그 <strong>논리 흐름</strong>을
+따라가고, 강한 신호가 왜 매번 무너졌는지 보여준다. (모든 트랙·버전 raw는 맨 아래 부록.)</p>
 <div class="hstats">
-<div class="hs"><span class="hsn">56</span><span class="hsl">분석 트랙</span></div>
-<div class="hs"><span class="hsn">95</span><span class="hsl">control 검증 버전</span></div>
-<div class="hs"><span class="hsn">210</span><span class="hsl">결과 폴더</span></div>
-<div class="hs"><span class="hsn">28</span><span class="hsl">분석 스크립트</span></div>
+<div class="hs"><span class="hsn">∂I/∂α → ∂²I/∂α²</span><span class="hsl">출발 질문</span></div>
+<div class="hs"><span class="hsn">6</span><span class="hsl">뒤집힌 결론</span></div>
+<div class="hs"><span class="hsn">95</span><span class="hsl">검증 버전</span></div>
+<div class="hs"><span class="hsn">1</span><span class="hsl">살아남은 결과</span></div>
 </div>
 <div class="hb">
 <a class="btn pr" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub: soccz/HIGAN</a>
-<a class="btn" href="/projects/higan/">← HIGAN v2 보고서</a></div>
+<a class="btn" href="/projects/higan/">← HIGAN v2 보고서</a>
+<a class="btn" href="#data">전체 데이터 부록 ↓</a></div>
 </div></section><hr>
 
 <section class="bl"><div class="container">
-<div class="lab">01 · 목표</div><h2>한 장의 saliency를 프레임워크로</h2>
-<p class="lead">HIGAN v2는 침실 GAN의 잠재방향이 이미지의 <em>어디</em>에 작용하는지 픽셀 saliency로 보였다.
-그건 결국 생성기 매니폴드의 <strong>1차 pushforward</strong>다. 그렇다면 2차(곡률)는? 그 곡률이
-아키텍처를 가로질러 의미를 담고 <strong>편집 위험을 예측</strong>한다면 한 장의 그림이 하나의 이론이 된다.
-그래서 forward-mode 미분기하 도구를 만들고, StyleGAN1·2·Diffusion을 가로질러 곡률을 측정하고,
-<em>곡률이 클수록 편집이 정체성을 망가뜨린다</em>는 가설을 검증하기로 했다.</p>
+<div class="lab">01 · 출발 질문</div><h2>saliency는 1차 미분이다 — 그럼 2차는?</h2>
+<p class="lead">HIGAN v2는 잠재방향이 이미지의 <em>어디</em>에 작용하는지 픽셀 saliency로 보였다. 그건 결국
+생성기 <code>G(α)</code>의 <strong>1차 pushforward ∂I/∂α</strong> — 방향으로 한 발 움직일 때 이미지가
+어떻게 변하는지다. 자연스러운 다음 질문: <strong>2차(곡률) ∂²I/∂α²</strong>는 무엇을 뜻하나?
+곡률이 크다 = 그 방향이 비선형적으로 휜다 = 조금만 더 편집해도 예측 못 하게 변한다.</p>
+<p>그래서 <strong>가설</strong>을 세웠다: <em>곡률 ρ가 크면 그 방향으로 편집할 때 정체성이 더 망가진다.</em>
+만약 사실이면 — 한 도메인의 그림이 아니라, 곡률로 <strong>안전한 편집을 고르는 cross-architecture 신호</strong>가
+된다. 이게 한 장의 saliency를 top-venue 논문으로 만들 베팅이었다. 검증하려면 곡률을 정확히 재야 했다.</p>
 </div></section><hr>
 
 <section class="bl alt"><div class="container">
-<div class="lab">02 · 전체 실험 원장 — 56개 분석 트랙</div>
-<h2>매 트랙의 결과, 성공도 실패도 그대로</h2>
-<p class="lead">5라운드에 걸쳐 돌린 분석 트랙 전부. <span class="tag ok">OK</span> 견고,
-<span class="tag mixed">MIXED</span> 부분/도메인 의존, <span class="tag fail">FAIL</span> 정직한 실패.</p>
+<div class="lab">02 · 논리 흐름 — 시도와 후퇴의 연쇄</div>
+<h2>각 발견이 다음 수를 정했다</h2>
+<p class="lead">핵심 주장 하나(곡률=편집위험)를 두고, <strong>생각 → 시도 → 발견 → 그래서 다음</strong>이
+한 줄로 이어졌다. 강한 주장이 나올 때마다 직접 공격했고, 그때마다 신호가 약해졌다.</p>
+<div class="flow">
+<div class="fstep">
+<div class="fhd"><span class="fn">도구</span>정확한 forward-mode 곡률 측정기</div>
+<div class="frow"><span class="fk think">생각</span><span>FD는 2차 미분에 부정확하고, 역방향 AD는 3HW 출력에서 메모리가 터진다.</span></div>
+<div class="frow"><span class="fk try">시도</span><span>forward-mode JVP — 1 pass로 정확한 pushforward, 2번 합성하면 정확한 곡률, 상수 메모리. StyleGAN1·2·SD에 적용.</span></div>
+<div class="frow"><span class="fk find">발견</span><span>작동. toy 해석적 정답에서 JVP <span class="num">2.5e-17</span> vs FD 최선 <span class="num">8.6e-9</span> — <span class="tag ok">OK</span> 도구는 깨끗.</span></div>
+<div class="fnext">도구가 됐으니, 곡률이 편집 위험을 <strong>제어</strong>하는지 본다</div>
+</div>
+<div class="fstep fail">
+<div class="fhd"><span class="fn">시도 1</span>곡률로 안전한 편집을 고르는 제어기 <span class="tag fail">FAIL</span></div>
+<div class="frow"><span class="fk think">생각</span><span>ρ 낮은 방향을 고르면 같은 의미 변화에서 손상이 적을 것이다.</span></div>
+<div class="frow"><span class="fk try">시도</span><span>risk-aware controller + 음성대조(risk를 shuffle/invert) + cross-domain(bedroom·church). <code>control_v1~v30</code>.</span></div>
+<div class="frow"><span class="fk find">발견</span><span>gain-only·random baseline을 안정적으로 못 이김. shuffle/invert와 차이 모호. church(StyleGAN2)에선 오히려 짐.</span></div>
+<div class="fnext">"제어"는 너무 강한 주장. <strong>예측</strong>으로 후퇴한다</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">시도 2</span>제어 말고 예측 — 손상을 맞히기만 하면</div>
+<div class="frow"><span class="fk think">생각</span><span>제어기로 못 쓰더라도, semantic gain을 통제한 뒤 ρ가 손상을 <em>예측</em>하면 그것만으로 의미 있다.</span></div>
+<div class="frow"><span class="fk try">시도</span><span>predictive validity — gain 통제 후 ρ↔손상 상관. <code>control_v31~</code>.</span></div>
+<div class="frow"><span class="fk find">발견</span><span>중간 정도 Spearman. 하지만 <strong>null-sensitive</strong> — permutation에 취약.</span></div>
+<div class="fnext">예측이 진짜인지 <strong>가정을 전부 흔들어</strong> 본다</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">시도 3</span>가정 스트레스 가틀릿</div>
+<div class="frow"><span class="fk think">생각</span><span>예측이 견고하면 추정기·프롬프트·평가셋·매칭을 바꿔도 살아남아야 한다.</span></div>
+<div class="frow"><span class="fk try">시도</span><span>FD estimator(v42), prompt 템플릿(v43/v46/v51), n_test 2배(v47), stricter matching(v48), DINO(v64), seed-scaling(v68~), permutation null(v82/v90). <code>control_v42~v95</code>.</span></div>
+<div class="frow"><span class="fk find">발견</span><span>매번 신호가 약해지거나 null 범위 안. <strong>743 실행, 0 재현실패</strong> — 그러나 주장은 끝내 단단해지지 않음.</span></div>
+<div class="fnext">"약한데 안 죽는" 신호 — 강한 버전을 <strong>직접 반박</strong>해보기로</div>
+</div>
+<div class="fstep fail">
+<div class="fhd"><span class="fn">반전</span>적대적 감사 — 강한 신호는 전부 artifact <span class="tag fail">결정적</span></div>
+<div class="frow"><span class="fk think">생각</span><span>강한 주장이 나오면 독립 에이전트가 raw로 재계산하고 <em>반박</em>한다(확인이 아니라 깨기).</span></div>
+<div class="frow"><span class="fk try">시도</span><span>매 강한 결과를 다수 에이전트가 공격. 6번의 결론 뒤집힘(아래 타임라인).</span></div>
+<div class="frow"><span class="fk find">발견</span><span>강한 신호 = 측정 artifact. tautology(무작위 selector가 재현)·순환논리(손상을 손상으로 통제)·outlier 의존·leakage·between-attr proxy.</span></div>
+<div class="fnext">도달한 floor: <strong>ρ는 약하고 baseline 정의에 fragile하다</strong></div>
+</div>
+</div>
+</div></section><hr>
+
+<section class="bl"><div class="container">
+<div class="lab">03 · 6번 뒤집힘 — 같은 데이터, 매번 바뀐 결론</div>
+<h2>주장이 양 극단을 오가며 수렴한 지점</h2>
+<div class="tl">
+<div class="tli dead"><div class="tlv">v1 · 과대</div><div class="tlt">"ρ가 편집 손상을 예측한다" <span class="tag dead">폐기</span></div><div class="tld">곡률이 trivial한 편집 크기(magnitude)를 넘는 가치를 거의 못 줬다.</div></div>
+<div class="tli dead"><div class="tlv">v2–v3 · 반대로 과대</div><div class="tlt">"magnitude가 충분통계량, geometry=0" <span class="tag dead">폐기</span></div><div class="tld">"0/41"의 baseline이 outcome과 결합된 leaky 4-feature MAX — 그것도 artifact.</div></div>
+<div class="tli weak"><div class="tlv">v4 · 절충</div><div class="tlt">"real-but-weak residual" <span class="tag weak">불안정</span></div><div class="tld">"6/6 ordinal residual"이 사실 between-attribute 난이도 proxy였다.</div></div>
+<div class="tli dead"><div class="tlv">v5 · 다시 과소</div><div class="tlt">"ρ는 actionable signal이 아니다" <span class="tag dead">또 과대</span></div><div class="tld">세 기둥(C4b leak, LPIPS 부호반전, within-unit 붕괴)이 tautology·순환논리·n=6 노이즈로 판명.</div></div>
+<div class="tli live"><div class="tlv">v6 · 데이터-진실</div><div class="tlt">곡률 = 약하고 baseline에 fragile한 신호 <span class="tag live">honest</span></div><div class="tld">"ρ가 magnitude를 이기냐"는 baseline 정의에 따라 갈린다. 이 fragility 자체가 robust한 발견.</div></div>
+</div>
+</div></section><hr>
+
+<section class="bl alt"><div class="container">
+<div class="lab">04 · 결산 — 무엇이 살아남고 무엇이 무너졌나</div><h2>같은 원장에 공존하는 성공과 실패</h2>
+<div class="grid2">
+<div class="card g"><h4>살아남음</h4>
+<p>① forward-mode JVP 곡률 도구 (cross-arch, 정확)</p>
+<p>② FD는 곡률 복원 못 함 — toy로 airtight (<span class="num">8.6e-9</span> vs <span class="num">2.5e-17</span>)</p>
+<p>③ per-layer 곡률 단조감소 (8/8, Spearman −0.96~−0.80)</p>
+<p>④ 곡률-vs-magnitude의 baseline-fragility를 규명한 것</p></div>
+<div class="card r"><h4>무너짐 (정직하게)</h4>
+<p>① edit-risk를 예측·제어하는 actionable 신호 — fragile</p>
+<p>② cross-encoder 보편성 — 1개 attr 빼면 Pearson 0.99→0.10</p>
+<p>③ FFHQ C5 인코더 전이 — sal_corr 0.07 정체</p>
+<p>④ Park NeurIPS23 재현 ρ=0.04 / real-LSUN 전이 +1148%</p></div>
+</div>
+<div class="callout"><p><strong>도구 + FD-non-recoverability만 깨끗하게 살아남았다.</strong> 짧은 methods note로 banking.</p></div>
+</div></section><hr>
+
+<section class="bl"><div class="container">
+<div class="lab">05 · 피벗 & 메타 교훈</div><h2>다음 질문도 같은 패턴 — 왜 반복됐나</h2>
+<p class="lead"><strong>피벗:</strong> HIGAN이 tool-first라 약했나 싶어, problem-first로 "오픈 TSFM zero-shot SOTA가
+오염인가"를 감사했다. 그런데 "Chronos가 baseline 박살" gap은 <strong>baseline-starvation artifact</strong>(짧은
+series)였고, 제대로 된 baseline엔 겨우 0.03 이김 — 부풀릴 advantage가 없었다. <em>같은 패턴, 같은 날 shelved.</em></p>
+<p><strong>메타 교훈:</strong> 두 번 다 강한 신호=artifact, 진짜 효과=thin. 구조적이다 — "주장이 진짜냐"를 엄격히
+감사하면 대부분 부풀려져 있으니 <em>깎는(deflationary) 결과</em>로 수렴한다. top-venue가 원하는 "새로 되는 것"이
+아니라 "주장이 안 맞다" 쪽. 그래서 멈췄다. 깨끗한 것을 banking하고, 다음 큰 시도는 감사가 아니라
+<strong>positive-construction</strong>으로 — 새 시점에.</p>
+<div class="callout"><p><strong>그래도 rigor는 남는다.</strong> 6번의 뒤집힘을 워크플로우 6번이 아니라 Day 3에 잡게 된 것 —
+자기 자신을 속이지 않는 법은 작동했다. 743 실행 0 실패, 17자리 bit-identical 재현이 그 증거다.</p></div>
+</div></section><hr>
+
+<section class="bl alt" id="data"><div class="container">
+<div class="lab">부록 · 전체 데이터 (raw)</div><h2>모든 트랙·버전, 잘림 없이</h2>
+<p class="lead">위 논리 흐름의 근거 데이터 전부. 펼쳐서 보거나 <code>github.com/soccz/HIGAN</code>에서 raw JSON으로.</p>
+<details><summary style="cursor:pointer;font-weight:600;color:var(--ac);padding:.5rem 0;">▶ 전체 실험 원장 — 56개 분석 트랙 (raw 결과)</summary>
 <div class="tbl-wrap"><table class="led">
 <thead><tr><th>판정</th><th>트랙</th><th>결과 (raw)</th></tr></thead>
 <tbody>
@@ -1275,20 +1375,8 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 
 ============================================================
 DONE</pre></td></tr>
-</tbody></table></div>
-<p class="note">예: Track 9 multi-CLIP은 3개 인코더 Pearson 0.97–0.99로 견고했지만, Track 7 Park 재현은
-ρ=0.04로 실패, Track 40 real-LSUN 인코더 전이는 encoder gap +1148%로 실패, Track 22 saliency-vs-seg은
-Spearman None으로 신호 없음. 강한 것과 무너진 것이 같은 원장에 공존한다.</p>
-</div></section><hr>
-
-<section class="bl"><div class="container">
-<div class="lab">03 · control 검증 캠페인 — 95개 버전</div>
-<h2>"곡률이 편집을 제어한다"를 95번 검증하려 한 기록</h2>
-<p class="lead">핵심 주장 하나(curvature-risk가 control 신호다)를 두고, 검증→약점 발견→진단→재검증→stress-test가
-끝없이 반복됐다. 단계: <span class="ph ph-controller">controller</span> 초기 제어기 →
-<span class="ph ph-feasible">feasible</span> 제약된 제어기 → <span class="ph ph-predictive">predictive</span>
-예측타당도로 후퇴 → <span class="ph ph-stress">stress</span> 가정 스트레스 →
-<span class="ph ph-audit">audit</span> 재현성 감사. 이 표가 "무엇을 계속 시도했나"의 전부다.</p>
+</tbody></table></div></details>
+<details><summary style="cursor:pointer;font-weight:600;color:var(--ac);padding:.5rem 0;">▶ control 검증 캠페인 — 95개 버전 (시도+실행내역)</summary>
 <div class="tbl-wrap"><table class="ctl">
 <thead><tr><th>버전</th><th>단계</th><th>exp</th><th>시도한 것 (purpose)</th></tr></thead>
 <tbody>
@@ -1387,67 +1475,11 @@ Spearman None으로 신호 없음. 강한 것과 무너진 것이 같은 원장�
 <tr class="c-stress"><td class="vn">v93</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Evaluate whether rho is useful as a pre-edit diagnostic score for high-damage candidates after the final n=10 defense set.<details><summary>실행 1개</summary><ul><li><code>predictive_diagnostic_utility_table_v1</code> rho should separate high-damage edit candidates from lower-damage candidates within attributes.</li></ul></details></td></tr>
 <tr class="c-stress"><td class="vn">v94</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Update failure-boundary reporting with diagnostic utility.<details><summary>실행 1개</summary><ul><li><code>failure_boundary_table_v4</code> Final framing should expose both stress-test and diagnostic-utility boundaries.</li></ul></details></td></tr>
 <tr class="c-audit"><td class="vn">v95</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Audit all locked protocols through diagnostic utility.<details><summary>실행 1개</summary><ul><li><code>main_grade_audit_v20</code> All locked protocols through diagnostic utility have traceable metrics outputs.</li></ul></details></td></tr>
-</tbody></table></div>
-<p class="note">v1: "곡률이 control 신호인가" → v2 제어기 → v4 shuffled/inverted 음성대조 → v6 real-LPIPS →
-v18/v20 cross-domain(bedroom/church) → v23 church 실패 진단 → v31 예측타당도로 후퇴 → v42 FD estimator,
-v43/v46 prompt 템플릿, v47 n_test 2배, v48 stricter matching → v72 incremental value, v74/v94 failure boundary,
-v82/v90 permutation null → v95 최종 감사. 743개 실행, 0 실패(재현성), 그러나 주장은 끝내 견고해지지 못함.</p>
-</div></section><hr>
-
-<section class="bl alt"><div class="container">
-<div class="lab">04 · 가설의 진화 — 여섯 번 뒤집힘</div>
-<h2>같은 데이터, 매번 바뀐 결론</h2>
-<div class="tl">
-<div class="tli dead"><div class="tlv">v1 · 과대</div><div class="tlt">"ρ가 편집 손상을 예측한다" <span class="tag dead">폐기</span></div><div class="tld">곡률이 trivial한 편집 크기(magnitude)를 넘는 가치를 거의 못 줬다.</div></div>
-<div class="tli dead"><div class="tlv">v2–v3 · 반대로 과대</div><div class="tlt">"magnitude가 충분통계량, geometry=0" <span class="tag dead">폐기</span></div><div class="tld">"0/41"의 baseline이 outcome과 결합된 leaky 4-feature MAX — 그것도 artifact.</div></div>
-<div class="tli weak"><div class="tlv">v4 · 절충</div><div class="tlt">"real-but-weak residual" <span class="tag weak">불안정</span></div><div class="tld">"6/6 ordinal residual"이 사실 between-attribute 난이도 proxy였다.</div></div>
-<div class="tli dead"><div class="tlv">v5 · 다시 과소</div><div class="tlt">"ρ는 actionable signal이 아니다" <span class="tag dead">또 과대</span></div><div class="tld">세 기둥(C4b leak, LPIPS 부호반전, within-unit 붕괴)이 tautology·순환논리·n=6 노이즈로 판명.</div></div>
-<div class="tli live"><div class="tlv">v6 · 데이터-진실</div><div class="tlt">곡률 = 약하고 baseline에 fragile한 신호 <span class="tag live">honest</span></div><div class="tld">"ρ가 magnitude를 이기냐"는 baseline 정의에 따라 갈린다. 이 fragility 자체가 robust한 발견.</div></div>
-</div>
-</div></section><hr>
-
-<section class="bl"><div class="container">
-<div class="lab">05 · 만든 것 (살아남음) vs 무너진 것</div><h2>정직한 결산</h2>
-<div class="grid2">
-<div class="card g"><h4>살아남음</h4>
-<p>① forward-mode JVP 곡률 도구 (cross-arch, 정확)</p>
-<p>② FD는 곡률 복원 못 함 — toy로 airtight (<span class="num">8.6e-9</span> vs JVP <span class="num">2.5e-17</span>)</p>
-<p>③ per-layer 곡률 단조감소 (8/8, Spearman −0.96~−0.80)</p>
-<p>④ multi-CLIP/DINO cross-encoder 일치 (Pearson 0.94–0.99) — 단, outlier 의존</p>
-<p>⑤ 곡률-vs-magnitude의 baseline-fragility 규명</p></div>
-<div class="card r"><h4>무너짐 (정직하게)</h4>
-<p>① edit-risk를 예측·제어하는 actionable 신호 — fragile</p>
-<p>② "magnitude 충분통계량" — leakage artifact</p>
-<p>③ cross-encoder 보편성 — 1개 attr 빼면 Pearson 0.10</p>
-<p>④ FFHQ C5 인코더 전이 — sal_corr 0.07 정체</p>
-<p>⑤ Park NeurIPS23 재현 — ρ=0.04 / real-LSUN 전이 +1148%</p></div>
-</div>
-<div class="callout"><p><strong>이 도구 + FD-non-recoverability가 깨끗하게 살아남은 결과.</strong>
-짧은 methods note로 정리됨. 나머지 강한 주장들은 검증 과정에서 artifact로 드러남.</p></div>
-</div></section><hr>
-
-<section class="bl alt"><div class="container">
-<div class="lab">06 · 후속 — TSFM 오염 감사 (problem-first 전환)</div>
-<h2>다음 질문도 같은 패턴으로 끝났다</h2>
-<p class="lead">HIGAN 이후 "오픈 time-series foundation model의 zero-shot SOTA가 pretraining 오염인가"를
-problem-first로 감사했다. 파이프라인은 ETTh1에서 검증됐지만(Chronos 0.58 / DLinear 0.61),
-큰 "Chronos가 baseline 박살" gap은 <strong>baseline-starvation artifact</strong>(짧은 series)였다.
-제대로 된 baseline엔 Chronos가 겨우 0.03 이김 — 오염이 부풀릴 큰 advantage가 애초에 없었다.
-recall index도 신호 0. 같은 날 정직하게 shelved.</p>
-</div></section><hr>
-
-<section class="bl"><div class="container">
-<div class="lab">07 · 메타 교훈</div><h2>적대적 감사는 효과를 깎는다 — 정직함의 대가</h2>
-<p class="lead">HIGAN edit-risk에 이어 TSFM까지, 두 프로젝트 모두 <strong>강한 신호=artifact, 진짜 효과=thin</strong>.
-구조적이다 — "주장된 효과가 진짜냐"를 엄격히 감사하면 대부분 부풀려져 있으니 <em>깎는 결과</em>로 수렴한다.
-top-venue가 원하는 "새로 되는 것"이 아니라 "주장이 안 맞다" 쪽. 그래서 멈췄다. 깨끗한 것(도구 +
-FD-non-recoverability)을 banking하고, 다음 큰 시도는 감사가 아니라 positive-construction으로 — 새 시점에.</p>
-<div class="callout"><p><strong>그래도 rigor는 남는다.</strong> 6번의 뒤집힘을 워크플로우 6번이 아니라 Day 3에 잡게 된 것 —
-자기 자신을 속이지 않는 법은 작동했다. 743 실행 0 실패, seed 고정, 17자리 bit-identical 재현이 그 증거다.</p></div>
-<p class="note">전체 데이터: <code>github.com/soccz/HIGAN</code> · 210개 결과 폴더 ·
-HIGAN note(<code>note/</code>: 도구+FD-non-recoverability) · TSFM(<code>tsfm_audit/STATUS.md</code>).</p>
+</tbody></table></div></details>
+<p class="note">210개 결과 폴더 · 28개 분석 스크립트 · HIGAN note(<code>note/</code>) ·
+TSFM(<code>tsfm_audit/STATUS.md</code>) · 실험 코드 전체 <code>github.com/soccz/HIGAN/tree/experiments</code>.</p>
 </div></section>
 
-<footer><p>HIGAN 일반화 연구 — 전체 실험 기록 · 2026 · 정직한 회고</p>
+<footer><p>HIGAN 일반화 연구 — 논리 흐름 · 2026 · 정직한 회고</p>
 <p style="margin-top:.6rem;"><a href="/projects/higan/">HIGAN v2 보고서</a> · <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">github.com/soccz/HIGAN</a> · <a href="/">소찬 · soccz</a></p></footer>
 </body></html>
