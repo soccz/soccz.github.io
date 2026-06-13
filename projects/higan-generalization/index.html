@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIGAN 일반화 — forward-mode 곡률로 생성모델을 해석하려던 여정</title>
+  <meta name="description" content="HIGAN 침실 saliency를 cross-architecture 미분기하 프레임워크로 일반화하려던 연구 여정의 정직한 기록. forward-mode JVP로 고차 곡률을 정확히 재고, 곡률이 edit-risk를 예측·제어하는지 묻고, 엄격한 adversarial 검증으로 무엇이 살아남고 무엇이 artifact였는지 정리한다.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9; --bg-secondary: #f5f5f4; --bg-card: #ffffff;
+      --text-primary: #1c1917; --text-secondary: #57534e; --text-muted: #a8a29e;
+      --accent: #44403c; --accent-dim: rgba(68,64,60,0.07);
+      --accent-red: #b91c1c; --accent-green: #15803d; --accent-amber: #b45309;
+      --border: #e7e5e4; --border-light: #d6d3d1;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary);
+      color: var(--text-primary); line-height: 1.75; -webkit-font-smoothing: antialiased; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    nav a.home { font-family: 'Noto Serif KR', serif; font-weight: 700; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; }
+    nav .nav-right a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; margin-left: 1.4rem; }
+    nav .nav-right a:hover { color: var(--accent); }
+
+    .container { max-width: 920px; margin: 0 auto; padding: 0 2rem; }
+
+    /* hero */
+    .hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 7rem 2rem 4rem;
+      background: radial-gradient(ellipse at 30% 40%, rgba(120,113,108,0.04) 0%, transparent 55%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.025) 0%, transparent 50%); }
+    .hero-content { max-width: 880px; }
+    .hero-label { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-muted);
+      border: 1px solid var(--border-light); border-radius: 100px; padding: 0.4rem 1.1rem; display: inline-block; margin-bottom: 1.8rem; }
+    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
+      line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 1.6rem; }
+    .hero h1 em { font-style: normal; color: var(--accent-amber); }
+    .hero-sub { font-size: 1.02rem; color: var(--text-secondary); max-width: 680px; margin: 0 auto 2.6rem; line-height: 1.85; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.4rem; flex-wrap: wrap; margin-bottom: 2.6rem; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.1rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-buttons { display: flex; justify-content: center; gap: 0.9rem; flex-wrap: wrap; }
+    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem;
+      border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-secondary);
+      text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: all 0.15s; background: var(--bg-card); }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-link.primary { background: var(--accent); color: #fafaf9; border-color: var(--accent); }
+    .hero-link.primary:hover { background: #292524; color: #fff; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+    section.block { padding: 4.5rem 0; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    h2 { font-family: 'Noto Serif KR', serif; font-size: 1.7rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.1rem; letter-spacing: -0.01em; }
+    h3 { font-size: 1.1rem; font-weight: 700; margin: 1.6rem 0 0.6rem; }
+    p.lead { font-size: 1.02rem; color: var(--text-secondary); margin-bottom: 1.4rem; }
+    p { color: var(--text-secondary); margin-bottom: 1rem; }
+    em { font-style: normal; color: var(--accent-amber); font-weight: 500; }
+    strong { color: var(--text-primary); font-weight: 700; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-secondary);
+      padding: 0.12rem 0.4rem; border-radius: 4px; border: 1px solid var(--border); color: var(--accent); }
+
+    /* timeline */
+    .timeline { border-left: 2px solid var(--border-light); margin: 1.5rem 0; padding-left: 1.8rem; }
+    .tl-item { position: relative; padding-bottom: 1.8rem; }
+    .tl-item::before { content: ''; position: absolute; left: -2.28rem; top: 0.35rem; width: 11px; height: 11px;
+      border-radius: 50%; background: var(--bg-primary); border: 2px solid var(--accent); }
+    .tl-item.dead::before { border-color: var(--accent-red); }
+    .tl-item.live::before { border-color: var(--accent-green); }
+    .tl-ver { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
+    .tl-title { font-weight: 700; color: var(--text-primary); margin: 0.15rem 0 0.3rem; }
+    .tl-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
+    .tag { display: inline-block; font-size: 0.68rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 4px; letter-spacing: 0.03em; vertical-align: middle; }
+    .tag.dead { background: rgba(185,28,28,0.08); color: var(--accent-red); }
+    .tag.live { background: rgba(21,128,61,0.09); color: var(--accent-green); }
+    .tag.weak { background: rgba(180,83,9,0.09); color: var(--accent-amber); }
+
+    /* cards */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1.6rem 0; }
+    @media (max-width: 680px) { .grid2 { grid-template-columns: 1fr; } .hero-stats { gap: 1.4rem; } }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem 1.6rem; }
+    .card.green { border-left: 4px solid var(--accent-green); }
+    .card.red { border-left: 4px solid var(--accent-red); }
+    .card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .card p { font-size: 0.88rem; margin-bottom: 0.5rem; line-height: 1.65; }
+    .card .num { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text-primary); }
+
+    .callout { background: var(--accent-dim); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0;
+      padding: 1.3rem 1.6rem; margin: 1.6rem 0; }
+    .callout p { margin-bottom: 0.4rem; font-size: 0.92rem; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    table.facts { width: 100%; border-collapse: collapse; margin: 1.4rem 0; font-size: 0.86rem; }
+    table.facts th, table.facts td { text-align: left; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
+    table.facts th { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+    table.facts td.mono { font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+
+    footer { padding: 3.5rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; }
+    footer a { color: var(--text-secondary); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="home" href="/">소찬 · soccz</a>
+  <div class="nav-right">
+    <a href="/projects/higan/">← HIGAN v2 보고서</a>
+    <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">RESEARCH JOURNEY · 정직한 회고</div>
+    <h1>HIGAN을 <em>일반화</em>하려던 여정<br>— 그리고 무엇이 살아남았나</h1>
+    <p class="hero-sub">
+      침실 saliency 한 장에서 시작해, 생성모델의 잠재공간을 <strong>cross-architecture 미분기하</strong>로
+      해석하려 했다. forward-mode 자동미분으로 고차 곡률을 정확히 재고, 곡률이 편집의 위험을
+      예측·제어하는지 물었다. 강한 신호가 보일 때마다 스스로를 적대적으로 검증했고 —
+      대부분이 artifact였다. 이 페이지는 그 과정을 과장 없이 기록한다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">30+</span><span class="hero-stat-label">분석 트랙</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">아키텍처 (SG1/2·SD)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">743</span><span class="hero-stat-label">감사 실행 (0 fail)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">∂³I/∂α³</span><span class="hero-stat-label">고차 곡률</span></div>
+    </div>
+    <div class="hero-buttons">
+      <a class="hero-link primary" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub: soccz/HIGAN
+      </a>
+      <a class="hero-link" href="/projects/higan/">← HIGAN v2 보고서</a>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ===================== 목표 ===================== -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">01 · 목표</div>
+    <h2>한 장의 saliency를 프레임워크로</h2>
+    <p class="lead">
+      HIGAN v2는 침실 GAN의 잠재방향이 이미지의 <em>어디</em>에 작용하는지 픽셀 saliency로 보였다.
+      그 다음 질문은 자연스러웠다 — 이 saliency는 결국 생성기 매니폴드의 <strong>1차 pushforward</strong>다.
+      그렇다면 <strong>2차(곡률)</strong>는? 그리고 그 곡률이 <strong>아키텍처를 가로질러</strong>
+      의미 구조를 담고, <strong>편집의 위험</strong>을 예측한다면 — 그건 한 장의 그림이 아니라 하나의 이론이 된다.
+    </p>
+    <p>
+      그래서 목표를 이렇게 세웠다: <strong>forward-mode 미분기하 도구를 만들고</strong>, 그것으로
+      StyleGAN1·StyleGAN2·Stable Diffusion을 가로질러 곡률을 측정하고,
+      <em>곡률이 클수록 편집이 정체성을 더 망가뜨린다</em>는 가설(edit-risk)을 검증한다.
+    </p>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ===================== 만든 것 ===================== -->
+<section class="block" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-label">02 · 만든 것 (살아남음)</div>
+    <h2>정확한 forward-mode 곡률 도구</h2>
+    <p class="lead">
+      유한차분(FD)으로 2차 미분을 근사하면 부정확하고, 역방향 자동미분으로 Jacobian을 통째로 만들면
+      출력 차원 3HW에서 메모리가 터진다. forward-mode JVP는 <strong>단 한 번의 forward pass로 정확한
+      pushforward</strong>를, 두 번 합성하면 정확한 곡률을 — 상수 메모리로 준다.
+    </p>
+    <div class="grid2">
+      <div class="card green">
+        <h4>고차 pushforward, 정확하게</h4>
+        <p>1차 ∂I/∂α는 1 pass, 2차 ∂²I/∂α²는 composed JVP 2 pass, 임의 차수까지 상수 메모리.
+        StyleGAN1/2 + Diffusion에 수정 없이 적용.</p>
+      </div>
+      <div class="card green">
+        <h4>FD는 곡률을 복원 못 한다</h4>
+        <p>해석적 정답을 아는 toy map에서 검증: fp64 최적 조건에서도 FD 최선이
+        <span class="num">8.6e-9</span>, composed JVP는 <span class="num">2.5e-17</span> —
+        <span class="num">3.5억 배</span> 차이. 작은 step에선 cancellation으로 발산.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p><strong>이게 전체 여정에서 깨끗하게 살아남은 결과다.</strong> 도구 자체(<code>torch.func.jvp</code>의
+      얇은 래퍼)와 "FD로는 곡률을 못 잰다"는 검증된 사실 — 짧은 methods note로 정리됨.</p>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ===================== 가설의 진화 ===================== -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">03 · 시도한 것 — 가설의 진화</div>
+    <h2>같은 데이터, 여섯 번 뒤집힌 주장</h2>
+    <p class="lead">
+      "곡률 ρ가 편집 위험을 예측한다"는 가설은 검증할 때마다 모습을 바꿨다. 강한 주장이 나오면
+      적대적으로 공격했고, 그때마다 <em>강한 신호가 측정 artifact</em>임이 드러났다.
+      뒤집힘 자체가 발견이었다 — 신호는 약하고, 결론은 baseline 정의에 따라 흔들린다.
+    </p>
+    <div class="timeline">
+      <div class="tl-item dead">
+        <div class="tl-ver">v1 · 과대</div>
+        <div class="tl-title">"ρ가 편집 손상을 예측한다" <span class="tag dead">폐기</span></div>
+        <div class="tl-desc">초기엔 강한 예측력으로 보였다. 그러나 곡률은 trivial한 편집 크기(magnitude)를
+        넘는 가치를 거의 못 줬다.</div>
+      </div>
+      <div class="tl-item dead">
+        <div class="tl-ver">v2–v3 · 반대로 과대</div>
+        <div class="tl-title">"magnitude가 충분통계량, geometry는 0" <span class="tag dead">폐기</span></div>
+        <div class="tl-desc">반대 방향으로 과교정. 하지만 "0/41"의 baseline이 outcome과 결합된
+        leaky한 4-feature MAX였음이 드러남 — 그것도 artifact.</div>
+      </div>
+      <div class="tl-item weak">
+        <div class="tl-ver">v4 · 절충</div>
+        <div class="tl-title">"real-but-weak residual" <span class="tag weak">불안정</span></div>
+        <div class="tl-desc">중간 지점으로 수렴하는 듯했으나, "6/6 ordinal residual"이 사실은
+        <strong>between-attribute 난이도 proxy</strong>였다.</div>
+      </div>
+      <div class="tl-item dead">
+        <div class="tl-ver">v5 · 다시 과소</div>
+        <div class="tl-title">"ρ는 actionable signal이 아니다" <span class="tag dead">또 과대</span></div>
+        <div class="tl-desc">null 쪽으로 과교정. 세 기둥(C4b leak, LPIPS 부호반전, within-unit 붕괴)이
+        각각 tautology·순환논리·n=6 노이즈로 판명.</div>
+      </div>
+      <div class="tl-item live">
+        <div class="tl-ver">v6 · 데이터-진실 (floor)</div>
+        <div class="tl-title">곡률 = 약하고 baseline에 fragile한 신호 <span class="tag live">honest</span></div>
+        <div class="tl-desc">"ρ가 magnitude를 이기냐"는 baseline 정의에 따라 갈린다(abs_alpha는 이김,
+        realized-Δ는 못 이김). 이 <strong>fragility 자체가 robust한 발견</strong>이다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ===================== 엄격한 검증 ===================== -->
+<section class="block" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-label">04 · 엄격한 검증</div>
+    <h2>강한 신호를 스스로 공격하기</h2>
+    <p class="lead">
+      매 단계 다수의 독립 에이전트가 raw 데이터로 숫자를 재계산하고 주장을 <em>반박</em>하려 했다
+      (확인이 아니라 깨기). 같은 결론에 합의될 때만 신뢰했다. 잡아낸 측정 함정들:
+    </p>
+    <table class="facts">
+      <tr><th>발견된 artifact</th><th>정체</th></tr>
+      <tr><td>매칭쌍 magnitude leak (0.765 / 0.287)</td><td class="mono">tautology — 무작위 selector도 재현</td></tr>
+      <tr><td>"LPIPS 통제 시 부호 반전"</td><td class="mono">순환 — 손상을 손상의 복사본으로 통제</td></tr>
+      <tr><td>cross-encoder "invariance" (Pearson 0.99)</td><td class="mono">outlier-driven — 1개 빼면 0.10</td></tr>
+      <tr><td>"Chronos가 baseline 박살" (TSFM)</td><td class="mono">baseline-starvation — 짧은 series</td></tr>
+      <tr><td>92.86% cross-domain 클러스터링</td><td class="mono">single-seed, n=14, CI 없음</td></tr>
+    </table>
+    <div class="callout">
+      <p><strong>이 검증 과정이 연구의 진짜 자산이다.</strong> 743개 감사 실행(0 실패), seed 고정,
+      bit-identical 재현(17자리), permutation null — 약한 효과를 강한 척하지 않게 막았다.</p>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ===================== 살아남은 것 vs 무너진 것 ===================== -->
+<section class="block">
+  <div class="container">
+    <div class="section-label">05 · 정직한 결산</div>
+    <h2>무엇이 살아남고 무엇이 무너졌나</h2>
+    <div class="grid2">
+      <div class="card green">
+        <h4>살아남음</h4>
+        <p>① forward-mode JVP 곡률 도구 (cross-arch, 정확)</p>
+        <p>② FD는 곡률을 복원 못 한다 (toy로 airtight)</p>
+        <p>③ per-layer 곡률 단조감소 (8/8, Spearman −0.96~−0.80)</p>
+        <p>④ 곡률-vs-magnitude의 baseline-fragility를 규명한 것</p>
+      </div>
+      <div class="card red">
+        <h4>무너짐 (정직하게)</h4>
+        <p>① edit-risk를 예측·제어하는 actionable 신호 — fragile</p>
+        <p>② "magnitude가 충분통계량" — leakage artifact</p>
+        <p>③ cross-encoder 보편성 — outlier-driven</p>
+        <p>④ TSFM 오염 감사 — 깨끗한 finding 없어 shelved</p>
+      </div>
+    </div>
+  </div>
+</section>
+<hr class="divider">
+
+<!-- ===================== 메타 교훈 ===================== -->
+<section class="block" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-label">06 · 메타 교훈</div>
+    <h2>적대적 감사는 효과를 깎는다 — 그게 정직함의 대가</h2>
+    <p class="lead">
+      HIGAN edit-risk에 이어 TSFM 오염 감사까지, 두 프로젝트 모두 같은 패턴을 보였다:
+      <strong>강한 신호 = artifact, 진짜 효과 = thin.</strong> 이건 우연이 아니라 구조적이다 —
+      "주장된 효과 X가 진짜냐"를 엄격히 감사하면, 대부분의 효과가 부풀려져 있으니
+      <em>깎는(deflationary) 결과</em>로 수렴한다.
+    </p>
+    <p>
+      이 접근의 산출물은 정직하지만 thin하고, top-venue가 원하는 "새로 되는 것"이 아니라
+      "주장이 안 맞다"는 쪽이다. 그래서 멈췄다. 손실을 키우는 대신 깨끗한 것(도구 + FD-non-recoverability)을
+      banking하고, 다음 큰 시도는 <strong>감사가 아니라 positive-construction</strong>으로 — 새 시점에.
+    </p>
+    <div class="callout">
+      <p><strong>그래도 이 여정에서 배운 rigor는 남는다.</strong> 6번의 뒤집힘을 worflow 6번이 아니라
+      Day 3에 잡게 된 것 — 적어도 자기 자신을 속이지 않는 법은 작동했다.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>HIGAN 일반화 연구 여정 · 2026 · 정직한 회고</p>
+  <p style="margin-top:0.6rem;">
+    <a href="/projects/higan/">HIGAN v2 보고서</a> &nbsp;·&nbsp;
+    <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">github.com/soccz/HIGAN</a> &nbsp;·&nbsp;
+    <a href="/">소찬 · soccz</a>
+  </p>
+</footer>
+
+</body>
+</html>
