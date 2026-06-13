@@ -1,327 +1,518 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HIGAN 일반화 — forward-mode 곡률로 생성모델을 해석하려던 여정</title>
-  <meta name="description" content="HIGAN 침실 saliency를 cross-architecture 미분기하 프레임워크로 일반화하려던 연구 여정의 정직한 기록. forward-mode JVP로 고차 곡률을 정확히 재고, 곡률이 edit-risk를 예측·제어하는지 묻고, 엄격한 adversarial 검증으로 무엇이 살아남고 무엇이 artifact였는지 정리한다.">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+<html lang="ko"><head>
+<meta charset="UTF-8"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIGAN 일반화 — 전체 실험 기록</title>
+<meta name="description" content="HIGAN을 cross-architecture 미분기하로 일반화하려던 연구 여정의 전체 실험 기록 — 56개 분석 트랙, 95개 control 검증 버전, 210개 결과 폴더. 성공과 실패를 과장 없이 전부 남긴다.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#fafaf9;--bg2:#f5f5f4;--card:#fff;--tx:#1c1917;--tx2:#57534e;--mut:#a8a29e;--ac:#44403c;--acd:rgba(68,64,60,.07);--red:#b91c1c;--grn:#15803d;--amb:#b45309;--bd:#e7e5e4;--bdl:#d6d3d1;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);line-height:1.72;-webkit-font-smoothing:antialiased;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 2rem;background:rgba(250,250,249,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;}
+nav a.home{font-family:'Noto Serif KR',serif;font-weight:700;color:var(--tx);text-decoration:none;font-size:.92rem;}
+nav .nr a{color:var(--tx2);text-decoration:none;font-size:.8rem;margin-left:1.2rem;}
+nav .nr a:hover{color:var(--ac);}
+.container{max-width:1040px;margin:0 auto;padding:0 2rem;}
+.hero{min-height:78vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:7rem 2rem 3.5rem;background:radial-gradient(ellipse at 30% 40%,rgba(120,113,108,.04) 0%,transparent 55%);}
+.hl{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mut);border:1px solid var(--bdl);border-radius:100px;padding:.4rem 1.1rem;display:inline-block;margin-bottom:1.6rem;}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(1.9rem,5vw,3rem);font-weight:700;line-height:1.32;margin-bottom:1.4rem;}
+.hero h1 em{font-style:normal;color:var(--amb);}
+.hsub{font-size:1rem;color:var(--tx2);max-width:720px;margin:0 auto 2.4rem;line-height:1.85;}
+.hstats{display:flex;justify-content:center;gap:2.2rem;flex-wrap:wrap;margin-bottom:2.4rem;}
+.hs{text-align:center;}.hsn{font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;color:#292524;display:block;line-height:1.2;}
+.hsl{font-size:.72rem;color:var(--mut);letter-spacing:.04em;}
+.hb{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.3rem;border:1px solid var(--bdl);border-radius:8px;color:var(--tx2);text-decoration:none;font-size:.86rem;font-weight:500;transition:all .15s;background:var(--card);}
+.btn:hover{border-color:var(--ac);color:var(--ac);}.btn.pr{background:var(--ac);color:var(--bg);border-color:var(--ac);}.btn.pr:hover{background:#292524;color:#fff;}
+hr{border:none;border-top:1px solid var(--bd);margin:0;}
+section.bl{padding:4rem 0;}section.bl.alt{background:var(--bg2);}
+.lab{font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mut);margin-bottom:.7rem;}
+h2{font-family:'Noto Serif KR',serif;font-size:1.6rem;font-weight:700;line-height:1.4;margin-bottom:1rem;}
+p.lead{font-size:1rem;color:var(--tx2);margin-bottom:1.2rem;}p{color:var(--tx2);margin-bottom:.9rem;}
+em{font-style:normal;color:var(--amb);font-weight:500;}strong{color:var(--tx);font-weight:700;}
+code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:var(--bg2);padding:.1rem .35rem;border-radius:4px;border:1px solid var(--bd);color:var(--ac);}
+.tag{display:inline-block;font-size:.64rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.03em;}
+.tag.ok{background:rgba(21,128,61,.1);color:var(--grn);}.tag.fail{background:rgba(185,28,28,.09);color:var(--red);}
+.tag.mixed{background:rgba(180,83,9,.1);color:var(--amb);}.tag.live{background:rgba(21,128,61,.1);color:var(--grn);}.tag.dead{background:rgba(185,28,28,.09);color:var(--red);}.tag.weak{background:rgba(180,83,9,.1);color:var(--amb);}
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--bd);border-radius:10px;margin:1.4rem 0;background:var(--card);}
+table.led{width:100%;border-collapse:collapse;font-size:.82rem;}
+table.led th{text-align:left;padding:.7rem .9rem;background:var(--bg2);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);position:sticky;top:0;}
+table.led td{padding:.6rem .9rem;border-top:1px solid var(--bd);vertical-align:top;}
+table.led td.tk{font-weight:600;color:var(--tx);min-width:180px;}
+table.led pre{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--tx2);white-space:pre-wrap;line-height:1.5;max-width:560px;}
+table.led tr.r-fail td.tk{color:var(--red);}
+table.ctl{width:100%;border-collapse:collapse;font-size:.8rem;}
+table.ctl th{text-align:left;padding:.6rem .8rem;background:var(--bg2);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);}
+table.ctl td{padding:.5rem .8rem;border-top:1px solid var(--bd);vertical-align:top;}
+table.ctl td.vn{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--tx);white-space:nowrap;}
+table.ctl td.ne{font-family:'JetBrains Mono',monospace;color:var(--tx2);text-align:center;}
+table.ctl td.pp{color:var(--tx2);line-height:1.55;}
+.ph{font-size:.62rem;font-weight:700;padding:.08rem .4rem;border-radius:4px;letter-spacing:.02em;white-space:nowrap;}
+.ph-controller{background:rgba(68,64,60,.1);color:var(--ac);}.ph-feasible{background:rgba(180,83,9,.1);color:var(--amb);}
+.ph-predictive{background:rgba(21,128,61,.1);color:var(--grn);}.ph-stress{background:rgba(120,113,108,.12);color:var(--tx2);}
+.ph-audit{background:rgba(28,25,23,.07);color:var(--mut);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.5rem 0;}
+@media(max-width:680px){.grid2{grid-template-columns:1fr;}.hstats{gap:1.3rem;}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.4rem 1.5rem;}
+.card.g{border-left:4px solid var(--grn);}.card.r{border-left:4px solid var(--red);}
+.card h4{font-size:.92rem;font-weight:700;margin-bottom:.5rem;}.card p{font-size:.86rem;margin-bottom:.45rem;line-height:1.6;}
+.card .num{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--tx);}
+.callout{background:var(--acd);border-left:4px solid var(--ac);border-radius:0 8px 8px 0;padding:1.2rem 1.5rem;margin:1.5rem 0;}
+.callout p{margin-bottom:.35rem;font-size:.9rem;}.callout p:last-child{margin-bottom:0;}
+.tl{border-left:2px solid var(--bdl);margin:1.4rem 0;padding-left:1.7rem;}
+.tli{position:relative;padding-bottom:1.5rem;}
+.tli::before{content:'';position:absolute;left:-2.26rem;top:.35rem;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--ac);}
+.tli.dead::before{border-color:var(--red);}.tli.live::before{border-color:var(--grn);}.tli.weak::before{border-color:var(--amb);}
+.tlv{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--mut);}
+.tlt{font-weight:700;color:var(--tx);margin:.12rem 0 .25rem;}.tld{font-size:.88rem;color:var(--tx2);line-height:1.6;}
+.note{font-size:.78rem;color:var(--mut);margin-top:.6rem;}
+footer{padding:3.2rem 2rem;text-align:center;border-top:1px solid var(--bd);color:var(--mut);font-size:.8rem;}
+footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
+</style></head><body>
+<nav><a class="home" href="/">소찬 · soccz</a>
+<div class="nr"><a href="/projects/higan/">← HIGAN v2 보고서</a><a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub ↗</a></div></nav>
 
-    :root {
-      --bg-primary: #fafaf9; --bg-secondary: #f5f5f4; --bg-card: #ffffff;
-      --text-primary: #1c1917; --text-secondary: #57534e; --text-muted: #a8a29e;
-      --accent: #44403c; --accent-dim: rgba(68,64,60,0.07);
-      --accent-red: #b91c1c; --accent-green: #15803d; --accent-amber: #b45309;
-      --border: #e7e5e4; --border-light: #d6d3d1;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary);
-      color: var(--text-primary); line-height: 1.75; -webkit-font-smoothing: antialiased; }
+<section class="hero"><div>
+<div class="hl">FULL EXPERIMENT RECORD · 전체 실험 기록</div>
+<h1>HIGAN을 <em>일반화</em>하려던 여정<br>— 시도한 것 전부, 과장 없이</h1>
+<p class="hsub">침실 saliency 한 장을 cross-architecture 미분기하 프레임워크로 키우려 했다.
+56개 분석 트랙, <strong>95개 control 검증 버전</strong>, 210개 결과 폴더 —
+성공과 실패가 끝없이 반복됐다. 강한 신호가 보일 때마다 스스로를 적대적으로 검증했고,
+대부분이 측정 artifact였다. 이 페이지는 그 전부를 데이터 그대로 남긴다.</p>
+<div class="hstats">
+<div class="hs"><span class="hsn">56</span><span class="hsl">분석 트랙</span></div>
+<div class="hs"><span class="hsn">95</span><span class="hsl">control 검증 버전</span></div>
+<div class="hs"><span class="hsn">210</span><span class="hsl">결과 폴더</span></div>
+<div class="hs"><span class="hsn">28</span><span class="hsl">분석 스크립트</span></div>
+</div>
+<div class="hb">
+<a class="btn pr" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub: soccz/HIGAN</a>
+<a class="btn" href="/projects/higan/">← HIGAN v2 보고서</a></div>
+</div></section><hr>
 
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem;
-      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    nav a.home { font-family: 'Noto Serif KR', serif; font-weight: 700; color: var(--text-primary); text-decoration: none; font-size: 0.95rem; }
-    nav .nav-right a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; margin-left: 1.4rem; }
-    nav .nav-right a:hover { color: var(--accent); }
+<section class="bl"><div class="container">
+<div class="lab">01 · 목표</div><h2>한 장의 saliency를 프레임워크로</h2>
+<p class="lead">HIGAN v2는 침실 GAN의 잠재방향이 이미지의 <em>어디</em>에 작용하는지 픽셀 saliency로 보였다.
+그건 결국 생성기 매니폴드의 <strong>1차 pushforward</strong>다. 그렇다면 2차(곡률)는? 그 곡률이
+아키텍처를 가로질러 의미를 담고 <strong>편집 위험을 예측</strong>한다면 한 장의 그림이 하나의 이론이 된다.
+그래서 forward-mode 미분기하 도구를 만들고, StyleGAN1·2·Diffusion을 가로질러 곡률을 측정하고,
+<em>곡률이 클수록 편집이 정체성을 망가뜨린다</em>는 가설을 검증하기로 했다.</p>
+</div></section><hr>
 
-    .container { max-width: 920px; margin: 0 auto; padding: 0 2rem; }
+<section class="bl alt"><div class="container">
+<div class="lab">02 · 전체 실험 원장 — 56개 분석 트랙</div>
+<h2>매 트랙의 결과, 성공도 실패도 그대로</h2>
+<p class="lead">5라운드에 걸쳐 돌린 분석 트랙 전부. <span class="tag ok">OK</span> 견고,
+<span class="tag mixed">MIXED</span> 부분/도메인 의존, <span class="tag fail">FAIL</span> 정직한 실패.</p>
+<div class="tbl-wrap"><table class="led">
+<thead><tr><th>판정</th><th>트랙</th><th>결과 (raw)</th></tr></thead>
+<tbody>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 1: SD C1/C2</td><td><pre>smile        t_idx=  35  ρ=0.043  CLIP-path=7.570
+  smile        t_idx=  25  ρ=0.092  CLIP-path=7.986
+  smile        t_idx=  15  ρ=0.559  CLIP-path=7.520
+  age          t_idx=  35  ρ=0.051  CLIP-path=8.103
+  age          t_idx=  25  ρ=0.071  CLIP-path=8.460
+  age          t_idx=  15  ρ=0.547  CLIP-path=7.711
+  gender       t_idx=  35  ρ=0.049  CLIP-path=7.934
+  gender       t_idx=  25  ρ=0.065  CLIP-path=7.551
+  gender       t_idx=  15  ρ=0.358  CLIP-path=7.029
+  eyeglasses   t_idx=  35  ρ=0.049  CLIP-path=7.928
+  eyeglasses   t_idx=  25  ρ=0.066  CLIP-path=7.977
+  eyeglasses   t_idx=  15  ρ=0</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 3 scaling, bedroom (v1 ratio-of-means)</td><td><pre>N=   8  indoor_lighting=0.339±0.068  wood=0.465±0.073  view=9.484±6.992  carpet=0.511±0.203  cluttered_space=0.465±0.070  glossy=0.393±0.074  dirt=0.333±0.072  scary=0.278±0.060
+  N=  16  indoor_lighting=0.432±0.181  wood=0.536±0.131  view=6.767±3.828  carpet=0.629±0.271  cluttered_space=0.537±0.064  glossy=0.406±0.043  dirt=0.360±0.049  scary=0.292±0.036
+  N=  32  indoor_lighting=0.498±0.169  wood=0.573±0.126  view=6.285±2.937  carpet=0.753±0.279  cluttered_space=0.545±0.072  glossy=0.400±0.044  dirt=0.342±0.038  scary=0.285±0.027
+  N=  64  indoor_lighting=0.522±0.146  wood=0.603±0.125  view=</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 3 scaling, bedroom (v2 mean-of-ratios)</td><td><pre>N=   8  indoor_lighting=0.649±0.098  wood=0.945±0.245  view=53.181±35.711  carpet=0.945±0.351  cluttered_space=0.971±0.156  glossy=0.873±0.251  dirt=0.726±0.187  scary=0.627±0.186
+  N=  16  indoor_lighting=0.847±0.279  wood=1.041±0.223  view=36.608±19.494  carpet=1.173±0.383  cluttered_space=1.232±0.217  glossy=0.977±0.207  dirt=0.859±0.227  scary=0.656±0.120
+  N=  32  indoor_lighting=0.953±0.284  wood=1.150±0.258  view=38.073±20.033  carpet=1.357±0.429  cluttered_space=1.241±0.251  glossy=0.965±0.191  dirt=0.792±0.160  scary=0.660±0.106
+  N=  64  indoor_lighting=0.975±0.233  wood=1.169±0.228 </pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 3 scaling, ffhq (v1 ratio-of-means)</td><td><pre>N=   8  smile=1.187±0.322  age=4.406±1.575  pose=21.818±5.209  gender=5.053±1.593  eyeglasses=10.980±5.534
+  N=  16  smile=1.220±0.229  age=3.950±0.959  pose=20.583±4.082  gender=5.025±1.329  eyeglasses=8.022±3.245
+  N=  32  smile=1.231±0.194  age=3.647±0.627  pose=23.508±4.712  gender=5.104±0.779  eyeglasses=6.755±1.875
+  N=  64  smile=1.273±0.159  age=3.481±0.510  pose=21.551±2.990  gender=4.887±0.500  eyeglasses=5.564±1.125
+  N= 128  smile=1.266±0.120  age=3.453±0.389  pose=20.779±1.927  gender=4.698±0.386  eyeglasses=5.298±0.885</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 3 scaling, ffhq (v2 mean-of-ratios)</td><td><pre>N=   8  smile=4.056±1.312  age=18.985±7.413  pose=150.904±40.835  gender=23.893±10.697  eyeglasses=44.549±23.258
+  N=  16  smile=4.105±0.818  age=17.427±5.189  pose=149.529±51.529  gender=23.569±8.791  eyeglasses=31.464±13.576
+  N=  32  smile=3.929±0.650  age=16.995±4.106  pose=166.373±55.218  gender=25.631±6.335  eyeglasses=27.625±8.323
+  N=  64  smile=3.971±0.503  age=15.429±2.698  pose=151.184±34.317  gender=23.455±3.672  eyeglasses=23.309±4.878
+  N= 128  smile=3.973±0.423  age=15.655±2.155  pose=166.685±30.413  gender=22.111±2.605  eyeglasses=22.389±3.799</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 3 scaling, church (v1 ratio-of-means)</td><td><pre>N=   8  clouds=0.039±0.007  sunny=0.037±0.003  vegetation=0.042±0.011
+  N=  16  clouds=0.040±0.005  sunny=0.044±0.005  vegetation=0.042±0.007
+  N=  32  clouds=0.038±0.003  sunny=0.042±0.003  vegetation=0.043±0.005
+  N=  64  clouds=0.036±0.002  sunny=0.040±0.002  vegetation=0.043±0.003
+  N= 128  clouds=0.036±0.001  sunny=0.039±0.001  vegetation=0.043±0.003</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 3 scaling, church (v2 mean-of-ratios)</td><td><pre>N=   8  clouds=0.091±0.019  sunny=0.068±0.008  vegetation=0.057±0.011
+  N=  16  clouds=0.089±0.011  sunny=0.070±0.006  vegetation=0.058±0.007
+  N=  32  clouds=0.084±0.007  sunny=0.067±0.004  vegetation=0.057±0.005
+  N=  64  clouds=0.080±0.004  sunny=0.063±0.003  vegetation=0.058±0.003
+  N= 128  clouds=0.077±0.003  sunny=0.061±0.002  vegetation=0.056±0.003</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 5 latentclr_ffhq]  K=20  epochs_done=50  final_loss=1.7279</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 5 latentclr_ffhq_v2]  K=50  epochs_done=24  final_loss=2.6198</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 5 disco_ffhq]  K=20  epochs_done=50  final_loss=1.7279</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 5 disco_ffhq_v2]  K=50  epochs_done=10  final_loss=2.6198</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 4 C5 FFHQ eval — v1 (w_mse=0.1, 40k iter)</td><td><pre>iter=  1000  recon_mse=0.3112  sal_corr_mean=+0.086
+  iter=  5000  recon_mse=0.5652  sal_corr_mean=+0.077
+  iter= 10000  recon_mse=0.3677  sal_corr_mean=+0.070
+  iter= 20000  recon_mse=0.2663  sal_corr_mean=+0.079
+  iter= 40000  recon_mse=0.3128  sal_corr_mean=+0.078
+  iter= 60000  recon_mse=0.3230  sal_corr_mean=+0.080
+  iter= 80000  recon_mse=0.3028  sal_corr_mean=+0.083</pre></td></tr>
+<tr class="r-fail"><td><span class="tag fail">FAIL</span></td><td class="tk">Track 4 C5 FFHQ eval — v2 (w_mse=2.0, 160k iter)</td><td><pre>iter=  5000  recon_mse=0.3753  sal_corr_mean=+0.072
+  iter= 20000  recon_mse=0.4117  sal_corr_mean=+0.067
+  iter= 40000  recon_mse=0.2888  sal_corr_mean=+0.076
+  iter= 80000  recon_mse=0.2961  sal_corr_mean=+0.078
+  iter=120000  recon_mse=0.3426  sal_corr_mean=+0.069
+  iter=160000  recon_mse=0.3596  sal_corr_mean=+0.056</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 2 editing head-to-head</td><td><pre>smile        curvature_low         ID-cos=0.981  Δattr=+0.000
+  smile        curvature_high        ID-cos=0.915  Δattr=+0.001
+  smile        random                ID-cos=0.953  Δattr=-0.001
+  age          curvature_low         ID-cos=0.951  Δattr=+0.001
+  age          curvature_high        ID-cos=0.786  Δattr=+0.004
+  age          random                ID-cos=0.901  Δattr=+0.004
+  pose         curvature_low         ID-cos=0.974  Δattr=-0.000
+  pose         curvature_high        ID-cos=0.824  Δattr=+0.011
+  pose         random                ID-cos=0.938  Δattr=+0.001
+  gender       curvature_l</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 6 DAAM] /mnt/20t/study/HIGAN/paper/experiments/out/sd_daam/daam_maps.json ready</td><td><pre>—</pre></td></tr>
+<tr class="r-fail"><td><span class="tag fail">FAIL</span></td><td class="tk">Track 7 Park reproduction]  top-1 σ=0.0015166536322794855  top-1 ρ=0.04250712944236238  Spearman σ↔ρ=-0.15</td><td><pre>—</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 8 truncation-ψ</td><td><pre>ψ=0.5  smile=1.273  age=3.481  pose=21.550  gender=4.886  eyeglasses=5.561
+  ψ=0.7  smile=1.273  age=3.481  pose=21.550  gender=4.886  eyeglasses=5.561
+  ψ=1.0  smile=1.273  age=3.481  pose=21.550  gender=4.886  eyeglasses=5.561
+  rank-stability 0.5_vs_0.7: Spearman r=+1.000
+  rank-stability 0.5_vs_1.0: Spearman r=+1.000
+  rank-stability 0.7_vs_1.0: Spearman r=+1.000</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 9 multi-CLIP C2</td><td><pre>ViT-B-32   bedroom   Pearson=+0.991  Spearman=+0.429
+  ViT-B-32   ffhq      Pearson=+0.970  Spearman=+1.000
+  ViT-L-14   bedroom   Pearson=+0.987  Spearman=+0.429
+  ViT-L-14   ffhq      Pearson=+0.977  Spearman=+1.000
+  ViT-H-14   bedroom   Pearson=+0.989  Spearman=+0.286
+  ViT-H-14   ffhq      Pearson=+0.966  Spearman=+1.000</pre></td></tr>
+<tr class="r-fail"><td><span class="tag fail">FAIL</span></td><td class="tk">Track 10 per-layer C1, bedroom]  argmax-in-canonical rate: 0.125</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 10 per-layer C1, ffhq]  argmax-in-canonical rate: 0.8</td><td><pre>—</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 11 wall-clock]  JVP=45.6ms  FD=18.4ms  vmap-vjp@256px=None</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 12 C6 scaling, bedroom</td><td><pre>N= 128  P=0.88  R=0.88  F1=0.88
+  N= 192  P=0.75  R=0.88  F1=0.81
+  N= 256  P=0.88  R=0.75  F1=0.81
+  N= 384  P=0.75  R=0.88  F1=0.81
+  N= 512  P=0.75  R=0.75  F1=0.75
+  N= 768  P=0.88  R=0.88  F1=0.88</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 13 FFHQ resolution</td><td><pre>lod=0  smile=1.231  age=3.651  pose=23.541  gender=5.106  eyeglasses=6.753
+  lod=1  smile=1.174  age=2.992  pose=19.197  gender=4.140  eyeglasses=5.762
+  lod=2  smile=1.044  age=2.505  pose=16.050  gender=3.540  eyeglasses=4.765</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 14 noise robustness, bedroom]  mean pairwise Spearman = +0.986</td><td><pre>—</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 14 noise robustness, ffhq]  mean pairwise Spearman = +1.000</td><td><pre>—</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 17 intrinsic dim, bedroom]  median rank = 50.44835662841797</td><td><pre>—</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 17 intrinsic dim, ffhq]  median rank = 63.74713134765625</td><td><pre>—</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 18 FD validation</td><td><pre>view: ε=0.1:m2_rel=2e+00  ε=0.01:m2_rel=7e+00  ε=0.001:m2_rel=2e+01  ε=0.0001:m2_rel=7e+01  ε=1e-05:m2_rel=6e+02
+  indoor_lighting: ε=0.1:m2_rel=6e+00  ε=0.01:m2_rel=2e+01  ε=0.001:m2_rel=4e+01  ε=0.0001:m2_rel=2e+02  ε=1e-05:m2_rel=2e+03
+  wood: ε=0.1:m2_rel=5e+00  ε=0.01:m2_rel=1e+01  ε=0.001:m2_rel=3e+01  ε=0.0001:m2_rel=2e+02  ε=1e-05:m2_rel=1e+03</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 19 DINOv2 path curvature</td><td><pre>bedroom   Pearson=+0.977  Spearman=+0.429
+  ffhq      Pearson=+0.937  Spearman=+0.900</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 20 α magnitude scan</td><td><pre>smile        log-slope = -0.086
+  age          log-slope = -0.146
+  pose         log-slope = -0.486
+  gender       log-slope = -0.123
+  eyeglasses   log-slope = -0.157</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 21 C2 path curvature, bedroom</td><td><pre>view               mean_ratio=6.262  median=6.395
+  indoor_lighting    mean_ratio=2.707  median=2.616
+  wood               mean_ratio=3.060  median=2.942
+  glossy             mean_ratio=2.813  median=2.757
+  carpet             mean_ratio=3.205  median=3.047
+  dirt               mean_ratio=2.844  median=2.726
+  scary              mean_ratio=2.772  median=2.641
+  cluttered_space    mean_ratio=2.946  median=2.821
+  vs_pixel  Pearson=+0.991  Spearman=+0.429</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 21 C2 path curvature, ffhq</td><td><pre>pose               mean_ratio=6.329  median=6.524
+  gender             mean_ratio=3.507  median=3.442
+  age                mean_ratio=3.083  median=3.084
+  eyeglasses         mean_ratio=3.681  median=3.712
+  smile              mean_ratio=2.141  median=2.113
+  vs_pixel  Pearson=+0.970  Spearman=+1.000</pre></td></tr>
+<tr class="r-fail"><td><span class="tag fail">FAIL</span></td><td class="tk">Track 22 C2 saliency-vs-segmentation, bedroom]  Spearman r = None</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 23 C3 layer-IOU, bedroom]  mean_c3=0.087  top_frac=0.200  N=16</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 23 C3 layer-IOU, ffhq]  mean_c3=0.161  top_frac=0.200  N=8</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 24 C3 threshold sweep, bedroom]  thresholds=[&#x27;0.1&#x27;, &#x27;0.2&#x27;, &#x27;0.3&#x27;, &#x27;0.5&#x27;</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 24 C3 threshold sweep, ffhq]  thresholds=[&#x27;0.1&#x27;, &#x27;0.2&#x27;, &#x27;0.3&#x27;, &#x27;0.5&#x27;</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 25 C4 composition, bedroom]  Pearson=+0.162  Spearman=+0.480  n_pairs=28</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 25 C4 composition, ffhq]  Pearson=+0.169  Spearman=+0.806  n_pairs=?</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 25 C4 composition, church]  Pearson=+0.397  Spearman=+0.500  n_pairs=3</td><td><pre>—</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 26 C4 robustness (composition ablations)</td><td><pre>bedroom  full          n=28  Spearman=+0.480
+  bedroom  no_view       n=21  Spearman=-0.166
+  bedroom  only_view     n=7  Spearman=-0.857
+  ffhq     full          n=10  Spearman=+0.806
+  ffhq     no_pose       n=6  Spearman=+0.600
+  ffhq     only_pose     n=4  Spearman=+0.400</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 27 C6 precision/recall</td><td><pre>bedroom  top-1  P=0.75  R=0.38  F1=0.50  P_lift=+0.68  R_lift=-0.03
+  bedroom  top-2  P=0.88  R=0.50  F1=0.64  P_lift=+0.74  R_lift=-0.14
+  bedroom  top-3  P=1.00  R=0.62  F1=0.77  P_lift=+0.81  R_lift=-0.14
+  bedroom  top-4  P=1.00  R=0.75  F1=0.86  P_lift=+0.75  R_lift=-0.10
+  ffhq     top-1  P=0.38  R=0.60  F1=0.46  P_lift=+0.25  R_lift=-0.05
+  ffhq     top-2  P=0.75  R=0.80  F1=0.77  P_lift=+0.51  R_lift=-0.07
+  ffhq     top-3  P=1.00  R=1.00  F1=1.00  P_lift=+0.66  R_lift=+0.05
+  ffhq     top-4  P=1.00  R=1.00  F1=1.00  P_lift=+0.57  R_lift=+0.02</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 28 CLIP-GradCAM baseline, clip_gradcam</td><td><pre>view         corr=-0.049  IOU=0.089
+  indoor_lighting corr=-0.071  IOU=0.101
+  wood         corr=-0.105  IOU=0.089
+  glossy       corr=-0.097  IOU=0.094</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 28 CLIP-GradCAM baseline, ffhq_clip_gradcam</td><td><pre>pose         corr=-0.017  IOU=0.200
+  smile        corr=-0.001  IOU=0.200
+  eyeglasses   corr=-0.013  IOU=0.200
+  age          corr=-0.020  IOU=0.200
+  gender       corr=-0.013  IOU=0.200</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 29 spatial diversity, bedroom</td><td><pre>ganspace     spatial_div=0.705  mean_IOU=0.295  n_dirs=8
+  sefa         spatial_div=0.714  mean_IOU=0.286  n_dirs=8
+  random       spatial_div=0.737  mean_IOU=0.263  n_dirs=8
+  higan_gt     spatial_div=0.687  mean_IOU=0.313  n_dirs=8</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 30 baselines sweep, bedroom_baselines_sweep</td><td><pre>ganspace    best K=16  n_coverage=7  diversity=10
+  sefa        best K=16  n_coverage=7  diversity=7
+  random      best K=12  n_coverage=7  diversity=9</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 30 baselines sweep, ffhq_baselines_sweep</td><td><pre>ganspace    best K=8  n_coverage=5  diversity=4
+  sefa        best K=8  n_coverage=4  diversity=6
+  random      best K=16  n_coverage=4  diversity=6</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 31 cross-domain k=2 signature]  agreement=0.778 (14/18)</td><td><pre>—</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 33 church (StyleGAN2) — higher-order ratio 2nd/1st</td><td><pre>clouds       ratio_mean=0.0427  p95=0.0741
+  sunny        ratio_mean=0.0448  p95=0.0654
+  vegetation   ratio_mean=0.0429  p95=0.0961</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 35 FFHQ higher-order (∂²/∂¹ ratio)</td><td><pre>smile        ratio_mean=1.750  p95=3.625
+  age          ratio_mean=7.622  p95=17.034
+  pose         ratio_mean=49.868  p95=138.143
+  gender       ratio_mean=8.705  p95=20.354
+  eyeglasses   ratio_mean=22.822  p95=50.958</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 36 FFHQ C6 discovery]  K=8 clusters from 96 candidate directions</td><td><pre>cluster 0: &#x27;open mouth&#x27; (Δ=+0.0033)
+  cluster 1: &#x27;dark hair&#x27; (Δ=+0.0021)
+  cluster 2: &#x27;dark hair&#x27; (Δ=+0.0033)
+  cluster 3: &#x27;blond hair&#x27; (Δ=+0.0012)
+  cluster 4: &#x27;an old face&#x27; (Δ=+0.0092)
+  cluster 5: &#x27;blond hair&#x27; (Δ=+0.0009)
+  cluster 6: &#x27;a side profile&#x27; (Δ=+0.0023)
+  cluster 7: &#x27;a forehead&#x27; (Δ=+0.0000)</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 37 SD C1/C2 at N=64</td><td><pre>smile        t=35  ρ=0.046
+  smile        t=25  ρ=0.060
+  smile        t=15  ρ=0.175
+  age          t=35  ρ=0.049
+  age          t=25  ρ=0.079
+  age          t=15  ρ=0.260
+  gender       t=35  ρ=0.050
+  gender       t=25  ρ=0.071
+  gender       t=15  ρ=0.246
+  eyeglasses   t=35  ρ=0.046
+  eyeglasses   t=25  ρ=0.065
+  eyeglasses   t=15  ρ=0.191
+  pose         t=35  ρ=0.043
+  pose         t=25  ρ=0.065
+  pose         t=15  ρ=0.330</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 38 8x14 attribute-layer saliency matrix, bedroom</td><td><pre>carpet             peak L=0  canonical=[6, 7, 8, 9, 10, 11]
+  cluttered_space    peak L=0  canonical=[6, 7, 8, 9, 10, 11]
+  dirt               peak L=0  canonical=[6, 7, 8, 9, 10, 11]
+  glossy             peak L=0  canonical=[6, 7, 8, 9, 10, 11]
+  indoor_lighting    peak L=0  canonical=[6, 7, 8, 9, 10, 11]
+  scary              peak L=0  canonical=[6, 7, 8, 9, 10, 11]
+  view               peak L=0  canonical=[0, 1, 2, 3, 4]
+  wood               peak L=0  canonical=[6, 7, 8, 9, 10, 11]</pre></td></tr>
+<tr class="r-ok"><td><span class="tag ok">OK</span></td><td class="tk">Track 39 CLIP zero-shot cluster labels</td><td><pre>cluster 0:  top-1 = &#x27;soft texture&#x27; (Δ=+0.009)
+  cluster 1:  top-1 = &#x27;clean room&#x27; (Δ=+0.004)
+  cluster 2:  top-1 = &#x27;a view through a window&#x27; (Δ=+0.021)
+  cluster 3:  top-1 = &#x27;soft texture&#x27; (Δ=+0.004)
+  cluster 4:  top-1 = &#x27;soft texture&#x27; (Δ=+0.022)
+  cluster 5:  top-1 = &#x27;clean room&#x27; (Δ=+0.007)
+  cluster 6:  top-1 = &#x27;metal surface&#x27; (Δ=+0.003)
+  cluster 7:  top-1 = &#x27;soft texture&#x27; (Δ=+0.003)</pre></td></tr>
+<tr class="r-mixed"><td><span class="tag mixed">MIXED</span></td><td class="tk">Track 41 InterFaceGAN supervised baseline, FFHQ</td><td><pre>K=5  coverage=4/5 ([&#x27;age&#x27;, &#x27;eyeglasses&#x27;, &#x27;gender&#x27;, &#x27;smile&#x27;])  diversity=4  wall_time=1.62s
+  → SUPERVISED upper bound; unsupervised GANSpace matches at K=8</pre></td></tr>
+<tr class="r-fail"><td><span class="tag fail">FAIL</span></td><td class="tk">Track 40 Real LSUN photo encoder transfer</td><td><pre>N photos: 4
+  LPIPS optim-inv: 0.040±0.011
+  LPIPS encoder:   0.495±0.066
+  encoder gap: +1148% (synthetic-supervision limit)
 
-    /* hero */
-    .hero { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 7rem 2rem 4rem;
-      background: radial-gradient(ellipse at 30% 40%, rgba(120,113,108,0.04) 0%, transparent 55%),
-                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.025) 0%, transparent 50%); }
-    .hero-content { max-width: 880px; }
-    .hero-label { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-muted);
-      border: 1px solid var(--border-light); border-radius: 100px; padding: 0.4rem 1.1rem; display: inline-block; margin-bottom: 1.8rem; }
-    .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700;
-      line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 1.6rem; }
-    .hero h1 em { font-style: normal; color: var(--accent-amber); }
-    .hero-sub { font-size: 1.02rem; color: var(--text-secondary); max-width: 680px; margin: 0 auto 2.6rem; line-height: 1.85; }
-    .hero-stats { display: flex; justify-content: center; gap: 2.4rem; flex-wrap: wrap; margin-bottom: 2.6rem; }
-    .hero-stat { text-align: center; }
-    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.1rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
-    .hero-stat-label { font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.04em; }
-    .hero-buttons { display: flex; justify-content: center; gap: 0.9rem; flex-wrap: wrap; }
-    .hero-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem;
-      border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-secondary);
-      text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: all 0.15s; background: var(--bg-card); }
-    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
-    .hero-link.primary { background: var(--accent); color: #fafaf9; border-color: var(--accent); }
-    .hero-link.primary:hover { background: #292524; color: #fff; }
+[Main claim A edit-regime prediction]
+  log10_pixel_rho      n=16  AUROC=1.000  LODO-acc=0.867
+  clip_path_ratio      n=13  AUROC=1.000  LODO-acc=0.900
 
-    hr.divider { border: none; border-top: 1px solid var(--border); margin: 0; }
-    section.block { padding: 4.5rem 0; }
-    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
-    h2 { font-family: 'Noto Serif KR', serif; font-size: 1.7rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.1rem; letter-spacing: -0.01em; }
-    h3 { font-size: 1.1rem; font-weight: 700; margin: 1.6rem 0 0.6rem; }
-    p.lead { font-size: 1.02rem; color: var(--text-secondary); margin-bottom: 1.4rem; }
-    p { color: var(--text-secondary); margin-bottom: 1rem; }
-    em { font-style: normal; color: var(--accent-amber); font-weight: 500; }
-    strong { color: var(--text-primary); font-weight: 700; }
-    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--bg-secondary);
-      padding: 0.12rem 0.4rem; border-radius: 4px; border: 1px solid var(--border); color: var(--accent); }
+[Main claim B composition-failure prediction]
+  bedroom  Spearman=+0.480  AUROC=0.673  baseline=0.247
+  ffhq     Spearman=+0.806  AUROC=0.960  baseline=0.040
+  church   Spearman=+0.500  AUROC=0.500  baseline=0.250
+  pooled within-domain percentile AUROC=0.727
 
-    /* timeline */
-    .timeline { border-left: 2px solid var(--border-light); margin: 1.5rem 0; padding-left: 1.8rem; }
-    .tl-item { position: relative; padding-bottom: 1.8rem; }
-    .tl-item::before { content: ''; position: absolute; left: -2.28rem; top: 0.35rem; width: 11px; height: 11px;
-      border-radius: 50%; background: var(--bg-primary); border: 2px solid var(--accent); }
-    .tl-item.dead::before { border-color: var(--accent-red); }
-    .tl-item.live::before { border-color: var(--accent-green); }
-    .tl-ver { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
-    .tl-title { font-weight: 700; color: var(--text-primary); margin: 0.15rem 0 0.3rem; }
-    .tl-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
-    .tag { display: inline-block; font-size: 0.68rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 4px; letter-spacing: 0.03em; vertical-align: middle; }
-    .tag.dead { background: rgba(185,28,28,0.08); color: var(--accent-red); }
-    .tag.live { background: rgba(21,128,61,0.09); color: var(--accent-green); }
-    .tag.weak { background: rgba(180,83,9,0.09); color: var(--accent-amber); }
+[Main claim C fixed-alpha curvature-guided selection]
+  cur</pre></td></tr>
+</tbody></table></div>
+<p class="note">예: Track 9 multi-CLIP은 3개 인코더 Pearson 0.97–0.99로 견고했지만, Track 7 Park 재현은
+ρ=0.04로 실패, Track 40 real-LSUN 인코더 전이는 encoder gap +1148%로 실패, Track 22 saliency-vs-seg은
+Spearman None으로 신호 없음. 강한 것과 무너진 것이 같은 원장에 공존한다.</p>
+</div></section><hr>
 
-    /* cards */
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1.6rem 0; }
-    @media (max-width: 680px) { .grid2 { grid-template-columns: 1fr; } .hero-stats { gap: 1.4rem; } }
-    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem 1.6rem; }
-    .card.green { border-left: 4px solid var(--accent-green); }
-    .card.red { border-left: 4px solid var(--accent-red); }
-    .card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .card p { font-size: 0.88rem; margin-bottom: 0.5rem; line-height: 1.65; }
-    .card .num { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text-primary); }
+<section class="bl"><div class="container">
+<div class="lab">03 · control 검증 캠페인 — 95개 버전</div>
+<h2>"곡률이 편집을 제어한다"를 95번 검증하려 한 기록</h2>
+<p class="lead">핵심 주장 하나(curvature-risk가 control 신호다)를 두고, 검증→약점 발견→진단→재검증→stress-test가
+끝없이 반복됐다. 단계: <span class="ph ph-controller">controller</span> 초기 제어기 →
+<span class="ph ph-feasible">feasible</span> 제약된 제어기 → <span class="ph ph-predictive">predictive</span>
+예측타당도로 후퇴 → <span class="ph ph-stress">stress</span> 가정 스트레스 →
+<span class="ph ph-audit">audit</span> 재현성 감사. 이 표가 "무엇을 계속 시도했나"의 전부다.</p>
+<div class="tbl-wrap"><table class="ctl">
+<thead><tr><th>버전</th><th>단계</th><th>exp</th><th>시도한 것 (purpose)</th></tr></thead>
+<tbody>
+<tr class="c-controller"><td class="vn">v1</td><td><span class="ph ph-controller">controller</span></td><td class="ne">3</td><td class="pp">Test whether generator-side curvature is an operational control signal for latent editing. All methods and negative outcomes are reported; outputs must not filter attributes or methods based on observed performance.</td></tr>
+<tr class="c-controller"><td class="vn">v2</td><td><span class="ph ph-controller">controller</span></td><td class="ne">1</td><td class="pp">Evaluate a predeclared risk-aware latent edit controller. The controller combines target response and curvature risk; all attributes and all baselines are reported regardless of outcome.</td></tr>
+<tr class="c-controller"><td class="vn">v3</td><td><span class="ph ph-controller">controller</span></td><td class="ne">6</td><td class="pp">Check whether the predeclared risk-aware controller remains stable across independent latent/probe/calibration/test seeds. The protocol repeats the same controller settings from control_v2 without tuning.</td></tr>
+<tr class="c-controller"><td class="vn">v4</td><td><span class="ph ph-controller">controller</span></td><td class="ne">11</td><td class="pp">Test whether the curvature-risk signal itself matters by replacing it with shuffled and inverted risk values while keeping the same seeds, candidate universe, probe/calibration/test sizes, and baselines as the actual-risk robustne</td></tr>
+<tr class="c-controller"><td class="vn">v5</td><td><span class="ph ph-controller">controller</span></td><td class="ne">12</td><td class="pp">Sensitivity validation for the predeclared gain/risk controller. The official controller uses risk_power=1.0; this protocol checks whether the paper claim is robust around that value rather than dependent on a single exponent.</td></tr>
+<tr class="c-controller"><td class="vn">v6</td><td><span class="ph ph-controller">controller</span></td><td class="ne">6</td><td class="pp">Validate the control claim with real LPIPS, not only the downsampled-L2 perceptual proxy used by the faster controller sweeps.</td></tr>
+<tr class="c-controller"><td class="vn">v7</td><td><span class="ph ph-controller">controller</span></td><td class="ne">6</td><td class="pp">Check whether the risk-aware controller survives an expanded predeclared candidate universe from the fixed-alpha editing run, rather than depending on the narrower matched-control output file.</td></tr>
+<tr class="c-audit"><td class="vn">v8</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit after the queued control-validation campaign finishes.</td></tr>
+<tr class="c-controller"><td class="vn">v9</td><td><span class="ph ph-controller">controller</span></td><td class="ne">16</td><td class="pp">Stricter causal negative control: compare actual, shuffled, and inverted risk selection while estimating the matched edit target from the full candidate universe, so target magnitude is not affected by the selected mode.</td></tr>
+<tr class="c-audit"><td class="vn">v10</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit after the full guarded control-validation campaign including fixed-target negatives finishes.</td></tr>
+<tr class="c-controller"><td class="vn">v11</td><td><span class="ph ph-controller">controller</span></td><td class="ne">30</td><td class="pp">Extended main-paper validation of the control claim: real LPIPS under fixed targets, sample-budget sensitivity, k sensitivity, gain-threshold sensitivity, and target-magnitude sensitivity.</td></tr>
+<tr class="c-controller"><td class="vn">v12</td><td><span class="ph ph-controller">controller</span></td><td class="ne">24</td><td class="pp">Sensitivity validation for controller hyperparameters that affect operating regime: minimum gain threshold and target edit magnitude.</td></tr>
+<tr class="c-audit"><td class="vn">v13</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final reproducibility audit after the extended control-validation campaign.</td></tr>
+<tr class="c-controller"><td class="vn">v14</td><td><span class="ph ph-controller">controller</span></td><td class="ne">11</td><td class="pp">Strict causal negative control under real LPIPS: compare actual fixed-target true-LPIPS controller runs from v11 against shuffled and inverted risk selection.</td></tr>
+<tr class="c-controller"><td class="vn">v15</td><td><span class="ph ph-controller">controller</span></td><td class="ne">6</td><td class="pp">Real-LPIPS validation on the expanded fixed-alpha candidate universe, using a target magnitude estimated from the full candidate universe.</td></tr>
+<tr class="c-controller"><td class="vn">v16</td><td><span class="ph ph-controller">controller</span></td><td class="ne">18</td><td class="pp">Estimator stability checks for the control claim: larger held-out test set and probe-alpha sensitivity under fixed-target evaluation.</td></tr>
+<tr class="c-audit"><td class="vn">v17</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final reproducibility audit after all extended background control experiments.</td></tr>
+<tr class="c-controller"><td class="vn">v18</td><td><span class="ph ph-controller">controller</span></td><td class="ne">17</td><td class="pp">Cross-domain validation of the risk-aware control claim on HiGAN bedroom: rebuild the candidate universe and risk/gain measurements outside FFHQ, then test actual risk against baselines and shuffled/inverted risk controls.</td></tr>
+<tr class="c-audit"><td class="vn">v19</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Main-paper reproducibility audit including the FFHQ control campaign and the cross-domain bedroom controller validation.</td></tr>
+<tr class="c-controller"><td class="vn">v20</td><td><span class="ph ph-controller">controller</span></td><td class="ne">17</td><td class="pp">Cross-domain and cross-architecture validation of the risk-aware control claim on StyleGAN2 church: rebuild candidate directions, risk, and target gain outside FFHQ and bedroom, then compare actual risk against shuffled/inverted r</td></tr>
+<tr class="c-audit"><td class="vn">v21</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit after the church StyleGAN2 cross-domain controller extension.</td></tr>
+<tr class="c-controller"><td class="vn">v22</td><td><span class="ph ph-controller">controller</span></td><td class="ne">12</td><td class="pp">Sensitivity validation for the church StyleGAN2 cross-domain controller. The official controller uses risk_power=1.0; this protocol checks whether the control claim is robust around that value rather than dependent on a single tun</td></tr>
+<tr class="c-controller"><td class="vn">v23</td><td><span class="ph ph-controller">controller</span></td><td class="ne">12</td><td class="pp">Diagnose the church StyleGAN2 weakness observed against random/low-risk baselines. This protocol tests whether the weakness is caused by including unstructured random directions in the candidate universe, or by allowing too-low se</td></tr>
+<tr class="c-audit"><td class="vn">v24</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit after the church failure-diagnosis protocol.</td></tr>
+<tr class="c-controller"><td class="vn">v25</td><td><span class="ph ph-controller">controller</span></td><td class="ne">11</td><td class="pp">Negative controls for the church structured-only diagnosis. This tests whether the improved structured-only controller is driven by the actual curvature/risk signal rather than by candidate-source restriction alone.</td></tr>
+<tr class="c-audit"><td class="vn">v26</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit after the church structured-only risk-signal negative-control protocol.</td></tr>
+<tr class="c-controller"><td class="vn">v27</td><td><span class="ph ph-controller">controller</span></td><td class="ne">17</td><td class="pp">Independent-seed, larger-test-set replication of the church structured-only control-signal result and its shuffled/inverted risk negative controls.</td></tr>
+<tr class="c-controller"><td class="vn">v28</td><td><span class="ph ph-controller">controller</span></td><td class="ne">6</td><td class="pp">Test whether the structured-only church controller is stable when the curvature, probe-gain, and calibration estimates use larger sample budgets.</td></tr>
+<tr class="c-controller"><td class="vn">v29</td><td><span class="ph ph-controller">controller</span></td><td class="ne">12</td><td class="pp">Test whether the structured-only control claim is tied to one decomposition family by evaluating GANSpace-only and SeFa-only candidate universes.</td></tr>
+<tr class="c-audit"><td class="vn">v30</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit after the main-grade church structured-only follow-up protocols.</td></tr>
+<tr class="c-feasible"><td class="vn">v31</td><td><span class="ph ph-feasible">feasible</span></td><td class="ne">12</td><td class="pp">Directly test whether curvature/risk predicts edit damage after semantic gain is controlled, addressing gain-only ambiguity.</td></tr>
+<tr class="c-feasible"><td class="vn">v32</td><td><span class="ph ph-feasible">feasible</span></td><td class="ne">17</td><td class="pp">Held-out controller test that uses risk as a tiebreaker inside a high-gain candidate pool, instead of relying on the original gain/risk ratio.</td></tr>
+<tr class="c-audit"><td class="vn">v33</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit after predictive-validity and gain-first/risk-tiebreak controller protocols.</td></tr>
+<tr class="c-audit"><td class="vn">v34</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Apply predeclared decision rules to decide whether the locked campaign supports a strong main-paper control claim, a predictive-only claim, or a narrowed failure-boundary claim.</td></tr>
+<tr class="c-audit"><td class="vn">v35</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including the predeclared main-claim readiness report.</td></tr>
+<tr class="c-audit"><td class="vn">v36</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build reviewer-facing evidence table with seed-level bootstrap confidence intervals and exact sign-test p-values for the main control-signal claim.</td></tr>
+<tr class="c-audit"><td class="vn">v37</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including the reviewer-facing main evidence table.</td></tr>
+<tr class="c-feasible"><td class="vn">v38</td><td><span class="ph ph-feasible">feasible</span></td><td class="ne">34</td><td class="pp">Test risk as a control variable under a predeclared semantic feasibility constraint, rather than as an unconstrained gain/risk ratio.</td></tr>
+<tr class="c-audit"><td class="vn">v39</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Apply predeclared main-claim rules to predictive validity plus semantic-feasible minimum-risk controller outputs.</td></tr>
+<tr class="c-audit"><td class="vn">v40</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build reviewer-facing evidence rows for the narrowed feasible minimum-risk controller claim.</td></tr>
+<tr class="c-audit"><td class="vn">v41</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including the feasible minimum-risk controller campaign.</td></tr>
+<tr class="c-predictive"><td class="vn">v42</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Test whether predictive validity survives replacing the JVP curvature/risk estimator with an independent finite-difference second-order estimator.</td></tr>
+<tr class="c-predictive"><td class="vn">v43</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Test whether predictive validity survives a held-out prompt template for semantic gain matching.</td></tr>
+<tr class="c-audit"><td class="vn">v44</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Apply predeclared decision rules to FD-estimator and prompt-template predictive-validity stress tests.</td></tr>
+<tr class="c-audit"><td class="vn">v45</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including predictive assumption-stress protocols.</td></tr>
+<tr class="c-predictive"><td class="vn">v46</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Test whether predictive validity survives a second held-out caption-like prompt template, after the photo prompt exposed bedroom sensitivity.</td></tr>
+<tr class="c-predictive"><td class="vn">v47</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Test whether predictive validity survives doubling the held-out evaluation set size from n_test=64 to n_test=128.</td></tr>
+<tr class="c-predictive"><td class="vn">v48</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Test whether predictive validity survives stricter semantic magnitude matching by reducing gain_match_rel from 0.25 to 0.10.</td></tr>
+<tr class="c-audit"><td class="vn">v49</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build a generic predeclared evidence table for baseline and assumption-stress predictive-validity summaries.</td></tr>
+<tr class="c-audit"><td class="vn">v50</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including extended predictive stress protocols.</td></tr>
+<tr class="c-predictive"><td class="vn">v51</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Test whether predictive validity survives replacing a single semantic prompt template with an averaged default/photo/caption prompt ensemble.</td></tr>
+<tr class="c-audit"><td class="vn">v52</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build the extended predictive stress table including a prompt-ensemble semantic direction diagnostic.</td></tr>
+<tr class="c-audit"><td class="vn">v53</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including prompt-ensemble semantic-measurement diagnostics.</td></tr>
+<tr class="c-predictive"><td class="vn">v54</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">24</td><td class="pp">Stress-test prompt-ensemble semantic directions under higher test-set size and stricter semantic gain matching.</td></tr>
+<tr class="c-audit"><td class="vn">v55</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build the extended predictive stress evidence table including prompt-ensemble high-n-test and strict-gain follow-ups.</td></tr>
+<tr class="c-audit"><td class="vn">v56</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including prompt-ensemble follow-up stress tests.</td></tr>
+<tr class="c-predictive"><td class="vn">v57</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Test whether prompt-ensemble predictive validity survives replacing JVP rho with finite-difference rho.</td></tr>
+<tr class="c-predictive"><td class="vn">v58</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">24</td><td class="pp">Test whether prompt-ensemble predictive validity depends on the GANSpace or SeFa candidate-source family.</td></tr>
+<tr class="c-audit"><td class="vn">v59</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build evidence table for prompt-ensemble estimator and source ablation stress tests.</td></tr>
+<tr class="c-audit"><td class="vn">v60</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including prompt-ensemble estimator and source-ablation stress tests.</td></tr>
+<tr class="c-predictive"><td class="vn">v61</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">6</td><td class="pp">Extend prompt-ensemble predictive validity to FFHQ so the claim is not only a church/bedroom cross-domain result.</td></tr>
+<tr class="c-predictive"><td class="vn">v62</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">12</td><td class="pp">Stress-test the FFHQ extension under higher test-set size and stricter semantic-gain matching.</td></tr>
+<tr class="c-predictive"><td class="vn">v63</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">18</td><td class="pp">Test whether prompt-ensemble predictive validity survives adding unstructured random directions to the candidate universe.</td></tr>
+<tr class="c-predictive"><td class="vn">v64</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">18</td><td class="pp">Test whether rho predicts damage in a non-language DINOv2 image feature space, not only CLIP-image consistency and LPIPS.</td></tr>
+<tr class="c-audit"><td class="vn">v65</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build a stress evidence table for FFHQ domain extension, random candidate-universe expansion, and DINO-preservation runs.</td></tr>
+<tr class="c-audit"><td class="vn">v66</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build a DINO-specific evidence table for non-language preservation predictive validity.</td></tr>
+<tr class="c-audit"><td class="vn">v67</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including FFHQ, random candidate-universe, and DINO-preservation extension stresses.</td></tr>
+<tr class="c-predictive"><td class="vn">v68</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">18</td><td class="pp">Scale the strongest candidate-universe stress test from five to ten seeds so sign-test evidence can cross conventional thresholds.</td></tr>
+<tr class="c-predictive"><td class="vn">v69</td><td><span class="ph ph-predictive">predictive</span></td><td class="ne">18</td><td class="pp">Scale the non-language DINO-preservation stress test from five to ten seeds for top-tier statistical robustness.</td></tr>
+<tr class="c-audit"><td class="vn">v70</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build the n=10 evidence table for random-universe and DINO-preservation seed-scaled predictive tests.</td></tr>
+<tr class="c-audit"><td class="vn">v71</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build a DINO-specific n=10 evidence table for non-language preservation predictive validity.</td></tr>
+<tr class="c-stress"><td class="vn">v72</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Test whether rho adds cross-validated predictive value beyond semantic gain, alpha magnitude, candidate source, and attribute.</td></tr>
+<tr class="c-audit"><td class="vn">v73</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including top-tier seed scaling and rho incremental-value analyses.</td></tr>
+<tr class="c-stress"><td class="vn">v74</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Build a final failure-boundary table so negative and borderline results are explicit rather than hidden in aggregate counts.</td></tr>
+<tr class="c-audit"><td class="vn">v75</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Final non-GPU reproducibility audit including failure-boundary reporting.</td></tr>
+<tr class="c-stress"><td class="vn">v76</td><td><span class="ph ph-stress">stress</span></td><td class="ne">6</td><td class="pp">Close the FFHQ estimator gap by replacing JVP rho with finite-difference rho under the prompt-ensemble protocol.</td></tr>
+<tr class="c-stress"><td class="vn">v77</td><td><span class="ph ph-stress">stress</span></td><td class="ne">12</td><td class="pp">Close the FFHQ candidate-source gap by testing GANSpace-only and SeFa-only prompt-ensemble predictive validity.</td></tr>
+<tr class="c-stress"><td class="vn">v78</td><td><span class="ph ph-stress">stress</span></td><td class="ne">18</td><td class="pp">Test whether the random-universe prompt-ensemble signal survives a larger rho/probe sampling budget.</td></tr>
+<tr class="c-stress"><td class="vn">v79</td><td><span class="ph ph-stress">stress</span></td><td class="ne">18</td><td class="pp">Test candidate-universe scale sensitivity by expanding the direction pool and GANSpace PCA sample budget.</td></tr>
+<tr class="c-stress"><td class="vn">v80</td><td><span class="ph ph-stress">stress</span></td><td class="ne">36</td><td class="pp">Test whether predictive validity is specific to the default semantic target magnitude or survives lower and higher targets.</td></tr>
+<tr class="c-audit"><td class="vn">v81</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build the evidence table for the added FFHQ, estimator-budget, wide-universe, and target-magnitude defense experiments.</td></tr>
+<tr class="c-stress"><td class="vn">v82</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Run an attribute-wise rho permutation null over the top-tier summary set to test for bookkeeping or candidate-pool artifacts.</td></tr>
+<tr class="c-stress"><td class="vn">v83</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Update the failure-boundary table after the exhaustive defense and permutation-null evidence.</td></tr>
+<tr class="c-audit"><td class="vn">v84</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Audit all locked control protocols through the exhaustive top-tier defense queue.</td></tr>
+<tr class="c-stress"><td class="vn">v85</td><td><span class="ph ph-stress">stress</span></td><td class="ne">18</td><td class="pp">Scale FFHQ finite-difference and source-ablation defense axes from five to ten seeds.</td></tr>
+<tr class="c-stress"><td class="vn">v86</td><td><span class="ph ph-stress">stress</span></td><td class="ne">18</td><td class="pp">Scale the estimator-budget defense axis from five to ten seeds.</td></tr>
+<tr class="c-stress"><td class="vn">v87</td><td><span class="ph ph-stress">stress</span></td><td class="ne">18</td><td class="pp">Scale the wide candidate-universe defense axis to n=10.</td></tr>
+<tr class="c-stress"><td class="vn">v88</td><td><span class="ph ph-stress">stress</span></td><td class="ne">36</td><td class="pp">Scale target-magnitude sensitivity axes to n=10.</td></tr>
+<tr class="c-audit"><td class="vn">v89</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Build the n=10 evidence table for exhaustive defense axes.</td></tr>
+<tr class="c-stress"><td class="vn">v90</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Run the permutation-null test on the n=10 defense set.</td></tr>
+<tr class="c-stress"><td class="vn">v91</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Update the final failure-boundary table after n=10 scaling.</td></tr>
+<tr class="c-audit"><td class="vn">v92</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Audit all locked protocols through n=10 exhaustive scaling.</td></tr>
+<tr class="c-stress"><td class="vn">v93</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Evaluate whether rho is useful as a pre-edit diagnostic score for high-damage candidates after the final n=10 defense set.</td></tr>
+<tr class="c-stress"><td class="vn">v94</td><td><span class="ph ph-stress">stress</span></td><td class="ne">1</td><td class="pp">Update failure-boundary reporting with diagnostic utility.</td></tr>
+<tr class="c-audit"><td class="vn">v95</td><td><span class="ph ph-audit">audit</span></td><td class="ne">1</td><td class="pp">Audit all locked protocols through diagnostic utility.</td></tr>
+</tbody></table></div>
+<p class="note">v1: "곡률이 control 신호인가" → v2 제어기 → v4 shuffled/inverted 음성대조 → v6 real-LPIPS →
+v18/v20 cross-domain(bedroom/church) → v23 church 실패 진단 → v31 예측타당도로 후퇴 → v42 FD estimator,
+v43/v46 prompt 템플릿, v47 n_test 2배, v48 stricter matching → v72 incremental value, v74/v94 failure boundary,
+v82/v90 permutation null → v95 최종 감사. 743개 실행, 0 실패(재현성), 그러나 주장은 끝내 견고해지지 못함.</p>
+</div></section><hr>
 
-    .callout { background: var(--accent-dim); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0;
-      padding: 1.3rem 1.6rem; margin: 1.6rem 0; }
-    .callout p { margin-bottom: 0.4rem; font-size: 0.92rem; }
-    .callout p:last-child { margin-bottom: 0; }
+<section class="bl alt"><div class="container">
+<div class="lab">04 · 가설의 진화 — 여섯 번 뒤집힘</div>
+<h2>같은 데이터, 매번 바뀐 결론</h2>
+<div class="tl">
+<div class="tli dead"><div class="tlv">v1 · 과대</div><div class="tlt">"ρ가 편집 손상을 예측한다" <span class="tag dead">폐기</span></div><div class="tld">곡률이 trivial한 편집 크기(magnitude)를 넘는 가치를 거의 못 줬다.</div></div>
+<div class="tli dead"><div class="tlv">v2–v3 · 반대로 과대</div><div class="tlt">"magnitude가 충분통계량, geometry=0" <span class="tag dead">폐기</span></div><div class="tld">"0/41"의 baseline이 outcome과 결합된 leaky 4-feature MAX — 그것도 artifact.</div></div>
+<div class="tli weak"><div class="tlv">v4 · 절충</div><div class="tlt">"real-but-weak residual" <span class="tag weak">불안정</span></div><div class="tld">"6/6 ordinal residual"이 사실 between-attribute 난이도 proxy였다.</div></div>
+<div class="tli dead"><div class="tlv">v5 · 다시 과소</div><div class="tlt">"ρ는 actionable signal이 아니다" <span class="tag dead">또 과대</span></div><div class="tld">세 기둥(C4b leak, LPIPS 부호반전, within-unit 붕괴)이 tautology·순환논리·n=6 노이즈로 판명.</div></div>
+<div class="tli live"><div class="tlv">v6 · 데이터-진실</div><div class="tlt">곡률 = 약하고 baseline에 fragile한 신호 <span class="tag live">honest</span></div><div class="tld">"ρ가 magnitude를 이기냐"는 baseline 정의에 따라 갈린다. 이 fragility 자체가 robust한 발견.</div></div>
+</div>
+</div></section><hr>
 
-    table.facts { width: 100%; border-collapse: collapse; margin: 1.4rem 0; font-size: 0.86rem; }
-    table.facts th, table.facts td { text-align: left; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--border); }
-    table.facts th { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
-    table.facts td.mono { font-family: 'JetBrains Mono', monospace; color: var(--text-primary); }
+<section class="bl"><div class="container">
+<div class="lab">05 · 만든 것 (살아남음) vs 무너진 것</div><h2>정직한 결산</h2>
+<div class="grid2">
+<div class="card g"><h4>살아남음</h4>
+<p>① forward-mode JVP 곡률 도구 (cross-arch, 정확)</p>
+<p>② FD는 곡률 복원 못 함 — toy로 airtight (<span class="num">8.6e-9</span> vs JVP <span class="num">2.5e-17</span>)</p>
+<p>③ per-layer 곡률 단조감소 (8/8, Spearman −0.96~−0.80)</p>
+<p>④ multi-CLIP/DINO cross-encoder 일치 (Pearson 0.94–0.99) — 단, outlier 의존</p>
+<p>⑤ 곡률-vs-magnitude의 baseline-fragility 규명</p></div>
+<div class="card r"><h4>무너짐 (정직하게)</h4>
+<p>① edit-risk를 예측·제어하는 actionable 신호 — fragile</p>
+<p>② "magnitude 충분통계량" — leakage artifact</p>
+<p>③ cross-encoder 보편성 — 1개 attr 빼면 Pearson 0.10</p>
+<p>④ FFHQ C5 인코더 전이 — sal_corr 0.07 정체</p>
+<p>⑤ Park NeurIPS23 재현 — ρ=0.04 / real-LSUN 전이 +1148%</p></div>
+</div>
+<div class="callout"><p><strong>이 도구 + FD-non-recoverability가 깨끗하게 살아남은 결과.</strong>
+짧은 methods note로 정리됨. 나머지 강한 주장들은 검증 과정에서 artifact로 드러남.</p></div>
+</div></section><hr>
 
-    footer { padding: 3.5rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; }
-    footer a { color: var(--text-secondary); text-decoration: none; }
-    footer a:hover { color: var(--accent); }
-  </style>
-</head>
-<body>
+<section class="bl alt"><div class="container">
+<div class="lab">06 · 후속 — TSFM 오염 감사 (problem-first 전환)</div>
+<h2>다음 질문도 같은 패턴으로 끝났다</h2>
+<p class="lead">HIGAN 이후 "오픈 time-series foundation model의 zero-shot SOTA가 pretraining 오염인가"를
+problem-first로 감사했다. 파이프라인은 ETTh1에서 검증됐지만(Chronos 0.58 / DLinear 0.61),
+큰 "Chronos가 baseline 박살" gap은 <strong>baseline-starvation artifact</strong>(짧은 series)였다.
+제대로 된 baseline엔 Chronos가 겨우 0.03 이김 — 오염이 부풀릴 큰 advantage가 애초에 없었다.
+recall index도 신호 0. 같은 날 정직하게 shelved.</p>
+</div></section><hr>
 
-<nav>
-  <a class="home" href="/">소찬 · soccz</a>
-  <div class="nav-right">
-    <a href="/projects/higan/">← HIGAN v2 보고서</a>
-    <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub ↗</a>
-  </div>
-</nav>
+<section class="bl"><div class="container">
+<div class="lab">07 · 메타 교훈</div><h2>적대적 감사는 효과를 깎는다 — 정직함의 대가</h2>
+<p class="lead">HIGAN edit-risk에 이어 TSFM까지, 두 프로젝트 모두 <strong>강한 신호=artifact, 진짜 효과=thin</strong>.
+구조적이다 — "주장된 효과가 진짜냐"를 엄격히 감사하면 대부분 부풀려져 있으니 <em>깎는 결과</em>로 수렴한다.
+top-venue가 원하는 "새로 되는 것"이 아니라 "주장이 안 맞다" 쪽. 그래서 멈췄다. 깨끗한 것(도구 +
+FD-non-recoverability)을 banking하고, 다음 큰 시도는 감사가 아니라 positive-construction으로 — 새 시점에.</p>
+<div class="callout"><p><strong>그래도 rigor는 남는다.</strong> 6번의 뒤집힘을 워크플로우 6번이 아니라 Day 3에 잡게 된 것 —
+자기 자신을 속이지 않는 법은 작동했다. 743 실행 0 실패, seed 고정, 17자리 bit-identical 재현이 그 증거다.</p></div>
+<p class="note">전체 데이터: <code>github.com/soccz/HIGAN</code> · 210개 결과 폴더 ·
+HIGAN note(<code>note/</code>: 도구+FD-non-recoverability) · TSFM(<code>tsfm_audit/STATUS.md</code>).</p>
+</div></section>
 
-<!-- ===================== HERO ===================== -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-label">RESEARCH JOURNEY · 정직한 회고</div>
-    <h1>HIGAN을 <em>일반화</em>하려던 여정<br>— 그리고 무엇이 살아남았나</h1>
-    <p class="hero-sub">
-      침실 saliency 한 장에서 시작해, 생성모델의 잠재공간을 <strong>cross-architecture 미분기하</strong>로
-      해석하려 했다. forward-mode 자동미분으로 고차 곡률을 정확히 재고, 곡률이 편집의 위험을
-      예측·제어하는지 물었다. 강한 신호가 보일 때마다 스스로를 적대적으로 검증했고 —
-      대부분이 artifact였다. 이 페이지는 그 과정을 과장 없이 기록한다.
-    </p>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">30+</span><span class="hero-stat-label">분석 트랙</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">4</span><span class="hero-stat-label">아키텍처 (SG1/2·SD)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">743</span><span class="hero-stat-label">감사 실행 (0 fail)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">∂³I/∂α³</span><span class="hero-stat-label">고차 곡률</span></div>
-    </div>
-    <div class="hero-buttons">
-      <a class="hero-link primary" href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">
-        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        GitHub: soccz/HIGAN
-      </a>
-      <a class="hero-link" href="/projects/higan/">← HIGAN v2 보고서</a>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ===================== 목표 ===================== -->
-<section class="block">
-  <div class="container">
-    <div class="section-label">01 · 목표</div>
-    <h2>한 장의 saliency를 프레임워크로</h2>
-    <p class="lead">
-      HIGAN v2는 침실 GAN의 잠재방향이 이미지의 <em>어디</em>에 작용하는지 픽셀 saliency로 보였다.
-      그 다음 질문은 자연스러웠다 — 이 saliency는 결국 생성기 매니폴드의 <strong>1차 pushforward</strong>다.
-      그렇다면 <strong>2차(곡률)</strong>는? 그리고 그 곡률이 <strong>아키텍처를 가로질러</strong>
-      의미 구조를 담고, <strong>편집의 위험</strong>을 예측한다면 — 그건 한 장의 그림이 아니라 하나의 이론이 된다.
-    </p>
-    <p>
-      그래서 목표를 이렇게 세웠다: <strong>forward-mode 미분기하 도구를 만들고</strong>, 그것으로
-      StyleGAN1·StyleGAN2·Stable Diffusion을 가로질러 곡률을 측정하고,
-      <em>곡률이 클수록 편집이 정체성을 더 망가뜨린다</em>는 가설(edit-risk)을 검증한다.
-    </p>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ===================== 만든 것 ===================== -->
-<section class="block" style="background:var(--bg-secondary);">
-  <div class="container">
-    <div class="section-label">02 · 만든 것 (살아남음)</div>
-    <h2>정확한 forward-mode 곡률 도구</h2>
-    <p class="lead">
-      유한차분(FD)으로 2차 미분을 근사하면 부정확하고, 역방향 자동미분으로 Jacobian을 통째로 만들면
-      출력 차원 3HW에서 메모리가 터진다. forward-mode JVP는 <strong>단 한 번의 forward pass로 정확한
-      pushforward</strong>를, 두 번 합성하면 정확한 곡률을 — 상수 메모리로 준다.
-    </p>
-    <div class="grid2">
-      <div class="card green">
-        <h4>고차 pushforward, 정확하게</h4>
-        <p>1차 ∂I/∂α는 1 pass, 2차 ∂²I/∂α²는 composed JVP 2 pass, 임의 차수까지 상수 메모리.
-        StyleGAN1/2 + Diffusion에 수정 없이 적용.</p>
-      </div>
-      <div class="card green">
-        <h4>FD는 곡률을 복원 못 한다</h4>
-        <p>해석적 정답을 아는 toy map에서 검증: fp64 최적 조건에서도 FD 최선이
-        <span class="num">8.6e-9</span>, composed JVP는 <span class="num">2.5e-17</span> —
-        <span class="num">3.5억 배</span> 차이. 작은 step에선 cancellation으로 발산.</p>
-      </div>
-    </div>
-    <div class="callout">
-      <p><strong>이게 전체 여정에서 깨끗하게 살아남은 결과다.</strong> 도구 자체(<code>torch.func.jvp</code>의
-      얇은 래퍼)와 "FD로는 곡률을 못 잰다"는 검증된 사실 — 짧은 methods note로 정리됨.</p>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ===================== 가설의 진화 ===================== -->
-<section class="block">
-  <div class="container">
-    <div class="section-label">03 · 시도한 것 — 가설의 진화</div>
-    <h2>같은 데이터, 여섯 번 뒤집힌 주장</h2>
-    <p class="lead">
-      "곡률 ρ가 편집 위험을 예측한다"는 가설은 검증할 때마다 모습을 바꿨다. 강한 주장이 나오면
-      적대적으로 공격했고, 그때마다 <em>강한 신호가 측정 artifact</em>임이 드러났다.
-      뒤집힘 자체가 발견이었다 — 신호는 약하고, 결론은 baseline 정의에 따라 흔들린다.
-    </p>
-    <div class="timeline">
-      <div class="tl-item dead">
-        <div class="tl-ver">v1 · 과대</div>
-        <div class="tl-title">"ρ가 편집 손상을 예측한다" <span class="tag dead">폐기</span></div>
-        <div class="tl-desc">초기엔 강한 예측력으로 보였다. 그러나 곡률은 trivial한 편집 크기(magnitude)를
-        넘는 가치를 거의 못 줬다.</div>
-      </div>
-      <div class="tl-item dead">
-        <div class="tl-ver">v2–v3 · 반대로 과대</div>
-        <div class="tl-title">"magnitude가 충분통계량, geometry는 0" <span class="tag dead">폐기</span></div>
-        <div class="tl-desc">반대 방향으로 과교정. 하지만 "0/41"의 baseline이 outcome과 결합된
-        leaky한 4-feature MAX였음이 드러남 — 그것도 artifact.</div>
-      </div>
-      <div class="tl-item weak">
-        <div class="tl-ver">v4 · 절충</div>
-        <div class="tl-title">"real-but-weak residual" <span class="tag weak">불안정</span></div>
-        <div class="tl-desc">중간 지점으로 수렴하는 듯했으나, "6/6 ordinal residual"이 사실은
-        <strong>between-attribute 난이도 proxy</strong>였다.</div>
-      </div>
-      <div class="tl-item dead">
-        <div class="tl-ver">v5 · 다시 과소</div>
-        <div class="tl-title">"ρ는 actionable signal이 아니다" <span class="tag dead">또 과대</span></div>
-        <div class="tl-desc">null 쪽으로 과교정. 세 기둥(C4b leak, LPIPS 부호반전, within-unit 붕괴)이
-        각각 tautology·순환논리·n=6 노이즈로 판명.</div>
-      </div>
-      <div class="tl-item live">
-        <div class="tl-ver">v6 · 데이터-진실 (floor)</div>
-        <div class="tl-title">곡률 = 약하고 baseline에 fragile한 신호 <span class="tag live">honest</span></div>
-        <div class="tl-desc">"ρ가 magnitude를 이기냐"는 baseline 정의에 따라 갈린다(abs_alpha는 이김,
-        realized-Δ는 못 이김). 이 <strong>fragility 자체가 robust한 발견</strong>이다.</div>
-      </div>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ===================== 엄격한 검증 ===================== -->
-<section class="block" style="background:var(--bg-secondary);">
-  <div class="container">
-    <div class="section-label">04 · 엄격한 검증</div>
-    <h2>강한 신호를 스스로 공격하기</h2>
-    <p class="lead">
-      매 단계 다수의 독립 에이전트가 raw 데이터로 숫자를 재계산하고 주장을 <em>반박</em>하려 했다
-      (확인이 아니라 깨기). 같은 결론에 합의될 때만 신뢰했다. 잡아낸 측정 함정들:
-    </p>
-    <table class="facts">
-      <tr><th>발견된 artifact</th><th>정체</th></tr>
-      <tr><td>매칭쌍 magnitude leak (0.765 / 0.287)</td><td class="mono">tautology — 무작위 selector도 재현</td></tr>
-      <tr><td>"LPIPS 통제 시 부호 반전"</td><td class="mono">순환 — 손상을 손상의 복사본으로 통제</td></tr>
-      <tr><td>cross-encoder "invariance" (Pearson 0.99)</td><td class="mono">outlier-driven — 1개 빼면 0.10</td></tr>
-      <tr><td>"Chronos가 baseline 박살" (TSFM)</td><td class="mono">baseline-starvation — 짧은 series</td></tr>
-      <tr><td>92.86% cross-domain 클러스터링</td><td class="mono">single-seed, n=14, CI 없음</td></tr>
-    </table>
-    <div class="callout">
-      <p><strong>이 검증 과정이 연구의 진짜 자산이다.</strong> 743개 감사 실행(0 실패), seed 고정,
-      bit-identical 재현(17자리), permutation null — 약한 효과를 강한 척하지 않게 막았다.</p>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ===================== 살아남은 것 vs 무너진 것 ===================== -->
-<section class="block">
-  <div class="container">
-    <div class="section-label">05 · 정직한 결산</div>
-    <h2>무엇이 살아남고 무엇이 무너졌나</h2>
-    <div class="grid2">
-      <div class="card green">
-        <h4>살아남음</h4>
-        <p>① forward-mode JVP 곡률 도구 (cross-arch, 정확)</p>
-        <p>② FD는 곡률을 복원 못 한다 (toy로 airtight)</p>
-        <p>③ per-layer 곡률 단조감소 (8/8, Spearman −0.96~−0.80)</p>
-        <p>④ 곡률-vs-magnitude의 baseline-fragility를 규명한 것</p>
-      </div>
-      <div class="card red">
-        <h4>무너짐 (정직하게)</h4>
-        <p>① edit-risk를 예측·제어하는 actionable 신호 — fragile</p>
-        <p>② "magnitude가 충분통계량" — leakage artifact</p>
-        <p>③ cross-encoder 보편성 — outlier-driven</p>
-        <p>④ TSFM 오염 감사 — 깨끗한 finding 없어 shelved</p>
-      </div>
-    </div>
-  </div>
-</section>
-<hr class="divider">
-
-<!-- ===================== 메타 교훈 ===================== -->
-<section class="block" style="background:var(--bg-secondary);">
-  <div class="container">
-    <div class="section-label">06 · 메타 교훈</div>
-    <h2>적대적 감사는 효과를 깎는다 — 그게 정직함의 대가</h2>
-    <p class="lead">
-      HIGAN edit-risk에 이어 TSFM 오염 감사까지, 두 프로젝트 모두 같은 패턴을 보였다:
-      <strong>강한 신호 = artifact, 진짜 효과 = thin.</strong> 이건 우연이 아니라 구조적이다 —
-      "주장된 효과 X가 진짜냐"를 엄격히 감사하면, 대부분의 효과가 부풀려져 있으니
-      <em>깎는(deflationary) 결과</em>로 수렴한다.
-    </p>
-    <p>
-      이 접근의 산출물은 정직하지만 thin하고, top-venue가 원하는 "새로 되는 것"이 아니라
-      "주장이 안 맞다"는 쪽이다. 그래서 멈췄다. 손실을 키우는 대신 깨끗한 것(도구 + FD-non-recoverability)을
-      banking하고, 다음 큰 시도는 <strong>감사가 아니라 positive-construction</strong>으로 — 새 시점에.
-    </p>
-    <div class="callout">
-      <p><strong>그래도 이 여정에서 배운 rigor는 남는다.</strong> 6번의 뒤집힘을 worflow 6번이 아니라
-      Day 3에 잡게 된 것 — 적어도 자기 자신을 속이지 않는 법은 작동했다.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>HIGAN 일반화 연구 여정 · 2026 · 정직한 회고</p>
-  <p style="margin-top:0.6rem;">
-    <a href="/projects/higan/">HIGAN v2 보고서</a> &nbsp;·&nbsp;
-    <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">github.com/soccz/HIGAN</a> &nbsp;·&nbsp;
-    <a href="/">소찬 · soccz</a>
-  </p>
-</footer>
-
-</body>
-</html>
+<footer><p>HIGAN 일반화 연구 — 전체 실험 기록 · 2026 · 정직한 회고</p>
+<p style="margin-top:.6rem;"><a href="/projects/higan/">HIGAN v2 보고서</a> · <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">github.com/soccz/HIGAN</a> · <a href="/">소찬 · soccz</a></p></footer>
+</body></html>
