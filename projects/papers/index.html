@@ -1349,15 +1349,19 @@ function renderPapersGrid() {
     const bucketLbl = BUCKET_LABEL[p.bucket] || p.bucket;
     const tags = (p.tags || []).slice(0, 4).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join('');
     const hasDeep = DEEP_DIVE_SLUGS.has(p.slug);
-    const deepBadge = hasDeep
+    const isFeatured = hasDeep || !!p.external;
+    const deepBadge = isFeatured
       ? `<span class="bucket-badge" style="background:#fdf0ea;color:#c4724e;font-weight:600">DEEP DIVE</span>`
       : '';
+    // External featured pages (self-contained standalone deep-dives) link straight out.
     // Deep-dive papers: clicking anywhere on the card goes to deep.html landing.
     // Regular papers: stay on the inline standard reader.
-    const cardClick = hasDeep
-      ? `location.href='deep.html?slug=${encodeURIComponent(p.slug)}'`
-      : `openPaper('${p.slug}')`;
-    const cardClass = hasDeep ? 'paper-card paper-card--deep' : 'paper-card';
+    const cardClick = p.external
+      ? `location.href='${p.external}'`
+      : hasDeep
+        ? `location.href='deep.html?slug=${encodeURIComponent(p.slug)}'`
+        : `openPaper('${p.slug}')`;
+    const cardClass = isFeatured ? 'paper-card paper-card--deep' : 'paper-card';
     return `<div class="${cardClass}" onclick="${cardClick}">
       <div class="paper-card-top">
         <span class="bucket-badge ${bucketCls}">${bucketLbl}</span>
@@ -1554,6 +1558,24 @@ async function init() {
   } catch (e) {
     console.error(e);
     return showInitError('parse manifest.json', e);
+  }
+
+  // Featured standalone deep-dive: a self-contained interactive page that lives
+  // outside the .md paper system, so it is injected here (not in manifest.json,
+  // which is content-synced). Card links straight to the standalone page.
+  if (MANIFEST && Array.isArray(MANIFEST.papers)
+      && !MANIFEST.papers.some(p => p.slug === 'momentum-barroso-2015')) {
+    MANIFEST.papers.unshift({
+      slug: 'momentum-barroso-2015', date: '2026-07-06', weekday: '월', bucket: '코어',
+      title: 'Momentum has its moments',
+      title_ko: '모멘텀에도 순간이 있다 — 폭락은 예측된다 (한국 재현)',
+      authors: 'Pedro Barroso, Pedro Santa-Clara',
+      venue: 'JFE 116 (2015)', identifier: 'doi:10.1016/j.jfineco.2014.11.010',
+      verdict: '모멘텀 폭락을 실현변동성 스케일링으로 관리 — 한국 주식 35년 재현 + 0부터 배경지식·섹션별 정밀독해·실데이터 인터랙티브 8종.',
+      tags: ['momentum-crash-risk', 'korea-reproduction', 'volatility-scaling', 'risk-managed-momentum'],
+      external: '/projects/momentum-barroso/',
+      private: false, sections: [], data_path: ''
+    });
   }
 
   try {
