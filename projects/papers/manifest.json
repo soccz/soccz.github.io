@@ -1,7 +1,43 @@
 {
-  "generated_at": "2026-07-06T00:25:52",
-  "count": 42,
+  "generated_at": "2026-07-08T00:14:52",
+  "count": 43,
   "papers": [
+    {
+      "slug": "2026-07-08_lim-tft-temporal-fusion-transformers",
+      "date": "2026-07-08",
+      "weekday": "수",
+      "bucket": "인접",
+      "title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+      "title_ko": "해석 가능한 다시계열-지평 예측을 위한 시간융합 트랜스포머",
+      "authors": "Bryan Lim, Sercan Ö. Arık, Nicolas Loeff, Tomas Pfister (Google Cloud AI Research; Bryan Lim은 당시 Oxford-Man Institute 겸직에서 Google로 이동)",
+      "venue": "*International Journal of Forecasting (IJF)* 37(4), 1748–1764 (2021). arXiv preprint 첫 등장 2019-12-19, v3 2020-09-27.",
+      "identifier": "arXiv:1912.09363",
+      "code": "`google-research/google-research/tft` (Apache-2.0, TF1.x 기반) — 저자 공식. PyTorch 계열 재현체는 PyTorch Forecasting, Nixtla neuralforecast 등에 다수 이식.",
+      "data": "(1) Electricity Load Diagrams (UCI 370 clients), (2) PEM-SF Traffic (UCI 963 sensors), (3) OMI Realized Volatility (31 stock indices, daily), (4) Favorita Grocery Sales (Kaggle). 4종 모두 공개.",
+      "tags": [
+        "fin-ts-dl",
+        "tsfm-interp",
+        "probabilistic-forecast",
+        "_profile.md"
+      ],
+      "verdict": "",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "0. 메타 & 선정 이유"
+        }
+      ],
+      "data_path": "data/2026/2026-07-08_lim-tft-temporal-fusion-transformers"
+    },
     {
       "slug": "2026-07-06_roformer-rope-rotary-position-embedding",
       "date": "2026-07-06",
