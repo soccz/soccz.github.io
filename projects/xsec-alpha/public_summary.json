@@ -1,44 +1,44 @@
 {
-  "asof": "2026-07-09T17:07:30+00:00",
+  "asof": "2026-07-09T23:07:32+00:00",
   "ic": {
     "short_6h": {
-      "live_30d_mean": 0.187097,
+      "live_30d_mean": 0.185803,
       "holdout": 0.1479,
       "holdout_tstat": 17.63,
       "holdout_n": 282,
       "gate": "OK"
     },
     "long_12h": {
-      "live_30d_mean": 0.14345,
+      "live_30d_mean": 0.139549,
       "holdout": 0.1371,
       "holdout_tstat": 16.47,
       "holdout_n": 281,
-      "gate": "OK"
+      "gate": "WARN"
     }
   },
   "realized_30d": {
     "SHORT": {
       "n": 580,
-      "win_pct": 55.0,
-      "gross_pct": 0.5377,
-      "net_pct": 0.2377,
+      "win_pct": 54.8,
+      "gross_pct": 0.5182,
+      "net_pct": 0.2182,
       "cost_pct": 0.3,
-      "tstat_clustered": 3.206,
-      "sharpe": 0.138
+      "tstat_clustered": 3.102,
+      "sharpe": 0.134
     },
     "WATCH_LONG": {
       "n": 285,
       "win_pct": 45.3,
-      "gross_pct": 0.0513,
-      "net_pct": -0.1487,
+      "gross_pct": -0.0161,
+      "net_pct": -0.2161,
       "cost_pct": 0.2,
-      "tstat_clustered": 0.13,
-      "sharpe": 0.009
+      "tstat_clustered": -0.04,
+      "sharpe": -0.003
     }
   },
   "model_age_days": {
-    "xsec_6h.pkl": 3.88,
-    "xsec_12h.pkl": 3.88
+    "xsec_6h.pkl": 4.13,
+    "xsec_12h.pkl": 4.13
   },
   "cost_assumptions": {
     "SHORT": 0.3,
