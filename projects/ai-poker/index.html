@@ -284,60 +284,19 @@
     }
     .callout p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
 
-    .table-preview {
-      position: relative;
-      min-height: 340px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at center, rgba(32,117,82,0.92) 0%, rgba(15,85,62,0.92) 50%, rgba(7,45,38,0.96) 78%),
-        #0f3d32;
-      box-shadow: inset 0 0 80px rgba(0,0,0,0.34);
+    .screenshot-frame {
       margin: 2rem 0;
-    }
-    .table-preview::before {
-      content: '';
-      position: absolute;
-      inset: 42px 72px;
-      border: 1px solid rgba(250,236,192,0.32);
-      border-radius: 999px;
-    }
-    .preview-center {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      color: #f8efe0;
-    }
-    .preview-center strong { font-family: 'Noto Serif KR', serif; font-size: 1.35rem; display: block; margin-bottom: 0.35rem; }
-    .preview-center span { color: rgba(248,239,224,0.72); font-size: 0.8rem; }
-    .seat-dot {
-      position: absolute;
-      width: 92px;
-      min-height: 58px;
-      transform: translate(-50%, -50%);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(8,14,12,0.74);
-      color: #f4e8bf;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      font-size: 0.72rem;
-      font-weight: 800;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.26);
+      overflow: hidden;
+      background: #111411;
+      box-shadow: 0 18px 60px rgba(28,25,23,0.12);
     }
-    .seat-dot.hero-seat { border-color: rgba(229,185,92,0.9); color: #fff4c8; }
-    .s0 { left: 50%; top: 84%; }
-    .s1 { left: 25%; top: 76%; }
-    .s2 { left: 12%; top: 50%; }
-    .s3 { left: 25%; top: 24%; }
-    .s4 { left: 50%; top: 16%; }
-    .s5 { left: 75%; top: 24%; }
-    .s6 { left: 88%; top: 50%; }
-    .s7 { left: 75%; top: 76%; }
+    .screenshot-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
 
     footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
@@ -354,15 +313,6 @@
       .flow { grid-template-columns: 1fr; }
       .feature-row { grid-template-columns: 1fr; }
       section { padding: 4rem 1.5rem; }
-      .table-preview { min-height: 420px; }
-      .table-preview::before { inset: 86px 28px; }
-      .seat-dot { width: 78px; min-height: 52px; font-size: 0.68rem; }
-      .s1 { left: 20%; top: 74%; }
-      .s2 { left: 13%; top: 50%; }
-      .s3 { left: 20%; top: 26%; }
-      .s5 { left: 80%; top: 26%; }
-      .s6 { left: 87%; top: 50%; }
-      .s7 { left: 80%; top: 74%; }
     }
 
     @media (max-width: 460px) {
@@ -435,22 +385,9 @@
     이 프로젝트는 단순 카드 게임보다 "왜 졌는지 계속 남는 연습 환경"에 초점을 맞췄습니다. 사용자는 혼자 입장하고, 나머지 7석은 각기 다른 성향의 AI가 채웁니다. AI는 핸드 강도만 보지 않고 포지션, 팟 압박, 보드 텍스처, 사용자의 누적 플레이 성향을 반영해 결정을 내립니다.
   </p>
 
-  <div class="table-preview" aria-label="8인 홀덤 테이블 미리보기">
-    <div class="seat-dot hero-seat s0">You<br>Hero</div>
-    <div class="seat-dot s1">Solver<br>Max</div>
-    <div class="seat-dot s2">River<br>Ace</div>
-    <div class="seat-dot s3">Cold<br>4Bet</div>
-    <div class="seat-dot s4">Value<br>Pro</div>
-    <div class="seat-dot s5">Final<br>Boss</div>
-    <div class="seat-dot s6">Range<br>Reader</div>
-    <div class="seat-dot s7">Pot<br>Bully</div>
-    <div class="preview-center">
-      <div>
-        <strong>Private Holdem Table</strong>
-        <span>AI table talk · replay · bankroll pressure</span>
-      </div>
-    </div>
-  </div>
+  <figure class="screenshot-frame">
+    <img src="/assets/images/ai-poker-table.png" alt="AI Poker 실제 8인 텍사스 홀덤 테이블 화면" loading="lazy" decoding="async">
+  </figure>
 
   <div class="card-grid">
     <div class="card">
