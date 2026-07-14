@@ -17,7 +17,8 @@
   <meta name="twitter:image" content="https://soccz.github.io/assets/og-image.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -657,10 +658,14 @@
     }
 
     .fade-up {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    body.anim-ready .fade-up {
       opacity: 0;
       transform: translateY(20px);
     }
-    .fade-up.visible {
+    body.anim-ready .fade-up.visible {
       opacity: 1;
       transform: translateY(0);
       transition: opacity 0.5s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
@@ -929,7 +934,7 @@ const CATEGORIES = {
     desc: '취미로 만들고, 실험하고, 부숴보는 놀이터',
     color: 'side',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>`,
-    match: ['night-shift-escape','self_exercise','kaggle_test','young-and-home','MC_order','forjp']
+    match: ['AI_poker','night-shift-escape','self_exercise','kaggle_test','young-and-home','MC_order','forjp']
   },
   note: {
     label: 'Notes & Daily',
@@ -987,6 +992,7 @@ const DESCS = {
   'asset-management-guide': '비전공자를 위한 자산운용 학습 시리즈 — 12챕터 완성',
   'MC_order': '주문 관리 웹 애플리케이션',
   'night-shift-escape': '솔로 호러-디펜스 브라우저 게임 \u2014 방 점유, 감염자 대응, 탈출',
+  'AI_poker': 'Private Holdem GTO Practice — 8인 텍사스 홀덤 연습 테이블. 프로/GTO 성향 AI 7명, 심리 멘트, 패배 분석, 리플레이 복기, 하루 2회 뱅크롤 제한을 넣은 솔로 트레이닝 게임',
   'demo': 'MediaPipe Vision 기반 데모 프로젝트',
   'forjp': 'COUPLE \u2014 한국형 대중교통 기반 데이트 코스 플래너',
   'self_exercise': '개인 운동 기록 & 분석 앱',
@@ -1014,6 +1020,12 @@ const STATIC_PROJECTS = [{
   name: 'FIN_AI_book',
   description: DESCS['FIN_AI_book'],
   language: 'Markdown',
+  pushed_at: new Date().toISOString(),
+  __static: true
+},{
+  name: 'AI_poker',
+  description: DESCS['AI_poker'],
+  language: 'HTML',
   pushed_at: new Date().toISOString(),
   __static: true
 }];
@@ -1157,6 +1169,7 @@ function renderPosts(catKey) {
       'son_data': '/projects/son-data/',
       'NeuroTraffic-DT': '/projects/neurotraffic-dt/',
       'night-shift-escape': '/projects/night-shift-escape/',
+      'AI_poker': '/projects/ai-poker/',
       'self_exercise': '/projects/self-exercise/',
       'kaggle_test': '/projects/kaggle-test/',
       'Daily-report': '/projects/daily-report/',
@@ -1207,6 +1220,16 @@ function handleExternalKey(event, url) {
   openPost(url, true);
 }
 
+function mergeStaticProjects(repos) {
+  const merged = Array.isArray(repos) ? repos.slice() : [];
+  if (typeof STATIC_PROJECTS === 'undefined') return merged;
+  const existing = new Set(merged.map(r => r.name));
+  for (const sp of STATIC_PROJECTS) {
+    if (!existing.has(sp.name)) merged.unshift(sp);
+  }
+  return merged;
+}
+
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebarOverlay').classList.toggle('open');
@@ -1244,28 +1267,32 @@ window.addEventListener('resize', () => {
 });
 
 async function init() {
+  initScrollObserver();
+  allRepos = mergeStaticProjects([]);
+  renderCatGrid();
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
   try {
-    const res = await fetch('https://api.github.com/users/soccz/repos?per_page=100&sort=pushed');
+    const res = await fetch('https://api.github.com/users/soccz/repos?per_page=100&sort=pushed', {
+      signal: controller.signal
+    });
     if (!res.ok) throw new Error('API error');
-    allRepos = await res.json();
+    allRepos = mergeStaticProjects(await res.json());
   } catch (e) {
-    allRepos = [];
+    allRepos = mergeStaticProjects([]);
+  } finally {
+    clearTimeout(timeout);
   }
-  // Merge static (non-public) projects so private repos with site pages still surface.
-  if (typeof STATIC_PROJECTS !== 'undefined') {
-    const existing = new Set(allRepos.map(r => r.name));
-    for (const sp of STATIC_PROJECTS) {
-      if (!existing.has(sp.name)) allRepos.unshift(sp);
-    }
-  }
+
   renderCatGrid();
   if (!allRepos.length) {
     document.getElementById('catGrid').innerHTML = '<div style="text-align:center;padding:40px 0;color:var(--text-muted);font-size:14px;grid-column:1/-1">GitHub API에서 데이터를 불러오지 못했습니다.</div>';
   }
-  initScrollObserver();
 }
 
 // Initial fade-up for hero
+document.body.classList.add('anim-ready');
 requestAnimationFrame(() => {
   document.querySelectorAll('.fade-up').forEach((el, i) => {
     el.style.transitionDelay = (i * 0.1) + 's';

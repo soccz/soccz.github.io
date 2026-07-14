@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Poker &mdash; Private Holdem GTO Practice</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #2f3a32;
+      --accent-dark: #18211b;
+      --accent-gold: #b9892f;
+      --accent-red: #a33a34;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250,250,249,0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.97); }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.05rem;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(47,58,50,0.08), transparent 46%),
+        radial-gradient(ellipse at 50% 35%, rgba(185,137,47,0.10), transparent 58%),
+        linear-gradient(rgba(28,25,23,0.026) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(28,25,23,0.018) 1px, transparent 1px);
+      background-size: auto, auto, 38px 38px, 38px 38px;
+    }
+    .hero-content { position: relative; width: 100%; max-width: 840px; min-width: 0; }
+    .hero-label {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem;
+      border-radius: 2px;
+      margin-bottom: 2.2rem;
+      background: rgba(255,255,255,0.5);
+      max-width: 100%;
+      line-height: 1.55;
+      white-space: normal;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.4rem;
+      overflow-wrap: break-word;
+    }
+    .hero-sub {
+      font-size: 1.02rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.9;
+      margin-bottom: 2.6rem;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .hero-stat { min-width: 92px; }
+    .hero-stat-num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #292524;
+      display: block;
+      line-height: 1.15;
+    }
+    .hero-stat-label { font-size: 0.76rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-links { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      padding: 0.65rem 1.35rem;
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.64);
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-link.primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+    .hero-link.primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+    .scroll-ind {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.4rem,3vw,2rem);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.02em;
+    }
+    .section-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      max-width: 740px;
+      line-height: 1.85;
+      margin-bottom: 2.4rem;
+    }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: all 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.05); }
+    .card-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.55rem;
+    }
+    .card-title { font-weight: 800; font-size: 0.98rem; margin-bottom: 0.55rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+    code {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      background: var(--bg-secondary);
+      padding: 0.12rem 0.38rem;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; margin: 2rem 0; }
+    .flow-step { background: var(--bg-card); padding: 1.45rem; min-height: 160px; }
+    .flow-num { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 0.6rem; }
+    .flow-title { font-weight: 800; font-size: 0.92rem; margin-bottom: 0.5rem; }
+    .flow-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1.8rem 0;
+    }
+    .feature-key {
+      background: var(--bg-secondary);
+      padding: 1rem 1.2rem;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+    }
+    .feature-value {
+      background: var(--bg-card);
+      padding: 1rem 1.4rem;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    .callout {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1.35rem 1.7rem;
+      margin: 2rem 0;
+    }
+    .callout-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .callout p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.8; }
+
+    .table-preview {
+      position: relative;
+      min-height: 340px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at center, rgba(32,117,82,0.92) 0%, rgba(15,85,62,0.92) 50%, rgba(7,45,38,0.96) 78%),
+        #0f3d32;
+      box-shadow: inset 0 0 80px rgba(0,0,0,0.34);
+      margin: 2rem 0;
+    }
+    .table-preview::before {
+      content: '';
+      position: absolute;
+      inset: 42px 72px;
+      border: 1px solid rgba(250,236,192,0.32);
+      border-radius: 999px;
+    }
+    .preview-center {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #f8efe0;
+    }
+    .preview-center strong { font-family: 'Noto Serif KR', serif; font-size: 1.35rem; display: block; margin-bottom: 0.35rem; }
+    .preview-center span { color: rgba(248,239,224,0.72); font-size: 0.8rem; }
+    .seat-dot {
+      position: absolute;
+      width: 92px;
+      min-height: 58px;
+      transform: translate(-50%, -50%);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(8,14,12,0.74);
+      color: #f4e8bf;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.26);
+    }
+    .seat-dot.hero-seat { border-color: rgba(229,185,92,0.9); color: #fff4c8; }
+    .s0 { left: 50%; top: 84%; }
+    .s1 { left: 25%; top: 76%; }
+    .s2 { left: 12%; top: 50%; }
+    .s3 { left: 25%; top: 24%; }
+    .s4 { left: 50%; top: 16%; }
+    .s5 { left: 75%; top: 24%; }
+    .s6 { left: 88%; top: 50%; }
+    .s7 { left: 75%; top: 76%; }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hero { padding-top: 5rem; min-height: 94vh; }
+      .hero-content { width: calc(100vw - 3rem); max-width: calc(100vw - 3rem); }
+      .hero-label { letter-spacing: 0.12em; padding: 0.4rem 0.85rem; }
+      .hero h1 { font-size: clamp(2rem, 9vw, 2.55rem); line-height: 1.22; }
+      .hero-sub { font-size: 0.94rem; }
+      .hero-stats { gap: 1.4rem; }
+      .flow { grid-template-columns: 1fr; }
+      .feature-row { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.5rem; }
+      .table-preview { min-height: 420px; }
+      .table-preview::before { inset: 86px 28px; }
+      .seat-dot { width: 78px; min-height: 52px; font-size: 0.68rem; }
+      .s1 { left: 20%; top: 74%; }
+      .s2 { left: 13%; top: 50%; }
+      .s3 { left: 20%; top: 26%; }
+      .s5 { left: 80%; top: 26%; }
+      .s6 { left: 87%; top: 50%; }
+      .s7 { left: 80%; top: 74%; }
+    }
+
+    @media (max-width: 460px) {
+      .hero { padding-left: 1.1rem; padding-right: 1.1rem; }
+      .hero-content { width: calc(100vw - 2.2rem); max-width: calc(100vw - 2.2rem); }
+      .hero-label { font-size: 0.62rem; letter-spacing: 0.09em; }
+      .hero h1 { font-size: clamp(1.85rem, 8.4vw, 2.2rem); }
+      .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem 0.8rem; }
+      .hero-stat { min-width: 0; }
+      .hero-stat-num { font-size: 1.85rem; }
+      .hero-links { gap: 0.55rem; }
+      .hero-link { padding: 0.6rem 1rem; }
+    }
+
+    @media (max-width: 600px) {
+      .hero { justify-content: flex-start; align-items: center; }
+      .hero-content { width: 100%; max-width: 340px; }
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem 0.75rem; }
+      .hero-stat { min-width: 0; }
+      .hero-stat-num { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#loop">Training</a></li>
+      <li><a href="#systems">Systems</a></li>
+      <li><a href="#limits">Limits</a></li>
+      <li><a href="#stack">Stack</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Side Project · AI Poker</span>
+    <h1>AI Poker<br>Private Holdem<br>GTO Practice</h1>
+    <p class="hero-sub">
+      혼자 들어가서 7명의 프로/GTO 성향 AI와 붙는 텍사스 홀덤 연습 테이블.<br>
+      심리 멘트, 패배 분석, 리플레이 복기, 하루 2회 뱅크롤 제한으로 실전 압박을 만들었습니다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">8</span><span class="hero-stat-label">Table Seats</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">7</span><span class="hero-stat-label">AI Opponents</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">2</span><span class="hero-stat-label">Daily Grants</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">Replay</span><span class="hero-stat-label">Loss Review</span></div>
+    </div>
+    <div class="hero-links">
+      <a href="https://private-holdem-gto-20260713-soccz.ether9073.chatgpt.site/?key=9963" target="_blank" rel="noopener noreferrer" class="hero-link primary">▶ 플레이하기</a>
+      <a href="https://github.com/soccz/AI_poker" target="_blank" rel="noopener noreferrer" class="hero-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Source
+      </a>
+    </div>
+  </div>
+  <div class="scroll-ind">SCROLL<br><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<hr class="divider">
+
+<section id="overview"><div class="container fade-in">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">혼자 쓰는 실전형 홀덤 연습장</h2>
+  <p class="section-desc">
+    이 프로젝트는 단순 카드 게임보다 "왜 졌는지 계속 남는 연습 환경"에 초점을 맞췄습니다. 사용자는 혼자 입장하고, 나머지 7석은 각기 다른 성향의 AI가 채웁니다. AI는 핸드 강도만 보지 않고 포지션, 팟 압박, 보드 텍스처, 사용자의 누적 플레이 성향을 반영해 결정을 내립니다.
+  </p>
+
+  <div class="table-preview" aria-label="8인 홀덤 테이블 미리보기">
+    <div class="seat-dot hero-seat s0">You<br>Hero</div>
+    <div class="seat-dot s1">Solver<br>Max</div>
+    <div class="seat-dot s2">River<br>Ace</div>
+    <div class="seat-dot s3">Cold<br>4Bet</div>
+    <div class="seat-dot s4">Value<br>Pro</div>
+    <div class="seat-dot s5">Final<br>Boss</div>
+    <div class="seat-dot s6">Range<br>Reader</div>
+    <div class="seat-dot s7">Pot<br>Bully</div>
+    <div class="preview-center">
+      <div>
+        <strong>Private Holdem Table</strong>
+        <span>AI table talk · replay · bankroll pressure</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Table</div>
+      <div class="card-title">8인 텍사스 홀덤</div>
+      <div class="card-text">한 명의 사용자와 7명의 AI가 블라인드, 포지션, 스트리트, 쇼다운 흐름을 따라 플레이합니다. UI는 모바일과 데스크톱에서 같은 흐름으로 접근할 수 있게 구성했습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Pressure</div>
+      <div class="card-title">하루 2회 뱅크롤 지급</div>
+      <div class="card-text">칩을 모두 잃으면 바로 무한 재도전할 수 없습니다. 정해진 지급 횟수 안에서 버티고, 이기면 계속할 수 있는 구조로 긴장감을 만들었습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Review</div>
+      <div class="card-title">패배 분석과 복기</div>
+      <div class="card-text">큰 팟 손실, 쇼다운 패배, 얇은 레이즈 같은 패턴을 기록합니다. 핸드별로 당시 승률과 상대 족보를 남겨 다음 판단의 근거로 쓰게 했습니다.</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="loop"><div class="container fade-in">
+  <div class="section-label">Training Loop</div>
+  <h2 class="section-title">한 판을 끝내고 바로 배우는 흐름</h2>
+  <p class="section-desc">
+    게임의 핵심 루프는 입장, 핸드 플레이, 결과 확인, 복기, 다음 핸드입니다. 사용자가 진 뒤에도 결과 로그가 남아서 같은 실수를 반복하는지 확인할 수 있습니다.
+  </p>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-num">01</div>
+      <div class="flow-title">Private Access</div>
+      <div class="flow-desc">키 번호가 포함된 링크로 입장합니다. 공개 게임보다 개인 연습 테이블에 가깝게 설계했습니다.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">02</div>
+      <div class="flow-title">AI Pressure</div>
+      <div class="flow-desc">각 AI는 다른 스타일로 폴드, 콜, 레이즈를 선택하고 때로는 진실인지 유도인지 모를 멘트를 던집니다.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">03</div>
+      <div class="flow-title">Hand Result</div>
+      <div class="flow-desc">승패, 팟, 쇼다운 족보, 손실 칩을 즉시 기록합니다. 큰 팟에서는 경고성 코칭을 더 강하게 표시합니다.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">04</div>
+      <div class="flow-title">Replay</div>
+      <div class="flow-desc">스트리트별 액션을 다시 보고, 어떤 지점에서 무리했는지 복기합니다.</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="systems"><div class="container fade-in">
+  <div class="section-label">Systems</div>
+  <h2 class="section-title">AI와 기록 시스템</h2>
+  <p class="section-desc">
+    프로급 솔버를 완전히 구현한 것은 아니지만, 단순 랜덤 AI와는 다르게 느껴지도록 플레이 근거와 압박 장치를 넣었습니다. 중요한 것은 사용자가 "상대가 생각하고 있다"는 감각과 "내 실수가 누적된다"는 감각을 받는 것입니다.
+  </p>
+
+  <div class="feature-row">
+    <div class="feature-key">Opponent AI</div>
+    <div class="feature-value">프리플랍 차트, 포지션, 핸드 강도, 팟 크기, 공격 성향을 섞어 의사결정합니다. Solver Max, Cold 4Bet, Final Boss처럼 이름과 성향이 다른 상대를 둬 테이블 분위기가 매번 다르게 보이게 했습니다.</div>
+  </div>
+  <div class="feature-row">
+    <div class="feature-key">Table Talk</div>
+    <div class="feature-value">AI 멘트는 전부 힌트가 아닙니다. 일부는 진짜 강함을 드러내고, 일부는 콜을 유도하거나 겁주는 식으로 작동합니다. 한국어 멘트만 남기도록 정리했습니다.</div>
+  </div>
+  <div class="feature-row">
+    <div class="feature-key">Weakness Log</div>
+    <div class="feature-value">쇼다운 패배, 큰 팟 손실, 얇은 레이즈, 약한 콜 같은 항목을 누적 기록합니다. 단발 결과보다 반복되는 약점을 보기 위한 장치입니다.</div>
+  </div>
+  <div class="feature-row">
+    <div class="feature-key">Ledger Guard</div>
+    <div class="feature-value">서버 세션 장부는 서명 토큰과 전환 검사를 사용합니다. 비정상적인 칩 증가나 지급 횟수 조작은 저장 단계에서 거부되도록 만들었습니다.</div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">AI Strength</div>
+    <p>목표는 "진짜 솔버 엔진"이 아니라, 사용자가 방심하면 계속 압박받는 프로/GTO 연습 상대입니다. 그래서 AI는 강한 범위에서 공격하고, 사용자가 너무 자주 접거나 큰 팟에서 얇게 따라가는 패턴을 보이면 그 성향을 이용합니다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="limits"><div class="container fade-in">
+  <div class="section-label">Guardrails</div>
+  <h2 class="section-title">의도적으로 정한 범위</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Solo Only</div>
+      <div class="card-title">멀티플레이 서버가 아님</div>
+      <div class="card-text">초대 링크는 접속 편의를 위한 것이고, 실시간 여러 유저가 같은 테이블에 앉는 구조는 아닙니다. 지금 버전은 혼자 연습하는 데 집중했습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">No Gambling</div>
+      <div class="card-title">실전 돈 거래 없음</div>
+      <div class="card-text">게임머니는 학습 압박을 만들기 위한 장치입니다. 결제, 환전, 실제 베팅 기능은 없습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Practice Tool</div>
+      <div class="card-title">GTO 학습 보조</div>
+      <div class="card-text">AI는 솔버식 압박을 흉내 내는 연습 상대입니다. 완전한 상용 솔버나 실제 프로 플레이어의 대체물은 아닙니다.</div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<section id="stack"><div class="container fade-in">
+  <div class="section-label">Stack</div>
+  <h2 class="section-title">구현 스택</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Frontend</div>
+      <div class="card-title">Vanilla HTML/CSS/JavaScript</div>
+      <div class="card-text">게임 UI, 카드 렌더링, 테이블 상태, 리플레이, 로컬 접근 키 처리를 별도 프레임워크 없이 구현했습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Engine</div>
+      <div class="card-title">Poker Engine</div>
+      <div class="card-text"><code>engine.js</code>에서 덱, 셔플, 족보 평가, 승률 추정, 멀티 상대 equity 계산을 분리했습니다.</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Runtime</div>
+      <div class="card-title">OpenAI Sites Runtime</div>
+      <div class="card-text">정적 앱을 빌드해 Sites 서버 엔트리로 묶고, 장부 API를 통해 세션 저장과 조작 방어를 처리합니다.</div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="footer-text">
+  AI Poker &mdash; Private Holdem GTO Practice<br>
+  <a href="https://private-holdem-gto-20260713-soccz.ether9073.chatgpt.site/?key=9963" target="_blank" rel="noopener noreferrer">플레이하기</a> &middot;
+  <a href="https://github.com/soccz/AI_poker" target="_blank" rel="noopener noreferrer">GitHub</a> &middot;
+  <a href="/">Home</a>
+</div></footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(element => observer.observe(element));
+</script>
+</body>
+</html>
