@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모멘텀 꼬리 보험 — 논문이 되기까지 39번의 실험</title>
+  <meta name="description" content="Barroso-Santa-Clara 재현에서 시작해 '예측이 좋아지면 무엇이 좋아지는가'라는 질문의 답을 찾기까지 — 성공과 실패, 철회와 반전을 전부 기록한 연구 원장(E00~E38). 신경망 붕괴, 프레임 폐기 2회, 블라인드 게이트 7라운드, 수치 전수대조 불일치 0건.">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg-primary: #fafaf9;
+      --bg-secondary: #f5f5f4;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafaf9;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --text-muted: #a8a29e;
+      --accent: #44403c;
+      --accent-dim: rgba(68, 64, 60, 0.07);
+      --accent-red: #b91c1c;
+      --accent-green: #15803d;
+      --accent-amber: #b45309;
+      --border: #e7e5e4;
+      --border-light: #d6d3d1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,250,249,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); transition: all 0.3s;
+    }
+    nav.scrolled { background: rgba(250,250,249,0.95); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
+
+    /* sticky left TOC for desktop */
+    .toc-side {
+      position: fixed; top: 80px; left: 1rem; width: 168px;
+      max-height: calc(100vh - 100px); overflow-y: auto;
+      padding: 0.8rem 0.6rem 1.2rem 0.4rem;
+      font-size: 0.74rem; line-height: 1.55; display: none; z-index: 50;
+      scrollbar-width: thin;
+    }
+    @media (min-width: 1280px) { .toc-side { display: block; } }
+    .toc-side .toc-title {
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted); margin: 0.3rem 0 0.6rem 0.5rem; font-weight: 700;
+    }
+    .toc-side ol { list-style: none; counter-reset: toc; padding-left: 0; }
+    .toc-side li { counter-increment: toc; margin-bottom: 0.18rem; }
+    .toc-side a {
+      color: var(--text-muted); text-decoration: none; display: block;
+      padding: 0.22rem 0.5rem; border-left: 2px solid transparent;
+      border-radius: 0 3px 3px 0; transition: all 0.15s;
+    }
+    .toc-side a:hover { color: var(--text-primary); background: var(--accent-dim); }
+    .toc-side a.active {
+      color: var(--accent); border-left-color: var(--accent);
+      background: var(--accent-dim); font-weight: 600;
+    }
+    .toc-side a::before {
+      content: counter(toc, decimal-leading-zero) " ";
+      font-family: 'JetBrains Mono', monospace; color: var(--text-muted);
+      font-size: 0.66rem; margin-right: 0.3rem;
+    }
+
+    /* publication callout */
+    .pub-card {
+      max-width: 960px; margin: 0 auto; background: var(--bg-card);
+      border: 1px solid var(--border); border-left: 4px solid #6d28d9;
+      border-radius: 8px; padding: 1.5rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .pub-head {
+      display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+      margin-bottom: 0.7rem;
+    }
+    .pub-badge {
+      font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #6d28d9; background: rgba(109,40,217,0.08); padding: 0.18rem 0.6rem;
+      border-radius: 3px; font-weight: 700;
+    }
+    .pub-venue {
+      font-size: 0.78rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace;
+    }
+    .pub-title-ko {
+      font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700;
+      line-height: 1.5; margin-bottom: 0.2rem;
+    }
+    .pub-title-en {
+      font-style: italic; font-size: 0.86rem; color: var(--text-secondary);
+      margin-bottom: 0.7rem;
+    }
+    .pub-authors {
+      font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.7rem;
+    }
+    .pub-authors strong { color: var(--text-primary); }
+    .pub-keywords {
+      display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.9rem;
+    }
+    .pub-keyword {
+      font-size: 0.7rem; padding: 0.18rem 0.5rem; background: var(--bg-secondary);
+      color: var(--text-secondary); border-radius: 3px; border: 1px solid var(--border);
+    }
+    .pub-note {
+      font-size: 0.85rem; color: var(--text-primary); padding: 0.7rem 0.9rem;
+      background: var(--bg-secondary); border-radius: 4px; margin-bottom: 0.9rem;
+      line-height: 1.7;
+    }
+    .pub-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; color: #6d28d9; text-decoration: none;
+      border-bottom: 1px solid rgba(109,40,217,0.3);
+      padding-bottom: 1px;
+    }
+    .pub-link:hover { border-bottom-color: #6d28d9; }
+
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(68,64,60,0.04) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 60%, rgba(120,113,108,0.03) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; max-width: 820px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-secondary); border: 1px solid var(--border-light);
+      padding: 0.4rem 1.2rem; border-radius: 2px; margin-bottom: 2.2rem;
+    }
+    .hero h1 {
+      font-family: 'Noto Serif KR', serif; font-size: clamp(1.9rem, 4.7vw, 3.1rem);
+      font-weight: 700; line-height: 1.4; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); border-bottom: 2px solid var(--border-light); padding-bottom: 2px; }
+    .hero-sub { font-size: 1.05rem; color: var(--text-secondary); font-weight: 300; line-height: 1.95; margin-bottom: 3rem; }
+    .hero-stats { display: flex; justify-content: center; gap: 2.6rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; font-weight: 700; color: #292524; display: block; line-height: 1.2; }
+    .hero-stat-label { font-size: 0.76rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .hero-links { display: flex; justify-content: center; gap: 0.9rem; margin-top: 2.6rem; flex-wrap: wrap; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.4rem; border: 1px solid var(--border-light); border-radius: 4px;
+      color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: all 0.2s;
+      background: var(--bg-card);
+    }
+    .hero-link:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-link.primary { background: var(--accent); color: #fafaf9; border-color: var(--accent); }
+    .hero-link.primary:hover { background: #292524; color: #fff; }
+
+    .scroll-ind {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      color: var(--text-muted); font-size: 0.65rem; letter-spacing: 0.1em;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+
+    section { padding: 5.5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.45rem,3vw,2.05rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.9rem; letter-spacing: -0.02em; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 740px; line-height: 1.85; margin-bottom: 2.6rem; }
+    .section-desc.full { max-width: none; }
+    .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.7rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .card:hover { border-color: var(--border-light); background: var(--bg-card-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card-title { font-weight: 700; font-size: 0.96rem; margin-bottom: 0.45rem; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+    .card-eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.6rem; }
+
+    .flow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 0; margin: 2.4rem 0; }
+    .flow-step {
+      flex: 1; min-width: 180px; background: var(--bg-card); border: 1px solid var(--border);
+      padding: 1.5rem 1.1rem; text-align: center; position: relative;
+    }
+    .flow-step:first-child { border-radius: 8px 0 0 8px; }
+    .flow-step:last-child { border-radius: 0 8px 8px 0; }
+    .flow-step::after {
+      content: ''; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+      border-left: 10px solid var(--border-light); border-top: 10px solid transparent; border-bottom: 10px solid transparent; z-index: 1;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-num { font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .flow-title { font-weight: 700; font-size: 0.86rem; margin-bottom: 0.3rem; }
+    .flow-desc { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.45; }
+
+    .layer-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.6rem; border-top: 3px solid #78716c; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .layer-num { font-size: 0.66rem; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.55rem; }
+    .layer-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.55rem; }
+    .layer-q { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.9rem; padding-left: 1rem; border-left: 2px solid var(--border); }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag { font-size: 0.68rem; padding: 0.2rem 0.55rem; background: #f5f5f4; color: #57534e; border-radius: 3px; border: 1px solid #e7e5e4; }
+    .tag.red { background: rgba(185,28,28,0.08); color: var(--accent-red); border-color: rgba(185,28,28,0.18); }
+    .tag.green { background: rgba(21,128,61,0.08); color: var(--accent-green); border-color: rgba(21,128,61,0.18); }
+
+    .viz-insight {
+      background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid #78716c;
+      border-radius: 0 8px 8px 0; padding: 1.25rem 1.7rem; margin: 1.6rem 0;
+    }
+    .viz-insight-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 700; }
+    .viz-insight p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.85; }
+    .viz-insight.amber { border-left-color: var(--accent-amber); }
+    .viz-insight.green { border-left-color: var(--accent-green); }
+    .viz-insight.red { border-left-color: var(--accent-red); }
+
+    .code-block {
+      background: #1c1917; border-radius: 8px; padding: 1.2rem 1.4rem; overflow-x: auto;
+      margin: 1.4rem 0; border: 1px solid #292524;
+    }
+    .code-block pre {
+      font-family: 'JetBrains Mono', 'SF Mono', monospace; font-size: 0.78rem; color: #e7e5e4; line-height: 1.65;
+      white-space: pre; tab-size: 2;
+    }
+    .code-comment { color: #78716c; }
+    .code-keyword { color: #d4a843; }
+    .code-string { color: #a8d8a8; }
+    .code-bad { color: #ef9a9a; text-decoration: line-through; opacity: 0.7; }
+    .code-good { color: #a8d8a8; font-weight: 600; }
+    .code-num { color: #d4a843; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    thead { background: var(--bg-secondary); }
+    th { padding: 0.85rem 1rem; text-align: left; font-weight: 700; color: var(--text-secondary); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    th.num { text-align: right; }
+    td { padding: 0.78rem 1rem; border-bottom: 1px solid var(--border); }
+    td.num { text-align: right; font-family: 'JetBrains Mono', monospace; }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: var(--bg-secondary); }
+    .winner { color: var(--accent-green); font-weight: 700; }
+    .loser { color: var(--accent-red); }
+
+    .img-frame {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.1rem; margin: 1.6rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .img-frame img { width: 100%; height: auto; border-radius: 6px; display: block; }
+    .img-caption {
+      font-size: 0.78rem; color: var(--text-muted); margin-top: 0.7rem;
+      text-align: center; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.02em;
+    }
+    .img-caption strong { color: var(--text-secondary); font-weight: 700; }
+
+    .img-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.4rem 0; }
+    .img-pair > div { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem; }
+    .img-pair img { width: 100%; height: auto; border-radius: 4px; display: block; }
+    .img-pair-label { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.5rem; text-align: center; font-family: 'JetBrains Mono', monospace; }
+    @media (max-width: 640px) { .img-pair { grid-template-columns: 1fr; } }
+
+    .cam-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.9rem;
+      margin: 1.6rem 0;
+    }
+    .cam-tile { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .cam-tile img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+    .cam-meta { padding: 0.6rem 0.85rem; }
+    .cam-name { font-weight: 700; font-size: 0.84rem; }
+    .cam-loc { font-size: 0.73rem; color: var(--text-secondary); margin-top: 0.15rem; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem; text-align: center;
+    }
+    .stat-num { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent); line-height: 1.1; }
+    .stat-num.green { color: var(--accent-green); }
+    .stat-num.red { color: var(--accent-red); }
+    .stat-num.amber { color: var(--accent-amber); }
+    .stat-label { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.35rem; }
+    .stat-sub { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+    .bullet-list { display: flex; flex-direction: column; gap: 0.7rem; margin: 1.2rem 0; }
+    .bullet-item {
+      display: flex; gap: 0.8rem; padding: 0.85rem 1.1rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+      font-size: 0.88rem; line-height: 1.7;
+    }
+    .bullet-mark {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 4px;
+      background: var(--accent-dim); color: var(--accent); font-weight: 700;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bullet-mark.red { background: rgba(185,28,28,0.1); color: var(--accent-red); }
+    .bullet-mark.green { background: rgba(21,128,61,0.1); color: var(--accent-green); }
+
+    .panel-2col {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; margin: 1.6rem 0;
+    }
+    @media (max-width: 720px) { .panel-2col { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem 1.7rem;
+    }
+    .panel h4 { font-family: 'Noto Serif KR', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .panel p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+    .panel.before { border-top: 3px solid var(--accent-red); }
+    .panel.after  { border-top: 3px solid var(--accent-green); }
+    .panel-eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.4rem; }
+
+    .file-tree {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem 1.4rem; line-height: 1.85; color: var(--text-secondary); margin: 1.4rem 0; overflow-x: auto;
+    }
+    .file-tree .dir { color: var(--accent); font-weight: 700; }
+    .file-tree .file { color: var(--text-primary); }
+    .file-tree .note { color: var(--text-muted); }
+
+    /* journal / 삽질 일지 */
+    .journal {
+      display: flex; flex-direction: column; gap: 0.9rem;
+      border-left: 1px solid var(--border); padding-left: 1.6rem;
+      margin: 1.6rem 0 1.6rem 0.4rem;
+    }
+    .journal-entry {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem 1.45rem; position: relative;
+      transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .journal-entry:hover { transform: translateX(2px); box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+    .journal-entry::before {
+      content: ''; position: absolute; left: -2.45rem; top: 1.45rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg-primary);
+      z-index: 2;
+    }
+    .journal-entry.wall::before    { background: var(--accent-red); }
+    .journal-entry.fix::before     { background: var(--accent-amber); }
+    .journal-entry.passed::before  { background: var(--accent-green); }
+    .journal-entry.pivot::before   { background: #6d28d9; }
+    .journal-head {
+      display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.55rem;
+    }
+    .journal-id {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted);
+    }
+    .journal-phase {
+      font-size: 0.66rem; padding: 0.16rem 0.5rem; background: var(--bg-secondary);
+      color: var(--text-secondary); border-radius: 3px; font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+    .journal-status {
+      font-size: 0.64rem; padding: 0.18rem 0.55rem; border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 700; margin-left: auto;
+    }
+    .journal-status.wall   { background: rgba(185,28,28,0.12); color: var(--accent-red); }
+    .journal-status.fix    { background: rgba(180,83,9,0.12);  color: var(--accent-amber); }
+    .journal-status.passed { background: rgba(21,128,61,0.12); color: var(--accent-green); }
+    .journal-status.pivot  { background: rgba(109,40,217,0.12); color: #6d28d9; }
+    .journal-entry h4 {
+      font-family: 'Noto Serif KR', serif; font-size: 1.02rem; font-weight: 700;
+      margin-bottom: 0.45rem; line-height: 1.45;
+    }
+    .journal-body { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.78; }
+    .journal-body code {
+      background: var(--bg-secondary); padding: 0.1rem 0.35rem; border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.82em;
+    }
+    .journal-fix {
+      margin-top: 0.75rem; padding: 0.55rem 0.85rem; background: var(--bg-secondary);
+      border-radius: 5px; font-size: 0.82rem; font-family: 'JetBrains Mono', monospace;
+      color: var(--text-primary); line-height: 1.6;
+    }
+    .journal-fix::before { content: '→ '; color: var(--accent-green); font-weight: 700; }
+
+    .stat-strip {
+      display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 2rem;
+      padding: 1.1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    }
+    .stat-strip-item { display: flex; flex-direction: column; min-width: 80px; }
+    .stat-strip-num { font-family: 'Noto Serif KR', serif; font-weight: 700; font-size: 1.4rem; line-height: 1.1; }
+    .stat-strip-num.red { color: var(--accent-red); }
+    .stat-strip-num.amber { color: var(--accent-amber); }
+    .stat-strip-num.green { color: var(--accent-green); }
+    .stat-strip-num.pivot { color: #6d28d9; }
+    .stat-strip-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.15rem; letter-spacing: 0.02em; }
+
+    /* lightbox */
+    .lightbox {
+      position: fixed; inset: 0; background: rgba(28,25,23,0.92); display: none;
+      align-items: center; justify-content: center; z-index: 1000; padding: 2rem;
+      cursor: zoom-out;
+    }
+    .lightbox.show { display: flex; }
+    .lightbox img { max-width: 95vw; max-height: 95vh; display: block; border-radius: 4px; }
+    .lightbox-close {
+      position: absolute; top: 1.2rem; right: 1.5rem; color: #fafaf9; font-size: 2rem;
+      background: none; border: none; cursor: pointer; opacity: 0.7;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    img.zoomable { cursor: zoom-in; transition: opacity 0.15s; }
+    img.zoomable:hover { opacity: 0.92; }
+
+    /* code copy button */
+    .code-block { position: relative; }
+    .code-copy {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(231,229,228,0.1); border: 1px solid rgba(231,229,228,0.2);
+      color: #d6d3d1; font-size: 0.7rem; padding: 0.3rem 0.6rem; border-radius: 4px;
+      cursor: pointer; font-family: 'JetBrains Mono', monospace;
+      transition: all 0.15s;
+    }
+    .code-copy:hover { background: rgba(231,229,228,0.18); color: #fff; }
+    .code-copy.copied { background: rgba(21,128,61,0.2); border-color: rgba(21,128,61,0.4); color: #86efac; }
+
+    /* progress bar */
+    .progress-bar {
+      position: fixed; top: 64px; left: 0; right: 0; height: 2px;
+      background: var(--accent); transform-origin: left; transform: scaleX(0);
+      z-index: 99; transition: transform 0.1s;
+    }
+
+    /* code diff (used in journal) */
+    .code-diff {
+      background: #1c1917; border-radius: 6px; padding: 0.8rem 1rem; margin-top: 0.8rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.65;
+      overflow-x: auto;
+    }
+    .code-diff .del { color: #ef9a9a; }
+    .code-diff .add { color: #a8d8a8; }
+    .code-diff .ctx { color: #78716c; }
+    .code-diff .meta { color: #a8a29e; font-style: italic; }
+
+    /* thinking flow timeline */
+    .flow-list {
+      display: grid; grid-template-columns: 1fr; gap: 0.7rem;
+      max-width: 920px; margin: 0 auto;
+    }
+    .flow-row {
+      display: grid; grid-template-columns: 60px 1fr auto;
+      align-items: stretch; gap: 1rem;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.95rem 1.2rem; transition: all 0.2s;
+    }
+    .flow-row:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.05); transform: translateX(2px); }
+    .flow-row.pivot { border-left: 3px solid #6d28d9; }
+    .flow-row.build { border-left: 3px solid var(--accent); }
+    .flow-row.iterate { border-left: 3px solid var(--accent-amber); }
+    .flow-row.discover { border-left: 3px solid var(--accent-green); }
+    .flow-step-num {
+      font-family: 'Noto Serif KR', serif; font-size: 1.4rem; font-weight: 700;
+      color: var(--text-muted); display: flex; align-items: center; justify-content: center;
+    }
+    .flow-step-body { display: flex; flex-direction: column; justify-content: center; }
+    .flow-step-title { font-weight: 700; font-size: 0.96rem; line-height: 1.4; }
+    .flow-step-desc { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.25rem; line-height: 1.55; }
+    .flow-step-tags { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
+    .flow-step-link {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      padding: 0.25rem 0.55rem; background: var(--bg-secondary); border: 1px solid var(--border);
+      border-radius: 4px; color: var(--text-secondary); text-decoration: none; white-space: nowrap;
+    }
+    .flow-step-link:hover { border-color: var(--accent); color: var(--accent); }
+    .flow-quote {
+      font-family: 'Noto Serif KR', serif; font-size: 0.86rem; font-style: italic;
+      color: #6d28d9; margin-top: 0.3rem;
+    }
+    .flow-phase-label {
+      font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted); padding: 0.5rem 0; font-family: 'JetBrains Mono', monospace;
+    }
+    @media (max-width: 640px) {
+      .flow-row { grid-template-columns: 50px 1fr; }
+      .flow-step-tags { grid-column: 1 / -1; margin-top: 0.4rem; }
+    }
+
+    footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); }
+    .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .flow { flex-direction: column; }
+      .flow-step { border-radius: 8px !important; }
+      .flow-step::after { display: none; }
+      section { padding: 4rem 1.4rem; }
+    }
+  </style>
+</head><body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')">
+  <button class="lightbox-close" aria-label="close">&times;</button>
+  <img id="lightbox-img" alt="">
+</div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">soccz.</a>
+    <a href="/projects/momentum-barroso/"
+       style="font-size:0.78rem;color:var(--text-muted);text-decoration:none;letter-spacing:0.04em;">
+      인터랙티브 데모 ↗
+    </a>
+  </div>
+</nav>
+
+<aside class="toc-side" id="toc-side" aria-label="목차">
+  <div class="toc-title">목차</div>
+  <ol>
+    <li><a href="#publication">Publication</a></li>
+    <li><a href="#map">여정 지도</a></li>
+    <li><a href="#reproduce">재현</a></li>
+    <li><a href="#race">예측 경기</a></li>
+    <li><a href="#transfer">전이곡선</a></li>
+    <li><a href="#robust">강건성 배터리</a></li>
+    <li><a href="#judgment">심판의 날</a></li>
+    <li><a href="#recalib">다중검정 재교정</a></li>
+    <li><a href="#intl">국제 원정</a></li>
+    <li><a href="#audit">감사와 논문화</a></li>
+    <li><a href="#rewrite">전면 재작성</a></li>
+    <li><a href="#gate">A+ 게이트 7라운드</a></li>
+    <li><a href="#graveyard">실패의 전당</a></li>
+    <li><a href="#protocol">정직성 프로토콜</a></li>
+    <li><a href="#numbers">숫자로 보는 여정</a></li>
+  </ol>
+</aside>
+
+<!-- =================== HERO =================== -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Momentum Tail Insurance — Research Ledger</span>
+    <h1>예측이 좋아지면 무엇이 좋아지는가 —<br>논문이 되기까지 <em>39번의 실험</em></h1>
+    <p class="hero-sub">
+      Barroso&ndash;Santa-Clara(2015)의 한국 재현에서 시작한 프로젝트가
+      "머신러닝 위험 예측의 경제적 가치는 어디로 가는가"라는 질문의 답 —
+      <strong>약한 팩터에 대한 꼬리 보험, 그리고 그 보험을 파는 것은 정확도가 아니라 구조</strong> —
+      에 도달하기까지. 성공만 남기지 않았다. 신경망 붕괴, 프레임 폐기 2회, 통계 철회 3건,
+      예상과 반대로 나온 실험, 그리고 블라인드 게이트 7라운드가 전부 원장(E00~E38)에 기록되어 있다.
+      이 페이지는 그 원장을 그대로 펼친 것이다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">39</span><span class="hero-stat-label">실험 (E00~E38)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">15+</span><span class="hero-stat-label">철회·폐기·반전</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">7</span><span class="hero-stat-label">블라인드 게이트 라운드</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">0</span><span class="hero-stat-label">수치 전수대조 불일치</span></div>
+    </div>
+    <div class="hero-links">
+      <a class="hero-link primary" href="/projects/momentum-barroso/">원논문 재현 인터랙티브 데모</a>
+      <a class="hero-link" href="#graveyard">실패의 전당 먼저 보기</a>
+    </div>
+  </div>
+  <div class="scroll-ind">SCROLL</div>
+</section>
+
+<!-- =================== PUBLICATION =================== -->
+<section id="publication" style="padding-top:4rem;padding-bottom:4rem;">
+  <div class="pub-card fade-in">
+    <div class="pub-head">
+      <span class="pub-badge">Working Paper</span>
+      <span class="pub-venue">한국어 정본 v4.2 — 학위논문 심사 준비 · 국제판(영문) 리라이트 예정</span>
+    </div>
+    <div class="pub-title-ko">위험 예측이 좋아지면 무엇이 좋아지는가: 약한 모멘텀 시장에서 머신러닝 변동성 예측과 꼬리 보험</div>
+    <div class="pub-title-en">What Improves When Risk Forecasts Improve: Machine-Learned Volatility and Tail Insurance in a Weak Momentum Market</div>
+    <div class="pub-authors">한국 전종목 35년(1991&ndash;2026, 상장폐지 포함) · 사전 지정 12개 예측기 · 표본외 292개월</div>
+    <div class="pub-keywords">
+      <span class="pub-keyword">모멘텀</span><span class="pub-keyword">변동성 관리 포트폴리오</span>
+      <span class="pub-keyword">머신러닝</span><span class="pub-keyword">실현변동성</span>
+      <span class="pub-keyword">꼬리위험</span><span class="pub-keyword">Romano&ndash;Wolf</span>
+      <span class="pub-keyword">극값이론</span>
+    </div>
+    <div class="pub-note">
+      <strong>세 발견.</strong> ① 예측은 좋아지지만(QLIKE −24%) 샤프비율은 따라오지 않는다 — 전이곡선의 기울기는 0과 구분되지 않는다.
+      ② 개선은 꼬리로 간다 — 월간 기대꼬리손실이 0.86%p 얕아지고, 사전 지정 예측기에서 다중검정 보정을 통과한다.
+      ③ 그 보험이 성립하는 곳은 좁다 — 약한 팩터 × 극단 구성의 교집합(한국 극단 10분위)뿐이고,
+      보험을 파는 것은 머신러닝의 정확도가 아니라 장기기억·시장상태라는 예측기의 구조다.
+    </div>
+    <a class="pub-link" href="/projects/momentum-barroso/">원논문(BS15) 재현 과정 인터랙티브 페이지 →</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- =================== JOURNEY MAP =================== -->
+<section id="map" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">∗ — Journey map · E00에서 E38까지</div>
+  <h2 class="section-title">하나의 결론이 아니라, 아홉 번의 방향 전환</h2>
+  <p class="section-desc">
+    최종 논문의 초록은 세 문장으로 요약되지만, 그 세 문장은 직선으로 도달한 것이 아니다.
+    아래 아홉 국면마다 무언가가 죽었고(<span style="color:var(--accent-red);font-weight:700;">빨강</span>),
+    고쳐졌고(<span style="color:var(--accent-amber);font-weight:700;">주황</span>),
+    발견됐고(<span style="color:var(--accent-green);font-weight:700;">초록</span>),
+    프레임이 바뀌었다(<span style="color:#6d28d9;font-weight:700;">보라</span>).
+  </p>
+  <div class="flow-list">
+    <div class="flow-phase-label">PHASE 1 — 기초 공사 (2026-07-06 ~ 07-07)</div>
+    <div class="flow-row build">
+      <div class="flow-step-num">01</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">재현 — 두 개의 독립 구현이 같은 답을 낼 때까지</div>
+        <div class="flow-step-desc">레퍼런스 파이프라인 + 최단순 노트북, 에이전트 24개 적대 감사. pdftotext가 마이너스 부호를 삼키는 함정 발견.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#reproduce" class="flow-step-link">E00–E01</a></div>
+    </div>
+    <div class="flow-row discover">
+      <div class="flow-step-num">02</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">예측 경기 — 앙상블이 이기고, 신경망이 죽다</div>
+        <div class="flow-step-desc">사전 지정 12개 예측기. ENS가 QLIKE 24% 개선. MLP·LSTM은 R² −73%, −439%로 붕괴 — 사전 지정 원칙대로 전부 보고.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#race" class="flow-step-link">E02–E03</a></div>
+    </div>
+    <div class="flow-row discover">
+      <div class="flow-step-num">03</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">전이곡선 — 샤프는 포화, 꼬리는 응답</div>
+        <div class="flow-step-desc">논문의 킬러 피겨 탄생. 예측이 좋아져도 샤프는 안 움직이는데 꼬리는 얕아진다 — "차원 분리"의 첫 목격.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#transfer" class="flow-step-link">E04–E05</a></div>
+    </div>
+    <div class="flow-row iterate">
+      <div class="flow-step-num">04</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">강건성 배터리 — 시도한 것의 절반이 실패</div>
+        <div class="flow-step-desc">크래시 직접 분류 실패(AUC 0.52), μ/σ² 동적 가중 참패(최악월 −93%), 동일가중은 관리가 역효과. 실패가 결론("분모만 관리하라")을 조각.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#robust" class="flow-step-link">E06–E11</a></div>
+    </div>
+    <div class="flow-phase-label">PHASE 2 — 심판과 재교정 (2026-07-07 ~ 07-08)</div>
+    <div class="flow-row pivot">
+      <div class="flow-step-num">05</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">심판의 날 — 통계 3건 철회, 프레임 폐기</div>
+        <div class="flow-step-desc">심사자 페르소나 4인의 적대 공격을 전부 수용. "죽은 팩터 소생" 프레임 폐기 → "약한 팩터의 꼬리 보험". 콜금리 12.6%가 "시장의 절반" 서사를 무너뜨림.</div>
+        <div class="flow-quote">"철회한 것은 지웠지만, 철회했다는 사실은 지우지 않았다."</div>
+      </div>
+      <div class="flow-step-tags"><a href="#judgment" class="flow-step-link">E12–E13</a></div>
+    </div>
+    <div class="flow-row pivot">
+      <div class="flow-step-num">06</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">다중검정 재교정 — 헤드라인이 자기 검정에서 탈락하다</div>
+        <div class="flow-step-desc">Romano–Wolf 보정에서 사전 지정 승자 ENS 자신이 탈락(p=0.125). 숨기지 않고 보고 위계를 재구축 — 1차 대상의 실패를 먼저 쓴다.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#recalib" class="flow-step-link">E16–E18</a></div>
+    </div>
+    <div class="flow-phase-label">PHASE 3 — 국제 원정 (2026-07-08 ~ 07-14)</div>
+    <div class="flow-row iterate">
+      <div class="flow-step-num">07</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">국제 원정 — 법칙을 찾으러 갔다가 경계를 갖고 돌아오다</div>
+        <div class="flow-step-desc">"약한 팩터 법칙"은 6개 시장에서 기각. 티어 상향 낙관 철회. 그러나 미재현이 명제의 대우 검증으로 전환 — 경계조건이 §8.4가 되다.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#intl" class="flow-step-link">E19–E24</a></div>
+    </div>
+    <div class="flow-row build">
+      <div class="flow-step-num">08</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">감사·재현킷·재작성 — 데이터부터 문체까지</div>
+        <div class="flow-step-desc">1,700만 행 전면 감사(유령 열 25개 정정), FRED 라이브 대조 1e-16, 재현킷 7게이트. 그리고 전면 재작성 — 블라인드 콜드리드 B+→A까지 5라운드.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#audit" class="flow-step-link">E25–E31</a></div>
+    </div>
+    <div class="flow-row pivot">
+      <div class="flow-step-num">09</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">A+ 게이트 — 7라운드, 신규 검정 6본, 서사 재정렬 3건</div>
+        <div class="flow-step-desc">5렌즈 블라인드 리뷰 × 적대적 검증을 7회전. 라운드마다 실험이 추가됐고, 예상과 반대로 나온 결과가 논문을 더 정확하게 만들었다. 최종: 확정 결함 0.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#gate" class="flow-step-link">E32–E38</a></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 01 REPRODUCE =================== -->
+<section id="reproduce"><div class="container fade-in">
+  <div class="section-label">01 — Reproduce · E00–E01</div>
+  <h2 class="section-title">믿을 수 있는 출발선: 두 개의 독립 구현</h2>
+  <p class="section-desc">
+    모든 것의 전제는 "재현이 맞다"는 확신이었다. 레퍼런스 파이프라인과, 그것을 전혀 참조하지 않은
+    최단순 노트북(30셀, 함수 2개)을 따로 만들어 서로를 검증했다 — 같은 데이터에서 두 구현이 같은 답을 내면
+    구현 오류일 확률은 급감한다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E00</span><span class="journal-phase">레퍼런스 파이프라인</span><span class="journal-status passed">PASSED</span></div>
+      <h4>에이전트 24개의 적대 감사 — 확정 오류 3건을 수정하고 시작</h4>
+      <div class="journal-body">한국 전종목(상폐 포함) 원천 데이터만으로 BS15 재현: WML 샤프 0.17, 왜도 −1.16, 최악월 1998-10 <strong>−94.9%</strong>(패자 다리가 한 달에 +121%). 결과를 믿기 전에 전면 적대 감사를 돌려 오류 3건을 수정했고, 오탐 1건은 원문 PDF 대조로 기각했다.</div>
+    </div>
+    <div class="journal-entry wall">
+      <div class="journal-head"><span class="journal-id">E00</span><span class="journal-phase">함정</span><span class="journal-status wall">WALL</span></div>
+      <h4>pdftotext가 마이너스 부호를 삼킨다</h4>
+      <div class="journal-body">원논문 텍스트 추출본에서 Table 2의 SMB OOS <code>−8.41</code>이 <code>8.41</code>로 보였다. 부호가 걸린 수치는 전부 PDF 원본으로만 확정한다는 원칙이 이때 생겼다.</div>
+      <div class="journal-fix">수치 부호는 반드시 원본 PDF 대조 — 프로젝트 헌법 "함정 목록" 1번으로 등재</div>
+    </div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E01</span><span class="journal-phase">최단순 노트북</span><span class="journal-status passed">6/6 GATES</span></div>
+      <h4>독립 구현 상호 검증 — 그리고 "공통표본" 함정</h4>
+      <div class="journal-body">노트북과 레퍼런스의 샤프·왜도·IR이 허용오차 안에서 일치. 단 Table 1은 <strong>4팩터 공통표본</strong>이어야 한다 — 팩터별 개별 표본으로 계산하면 시장 샤프가 0.36 vs 0.41로 어긋나 게이트가 실패한다. 원논문의 "same sample period" 한 구절이 게이트 하나의 값어치를 했다.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 02 RACE =================== -->
+<section id="race" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">02 — Forecast race · E02–E03</div>
+  <h2 class="section-title">예측 경기: 12명의 선수, 그리고 두 구의 시체</h2>
+  <p class="section-desc">
+    예측기 12개(기준 2 + 계량 3 + ML 6 + 결합 1)를 결과 산출 <em>이전에</em> 코드로 확정하고,
+    확장 윈도우 표본외 292개월에서 경기시켰다. 사전 지정의 대가는 실패도 그대로 보고해야 한다는 것이다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E03</span><span class="journal-phase">리더보드</span><span class="journal-status passed">PASSED</span></div>
+      <h4>앙상블이 벤치마크의 QLIKE를 24% 줄이다</h4>
+      <div class="journal-body">ENS(HAR+Ridge+HGB): QLIKE 0.334→0.253, 표본외 R² 28.0→38.9%. BS15의 126일 롤링은 넘기 쉬운 벤치마크였다 — 지수가중평균조차 유의하게 이긴다(p=0.001).</div>
+    </div>
+    <div class="journal-entry wall">
+      <div class="journal-head"><span class="journal-id">E03</span><span class="journal-phase">신경망</span><span class="journal-status wall">WALL</span></div>
+      <h4>MLP R² −73%, LSTM R² −439% — 신경망의 전사</h4>
+      <div class="journal-body">292개월 소표본에서 신경망은 과적합으로 붕괴했다. 5개 시드로 재훈련해도(E25) 전 시드에서 벤치마크보다 나빴다. 논문 표 4에 그대로 인쇄했다 — <em>"사전 지정 원칙에 따라 이 실패도 그대로 보고한다."</em></div>
+      <div class="journal-fix">실패 판정의 정본 기준을 시드에 강건한 QLIKE로 명시 (R² −439는 시드 특이값 가능성 각주)</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 03 TRANSFER =================== -->
+<section id="transfer"><div class="container fade-in">
+  <div class="section-label">03 — Transfer curve · E04–E05</div>
+  <h2 class="section-title">전이곡선: 샤프는 포화하고, 꼬리가 응답한다</h2>
+  <p class="section-desc">
+    12개 예측치를 동일한 스케일 규칙에 넣어 성과를 예측 정확도에 대응시키자 논문의 핵심 그림이 나왔다.
+    예측이 좋아져도 샤프는 움직이지 않는데, 꼬리(최악월·ES5)는 얕아진다 — "예측이 좋아지면 무엇이 좋아지는가"의 첫 답.
+  </p>
+  <div class="img-frame">
+    <img class="zoomable" src="figures/p3_transfer_curve.png" alt="전이곡선 — 좌: R² vs 샤프(평평), 우: R² vs ES5(쌍별 개선)">
+    <div class="img-caption"><strong>킬러 피겨.</strong> 좌: 예측력(표본외 R²) vs 샤프 — 평평. 우: 예측력 vs ES5 — 벤치마크 대비 쌍별 개선</div>
+  </div>
+  <div class="journal">
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E04</span><span class="journal-phase">전이곡선</span><span class="journal-status passed">DISCOVER</span></div>
+      <h4>양(+)의 R² 아홉 점에서 샤프–R² 기울기 ≈ 0</h4>
+      <div class="journal-body">나쁜 예측은 벌받지만(순위상관 0.56), 좋은 예측들 사이의 추가 개선은 샤프로 전이되지 않는다. 이 발견이 훗날 "차원 분리" 프레임과 Cederburg 회의론·BS15 낙관론의 화해로 자란다.</div>
+    </div>
+    <div class="journal-entry fix">
+      <div class="journal-head"><span class="journal-id">E05</span><span class="journal-phase">메커니즘</span><span class="journal-status fix">FIX</span></div>
+      <h4>수치 폭발 2건 — 게이트가 잡고, 논문이 공개하다</h4>
+      <div class="journal-body">성분 분해 회귀의 극단 외삽과 고유성분 음수화를 검증 게이트가 잡았다. 수정 장치 2건(예측치 절단·5% 하한)을 도입하되, <strong>도입 계기와 코드 위치를 논문 부록 A에 표로 공개</strong>했다 — "사후 개입의 공개"라는 §4.5가 이때 생겼다.</div>
+      <div class="journal-fix">한국 모멘텀 위험의 87%는 고유성분 — "예측 가능한 고유위험"이라는 BS15 메커니즘의 극단 시험대 확인</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 04 ROBUST =================== -->
+<section id="robust" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">04 — Robustness battery · E06–E11</div>
+  <h2 class="section-title">강건성 배터리: 실패가 결론을 조각하다</h2>
+  <p class="section-desc">
+    부트스트랩, 비용 스윕, 구성 그리드, 대안 전략까지 6개 배터리를 돌렸다.
+    여기서 죽은 세 가지가 살아남은 하나("분모만 관리하라")를 조각했다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry wall">
+      <div class="journal-head"><span class="journal-id">E09</span><span class="journal-phase">크래시 분류기</span><span class="journal-status wall">WALL</span></div>
+      <h4>크래시를 직접 분류하려는 시도 — AUC 0.52</h4>
+      <div class="journal-body">크래시 레이블이 51건뿐이라 로짓도 부스팅도 동전 던지기 수준(AUC 0.52~0.57). 오버레이 이득 +0.005. 실패했지만 버리지 않았다 — <strong>"변동성 경로가 옳다"는 역방향 증거</strong>로 §9.3에 남았다.</div>
+    </div>
+    <div class="journal-entry wall">
+      <div class="journal-head"><span class="journal-id">E07</span><span class="journal-phase">μ/σ² 동적 가중</span><span class="journal-status wall">WALL</span></div>
+      <h4>Daniel–Moskowitz형 가중의 참패 — 최악월 −93%</h4>
+      <div class="journal-body">기대수익까지 반영하는 μ/σ² 가중은 한국에서 μ 예측 R²가 1.3%에 그쳐 분자의 잡음이 레버리지를 오염시켰다. <em>"약한 모멘텀 시장의 처방은 분자를 건드리지 말고 분모만 관리하는 것이다"</em> — Barroso vs Daniel–Moskowitz 논쟁의 한국 답변이 이 실패에서 나왔다.</div>
+    </div>
+    <div class="journal-entry wall">
+      <div class="journal-head"><span class="journal-id">E08</span><span class="journal-phase">동일가중</span><span class="journal-status wall">WALL</span></div>
+      <h4>동일가중에서는 위험관리가 오히려 해를 끼친다</h4>
+      <div class="journal-body">6개 구성 변형 중 동일가중만 관리가 역효과(샤프 0.22→0.14). 소형주 잡음이 변동성 신호를 무력화한다 — <strong>"위험관리의 전제는 위험 신호의 품질"</strong>이라는 반례이자 가치가중 선택의 정당화.</div>
+    </div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E09–E11</span><span class="journal-phase">생존자들</span><span class="journal-status passed">PASSED</span></div>
+      <h4>살아남은 것들: 1개월 창, 곰장 방어, 레버리지 캡 무영향</h4>
+      <div class="journal-body">BS15의 6개월 창은 한국 최적이 아니고(1개월 0.66 &gt; 6개월 0.60), ML 이득의 출처는 정확히 약세장(−2.7% vs +2.4%)이며, 한국 관리 전략은 레버리지 범위 0.14~1.05로 사실상 디레버리지 전용이라 실행 제약이 바인딩하지 않는다. 공매도 금지 39개월을 반영하면 결론이 오히려 강화된다.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 05 JUDGMENT =================== -->
+<section id="judgment"><div class="container fade-in">
+  <div class="section-label">05 — Judgment day · E12–E13</div>
+  <h2 class="section-title">심판의 날: 철회 3건, 프레임 폐기, 그리고 금리 충격</h2>
+  <p class="section-desc">
+    초고가 자리 잡기 전에 심사자 페르소나 4인의 적대 공격을 먼저 돌렸다.
+    지적은 전부 옳았고, 전부 수용했다. 이날 논문의 헤드라인이 두 번 다시 쓰였다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">E12</span><span class="journal-phase">통계 철회</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>세 개의 p값을 스스로 철회하다</h4>
+      <div class="journal-body">
+        ① <strong>Δ최악월 P=0.010 철회</strong> — 표본 최솟값은 극값 순서통계량이라 블록 부트스트랩이 비일관적(Bickel–Freedman). 점추정 기술통계로 강등.
+        ② <strong>전이곡선 점별 p=0.988 철회</strong> — 아홉 점이 같은 292개월에서 나온 종속 관측치. 조인트 블록 부트스트랩 CI로 교체.
+        ③ <strong>family-wise p=0.002 폐기</strong> — max-t의 주인이 예측력 0짜리 순수 디레버리지(ExpandingMean)였다. 유리한 숫자였지만 잘못된 숫자였다.
+      </div>
+      <div class="journal-fix">헤드라인을 "사전 지정 승자 ENS 중심 + HARX는 사후 최고로 병기 강등"으로 재구축</div>
+    </div>
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">E12</span><span class="journal-phase">프레임</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>"죽은 팩터 소생" 프레임의 장례식</h4>
+      <div class="journal-body">표본외 창(2001+)에서 무관리 모멘텀도 t=2.79로 생존한다 — "죽은 팩터를 ML이 살린다"는 서사는 과장이었다. 진짜 죽은 2015+ 구간에선 ML도 샤프 0.15로 미약했다. 프레임을 <strong>"약한 팩터에 대한 꼬리 보험"</strong>으로 교체 — 이것이 최종 논문의 제목이 됐다.</div>
+    </div>
+    <div class="journal-entry fix">
+      <div class="journal-head"><span class="journal-id">E13</span><span class="journal-phase">무위험수익률</span><span class="journal-status fix">FIX</span></div>
+      <h4>콜금리 12.6%의 충격 — "시장의 절반" 서사 붕괴</h4>
+      <div class="journal-body">1990년대 한국 콜금리는 연 12.6%였다. RF≈0 가정이 시장 샤프를 크게 부풀렸고, "모멘텀은 시장의 절반도 안 된다"(0.42)는 도입부 서사는 착시였다. 초과수익 기준으로 재계산하자 <strong>0.77</strong> — 시장 초과수익 자체가 경계선(t=1.3)인 시장에서 모멘텀은 그 77% 수준의 약한 팩터. 서사가 정확해졌고, WML은 자기자금조달이라 핵심 결과는 불변이었다.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 06 RECALIB =================== -->
+<section id="recalib" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">06 — Recalibration · E16–E18</div>
+  <h2 class="section-title">헤드라인이 자기 검정에서 탈락했을 때</h2>
+  <p class="section-desc">
+    블라인드 심사 시뮬레이션이 major revision ×3을 냈다. 대응 과정에서 가장 아픈 발견 —
+    사전 지정 승자 ENS 자신이 Romano&ndash;Wolf 보정을 통과하지 못한다 — 을 논문의 구조로 만들었다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">E17</span><span class="journal-phase">Romano–Wolf</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>ENS 개별 p=0.037 → 보정 p=0.125, 탈락</h4>
+      <div class="journal-body">FWER 보정에서 1차 대상이 살아남지 못했다. 생존자는 HARX(0.022)·HAR·Lasso(0.040). 선택지는 둘이었다 — 생존자를 헤드라인으로 갈아타거나, 실패를 먼저 보고하거나. <strong>후자를 골랐다.</strong> "1차 대상의 실패 먼저, 생존자 다음, HARX는 탐색적 구분"이라는 보고 위계가 §4.4에 사전 규칙으로 박혔다.</div>
+    </div>
+    <div class="journal-entry fix">
+      <div class="journal-head"><span class="journal-id">E16</span><span class="journal-phase">극값이론</span><span class="journal-status fix">FIX</span></div>
+      <h4>"꼬리 관측 14개" 비판을 GPD로 우회 — 버그 수정 포함</h4>
+      <div class="journal-body">5% 꼬리는 292개월 중 14개월뿐이라는 비판에 극값이론(POT/GPD, 초과 44개)으로 답했다 — 1% 극단꼬리까지 유의(+4.9%p). 초판의 ES 공식 괄호 버그를 게이트가 잡아 수정한 뒤에야 GPD가 경험값을 재현했다.</div>
+    </div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E18</span><span class="journal-phase">재심</span><span class="journal-status passed">MINOR ×3</span></div>
+      <h4>major ×3 → minor ×3 — 그리고 메커니즘의 자발적 격하</h4>
+      <div class="journal-body">교차팩터 대비의 신뢰구간이 0을 포함(P=0.15)하자 메커니즘 주장을 "강한 증거"에서 <strong>"방향적·시사적 정합"으로 스스로 격하</strong>했다. 심사가 요구하기 전에 원고가 먼저 물러섰다.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 07 INTL =================== -->
+<section id="intl"><div class="container fade-in">
+  <div class="section-label">07 — International expedition · E19–E24</div>
+  <h2 class="section-title">국제 원정: 법칙을 찾으러 갔다가, 경계를 갖고 돌아왔다</h2>
+  <p class="section-desc">
+    "약한 팩터일수록 ML 꼬리 가치가 크다"는 법칙을 기대하고 미국·일본·유럽·북미·아태로 떠났다.
+    법칙은 없었다. 대신 더 좋은 것 — 명제의 대우를 검증하는 경계조건 — 을 얻었다.
+    이 국면의 실험들은 사전 지정 판정기준을 실행 전에 커밋으로 고정하고 돌렸다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E19</span><span class="journal-phase">미국 병렬</span><span class="journal-status passed">PASSED</span></div>
+      <h4>미국 BS15 재현 게이트 통과 — 그리고 첫 미재현</h4>
+      <div class="journal-body">1927–2013 표본에서 샤프 0.535(원논문 0.53), 왜도 −2.38(−2.47) — 거의 완전 재현으로 파이프라인 신뢰 확보. 그런데 ML 꼬리 증분은 <strong>−0.13(p=0.67)</strong>. 한국 +0.86과 정반대. 강한 미국에선 BS15 단순규칙이 이미 꼬리를 다 잡고 있었다(+8.2%p).</div>
+    </div>
+    <div class="journal-entry wall">
+      <div class="journal-head"><span class="journal-id">E20</span><span class="journal-phase">다시장 횡단면</span><span class="journal-status wall">WALL</span></div>
+      <h4>"약한 팩터 법칙" 기각 — 최약체 일본이 최악의 성적</h4>
+      <div class="journal-body">6개 시장 횡단면 회귀: r=−0.29, p=0.63, 비단조. 가장 약한 일본(샤프 0.09)에서 ML 꼬리가 가장 나빴다(−0.97). 게다가 미국이 구성(10분위 vs 2×3)에 따라 부호가 뒤집혔다 — 효과는 팩터 강도가 아니라 구성에 민감했다.</div>
+    </div>
+    <div class="journal-entry fix">
+      <div class="journal-head"><span class="journal-id">E20-정정</span><span class="journal-phase">자기 진단</span><span class="journal-status fix">FIX</span></div>
+      <h4>음성 결과가 사실은 우리 실험의 결함이었다</h4>
+      <div class="journal-body">한국 데이터를 국제 검정과 같은 축약 피처(변동성 이력만)에 넣자 한국조차 <strong>−0.79</strong>가 나왔다. E20의 국제 음성은 테제 반증이 아니라 <strong>피처셋 오지정</strong> — 한국의 승자를 만드는 시장상태 피처를 빼고 비교한 불공정 검정이었다. 결론을 유보하고 공정 재검정을 설계했다.</div>
+      <div class="journal-fix">교훈: ML 꼬리 이득은 변동성 자기이력이 아니라 시장상태 조건부성에서 나온다</div>
+    </div>
+    <div class="journal-entry wall">
+      <div class="journal-head"><span class="journal-id">E21–E24</span><span class="journal-phase">공정 재검정 + 절제</span><span class="journal-status wall">WALL ×3</span></div>
+      <h4>공정하게 다시 겨뤄도 국제는 전부 음성 — 티어 상향 낙관 철회</h4>
+      <div class="journal-body">시장상태 피처를 넣은 공정 파이프라인에서도 국제 4지역 전부 음수·무의미. 한국 2×3 절제(E22)는 사전 지정 판정기준 (a) 성립 — 효과는 극단 10분위 구성에 산다. 미국 소형주(E23)는 JFQA 트리거 불발, 메커니즘 대리검정(E24)은 <strong>중단조건 발동</strong>(3지표 중 1위 0개). "US 병렬로 JEF/QF 티어업"이라던 이전 낙관을 원장에 명시적으로 철회했다.</div>
+      <div class="journal-fix">효과의 정확한 주소 확정: "한국 약한-모멘텀 × 극단 10분위 구성의 교집합" — 훗날 §8.4 경계조건 절이 되다</div>
+    </div>
+  </div>
+  <div class="viz-insight amber">
+    <div class="viz-insight-label">이 국면이 남긴 것</div>
+    <p>실패한 일반화가 논문을 좁혔고, 좁아진 논문이 더 강해졌다. "일반성 확장"으로 팔 수 없게 된 국제 결과는
+    "명제의 대우 검증"으로 자리를 바꿨다 — 강한 팩터·분산 구성에서 증분이 <em>사라져야</em> 테제가 맞는 것이고, 실제로 사라졌다.
+    미재현 8행이 논문의 표 8이 됐다.</p>
+  </div>
+</div></section>
+
+<!-- =================== 08 AUDIT =================== -->
+<section id="audit" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">08 — Audit &amp; reproduce kit · E25–E30</div>
+  <h2 class="section-title">감사와 논문화: 유령 열 25개, 그리고 1e-16</h2>
+  <p class="section-desc">
+    원고가 자리 잡자 데이터로 되돌아갔다. 1,700만 행 원시 패널을 전면 감사하고,
+    "이 수치를 제3자가 재현할 수 있는가"를 기계 검증 가능하게 만들었다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry fix">
+      <div class="journal-head"><span class="journal-id">E27</span><span class="journal-phase">데이터 감사</span><span class="journal-status fix">FIX</span></div>
+      <h4>종목 수 4,685의 미스터리 — 범인은 피벗의 유령 열</h4>
+      <div class="journal-body">§3.1의 고유 종목 수가 재현되지 않았다. 추적 결과 구 값 4,685는 전체 기간으로 피벗한 뒤 행만 자른 산물 — 25개 종목은 1990년 이전에만 유효가격이 있는 <strong>유령 열</strong>이었다. 정본 4,660으로 정정, 원인 규명까지 원장에 기록(첫 진단이 틀렸다는 것도 "E27-정정"으로 남겼다).</div>
+    </div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E29</span><span class="journal-phase">3중 게이트 + 재현킷</span><span class="journal-status passed">PASSED</span></div>
+      <h4>무위험수익률을 FRED에서 라이브로 다시 받아 대조 — 최대차 1e-16</h4>
+      <div class="journal-body">노트북 재실행 PASS, 공개 출처 라이브 대조 PASS, 그리고 <code>reproduce/</code> 킷 신설 — pandas만으로 원시 주가에서 표 1·3까지 재생성하는 7게이트 스크립트. "임의 생성 데이터 없음"이 기계 검증 가능해졌다.</div>
+    </div>
+    <div class="journal-entry fix">
+      <div class="journal-head"><span class="journal-id">E30</span><span class="journal-phase">문헌 접속</span><span class="journal-status fix">FIX</span></div>
+      <h4>"빈 칸" 주장의 정밀 한정 — 선행 계보를 먼저 인정하기</h4>
+      <div class="journal-body">냉정 평가에서 최대 리스크는 "예측 개선의 경제가치 측정은 빈 칸"이라는 과장 판정 위험이었다. Fleming–Kirby–Ostdiek(2001·2003)와 Bollerslev et al.(2018)의 계보를 표 0에 명시하고, 주장을 "팩터 위험관리에서의 차원 분해가 빈 칸"으로 좁혔다.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 09 REWRITE =================== -->
+<section id="rewrite"><div class="container fade-in">
+  <div class="section-label">09 — Rewrite · E31</div>
+  <h2 class="section-title">전면 재작성: 같은 수치, 새 산문 — B+에서 A까지</h2>
+  <p class="section-desc">
+    내용·수치·주장을 하나도 바꾸지 않고 산문만 처음부터 다시 썼다.
+    매 라운드 서로를 볼 수 없는 신선한 채점자가 블라인드 콜드리드로 등급을 매겼다.
+  </p>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">B0</div><div class="stat-label">구판 (v3.4)</div><div class="stat-sub">"잘 정리된 보고서"</div></div>
+    <div class="stat-card"><div class="stat-num amber">B+</div><div class="stat-label">재작성 직후</div><div class="stat-sub">지적 5건 반영</div></div>
+    <div class="stat-card"><div class="stat-num amber">A−</div><div class="stat-label">2~4라운드</div><div class="stat-sub">문단→문장→구두점</div></div>
+    <div class="stat-card"><div class="stat-num green">A</div><div class="stat-label">5라운드</div><div class="stat-sub">"편집자가 손댈 곳이 거의 없음"</div></div>
+  </div>
+  <div class="viz-insight">
+    <div class="viz-insight-label">의도적으로 반영하지 않은 것</div>
+    <p>채점자 지적 중 2건은 저자 목소리로 남겼다 — 줄표(—) 밀도는 이 원고의 문체 서명이고,
+    부정형 헤지의 잔여 반복은 정직성 프로토콜의 언어적 표현이다. 다 고치는 것이 목표가 아니라,
+    무엇을 남길지 아는 것이 목표였다.</p>
+  </div>
+</div></section>
+
+<!-- =================== 10 GATE =================== -->
+<section id="gate" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">10 — The gauntlet · E32–E38</div>
+  <h2 class="section-title">A+ 게이트: 7라운드, 신규 검정 6본, 그리고 세 번의 서사 재정렬</h2>
+  <p class="section-desc">
+    마지막 관문 — 산문·저널심사·수치 전수대조·구조·학위방어의 5개 렌즈가 매 라운드 신선한 컨텍스트로
+    블라인드 리뷰하고, 심각 지적은 별도의 적대적 검증자가 원고·데이터·코드를 대조해 반박에 실패했을 때만 확정.
+    확정된 지적은 텍스트가 아니라 <strong>계산</strong>으로 닫는 것을 원칙으로 했다. 이 과정에서 실험 6본이 추가됐고,
+    그중 셋은 예상과 달라 논문의 주장 자체를 다시 썼다.
+  </p>
+  <div class="table-wrap" style="margin-bottom:2rem;">
+    <table>
+      <thead><tr><th>라운드</th><th>산문</th><th>저널심사</th><th>수치</th><th>구조</th><th>학위방어</th><th>확정 지적 → 대응</th></tr></thead>
+      <tbody>
+        <tr><td>R1</td><td>A−</td><td>A−</td><td class="winner">A+</td><td>A−</td><td>A−</td><td>major 3 — 초록 과대·표7 꼬리열 부재·일본 프레임 모순</td></tr>
+        <tr><td>R2</td><td>A</td><td>A−</td><td>A</td><td>A−</td><td>A−</td><td>major 1 — 중첩+다중성 동시 검정 부재 → CW-SPA p=0.002</td></tr>
+        <tr><td>R3</td><td>A−</td><td>A−</td><td>A</td><td>A−</td><td>A−</td><td>major 2 — 꼬리 기울기 미검정·분위 구조 표본창 → p27</td></tr>
+        <tr><td>R4</td><td>A−</td><td>A−</td><td class="winner">A+ (0건)</td><td class="winner">A</td><td>A−</td><td>major 3 — 미국 동창·ML−HAR·CE 신뢰구간 → p28</td></tr>
+        <tr><td>R5</td><td>A−</td><td>A−</td><td class="winner">A+ (0건)</td><td class="winner">A</td><td>A−</td><td>major 1 — 국제 행 예측품질 부재 → p29 (QLIKE 열)</td></tr>
+        <tr><td>R6</td><td>A−</td><td>A−</td><td class="winner">A+ (0건)</td><td class="winner">A</td><td>A−</td><td>major 1 — 차이 자체의 검정 부재 → p30 (D=+2.01, p=0.001)</td></tr>
+        <tr><td><strong>R7</strong></td><td class="winner">A</td><td>A−</td><td class="winner">A+ (0건)</td><td>A−</td><td>A−</td><td class="winner"><strong>확정 지적 0건 — 수렴</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="journal">
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">E32</span><span class="journal-phase">재정렬 ①</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>예상과 반대로 나온 실험 — 꼬리는 어디서나 얕아진다</h4>
+      <div class="journal-body">심사 렌즈가 요구한 "플라시보 표에 꼬리 열 추가"를 계산하자, ML 꼬리 증분이 모멘텀만이 아니라 <strong>시장·규모·가치 전부에서 양수</strong>로 나왔다. 예측이 정확할수록 변동성 타깃 포트폴리오는 동분산에 수렴하고 꼬리는 기계적으로 얕아진다 — 팩터 공통 효과였다. 은폐 대신 재정렬: <em>"꼬리 축소의 존재는 공통, 보험의 성립(프리미엄 보존 + 크래시 존재 + 관리 무손실)은 모멘텀 고유."</em> 논문이 더 정확해졌다.</div>
+    </div>
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">E34</span><span class="journal-phase">재정렬 ②</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>검증자가 산점도를 그려봤다 — "꼬리 축 우상향" 철회</h4>
+      <div class="journal-body">적대적 검증자가 직접 재계산해 꼬리 축 기울기가 0과 구분되지 않음을 확인(+0.004, CI [−0.107, +0.079]). 같은 라운드에 표 S2의 Q5 붕괴가 1998-10 지배 성질이고 표본외에서는 <strong>+7.9%로 뒤집힘</strong>도 드러났다. 두 발견을 정면 공개하고 메커니즘을 재정위 — <em>"분위의 보험이 아니라 국면의 보험", 꼬리 전이는 곡선이 아니라 벤치마크 대비 쌍별 개선.</em></div>
+    </div>
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">E35</span><span class="journal-phase">재정렬 ③</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>"왜 머신러닝인가"에 답하다 — 주장 단위의 자발적 하향</h4>
+      <div class="journal-body">FWER 생존자가 비ML(HAR)이라는 지적에 ML−HAR 분해로 답했다: 꼬리 증분의 대부분(+1.11%p)은 계량 HAR가 확보하고, 상태 정보가 +0.23%p를 더하며, <strong>순수 ML 결합의 꼬리 이득은 0</strong>(ENS−HAR −0.25). 초록의 주장 단위를 "ML의 가치"에서 <em>"예측기 개선의 가치 — 보험을 파는 것은 정확도가 아니라 구조"</em>로 내렸다. 미국 동창 재평가(무관리 0.17에도 증분 없음)와 함께, 판별자는 "단순규칙이 잡고 남긴 잔여 꼬리"로 확정.</div>
+    </div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">E36–E38</span><span class="journal-phase">수렴</span><span class="journal-status passed">CONVERGED</span></div>
+      <h4>마지막 두 검정, 그리고 저자의 통독</h4>
+      <div class="journal-body">국제 전 행의 QLIKE 개선(10~34%)을 문서화해 "증분 부재 ≠ 예측 실패"를 표로 증명하고(E36), 한국−미국 증분 차이 자체를 쌍별 검정(D=+2.01%p, p=0.001)으로 세웠다(E37). R7에서 확정 지적 0건 — 남은 것은 라운드마다 서로 상충하는 취향 지적뿐이었다. 마지막으로 저자가 전문을 순차 통독해 7라운드 패치가 남긴 이음매 7곳을 수리했다(E38).</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 11 GRAVEYARD =================== -->
+<section id="graveyard"><div class="container fade-in">
+  <div class="section-label">11 — Graveyard · 죽은 것들의 기록</div>
+  <h2 class="section-title">실패의 전당: 무엇이 죽었고, 무엇을 남겼는가</h2>
+  <p class="section-desc">
+    이 연구에서 철회·폐기·기각된 것들의 명단이다. 전부 원장에 사인(死因)과 함께 남아 있다 —
+    지운 것이 아니라 강등한 것이고, 강등의 이유가 논문의 방어력이 됐다.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>죽은 것</th><th>사인 (死因)</th><th>남긴 것</th></tr></thead>
+      <tbody>
+        <tr><td>신경망 (MLP·LSTM)</td><td>292개월 소표본 과적합 — R² −73%, −439%</td><td>"실패도 사전 지정대로 보고" 원칙의 증거</td></tr>
+        <tr><td>크래시 직접 분류</td><td>레이블 51건, AUC 0.52~0.57</td><td>변동성 경로가 옳다는 역방향 증거</td></tr>
+        <tr><td>μ/σ² 동적 가중 (DM16형)</td><td>μ 예측 R² 1.3%, 최악월 −93%</td><td>"분모만 관리하라" — 논쟁의 한국 답변</td></tr>
+        <tr><td>동일가중 구성</td><td>소형주 잡음이 위험 신호를 무력화</td><td>위험관리의 전제 = 신호 품질</td></tr>
+        <tr><td>"죽은 팩터 소생" 프레임</td><td>표본외 무관리도 t=2.79로 생존</td><td>"약한 팩터의 꼬리 보험" — 최종 제목</td></tr>
+        <tr><td>"시장의 절반" 서사</td><td>1990년대 콜금리 12.6% — RF≈0 착시</td><td>초과수익 기준 77%, RF 실질화</td></tr>
+        <tr><td>Δ최악월 P=0.010</td><td>극값 순서통계량 — 부트스트랩 비일관</td><td>점추정 강등, ES5로 주 지표 교체</td></tr>
+        <tr><td>전이곡선 점별 p=0.988</td><td>아홉 점이 종속 관측치</td><td>조인트 블록 부트스트랩 CI</td></tr>
+        <tr><td>family-wise p=0.002</td><td>max-t의 주인이 순수 디레버리지</td><td>Romano–Wolf step-down 재구축</td></tr>
+        <tr><td>ENS의 FWER 생존</td><td>보정 p=0.125 — 1차 대상 탈락</td><td>"실패 먼저 보고"의 위계 (§4.4)</td></tr>
+        <tr><td>"약한 팩터 법칙" (횡단면)</td><td>6개 시장 회귀 p=0.63, 최약 일본이 최악</td><td>경계조건 §8.4 — 명제의 대우 검증</td></tr>
+        <tr><td>JFQA 티어 상향</td><td>미국 소형주 트리거 불발 (사전 지정 판정)</td><td>JEF/QF 사다리로 정직한 재조준</td></tr>
+        <tr><td>메커니즘 대리지표 승격</td><td>3지표 중 1위 0개 — 중단조건 발동</td><td>"방향적 증거" 유지, 과잉 주장 차단</td></tr>
+        <tr><td>"꼬리 축 우상향"</td><td>기울기 +0.004, CI가 0 포함</td><td>"쌍별 개선"으로 정밀화 — EWMA 반례</td></tr>
+        <tr><td>분위(Q5) 메커니즘</td><td>98-10 제외 시 소멸, 표본외에선 +7.9 반전</td><td>"분위가 아니라 국면의 보험"</td></tr>
+        <tr><td>"머신러닝의 가치"라는 주장 단위</td><td>ENS−HAR −0.25 — 순수 ML 꼬리 이득 0</td><td>"보험을 파는 것은 구조" — 주장 하향</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="viz-insight red" style="margin-top:2rem;">
+    <div class="viz-insight-label">왜 이 표가 자랑인가</div>
+    <p>이 표의 각 행은 심사장에서 나올 공격 하나씩을 미리 맞아본 흉터다. 유리했지만 틀린 숫자(FW p=0.002)를 버렸고,
+    불리하지만 맞는 숫자(ENS 보정 탈락, CE 신뢰구간이 0 포함)를 본문에 실었다.
+    논문의 마지막 블라인드 방어 렌즈 평가 — <em>"불리한 결과의 전면 보고가 심사 공격면을 좁혔다"</em> — 는 이 표의 다른 표현이다.</p>
+  </div>
+</div></section>
+
+<!-- =================== 12 PROTOCOL =================== -->
+<section id="protocol" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">12 — Integrity protocol · 시스템</div>
+  <h2 class="section-title">정직성 프로토콜: 사람의 다짐이 아니라 시스템으로</h2>
+  <p class="section-desc">
+    "정직하게 쓰자"는 다짐은 마감 앞에서 무너진다. 그래서 다짐 대신 구조를 만들었다 —
+    기록의 의무, 소급의 의무, 그리고 실행자가 자기 산출물을 승인하지 못하게 하는 게이트.
+  </p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-eyebrow">Append-only Ledger</div>
+      <div class="card-title">결과 원장 E00~E38</div>
+      <div class="card-text">모든 실험은 완료 시 질문→방법→결과→산출물→게이트→커밋으로 원장에 기입. 원장에 없으면 미완료. 틀린 진단조차 "E27-정정"처럼 정정 이력으로 남긴다 — 덮어쓰지 않는다.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Claims Map</div>
+      <div class="card-title">주장–근거 지도 C1~C42</div>
+      <div class="card-text">논문·발표의 모든 주장은 주장↔수치↔표↔실험↔재현 명령의 행 하나를 가진다. "그 숫자 어디서 나왔죠?"에 즉답하기 위한 표 — 근거 없는 주장은 물리적으로 쓸 수 없다.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Pre-specification</div>
+      <div class="card-title">사전 지정 + 사후 개입 공개</div>
+      <div class="card-text">예측기 12개와 평가 프로토콜은 결과 산출 전 커밋으로 고정. 국제 절제 실험은 판정기준까지 실행 전 커밋. 결과를 보고 도입한 장치 2건은 도입 계기·코드 위치를 부록에 표로 공개.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Blind Gate</div>
+      <div class="card-title">5렌즈 × 적대적 검증</div>
+      <div class="card-text">산문·심사·수치·구조·방어의 5개 렌즈가 매번 신선한 컨텍스트로 블라인드 리뷰. 심각 지적은 별도 검증자가 데이터로 반박을 시도해 실패한 것만 확정 — 7라운드 동안 그럴듯한 지적 수십 건이 이 관문에서 기각됐다.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Fix by computation</div>
+      <div class="card-title">확정 지적은 계산으로 닫는다</div>
+      <div class="card-text">"표현을 다듬어 피하기"를 금지. 검정이 없다는 지적에는 검정을 만들어 답했다(CW-SPA, 꼬리 기울기 CI, 미국 동창, ML−HAR 분해, 국제 QLIKE, 차이 검정) — 마감 라운드에만 신규 검정 6본.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Reproduce Kit</div>
+      <div class="card-title">기계 검증 가능한 재현</div>
+      <div class="card-text">SHA256 매니페스트, FRED 라이브 대조(최대차 1e-16), pandas만으로 표 1·3을 재생성하는 7게이트 스크립트. 국제 원자료는 Ken French 공개 라이브러리 — 재현에 구독도 키도 필요 없다.</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== 13 NUMBERS =================== -->
+<section id="numbers"><div class="container fade-in">
+  <div class="section-label">13 — By the numbers</div>
+  <h2 class="section-title">숫자로 보는 여정</h2>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">39</div><div class="stat-label">원장 실험 항목</div><div class="stat-sub">E00 ~ E38</div></div>
+    <div class="stat-card"><div class="stat-num">30+</div><div class="stat-label">파이프라인 스크립트</div><div class="stat-sub">p2 ~ p30 + 빌드·재현킷</div></div>
+    <div class="stat-card"><div class="stat-num">42</div><div class="stat-label">주장–근거 지도 행</div><div class="stat-sub">C1 ~ C42</div></div>
+    <div class="stat-card"><div class="stat-num red">16</div><div class="stat-label">철회·폐기·기각</div><div class="stat-sub">실패의 전당 등재</div></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-num">35</div><div class="stat-label">블라인드 리뷰</div><div class="stat-sub">5렌즈 × 7라운드</div></div>
+    <div class="stat-card"><div class="stat-num amber">6</div><div class="stat-label">마감 라운드 신규 검정</div><div class="stat-sub">p25 ~ p30</div></div>
+    <div class="stat-card"><div class="stat-num pivot" style="color:#6d28d9;">3</div><div class="stat-label">서사 재정렬</div><div class="stat-sub">예상 밖 결과의 정면 수용</div></div>
+    <div class="stat-card"><div class="stat-num green">0</div><div class="stat-label">수치 전수대조 불일치</div><div class="stat-sub">정량 주장 ~200개 vs CSV</div></div>
+  </div>
+  <div class="img-frame" style="margin-top:2.4rem;">
+    <img class="zoomable" src="figures/fig1_crash.png" alt="격변기의 모멘텀 크래시 — 1998년 외환위기 반등 국면">
+    <div class="img-caption"><strong>이 모든 것의 시작.</strong> 1998년 10월, 시장이 바닥에서 반등하던 바로 그 달 — 모멘텀 −94.9%</div>
+  </div>
+</div></section>
+
+<footer>
+  <p class="footer-text">
+    <a href="/">soccz.</a> &mdash; Momentum Tail Insurance: Research Ledger &mdash;
+    <a href="/projects/momentum-barroso/">원논문 재현 인터랙티브 데모</a>
+  </p>
+</footer>
+
+<script>
+// nav scrolled state
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+});
+
+// reveal on scroll
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// progress bar
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const total = h.scrollHeight - h.clientHeight;
+  const scrolled = h.scrollTop || document.body.scrollTop;
+  progress.style.transform = `scaleX(${total > 0 ? scrolled / total : 0})`;
+});
+
+// lightbox: any img.zoomable opens enlarged view
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+document.querySelectorAll('img.zoomable').forEach(img => {
+  img.addEventListener('click', () => {
+    lbImg.src = img.src;
+    lbImg.alt = img.alt || '';
+    lb.classList.add('show');
+  });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('show'); });
+
+// code copy buttons
+document.querySelectorAll('.code-block').forEach(block => {
+  const btn = document.createElement('button');
+  btn.className = 'code-copy';
+  btn.textContent = 'copy';
+  btn.addEventListener('click', () => {
+    const code = block.querySelector('pre')?.innerText ?? '';
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = 'copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1400);
+    });
+  });
+  block.appendChild(btn);
+});
+
+// left TOC: active section highlight on scroll
+(function() {
+  const tocLinks = document.querySelectorAll('.toc-side a');
+  const sectionIds = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  function update() {
+    const y = window.scrollY + 140;
+    let active = null;
+    sections.forEach(s => { if (s.offsetTop <= y) active = s.id; });
+    tocLinks.forEach(a =>
+      a.classList.toggle('active', a.getAttribute('href') === '#' + active)
+    );
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+
+</script>
+</body>
+</html>
