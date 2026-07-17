@@ -529,6 +529,7 @@
     <li><a href="#easy">3분 요약</a></li>
     <li><a href="#publication">Publication</a></li>
     <li><a href="#map">여정 지도</a></li>
+    <li><a href="#phase0">실험 이전</a></li>
     <li><a href="#bs15">BS15 × ML 결합</a></li>
     <li><a href="#data">데이터 — 왜·함정</a></li>
     <li><a href="#reproduce">재현</a></li>
@@ -539,7 +540,7 @@
     <li><a href="#recalib">다중검정 재교정</a></li>
     <li><a href="#intl">국제 원정</a></li>
     <li><a href="#audit">감사와 논문화</a></li>
-    <li><a href="#rewrite">전면 재작성</a></li>
+    <li><a href="#rewrite">집필과 재작성</a></li>
     <li><a href="#gate">A+ 게이트 7라운드</a></li>
     <li><a href="#ledger">전체 원장 E00~E38</a></li>
     <li><a href="#graveyard">실패의 전당</a></li>
@@ -594,7 +595,7 @@
     <div class="card">
       <div class="card-eyebrow">왜 믿을 수 있나</div>
       <div class="card-title">실패까지 전부 공개된 39번의 실험</div>
-      <div class="card-text">모든 실험은 시작 전에 규칙을 정해 기록했고, 실패(신경망 붕괴, 틀렸던 주장 3건 철회, 기대와 반대로 나온 결과)도 지우지 않고 원장에 남겼다. 원고는 서로를 모르는 AI 심사자 5명 × 7라운드의 블라인드 검증을 통과했고, 논문의 모든 숫자(~200개)는 공개 저장소의 파일과 대조해 <strong>불일치 0건</strong>이다. 이 페이지가 바로 그 기록이다.</div>
+      <div class="card-text">핵심 실험의 규칙은 결과를 보기 전에 고정했고, 실패(신경망 붕괴, 틀렸던 주장 3건 철회, 기대와 반대로 나온 결과)도 지우지 않고 원장에 남겼다. 원고는 서로를 모르는 AI 심사자 5명 × 7라운드의 블라인드 검증을 통과했고, 논문의 모든 숫자(~200개)는 공개 저장소의 파일과 대조해 <strong>불일치 0건</strong>이다. 이 페이지가 바로 그 기록이다.</div>
     </div>
   </div>
   <div class="viz-insight" style="margin-top:1.8rem;">
@@ -648,6 +649,15 @@
     프레임이 바뀌었다(<span style="color:#6d28d9;font-weight:700;">보라</span>).
   </p>
   <div class="flow-list">
+    <div class="flow-phase-label">PHASE 0 — 실험 이전 (2026-07-06~07)</div>
+    <div class="flow-row build">
+      <div class="flow-step-num">00</div>
+      <div class="flow-step-body">
+        <div class="flow-step-title">마스터 · 설계 · 전략 — 코드보다 먼저 한 일들</div>
+        <div class="flow-step-desc">원논문을 "눈감고도" 수준으로 마스터(해설서+자가시험) → 신규성 조사에서 국내 선점(손경우 외 2017) 발견 → 기여를 ML 확장으로 강제 → 전이곡선 가설·투고 사다리·중단조건까지 실험 전에 설계.</div>
+      </div>
+      <div class="flow-step-tags"><a href="#phase0" class="flow-step-link">docs 00·02·04·08</a></div>
+    </div>
     <div class="flow-phase-label">PHASE 1 — 기초 공사 (2026-07-06 ~ 07-07)</div>
     <div class="flow-row build">
       <div class="flow-step-num">01</div>
@@ -669,7 +679,7 @@
       <div class="flow-step-num">03</div>
       <div class="flow-step-body">
         <div class="flow-step-title">전이곡선 — 샤프는 포화, 꼬리는 응답</div>
-        <div class="flow-step-desc">논문의 킬러 피겨 탄생. 예측이 좋아져도 샤프는 안 움직이는데 꼬리는 얕아진다 — "차원 분리"의 첫 목격.</div>
+        <div class="flow-step-desc">설계 단계에 고정한 가설 프레임(전이곡선)의 첫 실측. 발견된 것은 곡선이 아니라 곡선의 평평함 — 예측이 좋아져도 샤프는 안 움직이는데 꼬리는 얕아진다.</div>
       </div>
       <div class="flow-step-tags"><a href="#transfer" class="flow-step-link">E04–E05</a></div>
     </div>
@@ -712,7 +722,7 @@
       <div class="flow-step-num">08</div>
       <div class="flow-step-body">
         <div class="flow-step-title">감사·재현킷·재작성 — 데이터부터 문체까지</div>
-        <div class="flow-step-desc">1,700만 행 전면 감사(유령 열 25개 정정), FRED 라이브 대조 1e-16, 재현킷 7게이트. 그리고 전면 재작성 — 블라인드 콜드리드 B+→A까지 5라운드.</div>
+        <div class="flow-step-desc">1,700만 행 전면 감사(유령 열 25개 정정)·FRED 라이브 대조 1e-16·재현킷. 그리고 집필 — 3출구 뼈대로 초고를 쓰고, 탈고 감사 106건과 v2→v3.4 버전 사다리를 지나, 전면 재작성으로 콜드리드 B+→A.</div>
       </div>
       <div class="flow-step-tags"><a href="#audit" class="flow-step-link">E25–E31</a></div>
     </div>
@@ -723,6 +733,39 @@
         <div class="flow-step-desc">5렌즈 블라인드 리뷰 × 적대적 검증을 7회전. 라운드마다 실험이 추가됐고, 예상과 반대로 나온 결과가 논문을 더 정확하게 만들었다. 최종: 확정 결함 0.</div>
       </div>
       <div class="flow-step-tags"><a href="#gate" class="flow-step-link">E32–E38</a></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =================== PHASE 0 =================== -->
+<section id="phase0"><div class="container fade-in">
+  <div class="section-label">00 — Before the experiments · docs 00·02·04·08</div>
+  <h2 class="section-title">실험 이전: 코드 한 줄 쓰기 전에 결정된 것들</h2>
+  <p class="section-desc">
+    이 여정의 진짜 출발점은 E00이 아니다. 재현을 시작하기 전에 원논문을 마스터했고,
+    문헌을 뒤져 이 방향이 왜 유일하게 남은 기여인지 확인했고, 실험이 어떻게 나와도 논문이 되도록
+    가설과 투고 전략과 중단조건까지 설계해 두었다 — 실험은 이 설계의 실행이었다.
+  </p>
+  <div class="journal">
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">목표 1</span><span class="journal-phase">원논문 완전체화</span><span class="journal-status passed">FIRST</span></div>
+      <h4>"눈감고도" — 재현보다 마스터가 먼저였다</h4>
+      <div class="journal-body">프로젝트 목표 위계의 1번은 코드가 아니라 이해였다: 원논문의 모든 수치·수식·논증에 추론·약점·강점·활용점까지. 줄 단위 심층해설서(딥다이브)와 자가시험지(수치 암송·수식 유도·약점 방어)를 만들어 통과한 뒤에야 재현을 시작했다 — E00·E01의 검증 게이트를 설계할 수 있었던 이유다.</div>
+    </div>
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">신규성 조사</span><span class="journal-phase">5방향 × 20편</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>선점의 발견 — "재현은 이미 남의 것"</h4>
+      <div class="journal-body">설계 전 문헌 조사에서 두 가지가 방향을 강제했다. ① 한국 BS15 단순 재현은 <strong>손경우·윤병욱·윤보현(2017)이 이미 선점</strong> — 재현은 인용할 선행이지 기여가 될 수 없고, 기여는 ML 확장 위에만 설 수 있다(논문이 스스로 이 선행을 인용하는 이유). ② 갭 3결합(팩터 자체 변동성의 ML 예측 × Cederburg 회의론 대응 × 약한 시장)을 조립한 논문은 검색상 없지만 Hong(2026) 등 WP가 접근 중 — <strong>속도가 중요</strong>하다는 압박까지.</div>
+    </div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">방향 확정</span><span class="journal-phase">2026-07-07</span><span class="journal-status passed">LOCKED</span></div>
+      <h4>죽는 시나리오 없음 — 결과가 어떻게 나와도 논문이 되게</h4>
+      <div class="journal-body"><strong>전이곡선은 이때 가설로 고정됐다</strong> — 실험 도중의 발견이 아니다. 예측기 사다리(Layer 0~4)를 설계하며 결과 시나리오별 하방을 미리 깔았다: ML이 이기면 "전이의 측정", HAR가 이기면 "구조의 승리", 둘 다 실패하면 "회의론의 확장" — 어느 쪽이든 논문이 된다. 재현 방법론도 스펙 문서로 먼저 고정하고 "재논의 금지"를 박았다(사전 지정은 예측기 12개보다 먼저, 재현 단계부터였다).</div>
+    </div>
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">투고 전략</span><span class="journal-phase">docs/08 · 4관점 검토</span><span class="journal-status pivot">DESIGNED</span></div>
+      <h4>탑티어 4/4 만장일치 기각 — 그리고 사다리와 데드맨스위치</h4>
+      <div class="journal-body">4개 관점(전직 에디터·실증설계·현실주의 멘토·문헌 스카우트)의 독립 검토가 JFE/JF/RFS급 도전을 <strong>만장일치로 기각</strong>했고, 그 판정을 받아들여 사다리를 설계했다: 조건부 JFQA → JEF/QF 진입 → PBFJ 안전 착지, 최우선 원칙은 "졸업 먼저"(M0). 상향 조건을 시험할 실험 M1~M3와 <strong>중단조건(데드맨스위치)을 실행 전에 문서로 고정</strong> — 훗날 E22(구성 절제)·E23(JFQA 트리거 불발)·E24(중단조건 발동)는 이 설계의 실행이었다. 기각한 대안도 기록했다: 국제 미재현을 숨기고 투고 "절대 금지", 국내지 선게재 금지(이중게재로 국제 봉쇄).</div>
     </div>
   </div>
 </div></section>
@@ -870,7 +913,7 @@
   <div class="section-label">03 — Transfer curve · E04–E05</div>
   <h2 class="section-title">전이곡선: 샤프는 포화하고, 꼬리가 응답한다</h2>
   <p class="section-desc">
-    12개 예측치를 동일한 스케일 규칙에 넣어 성과를 예측 정확도에 대응시키자 논문의 핵심 그림이 나왔다.
+    전이곡선은 실험 도중 떠오른 아이디어가 아니다 — 실험 전 연구설계 문서에서 고정한 가설 프레임이다. 12개 예측치를 동일한 스케일 규칙에 넣어 실측하자 논문의 핵심 그림이 나왔다.
     예측이 좋아져도 샤프는 움직이지 않는데, 꼬리(최악월·ES5)는 얕아진다 — "예측이 좋아지면 무엇이 좋아지는가"의 첫 답.
   </p>
   <div class="img-frame">
@@ -1053,10 +1096,31 @@
 
 <!-- =================== 09 REWRITE =================== -->
 <section id="rewrite"><div class="container fade-in">
-  <div class="section-label">09 — Rewrite · E31</div>
-  <h2 class="section-title">전면 재작성: 같은 수치, 새 산문 — B+에서 A까지</h2>
+  <div class="section-label">09 — Writing · 집필과 재작성</div>
+  <h2 class="section-title">집필: 실험을 논문으로 — 뼈대, 탈고 감사, 그리고 전면 재작성</h2>
   <p class="section-desc">
-    내용·수치·주장을 하나도 바꾸지 않고 산문만 처음부터 다시 썼다.
+    실험이 논문이 되는 과정도 실험만큼 길었다 — 출구 전략이 뼈대를 정했고,
+    탈고는 감사였고, 버전은 사다리를 탔고, 마지막엔 산문을 통째로 다시 썼다.
+  </p>
+  <div class="journal" style="margin-bottom:2.4rem;">
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">뼈대</span><span class="journal-phase">3출구 설계</span><span class="journal-status passed">PASS</span></div>
+      <h4>하나의 구조, 세 개의 출구</h4>
+      <div class="journal-body">학위심사판·국내 학술지판·국제 영역판 — 세 출구를 하나의 국제 규격 뼈대로 설계하고 언어·분량만 갈아끼우는 전략. 한국어 초고를 작업 정본으로 정하되(생각의 속도), 구조는 처음부터 국제 규격으로 고정했다. 순서 규칙도 함께: 국내지 선게재는 이중게재 문제로 국제 투고를 봉쇄하므로 금지.</div>
+    </div>
+    <div class="journal-entry fix">
+      <div class="journal-head"><span class="journal-id">탈고 사다리</span><span class="journal-phase">v2 → v3.4</span><span class="journal-status fix">106건</span></div>
+      <h4>탈고는 퇴고가 아니라 감사였다</h4>
+      <div class="journal-body">초고 완성 후 탈고 1차에서 <strong>감사 지적 106건</strong>을 반영해 v3으로. 이후 버전마다 계기가 있었다 — v3.1 품질 업그레이드, v3.2 데이터 전면 감사 반영(E27), v3.3 국제 경계 통합(E28, 승인 게이트 통과), v3.4 문헌 접속 보강(E30). 각 버전은 커밋으로 남아 어느 수치가 언제 왜 바뀌었는지 소급된다.</div>
+    </div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">전달 제작물</span><span class="journal-phase">데모·PDF·발표</span><span class="journal-status passed">BUILD</span></div>
+      <h4>읽는 사람의 형태로 — 논문 밖의 만들기</h4>
+      <div class="journal-body">인터랙티브 재현 데모(템플릿+데이터 주입 파이프라인, Pages 배포 경쟁 함정까지), 그림을 임베드한 제출본 PDF 빌더, 무배경자용 발표 한장요약. 그리고 교육용 노트북은 처음부터 상호 검증 장치이자 <strong>독립 목표</strong>였다 — "읽는 사람이 논문을 이해하게 되는 코드"(헌법 목표 2).</div>
+    </div>
+  </div>
+  <p class="section-desc" style="margin-bottom:1.6rem;">
+    그리고 마지막 — 내용·수치·주장을 하나도 바꾸지 않고 산문만 처음부터 다시 썼다(E31).
     매 라운드 서로를 볼 수 없는 신선한 채점자가 블라인드 콜드리드로 등급을 매겼다.
   </p>
   <div class="stat-row">
@@ -1162,14 +1226,14 @@
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status discover" style="margin-left:0;">DISCOVER</span><br><span class="journal-id">E04</span></td>
-          <td style="min-width:210px;">좋아진 예측이 성과로 전이되는가 — 규칙·표본 고정, 예측기만 교체</td>
-          <td style="min-width:250px;">전이곡선 탄생: 샤프 포화, 꼬리 개선 경향</td>
+          <td style="min-width:210px;">설계 단계에 고정한 가설 프레임(전이곡선)의 첫 실측 — 규칙·표본 고정, 예측기만 교체</td>
+          <td style="min-width:250px;">발견된 것은 곡선이 아니라 곡선의 평평함: 샤프 포화, 꼬리 개선 경향</td>
           <td style="min-width:210px;">그림 3·표 5 — 발견 1 후반부("샤프는 안 따라온다"), 논문의 킬러 피겨</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E05</span></td>
           <td style="min-width:210px;">왜 되는가 — BS15의 위험 해부가 ML에서도 성립하나</td>
-          <td style="min-width:250px;">고유성분 87%·ML 개선은 고유성분에서·크래시 직전 ML이 먼저 발 뺌</td>
+          <td style="min-width:250px;">고유성분 87%·ML 개선은 고유성분에서·크래시 직전 ML이 먼저 발 뺌. 교차팩터 샤프 플라시보: SMB는 R² 64%인데 이득 0 — 예측가능성만으론 부족, WML만 음의 조건부 위험–수익</td>
           <td style="min-width:210px;">§8.1(고유성분)·§8.3(타이밍)·표 7의 원형 — 메커니즘 절의 뼈대</td>
         </tr>
         <tr>
@@ -1199,7 +1263,7 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E10</span></td>
           <td style="min-width:210px;">헤드라인의 공식 확정 — 꼬리 부트스트랩·실행 제약</td>
-          <td style="min-width:250px;">꼬리(최악월·ES5) 5% 유의, 레버리지 캡 무영향, 공매도 금지 반영</td>
+          <td style="min-width:250px;">꼬리(최악월·ES5) 5% 유의, 레버리지 캡 무영향, 공매도 금지 반영. + 학습창 120→180 강건 · 피처 중요도(최근 변동성&gt;드로다운&gt;하방준분산 — 1개월 창·HARX 우위와 맞물리는 내적 일관성) · Reality Check p=0.066(다중검정 경계의 정직 보고)</td>
           <td style="min-width:210px;">§7.2 꼬리 유의·§9.2 — 발견 2의 통계적 기초</td>
         </tr>
         <tr>
@@ -1211,12 +1275,12 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E12</span></td>
           <td style="min-width:210px;">초고가 굳기 전에 적대 공격 4인 — 전부 수용</td>
-          <td style="min-width:250px;">p값 3건 철회·HARX 강등·"죽은 팩터 소생" 폐기</td>
+          <td style="min-width:250px;">p값 3건 철회·HARX 강등·"죽은 팩터 소생" 폐기. + GW 조건부 검정(우위가 곰장 편중 아님) · "다음 세션 필수" 4건 큐를 남김 — E13~E15가 그 큐의 순차 실행</td>
           <td style="min-width:210px;">§4.4 보고 위계·§7.1 조인트 CI — 그리고 논문 제목("꼬리 보험")</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E13</span></td>
-          <td style="min-width:210px;">E12 최대 공격 — RF≈0 가정의 서사 오염</td>
+          <td style="min-width:210px;">E12가 남긴 필수 큐 1번 — RF≈0 가정의 서사 오염. 헌법 "한국 데이터만" 조항의 예외(공개 RF 시계열)를 승인받아 실행</td>
           <td style="min-width:250px;">콜금리 실질화(90년대 12.6%) → 0.42 착시가 77%로</td>
           <td style="min-width:210px;">표 1 초과수익 기준·§3.2 — "약한 팩터" 식별의 기준선</td>
         </tr>
@@ -1235,19 +1299,19 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX→PASS</span><br><span class="journal-id">E16</span></td>
           <td style="min-width:210px;">"꼬리 14관측" 공격의 우회 — 극값이론</td>
-          <td style="min-width:250px;">GPD(초과 44개)가 경험 ES 재현, 1% 꼬리 유의. 괄호 버그 수정</td>
+          <td style="min-width:250px;">GPD(초과 44개)가 경험 ES 재현, 1% 꼬리 유의. 괄호 버그 수정. + 롤링 60개월 승률: 꼬리 72~86% vs 샤프 45~67% — 꼬리에서만 안정 우위</td>
           <td style="min-width:210px;">§7.2 EVT·표 D1 — 소표본 꼬리 방어</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E17</span></td>
           <td style="min-width:210px;">블라인드 심사 major×3 — 다중검정 재교정</td>
-          <td style="min-width:250px;">Romano–Wolf에서 ENS 자신이 탈락(0.125) → 위계 재구축. 증권거래세 순비용에서도 꼬리 개선 유지(손익분기 63~92bp). 하위구간 분해(90년대 −0.37/2000s +0.66/2010s +0.40)로 "약함"을 3요소로 재정식화</td>
+          <td style="min-width:250px;">Romano–Wolf에서 ENS 자신이 탈락(0.125) → 위계 재구축. 증권거래세 순비용에서도 꼬리 개선 유지(손익분기 63~92bp). 하위구간 분해(90년대 −0.37/2000s +0.66/2010s +0.40)로 "약함"을 3요소로 재정식화. 개별 p 원고 내 불일치(0.034/0.0398)를 재계산 정본화(0.037), ES 신뢰수준 스윕(경험 1%는 2관측 → EVT가 보완하는 연결)</td>
           <td style="min-width:210px;">§7.2 두 층 보고·표 S1(약함의 재정식화)·표 S2·§9.2 순비용 — "실패 먼저"의 구조화</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E18</span></td>
           <td style="min-width:210px;">재심 — 닫혔는가</td>
-          <td style="min-width:250px;">major×3 → minor×3. 메커니즘 "방향적" 격하, 대차비용 강건</td>
+          <td style="min-width:250px;">major×3 → minor×3. 메커니즘 "방향적" 격하. 대차비용 강건 — 이유까지: ML이 위기월에 숏을 먼저 줄여 대차료 급등기에 비용을 덜 냄(심사 우려가 강건성 증거로 전환)</td>
           <td style="min-width:210px;">§8.2 한정·§9.2 — 주장 강도의 자기 교정</td>
         </tr>
         <tr>
@@ -1282,14 +1346,14 @@
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E23</span></td>
-          <td style="min-width:210px;">시장 밖에서 구성·개인지배 분리 — 미국 소형주</td>
+          <td style="min-width:210px;">시장 밖에서 구성·개인지배 분리 — 미국 소형주. 트리거도 사전 고정: ΔES5≥+0.5·p&lt;0.10이면 JFQA 상향</td>
           <td style="min-width:250px;">JFQA 트리거 불발(+0.18, p=0.20)</td>
           <td style="min-width:210px;">표 8 소형주 행 — 개인지배 단독 불충분, 투고 사다리 재조준</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E24</span></td>
           <td style="min-width:210px;">"왜 하필 한국" — 대리지표 3종 판별 시도</td>
-          <td style="min-width:250px;">한국 1위 지표 0개 → 중단조건 발동</td>
+          <td style="min-width:250px;">대리지표 3종(vol-of-vol·곰장 비선형성·꼬리 기습률)에서 한국은 4위·8위·2위 — 1위 0개 → 중단조건 발동. 기습률 1위 일본이 ML 이득 최악이라는 내부 반증까지</td>
           <td style="min-width:210px;">§8.4 한계 — "미해명"의 정직 명시(과잉 주장 차단)</td>
         </tr>
         <tr>
@@ -1350,7 +1414,7 @@
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E32</span></td>
           <td style="min-width:210px;">게이트 R1 — "플라시보에 꼬리 열이 없다"</td>
           <td style="min-width:250px;">계산했더니 반전: 4팩터 전부 양수(동분산 수렴의 기계 효과)</td>
-          <td style="min-width:210px;">표 7 꼬리 열·§8.2 재작성 — "보험 성립 3조건"(발견 3의 정밀화)</td>
+          <td style="min-width:210px;">표 7 꼬리 열·§8.2 재작성 — "보험 성립 3조건". + 한국 전팩터 반응 vs 국제 무반응 대조가 "왜 한국" 채널을 시장 수준으로 좁힘(§8.4)</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E33</span></td>
@@ -1373,7 +1437,7 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E36</span></td>
           <td style="min-width:210px;">R5 — "국제 행은 예측 실패라서 증분이 없는 것 아닌가"</td>
-          <td style="min-width:250px;">전 계열 재현(오차 0.000) + QLIKE 10~34% 개선 문서화</td>
+          <td style="min-width:250px;">전 계열 재현(오차 0.000) + QLIKE 10~34% 개선 문서화. 부수: p28 재실행의 rng 경로 변화로 CE CI 정본 이동 → 원고 즉시 동기화(재현성 관리의 실사례)</td>
           <td style="min-width:210px;">표 8 QLIKE 열 — "증분 부재 ≠ 예측 실패"</td>
         </tr>
         <tr>
@@ -1444,7 +1508,7 @@
     <div class="card">
       <div class="card-eyebrow">Append-only Ledger</div>
       <div class="card-title">결과 원장 E00~E38</div>
-      <div class="card-text">모든 실험은 완료 시 질문→방법→결과→산출물→게이트→커밋으로 원장에 기입. 원장에 없으면 미완료. 틀린 진단조차 "E27-정정"처럼 정정 이력으로 남긴다 — 덮어쓰지 않는다.</div>
+      <div class="card-text">모든 실험은 완료 시 질문→방법→결과→산출물→게이트→커밋으로 원장에 기입. 원장에 없으면 미완료. 틀린 진단조차 "E27-정정"처럼 정정 이력으로 남긴다 — 덮어쓰지 않는다. 원장 체계 자체는 초기 실험(P2) 직후 제도화됐고 E00~E03은 소급 기입임을 명시한다 — 이 사실도 기록의 일부다.</div>
     </div>
     <div class="card">
       <div class="card-eyebrow">Claims Map</div>
@@ -1454,7 +1518,7 @@
     <div class="card">
       <div class="card-eyebrow">Pre-specification</div>
       <div class="card-title">사전 지정 + 사후 개입 공개</div>
-      <div class="card-text">예측기 12개와 평가 프로토콜은 결과 산출 전 커밋으로 고정. 국제 절제 실험은 판정기준까지 실행 전 커밋. 결과를 보고 도입한 장치 2건은 도입 계기·코드 위치를 부록에 표로 공개.</div>
+      <div class="card-text">예측기 12개와 평가 프로토콜은 결과 산출 전 커밋으로 고정. 국제 절제 실험은 판정 임계값까지 실행 전 커밋 — 예: E22 "(a) ΔES5&lt;+0.3·p&gt;0.10 → 구성 식별 / (b) ≥+0.5·p&lt;0.10 → 기각". 결과를 보고 도입한 장치 2건은 도입 계기·코드 위치를 부록에 표로 공개.</div>
     </div>
     <div class="card">
       <div class="card-eyebrow">Blind Gate</div>
@@ -1465,6 +1529,11 @@
       <div class="card-eyebrow">Fix by computation</div>
       <div class="card-title">확정 지적은 계산으로 닫는다</div>
       <div class="card-text">"표현을 다듬어 피하기"를 금지. 검정이 없다는 지적에는 검정을 만들어 답했다(CW-SPA, 꼬리 기울기 CI, 미국 동창, ML−HAR 분해, 국제 QLIKE, 차이 검정) — 마감 라운드에만 신규 검정 6본.</div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow">Manuscript Gate</div>
+      <div class="card-title">원고 반영 게이트 (이중 잠금)</div>
+      <div class="card-text">실험과 원장 기록은 자유지만, 그 결과를 논문 본문에 넣는 것은 별도의 명시 승인 사항 — 실험의 자유와 원고의 보수성을 분리한 이중 잠금. E19~E24 국제 결과가 "논문 미반영"으로 대기하다 E28에서야 §8.4로 들어간 시차가 이 게이트의 흔적이다.</div>
     </div>
     <div class="card">
       <div class="card-eyebrow">Reproduce Kit</div>
