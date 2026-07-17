@@ -2,8 +2,8 @@
 <html lang="ko"><head>
 <meta charset="UTF-8"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>폐기에서 논문까지 — 7일의 기록</title>
-<meta name="description" content="ABANDONED로 닫힌 HIGAN 폴더의 전수 감사에서 살아남은 아이디어 하나가 사전등록 게이트 9개와 적대검증을 거쳐 8페이지 논문이 되기까지 — 실패와 잡아낸 결함을 앞에 둔 7일의 기록.">
+<title>폐기에서 논문까지 — 7일의 전수 기록</title>
+<meta name="description" content="ABANDONED로 닫힌 HIGAN 폴더의 전수 감사에서 살아남은 아이디어 하나가 사전등록 게이트 11회 판정과 무맥락 적대검증을 거쳐 8페이지 논문이 되기까지 — 2026-07-07~14의 모든 실험·게이트·적발을 하나도 빼지 않고 담은 전수 기록판.">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 :root{--bg:#fafaf9;--bg2:#f5f5f4;--card:#fff;--tx:#1c1917;--tx2:#57534e;--mut:#a8a29e;--ac:#44403c;--acd:rgba(68,64,60,.07);--red:#b91c1c;--grn:#15803d;--amb:#b45309;--bd:#e7e5e4;--bdl:#d6d3d1;}
@@ -30,6 +30,7 @@ hr{border:none;border-top:1px solid var(--bd);margin:0;}
 section.bl{padding:4rem 0;}section.bl.alt{background:var(--bg2);}
 .lab{font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mut);margin-bottom:.7rem;}
 h2{font-family:'Noto Serif KR',serif;font-size:1.6rem;font-weight:700;line-height:1.4;margin-bottom:1rem;}
+h3.sub{font-size:1.05rem;font-weight:700;margin:1.8rem 0 .7rem;color:var(--tx);}
 p.lead{font-size:1rem;color:var(--tx2);margin-bottom:1.2rem;}p{color:var(--tx2);margin-bottom:.9rem;}
 em{font-style:normal;color:var(--amb);font-weight:500;}strong{color:var(--tx);font-weight:700;}
 code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:var(--bg2);padding:.1rem .35rem;border-radius:4px;border:1px solid var(--bd);color:var(--ac);}
@@ -48,7 +49,7 @@ code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:var(--bg2
 .fnext{margin-top:.9rem;padding-top:.8rem;border-top:1px dashed var(--bdl);font-size:.88rem;font-weight:500;color:var(--grn);}
 .fnext::before{content:'→ ';font-weight:700;}
 .fstep.fail .fnext{color:var(--red);}
-/* evidence tiers (성공/실패 확실하게) */
+/* evidence tiers */
 .tier{margin-bottom:1.5rem;}
 .tier-h{font-weight:700;font-size:1.02rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
 .tier-h .dot{width:11px;height:11px;border-radius:50%;flex:none;}
@@ -60,15 +61,6 @@ code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:var(--bg2
 .ev.win{border-left:3px solid var(--grn);}.ev.win .ev-n{color:var(--grn);}
 .ev.lose{border-left:3px solid var(--red);}.ev.lose .ev-n{color:var(--red);}
 .ev.gray{border-left:3px solid var(--amb);}.ev.gray .ev-n{color:var(--amb);}
-/* future challenge cards */
-.fut{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;}
-@media(max-width:680px){.fut{grid-template-columns:1fr;}}
-.futc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.4rem 1.5rem;border-top:3px solid var(--ac);}
-.futc .fct{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--mut);letter-spacing:.06em;margin-bottom:.35rem;}
-.futc h4{font-size:.98rem;font-weight:700;margin-bottom:.55rem;line-height:1.4;}
-.futc p{font-size:.86rem;line-height:1.62;margin-bottom:.5rem;}
-.futc .need{font-size:.79rem;color:var(--tx2);border-top:1px dashed var(--bdl);padding-top:.55rem;margin-top:.65rem;}
-.futc .need b{color:var(--ac);font-weight:700;}
 /* tables */
 .tbl-wrap{overflow-x:auto;border:1px solid var(--bd);border-radius:10px;margin:1.4rem 0;background:var(--card);}
 table.led{width:100%;border-collapse:collapse;font-size:.82rem;}
@@ -76,11 +68,6 @@ table.led th{text-align:left;padding:.7rem .9rem;background:var(--bg2);font-size
 table.led td{padding:.6rem .9rem;border-top:1px solid var(--bd);vertical-align:top;}
 table.led td.tk{font-weight:600;color:var(--tx);min-width:180px;}
 table.led pre{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--tx2);white-space:pre-wrap;line-height:1.5;}
-table.ctl details{margin-top:.4rem;}
-table.ctl summary{cursor:pointer;font-size:.72rem;color:var(--ac);font-weight:600;}
-table.ctl details ul{margin:.4rem 0 0 1rem;padding:0;}
-table.ctl details li{font-size:.72rem;color:var(--tx2);line-height:1.5;list-style:disc;margin-bottom:.2rem;}
-table.ctl details code{font-size:.68rem;}
 table.led tr.r-fail td.tk{color:var(--red);}
 table.ctl{width:100%;border-collapse:collapse;font-size:.8rem;}
 table.ctl th{text-align:left;padding:.6rem .8rem;background:var(--bg2);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);}
@@ -88,10 +75,6 @@ table.ctl td{padding:.5rem .8rem;border-top:1px solid var(--bd);vertical-align:t
 table.ctl td.vn{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--tx);white-space:nowrap;}
 table.ctl td.ne{font-family:'JetBrains Mono',monospace;color:var(--tx2);text-align:center;}
 table.ctl td.pp{color:var(--tx2);line-height:1.55;}
-.ph{font-size:.62rem;font-weight:700;padding:.08rem .4rem;border-radius:4px;letter-spacing:.02em;white-space:nowrap;}
-.ph-controller{background:rgba(68,64,60,.1);color:var(--ac);}.ph-feasible{background:rgba(180,83,9,.1);color:var(--amb);}
-.ph-predictive{background:rgba(21,128,61,.1);color:var(--grn);}.ph-stress{background:rgba(120,113,108,.12);color:var(--tx2);}
-.ph-audit{background:rgba(28,25,23,.07);color:var(--mut);}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.5rem 0;}
 @media(max-width:680px){.grid2{grid-template-columns:1fr;}.hstats{gap:1.3rem;}}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.4rem 1.5rem;}
@@ -107,6 +90,13 @@ table.ctl td.pp{color:var(--tx2);line-height:1.55;}
 .tlv{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--mut);}
 .tlt{font-weight:700;color:var(--tx);margin:.12rem 0 .25rem;}.tld{font-size:.88rem;color:var(--tx2);line-height:1.6;}
 .note{font-size:.78rem;color:var(--mut);margin-top:.6rem;}
+/* charts */
+.figwrap{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.2rem 1.2rem .9rem;margin:1.4rem 0;}
+.figcap{font-size:.78rem;color:var(--mut);margin-top:.5rem;line-height:1.55;border-top:1px dashed var(--bd);padding-top:.55rem;}
+.figcap b{color:var(--tx2);}
+#tip{position:fixed;pointer-events:none;background:#1c1917;color:#fafaf9;font-family:'JetBrains Mono',monospace;font-size:.72rem;padding:.35rem .6rem;border-radius:6px;opacity:0;transition:opacity .1s;z-index:200;max-width:340px;line-height:1.5;white-space:pre-line;}
+details.raw{margin:1rem 0;}
+details.raw summary{cursor:pointer;font-weight:600;color:var(--ac);padding:.5rem 0;}
 footer{padding:3.2rem 2rem;text-align:center;border-top:1px solid var(--bd);color:var(--mut);font-size:.8rem;}
 footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 </style></head><body>
@@ -114,186 +104,1401 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="nr"><a href="/projects/higan/">← HIGAN v2 보고서</a><a href="/projects/higan-generalization/">일반화 여정</a><a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub ↗</a></div></nav>
 
 <section class="hero">
-<span class="hl">HIGAN 이후 · 2026.07.07 — 07.14</span>
-<h1>폐기된 폴더에서 <em>논문</em>까지 —<br>7일의 기록</h1>
-<p class="hsub">일반화 여정은 2026-06-22 ABANDONED로 끝났다. 이 페이지는 그 다음 장이다:
-죽은 폴더의 전수 감사에서 살아남은 아이디어 하나가, 사전등록 게이트 9개와 무맥락 적대검증을
-거쳐 8페이지 논문이 되기까지. 관례대로 — 성공보다 실패와 잡아낸 결함을 앞에 둔다.</p>
+<span class="hl">HIGAN 이후 · 2026.07.07 — 07.14 · 전수 기록판</span>
+<h1>폐기된 폴더에서 <em>논문</em>까지 —<br>7일의 전수 기록</h1>
+<p class="hsub">일반화 여정은 2026-06-22 ABANDONED로 끝났다. 이 페이지는 그 다음 장 — 죽은 폴더의
+전수 감사에서 살아남은 아이디어 하나가, 잠긴 프로토콜 9개 위의 게이트 판정 11회와 무맥락
+적대검증을 거쳐 8페이지 논문이 되기까지를 <strong>하나도 빼지 않고</strong> 기록한다.
+모든 수치는 결과 JSON·프로토콜·게이트 판정문에서 그대로 옮겼고, 관례대로
+성공보다 실패와 잡아낸 결함을 앞에 둔다.</p>
 <div class="hstats">
-<div class="hs"><span class="hsn">9</span><span class="hsl">preregistered gates</span></div>
-<div class="hs"><span class="hsn">2</span><span class="hsl">kill-gates fired</span></div>
-<div class="hs"><span class="hsn">~125</span><span class="hsl">numbers cross-checked</span></div>
+<div class="hs"><span class="hsn">11</span><span class="hsl">게이트 판정</span></div>
+<div class="hs"><span class="hsn">9</span><span class="hsl">잠긴 프로토콜 JSON</span></div>
+<div class="hs"><span class="hsn">2</span><span class="hsl">킬게이트 발동</span></div>
+<div class="hs"><span class="hsn">20+</span><span class="hsl">적발·수정된 결함</span></div>
+<div class="hs"><span class="hsn">~125</span><span class="hsl">수치 전수 대조</span></div>
 <div class="hs"><span class="hsn">8pp</span><span class="hsl">최종 논문</span></div>
 </div>
 <div class="hb">
 <a class="btn" href="/projects/higan-generalization/">← 이전 장: 일반화 여정</a>
+<a class="btn" href="#raw">부록: 게이트·결함 원장 ↓</a>
 <a class="btn pr" href="#paper">살아남은 것 — 논문 ↓</a>
 </div>
 </section>
 <hr>
 
 <section class="bl"><div class="container">
-<div class="lab">01 · 출발 — 죽은 폴더의 전수 감사</div>
+<div class="lab">00 · 한 장으로 보는 7일</div>
+<h2>날짜별 이벤트와 게이트 발동</h2>
+<p class="lead">7월 7일 "이 폴더에 뭐가 있나"에서 7월 14일 arXiv 선적까지.
+초록 = 통과/생존, 빨강 = FAIL 또는 적발, 호박 = 경보/방향 전환.</p>
+<div class="figwrap">
+<svg viewBox="0 0 920 310" role="img" aria-label="7일 타임라인 — 날짜별 게이트·적발 이벤트" style="width:100%;height:auto;">
+<line x1="15" y1="34" x2="905" y2="34" stroke="#e7e5e4" stroke-width="2"/>
+<circle cx="70.6" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="70.6" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/7</text>
+<circle cx="25.0" cy="65" r="3" fill="#57534e"/>
+<text x="32.0" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">전수 감사 8+24 에이전트</text>
+<circle cx="25.0" cy="86" r="3" fill="#15803d"/>
+<text x="32.0" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">부활 근거 2건 확정</text>
+<circle cx="25.0" cy="107" r="3" fill="#57534e"/>
+<text x="32.0" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">DESIGN.md 사전등록</text>
+<line x1="126.2" y1="48" x2="126.2" y2="276" stroke="#e7e5e4" stroke-width="1" stroke-dasharray="1 4"/>
+<circle cx="181.9" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="181.9" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/8</text>
+<circle cx="136.2" cy="65" r="3" fill="#b45309"/>
+<text x="143.2" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 0 FAIL→PASS</text>
+<circle cx="136.2" cy="86" r="3" fill="#15803d"/>
+<text x="143.2" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 1 PASS</text>
+<circle cx="136.2" cy="107" r="3" fill="#15803d"/>
+<text x="143.2" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 2 PASS*</text>
+<line x1="237.5" y1="48" x2="237.5" y2="276" stroke="#e7e5e4" stroke-width="1" stroke-dasharray="1 4"/>
+<circle cx="293.1" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="293.1" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/9</text>
+<circle cx="247.5" cy="65" r="3" fill="#15803d"/>
+<text x="254.5" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 3 · 3b PASS</text>
+<circle cx="247.5" cy="86" r="3" fill="#15803d"/>
+<text x="254.5" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 4a STRONG</text>
+<circle cx="247.5" cy="107" r="3" fill="#b91c1c"/>
+<text x="254.5" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">적대검증 6 — #3 적중</text>
+<circle cx="247.5" cy="128" r="3" fill="#57534e"/>
+<text x="254.5" y="132" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 1R 발사</text>
+<line x1="348.8" y1="48" x2="348.8" y2="276" stroke="#e7e5e4" stroke-width="1" stroke-dasharray="1 4"/>
+<circle cx="404.4" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="404.4" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/10</text>
+<circle cx="358.8" cy="65" r="3" fill="#15803d"/>
+<text x="365.8" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 1R 4/4 (13.4h)</text>
+<circle cx="358.8" cy="86" r="3" fill="#57534e"/>
+<text x="365.8" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">ICLR 상향 (사용자)</text>
+<circle cx="358.8" cy="107" r="3" fill="#b91c1c"/>
+<text x="365.8" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">concurrent 2607 발견</text>
+<circle cx="358.8" cy="128" r="3" fill="#b45309"/>
+<text x="365.8" y="132" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">gate5 킬게이트 반전</text>
+<line x1="460.0" y1="48" x2="460.0" y2="276" stroke="#e7e5e4" stroke-width="1" stroke-dasharray="1 4"/>
+<circle cx="515.6" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="515.6" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/11</text>
+<circle cx="470.0" cy="65" r="3" fill="#b91c1c"/>
+<text x="477.0" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">gate5 U3 NO-GO</text>
+<circle cx="470.0" cy="86" r="3" fill="#b91c1c"/>
+<text x="477.0" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">U4·분류기 연쇄 사망</text>
+<circle cx="470.0" cy="107" r="3" fill="#b91c1c"/>
+<text x="477.0" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Gate 4b FAIL-as-scored</text>
+<circle cx="470.0" cy="128" r="3" fill="#b45309"/>
+<text x="477.0" y="132" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">TMLR 자진 복귀</text>
+<line x1="571.2" y1="48" x2="571.2" y2="276" stroke="#e7e5e4" stroke-width="1" stroke-dasharray="1 4"/>
+<circle cx="626.9" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="626.9" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/12</text>
+<circle cx="581.2" cy="65" r="3" fill="#b91c1c"/>
+<text x="588.2" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">논문 v1 → REJECT</text>
+<circle cx="581.2" cy="86" r="3" fill="#b91c1c"/>
+<text x="588.2" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">blocker 12건 적발</text>
+<circle cx="581.2" cy="107" r="3" fill="#15803d"/>
+<text x="588.2" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">v2 정직 재작성 8pp</text>
+<line x1="682.5" y1="48" x2="682.5" y2="276" stroke="#e7e5e4" stroke-width="1" stroke-dasharray="1 4"/>
+<circle cx="738.1" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="738.1" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/13</text>
+<circle cx="692.5" cy="65" r="3" fill="#b45309"/>
+<text x="699.5" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Xu §5.2 원문 검증</text>
+<circle cx="692.5" cy="86" r="3" fill="#15803d"/>
+<text x="699.5" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">gate7 h=48 HOLDS</text>
+<circle cx="692.5" cy="107" r="3" fill="#b91c1c"/>
+<text x="699.5" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">키버그 거짓 0/4 차단</text>
+<circle cx="692.5" cy="128" r="3" fill="#b45309"/>
+<text x="699.5" y="132" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">U1 OOM → 재시도 큐</text>
+<line x1="793.8" y1="48" x2="793.8" y2="276" stroke="#e7e5e4" stroke-width="1" stroke-dasharray="1 4"/>
+<circle cx="849.4" cy="34" r="5" fill="#fafaf9" stroke="#44403c" stroke-width="2"/>
+<text x="849.4" y="22" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">7/14</text>
+<circle cx="803.8" cy="65" r="3" fill="#15803d"/>
+<text x="810.8" y="69" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">U1 완주 — FT 무효과</text>
+<circle cx="803.8" cy="86" r="3" fill="#15803d"/>
+<text x="810.8" y="90" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">재게이트 3종 통과</text>
+<circle cx="803.8" cy="107" r="3" fill="#b91c1c"/>
+<text x="810.8" y="111" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">arXiv 감사 3 FAIL 수정</text>
+<circle cx="803.8" cy="128" r="3" fill="#57534e"/>
+<text x="810.8" y="132" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">~125 수치 전수 대조</text>
+<circle cx="803.8" cy="149" r="3" fill="#15803d"/>
+<text x="810.8" y="153" font-size="8.6" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">선적</text>
+<circle cx="20" cy="295" r="4" fill="#15803d"/>
+<text x="29" y="298" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">통과/생존</text>
+<circle cx="150" cy="295" r="4" fill="#b91c1c"/>
+<text x="159" y="298" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">FAIL/적발</text>
+<circle cx="280" cy="295" r="4" fill="#b45309"/>
+<text x="289" y="298" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">경보/전환</text>
+<circle cx="410" cy="295" r="4" fill="#57534e"/>
+<text x="419" y="298" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">이벤트</text>
+</svg>
+<div class="figcap"><b>차트 F.</b> 7일 타임라인. 각 이벤트의 정확한 수치·근거 파일은 아래 해당 날짜 섹션과 부록 원장에.</div>
+</div>
+</div></section>
+<hr>
+
+<section class="bl alt"><div class="container">
+<div class="lab">01 · 7/7 — 출발: 죽은 폴더의 전수 감사</div>
 <h2>폐허에서 살아남은 관찰은 하나였다</h2>
-<p class="lead">7월 7일, "이 폴더에 뭐가 있나"라는 질문으로 시작했다. 병렬 리더 8개가 2년치
-기록을 전부 읽었고, 파일 단위 정밀 감사가 뒤따랐다. 결론: 4개 논문 라인 전부 사망 확정.
-단 하나, 하루 만에 접혔던 곁가지(<code>tsfm_audit</code>)에 "suggestive-but-unconfirmed"로
-남겨진 관찰이 있었다 — <strong>TSFM의 zero-shot 우위는 비교 대상 baseline이 데이터에
-굶주려서 부풀려진 것 아닌가.</strong></p>
+<p class="lead">"이 폴더에 뭐가 있나"라는 질문으로 시작했다. 1차로 병렬 리더 8개가 2년치
+기록을 통째로 읽었고, 2차로 24개 에이전트가 파일 단위 정밀 감사를 돌았다. 결론:
+4개 논문 라인 전부 사망 확정. 단 하나, 하루 만에 접혔던 곁가지(<code>tsfm_audit</code>,
+2026-05-30 shelved)에 "suggestive-but-unconfirmed"로 남은 관찰이 있었다 —
+<strong>TSFM의 zero-shot 우위는 비교 대상 baseline이 데이터에 굶주려 부풀려진 것 아닌가</strong>
+(당시 기록: ETTh1에서 DLinear 학습 데이터를 K=300→full로 늘리면 Chronos와의 격차가
+−0.40→−0.05로 줄어든다는 힌트).</p>
+<div class="tbl-wrap"><table class="ctl">
+<thead><tr><th>라인</th><th>전수 감사 판정 (7/7)</th><th>상태</th></tr></thead>
+<tbody>
+<tr><td class="vn">9732 — FD sign-flip</td><td class="pp">TMLR desk-reject 확정, 재도전 없음</td><td class="ne"><span class="tag dead">사망</span></td></tr>
+<tr><td class="vn">rewrite v2 — step trilemma</td><td class="pp">6/19–22 consequence 사냥(워크플로우 6종)이 "다운스트림 consequence 구조적 부재" 확정 — 제출 않고 자발 동결</td><td class="ne"><span class="tag dead">동결</span></td></tr>
+<tr><td class="vn">paper/ (ICLR 라인)</td><td class="pp">핵심 selector가 tautology로 판명, 본문 0줄</td><td class="ne"><span class="tag dead">사망</span></td></tr>
+<tr><td class="vn">paper_refutation</td><td class="pp">가설 반증 완료 — 결합해도 가치 추가 없음</td><td class="ne"><span class="tag dead">사망</span></td></tr>
+<tr><td class="vn">tsfm_audit (5/30 shelved)</td><td class="pp">contamination 훅은 죽었으나 starvation 관찰이 "suggestive-but-unconfirmed"로 잔존 — 유일한 부활 후보</td><td class="ne"><span class="tag live">부활 검토</span></td></tr>
+</tbody></table></div>
+
 <div class="flow">
 <div class="fstep">
-<div class="fhd"><span class="fn">부활 근거 1</span> "불안정"의 정체는 코드 결함이었다</div>
+<div class="fhd"><span class="fn">정밀 감사</span> 죽은 라인에서도 결함은 새로 나왔다</div>
+<div class="frow"><span class="fk find">적발</span><span>정밀 감사가 폐기 라인에서 잡아낸 것: ① v1 노트북의 direction-optimization <strong>detach 버그</strong> — 1,500 step 최적화가 사실상 no-op였던 증거, ② <code>scripts/10·14</code> 실행 불가 회귀, ③ 743개 확증 실행이 <strong>전원 git-dirty 트리</strong>에서 돌았던 이력. 결과 자체는 재현됐지만 provenance 규율이 없었다.</span></div>
+<div class="fnext">이 셋은 그대로 새 프로젝트의 규칙이 됐다 — 명시적 실패(폴백 금지) · 실행 가능성 검증 · clean git tree 강제(DESIGN.md §4에 "743-run git-dirty 교훈"으로 명문화).</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">부활 근거 1</span> "불안정"의 정체는 코드 결함 3종이었다</div>
 <div class="frow"><span class="fk think">당시</span><span>5/30에 접은 이유: "DLinear가 학습 예산에 따라 비단조·불안정해서 확증 불가."</span></div>
-<div class="frow"><span class="fk find">규명</span><span>학습 루프 자체가 없었다 — 고정 λ 닫힌형 ridge. K=600에선 윈도우 조건 미충족으로 <strong>조용히 naive persistence로 폴백</strong>(굶주린 baseline이 사실 baseline이 아니었다), K=600–1200 스파이크는 겹침 윈도우 5–6개 위의 ill-conditioned ridge, λ는 표본수에 비스케일.</span></div>
-<div class="fnext">"확증 불가"가 미스터리에서 수리 가능한 결함으로 — 부활 조건 성립. banked 수치는 전부 재측정 대상.</div>
+<div class="frow"><span class="fk find">규명</span><span>학습 루프 자체가 없었다 — 고정 λ 닫힌형 ridge. ① K=300에선 윈도우 조건(536≤K) 미충족으로 <strong>조용히 naive persistence로 폴백</strong>(굶주린 baseline이 사실 baseline이 아니었다), ② K=600–1200 스파이크는 near-duplicate 윈도우 ~5–6개 위의 <strong>ill-conditioned ridge</strong>, ③ λ가 표본수에 <strong>비스케일</strong>.</span></div>
+<div class="fnext">"확증 불가"가 미스터리에서 수리 가능한 결함으로 — 부활 조건 성립. banked 수치(bank_starvation.json)는 전부 고장난 계측기 산물, 재측정 대상.</div>
 </div>
 <div class="fstep">
 <div class="fhd"><span class="fn">부활 근거 2</span> 니치는 CROWDED-but-open</div>
-<div class="frow"><span class="fk try">조사</span><span>3각 병렬 문헌 스캔 + 원문 대조. 결론 층위("baseline 제대로 쓰면 격차 소멸")는 선점됐지만, <strong>데이터량 단독 개입 + parity 예산 측정</strong>은 비어 있었다.</span></div>
+<div class="frow"><span class="fk try">조사</span><span>3각 병렬 문헌 스캔 + 원문 대조. 직접 선점 0건 — 유일한 선점 후보 arXiv 2510.00742는 <strong>원문 확인으로 기각</strong>(데이터량 스윕 부재). 결론 층위("baseline 제대로 쓰면 격차 축소")는 Xu et al. 2411.02796(ICLR 2025)이 선점.</span></div>
+<div class="frow"><span class="fk find">델타</span><span>비어 있는 것: <strong>학습 데이터량 K 단독 개입 + 길이-조건부 기제 + parity 예산 N* 정량화</strong>. Xu의 레버는 튜닝·lookback — 우리는 그 강한 설정을 고정한 채 K만 움직인다.</span></div>
 <div class="fnext">설계 문서에 가설·게이트·죽음의 경로를 먼저 박고 시작 — "그냥 돌려보고"는 이 폴더에서 금지어다.</div>
 </div>
+<div class="fstep">
+<div class="fhd"><span class="fn">사전등록</span> DESIGN.md — 실험 전에 판정 기준을 잠갔다</div>
+<div class="frow"><span class="fk try">고정</span><span>가설 3개를 기대 신호·실패 시 처분과 함께 등록: <strong>H1</strong> corr(train 길이, 격차)&lt;0 (실패 시 범위 축소), <strong>H2</strong> K↑→gap 단조 수렴+유한 N* (실패 시 <em>KILL</em>), <strong>H3</strong> max-튜닝 후에도 K 효과 잔존 (실패 시 <em>KILL</em> — Xu에 포섭, replication note로 강등). 게이트 순서 고정: Gate 0 계측기 → 1 개입 → 2 요인분해 → 3 관찰 → 4 콜드 리뷰.</span></div>
+<div class="frow"><span class="fk think">캘리브</span><span>주장 강도를 미리 낮춰 등록: "역전" 주장 금지, "소멸+N* 정량화"까지만(내부 예비 증거상 잔여 격차 ~0.03 MASE). 죽음의 경로 4개 명시 — 최대 리스크는 "튜닝이 전부 설명"(Gate 2). 천장은 TMLR로 명시, 탑티어 아님.</span></div>
+<div class="fnext">확증 실험 시작 후 판정 기준 변경 금지. 모든 확증 run은 잠긴 JSON 프로토콜 + clean git tree + 커밋 해시 기록.</div>
 </div>
-</div></section>
-<hr>
-
-<section class="bl alt"><div class="container">
-<div class="lab">02 · 게이트의 사다리 — 7/7 ~ 7/9</div>
-<h2>실험보다 판정 기준이 먼저 잠겼다</h2>
-<p class="lead">모든 확증 실험은 잠긴 JSON 프로토콜에 판정 규칙을 먼저 박고, 클린 git 트리에서
-실행하고, 결과 파일에 프로토콜 해시와 커밋을 기록했다. 결과를 보고 기준을 바꾸는 길을
-스스로 막은 것이다.</p>
-<div class="tier win"><div class="tier-h"><span class="dot"></span>통과한 게이트 <span class="cnt">순서대로</span></div>
-<div class="ev win"><span class="ev-t">Gate 0 — 계측기 검증<span class="sub">수리된 gradient DLinear가 seed 변동계수 &lt;5%·비단조 스파이크 0으로 K-곡선을 안정 측정하는가. 1차 시도는 테스트 윈도우 50개의 중앙값 양자화 노이즈로 FAIL — 256개로 늘려 재통과.</span></span><span class="ev-n">PASS (2번째 시도)</span></div>
-<div class="ev win"><span class="ev-t">Gate 1 — 개입 K-스윕<span class="sub">데이터만 늘리면 격차가 단조 수렴하는가. 4/4 데이터셋 ρ=−1.0, parity 예산 전부 유한.</span></span><span class="ev-n">PASS</span></div>
-<div class="ev win"><span class="ev-t">Gate 2 — 튜닝 통제 분해<span class="sub">튜닝을 최대로 줘도 데이터량 효과가 잔존하는가. 3/4 생존.</span></span><span class="ev-n">PASS *</span></div>
-<div class="ev win"><span class="ev-t">Gate 3 — 관찰 arm<span class="sub">실제 벤치마크 10개 횡단, 자연 train 길이 ↔ 격차 Spearman ρ=−0.85 (permutation p=0.003).</span></span><span class="ev-n">PASS</span></div>
-<div class="ev win"><span class="ev-t">Gate 4a — 멀티모델<span class="sub">Chronos-t5 · Chronos-Bolt · TimesFM-2.5, 12셀 중 11 재현.</span></span><span class="ev-n">PASS</span></div>
 </div>
-<div class="tier lose"><div class="tier-h"><span class="dot"></span>규칙대로 FAIL로 기록한 것</div>
-<div class="ev lose"><span class="ev-t">Gate 4b — 비-ETT 도메인<span class="sub">전력·교통에서 소예산 격차는 크게 재현(+0.31~+0.64)되지만 1만 포인트를 줘도 parity가 안 온다(우측중도절단). 사전등록 규칙상 FAIL — 단 이 censoring이 나중에 논문의 정직한 scope가 된다.</span></span><span class="ev-n">FAIL (as scored)</span></div>
-</div>
-<p><em>*</em> Gate 2의 별표는 이유가 있다 — 다음 섹션.</p>
 </div></section>
 <hr>
 
 <section class="bl"><div class="container">
-<div class="lab">03 · 적대검증 — 7/9</div>
-<h2>4게이트 통과 직후, 결과를 깨러 갔다</h2>
-<p class="lead">이 폴더의 역사는 "강한 신호는 매번 artifact"였다. 그래서 논문을 쓰기 전에
-무맥락 fresh 적대자 6명에게 각기 다른 실패 모드(지표·누출·튜닝 진정성·공정성·통계·자명성)로
-결과를 <strong>반증</strong>하라고 시켰다. 앵커를 주면 false PASS가 나온다는 것을 이 폴더에서
-배웠기 때문에, 원고도 요약도 주지 않았다.</p>
+<div class="lab">02 · 7/8 — 게이트의 사다리</div>
+<h2>계측기가 먼저, 가설은 그 다음</h2>
+<p class="lead">하루에 게이트 세 개를 통과했다 — 단 첫 번째는 두 번 만에. 모든 판정 규칙은
+실행 전에 잠긴 JSON에 있었고, 결과 파일에는 프로토콜 해시와 git 커밋이 박혔다.</p>
+
+<div class="flow">
 <div class="fstep fail">
-<div class="fhd"><span class="fn">적중</span> Gate 2의 "3/4 생존"은 선택 절차의 artifact였다</div>
-<div class="frow"><span class="fk find">발견</span><span>설정 선택에 쓴 검증셋이 60포인트짜리 꼬리 하나였다. 소예산에서 이 굶주린 검증셋은 <strong>거의 학습되지 않은 flat 설정을 골랐다</strong> — ETTm2 K=600에서 선택된 설정의 test MASE는 1.127인데, 같은 그리드 안에 0.410짜리가 있었다. 격차가 6배 부풀려진 것.</span></div>
-<div class="frow"><span class="fk find">전이</span><span>같은 오염이 Gate 1(고정 lookback 336의 소예산 미결정성)까지 번져 있었다.</span></div>
-<div class="fnext">판정: 프로즈 수리가 아니라 재실행. "데이터 기아"가 아니라 "선택 절차의 기아"였다면 논문 전제가 무너진다 — 구제 금지 원칙으로 다시 쟀다.</div>
+<div class="fhd"><span class="fn">Gate 0 · Run 1</span> 계측기 검증 — 첫 시도는 FAIL <span class="tag fail">FAIL</span></div>
+<div class="frow"><span class="fk try">기준</span><span>수리된 gradient DLinear/NLinear가 (a) 폴백 0건(윈도우 부족 시 명시적 예외), (b) per-K seed 변동계수 &lt;5%, (c) K≥1200 비단조 스파이크(이웃 K 대비 +15% 초과) 0건.</span></div>
+<div class="frow"><span class="fk find">결과</span><span>seed-CV <strong>최악 6.583%</strong> — 위반 8건(ETTm1 4건·ETTm2 4건, 예: ETTm2 DLinear K2400 cv 6.58%). 원인은 모델이 아니라 <strong>평가 세팅</strong>: 테스트 윈도우 50개 위의 중앙값이 양자화 노이즈를 만들었다.</span></div>
+<div class="fnext">테스트 윈도우를 256개(고정 세트, stride 24)로 확장 — "50윈도우 평가 금지"가 프로토콜 규칙이 됐다.</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">Gate 0 · Run 2</span> 재실행 — PASS <span class="tag ok">PASS</span></div>
+<div class="frow"><span class="fk find">결과</span><span>폴백 0(소스 스캔 + 3개 모델 전부 insufficient-data probe가 예외를 던짐 확인) · seed-CV 최악 <strong>4.409%</strong> &lt; 5% · 스파이크 위반 0 — 인접 K 비율 최악 <strong>1.0303</strong>(ETTm2·NLinear·K2400→5000) &lt; 1.15로 8/8 곡선 통과.</span></div>
+<div class="frow"><span class="fk find">+IN</span><span>정본 계측기는 <strong>DLinear(+instance norm)</strong>. 이유가 코드에 측정치로 박혀 있다: 표류하는 ETT에서 vanilla DLinear는 level-fragile — test 구간이 짧은 train 세그먼트보다 ~1.5 sd 아래에 있어 OOD 외삽이 미세한 seed별 가중치 차이를 <strong>seed-CV 7–13%</strong>로 증폭(예: ETTh1 K2400 val MSE 0.531–0.550 → test MASE 0.82–0.97). RevIN류 per-window 정규화가 이 증폭을 제거. vanilla Zeng DLinear로부터의 유일한 이탈로 명기.</span></div>
+<div class="fnext">계측기 확보. 같은 날 v1.1 개정 — Gate 1 확증 run <em>이전</em>에 판정 기준을 명확화하고 잠금.</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">v1.1 잠금</span> 결과 보기 전에 예상을 기록해 두다</div>
+<div class="frow"><span class="fk try">고정</span><span>Chronos context 512(자기 표준 — Chronos에 유리하므로 우리 주장에 보수적), baseline context 336, horizon 24, 데이터셋당 256 윈도우 고정 세트, K 그리드 ETTh [600..10000] / ETTm [600..20000], seed 2027–2031.</span></div>
+<div class="frow"><span class="fk think">투명성</span><span>개정 시점의 예상을 문서에 박제: "h-계열(ETTh)은 parity 미도달, m-계열은 도달이 예상되는 상태에서 이 개정을 한다." — 결과가 예상과 달라도 바꿀 수 없게.</span></div>
+<div class="fnext">Gate 1 발사.</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">Gate 1</span> 개입 K-스윕 (H2) <span class="tag ok">PASS</span></div>
+<div class="frow"><span class="fk find">결과</span><span>Chronos-t5-small zero-shot MASE <strong>0.613 / 0.695 / 0.353 / 0.270</strong>(ETTh1/h2/m1/m2, K 무관 상수). gap(K) 곡선 8/8(2모델×4셋) 단조 수렴 — dlinear 4/4 trend ρ=−1.000. N*(gap CI가 처음 0에 닿는 K): dlinear <strong>5000/10000/10000/20000</strong>, nlinear 5000/5000/1200/5000 — <strong>전 데이터셋 유한</strong>.</span></div>
+<div class="frow"><span class="fk think">예상 대비</span><span>v1.1의 예상("h-계열 parity 미도달")을 <em>상회</em> — h-계열도 그리드 안에서 비유의 도달. 문서에 DEVIATES로 기록.</span></div>
+<div class="fnext">H2 생존. 이제 가장 개연성 높은 죽음의 경로 — "튜닝이 전부 설명하는가"(Gate 2).</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">Gate 2</span> 튜닝 통제 요인 분해 (H3) — 생존 실험 <span class="tag ok">PASS *</span></div>
+<div class="frow"><span class="fk try">방법</span><span>Xu-스타일 그리드(lookback {96,336,512,720} × lr {1e-4,1e-3,1e-2})로 각 (dataset,K,seed)에서 best-tuned baseline을 만든 뒤에도 K 효과가 남는지. 생존 대비 C = gap_tuned(600) − gap_tuned(K_max).</span></div>
+<div class="frow"><span class="fk find">결과</span><span>dlinear: ETTh1 <strong>+0.092 [−0.002,+0.187]</strong> 아슬 미달, ETTh2 <strong>+0.460</strong> [+0.322,+0.597], ETTm1 <strong>+0.101</strong> [+0.056,+0.145], ETTm2 <strong>+0.819</strong> [+0.674,+0.964] → 3/4 생존(규칙 ≥3). 기제 관찰: 소K에서 튜닝이 <strong>lookback 96으로 도망</strong>(ETTh1 K600 선택 분포 96/0.01×4) — 튜닝을 최대로 줘도 gap 양수 잔존.</span></div>
+<div class="fnext">H3 생존 — Xu 포섭 반박 확보. 관찰 arm(Gate 3)을 밤새 돌린다. (* 이 별표의 이유는 7/9 섹션 — 이 "3/4 생존"의 크기는 나중에 선택 절차 artifact로 판명된다.)</div>
+</div>
 </div>
 </div></section>
 <hr>
 
 <section class="bl alt"><div class="container">
-<div class="lab">04 · 정직한 재실행 — 7/9 ~ 7/10</div>
-<h2>효과는 진짜였고, 크기는 과장이었다</h2>
-<p class="lead">rolling-origin 교차검증 선택 + weight decay + lookback 48 floor +
-미결정 설정 배제로 계측기를 다시 만들어 13시간 재실행했다.</p>
-<div class="tier win"><div class="tier-h"><span class="dot"></span>살아남은 것</div>
-<div class="ev win"><span class="ev-t">소예산 격차, 4/4 유의 양수<span class="sub">K=600에서 +0.10 / +0.08 / +0.06 / +0.41 — 전부 CI가 0을 배제. 단조 수렴, parity 예산 유한.</span></span><span class="ev-n">4/4</span></div>
+<div class="lab">03 · 7/9 — 관찰 arm, 삼각화, 그리고 적대검증의 적중</div>
+<h2>4게이트 통과 직후, 결과를 깨러 갔다 — 그리고 깨졌다</h2>
+<p class="lead">새벽에 Gate 3이, 오전에 Gate 3b가 통과했다. 그리고 이 폴더의 역사("강한 신호는
+매번 artifact")대로, 논문을 쓰기 전에 무맥락 fresh 적대자 6명에게 각기 다른 실패 모드로
+결과를 <strong>반증</strong>하라고 시켰다. 앵커를 주면 false PASS가 나온다는 것을 배웠기
+때문에 원고도 요약도 주지 않았다. 하나가 적중했다.</p>
+
+<h3 class="sub">Gate 3 — 관찰 arm (H1) <span class="tag ok">PASS</span></h3>
+<p>실제 벤치마크를 가로질러, 자연 train 길이가 짧을수록 TSFM 우위가 큰가.
+10개 유닛(M4·Monash·ETT), 유닛당 최대 32계열, 튜닝 그리드 동일.
+<strong>Spearman ρ = −0.848, permutation p = 0.0034</strong>(10,000회), n=10.
+짧은 쪽(fred_md 436pt +0.847 / m4_weekly 590pt +1.135 / m4_hourly 604pt +0.579)과
+긴 쪽(ETTm1 41,808pt −0.043 / ETTm2 −0.012)이 정확히 갈렸다.
+tourism_monthly·hospital은 전 계열이 튜닝 그리드 infeasible(계열이 lookback 96도 못 담음)로
+프로토콜 규칙에 따라 제외 — n=10은 프로토콜 최소치다.</p>
+<div class="figwrap">
+<svg viewBox="0 0 920 440" role="img" aria-label="관찰 arm — 자연 train 길이 vs gap, 10 유닛 산점도" style="width:100%;height:auto;">
+<line x1="60" y1="345.6" x2="900" y2="345.6" stroke="#e7e5e4"/>
+<text x="52" y="349.1" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0</text>
+<line x1="60" y1="247.0" x2="900" y2="247.0" stroke="#e7e5e4"/>
+<text x="52" y="250.5" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.4</text>
+<line x1="60" y1="148.4" x2="900" y2="148.4" stroke="#e7e5e4"/>
+<text x="52" y="151.9" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.8</text>
+<line x1="60" y1="49.7" x2="900" y2="49.7" stroke="#e7e5e4"/>
+<text x="52" y="53.2" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+1.2</text>
+<line x1="60" y1="345.6" x2="900" y2="345.6" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 3"/>
+<line x1="147.1" y1="390" x2="147.1" y2="394" stroke="#a8a29e"/>
+<text x="147.1" y="407" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">500</text>
+<line x1="252.5" y1="390" x2="252.5" y2="394" stroke="#a8a29e"/>
+<text x="252.5" y="407" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1k</text>
+<line x1="497.1" y1="390" x2="497.1" y2="394" stroke="#a8a29e"/>
+<text x="497.1" y="407" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">5k</text>
+<line x1="602.5" y1="390" x2="602.5" y2="394" stroke="#a8a29e"/>
+<text x="602.5" y="407" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">10k</text>
+<line x1="813.2" y1="390" x2="813.2" y2="394" stroke="#a8a29e"/>
+<text x="813.2" y="407" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">40k</text>
+<text x="480.0" y="432" font-size="10.5" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">자연 train 길이 (중앙값, log 축)</text>
+<text x="16" y="210.0" font-size="10.5" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif" transform="rotate(-90 16 210.0)">gap (baseline − TSFM, MASE)</text>
+<circle cx="175.9" cy="203.0" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="m4_hourly: median train 604pt, gap +0.579 (n=32)"/>
+<text x="185.9" y="207.0" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">m4_hourly</text>
+<circle cx="671.9" cy="330.0" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="monash_electricity_hourly: median train 15,782pt, gap +0.063 (n=32)"/>
+<text x="680.9" y="321.0" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">electricity</text>
+<circle cx="610.3" cy="279.4" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="monash_traffic: median train 10,526pt, gap +0.269 (n=32)"/>
+<text x="620.3" y="283.4" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">traffic</text>
+<circle cx="336.3" cy="282.9" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="m4_daily: median train 1,735pt, gap +0.254 (n=25)"/>
+<text x="346.3" y="286.9" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">m4_daily</text>
+<circle cx="172.2" cy="65.8" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="m4_weekly: median train 589pt, gap +1.135 (n=23)"/>
+<text x="184.2" y="69.8" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">m4_weekly</text>
+<circle cx="126.3" cy="136.8" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="monash_fred_md: median train 436pt, gap +0.847 (n=32)"/>
+<text x="138.3" y="140.8" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">fred_md</text>
+<circle cx="609.2" cy="341.2" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="ETTh1: median train 10,452pt, gap +0.018 (n=1)"/>
+<text x="601.2" y="357.2" font-size="9.5" fill="#57534e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">ETTh1</text>
+<circle cx="609.2" cy="333.4" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="ETTh2: median train 10,452pt, gap +0.050 (n=1)"/>
+<text x="619.2" y="327.4" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">ETTh2</text>
+<circle cx="819.9" cy="356.2" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="ETTm1: median train 41,808pt, gap -0.043 (n=1)"/>
+<text x="809.9" y="346.2" font-size="9.5" fill="#57534e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">ETTm1</text>
+<circle cx="819.9" cy="348.5" r="6" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="ETTm2: median train 41,808pt, gap -0.012 (n=1)"/>
+<text x="829.9" y="356.5" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">ETTm2</text>
+<text x="900" y="40" font-size="12" font-weight="700" fill="#44403c" text-anchor="end" style="font-family:'JetBrains Mono',monospace">Spearman ρ = −0.848 · permutation p = 0.0034 · n = 10</text>
+<text x="900" y="56" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">robustness: ETT 제외 ρ=−0.886 (p=0.016) · 계열 단위 pooled ρ=−0.516 (p=0.0001, n=180)</text>
+</svg>
+<div class="figcap"><b>차트 D.</b> 관찰 arm 산점도 — x = 자연 train 길이(중앙값, log 축), y = tuned baseline − TSFM gap(MASE).
+점에 마우스를 올리면 원자료. robustness: ETT 4유닛 제외 ρ=−0.886(p=0.016, n=6), 계열 단위 pooled ρ=−0.516(p=0.0001, n=180).
+근거: <code>results/gate3_observational.json</code> (protocol sha <code>33bc70bf…</code>, wall 9.3h).</div>
 </div>
-<div class="tier gray"><div class="tier-h"><span class="dot"></span>깎인 것</div>
-<div class="ev gray"><span class="ev-t">크기 — 대부분 절반 이하로<span class="sub">부풀려진 0.86은 0.14로, 0.47은 0.25로. ETTh1은 K=5000에서 다시 유의해지는 비단조 wrinkle까지 — 전부 논문에 그대로 실렸다.</span></span><span class="ev-n">3~6× → 정직값</span></div>
+
+<h3 class="sub">Gate 3b — staleness 방어 <span class="tag ok">PASS</span></h3>
+<p>"Chronos-t5는 2024급 아니냐"에 대한 선제 방어: 2025급 다른 계보 TSFM
+<strong>TimesFM-2.5-200m</strong>(decoder-only, 231M params)으로 Gate 1 곡선 재현 —
+dlinear 단조 4/4 + 유한 N* 4/4, <strong>재현 4/4</strong>. zero-shot MASE
+0.616/0.734/0.330/0.287 — ETTm1에선 Chronos보다 강해(−0.023) 오히려 더 어려운 bar.
+해석 규칙도 프로토콜에 명시: 더 강한 TSFM = baseline이 더 많은 데이터를 필요로 함 = N*가
+커지는 방향이므로 staleness 반론은 우리 주장을 약화시키지 못한다.</p>
+
+<div class="flow">
+<div class="fstep fail">
+<div class="fhd"><span class="fn">적대검증 6</span> 무맥락 공격 6종 — #3 적중 <span class="tag fail">HIT</span></div>
+<div class="frow"><span class="fk try">공격</span><span>각자 다른 실패 모드 하나씩: #1 지표/분모, #2 누출, #3 튜닝 진정성, #4 공정성, #5 통계, #6 자명성. 원고·요약·기대 결론 제공 없이 결과 파일만.</span></div>
+<div class="frow"><span class="fk find">판정</span><span>#1·#2 <strong>NONE</strong>(클린), #4·#5 <strong>MINOR</strong>(보수적 방향), <strong>#3 적중</strong> — Gate 2의 설정 선택에 쓴 검증셋이 60포인트짜리 꼬리 하나(트레일링 10%)였고, 소예산에서 이 굶주린 검증셋은 <strong>거의 학습되지 않은 flat 설정을 오선택</strong>했다.</span></div>
+<div class="frow"><span class="fk find">직접 재계산</span><span>ETTm2 K=600: val-선택 설정(lb336/lr1e-4)의 test MASE <strong>1.127</strong>(gap +0.857) vs <strong>같은 그리드 안의</strong> oracle(lb96/lr1e-2) <strong>0.410</strong>(gap +0.140) — 격차 6배 인플레. oracle 재계산 시 gap(600): ETTm2 0.86→0.14, ETTh2 0.47→0.25. 같은 오염이 <strong>Gate 1(고정 lookback 336이 소K에서 미결정)까지 전이</strong>.</span></div>
+<div class="fnext">판정 (c): 프로즈 수리가 아니라 <strong>재실행</strong>. "데이터 기아"가 아니라 "선택 절차의 기아"였다면 논문 전제가 무너진다 — 구제 금지 원칙으로 다시 잰다. 그날로 gate1R 프로토콜 잠금(CV 선택 + weight decay + lookback 48 floor + 미결정 설정 배제, 세 선택 규칙 CV/val/oracle 병기 저장 의무).</div>
+</div>
+</div>
+<div class="figwrap">
+<svg viewBox="0 0 920 400" role="img" aria-label="선택 절차 artifact — val-선택 vs CV-선택 gap, ETTm2 oracle 대비" style="width:100%;height:auto;">
+<text x="10" y="18" font-size="12.5" font-weight="700" fill="#44403c" style="font-family:'Noto Sans KR',sans-serif">K=600 gap — 60pt tail-val 선택 vs 시계열 CV 선택</text>
+<line x1="56" y1="314.0" x2="480" y2="314.0" stroke="#e7e5e4"/>
+<text x="50" y="317.5" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.0</text>
+<line x1="56" y1="259.5" x2="480" y2="259.5" stroke="#e7e5e4"/>
+<text x="50" y="263.0" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.1</text>
+<line x1="56" y1="205.1" x2="480" y2="205.1" stroke="#e7e5e4"/>
+<text x="50" y="208.6" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.2</text>
+<line x1="56" y1="150.6" x2="480" y2="150.6" stroke="#e7e5e4"/>
+<text x="50" y="154.1" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.3</text>
+<line x1="56" y1="96.2" x2="480" y2="96.2" stroke="#e7e5e4"/>
+<text x="50" y="99.7" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.4</text>
+<rect x="73.0" y="178.6" width="34" height="135.4" rx="4" fill="#b91c1c" data-tip="ETTh1 K=600 val-선택 gap: +0.249"/>
+<text x="90.0" y="173.6" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.249</text>
+<rect x="111.0" y="261.3" width="34" height="52.7" rx="4" fill="#b45309" data-tip="ETTh1 K=600 CV-선택 gap: +0.097"/>
+<text x="128.0" y="256.3" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.097</text>
+<text x="109.0" y="330" font-size="10.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">ETTh1</text>
+<text x="109.0" y="345" font-size="9.5" fill="#b91c1c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">2.57×</text>
+<rect x="179.0" y="271.4" width="34" height="42.6" rx="4" fill="#b91c1c" data-tip="ETTh2 K=600 val-선택 gap: +0.078"/>
+<text x="196.0" y="266.4" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.078</text>
+<rect x="217.0" y="271.4" width="34" height="42.6" rx="4" fill="#b45309" data-tip="ETTh2 K=600 CV-선택 gap: +0.078"/>
+<text x="234.0" y="266.4" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.078</text>
+<text x="215.0" y="330" font-size="10.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">ETTh2</text>
+<text x="215.0" y="345" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1.00×</text>
+<rect x="285.0" y="279.2" width="34" height="34.8" rx="4" fill="#b91c1c" data-tip="ETTm1 K=600 val-선택 gap: +0.064"/>
+<text x="302.0" y="274.2" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.064</text>
+<rect x="323.0" y="279.2" width="34" height="34.8" rx="4" fill="#b45309" data-tip="ETTm1 K=600 CV-선택 gap: +0.064"/>
+<text x="340.0" y="274.2" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.064</text>
+<text x="321.0" y="330" font-size="10.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">ETTm1</text>
+<text x="321.0" y="345" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1.00×</text>
+<rect x="391.0" y="90.3" width="34" height="223.7" rx="4" fill="#b91c1c" data-tip="ETTm2 K=600 val-선택 gap: +0.411"/>
+<text x="408.0" y="85.3" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.411</text>
+<rect x="429.0" y="90.3" width="34" height="223.7" rx="4" fill="#b45309" data-tip="ETTm2 K=600 CV-선택 gap: +0.411"/>
+<text x="446.0" y="85.3" font-size="9.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.411</text>
+<text x="427.0" y="330" font-size="10.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">ETTm2</text>
+<text x="427.0" y="345" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1.00×</text>
+<line x1="56" y1="314.0" x2="480" y2="314.0" stroke="#57534e" stroke-width="1.2"/>
+<rect x="56" y="32" width="10" height="10" rx="2" fill="#b91c1c"/>
+<text x="70" y="41" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">60pt tail-val 선택 (Gate 1R 병기 기록)</text>
+<rect x="286" y="32" width="10" height="10" rx="2" fill="#b45309"/>
+<text x="300" y="41" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">rolling-origin CV 선택 (정본)</text>
+<text x="520" y="18" font-size="12.5" font-weight="700" fill="#44403c" style="font-family:'Noto Sans KR',sans-serif">ETTm2 K=600 — 선택된 설정의 test MASE (Gate 2)</text>
+<line x1="570" y1="314.0" x2="910" y2="314.0" stroke="#e7e5e4"/>
+<text x="564" y="317.5" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.00</text>
+<line x1="570" y1="263.2" x2="910" y2="263.2" stroke="#e7e5e4"/>
+<text x="564" y="266.7" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.25</text>
+<line x1="570" y1="212.5" x2="910" y2="212.5" stroke="#e7e5e4"/>
+<text x="564" y="216.0" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.50</text>
+<line x1="570" y1="161.7" x2="910" y2="161.7" stroke="#e7e5e4"/>
+<text x="564" y="165.2" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.75</text>
+<line x1="570" y1="110.9" x2="910" y2="110.9" stroke="#e7e5e4"/>
+<text x="564" y="114.4" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">1.00</text>
+<line x1="570" y1="60.2" x2="910" y2="60.2" stroke="#e7e5e4"/>
+<text x="564" y="63.7" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">1.25</text>
+<rect x="610.0" y="85.1" width="90" height="228.9" rx="4" fill="#b91c1c" data-tip="ETTm2 K=600 60pt tail-val 선택 (lb336 / lr 1e-4): test MASE 1.127"/>
+<text x="655.0" y="78.1" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1.127</text>
+<text x="655.0" y="330" font-size="10.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">60pt tail-val 선택</text>
+<text x="655.0" y="344" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">lb336 / lr 1e-4</text>
+<rect x="770.0" y="230.7" width="90" height="83.3" rx="4" fill="#15803d" data-tip="ETTm2 K=600 같은 그리드 oracle (lb96 / lr 1e-2): test MASE 0.410"/>
+<text x="815.0" y="223.7" font-size="12" font-weight="700" fill="#44403c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">0.410</text>
+<text x="815.0" y="330" font-size="10.5" font-weight="600" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">같은 그리드 oracle</text>
+<text x="815.0" y="344" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">lb96 / lr 1e-2</text>
+<line x1="570" y1="259.1" x2="910" y2="259.1" stroke="#57534e" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="574" y="253.1" font-size="9.5" fill="#57534e" text-anchor="start" style="font-family:'JetBrains Mono',monospace">Chronos zero-shot 0.270</text>
+<line x1="570" y1="314.0" x2="910" y2="314.0" stroke="#57534e" stroke-width="1.2"/>
+<text x="655.0" y="109.1" font-size="9.5" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">gap +0.857</text>
+<text x="815.0" y="254.7" font-size="9.5" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">gap +0.140</text>
+</svg>
+<div class="figcap"><b>차트 B.</b> 선택 절차 artifact의 크기. 왼쪽: K=600에서 60pt tail-val 선택 vs rolling-origin CV 선택의
+gap(둘 다 gate1R에 병기 기록된 실측) — ETTh1만 2.57×, 나머지 3계열은 정확히 1.00×.
+오른쪽: 적중의 진원지였던 ETTm2 K=600 — val이 고른 설정과 같은 그리드 oracle의 test MASE.
+근거: <code>results/gate1R_honest_rerun.json</code>(val/cv 병기), <code>protocols/gate1R_honest_rerun.json</code> motivation(1.127 vs 0.410),
+<code>results/gate2_factor_decomposition.json</code>(mase_tuned 1.1271).</div>
 </div>
 </div></section>
 <hr>
 
 <section class="bl"><div class="container">
-<div class="lab">05 · 상향 시도와 자진 철회 — 7/10 ~ 7/11</div>
-<h2>킬게이트가 발동했고, 스스로 내려왔다</h2>
-<p class="lead">더 높은 곳을 노리는 업그레이드를 설계했다 — 핵심은 "parity 예산 N*를 계열
-통계량으로 예측하는 법칙"(U3). 값싼 파일럿을 <strong>킬게이트로 먼저</strong> 사전등록했다:
-LODO Spearman ≥0.4, 자명한 기준선 대비 ≥15% 개선 — 하나라도 미달이면 그 자리에서 철회.</p>
-<div class="tier lose"><div class="tier-h"><span class="dot"></span>죽은 것들 <span class="cnt">전부 사전등록 기준으로</span></div>
-<div class="ev lose"><span class="ev-t">U3 — N* 예측 법칙<span class="sub">160계열 중 89%가 K=10,000 안에 parity 미도달(우측중도절단). 회귀 가능한 11%는 2개 도메인뿐 — LODO 불가, 부분 spearman −0.48. 3기준 전패.</span></span><span class="ev-n">NO-GO</span></div>
-<div class="ev lose"><span class="ev-t">U4 — 실무 셀렉터<span class="sub">89%가 censored면 정답이 거의 항상 "TSFM 써라" — 자명해져 사망.</span></span><span class="ev-n">소멸</span></div>
-<div class="ev lose"><span class="ev-t">censoring 분류기<span class="sub">"parity가 예산 내에 오는가"의 도메인 간 예측 — LODO AUC 0.18(랜덤 미만). 도메인 속성이지 계열 특징으로 전이되지 않는다.</span></span><span class="ev-n">AUC 0.18</span></div>
-</div>
-<p>이 폴더에서 감사·측정 계열 연구가 "강한 신호 → artifact 판명"으로 끝난 것이 이로써
-4연속이다. 다만 이번에는 리뷰어가 아니라 <strong>우리가 먼저 판정했고</strong>, 실패한
-법칙은 지워지지 않고 논문의 scope 문장이 됐다: "어느 계열이 어느 레짐인지는 예측되지 않는다."</p>
-</div></section>
-<hr>
+<div class="lab">04 · 7/10 — 정직한 재실행, 그리고 상향과 경보</div>
+<h2>효과는 진짜였고, 크기는 과장이었다</h2>
+<p class="lead">rolling-origin 3-fold CV 선택 + weight decay {0,1e-4,1e-3} + lookback 48 floor +
+미결정 설정 배제(n_train_windows &lt; 4×(lookback+horizon) infeasible)로 계측기를 다시 만들어
+새벽 1시 57분에 완주했다 — wall 48,119초(13.4h).</p>
 
-<section class="bl alt"><div class="container">
-<div class="lab">06 · 강화 실험 — 7/11 ~ 7/14</div>
-<h2>반론을 실험으로 미리 닫았다</h2>
+<div class="tier win"><div class="tier-h"><span class="dot"></span>살아남은 것 <span class="cnt">gate1R · dlinear 판정 4/4 PASS</span></div>
+<div class="ev win"><span class="ev-t">소예산 격차, 4/4 유의 양수<span class="sub">K=600 gap: ETTh1 +0.097 [+0.043,+0.151] · ETTh2 +0.078 [+0.035,+0.122] · ETTm1 +0.064 [+0.026,+0.102] · ETTm2 +0.411 [+0.318,+0.504] — 전부 CI가 0 배제.</span></span><span class="ev-n">4/4</span></div>
+<div class="ev win"><span class="ev-t">단조 수렴 + 유한 N*<span class="sub">단조 4/4(스파이크 기준), N* = 2400 / 2400 / 1200 / 10000 — Gate 1의 5000/10000/10000/20000에서 대폭 축소. 효과가 사라진 게 아니라 인플레가 빠진 것.</span></span><span class="ev-n">N* 4/4 유한</span></div>
+</div>
+<div class="tier gray"><div class="tier-h"><span class="dot"></span>깎인 것 — 전부 논문에 그대로 실렸다</div>
+<div class="ev gray"><span class="ev-t">크기 — 절반 이하로<span class="sub">Gate 1(고정 lb336) 대비 K600 gap: +0.289→+0.097, +0.492→+0.078, +0.599→+0.064, +0.800→+0.411. 그리드·선택 규칙이 함께 바뀐 비교라 "몇 배"라는 한 숫자는 쓰지 않는다(그 과장이 나중에 v1 blocker가 된다).</span></span><span class="ev-n">인플레 제거</span></div>
+<div class="ev gray"><span class="ev-t">ETTh1 K=5000 재유의 wrinkle<span class="sub">N*=2400 이후 K=5000에서 gap +0.082 [+0.037,+0.126]로 다시 유의 — 단조 서사를 깨는 비단조 재확대. 숨기지 않고 본문 보고("parity"는 등가가 아니라 비유의).</span></span><span class="ev-n">+0.082 재유의</span></div>
+<div class="ev gray"><span class="ev-t">NLinear는 부판정 2/4<span class="sub">ETTh1 +0.025 [−0.010,+0.060]·ETTm1 +0.027 [−0.005,+0.058] 비유의 — 4계열 결과는 DLinear 한정. 판정 비관여로 기록, 논문에선 부록 2차 검증으로.</span></span><span class="ev-n">2/4</span></div>
+</div>
+<div class="figwrap">
+<svg viewBox="0 0 920 600" role="img" aria-label="정직한 gap(K) 곡선 — DLinear vs Chronos, ETT 4종" style="width:100%;height:auto;">
+<text x="8" y="16" font-size="11" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">gap(K) = MASE<tspan font-size="8" dy="2">baseline</tspan>
+<tspan dy="-2"> − MASE</tspan>
+<tspan font-size="8" dy="2">Chronos</tspan>
+<tspan dy="-2"> · 밴드 = 95% CI(부트스트랩+시드 결합) · 점선 = 0선 · 초록 세로선 = N* · 채운 점 = CI가 0 배제</tspan>
+</text>
+<g>
+<text x="51" y="42" font-size="12" font-weight="700" fill="#44403c" style="font-family:'Noto Sans KR',sans-serif">ETTh1</text>
+<text x="445" y="42" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">N*=2,400</text>
+<line x1="51" y1="226.8" x2="445" y2="226.8" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="230.3" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0</text>
+<line x1="51" y1="179.0" x2="445" y2="179.0" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="182.5" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.05</text>
+<line x1="51" y1="131.2" x2="445" y2="131.2" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="134.7" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.10</text>
+<line x1="51" y1="83.4" x2="445" y2="83.4" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="86.9" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.15</text>
+<line x1="51" y1="226.8" x2="445" y2="226.8" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 3"/>
+<line x1="51.0" y1="273" x2="51.0" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="51.0" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">600</text>
+<line x1="148.1" y1="273" x2="148.1" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="148.1" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1k</text>
+<line x1="245.1" y1="273" x2="245.1" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="245.1" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">2k</text>
+<line x1="347.9" y1="273" x2="347.9" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="347.9" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">5k</text>
+<line x1="445.0" y1="273" x2="445.0" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="445.0" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">10k</text>
+<path d="M 51.0 82.7 L 148.1 148.8 L 245.1 170.5 L 347.9 105.9 L 445.0 193.6 L 445.0 253.9 L 347.9 191.2 L 245.1 235.2 L 148.1 222.1 L 51.0 185.9 Z" fill="#b45309" opacity="0.13"/>
+<path d="M 51.0 134.3 L 148.1 185.5 L 245.1 202.9 L 347.9 148.6 L 445.0 223.7" fill="none" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/>
+<line x1="245.1" y1="54" x2="245.1" y2="273" stroke="#15803d" stroke-width="1" stroke-dasharray="2 3" opacity="0.8"/>
+<circle cx="51.0" cy="134.3" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTh1 K=600: gap +0.097 [CI +0.043, +0.151]"/>
+<circle cx="148.1" cy="185.5" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTh1 K=1,200: gap +0.043 [CI +0.005, +0.082]"/>
+<circle cx="245.1" cy="202.9" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTh1 K=2,400: gap +0.025 [CI -0.009, +0.059]"/>
+<circle cx="347.9" cy="148.6" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTh1 K=5,000: gap +0.082 [CI +0.037, +0.126]"/>
+<circle cx="445.0" cy="223.7" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTh1 K=10,000: gap +0.003 [CI -0.028, +0.035]"/>
+<text x="58.0" y="127.3" font-size="10.5" font-weight="600" fill="#b45309" style="font-family:'JetBrains Mono',monospace">+0.097</text>
+</g>
+<g>
+<text x="511" y="42" font-size="12" font-weight="700" fill="#44403c" style="font-family:'Noto Sans KR',sans-serif">ETTh2</text>
+<text x="905" y="42" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">N*=2,400</text>
+<line x1="511" y1="252.7" x2="905" y2="252.7" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="256.2" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">-0.05</text>
+<line x1="511" y1="203.5" x2="905" y2="203.5" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="207.0" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0</text>
+<line x1="511" y1="154.2" x2="905" y2="154.2" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="157.7" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.05</text>
+<line x1="511" y1="105.0" x2="905" y2="105.0" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="108.5" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.10</text>
+<line x1="511" y1="55.7" x2="905" y2="55.7" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="59.2" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.15</text>
+<line x1="511" y1="203.5" x2="905" y2="203.5" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 3"/>
+<line x1="511.0" y1="273" x2="511.0" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="511.0" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">600</text>
+<line x1="608.1" y1="273" x2="608.1" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="608.1" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1k</text>
+<line x1="705.1" y1="273" x2="705.1" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="705.1" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">2k</text>
+<line x1="807.9" y1="273" x2="807.9" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="807.9" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">5k</text>
+<line x1="905.0" y1="273" x2="905.0" y2="277" stroke="#a8a29e" stroke-width="1"/>
+<text x="905.0" y="288" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">10k</text>
+<path d="M 511.0 83.6 L 608.1 123.9 L 705.1 166.0 L 807.9 174.8 L 905.0 189.6 L 905.0 253.3 L 807.9 243.9 L 705.1 233.2 L 608.1 203.3 L 511.0 169.4 Z" fill="#b45309" opacity="0.13"/>
+<path d="M 511.0 126.5 L 608.1 163.6 L 705.1 199.6 L 807.9 209.4 L 905.0 221.4" fill="none" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/>
+<line x1="705.1" y1="54" x2="705.1" y2="273" stroke="#15803d" stroke-width="1" stroke-dasharray="2 3" opacity="0.8"/>
+<circle cx="511.0" cy="126.5" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTh2 K=600: gap +0.078 [CI +0.035, +0.122]"/>
+<circle cx="608.1" cy="163.6" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTh2 K=1,200: gap +0.041 [CI +0.000, +0.081]"/>
+<circle cx="705.1" cy="199.6" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTh2 K=2,400: gap +0.004 [CI -0.030, +0.038]"/>
+<circle cx="807.9" cy="209.4" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTh2 K=5,000: gap -0.006 [CI -0.041, +0.029]"/>
+<circle cx="905.0" cy="221.4" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTh2 K=10,000: gap -0.018 [CI -0.051, +0.014]"/>
+<text x="518.0" y="119.5" font-size="10.5" font-weight="600" fill="#b45309" style="font-family:'JetBrains Mono',monospace">+0.078</text>
+</g>
+<g>
+<text x="51" y="327" font-size="12" font-weight="700" fill="#44403c" style="font-family:'Noto Sans KR',sans-serif">ETTm1</text>
+<text x="445" y="327" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">N*=1,200</text>
+<line x1="51" y1="548.7" x2="445" y2="548.7" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="552.2" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">-0.05</text>
+<line x1="51" y1="491.1" x2="445" y2="491.1" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="494.6" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0</text>
+<line x1="51" y1="433.5" x2="445" y2="433.5" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="437.0" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.05</text>
+<line x1="51" y1="375.9" x2="445" y2="375.9" stroke="#e7e5e4" stroke-width="1"/>
+<text x="45" y="379.4" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.10</text>
+<line x1="51" y1="491.1" x2="445" y2="491.1" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 3"/>
+<line x1="51.0" y1="558" x2="51.0" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="51.0" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">600</text>
+<line x1="128.9" y1="558" x2="128.9" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="128.9" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1k</text>
+<line x1="206.8" y1="558" x2="206.8" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="206.8" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">2k</text>
+<line x1="289.2" y1="558" x2="289.2" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="289.2" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">5k</text>
+<line x1="367.1" y1="558" x2="367.1" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="367.1" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">10k</text>
+<line x1="445.0" y1="558" x2="445.0" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="445.0" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">20k</text>
+<path d="M 51.0 373.6 L 128.9 447.0 L 206.8 438.0 L 289.2 443.9 L 367.1 459.4 L 445.0 469.1 L 445.0 535.0 L 367.1 518.4 L 289.2 507.7 L 206.8 506.0 L 128.9 508.2 L 51.0 461.3 Z" fill="#b45309" opacity="0.13"/>
+<path d="M 51.0 417.4 L 128.9 477.6 L 206.8 472.0 L 289.2 475.8 L 367.1 488.9 L 445.0 502.0" fill="none" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/>
+<line x1="128.9" y1="339" x2="128.9" y2="558" stroke="#15803d" stroke-width="1" stroke-dasharray="2 3" opacity="0.8"/>
+<circle cx="51.0" cy="417.4" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTm1 K=600: gap +0.064 [CI +0.026, +0.102]"/>
+<circle cx="128.9" cy="477.6" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTm1 K=1,200: gap +0.012 [CI -0.015, +0.038]"/>
+<circle cx="206.8" cy="472.0" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTm1 K=2,400: gap +0.017 [CI -0.013, +0.046]"/>
+<circle cx="289.2" cy="475.8" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTm1 K=5,000: gap +0.013 [CI -0.014, +0.041]"/>
+<circle cx="367.1" cy="488.9" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTm1 K=10,000: gap +0.002 [CI -0.024, +0.027]"/>
+<circle cx="445.0" cy="502.0" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTm1 K=20,000: gap -0.010 [CI -0.038, +0.019]"/>
+<text x="58.0" y="410.4" font-size="10.5" font-weight="600" fill="#b45309" style="font-family:'JetBrains Mono',monospace">+0.064</text>
+</g>
+<g>
+<text x="511" y="327" font-size="12" font-weight="700" fill="#44403c" style="font-family:'Noto Sans KR',sans-serif">ETTm2</text>
+<text x="905" y="327" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">N*=10,000</text>
+<line x1="511" y1="548.9" x2="905" y2="548.9" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="552.4" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0</text>
+<line x1="511" y1="509.6" x2="905" y2="509.6" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="513.1" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.10</text>
+<line x1="511" y1="470.3" x2="905" y2="470.3" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="473.8" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.20</text>
+<line x1="511" y1="431.0" x2="905" y2="431.0" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="434.5" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.30</text>
+<line x1="511" y1="391.7" x2="905" y2="391.7" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="395.2" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.40</text>
+<line x1="511" y1="352.3" x2="905" y2="352.3" stroke="#e7e5e4" stroke-width="1"/>
+<text x="505" y="355.8" font-size="9.5" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">+0.50</text>
+<line x1="511" y1="548.9" x2="905" y2="548.9" stroke="#57534e" stroke-width="1.2" stroke-dasharray="4 3"/>
+<line x1="511.0" y1="558" x2="511.0" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="511.0" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">600</text>
+<line x1="588.9" y1="558" x2="588.9" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="588.9" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1k</text>
+<line x1="666.8" y1="558" x2="666.8" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="666.8" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">2k</text>
+<line x1="749.2" y1="558" x2="749.2" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="749.2" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">5k</text>
+<line x1="827.1" y1="558" x2="827.1" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="827.1" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">10k</text>
+<line x1="905.0" y1="558" x2="905.0" y2="562" stroke="#a8a29e" stroke-width="1"/>
+<text x="905.0" y="573" font-size="9.5" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">20k</text>
+<path d="M 511.0 350.8 L 588.9 407.7 L 666.8 428.5 L 749.2 479.5 L 827.1 520.2 L 905.0 518.0 L 905.0 550.1 L 827.1 549.4 L 749.2 520.9 L 666.8 505.4 L 588.9 481.2 L 511.0 424.0 Z" fill="#b45309" opacity="0.13"/>
+<path d="M 511.0 387.4 L 588.9 444.4 L 666.8 467.0 L 749.2 500.2 L 827.1 534.8 L 905.0 534.1" fill="none" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/>
+<line x1="827.1" y1="339" x2="827.1" y2="558" stroke="#15803d" stroke-width="1" stroke-dasharray="2 3" opacity="0.8"/>
+<circle cx="511.0" cy="387.4" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTm2 K=600: gap +0.411 [CI +0.318, +0.504]"/>
+<circle cx="588.9" cy="444.4" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTm2 K=1,200: gap +0.266 [CI +0.172, +0.359]"/>
+<circle cx="666.8" cy="467.0" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTm2 K=2,400: gap +0.208 [CI +0.111, +0.306]"/>
+<circle cx="749.2" cy="500.2" r="4" fill="#b45309" stroke="#b45309" stroke-width="2" data-tip="ETTm2 K=5,000: gap +0.124 [CI +0.071, +0.177]"/>
+<circle cx="827.1" cy="534.8" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTm2 K=10,000: gap +0.036 [CI -0.001, +0.073]"/>
+<circle cx="905.0" cy="534.1" r="4" fill="#fff" stroke="#b45309" stroke-width="2" data-tip="ETTm2 K=20,000: gap +0.038 [CI -0.003, +0.079]"/>
+<text x="518.0" y="380.4" font-size="10.5" font-weight="600" fill="#b45309" style="font-family:'JetBrains Mono',monospace">+0.411</text>
+</g>
+</svg>
+<div class="figcap"><b>차트 A.</b> 정직한 gap(K) 곡선 — CV-선택 DLinear vs Chronos-t5 zero-shot, log-x, 95% CI 밴드
+(paired window-block bootstrap B=1000 + 시드 분산 결합). 채운 점 = CI가 0 배제, 초록 세로선 = N*.
+ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_honest_rerun.json</code>
+(protocol sha <code>e7ac3031…</code>, git <code>175389e9</code>, 5 seeds, 3-fold).</div>
+</div>
+
+<h3 class="sub">Gate 4a — 멀티-TSFM 확장 <span class="tag ok">STRONG (3/3)</span></h3>
+<p>정직 계측기로 3개 모델 대조: chronos-t5-small <strong>4/4</strong>, timesfm-2.5-200m <strong>3/4</strong>,
+chronos-bolt-small <strong>4/4</strong> — 12셀 중 11 재현. ETTm2 K600 gap은 <strong>0.411 / 0.400 / 0.409</strong>로
+3모델 사실상 동일 — "얇음이 chronos·ETTm2 한 셀에 기댄다"는 반론 사망. 유일한 예외는
+TimesFM/ETTh2(K600 +0.047 [−0.005,+0.098] 비유의). 단 chronos-t5와 bolt는 같은 계보라
+독립 계보는 2개 — 이 구분을 뭉개면 어떻게 되는지 7/12에 배운다.</p>
+
 <div class="flow">
 <div class="fstep">
-<div class="fhd"><span class="fn">h=48</span> "horizon 24 특유 아닌가?"</div>
-<div class="frow"><span class="fk find">결과</span><span>같은 설계를 horizon 48로 — 4/4 유의(+0.12/+0.19/+0.13/+0.37), 단조 수렴, parity 예산 유한. 특유 아님.</span></div>
-<div class="fnext">부수 수확: 판정 요약 코드의 int-vs-str 키 버그가 "0/4 실패"라는 거짓 결론을 낼 뻔했다 — 원본 숫자 재검이 잡았다.</div>
+<div class="fhd"><span class="fn">상향</span> ICLR 2027 본선 + TMLR fallback (사용자 결정, DESIGN v2.0)</div>
+<div class="frow"><span class="fk think">근거</span><span>적대검증 생존(이 폴더 최초) + Gate 4a STRONG + 비-ETT 초기 신호(gap 0.31~0.33, ETT보다 큼) + Xu 선례(튜닝 레버 하나로 ICLR 2025). 업그레이드 4축 사전등록: U1 같은 K에서 fine-tuned TSFM vs trained baseline, U2 대규모화, <strong>U3 N* 스케일링 법칙(승부수)</strong>, U4 셀렉터 regret.</span></div>
+<div class="fnext">상향 직후 의무 절차 — 선행 재스캔.</div>
+</div>
+<div class="fstep fail">
+<div class="fhd"><span class="fn">경보</span> concurrent work — 4일 전 공개된 arXiv 2607.04919 <span class="tag mixed">GO-MODIFIED</span></div>
+<div class="frow"><span class="fk find">발견</span><span>Tan Jerome &amp; Simon, "When Do Foundation Models Pay Off?" — <strong>7/6 v1 공개</strong>(우리 스캔 4일 전). 30개 데이터셋 break-even 측정. "N* 측정"은 더 이상 헤드라인이 될 수 없다. 첫 스캔의 "FT arm 없음"은 오독으로 판명 — LoRA r8 arm 존재(v2.2 정정, 원문 3회 교차 대조).</span></div>
+<div class="frow"><span class="fk think">생존 델타</span><span>① 그들 baseline은 고전 4종(신경망 0) vs 우리 CV-tuned DLinear, ② 그들 n*는 zero-shot 전용·CI 없는 점추정 vs 우리 예산일치 N*_FT(K)+CI, ③ 메타표본 n=30(per-dataset, "open problem" 자인) vs 우리 per-series 수백, ④ 셀렉터가 정적 규칙 vs 우리 regret 정량화.</span></div>
+<div class="fnext"><strong>순서 반전</strong>: U3 파일럿(gate5)을 ICLR 승격 전체의 킬게이트로 최우선 사전등록 — LODO Spearman ≥0.4, 자명 기준선(global median·const700) 대비 ≥15% 개선. 하나라도 미달이면 그 자리에서 철회하고 TMLR 복귀. 정직한 사전 확률도 기록: 파일럿 PASS 시 ICLR 생존 ~30%.</div>
+</div>
+</div>
+
+<h3 class="sub">업그레이드 4축의 설계와 운명</h3>
+<div class="tbl-wrap"><table class="ctl">
+<thead><tr><th>축</th><th>설계 (DESIGN v2.0, 7/10 사전등록)</th><th>운명</th></tr></thead>
+<tbody>
+<tr><td class="vn">U1 공정 대결</td><td class="pp">같은 예산 K에서 fine-tuned TSFM vs trained baseline — "데이터 예산 프런티어". 분기 명시: fine-tuned가 전 K 지배 시 스토리 전환("zero-shot이 아니라 fine-tune이 정답")도 논문.</td><td class="pp"><span class="tag ok">생존·완주</span> U3 사망 후에도 반론 차단 본체(gate6)로 살아남아 7/14 완주 — FT 무효과~악화 확정</td></tr>
+<tr><td class="vn">U2 대규모화</td><td class="pp">장기 계열 10+개 다도메인, horizon {24,48,96}.</td><td class="pp"><span class="tag fail">중단</span> U3 종속 — 7/11 NO-GO와 함께. 축소판(h=48 단일)만 gate7로 생존</td></tr>
+<tr><td class="vn">U3 N* 스케일링 법칙</td><td class="pp">N* ~ f(계열 통계량, TSFM zero-shot 강도), OOS 검증. <strong>탑티어 승부수</strong> — 실패 시 ICLR 포기 명시.</td><td class="pp"><span class="tag fail">NO-GO</span> 7/11 킬게이트 발동 — 89.2% censored, 3기준 전패</td></tr>
+<tr><td class="vn">U4 셀렉터</td><td class="pp">history&lt;N̂*면 TSFM 규칙의 regret 평가.</td><td class="pp"><span class="tag fail">소멸</span> censoring이 정답을 자명하게 만듦</td></tr>
+</tbody></table></div>
+</div></section>
+<hr>
+
+<section class="bl alt"><div class="container">
+<div class="lab">05 · 7/11 — 킬게이트 발동, 자진 철회</div>
+<h2>89%가 우측중도절단 — 법칙은 성립하지 않았다</h2>
+<p class="lead">값싼 파일럿을 먼저 돌린 것이 이 주의 가장 잘한 결정이었다. 160계열
+(4 도메인 × 최대 40계열)에서 per-series parity 예산 N*를 재고, 계열 통계량 9종으로
+예측 법칙을 적합하려 했다.</p>
+
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>죽은 것들 <span class="cnt">전부 사전등록 기준으로</span></div>
+<div class="ev lose"><span class="ev-t">gate5 — U3 N* 예측 법칙<span class="sub">157 유효 레코드(제외 3: test_windows&lt;32 ×2, feasible K&lt;3 ×1) 중 <strong>140개(89.2%)가 right-censored</strong> — K=10,000을 줘도 parity 미도달. usable 17계열(10.8%)은 electricity·kdd 2개 도메인뿐 → LODO(3+ 도메인 필요) 불가, 부분 spearman −0.48. 3기준 전패: (a) LODO≥0.4 불가 (b) global median 대비 −2.7% (c) const700 대비 −227.6%.</span></span><span class="ev-n">NO-GO</span></div>
+<div class="ev lose"><span class="ev-t">U4 — 실무 셀렉터<span class="sub">89%가 censored면 정답이 거의 항상 "TSFM 써라" — 자명해져 소멸. U2 대규모화도 U3 종속으로 중단.</span></span><span class="ev-n">연쇄 소멸</span></div>
+<div class="ev lose"><span class="ev-t">censoring 분류기<span class="sub">"parity가 예산 내에 오는가"의 도메인 간 예측 — LODO AUC <strong>0.182</strong>(랜덤 미만). 도메인별 parity 도달률(elec 5%/kdd 38%/ped 0%/traffic 0%)이 보여주듯 도메인 속성이지 계열 특징으로 전이되지 않는다. 정직한 negative로 논문행.</span></span><span class="ev-n">AUC 0.182</span></div>
+<div class="ev lose"><span class="ev-t">Gate 4b — 비-ETT 도메인<span class="sub">electricity·traffic × 3모델: 소예산 gap은 6/6셀 유의하게 재현(K600 +0.309~+0.635)되고 단조지만, K=10,000까지 parity가 안 와 N* 전부 censored — 사전등록 규칙(N* 재현 요구)상 <strong>FAIL as scored</strong>. 이 censoring이 나중에 논문의 정직한 scope가 된다.</span></span><span class="ev-n">FAIL (as scored)</span></div>
+</div>
+<div class="figwrap">
+<svg viewBox="0 0 920 330" role="img" aria-label="gate5 U3 파일럿 — 도메인별 right-censoring 분포" style="width:100%;height:auto;">
+<text x="180" y="51" font-size="11" font-weight="600" fill="#57534e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">electricity_hourly</text>
+<rect x="190" y="34" width="28.0" height="26" rx="4" fill="#15803d" data-tip="electricity_hourly: uncensored 2 (K≤10,000 내 parity 도달)"/>
+<text x="204.0" y="51" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">2</text>
+<rect x="220.0" y="34" width="532.0" height="26" rx="4" fill="#b91c1c" opacity="0.82" data-tip="electricity_hourly: right-censored 38 (K=10,000에도 parity 미도달)"/>
+<text x="486.0" y="51" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">38</text>
+<text x="760.0" y="51" font-size="10" fill="#a8a29e" style="font-family:'JetBrains Mono',monospace">2/40 usable</text>
+<text x="180" y="95" font-size="11" font-weight="600" fill="#57534e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">kdd_cup_2018</text>
+<rect x="190" y="78" width="210.0" height="26" rx="4" fill="#15803d" data-tip="kdd_cup_2018: uncensored 15 (K≤10,000 내 parity 도달)"/>
+<text x="295.0" y="95" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">15</text>
+<rect x="402.0" y="78" width="350.0" height="26" rx="4" fill="#b91c1c" opacity="0.82" data-tip="kdd_cup_2018: right-censored 25 (K=10,000에도 parity 미도달)"/>
+<text x="577.0" y="95" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">25</text>
+<text x="760.0" y="95" font-size="10" fill="#a8a29e" style="font-family:'JetBrains Mono',monospace">15/40 usable</text>
+<text x="180" y="139" font-size="11" font-weight="600" fill="#57534e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">pedestrian_counts</text>
+<rect x="190.0" y="122" width="518.0" height="26" rx="4" fill="#b91c1c" opacity="0.82" data-tip="pedestrian_counts: right-censored 37 (K=10,000에도 parity 미도달)"/>
+<text x="449.0" y="139" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">37</text>
+<text x="716.0" y="139" font-size="10" fill="#a8a29e" style="font-family:'JetBrains Mono',monospace">0/37 usable</text>
+<text x="180" y="183" font-size="11" font-weight="600" fill="#57534e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">traffic</text>
+<rect x="190.0" y="166" width="560.0" height="26" rx="4" fill="#b91c1c" opacity="0.82" data-tip="traffic: right-censored 40 (K=10,000에도 parity 미도달)"/>
+<text x="470.0" y="183" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">40</text>
+<text x="758.0" y="183" font-size="10" fill="#a8a29e" style="font-family:'JetBrains Mono',monospace">0/40 usable</text>
+<line x1="20" y1="208" x2="870" y2="208" stroke="#e7e5e4"/>
+<text x="180" y="237" font-size="11" font-weight="700" fill="#44403c" text-anchor="end" style="font-family:'Noto Sans KR',sans-serif">합계 (157계열)</text>
+<rect x="190" y="220" width="60.6" height="26" rx="4" fill="#15803d" data-tip="uncensored 합계 17/157 = 10.8%"/>
+<text x="220.3" y="237" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">17</text>
+<rect x="252.6" y="220" width="499.4" height="26" rx="4" fill="#b91c1c" opacity="0.82" data-tip="right-censored 합계 140/157 = 89.2%"/>
+<text x="502.3" y="237" font-size="10" font-weight="700" fill="#fff" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">140</text>
+<text x="760.0" y="237" font-size="10" font-weight="700" fill="#b91c1c" style="font-family:'JetBrains Mono',monospace">89.2% censored</text>
+<rect x="190" y="8" width="10" height="10" rx="2" fill="#15803d"/>
+<text x="204" y="17" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">uncensored — K≤10,000 내 parity 도달 (N* 회귀 가능)</text>
+<rect x="500" y="8" width="10" height="10" rx="2" fill="#b91c1c" opacity="0.82"/>
+<text x="514" y="17" font-size="10" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">right-censored — N* &gt; 10,000</text>
+</svg>
+<div class="figcap"><b>차트 C.</b> gate5 파일럿의 도메인별 censoring 분포 — usable(초록)은 2개 도메인에 17계열뿐.
+좌측절단(left-censored, 최소 K에서 이미 parity) 4계열은 uncensored에 포함.
+근거: <code>results/gate5_u3pilot.json</code> (protocol sha <code>bda7ec37…</code>) verdict_final.</div>
+</div>
+<div class="tbl-wrap"><table class="ctl">
+<thead><tr><th>사전등록 킬 기준 (7/10 잠금)</th><th>임계값</th><th>실측 (7/11)</th><th>판정</th></tr></thead>
+<tbody>
+<tr><td class="pp">(a) LODO(leave-one-domain-out) Spearman — 법칙이 도메인을 건너 예측하는가</td><td class="ne">≥ 0.4</td><td class="ne">측정 불가 (uncensored 도메인 2개 &lt; 3) · 부분 spearman −0.4837</td><td class="ne"><span class="tag fail">FAIL</span></td></tr>
+<tr><td class="pp">(b) global median 예측 대비 MAE 개선 — 자명한 기준선을 이기는가</td><td class="ne">≥ +15%</td><td class="ne">−2.7%</td><td class="ne"><span class="tag fail">FAIL</span></td></tr>
+<tr><td class="pp">(c) 상수 N*=700 예측 대비 MAE 개선</td><td class="ne">≥ +15%</td><td class="ne">−227.6%</td><td class="ne"><span class="tag fail">FAIL</span></td></tr>
+</tbody></table></div>
+<p>부산물 하나는 방어 무기가 됐다 — <strong>오염 층화</strong>. gate5의 4개 도메인 중 3개
+(electricity·kdd·pedestrian)는 Chronos 학습 코퍼스의 Benchmark I(in-domain·암기 가능)이고
+traffic만 Benchmark II(명목 zero-shot, 유일 clean-ish fold)인데, in-domain인 pedestrian(37/37)과
+clean인 traffic(40/40)이 <em>똑같이 전 계열 censored</em>다 — 메모리제이션이 censoring 경계를
+설명한다는 공격의 선제 차단. 이 층화 판정 규칙은 gate5 실행 <em>도중</em>, 결과 수치를
+<code>sed</code>로 마스킹한 채(미열람 상태) 별도 선언문으로 동결해 뒀다 — post-hoc 합리화 차단.</p>
+<div class="callout">
+<p><strong>사전등록대로 스스로 판정했다: ICLR 승격 철회, TMLR 복귀</strong> (commit 71d942c).
+이 폴더에서 감사·측정 계열 연구가 "강한 신호 → artifact/deflation"으로 끝난 것이 4연속이다.
+다만 이번에는 리뷰어가 아니라 우리가 먼저 판정했고, 실패한 법칙은 지워지지 않고 논문의
+scope 문장이 됐다: "어느 계열이 어느 레짐인지는 예측되지 않는다."</p>
+<p>같은 날 U1 fine-tuning 레시피(chronos_finetune.py)는 CPU 통합 스모크 3종으로 검증만 해두고
+보존 — U3가 죽어도 "fine-tune하면 되지 않나" 반론 차단용 본체 실험(gate6)으로 살아남는다.</p>
+</div>
+</div></section>
+<hr>
+
+<section class="bl"><div class="container">
+<div class="lab">06 · 7/12 — 원고 게이트체인: REJECT</div>
+<h2>빠른 초안의 과장 12건이 전부 적발됐다</h2>
+<p class="lead">병렬 세션이 논문 v1을 썼고, fresh 무맥락 게이트체인(action-editor + cold-reader)이
+<strong>REJECT / MAJOR-REVISION</strong>을 냈다. 전부 증거 JSON과의 직접 대조로 확정된
+load-bearing 결함들 — 아래 표는 판정문(GATE_VERDICT.md)의 원문 그대로다.</p>
+<div class="tbl-wrap"><table class="led">
+<thead><tr><th>#</th><th>결함</th><th>초안 주장</th><th>실측 (증거파일 대조)</th><th>수정</th></tr></thead>
+<tbody>
+<tr class="r-fail"><td class="tk">B1</td><td>단조성 거짓</td><td>"closes monotonically", "past N* the advantage disappears"</td><td>ETTh1 gap 0.097→0.043→0.025(N*=2400)→<strong>0.082(K5000 재유의)</strong>→0.003 — 비단조·N* 이후 재유의</td><td>"monotone" 삭제, 비단조 곡선 전체 보고, N*=비기각(등가 아님)</td></tr>
+<tr class="r-fail"><td class="tk">B6</td><td>"3–6배" 미근거</td><td>"inflates 3-6× across"</td><td>val-vs-cv 실측: ETTh1 2.57×, 나머지 3계열 정확히 1.00×</td><td>기여 강등: ETTh1 한정 2.6×, 나머지 무영향</td></tr>
+<tr class="r-fail"><td class="tk">B2</td><td>parity=등가 오역</td><td>"reaches parity", "matches", "disappears"</td><td>N* = gap CI가 0 처음 포함 = 영가설 비기각(잔여 gap ~0.03). K5000 재유의가 등가 아님을 실증</td><td>"no longer statistically significant"로 정밀화</td></tr>
+<tr class="r-fail"><td class="tk">B4</td><td>초록 magnitude 오귀속</td><td>off-ETT "+0.31~+0.64 past 10,000 points"</td><td>+0.31~0.64는 K=600 값. K=10,000선 elec +0.10~0.13·traffic +0.09~0.14(3~5배 작음)</td><td>초록 분리: 소예산 vs past-10k 실값</td></tr>
+<tr class="r-fail"><td class="tk">B6′</td><td>N* 패밀리 불안정</td><td>"N* 1,200–10,000 across four series for three families"</td><td>Table 1 N* = chronos-t5 단일. TimesFM ETTm1 N*=20,000(범위 밖)</td><td>Table 1 N*를 chronos-t5 한정 명시</td></tr>
+<tr class="r-fail"><td class="tk">B7</td><td>"three families" 독립성 과장</td><td>3 families</td><td>chronos-t5+bolt = 동일 계보. 독립 계보 = TimesFM 1개(3/4 재현). Moirai 미평가</td><td>"three models spanning two lineages"</td></tr>
+<tr class="r-fail"><td class="tk">R4</td><td>NLinear 은폐</td><td>"DLinear/NLinear family"</td><td>NLinear PASS=False: ETTh1 0.025 [−0.010,0.060]·ETTm1 0.027 [−0.005,0.058] 비유의</td><td>DLinear를 THE baseline로, NLinear는 부록 2차검증</td></tr>
+<tr class="r-fail"><td class="tk">R5</td><td>그리드 축소보고</td><td>lookback {48,96,336}, 3 seeds</td><td>실제 {48,96,336,512,720}, 5 seeds(512/720이 143회 선택)</td><td>정정</td></tr>
+<tr class="r-fail"><td class="tk">B5</td><td>부록 부재</td><td>"the appendix" 5회 참조</td><td>main.tex \appendix 0개, PDF 7p</td><td>부록 신설(biased/corrected·grid·seed·censoring·NLinear)</td></tr>
+<tr class="r-fail"><td class="tk">B3</td><td>오염 혼입 은폐</td><td>"Contamination does not explain the boundary"</td><td>노트 §4가 elec(Benchmark-I)에 in-domain 상한 주석을 의무화했는데 본문이 부록으로 밀어냄. clean 경계는 traffic 1개</td><td>오염 주석 본문 이동, "under a linear baseline" 한정</td></tr>
+<tr class="r-fail"><td class="tk">B8</td><td>상관 최대집계 선택보고</td><td>ρ=−0.85 p=0.003</td><td>계열단위 pooled ρ=−0.52, ETT-제외 p=0.016(n=6), ETT 4/10 비독립</td><td>범위 병기, 보강 프레임</td></tr>
+<tr class="r-fail"><td class="tk">B9</td><td>깨진 참조 + 유령저자</td><td>Table~\ref{tab:concurrent}(표 부재), bib author={others}</td><td>PDF에 "Table ??", "others. ..." 렌더</td><td>표 추가 + bib 저자 arXiv 실검증 정정</td></tr>
+<tr class="r-fail"><td class="tk">R10</td><td>null 저검정력 단정</td><td>"not predictable" 단정</td><td>LODO 2도메인·17점 — 저검정력</td><td>"underpowered rather than decisive", "cannot fit or test off-ETT"</td></tr>
+</tbody></table></div>
+<p class="note">표는 13행이지만 판정문 집계로는 과장 12건 — B6·B6′는 같은 인플레 주장의 두 표현으로 묶인다.</p>
+<details class="raw"><summary>▶ v2 조치 대조표 — BLOCKER별 렌더 확인 (판정문 원문)</summary>
+<div class="tbl-wrap"><table class="ctl">
+<thead><tr><th>BLOCKER</th><th>v2 조치 (렌더 확인)</th></tr></thead>
+<tbody>
+<tr><td class="vn">B1 단조성</td><td class="pp">"monotonically" 전삭 → "The trend is not monotone: ETTh1 0.097→…→0.082(K5000 재유의)→0.003" 명시 + Appendix C 전체 곡선</td></tr>
+<tr><td class="vn">B6 3-6배</td><td class="pp">기여 강등 → "ETTh1 2.6×, 나머지 3계열 1.00×" + Appendix B biased/corrected 표</td></tr>
+<tr><td class="vn">B2 parity=등가</td><td class="pp">"failure-to-reject, not equivalence" · "first-insignificant budget"로 전면 재서술</td></tr>
+<tr><td class="vn">B4 초록 magnitude</td><td class="pp">"past 10,000 points … shrinks there to +0.09 to +0.14 MASE"로 정정</td></tr>
+<tr><td class="vn">B6′/B7 패밀리</td><td class="pp">"three models spanning two pretraining lineages", Table 1 N*=chronos-t5 명시, Appendix D 패밀리별</td></tr>
+<tr><td class="vn">R4 NLinear</td><td class="pp">DLinear를 THE baseline로, "four-series result is specific to DLinear" + Appendix E NLinear 2차</td></tr>
+<tr><td class="vn">R5 grid</td><td class="pp">{48,96,336,512,720}, 5 seeds로 정정 + Appendix A</td></tr>
+<tr><td class="vn">B5 부록</td><td class="pp">Appendix A~G 신설 (grid/selection/curves/family/nlinear/censoring/repro)</td></tr>
+<tr><td class="vn">B3 오염</td><td class="pp">"memorization ceiling" 캐비엇 본문 이동, "under a linear baseline" 8곳, traffic 유일 clean 명시</td></tr>
+<tr><td class="vn">B8 상관</td><td class="pp">ρ 범위 병기 (−0.52 계열단위 / −0.85 단위 / −0.89 ETT제외 p=0.016)</td></tr>
+<tr><td class="vn">B9 참조/저자</td><td class="pp">tab:concurrent 표 신설, bib 저자 arXiv 실검증 (Xu 등 7·Tan Jerome&amp;Simon·Meyer 등 4·Soni 등 3)</td></tr>
+<tr><td class="vn">R10 null</td><td class="pp">"underpowered rather than decisive", "2 usable domains", "cannot fit or test"</td></tr>
+</tbody></table></div></details>
+<p>수정 전략은 "좁혀서 정직하게": 긍정 주장 2개(ETT 예산 아티팩트의 방향성 + 유한 N* 존재)를
+주기여로, off-ETT 비일반화·예측 null은 co-equal 기여가 아닌 <strong>scope-limiting</strong>으로.
+같은 날 v2 재작성 완료 — 8pp, Appendix A~G 신설, 빌드 exit 0·미해결 참조 0·유령저자 0.
+유지할 강점도 판정문에 명시됐다: "전 헤드라인 수치가 증거 JSON과 일치 — 이 강점 훼손 금지."</p>
+</div></section>
+<hr>
+
+<section class="bl alt"><div class="container">
+<div class="lab">07 · 7/13 — 원문 검증과 키버그, OOM</div>
+<h2>리뷰어 gotcha 하나, 거짓 결론 하나, 경합 하나</h2>
+
+<div class="flow">
+<div class="fstep">
+<div class="fhd"><span class="fn">Xu 검증</span> 가장 가까운 선행의 원문 전수 대조</div>
+<div class="frow"><span class="fk try">확인</span><span>arXiv 2411.02796 v1·v2 원문 정독. 제목 확정: <strong>"Specialized Foundation Models Struggle to Beat Supervised Baselines"</strong>(추정과 정확히 일치). 그들의 레버 = HP 튜닝 + Auto-AR lookback(≤512) + KPSS differencing — 주 실험에서 데이터량은 full 고정. DLinear도 쓰지만 Auto-AR에 밀리는 열등 baseline(RMSE 0.567 vs 0.551).</span></div>
+<div class="frow"><span class="fk find">위험 발견</span><span><strong>§5.2 + Fig.3에 100%→20% 데이터량 ablation이 실존</strong>한다 — 시계열 포함 3 modality, 게이트 판정문의 "합리적 추정"이 놓친 지점. "their lever is tuning"만 쓰면 §5.2를 아는 리뷰어에게 <strong>은폐로 읽힌다</strong>.</span></div>
+<div class="frow"><span class="fk think">판정</span><span>델타는 5축에서 생존: 2점(100/20%) vs 연속 K-스윕 · parity N* 부재 vs 측정 · 양쪽 동시 축소 vs TSFM 고정 단독 개입 · 튜닝×데이터량 미분해 vs Gate 2 교차분해 · 방향 반대(그들: baseline은 굶겨도 경쟁력 / 우리: 굶긴 baseline이 우위를 부풀림).</span></div>
+<div class="fnext">related work에 §5.2 명시 인용 + 델타 4항 재서술 패치(commit 9c45720) — 숨길 수 있던 것을 먼저 공개하는 쪽으로.</div>
+</div>
+<div class="fstep" style="border-left:3px solid var(--bdl);">
+<div class="fhd"><span class="fn">대조표</span> Xu §5.2 vs 우리 개입 — 5축 (원문 대조 후 판정, 전부 생존)</div>
+<div class="tbl-wrap" style="margin:.4rem 0 0;"><table class="ctl">
+<thead><tr><th>축</th><th>Xu §5.2 (verbatim 근거)</th><th>우리</th></tr></thead>
+<tbody>
+<tr><td class="vn">해상도</td><td class="pp">100% vs 20% — 두 점짜리 robustness check ("only 20% of the data is provided")</td><td class="pp">K ∈ {600…20,000} 연속 스윕 → gap(K) 곡선·기울기·임계점</td></tr>
+<tr><td class="vn">parity 예산</td><td class="pp">N* 정의도 측정도 없음</td><td class="pp">N* = gap CI가 0에 처음 닿는 예산 — 유일 정량 신규성</td></tr>
+<tr><td class="vn">개입 방향</td><td class="pp">FM fine-tuning 데이터도 같이 20%로 축소 ("20% as much fine-tuning data")</td><td class="pp">TSFM zero-shot 고정, baseline K만 단독 개입 — 순수 기아 분리</td></tr>
+<tr><td class="vn">분해</td><td class="pp">튜닝(Auto-AR)과 데이터량(§5.2)을 각각 따로 — 교차분해 없음</td><td class="pp">그들 튜닝 스펙을 floor로 고정한 채 K 효과 잔존 확인 (Gate 2)</td></tr>
+<tr><td class="vn">방향/주장</td><td class="pp">"baseline은 20%로 굶겨도 경쟁력" — FM의 low-data 이점 반박</td><td class="pp">"굶긴 baseline이 TSFM 우위를 부풀린다" — 기아를 인플레 기제로</td></tr>
+</tbody></table></div>
 </div>
 <div class="fstep">
-<div class="fhd"><span class="fn">fine-tune</span> "TSFM을 fine-tune하면 되지 않나?"</div>
-<div class="frow"><span class="fk find">결과</span><span>같은 예산으로 full fine-tuning — K≥1,200에선 early stopping이 <strong>42/42 셀에서 미학습 모델을 반환</strong>(검증에서 zero-shot을 못 이김), K=600에선 학습되지만 test가 오히려 악화. 적응은 이 예산대에서 비교를 바꾸지 못한다.</span></div>
-<div class="fnext">concurrent work의 "짧은 시계열에서 LoRA 악화" 관찰을 full FT로 재현한 셈 — 반론이 논거를 잃었다.</div>
+<div class="fhd"><span class="fn">gate7</span> "horizon 24 특유 아닌가?" — h=48 재실행 <span class="tag ok">HOLDS</span></div>
+<div class="frow"><span class="fk try">방법</span><span>같은 설계를 horizon 48로(h=96 대신 — Chronos pred_len≤64 설계 범위 준수). 5 seeds, wall 5,551초.</span></div>
+<div class="frow"><span class="fk find">결과</span><span>K600 gap <strong>+0.125 [+0.058,+0.192] / +0.189 [+0.121,+0.257] / +0.133 [+0.071,+0.194] / +0.367 [+0.245,+0.490]</strong> — 4/4 유의, 단조 4/4, N* 1200/2400/5000/2400 유한. horizon 특유 아님.</span></div>
+<div class="frow"><span class="fk find">부수 적발</span><span>판정 요약 코드의 <strong>int-vs-str 키 버그</strong>가 by_K를 못 읽고 로그에 "smallK_sig <strong>0/4</strong>"라는 거짓 결론을 실제로 찍었다(gate7 run 로그에 그대로 남아 있다). 원본 by_K 숫자 재검이 차단 — 수정된 verdict JSON에 "CORRECTED: prior verdict had int-vs-str key bug. Raw by_K data valid." 주석으로 박제.</span></div>
+<div class="fnext">검증 루프가 없었으면 "h=48에서 재현 실패"라는 거짓 negative가 논문 방향을 바꿨을 것이다.</div>
+</div>
+<div class="fstep fail">
+<div class="fhd"><span class="fn">U1 발사 실패</span> CUDA OOM — GPU 경합 <span class="tag fail">OOM</span></div>
+<div class="frow"><span class="fk find">원인</span><span>같은 GPU에서 타 프로젝트(Grokking 150k long-run)가 1.20GiB 점유 — U1 로그: "Tried to allocate 642.00 MiB … only <strong>160.56 MiB is free</strong>". 단순 폴링 발사기가 잔여 캐시를 여유로 오판.</span></div>
+<div class="fnext">지속-여유 감시 + 실패 시 재시도하는 견고 재발사기로 교체(PID 4112995) — Grokking sweep 종료를 기다려 자동 발사 큐 대기.</div>
 </div>
 </div>
 </div></section>
 <hr>
 
 <section class="bl"><div class="container">
-<div class="lab">07 · 마지막 방어선 — 공개 전 감사가 잡은 것들</div>
+<div class="lab">08 · 7/14 — 완주, 재게이트, 그리고 선적 직전의 적발들</div>
 <h2>사람 눈은 이 중 하나도 잡지 못했다</h2>
-<p class="lead">원고와 업로드 패키지는 "작성자가 자기 산출물을 승인하지 않는다"는 원칙으로
-매 단계 무맥락 fresh 감사를 거쳤다. 각 감사가 실제로 잡아낸 것들:</p>
-<div class="tier lose"><div class="tier-h"><span class="dot"></span>원고 층 <span class="cnt">게이트 체인 → 증거파일 대조</span></div>
-<div class="ev lose"><span class="ev-t">초안 v1의 과장 12건 → REJECT<span class="sub">"단조 수렴" 주장(실제론 재확대 있음), "3–6배 인플레"(실제론 한 계열만 2.6배, 나머지는 정확히 1.00배), "3개 모델 패밀리"(실제론 2개 계보) 등 — 전부 증거 JSON 대조로 적발, v2에서 좁혀서 정직하게 재작성.</span></span><span class="ev-n">12건</span></div>
+<p class="lead">재발사기가 Grokking 종료 직후 U1을 자동 발사했고, OOM 없이 12,040초에 완주했다.
+그리고 원고와 업로드 패키지는 "작성자가 자기 산출물을 승인하지 않는다"는 원칙으로
+마지막까지 무맥락 fresh 감사를 돌았다 — 업로드 직전에도 적발은 계속 나왔다.</p>
+
+<h3 class="sub">U1 (gate6) — fine-tuning 프런티어: "fine-tune하면 되지 않나" 반론 종결</h3>
+<p>같은 K 세그먼트로 Chronos-t5를 full fine-tuning(3 seeds, held-out val tail로 early stopping)한
+3자 대결. <strong>K≥1,200에선 early stopping이 54/54 셀(데이터셋×K×seed) 전부 epoch-0
+— 미학습 pretrained 모델 그대로 —를 반환</strong>했다(어떤 체크포인트도 val에서 zero-shot을
+못 이김). K=600에선 학습은 되지만(3 epochs) test가 오히려 악화 — ft−zs =
+<strong>−0.034 / −0.039 / −0.061 / −0.022</strong> 4/4 음수. N*_FT(2400/1200/600/10000) ≈
+N*_ZS(2400/1200/1200/10000). concurrent(2607)의 "짧은 계열에서 LoRA 악화"를 full FT로 재현한 셈.</p>
+<div class="figwrap">
+<svg viewBox="0 0 920 430" role="img" aria-label="U1 3자 대결 ETTm2 — from-scratch baseline vs zero-shot vs fine-tuned Chronos" style="width:100%;height:auto;">
+<line x1="56" y1="377.9" x2="900" y2="377.9" stroke="#e7e5e4"/>
+<text x="48" y="381.4" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.25</text>
+<line x1="56" y1="297.0" x2="900" y2="297.0" stroke="#e7e5e4"/>
+<text x="48" y="300.5" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.35</text>
+<line x1="56" y1="216.0" x2="900" y2="216.0" stroke="#e7e5e4"/>
+<text x="48" y="219.5" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.45</text>
+<line x1="56" y1="135.0" x2="900" y2="135.0" stroke="#e7e5e4"/>
+<text x="48" y="138.5" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.55</text>
+<line x1="56" y1="54.1" x2="900" y2="54.1" stroke="#e7e5e4"/>
+<text x="48" y="57.6" font-size="10" fill="#a8a29e" text-anchor="end" style="font-family:'JetBrains Mono',monospace">0.65</text>
+<line x1="56.0" y1="386" x2="56.0" y2="390" stroke="#a8a29e"/>
+<text x="56.0" y="403" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">600</text>
+<line x1="222.8" y1="386" x2="222.8" y2="390" stroke="#a8a29e"/>
+<text x="222.8" y="403" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">1k</text>
+<line x1="389.7" y1="386" x2="389.7" y2="390" stroke="#a8a29e"/>
+<text x="389.7" y="403" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">2k</text>
+<line x1="566.3" y1="386" x2="566.3" y2="390" stroke="#a8a29e"/>
+<text x="566.3" y="403" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">5k</text>
+<line x1="733.2" y1="386" x2="733.2" y2="390" stroke="#a8a29e"/>
+<text x="733.2" y="403" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">10k</text>
+<line x1="900.0" y1="386" x2="900.0" y2="390" stroke="#a8a29e"/>
+<text x="900.0" y="403" font-size="10" fill="#a8a29e" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">20k</text>
+<text x="478.0" y="424" font-size="10.5" fill="#57534e" text-anchor="middle" style="font-family:'Noto Sans KR',sans-serif">학습 예산 K (log 축) — ETTm2, test MASE (256 windows)</text>
+<rect x="222.8" y="46" width="677.2" height="340" fill="#b91c1c" opacity="0.045"/>
+<text x="561.4" y="60" font-size="10" fill="#b91c1c" text-anchor="middle" style="font-family:'JetBrains Mono',monospace">K≥1,200: fine-tune early-stop이 epoch-0(=미학습 zero-shot 모델) 반환 — 54/54 셀</text>
+<line x1="56" y1="361.5" x2="900" y2="361.5" stroke="#15803d" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="900" y="376.5" font-size="10" font-weight="600" fill="#15803d" text-anchor="end" style="font-family:'JetBrains Mono',monospace">zero-shot 0.270</text>
+<path d="M 56.0 99.8 L 222.8 217.3 L 389.7 256.3 L 566.3 261.4 L 733.2 331.4 L 900.0 326.5" fill="none" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="56.0" cy="99.8" r="4.5" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="from-scratch DLinear K=600: MASE 0.593"/>
+<circle cx="222.8" cy="217.3" r="4.5" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="from-scratch DLinear K=1,200: MASE 0.448"/>
+<circle cx="389.7" cy="256.3" r="4.5" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="from-scratch DLinear K=2,400: MASE 0.400"/>
+<circle cx="566.3" cy="261.4" r="4.5" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="from-scratch DLinear K=5,000: MASE 0.394"/>
+<circle cx="733.2" cy="331.4" r="4.5" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="from-scratch DLinear K=10,000: MASE 0.307"/>
+<circle cx="900.0" cy="326.5" r="4.5" fill="#b45309" stroke="#fff" stroke-width="2" data-tip="from-scratch DLinear K=20,000: MASE 0.314"/>
+<path d="M 56.0 343.7 L 222.8 345.6 L 389.7 345.6 L 566.3 345.6 L 733.2 345.6 L 900.0 345.6" fill="none" stroke="#b91c1c" stroke-width="2" stroke-dasharray="1 0" stroke-linejoin="round"/>
+<rect x="52.0" y="339.7" width="8" height="8" rx="1.5" fill="#b91c1c" stroke="#fff" stroke-width="1.5" data-tip="fine-tuned Chronos K=600: MASE 0.292 (best epoch 3 — 실학습)"/>
+<rect x="218.8" y="341.6" width="8" height="8" rx="1.5" fill="#b91c1c" stroke="#fff" stroke-width="1.5" data-tip="fine-tuned Chronos K=1,200: MASE 0.290 (best epoch 0 — epoch-0 폴백)"/>
+<rect x="385.7" y="341.6" width="8" height="8" rx="1.5" fill="#b91c1c" stroke="#fff" stroke-width="1.5" data-tip="fine-tuned Chronos K=2,400: MASE 0.290 (best epoch 0 — epoch-0 폴백)"/>
+<rect x="562.3" y="341.6" width="8" height="8" rx="1.5" fill="#b91c1c" stroke="#fff" stroke-width="1.5" data-tip="fine-tuned Chronos K=5,000: MASE 0.290 (best epoch 0 — epoch-0 폴백)"/>
+<rect x="729.2" y="341.6" width="8" height="8" rx="1.5" fill="#b91c1c" stroke="#fff" stroke-width="1.5" data-tip="fine-tuned Chronos K=10,000: MASE 0.290 (best epoch 0 — epoch-0 폴백)"/>
+<rect x="896.0" y="341.6" width="8" height="8" rx="1.5" fill="#b91c1c" stroke="#fff" stroke-width="1.5" data-tip="fine-tuned Chronos K=20,000: MASE 0.290 (best epoch 0 — epoch-0 폴백)"/>
+<text x="82.0" y="306.7" font-size="10" fill="#b91c1c" style="font-family:'JetBrains Mono',monospace">K=600: 학습은 되지만(ep3) test 악화 (ft−zs = −0.022)</text>
+<text x="64.0" y="91.8" font-size="10.5" font-weight="600" fill="#b45309" style="font-family:'JetBrains Mono',monospace">0.593</text>
+<line x1="60" y1="102" x2="82" y2="102" stroke="#b45309" stroke-width="2"/>
+<circle cx="71" cy="102" r="3.5" fill="#b45309"/>
+<text x="88" y="106" font-size="10.5" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">from-scratch DLinear(K)</text>
+<line x1="60" y1="122" x2="82" y2="122" stroke="#15803d" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="88" y="126" font-size="10.5" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">Chronos zero-shot (K 무관)</text>
+<line x1="60" y1="142" x2="82" y2="142" stroke="#b91c1c" stroke-width="2"/>
+<rect x="68" y="138.5" width="7" height="7" rx="1.5" fill="#b91c1c"/>
+<text x="88" y="146" font-size="10.5" fill="#57534e" style="font-family:'Noto Sans KR',sans-serif">full fine-tuned Chronos(K) · 3 seeds</text>
+</svg>
+<div class="figcap"><b>차트 E.</b> U1 3자 대결(ETTm2, test MASE) — from-scratch DLinear(K)는 수렴해 가고,
+fine-tuned Chronos는 K≥1,200에서 epoch-0 폴백으로 zero-shot과 같은 모델이다(둥근 사각형 마커;
+zero-shot 점선과의 미세한 차이는 fp32/fp16 평가 정밀도 artifact로 판정문에 명시).
+근거: <code>results/gate6_u1_frontier.json</code> (protocol sha <code>886106b3…</code>, wall 12,040s).</div>
 </div>
-<div class="tier lose"><div class="tier-h"><span class="dot"></span>서지 층 <span class="cnt">arXiv 원문 전수 대조</span></div>
-<div class="ev lose"><span class="ev-t">존재하지 않는 논문 2건 인용<span class="sub">bib의 두 항목이 환각된 제목이었고, 그중 하나는 실제로는 반대 논지(친-Chronos) 논문을 회의적 재평가로 인용하고 있었다. 실존 논문으로 교체하고 인용 문장을 각 논문의 실제 주장에 맞게 재작성.</span></span><span class="ev-n">환각 2건</span></div>
-<div class="ev lose"><span class="ev-t">조작된 직접 인용 1건<span class="sub">"was not strictly enforced" — Chronos 논문 전 버전을 grep해도 존재하지 않는 문구. 우리 내부 노트의 해석이 따옴표째 원고로 전파된 것. 실제 원문 단어로 교체, 진원지 문서까지 교정.</span></span><span class="ev-n">업로드 직전 적발</span></div>
+
+<h3 class="sub">재게이트 3종 — fresh 무맥락, 앵커 없이 원고 경로만</h3>
+<div class="tier win"><div class="tier-h"><span class="dot"></span>v2(+Xu 패치) 판정</div>
+<div class="ev win"><span class="ev-t">tmlr-desk-editor<span class="sub">하드 데스크킬 트리거 전부 통과. 권고: 메타코멘터리 전삭, 초록 압축, 처방 승격.</span></span><span class="ev-n">DESK-PASS</span></div>
+<div class="ev win"><span class="ev-t">tmlr-criteria-auditor<span class="sub">기준1(주장↔증거)·기준2(독자 관심) 모두 Y, <strong>과대주장 0건</strong> — 11개 핵심 주장 전부 증거 JSON과 소수점 일치. 미편입 유리 증거 2건(gate7 h48, gate6 FT) 지적.</span></span><span class="ev-n">양기준 PASS</span></div>
+<div class="ev win"><span class="ev-t">paper-cold-reader<span class="sub">fatal 0. 최우선 공격 = ETT 오염 미공개("이거 없으면 크게 깎인다"), 차순위 = 단일 horizon.</span></span><span class="ev-n">MINOR</span></div>
 </div>
-<div class="tier lose"><div class="tier-h"><span class="dot"></span>패키지 층 <span class="cnt">클린 디렉토리 pdflatex 실검증</span></div>
-<div class="ev lose"><span class="ev-t">허위 상태 헤더 + 익명 저자<span class="sub">스타일 기본 모드가 "Under review as submission to TMLR" 헤더와 "Anonymous authors"를 찍고 있었다 — 제출 전 프리프린트에 둘 다 거짓. [preprint] 모드로 교정.</span></span><span class="ev-n">허위표시</span></div>
-<div class="ev lose"><span class="ev-t">참고문헌 통째 소실<span class="sub">tarball 단독 빌드에서 References 섹션이 사라진 7페이지 PDF가 나왔다 — 로컬 빌드 도구로는 재현되지 않던 결함. 진짜 pdflatex 파이프라인 검증이 잡았다.</span></span><span class="ev-n">7pp→8pp</span></div>
-<div class="ev lose"><span class="ev-t">메타데이터 초록 한도 초과 · 방법 오명명 · 그리드 오기<span class="sub">1,991자(한도 1,920) 초과, "stationary bootstrap"으로 잘못 불린 window-block bootstrap, weight-decay 그리드에서 실제 선택된 값 하나가 누락된 표기 — 최종 ~125개 수치 전수 대조에서 적발.</span></span><span class="ev-n">전수 대조</span></div>
+<p><strong>v2.1 조치(전부 적용):</strong> ① ETT 오염 본문 공개 — Chronos Benchmark-II의 시간 분리
+불완전성 명시 + <em>level-vs-slope 논증</em>(오염은 K-무관 level offset, 우리 효과는 K에 대한
+기울기이고 그 기울기는 baseline 쪽이 생성 — 오염이 효과를 만들 수 없다), ② gate7 h=48 편입,
+③ gate6 FT-무효과 편입, ④ 톤 수술 — 메타코멘터리 잔여 0. 이로써 cold의 처방과
+criteria의 미편입 지적이 전부 닫혔다.</p>
+
+<h3 class="sub">arXiv 선적 감사 — 업로드 직전의 적발들</h3>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>패키지 층 <span class="cnt">클린 디렉토리 pdflatex 실검증(TinyTeX, AutoTeX 모사)</span></div>
+<div class="ev lose"><span class="ev-t">허위 상태 헤더 + 익명 저자<span class="sub">tmlr.sty 기본 모드가 "Under review as submission to TMLR" 헤더와 "Anonymous authors"를 찍고 있었다 — 제출 전 프리프린트에 둘 다 거짓 표시. [preprint] 모드로 교정, 실명 저자 렌더 확인.</span></span><span class="ev-n">FAIL → 수정</span></div>
+<div class="ev lose"><span class="ev-t">참고문헌 통째 소실<span class="sub">tarball 단독 빌드에서 References 섹션이 사라진 <strong>7페이지</strong> PDF가 나왔다 — tectonic 로컬 빌드로는 재현되지 않던 결함. bbl+bib+bst 3종 동봉(bbl-소비·bibtex-재실행 양쪽 파이프라인 안전)으로 수정, 8pp·참고문헌 13건 렌더 확인.</span></span><span class="ev-n">7pp → 8pp</span></div>
+<div class="ev lose"><span class="ev-t">메타데이터 초록 한도 초과<span class="sub">1,991자 &gt; arXiv 한도 1,920자 — 그대로 넣었으면 업로드에서 잘림. 1,728자 축약본 별도 작성(PDF 초록은 전문 유지).</span></span><span class="ev-n">1,991 → 1,728자</span></div>
+</div>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>서지·인용 층 <span class="cnt">arXiv 원문 전수 대조</span></div>
+<div class="ev lose"><span class="ev-t">존재하지 않는 논문 2건 인용<span class="sub">bib의 "Bergmeir 재평가" 2건이 환각된 제목 — 그중 1건은 실제로는 반대 논지(친-Chronos) 논문을 회의적 재평가로 인용하고 있었다. 실존 논문(Toner et al. 2502.12944, Karaouli et al. 2510.00742)으로 교체하고 인용 문장을 각 논문의 실제 초록에 맞게 재작성.</span></span><span class="ev-n">환각 2건</span></div>
+<div class="ev lose"><span class="ev-t">조작된 직접 인용 1건<span class="sub">"was not strictly enforced" — Chronos 논문(2403.07815) v1~v3 어디에도 없는 문구. 진원지는 우리 자신의 5/30 노트(tsfm_audit STATUS.md·provenance)의 <em>해석</em>이 따옴표째 원고로 전파된 것. 실제 원문 표현("from a rigorous standpoint" 요구가 "minimal"하게만 충족)으로 교체하고 진원지 문서까지 교정.</span></span><span class="ev-n">업로드 직전 적발</span></div>
+</div>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>수치 층 <span class="cnt">최종 전수 대조 ~125항목</span></div>
+<div class="ev lose"><span class="ev-t">MISMATCH 2건<span class="sub">① weight-decay 그리드 표기 오기 — 실제 그리드 {0, 10⁻⁴, 10⁻³}와 불일치하던 본문 표기 정정, ② 통계 방법 오명명 — "stationary bootstrap"이라 불리던 것은 실제로는 <strong>paired window-block bootstrap</strong>. 나머지 ~123항목은 소수점까지 일치.</span></span><span class="ev-n">2/125 수정</span></div>
+</div>
+<p>최종 빌드 검증: pdflatex 2-pass <strong>exit 0 · 8pp · TeX 에러 0 · 미해결 인용/참조 0 ·
+overfull hbox 0</strong> — tectonic만으로는 References 소실을 못 잡았다. 진짜 파이프라인
+모사가 결정적이었다. 업로드 킷(<code>arxiv_v1.tar.gz</code>, md5 <code>e8aa24a8…</code>) 선적.</p>
+
+<div class="flow">
+<div class="fstep">
+<div class="fhd"><span class="fn">봉인</span> 같은 날, 씨앗이 나온 폴더를 닫았다</div>
+<div class="frow"><span class="fk try">기록</span><span>HIGAN MEMORY.md에 최종 종결 기록 명기 — 위 기록은 "SUBMIT-READY"에서 끝나지만 그것이 결말이 아님을, 결말(desk-reject · 자발 동결 · ABANDONED)을 그대로 적었다. 계승도 명기: "이 폴더의 tsfm_audit(5/30 shelved)가 7/7 부활해 완성 논문이 됨 — 이 폴더 2년 만의 첫 완성 논문의 씨앗."</span></div>
+<div class="frow"><span class="fk try">정리</span><span>폐기 라인 산출물 ~64GB 삭제(ffhq_c5*·중간 ckpt 39개 — 최종 <code>enc_040000.pt</code>는 보존), 죽은 logs/ 삭제, 개인 파일 repo 밖 이동. 미커밋 최종 상태 전부 커밋(3bf94d3).</span></div>
+<div class="fnext">폐기가 아니라 봉인 — 다음에 열어볼 사람(대개 미래의 우리)이 옛 narrative에 속지 않도록.</div>
+</div>
 </div>
 </div></section>
 <hr>
 
 <section class="bl alt" id="paper"><div class="container">
-<div class="lab">08 · 살아남은 것</div>
-<h2>8페이지, 과장 0건</h2>
+<div class="lab">09 · 살아남은 것</div>
+<h2>8페이지, 과대주장 0건</h2>
 <p class="lead"><strong>"Data-Starved Baselines Inflate the Measured Advantage of
 Time-Series Foundation Models on ETT"</strong> — 최종 기준 감사에서 11개 핵심 주장 전부가
-증거 파일과 소수점까지 일치했고, 한 곳에서는 기계 판정보다 더 보수적으로 서술됐다.</p>
+증거 파일과 소수점까지 일치했다.</p>
 <div class="tier win"><div class="tier-h"><span class="dot"></span>논문이 주장하는 것</div>
-<div class="ev win"><span class="ev-t">ETT에서 소예산 zero-shot 우위의 일부는 baseline 학습예산의 측정 artifact다<span class="sub">튜닝·lookback·평가 고정, 데이터량만 개입 — K=600 격차 4/4 유의, 유한 예산에서 통계적 비유의로 수렴(비단조 재확대 포함 전부 보고).</span></span><span class="ev-n">개입 실증</span></div>
-<div class="ev win"><span class="ev-t">튜닝으로도, fine-tuning으로도 설명되지 않는다<span class="sub">튜닝 통제 분해 3/4 잔존 · full FT는 무효과(42/42 미학습 반환)~악화.</span></span><span class="ev-n">분해 실증</span></div>
+<div class="ev win"><span class="ev-t">ETT에서 소예산 zero-shot 우위의 일부는 baseline 학습예산의 측정 artifact다<span class="sub">튜닝·lookback·평가 고정, 데이터량 K만 개입 — K=600 격차 4/4 유의(+0.06~+0.41 MASE), 유한 예산(수천~1만 포인트)에서 통계적 비유의로 수렴. 비단조 재확대(ETTh1 K5000)까지 전부 보고 — "parity"는 등가가 아니라 비유의.</span></span><span class="ev-n">개입 실증</span></div>
+<div class="ev win"><span class="ev-t">튜닝으로도, fine-tuning으로도 설명되지 않는다<span class="sub">튜닝 통제 분해 3/4 잔존(Gate 2 — Xu가 하지 않은 교차분해) · full FT는 무효과(54/54 epoch-0)~악화(K600 4/4). 2 계보 3모델 재현, h=48 재현.</span></span><span class="ev-n">분해 실증</span></div>
 </div>
 <div class="tier gray"><div class="tier-h"><span class="dot"></span>논문이 스스로 한정하는 것</div>
-<div class="ev gray"><span class="ev-t">비-ETT 도메인에선 우위가 지속되고, 어느 레짐인지 예측되지 않는다<span class="sub">전력·교통 우측중도절단 + 예측 법칙의 사전등록 실패를 scope로 정직 보고. ETT 자체의 오염 가능성도 level-vs-slope 논증과 함께 본문 공개.</span></span><span class="ev-n">scope 명시</span></div>
+<div class="ev gray"><span class="ev-t">비-ETT 도메인에선 우위가 지속되고, 어느 레짐인지 예측되지 않는다<span class="sub">electricity·traffic 우측중도절단(K=10,000 지나서도 +0.09~+0.14) + 예측 법칙의 사전등록 실패(2 usable 도메인, underpowered)를 scope로 정직 보고. ETT 자체의 오염 가능성도 level-vs-slope 논증과 함께 본문 공개.</span></span><span class="ev-n">scope 명시</span></div>
 </div>
+<details class="raw"><summary>▶ 최종 초록 전문 (arXiv 메타데이터 축약본 1,728자 — 원문 그대로)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">Zero-shot time-series foundation models (TSFMs) are increasingly deployed on the premise that
+they outperform trained baselines without any local training, and public leaderboards report
+this advantage against baselines fit on whatever history each benchmark series provides. We
+show that on the widely used ETT benchmark, part of this advantage is a measurement artifact
+of baseline training budget. Holding tuning, lookback, and evaluation windows fixed at strong
+settings and sweeping only the number of training points K, the gap between a gradient-trained
+DLinear baseline and zero-shot Chronos is positive and significant at a short budget (K=600;
++0.06 to +0.41 MASE across the four ETT series, all confidence intervals excluding zero) and
+shrinks to statistical insignificance at a finite budget of order one to ten thousand points.
+The shrinkage is not clean: on ETTh1 the gap re-widens at K=5000, so "parity" means the
+difference is no longer detectable, not that the models are equivalent. The effect reproduces
+across three models spanning two pretraining lineages, survives a tuning-controlled
+decomposition on three of four series, and is bounded: on two hourly non-ETT domains the gap
+stays significant past 10,000 points under a linear baseline (shrinking to +0.09 to +0.14
+MASE), and with only two usable domains we cannot fit a law predicting where the artifact
+applies. Two decisions follow: benchmark authors reporting a zero-shot advantage should
+disclose the training budget given to each baseline, and practitioners holding more history
+than the closing budget should sweep the baseline's budget before concluding that zero-shot is
+better; on ETT, a short evaluation split alone inflates the reported gap.</pre></div></details>
 <p style="margin-top:1.2rem;"><em>arXiv 공개 시 이 자리에 링크가 걸린다.</em> 재현 자료:
 잠긴 프로토콜 JSON·결과 파일(해시·커밋 포함)은 저자에게 요청.</p>
 </div></section>
 <hr>
 
 <section class="bl"><div class="container">
-<div class="lab">09 · 이 7일이 확정한 것</div>
+<div class="lab">10 · 이 7일이 확정한 것</div>
 <h2>교훈은 네 개로 줄었다</h2>
 <div class="flow">
 <div class="fstep"><div class="fhd"><span class="fn">1</span> 강한 신호일수록 먼저 의심한다</div>
-<div class="frow"><span class="fk find">근거</span><span>이 폴더에서 4연속 — 6배 격차도, 0.85 상관도, "3 families"도, 예외 없이 처음 본 크기는 과장이었다. 방향이 진짜인지가 유일한 질문이다.</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>이 폴더에서 4연속 — 6배 격차(선택 artifact)도, "3 families"도, "3–6배 인플레"도, 예외 없이 처음 본 크기는 과장이었다. 방향이 진짜인지가 유일한 질문이고, 이번엔 방향은 살아남았다(4/4 유의, 2계보 3모델, h=48).</span></div></div>
 <div class="fstep"><div class="fhd"><span class="fn">2</span> 킬게이트는 실험 전에 박는다</div>
-<div class="frow"><span class="fk find">근거</span><span>U3는 실험 후였다면 "조금만 더"로 몇 주를 태웠을 것이다. 사전등록된 3기준이 하루 만에 철회를 결정했다.</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>U3는 실험 후였다면 "조금만 더"로 몇 주를 태웠을 것이다. 사전등록된 3기준(LODO ≥0.4, 자명 기준선 대비 ≥15%×2)이 파일럿 하루 만에 철회를 결정했다 — 그리고 4b의 censoring과 교차확인돼 artifact가 아님도 확인됐다.</span></div></div>
 <div class="fstep"><div class="fhd"><span class="fn">3</span> 앵커 없는 fresh 검증만이 진실에 도달한다</div>
-<div class="frow"><span class="fk find">근거</span><span>맥락을 준 게이트는 전부 PASS를 냈다. 조작 인용도, 선택 artifact도, 환각 서지도 — 전부 무맥락 검증이 잡았다.</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>맥락을 준 게이트가 false PASS를 낸다는 것은 이전 장의 교훈이었다. 이번 장에서 선택 artifact(#3), 과장 12건, 환각 서지 2건, 조작 인용 1건, References 소실 — 전부 무맥락 검증·실물 대조가 잡았다. 사람 눈은 이 중 하나도 잡지 못했다.</span></div></div>
 <div class="fstep"><div class="fhd"><span class="fn">4</span> 실패는 지우는 게 아니라 scope가 된다</div>
-<div class="frow"><span class="fk find">근거</span><span>NO-GO 난 법칙, censored 89%, FAIL로 기록된 게이트 — 전부 논문의 경계 섹션이 됐다. 이 페이지가 존재하는 이유이기도 하다.</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>NO-GO 난 법칙, censored 89.2%, FAIL로 기록된 게이트, 비단조 wrinkle — 전부 논문의 경계 섹션이 됐다. 이 페이지가 존재하는 이유이기도 하다.</span></div></div>
 </div>
 </div></section>
+<hr>
 
-<footer><p>HIGAN 이후 — 폐기에서 논문까지 · 2026 · 정직한 회고</p>
+<section class="bl alt" id="raw"><div class="container">
+<div class="lab">부록 A · 게이트 원장 (raw)</div>
+<h2>11회 판정, 잘림 없이</h2>
+<p class="lead">잠긴 프로토콜 9개(<code>protocols/</code>) + 프로토콜을 스크립트/설계문서에 내장한
+게이트 2개(Gate 0, gate7). 판정 규칙은 전부 실행 전 고정. sha는 프로토콜 sha256 앞 8자리.</p>
+<details class="raw"><summary>▶ protocols/ 디렉토리 실측 (9 파일)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+gate1_ett_ksweep.json           protocol=gate1_ett_ksweep              locked 2026-07-08  v1.0
+gate2_factor_decomposition.json protocol=gate2_factor_decomposition    locked 2026-07-08  v1.0
+gate3_observational.json        protocol=gate3_observational           locked 2026-07-08  v1.0
+gate1R_honest_rerun.json        protocol=gate1R_honest_rerun           locked 2026-07-09  v1.0
+gate3b_staleness.json           protocol=gate3b_staleness_defense      locked 2026-07-09  v1.0
+gate4_multitsfm.json            protocol=gate4_multitsfm_generalization locked 2026-07-09  v1.0
+gate4b_nonett.json              protocol=gate4b_nonett_domain          locked 2026-07-10  v1.0
+gate5_u3pilot.json              protocol=gate5_u3pilot_law_killgate    locked 2026-07-10  v1.0
+gate6_u1_ftfrontier.json        protocol=gate6_u1_ft_frontier          locked 2026-07-11  v1.0</pre></div></details>
+<details class="raw"><summary>▶ 공통 통계 기계 (전 게이트 동일)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+gap CI     : paired window-block bootstrap B=1000 (공유 행렬 seed 20260708)
+             + seed 분산 결합 — gap ± 1.96·√(se_boot² + seed_sd²/5)
+N*         : combined 95% CI가 0에 처음 닿는 최소 그리드 K (등가 아님 — 비기각)
+permutation: one-sided, p = (1 + #{ρ_perm ≤ ρ_obs}) / (n_perm + 1), n_perm = 10,000
+단조/스파이크: 이웃 K 대비 +15% 초과 상승 0건 (Gate 0 기준 c 재사용)
+실행 규율   : clean git tree에서만 확증 run · 결과 파일에 protocol sha256 + git commit 기록</pre></div></details>
+<div class="tbl-wrap"><table class="led">
+<thead><tr><th>게이트</th><th>프로토콜</th><th>판정</th><th>핵심 수치 (raw)</th><th>결과 파일</th></tr></thead>
+<tbody>
+<tr><td class="tk">Gate 0 — 계측기<br><span class="note">7/8 · 2트라이</span></td><td><pre>DESIGN.md §3
+(기준 3종: 폴백 0
+seed-CV&lt;5%, 스파이크 0)</pre></td><td><span class="tag fail">FAIL</span>→<span class="tag ok">PASS</span></td><td><pre>Run1: max seed-CV 6.583% — 위반 8건, 전부 ETTm 계열
+ (ETTm1 4 · ETTm2 4 / DLinear 3 · NLinear 5)
+ 최악 ETTm2·DLinear·K2400 6.58%
+ 원인 = 50 테스트윈도우 중앙값 양자화
+Run2(256윈도우): 폴백 0 · max seed-CV 4.409%
+ 스파이크 최악 1.0303 (ETTm2·NLinear·K2400→5000) &lt; 1.15</pre></td><td><pre>gate0_instrument.json
+gate0_run.log
+gate0_run2.log
+wall 286s</pre></td></tr>
+<tr><td class="tk">Gate 1 — ETT K-스윕 (H2)<br><span class="note">7/8</span></td><td><pre>gate1_ett_ksweep.json
+locked 7/8 · e891a578</pre></td><td><span class="tag ok">PASS</span></td><td><pre>Chronos MASE 0.6133/0.6945/0.3526/0.2703
+단조 8/8 (dlinear trend ρ=−1.000 4/4)
+N* dlinear 5000/10000/10000/20000
+N* nlinear 5000/5000/1200/5000
+(K600 gap은 이후 선택 artifact 판명 → gate1R로 대체)</pre></td><td><pre>gate1_ksweep.json
+git f3447d50
+wall 421s</pre></td></tr>
+<tr><td class="tk">Gate 2 — 요인 분해 (H3)<br><span class="note">7/8</span></td><td><pre>gate2_factor_decomposition.json
+locked 7/8 · 392ece7f</pre></td><td><span class="tag ok">PASS *</span></td><td><pre>C = gap_tuned(600) − gap_tuned(K_max), dlinear:
+ETTh1 +0.0923 [−0.0022,+0.1868]  미달
+ETTh2 +0.4598 [+0.3224,+0.5972]  생존
+ETTm1 +0.1008 [+0.0565,+0.1451]  생존
+ETTm2 +0.8193 [+0.6744,+0.9643]  생존  → 3/4 (규칙 ≥3)
+* 크기는 7/9 적대검증에서 선택 artifact 판명</pre></td><td><pre>gate2_factor_decomposition.json
+git 10d57f12
+wall 5,200s</pre></td></tr>
+<tr><td class="tk">Gate 3 — 관찰 arm (H1)<br><span class="note">7/8 밤 → 7/9 00:23</span></td><td><pre>gate3_observational.json
+locked 7/8 · 33bc70bf</pre></td><td><span class="tag ok">PASS</span></td><td><pre>ρ = −0.848, permutation p = 0.0034 (n=10, 10k perms)
+excl-ETT ρ=−0.886 p=0.0156 (n=6)
+pooled ρ=−0.516 p=0.0001 (n=180)
+tourism_monthly·hospital 전 계열 infeasible 제외</pre></td><td><pre>gate3_observational.json
+git aff3669d
+wall 33,382s</pre></td></tr>
+<tr><td class="tk">Gate 3b — staleness 방어<br><span class="note">7/9</span></td><td><pre>gate3b_staleness.json
+locked 7/9 · c26456e3</pre></td><td><span class="tag ok">PASS</span></td><td><pre>TimesFM-2.5-200m (2025급, 다른 계보, 231M)
+dlinear 재현 4/4 (단조 4/4 + 유한 N* 4/4)
+zero-shot MASE 0.6159/0.7340/0.3298/0.2871
+(ETTm1은 Chronos보다 강함 → 더 어려운 bar)</pre></td><td><pre>gate3b_staleness.json
+git 5a42035e
+wall 6s (baseline 재사용)</pre></td></tr>
+<tr class="r-fail"><td class="tk">적대검증 6종<br><span class="note">7/9 · 무맥락</span></td><td><pre>wf_c130ea48
+(지표/누출/튜닝/공정성/
+통계/자명성 각 1)</pre></td><td><span class="tag fail">#3 적중</span></td><td><pre>#1 분모 NONE · #2 누출 NONE · #4 공정성 MINOR
+#5 통계 MINOR · #3 튜닝 진정성 — 적중:
+ ETTm2 K600 val-선택 test 1.127 vs oracle 0.410 (6×)
+ Gate 1 고정 lb336 소K 미결정성까지 전이
+판정 (c) 재실행 — gate1R 프로토콜 즉시 잠금</pre></td><td><pre>protocols/gate1R_…json
+design_ref에 판정 인용</pre></td></tr>
+<tr><td class="tk">Gate 1R — 정직 재실행<br><span class="note">7/9 잠금 → 7/10 01:57 완주</span></td><td><pre>gate1R_honest_rerun.json
+locked 7/9 · e7ac3031</pre></td><td><span class="tag ok">PASS</span></td><td><pre>CV선택+wd+lb48 floor+미결정 배제, 13.4h
+K600 gap 4/4 유의: +0.097/+0.078/+0.064/+0.411
+N* 2400/2400/1200/10000 · NLinear 부판정 2/4
+ETTh1 K5000 재유의 +0.082 [+0.037,+0.126] (wrinkle 보고)</pre></td><td><pre>gate1R_honest_rerun.json
+git 175389e9
+wall 48,119s</pre></td></tr>
+<tr><td class="tk">Gate 4a — 멀티-TSFM<br><span class="note">7/10</span></td><td><pre>gate4_multitsfm.json
+locked 7/9 · cb9d2d41</pre></td><td><span class="tag ok">STRONG</span></td><td><pre>chronos-t5 4/4 · timesfm-2.5 3/4 · chronos-bolt 4/4 → 11/12
+ETTm2 K600 gap 0.411/0.400/0.409 (3모델 동일)
+예외: TimesFM/ETTh2 +0.047 [−0.005,+0.098] 비유의
+(주의: t5+bolt 동일 계보 → 독립 계보 2)</pre></td><td><pre>gate4_multitsfm.json
+git 97ee9637
+wall 262s (baseline 재사용)</pre></td></tr>
+<tr class="r-fail"><td class="tk">Gate 4b — 비-ETT 도메인<br><span class="note">7/10~11</span></td><td><pre>gate4b_nonett.json
+locked 7/10 · 199efefb</pre></td><td><span class="tag fail">FAIL as scored</span></td><td><pre>elec K600 gap +0.334/+0.309/+0.323 (3모델 유의)
+traffic K600 gap +0.629/+0.635/+0.588 (3모델 유의)
+단조 6/6 — 그러나 N* 전부 censored (K≤10,000 내 미도달)
+→ 재현 0/2 도메인으로 채점, censoring은 논문 scope로</pre></td><td><pre>gate4b_nonett.json
+git 7acd58cb
+wall 6,485s</pre></td></tr>
+<tr class="r-fail"><td class="tk">gate5 — U3 파일럿 킬게이트<br><span class="note">7/10 잠금 → 7/11 NO-GO</span></td><td><pre>gate5_u3pilot.json
+locked 7/10 · bda7ec37</pre></td><td><span class="tag fail">NO-GO</span></td><td><pre>157 레코드: right-censored 140 (89.2%) · usable 17 (2도메인)
+LODO 불가(3+ 도메인 필요) · 부분 spearman −0.4837
+vs global median −2.7% · vs const700 −227.6% → 3기준 전패
+"NO-GO (preregistered) → return to TMLR"
+부속: censoring 분류기 LODO AUC 0.182 (negative)</pre></td><td><pre>gate5_u3pilot.json
+git f9d047bb
+commit 71d942c</pre></td></tr>
+<tr><td class="tk">gate6 — U1 FT 프런티어<br><span class="note">7/11 잠금 → 7/13 OOM → 7/14 완주</span></td><td><pre>gate6_u1_ftfrontier.json
+locked 7/11 · 886106b3</pre></td><td><span class="tag ok">완주</span></td><td><pre>K≥1200: 54/54 셀 epoch-0 폴백 (val서 zero-shot 못 이김)
+K600: 학습(ep3)되나 ft−zs 4/4 음수
+ −0.0338/−0.0391/−0.0611/−0.0220
+N*_FT 2400/1200/600/10000 ≈ N*_ZS 2400/1200/1200/10000</pre></td><td><pre>gate6_u1_frontier.json
+git 0dcf0a90
+wall 12,040s</pre></td></tr>
+<tr><td class="tk">gate7 — multi-horizon h=48<br><span class="note">7/12 밤 → 7/13 00:56</span></td><td><pre>(스크립트 내 명세
+09_gate7_multihorizon.py)</pre></td><td><span class="tag ok">HOLDS</span></td><td><pre>K600 gap 4/4 유의: +0.125/+0.189/+0.133/+0.367
+단조 4/4 · N* 1200/2400/5000/2400
+로그의 최초 판정 "smallK_sig 0/4"는 int-vs-str 키버그
+→ 원본 재검으로 차단, verdict에 CORRECTED 주석</pre></td><td><pre>gate7_multihorizon.json
+git 62ea5b2c
+wall 5,551s</pre></td></tr>
+</tbody></table></div>
+
+<details class="raw"><summary>▶ raw 수치 펼치기 — Gate 0 Run 2 계측기 곡선 (8 곡선, 로그 원문)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+gate0_run2.log 판정 블록 (원문 그대로):
+
+=== Gate 0 verdict: PASS ===
+  a_fallback: PASS
+  b_seed_cv: PASS
+  c_k_spike: PASS
+  max seed-CV observed: 4.409%
+(dataset, model): MASE mean by K   [I = infeasible]
+  ETTh1  DLinearTrained  300:I  600:0.902  1200:0.755  2400:0.702  5000:0.657  10000:0.639
+  ETTh1  NLinearTrained  300:I  600:0.677  1200:0.672  2400:0.670  5000:0.651  10000:0.629
+  ETTh2  DLinearTrained  300:I  600:1.187  1200:0.998  2400:0.808  5000:0.750  10000:0.709
+  ETTh2  NLinearTrained  300:I  600:0.927  1200:0.886  2400:0.754  5000:0.728  10000:0.710
+  ETTm1  DLinearTrained  300:I  600:1.105  1200:0.647  2400:0.546  5000:0.525  10000:0.438
+  ETTm1  NLinearTrained  300:I  600:0.758  1200:0.452  2400:0.446  5000:0.453  10000:0.436
+  ETTm2  DLinearTrained  300:I  600:0.669  1200:0.375  2400:0.317  5000:0.264  10000:0.223
+  ETTm2  NLinearTrained  300:I  600:0.407  1200:0.328  2400:0.233  5000:0.240  10000:0.227</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — Gate 1 원본 gap 곡선 (고정 lb336 — 이후 artifact 판명, 대조용 보존)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+Gate 1 원본 (고정 lookback 336) — 7/9 적대검증에서 소K 값이 선택/미결정 artifact로 판명.
+정본은 gate1R(위). 대조를 위해 원본 그대로 보존한다.
+
+[dlinear]
+  ETTh1: K600:+0.289 K1k:+0.142 K2k:+0.089 K5k:+0.043 K10k:+0.026
+    trend ρ = -1.000 · monotone True · N* = 5000 (gap CI [-0.0155, +0.1025])
+  ETTh2: K600:+0.492 K1k:+0.304 K2k:+0.114 K5k:+0.056 K10k:+0.015
+    trend ρ = -1.000 · monotone True · N* = 10000 (gap CI [-0.0456, +0.0747])
+  ETTm1: K600:+0.599 K1k:+0.174 K2k:+0.086 K5k:+0.068 K10k:+0.019 K20k:+0.001
+    trend ρ = -1.000 · monotone True · N* = 10000 (gap CI [-0.0279, +0.0651])
+  ETTm2: K600:+0.800 K1k:+0.304 K2k:+0.156 K5k:+0.098 K10k:+0.064 K20k:+0.030
+    trend ρ = -1.000 · monotone True · N* = 20000 (gap CI [-0.0241, +0.0839])
+
+[nlinear]
+  ETTh1: K600:+0.063 K1k:+0.058 K2k:+0.057 K5k:+0.038 K10k:+0.016
+    trend ρ = -1.000 · monotone True · N* = 5000 (gap CI [-0.0140, +0.0901])
+  ETTh2: K600:+0.233 K1k:+0.191 K2k:+0.059 K5k:+0.033 K10k:+0.015
+    trend ρ = -1.000 · monotone True · N* = 5000 (gap CI [-0.0218, +0.0888])
+  ETTm1: K600:+0.303 K1k:+0.005 K2k:+0.002 K5k:+0.009 K10k:+0.004 K20k:+0.007
+    trend ρ = -0.257 · monotone True · N* = 1200 (gap CI [-0.0305, +0.0414])
+  ETTm2: K600:+0.371 K1k:+0.190 K2k:+0.058 K5k:+0.052 K10k:+0.042 K20k:+0.026
+    trend ρ = -1.000 · monotone True · N* = 5000 (gap CI [-0.0058, +0.1104])
+</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate1R 전체 gap(K) 표 (dlinear + nlinear, CV-선택)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+[dlinear · primary — 판정]  smallK 유의 4/4 · 단조 4/4 · N* 유한 4/4 · PASS=True
+ETTh1 — Chronos MASE 0.6133 (K 무관) · N* = 2400
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.0968  [+0.0428, +0.1507] *   +0.2486
+   1,200  +0.0433  [+0.0049, +0.0817] *   +0.0472
+   2,400  +0.0251  [-0.0088, +0.0589]   +0.0216
+   5,000  +0.0819  [+0.0373, +0.1265] *   +0.0064
+  10,000  +0.0032  [-0.0283, +0.0348]   -0.0050
+
+ETTh2 — Chronos MASE 0.6945 (K 무관) · N* = 2400
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.0782  [+0.0346, +0.1217] *   +0.0782
+   1,200  +0.0405  [+0.0002, +0.0808] *   +0.0401
+   2,400  +0.0040  [-0.0301, +0.0381]   +0.0057
+   5,000  -0.0060  [-0.0410, +0.0291]   +0.0547
+  10,000  -0.0182  [-0.0506, +0.0141]   -0.0007
+
+ETTm1 — Chronos MASE 0.3526 (K 무관) · N* = 1200
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.0639  [+0.0258, +0.1020] *   +0.0639
+   1,200  +0.0117  [-0.0149, +0.0382]   +0.0058
+   2,400  +0.0166  [-0.0130, +0.0461]   +0.0119
+   5,000  +0.0133  [-0.0144, +0.0410]   +0.0215
+  10,000  +0.0019  [-0.0238, +0.0275]   -0.0053
+  20,000  -0.0095  [-0.0381, +0.0191]   -0.0165
+
+ETTm2 — Chronos MASE 0.2703 (K 무관) · N* = 10000
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.4109  [+0.3178, +0.5040] *   +0.4109
+   1,200  +0.2657  [+0.1723, +0.3592] *   +0.2361
+   2,400  +0.2084  [+0.1107, +0.3062] *   +0.0767
+   5,000  +0.1238  [+0.0711, +0.1765] *   +0.0876
+  10,000  +0.0359  [-0.0012, +0.0731]   +0.0354
+  20,000  +0.0377  [-0.0032, +0.0785]   +0.0196
+
+[nlinear · secondary — 판정 비관여]  smallK 유의 2/4 · 단조 4/4 · N* 유한 4/4 · PASS=False
+ETTh1 — Chronos MASE 0.6133 (K 무관) · N* = 600
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.0247  [-0.0101, +0.0595]   +0.0662
+   1,200  +0.0249  [-0.0131, +0.0629]   +0.0141
+   2,400  +0.0176  [-0.0163, +0.0516]   +0.0100
+   5,000  +0.0137  [-0.0214, +0.0487]   +0.0048
+  10,000  -0.0199  [-0.0476, +0.0078]   -0.0094
+
+ETTh2 — Chronos MASE 0.6945 (K 무관) · N* = 2400
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.2190  [+0.1716, +0.2664] *   +0.1060
+   1,200  +0.0810  [+0.0277, +0.1344] *   +0.1053
+   2,400  +0.0007  [-0.0333, +0.0347]   +0.0188
+   5,000  +0.0547  [+0.0185, +0.0908] *   +0.0512
+  10,000  -0.0081  [-0.0409, +0.0247]   -0.0085
+
+ETTm1 — Chronos MASE 0.3526 (K 무관) · N* = 600
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.0268  [-0.0048, +0.0584]   +0.0118
+   1,200  +0.0007  [-0.0265, +0.0278]   +0.0069
+   2,400  -0.0242  [-0.0447, -0.0038]   -0.0089
+   5,000  -0.0253  [-0.0490, -0.0016]   -0.0270
+  10,000  -0.0090  [-0.0327, +0.0146]   -0.0309
+  20,000  -0.0210  [-0.0475, +0.0056]   -0.0236
+
+ETTm2 — Chronos MASE 0.2703 (K 무관) · N* = 10000
+  K      cv gap    95% CI               val gap(병기)
+     600  +0.3570  [+0.2744, +0.4395] *   +0.4890
+   1,200  +0.2067  [+0.1392, +0.2743] *   +0.1935
+   2,400  +0.1382  [+0.0833, +0.1931] *   +0.0580
+   5,000  +0.0841  [+0.0418, +0.1265] *   +0.0444
+  10,000  +0.0309  [-0.0073, +0.0691]   +0.0268
+  20,000  +0.0185  [-0.0219, +0.0588]   +0.0182
+
+* = CI가 0 배제 (유의). 출처: results/gate1R_honest_rerun.json (5 seeds, 3-fold rolling-origin CV)</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate2 생존 대비 C 전체 (dlinear + nlinear)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+C = gap_tuned(600) − gap_tuned(K_max) · combined 95% CI (bootstrap+seed)
+[dlinear — primary(판정)]
+  ETTh1: gap600 +0.1284  gapKmax +0.0361  C +0.0923  CI [-0.0022, +0.1868]  미달
+  ETTh2: gap600 +0.4669  gapKmax +0.0071  C +0.4598  CI [+0.3224, +0.5972]  생존
+  ETTm1: gap600 +0.0789  gapKmax -0.0219  C +0.1008  CI [+0.0565, +0.1451]  생존
+  ETTm2: gap600 +0.8568  gapKmax +0.0375  C +0.8193  CI [+0.6744, +0.9643]  생존
+
+[nlinear — secondary(판정 비관여)]
+  ETTh1: gap600 +0.1013  gapKmax +0.0204  C +0.0809  CI [+0.0263, +0.1356]  생존
+  ETTh2: gap600 +0.2639  gapKmax +0.0032  C +0.2606  CI [+0.1816, +0.3397]  생존
+  ETTm1: gap600 +0.0026  gapKmax -0.0367  C +0.0393  CI [-0.0052, +0.0838]  미달
+  ETTm2: gap600 +0.3198  gapKmax +0.0340  C +0.2857  CI [+0.1763, +0.3952]  생존
+
+출처: results/gate2_factor_decomposition.json — 단, 크기는 7/9 적대검증에서 선택 artifact 판명(§03)</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate3 유닛 표 (10 units + 제외 2)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+unit                        median train  log10   gap      n계열
+m4_hourly                          604  2.781  +0.5786  32
+monash_electricity_hourly       15,782  4.198  +0.0634  32
+monash_traffic                  10,526  4.022  +0.2687  32
+m4_daily                         1,735  3.239  +0.2543  25
+m4_weekly                          589  2.770  +1.1347  23
+monash_fred_md                     436  2.639  +0.8471  32
+ETTh1                           10,452  4.019  +0.0181  1
+ETTh2                           10,452  4.019  +0.0497  1
+ETTm1                           41,808  4.621  -0.0430  1
+ETTm2                           41,808  4.621  -0.0118  1
+
+primary: ρ = -0.8476, one-sided permutation p = 0.0034 (n=10, 10,000 perms)
+excl-ETT: ρ = -0.8857, p = 0.0156 (n=6)
+pooled series-level: ρ = -0.5156, p = 0.0001 (n=180)
+제외: monash_tourism_monthly — all tuning-grid combos infeasible (32x)
+제외: monash_hospital — all tuning-grid combos infeasible (32x)</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate3b TimesFM-2.5 재현 곡선 (dlinear)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+new TSFM = google/timesfm-2.5-200m-pytorch (decoder-only, 231M, context 512)
+baseline arm은 Gate 1에서 재사용(재학습 없음) — gap = MASE_baseline − MASE_TimesFM
+
+ETTh1 (TimesFM MASE 0.6159): K600:+0.286 K1k:+0.139 K2k:+0.086 K5k:+0.041 K10k:+0.023
+  monotone True · N* = 5000 · reproduces True
+ETTh2 (TimesFM MASE 0.7340): K600:+0.453 K1k:+0.264 K2k:+0.074 K5k:+0.016 K10k:-0.025
+  monotone True · N* = 5000 · reproduces True
+ETTm1 (TimesFM MASE 0.3298): K600:+0.622 K1k:+0.197 K2k:+0.109 K5k:+0.090 K10k:+0.041 K20k:+0.024
+  monotone True · N* = 10000 · reproduces True
+ETTm2 (TimesFM MASE 0.2871): K600:+0.783 K1k:+0.287 K2k:+0.139 K5k:+0.081 K10k:+0.047 K20k:+0.013
+  monotone True · N* = 10000 · reproduces True
+
+dlinear 재현 4/4 → PASS. 해석 규칙(프로토콜): 더 강한 zero-shot = 더 어려운 bar = N* 증가 방향.</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate4a 12셀 (3모델 × 4데이터셋 K600)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+model                 dataset  TSFM MASE  K600 gap   95% CI               유의  재현(단조+N*)
+chronos-t5-small      ETTh1    0.6133    +0.0968   [+0.0428, +0.1507]  yes  True
+timesfm-2.5-200m      ETTh1    0.6159    +0.1104   [+0.0616, +0.1592]  yes  True
+chronos-bolt-small    ETTh1    0.6258    +0.0862   [+0.0338, +0.1386]  yes  True
+chronos-t5-small      ETTh2    0.6945    +0.0782   [+0.0346, +0.1217]  yes  True
+timesfm-2.5-200m      ETTh2    0.7340    +0.0467   [-0.0047, +0.0981]  NO   False
+chronos-bolt-small    ETTh2    0.6592    +0.1171   [+0.0785, +0.1558]  yes  True
+chronos-t5-small      ETTm1    0.3526    +0.0639   [+0.0258, +0.1020]  yes  True
+timesfm-2.5-200m      ETTm1    0.3297    +0.0875   [+0.0491, +0.1260]  yes  True
+chronos-bolt-small    ETTm1    0.3496    +0.0860   [+0.0467, +0.1253]  yes  True
+chronos-t5-small      ETTm2    0.2703    +0.4109   [+0.3178, +0.5040]  yes  True
+timesfm-2.5-200m      ETTm2    0.2871    +0.4002   [+0.3080, +0.4923]  yes  True
+chronos-bolt-small    ETTm2    0.2621    +0.4092   [+0.3110, +0.5073]  yes  True
+
+판정: chronos-t5 4/4 · timesfm-2.5 3/4 · chronos-bolt 4/4 → STRONG=True</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate4b 비-ETT 전체 곡선 (2도메인 × 3모델)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+[elec_hourly_s0 — monash_electricity_hourly, train_end 15,782]
+  chronos-t5-small      K600:+0.334 K1k:+0.346 K2k:+0.379 K5k:+0.195 K10k:+0.125  (단조 True, N* None)
+  timesfm-2.5-200m      K600:+0.309 K1k:+0.321 K2k:+0.354 K5k:+0.170 K10k:+0.100  (단조 True, N* None)
+  chronos-bolt-small    K600:+0.323 K1k:+0.335 K2k:+0.368 K5k:+0.184 K10k:+0.114  (단조 True, N* None)
+
+[traffic_s0 — monash_traffic, train_end 10,526]
+  chronos-t5-small      K600:+0.629 K1k:+0.619 K2k:+0.241 K5k:+0.164 K10k:+0.130  (단조 True, N* None)
+  timesfm-2.5-200m      K600:+0.635 K1k:+0.625 K2k:+0.248 K5k:+0.170 K10k:+0.136  (단조 True, N* None)
+  chronos-bolt-small    K600:+0.588 K1k:+0.577 K2k:+0.200 K5k:+0.123 K10k:+0.088  (단조 True, N* None)
+
+전 셀 K600 CI가 0 배제(유의) — 그러나 N* 전부 censored → 사전등록 규칙상 FAIL as scored</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate5 usable 17계열 + 판정 원문</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+usable(비중도절단) 17계열 — 전부 2개 도메인:
+domain                       idx   n(계열길이)  N*_interp
+monash_electricity_hourly     42      26,304   4,750.2
+monash_electricity_hourly     67      26,304   4,798.8
+monash_kdd_cup_2018           36       9,777   1,586.3
+monash_kdd_cup_2018           60       9,792     948.6
+monash_kdd_cup_2018           67       8,220     672.8
+monash_kdd_cup_2018           97       6,055     649.1
+monash_kdd_cup_2018          120       9,695     600.0
+monash_kdd_cup_2018          122       9,805   1,432.5
+monash_kdd_cup_2018          138       9,770     990.8
+monash_kdd_cup_2018          156       9,681     924.0
+monash_kdd_cup_2018          176       9,949   2,494.3
+monash_kdd_cup_2018          190       9,648     600.0
+monash_kdd_cup_2018          192       9,436     818.5
+monash_kdd_cup_2018          196       9,541     600.0
+monash_kdd_cup_2018          225       9,681     860.3
+monash_kdd_cup_2018          227      10,820     936.1
+monash_kdd_cup_2018          242      10,176     600.0
+
+verdict_final (원문 발췌):
+{
+ "PASS": false,
+ "decision": "NO-GO (preregistered) -&gt; return to TMLR",
+ "n_records": 157,
+ "n_uncensored": 17,
+ "pct_uncensored": 10.8,
+ "n_right_censored": 140,
+ "pct_right_censored": 89.2,
+ "uncensored_domains": [
+  "monash_electricity_hourly",
+  "monash_kdd_cup_2018"
+ ]
+}
+lodo_spearman(부분) = -0.4837 · rel_improve_vs_median = -0.0272 · rel_improve_vs_const = -2.2761
+censoring 분류기: LODO AUC 0.182 · 도메인별 parity 도달률 {"electricity": 0.05, "kdd": 0.38, "pedestrian": 0.0, "traffic": 0.0}</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate6 U1 전체 표 (4데이터셋 × K)</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+dataset  K       baseline  zero-shot  fine-tuned  ft−zs     best_epoch(3 seeds)
+ETTh1       600  0.7278    0.6133     0.6470      -0.0338   3/3/3
+ETTh1     1,200  0.6795    0.6133     0.5971      +0.0162   0/0/0
+ETTh1     2,400  0.6609    0.6133     0.5971      +0.0162   0/0/0
+ETTh1     5,000  0.7064    0.6133     0.5971      +0.0162   0/0/0
+ETTh1    10,000  0.6383    0.6133     0.5971      +0.0162   0/0/0
+         N*_ZS = 2,400 · N*_FT = 2,400
+
+ETTh2       600  0.7604    0.6945     0.7336      -0.0391   3/3/3
+ETTh2     1,200  0.7226    0.6945     0.6870      +0.0075   0/0/0
+ETTh2     2,400  0.7023    0.6945     0.6870      +0.0075   0/0/0
+ETTh2     5,000  0.7141    0.6945     0.6870      +0.0075   0/0/0
+ETTh2    10,000  0.6822    0.6945     0.6870      +0.0075   0/0/0
+         N*_ZS = 1,200 · N*_FT = 1,200
+
+ETTm1       600  0.4202    0.3526     0.4137      -0.0611   3/3/3
+ETTm1     1,200  0.3638    0.3526     0.3585      -0.0059   0/0/0
+ETTm1     2,400  0.3676    0.3526     0.3585      -0.0059   0/0/0
+ETTm1     5,000  0.3598    0.3526     0.3585      -0.0059   0/0/0
+ETTm1    10,000  0.3765    0.3526     0.3585      -0.0059   0/0/0
+ETTm1    20,000  0.3323    0.3526     0.3585      -0.0059   0/0/0
+         N*_ZS = 1,200 · N*_FT = 600
+
+ETTm2       600  0.5935    0.2703     0.2922      -0.0220   3/3/3
+ETTm2     1,200  0.4484    0.2703     0.2899      -0.0197   0/0/0
+ETTm2     2,400  0.4002    0.2703     0.2899      -0.0197   0/0/0
+ETTm2     5,000  0.3939    0.2703     0.2899      -0.0197   0/0/0
+ETTm2    10,000  0.3075    0.2703     0.2899      -0.0197   0/0/0
+ETTm2    20,000  0.3135    0.2703     0.2899      -0.0197   0/0/0
+         N*_ZS = 10,000 · N*_FT = 10,000
+
+K≥1,200: best_epoch 전부 0 (54/54 셀) = early stopping이 미학습 pretrained 모델 반환.
+epoch-0 셀의 ft−zs 미세 양수는 fp32/fp16 평가 정밀도 artifact (동일 모델).</pre></div></details>
+<details class="raw"><summary>▶ raw 수치 펼치기 — gate7 h=48 전체 표</summary>
+<div class="tbl-wrap"><pre style="padding:1rem;">
+h=48 · 5 seeds · paired window-block bootstrap
+[ETTh1 — Chronos MASE 0.7802, 145 windows, N* = 1200, 단조 True]
+  K    600: gap +0.1247  [+0.0576, +0.1919] *  cfg lb48_lr0.001_wd0.0
+  K  1,200: gap +0.0308  [-0.0244, +0.0859]  cfg lb48_lr0.001_wd0.0
+  K  2,400: gap +0.0007  [-0.0505, +0.0519]  cfg lb48_lr0.01_wd0.001
+  K  5,000: gap +0.0528  [-0.0122, +0.1179]  cfg lb720_lr0.001_wd0.001
+  K 10,000: gap -0.0283  [-0.0775, +0.0209]  cfg lb96_lr0.001_wd0.001
+
+[ETTh2 — Chronos MASE 0.9522, 145 windows, N* = 2400, 단조 True]
+  K    600: gap +0.1892  [+0.1210, +0.2574] *  cfg lb48_lr0.001_wd0.0
+  K  1,200: gap +0.0896  [+0.0279, +0.1512] *  cfg lb96_lr0.001_wd0.001
+  K  2,400: gap +0.0155  [-0.0380, +0.0690]  cfg lb96_lr0.01_wd0.001
+  K  5,000: gap -0.0017  [-0.0543, +0.0508]  cfg lb96_lr0.001_wd0.001
+  K 10,000: gap -0.0065  [-0.0644, +0.0513]  cfg lb96_lr0.01_wd0.0001
+
+[ETTm1 — Chronos MASE 0.5570, 256 windows, N* = 5000, 단조 True]
+  K    600: gap +0.1326  [+0.0713, +0.1938] *  cfg lb48_lr0.01_wd0.001
+  K  1,200: gap +0.2703  [+0.2016, +0.3391] *  cfg lb48_lr0.001_wd0.001
+  K  2,400: gap +0.0548  [+0.0086, +0.1009] *  cfg lb48_lr0.01_wd0.001
+  K  5,000: gap +0.0025  [-0.0370, +0.0420]  cfg lb96_lr0.01_wd0.0001
+  K 10,000: gap +0.0110  [-0.0267, +0.0486]  cfg lb336_lr0.01_wd0.001
+  K 20,000: gap +0.0021  [-0.0418, +0.0459]  cfg lb720_lr0.01_wd0.001
+
+[ETTm2 — Chronos MASE 0.5195, 256 windows, N* = 2400, 단조 True]
+  K    600: gap +0.3671  [+0.2447, +0.4895] *  cfg lb48_lr0.01_wd0.001
+  K  1,200: gap +0.3882  [+0.2471, +0.5293] *  cfg lb96_lr0.01_wd0.0
+  K  2,400: gap +0.0700  [-0.0024, +0.1424]  cfg lb96_lr0.01_wd0.001
+  K  5,000: gap +0.1010  [+0.0313, +0.1706] *  cfg lb336_lr0.01_wd0.0
+  K 10,000: gap +0.0173  [-0.0391, +0.0737]  cfg lb336_lr0.01_wd0.0
+  K 20,000: gap +0.0213  [-0.0370, +0.0795]  cfg lb336_lr0.01_wd0.0001
+
+판정: smallK_sig 4/4 · monotone 4/4 · nstar_finite 4/4 · HOLDS=True
+verdict note(원문): CORRECTED: prior verdict had int-vs-str key bug (by_K keys serialized as str). Raw by_K data valid. h=48 robustness HOLDS.</pre></div></details>
+</div></section>
+<hr>
+
+<section class="bl"><div class="container">
+<div class="lab">부록 B · 적발 결함 원장 (raw)</div>
+<h2>적발 20건+ — 무엇이, 어느 층에서, 어떻게</h2>
+<p class="lead">이 7일 동안 기계 검증이 잡아낸 결함 전부. "잡은 층"은 사람이 아니라
+전부 프로세스다 — 사전등록 기준, 무맥락 적대자, 원문 대조, 실물 파이프라인 검증.</p>
+<div class="tbl-wrap"><table class="ctl">
+<thead><tr><th>#</th><th>결함</th><th>잡은 층</th><th>수정</th></tr></thead>
+<tbody>
+<tr><td class="vn">1</td><td class="pp">v1 노트북 direction-optimization detach 버그 — 1,500 step 최적화가 no-op</td><td class="pp">7/7 파일 단위 정밀 감사 (24 에이전트)</td><td class="pp">폐기 라인이라 수리 대신 기록 — "명시적 실패" 원칙의 근거</td></tr>
+<tr><td class="vn">2</td><td class="pp">scripts/10·14 실행 불가 회귀</td><td class="pp">7/7 정밀 감사 (실행 가능성 검증)</td><td class="pp">동일 — 재현 스크립트는 실행 검증 후 봉인</td></tr>
+<tr><td class="vn">3</td><td class="pp">743개 확증 실행 전원 git-dirty 트리 실행</td><td class="pp">7/7 정밀 감사 (provenance 대조)</td><td class="pp">신규 프로젝트에 clean-git-tree 강제 규칙 (DESIGN.md §4)</td></tr>
+<tr><td class="vn">4</td><td class="pp">K=300 조용한 persistence 폴백 (윈도우 조건 536≤K 미충족)</td><td class="pp">7/7 코드 감사 — 5/30 "불안정" 규명</td><td class="pp">폴백 금지·명시적 예외로 재구현 (Gate 0 기준 a)</td></tr>
+<tr><td class="vn">5</td><td class="pp">K=600–1200 스파이크 = near-duplicate 윈도우 ~5–6개 위 ill-conditioned ridge</td><td class="pp">7/7 코드 감사</td><td class="pp">gradient 학습 DLinear로 교체</td></tr>
+<tr><td class="vn">6</td><td class="pp">ridge λ 표본수 비스케일</td><td class="pp">7/7 코드 감사</td><td class="pp">고정 λ 폐기 (N-스케일 or CV)</td></tr>
+<tr><td class="vn">7</td><td class="pp">50 테스트윈도우 중앙값 양자화 노이즈 → seed-CV 6.583%</td><td class="pp">Gate 0 Run 1 사전등록 기준 (b)</td><td class="pp">256 고정 윈도우 세트 — "50윈도우 평가 금지" 프로토콜화</td></tr>
+<tr><td class="vn">8</td><td class="pp">Gate 2 선택 artifact — 60pt tail val이 소K에서 flat config 오선택 (ETTm2 6×)</td><td class="pp">7/9 무맥락 적대자 #3 (튜닝 진정성)</td><td class="pp">gate1R 재실행: rolling-origin CV + wd + lb48 floor</td></tr>
+<tr><td class="vn">9</td><td class="pp">Gate 1 고정 lookback 336 — 소K에서 미결정(underdetermined) 전이</td><td class="pp">동일 감사의 전이 분석</td><td class="pp">미결정 설정 infeasible 배제 규칙 (n_windows &lt; 4×(lb+h))</td></tr>
+<tr><td class="vn">10</td><td class="pp">논문 v1 과장 12건 — 단조성 거짓·"3–6배"·"3 families"·parity=등가·NLinear 은폐·그리드 축소보고·부록 부재·오염 은폐·상관 최대집계·깨진 참조/유령저자 등 (§06 표 전문)</td><td class="pp">7/12 게이트체인 (action-editor + cold-reader) 증거 JSON 대조</td><td class="pp">v2 전면 재작성 — "좁혀서 정직하게", Appendix A~G 신설</td></tr>
+<tr><td class="vn">11</td><td class="pp">"their lever is tuning" — Xu §5.2의 20% 데이터 ablation 실존을 모른 채 단정 (은폐로 읽힐 위험)</td><td class="pp">7/13 원문 전수 대조 (v1·v2 verbatim)</td><td class="pp">§5.2 명시 인용 + 델타 4항 재서술 (commit 9c45720)</td></tr>
+<tr><td class="vn">12</td><td class="pp">gate7 판정 요약의 int-vs-str 키버그 — "smallK_sig 0/4" 거짓 결론을 로그에 실제 출력</td><td class="pp">원본 by_K 숫자 재검 (검증 루프)</td><td class="pp">판정 재계산 + verdict JSON에 CORRECTED 주석 박제</td></tr>
+<tr><td class="vn">13</td><td class="pp">U1 발사기 — GPU 경합(160.56MiB 잔여)을 여유로 오판해 CUDA OOM</td><td class="pp">7/13 실행 로그</td><td class="pp">지속-여유 감시 + 재시도 견고 재발사기 (7/14 자동 완주)</td></tr>
+<tr><td class="vn">14</td><td class="pp">허위 "Under review as submission to TMLR" 헤더 + "Anonymous authors" (tmlr.sty 기본 모드)</td><td class="pp">7/14 arXiv 엄격 감사 — 렌더 실검</td><td class="pp">[preprint] 모드 — 빈 러닝헤더 + 실명 저자</td></tr>
+<tr><td class="vn">15</td><td class="pp">tarball 단독 빌드 시 References 통째 소실 (7pp PDF)</td><td class="pp">7/14 클린 디렉토리 pdflatex 실검증 (tectonic은 미탐)</td><td class="pp">bbl+bib+bst 동봉 — 양쪽 파이프라인 안전</td></tr>
+<tr><td class="vn">16</td><td class="pp">메타데이터 초록 1,991자 &gt; 1,920 한도</td><td class="pp">7/14 arXiv 폼 규격 대조</td><td class="pp">1,728자 축약본 (PDF 초록은 전문 유지)</td></tr>
+<tr><td class="vn">17</td><td class="pp">bib 환각 서지 2건 — 존재하지 않는 제목, 1건은 친-Chronos 논문을 회의적 인용</td><td class="pp">7/14 서지 전수 arXiv 실검증</td><td class="pp">Toner 2502.12944 / Karaouli 2510.00742 실물 교체 + 인용-주장 재정합</td></tr>
+<tr><td class="vn">18</td><td class="pp">조작된 직접 인용 "was not strictly enforced" — Chronos 원문(v1~v3)에 부재, 진원지는 자체 5/30 노트</td><td class="pp">7/14 인용 원문 grep 대조</td><td class="pp">실원문 표현("from a rigorous standpoint" / "minimal")으로 교체 + 진원지 문서 교정</td></tr>
+<tr><td class="vn">19</td><td class="pp">weight-decay 그리드 표기 오기 (실그리드 {0,10⁻⁴,10⁻³} 불일치)</td><td class="pp">7/14 최종 수치 전수 대조 (~125항목)</td><td class="pp">본문 표기 정정</td></tr>
+<tr><td class="vn">20</td><td class="pp">"stationary bootstrap" 오명명 — 실제는 paired window-block bootstrap</td><td class="pp">동일 전수 대조</td><td class="pp">방법명 정정</td></tr>
+<tr><td class="vn">21</td><td class="pp">U1 K≥1200 ft_value 미세 양수(+0.016 등)가 FT 효과처럼 보임 — 실제는 fp32/fp16 평가 정밀도 artifact (epoch-0 = 동일 모델)</td><td class="pp">7/14 U1 결과 자체 감사</td><td class="pp">캐비엇 명시, 정성 결론은 best_epoch 기준으로 한정</td></tr>
+</tbody></table></div>
+<p class="note">이 원장의 존재 이유: 21건 중 사람 눈이 먼저 잡은 것은 0건이다. 전부
+사전등록 기준·무맥락 적대자·원문 대조·실물 파이프라인 검증이 잡았다.</p>
+</div></section>
+
+<footer><p>HIGAN 이후 — 폐기에서 논문까지 · 2026.07.07–14 · 전수 기록판</p>
 <p style="margin-top:.6rem;"><a href="/projects/higan/">HIGAN v2 보고서</a> · <a href="/projects/higan-generalization/">일반화 여정</a> · <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">github.com/soccz/HIGAN</a> · <a href="/">소찬 · soccz</a></p></footer>
+
+<div id="tip" role="tooltip" aria-hidden="true"></div>
+<script>
+(function(){
+  var tip = document.getElementById('tip');
+  document.addEventListener('mousemove', function(e){
+    var el = e.target.closest ? e.target.closest('[data-tip]') : null;
+    if (el) {
+      tip.textContent = el.getAttribute('data-tip');
+      tip.style.opacity = '1';
+      var x = Math.min(e.clientX + 14, window.innerWidth - 360);
+      tip.style.left = x + 'px';
+      tip.style.top = (e.clientY + 16) + 'px';
+    } else {
+      tip.style.opacity = '0';
+    }
+  });
+})();
+</script>
 </body></html>
