@@ -529,6 +529,7 @@
     <li><a href="#easy">3분 요약</a></li>
     <li><a href="#publication">Publication</a></li>
     <li><a href="#map">여정 지도</a></li>
+    <li><a href="#bs15">BS15 × ML 결합</a></li>
     <li><a href="#reproduce">재현</a></li>
     <li><a href="#race">예측 경기</a></li>
     <li><a href="#transfer">전이곡선</a></li>
@@ -539,6 +540,7 @@
     <li><a href="#audit">감사와 논문화</a></li>
     <li><a href="#rewrite">전면 재작성</a></li>
     <li><a href="#gate">A+ 게이트 7라운드</a></li>
+    <li><a href="#ledger">전체 원장 E00~E38</a></li>
     <li><a href="#graveyard">실패의 전당</a></li>
     <li><a href="#protocol">정직성 프로토콜</a></li>
     <li><a href="#numbers">숫자로 보는 여정</a></li>
@@ -556,7 +558,7 @@
       <strong>약한 팩터에 대한 꼬리 보험, 그리고 그 보험을 파는 것은 정확도가 아니라 구조</strong> —
       에 도달하기까지. 성공만 남기지 않았다. 신경망 붕괴, 프레임 폐기 2회, 통계 철회 3건,
       예상과 반대로 나온 실험, 그리고 블라인드 게이트 7라운드가 전부 원장(E00~E38)에 기록되어 있다.
-      이 페이지는 그 원장을 그대로 펼친 것이다.
+      이 페이지는 그 원장을 그대로 펼친 것이다 — 국면별 이야기(하이라이트)와 <a href="#ledger" style="color:var(--accent);">실험 전수 기록(39건의 "왜")</a> 둘 다.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">39</span><span class="hero-stat-label">실험 (E00~E38)</span></div>
@@ -721,6 +723,39 @@
       </div>
       <div class="flow-step-tags"><a href="#gate" class="flow-step-link">E32–E38</a></div>
     </div>
+  </div>
+</div></section>
+
+<!-- =================== BS15 x ML =================== -->
+<section id="bs15"><div class="container fade-in">
+  <div class="section-label">∗∗ — 원논문과의 결합 구조</div>
+  <h2 class="section-title">"Momentum has its moments" × 머신러닝 — 무엇을 지키고, 무엇을 바꿨나</h2>
+  <p class="section-desc">
+    이 연구의 모든 내용은 Barroso and Santa-Clara (2015, <em>JFE</em>) 위에 서 있다.
+    원논문의 발견 — "모멘텀 크래시는 예측 가능한 변동성에서 오고, 변동성으로 포지션을 역스케일하면 꼬리가 사라진다" —
+    에서 <strong>단 하나의 입력(위험 예측치 σ̂)만 머신러닝으로 교체</strong>하고 나머지는 전부 고정했다.
+    규칙과 표본이 같으므로 성과 차이는 전부 예측력에 귀속된다 — 이것이 식별 설계의 핵심이다.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>BS15의 요소</th><th>본 연구의 처리</th><th>왜</th></tr></thead>
+      <tbody>
+        <tr><td>Eq(6) 스케일 규칙 w=σ<sub>target</sub>/σ̂</td><td class="winner">그대로 고정</td><td>규칙을 고정해야 "예측기 차이 = 성과 차이"의 깨끗한 귀속이 성립</td></tr>
+        <tr><td>Eq(5) 예측기 — 126일 롤링 분산</td><td><strong>12개 예측기 사다리로 교체</strong> (RW126은 벤치마크로 유지)</td><td>연구 질문 자체: "이 하나뿐인 입력이 좋아지면 무엇이 좋아지는가"</td></tr>
+        <tr><td>표본 — 미국 1927–2011 (강한 모멘텀)</td><td>한국 전종목 35년, 상폐 1,842종목 포함 (약한 모멘텀)</td><td>위험관리가 "강자를 더 강하게"인지 "약자도 지키는 보험"인지는 약한 팩터에서만 판별</td></tr>
+        <tr><td>Table 1 기술통계 · Fig 1–3·6</td><td>한국 재현 (표 1·3, 그림 1–2) — 노트북·재현킷 게이트</td><td>모든 확장의 전제 = 재현의 신뢰 (E00–E01)</td></tr>
+        <tr><td>Table 4 위험 분해 — 고유성분이 다수·예측 가능</td><td>한국 재확인: 고유성분 87% + ML 개선의 소재 확인</td><td>BS15 메커니즘의 더 극단적인 시험대 (§8.1)</td></tr>
+        <tr><td>일본 관찰 — 약한 시장(0.08→0.24)에서도 관리 유효</td><td>국제 8계열 경계조건으로 확장 (표 8) + 한국−미국 차이 검정</td><td>"약한 팩터의 보험" 명제의 대우 검증 (§8.4)</td></tr>
+        <tr><td>평가 차원 — 샤프·왜도</td><td><strong>샤프 + 꼬리(ES) + 확실성등가로 분리</strong></td><td>본 연구의 신규 기여: 개선이 "어느 차원으로" 가는지의 분해 (전이곡선)</td></tr>
+        <tr><td>BS15가 묻지 않은 질문</td><td class="winner">"예측이 더 좋아지면?" — 전이곡선 프레임</td><td>예측 문헌(좋아진다)과 포트폴리오 문헌(이득이다)을 잇는 빈 칸</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="viz-insight" style="margin-top:1.8rem;">
+    <div class="viz-insight-label">결합의 결론</div>
+    <p>머신러닝은 BS15의 예측기를 확실히 이겼지만(QLIKE −24%), BS15의 <em>규칙</em>이 이미 벌어둔 것(관리 자체의 꼬리 제거)을
+    넘어 더해준 것은 "약한 팩터 × 극단 구성"이라는 좁은 교집합의 잔여 꼬리뿐이었다 — 그리고 그 증분마저
+    ML의 정확도가 아니라 HAR류 구조가 팔았다. 원논문의 단순한 규칙이 얼마나 강한지가, 역설적으로 이 연구의 가장 큰 확인이다.</p>
   </div>
 </div></section>
 
@@ -1029,6 +1064,225 @@
       <h4>마지막 두 검정, 그리고 저자의 통독</h4>
       <div class="journal-body">국제 전 행의 QLIKE 개선(10~34%)을 문서화해 "증분 부재 ≠ 예측 실패"를 표로 증명하고(E36), 한국−미국 증분 차이 자체를 쌍별 검정(D=+2.01%p, p=0.001)으로 세웠다(E37). R7에서 확정 지적 0건 — 남은 것은 라운드마다 서로 상충하는 취향 지적뿐이었다. 마지막으로 저자가 전문을 순차 통독해 7라운드 패치가 남긴 이음매 7곳을 수리했다(E38).</div>
     </div>
+  </div>
+</div></section>
+
+<!-- =================== FULL LEDGER =================== -->
+<section id="ledger" style="background:var(--bg-secondary);"><div class="container fade-in">
+  <div class="section-label">10.5 — Full ledger · 전수 기록</div>
+  <h2 class="section-title">전체 실험 원장: 39번의 "왜"</h2>
+  <p class="section-desc full">
+    위 국면별 이야기는 선별본이다. 아래는 <strong>전수</strong> — 실험 하나하나가 왜 시작됐고(직전 실험이 남긴 질문),
+    무엇을 했고, 무엇을 남겼는지의 사슬 전체다. 논문은 이 사슬의 마지막 정리일 뿐이다.
+    각 행의 상세(방법·수치·산출물·커밋)는 공개 레포의
+    <a href="https://github.com/soccz/momentum-tail-insurance/blob/main/docs/05_results_ledger.md" target="_blank" rel="noopener" style="color:var(--accent);">결과 원장 원문</a>에 있다.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:90px;">실험</th><th>왜 — 직전 단계가 남긴 질문</th><th>무엇을 → 무엇이 남았나</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E00</span></td>
+          <td style="min-width:220px;">모든 주장의 전제는 재현의 신뢰 — BS15를 한국 원천 데이터만으로</td>
+          <td style="min-width:300px;">레퍼런스 파이프라인 구축 + 에이전트 24개 적대 감사 → WML 샤프 0.17·왜도 −1.16·최악월 1998-10 −94.9%. 오류 3건 수정, pdftotext 마이너스 함정 발견</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E01</span></td>
+          <td style="min-width:220px;">한 구현의 오류는 자기 눈에 안 보인다 → 서로를 참조하지 않은 독립 구현으로 상호 검증</td>
+          <td style="min-width:300px;">최단순 노트북(30셀, 함수 2개) → 6게이트 전부 레퍼런스와 일치. 함정: 표 1은 4팩터 공통표본이어야 함</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E02</span></td>
+          <td style="min-width:220px;">ML 결합의 첫 단추 — 선견 편향 없는 피처·타깃 행렬. BS15의 Eq(5)를 피처에 포함(훗날 중첩 보정이 필요해지는 씨앗)</td>
+          <td style="min-width:300px;">피처 20종 × 422개월. 게이트: 변동성 지속성 0.59, 피처로 BS15 성과 재구성 일치</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS + WALL</span><br><span class="journal-id">E03</span></td>
+          <td style="min-width:220px;">본론 1막 — "예측이 좋아지는가"를 사전 지정 12개의 공정 경기로</td>
+          <td style="min-width:300px;">ENS가 QLIKE 24%↓·R² 28→39%. 신경망은 R² −73%/−439%로 붕괴 — 사전 지정 원칙대로 그대로 보고</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status discover" style="margin-left:0;">DISCOVER</span><br><span class="journal-id">E04</span></td>
+          <td style="min-width:220px;">본론 2막 — 좋아진 예측이 성과로 전이되는가. BS15 규칙·표본 고정, 예측기만 교체(식별)</td>
+          <td style="min-width:300px;">전이곡선 탄생: 샤프는 포화(기울기≈0), 꼬리는 개선 경향. "차원 분리"의 첫 목격</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E05</span></td>
+          <td style="min-width:220px;">왜 되는가 — 블랙박스 금지. BS15의 위험 해부(고유성분)가 ML에서도 성립하는지</td>
+          <td style="min-width:300px;">고유성분 87%·ML 개선은 고유성분에서·크래시 직전 ML이 먼저 발 뺌. 수치 폭발 2건은 게이트가 잡음(→사후 개입 공개 §4.5)</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E06</span></td>
+          <td style="min-width:220px;">그 우위가 우연인가 — 부트스트랩·선택편의·비용</td>
+          <td style="min-width:300px;">샤프 개선은 경계(P=0.082), 관리 모멘텀 자체는 DSR 0.998로 진짜. 60bp까지 비용 강건</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E07</span></td>
+          <td style="min-width:220px;">대안 설계와의 대결 — 무엇을 예측할지(하방준분산), 분자까지 만질지(DM16 μ/σ²)</td>
+          <td style="min-width:300px;">μ 예측 R² 1.3% → μ/σ² 참패(최악월 −93%). 교훈: "분모만 관리하라"</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">PASS + WALL</span><br><span class="journal-id">E08</span></td>
+          <td style="min-width:220px;">결과가 구성 선택의 산물인가 — 6변형 그리드 + 실제 회전율</td>
+          <td style="min-width:300px;">5변형에서 구조 유지, 동일가중만 관리 역효과(신호 품질이 전제). 회전율 28.9%로 실행 가능</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">혼합</span><br><span class="journal-id">E09</span></td>
+          <td style="min-width:220px;">남은 궁금증 4종 일괄 — 창 길이·크래시 직접 분류·효용 환산·최근 10년</td>
+          <td style="min-width:300px;">1개월 창 우월 / 크래시 분류 실패(AUC 0.52) / CE 12.5%p / 2015+ 초약체 구간엔 ML만 방어적 가치</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E10</span></td>
+          <td style="min-width:220px;">헤드라인 주장의 공식 확정 — 꼬리 부트스트랩과 실행 제약</td>
+          <td style="min-width:300px;">꼬리(최악월·ES5)는 5% 유의, 샤프는 경계 — "가치는 꼬리에"가 통계로 섬. 레버리지 캡 무영향·공매도 금지 반영해도 유지</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E11</span></td>
+          <td style="min-width:220px;">심사자가 물을 잔소리 5종을 먼저 묻기</td>
+          <td style="min-width:300px;">이득의 출처는 정확히 약세장(−2.7% vs +2.4%) / 1998-10 단일 월 지배 명시 의무 확인 / 월별 갱신의 반응성이 이득의 일부</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E12</span></td>
+          <td style="min-width:220px;">초고가 굳기 전에 심사자 페르소나 4인 적대 공격 — 전부 수용</td>
+          <td style="min-width:300px;">Δ최악월 p 철회·점별 p 철회·FW p=0.002 폐기·HARX 강등. "죽은 팩터 소생" 프레임 폐기 → "약한 팩터의 꼬리 보험"</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E13</span></td>
+          <td style="min-width:220px;">E12 공격 중 최대 — RF≈0 가정이 서사를 오염</td>
+          <td style="min-width:300px;">콜금리(90년대 12.6%) 실질화 → "시장의 절반"(0.42) 착시가 77%로. WML은 자기자금조달이라 핵심 결과 불변</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E14</span></td>
+          <td style="min-width:220px;">"약한 팩터" 전제가 데이터 처리의 산물인가 — 상폐·이상치 민감도</td>
+          <td style="min-width:300px;">상폐 3안(-100%까지)·필터 4안에서 방향 유지. 극단 가정일수록 오히려 개선(상폐 벌점=숏 수익)</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E15</span></td>
+          <td style="min-width:220px;">잔여 민감도 일괄 + 꼬리보험 테제의 직접 검증</td>
+          <td style="min-width:300px;">블록·평가창 강건. γ 스윕: 위험회피 클수록 가치 단조 증가 — "꼬리를 싫어할수록 값진 보험"</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX→PASS</span><br><span class="journal-id">E16</span></td>
+          <td style="min-width:220px;">"꼬리 관측 14개" 공격의 우회로 — 극값이론</td>
+          <td style="min-width:300px;">GPD(초과 44개)가 경험 ES 재현, 1% 극단꼬리까지 유의. ES 공식 괄호 버그를 게이트가 잡아 수정</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E17</span></td>
+          <td style="min-width:220px;">블라인드 심사 major×3 — 다중검정의 재교정</td>
+          <td style="min-width:300px;">Romano–Wolf에서 1차 대상 ENS 자신이 탈락(p=0.125). 갈아타지 않고 "실패 먼저 보고"의 위계를 §4.4에 명문화</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E18</span></td>
+          <td style="min-width:220px;">재심 — 닫혔는가, 남은 건 무엇인가</td>
+          <td style="min-width:300px;">major×3 → minor×3. 메커니즘을 "방향적 증거"로 자발적 격하, 대차수수료는 오히려 강건성 증거로 전환</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E19</span></td>
+          <td style="min-width:220px;">최대 약점 = 단일 시장 → 미국 병렬(강한 팩터 대조군)</td>
+          <td style="min-width:300px;">BS15 재현 게이트 통과(샤프 0.535 vs 0.53) 후 첫 미재현: 미국 ML 꼬리 증분 −0.13. 경계조건의 씨앗</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E20</span></td>
+          <td style="min-width:220px;">이것이 법칙인가 — 6시장 횡단면 검정</td>
+          <td style="min-width:300px;">"약한 팩터 법칙" 기각(p=0.63). 최약체 일본이 최악. 구성(10분위 vs 2×3)에 따라 미국 부호가 뒤집힘</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E20-정정</span></td>
+          <td style="min-width:220px;">음성 결과를 그대로 믿어도 되나 — 자기 실험의 진단</td>
+          <td style="min-width:300px;">음성은 피처셋 아티팩트였다(시장상태 피처를 빼면 한국조차 −0.79). 결론 유보, 공정 재검정 설계</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E21</span></td>
+          <td style="min-width:220px;">공정하게 다시 — 시장상태 피처를 넣은 재검정</td>
+          <td style="min-width:300px;">그래도 국제 4지역 전부 음성 → 효과는 한국 특수. "티어 상향" 낙관을 원장에 명시적으로 철회</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E22</span></td>
+          <td style="min-width:220px;">한국 안에서 구성 축만 절제 — 판정기준을 실행 전 커밋으로 고정</td>
+          <td style="min-width:300px;">2×3 분산 구성이면 증분 1/3로 축소·유의성 소멸 → 사전 지정 판정 (a): 효과는 극단 10분위 구성에 산다</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E23</span></td>
+          <td style="min-width:220px;">시장 밖에서 구성·개인지배를 분리 — 미국 소형주(JFQA 트리거)</td>
+          <td style="min-width:300px;">ME1 +0.18(p=0.20) 불발. 방향은 정합하나 유의성 없음 → 투고 사다리 JEF/QF로 정직한 재조준</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E24</span></td>
+          <td style="min-width:220px;">"왜 하필 한국인가" — 대리지표 3종으로 채널 판별 시도</td>
+          <td style="min-width:300px;">한국이 1위인 지표 0개 → 사전 지정 중단조건 발동. 메커니즘은 "방향적" 서술 유지, 승격 포기</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E25</span></td>
+          <td style="min-width:220px;">신경망의 실패가 시드 운인가</td>
+          <td style="min-width:300px;">5개 시드 재훈련 — 전 시드에서 벤치마크보다 나쁨. 실패 판정 강건(정본 기준은 QLIKE)</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E26</span></td>
+          <td style="min-width:220px;">콜금리라는 선택이 서사를 좌우하나</td>
+          <td style="min-width:300px;">CD 금리로 바꿔도 0.02 이내. 77%가 CD 기준 85%가 되므로 콜금리는 오히려 보수적 선택</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E27</span></td>
+          <td style="min-width:220px;">논문이 이 데이터를 믿어도 되나 — 1,700만 행 전면 감사</td>
+          <td style="min-width:300px;">필터 적중·연도분포 정확 재현. 종목 수 4,685는 피벗의 유령 열 25개 → 4,660 정정 (첫 진단의 오류도 E27-정정으로 기록)</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E28</span></td>
+          <td style="min-width:220px;">국제 결과를 논문에 어떻게 — "일반성 확장"이 아니라 "경계조건"으로</td>
+          <td style="min-width:300px;">E19~E23을 §8.4로 통합: 미재현은 실패가 아니라 명제의 대우 검증. 표 8(당시 표 9) 탄생</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E29</span></td>
+          <td style="min-width:220px;">출고 전 마지막 — 제3자가 재현할 수 있는가</td>
+          <td style="min-width:300px;">노트북 재실행·FRED 라이브 대조(1e-16)·재현킷 신설(7게이트). "임의 생성 데이터 없음"이 기계 검증 가능해짐</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E30</span></td>
+          <td style="min-width:220px;">"빈 칸" 주장이 과장인가 — 문헌 접속 냉정 평가</td>
+          <td style="min-width:300px;">Fleming–Kirby–Ostdiek·Bollerslev et al. 계보를 표 0에 명시, 주장을 "팩터·차원 분해의 빈 칸"으로 정밀 한정</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E31</span></td>
+          <td style="min-width:220px;">같은 내용, 읽히는 산문 — 전면 재작성</td>
+          <td style="min-width:300px;">수치·주장 동일, 산문만 재작성. 매회 신선한 블라인드 채점자 5라운드: B+ → A ("편집자가 손댈 곳이 거의 없음")</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E32</span></td>
+          <td style="min-width:220px;">A+ 게이트 R1 — "플라시보 표에 꼬리 열이 없다"</td>
+          <td style="min-width:300px;">계산했더니 예상 반전: 꼬리 증분이 4팩터 전부 양수(동분산 수렴의 기계 효과). 은폐 대신 재정렬 — "꼬리 축소는 공통, 보험 성립은 모멘텀 고유"</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E33</span></td>
+          <td style="min-width:220px;">R2 — "중첩과 다중성을 동시에 처리한 검정이 없다"</td>
+          <td style="min-width:300px;">CW-보정 손실차의 SPA형 부트스트랩 p=0.002 + CE 잭나이프(최악월 제거에도 +1.6~1.8) + MV-CE 산출물 보존</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E34</span></td>
+          <td style="min-width:220px;">R3 — 검증자가 산점도를 직접 그려봄</td>
+          <td style="min-width:300px;">꼬리 축 기울기도 0(CI [−0.107,+0.079]) → "우상향" 철회. 분위(Q5) 구조는 표본외에서 반전(+7.9) → "분위가 아니라 국면의 보험"</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E35</span></td>
+          <td style="min-width:220px;">R4 — "생존자가 비ML(HAR)인데 왜 ML의 논문인가" + 기간 불일치</td>
+          <td style="min-width:300px;">ML−HAR 분해: 순수 ML 꼬리 이득 0 → 주장 단위 하향("판매자는 구조"). 미국 동창(2001+) 재평가: 무관리 0.17에도 증분 없음 → 판별자는 "잔여 꼬리"</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E36</span></td>
+          <td style="min-width:220px;">R5 — "국제 행들은 예측 실패라서 증분이 없는 것 아닌가"</td>
+          <td style="min-width:300px;">국제 전 계열 파이프라인 재현(오차 0.000) + QLIKE 10~34% 개선 문서화 — 증분 부재 ≠ 예측 실패</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E37</span></td>
+          <td style="min-width:220px;">R6 — "'한국 유의·타국 비유의'는 차이의 검정이 아니다"</td>
+          <td style="min-width:300px;">동일 달력 창 쌍별 부트스트랩: D = ΔES5(한국)−ΔES5(미국) = +2.01%p, p=0.001 — "확정"이 검정을 얻음</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">CONVERGED</span><br><span class="journal-id">E38</span></td>
+          <td style="min-width:220px;">R7 수렴 + 마무리</td>
+          <td style="min-width:300px;">확정 지적 0건·수치 렌즈 A+ 3연속 → 정본 전환(v4.2). 저자 통독으로 패치 이음매 7곳 수리, 여정 페이지·공개 레포로 과정 전체 공개</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div></section>
 
