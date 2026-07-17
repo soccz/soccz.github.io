@@ -913,7 +913,7 @@ const CATEGORIES = {
     desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper','papers']
+    match: ['momentum-tail-insurance','FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper','papers']
   },
   project: {
     label: 'Project',
@@ -959,6 +959,7 @@ const LANG_COLORS = {
 };
 
 const DESCS = {
+  'momentum-tail-insurance': '졸업논문 프로젝트 — "위험 예측이 좋아지면 무엇이 좋아지는가?" 한국 모멘텀 35년, 39번의 실험(실패·철회 포함 전부 공개)으로 답한 기록. 답: 수익률이 아니라 꼬리(최악의 달)가 좋아진다',
   'M_C_P': 'Claude Thinking \u2014 클로드 코드 완벽 가이드. 7 Parts 30 Chapters 한국어 교재 + 발표자료',
   'VME_paper': 'Value and Momentum Everywhere (AMP 2013) \u2014 논문 완전 해체. 8개 시장 \u00D7 두 팩터 재현 + 한국 모멘텀 검증',
   'AP_CSA': 'AP Computer Science A 한국어 가이드 \u2014 CSAwesome2 기반, Unit \u00B7 FRQ \u00B7 Mock \u00B7 Level \u00B7 Topical 통합',
@@ -1141,6 +1142,7 @@ function renderPosts(catKey) {
     const lang = r.language || r.primaryLanguage?.name;
     const lc = LANG_COLORS[lang] || '#ccc';
     const PROJECT_PAGES = {
+      'momentum-tail-insurance': '/projects/momentum-journey/',
       'market-impact-analysis': '/projects/market-impact/',
       'boundarybench': '/projects/boundarybench/',
       'asset-management-guide': '/projects/asset-management/',
