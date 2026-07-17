@@ -90,6 +90,11 @@ table.ctl td.pp{color:var(--tx2);line-height:1.55;}
 .tlv{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--mut);}
 .tlt{font-weight:700;color:var(--tx);margin:.12rem 0 .25rem;}.tld{font-size:.88rem;color:var(--tx2);line-height:1.6;}
 .note{font-size:.78rem;color:var(--mut);margin-top:.6rem;}
+.easy{background:var(--card);border:1px dashed var(--bdl);border-left:4px solid var(--amb);border-radius:0 10px 10px 0;padding:1rem 1.3rem;margin:0 0 1.5rem;font-size:.93rem;color:var(--tx2);line-height:1.75;}
+.easy .et{display:block;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amb);font-weight:700;margin-bottom:.35rem;}
+.gl{border-bottom:1px dotted var(--mut);cursor:help;}
+.easy-line{margin-top:.9rem;padding-top:.7rem;border-top:1px dashed var(--bdl);font-size:.86rem;color:var(--tx2);}
+.easy-line::before{content:'쉽게 말하면 — ';font-weight:700;color:var(--amb);}
 /* charts */
 .figwrap{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.2rem 1.2rem .9rem;margin:1.4rem 0;}
 .figcap{font-size:.78rem;color:var(--mut);margin-top:.5rem;line-height:1.55;border-top:1px dashed var(--bd);padding-top:.55rem;}
@@ -123,11 +128,51 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="hs"><span class="hsn">8pp</span><span class="hsl">최종 논문</span></div>
 </div>
 <div class="hb">
+<a class="btn" href="#easy">3분 쉬운 버전 ↓</a>
 <a class="btn" href="/projects/higan-generalization/">← 이전 장: 일반화 여정</a>
 <a class="btn" href="#raw">부록: 게이트·결함 원장 ↓</a>
 <a class="btn pr" href="#paper">살아남은 것 — 논문 ↓</a>
 </div>
 </section>
+<hr>
+
+<section class="bl alt" id="easy"><div class="container">
+<div class="lab">쉬운 버전 · 3분</div>
+<h2>관련 지식이 없어도 되는 요약 — 무슨 일이 있었나</h2>
+<p>요즘 AI 분야엔 "시계열 파운데이션 모델"이라는 것이 있다 — 세상의 온갖 과거 기록(전력 사용량,
+교통량, 환율…)을 미리 공부해 둬서, 처음 보는 데이터도 <em>추가 훈련 없이</em> 바로 예측하는
+모델이다(이걸 zero-shot이라 부른다). 그리고 "이 모델이, 그 데이터로 직접 훈련한 전통적 소형
+모델보다 잘 맞힌다"는 보고가 유명 벤치마크마다 이어졌다. AI 기상캐스터가 현지 관측소보다
+낫다는 얘기가 곳곳에서 나온 셈이다.</p>
+<p>이 연구의 질문은 하나다: <strong>그 시합, 공정했나?</strong> 전학 온 천재와 동네 학생을
+시험으로 붙이면서 동네 학생에게는 교과서를 몇 페이지만 줬다면, "천재가 이겼다"는 결과의
+일부는 실력 차가 아니라 <em>상대를 굶긴 효과</em>다. 실제로 유명 벤치마크의 관례는 소형
+모델에게 꽤 짧은 훈련 데이터만 주게 돼 있었다.</p>
+<p>그래서 딱 하나만 바꿔 가며 쟀다. 소형 모델에게 주는 훈련 데이터 양(K)을 600포인트에서
+2만 포인트까지 단계적으로 늘리고, 나머지 — 모델 설정 고르기, 평가 구간, 채점 방식 — 는 전부
+고정했다. 격차가 데이터 양을 따라 줄어들면, 굶김 효과는 실재하는 것이다.</p>
+<p>결과: 데이터를 조금 줬을 때는 AI가 확실히 이기지만, 몇천~1만 포인트를 주면 <strong>격차가
+통계적으로 구별 불가능한 수준까지 줄었다</strong>. 즉 이 벤치마크(ETT)에서 보고돼 온 우위의
+일부는 상대를 굶긴 측정 효과였다. 단 어디서나 그런 것은 아니어서, 전력·교통 데이터에선
+1만 포인트를 줘도 우위가 남았다. "어느 데이터가 어느 쪽인지 미리 알 수 있나?"라는 예측
+법칙도 시도했지만 하루 만에 깨끗이 실패했고 — 그 실패까지 논문에 그대로 실었다.</p>
+<p>이 페이지가 기록하는 것은 결론이 아니라 <strong>과정</strong>이다. 7일 동안 실험 41개가
+꼬리를 물었다 — 상당수는 실패했고, 실패할 때마다 "왜 실패했는지"가 다음 실험을 결정했다.
+그 사슬을 #01부터 #41까지 번호를 붙여 하나도 빼지 않고 실었다.</p>
+<p>과정에는 규칙이 둘 있었다. 첫째, <strong>채점 기준은 시험 전에 잠근다</strong>(사전등록) —
+결과를 보고 기준을 고치면 사람은 반드시 자기에게 유리하게 고친다. 둘째, <strong>내 결과는
+내가 채점하지 않는다</strong> — 사정을 전혀 모르는 검증자들에게 "이 결과를 깨 보라"고 시켰다.</p>
+<p>그리고 실제로 깨졌다. 처음 잰 "6배 격차"는 절반 넘게 우리 실수(모델 설정을 고르는 방식의
+결함)가 만든 것이었고, 고쳐서 13시간을 다시 재니 효과는 진짜지만 훨씬 얇았다(#15→#18).
+AI가 쓴 논문 초안은 12곳 과장으로 퇴짜를 맞았고(#30), 존재하지 않는 논문 인용 2건(#38)과
+남의 논문에 없는 문장을 따옴표로 인용한 것 1건(#41)이 업로드 직전에 적발됐다 — 전부 사람
+눈이 아니라 검증 절차가 잡았다.</p>
+<p>그렇게 살아남은 것이 8페이지 논문 한 편이다 — 과장 0건, 실패와 한계까지 본문에 실은 채로.
+아래가 그 7일의 전부다.</p>
+<p class="note">아래 본문은 같은 이야기를 수치·프로토콜·커밋 단위로 다시 쓴 것이다. 각 날짜
+섹션 머리의 "쉽게 말하면" 상자, <span class="gl" data-tip="이렇게 생긴 점선 밑줄에 마우스를 올리면 쉬운 설명이 뜬다">점선 밑줄 용어</span>,
+그리고 <a href="#glossary">부록 용어사전</a>이 안내를 이어받는다.</p>
+</div></section>
 <hr>
 
 <section class="bl"><div class="container">
@@ -236,6 +281,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <hr>
 
 <section class="bl alt"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>2년을 판 연구 폴더가 실패로 닫혔다. 버리기 전에 "건질 게 있나" 전부 다시 읽었더니, 1년 전 하루 만에 접었던 관찰 하나가 남아 있었다 — "AI가 이긴 건 상대를 굶겼기 때문 아닐까?" 그날 안에, 이 의심을 검증할 계획서와 채점 기준부터 먼저 잠갔다.</div>
 <div class="lab">01 · 7/7 — 출발: 죽은 폴더의 전수 감사</div>
 <h2>폐허에서 살아남은 관찰은 하나였다</h2>
 <p class="lead">"이 폴더에 뭐가 있나"라는 질문으로 시작했다. 1차로 병렬 리더 8개가 2년치
@@ -259,7 +305,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="fstep">
 <div class="fhd"><span class="fn">#01</span> 폴더 1차 감사 — "이 폴더에 뭐가 있나" (병렬 리더 8)</div>
 <div class="frow"><span class="fk think">설계</span><span>질문은 하나: <strong>2년치 기록에 논문화 가능한 것이 남았는가.</strong> 4개 논문 라인 + 곁가지 전부를 라인별 병렬 리더 8개에 나눠 통독시키고, 메인은 종합 판정만 맡는다 — 폐기된 폴더일수록 옛 narrative에 속기 쉬우니 "당시 결론"이 아니라 "지금 파일에 있는 것"만 근거로.</span></div>
-<div class="frow"><span class="fk find">결과</span><span>4개 라인 전부 사망 확정(위 표). 단 하나의 예외 — 하루 만에 접혔던 곁가지 <code>tsfm_audit</code>(5/30 shelved)에 "suggestive-but-unconfirmed"로 남은 관찰: <strong>TSFM zero-shot 우위는 비교 대상 baseline이 데이터에 굶주려 부풀려진 것 아닌가</strong>(당시 힌트: ETTh1에서 DLinear 학습 데이터 K=300→full 시 Chronos와의 격차 −0.40→−0.05).</span></div>
+<div class="frow"><span class="fk find">결과</span><span>4개 라인 전부 사망 확정(위 표). 단 하나의 예외 — 하루 만에 접혔던 곁가지 <code>tsfm_audit</code>(5/30 shelved)에 "suggestive-but-unconfirmed"로 남은 관찰: <strong><span class="gl" data-tip="TSFM(시계열 파운데이션 모델): 방대한 과거 데이터로 미리 공부해 둔 범용 예측 AI">TSFM</span> <span class="gl" data-tip="zero-shot: 새 데이터로는 따로 훈련하지 않고 바로 예측하는 방식">zero-shot</span> 우위는 비교 대상 <span class="gl" data-tip="baseline: 비교 기준이 되는 단순한 모델 — 여기선 그 데이터로 직접 훈련하는 소형 선형 모델">baseline</span>이 데이터에 굶주려 부풀려진 것 아닌가</strong>(당시 힌트: ETTh1에서 DLinear 학습 데이터 K=300→full 시 Chronos와의 격차 −0.40→−0.05).</span></div>
 <div class="fnext">후보가 하나뿐이면 해상도를 올린다 — 파일 단위 2차 정밀 감사로.</div>
 </div>
 <div class="fstep">
@@ -273,7 +319,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="fhd"><span class="fn">#03</span> 선행 3각 스캔 — 니치가 비어 있는가</div>
 <div class="frow"><span class="fk think">설계</span><span>계측기를 고쳐도 니치가 선점돼 있으면 헛수고다. 재실험 전에 문헌부터 — 서로 다른 각도의 3각 병렬 스캔 + 선점 후보는 요약이 아니라 <strong>원문 대조</strong>로 판정.</span></div>
 <div class="frow"><span class="fk find">결과</span><span><strong>CROWDED-but-open.</strong> 직접 선점 0건 — 유일한 선점 후보 arXiv 2510.00742는 원문 확인으로 기각(데이터량 스윕 부재). 결론 층위("baseline 제대로 쓰면 격차 축소")는 Xu et al. 2411.02796(ICLR 2025, 레버=튜닝)이 선점.</span></div>
-<div class="frow"><span class="fk find">델타</span><span>비어 있는 것: <strong>학습 데이터량 K 단독 개입 + 길이-조건부 기제 + parity 예산 N* 정량화</strong>. Xu의 레버는 튜닝·lookback — 우리는 그 강한 설정을 고정한 채 K만 움직인다.</span></div>
+<div class="frow"><span class="fk find">델타</span><span>비어 있는 것: <strong>학습 데이터량 <span class="gl" data-tip="K(예산): baseline에게 주는 훈련 데이터 포인트 개수 — 이 연구가 움직이는 유일한 레버">K</span> 단독 개입 + 길이-조건부 기제 + parity 예산 <span class="gl" data-tip="N*: 두 모델의 격차가 처음으로 &#39;통계적으로 구별 불가&#39;가 되는 훈련 데이터 양">N*</span> 정량화</strong>. Xu의 레버는 튜닝·lookback — 우리는 그 강한 설정을 고정한 채 K만 움직인다.</span></div>
 <div class="fnext">부활 조건 2 성립. 단 "그냥 돌려보고"는 이 폴더에서 금지어 — 설계 문서가 먼저다.</div>
 </div>
 <div class="fstep">
@@ -282,10 +328,10 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="fnext">계측기를 새로 만들면 검증도 새로 해야 한다 — "계측기 게이트"(Gate 0)가 사다리의 첫 칸이 된 이유.</div>
 </div>
 <div class="fstep">
-<div class="fhd"><span class="fn">#05</span> DESIGN.md v1 사전등록 — 실험 전에 판정 기준을 잠갔다</div>
-<div class="frow"><span class="fk try">고정</span><span>가설 3개를 기대 신호·실패 시 처분과 함께 등록: <strong>H1</strong> corr(train 길이, 격차)&lt;0 (실패 시 주장 범위를 개입 결과로 축소), <strong>H2</strong> K↑→gap 단조 수렴+유한 N* (실패 시 <em>KILL</em>), <strong>H3</strong> max-튜닝 후에도 K 효과 잔존 (실패 시 <em>KILL</em> — Xu에 포섭, replication note로 강등). 게이트 순서 고정: Gate 0 계측기 → 1 개입 → 2 요인분해 → 3 관찰 → 4 콜드 리뷰.</span></div>
+<div class="fhd"><span class="fn">#05</span> DESIGN.md v1 <span class="gl" data-tip="사전등록: 실험 전에 가설·판정 기준·실패 시 처분을 문서로 잠그는 것 — 결과를 보고 기준을 바꾸는 자기기만 차단">사전등록</span> — 실험 전에 판정 기준을 잠갔다</div>
+<div class="frow"><span class="fk try">고정</span><span>가설 3개를 기대 신호·실패 시 처분과 함께 등록: <strong>H1</strong> corr(train 길이, 격차)&lt;0 (실패 시 주장 범위를 개입 결과로 축소), <strong>H2</strong> K↑→<span class="gl" data-tip="gap(격차): baseline 오차 − TSFM 오차. 양수면 TSFM이 이기고 있다는 뜻">gap</span> <span class="gl" data-tip="단조 수렴: 데이터를 줄 때마다 격차가 들쭉날쭉 없이 꾸준히 줄어드는 모양">단조 수렴</span>+유한 N* (실패 시 <em>KILL</em>), <strong>H3</strong> max-튜닝 후에도 K 효과 잔존 (실패 시 <em>KILL</em> — Xu에 포섭, replication note로 강등). 게이트 순서 고정: Gate 0 계측기 → 1 개입 → 2 요인분해 → 3 관찰 → 4 콜드 리뷰.</span></div>
 <div class="frow"><span class="fk think">판단</span><span>부활 판단의 두 축을 정직하게 먼저: ① banked 수치에 유리한 게 있어도 고장난 계측기의 수치는 자산이 아니라 부채 — <strong>전부 버리고 재측정부터</strong> 시작한다. ② 이 폴더의 audit 계열은 3연속 deflationary였고 이 라인도 구조적으로 얇을 수 있다 — <strong>천장은 TMLR로 명시</strong>(탑티어 아님)하고, 그 평가 아래에서도 갈 가치가 있는지(검증된 결과 자체의 기록 가치)를 물은 뒤 진행.</span></div>
-<div class="frow"><span class="fk think">캘리브</span><span>주장 강도를 미리 낮춰 등록: "역전" 주장 금지, "소멸+N* 정량화"까지만(내부 예비 증거상 잔여 격차 ~0.03 MASE). 죽음의 경로 4개 명시 — 최대 리스크는 "튜닝이 전부 설명"(Gate 2). <a href="#decisions">부록 C</a>에 전문.</span></div>
+<div class="frow"><span class="fk think">캘리브</span><span>주장 강도를 미리 낮춰 등록: "역전" 주장 금지, "소멸+N* 정량화"까지만(내부 예비 증거상 잔여 격차 ~0.03 <span class="gl" data-tip="MASE: 예측 오차 지표 — &#39;어제 값을 그대로 반복&#39;하는 순진한 예측 대비 오차 비율. 1보다 작으면 그보다 낫다">MASE</span>). 죽음의 경로 4개 명시 — 최대 리스크는 "튜닝이 전부 설명"(Gate 2). <a href="#decisions">부록 C</a>에 전문.</span></div>
 <div class="frow"><span class="fk try">인용 앵커</span><span>집필 시 필수 인용 목록(§6)까지 실험 전에 등록 — Xu 2411.02796(차별화 절 필수) · GIFT-Eval/TSFM-Bench(FoundTS — full-shot 프로토콜 표준) · Zeng 2023(baseline 스펙·계보) · Chronos(대상 모델+provenance 인용) · Bergmeir 계열 재평가(2501.10216·2502.12944 — 현상 층위 선행) · 2510.13654(leakage 계열, 상보) · 기각한 2510.00742까지. (이 중 2501.10216은 7/14 서지 검증에서 회의적 인용에 부적합한 친-Chronos 논문으로 판명돼 교체된다 — #38.)</span></div>
 <div class="fnext">확증 실험 시작 후 판정 기준 변경 금지. 모든 확증 run은 잠긴 JSON 프로토콜 + clean git tree + 커밋 해시 기록. 7/8 아침, Gate 0부터.</div>
 </div>
@@ -294,6 +340,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <hr>
 
 <section class="bl"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>본실험 전에 저울(측정 도구)부터 검사했다 — 첫 검사는 불합격이었는데 원인은 모델이 아니라 채점 방식이라, 고쳐서 합격시켰다. 그 저울로 "데이터를 더 주면 격차가 줄어드는가"를 재니 4개 데이터셋 전부에서 줄었다. 밤에는 더 큰 조사를 걸어 두고 잤다.</div>
 <div class="lab">02 · 7/8 — 게이트의 사다리</div>
 <h2>계측기가 먼저, 가설은 그 다음</h2>
 <p class="lead">하루에 게이트 세 개를 통과했다 — 단 첫 번째는 두 번 만에. 모든 판정 규칙은
@@ -302,7 +349,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="flow">
 <div class="fstep fail">
 <div class="fhd"><span class="fn">#06</span> Gate 0 · Run 1 — 계측기 검증, 첫 시도는 FAIL <span class="tag fail">FAIL</span></div>
-<div class="frow"><span class="fk think">설계</span><span>가설 실험이 아니라 계측기 실험이 먼저다. 수리된 gradient DLinear/NLinear가 계측기답게 행동하는가 — (a) 폴백 0건(윈도우 부족 시 명시적 예외), (b) per-K seed 변동계수 &lt;5%, (c) K≥1200 비단조 스파이크(이웃 K 대비 +15% 초과) 0건. 셋 다 5/30 결함의 직접 부정형이다.</span></div>
+<div class="frow"><span class="fk think">설계</span><span>가설 실험이 아니라 계측기 실험이 먼저다. 수리된 gradient DLinear/NLinear가 계측기답게 행동하는가 — (a) 폴백 0건(윈도우 부족 시 명시적 예외), (b) per-K <span class="gl" data-tip="seed 변동계수(seed-CV): 난수 시작값만 바꿔 5번 돌렸을 때 결과가 흔들리는 정도 — 크면 측정이 불안정하다는 신호">seed 변동계수</span> &lt;5%, (c) K≥1200 비단조 스파이크(이웃 K 대비 +15% 초과) 0건. 셋 다 5/30 결함의 직접 부정형이다.</span></div>
 <div class="frow"><span class="fk try">실행</span><span>2모델 × ETT 4 × K 그리드 × 5 seeds, 테스트 윈도우 50개(당시 기본값).</span></div>
 <div class="frow"><span class="fk find">결과</span><span>seed-CV <strong>최악 6.583%</strong> — 위반 8건(ETTm1 4·ETTm2 4, 최악 ETTm2·DLinear·K2400 6.583%). 기준 (b) FAIL.</span></div>
 <div class="frow"><span class="fk find">원인</span><span>모델이 아니라 <strong>평가 세팅</strong>: 테스트 윈도우 50개 위의 중앙값은 order-statistic — 시드가 조금만 달라도 중앙값이 이웃 윈도우로 점프하며 양자화 노이즈를 만든다. 판별 실험으로 확증: <strong>같은 모델·같은 시드를 256윈도우로 재평가하자 위반 8셀의 CV가 전부 0.46–3.64%로 붕괴</strong>(예: 6.583%→2.520%).</span></div>
@@ -333,7 +380,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <div class="fhd"><span class="fn">#10</span> Gate 1 — 개입 K-스윕 (H2) <span class="tag ok">PASS</span></div>
 <div class="frow"><span class="fk try">실행</span><span>프로토콜이 열어 둔 연산 디테일 9개를 disambiguation <strong>D1–D9</strong>로 잠가 git에 먼저 커밋(아래 접이식), <code>--quick</code> 스모크(wall 17s)로 경로 검증 후 본 run — wall 421s(Chronos는 데이터셋당 1회 평가를 전 K에 공유하므로 싸다).</span></div>
 <div class="frow"><span class="fk find">결과</span><span>Chronos-t5-small zero-shot MASE <strong>0.613 / 0.695 / 0.353 / 0.270</strong>(ETTh1/h2/m1/m2, K 무관 상수). gap(K) 곡선 8/8(2모델×4셋) 단조 수렴 — dlinear 4/4 trend ρ=−1.000. N*: dlinear <strong>5000/10000/10000/20000</strong>, nlinear 5000/5000/1200/5000 — <strong>전 데이터셋 유한</strong>.</span></div>
-<div class="frow"><span class="fk think">예상 대비</span><span>v1.1의 예상("h-계열 parity 미도달")을 <em>상회</em> — h-계열도 그리드 안에서 비유의 도달. 문서에 DEVIATES로 기록.</span></div>
+<div class="frow"><span class="fk think">예상 대비</span><span>v1.1의 예상("h-계열 parity 미도달")을 <em>상회</em> — h-계열도 그리드 안에서 <span class="gl" data-tip="비유의: 남은 격차가 우연 변동과 구별되지 않는다는 통계 판정 — &#39;같아졌다&#39;가 아니라 &#39;차이를 더는 검출 못 한다&#39;">비유의</span> 도달. 문서에 DEVIATES로 기록.</span></div>
 <details class="raw"><summary>▶ 이때 잠근 결정들 — D1–D9 (실행 전 git 커밋, 결과 JSON에 echo)</summary>
 <div class="tbl-wrap"><table class="ctl">
 <thead><tr><th>결정</th><th>무엇을 · 왜</th></tr></thead>
@@ -341,7 +388,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <tr><td class="vn">D1</td><td class="pp">테스트 윈도우를 절대 target 시작 인덱스로 식별 — tail-anchored·stride 24·정확히 256개·전부 엄격-미래. context 길이가 달라도(512 vs 336) 두 모델이 <em>같은 윈도우 세트</em>를 공유해야 paired 비교가 성립.</td></tr>
 <tr><td class="vn">D2</td><td class="pp">paired MASE 분모 — 둘 다 관측하는 336pt context 위 seasonal-naive 스케일(ETTh 24/ETTm 96). 분모가 다르면 gap이 지표 artifact가 된다.</td></tr>
 <tr><td class="vn">D3</td><td class="pp">점추정 연산 순서 고정 — baseline은 seed 5개 평균(윈도우 중앙값), Chronos는 데이터셋당 1회 고정 시드 평가를 전 K에 공유. 프로토콜의 모호한 문구("중앙값, 시드 평균")를 하나의 연산으로.</td></tr>
-<tr><td class="vn">D4</td><td class="pp">불확실성 — 고정 resample 행렬(B=1000, seed 20260708)의 paired window bootstrap + seed 분산 결합. stride 24=horizon이라 윈도우=블록(비겹침).</td></tr>
+<tr><td class="vn">D4</td><td class="pp">불확실성 — 고정 resample 행렬(B=1000, seed 20260708)의 paired window <span class="gl" data-tip="bootstrap: 데이터를 무작위 재추출해 1000번 다시 계산 — 결과가 얼마나 흔들리는지(불확실성)를 재는 통계 기법">bootstrap</span> + seed 분산 결합. stride 24=horizon이라 윈도우=블록(비겹침).</td></tr>
 <tr><td class="vn">D5</td><td class="pp">N* = combined 95% CI가 처음 0에 닿는 최소 그리드 K. CI가 전부 0 아래(역전)여도 a-fortiori 충족 — "parity 도달"의 조작적 정의.</td></tr>
 <tr><td class="vn">D6</td><td class="pp">"감소 추세" = Spearman ρ(K,gap)&lt;0 <em>그리고</em> gap(K_max)&lt;gap(K_min) — 상관 하나로 퉁치지 않게 이중 조건.</td></tr>
 <tr><td class="vn">D7</td><td class="pp">스파이크 기준은 Gate 0 (c) 재사용 — 단 gap이 아니라 baseline MASE 곡선에(gap≈0 구간에선 비율이 퇴화하므로).</td></tr>
@@ -352,7 +399,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 </div>
 <div class="fstep">
 <div class="fhd"><span class="fn">#11</span> Gate 2 — 튜닝 통제 요인 분해 (H3), 생존 실험 <span class="tag ok">PASS *</span></div>
-<div class="frow"><span class="fk think">설계</span><span>Xu의 반론을 정면으로: 각 (dataset,K,seed)에서 Xu-스타일 그리드(lookback {96,336,512,720} × lr {1e-4,1e-3,1e-2})로 best-tuned baseline을 만들어 준 <em>뒤에도</em> K 효과가 남는가. 생존 대비 C = gap_tuned(600) − gap_tuned(K_max). disambiguation <strong>E1–E10</strong> 잠금(아래 접이식).</span></div>
+<div class="frow"><span class="fk think">설계</span><span>Xu의 반론을 정면으로: 각 (dataset,K,seed)에서 Xu-스타일 그리드(<span class="gl" data-tip="lookback: 예측할 때 모델이 참고하는 과거 구간의 길이">lookback</span> {96,336,512,720} × lr {1e-4,1e-3,1e-2})로 best-tuned baseline을 만들어 준 <em>뒤에도</em> K 효과가 남는가. 생존 대비 C = gap_tuned(600) − gap_tuned(K_max). disambiguation <strong>E1–E10</strong> 잠금(아래 접이식).</span></div>
 <div class="frow"><span class="fk think">판단</span><span>primary는 <strong>DLinear 단독</strong>으로 사전 고정 — NLinear는 튜닝 없이도 조기 parity에 도달하는 모델(Gate 1에서 ETTm1 N*=1200)이라 "튜닝을 줘도 K 효과가 남는가"의 <em>변별력이 없다</em>. 판정에 넣으면 물타기, 빼면 은폐 — 그래서 "동일하게 보고하되 판정 비관여"(E7)로.</span></div>
 <div class="frow"><span class="fk find">결과</span><span>dlinear: ETTh1 <strong>+0.092 [−0.002,+0.187]</strong> 아슬 미달, ETTh2 <strong>+0.460</strong> [+0.322,+0.597], ETTm1 <strong>+0.101</strong> [+0.056,+0.145], ETTm2 <strong>+0.819</strong> [+0.674,+0.964] → 3/4 생존(규칙 ≥3). wall 5,200s. 기제 관찰: 소K에서 튜닝이 <strong>lookback 96으로 도망</strong>(ETTh1 K600 선택 96/0.01×4), 대K는 512 선택 — 도망가도 gap 양수 잔존.</span></div>
 <div class="frow"><span class="fk find">캐비앗</span><span>K=1200에서 per-seed val 선택 노이즈 실측 — ETTh1은 <strong>전 시드가 720/1e-4를 선택</strong>해 tuned MASE 1.043(K600 0.742·K2400 0.668 대비 붕괴), seed sd 최대 0.29. 판정 비관여(C는 600 vs K_max)지만 기록해 뒀다 — 이 "val 선택이 이상하다"는 흔적이 이틀 뒤 적대검증 #3의 복선이 된다.</span></div>
@@ -371,7 +418,7 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <tr><td class="vn">E9</td><td class="pp">결정론 교차검증 — 그리드점 (336,1e-3)은 Gate 1과 동일 설정이므로 저장값과 1e-5 내 재현 실패 시 <em>run 전체 abort</em>.</td></tr>
 <tr><td class="vn">E10</td><td class="pp">clean-tree — porcelain 검사 예외는 launch 시점에 필연 존재하는 nohup 로그 1개뿐.</td></tr>
 </tbody></table></div></details>
-<div class="fnext">H3 생존 — Xu 포섭 반박 확보. (* 이 "3/4 생존"의 크기는 7/9 적대검증에서 선택 절차 artifact로 판명된다 — #15.)</div>
+<div class="fnext">H3 생존 — Xu 포섭 반박 확보. (* 이 "3/4 생존"의 크기는 7/9 적대검증에서 선택 절차 <span class="gl" data-tip="artifact: 진짜 현상이 아니라 측정·절차의 결함이 만들어 낸 가짜 신호">artifact</span>로 판명된다 — #15.)</div>
 </div>
 <div class="fstep">
 <div class="fhd"><span class="fn">#12</span> Gate 3 발사 — 관찰 arm 사전등록 후 밤새 run</div>
@@ -403,10 +450,11 @@ footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
 <hr>
 
 <section class="bl alt"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>다른 데이터 10종과 다른 회사의 AI에서도 같은 패턴을 확인했다. 그리고 결과를 믿기 전에, 사정을 전혀 모르는 검증자 6명에게 "이 결과를 깨 보라"고 시켰다 — 한 명이 진짜로 깼다. 모델 설정을 고르는 우리 방식에 결함이 있어 격차가 부풀려져 있었던 것이다.</div>
 <div class="lab">03 · 7/9 — 관찰 arm, 삼각화, 그리고 적대검증의 적중</div>
 <h2>4게이트 통과 직후, 결과를 깨러 갔다 — 그리고 깨졌다</h2>
 <p class="lead">새벽에 Gate 3이, 오전에 Gate 3b가 통과했다. 그리고 이 폴더의 역사("강한 신호는
-매번 artifact")대로, 논문을 쓰기 전에 무맥락 fresh 적대자 6명에게 각기 다른 실패 모드로
+매번 artifact")대로, 논문을 쓰기 전에 <span class="gl" data-tip="무맥락(fresh) 적대자: 프로젝트의 기대·맥락을 전혀 모르는 상태로 투입돼, 결과를 옹호가 아니라 반박하려 드는 검증자">무맥락 fresh 적대자</span> 6명에게 각기 다른 실패 모드로
 결과를 <strong>반증</strong>하라고 시켰다. 앵커를 주면 false PASS가 나온다는 것을 배웠기
 때문에 원고도 요약도 주지 않았다. 하나가 적중했다.</p>
 
@@ -576,6 +624,7 @@ gap(둘 다 gate1R에 병기 기록된 실측) — ETTh1만 2.57×, 나머지 3�
 <hr>
 
 <section class="bl"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>지적받은 결함을 전부 고쳐 13시간짜리 재실험을 돌렸다 — 효과는 진짜였지만 크기는 절반 이하였다. 자신감이 붙어 목표 학회를 상향했는데, 재검색에서 나흘 전 공개된 비슷한 논문을 발견 — 계획 순서를 뒤집어 "가장 위험한 가설부터 싸게 검증"하기로 했다.</div>
 <div class="lab">04 · 7/10 — 정직한 재실행, 그리고 상향과 경보</div>
 <h2>효과는 진짜였고, 크기는 과장이었다</h2>
 <p class="lead">적대자의 처방을 전부 반영한 재계측 — 설계·잠금(7/9 오후) → 크래시와 스모크 →
@@ -585,7 +634,7 @@ gap(둘 다 gate1R에 병기 기록된 실측) — ETTh1만 2.57×, 나머지 3�
 <div class="flow">
 <div class="fstep">
 <div class="fhd"><span class="fn">#16</span> Gate 1R 설계·잠금 — 적대자의 처방을 프로토콜로 (7/9 12:35)</div>
-<div class="frow"><span class="fk think">설계</span><span>#15가 지적한 빠진 레버 전부를 계측기에 넣는다: ① 60pt tail-val 선택 → <strong>rolling-origin 3-fold CV 선택</strong>, ② <strong>weight decay {0, 1e-4, 1e-3}</strong> 그리드(감사가 "빠진 강한-baseline 레버"로 지목한 Xu 스펙), ③ <strong>lookback 48 floor</strong>(소K에선 96조차 과대), ④ <strong>미결정 설정 배제</strong> — n_train_windows &lt; 4×(lookback+horizon)이면 infeasible, ⑤ 선택 규칙 3종(<strong>cv/val/oracle</strong>) 병기 저장 의무 — 어느 규칙이 유리했는지 숨길 수 없게. per-window 저장으로 적법한 CI까지.</span></div>
+<div class="frow"><span class="fk think">설계</span><span>#15가 지적한 빠진 레버 전부를 계측기에 넣는다: ① 60pt tail-val 선택 → <strong>rolling-origin 3-fold CV 선택</strong>, ② <strong>weight decay {0, 1e-4, 1e-3}</strong> 그리드(감사가 "빠진 강한-baseline 레버"로 지목한 Xu 스펙), ③ <strong>lookback 48 floor</strong>(소K에선 96조차 과대), ④ <strong>미결정 설정 배제</strong> — n_train_windows &lt; 4×(lookback+horizon)이면 infeasible, ⑤ 선택 규칙 3종(<strong>cv/val/oracle</strong>) 병기 저장 의무 — 어느 규칙이 유리했는지 숨길 수 없게. per-window 저장으로 적법한 <span class="gl" data-tip="CI(신뢰구간): 참값이 있을 법한 범위 — 이 범위가 0을 포함하지 않으면 &#39;유의&#39;(우연이 아님)로 판정">CI</span>까지.</span></div>
 <div class="frow"><span class="fk think">판정 기준</span><span>실행 전 고정: "적정 튜닝 아래에서도 소K gap이 여전히 유의하게 양수 — ≥3/4." 통계 기계는 D3/D4 verbatim. <strong>실패 시 처분까지 미리</strong>(프로토콜 verbatim): "smallK_gap_positive 실패 = FAIL — Xu 포섭, measurement note 강등 or BANK" — 재실행이 불리하게 나와도 도망갈 문구를 안 남긴다.</span></div>
 <div class="fnext">잠금(sha e7ac3031) 즉시 실행 준비 — 그런데 첫 기동이 바로 죽는다.</div>
 </div>
@@ -786,13 +835,13 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <div class="fhd"><span class="fn">#21</span> 상향 — ICLR 2027 본선 + TMLR fallback (사용자 결정, DESIGN v2.0, 16:20)</div>
 <div class="frow"><span class="fk think">판단</span><span>재심사 근거 4개를 명시 기록: ① <strong>적대검증 생존</strong> — 이 폴더 최초(6-적대자 감사 후 정직 재실행에서 코어 4/4 생존), ② Gate 4a STRONG(3모델 11/12), ③ Gate 4b 초기 신호(비-ETT gap 0.31~0.33, ETT보다 큼), ④ Xu 선례(튜닝 레버 하나로 ICLR 2025 — 우리 증거 기반이 더 넓음).</span></div>
 <div class="frow"><span class="fk think">리스크 자인</span><span>같은 문서에 정직하게: <em>"audit 프레임 단독은 탑티어에서 incremental. 구성적 기여 필수."</em> — audit 계열 연속 deflation 이력을 알고 하는 상향이며, 그래서 구성적 축(U3)이 성패를 쥔다.</span></div>
-<div class="frow"><span class="fk try">고정</span><span>업그레이드 4축 사전등록 — U1 공정 대결(같은 K에서 fine-tuned TSFM vs trained baseline, "fine-tuned 전 K 지배 시 스토리 전환"이라는 분기까지), U2 대규모화, <strong>U3 N* 스케일링 법칙(승부수 — 실패 시 ICLR 포기 명시)</strong>, U4 셀렉터 regret. 실험 동결 ~9/5. Fallback 불변: 어느 분기든 TMLR 성립(지배 구조).</span></div>
+<div class="frow"><span class="fk try">고정</span><span>업그레이드 4축 사전등록 — U1 공정 대결(같은 K에서 <span class="gl" data-tip="fine-tuning(FT): 미리 공부한 모델을 새 데이터로 추가 학습시키는 것">fine-tuned</span> TSFM vs trained baseline, "fine-tuned 전 K 지배 시 스토리 전환"이라는 분기까지), U2 대규모화, <strong>U3 N* 스케일링 법칙(승부수 — 실패 시 ICLR 포기 명시)</strong>, U4 셀렉터 regret. 실험 동결 ~9/5. Fallback 불변: 어느 분기든 TMLR 성립(지배 구조).</span></div>
 <div class="fnext">상향 직후 의무 절차 — 선행 재스캔.</div>
 </div>
 <div class="fstep fail">
 <div class="fhd"><span class="fn">#22</span> 경보 — concurrent arXiv 2607.04919, GO-MODIFIED (16:31)</div>
 <div class="frow"><span class="fk find">발견</span><span>Tan Jerome &amp; Simon, "When Do Foundation Models Pay Off?" — <strong>7/6 v1 공개</strong>, 우리 재스캔 4일 전. 30개 데이터셋 break-even 측정 — "N* 측정"은 더 이상 헤드라인이 될 수 없다. 첫 스캔 판정은 "FT arm 없음, 고전 baseline만" — 이 판정의 절반이 10분 뒤 뒤집힌다(#23).</span></div>
-<div class="frow"><span class="fk think">판단</span><span><strong>순서 반전의 논리</strong>: 상향의 하중이 U3(N* 예측 법칙) 하나에 집중된 구조가 됐다 — 비싼 FT 실험(U1)부터 태우는 대신, <em>값싼 파일럿으로 U3부터 죽여 본다</em>. gate5를 ICLR 승격 전체의 킬게이트로 사전등록: LODO Spearman ≥0.4 ∧ 자명 기준선 2종(global median·const-700) 대비 각 ≥15% — 하나라도 미달이면 그 자리에서 자진 철회·TMLR 복귀. 정직한 사전 확률 기록: 파일럿 PASS 시 ICLR 생존 ~30%.</span></div>
+<div class="frow"><span class="fk think">판단</span><span><strong>순서 반전의 논리</strong>: 상향의 하중이 U3(N* 예측 법칙) 하나에 집중된 구조가 됐다 — 비싼 FT 실험(U1)부터 태우는 대신, <em>값싼 파일럿으로 U3부터 죽여 본다</em>. gate5를 ICLR 승격 전체의 <span class="gl" data-tip="킬게이트: 미리 정한 기준에 미달하면 프로젝트(또는 승격)를 스스로 접기로 잠가 둔 관문">킬게이트</span>로 사전등록: <span class="gl" data-tip="LODO(leave-one-domain-out): 한 분야를 통째로 빼고 법칙을 학습한 뒤 그 분야에서 시험 — 법칙이 새 영역에도 통하는지 재는 방법">LODO</span> Spearman ≥0.4 ∧ 자명 기준선 2종(global median·const-700) 대비 각 ≥15% — 하나라도 미달이면 그 자리에서 자진 철회·TMLR 복귀. 정직한 사전 확률 기록: 파일럿 PASS 시 ICLR 생존 ~30%.</span></div>
 <div class="frow"><span class="fk try">재구조화</span><span>같은 개정(DESIGN v2.1)에 논문 헤드라인도 재설계 — 단일 정량 객체 <strong>"사전학습의 데이터 등가 가치"</strong>: zero-shot은 N*_ZS 샘플어치, fine-tuning은 N*_FT 샘플어치, 이 양을 계열 통계량으로 OOS 예측해 셀렉터로 현금화 — U1과 U3는 두 연구가 아니라 한 법칙. 선제 인용·차별화 의무도 명문: concurrent 2607 명시 인용+설계 대비표, <strong>2605.24381·It's TIME 계열</strong>까지 리뷰어가 지적하기 전에 본문이 먼저.</span></div>
 <div class="fnext">파일럿 스크립트 커밋(16:37) — 그리고 10분 뒤, 자기 정정이 필요해진다.</div>
 </div>
@@ -820,6 +869,7 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <hr>
 
 <section class="bl alt"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>그 승부수 실험(격차가 사라지는 시점을 데이터의 성질로 예측하는 법칙 찾기)은 하루 만에 깨끗하게 실패했다 — 그리고 미리 정해 둔 기준대로 상향을 스스로 철회했다. 실패한 법칙은 지우지 않고 논문의 "한계" 절이 됐다.</div>
 <div class="lab">05 · 7/11 → 7/12 — 킬게이트 발동, 자진 철회</div>
 <h2>89%가 우측중도절단 — 법칙은 성립하지 않았다</h2>
 <p class="lead">값싼 파일럿을 먼저 돌린 것이 이 주의 가장 잘한 결정이었다. 죽은 것 전부가
@@ -829,7 +879,7 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <div class="fstep fail">
 <div class="fhd"><span class="fn">#24</span> Gate 4b run — 비-ETT 확장 <span class="tag fail">FAIL as scored</span></div>
 <div class="frow"><span class="fk try">실행</span><span>#20의 잠금 그대로 발사 — electricity·traffic × 3 TSFM, wall 6,485s (판정 커밋 7/11 21:22).</span></div>
-<div class="frow"><span class="fk find">결과</span><span>소예산 gap은 <strong>6/6셀 유의 재현</strong>(elec K600 +0.309~+0.334 · traffic +0.588~+0.635) + 단조 6/6 — 기아 현상 자체는 도메인 일반. 그러나 K=10,000까지 parity가 안 와 <strong>N* 전부 right-censored</strong> → 사전등록 규칙(N* 재현 요구)상 FAIL로 채점. 커밋 메시지에 정직한 독해 병기: "what fails is parity-within-10k."</span></div>
+<div class="frow"><span class="fk find">결과</span><span>소예산 gap은 <strong>6/6셀 유의 재현</strong>(elec K600 +0.309~+0.334 · traffic +0.588~+0.635) + 단조 6/6 — 기아 현상 자체는 도메인 일반. 그러나 K=10,000까지 parity가 안 와 <strong>N* 전부 <span class="gl" data-tip="right-censored(우측 중도절단): 측정 한계(K=10,000)까지 가도 parity가 안 와서 &#39;N*는 그 너머&#39;라고만 알 수 있는 상태">right-censored</span></strong> → 사전등록 규칙(N* 재현 요구)상 FAIL로 채점. 커밋 메시지에 정직한 독해 병기: "what fails is parity-within-10k."</span></div>
 <div class="frow"><span class="fk think">판단</span><span>FAIL의 재해석 — <strong>N* 이질성(ETTm1 1,200 ↔ traffic &gt;10,000)이야말로 "어느 계열이 어느 레짐인지"를 예측하는 법칙(U3)이 자명하지 않다는 근거</strong>다. 즉 이 FAIL은 U3의 사망 선고가 아니라 동기 강화 — 단 그만큼 U3가 성립해야만 한다는 하중도 커졌다. censoring은 논문 scope로 승격.</span></div>
 <div class="fnext">같은 밤 gate5(U3 파일럿)로 — 법칙이 서는지 직접 잰다.</div>
 </div>
@@ -843,7 +893,7 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <div class="fstep">
 <div class="fhd"><span class="fn">#26</span> gate5 발사 — 그리고 run 도중의 사전등록 (7/12 04:25)</div>
 <div class="frow"><span class="fk try">실행</span><span>160계열(4 hourly 도메인 × 최대 40)에서 per-series N*를 재고 계열 통계량으로 예측 법칙을 적합한다. 킬 3기준은 7/10에 이미 잠김(#22). 운영 결정 G1–G6은 스크립트 헤더에 잠금(아래 접이식).</span></div>
-<div class="frow"><span class="fk think">run 도중 동결</span><span>run 진행 중(~7h 경과 시점) 4도메인 중 3개(elec·kdd·pedestrian)가 <strong>Chronos 학습 코퍼스 Benchmark I(in-domain·암기 가능)</strong>이고 clean fold는 traffic 하나뿐임을 확인 — LODO가 오염 층화에 노출된 구조. 그래서 결과 수치를 <strong>sed로 마스킹한 채(미열람)</strong> 층화 판정 규칙을 별도 선언문으로 동결: 판정 라벨(pooled 3기준)은 불변, 층화는 후속 행동만 결정 — <strong>R2</strong>(pooled PASS 시): B-II 미니 재검을 선결 조건으로, <strong>R3</strong>(pooled NO-GO 시): 층화가 artifact를 시사하면 B-II-only 재파일럿을 <em>단 1회만</em> 허용(이 선언이 그 사전등록), <strong>R4</strong>(자유도 가드): 분기 컷 ρ 0.4는 원 프로토콜 기준 (a) 재사용 — 새 숫자 발명 금지. 적용 범위도 한정: 이 선언은 chronos-t5-small에만 — TimesFM-2.5·Moirai 코퍼스는 provenance 미확정이라 <strong>gate3b/4a 해석에 일반화 금지</strong>.</span></div>
+<div class="frow"><span class="fk think">run 도중 동결</span><span>run 진행 중(~7h 경과 시점) 4도메인 중 3개(elec·kdd·pedestrian)가 <strong>Chronos 학습 코퍼스 Benchmark I(in-domain·암기 가능)</strong>이고 clean fold는 traffic 하나뿐임을 확인 — LODO가 <span class="gl" data-tip="오염(contamination): 시험 데이터가 모델의 사전학습 자료에 이미 들어 있었을 가능성 — 실력이 아니라 암기일 수 있다는 뜻">오염</span> 층화에 노출된 구조. 그래서 결과 수치를 <strong>sed로 마스킹한 채(미열람)</strong> 층화 판정 규칙을 별도 선언문으로 동결: 판정 라벨(pooled 3기준)은 불변, 층화는 후속 행동만 결정 — <strong>R2</strong>(pooled PASS 시): B-II 미니 재검을 선결 조건으로, <strong>R3</strong>(pooled NO-GO 시): 층화가 artifact를 시사하면 B-II-only 재파일럿을 <em>단 1회만</em> 허용(이 선언이 그 사전등록), <strong>R4</strong>(자유도 가드): 분기 컷 ρ 0.4는 원 프로토콜 기준 (a) 재사용 — 새 숫자 발명 금지. 적용 범위도 한정: 이 선언은 chronos-t5-small에만 — TimesFM-2.5·Moirai 코퍼스는 provenance 미확정이라 <strong>gate3b/4a 해석에 일반화 금지</strong>.</span></div>
 <details class="raw"><summary>▶ 이때 잠근 결정들 — gate5 G1–G6</summary>
 <div class="tbl-wrap"><table class="ctl">
 <thead><tr><th>결정</th><th>무엇을 · 왜</th></tr></thead>
@@ -927,6 +977,7 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <hr>
 
 <section class="bl"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>밤새 실험을 자동으로 돌릴 장치를 만들어 걸어 두고, AI가 쓴 논문 초안을 검증에 넣었다 — 12곳에서 과장이 적발돼 퇴짜. 데이터는 멀쩡했는데 글이 데이터보다 크게 말하고 있었다. 전부 고쳐 다시 썼다.</div>
 <div class="lab">06 · 7/12 밤 — 야간 자동화 체인, 그리고 원고 게이트체인: REJECT</div>
 <h2>빠른 초안의 과장 12건이 전부 적발됐다</h2>
 
@@ -934,7 +985,7 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <div class="fstep">
 <div class="fhd"><span class="fn">#29</span> 야간 자동화 체인 구축 — [GPU 대기] → U1 → gate7 (21:25–21:34)</div>
 <div class="frow"><span class="fk try">실행</span><span>U1(gate6) 프로토콜 잠금 + 스크립트 + <strong>GPU-대기 발사기</strong>: 같은 GPU를 다른 프로젝트의 장기 실험(150k step long-run)이 점유 중 — 발사기는 여유를 폴링하다 비는 즉시 자동 발사. 이어 multi-horizon 검증(gate7) 스크립트를 발사기에 체인 — [대기]→U1→gate7, 무인 야간 운행.</span></div>
-<div class="frow"><span class="fk think">판단 ①</span><span>gate7의 horizon은 <strong>h=96이 아니라 h=48</strong> — chronos-t5는 prediction_length≤64로 학습된 모델이라 h=96은 설계 한도 밖 자기회귀 연장을 강요한다(스크립트 주석: "h=96 would handicap chronos"). <strong>상대를 불리하게 만들어 이기는 비교는 하지 않는다</strong> — 우리 주장에 유리해도. 검증된 1R 기계를 <code>HORIZON</code> monkeypatch로 재사용, sanity(누출 0, cv 구동) 확인.</span></div>
+<div class="frow"><span class="fk think">판단 ①</span><span>gate7의 <span class="gl" data-tip="horizon(h): 몇 스텝 앞까지 예측하는가 — h=24면 24시점 앞">horizon</span>은 <strong>h=96이 아니라 h=48</strong> — chronos-t5는 prediction_length≤64로 학습된 모델이라 h=96은 설계 한도 밖 자기회귀 연장을 강요한다(스크립트 주석: "h=96 would handicap chronos"). <strong>상대를 불리하게 만들어 이기는 비교는 하지 않는다</strong> — 우리 주장에 유리해도. 검증된 1R 기계를 <code>HORIZON</code> monkeypatch로 재사용, sanity(누출 0, cv 구동) 확인.</span></div>
 <div class="frow"><span class="fk think">판단 ②</span><span>U1의 4번째 TSFM 후보 Moirai는 <strong>제외 기본값</strong> — uni2ts 설치가 고정된 torch 스택을 깨뜨릴 위험이, 이미 2계보 3모델로 재현된 결과에 4번째 모델이 더할 한계 이득보다 크다. 재현성 스택은 실험 자산이다.</span></div>
 <div class="frow"><span class="fk think">판단 ③</span><span>동일 GPU의 타 장기 실험은 <strong>죽이지 않는다</strong> — 소유권은 그쪽에 있다. 죽이는 대신 기다리는 큐로 공존을 설계한다(이 원칙이 다음 날 밤 시험대에 오른다 — #32).</span></div>
 <div class="fnext">사람은 자고 큐가 돈다. 같은 시각, 병렬 세션에선 원고가 심판대에 올라 있었다.</div>
@@ -993,12 +1044,13 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <hr>
 
 <section class="bl alt"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>밤샘 자동 실험은 메모리 부족으로 11초 만에 죽었고, 이어진 실험은 코드 버그 탓에 "실패했다"는 거짓 결론을 찍었다 — 원본 숫자를 다시 확인해 버그를 잡으니 실제론 성공이었다. 발사 장치는 죽지 않고 재시도하는 방식으로 다시 만들었다.</div>
 <div class="lab">07 · 7/12 밤 – 7/13 — OOM 하나, 거짓 결론 하나, 리뷰어 gotcha 하나</div>
 <h2>그 밤의 체인은 반은 죽고 반은 거짓말을 했다</h2>
 
 <div class="flow">
 <div class="fstep fail">
-<div class="fhd"><span class="fn">#32</span> U1 1차 발사 — 11초 만의 OOM (7/12 23:24) <span class="tag fail">OOM</span></div>
+<div class="fhd"><span class="fn">#32</span> U1 1차 발사 — 11초 만의 <span class="gl" data-tip="OOM(out-of-memory): GPU 메모리가 모자라 프로그램이 죽는 것">OOM</span> (7/12 23:24) <span class="tag fail">OOM</span></div>
 <div class="frow"><span class="fk try">실행</span><span>23:24:05 — 발사기가 "GPU free (used=5 MiB)"를 판정하고 U1을 발사.</span></div>
 <div class="frow"><span class="fk find">결과</span><span>23:24:16 종료 — 발사에서 사망까지 <strong>11초</strong>. traceback: "Tried to allocate <strong>642.00 MiB</strong> … of which <strong>160.56 MiB is free</strong> … Process … has <strong>1.20 GiB</strong> memory in use." 동일 GPU의 다른 장기 실험이 재시작하며 경합 — 발사기의 순간 스냅샷 폴링이 그 사이의 일시적 여유를 진짜 여유로 오판했다.</span></div>
 <div class="fnext">U1은 죽었지만 체인의 다음 항목 gate7은 그대로 진행됐다 — 거기서 두 번째 문제가 기다린다.</div>
@@ -1040,6 +1092,7 @@ ETTh1의 K5000 재확대가 그대로 보인다. 근거: <code>results/gate1R_ho
 <hr>
 
 <section class="bl"><div class="container">
+<div class="easy"><span class="et">쉽게 말하면</span>마지막 실험이 "이길 때까지 추가 학습시키면 되지 않나"라는 반론까지 닫았고, 논문은 3중 재검증을 통과했다. 업로드 직전 검사에서도 가짜 인용과 규격 위반이 잇따라 적발됐고 — 전부 고친 뒤에야 선적했다.</div>
 <div class="lab">08 · 7/14 — 완주, 재게이트, 그리고 선적 직전의 적발들</div>
 <h2>사람 눈은 이 중 하나도 잡지 못했다</h2>
 <p class="lead">아침에 마지막 실험이 끝났고, 원고와 업로드 패키지는 "작성자가 자기 산출물을
@@ -1212,14 +1265,55 @@ better; on ETT, a short evaluation split alone inflates the reported gap.</pre><
 <h2>교훈은 네 개로 줄었다</h2>
 <div class="flow">
 <div class="fstep"><div class="fhd"><span class="fn">1</span> 강한 신호일수록 먼저 의심한다</div>
-<div class="frow"><span class="fk find">근거</span><span>이 폴더에서 4연속 — 6배 격차(선택 artifact)도, "3 families"도, "3–6배 인플레"도, 예외 없이 처음 본 크기는 과장이었다. 방향이 진짜인지가 유일한 질문이고, 이번엔 방향은 살아남았다(4/4 유의, 2계보 3모델, h=48).</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>이 폴더에서 4연속 — 6배 격차(선택 artifact)도, "3 families"도, "3–6배 인플레"도, 예외 없이 처음 본 크기는 과장이었다. 방향이 진짜인지가 유일한 질문이고, 이번엔 방향은 살아남았다(4/4 유의, 2계보 3모델, h=48).</span></div><div class="easy-line">처음 본 대박 신호는 대부분 측정 실수다 — 끝까지 살아남는 건 크기가 아니라 방향이다.</div></div>
 <div class="fstep"><div class="fhd"><span class="fn">2</span> 킬게이트는 실험 전에 박는다</div>
-<div class="frow"><span class="fk find">근거</span><span>U3는 실험 후였다면 "조금만 더"로 몇 주를 태웠을 것이다. 사전등록된 3기준(LODO ≥0.4, 자명 기준선 대비 ≥15%×2)이 파일럿 하루 만에 철회를 결정했다 — 그리고 4b의 censoring과 교차확인돼 artifact가 아님도 확인됐다.</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>U3는 실험 후였다면 "조금만 더"로 몇 주를 태웠을 것이다. 사전등록된 3기준(LODO ≥0.4, 자명 기준선 대비 ≥15%×2)이 파일럿 하루 만에 철회를 결정했다 — 그리고 4b의 censoring과 교차확인돼 artifact가 아님도 확인됐다.</span></div><div class="easy-line">"실패하면 접는다"의 기준은 실험을 시작하기 전에 정해 둬야, 미련 없이 접을 수 있다.</div></div>
 <div class="fstep"><div class="fhd"><span class="fn">3</span> 앵커 없는 fresh 검증만이 진실에 도달한다</div>
-<div class="frow"><span class="fk find">근거</span><span>맥락을 준 게이트가 false PASS를 낸다는 것은 이전 장의 교훈이었다. 이번 장에서 선택 artifact(#3), 과장 12건, 환각 서지 2건, 조작 인용 1건, References 소실 — 전부 무맥락 검증·실물 대조가 잡았다. 사람 눈은 이 중 하나도 잡지 못했다.</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>맥락을 준 게이트가 false PASS를 낸다는 것은 이전 장의 교훈이었다. 이번 장에서 선택 artifact(#3), 과장 12건, 환각 서지 2건, 조작 인용 1건, References 소실 — 전부 무맥락 검증·실물 대조가 잡았다. 사람 눈은 이 중 하나도 잡지 못했다.</span></div><div class="easy-line">내 답안은 내가 채점하지 않는다 — 사정을 모르는 채점자가 제일 정확하다.</div></div>
 <div class="fstep"><div class="fhd"><span class="fn">4</span> 실패는 지우는 게 아니라 scope가 된다</div>
-<div class="frow"><span class="fk find">근거</span><span>NO-GO 난 법칙, censored 89.2%, FAIL로 기록된 게이트, 비단조 wrinkle — 전부 논문의 경계 섹션이 됐다. 이 페이지가 존재하는 이유이기도 하다.</span></div></div>
+<div class="frow"><span class="fk find">근거</span><span>NO-GO 난 법칙, censored 89.2%, FAIL로 기록된 게이트, 비단조 wrinkle — 전부 논문의 경계 섹션이 됐다. 이 페이지가 존재하는 이유이기도 하다.</span></div><div class="easy-line">실패는 지우는 게 아니라 "여기부터는 안 된다"는 지도의 경계선으로 싣는다.</div></div>
 </div>
+</div></section>
+<hr>
+
+<section class="bl" id="glossary"><div class="container">
+<div class="lab">용어사전 · 비전공자용</div>
+<h2>이 페이지의 용어 29개 — 쉬운 한 문장씩</h2>
+<p class="lead">본문의 점선 밑줄 용어에 마우스를 올려도 같은 설명이 뜬다.</p>
+<details class="raw"><summary>▶ 용어 29개 펼치기</summary>
+<div class="tbl-wrap"><table class="ctl">
+<thead><tr><th>용어</th><th>쉬운 설명</th></tr></thead>
+<tbody>
+<tr><td class="vn">시계열</td><td class="pp">시간 순서로 기록된 숫자들 — 예: 매시간 기온, 매일 주가.</td></tr>
+<tr><td class="vn">TSFM · 파운데이션 모델</td><td class="pp">세상의 방대한 과거 데이터로 미리 공부해 둔 범용 예측 AI.</td></tr>
+<tr><td class="vn">zero-shot</td><td class="pp">새 데이터로는 따로 훈련하지 않고 바로 예측하는 방식.</td></tr>
+<tr><td class="vn">baseline</td><td class="pp">비교 기준이 되는 단순한 모델 — 여기선 그 데이터로 직접 훈련하는 소형 선형 모델.</td></tr>
+<tr><td class="vn">DLinear / NLinear</td><td class="pp">이 연구가 baseline으로 쓴 아주 단순한 선형 예측 모델 두 종.</td></tr>
+<tr><td class="vn">Chronos · TimesFM</td><td class="pp">실험 대상인 파운데이션 모델들(각각 아마존·구글 계열).</td></tr>
+<tr><td class="vn">K (예산)</td><td class="pp">baseline에게 주는 훈련 데이터 포인트 개수 — 이 연구가 움직이는 유일한 레버.</td></tr>
+<tr><td class="vn">gap (격차)</td><td class="pp">baseline 오차 − TSFM 오차. 양수면 TSFM이 이기고 있다는 뜻.</td></tr>
+<tr><td class="vn">MASE</td><td class="pp">예측 오차 지표 — '어제 값을 그대로 반복'하는 순진한 예측 대비 오차 비율. 1보다 작으면 그보다 낫다.</td></tr>
+<tr><td class="vn">lookback</td><td class="pp">예측할 때 모델이 참고하는 과거 구간의 길이.</td></tr>
+<tr><td class="vn">horizon (h)</td><td class="pp">몇 스텝 앞까지 예측하는가 — h=24면 24시점 앞.</td></tr>
+<tr><td class="vn">seed</td><td class="pp">난수의 시작값 — 이것만 바꿔 여러 번 돌려서 결과가 우연인지 확인한다.</td></tr>
+<tr><td class="vn">seed-CV</td><td class="pp">seed만 바꿨을 때 결과가 흔들리는 정도 — 크면 측정이 불안정하다는 신호.</td></tr>
+<tr><td class="vn">CI (신뢰구간)</td><td class="pp">참값이 있을 법한 범위 — 이 범위가 0을 포함하지 않으면 '유의'로 판정.</td></tr>
+<tr><td class="vn">유의 / 비유의</td><td class="pp">'우연으로 보기 어렵다' / '우연 변동과 구별되지 않는다'는 통계 판정.</td></tr>
+<tr><td class="vn">N* (parity 예산)</td><td class="pp">격차가 처음으로 '통계적으로 구별 불가'가 되는 훈련 데이터 양 — '같아졌다'는 뜻이 아니다.</td></tr>
+<tr><td class="vn">단조 수렴</td><td class="pp">데이터를 줄 때마다 격차가 들쭉날쭉 없이 꾸준히 줄어드는 모양.</td></tr>
+<tr><td class="vn">bootstrap</td><td class="pp">데이터를 무작위로 재추출해 수백~수천 번 다시 계산하며 불확실성을 재는 통계 기법.</td></tr>
+<tr><td class="vn">right-censored (우측 중도절단)</td><td class="pp">측정 한계(K=1만)까지 가도 그 사건(parity)이 안 와서 '그 너머'라고만 알 수 있는 상태.</td></tr>
+<tr><td class="vn">사전등록</td><td class="pp">실험 전에 가설·판정 기준·실패 시 처분을 문서로 잠그는 것 — 결과 보고 기준을 바꾸는 자기기만 차단.</td></tr>
+<tr><td class="vn">킬게이트</td><td class="pp">미리 정한 기준에 미달하면 프로젝트를 스스로 접기로 잠가 둔 관문.</td></tr>
+<tr><td class="vn">적대검증</td><td class="pp">결과를 옹호가 아니라 반박하려는 검증자에게 맡기는 검증.</td></tr>
+<tr><td class="vn">무맥락 (fresh)</td><td class="pp">프로젝트의 기대·맥락을 전혀 모르는 상태의 검증자 — 편을 들 수가 없다.</td></tr>
+<tr><td class="vn">LODO</td><td class="pp">한 분야(도메인)를 통째로 빼고 법칙을 학습한 뒤 그 분야에서 시험 — 새 영역에도 통하는지 재는 방법.</td></tr>
+<tr><td class="vn">fine-tuning (FT)</td><td class="pp">미리 공부한 모델을 새 데이터로 추가 학습시키는 것.</td></tr>
+<tr><td class="vn">튜닝</td><td class="pp">모델의 설정값(lookback·학습률 등)을 데이터에 맞게 골라 주는 것.</td></tr>
+<tr><td class="vn">오염 (contamination)</td><td class="pp">시험 데이터가 모델의 사전학습 자료에 이미 들어 있었을 가능성 — 실력이 아니라 암기일 수 있다는 뜻.</td></tr>
+<tr><td class="vn">artifact</td><td class="pp">진짜 현상이 아니라 측정·절차의 결함이 만들어 낸 가짜 신호.</td></tr>
+<tr><td class="vn">OOM</td><td class="pp">GPU 메모리가 모자라 프로그램이 죽는 것(out-of-memory).</td></tr>
+</tbody></table></div></details>
 </div></section>
 <hr>
 
