@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8"><link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>폐기에서 논문까지 — 7일의 기록</title>
+<meta name="description" content="ABANDONED로 닫힌 HIGAN 폴더의 전수 감사에서 살아남은 아이디어 하나가 사전등록 게이트 9개와 적대검증을 거쳐 8페이지 논문이 되기까지 — 실패와 잡아낸 결함을 앞에 둔 7일의 기록.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--bg:#fafaf9;--bg2:#f5f5f4;--card:#fff;--tx:#1c1917;--tx2:#57534e;--mut:#a8a29e;--ac:#44403c;--acd:rgba(68,64,60,.07);--red:#b91c1c;--grn:#15803d;--amb:#b45309;--bd:#e7e5e4;--bdl:#d6d3d1;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);line-height:1.72;-webkit-font-smoothing:antialiased;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 2rem;background:rgba(250,250,249,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;}
+nav a.home{font-family:'Noto Serif KR',serif;font-weight:700;color:var(--tx);text-decoration:none;font-size:.92rem;}
+nav .nr a{color:var(--tx2);text-decoration:none;font-size:.8rem;margin-left:1.2rem;}
+nav .nr a:hover{color:var(--ac);}
+.container{max-width:1040px;margin:0 auto;padding:0 2rem;}
+.hero{min-height:78vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:7rem 2rem 3.5rem;background:radial-gradient(ellipse at 30% 40%,rgba(120,113,108,.04) 0%,transparent 55%);}
+.hl{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--mut);border:1px solid var(--bdl);border-radius:100px;padding:.4rem 1.1rem;display:inline-block;margin-bottom:1.6rem;}
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(1.9rem,5vw,3rem);font-weight:700;line-height:1.32;margin-bottom:1.4rem;}
+.hero h1 em{font-style:normal;color:var(--amb);}
+.hsub{font-size:1rem;color:var(--tx2);max-width:720px;margin:0 auto 2.4rem;line-height:1.85;}
+.hstats{display:flex;justify-content:center;gap:2.2rem;flex-wrap:wrap;margin-bottom:2.4rem;}
+.hs{text-align:center;}.hsn{font-family:'Noto Serif KR',serif;font-size:2rem;font-weight:700;color:#292524;display:block;line-height:1.2;}
+.hsl{font-size:.72rem;color:var(--mut);letter-spacing:.04em;}
+.hb{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.3rem;border:1px solid var(--bdl);border-radius:8px;color:var(--tx2);text-decoration:none;font-size:.86rem;font-weight:500;transition:all .15s;background:var(--card);}
+.btn:hover{border-color:var(--ac);color:var(--ac);}.btn.pr{background:var(--ac);color:var(--bg);border-color:var(--ac);}.btn.pr:hover{background:#292524;color:#fff;}
+hr{border:none;border-top:1px solid var(--bd);margin:0;}
+section.bl{padding:4rem 0;}section.bl.alt{background:var(--bg2);}
+.lab{font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mut);margin-bottom:.7rem;}
+h2{font-family:'Noto Serif KR',serif;font-size:1.6rem;font-weight:700;line-height:1.4;margin-bottom:1rem;}
+p.lead{font-size:1rem;color:var(--tx2);margin-bottom:1.2rem;}p{color:var(--tx2);margin-bottom:.9rem;}
+em{font-style:normal;color:var(--amb);font-weight:500;}strong{color:var(--tx);font-weight:700;}
+code{font-family:'JetBrains Mono',monospace;font-size:.84em;background:var(--bg2);padding:.1rem .35rem;border-radius:4px;border:1px solid var(--bd);color:var(--ac);}
+.tag{display:inline-block;font-size:.64rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.03em;}
+.tag.ok{background:rgba(21,128,61,.1);color:var(--grn);}.tag.fail{background:rgba(185,28,28,.09);color:var(--red);}
+.tag.mixed{background:rgba(180,83,9,.1);color:var(--amb);}.tag.live{background:rgba(21,128,61,.1);color:var(--grn);}.tag.dead{background:rgba(185,28,28,.09);color:var(--red);}.tag.weak{background:rgba(180,83,9,.1);color:var(--amb);}
+/* logical flow steps */
+.flow{margin:1.6rem 0;}
+.fstep{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.4rem 1.6rem;margin-bottom:.9rem;}
+.fstep .fhd{font-weight:700;color:var(--tx);font-size:1.02rem;margin-bottom:.9rem;display:flex;align-items:baseline;gap:.7rem;flex-wrap:wrap;}
+.fstep .fn{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:#fff;background:var(--ac);padding:.16rem .55rem;border-radius:5px;letter-spacing:.04em;}
+.frow{display:grid;grid-template-columns:3.2rem 1fr;gap:.7rem;margin-bottom:.5rem;align-items:start;}
+.fk{font-size:.64rem;font-weight:700;letter-spacing:.06em;padding:.14rem 0;border-radius:4px;text-align:center;}
+.fk.think{color:var(--tx2);}.fk.try{color:var(--ac);}.fk.find{color:var(--amb);}
+.frow span:last-child{font-size:.9rem;color:var(--tx2);line-height:1.6;}
+.fnext{margin-top:.9rem;padding-top:.8rem;border-top:1px dashed var(--bdl);font-size:.88rem;font-weight:500;color:var(--grn);}
+.fnext::before{content:'→ ';font-weight:700;}
+.fstep.fail .fnext{color:var(--red);}
+/* evidence tiers (성공/실패 확실하게) */
+.tier{margin-bottom:1.5rem;}
+.tier-h{font-weight:700;font-size:1.02rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.tier-h .dot{width:11px;height:11px;border-radius:50%;flex:none;}
+.tier.win .dot{background:var(--grn);}.tier.lose .dot{background:var(--red);}.tier.gray .dot{background:var(--amb);}
+.tier-h .cnt{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--mut);font-weight:500;}
+.ev{display:grid;grid-template-columns:1fr auto;gap:.3rem 1rem;padding:.65rem .95rem;border:1px solid var(--bd);border-radius:8px;margin-bottom:.5rem;background:var(--card);align-items:center;}
+.ev-t{font-size:.89rem;color:var(--tx);font-weight:500;}.ev-t .sub{display:block;color:var(--tx2);font-size:.8rem;font-weight:400;margin-top:.1rem;line-height:1.5;}
+.ev-n{font-family:'JetBrains Mono',monospace;font-size:.76rem;font-weight:600;white-space:nowrap;text-align:right;}
+.ev.win{border-left:3px solid var(--grn);}.ev.win .ev-n{color:var(--grn);}
+.ev.lose{border-left:3px solid var(--red);}.ev.lose .ev-n{color:var(--red);}
+.ev.gray{border-left:3px solid var(--amb);}.ev.gray .ev-n{color:var(--amb);}
+/* future challenge cards */
+.fut{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;}
+@media(max-width:680px){.fut{grid-template-columns:1fr;}}
+.futc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.4rem 1.5rem;border-top:3px solid var(--ac);}
+.futc .fct{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--mut);letter-spacing:.06em;margin-bottom:.35rem;}
+.futc h4{font-size:.98rem;font-weight:700;margin-bottom:.55rem;line-height:1.4;}
+.futc p{font-size:.86rem;line-height:1.62;margin-bottom:.5rem;}
+.futc .need{font-size:.79rem;color:var(--tx2);border-top:1px dashed var(--bdl);padding-top:.55rem;margin-top:.65rem;}
+.futc .need b{color:var(--ac);font-weight:700;}
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--bd);border-radius:10px;margin:1.4rem 0;background:var(--card);}
+table.led{width:100%;border-collapse:collapse;font-size:.82rem;}
+table.led th{text-align:left;padding:.7rem .9rem;background:var(--bg2);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);position:sticky;top:0;}
+table.led td{padding:.6rem .9rem;border-top:1px solid var(--bd);vertical-align:top;}
+table.led td.tk{font-weight:600;color:var(--tx);min-width:180px;}
+table.led pre{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--tx2);white-space:pre-wrap;line-height:1.5;}
+table.ctl details{margin-top:.4rem;}
+table.ctl summary{cursor:pointer;font-size:.72rem;color:var(--ac);font-weight:600;}
+table.ctl details ul{margin:.4rem 0 0 1rem;padding:0;}
+table.ctl details li{font-size:.72rem;color:var(--tx2);line-height:1.5;list-style:disc;margin-bottom:.2rem;}
+table.ctl details code{font-size:.68rem;}
+table.led tr.r-fail td.tk{color:var(--red);}
+table.ctl{width:100%;border-collapse:collapse;font-size:.8rem;}
+table.ctl th{text-align:left;padding:.6rem .8rem;background:var(--bg2);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);}
+table.ctl td{padding:.5rem .8rem;border-top:1px solid var(--bd);vertical-align:top;}
+table.ctl td.vn{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--tx);white-space:nowrap;}
+table.ctl td.ne{font-family:'JetBrains Mono',monospace;color:var(--tx2);text-align:center;}
+table.ctl td.pp{color:var(--tx2);line-height:1.55;}
+.ph{font-size:.62rem;font-weight:700;padding:.08rem .4rem;border-radius:4px;letter-spacing:.02em;white-space:nowrap;}
+.ph-controller{background:rgba(68,64,60,.1);color:var(--ac);}.ph-feasible{background:rgba(180,83,9,.1);color:var(--amb);}
+.ph-predictive{background:rgba(21,128,61,.1);color:var(--grn);}.ph-stress{background:rgba(120,113,108,.12);color:var(--tx2);}
+.ph-audit{background:rgba(28,25,23,.07);color:var(--mut);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin:1.5rem 0;}
+@media(max-width:680px){.grid2{grid-template-columns:1fr;}.hstats{gap:1.3rem;}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:1.4rem 1.5rem;}
+.card.g{border-left:4px solid var(--grn);}.card.r{border-left:4px solid var(--red);}
+.card h4{font-size:.92rem;font-weight:700;margin-bottom:.5rem;}.card p{font-size:.86rem;margin-bottom:.45rem;line-height:1.6;}
+.card .num{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--tx);}
+.callout{background:var(--acd);border-left:4px solid var(--ac);border-radius:0 8px 8px 0;padding:1.2rem 1.5rem;margin:1.5rem 0;}
+.callout p{margin-bottom:.35rem;font-size:.9rem;}.callout p:last-child{margin-bottom:0;}
+.tl{border-left:2px solid var(--bdl);margin:1.4rem 0;padding-left:1.7rem;}
+.tli{position:relative;padding-bottom:1.5rem;}
+.tli::before{content:'';position:absolute;left:-2.26rem;top:.35rem;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--ac);}
+.tli.dead::before{border-color:var(--red);}.tli.live::before{border-color:var(--grn);}.tli.weak::before{border-color:var(--amb);}
+.tlv{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--mut);}
+.tlt{font-weight:700;color:var(--tx);margin:.12rem 0 .25rem;}.tld{font-size:.88rem;color:var(--tx2);line-height:1.6;}
+.note{font-size:.78rem;color:var(--mut);margin-top:.6rem;}
+footer{padding:3.2rem 2rem;text-align:center;border-top:1px solid var(--bd);color:var(--mut);font-size:.8rem;}
+footer a{color:var(--tx2);text-decoration:none;}footer a:hover{color:var(--ac);}
+</style></head><body>
+<nav><a class="home" href="/">소찬 · soccz</a>
+<div class="nr"><a href="/projects/higan/">← HIGAN v2 보고서</a><a href="/projects/higan-generalization/">일반화 여정</a><a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">GitHub ↗</a></div></nav>
+
+<section class="hero">
+<span class="hl">HIGAN 이후 · 2026.07.07 — 07.14</span>
+<h1>폐기된 폴더에서 <em>논문</em>까지 —<br>7일의 기록</h1>
+<p class="hsub">일반화 여정은 2026-06-22 ABANDONED로 끝났다. 이 페이지는 그 다음 장이다:
+죽은 폴더의 전수 감사에서 살아남은 아이디어 하나가, 사전등록 게이트 9개와 무맥락 적대검증을
+거쳐 8페이지 논문이 되기까지. 관례대로 — 성공보다 실패와 잡아낸 결함을 앞에 둔다.</p>
+<div class="hstats">
+<div class="hs"><span class="hsn">9</span><span class="hsl">preregistered gates</span></div>
+<div class="hs"><span class="hsn">2</span><span class="hsl">kill-gates fired</span></div>
+<div class="hs"><span class="hsn">~125</span><span class="hsl">numbers cross-checked</span></div>
+<div class="hs"><span class="hsn">8pp</span><span class="hsl">최종 논문</span></div>
+</div>
+<div class="hb">
+<a class="btn" href="/projects/higan-generalization/">← 이전 장: 일반화 여정</a>
+<a class="btn pr" href="#paper">살아남은 것 — 논문 ↓</a>
+</div>
+</section>
+<hr>
+
+<section class="bl"><div class="container">
+<div class="lab">01 · 출발 — 죽은 폴더의 전수 감사</div>
+<h2>폐허에서 살아남은 관찰은 하나였다</h2>
+<p class="lead">7월 7일, "이 폴더에 뭐가 있나"라는 질문으로 시작했다. 병렬 리더 8개가 2년치
+기록을 전부 읽었고, 파일 단위 정밀 감사가 뒤따랐다. 결론: 4개 논문 라인 전부 사망 확정.
+단 하나, 하루 만에 접혔던 곁가지(<code>tsfm_audit</code>)에 "suggestive-but-unconfirmed"로
+남겨진 관찰이 있었다 — <strong>TSFM의 zero-shot 우위는 비교 대상 baseline이 데이터에
+굶주려서 부풀려진 것 아닌가.</strong></p>
+<div class="flow">
+<div class="fstep">
+<div class="fhd"><span class="fn">부활 근거 1</span> "불안정"의 정체는 코드 결함이었다</div>
+<div class="frow"><span class="fk think">당시</span><span>5/30에 접은 이유: "DLinear가 학습 예산에 따라 비단조·불안정해서 확증 불가."</span></div>
+<div class="frow"><span class="fk find">규명</span><span>학습 루프 자체가 없었다 — 고정 λ 닫힌형 ridge. K=600에선 윈도우 조건 미충족으로 <strong>조용히 naive persistence로 폴백</strong>(굶주린 baseline이 사실 baseline이 아니었다), K=600–1200 스파이크는 겹침 윈도우 5–6개 위의 ill-conditioned ridge, λ는 표본수에 비스케일.</span></div>
+<div class="fnext">"확증 불가"가 미스터리에서 수리 가능한 결함으로 — 부활 조건 성립. banked 수치는 전부 재측정 대상.</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">부활 근거 2</span> 니치는 CROWDED-but-open</div>
+<div class="frow"><span class="fk try">조사</span><span>3각 병렬 문헌 스캔 + 원문 대조. 결론 층위("baseline 제대로 쓰면 격차 소멸")는 선점됐지만, <strong>데이터량 단독 개입 + parity 예산 측정</strong>은 비어 있었다.</span></div>
+<div class="fnext">설계 문서에 가설·게이트·죽음의 경로를 먼저 박고 시작 — "그냥 돌려보고"는 이 폴더에서 금지어다.</div>
+</div>
+</div>
+</div></section>
+<hr>
+
+<section class="bl alt"><div class="container">
+<div class="lab">02 · 게이트의 사다리 — 7/7 ~ 7/9</div>
+<h2>실험보다 판정 기준이 먼저 잠겼다</h2>
+<p class="lead">모든 확증 실험은 잠긴 JSON 프로토콜에 판정 규칙을 먼저 박고, 클린 git 트리에서
+실행하고, 결과 파일에 프로토콜 해시와 커밋을 기록했다. 결과를 보고 기준을 바꾸는 길을
+스스로 막은 것이다.</p>
+<div class="tier win"><div class="tier-h"><span class="dot"></span>통과한 게이트 <span class="cnt">순서대로</span></div>
+<div class="ev win"><span class="ev-t">Gate 0 — 계측기 검증<span class="sub">수리된 gradient DLinear가 seed 변동계수 &lt;5%·비단조 스파이크 0으로 K-곡선을 안정 측정하는가. 1차 시도는 테스트 윈도우 50개의 중앙값 양자화 노이즈로 FAIL — 256개로 늘려 재통과.</span></span><span class="ev-n">PASS (2번째 시도)</span></div>
+<div class="ev win"><span class="ev-t">Gate 1 — 개입 K-스윕<span class="sub">데이터만 늘리면 격차가 단조 수렴하는가. 4/4 데이터셋 ρ=−1.0, parity 예산 전부 유한.</span></span><span class="ev-n">PASS</span></div>
+<div class="ev win"><span class="ev-t">Gate 2 — 튜닝 통제 분해<span class="sub">튜닝을 최대로 줘도 데이터량 효과가 잔존하는가. 3/4 생존.</span></span><span class="ev-n">PASS *</span></div>
+<div class="ev win"><span class="ev-t">Gate 3 — 관찰 arm<span class="sub">실제 벤치마크 10개 횡단, 자연 train 길이 ↔ 격차 Spearman ρ=−0.85 (permutation p=0.003).</span></span><span class="ev-n">PASS</span></div>
+<div class="ev win"><span class="ev-t">Gate 4a — 멀티모델<span class="sub">Chronos-t5 · Chronos-Bolt · TimesFM-2.5, 12셀 중 11 재현.</span></span><span class="ev-n">PASS</span></div>
+</div>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>규칙대로 FAIL로 기록한 것</div>
+<div class="ev lose"><span class="ev-t">Gate 4b — 비-ETT 도메인<span class="sub">전력·교통에서 소예산 격차는 크게 재현(+0.31~+0.64)되지만 1만 포인트를 줘도 parity가 안 온다(우측중도절단). 사전등록 규칙상 FAIL — 단 이 censoring이 나중에 논문의 정직한 scope가 된다.</span></span><span class="ev-n">FAIL (as scored)</span></div>
+</div>
+<p><em>*</em> Gate 2의 별표는 이유가 있다 — 다음 섹션.</p>
+</div></section>
+<hr>
+
+<section class="bl"><div class="container">
+<div class="lab">03 · 적대검증 — 7/9</div>
+<h2>4게이트 통과 직후, 결과를 깨러 갔다</h2>
+<p class="lead">이 폴더의 역사는 "강한 신호는 매번 artifact"였다. 그래서 논문을 쓰기 전에
+무맥락 fresh 적대자 6명에게 각기 다른 실패 모드(지표·누출·튜닝 진정성·공정성·통계·자명성)로
+결과를 <strong>반증</strong>하라고 시켰다. 앵커를 주면 false PASS가 나온다는 것을 이 폴더에서
+배웠기 때문에, 원고도 요약도 주지 않았다.</p>
+<div class="fstep fail">
+<div class="fhd"><span class="fn">적중</span> Gate 2의 "3/4 생존"은 선택 절차의 artifact였다</div>
+<div class="frow"><span class="fk find">발견</span><span>설정 선택에 쓴 검증셋이 60포인트짜리 꼬리 하나였다. 소예산에서 이 굶주린 검증셋은 <strong>거의 학습되지 않은 flat 설정을 골랐다</strong> — ETTm2 K=600에서 선택된 설정의 test MASE는 1.127인데, 같은 그리드 안에 0.410짜리가 있었다. 격차가 6배 부풀려진 것.</span></div>
+<div class="frow"><span class="fk find">전이</span><span>같은 오염이 Gate 1(고정 lookback 336의 소예산 미결정성)까지 번져 있었다.</span></div>
+<div class="fnext">판정: 프로즈 수리가 아니라 재실행. "데이터 기아"가 아니라 "선택 절차의 기아"였다면 논문 전제가 무너진다 — 구제 금지 원칙으로 다시 쟀다.</div>
+</div>
+</div></section>
+<hr>
+
+<section class="bl alt"><div class="container">
+<div class="lab">04 · 정직한 재실행 — 7/9 ~ 7/10</div>
+<h2>효과는 진짜였고, 크기는 과장이었다</h2>
+<p class="lead">rolling-origin 교차검증 선택 + weight decay + lookback 48 floor +
+미결정 설정 배제로 계측기를 다시 만들어 13시간 재실행했다.</p>
+<div class="tier win"><div class="tier-h"><span class="dot"></span>살아남은 것</div>
+<div class="ev win"><span class="ev-t">소예산 격차, 4/4 유의 양수<span class="sub">K=600에서 +0.10 / +0.08 / +0.06 / +0.41 — 전부 CI가 0을 배제. 단조 수렴, parity 예산 유한.</span></span><span class="ev-n">4/4</span></div>
+</div>
+<div class="tier gray"><div class="tier-h"><span class="dot"></span>깎인 것</div>
+<div class="ev gray"><span class="ev-t">크기 — 대부분 절반 이하로<span class="sub">부풀려진 0.86은 0.14로, 0.47은 0.25로. ETTh1은 K=5000에서 다시 유의해지는 비단조 wrinkle까지 — 전부 논문에 그대로 실렸다.</span></span><span class="ev-n">3~6× → 정직값</span></div>
+</div>
+</div></section>
+<hr>
+
+<section class="bl"><div class="container">
+<div class="lab">05 · 상향 시도와 자진 철회 — 7/10 ~ 7/11</div>
+<h2>킬게이트가 발동했고, 스스로 내려왔다</h2>
+<p class="lead">더 높은 곳을 노리는 업그레이드를 설계했다 — 핵심은 "parity 예산 N*를 계열
+통계량으로 예측하는 법칙"(U3). 값싼 파일럿을 <strong>킬게이트로 먼저</strong> 사전등록했다:
+LODO Spearman ≥0.4, 자명한 기준선 대비 ≥15% 개선 — 하나라도 미달이면 그 자리에서 철회.</p>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>죽은 것들 <span class="cnt">전부 사전등록 기준으로</span></div>
+<div class="ev lose"><span class="ev-t">U3 — N* 예측 법칙<span class="sub">160계열 중 89%가 K=10,000 안에 parity 미도달(우측중도절단). 회귀 가능한 11%는 2개 도메인뿐 — LODO 불가, 부분 spearman −0.48. 3기준 전패.</span></span><span class="ev-n">NO-GO</span></div>
+<div class="ev lose"><span class="ev-t">U4 — 실무 셀렉터<span class="sub">89%가 censored면 정답이 거의 항상 "TSFM 써라" — 자명해져 사망.</span></span><span class="ev-n">소멸</span></div>
+<div class="ev lose"><span class="ev-t">censoring 분류기<span class="sub">"parity가 예산 내에 오는가"의 도메인 간 예측 — LODO AUC 0.18(랜덤 미만). 도메인 속성이지 계열 특징으로 전이되지 않는다.</span></span><span class="ev-n">AUC 0.18</span></div>
+</div>
+<p>이 폴더에서 감사·측정 계열 연구가 "강한 신호 → artifact 판명"으로 끝난 것이 이로써
+4연속이다. 다만 이번에는 리뷰어가 아니라 <strong>우리가 먼저 판정했고</strong>, 실패한
+법칙은 지워지지 않고 논문의 scope 문장이 됐다: "어느 계열이 어느 레짐인지는 예측되지 않는다."</p>
+</div></section>
+<hr>
+
+<section class="bl alt"><div class="container">
+<div class="lab">06 · 강화 실험 — 7/11 ~ 7/14</div>
+<h2>반론을 실험으로 미리 닫았다</h2>
+<div class="flow">
+<div class="fstep">
+<div class="fhd"><span class="fn">h=48</span> "horizon 24 특유 아닌가?"</div>
+<div class="frow"><span class="fk find">결과</span><span>같은 설계를 horizon 48로 — 4/4 유의(+0.12/+0.19/+0.13/+0.37), 단조 수렴, parity 예산 유한. 특유 아님.</span></div>
+<div class="fnext">부수 수확: 판정 요약 코드의 int-vs-str 키 버그가 "0/4 실패"라는 거짓 결론을 낼 뻔했다 — 원본 숫자 재검이 잡았다.</div>
+</div>
+<div class="fstep">
+<div class="fhd"><span class="fn">fine-tune</span> "TSFM을 fine-tune하면 되지 않나?"</div>
+<div class="frow"><span class="fk find">결과</span><span>같은 예산으로 full fine-tuning — K≥1,200에선 early stopping이 <strong>42/42 셀에서 미학습 모델을 반환</strong>(검증에서 zero-shot을 못 이김), K=600에선 학습되지만 test가 오히려 악화. 적응은 이 예산대에서 비교를 바꾸지 못한다.</span></div>
+<div class="fnext">concurrent work의 "짧은 시계열에서 LoRA 악화" 관찰을 full FT로 재현한 셈 — 반론이 논거를 잃었다.</div>
+</div>
+</div>
+</div></section>
+<hr>
+
+<section class="bl"><div class="container">
+<div class="lab">07 · 마지막 방어선 — 공개 전 감사가 잡은 것들</div>
+<h2>사람 눈은 이 중 하나도 잡지 못했다</h2>
+<p class="lead">원고와 업로드 패키지는 "작성자가 자기 산출물을 승인하지 않는다"는 원칙으로
+매 단계 무맥락 fresh 감사를 거쳤다. 각 감사가 실제로 잡아낸 것들:</p>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>원고 층 <span class="cnt">게이트 체인 → 증거파일 대조</span></div>
+<div class="ev lose"><span class="ev-t">초안 v1의 과장 12건 → REJECT<span class="sub">"단조 수렴" 주장(실제론 재확대 있음), "3–6배 인플레"(실제론 한 계열만 2.6배, 나머지는 정확히 1.00배), "3개 모델 패밀리"(실제론 2개 계보) 등 — 전부 증거 JSON 대조로 적발, v2에서 좁혀서 정직하게 재작성.</span></span><span class="ev-n">12건</span></div>
+</div>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>서지 층 <span class="cnt">arXiv 원문 전수 대조</span></div>
+<div class="ev lose"><span class="ev-t">존재하지 않는 논문 2건 인용<span class="sub">bib의 두 항목이 환각된 제목이었고, 그중 하나는 실제로는 반대 논지(친-Chronos) 논문을 회의적 재평가로 인용하고 있었다. 실존 논문으로 교체하고 인용 문장을 각 논문의 실제 주장에 맞게 재작성.</span></span><span class="ev-n">환각 2건</span></div>
+<div class="ev lose"><span class="ev-t">조작된 직접 인용 1건<span class="sub">"was not strictly enforced" — Chronos 논문 전 버전을 grep해도 존재하지 않는 문구. 우리 내부 노트의 해석이 따옴표째 원고로 전파된 것. 실제 원문 단어로 교체, 진원지 문서까지 교정.</span></span><span class="ev-n">업로드 직전 적발</span></div>
+</div>
+<div class="tier lose"><div class="tier-h"><span class="dot"></span>패키지 층 <span class="cnt">클린 디렉토리 pdflatex 실검증</span></div>
+<div class="ev lose"><span class="ev-t">허위 상태 헤더 + 익명 저자<span class="sub">스타일 기본 모드가 "Under review as submission to TMLR" 헤더와 "Anonymous authors"를 찍고 있었다 — 제출 전 프리프린트에 둘 다 거짓. [preprint] 모드로 교정.</span></span><span class="ev-n">허위표시</span></div>
+<div class="ev lose"><span class="ev-t">참고문헌 통째 소실<span class="sub">tarball 단독 빌드에서 References 섹션이 사라진 7페이지 PDF가 나왔다 — 로컬 빌드 도구로는 재현되지 않던 결함. 진짜 pdflatex 파이프라인 검증이 잡았다.</span></span><span class="ev-n">7pp→8pp</span></div>
+<div class="ev lose"><span class="ev-t">메타데이터 초록 한도 초과 · 방법 오명명 · 그리드 오기<span class="sub">1,991자(한도 1,920) 초과, "stationary bootstrap"으로 잘못 불린 window-block bootstrap, weight-decay 그리드에서 실제 선택된 값 하나가 누락된 표기 — 최종 ~125개 수치 전수 대조에서 적발.</span></span><span class="ev-n">전수 대조</span></div>
+</div>
+</div></section>
+<hr>
+
+<section class="bl alt" id="paper"><div class="container">
+<div class="lab">08 · 살아남은 것</div>
+<h2>8페이지, 과장 0건</h2>
+<p class="lead"><strong>"Data-Starved Baselines Inflate the Measured Advantage of
+Time-Series Foundation Models on ETT"</strong> — 최종 기준 감사에서 11개 핵심 주장 전부가
+증거 파일과 소수점까지 일치했고, 한 곳에서는 기계 판정보다 더 보수적으로 서술됐다.</p>
+<div class="tier win"><div class="tier-h"><span class="dot"></span>논문이 주장하는 것</div>
+<div class="ev win"><span class="ev-t">ETT에서 소예산 zero-shot 우위의 일부는 baseline 학습예산의 측정 artifact다<span class="sub">튜닝·lookback·평가 고정, 데이터량만 개입 — K=600 격차 4/4 유의, 유한 예산에서 통계적 비유의로 수렴(비단조 재확대 포함 전부 보고).</span></span><span class="ev-n">개입 실증</span></div>
+<div class="ev win"><span class="ev-t">튜닝으로도, fine-tuning으로도 설명되지 않는다<span class="sub">튜닝 통제 분해 3/4 잔존 · full FT는 무효과(42/42 미학습 반환)~악화.</span></span><span class="ev-n">분해 실증</span></div>
+</div>
+<div class="tier gray"><div class="tier-h"><span class="dot"></span>논문이 스스로 한정하는 것</div>
+<div class="ev gray"><span class="ev-t">비-ETT 도메인에선 우위가 지속되고, 어느 레짐인지 예측되지 않는다<span class="sub">전력·교통 우측중도절단 + 예측 법칙의 사전등록 실패를 scope로 정직 보고. ETT 자체의 오염 가능성도 level-vs-slope 논증과 함께 본문 공개.</span></span><span class="ev-n">scope 명시</span></div>
+</div>
+<p style="margin-top:1.2rem;"><em>arXiv 공개 시 이 자리에 링크가 걸린다.</em> 재현 자료:
+잠긴 프로토콜 JSON·결과 파일(해시·커밋 포함)은 저자에게 요청.</p>
+</div></section>
+<hr>
+
+<section class="bl"><div class="container">
+<div class="lab">09 · 이 7일이 확정한 것</div>
+<h2>교훈은 네 개로 줄었다</h2>
+<div class="flow">
+<div class="fstep"><div class="fhd"><span class="fn">1</span> 강한 신호일수록 먼저 의심한다</div>
+<div class="frow"><span class="fk find">근거</span><span>이 폴더에서 4연속 — 6배 격차도, 0.85 상관도, "3 families"도, 예외 없이 처음 본 크기는 과장이었다. 방향이 진짜인지가 유일한 질문이다.</span></div></div>
+<div class="fstep"><div class="fhd"><span class="fn">2</span> 킬게이트는 실험 전에 박는다</div>
+<div class="frow"><span class="fk find">근거</span><span>U3는 실험 후였다면 "조금만 더"로 몇 주를 태웠을 것이다. 사전등록된 3기준이 하루 만에 철회를 결정했다.</span></div></div>
+<div class="fstep"><div class="fhd"><span class="fn">3</span> 앵커 없는 fresh 검증만이 진실에 도달한다</div>
+<div class="frow"><span class="fk find">근거</span><span>맥락을 준 게이트는 전부 PASS를 냈다. 조작 인용도, 선택 artifact도, 환각 서지도 — 전부 무맥락 검증이 잡았다.</span></div></div>
+<div class="fstep"><div class="fhd"><span class="fn">4</span> 실패는 지우는 게 아니라 scope가 된다</div>
+<div class="frow"><span class="fk find">근거</span><span>NO-GO 난 법칙, censored 89%, FAIL로 기록된 게이트 — 전부 논문의 경계 섹션이 됐다. 이 페이지가 존재하는 이유이기도 하다.</span></div></div>
+</div>
+</div></section>
+
+<footer><p>HIGAN 이후 — 폐기에서 논문까지 · 2026 · 정직한 회고</p>
+<p style="margin-top:.6rem;"><a href="/projects/higan/">HIGAN v2 보고서</a> · <a href="/projects/higan-generalization/">일반화 여정</a> · <a href="https://github.com/soccz/HIGAN" target="_blank" rel="noopener">github.com/soccz/HIGAN</a> · <a href="/">소찬 · soccz</a></p></footer>
+</body></html>
