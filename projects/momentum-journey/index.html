@@ -775,7 +775,7 @@
         <tr>
           <td><strong>한국 전종목 일별 수정주가·시가총액</strong><br><span class="journal-id">FnGuide · 1990–2026 · 4,660종목 (상폐 1,842 포함)</span></td>
           <td>모멘텀은 횡단면 전략 — 전 유니버스(코스피+코스닥)가 필요. <strong>상장폐지 포함이 비협상 조건</strong>: 왼쪽 꼬리가 연구 대상인데 생존 종목만 남기면 패자 포트폴리오의 손실이 체계적으로 지워진다(패자를 공매도하는 전략에서 치명적).</td>
-          <td>WML·시장·SMB 구축(E00) → 본편 전체. 상폐 처리 3안 스윕(E14)이 "극단 가정일수록 오히려 개선"(상폐 벌점=숏 수익)을 확인.</td>
+          <td>WML·시장·SMB 구축(E00) → 본편 전체. 상폐 처리 3안 스윕(E14)이 "극단 가정일수록 오히려 개선"(상폐 벌점=숏 수익)을 확인. 별도로 2005년 이후만 재구축한 <strong>청정 패널</strong>은 §9.3의 대조에 사용 — 최근 10년 초약체 국면(샤프 0.06)에서 BS15도 못 살리는데 ML만 방어적 가치(0.15)를 보임(E09).</td>
           <td>① |일별수익|&gt;50% 필터 1,410건이 위기 연도 집중 — 진짜 극단수익 포함 가능 → 4안 스윕으로 둔감성 확인(부록 B) ② 거래정지 재개일 점프 157건 소실 — 완전 공개 ③ 종목 수 4,685는 피벗의 <strong>유령 열 25개</strong> → 전면 감사로 4,660 정정(E27) ④ 1989년 이전은 데이터 품질 붕괴 — 1990 시작은 선택이 아니라 강제</td>
         </tr>
         <tr>
@@ -801,6 +801,12 @@
           <td>피처 20종은 전부 <strong>t월 말까지의 정보만</strong>(선견 금지 — E02 게이트). BS15의 Eq(5) 예측치를 피처로 포함 — 이 설계가 훗날 "중첩 모형" 문제(Clark–West 보정, CW-SPA)의 씨앗이자 해법의 출발점.</td>
           <td>예측 경기(E03)부터 최종 검정(E37)까지 전 실험의 공통 입력. 팩터 수준이라 공개 레포에 포함 — p2~p30이 레포 단독 재현.</td>
           <td>① 월별 WML(월복리 차)과 일별 WML(일별 차)은 <strong>의도된 두 시계열</strong>(French 규약) — 버그로 오인 금지(§4.1 명시) ② 표본창이 표마다 다른 이유(418/423/292/293)를 전부 표 주로 공개 — "대조 피로"를 지적받고도 정직성 우선</td>
+        </tr>
+        <tr>
+          <td><strong>의도적으로 안 쓴 데이터</strong><br><span class="journal-id">한계 절의 원료</span></td>
+          <td>안 쓴 것에도 이유가 있다 — 없어서 못 쓴 것과 표본이 부족해 안 쓴 것을 구분해 기록(E10 "의도적 미실시 목록").</td>
+          <td>논문 §10 한계 — "일별 기반 실현변동성만 썼으므로 본 결과는 보수적 하한일 수 있다."</td>
+          <td>① <strong>인트라데이(고빈도) RV</strong> — 데이터 부재. 문헌상 ML 이득의 상당분이 고빈도에서 나오므로 본 결과는 하한 ② <strong>딥러닝 대형모델(트랜스포머·딥RL)</strong> — 표본 292개월로 부족(신경망 붕괴가 이미 증거) ③ 종목수준 위험관리·실체결 슬리피지·차입비용 실측 — 후속 과제로 명시</td>
         </tr>
       </tbody>
     </table>
@@ -1118,7 +1124,7 @@
 <!-- =================== FULL LEDGER =================== -->
 <section id="ledger" style="background:var(--bg-secondary);"><div class="container fade-in">
   <div class="section-label">10.5 — Full ledger · 전수 기록</div>
-  <h2 class="section-title">전체 실험 원장: 39번의 "왜", 그리고 각각이 논문 어디를 받치는가</h2>
+  <h2 class="section-title">전체 실험 원장 42행: 39번의 실험 + 정정 2 + 문체 1 — 각각이 논문 어디를 받치는가</h2>
   <p class="section-desc full">
     위 국면별 이야기는 선별본이다. 아래는 <strong>전수</strong> — 실험 하나하나가 왜 시작됐고(직전 실험이 남긴 질문),
     무엇을 해서 무엇이 남았고, <strong>성공한 것은 최종 논문의 정확히 어느 자리를 받치는지</strong>까지의 사슬 전체다.
@@ -1169,14 +1175,14 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E06</span></td>
           <td style="min-width:210px;">샤프 우위가 우연인가 — 부트스트랩·선택편의·비용</td>
-          <td style="min-width:250px;">샤프 개선 경계(P=0.082), 관리 모멘텀 자체는 DSR 0.998</td>
+          <td style="min-width:250px;">샤프 개선 경계(P=0.082), 관리 모멘텀 자체는 DSR 0.998. 비용 스윕: 60bp까지 HARX 우위·100bp에선 Ridge가 최강. 하위표본: ML 이득은 2014+ 후반에 집중(학습데이터 축적 효과 후보)</td>
           <td style="min-width:210px;">표 5 주(샤프 경계 명시)·§7.3 DSR — 과대주장 방지 장치</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E07</span></td>
           <td style="min-width:210px;">대안 설계와의 대결 — 하방준분산 타깃, DM16 μ/σ²</td>
-          <td style="min-width:250px;">μ 예측 R² 1.3% → μ/σ² 참패(최악월 −93%)</td>
-          <td style="min-width:210px;">§9.3 — "분모만 관리하라" 처방, Barroso vs DM16 논쟁의 한국 답</td>
+          <td style="min-width:250px;">두 갈래: ① 무엇을 예측하나 — 하방준분산 타깃 × Ridge가 전체 최고 샤프 0.651(분산 타깃 0.636), 단 ML과 결합할 때만 가치 ② 분자까지 만지나 — μ 예측 R² 1.3%로 μ/σ² 참패(최악월 −93%)</td>
+          <td style="min-width:210px;">§9.3 — "분모만 관리하라" 처방 + "무엇을 예측하는가도 중요하다"(둘 다 탐색적 참고)</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">PASS+WALL</span><br><span class="journal-id">E08</span></td>
@@ -1235,8 +1241,8 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E17</span></td>
           <td style="min-width:210px;">블라인드 심사 major×3 — 다중검정 재교정</td>
-          <td style="min-width:250px;">Romano–Wolf에서 ENS 자신이 탈락(0.125) → 위계 재구축</td>
-          <td style="min-width:210px;">§7.2 두 층 보고·표 S1·S2 — "실패 먼저"의 구조화</td>
+          <td style="min-width:250px;">Romano–Wolf에서 ENS 자신이 탈락(0.125) → 위계 재구축. 증권거래세 순비용에서도 꼬리 개선 유지(손익분기 63~92bp). 하위구간 분해(90년대 −0.37/2000s +0.66/2010s +0.40)로 "약함"을 3요소로 재정식화</td>
+          <td style="min-width:210px;">§7.2 두 층 보고·표 S1(약함의 재정식화)·표 S2·§9.2 순비용 — "실패 먼저"의 구조화</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E18</span></td>
@@ -1302,7 +1308,13 @@
           <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E27</span></td>
           <td style="min-width:210px;">1,700만 행을 논문이 믿어도 되나 — 전면 감사</td>
           <td style="min-width:250px;">유령 열 25개 → 4,660 정정, 재개 점프 공개, 1990 시작 강제 확인</td>
-          <td style="min-width:210px;">§3.1 수치 정본·부록 B — 그리고 틀린 진단의 정정 이력(E27-정정)</td>
+          <td style="min-width:210px;">§3.1 수치 정본·부록 B</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E27-정정</span></td>
+          <td style="min-width:210px;">E27의 첫 진단("이전 데이터 빈티지")이 맞았는가 — 재현 킷 실행 중 재검</td>
+          <td style="min-width:250px;">오진이었다. 진짜 원인은 전체 기간 피벗 후 행만 자른 유령 열 25개 — 재현 스크립트가 동일 방식으로 4,685를 재현해 증명</td>
+          <td style="min-width:210px;">원장의 정정 이력 그 자체 — "틀린 진단도 덮어쓰지 않는다"는 프로토콜의 실증</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E28</span></td>
@@ -1327,6 +1339,12 @@
           <td style="min-width:210px;">같은 내용, 읽히는 산문 — 전면 재작성</td>
           <td style="min-width:250px;">블라인드 콜드리드 5라운드 B+→A</td>
           <td style="min-width:210px;">원고 v4 산문 전체 — 수치·주장 불변</td>
+        </tr>
+        <tr>
+          <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E31-b</span></td>
+          <td style="min-width:210px;">B+에서 멈추지 않기 — "A+로 극대화" 지시로 라인에딧 반복</td>
+          <td style="min-width:250px;">라인에딧 → 매회 다른 블라인드 채점자 → 반영, 5라운드: B+→A−→A−→A−→A. 의도적 미반영 2건(줄표 서명·헤지 변주)은 저자 목소리로 유지</td>
+          <td style="min-width:210px;">최종 산문 등급의 근거 — 그리고 "무엇을 남길지 아는 것"의 기록</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E32</span></td>
@@ -1431,7 +1449,7 @@
     <div class="card">
       <div class="card-eyebrow">Claims Map</div>
       <div class="card-title">주장–근거 지도 C1~C42</div>
-      <div class="card-text">논문·발표의 모든 주장은 주장↔수치↔표↔실험↔재현 명령의 행 하나를 가진다. "그 숫자 어디서 나왔죠?"에 즉답하기 위한 표 — 근거 없는 주장은 물리적으로 쓸 수 없다.</div>
+      <div class="card-text">논문·발표의 모든 주장은 주장↔수치↔표↔실험↔재현 명령의 행 하나를 가진다. "그 숫자 어디서 나왔죠?"에 즉답하기 위한 표 — 근거 없는 주장은 물리적으로 쓸 수 없다. 이 지도를 소비하는 심사 방어킷(예상 질문 30+ 문답, Q17~Q26-g)이 내부 장치로 병행된다.</div>
     </div>
     <div class="card">
       <div class="card-eyebrow">Pre-specification</div>
@@ -1461,7 +1479,7 @@
   <div class="section-label">13 — By the numbers</div>
   <h2 class="section-title">숫자로 보는 여정</h2>
   <div class="stat-row">
-    <div class="stat-card"><div class="stat-num">39</div><div class="stat-label">원장 실험 항목</div><div class="stat-sub">E00 ~ E38</div></div>
+    <div class="stat-card"><div class="stat-num">42</div><div class="stat-label">원장 항목</div><div class="stat-sub">실험 39 + 정정 2 + 문체 1 (E00~E38)</div></div>
     <div class="stat-card"><div class="stat-num">30+</div><div class="stat-label">파이프라인 스크립트</div><div class="stat-sub">p2 ~ p30 + 빌드·재현킷</div></div>
     <div class="stat-card"><div class="stat-num">42</div><div class="stat-label">주장–근거 지도 행</div><div class="stat-sub">C1 ~ C42</div></div>
     <div class="stat-card"><div class="stat-num red">16</div><div class="stat-label">철회·폐기·기각</div><div class="stat-sub">실패의 전당 등재</div></div>
