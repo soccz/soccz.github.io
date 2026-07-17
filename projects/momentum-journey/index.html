@@ -612,7 +612,7 @@
   <div class="pub-card fade-in">
     <div class="pub-head">
       <span class="pub-badge">Working Paper</span>
-      <span class="pub-venue">한국어 정본 v4.2 — 학위논문 심사 준비 · 국제판(영문) 리라이트 예정</span>
+      <span class="pub-venue">한국어 정본 v4.2 — 학위논문 심사 준비 · 국제판(영문) 리라이트 예정 · 전문은 심사 후 공개(그 전까지 검증은 공개 레포의 주장지도·정본 CSV로)</span>
     </div>
     <div class="pub-title-ko">위험 예측이 좋아지면 무엇이 좋아지는가: 약한 모멘텀 시장에서 머신러닝 변동성 예측과 꼬리 보험</div>
     <div class="pub-title-en">What Improves When Risk Forecasts Improve: Machine-Learned Volatility and Tail Insurance in a Weak Momentum Market</div>
@@ -654,7 +654,7 @@
       <div class="flow-step-num">00</div>
       <div class="flow-step-body">
         <div class="flow-step-title">마스터 · 설계 · 전략 — 코드보다 먼저 한 일들</div>
-        <div class="flow-step-desc">원논문을 "눈감고도" 수준으로 마스터(해설서+자가시험) → 신규성 조사에서 국내 선점(손경우 외 2017) 발견 → 기여를 ML 확장으로 강제 → 전이곡선 가설·투고 사다리·중단조건까지 실험 전에 설계.</div>
+        <div class="flow-step-desc">원논문을 "눈감고도" 수준으로 마스터(해설서+자가시험) → 신규성 조사에서 국내 선점(손경우 외 2017) 발견 → 기여를 ML 확장으로 강제 → 전이곡선 가설과 국제 타깃 방향을 실험 전에 고정.</div>
       </div>
       <div class="flow-step-tags"><a href="#phase0" class="flow-step-link">docs 00·02·04·08</a></div>
     </div>
@@ -744,7 +744,7 @@
   <p class="section-desc">
     이 여정의 진짜 출발점은 E00이 아니다. 재현을 시작하기 전에 원논문을 마스터했고,
     문헌을 뒤져 이 방향이 왜 유일하게 남은 기여인지 확인했고, 실험이 어떻게 나와도 논문이 되도록
-    가설과 투고 전략과 중단조건까지 설계해 두었다 — 실험은 이 설계의 실행이었다.
+    가설 프레임과 타깃 방향까지 정해 두었다. 구체 투고 사다리·중단조건은 실험 중반의 재조준이다 — 그 이야기는 국제 원정 절에, 시점 그대로.
   </p>
   <div class="journal">
     <div class="journal-entry passed">
@@ -762,10 +762,10 @@
       <h4>죽는 시나리오 없음 — 결과가 어떻게 나와도 논문이 되게</h4>
       <div class="journal-body"><strong>전이곡선은 이때 가설로 고정됐다</strong> — 실험 도중의 발견이 아니다. 예측기 사다리(Layer 0~4)를 설계하며 결과 시나리오별 하방을 미리 깔았다: ML이 이기면 "전이의 측정", HAR가 이기면 "구조의 승리", 둘 다 실패하면 "회의론의 확장" — 어느 쪽이든 논문이 된다. 재현 방법론도 스펙 문서로 먼저 고정하고 "재논의 금지"를 박았다(사전 지정은 예측기 12개보다 먼저, 재현 단계부터였다).</div>
     </div>
-    <div class="journal-entry pivot">
-      <div class="journal-head"><span class="journal-id">투고 전략</span><span class="journal-phase">docs/08 · 4관점 검토</span><span class="journal-status pivot">DESIGNED</span></div>
-      <h4>탑티어 4/4 만장일치 기각 — 그리고 사다리와 데드맨스위치</h4>
-      <div class="journal-body">4개 관점(전직 에디터·실증설계·현실주의 멘토·문헌 스카우트)의 독립 검토가 JFE/JF/RFS급 도전을 <strong>만장일치로 기각</strong>했고, 그 판정을 받아들여 사다리를 설계했다: 조건부 JFQA → JEF/QF 진입 → PBFJ 안전 착지, 최우선 원칙은 "졸업 먼저"(M0). 상향 조건을 시험할 실험 M1~M3와 <strong>중단조건(데드맨스위치)을 실행 전에 문서로 고정</strong> — 훗날 E22(구성 절제)·E23(JFQA 트리거 불발)·E24(중단조건 발동)는 이 설계의 실행이었다. 기각한 대안도 기록했다: 국제 미재현을 숨기고 투고 "절대 금지", 국내지 선게재 금지(이중게재로 국제 봉쇄).</div>
+    <div class="journal-entry passed">
+      <div class="journal-head"><span class="journal-id">타깃 선언</span><span class="journal-phase">2026-07-07 헌법</span><span class="journal-status passed">LOCKED</span></div>
+      <h4>국제 JBF/JEF/QF급을 겨냥한다 — 방향만 먼저, 사다리는 나중에</h4>
+      <div class="journal-body">실험 전에 고정된 것은 타깃의 <strong>방향</strong>(국제 JBF/JEF/QF급)까지다. 구체 투고 사다리·중단조건·4관점 검토는 실험 중반 — 심판의 날(E12)과 국제 1차 음성(E19~E21)을 본 뒤 — 의 <strong>중간 재조준</strong>이며, 그 시점 그대로 국제 원정 절에 기록했다. 시점을 앞당겨 "전부 사전 설계였다"고 말하는 것은 이 페이지가 금지하는 종류의 부풀림이다.</div>
     </div>
   </div>
 </div></section>
@@ -818,14 +818,14 @@
         <tr>
           <td><strong>한국 전종목 일별 수정주가·시가총액</strong><br><span class="journal-id">FnGuide · 1990–2026 · 4,660종목 (상폐 1,842 포함)</span></td>
           <td>모멘텀은 횡단면 전략 — 전 유니버스(코스피+코스닥)가 필요. <strong>상장폐지 포함이 비협상 조건</strong>: 왼쪽 꼬리가 연구 대상인데 생존 종목만 남기면 패자 포트폴리오의 손실이 체계적으로 지워진다(패자를 공매도하는 전략에서 치명적).</td>
-          <td>WML·시장·SMB 구축(E00) → 본편 전체. 상폐 처리 3안 스윕(E14)이 "극단 가정일수록 오히려 개선"(상폐 벌점=숏 수익)을 확인. 별도로 2005년 이후만 재구축한 <strong>청정 패널</strong>은 §9.3의 대조에 사용 — 최근 10년 초약체 국면(샤프 0.06)에서 BS15도 못 살리는데 ML만 방어적 가치(0.15)를 보임(E09).</td>
+          <td>WML·시장·SMB 구축(E00) → 본편 전체. 상폐 처리 3안 스윕(E14)이 "극단 가정일수록 오히려 개선"(상폐 벌점=숏 수익)을 확인. 별도로 2005년 이후만 재구축한 <strong>청정 패널</strong>은 §9.3의 대조에 사용 — 최근 10년 초약체 국면(샤프 0.06)에서 BS15도 못 살리는데 ML만 방어적 가치(0.15)를 보임(E09). 장기 35년이 본편인 이유도 설계 결정이다: 청정 표본은 왜도 +0.08로 크래시가 실종 — 연구 대상 현상이 장기 표본에만 존재한다.</td>
           <td>① |일별수익|&gt;50% 필터 1,410건이 위기 연도 집중 — 진짜 극단수익 포함 가능 → 4안 스윕으로 둔감성 확인(부록 B) ② 거래정지 재개일 점프 157건 소실 — 완전 공개 ③ 종목 수 4,685는 피벗의 <strong>유령 열 25개</strong> → 전면 감사로 4,660 정정(E27) ④ 1989년 이전은 데이터 품질 붕괴 — 1990 시작은 선택이 아니라 강제</td>
         </tr>
         <tr>
           <td><strong>일간 PBR → B/M</strong><br><span class="journal-id">FnGuide · 1988+ 월말 · 1.1GB 엑셀</span></td>
           <td>가치(HML) 팩터용 — HML 자체가 목적이 아니라 <strong>교차팩터 플라시보의 대조군</strong>. "모멘텀에서만 되는가"를 판별하려면 시장·규모·가치라는 비교 팩터가 필요했다.</td>
           <td>HML 구축 → 표 7 플라시보(E05·E32), 표 S2 조건부 위험–수익.</td>
-          <td>① openpyxl로 40분+ 폭주 → <strong>python-calamine으로 2.7분</strong> (헌법 함정 목록 등재) ② 초기 커버리지 얇음(1990년 78종목) — HML이 플라시보 전용이라 핵심 결과에 안 닿음을 §3.2에 명시</td>
+          <td>① openpyxl로 40분+ 폭주 → <strong>python-calamine으로 2.7분</strong> (헌법 함정 목록 등재) ② 초기 커버리지 얇음(1990년 78종목) — HML이 플라시보 전용이라 핵심 결과에 안 닿음을 §3.2에 명시 ③ 외부 FF3 팩터 파일은 손상(HML 연 −42%)으로 판명 → 폐기하고 모든 팩터를 원천 주가+PBR에서 자가 구축</td>
         </tr>
         <tr>
           <td><strong>무위험수익률 — 한국은행 콜금리</strong><br><span class="journal-id">FRED IRSTCI01KRM156N · 1991+ · 키 없이 재현</span></td>
@@ -978,11 +978,11 @@
   <div class="journal">
     <div class="journal-entry pivot">
       <div class="journal-head"><span class="journal-id">E12</span><span class="journal-phase">통계 철회</span><span class="journal-status pivot">PIVOT</span></div>
-      <h4>세 개의 p값을 스스로 철회하다</h4>
+      <h4>두 개의 p값을 철회하다 — 그리고 이날 도입한 숫자 하나는 나중에 죽는다</h4>
       <div class="journal-body">
         ① <strong>Δ최악월 P=0.010 철회</strong> — 표본 최솟값은 극값 순서통계량이라 블록 부트스트랩이 비일관적(Bickel–Freedman). 점추정 기술통계로 강등.
         ② <strong>전이곡선 점별 p=0.988 철회</strong> — 아홉 점이 같은 292개월에서 나온 종속 관측치. 조인트 블록 부트스트랩 CI로 교체.
-        ③ <strong>family-wise p=0.002 폐기</strong> — max-t의 주인이 예측력 0짜리 순수 디레버리지(ExpandingMean)였다. 유리한 숫자였지만 잘못된 숫자였다.
+        ③ 그리고 이 라운드가 헤드라인 재구축에 <strong>도입한 family-wise p=0.002</strong>는 훗날 블라인드 심사(E17)에서 max-t의 주인이 예측력 0짜리 순수 디레버리지(ExpandingMean)로 판명돼 다시 폐기된다 — 수정의 산물도 다시 심판대에 오른다.
       </div>
       <div class="journal-fix">헤드라인을 "사전 지정 승자 ENS 중심 + HARX는 사후 최고로 병기 강등"으로 재구축</div>
     </div>
@@ -1052,6 +1052,11 @@
       <div class="journal-body">한국 데이터를 국제 검정과 같은 축약 피처(변동성 이력만)에 넣자 한국조차 <strong>−0.79</strong>가 나왔다. E20의 국제 음성은 테제 반증이 아니라 <strong>피처셋 오지정</strong> — 한국의 승자를 만드는 시장상태 피처를 빼고 비교한 불공정 검정이었다. 결론을 유보하고 공정 재검정을 설계했다.</div>
       <div class="journal-fix">교훈: ML 꼬리 이득은 변동성 자기이력이 아니라 시장상태 조건부성에서 나온다</div>
     </div>
+    <div class="journal-entry pivot">
+      <div class="journal-head"><span class="journal-id">재조준</span><span class="journal-phase">docs/08 · 2026-07-10</span><span class="journal-status pivot">PIVOT</span></div>
+      <h4>중간 재조준 — 탑티어 4/4 만장일치 기각, 사다리와 데드맨스위치</h4>
+      <div class="journal-body">심판의 날(E12)과 국제 1차 음성(E19~E21)을 본 뒤, 4개 관점(전직 에디터·실증설계·현실주의 멘토·문헌 스카우트)의 독립 검토를 돌렸다. JFE/JF/RFS급 도전은 <strong>만장일치 기각</strong> — 받아들이고 사다리를 설계했다: 조건부 JFQA → JEF/QF 진입 → PBFJ 안전 착지, 최우선 원칙 "졸업 먼저". 상향 조건을 시험할 M1~M3 실험과 <strong>중단조건(데드맨스위치)을 실행 전에 문서로 고정</strong> — 아래 E22~E24가 그 실행이다. 기각한 대안도 기록: 국제 미재현 은폐 투고 "절대 금지", 국내지 선게재 금지(이중게재로 국제 봉쇄). 탑티어 야망은 폐기가 아니라 <strong>후속 논문(M7)으로 이월</strong> — 현 논문이 그 동기 증거가 된다.</div>
+    </div>
     <div class="journal-entry wall">
       <div class="journal-head"><span class="journal-id">E21–E24</span><span class="journal-phase">공정 재검정 + 절제</span><span class="journal-status wall">WALL ×3</span></div>
       <h4>공정하게 다시 겨뤄도 국제는 전부 음성 — 티어 상향 낙관 철회</h4>
@@ -1101,17 +1106,18 @@
   <p class="section-desc">
     실험이 논문이 되는 과정도 실험만큼 길었다 — 출구 전략이 뼈대를 정했고,
     탈고는 감사였고, 버전은 사다리를 탔고, 마지막엔 산문을 통째로 다시 썼다.
+    시점도 기록해 둔다: 초고는 국제 원정(E19) 전에 이미 완성됐다 — E16~E24와 게이트 전 과정은 완성된 초고를 수술한 것이다.
   </p>
   <div class="journal" style="margin-bottom:2.4rem;">
     <div class="journal-entry passed">
       <div class="journal-head"><span class="journal-id">뼈대</span><span class="journal-phase">3출구 설계</span><span class="journal-status passed">PASS</span></div>
       <h4>하나의 구조, 세 개의 출구</h4>
-      <div class="journal-body">학위심사판·국내 학술지판·국제 영역판 — 세 출구를 하나의 국제 규격 뼈대로 설계하고 언어·분량만 갈아끼우는 전략. 한국어 초고를 작업 정본으로 정하되(생각의 속도), 구조는 처음부터 국제 규격으로 고정했다. 순서 규칙도 함께: 국내지 선게재는 이중게재 문제로 국제 투고를 봉쇄하므로 금지.</div>
+      <div class="journal-body">학위심사판·국내 학술지판·국제 영역판 — 세 출구를 하나의 국제 규격 뼈대로 설계하고 언어·분량만 갈아끼우는 전략. 언어 결정엔 반전이 있었다 — 최초 설계는 "영어 정본 + 한국어 병행"이었으나 생각의 속도를 위해 "한국어 초고 정본, 완성 후 영어 리라이트"로 재확정. 구조는 처음부터 국제 규격으로 고정했다. 순서 규칙도 함께: 국내지 선게재는 이중게재 문제로 국제 투고를 봉쇄하므로 금지.</div>
     </div>
     <div class="journal-entry fix">
       <div class="journal-head"><span class="journal-id">탈고 사다리</span><span class="journal-phase">v2 → v3.4</span><span class="journal-status fix">106건</span></div>
       <h4>탈고는 퇴고가 아니라 감사였다</h4>
-      <div class="journal-body">초고 완성 후 탈고 1차에서 <strong>감사 지적 106건</strong>을 반영해 v3으로. 이후 버전마다 계기가 있었다 — v3.1 품질 업그레이드, v3.2 데이터 전면 감사 반영(E27), v3.3 국제 경계 통합(E28, 승인 게이트 통과), v3.4 문헌 접속 보강(E30). 각 버전은 커밋으로 남아 어느 수치가 언제 왜 바뀌었는지 소급된다.</div>
+      <div class="journal-body">초고 완성 직후 E번호 없는 정밀 감사 패스(최종 적대검증 7건, 수치–CSV 정합)를 먼저 돌렸고, 탈고 1차에서 <strong>감사 지적 106건</strong>을 반영해 v3으로. 이후 버전마다 계기가 있었다 — v3.1 품질 업그레이드, v3.2 데이터 전면 감사 반영(E27), v3.3 국제 경계 통합(E28, 승인 게이트 통과), v3.4 문헌 접속 보강(E30). 각 버전은 커밋으로 남아 어느 수치가 언제 왜 바뀌었는지 소급된다.</div>
     </div>
     <div class="journal-entry passed">
       <div class="journal-head"><span class="journal-id">전달 제작물</span><span class="journal-phase">데모·PDF·발표</span><span class="journal-status passed">BUILD</span></div>
@@ -1203,7 +1209,7 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E00</span></td>
           <td style="min-width:210px;">모든 주장의 전제는 재현의 신뢰 — BS15를 한국 원천 데이터만으로</td>
-          <td style="min-width:250px;">레퍼런스 파이프라인 + 에이전트 24개 적대 감사 → WML 0.17·왜도 −1.16·최악월 −94.9%. 오류 3건 수정</td>
+          <td style="min-width:250px;">레퍼런스 파이프라인 + 에이전트 24개 적대 감사 + 독립 교차검증(원시 CSV 별도 재계산 일치) → WML 0.17·왜도 −1.16·최악월 −94.9%, 위험은 연 7~95%로 요동치되 예측 가능(이후 모든 실험의 전제), BS15 관리도 한국에서 작동(0.17→0.26, 최악월 −20.1%). 오류 3건 수정</td>
           <td style="min-width:210px;">표 1·3, 그림 1–2의 모든 수치 원천 — §3·§5의 토대</td>
         </tr>
         <tr>
@@ -1269,13 +1275,13 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E11</span></td>
           <td style="min-width:210px;">심사자가 물을 잔소리 5종을 먼저 묻기</td>
-          <td style="min-width:250px;">약세장 −2.7 vs +2.4 / JKM / 1998-10 제외 −0.21 / 분기 고정 하락</td>
+          <td style="min-width:250px;">약세장 −2.7 vs +2.4 / JKM / 1998-10 제외 −0.21 / ΔCE 부트스트랩(ML의 CE 증분은 경계 P=0.102 — 관리 +12.5%p와 구분 서술) / 분기 고정 하락</td>
           <td style="min-width:210px;">표 D2·§8.3(이득의 국면)·§3.3(1998-10 지배 명시)</td>
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E12</span></td>
           <td style="min-width:210px;">초고가 굳기 전에 적대 공격 4인 — 전부 수용</td>
-          <td style="min-width:250px;">p값 3건 철회·HARX 강등·"죽은 팩터 소생" 폐기. + GW 조건부 검정(우위가 곰장 편중 아님) · "다음 세션 필수" 4건 큐를 남김 — E13~E15가 그 큐의 순차 실행</td>
+          <td style="min-width:250px;">p값 2건 철회(Δ최악월·점별)·fw p=0.002 도입(→E17에서 폐기됨)·HARX 강등·"죽은 팩터 소생" 폐기. + GW 조건부 검정(우위가 곰장 편중 아님) · "다음 세션 필수" 4건 큐를 남김 — E13~E15가 그 큐의 순차 실행</td>
           <td style="min-width:210px;">§4.4 보고 위계·§7.1 조인트 CI — 그리고 논문 제목("꼬리 보험")</td>
         </tr>
         <tr>
@@ -1305,7 +1311,7 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status pivot" style="margin-left:0;">PIVOT</span><br><span class="journal-id">E17</span></td>
           <td style="min-width:210px;">블라인드 심사 major×3 — 다중검정 재교정</td>
-          <td style="min-width:250px;">Romano–Wolf에서 ENS 자신이 탈락(0.125) → 위계 재구축. 증권거래세 순비용에서도 꼬리 개선 유지(손익분기 63~92bp). 하위구간 분해(90년대 −0.37/2000s +0.66/2010s +0.40)로 "약함"을 3요소로 재정식화. 개별 p 원고 내 불일치(0.034/0.0398)를 재계산 정본화(0.037), ES 신뢰수준 스윕(경험 1%는 2관측 → EVT가 보완하는 연결)</td>
+          <td style="min-width:250px;">E12가 도입한 fw p=0.002가 심사 적중으로 폐기(max-t 주인이 디레버리지) → Romano–Wolf로 재구축, 거기서 ENS 자신이 탈락(0.125) → 위계 확립. 증권거래세 순비용에서도 꼬리 개선 유지(손익분기 63~92bp). 하위구간 분해(90년대 −0.37/2000s +0.66/2010s +0.40)로 "약함"을 3요소로 재정식화. 개별 p 원고 내 불일치(0.034/0.0398)를 재계산 정본화(0.037), ES 신뢰수준 스윕(경험 1%는 2관측 → EVT가 보완하는 연결). 부속 사실: OOS 최악월은 2004-04 −46.6%(−94.9%의 1998-10은 표본외 창 밖)</td>
           <td style="min-width:210px;">§7.2 두 층 보고·표 S1(약함의 재정식화)·표 S2·§9.2 순비용 — "실패 먼저"의 구조화</td>
         </tr>
         <tr>
@@ -1317,7 +1323,7 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">PASS</span><br><span class="journal-id">E19</span></td>
           <td style="min-width:210px;">단일 시장 약점 → 미국 병렬(강한 팩터 대조군)</td>
-          <td style="min-width:250px;">BS15 재현 게이트 통과 후 첫 미재현: 미국 ML 증분 −0.13</td>
+          <td style="min-width:250px;">BS15 재현 게이트 통과 후 첫 미재현: 미국 ML 증분 −0.13. CRRA γ-스윕 대비까지 — 미국은 저위험회피 구간 음수, 한국은 전 구간 양수</td>
           <td style="min-width:210px;">표 8 미국 행·§8.4 층1·2 — 경계조건의 첫 기둥</td>
         </tr>
         <tr>
@@ -1352,7 +1358,7 @@
         </tr>
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status wall" style="margin-left:0;">WALL</span><br><span class="journal-id">E24</span></td>
-          <td style="min-width:210px;">"왜 하필 한국" — 대리지표 3종 판별 시도</td>
+          <td style="min-width:210px;">"왜 하필 한국" — 대리지표 3종 판별. 판정기준 실행 전 고정: 3지표 중 2개 이상에서 8계열 중 1위면 확인, 아니면 승격 포기</td>
           <td style="min-width:250px;">대리지표 3종(vol-of-vol·곰장 비선형성·꼬리 기습률)에서 한국은 4위·8위·2위 — 1위 0개 → 중단조건 발동. 기습률 1위 일본이 ML 이득 최악이라는 내부 반증까지</td>
           <td style="min-width:210px;">§8.4 한계 — "미해명"의 정직 명시(과잉 주장 차단)</td>
         </tr>
@@ -1395,7 +1401,7 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status fix" style="margin-left:0;">FIX</span><br><span class="journal-id">E30</span></td>
           <td style="min-width:210px;">"빈 칸" 주장이 과장인가 — 문헌 냉정 평가</td>
-          <td style="min-width:250px;">FKO·BHHP 계보 인정, 주장을 "차원 분해의 빈 칸"으로 한정</td>
+          <td style="min-width:250px;">FKO·BHHP 계보 인정, 주장을 "차원 분해의 빈 칸"으로 한정. 자기평가 등급까지 기록(정직성 A·식별 A− / 효과크기 C+·메커니즘 C) — 티어 판정: 학위 여유 통과·JEF/QF R&R 현실권</td>
           <td style="min-width:210px;">§2·표 0 — 문헌 좌표와 신규성의 정밀 한정</td>
         </tr>
         <tr>
@@ -1449,7 +1455,7 @@
         <tr>
           <td style="white-space:nowrap;"><span class="journal-status passed" style="margin-left:0;">CONVERGED</span><br><span class="journal-id">E38</span></td>
           <td style="min-width:210px;">R7 수렴 + 마무리</td>
-          <td style="min-width:250px;">확정 지적 0건 → 정본 전환·통독·공개</td>
+          <td style="min-width:250px;">확정 지적 0건 → 정본 전환·통독·공개. 공개 레포 3패스: 파생 시계열 17종 공개(p2~p30 레포 단독 재현)·헤드라인 게이트 11/11·v1.0.0 릴리스</td>
           <td style="min-width:210px;">정본 v4.2 — 그리고 이 페이지와 공개 레포</td>
         </tr>
       </tbody>
@@ -1477,7 +1483,7 @@
         <tr><td>"시장의 절반" 서사</td><td>1990년대 콜금리 12.6% — RF≈0 착시</td><td>초과수익 기준 77%, RF 실질화</td></tr>
         <tr><td>Δ최악월 P=0.010</td><td>극값 순서통계량 — 부트스트랩 비일관</td><td>점추정 강등, ES5로 주 지표 교체</td></tr>
         <tr><td>전이곡선 점별 p=0.988</td><td>아홉 점이 종속 관측치</td><td>조인트 블록 부트스트랩 CI</td></tr>
-        <tr><td>family-wise p=0.002</td><td>max-t의 주인이 순수 디레버리지</td><td>Romano–Wolf step-down 재구축</td></tr>
+        <tr><td>family-wise p=0.002</td><td>E12 수정 라운드가 도입 → E17 심사가 적중(max-t 주인이 순수 디레버리지)</td><td>Romano–Wolf step-down 재구축 — 수정의 산물도 다시 심판대에</td></tr>
         <tr><td>ENS의 FWER 생존</td><td>보정 p=0.125 — 1차 대상 탈락</td><td>"실패 먼저 보고"의 위계 (§4.4)</td></tr>
         <tr><td>"약한 팩터 법칙" (횡단면)</td><td>6개 시장 회귀 p=0.63, 최약 일본이 최악</td><td>경계조건 §8.4 — 명제의 대우 검증</td></tr>
         <tr><td>JFQA 티어 상향</td><td>미국 소형주 트리거 불발 (사전 지정 판정)</td><td>JEF/QF 사다리로 정직한 재조준</td></tr>
@@ -1538,7 +1544,7 @@
     <div class="card">
       <div class="card-eyebrow">Reproduce Kit</div>
       <div class="card-title">기계 검증 가능한 재현</div>
-      <div class="card-text">SHA256 매니페스트, FRED 라이브 대조(최대차 1e-16), pandas만으로 표 1·3을 재생성하는 7게이트 스크립트. 국제 원자료는 Ken French 공개 라이브러리 — 재현에 구독도 키도 필요 없다.</div>
+      <div class="card-text">SHA256 매니페스트, FRED 라이브 대조(최대차 1e-16), pandas만으로 표 1·3을 재생성하는 7게이트 스크립트. 국제 원자료는 Ken French 공개 라이브러리 — 재현에 구독도 키도 필요 없다. 공개 레포에는 헤드라인 게이트 11건(tests/)이 있어 핵심 수치의 CSV 재현을 누구나 즉시 검증한다.</div>
     </div>
   </div>
 </div></section>
