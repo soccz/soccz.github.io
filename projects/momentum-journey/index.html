@@ -527,7 +527,7 @@
   <div class="toc-title">목차</div>
   <ol>
     <li><a href="#easy">3분 요약</a></li>
-    <li><a href="#glossary">용어 12개</a></li>
+    <li><a href="#glossary">용어 16개</a></li>
     <li><a href="#publication">Publication</a></li>
     <li><a href="#map">여정 지도</a></li>
     <li><a href="#phase0">실험 이전</a></li>
@@ -610,9 +610,9 @@
 
 <!-- =================== GLOSSARY =================== -->
 <section id="glossary" style="background:var(--bg-secondary); padding-top:4rem; padding-bottom:4rem;"><div class="container fade-in">
-  <div class="section-label">0.5 — 용어 12개 · 이것만 알면 끝까지 읽힌다</div>
+  <div class="section-label">0.5 — 용어 16개 · 이것만 알면 끝까지 읽힌다</div>
   <h2 class="section-title">배경지식 없이 이 페이지를 완주하기 위한 최소 사전</h2>
-  <p class="section-desc">아래부터는 전문용어가 나온다. 이 12개만 잡으면 나머지는 문맥으로 따라온다 — 막히면 여기로 돌아오면 된다.</p>
+  <p class="section-desc">아래부터는 전문용어가 나온다. 이 16개만 잡으면 나머지는 문맥으로 따라온다 — 막히면 여기로 돌아오면 된다.</p>
   <div class="table-wrap">
     <table>
       <thead><tr><th style="width:180px;">용어</th><th>쉬운 말로</th></tr></thead>
@@ -629,6 +629,10 @@
         <tr><td><strong>부트스트랩</strong></td><td>데이터를 무작위로 뒤섞어 수천 번 다시 뽑아보며 "이 결과가 우연으로도 나오는지" 확인하는 방법. '블록'은 달력 덩어리째, '쌍별'은 두 전략에 같은 달을 적용해 공정 비교.</td></tr>
         <tr><td><strong>다중검정 보정 (Romano–Wolf)</strong></td><td>후보 12개를 동시에 시험하면 우연히 하나쯤은 좋아 보인다 — 그만큼 기준을 깎아서 다시 채점하는 것. 이 보정에서 살아남아야 진짜다.</td></tr>
         <tr><td><strong>확실성등가 (CE)</strong></td><td>출렁이는 전략을 "확실한 연 수익 몇 %와 맞바꿀래?"로 환산한 값. 꼬리를 싫어하는 투자자일수록(γ가 클수록) 보험의 값이 커진다.</td></tr>
+        <tr><td><strong>전이곡선</strong></td><td>예측 정확도(가로축)와 포트폴리오 성과(세로축)를 잇는 선 — "예측이 좋아지면 성과가 얼마나 따라오나"를 한 그림으로 보는 이 논문의 간판 개념. 발견 1은 "이 선의 샤프 쪽 기울기가 0"이라는 것.</td></tr>
+        <tr><td><strong>예측기 이름들</strong></td><td>경기에 나온 선수들. RW126=원논문의 단순 롤링(기준선) · EWMA=최근값에 가중치를 주는 평활 · <strong>HAR=지난달·지난 분기·지난해의 기억을 결합하는 "장기기억" 모형</strong> · HARX=HAR+시장상태(약세장 등) · Ridge/Lasso/RF/HGB=머신러닝 회귀·트리 · ENS=셋의 평균(결합). 결론의 "구조가 보험을 판다"에서 구조란 바로 HAR류의 장기기억+시장상태다.</td></tr>
+        <tr><td><strong>자기자금조달</strong></td><td>산 것(승자)과 판 것(패자)의 금액이 같아 내 돈이 따로 안 들어가는 구성. 그래서 무위험 이자를 뺄 필요가 없다 — 이미 "초과" 수익이다. WML·SMB·HML이 전부 이렇다.</td></tr>
+        <tr><td><strong>10분위 vs 2×3</strong></td><td>전략을 얼마나 극단으로 짜는가의 축. <strong>10분위</strong> = 전 종목을 10등분해 맨 위 10%만 사고 맨 아래 10%만 판다(극단·화끈). <strong>2×3</strong> = 크기×모멘텀 6칸으로 넓게 섞는다(분산·순함). 발견 3의 경계선: 보험은 극단 쪽에서만 팔렸다.</td></tr>
       </tbody>
     </table>
   </div>
@@ -1268,7 +1272,7 @@
   </p>
   <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
     <div class="viz-insight-label">한 문장으로</div>
-    <p>아래 42행이 시도의 전부다. 왼쪽→오른쪽으로 "왜 했나 → 뭐가 나왔나 → 논문 어디에 쓰였나"로 읽으면 되고, 용어가 막히면 위의 용어 12개로 돌아가면 된다.</p>
+    <p>아래 42행이 시도의 전부다. 왼쪽→오른쪽으로 "왜 했나 → 뭐가 나왔나 → 논문 어디에 쓰였나"로 읽으면 되고, 용어가 막히면 위의 용어 16개로 돌아가면 된다.</p>
   </div>
 
   <div class="table-wrap">
