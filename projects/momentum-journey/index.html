@@ -527,6 +527,7 @@
   <div class="toc-title">목차</div>
   <ol>
     <li><a href="#easy">3분 요약</a></li>
+    <li><a href="#glossary">용어 12개</a></li>
     <li><a href="#publication">Publication</a></li>
     <li><a href="#map">여정 지도</a></li>
     <li><a href="#phase0">실험 이전</a></li>
@@ -602,6 +603,34 @@
     <div class="viz-insight-label">한 문장으로</div>
     <p>"AI가 위험을 더 잘 예측하면 돈을 더 버는 게 아니라 <strong>망하는 달이 덜 아파진다</strong> —
     그리고 그 보험은 아무 데서나 팔리지 않고, 약한 전략 × 극단적 구성이라는 좁은 교집합에서만 팔린다."</p>
+  </div>
+</div></section>
+
+<hr class="divider">
+
+<!-- =================== GLOSSARY =================== -->
+<section id="glossary" style="background:var(--bg-secondary); padding-top:4rem; padding-bottom:4rem;"><div class="container fade-in">
+  <div class="section-label">0.5 — 용어 12개 · 이것만 알면 끝까지 읽힌다</div>
+  <h2 class="section-title">배경지식 없이 이 페이지를 완주하기 위한 최소 사전</h2>
+  <p class="section-desc">아래부터는 전문용어가 나온다. 이 12개만 잡으면 나머지는 문맥으로 따라온다 — 막히면 여기로 돌아오면 된다.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:180px;">용어</th><th>쉬운 말로</th></tr></thead>
+      <tbody>
+        <tr><td><strong>팩터 / WML</strong></td><td>정해진 규칙으로 주식을 사고파는 전략의 "성분". WML = 최근 1년 오른 주식(승자)을 사고 내린 주식(패자)을 파는 모멘텀 전략. SMB(소형−대형)·HML(가치−성장)은 비교용 다른 성분.</td></tr>
+        <tr><td><strong>샤프비율</strong></td><td>위험 한 단위당 수익 — 전략의 "평균 성적". 이 페이지에서 0.17은 "겨우 본전 언저리", 0.6은 "쓸 만함" 느낌으로 읽으면 된다.</td></tr>
+        <tr><td><strong>꼬리 / ES5</strong></td><td>수익 분포의 왼쪽 끝 = 최악의 달들. ES5는 "최악 5% 달들의 평균 손실". "꼬리가 얕아진다" = 망하는 달이 덜 아파진다.</td></tr>
+        <tr><td><strong>왜도</strong></td><td>분포가 어느 쪽으로 찌그러졌나. 음수(−1.16)면 "가끔 왕창 잃는" 모양, 양수면 반대. 모멘텀의 위험이 바로 이 음수 왜도다.</td></tr>
+        <tr><td><strong>표본외 (292개월)</strong></td><td>규칙을 만든 뒤 "처음 보는 기간"에서 채점하는 것. 답안지를 보고 공부한 문제(표본내)가 아니라 새 시험지(표본외)의 성적만 인정한다는 뜻.</td></tr>
+        <tr><td><strong>R²</strong></td><td>예측이 실제를 맞춘 정도(%). 0이면 "아무 정보 없음", 39%면 꽤 맞춤. <strong>음수(−439%)면 아무것도 안 하느니만 못하게 틀렸다</strong>는 뜻 — 신경망이 그랬다.</td></tr>
+        <tr><td><strong>QLIKE</strong></td><td>변동성 예측의 채점표(낮을수록 좋음). 특히 "위기 직전에 위험을 낮게 봤다"는 실수를 무겁게 벌점 준다.</td></tr>
+        <tr><td><strong>p값</strong></td><td>"이 결과가 그냥 우연일 확률". 낮을수록 진짜(관행상 0.05 미만이면 '유의'). p=0.001은 우연일 리 거의 없음, p=0.67은 우연과 구별 안 됨. <strong>같은 p라도 문맥이 중요</strong> — "개선의 p=0.037"은 좋은 소식, "우리 1등의 보정 p=0.125"는 탈락 소식.</td></tr>
+        <tr><td><strong>신뢰구간이 0을 포함</strong></td><td>효과의 그럴듯한 범위 안에 "0(효과 없음)"이 들어 있다는 뜻 = "효과가 있다고 자신 있게 말할 수 없다".</td></tr>
+        <tr><td><strong>부트스트랩</strong></td><td>데이터를 무작위로 뒤섞어 수천 번 다시 뽑아보며 "이 결과가 우연으로도 나오는지" 확인하는 방법. '블록'은 달력 덩어리째, '쌍별'은 두 전략에 같은 달을 적용해 공정 비교.</td></tr>
+        <tr><td><strong>다중검정 보정 (Romano–Wolf)</strong></td><td>후보 12개를 동시에 시험하면 우연히 하나쯤은 좋아 보인다 — 그만큼 기준을 깎아서 다시 채점하는 것. 이 보정에서 살아남아야 진짜다.</td></tr>
+        <tr><td><strong>확실성등가 (CE)</strong></td><td>출렁이는 전략을 "확실한 연 수익 몇 %와 맞바꿀래?"로 환산한 값. 꼬리를 싫어하는 투자자일수록(γ가 클수록) 보험의 값이 커진다.</td></tr>
+      </tbody>
+    </table>
   </div>
 </div></section>
 
@@ -780,6 +809,11 @@
     에서 <strong>단 하나의 입력(위험 예측치 σ̂)만 머신러닝으로 교체</strong>하고 나머지는 전부 고정했다.
     규칙과 표본이 같으므로 성과 차이는 전부 예측력에 귀속된다 — 이것이 식별 설계의 핵심이다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>원논문의 레시피에서 재료 하나(위험 예측치)만 바꿔 끼웠다 — 그래야 결과 차이가 전부 그 재료 탓이 된다.</p>
+  </div>
+
   <div class="table-wrap">
     <table>
       <thead><tr><th>BS15의 요소</th><th>본 연구의 처리</th><th>왜</th></tr></thead>
@@ -811,6 +845,11 @@
     데이터는 주어진 것이 아니라 선택한 것이다 — 각 선택에는 이유가 있고, 각 이유는 나중에 공격받았고,
     일부는 함정으로 판명나 원장에 흉터로 남았다. 아래는 데이터별 "왜 이걸 → 무엇에 쓰였나 → 무엇에 데였나"의 전체 지도다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>재료 이야기다 — 무엇을 왜 골랐고, 무엇을 잘못 골랐다가 바꿨는지. 요리(실험)보다 재료 손질에서 더 많이 데였다.</p>
+  </div>
+
   <div class="table-wrap">
     <table>
       <thead><tr><th>데이터</th><th>왜 이 데이터인가</th><th>어디에 쓰였나</th><th>함정과 처치 (피 흘리며 배운 것)</th></tr></thead>
@@ -943,6 +982,11 @@
     부트스트랩, 비용 스윕, 구성 그리드, 대안 전략까지 6개 배터리를 돌렸다.
     여기서 죽은 세 가지가 살아남은 하나("분모만 관리하라")를 조각했다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>설정을 이리저리 바꿔가며 결론을 두들겨봤다 — 부서진 것 세 개가 오히려 교훈이 됐다: 수익 예측은 건드리지 말고, 위험 예측만 관리하라.</p>
+  </div>
+
   <div class="journal">
     <div class="journal-entry wall">
       <div class="journal-head"><span class="journal-id">E09</span><span class="journal-phase">크래시 분류기</span><span class="journal-status wall">WALL</span></div>
@@ -975,6 +1019,11 @@
     초고가 자리 잡기 전에 심사자 페르소나 4인의 적대 공격을 먼저 돌렸다.
     지적은 전부 옳았고, 전부 수용했다. 이날 논문의 헤드라인이 두 번 다시 쓰였다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>가짜 심사위원 4명에게 미리 두들겨 맞고, 유리하지만 틀린 숫자들을 스스로 버렸다 — 그리고 금리를 확인해보니 첫 서사가 착시였다.</p>
+  </div>
+
   <div class="journal">
     <div class="journal-entry pivot">
       <div class="journal-head"><span class="journal-id">E12</span><span class="journal-phase">통계 철회</span><span class="journal-status pivot">PIVOT</span></div>
@@ -1007,6 +1056,11 @@
     블라인드 심사 시뮬레이션이 major revision ×3을 냈다. 대응 과정에서 가장 아픈 발견 —
     사전 지정 승자 ENS 자신이 Romano&ndash;Wolf 보정을 통과하지 못한다 — 을 논문의 구조로 만들었다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>우리가 뽑은 1등이 우리가 만든 시험에서 떨어졌다 — 갈아치우는 대신, 그 사실을 첫 줄에 쓰는 규칙을 만들었다.</p>
+  </div>
+
   <div class="journal">
     <div class="journal-entry pivot">
       <div class="journal-head"><span class="journal-id">E17</span><span class="journal-phase">Romano–Wolf</span><span class="journal-status pivot">PIVOT</span></div>
@@ -1035,6 +1089,11 @@
     법칙은 없었다. 대신 더 좋은 것 — 명제의 대우를 검증하는 경계조건 — 을 얻었다.
     이 국면의 실험들은 사전 지정 판정기준을 실행 전에 커밋으로 고정하고 돌렸다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>"약한 시장일수록 잘 통한다"는 법칙을 찾으러 6개 시장에 갔다가, 법칙 대신 "한국의 극단 전략에서만 통한다"는 경계선을 갖고 돌아왔다.</p>
+  </div>
+
   <div class="journal">
     <div class="journal-entry passed">
       <div class="journal-head"><span class="journal-id">E19</span><span class="journal-phase">미국 병렬</span><span class="journal-status passed">PASSED</span></div>
@@ -1153,6 +1212,11 @@
     확정된 지적은 텍스트가 아니라 <strong>계산</strong>으로 닫는 것을 원칙으로 했다. 이 과정에서 실험 6본이 추가됐고,
     그중 셋은 예상과 달라 논문의 주장 자체를 다시 썼다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>서로 모르는 AI 심사자 5명에게 7번 심사받고, 지적이 나올 때마다 말이 아니라 새 계산으로 답했다 — 마지막 라운드에 지적이 0이 됐다.</p>
+  </div>
+
   <div class="table-wrap" style="margin-bottom:2rem;">
     <table>
       <thead><tr><th>라운드</th><th>산문</th><th>저널심사</th><th>수치</th><th>구조</th><th>학위방어</th><th>확정 지적 → 대응</th></tr></thead>
@@ -1202,6 +1266,11 @@
     각 행의 상세(방법·수치·산출물·커밋)는 공개 레포의
     <a href="https://github.com/soccz/momentum-tail-insurance/blob/main/docs/05_results_ledger.md" target="_blank" rel="noopener" style="color:var(--accent);">결과 원장 원문</a>에 있다.
   </p>
+  <div class="viz-insight" style="margin-top:0;margin-bottom:2rem;">
+    <div class="viz-insight-label">한 문장으로</div>
+    <p>아래 42행이 시도의 전부다. 왼쪽→오른쪽으로 "왜 했나 → 뭐가 나왔나 → 논문 어디에 쓰였나"로 읽으면 되고, 용어가 막히면 위의 용어 12개로 돌아가면 된다.</p>
+  </div>
+
   <div class="table-wrap">
     <table>
       <thead><tr><th style="width:90px;">실험</th><th>왜 — 직전 단계가 남긴 질문</th><th>무엇을 → 무엇이 남았나</th><th>논문에서의 자리 (왜 필요한가)</th></tr></thead>
