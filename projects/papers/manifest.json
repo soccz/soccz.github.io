@@ -1,7 +1,54 @@
 {
-  "generated_at": "2026-07-10T00:38:11",
-  "count": 44,
+  "generated_at": "2026-07-20T00:25:49",
+  "count": 45,
   "papers": [
+    {
+      "slug": "2026-07-20_alibi-train-short-test-long",
+      "date": "2026-07-20",
+      "weekday": "월",
+      "bucket": "코어",
+      "title": "",
+      "title_ko": "짧게 학습하고 길게 시험하라 — 선형 편향 어텐션(ALiBi)으로 입력 길이 외삽을 가능하게 하다",
+      "authors": "",
+      "venue": "ICLR 2022 (Poster) · 2021-08 arXiv 최초 공개",
+      "identifier": "arXiv:2108.12409",
+      "code": "",
+      "data": "",
+      "tags": [
+        "pe-attention-geometry",
+        "attention-as-explanation",
+        "training-dynamics"
+      ],
+      "verdict": "위치를 \"더하지\" 말고 어텐션 점수에서 \"거리만큼 깎아라\" — 학습 파라미터 0개짜리 최근성 편향(recency bias)이 길이 외삽을 공짜로 얻게 해준다. APF의 PE 5-셀 비교에서 ALiBi는 \"content×position을 곱으로 얽는 RoPE\"의 정확한 대척점(순수 additive distance penalty)이며, Grokking-TS의 PE 축 실험에서 반드시 넣어야 할 셀이다.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "0. 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "1. 3층 TL;DR"
+        },
+        {
+          "file": "03_problem.md",
+          "num": "03",
+          "suffix": null,
+          "title": "2. 문제 지형도"
+        }
+      ],
+      "data_path": "data/2026/2026-07-20_alibi-train-short-test-long"
+    },
     {
       "slug": "2026-07-10_chernozhukov-double-ml-treatment-structural-parameters",
       "date": "2026-07-10",
