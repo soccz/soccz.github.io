@@ -1,7 +1,42 @@
 {
-  "generated_at": "2026-07-22T00:37:25",
-  "count": 46,
+  "generated_at": "2026-07-24T00:25:05",
+  "count": 47,
   "papers": [
+    {
+      "slug": "2026-07-24_sparse-autoencoders-interpretable-features",
+      "date": "2026-07-24",
+      "weekday": "금",
+      "bucket": "원거리",
+      "title": "",
+      "title_ko": "희소 오토인코더는 언어모델에서 고도로 해석 가능한 특징을 찾아낸다",
+      "authors": "Hoagy Cunningham, Aidan Ewart, Logan Riggs, Robert Huben, Lee Sharkey",
+      "venue": "ICLR 2024 (Poster) — `iclr.cc/virtual/2024/poster/19081`, OpenReview `F76bwRSLeK`",
+      "identifier": "arXiv:2309.08600",
+      "code": "",
+      "data": "",
+      "tags": [
+        "sae-features",
+        "mech-interp-circuits",
+        "causal-intervention"
+      ],
+      "verdict": "SAE(희소 오토인코더)를 \"중첩 해소 → 단의미 특징 사전 → 인과 개입\"의 한 파이프라인으로 처음 실증한 독립 계열의 원전.** 내 \"TS Transformer 기계적 해석\" 피벗의 특징-사전 방법론 앵커이자, APF의 attention motif 를 \"특징(feature)\"이 아니라 \"패턴(pattern)\"으로 봐야 하는 이유를 되비추는 대조군이다. 다만 재구성 손실(perplexity 25→40)·MLP 학습 실패·ground-truth 부재라는 세 구멍을 그대로 물려받는다.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "0. 메타 & 선정 이유"
+        }
+      ],
+      "data_path": "data/2026/2026-07-24_sparse-autoencoders-interpretable-features"
+    },
     {
       "slug": "2026-07-22_powerformer-weighted-causal-attention",
       "date": "2026-07-22",
