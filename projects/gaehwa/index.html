@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="개화(Gaehwa): AI가 실패해도 사용자의 발화권이 남는 접근 가능한 AAC를 설계하는 프로토타입과 연구 로드맵">
+  <meta name="theme-color" content="#f7f7f4">
+  <meta property="og:title" content="개화 · Gaehwa AAC">
+  <meta property="og:description" content="AI가 실패해도 나는 계속 말한다 — 접근 가능하고 fail-operational한 AAC 연구 로드맵">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://soccz.github.io/projects/gaehwa/">
+  <meta property="og:image" content="https://soccz.github.io/projects/gaehwa/og.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <title>개화 · Gaehwa — AI가 실패해도 말할 권리는 남아야 한다</title>
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --bg-soft: #f0f3f0;
+      --card: #ffffff;
+      --ink: #17201f;
+      --text: #4f5e5b;
+      --muted: #5f6f6b;
+      --line: #dce4e1;
+      --line-strong: #bdccc8;
+      --teal: #236f69;
+      --teal-dark: #195650;
+      --teal-soft: #e5f1ef;
+      --gold: #735015;
+      --gold-soft: #f7eedc;
+      --blue: #426b91;
+      --blue-soft: #eaf0f6;
+      --danger: #9a4845;
+      --danger-soft: #f8eceb;
+      --shadow: 0 16px 48px rgba(21, 51, 47, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 5%, rgba(35,111,105,0.08), transparent 28rem),
+        var(--bg);
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--teal-dark);
+      border-radius: 8px;
+      transform: translateY(-150%);
+      transition: transform 0.2s;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      background: rgba(247,247,244,0.9);
+      border-bottom: 1px solid rgba(189,204,200,0.75);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      flex: 0 0 auto;
+      color: var(--teal-dark);
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .nav-links a {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      color: var(--text);
+      font-size: 0.82rem;
+      text-decoration: none;
+    }
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--teal); }
+
+    main { overflow: hidden; }
+    .hero {
+      min-height: 92vh;
+      padding: 150px 24px 92px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      place-items: center;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: min(60vw, 720px);
+      aspect-ratio: 1;
+      right: -18%;
+      top: 9%;
+      border: 1px solid rgba(35,111,105,0.12);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 72px rgba(35,111,105,0.025),
+        0 0 0 144px rgba(35,111,105,0.018);
+      pointer-events: none;
+    }
+    .hero-inner {
+      width: 100%;
+      max-width: 940px;
+      min-width: 0;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 100%;
+      margin-bottom: 28px;
+      color: var(--teal-dark);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--teal);
+      border-radius: 50%;
+    }
+    h1 {
+      margin: 0;
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-size: clamp(2.45rem, 7.2vw, 5.6rem);
+      line-height: 1.14;
+      letter-spacing: -0.055em;
+    }
+    h1 .accent { color: var(--teal); }
+    .hero-copy {
+      width: 100%;
+      max-width: 740px;
+      margin: 30px auto 0;
+      color: var(--text);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      font-weight: 300;
+    }
+    .status {
+      width: fit-content;
+      max-width: 100%;
+      margin: 28px auto 0;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--teal-dark);
+      background: rgba(229,241,239,0.85);
+      border: 1px solid #c5ddd9;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .button {
+      min-height: 48px;
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      color: var(--teal-dark);
+      background: rgba(255,255,255,0.68);
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .button.primary {
+      color: #fff;
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--teal);
+      box-shadow: 0 8px 24px rgba(35,111,105,0.14);
+    }
+    .hero-facts {
+      width: 100%;
+      max-width: 760px;
+      margin: 60px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .fact {
+      padding: 22px 12px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+    }
+    .fact:last-child { border-right: 0; }
+    .fact strong {
+      display: block;
+      color: var(--teal-dark);
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+    .fact span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    section { padding: 104px 24px; }
+    section.alt { background: rgba(240,243,240,0.74); }
+    .container { width: min(1120px, 100%); margin: 0 auto; }
+    .section-head { max-width: 760px; margin-bottom: 44px; }
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--teal);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0;
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-size: clamp(1.75rem, 4vw, 2.7rem);
+      line-height: 1.35;
+      letter-spacing: -0.035em;
+    }
+    .section-desc {
+      margin: 16px 0 0;
+      color: var(--text);
+      font-size: 0.98rem;
+    }
+    h3 { margin: 0; font-size: 1rem; line-height: 1.5; }
+    p { margin-top: 0; }
+    .muted { color: var(--muted); }
+
+    .prototype-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.76fr) minmax(0, 1.24fr);
+      align-items: center;
+      gap: clamp(42px, 8vw, 100px);
+    }
+    .phone-frame {
+      width: min(330px, 100%);
+      margin: 0 auto;
+      padding: 10px;
+      background: #151918;
+      border-radius: 46px;
+      box-shadow: var(--shadow);
+    }
+    .phone-frame img {
+      display: block;
+      width: 100%;
+      border-radius: 37px;
+      background: #fff;
+    }
+    .caption {
+      max-width: 330px;
+      margin: 14px auto 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-align: center;
+    }
+    .feature-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+    .feature {
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 14px;
+      align-items: start;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .feature-num {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .feature p {
+      margin: 5px 0 0;
+      color: var(--text);
+      font-size: 0.84rem;
+    }
+    .honesty-note {
+      margin-top: 22px;
+      padding: 18px 20px;
+      color: var(--text);
+      background: var(--gold-soft);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.82rem;
+    }
+    .honesty-note strong { color: #735015; }
+
+    .turning-point {
+      display: grid;
+      grid-template-columns: 0.88fr 1.12fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+    .quote-panel {
+      padding: clamp(26px, 5vw, 48px);
+      color: #eef8f6;
+      background: var(--teal-dark);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .quote-panel blockquote {
+      margin: 0;
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.45rem, 3vw, 2.25rem);
+      line-height: 1.55;
+      letter-spacing: -0.035em;
+    }
+    .quote-panel small {
+      display: block;
+      margin-top: 32px;
+      color: #afd0cb;
+    }
+    .insight-grid { display: grid; gap: 14px; }
+    .insight {
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .insight .label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--teal);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .insight p {
+      margin: 7px 0 0;
+      color: var(--text);
+      font-size: 0.86rem;
+    }
+
+    .architecture {
+      display: grid;
+      gap: 14px;
+    }
+    .arch-box {
+      padding: 20px 22px;
+      text-align: center;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .arch-box strong { display: block; font-size: 0.95rem; }
+    .arch-box span {
+      display: block;
+      margin-top: 6px;
+      color: var(--text);
+      font-size: 0.76rem;
+    }
+    .arch-box.action {
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      border-color: #c1dbd7;
+    }
+    .plane-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .arch-box.essential { border-top: 4px solid var(--teal); }
+    .arch-box.assistive { border-top: 4px solid var(--blue); }
+    .arch-box.kernel {
+      color: #fff;
+      background: var(--teal-dark);
+      border-color: var(--teal-dark);
+    }
+    .arch-box.kernel span { color: #bfd8d4; }
+    .side-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .arrow {
+      height: 22px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+    .arch-principle {
+      margin: 28px auto 0;
+      max-width: 800px;
+      color: var(--text);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .arch-principle strong { color: var(--teal-dark); }
+
+    .invariant-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .invariant {
+      min-height: 126px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .invariant-id {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--teal-dark);
+      background: var(--teal-soft);
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .invariant p {
+      margin: 5px 0 0;
+      color: var(--text);
+      font-size: 0.79rem;
+      line-height: 1.65;
+    }
+
+    .degrade-wrap {
+      overflow-x: auto;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    caption {
+      padding: 16px 18px;
+      color: var(--teal-dark);
+      background: var(--card);
+      font-weight: 700;
+      text-align: left;
+    }
+    th, td {
+      padding: 15px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      background: var(--bg-soft);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child {
+      color: var(--teal-dark);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .table-note {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .program {
+      position: relative;
+      display: grid;
+      gap: 14px;
+    }
+    .program-step {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 24px;
+      align-items: start;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .program-phase {
+      color: var(--teal);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .program-step p {
+      margin: 7px 0 0;
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+    .badge {
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge.done { color: var(--teal-dark); background: var(--teal-soft); }
+    .badge.designed { color: var(--gold); background: var(--gold-soft); }
+    .badge.future { color: var(--blue); background: var(--blue-soft); }
+
+    .boundary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .boundary-card {
+      padding: 22px;
+      background: var(--danger-soft);
+      border: 1px solid #edd0ce;
+      border-radius: 12px;
+    }
+    .boundary-card h3 { color: var(--danger); }
+    .boundary-card p {
+      margin: 7px 0 0;
+      color: var(--text);
+      font-size: 0.8rem;
+    }
+
+    .reference-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+    .reference-list li {
+      padding: 14px 16px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.78rem;
+    }
+    .reference-list a {
+      color: var(--teal-dark);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    footer {
+      padding: 52px 24px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-size: 0.76rem;
+    }
+    footer a {
+      color: var(--teal-dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .js .reveal.visible { opacity: 1; transform: none; }
+    :focus-visible { outline: 3px solid var(--teal-dark); outline-offset: 3px; }
+
+    @media (max-width: 860px) {
+      .nav-inner {
+        width: 100%;
+        padding: 0 18px;
+        overflow-x: auto;
+      }
+      .nav-links { gap: 16px; }
+      .nav-links a { white-space: nowrap; }
+      .hero { min-height: auto; padding-top: 132px; }
+      .hero-facts { grid-template-columns: repeat(2, 1fr); }
+      .fact:nth-child(2) { border-right: 0; }
+      .fact:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .prototype-grid, .turning-point { grid-template-columns: 1fr; }
+      .prototype-grid { gap: 52px; }
+      .program-step { grid-template-columns: 1fr; gap: 8px; }
+      .program-step .badge { width: fit-content; }
+    }
+    @media (max-width: 640px) {
+      section { padding: 76px 18px; }
+      .hero { padding-left: 18px; padding-right: 18px; }
+      .eyebrow {
+        display: block;
+        width: 100%;
+        font-size: 0.64rem;
+        line-height: 1.7;
+      }
+      .eyebrow::before {
+        display: inline-block;
+        margin-right: 8px;
+      }
+      .hero-copy { overflow-wrap: anywhere; }
+      .status {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+      .status-dot {
+        display: inline-block;
+        margin-right: 8px;
+      }
+      .hero-actions { flex-direction: column; }
+      .button { width: 100%; }
+      .plane-grid, .side-grid, .invariant-grid, .boundary-grid { grid-template-columns: 1fr; }
+      .feature { padding: 16px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 건너뛰기</a>
+  <nav aria-label="페이지 내 탐색">
+    <div class="nav-inner">
+      <a class="brand" href="/">soccz.</a>
+      <ul class="nav-links">
+        <li><a href="#prototype">프로토타입</a></li>
+        <li><a href="#turning-point">전환점</a></li>
+        <li><a href="#architecture">목표 설계</a></li>
+        <li><a href="#research">연구 계획</a></li>
+        <li><a href="#limits">검증 경계</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="content">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">AAC · Human-centered AI · Research Roadmap</div>
+        <h1>AI가 실패해도<br><span class="accent">나는 계속 말한다</span></h1>
+        <p class="hero-copy">
+          개화는 주변 대화를 듣고 발화가 어려운 사용자가 선택할 문장 후보를 만드는 AAC 프로토타입입니다.
+          전수 감사 이후 목표를 바꿨습니다. 더 영리한 추천기가 아니라,
+          사전 정의한 장애가 발생해도 사용자의 발화·거절·취소·수리 권리를 남기도록 설계하는 연구입니다.
+        </p>
+        <div class="status"><span class="status-dot" aria-hidden="true"></span>읽기 전용 감사·연구 설계 완료 · 결함 보완과 실증 검증은 수행 전</div>
+        <div class="hero-actions">
+          <a class="button primary" href="https://github.com/Tech4GoodHACKERTHON/AI_model" target="_blank" rel="noopener noreferrer">
+            GitHub 소스 보기 <span aria-hidden="true">↗</span>
+          </a>
+          <a class="button" href="#architecture">연구 설계 보기 <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-facts" role="group" aria-label="프로젝트 핵심 수치">
+          <div class="fact"><strong>4</strong><span>현재 표시 후보</span></div>
+          <div class="fact"><strong>3</strong><span>AI 구성요소</span></div>
+          <div class="fact"><strong>10</strong><span>제안한 제품 불변식</span></div>
+          <div class="fact"><strong>P0</strong><span>최종 연구 방향</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section id="prototype" class="alt">
+      <div class="container prototype-grid reveal">
+        <figure>
+          <div class="phone-frame">
+            <img src="gaehwa-conversation.png" width="414" height="868" alt="개화 실시간 대화 화면. 상대 발화와 답변, 조건, 보류, 추가 후보 네 개, 직접 입력과 말하기 버튼이 표시되어 있다.">
+          </div>
+          <figcaption class="caption">현재 프로토타입의 실시간 대화 화면. 현재 구현에서는 화면 후보를 선택하면 발화됩니다.</figcaption>
+        </figure>
+        <div>
+          <div class="section-head">
+            <p class="section-kicker">What exists today</p>
+            <h2>대화를 듣고, 말할 후보를 준비합니다</h2>
+            <p class="section-desc">
+              현재 데모는 오디오를 짧은 구간으로 처리하고, 상대 발화의 화행과 사용자 맥락에 맞는 후보를 스트리밍합니다.
+              모델이 임의로 발화하지 않고 사용자의 선택이 마지막 게이트가 되는 구조입니다.
+            </p>
+          </div>
+          <ol class="feature-list">
+            <li class="feature">
+              <span class="feature-num">01</span>
+              <div><h3>꾹 누른 채 듣기</h3><p>3초 프리롤과 VAD로 홀드 구간 주변의 오디오를 처리합니다. 감사에서 마이크 수명주기 결함을 확인했으며 아직 보완 전입니다.</p></div>
+            </li>
+            <li class="feature">
+              <span class="feature-num">02</span>
+              <div><h3>화자·화행·맥락 추정</h3><p>ASR, 세션 화자 임베딩, 코드 기반 응답 계획을 조합해 그 턴에 가능한 행동을 먼저 정합니다.</p></div>
+            </li>
+            <li class="feature">
+              <span class="feature-num">03</span>
+              <div><h3>후보 네 개와 거절권</h3><p>답변만 밀어붙이지 않고 보류·거절·확인 같은 선택권을 정책 계층에서 보존합니다.</p></div>
+            </li>
+            <li class="feature">
+              <span class="feature-num">04</span>
+              <div><h3>사용자 승인 후 출력</h3><p>후보, 즐겨찾기, 직접 입력은 사용자가 선택한 뒤 브라우저 TTS 또는 큰 글자 화면으로 전달됩니다.</p></div>
+            </li>
+          </ol>
+          <div class="honesty-note">
+            <strong>현재 배포 경계:</strong> 공개 화면과 자가 호스팅 GPU 백엔드가 분리된 연구용 구조입니다.
+            상시 가동을 보장하는 서비스는 아니며, 최종 목표인 완전한 온디바이스 실행과 접근성 동등성도 아직 구현·검증된 결과가 아닙니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="turning-point">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">The audit changed the question</p>
+          <h2>추천 품질만 높이면 충분하다는 전제를 버렸습니다</h2>
+          <p class="section-desc">
+            코드 감사에서 발견된 문제들은 별개의 버그가 아니었습니다. AI·접근성·수집·출력·평가를 끝까지 제약하는
+            공통 불변식이 없다는 한 구조적 문제가 여러 경계에서 드러난 것이었습니다.
+          </p>
+        </div>
+        <div class="turning-point reveal">
+          <div class="quote-panel">
+            <blockquote>“접근 가능한 방법으로 선택할 수 없는 후보는 기능적으로 존재하지 않는 후보다.”</blockquote>
+            <small>전수 감사에서 도출한 제품 원칙</small>
+          </div>
+          <div class="insight-grid">
+            <article class="insight">
+              <span class="label">01 · Semantics</span>
+              <h3>다양성 강제가 사실을 만들 수 있다</h3>
+              <p>모델에게 모든 라벨을 채우게 하면 근거가 없는 슬롯을 지어낼 수 있습니다. 그래서 채울 행동은 비LLM 정책이 정하고, 모델의 표현도 허용된 재료로 제한하는 것을 목표로 합니다.</p>
+            </article>
+            <article class="insight">
+              <span class="label">02 · Access</span>
+              <h3>터치 전용 승인은 실제 승인권이 아니다</h3>
+              <p>운동장애 사용자가 스위치·키보드·스크린리더로 후보를 고르거나 취소할 수 없다면, “사람이 최종 결정한다”는 원칙도 성립하지 않습니다.</p>
+            </article>
+            <article class="insight">
+              <span class="label">03 · Failure</span>
+              <h3>AI 장애가 발화 장애가 되어서는 안 된다</h3>
+              <p>서버나 모델이 멈추면 도움의 수준은 낮아질 수 있습니다. 그러나 직접 입력, 기본 보드, 거절, 정정까지 사라져서는 안 됩니다.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture" class="alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">P0 · Agency-Safe AAC Runtime</p>
+          <h2>AI를 본체가 아니라 교체 가능한 가속 계층으로</h2>
+          <p class="section-desc">
+            최종 연구 가제는 <em>When AI Fails, I Still Speak</em>입니다.
+            기본 의사소통 경로와 실패 가능한 AI 경로를 분리하고, 두 경로가 같은 사용자 권한을 통과하도록 설계합니다.
+          </p>
+        </div>
+        <div class="architecture reveal" role="group" aria-label="개화 목표 아키텍처">
+          <div class="arch-box action">
+            <strong>Accessible Action Bus</strong>
+            <span>터치 · 키보드 · 1·2스위치 · 시선 키 이벤트 · 스크린리더</span>
+          </div>
+          <div class="arrow" aria-hidden="true">↓</div>
+          <div class="plane-grid">
+            <div class="arch-box essential">
+              <strong>Essential Communication Plane</strong>
+              <span>직접 입력 · 기본 보드 · 즐겨찾기 · 로컬 출력 · 거절 · 취소 · 정정</span>
+            </div>
+            <div class="arch-box assistive">
+              <strong>Assistive AI Plane</strong>
+              <span>오디오 · ASR · 화자/수신자 · TRP/화행 · 검색 · 템플릿 · 로컬 LLM</span>
+            </div>
+          </div>
+          <div class="arrow" aria-hidden="true">↓</div>
+          <div class="arch-box kernel">
+            <strong>Agency Safety Kernel</strong>
+            <span>후보 출처 · 근거 · 위험 · 승인 · 거절권 · 보류 · 안정된 선택 대상 · 즉시 수리</span>
+          </div>
+          <div class="arrow" aria-hidden="true">↑ ↓</div>
+          <div class="side-grid">
+            <div class="arch-box">
+              <strong>Context &amp; Consent Firewall</strong>
+              <span>수집 상태 · 관계 · 목적 · 처리 위치 · TTL · 삭제 · 주변인 동의</span>
+            </div>
+            <div class="arch-box">
+              <strong>Evidence Plane</strong>
+              <span>형식화 오류 · 단계별 지연 · 저하 전환 · 후보 출처 · 실행/모델/정책 해시</span>
+            </div>
+          </div>
+        </div>
+        <p class="arch-principle reveal">
+          <strong>보안 경계에서는 실패 시 닫히고, 의사소통 경로에서는 실패해도 작동합니다.</strong><br>
+          인증되지 않은 원격 AI는 차단하되 사용자의 로컬 기본 발화까지 차단하지 않는 것이 핵심입니다.
+        </p>
+      </div>
+    </section>
+
+    <section id="invariants">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">Verifiable agency floor</p>
+          <h2>좋은 의도를 열 개의 반증 가능한 불변식으로</h2>
+          <p class="section-desc">
+            Agency Floor는 하나의 평균점수가 아닙니다. 치명적 권리 손실을 빠른 속도나 높은 후보 점수로 상쇄하지 못하게 하는
+            제품·연구 계약입니다. 아래 항목은 제안 단계이며 공동설계와 파일럿에서 수정해야 합니다.
+          </p>
+        </div>
+        <div class="invariant-grid reveal">
+          <article class="invariant"><span class="invariant-id">I1</span><div><h3>Communication Continuity</h3><p>AI·서버·네트워크가 실패해도 기본 의사소통은 남는다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I2</span><div><h3>Access Equivalence</h3><p>지원한다고 밝힌 접근 방식마다 발화·취소·수리가 가능하다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I3</span><div><h3>Selection Stability</h3><p>스트리밍이 사용자가 탐색 중인 후보의 위치와 의미를 바꾸지 않는다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I4</span><div><h3>Output Authority</h3><p>승인 없는 의미 출력은 금지한다. 사전 승인한 저의미 신호만 제한적으로 예외다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I5</span><div><h3>Refusal &amp; Epistemic Rights</h3><p>모델이 거절·보류를 지우거나 근거 없는 사실을 채우지 못한다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I6</span><div><h3>Capture Boundedness</h3><p>선언한 수집 상태 밖에서는 마이크·카메라 트랙이 종료된다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I7</span><div><h3>Boundary Security</h3><p>무권한 웹·사용자가 오디오·모델·기억에 접근하지 못한다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I8</span><div><h3>Placement Transparency</h3><p>로컬·원격 처리 위치와 실패 전환을 숨기지 않는다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I9</span><div><h3>Constrained Learning</h3><p>선택은 선호 신호일 뿐 사실·동의·자동발화 권한의 증거가 아니다.</p></div></article>
+          <article class="invariant"><span class="invariant-id">I10</span><div><h3>Evidence Contract</h3><p>오류·지연·평가 조건을 숨기거나 유리한 수치로 재해석하지 않는다.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="degradation" class="alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">Fail-operational states</p>
+          <h2>고장 나면 사라지는 대신, 단계적으로 단순해지도록 설계합니다</h2>
+          <p class="section-desc">
+            “서버 연결 실패”로 앱 전체를 막지 않는 것이 목표입니다. 여러 장애가 겹치면 가능한 기능의 교집합으로 내려가되,
+            직접 말하고 거절하고 고치는 권한은 유지하도록 설계합니다.
+          </p>
+        </div>
+        <div class="degrade-wrap reveal" role="region" aria-label="목표 저하 상태표" tabindex="0">
+          <table>
+            <caption>개화가 목표로 하는 장애 상태별 기능 저하와 사용자 안내</caption>
+            <thead><tr><th scope="col">상태</th><th scope="col">잃는 기능</th><th scope="col">반드시 남는 기능</th><th scope="col">사용자 안내</th></tr></thead>
+            <tbody>
+              <tr><td>S0 · Full Local</td><td>없음</td><td>전체 로컬 AI와 기본 AAC</td><td>로컬 AI 사용 중</td></tr>
+              <tr><td>S1 · No Turn/Speaker</td><td>자동 화자·수신자 추정</td><td>수동 상대 지정, 후보, 직접 입력</td><td>대화 상대를 직접 선택해 주세요</td></tr>
+              <tr><td>S2 · No LLM</td><td>자유 생성</td><td>템플릿, 저장 표현, 거절·보류·수리</td><td>AI 후보 없이 기본 표현을 사용합니다</td></tr>
+              <tr><td>S3 · No ASR</td><td>주변 발화 자동 전사</td><td>수동 맥락, 기본 보드, 직접 입력</td><td>듣기 기능을 사용할 수 없습니다</td></tr>
+              <tr><td>S4 · No TTS</td><td>합성음성</td><td>파트너용 큰 글자와 시각 카드</td><td>음성 대신 화면으로 보여 줍니다</td></tr>
+              <tr><td>S5 · Privacy Paused</td><td>센서·학습·기억 갱신</td><td>직접 입력, 기본 보드, 허용된 출력</td><td>듣기와 학습을 일시 중지했습니다</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note reveal">이 상태기계는 목표 설계입니다. 현재 프로토타입에서 모두 구현·검증됐다는 뜻이 아닙니다.</p>
+      </div>
+    </section>
+
+    <section id="research">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">Research program</p>
+          <h2>코드 감사에서 당사자 연구까지</h2>
+          <p class="section-desc">
+            “논문급”이라는 말은 기능을 많이 붙인다는 뜻이 아니라, 무엇을 아직 모르는지 밝히고
+            반증 가능한 순서로 증거를 쌓는다는 뜻으로 사용합니다.
+          </p>
+        </div>
+        <div class="program reveal">
+          <article class="program-step">
+            <div class="program-phase">Phase 0</div>
+            <div><h3>코드 감사와 연구 명제 재구성</h3><p>후보 정책, 접근성, 수집 수명주기, 오류 경계와 평가 체계를 읽기 전용으로 감사하고 P0 Agency Floor를 설계했습니다. 발견 결함의 수정·재검증은 이 단계에 포함하지 않았습니다.</p></div>
+            <span class="badge done">감사·설계 완료</span>
+          </article>
+          <article class="program-step">
+            <div class="program-phase">Phase 1</div>
+            <div><h3>AI 없는 필수 의사소통 경로</h3><p>Action Bus, 기본 보드, 직접 입력, 취소·정정, 키보드·1·2스위치·스크린리더 접근을 먼저 검증합니다.</p></div>
+            <span class="badge designed">설계됨 · 미실행</span>
+          </article>
+          <article class="program-step">
+            <div class="program-phase">Phase 2</div>
+            <div><h3>안전 커널과 장애주입</h3><p>LLM·ASR·화자·TTS·네트워크·인증 실패를 주입하고 NDJSON 계약, 후보 출처, 저하 전환과 종단간 지연을 측정합니다.</p></div>
+            <span class="badge designed">설계됨 · 미실행</span>
+          </article>
+          <article class="program-step">
+            <div class="program-phase">Phase 3</div>
+            <div><h3>실제 AAC 사용자와 파트너 연구</h3><p>의도하지 않은 대리발화(UAO), 발언 기회 손실, 의미 전달, 저자감과 접근 비용을 실제 보조기술 사용자별로 층화해 평가합니다.</p></div>
+            <span class="badge future">향후 연구</span>
+          </article>
+          <article class="program-step">
+            <div class="program-phase">Phase 4</div>
+            <div><h3>온디바이스와 다자 현장 배치</h3><p>소형 로컬 모델의 품질·지연·메모리·에너지 Pareto frontier를 확인한 뒤, 동의와 삭제가 가능한 제한적 현장 연구로 확장합니다.</p></div>
+            <span class="badge future">장기 목표</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="limits" class="alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">What this page does not claim</p>
+          <h2>아직 하지 않은 실험을 결과처럼 쓰지 않습니다</h2>
+          <p class="section-desc">
+            이 페이지는 현재 프로토타입과 감사에서 도출한 연구 설계를 함께 보여 줍니다.
+            둘 사이의 경계를 아래처럼 고정합니다.
+          </p>
+        </div>
+        <div class="boundary-grid reveal">
+          <article class="boundary-card"><h3>감사 결함 보완 전</h3><p>읽기 전용 코드 감사와 연구 설계만 완료했습니다. 확인된 결함을 수정하거나 수정본을 재검증한 상태가 아닙니다.</p></article>
+          <article class="boundary-card"><h3>AAC 사용자 효과 미검증</h3><p>실제 당사자의 속도·참여·저자성이 개선됐다는 사용자 연구를 아직 수행하지 않았습니다.</p></article>
+          <article class="boundary-card"><h3>접근성 준수 미선언</h3><p>WCAG 참고 설계와 실제 스위치·스크린리더 검증은 다릅니다. 현재 제품의 준수를 주장하지 않습니다.</p></article>
+          <article class="boundary-card"><h3>Agency Floor는 제안 지표</h3><p>열 개 불변식과 생존율은 공동설계·파일럿에서 타당화해야 할 연구 가설입니다.</p></article>
+          <article class="boundary-card"><h3>온디바이스는 목표 상태</h3><p>현재 공개 구조를 완전한 온디바이스 또는 무중단 서비스로 표현하지 않습니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="references">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">Selected foundations</p>
+          <h2>이 방향을 만든 직접 연구와 공식 기준</h2>
+          <p class="section-desc">신규성은 “AAC에 LLM을 썼다”가 아니라, 기존 연구 위에서 접근성과 실패 상태까지 주체성의 문제로 연결하는 데 둡니다.</p>
+        </div>
+        <ul class="reference-list reveal">
+          <li>Valencia et al. (2020), <a href="https://doi.org/10.1145/3313831.3376376" target="_blank" rel="noopener noreferrer">Conversational Agency in AAC</a> — 언제·무엇을·누구에게 말할 수 있는가.</li>
+          <li>Valencia et al. (2023), <a href="https://doi.org/10.1145/3544548.3581560" target="_blank" rel="noopener noreferrer">The Less I Type, the Better</a> — 시간·신체·인지 노력 절감에 대한 사용자 기대와 개인 말투·편집권 요구.</li>
+          <li>Valencia et al. (2024), <a href="https://doi.org/10.1145/3613904.3642762" target="_blank" rel="noopener noreferrer">COMPA</a> — 대화 맥락을 활용하는 AAC 설계.</li>
+          <li>Weinberg et al. (2025), <a href="https://doi.org/10.1145/3663547.3746381" target="_blank" rel="noopener noreferrer">One Does Not Simply “Mm-hmm”</a> — 사용자·관계별 다중양식 AAC 백채널에 대한 질적 탐색.</li>
+          <li>Weinberg et al. (2025), <a href="https://doi.org/10.1145/3706598.3714102" target="_blank" rel="noopener noreferrer">Why So Serious?</a> — 시간 민감한 발화에서 효율과 사용자 통제가 충돌하는 지점.</li>
+          <li>Ibrahim et al. (2026), <a href="https://doi.org/10.1145/3772363.3798436" target="_blank" rel="noopener noreferrer">Before the Technological Fix</a> — AI–AAC 연구의 기술 효율 편중과 시간적·관계적 연구 공백.</li>
+          <li>W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">WCAG 2.2</a> 및 <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener noreferrer">ARIA Button Pattern</a> — WCAG 준수 기준과 APG 구현 지침.</li>
+          <li>OWASP, <a href="https://github.com/OWASP/ASVS/tree/v5.0.0" target="_blank" rel="noopener noreferrer">ASVS 5.0.0</a> — 웹·서비스 경계의 기술적 보안 검증 기준.</li>
+          <li>NIST, <a href="https://doi.org/10.6028/NIST.AI.600-1" target="_blank" rel="noopener noreferrer">Generative AI Profile</a> — 거버넌스·출처·배포 전 시험·사고 공개의 위험관리 프레임.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      개화 · Gaehwa AAC · 2026-07-25<br>
+      <a href="https://github.com/Tech4GoodHACKERTHON/AI_model" target="_blank" rel="noopener noreferrer">Source</a>
+      &nbsp;·&nbsp; <a href="/">soccz.github.io</a>
+    </p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -32px' });
+
+      reveals.forEach((element) => observer.observe(element));
+    } else {
+      reveals.forEach((element) => element.classList.add('visible'));
+    }
+  </script>
+</body>
+</html>
