@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="개화(Gaehwa): AI가 실패해도 사용자의 발화권이 남는 접근 가능한 AAC를 설계하는 프로토타입과 연구 로드맵">
+  <meta name="description" content="개화(Gaehwa): faster-whisper, ERes2Net, 7B LLM을 AAC 정책·스트리밍 계층으로 통합한 AI 시스템과 Agency Floor 연구 로드맵">
   <meta name="theme-color" content="#f7f7f4">
   <meta property="og:title" content="개화 · Gaehwa AAC">
-  <meta property="og:description" content="AI가 실패해도 나는 계속 말한다 — 접근 가능하고 fail-operational한 AAC 연구 로드맵">
+  <meta property="og:description" content="STT·화자 임베딩·화행 정책·7B LLM을 직접 오케스트레이션한 AAC AI 시스템과 Agency Floor 연구">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soccz.github.io/projects/gaehwa/">
   <meta property="og:image" content="https://soccz.github.io/projects/gaehwa/og.png">
@@ -279,13 +279,14 @@
       font-size: clamp(1.75rem, 4vw, 2.7rem);
       line-height: 1.35;
       letter-spacing: -0.035em;
+      word-break: keep-all;
     }
     .section-desc {
       margin: 16px 0 0;
       color: var(--text);
       font-size: 0.98rem;
     }
-    h3 { margin: 0; font-size: 1rem; line-height: 1.5; }
+    h3 { margin: 0; font-size: 1rem; line-height: 1.5; word-break: keep-all; }
     p { margin-top: 0; }
     .muted { color: var(--muted); }
 
@@ -359,6 +360,149 @@
       font-size: 0.82rem;
     }
     .honesty-note strong { color: #735015; }
+
+    .ai-system-section {
+      background:
+        linear-gradient(135deg, rgba(229,241,239,0.88), rgba(247,247,244,0.96) 55%, rgba(234,240,246,0.72));
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .scope-grid {
+      margin-bottom: 28px;
+      display: grid;
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: 14px;
+    }
+    .scope-card {
+      padding: 24px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .scope-card.direct {
+      border-color: #acd0ca;
+      box-shadow: inset 4px 0 0 var(--teal);
+    }
+    .scope-label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--teal-dark);
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .scope-card p {
+      margin: 7px 0 0;
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+    .scope-card ul {
+      margin: 14px 0 0;
+      padding-left: 19px;
+      color: var(--text);
+      font-size: 0.79rem;
+    }
+    .scope-card li + li { margin-top: 6px; }
+
+    .pipeline-stack {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+      list-style: none;
+    }
+    .pipeline-stage {
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 48px minmax(190px, 0.52fr) minmax(0, 1.48fr);
+      gap: 18px;
+      align-items: start;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .stage-number {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--teal);
+      border-radius: 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .stage-head h3 { color: var(--ink); }
+    .stage-tech {
+      display: inline-block;
+      margin-top: 6px;
+      color: var(--blue);
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+    .stage-body p {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.79rem;
+      line-height: 1.72;
+    }
+    .stage-body strong { color: var(--teal-dark); }
+
+    .evidence-head {
+      max-width: 760px;
+      margin: 54px 0 24px;
+    }
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .evidence-card {
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .evidence-value {
+      display: block;
+      color: var(--teal-dark);
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .evidence-tag {
+      display: inline-block;
+      margin: 10px 0 12px;
+      padding: 4px 8px;
+      color: var(--gold);
+      background: var(--gold-soft);
+      border-radius: 999px;
+      font-size: 0.64rem;
+      font-weight: 700;
+    }
+    .evidence-card p {
+      margin: 7px 0 0;
+      color: var(--text);
+      font-size: 0.77rem;
+    }
+    .evidence-boundary {
+      margin: 16px 0 0;
+      padding: 16px 18px;
+      color: var(--text);
+      background: rgba(255,255,255,0.66);
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      font-size: 0.76rem;
+    }
+    .evidence-boundary strong { color: var(--danger); }
+    .code-links {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
     .turning-point {
       display: grid;
@@ -659,6 +803,8 @@
       .fact:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
       .prototype-grid, .turning-point { grid-template-columns: 1fr; }
       .prototype-grid { gap: 52px; }
+      .scope-grid, .evidence-grid { grid-template-columns: 1fr; }
+      .pipeline-stage { grid-template-columns: 48px minmax(180px, 0.7fr) minmax(0, 1.3fr); }
       .program-step { grid-template-columns: 1fr; gap: 8px; }
       .program-step .badge { width: fit-content; }
     }
@@ -688,6 +834,10 @@
       .hero-actions { flex-direction: column; }
       .button { width: 100%; }
       .plane-grid, .side-grid, .invariant-grid, .boundary-grid { grid-template-columns: 1fr; }
+      .pipeline-stage { grid-template-columns: 42px 1fr; gap: 12px; }
+      .stage-number { width: 38px; height: 38px; }
+      .stage-body { grid-column: 2; }
+      .code-links { flex-direction: column; }
       .feature { padding: 16px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -707,7 +857,7 @@
       <a class="brand" href="/">soccz.</a>
       <ul class="nav-links">
         <li><a href="#prototype">프로토타입</a></li>
-        <li><a href="#turning-point">전환점</a></li>
+        <li><a href="#ai-pipeline">AI 파이프라인</a></li>
         <li><a href="#architecture">목표 설계</a></li>
         <li><a href="#research">연구 계획</a></li>
         <li><a href="#limits">검증 경계</a></li>
@@ -722,7 +872,8 @@
         <h1>AI가 실패해도<br><span class="accent">나는 계속 말한다</span></h1>
         <p class="hero-copy">
           개화는 주변 대화를 듣고 발화가 어려운 사용자가 선택할 문장 후보를 만드는 AAC 프로토타입입니다.
-          전수 감사 이후 목표를 바꿨습니다. 더 영리한 추천기가 아니라,
+          faster-whisper, ERes2Net, 7B LLM을 결합하고 화행 분류·응답 정책·스트리밍 파서·품질 필터를 직접 설계했습니다.
+          전수 감사 이후에는 더 영리한 추천기를 넘어,
           사전 정의한 장애가 발생해도 사용자의 발화·거절·취소·수리 권리를 남기도록 설계하는 연구입니다.
         </p>
         <div class="status"><span class="status-dot" aria-hidden="true"></span>읽기 전용 감사·연구 설계 완료 · 결함 보완과 실증 검증은 수행 전</div>
@@ -730,11 +881,11 @@
           <a class="button primary" href="https://github.com/Tech4GoodHACKERTHON/AI_model" target="_blank" rel="noopener noreferrer">
             GitHub 소스 보기 <span aria-hidden="true">↗</span>
           </a>
-          <a class="button" href="#architecture">연구 설계 보기 <span aria-hidden="true">↓</span></a>
+          <a class="button" href="#ai-pipeline">AI 파이프라인 보기 <span aria-hidden="true">↓</span></a>
         </div>
         <div class="hero-facts" role="group" aria-label="프로젝트 핵심 수치">
           <div class="fact"><strong>4</strong><span>현재 표시 후보</span></div>
-          <div class="fact"><strong>3</strong><span>AI 구성요소</span></div>
+          <div class="fact"><strong>7</strong><span>구현한 추론 단계</span></div>
           <div class="fact"><strong>10</strong><span>제안한 제품 불변식</span></div>
           <div class="fact"><strong>P0</strong><span>최종 연구 방향</span></div>
         </div>
@@ -780,6 +931,117 @@
             <strong>현재 배포 경계:</strong> 공개 화면과 자가 호스팅 GPU 백엔드가 분리된 연구용 구조입니다.
             상시 가동을 보장하는 서비스는 아니며, 최종 목표인 완전한 온디바이스 실행과 접근성 동등성도 아직 구현·검증된 결과가 아닙니다.
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ai-pipeline" class="ai-system-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="section-kicker">Implemented AI pipeline · Current prototype</p>
+          <h2>모델보다 앞에서 결정하고, 모델 뒤에서 검증합니다</h2>
+          <p class="section-desc">
+            개화는 기반모델 가중치를 새로 사전학습하거나 파인튜닝했다고 주장하지 않습니다.
+            대신 음성·화자·언어 모델을 AAC에 맞게 선택하고 캘리브레이션한 뒤,
+            무엇을 생성해도 되는지 LLM 전후에서 통제하는 실시간 추론 시스템을 직접 설계·구현했습니다.
+          </p>
+        </div>
+
+        <div class="scope-grid reveal">
+          <article class="scope-card">
+            <span class="scope-label">Integrated pretrained models</span>
+            <h3>기반모델은 검증된 사전학습 가중치를 선택했습니다</h3>
+            <p>원천 가중치를 새로 학습한 것은 아니지만, 각 모델을 외부 API에 맡기지 않고 자가 호스팅 추론 경로에 통합하고 실제 후보 품질에 맞춰 선택했습니다.</p>
+            <ul>
+              <li>faster-whisper large-v3-turbo 한국어 STT</li>
+              <li>sherpa-onnx ERes2Net 512차원 화자 임베딩</li>
+              <li>SKT A.X 4.0 Light 7B GGUF와 Ollama</li>
+              <li>ffmpeg 및 브라우저 Web Speech TTS</li>
+            </ul>
+          </article>
+          <article class="scope-card direct">
+            <span class="scope-label">Designed &amp; implemented in Gaehwa</span>
+            <h3>이 제품의 AI 시스템 모델링은 직접 설계·구현했습니다</h3>
+            <ul>
+              <li>화자 모델 비교, 임계값 캘리브레이션과 세션 신뢰 게이트</li>
+              <li>한국어 화행 분류와 행위별 여섯 개 응답 슬롯 정책</li>
+              <li>프로필·말투·목적·미전달 항목을 합치는 프롬프트 컴파일러</li>
+              <li>줄 단위 스트리밍 파서, 품질 필터와 거절·보류 표출 경로</li>
+              <li>브라우저 오디오·에코 가드·후보 선택·TTS 및 합성 회귀 하네스</li>
+            </ul>
+          </article>
+        </div>
+
+        <ol class="pipeline-stack reveal" aria-label="현재 구현된 일곱 단계 AI 추론 파이프라인">
+          <li class="pipeline-stage">
+            <span class="stage-number">01</span>
+            <div class="stage-head"><h3>오디오와 무음 경계</h3><span class="stage-tech">Web Audio · ffmpeg · RMS VAD</span></div>
+            <div class="stage-body"><p>3초 프리롤을 포함한 오디오를 메모리 경로로 16&nbsp;kHz 단일 채널 신호로 변환합니다. 30&nbsp;ms 프레임의 RMS, 하한 0.006과 30분위수×1.5를 이용하고 0.55초 무음을 발화 경계로 삼아 조각 양끝에 0.25초를 보탭니다. <strong>신경망 VAD나 중첩 화자 분리는 아닙니다.</strong></p></div>
+          </li>
+          <li class="pipeline-stage">
+            <span class="stage-number">02</span>
+            <div class="stage-head"><h3>한국어 음성 인식</h3><span class="stage-tech">faster-whisper large-v3-turbo</span></div>
+            <div class="stage-body"><p>한국어·beam&nbsp;1로 추론하며 CUDA에서는 int8_float16, GPU 적재 실패 시 CPU int8·8스레드 경로로 내려갑니다. 1.2초 미만 조각에서 Whisper가 반복적으로 만드는 알려진 환각 문구를 별도 규칙으로 제거합니다.</p></div>
+          </li>
+          <li class="pipeline-stage">
+            <span class="stage-number">03</span>
+            <div class="stage-head"><h3>세션 화자 판단</h3><span class="stage-tech">ERes2Net · 512D embedding</span></div>
+            <div class="stage-body"><p>L2 정규화한 임베딩의 코사인 유사도 0.50과 1·2위 차이 0.08을 함께 통과해야 화자를 확정합니다. 0.8초 미만은 추정, 애매한 구간은 미확인으로 남기며 최대 여섯 개 세션 클러스터만 유지합니다. <strong>사람의 신원을 식별하는 모델은 아닙니다.</strong></p></div>
+          </li>
+          <li class="pipeline-stage">
+            <span class="stage-number">04</span>
+            <div class="stage-head"><h3>화행과 응답 공간</h3><span class="stage-tech">Act-first policy model</span></div>
+            <div class="stage-body"><p>상대의 마지막 발화를 WH질문·예/아니오 질문·제안·평서로 분류하고, 코드가 먼저 여섯 슬롯의 순서를 정합니다. 예컨대 제안에는 수락·거절·조건을, 사실 질문에는 답변·보류·확인을 배치합니다. <strong>LLM이 후보 종류부터 마음대로 만들지 못하게 하는 핵심 정책 계층입니다.</strong></p></div>
+          </li>
+          <li class="pipeline-stage">
+            <span class="stage-number">05</span>
+            <div class="stage-head"><h3>프롬프트 컴파일</h3><span class="stage-tech">Profile · briefing · paired few-shot</span></div>
+            <div class="stage-body"><p>사용자 사실·선호·개인 사전·말투 예시, 대화 목적, 반드시 말하거나 물을 항목, 답변 대상과 최근 8턴을 조립합니다. 문맥에 맞는 한 개의 user/assistant 예시쌍과 현재 화행의 슬롯 템플릿을 함께 넣습니다. 이는 <strong>학습이나 파인튜닝이 아닌 코드 기반 프롬프트 조립</strong>입니다.</p></div>
+          </li>
+          <li class="pipeline-stage">
+            <span class="stage-number">06</span>
+            <div class="stage-head"><h3>7B LLM 로컬 추론</h3><span class="stage-tech">A.X 4.0 Light · Ollama streaming</span></div>
+            <div class="stage-body"><p>기본 모델은 A.X 4.0 Light 7B Q4_K_M이며 temperature&nbsp;0.65, top_p&nbsp;0.9, repeat penalty&nbsp;1.1, context&nbsp;2048로 실행합니다. GPU에 상주시켜 콜드스타트를 줄이고 토큰 조각을 실시간으로 전달합니다. 모델 가중치 자체를 개발한 것은 아닙니다.</p></div>
+          </li>
+          <li class="pipeline-stage">
+            <span class="stage-number">07</span>
+            <div class="stage-head"><h3>파싱·필터·사용자 게이트</h3><span class="stage-tech">Line parser · NDJSON · Web Speech TTS</span></div>
+            <div class="stage-body"><p>번호·bullet·영문 라벨 변형을 흡수하고 40자 상한, 직원 역할 말투·민감번호·메타출력·복창·예문 유출·존댓말 불일치 필터를 적용합니다. 유효 후보부터 NDJSON으로 최대 네 개를 보내고 응답 모드에서는 마지막 자리를 거절·보류 경로에 남깁니다. <strong>최종 출력은 사용자가 선택한 뒤에만 실행됩니다.</strong></p></div>
+          </li>
+        </ol>
+
+        <div class="evidence-head reveal">
+          <p class="section-kicker">What was actually measured</p>
+          <h2>모델을 감으로 고르지 않았습니다</h2>
+          <p class="section-desc">아래는 이번 사이트 작성 중 새로 만든 결과가 아니라, 기존 프로젝트에 남아 있는 모델 선택·캘리브레이션·회귀 기록입니다.</p>
+        </div>
+        <div class="evidence-grid reveal">
+          <article class="evidence-card">
+            <span class="evidence-value">3 → 1</span>
+            <span class="evidence-tag">프로젝트 화자 벤치마크</span>
+            <h3>ERes2Net 선택</h3>
+            <p>resemblyzer·TitaNet·ERes2Net을 비교했습니다. Zeroth-Korean 10화자·200발화와 Opus 조건에서 같은 화자 평균 0.663, 다른 화자 0.211을 기록했고, ERes2Net의 분리 간격이 비교 모델보다 2.2배 커 기본값으로 채택됐습니다.</p>
+          </article>
+          <article class="evidence-card">
+            <span class="evidence-value">52.8%</span>
+            <span class="evidence-tag">내부 생성 모델 A/B</span>
+            <h3>Kanana 8B 기각</h3>
+            <p>Kanana 8B는 기록된 비교 실행에서 153/290 체크에 그쳐 기본 모델에서 제외됐습니다. 모델 크기 대신 실제 후보 정책 적합도를 기준으로 A.X 4.0 Light를 우선 모델로 두었습니다.</p>
+          </article>
+          <article class="evidence-card">
+            <span class="evidence-value">76</span>
+            <span class="evidence-tag">합성 텍스트 회귀</span>
+            <h3>골든 시나리오 하네스</h3>
+            <p>후보 수, 거절·보류 슬롯, 직원 말투, 첫 후보 시간과 일부 프로필 모순을 반복 검사합니다. 최신 내부 기록은 1,388/1,392 체크지만 이는 코드 회귀 점수이며 사용자 효과나 제품 정확도가 아닙니다.</p>
+          </article>
+        </div>
+        <p class="evidence-boundary reveal">
+          <strong>증거 경계:</strong> 화자 벤치마크는 이번 읽기 전용 감사에서 재현하지 않았고, 합성 회귀는 오디오 입력 0건·모순 패턴 적용 4개 시나리오이며 동일 계열 모델 심판 등의 한계가 있습니다.
+          실제 AAC 사용자 효과, 실환경 STT·화자 정확도와 종단간 지연은 아직 검증 전입니다.
+        </p>
+        <div class="code-links reveal">
+          <a class="button" href="https://github.com/Tech4GoodHACKERTHON/AI_model/tree/main/app" target="_blank" rel="noopener noreferrer">AI 파이프라인 코드 <span aria-hidden="true">↗</span></a>
+          <a class="button" href="https://github.com/Tech4GoodHACKERTHON/AI_model/tree/main/eval" target="_blank" rel="noopener noreferrer">평가 하네스 <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
