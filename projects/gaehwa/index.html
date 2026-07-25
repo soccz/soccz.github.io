@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="개화(Gaehwa): faster-whisper, ERes2Net, 7B LLM을 AAC 정책·스트리밍 계층으로 통합한 AI 시스템과 Agency Floor 연구 로드맵">
+  <meta name="description" content="개화 AI 시스템 개발·탐구 보고서: AAC 문제 정의, 모델 선택·캘리브레이션, 정책 기반 추론 구현, 내부 실험과 후속 연구 설계">
   <meta name="theme-color" content="#f7f7f4">
-  <meta property="og:title" content="개화 · Gaehwa AAC">
-  <meta property="og:description" content="STT·화자 임베딩·화행 정책·7B LLM을 직접 오케스트레이션한 AAC AI 시스템과 Agency Floor 연구">
+  <meta property="og:title" content="개화 AI 시스템 개발·탐구 보고서">
+  <meta property="og:description" content="직접 수행한 AAC AI 모델링·구현·평가를 근거로 전개하고 다음 연구 질문까지 연결한 개발 보고서">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://soccz.github.io/projects/gaehwa/">
   <meta property="og:image" content="https://soccz.github.io/projects/gaehwa/og.png">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <title>개화 · Gaehwa — AI가 실패해도 말할 권리는 남아야 한다</title>
+  <title>개화 AI 시스템 개발·탐구 보고서 · Gaehwa AAC</title>
   <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
@@ -176,6 +176,13 @@
       font-size: clamp(1rem, 2vw, 1.18rem);
       font-weight: 300;
     }
+    .hero-thesis {
+      margin: 18px auto 0;
+      color: var(--teal-dark);
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 700;
+    }
     .status {
       width: fit-content;
       max-width: 100%;
@@ -289,6 +296,136 @@
     h3 { margin: 0; font-size: 1rem; line-height: 1.5; word-break: keep-all; }
     p { margin-top: 0; }
     .muted { color: var(--muted); }
+
+    .report-section {
+      background: var(--card);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .report-lead {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+    .report-lead .section-head { margin: 0; }
+    .research-question {
+      padding: clamp(24px, 4vw, 38px);
+      color: #eef8f6;
+      background: var(--teal-dark);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .research-question .question-label {
+      color: #afd0cb;
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .research-question h3 {
+      margin-top: 12px;
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-size: clamp(1.3rem, 2.7vw, 2rem);
+      line-height: 1.55;
+    }
+    .research-question p {
+      margin: 14px 0 0;
+      color: #d2e5e1;
+      font-size: 0.82rem;
+    }
+    .report-meta {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .report-meta-item {
+      padding: 18px 20px;
+      background: var(--bg);
+      border-right: 1px solid var(--line);
+    }
+    .report-meta-item:last-child { border-right: 0; }
+    .report-meta-item strong {
+      display: block;
+      color: var(--teal-dark);
+      font-size: 0.72rem;
+    }
+    .report-meta-item span {
+      display: block;
+      margin-top: 5px;
+      color: var(--text);
+      font-size: 0.76rem;
+    }
+    .contribution-block {
+      padding-top: 72px;
+      scroll-margin-top: 78px;
+    }
+    .contribution-grid {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      list-style: none;
+    }
+    .contribution-card {
+      min-width: 0;
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: start;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+    .contribution-id {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--teal);
+      border-radius: 12px;
+      font-size: 0.73rem;
+      font-weight: 800;
+    }
+    .contribution-type {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--blue);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .contribution-card p {
+      margin: 7px 0 0;
+      color: var(--text);
+      font-size: 0.79rem;
+    }
+    .contribution-proof {
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      color: var(--muted) !important;
+      font-size: 0.7rem !important;
+    }
+    .contribution-proof strong { color: var(--teal-dark); }
+    .contribution-boundary {
+      margin: 16px 0 0;
+      padding: 17px 19px;
+      color: var(--text);
+      background: var(--gold-soft);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.78rem;
+    }
+    .contribution-boundary strong { color: var(--gold); }
 
     .prototype-grid {
       display: grid;
@@ -497,6 +634,35 @@
       font-size: 0.76rem;
     }
     .evidence-boundary strong { color: var(--danger); }
+    .audit-head {
+      max-width: 760px;
+      margin: 52px 0 22px;
+    }
+    .audit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .audit-card {
+      padding: 22px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+    .audit-card.findings { border-top: 3px solid var(--teal); }
+    .audit-card.gaps { border-top: 3px solid var(--danger); }
+    .audit-card p {
+      margin: 7px 0 0;
+      color: var(--text);
+      font-size: 0.76rem;
+    }
+    .audit-card ul {
+      margin: 13px 0 0;
+      padding-left: 18px;
+      color: var(--text);
+      font-size: 0.74rem;
+    }
+    .audit-card li + li { margin-top: 6px; }
     .code-links {
       margin-top: 20px;
       display: flex;
@@ -687,6 +853,68 @@
       font-size: 0.76rem;
     }
 
+    .rq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .rq-card {
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .rq-card header {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    .rq-id {
+      display: inline-flex;
+      margin-bottom: 9px;
+      padding: 4px 8px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+    .rq-card h3 { font-size: 1.06rem; }
+    .rq-details {
+      margin: 16px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+    .rq-details div {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 10px;
+    }
+    .rq-details dt {
+      color: var(--teal-dark);
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+    .rq-details dd {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.76rem;
+    }
+    .future-boundary {
+      margin: 16px 0 0;
+      padding: 16px 18px;
+      color: var(--text);
+      background: var(--gold-soft);
+      border: 1px solid #e6d6b7;
+      border-radius: 10px;
+      font-size: 0.77rem;
+    }
+    .future-boundary strong { color: var(--gold); }
+    .roadmap-head {
+      margin: 58px 0 20px;
+      font-family: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      font-size: 1.55rem;
+    }
     .program {
       position: relative;
       display: grid;
@@ -801,9 +1029,9 @@
       .hero-facts { grid-template-columns: repeat(2, 1fr); }
       .fact:nth-child(2) { border-right: 0; }
       .fact:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-      .prototype-grid, .turning-point { grid-template-columns: 1fr; }
+      .report-lead, .prototype-grid, .turning-point { grid-template-columns: 1fr; }
       .prototype-grid { gap: 52px; }
-      .scope-grid, .evidence-grid { grid-template-columns: 1fr; }
+      .scope-grid, .evidence-grid, .audit-grid { grid-template-columns: 1fr; }
       .pipeline-stage { grid-template-columns: 48px minmax(180px, 0.7fr) minmax(0, 1.3fr); }
       .program-step { grid-template-columns: 1fr; gap: 8px; }
       .program-step .badge { width: fit-content; }
@@ -833,7 +1061,13 @@
       }
       .hero-actions { flex-direction: column; }
       .button { width: 100%; }
+      .report-meta, .contribution-grid, .rq-grid,
       .plane-grid, .side-grid, .invariant-grid, .boundary-grid { grid-template-columns: 1fr; }
+      .report-meta-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .report-meta-item:last-child { border-bottom: 0; }
       .pipeline-stage { grid-template-columns: 42px 1fr; gap: 12px; }
       .stage-number { width: 38px; height: 38px; }
       .stage-body { grid-column: 2; }
@@ -856,11 +1090,12 @@
     <div class="nav-inner">
       <a class="brand" href="/">soccz.</a>
       <ul class="nav-links">
-        <li><a href="#prototype">프로토타입</a></li>
-        <li><a href="#ai-pipeline">AI 파이프라인</a></li>
-        <li><a href="#architecture">목표 설계</a></li>
-        <li><a href="#research">연구 계획</a></li>
-        <li><a href="#limits">검증 경계</a></li>
+        <li><a href="#contributions">나의 기여</a></li>
+        <li><a href="#ai-pipeline">구현 방법</a></li>
+        <li><a href="#results">실험 결과</a></li>
+        <li><a href="#turning-point">해석</a></li>
+        <li><a href="#research">향후 탐구</a></li>
+        <li><a href="#limits">한계</a></li>
       </ul>
     </div>
   </nav>
@@ -868,29 +1103,129 @@
   <main id="content">
     <header class="hero">
       <div class="hero-inner">
-        <div class="eyebrow">AAC · Human-centered AI · Research Roadmap</div>
-        <h1>AI가 실패해도<br><span class="accent">나는 계속 말한다</span></h1>
+        <div class="eyebrow">AI System Development · Exploratory Report</div>
+        <h1>개화 AI 시스템<br><span class="accent">개발·탐구 보고서</span></h1>
+        <p class="hero-thesis">탐구 명제 · “AI가 실패해도, 나는 계속 말한다.”</p>
         <p class="hero-copy">
-          개화는 주변 대화를 듣고 발화가 어려운 사용자가 선택할 문장 후보를 만드는 AAC 프로토타입입니다.
-          faster-whisper, ERes2Net, 7B LLM을 결합하고 화행 분류·응답 정책·스트리밍 파서·품질 필터를 직접 설계했습니다.
-          전수 감사 이후에는 더 영리한 추천기를 넘어,
-          사전 정의한 장애가 발생해도 사용자의 발화·거절·취소·수리 권리를 남기도록 설계하는 연구입니다.
+          기존 ASR·화자 임베딩·7B 언어모델 위에 AAC에 필요한 화자 불확실성 처리,
+          화행별 응답 계획, 거절·보류 정책, 프롬프트 컴파일러와 스트리밍 후보 필터를 직접 구현했습니다.
+          이 보고서는 무엇을 모델링하고 비교했는지부터, 실패 감사에서 무엇을 배웠고 다음에 무엇을 검증할지까지 전개합니다.
         </p>
-        <div class="status"><span class="status-dot" aria-hidden="true"></span>읽기 전용 감사·연구 설계 완료 · 결함 보완과 실증 검증은 수행 전</div>
+        <div class="status"><span class="status-dot" aria-hidden="true"></span>프로토타입 구현 · 내부 비교·회귀 평가 · 읽기 전용 감사 완료 · 사용자 연구 전</div>
         <div class="hero-actions">
-          <a class="button primary" href="https://github.com/Tech4GoodHACKERTHON/AI_model" target="_blank" rel="noopener noreferrer">
-            GitHub 소스 보기 <span aria-hidden="true">↗</span>
+          <a class="button primary" href="#contributions">내가 구현한 것 <span aria-hidden="true">↓</span></a>
+          <a class="button" href="https://github.com/Tech4GoodHACKERTHON/AI_model" target="_blank" rel="noopener noreferrer">
+            GitHub 소스 <span aria-hidden="true">↗</span>
           </a>
-          <a class="button" href="#ai-pipeline">AI 파이프라인 보기 <span aria-hidden="true">↓</span></a>
         </div>
         <div class="hero-facts" role="group" aria-label="프로젝트 핵심 수치">
-          <div class="fact"><strong>4</strong><span>현재 표시 후보</span></div>
+          <div class="fact"><strong>6</strong><span>직접 기여 영역</span></div>
           <div class="fact"><strong>7</strong><span>구현한 추론 단계</span></div>
-          <div class="fact"><strong>10</strong><span>제안한 제품 불변식</span></div>
-          <div class="fact"><strong>P0</strong><span>최종 연구 방향</span></div>
+          <div class="fact"><strong>3</strong><span>기록된 비교·평가</span></div>
+          <div class="fact"><strong>4</strong><span>제안한 후속 연구 질문</span></div>
         </div>
       </div>
     </header>
+
+    <section id="report" class="report-section">
+      <div class="container">
+        <div class="report-lead reveal">
+          <div class="section-head">
+            <p class="section-kicker">01 · Inquiry overview</p>
+            <h2>무엇을 만들었고, 무엇을 알게 되었는가</h2>
+            <p class="section-desc">
+              처음에는 주변 대화를 인식해 적절한 답변 후보를 빠르게 제안하는 문제에서 출발했습니다.
+              구현과 내부 비교를 거친 뒤에는 “후보가 정확한가”만으로 부족하다는 사실을 감사에서 확인했고,
+              사용자의 발화권이 실패 상황에서도 남는지를 다음 탐구 문제로 확장했습니다.
+            </p>
+          </div>
+          <article class="research-question">
+            <span class="question-label">Core inquiry question</span>
+            <h3>주변 대화를 이해하는 생성형 AAC에서, 모델의 도움을 늘리면서도 사용자의 발화·거절·수리 권리를 어떻게 보존할 수 있는가?</h3>
+            <p>현재 답은 완성된 효과가 아니라 작동하는 프로토타입, 내부 실험 기록, 코드 감사와 후속 검증 설계로 제시합니다.</p>
+          </article>
+        </div>
+
+        <div class="report-meta reveal" role="list" aria-label="보고서 범위">
+          <div class="report-meta-item" role="listitem"><strong>수행 범위</strong><span>문제 정의 · 모델 선택/캘리브레이션 · AI 추론 구현 · 평가 설계</span></div>
+          <div class="report-meta-item" role="listitem"><strong>현재 산출물</strong><span>작동 프로토타입 · 소스 코드 · 내부 비교 기록 · 회귀 하네스</span></div>
+          <div class="report-meta-item" role="listitem"><strong>남은 검증</strong><span>결함 보완 · 오디오 E2E · 접근 방식 동등성 · 실제 AAC 사용자 연구</span></div>
+        </div>
+
+        <div id="contributions" class="contribution-block">
+          <div class="section-head reveal">
+            <p class="section-kicker">Contribution statement</p>
+            <h2>범용 모델을 AAC 시스템으로 바꾼 여섯 가지 기여</h2>
+            <p class="section-desc">
+              기반모델 가중치를 새로 사전학습한 프로젝트는 아닙니다.
+              대신 기존 모델이 사용자의 말이 되기 전에 무엇을 추정하고, 어떤 행동을 생성해도 되며,
+              언제 보류해야 하는지를 제품 코드와 평가 규칙으로 직접 모델링했습니다.
+            </p>
+          </div>
+          <ol class="contribution-grid reveal">
+            <li class="contribution-card">
+              <span class="contribution-id">C1</span>
+              <div>
+                <span class="contribution-type">Problem formulation</span>
+                <h3>인접 대화쌍을 AAC 후보 생성 문제로 정의</h3>
+                <p>상대의 마지막 발화와 사용자의 가능한 응답을 한 쌍으로 보고, 빠른 답변뿐 아니라 확인·조건·거절·보류가 함께 필요한 문제로 정의했습니다.</p>
+                <p class="contribution-proof"><strong>근거</strong> 화행 분류, 행위별 응답 계획, 거절·보류 슬롯 정책</p>
+              </div>
+            </li>
+            <li class="contribution-card">
+              <span class="contribution-id">C2</span>
+              <div>
+                <span class="contribution-type">Model selection &amp; calibration</span>
+                <h3>모델을 비교하고 서비스 정책으로 캘리브레이션</h3>
+                <p>Whisper·A.X·ERes2Net을 선택·통합하고, 화자 임베딩 3종 비교와 LLM A/B 기록을 근거로 기본 모델과 0.50/0.08 화자 게이트를 정했습니다.</p>
+                <p class="contribution-proof"><strong>근거</strong> 10화자·200발화 벤치마크, Kanana 8B 153/290 기각 기록</p>
+              </div>
+            </li>
+            <li class="contribution-card">
+              <span class="contribution-id">C3</span>
+              <div>
+                <span class="contribution-type">Conversation policy modeling</span>
+                <h3>LLM 앞에 화행·응답 공간 정책을 구현</h3>
+                <p>WH·YN·제안·평서 화행, 행위별 여섯 슬롯, 최대 네 후보와 거절·보류 자리를 코드가 먼저 정하도록 만들었습니다.</p>
+                <p class="contribution-proof"><strong>근거</strong> policy.yaml, 프롬프트 컴파일러, 라인 파서와 품질 필터</p>
+              </div>
+            </li>
+            <li class="contribution-card">
+              <span class="contribution-id">C4</span>
+              <div>
+                <span class="contribution-type">Real-time AI system</span>
+                <h3>오디오부터 사용자 출력까지 종단 파이프라인 구축</h3>
+                <p>3초 프리롤, 메모리 디코딩, VAD, STT, 세션 화자 판정, 로컬 LLM, NDJSON 후보 스트리밍과 브라우저 TTS를 하나의 런타임으로 연결했습니다.</p>
+                <p class="contribution-proof"><strong>근거</strong> listen/candidates 파이프라인, GPU·CPU 폴백, 사용자 승인 게이트</p>
+              </div>
+            </li>
+            <li class="contribution-card">
+              <span class="contribution-id">C5</span>
+              <div>
+                <span class="contribution-type">Evaluation engineering</span>
+                <h3>성공뿐 아니라 실패를 남기는 평가 하네스 설계</h3>
+                <p>서버 없는 단위 테스트와 76개 합성 텍스트 시나리오로 후보 수, 말투, 거절권, 목적과 일부 모순을 반복 검사하고 모델 기각 결과도 기록했습니다.</p>
+                <p class="contribution-proof"><strong>근거</strong> tests/, eval/golden.json, 실행·모델·정책 해시 기록</p>
+              </div>
+            </li>
+            <li class="contribution-card">
+              <span class="contribution-id">C6</span>
+              <div>
+                <span class="contribution-type">User gate &amp; data boundary</span>
+                <h3>모델 출력과 실제 발화를 분리하는 사용자 게이트</h3>
+                <p>후보는 사용자가 선택한 뒤에만 발화되며 오디오는 메모리 파이프로 처리하고 화자 임베딩은 세션 클러스터로 유지했습니다.</p>
+                <p class="contribution-proof"><strong>근거</strong> 선택 후 TTS, 인메모리 ffmpeg, localStorage 화이트리스트</p>
+              </div>
+            </li>
+          </ol>
+          <p class="contribution-boundary reveal">
+            <strong>기여의 경계:</strong> foundation model 사전학습·파인튜닝, 자체 TTS, RAG는 수행하지 않았습니다.
+            C2의 내부 캘리브레이션은 현재 감사에서 재실행하지 않았고, C6 역시 마이크 수명주기·원격 보안·키보드/스위치 접근 결함이 남아 있어
+            완전한 온디바이스·프라이버시·접근성 준수로 일반화하지 않습니다.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <section id="prototype" class="alt">
       <div class="container prototype-grid reveal">
@@ -902,8 +1237,8 @@
         </figure>
         <div>
           <div class="section-head">
-            <p class="section-kicker">What exists today</p>
-            <h2>대화를 듣고, 말할 후보를 준비합니다</h2>
+            <p class="section-kicker">02 · Prototype artifact</p>
+            <h2>작동하는 프로토타입으로 질문을 구현했습니다</h2>
             <p class="section-desc">
               현재 데모는 오디오를 짧은 구간으로 처리하고, 상대 발화의 화행과 사용자 맥락에 맞는 후보를 스트리밍합니다.
               모델이 임의로 발화하지 않고 사용자의 선택이 마지막 게이트가 되는 구조입니다.
@@ -938,7 +1273,7 @@
     <section id="ai-pipeline" class="ai-system-section">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">Implemented AI pipeline · Current prototype</p>
+          <p class="section-kicker">03 · Methods · Current implementation</p>
           <h2>모델보다 앞에서 결정하고, 모델 뒤에서 검증합니다</h2>
           <p class="section-desc">
             개화는 기반모델 가중치를 새로 사전학습하거나 파인튜닝했다고 주장하지 않습니다.
@@ -1010,9 +1345,9 @@
           </li>
         </ol>
 
-        <div class="evidence-head reveal">
-          <p class="section-kicker">What was actually measured</p>
-          <h2>모델을 감으로 고르지 않았습니다</h2>
+        <div id="results" class="evidence-head reveal">
+          <p class="section-kicker">04 · Existing experiment records</p>
+          <h2>무엇을 비교했고, 어떤 결정을 내렸는가</h2>
           <p class="section-desc">아래는 이번 사이트 작성 중 새로 만든 결과가 아니라, 기존 프로젝트에 남아 있는 모델 선택·캘리브레이션·회귀 기록입니다.</p>
         </div>
         <div class="evidence-grid reveal">
@@ -1039,6 +1374,40 @@
           <strong>증거 경계:</strong> 화자 벤치마크는 이번 읽기 전용 감사에서 재현하지 않았고, 합성 회귀는 오디오 입력 0건·모순 패턴 적용 4개 시나리오이며 동일 계열 모델 심판 등의 한계가 있습니다.
           실제 AAC 사용자 효과, 실환경 STT·화자 정확도와 종단간 지연은 아직 검증 전입니다.
         </p>
+        <div class="audit-head reveal">
+          <p class="section-kicker">Technical audit · Read-only</p>
+          <h2>코드가 의도대로 말하는지 경계별로 대조했습니다</h2>
+          <p class="section-desc">이번 감사는 새 사용자 실험이 아니라, 구현·문서·실행 결과가 서로 맞는지 확인하고 다음 연구 질문을 도출한 기술 탐구입니다.</p>
+        </div>
+        <div class="audit-grid reveal">
+          <article class="audit-card">
+            <h3>확인 방법</h3>
+            <ul>
+              <li>화행·정책·파서·필터에 재현 입력 적용</li>
+              <li>프롬프트와 NDJSON 상태 전이 대조</li>
+              <li>브라우저 이벤트·접근성 의미 구조 확인</li>
+              <li>오디오·LLM·배포·평가 경계 점검</li>
+            </ul>
+          </article>
+          <article class="audit-card findings">
+            <h3>확인된 설계 강점</h3>
+            <ul>
+              <li>LLM 밖에서 응답 행동과 거절 경로를 소유</li>
+              <li>화자 판단을 확정·추정·미확인으로 분리</li>
+              <li>후보 단위 스트리밍과 사용자 최종 승인</li>
+              <li>실패 사례를 회귀 항목으로 남기는 구조</li>
+            </ul>
+          </article>
+          <article class="audit-card gaps">
+            <h3>확인된 보완 과제</h3>
+            <ul>
+              <li>화행 오분류, retry와 필터 충돌</li>
+              <li>키보드·스위치·스크린리더 경로 부재</li>
+              <li>마이크 수명주기·원격 보안·오류 가시성</li>
+              <li>합성 평가 범위와 심판 독립성 부족</li>
+            </ul>
+          </article>
+        </div>
         <div class="code-links reveal">
           <a class="button" href="https://github.com/Tech4GoodHACKERTHON/AI_model/tree/main/app" target="_blank" rel="noopener noreferrer">AI 파이프라인 코드 <span aria-hidden="true">↗</span></a>
           <a class="button" href="https://github.com/Tech4GoodHACKERTHON/AI_model/tree/main/eval" target="_blank" rel="noopener noreferrer">평가 하네스 <span aria-hidden="true">↗</span></a>
@@ -1049,8 +1418,8 @@
     <section id="turning-point">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">The audit changed the question</p>
-          <h2>추천 품질만 높이면 충분하다는 전제를 버렸습니다</h2>
+          <p class="section-kicker">05 · Interpretation from audit</p>
+          <h2>후보 품질만으로는 좋은 AAC를 정의할 수 없었습니다</h2>
           <p class="section-desc">
             코드 감사에서 발견된 문제들은 별개의 버그가 아니었습니다. AI·접근성·수집·출력·평가를 끝까지 제약하는
             공통 불변식이 없다는 한 구조적 문제가 여러 경계에서 드러난 것이었습니다.
@@ -1085,7 +1454,7 @@
     <section id="architecture" class="alt">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">P0 · Agency-Safe AAC Runtime</p>
+          <p class="section-kicker">06 · Proposed redesign · P0</p>
           <h2>AI를 본체가 아니라 교체 가능한 가속 계층으로</h2>
           <p class="section-desc">
             최종 연구 가제는 <em>When AI Fails, I Still Speak</em>입니다.
@@ -1135,7 +1504,7 @@
     <section id="invariants">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">Verifiable agency floor</p>
+          <p class="section-kicker">07 · Proposed evaluation criteria</p>
           <h2>좋은 의도를 열 개의 반증 가능한 불변식으로</h2>
           <p class="section-desc">
             Agency Floor는 하나의 평균점수가 아닙니다. 치명적 권리 손실을 빠른 속도나 높은 후보 점수로 상쇄하지 못하게 하는
@@ -1160,7 +1529,7 @@
     <section id="degradation" class="alt">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">Fail-operational states</p>
+          <p class="section-kicker">08 · Proposed failure protocol</p>
           <h2>고장 나면 사라지는 대신, 단계적으로 단순해지도록 설계합니다</h2>
           <p class="section-desc">
             “서버 연결 실패”로 앱 전체를 막지 않는 것이 목표입니다. 여러 장애가 겹치면 가능한 기능의 교집합으로 내려가되,
@@ -1188,14 +1557,56 @@
     <section id="research">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">Research program</p>
-          <h2>코드 감사에서 당사자 연구까지</h2>
+          <p class="section-kicker">09 · Future research questions</p>
+          <h2>다음 단계는 더 큰 모델이 아니라 더 강한 증거입니다</h2>
           <p class="section-desc">
-            “논문급”이라는 말은 기능을 많이 붙인다는 뜻이 아니라, 무엇을 아직 모르는지 밝히고
-            반증 가능한 순서로 증거를 쌓는다는 뜻으로 사용합니다.
+            현재 구현과 감사 결과에서 네 개의 후속 질문을 도출했습니다.
+            각 아이디어를 가설·비교 조건·평가지표로 바꿔, 좋아 보이는 기능이 아니라 실제 발화권과 저자성을 개선하는지 검증합니다.
           </p>
         </div>
+        <div class="rq-grid reveal">
+          <article class="rq-card">
+            <header><span class="rq-id">RQ1 · AGENCY</span><h3>정책 기반 후보가 일반 LLM 자동완성보다 발화 주도권을 더 잘 보존하는가?</h3></header>
+            <dl class="rq-details">
+              <div><dt>가설</dt><dd>승인·거절·수정·보류 경로는 준비 시간을 일부 늘려도 의도하지 않은 대리발화와 사후 정정을 줄일 것이다.</dd></div>
+              <div><dt>실험</dt><dd>기존 AAC 입력, LLM 후보만 제공, 정책 기반 후보와 사용자 게이트의 피험자 내 비교.</dd></div>
+              <div><dt>지표</dt><dd>승인 시간, 수락·편집·거절률, 의도 불일치 발화, 정정 횟수, 저작성·통제감.</dd></div>
+            </dl>
+          </article>
+          <article class="rq-card">
+            <header><span class="rq-id">RQ2 · UNCERTAINTY</span><h3>불확실할 때 확인·보류로 강등하면 그럴듯한 오답의 피해를 줄일 수 있는가?</h3></header>
+            <dl class="rq-details">
+              <div><dt>가설</dt><dd>항상 생성하는 방식보다 후보 제공률은 낮아져도 잘못된 화자 귀속과 맥락 불일치 및 복구 비용은 감소할 것이다.</dd></div>
+              <div><dt>실험</dt><dd>소음·화자 중첩·화자 ID·화행 오분류를 단계적으로 주입하고 항상 생성 정책과 신뢰도 기반 강등을 비교.</dd></div>
+              <div><dt>지표</dt><dd>오귀속·위험 후보율, 적절한 보류율, 복구 시간, calibration error, 의사소통 유지율.</dd></div>
+            </dl>
+          </article>
+          <article class="rq-card">
+            <header><span class="rq-id">RQ3 · TIMING</span><h3>지연 적응형 후보 제시가 실제 대화의 발언 기회를 더 많이 보존하는가?</h3></header>
+            <dl class="rq-details">
+              <div><dt>가설</dt><dd>후보 준비도와 대화 공백을 함께 쓰는 정책은 고정 지연보다 승인 발화 시간을 줄이고 발언 기회 손실을 낮출 것이다.</dd></div>
+              <div><dt>실험</dt><dd>통제된 삼자 대화에서 고정 지연, 가능한 즉시 노출, 지연 적응형 정책을 무작위 순서로 비교.</dd></div>
+              <div><dt>지표</dt><dd>오디오 입력부터 승인 발화까지 E2E 지연, 놓친 발화 기회, 중첩, 상대 선점, 완료 턴.</dd></div>
+            </dl>
+          </article>
+          <article class="rq-card">
+            <header><span class="rq-id">RQ4 · AUTHORSHIP</span><h3>사용자 통제형 로컬 개인화가 편집 부담을 줄이면서도 ‘내 말’의 감각을 지키는가?</h3></header>
+            <dl class="rq-details">
+              <div><dt>가설</dt><dd>열람·수정·삭제 가능한 개인화는 수락률과 말투 적합성을 높이지만 과거 표현의 고착 위험도 함께 만든다.</dd></div>
+              <div><dt>실험</dt><dd>범용 후보와 명시적 동의 기반 개인화 후보를 2–4주 교차 사용하고 자동 축적 없이 항목별 통제를 제공.</dd></div>
+              <div><dt>지표</dt><dd>수락률, 편집 거리·시간, 저작성·진정성, 관계별 말투 전이, 삭제·비학습 요청 성공률.</dd></div>
+            </dl>
+          </article>
+        </div>
+        <p class="future-boundary reveal"><strong>연구 상태:</strong> RQ1–RQ4는 현재 구현에서 도출한 향후 실험 설계이며 아직 수행된 결과가 아닙니다. 실제 AAC 당사자와의 공동설계, 윤리 검토, 접근 방식별 모집·층화가 선행돼야 합니다.</p>
+
+        <h3 class="roadmap-head reveal">구현에서 당사자 연구까지의 검증 순서</h3>
         <div class="program reveal">
+          <article class="program-step">
+            <div class="program-phase">Foundation</div>
+            <div><h3>AAC 전용 AI 모델링과 작동 프로토타입</h3><p>STT·화자 임베딩·7B LLM을 선택·캘리브레이션하고, 화행 정책·프롬프트·스트리밍 파서·사용자 게이트와 내부 평가 하네스를 구현했습니다.</p></div>
+            <span class="badge done">구현·내부 평가</span>
+          </article>
           <article class="program-step">
             <div class="program-phase">Phase 0</div>
             <div><h3>코드 감사와 연구 명제 재구성</h3><p>후보 정책, 접근성, 수집 수명주기, 오류 경계와 평가 체계를 읽기 전용으로 감사하고 P0 Agency Floor를 설계했습니다. 발견 결함의 수정·재검증은 이 단계에 포함하지 않았습니다.</p></div>
@@ -1228,7 +1639,7 @@
     <section id="limits" class="alt">
       <div class="container">
         <div class="section-head reveal">
-          <p class="section-kicker">What this page does not claim</p>
+          <p class="section-kicker">10 · Limits &amp; reproducibility</p>
           <h2>아직 하지 않은 실험을 결과처럼 쓰지 않습니다</h2>
           <p class="section-desc">
             이 페이지는 현재 프로토타입과 감사에서 도출한 연구 설계를 함께 보여 줍니다.
