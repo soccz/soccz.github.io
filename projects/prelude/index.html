@@ -334,6 +334,7 @@
       <li><a href="#summary">Summary</a></li>
       <li><a href="#journey">Journey</a></li>
       <li><a href="#vnext">v-next</a></li>
+      <li><a href="#integrity-turn">Integrity</a></li>
       <li><a href="#thesis">Thesis</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#distribution">Distribution</a></li>
@@ -381,7 +382,9 @@
 <!-- Honest-conclusion banner -->
 <div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
   <div class="callout warn" style="margin:1.5rem 0;">
-    <p><strong>현재 정직한 결론 (2026-05-31):</strong> 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 OOS·leak 4/4 PASS 로 진짜지만, 기계적 청산 net 은 breakeven~음수 — 수익은 사용자의 진입/청산 판단이 결정한다. 아래 상단 지표 중 일부(†)는 단일전략 가정의 optimistic upper-bound 이며, 실제 운영 net 과 정직한 프레이밍은 <a href="#vnext" style="color:var(--amber); border-bottom:1px solid var(--amber);">§v-next 로 이동</a>.</p>
+    <p><strong>현재 정직한 결론 (2026-05-31):</strong> 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 OOS·leak 4/4 PASS 로 진짜지만, 기계적 청산 net 은 breakeven~음수 — 수익은 사용자의 진입/청산 판단이 결정한다. 아래 상단 지표 중 일부(†)는 단일전략 가정의 optimistic upper-bound 이며, 실제 운영 net 과 정직한 프레이밍은 <a href="#vnext" style="color:var(--amber); border-bottom:1px solid var(--amber);">§v-next 로 이동</a>.
+    <strong>최신 판정 (2026-07-28):</strong> 이후 5주의 연구 전멸·측정 재건·장애와 복구까지 포함한 전체 기록은
+    <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a> 참조.</p>
   </div>
 </div>
 <hr class="divider">
@@ -722,6 +725,147 @@
     <span class="badge badge-blue">무소음 정책 (후보 없으면 침묵)</span>
     <span class="badge badge-pivot">net 정직 고지 내장</span>
   </div>
+</div></section>
+<hr class="divider">
+
+<!-- ═══════════ The Integrity Turn · 2026-06-25 → 07-28 ═══════════ -->
+<section id="integrity-turn"><div class="container fade-in">
+  <div class="section-label">The Integrity Turn · 2026-06-25 → 07-28</div>
+  <h2 class="section-title">측정의 전환 — 새 모델 0개를 만든 5주가 시스템 최대의 업그레이드였다</h2>
+  <p class="section-desc">
+    검증 사슬 이후의 질문은 다시 한 번 이동했다. "무엇을 믿어도 되는가"에서 —
+    <strong>"측정 그 자체를 믿을 수 있는가"</strong>로. 이 기간에 연구 트랙은 남아 있던 모든 축
+    (청산 · 진입타이밍 · 상방 head · 하방 veto)을 끝까지 소진해 <strong>전부 기각</strong>했고,
+    그 대신 시스템은 <strong>증거 사슬</strong>(불변 snapshot → 발송 영수증 → 발송시각 기준 라벨 → 감사 평가)을 얻었다.
+    아래는 그 실패와 성공의 전체 기록이다 — 잘된 것만 골라 적지 않는다.
+  </p>
+
+  <!-- 06-25: 옵션이론 팬아웃 -->
+  <div class="callout">
+    <p><strong>06-25 · 옵션이론에서 훔쳐온 발상 6트랙 — exit 와 entry-timing 의 천장을 확정하다</strong></p>
+    <p style="margin-top:0.6rem;">
+      Thorp/BSM 델타헤지에서 합성한 <strong>델타-사다리 청산</strong>은 이 기간 최고 성과였다:
+      같은 픽셋(n=3,732)에서 deep-loss 빈도 <strong>0.491 → 0.303 (−38%)</strong>, 대신 평균 승자를 1.7pp 양보 —
+      정확히 하방-우선 철학의 reshaping 이다. 그러나 전 cell net 음수라 채택 상한은 SHADOW.
+      <strong>군중쏠림 강등</strong>(Newton 과확장)은 within-date permutation p=0.002 로 "진짜"였지만
+      운영 bracket(−3%SL)이 그 효과를 이미 전부 흡수하고 있었다 — record-only 로만 생존.
+      <strong>exit-timing autopsy</strong>는 결론을 뒤집을 수 없게 만들었다: 고점은 장 초반(t_max 중앙 0.06)에 찍히고,
+      EOD 까지 들고 있으면 −2.1% — 13개 청산 정책 토너먼트에서 <strong>현행 TP5/SL3 를 net↑·deep≤ 로 동시에 이기는 정책은 없다.
+      exit lever 는 소진됐다.</strong> 마지막 남은 축이던 <strong>진입 확인타이밍(PRPC)</strong>도 kill-test 에서
+      net +0.13%(CI 0 포함)로 DEAD — 펌프-후-되돌림은 타임프레임 불변이었다.
+    </p>
+    <span class="badge badge-ok">델타-사다리: deep-loss −38% (SHADOW)</span>
+    <span class="badge badge-fail">exit lever 소진 — 현행이 이미 frontier</span>
+    <span class="badge badge-fail">entry-timing 소진 (PRPC DEAD)</span>
+  </div>
+
+  <!-- 07-25: 최후 챌린저 전멸 -->
+  <div class="callout fail">
+    <p><strong>07-25 · 최후의 챌린저 5축 전멸 — 그리고 가장 아픈 정량 확인</strong></p>
+    <p style="margin-top:0.6rem;">
+      마지막으로 남긴 다섯 갈래(하방 veto · 상방 head 재구축 · safe-up 직접 라벨 · first-passage head · 하방 semivol)를
+      180일 잠금 holdout + <strong>별도 seed 독립 재검산기</strong>(연구자 요약을 불신하고 row 데이터에서 재계산)로 끝까지 밀었다.
+      결과: <strong>7개 후보 전원 REJECT — ADOPT 0 · SHADOW 0</strong>. 이 과정에서 이 시스템의 근본 제약이 숫자로 박혔다:
+      <strong>"상승확률을 올리면 하방도 같이 커진다"</strong> — safe-up 을 +5.65pp 올리는 후보가 P(−5%)를 +15.07pp 같이 올렸다
+      (변동성 재포장). 더 아픈 것: 신형 forward 측정에서 <strong>R1 상방 head 의 AUC 는 0.477</strong>,
+      실측 −0.624%/픽으로 <strong>무작위 몽키(−0.424%)보다 나빴다</strong>. 하방 head(p_dn5, AUC 0.721)만 살아 있었다.
+      그래서 프로젝트 주장을 스스로 강등했다: <strong>radar-not-strategy</strong> — 우수 추천기라고 주장할 수 없다.
+      그리고 선언했다: <em>"역사 데이터 탐색은 여기서 닫는다. 다음 판단은 새 forward 표본에서만."</em>
+    </p>
+    <span class="badge badge-fail">7후보 전원 REJECT</span>
+    <span class="badge badge-fail">상방 head AUC 0.477 — 몽키 이하</span>
+    <span class="badge badge-pivot">historical 탐색 공식 종료</span>
+  </div>
+
+  <!-- Track 1: 측정 무결성 -->
+  <div class="callout win">
+    <p><strong>07-25~26 · Track 1 측정 무결성 — "성과를 주장하는 시스템"에서 "성과를 증명할 수 있는 시스템"으로</strong></p>
+    <p style="margin-top:0.6rem;">
+      모델은 한 줄도 바꾸지 않고 측정 계층 전체를 다시 지었다.
+      <strong>슬롯당 단일 불변 snapshot</strong>(점수는 정확히 1회 계산, 발송과 원장이 같은 것을 읽음) →
+      <strong>텔레그램 서버 수락 영수증</strong>(bool 이 아니라 message_id 대조) →
+      <strong>실제 발송시각 이후 15분 경계부터 96봉 라벨</strong>(09:10 알림이 09:00 봉을 소급 적중하는 왜곡 차단) →
+      <strong>전 유니버스 ~100종목 forward 자동 평가</strong>. 모든 산출물은 content-addressed(SHA-256) + 코드 계보 해시로 봉인 —
+      입력 바이트나 코드 한 줄이 바뀌면 아티팩트가 stale 로 무효화된다. 그리고 pump v2 에는
+      <strong>2026-09-01 GO/KILL 시한부 판정</strong>을 불변 터미널 상태로 박제했다: 판정 기준은 사전등록으로 동결,
+      한 번 기록되면 코드로도 뒤집을 수 없고, KILL 이면 전송 API 직전에서 차단된다. 자기 자신도 못 믿는다는 전제로 지은 구조다.
+    </p>
+    <span class="badge badge-ok">snapshot → receipt → label 증거사슬</span>
+    <span class="badge badge-ok">content-addressed + 코드계보 봉인</span>
+    <span class="badge badge-blue">09-01 시한부 판정 박제 (조작 불가)</span>
+  </div>
+
+  <!-- 07-27: 강화가 스스로를 쏘다 -->
+  <div class="callout fail">
+    <p><strong>07-27 · 강화가 스스로를 쐈다 — 3중 장애, 그리고 완전한 침묵</strong></p>
+    <p style="margin-top:0.6rem;">
+      새 계약의 첫 무인 가동일에 시스템이 통째로 죽었다. ① 새로 추가된 확률 단조성 하드체크가
+      <strong>모델이 만족한 적 없는 불변식</strong>(100개 중 36개 위반은 독립 head 의 알려진 성질)을 강제해 —
+      rank 77 짜리 코인 하나가 <strong>발송 전체와 라벨 축적을 죽였다</strong>. ② 전날(07-26)의 원장은 구스키마인데
+      새 close 게이트가 신스키마를 요구해 <strong>청산이 마비</strong>됐다. ③ 그리고 아무도 몰랐다 —
+      실패 경보 유닛은 15개 중 유일하게 미설치였고, heartbeat 는 이상을 정확히 탐지하고도
+      전달 검증이 텔레그램의 개행-strip 에코를 변조로 오분류해 <strong>스스로 FAIL 처리</strong>했다(실제로는 전달됐다).
+      교훈은 명확했다: <strong>fail-closed 는 "실패를 시끄럽게"와 세트일 때만 안전하다.</strong>
+      조용한 fail-closed 는 조용한 fail-open 과 같은 얼굴을 하고 있다.
+    </p>
+    <span class="badge badge-fail">발송 사망 + close 마비 + 침묵</span>
+    <span class="badge badge-pivot">교훈: fail-closed ⊂ fail-loud</span>
+  </div>
+
+  <!-- 07-28: 복구와 완성 -->
+  <div class="callout win">
+    <p><strong>07-28 · 복구와 완성 — 적대 리뷰 2×2회전이 CRITICAL 7건을 잡았다</strong></p>
+    <p style="margin-top:0.6rem;">
+      수리는 전부 신선한 컨텍스트의 <strong>적대 리뷰어</strong>를 통과해야 커밋됐다. 1차 수리(단조성 top-k 한정 ·
+      이음매 1컬럼 allowlist · no-decision 감사 마커)는 리뷰에서 CRITICAL 3건이 추가 적발됐고 — "증거 삭제로 불리한 날을
+      숨길 수 있다", "내일 아침이면 같은 자리에서 다시 깨진다" — 전부 수리 후에야 "신뢰 가능" 판정을 받았다.
+      이어진 전수 진단에서 더 큰 것이 나왔다: <strong>v2 레이더가 07-26 강화 이후 후보를 단 하루도 생산하지 못하고
+      있었다</strong>(소급 53일 중 ok 0일 — 업비트 단독상장 코인 1개가 섞이면 그날 전체가 죽는 회귀).
+      수리 후 53/53일 정상 + <strong>BTCUSDT 앵커 프로브</strong>로 "DB 장애가 정상 무추천일로 위장되는" fail-open 까지 차단.
+      heartbeat 오분류 수리, flat-fill 편향의 양방향 코호트 분리, 재생성 대기열은 SHA-256 동일성 증명으로 소멸 판정.
+      마지막으로 systemd 15유닛 전체 재설치 + <strong>실패 경보 유닛 가동</strong> — 침묵의 시대를 끝냈다.
+      최종: <strong>테스트 1,273개 통과, 미커밋 0.</strong>
+    </p>
+    <span class="badge badge-ok">v2 소생: 소급 0/53 → 53/53 ok</span>
+    <span class="badge badge-ok">적대 리뷰 CRITICAL 7건 적발·해소</span>
+    <span class="badge badge-blue">failure-alert 가동 — 이제 죽으면 시끄럽다</span>
+  </div>
+
+  <!-- 기간 판정 요약 표 -->
+  <div class="table-wrap" style="margin:1.6rem 0;">
+    <table>
+      <thead><tr><th>트랙 (06-25 → 07-28)</th><th>핵심 숫자</th><th>판정</th></tr></thead>
+      <tbody>
+        <tr><td><strong>델타-사다리 청산</strong> (Thorp 합성)</td><td>deep-loss 0.491→0.303 (−38%) · net 동등</td><td><span class="badge badge-pivot">SHADOW</span></td></tr>
+        <tr><td><strong>군중쏠림 강등</strong> (Newton 과확장)</td><td>perm p=0.002 진짜 · 운영 bracket 에서 소멸</td><td><span class="badge badge-pivot">record-only</span></td></tr>
+        <tr><td><strong>exit-timing autopsy</strong> (13정책 토너먼트)</td><td>현행 TP5/SL3 를 이기는 정책 0개</td><td><span class="badge badge-fail">exit 소진</span></td></tr>
+        <tr><td><strong>PRPC 확인진입</strong> (마지막 entry축)</td><td>net +0.13% CI 0 포함</td><td><span class="badge badge-fail">DEAD</span></td></tr>
+        <tr><td><strong>최후 챌린저 5축</strong> (독립 재검산)</td><td>7후보 · safe-up +5.65pp ↔ dn5 +15.07pp 동반</td><td><span class="badge badge-fail">전원 REJECT</span></td></tr>
+        <tr><td><strong>측정 무결성 v2</strong> (Track 1 + 07-28 수리)</td><td>증거사슬 완성 · 1,273 tests · 소급 53/53</td><td><span class="badge badge-ok">가동</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 시한부 판정의 정직한 산술 -->
+  <div class="callout warn">
+    <p><strong>시한부 판정의 정직한 산술 — 그리고 왜 그래도 게이트를 살렸나</strong></p>
+    <p style="margin-top:0.6rem;">
+      v2 의 09-01 GO 기준은 verified closed <strong>n ≥ 200</strong> 인데, 계약 활성(07-27) 후 잔여 발사일 × 일일 캡 5건의
+      산술 상한은 <strong>175 &lt; 200</strong> — 즉 동결 조항 그대로면 <strong>KILL 이 산술적으로 확정</strong>돼 있다.
+      그럼에도 후보 생산 게이트를 수리한 이유: <strong>무증거로 죽는 실험과 데이터로 판정받는 실험은 다르다.</strong>
+      전자는 아무것도 남기지 않지만, 후자는 다음 실험의 사전확률을 남긴다. 사전등록을 스스로 뒤집지 않는 것 —
+      그것이 이 페이지 전체가 지키려는 단 하나의 규율이다.
+    </p>
+    <span class="badge badge-fail">09-01 KILL 산술 확정 (상한 175 &lt; 200)</span>
+    <span class="badge badge-ok">판정 기준 동결 유지 — 조작 없음</span>
+  </div>
+
+  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.85; max-width:760px;">
+    이 5주의 산출물은 모델이 아니다. <strong>신뢰의 인프라</strong>다 — 알림이 실제 도달한 시각 이후의 성과만 재고,
+    산출물은 해시로 봉인되고, 실패는 시끄럽고, 판정은 사전등록 그대로 집행된다.
+    누적 <strong>negative result 22건+</strong>이 전부 재현 가능한 형태로 박제되어 있다는 것 —
+    그것이 이 프로젝트가 "좋아 보이는 백테스트"와 다른 점이다.
+  </p>
 </div></section>
 <hr class="divider">
 
@@ -1547,8 +1691,18 @@
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-06-11</div>
+  <div class="section-label">Current Status · 2026-07-28</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
+
+  <div class="callout" style="margin-bottom:2rem;">
+    <p><strong>상태 갱신 (2026-07-28):</strong> 판정은 <strong>radar-not-strategy 로 확정</strong>됐다 —
+    신형 forward 측정에서 R1 상방 head AUC 0.477(하방 head 0.721 은 생존), 우수 추천기 주장 불가.
+    발송은 R1(08:50/09:05) + 🎯 v2(09:05~, 후보 있는 날만) 그대로, 자동 주문 없음.
+    historical 백테스트 탐색은 <strong>공식 종료</strong> — 이후 모든 판단은 새 측정 계약(불변 snapshot → 발송 영수증 →
+    발송시각 기준 96봉 라벨)의 forward 표본에서만 한다. v2 는 <strong>2026-09-01 GO/KILL 시한부 판정</strong>(사전등록 동결) 진행 중.
+    이 전환의 전체 기록(실패 포함)은 <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a>.
+    아래 박스들은 06-11 시점 기록으로 보존한다.</p>
+  </div>
   <p class="section-desc"><strong>발송 = R1 레이더 (08:50 예고 / 09:05 확정) + 🎯 PUMP v2 (09:10~, 후보 있는 날만)</strong>.
   구 distribution · pre-open 은 record-only. 챔피언은 forward 성과로 자동 선정(하방 우선) — 현재 R1 fallback,
   gate 진행 10/30일 (6월 말 첫 실전 판정). <strong>15실험</strong>까지 자동 net 흑자는 미달 — 시스템 정체성은
