@@ -75,6 +75,10 @@
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
     .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
     .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 720px; line-height: 1.85; margin-bottom: 3rem; }
+    .part-divider { max-width: 1100px; margin: 0 auto; padding: 3.2rem 2rem 0; }
+    .part-divider .pd-label { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.5rem; font-family: 'JetBrains Mono', monospace; }
+    .part-divider .pd-title { font-family: 'Noto Serif KR', serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
+    .part-divider .pd-bridge { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.8; margin-top: 0.5rem; max-width: 760px; }
     .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -332,16 +336,14 @@
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
       <li><a href="#summary">Summary</a></li>
-      <li><a href="#journey">Journey</a></li>
-      <li><a href="#vnext">v-next</a></li>
+      <li><a href="#journey">I·Journey</a></li>
+      <li><a href="#validation-chain">Chain</a></li>
       <li><a href="#integrity-turn">Integrity</a></li>
-      <li><a href="#thesis">Thesis</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#distribution">Distribution</a></li>
-      <li><a href="#preopen">Pre-open</a></li>
-      <li><a href="#experiments">Experiments</a></li>
-      <li><a href="#failures">Failures</a></li>
+      <li><a href="#architecture">II·System</a></li>
       <li><a href="#ops">Ops</a></li>
+      <li><a href="#distribution">III·Archive</a></li>
+      <li><a href="#failures">Failures</a></li>
+      <li><a href="#lessons">IV·Lessons</a></li>
       <li><a href="#status">Status</a></li>
     </ul>
   </div>
@@ -408,6 +410,14 @@
   </div>
 </div></section>
 <hr class="divider">
+
+<div class="part-divider fade-in">
+  <div class="pd-label">Part I · 이야기</div>
+  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 07-28</div>
+  <div class="pd-bridge">아래 네 챕터는 시간 순서다. 첫 모델의 실패(Journey)에서 시작해, 12실험의 천장(v-next),
+  가짜 양수를 죽이는 검증 사슬, 그리고 연구 전멸과 측정 재건(Integrity Turn)으로 끝난다.
+  결론부터 알고 싶으면 마지막 챕터로 건너뛰어도 된다 — 다만 결론의 무게는 그 앞의 실패들이 만든다.</div>
+</div>
 
 <!-- Project Journey -->
 <section id="journey"><div class="container fade-in">
@@ -899,6 +909,13 @@
 </div></section>
 <hr class="divider">
 
+<div class="part-divider fade-in">
+  <div class="pd-label">Part II · 지금의 시스템</div>
+  <div class="pd-title">이야기가 남긴 기계 — 오늘 아침에도 이렇게 돌았다</div>
+  <div class="pd-bridge">여기서부터는 현재형이다. 무엇을 믿고 설계했는지(Thesis), 데이터가 어떻게 알림이 되는지(Architecture),
+  매일 받는 메시지의 실물(Ops), 그리고 사람 없이 도는 스케줄(Automation).</div>
+</div>
+
 <!-- Thesis -->
 <section id="thesis"><div class="container fade-in">
   <div class="section-label">Thesis</div>
@@ -1026,6 +1043,172 @@
   </div>
 </div></section>
 <hr class="divider">
+
+<!-- Operational Reality -->
+<section id="ops"><div class="container fade-in">
+  <div class="section-label">Operational Reality</div>
+  <h2 class="section-title">실제로 매일 받는 메시지</h2>
+  <p class="section-desc">진입가는 paper ledger entry_price 와 매칭되어 close-out 시 실제 15m 경로와 비교 — slippage / signal-quality 자동 추적 인프라.</p>
+
+  <!-- 현재 구성 (2026-06-11) -->
+  <div class="callout" style="margin-bottom:2rem;">
+    <p><strong>현재 구성 (2026-07-28) — 정상일 기준 하루 2~3통</strong></p>
+    <p style="margin-top:0.6rem;">
+      <strong>08:50</strong> 🛰️ R1 레이더 <strong>예고</strong> (진입가는 09:00 확정)<br>
+      <strong>09:05</strong> 🛰️ R1 레이더 <strong>확정</strong> — Top3 + 진입가 + SL −3% / TP +5% + 하방 플래그<br>
+      <strong>09:05~</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(Binance volsurge 융합 · 후보 있는 날만 · hit 8.1% + net 음수 정직 고지 내장)</span><br>
+      <span style="color:var(--text-muted);">구 pre-open/distribution 모델은 텔레그램 완전 무발송(record-only 채점만). + 이상 시에만: heartbeat 경고 · <strong>failure-alert</strong>(어느 유닛이든 죽으면 즉시 — 07-28 가동). 아래 mockup 들은 초기 (Phase X+1) 형식 — 디자인 진화의 기록으로 보존.</span>
+    </p>
+  </div>
+
+  <div class="two-col" style="gap:1.2rem;">
+    <div>
+      <div class="chart-title" style="margin-bottom:0.4rem;">⚡ Pre-open Trigger (KST 08:55)</div>
+      <div class="chart-subtitle" style="margin-bottom:0.6rem;">15m precursor 위 6 heads. raw score 표기 (1주 live 후 calibration).</div>
+      <div class="tg-mockup">
+        <div class="tg-sender">prelude bot</div>
+        <div class="tg-header">
+          ⚡ pre-open trigger 2026-05-06 (KST 08:55)<br>
+          BTC: 🔴 약세 안정 | universe: top100
+        </div>
+        <div class="tg-section-title">━━━ 09:00 직후 펌프 후보 5건 ━━━</div>
+        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">CPOOL</span>  진입가 ≈ <span class="tg-price">42.80원</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 85  +5 raw: 72</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 80</span></div>
+        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">AXL</span>  진입가 ≈ <span class="tg-price">122.0원</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 90  +5 raw: 46</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 93</span></div>
+        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">BIO</span>  진입가 ≈ <span class="tg-price">81.50원</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 95  +5 raw: 46</span></div>
+        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 92</span></div>
+        <div class="tg-legend">
+          • 09:00 직후 진입, 5% 오르면 즉시 매도<br>
+          • 자동 손절 X — 직접 판단<br>
+          • raw score 는 실제 확률 아님 — 1주 live 후 calibration 예정
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="chart-title" style="margin-bottom:0.4rem;">🌅 Distribution Beta (KST 09:05)</div>
+      <div class="chart-subtitle" style="margin-bottom:0.6rem;">Daily 47 features 위 3 binary heads + setup library + bucket calibration.</div>
+      <div class="tg-mockup">
+        <div class="tg-sender">prelude bot</div>
+        <div class="tg-header">
+          🌅 prelude distribution beta 2026-05-06 (KST 09:05)<br>
+          BTC: bear_quiet | universe: top100 (100)
+        </div>
+        <div class="tg-section-title">━━━ 상승 setup 후보 (5건) ━━━</div>
+        <div class="tg-row"><span class="tg-tier">🔍</span> <span class="tg-coin">CPOOL</span> 진입가 ≈ <span class="tg-price">45.80원</span> Setup: S01+S02+S03</div>
+        <div class="tg-row"><span class="tg-detail tg-key">판단 즉발 +3% / 24h +5% / +20% tail | 우선: TP3/TP5, tail bonus</span></div>
+        <div class="tg-row"><span class="tg-detail">+3% in 4h : 58.1% hist hit (decile 10/10, n=508)</span></div>
+        <div class="tg-row"><span class="tg-detail">+5% in 24h : 55.1% hist hit (decile 9/10, n=508)</span></div>
+        <div class="tg-row"><span class="tg-detail">+20% tail : 11.6% hist hit (decile 10/10, rare)</span></div>
+        <div class="tg-row"><span class="tg-detail">근거 전일 +18.41% / ATR14 11.76% / vol5 0.98 / return5 0.99</span></div>
+        <div class="tg-row"><span class="tg-tier">🔍</span> <span class="tg-coin">BIO</span> 진입가 ≈ <span class="tg-price">89.90원</span> Setup: S01+S02</div>
+        <div class="tg-row"><span class="tg-detail tg-key">판단 즉발 +3% / 24h +5% / +20% tail | 우선: TP3/TP5, tail bonus</span></div>
+        <div class="tg-row"><span class="tg-detail">+3% in 4h : 58.1% hist hit (decile 10/10, n=508)</span></div>
+        <div class="tg-row"><span class="tg-detail">+5% in 24h : 58.1% hist hit (decile 10/10, n=508)</span></div>
+        <div class="tg-legend">
+          ※ 매수 추천 아님 / 표시 = OOF backfill 기반 historical hit (raw probability X)<br>
+          ⚠️ 실거래는 사용자 본인 판단. 가상 paper ledger 만 자동 누적
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-wrap" style="margin-top:2rem;">
+    <div class="chart-title">Before / After — 운영 단계의 실제 변경 5종</div>
+    <div class="chart-subtitle">모두 incident 또는 audit 결과로 추가됨. 모델 재학습 X — 운영 코드 변경만으로 ledger 무결성과 latency 가 바뀜.</div>
+    <table class="tbl">
+      <thead><tr><th>운영 spec</th><th>Before</th><th>After</th><th>이유</th></tr></thead>
+      <tbody>
+        <tr><td>Predict latency</td><td class="neg">4m 48s</td><td class="pos">21s</td><td class="mono">15m DB recent 3-day window</td></tr>
+        <tr><td>Late manual run</td><td class="neg">ledger 오염 가능</td><td class="pos">08:45-08:59 외 skip</td><td class="mono">decision-window guard</td></tr>
+        <tr><td>Score 표기</td><td class="neg">"85%" (raw)</td><td class="pos">raw 85 + decile 10/10</td><td class="mono">calib error 30+pp</td></tr>
+        <tr><td>알림 진입가</td><td class="neg">미표시</td><td class="pos">≈ 일봉 close</td><td class="mono">close-out slippage 추적</td></tr>
+        <tr><td>Pre-open close-out</td><td class="neg">09:30 (partial 위험)</td><td class="pos">10:05 (full 1h)</td><td class="mono">first1h 4 bars 모두 closed</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- Automation -->
+<section id="automation"><div class="container fade-in">
+  <div class="section-label">Automation</div>
+  <h2 class="section-title">systemd 7 timer + failure-alert — 무인 운영</h2>
+  <p class="section-desc">cron 대신 systemd timer (xsec_alpha 패턴 차용). install <code class="c">sudo bash deploy/install_systemd.sh</code> 한 줄. 모든 unit 은 <code class="c">deploy/</code> 에서 버전 관리. 텔레그램 발송은 <strong>R1 레이더(08:50/09:05)가 담당</strong> — 아래 predict timer 들은 구 모델을 record-only 로 돌리고 그 끝에서 R1 을 발송한다.</p>
+
+  <div style="margin: 2rem 0;">
+    <div class="auto-timer blue-acc">
+      <div class="auto-name">prelude-preopen.timer<span class="mono-small">scripts/daily_run_preopen.sh</span></div>
+      <div class="auto-role">15m DB update + health_check(<strong>stale 면 중단 → 발송 X</strong>) + 구 pre-open predict 는 record-only(observed −40.8%) → 그 끝에서 <strong>R1 레이더가 08:50 예고 텔레그램 발송(champion)</strong>. decision-window 가드 유지.</div>
+      <div class="auto-when"><strong>매일</strong>08:50 KST<br><span style="color:var(--blue);">R1 예고</span></div>
+    </div>
+    <div class="auto-timer blue-acc">
+      <div class="auto-name">prelude-distribution.timer<span class="mono-small">scripts/daily_run_distribution.sh</span></div>
+      <div class="auto-role">d1 update + health_check(stale 면 중단) + 구 distribution score 는 record-only → <strong>R1 레이더가 09:05 확정 텔레그램 발송(champion)</strong> + shadow ledger 기록. decision-window 09:00-09:20 가드.</div>
+      <div class="auto-when"><strong>매일</strong>09:05 KST<br><span style="color:var(--blue);">R1 확정</span></div>
+    </div>
+    <div class="auto-timer green-acc">
+      <div class="auto-name">prelude-close.timer<span class="mono-small">scripts/daily_close_distribution.sh</span></div>
+      <div class="auto-role">paper ledger close-out + <strong>R1 SHADOW ledger 실현</strong>(−3%SL/+5%TP 15m 경로) + <strong>champion_selector 재선정</strong>(forward 갱신 후 → 다음날 08:50/09:05 챔피언 결정). 텔레그램 X.</div>
+      <div class="auto-when"><strong>매일</strong>09:30 KST<br><span style="color:var(--green);">champion 재선정</span></div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-preopen-close.timer<span class="mono-small">scripts/daily_close_preopen.sh</span></div>
+      <div class="auto-role">15m DB update wrapper + pre-open ledger close-out. first1h 4 bars 모두 closed 일 때만 status=closed, 부족하면 pending 으로 retry.</div>
+      <div class="auto-when"><strong>매일</strong>10:05 KST</div>
+    </div>
+    <div class="auto-timer green-acc">
+      <div class="auto-name">prelude-publish-dashboard.timer<span class="mono-small">scripts/publish_dashboard.sh</span></div>
+      <div class="auto-role">findings.json(암호화) 빌드 + <strong>champion/challenger 리더보드</strong> + 6 차트 → soccz.github.io 대시보드 push. close 2개 끝난 후.</div>
+      <div class="auto-when"><strong>매일</strong>10:10 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-backup.timer<span class="mono-small">DB 백업</span></div>
+      <div class="auto-role">upbit_d1.db 스냅샷 백업 — 데이터 유실 방어(방치 운영 안전 레일).</div>
+      <div class="auto-when"><strong>매일</strong>04:00 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-heartbeat.timer<span class="mono-small">freshness · 발송 감시</span></div>
+      <div class="auto-role">데이터 freshness + 당일 발송 여부 heartbeat 점검 — 조용한 실패(stale·미발송)를 운영자가 알 수 있게. v2 시한부 판정 일일 자동 채점 포함.</div>
+      <div class="auto-when"><strong>매일</strong>10:30 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-failure-alert@.service<span class="mono-small">OnFailure · 경보</span></div>
+      <div class="auto-role">어느 유닛이든 실패하면 유닛명·KST 시각·journalctl 힌트를 텔레그램으로 즉시 발사 — 침묵 실패 제거 (2026-07-28 가동, 15유닛 중 마지막 퍼즐).</div>
+      <div class="auto-when"><strong>장애 시</strong>즉시</div>
+    </div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Decision-window guard — 늦은 manual run 차단</div>
+    <div class="chart-subtitle">systemd <code class="c">Persistent=false</code> 와 별개로 script 안에서도 시간 가드. 두 로직이 함께 ledger 오염 방지.</div>
+    <div class="pipe-wrap">
+      <div class="pipe-stage gate">
+        <div class="pipe-num">1</div>
+        <div class="pipe-body"><div class="pipe-title">Pre-open: <code class="c">is_preopen_window()</code></div><div class="pipe-desc">asof.hour == 8 and 45 ≤ minute ≤ 59. 외부면 ledger append + telegram skip (<code class="c">--allow-late-run</code> 으로 manual override).</div></div>
+      </div>
+      <div class="pipe-stage gate">
+        <div class="pipe-num">2</div>
+        <div class="pipe-body"><div class="pipe-title">Distribution: <code class="c">is_decision_window()</code></div><div class="pipe-desc">09:00-09:20 KST. <code class="c">--allow-late-ledger</code> 가 명시 backfill 용 escape hatch.</div></div>
+      </div>
+      <div class="pipe-stage deploy">
+        <div class="pipe-num">3</div>
+        <div class="pipe-body"><div class="pipe-title">Close-out: 데이터 가용성 가드</div><div class="pipe-desc">pre-open close 는 first1h = 4 bars 모두 closed 일 때만 status=closed. 부족하면 pending 으로 두고 다음 실행에서 retry.</div></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<div class="part-divider fade-in">
+  <div class="pd-label">Part III · 기록 보관소</div>
+  <div class="pd-title">버린 모델들의 설계 원문 — 지금은 record-only, 그러나 지웠다면 배우지 못했다</div>
+  <div class="pd-bridge">Distribution·Pre-open 은 더 이상 발송하지 않는다. 그 설계 문서와 실험 6개, 그리고 실패의 벽(Failures Wall)을
+  당시 시점 그대로 보존한다 — 이 프로젝트의 방법론은 "잘된 것"이 아니라 여기서 나왔다.</div>
+</div>
 
 <!-- Distribution -->
 <section id="distribution"><div class="container fade-in">
@@ -1500,164 +1683,12 @@
 </div></section>
 <hr class="divider">
 
-<!-- Operational Reality -->
-<section id="ops"><div class="container fade-in">
-  <div class="section-label">Operational Reality</div>
-  <h2 class="section-title">실제로 매일 받는 메시지</h2>
-  <p class="section-desc">진입가는 paper ledger entry_price 와 매칭되어 close-out 시 실제 15m 경로와 비교 — slippage / signal-quality 자동 추적 인프라.</p>
-
-  <!-- 현재 구성 (2026-06-11) -->
-  <div class="callout" style="margin-bottom:2rem;">
-    <p><strong>현재 구성 (2026-07-28) — 정상일 기준 하루 2~3통</strong></p>
-    <p style="margin-top:0.6rem;">
-      <strong>08:50</strong> 🛰️ R1 레이더 <strong>예고</strong> (진입가는 09:00 확정)<br>
-      <strong>09:05</strong> 🛰️ R1 레이더 <strong>확정</strong> — Top3 + 진입가 + SL −3% / TP +5% + 하방 플래그<br>
-      <strong>09:05~</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(Binance volsurge 융합 · 후보 있는 날만 · hit 8.1% + net 음수 정직 고지 내장)</span><br>
-      <span style="color:var(--text-muted);">구 pre-open/distribution 모델은 텔레그램 완전 무발송(record-only 채점만). + 이상 시에만: heartbeat 경고 · <strong>failure-alert</strong>(어느 유닛이든 죽으면 즉시 — 07-28 가동). 아래 mockup 들은 초기 (Phase X+1) 형식 — 디자인 진화의 기록으로 보존.</span>
-    </p>
-  </div>
-
-  <div class="two-col" style="gap:1.2rem;">
-    <div>
-      <div class="chart-title" style="margin-bottom:0.4rem;">⚡ Pre-open Trigger (KST 08:55)</div>
-      <div class="chart-subtitle" style="margin-bottom:0.6rem;">15m precursor 위 6 heads. raw score 표기 (1주 live 후 calibration).</div>
-      <div class="tg-mockup">
-        <div class="tg-sender">prelude bot</div>
-        <div class="tg-header">
-          ⚡ pre-open trigger 2026-05-06 (KST 08:55)<br>
-          BTC: 🔴 약세 안정 | universe: top100
-        </div>
-        <div class="tg-section-title">━━━ 09:00 직후 펌프 후보 5건 ━━━</div>
-        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">CPOOL</span>  진입가 ≈ <span class="tg-price">42.80원</span></div>
-        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 85  +5 raw: 72</span></div>
-        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 80</span></div>
-        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">AXL</span>  진입가 ≈ <span class="tg-price">122.0원</span></div>
-        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 90  +5 raw: 46</span></div>
-        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 93</span></div>
-        <div class="tg-row"><span class="tg-tier">🔥</span> <span class="tg-coin">BIO</span>  진입가 ≈ <span class="tg-price">81.50원</span></div>
-        <div class="tg-row"><span class="tg-detail">▸ 15분 안 +3 raw: 95  +5 raw: 46</span></div>
-        <div class="tg-row"><span class="tg-detail">▸ 1시간 안 +3 raw: 92</span></div>
-        <div class="tg-legend">
-          • 09:00 직후 진입, 5% 오르면 즉시 매도<br>
-          • 자동 손절 X — 직접 판단<br>
-          • raw score 는 실제 확률 아님 — 1주 live 후 calibration 예정
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="chart-title" style="margin-bottom:0.4rem;">🌅 Distribution Beta (KST 09:05)</div>
-      <div class="chart-subtitle" style="margin-bottom:0.6rem;">Daily 47 features 위 3 binary heads + setup library + bucket calibration.</div>
-      <div class="tg-mockup">
-        <div class="tg-sender">prelude bot</div>
-        <div class="tg-header">
-          🌅 prelude distribution beta 2026-05-06 (KST 09:05)<br>
-          BTC: bear_quiet | universe: top100 (100)
-        </div>
-        <div class="tg-section-title">━━━ 상승 setup 후보 (5건) ━━━</div>
-        <div class="tg-row"><span class="tg-tier">🔍</span> <span class="tg-coin">CPOOL</span> 진입가 ≈ <span class="tg-price">45.80원</span> Setup: S01+S02+S03</div>
-        <div class="tg-row"><span class="tg-detail tg-key">판단 즉발 +3% / 24h +5% / +20% tail | 우선: TP3/TP5, tail bonus</span></div>
-        <div class="tg-row"><span class="tg-detail">+3% in 4h : 58.1% hist hit (decile 10/10, n=508)</span></div>
-        <div class="tg-row"><span class="tg-detail">+5% in 24h : 55.1% hist hit (decile 9/10, n=508)</span></div>
-        <div class="tg-row"><span class="tg-detail">+20% tail : 11.6% hist hit (decile 10/10, rare)</span></div>
-        <div class="tg-row"><span class="tg-detail">근거 전일 +18.41% / ATR14 11.76% / vol5 0.98 / return5 0.99</span></div>
-        <div class="tg-row"><span class="tg-tier">🔍</span> <span class="tg-coin">BIO</span> 진입가 ≈ <span class="tg-price">89.90원</span> Setup: S01+S02</div>
-        <div class="tg-row"><span class="tg-detail tg-key">판단 즉발 +3% / 24h +5% / +20% tail | 우선: TP3/TP5, tail bonus</span></div>
-        <div class="tg-row"><span class="tg-detail">+3% in 4h : 58.1% hist hit (decile 10/10, n=508)</span></div>
-        <div class="tg-row"><span class="tg-detail">+5% in 24h : 58.1% hist hit (decile 10/10, n=508)</span></div>
-        <div class="tg-legend">
-          ※ 매수 추천 아님 / 표시 = OOF backfill 기반 historical hit (raw probability X)<br>
-          ⚠️ 실거래는 사용자 본인 판단. 가상 paper ledger 만 자동 누적
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="chart-wrap" style="margin-top:2rem;">
-    <div class="chart-title">Before / After — 운영 단계의 실제 변경 5종</div>
-    <div class="chart-subtitle">모두 incident 또는 audit 결과로 추가됨. 모델 재학습 X — 운영 코드 변경만으로 ledger 무결성과 latency 가 바뀜.</div>
-    <table class="tbl">
-      <thead><tr><th>운영 spec</th><th>Before</th><th>After</th><th>이유</th></tr></thead>
-      <tbody>
-        <tr><td>Predict latency</td><td class="neg">4m 48s</td><td class="pos">21s</td><td class="mono">15m DB recent 3-day window</td></tr>
-        <tr><td>Late manual run</td><td class="neg">ledger 오염 가능</td><td class="pos">08:45-08:59 외 skip</td><td class="mono">decision-window guard</td></tr>
-        <tr><td>Score 표기</td><td class="neg">"85%" (raw)</td><td class="pos">raw 85 + decile 10/10</td><td class="mono">calib error 30+pp</td></tr>
-        <tr><td>알림 진입가</td><td class="neg">미표시</td><td class="pos">≈ 일봉 close</td><td class="mono">close-out slippage 추적</td></tr>
-        <tr><td>Pre-open close-out</td><td class="neg">09:30 (partial 위험)</td><td class="pos">10:05 (full 1h)</td><td class="mono">first1h 4 bars 모두 closed</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div></section>
-<hr class="divider">
-
-<!-- Automation -->
-<section id="automation"><div class="container fade-in">
-  <div class="section-label">Automation</div>
-  <h2 class="section-title">systemd 7 timer + failure-alert — 무인 운영</h2>
-  <p class="section-desc">cron 대신 systemd timer (xsec_alpha 패턴 차용). install <code class="c">sudo bash deploy/install_systemd.sh</code> 한 줄. 모든 unit 은 <code class="c">deploy/</code> 에서 버전 관리. 텔레그램 발송은 <strong>R1 레이더(08:50/09:05)가 담당</strong> — 아래 predict timer 들은 구 모델을 record-only 로 돌리고 그 끝에서 R1 을 발송한다.</p>
-
-  <div style="margin: 2rem 0;">
-    <div class="auto-timer blue-acc">
-      <div class="auto-name">prelude-preopen.timer<span class="mono-small">scripts/daily_run_preopen.sh</span></div>
-      <div class="auto-role">15m DB update + health_check(<strong>stale 면 중단 → 발송 X</strong>) + 구 pre-open predict 는 record-only(observed −40.8%) → 그 끝에서 <strong>R1 레이더가 08:50 예고 텔레그램 발송(champion)</strong>. decision-window 가드 유지.</div>
-      <div class="auto-when"><strong>매일</strong>08:50 KST<br><span style="color:var(--blue);">R1 예고</span></div>
-    </div>
-    <div class="auto-timer blue-acc">
-      <div class="auto-name">prelude-distribution.timer<span class="mono-small">scripts/daily_run_distribution.sh</span></div>
-      <div class="auto-role">d1 update + health_check(stale 면 중단) + 구 distribution score 는 record-only → <strong>R1 레이더가 09:05 확정 텔레그램 발송(champion)</strong> + shadow ledger 기록. decision-window 09:00-09:20 가드.</div>
-      <div class="auto-when"><strong>매일</strong>09:05 KST<br><span style="color:var(--blue);">R1 확정</span></div>
-    </div>
-    <div class="auto-timer green-acc">
-      <div class="auto-name">prelude-close.timer<span class="mono-small">scripts/daily_close_distribution.sh</span></div>
-      <div class="auto-role">paper ledger close-out + <strong>R1 SHADOW ledger 실현</strong>(−3%SL/+5%TP 15m 경로) + <strong>champion_selector 재선정</strong>(forward 갱신 후 → 다음날 08:50/09:05 챔피언 결정). 텔레그램 X.</div>
-      <div class="auto-when"><strong>매일</strong>09:30 KST<br><span style="color:var(--green);">champion 재선정</span></div>
-    </div>
-    <div class="auto-timer muted-acc">
-      <div class="auto-name">prelude-preopen-close.timer<span class="mono-small">scripts/daily_close_preopen.sh</span></div>
-      <div class="auto-role">15m DB update wrapper + pre-open ledger close-out. first1h 4 bars 모두 closed 일 때만 status=closed, 부족하면 pending 으로 retry.</div>
-      <div class="auto-when"><strong>매일</strong>10:05 KST</div>
-    </div>
-    <div class="auto-timer green-acc">
-      <div class="auto-name">prelude-publish-dashboard.timer<span class="mono-small">scripts/publish_dashboard.sh</span></div>
-      <div class="auto-role">findings.json(암호화) 빌드 + <strong>champion/challenger 리더보드</strong> + 6 차트 → soccz.github.io 대시보드 push. close 2개 끝난 후.</div>
-      <div class="auto-when"><strong>매일</strong>10:10 KST</div>
-    </div>
-    <div class="auto-timer muted-acc">
-      <div class="auto-name">prelude-backup.timer<span class="mono-small">DB 백업</span></div>
-      <div class="auto-role">upbit_d1.db 스냅샷 백업 — 데이터 유실 방어(방치 운영 안전 레일).</div>
-      <div class="auto-when"><strong>매일</strong>04:00 KST</div>
-    </div>
-    <div class="auto-timer muted-acc">
-      <div class="auto-name">prelude-heartbeat.timer<span class="mono-small">freshness · 발송 감시</span></div>
-      <div class="auto-role">데이터 freshness + 당일 발송 여부 heartbeat 점검 — 조용한 실패(stale·미발송)를 운영자가 알 수 있게. v2 시한부 판정 일일 자동 채점 포함.</div>
-      <div class="auto-when"><strong>매일</strong>10:30 KST</div>
-    </div>
-    <div class="auto-timer muted-acc">
-      <div class="auto-name">prelude-failure-alert@.service<span class="mono-small">OnFailure · 경보</span></div>
-      <div class="auto-role">어느 유닛이든 실패하면 유닛명·KST 시각·journalctl 힌트를 텔레그램으로 즉시 발사 — 침묵 실패 제거 (2026-07-28 가동, 15유닛 중 마지막 퍼즐).</div>
-      <div class="auto-when"><strong>장애 시</strong>즉시</div>
-    </div>
-  </div>
-
-  <div class="chart-wrap">
-    <div class="chart-title">Decision-window guard — 늦은 manual run 차단</div>
-    <div class="chart-subtitle">systemd <code class="c">Persistent=false</code> 와 별개로 script 안에서도 시간 가드. 두 로직이 함께 ledger 오염 방지.</div>
-    <div class="pipe-wrap">
-      <div class="pipe-stage gate">
-        <div class="pipe-num">1</div>
-        <div class="pipe-body"><div class="pipe-title">Pre-open: <code class="c">is_preopen_window()</code></div><div class="pipe-desc">asof.hour == 8 and 45 ≤ minute ≤ 59. 외부면 ledger append + telegram skip (<code class="c">--allow-late-run</code> 으로 manual override).</div></div>
-      </div>
-      <div class="pipe-stage gate">
-        <div class="pipe-num">2</div>
-        <div class="pipe-body"><div class="pipe-title">Distribution: <code class="c">is_decision_window()</code></div><div class="pipe-desc">09:00-09:20 KST. <code class="c">--allow-late-ledger</code> 가 명시 backfill 용 escape hatch.</div></div>
-      </div>
-      <div class="pipe-stage deploy">
-        <div class="pipe-num">3</div>
-        <div class="pipe-body"><div class="pipe-title">Close-out: 데이터 가용성 가드</div><div class="pipe-desc">pre-open close 는 first1h = 4 bars 모두 closed 일 때만 status=closed. 부족하면 pending 으로 두고 다음 실행에서 retry.</div></div>
-      </div>
-    </div>
-  </div>
-</div></section>
-<hr class="divider">
+<div class="part-divider fade-in">
+  <div class="pd-label">Part IV · 결산</div>
+  <div class="pd-title">가져갈 것과 다음 이정표</div>
+  <div class="pd-bridge">12가지 교훈은 전부 incident 나 audit 의 산물이다. 그리고 현재 상태와 단 하나 남은 약속 —
+  2026-09-01 동결 판정 — 으로 끝난다.</div>
+</div>
 
 <!-- Lessons -->
 <section id="lessons"><div class="container fade-in">
