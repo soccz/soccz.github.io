@@ -446,6 +446,11 @@
       <div class="pc-name">분포+하방 레이더</div>
       <div class="pc-status">SHADOW · 좁혀주기</div>
     </div>
+    <div class="phase-chip live">
+      <div class="pc-num">Integrity Turn</div>
+      <div class="pc-name">증거사슬 · forward-only</div>
+      <div class="pc-status">LIVE · 07-28</div>
+    </div>
   </div>
 
   <div class="timeline" style="margin-top:2rem;">
@@ -513,6 +518,31 @@
       <span class="badge badge-ok">19 ft / 6 heads</span>
       <span class="badge badge-blue">15m only</span>
       <span class="badge badge-fail">forward −40.8%</span>
+    </div>
+
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">검증 사슬 → 옵션이론 · 2026-06 → 07</span><span class="badge badge-pivot">EXHAUST</span></div>
+      <div class="t-title">남은 모든 lever 를 끝까지 소진하다 — exit · entry-timing · 상방 head</div>
+      <div class="t-find">
+        적대 검증 사슬(researcher → evaluator → 15m 실경로)이 가짜 "+1.24%" 를 적발하고 hit 엣지만 🎯 v2 radar 로 배선.
+        옵션이론 팬아웃에서 델타-사다리가 deep-loss −38%(SHADOW), exit autopsy 가 "현행 TP5/SL3 가 이미 frontier" 를 확정,
+        PRPC kill-test 로 진입타이밍 마지막 축도 DEAD. 상세는 <a href="#validation-chain" style="color:var(--blue);">§검증 사슬</a> · <a href="#integrity-turn" style="color:var(--amber);">§Integrity Turn</a>.
+      </div>
+      <span class="badge badge-fail">exit·entry-timing 소진</span>
+      <span class="badge badge-ok">델타-사다리 SHADOW</span>
+    </div>
+
+    <div class="timeline-item"><div class="timeline-dot done"></div>
+      <div class="t-meta"><span class="t-date">Integrity Turn · 2026-07-25 → 28</span><span class="badge badge-ok">LIVE</span></div>
+      <div class="t-title">최후 챌린저 전멸 → radar-not-strategy 자기 강등 → 측정 재건 → 장애와 복구</div>
+      <div class="t-find">
+        챌린저 5축(7후보) 전원 REJECT — "상방을 올리면 하방이 따라온다" 정량 확인, 상방 head AUC 0.477 로 주장 철회.
+        historical 탐색 공식 종료, 증거사슬(불변 snapshot → 발송 영수증 → 발송시각 라벨) 재건.
+        07-27 3중 장애(발송 사망·close 마비·침묵)를 적대 리뷰 2×2회전으로 복구하고 v2 후보 사멸 회귀(소급 0/53)까지 수리.
+        이제 판단은 forward 표본과 <strong>09-01 동결 판정</strong>만 한다. 전체 기록 <a href="#integrity-turn" style="color:var(--amber);">§Integrity Turn</a>.
+      </div>
+      <span class="badge badge-fail">7후보 전원 REJECT</span>
+      <span class="badge badge-ok">1,273 tests · 증거사슬 가동</span>
     </div>
 
   </div>
@@ -1448,6 +1478,24 @@
       <div class="f-desc">Binance 융합 룰의 첫 양수 net 보고. evaluator 가 적발 — 시뮬이 low 를 안 보고 SL 을 바닥으로만 적용 (종가 −5.9% 를 −3% 로 기록). 15m 실경로 재계산 후 최근 OOS −0.36%.</div>
       <div class="f-takeaway">net 추정은 일봉 근사 금지 — 15m 실경로 + 동시터치 SL 우선만 신뢰</div>
     </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-07-25</div>
+      <div class="f-title">최후 챌린저 5축 — 상방 head 는 몽키 이하였다</div>
+      <div class="f-desc">하방 veto·상방 head·safe-up·first-passage·semivol 7후보를 180일 잠금 + 별도 seed 독립 재검산으로 끝까지. 전원 REJECT. safe-up +5.65pp 후보가 P(−5%) +15.07pp 동반 — 변동성 재포장. 신형 측정에서 R1 상방 head AUC 0.477, −0.624%/픽(몽키 −0.424%).</div>
+      <div class="f-takeaway">"상방을 올리면 하방이 따라온다" — 우수 추천기 주장 철회, radar-not-strategy 확정</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-07-27</div>
+      <div class="f-title">강화가 스스로를 쐈다 — 3중 장애와 완전한 침묵</div>
+      <div class="f-desc">모델이 만족한 적 없는 단조성 불변식을 하드체크로 걸어 rank 77 코인 하나가 발송 전체를 죽임. 구스키마 원장과 신형 게이트의 이음매에서 close 마비. 경보 유닛 미설치 + heartbeat 에코 오분류로 아무도 몰랐다.</div>
+      <div class="f-takeaway">fail-closed 는 fail-loud 와 세트일 때만 안전 — 조용한 fail-closed 는 fail-open 과 같은 얼굴</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-07-28</div>
+      <div class="f-title">v2 후보 사멸 53일 — 미상장과 수집장애를 구분 못 한 원자 fail-closed</div>
+      <div class="f-desc">업비트 단독상장 코인 1개가 roc 상위에 섞이면 그날 Binance 융합 후보 전량 사멸 — 신계약 소급 53일 중 ok 0일, 시한부 실험이 무증거로 죽는 중이었다. 구조적 제외 분리 + BTCUSDT 앵커 프로브로 수리(53/53 ok).</div>
+      <div class="f-takeaway">fail-closed 의 단위는 "판정 불가능한 것"만 — 구조적 사실(미상장)까지 묶으면 시스템이 굶어 죽는다</div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
@@ -1611,7 +1659,7 @@
 <!-- Lessons -->
 <section id="lessons"><div class="container fade-in">
   <div class="section-label">Lessons</div>
-  <h2 class="section-title">10 가지 교훈 — 다음 프로젝트로 가져갈 것</h2>
+  <h2 class="section-title">12 가지 교훈 — 다음 프로젝트로 가져갈 것</h2>
   <p class="section-desc">전부 incident 또는 audit 결과. backtest 만 잘 나오면 운영 단계에서 비싼 수업료를 낸다.</p>
 
   <div style="margin-top:2rem;">
@@ -1683,6 +1731,20 @@
       <div class="lesson-body">
         <div class="lesson-title">Premature complexity 회피 — v1 은 단순, v2 는 데이터로 결정</div>
         <div class="lesson-desc">Multi-scale ablation 에서 h5 가 daily+1h+15m 우위였지만 v1 은 daily-only 채택. 1주 live 결과로 ground truth 잡고 v2 swap 결정. 검증 안 된 복잡성을 운영에 넣지 않음.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">11</div>
+      <div class="lesson-body">
+        <div class="lesson-title">fail-closed 는 fail-loud 와 세트일 때만 안전하다</div>
+        <div class="lesson-desc">07-27, 강화된 게이트들이 시스템을 올바르게 멈췄지만 경보가 없어 아무도 몰랐다 — 그리고 v2 는 53일간 "정상 무추천일" 로 위장된 채 굶어 죽는 중이었다. 멈추는 코드보다 멈췄다고 소리치는 코드가 먼저다.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">12</div>
+      <div class="lesson-body">
+        <div class="lesson-title">측정을 먼저 고쳐라 — 모델 개선은 그 다음이다</div>
+        <div class="lesson-desc">5주간 새 모델 0개. 대신 증거사슬(불변 snapshot → 발송 영수증 → 발송시각 라벨)을 얻었고, 그 측정이 곧바로 "상방 head 는 몽키 이하" 라는 이 프로젝트에서 가장 중요한 사실을 돌려줬다. 못 믿는 측정 위의 개선은 전부 환상이다.</div>
       </div>
     </div>
   </div>
