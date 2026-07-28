@@ -355,7 +355,7 @@
       자동 net 전략이 아니라 추천 레이더 — 청산은 사람이 한다. 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 과정을 그대로 공개.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="6" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="7" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
       <div class="hero-stat"><span class="hero-stat-num">~6×</span><span class="hero-stat-label">precision@3 농축 (OOS)</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">Optimistic Tiered Sharpe †</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0 †</span></div>
@@ -379,8 +379,8 @@
 <!-- Honest-conclusion banner -->
 <div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
   <div class="callout warn" style="margin:1.5rem 0;">
-    <p><strong>현재 정직한 결론 (2026-05-31):</strong> 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 OOS·leak 4/4 PASS 로 진짜지만, 기계적 청산 net 은 breakeven~음수 — 수익은 사용자의 진입/청산 판단이 결정한다. 아래 상단 지표 중 일부(†)는 단일전략 가정의 optimistic upper-bound 이며, 실제 운영 net 과 정직한 프레이밍은 <a href="#vnext" style="color:var(--amber); border-bottom:1px solid var(--amber);">§v-next 로 이동</a>.
-    <strong>최신 판정 (2026-07-28):</strong> 이후 5주의 연구 전멸·측정 재건·장애와 복구까지 포함한 전체 기록은
+    <p><strong>첫 정직한 결론 (2026-05-31):</strong> 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 OOS·leak 4/4 PASS 로 진짜지만, 기계적 청산 net 은 breakeven~음수 — 수익은 사용자의 진입/청산 판단이 결정한다. 아래 상단 지표 중 일부(†)는 단일전략 가정의 optimistic upper-bound 이며, 실제 운영 net 과 정직한 프레이밍은 <a href="#vnext" style="color:var(--amber); border-bottom:1px solid var(--amber);">§v-next 로 이동</a>.
+    <strong>최신 판정 (2026-07-28):</strong> 이후 두 달의 연구 전멸·측정 재건·장애와 복구(핵심 5주는 06-25→07-28)까지 포함한 전체 기록은
     <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a> 참조.</p>
   </div>
 </div>
@@ -401,7 +401,7 @@
     <div class="metric-card"><span class="metric-val neutral">92.9% †</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">optimistic upper-bound<br>5000 boot, 95% CI 0 걸침</div></div>
     <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>운영은 fractional</div></div>
     <div class="metric-card"><span class="metric-val neutral">2–3 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">R1 08:50 예고 + 09:05 확정<br>+ 🎯 v2 조건부 (후보 있는 날만)</div></div>
-    <div class="metric-card"><span class="metric-val neutral">15 units</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">7 timer + failure-alert 경보<br>(07-28 가동 — 침묵 실패 제거)</div></div>
+    <div class="metric-card"><span class="metric-val neutral">15 units</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">7 timer + 7 service + alert 유닛<br>= 15 units (07-28 침묵 실패 제거)</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -409,7 +409,7 @@
 <div class="part-divider fade-in">
   <div class="pd-label">Part I · 이야기</div>
   <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 07-28</div>
-  <div class="pd-bridge">아래 네 챕터는 시간 순서다. 첫 모델의 실패(Journey)에서 시작해, 12실험의 천장(v-next),
+  <div class="pd-bridge">출발 질문은 하나였다 — <strong>"어떻게 맞히나."</strong> 이 질문이 두 번 부서지며 다른 질문으로 진화하는 것이 이 부의 플롯이다. 아래 네 챕터는 시간 순서다. 첫 모델의 실패(Journey)에서 시작해, 12실험의 천장(v-next),
   가짜 양수를 죽이는 검증 사슬, 그리고 연구 전멸과 측정 재건(Integrity Turn)으로 끝난다.
   결론부터 알고 싶으면 마지막 챕터로 건너뛰어도 된다 — 다만 결론의 무게는 그 앞의 실패들이 만든다.</div>
 </div>
@@ -417,7 +417,7 @@
 <!-- Project Journey -->
 <section id="journey"><div class="container fade-in">
   <div class="section-label">Project Journey</div>
-  <h2 class="section-title">6 단계 — 무엇을 부수고 무엇을 남겼나</h2>
+  <h2 class="section-title">7 단계 — 무엇을 부수고 무엇이 남았나</h2>
   <p class="section-desc">첫 모델은 "다중 클래스 펌프 분포 예측"이었다. 운영하니 ledger 가 음수로 무너졌고, task 정의 자체가 잘못이라는 진단으로 다시 시작했다. 이후 detector, distribution, pre-open, 그리고 "맞히는 모델 → 좁혀주는 레이더" 까지 구조 재정의가 5번 더 일어났다.</p>
 
   <div class="phase-flow">
@@ -538,7 +538,7 @@
     </div>
 
     <div class="timeline-item"><div class="timeline-dot done"></div>
-      <div class="t-meta"><span class="t-date">Integrity Turn · 2026-07-25 → 28</span><span class="badge badge-ok">LIVE</span></div>
+      <div class="t-meta"><span class="t-date">Integrity Turn · 2026-06-25 → 07-28</span><span class="badge badge-ok">LIVE</span></div>
       <div class="t-title">최후 챌린저 전멸 → radar-not-strategy 자기 강등 → 측정 재건 → 장애와 복구</div>
       <div class="t-find">
         챌린저 5축(7후보) 전원 REJECT — "상방을 올리면 하방이 따라온다" 정량 확인, 상방 head AUC 0.477 로 주장 철회.
@@ -557,7 +557,7 @@
     <a href="#vnext" style="color:var(--amber);">재정의(v-next)</a> ·
     <a href="#validation-chain" style="color:var(--amber);">검증 사슬</a> ·
     <a href="#integrity-turn" style="color:var(--amber);">Integrity Turn</a> —
-    를 <strong>그 시점의 생각 그대로</strong> 연다. 각 장의 끝에서 다음 질문이 태어나는 것을 보게 될 것이다.
+    를 <strong>그 시점의 생각 그대로</strong> 연다.
   </p>
 </div></section>
 <hr class="divider">
@@ -572,10 +572,10 @@
   <div class="callout fail">
     <p><strong>① 진단 — 출발 문제: 레이더가 거의 침묵했다</strong></p>
     <p style="margin-top:0.6rem;">
-      구 엔진을 bear_quiet regime 에서 돌리면 거의 아무 것도 안 불렀다. bear_quiet 침묵 <strong>recall ~6%</strong>, top-3 중 ACTIVE 후보가 <strong>1/93 일</strong> 뿐. 그런데 같은 5월 시장에는 다음날 ≥15% 오른 코인이 <strong>84건</strong> 실제로 있었다. "안 부르는 게 안전"이 아니라 "기회를 통째로 놓치는" 상태 — 게이트가 아니라 task 정의를 다시 봐야 한다는 진단.
+      구 엔진을 bear_quiet(약세·저변동 국면) regime 에서 돌리면 거의 아무 것도 안 불렀다. bear_quiet 침묵 <strong>recall ~6%</strong>, top-3 슬롯 93개(31일×3) 중 ACTIVE 가 <strong>단 1개</strong>. 그런데 같은 5월 시장에는 다음날 ≥15% 오른 코인이 <strong>84건</strong> 실제로 있었다. "안 부르는 게 안전"이 아니라 "기회를 통째로 놓치는" 상태 — 게이트가 아니라 task 정의를 다시 봐야 한다는 진단.
     </p>
     <span class="badge badge-fail">recall ~6%</span>
-    <span class="badge badge-fail">top-3 ACTIVE 1/93일</span>
+    <span class="badge badge-fail">top-3 ACTIVE 1/93 슬롯</span>
     <span class="badge badge-pivot">시장엔 ≥15% 84건</span>
   </div>
 
@@ -632,7 +632,8 @@
   <div class="callout win">
     <p><strong>⑥ 하방 — 상승확률은 유지하고 리스크만 절반으로</strong></p>
     <p style="margin-top:0.6rem;">
-      upside-only 랭킹의 함정(상승확률만 보면 P(≤−5%) 44~67% 짜리 폭탄을 top 에 올림)을 risk-reward 랭킹으로 교정. P(≤−5%) <strong>0.53 → R1_ratio 0.33 → R2(λ=1) 0.16</strong> 으로 단계적 축소, deep-dump(≤−10%)는 <strong>0.15 → 0.02~0.07</strong>. 상승 확률은 유지하면서 하방만 깎는다. 위험 정책은 <strong>−3% 손절 + 5% 익절</strong>(하방 위험 최소화 우선).
+      upside-only 랭킹의 함정(상승확률만 보면 P(≤−5%) 44~67% 짜리 폭탄을 top 에 올림)을 risk-reward 랭킹으로 교정. P(≤−5%) <strong>0.53 → R1_ratio 0.33 → R2(λ=1) 0.16</strong> 으로 단계적 축소, deep-dump(≤−10%)는 <strong>0.15 → 0.02~0.07</strong>. 상승 확률은 유지하면서 하방만 깎는다(λ = 하방확률 페널티 강도). 위험 정책은 <strong>−3% 손절 + 5% 익절</strong>(하방 위험 최소화 우선).
+      <strong>이 risk-reward 랭킹이 곧 R1 — 지금 매일 아침 발송되는 바로 그 레이더다</strong>(입력 8피처 rank + 독립 상방/하방 head, 정렬 p_up10/p_dn5).
     </p>
     <span class="badge badge-blue">P(≤−5%) 0.53→0.16</span>
     <span class="badge badge-blue">deep-dump 0.15→0.02~0.07</span>
@@ -672,13 +673,14 @@
     <p><strong>정직한 결론</strong></p>
     <p style="margin-top:0.6rem;">
       • 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 기계적 청산 net 은 breakeven~음수. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 진짜지만, 수익은 사용자의 진입/청산 판단이 결정 → <strong>SHADOW 로 forward 표본 축적 중</strong>. leak 4/4 PASS.<br>
+      • 재정의 직후(06-01) <strong>12개 가설 exhaustive</strong> — 후처리 5축(랭킹·청산·필터·regime·멀티데이) + 새 신호 2 + R1 엔진 sweep — 를 전부 OOS·비용차감·bootstrap 으로 돌려 <strong>자동 net 흑자 0개</strong>를 확정했다 (상세 표는 <a href="#status" style="color:var(--amber);">§Status 연구 결론</a>).<br>
       • 당시(05-31) 정책: <strong>distribution = PROMOTE_PAPER</strong>, <strong>preopen = DEMOTED (observed −40.8%)</strong> — 현행(07-28)은 구 모델 전부 record-only, 발송은 R1 + 🎯 v2 조건부 (<a href="#integrity-turn" style="color:var(--amber);">§Integrity Turn</a>).<br>
       • 단일 ✓/✗ 대신 확률 분포로 표기하고, 위험 정책은 −3% 손절 + 5% 익절(하방 위험 최소화 우선).
     </p>
   </div>
 
   <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">
-    12실험이 남긴 것은 더 나은 모델이 아니라 <strong>천장</strong>이었다. 천장을 확인하자 질문이 바뀌었다 —
+    위의 12실험(<a href="#status" style="color:var(--amber);">§Status</a>)이 남긴 것은 더 나은 모델이 아니라 <strong>천장</strong>이었다. 천장을 확인하자 질문이 바뀌었다 —
     "더 좋은 모델은 어디 있나"가 아니라, <strong>"지금 보이는 숫자 중 무엇을 믿어도 되는가."</strong>
     다음 장은 그 질문을 기계로 만든 이야기다.
   </p>
@@ -770,7 +772,7 @@
       Binance D-1 봉은 00:00 UTC = KST 09:00 마감이라 09:10 발사 시점에 막 확정된 데이터를 쓴다 (leak 0).
       이것이 이 시스템의 운영 원칙이다: <strong>lift 는 알리고, net 은 약속하지 않는다.</strong>
     </p>
-    <span class="badge badge-ok">hit 8.1% — 기존 레이더의 ~2.5×</span>
+    <span class="badge badge-ok">hit 8.1% — baseline +2.5pp · base ~6×</span>
     <span class="badge badge-blue">무소음 정책 (후보 없으면 침묵)</span>
     <span class="badge badge-pivot">net 정직 고지 내장</span>
   </div>
@@ -806,8 +808,8 @@
       <strong>군중쏠림 강등</strong>(Newton 과확장)은 within-date permutation p=0.002 로 "진짜"였지만
       운영 bracket(−3%SL)이 그 효과를 이미 전부 흡수하고 있었다 — record-only 로만 생존.
       <strong>exit-timing autopsy</strong>는 결론을 뒤집을 수 없게 만들었다: 고점은 장 초반(t_max 중앙 0.06)에 찍히고,
-      EOD 까지 들고 있으면 −2.1% — 13개 청산 정책 토너먼트에서 <strong>현행 TP5/SL3 를 net↑·deep≤ 로 동시에 이기는 정책은 없다.
-      exit lever 는 소진됐다.</strong> 마지막 남은 축이던 <strong>진입 확인타이밍(PRPC)</strong>도 kill-test 에서
+      EOD 까지 들고 있으면 −2.1% — 13개 청산 정책 토너먼트에서 <strong>현행 TP5/SL3 를 net↑·deep≤ 로 동시에 이기는 정책은 없다</strong> —
+      검증 사슬 시절 라이브 소급에서 나온 tp5_sl2 후보(+0.35pp)도 이 동시 기준을 넘지 못했고, 판정은 forward 병렬 기록이 계속한다. <strong>exit lever 는 소진됐다.</strong> 마지막 남은 축이던 <strong>진입 확인타이밍(PRPC)</strong>도 kill-test 에서
       net +0.13%(CI 0 포함)로 DEAD — 펌프-후-되돌림은 타임프레임 불변이었다.
       같은 버스트의 <strong>self-impact decay</strong>는 표본 부족(INSUFFICIENT)으로 판정을 유보했지만
       중요한 시그니처를 남겼다: 발사된 후보의 장중 최고가 +9.9% vs EOD −5.9% — <em>레이더는 펌프를 잡는데
@@ -922,12 +924,12 @@
     <span class="badge badge-ok">판정 기준 동결 유지 — 조작 없음</span>
   </div>
 
-  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.85; max-width:760px;">
+  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">
     이 5주의 산출물은 모델이 아니다. <strong>신뢰의 인프라</strong>다 — 알림이 실제 도달한 시각 이후의 성과만 재고,
     산출물은 해시로 봉인되고, 실패는 시끄럽고, 판정은 사전등록 그대로 집행된다.
     누적 <strong>negative result 22건+</strong>이 전부 재현 가능한 형태로 박제되어 있다는 것 —
     그것이 이 프로젝트가 "좋아 보이는 백테스트"와 다른 점이다.
-    그 신뢰의 기계가 실제로 어떻게 생겼고 오늘 아침에도 어떻게 돌았는지 — 여기서부터 이야기는 현재형이 된다.
+    그 기계의 실물이 바로 다음 장이다.
   </p>
 </div></section>
 <hr class="divider">
@@ -943,7 +945,7 @@
 <section id="thesis"><div class="container fade-in">
   <div class="section-label">Thesis</div>
   <h2 class="section-title">왜 다시 만들었는가</h2>
-  <p class="section-desc">두 번의 task 재정의 + 한 번의 timer 분리 = 총 세 번의 큰 pivot. 각 단계가 어떤 운영 incident 또는 audit 결과로 강제됐는지 비교.</p>
+  <p class="section-desc"><strong>설계 계보</strong> — 지금 구조가 왜 이렇게 생겼는지, 일곱 단계 중 <strong>구조를 결정한 세 번의 pivot</strong>만 되짚는다(전체 여정은 §Journey). 각 pivot 이 어떤 운영 incident 또는 audit 결과로 강제됐는지 비교.</p>
 
   <div class="three-col" style="margin-bottom:2rem;">
     <div class="card" style="border-top: 3px solid var(--red);">
@@ -1027,7 +1029,7 @@
 
   <div class="cadence-wrap">
     <div class="cadence-title">하루 운영 타이밍 (KST)</div>
-    <div class="cadence-sub">systemd 7 timer. R1 레이더 텔레그램 2통 (08:50 예고 + 09:05 확정, champion만) + close-out 2 + publish/backup/heartbeat. 구 distribution/preopen 모델은 record-only(텔레그램 X). 장애 시 failure-alert 즉시 경보(07-28 가동).</div>
+    <div class="cadence-sub">systemd 7 timer. R1 레이더 텔레그램 2통 (08:50 예고 + 09:05 확정, champion만) + close-out 2 + publish/backup/heartbeat. + 🎯 v2 09:05~ (후보 있는 날만). 구 distribution/preopen 모델은 record-only(텔레그램 X). 장애 시 failure-alert 즉시 경보(07-28 가동).</div>
     <div class="cadence-row">
       <div class="cadence-label a">08:50</div>
       <div class="cadence-bar">
@@ -1052,7 +1054,7 @@
       <div class="cadence-label g">close</div>
       <div class="cadence-bar">
         <div class="cadence-slot inactive">~08:30</div>
-        <div class="cadence-slot inactive">08:55</div>
+        <div class="cadence-slot inactive">09:30</div>
         <div class="cadence-slot inactive">09:05</div>
         <div class="cadence-slot fire-g">09:30 dist</div>
         <div class="cadence-slot fire-g">10:05 pre</div>
@@ -1070,7 +1072,7 @@
 <!-- Operational Reality -->
 <section id="ops"><div class="container fade-in">
   <div class="section-label">Operational Reality</div>
-  <h2 class="section-title">실제로 매일 받는 메시지</h2>
+  <h2 class="section-title">메시지의 진화 — 현재 구성과 초기 형식(보존)</h2>
   <p class="section-desc">진입가는 paper ledger entry_price 와 매칭되어 close-out 시 실제 15m 경로와 비교 — slippage / signal-quality 자동 추적 인프라.</p>
 
   <!-- 현재 구성 (2026-06-11) -->
@@ -1333,6 +1335,10 @@
 
 <!-- Experiments -->
 <section id="experiments"><div class="container fade-in">
+  <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:2rem; border-left:2px solid var(--border-light); padding-left:1rem;">
+    아래 실험 6종은 <strong>2026-05-31 시점의 audit 기록</strong>이다 — 당시 "운영해도 되는가"를 심사한 관문.
+    이 결과들에 대한 <strong>최종 판정은 §Integrity Turn</strong>(radar-not-strategy)이며, † 지표는 낙관 상한이다.
+  </p>
 
   <!-- Experiment 1: Bootstrap CI -->
   <div class="section-label" style="margin-bottom:0.5rem;">Experiment 01 · Bootstrap CI</div>
@@ -1365,19 +1371,19 @@
       <rect x="700" y="203.4" width="80" height="16.6" fill="rgba(22,163,74,0.45)"/>
       <rect x="780" y="217.7" width="80" height="2.3" fill="rgba(22,163,74,0.45)"/>
       <!-- zero line -->
-      <line x1="460" y1="50" x2="460" y2="225" stroke="#dc2626" stroke-width="2" stroke-dasharray="4 3"/>
-      <rect x="464" y="25" width="92" height="18" rx="3" fill="#ffffff" opacity="0.94"/>
-      <text x="469" y="38" fill="#dc2626" font-size="11" font-family="JetBrains Mono">H₀: diff=0</text>
+      <line x1="380" y1="50" x2="380" y2="225" stroke="#dc2626" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="384" y="25" width="92" height="18" rx="3" fill="#ffffff" opacity="0.94"/>
+      <text x="389" y="38" fill="#dc2626" font-size="11" font-family="JetBrains Mono">H₀: diff=0</text>
       <!-- mean line -->
-      <line x1="606" y1="50" x2="606" y2="225" stroke="#16a34a" stroke-width="2"/>
-      <rect x="610" y="25" width="122" height="18" rx="3" fill="#ffffff" opacity="0.94"/>
-      <text x="615" y="38" fill="#16a34a" font-size="11" font-family="JetBrains Mono" font-weight="700">mean +0.181</text>
+      <line x1="525" y1="50" x2="525" y2="225" stroke="#16a34a" stroke-width="2"/>
+      <rect x="529" y="25" width="122" height="18" rx="3" fill="#ffffff" opacity="0.94"/>
+      <text x="534" y="38" fill="#16a34a" font-size="11" font-family="JetBrains Mono" font-weight="700">mean +0.181</text>
       <!-- 95% CI band -->
-      <line x1="421" y1="252" x2="793" y2="252" stroke="#7e3af2" stroke-width="3"/>
-      <circle cx="421" cy="252" r="3.5" fill="#7e3af2"/>
-      <circle cx="793" cy="252" r="3.5" fill="#7e3af2"/>
-      <text x="421" y="274" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="start">−0.05 (p2.5)</text>
-      <text x="793" y="274" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="end">+0.42 (p97.5)</text>
+      <line x1="340" y1="252" x2="716" y2="252" stroke="#7e3af2" stroke-width="3"/>
+      <circle cx="340" cy="252" r="3.5" fill="#7e3af2"/>
+      <circle cx="716" cy="252" r="3.5" fill="#7e3af2"/>
+      <text x="340" y="274" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="start">−0.05 (p2.5)</text>
+      <text x="716" y="274" fill="#7e3af2" font-size="10" font-family="JetBrains Mono" text-anchor="end">+0.42 (p97.5)</text>
       <!-- x-axis labels -->
       <text x="60" y="238" class="svg-text" text-anchor="middle">−0.30</text>
       <text x="220" y="238" class="svg-text" text-anchor="middle">−0.10</text>
@@ -1425,7 +1431,7 @@
 
   <div class="chart-wrap">
     <div class="chart-title">Hit rate (% of trades net positive after cost)</div>
-    <div class="chart-subtitle">distribution_beta 67.5% — momentum_1d 와 setup_only 보다 2.5pp 높음. random 54% (약간 양수 = TP-tiered 의 자연스러운 우상향 bias).</div>
+    <div class="chart-subtitle">distribution_beta 67.5% — setup_only(65.0%) 대비 +2.5pp, momentum_1d(64.6%) 대비 +2.9pp. random 54% (약간 양수 = TP-tiered 의 자연스러운 우상향 bias).</div>
     <div class="bar-chart">
       <div class="bar-row"><div class="bar-label">distribution_beta</div><div class="bar-track"><div class="bar-fill tier-b" style="width:67.5%"></div></div><div class="bar-val">67.5%</div></div>
       <div class="bar-row"><div class="bar-label">setup_only</div><div class="bar-track"><div class="bar-fill tier-g" style="width:65%"></div></div><div class="bar-val">65.0%</div></div>
@@ -1697,7 +1703,7 @@
     <div class="fail-card">
       <div class="f-tag">2026-07-28</div>
       <div class="f-title">테스트가 진짜 봇으로 소리쳤다 — 하루 수십 통의 가짜 경보</div>
-      <div class="f-desc">pytest 픽스처가 백업 실패 시나리오를 유도할 때마다, venv 의 전역 import + 실제 .env 토큰 경유로 <em>진짜 텔레그램</em>에 경보가 나갔다. 전체 스위트 1회당 4통 — 하루 수십 통. 발신자 추적 끝에 스크린샷 시각과 스위트 실행 시각이 정확히 일치했다. kill-switch(테스트 프로세스 전역, 자식 프로세스 상속)로 구조 봉쇄.</div>
+      <div class="f-desc">pytest 픽스처가 백업 실패 시나리오를 유도할 때마다, venv 의 전역 import + 실제 .env 토큰 경유로 <em>진짜 텔레그램</em>에 경보가 나갔다. 전체 스위트 1회당 4통 — 누적 수십 통(스크린샷으로 확정). 발신자 추적 끝에 스크린샷 시각과 스위트 실행 시각이 정확히 일치했다. kill-switch(테스트 프로세스 전역, 자식 프로세스 상속)로 구조 봉쇄 — 이 봉쇄의 회귀 테스트가 스위트를 1,273 → <strong>1,276</strong>으로 올렸다(hero 의 현재 값).</div>
       <div class="f-takeaway">테스트 환경은 실발송이 "금지"가 아니라 "불가능"해야 한다 — fail-loud 시스템일수록 더</div>
     </div>
   </div>
@@ -1722,7 +1728,7 @@
       <div class="lesson-num">01</div>
       <div class="lesson-body">
         <div class="lesson-title">Label 정의는 학습 metric 이 아니라 <em>사용자 행동 가능성</em> 기준</div>
-        <div class="lesson-desc">6-class softprob 은 cross-entropy 잘 떨어졌지만 "5-10% class 60%" 가 매매 결정으로 안 이어짐. h2/h5/h6 처럼 "4h 안 +3% 이상" 같은 actionable label 로 재정의 후 ledger 가 양수로.</div>
+        <div class="lesson-desc">6-class softprob 은 cross-entropy 잘 떨어졌지만 "5-10% class 60%" 가 매매 결정으로 안 이어짐. h2/h5/h6 처럼 "4h 안 +3% 이상" 같은 actionable label 로 재정의하자 알림이 비로소 행동 가능해졌고 hit·농축 엣지가 살아났다 — 단 자동 net 흑자는 끝내 아니었다(§Status).</div>
       </div>
     </div>
     <div class="lesson-item">
@@ -1821,7 +1827,7 @@
     아래 박스들은 06-11 시점 기록으로 보존한다.</p>
   </div>
   <p class="section-desc"><strong>발송 = R1 레이더 (08:50 예고 / 09:05 확정) + 🎯 PUMP v2 (09:05~, 후보 있는 날만)</strong>.
-  구 distribution · pre-open 은 record-only. 챔피언은 forward 성과로 자동 선정(하방 우선) — 현재까지 게이트 미통과(R1 fallback 지속 — 절대 게이트에 비용차감 forward net&gt;0 포함).
+  구 distribution · pre-open 은 record-only. 챔피언은 forward 성과로 자동 선정(하방 우선) — selector 가 아직 아무 모델도 승격시키지 못해 <strong>R1 이 기본(default) 챔피언</strong>으로 발송 중이다(절대 게이트: 비용차감 forward net&gt;0 + 완결 하방 표본 n≥30).
   <strong>12실험 exhaustive + 챌린저 7후보</strong>까지 자동 net 흑자는 전무 — 시스템 정체성은
   <strong>하방-규율 추천 레이더</strong>로 확정. 새로 추가된 두 축: <strong>exit lab</strong> (청산 잣대 7개 매일 병렬 기록 —
   채택은 데이터가 결정) + <strong>검증 사슬</strong> (researcher → evaluator → 15m 재계산 — 가짜 양수 1건 실제 적발).
@@ -1896,13 +1902,19 @@
   <div class="callout">
     <p>
       <strong>R1 레이더 채널 (06-11 기록 → 07-28 판정 확정):</strong>
-      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 발사한다. <strong>R1 레이더로 08:50/09:05 텔레그램에 연결되어 있다.</strong> 당시엔 SHADOW 검증 중이었고 — 판정은 07-28에 끝났다: <strong>radar-not-strategy 확정</strong>(상방 head 주장 철회). 이후 판단은 forward 증거사슬과 09-01 v2 동결 판정만 한다.
+      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 발사한다. <strong>R1 레이더로 08:50/09:05 텔레그램에 연결되어 있다.</strong> 당시엔 SHADOW 검증 중이었고, 최종 판정은 상단 상태 갱신과 같다. 이후 판단은 forward 증거사슬과 09-01 v2 동결 판정만 한다.
     </p>
     <p style="margin-top:0.7rem;">
       <strong>운영 원칙 유지:</strong>
       매수 추천 X · 자동매매 X · 텔레그램 알림 + paper/shadow ledger 만 · BTC regime 표시 · raw probability 표기 금지 · threshold 고정값 사용(라이브 재계산 X) · 거래비용 0.15% 왕복 차감 · 모든 코드 self-contained (gan_t / xsec_alpha import X).
     </p>
   </div>
+
+  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">
+    이 이야기의 다음 문장은 사람이 아니라 달력이 쓴다 — <strong>2026-09-01, v2 동결 판정.</strong>
+    산술은 이미 KILL 을 가리키고 있지만(상한 175 &lt; 필요 200) 기준은 뒤집지 않는다.
+    그날 무슨 일이 있었는지는, 그날 이후의 이 페이지가 말해줄 것이다.
+  </p>
 </div></section>
 
 <footer>
