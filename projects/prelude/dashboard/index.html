@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>prelude live dashboard — 누적 회고</title>
-  <meta name="description" content="prelude detector / distribution / preopen 의 실제 알림 + 가격 결과 누적. 가상 누적 PnL · rolling hit rate · 알림 히스토리. 매일 cron 자동 갱신.">
+  <meta name="description" content="prelude R1 코인 레이더의 실제 알림 회고 (radar-not-strategy) + 가격 결과 누적. 가상 누적 PnL · rolling hit rate · 알림 히스토리. 매일 cron 자동 갱신.">
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/dashboard/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -574,25 +574,25 @@
     <span class="hero-label">PRELUDE LIVE DASHBOARD · 회고 · 누적</span>
     <h1>어제 샀으면 어땠나.</h1>
     <p class="hero-sub">
-      08:50 pre-open + 09:05 distribution + 2026-06-04 신규 PUMP hunter SHADOW.<br>
-      매일 가격 결과 누적 — 가상 진입 룰 (5% TP / EOD close, 0.15% 비용 차감) 기준 사후 PnL · rolling hit rate · 알림 히스토리. <em>자동 매매 없음 — 사용자 직접 판단.</em>
+      라이브 발송은 <strong>R1 레이더 (08:50 예고 / 09:05 확정) + 🎯 PUMP v2 조건부 radar</strong> 뿐.<br>
+      구 distribution·pre-open 은 record-only 회고로 보존. R1 룰 −3%SL / +5%TP / EOD · 왕복 0.15% 차감 net 누적. <em>자동 매매 없음 — 사용자 직접 판단.</em>
     </p>
     <div class="idea-expansion-banner" role="note" aria-label="아이디어 확장 안내">
-      <span class="banner-tag">아이디어 확장 · 2026-06-04</span>
+      <span class="banner-tag">판정 · 2026-07-28</span>
       <span class="banner-text">
-        기존 R1/R2/A1 의 +20% capture 0% 천장 진단 → 별도 <strong>PUMP detector</strong>
-        (shadow only · 매일 15 watchlist · ACTIVE 승격 코드 차단) + model × send-policy
-        25 조합 record-only 감사 추가. 아래 <a href="#policyCompetition">⑧ competition</a> /
-        <a href="#pumpHunterSection">⑨ PUMP hunter</a> 참고.
+        <strong>radar-not-strategy 확정</strong> — 상방 head 주장 철회(AUC 0.477), 살아있는 것은
+        진입 농축(base 대비 ~6배)과 하방 head(AUC 0.721). 🎯 v2 는 <strong>2026-09-01 동결
+        GO/KILL 판정</strong>(사전등록 · 코드로도 불변) 진행 중. 실패까지의 전체 기록은
+        <a href="../#integrity-turn">보고서 §Integrity Turn</a>.
       </span>
     </div>
     <div class="hero-stats" id="heroStats">
       <div class="hero-stat"><span class="hero-stat-num" id="statTotal">—</span><span class="hero-stat-label">총 알림</span></div>
       <div class="hero-stat"><span class="hero-stat-num" id="statClosed">—</span><span class="hero-stat-label">closed</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statDistPnl">—</span><span class="hero-stat-label">dist 누적 (paper)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statPrePnl">—</span><span class="hero-stat-label">pre 누적 (paper)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statDistSharpe">—</span><span class="hero-stat-label">dist Sharpe (live ann)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statPreSharpe">—</span><span class="hero-stat-label">pre Sharpe (live ann)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statR1Pnl">—</span><span class="hero-stat-label">R1 누적 net (live)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statR1Sharpe">—</span><span class="hero-stat-label">R1 Sharpe (ann)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statDistPnl">—</span><span class="hero-stat-label">dist 누적 (record-only)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statPrePnl">—</span><span class="hero-stat-label">pre 누적 (record-only)</span></div>
     </div>
     <div class="hero-meta" id="heroMeta">데이터 잠금 — PIN 입력 후 표시</div>
     <div class="hero-links">
@@ -607,10 +607,33 @@
 
 <hr class="divider">
 
-<!-- 이번 세션 새 발견 (2026-05-31) — 레이더 정직성 차트 (수익기 아님) -->
+<!-- R1 레이더 — 유일한 라이브 채널 (2026-07-28 추가) -->
+<section id="recSection">
+  <div class="container">
+    <div class="section-label">R1 RADAR · LIVE</div>
+    <h2 class="section-title">R1 레이더 — 오늘의 Top3 와 라이브 성적</h2>
+    <p class="section-desc">
+      매일 08:50 예고 · 09:05 확정으로 실제 발사되는 유일한 채널. 아래 성적은
+      <b>발송 영수증 이후 실측</b>의 비용 차감 net — 좋게 포장하지 않는다
+      (radar-not-strategy: 수익은 사용자의 진입·청산 판단이 결정).
+    </p>
+    <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 추천</h3>
+    <div class="table-wrap">
+      <table class="tbl" id="recRadarTable" style="min-width:640px;">
+        <thead><tr><th>#</th><th>코인</th><th class="num">score</th><th class="num">pump prob</th><th>하방⚠️</th><th class="num">진입가</th><th>regime</th></tr></thead>
+        <tbody><tr><td colspan="7"><div class="loading-state">loading…</div></td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- 이번 세션 새 발견 — 레이더 정직성 차트 (수익기 아님) -->
 <section>
   <div class="container">
-    <div class="section-label">SESSION FINDINGS · 2026-05-31</div>
+    <div class="section-label" id="findingsLabel">SESSION FINDINGS</div>
     <h2 class="section-title">새 발견 — 분포·하방·정직성 레이더</h2>
     <p class="section-desc" id="findingsCaption">
       레이더 정직성 차트. 큰 펌프 <b>포착</b> 능력 + 하방 관리 + 정직한 확률을 보인다.
@@ -719,6 +742,7 @@
       <div id="pumpV2Watchlist" style="overflow-x:auto">
         <div class="loading-state">loading…</div>
       </div>
+      <p id="pumpV2Note" style="font-size:0.78rem;color:var(--text-muted);margin-top:0.5rem"></p>
 
       <h4 class="pump-h">exit lab — 같은 경로, 청산 잣대 4 개 병렬 가상 평가</h4>
       <div class="chart-subtitle">
@@ -1261,12 +1285,13 @@
     <p class="section-desc">
       텔레그램으로 외친 모든 알림 + 알림 시점 진입가 + 다음 일봉의 실제 max / min / close.
       가상 PnL 은 위 룰 적용 결과. 컬럼 클릭으로 정렬, 채널·날짜·코인 필터.<br>
-      <em>※ 진입가 — distribution 은 다음 일봉 09:00 시초가 (시뮬 진입), preopen 은 알림 시점 close.</em>
+      <em>※ 진입가 — R1 recommend 는 09:00 시초가(라이브 원장), distribution 은 다음 일봉 09:00 시초가 (시뮬), preopen 은 알림 시점 close. R1 행의 setup 칸은 exit 사유(TP/SL/EOD).</em>
     </p>
     <div class="controls">
       <label>채널
         <select id="filterChannel">
           <option value="all">전체</option>
+          <option value="recommend">R1 recommend (live)</option>
           <option value="distribution">distribution</option>
           <option value="preopen">preopen</option>
         </select>
@@ -1559,15 +1584,51 @@ function showPinModal() {
 }
 
 /* ───────── Render: hero / channel / charts / history ───────── */
+function renderRecommend(summary) {
+  const rec = summary.channels?.recommend;
+  const kpiRoot = document.getElementById('recKpi');
+  const tbl = document.getElementById('recRadarTable');
+  if (!rec || !kpiRoot || !tbl) return;
+  const stat = (label, val, cls) =>
+    `<div class="hero-stat"><span class="hero-stat-num${cls ? ' ' + cls : ''}">${val}</span><span class="hero-stat-label">${label}</span></div>`;
+  const sgn = v => v == null ? '' : (v >= 0 ? 'pos' : 'neg');
+  const ci = rec.date_cluster_ci?.mean_return_ci95_pct;
+  kpiRoot.innerHTML = [
+    stat('알림', rec.n_alerts_total ?? '—'),
+    stat('closed', rec.n_closed ?? '—'),
+    stat('누적 net (복리)', fmtPct(rec.cum_net_pnl_pct, 1), sgn(rec.cum_net_pnl_pct)),
+    stat('평균/픽', fmtPct(rec.avg_net_realized_pct, 2), sgn(rec.avg_net_realized_pct)),
+    stat('win rate', fmtPct(rec.win_rate_pct, 0)),
+    stat('MDD', fmtPct(rec.max_drawdown_pct, 1), 'neg'),
+    stat('Sharpe (ann)', fmt(rec.sharpe_ann, 2), sgn(rec.sharpe_ann)),
+    stat('평균 CI95', Array.isArray(ci) ? `${fmt(ci[0],2)}~${fmt(ci[1],2)}%` : '—'),
+  ].join('');
+  const title = document.getElementById('recRadarTitle');
+  if (title && rec.latest_radar_date) title.textContent = `최신 추천 · ${rec.latest_radar_date}`;
+  const rows = rec.latest_radar || [];
+  const body = tbl.querySelector('tbody');
+  if (!rows.length) { body.innerHTML = '<tr><td colspan="7">—</td></tr>'; return; }
+  body.innerHTML = rows.map(r => `<tr>
+    <td>${r.rank ?? '—'}</td>
+    <td><strong>${escapeHtml(r.coin || '')}</strong></td>
+    <td class="num">${fmt(r.score, 3)}</td>
+    <td class="num">${r.pump_prob_pct != null ? fmt(r.pump_prob_pct * 100, 1) + '%' : '—'}</td>
+    <td>${r.dump_risk_flag ? '⚠️' : ''}</td>
+    <td class="num">${r.entry_open != null ? Number(r.entry_open).toLocaleString('en-US') : '—'}</td>
+    <td>${escapeHtml(r.btc_regime || '')}</td>
+  </tr>`).join('');
+}
+
 function renderHero(summary) {
   const dist = summary.channels.distribution || {};
   const pre = summary.channels.preopen || {};
-  const total = (dist.n_alerts_total || 0) + (pre.n_alerts_total || 0);
-  const closed = (dist.n_closed || 0) + (pre.n_closed || 0);
+  const rec = summary.channels.recommend || {};
+  const total = (dist.n_alerts_total || 0) + (pre.n_alerts_total || 0) + (rec.n_alerts_total || 0);
+  const closed = (dist.n_closed || 0) + (pre.n_closed || 0) + (rec.n_closed || 0);
   const dPnl = dist.virtual?.cum_pnl_pct;
   const pPnl = pre.virtual?.cum_pnl_pct;
-  const dSharpe = dist.quant?.sharpe_ann;
-  const pSharpe = pre.quant?.sharpe_ann;
+  const rPnl = rec.cum_net_pnl_pct;
+  const rSharpe = rec.sharpe_ann;
 
   const set = (id, val, cls) => {
     const el = document.getElementById(id);
@@ -1578,16 +1639,16 @@ function renderHero(summary) {
   const sgn = v => v == null ? '' : (v >= 0 ? 'pos' : 'neg');
   set('statTotal', total);
   set('statClosed', closed);
+  set('statR1Pnl', fmtPct(rPnl, 1), sgn(rPnl));
+  set('statR1Sharpe', fmt(rSharpe, 2), sgn(rSharpe));
   set('statDistPnl', fmtPct(dPnl, 1), sgn(dPnl));
   set('statPrePnl', fmtPct(pPnl, 1), sgn(pPnl));
-  set('statDistSharpe', fmt(dSharpe, 2), sgn(dSharpe));
-  set('statPreSharpe', fmt(pSharpe, 2), sgn(pSharpe));
 
   const asof = new Date(summary.asof);
   const asofKst = asof.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'medium', timeStyle: 'short' });
-  const liveStart = dist.first_alert_date || pre.first_alert_date || '—';
+  const liveStart = rec.first_alert_date || dist.first_alert_date || pre.first_alert_date || '—';
   document.getElementById('heroMeta').textContent =
-    `데이터 기준 ${asofKst} (KST) · 라이브 시작 ${liveStart} · 가상 진입 룰 5% TP / horizon close, 비용 0.15% 차감`;
+    `데이터 기준 ${asofKst} (KST) · R1 라이브 시작 ${liveStart} · R1 룰 −3%SL/+5%TP/EOD · 비용 0.15% 차감`;
 
   // footer build 시각
   const footerEl = document.getElementById('footerBuildAt');
@@ -1606,7 +1667,7 @@ function channelKpiHtml(s, kind) {
   const v = s.virtual || {};
   const pnl = v.cum_pnl_pct;
   const cls = pnl == null ? '' : (pnl >= 0 ? 'pos' : 'neg');
-  const title = kind === 'distribution' ? 'distribution (09:05)' : 'pre-open trigger (08:55)';
+  const title = kind === 'distribution' ? 'distribution (record-only)' : 'pre-open trigger (record-only)';
   const subtitle = kind === 'distribution' ? '4h / 24h horizon' : '15m / 1h horizon';
   const hitRows = kind === 'distribution'
     ? [
@@ -2652,6 +2713,15 @@ function renderPolicyEvolution(summary) {
 function renderMetaModel(summary) {
   const m = summary.meta_model || {};
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  if (m.artifact_status && !m.model_id) {
+    // 새 ordered-증거 계약 이후 표본 0 → REJECTED 진단 아티팩트 (2026-07-28).
+    set('metaModelId', `상태: ${m.artifact_status}`);
+    set('metaDeployReason', m.reason || '—');
+    set('metaDeployable', 'NO (진단 아티팩트만)');
+    const root = document.getElementById('metaMetrics');
+    if (root) root.innerHTML = '<div class="loading-state">ordered first-passage 증거 컬럼이 원장에 누적되기 전까지 학습 표본 0 — DECISIONS #13 (존치/은퇴) 대기</div>';
+    return;
+  }
   set('metaModelId', m.model_id || '—');
   set('metaModelVersion', m.model_version || '—');
   set('metaDeployable', m.deployable === true ? 'YES' : 'NO (shadow only)');
@@ -2932,6 +3002,8 @@ const MONO = "'JetBrains Mono', monospace";
 
 function renderFindings(findings) {
   if (!findings) return;
+  const label = document.getElementById('findingsLabel');
+  if (label && findings.asof) label.textContent = `SESSION FINDINGS · asof ${findings.asof}`;
   if (findings.honest_caption) {
     const cap = document.getElementById('findingsCaption');
     if (cap) cap.textContent = findings.honest_caption;
@@ -3125,6 +3197,8 @@ function renderPumpHunter(ph) {
 /* ───────── PUMP hunter v2 — Binance volsurge radar (2026-06-11) ───────── */
 function renderPumpHunterV2(ph) {
   const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  const noteEl = document.getElementById('pumpV2Note');
+  if (noteEl && ph && ph.note) noteEl.textContent = ph.note;
   const wlEl = document.getElementById('pumpV2Watchlist');
   if (!ph || ph.status === 'pending_first_cron' || ph.status === 'empty') {
     setText('pumpV2LatestDate', '—');
@@ -3614,6 +3688,7 @@ window.addEventListener('scroll', () => {
 
     HISTORY_ROWS = history.rows || [];
     renderHero(summary);
+    renderRecommend(summary);
     renderFindings(findings);  // 이번 세션 새 발견 차트 (2026-05-31)
     renderAlphaCard(summary, accuracy);
     renderBenchmark(summary);

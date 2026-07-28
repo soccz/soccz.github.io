@@ -291,7 +291,7 @@
     .tag-card .tag-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.7; }
 
     /* Phase chip flow */
-    .phase-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin: 2rem 0 1.5rem; }
+    .phase-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem; margin: 2rem 0 1.5rem; }
     .phase-chip { padding: 1rem 0.7rem; border-radius: 8px; text-align: center; position: relative; }
     .phase-chip .pc-num { font-family: 'Noto Serif KR', serif; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem; }
     .phase-chip .pc-name { font-weight: 700; font-size: 0.82rem; margin-bottom: 0.3rem; }
@@ -316,11 +316,6 @@
     .footer-text { font-size: 0.78rem; color: var(--text-muted); }
     .footer-text a { color: var(--text-muted); text-decoration: none; border-bottom: 1px solid var(--border); }
 
-    .part-divider { text-align: center; padding: 5rem 2rem 2rem; }
-    .part-divider .part-label { display: inline-block; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.8rem; }
-    .part-divider h2 { font-family: 'Noto Serif KR', serif; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .part-divider p { font-size: 0.92rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.85; }
-    .part-divider .part-ornament { width: 40px; height: 1px; background: var(--border-light); margin: 1.5rem auto; }
 
     @media (max-width: 980px) { .heatmap.h-3 { grid-template-columns: 80px repeat(6, 1fr); font-size: 0.65rem; min-width: 640px; } .phase-flow { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } .auto-timer { grid-template-columns: 1fr; gap: 0.4rem; } .auto-when { text-align: left; } }
@@ -633,7 +628,7 @@
     </p>
     <span class="badge badge-blue">P(≤−5%) 0.53→0.16</span>
     <span class="badge badge-blue">deep-dump 0.15→0.02~0.07</span>
-    <span class="badge badge-amber" style="background:var(--amber-dim); color:var(--amber); border:1px solid rgba(180,83,9,0.2);">−3% SL / +5% TP</span>
+    <span class="badge badge-pivot">−3% SL / +5% TP</span>
   </div>
 
   <div class="four-col" style="margin:2rem 0;">
@@ -723,8 +718,8 @@
   </div>
 
   <!-- 3 연구 판정 표 -->
-  <div class="table-wrap" style="margin:1.6rem 0;">
-    <table>
+  <div class="chart-wrap" style="margin:1.6rem 0;">
+    <table class="tbl">
       <thead><tr><th>가설 (1주 · 3 연구)</th><th>방법</th><th>결과</th><th>판정</th></tr></thead>
       <tbody>
         <tr>
@@ -872,8 +867,8 @@
   </div>
 
   <!-- 기간 판정 요약 표 -->
-  <div class="table-wrap" style="margin:1.6rem 0;">
-    <table>
+  <div class="chart-wrap" style="margin:1.6rem 0;">
+    <table class="tbl">
       <thead><tr><th>트랙 (06-25 → 07-28)</th><th>핵심 숫자</th><th>판정</th></tr></thead>
       <tbody>
         <tr><td><strong>델타-사다리 청산</strong> (Thorp 합성)</td><td>deep-loss 0.491→0.303 (−38%) · net 동등</td><td><span class="badge badge-pivot">SHADOW</span></td></tr>
@@ -1036,7 +1031,7 @@
       </div>
     </div>
     <div class="cadence-legend">
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(168,162,158,0.35)"></div>R1 레이더 08:50 예고 (텔레그램 · champion)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.35)"></div>R1 레이더 08:50 예고 (텔레그램 · champion)</div>
       <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>R1 레이더 09:05 확정 (텔레그램 · champion)</div>
       <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(22,163,74,0.3)"></div>Paper ledger close-out (자동)</div>
     </div>
@@ -1307,14 +1302,6 @@
   </div>
 </div></section>
 <hr class="divider">
-
-<!-- Part divider -->
-<div class="part-divider">
-  <span class="part-label">Part II</span>
-  <h2>Experiments &amp; Audit Wall</h2>
-  <div class="part-ornament"></div>
-  <p>backtest 가 좋다는 이유로 운영하지 않았다. 6 종류 실험으로 edge 가 통계적으로 살아있는지, sizing 은 어디서 깨지는지, 어디서 calibration 이 무너지는지 — 모두 빨간불 하나라도 있으면 운영 폭을 좁혔다.</p>
-</div>
 
 <!-- Experiments -->
 <section id="experiments"><div class="container fade-in">
@@ -1911,7 +1898,7 @@ if (nav) {
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
+  }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 } else {
   document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
@@ -1928,25 +1915,33 @@ function animateCountup(el) {
     const progress = Math.min((now - start) / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
     const current = target * eased;
-    el.textContent = prefix + current.toFixed(decimals) + suffix;
+    const shown = decimals === 0
+      ? Math.round(current).toLocaleString('en-US')
+      : current.toFixed(decimals);
+    el.textContent = prefix + shown + suffix;
     if (progress < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
 }
 
-const heroObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting && !e.target.dataset.animated) {
-      e.target.dataset.animated = '1';
-      animateCountup(e.target);
-    }
-  });
-}, { threshold: 0.5 });
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+const heroObserver = ('IntersectionObserver' in window)
+  ? new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.dataset.animated) {
+          e.target.dataset.animated = '1';
+          animateCountup(e.target);
+        }
+      });
+    }, { threshold: 0.5 })
+  : null;
+if (!heroObserver || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   document.querySelectorAll('.countup').forEach(el => {
     const target = parseFloat(el.dataset.target);
     const decimals = parseInt(el.dataset.decimals || '0');
-    el.textContent = (el.dataset.prefix || '') + target.toFixed(decimals) + (el.dataset.suffix || '');
+    const shown = decimals === 0
+      ? Math.round(target).toLocaleString('en-US')
+      : target.toFixed(decimals);
+    el.textContent = (el.dataset.prefix || '') + shown + (el.dataset.suffix || '');
   });
 } else {
   document.querySelectorAll('.countup').forEach(el => heroObserver.observe(el));
