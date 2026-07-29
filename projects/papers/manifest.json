@@ -1,7 +1,49 @@
 {
-  "generated_at": "2026-07-24T00:42:56",
-  "count": 47,
+  "generated_at": "2026-07-29T00:24:41",
+  "count": 48,
   "papers": [
+    {
+      "slug": "2026-07-29_tsfm-representations-interventions",
+      "date": "2026-07-29",
+      "weekday": "수",
+      "bucket": "인접",
+      "title": "",
+      "title_ko": "시계열 파운데이션 모델의 내부 표현과 개입(steering) 탐구",
+      "authors": "Michał Wiliński, Mononito Goswami, Willa Potosnak, Nina Żukowska, Artur Dubrawski",
+      "venue": "ICML 2025 (Poster), PMLR 267 · Vancouver",
+      "identifier": "arXiv:2409.12915",
+      "code": "",
+      "data": "",
+      "tags": [
+        "tsfm-interp",
+        "mech-interp-circuits",
+        "causal-intervention",
+        "ts-transformer-baseline"
+      ],
+      "verdict": "LLM 해석론의 3대 도구(CKA 층 유사도 · 선형 프로빙 · steering 벡터)를 시계열 파운데이션 모델에 처음으로 이식해 \"층 중복 → 가지치기\"는 정량적으로, \"개념 국소화·조종\"은 정성적으로 보여준 브릿지 논문 — 내 APF의 causal-intervention 단계에 그대로 쓸 수 있는 방법 템플릿이자, \"steering이 합성 데이터에서만 검증됐다\"는 빈틈이 곧 내 실험 기회다.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "Exploring Representations and Interventions in Time Series Foundation Models"
+        },
+        {
+          "file": "01_meta.md",
+          "num": "01",
+          "suffix": null,
+          "title": "0. 메타 & 선정 이유"
+        },
+        {
+          "file": "02_tldr.md",
+          "num": "02",
+          "suffix": null,
+          "title": "1. 3층 TL;DR"
+        }
+      ],
+      "data_path": "data/2026/2026-07-29_tsfm-representations-interventions"
+    },
     {
       "slug": "2026-07-24_sparse-autoencoders-interpretable-features",
       "date": "2026-07-24",
