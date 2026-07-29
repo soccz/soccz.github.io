@@ -22,6 +22,10 @@
 - 핵심 주장: zero-shot에서 all-blocks 가지치기는 열화(0.132→0.185)했고, "유지"는 대개 재학습 후다. 그렇다면 fine-tuning이 **잃은 용량을 다시 채운** 것이지, 그 층들이 원래 **불필요**했다는 증거로는 약하다.
 - 검증 실험: fine-tuning 없이 **다양한 다운스트림 태스크**(예측·분류·이상탐지)에서 가지친 모델의 zero-shot 성능을 광범위 측정. 특정 태스크에서만 무너지면 "그 중간 층은 그 태스크 전용" → 단순 중복이 아님을 시사.
 
+**반박 3 — "세 모델로 '일반성'을 주장하기엔 표본이 작다."**
+- 핵심 주장: MOMENT·Chronos·Moirai는 모두 **Transformer 계열**이고, 그 중 MOMENT는 저자 자작이다. 세 개의 상관된 표본으로 "TSFM 일반의 성질"을 말하는 건 성급할 수 있다. block-redundancy가 Transformer의 residual+skip 구조에서 오는 **아키텍처 인공물**일 가능성(개념 이해와 무관)을 배제 못 한다.
+- 검증 실험: §5가 지목한 대로 **SSM(Mamba류)·MLP-Mixer류**에 같은 CKA·프로빙·steering을 적용. 만약 skip-connection이 약하거나 없는 구조에서 block 중복이 사라지면, "중복은 개념 위계가 아니라 잔차 구조의 부산물"이라는 대안 설명이 강해진다. 반대로 비-Transformer에서도 나타나면 일반성 주장이 훨씬 튼튼해진다.
+
 ## 재현성 평가
 
 - **공개**: ✅ 코드(github moment-timeseries-foundation-model/representations-in-tsfms), ✅ 분석 대상 모델 가중치(MOMENT·Chronos·Moirai 공개), ✅ 합성 데이터 생성기.
