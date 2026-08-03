@@ -1,49 +1,93 @@
 {
-  "asof": "2026-08-03T05:09:11+00:00",
+  "asof": "2026-08-03T07:50:06+00:00",
   "ic": {
     "short_6h": {
-      "live_30d_mean": 0.191496,
+      "live_30d_mean": 0.191228,
       "holdout": 0.1731,
       "holdout_tstat": 22.74,
       "holdout_n": 281,
       "gate": "OK"
     },
     "long_12h": {
-      "live_30d_mean": 0.152264,
+      "live_30d_mean": 0.154609,
       "holdout": 0.1744,
       "holdout_tstat": 22.03,
       "holdout_n": 280,
-      "gate": "WARN"
+      "gate": "OK"
     }
   },
   "realized_30d": {
     "SHORT": {
       "n": 535,
-      "win_pct": 61.5,
+      "win_pct": 59.4,
+      "gross_win_pct": 61.5,
+      "net_win_pct": 59.4,
+      "win_pct_basis": "net_return",
       "gross_pct": 0.9597,
       "net_pct": 0.6597,
       "cost_pct": 0.3,
-      "tstat_clustered": 4.365,
-      "sharpe": 0.197
+      "tstat_clustered": 3.001,
+      "sharpe": 0.135
     },
     "WATCH_LONG": {
       "n": 270,
-      "win_pct": 41.9,
+      "win_pct": 40.7,
+      "gross_win_pct": 41.9,
+      "net_win_pct": 40.7,
+      "win_pct_basis": "net_return",
       "gross_pct": -0.1066,
       "net_pct": -0.3066,
       "cost_pct": 0.2,
-      "tstat_clustered": -0.435,
-      "sharpe": -0.028
+      "tstat_clustered": -1.251,
+      "sharpe": -0.082
     }
   },
   "model_age_days": {
-    "xsec_6h.pkl": 0.15,
-    "xsec_12h.pkl": 0.15
+    "xsec_6h.pkl": 0.26,
+    "xsec_12h.pkl": 0.26
   },
   "cost_assumptions": {
     "SHORT": 0.3,
     "LONG": 0.2,
     "WATCH_LONG": 0.2
+  },
+  "long_policy": {
+    "contract": "strong_shadow_watch_v1",
+    "status": "EXECUTION_BLOCKED_CONDITIONAL_WATCH",
+    "reason": "WATCH_LONG KILL policy: LIVE_WATCH_LONG_N=0 (README §14-bis)",
+    "execution_max": 0,
+    "execution_actionable": false,
+    "conditional_watch_alert_max": 1,
+    "watch_alert_gates": {
+      "anchor_hours_utc": [
+        11,
+        23
+      ],
+      "bitget_tradable_required": true,
+      "preflight_clear_required": true,
+      "btc_7d_return_gt": 0.0,
+      "btc_30d_return_gt": -0.1,
+      "ic_status_required": "OK",
+      "ic_min_reads": 3,
+      "ic_each_gte": 0.05,
+      "latest_ic_gte": 0.1,
+      "sigma_gte": 2.0,
+      "expected_pct_gte": 0.2,
+      "direction_probability_gte": 0.65,
+      "positive_direction_required": true,
+      "cross_horizon_consensus_required": true,
+      "untrusted_hidden": true,
+      "shadow_top_n": 5
+    },
+    "economic_reactivation": {
+      "automatic": false,
+      "requires_separate_code_change": true,
+      "min_independent_12h_baskets": 60,
+      "mean_net_gt": 0.0,
+      "block_bootstrap_95pct_lower_gt": 0.0,
+      "three_temporal_folds_net_gt": 0.0,
+      "all_allowed_regimes_net_gt": 0.0
+    }
   },
   "_note": "public sibling of encrypted dashboard data. Aggregates only — no individual picks."
 }

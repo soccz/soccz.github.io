@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xsec_alpha — Cross-Sectional Crypto Ranking · 연구 + 운영 보고서</title>
-  <meta name="description" content="크로스섹션 크립토 랭킹 시스템. F1 통합 아키텍처: 같은 10-feature 파이프라인으로 6h/12h 두 모델. 2σ+ 적중 64.6%/70.6%. 방향 합의 92%. 자동 재학습 + promotion gate.">
+  <title>xsec_alpha — Cross-Sectional Crypto Ranking · 연구에서 운영 감사까지</title>
+  <meta name="description" content="크로스섹션 크립토 랭킹 시스템의 전체 여정. SHORT 운영, LONG KILL 이후 측정 계약 복구, 조건부 WATCH 알림과 재활성화 기준까지 증거와 함께 기록합니다.">
   <meta property="og:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
-  <meta property="og:description" content="F1 통합 아키텍처 · 6h/12h 동일 피처 · 92% 방향 합의 · 2σ+ 적중 64.6%/70.6% · systemd 자동 재학습.">
+  <meta property="og:description" content="gan_t 실패 → 크로스섹션 전환 → 운영 버그와 비용 감사 → LONG KILL → prospective shadow 검증. 결과뿐 아니라 판단이 바뀐 이유를 기록한 운영 보고서.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/xsec-alpha/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
-  <meta name="twitter:description" content="F1 통합 아키텍처 · 연구(v1-v3) + 운영 재설계 · 60+ 에이전트 토론.">
+  <meta name="twitter:description" content="연구(v1-v3), 운영 재설계, 비용 감사, LONG KILL과 복구 조건까지 이어지는 xsec_alpha의 전체 기록.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/xsec-alpha/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +42,7 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
-    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
     nav.scrolled { background: rgba(250,250,249,0.97); }
@@ -76,7 +76,7 @@
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
     .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.4rem,3vw,2rem); font-weight: 700; line-height: 1.4; margin-bottom: 0.8rem; letter-spacing: -0.02em; }
-    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 720px; line-height: 1.85; margin-bottom: 3rem; }
+    .section-desc { color: var(--text-secondary); font-size: 0.95rem; max-width: 720px; line-height: 1.85; margin-bottom: 3rem; overflow-wrap: anywhere; }
     .divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 0; }
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -87,7 +87,7 @@
     .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.8rem; transition: all 0.3s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
     .card:hover { border-color: var(--border-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     .card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
-    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; }
+    .card-text { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.75; overflow-wrap: anywhere; }
 
     .badge { display: inline-block; margin-top: 0.5rem; margin-right: 0.35rem; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; padding: 0.2rem 0.6rem; border-radius: 3px; }
     .badge-fail { background: var(--red-dim); color: var(--red); border: 1px solid rgba(220,38,38,0.2); }
@@ -294,7 +294,7 @@
     .pipe-stage.deploy { border-left-color: var(--green); }
     .pipe-stage.fail { border-left-color: var(--red); }
     .pipe-num { font-family: 'Noto Serif KR', serif; font-size: 1rem; color: var(--text-muted); min-width: 30px; font-weight: 700; }
-    .pipe-body { flex: 1; }
+    .pipe-body { flex: 1; min-width: 0; }
     .pipe-title { font-weight: 700; font-size: 0.88rem; margin-bottom: 0.2rem; }
     .pipe-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; }
     .pipe-arrow { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin: 0.2rem 0; }
@@ -322,7 +322,7 @@
     @media (max-width: 680px) { .auto-timer { grid-template-columns: 1fr; gap: 0.4rem; } .auto-when { text-align: left; } .ba-grid { grid-template-columns: 1fr; } .ba-arrow { transform: rotate(90deg); padding: 0.5rem 0; } }
 
     @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } }
-    @media (max-width: 680px) { .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 60px; font-size: 0.65rem; word-break: break-all; } .lesson-item { flex-direction: column; gap: 0.4rem; } .funnel-step { flex-wrap: wrap; } .funnel-step .funnel-ic { margin-left: 0; margin-top: 0.3rem; font-size: 0.68rem; } .cadence-slot { font-size: 0.55rem; } }
+    @media (max-width: 680px) { .hero { width: 100vw; min-height: auto; align-items: flex-start; padding-top: 7rem; padding-bottom: 4rem; } .hero-content { width: 100%; min-width: 0; } .hero-label { display: block; width: max-content; max-width: 100%; margin-left: auto; margin-right: auto; font-size: 0.62rem; letter-spacing: 0.1em; line-height: 1.5; overflow-wrap: anywhere; } .hero-sub, .callout p, code, .c { overflow-wrap: anywhere; word-break: break-word; } .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem 0.8rem; width: 100%; } .hero-stat { min-width: 0; } .hero-stat-num { font-size: 1.65rem; } .scroll-ind { display: none; } .chart-wrap, .tg-mockup { max-width: 100%; overflow-x: auto; } .bar-row { grid-template-columns: minmax(0, 76px) minmax(0, 1fr) minmax(0, 58px); gap: 0.4rem; } .bar-val { min-width: 0; } .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 60px; font-size: 0.65rem; word-break: break-all; } .lesson-item { flex-direction: column; gap: 0.4rem; } .funnel-step { flex-wrap: wrap; } .funnel-step .funnel-ic { margin-left: 0; margin-top: 0.3rem; font-size: 0.68rem; } .cadence-slot { font-size: 0.55rem; } .pipe-wrap { padding: 1rem; overflow: hidden; } .pipe-branches { grid-template-columns: 1fr !important; } }
   </style>
 </head>
 <body>
@@ -343,6 +343,7 @@
       <li><a href="#cost-reality">Cost Reality</a></li>
       <li><a href="#audit-summary">Audit</a></li>
       <li><a href="#hygiene">Hygiene</a></li>
+      <li><a href="#august-audit">Aug Audit</a></li>
       <li><a href="#status">Status</a></li>
     </ul>
   </div>
@@ -356,22 +357,23 @@
     <p class="hero-sub">
       <strong>크립토 200+개 마켓을 매 6시간 비교해서 어떤 게 떨어지고/오를지 줄세우는 시스템.</strong><br>
       gan_t의 실패에서 출발해 크로스섹션 상대 랭킹으로 전환 — Short 6h + Long 12h 듀얼 모델, F1 통합 아키텍처.<br>
-      <strong>현재 단계:</strong> paper 운영 60일 — 신호 자체는 강함 (holdout IC 0.15-0.19, σ≥2 적중 59-63%),
-      평균 picks는 수수료 차감 후 0 근처라 <strong>강한 신호만 선별 거래 + shadow long_short5 평행 추적</strong>.
-      실거래는 30-60일 더 보고 결정.
+      <strong>현재 단계:</strong> SHORT는 수동 판단용 신호를 운영 중. LONG은 2026-07-11 KILL 이후 <strong>actionable 0건</strong>을 유지한다.
+      다만 BTC 레짐·현재 계약 IC·신호 강도·유동성 게이트를 모두 통과한 경우에만
+      <strong>WATCH ONLY 알림을 최대 1개</strong> 보낸다. 알림은 관찰 후보이며 주문도, 수익 보장도 아니다.
     </p>
     <p class="hero-phases">
       <span class="phase-chip">① 연구 — gan_t→F1</span>
       <span class="phase-chip">② 운영 — 원장이 드러낸 실패 3</span>
       <span class="phase-chip">③ 비용 결산 — gross vs net</span>
       <span class="phase-chip">④ 엔지니어링 — 테스트·백업·shadow</span>
+      <span class="phase-chip">⑤ 8월 감사 — 측정 계약 복구·LONG KILL 유지</span>
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.19" data-decimals="2">0</span><span class="hero-stat-label">Short Holdout IC</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-prefix="+" data-target="0.22" data-decimals="2">0</span><span class="hero-stat-label">Long Holdout IC</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">ACTIVE</span><span class="hero-stat-label">SHORT · 최대 5</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">0 / ≤1</span><span class="hero-stat-label">LONG actionable / 조건부 WATCH</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="200" data-suffix="+" data-decimals="0">0</span><span class="hero-stat-label">KRW Markets</span></div>
       <div class="hero-stat"><span class="hero-stat-num">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">6+4</span><span class="hero-stat-label">Short / Long Factors</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">Unified F1 Features</span></div>
     </div>
     <div class="hero-links">
       <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
@@ -392,12 +394,12 @@
 <section id="summary" class="compact"><div class="container fade-in">
   <div class="section-label">Executive Summary</div>
   <h2 class="section-title">핵심 결과</h2>
-  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발해 크로스섹션 랭킹으로 전환 → 3개 페이즈(연구·운영 재설계·비용 차감 결산)의 결과. 아래 4개는 <strong>live 수치</strong> (수수료 차감 후 net 기준) — 매 6h 자동 갱신, <span data-live-asof>2026-05-25 기준</span>.</p>
+  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발해 크로스섹션 랭킹으로 전환했고, 운영 원장과 비용 감사가 다시 결론을 바꿨다. 실현 원장 aggregate는 매 6h 자동 갱신하며(<span data-live-asof>2026-08-03 기준</span>), LONG 감사 수치는 2026-08-03에 고정한 next-open·non-overlap 계약의 내부 재현 결과다.</p>
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.short_6h.holdout" data-live-fmt="signed-3">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.short_6h.holdout_tstat" data-live-fmt="fixed-1">20.1</span> · n=<span data-live-key="ic.short_6h.holdout_n" data-live-fmt="int">281</span><br><span data-live-key="ic.short_6h.gate" data-live-fmt="text">OK</span></div></div>
-    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.long_12h.holdout" data-live-fmt="signed-3">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.long_12h.holdout_tstat" data-live-fmt="fixed-1">16.9</span> · n=<span data-live-key="ic.long_12h.holdout_n" data-live-fmt="int">280</span><br><span data-live-key="ic.long_12h.gate" data-live-fmt="text">OK</span></div></div>
-    <div class="metric-card"><span class="metric-val neg" data-live-key="realized_30d.SHORT.net_pct" data-live-fmt="signed-pct-2">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.SHORT.n" data-live-fmt="int">625</span> · win <span data-live-key="realized_30d.SHORT.win_pct" data-live-fmt="fixed-1">52.6</span>%<br>after <span data-live-key="realized_30d.SHORT.cost_pct" data-live-fmt="fixed-2">0.30</span>% fees</div></div>
-    <div class="metric-card"><span class="metric-val pos" data-live-key="realized_30d.WATCH_LONG.net_pct" data-live-fmt="signed-pct-2">+0.10%</span><div class="metric-label">LONG 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.WATCH_LONG.n" data-live-fmt="int">285</span> · win <span data-live-key="realized_30d.WATCH_LONG.win_pct" data-live-fmt="fixed-1">50.9</span>%<br>after <span data-live-key="realized_30d.WATCH_LONG.cost_pct" data-live-fmt="fixed-2">0.20</span>% fees</div></div>
+    <div class="metric-card"><span class="metric-val pos" data-live-key="realized_30d.SHORT.net_pct" data-live-fmt="signed-pct-2">+0.66%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">live aggregate · n=<span data-live-key="realized_30d.SHORT.n" data-live-fmt="int">535</span><br>cost-adjusted</div></div>
+    <div class="metric-card"><span class="metric-val neg" data-live-key="realized_30d.WATCH_LONG.net_pct" data-live-fmt="signed-pct-2">&minus;0.31%</span><div class="metric-label">과거 WATCH_LONG 30d net</div><div class="metric-sub">legacy ledger · n=<span data-live-key="realized_30d.WATCH_LONG.n" data-live-fmt="int">270</span><br>현재 알림 성과 아님</div></div>
+    <div class="metric-card"><span class="metric-val pos">+0.123</span><div class="metric-label">LONG strict audit IC</div><div class="metric-sub">exact 11/23 UTC · lag 1<br>n=23 independent periods</div></div>
+    <div class="metric-card"><span class="metric-val neg">&minus;1.180%</span><div class="metric-label">LONG strict audit net</div><div class="metric-sub">BTC regime-active top5 · n=7<br>IC ≠ executable edge</div></div>
   </div>
 </div></section>
 <hr class="divider">
@@ -421,7 +423,7 @@
     <div class="card">
       <div class="card-title">xsec_alpha: 뭘 바꿨나</div>
       <div class="card-text">
-        절대 수익률 &rarr; residual return (coin - beta &times; BTC). 개별 코인 예측 &rarr; 크로스섹션 상대 랭킹. per-market MinMax &rarr; per-timestamp z-score. fillna(0) &rarr; ffill only + 480행 drop. train&supset;test &rarr; temporal holdout 20%.
+        <strong>초기 연구:</strong> 절대 수익률 &rarr; residual return, 개별 코인 예측 &rarr; 크로스섹션 상대 랭킹으로 전환했다. 이후 운영 F1은 <strong>통합 10개 피처 + absolute next-open target</strong>으로 다시 정렬했고, temporal holdout과 horizon purge로 미래 타깃이 학습 경계를 넘지 않게 했다.
       </div>
       <span class="badge badge-ok">IC = +0.19</span>
       <span class="badge badge-ok">Holdout PASS</span>
@@ -435,14 +437,14 @@
 <section id="architecture"><div class="container fade-in">
   <div class="section-label">Architecture</div>
   <h2 class="section-title">시스템 구조</h2>
-  <p class="section-desc">Short 6h / Long 12h 듀얼 모델. systemd 타이머가 6h마다 실행하고, long은 12h 리밸런스 슬롯에서만 갱신, 나머지는 carry.</p>
+  <p class="section-desc">SHORT 6h / LONG 12h 듀얼 모델. systemd가 6h마다 신호·측정을 갱신한다. LONG은 11/23 UTC 슬롯에서 shadow 평가하며 actionable 경로는 KILL, 조건부 WATCH surface만 별도로 심사한다.</p>
 
   <div class="flow">
     <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">수집</div><div class="flow-desc">Upbit 200+ KRW<br>Binance USDT</div></div>
-    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">Short: 6개 (reversal, vol_inv, kimchi, binance_lead, order_flow)<br>Long: 4개 (range_contraction, reversal, binance_lead)</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">F1 unified 10개<br>두 horizon 공통</div></div>
     <div class="flow-step"><div class="flow-num">3</div><div class="flow-title">스코어링</div><div class="flow-desc">Ensemble (Ridge + LightGBM)<br>Short 6h / Long 12h</div></div>
-    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">실행</div><div class="flow-desc">SHORT 5 (실행)<br>WATCH LONG 5 (관찰)</div></div>
-    <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측</div><div class="flow-desc">Ledger + IC 추적<br>텔레그램 알림</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">정책</div><div class="flow-desc">SHORT 최대 5<br>LONG 실행 0</div></div>
+    <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측</div><div class="flow-desc">LONG shadow ledger<br>조건부 WATCH ≤1</div></div>
   </div>
 
   <!-- Dual Model Visual Comparison -->
@@ -457,7 +459,7 @@
       <div class="dual-row"><span class="dual-key">t-stat</span><span class="dual-val">11.3</span></div>
       <div class="dual-row"><span class="dual-key">리밸런스</span><span class="dual-val">매 run</span></div>
       <div class="dual-row"><span class="dual-key">레짐 게이트</span><span class="dual-val">없음 (전 레짐)</span></div>
-      <div class="dual-row"><span class="dual-key">상태</span><span class="dual-val g">실행 중</span></div>
+      <div class="dual-row"><span class="dual-key">상태</span><span class="dual-val g">manual signal active</span></div>
       <div class="dual-philosophy short-phil">
         <strong>철학: 역추세 + 교차거래소 선행</strong><br>
         최근에 오른 코인은 반락한다. 김프가 높은 코인은 과열됐다. 글로벌에서 먼저 빠진 코인은 로컬도 따라간다. 이 셋을 조합해서 "다음에 떨어질 코인"을 찾는다.
@@ -470,11 +472,11 @@
         <div><div class="dual-name">Long Model</div><div class="dual-sub">조용해진 코인에서 폭발을 기다린다</div></div>
       </div>
       <div class="dual-row"><span class="dual-key">Horizon</span><span class="dual-val a">12h</span></div>
-      <div class="dual-row"><span class="dual-key">Holdout IC</span><span class="dual-val a">+0.216</span></div>
-      <div class="dual-row"><span class="dual-key">t-stat</span><span class="dual-val">4.2</span></div>
+      <div class="dual-row"><span class="dual-key">Strict audit IC</span><span class="dual-val a">+0.123</span></div>
+      <div class="dual-row"><span class="dual-key">t-stat</span><span class="dual-val">4.4</span></div>
       <div class="dual-row"><span class="dual-key">리밸런스</span><span class="dual-val">12h (carry)</span></div>
-      <div class="dual-row"><span class="dual-key">레짐 게이트</span><span class="dual-val a">BTC bull only</span></div>
-      <div class="dual-row"><span class="dual-key">상태</span><span class="dual-val a">WATCH</span></div>
+      <div class="dual-row"><span class="dual-key">학습 / 실행 레짐</span><span class="dual-val a">all / strict BTC</span></div>
+      <div class="dual-row"><span class="dual-key">상태</span><span class="dual-val a">KILL · WATCH≤1</span></div>
       <div class="dual-philosophy long-phil">
         <strong>철학: 압축 후 팽창 + 딥 매수</strong><br>
         고저폭이 줄어든 코인은 에너지를 모으고 있다. 단기 하락 후 반등할 코인을 고른다. 모멘텀(순추세)이 아니라 compression(압축)이 크립토 long의 핵심 패턴이다.
@@ -485,7 +487,7 @@
   <!-- Cadence Timeline -->
   <div class="cadence-wrap">
     <div class="cadence-title">듀얼 리밸런스 타이밍</div>
-    <div class="cadence-sub">systemd 타이머가 6h마다 실행. Short는 매번 새로 스코어링. Long은 12h 슬롯에서만 갱신, 오프사이클은 이전 포지션 carry.</div>
+    <div class="cadence-sub">systemd 타이머가 6h마다 실행. SHORT는 매번 새로 스코어링한다. LONG은 11/23 UTC 슬롯에서 shadow 평가하며, 모든 게이트를 통과할 때만 비실행 WATCH 알림을 최대 1개 보낸다.</div>
     <div class="cadence-row">
       <div class="cadence-label g">Short</div>
       <div class="cadence-bar">
@@ -498,16 +500,16 @@
     <div class="cadence-row">
       <div class="cadence-label a">Long</div>
       <div class="cadence-bar">
-        <div class="cadence-slot carry">carry</div>
-        <div class="cadence-slot active-a">11:00</div>
-        <div class="cadence-slot carry">carry</div>
-        <div class="cadence-slot active-a">23:00</div>
+        <div class="cadence-slot inactive">off-slot</div>
+        <div class="cadence-slot active-a">11:00 gate</div>
+        <div class="cadence-slot inactive">off-slot</div>
+        <div class="cadence-slot active-a">23:00 gate</div>
       </div>
     </div>
     <div class="cadence-legend">
       <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(22,163,74,0.3)"></div>Short 리밸런스 (매 6h)</div>
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.25)"></div>Long 리밸런스 (12h마다)</div>
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.08); border: 1px dashed rgba(180,83,9,0.3)"></div>Long carry (이전 포지션 유지)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.25)"></div>LONG shadow + 조건부 WATCH 심사</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:var(--bg-secondary); border: 1px solid var(--border)"></div>LONG off-slot · 실행 없음</div>
     </div>
   </div>
 </div></section>
@@ -515,9 +517,9 @@
 
 <!-- Short Model -->
 <section id="short-model"><div class="container fade-in">
-  <div class="section-label">Short Model</div>
-  <h2 class="section-title">Short 전문 모델 — 떨어질 코인 골라내기</h2>
-  <p class="section-desc">6h horizon, top100 유니버스, Bitget USDT perp tradable. 핵심 팩터 6개가 전반/후반 split에서 모두 STABLE.</p>
+  <div class="section-label">Initial Short Research · 2026-04-14 · Historical</div>
+  <h2 class="section-title">Short 전문 모델 — F1 이전의 6-factor 발견 기록</h2>
+  <p class="section-desc">아래는 2026-04-14 초기 residual-target·6-factor 연구 snapshot이다. 현재 production은 unified 10 features + absolute next-open target이며 이 숫자를 현재 성능으로 재사용하지 않는다.</p>
 
   <div class="chart-wrap">
     <div class="chart-title">Short 팩터 IC (6h horizon, top 100)</div>
@@ -591,10 +593,10 @@
 
     <!-- v3 -->
     <div class="timeline-item"><div class="timeline-dot done"></div>
-      <div class="t-meta"><span class="t-date">Long v3</span><span class="badge badge-ok">CURRENT</span></div>
+      <div class="t-meta"><span class="t-date">Long v3 · 2026-04</span><span class="badge badge-pivot">HISTORICAL DESIGN</span></div>
       <div class="t-title">Compression + Reversal 모델</div>
       <div class="t-find">
-        모멘텀 전부 제거. range_contraction(압축) + reversal(딥 매수) + binance_lead(글로벌 선행)로 재설계. 호라이즌 12h. 4개 모델(Ridge/XGBoost/LightGBM/Ensemble) 비교 후 Ensemble 채택. Ridge 계수 전부 양수 = 설계와 결과 일치.
+        모멘텀 전부 제거. range_contraction(압축) + reversal(딥 매수) + binance_lead(글로벌 선행)로 재설계. 호라이즌 12h. 4개 모델 비교 후 Ensemble을 채택한 당시 설계 기록이다. 현재 production 모델도 스코어는 계산하지만 8월 strict 경제성 감사는 통과하지 못해 KILL/shadow 상태다.
       </div>
     </div>
 
@@ -858,10 +860,10 @@
 
   <!-- Sigma bucket calibration bars -->
   <div class="chart-wrap">
-    <div class="chart-title">σ-bucket 보정 (7,600 예측 스캔 기반)</div>
+    <div class="chart-title">2026-04 당시 σ-bucket 보정 (historical · superseded)</div>
     <div class="chart-subtitle">
       <code class="c">|σ| = |score| / batch_std</code> 구간별 과거 방향 적중률.
-      6h / 12h 양 호라이즌. 이 수치가 <code class="c">output/calibration_sigma.json</code>에 저장되어 실시간 예측에 쓰임.
+      당시 7,600개 full-scan 연구 표본의 기록이다. <strong>현재 검증값이나 수익 보장이 아니며</strong>, 8월부터 temporal holdout OOS next-open calibration으로 교체됐다.
     </div>
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
       <div>
@@ -889,8 +891,8 @@
 
   <!-- Telegram mockup -->
   <div class="chart-wrap" style="background: var(--bg-secondary);">
-    <div class="chart-title">텔레그램 출력 예시</div>
-    <div class="chart-subtitle">실제 라이브 포맷. σ-tier + 방향 + 확률 + 기대% + coin vol + 95% CI + 사이즈 + 합의/신뢰 태그.</div>
+    <div class="chart-title">2026-04 텔레그램 출력 예시 (historical)</div>
+    <div class="chart-subtitle">당시 포맷 기록. 현재는 SHORT 수동 판단용 신호와 조건부 LONG WATCH를 분리한다.</div>
     <div class="tg-mockup">
       <div class="tg-sender">📊 xsec_alpha</div>
       <div class="tg-header">
@@ -915,7 +917,7 @@
 
   <!-- Tag explanations -->
   <div class="tag-grid">
-    <div class="tag-card"><div class="tag-icon">🔥</div><div class="tag-name">2σ+ tier</div><div class="tag-desc">가장 강한 모델 확신. 과거 방향 적중률 64-70%. 제안 사이즈 3%.</div></div>
+    <div class="tag-card"><div class="tag-icon">🔥</div><div class="tag-name">2σ+ tier</div><div class="tag-desc">2026-04 연구 당시 가장 강한 구간. 현재는 OOS calibration과 추가 gate를 함께 사용.</div></div>
     <div class="tag-card"><div class="tag-icon">✅</div><div class="tag-name">1σ+ tier</div><div class="tag-desc">보통 신뢰. 55-61% 적중. 제안 사이즈 2%.</div></div>
     <div class="tag-card"><div class="tag-icon">⚡</div><div class="tag-name">6h + 12h 합의</div><div class="tag-desc">두 호라이즌 모델이 같은 방향을 가리킬 때. 92%에서 일치.</div></div>
     <div class="tag-card"><div class="tag-icon">⭐</div><div class="tag-name">신뢰 코인</div><div class="tag-desc">원장 기준 과거 적중률 ≥60% (n≥5). 모델이 이 코인에서 특히 잘 맞춘 이력.</div></div>
@@ -930,7 +932,7 @@
   <h2 class="section-title">2 모델, 같은 피처 — 호라이즌만 다르게</h2>
   <p class="section-desc">
     20명 트레이더 × 3 라운드 토론 결과, 13/20이 F1 (Unified cleanup)을 택했다.
-    같은 10-피처 파이프라인으로 두 모델을 학습 → <strong>방향 합의 10%→92%, rank correlation 0.55→0.908</strong>.
+    같은 10-피처 파이프라인으로 두 모델을 학습했다. 아래 합의·적중 수치는 <strong>2026-04 F1 선택 당시 historical snapshot</strong>이며 현재 production 검증값으로 재사용하지 않는다.
   </p>
 
   <!-- Before / After Dashboard -->
@@ -947,7 +949,7 @@
       <div class="ba-metric"><span class="ba-metric-key">rank correlation</span><span class="ba-metric-val">+0.55</span></div>
       <div class="ba-metric"><span class="ba-metric-key">6h 2σ+ 적중</span><span class="ba-metric-val">63.7%</span></div>
       <div class="ba-metric"><span class="ba-metric-key">12h 2σ+ 적중</span><span class="ba-metric-val">64.3%</span></div>
-      <div class="ba-metric"><span class="ba-metric-key">Regime 필터</span><span class="ba-metric-val">bull only (LONG)</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">당시 학습 Regime</span><span class="ba-metric-val">bull only (LONG)</span></div>
     </div>
     <div class="ba-arrow">→</div>
     <div class="ba-card after">
@@ -962,7 +964,7 @@
       <div class="ba-metric"><span class="ba-metric-key">rank correlation</span><span class="ba-metric-val pos">+0.908</span></div>
       <div class="ba-metric"><span class="ba-metric-key">6h 2σ+ 적중</span><span class="ba-metric-val pos">64.6%</span></div>
       <div class="ba-metric"><span class="ba-metric-key">12h 2σ+ 적중</span><span class="ba-metric-val pos">70.6%</span></div>
-      <div class="ba-metric"><span class="ba-metric-key">Regime 필터</span><span class="ba-metric-val pos">없음 (all-regime)</span></div>
+      <div class="ba-metric"><span class="ba-metric-key">학습 / 현재 실행 gate</span><span class="ba-metric-val pos">all-regime / strict BTC</span></div>
     </div>
   </div>
 
@@ -971,12 +973,12 @@
     <div class="chart-title">F1 통합 파이프라인</div>
     <div class="chart-subtitle">하나의 피처 라이브러리 → 두 호라이즌 모델 → σ-bucket 보정 → 확률형 per-coin 출력</div>
     <div style="display:flex; flex-direction:column; align-items:center; gap: 0.4rem; padding: 1.5rem 0;">
-      <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.5rem; text-align:center; min-width: 300px;">
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.5rem; text-align:center; width: min(300px, 100%);">
         <div style="font-weight:700; font-size:0.88rem;">Upbit + Binance 1h OHLCV</div>
         <div style="font-size:0.72rem; color:var(--text-muted); font-family: 'JetBrains Mono', monospace;">200+ KRW markets</div>
       </div>
       <div style="color: var(--text-muted);">↓</div>
-      <div style="background: var(--bg-card); border: 2px solid var(--accent); border-radius: 8px; padding: 1rem 1.5rem; text-align:center; min-width: 440px;">
+      <div style="background: var(--bg-card); border: 2px solid var(--accent); border-radius: 8px; padding: 1rem 1.5rem; text-align:center; width: min(440px, 100%);">
         <div style="font-weight:700; font-size:0.88rem; color: var(--accent);">compute_unified_factors( ) — 10 features</div>
         <div style="font-size:0.7rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; line-height: 1.7;">
           reversal_1h / reversal_4h / volatility_inv_24h / order_flow_bear<br>
@@ -986,17 +988,17 @@
       </div>
       <div style="color: var(--text-muted);">↓ cross-section z-score</div>
       <div style="display:flex; gap: 1.5rem; justify-content:center;">
-        <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--green); border-radius: 8px; padding: 1rem 1.3rem; text-align:center; min-width: 180px;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--green); border-radius: 8px; padding: 1rem 1.3rem; text-align:center; width: min(180px, 100%);">
           <div style="font-weight:700; font-size:0.88rem;">xsec_6h.pkl</div>
           <div style="font-size:0.72rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem;">Ridge + LightGBM<br>horizon = 6h<br>target = absolute</div>
         </div>
-        <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 8px; padding: 1rem 1.3rem; text-align:center; min-width: 180px;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border); border-top: 3px solid var(--amber); border-radius: 8px; padding: 1rem 1.3rem; text-align:center; width: min(180px, 100%);">
           <div style="font-weight:700; font-size:0.88rem;">xsec_12h.pkl</div>
           <div style="font-size:0.72rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem;">Ridge + LightGBM<br>horizon = 12h<br>target = absolute</div>
         </div>
       </div>
       <div style="color: var(--text-muted); text-align:center;">↓ 92% direction agreement · rank_corr 0.908</div>
-      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.5rem; text-align:center; min-width: 340px;">
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem 1.5rem; text-align:center; width: min(340px, 100%);">
         <div style="font-weight:700; font-size:0.88rem;">σ-bucket calibration</div>
         <div style="font-size:0.72rem; color:var(--text-secondary); font-family: 'JetBrains Mono', monospace; margin-top: 0.25rem;">direction_prob · expected_pct · CI_95 · position_size</div>
       </div>
@@ -1092,7 +1094,7 @@
       <div class="pipe-body"><div class="pipe-title">Promotion Gate</div><div class="pipe-desc"><code class="c">new_ic ≥ old_ic − 0.015</code> AND <code class="c">new_ic ≥ 0.040</code> — 둘 다 통과해야 배포</div></div>
     </div>
     <div class="pipe-arrow">↓</div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+    <div class="pipe-branches" style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
       <div class="pipe-stage deploy" style="margin-bottom:0;">
         <div class="pipe-num">04</div>
         <div class="pipe-body"><div class="pipe-title">통과 → 배포</div><div class="pipe-desc">archive 백업 → 모델 교체 → calibration_sigma.json 재생성</div></div>
@@ -1106,7 +1108,7 @@
 
   <!-- Systemd timers -->
   <div class="chart-wrap">
-    <div class="chart-title">Systemd 타이머 3층</div>
+    <div class="chart-title">2026-04 당시 Systemd 타이머 3층 (historical)</div>
     <div class="chart-subtitle">모든 타이머 <code class="c">Persistent=true</code> — 미싱 윈도우 자동 복구.</div>
 
     <div class="auto-timer">
@@ -1155,7 +1157,7 @@
   <div class="callout">
     <p>
       <strong>한 번의 <code class="c">sudo bash deploy/install_f1.sh</code></strong> 로 3개 유닛 설치.
-      이후 재학습·측정·예측이 무인 자동 운영. 재학습 실패 3회 연속이면 systemd 타이머 자동 mask + 이전 모델 유지.
+      이후 재학습·측정·예측이 systemd로 자동 운영된다. 실패 시 unit의 <code class="c">Restart=on-failure</code> 정책으로 재시도하며, promotion gate가 기각하면 이전 모델을 유지한다. 자동 mask는 구현되어 있지 않다.
     </p>
   </div>
 </div></section>
@@ -1288,7 +1290,7 @@
   <div class="callout">
     <p>
       <strong>설정값:</strong> <code class="c">XSEC_TELEGRAM_MIN_SIGMA=1.5</code> · <code class="c">XSEC_TELEGRAM_MIN_EXPECTED_ABS_PCT=0.20</code> · <code class="c">XSEC_TELEGRAM_HIDE_UNTRUSTED=1</code> — env override 가능.
-      verify_telegram regression test가 텔레그램에 표시된 숫자와 ledger 행 100% 일치 보장 (현재 200/200 통과).
+      verify_telegram regression test가 텔레그램에 표시된 숫자와 ledger 행을 비교했다 (2026-05 당시 200/200, 2026-08 최종 검증 50/50).
     </p>
   </div>
 </div></section>
@@ -1325,8 +1327,8 @@
     <p>
       <strong>이번 감사에서 새로 확인된 운영 사실:</strong>
       ① feature_health (kimchi/binance 18% NaN은 구조적, dashboard section F에 자동 표시) ·
-      ② dashboard auto-push (매 6h commit, 24시간 6개 정시 commit 체인 확인) ·
-      ③ verify_telegram 200/200 통과 ·
+      ② dashboard auto-push (매 6h, 하루 4개 정시 run) ·
+      ③ verify_telegram 2026-05 당시 200/200 통과 ·
       ④ DB 0 NULL / 0 dup / 1.51M rows ·
       ⑤ 모델 predict std/mean gate 둘 다 통과 (CLAUDE.md §8 신규 기준 0.001~0.50).
     </p>
@@ -1425,42 +1427,132 @@
 </div></section>
 <hr class="divider">
 
+<!-- ============================================== -->
+<!-- PART 5 (2026-08-03): Full audit + LONG contract -->
+<!-- ============================================== -->
+
+<div class="part-divider fade-in">
+  <span class="part-label">Part V · Measurement Contract &amp; LONG Policy · 2026-08-03</span>
+  <h2>신호가 보여도, 돈이 되지 않으면 실행하지 않는다</h2>
+  <div class="part-ornament"></div>
+</div>
+
+<section id="august-audit"><div class="container fade-in">
+  <div class="section-label">The Entire Journey · Evidence Ledger</div>
+  <h2 class="section-title">실패에서 KILL까지 — 한 줄로 잇는 전체 타임라인</h2>
+  <p class="section-desc">
+    Prelude처럼 성공한 숫자만 남기지 않고, 가설·반증·정책 변경을 시간순으로 보존한다.
+    아래 8월 수치는 로컬 운영 DB와 당시 모델을 같은 next-open 계약으로 다시 계산한 <strong>내부 감사 결과</strong>이며,
+    prospective shadow 결과가 쌓이기 전까지 미래 성과 주장이 아니다.
+  </p>
+
+  <div class="timeline">
+    <div class="timeline-item"><div class="timeline-dot fail"></div>
+      <div class="t-meta"><span class="t-date">2025 → 2026 Q1</span><span class="badge badge-fail">RESET</span></div>
+      <div class="t-title">gan_t: 절대수익 예측이 BTC 베타와 누수에 무너짐</div>
+      <div class="t-find">CVAE/GAN과 35개 피처를 쌓았지만 Sharpe 0.17, IC &minus;0.06. 개별 코인의 가격을 맞히는 대신 같은 시각 코인들을 상대 순위로 비교하는 xsec_alpha로 문제를 다시 정의했다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">2026-04</span><span class="badge badge-pivot">PIVOT</span></div>
+      <div class="t-title">LONG v1→v3: momentum을 버리고 compression으로</div>
+      <div class="t-find">모멘텀 팩터는 6~72h 전 구간에서 음수였다. range contraction·reversal 중심으로 다시 만들고 SHORT 6h / LONG 12h 듀얼 모델과 F1 공통 피처 파이프라인으로 통합했다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot fail"></div>
+      <div class="t-meta"><span class="t-date">2026-04 → 05</span><span class="badge badge-fail">OPS FOUND IT</span></div>
+      <div class="t-title">라이브 원장이 백테스트의 자신감을 반박</div>
+      <div class="t-find">WATCH_LONG 텔레그램 부호 버그, 82.7% 적중률의 training overlap·survivorship bias, SHORT↔LONG 방향 정의 불일치를 발견했다. 원장·알림·런타임 계약을 하나씩 맞췄다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot pivot"></div>
+      <div class="t-meta"><span class="t-date">2026-05-25</span><span class="badge badge-pivot">COST REALITY</span></div>
+      <div class="t-title">IC와 gross가 좋아도 비용 후 PnL은 별개</div>
+      <div class="t-find">실현 원장, 거래비용, clustered 통계, 20-layer 운영 감사를 도입했다. 자동 백업·promotion gate·암호화 대시보드·공개 aggregate를 연결하고 약한 전략 변경은 shadow로만 추적했다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot fail"></div>
+      <div class="t-meta"><span class="t-date">2026-07-11 → 07-31</span><span class="badge badge-fail">INTEGRITY TURN</span></div>
+      <div class="t-title">KILL을 선언했지만 런타임은 집행하지 않았다</div>
+      <div class="t-find">30일 실현 net과 승률이 사전등록 전제를 충족하지 못해 commit <code class="c">b6f073a</code>에서 <code class="c">LIVE_WATCH_LONG_N=0</code>을 선언했다. 그러나 fetch 경로가 이 한도를 실제 선택에 적용하지 않아 WATCH_LONG 4~5개가 계속 나갔고, 7월 31일 11 UTC까지 KILL 이후 원장 205행이 남았다. 문서 정책과 실행 코드가 분리된 거버넌스 실패다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot fail"></div>
+      <div class="t-meta"><span class="t-date">2026-08-03 · 10:26–10:29 KST</span><span class="badge badge-fail">TRIPLE FAILURE</span></div>
+      <div class="t-title">동시 실행이 partial snapshot을 만들고, 구 계약이 그대로 통과시킴</div>
+      <div class="t-find">retrain·update·fetch가 겹치며 <code class="c">database is locked</code>가 20회 이상 발생했다. valid coin 0, LONG bull timestamp 0, 3개 피처 NaN 100% 상태에서도 구 경로는 SHORT 5 + WATCH_LONG 1과 텔레그램을 만들었고, 뒤이어 IC-only retrain이 두 모델을 승격했다. concurrency, KILL wiring, 측정·promotion 계약이 동시에 깨진 사건이 8월 전수 감사의 직접 계기였다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot done"></div>
+      <div class="t-meta"><span class="t-date">2026-08-03</span><span class="badge badge-ok">CONTRACT REPAIRED</span></div>
+      <div class="t-title">전수 감사: KILL 런타임 집행 + 측정 계약 복구</div>
+      <div class="t-find">strict pick limit, policy block, health 표시를 fetch 경로까지 연결해 비로소 LONG 실행·추천 원장 0을 강제했다. 동시에 exact 11/23 UTC, next-open lag 1, non-overlap, BTC 레짐, Bitget tradable, top5, 거래비용으로 재측정했다. 학습 horizon purge, OOS calibration, 실제 관측 진입시각, fail-closed 게이트와 독립 shadow ledger도 함께 복구했다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot fail"></div>
+      <div class="t-meta"><span class="t-date">2026-08-03</span><span class="badge badge-fail">CANDIDATES REJECTED</span></div>
+      <div class="t-title">순위 IC는 남았지만 LONG 경제성은 복구되지 않음</div>
+      <div class="t-find">현행 모델 IC +0.1227에도 strict regime top5 net은 &minus;1.1796%. 새 Ensemble net &minus;1.5345%, Ridge net &minus;1.3601%라 모두 자동 기각했다. 모델 교체도, KILL 해제도 하지 않았다.</div>
+    </div>
+    <div class="timeline-item"><div class="timeline-dot next"></div>
+      <div class="t-meta"><span class="t-date">NEXT · PROSPECTIVE</span><span class="badge badge-blue">OBSERVE</span></div>
+      <div class="t-title">조건부 WATCH ≤1 + 독립 12h shadow 60개</div>
+      <div class="t-find">실행은 계속 0. 레짐·현재 계약 IC·신호 강도·유동성 검사를 모두 통과한 한 종목만 WATCH ONLY로 알릴 수 있다. 별도 shadow basket 60개가 쌓인 뒤 평균 net, block-bootstrap 하한, 3개 시간순 fold를 모두 통과해야 별도 코드 변경으로 재활성화를 검토한다.</div>
+    </div>
+  </div>
+
+  <div class="four-col" style="margin:2.5rem 0 2rem;">
+    <div class="metric-card"><span class="metric-val pos">+0.1227</span><div class="metric-label">current LONG IC</div><div class="metric-sub">internal strict audit<br>t=4.39 · periods=23</div></div>
+    <div class="metric-card"><span class="metric-val neg">&minus;1.1796%</span><div class="metric-label">current LONG net</div><div class="metric-sub">regime-active top5<br>periods=7 · hit 14.3%</div></div>
+    <div class="metric-card"><span class="metric-val neg">&minus;1.5345%</span><div class="metric-label">new Ensemble net</div><div class="metric-sub">candidate rejected<br>active model unchanged</div></div>
+    <div class="metric-card"><span class="metric-val neg">&minus;1.3601%</span><div class="metric-label">Ridge candidate net</div><div class="metric-sub">candidate rejected<br>active model unchanged</div></div>
+  </div>
+
+  <div class="chart-wrap">
+    <div class="chart-title">현재 LONG 의사결정 계약</div>
+    <div class="chart-subtitle">“확실한 신호”는 보장이 아니라 사전등록된 관찰 문턱을 통과했다는 뜻이다. 알림과 실행을 분리한다.</div>
+    <div class="flow" style="margin-bottom:1rem;">
+      <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">12h slot</div><div class="flow-desc">11/23 UTC<br>fresh data</div></div>
+      <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">BTC regime</div><div class="flow-desc">7d &gt; gate<br>30d &gt; floor</div></div>
+      <div class="flow-step"><div class="flow-num">3</div><div class="flow-title">Model health</div><div class="flow-desc">current-contract IC<br>policy fail-closed</div></div>
+      <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">Signal gate</div><div class="flow-desc">strength · trust<br>tradable · finite</div></div>
+      <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">Surface</div><div class="flow-desc">WATCH ONLY ≤1<br>execution = 0</div></div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p><strong>해석 규칙:</strong> 이 저장소에는 Bitget 주문 API나 브로커 실행이 없다. SHORT “actionable”은 자동 주문이 아니라 수동 판단용 텔레그램 신호 최대 5개를 뜻한다. 모든 실현 수치는 실제 fill이 아닌 paper/proxy 가격과 가정 비용으로 계산한다. 과거 WATCH_LONG 차트는 legacy paper ledger이며, 앞으로의 조건부 WATCH 알림과 prospective shadow ledger는 분리해 평가한다.</p>
+  </div>
+</div></section>
+<hr class="divider">
+
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · F1 Production</div>
-  <h2 class="section-title">현재 운영 상태 (최근 갱신 2026-05-25)</h2>
-  <p class="section-desc">F1 통합 아키텍처 배포 완료. 3개 systemd 타이머 자동 운영 중. 매 주 일요일 자동 재학습 + promotion gate 통과 시 모델 갱신. <strong>실시간 수치는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a></strong>에서 확인 (asof 매 6h 갱신, 페이지 헤드라인 숫자도 자동).</p>
+  <div class="section-label">Current Status · Audited 2026-08-03</div>
+  <h2 class="section-title">운영은 정상, LONG actionable 신호는 의도적으로 0</h2>
+  <p class="section-desc">SHORT 신호 생성과 측정·재학습·백업 자동화는 정상이다. SHORT는 수동 판단용 actionable 텔레그램 신호를 최대 5개 만들 뿐 자동 주문하지 않는다. LONG은 스코어를 shadow로 남기되 실행 추천 원장에는 넣지 않고, 엄격 게이트 통과 시 WATCH ONLY 최대 1개만 허용한다. <strong>실시간 aggregate는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a></strong>에서 확인한다.</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--green);">
-      <div class="layer-num">Live · 2026-05-25</div>
-      <div class="layer-title">xsec_6h (6h horizon · 오늘 promoted)</div>
+      <div class="layer-num">Operational · 2026-08-03 audit</div>
+      <div class="layer-title">xsec_6h · SHORT active</div>
       <div class="card-text">
-        <strong>Holdout IC:</strong> +0.152 (t=20.1, n=281) — 직전 모델 +0.150 대비 +0.002 promoted<br>
         <strong>피처:</strong> 10개 통합 (reversal, vol_inv, order_flow, range_contraction, binance_lead, kimchi, kimchi_z, calendar)<br>
-        <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
-        <strong>출력:</strong> 전체 100 코인 · 방향 + 확률 + 기대% + 95% CI + 사이즈<br>
-        <strong>리밸런스:</strong> 매 6h (05/11/17/23 UTC)
+        <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute next-open target<br>
+        <strong>출력:</strong> Bitget USDT-perp tradable universe에서 수동 판단용 신호 최대 5개<br>
+        <strong>리밸런스:</strong> 05/11/17/23 UTC · preflight와 IC gate 적용
       </div>
     </div>
     <div class="layer-card" style="border-top-color: var(--amber);">
-      <div class="layer-num">Live · 2026-05-18</div>
-      <div class="layer-title">xsec_12h (12h horizon · 후보 reject)</div>
+      <div class="layer-num">Blocked execution · prospective observation</div>
+      <div class="layer-title">xsec_12h · LONG KILL / conditional WATCH</div>
       <div class="card-text">
-        <strong>Holdout IC:</strong> +0.126 (t=16.9, n=280) — 후보 +0.120이라 promotion gate에서 자동 기각<br>
         <strong>피처:</strong> xsec_6h와 동일 (10개) — 호라이즌 타겟만 다름<br>
-        <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute target, all-regime<br>
-        <strong>방향 합의:</strong> 6h와 92%, rank correlation +0.908<br>
-        <strong>리밸런스:</strong> 12h (오프사이클 carry)
+        <strong>스코어링:</strong> exact 11/23 UTC · next-open lag 1 · strict BTC regime<br>
+        <strong>실행:</strong> 0건으로 하드 고정 · 자동 재활성화 없음<br>
+        <strong>관찰:</strong> 조건부 WATCH ONLY ≤1 · prospective shadow 별도 누적
       </div>
     </div>
   </div>
 
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.short_6h.holdout" data-live-fmt="signed-3">+0.152</span><div class="metric-label">SHORT Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.short_6h.holdout_tstat" data-live-fmt="fixed-1">20.1</span> · n=<span data-live-key="ic.short_6h.holdout_n" data-live-fmt="int">281</span><br>last <span data-live-key="model_age_days.xsec_6h.pkl" data-live-fmt="fixed-1">0</span>d</div></div>
-    <div class="metric-card"><span class="metric-val pos" data-live-key="ic.long_12h.holdout" data-live-fmt="signed-3">+0.126</span><div class="metric-label">LONG Holdout IC</div><div class="metric-sub">t=<span data-live-key="ic.long_12h.holdout_tstat" data-live-fmt="fixed-1">16.9</span> · n=<span data-live-key="ic.long_12h.holdout_n" data-live-fmt="int">280</span><br>last <span data-live-key="model_age_days.xsec_12h.pkl" data-live-fmt="fixed-1">7</span>d</div></div>
-    <div class="metric-card"><span class="metric-val neg" data-live-key="realized_30d.SHORT.net_pct" data-live-fmt="signed-pct-2">&minus;0.28%</span><div class="metric-label">SHORT 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.SHORT.n" data-live-fmt="int">625</span> · gross <span data-live-key="realized_30d.SHORT.gross_pct" data-live-fmt="signed-pct-2">+0.02%</span><br>fees 0.30%</div></div>
-    <div class="metric-card"><span class="metric-val pos" data-live-key="realized_30d.WATCH_LONG.net_pct" data-live-fmt="signed-pct-2">+0.10%</span><div class="metric-label">WATCH_LONG 30d net</div><div class="metric-sub">n=<span data-live-key="realized_30d.WATCH_LONG.n" data-live-fmt="int">285</span> · gross <span data-live-key="realized_30d.WATCH_LONG.gross_pct" data-live-fmt="signed-pct-2">+0.30%</span><br>fees 0.20%</div></div>
+    <div class="metric-card"><span class="metric-val pos">OK</span><div class="metric-label">operational health</div><div class="metric-sub">alpha · measure · retrain<br>backup timers active</div></div>
+    <div class="metric-card"><span class="metric-val pos">112</span><div class="metric-label">pytest passed</div><div class="metric-sub">2026-08-03 verification<br>4 known sklearn warnings</div></div>
+    <div class="metric-card"><span class="metric-val neutral">0</span><div class="metric-label">LONG actionable signals</div><div class="metric-sub">policy invariant<br>LIVE_WATCH_LONG_N=0</div></div>
+    <div class="metric-card"><span class="metric-val amber">≤1</span><div class="metric-label">conditional WATCH alert</div><div class="metric-sub">all gates must pass<br>non-actionable</div></div>
   </div>
 
   <div class="callout">
@@ -1468,8 +1560,9 @@
       <strong>자동 운영 상태:</strong>
       <span class="c">xsec-alpha.timer</span> (예측, 매 6h) ·
       <span class="c">xsec-measure.timer</span> (IC + drift, 매일 00:00 UTC) ·
-      <span class="c">xsec-retrain.timer</span> (재학습 + promotion gate, 주 1회 일 20:00 UTC).
-      CLAUDE.md §7 IC gate 자동 집행 · verify_telegram regression test 원장 일관성 보장 · retrain_pipeline promotion gate로 나쁜 모델 자동 기각.
+      <span class="c">xsec-retrain.timer</span> (재학습 + promotion gate, 주 1회 일 20:00 UTC) ·
+      <span class="c">xsec-backup.timer</span> (SQLite hot backup, 매일 03:02 KST).
+      LONG 후보는 IC뿐 아니라 비용 후 net과 독립 기간 수를 통과해야 shadow model 승격 대상이 되며, 그 승격도 KILL을 자동 해제하지 않는다.
     </p>
   </div>
 </div></section>
