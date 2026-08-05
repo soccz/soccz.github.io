@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>prelude — 업비트 KRW 상승확률·하방리스크 레이더 · 정직 보고서</title>
-  <meta name="description" content="업비트 KRW 일봉 추천 레이더. 코인별 상승 확률분포 + 하락 리스크로 후보를 base 대비 ~6배 농축해 좁혀준다. 자동 net 전략이 아니라 사람이 청산하는 레이더 — 판정 radar-not-strategy 확정(07-28), 발송은 R1 08:50/09:05 + 🎯 v2 조건부, 구 모델 record-only. 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 전 과정 공개.">
+  <meta name="description" content="업비트 KRW 일봉 추천 레이더. 코인별 상승 확률분포 + 하락 리스크로 후보를 base 대비 ~6배 농축해 좁혀준다. 자동 net 전략이 아니라 사람이 청산하는 레이더 — 판정 radar-not-strategy 확정(07-28), v2 급등 레이더는 동결 조기사망 조항으로 08-05 KILL 종결, 발송은 R1 08:50/09:05 단일, 구 모델 record-only. 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 전 과정 공개.">
   <meta property="og:title" content="prelude — 상승확률·하방리스크 레이더">
   <meta property="og:description" content="맞히는 모델이 아니라 좁혀주는 레이더. 상승 확률분포 + 하락 리스크로 후보를 base 대비 ~6배 농축. 자동 net 전략 아님 · 사람이 청산 · 구 모델 record-only · 최신 판정과 전체 기록은 §Integrity Turn.">
   <meta property="og:type" content="article">
@@ -359,7 +359,7 @@
       <div class="hero-stat"><span class="hero-stat-num">~6×</span><span class="hero-stat-label">precision@3 농축 (OOS)</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">Optimistic Tiered Sharpe †</span></div>
       <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0 †</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="1276" data-decimals="0">0</span><span class="hero-stat-label">Tests Passed</span></div>
+      <div class="hero-stat"><span class="hero-stat-num countup" data-target="1362" data-decimals="0">0</span><span class="hero-stat-label">Tests Passed</span></div>
     </div>
     <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">† optimistic upper-bound (단일전략 가정 · TP-tiered exit). 실제 운영 net 결과는 <a href="#vnext" style="color:var(--text-secondary); border-bottom:1px solid var(--border);">§v-next</a> 참조.</p>
     <div class="hero-links">
@@ -380,7 +380,7 @@
 <div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
   <div class="callout warn" style="margin:1.5rem 0;">
     <p><strong>첫 정직한 결론 (2026-05-31):</strong> 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 OOS·leak 4/4 PASS 로 진짜지만, 기계적 청산 net 은 breakeven~음수 — 수익은 사용자의 진입/청산 판단이 결정한다. 아래 상단 지표 중 일부(†)는 단일전략 가정의 optimistic upper-bound 이며, 실제 운영 net 과 정직한 프레이밍은 <a href="#vnext" style="color:var(--amber); border-bottom:1px solid var(--amber);">§v-next 로 이동</a>.
-    <strong>최신 판정 (2026-07-28):</strong> 이후 두 달의 연구 전멸·측정 재건·장애와 복구(핵심 5주는 06-25→07-28)까지 포함한 전체 기록은
+    <strong>최신 판정 (2026-08-05):</strong> v2 급등 레이더 조기 KILL 자동 집행(동결 조기사망 조항). 연구 전멸·측정 재건·장애와 복구·실전 9일(핵심 5주는 06-25→07-28)까지 전체 기록은
     <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a> 참조.</p>
   </div>
 </div>
@@ -400,15 +400,15 @@
   <div class="four-col">
     <div class="metric-card"><span class="metric-val neutral">92.9% †</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">optimistic upper-bound<br>5000 boot, 95% CI 0 걸침</div></div>
     <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>운영은 fractional</div></div>
-    <div class="metric-card"><span class="metric-val neutral">2–3 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">R1 08:50 예고 + 09:05 확정<br>+ 🎯 v2 조건부 (후보 있는 날만)</div></div>
-    <div class="metric-card"><span class="metric-val neutral">15 units</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">7 timer + 7 service + alert 유닛<br>= 15 units (07-28 침묵 실패 제거)</div></div>
+    <div class="metric-card"><span class="metric-val neutral">2 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">R1 08:50 예고 + 09:05 확정<br>🎯 v2 는 08-05 KILL 로 종료</div></div>
+    <div class="metric-card"><span class="metric-val neutral">17 units</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">8 timer + 8 service + alert 유닛<br>(07:30 전수 selftest 포함)</div></div>
   </div>
 </div></section>
 <hr class="divider">
 
 <div class="part-divider fade-in">
   <div class="pd-label">Part I · 이야기</div>
-  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 07-28</div>
+  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 08-05</div>
   <div class="pd-bridge">출발 질문은 하나였다 — <strong>"어떻게 맞히나."</strong> 이 질문이 두 번 부서지며 다른 질문으로 진화하는 것이 이 부의 플롯이다. 아래 네 챕터는 시간 순서다. 첫 모델의 실패(Journey)에서 시작해, 12실험의 천장(v-next),
   가짜 양수를 죽이는 검증 사슬, 그리고 연구 전멸과 측정 재건(Integrity Turn)으로 끝난다.
   결론부터 알고 싶으면 마지막 챕터로 건너뛰어도 된다 — 다만 결론의 무게는 그 앞의 실패들이 만든다.</div>
@@ -550,6 +550,20 @@
       <span class="badge badge-ok">1,273 tests · 증거사슬 가동</span>
     </div>
 
+    <div class="timeline-item"><div class="timeline-dot done"></div>
+      <div class="t-meta"><span class="t-date">실전 첫 9일 · 2026-07-28 → 08-05</span><span class="badge badge-fail">v2 조기 KILL 집행</span></div>
+      <div class="t-title">아침마다 하나씩 터졌다 — 사후수리에서 클래스 봉쇄로, 그리고 달력이 문장을 27일 일찍 썼다</div>
+      <div class="t-find">
+        첫 아침(07-28) stdout 프로토콜 오염·잠복 경로 폭발, 둘째 아침(07-29) 같은 클래스의 재발 —
+        여기서 방침을 바꿨다: 증상이 아니라 <strong>클래스를 봉쇄</strong>한다(fd 봉인 · 07:30 전수 selftest 타이머 · pre-push 게이트 · import 불변식).
+        셋째 시험은 시스템이 아니라 세상이 냈다: 서버가 사흘에 걸쳐 다운(08-01 새벽 → 08-03 오전) → 부팅폭풍 캐치업 충돌(hermeticity 가드·갭치유 모드로 봉쇄),
+        08-04 <strong>첫 완전 무인 하루 — 8개 타이머 전 단계 성공</strong>. 다음 날 상폐 코인 2종이 close 를 물었고(구조적 종결로 수리),
+        같은 날 v2 가 동결 조기사망 조항(누적 mean&lt;0)으로 <strong>스스로 KILL 을 집행했다</strong> — n=9, mean −0.097%, 판정문 해시 박제.
+      </div>
+      <span class="badge badge-ok">무인 사이클 실증 · 1,362 tests</span>
+      <span class="badge badge-fail">v2 early KILL (08-05, 동결 룰 자동 집행)</span>
+    </div>
+
   </div>
 
   <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">
@@ -674,7 +688,7 @@
     <p style="margin-top:0.6rem;">
       • 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 기계적 청산 net 은 breakeven~음수. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 진짜지만, 수익은 사용자의 진입/청산 판단이 결정 → <strong>SHADOW 로 forward 표본 축적 중</strong>. leak 4/4 PASS.<br>
       • 재정의 직후(06-01) <strong>12개 가설 exhaustive</strong> — 후처리 5축(랭킹·청산·필터·regime·멀티데이) + 새 신호 2 + R1 엔진 sweep — 를 전부 OOS·비용차감·bootstrap 으로 돌려 <strong>자동 net 흑자 0개</strong>를 확정했다 (상세 표는 <a href="#status" style="color:var(--amber);">§Status 연구 결론</a>).<br>
-      • 당시(05-31) 정책: <strong>distribution = PROMOTE_PAPER</strong>, <strong>preopen = DEMOTED (observed −40.8%)</strong> — 현행(07-28)은 구 모델 전부 record-only, 발송은 R1 + 🎯 v2 조건부 (<a href="#integrity-turn" style="color:var(--amber);">§Integrity Turn</a>).<br>
+      • 당시(05-31) 정책: <strong>distribution = PROMOTE_PAPER</strong>, <strong>preopen = DEMOTED (observed −40.8%)</strong> — 현행(08-05 이후)은 구 모델 전부 record-only, 발송은 R1 단일 — 🎯 v2 는 08-05 동결 KILL 로 종결 (<a href="#integrity-turn" style="color:var(--amber);">§Integrity Turn</a>).<br>
       • 단일 ✓/✗ 대신 확률 분포로 표기하고, 위험 정책은 −3% 손절 + 5% 익절(하방 위험 최소화 우선).
     </p>
   </div>
@@ -920,7 +934,14 @@
       전자는 아무것도 남기지 않지만, 후자는 다음 실험의 사전확률을 남긴다. 사전등록을 스스로 뒤집지 않는 것 —
       그것이 이 페이지 전체가 지키려는 단 하나의 규율이다.
     </p>
+    <p style="margin-top:0.8rem;">
+      <strong>후일담 (2026-08-05):</strong> 판정은 09-01 까지 가지 않았다. 동결 조항의 조기 사망 규칙 —
+      <em>누적 mean net 이 0 미만이면 마감일 전이라도 KILL</em> — 이 verified closed 9건, mean −0.097% 에서 자동 발동했고,
+      판정문은 integrity hash 와 함께 박제됐다. 산술이 예고한 결말을 데이터가 27일 앞당겨 집행한 것이다.
+      게이트를 살린 보람은 그대로다: 이 실험은 무증거로 죽지 않았다.
+    </p>
     <span class="badge badge-fail">09-01 KILL 산술 확정 (상한 175 &lt; 200)</span>
+    <span class="badge badge-fail">→ 08-05 조기 KILL 자동 집행 (동결 룰 · n=9 · mean −0.097%)</span>
     <span class="badge badge-ok">판정 기준 동결 유지 — 조작 없음</span>
   </div>
 
@@ -987,7 +1008,7 @@
     <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit KRW d1 / 15m / 1h<br>Binance d1 (BTC reference)</div></div>
     <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">Daily 47 features<br>15m precursor 19 features</div></div>
     <div class="flow-step"><div class="flow-num">3</div><div class="flow-title">스코어링</div><div class="flow-desc">R1 risk-reward (상방/하방 head)<br>record-only: preopen 6h · dist 3h</div></div>
-    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">알림</div><div class="flow-desc">R1 08:50 예고 / 09:05 확정<br>🎯 v2 09:05~ (후보 있는 날만)</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">알림</div><div class="flow-desc">R1 08:50 예고 / 09:05 확정<br>🎯 v2 는 08-05 KILL 로 종료</div></div>
     <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측·증거</div><div class="flow-desc">snapshot→영수증→96봉 라벨<br>09:30 청산 · 10:05 평가</div></div>
   </div>
 
@@ -1029,7 +1050,7 @@
 
   <div class="cadence-wrap">
     <div class="cadence-title">하루 운영 타이밍 (KST)</div>
-    <div class="cadence-sub">systemd 7 timer. R1 레이더 텔레그램 2통 (08:50 예고 + 09:05 확정, champion만) + close-out 2 + publish/backup/heartbeat. + 🎯 v2 09:05~ (후보 있는 날만). 구 distribution/preopen 모델은 record-only(텔레그램 X). 장애 시 failure-alert 즉시 경보(07-28 가동).</div>
+    <div class="cadence-sub">systemd 8 timer (07:30 전수 selftest 포함). R1 레이더 텔레그램 2통 (08:50 예고 + 09:05 확정, champion만) + close-out 2 + publish/backup/heartbeat. 🎯 v2 는 08-05 KILL 로 발송 종료(record 박제). 구 distribution/preopen 모델은 record-only(텔레그램 X). 장애 시 failure-alert 즉시 경보(07-28 가동).</div>
     <div class="cadence-row">
       <div class="cadence-label a">08:50</div>
       <div class="cadence-bar">
@@ -1081,7 +1102,7 @@
     <p style="margin-top:0.6rem;">
       <strong>08:50</strong> 🛰️ R1 레이더 <strong>예고</strong> (진입가는 09:00 확정)<br>
       <strong>09:05</strong> 🛰️ R1 레이더 <strong>확정</strong> — Top3 + 진입가 + SL −3% / TP +5% + 하방 플래그<br>
-      <strong>09:05~</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(Binance volsurge 융합 · 후보 있는 날만 · hit 8.1% + net 음수 정직 고지 내장)</span><br>
+      <strong>09:05~</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(Binance volsurge 융합 — 08-05 동결 조기사망 조항으로 KILL, 발송 종료·record 박제)</span><br>
       <span style="color:var(--text-muted);">구 pre-open/distribution 모델은 텔레그램 완전 무발송(record-only 채점만). + 이상 시에만: heartbeat 경고 · <strong>failure-alert</strong>(어느 유닛이든 죽으면 즉시 — 07-28 가동). 아래 mockup 들은 초기 (Phase X+1) 형식 — 디자인 진화의 기록으로 보존.</span>
     </p>
   </div>
@@ -1703,8 +1724,20 @@
     <div class="fail-card">
       <div class="f-tag">2026-07-28</div>
       <div class="f-title">테스트가 진짜 봇으로 소리쳤다 — 하루 수십 통의 가짜 경보</div>
-      <div class="f-desc">pytest 픽스처가 백업 실패 시나리오를 유도할 때마다, venv 의 전역 import + 실제 .env 토큰 경유로 <em>진짜 텔레그램</em>에 경보가 나갔다. 전체 스위트 1회당 4통 — 누적 수십 통(스크린샷으로 확정). 발신자 추적 끝에 스크린샷 시각과 스위트 실행 시각이 정확히 일치했다. kill-switch(테스트 프로세스 전역, 자식 프로세스 상속)로 구조 봉쇄 — 이 봉쇄의 회귀 테스트가 스위트를 1,273 → <strong>1,276</strong>으로 올렸다(hero 의 현재 값).</div>
+      <div class="f-desc">pytest 픽스처가 백업 실패 시나리오를 유도할 때마다, venv 의 전역 import + 실제 .env 토큰 경유로 <em>진짜 텔레그램</em>에 경보가 나갔다. 전체 스위트 1회당 4통 — 누적 수십 통(스크린샷으로 확정). 발신자 추적 끝에 스크린샷 시각과 스위트 실행 시각이 정확히 일치했다. kill-switch(테스트 프로세스 전역, 자식 프로세스 상속)로 구조 봉쇄 — 이 봉쇄의 회귀 테스트가 스위트를 1,273 → <strong>1,276</strong>으로 올렸다(이후 실전 9일의 가드들이 1,362까지 올린다).</div>
       <div class="f-takeaway">테스트 환경은 실발송이 "금지"가 아니라 "불가능"해야 한다 — fail-loud 시스템일수록 더</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-08-01 → 08-03</div>
+      <div class="f-title">부팅폭풍 — 서버가 사흘에 걸쳐 죽었다(08-01 새벽 → 08-03 오전) 깨어나자, 밀린 타이머 5개가 동시에 서로를 물었다</div>
+      <div class="f-desc">이틀여 만의 부팅(08-03 10:26) 즉시 캐치업 타이머들이 폭발했다: 백업이 수집기와 DB lock 충돌로 즉사했고, 아침 selftest 는 몰래 실 운영 DB 를 읽던 테스트 2계통(라벨 manifest 기본경로 · snapshot D1 provenance)이 수집기의 병행 쓰기와 부딪혀 실패했다 — 평시엔 아무도 그 파일을 안 써서 존재조차 몰랐던 탈출구다. 게다가 15m 수집기는 다운타임이 만든 "중간 구멍"을 구조적으로 못 메워, 그 사이 하루의 채점 창이 영구 미완성으로 고착돼 있었다. 셋 다 클래스로 봉쇄: sqlite busy-재시도 + 유닛 직렬화, 테스트의 운영 DB 접근을 즉시 실패시키는 hermeticity 가드(부수효과: 라벨 테스트 130s→3.6s), 갭치유 모드(<code class="c">--heal-days</code>) 상시 배선. 무결정 2일은 skip-no-decision 마커로 정확히 회계됐다.</div>
+      <div class="f-takeaway">복구는 "다시 돌리기"가 아니다 — 다운타임이 만드는 상태(동시성·구멍·무결정일)마다 전용 회계가 있어야 한다</div>
+    </div>
+    <div class="fail-card">
+      <div class="f-tag">2026-08-05</div>
+      <div class="f-title">상장폐지 코인 2개가 파이프라인 전체를 인질로 잡았다</div>
+      <div class="f-desc">AERGO·AQT 가 업비트에서 사라지자(404 Code not found), 채점기는 "데이터가 안 오네 — 내일 재시도"를 영원히 반복하는 구조였다: 라벨 영구 partial → close rc 2 → 대시보드 발행 무기한 차단. 관용은 딱 세 응답에만 열었다 — 404 상폐 · 200+빈배열 · 봉 전부 창밖 — 이때만 해당 행을 구조적 종결(halted)로 도장 찍고 평가 표본에서 명시 제외한다. 그 외는 전부 fail-closed 유지: 우리 수집 갭이면 재시도가 치유해야 하기 때문. 같은 날 아침엔 당일 첫 거래가 수집 시각(09:06)보다 늦었던 기존 상장 코인 2개(FLUID·TRUMP)를 게이트가 "진짜 갭"으로 정확히 잡아내기도 했다 — 과잉 조심이었지만 옳은 방향의 과잉이었다.</div>
+      <div class="f-takeaway">retry 루프에는 반드시 "영원히 안 올 데이터"의 탈출구가 필요하다 — 단, 탈출은 업스트림 확인이 있을 때만</div>
     </div>
   </div>
 </div></section>
@@ -1713,14 +1746,14 @@
 <div class="part-divider fade-in">
   <div class="pd-label">Part IV · 결산</div>
   <div class="pd-title">가져갈 것과 다음 이정표</div>
-  <div class="pd-bridge">12가지 교훈은 전부 incident 나 audit 의 산물이다. 그리고 현재 상태와 단 하나 남은 약속 —
-  2026-09-01 동결 판정 — 으로 끝난다.</div>
+  <div class="pd-bridge">14가지 교훈은 전부 incident 나 audit 의 산물이다. 마지막 약속 — 동결 판정 — 은
+  예정보다 27일 일찍, 사람 손 없이 지켜졌다. 그 결말까지가 이 결산이다.</div>
 </div>
 
 <!-- Lessons -->
 <section id="lessons"><div class="container fade-in">
   <div class="section-label">Lessons</div>
-  <h2 class="section-title">12 가지 교훈 — 다음 프로젝트로 가져갈 것</h2>
+  <h2 class="section-title">14 가지 교훈 — 다음 프로젝트로 가져갈 것</h2>
   <p class="section-desc">전부 incident 또는 audit 결과. backtest 만 잘 나오면 운영 단계에서 비싼 수업료를 낸다.</p>
 
   <div style="margin-top:2rem;">
@@ -1808,25 +1841,39 @@
         <div class="lesson-desc">5주간 새 모델 0개. 대신 증거사슬(불변 snapshot → 발송 영수증 → 발송시각 라벨)을 얻었고, 그 측정이 곧바로 "상방 head 는 몽키 이하" 라는 이 프로젝트에서 가장 중요한 사실을 돌려줬다. 못 믿는 측정 위의 개선은 전부 환상이다.</div>
       </div>
     </div>
+    <div class="lesson-item">
+      <div class="lesson-num">13</div>
+      <div class="lesson-body">
+        <div class="lesson-title">수리는 증상이 아니라 클래스 단위로 — "새 모듈이 오면 또 뚫리는 방어"는 방어가 아니다</div>
+        <div class="lesson-desc">stdout 오염을 모듈 하나씩 세 번 고치고서야 인정했다: 같은 사고가 이틀 연속 다른 파일에서 재발하면 그건 버그가 아니라 클래스다. fd 봉인(OS 수준)·hermeticity 가드(테스트가 운영 DB 를 여는 순간 실패)·import 불변식처럼, 미래의 코드까지 구속하는 계약으로만 재발이 끝났다. 실전 9일간 스위트가 1,276 → 1,362 로 는 것은 전부 이런 계약의 회귀 테스트다.</div>
+      </div>
+    </div>
+    <div class="lesson-item">
+      <div class="lesson-num">14</div>
+      <div class="lesson-body">
+        <div class="lesson-title">판정은 집행되어야 판정이다 — 그리고 좋은 시스템은 나쁜 소식을 스스로 말한다</div>
+        <div class="lesson-desc">v2 의 조기 사망 조항(누적 mean&lt;0)은 표본 9건, −0.097% 에서 사람 개입 없이 발동해 판정문을 해시로 박제했다. 뒤집고 싶은 유혹이 가장 클 순간에 뒤집을 수 없게 만들어 둔 것 — 그것이 사전등록의 전부다. 실험은 죽었지만 무증거로 죽지 않았고, 이 죽음은 다음 가설의 사전확률이 된다.</div>
+      </div>
+    </div>
   </div>
 </div></section>
 <hr class="divider">
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-07-28</div>
+  <div class="section-label">Current Status · 2026-08-05</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
 
   <div class="callout" style="margin-bottom:2rem;">
     <p><strong>상태 갱신 (2026-07-28):</strong> 판정은 <strong>radar-not-strategy 로 확정</strong>됐다 —
     신형 forward 측정에서 R1 상방 head AUC 0.477(하방 head 0.721 은 생존), 우수 추천기 주장 불가.
-    발송은 R1(08:50/09:05) + 🎯 v2(09:05~, 후보 있는 날만) 그대로, 자동 주문 없음.
+    발송은 R1(08:50/09:05) 단일 — 🎯 v2 는 아래대로 08-05 KILL 로 발송이 끝났다. 자동 주문 없음.
     historical 백테스트 탐색은 <strong>공식 종료</strong> — 이후 모든 판단은 새 측정 계약(불변 snapshot → 발송 영수증 →
-    발송시각 기준 96봉 라벨)의 forward 표본에서만 한다. v2 는 <strong>2026-09-01 GO/KILL 시한부 판정</strong>(사전등록 동결) 진행 중.
+    발송시각 기준 96봉 라벨)의 forward 표본에서만 한다. v2 는 동결 조기사망 조항으로 <strong>2026-08-05 KILL 이 자동 집행</strong>돼 종결됐다(불변 터미널).
     이 전환의 전체 기록(실패 포함)은 <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a>.
     아래 박스들은 06-11 시점 기록으로 보존한다.</p>
   </div>
-  <p class="section-desc"><strong>발송 = R1 레이더 (08:50 예고 / 09:05 확정) + 🎯 PUMP v2 (09:05~, 후보 있는 날만)</strong>.
+  <p class="section-desc"><strong>발송 = R1 레이더 (08:50 예고 / 09:05 확정) 단일 — 🎯 PUMP v2 는 08-05 KILL 로 종료</strong>.
   구 distribution · pre-open 은 record-only. 챔피언은 forward 성과로 자동 선정(하방 우선) — selector 가 아직 아무 모델도 승격시키지 못해 <strong>R1 이 기본(default) 챔피언</strong>으로 발송 중이다(절대 게이트: 비용차감 forward net&gt;0 + 완결 하방 표본 n≥30).
   <strong>12실험 exhaustive + 챌린저 7후보</strong>까지 자동 net 흑자는 전무 — 시스템 정체성은
   <strong>하방-규율 추천 레이더</strong>로 확정. 새로 추가된 두 축: <strong>exit lab</strong> (청산 잣대 7개 매일 병렬 기록 —
@@ -1902,7 +1949,7 @@
   <div class="callout">
     <p>
       <strong>R1 레이더 채널 (06-11 기록 → 07-28 판정 확정):</strong>
-      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 발사한다. <strong>R1 레이더로 08:50/09:05 텔레그램에 연결되어 있다.</strong> 당시엔 SHADOW 검증 중이었고, 최종 판정은 상단 상태 갱신과 같다. 이후 판단은 forward 증거사슬과 09-01 v2 동결 판정만 한다.
+      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 발사한다. <strong>R1 레이더로 08:50/09:05 텔레그램에 연결되어 있다.</strong> 당시엔 SHADOW 검증 중이었고, 최종 판정은 상단 상태 갱신과 같다. 이후 판단은 forward 증거사슬만 한다 — v2 동결 판정은 08-05 조기 KILL 로 이미 집행됐다.
     </p>
     <p style="margin-top:0.7rem;">
       <strong>운영 원칙 유지:</strong>
@@ -1911,9 +1958,11 @@
   </div>
 
   <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">
-    이 이야기의 다음 문장은 사람이 아니라 달력이 쓴다 — <strong>2026-09-01, v2 동결 판정.</strong>
-    산술은 이미 KILL 을 가리키고 있지만(상한 175 &lt; 필요 200) 기준은 뒤집지 않는다.
-    그날 무슨 일이 있었는지는, 그날 이후의 이 페이지가 말해줄 것이다.
+    이 자리에는 원래 이렇게 적혀 있었다 — <em>"이 이야기의 다음 문장은 사람이 아니라 달력이 쓴다. 2026-09-01, v2 동결 판정."</em><br>
+    그 문장은 예정보다 27일 일찍 쓰였다. <strong>2026-08-05, v2 조기 KILL</strong> — 동결 조항의 사망 규칙(누적 mean net &lt; 0)이
+    verified closed 9건, −0.097% 에서 사람 손 없이 발동했고 판정문은 해시로 박제됐다. 기준은 끝까지 뒤집히지 않았다.
+    급등 레이더는 죽었고, R1 레이더(상승확률·하방위험)는 계속 아침을 연다.
+    다음 문장도 사람이 아니라 forward 표본이 쓸 것이다.
   </p>
 </div></section>
 
