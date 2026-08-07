@@ -22,7 +22,7 @@ $$u_l[i] \;=\; \eta \times u_l[i] \;+\; (1-\eta) \times |h_{l,i,t}| \times \sum_
 - $h_{l,i,t}$ — 저자 정의 verbatim: *"the output of the i-th hidden unit in layer l at time t"*. 즉 시각 $t$ 에서 그 유닛이 내보낸 활성값. 절댓값을 씌우므로 **부호가 아니라 세기**만 본다.
 - $w_{l,i,k,t}$ — 저자 정의 verbatim: *"the weight connecting the i-th unit in layer l to the k-th unit in layer l + 1"*. 그 유닛이 다음 층 $k$ 번 유닛에게 전달하는 배율.
 - $n_{l+1}$ — 저자 정의 verbatim: *"the number of units in layer l + 1"*. 다음 층의 유닛 개수, 즉 이 유닛의 청중 수.
-- $\eta$ — 감쇠율(decay rate). 0과 1 사이. 과거 효용을 얼마나 남길지 정한다. $\eta$ 가 1 에 가까우면 아주 긴 기억, 0 에 가까우면 최근 한 스텝만 본다.
+- $\eta$ — 감쇠율(decay rate). 0과 1 사이. 과거 효용을 얼마나 남길지 정한다. $\eta$ 가 1 에 가까우면 아주 긴 기억, 0 에 가까우면 최근 한 스텝만 본다. 원문 verbatim: *"The contribution utility is measured as a running average of instantaneous contributions with a decay rate, η, which is set to 0.99 in all experiments."* — **모든 실험에서 0.99 고정**이다.
 
 ### ② 일상 비유
 
@@ -47,7 +47,7 @@ $$u_l[i] \;=\; \eta \times u_l[i] \;+\; (1-\eta) \times |h_{l,i,t}| \times \sum_
 ### ④ 조심할 점
 
 1. **층 간 비교 불가.** $u_l[i]$ 의 크기는 층의 폭·활성함수·스케일에 의존한다. 그래서 알고리즘은 층별로 독립적으로 순위를 매긴다 — 저자 표현 verbatim: *"a fraction of mature units, called the replacement rate, is reinitialized in every layer"*. **매 층에서** 라는 조건이 붙는 이유다.
-2. **$\eta$ 는 시간 상수다.** $\eta=0.99$ 면 대략 최근 100 갱신, $0.999$ 면 1,000 갱신의 기억. 이 값이 비정상성의 속도(과제가 얼마나 자주 바뀌는가)와 맞지 않으면 척도가 무의미해진다. 과제 전환 주기보다 기억이 훨씬 길면 이미 쓸모없어진 유닛이 옛 평판으로 보호되고, 훨씬 짧으면 잡음으로 순위가 요동친다. **본 해체에서 $\eta$ 의 구체 값은 원문 본문 문장에서 확인하지 못했다** (Extended Data Table 에 있을 수 있으나 전사 불가) → 수치 미확인 처리.
+2. **$\eta$ 는 시간 상수인데, 튜닝되지 않았다.** $\eta=0.99$ 는 대략 최근 100 갱신 분량의 기억에 해당한다. 그런데 이 값이 **모든 실험에서 고정**이라는 사실(원문 verbatim: *"which is set to 0.99 in all experiments"*)은 곱씹을 만하다. 효용 척도의 기억 길이는 원리적으로 **비정상성의 속도**와 맞물려야 한다 — 과제 전환 주기보다 기억이 훨씬 길면 이미 쓸모없어진 유닛이 옛 평판으로 보호되고, 훨씬 짧으면 잡음으로 순위가 요동친다. 그런데 이 논문의 실험은 과제 전환 주기를 의도적으로 크게 흔든다 (Online Permuted MNIST 에서 *"after each 10,000, 100,000 or 1 million examples"*). **그 전 범위에서 $\eta$ 하나로 충분했다**는 건 ⓐ 효용 척도가 $\eta$ 에 둔감하다는 좋은 소식이거나, ⓑ $\eta$ 를 맞췄으면 더 좋았을 여지를 남긴 것이다. 어느 쪽인지 가르는 민감도 분석은 확인된 본문 범위에 없다.
 3. **곱셈 구조의 부작용.** $|h|$ 와 $\sum|w|$ 가 곱해지므로 한쪽이 아주 작으면 다른 쪽이 아무리 커도 효용이 낮게 나온다. 이는 죽은 유닛 검출에는 이득이지만, "출력은 작지만 정밀하게 결정적인" 유닛(예: 게이트 역할)을 과소평가할 수 있다. 트랜스포머의 어텐션 헤드처럼 **출력 크기와 기능적 중요도가 어긋나는 구조**에서는 이 척도의 타당성이 재검증돼야 한다 — 이건 사용자의 APF 트랙과 직결되는 지점이다 (`09_my_research.md`).
 4. **절댓값 사용의 함의.** 부호를 버리므로 "억제성(음의) 기여"와 "흥분성(양의) 기여"를 동일 취급한다. 대부분의 경우 합리적이지만, 부호가 기능적으로 구분되는 회로(예: 상반된 두 특징의 대비를 만드는 유닛쌍)에서는 정보를 잃는다.
 
