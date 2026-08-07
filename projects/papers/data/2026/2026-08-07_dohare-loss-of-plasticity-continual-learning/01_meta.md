@@ -4,8 +4,8 @@
 
 - **DOI**: 10.1038/s41586-024-07711-7 · *Nature* 632(8026), 768–774 (2024)
 - **프리프린트**: arXiv:2306.13812 (v3, 2024-04-09) — 제목이 *"Maintaining Plasticity in Deep Continual Learning"* 으로 게재본과 다르다
-- **인용 수**: **미확인**. 본 실행 환경에서 Semantic Scholar API 및 nature.com 도메인이 차단되어 직접 조회하지 못했다. 정성적으로는 "가소성 상실(plasticity loss)"이라는 용어 자체를 표준화한 논문으로 후속 흐름이 형성되어 있으나, **구체 인용 수치는 주장하지 않는다.**
-- **저자 권위**: 교신 저자 Richard S. Sutton 은 강화학습 교과서 *Reinforcement Learning: An Introduction* 의 공저자이자 2024년 튜링상 수상자다. A. Rupam Mahmood 과 함께 University of Alberta / Amii 라인의 "연속학습(continual learning)을 특수 사례가 아니라 기본값으로 놓자"는 오랜 프로그램의 결과물이다. 즉 이 논문은 단발 아이디어가 아니라 **연구 프로그램의 결론부**다.
+- **인용 수**: **미확인** (본 실행에서 Semantic Scholar API 및 nature.com 접근이 차단되어 직접 조회 실패 → **구체 수치를 주장하지 않는다**).
+- **저자 권위**: 교신 저자 Richard S. Sutton 은 *Reinforcement Learning: An Introduction* 공저자이자 2024년 튜링상 수상자다. A. Rupam Mahmood 과 함께 University of Alberta / Amii 라인의 "연속학습을 특수 사례가 아니라 기본값으로 놓자"는 오랜 프로그램의 결과물 — 단발 아이디어가 아니라 **연구 프로그램의 결론부**다.
 
 ## 근거 지도 (Evidence map — 원문 위치)
 
@@ -14,7 +14,7 @@
 3. **실험 세부** → Methods 하위절 "Details of Continual ImageNet" / "Class-incremental CIFAR-100" / "Robust loss of plasticity in permuted MNIST" / "Loss of plasticity with different activations in Slowly-Changing Regression" / "Details and further analysis in reinforcement learning". 하이퍼파라미터 격자는 **Extended Data Table 1–5**.
 4. **한계·유보** → Discussion 절 마지막 문단 (*"will probably require further development to reach its most effective form"*) + Methods 의 ReDo 비교 문단(*"we perform a preliminary comparison"* — 저자 스스로 "예비적"이라 명시).
 
-> **미확보 구간 명시**: Extended Data Table 1–5 는 PMC 렌더에서 **이미지 파일**(예: `41586_2024_7711_Tab2_ESM.jpg`)로만 제공되어 셀 값을 전사할 수 없었다. 따라서 본 해체에서 인용하는 하이퍼파라미터 수치는 **Methods 본문에 문장으로 적힌 것만**이며, 표 셀에서 온 값은 없다. Data/Code availability 정식 문구와 ReDo 비교의 정량 결과 역시 렌더 절단으로 확인 불가 → "원문 수치 미확인" 처리.
+> **미확보 구간 명시**: Extended Data Table 1–5 는 PMC 렌더에서 **이미지 파일**(예: `41586_2024_7711_Tab2_ESM.jpg`)로만 제공되어 셀 값을 전사할 수 없었다. 따라서 본 해체가 인용하는 하이퍼파라미터는 **Methods 본문에 문장으로 적힌 것만**이며 표 셀에서 온 값은 없다. Data/Code availability 문구와 ReDo 비교의 정량 결과도 렌더 절단으로 "미확인" 처리.
 
 ## 선정 이유 (품질 게이트 통과 근거)
 
@@ -28,8 +28,8 @@
 
 ## 왜 오늘(금요일 원거리) 이 논문인가
 
-`_coverage.md` 기준 원거리 버킷 태그 중 `continual-learning` 은 **커버 1건, 마지막 2026-05-01** 로 3개월 넘게 정체된 최장 공백 태그였다. 같은 버킷의 `sae-features`(3, 07-24)·`causal-ml-finance`(1, 07-10)·`rl-trading`(1, 07-03) 은 최근 2개월 내 커버됐다.
+`_coverage.md` 기준 원거리 버킷에서 `continual-learning` 은 **커버 1건, 마지막 2026-05-01** 로 3개월 넘게 정체된 최장 공백 태그였다 (같은 버킷의 `sae-features`·`causal-ml-finance`·`rl-trading` 은 최근 2개월 내 커버).
 
-또한 이 논문은 **2026-07-17 실행에서 이미 최우선 후보로 지목됐다가 프록시 차단으로 SKIP-DAY 처리된 항목**이다 (`skipped.log`: `2026-07-17 SKIP DOI:10.1038/s41586-024-07711-7 reason=no_fulltext`). 당시 저자 GitHub(2차)만 열려 §4-bis 를 통과하지 못했다. 오늘은 Nature 게재본 오픈액세스 전문에 직접 접근해 Q1/Q2/Q3 를 모두 원문 verbatim 으로 답했으므로 **정상 발행 자격을 얻었다**. 이는 "부분 복원 발행 금지" 규칙이 실제로 작동해 3주 뒤 온전한 근거로 회수된 사례다.
+또한 이 논문은 **2026-07-17 실행에서 최우선 후보로 지목됐다가 프록시 차단으로 SKIP-DAY 처리된 항목**이다 (`skipped.log`: `2026-07-17 SKIP DOI:10.1038/s41586-024-07711-7 reason=no_fulltext`). 당시 저자 GitHub(2차)만 열려 §4-bis 를 통과하지 못했다. 오늘은 Nature 게재본 전문에 직접 접근해 Q1/Q2/Q3 를 원문 verbatim 으로 답했으므로 **정상 발행 자격을 얻었다** — "부분 복원 발행 금지" 규칙이 작동해 3주 뒤 온전한 근거로 회수된 사례다.
 
-Priority 목록(`_index.md` "사용자 우선 읽기 목록") 직접 매칭은 없다. 태그 균형 + 품질 게이트 A 로 선정했다.
+Priority 목록 직접 매칭은 없다. 태그 균형 + 품질 게이트 A 로 선정했다.

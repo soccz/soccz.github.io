@@ -17,13 +17,13 @@
 - **Fig. 2** (class-incremental CIFAR-100): *"By the end, when all 100 classes were available, the accuracy of the incrementally trained base system was 5% lower than the retrained network"*
 
 > **⚠️ 수치 주의 — 널리 인용되는 "89% → 77%"에 대하여**
-> 이 논문을 인용할 때 흔히 등장하는 "ImageNet 이진 분류가 89%에서 77%로 떨어졌다"는 수치는 **arXiv 프리프린트(arXiv:2306.13812) 초록**의 문장이다: *"In ImageNet, binary classification performance dropped from 89% accuracy on an early task down to 77%, about the level of a linear network, on the 2000th task."*
-> **Nature 게재본 초록에는 이 문장이 없다.** 게재본 본문에서 내가 직접 확인한 대응 수치는 *"up to 88% correct on the test set of the early tasks"* 이며, 2,000번째 과제의 정확한 값은 Fig. 1b 그래프에 있고 본문 문장으로는 전사하지 못했다. 따라서 **본 해체는 "89%→77%"를 Nature 판본의 수치로 단정하지 않는다.** 인용할 때는 어느 판본인지 반드시 명시해야 한다. (이건 사소한 트집이 아니다 — 게재 과정에서 초록이 정성적 서술로 바뀌었다는 건 저자 또는 리뷰어가 그 단일 숫자쌍의 대표성에 부담을 느꼈을 가능성을 시사한다.)
+> 흔히 인용되는 "ImageNet 이진 분류가 89%에서 77%로 떨어졌다"는 **arXiv 프리프린트(arXiv:2306.13812) 초록**의 문장이다: *"In ImageNet, binary classification performance dropped from 89% accuracy on an early task down to 77%, about the level of a linear network, on the 2000th task."*
+> **Nature 게재본 초록에는 이 문장이 없다.** 게재본 본문에서 직접 확인한 대응 수치는 *"up to 88% correct on the test set of the early tasks"* 이고, 2,000번째 과제의 정확한 값은 Fig. 1b 그래프에 있어 본문 문장으로는 전사하지 못했다. 따라서 **"89%→77%"를 Nature 판본의 수치로 단정하지 않는다.** 인용 시 판본을 명시할 것. (사소한 트집이 아니다 — 게재 과정에서 초록이 정성적 서술로 바뀌었다는 건 그 단일 숫자쌍의 대표성에 저자 또는 리뷰어가 부담을 느꼈을 가능성을 시사한다.)
 
 ### 숨은 전제
-1. **"과제 n 에서의 성능"이 곧 "가소성"이다.** 실제로 측정되는 건 온라인 분류 정확도이지 "학습 여력"이 아니다. 성능 하락은 (a) 학습 능력 상실 때문일 수도, (b) 후반 과제가 더 어려워서일 수도 있다. 저자들은 과제를 무작위 클래스쌍으로 뽑아 (b) 를 통제하려 하지만(*"varying the sequence of tasks"* 로 30 runs), **과제 난이도 분포가 시간에 대해 정상(stationary)이라는 가정**이 깔린다.
-2. **선형/얕은 기준선이 공정하게 튜닝됐다.** "얕은 망보다 못하다"는 비교 주장은 기준선의 강도에 전적으로 의존한다.
-3. **모든 개별 과제는 독립적으로 학습 가능하다.** 즉 실패의 원인이 과제 자체에 있지 않다.
+1. **"과제 n 에서의 성능"이 곧 "가소성"이다.** 실제 측정되는 건 온라인 분류 정확도이지 "학습 여력"이 아니다. 성능 하락은 (a) 학습 능력 상실 때문일 수도, (b) 후반 과제가 더 어려워서일 수도 있는데, 저자들은 무작위 클래스쌍으로 (b) 를 통제하려 하지만 **과제 난이도 분포가 시간에 대해 정상(stationary)이라는 가정**이 깔린다.
+2. **선형/얕은 기준선이 공정하게 튜닝됐다.** "얕은 망보다 못하다"는 비교 주장은 기준선 강도에 전적으로 의존한다.
+3. **모든 개별 과제는 독립적으로 학습 가능하다** — 실패 원인이 과제 자체에 있지 않다.
 
 ### 쉬운 말 풀이
 운동선수가 훈련을 계속하는데, 어느 순간부터 **훈련해도 기록이 안 늘어난다**. 심지어 방금 운동을 시작한 초보자보다도 향상 속도가 느리다. 몸이 굳은 것이다. 이 논문은 신경망에서 정확히 그 일이 일어난다는 걸, 이천 번의 훈련 사이클로 보여준다.

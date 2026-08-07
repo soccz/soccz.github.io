@@ -29,14 +29,9 @@
 
 ## 4-a-2. 왜 "재초기화"인가 — 발상의 출처
 
-이 알고리즘의 논리는 거꾸로 읽어야 이해된다.
+이 알고리즘의 논리는 거꾸로 읽어야 이해된다. **관찰 1**: 학습 초기의 망은 가소성이 최대이고, 그때 망에는 **무작위 초기화 직후의 다양성**이 있다. **관찰 2**: 시간이 지나며 그 다양성이 단조 감소한다. **가설**: 가소성 = 다양성의 함수다. **처방**: 다양성을 되돌려라 — 가장 직접적인 방법은 **초기 분포에서 다시 뽑는 것**, 즉 재초기화다.
 
-1. **관찰**: 학습 초기의 망은 가소성이 최대다. 그때 망은 무엇이 다른가? → **무작위 초기화 직후의 다양성**이 있다.
-2. **관찰**: 시간이 지나며 그 다양성이 단조 감소한다 (죽은 유닛 증가, 가중치 크기 증가, 유효 랭크 감소).
-3. **가설**: 그렇다면 가소성 = 다양성의 함수다.
-4. **처방**: 다양성을 되돌려라. 되돌리는 가장 직접적인 방법은 **초기 분포에서 다시 뽑는 것** — 즉 재초기화.
-
-여기서 저자들이 마주친 실무적 딜레마가 문제 설정 전체를 규정한다. **망 전체를 재초기화하면 다양성은 완벽히 회복되지만 지금까지 배운 걸 다 버린다.** 반대로 아무것도 안 하면 다양성은 계속 준다. 그래서 필요한 건 "얼마나, 어디를 리셋할 것인가"의 답이다. 연속 역전파의 세 하이퍼파라미터가 정확히 그 세 질문에 대응한다.
+여기서 마주치는 딜레마가 문제 설정 전체를 규정한다. **망 전체를 재초기화하면 다양성은 완벽히 회복되지만 배운 걸 다 버리고**, 아무것도 안 하면 다양성은 계속 준다. 그래서 필요한 건 "얼마나, 어디를 리셋할 것인가"이며, 세 하이퍼파라미터가 정확히 그 질문들에 대응한다.
 
 | 질문 | 하이퍼파라미터 | 역할 |
 |---|---|---|
@@ -50,21 +45,17 @@
 
 > *"in class-incremental CIFAR-100 (Fig. 2) we used continual backpropagation with a replacement rate of 10⁻⁵"* → *"roughly 512 × 10⁻⁵ = 0.00512 units are replaced"* → *"one replacement after every 1/0.00512 ≈ 200 updates or one replacement after every eight epochs"*
 
-**여덟 에폭에 뉴런 하나.** 이 개입 강도를 어떻게 이해해야 하는가.
-
-- **연산 비용 관점**: 무시 가능하다. 효용 갱신은 유닛당 곱셈 몇 번, 재초기화는 200 갱신에 한 번이다. 학습 속도에 사실상 영향이 없다.
-- **손상 관점**: 512 개 유닛 중 하나를 200 갱신마다 바꾸는 건, 남은 511 개가 그 사이에 보정할 시간이 충분하다는 뜻이다. Shrink and Perturb 처럼 전체를 흔드는 것과 질적으로 다르다.
-- **놀라움 관점**: 그런데 **이 정도의 미세 개입이 "무한 가소성"과 "얕은 망 수준 붕괴"를 가른다.** 이게 이 논문에서 가장 인상적인 부분이다. 뒤집어 말하면 — 표준 딥러닝이 실패하는 이유가 **"다양성을 조금도 재공급하지 않는다"는 구조적 0(zero)** 에 있다는 뜻이다. 0 과 0.00512 의 차이가 결과를 가른다. 이건 연속적 튜닝 문제가 아니라 **질적 상전이**에 가깝다.
+**여덟 에폭에 뉴런 하나.** **연산 비용**은 무시 가능하고(효용 갱신은 유닛당 곱셈 몇 번), **손상**도 작다(남은 511 개가 보정할 시간이 충분하다 — 전체를 흔드는 Shrink and Perturb 와 질적으로 다르다). 그런데 **이 정도의 미세 개입이 "무한 가소성"과 "얕은 망 수준 붕괴"를 가른다.** 이게 이 논문에서 가장 인상적인 부분이다. 뒤집어 말하면 표준 딥러닝이 실패하는 이유는 **"다양성을 조금도 재공급하지 않는다"는 구조적 0(zero)** 에 있다 — 0 과 0.00512 의 차이가 결과를 가르므로, 연속적 튜닝 문제가 아니라 **질적 상전이**에 가깝다.
 
 > **조심할 점**: 이 계산은 CIFAR-100 설정(층 폭 512, $\rho=10^{-5}$)에 대한 것이다. Continual ImageNet 등 다른 실험의 $\rho$ 값은 Extended Data Table 2 에 있으나 **해당 표는 이미지로만 제공돼 본 해체에서 셀 값을 전사하지 못했다.** 다른 설정의 교체율을 이 값으로 유추하면 안 된다.
 
 ## 4-a-4. 이 방법이 아니었다면 — 대안 설계 3가지
 
-**대안 1: 주기적 전면 재초기화 (periodic reset).** 일정 주기마다 망 전체를 다시 초기화하고 처음부터 학습. 다양성은 완벽히 회복되지만 지식이 전부 날아가고, 매번 학습 비용이 든다. 실제로 class-incremental CIFAR-100 의 "retrained network" 기준선이 이 전략의 극단이며, 논문은 이것이 **증분 학습보다 낫다**고 보고한다(*"the accuracy of the incrementally trained base system was 5% lower than the retrained network"*). 즉 대안 1 은 강력하지만 비싸다. 연속 역전파는 "재학습 수준의 성능을 재학습 비용 없이"를 노린다.
+**대안 1: 주기적 전면 재초기화.** 다양성은 완벽히 회복되지만 지식이 전부 날아가고 매번 학습 비용이 든다. class-incremental CIFAR-100 의 "retrained network" 기준선이 이 전략의 극단이며, 논문은 이것이 **증분 학습보다 낫다**고 보고한다(*"the accuracy of the incrementally trained base system was 5% lower than the retrained network"*). 강력하지만 비싸다 — 연속 역전파는 "재학습 수준의 성능을 재학습 비용 없이"를 노린다.
 
-**대안 2: 가중치 크기 억제만 (L2).** 세 진단 축 중 "가중치 크기"만 공략. 실제로 상당히 잘 듣는다 (Fig. 1c, Fig. 3c 모두에 등장). 그런데 죽은 유닛과 유효 랭크 축은 직접 건드리지 않는다. 저자들이 Fig. 1c 에 L2 를 함께 그려 넣은 건 정직한 처사이지만, 동시에 Claim 4 를 약화시킨다 (`04_claims_b_remedy.md` 참조).
+**대안 2: 가중치 크기 억제만 (L2).** 세 축 중 하나만 공략하는데 상당히 잘 듣는다(Fig. 1c·3c 모두 등장). 저자들이 이를 함께 그려 넣은 건 정직하지만 동시에 Claim 4 를 약화시킨다 (`04_claims_b_remedy.md`).
 
-**대안 3: 전면 노이즈 주입 (Shrink and Perturb).** 모든 가중치를 축소하고 노이즈를 더한다. 다양성·크기 두 축을 동시에 공략하며 실제로 효과가 크다 — *"almost completely mitigates loss of plasticity in Online Permuted MNIST"*. 약점은 선택성이 없다는 것. Discussion 의 대비 문장이 연속 역전파의 존재 이유를 정확히 요약한다: *"continual backpropagation restricts this variability to the units of the network that are at present least used, minimizing damage to the operation of the network."*
+**대안 3: 전면 노이즈 주입 (Shrink and Perturb).** 다양성·크기 두 축을 동시에 공략하며 효과가 크다 — *"almost completely mitigates loss of plasticity in Online Permuted MNIST"*. 약점은 선택성 부재. Discussion 이 연속 역전파의 존재 이유를 정확히 요약한다: *"continual backpropagation restricts this variability to the units of the network that are at present least used, minimizing damage to the operation of the network."*
 
 ## 4-a-5. 핵심 한 문장
 

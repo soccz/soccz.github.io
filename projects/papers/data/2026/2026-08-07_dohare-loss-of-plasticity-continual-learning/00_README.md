@@ -20,7 +20,7 @@
 | Metadata match | ✅ 제목·저자 6인·연도·venue 일치 확인 (PMC 게재본 서지 + arXiv 공식 abs 페이지 버전 이력) |
 | Full text access | ✅ **1차 소스 = Nature 게재본 오픈액세스 전문** (PMC11338828). Abstract / Main / Plasticity loss in supervised learning / Plasticity loss in reinforcement learning / Maintaining plasticity / Discussion / Methods 8개 하위절 / Fig. 1–4 / Extended Data Fig. 2–5 / Extended Data Table 1–5 위치 전부 확인 |
 | Evidence map | ✅ `01_meta.md` 참조 |
-| 미확보 구간 | Extended Data Table 1~5 의 **셀 값은 이미지로만 제공**되어 전사 불가 (캡션만 확인). Data/Code availability 문·ReDo 비교 문단 뒷부분은 PMC 렌더가 중간에서 잘림 → 해당 수치는 본 해체에서 **단정하지 않음** |
+| 미확보 구간 | Extended Data Table 1~5 의 **셀 값은 이미지로만 제공**되어 전사 불가 (캡션만 확인). Data/Code availability 문·ReDo 비교 뒷부분은 PMC 렌더 절단 → 해당 수치를 **단정하지 않음** |
 
 ## §4-bis 3문 자기시험 (통과)
 
@@ -36,7 +36,7 @@
 
 ## 코드·데이터
 
-저자 공식 저장소 `github.com/shibhansh/loss-of-plasticity` 존재 *(2차: 저자 GitHub — 구조·구현 세부만 사용, 본 해체의 수치 근거로 쓰지 않음)*. 게재본의 Data/Code availability 정식 문구는 PMC 렌더 절단으로 전사하지 못했다.
+저자 공식 저장소 `github.com/shibhansh/loss-of-plasticity` 존재 *(2차: 저자 GitHub — 본 해체의 수치 근거로 쓰지 않음)*. 게재본의 Data/Code availability 정식 문구는 PMC 렌더 절단으로 전사하지 못했다.
 
 ---
 
