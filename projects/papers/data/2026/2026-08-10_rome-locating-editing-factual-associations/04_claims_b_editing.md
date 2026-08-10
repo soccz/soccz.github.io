@@ -17,12 +17,12 @@
 - 실행 비용 증거: **Appendix E.5** — "The entire ROME edit takes approximately **2s on an NVIDIA A6000 GPU** for GPT-2 XL."
 
 **숨은 전제.**
-1. **$W$가 애초에 최소제곱 최적해였다는 가정.** Appendix A는 첫 문장부터 "We assume that $W$ is the optimal least-squares solution for memorizing a mapping from a previous set of keys $K$ to values $V$"라고 전제한다. 하지만 실제 GPT의 $W_{proj}$는 언어모델링 손실로 학습된 것이지, 어떤 $(K, V)$ 쌍의 최소제곱해로 학습된 게 아니다. **유도의 출발점이 사실이 아니라 편의상의 가정**이다. 이게 통하는 건 결국 실험이 통했기 때문이지 정리가 보증해서가 아니다.
-2. **$C = KK^\top$의 대리 추정이 타당하다.** 진짜 $K$(모델이 학습 중 본 모든 키)는 접근 불가라, 저자들은 위키피디아 텍스트 10만 개 은닉상태 샘플로 비중심 2차 모멘트를 추정한다(Appendix E.5). "모델의 기억 분포 ≈ 위키피디아 토큰 분포"라는 대체가 깔려 있다.
-3. **$C$가 비퇴화(nondegenerate)** — Appendix A가 명시적으로 "assuming $C$ is nondegenerate"라고 가정한다. 역행렬이 존재하지 않거나 조건수가 나쁘면 업데이트가 폭주한다.
+1. **$W$가 애초에 최소제곱 최적해였다는 가정.** Appendix A 첫 문장이 "We assume that $W$ is the optimal least-squares solution…"이라 전제하지만, 실제 GPT의 $W_{proj}$는 언어모델링 손실로 학습된 것이다. **유도의 출발점이 사실이 아니라 편의상의 가정**이며, 이게 통하는 건 실험이 통했기 때문이지 정리가 보증해서가 아니다.
+2. **$C = KK^\top$의 대리 추정이 타당하다.** 진짜 $K$는 접근 불가라 위키피디아 10만 은닉상태 샘플로 추정한다(Appendix E.5). "모델의 기억 분포 ≈ 위키피디아 토큰 분포"라는 대체가 깔려 있다.
+3. **$C$가 비퇴화(nondegenerate)** — Appendix A가 명시적으로 가정한다. 조건수가 나쁘면 업데이트가 폭주한다.
 4. **사실 하나 = 키–값 쌍 하나.** 이것이 §3.7이 인정하는 방향성 문제의 근원이다.
 
-**쉬운 말 풀이.** 도서관 사서의 머릿속에 "이름표 → 정보" 카드가 잔뜩 든 서랍이 있다고 하자. 새 카드를 넣고 싶다. 무식한 방법은 서랍 전체를 다시 정리하는 것(fine-tuning)인데, 그러면 옆 카드들이 뒤섞인다. 저자들의 방법은 **"기존 카드들을 최대한 안 건드리면서 새 카드만 들어가게 하는 최소한의 밀어넣기"를 수식으로 정확히 계산**하는 것이다. 그리고 그 계산에 답이 딱 하나로 나온다 — 시행착오가 필요 없다. 2초면 끝난다.
+**쉬운 말 풀이.** 사서의 머릿속에 "이름표 → 정보" 카드가 잔뜩 든 서랍이 있다. 새 카드를 넣는 무식한 방법은 서랍 전체를 다시 정리하는 것(fine-tuning)인데 그러면 옆 카드들이 뒤섞인다. 저자들의 방법은 **"기존 카드를 최대한 안 건드리면서 새 카드만 들어가게 하는 최소한의 밀어넣기"를 수식으로 정확히 계산**하는 것이고, 답이 딱 하나로 나온다 — 시행착오 없이 2초면 끝난다.
 
 ---
 
@@ -38,15 +38,15 @@
   - **KE-CF**: ES 99.9, PS 95.8인데 **NS 6.9**, NM −63.2, GE 383.0 → 극단적 F2 + 유창성 붕괴. 종합 S는 **18.1**로 편집 안 한 GPT-2 XL(30.5)보다도 낮다.
   - **KN**: ES 28.7 → 애초에 편집이 안 됨 (F1+F2)
 - GPT-J(6B)에서도 동일 패턴 — ROME **S=91.5** vs FT **S=25.5**(NS 10.3으로 붕괴). Table 4 캡션이 이를 직접 짚는다: "on GPT-J, FT achieves 100% efficacy, but nearly 90% of neighborhood prompts are incorrect."
-- 질적 증거 **Figure 6**: "Pierre Curie's area of work is medicine"를 삽입한 뒤, FT+L·KE·MEND는 **무관한 Robert Millikan까지** 의학자로 바꿔버리는 반면 ROME은 Millikan을 건드리지 않는다(f2).
-- 작은 모델 확장 **Table 5**: GPT-2 M에서 ROME S=87.4 vs FT+L 68.0, GPT-2 L에서 ROME S=88.2 vs FT+L 71.2.
+- 질적 증거 **Figure 6**: "Pierre Curie's area of work is medicine"를 삽입한 뒤 FT+L·KE·MEND는 **무관한 Robert Millikan까지** 의학자로 바꾸는 반면 ROME은 Millikan을 건드리지 않는다(f2).
+- 작은 모델 확장 **Table 5**: GPT-2 M에서 ROME 87.4 vs FT+L 68.0, GPT-2 L에서 88.2 vs 71.2.
 
 **숨은 전제.**
-1. **종합 점수 S(조화평균)가 공정한 심판이다.** ES·PS·NS의 조화평균은 **한 축이 낮으면 전체가 무너지도록** 설계됐다. 이는 F1/F2 실패를 처벌하려는 의도적 설계지만, 동시에 **ROME의 강점 축(균형)을 점수화한 지표**이기도 하다. 다른 가중을 쓰면 순위가 달라질 수 있다(예: 특이성을 포기해도 되는 응용에서는 FT가 낫다).
-2. **baseline 하이퍼파라미터가 충분히 탐색됐다.** 저자들은 Figure 17·18로 FT·FT+L의 층과 $\epsilon$을 스윕했고, KE·MEND는 C OUNTER FACT/zsRE 학습셋으로 **전용 버전(KE-CF, MEND-CF, KE-zsRE, MEND-zsRE)까지 따로 학습**시켰다(Appendix E.3, E.4). 이 성실성은 인정할 만하다. 다만 KE·MEND의 학습 하이퍼파라미터는 "default configuration"을 그대로 썼다고 명시한다 — ROME 쪽은 저자들이 직접 튜닝한 반면 baseline 쪽은 기본값이라는 비대칭이 남는다.
-3. **C OUNTER FACT가 편향 없는 시험장이다.** 이 데이터셋은 **저자들이 만들었고**, 지표 정의도 저자들이 했다. Table 3이 기존 벤치마크(SQuAD, zsRE, FEVER, WikiText, PARAREL) 대비 우위를 표로 보이는데, 비교 기준(Efficacy/Generalization/Bleedover/Consistency/Fluency) 역시 저자들이 골랐다. 자기가 만든 자에서 자기가 1등인 구조다. (**완화 요인**: zsRE라는 **남의 벤치마크**에서도 Table 1로 경쟁력을 보였다.)
+1. **종합 점수 S(조화평균)가 공정한 심판이다.** ES·PS·NS의 조화평균은 **한 축이 낮으면 전체가 무너지도록** 설계됐다. F1/F2를 처벌하려는 의도적 설계지만 동시에 **ROME의 강점 축(균형)을 점수화한 지표**이기도 하다.
+2. **baseline 하이퍼파라미터가 충분히 탐색됐다.** 저자들은 Figure 17·18로 FT·FT+L의 층과 $\epsilon$을 스윕했고, KE·MEND는 **전용 버전(KE-CF, MEND-CF, KE-zsRE, MEND-zsRE)까지 따로 학습**시켰다(Appendix E.3, E.4). 다만 KE·MEND의 학습 하이퍼파라미터는 "default configuration"이라 명시한다 — ROME은 저자 튜닝, baseline은 기본값이라는 비대칭이 남는다.
+3. **C OUNTER FACT가 편향 없는 시험장이다.** 데이터셋도 지표도 저자들이 만들었고 Table 3의 비교 기준도 저자들이 골랐다. 자기가 만든 자에서 자기가 1등인 구조다. (**완화 요인**: zsRE라는 **남의 벤치마크**에서도 Table 1로 경쟁력을 보였다.)
 
-**쉬운 말 풀이.** 학생에게 "퀴리는 의사였다"고 잘못 가르쳐 본다고 하자. 좋은 교정이란 ① 다르게 물어도 "의사"라 답하고(일반화) ② 다른 과학자 이야기는 원래대로 남는(특이성) 것이다. 기존 방법들은 둘 중 하나만 됐다 — 어떤 건 그 문장만 외워서 다르게 물으면 도로 물리학자라 하고, 어떤 건 아예 **모든 과학자를 의사로** 만들어버린다. ROME은 처음으로 둘을 동시에 해냈다.
+**쉬운 말 풀이.** 학생에게 "퀴리는 의사였다"고 잘못 가르쳤다 하자. 좋은 교정이란 ① 다르게 물어도 "의사"라 답하고(일반화) ② 다른 과학자 이야기는 원래대로 남는(특이성) 것이다. 기존 방법들은 둘 중 하나만 됐다 — 어떤 건 그 문장만 외워 다르게 물으면 도로 물리학자라 하고, 어떤 건 아예 **모든 과학자를 의사로** 만든다. ROME은 처음으로 둘을 동시에 해냈다.
 
 ---
 
@@ -55,10 +55,10 @@
 **주장 (한 문장).** ROME을 모든 (층, 토큰) 조합에 적용해보면 성능 봉우리가 **§2의 인과추적이 지목한 바로 그 좌표**에 선다.
 
 **증거.**
-- 원문 **§3.4** + **Figure 5**: "ROME edits are benchmarked at each layer-and-token combination in GPT-2-XL… ROME editing results confirm the importance of mid-layer MLP layers at the final subject token, where performance peaks." 본문 서술: "rewrites are most successful at the last subject token, where both specificity and generalization peak at middle layers. Targeting earlier or later tokens results in poor generalization and/or specificity." 그리고 "**generalization peaking at the 18th layer**."
-- 저자들이 §3.4에서 이 수렴의 의미를 직접 선언: "This evidence suggests that we have an accurate understanding not only of **where** factual associations are stored, but also **how**."
-- **보완 실험 (Appendix I)** — 어텐션 쪽을 편집하는 **AttnEdit**를 만들어 층 33(어텐션 인과효과의 중심, Figure 1l)의 $W_i^Q, W_i^K, W_i^V$를 제약 fine-tuning한다. 결과: ROME과 AttnEdit **둘 다 원래 프롬프트는 성공**하지만 AttnEdit는 패러프레이즈·일반화 프롬프트에서 실패한다(**Figure 25** — "에펠탑은 로마에 있다" 삽입 후, AttnEdit는 (c)에서 도로 파리·프랑스 이야기를 하는 반면 ROME은 (d)에서 "로마의 상징"이라 답한다). 즉 **후반 어텐션 편집은 앵무새 반복(regurgitation)을 낳고 중간층 MLP 편집만 진짜 지식 변경을 낳는다** — §3.4가 "Appendix I furthermore demonstrates that editing the late-layer attention modules leads to regurgitation"으로 본문에 연결한다.
+- 원문 **§3.4** + **Figure 5**: "rewrites are most successful at the last subject token, where both specificity and generalization peak at middle layers. Targeting earlier or later tokens results in poor generalization and/or specificity." 그리고 "**generalization peaking at the 18th layer**."
+- 저자들이 수렴의 의미를 직접 선언: "This evidence suggests that we have an accurate understanding not only of **where** factual associations are stored, but also **how**."
+- **음성 대조군 (Appendix I)** — 어텐션 쪽을 편집하는 **AttnEdit**. 결과는 "후반 어텐션 편집은 앵무새 반복(regurgitation)을 낳고 중간층 MLP 편집만 진짜 지식 변경을 낳는다"이며, §3.4가 이를 본문에 연결한다. 상세는 [06_experiments_b_localization.md](06_experiments_b_localization.md) 실험 2.
 
-**숨은 전제.** **두 측정이 진짜 독립인가.** 인과추적도 ROME도 결국 "subject 마지막 토큰의 중간층 MLP 활성"이라는 같은 대상을 건드린다. 인과추적은 그 활성을 **복원**하고, ROME은 그 활성을 만드는 **가중치**를 바꾼다. 표적이 같으면 두 측정이 같은 봉우리를 내는 건 놀랍지 않을 수 있다 — 독립적 확인이라기보다 **같은 개입의 두 표현**일 가능성. 이 반론은 실제로 후속 연구(Hase et al., NeurIPS 2023 Spotlight)가 반대 방향에서 파고든 지점이며, [07_limits.md](07_limits.md)에서 정면으로 다룬다.
+**숨은 전제.** **두 측정이 진짜 독립인가.** 인과추적도 ROME도 결국 "subject 마지막 토큰의 중간층 MLP"라는 같은 대상을 건드린다 — 전자는 그 활성을 **복원**하고 후자는 그 활성을 만드는 **가중치**를 바꾼다. 표적이 같으면 같은 봉우리가 나오는 게 놀랍지 않을 수 있다. 이 반론은 후속 연구(Hase et al., NeurIPS 2023 Spotlight)가 반대 방향에서 파고든 지점이며 [07_limits.md](07_limits.md)에서 정면으로 다룬다.
 
-**쉬운 말 풀이.** 범인을 지목하는 방법이 두 가지 있다. ① 알리바이를 하나씩 지워보며 누가 사건에 결정적이었는지 추론하기(인과추적), ② 실제로 그 사람의 행동을 바꿔놓고 사건이 달라지는지 보기(ROME 편집). 둘이 같은 사람을 가리키면 신뢰도가 올라간다. 이 논문의 힘은 두 방법을 **같은 논문 안에서** 돌려 지도를 겹쳐 보였다는 데 있다. 다만 두 방법이 같은 사람의 같은 부위를 건드리고 있다면, 겹침이 얼마나 강한 증거인지는 따져볼 여지가 있다.
+**쉬운 말 풀이.** 범인을 지목하는 두 방법 — ① 알리바이를 하나씩 지워보며 누가 결정적이었는지 추론하기(인과추적), ② 실제로 그 사람의 행동을 바꿔놓고 사건이 달라지는지 보기(편집). 둘이 같은 사람을 가리키면 신뢰도가 올라가고, 이 논문의 힘은 두 방법을 **한 논문 안에서** 돌려 지도를 겹친 데 있다. 다만 두 방법이 같은 사람의 같은 부위를 건드린다면 겹침이 얼마나 강한 증거인지는 따져볼 여지가 있다.

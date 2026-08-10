@@ -6,7 +6,7 @@
 
 ## 이 부분이 왜 필요한가
 
-Eqn. 2는 재료를 받아 요리하는 레시피일 뿐, 재료 자체는 만들어주지 않는다. 그리고 재료 선택이 곧 **"사실이란 무엇인가"에 대한 조작적 정의**가 된다. $k_*$를 어떻게 잡느냐가 "주체를 어떻게 식별하는가"이고, $v_*$를 어떻게 잡느냐가 "새 사실이 무엇을 의미하는가"이기 때문이다.
+Eqn. 2는 재료를 받아 요리하는 레시피일 뿐 재료 자체는 만들어주지 않는다. 그리고 재료 선택이 곧 **"사실이란 무엇인가"에 대한 조작적 정의**가 된다 — $k_*$가 "주체를 어떻게 식별하는가"이고 $v_*$가 "새 사실이 무엇을 의미하는가"이기 때문이다.
 
 ---
 
@@ -23,14 +23,9 @@ $$k_* = \frac{1}{N}\sum_{j=1}^{N} k(x_j + s), \qquad \text{where}\quad k(x) = \s
 - **왜 비선형 직후인가?** Eqn. 1에서 $m_i^{(l)} = W_{proj}^{(l)}\sigma(W_{fc}^{(l)}\gamma(\cdot))$이므로, $W_{proj}$의 입장에서 **입력**은 정확히 $\sigma(\cdot)$의 출력이다. 즉 $k_*$는 "$W_{proj}$라는 연상 기억에 실제로 들어가는 키"의 정의 그 자체다. 임의 선택이 아니라 §4-C의 키–값 관점이 강제하는 정의다.
 - **왜 평균인가?** 논문이 이유를 직접 밝힌다: "Because the state will vary depending on tokens that precede $s$ in text, we set $k_*$ to an average value over a small set of texts ending with the subject $s$." 접두사가 다르면 같은 subject라도 다른 벡터가 나오므로, 평균이 **문맥 불변 핵심**을 근사한다.
 
-**④ 조심할 점.** 평균을 취한다는 건 **분산을 버린다**는 뜻이다. 만약 어떤 subject의 표현이 문맥에 따라 정말로 갈라진다면(다의어 등), 평균은 어느 쪽도 아닌 벡터가 된다. 그리고 실제 접두사 표본은 **Appendix E.5** 기준 20개(길이 5 열 개 + 길이 10 열 개)에 불과하다 — §3.1 본문의 "50 random token sequences of length 2 to 10"과 부록 실행 설정이 다르다는 점도 재현 시 주의할 대목이다.
+**④ 조심할 점.** 평균은 **분산을 버린다**. 어떤 subject의 표현이 문맥에 따라 정말로 갈라진다면(다의어 등) 평균은 어느 쪽도 아닌 벡터가 된다. 그리고 실제 접두사 표본은 **Appendix E.5** 기준 20개로, §3.1 본문의 "50 random token sequences of length 2 to 10"과 다르다 — 재현 시 주의.
 
-**저자들의 정직한 ablation (Appendix E.5).** 접두사 샘플링 방식을 바꿔봤고 수치까지 공개한다.
-- 접두사 없음: $S' = 86.1$ (본 설정 $S = 89.2$ 대비 하락)
-- 더 긴 접두사(길이 50 추가): $S' = 89.3$ (거의 무변화)
-- 같은 길이 더 많이(각 30개): $S' = 89.2$ (무변화)
-
-**해석.** 접두사를 **쓰느냐 마느냐**는 3.1점 차이를 만들지만, **얼마나 많이·길게 쓰느냐**는 무의미하다. 즉 문맥 평균화는 "하면 이득, 더 해도 이득 없음"의 포화 구조다. 이런 negative ablation을 부록에 수치로 남긴 건 신뢰를 크게 올리는 대목이다.
+**저자들의 정직한 ablation (Appendix E.5).** 접두사 없음 $S' = 86.1$ / 더 긴 접두사(길이 50 추가) $S' = 89.3$ / 같은 길이 더 많이(각 30개) $S' = 89.2$ (본 설정 $S = 89.2$). 즉 접두사를 **쓰느냐 마느냐**는 3.1점 차이를 만들지만 **얼마나 많이·길게 쓰느냐**는 무의미하다 — "하면 이득, 더 해도 이득 없음"의 포화 구조. 이런 negative ablation을 수치로 남긴 건 신뢰를 크게 올린다.
 
 ---
 
@@ -48,28 +43,24 @@ $$v_* = \arg\min_z \; \frac{1}{N}\sum_{j=1}^{N}\underbrace{-\log \mathbb{P}_{G(m
 - **왜 KL이고 cross-entropy가 아닌가.** 목표가 "정답을 맞혀라"가 아니라 "**원래 모델의 분포와 달라지지 마라**"이기 때문이다. 참조 분포가 정답 레이블이 아니라 편집 전 모델 $\mathbb{P}_G$ 자신이다. 이건 정규화이지 학습 목표가 아니다.
 
 **④ 조심할 점.**
-- 논문이 §3.1 말미에서 못박는 중요한 구분: "**the optimization does not directly alter model weights**; it identifies a vector representation $v_*$ that, when output at the targeted MLP module, represents the new property $(r, o^*)$ for the subject $s$." 즉 Eqn. 4는 **가중치 학습이 아니라 표적 벡터 탐색**이다. 가중치 변경은 Step 3의 대수가 전담한다. "ROME은 최적화 없는 닫힌 해"라는 흔한 요약은 이 지점에서 부정확하다.
-- **KL 계수 $\lambda$가 본문 수식에 안 보인다.** Eqn. 4에는 명시적 가중치가 없는데 **Appendix E.5**는 "The KL divergence scaling factor, denoted $\lambda$ in Eqn. 4, is set to $1\times 10^2$"라고 말한다. 본문 식과 부록 서술이 어긋나 있다 — 재현할 때 반드시 부록을 따라야 한다. 그리고 $\lambda = 100$은 **작지 않은 값**이다. essence 보존 항의 무게가 상당하다는 뜻이고, ROME의 특이성(NS 75.4)이 이 하이퍼파라미터에 얼마나 의존하는지에 대한 민감도 분석은 **원문에 없다**.
-- $p'$이 "{subject} is a" **한 형태로 고정**돼 있다. 이 프롬프트로 포착되지 않는 종류의 본질(예: 시간적 속성, 관계적 속성)은 보호받지 못한다.
+- §3.1 말미의 중요한 구분: "**the optimization does not directly alter model weights**; it identifies a vector representation $v_*$ that, when output at the targeted MLP module, represents the new property $(r, o^*)$." 즉 Eqn. 4는 **가중치 학습이 아니라 표적 벡터 탐색**이고 가중치 변경은 Step 3의 대수가 전담한다. "ROME은 최적화 없는 닫힌 해"라는 흔한 요약이 부정확한 이유다.
+- **KL 계수 $\lambda$가 본문 수식에 안 보인다.** Eqn. 4에는 명시적 가중치가 없는데 **Appendix E.5**는 "denoted $\lambda$ in Eqn. 4, is set to $1\times 10^2$"라고 한다 — 재현 시 반드시 부록을 따라야 한다. $\lambda = 100$은 작지 않은 값이고, ROME의 특이성(NS 75.4)이 이 값에 얼마나 의존하는지에 대한 민감도 분석은 **원문에 없다**.
+- $p'$이 "{subject} is a" **한 형태로 고정**돼 있어, 이 프롬프트로 포착되지 않는 본질(시간적·관계적 속성)은 보호받지 못한다.
 
 ---
 
-## 부품 3: 세 스텝의 역할 분담
+## 부품 3: 세 스텝의 비용 구조
 
-| Step | 하는 일 | 성격 | 비용 |
-|---|---|---|---|
-| 1. $k_*$ | 여러 접두사에서 활성 읽고 평균 | **관측** | forward pass ×20 |
-| 2. $v_*$ | 목적함수 최소화하는 벡터 탐색 | **최적화** (Adam, 최대 20 스텝) | 지배적 비용 |
-| 3. 삽입 | Eqn. 2 닫힌 해 적용 | **대수** | 행렬 연산 1회 |
+Step 1($k_*$, **관측** — forward pass ×20) → Step 2($v_*$, **최적화** — Adam 최대 20 스텝, **지배적 비용**) → Step 3(삽입, **대수** — 행렬 연산 1회). 전체 2초(A6000, GPT-2 XL, Appendix E.5).
 
-전체 2초(A6000, GPT-2 XL, Appendix E.5). 저자들이 비교 맥락도 함께 준다 — 하이퍼네트워크(KE·MEND)는 추론이 100ms 수준으로 훨씬 빠르지만 "**require hours-to-days of additional training overhead**"다. 즉 ROME은 **선불 비용 0, 건당 2초**, 하이퍼네트워크는 **선불 수 시간~수일, 건당 0.1초**. 사실 몇 개를 편집하느냐에 따라 손익분기가 갈리며, "메커니즘 이해 도구"라는 논문의 목적에서는 선불 0이 압도적으로 유리하다 — 새 모델마다 하이퍼네트워크를 다시 학습시킬 필요가 없기 때문이다.
+저자들이 비교 맥락도 준다 — 하이퍼네트워크(KE·MEND)는 추론이 100ms로 훨씬 빠르지만 "**require hours-to-days of additional training overhead**"다. 즉 ROME은 **선불 0, 건당 2초**, 하이퍼네트워크는 **선불 수 시간~수일, 건당 0.1초**. "메커니즘 이해 도구"라는 목적에서는 선불 0이 압도적으로 유리하다 — 새 모델마다 다시 학습시킬 필요가 없기 때문이다.
 
 ---
 
 ## 다른 접근으로 했다면
 
-- **$v_*$를 최적화 대신 object 임베딩으로 직접 설정.** Dai et al. (2022)의 KN이 실제로 이렇게 한다 — "adding scaled embedding vectors"(Appendix E.2). Table 4에서 KN은 ES 28.7로 사실상 편집이 안 된다. 교훈: **출력층의 토큰 임베딩과 중간층 MLP의 값 공간은 같은 공간이 아니다.** 중간층에 무엇을 써야 하는지는 최적화로 찾아야 한다.
-- **$k_*$를 평균 대신 단일 문맥에서.** Appendix E.5의 "No prefix" ablation이 정확히 이 조건이고, $S' = 86.1$로 3.1점 하락한다.
+- **$v_*$를 최적화 대신 object 임베딩으로 직접 설정.** Dai et al. (2022)의 KN이 이렇게 한다("adding scaled embedding vectors", Appendix E.2). Table 4에서 KN은 ES 28.7로 사실상 편집이 안 된다. 교훈: **출력층 토큰 임베딩과 중간층 MLP의 값 공간은 같은 공간이 아니다.**
+- **$k_*$를 평균 대신 단일 문맥에서.** Appendix E.5의 "No prefix" 조건, $S' = 86.1$로 3.1점 하락.
 - **$p'$을 여러 형태로 확장.** 논문은 하나로 고정했다. 다중 essence 프롬프트는 자연스러운 확장이지만 시도되지 않았다 — [10_extensions_c_ideas.md](10_extensions_c_ideas.md)에서 실험 설계로 다룬다.
 
 ---
