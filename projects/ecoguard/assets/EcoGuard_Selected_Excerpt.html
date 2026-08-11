@@ -427,7 +427,7 @@
       border-radius: 2mm;
       background: var(--amber);
       color: #625333;
-      font-size: 6.3pt;
+      font-size: 6.6pt;
       line-height: 1.45;
     }
 
@@ -489,7 +489,7 @@
       font-weight: 800;
     }
     .journey strong { display: block; color: white; font-size: 7.7pt; }
-    .journey span { display: block; margin-top: .6mm; color: #acc5be; font-size: 6.4pt; line-height: 1.35; }
+    .journey span { display: block; margin-top: .6mm; color: #acc5be; font-size: 6.7pt; line-height: 1.35; }
     .boundary-area { padding-top: 5mm; }
     .boundary-area > h3 {
       color: var(--lime);
@@ -517,13 +517,26 @@
       border-radius: 99mm;
       background: var(--lime);
       color: #123b32;
-      font-size: 5.7pt;
+      font-size: 6.2pt;
       font-weight: 800;
     }
     .boundary-card:nth-child(2) .pill { background: #f3c65b; }
     .boundary-card:nth-child(3) .pill { background: #b9d9d0; }
-    .boundary-card ul { margin-top: 3mm; padding-left: 3.8mm; }
-    .boundary-card li { margin-top: 1.7mm; color: #bfd5ce; font-size: 6.2pt; line-height: 1.45; }
+    .boundary-card ul { margin-top: 3mm; padding-left: 0; list-style: none; }
+    .boundary-card li,
+    .lesson-card li { position: relative; padding-left: 3mm; }
+    .boundary-card li::before,
+    .lesson-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 0.9mm;
+      height: 0.9mm;
+      border-radius: 50%;
+      background: var(--lime);
+    }
+    .boundary-card li { margin-top: 1.7mm; color: #bfd5ce; font-size: 6.6pt; line-height: 1.45; }
     .lesson-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 3mm; }
     .lesson-card {
       min-height: 47mm;
@@ -532,8 +545,8 @@
       background: rgba(255,255,255,.055);
     }
     .lesson-card h3 { color: white; font-size: 8pt; font-weight: 800; }
-    .lesson-card ul { margin-top: 2.3mm; padding-left: 4mm; }
-    .lesson-card li { margin-top: 1.2mm; color: #bdd3cc; font-size: 6.3pt; line-height: 1.42; }
+    .lesson-card ul { margin-top: 2.3mm; padding-left: 0; list-style: none; }
+    .lesson-card li { margin-top: 1.2mm; color: #bdd3cc; font-size: 6.6pt; line-height: 1.42; }
     .repo-link {
       display: flex;
       align-items: center;
@@ -606,7 +619,7 @@
         <figure class="shot"><span class="synthetic">합성 데이터 · 프로토타입 화면</span><img src="screen-legal-rag.webp" width="1280" height="720" alt="합성 질의로 조문 근거를 찾는 화면"></figure>
         <p class="stage-id">STAGE 3 · GROUND</p>
         <h3>문제를 EU 규정의 조문 근거와 연결한다</h3>
-        <p>“문제가 있다”는 문장에 그치지 않고 관련 조문, 요구사항, 보완 행동을 함께 찾는 검색·응답 구조를 준비했습니다.</p>
+            <p>“문제가 있다”는 문장에 그치지 않고 관련 조문, 요구사항, 보완 행동을 함께 찾는 검색·근거 제시 구조를 준비했습니다.</p>
         <ul><li>조문·문단 메타데이터와 citation</li><li>근거 부족·도메인 밖 질문은 기권</li></ul>
       </article>
     </div>
@@ -628,18 +641,18 @@
 
     <div class="tech-grid">
       <article class="tech-card">
-        <div class="tech-head"><div><small>CBAM · DETERMINISTIC</small><h3>공개 산식을 따라가는<br>노출액 계산</h3></div><span class="label">CALCULATE</span></div>
+        <div class="tech-head"><div><small>CBAM · DETERMINISTIC</small><h3>추적 가능한<br>가격 민감도</h3></div><span class="label">CALCULATE</span></div>
         <div class="tech-visuals">
           <figure class="shot"><span class="synthetic">합성 데이터 · 프로토타입 화면</span><img src="screen-cbam.webp" width="1280" height="720" alt="합성 CBAM 비용 시나리오 화면"></figure>
           <div class="metric-box"><strong>11</strong><span>단계 계산 DAG<br>피연산자·중간값·계보 보존</span></div>
         </div>
-        <div class="formula">내재배출량 = sum(품목 중량 × 품목별 단위 내재배출)<br>유효가격 = max(인증서 가격 − 원산지 탄소가격, 0)<br>교육용 노출도 = 내재배출량 × 분석자 적용계수 × 유효가격</div>
+        <div class="formula">내재배출량 = sum(품목 중량 × 품목별 단위 내재배출)<br>유효가격 = max(인증서 가격 − 제3국 탄소가격, 0)<br>교육용 노출도 = 내재배출량 × 분석자 적용계수 × 유효가격</div>
         <ul class="checks"><li>입력 스키마와 단위 규칙 고정</li><li>원자료→중간 계산 계보 보존</li><li>손계산 기준값과 자동 테스트</li><li>가정 변화 민감도 분리</li></ul>
         <p class="boundary">구조 설명을 위한 교육용 계산입니다. 분석자 적용계수는 법정 phase-in 계수가 아니며 실제 신고액·인증서 의무·공식 산정값을 제공하지 않습니다.</p>
       </article>
 
       <article class="tech-card">
-        <div class="tech-head"><div><small>FOREST · EVIDENCE PACK</small><h3>합성 red/NIR 변화 기준선을<br>근거 묶음으로</h3></div><span class="label">EVIDENCE</span></div>
+        <div class="tech-head"><div><small>FOREST · EVIDENCE PACK</small><h3>합성 NDVI<br>변화 근거 묶음</h3></div><span class="label">EVIDENCE</span></div>
         <div class="tech-visuals">
           <figure class="forest-svg"><img src="forest-baseline.svg" width="448" height="573" alt="합성 산림 변화 reference mask 평가 결과"></figure>
           <div class="metric-box"><strong>36</strong><span>합성 셀 전부에 prediction·reference·confusion class 기록</span></div>

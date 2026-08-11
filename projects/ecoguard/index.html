@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="2026 하나 청년 금융인재 양성 프로젝트 대상 수상작 EcoGuard. 3인 팀이 비정형 수출 데이터, EU 규정 검색, CBAM 계산과 산림 변화 기준선을 증명 가능한 흐름으로 만든 제작기">
+  <meta name="description" content="2026 하나 청년 금융인재 양성 프로젝트 대상 수상작 EcoGuard. 3인 팀이 비정형 수출 데이터, EU 규정 검색, CBAM 가격 민감도와 산림 변화 기준선을 증명 가능한 흐름으로 만든 제작기">
   <meta name="theme-color" content="#008e71">
   <meta property="og:title" content="EcoGuard — 대상을 만든 증명의 구조">
   <meta property="og:description" content="대상 수상작의 제작기이자 기술 증명 보고서. CarbonCast에서 EcoGuard까지, 기능을 심사 가능한 근거로 바꾼 3인의 기록">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/ecoguard/">
   <meta property="og:image" content="https://soccz.github.io/projects/ecoguard/assets/award-day.webp">
+  <meta property="og:image:alt" content="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <title>EcoGuard — 대상을 만든 증명의 구조</title>
   <style>
@@ -80,6 +81,9 @@
     a { color: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     :focus-visible { outline: 3px solid var(--green-dark); outline-offset: 3px; }
+    .award-section :focus-visible,
+    .closing-thesis :focus-visible,
+    .outro :focus-visible { outline-color: #9fe0cd; }
 
     .skip-link {
       position: fixed;
@@ -275,6 +279,14 @@
       border-radius: 16px;
       overflow: hidden;
     }
+    .hero-proof-label {
+      margin: 42px 0 0;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+    .hero-proof-label + .hero-facts { margin-top: 10px; }
     .fact { padding: 20px 18px; border-right: 1px solid var(--line); text-align: left; }
     .fact:last-child { border-right: 0; }
     .fact strong {
@@ -810,6 +822,7 @@
     .scope-tag.idea { color: var(--blue); background: var(--blue-soft); }
 
     .lesson-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .team-axes { margin-bottom: 24px; }
     .lesson-card { padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
     .lesson-card { border-top: 4px solid var(--green); }
     .lesson-card span { color: var(--green); font-family: var(--display); font-size: 1.55rem; font-weight: 800; }
@@ -824,6 +837,8 @@
       text-align: center;
     }
     .closing-thesis p { max-width: 820px; margin: 0 auto; font-family: var(--display); font-size: clamp(1.22rem, 2.6vw, 1.8rem); font-weight: 700; line-height: 1.55; }
+    .closing-thesis .proof-source { margin-top: 15px; font-family: var(--sans); font-size: 0.74rem; font-weight: 400; }
+    .closing-thesis .proof-source a { color: #c9f4e5; text-underline-offset: 4px; }
 
     .limit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .limit-card { padding: 21px; background: var(--red-soft); border: 1px solid #ead0cc; border-radius: 11px; }
@@ -864,8 +879,9 @@
     @media (max-width: 680px) {
       body { word-break: normal; overflow-wrap: anywhere; }
       .site-nav { overflow: hidden; }
-      .nav-links { gap: 16px; }
-      .nav-links li:nth-child(2), .nav-links li:nth-child(4) { display: none; }
+      .nav-inner { justify-content: flex-start; gap: 20px; scrollbar-width: none; }
+      .nav-inner::-webkit-scrollbar { display: none; }
+      .nav-links { flex: 0 0 max-content; gap: 16px; }
       section { padding: 76px 18px; }
       .hero { display: block; padding: 112px 18px 62px; background: linear-gradient(180deg, rgba(255,255,250,0.98), rgba(225,240,233,0.9)); }
       .hero-inner { width: 100%; max-width: 100%; overflow: hidden; }
@@ -977,7 +993,8 @@
             </div>
           </aside>
         </div>
-        <div class="hero-facts" role="list" aria-label="프로젝트 핵심 정보">
+        <p class="hero-proof-label">현재 공개 v0.3 재구성 기준 · 수상 당시 전체 시스템을 그대로 복제한 수치가 아닙니다.</p>
+        <div class="hero-facts" role="list" aria-label="현재 공개 재현 코드의 핵심 정보">
           <div class="fact" role="listitem"><strong>7</strong><span>합성 입력 문서</span></div>
           <div class="fact" role="listitem"><strong>37</strong><span>원문 라인</span></div>
           <div class="fact" role="listitem"><strong>111</strong><span>자동 회귀 테스트</span></div>
@@ -998,6 +1015,7 @@
             <p class="section-kicker">01 · Award note</p>
             <h2 id="award-title">세 달의 멘토링 끝에,<br>EcoGuard가 대상을 받았습니다</h2>
             <p class="section-desc">
+              하나금융그룹이 진행한 이 과정은 디지털 기술을 활용한 ESG·미래 금융서비스를 주제로 교육, 해커톤, 현장 프로젝트와 최종 성과공유회로 이어졌습니다.
               2026년 7월 23일 최종 성과공유회에서 유니하나팀은 ‘기업의 ESG 관련 규제 대응 및 리스크 검토 플랫폼’으로 대상(금융감독원상)을 받아 상장과 상금 1천만원을 수상했습니다.
               결과보다 더 오래 남은 것은, 넓었던 아이디어를 하나의 심사 문제로 좁히고 각 기술 주장을 확인 가능한 근거로 바꾼 과정이었습니다.
             </p>
@@ -1012,7 +1030,7 @@
             수상 결과 교차 확인:
             <a href="https://www.yna.co.kr/view/AKR20260724041100002" target="_blank" rel="noopener noreferrer">연합뉴스 보도</a>
             ·
-            <a href="https://www.hankyung.com/article/202607243395P" target="_blank" rel="noopener noreferrer">하나금융 제공 보도자료</a>
+            <a href="https://www.hankyung.com/article/202607243395P" target="_blank" rel="noopener noreferrer">하나금융 제공 보도자료 게재본</a>
           </p>
         </div>
       </div>
@@ -1027,8 +1045,11 @@
             <p class="section-desc">
               CBAM과 EUDR 대응에는 수출기업이 가진 생산·에너지·원산지 자료가 필요합니다.
               그러나 실제 자료는 규제 양식에 맞춰 깨끗하게 준비돼 있지 않았습니다.
-              EcoGuard는 그 간극을 데이터 정규화, 규정 검색, 결정론적 계산, 위성 변화 탐지로 잇고
+              EcoGuard는 그 간극을 데이터 정규화, 규정 검색, 결정론적 계산, 산림 변화 검토로 잇고
               은행 심사역이 확인할 수 있는 근거 묶음으로 바꾸려 했습니다.
+              당시 팀은 수출환어음 매입처럼 은행이 수입자의 대금 지급 전에 수출자에게 자금을 공급하는 일부 구조에서,
+              뒤늦게 드러난 증빙 누락과 규제 비용이 심사 리스크로 이어질 수 있다고 가정했습니다.
+              그래서 기업의 작성 편의보다 은행이 제출 증빙을 믿고 다음 판단을 내릴 수 있는지를 최종 질문으로 삼았습니다.
             </p>
           </div>
           <aside class="thesis-card" aria-label="프로젝트 핵심 명제">
@@ -1114,7 +1135,7 @@
           </figure>
           <figure class="screen-card">
             <img src="/projects/ecoguard/assets/screen-normalize.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 문서 정리 화면. 여섯 개 파일과 분류 결과, 유효 상태가 목록으로 표시되어 있다.">
-            <figcaption><span class="figure-label">Figure 02 · Normalize</span>추출 뒤에는 문서 분류, 필드 정규화, 단위 통일, 교차검증과 출처 연결이 이어집니다. 화면의 상태값은 합성 시나리오입니다.</figcaption>
+            <figcaption><span class="figure-label">Figure 02 · Normalize</span>추출 뒤에는 문서 분류, 필드 정규화, 단위 통일, 교차검증과 출처 연결이 이어집니다. 이 발표 화면의 6개 파일 구성은 공개 재현 코드의 7문서 fixture와 별도로 만든 합성 시나리오입니다.</figcaption>
           </figure>
         </div>
       </div>
@@ -1191,10 +1212,11 @@
         <div class="feature-layout">
           <div class="feature-copy">
             <div class="section-head">
-              <p class="section-kicker">06 · EU Legal RAG</p>
+              <p class="section-kicker">06 · EU Legal RAG · Retrieval baseline</p>
               <h2>답보다 먼저, 어느 조문을 확인해야 하는지 찾았습니다</h2>
               <p class="section-desc">
-                많은 법률 RAG가 실제로 시험받는 지점은 자연스러운 문장이 아니라 올바른 근거 검색입니다.
+                프로젝트 과정에서 들은 현업 의견은, 공문서·법률 자료를 RAG에 넣었을 때 자연스러운 답변보다
+                문제에 맞는 조문을 실제로 찾는지를 먼저 시험한다는 것이었습니다.
                 대회에서는 “문제가 있다”로 끝내지 않고 어떤 규정의 어느 조·항이 어떤 자료를 요구하는지 연결하는 구조를 목표로 했습니다.
                 공개 기준선은 그 목표 전체가 아니라 article 단위 레코드와 paragraph 범위 메타데이터에서 확인할 조문과 보완 항목을 찾는 범위입니다.
               </p>
@@ -1223,7 +1245,7 @@
               </div>
             </div>
             <p class="boundary-note"><strong>공개 기준선:</strong> CBAM·EUDR 8개 article record와 34개 고정 사례(positive 16 · distractor 8 · hard-negative 10)에서 Recall@3 1.0, MRR 1.0, negative abstention 1.0을 재현합니다. false support는 0, instrument leakage@3도 0입니다. 각 record의 CELEX·ELI·확인일은 별도 source manifest와 대조하며, 서로 다르면 산출물을 만들지 않습니다.</p>
-            <p class="boundary-note"><strong>검증 경계:</strong> 이 수치는 팀이 구성한 작은 fixed fixture 안에서 결정론적 lexical retrieval과 기권 경로를 검사한 결과입니다. paragraph는 범위 메타데이터이며 별도 원문 청크가 아닙니다. 일반적인 법률 검색 성능, LLM 답변 품질, 최신 규제 해석이나 적합성 판정을 뜻하지 않습니다.</p>
+            <p class="boundary-note"><strong>검증 경계:</strong> 이 수치는 팀이 구성한 작은 fixed fixture 안에서 결정론적 lexical retrieval과 기권 경로를 검사한 결과입니다. paragraph는 범위 메타데이터이며 별도 원문 청크가 아닙니다. 발표 화면에는 생성형 답변과 규정 자동 갱신까지 그렸지만 이는 적용 제안이었고, 공개 코드는 팀 작성 source manifest에 고정된 lexical retrieval과 citation 평가만 재현합니다. 일반적인 법률 검색 성능, LLM 답변 품질, 최신 규제 해석이나 적합성 판정을 뜻하지 않습니다.</p>
           </div>
           <figure class="single-screen">
             <div class="browser-frame">
@@ -1297,6 +1319,8 @@
           </p>
         </div>
 
+        <p class="boundary-note"><strong>발표에 포함했던 시각화:</strong> 2D 변화 화면이 심사자에게 직관적이지 않다는 피드백을 반영해, 판독 결과를 현장처럼 탐색하는 pseudo-360 forest roadview를 발표 프로토타입에 추가했습니다. 이는 사전 렌더링한 파노라마를 이용한 시각화였으며 위성 실측 기반 3D 디지털트윈이 아닙니다. 원본 인터랙티브 데모와 파노라마 자산은 이번 공개 재현 범위에서 제외했습니다.</p>
+
         <div class="forest-figures">
           <figure class="screen-card">
             <img class="contain" src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 구분해 표시한다.">
@@ -1348,6 +1372,7 @@
 
         <div class="closing-thesis">
           <p>증명은 기술 뒤에 붙는 발표 장식이 아니었습니다. 어떤 값을 믿어도 되는지 정의하는 과정 자체가 데이터 모델, 계산 엔진, 검색 단위와 보고서 구조를 더 낫게 만들었습니다.</p>
+          <p class="proof-source">각 기술 수치의 입력·함수·테스트·산출물 연결은 GitHub의 <a href="https://github.com/soccz/EcoGuard/blob/main/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">주장-증거 검증표</a>에서 확인할 수 있습니다.</p>
         </div>
       </div>
     </section>
@@ -1373,12 +1398,12 @@
               </tr>
               <tr>
                 <th scope="row"><span class="scope-tag sim">발표 시뮬레이션</span></th>
-                <td><strong>문서 접수·규제 질의·위험 요약·심사 흐름</strong>을 정적 화면과 합성 사례로 연결한 제품 프로토타입</td>
+                <td><strong>문서 접수·규제 질의·위험 요약·심사 흐름</strong>과 사전 렌더링 파노라마 기반 pseudo-360 현장 뷰를 정적 화면·합성 사례로 연결한 제품 프로토타입</td>
                 <td>상용 서비스, 실제 기업·은행 데이터 처리, 공식 법률 자문</td>
               </tr>
               <tr>
                 <th scope="row"><span class="scope-tag idea">적용 제안</span></th>
-                <td><strong>은행 내부 심사 시스템 연계, 규정 자동 갱신, 기업 보완 요청과 여신 조건 연결</strong>에 대한 업무 가설</td>
+                <td><strong>은행 내부 심사 시스템 연계, 규정 자동 갱신, 근거 기반 생성형 답변, 기업 보완 요청과 여신 조건 연결</strong>에 대한 업무 가설</td>
                 <td>하나금융그룹의 채택·운영, 자동 승인·거절, 규제 준수 보장</td>
               </tr>
             </tbody>
@@ -1393,8 +1418,14 @@
           <p class="section-kicker">11 · Retrospective</p>
           <h2 id="retrospective-title">3명이 함께 준비하며 좋았던 점</h2>
           <p class="section-desc">
-            가장 좋았던 경험은 기술을 많이 나열한 순간이 아니라, 각 기술이 누구의 어떤 판단을 바꾸는지 팀의 언어로 다시 설명한 순간들이었습니다.
+            가장 좋았던 경험은 기술을 많이 나열한 순간이 아니라, 각 기술이 누구의 어떤 판단을 바꾸는지 팀의 언어로 다시 설명한 순간들이었습니다. 개인 이름과 고정된 세부 역할은 공개하지 않고, 세 사람이 함께 다룬 작업 축을 남깁니다.
           </p>
+        </div>
+
+        <div class="meta-strip team-axes" role="list" aria-label="3인 팀이 함께 다룬 작업 축">
+          <div class="meta-item" role="listitem"><strong>Workstream 01</strong><span>금융·규제 문제 정의와 현업 피드백 정리</span></div>
+          <div class="meta-item" role="listitem"><strong>Workstream 02</strong><span>문서·데이터 파이프라인과 AI 프로토타이핑</span></div>
+          <div class="meta-item" role="listitem"><strong>Workstream 03</strong><span>계산·모델 검증과 발표용 증거 설계</span></div>
         </div>
 
         <div class="lesson-grid">
