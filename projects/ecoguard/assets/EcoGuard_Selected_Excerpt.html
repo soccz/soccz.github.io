@@ -1,0 +1,689 @@
+<!doctype html>
+<!-- Build: weasyprint --pdf-tags EcoGuard_Selected_Excerpt.html EcoGuard_Selected_Excerpt.pdf -->
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EcoGuard — 공개용 프로젝트 발췌본</title>
+  <style>
+    @font-face {
+      font-family: "Paperlogy";
+      src: url("fonts/paperlogy-regular-subset.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Paperlogy";
+      src: url("fonts/paperlogy-semibold-subset.woff2") format("woff2");
+      font-weight: 600;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Paperlogy";
+      src: url("fonts/paperlogy-extrabold-subset.woff2") format("woff2");
+      font-weight: 800;
+      font-style: normal;
+    }
+
+    @page { size: A4 landscape; margin: 0; }
+
+    :root {
+      --green: #006b57;
+      --green-2: #0ca47e;
+      --forest: #071f1b;
+      --forest-2: #0b2c25;
+      --ink: #142824;
+      --muted: #60746f;
+      --mint: #eaf5f1;
+      --mint-2: #d8eee7;
+      --lime: #b9e866;
+      --paper: #f8fbf9;
+      --line: #d5e1dd;
+      --amber: #fff1c6;
+    }
+
+    * { box-sizing: border-box; }
+    html, body, main { margin: 0; padding: 0; }
+    main { display: block; }
+    body {
+      color: var(--ink);
+      background: #dfe7e4;
+      font-family: "Paperlogy", sans-serif;
+      font-size: 9.2pt;
+      line-height: 1.42;
+    }
+    h1, h2, h3, p, figure, blockquote, ol, ul { margin: 0; }
+    ol, ul { padding: 0; }
+    img { display: block; max-width: 100%; }
+
+    .page {
+      position: relative;
+      width: 297mm;
+      height: 210mm;
+      padding: 13mm 14mm 10mm;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 90% 8%, rgba(0,142,113,.09), transparent 27%),
+        linear-gradient(180deg, #fbfdfc, #f5f9f7);
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+    .page.dark {
+      color: #f5fbf8;
+      background:
+        radial-gradient(circle at 86% 15%, rgba(25,143,101,.32), transparent 30%),
+        radial-gradient(circle at 13% 90%, rgba(0,142,113,.20), transparent 34%),
+        linear-gradient(135deg, #061d19 0%, #0a2b24 54%, #071f1b 100%);
+    }
+    .page.dark::before {
+      content: "";
+      position: absolute;
+      right: -20mm;
+      top: -28mm;
+      width: 104mm;
+      height: 104mm;
+      border: 20mm solid rgba(255,255,255,.025);
+      border-radius: 50%;
+    }
+    .page.dark::after {
+      content: "";
+      position: absolute;
+      left: -34mm;
+      bottom: -52mm;
+      width: 106mm;
+      height: 106mm;
+      border: 18mm solid rgba(185,232,102,.025);
+      border-radius: 50%;
+    }
+
+    .page-mark {
+      position: absolute;
+      top: 8mm;
+      right: 14mm;
+      z-index: 4;
+      color: #55716a;
+      font-size: 6.5pt;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .dark .page-mark { color: #a9c9c0; }
+    .footer {
+      position: absolute;
+      left: 14mm;
+      right: 14mm;
+      bottom: 4.3mm;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #536a64;
+      font-size: 6.4pt;
+      border-top: .25mm solid rgba(93,124,116,.22);
+      padding-top: 2.1mm;
+    }
+    .dark .footer {
+      color: #a7c1ba;
+      border-color: rgba(204,231,222,.18);
+    }
+    .kicker {
+      color: var(--green);
+      font-size: 7pt;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .dark .kicker { color: var(--lime); }
+    .section-title {
+      margin-top: 2mm;
+      color: var(--ink);
+      font-size: 21pt;
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -.04em;
+    }
+    .section-title em { color: var(--green); font-style: normal; }
+    .section-lead {
+      margin-top: 2.4mm;
+      max-width: 248mm;
+      color: var(--muted);
+      font-size: 8.6pt;
+      line-height: 1.5;
+    }
+    .label {
+      display: inline-block;
+      padding: 1.1mm 2.3mm;
+      border-radius: 99mm;
+      background: var(--green);
+      color: white;
+      font-size: 6.4pt;
+      font-weight: 800;
+      letter-spacing: .05em;
+    }
+    .synthetic {
+      position: absolute;
+      top: 2.5mm;
+      left: 2.8mm;
+      z-index: 2;
+      padding: .9mm 1.8mm;
+      border-radius: 99mm;
+      background: rgba(5,28,24,.83);
+      color: white;
+      font-size: 5.8pt;
+      font-weight: 600;
+    }
+    .shot {
+      position: relative;
+      overflow: hidden;
+      border: .25mm solid var(--line);
+      border-radius: 2.8mm;
+      background: white;
+    }
+    .shot img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Page 1 */
+    .cover {
+      display: grid;
+      grid-template-columns: 112mm 1fr;
+      gap: 11mm;
+      height: 178mm;
+      position: relative;
+      z-index: 2;
+    }
+    .cover-copy { padding-top: 7mm; }
+    .cover h1 {
+      margin-top: 5mm;
+      font-size: 31pt;
+      line-height: 1.08;
+      letter-spacing: -.055em;
+      font-weight: 800;
+    }
+    .cover h1 em { color: var(--lime); font-style: normal; }
+    .cover-subtitle {
+      margin-top: 6mm;
+      color: #d3e7e1;
+      font-size: 10.6pt;
+      line-height: 1.54;
+    }
+    .thesis {
+      margin-top: 8mm;
+      padding: 4.2mm 4.8mm;
+      border-left: 1.2mm solid var(--lime);
+      background: rgba(255,255,255,.055);
+      color: #eef8f4;
+      font-size: 9.2pt;
+      font-weight: 600;
+      line-height: 1.54;
+    }
+    .cover-tags { display: flex; gap: 2mm; margin-top: 7mm; }
+    .cover-tags span {
+      padding: 1.4mm 2.8mm;
+      border: .25mm solid rgba(229,244,238,.24);
+      border-radius: 99mm;
+      color: #d5e8e2;
+      font-size: 6.8pt;
+      font-weight: 600;
+    }
+    .cover-visual {
+      display: grid;
+      grid-template-rows: 88mm 1fr;
+      gap: 5mm;
+      padding-top: 6mm;
+    }
+    .cover-report {
+      border-color: rgba(255,255,255,.16);
+    }
+    .award-card {
+      display: grid;
+      grid-template-columns: 49mm 1fr;
+      gap: 4mm;
+      min-height: 59mm;
+      padding: 3.6mm;
+      border: .25mm solid rgba(222,242,234,.18);
+      border-radius: 3mm;
+      background: linear-gradient(120deg, rgba(255,255,255,.10), rgba(255,255,255,.045));
+    }
+    .award-photo {
+      height: 51mm;
+      border-radius: 2.2mm;
+      overflow: hidden;
+      background: #183f35;
+    }
+    .award-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 58% 72%;
+    }
+    .award-copy { padding: 2.2mm 1.2mm 1mm 0; }
+    .award-copy .award-eyebrow {
+      color: var(--lime);
+      font-size: 6.4pt;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .award-copy h2 {
+      margin-top: 2mm;
+      color: white;
+      font-size: 13.2pt;
+      line-height: 1.24;
+      letter-spacing: -.025em;
+      font-weight: 800;
+    }
+    .award-facts {
+      margin-top: 3.4mm;
+      padding-top: 3mm;
+      border-top: .25mm solid rgba(220,240,233,.18);
+      color: #d9e9e4;
+      font-size: 7.1pt;
+      line-height: 1.55;
+    }
+    .award-facts strong { color: white; font-weight: 800; }
+
+    /* Page 2 */
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4.4mm;
+      margin-top: 7mm;
+    }
+    .stage {
+      min-height: 108mm;
+      padding: 3mm;
+      border: .25mm solid var(--line);
+      border-radius: 3mm;
+      background: rgba(255,255,255,.88);
+    }
+    .stage .shot { height: 44mm; }
+    .stage-id {
+      margin-top: 3.1mm;
+      color: var(--green);
+      font-size: 6.4pt;
+      font-weight: 800;
+      letter-spacing: .11em;
+    }
+    .stage h3 {
+      margin-top: 1.5mm;
+      font-size: 11.4pt;
+      line-height: 1.25;
+      letter-spacing: -.025em;
+      font-weight: 800;
+    }
+    .stage p {
+      margin-top: 2mm;
+      color: var(--muted);
+      font-size: 7.4pt;
+      line-height: 1.48;
+    }
+    .stage ul { margin-top: 3mm; list-style: none; }
+    .stage li {
+      position: relative;
+      padding-left: 3.7mm;
+      color: #38534d;
+      font-size: 6.9pt;
+      line-height: 1.55;
+    }
+    .stage li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.7mm;
+      width: 1.5mm;
+      height: 1.5mm;
+      border-radius: 50%;
+      background: var(--green-2);
+    }
+    .proof-strip {
+      display: grid;
+      grid-template-columns: 69mm repeat(3, 1fr);
+      gap: 0;
+      margin-top: 5mm;
+      padding: 3.8mm 4.5mm;
+      border: .25mm solid #c8dfd7;
+      border-radius: 3mm;
+      background: var(--mint);
+    }
+    .proof-strip > div { padding: 0 4mm; border-left: .25mm solid #c7dcd5; }
+    .proof-strip > div:first-child { padding-left: 0; border-left: 0; }
+    .proof-strip strong { display: block; font-size: 7.5pt; font-weight: 800; }
+    .proof-strip span { display: block; margin-top: 1mm; color: var(--muted); font-size: 6.5pt; }
+
+    /* Page 3 */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5mm;
+      margin-top: 6mm;
+    }
+    .tech-card {
+      height: 132mm;
+      padding: 4mm;
+      border: .25mm solid var(--line);
+      border-radius: 3.2mm;
+      background: rgba(255,255,255,.92);
+    }
+    .tech-head { display: flex; align-items: flex-start; justify-content: space-between; }
+    .tech-head h3 {
+      margin-top: 1.5mm;
+      font-size: 12pt;
+      line-height: 1.24;
+      letter-spacing: -.025em;
+      font-weight: 800;
+    }
+    .tech-head small { color: var(--green); font-size: 6.2pt; font-weight: 800; }
+    .tech-visuals {
+      display: grid;
+      grid-template-columns: 1.6fr .8fr;
+      gap: 3mm;
+      margin-top: 3.4mm;
+      height: 58mm;
+    }
+    .tech-visuals .shot { height: 58mm; }
+    .forest-svg {
+      height: 58mm;
+      padding: 2mm;
+      border: .25mm solid var(--line);
+      border-radius: 2.5mm;
+      background: #f3f8f5;
+    }
+    .forest-svg img { width: 100%; height: 100%; object-fit: contain; }
+    .metric-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3mm;
+      border-radius: 2.5mm;
+      background: var(--mint);
+      color: #274c43;
+    }
+    .metric-box strong { color: var(--green); font-size: 17pt; line-height: 1; font-weight: 800; }
+    .metric-box span { margin-top: 2mm; font-size: 6.8pt; }
+    .formula {
+      margin-top: 3mm;
+      padding: 3mm 3.5mm;
+      border-left: 1mm solid var(--green);
+      background: var(--mint);
+      color: #1b463c;
+      font-family: "Paperlogy", sans-serif;
+      font-size: 7pt;
+      line-height: 1.55;
+    }
+    .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2mm 3mm; margin-top: 3mm; list-style: none; }
+    .checks li { color: #405c55; font-size: 6.7pt; line-height: 1.4; }
+    .checks li::before {
+      content: "";
+      display: inline-block;
+      width: 1.7mm;
+      height: 3mm;
+      margin: 0 2.2mm 0.6mm 0.8mm;
+      border: solid var(--green);
+      border-width: 0 0.65mm 0.65mm 0;
+      transform: rotate(45deg);
+    }
+    .boundary {
+      margin-top: 3.3mm;
+      padding: 2.4mm 3mm;
+      border-radius: 2mm;
+      background: var(--amber);
+      color: #625333;
+      font-size: 6.3pt;
+      line-height: 1.45;
+    }
+
+    /* Page 4 */
+    .proof-page {
+      display: grid;
+      grid-template-columns: 96mm 1fr;
+      gap: 9mm;
+      height: 174mm;
+      position: relative;
+      z-index: 2;
+    }
+    .proof-story { padding-top: 5mm; }
+    .proof-story h2 {
+      margin-top: 3mm;
+      font-size: 23pt;
+      line-height: 1.14;
+      letter-spacing: -.045em;
+      font-weight: 800;
+    }
+    .proof-story h2 em { color: var(--lime); font-style: normal; }
+    .proof-story > p {
+      margin-top: 3mm;
+      color: #c9ddd7;
+      font-size: 8pt;
+      line-height: 1.5;
+    }
+    .proof-thumb {
+      position: relative;
+      height: 42mm;
+      margin-top: 5mm;
+      overflow: hidden;
+      border: .25mm solid rgba(225,243,237,.18);
+      border-radius: 2.6mm;
+      background: #102f28;
+    }
+    .proof-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .journey { margin-top: 5mm; list-style: none; }
+    .journey li {
+      position: relative;
+      min-height: 15mm;
+      padding: 0 0 3.2mm 8mm;
+      border-left: .35mm solid rgba(181,223,210,.24);
+    }
+    .journey li::before {
+      content: attr(data-step);
+      position: absolute;
+      left: -3.7mm;
+      top: -.4mm;
+      display: flex;
+      width: 7mm;
+      height: 7mm;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--lime);
+      color: #0b2b24;
+      font-size: 6pt;
+      font-weight: 800;
+    }
+    .journey strong { display: block; color: white; font-size: 7.7pt; }
+    .journey span { display: block; margin-top: .6mm; color: #acc5be; font-size: 6.4pt; line-height: 1.35; }
+    .boundary-area { padding-top: 5mm; }
+    .boundary-area > h3 {
+      color: var(--lime);
+      font-size: 7pt;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .boundary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+      margin-top: 3mm;
+    }
+    .boundary-card {
+      min-height: 66mm;
+      padding: 3.3mm;
+      border: .25mm solid rgba(220,241,234,.15);
+      border-radius: 2.5mm;
+      background: rgba(255,255,255,.04);
+    }
+    .boundary-card .pill {
+      display: inline-block;
+      padding: .9mm 1.8mm;
+      border-radius: 99mm;
+      background: var(--lime);
+      color: #123b32;
+      font-size: 5.7pt;
+      font-weight: 800;
+    }
+    .boundary-card:nth-child(2) .pill { background: #f3c65b; }
+    .boundary-card:nth-child(3) .pill { background: #b9d9d0; }
+    .boundary-card ul { margin-top: 3mm; padding-left: 3.8mm; }
+    .boundary-card li { margin-top: 1.7mm; color: #bfd5ce; font-size: 6.2pt; line-height: 1.45; }
+    .lesson-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 3mm; }
+    .lesson-card {
+      min-height: 47mm;
+      padding: 3.4mm;
+      border-radius: 2.5mm;
+      background: rgba(255,255,255,.055);
+    }
+    .lesson-card h3 { color: white; font-size: 8pt; font-weight: 800; }
+    .lesson-card ul { margin-top: 2.3mm; padding-left: 4mm; }
+    .lesson-card li { margin-top: 1.2mm; color: #bdd3cc; font-size: 6.3pt; line-height: 1.42; }
+    .repo-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 3mm;
+      padding: 2.5mm 3.5mm;
+      border: .35mm solid rgba(185,232,102,.68);
+      border-radius: 2.4mm;
+      color: white;
+      font-size: 6.8pt;
+      text-decoration: none;
+    }
+    .repo-link strong { color: var(--lime); font-size: 7.2pt; }
+  </style>
+</head>
+<body>
+  <main>
+  <section class="page dark">
+    <div class="page-mark">PUBLIC EXCERPT · 01 / 04</div>
+    <div class="cover">
+      <div class="cover-copy">
+        <p class="kicker">EcoGuard · Project case study</p>
+        <h1>기술을 만드는 일보다<br><em>그 기술이 맞다는 것을</em><br>증명하는 일이 어려웠다.</h1>
+        <p class="cover-subtitle">비정형 수출 데이터를 검토 가능한 증빙으로 바꾸고, CBAM 비용과 산림 변화의 근거를 연결한 무역금융 교육용 PoC</p>
+        <blockquote class="thesis">증명에 시간을 쓴 뒤에야, 데이터 전처리·계산·근거 추적이라는 우리의 기술이 왜 실무에서 의미 있는지 더 선명하게 보였다.</blockquote>
+        <div class="cover-tags"><span>Team UniHana</span><span>교육 프로젝트</span><span>공개용 발췌본</span></div>
+      </div>
+      <div class="cover-visual">
+        <figure class="shot cover-report">
+          <span class="synthetic">합성 데이터 · 프로토타입 화면</span>
+          <img src="screen-report.webp" width="1280" height="720" alt="합성 데이터로 구성한 EcoGuard 검토 보고서 화면">
+        </figure>
+        <aside class="award-card">
+          <figure class="award-photo">
+            <img src="award-day.webp" width="1440" height="1160" alt="수상 보드와 꽃다발을 안전하게 크롭한 기록 사진">
+          </figure>
+          <div class="award-copy">
+            <p class="award-eyebrow">Award record</p>
+            <h2>2026 하나 청년 금융인재 양성 프로젝트<br>대상(금융감독원상)</h2>
+            <p class="award-facts"><strong>2026.07.23 · Team UniHana 3인</strong><br>상장 및 상금 1천만원</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <footer class="footer"><span>공개 범위: 전체 발표자료가 아닌 4페이지 프로젝트 발췌본</span><span>모든 화면 데이터는 합성 · 교육용 PoC · 하나금융그룹·하나은행 공식 제품 아님 · 법률 자문 아님</span></footer>
+  </section>
+
+  <section class="page">
+    <div class="page-mark">PUBLIC EXCERPT · 02 / 04</div>
+    <p class="kicker">01 · From OCR to evidence</p>
+    <h2 class="section-title">OCR의 핵심은 ‘읽기’가 아니라, 흐트러진 원천 데이터를<br><em>설명 가능한 증빙</em>으로 바꾸는 일이었다.</h2>
+    <p class="section-lead">현업의 메모와 내부 양식은 누락·단위 혼용·자유로운 표현이 많습니다. 그래서 문자 인식률보다 값의 의미를 정리하고, 어디에서 왔는지 추적하며, 필요한 규정 근거와 연결하는 전처리에 집중했습니다.</p>
+
+    <div class="pipeline">
+      <article class="stage">
+        <figure class="shot"><span class="synthetic">합성 데이터 · 프로토타입 화면</span><img src="screen-upload.webp" width="1280" height="720" alt="합성 원천 문서 업로드 화면"></figure>
+        <p class="stage-id">STAGE 1 · RAW INTAKE</p>
+        <h3>원천자료를 있는 그대로 받는다</h3>
+        <p>스캔 문서, 자유 형식 메모, 표, 위치자료처럼 형태가 다른 입력을 접수합니다. 목표는 ‘깔끔한 문서라고 가정하지 않는 것’입니다.</p>
+        <ul><li>원본 파일과 줄·필드 위치 보존</li><li>빈칸과 모호한 값을 임의로 채우지 않음</li></ul>
+      </article>
+      <article class="stage">
+        <figure class="shot"><span class="synthetic">합성 데이터 · 프로토타입 화면</span><img src="screen-normalize.webp" width="1280" height="720" alt="합성 데이터 필드 정규화 화면"></figure>
+        <p class="stage-id">STAGE 2 · NORMALIZE</p>
+        <h3>필드·단위·출처를 함께 구조화한다</h3>
+        <p>같은 의미의 항목명을 통합하고 단위를 맞춥니다. 값마다 원본 위치를 남겨 계산 결과에서 원자료까지 되짚을 수 있게 설계했습니다.</p>
+        <ul><li>스키마·단위·범위 검사</li><li>source span·변환 이력·해시 추적</li></ul>
+      </article>
+      <article class="stage">
+        <figure class="shot"><span class="synthetic">합성 데이터 · 프로토타입 화면</span><img src="screen-legal-rag.webp" width="1280" height="720" alt="합성 질의로 조문 근거를 찾는 화면"></figure>
+        <p class="stage-id">STAGE 3 · GROUND</p>
+        <h3>문제를 EU 규정의 조문 근거와 연결한다</h3>
+        <p>“문제가 있다”는 문장에 그치지 않고 관련 조문, 요구사항, 보완 행동을 함께 찾는 검색·응답 구조를 준비했습니다.</p>
+        <ul><li>조문·문단 메타데이터와 citation</li><li>근거 부족·도메인 밖 질문은 기권</li></ul>
+      </article>
+    </div>
+
+    <aside class="proof-strip">
+      <div><strong>유창한 답변보다 추적 가능한 답변</strong><span>법률 RAG는 그럴듯함이 아니라 근거 검색과 재현 가능한 평가로 봤습니다.</span></div>
+      <div><strong>① Source lineage</strong><span>어느 파일·항목에서 왔는지 추적</span></div>
+      <div><strong>② Schema checks</strong><span>필수값·단위·문서 간 불일치를 검사</span></div>
+      <div><strong>③ Article retrieval</strong><span>정답 질문셋과 기권 사례로 평가</span></div>
+    </aside>
+    <footer class="footer"><span>법무 관점 피드백: 자료를 규제 요구사항과 조문 근거로 연결하는 방향의 실무적 의미를 확인</span><span>공식 인증·완전한 법률 검증 아님 · 합성 데이터 · 법률 자문 아님</span></footer>
+  </section>
+
+  <section class="page">
+    <div class="page-mark">PUBLIC EXCERPT · 03 / 04</div>
+    <p class="kicker">02 · Reproducible technical core</p>
+    <h2 class="section-title">정규화된 입력은 계산과 탐지를 <em>반복 가능한 기술</em>로 바꾼다.</h2>
+    <p class="section-lead">모델 화면보다 중요한 것은 같은 입력에서 같은 결과가 나오고, 어떤 값과 가정이 결과를 만들었는지 설명할 수 있는가였습니다.</p>
+
+    <div class="tech-grid">
+      <article class="tech-card">
+        <div class="tech-head"><div><small>CBAM · DETERMINISTIC</small><h3>공개 산식을 따라가는<br>노출액 계산</h3></div><span class="label">CALCULATE</span></div>
+        <div class="tech-visuals">
+          <figure class="shot"><span class="synthetic">합성 데이터 · 프로토타입 화면</span><img src="screen-cbam.webp" width="1280" height="720" alt="합성 CBAM 비용 시나리오 화면"></figure>
+          <div class="metric-box"><strong>11</strong><span>단계 계산 DAG<br>피연산자·중간값·계보 보존</span></div>
+        </div>
+        <div class="formula">내재배출량 = sum(품목 중량 × 품목별 단위 내재배출)<br>유효가격 = max(인증서 가격 − 원산지 탄소가격, 0)<br>교육용 노출도 = 내재배출량 × 분석자 적용계수 × 유효가격</div>
+        <ul class="checks"><li>입력 스키마와 단위 규칙 고정</li><li>원자료→중간 계산 계보 보존</li><li>손계산 기준값과 자동 테스트</li><li>가정 변화 민감도 분리</li></ul>
+        <p class="boundary">구조 설명을 위한 교육용 계산입니다. 분석자 적용계수는 법정 phase-in 계수가 아니며 실제 신고액·인증서 의무·공식 산정값을 제공하지 않습니다.</p>
+      </article>
+
+      <article class="tech-card">
+        <div class="tech-head"><div><small>FOREST · EVIDENCE PACK</small><h3>합성 red/NIR 변화 기준선을<br>근거 묶음으로</h3></div><span class="label">EVIDENCE</span></div>
+        <div class="tech-visuals">
+          <figure class="forest-svg"><img src="forest-baseline.svg" width="448" height="573" alt="합성 산림 변화 reference mask 평가 결과"></figure>
+          <div class="metric-box"><strong>36</strong><span>합성 셀 전부에 prediction·reference·confusion class 기록</span></div>
+        </div>
+        <div class="formula">NDVI 변화량 = NDVI(after) − NDVI(before)<br>후보 픽셀 = 이전 NDVI ≥ 0.45 그리고 변화량 ≤ −0.25<br>출력 = 픽셀 마스크 + 4방향 연속 영역 + GeoJSON·SVG</div>
+        <ul class="checks"><li>합성 전후 band·NDVI 공개</li><li>TP·FP·FN·TN을 함께 기록</li><li>연속 후보 영역 결정론적 계산</li><li>탐지와 규제 판단 분리</li></ul>
+        <p class="boundary">작은 합성 정답셋에서 metric code path를 검사한 기준선입니다. 실제 위성 모델 성능, 현장 실사 또는 공식 EUDR 적합성 판정을 뜻하지 않습니다.</p>
+      </article>
+    </div>
+    <footer class="footer"><span>기술적 기준: 같은 합성 입력 · 같은 파라미터 · 같은 출력 · 중간값과 근거 보존</span><span>공식 CBAM 계산·EUDR 판정 아님 · 교육용 PoC</span></footer>
+  </section>
+
+  <section class="page dark">
+    <div class="page-mark">PUBLIC EXCERPT · 04 / 04</div>
+    <div class="proof-page">
+      <div class="proof-story">
+        <p class="kicker">03 · Proof journey</p>
+        <h2>증명하고 나니<br>기술의 의미가<br><em>더 선명해졌다.</em></h2>
+        <p>기능을 늘리는 일보다 데이터와 근거를 되짚을 수 있게 만드는 데 더 많은 시간을 썼습니다.</p>
+        <figure class="proof-thumb"><span class="synthetic">합성 데이터 · 프로토타입 화면</span><img src="screen-report.webp" width="1280" height="720" alt="합성 EcoGuard 보고서 화면"></figure>
+        <ol class="journey">
+          <li data-step="1"><strong>기술은 이미 있었다</strong><span>구조화·계산·변화 탐지·근거 검색을 하나의 흐름으로 연결했습니다.</span></li>
+          <li data-step="2"><strong>그러나 맞다고 말하기 어려웠다</strong><span>정답 데이터, 규정 버전, 평가 기준이 함께 필요했습니다.</span></li>
+          <li data-step="3"><strong>증명의 경로에 시간을 썼다</strong><span>출처 계보, 결정적 산식, 기준 질문과 판단 경계를 남겼습니다.</span></li>
+          <li data-step="4"><strong>실무적 의미가 드러났다</strong><span>자동화보다 ‘왜 이 결과를 믿을 수 있는가’를 설명하는 기술이 중요했습니다.</span></li>
+        </ol>
+      </div>
+
+      <div class="boundary-area">
+        <h3>Public boundary · 공개 범위와 구현 경계</h3>
+        <div class="boundary-grid">
+          <article class="boundary-card"><span class="pill">재현 가능한 PoC</span><ul><li>합성 원천자료 정규화·입력 검증</li><li>출처 위치와 변환 이력 추적</li><li>조문 검색·citation·기권 평가</li><li>CBAM 교육용 결정론적 계산</li><li>합성 NDVI reference 평가</li></ul></article>
+          <article class="boundary-card"><span class="pill">화면에서 시뮬레이션</span><ul><li>OCR 추출 완료 상태</li><li>종합 품질점수와 보완 문구</li><li>은행 심사역용 통합 보고 흐름</li><li>업무 단계 간 자동 전달 경험</li></ul></article>
+          <article class="boundary-card"><span class="pill">후속 검증·연동 필요</span><ul><li>실제 기업·은행 데이터 연동</li><li>운영급 OCR·산림 모델 평가</li><li>법률 전문가의 정답셋 관리</li><li>규정·계수·가격 최신화</li></ul></article>
+        </div>
+        <div class="lesson-grid">
+          <article class="lesson-card"><h3>좋았던 점</h3><ul><li>OCR을 데이터 품질과 계보의 문제로 다시 정의했습니다.</li><li>환경 분석을 비용과 검토 근거의 언어로 번역했습니다.</li><li>각 주장에 확인 방법과 실패 경계를 붙였습니다.</li></ul></article>
+          <article class="lesson-card"><h3>남은 한계</h3><ul><li>공개 예제는 작은 합성 자료 중심입니다.</li><li>운영 성능과 실제 신고 적합성을 검증하지 않았습니다.</li><li>규정 해석과 현장 확인에는 전문가 검토가 필요합니다.</li></ul></article>
+        </div>
+        <a class="repo-link" href="https://github.com/soccz/EcoGuard"><span>재현 코드와 방법론 문서</span><strong>github.com/soccz/EcoGuard →</strong></a>
+      </div>
+    </div>
+    <footer class="footer"><span>EcoGuard · Team UniHana · 공개용 4페이지 프로젝트 기록</span><span>합성 데이터 · 하나금융그룹·하나은행 공식 제품 아님 · 법률 자문 아님 · 전체 발표자료 미공개</span></footer>
+  </section>
+  </main>
+</body>
+</html>
