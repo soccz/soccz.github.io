@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EcoGuard: 비정형 수출 데이터를 정규화하고 EU 규정, CBAM 계산, 산림 변화 탐지를 은행 심사 근거로 연결한 3인 팀의 프로젝트 보고서">
+  <meta name="theme-color" content="#f6f7f3">
+  <meta property="og:title" content="EcoGuard — 기술보다 증명이 더 어려웠던 무역금융 PoC">
+  <meta property="og:description" content="CarbonCast에서 EcoGuard까지. 데이터 전처리, EU Legal RAG, CBAM 연산, 산림 변화 탐지를 하나의 증거 흐름으로 만든 과정">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://soccz.github.io/projects/ecoguard/">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <title>EcoGuard — 기술보다 증명이 더 어려웠던 ESG 무역금융 PoC</title>
+  <style>
+    :root {
+      --bg: #f6f7f3;
+      --bg-soft: #eef2ed;
+      --paper: #fffefa;
+      --ink: #18211e;
+      --text: #50605a;
+      --muted: #59675f;
+      --line: #d9e1dc;
+      --line-strong: #bccbc4;
+      --green: #28745f;
+      --green-dark: #155443;
+      --green-soft: #dfeee8;
+      --sage: #7d9689;
+      --gold: #7a5a22;
+      --gold-soft: #f5ecd8;
+      --red: #8e4540;
+      --red-soft: #f7eae7;
+      --blue: #3d6477;
+      --blue-soft: #e5eef2;
+      --shadow: 0 18px 54px rgba(27, 58, 47, 0.09);
+      --serif: 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+      --sans: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 14% 3%, rgba(40,116,95,0.09), transparent 28rem),
+        var(--bg);
+      font-family: var(--sans);
+      line-height: 1.78;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid var(--green-dark); outline-offset: 3px; }
+
+    .skip-link {
+      position: fixed;
+      z-index: 1000;
+      top: 10px;
+      left: 10px;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--green-dark);
+      border-radius: 8px;
+      transform: translateY(-160%);
+      transition: transform 0.2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-nav {
+      position: fixed;
+      z-index: 100;
+      inset: 0 0 auto;
+      background: rgba(246,247,243,0.9);
+      border-bottom: 1px solid rgba(188,203,196,0.75);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 66px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand {
+      flex: 0 0 auto;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: 0.96rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      list-style: none;
+    }
+    .nav-links a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--text);
+      font-size: 0.78rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--green); }
+
+    main { overflow: hidden; }
+    .hero {
+      min-height: 94vh;
+      padding: 148px 24px 92px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      isolation: isolate;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      width: min(68vw, 820px);
+      aspect-ratio: 1;
+      right: -20%;
+      top: 4%;
+      border: 1px solid rgba(40,116,95,0.12);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 76px rgba(40,116,95,0.026),
+        0 0 0 152px rgba(40,116,95,0.017);
+    }
+    .hero-inner { width: min(100%, 980px); min-width: 0; text-align: center; }
+    .eyebrow {
+      margin-bottom: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      color: var(--green-dark);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+    }
+    h1, h2, .serif { font-family: var(--serif); }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.55rem, 7vw, 5.5rem);
+      line-height: 1.13;
+      letter-spacing: -0.06em;
+    }
+    h1 span { color: var(--green); }
+    .hero-name {
+      margin: 24px 0 0;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: clamp(1.02rem, 2vw, 1.26rem);
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    .hero-copy {
+      max-width: 760px;
+      margin: 18px auto 0;
+      color: var(--text);
+      font-size: clamp(0.98rem, 1.8vw, 1.12rem);
+      font-weight: 300;
+    }
+    .status {
+      width: fit-content;
+      max-width: 100%;
+      margin: 28px auto 0;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--green-dark);
+      background: rgba(223,238,232,0.84);
+      border: 1px solid #c2ddd2;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    .status::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+    .hero-actions {
+      margin-top: 32px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .button {
+      min-height: 48px;
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--green-dark);
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--line-strong);
+      border-radius: 9px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .button.primary { color: #fff; background: var(--green); border-color: var(--green); }
+    .button:hover { transform: translateY(-2px); border-color: var(--green); box-shadow: 0 9px 24px rgba(40,116,95,0.14); }
+    .hero-facts {
+      max-width: 820px;
+      margin: 58px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .fact { padding: 22px 12px; border-right: 1px solid var(--line); text-align: center; }
+    .fact:last-child { border-right: 0; }
+    .fact strong {
+      display: block;
+      color: var(--green-dark);
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      line-height: 1.2;
+    }
+    .fact span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.7rem; }
+    .hero-disclaimer {
+      max-width: 800px;
+      margin: 22px auto 0;
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    section { padding: 104px 24px; }
+    section.alt { background: rgba(238,242,237,0.78); }
+    section.paper { background: var(--paper); border-block: 1px solid var(--line); }
+    .container { width: min(1120px, 100%); margin: 0 auto; }
+    .section-head { max-width: 780px; margin-bottom: 42px; }
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 2.75rem);
+      line-height: 1.34;
+      letter-spacing: -0.04em;
+    }
+    h3 { margin: 0; font-size: 1rem; line-height: 1.5; }
+    p { margin-top: 0; }
+    .section-desc { margin: 15px 0 0; color: var(--text); font-size: 0.96rem; }
+    .small { color: var(--muted); font-size: 0.76rem; }
+
+    .report-lead {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
+      gap: 26px;
+      align-items: stretch;
+    }
+    .report-lead .section-head { margin: 0; }
+    .thesis-card {
+      padding: clamp(26px, 4vw, 40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #eff8f4;
+      background: var(--green-dark);
+      border-radius: 16px;
+    }
+    .thesis-label {
+      color: #afd0c3;
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .thesis-card blockquote {
+      margin: 12px 0 0;
+      font-family: var(--serif);
+      font-size: clamp(1.35rem, 2.7vw, 2rem);
+      font-weight: 700;
+      line-height: 1.52;
+    }
+    .thesis-card p { margin: 14px 0 0; color: #d4e7df; font-size: 0.8rem; }
+    .meta-strip {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .meta-item { padding: 18px 20px; background: var(--bg); border-right: 1px solid var(--line); }
+    .meta-item:last-child { border-right: 0; }
+    .meta-item strong { display: block; color: var(--green-dark); font-size: 0.7rem; }
+    .meta-item span { display: block; margin-top: 5px; color: var(--text); font-size: 0.76rem; }
+
+    .journey {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      list-style: none;
+    }
+    .journey li {
+      min-width: 0;
+      padding: 28px;
+      position: relative;
+      background: var(--paper);
+      border: 1px solid var(--line);
+    }
+    .journey li:first-child { border-radius: 14px 0 0 14px; }
+    .journey li:last-child { border-radius: 0 14px 14px 0; }
+    .journey li + li { border-left: 0; }
+    .journey li:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      z-index: 2;
+      right: -15px;
+      top: 28px;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      font-weight: 800;
+    }
+    .journey-num { color: var(--muted); font-family: var(--serif); font-size: 1.45rem; font-weight: 700; }
+    .journey h3 { margin-top: 6px; font-family: var(--serif); font-size: 1.08rem; }
+    .journey p { margin: 8px 0 0; color: var(--text); font-size: 0.8rem; }
+    .journey strong { color: var(--green-dark); }
+    .turning-note {
+      margin-top: 20px;
+      padding: 21px 24px;
+      color: var(--text);
+      background: var(--gold-soft);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      font-size: 0.84rem;
+    }
+    .turning-note strong { color: var(--gold); }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+    .field-quote {
+      margin: 0;
+      padding: 30px;
+      color: #f3f8f6;
+      background: #1f2f2a;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .field-quote p { margin: 0; font-family: var(--serif); font-size: 1.23rem; line-height: 1.65; }
+    .field-quote cite { margin-top: 24px; color: #adc2b9; font-size: 0.72rem; font-style: normal; }
+    .raw-list {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      list-style: none;
+    }
+    .raw-list li { padding: 20px; background: var(--paper); border: 1px solid var(--line); border-radius: 11px; }
+    .raw-list strong { display: block; color: var(--green-dark); font-size: 0.82rem; }
+    .raw-list span { display: block; margin-top: 5px; color: var(--text); font-size: 0.76rem; }
+
+    .screen-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .screen-card {
+      margin: 0;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 10px 34px rgba(29, 62, 50, 0.06);
+    }
+    .screen-card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #f2f3f1; }
+    .screen-card img.contain { padding: 12px; object-fit: contain; }
+    .screen-card figcaption { padding: 17px 19px 19px; color: var(--text); font-size: 0.76rem; }
+    .figure-label { display: block; margin-bottom: 5px; color: var(--green); font-size: 0.64rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .pipeline {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+      list-style: none;
+    }
+    .pipeline li {
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 46px minmax(190px, 0.48fr) minmax(0, 1.52fr);
+      gap: 18px;
+      align-items: start;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 11px;
+    }
+    .stage-num {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      border-radius: 10px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .stage-title span { display: block; margin-top: 4px; color: var(--blue); font-family: var(--mono); font-size: 0.64rem; }
+    .stage-copy { margin: 0; color: var(--text); font-size: 0.78rem; }
+
+    .principle-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .principle { padding: 20px; background: rgba(255,255,255,0.72); border: 1px solid var(--line); border-radius: 11px; }
+    .principle code { color: var(--green); font-family: var(--mono); font-size: 0.66rem; }
+    .principle h3 { margin-top: 7px; font-size: 0.88rem; }
+    .principle p { margin: 6px 0 0; color: var(--text); font-size: 0.74rem; }
+
+    .feature-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.96fr);
+      gap: clamp(28px, 5vw, 62px);
+      align-items: center;
+    }
+    .feature-layout.reverse { grid-template-columns: minmax(320px, 0.96fr) minmax(0, 1.04fr); }
+    .feature-layout.reverse .feature-copy { order: 2; }
+    .feature-layout + .feature-layout { margin-top: 86px; }
+    .feature-copy .section-head { margin-bottom: 22px; }
+    .feature-list { margin: 0; padding: 0; display: grid; gap: 11px; list-style: none; }
+    .feature-list li {
+      padding: 15px 17px;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+    .feature-index {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      color: var(--green-dark);
+      background: var(--green-soft);
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 800;
+    }
+    .feature-list h3 { font-size: 0.86rem; }
+    .feature-list p { margin: 4px 0 0; color: var(--text); font-size: 0.75rem; }
+    .single-screen { margin: 0; }
+    .browser-frame {
+      padding: 8px;
+      overflow: hidden;
+      background: #dfe5e1;
+      border: 1px solid var(--line-strong);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+    .browser-bar { height: 18px; display: flex; align-items: center; gap: 5px; padding: 0 5px 7px; }
+    .browser-bar span { width: 6px; height: 6px; background: #9aa9a2; border-radius: 50%; }
+    .browser-frame img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 9px; background: #fff; }
+    .single-screen figcaption { margin-top: 13px; color: var(--muted); font-size: 0.7rem; text-align: center; }
+    .boundary-note {
+      margin-top: 18px;
+      padding: 17px 19px;
+      color: var(--text);
+      background: var(--gold-soft);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.76rem;
+    }
+    .boundary-note strong { color: var(--gold); }
+
+    .retrieval-path {
+      margin: 22px 0 0;
+      padding: 0;
+      display: flex;
+      align-items: stretch;
+      list-style: none;
+    }
+    .retrieval-path li {
+      flex: 1;
+      min-width: 0;
+      padding: 14px 10px;
+      position: relative;
+      color: var(--text);
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      font-size: 0.7rem;
+      text-align: center;
+    }
+    .retrieval-path li:first-child { border-radius: 9px 0 0 9px; }
+    .retrieval-path li:last-child { border-radius: 0 9px 9px 0; }
+    .retrieval-path li + li { border-left: 0; }
+    .retrieval-path li:not(:last-child)::after {
+      content: '›';
+      position: absolute;
+      z-index: 1;
+      right: -8px;
+      top: 50%;
+      color: var(--green);
+      font-size: 1.15rem;
+      font-weight: 800;
+      transform: translateY(-52%);
+    }
+
+    .formula-card {
+      margin: 22px 0 0;
+      padding: 22px;
+      color: #edf6f2;
+      background: #20332d;
+      border-radius: 12px;
+    }
+    .formula-card span { display: block; color: #a7c9bc; font-size: 0.64rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+    .formula-card code { display: block; margin-top: 10px; font-family: var(--mono); font-size: 0.74rem; line-height: 1.75; white-space: normal; }
+    .formula-card em { color: #cae4da; font-style: normal; }
+
+    .forest-figures { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+    .proof-grid {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      list-style: none;
+    }
+    .proof-card {
+      padding: 22px;
+      display: grid;
+      grid-template-columns: 45px 1fr;
+      gap: 14px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .proof-id {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      border-radius: 10px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    .proof-card p { margin: 7px 0 0; color: var(--text); font-size: 0.78rem; }
+    .proof-check { margin-top: 9px !important; padding-top: 9px; border-top: 1px solid var(--line); color: var(--muted) !important; font-size: 0.7rem !important; }
+    .proof-check strong { color: var(--green-dark); }
+    .legal-review {
+      margin-top: 20px;
+      padding: 25px;
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 24px;
+      color: #eef6f3;
+      background: var(--green-dark);
+      border-radius: 14px;
+    }
+    .legal-review h3 { font-family: var(--serif); font-size: 1.25rem; }
+    .legal-review p { margin: 0; color: #d2e4dd; font-size: 0.78rem; }
+
+    .scope-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); }
+    .scope-table { width: 100%; min-width: 720px; border-collapse: collapse; }
+    .scope-table th, .scope-table td { padding: 18px 20px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    .scope-table tr:last-child th, .scope-table tr:last-child td { border-bottom: 0; }
+    .scope-table th { width: 150px; font-size: 0.76rem; }
+    .scope-table td { color: var(--text); font-size: 0.77rem; }
+    .scope-table td strong { color: var(--ink); }
+    .scope-tag { display: inline-flex; padding: 5px 9px; border-radius: 999px; font-size: 0.66rem; font-weight: 800; }
+    .scope-tag.built { color: var(--green-dark); background: var(--green-soft); }
+    .scope-tag.sim { color: var(--gold); background: var(--gold-soft); }
+    .scope-tag.idea { color: var(--blue); background: var(--blue-soft); }
+
+    .lesson-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .lesson-card { padding: 24px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
+    .lesson-card span { color: var(--green); font-family: var(--serif); font-size: 1.25rem; font-weight: 700; }
+    .lesson-card h3 { margin-top: 7px; font-family: var(--serif); font-size: 1.05rem; }
+    .lesson-card p { margin: 8px 0 0; color: var(--text); font-size: 0.78rem; }
+    .closing-thesis {
+      margin-top: 22px;
+      padding: clamp(26px, 5vw, 46px);
+      color: #edf7f3;
+      background: var(--green-dark);
+      border-radius: 15px;
+      text-align: center;
+    }
+    .closing-thesis p { max-width: 820px; margin: 0 auto; font-family: var(--serif); font-size: clamp(1.22rem, 2.6vw, 1.8rem); font-weight: 700; line-height: 1.62; }
+
+    .limit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .limit-card { padding: 21px; background: var(--red-soft); border: 1px solid #ead0cc; border-radius: 11px; }
+    .limit-card h3 { color: var(--red); font-size: 0.88rem; }
+    .limit-card p { margin: 7px 0 0; color: var(--text); font-size: 0.74rem; }
+
+    .outro {
+      padding: 90px 24px;
+      text-align: center;
+    }
+    .outro-inner { width: min(850px, 100%); margin: 0 auto; }
+    .outro h2 { font-size: clamp(1.8rem, 4.5vw, 3rem); }
+    .outro p { max-width: 700px; margin: 16px auto 0; color: var(--text); }
+
+    footer { padding: 48px 24px; color: var(--muted); border-top: 1px solid var(--line); text-align: center; font-size: 0.73rem; }
+    footer strong { color: var(--green-dark); }
+
+    @media (max-width: 900px) {
+      .nav-inner { width: 100%; padding: 0 18px; overflow-x: auto; }
+      .hero { min-height: auto; padding-top: 132px; }
+      .report-lead, .field-grid, .feature-layout, .feature-layout.reverse { grid-template-columns: 1fr; }
+      .feature-layout.reverse .feature-copy { order: initial; }
+      .principle-grid { grid-template-columns: repeat(2, 1fr); }
+      .pipeline li { grid-template-columns: 46px minmax(170px, 0.62fr) minmax(0, 1.38fr); }
+      .legal-review { grid-template-columns: 1fr; gap: 10px; }
+      .limit-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      body { word-break: normal; overflow-wrap: anywhere; }
+      .site-nav { overflow: hidden; }
+      .nav-links { gap: 16px; }
+      .nav-links li:nth-child(2), .nav-links li:nth-child(4) { display: none; }
+      section { padding: 76px 18px; }
+      .hero { display: block; padding-left: 18px; padding-right: 18px; }
+      .hero-inner { width: 100%; max-width: 100%; overflow: hidden; }
+      .eyebrow { display: block; font-size: 0.62rem; line-height: 1.65; }
+      .eyebrow::before { display: inline-block; margin-right: 8px; }
+      h1 { font-size: 2rem; line-height: 1.22; letter-spacing: -0.045em; overflow-wrap: anywhere; }
+      .hero-name { font-size: 0.93rem; line-height: 1.65; }
+      .hero-copy { font-size: 0.9rem; word-break: keep-all; overflow-wrap: anywhere; }
+      .status { display: block; width: 100%; text-align: center; }
+      .status::before { display: inline-block; margin-right: 7px; }
+      .hero-actions { width: 100%; flex-direction: column; }
+      .button { width: 100%; }
+      .hero-facts { width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .fact { min-width: 0; }
+      .fact:nth-child(2) { border-right: 0; }
+      .fact:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .meta-strip, .screen-grid, .proof-grid, .lesson-grid, .forest-figures, .limit-grid { grid-template-columns: 1fr; }
+      .meta-item { border-right: 0; border-bottom: 1px solid var(--line); }
+      .meta-item:last-child { border-bottom: 0; }
+      .journey { gap: 10px; grid-template-columns: 1fr; }
+      .journey li, .journey li:first-child, .journey li:last-child { border: 1px solid var(--line); border-radius: 11px; }
+      .journey li:not(:last-child)::after { content: '↓'; right: 20px; top: auto; bottom: -20px; }
+      .raw-list, .principle-grid { grid-template-columns: 1fr; }
+      .pipeline li { grid-template-columns: 42px 1fr; gap: 11px; }
+      .stage-copy { grid-column: 2; }
+      .retrieval-path { flex-direction: column; gap: 7px; }
+      .retrieval-path li, .retrieval-path li:first-child, .retrieval-path li:last-child { border: 1px solid var(--line); border-radius: 8px; }
+      .retrieval-path li:not(:last-child)::after { content: '↓'; right: 12px; top: auto; bottom: -17px; transform: none; }
+      .proof-card { grid-template-columns: 40px 1fr; padding: 18px; }
+      .feature-layout + .feature-layout { margin-top: 68px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">본문으로 건너뛰기</a>
+
+  <nav class="site-nav" aria-label="페이지 탐색">
+    <div class="nav-inner">
+      <a class="brand" href="/" aria-label="soccz 홈으로 이동">soccz.</a>
+      <ul class="nav-links">
+        <li><a href="#story">프로젝트</a></li>
+        <li><a href="#raw-data">원천 데이터</a></li>
+        <li><a href="#technology">기술</a></li>
+        <li><a href="#proof">증명</a></li>
+        <li><a href="#retrospective">회고</a></li>
+        <li><a href="#limits">한계</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="content">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">2026 하나 청년 금융인재 양성 프로젝트 · Team UniHana</div>
+        <h1>기술을 만드는 것보다<br><span>왜 맞는지 증명하는 일이 더 어려웠습니다</span></h1>
+        <p class="hero-name">EcoGuard · ESG 무역금융 심사 지원 PoC</p>
+        <p class="hero-copy">
+          기업의 제각각인 메모와 수출 서류를 계산 가능한 데이터로 정리하고,
+          EU 규정의 조항 근거, CBAM 비용, 산림 변화 신호를 하나의 심사 흐름으로 연결했습니다.
+          이 페이지는 완성된 화면보다 그 결과를 믿을 수 있게 만들기 위해 거친 판단과 검증의 기록입니다.
+        </p>
+        <div class="status">3인 팀 · 교육·경진 프로젝트 · 합성 데이터 기반 프로토타입</div>
+        <div class="hero-actions" aria-label="프로젝트 자료">
+          <a class="button primary" href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">재현 코드 보기 <span aria-hidden="true">↗</span></a>
+          <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">발표 발췌본 · 4쪽 <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-facts" role="list" aria-label="프로젝트 핵심 정보">
+          <div class="fact" role="listitem"><strong>3</strong><span>Team UniHana 구성원</span></div>
+          <div class="fact" role="listitem"><strong>3</strong><span>아이디어 발전 단계</span></div>
+          <div class="fact" role="listitem"><strong>4</strong><span>핵심 기술 축</span></div>
+          <div class="fact" role="listitem"><strong>PoC</strong><span>교육·경진 목적 범위</span></div>
+        </div>
+        <p class="hero-disclaimer">
+          EcoGuard는 하나금융그룹 또는 하나은행의 공식 제품이 아닙니다. 하나은행의 무역금융 업무 맥락을 가정해 설계한 교육·경진 목적의 독립적인 팀 프로젝트입니다.
+        </p>
+      </div>
+    </header>
+
+    <section id="story" class="paper">
+      <div class="container">
+        <div class="report-lead">
+          <div class="section-head">
+            <p class="section-kicker">01 · Executive summary</p>
+            <h2>서류를 읽는 AI가 아니라,<br>근거를 남기는 심사 흐름</h2>
+            <p class="section-desc">
+              CBAM과 EUDR 대응에는 수출기업이 가진 생산·에너지·원산지 자료가 필요합니다.
+              그러나 실제 자료는 규제 양식에 맞춰 깨끗하게 준비돼 있지 않았습니다.
+              EcoGuard는 그 간극을 데이터 정규화, 규정 검색, 결정론적 계산, 위성 변화 탐지로 잇고
+              은행 심사역이 확인할 수 있는 근거 묶음으로 바꾸려 했습니다.
+            </p>
+          </div>
+          <aside class="thesis-card" aria-label="프로젝트 핵심 명제">
+            <span class="thesis-label">Core thesis</span>
+            <blockquote>“기술 구현보다 증명이 더 어려웠다. 그리고 증명하고 나니, 우리가 만든 기술의 의미가 더 분명해졌다.”</blockquote>
+            <p>정확도 한 줄 대신 원본 위치, 변환 규칙, 적용 조항, 계산식과 판단 경계를 함께 남기는 방향으로 프로젝트가 바뀌었습니다.</p>
+          </aside>
+        </div>
+
+        <div class="meta-strip" role="list" aria-label="프로젝트 범위 요약">
+          <div class="meta-item" role="listitem"><strong>문제</strong><span>기업 원천자료와 EU 규제 증빙 사이의 구조적 간극</span></div>
+          <div class="meta-item" role="listitem"><strong>사용자 가정</strong><span>수출 증빙을 검토하는 은행의 무역금융 심사역</span></div>
+          <div class="meta-item" role="listitem"><strong>최종 산출물</strong><span>기술 PoC · 발표 프로토타입 · 재현 코드 · 프로젝트 보고</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" aria-labelledby="evolution-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">02 · Evolution</p>
+          <h2 id="evolution-title">무엇을 더할지보다, 어디에 집중할지를 정한 과정</h2>
+          <p class="section-desc">
+            시작은 탄소비용 예측이었고 중간에는 규제 기능을 넓게 모았습니다.
+            마지막에는 “기업이 문서를 만드는 도구”보다 “은행이 그 문서를 믿어도 되는지 확인하는 도구”로 질문을 좁혔습니다.
+          </p>
+        </div>
+
+        <ol class="journey" aria-label="프로젝트 발전 과정">
+          <li>
+            <span class="journey-num">01</span>
+            <h3>CarbonCast</h3>
+            <p><strong>탄소가격과 비용 예측</strong>에서 출발했습니다. 계산 결과는 만들 수 있었지만, 그 숫자에 들어가는 기업 데이터가 믿을 만한지는 별개의 문제였습니다.</p>
+          </li>
+          <li>
+            <span class="journey-num">02</span>
+            <h3>ESG TradeGuard</h3>
+            <p><strong>OCR·규제 매칭·탄소·위성</strong>을 한데 묶었습니다. 기능은 풍부해졌지만 사용자가 누구이고 어떤 결정을 돕는지 흐려졌습니다.</p>
+          </li>
+          <li>
+            <span class="journey-num">03</span>
+            <h3>EcoGuard</h3>
+            <p><strong>증빙의 신뢰도와 추적성</strong>을 중심에 놓았습니다. 각 기술을 은행의 승인·보완·재검토 판단에 필요한 근거로 재배치했습니다.</p>
+          </li>
+        </ol>
+
+        <p class="turning-note">
+          <strong>전환점:</strong> “무엇을 예측할 수 있는가?”에서 “그 예측의 입력과 근거를 누가 다시 확인할 수 있는가?”로 질문이 바뀌었습니다.
+          이 질문이 데이터 전처리를 부수 작업이 아니라 EcoGuard의 핵심 기술로 만들었습니다.
+        </p>
+      </div>
+    </section>
+
+    <section id="raw-data">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">03 · Field insight</p>
+          <h2>현업 데이터는 보고서보다 메모에 가까웠습니다</h2>
+          <p class="section-desc">
+            현업 피드백에서 반복해서 확인한 어려움은 OCR 모델이 글자를 읽느냐가 아니었습니다.
+            담당자마다 다른 표현, 단위 없는 숫자, 엑셀 셀과 손메모, 앞뒤가 맞지 않는 문서를
+            규제 계산과 법률 검토에 쓸 수 있는 데이터로 바꾸는 일이 더 어려웠습니다.
+          </p>
+        </div>
+
+        <div class="field-grid">
+          <blockquote class="field-quote">
+            <p>“원본은 깨끗한 양식이 아니다. 읽은 값을 그대로 쓰지 말고, 무엇을 뜻하는지 정리하고 어디에서 왔는지 남겨야 한다.”</p>
+            <cite>프로젝트 과정에서 정리한 현업 문제의 요지 · 직접 인용문이 아닌 팀의 재서술</cite>
+          </blockquote>
+          <ul class="raw-list" aria-label="현업 원천 데이터의 대표 문제">
+            <li><strong>제각각인 표현</strong><span>전력, 전기사용, kWh 사용량처럼 같은 개념이 다른 이름으로 기록됩니다.</span></li>
+            <li><strong>단위 없는 숫자</strong><span>톤·kg·MWh가 생략되거나 서로 섞이면 계산 전에 의미부터 복원해야 합니다.</span></li>
+            <li><strong>문서 간 불일치</strong><span>인보이스, 선하증권, 원산지 자료의 품목·수량·날짜가 맞지 않을 수 있습니다.</span></li>
+            <li><strong>출처가 사라진 값</strong><span>정리된 숫자가 어느 파일의 몇 쪽에서 왔는지 모르면 심사 근거가 되기 어렵습니다.</span></li>
+          </ul>
+        </div>
+
+        <div class="screen-grid">
+          <figure class="screen-card">
+            <img src="/projects/ecoguard/assets/screen-upload.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 서류 접수 화면. 인보이스, 선하증권, 원산지 증명서 등 검토할 파일 종류와 업로드 영역이 보인다.">
+            <figcaption><span class="figure-label">Figure 01 · Intake</span>서류 접수는 파이프라인의 시작일 뿐입니다. 화면과 예시 문서는 발표를 위해 만든 합성 데이터 기반 프로토타입입니다.</figcaption>
+          </figure>
+          <figure class="screen-card">
+            <img src="/projects/ecoguard/assets/screen-normalize.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 문서 정리 화면. 여섯 개 파일과 분류 결과, 유효 상태가 목록으로 표시되어 있다.">
+            <figcaption><span class="figure-label">Figure 02 · Normalize</span>추출 뒤에는 문서 분류, 필드 정규화, 단위 통일, 교차검증과 출처 연결이 이어집니다. 화면의 상태값은 합성 시나리오입니다.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper" aria-labelledby="ocr-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">04 · OCR after OCR</p>
+          <h2 id="ocr-title">우리의 강점은 OCR 이후에 있었습니다</h2>
+          <p class="section-desc">
+            OCR은 이미지와 PDF를 텍스트로 바꾸는 입력 어댑터입니다. EcoGuard가 기술적으로 집중한 부분은
+            그 결과를 규제와 계산이 이해할 수 있는 스키마로 바꾸고, 이상값을 걸러내며, 원본까지 되짚을 수 있게 하는 데이터 엔지니어링이었습니다.
+          </p>
+        </div>
+
+        <ol class="pipeline" aria-label="원천 문서에서 검토 가능한 데이터까지의 처리 단계">
+          <li>
+            <span class="stage-num">01</span>
+            <div class="stage-title"><h3>Ingest</h3><span>PDF · IMAGE · SHEET · NOTE</span></div>
+            <p class="stage-copy">문서 유형과 페이지 구조를 보존한 채 텍스트·표·좌표 후보를 수집합니다. OCR 신뢰도가 낮은 영역은 확정값으로 넘기지 않습니다.</p>
+          </li>
+          <li>
+            <span class="stage-num">02</span>
+            <div class="stage-title"><h3>Normalize</h3><span>FIELD · UNIT · DATE · ID</span></div>
+            <p class="stage-copy">서로 다른 항목명을 공통 필드로 매핑하고 수량·에너지·배출량 단위와 날짜 형식을 표준화합니다. 원본값과 변환값은 분리해 보존합니다.</p>
+          </li>
+          <li>
+            <span class="stage-num">03</span>
+            <div class="stage-title"><h3>Cross-check</h3><span>REQUIRED · RANGE · CONSISTENCY</span></div>
+            <p class="stage-copy">필수값 누락, 허용 범위, 문서 간 품목·수량·원산지 불일치를 규칙으로 검사합니다. 애매한 값은 자동 보정하지 않고 검토 대상으로 남깁니다.</p>
+          </li>
+          <li>
+            <span class="stage-num">04</span>
+            <div class="stage-title"><h3>Provenance</h3><span>DOCUMENT · PAGE · CELL · RULE</span></div>
+            <p class="stage-copy">정규화된 값마다 원본 파일·페이지·셀, 적용한 변환 규칙과 검토 상태를 연결합니다. 계산 결과에서 입력 증빙으로 역추적하는 토대입니다.</p>
+          </li>
+          <li>
+            <span class="stage-num">05</span>
+            <div class="stage-title"><h3>Regulatory mapping</h3><span>REQUIREMENT · ARTICLE · PARAGRAPH</span></div>
+            <p class="stage-copy">구조화된 필드를 CBAM·EUDR의 요구사항과 연결하고, 빠졌거나 충돌한 항목을 관련 조문 단위의 검색 질문으로 바꿉니다.</p>
+          </li>
+          <li>
+            <span class="stage-num">06</span>
+            <div class="stage-title"><h3>Review artifact</h3><span>INPUT · FORMULA · SOURCE · STATUS</span></div>
+            <p class="stage-copy">기업에는 보완할 항목을, 심사자에게는 입력·산식·규정 근거·환경 신호와 판단 경계를 묶은 검토 자료를 제공합니다.</p>
+          </li>
+        </ol>
+
+        <div class="principle-grid" aria-label="데이터 처리 설계 원칙">
+          <article class="principle"><code>RAW ≠ CLEAN</code><h3>원본과 정규화 값 분리</h3><p>정리 과정에서 정보가 덮어써지지 않게 두 값을 함께 보존합니다.</p></article>
+          <article class="principle"><code>NULL ≠ ZERO</code><h3>누락과 0을 구분</h3><p>추측으로 채운 값이 비용 계산에 들어가지 않도록 상태를 분리합니다.</p></article>
+          <article class="principle"><code>RULES &gt; GUESS</code><h3>단위 변환은 규칙으로</h3><p>LLM의 해석보다 버전이 있는 명시적 변환을 우선합니다.</p></article>
+          <article class="principle"><code>VALUE → SOURCE</code><h3>모든 값은 출처로</h3><p>결과 숫자에서 원본 증빙까지 되짚을 수 있어야 합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="technology" class="alt">
+      <div class="container">
+        <div class="feature-layout">
+          <div class="feature-copy">
+            <div class="section-head">
+              <p class="section-kicker">05 · EU Legal RAG</p>
+              <h2>답보다 먼저, 몇 조 몇 항인지 찾았습니다</h2>
+              <p class="section-desc">
+                많은 법률 RAG가 실제로 시험받는 지점은 자연스러운 문장이 아니라 올바른 근거 검색입니다.
+                EcoGuard도 “문제가 있다”로 끝내지 않고 어떤 규정의 어느 조항·항이 어떤 자료를 요구하는지,
+                지금 무엇이 비었고 무엇을 보완해야 하는지를 함께 반환하는 구조를 목표로 했습니다.
+              </p>
+            </div>
+            <ol class="feature-list">
+              <li><span class="feature-index">01</span><div><h3>조문 단위 레코드와 항 메타데이터</h3><p>공개 기준선은 article 단위 레코드에 paragraph 번호·범위와 요구사항을 함께 보존합니다. 항별 원문 청크 구현은 아닙니다.</p></div></li>
+              <li><span class="feature-index">02</span><div><h3>이슈를 검색 질문으로 변환</h3><p>“좌표 누락” 같은 데이터 품질 문제를 “어떤 의무의 어떤 필드가 비었는가”라는 검색 단위로 바꿉니다.</p></div></li>
+              <li><span class="feature-index">03</span><div><h3>근거와 보완 행동을 함께 반환</h3><p>조항 번호, 근거 문맥, 현재 문제, 추가로 받아야 할 자료를 분리해 출력합니다.</p></div></li>
+              <li><span class="feature-index">04</span><div><h3>정답 질문으로 검색을 평가</h3><p>답변의 말투가 아니라 기대 조항이 상위 검색 결과에 있는지, 인용이 원문과 맞는지 확인합니다.</p></div></li>
+            </ol>
+            <ol class="retrieval-path" aria-label="법률 RAG 검색 단위">
+              <li>규정 문서</li><li>Article</li><li>Paragraph</li><li>요구사항</li><li>보완 행동</li>
+            </ol>
+            <p class="boundary-note"><strong>공개 기준선:</strong> CBAM·EUDR 8개 조문 메타데이터와 기대 citation을 붙인 5개 합성 질문에서 현재 top-1 5/5를 재현합니다. 이는 고정된 최소 평가셋의 회수 결과이며 일반적인 법률 검색 정확도는 아닙니다.</p>
+            <p class="boundary-note"><strong>검증 경계:</strong> 법률 RAG 화면은 합성 질의와 문서를 사용한 발표 프로토타입입니다. 공개 코드는 CBAM·EUDR 8개 조문 메타데이터와 5개 고정 질의에서 citation 회수를 확인하는 작은 lexical baseline만 재현합니다. 공식 법률 해석이나 완성된 규제 적합성 판정을 제공한다고 주장하지 않습니다.</p>
+          </div>
+          <figure class="single-screen">
+            <div class="browser-frame">
+              <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img src="/projects/ecoguard/assets/screen-legal-rag.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 규제 질의 화면. 거래 리스크 질문 입력창과 탄소 감축 방안, 조건부 검토 결과가 표시되어 있다.">
+            </div>
+            <figcaption>Figure 03. 규정 질의와 보완 방향을 함께 제시하도록 구성한 발표 화면. 모든 표시 데이터는 합성 예시입니다.</figcaption>
+          </figure>
+        </div>
+
+        <div class="feature-layout reverse">
+          <div class="feature-copy">
+            <div class="section-head">
+              <p class="section-kicker">06 · Deterministic CBAM</p>
+              <h2>공개된 계산을, 추적 가능한 입력과 연결했습니다</h2>
+              <p class="section-desc">
+                CBAM 계산 구조 자체는 규정과 지침에 상당 부분 공개돼 있습니다. 그래서 차별점은 공식을 숨기는 데 있지 않았습니다.
+                기업의 메모와 서류에서 계산에 필요한 활동자료를 안정적으로 만들고, 누락과 단위 오류를 막고,
+                어떤 원본값이 어떤 산식에 들어갔는지 보여주는 데 있었습니다.
+              </p>
+            </div>
+            <ul class="feature-list">
+              <li><span class="feature-index">01</span><div><h3>LLM이 아닌 코드가 계산</h3><p>추출과 설명은 보조 모델을 쓸 수 있지만 배출량·비용 연산은 버전이 있는 결정론적 함수로 분리합니다.</p></div></li>
+              <li><span class="feature-index">02</span><div><h3>입력 품질 게이트</h3><p>품목별 중량과 단위 내재배출, 인증서 가격, 원산지 탄소가격과 적용계수의 단위·출처를 먼저 검사합니다.</p></div></li>
+              <li><span class="feature-index">03</span><div><h3>관측값과 시나리오 분리</h3><p>정규화된 품목 데이터와 가격·적용계수 같은 가정값을 구분해 결과를 다시 계산할 수 있게 합니다.</p></div></li>
+              <li><span class="feature-index">04</span><div><h3>기준 예제로 회귀 검증</h3><p>손계산 가능한 작은 fixture와 예상 출력으로 코드 변경 뒤에도 동일한 결과가 나오는지 확인합니다.</p></div></li>
+            </ul>
+            <div class="formula-card" aria-label="CBAM 계산 흐름의 개념식">
+              <span>Conceptual calculation path</span>
+              <code><em>embedded emissions</em> = Σ(item mass × specific embedded emissions)<br><em>effective price</em> = max(certificate price − origin carbon price, 0)<br><em>estimated exposure</em> = embedded emissions × phase factor × effective price</code>
+            </div>
+            <p class="boundary-note"><strong>합성 golden fixture:</strong> M5 90t × 5.584 = 502.56, M12 100t × 6.088 = 608.80, 합계 1,111.36 tCO₂e를 검산합니다. €87.50 가격 가정에서 실측 시나리오 €97,244, 기본값 시나리오 €121,555, 차이 €24,311이 반복됩니다.</p>
+            <p class="boundary-note"><strong>적용 경계:</strong> 위 식은 공개 보고서의 가격 민감도 흐름을 설명하기 위한 개념식입니다. 현행 통합본의 Article 9 탄소가격 변환과 Article 31 무상할당 조정, 품목별 시행규칙을 구현한 공식 의무액 산식이 아닙니다. 실제 신고에는 검증된 사업자 자료와 전문가 확인이 필요합니다.</p>
+          </div>
+          <figure class="single-screen">
+            <div class="browser-frame">
+              <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img src="/projects/ecoguard/assets/screen-cbam.webp" width="1280" height="720" loading="lazy" alt="EcoGuard CBAM 비용 분석 화면. 배출계수, 품질 점수, 해시 검증과 비용 시뮬레이션 영역이 보인다.">
+            </div>
+            <figcaption>Figure 04. 정규화된 입력에서 탄소비용 시나리오까지 이어지는 발표 화면. 수치와 기업 정보는 합성 예시입니다.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="paper" aria-labelledby="forest-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">07 · Forest change detection</p>
+          <h2 id="forest-title">산림을 “판정”하기보다 변화의 근거를 드러냈습니다</h2>
+          <p class="section-desc">
+            발표에서는 EUDR 맥락의 원산지 좌표, 전후 영상, 식생지수와 변화 마스크를 하나의 검토 화면으로 연결했습니다.
+            분할 모델과 CAM 시각화는 가능성을 보여주는 프로토타입입니다. 공개 코드는 이를 운영 모델로 포장하지 않고,
+            6×6 합성 red/NIR 전후 픽셀에서 NDVI 변화, 임계값 마스크, 연속 후보 영역과 면적을 다시 만드는 기준선으로 제한했습니다.
+            이 산림 fixture는 공개 CBAM 거래 사례와 결합된 증빙이 아니라 별도의 기술 재현 예제입니다.
+          </p>
+        </div>
+
+        <div class="forest-figures">
+          <figure class="screen-card">
+            <img class="contain" src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="513" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 변화 격자. 36개 픽셀 중 12개가 손실 후보로 표시되어 있다.">
+            <figcaption><span class="figure-label">Figure 05 · Reproduced baseline</span>공개 코드가 합성 red/NIR 입력에서 다시 생성한 NDVI 변화 마스크입니다. 원본 픽셀, 임계값과 후보 영역을 함께 확인할 수 있습니다.</figcaption>
+          </figure>
+          <figure class="screen-card">
+            <img src="/projects/ecoguard/assets/screen-report.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 산림 분석 요약 화면. 산림 비율 변화, 연도별 NDVI 추이, 고위험 상태와 분석 소견이 표시되어 있다.">
+            <figcaption><span class="figure-label">Figure 06 · Review summary</span>변화량, 임계값 통과 시점과 관찰 소견을 심사자가 다시 확인할 수 있도록 요약한 발표 화면입니다. 수치는 합성 예시입니다.</figcaption>
+          </figure>
+        </div>
+
+        <div class="principle-grid" aria-label="산림 변화 탐지의 재현 단계">
+          <article class="principle"><code>01 · PIXELS</code><h3>합성 전후 입력</h3><p>각 위치의 red·NIR before/after 값을 CSV로 고정해 모든 계산 입력을 공개합니다.</p></article>
+          <article class="principle"><code>02 · INDEX</code><h3>NDVI 변화</h3><p>각 픽셀의 전후 NDVI와 차이를 같은 산식으로 반복 계산합니다.</p></article>
+          <article class="principle"><code>03 · MASK</code><h3>명시적 임계값</h3><p>이전 식생 상태와 감소폭이 두 임계값을 모두 넘는 위치만 후보로 남깁니다.</p></article>
+          <article class="principle"><code>04 · REGION</code><h3>연속 영역과 면적</h3><p>4방향 연결요소로 후보 픽셀을 묶고 합성 픽셀 면적과 SVG 근거를 출력합니다.</p></article>
+        </div>
+        <p class="boundary-note"><strong>공개 기준선:</strong> 36개 합성 픽셀 중 12개를 하나의 연속 후보 영역으로 묶고, 100m²라는 합성 픽셀 면적 가정에서 1,200m²를 출력합니다. <strong>해석 경계:</strong> 이 값은 법적 산림 훼손 확정 판정이 아닙니다. 실제 위성 보정, 현장·고해상도 자료, 컷오프 기준, 정답 라벨과 전문가 검토가 추가로 필요합니다.</p>
+      </div>
+    </section>
+
+    <section id="proof">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">08 · From capability to evidence</p>
+          <h2>“할 수 있다”를 “다시 확인할 수 있다”로 바꾸는 데 시간을 썼습니다</h2>
+          <p class="section-desc">
+            초반에는 기능 수로 기술력을 보여주려 했습니다. 그러나 규제·금융·환경 영역에서는 결과 하나가 맞아 보여도 부족했습니다.
+            증명 대상을 작게 나누고 각 주장에 필요한 확인 방법을 붙이자, 데이터 전처리와 추적성이 전체 기술의 기반이라는 점이 드러났습니다.
+          </p>
+        </div>
+
+        <ol class="proof-grid" aria-label="기술 주장과 증명 방법">
+          <li class="proof-card"><span class="proof-id">E1</span><div><h3>비정형 자료를 계산 입력으로 바꾼다</h3><p>원본·정규화 스키마, 단위 변환, 누락값과 문서 간 불일치 규칙을 고정된 샘플로 반복 검사합니다.</p><p class="proof-check"><strong>확인 흔적</strong> source pointer · validation status · normalized value</p></div></li>
+          <li class="proof-card"><span class="proof-id">E2</span><div><h3>올바른 EU 규정 근거를 찾는다</h3><p>질문별 기대 article을 정하고 검색 순위, 원문 링크와 근거 없는 답변 여부를 따로 봅니다. paragraph는 범위 메타데이터로 보존합니다.</p><p class="proof-check"><strong>확인 흔적</strong> expected article · retrieved record · citation</p></div></li>
+          <li class="proof-card"><span class="proof-id">E3</span><div><h3>CBAM 결과를 같은 방식으로 재현한다</h3><p>손으로 확인할 수 있는 입력·출력 fixture, 단위 테스트와 버전이 있는 가정값으로 계산을 검증합니다.</p><p class="proof-check"><strong>확인 흔적</strong> input schema · formula version · expected output</p></div></li>
+          <li class="proof-card"><span class="proof-id">E4</span><div><h3>산림 변화 후보의 근거를 보여준다</h3><p>합성 red/NIR 픽셀, 임계값, NDVI 차이, 영역 좌표와 SVG를 함께 남기고 실제 위성 성능은 주장하지 않습니다.</p><p class="proof-check"><strong>확인 흔적</strong> input pixels · explicit thresholds · region artifact</p></div></li>
+        </ol>
+
+        <aside class="legal-review" aria-label="법무 검토 피드백의 범위">
+          <h3>법무 검토에서 확인한 것은<br>“인증”이 아니라 “방향”이었습니다</h3>
+          <p>
+            프로젝트 과정의 법무 검토에서는 비정형 기업 자료를 규제 문서 구조로 정리하고,
+            발견한 문제를 조항 단위 근거와 보완 요청으로 연결하는 접근과 문서 구조가 실무적으로 의미 있다는 피드백을 받았습니다.
+            이는 특정 답변의 법률적 정확성, 전체 시스템의 적법성 또는 공식 제품성을 인증한 것이 아닙니다.
+          </p>
+        </aside>
+
+        <div class="closing-thesis">
+          <p>증명은 기술 뒤에 붙는 발표 장식이 아니었습니다. 어떤 값을 믿어도 되는지 정의하는 과정 자체가 데이터 모델, 계산 엔진, 검색 단위와 보고서 구조를 더 낫게 만들었습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" aria-labelledby="boundary-title">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">09 · Evidence boundary</p>
+          <h2 id="boundary-title">구현, 시뮬레이션, 제안을 분리해 기록합니다</h2>
+          <p class="section-desc">발표 화면의 완성도와 실제 검증 수준을 혼동하지 않도록 현재 공개 범위를 세 층으로 나눴습니다.</p>
+        </div>
+
+        <div class="scope-table-wrap">
+          <table class="scope-table">
+            <thead>
+              <tr><th scope="col">구분</th><th scope="col">포함한 범위</th><th scope="col">주장하지 않는 것</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><span class="scope-tag built">재현 코드</span></th>
+                <td><strong>데이터 정규화·출처 추적, 조문 검색·citation 평가, 결정론적 CBAM 계산, 합성 NDVI 변화 기준선과 샘플 결과물</strong>을 다시 실행하는 기술 경로</td>
+                <td>운영 데이터 성능, 실제 신고 적합성, 법적 산림 훼손 확정</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="scope-tag sim">발표 시뮬레이션</span></th>
+                <td><strong>문서 접수·규제 질의·위험 요약·심사 흐름</strong>을 정적 화면과 합성 사례로 연결한 제품 프로토타입</td>
+                <td>상용 서비스, 실제 기업·은행 데이터 처리, 공식 법률 자문</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="scope-tag idea">적용 제안</span></th>
+                <td><strong>은행 내부 심사 시스템 연계, 규정 자동 갱신, 기업 보완 요청과 여신 조건 연결</strong>에 대한 업무 가설</td>
+                <td>하나금융그룹의 채택·운영, 자동 승인·거절, 규제 준수 보장</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="retrospective">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">10 · Retrospective</p>
+          <h2>3명이 함께 준비하며 좋았던 점</h2>
+          <p class="section-desc">
+            가장 좋았던 경험은 기술을 많이 나열한 순간이 아니라, 각 기술이 누구의 어떤 판단을 바꾸는지 팀의 언어로 다시 설명한 순간들이었습니다.
+          </p>
+        </div>
+
+        <div class="lesson-grid">
+          <article class="lesson-card"><span>01</span><h3>현업의 한 문장이 문제 정의를 바꿨습니다</h3><p>“자료가 애초에 정리돼 있지 않다”는 관찰을 받아들이면서 OCR 정확도 경쟁보다 정규화·교차검증·출처 추적에 집중할 수 있었습니다.</p></article>
+          <article class="lesson-card"><span>02</span><h3>기술을 금융 의사결정의 언어로 번역했습니다</h3><p>NDVI, RAG, 배출계수라는 용어를 그대로 말하는 대신 심사자가 승인·보완·재검토 중 무엇을 선택하는 데 필요한지 연결했습니다.</p></article>
+          <article class="lesson-card"><span>03</span><h3>생성과 계산의 경계를 배웠습니다</h3><p>법령 설명은 검색과 생성이 도울 수 있지만 비용 산식과 단위 변환은 명시적 코드가 맡아야 재현성과 감사 가능성이 생긴다는 원칙을 세웠습니다.</p></article>
+          <article class="lesson-card"><span>04</span><h3>한계를 쓰는 일이 결과를 더 강하게 만들었습니다</h3><p>합성 데이터와 제안 기능을 구분하자 무엇을 실제 코드로 남겨야 하는지가 선명해졌고, 기술력도 더 구체적으로 설명할 수 있었습니다.</p></article>
+          <article class="lesson-card"><span>05</span><h3>넓은 아이디어를 하나의 이야기로 줄였습니다</h3><p>CarbonCast부터 쌓인 기능을 모두 전면에 두지 않고, “증빙을 믿을 수 있는가”라는 한 질문 아래 발표 흐름을 다시 구성했습니다.</p></article>
+          <article class="lesson-card"><span>06</span><h3>증명 과정이 곧 다음 개발 목록이 됐습니다</h3><p>정답 데이터, 규정 버전, 기준 질문, 단위 테스트가 부족한 지점을 찾을수록 후속 작업이 추상적인 고도화가 아니라 실행 가능한 검증 계획으로 바뀌었습니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="limits" class="paper">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-kicker">11 · Limitations</p>
+          <h2>아직 증명하지 못한 것들</h2>
+          <p class="section-desc">이 프로젝트의 가치는 운영 성능을 과장하는 데 있지 않습니다. 다음 검증이 필요한 지점을 공개적으로 남깁니다.</p>
+        </div>
+
+        <div class="limit-grid">
+          <article class="limit-card"><h3>합성 데이터 중심</h3><p>공개 화면과 재현 예제는 개인정보와 영업정보가 없는 합성 자료입니다. 실제 기업 자료의 분포를 대표하지 않습니다.</p></article>
+          <article class="limit-card"><h3>OCR 운영 성능 미검증</h3><p>다양한 스캔 품질·필기·복잡한 표에 대한 대규모 벤치마크를 수행하지 않았습니다. 핵심 공개 범위는 OCR 이후 처리입니다.</p></article>
+          <article class="limit-card"><h3>법률 정확성 미인증</h3><p>조문 단위 검색 구조는 법률 자문이나 적합성 판정을 대체하지 않습니다. 최신 원문과 전문가 검토가 필요합니다.</p></article>
+          <article class="limit-card"><h3>CBAM 신고 도구가 아님</h3><p>공개 계산은 기술 재현과 시나리오 설명을 위한 베이스라인입니다. 품목별 최신 방법론과 검증 절차를 모두 포괄하지 않습니다.</p></article>
+          <article class="limit-card"><h3>산림 정답 라벨 부족</h3><p>변화 마스크만으로 훼손 원인과 법적 상태를 확정할 수 없습니다. 지역별 정답 데이터와 현장 검증이 필요합니다.</p></article>
+          <article class="limit-card"><h3>은행 시스템 미연동</h3><p>화면은 심사 흐름을 가정한 프로토타입입니다. 실제 하나은행 내부 시스템, 고객 데이터 또는 여신 의사결정과 연결되지 않았습니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="outro" aria-labelledby="outro-title">
+      <div class="outro-inner">
+        <p class="section-kicker">EcoGuard · Project archive</p>
+        <h2 id="outro-title">기술력은 결과가 아니라<br>결과까지의 근거에서 보였습니다</h2>
+        <p>
+          공개 저장소에는 데이터 정규화, CBAM 연산과 산림 변화 탐지의 재현 가능한 경로를,
+          발표 발췌본에는 문제와 해결 구조를 압축해 남겼습니다.
+        </p>
+        <div class="hero-actions" aria-label="프로젝트 최종 자료">
+          <a class="button primary" href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">GitHub 저장소 <span aria-hidden="true">↗</span></a>
+          <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">발표 발췌본 · 4쪽 <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>EcoGuard · Team UniHana · 3 Members</strong><br>
+    2026 하나 청년 금융인재 양성 프로젝트를 위해 제작한 교육·경진 목적 PoC입니다.<br>
+    하나금융그룹 또는 하나은행의 공식 제품·서비스·법률 자문이 아닙니다. 화면과 공개 예시는 합성 데이터를 사용합니다.
+  </footer>
+</body>
+</html>
