@@ -4,15 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="2026 하나 청년 금융인재 양성 프로젝트 대상 수상작 EcoGuard. 3인 팀이 비정형 수출 데이터, EU 규정 검색, CBAM 가격 민감도와 산림 변화 기준선을 증명 가능한 흐름으로 만든 제작기">
+  <meta name="author" content="Team UniHana">
   <meta name="theme-color" content="#008e71">
+  <link rel="canonical" href="https://soccz.github.io/projects/ecoguard/">
   <meta property="og:title" content="EcoGuard — 대상을 만든 증명의 구조">
   <meta property="og:description" content="대상 수상작의 제작기이자 기술 증명 보고서. CarbonCast에서 EcoGuard까지, 기능을 심사 가능한 근거로 바꾼 3인의 기록">
   <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
   <meta property="og:url" content="https://soccz.github.io/projects/ecoguard/">
   <meta property="og:image" content="https://soccz.github.io/projects/ecoguard/assets/award-day.webp">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="1160">
   <meta property="og:image:alt" content="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발">
+  <meta property="article:published_time" content="2026-08-11">
+  <meta property="article:modified_time" content="2026-08-12">
+  <meta property="article:section" content="Project case study">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EcoGuard — 대상을 만든 증명의 구조">
+  <meta name="twitter:description" content="비정형 수출 서류를 추적 가능한 규제·탄소·산림 심사 근거로 바꾼 3인 팀 프로젝트 제작기">
+  <meta name="twitter:image" content="https://soccz.github.io/projects/ecoguard/assets/award-day.webp">
+  <meta name="twitter:image:alt" content="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <title>EcoGuard — 대상을 만든 증명의 구조</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "EcoGuard — 대상을 만든 증명의 구조",
+    "description": "비정형 수출 자료를 추적 가능한 규제·탄소·산림 심사 근거로 바꾼 3인 팀 프로젝트 제작기",
+    "inLanguage": "ko-KR",
+    "datePublished": "2026-08-11",
+    "dateModified": "2026-08-12",
+    "mainEntityOfPage": "https://soccz.github.io/projects/ecoguard/",
+    "image": "https://soccz.github.io/projects/ecoguard/assets/award-day.webp",
+    "author": {
+      "@type": "Organization",
+      "name": "Team UniHana"
+    },
+    "about": ["CBAM", "EUDR", "data provenance", "forest change detection"],
+    "award": "2026 하나 청년 금융인재 양성 프로젝트 대상"
+  }
+  </script>
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
   <style>
     @font-face {
       font-family: 'EcoGuard Paperlogy';
@@ -118,6 +153,9 @@
     }
     .brand {
       flex: 0 0 auto;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
       color: var(--green-dark);
       font-family: var(--display);
       font-size: 1.05rem;
@@ -134,19 +172,22 @@
     }
     .nav-links a {
       min-height: 44px;
+      min-width: 44px;
+      padding-inline: 6px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       color: var(--text);
       font-size: 0.78rem;
       text-decoration: none;
       white-space: nowrap;
     }
-    .nav-links a:hover { color: var(--green); }
+    .nav-links a:hover { color: var(--green-dark); }
 
     main { overflow: hidden; }
     .hero {
-      min-height: 100vh;
-      padding: 132px 24px 72px;
+      min-height: min(820px, 100svh);
+      padding: 106px 24px 52px;
       position: relative;
       isolation: isolate;
       background:
@@ -197,18 +238,18 @@
       background: var(--green);
       border-radius: 50%;
     }
-    h1, h2, .serif { font-family: var(--display); }
+    h1, h2 { font-family: var(--display); }
     h1 {
       margin: 0;
       max-width: 760px;
-      font-size: clamp(3rem, 6.7vw, 6rem);
+      font-size: clamp(2.8rem, 5.8vw, 4.85rem);
       font-weight: 800;
       line-height: 1.04;
       letter-spacing: -0.07em;
     }
     h1 span { color: var(--green); }
     .hero-name {
-      margin: 26px 0 0;
+      margin: 22px 0 0;
       color: var(--green-dark);
       font-family: var(--display);
       font-size: clamp(1rem, 1.8vw, 1.22rem);
@@ -217,14 +258,14 @@
     }
     .hero-copy {
       max-width: 680px;
-      margin: 16px 0 0;
+      margin: 12px 0 0;
       color: var(--text);
       font-size: clamp(0.98rem, 1.55vw, 1.08rem);
     }
     .status {
       width: fit-content;
       max-width: 100%;
-      margin: 24px 0 0;
+      margin: 18px 0 0;
       padding: 9px 13px;
       display: flex;
       align-items: center;
@@ -246,7 +287,7 @@
       border-radius: 50%;
     }
     .hero-actions {
-      margin-top: 28px;
+      margin-top: 20px;
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
@@ -269,9 +310,9 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
     .button.primary { color: #fff; background: #007b63; border-color: #007b63; box-shadow: 0 12px 30px rgba(0,142,113,0.18); }
-    .button:hover { transform: translateY(-2px); border-color: var(--green); box-shadow: 0 9px 24px rgba(40,116,95,0.14); }
+    .button:hover { transform: translateY(-2px); border-color: var(--green-dark); box-shadow: 0 9px 24px rgba(40,116,95,0.14); }
     .hero-facts {
-      margin: 48px 0 0;
+      margin: 34px 0 0;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       background: rgba(255,255,250,0.78);
@@ -280,7 +321,7 @@
       overflow: hidden;
     }
     .hero-proof-label {
-      margin: 42px 0 0;
+      margin: 30px 0 0;
       color: var(--muted);
       font-size: 0.7rem;
       font-weight: 600;
@@ -300,13 +341,13 @@
     .fact span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.7rem; }
     .hero-disclaimer {
       max-width: 760px;
-      margin: 18px 0 0;
+      margin: 14px 0 0;
       color: var(--muted);
       font-size: 0.7rem;
     }
 
     .hero-visual {
-      min-height: 510px;
+      min-height: 440px;
       padding: 30px;
       display: flex;
       flex-direction: column;
@@ -345,6 +386,44 @@
     .mini-flow span { font-size: 0.73rem; font-weight: 700; }
     .mini-flow small { color: #eefaf6; font-family: var(--mono); font-size: 0.6rem; }
 
+    .phase-section {
+      padding-block: 34px;
+      background: #edf3ef;
+      border-block: 1px solid var(--line);
+    }
+    .phase-grid {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      list-style: none;
+    }
+    .phase-card {
+      min-width: 0;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .phase-card > span {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green-dark);
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+    .phase-card h2 { font-family: var(--sans); font-size: 0.86rem; letter-spacing: -0.02em; }
+    .phase-card p { margin: 4px 0 0; color: var(--text); font-size: 0.74rem; line-height: 1.62; }
+
     section { padding: 112px 24px; }
     section.alt { background: rgba(238,242,237,0.78); }
     section.paper { background: var(--paper); border-block: 1px solid var(--line); }
@@ -368,7 +447,6 @@
     h3 { margin: 0; font-size: 1rem; line-height: 1.5; }
     p { margin-top: 0; }
     .section-desc { margin: 16px 0 0; color: var(--text); font-size: 0.96rem; word-break: keep-all; overflow-wrap: break-word; }
-    .small { color: var(--muted); font-size: 0.76rem; }
 
     .award-section {
       position: relative;
@@ -415,7 +493,6 @@
     .award-source a { color: #fff; text-underline-offset: 3px; }
     .award-source a:hover { color: #bfe8dc; }
 
-    .deck-rule { width: 58px; height: 5px; margin: 0 0 24px; background: var(--green); border-radius: 999px; }
 
     .report-lead {
       display: grid;
@@ -460,6 +537,33 @@
     .meta-item:last-child { border-right: 0; }
     .meta-item strong { display: block; color: var(--green-dark); font-size: 0.7rem; }
     .meta-item span { display: block; margin-top: 5px; color: var(--text); font-size: 0.76rem; }
+
+    .decision-flow {
+      margin: 18px 0 0;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1.05fr 30px 1.4fr;
+      gap: 12px;
+      align-items: center;
+      background: #edf3ef;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .decision-input, .decision-outcome {
+      min-height: 68px;
+      padding: 13px 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+    }
+    .decision-input strong, .decision-outcome strong { color: var(--green-dark); font-size: 0.75rem; }
+    .decision-input span, .decision-outcome span { margin-top: 3px; color: var(--text); font-size: 0.7rem; }
+    .decision-arrow { color: var(--green-dark); font-size: 1.3rem; font-weight: 800; text-align: center; }
+    .decision-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .decision-outcome { min-width: 0; }
 
     .journey {
       margin: 0;
@@ -528,6 +632,13 @@
     }
     .field-quote p { margin: 0; font-family: var(--display); font-size: 1.23rem; font-weight: 700; line-height: 1.55; }
     .field-quote cite { margin-top: 24px; color: #adc2b9; font-size: 0.72rem; font-style: normal; }
+    .feedback-scope {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.6;
+    }
     .raw-list {
       margin: 0;
       padding: 0;
@@ -669,6 +780,20 @@
     .browser-bar span { width: 6px; height: 6px; background: #9aa9a2; border-radius: 50%; }
     .browser-frame img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 9px; background: #fff; }
     .single-screen figcaption { margin-top: 13px; color: var(--muted); font-size: 0.7rem; text-align: center; }
+    .js .image-button {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      display: block;
+      color: inherit;
+      background: transparent;
+      border: 0;
+      cursor: zoom-in;
+    }
+    .js .image-button:focus-visible { outline-offset: -4px; }
+    .js .image-button img { width: 100%; }
+    .js .award-photo .image-button { border-radius: 22px; }
+    .js .browser-frame .image-button { border-radius: 9px; overflow: hidden; }
     .boundary-note {
       margin-top: 18px;
       padding: 17px 19px;
@@ -809,17 +934,28 @@
     .legal-review h3 { font-family: var(--serif); font-size: 1.25rem; }
     .legal-review p { margin: 0; color: #d2e4dd; font-size: 0.78rem; }
 
-    .scope-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--paper); }
-    .scope-table { width: 100%; min-width: 720px; border-collapse: collapse; }
-    .scope-table th, .scope-table td { padding: 18px 20px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
-    .scope-table tr:last-child th, .scope-table tr:last-child td { border-bottom: 0; }
-    .scope-table th { width: 150px; font-size: 0.76rem; }
-    .scope-table td { color: var(--text); font-size: 0.77rem; }
-    .scope-table td strong { color: var(--ink); }
     .scope-tag { display: inline-flex; padding: 5px 9px; border-radius: 999px; font-size: 0.66rem; font-weight: 800; }
     .scope-tag.built { color: var(--green-dark); background: var(--green-soft); }
     .scope-tag.sim { color: var(--gold); background: var(--gold-soft); }
     .scope-tag.idea { color: var(--blue); background: var(--blue-soft); }
+
+    .scope-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .scope-card {
+      padding: 22px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--green-dark);
+      border-radius: 12px;
+    }
+    .scope-card h3 { margin-top: 14px; font-family: var(--display); font-size: 1rem; }
+    .scope-card dl { margin: 16px 0 0; }
+    .scope-card dt { margin-top: 12px; color: var(--green-dark); font-size: 0.72rem; font-weight: 800; }
+    .scope-card dd { margin: 4px 0 0; color: var(--text); font-size: 0.76rem; }
+    .scope-card .not-claimed { color: #7e2842; }
 
     .lesson-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
     .team-axes { margin-bottom: 24px; }
@@ -840,11 +976,6 @@
     .closing-thesis .proof-source { margin-top: 15px; font-family: var(--sans); font-size: 0.74rem; font-weight: 400; }
     .closing-thesis .proof-source a { color: #c9f4e5; text-underline-offset: 4px; }
 
-    .limit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .limit-card { padding: 21px; background: var(--red-soft); border: 1px solid #ead0cc; border-radius: 11px; }
-    .limit-card h3 { color: var(--red); font-size: 0.88rem; }
-    .limit-card p { margin: 7px 0 0; color: var(--text); font-size: 0.74rem; }
-
     .outro {
       padding: 90px 24px;
       text-align: center;
@@ -860,6 +991,50 @@
     footer { padding: 48px 24px; color: var(--muted); border-top: 1px solid var(--line); text-align: center; font-size: 0.73rem; }
     footer strong { color: var(--green-dark); }
 
+    .image-dialog {
+      width: min(1180px, calc(100% - 36px));
+      max-height: calc(100dvh - 36px);
+      margin: auto;
+      padding: 0;
+      overflow: hidden;
+      background: #071510;
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 16px;
+      box-shadow: 0 30px 90px rgba(0,0,0,0.5);
+    }
+    .image-dialog::backdrop { background: rgba(1,13,10,0.86); backdrop-filter: blur(5px); }
+    .image-dialog-inner { max-height: calc(100dvh - 36px); display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+    .image-dialog-bar { min-height: 50px; padding: 8px 10px 8px 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #dcebe5; }
+    .image-dialog-label { font-size: 0.76rem; font-weight: 700; }
+    .image-dialog-close { width: 40px; height: 40px; display: grid; place-items: center; color: #fff; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
+    .image-dialog figure { min-height: 0; margin: 0; padding: 0 18px 18px; overflow: auto; }
+    .image-dialog img { width: 100%; max-height: calc(100dvh - 145px); object-fit: contain; }
+    .image-dialog figcaption { padding: 10px 18px 16px; color: #c9ddd5; font-size: 0.76rem; }
+
+    @media (min-width: 681px) {
+      .phase-card p,
+      .award-photo figcaption,
+      .award-source,
+      .meta-item strong,
+      .decision-input span,
+      .decision-outcome span,
+      .screen-card figcaption,
+      .principle p,
+      .feature-list p,
+      .single-screen figcaption,
+      .proof-card p,
+      .scope-card dd,
+      .lesson-card p,
+      .closing-thesis .proof-source,
+      footer { font-size: 0.78rem; }
+
+      .figure-label,
+      .review-chip,
+      .principle code,
+      .scope-tag,
+      .proof-check { font-size: 0.72rem !important; }
+    }
+
     @media (max-width: 900px) {
       .nav-inner { width: 100%; padding: 0 18px; overflow-x: auto; }
       .hero { min-height: auto; padding-top: 132px; }
@@ -874,7 +1049,9 @@
       .evidence-flow li:nth-child(2)::after { display: none; }
       .pipeline li { grid-template-columns: 46px minmax(170px, 0.62fr) minmax(0, 1.38fr); }
       .legal-review { grid-template-columns: 1fr; gap: 10px; }
-      .limit-grid { grid-template-columns: repeat(2, 1fr); }
+      .phase-grid, .scope-cards { grid-template-columns: 1fr; }
+      .decision-flow { grid-template-columns: 1fr; }
+      .decision-arrow { transform: rotate(90deg); }
     }
     @media (max-width: 680px) {
       body { word-break: normal; overflow-wrap: anywhere; }
@@ -906,7 +1083,7 @@
       .award-facts div { padding: 13px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.16); }
       .award-facts div:last-child { border-bottom: 0; }
       .award-photo img { border-radius: 15px; }
-      .meta-strip, .screen-grid, .proof-grid, .lesson-grid, .forest-figures, .limit-grid { grid-template-columns: 1fr; }
+      .meta-strip, .screen-grid, .proof-grid, .lesson-grid, .forest-figures { grid-template-columns: 1fr; }
       .meta-item { border-right: 0; border-bottom: 1px solid var(--line); }
       .meta-item:last-child { border-bottom: 0; }
       .journey { gap: 10px; grid-template-columns: 1fr; }
@@ -932,6 +1109,33 @@
       .proof-card { grid-template-columns: 40px 1fr; padding: 18px; }
       .proof-card:last-child { grid-column: auto; }
       .feature-layout + .feature-layout { margin-top: 68px; }
+      .phase-section { padding-block: 24px; }
+      .phase-card { padding: 16px; }
+      .decision-results { grid-template-columns: 1fr; }
+      .scope-card { padding: 19px; }
+      .section-kicker, .hero-proof-label, .hero-disclaimer, .award-photo figcaption,
+      .award-source, .meta-item strong, .meta-item span, .journey p,
+      .field-quote cite, .feedback-scope, .raw-list span, .screen-card figcaption,
+      .figure-label, .stage-title span, .stage-copy, .review-chip, .principle code,
+      .principle p, .feature-list p, .single-screen figcaption, .boundary-note,
+      .metric-board-title, .metric-cell span, .axis-label, .axis-total, .axis-legend,
+      .retrieval-path li, .formula-card span, .formula-card code, .proof-card p,
+      .proof-check, .legal-review p, .scope-tag, .scope-card dt, .scope-card dd,
+      .lesson-card p, .closing-thesis .proof-source, footer {
+        font-size: 0.875rem !important;
+      }
+      .nav-links a, .eyebrow, .status, .hero-visual-label, .award-mark span,
+      .mini-flow b, .mini-flow span, .mini-flow small, .fact span,
+      .phase-card > span, .award-badge span, .award-facts dt, .award-facts dd,
+      .thesis-label, .evidence-flow span, .case-mix span,
+      .stage-num, .feature-index, .proof-id, .raw-list strong, .button,
+      .award-badge strong, .thesis-card p, .turning-note strong,
+      .feature-list h3, .reconcile-board h3,
+      .image-dialog-label, .image-dialog figcaption {
+        font-size: 0.875rem !important;
+      }
+      .phase-card p, .decision-input span, .decision-outcome span { font-size: 0.875rem; }
+      .phase-card h2, .decision-input strong, .decision-outcome strong { font-size: 0.94rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -950,8 +1154,8 @@
         <li><a href="#story">제작기</a></li>
         <li><a href="#technology">기술 증명</a></li>
         <li><a href="#proof">증명</a></li>
+        <li><a href="#boundary">공개 범위</a></li>
         <li><a href="#retrospective">회고</a></li>
-        <li><a href="#limits">한계</a></li>
       </ul>
     </div>
   </nav>
@@ -963,16 +1167,15 @@
           <div class="hero-copy-block">
             <div class="eyebrow">2026 대상 수상 · Team UniHana</div>
             <h1>대상을 만든 건<br><span>기능의 수가 아니라</span><br>증명의 구조였습니다</h1>
-            <p class="hero-name">EcoGuard · 대상 수상작 제작기 &amp; 기술 증명 보고서</p>
+            <p class="hero-name">EcoGuard는 비정형 수출 자료를 규제·탄소·산림 검토에 쓸 수 있는 추적 가능한 심사 근거로 바꾸는 PoC입니다.</p>
             <p class="hero-copy">
-              기업의 제각각인 메모와 수출 서류를 계산 가능한 데이터로 정리하고,
-              EU 규정의 조항 근거, CBAM 가격 민감도, 산림 변화 신호를 하나의 심사 근거 흐름으로 연결했습니다.
-              이 페이지는 3명이 약 3개월의 멘토링 동안 아이디어를 좁히고, 구현보다 어려웠던 증명을 완성해 간 기록입니다.
+              이 페이지는 3명이 약 3개월의 멘토링 동안 넓은 아이디어를 하나의 심사 문제로 좁히고,
+              구현보다 어려웠던 증명을 완성해 간 공동 제작기입니다.
             </p>
             <div class="status">2026 하나 청년 금융인재 양성 프로젝트 대상 · 교육·경진 PoC</div>
             <div class="hero-actions" aria-label="프로젝트 자료">
               <a class="button primary" href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">재현 코드 보기 <span aria-hidden="true">↗</span></a>
-              <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">발표 발췌본 · 4쪽 <span aria-hidden="true">↓</span></a>
+              <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">공개 case study · 4쪽 <span aria-hidden="true">↓</span></a>
             </div>
             <p class="hero-disclaimer">
               EcoGuard는 하나금융그룹 또는 하나은행의 공식 제품이 아닙니다. 하나은행의 무역금융 업무 맥락을 가정해 설계한 교육·경진 목적의 독립적인 3인 팀 프로젝트입니다.
@@ -993,7 +1196,7 @@
             </div>
           </aside>
         </div>
-        <p class="hero-proof-label">현재 공개 v0.3 재구성 기준 · 수상 당시 전체 시스템을 그대로 복제한 수치가 아닙니다.</p>
+        <p class="hero-proof-label">현재 공개 v0.4 재구성 기준 · 수상 당시 전체 시스템을 그대로 복제한 수치가 아닙니다.</p>
         <div class="hero-facts" role="list" aria-label="현재 공개 재현 코드의 핵심 정보">
           <div class="fact" role="listitem"><strong>7</strong><span>합성 입력 문서</span></div>
           <div class="fact" role="listitem"><strong>37</strong><span>원문 라인</span></div>
@@ -1003,10 +1206,20 @@
       </div>
     </header>
 
+    <section class="phase-section" aria-label="프로젝트 시기와 공개 범위">
+      <div class="container">
+        <ol class="phase-grid">
+          <li class="phase-card"><span>01</span><div><h2>수상 당시 프로토타입</h2><p>합성 사례와 발표용 화면으로 문서 접수부터 규제·탄소·산림 검토까지의 제품 흐름을 시연했습니다.</p></div></li>
+          <li class="phase-card"><span>02</span><div><h2>공개 재구성 v0.4</h2><p>원본 데모와 비공개 자산 대신, 공개 가능한 합성 입력과 결정론적 기준선으로 기술 경로를 다시 구성했습니다.</p></div></li>
+          <li class="phase-card"><span>03</span><div><h2>현재 재현 가능한 범위</h2><p>전처리·EU 조문 검색·CBAM 계산·합성 NDVI 평가를 111개 테스트와 11개 산출물로 확인할 수 있습니다.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
     <section id="award" class="award-section" aria-labelledby="award-title">
       <div class="container award-layout">
         <figure class="award-photo">
-          <img src="/projects/ecoguard/assets/award-day.webp" width="1440" height="1160" alt="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발. 개인 이름이 적힌 상장 영역은 공개 이미지에서 제외했다.">
+          <img data-lightbox src="/projects/ecoguard/assets/award-day.webp" width="1440" height="1160" alt="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발. 개인 이름이 적힌 상장 영역은 공개 이미지에서 제외했다.">
           <figcaption>2026.07.23 수상 기록. 공개본은 팀원 이름이 적힌 상장 영역을 제외해 크롭했습니다.</figcaption>
         </figure>
         <div class="award-copy">
@@ -1015,9 +1228,9 @@
             <p class="section-kicker">01 · Award note</p>
             <h2 id="award-title">세 달의 멘토링 끝에,<br>EcoGuard가 대상을 받았습니다</h2>
             <p class="section-desc">
-              하나금융그룹이 진행한 이 과정은 디지털 기술을 활용한 ESG·미래 금융서비스를 주제로 교육, 해커톤, 현장 프로젝트와 최종 성과공유회로 이어졌습니다.
-              2026년 7월 23일 최종 성과공유회에서 유니하나팀은 ‘기업의 ESG 관련 규제 대응 및 리스크 검토 플랫폼’으로 대상(금융감독원상)을 받아 상장과 상금 1천만원을 수상했습니다.
-              결과보다 더 오래 남은 것은, 넓었던 아이디어를 하나의 심사 문제로 좁히고 각 기술 주장을 확인 가능한 근거로 바꾼 과정이었습니다.
+              ESG·미래 금융서비스를 주제로 교육, 해커톤, 현장 프로젝트를 거쳐 2026년 7월 23일 최종 성과공유회에 올랐습니다.
+              유니하나팀은 ‘기업의 ESG 관련 규제 대응 및 리스크 검토 플랫폼’으로 대상(금융감독원상)과 상금 1천만원을 받았습니다.
+              이 기록은 넓은 아이디어를 하나의 심사 문제와 확인 가능한 근거로 좁힌 과정에 집중합니다.
             </p>
           </div>
           <dl class="award-facts">
@@ -1044,12 +1257,9 @@
             <h2 id="story-title">서류를 읽는 AI가 아니라,<br>근거를 남기는 심사 흐름</h2>
             <p class="section-desc">
               CBAM과 EUDR 대응에는 수출기업이 가진 생산·에너지·원산지 자료가 필요합니다.
-              그러나 실제 자료는 규제 양식에 맞춰 깨끗하게 준비돼 있지 않았습니다.
-              EcoGuard는 그 간극을 데이터 정규화, 규정 검색, 결정론적 계산, 산림 변화 검토로 잇고
-              은행 심사역이 확인할 수 있는 근거 묶음으로 바꾸려 했습니다.
-              당시 팀은 수출환어음 매입처럼 은행이 수입자의 대금 지급 전에 수출자에게 자금을 공급하는 일부 구조에서,
-              뒤늦게 드러난 증빙 누락과 규제 비용이 심사 리스크로 이어질 수 있다고 가정했습니다.
-              그래서 기업의 작성 편의보다 은행이 제출 증빙을 믿고 다음 판단을 내릴 수 있는지를 최종 질문으로 삼았습니다.
+              그러나 실제 자료는 규제 양식에 맞춰 깨끗하게 준비돼 있지 않습니다. 팀은 수출환어음 매입처럼
+              은행이 대금 지급 전에 자금을 공급하는 일부 무역금융 구조에서, 뒤늦게 확인된 증빙 누락과 규제 비용이
+              심사 리스크가 될 수 있다고 가정했습니다. 그래서 최종 질문을 “제출된 근거를 믿고 다음 판단을 내릴 수 있는가?”로 좁혔습니다.
             </p>
           </div>
           <aside class="thesis-card" aria-label="프로젝트 핵심 명제">
@@ -1064,6 +1274,17 @@
           <div class="meta-item" role="listitem"><strong>사용자 가정</strong><span>수출 증빙을 검토하는 은행의 무역금융 심사역</span></div>
           <div class="meta-item" role="listitem"><strong>최종 산출물</strong><span>기술 PoC · 발표 프로토타입 · 재현 코드 · 프로젝트 보고</span></div>
         </div>
+
+        <div class="decision-flow" aria-label="EcoGuard가 가정한 은행 심사 흐름">
+          <div class="decision-input"><strong>기업 제출자료를 근거 묶음으로 변환</strong><span>정규화 값 · EU 조문 · CBAM trace · 산림 변화 신호</span></div>
+          <div class="decision-arrow" aria-hidden="true">→</div>
+          <div class="decision-results">
+            <div class="decision-outcome"><strong>승인 검토</strong><span>근거와 값이 일치</span></div>
+            <div class="decision-outcome"><strong>보완 요청</strong><span>누락·충돌 자료 확인</span></div>
+            <div class="decision-outcome"><strong>재검토</strong><span>규제·환경 신호 점검</span></div>
+          </div>
+        </div>
+        <span class="feedback-scope">업무 흐름은 프로젝트 과정에서 세운 가설이며, 실제 은행의 승인·여신 시스템과 연결된 결과가 아닙니다.</span>
       </div>
     </section>
 
@@ -1073,8 +1294,7 @@
           <p class="section-kicker">03 · Evolution</p>
           <h2 id="evolution-title">무엇을 더할지보다, 어디에 집중할지를 정한 과정</h2>
           <p class="section-desc">
-            시작은 탄소비용 예측이었고 중간에는 규제 기능을 넓게 모았습니다.
-            마지막에는 “기업이 문서를 만드는 도구”보다 “은행이 그 문서를 믿어도 되는지 확인하는 도구”로 질문을 좁혔습니다.
+            탄소비용 예측에서 시작해 규제 기능을 넓혔고, 마지막에는 “은행이 제출 문서를 믿어도 되는가”로 질문을 좁혔습니다.
           </p>
         </div>
 
@@ -1082,17 +1302,17 @@
           <li>
             <span class="journey-num">01</span>
             <h3>CarbonCast</h3>
-            <p><strong>탄소가격과 비용 예측</strong>에서 출발했습니다. 계산 결과는 만들 수 있었지만, 그 숫자에 들어가는 기업 데이터가 믿을 만한지는 별개의 문제였습니다.</p>
+            <p><strong>탄소가격과 비용 예측</strong>에서 출발했지만 계산 입력의 신뢰성은 별개였습니다.</p>
           </li>
           <li>
             <span class="journey-num">02</span>
             <h3>ESG TradeGuard</h3>
-            <p><strong>OCR·규제 매칭·탄소·위성</strong>을 한데 묶었습니다. 기능은 풍부해졌지만 사용자가 누구이고 어떤 결정을 돕는지 흐려졌습니다.</p>
+            <p><strong>OCR·규제 매칭·탄소·위성</strong>을 묶자 기능은 늘었지만 사용자와 결정이 흐려졌습니다.</p>
           </li>
           <li>
             <span class="journey-num">03</span>
             <h3>EcoGuard</h3>
-            <p><strong>증빙의 신뢰도와 추적성</strong>을 중심에 놓았습니다. 각 기술을 은행의 승인·보완·재검토 판단에 필요한 근거로 재배치했습니다.</p>
+            <p><strong>증빙의 신뢰도와 추적성</strong>을 승인·보완·재검토의 근거로 재배치했습니다.</p>
           </li>
         </ol>
 
@@ -1109,32 +1329,31 @@
           <p class="section-kicker">04 · Field insight</p>
           <h2 id="raw-title">현업 데이터는 보고서보다 메모에 가까웠습니다</h2>
           <p class="section-desc">
-            현업 피드백에서 반복해서 확인한 어려움은 OCR 모델이 글자를 읽느냐가 아니었습니다.
-            담당자마다 다른 표현, 단위 없는 숫자, 엑셀 셀과 손메모, 앞뒤가 맞지 않는 문서를
-            규제 계산과 법률 검토에 쓸 수 있는 데이터로 바꾸는 일이 더 어려웠습니다.
+            현업 피드백의 핵심은 OCR 정확도보다 서로 다른 표현, 단위 없는 숫자와 앞뒤가 맞지 않는 문서를
+            규제 계산·법률 검토용 데이터로 바꾸는 일이 더 어렵다는 것이었습니다.
           </p>
         </div>
 
         <div class="field-grid">
           <blockquote class="field-quote">
             <p>“원본은 깨끗한 양식이 아니다. 읽은 값을 그대로 쓰지 말고, 무엇을 뜻하는지 정리하고 어디에서 왔는지 남겨야 한다.”</p>
-            <cite>프로젝트 과정에서 정리한 현업 문제의 요지 · 직접 인용문이 아닌 팀의 재서술</cite>
+            <cite>현업 피드백 범위 · 프로젝트 과정의 의견을 팀이 재서술한 요약이며, 직접 인용이나 기관의 공식 견해가 아닙니다.</cite>
           </blockquote>
           <ul class="raw-list" aria-label="현업 원천 데이터의 대표 문제">
-            <li><strong>제각각인 표현</strong><span>전력, 전기사용, kWh 사용량처럼 같은 개념이 다른 이름으로 기록됩니다.</span></li>
-            <li><strong>단위 없는 숫자</strong><span>톤·kg·MWh가 생략되거나 서로 섞이면 계산 전에 의미부터 복원해야 합니다.</span></li>
-            <li><strong>문서 간 불일치</strong><span>인보이스, 선하증권, 원산지 자료의 품목·수량·날짜가 맞지 않을 수 있습니다.</span></li>
-            <li><strong>출처가 사라진 값</strong><span>정리된 숫자가 어느 파일의 몇 쪽에서 왔는지 모르면 심사 근거가 되기 어렵습니다.</span></li>
+            <li><strong>제각각인 표현</strong><span>같은 개념이 전력, 전기사용, kWh 사용량으로 기록됩니다.</span></li>
+            <li><strong>단위 없는 숫자</strong><span>톤·kg·MWh가 생략되거나 섞이면 의미부터 복원해야 합니다.</span></li>
+            <li><strong>문서 간 불일치</strong><span>인보이스·선하증권·원산지 자료의 수량과 날짜가 다를 수 있습니다.</span></li>
+            <li><strong>출처가 사라진 값</strong><span>파일과 페이지를 모르는 숫자는 심사 근거가 되기 어렵습니다.</span></li>
           </ul>
         </div>
 
         <div class="screen-grid">
           <figure class="screen-card">
-            <img src="/projects/ecoguard/assets/screen-upload.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 서류 접수 화면. 인보이스, 선하증권, 원산지 증명서 등 검토할 파일 종류와 업로드 영역이 보인다.">
+            <img data-lightbox src="/projects/ecoguard/assets/screen-upload.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 서류 접수 화면. 인보이스, 선하증권, 원산지 증명서 등 검토할 파일 종류와 업로드 영역이 보인다.">
             <figcaption><span class="figure-label">Figure 01 · Intake</span>서류 접수는 파이프라인의 시작일 뿐입니다. 화면과 예시 문서는 발표를 위해 만든 합성 데이터 기반 프로토타입입니다.</figcaption>
           </figure>
           <figure class="screen-card">
-            <img src="/projects/ecoguard/assets/screen-normalize.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 문서 정리 화면. 여섯 개 파일과 분류 결과, 유효 상태가 목록으로 표시되어 있다.">
+            <img data-lightbox src="/projects/ecoguard/assets/screen-normalize.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 문서 정리 화면. 여섯 개 파일과 분류 결과, 유효 상태가 목록으로 표시되어 있다.">
             <figcaption><span class="figure-label">Figure 02 · Normalize</span>추출 뒤에는 문서 분류, 필드 정규화, 단위 통일, 교차검증과 출처 연결이 이어집니다. 이 발표 화면의 6개 파일 구성은 공개 재현 코드의 7문서 fixture와 별도로 만든 합성 시나리오입니다.</figcaption>
           </figure>
         </div>
@@ -1147,8 +1366,8 @@
           <p class="section-kicker">05 · OCR after OCR</p>
           <h2 id="ocr-title">우리의 강점은 OCR 이후에 있었습니다</h2>
           <p class="section-desc">
-            OCR은 이미지와 PDF를 텍스트로 바꾸는 입력 어댑터입니다. EcoGuard가 기술적으로 집중한 부분은
-            그 결과를 규제와 계산이 이해할 수 있는 스키마로 바꾸고, 이상값을 걸러내며, 원본까지 되짚을 수 있게 하는 데이터 엔지니어링이었습니다.
+            OCR은 이미지와 PDF를 텍스트로 바꾸는 입력 어댑터입니다. 핵심은 결과를 계산 스키마로 정리하고
+            이상값을 거르며 원본까지 되짚을 수 있게 하는 데이터 엔지니어링이었습니다.
           </p>
         </div>
 
@@ -1168,42 +1387,42 @@
           <li>
             <span class="stage-num">01</span>
             <div class="stage-title"><h3>Ingest</h3><span>7 DOCS · 37 LINES · 30 CANDIDATES</span></div>
-            <p class="stage-copy">7개 합성 문서의 37개 라인을 문서·페이지·줄 순서로 읽고, alias가 확인된 30개 라인을 후보 레코드로 남깁니다. 매칭하지 못한 라인은 버리지 않고 별도 목록으로 보존합니다.</p>
+            <p class="stage-copy">7개 합성 문서의 37라인을 읽어 alias가 확인된 30개 후보를 만들고, 매칭되지 않은 라인도 보존합니다.</p>
           </li>
           <li>
             <span class="stage-num">02</span>
             <div class="stage-title"><h3>Normalize</h3><span>30 CANDIDATES · 26 FIELDS</span></div>
-            <p class="stage-copy">30개 후보를 26개 공통 필드로 정리하고 중량·에너지·배출량·가격 단위를 표준화합니다. 같은 필드의 후보는 변환 가능 여부, 문서 권위도, 신뢰도와 안정된 입력 순서로 선택합니다.</p>
+            <p class="stage-copy">30개 후보를 26개 필드로 정리하고 단위를 표준화한 뒤 변환 가능성·문서 권위도·신뢰도로 선택합니다.</p>
           </li>
           <li>
             <span class="stage-num">03</span>
             <div class="stage-title"><h3>Cross-check</h3><span>3 ISSUES · 1 OBSERVATION</span></div>
-            <p class="stage-copy">필수값·범위·문서 간 일관성을 규칙으로 검사해 3개 이슈를 사람의 검토 대상으로 남겼습니다. 허용오차 안의 차이 1건은 오류와 섞지 않고 observation으로 분리합니다.</p>
+            <p class="stage-copy">필수값·범위·문서 간 일관성을 검사해 이슈 3건과 허용오차 내 관찰 1건을 분리합니다.</p>
           </li>
           <li>
             <span class="stage-num">04</span>
             <div class="stage-title"><h3>Provenance</h3><span>SPAN · SHA-256 · AUTHORITY</span></div>
-            <p class="stage-copy">정규화 값마다 원문 안의 alias/value span, 문서·페이지·줄, line/document SHA-256, 추출기와 문서 권위도를 연결합니다. 선택된 값뿐 아니라 대안 후보와 선택 순위도 남깁니다.</p>
+            <p class="stage-copy">각 값에 원문 span, 문서·페이지·줄, SHA-256, 추출기·문서 권위도와 대안 후보를 연결합니다.</p>
           </li>
           <li>
             <span class="stage-num">05</span>
             <div class="stage-title"><h3>Regulatory mapping</h3><span>REQUIREMENT · ARTICLE · PARAGRAPH</span></div>
-            <p class="stage-copy">구조화된 필드를 CBAM·EUDR의 요구사항과 연결하고, 빠졌거나 충돌한 항목을 관련 조문 단위의 검색 질문으로 바꿉니다.</p>
+            <p class="stage-copy">필드를 CBAM·EUDR 요구사항과 연결하고 누락·충돌 항목을 조문 검색 질문으로 바꿉니다.</p>
           </li>
           <li>
             <span class="stage-num">06</span>
             <div class="stage-title"><h3>Review artifact</h3><span>INPUT · FORMULA · SOURCE · STATUS</span></div>
-            <p class="stage-copy">기업에는 보완할 항목을, 심사자에게는 입력·산식·규정 근거·환경 신호와 판단 경계를 묶은 검토 자료를 제공합니다.</p>
+            <p class="stage-copy">보완 항목과 입력·산식·규정 근거·환경 신호를 하나의 검토 자료로 묶습니다.</p>
           </li>
         </ol>
 
         <div class="principle-grid" aria-label="데이터 처리 설계 원칙">
-          <article class="principle"><code>RAW ≠ CLEAN</code><h3>원본과 정규화 값 분리</h3><p>정리 과정에서 정보가 덮어써지지 않게 두 값을 함께 보존합니다.</p></article>
-          <article class="principle"><code>NULL ≠ ZERO</code><h3>누락과 0을 구분</h3><p>추측으로 채운 값이 비용 계산에 들어가지 않도록 상태를 분리합니다.</p></article>
-          <article class="principle"><code>RULES &gt; GUESS</code><h3>단위 변환은 규칙으로</h3><p>LLM의 해석보다 버전이 있는 명시적 변환을 우선합니다.</p></article>
-          <article class="principle"><code>VALUE → SOURCE</code><h3>모든 값은 출처로</h3><p>결과 숫자에서 원본 증빙까지 되짚을 수 있어야 합니다.</p></article>
+          <article class="principle"><code>RAW ≠ CLEAN</code><h3>원본과 정규화 값 분리</h3><p>두 값을 함께 보존합니다.</p></article>
+          <article class="principle"><code>NULL ≠ ZERO</code><h3>누락과 0을 구분</h3><p>추측값의 계산 유입을 막습니다.</p></article>
+          <article class="principle"><code>RULES &gt; GUESS</code><h3>단위 변환은 규칙으로</h3><p>버전이 있는 변환을 우선합니다.</p></article>
+          <article class="principle"><code>VALUE → SOURCE</code><h3>모든 값은 출처로</h3><p>결과에서 원본으로 돌아갑니다.</p></article>
         </div>
-        <p class="boundary-note"><strong>공개 합성 fixture:</strong> 7개 문서·37개 라인에서 30개 후보를 추출해 26개 필드로 정규화했습니다. 현재 결과는 검토 이슈 3건(high 1, review 2)과 허용오차 내 관찰 1건을 분리합니다. 후보 선택에는 정규화 성공 여부, 필드별·문서별 권위도, 신뢰도와 안정된 입력 순서를 사용하며, source span과 SHA-256은 결과에서 원문으로 돌아가기 위한 증거 포인터입니다.</p>
+        <p class="boundary-note"><strong>공개 합성 기준선:</strong> 7문서·37라인에서 30개 후보를 찾아 26개 필드로 정규화하고, 이슈 3건과 허용오차 내 관찰 1건을 분리합니다. 선택값에는 원문 span·SHA-256·문서 권위도를 함께 남깁니다.</p>
       </div>
     </section>
 
@@ -1212,26 +1431,23 @@
         <div class="feature-layout">
           <div class="feature-copy">
             <div class="section-head">
-              <p class="section-kicker">06 · EU Legal RAG · Retrieval baseline</p>
-              <h2>답보다 먼저, 어느 조문을 확인해야 하는지 찾았습니다</h2>
+              <p class="section-kicker">06 · EU Legal retrieval baseline</p>
+              <h2>답보다 먼저, 확인할 조문을 찾았습니다</h2>
               <p class="section-desc">
-                프로젝트 과정에서 들은 현업 의견은, 공문서·법률 자료를 RAG에 넣었을 때 자연스러운 답변보다
-                문제에 맞는 조문을 실제로 찾는지를 먼저 시험한다는 것이었습니다.
-                대회에서는 “문제가 있다”로 끝내지 않고 어떤 규정의 어느 조·항이 어떤 자료를 요구하는지 연결하는 구조를 목표로 했습니다.
-                공개 기준선은 그 목표 전체가 아니라 article 단위 레코드와 paragraph 범위 메타데이터에서 확인할 조문과 보완 항목을 찾는 범위입니다.
+                현업 의견에서 먼저 확인한 질문은 자연스러운 답변을 생성하는지가 아니라, 문제에 맞는 조문을 실제로 찾는지였습니다.
+                공개 기준선은 article 레코드와 paragraph 범위 메타데이터에서 확인할 조문과 보완 항목을 찾는 데 한정됩니다.
               </p>
             </div>
             <ol class="feature-list">
-              <li><span class="feature-index">01</span><div><h3>조문 단위 레코드와 항 메타데이터</h3><p>공개 기준선은 article 단위 레코드에 paragraph 번호·범위와 요구사항을 함께 보존합니다. 항별 원문 청크 구현은 아닙니다.</p></div></li>
-              <li><span class="feature-index">02</span><div><h3>이슈를 검색 질문으로 변환</h3><p>“좌표 누락” 같은 데이터 품질 문제를 “어떤 의무의 어떤 필드가 비었는가”라는 검색 단위로 바꿉니다.</p></div></li>
-              <li><span class="feature-index">03</span><div><h3>근거와 보완 행동을 함께 반환</h3><p>조항 번호, 근거 문맥, 현재 문제, 추가로 받아야 할 자료를 분리해 출력합니다.</p></div></li>
-              <li><span class="feature-index">04</span><div><h3>세 종류의 고정 사례로 평가</h3><p>16개 positive, 8개 인접 조문 distractor, 10개 hard-negative에서 검색·기권·규정 분리 동작을 각각 확인합니다.</p></div></li>
+              <li><span class="feature-index">01</span><div><h3>조문 레코드와 항 메타데이터</h3><p>article에 paragraph 범위와 요구사항을 보존합니다. 항별 원문 청크는 아닙니다.</p></div></li>
+              <li><span class="feature-index">02</span><div><h3>이슈를 검색 질문으로 변환</h3><p>“좌표 누락”을 “어떤 의무의 어떤 필드가 비었는가”로 바꿉니다.</p></div></li>
+              <li><span class="feature-index">03</span><div><h3>근거와 보완 행동을 반환</h3><p>조항, 근거 문맥, 현재 문제와 추가 자료를 분리해 출력합니다.</p></div></li>
             </ol>
             <ol class="retrieval-path" aria-label="법률 RAG 검색 단위">
               <li>규정 문서</li><li>Article</li><li>Paragraph metadata</li><li>요구사항</li><li>보완 행동</li>
             </ol>
             <div class="metric-board" aria-label="법률 검색 고정 평가셋과 결과">
-              <p class="metric-board-title">Fixed-fixture evaluation · k=3</p>
+              <p class="metric-board-title">Team-authored fixed fixture · 34 cases · k=3</p>
               <div class="metric-row" role="list">
                 <div class="metric-cell" role="listitem"><strong>1.0</strong><span>Recall@3</span></div>
                 <div class="metric-cell" role="listitem"><strong>1.0</strong><span>MRR</span></div>
@@ -1243,16 +1459,16 @@
                 <span class="distractor">distractor 8</span>
                 <span class="negative">hard-negative 10</span>
               </div>
+              <span class="feedback-scope">팀이 작성한 작은 회귀 fixture 안의 결과이며, 일반적인 EU 법률 검색 정확도를 뜻하지 않습니다.</span>
             </div>
-            <p class="boundary-note"><strong>공개 기준선:</strong> CBAM·EUDR 8개 article record와 34개 고정 사례(positive 16 · distractor 8 · hard-negative 10)에서 Recall@3 1.0, MRR 1.0, negative abstention 1.0을 재현합니다. false support는 0, instrument leakage@3도 0입니다. 각 record의 CELEX·ELI·확인일은 별도 source manifest와 대조하며, 서로 다르면 산출물을 만들지 않습니다.</p>
-            <p class="boundary-note"><strong>검증 경계:</strong> 이 수치는 팀이 구성한 작은 fixed fixture 안에서 결정론적 lexical retrieval과 기권 경로를 검사한 결과입니다. paragraph는 범위 메타데이터이며 별도 원문 청크가 아닙니다. 발표 화면에는 생성형 답변과 규정 자동 갱신까지 그렸지만 이는 적용 제안이었고, 공개 코드는 팀 작성 source manifest에 고정된 lexical retrieval과 citation 평가만 재현합니다. 일반적인 법률 검색 성능, LLM 답변 품질, 최신 규제 해석이나 적합성 판정을 뜻하지 않습니다.</p>
+            <p class="boundary-note"><strong>재현 범위:</strong> CBAM·EUDR 8개 article record와 34개 고정 사례에서 lexical retrieval·citation·기권 경로를 검사합니다. paragraph는 범위 메타데이터이며 원문 청크가 아닙니다. 공식 원문은 <a href="https://eur-lex.europa.eu/eli/reg/2023/956/oj" target="_blank" rel="noopener noreferrer">CBAM Regulation (EU) 2023/956</a>과 <a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj" target="_blank" rel="noopener noreferrer">EUDR Regulation (EU) 2023/1115</a>에서 확인할 수 있습니다.</p>
           </div>
           <figure class="single-screen">
             <div class="browser-frame">
               <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-              <img src="/projects/ecoguard/assets/screen-legal-rag.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 규제 질의 화면. 거래 리스크 질문 입력창과 탄소 감축 방안, 조건부 검토 결과가 표시되어 있다.">
+              <img data-lightbox src="/projects/ecoguard/assets/screen-legal-rag.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 규제 질의 화면. 거래 리스크 질문 입력창과 탄소 감축 방안, 조건부 검토 결과가 표시되어 있다.">
             </div>
-            <figcaption>Figure 03. 규정 질의와 보완 방향을 함께 제시하도록 구성한 발표 화면. 모든 표시 데이터는 합성 예시입니다.</figcaption>
+            <figcaption>Figure 03. 발표용 합성 화면입니다. 화면의 생성형 답변 UI는 적용 제안이며, 공개 코드는 lexical retrieval·citation 평가만 재현합니다.</figcaption>
           </figure>
         </div>
 
@@ -1268,10 +1484,10 @@
               </p>
             </div>
             <ul class="feature-list">
-              <li><span class="feature-index">01</span><div><h3>LLM이 아닌 코드가 계산</h3><p>추출과 설명은 보조 모델을 쓸 수 있지만 배출량·비용 연산은 버전이 있는 결정론적 함수로 분리합니다.</p></div></li>
-              <li><span class="feature-index">02</span><div><h3>품목별 네 구성요소</h3><p>M5와 M12 각각을 공정·전구물질 × 직접·간접 배출의 네 구성요소로 풀고, 중량과 단위 내재배출의 출처를 먼저 검사합니다.</p></div></li>
-              <li><span class="feature-index">03</span><div><h3>11단계 산식 DAG와 양축 대사</h3><p>8개 구성요소, 2개 품목 합계, 1개 선적 합계의 trace를 만들고 직접/간접 및 공정/전구물질 두 축이 같은 총량인지 확인합니다.</p></div></li>
-              <li><span class="feature-index">04</span><div><h3>관측 입력과 세 민감도 분리</h3><p>정규화된 품목 데이터와 인증서 가격, 제3국 탄소가격, 분석자가 정의한 시나리오 노출계수를 분리해 세 가격 민감도를 재현합니다.</p></div></li>
+              <li><span class="feature-index">01</span><div><h3>코드가 계산</h3><p>배출량·비용 연산은 버전이 있는 결정론적 함수로 분리합니다.</p></div></li>
+              <li><span class="feature-index">02</span><div><h3>품목별 네 구성요소</h3><p>M5·M12를 공정·전구물질 × 직접·간접 배출로 풀고 입력 출처를 검사합니다.</p></div></li>
+              <li><span class="feature-index">03</span><div><h3>11단계 DAG와 양축 대사</h3><p>직접/간접과 공정/전구물질 두 축이 같은 총량인지 확인합니다.</p></div></li>
+              <li><span class="feature-index">04</span><div><h3>입력과 민감도 분리</h3><p>관측 데이터, 인증서·제3국 가격과 분석자 노출계수를 분리합니다.</p></div></li>
             </ul>
             <div class="formula-card" aria-label="CBAM 계산 흐름의 개념식">
               <span>Conceptual calculation path</span>
@@ -1292,13 +1508,12 @@
               </div>
               <div class="axis-legend"><span><i style="background:#39c8a2"></i>process</span><span><i style="background:#74a99a"></i>precursor</span></div>
             </div>
-            <p class="boundary-note"><strong>합성 golden fixture:</strong> 계산 전에 선택값을 37개 retained source line에서 다시 정규화하고, span·line/document hash·문서 manifest가 서로 맞는지 확인합니다. 이어 M5·M12의 네 구성요소를 합산한 11-step DAG는 직접 970.50 + 간접 140.86 = 1,111.36 tCO2e, 공정 731.36 + 전구물질 380.00 = 1,111.36 tCO2e로 양축 대사됩니다. 세 민감도 결과는 €97,244.00 · €77,795.20 · €66,681.60입니다.</p>
-            <p class="boundary-note"><strong>적용 경계:</strong> analyst-defined scenario exposure factor는 법정 phase-in 또는 무상할당 조정계수가 아니라 가격 노출을 비교하기 위한 분석자 가정입니다. 이 결과는 Article 9 탄소가격 변환, Article 31 조정과 품목별 시행규칙을 모두 구현한 공식 의무액이 아니며 실제 신고에는 검증된 사업자 자료와 전문가 확인이 필요합니다.</p>
+            <p class="boundary-note"><strong>합성 golden fixture:</strong> M5·M12의 11-step DAG는 직접 970.50 + 간접 140.86 = 공정 731.36 + 전구물질 380.00 = 총 1,111.36 tCO2e로 대사됩니다. 세 가격 결과는 분석자가 정의한 노출계수의 민감도이며, 법정 phase-in·Article 9/31·품목별 시행규칙을 모두 반영한 공식 의무액이 아닙니다.</p>
           </div>
           <figure class="single-screen">
             <div class="browser-frame">
               <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-              <img src="/projects/ecoguard/assets/screen-cbam.webp" width="1280" height="720" loading="lazy" alt="EcoGuard CBAM 비용 분석 화면. 배출계수, 품질 점수, 해시 검증과 비용 시뮬레이션 영역이 보인다.">
+              <img data-lightbox src="/projects/ecoguard/assets/screen-cbam.webp" width="1280" height="720" loading="lazy" alt="EcoGuard CBAM 비용 분석 화면. 배출계수, 품질 점수, 해시 검증과 비용 시뮬레이션 영역이 보인다.">
             </div>
             <figcaption>Figure 04. 정규화된 입력에서 탄소비용 시나리오까지 이어지는 발표 화면. 수치와 기업 정보는 합성 예시입니다.</figcaption>
           </figure>
@@ -1313,21 +1528,20 @@
           <h2 id="forest-title">산림을 “판정”하기보다 변화의 근거를 드러냈습니다</h2>
           <p class="section-desc">
             발표에서는 EUDR 맥락의 원산지 좌표, 전후 영상, 식생지수와 변화 마스크를 하나의 검토 화면으로 연결했습니다.
-            분할 모델과 CAM 시각화는 가능성을 보여주는 프로토타입입니다. 공개 코드는 이를 운영 모델로 포장하지 않고,
-            6×6 합성 red/NIR 전후 픽셀에서 NDVI 변화, 임계값 마스크와 팀이 만든 reference mask의 차이를 다시 계산하는 기준선으로 제한했습니다.
-            이 산림 fixture는 공개 CBAM 거래 사례와 결합된 증빙이 아니라 별도의 기술 재현 예제입니다.
+            공개 코드는 6×6 합성 red/NIR 전후 픽셀의 NDVI 변화와 팀이 만든 reference mask의 차이를 다시 계산하는 기준선입니다.
+            이 fixture는 CBAM 사례와 결합된 실제 증빙이 아니라 별도의 기술 재현 예제입니다.
           </p>
         </div>
 
-        <p class="boundary-note"><strong>발표에 포함했던 시각화:</strong> 2D 변화 화면이 심사자에게 직관적이지 않다는 피드백을 반영해, 판독 결과를 현장처럼 탐색하는 pseudo-360 forest roadview를 발표 프로토타입에 추가했습니다. 이는 사전 렌더링한 파노라마를 이용한 시각화였으며 위성 실측 기반 3D 디지털트윈이 아닙니다. 원본 인터랙티브 데모와 파노라마 자산은 이번 공개 재현 범위에서 제외했습니다.</p>
+        <p class="boundary-note"><strong>발표 시각화:</strong> 2D 변화 화면의 이해를 돕기 위해 사전 렌더링 파노라마 기반 pseudo-360 뷰를 사용했습니다. 위성 실측 3D 디지털트윈은 아니며 원본 인터랙티브 자산은 공개하지 않습니다.</p>
 
         <div class="forest-figures">
           <figure class="screen-card">
-            <img class="contain" src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 구분해 표시한다.">
+            <img data-lightbox class="contain" src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 구분해 표시한다.">
             <figcaption><span class="figure-label">Figure 05 · Reference evaluation</span>36개 합성 셀의 예측과 reference mask를 TP 11 · FP 1 · FN 1 · TN 23으로 나눈 confusion-class SVG입니다.</figcaption>
           </figure>
           <figure class="screen-card">
-            <img src="/projects/ecoguard/assets/screen-report.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 산림 분석 요약 화면. 산림 비율 변화, 연도별 NDVI 추이, 고위험 상태와 분석 소견이 표시되어 있다.">
+            <img data-lightbox src="/projects/ecoguard/assets/screen-report.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 산림 분석 요약 화면. 산림 비율 변화, 연도별 NDVI 추이, 고위험 상태와 분석 소견이 표시되어 있다.">
             <figcaption><span class="figure-label">Figure 06 · Review summary</span>변화량, 임계값 통과 시점과 관찰 소견을 심사자가 다시 확인할 수 있도록 요약한 발표 화면입니다. 수치는 합성 예시입니다.</figcaption>
           </figure>
         </div>
@@ -1338,7 +1552,7 @@
           <article class="principle"><code>03 · MASK</code><h3>명시적 임계값</h3><p>이전 식생 상태와 감소폭이 두 임계값을 모두 넘는 위치만 후보로 남깁니다.</p></article>
           <article class="principle"><code>04 · ARTIFACT</code><h3>셀 단위 결과와 시각화</h3><p>36개 셀의 좌표·예측·reference·confusion class를 GeoJSON으로, 같은 분류와 NDVI 차이를 SVG로 출력합니다.</p></article>
         </div>
-        <p class="boundary-note"><strong>공개 기준선:</strong> 예측 양성 12개를 하나의 연속 영역으로 묶고, 합성 reference mask와 비교해 TP 11 · FP 1 · FN 1 · TN 23, F1 0.916667, IoU 0.846154를 재현합니다. 36개 모든 셀은 RFC 7946 형태의 GeoJSON과 confusion-class SVG에 남습니다. <strong>해석 경계:</strong> 팀이 만든 작은 합성 정답셋에서 metric code path를 검사한 값이며 실제 위성 모델 성능이나 법적 산림 훼손 판정이 아닙니다.</p>
+        <p class="boundary-note"><strong>공개 합성 기준선:</strong> 36셀에서 TP 11 · FP 1 · FN 1 · TN 23, F1 0.916667, IoU 0.846154를 재현하고 셀별 결과를 GeoJSON·SVG로 남깁니다. 작은 팀 작성 정답셋의 코드 경로 검증값이며 실제 위성 모델 성능이나 법적 산림 훼손 판정이 아닙니다.</p>
       </div>
     </section>
 
@@ -1354,30 +1568,27 @@
         </div>
 
         <ol class="proof-grid" aria-label="기술 주장과 증명 방법">
-          <li class="proof-card"><span class="proof-id">E1</span><div><h3>비정형 자료를 계산 입력으로 바꾼다</h3><p>30개 후보에서 선택한 26개 필드의 source span, line/document hash, 권위도와 검토 상태를 고정된 샘플로 반복 검사합니다.</p><p class="proof-check"><strong>확인 흔적</strong> source span · SHA-256 · authority rank · normalized value</p></div></li>
-          <li class="proof-card"><span class="proof-id">E2</span><div><h3>올바른 EU 규정 근거를 찾는다</h3><p>34개 고정 사례에서 Recall@3·MRR·기권과 규정 간 leakage를 따로 측정하고, 작은 fixture 밖의 성능은 주장하지 않습니다.</p><p class="proof-check"><strong>확인 흔적</strong> expected article · score trace · citation · abstention</p></div></li>
-          <li class="proof-card"><span class="proof-id">E3</span><div><h3>CBAM 결과를 같은 방식으로 재현한다</h3><p>M5·M12 네 구성요소의 11-step DAG, leaf provenance, SEE·중량과 두 배출 축의 합계를 회귀 테스트로 검산합니다.</p><p class="proof-check"><strong>확인 흔적</strong> operands · derived-from step · reconciliation · sensitivity</p></div></li>
-          <li class="proof-card"><span class="proof-id">E4</span><div><h3>산림 변화 후보의 근거를 보여준다</h3><p>36개 합성 셀의 prediction·reference·confusion class와 좌표를 GeoJSON·SVG로 남기고 실제 위성 성능은 주장하지 않습니다.</p><p class="proof-check"><strong>확인 흔적</strong> reference mask · TP/FP/FN/TN · GeoJSON · SVG</p></div></li>
-          <li class="proof-card"><span class="proof-id">E5</span><div><h3>저장소 밖에서도 같은 결과가 나온다</h3><p>111개 테스트를 source tree와 설치된 wheel에서 실행하고, 저장소 밖의 임시 경로에서 11개 공개 산출물을 다시 만들어 committed golden output과 byte-for-byte 비교합니다.</p><p class="proof-check"><strong>확인 흔적</strong> wheel · outside-repo run · artifact hash · byte diff</p></div></li>
+          <li class="proof-card"><span class="proof-id">E1</span><div><h3>결과에서 원문과 조문으로 돌아갑니다</h3><p>정규화 값과 검색 결과에 source span·SHA-256·citation·기권 흔적을 남깁니다.</p><p class="proof-check"><strong>확인 흔적</strong> source · hash · score trace · citation</p></div></li>
+          <li class="proof-card"><span class="proof-id">E2</span><div><h3>계산과 변화 마스크를 다시 만듭니다</h3><p>CBAM DAG와 산림 셀별 prediction·reference를 고정 입력에서 회귀 검사합니다.</p><p class="proof-check"><strong>확인 흔적</strong> operands · reconciliation · GeoJSON · SVG</p></div></li>
+          <li class="proof-card"><span class="proof-id">E3</span><div><h3>설치한 패키지에서도 같은 산출물이 나옵니다</h3><p>111개 테스트와 저장소 밖 실행으로 11개 산출물을 다시 만들고 golden output과 byte 단위로 비교합니다.</p><p class="proof-check"><strong>확인 흔적</strong> wheel · artifact hash · byte diff</p></div></li>
         </ol>
 
         <aside class="legal-review" aria-label="법무 검토 피드백의 범위">
-          <h3>법무 검토에서 확인한 것은<br>“인증”이 아니라 “방향”이었습니다</h3>
+          <h3>법무 피드백의 범위</h3>
           <p>
-            프로젝트 과정의 법무 검토에서는 비정형 기업 자료를 규제 문서 구조로 정리하고,
-            발견한 문제를 조항 단위 근거와 보완 요청으로 연결하는 접근과 문서 구조가 실무적으로 의미 있다는 피드백을 받았습니다.
-            이는 특정 답변의 법률적 정확성, 전체 시스템의 적법성 또는 공식 제품성을 인증한 것이 아닙니다.
+            기업 자료를 규제 문서 구조로 정리하고 문제를 조문 근거·보완 요청으로 연결하는 방향이 실무적으로 의미 있다는 의견을 받았습니다.
+            프로젝트 과정의 접근 방향에 대한 피드백이며, 법률 자문·답변 정확성·제품 적법성 인증은 아닙니다.
           </p>
         </aside>
 
         <div class="closing-thesis">
-          <p>증명은 기술 뒤에 붙는 발표 장식이 아니었습니다. 어떤 값을 믿어도 되는지 정의하는 과정 자체가 데이터 모델, 계산 엔진, 검색 단위와 보고서 구조를 더 낫게 만들었습니다.</p>
-          <p class="proof-source">각 기술 수치의 입력·함수·테스트·산출물 연결은 GitHub의 <a href="https://github.com/soccz/EcoGuard/blob/main/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">주장-증거 검증표</a>에서 확인할 수 있습니다.</p>
+          <p>어떤 값을 믿어도 되는지 정의하는 과정이 데이터 모델, 계산 엔진과 검색 단위를 더 낫게 만들었습니다.</p>
+          <p class="proof-source">각 기술 수치의 입력·함수·테스트·산출물 연결은 GitHub의 <a href="https://github.com/soccz/EcoGuard/blob/v0.4.0/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">주장-증거 검증표</a>에서 확인할 수 있습니다.</p>
         </div>
       </div>
     </section>
 
-    <section class="alt" aria-labelledby="boundary-title">
+    <section id="boundary" class="alt" aria-labelledby="boundary-title">
       <div class="container">
         <div class="section-head">
           <p class="section-kicker">10 · Evidence boundary</p>
@@ -1385,29 +1596,19 @@
           <p class="section-desc">발표 화면의 완성도와 실제 검증 수준을 혼동하지 않도록 현재 공개 범위를 세 층으로 나눴습니다.</p>
         </div>
 
-        <div class="scope-table-wrap">
-          <table class="scope-table">
-            <thead>
-              <tr><th scope="col">구분</th><th scope="col">포함한 범위</th><th scope="col">주장하지 않는 것</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row"><span class="scope-tag built">재현 코드</span></th>
-                <td><strong>데이터 정규화·출처 추적, 조문 검색·citation 평가, 결정론적 CBAM 계산, 합성 NDVI reference 평가와 11개 공개 산출물</strong>을 다시 실행하는 기술 경로. 매니페스트는 8개 입력과 자신을 제외한 10개 출력의 byte 수·SHA-256을 기록하며, 설치된 wheel을 저장소 밖에서 실행한 결과도 golden output과 byte 단위로 비교합니다.</td>
-                <td>운영 데이터 성능, 실제 신고 적합성, 법적 산림 훼손 확정</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="scope-tag sim">발표 시뮬레이션</span></th>
-                <td><strong>문서 접수·규제 질의·위험 요약·심사 흐름</strong>과 사전 렌더링 파노라마 기반 pseudo-360 현장 뷰를 정적 화면·합성 사례로 연결한 제품 프로토타입</td>
-                <td>상용 서비스, 실제 기업·은행 데이터 처리, 공식 법률 자문</td>
-              </tr>
-              <tr>
-                <th scope="row"><span class="scope-tag idea">적용 제안</span></th>
-                <td><strong>은행 내부 심사 시스템 연계, 규정 자동 갱신, 근거 기반 생성형 답변, 기업 보완 요청과 여신 조건 연결</strong>에 대한 업무 가설</td>
-                <td>하나금융그룹의 채택·운영, 자동 승인·거절, 규제 준수 보장</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="scope-cards">
+          <article class="scope-card">
+            <span class="scope-tag built">재현 코드</span><h3>현재 실행해 확인할 수 있습니다</h3>
+            <dl><dt>포함</dt><dd>정규화·출처 추적, 조문 검색, CBAM 계산, 합성 NDVI 평가, 11개 산출물</dd><dt class="not-claimed">주장하지 않음</dt><dd>운영 데이터 성능, 실제 신고 적합성, 법적 산림 훼손 확정</dd></dl>
+          </article>
+          <article class="scope-card">
+            <span class="scope-tag sim">발표 시뮬레이션</span><h3>수상 당시 제품 흐름을 보여줬습니다</h3>
+            <dl><dt>포함</dt><dd>합성 사례 기반 문서 접수·규제 질의·위험 요약·pseudo-360 화면</dd><dt class="not-claimed">주장하지 않음</dt><dd>상용 서비스, 실제 기업·은행 데이터 처리, 공식 법률 자문</dd></dl>
+          </article>
+          <article class="scope-card">
+            <span class="scope-tag idea">적용 제안</span><h3>후속 업무 가설로 남겼습니다</h3>
+            <dl><dt>포함</dt><dd>심사 시스템 연계, 규정 갱신, 근거 기반 생성형 답변, 보완 요청</dd><dt class="not-claimed">주장하지 않음</dt><dd>하나금융그룹의 채택·운영, 자동 승인·거절, 규제 준수 보장</dd></dl>
+          </article>
         </div>
       </div>
     </section>
@@ -1418,7 +1619,8 @@
           <p class="section-kicker">11 · Retrospective</p>
           <h2 id="retrospective-title">3명이 함께 준비하며 좋았던 점</h2>
           <p class="section-desc">
-            가장 좋았던 경험은 기술을 많이 나열한 순간이 아니라, 각 기술이 누구의 어떤 판단을 바꾸는지 팀의 언어로 다시 설명한 순간들이었습니다. 개인 이름과 고정된 세부 역할은 공개하지 않고, 세 사람이 함께 다룬 작업 축을 남깁니다.
+            기술을 많이 나열하기보다 각 기술이 어떤 판단을 돕는지 팀의 언어로 다시 설명한 순간이 가장 오래 남았습니다.
+            이 페이지는 공동 제작 과정을 기록하며, 공개 코드의 기술 구현·재현 범위는 <a href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">GitHub 저장소</a>에서 확인할 수 있습니다.
           </p>
         </div>
 
@@ -1433,27 +1635,6 @@
           <article class="lesson-card"><span>02</span><h3>기술을 금융 의사결정의 언어로 번역했습니다</h3><p>NDVI, RAG, 배출계수라는 용어를 그대로 말하는 대신 심사자가 승인·보완·재검토 중 무엇을 선택하는 데 필요한지 연결했습니다.</p></article>
           <article class="lesson-card"><span>03</span><h3>생성과 계산의 경계를 배웠습니다</h3><p>법령 설명은 검색과 생성이 도울 수 있지만 비용 산식과 단위 변환은 명시적 코드가 맡아야 재현성과 감사 가능성이 생긴다는 원칙을 세웠습니다.</p></article>
           <article class="lesson-card"><span>04</span><h3>한계를 쓰는 일이 결과를 더 강하게 만들었습니다</h3><p>합성 데이터와 제안 기능을 구분하자 무엇을 실제 코드로 남겨야 하는지가 선명해졌고, 기술력도 더 구체적으로 설명할 수 있었습니다.</p></article>
-          <article class="lesson-card"><span>05</span><h3>넓은 아이디어를 하나의 이야기로 줄였습니다</h3><p>CarbonCast부터 쌓인 기능을 모두 전면에 두지 않고, “증빙을 믿을 수 있는가”라는 한 질문 아래 발표 흐름을 다시 구성했습니다.</p></article>
-          <article class="lesson-card"><span>06</span><h3>증명 과정이 곧 다음 개발 목록이 됐습니다</h3><p>정답 데이터, 규정 버전, 기준 질문, 단위 테스트가 부족한 지점을 찾을수록 후속 작업이 추상적인 고도화가 아니라 실행 가능한 검증 계획으로 바뀌었습니다.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="limits" class="paper" aria-labelledby="limits-title">
-      <div class="container">
-        <div class="section-head">
-          <p class="section-kicker">12 · Limitations</p>
-          <h2 id="limits-title">아직 증명하지 못한 것들</h2>
-          <p class="section-desc">이 프로젝트의 가치는 운영 성능을 과장하는 데 있지 않습니다. 다음 검증이 필요한 지점을 공개적으로 남깁니다.</p>
-        </div>
-
-        <div class="limit-grid">
-          <article class="limit-card"><h3>합성 데이터 중심</h3><p>공개 화면과 재현 예제는 개인정보와 영업정보가 없는 합성 자료입니다. 실제 기업 자료의 분포를 대표하지 않습니다.</p></article>
-          <article class="limit-card"><h3>OCR 운영 성능 미검증</h3><p>다양한 스캔 품질·필기·복잡한 표에 대한 대규모 벤치마크를 수행하지 않았습니다. 핵심 공개 범위는 OCR 이후 처리입니다.</p></article>
-          <article class="limit-card"><h3>법률 정확성 미인증</h3><p>조문 단위 검색 구조는 법률 자문이나 적합성 판정을 대체하지 않습니다. 최신 원문과 전문가 검토가 필요합니다.</p></article>
-          <article class="limit-card"><h3>CBAM 신고 도구가 아님</h3><p>공개 계산은 기술 재현과 시나리오 설명을 위한 베이스라인입니다. 품목별 최신 방법론과 검증 절차를 모두 포괄하지 않습니다.</p></article>
-          <article class="limit-card"><h3>합성 산림 기준선</h3><p>F1과 IoU는 팀이 만든 36셀 reference mask에서 계산한 코드 검증값입니다. 실제 지역의 정답 데이터, 영상 보정과 현장 검증이 필요합니다.</p></article>
-          <article class="limit-card"><h3>은행 시스템 미연동</h3><p>화면은 심사 흐름을 가정한 프로토타입입니다. 실제 하나은행 내부 시스템, 고객 데이터 또는 여신 의사결정과 연결되지 않았습니다.</p></article>
         </div>
       </div>
     </section>
@@ -1465,11 +1646,11 @@
         <p>
           공개 저장소에는 111개 테스트와 11개 산출물, 입력·출력 SHA-256 매니페스트를 남겼습니다.
           설치된 wheel을 저장소 밖에서 실행해 golden output과 byte 단위로 비교하고,
-          발표 발췌본에는 그 기술을 왜 만들었고 어떻게 증명했는지를 압축했습니다.
+          원 발표 기반 공개 case study에는 그 기술을 왜 만들었고 어떻게 증명했는지를 4쪽으로 압축했습니다.
         </p>
         <div class="hero-actions" aria-label="프로젝트 최종 자료">
           <a class="button primary" href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">GitHub 저장소 <span aria-hidden="true">↗</span></a>
-          <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">발표 발췌본 · 4쪽 <span aria-hidden="true">↓</span></a>
+          <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">공개 case study · 4쪽 <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </section>
@@ -1481,5 +1662,57 @@
     하나금융그룹 또는 하나은행의 공식 제품·서비스·법률 자문이 아닙니다. 화면과 공개 예시는 합성 데이터를 사용합니다.<br>
     Typography: Paperlogy web subset · <a href="/projects/ecoguard/assets/fonts/OFL.txt">SIL Open Font License 1.1</a>
   </footer>
+
+  <dialog class="image-dialog" aria-labelledby="image-dialog-title">
+    <div class="image-dialog-inner">
+      <div class="image-dialog-bar">
+        <span id="image-dialog-title" class="image-dialog-label">이미지 확대</span>
+        <button class="image-dialog-close" type="button" aria-label="확대 이미지 닫기">×</button>
+      </div>
+      <figure>
+        <img class="image-dialog-image" alt="">
+        <figcaption class="image-dialog-caption"></figcaption>
+      </figure>
+    </div>
+  </dialog>
+  <script>
+    (() => {
+      const dialog = document.querySelector('.image-dialog');
+      if (!dialog || typeof dialog.showModal !== 'function') return;
+
+      const dialogImage = dialog.querySelector('.image-dialog-image');
+      const dialogCaption = dialog.querySelector('.image-dialog-caption');
+      const closeButton = dialog.querySelector('.image-dialog-close');
+      let trigger = null;
+
+      document.querySelectorAll('img[data-lightbox]').forEach((image) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'image-button';
+        button.setAttribute('aria-label', `${image.alt} — 크게 보기`);
+        image.parentNode.insertBefore(button, image);
+        button.appendChild(image);
+        button.addEventListener('click', () => {
+          trigger = button;
+          const figure = button.closest('figure');
+          dialogImage.src = image.currentSrc || image.src;
+          dialogImage.alt = image.alt;
+          dialogCaption.textContent = figure?.querySelector('figcaption')?.textContent.trim() || image.alt;
+          dialog.showModal();
+          closeButton.focus();
+        });
+      });
+
+      const close = () => dialog.close();
+      closeButton.addEventListener('click', close);
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) close();
+      });
+      dialog.addEventListener('close', () => {
+        dialogImage.removeAttribute('src');
+        if (trigger) trigger.focus();
+      });
+    })();
+  </script>
 </body>
 </html>
