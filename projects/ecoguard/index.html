@@ -1196,12 +1196,12 @@
             </div>
           </aside>
         </div>
-        <p class="hero-proof-label">현재 공개 v0.4 재구성 기준 · 수상 당시 전체 시스템을 그대로 복제한 수치가 아닙니다.</p>
+        <p class="hero-proof-label">현재 공개 v0.5 재구성 기준 · 수상 당시 전체 시스템을 그대로 복제한 수치가 아닙니다.</p>
         <div class="hero-facts" role="list" aria-label="현재 공개 재현 코드의 핵심 정보">
-          <div class="fact" role="listitem"><strong>7</strong><span>합성 입력 문서</span></div>
-          <div class="fact" role="listitem"><strong>37</strong><span>원문 라인</span></div>
-          <div class="fact" role="listitem"><strong>111</strong><span>자동 회귀 테스트</span></div>
-          <div class="fact" role="listitem"><strong>11</strong><span>공개 산출물 · manifest 포함</span></div>
+          <div class="fact" role="listitem"><strong>7</strong><span>core 합성 입력 문서</span></div>
+          <div class="fact" role="listitem"><strong>37</strong><span>core 원문 라인</span></div>
+          <div class="fact" role="listitem"><strong>174</strong><span>자동·속성 회귀 테스트</span></div>
+          <div class="fact" role="listitem"><strong>11 + 6</strong><span>core + benchmark 산출물</span></div>
         </div>
       </div>
     </header>
@@ -1210,8 +1210,8 @@
       <div class="container">
         <ol class="phase-grid">
           <li class="phase-card"><span>01</span><div><h2>수상 당시 프로토타입</h2><p>합성 사례와 발표용 화면으로 문서 접수부터 규제·탄소·산림 검토까지의 제품 흐름을 시연했습니다.</p></div></li>
-          <li class="phase-card"><span>02</span><div><h2>공개 재구성 v0.4</h2><p>원본 데모와 비공개 자산 대신, 공개 가능한 합성 입력과 결정론적 기준선으로 기술 경로를 다시 구성했습니다.</p></div></li>
-          <li class="phase-card"><span>03</span><div><h2>현재 재현 가능한 범위</h2><p>전처리·EU 조문 검색·CBAM 계산·합성 NDVI 평가를 111개 테스트와 11개 산출물로 확인할 수 있습니다.</p></div></li>
+          <li class="phase-card"><span>02</span><div><h2>공개 재구성 v0.5</h2><p>원본 데모와 비공개 자산 대신, 공개 가능한 합성 입력과 결정론적 기준선으로 기술 경로를 다시 구성했습니다.</p></div></li>
+          <li class="phase-card"><span>03</span><div><h2>현재 재현 가능한 범위</h2><p>OCR 출력 변환부터 EU 조문 검색·CBAM 계산·산림 geospatial 평가까지 174개 테스트, core 11개와 benchmark 6개 산출물로 확인할 수 있습니다.</p></div></li>
         </ol>
       </div>
     </section>
@@ -1382,6 +1382,7 @@
           <span class="review-chip">1 within-tolerance observation</span>
           <span class="review-chip">span · line hash · document hash · authority rank</span>
         </div>
+        <p class="boundary-note"><strong>v0.5 입력·평가 경로:</strong> Tesseract TSV, generic JSON, pdftotext 출력을 하나의 document bundle로 변환합니다. 별도 합성 오류 fixture는 field 단위 TP/FP/FN 2/2/2와 mismatch·missing·spurious를 모두 발생시켜 평가 코드의 실패 분류를 확인합니다. 이는 OCR 모델 정확도가 아닙니다.</p>
 
         <ol class="pipeline" aria-label="원천 문서에서 검토 가능한 데이터까지의 처리 단계">
           <li>
@@ -1459,9 +1460,9 @@
                 <span class="distractor">distractor 8</span>
                 <span class="negative">hard-negative 10</span>
               </div>
-              <span class="feedback-scope">팀이 작성한 작은 회귀 fixture 안의 결과이며, 일반적인 EU 법률 검색 정확도를 뜻하지 않습니다.</span>
+              <span class="feedback-scope">팀이 작성한 작은 개발 회귀 fixture 안의 결과이며, 일반적인 EU 법률 검색 정확도를 뜻하지 않습니다.</span>
             </div>
-            <p class="boundary-note"><strong>재현 범위:</strong> CBAM·EUDR 8개 article record와 34개 고정 사례에서 lexical retrieval·citation·기권 경로를 검사합니다. paragraph는 범위 메타데이터이며 원문 청크가 아닙니다. 공식 원문은 <a href="https://eur-lex.europa.eu/eli/reg/2023/956/oj" target="_blank" rel="noopener noreferrer">CBAM Regulation (EU) 2023/956</a>과 <a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj" target="_blank" rel="noopener noreferrer">EUDR Regulation (EU) 2023/1115</a>에서 확인할 수 있습니다.</p>
+            <p class="boundary-note"><strong>재현 범위:</strong> CBAM·EUDR 8개 article record와 개발 fixture 34건에 더해, 개발셋과 분리한 maintainer 작성 post-hoc blind-style 36건(positive 16·distractor 8·negative 12)으로 lexical retrieval·citation·기권 경로를 검사합니다. 이 별도 셋은 외부 독립 blind 평가가 아닙니다. paragraph는 범위 메타데이터이며 원문 청크가 아닙니다. 공식 원문은 <a href="https://eur-lex.europa.eu/eli/reg/2023/956/oj" target="_blank" rel="noopener noreferrer">CBAM Regulation (EU) 2023/956</a>과 <a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj" target="_blank" rel="noopener noreferrer">EUDR Regulation (EU) 2023/1115</a>에서 확인할 수 있습니다.</p>
           </div>
           <figure class="single-screen">
             <div class="browser-frame">
@@ -1508,7 +1509,7 @@
               </div>
               <div class="axis-legend"><span><i style="background:#39c8a2"></i>process</span><span><i style="background:#74a99a"></i>precursor</span></div>
             </div>
-            <p class="boundary-note"><strong>합성 golden fixture:</strong> M5·M12의 11-step DAG는 직접 970.50 + 간접 140.86 = 공정 731.36 + 전구물질 380.00 = 총 1,111.36 tCO2e로 대사됩니다. 세 가격 결과는 분석자가 정의한 노출계수의 민감도이며, 법정 phase-in·Article 9/31·품목별 시행규칙을 모두 반영한 공식 의무액이 아닙니다.</p>
+            <p class="boundary-note"><strong>합성 golden fixture와 규정 coverage:</strong> M5·M12의 11-step DAG는 직접 970.50 + 간접 140.86 = 공정 731.36 + 전구물질 380.00 = 총 1,111.36 tCO2e로 대사됩니다. 공식 EUR-Lex 원문에 대조한 선정 요구사항 15개는 partial 8·미구현 7·완전 구현 0으로 공개합니다. 세 가격 결과는 분석자 정의 민감도이며, 공식 의무액이 아닙니다.</p>
           </div>
           <figure class="single-screen">
             <div class="browser-frame">
@@ -1552,7 +1553,7 @@
           <article class="principle"><code>03 · MASK</code><h3>명시적 임계값</h3><p>이전 식생 상태와 감소폭이 두 임계값을 모두 넘는 위치만 후보로 남깁니다.</p></article>
           <article class="principle"><code>04 · ARTIFACT</code><h3>셀 단위 결과와 시각화</h3><p>36개 셀의 좌표·예측·reference·confusion class를 GeoJSON으로, 같은 분류와 NDVI 차이를 SVG로 출력합니다.</p></article>
         </div>
-        <p class="boundary-note"><strong>공개 합성 기준선:</strong> 36셀에서 TP 11 · FP 1 · FN 1 · TN 23, F1 0.916667, IoU 0.846154를 재현하고 셀별 결과를 GeoJSON·SVG로 남깁니다. 작은 팀 작성 정답셋의 코드 경로 검증값이며 실제 위성 모델 성능이나 법적 산림 훼손 판정이 아닙니다.</p>
+        <p class="boundary-note"><strong>공개 합성 기준선:</strong> core 36셀에서 TP 11 · FP 1 · FN 1 · TN 23, F1 0.916667, IoU 0.846154를 재현합니다. 별도 4×6 geospatial fixture는 CRS(EPSG:32652)·affine 면적·cloud/nodata/shadow·시간/계절·결정론적 tile holdout을 검사하며, 유효 holdout 9셀의 TP/FP/FN/TN은 4/1/1/3입니다. 둘 다 실제 위성 모델 성능이나 법적 산림 훼손 판정이 아닙니다.</p>
       </div>
     </section>
 
@@ -1570,7 +1571,7 @@
         <ol class="proof-grid" aria-label="기술 주장과 증명 방법">
           <li class="proof-card"><span class="proof-id">E1</span><div><h3>결과에서 원문과 조문으로 돌아갑니다</h3><p>정규화 값과 검색 결과에 source span·SHA-256·citation·기권 흔적을 남깁니다.</p><p class="proof-check"><strong>확인 흔적</strong> source · hash · score trace · citation</p></div></li>
           <li class="proof-card"><span class="proof-id">E2</span><div><h3>계산과 변화 마스크를 다시 만듭니다</h3><p>CBAM DAG와 산림 셀별 prediction·reference를 고정 입력에서 회귀 검사합니다.</p><p class="proof-check"><strong>확인 흔적</strong> operands · reconciliation · GeoJSON · SVG</p></div></li>
-          <li class="proof-card"><span class="proof-id">E3</span><div><h3>설치한 패키지에서도 같은 산출물이 나옵니다</h3><p>111개 테스트와 저장소 밖 실행으로 11개 산출물을 다시 만들고 golden output과 byte 단위로 비교합니다.</p><p class="proof-check"><strong>확인 흔적</strong> wheel · artifact hash · byte diff</p></div></li>
+          <li class="proof-card"><span class="proof-id">E3</span><div><h3>설치한 패키지에서도 같은 산출물이 나옵니다</h3><p>174개 자동·속성 테스트와 저장소 밖 실행으로 core 11개·benchmark 6개 산출물을 다시 만들고 golden output과 byte 단위로 비교합니다.</p><p class="proof-check"><strong>확인 흔적</strong> wheel · branch coverage · artifact hash · byte diff</p></div></li>
         </ol>
 
         <aside class="legal-review" aria-label="법무 검토 피드백의 범위">
@@ -1583,7 +1584,7 @@
 
         <div class="closing-thesis">
           <p>어떤 값을 믿어도 되는지 정의하는 과정이 데이터 모델, 계산 엔진과 검색 단위를 더 낫게 만들었습니다.</p>
-          <p class="proof-source">각 기술 수치의 입력·함수·테스트·산출물 연결은 GitHub의 <a href="https://github.com/soccz/EcoGuard/blob/v0.4.1/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">주장-증거 검증표</a>에서 확인할 수 있습니다.</p>
+          <p class="proof-source">각 기술 수치의 입력·함수·테스트·산출물 연결은 GitHub의 <a href="https://github.com/soccz/EcoGuard/blob/v0.5.0/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">주장-증거 검증표</a>에서 확인할 수 있습니다.</p>
         </div>
       </div>
     </section>
@@ -1599,7 +1600,7 @@
         <div class="scope-cards">
           <article class="scope-card">
             <span class="scope-tag built">재현 코드</span><h3>현재 실행해 확인할 수 있습니다</h3>
-            <dl><dt>포함</dt><dd>정규화·출처 추적, 조문 검색, CBAM 계산, 합성 NDVI 평가, 11개 산출물</dd><dt class="not-claimed">주장하지 않음</dt><dd>운영 데이터 성능, 실제 신고 적합성, 법적 산림 훼손 확정</dd></dl>
+            <dl><dt>포함</dt><dd>OCR 출력 adapter·정규화·출처 추적, 조문 검색·blind-style 평가, CBAM 계산·규칙 coverage, 합성 NDVI·geospatial 평가, core 11개 + benchmark 6개 산출물</dd><dt class="not-claimed">주장하지 않음</dt><dd>운영 데이터 성능, 외부 독립 blind 결과, 실제 신고 적합성, 법적 산림 훼손 확정</dd></dl>
           </article>
           <article class="scope-card">
             <span class="scope-tag sim">발표 시뮬레이션</span><h3>수상 당시 제품 흐름을 보여줬습니다</h3>
@@ -1644,7 +1645,7 @@
         <p class="section-kicker">EcoGuard · Project archive</p>
         <h2 id="outro-title">기술력은 결과가 아니라<br>결과까지의 근거에서 보였습니다</h2>
         <p>
-          공개 저장소에는 111개 테스트와 11개 산출물, 입력·출력 SHA-256 매니페스트를 남겼습니다.
+          공개 저장소에는 174개 자동·속성 테스트와 core 11개·benchmark 6개 산출물, 입력·출력 SHA-256 매니페스트를 남겼습니다.
           설치된 wheel을 저장소 밖에서 실행해 golden output과 byte 단위로 비교하고,
           원 발표 기반 공개 case study에는 그 기술을 왜 만들었고 어떻게 증명했는지를 4쪽으로 압축했습니다.
         </p>

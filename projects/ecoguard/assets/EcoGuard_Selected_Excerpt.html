@@ -741,8 +741,8 @@
         <h1 id="cover-title">기술을 만드는 일보다<br><em>그 기술이 맞다는 것을</em><br>증명하는 일이 어려웠다.</h1>
         <p class="cover-subtitle">비정형 수출 데이터를 검토 가능한 증빙으로 바꾸고, EU 탄소국경조정제도(CBAM)의 교육용 계산과 EU 산림전용방지규정(EUDR)을 위한 산림 변화 근거를 연결한 무역금융 PoC</p>
         <blockquote class="thesis">증명에 시간을 쓴 뒤에야, 데이터 전처리·계산·근거 추적이라는 기술이 왜 실무에서 의미 있는지 더 선명하게 보였다.</blockquote>
-        <div class="cover-tags"><span>Team UniHana</span><span>3인 팀 수상</span><span>공개 v0.4 재구성 · 2026.08</span></div>
-        <p class="scope-note"><strong>이 문서는 원본 발표자료의 발췌가 아닙니다.</strong><br>대회 당시 발표 흐름과 개발 기록, 공개 v0.4 재현 코드를 바탕으로 새로 구성한 4쪽 case study입니다. 원본 Live Demo와 전체 발표자료는 공개하지 않습니다.</p>
+        <div class="cover-tags"><span>Team UniHana</span><span>3인 팀 수상</span><span>공개 v0.5 재구성 · 2026.08</span></div>
+        <p class="scope-note"><strong>이 문서는 원본 발표자료의 발췌가 아닙니다.</strong><br>대회 당시 발표 흐름과 개발 기록, 공개 v0.5 재현 코드를 바탕으로 새로 구성한 4쪽 case study입니다. 원본 Live Demo와 전체 발표자료는 공개하지 않습니다.</p>
       </div>
       <div class="cover-visual">
         <figure class="shot cover-report">
@@ -762,7 +762,7 @@
         </aside>
       </div>
     </div>
-    <footer class="footer"><span>원 발표자료·개발 기록·공개 v0.4를 바탕으로 재구성한 case study</span><span>합성 데이터 · 교육용 PoC · 하나금융그룹·하나은행 공식 제품 아님 · 법률 자문 아님</span></footer>
+    <footer class="footer"><span>원 발표자료·개발 기록·공개 v0.5를 바탕으로 재구성한 case study</span><span>합성 데이터 · 교육용 PoC · 하나금융그룹·하나은행 공식 제품 아님 · 법률 자문 아님</span></footer>
   </section>
 
   <section class="page" aria-labelledby="evidence-title">
@@ -776,8 +776,8 @@
         <figure class="shot"><span class="synthetic">합성 데이터 · 발표 프로토타입 화면</span><img src="screen-upload.webp" width="1280" height="720" alt="형태가 다른 합성 원천 문서를 접수하는 발표 프로토타입 화면"></figure>
         <p class="stage-id">STAGE 1 · RAW INTAKE</p>
         <h3>원천자료를 있는 그대로 받는다</h3>
-        <p>스캔 문서, 메모, 표처럼 형태가 다른 입력을 접수합니다. ‘처음부터 정돈된 자료’라고 가정하지 않습니다.</p>
-        <ul><li>원본과 줄·필드 위치 보존</li><li>빈칸과 모호한 값을 임의로 보정하지 않음</li></ul>
+        <p>Tesseract TSV·generic JSON·pdftotext처럼 형태가 다른 출력을 공통 document bundle로 바꿉니다.</p>
+        <ul><li>원본과 줄·필드 위치 보존</li><li>빈칸·모호한 값을 임의로 보정하지 않음</li></ul>
       </article>
 
       <article class="stage">
@@ -808,10 +808,10 @@
     </div>
 
     <aside class="proof-strip">
-      <div><strong>유창함보다 추적 가능성</strong><span>화면이 아니라 공개 JSON의 lineage·score trace를 증거로 제시합니다.</span></div>
+      <div><strong>3 OCR-output adapters</strong><span>형태가 다른 engine 출력을 공통 입력 계약으로 변환</span></div>
       <div><strong>7 docs · 37 lines</strong><span>30개 후보에서 26개 필드 정규화</span></div>
-      <div><strong>3 issues · 1 observation</strong><span>누락·충돌·허용오차를 분리</span></div>
-      <div><strong>34 fixed queries</strong><span>16 positive · 8 distractor · 10 negative</span></div>
+      <div><strong>field TP / FP / FN · 2 / 2 / 2</strong><span>오류 분류를 확인하는 합성 fixture · 모델 정확도 아님</span></div>
+      <div><strong>34 dev + 36 holdout</strong><span>legal citation·기권 평가 · 외부 blind 아님</span></div>
     </aside>
     <footer class="footer"><span>법무 관점 피드백은 비공개 멘토링에서 받은 ‘방향성 피드백’입니다.</span><span>법무팀의 공식 인증·완전한 법률 검증 아님 · 합성 고정셋 · 법률 자문 아님</span></footer>
   </section>
@@ -832,8 +832,8 @@
           <div class="calc-step calc-total"><small>EUR 87.50 / tCO2e 가정</small><strong>EUR 97,244</strong><span>교육용 가격 민감도 · 법정 의무액 아님</span></div>
         </div>
         <div class="formula">내재배출량 = sum(품목 중량 × 구성요소별 배출강도)<br>교육용 노출도 = 내재배출량 × 분석자 적용계수 × 유효가격</div>
-        <ul class="checks"><li>원자료→피연산자 계보</li><li>중간값과 반올림 보존</li><li>손계산 golden fixture</li><li>가정 변화 민감도 분리</li></ul>
-        <p class="boundary">분석자 적용계수는 법정 phase-in 계수가 아닙니다. 실제 신고액·인증서 수량·공식 산정값을 제공하지 않습니다.</p>
+        <ul class="checks"><li>원자료→피연산자 계보</li><li>중간값과 반올림 보존</li><li>손계산 golden fixture</li><li>15-rule map · partial 8 / missing 7</li></ul>
+        <p class="boundary">선정 요구사항의 완전 구현은 0개입니다. 실제 신고액·인증서 수량·공식 산정값을 제공하지 않습니다.</p>
       </article>
 
       <article class="tech-card">
@@ -858,11 +858,11 @@
           </div>
         </div>
         <div class="formula">NDVI 변화량 = NDVI(after) − NDVI(before)<br>후보 = 이전 NDVI ≥ 0.45 · 변화량 ≤ −0.25 → mask·region·GeoJSON</div>
-        <ul class="checks"><li>합성 red/NIR 입력 공개</li><li>prediction·reference 병기</li><li>연속 영역 결정론적 계산</li><li>탐지와 규제 판단 분리</li></ul>
-        <p class="boundary">6×6 합성 고정셋으로 metric code path를 확인한 결과입니다. 실제 위성 모델 정확도·현장 실사·EUDR 적합성 판정이 아닙니다.</p>
+        <ul class="checks"><li>합성 red/NIR 입력 공개</li><li>CRS·affine 면적 검증</li><li>cloud·nodata·shadow 제외</li><li>결정론적 tile holdout</li></ul>
+        <p class="boundary">core 6×6과 별도 4×6 geospatial fixture로 plumbing을 검사합니다. 실제 위성 모델 정확도·EUDR 판정이 아닙니다.</p>
       </article>
     </div>
-    <footer class="footer"><span>같은 합성 입력 · 같은 파라미터 · 같은 출력 · 중간값과 근거 보존</span><span>공식 CBAM 계산·EUDR 판정 아님 · 공개 v0.4 재현 기준선</span></footer>
+    <footer class="footer"><span>같은 합성 입력 · 같은 파라미터 · 같은 출력 · 중간값과 근거 보존</span><span>공식 CBAM 계산·EUDR 판정 아님 · 공개 v0.5 재현 기준선</span></footer>
   </section>
 
   <section class="page dark" aria-labelledby="proof-title">
@@ -884,17 +884,17 @@
       <div class="boundary-area">
         <h3>Public boundary · 대회 당시 화면과 공개 재현 코드의 경계</h3>
         <div class="boundary-grid">
-          <article class="boundary-card"><span class="pill">공개 v0.4에서 재현</span><ul><li>정규화·검증·출처 계보</li><li>조문 citation·score·기권</li><li>CBAM 계산·합성 NDVI 평가</li></ul></article>
+          <article class="boundary-card"><span class="pill">공개 v0.5에서 재현</span><ul><li>OCR 출력 adapter·출처 계보</li><li>legal blind-style·CBAM rule map</li><li>geospatial holdout·branch coverage gate</li></ul></article>
           <article class="boundary-card"><span class="pill">대회 화면에서 시뮬레이션</span><ul><li>OCR 추출 완료 상태</li><li>종합 품질점수·보완 문구</li><li>통합 보고·업무 전달 경험</li></ul></article>
           <article class="boundary-card"><span class="pill">후속 검증·연동 필요</span><ul><li>실제 기업·은행 데이터</li><li>운영급 OCR·위성 모델 평가</li><li>전문가 정답셋·규정 최신화</li></ul></article>
         </div>
         <div class="lesson-grid">
-          <article class="lesson-card"><h3>이 공개본이 보여주는 것</h3><ul><li>값의 출처부터 계산 결과까지 이어지는 검증 경로</li><li>합성 고정셋과 자동 테스트로 다시 실행할 수 있는 기술 기준선</li></ul></article>
+          <article class="lesson-card"><h3>이 공개본이 보여주는 것</h3><ul><li>값의 출처부터 계산 결과까지 이어지는 검증 경로</li><li>core 11개 + benchmark 6개를 다시 만드는 기술 기준선</li></ul></article>
           <article class="lesson-card"><h3>보여주지 않는 것</h3><ul><li>실제 고객 데이터의 운영 성능과 법정 신고 적합성</li><li>전체 발표자료, 원본 Live Demo, 비공개 멘토링 자료</li></ul></article>
         </div>
         <div class="cta-grid">
           <a class="repo-link" href="https://soccz.github.io/projects/ecoguard/" title="과정·회고·증거 경계를 설명하는 EcoGuard 상세 HTML 보고서">상세 HTML 보고서 →</a>
-          <a class="repo-link" href="https://github.com/soccz/EcoGuard/blob/v0.4.1/docs/VALIDATION.md" title="명령·평가셋·검증 결과를 정리한 GitHub VALIDATION 문서">GitHub VALIDATION →</a>
+          <a class="repo-link" href="https://github.com/soccz/EcoGuard/blob/v0.5.0/docs/VALIDATION.md" title="명령·평가셋·검증 결과를 정리한 GitHub VALIDATION 문서">GitHub VALIDATION →</a>
         </div>
       </div>
     </div>
