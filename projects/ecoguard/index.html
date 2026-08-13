@@ -1243,7 +1243,7 @@
         <div class="hero-facts" role="list" aria-label="현재 공개 재현 코드의 핵심 정보">
           <div class="fact" role="listitem"><strong>7</strong><span>합성 입력 문서</span></div>
           <div class="fact" role="listitem"><strong>37</strong><span>원문 라인</span></div>
-          <div class="fact" role="listitem"><strong>174</strong><span>자동·속성 기반 테스트</span></div>
+          <div class="fact" role="listitem"><strong>174</strong><span>자동·속성 기반 core 테스트</span></div>
           <div class="fact" role="listitem"><strong>17</strong><span>재생성 결과물</span></div>
         </div>
       </div>
@@ -1358,7 +1358,7 @@
         <div class="scope-cards">
           <article class="scope-card">
             <span class="scope-tag built">재현 코드</span><h3>지금 실행해 확인할 수 있는 것</h3>
-            <p>문서 정규화와 출처 추적, 조문 검색, CBAM 계산, 합성 NDVI·공간정보 평가입니다. 운영 데이터 성능이나 규제 준수를 보장하지 않습니다.</p>
+            <p>문서 정규화와 출처 추적, 조문 검색, CBAM 계산, 합성 NDVI·공간정보 평가, 그리고 선택형 연구 트랙의 공개 Sentinel-2 파생 단일시점 산림피복 CNN입니다. 운영 데이터 성능이나 규제 준수를 보장하지 않습니다.</p>
           </article>
           <article class="scope-card">
             <span class="scope-tag sim">발표 시뮬레이션</span><h3>수상 당시 보여준 제품 흐름</h3>
@@ -1585,6 +1585,7 @@
           <p class="section-desc">
             발표에서는 CNN·CAM과 pseudo-360 화면으로 변화 위치를 설명했습니다. 현재 공개본은 당시 모델 성능을 재현한다고 말하지 않습니다.
             대신 누구나 입력과 정답을 볼 수 있는 6×6 합성 red/NIR 데이터로 NDVI 계산, 변화 마스크와 reference 비교를 다시 실행합니다.
+            2026년 8월에는 공개 Sentinel-2 파생 fixture로 단일시점 산림피복 CNN을 학습·평가·설명하는 선택형 연구 트랙을 저장소에 추가했습니다. 전후 변화 탐지나 발표 당시 수치의 재현은 아닙니다.
           </p>
         </div>
 
@@ -1602,8 +1603,9 @@
         <details class="tech-details">
           <summary>발표 프로토타입과 공간 평가 세부 보기</summary>
           <div class="details-body">
-            <p>멘토링에서 위에서 내려다본 지도만으로는 현장을 이해하기 어렵다는 의견을 받아, 발표에는 사전 렌더링 파노라마를 둘러보는 pseudo-360 화면을 더했습니다. 실제 위성 표고로 만든 디지털트윈은 아니며 원본 인터랙티브 자산은 공개하지 않습니다.</p>
+            <p>멘토링에서 위에서 내려다본 지도만으로는 현장을 이해하기 어렵다는 의견을 받아, 발표에는 사전 렌더링 파노라마를 둘러보는 pseudo-360 화면을 더했습니다. 실제 위성 표고로 만든 디지털트윈은 아닙니다. 발표에 쓴 파노라마 시연은 정리해 <a href="/projects/ecoguard/demo/" target="_blank" rel="noopener noreferrer">현장 시연 데모 ↗</a>로 공개했습니다. 수상 당시 발표 흐름을 보여주는 보조 화면으로, 화면 속 패널·수치·훼손 표시는 합성 예시이며 실제 탐지 모델의 출력이 아닙니다. 훼손 구역 파노라마는 Wikimedia Commons CC 이미지를 가공해 만들었고 출처와 라이선스는 <a href="/projects/ecoguard/demo/CREDITS.txt" target="_blank" rel="noopener noreferrer">CREDITS</a>에 남겼습니다.</p>
             <p>36개 합성 셀의 결과는 TP 11 · FP 1 · FN 1 · TN 23, F1 0.917, IoU 0.846입니다. 별도 4×6 예제에서는 EPSG:32652 좌표, 픽셀 면적, cloud/nodata/shadow, 촬영 시기와 공간 holdout을 검사합니다. 유효 holdout 9셀의 결과는 4/1/1/3입니다.</p>
+            <p>선택형 <a href="https://github.com/soccz/EcoGuard/tree/main/research/forest_xai" target="_blank" rel="noopener noreferrer">연구 트랙</a>은 공개 Sentinel-2 파생 fixture(CC BY 4.0)에서 단일시점 산림피복 CNN을 CPU로 재현 학습해 평가 F1 0.947917을 기록합니다. 작은 capability fixture의 결과로, 산림 변화·훼손 탐지 성능이나 발표 수치의 재현이 아닙니다.</p>
             <p>실제 위성 모델의 정확도나 법적 산림 훼손 판정으로 쓰는 수치는 아닙니다.</p>
           </div>
         </details>
@@ -1624,7 +1626,7 @@
         <ol class="proof-grid" aria-label="기술 주장과 증명 방법">
           <li class="proof-card"><span class="proof-id">E1</span><div><h3>값을 클릭하면 원문까지 돌아갑니다</h3><p>어느 문서의 몇 쪽·몇 번째 줄인지, 어떤 규칙으로 바뀌었는지와 선택하지 않은 후보까지 보존합니다.</p><p class="proof-check"><strong>남긴 것</strong> source span · line/document hash · citation · 검색 점수</p></div></li>
           <li class="proof-card"><span class="proof-id">E2</span><div><h3>계산 중간값과 산림 셀을 숨기지 않았습니다</h3><p>CBAM의 11단계 피연산자와 산림 36셀의 예측·reference를 파일로 남겨 합계와 오차를 따로 확인할 수 있습니다.</p><p class="proof-check"><strong>남긴 것</strong> reconciliation · GeoJSON · SVG · FP/FN</p></div></li>
-          <li class="proof-card"><span class="proof-id">E3</span><div><h3>처음 받은 사람도 같은 결과를 만들 수 있습니다</h3><p>설치한 패키지를 저장소 밖에서 실행하고 174개 테스트를 거쳐 기본 시나리오 11개·별도 평가 6개 결과를 공개본과 byte 단위로 비교합니다.</p><p class="proof-check"><strong>남긴 것</strong> wheel · branch coverage · 결과물 SHA-256 · byte diff</p></div></li>
+          <li class="proof-card"><span class="proof-id">E3</span><div><h3>처음 받은 사람도 같은 결과를 만들 수 있습니다</h3><p>설치한 패키지를 저장소 밖에서 실행하고 174개 core 테스트를 거쳐 기본 시나리오 11개·별도 평가 6개 결과를 공개본과 byte 단위로 비교합니다.</p><p class="proof-check"><strong>남긴 것</strong> wheel · branch coverage · 결과물 SHA-256 · byte diff</p></div></li>
         </ol>
 
         <aside class="legal-review" aria-label="법무 검토 피드백의 범위">
@@ -1637,7 +1639,7 @@
 
         <div class="closing-thesis">
           <p>입력·함수·테스트·산출물의 연결을 직접 확인하세요.</p>
-          <p class="proof-source"><a href="https://github.com/soccz/EcoGuard/blob/v0.5.0/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">GitHub 주장-증거 검증표 열기 ↗</a></p>
+          <p class="proof-source"><a href="https://github.com/soccz/EcoGuard/blob/v0.5.0/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">core v0.5.0 주장-증거 검증표 ↗</a> · <a href="https://github.com/soccz/EcoGuard/blob/main/docs/VALIDATION.md" target="_blank" rel="noopener noreferrer">최신 검증표 · 연구 트랙 포함 ↗</a></p>
         </div>
       </div>
     </section>
@@ -1655,7 +1657,7 @@
         <div class="lesson-grid">
           <article class="lesson-card"><span>01</span><h3>OCR 점수보다 문서 사이의 불일치를 먼저 봤습니다</h3><p>입력 자료부터 정리돼 있지 않다는 말을 듣고, 글자를 읽는 성능보다 서로 다른 단위와 기록을 맞추는 데 더 많은 시간을 썼습니다.</p></article>
           <article class="lesson-card"><span>02</span><h3>검색은 후보를 찾고, 계산은 코드가 맡게 했습니다</h3><p>조문 검색은 관련 근거를 좁히되, 배출량과 비용은 같은 입력이면 언제나 같은 값이 나오도록 역할을 나눴습니다.</p></article>
-          <article class="lesson-card"><span>03</span><h3>발표 기능과 공개 코드를 나누자 다음 일이 보였습니다</h3><p>실데이터 평가, 법률 원문 단위 검색과 위성 모델 검증처럼 아직 하지 못한 일을 구체적인 후속 과제로 남길 수 있었습니다.</p></article>
+          <article class="lesson-card"><span>03</span><h3>발표 기능과 공개 코드를 나누자 다음 일이 보였습니다</h3><p>법률 원문 단위 검색과 실제 변화 탐지 검증처럼 아직 하지 못한 일을 구체적인 후속 과제로 남길 수 있었고, 그중 공개 위성 파생 데이터 평가는 수상 후 선택형 연구 트랙으로 저장소에 추가했습니다.</p></article>
         </div>
       </div>
     </section>
