@@ -632,6 +632,39 @@
     }
     .screen-card figcaption { padding: 17px 19px 19px; color: var(--text); font-size: 0.76rem; }
     .figure-label { display: block; margin-bottom: 5px; color: var(--green-ink); font-size: 0.64rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+    .presentation-gallery { margin-top: 34px; }
+    .subsection-head {
+      margin-bottom: 17px;
+      display: grid;
+      grid-template-columns: minmax(220px, 0.75fr) minmax(0, 1.25fr);
+      gap: 28px;
+      align-items: end;
+    }
+    .subsection-head h3 { margin-top: 9px; color: var(--green-dark); font-size: 1.15rem; }
+    .subsection-head p { margin: 0; color: var(--text); font-size: 0.78rem; line-height: 1.75; }
+    .document-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .document-card { min-width: 0; }
+    .document-stage {
+      min-height: 390px;
+      padding: 13px;
+      display: grid;
+      place-items: center;
+      background: #e8eeea;
+      border-bottom: 1px solid var(--line);
+    }
+    .document-stage img {
+      width: 100%;
+      aspect-ratio: 637 / 900;
+      object-fit: contain;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(29, 62, 50, 0.12);
+    }
+    .presentation-snapshot { margin: 4px 0 34px; }
+    .presentation-snapshot .browser-frame { margin-top: 16px; }
 
     .pipeline {
       margin: 0;
@@ -746,6 +779,7 @@
     .browser-bar { height: 18px; display: flex; align-items: center; gap: 5px; padding: 0 5px 7px; }
     .browser-bar span { width: 6px; height: 6px; background: #9aa9a2; border-radius: 50%; }
     .browser-frame img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 9px; background: #fff; }
+    .browser-frame.contain-frame img { aspect-ratio: auto; object-fit: contain; }
     .single-screen figcaption { margin-top: 13px; color: var(--muted); font-size: 0.7rem; text-align: center; }
     .js .image-button {
       width: 100%;
@@ -1213,7 +1247,9 @@
       .award-facts div { padding: 13px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.16); }
       .award-facts div:last-child { border-bottom: 0; }
       .award-photo img { border-radius: 15px; }
-      .meta-strip, .screen-grid, .proof-grid, .lesson-grid, .forest-figures { grid-template-columns: 1fr; }
+      .meta-strip, .screen-grid, .document-grid, .proof-grid, .lesson-grid, .forest-figures, .subsection-head { grid-template-columns: 1fr; }
+      .subsection-head { gap: 9px; align-items: start; }
+      .document-stage { min-height: 0; padding: 10px; }
       .forest-actions { margin-top: -14px; }
       .forest-artifact-stage { min-height: 250px; padding: 12px; }
       .forest-artifact-stage img { aspect-ratio: 4 / 3; }
@@ -1257,7 +1293,7 @@
       .retrieval-path li, .formula-card span, .formula-card code, .proof-card p,
       .proof-check, .legal-review p, .scope-tag, .scope-card p,
       .lesson-card p, .details-body > p, .module-limit, .forest-demo-note,
-      .forest-baseline-proof p, .forest-baseline-label,
+      .forest-baseline-proof p, .forest-baseline-label, .forest-source-note, .subsection-head p,
       .forest-boundary, .closing-thesis .proof-source, footer {
         font-size: 0.9375rem !important;
       }
@@ -1468,6 +1504,23 @@
             <p>심사 시스템 연계, 규정 갱신과 보완 요청입니다. 하나금융그룹의 채택이나 자동 승인·거절을 뜻하지 않습니다.</p>
           </article>
         </div>
+
+        <div class="presentation-snapshot presentation-gallery" aria-labelledby="demo-flow-title">
+          <div class="subsection-head">
+            <div>
+              <span class="scope-tag sim">발표 데모</span>
+              <h3 id="demo-flow-title">서류 접수부터 보고서까지 여섯 화면으로 이었습니다</h3>
+            </div>
+            <p>최종 발표는 Intake → OCR Parse → CBAM → Satellite → Report → AI Agent 순서로 진행했습니다. 이 화면의 6단계·9개 조항·30분은 제품 흐름을 설명하기 위한 시연값이며, 현재 공개 코드의 성능 수치가 아닙니다.</p>
+          </div>
+          <figure class="single-screen">
+            <div class="browser-frame">
+              <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img data-lightbox src="/projects/ecoguard/assets/presentation-demo-flow.png" width="1280" height="720" loading="lazy" alt="최종 발표 데모의 시작 화면. 왼쪽에는 EU 환경 규제를 서류부터 위성까지 한 번에 검토한다는 설명이 있고, 오른쪽에는 Intake, OCR Parse, CBAM, Satellite, Report, AI Agent의 여섯 단계가 세로로 나열되어 있다.">
+            </div>
+            <figcaption><span class="figure-label">발표 화면 · 전체 흐름</span>수상 발표에서 사용한 합성 시나리오의 입구입니다. 화면에 적힌 단계 수·조항 수·처리시간은 운영 실측값이 아닙니다.</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
@@ -1489,6 +1542,36 @@
             <li><strong>빈칸과 0의 의미가 다름</strong><span>자료가 없는 것과 실제값이 0인 것을 구분해야 합니다.</span></li>
             <li><strong>출처 없는 숫자는 쓸 수 없음</strong><span>어느 파일의 몇 번째 줄인지 모르면 계산 결과를 다시 확인하기 어렵습니다.</span></li>
           </ul>
+        </div>
+
+        <div class="presentation-gallery" aria-labelledby="presentation-docs-title">
+          <div class="subsection-head">
+            <div>
+              <span class="scope-tag sim">발표용 합성 입력</span>
+              <h3 id="presentation-docs-title">같은 거래도 문서마다 다른 정보를 들고 있었습니다</h3>
+            </div>
+            <p>발표에서는 한 거래의 상업송장, CBAM 시트와 공급망 선언서를 따로 만들었습니다. 아래 회사명·주소·식별자·연락처·수치·좌표·도장·서명은 모두 생성한 가상 정보이며 실제 기업·은행 자료나 규제 제출 문서가 아닙니다.</p>
+          </div>
+          <div class="document-grid">
+            <figure class="screen-card document-card">
+              <div class="document-stage">
+                <img data-lightbox src="/projects/ecoguard/assets/presentation-invoice.png" width="637" height="900" loading="lazy" alt="합성 샘플과 제출금지 표시가 있는 발표용 가상 상업송장. 품목, 수량 190톤, 금액과 운송 정보가 표 형식으로 정리되어 있다.">
+              </div>
+              <figcaption><span class="figure-label">합성 입력 01 · Invoice</span>190,000 kg과 190 MT가 함께 적힌 출발 문서입니다. OCR 뒤 단위를 맞추고 다른 문서와 수량을 대조해야 했습니다.</figcaption>
+            </figure>
+            <figure class="screen-card document-card">
+              <div class="document-stage">
+                <img data-lightbox src="/projects/ecoguard/assets/presentation-cbam-sheet.png" width="637" height="900" loading="lazy" alt="합성 샘플과 제출금지 표시가 있는 발표용 가상 CBAM 제품 탄소 데이터 시트. M5와 M12 품목의 배출량, 에너지 사용과 누락 증빙 상태가 표로 표시되어 있다.">
+              </div>
+              <figcaption><span class="figure-label">합성 입력 02 · CBAM sheet</span>제품별 배출량과 에너지 정보 옆에 검증·공급사 계수 같은 누락 근거를 함께 두었습니다. 계산 가능한 값과 보완 대상을 가르는 입력입니다.</figcaption>
+            </figure>
+            <figure class="screen-card document-card">
+              <div class="document-stage">
+                <img data-lightbox src="/projects/ecoguard/assets/presentation-supply-chain.png" width="637" height="900" loading="lazy" alt="합성 샘플과 제출금지 표시가 있는 발표용 가상 공급망 자가확인서. 공급망 점검 항목과 생산지 좌표, 보유 증빙 상태가 표로 표시되어 있다.">
+              </div>
+              <figcaption><span class="figure-label">합성 입력 03 · Supply chain</span>공급망 확인 항목과 생산지 좌표는 EUDR 조문 검색과 산림 검토로 이어졌습니다. 선언만 있는 항목은 확인 완료로 간주하지 않았습니다.</figcaption>
+            </figure>
+          </div>
         </div>
 
         <div class="screen-grid">
@@ -1670,7 +1753,7 @@
               <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
               <img data-lightbox src="/projects/ecoguard/assets/screen-cbam.webp" width="1280" height="720" loading="lazy" alt="EcoGuard CBAM 비용 분석 화면. 배출계수, 품질 점수, 해시 검증과 비용 시뮬레이션 영역이 보인다.">
             </div>
-            <figcaption>Figure 04. 정규화된 입력에서 탄소비용 시나리오까지 이어지는 발표 화면. 수치와 기업 정보는 합성 예시입니다.</figcaption>
+            <figcaption>Figure 04. 정규화된 입력에서 탄소비용 시나리오까지 이어지는 발표 화면. 수치와 기업 정보는 합성 예시이며, 화면의 온체인 표시는 적용 아이디어입니다. 현재 공개 코드는 블록체인 연동이 아니라 파일 해시 검증까지만 재현합니다.</figcaption>
           </figure>
         </div>
       </div>
@@ -1691,6 +1774,31 @@
           <a class="button primary" href="/projects/ecoguard/demo/" target="_blank" rel="noopener noreferrer">발표용 pseudo-360 직접 보기 <span aria-hidden="true">↗</span></a>
           <a class="button" href="https://github.com/soccz/EcoGuard/tree/main/research/forest_xai" target="_blank" rel="noopener noreferrer">재현 코드와 산출물 보기 <span aria-hidden="true">↗</span></a>
           <p class="forest-demo-note">현장 데모의 파노라마·수치·훼손 표시는 발표용 합성 예시이며 실제 모델 출력이나 디지털트윈이 아닙니다.</p>
+        </div>
+
+        <div class="presentation-snapshot" aria-labelledby="satellite-demo-title">
+          <div class="subsection-head">
+            <div>
+              <span class="scope-tag sim">수상 당시 화면</span>
+              <h3 id="satellite-demo-title">판독 결과를 심사자가 읽을 위험 요약으로 바꿨습니다</h3>
+            </div>
+            <p>발표에서는 토지 비율, 연도별 NDVI, 임계값 이탈 시점과 다음 행동을 한 화면에 묶었습니다. 다만 이 화면은 당시 제품 흐름을 보여주는 시뮬레이션이며, 아래 수치는 현재 공개 산림 모델의 평가 결과가 아닙니다.</p>
+          </div>
+          <figure class="single-screen">
+            <div class="browser-frame">
+              <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img data-lightbox src="/projects/ecoguard/assets/screen-report.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 발표 데모의 위성 환경검증 화면. 토지 비율, 2019년부터 2024년까지의 NDVI 하락 그래프, High Risk 판정과 심사 참고 문구가 표시되어 있다.">
+            </div>
+            <figcaption><span class="figure-label">발표 화면 · Satellite review</span>2019–2024 NDVI, 산림 31%p 감소, High Risk와 과징금 문구는 실제 기업·지역·위성 모델 출력이 아닌 합성 시나리오입니다.</figcaption>
+          </figure>
+        </div>
+
+        <div class="subsection-head">
+          <div>
+            <span class="scope-tag built">수상 후 재구성</span>
+            <h3>발표에서 멈춘 두 아이디어를 실행 가능한 산출물로 다시 만들었습니다</h3>
+          </div>
+          <p>왼쪽은 공개 chip을 학습한 작은 GAN의 잠재공간 보간, 오른쪽은 공개 평가 장면과 모델 확률을 합성 높이장 위에 얹은 2.5D 검토 화면입니다. 둘 다 발표 당시 구현의 복구본이 아니라 수상 뒤 새로 만든 재구성입니다.</p>
         </div>
 
         <div class="forest-figures">
@@ -1734,6 +1842,23 @@
             <p>pseudo-360은 위에서 본 지도만으로 현장을 이해하기 어렵다는 피드백에서 출발한 발표용 파노라마입니다. 훼손 구역 이미지는 Wikimedia Commons CC 자료를 가공했으며 출처와 라이선스는 <a href="/projects/ecoguard/demo/CREDITS.txt" target="_blank" rel="noopener noreferrer">CREDITS</a>에 남겼습니다.</p>
           </div>
         </details>
+
+        <div class="presentation-snapshot presentation-gallery" aria-labelledby="trust-report-title">
+          <div class="subsection-head">
+            <div>
+              <span class="scope-tag sim">발표의 마지막 출력</span>
+              <h3 id="trust-report-title">서류·CBAM·공급망·산림 검토를 한 장에 모았습니다</h3>
+            </div>
+            <p>목표는 점수 하나를 보여주는 것이 아니라 어떤 규제 축에서 무엇을 다시 받아야 하는지 정리하는 것이었습니다. 발표 보고서는 이 네 축과 우선 조치를 한 화면으로 묶었고, 현재 공개본은 각 축의 계산·검색·출처 추적을 따로 검증합니다.</p>
+          </div>
+          <figure class="single-screen">
+            <div class="browser-frame contain-frame">
+              <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+              <img data-lightbox src="/projects/ecoguard/assets/presentation-trust-report.png" width="1810" height="894" loading="lazy" alt="EcoGuard 최종 발표의 통합 신뢰 보고서 화면. EUDR 산림전용, CBAM 탄소국경조정, CSDDD 공급망 실사와 최종 우선 이행 조치가 네 개의 카드로 정리되어 있다.">
+            </div>
+            <figcaption><span class="figure-label">발표 화면 · Trust report</span>31%p·4%·7.3억원·127가구·8개 표준·HIGH·P0는 발표용 합성 시나리오 값입니다. 실제 법률 판정, 은행 심사 결과, 자동 승인·거절이나 절감액을 뜻하지 않습니다.</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
