@@ -12,18 +12,18 @@
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:url" content="https://soccz.github.io/projects/ecoguard/">
-  <meta property="og:image" content="https://soccz.github.io/projects/ecoguard/assets/award-day.webp">
-  <meta property="og:image:width" content="1440">
-  <meta property="og:image:height" content="1160">
-  <meta property="og:image:alt" content="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발">
+  <meta property="og:image" content="https://soccz.github.io/projects/ecoguard/assets/ecoguard-social-preview.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="지저분한 수출 서류를 심사할 수 있는 근거로 바꾼 EcoGuard 대상 수상 프로젝트 요약">
   <meta property="article:published_time" content="2026-08-11">
-  <meta property="article:modified_time" content="2026-08-15">
+  <meta property="article:modified_time" content="2026-08-16">
   <meta property="article:section" content="Project case study">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="EcoGuard — 서류에서 심사 자료까지">
   <meta name="twitter:description" content="비정형 수출 서류를 추적 가능한 규제·탄소·산림 심사 근거로 바꾼 3인 팀 프로젝트 제작기">
-  <meta name="twitter:image" content="https://soccz.github.io/projects/ecoguard/assets/award-day.webp">
-  <meta name="twitter:image:alt" content="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발">
+  <meta name="twitter:image" content="https://soccz.github.io/projects/ecoguard/assets/ecoguard-social-preview.png">
+  <meta name="twitter:image:alt" content="지저분한 수출 서류를 심사할 수 있는 근거로 바꾼 EcoGuard 대상 수상 프로젝트 요약">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <title>EcoGuard — 서류에서 심사 자료까지</title>
   <script type="application/ld+json">
@@ -34,14 +34,14 @@
     "description": "비정형 수출 자료를 추적 가능한 규제·탄소·산림 심사 근거로 바꾼 3인 팀 프로젝트 제작기",
     "inLanguage": "ko-KR",
     "datePublished": "2026-08-11",
-    "dateModified": "2026-08-15",
+    "dateModified": "2026-08-16",
     "mainEntityOfPage": "https://soccz.github.io/projects/ecoguard/",
-    "image": "https://soccz.github.io/projects/ecoguard/assets/award-day.webp",
+    "image": "https://soccz.github.io/projects/ecoguard/assets/ecoguard-social-preview.png",
     "author": {
       "@type": "Organization",
       "name": "Team UniHana"
     },
-    "about": ["CBAM", "EUDR", "data provenance", "forest change detection"],
+    "about": ["CBAM", "EUDR", "data provenance", "forest evidence review", "forest XAI"],
     "award": "2026 하나 청년 금융인재 양성 프로젝트 대상"
   }
   </script>
@@ -1329,10 +1329,10 @@
     <div class="nav-inner">
       <a class="brand" href="/" aria-label="soccz 홈으로 이동">soccz.</a>
       <ul class="nav-links">
-        <li><a href="#award">수상</a></li>
         <li><a href="#story" aria-label="문제와 방향 전환">문제</a></li>
         <li><a href="#evidence" aria-label="원자료와 데이터 처리">데이터</a></li>
         <li><a href="#technology" aria-label="규정 검색과 CBAM 계산">규정</a></li>
+        <li><a href="#forest" aria-label="산림 분석과 수상 후 재구성">산림</a></li>
         <li><a href="#proof">검증</a></li>
       </ul>
     </div>
@@ -1351,7 +1351,7 @@
               세 달 동안 서로 다른 문서의 값을 맞추고, 선택한 값의 출처를 끝까지 남기는 흐름으로 프로젝트를 바꿨습니다.
             </p>
             <div class="status">2026 하나 청년 금융인재 양성 프로젝트 대상 · 교육·경진 PoC</div>
-            <div class="hero-actions" aria-label="프로젝트 자료">
+            <div class="hero-actions" role="group" aria-label="프로젝트 자료">
               <a class="button primary" href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">재현 코드 보기 <span aria-hidden="true">↗</span></a>
               <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">공개 case study · 4쪽 <span aria-hidden="true">↓</span></a>
             </div>
@@ -1374,12 +1374,12 @@
             </div>
           </aside>
         </div>
-        <p class="hero-proof-label">대회에서는 제품의 전체 흐름을, 공개 v0.6.0에서는 다시 실행할 수 있는 핵심 기술을 보여줍니다.</p>
-        <div class="hero-facts" role="list" aria-label="현재 공개 재현 코드의 핵심 정보">
+        <p class="hero-proof-label">발표에서는 여섯 화면의 제품 흐름을 보여줬고, v0.6.0에는 문서 정리부터 조문·CBAM·산림 검토까지 다시 실행할 수 있게 담았습니다.</p>
+        <div class="hero-facts" role="list" aria-label="공개 코드의 처리 흐름과 결과">
           <div class="fact" role="listitem"><strong>7</strong><span>합성 입력 문서</span></div>
-          <div class="fact" role="listitem"><strong>37</strong><span>원문 라인</span></div>
-          <div class="fact" role="listitem"><strong>CI</strong><span>자동·속성 기반 core 검증</span></div>
-          <div class="fact" role="listitem"><strong>17</strong><span>재생성 결과물</span></div>
+          <div class="fact" role="listitem"><strong>37→26</strong><span>37줄 → 후보 30개 → 필드 26개</span></div>
+          <div class="fact" role="listitem"><strong>3축</strong><span>조문 · CBAM · 산림 검토</span></div>
+          <div class="fact" role="listitem"><strong>17</strong><span>재생성·바이트 비교 결과물</span></div>
         </div>
       </div>
     </header>
@@ -1425,13 +1425,14 @@
             <p class="section-desc">
               CBAM과 EUDR 검토에는 생산·에너지·원산지 자료가 필요하지만, 기업 자료는 규제 양식대로 정리돼 있지 않습니다.
               팀은 은행이 수출 거래를 심사할 때 먼저 “이 자료를 믿고 다음 판단을 내려도 되는가”를 확인해야 한다고 가정했습니다.
+              기업 대신 규제 서류를 작성하기보다, 은행이 이미 받은 자료를 검토 가능한 근거 묶음으로 바꾸는 층에 초점을 맞췄습니다.
             </p>
           </div>
-          <aside class="thesis-card" aria-label="심사자가 확인할 네 가지 질문">
+          <div class="thesis-card" role="group" aria-label="심사자가 확인할 네 가지 질문">
             <span class="thesis-label">심사자가 확인할 네 가지</span>
             <blockquote>어느 문서에서 왔나<br>단위와 기간이 맞나<br>다른 문서와 충돌하나<br>무엇을 다시 받아야 하나</blockquote>
             <p>EcoGuard는 이 네 질문에 답할 수 있도록 값 옆에 원문 위치, 변환 규칙, 적용 조항과 계산 과정을 남겼습니다.</p>
-          </aside>
+          </div>
         </div>
 
         <div class="meta-strip" role="list" aria-label="프로젝트 범위 요약">
@@ -1440,7 +1441,7 @@
           <div class="meta-item" role="listitem"><strong>최종 산출물</strong><span>기술 PoC · 발표 프로토타입 · 재현 코드 · 프로젝트 보고</span></div>
         </div>
 
-        <div class="decision-flow" aria-label="EcoGuard가 가정한 은행 심사 흐름">
+        <div class="decision-flow" role="group" aria-label="EcoGuard가 가정한 은행 심사 흐름">
           <div class="decision-input"><strong>기업 제출자료를 근거 묶음으로 변환</strong><span>정규화 값 · EU 조문 · CBAM trace · 산림 변화 신호</span></div>
           <div class="decision-arrow" aria-hidden="true">→</div>
           <div class="decision-results">
@@ -1453,7 +1454,7 @@
       </div>
     </section>
 
-    <section class="alt" aria-labelledby="evolution-title">
+    <section id="evolution" class="alt" aria-labelledby="evolution-title">
       <div class="container">
         <div class="section-head">
           <p class="section-kicker">03 · 방향 전환</p>
@@ -1485,27 +1486,27 @@
     <section id="boundary" class="paper scope-section" aria-labelledby="boundary-title">
       <div class="container">
         <div class="section-head">
-          <p class="section-kicker">04 · 공개 범위</p>
-          <h2 id="boundary-title">발표한 것과 공개한 것을<br>나눠 적었습니다</h2>
-          <p class="section-desc">대회에서는 제품의 전체 흐름을 시연했고, 지금은 그중 다시 실행해 확인할 수 있는 기술만 코드로 공개했습니다. 이후 화면과 수치는 아래 세 범주로 읽으면 됩니다.</p>
+          <p class="section-kicker">04 · 페이지 읽는 법</p>
+          <h2 id="boundary-title">같은 프로젝트 안에서도<br>확인할 수 있는 수준은 달랐습니다</h2>
+          <p class="section-desc">그래서 이후의 모든 화면을 세 표지로 나눴습니다. 지금 다시 실행되는 코드, 수상 발표에서 보여 준 합성 시뮬레이션, 아직 업무 적용을 가정한 아이디어입니다.</p>
         </div>
 
         <div class="scope-cards">
           <article class="scope-card">
             <span class="scope-tag built">재현 코드</span><h3>지금 실행해 확인할 수 있는 것</h3>
-            <p>문서 정규화와 출처 추적, 조문 검색, CBAM 계산, 합성 NDVI·공간정보 평가, 그리고 선택형 연구 트랙의 공개 Sentinel-2 파생 단일시점 산림피복 CNN입니다. 운영 데이터 성능이나 규제 준수를 보장하지 않습니다.</p>
+            <p>문서 정규화·출처 추적, 조문 검색, CBAM 계산, 합성 NDVI·공간정보 평가와 공개 위성 파생 데이터의 단일시점 산림피복 CNN은 저장소에서 다시 실행됩니다. 운영 데이터 성능이나 규제 준수를 보장하지는 않습니다.</p>
           </article>
           <article class="scope-card">
             <span class="scope-tag sim">발표 시뮬레이션</span><h3>수상 당시 보여준 제품 흐름</h3>
-            <p>합성 사례 기반 문서 접수, 위험 요약과 pseudo-360 화면입니다. 상용 서비스나 실제 기업·은행 데이터 처리 결과가 아닙니다.</p>
+            <p>수상 발표에서는 합성 사례의 서류 접수, 위험 요약과 pseudo-360까지 하나의 제품 흐름으로 연결했습니다. 여기에 공개한 화면과 수치는 실제 기업·은행 데이터 처리 결과가 아닙니다.</p>
           </article>
           <article class="scope-card">
             <span class="scope-tag idea">적용 가설</span><h3>후속 업무로 제안한 것</h3>
-            <p>심사 시스템 연계, 규정 갱신과 보완 요청입니다. 하나금융그룹의 채택이나 자동 승인·거절을 뜻하지 않습니다.</p>
+            <p>심사 시스템 연계, 규정 갱신과 보완 요청 자동화는 다음 단계로 제안했습니다. 실제 도입·채택이나 자동 승인·거절 기능을 뜻하지 않습니다.</p>
           </article>
         </div>
 
-        <div class="presentation-snapshot presentation-gallery" aria-labelledby="demo-flow-title">
+        <div class="presentation-snapshot presentation-gallery" role="group" aria-labelledby="demo-flow-title">
           <div class="subsection-head">
             <div>
               <span class="scope-tag sim">발표 데모</span>
@@ -1544,7 +1545,7 @@
           </ul>
         </div>
 
-        <div class="presentation-gallery" aria-labelledby="presentation-docs-title">
+        <div class="presentation-gallery" role="group" aria-labelledby="presentation-docs-title">
           <div class="subsection-head">
             <div>
               <span class="scope-tag sim">발표용 합성 입력</span>
@@ -1587,7 +1588,7 @@
       </div>
     </section>
 
-    <section class="paper" aria-labelledby="ocr-title">
+    <section id="ocr" class="paper" aria-labelledby="ocr-title">
       <div class="container">
         <div class="section-head">
           <p class="section-kicker">06 · OCR 이후 데이터 처리</p>
@@ -1599,17 +1600,17 @@
         </div>
 
         <ol class="evidence-flow" aria-label="공개 합성 문서 처리 수치">
-          <li><strong>7</strong><span>synthetic documents</span></li>
-          <li><strong>37</strong><span>source lines</span></li>
-          <li><strong>30</strong><span>matched candidates</span></li>
-          <li><strong>26</strong><span>normalized fields</span></li>
+          <li><strong>7</strong><span>합성 문서</span></li>
+          <li><strong>37</strong><span>원문 줄</span></li>
+          <li><strong>30</strong><span>찾은 값 후보</span></li>
+          <li><strong>26</strong><span>정규화한 필드</span></li>
         </ol>
-        <div class="review-strip" aria-label="전처리 검토 결과">
-          <span class="review-chip alert">3 review issues · high 1 / review 2</span>
-          <span class="review-chip">1 within-tolerance observation</span>
-          <span class="review-chip">span · line hash · document hash · authority rank</span>
+        <div class="review-strip" role="group" aria-label="전처리 검토 결과">
+          <span class="review-chip alert">검토 이슈 3건 · 높음 1 / 확인 2</span>
+          <span class="review-chip">허용 범위 안 관찰 1건</span>
+          <span class="review-chip">원문 위치 · 줄 해시 · 문서 해시 · 문서 우선순위</span>
         </div>
-        <div class="case-example" aria-label="출하량 190톤을 선택하고 충돌을 남기는 전처리 예시">
+        <div class="case-example" role="group" aria-label="출하량 190톤을 선택하고 충돌을 남기는 전처리 예시">
           <div>
             <h3>같은 출하량이 세 가지로 들어왔습니다</h3>
             <p>인보이스에는 <strong>190,000 kg</strong>, 패킹리스트에는 <strong>190 MT</strong>, 담당자 메모에는 <strong>“약 191톤? 재확인 필요”</strong>라고 적혀 있습니다.</p>
@@ -1662,14 +1663,14 @@
               <p class="section-kicker">07 · EU 조문 검색</p>
               <h2>답변을 만들기 전에<br>관련 조문부터 찾았습니다</h2>
               <p class="section-desc">
-                앞 단계에서 발견한 “원산지 좌표 누락” 같은 이슈를 검색 질문으로 바꾸고, 관련 CBAM·EUDR 조문과
-                더 받아야 할 자료를 함께 보여줍니다. 현재 공개본은 생성형 법률 답변이 아니라 키워드 기반 조문 검색·출처 표시 기준선이며,
-                관련 없는 질문에는 답하지 않습니다.
+                앞 단계에서 찾은 “원산지 좌표 누락”을 검색 질문으로 바꿉니다. 공개 코드는 법률 답변을 생성하지 않습니다.
+                키워드로 후보 조문을 좁힌 뒤 Article·paragraph와 공식 출처를 보여주고, 추가로 받아야 할 자료를 따로 적습니다.
+                관련 근거가 없는 질문에는 결과를 내지 않습니다.
               </p>
             </div>
             <ol class="feature-list">
-              <li><span class="feature-index">01</span><div><h3>누락·충돌을 검색 질문으로 변환</h3><p>현재 문제를 어떤 의무의 어떤 필드가 비었는지로 바꿉니다.</p></div></li>
-              <li><span class="feature-index">02</span><div><h3>조문과 보완 자료를 함께 표시</h3><p>Article과 paragraph 범위, 현재 문제와 추가로 받아야 할 자료를 나눠 보여줍니다.</p></div></li>
+              <li><span class="feature-index">01</span><div><h3>누락·충돌을 검색 질문으로 변환</h3><p>현재 문제를 “어느 의무에서 어떤 자료가 비었는가”라는 검색어로 바꿉니다.</p></div></li>
+              <li><span class="feature-index">02</span><div><h3>조문과 보완 자료를 함께 표시</h3><p>Article·paragraph 범위, 출처, 빠진 자료와 다음 행동을 나눠 보여줍니다.</p></div></li>
             </ol>
             <details class="tech-details">
               <summary>평가 구성과 검색 수치 보기</summary>
@@ -1677,13 +1678,13 @@
                 <ol class="retrieval-path" aria-label="법률 검색 단위">
                   <li>규정 문서</li><li>Article</li><li>Paragraph 범위</li><li>요구사항</li><li>보완 행동</li>
                 </ol>
-                <div class="metric-board" aria-label="법률 검색 고정 평가셋과 결과">
+                <div class="metric-board" role="group" aria-label="법률 검색 고정 평가셋과 결과">
                   <p class="metric-board-title">팀 작성 회귀 사례 · 34 cases · k=3</p>
                   <div class="metric-row" role="list">
                     <div class="metric-cell" role="listitem"><strong>1.0</strong><span>Recall@3</span></div>
                     <div class="metric-cell" role="listitem"><strong>1.0</strong><span>MRR</span></div>
                     <div class="metric-cell" role="listitem"><strong>1.0</strong><span>무관 질문 기권</span></div>
-                    <div class="metric-cell" role="listitem"><strong>0</strong><span>잘못된 근거·규정 혼입</span></div>
+                    <div class="metric-cell" role="listitem"><strong>0</strong><span>무관 질문 근거 생성·규정 혼입</span></div>
                   </div>
                   <div class="case-mix" role="img" aria-label="34개 평가 사례 중 positive 16개, distractor 8개, hard-negative 10개">
                     <span class="positive">관련 16</span>
@@ -1691,7 +1692,7 @@
                     <span class="negative">무관 10</span>
                   </div>
                 </div>
-                <p>CBAM·EUDR 8개 조문 레코드를 대상으로 개발 사례 34건과, 개발 중 보지 않은 표현을 따로 모은 36건을 실행합니다. 모두 팀이 작성했으며 외부 기관의 독립 평가가 아닙니다. 공식 원문은 <a href="https://eur-lex.europa.eu/eli/reg/2023/956/oj" target="_blank" rel="noopener noreferrer">CBAM Regulation (EU) 2023/956</a>과 <a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj" target="_blank" rel="noopener noreferrer">EUDR Regulation (EU) 2023/1115</a>에서 확인할 수 있습니다.</p>
+                <p>CBAM·EUDR 8개 조문 레코드를 대상으로 개발 사례 34건과, 개발셋과 분리해 나중에 작성한 팀 내부 평가(blind-style) 36건을 실행합니다. 모두 팀이 작성했으며 외부 기관의 독립 평가가 아닙니다. 공식 원문은 <a href="https://eur-lex.europa.eu/eli/reg/2023/956/oj" target="_blank" rel="noopener noreferrer">CBAM Regulation (EU) 2023/956</a>과 <a href="https://eur-lex.europa.eu/eli/reg/2023/1115/oj" target="_blank" rel="noopener noreferrer">EUDR Regulation (EU) 2023/1115</a>에서 확인할 수 있습니다.</p>
                 <p>paragraph는 조문에 붙인 범위 정보이며 항별 원문 전체를 잘라 둔 청크가 아닙니다.</p>
               </div>
             </details>
@@ -1717,18 +1718,19 @@
               </p>
             </div>
             <ul class="feature-list">
-              <li><span class="feature-index">01</span><div><h3>계산 가능한 값 선별</h3><p>누락·충돌·출처 오류가 있는 값은 산식에 들어가기 전에 멈춥니다.</p></div></li>
+              <li><span class="feature-index">01</span><div><h3>계산 가능한 값 선별</h3><p>필수 계산값이나 출처 이력 검증이 실패하면 중단하고, 선택 가능한 충돌은 대안과 검토 상태로 남깁니다.</p></div></li>
               <li><span class="feature-index">02</span><div><h3>11단계 계산 이력</h3><p>M5·M12를 공정·전구물질 × 직접·간접 배출로 풀고 피연산자 출처를 남깁니다.</p></div></li>
               <li><span class="feature-index">03</span><div><h3>두 방향으로 합계 확인</h3><p>직접/간접과 공정/전구물질 기준으로 더한 총량이 같은지 검사합니다.</p></div></li>
             </ul>
             <details class="tech-details">
               <summary>11단계 산식과 규정 대응 범위 보기</summary>
               <div class="details-body">
-                <div class="formula-card" aria-label="CBAM 계산 흐름의 개념식">
+                <div class="formula-card" role="group" aria-label="CBAM 계산 흐름의 개념식">
                   <span>계산 흐름</span>
                   <code><em>구성요소 배출량</em> = 품목 중량 × 구성요소별 내재배출량<br><em>총 내재배출량</em> = sum(공정/전구물질 × 직접/간접 배출)<br><em>유효 가격</em> = max(인증서 가격 − 제3국 지불 탄소가격, 0)<br><em>분석 시나리오 노출액</em> = 내재배출량 × 분석자 정의 노출계수 × 유효 가격</code>
                 </div>
-                <div class="reconcile-board" aria-label="CBAM 구성요소의 두 축 대사">
+                <p>문서에서 확인한 값과 가격·노출계수 같은 분석 가정은 별도 assumption ID로 구분합니다.</p>
+                <div class="reconcile-board" role="group" aria-label="CBAM 구성요소의 두 축 대사">
                   <h3>두 축 검산 · 총 1,111.36 tCO2e</h3>
                   <div class="axis-row">
                     <span class="axis-label">배출 유형</span>
@@ -1743,7 +1745,7 @@
                   </div>
                   <div class="axis-legend"><span><i style="background:#39c8a2"></i>공정</span><span><i style="background:#74a99a"></i>전구물질</span></div>
                 </div>
-                <p>M5 502.56과 M12 608.80을 합치면 1,111.36 tCO2e입니다. EUR-Lex 원문과 대조한 요구사항 15개 중 현재 대응은 부분 8·미구현 7·완전 구현 0입니다.</p>
+                <p>M5 502.56과 M12 608.80을 합치면 1,111.36 tCO2e입니다. 2026-08-12 확인 기준, EUR-Lex 원문과 대조한 요구사항 15개 중 현재 대응은 부분 8·미구현 7·완전 구현 0입니다.</p>
               </div>
             </details>
             <p class="module-limit">공개 예제의 결정론적 기술 기준선이며 실제 신고액이나 납부액을 산정하는 도구는 아닙니다.</p>
@@ -1759,14 +1761,14 @@
       </div>
     </section>
 
-    <section class="paper" aria-labelledby="forest-title">
+    <section id="forest" class="paper" aria-labelledby="forest-title">
       <div class="container">
         <div class="section-head">
           <p class="section-kicker">09 · 산림 분석과 현장 확인</p>
-          <h2 id="forest-title">시도는 남기고,<br>증명 범위는 나눴습니다</h2>
+          <h2 id="forest-title">발표에서 시도한 두 방향을<br>수상 후 다시 만들었습니다</h2>
           <p class="section-desc">
-            대회 때는 GAN의 잠재공간을 오가며 산림 장면을 실사풍으로 잇고, z축 표현을 더해 변화 위치를 현장처럼 읽히게 만드는 방향을 시도했습니다. 발표 화면은 남았지만 같은 결과를 다시 만들 코드와 가중치는 남아 있지 않습니다.
-            그래서 수상 뒤에는 아이디어의 핵심을 공개 데이터로 처음부터 다시 만들었습니다. 현재 GitHub에는 검증 가능한 단일시점 산림피복 CNN·Grad-CAM과 아래 두 재구성 경로가 서로 섞이지 않게 나뉘어 있습니다. 이는 당시 성능을 되살렸다는 뜻이 아니라, 당시 방향을 지금 실행할 수 있는 코드로 바꾼 후속 실험입니다.
+            대회 때 산림 파트에는 서로 다른 두 보간 아이디어가 있었습니다. 하나는 GAN의 잠재벡터 z0→z1을 보간해 산림 장면을 이어 보려는 실험이었고, 다른 하나는 평면 위성 화면에 별도의 높이 축을 더해 변화 위치를 현장형 화면으로 보는 표현이었습니다. 발표 화면은 남았지만 같은 결과를 되살릴 코드와 가중치는 남아 있지 않습니다.
+            수상 후에는 이를 완성된 HiGAN이나 3D 복원으로 부르지 않고, 공개 데이터로 핵심 메커니즘부터 다시 만들었습니다. GitHub에는 ① 단일시점 산림피복 CNN·Grad-CAM, ② tiny GAN의 z0→z1 보간, ③ 합성 높이장 기반 2.5D 화면이 서로 다른 검증 경로로 나뉘어 있습니다. 당시 성능을 복구한 것이 아니라, 당시 아이디어를 지금 실행할 수 있게 만든 후속 실험입니다.
           </p>
         </div>
 
@@ -1776,7 +1778,7 @@
           <p class="forest-demo-note">현장 데모의 파노라마·수치·훼손 표시는 발표용 합성 예시이며 실제 모델 출력이나 디지털트윈이 아닙니다.</p>
         </div>
 
-        <div class="presentation-snapshot" aria-labelledby="satellite-demo-title">
+        <div class="presentation-snapshot" role="group" aria-labelledby="satellite-demo-title">
           <div class="subsection-head">
             <div>
               <span class="scope-tag sim">수상 당시 화면</span>
@@ -1806,13 +1808,13 @@
             <div class="forest-artifact-stage">
               <img data-lightbox class="latent-preview" src="/projects/ecoguard/assets/forest-latent-interpolation.png" width="1048" height="520" loading="lazy" alt="공개 Sentinel-2 파생 chip으로 수상 후 학습한 작은 GAN이 고정된 두 잠재벡터 사이를 여덟 단계로 보간해 만든 4열 2행의 합성 장면. 녹색과 어두운 영역의 모양이 단계마다 이어져 변한다.">
             </div>
-            <figcaption><span class="figure-label">Figure 05 · Latent scene transition</span>발표에서 시도한 잠재공간 보간을 수상 후 다시 만든 여덟 장면입니다. 실사 품질이나 HiGAN 재현을 뜻하지 않습니다.</figcaption>
+            <figcaption><span class="figure-label">Figure 05 · Latent scene transition</span>공개 학습용 위성 chip으로 수상 후 학습한 작은 GAN이 z0→z1을 8단계로 잇습니다. 당시 모델이나 HiGAN의 복구본이 아니라 보간 메커니즘을 확인한 결과입니다.</figcaption>
           </figure>
           <figure class="screen-card forest-artifact-card">
             <div class="forest-artifact-stage">
               <img data-lightbox class="terrain-preview" src="/projects/ecoguard/assets/forest-2_5d-drape.png" width="960" height="640" loading="lazy" alt="공개 Sentinel-2 파생 RGB와 산림 확률을 합성 높이장 위에 얹어 투시해 본 수상 후 2.5D 시각화. 실제 지형 고도를 나타내지 않는다.">
             </div>
-            <figcaption><span class="figure-label">Figure 06 · Height-field review view</span>공개 평가 장면 S2-EV-003의 RGB와 모델 산림 확률을 높낮이 있는 검토 화면으로 바꿔 봤습니다. 실제 지형을 나타내는 화면은 아닙니다.</figcaption>
+            <figcaption><span class="figure-label">Figure 06 · Height-field review view</span>공개 평가 장면 S2-EV-003의 RGB와 모델 확률을 합성 높이장 위에 얹었습니다. 실제 지형 고도나 위성 기반 3D 복원은 아닙니다.</figcaption>
           </figure>
         </div>
 
@@ -1823,27 +1825,27 @@
           EcoGuard는 공개 mirror에서 선택한 chip을 64×64로 축소·정규화했습니다. Figure 05는 그 데이터로 학습한 GAN의 합성 출력이고, Figure 06은 평가 chip·모델 확률을 합성 높이에 얹어 변형한 시각화입니다.
         </p>
 
-        <aside class="forest-baseline-proof" aria-label="현재 공개 검증 기준선">
+        <div class="forest-baseline-proof" role="group" aria-label="현재 공개 검증 기준선">
           <img data-lightbox src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 나누어 표시한다.">
           <div>
             <span class="forest-baseline-label">현재 검증 기준선</span>
             <h3>재구성 실험 아래에는 다시 계산되는 비교표가 있습니다</h3>
-            <p>기본 공개본은 36개 합성 셀의 예측과 reference를 TP 11 · FP 1 · FN 1 · TN 23으로 직접 나눕니다. 발표용 산림 보고 화면은 이 계산을 심사자가 읽는 변화량·임계값·관찰 소견으로 정리한 UI였습니다.</p>
+            <p>기본 공개본은 36개 합성 셀의 예측과 reference를 TP 11 · FP 1 · FN 1 · TN 23으로 직접 나눕니다. 발표용 산림 보고 화면도 변화량·임계값·관찰 소견을 보여줬지만, 현재 36셀 기준선과는 입력·모델·수치가 다른 발표 시뮬레이션입니다.</p>
           </div>
-        </aside>
+        </div>
 
         <details class="tech-details">
           <summary>검증 수치와 GAN·JVP·2.5D의 정확한 범위 보기</summary>
           <div class="details-body">
             <p><strong>먼저 다시 검증한 것.</strong> dependency-free 기준선은 6×6 합성 red/NIR 셀에서 NDVI 변화 마스크를 reference와 비교해 TP 11 · FP 1 · FN 1 · TN 23, F1 0.917, IoU 0.846을 냅니다. 별도 공간 예제는 좌표계·픽셀 면적·cloud/nodata/shadow·촬영 시기와 holdout까지 검사합니다.</p>
-            <p><strong>실제 공개 영상으로 확인한 것.</strong> 선택형 연구 트랙은 공개 Sentinel-2 파생 fixture(CC BY 4.0)에서 단일시점 산림피복 CNN을 CPU로 재현 학습하고 Grad-CAM을 생성합니다. 평가 F1 0.947917은 작은 capability fixture의 값이며, 전후 변화나 훼손 탐지 정확도가 아닙니다.</p>
+            <p><strong>공개 위성 파생 데이터로 확인한 것.</strong> 선택형 연구 트랙은 공개 Sentinel-2 파생 fixture(CC BY 4.0)에서 단일시점 산림피복 CNN을 CPU로 재현 학습하고 Grad-CAM을 생성합니다. 평가 F1 0.947917은 작은 capability fixture의 값이며, 전후 변화나 훼손 탐지 정확도가 아닙니다. 이 fixture는 공개 mirror의 특정 행과 hash를 고정한 것으로, 원 Zenodo archive와 모든 수치 표현이 동일하다고 주장하지 않습니다.</p>
             <p><strong>발표 아이디어를 수상 후 다시 만든 것.</strong> 공개 train chip으로 tiny GAN을 학습한 뒤 고정된 z0→z1을 8단계로 보간하고, 각 프레임에 대한 산림피복 CNN의 반응과 중간점의 정확한 JVP를 남겼습니다. 별도 2.5D 경로는 64×64 합성 높이·확률장을 33×33 mesh(정점 1,089개·면 1,024개)로 바꿔 공개 RGB와 함께 렌더링합니다. checkpoint·JSON·이미지·기계 판독용 배열의 hash와 재학습 방법은 <a href="https://github.com/soccz/EcoGuard/blob/v0.6.0/research/forest_xai/RECONSTRUCTION_CARD.md" target="_blank" rel="noopener noreferrer">재구성 카드</a>에서 확인할 수 있습니다.</p>
             <div class="forest-boundary"><strong>넘지 않는 선.</strong> 이 산출물은 대회 당시 코드의 복구본, 특정 HiGAN 구현, 발표의 83.4%→96.2%, 실사 생성 품질, 실제 전후 산림변화 또는 위성영상에서 복원한 고도·3D를 증명하지 않습니다.</div>
             <p>pseudo-360은 위에서 본 지도만으로 현장을 이해하기 어렵다는 피드백에서 출발한 발표용 파노라마입니다. 훼손 구역 이미지는 Wikimedia Commons CC 자료를 가공했으며 출처와 라이선스는 <a href="/projects/ecoguard/demo/CREDITS.txt" target="_blank" rel="noopener noreferrer">CREDITS</a>에 남겼습니다.</p>
           </div>
         </details>
 
-        <div class="presentation-snapshot presentation-gallery" aria-labelledby="trust-report-title">
+        <div class="presentation-snapshot presentation-gallery" role="group" aria-labelledby="trust-report-title">
           <div class="subsection-head">
             <div>
               <span class="scope-tag sim">발표의 마지막 출력</span>
@@ -1874,18 +1876,18 @@
         </div>
 
         <ol class="proof-grid" aria-label="기술 주장과 증명 방법">
-          <li class="proof-card"><span class="proof-id">E1</span><div><h3>값을 클릭하면 원문까지 돌아갑니다</h3><p>어느 문서의 몇 쪽·몇 번째 줄인지, 어떤 규칙으로 바뀌었는지와 선택하지 않은 후보까지 보존합니다.</p><p class="proof-check"><strong>남긴 것</strong> source span · line/document hash · citation · 검색 점수</p></div></li>
+          <li class="proof-card"><span class="proof-id">E1</span><div><h3>결과에서 원문까지 거슬러 올라갑니다</h3><p>어느 문서의 몇 쪽·몇 번째 줄인지, 어떤 규칙으로 바뀌었는지와 선택하지 않은 후보까지 보존합니다.</p><p class="proof-check"><strong>남긴 것</strong> source span · line/document hash · citation · 검색 점수</p></div></li>
           <li class="proof-card"><span class="proof-id">E2</span><div><h3>계산 중간값과 산림 셀을 숨기지 않았습니다</h3><p>CBAM의 11단계 피연산자와 산림 36셀의 예측·reference를 파일로 남겨 합계와 오차를 따로 확인할 수 있습니다.</p><p class="proof-check"><strong>남긴 것</strong> reconciliation · GeoJSON · SVG · FP/FN</p></div></li>
           <li class="proof-card"><span class="proof-id">E3</span><div><h3>처음 받은 사람도 같은 결과를 만들 수 있습니다</h3><p>설치한 패키지를 저장소 밖에서 실행하고 자동·속성 기반 core 테스트를 거쳐 기본 시나리오 11개·별도 평가 6개 결과를 공개본과 byte 단위로 비교합니다.</p><p class="proof-check"><strong>남긴 것</strong> wheel · branch coverage · 결과물 SHA-256 · byte diff</p></div></li>
         </ol>
 
-        <aside class="legal-review" aria-label="법무 검토 피드백의 범위">
+        <div class="legal-review" role="group" aria-label="법무 검토 피드백의 범위">
           <h3>법무 관점에서 받은 피드백</h3>
           <p>
             원자료를 규제 문서 구조로 정리하고, 누락을 관련 조문과 보완 요청으로 잇는 방향이 실제 검토 업무에 의미 있다는 의견을 받았습니다.
             프로젝트 과정의 비공개 피드백이며 법률 자문이나 정확성 인증은 아닙니다.
           </p>
-        </aside>
+        </div>
 
         <div class="closing-thesis">
           <p>입력·함수·테스트·산출물의 연결을 직접 확인하세요.</p>
@@ -1912,12 +1914,12 @@
       </div>
     </section>
 
-    <section class="outro" aria-labelledby="outro-title">
+    <section id="outro" class="outro" aria-labelledby="outro-title">
       <div class="outro-inner">
         <p class="section-kicker">EcoGuard · 전체 자료</p>
         <h2 id="outro-title">전체 흐름은 이 페이지에,<br>재현 절차는 GitHub에 남겼습니다</h2>
         <p>실행 방법·테스트·산출물은 GitHub에, 네 달의 문제 정의와 방향 전환은 4쪽 case study에도 압축해 정리했습니다.</p>
-        <div class="hero-actions" aria-label="프로젝트 최종 자료">
+        <div class="hero-actions" role="group" aria-label="프로젝트 최종 자료">
           <a class="button primary" href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">GitHub 저장소 <span aria-hidden="true">↗</span></a>
           <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">공개 case study · 4쪽 <span aria-hidden="true">↓</span></a>
         </div>
