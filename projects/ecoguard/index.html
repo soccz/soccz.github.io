@@ -17,7 +17,7 @@
   <meta property="og:image:height" content="1160">
   <meta property="og:image:alt" content="하나 청년 금융인재 양성 프로젝트 대상 수상 보드와 꽃다발">
   <meta property="article:published_time" content="2026-08-11">
-  <meta property="article:modified_time" content="2026-08-12">
+  <meta property="article:modified_time" content="2026-08-15">
   <meta property="article:section" content="Project case study">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="EcoGuard — 서류에서 심사 자료까지">
@@ -34,7 +34,7 @@
     "description": "비정형 수출 자료를 추적 가능한 규제·탄소·산림 심사 근거로 바꾼 3인 팀 프로젝트 제작기",
     "inLanguage": "ko-KR",
     "datePublished": "2026-08-11",
-    "dateModified": "2026-08-12",
+    "dateModified": "2026-08-15",
     "mainEntityOfPage": "https://soccz.github.io/projects/ecoguard/",
     "image": "https://soccz.github.io/projects/ecoguard/assets/award-day.webp",
     "author": {
@@ -76,7 +76,7 @@
       --paper: #fffefa;
       --ink: #101815;
       --text: #46544f;
-      --muted: #66726d;
+      --muted: #64706b;
       --line: #d6dfda;
       --line-strong: #aec1b8;
       --green: #008e71;
@@ -838,7 +838,94 @@
     .formula-card code { display: block; margin-top: 10px; font-family: var(--mono); font-size: 0.74rem; line-height: 1.75; white-space: normal; }
     .formula-card em { color: #cae4da; font-style: normal; }
 
-    .forest-figures { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .forest-figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .forest-actions {
+      margin: -18px 0 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .forest-demo-note {
+      flex: 1 1 100%;
+      margin: -2px 0 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+    .forest-artifact-card { min-width: 0; }
+    .forest-artifact-stage {
+      min-height: 300px;
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(84, 178, 144, 0.23), transparent 45%),
+        #10251e;
+    }
+    .forest-artifact-stage img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: contain;
+      background: transparent;
+    }
+    .forest-artifact-stage img.latent-preview { aspect-ratio: 1048 / 520; }
+    .forest-artifact-stage img.terrain-preview { aspect-ratio: 3 / 2; }
+    .js .forest-artifact-stage .image-button {
+      width: 100%;
+      padding: 0;
+      display: block;
+      background: transparent;
+      border: 0;
+      cursor: zoom-in;
+    }
+    .forest-boundary {
+      margin: 16px 0 0;
+      padding: 16px 18px;
+      color: var(--text);
+      background: var(--bg-soft);
+      border-left: 4px solid var(--green);
+      border-radius: 0 9px 9px 0;
+      font-size: 0.78rem;
+    }
+    .forest-boundary strong { color: var(--green-dark); }
+    .forest-source-note {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+      line-height: 1.75;
+    }
+    .forest-source-note a { color: var(--green-dark); font-weight: 700; }
+    .forest-baseline-proof {
+      margin-top: 18px;
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      background: var(--green-soft);
+      border: 1px solid #beddd2;
+      border-radius: 12px;
+    }
+    .forest-baseline-proof img {
+      width: 100%;
+      max-height: 124px;
+      object-fit: contain;
+    }
+    .forest-baseline-proof h3 { color: var(--green-dark); }
+    .forest-baseline-proof p {
+      margin: 5px 0 0;
+      color: var(--text);
+      font-size: 0.76rem;
+    }
+    .forest-baseline-label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--green-ink);
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
 
     .proof-grid {
       margin: 0;
@@ -1027,10 +1114,13 @@
       .lesson-card p,
       .details-body > p,
       .module-limit,
+      .forest-demo-note,
+      .forest-baseline-proof p, .forest-source-note,
       .closing-thesis .proof-source,
       footer { font-size: 0.78rem; }
 
       .figure-label,
+      .forest-baseline-label,
       .review-chip,
       .scope-tag,
       .proof-check { font-size: 0.75rem !important; }
@@ -1124,6 +1214,13 @@
       .award-facts div:last-child { border-bottom: 0; }
       .award-photo img { border-radius: 15px; }
       .meta-strip, .screen-grid, .proof-grid, .lesson-grid, .forest-figures { grid-template-columns: 1fr; }
+      .forest-actions { margin-top: -14px; }
+      .forest-artifact-stage { min-height: 250px; padding: 12px; }
+      .forest-artifact-stage img { aspect-ratio: 4 / 3; }
+      .forest-artifact-stage img.latent-preview { aspect-ratio: 1048 / 520; }
+      .forest-artifact-stage img.terrain-preview { aspect-ratio: 3 / 2; }
+      .forest-baseline-proof { grid-template-columns: 1fr; gap: 13px; padding: 16px; }
+      .forest-baseline-proof img { width: min(100%, 180px); max-height: 230px; margin-inline: auto; }
       .meta-item { border-right: 0; border-bottom: 1px solid var(--line); }
       .meta-item:last-child { border-bottom: 0; }
       .journey { gap: 10px; grid-template-columns: 1fr; }
@@ -1159,7 +1256,9 @@
       .metric-board-title, .metric-cell span, .axis-label, .axis-total, .axis-legend,
       .retrieval-path li, .formula-card span, .formula-card code, .proof-card p,
       .proof-check, .legal-review p, .scope-tag, .scope-card p,
-      .lesson-card p, .details-body > p, .module-limit, .closing-thesis .proof-source, footer {
+      .lesson-card p, .details-body > p, .module-limit, .forest-demo-note,
+      .forest-baseline-proof p, .forest-baseline-label,
+      .forest-boundary, .closing-thesis .proof-source, footer {
         font-size: 0.9375rem !important;
       }
       .nav-links a, .eyebrow, .status, .hero-visual-label, .award-mark span,
@@ -1178,7 +1277,7 @@
       .decision-input strong, .decision-outcome strong { font-size: 0.94rem; }
       .tech-details summary { font-size: 0.9375rem; }
       .image-dialog img { width: auto; max-width: none; min-width: 960px; }
-      .award-source a { min-height: 44px; display: inline-flex; align-items: center; }
+      .award-source a, .details-body a, .forest-source-note a { min-height: 44px; display: inline-flex; align-items: center; }
       .closing-thesis a, footer a { min-height: 44px; display: inline-flex; align-items: center; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -1580,33 +1679,59 @@
     <section class="paper" aria-labelledby="forest-title">
       <div class="container">
         <div class="section-head">
-          <p class="section-kicker">09 · 산림 변화 확인</p>
-          <h2 id="forest-title">발표 화면과 공개 기준선을<br>나눴습니다</h2>
+          <p class="section-kicker">09 · 산림 분석과 현장 확인</p>
+          <h2 id="forest-title">시도는 남기고,<br>증명 범위는 나눴습니다</h2>
           <p class="section-desc">
-            발표에서는 CNN·CAM과 pseudo-360 화면으로 변화 위치를 설명했습니다. 현재 공개본은 당시 모델 성능을 재현한다고 말하지 않습니다.
-            대신 누구나 입력과 정답을 볼 수 있는 6×6 합성 red/NIR 데이터로 NDVI 계산, 변화 마스크와 reference 비교를 다시 실행합니다.
-            2026년 8월에는 공개 Sentinel-2 파생 fixture로 단일시점 산림피복 CNN을 학습·평가·설명하는 선택형 연구 트랙을 저장소에 추가했습니다. 전후 변화 탐지나 발표 당시 수치의 재현은 아닙니다.
+            대회 때는 GAN의 잠재공간을 오가며 산림 장면을 실사풍으로 잇고, z축 표현을 더해 변화 위치를 현장처럼 읽히게 만드는 방향을 시도했습니다. 발표 화면은 남았지만 같은 결과를 다시 만들 코드와 가중치는 남아 있지 않습니다.
+            그래서 수상 뒤에는 아이디어의 핵심을 공개 데이터로 처음부터 다시 만들었습니다. 현재 GitHub에는 검증 가능한 단일시점 산림피복 CNN·Grad-CAM과 아래 두 재구성 경로가 서로 섞이지 않게 나뉘어 있습니다. 이는 당시 성능을 되살렸다는 뜻이 아니라, 당시 방향을 지금 실행할 수 있는 코드로 바꾼 후속 실험입니다.
           </p>
         </div>
 
+        <div class="forest-actions">
+          <a class="button primary" href="/projects/ecoguard/demo/" target="_blank" rel="noopener noreferrer">발표용 pseudo-360 직접 보기 <span aria-hidden="true">↗</span></a>
+          <a class="button" href="https://github.com/soccz/EcoGuard/tree/main/research/forest_xai" target="_blank" rel="noopener noreferrer">재현 코드와 산출물 보기 <span aria-hidden="true">↗</span></a>
+          <p class="forest-demo-note">현장 데모의 파노라마·수치·훼손 표시는 발표용 합성 예시이며 실제 모델 출력이나 디지털트윈이 아닙니다.</p>
+        </div>
+
         <div class="forest-figures">
-          <figure class="screen-card">
-            <img data-lightbox class="contain" src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 구분해 표시한다.">
-            <figcaption><span class="figure-label">Figure 05 · Reference evaluation</span>36개 합성 셀의 예측과 reference mask를 TP 11 · FP 1 · FN 1 · TN 23으로 나눈 confusion-class SVG입니다.</figcaption>
+          <figure class="screen-card forest-artifact-card">
+            <div class="forest-artifact-stage">
+              <img data-lightbox class="latent-preview" src="/projects/ecoguard/assets/forest-latent-interpolation.png" width="1048" height="520" loading="lazy" alt="공개 Sentinel-2 파생 chip으로 수상 후 학습한 작은 GAN이 고정된 두 잠재벡터 사이를 여덟 단계로 보간해 만든 4열 2행의 합성 장면. 녹색과 어두운 영역의 모양이 단계마다 이어져 변한다.">
+            </div>
+            <figcaption><span class="figure-label">Figure 05 · Latent scene transition</span>발표에서 시도한 잠재공간 보간을 수상 후 다시 만든 여덟 장면입니다. 실사 품질이나 HiGAN 재현을 뜻하지 않습니다.</figcaption>
           </figure>
-          <figure class="screen-card">
-            <img data-lightbox src="/projects/ecoguard/assets/screen-report.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 산림 분석 요약 화면. 산림 비율 변화, 연도별 NDVI 추이, 고위험 상태와 분석 소견이 표시되어 있다.">
-            <figcaption><span class="figure-label">Figure 06 · Review summary</span>변화량, 임계값 통과 시점과 관찰 소견을 심사자가 다시 확인할 수 있도록 요약한 발표 화면입니다. 수치는 합성 예시입니다.</figcaption>
+          <figure class="screen-card forest-artifact-card">
+            <div class="forest-artifact-stage">
+              <img data-lightbox class="terrain-preview" src="/projects/ecoguard/assets/forest-2_5d-drape.png" width="960" height="640" loading="lazy" alt="공개 Sentinel-2 파생 RGB와 산림 확률을 합성 높이장 위에 얹어 투시해 본 수상 후 2.5D 시각화. 실제 지형 고도를 나타내지 않는다.">
+            </div>
+            <figcaption><span class="figure-label">Figure 06 · Height-field review view</span>공개 평가 장면 S2-EV-003의 RGB와 모델 산림 확률을 높낮이 있는 검토 화면으로 바꿔 봤습니다. 실제 지형을 나타내는 화면은 아닙니다.</figcaption>
           </figure>
         </div>
 
+        <p class="forest-source-note">
+          데이터 출처 — Bragagnolo·da Silva·Grzybowski,
+          <a href="https://doi.org/10.5281/zenodo.4498086" target="_blank" rel="noopener noreferrer"><cite>Amazon and Atlantic Forest image datasets for semantic segmentation</cite> (Zenodo) <span aria-hidden="true">↗</span></a>,
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0 <span aria-hidden="true">↗</span></a>.
+          EcoGuard는 공개 mirror에서 선택한 chip을 64×64로 축소·정규화했습니다. Figure 05는 그 데이터로 학습한 GAN의 합성 출력이고, Figure 06은 평가 chip·모델 확률을 합성 높이에 얹어 변형한 시각화입니다.
+        </p>
+
+        <aside class="forest-baseline-proof" aria-label="현재 공개 검증 기준선">
+          <img data-lightbox src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 나누어 표시한다.">
+          <div>
+            <span class="forest-baseline-label">현재 검증 기준선</span>
+            <h3>재구성 실험 아래에는 다시 계산되는 비교표가 있습니다</h3>
+            <p>기본 공개본은 36개 합성 셀의 예측과 reference를 TP 11 · FP 1 · FN 1 · TN 23으로 직접 나눕니다. 발표용 산림 보고 화면은 이 계산을 심사자가 읽는 변화량·임계값·관찰 소견으로 정리한 UI였습니다.</p>
+          </div>
+        </aside>
+
         <details class="tech-details">
-          <summary>발표 프로토타입과 공간 평가 세부 보기</summary>
+          <summary>검증 수치와 GAN·JVP·2.5D의 정확한 범위 보기</summary>
           <div class="details-body">
-            <p>멘토링에서 위에서 내려다본 지도만으로는 현장을 이해하기 어렵다는 의견을 받아, 발표에는 사전 렌더링 파노라마를 둘러보는 pseudo-360 화면을 더했습니다. 실제 위성 표고로 만든 디지털트윈은 아닙니다. 발표에 쓴 파노라마 시연은 정리해 <a href="/projects/ecoguard/demo/" target="_blank" rel="noopener noreferrer">현장 시연 데모 ↗</a>로 공개했습니다. 수상 당시 발표 흐름을 보여주는 보조 화면으로, 화면 속 패널·수치·훼손 표시는 합성 예시이며 실제 탐지 모델의 출력이 아닙니다. 훼손 구역 파노라마는 Wikimedia Commons CC 이미지를 가공해 만들었고 출처와 라이선스는 <a href="/projects/ecoguard/demo/CREDITS.txt" target="_blank" rel="noopener noreferrer">CREDITS</a>에 남겼습니다.</p>
-            <p>36개 합성 셀의 결과는 TP 11 · FP 1 · FN 1 · TN 23, F1 0.917, IoU 0.846입니다. 별도 4×6 예제에서는 EPSG:32652 좌표, 픽셀 면적, cloud/nodata/shadow, 촬영 시기와 공간 holdout을 검사합니다. 유효 holdout 9셀의 결과는 4/1/1/3입니다.</p>
-            <p>선택형 <a href="https://github.com/soccz/EcoGuard/tree/main/research/forest_xai" target="_blank" rel="noopener noreferrer">연구 트랙</a>은 공개 Sentinel-2 파생 fixture(CC BY 4.0)에서 단일시점 산림피복 CNN을 CPU로 재현 학습해 평가 F1 0.947917을 기록합니다. 작은 capability fixture의 결과로, 산림 변화·훼손 탐지 성능이나 발표 수치의 재현이 아닙니다.</p>
-            <p>실제 위성 모델의 정확도나 법적 산림 훼손 판정으로 쓰는 수치는 아닙니다.</p>
+            <p><strong>먼저 다시 검증한 것.</strong> dependency-free 기준선은 6×6 합성 red/NIR 셀에서 NDVI 변화 마스크를 reference와 비교해 TP 11 · FP 1 · FN 1 · TN 23, F1 0.917, IoU 0.846을 냅니다. 별도 공간 예제는 좌표계·픽셀 면적·cloud/nodata/shadow·촬영 시기와 holdout까지 검사합니다.</p>
+            <p><strong>실제 공개 영상으로 확인한 것.</strong> 선택형 연구 트랙은 공개 Sentinel-2 파생 fixture(CC BY 4.0)에서 단일시점 산림피복 CNN을 CPU로 재현 학습하고 Grad-CAM을 생성합니다. 평가 F1 0.947917은 작은 capability fixture의 값이며, 전후 변화나 훼손 탐지 정확도가 아닙니다.</p>
+            <p><strong>발표 아이디어를 수상 후 다시 만든 것.</strong> 공개 train chip으로 tiny GAN을 학습한 뒤 고정된 z0→z1을 8단계로 보간하고, 각 프레임에 대한 산림피복 CNN의 반응과 중간점의 정확한 JVP를 남겼습니다. 별도 2.5D 경로는 64×64 합성 높이·확률장을 33×33 mesh(정점 1,089개·면 1,024개)로 바꿔 공개 RGB와 함께 렌더링합니다. checkpoint·JSON·이미지·기계 판독용 배열의 hash와 재학습 방법은 <a href="https://github.com/soccz/EcoGuard/blob/main/research/forest_xai/RECONSTRUCTION_CARD.md" target="_blank" rel="noopener noreferrer">재구성 카드</a>에서 확인할 수 있습니다.</p>
+            <div class="forest-boundary"><strong>넘지 않는 선.</strong> 이 산출물은 대회 당시 코드의 복구본, 특정 HiGAN 구현, 발표의 83.4%→96.2%, 실사 생성 품질, 실제 전후 산림변화 또는 위성영상에서 복원한 고도·3D를 증명하지 않습니다.</div>
+            <p>pseudo-360은 위에서 본 지도만으로 현장을 이해하기 어렵다는 피드백에서 출발한 발표용 파노라마입니다. 훼손 구역 이미지는 Wikimedia Commons CC 자료를 가공했으며 출처와 라이선스는 <a href="/projects/ecoguard/demo/CREDITS.txt" target="_blank" rel="noopener noreferrer">CREDITS</a>에 남겼습니다.</p>
           </div>
         </details>
       </div>
