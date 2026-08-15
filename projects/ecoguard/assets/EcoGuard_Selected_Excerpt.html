@@ -10,7 +10,7 @@
   <meta name="keywords" content="EcoGuard, CBAM, EUDR, provenance, evidence, reproducibility, Team UniHana">
   <meta name="rights" content="© 2026 Team UniHana. 공개용 프로젝트 기록.">
   <meta name="dcterms.created" content="2026-08-12">
-  <meta name="dcterms.modified" content="2026-08-12">
+  <meta name="dcterms.modified" content="2026-08-15">
   <meta name="generator" content="WeasyPrint 68.1">
   <style>
     @font-face {
@@ -741,8 +741,8 @@
         <h1 id="cover-title">기술을 만드는 일보다<br><em>그 기술이 맞다는 것을</em><br>증명하는 일이 어려웠다.</h1>
         <p class="cover-subtitle">비정형 수출 데이터를 검토 가능한 증빙으로 바꾸고, EU 탄소국경조정제도(CBAM)의 교육용 계산과 EU 산림전용방지규정(EUDR)을 위한 산림 변화 근거를 연결한 무역금융 PoC</p>
         <blockquote class="thesis">증명에 시간을 쓴 뒤에야, 데이터 전처리·계산·근거 추적이라는 기술이 왜 실무에서 의미 있는지 더 선명하게 보였다.</blockquote>
-        <div class="cover-tags"><span>Team UniHana</span><span>3인 팀 수상</span><span>공개 v0.5 재구성 · 2026.08</span></div>
-        <p class="scope-note"><strong>이 문서는 원본 발표자료의 발췌가 아닙니다.</strong><br>대회 당시 발표 흐름과 개발 기록, 공개 v0.5 재현 코드를 바탕으로 새로 구성한 4쪽 case study입니다. 원본 Live Demo와 전체 발표자료는 공개하지 않습니다.</p>
+        <div class="cover-tags"><span>Team UniHana</span><span>3인 팀 수상</span><span>공개 v0.6.0 재구성 · 2026.08</span></div>
+        <p class="scope-note"><strong>이 문서는 원본 발표자료의 발췌가 아닙니다.</strong><br>대회 당시 발표 흐름과 개발 기록, 공개 v0.6.0 재현 코드를 바탕으로 새로 구성한 4쪽 case study입니다. 원본 Live Demo와 전체 발표자료는 공개하지 않습니다.</p>
       </div>
       <div class="cover-visual">
         <figure class="shot cover-report">
@@ -762,7 +762,7 @@
         </aside>
       </div>
     </div>
-    <footer class="footer"><span>원 발표자료·개발 기록·공개 v0.5를 바탕으로 재구성한 case study</span><span>합성 데이터 · 교육용 PoC · 하나금융그룹·하나은행 공식 제품 아님 · 법률 자문 아님</span></footer>
+    <footer class="footer"><span>원 발표자료·개발 기록·공개 v0.6.0을 바탕으로 재구성한 case study</span><span>합성 데이터 · 교육용 PoC · 하나금융그룹·하나은행 공식 제품 아님 · 법률 자문 아님</span></footer>
   </section>
 
   <section class="page" aria-labelledby="evidence-title">
@@ -862,7 +862,7 @@
         <p class="boundary">core 6×6과 별도 4×6 geospatial fixture로 plumbing을 검사합니다. 실제 위성 모델 정확도·EUDR 판정이 아닙니다.</p>
       </article>
     </div>
-    <footer class="footer"><span>같은 합성 입력 · 같은 파라미터 · 같은 출력 · 중간값과 근거 보존</span><span>공식 CBAM 계산·EUDR 판정 아님 · 공개 v0.5 재현 기준선</span></footer>
+    <footer class="footer"><span>같은 합성 입력 · 같은 파라미터 · 같은 출력 · 중간값과 근거 보존</span><span>공식 CBAM 계산·EUDR 판정 아님 · 공개 v0.6.0 재현 기준선</span></footer>
   </section>
 
   <section class="page dark" aria-labelledby="proof-title">
@@ -884,9 +884,9 @@
       <div class="boundary-area">
         <h3>Public boundary · 대회 당시 화면과 공개 재현 코드의 경계</h3>
         <div class="boundary-grid">
-          <article class="boundary-card"><span class="pill">공개 v0.5에서 재현</span><ul><li>OCR 출력 adapter·출처 계보</li><li>legal blind-style·CBAM rule map</li><li>geospatial holdout·branch coverage gate</li></ul></article>
+          <article class="boundary-card"><span class="pill">공개 v0.6.0에서 재현</span><ul><li>core 계보·법무·CBAM·공간 gate</li><li>선택형 Sentinel-2 파생 단일시점 산림피복 CNN · F1 0.947917 · Grad-CAM</li><li>수상 후 tiny-GAN latent interpolation · 2.5D synthetic-height reconstruction</li></ul></article>
           <article class="boundary-card"><span class="pill">대회 화면에서 시뮬레이션</span><ul><li>OCR 추출 완료 상태</li><li>종합 품질점수·보완 문구</li><li>통합 보고·업무 전달 경험</li></ul></article>
-          <article class="boundary-card"><span class="pill">후속 검증·연동 필요</span><ul><li>실제 기업·은행 데이터</li><li>운영급 OCR·위성 모델 평가</li><li>전문가 정답셋·규정 최신화</li></ul></article>
+          <article class="boundary-card"><span class="pill">미검증</span><ul><li>실제 전후 산림변화·HiGAN</li><li>발표 수치 83.4→96.2</li><li>위성영상 기반 고도·3D 복원</li></ul></article>
         </div>
         <div class="lesson-grid">
           <article class="lesson-card"><h3>이 공개본이 보여주는 것</h3><ul><li>값의 출처부터 계산 결과까지 이어지는 검증 경로</li><li>core 11개 + benchmark 6개를 다시 만드는 기술 기준선</li></ul></article>
@@ -894,11 +894,11 @@
         </div>
         <div class="cta-grid">
           <a class="repo-link" href="https://soccz.github.io/projects/ecoguard/" title="과정·회고·증거 경계를 설명하는 EcoGuard 상세 HTML 보고서">상세 HTML 보고서 →</a>
-          <a class="repo-link" href="https://github.com/soccz/EcoGuard/blob/v0.5.0/docs/VALIDATION.md" title="명령·평가셋·검증 결과를 정리한 GitHub VALIDATION 문서">GitHub VALIDATION →</a>
+          <a class="repo-link" href="https://github.com/soccz/EcoGuard/blob/v0.6.0/docs/VALIDATION.md" title="명령·평가셋·검증 결과를 정리한 GitHub VALIDATION 문서">GitHub VALIDATION →</a>
         </div>
       </div>
     </div>
-    <footer class="footer"><span>EcoGuard · Team UniHana · 공개용 4쪽 case study · 2026.08.12</span><span>합성 데이터 · 비공개 데모 미포함 · 공식 제품·법률 자문 아님</span></footer>
+    <footer class="footer"><span>EcoGuard · Team UniHana · 공개용 4쪽 case study · 2026.08.15</span><span>합성 데이터 · 비공개 데모 미포함 · 공식 제품·법률 자문 아님</span></footer>
   </section>
   </main>
 </body>
