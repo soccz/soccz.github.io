@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/09/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>HARK the SHARK: Realized Volatility Modeling with Measurement Errors and Nonlinear Dependencies · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,181 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>일별 WML에는 시간가변 계수를 다루는 Score-HAR만 직접 challenger로 쓰고, realized quarticity가 필요한 HARK·SHARK는 일중자료가 생길 때까지 이름과 구현을 분리한다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>HAR의 측정오차·이분산·시간가변 계수 기여를 분해할 때</li><li>Score-HAR가 constant log-HAR보다 안정적인지 시험할 때</li><li>일중 RV/RQ가 갖춰진 뒤 Kalman HARK와 결합 SHARK를 구현할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>quarticity 없는 일별 제곱수익 모형을 HARK 또는 SHARK라 부를 때</li><li>Score-HAR 약어 SHAR를 signed-semivariance HAR와 혼동할 때</li><li>90% MCS 포함을 모든 loss·빈도의 유일한 승리로 표현할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>HAR가 틀리는 이유를 한꺼번에 &#x27;비선형성&#x27;이라 부르면 어떤 추가복잡성이 필요한지 알 수 없다. 이 논문은 측정오차, 이분산, 시간가변 계수를 별도 채널로 분해한다.</p></article>
+            <article><h3>중심 질문</h3><p>실현변동성의 관측오차를 Kalman filter로, 시간가변 의존성을 likelihood score로 처리하면 HAR 예측이 각각 얼마나 개선되고 두 채널을 합치면 추가가치가 있는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>HARQ 같은 보정은 측정오차와 비선형성을 섞을 수 있어, 어느 misspecification이 예측개선을 만드는지 구조적으로 분리할 기준모형이 필요했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 증거는 HARK의 측정오차 채널과 Score-HAR의 시간가변 계수 채널을 결합한 SHARK가 여러 일·주·월 OOS에서 강하다는 것이다. 다만 모든 빈도·loss에서 유일한 winner는 아니고 측정오차 이득은 sampling frequency에 따라 약해진다. 연구자 해석은 한국 일별 WML에서 quarticity 없이 구현 가능한 것은 Score-HAR뿐이라는 것이다. HARK·SHARK는 동기화된 일중 WML RV와 RQ가 확보될 때까지 data gate로 막고, constant log-HAR 대비 Score-HAR의 증분을 먼저 시험한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>관측오차 채널을 HARK로 분리한다</h3>
+          <p>realized quarticity로 날짜별 측정오차 분산을 만들고 state-space HAR에서 noisy observation의 Kalman gain을 낮춘다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>시간가변 의존성을 Score-HAR로 분리한다</h3>
+          <p>log-HAR 계수와 innovation variance를 likelihood score로 매일 갱신해 coefficient drift와 이분산에 적응한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>두 채널을 SHARK로 결합한다</h3>
+          <p>time-varying state-space likelihood 안에서 관측신뢰도와 persistence 변화를 함께 처리한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>빈도·regime·horizon에서 증분을 분해한다</h3>
+          <p>S&amp;P와 개별주식, static·rolling, 일·주·월 target에서 component loss ratio와 공동검정을 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>measurement error</h3>
+          <p><strong>쉽게 말하면</strong><br>일중수익으로 계산한 실현분산이 보이지 않는 진짜 적분분산을 정확히 재지 못하는 오차다.</p>
+          <p><strong>논문 안의 역할</strong><br>HARK 관측방정식의 날짜별 noise variance를 결정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>일별 제곱수익만으로 원문의 quarticity 기반 오차분산을 만들 수 없다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a></div>
+        </article><article class="section-card concept-card">
+          <h3>Kalman gain</h3>
+          <p><strong>쉽게 말하면</strong><br>새 관측값을 잠재위험 추정에 얼마나 믿고 반영할지를 정하는 가중치다.</p>
+          <p><strong>논문 안의 역할</strong><br>quarticity가 큰 noisy day의 RV 영향을 낮춘다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>항상 낮을수록 좋은 상수가 아니라 날짜별 관측신뢰도의 결과다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a></div>
+        </article><article class="section-card concept-card">
+          <h3>Score-HAR</h3>
+          <p><strong>쉽게 말하면</strong><br>최근 관측이 현재 likelihood에서 예상 밖인 방향만큼 HAR 계수를 갱신하는 모형이다.</p>
+          <p><strong>논문 안의 역할</strong><br>quarticity 없이도 시간가변 계수와 이분산에 적응한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>이 논문의 SHAR는 signed-semivariance HAR가 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a></div>
+        </article><article class="section-card concept-card">
+          <h3>SHARK</h3>
+          <p><strong>쉽게 말하면</strong><br>HARK의 측정오차 필터와 Score-HAR의 시간가변 계수를 한 state-space 안에 합친 모형이다.</p>
+          <p><strong>논문 안의 역할</strong><br>두 misspecification channel의 결합 이득을 측정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>quarticity 입력 없이 이름만 SHARK로 쓰면 원형이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>HARK 관측방정식 · 관측된 로그 실현분산을 잠재 위험과 날짜별 크기가 다른 측정오차의 합으로 본다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>logRV_t = latent_logIV_t + measurement_error_t, Var(measurement_error_t) = V_t from RV_t and RQ_t</code></pre>
+                <dl class="symbol-grid"><dt><code>logRV_t</code></dt><dd>일중수익으로 관측한 로그 실현분산</dd><dt><code>latent_logIV_t</code></dt><dd>직접 보이지 않는 잠재 통합분산</dd><dt><code>V_t</code></dt><dd>RV와 realized quarticity로 추정한 관측오차 분산</dd></dl>
+                <p><strong>직관:</strong> 잡음이 큰 날의 관측은 덜 믿고 잠재 HAR 동학을 더 믿는다.</p>
+                <p><strong>구현할 때:</strong> RV·RQ·sampling alignment가 없으면 이 방정식의 data gate를 통과하지 못하며 daily proxy로 대체하지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Score-HAR state update · 오늘 likelihood 기울기의 방향과 크기만큼 다음날 HAR 계수·오차분산 상태를 움직인다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>theta_{t+1} = theta_t + A × scaled_score_t</code></pre>
+                <dl class="symbol-grid"><dt><code>theta_t</code></dt><dd>시간 t의 HAR 계수와 log innovation variance</dd><dt><code>scaled_score_t</code></dt><dd>정보행렬로 조정한 likelihood gradient</dd><dt><code>A</code></dt><dd>각 계수상태가 새로운 score 신호에 반응하는 갱신속도 행렬</dd></dl>
+                <p><strong>직관:</strong> 고정 window를 다시 적합하지 않아도 새 정보에 따라 persistence 구조가 연속적으로 적응한다.</p>
+                <p><strong>구현할 때:</strong> analytic score를 finite-difference gradient와 대조하고 명칭을 Score-HAR로 고정한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>SHARK 결합 · 관측값의 신뢰도와 잠재위험 동학의 계수변화를 한 예측필터에서 동시에 반영한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>state-space prediction with V_t plus score-updated transition parameters</code></pre>
+                <dl class="symbol-grid"><dt><code>V_t</code></dt><dd>날짜별 실현분산 측정의 신뢰도를 나타내는 관측오차 채널</dd><dt><code>transition parameters</code></dt><dd>잠재 HAR 지속성 채널</dd><dt><code>score</code></dt><dd>현재 likelihood의 예측오차가 다음 계수를 움직이는 갱신 신호</dd></dl>
+                <p><strong>직관:</strong> noisy measurement와 changing persistence를 한 요소가 대신 흡수하지 않게 분리한다.</p>
+                <p><strong>구현할 때:</strong> nested model의 loss ratio를 순서대로 계산해 결합모형의 이득을 어느 채널에서 왔는지 남긴다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>미국 지수선물과 유동 주식의 일중 가격으로 RV·RQ를 여러 sampling frequency에서 계산한다.</li><li>HAR의 단기·주간·월간 state와 log likelihood score를 사용한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>다음 일·주·월 집계 실현분산을 예측한다.</li><li>긴 horizon에서 일부 모형은 recursion, 일부는 simulation 또는 direct forecast를 쓴다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>고정길이 rolling과 최초추정 뒤 static parameter를 비교한다.</li><li>Score state는 초기구간 뒤 매 관측에서 갱신하며 OOS를 regime별로 나눈다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE·QLIKE·MCS와 component loss ratios를 본다.</li><li>다중 horizon 공동검정과 관측오차 scaling robustness를 추가한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">HARK·Score-HAR·SHARK 식</p><h3>HARK·Score-HAR·SHARK 세 모형은 어떤 예측 오류원을 각각 고치도록 설계됐는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>HARK의 V_t 관측오차, Score-HAR의 time-varying theta, SHARK의 결합을 nested 순서로 읽는다. 이름이 비슷해도 입력요건이 다르다.</dd>
+            <dt>저자 보고 결과</dt><dd>측정신뢰도와 시간가변 persistence를 독립 channel로 모델링한다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서는 가능한 Score-HAR와 불가능한 HARK branch를 명칭부터 분리해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>결합이 자동 우위를 보장하지 않고 식의 optimizer·초기상태도 결과에 영향을 준다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 4–6</p><h3>SHARK는 모든 표본·빈도에서 유일한 winner인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>HAR 대비 relative loss는 1보다 낮을수록 좋고 괄호 MCS 종목 수는 unique-winner 수가 아니다. S&amp;P와 NYSE, static·rolling을 분리한다.</dd>
+            <dt>저자 보고 결과</dt><dd>SHARK가 다수 비교에서 강하지만 일부 고빈도·loss에서는 Score-HAR 또는 HARK가 근소하게 앞선다.</dd>
+            <dt>검토자 해석</dt><dd>결합모형의 보편승리가 아니라 조건부 강점으로 인용한다.</dd>
+            <dt>검토자 경계</dt><dd>유동 미국 자산과 짧은 개별주식 OOS가 한국 WML를 대표하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 10·12</p><h3>월근사 horizon과 공동검정에서도 channel 이득이 남는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>22일 relative QLIKE의 분자·분모를 확인하고, 여러 horizon을 함께 본 uSPA p-value를 bootstrap 해상도와 함께 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>SHARK는 긴 horizon에서도 강하고 세 misspecification channel의 공동 이득이 지지된다.</dd>
+            <dt>검토자 해석</dt><dd>월별 WML에서 Score-HAR를 시험할 직접적 방법론 근거가 된다.</dd>
+            <dt>검토자 경계</dt><dd>지수선물 RV loss이며 WML 경제성과를 직접 측정하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>HARK는 noisy RV를 덜 믿고 Score-HAR는 변하는 persistence를 따라가며 SHARK는 두 오차원이 서로를 잘못 흡수하는 것을 막는다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>sampling frequency별 측정오차 gain, Score channel의 넓은 gain과 결합모형의 일·주·월 loss가 메커니즘에 부합한다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>특정 liquid sample, crisis split, optimizer·simulation·fallback과 후보모형 선택이 결과를 만들었을 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>한국 daily branch에서 Score-HAR가 constant log-HAR의 QLIKE와 비용 후 WML 효용을 못 이기면 time-varying 계수 채택을 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>simulation, 자산군, sampling frequency, static·rolling, crisis split, horizon과 observation-noise scaling을 교차한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>측정오차 gain은 촘촘한 sampling에서 줄고 결합모형이 모든 cell의 유일 최저는 아니다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 WML의 일중 RV·RQ와 동일 BS15 비용 후 경제성과는 직접 시험하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>강한 결합모형 결과에도 일부 표기 모호성, simulation·optimizer·bootstrap 재현세칙의 공백이 남는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">constant log-HAR</th><td>일별 WML log-risk 기준선</td><td>Score-HAR 증분의 필수 comparator로 고정한다.</td></tr><tr><th scope="row">Score-HAR</th><td>SHAR-S challenger</td><td>quarticity 없이 가능한 시간가변 계수 branch이며 signed SHAR와 구분한다.</td></tr><tr><th scope="row">HARK·SHARK</th><td>일중 RV·RQ 확보 후 branch</td><td>측정오차 원형의 필수 데이터가 없으면 실행을 막는다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>비중첩 단기·주간·월간 WML risk component를 검산한다.</li><li>constant log-HAR를 공통 outer origin에 복제한다.</li><li>diagonal Score-HAR를 finite-difference score test 뒤 추가한다.</li><li>origin별 optimizer·state·fallback·convergence를 저장한다.</li><li>MSE·QLIKE와 coefficient stability를 평가한다.</li><li>같은 forecast를 BS15 mapping에 넣어 비용 후 성과를 계산한다.</li><li>RV·RQ가 없으면 HARK·SHARK run을 자동 차단한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>analytic score와 수치 gradient가 허용오차 내 일치한다.</li><li>Score-HAR가 log-HAR의 공통 OOS loss를 안정적으로 개선한다.</li><li>예측개선이 비용 후 Sharpe·CER에도 이어지고 convergence 실패에 의존하지 않는다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>state 폭주·미수렴은 수치안정성 실패로 분류한다.</li><li>loss만 좋으면 경제적 전이 실패로 분류한다.</li><li>quarticity 없는 HARK 요청은 데이터요건 실패로 즉시 중단한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>HAR lag·score·state 단위시험 보고서</li><li>constant 대 Score-HAR OOS loss·안정성표</li><li>data gate와 동일 BS15 비용 후 경제성과표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>HARK는 측정오차, Score-HAR는 시간가변 계수를 다룬다.</li><li>SHARK는 두 channel을 결합한다.</li><li>이 논문의 SHAR는 signed semivariance가 아니다.</li><li>quarticity 없이는 HARK 원형을 만들 수 없다.</li><li>한국 현재 branch는 constant log-HAR 대 Score-HAR다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>세 모형의 error channel을 구분한다.</li><li>RV와 RQ의 데이터요건을 설명한다.</li><li>score update를 읽을 수 있다.</li><li>relative loss의 baseline을 확인한다.</li><li>한국 data gate를 설계한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 daily WML 제곱수익만으로 HARK를 부를 수 없는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> HARK의 날짜별 관측오차 분산은 동기화된 일중 RV와 realized quarticity에서 오기 때문이다.</p>
+          <p><strong>왜:</strong> 그 입력이 Kalman gain의 핵심이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. Score-HAR가 signed-semivariance HAR와 다른 점은?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 수익 부호를 나누는 모형이 아니라 likelihood score로 HAR 계수를 갱신하는 모형이다.</p>
+          <p><strong>왜:</strong> 모형 정의가 time-varying coefficient update에 있다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. SHARK를 모든 cell의 winner라고 부르면 안 되는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 일부 sampling frequency와 loss에서 Score-HAR 또는 HARK가 더 낮은 반례가 있기 때문이다.</p>
+          <p><strong>왜:</strong> S&amp;P와 NYSE 표를 조건별로 읽어야 한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 확인된 accepted manuscript에서 측정오차와 시간가변 의존성을 결합한 SHARK는 다수 일·주·월 OOS에서 강했지만 모든 빈도·loss의 유일한 winner는 아니었다. 한국 일별자료에는 Score-HAR만 직접 적응 가능하다.</p><p><strong>이렇게 말하면 안 됨:</strong> quarticity 없는 daily 모형을 HARK·SHARK 원형이라 부르거나 SHARK가 항상 이기며 loss 개선이 WML 경제성과를 보장한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p09_hark">p09_hark · PDF 9쪽 · Equations 14–19, HARK state-space model</a><a class="evidence-chip" href="#locator-p09_joint">p09_joint · PDF 36쪽 · Tables 12 and 13</a><a class="evidence-chip" href="#locator-p09_long">p09_long · PDF 34쪽 · Table 10, weekly and monthly OOS</a><a class="evidence-chip" href="#locator-p09_nyse">p09_nyse · PDF 30쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p09_oos">p09_oos · PDF 16쪽 · OOS windows and Equations 39–40</a><a class="evidence-chip" href="#locator-p09_scorehar">p09_scorehar · PDF 12쪽 · Equations 22–26, Score-HAR update</a><a class="evidence-chip" href="#locator-p09_shark">p09_shark · PDF 13쪽 · Equations 27–33, SHARK model</a><a class="evidence-chip" href="#locator-p09_sp500">p09_sp500 · PDF 29쪽 · Table 4, S&amp;P daily OOS</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>S&amp;P 500 index futures 1995-01-03–2013-06-21 4,259일과 NYSE 18종목 2006-01-03–2014-12-31 2,250일의 1초 가격을 10·5·1분으로 집계 [원문 보고]</dd><dt>target</dt><dd>다음 1·5·22일 realized variance; HARK/SHARK는 realized quarticity 기반 관측오차를 함께 모형화 [원문 보고]</dd><dt>information set</dt><dd>비중첩 1+4+17일 HAR state, log RV, realized quarticity/RV² 측정오차 분산, likelihood-score state [원문 보고]</dd><dt>lookback</dt><dd>S&amp;P와 NYSE rolling 2,000일; Score model 초기화는 앞 500 observations [원문 보고]</dd><dt>horizon</dt><dd>1·5·22거래일 [원문 보고]</dd><dt>model family</dt><dd>HAR, HARQ, log-HAR, HARK state-space, Score-HAR and combined SHARK</dd><dt>training window</dt><dd>S&amp;P OOS는 마지막 2,259일, NYSE OOS는 2014년 마지막 250일이며 rolling 2,000과 최초추정 후 static을 비교한다.</dd><dt>retune</dt><dd>rolling 사양은 매 origin 재추정하고 Score-HAR/SHARK state는 매일 likelihood score로 갱신한다.</dd><dt>benchmarks</dt><dd>HAR and HARQ · constant log-HAR · ARFIMA(1,d,1) · smooth-transition HAR · signed-jump HAR</dd><dt>loss / test</dt><dd>MSE · QLIKE · component loss ratios · 90% Model Confidence Set · 5,000-replication multi-horizon uSPA · pre/post-2008 and sampling-frequency robustness</dd><dt>economic metrics</dt><dd>포트폴리오 Sharpe·utility는 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래비용은 보고하지 않는다.</dd><dt>turnover</dt><dd>회전율은 보고하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +218,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>HAR 1+4+17 비중첩 lag identity test</li><li>analytic score와 finite-difference gradient test</li><li>미래수익 변형에 대한 state·forecast prefix test</li><li>optimizer convergence·fallback 기록 test</li><li>intraday RV/RQ 없는 HARK data gate test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p09_sp500_regime</span> 위기 전 S&amp;P의 5분(M=78) rolling relative MSE/QLIKE는 SHARK 0.9142/0.7421로 강했지만 1분(M=390) rolling MSE에서는 Score-HAR 0.9502가 SHARK 0.9527보다 근소하게 낮았다.<p class="meta">sample: S&amp;P futures pre-crisis rolling OOS · target: 다음날 RV · horizon: 1일 · metric: HAR 대비 relative MSE and QLIKE · unit: loss ratio · comparator: HARlog, HARK, Score-HAR and SHARK · loss_or_test: Table 4 and 90% MCS</p><p><strong>근거:</strong> p09_sp500 · p09_oos</p><p><strong>전이 경고:</strong> 결합 SHARK가 모든 sampling frequency와 loss에서 유일한 최저는 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p09_nyse_shark</span> NYSE 18종목의 10분(M=39) rolling 평균 MSE는 HARlog 0.5639, HARK 0.5433, Score-HAR 0.5488, SHARK 0.5351이었고 SHARK는 18종목 모두의 90% MCS에 포함됐다.<p class="meta">sample: NYSE 18종목의 2014년 250일 OOS · target: 다음날 RV · horizon: 1일 · metric: HAR 대비 relative MSE and MCS inclusion · unit: loss ratio와 종목 수 · comparator: HARlog, HARK and Score-HAR · loss_or_test: Table 5, 90% MCS</p><p><strong>근거:</strong> p09_nyse</p><p><strong>전이 경고:</strong> MCS 18/18은 unique winner count가 아니며 유동성 높은 미국 종목 결과다.</p></li><li><span class="badge">author_result</span> <span class="badge">p09_monthly</span> 22일·10분 sampling의 rolling QLIKE는 HAR 1, HARlog 0.8023, HARK 0.7630, Score-HAR 0.8024, SHARK 0.6922였고 joint uSPA는 HAR–HARlog·HARlog–HARK·HARlog–Score-HAR 비교에서 p=0·0·0.0365를 보고했다.<p class="meta">sample: S&amp;P futures rolling OOS · target: 22일 aggregate RV · horizon: 22일 · metric: relative QLIKE and uSPA p-value · unit: loss ratio and p-value · comparator: HAR family components · loss_or_test: Table 10 and 5,000-replication multi-horizon uSPA in Table 12</p><p><strong>근거:</strong> p09_long · p09_joint</p><p><strong>전이 경고:</strong> 22일 index-futures RV는 한국 WML calendar-month variance와 다르고 경제성과를 직접 측정하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>HARK the SHARK: Realized Volatility Modeling with Measurement Errors and Nonlinear Dependencies — accepted manuscript</strong><p>게재 승인 원고 · 2019-04 · 42쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 저장소 표지와 ‘This version: April, 2019’ 표식이 있는 accepted manuscript 기준이다. 원고가 제시하는 2019년 4월 정밀도까지만 기록했으며 최종 JFEC 조판페이지에 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p09_hark</strong> · artifact p09_aam2019 · PDF 9쪽 · Equations 14–19, HARK state-space model · 검증됨</li><li><strong>p09_scorehar</strong> · artifact p09_aam2019 · PDF 12쪽 · Equations 22–26, Score-HAR update · 검증됨</li><li><strong>p09_shark</strong> · artifact p09_aam2019 · PDF 13쪽 · Equations 27–33, SHARK model · 검증됨</li><li><strong>p09_oos</strong> · artifact p09_aam2019 · PDF 16쪽 · OOS windows and Equations 39–40 · 검증됨</li><li><strong>p09_sp500</strong> · artifact p09_aam2019 · PDF 29쪽 · Table 4, S&amp;P daily OOS · 검증됨</li><li><strong>p09_nyse</strong> · artifact p09_aam2019 · PDF 30쪽 · Tables 5 and 6 · 검증됨</li><li><strong>p09_long</strong> · artifact p09_aam2019 · PDF 34쪽 · Table 10, weekly and monthly OOS · 검증됨</li><li><strong>p09_joint</strong> · artifact p09_aam2019 · PDF 36쪽 · Tables 12 and 13 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>HARK the SHARK: Realized Volatility Modeling with Measurement Errors and Nonlinear Dependencies — accepted manuscript</strong><p>게재 승인 원고 · 2019-04 · 42쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 저장소 표지와 ‘This version: April, 2019’ 표식이 있는 accepted manuscript 기준이다. 원고가 제시하는 2019년 4월 정밀도까지만 기록했으며 최종 JFEC 조판페이지에 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p09_hark"><strong>p09_hark</strong> · artifact p09_aam2019 · PDF 9쪽 · Equations 14–19, HARK state-space model · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p09_scorehar"><strong>p09_scorehar</strong> · artifact p09_aam2019 · PDF 12쪽 · Equations 22–26, Score-HAR update · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p09_shark"><strong>p09_shark</strong> · artifact p09_aam2019 · PDF 13쪽 · Equations 27–33, SHARK model · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p09_oos"><strong>p09_oos</strong> · artifact p09_aam2019 · PDF 16쪽 · OOS windows and Equations 39–40 · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p09_sp500"><strong>p09_sp500</strong> · artifact p09_aam2019 · PDF 29쪽 · Table 4, S&amp;P daily OOS · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p09_nyse"><strong>p09_nyse</strong> · artifact p09_aam2019 · PDF 30쪽 · Tables 5 and 6 · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p09_long"><strong>p09_long</strong> · artifact p09_aam2019 · PDF 34쪽 · Table 10, weekly and monthly OOS · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p09_joint"><strong>p09_joint</strong> · artifact p09_aam2019 · PDF 36쪽 · Tables 12 and 13 · 검증됨 · <a href="https://openaccess.city.ac.uk/id/eprint/23156/1/BuccheriCorsi_HarkTheShark_wp2019.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>accepted manuscript에서 measurement error와 time-varying dependence를 결합한 SHARK는 다수 일·주·월 OOS 비교에서 강했다.</strong><p>이유: Tables 4·5·10·12가 여러 빈도와 horizon의 강점을 보여 준다. · 교정: 모든 cell의 유일한 winner가 아니라 다수 비교에서 강했다고 표현한다. · 근거: p09_sp500 · p09_nyse · p09_long · p09_joint</p></li><li><strong>한국 일별 WML에는 constant log-HAR 대비 Score-HAR를 직접 challenger로 시험할 수 있다.</strong><p>이유: Score-HAR의 time-varying coefficient channel은 quarticity 없이 정의되지만 HARK channel은 그렇지 않다. · 교정: HARK·SHARK 원형과 분리한다. · 근거: p09_scorehar · p09_hark</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>quarticity 없는 daily squared returns 모형은 HARK 또는 SHARK 원형이다.</strong><p>이유: HARK observation variance는 intraday RV와 RQ의 asymptotic measurement error를 사용한다. · 교정: daily branch는 Score-HAR로 한정한다. · 근거: p09_hark · p09_shark</p></li><li><strong>SHARK는 모든 빈도·loss·기간의 유일한 winner다.</strong><p>이유: S&amp;P M=390 rolling MSE에서는 Score-HAR가 근소하게 낮은 반례가 있다. · 교정: sample·frequency·loss별 결과를 함께 쓴다. · 근거: p09_sp500</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>static-window freeze date·optimizer tolerance·multi-step simulation draws와 MCS block 세칙은 accepted manuscript에서 완전히 닫히지 않는다.</li><li>Table 8의 M=78 MSE 두 행이 모두 RW로 인쇄돼 두 번째 SW 해석은 caption과 주변 패턴에 의존한다.</li></ul>

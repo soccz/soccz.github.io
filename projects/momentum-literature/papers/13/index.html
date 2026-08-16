@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/13/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>A Simple Joint Model for Returns, Volatility and Volatility of Volatility · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,177 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>일별 수익만으로 time-varying volatility of volatility와 leverage를 함께 담는 위기 민감 challenger가 필요할 때 쓰는 보조 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>GARCH/GJR 다음에 vol-of-vol 효과를 추가할 때</li><li>현재 수익을 이용한 volatility nowcast와 미래 forecast를 구분할 때</li><li>위기 구간에서 대칭 SHARV와 비대칭 ASHARV를 비교할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>5분 RV 없이 원 논문의 평가측정까지 복제했다고 말할 때</li><li>일별 horizon 결과를 한국 다음달 WML 분산에 직접 이전할 때</li><li>forecast loss 우위를 BS15 경제성과 우위로 바꿔 말할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>고빈도 realized measure가 없어도 일별수익만으로 변동성을 갱신하면서, 위험 자체의 변동성인 volatility-of-volatility와 음의 충격 비대칭을 한 recursion에서 다룰 수 있다는 점이 한국 WML에 실용적이다.</p></article>
+            <article><h3>중심 질문</h3><p>현재 제곱수익이 주는 contemporaneous 정보를 조건부분산 update에 넣으면 일별자료만으로 volatility nowcast·forecast와 volatility-of-volatility를 함께 개선할 수 있는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>전통 GARCH는 현재 shock 정보와 time-varying vol-of-vol을 제한적으로 다루고, realized-volatility 모형은 고빈도 입력을 요구한다. 두 장점을 단순한 daily-return 모형에서 연결할 필요가 있었다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>SHARV는 현재 standardized return shock의 크기에 따라 분산 update 계수가 달라지게 해 volatility-of-volatility를 만든다. ASHARV는 음의 shock에 별도 반응과 volatility-dependent mean을 추가해 leverage와 skewness를 표현한다. 다섯 자산에서 vol-of-vol 제한은 강하게 기각되고, nowcast와 여러 OOS horizon에서 SHARV·ASHARV가 전통 GARCH류보다 경쟁력 있지만 비대칭 사양의 우위는 자산과 horizon에 따라 달라진다. 한국에서는 일별 WML만으로 challenger를 만들 수 있으나 원문의 5분 RV 평가 proxy와 1·2·5·10일 horizon을 다음달 제곱합으로 바꾸는 적응이다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>현재 제곱수익을 latent variance shock의 측정치로 쓴다.</h3>
+          <p>당일 return을 보고 난 뒤의 nowcast에는 contemporaneous squared return이 volatility innovation 정보를 준다는 filtering 논리다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>shock 크기에 따라 volatility update의 불확실성도 변하게 한다.</h3>
+          <p>분산수준과 innovation 제곱의 상호작용이 time-varying volatility-of-volatility를 만든다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>음의 shock와 mean–volatility 연결을 별도 확장한다.</h3>
+          <p>ASHARV는 negative innovation에 추가반응을 주어 leverage·conditional skewness를 표현한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>parameter 필요성을 먼저 제한검정으로 확인한다.</h3>
+          <p>vol-of-vol term과 추가 lag·asymmetry 제한을 QLR로 검사해 복잡성의 어느 부분이 자료에 필요한지 구분한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>nowcast·다중 forecast·VaR를 별도 표에서 비교한다.</h3>
+          <p>현재일 정보가 포함된 nowcast와 미래 horizon forecast, tail calibration을 섞지 않고 각 질문에 맞는 표로 평가한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>volatility-of-volatility</h3>
+          <p><strong>쉽게 말하면</strong><br>위험수준 자체가 얼마나 불안정하게 흔들리는지를 뜻한다.</p>
+          <p><strong>논문 안의 역할</strong><br>같은 크기의 return shock도 현재 variance 상태에 따라 다음 variance를 다르게 움직이게 한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>variance가 높다는 것과 variance 변화의 불확실성이 높다는 것은 다르다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a></div>
+        </article><article class="section-card concept-card">
+          <h3>nowcast</h3>
+          <p><strong>쉽게 말하면</strong><br>당일 수익까지 본 뒤 그날의 숨은 변동성을 추정하는 값이다.</p>
+          <p><strong>논문 안의 역할</strong><br>현재 shock의 contemporaneous 정보를 조건부분산 filtering에 사용한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>당일 수익을 쓰는 nowcast를 전날 시점의 one-step forecast와 같은 정보조건으로 비교하면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a></div>
+        </article><article class="section-card concept-card">
+          <h3>ASHARV leverage</h3>
+          <p><strong>쉽게 말하면</strong><br>같은 크기라도 하락충격이 상승충격보다 미래 위험에 더 다르게 작용하도록 허용한다.</p>
+          <p><strong>논문 안의 역할</strong><br>negative innovation term과 mean term으로 covariance·skewness를 표현한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>모든 자산·horizon에서 비대칭형이 대칭형보다 낫다는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a></div>
+        </article><article class="section-card concept-card">
+          <h3>50-observation refit</h3>
+          <p><strong>쉽게 말하면</strong><br>매일 새 parameter를 추정하지 않고 50일마다 expanding sample로 다시 맞춘다.</p>
+          <p><strong>논문 안의 역할</strong><br>계산비용과 parameter stability를 관리하는 재추정 일정이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>50일이 forecast horizon이나 feature lag라는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>SHARV variance recursion · 현재 standardized shock의 제곱이 분산을 올리되 그 반응계수 자체가 직전 분산수준에 따라 커지거나 작아진다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>r_t = sigma_t epsilon_t; sigma_t^2 = beta sigma_(t-1)^2 + (alpha + psi sigma_(t-1)^2) epsilon_t^2</code></pre>
+                <dl class="symbol-grid"><dt><code>r_t</code></dt><dd>시점 t에 관측되는 해당 자산의 당일 return</dd><dt><code>sigma_t^2</code></dt><dd>시점 t의 정보로 갱신되는 양의 조건부분산</dd><dt><code>epsilon_t</code></dt><dd>standardized innovation</dd><dt><code>psi</code></dt><dd>state-dependent volatility-of-volatility 강도</dd></dl>
+                <p><strong>직관:</strong> 평온기와 위기에서 같은 표준화 충격을 받은 뒤 위험이 움직이는 폭이 같지 않도록 만든다.</p>
+                <p><strong>구현할 때:</strong> implicit contemporaneous update를 수치적으로 풀고 positivity·stationarity·initialization을 각 origin에서 검사한다. 다음달 노출에는 월말까지 확정된 nowcast만 쓴다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>ASHARV asymmetric extension · 음의 shock일 때만 추가되는 state-dependent 항으로 하락충격의 별도 위험반응을 허용한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>variance update = SHARV part + (omega + phi sigma_(t-1)^2) × (negative epsilon_t)^2</code></pre>
+                <dl class="symbol-grid"><dt><code>phi</code></dt><dd>negative shock의 state-dependent 추가반응</dd><dt><code>omega</code></dt><dd>negative shock의 기본 추가반응</dd><dt><code>negative epsilon_t</code></dt><dd>0보다 작은 innovation 부분</dd></dl>
+                <p><strong>직관:</strong> 크래시 민감도가 필요한 WML에서는 상승과 하락의 같은 절대수익을 같은 위험뉴스로 처리하지 않는다.</p>
+                <p><strong>구현할 때:</strong> mean equation을 포함한 원형과 mean을 제한한 variant를 비교해 leverage와 expected-return 효과를 분리한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>S&amp;P 500·DJIA·JPM·AAPL의 1998–2019, EUR/USD의 2009–2019 일별 open-to-close return을 사용한다.</li><li>평가 proxy는 5분 intraday return으로 만든 realized volatility이며 overnight는 제외한다.</li><li>모형 recursion 자체는 일별 return만 필요하므로 한국 WML 적응은 가능하다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>당일 return까지 이용한 nowcast와 origin 이후 1·2·5·10 step volatility forecast를 분리한다.</li><li>보조 target은 one-step 1%·5% VaR다.</li><li>한국 본선은 월말 정보로 다음 22거래일 분산을 예측하므로 aggregation과 timing을 새로 고정한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>QMLE로 적합하고 마지막 1,500관측을 OOS로 둔다.</li><li>initial sample 이후 expanding parameter를 50관측마다 갱신한다.</li><li>한국에서는 50일과 매월 재추정 규칙을 사전 비교하고 optimizer failure를 같은 OOS mask에 남긴다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>BIC·QLR은 in-sample 필요성, MSE·MCS/SPA는 forecast, coverage는 VaR를 묻는다.</li><li>robust standard error와 residual QQ로 비정규성 민감도를 확인한다.</li><li>forecast loss와 BS15 scaling 성과를 다른 표로 유지한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 2</p><h3>복잡한 recursion 중 실제로 필요한 부분은 무엇인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>추가 lag restriction과 psi=0 restriction의 p-value를 자산별로 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>별도 lagged squared-return 항의 필요는 약하지만 vol-of-vol 항을 없애는 제한은 다섯 자산 모두 강하게 기각된다.</dd>
+            <dt>검토자 해석</dt><dd>복잡성의 핵심은 lag 수보다 state-dependent variance shock일 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>동일 미국·FX 자산의 in-sample restriction이며 한국 WML에서 재검정해야 한다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 4–5</p><h3>nowcast와 미래 forecast에서 같은 모형이 이기는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>Table 4는 당일 return을 포함한 nowcast, Table 5는 1·2·5·10-step future loss이므로 정보집합부터 분리한 뒤 MCS를 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>nowcast에는 ASHARV가 강하지만 장기 horizon 일부에서는 대칭 SHARV가 더 강해 비대칭 우위가 약해진다.</dd>
+            <dt>검토자 해석</dt><dd>crash asymmetry를 무조건 켜기보다 horizon별 restriction을 검증해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>5분 RV 제곱근 proxy와 open-to-close return 결과다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 6–7</p><h3>낮은 variance MSE가 tail calibration도 보장하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>SPA forecast 비교와 1%·5% conditional coverage 통과 여부를 별도 열로 보고 자산별 예외를 찾는다.</dd>
+            <dt>저자 보고 결과</dt><dd>주가지수 1%에서 ASHARV가 두드러지지만 개별주식에는 여러 모형이 통과한다.</dd>
+            <dt>검토자 해석</dt><dd>분산 loss와 VaR coverage는 서로 독립 gate다.</dd>
+            <dt>검토자 경계</dt><dd>coverage 통과가 투자 Sharpe 개선이나 tail loss 최소를 뜻하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>현재 제곱수익은 latent variance innovation에 대한 빠른 측정신호를 제공한다.</li><li>psi 항은 위험상태가 높을수록 volatility response의 분산을 바꾸고, negative 항은 leverage와 skewness를 반영한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>Table 2의 psi restriction 전 자산 기각은 time-varying vol-of-vol 필요성을 지지한다.</li><li>Table 4·5의 horizon별 SHARV/ASHARV 차이는 비대칭 효과가 시간척도에 따라 달라진다는 설명과 맞는다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>5분 RV proxy와 open-to-close 표본이 특정 nowcast 모형에 유리할 수 있다.</li><li>비대칭 성과가 mean term이나 innovation distribution misspecification에서 생겼을 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>한국 WML rolling fit에서 psi가 경계에 붙거나 RW126·GJR보다 OOS QLIKE가 나쁘면 vol-of-vol 증분가치를 기각한다.</li><li>negative term을 뺀 SHARV와 성과차가 seed·기간에 안정적이지 않으면 leverage channel을 약하게 판정한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>다섯 자산, nowcast·다중 horizon·VaR, robust SE와 MCS/SPA를 함께 본다.</li><li>일별 return만으로 parameter recursion을 적합할 수 있다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>비대칭 ASHARV가 모든 자산·horizon에서 필수는 아니다.</li><li>고차 moment approximation과 Gaussian tail 해석은 극단수익에서 더 불안정하다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 WML, 다음달 aggregation, 거래비용·leverage cap·portfolio utility는 시험하지 않았다.</li><li>최종 untouched holdout과 Supplement의 QLIKE를 현재 근거로 확인하지 못했다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>parameter에는 daily return만 쓰지만 평가에는 5분 RV가 필요하다.</li><li>nowcast와 forecast가 같은 결과표현으로 읽힐 위험이 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">daily return SHARV recursion</th><td>각 WML의 일별 SHARV/ASHARV filter</td><td>현재 자료로 직접 적합 가능한 핵심 모형을 보존한다.</td></tr><tr><th scope="row">1·2·5·10일 RV forecast</th><td>월말 기준 다음 22거래일 WML 제곱합</td><td>모든 challenger의 본선 target을 통일한다.</td></tr><tr><th scope="row">GARCH·GJR·RT-GARCH</th><td>RW126·GARCH·GJR·SHARV·ASHARV tournament</td><td>state-dependent vol-of-vol의 증분효과를 단순 비대칭 baseline과 분리한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>여섯 WML의 일별 return과 월말 origin을 고정한다.</li><li>RW126·GARCH·GJR를 동일 target으로 먼저 적합한다.</li><li>SHARV·ASHARV를 positivity·stationarity 제약 아래 rolling 적합한다.</li><li>일별 forecast를 다음 22거래일 variance로 합산하는 규칙을 모델별 동일하게 둔다.</li><li>MSE·QLIKE·DM/MCS와 convergence diagnostics를 계산한다.</li><li>동일 forecast를 BS15 scaling에 넣어 cap·비용 후 경제성과를 평가한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>모든 origin에서 variance가 양수이고 제약조건과 optimizer가 통과한다.</li><li>SHARV 계열이 RW126·GJR 대비 중앙 QLIKE를 개선하고 극단월에 과소예측을 늘리지 않는다.</li><li>경제성과 표에서 비용 후 Sharpe 또는 worst month가 개선되고 turnover가 허용범위다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>nowcast만 좋고 22일 forecast가 나쁘면 contemporaneous 정보의 장기 지속 부족을 의심한다.</li><li>psi가 폭발하면 heavy-tail innovation·initialization·stationarity 조건을 진단한다.</li><li>ASHARV만 불안정하면 mean term과 negative-shock term을 분리 ablation한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 parameter·제약·convergence 감사표</li><li>nowcast와 22일 forecast를 분리한 loss 표</li><li>SHARV/ASHARV news-response 및 위기월 분해 그림</li><li>BS15 scaling의 경제성과·turnover 표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>SHARV의 핵심은 state-dependent volatility-of-volatility다.</li><li>현재 return을 쓰는 nowcast와 미래 forecast를 구분해야 한다.</li><li>ASHARV 비대칭은 모든 horizon의 고정 winner가 아니다.</li><li>일별 자료만으로 적합 가능하지만 원문 평가는 5분 RV다.</li><li>한국에서는 RW126·GJR 뒤의 crash-sensitive challenger다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>variance와 volatility-of-volatility를 구분한다.</li><li>SHARV recursion의 psi 역할을 설명한다.</li><li>nowcast·forecast·VaR를 분리한다.</li><li>50일 재추정과 forecast horizon을 구분한다.</li><li>Table 2·4·5·7의 질문 차이를 설명한다.</li><li>한국 22일 target이 원형 적응임을 명시한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. psi 계수는 무엇을 하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 직전 variance 상태에 따라 현재 shock이 variance update에 미치는 강도를 바꿔 time-varying volatility-of-volatility를 만든다.</p>
+          <p><strong>왜:</strong> Table 2에서 가장 강하게 필요한 것으로 나타난 구조다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. Table 4 nowcast를 one-step forecast와 같다고 보면 왜 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> nowcast는 당일 return까지 사용하지만 one-step forecast는 origin 이후 return을 볼 수 없기 때문이다.</p>
+          <p><strong>왜:</strong> 정보집합 차이를 무시하면 look-ahead 해석이 생긴다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. ASHARV가 장기 horizon에서도 항상 최선인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 아니다. Table 5에서는 일부 긴 horizon에 대칭 SHARV가 더 강하다.</p>
+          <p><strong>왜:</strong> 비대칭 효과는 자산과 horizon에 조건부다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 다섯 자산 실증에서 time-varying volatility-of-volatility 항은 강하게 지지됐고 SHARV·ASHARV는 여러 nowcast·forecast에서 전통 GARCH류보다 경쟁력 있었지만 비대칭 사양의 우위는 자산과 horizon에 따라 달랐다.</p><p><strong>이렇게 말하면 안 됨:</strong> 5분 RV 없이 한국 WML에 적용한 결과를 원형 재현이라 하거나, ASHARV가 모든 horizon의 winner이며 variance loss 개선이 Sharpe 개선을 보장한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p13_sharv">p13_sharv · PDF 5쪽 · SHARV equations and time-varying volatility of volatility</a><a class="evidence-chip" href="#locator-p13_asharv">p13_asharv · PDF 8쪽 · ASHARV leverage extension</a><a class="evidence-chip" href="#locator-p13_table2">p13_table2 · PDF 16쪽 · Table 2</a><a class="evidence-chip" href="#locator-p13_table4">p13_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p13_table5">p13_table5 · PDF 19쪽 · Table 5</a><a class="evidence-chip" href="#locator-p13_table7">p13_table7 · PDF 20쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-p13_design">p13_design · PDF 15쪽 · Data and expanding-window forecast design</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>S&amp;P 500·DJIA·JPM·AAPL의 1998-01-02–2019-12-31 일별 수익, EUR/USD의 2009-01-02–2019-12-31 일별 수익 [원문 보고] · 예측평가 proxy에는 5분 수익으로 계산한 realized volatility를 사용 [원문 보고]</dd><dt>target</dt><dd>조건부 volatility의 nowcast와 1·2·5·10일 ahead forecast; 별도로 1일 1%·5% VaR [원문 보고]</dd><dt>information set</dt><dd>origin까지의 일별 수익과 재귀적으로 필터링한 조건부 분산 [원문 보고]</dd><dt>lookback</dt><dd>명시적 고정창 대신 SHARV/ASHARV recursion의 감쇠계수가 과거를 요약 [원문 보고]</dd><dt>horizon</dt><dd>nowcast 및 1·2·5·10 거래일; VaR는 1거래일 [원문 보고]</dd><dt>model family</dt><dd>SHARV·ASHARV의 joint return-volatility-vol-of-vol recursion과 Gaussian QMLE</dd><dt>training window</dt><dd>마지막 1,500관측을 forecast sample로 두는 expanding window다.</dd><dt>retune</dt><dd>모수는 forecast sample에서 매 50관측마다 다시 추정한다.</dd><dt>benchmarks</dt><dd>GARCH · GJR-GARCH · RT-GARCH</dd><dt>loss / test</dt><dd>volatility-level MSE · QLIKE (author-reported in unavailable Supplement; numerical table not independently verified from this artifact) · 95% Model Confidence Set · Hansen Superior Predictive Ability test · Christoffersen conditional coverage test · BIC와 quasi-likelihood ratio test</dd><dt>economic metrics</dt><dd>VaR conditional coverage · Sharpe·CER·turnover는 보고되지 않는다.</dd><dt>trading costs</dt><dd>투자전략을 구성하지 않아 거래비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 회전율을 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +214,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>현재 수익을 쓰는 nowcast와 미래 forecast의 시점을 구분하는 timing test</li><li>1–22 step 합이 모두 origin 뒤 날짜만 포함하는 aggregation test</li><li>모수 제약과 forecast positivity test</li><li>6개 WML에 같은 추정·경제 mapping을 적용하는 parity test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p13_vov</span> 별도 lagged squared-return 항의 배제는 기각되지 않았지만 volatility-of-volatility 계수 ψ=0은 다섯 자산 모두 p=0.0000으로 기각됐다.<p class="meta">sample: 주가지수·개별주식·EUR/USD 5개 시계열 · target: SHARV/ASHARV 조건부 분산 동학 · horizon: 전체 추정표본 · metric: quasi-likelihood ratio p-value · unit: p-value · comparator: ψ=0 및 별도 lagged squared-return 제한 · loss_or_test: QLR restriction tests</p><p><strong>근거:</strong> p13_table2</p><p><strong>전이 경고:</strong> 미국·FX 자산의 parameter restriction 결과이며 한국 long–short WML의 계수 안정성을 보장하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p13_nowcast</span> nowcast MSE에서 ASHARV는 네 주식·지수 모두 표의 최저였고 95% MCS에 남았으며, EUR/USD에는 대칭 SHARV가 적용돼 최저였다.<p class="meta">sample: 각 자산의 마지막 1,500관측 forecast period · target: 현재일 volatility nowcast · horizon: nowcast · metric: MSE와 MCS 포함 · unit: volatility-level loss · comparator: GARCH·GJR-GARCH·RT-GARCH · loss_or_test: MSE, 95% MCS</p><p><strong>근거:</strong> p13_table4</p><p><strong>전이 경고:</strong> 5분 RV의 제곱근 proxy를 쓴 자산별 결과이며 WML 월분산 성과가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p13_horizon</span> S&amp;P 500 10-step MSE는 SHARV 0.1225, GARCH 0.1654, GJR 0.1827로 보고됐고, 짧은 horizon에서는 ASHARV도 강해 대칭·비대칭 순위가 horizon에 따라 달랐다.<p class="meta">sample: S&amp;P 500의 1,500관측 forecast period · target: 미래 volatility · horizon: 1·2·5·10 거래일 중 10-step 수치 · metric: MSE와 MCS · unit: 표 기재 volatility MSE · comparator: SHARV·ASHARV와 GARCH 계열 · loss_or_test: Table 5 MSE·95% MCS</p><p><strong>근거:</strong> p13_table5</p><p><strong>전이 경고:</strong> 10-step 수치를 모든 자산·horizon의 보편적 순위로 확대하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p13_var</span> 1% VaR에서 ASHARV는 두 주가지수의 conditional coverage를 통과한 유일한 모형으로 보고됐지만 개별주식에서는 여러 모형이 통과했다.<p class="meta">sample: S&amp;P 500·DJIA·JPM·AAPL forecast period · target: 1% one-day VaR · horizon: 1거래일 · metric: conditional coverage 통과 여부 · unit: 검정 판정 · comparator: GARCH·GJR·RT-GARCH·SHARV · loss_or_test: Christoffersen conditional coverage</p><p><strong>근거:</strong> p13_table7</p><p><strong>전이 경고:</strong> 지수 tail calibration 결과이며 한국 WML의 VaR 또는 scaling 효용이 아니다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>A Simple Joint Model for Returns, Volatility and Volatility of Volatility — accepted manuscript</strong><p>게재 승인 원고 · 2023-06-22 · 35쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치와 표 수치는 accepted manuscript 기준이다. 최종 Journal of Econometrics 게재본의 조판 페이지와 구분한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p13_sharv</strong> · artifact p13_aam · PDF 5쪽 · SHARV equations and time-varying volatility of volatility · 검증됨</li><li><strong>p13_asharv</strong> · artifact p13_aam · PDF 8쪽 · ASHARV leverage extension · 검증됨</li><li><strong>p13_design</strong> · artifact p13_aam · PDF 15쪽 · Data and expanding-window forecast design · 검증됨</li><li><strong>p13_table2</strong> · artifact p13_aam · PDF 16쪽 · Table 2 · 검증됨</li><li><strong>p13_table4</strong> · artifact p13_aam · PDF 18쪽 · Table 4 · 검증됨</li><li><strong>p13_table5</strong> · artifact p13_aam · PDF 19쪽 · Table 5 · 검증됨</li><li><strong>p13_table7</strong> · artifact p13_aam · PDF 20쪽 · Tables 6 and 7 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>A Simple Joint Model for Returns, Volatility and Volatility of Volatility — accepted manuscript</strong><p>게재 승인 원고 · 2023-06-22 · 35쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치와 표 수치는 accepted manuscript 기준이다. 최종 Journal of Econometrics 게재본의 조판 페이지와 구분한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p13_sharv"><strong>p13_sharv</strong> · artifact p13_aam · PDF 5쪽 · SHARV equations and time-varying volatility of volatility · 검증됨 · <a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p13_asharv"><strong>p13_asharv</strong> · artifact p13_aam · PDF 8쪽 · ASHARV leverage extension · 검증됨 · <a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p13_design"><strong>p13_design</strong> · artifact p13_aam · PDF 15쪽 · Data and expanding-window forecast design · 검증됨 · <a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p13_table2"><strong>p13_table2</strong> · artifact p13_aam · PDF 16쪽 · Table 2 · 검증됨 · <a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p13_table4"><strong>p13_table4</strong> · artifact p13_aam · PDF 18쪽 · Table 4 · 검증됨 · <a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p13_table5"><strong>p13_table5</strong> · artifact p13_aam · PDF 19쪽 · Table 5 · 검증됨 · <a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p13_table7"><strong>p13_table7</strong> · artifact p13_aam · PDF 20쪽 · Tables 6 and 7 · 검증됨 · <a href="https://api.repository.cam.ac.uk/server/api/core/bitstreams/7b503f5c-22ed-4166-af44-105d7fea064a/content" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>accepted manuscript의 5개 자산 실험에서 SHARV/ASHARV는 vol-of-vol과 leverage를 단순 recursion에 넣어 여러 volatility horizon과 VaR에서 기존 GARCH류와 경쟁했다.</strong><p>이유: 모형식·restriction test·Tables 4–7이 함께 근거를 제공한다. · 교정: 판본, 자산, 5분 평가 proxy, horizon을 함께 적는다. · 근거: p13_sharv · p13_asharv · p13_table2 · p13_table5 · p13_table7</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>일별 WML만 쓴 평가가 원 논문의 5분 RV 평가를 정확히 복제한다.</strong><p>이유: 모형추정은 일별자료로 가능하지만 평가 proxy의 품질은 다르다. · 교정: daily WML proxy adaptation으로 표시한다. · 근거: p13_design</p></li><li><strong>SHARV/ASHARV는 모든 자산과 horizon에서 단독 winner다.</strong><p>이유: 대칭·비대칭 순위와 MCS 결과가 horizon·자산별로 달랐다. · 교정: 각 horizon의 손실과 검정을 조건부로 보고한다. · 근거: p13_table4 · p13_table5</p></li><li><strong>forecast MSE 개선은 한국 WML Sharpe 개선을 뜻한다.</strong><p>이유: 논문은 포트폴리오 경제성과를 평가하지 않는다. · 교정: 동일 BS15 economic gate를 새로 통과시킨다. · 근거: p13_table5</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>최종 게재본과 accepted manuscript의 전체 조판·supplement 판본대조 및 원자료 기반 독립 재현은 이 레코드 범위에 포함되지 않는다.</li><li>Online Supplement Table 3 containing QLIKE results is not present in the active artifact; only the manuscript&#x27;s qualitative description is verified.</li></ul>

@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/26/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Forecasting Realized Volatility with Spillover Effects - Perspectives from Graph Neural Networks · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,186 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>GNN 채택 근거가 아니라 graph·QL 이득이 짧은 horizon에 집중되고 깊은 layer가 실패할 수 있음을 보여주는 후속 forecast 확장 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>선형 HAR→GHAR→얕은 GNN의 증분을 분리할 때</li><li>MSE와 QLIKE 학습이 turbulent 구간에서 다르게 작동하는지 볼 때</li><li>graph depth와 multi-hop 정보의 실패 가능성을 사전등록할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>6개 WML·짧은 월표본으로 깊은 GNN을 기본모형으로 둘 때</li><li>월간 horizon에서도 graph가 항상 개선된다고 주장할 때</li><li>preprint 수치를 최종 IJF 수치로 인용할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>graph 정보가 도움이 된다고 해도 선형 이웃평균이면 충분한지, nonlinear GNN과 먼 이웃까지 필요한지는 별도 질문이다. 이 논문은 HAR→GHAR→1·2·3층 GNN을 중첩 비교하고 학습 loss까지 분리한다.</p></article>
+            <article><h3>중심 질문</h3><p>다종목 realized volatility의 lagged spillover를 graph convolution으로 비선형화하면 HAR보다 좋아지는가, 그리고 더 깊은 multi-hop 정보와 QL 학습이 언제 추가가치를 주는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 HAR는 cross-series 정보를 무시하고, network 모델은 주로 선형이며, GNN 연구는 graph·비선형성·깊이·loss의 기여를 한꺼번에 바꿔 무엇이 성과를 만드는지 분명하지 않았다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>얕은 graph model과 QL 학습의 이득은 주로 1일·1주 horizon에서 나타나고, 월간 MSE는 여러 GNN에서 악화된다. 2·3층은 1층보다 일관되게 낫지 않으며 hop 계수 희석과 over-smoothing 진단도 깊이가 자동 이점이 아님을 보여 준다. 따라서 한국 WML에서 가져올 핵심은 ‘GNN을 쓰라’가 아니라 QLIKE, 시간순 train-validation-test, HAR→선형 GHAR→얕은 GNN의 complexity gate다. 현재 월별 6-node 표본에는 원형 GNN보다 축소형 선형 GHAR가 우선이다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_design">p26_design · PDF 15쪽 · Rolling training-validation-test design</a><a class="evidence-chip" href="#locator-p26_gnn_layer">p26_gnn_layer · PDF 9쪽 · Equation 5</a><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p26_oversmoothing">p26_oversmoothing · PDF 25쪽 · Figure 7</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>own persistence와 이웃정보를 분리한다.</h3>
+          <p>pooled HAR를 기준으로 같은 daily·weekly·monthly block의 graph 이웃평균을 더한 선형 GHAR를 만들어 graph 자체의 가치를 측정한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_graph">p26_graph · PDF 7쪽 · Equation 1 graph convolution</a><a class="evidence-chip" href="#locator-p26_architecture">p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>비선형성과 깊이를 한 층씩 추가한다.</h3>
+          <p>1·2·3 graph convolution layer가 1-hop부터 multi-hop 정보까지 전달하도록 하되 own HAR path는 유지한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_graph">p26_graph · PDF 7쪽 · Equation 1 graph convolution</a><a class="evidence-chip" href="#locator-p26_architecture">p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</a><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>학습목적을 MSE와 QL로 분리한다.</h3>
+          <p>같은 architecture를 두 loss로 훈련해 graph 효과와 underprediction-sensitive objective 효과를 혼동하지 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_ql">p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</a><a class="evidence-chip" href="#locator-p26_ql_figure">p26_ql_figure · PDF 13쪽 · Figure 4</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>rolling train-validation-test로 hyperparameter를 제한한다.</h3>
+          <p>graph sparsity·hidden width·early stopping을 과거 validation에서 정하고 다음 test 구간을 평가한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_design">p26_design · PDF 15쪽 · Rolling training-validation-test design</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>horizon·regime·depth의 실패를 명시한다.</h3>
+          <p>단기 평균이득뿐 아니라 월간 악화, 위기상태, 2층 대 1층 DM과 다른 universe의 깊은 layer를 함께 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a><a class="evidence-chip" href="#locator-p26_regime">p26_regime · PDF 19쪽 · Table 2</a><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p26_snp100">p26_snp100 · PDF 27쪽 · Table 5</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>GHAR</h3>
+          <p><strong>쉽게 말하면</strong><br>내 HAR 정보에 직접 연결된 이웃들의 HAR 정보를 선형으로 더한 모델이다.</p>
+          <p><strong>논문 안의 역할</strong><br>graph의 증분가치를 nonlinear neural network보다 먼저 측정하는 필수 기준선이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>GHAR가 좋으면 곧바로 깊은 GNN도 좋아진다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_graph">p26_graph · PDF 7쪽 · Equation 1 graph convolution</a><a class="evidence-chip" href="#locator-p26_architecture">p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</a></div>
+        </article><article class="section-card concept-card">
+          <h3>graph convolution</h3>
+          <p><strong>쉽게 말하면</strong><br>연결된 node의 특징을 가중평균하고 학습된 변환을 거쳐 새 특징을 만드는 연산이다.</p>
+          <p><strong>논문 안의 역할</strong><br>1층은 직접 이웃, 여러 층은 더 먼 이웃의 정보를 전달한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>edge가 인과 채널이거나 layer가 많을수록 정보가 늘기만 하는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_graph">p26_graph · PDF 7쪽 · Equation 1 graph convolution</a></div>
+        </article><article class="section-card concept-card">
+          <h3>QL training</h3>
+          <p><strong>쉽게 말하면</strong><br>절대오차보다 예측규모와 과소예측을 중시해 분산모형을 학습한다.</p>
+          <p><strong>논문 안의 역할</strong><br>MSE-trained model과 다른 gradient weighting을 주어 높은 변동성 관측의 underprediction을 줄일 수 있다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>출력이 자동으로 양수가 된다는 뜻이 아니며 positivity link는 구현에서 별도로 필요하다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_ql">p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</a><a class="evidence-chip" href="#locator-p26_ql_figure">p26_ql_figure · PDF 13쪽 · Figure 4</a></div>
+        </article><article class="section-card concept-card">
+          <h3>over-smoothing</h3>
+          <p><strong>쉽게 말하면</strong><br>layer를 반복할수록 서로 다른 node 표현이 비슷해져 유용한 차이가 사라지는 현상이다.</p>
+          <p><strong>논문 안의 역할</strong><br>multi-hop 계수의 감소와 깊은 모델의 성과악화를 설명하는 후보다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>작은 계수만으로 먼 이웃의 경제적 영향이 없다고 인과 결론낼 수 없다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p26_oversmoothing">p26_oversmoothing · PDF 25쪽 · Figure 7</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 5–6 GNNHAR1L · 대각이 0인 graph path가 이웃 정보를 요약하고 별도의 Xβ가 own HAR 정보를 유지한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>H¹=ReLU(D^(−1/2) A D^(−1/2) X Θ); E(v_t|F_{t−1})=α+Xβ+H¹γ</code></pre>
+                <dl class="symbol-grid"><dt><code>A</code></dt><dd>대각이 0인 training-return adjacency</dd><dt><code>D</code></dt><dd>node degree matrix</dd><dt><code>X</code></dt><dd>node별 daily·weekly·monthly RV block</dd><dt><code>Θ</code></dt><dd>학습되는 graph hidden transformation</dd><dt><code>β</code></dt><dd>별도 own-HAR path 계수</dd></dl>
+                <p><strong>직관:</strong> 자기 지속성과 이웃 spillover를 분리하면 graph의 추가정보가 무엇인지 추적할 수 있다.</p>
+                <p><strong>구현할 때:</strong> adjacency 대각을 임의로 더해 own path와 중복시키지 말고, 작은 한국표본에서는 GHAR를 통과한 뒤 1층만 고려한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_gnn_layer">p26_gnn_layer · PDF 9쪽 · Equation 5</a><a class="evidence-chip" href="#locator-p26_architecture">p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 9–10 · MSE는 절대 제곱오차를, QL은 실현값과 양의 예측값의 비율을 평가한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>MSE=mean(RV−RV̂)²;  QL=mean(RV/RV̂−log(RV/RV̂)−1)</code></pre>
+                <dl class="symbol-grid"><dt><code>RV</code></dt><dd>실현분산 target</dd><dt><code>RV̂</code></dt><dd>반드시 양수여야 하는 forecast</dd></dl>
+                <p><strong>직관:</strong> QL은 scale 차이가 큰 node를 비교하기 쉽고 과소예측에 다른 벌점을 준다.</p>
+                <p><strong>구현할 때:</strong> exp 또는 softplus link와 positive floor를 사전 고정하고 동일 link를 모든 QL 후보에 적용한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_ql">p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</a><a class="evidence-chip" href="#locator-p26_ql_figure">p26_ql_figure · PDF 13쪽 · Figure 4</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 다수 미국 종목의 일별수익 graph와 5분 realized variance panel을 사용한다(근거: p26_design).</li><li>한국은 6개 WML 일별수익·월별 분산 proxy만 있어 node 수·target 정밀도·표본 길이가 모두 작다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>원문은 lagged RV block으로 미래 1·5·22거래일 합을 예측한다(근거: p26_table1).</li><li>한국은 월말 origin의 다음 달 비중첩 target을 주사양으로 두고 overlap을 피한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>rolling 과거창을 train과 validation으로 나누고 한 달 test를 반복한다(근거: p26_design).</li><li>한국은 final holdout을 추가하고 graph·width·loss를 validation에서 한 번만 고정한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>HAR 대비 MSE·QL ratio, MCS, regime와 depth DM을 함께 읽는다(근거: p26_table1, p26_depth).</li><li>GHAR가 own-HAR를 이긴 경우에만 1-layer GNN을 허용하고 forecast gate 뒤 BS15 경제성을 평가한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_design">p26_design · PDF 15쪽 · Rolling training-validation-test design</a><a class="evidence-chip" href="#locator-p26_graph">p26_graph · PDF 7쪽 · Equation 1 graph convolution</a><a class="evidence-chip" href="#locator-p26_gnn_layer">p26_gnn_layer · PDF 9쪽 · Equation 5</a><a class="evidence-chip" href="#locator-p26_architecture">p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</a><a class="evidence-chip" href="#locator-p26_ql">p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 1</p><h3>graph·QL의 이득은 어느 horizon에 있는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>HAR=1인 상대 MSE·QL을 horizon별로 보고 1-layer와 2·3-layer, MSE/QL training을 교차한다.</dd>
+            <dt>저자 보고 결과</dt><dd>1일 GNNHAR1LQ의 상대 MSE·QL은 0.867·0.961이고 1주도 낮지만, 월간 MSE는 여러 GNN에서 1을 넘는다.</dd>
+            <dt>검토자 해석</dt><dd>이득은 단기·loss 조건부이며 월 horizon에 자동 이전되지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>상대 loss 개선은 포트폴리오 경제성과나 한국 월별 표본의 결과가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Figure 6</p><h3>2-hop가 1-hop보다 더 유용한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>종목별 DM 부호의 일관성과 cross-sectional p값을 보고 개별 별표만 선택하지 않는다.</dd>
+            <dt>저자 보고 결과</dt><dd>2층 대 1층 비교의 cross-sectional 결과는 평균적 우월성을 지지하지 않는다.</dd>
+            <dt>검토자 해석</dt><dd>graph diameter나 더 넓은 receptive field만으로 depth를 정당화할 수 없다.</dd>
+            <dt>검토자 경계</dt><dd>최적화난이도와 정보무용을 완전히 분리한 인과시험은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 5</p><h3>다른 universe에서도 깊을수록 좋아지는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>1–5층의 두 loss 결과를 나란히 보고 특정 단기 최저와 깊은 모델의 전반적 악화를 함께 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>다른 대형주 표본에서도 얕은 graph·QL의 일부 개선은 남지만 4·5층은 보편적으로 좋아지지 않는다.</dd>
+            <dt>검토자 해석</dt><dd>강건성은 GNN 일반 우월성이 아니라 제한된 얕은 구조의 가능성이다.</dd>
+            <dt>검토자 경계</dt><dd>같은 연구과정의 대체표본이며 완전히 독립된 외부 holdout은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_snp100">p26_snp100 · PDF 27쪽 · Table 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 2</p><h3>위기상태에서 QL 학습이 특히 유리한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>전체·calm·turbulent의 두 loss와 모든 horizon을 함께 보고 사후 threshold의 표본수를 확인한다.</dd>
+            <dt>저자 보고 결과</dt><dd>QL-trained nonlinear 사양이 높은 변동성 상태의 underprediction을 줄이는 방향이 있으나 결과는 horizon별로 다르다.</dd>
+            <dt>검토자 해석</dt><dd>loss choice는 단순 평가척도가 아니라 학습된 forecast의 상태별 행동을 바꾼다.</dd>
+            <dt>검토자 경계</dt><dd>상태 threshold가 전체표본 quantile이라 실시간 위기전략의 증거가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_regime">p26_regime · PDF 19쪽 · Table 2</a><a class="evidence-chip" href="#locator-p26_ql_figure">p26_ql_figure · PDF 13쪽 · Figure 4</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>직접 연결된 종목의 lagged RV가 own HAR가 놓친 단기 공통충격을 전달하고, QL 학습이 고변동 상태의 과소예측을 더 강하게 교정한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>얕은 graph·QL 사양의 단기 상대 loss 개선과 높은 변동상태의 error 변화가 같은 방향이다(근거: p26_table1, p26_regime).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>공통 시장요인, survivor universe, graph 선택·neural ensemble과 QL positive floor가 개선 일부를 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>선형 GHAR가 own-HAR를 이기지 못하거나 1-layer가 validation과 untouched test 모두에서 GHAR를 개선하지 못하면 한국 GNN 승격을 중단한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_gnn_layer">p26_gnn_layer · PDF 9쪽 · Equation 5</a><a class="evidence-chip" href="#locator-p26_regime">p26_regime · PDF 19쪽 · Table 2</a><a class="evidence-chip" href="#locator-p26_oversmoothing">p26_oversmoothing · PDF 25쪽 · Figure 7</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>여러 horizon·loss·regime, validation 길이, 대체 universe와 depth counterfactual을 비교한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>월간 MSE와 깊은 multi-hop에서 성과가 악화되며 depth superiority가 지지되지 않는다(근거: p26_table1, p26_depth, p26_snp100).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 6-WML 월표본, 실제 target-vol 성과·비용, fully point-in-time universe와 작은 node에서의 neural 안정성은 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>QL은 양수 forecast를 요구하지만 선행판은 neural output의 정확한 positivity link·floor와 모든 seed를 완전히 명시하지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p26_snp100">p26_snp100 · PDF 27쪽 · Table 5</a><a class="evidence-chip" href="#locator-p26_oversmoothing">p26_oversmoothing · PDF 25쪽 · Figure 7</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">다종목 5분 RV HAR</th><td>6-WML 월별 own-HAR</td><td>가장 가까운 단순 persistence baseline을 먼저 고정한다.</td></tr><tr><th scope="row">graphical-lasso GHAR</th><td>training-only shrinkage graph의 선형 GHAR</td><td>graph 증분가치를 neural 비선형성 전에 식별한다.</td></tr><tr><th scope="row">1–3층 GNNHAR</th><td>검증 통과 시 1층 소형 GNN</td><td>원문도 깊은 layer의 일관된 이득을 보여주지 못했다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>RW126·RW252·own HAR/log-HAR·QL-HAR를 공통 origin에 고정한다.</li><li>training returns만으로 축소 graph를 만들고 선형 GHAR를 적합한다.</li><li>HAR→GHAR의 untouched-test loss 개선을 먼저 확인한다.</li><li>통과한 경우 hidden width를 매우 작은 grid에서 validation으로 정해 1-layer GNN을 학습한다.</li><li>MSE/QL training 모두에 같은 positive link·seed policy를 적용한다.</li><li>QLIKE·MSE와 동일 BS15 경제성과를 보고하고 2층 이상은 사전 조건 없이는 실행하지 않는다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>GHAR가 own-HAR의 primary loss를 validation과 final test 모두에서 개선한다.</li><li>1-layer는 GHAR보다 개선하고 random-start 분산·fallback이 사전 한도 안이다.</li><li>월별 경제성과가 비용 후 악화되지 않으며 특정 위기월 하나에만 의존하지 않는다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>QL model이 nonfinite면 positive link·floor·target zero 처리를 먼저 감사한다.</li><li>graph만 실패하면 edge stability·common-factor 중복과 작은 node 수를 확인한다.</li><li>neural만 실패하면 parameter-to-origin 비율·early stopping·seed variance를 기록하고 GHAR 결과를 최종으로 보존한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>HAR/GHAR/GNN nested loss·parameter-count 표</li><li>origin별 adjacency·hyperparameter·seed·epoch audit CSV</li><li>positive forecast·failure·fallback 로그</li><li>동일 BS15 mapping의 예측/경제성 이중 gate 결과</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_graph">p26_graph · PDF 7쪽 · Equation 1 graph convolution</a><a class="evidence-chip" href="#locator-p26_gnn_layer">p26_gnn_layer · PDF 9쪽 · Equation 5</a><a class="evidence-chip" href="#locator-p26_ql">p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</a><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>graph의 가치와 neural 비선형성의 가치는 GHAR를 통해 분리해야 한다.</li><li>얕은 graph·QL의 이득은 주로 단기 horizon에 나타난다.</li><li>깊은 multi-hop는 일관된 추가가치를 보이지 않고 over-smoothing 위험이 있다.</li><li>한국 월별 6-node 자료에서는 선형 GHAR가 우선이며 GNN은 조건부 후속이다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>HAR·GHAR·GNNHAR의 중첩관계를 설명할 수 있다.</li><li>MSE와 QL 학습의 행동차이를 말할 수 있다.</li><li>graph layer와 hop 범위의 관계를 설명할 수 있다.</li><li>depth 결과를 over-smoothing의 후보증거로 제한해 읽을 수 있다.</li><li>한국에서 GNN을 중단해야 할 사전 gate를 정의할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_gnn_layer">p26_gnn_layer · PDF 9쪽 · Equation 5</a><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p26_oversmoothing">p26_oversmoothing · PDF 25쪽 · Figure 7</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 HAR 다음에 바로 3-layer GNN을 비교하면 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> graph 정보, 비선형성, multi-hop depth가 동시에 바뀌어 어떤 요소가 성과를 만든지 알 수 없기 때문이다.</p>
+          <p><strong>왜:</strong> 중첩 비교의 논리를 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_architecture">p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</a><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. Table 1이 ‘GNN은 모든 horizon에서 우월’이라는 주장을 어떻게 반박하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 단기에는 낮은 상대 loss가 있지만 월간 MSE는 여러 GNN 사양에서 1을 넘어 HAR보다 나쁘기 때문이다.</p>
+          <p><strong>왜:</strong> horizon 조건을 보존한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. QL-trained GNN 구현에서 필수지만 선행판에 완전히 닫히지 않은 항목은?</summary>
+          <div class="details-body"><p><strong>정답:</strong> forecast를 양수로 보장하는 link·floor와 모든 random-start seed·횟수다.</p>
+          <p><strong>왜:</strong> 수식이 정의되기 위한 계산재현 조건을 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_ql">p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 미국 다종목 고빈도 RV 선행판에서 얕은 graph·QL 사양은 단기 loss를 개선했지만 월간 MSE와 깊은 multi-hop에서는 우위가 약하거나 악화됐다.</p><p><strong>이렇게 말하면 안 됨:</strong> GNN이 HAR보다 항상 낫고 깊을수록 정확하며 현재 6개 월별 WML로 원형을 재현할 수 있다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p26_table1">p26_table1 · PDF 17쪽 · Table 1</a><a class="evidence-chip" href="#locator-p26_depth">p26_depth · PDF 24쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p26_snp100">p26_snp100 · PDF 27쪽 · Table 5</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>2007-07-01–2021-06-30 LOBSTER DJIA 27개 종목의 5분 realized variance와 일별 종목수익; S&amp;P 100 강건성 표본 [원문 보고]</dd><dt>target</dt><dd>미래 1일·5일합·22일합 realized variance [원문 보고]</dd><dt>information set</dt><dd>각 node의 비중첩 daily·weekly·monthly RV blocks와 training 수익으로 graphical lasso한 adjacency [원문 보고]</dd><dt>lookback</dt><dd>직전 1,000거래일 rolling raw window; HAR 1·5·22일 blocks [원문 보고]</dd><dt>horizon</dt><dd>1, 5, 22거래일 [원문 보고]</dd><dt>model family</dt><dd>HAR, 1-hop GHAR, 1·2·3-layer GNNHAR trained by MSE or QL</dd><dt>training window</dt><dd>각 월 직전 1,000거래일 안의 앞 36개월 training·최근 12개월 validation 뒤 다음 한 달 test</dd><dt>retune</dt><dd>graph sparsity와 GNN hyperparameters를 시간순 validation으로 고르고 매월 rolling 재학습하며 여러 무작위 초기값 forecast를 평균한다.</dd><dt>benchmarks</dt><dd>HAR · GHAR · 1-layer GNNHAR · 2·3-layer GNNHAR</dd><dt>loss / test</dt><dd>MSE · quasi-likelihood loss · Model Confidence Set · modified Diebold–Mariano · calm/turbulent regime loss · S&amp;P 100 및 validation-length robustness</dd><dt>economic metrics</dt><dd>Sharpe·turnover·BS15 scaling은 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래전략을 구성하지 않아 비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>portfolio turnover를 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +223,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>graph·scaler가 training data만 쓰는 prefix test</li><li>train/validation/final-test 날짜 비중복 test</li><li>GNN seed 반복과 forecast 분산 저장 test</li><li>positive forecast·QLIKE finite test</li><li>daily-origin 중첩 target 유입 차단 test</li><li>모든 모형의 BS15 mapping 동일성 test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p26_short_gain</span> 1일 horizon에서 QL-trained 1-layer GNNHAR의 HAR 대비 MSE ratio는 0.867, QL ratio는 0.961로 짧은 horizon의 개선이 나타났다.<p class="meta">sample: DJIA 27개 종목 2011-07–2021-06 OOS · target: 다음 날 realized variance · horizon: 1거래일 · metric: HAR 대비 평균 loss ratio · unit: ratio · comparator: HAR · loss_or_test: MSE and QL</p><p><strong>근거:</strong> p26_table1</p><p><strong>전이 경고:</strong> LOBSTER intraday 종목패널 결과이며 한국 6개 WML 월표본으로 직접 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p26_horizon_boundary</span> graph 이득은 주로 1일·1주에 나타났고 월간에는 약해졌으며, QL-trained 2-layer 사양의 월간 MSE ratio는 1.736으로 HAR보다 악화됐다.<p class="meta">sample: DJIA 27개 종목 OOS · target: 미래 realized variance 합 · horizon: 1·5·22거래일 · metric: HAR 대비 MSE·QL ratio · unit: ratio · comparator: HAR · loss_or_test: horizon-specific out-of-sample loss</p><p><strong>근거:</strong> p26_table1</p><p><strong>전이 경고:</strong> 다음 달 한국 WML은 원문의 가장 약한 장기 구간에 가까우므로 단기 성공만으로 채택하지 않는다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p26_depth_failure</span> 2·3 layer는 1 layer보다 일관되게 낫지 않았고 2-layer 대 1-layer cross-sectional DM p-value는 MSE-trained 0.75, QL-trained 0.40으로 깊이 증가의 우위가 지지되지 않았다.<p class="meta">sample: DJIA 27개 종목 OOS · target: realized variance · horizon: 원문 본문·Figure 6 caption에 명시되지 않음 · metric: layer-depth loss difference · unit: cross-sectional p-value · comparator: 2-layer 대 1-layer GNNHAR · loss_or_test: modified Diebold–Mariano</p><p><strong>근거:</strong> p26_depth</p><p><strong>전이 경고:</strong> 깊은 graph 일반을 반증하지 않지만 6-node 월표본에서 multi-hop 복잡성을 정당화하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Forecasting Realized Volatility with Spillover Effects: Perspectives from Graph Neural Networks — April 2024 preprint</strong><p>프리프린트 · 2024-04 · 41쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 41쪽 April 2024 author preprint 기준이다. 2025년 IJF VOR의 편집·표 수치와 같다고 단정하지 않고 PDF는 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p26_graph</strong> · artifact p26_preprint · PDF 7쪽 · Equation 1 graph convolution · 검증됨</li><li><strong>p26_architecture</strong> · artifact p26_preprint · PDF 10쪽 · Figure 3 and Equation 6 · 검증됨</li><li><strong>p26_ql</strong> · artifact p26_preprint · PDF 12쪽 · Equations 9-10: MSE and QL losses · 검증됨</li><li><strong>p26_design</strong> · artifact p26_preprint · PDF 15쪽 · Rolling training-validation-test design · 검증됨</li><li><strong>p26_table1</strong> · artifact p26_preprint · PDF 17쪽 · Table 1 · 검증됨</li><li><strong>p26_regime</strong> · artifact p26_preprint · PDF 19쪽 · Table 2 · 검증됨</li><li><strong>p26_depth</strong> · artifact p26_preprint · PDF 24쪽 · Figure 6 · 검증됨</li><li><strong>p26_snp100</strong> · artifact p26_preprint · PDF 27쪽 · Table 5 · 검증됨</li><li><strong>p26_ql_figure</strong> · artifact p26_preprint · PDF 13쪽 · Figure 4 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Forecasting Realized Volatility with Spillover Effects: Perspectives from Graph Neural Networks — April 2024 preprint</strong><p>프리프린트 · 2024-04 · 41쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 41쪽 April 2024 author preprint 기준이다. 2025년 IJF VOR의 편집·표 수치와 같다고 단정하지 않고 PDF는 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p26_graph"><strong>p26_graph</strong> · artifact p26_preprint · PDF 7쪽 · Equation 1 graph convolution · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_architecture"><strong>p26_architecture</strong> · artifact p26_preprint · PDF 10쪽 · Figure 3 and Equation 6 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_ql"><strong>p26_ql</strong> · artifact p26_preprint · PDF 12쪽 · Equations 9-10: MSE and QL losses · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_design"><strong>p26_design</strong> · artifact p26_preprint · PDF 15쪽 · Rolling training-validation-test design · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_table1"><strong>p26_table1</strong> · artifact p26_preprint · PDF 17쪽 · Table 1 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_regime"><strong>p26_regime</strong> · artifact p26_preprint · PDF 19쪽 · Table 2 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_depth"><strong>p26_depth</strong> · artifact p26_preprint · PDF 24쪽 · Figure 6 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_snp100"><strong>p26_snp100</strong> · artifact p26_preprint · PDF 27쪽 · Table 5 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_ql_figure"><strong>p26_ql_figure</strong> · artifact p26_preprint · PDF 13쪽 · Figure 4 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_gnn_layer"><strong>p26_gnn_layer</strong> · artifact p26_preprint · PDF 9쪽 · Equation 5 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p26_oversmoothing"><strong>p26_oversmoothing</strong> · artifact p26_preprint · PDF 25쪽 · Figure 7 · 검증됨 · <a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>preprint의 다종목 intraday RV에서 graph·QL 개선은 주로 짧은 horizon에 나타났고 깊은 layer는 일관된 추가이득을 보이지 않았다.</strong><p>이유: Table 1과 Figure 6 및 S&amp;P 100 강건성이 같은 경계를 보인다. · 교정: 판본·데이터·horizon·layer를 함께 적는다. · 근거: p26_table1 · p26_depth · p26_snp100</p></li><li><strong>한국에서는 QLIKE·시간순 validation·단순 GHAR 우선을 채택할 수 있다.</strong><p>이유: 원문 설계는 loss와 복잡성의 증분을 분리한다. · 교정: GNN 자체는 추가자료 후속확장으로 둔다. · 근거: p26_ql · p26_design</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>GNN은 HAR보다 항상 우월하고 layer가 깊을수록 좋다.</strong><p>이유: 월간 악화와 2·3 layer의 비유의·over-smoothing 결과가 있다. · 교정: horizon·loss·depth별 실패를 함께 보고한다. · 근거: p26_table1 · p26_depth</p></li><li><strong>6개 WML만으로 원문의 intraday stock graph를 재현했다.</strong><p>이유: node 의미·target 빈도·표본규모가 모두 다르다. · 교정: lagged 6-WML adaptation으로 명명한다. · 근거: p26_graph · p26_design</p></li><li><strong>QLIKE 개선은 Sharpe·최악월 개선을 보장한다.</strong><p>이유: 원문은 투자수익과 거래비용을 평가하지 않는다. · 교정: 동일 BS15 mapping의 경제성과를 별도 검정한다. · 근거: p26_ql · p26_table1</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>2025년 IJF 최종판과 April 2024 preprint의 표·수치 변경은 이 레코드에서 판본 간 대조하지 않았다.</li><li>LOBSTER 원자료·저자 코드·optimizer와 정확한 1,000일 대 36+12개월 정렬의 계산 재현은 근거 범위 밖이다.</li></ul>

@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/14/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Exploiting Intraday Decompositions in Realized Volatility Forecasting - A Forecast Reconciliation Approach · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,177 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>정확한 합계 제약을 가진 일중 변동성 구성요소를 따로 예측해 reconcile하는 후속확장 문헌이며, 6개 WML 자체를 임의로 묶는 근거는 아니다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>positive·negative 또는 partial variance의 합이 total variation과 정확히 맞을 때</li><li>bottom-up과 MinT-shrinkage의 증분을 비교할 때</li><li>고변동기 decomposition 이득을 진단할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>1분 자료 없이 원형 partial/time hierarchy를 구현했다고 할 때</li><li>서로 다른 여섯 WML forecast를 합계 제약 없이 reconcile할 때</li><li>QLIKE 개선을 WML Sharpe 개선으로 바꿔 말할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>총위험을 직접 한 번 예측하는 대신, 정확히 합쳐져 총위험이 되는 구성요소를 따로 예측한 뒤 합계 일관성을 회복하면 더 많은 정보를 쓰면서도 모순된 forecast를 피할 수 있다. 이 논문은 decomposition과 coherence를 하나의 실험으로 묶는다.</p></article>
+            <article><h3>중심 질문</h3><p>일중수익을 부호·크기·시간구간으로 분해해 구성요소를 예측하고, bottom-up 또는 MinT-shr로 daily RV와 정확히 일치시키면 direct HAR보다 MSE·QLIKE가 낮아지는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>RV decomposition 연구는 구성요소의 예측력을 보지만, 각 component forecast의 합이 total forecast와 달라지는 incoherence를 자주 남긴다. 반대로 forecast reconciliation 연구는 금융의 일중 부호·크기 정보를 충분히 활용하지 않았다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자들은 DJIA와 26개 종목의 1분수익으로 total RV를 sign, empirical-quantile partial variance, time bin으로 정확히 분해한다. total과 component에 같은 HAR를 맞춘 뒤 component 합만 쓰는 bottom-up과, total·bottom forecast error covariance를 shrinkage로 결합하는 MinT-shr를 비교한다. 26개 종목의 QLIKE에서 세 partial-variance reconciliation이 강하지만 DJIA 지수에서는 loss에 따라 순위가 뒤집히고 더 큰 time×PV hierarchy의 추가이익은 작다. 한국 일별 WML에는 positive·negative 제곱수익의 정확한 합만 적응할 수 있으며 합계관계가 없는 여섯 WML 자체를 reconcile하면 안 된다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>total RV를 합계가 정확히 보존되는 components로 나눈다.</h3>
+          <p>부호, 표준화된 일중수익 크기, 시간구간별 제곱수익은 다시 합치면 원 total RV가 되는 구조를 만든다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>top과 bottom을 같은 HAR 구조로 각각 예측한다.</h3>
+          <p>direct total HAR와 component별 HAR를 만들어 architecture 차이가 아니라 decomposition 정보의 가치를 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>forecast coherence를 복원한다.</h3>
+          <p>bottom-up은 component를 단순 합하고 MinT-shr는 top과 bottom base forecast를 error covariance로 절충해 constraint를 만족시킨다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>loss와 horizon별로 reconciliation의 이득을 검정한다.</h3>
+          <p>1·5·22일 MSE·QLIKE, DM·MCS를 함께 보며 종목 평균과 DJIA 지수의 차이를 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>더 큰 hierarchy의 한계로 parsimony를 판정한다.</h3>
+          <p>time과 partial variance를 교차한 복잡한 hierarchy가 단순 PV(3)shr보다 명확히 낫지 않은지 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>coherent forecast</h3>
+          <p><strong>쉽게 말하면</strong><br>구성요소 예측을 모두 더한 값이 총계 예측과 정확히 같은 forecast다.</p>
+          <p><strong>논문 안의 역할</strong><br>관측자료의 선형 합계제약을 forecast에도 강제한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>상관이 높은 series를 임의로 묶는 것이 아니라 실제 항등식이 있어야 한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a></div>
+        </article><article class="section-card concept-card">
+          <h3>bottom-up</h3>
+          <p><strong>쉽게 말하면</strong><br>아래 구성요소를 각각 예측한 뒤 단순히 합쳐 총계를 만드는 방식이다.</p>
+          <p><strong>논문 안의 역할</strong><br>component 정보는 쓰지만 별도 direct total forecast는 버린다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>항상 MinT보다 열등하거나 component 오차가 서로 상쇄된다는 보장은 없다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a></div>
+        </article><article class="section-card concept-card">
+          <h3>MinT-shr</h3>
+          <p><strong>쉽게 말하면</strong><br>total과 component forecast를 과거 오차공분산에 따라 가중해 합계가 맞도록 조정하는 방식이다.</p>
+          <p><strong>논문 안의 역할</strong><br>forecast-error variance를 줄이는 선형 reconciliation을 shrinkage covariance로 안정화한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>여섯 WML 사이에 합계항등식이 없는데도 적용할 수 있는 일반 앙상블이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a></div>
+        </article><article class="section-card concept-card">
+          <h3>partial variance PV(3)</h3>
+          <p><strong>쉽게 말하면</strong><br>그날 일중수익을 작은·중간·큰 크기 영역 세 개로 나눈 제곱수익 구성요소다.</p>
+          <p><strong>논문 안의 역할</strong><br>큰 shock와 평상 변동의 서로 다른 dynamics를 HAR 입력으로 보존한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>일별 WML 양·음 제곱 두 개만으로 원문의 1분 PV(3)를 재현할 수 없다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>forecast reconciliation · 관측벡터 y가 만족하는 합계제약 C y=0을 forecast에도 강제하도록 base forecast를 structural summing matrix S와 조정행렬 G로 투영한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>C y_t = 0; reconciled_y_hat = S G y_hat_base</code></pre>
+                <dl class="symbol-grid"><dt><code>C</code></dt><dd>총계와 구성요소 사이 제약행렬</dd><dt><code>S</code></dt><dd>bottom series에서 전체 hierarchy를 만드는 합산행렬</dd><dt><code>G</code></dt><dd>base forecasts를 bottom-level coherent forecast로 바꾸는 가중행렬</dd><dt><code>y_hat_base</code></dt><dd>서로 일치하지 않을 수 있는 top·bottom 예측</dd></dl>
+                <p><strong>직관:</strong> 총위험 직접예측과 세부위험 예측의 장점을 과거 오차 신뢰도에 따라 결합하되 합계 모순은 남기지 않는다.</p>
+                <p><strong>구현할 때:</strong> 각 origin에서 과거 one-step errors만으로 covariance를 추정하고 C·S의 rank, column order, reconciled constraint를 unit test한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>daily sign adaptation identity · 한 WML의 일별 제곱수익은 상승일 제곱수익과 하락일 제곱수익의 정확한 합이다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>r_d^2 = r_d^2 I(r_d &gt;= 0) + r_d^2 I(r_d &lt; 0)</code></pre>
+                <dl class="symbol-grid"><dt><code>r_d</code></dt><dd>일별 WML return</dd><dt><code>I</code></dt><dd>부호조건을 만족하면 1인 indicator</dd></dl>
+                <p><strong>직관:</strong> 현재 자료에서도 최소한의 coherent hierarchy를 만들 수 있지만 intraday 크기·시간 정보는 없다.</p>
+                <p><strong>구현할 때:</strong> 여섯 WML별로 독립 hierarchy를 만들고 WML끼리 합산제약을 꾸며내지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>DJIA index와 26개 구성종목의 2003–2022 1분 adjusted price를 사용한다.</li><li>일별 RV를 sign, fixed quantile-size, 다섯 시간구간으로 분해한다.</li><li>한국 일별 WML adaptation은 sign 두 구성요소만 관측한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>target은 미래 1·5·22일 평균 daily RV의 direct forecast다.</li><li>HAR feature는 lagged daily·5일·22일 평균이고 1,007일 estimation window와 다르다.</li><li>component quantile·covariance는 각 origin의 과거 window만으로 계산해야 한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>각 top·bottom series에 OLS HAR를 fixed 1,007-day rolling window로 적합한다.</li><li>MinT-shr covariance는 window 안 one-step in-sample errors로 추정한다.</li><li>10/75% PV thresholds와 hierarchy를 사전 고정하고 대안은 robustness로만 둔다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE·QLIKE ratio, one-sided DM, 80% MCS, rank comparison을 함께 본다.</li><li>overlapping 5·22일 target에는 block/HAC dependence를 반영한다.</li><li>forecast coherence를 통과한 뒤에만 BS15 경제성과를 별도 평가한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 4</p><h3>평균적으로 decomposition·reconciliation이 HAR를 개선하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>DJIA와 26-stock average를 나누고 h=1·5·22의 MSE·QLIKE ratio가 1 아래인지 본 뒤 loss 간 충돌을 찾는다.</dd>
+            <dt>저자 보고 결과</dt><dd>종목의 PV(3)shr는 모든 열에서 1 아래·최저지만 DJIA h=1 direct PV는 MSE 0.816, QLIKE 2.272로 판정이 반대다.</dd>
+            <dt>검토자 해석</dt><dd>reconciliation의 효용은 자산과 loss에 조건부이며 QLIKE를 반드시 병기해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>average ratio가 모든 개별종목 개선을 뜻하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 5–7</p><h3>여러 종목과 forecast horizon에서 개선이 통계적으로 넓게 반복되는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>각 horizon에서 DM 유의 종목 수와 MCS 포함 수를 loss별로 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>PV(3)shr의 종목 QLIKE 개선은 h=5·22에도 넓지만 MSE 유의성은 훨씬 약하다.</dd>
+            <dt>검토자 해석</dt><dd>underprediction에 민감한 QLIKE에서 component 정보가 특히 가치 있을 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>5·22일 target은 중첩되어 loss differential 의존이 생기므로 block 또는 HAC 세칙을 사전에 고정해야 한다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 8</p><h3>더 많은 time×size components가 더 좋은가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>복합 hierarchy의 loss ratio를 단순 PV(3)shr와 직접 비교해 추가 node 수에 비례한 개선이 있는지 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>복잡 hierarchy는 단순 PV와 비슷하고 뚜렷한 추가이익이 작다.</dd>
+            <dt>검토자 해석</dt><dd>coherence는 유용하지만 hierarchy 크기는 parsimony gate를 통과해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>같은 OOS에서 여러 hierarchy를 탐색했으므로 사후 winner로 고정하면 안 된다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>큰·작은·부호별 shock가 서로 다른 persistence를 가져 total HAR가 평균내 버리는 정보를 제공한다.</li><li>reconciliation은 noisy components와 direct total forecast를 오차공분산에 따라 절충해 incoherence와 variance를 줄인다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>종목 QLIKE에서 PV(3)shr가 여러 horizon에 걸쳐 강한 것은 component 정보와 coherence의 결합과 일치한다.</li><li>복합 hierarchy의 추가이익이 작다는 결과는 정보보다 과다차원 오차가 빠르게 커질 수 있음을 보인다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>fixed PV thresholds와 미국 대형주 intraday liquidity가 결과를 만들 수 있다.</li><li>one-step error covariance를 multi-step reconciliation에 쓰는 근사가 특정 horizon에 유리할 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>한국 daily-sign bottom-up·MinT가 direct HAR보다 동일-origin QLIKE를 낮추지 못하면 coarse decomposition 가설을 기각한다.</li><li>coherence는 맞지만 경제성과가 악화되면 forecast-to-scaling 전달채널은 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>여러 horizon, MSE·QLIKE, DM·MCS, subperiod와 alternative thresholds를 본다.</li><li>direct·bottom-up·MinT-shr를 같은 HAR base 구조에서 비교한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>DJIA 지수에서 loss 충돌이 크고 복잡 hierarchy의 증분이 작다.</li><li>고변동 subperiod 우위는 사후 기간분석이다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 WML, 거래비용·Sharpe와 일별 coarse decomposition은 직접 시험하지 않았다.</li><li>일중 microstructure correction과 hierarchy 선택의 untouched holdout이 없다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>Table 6·7 note 일부의 &#x27;1-step&#x27; 표기가 본문의 h=5·22 설계와 충돌하므로 horizon은 표 제목·열 정의·본문 설명을 함께 확인해야 한다.</li><li>거래시간 표기와 390 one-minute observations의 시각정의가 불분명하다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">1분 PV(3) components</th><td>일별 WML positive/negative squared-return components</td><td>현재 자료에서 exact sum을 만족하는 최소 적응이다.</td></tr><tr><th scope="row">direct HAR·bottom-up·MinT-shr</th><td>여섯 WML별 세 forecast path</td><td>관측상 exact sum인 합계관계는 여섯 전략 사이가 아니라 각 WML의 내부 components에만 적용한다.</td></tr><tr><th scope="row">1·5·22일 RV</th><td>다음 22거래일 WML variance</td><td>월간 본선 target과 horizon을 통일한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>일별 WML 제곱이 positive+negative components와 일치하는지 확인한다.</li><li>각 component와 total에 동일 causal HAR features를 만든다.</li><li>direct·bottom-up·MinT-shr를 같은 rolling origin에서 예측한다.</li><li>S matrix·C matrix의 rank와 reconciled equality를 unit test한다.</li><li>MSE·QLIKE·DM/MCS를 overlapping 22-day dependence와 함께 계산한다.</li><li>동일 forecast를 BS15 scaling에 넣어 경제성과·turnover를 비교한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>모든 일·origin에서 total-component 합 오차가 machine tolerance 이하다.</li><li>MinT weight는 과거 forecast error만 사용하고 reconciliation 후 제약오차가 0이다.</li><li>direct HAR 대비 QLIKE 개선이 다수 WML에서 나타나며 비용 후 성과를 악화시키지 않는다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>bottom-up만 실패하면 한 component의 noisy forecast와 상쇄 부족을 점검한다.</li><li>MinT만 실패하면 covariance sample size·shrinkage·matrix rank를 진단한다.</li><li>QLIKE만 개선되고 MSE가 악화되면 underprediction 교정과 극단월 영향을 분리한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>component identity와 matrix 제약 unit-test 보고서</li><li>direct·bottom-up·MinT OOS loss 표</li><li>component별 forecast 기여와 위기월 그림</li><li>BS15 경제성과 및 복잡도 비용표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>핵심은 decomposition보다 exact aggregation과 coherence다.</li><li>PV(3)shr는 종목 QLIKE에서 강하지만 loss·자산별 예외가 있다.</li><li>더 큰 hierarchy가 자동으로 더 좋지 않다.</li><li>estimation window와 HAR feature lag를 구분해야 한다.</li><li>합계관계 없는 여섯 WML을 서로 reconcile하면 안 된다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>bottom-up과 MinT-shr를 구분한다.</li><li>coherence에 exact identity가 필요한 이유를 설명한다.</li><li>Table 4의 loss conflict를 말할 수 있다.</li><li>1,007일 estimation과 1/5/22 feature를 구분한다.</li><li>복잡 hierarchy의 parsimony 한계를 설명한다.</li><li>daily-sign adaptation의 자료한계를 명시한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. coherent forecast란 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> component forecasts의 합이 total forecast와 관측자료의 합계제약을 정확히 만족하는 forecast다.</p>
+          <p><strong>왜:</strong> 관측자료의 합계구조를 forecast에도 보존하는 것이 reconciliation의 직접적인 목적이기 때문이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. Table 4의 DJIA direct PV는 좋은 모형인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> MSE로는 좋아 보이지만 QLIKE는 크게 악화돼 loss에 따라 답이 다르다.</p>
+          <p><strong>왜:</strong> 단일 loss winner를 일반화하면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 왜 여섯 WML을 한 MinT hierarchy로 묶으면 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 서로를 더해 하나의 관측 total이 되는 exact sum identity가 없기 때문이다.</p>
+          <p><strong>왜:</strong> 전략들 사이의 상관관계는 관측자료에 존재하는 정확한 선형 합계제약을 대신할 수 없기 때문이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> DJIA·26종목의 intraday exact-sum components를 활용한 reconciliation은 특히 종목 QLIKE에서 강했지만 지수·loss별 예외가 있고 더 복잡한 hierarchy의 추가이익은 제한적이었다.</p><p><strong>이렇게 말하면 안 됨:</strong> 일별 WML sign 분해를 원문의 1분 PV(3) 재현이라 하거나, 합계관계 없는 여섯 WML을 MinT로 묶으며 QLIKE 개선이 Sharpe 개선을 보장한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p14_data">p14_data · PDF 12쪽 · One-minute data and exact component hierarchies</a><a class="evidence-chip" href="#locator-p14_design">p14_design · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE</a><a class="evidence-chip" href="#locator-p14_reconcile">p14_reconcile · PDF 8쪽 · Forecast reconciliation and MinT equations</a><a class="evidence-chip" href="#locator-p14_table4">p14_table4 · PDF 20쪽 · Table 4</a><a class="evidence-chip" href="#locator-p14_table5">p14_table5 · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p14_table6">p14_table6 · PDF 23쪽 · Table 6</a><a class="evidence-chip" href="#locator-p14_table7">p14_table7 · PDF 24쪽 · Table 7</a><a class="evidence-chip" href="#locator-p14_table8">p14_table8 · PDF 28쪽 · Table 8</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>DJIA 지수와 26개 구성주식의 조정 1분 가격, 2003년 초–2022년 6월 말 4,908 full trading days [원문 보고]</dd><dt>target</dt><dd>daily realized variance의 direct 1·5·22일 forecast와 정의상 합이 같은 bottom components [원문 보고]</dd><dt>information set</dt><dd>origin까지의 daily total·semivariance·partial variance·시간대 component history와 HAR 1·5·22일 lag [원문 보고]</dd><dt>lookback</dt><dd>HAR feature는 1·5·22일; 모수추정은 별도 1,007일 rolling window [원문 보고]</dd><dt>horizon</dt><dd>1·5·22일 direct forecast [원문 보고]</dd><dt>model family</dt><dd>component-level HAR, bottom-up, MinT-shrinkage forecast reconciliation, direct SV와 PV(3)</dd><dt>training window</dt><dd>2003-01-02–2006-12-29의 1,007일을 시작으로 같은 길이의 rolling window를 사용한다.</dd><dt>retune</dt><dd>각 origin에서 component HAR와 reconciliation error covariance를 rolling history로 갱신한다.</dd><dt>benchmarks</dt><dd>top-level direct HAR · direct signed-semivariance model · direct PV(3) · bottom-up component forecasts</dd><dt>loss / test</dt><dd>MSE · QLIKE · HAR 대비 loss ratio · one-sided Diebold–Mariano · 80% Model Confidence Set · MCB Nemenyi test · 22일 block과 10,000 bootstrap MCS</dd><dt>economic metrics</dt><dd>투자수익·Sharpe·turnover는 보고되지 않는다.</dd><dt>trading costs</dt><dd>거래전략을 구성하지 않아 거래비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 비중과 회전율을 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +214,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>component 합이 total target과 수치적으로 일치하는 coherence test</li><li>여섯 WML 사이 reconciliation을 차단하는 target-identity test</li><li>reconciliation covariance가 origin 이후를 참조하지 않는 prefix test</li><li>1분 원형과 daily-sign adaptation 라벨을 구분하는 provenance-free method test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p14_pv3</span> 26개 개별주식 평균에서 reconciliation형 PV(3)shr는 모든 1·5·22일 MSE·QLIKE ratio가 1보다 작고 각 열 최저로 보고됐다.<p class="meta">sample: 26개 DJIA 구성주식의 2007–2022 OOS · target: daily RV의 1·5·22일 direct forecast · horizon: 1·5·22일 · metric: HAR 대비 MSE·QLIKE ratio · unit: HAR=1인 상대비율 · comparator: direct HAR·SV·PV(3), bottom-up과 MinT-shr · loss_or_test: MSE와 QLIKE</p><p><strong>근거:</strong> p14_table4</p><p><strong>전이 경고:</strong> 1분 partial-variance hierarchy를 쓴 결과이며 일별 WML 부호분해와 같지 않다.</p></li><li><span class="badge">author_result</span> <span class="badge">p14_loss_reversal</span> DJIA 지수의 1일 direct PV(3)는 MSE ratio 0.816이지만 QLIKE ratio 2.272로, 같은 모형의 판정이 loss에 따라 뒤집혔다.<p class="meta">sample: DJIA 지수의 2007–2022 OOS · target: 다음날 daily RV · horizon: 1일 · metric: HAR 대비 MSE와 QLIKE ratio · unit: 상대비율 · comparator: direct HAR · loss_or_test: MSE·QLIKE</p><p><strong>근거:</strong> p14_table4</p><p><strong>전이 경고:</strong> 단일 loss로 모형 채택을 결정하지 말라는 반례이며 경제성과와도 별개다.</p></li><li><span class="badge">author_result</span> <span class="badge">p14_long</span> h=5와 h=22에서 PV(3)shr의 HAR 대비 QLIKE 개선은 각각 24/26, 22/26 종목에서 DM 유의로 보고됐지만 MSE 유의성은 훨씬 약했다.<p class="meta">sample: 26개 DJIA 구성주식 OOS · target: 5일·22일 평균 RV · horizon: 5·22일 · metric: 유의한 개선 종목 수 · unit: 26개 중 종목 개수 · comparator: direct HAR · loss_or_test: one-sided DM under QLIKE and MSE</p><p><strong>근거:</strong> p14_table6 · p14_table7</p><p><strong>전이 경고:</strong> overlapping horizon과 주식패널의 결과이며 한국 월별 WML에 별도 검정이 필요하다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p14_complexity</span> time hierarchy와 partial variance를 함께 쓴 더 복잡한 hierarchy는 단순 PV(3)shr보다 뚜렷한 추가 개선이 작았다.<p class="meta">sample: DJIA 지수·구성주식 OOS · target: daily RV · horizon: 1·5·22일 · metric: relative forecast loss · unit: loss ratio · comparator: 단순 PV(3)shr · loss_or_test: Table 8 MSE·QLIKE 비교</p><p><strong>근거:</strong> p14_table8</p><p><strong>전이 경고:</strong> 구성요소를 더 늘리는 것 자체가 성과를 보장하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Exploiting Intraday Decompositions in Realized Volatility Forecasting: A Forecast Reconciliation Approach — arXiv v1 author preprint</strong><p>프리프린트 · 2023-06-06 · 66쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 4e4dfc8464e235666ff76e0ea39c0d405406ca0663ef2a2ccaeed0703ba6055b</p><p>근거 위치와 수치는 2023년 arXiv 선행판 기준이다. 최종 JFEC 조판본의 locator로 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p14_reconcile</strong> · artifact p14_preprint · PDF 8쪽 · Forecast reconciliation and MinT equations · 검증됨</li><li><strong>p14_data</strong> · artifact p14_preprint · PDF 12쪽 · One-minute data and exact component hierarchies · 검증됨</li><li><strong>p14_design</strong> · artifact p14_preprint · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE · 검증됨</li><li><strong>p14_table4</strong> · artifact p14_preprint · PDF 20쪽 · Table 4 · 검증됨</li><li><strong>p14_table5</strong> · artifact p14_preprint · PDF 22쪽 · Table 5 · 검증됨</li><li><strong>p14_table6</strong> · artifact p14_preprint · PDF 23쪽 · Table 6 · 검증됨</li><li><strong>p14_table7</strong> · artifact p14_preprint · PDF 24쪽 · Table 7 · 검증됨</li><li><strong>p14_table8</strong> · artifact p14_preprint · PDF 28쪽 · Table 8 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Exploiting Intraday Decompositions in Realized Volatility Forecasting: A Forecast Reconciliation Approach — arXiv v1 author preprint</strong><p>프리프린트 · 2023-06-06 · 66쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 4e4dfc8464e235666ff76e0ea39c0d405406ca0663ef2a2ccaeed0703ba6055b</p><p>근거 위치와 수치는 2023년 arXiv 선행판 기준이다. 최종 JFEC 조판본의 locator로 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p14_reconcile"><strong>p14_reconcile</strong> · artifact p14_preprint · PDF 8쪽 · Forecast reconciliation and MinT equations · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p14_data"><strong>p14_data</strong> · artifact p14_preprint · PDF 12쪽 · One-minute data and exact component hierarchies · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p14_design"><strong>p14_design</strong> · artifact p14_preprint · PDF 17쪽 · Rolling window, OOS design, MSE and QLIKE · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p14_table4"><strong>p14_table4</strong> · artifact p14_preprint · PDF 20쪽 · Table 4 · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p14_table5"><strong>p14_table5</strong> · artifact p14_preprint · PDF 22쪽 · Table 5 · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p14_table6"><strong>p14_table6</strong> · artifact p14_preprint · PDF 23쪽 · Table 6 · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p14_table7"><strong>p14_table7</strong> · artifact p14_preprint · PDF 24쪽 · Table 7 · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p14_table8"><strong>p14_table8</strong> · artifact p14_preprint · PDF 28쪽 · Table 8 · 검증됨 · <a href="https://arxiv.org/pdf/2306.02952v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>검증한 저자 선행판에서는 정확한 합계 hierarchy의 partial-variance forecasts를 reconcile한 PV(3)shr가 특히 개별주식 QLIKE에서 강했다.</strong><p>이유: 방법의 coherence 조건과 Tables 4–7이 함께 제시된다. · 교정: 1분 자료, 26개 주식, horizon·loss와 선행판을 붙인다. · 근거: p14_reconcile · p14_data · p14_table4 · p14_table6 · p14_table7</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>현재 일별 WML로 원 논문의 partial/time hierarchy를 재현할 수 있다.</strong><p>이유: 원형에는 거래일당 390개의 1분 관측과 정확한 time hierarchy가 필요하다. · 교정: daily-sign adaptation과 원형을 분리한다. · 근거: p14_data</p></li><li><strong>여섯 WML forecast를 MinT로 합치면 원 논문의 forecast reconciliation이다.</strong><p>이유: 여섯 전략은 합이 하나의 total series가 되는 hierarchy가 아니다. · 교정: 각 WML 내부의 정의상 component 합에만 적용한다. · 근거: p14_reconcile</p></li><li><strong>PV(3)shr는 모든 자산·loss·horizon에서 단독 winner다.</strong><p>이유: 지수 h=1의 MSE와 QLIKE 판정이 반대로 움직였다. · 교정: loss·자산·horizon별 수치를 함께 보고한다. · 근거: p14_table4</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>최종 JFEC 조판본과 2023년 선행판의 전 표·부록 판본대조 및 1분 원자료 기반 독립 재현은 이 레코드 범위에 포함되지 않는다.</li></ul>

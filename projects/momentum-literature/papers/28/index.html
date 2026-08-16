@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/28/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Multivariate Volatility Forecasts for Stock Market Indices · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,186 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>6개 WML 공동예측의 첫 모델은 GNN이 아니라 축소형 선형 multivariate HAR여야 하며, 단변량·다변량 우위가 horizon·창에 따라 바뀌는 반증까지 함께 쓰는 forecast 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>6개 WML의 다른 구성 과거분산이 증분정보를 주는지 시험할 때</li><li>univariate HAR와 multivariate HAR를 같은 horizon에서 비교할 때</li><li>ordered lasso보다 단순 dwm 제약을 우선할 근거가 필요할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>다변량이 모든 horizon·창에서 우월하다고 주장할 때</li><li>6개 WML 계수를 인과적 시장 spillover로 해석할 때</li><li>옵션 IV·jump 자료 없이 원형 24개 조합을 재현했다고 말할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>6개 WML 위험은 서로 비슷하게 움직일 수 있지만 cross-series 정보를 넣으면 파라미터가 급증한다. 이 논문은 단순 HAR, lag selection, 다변량 정보, jump와 option-implied variance를 조합해 복잡성이 언제 실제로 필요한지 보여 준다.</p></article>
+            <article><h3>중심 질문</h3><p>국제지수의 realized variance를 예측할 때 다른 시장의 정보와 IV·jump·긴 lag를 추가하면 어느 horizon에서 단순 own-HAR보다 좋아지는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>다변량·IV·jump·lag selection은 각각 연구됐지만 predictor set, lag restriction, univariate/multivariate와 horizon을 같은 rolling OOS에서 완전교차한 비교는 부족했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>1년 rolling 주결과에서는 단기 horizon에 univariate, 더 긴 horizon에 multivariate가 유리하고 IV 추가와 단순 day-week-month HAR가 경쟁력 있다. 그러나 ordered lasso는 일관되게 HAR를 이기지 못하고, 5년창의 h=22 winner는 univariate JC로 바뀐다. 이는 ‘월간이면 joint model’이라는 규칙을 반증한다. 한국 6개 WML에는 graph/GNN 전에 own-HAR→cross-mean HAR→ridge multivariate HAR의 선형 축소경로를 제공하지만, option·jump 자료가 없는 현재 결과는 cross-configuration 정보의 적응실험이다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_har">p28_har · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure</a><a class="evidence-chip" href="#locator-p28_predictors">p28_predictors · PDF 5쪽 · Table 1 and predictor/spillover interpretation</a><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a><a class="evidence-chip" href="#locator-p28_five_year">p28_five_year · PDF 15쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>세 모델축을 완전교차한다.</h3>
+          <p>RV/JC/IV predictor set, 고정 HAR/ordered-lasso lag, univariate/multivariate를 조합해 각 요소의 증분가치를 분리한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_predictors">p28_predictors · PDF 5쪽 · Table 1 and predictor/spillover interpretation</a><a class="evidence-chip" href="#locator-p28_predictor_equations">p28_predictor_equations · PDF 4쪽 · Equations 4-7</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>여러 horizon을 direct forecast한다.</h3>
+          <p>같은 rolling window에서 단기부터 장기까지 각 horizon을 별도 회귀해 cross-market 정보의 horizon별 가치를 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_design">p28_design · PDF 6쪽 · Data and 252-day rolling design</a><a class="evidence-chip" href="#locator-p28_direct_results">p28_direct_results · PDF 7쪽 · Direct forecast horizons and modified-DM comparison</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>평균 OOS loss와 MCS로 주권고를 만든다.</h3>
+          <p>시장평균 MAFE 최소와 superior set을 구분해 단기 univariate·장기 multivariate·단순 HAR라는 패턴을 도출한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>lag flexibility가 정말 필요한지 시험한다.</h3>
+          <p>monotone ordered lasso와 post-lasso forecast combination을 고정 3-block HAR와 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_ordered_lasso">p28_ordered_lasso · PDF 14쪽 · Equation 9 and Appendix A</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>긴 추정창으로 결론의 경계를 찾는다.</h3>
+          <p>5년 rolling에서 중간 장기 horizon의 winner가 univariate로 바뀌는 셀을 보존해 multivariate 권고가 window에 조건부임을 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_five_year">p28_five_year · PDF 15쪽 · Table 6</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>day-week-month HAR</h3>
+          <p><strong>쉽게 말하면</strong><br>최근 하루, 일주일, 한 달의 위험을 세 덩어리로 압축한 선형모형이다.</p>
+          <p><strong>논문 안의 역할</strong><br>22개의 자유로운 lag를 세 계수로 줄여 짧은 rolling window에서도 안정성을 얻는다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>모든 lag를 버리는 단순 평균이나 일반 중첩블록과 자동으로 같은 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_har">p28_har · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure</a></div>
+        </article><article class="section-card concept-card">
+          <h3>direct multi-horizon forecast</h3>
+          <p><strong>쉽게 말하면</strong><br>하루 모델을 여러 번 반복하지 않고 각 horizon의 미래값을 직접 예측한다.</p>
+          <p><strong>논문 안의 역할</strong><br>horizon마다 계수와 정보가 달라질 수 있어 순위전환을 허용한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>긴 horizon의 overlapping error를 독립관측으로 검정해도 된다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_direct_results">p28_direct_results · PDF 7쪽 · Direct forecast horizons and modified-DM comparison</a></div>
+        </article><article class="section-card concept-card">
+          <h3>multivariate HAR</h3>
+          <p><strong>쉽게 말하면</strong><br>내 시장의 과거뿐 아니라 다른 시장들의 HAR block도 함께 넣는 모형이다.</p>
+          <p><strong>논문 안의 역할</strong><br>긴 horizon에서 cross-market 공통성의 증분예측력을 시험한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>계수가 인과적 shock transmission을 증명하거나 항상 own-HAR보다 낫다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_predictor_equations">p28_predictor_equations · PDF 4쪽 · Equations 4-7</a><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a></div>
+        </article><article class="section-card concept-card">
+          <h3>ordered lasso</h3>
+          <p><strong>쉽게 말하면</strong><br>먼 lag의 계수가 가까운 lag보다 커지지 않도록 순서를 제약하며 변수를 고르는 방법이다.</p>
+          <p><strong>논문 안의 역할</strong><br>22 lag의 유연성을 유지하면서 monotone decay prior로 차원을 줄인다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>실제 volatility memory가 반드시 단조감쇠하거나 lasso가 HAR보다 늘 우월하다는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_ordered_lasso">p28_ordered_lasso · PDF 14쪽 · Equation 9 and Appendix A</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 2–3 · 최근 하루, 최근 5일 평균, 최근 22일 평균이라는 서로 겹치는 세 성분으로 오늘의 로그 RV를 설명한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>LRV_t^(i)=β_d LRV_{t−1}^(i)+β_w(1/5)Σ_{k=1}^{5}LRV_{t−k}^(i)+β_m(1/22)Σ_{k=1}^{22}LRV_{t−k}^(i)+ε_t^(i).</code></pre>
+                <dl class="symbol-grid"><dt><code>LRV_t^(i)</code></dt><dd>시장 i의 t일 로그 실현분산</dd><dt><code>β_d</code></dt><dd>직전 하루 로그 RV 계수</dd><dt><code>β_w</code></dt><dd>최근 5일 겹침평균 계수</dd><dt><code>β_m</code></dt><dd>최근 22일 겹침평균 계수</dd></dl>
+                <p><strong>직관:</strong> 서로 다른 투자 horizon의 지속성을 작은 파라미터 수로 근사한다.</p>
+                <p><strong>구현할 때:</strong> 한국 adaptation에서도 1·5·22일이 서로 겹치는 최근창임을 고정하고, origin 이후 날짜가 섞이지 않는 index test를 둔다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_har">p28_har · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 7 · 각 시장의 각 lag별 log jump·log continuous·log implied-volatility 입력을 별도 계수로 더한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>LRV_{i,t}=Σ_jΣ_{k=1}^{K}[β^J_{i,j,k}LJ_{j,t−k}+β^C_{i,j,k}LC_{j,t−k}+β^{IV}_{i,j,k}LIV_{j,t−k}]+ε_{i,t}.</code></pre>
+                <dl class="symbol-grid"><dt><code>i</code></dt><dd>로그 실현분산을 설명할 대상 시장</dd><dt><code>j</code></dt><dd>lagged 정보를 제공하는 시장</dd><dt><code>k</code></dt><dd>각 predictor의 개별 시차</dd><dt><code>LJ</code></dt><dd>log(1+jump component)</dd><dt><code>LC</code></dt><dd>log continuous component</dd><dt><code>LIV</code></dt><dd>log option-implied variance</dd></dl>
+                <p><strong>직관:</strong> 공통 변동성 충격이 오래 누적될수록 다른 시장의 lagged 정보가 유용할 수 있다.</p>
+                <p><strong>구현할 때:</strong> 6-WML full OLS도 표본에 비해 클 수 있으므로 cross-mean과 ridge를 먼저 쓰고, coefficient를 causal spillover로 부르지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_predictor_equations">p28_predictor_equations · PDF 4쪽 · Equations 4-7</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 8 · 로그 예측을 지수화할 때 로그오차 분산의 절반을 더해 level 편의를 보정한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RV̂_level = exp(LRV̂ + 0.5·σ̂²_error)</code></pre>
+                <dl class="symbol-grid"><dt><code>LRV̂</code></dt><dd>예측한 log RV</dd><dt><code>σ̂²_error</code></dt><dd>로그회귀 오차분산 추정치</dd></dl>
+                <p><strong>직관:</strong> 단순 exp는 Jensen 효과 때문에 level forecast를 체계적으로 낮출 수 있다.</p>
+                <p><strong>구현할 때:</strong> 오차분산도 각 rolling training 안에서만 추정하고 full-sample 값을 쓰지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_backtransform">p28_backtransform · PDF 10쪽 · Equation 8</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 여러 국제지수의 고빈도 RV·jump/continuous·option-implied variance를 공통 거래일로 맞춘다(근거: p28_predictors, p28_design).</li><li>한국 적응은 동일 시장의 6개 WML 분산 proxy만 사용하며 jump·IV 원형을 재현했다고 부르지 않는다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>원문은 여러 거래일 horizon의 log RV를 각 horizon별 direct regression으로 예측한다(근거: p28_direct_results).</li><li>한국은 월말 origin의 다음 달 비중첩 target을 주분석으로 두고 daily h22는 overlap-aware 보조분석으로 둔다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>주사양은 짧은 fixed rolling, 강건성은 더 긴 rolling window이며 매 origin 재추정한다(근거: p28_design, p28_five_year).</li><li>한국은 own-HAR→cross-mean→ridge full 순서와 lambda inner-validation을 고정한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>시장평균 MAFE, 시장별 결과, modified DM과 MCS를 보고 window별 winner 변화까지 남긴다(근거: p28_main, p28_five_year).</li><li>한국은 QLIKE·MSE·MAE와 동일 BS15 경제성과를 별도 gate로 둔다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_design">p28_design · PDF 6쪽 · Data and 252-day rolling design</a><a class="evidence-chip" href="#locator-p28_har">p28_har · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure</a><a class="evidence-chip" href="#locator-p28_predictor_equations">p28_predictor_equations · PDF 4쪽 · Equations 4-7</a><a class="evidence-chip" href="#locator-p28_backtransform">p28_backtransform · PDF 10쪽 · Equation 8</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 3</p><h3>단기와 장기에서 어떤 정보구조가 유리한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>24개 조합의 horizon별 shaded minimum과 bold MCS를 구분하고 univariate/multivariate·predictor·lag 구조를 함께 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>짧은 horizon에서는 univariate dwm JC+IV, 더 긴 horizon에서는 multivariate dwm RV+IV가 평균 MAFE 최저다.</dd>
+            <dt>검토자 해석</dt><dd>cross-market 정보는 horizon이 길 때 더 유용할 수 있고 단순 HAR가 유연한 lag selection과 경쟁한다.</dd>
+            <dt>검토자 경계</dt><dd>10개 시장 평균결과라 개별시장 winner와 다를 수 있고 statistical loss만 평가한다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 6</p><h3>긴 horizon multivariate 권고는 추정창에도 강건한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>5년창의 각 horizon shaded winner를 주 Table 3과 직접 대조한다.</dd>
+            <dt>저자 보고 결과</dt><dd>h=22의 winner는 univariate dwm JC로 바뀌고 비슷한 다른 univariate 사양도 반올림 loss가 같다.</dd>
+            <dt>검토자 해석</dt><dd>‘월간 이상이면 항상 multivariate·IV’라는 규칙은 성립하지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>한 horizon의 반례가 h=44 multivariate 결과나 전체 논문을 모두 무효화하는 것은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_five_year">p28_five_year · PDF 15쪽 · Table 6</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Appendix A·Eq. 9</p><h3>유연한 lag selection이 단순 HAR를 이기는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>monotone constraint, post-lasso OLS, 여러 penalty의 BIC-weighted 결합을 확인한 뒤 Table 3의 dwm과 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>ordered lasso는 일부 유연성을 주지만 dwm을 일관되게 이기지 못한다.</dd>
+            <dt>검토자 해석</dt><dd>짧은 표본에서는 구조적 단순성이 tuning 유연성보다 강할 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>패키지·standardization·penalty 세칙과 post-selection 불확실성이 완전 공개코드 없이 남는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_ordered_lasso">p28_ordered_lasso · PDF 14쪽 · Equation 9 and Appendix A</a><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>변동성 충격의 국제 공통성이 누적되는 긴 horizon에는 다른 시장의 lagged RV·IV가 own history를 보완한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>짧은 rolling의 장기 horizon에서 multivariate dwm이 평균 loss를 낮추고 위기기간 in-sample 연결성이 커진다(근거: p28_main, p28_predictors).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>공통 글로벌 factor, time-zone lead-lag, 더 많은 parameters와 crisis-specific fit이 spillover처럼 보일 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>긴 training window나 untouched 한국 test에서 own-HAR가 cross-mean/ridge multivariate와 같거나 더 좋으면 joint-information 채널은 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_predictors">p28_predictors · PDF 5쪽 · Table 1 and predictor/spillover interpretation</a><a class="evidence-chip" href="#locator-p28_predictor_equations">p28_predictor_equations · PDF 4쪽 · Equations 4-7</a><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>여러 predictor·lag·dimension 조합, horizon, MCS·DM, level 변환과 두 rolling 길이를 비교한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>ordered lasso가 일관되게 이기지 못하고 긴 창 h=22에서는 univariate가 winner로 바뀐다(근거: p28_ordered_lasso, p28_five_year).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 WML, 목표변동성 Sharpe·비용, truly causal spillover와 현재 자료의 option/jump 입력은 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>자료는 더 길지만 descriptive network 구간이 일찍 끝나는 이유와 일부 upon-request code·결과, exact overlap inference 세칙이 공개 레코드에 완전히 닫히지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_direct_results">p28_direct_results · PDF 7쪽 · Direct forecast horizons and modified-DM comparison</a><a class="evidence-chip" href="#locator-p28_five_year">p28_five_year · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p28_ordered_lasso">p28_ordered_lasso · PDF 14쪽 · Equation 9 and Appendix A</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">10개 국제지수</th><td>6개 한국 WML</td><td>서로 다른 시장 spillover가 아니라 공통 구성의 cross-configuration 정보로 해석한다.</td></tr><tr><th scope="row">dwm univariate HAR</th><td>WML별 own log-HAR</td><td>가장 안정적인 선형 기준선을 먼저 고정한다.</td></tr><tr><th scope="row">full multivariate HAR</th><td>cross-mean·ridge multivariate HAR</td><td>월표본 대비 parameter 수를 줄이고 graph 이전의 joint-information gate로 쓴다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>6개 WML의 공통 일별 calendar와 다음 달 분산 target을 만든다.</li><li>RW126·RW252와 own HAR/log-HAR를 동일 월에서 적합한다.</li><li>다른 다섯 WML의 cross-sectional mean HAR block을 하나 추가한다.</li><li>ridge full multivariate HAR를 inner validation으로만 조정한다.</li><li>QLIKE·MSE·MAE를 공통 평가월에서 비교하고 구성별 실패를 별도 표시한다.</li><li>joint model이 own-HAR를 통과한 경우에만 graph/GNN 후속을 허용하고 BS15 경제성과를 평가한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>cross-mean 또는 ridge model이 own-HAR의 untouched-test primary loss를 개선한다.</li><li>개선이 rolling 길이와 구성별 결과에서 완전히 뒤집히지 않는다.</li><li>동일 cap·비용의 BS15 경제성과가 악화되지 않고 parameter·lambda가 training-only다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>짧은 창에서만 개선되면 parameter variance와 위기기간 의존성을 비교한다.</li><li>특정 WML만 악화되면 공통 구성중복·scale standardization과 cross-mean 기여를 분해한다.</li><li>level forecast가 편향되면 lognormal correction의 training-only error variance를 감사한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>RW/own/cross-mean/ridge nested loss 표</li><li>origin별 coefficient·lambda·standardization audit CSV</li><li>rolling 길이·구성별 sensitivity matrix</li><li>동일 BS15 mapping의 forecast/economic gate 표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_har">p28_har · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure</a><a class="evidence-chip" href="#locator-p28_predictor_equations">p28_predictor_equations · PDF 4쪽 · Equations 4-7</a><a class="evidence-chip" href="#locator-p28_backtransform">p28_backtransform · PDF 10쪽 · Equation 8</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>단순 day-week-month HAR가 유연한 ordered lasso와 경쟁한다.</li><li>짧은 horizon은 univariate, 긴 horizon은 multivariate가 주결과지만 window에 조건부다.</li><li>5년창 h22의 univariate 반례를 반드시 함께 읽어야 한다.</li><li>한국에서는 graph 전에 축소형 선형 joint HAR를 시험한다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>dwm HAR의 세 block과 차원축소를 설명할 수 있다.</li><li>direct forecast와 recursive forecast를 구분할 수 있다.</li><li>univariate/multivariate의 horizon별 순위전환을 말할 수 있다.</li><li>Table 6 반례가 주권고를 어떻게 제한하는지 설명할 수 있다.</li><li>한국에서 cross-mean→ridge→graph 순서를 설계할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_har">p28_har · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure</a><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a><a class="evidence-chip" href="#locator-p28_five_year">p28_five_year · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p28_ordered_lasso">p28_ordered_lasso · PDF 14쪽 · Equation 9 and Appendix A</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 Table 3의 h22 winner만 보고 ‘월간은 multivariate’라고 규칙화하면 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 5년 rolling Table 6의 h22 winner가 univariate JC로 바뀌어 추정창에 민감하기 때문이다.</p>
+          <p><strong>왜:</strong> 강건성표의 반증을 주결론과 함께 읽는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a><a class="evidence-chip" href="#locator-p28_five_year">p28_five_year · PDF 15쪽 · Table 6</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. ordered lasso가 HAR보다 반드시 유리하지 않은 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 짧은 rolling 창에서는 많은 lag의 선택·추정분산이 커지고, 세 block으로 축소한 HAR의 안정성이 더 나을 수 있기 때문이다.</p>
+          <p><strong>왜:</strong> 복잡도와 표본길이의 trade-off를 이해한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_har">p28_har · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure</a><a class="evidence-chip" href="#locator-p28_ordered_lasso">p28_ordered_lasso · PDF 14쪽 · Equation 9 and Appendix A</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국 6-WML cross coefficient를 spillover라고 단정하면 안 되는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 여섯 series가 같은 종목·모멘텀 신호의 설계변형이라 공통 구성과 측정중복이 예측관계를 만들 수 있기 때문이다.</p>
+          <p><strong>왜:</strong> 원문의 국제시장 node 의미와 한국 adaptation을 구분한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_predictor_equations">p28_predictor_equations · PDF 4쪽 · Equations 4-7</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 국제지수 VOR의 짧은 rolling에서는 단기 univariate·장기 multivariate와 단순 HAR가 강했지만, 긴 rolling h=22에서는 univariate winner로 바뀌어 joint-model 우위가 horizon·window에 조건부였다.</p><p><strong>이렇게 말하면 안 됨:</strong> multivariate·IV가 모든 horizon과 window에서 우월하고 cross coefficient가 인과적 변동성 전염을 증명하며 statistical loss가 WML Sharpe를 보장한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p28_main">p28_main · PDF 8쪽 · Table 3</a><a class="evidence-chip" href="#locator-p28_five_year">p28_five_year · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p28_ordered_lasso">p28_ordered_lasso · PDF 14쪽 · Equation 9 and Appendix A</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>2004-01-02–2019-04-30 미국 4개·유럽 6개 지수의 5분 RV, jump·continuous components, option-implied variance, 총 3,686개 공통 거래일 [원문 보고]</dd><dt>target</dt><dd>각 지수의 미래 log realized variance [원문 보고]</dd><dt>information set</dt><dd>최근 22일 RV 또는 jump·continuous와 option IV의 daily·weekly·monthly blocks, 다른 9개 시장의 lagged predictors [원문 보고]</dd><dt>lookback</dt><dd>기본 22 lag와 252일 rolling estimation; 강건성은 1,260일 rolling [원문 보고]</dd><dt>horizon</dt><dd>direct 1·5·22·44거래일 [원문 보고]</dd><dt>model family</dt><dd>univariate/multivariate HAR with dwm restrictions, ordered-lasso lag selection, four RV/JC/IV predictor sets</dd><dt>training window</dt><dd>주결과는 252거래일 고정 rolling, 강건성은 1,260거래일 고정 rolling</dd><dt>retune</dt><dd>각 forecast origin·horizon에서 재추정하며 ordered lasso는 50개 lambda post-lasso 예측을 BIC weight로 결합한다.</dd><dt>benchmarks</dt><dd>univariate RV-HAR dwm · multivariate RV-HAR dwm · ordered-lasso lag selection · IV-augmented HAR</dd><dt>loss / test</dt><dd>10개 시장 평균 MAFE · MSFE robustness · level-RV back-transformed loss · Harvey–Leybourne–Newbold modified DM with Newey–West · 75% Model Confidence Set with 5,000 bootstraps · 5-year-window robustness</dd><dt>economic metrics</dt><dd>Sharpe·BS15 scaling·turnover는 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래전략과 비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>portfolio turnover를 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +223,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>월말 이후 peer 값 유입 차단 test</li><li>6 series feature timestamp assertion</li><li>log-to-level correction test</li><li>rolling scaler·ridge train-only test</li><li>공통 OOS mask와 month-cluster loss test</li><li>동일 BS15 mapping test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p28_horizon_dimension</span> 252일 rolling에서 univariate는 1·5일, multivariate는 22·44일에 유의하게 더 정확했고 dimension 비교 DM p-value는 모두 0.01 미만이었다.<p class="meta">sample: 10개 국제지수 2004–2019 rolling OOS · target: 미래 log RV · horizon: 1·5·22·44거래일 · metric: 평균 MAFE와 dimension DM · unit: loss and p-value · comparator: univariate 대 multivariate · loss_or_test: MAFE and modified DM</p><p><strong>근거:</strong> p28_direct_results · p28_main</p><p><strong>전이 경고:</strong> 10개 독립시장·intraday RV 결과이며 같은 KOSPI 종목에서 파생된 6개 WML로 직접 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p28_simple_har</span> option-implied variance를 포함한 predictor set이 전반적으로 강했지만 복잡한 ordered lasso는 단순 daily-weekly-monthly HAR 제약을 일관되게 이기지 못했다.<p class="meta">sample: 10개 국제지수 252일 rolling OOS · target: 미래 log RV · horizon: 1–44거래일 · metric: 평균 MAFE와 MCS · unit: loss · comparator: dwm HAR 대 ordered-lasso schemes · loss_or_test: MAFE, DM and MCS</p><p><strong>근거:</strong> p28_predictors · p28_main · p28_ordered_lasso</p><p><strong>전이 경고:</strong> 한국 price-only 적응에는 IV·jump predictor 우위를 복제할 입력이 없고 단순 HAR 부분만 직접 시험할 수 있다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p28_five_year_counterexample</span> 1,260일 rolling Table 6의 22일 shaded winner는 univariate dwm jump·continuous 0.616이었고 같은 set의 dwm+lag-selection도 반올림 0.616이어서, 장기 multivariate·IV 우위가 모든 창에서 유지되지는 않았다.<p class="meta">sample: 10개 국제지수의 5년 rolling 강건성 · target: 22일 log RV · horizon: 22거래일 · metric: 평균 MAFE · unit: loss rounded to three decimals · comparator: 24 predictor-dimension-lag combinations · loss_or_test: Table 6 MAFE and MCS</p><p><strong>근거:</strong> p28_five_year</p><p><strong>전이 경고:</strong> 비반올림값이 없어 0.616 두 모형 중 유일한 최소를 정하지 않으며 joint model을 사전 승자로 두지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Multivariate volatility forecasts for stock market indices — publisher PDF</strong><p>최종 게재본 · 2021-04-01 · 17쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 repository cover를 포함한 17쪽 publisher PDF/VOR 기준이다. Taverne 공개조건 아래 사이트는 PDF를 복제하지 않고 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p28_har</strong> · artifact p28_vor · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure · 검증됨</li><li><strong>p28_predictors</strong> · artifact p28_vor · PDF 5쪽 · Table 1 and predictor/spillover interpretation · 검증됨</li><li><strong>p28_design</strong> · artifact p28_vor · PDF 6쪽 · Data and 252-day rolling design · 검증됨</li><li><strong>p28_main</strong> · artifact p28_vor · PDF 8쪽 · Table 3 · 검증됨</li><li><strong>p28_backtransform</strong> · artifact p28_vor · PDF 10쪽 · Equation 8 · 검증됨</li><li><strong>p28_ordered_lasso</strong> · artifact p28_vor · PDF 14쪽 · Equation 9 and Appendix A · 검증됨</li><li><strong>p28_five_year</strong> · artifact p28_vor · PDF 15쪽 · Table 6 · 검증됨</li><li><strong>p28_ar1</strong> · artifact p28_vor · PDF 3쪽 · Equation 1 · 검증됨</li><li><strong>p28_predictor_equations</strong> · artifact p28_vor · PDF 4쪽 · Equations 4-7 · 검증됨</li><li><strong>p28_direct_results</strong> · artifact p28_vor · PDF 7쪽 · Direct forecast horizons and modified-DM comparison · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Multivariate volatility forecasts for stock market indices — publisher PDF</strong><p>최종 게재본 · 2021-04-01 · 17쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 repository cover를 포함한 17쪽 publisher PDF/VOR 기준이다. Taverne 공개조건 아래 사이트는 PDF를 복제하지 않고 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p28_har"><strong>p28_har</strong> · artifact p28_vor · PDF 4쪽 · Equations 2-3: daily-weekly-monthly HAR structure · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_predictors"><strong>p28_predictors</strong> · artifact p28_vor · PDF 5쪽 · Table 1 and predictor/spillover interpretation · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_design"><strong>p28_design</strong> · artifact p28_vor · PDF 6쪽 · Data and 252-day rolling design · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_main"><strong>p28_main</strong> · artifact p28_vor · PDF 8쪽 · Table 3 · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_backtransform"><strong>p28_backtransform</strong> · artifact p28_vor · PDF 10쪽 · Equation 8 · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_ordered_lasso"><strong>p28_ordered_lasso</strong> · artifact p28_vor · PDF 14쪽 · Equation 9 and Appendix A · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_five_year"><strong>p28_five_year</strong> · artifact p28_vor · PDF 15쪽 · Table 6 · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_ar1"><strong>p28_ar1</strong> · artifact p28_vor · PDF 3쪽 · Equation 1 · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_predictor_equations"><strong>p28_predictor_equations</strong> · artifact p28_vor · PDF 4쪽 · Equations 4-7 · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p28_direct_results"><strong>p28_direct_results</strong> · artifact p28_vor · PDF 7쪽 · Direct forecast horizons and modified-DM comparison · 검증됨 · <a href="https://cris.maastrichtuniversity.nl/ws/files/65505312/Wilms_2021_multivariate_volatility_forecasts_for_stock.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>VOR의 10개 지수 결과에서 multivariate HAR의 이점은 주로 22·44일 horizon에 나타났고 단순 dwm 제약이 ordered lasso보다 경쟁력 있었다.</strong><p>이유: Table 3의 dimension·lag 구조 결과가 이를 보인다. · 교정: 252일창·intraday RV·IV 조건과 5년창 반례를 함께 쓴다. · 근거: p28_main · p28_five_year</p></li><li><strong>한국 6개 WML에서는 축소형 선형 joint HAR를 graph·GNN보다 먼저 시험할 수 있다.</strong><p>이유: 원문도 단순 제약의 경쟁력과 horizon-dependent dimension을 보였다. · 교정: adapted multivariate HAR로 명명하고 causal spillover 해석을 피한다. · 근거: p28_har · p28_main</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>다변량은 모든 horizon과 rolling-window 길이에서 단변량보다 좋다.</strong><p>이유: 단기 주결과와 5년창 22일 반례가 있다. · 교정: horizon·창별 결과를 모두 보고한다. · 근거: p28_main · p28_five_year</p></li><li><strong>6개 WML 간 회귀계수는 경제적·인과적 spillover다.</strong><p>이유: 여섯 series는 동일 종목·신호의 파생구성이어서 기계적 중복이 크다. · 교정: incremental forecast information으로만 해석한다. · 근거: p28_predictors</p></li><li><strong>MAFE 개선은 BS15 Sharpe 개선을 의미한다.</strong><p>이유: 원문은 투자수익과 비용을 평가하지 않는다. · 교정: 동일 BS15 mapping의 경제성과를 별도 gate로 둔다. · 근거: p28_main</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>authors-upon-request code와 별도 Supplement를 이용한 ordered-lasso·optimizer 재계산은 이 근거 범위 밖이다.</li><li>Table 6의 두 0.616 모형은 반올림 전 값 없이 유일한 최소를 판정하지 않는다.</li></ul>

@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/HW23/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Enhanced momentum strategies · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,195 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>cMOM·sMOM·dMOM을 동일 자료와 factor construction에서 국제 비교하고 한국 행까지 제시한 경제성과 benchmark이며, 장기정보 기반 새 미래분산 모형은 아니다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>BS15형 총변동성 scaling, downside semi-volatility scaling, 기대수익·분산 dynamic scaling을 같은 조건에서 비교할 때</li><li>한국에서 단순 cMOM·sMOM은 양의 평균을 보였지만 dMOM은 실패한 반례를 정확한 조건과 함께 읽을 때</li><li>예측 개선이 Sharpe·drawdown·turnover·break-even cost로 이어지는지 경제성과 gate를 설계할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>한국 Table 6 수치를 현재 한국 6개 WML의 재현 target으로 사용할 때</li><li>cMOM의 target을 고정 연 12%라고 설명할 때</li><li>dMOM을 126일보다 긴 정보로 미래 WML 분산을 예측하는 모형 또는 ML 전략으로 분류할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>위험관리 모멘텀이 미국만의 결과인지, 총위험·하방위험·조건부 기대수익 중 무엇이 여러 나라와 한국에서 실제로 안정적인지 확인해야 한다. 이 논문은 동일 factor construction으로 49개국을 비교한다.</p></article>
+            <article><h3>중심 질문</h3><p>cMOM·sMOM·dMOM은 미국과 48개 비미국 시장에서 raw MOM의 Sharpe·drawdown을 개선하는가, 하나의 enhanced strategy가 모든 국가에서 일관되게 최선인가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 연구는 미국 중심이거나 전략별 자료·포트폴리오 정의가 달라 국제비교가 어려웠고, 한국을 포함한 국가별 성공·실패와 거래집약도를 같은 설계에서 보여준 증거가 부족했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>집계 미국·비미국 결과에서는 cMOM·sMOM·dMOM 모두 raw MOM보다 높은 Sharpe와 작은 최대낙폭을 보이지만 한 전략이 모든 비교에서 지배하지 않는다. 특히 논문 고유의 한국 USD 2×3 MOM에서는 cMOM·sMOM 월평균이 양이고 유의하지만 dMOM은 음수다. 이는 복잡한 expected-return/variance 전략이 단순 risk scaling보다 항상 낫지 않다는 직접 반례다. 다만 cMOM·sMOM의 target은 전체표본 원 MOM 위험에 맞춘 사후 scale이고 비용은 break-even이지 실제 순비용 수익이 아니다. 현재 한국 6-WML에는 외부 수치 재현목표가 아니라 cMOM·sMOM·dMOM 경제성 benchmark로 사용한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_data">hw23_data · PDF 3쪽 · Sections 2.1 and 2.2</a><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a><a class="evidence-chip" href="#locator-hw23_global_table2">hw23_global_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>국가별 동일 MOM 구성과 자료필터를 만든다.</h3>
+          <p>미국과 비미국 시장에서 size×momentum 2×3 value-weighted factor를 구축하고 국가·월 최소 종목 등 공통 규칙을 적용한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_data">hw23_data · PDF 3쪽 · Sections 2.1 and 2.2</a><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>세 enhanced strategy의 정보집합을 분리한다.</h3>
+          <p>cMOM은 126일 총위험, sMOM은 같은 창의 음의 WML 제곱, dMOM은 126일 분산과 장기 시장상태 기반 기대수익을 결합한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>집계표본에서 경제성과의 공통방향을 확인한다.</h3>
+          <p>월평균·Sharpe·왜도·첨도·최대낙폭을 미국과 비미국으로 나눠 raw MOM 대비 개선을 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_global_table2">hw23_global_table2 · PDF 6쪽 · Table 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>국가별 이질성과 한국 반례를 보존한다.</h3>
+          <p>집계평균 뒤 각 나라 행을 확인해 cMOM·sMOM의 한국 성공과 dMOM 실패처럼 복잡성의 비보편성을 남긴다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>회전율과 비용경계를 추가한다.</h3>
+          <p>enhanced strategy의 높은 turnover와 수익 유의성이 사라지는 break-even cost를 보고 gross 성과의 실행가능성을 제한한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>cMOM</h3>
+          <p><strong>쉽게 말하면</strong><br>최근 126일 총 WML 위험이 높을수록 다음 달 노출을 줄이는 전략이다.</p>
+          <p><strong>논문 안의 역할</strong><br>BS15 계열의 inverse-volatility benchmark다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>논문 target이 고정 연 12%라고 읽으면 안 된다. 전체표본 원 MOM 위험에 맞춘다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div>
+        </article><article class="section-card concept-card">
+          <h3>sMOM</h3>
+          <p><strong>쉽게 말하면</strong><br>최근 126일 중 WML가 음수였던 날의 제곱수익만 위험으로 센다.</p>
+          <p><strong>논문 안의 역할</strong><br>하방 semi-volatility를 분모로 쓰는 asymmetric risk-scaling benchmark다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>분모를 음수일 개수로 바꾸거나 downside option-implied variance로 부르면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div>
+        </article><article class="section-card concept-card">
+          <h3>dMOM</h3>
+          <p><strong>쉽게 말하면</strong><br>예상 모멘텀 수익이 높고 예상분산이 낮을수록 더 투자하는 동적 전략이다.</p>
+          <p><strong>논문 안의 역할</strong><br>bear indicator와 시장분산 interaction으로 expanding expected return을 추정하고 같은 RW126 분산으로 나눈다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>24개월 정보가 미래 WML 분산을 새로 예측하거나 ML을 사용한다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div>
+        </article><article class="section-card concept-card">
+          <h3>국가별 외적 타당성</h3>
+          <p><strong>쉽게 말하면</strong><br>집계평균뿐 아니라 각 나라에서 같은 전략이 어떻게 달라지는지 보는 것이다.</p>
+          <p><strong>논문 안의 역할</strong><br>미국 중심 결과의 일반화와 시장별 실패를 동시에 드러낸다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>논문의 한국 행이 현재 KRW 6-WML과 같은 portfolio·표본·수치 target이라는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 2–3 cMOM · 126일 WML 제곱수익 평균을 월·연 위험척도로 바꾸고 target volatility를 그 위험으로 나눠 다음 달 비중을 정한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>σ̂²_{MOM,t}=21·(1/126)Σ_{j=1}^{126}R²_{MOM,d−j};  w_{c,t}=σ_target/σ̂_{MOM,t}</code></pre>
+                <dl class="symbol-grid"><dt><code>R_{MOM}</code></dt><dd>일별 momentum factor return</dd><dt><code>σ̂_{MOM}</code></dt><dd>126일 total volatility estimate</dd><dt><code>σ_target</code></dt><dd>전체표본에서 원 MOM 위험에 맞추는 scale</dd></dl>
+                <p><strong>직관:</strong> 변동성 지속성이 강하고 평균수익이 덜 변하면 고위험 상태에서 exposure를 줄이는 것이 risk-adjusted 성과를 개선할 수 있다.</p>
+                <p><strong>구현할 때:</strong> 현재 주분석에서는 σ_target=12%를 유지하고 논문식 full-sample scale은 별도 replication panel로 둔다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>sMOM defining rule · 음의 WML 날만 제곱합에 남기되 전체 창 126으로 나눠 하방 위험을 만든다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>σ̂²_{semi,t}=21·(1/126)Σ_{j=1}^{126}R²_{MOM,d−j}·1(R_{MOM,d−j}&lt;0)</code></pre>
+                <dl class="symbol-grid"><dt><code>1(R&lt;0)</code></dt><dd>음의 일별 WML에서만 1인 지시함수</dd><dt><code>126</code></dt><dd>음수일 수가 아니라 고정 위험창의 분모</dd></dl>
+                <p><strong>직관:</strong> 같은 total volatility라도 손실방향 변동이 많은 상태를 더 위험하게 본다.</p>
+                <p><strong>구현할 때:</strong> 0·양수일 처리와 동일 관측 mask를 고정하고 negative-day count로 재정규화하지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>dMOM weight · 과거로 추정한 기대 WML 수익을 같은 126일 분산으로 나누고 위험회피로 축소한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>w_{d,t}=(1/(2λ))·μ̂_t/σ̂²_t</code></pre>
+                <dl class="symbol-grid"><dt><code>μ̂_t</code></dt><dd>bear state와 시장분산 interaction의 expanding 예상수익</dd><dt><code>σ̂²_t</code></dt><dd>cMOM과 같은 126일 WML variance</dd><dt><code>λ</code></dt><dd>위험회피 계수</dd></dl>
+                <p><strong>직관:</strong> 위험만 조절하는 cMOM보다 expected-return timing까지 시도한다.</p>
+                <p><strong>구현할 때:</strong> 예상수익 회귀와 분산모형을 별도 audit하고, μ가 불안정할 때 cap·sign·fallback을 사전 고정한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 미국과 48개 비미국 시장의 종목패널로 동일 2×3 value-weighted MOM을 만든다(근거: hw23_data, hw23_korea_sample).</li><li>현재 한국 실험은 KRW·PIT universe·6개 sort/weight 조합이므로 논문 한국행과 수치일치를 목표로 하지 않는다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>직전 126일 위험과 dMOM의 월 시작 전 expanding 예상수익으로 다음 한 달 전략수익을 만든다(근거: hw23_method).</li><li>한국에서도 t월말 이전 정보만 t+1 weight에 쓰고 c/s/dMOM을 별도 열로 유지한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>cMOM·sMOM은 rolling risk, dMOM 예상수익은 초기 과거창 뒤 expanding이지만 scale은 full sample이다(근거: hw23_method).</li><li>한국은 fixed 12% 주결과와 full-sample equal-risk 보조결과를 분리하고 final holdout을 둔다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>집계·국가별 mean·Sharpe·drawdown·turnover·break-even을 함께 읽는다(근거: hw23_global_table2, hw23_korea_table6, hw23_costs).</li><li>forecast loss와 경제성과를 분리하고 복잡 dMOM은 단순 c/sMOM을 이겨야 채택한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_data">hw23_data · PDF 3쪽 · Sections 2.1 and 2.2</a><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 2</p><h3>위험관리 모멘텀은 미국 밖에서도 작동하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>미국·비미국에서 raw MOM과 cMOM·sMOM·dMOM의 월평균, Sharpe, maximum drawdown을 같은 행에서 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>집계표본에서는 세 enhanced strategy가 raw MOM보다 높은 Sharpe와 작은 최대낙폭을 보인다.</dd>
+            <dt>검토자 해석</dt><dd>volatility management의 방향은 미국 한 시장에만 국한되지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>전체표본 equal-risk scale과 국가 pooling에 조건부이며 한 enhanced strategy의 보편적 지배는 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_global_table2">hw23_global_table2 · PDF 6쪽 · Table 2</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 6 South Korea</p><h3>논문 고유 한국 표본에서는 어떤 전략이 성공·실패하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>월평균 %와 t-stat을 Sharpe로 오인하지 말고, MOM/cMOM/sMOM/dMOM 네 열을 동일 국가행에서 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>MOM 0.31, cMOM 1.01, sMOM 1.05, dMOM −0.38의 월평균이며 cMOM·sMOM은 양의 유의, dMOM은 음수다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서는 단순 total/downside risk scaling이 복잡 expected-return timing보다 안정적일 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>USD, 2×3 VW, 1994–2017 기반 286개월 결과로 현재 KRW 6-WML의 numeric target이 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 10</p><h3>gross 개선은 거래집약도를 감당하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>raw와 세 enhanced 전략의 turnover를 비교하고 break-even cost가 실제 비용차감 수익인지 구분한다.</dd>
+            <dt>저자 보고 결과</dt><dd>enhanced strategies는 raw MOM보다 turnover가 높고 dMOM이 특히 거래집약적이다.</dd>
+            <dt>검토자 해석</dt><dd>위험관리의 경제가치는 비용·funding·shorting gate를 통과해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>보고된 비용은 수익 유의성이 사라지는 break-even으로 실제 bid-ask·대차·레버리지 순비용이 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 1·method section</p><h3>논문 한국 MOM과 현재 한국 WML은 같은가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>국가표본·통화·종목수와 2×3 size-momentum construction을 먼저 확인한 뒤 성과표를 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>논문은 USD 기준 국가별 2×3 VW factor이고 현재 프로젝트의 KRW 6개 sort/weight WML와 다르다.</dd>
+            <dt>검토자 해석</dt><dd>한국 행은 방향성 외부 benchmark이지 복제수치가 아니다.</dd>
+            <dt>검토자 경계</dt><dd>국가별 raw vendor screen과 모든 proprietary cleaning을 공개문서만으로 완전 재현할 수 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_data">hw23_data · PDF 3쪽 · Sections 2.1 and 2.2</a><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>momentum 위험은 지속적이지만 평균수익은 덜 안정적이어서 simple inverse-volatility·downside scaling이 crash exposure를 줄이고 risk-adjusted 성과를 높인다는 설명이다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>미국·비미국 집계의 Sharpe·drawdown 개선과 한국 cMOM·sMOM 성공, dMOM 실패가 simple risk timing의 상대적 안정성과 정합적이다(근거: hw23_global_table2, hw23_korea_table6).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>full-sample scale, 국가·통화·vendor screen, 2×3 factor construction과 sample-specific crash episodes가 전략순위를 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>현재 6-WML 공통 test에서 cMOM·sMOM이 raw/BS15 대비 risk·tail·비용 후 성과를 개선하지 못하면 한국 adaptation의 증분채널은 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a><a class="evidence-chip" href="#locator-hw23_global_table2">hw23_global_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>49개국 집계·국가별 행, total/downside/dynamic strategy, 분포·drawdown·turnover·break-even을 비교한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>한 전략이 모든 나라에서 지배하지 않고 한국에서는 dMOM이 음의 평균을 보인다(근거: hw23_korea_table6).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>현재 KRW 6-WML, 2018년 이후 한국, fixed 12% target과 실제 비용·shorting·funding 순성과는 원문이 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>국제 vendor 자료와 screen의 완전 재현이 어렵고 full-sample equal-risk scale이 live target과 다르다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_global_table2">hw23_global_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">국가별 2×3 VW MOM</th><td>고정 6개 한국 WML</td><td>포트폴리오 차이를 유지한 채 전략별 방향성만 비교한다.</td></tr><tr><th scope="row">cMOM·sMOM</th><td>12% RW126·DSV126 scaling</td><td>주 baseline의 target·cap을 고정하고 total/downside 위험입력만 비교한다.</td></tr><tr><th scope="row">dMOM</th><td>24개월 bear×126일 시장분산 expanding expected-return benchmark</td><td>분산은 RW126 그대로 두고 복잡 예상수익 timing의 증분가치를 별도 시험한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>6개 WML별 RW126 total variance와 고정분모 DSV126을 같은 mask로 계산한다.</li><li>12% target·동일 cap의 cMOM·sMOM을 별도 수익열로 만든다.</li><li>dMOM 예상수익 회귀를 초기 과거창 뒤 monthly expanding으로 구현한다.</li><li>full-sample equal-risk scale은 보조 replication panel에만 둔다.</li><li>mean·Sharpe·maximum drawdown·worst month·turnover·cap hit을 공통월에서 비교한다.</li><li>실제 가능한 비용·funding grid와 final holdout에서 c/s/dMOM의 증분가치를 검정한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>cMOM·sMOM·dMOM의 정보집합과 결과열이 분리되고 모든 weight가 월 시작 전 정보만 쓴다.</li><li>cMOM 또는 sMOM이 raw/BS15 대비 비용 후 Sharpe나 tail을 개선하고 한 구성에만 의존하지 않는다.</li><li>dMOM은 c/sMOM보다 untouched-test 경제성과를 개선하고 예상수익계수·weight가 안정적일 때만 채택한다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>sMOM만 폭발하면 음수일 분모를 126으로 유지했는지와 floor·cap을 감사한다.</li><li>dMOM이 실패하면 expected-return 회귀와 RW126 분산 중 어느 항이 weight sign·extreme을 만드는지 분해한다.</li><li>논문 한국행과 다르면 통화·표본·2×3 대 6개 WML·사후 scale 차이를 먼저 기록하고 오류로 단정하지 않는다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>WML별 c/s/dMOM risk·weight·return audit CSV</li><li>fixed 12% 대 equal-risk scale 비교표</li><li>공통월 경제성과·turnover·cost waterfall</li><li>expected-return 회귀·weight stability와 한국행 차이 설명표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>cMOM은 total risk, sMOM은 downside risk, dMOM은 expected return까지 timing한다.</li><li>집계 국제결과는 세 전략 모두 개선 방향이지만 보편적 단일 winner는 없다.</li><li>논문 한국행은 cMOM·sMOM 성공과 dMOM 실패라는 복잡성 반례를 준다.</li><li>한국행의 숫자는 월평균이며 현재 6-WML numeric target이 아니고 비용도 break-even이다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>cMOM·sMOM·dMOM의 정보집합과 수식을 구분할 수 있다.</li><li>fixed 12% target과 full-sample equal-risk scale을 구분할 수 있다.</li><li>집계결과와 한국행 반례를 함께 설명할 수 있다.</li><li>Table 6의 숫자 단위·통화·포트폴리오를 정확히 말할 수 있다.</li><li>turnover와 break-even cost의 제한을 설명할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a><a class="evidence-chip" href="#locator-hw23_global_table2">hw23_global_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. sMOM의 분모를 음수일 개수로 나누면 왜 틀리는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 원식은 음의 일별수익만 합에 남기지만 고정 126일 창으로 나누므로 음수일 빈도 자체도 위험정보에 포함하기 때문이다.</p>
+          <p><strong>왜:</strong> downside estimator의 정확한 정의를 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 한국 Table 6의 1.01·1.05·−0.38은 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 논문 고유 USD 2×3 VW South Korea portfolio의 월평균수익률 %이며 Sharpe나 현재 6-WML 결과가 아니다.</p>
+          <p><strong>왜:</strong> 숫자의 단위·대상을 정확히 인용한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. dMOM의 24개월 정보는 무엇을 예측하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> bear state와 시장분산을 통해 조건부 기대 WML 수익을 추정하며, 분산은 cMOM과 같은 126일 위험을 쓴다.</p>
+          <p><strong>왜:</strong> 장기 expected-return timing과 미래분산 모형을 구분한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_method">hw23_method · PDF 5쪽 · Eqs. (2)–(8)</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 49개국 VOR에서 세 enhanced momentum strategy는 집계표본의 Sharpe·drawdown을 개선했지만 단일 winner는 없었고, 논문 고유 한국행에서는 cMOM·sMOM 평균이 양의 유의, dMOM은 음수였다.</p><p><strong>이렇게 말하면 안 됨:</strong> 한국행 수치가 현재 6-WML의 Sharpe이고 cMOM target이 고정 12%이며 dMOM이 장기정보로 미래분산을 새로 예측하고 실제 비용 후 순성과를 증명했다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-hw23_global_table2">hw23_global_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-hw23_korea_sample">hw23_korea_sample · PDF 4쪽 · Table 1; MOM construction</a><a class="evidence-chip" href="#locator-hw23_korea_table6">hw23_korea_table6 · PDF 11쪽 · Table 6, South Korea row</a><a class="evidence-chip" href="#locator-hw23_costs">hw23_costs · PDF 16쪽 · Table 10 and Conclusion</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>CRSP 미국 보통주 일별·월별 수익, 1926-01–2017-12; 전략 표본 1930-01–2017-12 [원문 보고] · Refinitiv Datastream/Worldscope의 48개 비미국 시장, 1987-01–2017-12; 전략 표본은 대체로 1990-01–2017-12; 모든 수익률은 USD [원문 보고] · 총 49개국, 66,905 stocks, 8,550,324 firm-month observations; 국가·월별 filter 후 최소 30 stocks [원문 보고]</dd><dt>target</dt><dd>MOM, cMOM, sMOM, dMOM의 월별 전략수익과 risk-adjusted performance [원문 보고] · cMOM·sMOM의 다음달 risk proxy와 dMOM의 조건부 기대 MOM 수익; 별도 장기-horizon 미래분산 target은 두지 않음 [원문 보고]</dd><dt>information set</dt><dd>cMOM은 직전 126일 MOM 제곱수익, sMOM은 같은 126일 중 음의 MOM 제곱수익만 사용 [원문 보고] · dMOM 기대수익은 직전 2년 bear indicator와 직전 126일 시장분산의 interaction을 monthly expanding regression으로 추정하고, dMOM variance는 cMOM과 같은 126일 MOM 제곱수익을 사용 [원문 보고]</dd><dt>lookback</dt><dd>cMOM·sMOM·dMOM variance는 126거래일; dMOM bear state는 24개월; expected-return expanding regression은 초기 24개월 [원문 보고]</dd><dt>horizon</dt><dd>다음 1개월 momentum strategy return [원문 보고]</dd><dt>model family</dt><dd>cMOM inverse total-volatility scaling, sMOM inverse downside semi-volatility scaling, dMOM conditional expected-return/variance scaling</dd><dt>training window</dt><dd>cMOM·sMOM은 회귀 학습 없이 126일 rolling risk를 쓰고, dMOM 기대수익 회귀는 국가별 초기 24개월 뒤 monthly expanding OOS로 갱신한다; cMOM·sMOM·dMOM의 static scalar는 full-sample MOM volatility에 맞춘다.</dd><dt>retune</dt><dd>위험추정과 dMOM expected-return regression을 매월 갱신하며, full-sample risk-equalizing scalar는 사후 고정한다.</dd><dt>benchmarks</dt><dd>Standard momentum (MOM) · Constant volatility-scaled momentum (cMOM) · Constant semi-volatility-scaled momentum (sMOM) · Dynamic-scaled momentum (dMOM)</dd><dt>loss / test</dt><dd>MSE·QLIKE 같은 미래분산 forecast loss를 평가하지 않고 전략수익 분포와 경제성과를 비교한다. · 월평균수익 t-statistic과 분포 통계 · mean-variance spanning alpha · maximum ex-post Sharpe ratio model-comparison test · cross-country panel regression · January 대 non-January 평균차</dd><dt>economic metrics</dt><dd>월평균수익률과 연율 Sharpe ratio · skewness, kurtosis와 maximum drawdown · 월 회전율과 break-even round-trip cost · bear-up state 수익과 spanning alpha</dd><dt>trading costs</dt><dd>실제 거래비용을 차감한 순성과가 아니라 수익의 유의성이 사라지는 break-even round-trip cost의 상한을 보고한다.</dd><dt>turnover</dt><dd>long leg와 short leg의 one-way monthly turnover 합계에 strategy scaling-weight 변화를 반영한다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +232,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>sMOM은 음의 일별 WML 제곱만 합하되 분모를 음수 관측수로 바꾸지 않고 126으로 유지한다.</li><li>dMOM의 variance component가 cMOM과 같은 RW126인지 검증한다.</li><li>월 t weight는 t-1 월말까지의 daily return과 expanding regression만 사용한다.</li><li>논문식 full-sample target과 고정 12% target을 같은 결과열에 섞지 않는다.</li><li>한국 6개 WML 각각에서 mean·Sharpe·drawdown·turnover를 독립 산출한다.</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">hw23_global_performance</span> 미국 MOM/cMOM/sMOM/dMOM의 연율 Sharpe는 0.47/0.87/0.83/0.91, 최대낙폭은 −69.09/−38.59/−38.27/−40.05%이고, 비미국은 0.53/0.98/0.94/0.95와 −41.36/−25.25/−22.88/−16.98%다.<p class="meta">sample: 미국 1930-01–2017-12 및 비미국 1990-07–2017-12 aggregate portfolios · target: MOM과 세 enhanced momentum strategy의 월수익률 · horizon: 전체표본 월별 전략성과 · metric: 연율 Sharpe ratio와 maximum drawdown · unit: Sharpe ratio, % · comparator: MOM, cMOM, sMOM, dMOM · loss_or_test: Table 2 기술통계</p><p><strong>근거:</strong> hw23_global_table2</p><p><strong>전이 경고:</strong> 세 enhanced strategy의 risk는 raw MOM의 전체표본 volatility에 사후 맞춰졌으며 어느 하나가 모든 비교검정에서 일관되게 우월하다는 결과가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">hw23_korea_country_row</span> South Korea 행의 월평균수익률과 t-statistic은 MOM 0.31%(0.75), cMOM 1.01%(2.47), sMOM 1.05%(2.56), dMOM −0.38%(−0.94)다.<p class="meta">sample: South Korea, MSCI Emerging Market 분류, 286 monthly strategy observations, data ending 2017-12 · target: 국가별 MOM, cMOM, sMOM, dMOM 월수익률 · horizon: 월별 · metric: 월평균수익률과 t-statistic · unit: 월 %, t-statistic · comparator: MOM 대 cMOM·sMOM·dMOM · loss_or_test: mean-return t-statistic; Table 6은 5% 유의 값을 bold 처리</p><p><strong>근거:</strong> hw23_korea_table6</p><p><strong>전이 경고:</strong> USD 수익, Refinitiv/Worldscope, 국가별 2×3 size–momentum VW, 1990년대–2017 표본의 한 국가 행이다. 현재 KRW 6개 WML과 수치 일치를 기대하지 않으며 다중검정 보정도 제시되지 않는다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">hw23_not_long_variance_forecast</span> cMOM·sMOM은 126일 total/downside risk를 쓰고 dMOM도 분산에는 같은 126일 MOM 제곱수익을 쓰므로, dMOM의 24개월 정보는 expected-return 회귀에만 들어간다.<p class="meta">sample: 논문의 미국 및 비미국 전략 설계 · target: 다음달 strategy weight의 risk 및 expected-return components · horizon: 1개월 · metric: 정보집합과 weight formula의 설계 분류 · unit: 126 trading days, 24 months · comparator: cMOM, sMOM, dMOM · loss_or_test: Eqs. (2)–(8) 직접 대조</p><p><strong>근거:</strong> hw23_method</p><p><strong>전이 경고:</strong> dMOM을 126일보다 긴 미래분산 forecast 또는 ML 결과로 인용하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">hw23_turnover_cost_boundary</span> 월 회전율 MOM/cMOM/sMOM/dMOM은 미국 55.34/82.88/81.46/85.43%, 비미국 49.26/70.77/70.26/74.24%다.<p class="meta">sample: 미국 1930-01–2017-12 및 비미국 1990-01–2017-12 · target: long-short strategy implementation intensity · horizon: 월별 · metric: 평균 turnover와 break-even round-trip cost · unit: % · comparator: MOM, cMOM, sMOM, dMOM · loss_or_test: break-even significance boundary, not realized net return</p><p><strong>근거:</strong> hw23_costs</p><p><strong>전이 경고:</strong> break-even cost는 실제 비용 차감 결과가 아니며 enhanced strategy의 높은 turnover와 공매도·leverage cost를 제거하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Enhanced momentum strategies — Journal of Banking &amp; Finance version of record</strong><p>최종 게재본 · 2022-11-05 · 22쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>출판사 VOR 레코드에 연결한다. 내용 검증에는 최종 게재 내용을 보존한 재처리 아티팩트를 사용했으므로 출판사 원본 PDF와의 바이트 동일성은 주장하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>hw23_abstract</strong> · artifact hw23_vor_20221105 · PDF 1쪽 · Abstract and publication history · 검증됨</li><li><strong>hw23_data</strong> · artifact hw23_vor_20221105 · PDF 3쪽 · Sections 2.1 and 2.2 · 검증됨</li><li><strong>hw23_korea_sample</strong> · artifact hw23_vor_20221105 · PDF 4쪽 · Table 1; MOM construction · 검증됨</li><li><strong>hw23_method</strong> · artifact hw23_vor_20221105 · PDF 5쪽 · Eqs. (2)–(8) · 검증됨</li><li><strong>hw23_global_table2</strong> · artifact hw23_vor_20221105 · PDF 6쪽 · Table 2 · 검증됨</li><li><strong>hw23_korea_table6</strong> · artifact hw23_vor_20221105 · PDF 11쪽 · Table 6, South Korea row · 검증됨</li><li><strong>hw23_costs</strong> · artifact hw23_vor_20221105 · PDF 16쪽 · Table 10 and Conclusion · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Enhanced momentum strategies — Journal of Banking &amp; Finance version of record</strong><p>최종 게재본 · 2022-11-05 · 22쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>출판사 VOR 레코드에 연결한다. 내용 검증에는 최종 게재 내용을 보존한 재처리 아티팩트를 사용했으므로 출판사 원본 PDF와의 바이트 동일성은 주장하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-hw23_abstract"><strong>hw23_abstract</strong> · artifact hw23_vor_20221105 · PDF 1쪽 · Abstract and publication history · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-hw23_data"><strong>hw23_data</strong> · artifact hw23_vor_20221105 · PDF 3쪽 · Sections 2.1 and 2.2 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-hw23_korea_sample"><strong>hw23_korea_sample</strong> · artifact hw23_vor_20221105 · PDF 4쪽 · Table 1; MOM construction · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-hw23_method"><strong>hw23_method</strong> · artifact hw23_vor_20221105 · PDF 5쪽 · Eqs. (2)–(8) · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-hw23_global_table2"><strong>hw23_global_table2</strong> · artifact hw23_vor_20221105 · PDF 6쪽 · Table 2 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-hw23_korea_table6"><strong>hw23_korea_table6</strong> · artifact hw23_vor_20221105 · PDF 11쪽 · Table 6, South Korea row · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-hw23_costs"><strong>hw23_costs</strong> · artifact hw23_vor_20221105 · PDF 16쪽 · Table 10 and Conclusion · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0378426622002928" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>논문의 aggregate 미국·비미국 표본에서 세 enhanced momentum strategy는 raw MOM보다 높은 Sharpe와 작은 maximum drawdown을 보인다.</strong><p>이유: Table 2가 동일한 factor construction과 full-sample risk equalization 아래 네 전략의 통계를 보고한다. · 교정: 한 enhanced strategy가 모든 비교검정에서 일관되게 우월하다고 바꾸지 말고 미국·비미국 조건을 함께 쓴다. · 근거: hw23_global_table2</p></li><li><strong>South Korea 행에서는 cMOM과 sMOM 평균이 양수이고 5% 수준에서 유의하지만 dMOM 평균은 음수다.</strong><p>이유: Table 6의 South Korea 행은 cMOM 1.01%(t=2.47), sMOM 1.05%(t=2.56), dMOM −0.38%(t=−0.94)를 보고한다. · 교정: 286개월, USD, 2×3 size–momentum VW와 2017년 종료라는 조건을 함께 쓴다. · 근거: hw23_korea_table6</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>한국의 1.01, 1.05, −0.38은 Sharpe ratio이거나 현재 6개 WML의 결과다.</strong><p>이유: Table 6은 논문 고유 South Korea portfolio의 월평균수익률과 t-statistic을 보고한다. · 교정: 월평균수익률 %, 대응 t-statistic, 논문의 USD 2×3 factor 조건으로 표기한다. · 근거: hw23_korea_table6</p></li><li><strong>Hanauer cMOM의 target volatility는 Barroso와 같은 고정 연 12%다.</strong><p>이유: Eq. (2) 설명은 cMOM의 전체표본 volatility가 MOM과 같도록 sigma target을 선택한다고 명시한다. · 교정: 논문식 사후 동일위험 scalar와 현재 연구의 고정 12% BS15 target을 분리한다. · 근거: hw23_method</p></li><li><strong>dMOM은 24개월 이상 정보로 미래 WML 분산을 새롭게 예측한다.</strong><p>이유: 24개월 bear 정보는 expected-return regression에 들어가고 variance는 cMOM과 동일한 126일 제곱수익이다. · 교정: dMOM을 expected-return/variance 전략 benchmark로 부르고 장기 미래분산 예측모형과 구분한다. · 근거: hw23_method</p></li><li><strong>Table 10은 실제 거래비용을 차감한 net performance를 증명한다.</strong><p>이유: Table 10은 평균 turnover와 수익 유의성이 사라지는 break-even cost를 보고한다. · 교정: 실제 bid-ask·shorting·leverage cost 차감은 별도 경제성과 검증으로 남긴다. · 근거: hw23_costs</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>South Korea 행은 국가별 다중검정 보정을 제시하지 않는다.</li><li>비미국 raw stock data와 모든 proprietary screen을 논문만으로 완전히 재현할 수 없다.</li><li>실제 bid-ask, short-sale와 leverage cost를 차감한 net performance는 보고하지 않는다.</li></ul>

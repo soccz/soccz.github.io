@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/05/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Time-varying variance and skewness in realized volatility measures · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,172 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>점예측 이후 변동성분포의 시간가변 꼬리와 95% VolaR를 평가하는 확장 문헌으로 쓰고, 상대 loss와 조건부 calibration을 반드시 함께 판정한다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>점분산이 아니라 다음 위험의 전체 density와 upper quantile을 예측할 때</li><li>log score·tick loss와 UC·CC·Berkowitz calibration을 분리할 때</li><li>변동성의 분산·왜도가 시간에 따라 변하는지 score-driven state로 모형화할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>VolaR를 수익률 VaR나 expected shortfall로 바꿔 부를 때</li><li>log-score MCS 포함을 조건부 calibration 통과로 해석할 때</li><li>일별 WML 제곱합을 5분 realized kernel 원형과 동일시할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>점분산 하나가 같아도 미래 위험분포의 폭과 오른쪽 꼬리는 달라질 수 있다. 이 논문은 평균예측 뒤에 남는 분포형태를 시간가변 상태로 직접 다룬다.</p></article>
+            <article><h3>중심 질문</h3><p>실현변동성의 조건부 평균뿐 아니라 분산과 왜도·꼬리 형태를 매일 갱신하면 density와 상위 위험분위수 예측이 개선되고 올바르게 calibration되는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>HAR 계열은 평균 지속성에는 강하지만 변동성 자체의 변동성과 비대칭 꼬리가 시간에 따라 바뀌는 현상을 고정 분포로 남겨 두기 쉽다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 증거는 scaled-F의 shape parameter를 score로 갱신한 모형이 다수 종목의 log-score와 상위 변동성 분위수 loss에서 강했다는 것이다. 그러나 조건부 coverage와 Berkowitz 계열 검정은 거의 전 종목에서 실패해 상대적으로 가장 좋은 모형이 절대적으로 올바른 density는 아니었다. 연구자 해석은 winner 표와 calibration 표를 반드시 함께 읽어야 한다는 것이다. 한국에서는 이 모형을 본선 점예측이 아니라 next-month WML risk density의 후속 확장으로 두고, 간단한 Gamma/MEM·lognormal HAR를 먼저 이겨야 한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>양의 위험변수에 맞는 분포를 둔다</h3>
+          <p>실현변동성을 scaled-F로 모형화해 양수 제약과 두꺼운 오른쪽 꼬리를 동시에 표현한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>평균과 shape의 동학을 나눈다</h3>
+          <p>HAR형 평균을 유지하면서 분포 자유도를 score로 갱신해 조건부 dispersion과 꼬리모양을 움직인다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>강한 density 기준선과 표본외 비교한다</h3>
+          <p>lognormal 계열과 MEM-HAR를 두고 expanding 예측으로 full-density loss와 상위 분위수 loss를 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>상대승리를 calibration으로 반증한다</h3>
+          <p>MCS 순위와 함께 무조건부·조건부 coverage 및 PIT 기반 검정을 실시해 density의 절대 적합성을 점검한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>scaled-F density</h3>
+          <p><strong>쉽게 말하면</strong><br>평균이 양수인 위험변수의 비대칭·두꺼운 꼬리를 두 자유도로 조절하는 확률분포다.</p>
+          <p><strong>논문 안의 역할</strong><br>다음 실현변동성의 전체 조건부분포를 제공한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>두 자유도가 각각 분산과 왜도 하나만 독립적으로 조절하는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a></div>
+        </article><article class="section-card concept-card">
+          <h3>두 scaled-F 자유도</h3>
+          <p><strong>쉽게 말하면</strong><br>양의 실현변동성 분포의 폭과 오른쪽 꼬리 모양을 함께 결정하는 두 shape parameter다.</p>
+          <p><strong>논문 안의 역할</strong><br>조건부 평균이 같아도 미래 위험분포의 dispersion과 skewness가 달라질 수 있게 한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>첫 자유도는 분산만, 둘째 자유도는 왜도만 일대일로 조절한다고 읽으면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a></div>
+        </article><article class="section-card concept-card">
+          <h3>VolaR</h3>
+          <p><strong>쉽게 말하면</strong><br>다음 실현변동성 값이 넘기 어려울 것으로 보는 상위 조건부 분위수다.</p>
+          <p><strong>논문 안의 역할</strong><br>점예측을 넘어 volatility-of-volatility와 꼬리위험을 평가한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>수익률 손실의 VaR나 expected shortfall과 같은 위험척도가 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </article><article class="section-card concept-card">
+          <h3>상대 loss와 calibration</h3>
+          <p><strong>쉽게 말하면</strong><br>경쟁모형보다 덜 틀렸는지와 예측분포의 확률이 실제 빈도·시간의존을 맞추는지는 다른 질문이다.</p>
+          <p><strong>논문 안의 역할</strong><br>MCS winner와 UC·CC·PIT 검정을 분리한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>MCS에 자주 남았다고 조건부 coverage까지 통과한 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>scaled-F 조건부분포 · 다음 실현커널은 양수이며 조건부 평균 mu와 두 shape 자유도로 정해지는 scaled-F 분포를 따른다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RK_t | F_{t-1} ~ scaled-F(mu_t, nu_{1,t}, nu_{2,t}), with RK_t &gt; 0 and E[RK_t | F_{t-1}] = mu_t</code></pre>
+                <dl class="symbol-grid"><dt><code>RK_t</code></dt><dd>날짜 t의 양의 실현커널 변동성</dd><dt><code>mu_t</code></dt><dd>scaled-F가 평균정합되는 조건부 위험수준</dd><dt><code>nu_{1,t}, nu_{2,t}</code></dt><dd>분포의 dispersion과 오른쪽 꼬리에 공동으로 작용하는 자유도</dd></dl>
+                <p><strong>직관:</strong> 평균예측 하나에 더해 평균 주변의 폭과 비대칭 꼬리를 별도 상태로 표현한다.</p>
+                <p><strong>구현할 때:</strong> 구현한 density가 양수 support, 적분값 1과 조건부 평균 mu를 만족하는지 수치검증하고 moment 존재조건을 기록한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>분위수 tick loss · 실제값이 예측분위수의 어느 쪽에 있는지에 따라 과소·과대예측을 비대칭적으로 벌점한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>L_q(y, forecast_q) = (q - I[y &lt; forecast_q]) × (y - forecast_q)</code></pre>
+                <dl class="symbol-grid"><dt><code>q</code></dt><dd>평가할 상위 분위수 수준</dd><dt><code>forecast_q</code></dt><dd>다음 실현변동성에 대해 예측한 상위 VolaR 분위수</dd><dt><code>I</code></dt><dd>실제값이 예측보다 작은지 표시하는 함수</dd></dl>
+                <p><strong>직관:</strong> 상위 꼬리를 너무 자주 넘거나 지나치게 보수적인 예측을 하나의 일관된 loss로 비교한다.</p>
+                <p><strong>구현할 때:</strong> tick loss가 낮아도 exceedance의 연속 군집을 CC 검정으로 별도 확인한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>미국 대형주들의 정규장 일중수익으로 만든 양의 실현커널을 사용한다.</li><li>조건부 평균과 분포 shape state를 같은 일별 위험 시계열에서 갱신한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>오늘까지의 위험과 score로 다음 거래일 전체 density를 예측한다.</li><li>전체 density와 상위 변동성 분위수는 서로 다른 loss로 평가한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>초기 추정 뒤 과거자료가 늘어나는 방식으로 표본외 density를 순차 생성한다.</li><li>일정 간격으로 모수를 다시 맞추고 rolling 창을 보조 점검한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>log score·tick loss의 MCS로 상대성과를 본다.</li><li>UC·CC·PIT/Berkowitz 검정으로 절대 calibration을 따로 판정한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Equation 1</p><h3>왜 정규분포 대신 scaled-F를 쓰는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>support가 양수인지, 평균을 mu로 분리하는지, 두 자유도가 꼬리와 dispersion에 공동으로 어떻게 들어가는지 확인한다.</dd>
+            <dt>저자 보고 결과</dt><dd>양의 fat-tailed 실현변동성에 맞는 flexible density가 구성된다.</dd>
+            <dt>검토자 해석</dt><dd>점 HAR 뒤에 분포형태를 추가할 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>shape parameter 이름을 존재하지 않는 moment의 직접 관측치처럼 부르면 안 된다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Equations 9–10</p><h3>새로운 scaled-F 분포모형을 평가하는 비교대상은 충분히 강하고 공정한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>직접 scaled-F와 log-RK normal, MEM-HAR의 target scale과 조건부 평균을 맞춰 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>로그변환과 multiplicative benchmark가 새 모형의 증분을 가리는 강한 기준선으로 놓인다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서도 단순 Gamma/MEM과 lognormal HAR를 먼저 구현해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>변환에 따른 bias correction과 density Jacobian을 빼면 공정비교가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 3</p><h3>상대적으로 좋은 density가 절대적으로도 맞는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>MCS 포함 종목 수는 높을수록 상대적으로 강하지만, UC·CC·Berkowitz rejection 수는 낮을수록 좋다. 두 panel의 방향을 반대로 읽지 않는다.</dd>
+            <dt>저자 보고 결과</dt><dd>동적 shape 모형은 상대 loss에서 강하지만 조건부 calibration은 거의 전 종목에서 실패한다.</dd>
+            <dt>검토자 해석</dt><dd>winner와 calibrated model을 동의어로 쓰면 안 된다.</dd>
+            <dt>검토자 경계</dt><dd>상위 분위수 결과는 수익률 VaR나 WML 최악월 성과가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>위기 때 실현변동성의 평균뿐 아니라 분포 폭과 오른쪽 꼬리가 변하므로 likelihood score로 shape를 갱신하면 density loss가 줄 수 있다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>time-varying shape 계열의 log-score·tick-loss MCS 강점이 고정형·MEM 기준선보다 넓게 나타난다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>분포군·lag·대형주 표본 선택과 전체 개발자료에서 정한 사양이 상대순위를 만들었을 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>한국 WML에서 동적 shape가 단순 density의 loss를 못 이기거나 exceedance 군집을 줄이지 못하면 tail extension을 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>expanding과 rolling 추정, full-density와 분위수 loss, 여러 absolute calibration 검정을 함께 본다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>조건부 coverage와 PIT 기반 검정에서 광범위한 실패가 남는다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 long–short WML의 월별 risk density와 그 density를 이용한 비용 후 투자성과는 직접 시험하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>상대적으로 가장 좋은 모형이 절대 calibration에서는 거의 전면 거부되는 점이 핵심 긴장이다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">일별 realized kernel</th><td>다음달 WML realized-risk target</td><td>빈도와 측정치가 달라 원형이 아닌 월별 density 적응으로 명시한다.</td></tr><tr><th scope="row">MEM·lognormal benchmark</th><td>단순 양의 월위험 density</td><td>복잡한 GAS-F 앞의 강한 비교군을 확보한다.</td></tr><tr><th scope="row">VolaR calibration</th><td>월위험 상위분위수·exceedance</td><td>tail trigger를 쓰기 전에 빈도와 군집을 검정한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>여섯 구성의 다음 보유월 양의 위험 target을 고정한다.</li><li>Gamma/MEM과 lognormal HAR density를 past-only로 적합한다.</li><li>간결한 time-varying shape 후보를 같은 outer origin에 추가한다.</li><li>log score·tick loss·PIT·UC·CC를 공통월에서 계산한다.</li><li>상위분위수 신호를 공통 target-vol·cap에 넣는다.</li><li>Sharpe·CER·worst month·turnover·비용을 point forecast 전략과 비교한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>density가 양수 support와 적분값·분위수 단조성을 만족한다.</li><li>상대 loss 개선과 UC·CC calibration을 동시에 통과한다.</li><li>tail mapping이 비용 후 꼬리·효용을 point baseline보다 개선한다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>loss만 좋고 CC가 나쁘면 exceedance clustering 실패로 분류한다.</li><li>density는 좋고 투자성과가 나쁘면 quantile→비중 매핑 문제로 분류한다.</li><li>moment가 존재하지 않는 state가 잦으면 모형 안정성 실패로 분류한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>density 적분·state·분위수 단위시험 원장</li><li>상대 loss와 calibration을 나란히 둔 표</li><li>point 대 density scaling의 비용 후 tail 성과표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>이 논문은 점예측보다 전체 위험분포가 중심이다.</li><li>VolaR는 수익률 VaR가 아니다.</li><li>상대 loss와 절대 calibration은 다른 판정이다.</li><li>동적 shape는 상대적으로 강해도 조건부 검정에서 실패한다.</li><li>한국 적용은 본선이 아니라 tail-risk 후속 확장이다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>점예측과 density 예측을 구분한다.</li><li>scaled-F의 양수 support를 설명한다.</li><li>VolaR와 return VaR를 구분한다.</li><li>MCS와 calibration 결과를 함께 읽는다.</li><li>한국 tail extension의 실패조건을 쓸 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. Table 3에서 MCS 숫자와 CC rejection 숫자를 같은 방향으로 읽으면 왜 틀리는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> MCS 포함은 많을수록 상대적으로 강하지만 rejection은 적을수록 calibration이 좋기 때문이다.</p>
+          <p><strong>왜:</strong> 동적 shape 모형은 두 기준에서 정반대의 인상을 준다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. VolaR를 WML 수익 VaR라고 부를 수 있는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 아니다. 예측대상은 다음 실현변동성 측정치의 상위 분위수다.</p>
+          <p><strong>왜:</strong> OOS 설계가 volatility measure의 exceedance를 평가한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국에서 GAS-F 앞에 무엇을 구현해야 하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 같은 양의 target을 쓰는 단순 Gamma/MEM과 lognormal HAR density다.</p>
+          <p><strong>왜:</strong> 논문도 강한 log·MEM 기준선을 두어 shape dynamics의 증분을 측정한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 확인된 VOR에서 time-varying shape 모형은 실현변동성 density와 상위 분위수의 상대 loss에서 강했지만 조건부 calibration 검정은 광범위하게 실패했다.</p><p><strong>이렇게 말하면 안 됨:</strong> MCS 포함이 올바른 조건부분포를 증명한다거나 VolaR가 수익률 VaR이며 한국 WML 꼬리손실을 이미 줄였다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p05_benchmarks">p05_benchmarks · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks</a><a class="evidence-chip" href="#locator-p05_density">p05_density · PDF 3쪽 · Equation 1 and scaled-F density introduction</a><a class="evidence-chip" href="#locator-p05_oos">p05_oos · PDF 11쪽 · Equations 15–16 and OOS estimation design</a><a class="evidence-chip" href="#locator-p05_table3">p05_table3 · PDF 12쪽 · Table 3 and Equation 17</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>S&amp;P 500 대형주 89종목, 2001-01-02–2019-12-31의 5분 TAQ 수익으로 만든 일별 realized kernel 4,713개 [원문 보고]</dd><dt>target</dt><dd>다음날 realized kernel의 전체 조건부분포와 95% upper volatility quantile(VolaR) [원문 보고]</dd><dt>information set</dt><dd>과거 realized kernel의 HAR mean state와 scaled-F 자유도에 대한 score-driven shape states [원문 보고]</dd><dt>lookback</dt><dd>HAR mean의 1·12·60일 평균; OOS initial estimation 1,500일 [원문 보고]</dd><dt>horizon</dt><dd>다음 1거래일 [원문 보고]</dd><dt>model family</dt><dd>scaled-F GAS-HAR with fixed or time-varying degrees of freedom, lognormal GAS benchmark and MEM-HAR</dd><dt>training window</dt><dd>최초 1,500일 뒤 expanding estimation으로 3,213개 one-step density forecast를 만든다.</dd><dt>retune</dt><dd>모형모수는 약 50개 관측마다 재추정하고 score state는 매일 갱신한다.</dd><dt>benchmarks</dt><dd>fixed-shape GAS-HAR-F · lognormal HAR with dynamic variance · MEM-HAR</dd><dt>loss / test</dt><dd>negative log score · 95% asymmetric tick loss · Model Confidence Set · unconditional and conditional coverage · unconditional and conditional Berkowitz tests</dd><dt>economic metrics</dt><dd>95% VolaR exceedance rate and clustering</dd><dt>trading costs</dt><dd>포트폴리오 거래비용은 보고하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 회전율은 보고하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +209,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>density numerical integration과 positive support test</li><li>quantile monotonicity와 finite GAS-score test</li><li>미래 target 변형에 대한 state·forecast prefix test</li><li>UC·CC exceedance count hand-check</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p05_logscore</span> 시간가변 두 shape를 둔 GAS-HAR-ν1–2는 log-score MCS에 89종목 중 87개가 포함돼 fixed-shape 74개와 MEM-HAR 11개보다 넓게 포함됐다.<p class="meta">sample: 미국 대형주 89종목, 3,213일 OOS · target: 다음날 realized-kernel density · horizon: 1일 · metric: log-score MCS 포함 종목 수 · unit: 89종목 중 개수 · comparator: fixed-shape GAS and MEM-HAR · loss_or_test: negative log score Model Confidence Set</p><p><strong>근거:</strong> p05_table3 · p05_oos</p><p><strong>전이 경고:</strong> 미국 대형주의 1일 realized-kernel density 결과이며 한국 월 WML density와 같은 측정대상이 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p05_tickloss</span> 95% VolaR tick-loss MCS에서는 ν1 model 69종목, ν1–2 model 58종목, log-N-VoV 66종목으로 density winner와 quantile winner가 달랐다.<p class="meta">sample: 미국 대형주 89종목 OOS · target: 다음날 realized-kernel 95% VolaR · horizon: 1일 · metric: tick-loss MCS 포함 종목 수 · unit: 89종목 중 개수 · comparator: GAS-F and lognormal variants · loss_or_test: 95% asymmetric tick loss MCS</p><p><strong>근거:</strong> p05_table3</p><p><strong>전이 경고:</strong> VolaR는 return VaR가 아니며 quantile loss의 상대우위는 경제적 꼬리손실 감소가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p05_calibration_failure</span> 5% conditional-coverage 검정은 ν1–2 model을 89종목 중 88개, ν1 model을 89개 모두에서 기각해 상대 loss 우위와 조건부 calibration 실패가 공존했다.<p class="meta">sample: 미국 대형주 89종목 OOS · target: 95% VolaR exceedance sequence · horizon: 1일 반복 · metric: conditional-coverage rejection count · unit: 89종목 중 기각 개수 · comparator: correctly conditionally calibrated exceedances · loss_or_test: 5% conditional coverage test</p><p><strong>근거:</strong> p05_table3</p><p><strong>전이 경고:</strong> 좋은 상대 loss를 올바른 조건부분포라는 주장으로 바꾸면 안 된다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Time-varying variance and skewness in realized volatility measures — International Journal of Forecasting version of record</strong><p>최종 게재본 · 2023 · 15쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://research.vu.nl/ws/portalfiles/portal/299129865/Time-varying_variance_and_skewness_in_realized_volatility_measures.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>artifact는 IJF 39(2) 827–840의 VOR이다. 공개 PDF가 일 단위 발행일을 제시하지 않아 확인된 서지연도만 기록했으며, 물리 p.1은 저장소 표지이고 journal 본문은 p.2부터 시작한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p05_density</strong> · artifact p05_vor · PDF 3쪽 · Equation 1 and scaled-F density introduction · 검증됨</li><li><strong>p05_benchmarks</strong> · artifact p05_vor · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks · 검증됨</li><li><strong>p05_oos</strong> · artifact p05_vor · PDF 11쪽 · Equations 15–16 and OOS estimation design · 검증됨</li><li><strong>p05_table3</strong> · artifact p05_vor · PDF 12쪽 · Table 3 and Equation 17 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Time-varying variance and skewness in realized volatility measures — International Journal of Forecasting version of record</strong><p>최종 게재본 · 2023 · 15쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://research.vu.nl/ws/portalfiles/portal/299129865/Time-varying_variance_and_skewness_in_realized_volatility_measures.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>artifact는 IJF 39(2) 827–840의 VOR이다. 공개 PDF가 일 단위 발행일을 제시하지 않아 확인된 서지연도만 기록했으며, 물리 p.1은 저장소 표지이고 journal 본문은 p.2부터 시작한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p05_density"><strong>p05_density</strong> · artifact p05_vor · PDF 3쪽 · Equation 1 and scaled-F density introduction · 검증됨 · <a href="https://research.vu.nl/ws/portalfiles/portal/299129865/Time-varying_variance_and_skewness_in_realized_volatility_measures.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p05_benchmarks"><strong>p05_benchmarks</strong> · artifact p05_vor · PDF 7쪽 · Equations 9A–10, log-normal and MEM-HAR benchmarks · 검증됨 · <a href="https://research.vu.nl/ws/portalfiles/portal/299129865/Time-varying_variance_and_skewness_in_realized_volatility_measures.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p05_oos"><strong>p05_oos</strong> · artifact p05_vor · PDF 11쪽 · Equations 15–16 and OOS estimation design · 검증됨 · <a href="https://research.vu.nl/ws/portalfiles/portal/299129865/Time-varying_variance_and_skewness_in_realized_volatility_measures.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p05_table3"><strong>p05_table3</strong> · artifact p05_vor · PDF 12쪽 · Table 3 and Equation 17 · 검증됨 · <a href="https://research.vu.nl/ws/portalfiles/portal/299129865/Time-varying_variance_and_skewness_in_realized_volatility_measures.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>VOR에서 time-varying shape는 realized-volatility density와 VolaR의 상대 loss를 개선했다.</strong><p>이유: Table 3의 log-score와 tick-loss MCS가 이를 지지한다. · 교정: 미국 89종목·1일 RK 조건을 함께 밝힌다. · 근거: p05_table3</p></li><li><strong>상대 density loss 개선과 conditional calibration은 별도 판정이다.</strong><p>이유: ν1–2는 log-score MCS에 강하지만 CC에서 88/89 기각된다. · 교정: MCS와 UC·CC·Berkowitz 결과를 함께 제시한다. · 근거: p05_table3</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>87/89 MCS 포함은 조건부분포가 올바르게 calibration됐다는 뜻이다.</strong><p>이유: 같은 표의 conditional coverage가 거의 전 종목에서 기각된다. · 교정: 상대 loss와 absolute calibration을 분리한다. · 근거: p05_table3</p></li><li><strong>VolaR는 WML 수익률 VaR 또는 expected shortfall과 같다.</strong><p>이유: target은 다음날 realized volatility measure의 upper quantile이다. · 교정: volatility quantile이라고 명시한다. · 근거: p05_density · p05_table3</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>Figure 7의 4,312 observations와 다른 표의 4,713 observations 차이는 본문에서 설명되지 않는다.</li><li>저자 코드·TAQ 원자료·kernel bandwidth와 optimizer 세칙은 공개 VOR 근거범위에 포함되지 않는다.</li></ul>

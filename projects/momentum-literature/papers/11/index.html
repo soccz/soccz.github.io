@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/11/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Decoupling the Short- and Long-Term Behavior of Stochastic Volatility · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,168 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>단기 roughness와 장기 persistence를 한 계수로 뭉개지 않고 분리하는 장기의존 challenger를 설계할 때 읽는 필수 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>RW126보다 긴 정보가 다음달 WML 위험예측에 추가 가치를 주는지 검정할 때</li><li>로그분산 예측의 수준 재변환에서 Jensen 편향을 처리할 때</li><li>horizon별 모형순위와 복수 benchmark를 사전 고정할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>일중 pre-averaged variation과 일별 WML 제곱수익 합을 같은 측정치로 취급할 때</li><li>200관측 rolling 추정창을 126일 feature lookback과 동일시할 때</li><li>한국 WML의 Sharpe 개선을 이 논문의 예측표만으로 선언할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>변동성이 단기에는 매우 거칠면서 장기에는 오래 지속된다는 두 현상을 하나의 기억모수로 설명하면 모형이 무엇을 배웠는지 알기 어렵다. 이 논문은 두 시간척도를 분리해 예측설계 자체를 더 정직하게 만든다.</p></article>
+            <article><h3>중심 질문</h3><p>로그변동성의 국소적 roughness와 장거리 persistence를 서로 다른 모수로 허용하면, 통계적으로 더 잘 식별되고 horizon별 integrated-variance 예측도 좋아지는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>fractional 계열은 짧은 구간의 거칠기와 장기 상관감쇠를 같은 지수에 묶는 경우가 많다. 또한 noisy realized measure를 그대로 쓰면 roughness 추정이 왜곡될 수 있는데, 이 측정문제와 예측문제를 함께 다룬 비교가 필요했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자들은 Cauchy와 BSS 후보를 통해 원점의 roughness와 먼 거리의 memory를 분리하고, E-mini와 미국주식에서 두 특성을 살핀 뒤 rolling OOS로 여러 간격과 1·2·5·10·20 step integrated variance를 예측한다. 결과는 복잡모형 하나의 보편적 승리가 아니라 짧은 일별 horizon에서는 RFSV, 더 긴 horizon 또는 일중에서는 Cauchy·BSS가 강할 수 있다는 horizon별 분업이다. 한국 WML에는 RW126·HAR 뒤에 short/long challenger를 두되, 일별 제곱수익 proxy로는 원문의 고빈도 측정단계를 재현하지 못한다는 경계를 준다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>roughness와 persistence가 같은 개념이라는 묶음을 푼다.</h3>
+          <p>작은 시차에서 경로가 얼마나 거친지와 큰 시차에서 상관이 얼마나 천천히 사라지는지를 별도 통계적 특성으로 정의한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>두 시간척도를 독립적으로 모델링해야 한다는 선택기준을 세운다.</h3>
+          <p>같은 fractional parameter가 짧은 lag의 거칠기와 먼 lag의 상관감쇠를 동시에 정하는 제약을 풀고, 두 특성을 따로 움직이는 후보를 horizon별로 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>로그예측을 실제 분산수준으로 올바르게 되돌린다.</h3>
+          <p>조건부 로그평균만 지수화하지 않고 조건부분산을 더한 Jensen 보정으로 수준 예측을 구성해 재변환 편향을 막는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>horizon별로 강한 단순모형과 구조모형을 경쟁시킨다.</h3>
+          <p>MSE·QLIKE와 MCS를 함께 사용해 짧은 horizon과 긴 horizon에서 생존모형이 달라지는지 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>예측우위와 잠재변동성의 존재론적 결론을 분리한다.</h3>
+          <p>realized proxy의 측정오차 때문에 latent spot volatility가 정말 rough한지까지 확정하지 않고, 예측성과와 식별 한계를 함께 남긴다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>roughness</h3>
+          <p><strong>쉽게 말하면</strong><br>아주 짧은 간격에서 변동성 경로가 매끈하지 않고 들쭉날쭉한 정도다.</p>
+          <p><strong>논문 안의 역할</strong><br>작은 lag의 variogram 기울기 또는 kernel의 원점 거동으로 식별한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>장기간 높은 변동성이 지속된다는 long memory와 같은 말이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a></div>
+        </article><article class="section-card concept-card">
+          <h3>long-run persistence</h3>
+          <p><strong>쉽게 말하면</strong><br>멀리 떨어진 두 시점의 변동성이 얼마나 오래 관련을 유지하는지다.</p>
+          <p><strong>논문 안의 역할</strong><br>상관함수 또는 kernel tail의 다항·지수 감쇠를 정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>200개 rolling estimation window가 곧 200개 장기 feature라는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a></div>
+        </article><article class="section-card concept-card">
+          <h3>Jensen correction</h3>
+          <p><strong>쉽게 말하면</strong><br>로그분산 예측을 수준으로 되돌릴 때 불확실성 때문에 생기는 위쪽 편향을 반영하는 보정이다.</p>
+          <p><strong>논문 안의 역할</strong><br>로그정규 조건에서 조건부 평균과 조건부분산을 함께 지수화해 양의 수준예측을 만든다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>로그예측에 단순 exp만 취한 값과 같지 않다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a></div>
+        </article><article class="section-card concept-card">
+          <h3>MCS</h3>
+          <p><strong>쉽게 말하면</strong><br>손실 차이가 작을 때 억지로 1등 하나를 고르지 않고 통계적으로 남을 수 있는 모형 집합을 보여 준다.</p>
+          <p><strong>논문 안의 역할</strong><br>여러 후보의 equal predictive ability를 반복적으로 검정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>표의 최소손실 모형이 유일하게 참이라는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>로그수준 재변환 · 로그변동성의 조건부 평균에 조건부분산의 절반을 더한 뒤 지수화해야 수준의 조건부 평균이 된다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>E[exp(X) | F] = exp(E[X | F] + 0.5 Var[X | F])</code></pre>
+                <dl class="symbol-grid"><dt><code>X</code></dt><dd>로그분산 또는 로그변동성 예측대상</dd><dt><code>F</code></dt><dd>forecast origin에서 이용 가능한 정보집합</dd><dt><code>Var[X | F]</code></dt><dd>로그예측의 조건부 불확실성</dd></dl>
+                <p><strong>직관:</strong> 불확실한 로그값을 단순 exp하면 큰 값의 비대칭적 기여를 놓쳐 수준평균을 낮게 예측할 수 있다.</p>
+                <p><strong>구현할 때:</strong> 단순 exp와 보정 exp를 병렬 산출하고 양수성·overflow·OOS loss를 비교한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>주 실증은 E-mini S&amp;P 500 tick 자료에서 만든 여러 간격의 pre-averaged integrated-variance proxy다.</li><li>횡단면 보조분석은 미국 개별주식을 사용하며 한국 WML이나 포트폴리오 수익이 아니다.</li><li>한국 적응은 일별 WML의 causal log-variance proxy만 사용하므로 측정층이 더 거칠다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>target은 origin 뒤 h개 구간 integrated variance의 합이며 h는 1·2·5·10·20이다.</li><li>각 origin은 그때까지 관측된 로그 proxy와 계절성만 사용한다.</li><li>일별 h=20이 한국 다음달 target에 가장 가깝지만 동일한 측정치는 아니다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>최근 200관측 fixed rolling window에서 매 origin 모수를 다시 추정한다.</li><li>모형은 RW·AR·ARMA·log-HAR·ARFIMA·RFSV·Cauchy·BSS를 함께 비교한다.</li><li>한국에서는 window·kernel·재변환 선택을 outer OOS 안의 과거 validation으로 제한한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE와 QLIKE를 모두 보고해 loss별 순위차를 보존한다.</li><li>75%·90% MCS에서 복수모형 생존을 허용한다.</li><li>forecast 개선과 BS15 scaling의 Sharpe·최악월·turnover는 별도 결과층으로 판정한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 4</p><h3>일중 짧은 간격에서도 short/long 분리가 단순 benchmark를 이기는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>15·30분 패널에서 horizon별 MSE와 QLIKE 최소값뿐 아니라 MCS 음영에 몇 모형이 함께 남는지 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>Cauchy와 BSS가 여러 열에서 최저권이지만 복수모형이 MCS에 함께 남는다.</dd>
+            <dt>검토자 해석</dt><dd>분리모형은 경쟁력 있는 challenger지만 유일한 winner로 고정할 근거는 약하다.</dd>
+            <dt>검토자 경계</dt><dd>고유동성 선물의 일중 target이며 한국 월별 WML에 직접 전이되지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 5</p><h3>예측 horizon이 길어지면 winner가 바뀌는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>65분과 일별 패널의 h=1부터 h=20까지 행을 따라가며 RFSV·Cauchy·BSS의 loss와 MCS 포함을 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>일별 짧은 horizon에는 RFSV가 강하고 h=20에는 Gamma-BSS가 표의 최저권으로 이동한다.</dd>
+            <dt>검토자 해석</dt><dd>모형선택은 자산 이름이 아니라 target horizon별로 해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>같은 표에서도 loss와 horizon에 따라 동률 또는 순위교차가 있다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Conclusion measurement warning</p><h3>좋은 forecast가 잠재변동성이 정말 rough하다는 증명인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>결론에서 observed realized measure와 latent spot process를 구분하는 문장을 예측표와 함께 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>저자들은 측정오차 때문에 roughness 역추론이 ill-posed일 수 있음을 남긴다.</dd>
+            <dt>검토자 해석</dt><dd>한국 일별 제곱수익의 모수 추정은 구조적 진실보다 예측도구로 더 좁게 해석해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>예측 우위와 잠재과정 식별은 서로 다른 주장이다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>단기 roughness는 최근 충격 직후의 빠른 위험변화를, 장기 kernel tail은 천천히 사라지는 위험상태를 포착한다.</li><li>로그수준 Jensen 보정은 높은 불확실성 상태에서 체계적 과소예측을 줄인다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>Table 5에서 짧은 horizon과 긴 horizon의 winner가 갈리는 패턴이 시간척도 분리의 실증적 필요와 일치한다.</li><li>Table 4에서 구조모형이 여러 loss 열의 최저권에 드는 것은 단순 persistence 하나 이상이 유용할 가능성을 보인다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>성능차가 roughness 구조보다 realized-measure 잡음, 계절조정 또는 재변환 방식에서 생겼을 수 있다.</li><li>선택된 200-window와 E-mini 표본특성이 특정 kernel에 유리할 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>동일 origin에서 causal kernel이 RW126·HAR·log-AR보다 QLIKE와 경제성과 모두 나쁘면 추가 short/long 구조를 기각한다.</li><li>Jensen 보정이 OOS calibration을 개선하지 않거나 극단값만 키우면 재변환 채널을 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>여러 sampling interval, horizon, MSE·QLIKE와 MCS에서 구조모형의 경쟁력이 반복된다.</li><li>E-mini뿐 아니라 개별주식의 roughness·persistence 분리도 보조적으로 확인한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>단일 winner는 horizon에 따라 바뀌고 MCS가 복수모형을 남긴다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 long–short WML, 다음달 scaling Sharpe와 거래비용은 평가하지 않았다.</li><li>window와 kernel을 nested validation으로 선택한 완전 untouched test는 없다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>latent roughness와 noisy realized proxy의 roughness를 완전히 식별하지 못한다.</li><li>짧은 주 OOS와 더 긴 누적손실 그림이 서로 다른 증거창을 사용한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">E-mini pre-averaged integrated variance</th><td>각 WML의 다음 22거래일 일별수익 제곱합</td><td>현재 자료에서 동일 origin으로 만들 수 있는 공통 위험 target이지만 원형 측정과 다름을 표시한다.</td></tr><tr><th scope="row">Cauchy/BSS short-long process</th><td>causal discrete short/long kernel challenger</td><td>연속시간 원형보다 투명한 이산 적응으로 누수와 계산복잡성을 통제한다.</td></tr><tr><th scope="row">RW·HAR·RFSV 비교</th><td>RW126·log-AR·HAR·kernel 공통 OOS tournament</td><td>복잡모형의 증분가치를 강한 단순 baseline 위에서만 인정한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>여섯 WML별 다음 22거래일 제곱합 target과 origin metadata를 만든다.</li><li>RW126·log-AR·HAR를 같은 target·origin에서 먼저 고정한다.</li><li>short decay와 long tail이 분리된 causal kernel 후보를 training-only로 적합한다.</li><li>로그예측의 단순 exp와 Jensen 보정 버전을 모두 생성한다.</li><li>MSE·QLIKE·DM/MCS와 regime 누적손실을 같은 OOS mask에서 계산한다.</li><li>같은 forecast를 BS15 scaling에 넣어 cap·turnover·비용 후 성과를 별도 평가한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>모든 feature와 tuning data의 최대일이 forecast origin을 넘지 않는다.</li><li>kernel challenger가 여섯 WML 중앙값 QLIKE에서 RW126·HAR를 개선하고 MCS에서 반복 생존한다.</li><li>forecast 개선이 비용 후 Sharpe 또는 최악월 중 최소 하나의 경제지표와 모순되지 않는다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>긴 horizon만 개선되면 short/long 분리보다 target aggregation 효과인지 확인한다.</li><li>로그수준 예측만 폭발하면 Jensen 보정·분산추정·floor를 진단한다.</li><li>kernel truncation에 따라 순위가 뒤집히면 long-tail 식별이 약하다고 판정한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 target·feature 최대일·kernel 선택 감사표</li><li>horizon·loss별 단순 baseline과 kernel 비교표</li><li>regime별 누적 QLIKE 및 forecast 분해 그림</li><li>동일 forecast의 BS15 경제성과·turnover 표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>roughness와 long memory는 다른 현상이며 별도 모수로 봐야 한다.</li><li>모형 winner는 horizon별로 달라진다.</li><li>로그예측은 Jensen 보정 여부가 실질적인 구현 선택이다.</li><li>좋은 realized-volatility forecast가 latent process의 본질을 확정하지 않는다.</li><li>한국에서는 RW126·HAR 뒤의 challenger이지 첫 baseline이 아니다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>단기 roughness와 장기 persistence를 구분한다.</li><li>estimation window와 feature memory를 구분한다.</li><li>Jensen 재변환식을 설명한다.</li><li>Table 4·5를 loss와 MCS까지 읽는다.</li><li>latent process 주장과 forecast 주장을 분리한다.</li><li>한국 일별 적응이 고빈도 원형 재현이 아님을 명시한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. roughness와 persistence의 차이는 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> roughness는 아주 짧은 lag의 경로 거칠기이고 persistence는 먼 lag의 상관감쇠다.</p>
+          <p><strong>왜:</strong> 두 현상을 한 모수로 묶지 않는 것이 논문의 출발점이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 exp(log forecast)만 쓰면 안 될 수 있는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 로그예측의 조건부분산이 있으면 수준의 조건부 평균에는 그 절반을 더한 Jensen 보정이 필요하기 때문이다.</p>
+          <p><strong>왜:</strong> 재변환 방식만으로 수준손실과 scaling weight가 달라질 수 있다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. Table 5가 단일 winner를 지지하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 아니다. 짧은 일별 horizon에는 RFSV, 긴 horizon에는 Gamma-BSS가 강해 순위가 바뀐다.</p>
+          <p><strong>왜:</strong> 모형선택은 horizon 조건부로 해야 한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 저자들은 roughness와 장기 persistence를 분리하는 Cauchy/BSS 모형을 제안했고, E-mini integrated-variance 예측에서 구조모형이 여러 간격에서 경쟁력 있었지만 winner는 horizon별로 달랐다.</p><p><strong>이렇게 말하면 안 됨:</strong> 이 논문이 한국 WML의 다음달 분산이나 Sharpe 개선을 증명했거나, 200관측 추정창이 200관측 feature이며 잠재변동성이 확정적으로 rough하다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p11_model">p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</a><a class="evidence-chip" href="#locator-p11_table4">p11_table4 · PDF 37쪽 · Table 4</a><a class="evidence-chip" href="#locator-p11_table5">p11_table5 · PDF 38쪽 · Table 5</a><a class="evidence-chip" href="#locator-p11_target">p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</a><a class="evidence-chip" href="#locator-p11_limit">p11_limit · PDF 39쪽 · Conclusion and measurement warning</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>CME E-mini S&amp;P 500 tick 자료 2011-01-02–2014-12-31의 996거래일과 약 2천 개 미국주식의 보조 횡단면 [원문 보고] · 점프와 미시구조 잡음에 강건한 pre-averaged bipower variation 및 일중 계절조정 [원문 보고]</dd><dt>target</dt><dd>15·30·65분 또는 1일 간격에서 앞으로 1·2·5·10·20개 구간의 integrated variance 합 [원문 보고]</dd><dt>information set</dt><dd>각 origin까지 관측된 로그 realized measure와 그 시점에 추정 가능한 계절요인 [원문 보고]</dd><dt>lookback</dt><dd>모수추정은 최근 200관측 rolling window; 모형의 장기 kernel history와는 별개 [원문 보고]</dd><dt>horizon</dt><dd>1·2·5·10·20 step; 1일 간격 20-step이 약 한 달에 가장 가깝다 [원문 보고]</dd><dt>model family</dt><dd>Cauchy, Power-BSS, Gamma-BSS의 short/long-dependence 분리 모형과 RW·AR·ARMA·log-HAR·ARFIMA·RFSV</dd><dt>training window</dt><dd>각 forecast origin에서 최근 200개 관측을 고정 길이로 사용한다.</dd><dt>retune</dt><dd>모형은 rolling origin마다 다시 추정하며 window와 후보군을 위한 별도 nested validation은 보고하지 않는다.</dd><dt>benchmarks</dt><dd>random walk · AR(5) · AR(10) · ARMA(1,1) · log-HAR · ARFIMA · RFSV</dd><dt>loss / test</dt><dd>MSE · QLIKE · 75%·90% Model Confidence Set · block bootstrap 25,000회와 block length 6</dd><dt>economic metrics</dt><dd>포트폴리오 Sharpe·CER·turnover는 보고되지 않는다.</dd><dt>trading costs</dt><dd>거래전략을 구성하지 않아 거래비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 비중과 회전율을 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +205,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>미래 수익을 바꿔도 과거 origin의 feature·forecast가 변하지 않는 prefix-invariance test</li><li>200관측 estimation window와 feature lag를 별도 열로 검증하는 window-semantics test</li><li>로그예측의 단순 지수변환과 Jensen 보정을 구분하는 level-transform test</li><li>6개 모형 출력에 동일한 BS15 scaling 함수만 적용하는 common-mapping test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p11_intraday</span> 15분 간격에서는 Cauchy와 BSS 모형이 다수 horizon의 MSE·QLIKE 최저권에 있었지만 MCS가 여러 모형을 함께 남겼다.<p class="meta">sample: E-mini S&amp;P 500의 2013-01-02–2014-12-31 OOS · target: 15분 integrated variance 합 · horizon: 1·2·5·10·20 step · metric: MSE·QLIKE와 MCS 포함 · unit: 분산손실 및 모형집합 · comparator: RW·AR·ARMA·log-HAR·ARFIMA·RFSV · loss_or_test: MSE, QLIKE, 75%·90% MCS</p><p><strong>근거:</strong> p11_table4</p><p><strong>전이 경고:</strong> 일중 선물 RV 결과이며 한국 월별 WML 위험예측의 직접 성과가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p11_daily_horizon</span> 일별 20-step 예측에서는 Gamma-BSS가 MSE 0.010×10^-5와 QLIKE −6.412로 표의 최저값을 보였고, 짧은 horizon에서는 RFSV가 강했다.<p class="meta">sample: E-mini S&amp;P 500의 2013-01-02–2014-12-31 OOS · target: 일별 integrated variance 합 · horizon: 1·2·5·10·20 거래일 · metric: MSE와 QLIKE · unit: 표 기재 손실단위 · comparator: Cauchy·BSS와 전통·fractional benchmarks · loss_or_test: Table 5 MSE·QLIKE 및 MCS</p><p><strong>근거:</strong> p11_table5</p><p><strong>전이 경고:</strong> horizon별 winner가 달라 단일 장기의존 모형의 보편적 우위로 표현하지 않는다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p11_measurement_caveat</span> 저자들은 observed realized measure에서 잠재 spot volatility의 roughness를 역추론하는 문제가 측정오차 때문에 ill-posed일 수 있다고 경고한다.<p class="meta">sample: 논문의 이론·실증 전체 · target: 잠재 변동성 roughness 해석 · horizon: 해당 없음 · metric: 식별 한계 · unit: 정성적 경고 · comparator: observed realized measure와 latent spot volatility · loss_or_test: 결론의 측정오차 논의</p><p><strong>근거:</strong> p11_limit</p><p><strong>전이 경고:</strong> 일별 WML 제곱수익 proxy는 원 논문의 noise-robust 일중 측정보다 더 거친 대용치다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Decoupling the Short- and Long-Term Behavior of Stochastic Volatility — arXiv v3 author preprint</strong><p>프리프린트 · 2021-01-06 · 48쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치와 수치는 2021년 저자 선행판 기준이다. 최종 JFEC 게재본의 조판 페이지에 이 locator를 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p11_model</strong> · artifact p11_preprint · PDF 5쪽 · Section 2 roughness and persistence definitions · 검증됨</li><li><strong>p11_target</strong> · artifact p11_preprint · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction · 검증됨</li><li><strong>p11_table4</strong> · artifact p11_preprint · PDF 37쪽 · Table 4 · 검증됨</li><li><strong>p11_table5</strong> · artifact p11_preprint · PDF 38쪽 · Table 5 · 검증됨</li><li><strong>p11_limit</strong> · artifact p11_preprint · PDF 39쪽 · Conclusion and measurement warning · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Decoupling the Short- and Long-Term Behavior of Stochastic Volatility — arXiv v3 author preprint</strong><p>프리프린트 · 2021-01-06 · 48쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치와 수치는 2021년 저자 선행판 기준이다. 최종 JFEC 게재본의 조판 페이지에 이 locator를 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p11_model"><strong>p11_model</strong> · artifact p11_preprint · PDF 5쪽 · Section 2 roughness and persistence definitions · 검증됨 · <a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p11_target"><strong>p11_target</strong> · artifact p11_preprint · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction · 검증됨 · <a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p11_table4"><strong>p11_table4</strong> · artifact p11_preprint · PDF 37쪽 · Table 4 · 검증됨 · <a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p11_table5"><strong>p11_table5</strong> · artifact p11_preprint · PDF 38쪽 · Table 5 · 검증됨 · <a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p11_limit"><strong>p11_limit</strong> · artifact p11_preprint · PDF 39쪽 · Conclusion and measurement warning · 검증됨 · <a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>검증한 저자 선행판에서는 단기 roughness와 장기 persistence를 분리한 모형이 여러 RV horizon에서 경쟁력 있는 예측을 보였다.</strong><p>이유: 모형 정의와 Tables 4–5가 horizon·loss별 결과를 제시한다. · 교정: 판본, E-mini 일중자료, horizon과 loss를 함께 적고 MCS의 공동 생존을 밝힌다. · 근거: p11_model · p11_table4 · p11_table5</p></li><li><strong>한국 WML에서는 short/long 정보분리를 복잡모형의 사전 정당화가 아니라 검정 가능한 challenger로 사용할 수 있다.</strong><p>이유: 논문 자체가 horizon별 winner 변화와 측정오차 한계를 함께 보인다. · 교정: RW126·HAR·MLOG를 같은 origin에서 비교하고 경제성과를 별도 평가한다. · 근거: p11_table5 · p11_limit</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>이 논문은 한국 WML의 다음달 분산과 Sharpe 개선을 입증했다.</strong><p>이유: 표본·측정치·투자전략이 모두 다르며 경제성과를 평가하지 않는다. · 교정: 한국 6개 WML에서 forecast와 economic gate를 새로 실행한다. · 근거: p11_target · p11_limit</p></li><li><strong>200관측 rolling window는 BS15의 126거래일 위험 lookback과 같은 뜻이다.</strong><p>이유: 전자는 모수 추정창이고 후자는 위험 feature 정의다. · 교정: training window와 feature lookback을 별도 항목으로 기록한다. · 근거: p11_target</p></li><li><strong>Table 4–5의 선행판 locator를 최종 JFEC 조판 페이지로 사용할 수 있다.</strong><p>이유: 실제로 읽은 artifact는 최종 게재 전 판본이다. · 교정: 결과에는 선행판임을 붙이고 최종본 locator는 별도 판본감사 뒤에만 추가한다. · 근거: p11_table4 · p11_table5</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>최종 JFEC 조판본과 2021년 선행판의 모든 표·부록을 문장 단위로 대조한 증거는 이 레코드 범위에 포함되지 않는다.</li><li>저자 코드와 원 tick 자료를 이용한 독립 수치 재현은 이 레코드 범위에 포함되지 않는다.</li></ul>

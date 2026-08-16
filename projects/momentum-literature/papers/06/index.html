@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/06/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Realized Volatility Forecasting with Neural Networks · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,181 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>월별 일수익 제곱합 target과 recurrent-network 후보를 설계할 때 읽되, 작은 표본·feature/architecture 선택을 nested OOS로 다시 통제한 뒤에만 한국 WML challenger로 사용한다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>월별 realized volatility를 NN·ARFIMA·LSTAR로 비교할 때</li><li>LSTM·NARX의 delay와 recursive multi-step 구조를 구분할 때</li><li>짧은 위기 OOS에서 MCS의 낮은 검정력을 해석할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>training MSE로 고른 architecture를 untouched OOS 최적이라고 부를 때</li><li>22개월 위기표본의 MCS를 모형 동등성 증거로 쓸 때</li><li>forecast loss를 WML Sharpe 개선으로 바꿔 말할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>대부분의 실현변동성 ML 연구가 일별·일중 target을 쓰는 반면, 이 논문은 일수익 제곱합으로 월별 위험을 만들어 한국 WML의 월별 의사결정과 빈도가 비교적 가깝다.</p></article>
+            <article><h3>중심 질문</h3><p>월별 위험의 장기의존성과 비선형성을 feed-forward·recurrent·LSTM·NARX가 ARFIMA·LSTAR보다 더 잘 예측하는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>월별 장기 표본에서 여러 recurrent architecture와 경제·금융 feature를 공통 OOS 및 위기구간에서 비교한 직접 증거가 부족했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 증거는 전체 OOS에서 NARX와 LSTM 계열이 여러 loss에서 강하고 naive보다 유의하게 나았다는 것이다. 그러나 매우 짧은 위기 OOS에서는 많은 모형이 MCS에 남고, feature와 architecture가 별도 untouched validation 없이 선택돼 낙관 가능성이 있다. 연구자 해석은 월별 target construction은 유용하지만 NN 우위를 그대로 가져오면 안 된다는 것이다. 한국에서는 naive·RW126·HAR·ARFIMA를 먼저 만들고, feature selection·scaling·architecture를 각 outer origin 내부에서 다시 선택한 작은 NN만 challenger로 둔다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>월별 위험과 후보정보를 만든다</h3>
+          <p>일별 시장수익의 제곱을 월 안에서 합쳐 위험 target을 만들고 금융·거시 후보와 긴 자기의존을 함께 둔다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>서로 다른 memory 구조를 비교한다</h3>
+          <p>feed-forward, hidden/output feedback, gated memory와 target-delay network가 과거위험을 저장하는 방식을 나눈다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>feature와 architecture를 선택한다</h3>
+          <p>LASSO로 입력을 줄이고 training loss와 반복 초기화로 hidden-node 수를 정한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>전체기간과 위기기간을 반증적으로 비교한다</h3>
+          <p>한 달과 반복 다개월 forecast를 MSE·QLIKE·MCS 및 naive 대비 DM으로 평가한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>월별 realized volatility</h3>
+          <p><strong>쉽게 말하면</strong><br>한 달 안의 일별 수익 제곱을 합쳐 그 달 시장위험을 요약한 값이다.</p>
+          <p><strong>논문 안의 역할</strong><br>다음 달 예측의 종속변수이자 NN의 자기지연 입력이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>일중 5분 실현분산과 측정정밀도가 같거나 WML 장단기 위험과 동일한 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a></div>
+        </article><article class="section-card concept-card">
+          <h3>NARX</h3>
+          <p><strong>쉽게 말하면</strong><br>외생변수와 과거 실제 target 지연을 함께 입력하는 비선형 자기회귀 신경망이다.</p>
+          <p><strong>논문 안의 역할</strong><br>월별 위험의 강한 지속성을 직접 delay line으로 전달한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>학습 때 실제 과거 target을 쓰는 것과 다기간 예측 때 미래 실제 target을 쓰는 것은 다르다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a></div>
+        </article><article class="section-card concept-card">
+          <h3>architecture selection</h3>
+          <p><strong>쉽게 말하면</strong><br>hidden node와 지연·network 종류 중 어떤 구조를 사용할지 고르는 과정이다.</p>
+          <p><strong>논문 안의 역할</strong><br>학습할 network weight 수와 유연성을 통해 모형 복잡성과 과적합 위험을 결정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>training MSE가 가장 낮은 구조를 untouched OOS 최적구조로 부르면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a></div>
+        </article><article class="section-card concept-card">
+          <h3>MCS와 위기표본</h3>
+          <p><strong>쉽게 말하면</strong><br>경쟁모형을 통계적으로 구분하지 못한 집합과 위기 동안의 짧은 평가구간이다.</p>
+          <p><strong>논문 안의 역할</strong><br>위기 robustness와 순위 불확실성을 보여 준다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>짧은 표본에서 여러 모형이 남았다고 진정한 성능이 동등하다는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>LASSO-selected full-sample 입력 · 원고가 최종 집합으로 적은 표기상 세 위험지연과 배당수익률·시장·단기반전·부도스프레드 변수를 NARX 등 외생입력 후보로 사용한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>x_t = {RV_{t-1}, RV_{t-2}, RV_{t-3}, DP_{t-1}, MKT_{t-1}, STR_{t-1}, DEF_{t-1}}</code></pre>
+                <dl class="symbol-grid"><dt><code>RV_{t-1:t-3}</code></dt><dd>예측시점 전에 관측된 최근 세 월의 로그 실현변동성</dd><dt><code>DP, MKT, STR</code></dt><dd>원고 최종 집합에서 t-1로 적힌 배당가격비율·시장수익·단기반전 입력</dd><dt><code>DEF</code></dt><dd>원고 최종 집합에서 t-1로 적힌 부도스프레드 입력</dd></dl>
+                <p><strong>직관:</strong> 긴 후보목록을 그대로 network에 넣지 않고 선형 선택단계를 거쳐 월별 작은 표본의 입력차원을 줄인다.</p>
+                <p><strong>구현할 때:</strong> 직전 문장의 &#x27;lagged by one year&#x27;와 최종 집합의 t-1 표기가 충돌하므로 원문 시차를 추정해 채우지 않는다. 한국에서는 각 outer origin 안에서 발표시차가 검증된 후보만 다시 선택한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>NARX mapping · 현재 외생정보와 여러 과거 실제 위험을 비선형 함수에 넣어 다음 위험을 예측한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>y_hat_t = Psi(x_t, y_{t-1}, ..., y_{t-d}; theta)</code></pre>
+                <dl class="symbol-grid"><dt><code>x_t</code></dt><dd>예측시점까지 관측된 금융·거시 입력</dd><dt><code>d</code></dt><dd>target delay 길이</dd><dt><code>theta</code></dt><dd>network weights</dd></dl>
+                <p><strong>직관:</strong> 장기의존을 hidden state에만 맡기지 않고 실제 target lag를 직접 전달한다.</p>
+                <p><strong>구현할 때:</strong> 다개월 recursive 예측에서는 첫 예측 이후 실제 미래 y가 아니라 이전 예측값만 재입력해야 한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>장기 미국 시장지수의 일별수익을 월별 target으로 집계한다.</li><li>위험지연과 금융·거시 후보를 LASSO-selected 입력으로 사용한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>다음 한 달과 반복 다개월 로그 위험을 예측한다.</li><li>다개월 예측은 이전 단계 예측을 다음 단계 입력으로 되먹인다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>초기 학습 뒤 rolling 방식으로 전체 OOS와 위기 OOS를 만든다.</li><li>network 초기값을 반복하고 training loss로 hidden-node 수를 고른다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE·QLIKE·MCS로 모형군을 비교한다.</li><li>naive 대비 DM 검정은 방향과 sign convention을 확인해 읽는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Data·Table 1</p><h3>한국 WML에 직접 가져올 수 있는 부분은 무엇인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>월 target이 일수익 제곱합인지 확인하고 predictor의 관측시차·출처를 별도로 읽는다. 시장지수와 WML은 같은 수익단위가 아니다.</dd>
+            <dt>저자 보고 결과</dt><dd>월별 low-frequency target과 긴 위험이력은 현재 한국 자료로 적응 가능하다.</dd>
+            <dt>검토자 해석</dt><dd>일중자료 없이도 월 위험 forecasting branch를 만들 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>미국 거시변수의 정의와 발표시차를 한국 변수로 자동 대체할 수 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 2·architecture</p><h3>각 recurrent·feed-forward network의 hidden node와 전체 복잡성은 어떻게 정해졌는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>모형별 hidden nodes·training MSE·weight 수를 함께 보며 낮은 training loss와 높은 parameter count를 교환관계로 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>architecture가 network마다 다르고 반복 초기화로 국소 최솟값에 머무를 위험을 줄인다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서는 별도 validation과 seed 분포를 추가해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>training MSE 선택은 nested OOS 선택보다 낙관적일 수 있다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 4–5</p><h3>전체표본과 위기표본의 winner가 같은가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>한 달·다개월의 MSE와 QLIKE를 각각 낮을수록 좋게 읽고, MCS p-value를 loss 수준과 구분한다. 위기 OOS의 관측수가 매우 적음을 조건에 붙인다.</dd>
+            <dt>저자 보고 결과</dt><dd>전체 OOS에서 NARX/LSTM이 강하지만 위기구간에서는 다수 모형을 명확히 구분하기 어렵다.</dd>
+            <dt>검토자 해석</dt><dd>위기그래프 몇 점으로 보편적 NN 우위를 선언하면 안 된다.</dd>
+            <dt>검토자 경계</dt><dd>짧은 위기표본의 비기각은 등가성 증거가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 6</p><h3>복잡모형이 단순 naive보다 의미 있게 좋은가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>DM statistic의 양의 방향이 어느 모델 우위를 뜻하는지 표 주석을 먼저 확인하고 horizon별 값을 따로 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>NARX는 전체 및 위기 비교에서 naive보다 좋은 방향의 유의 결과를 보인다.</dd>
+            <dt>검토자 해석</dt><dd>단순 benchmark를 통과하는 최소 예측증거가 있다.</dd>
+            <dt>검토자 경계</dt><dd>naive 우위만으로 HAR·ARFIMA나 경제성과까지 이긴 것은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>월별 위험의 장기의존과 비선형 regime 반응을 target delays와 recurrent memory가 선형 ARFIMA/LSTAR보다 유연하게 학습할 수 있다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>NARX/LSTM의 전체 OOS loss와 naive 대비 DM 결과가 지속성·비선형 채널에 부합한다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>LASSO feature selection, training-loss architecture 선택, 많은 random starts와 특정 위기구간이 결과를 유리하게 만들었을 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>nested OOS에서 simple long-memory benchmark를 못 이기거나 비용 후 WML 성과가 나쁘면 한국 NN 채택을 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>전체 장기 OOS와 금융위기 OOS, 한 달·다개월, MSE·QLIKE·MCS·DM을 교차한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>짧은 위기 OOS에서는 순위 확신이 낮고 많은 모형이 superior set에 남는다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>변동성예측을 실제 목표변동성 WML에 넣은 Sharpe·CER·turnover·거래비용은 직접 시험하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>월별 target은 한국과 가깝지만 feature·architecture 선택에는 현대적 nested validation보다 약한 통제가 남는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">시장 월별 RV</th><td>구성별 WML 월위험</td><td>각 장단기 수익의 다음 보유월 위험을 직접 예측한다.</td></tr><tr><th scope="row">ARFIMA·LSTAR 기준선</th><td>RW126·HAR·ARFIMA 기준선</td><td>NN 이전에 단순 지속성·장기의존을 충분히 통제한다.</td></tr><tr><th scope="row">NARX·LSTM</th><td>작은 사전 grid의 월별 NN</td><td>표본크기에 맞게 복잡성과 delay를 제한한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>여섯 WML의 월별 위험 target과 로그변환을 고정한다.</li><li>naive·RW126·HAR·ARFIMA를 공통 origin에 먼저 생성한다.</li><li>outer training 안에서 scaler와 feature selection을 다시 fit한다.</li><li>inner blocked validation으로 hidden nodes·delay·regularization을 고른다.</li><li>seed 반복의 중앙값·분산·실패율을 저장한다.</li><li>동일 BS15 mapping의 비용 후 경제성과를 forecast loss와 분리한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>미래 target이 feature selection·scaler·architecture에 들어가지 않는다.</li><li>NN이 common OOS에서 강한 단순 기준선의 MSE·QLIKE를 개선한다.</li><li>개선이 seed에 안정적이고 비용 후 Sharpe·CER에도 이어진다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>training만 좋으면 architecture overfit으로 분류한다.</li><li>위기 몇 달만 좋으면 episode concentration으로 분류한다.</li><li>loss는 좋고 WML 성과가 나쁘면 mapping·turnover 실패로 분류한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>월위험 target·feature cutoff 감사원장</li><li>architecture·seed·OOS loss 비교표</li><li>단순기준선 대 NN의 비용 후 WML 성과표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>월별 target 구조는 한국 WML에 비교적 가깝다.</li><li>NARX는 실제 target delay를 직접 입력한다.</li><li>전체 OOS와 짧은 위기 OOS의 확신 수준은 다르다.</li><li>training MSE architecture 선택은 낙관 위험이 있다.</li><li>NN은 단순 long-memory 기준선과 경제성과를 모두 이겨야 한다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>월별 RV target을 재구성한다.</li><li>NARX와 LSTM의 memory 차이를 설명한다.</li><li>recursive 다개월 예측을 구분한다.</li><li>MCS 비기각과 등가성을 구분한다.</li><li>nested architecture 선택을 설계한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. NARX의 series-parallel 구조에서 다개월 예측 누수는 어떻게 생기는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 첫 예측 뒤 실제 미래 target을 다음 입력에 넣으면 당시 알 수 없는 값을 사용하게 된다.</p>
+          <p><strong>왜:</strong> 정상적인 recursive forecast는 이전 예측값을 되먹여야 한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 위기표본에서 많은 모형이 MCS에 남은 것을 왜 동등성으로 읽으면 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 관측수가 매우 적어 차이를 검출할 힘이 낮을 수 있기 때문이다.</p>
+          <p><strong>왜:</strong> 전체표본과 위기표본의 결과 확신이 크게 다르다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국에서 원문의 LASSO 선택을 그대로 복사하면 안 되는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 변수 정의·발표시차가 다르고 선택이 outer forecast 시점마다 과거자료 안에서 다시 이뤄져야 하기 때문이다.</p>
+          <p><strong>왜:</strong> feature selection 자체가 예측절차의 일부다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 확인된 working-paper 증거에서 월별 시장위험의 NARX·LSTM 계열은 전체 OOS에서 강했지만 매우 짧은 위기 OOS에서는 모형순위의 확신이 약했고 선택절차의 낙관 가능성이 남는다.</p><p><strong>이렇게 말하면 안 됨:</strong> NARX·LSTM이 모든 시장에서 최고이거나 짧은 MCS가 모형 동등성을 증명하며 forecast loss가 WML Sharpe를 보장한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p06_architecture">p06_architecture · PDF 16쪽 · Table 2, full-sample network architecture</a><a class="evidence-chip" href="#locator-p06_data">p06_data · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors</a><a class="evidence-chip" href="#locator-p06_dm">p06_dm · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p06_lasso">p06_lasso · PDF 14쪽 · LASSO feature-selection discussion</a><a class="evidence-chip" href="#locator-p06_narx">p06_narx · PDF 13쪽 · Equations 13–14 and Figure 7</a><a class="evidence-chip" href="#locator-p06_results">p06_results · PDF 21쪽 · Tables 4 and 5</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>S&amp;P market index 월자료 1950-02–2017-12, 815개월과 금융·거시 predictor 후보 [원문 보고]</dd><dt>target</dt><dd>월내 일별 연속복리수익 제곱합의 제곱근을 log 변환한 다음달 realized volatility [원문 보고]</dd><dt>information set</dt><dd>realized-volatility lags와 LASSO로 고른 DP·MKT·STR·DEF 등 predictor; endogenous-only와 exogenous-X variants [원문 보고]</dd><dt>lookback</dt><dd>선택된 endogenous 입력은 최근 3개월 RV lags(t−1:t−3); NARX는 observed target delays를 입력으로 포함한다. [원문 보고]</dd><dt>horizon</dt><dd>1개월과 recursive 5개월 [원문 보고]</dd><dt>model family</dt><dd>FNN, Elman, Jordan, LSTM, NARX alongside ARFIMA, LSTAR and naive forecasts</dd><dt>training window</dt><dd>약 2/3 training과 1/3 OOS로 나누며 full OOS는 245개월, 위기 OOS는 22개월이다.</dd><dt>retune</dt><dd>rolling estimation으로 서술되지만 정확한 창길이는 공개 working paper에서 수치로 고정되지 않는다.</dd><dt>benchmarks</dt><dd>naive realized-volatility forecast · ARFIMA and ARFIMAX · LSTAR and LSTARX</dd><dt>loss / test</dt><dd>MSE · QLIKE · Model Confidence Set · naive benchmark 대비 Diebold–Mariano test · full and crisis OOS comparison</dd><dt>economic metrics</dt><dd>포트폴리오 경제성과는 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래비용은 보고하지 않는다.</dd><dt>turnover</dt><dd>회전율은 보고하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +218,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>월별 daily-squares target 재계산 test</li><li>outer origin별 max feature date cutoff test</li><li>LASSO·scaler·architecture past-only fit test</li><li>recursive 5-step path에 실제 미래 target이 섞이지 않는 test</li><li>random seed 반복과 failed-fit count test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p06_narx_full</span> full OOS에서 NARX의 1개월 MSE/QLIKE는 0.018/3.288, recursive 5개월은 0.146/3.316으로 recurrent 계열 중 강했다.<p class="meta">sample: S&amp;P 월변동성 full OOS 245개월 · target: log realized volatility · horizon: 1개월과 recursive 5개월 · metric: MSE and QLIKE · unit: loss level · comparator: naive, ARFIMA, LSTAR and other neural networks · loss_or_test: Tables 4 loss comparison and MCS</p><p><strong>근거:</strong> p06_results · p06_narx</p><p><strong>전이 경고:</strong> working-paper 수치이며 architecture와 features가 별도 nested validation 없이 선택됐다.</p></li><li><span class="badge">author_result</span> <span class="badge">p06_lstm_full</span> LSTMX의 full OOS MSE/QLIKE는 1개월 0.042/3.293, 5개월 0.152/3.313으로 단순 시계열 benchmark보다 경쟁력 있는 값을 보였다.<p class="meta">sample: S&amp;P 월변동성 full OOS · target: predictor-X를 포함한 log realized volatility · horizon: 1개월과 recursive 5개월 · metric: MSE and QLIKE · unit: loss level · comparator: ARFIMA(X), LSTAR(X) and other networks · loss_or_test: Table 4</p><p><strong>근거:</strong> p06_results · p06_lasso</p><p><strong>전이 경고:</strong> 미국 macro predictor의 한국 release-vintage 가용성과 nonlinear feature 적합성은 별도 문제다.</p></li><li><span class="badge">author_result</span> <span class="badge">p06_crisis_power</span> 22개월 위기 OOS에서 NARX 1개월 MSE/QLIKE는 0.052/2.824, LSTM은 0.080/2.833이었지만 많은 모형이 MCS에 남았다.<p class="meta">sample: 2007-09–2009-06 위기 OOS 22개월 · target: log realized volatility · horizon: 1개월 · metric: MSE·QLIKE와 MCS · unit: loss level and inclusion · comparator: all linear and neural models · loss_or_test: Table 5 Model Confidence Set</p><p><strong>근거:</strong> p06_results</p><p><strong>전이 경고:</strong> 22개월은 검정력이 낮아 다수 MCS 포함을 true equivalence로 해석하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Realized Volatility Forecasting with Neural Networks — MPRA Paper 95443 working paper</strong><p>워킹페이퍼 · 2019-08 · 33쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 2019 MPRA working paper 기준이며 최종 2020 JFEC VOR과 전면 대조하지 않았다. 표지가 제시하는 2019년 8월 정밀도까지만 기록했다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p06_data</strong> · artifact p06_mpra2019 · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors · 검증됨</li><li><strong>p06_narx</strong> · artifact p06_mpra2019 · PDF 13쪽 · Equations 13–14 and Figure 7 · 검증됨</li><li><strong>p06_lasso</strong> · artifact p06_mpra2019 · PDF 14쪽 · LASSO feature-selection discussion · 검증됨</li><li><strong>p06_architecture</strong> · artifact p06_mpra2019 · PDF 16쪽 · Table 2, full-sample network architecture · 검증됨</li><li><strong>p06_results</strong> · artifact p06_mpra2019 · PDF 21쪽 · Tables 4 and 5 · 검증됨</li><li><strong>p06_dm</strong> · artifact p06_mpra2019 · PDF 22쪽 · Table 6 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Realized Volatility Forecasting with Neural Networks — MPRA Paper 95443 working paper</strong><p>워킹페이퍼 · 2019-08 · 33쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 2019 MPRA working paper 기준이며 최종 2020 JFEC VOR과 전면 대조하지 않았다. 표지가 제시하는 2019년 8월 정밀도까지만 기록했다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p06_data"><strong>p06_data</strong> · artifact p06_mpra2019 · PDF 6쪽 · Figure 2 and Table 1, monthly data and predictors · 검증됨 · <a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p06_narx"><strong>p06_narx</strong> · artifact p06_mpra2019 · PDF 13쪽 · Equations 13–14 and Figure 7 · 검증됨 · <a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p06_lasso"><strong>p06_lasso</strong> · artifact p06_mpra2019 · PDF 14쪽 · LASSO feature-selection discussion · 검증됨 · <a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p06_architecture"><strong>p06_architecture</strong> · artifact p06_mpra2019 · PDF 16쪽 · Table 2, full-sample network architecture · 검증됨 · <a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p06_results"><strong>p06_results</strong> · artifact p06_mpra2019 · PDF 21쪽 · Tables 4 and 5 · 검증됨 · <a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p06_dm"><strong>p06_dm</strong> · artifact p06_mpra2019 · PDF 22쪽 · Table 6 · 검증됨 · <a href="https://mpra.ub.uni-muenchen.de/95443/1/MPRA_paper_95443.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>로컬 2019 working paper에서 NARX·LSTM 계열은 S&amp;P 월변동성 full OOS에서 ARFIMA·LSTAR보다 낮은 loss를 보였다.</strong><p>이유: Table 4의 MSE·QLIKE가 이를 지지한다. · 교정: working-paper 판본과 full OOS 조건을 붙인다. · 근거: p06_results</p></li><li><strong>월별 일수익 제곱합으로 위험 target을 만드는 구조는 한국 WML에 적응할 수 있다.</strong><p>이유: 논문 target이 월내 일별 수익제곱의 집계에서 출발한다. · 교정: S&amp;P long-only와 WML long–short의 차이를 함께 적는다. · 근거: p06_data</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>NARX와 LSTM은 모든 시장·기간에서 최고다.</strong><p>이유: 위기표본은 짧고 많은 모형이 MCS에 남으며 tuning 낙관 가능성이 있다. · 교정: 한국에서는 nested OOS로 다시 비교한다. · 근거: p06_results · p06_architecture</p></li><li><strong>forecast loss 개선은 한국 WML Sharpe 개선을 보장한다.</strong><p>이유: 논문은 변동성관리 수익·회전율·비용을 평가하지 않는다. · 교정: 동일 forecast를 BS15 경제 gate에서 별도 검정한다. · 근거: p06_results</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>working paper의 ‘one year lag’ 문구와 t−1 수식의 predictor timing은 서로 모호하다.</li><li>rolling 창길이·standardization·optimizer failure 처리와 최종 JFEC 표의 변경은 이 artifact에서 완전히 닫히지 않는다.</li></ul>

@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/04/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>HARd to beat: The overlooked impact of rolling windows in the era of machine learning · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,172 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>ML을 채택하기 전에 HAR의 rolling-window 길이와 refit stride를 공정하게 맞췄는지 감사하는 필수 benchmark 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>HAR와 ML의 성능차가 모형 자체인지 update 규칙 차이인지 분리할 때</li><li>rolling window와 refit stride를 inner validation에서 고정할 때</li><li>forecast loss와 비용 후 utility를 같은 OOS에서 비교할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>static ML 대 daily-refit HAR 결과를 알고리즘만의 순수효과로 해석할 때</li><li>좁은 RV/VIX feature 결과로 ML 일반의 무용성을 주장할 때</li><li>arXiv v1 수치를 2026 IJF 최종표로 인용할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>새 모델이 강해 보일 때 먼저 물어야 할 질문은 &#x27;HAR를 제대로 다시 맞췄는가&#x27;이다. 이 논문은 단순 기준선의 창 길이와 갱신주기만으로 순위가 크게 달라질 수 있음을 보여 준다.</p></article>
+            <article><h3>중심 질문</h3><p>합리적으로 선택한 rolling window와 자주 갱신한 HAR는 좁은 RV·VIX 정보집합에서 static 머신러닝보다 실제로 약한가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 ML 비교는 HAR의 fitting scheme을 충분히 보고하거나 튜닝하지 않아, 알고리즘 차이와 갱신규칙 차이가 뒤섞일 수 있었다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 증거는 미국 주식 패널에서 HAR의 window와 특히 refit stride가 예측오차를 크게 바꾸며, 매일 갱신한 rolling HAR가 static ML보다 MSE·QLIKE와 비용 후 효용에서 강했다는 것이다. 연구자 해석은 ML이 무용하다는 것이 아니라 비교 기준선과 update 조건을 먼저 공정하게 맞추라는 것이다. 한국 월 WML에서는 각 월 origin에서 HAR와 challenger를 같은 주기로 다시 맞추는 비교를 main으로 두고, 계산비용 때문에 static하게 운용한 결과는 별도 operational robustness로 분리한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>HAR fitting surface를 먼저 그린다</h3>
+          <p>window length와 refit stride의 격자에서 예측오차가 어떻게 바뀌는지 확인해 benchmark 자체의 민감도를 드러낸다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>잘 맞춘 HAR와 ML을 넓은 패널에서 비교한다</h3>
+          <p>HAR는 rolling·빈번한 갱신, ML은 고정 train·validation 뒤 static test라는 실제 운용규칙으로 MSE와 QLIKE를 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>loss별 맞는 추정법을 구분한다</h3>
+          <p>MSE에는 OLS 계열, QLIKE에는 WLS 계열을 두어 하나의 HAR 사양을 모든 loss의 약한 기준선으로 쓰지 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>경제적 결과와 비용으로 닫는다</h3>
+          <p>예측분산을 투자노출로 변환해 거래비용 전후 realized utility를 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>rolling window</h3>
+          <p><strong>쉽게 말하면</strong><br>항상 가장 최근의 고정 길이 자료만 남기고 오래된 관측을 버리며 다시 추정하는 창이다.</p>
+          <p><strong>논문 안의 역할</strong><br>구조변화에 적응하면서 기준모형 계수를 갱신한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>창 길이와 다시 맞추는 간격은 서로 다른 하이퍼파라미터다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </article><article class="section-card concept-card">
+          <h3>refit stride</h3>
+          <p><strong>쉽게 말하면</strong><br>모형을 한 번 추정한 뒤 몇 예측을 그대로 쓰고 다시 추정할지를 뜻한다.</p>
+          <p><strong>논문 안의 역할</strong><br>새 위험정보가 계수에 반영되는 속도를 결정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>같은 rolling window라도 stride가 다르면 같은 benchmark가 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </article><article class="section-card concept-card">
+          <h3>OLS와 WLS HAR</h3>
+          <p><strong>쉽게 말하면</strong><br>OLS는 오차제곱을 같은 비중으로, WLS는 관측별 중요도를 달리해 맞춘 HAR다.</p>
+          <p><strong>논문 안의 역할</strong><br>서로 다른 loss에 더 적합한 기준선을 제공한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>한 추정법의 승리를 HAR 전체의 절대 승리로 일반화하면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a></div>
+        </article><article class="section-card concept-card">
+          <h3>static ML</h3>
+          <p><strong>쉽게 말하면</strong><br>시험기간이 시작되기 전에 학습한 모델을 시험기간 동안 다시 맞추지 않는 운용규칙이다.</p>
+          <p><strong>논문 안의 역할</strong><br>시험기간 중 재학습을 생략해 계산비용을 줄인 ML의 운용 비교조건이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>rolling HAR와의 차이를 알고리즘 함수형태의 순수효과라고 부르면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>window·stride 선택규칙 · 시험구간에 들어가기 전에 창 길이와 재추정 간격의 격자를 비교해 예측오차가 가장 낮은 HAR 운용규칙을 고른다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>selected_HAR_scheme = argmin_{window,stride} RMSE(window, stride) on the pre-test diagnostic sample</code></pre>
+                <dl class="symbol-grid"><dt><code>window</code></dt><dd>HAR 계수추정에 남기는 최근 관측기간</dd><dt><code>stride</code></dt><dd>한 번 추정한 뒤 다시 맞추기까지의 예측 간격</dd><dt><code>RMSE</code></dt><dd>Figure 1 heatmap에서 낮을수록 좋은 예측오차</dd></dl>
+                <p><strong>직관:</strong> 같은 HAR 식도 과거관측을 얼마나 남기고 얼마나 자주 갱신하는지에 따라 실제 forecast 경로와 성능이 달라진다.</p>
+                <p><strong>구현할 때:</strong> 후보 격자와 선택구간을 저장하고 outer test 결과로 window·stride를 다시 고르지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>realized utility (Equation 7) · 실현분산과 예측분산의 비율을 고정 Sharpe와 위험회피도 아래 효용으로 바꾸며, 예측과 실현 위험이 가까울수록 완전예측 효용에 가까워진다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RU_{i,t+1} = (SR^2 / gamma) × [sqrt(exp(RV_{i,t+1}) / exp(RV_hat_{i,t+1})) - 0.5 × exp(RV_{i,t+1}) / exp(RV_hat_{i,t+1})]</code></pre>
+                <dl class="symbol-grid"><dt><code>SR</code></dt><dd>논문이 40%로 고정한 투자기회의 Sharpe ratio</dd><dt><code>gamma</code></dt><dd>논문이 2로 고정한 투자자의 위험회피도</dd><dt><code>exp(RV) / exp(RV_hat)</code></dt><dd>다음날 실현분산과 예측분산의 비율</dd></dl>
+                <p><strong>직관:</strong> 모형의 분산예측 오차를 변동성 목표 투자자의 경제가치 단위로 번역한다.</p>
+                <p><strong>구현할 때:</strong> Equation 7 자체에는 거래비용 항이 없으며, 비용 후 결과는 별도 Table 7에서 Table 6의 비용 전 결과와 대조한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_eq7">p04_eq7 · PDF 16쪽 · Equation 7, realized utility definition</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>균형 패널의 미국 개별주식 일중 실현변동성을 사용한다.</li><li>HAR는 다중시간척도와 선택적 시장위험, ML은 긴 RV lag와 선택적 시장위험을 쓴다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>오늘까지의 정보로 다음 거래일 log 실현변동성을 예측한다.</li><li>rolling HAR는 각 시험일 직전에 다시 맞추고 ML은 시험기간에 고정한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>사전 진단구간에서 window와 stride를 고른 뒤 이후 시험구간을 평가한다.</li><li>ML hyperparameter는 시간상 앞선 validation에서 선택한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE와 QLIKE에 맞는 HAR 사양을 각각 비교한다.</li><li>MCS와 거래비용 전후 utility를 별도 결과층으로 둔다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_eq7">p04_eq7 · PDF 16쪽 · Equation 7, realized utility definition</a><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Figure 1·Table 1</p><h3>HAR benchmark의 창 길이와 재추정 간격 설정이 예측순위에 얼마나 중요한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>heatmap에서 창 길이 축과 stride 축을 따로 따라가고 색의 오차 수준을 비교한다. 표시된 선행 사양은 동일 데이터의 절대 순위가 아니라 benchmark 선택의 위치다.</dd>
+            <dt>저자 보고 결과</dt><dd>재추정 간격이 조금만 길어져도 HAR 성능이 빠르게 나빠진다.</dd>
+            <dt>검토자 해석</dt><dd>ML과 비교하기 전에 HAR window·stride를 검증해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>heatmap에서 선택한 사양 자체도 개발데이터 선택의 결과다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 3–5</p><h3>OLS·WLS HAR 가운데 어떤 기준선이 MSE와 QLIKE 각각에서 강한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>MCS 포함률과 횡단 평균 loss를 분리하고, MSE의 OLS HAR와 QLIKE의 WLS HAR를 각자 맞는 comparator로 읽는다. 낮은 loss가 우수하다.</dd>
+            <dt>저자 보고 결과</dt><dd>잘 fitted HAR가 static ML보다 넓은 종목군에서 강하다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서도 loss별 강한 benchmark를 이기지 못하면 ML 증분을 인정하지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>narrow feature와 unequal refit 조건이므로 ML 일반의 무용성은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 6–7</p><h3>통계적 예측 우위가 비중변화의 거래비용을 차감한 뒤 투자효용에도 남는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>비용 전·후 표의 평균 utility와 분포를 같은 모형 행에서 비교한다. 퍼센트 수준과 loss 순위를 혼동하지 않는다.</dd>
+            <dt>저자 보고 결과</dt><dd>WLS HAR의 경제성과가 강하고 비용 후에도 주요 순위가 유지된다.</dd>
+            <dt>검토자 해석</dt><dd>예측모형 비교에 회전율·비용을 포함해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>단일주식 타이밍의 비용식은 한국 WML 장단기 실행비용과 다르다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>변동성 관계가 이동할 때 오래된 계수를 버리고 자주 다시 맞추는 단순 HAR가 최신 지속성 구조를 빠르게 흡수한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>window×stride heatmap의 급격한 성능차와 rolling HAR의 loss·utility 우위가 같은 메커니즘에 부합한다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>ML이 시험기간에 갱신되지 않았고 정보집합도 좁아서 update-frequency와 feature 제한이 HAR 우위를 만들었을 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>같은 feature·같은 monthly refit의 ML이 한국 WML에서 강한 HAR를 안정적으로 이기면 HAR 우위의 한국 전이는 기각된다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>expanding window와 대형주 부분표본, 누적 오차, 비용 전후 utility에서 benchmark 강점을 재점검한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>VIX의 이득은 모형과 시험 후반에 따라 달라지고 loss별 최적 HAR 추정법도 다르다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>동일 rolling refit을 준 richer-feature ML과 한국 월별 WML의 비용 후 성과는 직접 시험하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>공정한 benchmark를 강조하지만 main 비교에서 HAR와 ML의 update 빈도는 동일하지 않다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">daily refit stride</th><td>매월 origin마다 refit</td><td>월별 의사결정에서 가능한 가장 잦은 갱신을 main으로 둔다.</td></tr><tr><th scope="row">HAR window heatmap</th><td>past-only 월별 window grid</td><td>기준선의 창을 test 결과가 아니라 inner validation에서 고른다.</td></tr><tr><th scope="row">rolling HAR 대 static ML</th><td>equal-refit main과 static operational 보조</td><td>모형 알고리즘의 함수형태 효과와 재추정 운용비용·갱신효과를 서로 분리한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>여섯 WML의 공통 next-month risk target을 고정한다.</li><li>RW126과 HAR/LogHAR의 window·stride grid를 inner validation에서 비교한다.</li><li>선택된 HAR를 각 outer month마다 다시 맞춘다.</li><li>lasso·RF에도 같은 origin과 refit 주기를 주어 main 비교를 만든다.</li><li>static challenger는 계산비용 비교용 별도 열로 둔다.</li><li>MSE·QLIKE·runtime 뒤 동일 BS15 비용 후 경제성과를 평가한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>window·stride 선택에 outer test loss가 사용되지 않는다.</li><li>모형 간 forecast origin·target·refit 날짜가 정확히 일치한다.</li><li>challenger가 강한 HAR의 예측 loss와 비용 후 경제성과를 모두 개선한다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>static만 나쁘면 알고리즘보다 update 빈도 문제로 분류한다.</li><li>한 loss만 좋으면 loss-specific 개선으로 제한한다.</li><li>runtime 이득 없이 경제성과도 없으면 복잡모형을 제거한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>window×stride past-only 선택 heatmap</li><li>equal-refit과 operational-refit 분리 성과표</li><li>예측 loss·runtime·비용 후 utility 연결표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>HAR의 창과 refit 주기도 모델의 일부다.</li><li>강한 benchmark 없이 ML 개선을 주장하면 안 된다.</li><li>MSE와 QLIKE에는 서로 다른 HAR 추정법이 강할 수 있다.</li><li>main 비교는 rolling HAR 대 static ML의 운용규칙 비교다.</li><li>비용 후 utility가 최종 경제 게이트다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>window와 stride를 구분한다.</li><li>loss별 HAR 기준선을 고를 수 있다.</li><li>rolling 대 static 비교의 한계를 설명한다.</li><li>MCS 포함률과 평균 loss를 구분한다.</li><li>equal-refit 한국 실험을 설계한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 같은 HAR 식인데 stride가 다르면 왜 다른 benchmark인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 새 관측이 계수에 반영되는 속도가 달라져 실제 forecast 경로가 달라지기 때문이다.</p>
+          <p><strong>왜:</strong> window×stride heatmap에서 stride 변화만으로 오차가 크게 움직인다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 이 논문으로 ML이 쓸모없다고 결론낼 수 없는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> ML은 static이고 feature가 좁아 알고리즘·갱신·정보집합 효과가 함께 비교되기 때문이다.</p>
+          <p><strong>왜:</strong> 결과표의 강한 HAR와 ML은 같은 fitting scheme이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국 main 비교에서 가장 먼저 맞춰야 하는 조건은?</summary>
+          <div class="details-body"><p><strong>정답:</strong> forecast origin, target, feature cutoff와 refit frequency를 모델 간 동일하게 맞춰야 한다.</p>
+          <p><strong>왜:</strong> 그렇지 않으면 모형 함수형태가 아니라 update rule 차이를 측정한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 확인된 preprint에서 자주 갱신한 rolling HAR는 좁은 RV·시장위험 정보집합의 static ML보다 예측 loss와 비용 후 utility에서 강했으며, benchmark window와 stride가 순위에 중요했다.</p><p><strong>이렇게 말하면 안 됨:</strong> 알고리즘만의 순수효과로 HAR가 ML을 이겼다거나 ML 일반이 무용하다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p04_eq7">p04_eq7 · PDF 16쪽 · Equation 7, realized utility definition</a><a class="evidence-chip" href="#locator-p04_mcs">p04_mcs · PDF 17쪽 · Table 3, 95% MCS inclusion rates</a><a class="evidence-chip" href="#locator-p04_mse">p04_mse · PDF 18쪽 · Table 4, cross-sectional MSE</a><a class="evidence-chip" href="#locator-p04_qlike">p04_qlike · PDF 20쪽 · Table 5, cross-sectional QLIKE</a><a class="evidence-chip" href="#locator-p04_utility">p04_utility · PDF 21쪽 · Table 6, realized utility before costs</a><a class="evidence-chip" href="#locator-p04_utility_cost">p04_utility_cost · PDF 22쪽 · Table 7, realized utility after costs</a><a class="evidence-chip" href="#locator-p04_window_heatmap">p04_window_heatmap · PDF 4쪽 · Figure 1 and Table 1</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>CRSP–TAQ 매칭 미국주식 1,445종목의 5분 log realized volatility, 2015-01-01–2023-10-31 [원문 보고]</dd><dt>target</dt><dd>종목별 다음 거래일 log realized volatility [원문 보고]</dd><dt>information set</dt><dd>HAR는 1·5·22일 RV와 선택적으로 VIX, ML은 최근 100 RV lags와 선택적으로 VIX [원문 보고]</dd><dt>lookback</dt><dd>HAR feature는 1·5·22거래일 log-RV 평균; ML feature는 최근 100 RV lags [원문 보고]</dd><dt>horizon</dt><dd>1거래일 [원문 보고]</dd><dt>model family</dt><dd>individual/pooled OLS·WLS HAR와 HAR-VIX, lasso, random forest, gradient-boosted trees, feed-forward neural network</dd><dt>training window</dt><dd>HAR는 직전 630일 고정길이 rolling이고 ML은 고정 train/validation 뒤 2022–2023 test 동안 static이다.</dd><dt>retune</dt><dd>HAR는 매일 refit하며 ML hyperparameter와 weights는 test 전에 고정한다.</dd><dt>benchmarks</dt><dd>individual and pooled HAR-OLS · individual and pooled HAR-WLS · HAR-VIX variants</dd><dt>loss / test</dt><dd>MSE · QLIKE · 종목별 95% Model Confidence Set · cross-sectional squared-error difference · DJIA·Nasdaq-100 하위표본</dd><dt>economic metrics</dt><dd>realized utility before and after transaction costs · forecast runtime</dd><dt>trading costs</dt><dd>bid–ask 기반 거래비용을 realized utility에서 차감한다.</dd><dt>turnover</dt><dd>forecast variance가 바꾸는 일별 포지션 변화가 비용에 반영된다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +209,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>forecast origin·feature cutoff·target month 날짜 폐쇄 test</li><li>window·stride 선택이 inner validation에만 의존하는 test</li><li>모델 간 outer row-hash 동일성 test</li><li>future mutation에 대한 scaler·forecast prefix invariance test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p04_mcs_rates</span> arXiv v1의 1,445종목 비교에서 HAR-OLS+VIX의 MSE MCS 포함률은 88.5%, HAR-WLS+VIX의 QLIKE 포함률은 85.5%였고 FFNN은 각각 17.3%와 36.4%였다.<p class="meta">sample: 미국 1,445종목, 2022–2023 test · target: 다음날 log RV · horizon: 1일 · metric: 95% MCS 포함률 · unit: 종목 비율 퍼센트 · comparator: static FFNN · loss_or_test: MSE and QLIKE MCS</p><p><strong>근거:</strong> p04_mcs</p><p><strong>전이 경고:</strong> rolling HAR와 static ML의 joint rule 비교이며 동일 refit 조건의 알고리즘 비교가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p04_loss_winners</span> 횡단면 평균에서 최저 MSE는 HAR-OLS+VIX 0.419, 최저 QLIKE는 HAR-WLS+VIX 0.313으로 loss에 따라 강한 HAR 추정법이 달랐다.<p class="meta">sample: 미국 1,445종목 test · target: 다음날 log RV · horizon: 1일 · metric: 종목별 loss의 횡단면 평균 · unit: MSE와 QLIKE · comparator: HAR·lasso·RF·GBT·FFNN variants · loss_or_test: Tables 4 and 5 descriptive loss comparison</p><p><strong>근거:</strong> p04_mse · p04_qlike</p><p><strong>전이 경고:</strong> 한 loss의 winner를 다른 loss나 한국 월 WML의 winner로 확장하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p04_net_utility</span> 평균 realized utility의 최고값은 비용 전후 모두 VIX 없는 HAR-WLS에서 나타나 각각 3.218%와 2.340%였다.<p class="meta">sample: 미국 1,445종목 test · target: variance forecast 기반 투자포지션 · horizon: 일별 반복 운용 · metric: realized utility · unit: 연율 퍼센트 · comparator: HAR·ML forecast rules · loss_or_test: risk aversion 2, assumed Sharpe 40%, before/after bid–ask costs</p><p><strong>근거:</strong> p04_utility · p04_utility_cost</p><p><strong>전이 경고:</strong> 미국 단일주식 포지션의 비용모형이며 한국 long–short WML의 대차·세금·회전율을 포함하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>HARd to Beat: The Overlooked Impact of Rolling Windows in the Era of Machine Learning — arXiv:2406.08041v1</strong><p>프리프린트 · 2024-06-12 · 39쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> cf662652225152c6e8cf3c0022e9258e5962aa4dd07506c3c23529781893e3d8</p><p>수치와 locator는 version-pinned 2024-06-12 arXiv v1 기준이다. 2026-08-16에 공개 v1과 검독본의 SHA-256 바이트 일치를 확인했으며, 2026 IJF 최종 게재본의 저자순서·표·기간·부록과 동일하다고 간주하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p04_window_heatmap</strong> · artifact p04_arxiv_v1 · PDF 4쪽 · Figure 1 and Table 1 · 검증됨</li><li><strong>p04_mcs</strong> · artifact p04_arxiv_v1 · PDF 17쪽 · Table 3, 95% MCS inclusion rates · 검증됨</li><li><strong>p04_mse</strong> · artifact p04_arxiv_v1 · PDF 18쪽 · Table 4, cross-sectional MSE · 검증됨</li><li><strong>p04_qlike</strong> · artifact p04_arxiv_v1 · PDF 20쪽 · Table 5, cross-sectional QLIKE · 검증됨</li><li><strong>p04_utility</strong> · artifact p04_arxiv_v1 · PDF 21쪽 · Table 6, realized utility before costs · 검증됨</li><li><strong>p04_utility_cost</strong> · artifact p04_arxiv_v1 · PDF 22쪽 · Table 7, realized utility after costs · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>HARd to Beat: The Overlooked Impact of Rolling Windows in the Era of Machine Learning — arXiv:2406.08041v1</strong><p>프리프린트 · 2024-06-12 · 39쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> cf662652225152c6e8cf3c0022e9258e5962aa4dd07506c3c23529781893e3d8</p><p>수치와 locator는 version-pinned 2024-06-12 arXiv v1 기준이다. 2026-08-16에 공개 v1과 검독본의 SHA-256 바이트 일치를 확인했으며, 2026 IJF 최종 게재본의 저자순서·표·기간·부록과 동일하다고 간주하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p04_window_heatmap"><strong>p04_window_heatmap</strong> · artifact p04_arxiv_v1 · PDF 4쪽 · Figure 1 and Table 1 · 검증됨 · <a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p04_mcs"><strong>p04_mcs</strong> · artifact p04_arxiv_v1 · PDF 17쪽 · Table 3, 95% MCS inclusion rates · 검증됨 · <a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p04_mse"><strong>p04_mse</strong> · artifact p04_arxiv_v1 · PDF 18쪽 · Table 4, cross-sectional MSE · 검증됨 · <a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p04_qlike"><strong>p04_qlike</strong> · artifact p04_arxiv_v1 · PDF 20쪽 · Table 5, cross-sectional QLIKE · 검증됨 · <a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p04_eq7"><strong>p04_eq7</strong> · artifact p04_arxiv_v1 · PDF 16쪽 · Equation 7, realized utility definition · 검증됨 · <a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p04_utility"><strong>p04_utility</strong> · artifact p04_arxiv_v1 · PDF 21쪽 · Table 6, realized utility before costs · 검증됨 · <a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p04_utility_cost"><strong>p04_utility_cost</strong> · artifact p04_arxiv_v1 · PDF 22쪽 · Table 7, realized utility after costs · 검증됨 · <a href="https://arxiv.org/pdf/2406.08041v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>arXiv v1에서는 daily-refit rolling HAR가 static ML보다 MSE·QLIKE·비용 후 utility에서 강했다.</strong><p>이유: Tables 3–7의 MCS·loss·utility가 같은 방향을 보인다. · 교정: fitting scheme과 artifact version을 함께 명시한다. · 근거: p04_mcs · p04_mse · p04_qlike · p04_utility_cost</p></li><li><strong>HAR window와 refit stride를 합리적으로 맞추지 않으면 ML 증분성과가 benchmark 설정에 좌우될 수 있다.</strong><p>이유: Figure 1과 Table 1이 window×stride 성능 변화를 보여 준다. · 교정: 한국 비교 전에 HAR tuning audit를 먼저 수행한다. · 근거: p04_window_heatmap</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>이 연구는 ML이 변동성예측에 일반적으로 무용함을 입증했다.</strong><p>이유: feature set이 RV/VIX로 좁고 ML은 static, HAR는 daily rolling이다. · 교정: 좁은 정보집합과 fitting-rule 비교로 한정한다. · 근거: p04_window_heatmap · p04_mcs</p></li><li><strong>2026 IJF 최종 게재본의 모든 표가 arXiv v1과 같다.</strong><p>이유: 읽은 artifact는 2024 arXiv v1이고 최종판과 전면 대조하지 않았다. · 교정: 수치에는 arXiv v1이라는 판본표시를 붙인다. · 근거: p04_mcs</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>TAQ 종료 2023-10-31과 서술된 2023-11 test 종료의 날짜 연결은 공개 preprint만으로 닫히지 않는다.</li><li>WLS의 정확한 관측가중식과 MCS bootstrap 세칙은 이 artifact에 완전한 재현 사양으로 제시되지 않는다.</li></ul>

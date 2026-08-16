@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/23/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Forecasting the Variability of Stock Index Returns with the Multifractal Random Walk Model for Realized Volatilities · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,172 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>126일보다 먼 과거를 horizon별 감쇠가중으로 쓰는 long-memory challenger이지만, RW252·HAR·ARFIMA를 이긴 뒤에만 채택할 고복잡도 forecast 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>최근 126일 밖의 정보가 다음 달 WML 분산에 증분가치를 주는지 시험할 때</li><li>짧은 창·fractional memory·multifractal memory를 horizon별로 비교할 때</li><li>MAE와 MSE의 승자가 다른 이유를 설명할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>전체 과거를 사용한다는 이유만으로 forecast가 안정적이라고 가정할 때</li><li>일중 realized kernel을 일별 WML 제곱합과 같은 target으로 부를 때</li><li>working-paper 수치를 최종 IJF 수치로 단정할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>RW126은 최근 정보만 동일가중한다. 이 논문은 훨씬 먼 과거를 horizon과 lag에 따라 감쇠시키는 multifractal 구조가 단순 장기창·ARFIMA·상태모형보다 언제 유용한지를 묻는다.</p></article>
+            <article><h3>중심 질문</h3><p>realized-volatility의 긴 기억을 전 과거의 곱셈형 가중으로 표현한 RV-MRW가 단기와 장기 horizon에서 기존 RV 모형을 이기는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>장기기억을 선형 fractional dependence나 유한 상태 cascade로 표현한 연구는 많지만, MRW의 전경로 조건부 예측을 여러 국제시장·horizon·loss에서 직접 비교한 증거는 부족했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>RV-MRW는 MAE에서 전반적으로 강하고 MSE에서는 긴 horizon에서 우세하지만, 단기 MSE는 RV-BMSM과 RV-ARFIMA가 경쟁한다. 이는 ‘전 과거를 쓰면 항상 좋다’가 아니라 smooth long-memory가 긴 horizon과 안정구간에 더 맞고 급격한 단기 변화를 놓칠 수 있다는 결과다. 한국 WML에서는 126일 밖 정보의 가치를 시험하는 중요한 challenger지만, intraday realized kernel을 월별 제곱수익 합으로 바꾸고 표본도 짧아진다. 따라서 RW252·expanding mean·HAR·ARFIMA를 먼저 이긴 뒤에만 MRW 복잡성을 정당화한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_mrw_all_history">p23_mrw_all_history · PDF 11쪽 · Equation 17 completion and all-available-past discussion</a><a class="evidence-chip" href="#locator-p23_models">p23_models · PDF 8쪽 · Table 1 and MRW model family</a><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>장기기억의 세 표현을 같은 무대에 놓는다.</h3>
+          <p>fractional ARFIMA, 상태 cascade BMSM, 연속 multifractal MRW를 returns와 RV 입력 양쪽에서 비교해 모델명보다 기억구조의 차이를 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_models">p23_models · PDF 8쪽 · Table 1 and MRW model family</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>MRW의 전경로 예측식을 실증 가능한 형태로 만든다.</h3>
+          <p>상관길이를 무한대로 둔 조건부 product가 origin까지의 모든 RV를 서로 다른 지수로 가중하게 해 단순 expanding mean과 다른 long-memory forecast를 만든다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_mrw_all_history">p23_mrw_all_history · PDF 11쪽 · Equation 17 completion and all-available-past discussion</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>horizon과 loss를 교차해 순위전환을 찾는다.</h3>
+          <p>여러 시장에서 단기·중기·장기 horizon의 상대 MSE와 MAE를 비교해 한 모형의 보편승리 대신 조건부 우위를 드러낸다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_data">p23_data · PDF 14쪽 · Table 2</a><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>MCS와 경로 그림으로 불확실성과 실패상태를 남긴다.</h3>
+          <p>최저 loss뿐 아니라 superior set을 보고, 급등기 과소예측과 안정기 추적이라는 상태별 차이를 시각적으로 점검한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p23_appendix_mcs">p23_appendix_mcs · PDF 34쪽 · Table B1</a><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>multifractal long memory</h3>
+          <p><strong>쉽게 말하면</strong><br>짧은 파동과 긴 파동이 여러 시간척도에서 겹쳐 변동성이 오래 기억되는 구조다.</p>
+          <p><strong>논문 안의 역할</strong><br>intermittency 모수가 lag별 조건부 가중과 scaling 강도를 정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>먼 과거를 동일가중하거나 구조변화에 자동으로 강건하다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_mrw_all_history">p23_mrw_all_history · PDF 11쪽 · Equation 17 completion and all-available-past discussion</a></div>
+        </article><article class="section-card concept-card">
+          <h3>RV-MRW product forecast</h3>
+          <p><strong>쉽게 말하면</strong><br>과거 변동성들을 horizon별 지수로 곱해 미래 위험을 만든다.</p>
+          <p><strong>논문 안의 역할</strong><br>각 lag의 영향이 arctangent 차이 형태로 감쇠하며 전 과거를 이용한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>단순 장기 평균이나 126일 window를 무한히 늘린 것과 같지 않다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_mrw_all_history">p23_mrw_all_history · PDF 11쪽 · Equation 17 completion and all-available-past discussion</a></div>
+        </article><article class="section-card concept-card">
+          <h3>horizon transition</h3>
+          <p><strong>쉽게 말하면</strong><br>짧게 볼 때와 길게 볼 때 좋은 모형이 바뀌는 현상이다.</p>
+          <p><strong>논문 안의 역할</strong><br>단기 MSE는 state/fractional 모형, 장기 MSE는 smooth MRW가 강한 조건부 결과다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>20일 이상이면 모든 시장에서 MRW가 단독 승리한다는 규칙이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a></div>
+        </article><article class="section-card concept-card">
+          <h3>상대 loss</h3>
+          <p><strong>쉽게 말하면</strong><br>각 모형의 오차를 historical-volatility benchmark 오차로 나눈 값이다.</p>
+          <p><strong>논문 안의 역할</strong><br>1보다 작으면 해당 benchmark보다 낮은 loss지만 시장 간 절대오차 크기를 뜻하지 않는다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>상대 MSE와 상대 MAE의 숫자를 같은 효용단위로 비교하면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 17 · 현재까지의 각 과거 변동성을 horizon·lag kernel과 intermittency가 정한 지수만큼 곱하고 horizon별 scale을 적용해 미래 변동성을 만든다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>E[σ_{t+h}|σ_t,…,σ_{t−N}] ≈ exp(λ² C_h/2) · ∏_{τ=0}^{N}(σ_{t−τ})^(λ² α*_{h,τ}/2)</code></pre>
+                <dl class="symbol-grid"><dt><code>h</code></dt><dd>예측 horizon</dd><dt><code>τ</code></dt><dd>과거로부터의 lag</dd><dt><code>λ²</code></dt><dd>kernel 지수를 별도로 배율하는 multifractal intermittency 강도</dd><dt><code>α*_{h,τ}</code></dt><dd>horizon h와 lag τ에 따른 감쇠 kernel</dd></dl>
+                <p><strong>직관:</strong> 먼 과거도 버리지 않지만 최근과 같은 비중으로 쓰지 않고 horizon에 맞춰 영향력을 줄인다.</p>
+                <p><strong>구현할 때:</strong> 직접 곱하면 underflow가 나므로 log-space 합으로 구현하고, λ²는 각 training window에서만 추정한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_mrw_all_history">p23_mrw_all_history · PDF 11쪽 · Equation 17 completion and all-available-past discussion</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 21 RV-BMSM · 여덟 multiplier의 로그합과 양의 innovation 로그의 두 배가 로그 분산을 만든다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>ln σ_t² = Σ_{j=1}^{8} ln M_t^(j) + 2 ln η_t</code></pre>
+                <dl class="symbol-grid"><dt><code>M_t^(j)</code></dt><dd>j번째 시간척도의 binomial multiplier</dd><dt><code>η_t</code></dt><dd>양의 lognormal innovation</dd></dl>
+                <p><strong>직관:</strong> MRW의 부드러운 장기기억과 달리 상태 cascade는 급격한 단기 전환을 빠르게 반영할 수 있다.</p>
+                <p><strong>구현할 때:</strong> 짧은 한국 월표본에 큰 상태공간을 바로 옮기지 말고 ARFIMA·단순 상태모형을 우선한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_bmsm_equation">p23_bmsm_equation · PDF 12쪽 · Equation 21</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 여러 국제지수의 일별수익과 noise-robust realized-kernel 계열을 사용한다(근거: p23_data).</li><li>한국 적응은 6개 WML의 월별 관측분산 경로를 사용하고 realized kernel과 같다고 부르지 않는다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>원문은 여러 거래일 horizon을 같은 OOS 기간에서 비교한다(근거: p23_table3).</li><li>한국 주target은 월말 origin의 다음 달 비중첩 분산 하나로 고정하고 장기 2·3개월은 별도 보조분석으로 둔다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>저자 판본은 초기 추정 종료와 OOS 기간은 주지만 모든 모형의 재추정 빈도를 완전히 닫지는 않는다(근거: p23_data).</li><li>한국에서는 expanding/rolling, refit 주기, λ² bounds와 optimizer restart를 사전 설정에 기록한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE·MAE와 MCS를 horizon별로 읽어 minimum과 survivor를 구분한다(근거: p23_table3, p23_table4).</li><li>한국은 QLIKE를 추가하고, 통계 winner를 동일 BS15 mapping의 경제성과 winner와 분리한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_data">p23_data · PDF 14쪽 · Table 2</a><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 3</p><h3>좋은 모형은 horizon에 따라 바뀌는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>열별 최저 기호를 따라 1·5일, 전환구간, 긴 horizon의 모델 family가 어떻게 달라지는지 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>단기 MSE는 RV-BMSM·RV-ARFIMA가 강하고 긴 horizon의 다수 시장에서는 RV-MRW가 강하다.</dd>
+            <dt>검토자 해석</dt><dd>긴 기억의 가치와 빠른 상태반응의 가치는 horizon에 따라 다르다.</dd>
+            <dt>검토자 경계</dt><dd>일부 시장과 긴 horizon에서도 ARFIMA·returns 모형 예외가 있어 보편 threshold로 쓰면 안 된다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 4·Appendix MCS</p><h3>최저 loss 차이가 통계적으로 단독 우위인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>empirical minimum과 MCS에 남은 모형을 구분하고 MSE·MAE별 survivor 폭을 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>MAE에서는 RV-MRW가 매우 강하지만 일부 셀에는 다른 모형도 남고, MSE의 전환구간은 여러 RV 모형이 함께 남는다.</dd>
+            <dt>검토자 해석</dt><dd>채택은 평균순위가 아니라 loss·horizon과 불확실성에 조건부여야 한다.</dd>
+            <dt>검토자 경계</dt><dd>시장들이 글로벌 충격을 공유하므로 survivor 횟수를 독립 binomial 증거로 해석할 수 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p23_appendix_mcs">p23_appendix_mcs · PDF 34쪽 · Table B1</a><a class="evidence-chip" href="#locator-p23_mae_mcs_text">p23_mae_mcs_text · PDF 16쪽 · Main-text MAE MCS summary; sole survivor in 11 cases</a><a class="evidence-chip" href="#locator-p23_mse_mcs_text">p23_mse_mcs_text · PDF 17쪽 · Main-text 20-day 90% MCS inclusion counts 11/11/9</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Figure 1</p><h3>MRW는 어떤 상태에서 실패할 수 있는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>실현경로의 급등과 안정구간에서 RV-MRW·RV-BMSM·RV-ARFIMA의 반응속도와 평균회귀를 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>RV-MRW는 안정구간을 부드럽게 추적하지만 급격한 변동성 spike를 과소예측할 수 있다.</dd>
+            <dt>검토자 해석</dt><dd>장기 평균회귀 강점이 crash 대응력까지 보장하지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>한 시장·기간의 사후 그림은 formal regime-conditioned loss test가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>다양한 투자 horizon이 만든 장기 의존을 multifractal scaling이 포착해 먼 과거의 정보를 장기 forecast에 활용한다는 해석이다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>장기 horizon에서 RV-MRW의 MSE가 다수 시장에서 낮아지고 MAE 전반에서 강한 패턴이 나타난다(근거: p23_table3, p23_table4).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>부드러운 평균회귀, 긴 표본, loss의 극단치 민감도 차이 또는 ARFIMA order 선택이 같은 순위전환을 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>RW252·expanding mean·HAR·ARFIMA가 동일 한국 OOS에서 MRW와 같거나 더 낮은 loss를 보이면 multifractal 가중의 증분가치는 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_bmsm_equation">p23_bmsm_equation · PDF 12쪽 · Equation 21</a><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>여러 국제시장, 여섯 horizon, MSE·MAE, MCS·SPA와 부록의 대체 비교에서 long-horizon 방향을 점검한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>짧은 horizon과 급등상태에서는 RV-BMSM·RV-ARFIMA가 경쟁하거나 MRW가 과소예측한다(근거: p23_table3, p23_crisis).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 factor portfolio, 월별 next-month target, target-vol Sharpe·거래비용과 post-sample 안정성은 원문이 검정하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>전 과거 활용이라는 장점과 구조변화에 오래된 정보가 해로울 위험이 공존하고, 검토한 선행판만으로는 rolling/refit 세칙이 완전히 닫히지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p23_appendix_mcs">p23_appendix_mcs · PDF 34쪽 · Table B1</a><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">국제지수 realized kernel</th><td>WML 다음 달 관측분산 proxy</td><td>고빈도 측정정밀도는 포기하되 long-history 질문만 이식한다.</td></tr><tr><th scope="row">RV-MRW 전경로 product</th><td>월별 log-variance MRW challenger</td><td>월말 origin에서 이용 가능한 월경로만 log-space 가중한다.</td></tr><tr><th scope="row">1–100일 horizon</th><td>다음 달 주target과 2·3개월 보조target</td><td>월별 운용시점과 겹치지 않는 target을 우선해 horizon별 순위전환을 제한적으로 시험한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>RW126·RW252·expanding mean·HAR/log-HAR·ARFIMA 후보를 먼저 동결한다.</li><li>6개 WML별 월별 관측분산과 공통 OOS origin을 만든다.</li><li>training window 안에서만 MRW intermittency를 추정하고 Eq. 17을 log-space로 계산한다.</li><li>경계도달·비수렴·nonfinite forecast를 원장화하고 deterministic fallback을 적용한다.</li><li>QLIKE·MSE·MAE와 월 block-bootstrap 차이를 계산한다.</li><li>통계 gate 통과 시 동일 12% BS15 scaling으로 Sharpe·최악월·turnover·cap hit을 비교한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>MRW가 untouched test의 primary QLIKE에서 RW252·HAR·ARFIMA를 개선한다.</li><li>개선이 한 WML 또는 한 극단월에만 의존하지 않고 MSE·MAE에 치명적 악화를 만들지 않는다.</li><li>optimizer 실패율과 모수 경계가 사전 한도 안이며 동일 BS15 비용 후 성과가 악화되지 않는다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>MRW가 급등월에 실패하면 상태별 loss와 cap-hit을 분해하고 사후 혼합모형을 즉시 채택하지 않는다.</li><li>긴 창 baseline도 함께 나쁘면 126일 이전 정보 자체보다 target noise·구조변화를 먼저 점검한다.</li><li>수렴 문제가 크면 λ² bounds·초기값·scale 변환을 감사하고 단순 ARFIMA 결과를 보존한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 모수·수렴·forecast trace CSV</li><li>baseline-to-MRW 중첩 loss 표와 horizon별 MCS</li><li>급등·안정상태 오류분해 그림</li><li>동일 BS15 mapping의 gross/net 경제성과 표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_data">p23_data · PDF 14쪽 · Table 2</a><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>RV-MRW는 전 과거를 동일가중하지 않고 horizon별 감쇠지수로 사용한다.</li><li>MAE에서는 강하지만 MSE의 승자는 단기와 장기에서 바뀐다.</li><li>급격한 spike 대응은 state/fractional 모형이 더 나을 수 있다.</li><li>한국에서는 RW252·HAR·ARFIMA를 이긴 뒤에만 MRW를 채택한다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>MRW·BMSM·ARFIMA의 기억구조 차이를 설명할 수 있다.</li><li>Eq. 17 product를 log-space로 구현해야 하는 이유를 말할 수 있다.</li><li>MSE와 MAE의 horizon별 순위전환을 설명할 수 있다.</li><li>MCS survivor와 empirical minimum을 구분할 수 있다.</li><li>한국 월별 adaptation의 target·자료 차이를 명확히 표시할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. Eq. 17이 expanding mean과 다른 핵심은 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 각 과거값의 지수가 horizon·lag·intermittency에 따라 달라져 먼 과거가 동일가중되지 않는다는 점이다.</p>
+          <p><strong>왜:</strong> MRW의 실제 정보가중 구조를 이해한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_mrw_forecast">p23_mrw_forecast · PDF 10쪽 · Equation 17 forecast formula begins</a><a class="evidence-chip" href="#locator-p23_mrw_all_history">p23_mrw_all_history · PDF 11쪽 · Equation 17 completion and all-available-past discussion</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 ‘RV-MRW가 모든 경우의 승자’라고 할 수 없는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 단기 MSE에서는 RV-BMSM·RV-ARFIMA가 경쟁하고 시장별 MCS에도 예외가 남기 때문이다.</p>
+          <p><strong>왜:</strong> loss·horizon 조건을 보존한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국 적용에서 가장 먼저 이겨야 할 비교군은?</summary>
+          <div class="details-body"><p><strong>정답:</strong> RW252·expanding mean·HAR/log-HAR·ARFIMA 같은 단순 long-history baseline이다.</p>
+          <p><strong>왜:</strong> 복잡성 자체를 장기정보의 가치로 오인하지 않기 위해서다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_models">p23_models · PDF 8쪽 · Table 1 and MRW model family</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 국제지수 realized-volatility 선행판에서 RV-MRW는 MAE 전반과 긴 horizon MSE에서 강했지만, 단기 MSE와 급등상태에서는 RV-BMSM·RV-ARFIMA가 경쟁했다.</p><p><strong>이렇게 말하면 안 됨:</strong> 전 과거를 쓰기 때문에 모든 시장·loss·horizon에서 안정적이며 한국 월 WML에도 그대로 재현된다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p23_table3">p23_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p23_table4">p23_table4 · PDF 18쪽 · Table 4</a><a class="evidence-chip" href="#locator-p23_crisis">p23_crisis · PDF 19쪽 · Figure 1</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>Oxford–Man realized library의 14개 국제 주가지수 일별수익과 realized kernel; 대다수 2000-01–2018-10, 일부 지수는 2005·2009 시작 [원문 보고]</dd><dt>target</dt><dd>미래 일별 realized variance(논문은 RV를 realized volatility라고도 부름) [원문 보고]</dd><dt>information set</dt><dd>RV-MRW는 예측시점까지 이용 가능한 realized-volatility 전 경로를 horizon·lag·intermittency가 정하는 곱셈형 감쇠가중으로 사용 [원문 보고]</dd><dt>lookback</dt><dd>RV-MRW는 가용 전 과거경로, 비교모형은 각 ARFIMA·BMSM·GARCH 사양의 추정이력 [원문 보고]</dd><dt>horizon</dt><dd>1, 5, 10, 20, 50, 100거래일 [원문 보고]</dd><dt>model family</dt><dd>LMSM·BMSM·MRW·GARCH·GJR-GARCH와 RV-LMSM·RV-BMSM·RV-MRW·RV-ARFIMA</dd><dt>training window</dt><dd>각 지수 시작일–2015-12를 초기추정에 사용하고 2016-01–2018-10을 OOS로 평가한다.</dd><dt>retune</dt><dd>본문은 rolling 예측을 명시하지만 모든 모형의 동일 재추정 빈도·고정창 길이를 하나의 숫자로 고정하지 않는다.</dd><dt>benchmarks</dt><dd>historical volatility · RV-ARFIMA · RV-BMSM · GARCH(1,1) · GJR-GARCH</dd><dt>loss / test</dt><dd>historical-volatility loss 대비 상대 MSE · 상대 MAE · 지수·horizon별 Model Confidence Set · Politis–Romano stationary bootstrap 1,000회 · superior predictive ability test · MRW GMM과 HAC standard errors</dd><dt>economic metrics</dt><dd>Sharpe·target-vol scaling·turnover는 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래전략을 구성하지 않아 비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 비중을 만들지 않아 turnover를 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +209,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>forecast origin 이후 과거경로가 바뀌어도 이전 forecast가 불변인 test</li><li>log-space product와 direct product의 작은 표본 일치 test</li><li>모수 경계·비수렴 fallback의 사전규칙 test</li><li>모든 모형의 공통 target month mask test</li><li>경제성과 mapping의 target·cap 동일성 test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p23_mae_breadth</span> working paper에서 RV-MRW는 14개 시장·6개 horizon의 MAE가 일관되게 가장 낮았고, 99% MCS에서 RV-MRW만 남은 경우가 11개로 보고됐다.<p class="meta">sample: 14개 국제지수의 2016-01–2018-10 OOS · target: 미래 realized volatility · horizon: 1·5·10·20·50·100거래일 · metric: historical-volatility 대비 상대 MAE와 MCS 포함 · unit: loss ratio와 시장-horizon 사례 수 · comparator: 8개 대체 수익률·RV 모형 · loss_or_test: MAE and 99% MCS</p><p><strong>근거:</strong> p23_table3 · p23_mae_mcs_text</p><p><strong>전이 경고:</strong> working-paper 결과이며 고빈도 realized kernel·일별 horizon을 한국 월 WML proxy로 직접 이전하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p23_horizon_switch</span> MSE에서는 1·5일에 RV-ARFIMA·RV-BMSM이 자주 우세하고 20·50·100일에는 RV-MRW가 강해, long-memory 모형의 순위가 horizon에 따라 바뀌었다.<p class="meta">sample: 14개 국제지수의 2016–2018 OOS · target: 미래 realized variance · horizon: 1–100거래일 · metric: 상대 MSE 최저모형 · unit: 시장별 loss ratio와 승리 개수 · comparator: RV-ARFIMA·RV-BMSM 및 역사적 변동성 · loss_or_test: MSE</p><p><strong>근거:</strong> p23_table3</p><p><strong>전이 경고:</strong> 다음 달 한국 WML은 원문의 20–22일에 가깝지만 측정치·표본길이·factor 구성은 다르다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p23_mcs_not_unique</span> 20일 MSE MCS에는 RV-MRW와 RV-ARFIMA가 각각 14개 중 11개 지수, RV-BMSM이 9개 지수에서 포함돼 장기 MRW가 강해도 유일한 생존모형은 아니었다.<p class="meta">sample: 14개 국제지수 OOS · target: 20일 realized variance · horizon: 20거래일 · metric: MCS 포함 지수 수 · unit: 14개 중 개수 · comparator: RV-ARFIMA·RV-BMSM · loss_or_test: MSE Model Confidence Set</p><p><strong>근거:</strong> p23_mse_mcs_text</p><p><strong>전이 경고:</strong> 최저 empirical loss와 MCS survivor는 같은 개념이 아니며 한국 후보집합에서 다시 계산해야 한다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Forecasting the Variability of Stock Index Returns with the Multifractal Random Walk Model for Realized Volatilities — Kiel Economics Working Paper 2021-02</strong><p>워킹페이퍼 · 2021-10-28 · 56쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 본문과 파일 내부 Online Appendix를 포함한 56쪽 Kiel working paper 기준이다. 2023년 IJF 최종판의 수치·쪽수로 바꾸어 인용하지 않고 PDF는 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p23_models</strong> · artifact p23_wp · PDF 8쪽 · Table 1 and MRW model family · 검증됨</li><li><strong>p23_mrw_forecast</strong> · artifact p23_wp · PDF 10쪽 · Equation 17 forecast formula begins · 검증됨</li><li><strong>p23_data</strong> · artifact p23_wp · PDF 14쪽 · Table 2 · 검증됨</li><li><strong>p23_table3</strong> · artifact p23_wp · PDF 15쪽 · Table 3 · 검증됨</li><li><strong>p23_table4</strong> · artifact p23_wp · PDF 18쪽 · Table 4 · 검증됨</li><li><strong>p23_crisis</strong> · artifact p23_wp · PDF 19쪽 · Figure 1 · 검증됨</li><li><strong>p23_appendix_mcs</strong> · artifact p23_wp · PDF 34쪽 · Table B1 · 검증됨</li><li><strong>p23_mrw_all_history</strong> · artifact p23_wp · PDF 11쪽 · Equation 17 completion and all-available-past discussion · 검증됨</li><li><strong>p23_mae_mcs_text</strong> · artifact p23_wp · PDF 16쪽 · Main-text MAE MCS summary; sole survivor in 11 cases · 검증됨</li><li><strong>p23_mse_mcs_text</strong> · artifact p23_wp · PDF 17쪽 · Main-text 20-day 90% MCS inclusion counts 11/11/9 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Forecasting the Variability of Stock Index Returns with the Multifractal Random Walk Model for Realized Volatilities — Kiel Economics Working Paper 2021-02</strong><p>워킹페이퍼 · 2021-10-28 · 56쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 본문과 파일 내부 Online Appendix를 포함한 56쪽 Kiel working paper 기준이다. 2023년 IJF 최종판의 수치·쪽수로 바꾸어 인용하지 않고 PDF는 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p23_models"><strong>p23_models</strong> · artifact p23_wp · PDF 8쪽 · Table 1 and MRW model family · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_mrw_forecast"><strong>p23_mrw_forecast</strong> · artifact p23_wp · PDF 10쪽 · Equation 17 forecast formula begins · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_data"><strong>p23_data</strong> · artifact p23_wp · PDF 14쪽 · Table 2 · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_table3"><strong>p23_table3</strong> · artifact p23_wp · PDF 15쪽 · Table 3 · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_table4"><strong>p23_table4</strong> · artifact p23_wp · PDF 18쪽 · Table 4 · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_crisis"><strong>p23_crisis</strong> · artifact p23_wp · PDF 19쪽 · Figure 1 · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_appendix_mcs"><strong>p23_appendix_mcs</strong> · artifact p23_wp · PDF 34쪽 · Table B1 · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_mrw_all_history"><strong>p23_mrw_all_history</strong> · artifact p23_wp · PDF 11쪽 · Equation 17 completion and all-available-past discussion · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_mae_mcs_text"><strong>p23_mae_mcs_text</strong> · artifact p23_wp · PDF 16쪽 · Main-text MAE MCS summary; sole survivor in 11 cases · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_mse_mcs_text"><strong>p23_mse_mcs_text</strong> · artifact p23_wp · PDF 17쪽 · Main-text 20-day 90% MCS inclusion counts 11/11/9 · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p23_bmsm_equation"><strong>p23_bmsm_equation</strong> · artifact p23_wp · PDF 12쪽 · Equation 21 · 검증됨 · <a href="https://www.econstor.eu/bitstream/10419/247272/1/1780096682.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>국제지수 고빈도 RV의 working paper에서 RV-MRW는 특히 긴 horizon의 MSE와 전 horizon MAE에서 강했다.</strong><p>이유: Table 3과 Appendix MCS가 horizon·loss별 조건부 우위를 보여준다. · 교정: working-paper 판본, 14개 지수, realized kernel, 2016–2018 OOS를 함께 적는다. · 근거: p23_data · p23_table3 · p23_table4</p></li><li><strong>한국에서 126일 초과 정보의 가치를 multifractal 가중으로 검정할 수 있다.</strong><p>이유: Equation 17은 예측시점까지의 먼 과거를 horizon별 감쇠가중으로 사용한다. · 교정: 먼저 RW252·HAR·ARFIMA를 통과한 뒤의 적응 challenger로 둔다. · 근거: p23_mrw_all_history · p23_mrw_forecast</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>RV-MRW는 모든 시장·loss·horizon에서 유일한 승자다.</strong><p>이유: 단기 MSE에서는 RV-ARFIMA·RV-BMSM이 강하고 장기 MCS에도 여러 모형이 함께 남는다. · 교정: loss·horizon·MCS와 empirical minimum을 구분한다. · 근거: p23_table3 · p23_table4 · p23_appendix_mcs</p></li><li><strong>전체 과거를 쓰는 MRW에는 미래정보 누수가 생길 수 없다.</strong><p>이유: 모수추정·전처리·모형선택은 별도로 training 시점 경계를 지켜야 한다. · 교정: 각 origin에서 이용 가능한 과거만으로 모수와 feature를 다시 만든다. · 근거: p23_mrw_all_history · p23_mrw_forecast</p></li><li><strong>MSE·MAE 개선은 한국 WML의 Sharpe 개선을 보장한다.</strong><p>이유: 원문은 목표변동성 투자수익과 비용을 평가하지 않는다. · 교정: 동일 BS15 mapping의 경제성과를 별도 표로 둔다. · 근거: p23_table3</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>2023년 IJF 최종 조판본과 2021년 working paper의 모든 표·수치 차이는 이 레코드에서 판본 간 대조하지 않았다.</li><li>저자 코드·Oxford–Man snapshot·GMM 환경을 이용한 end-to-end 재계산은 근거 범위 밖이다.</li></ul>

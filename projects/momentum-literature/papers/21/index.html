@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/21/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Downside Risk and the Performance of Volatility-Managed Portfolios · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,172 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>미래분산 forecast 모형이 아니라 총위험과 하방위험 scaling의 경제성과·메커니즘·실시간 구현을 비교하는 문헌으로, RW126 뒤의 하방위험 적응과 비용 gate에 사용한다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>한국 WML 일별수익만으로 총실현분산과 하방 준분산 challenger를 만들 때</li><li>성과를 return timing과 volatility timing으로 분해할 때</li><li>full-sample 정규화와 120개월 expanding 실시간 결합을 구별할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>하방 준분산이 미래 WML 분산을 가장 정확히 예측한다고 주장할 때</li><li>원문의 직전 1개월 역실현변동성 규칙과 한국 RW126·12% 목표변동성 적응을 같은 전략으로 부를 때</li><li>낮은 overlay 비용 결과를 실제 종목·대차비용 전체로 확대할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>변동성이 높을 때 노출을 줄인다는 아이디어 안에서도 ‘전체 변동’과 ‘손실이 난 날의 변동’은 서로 다른 정보를 담는다. 이 논문은 두 신호를 같은 원 포트폴리오에 적용해 성과 차이가 어디서 생기는지, 실시간 추정과 비용을 넣어도 남는지까지 추적한다.</p></article>
+            <article><h3>중심 질문</h3><p>직전 달의 하방위험으로 다음 달 노출을 조절하면 총변동성 관리보다 더 나은 경제성과를 얻는가, 그렇다면 그 차이는 미래 수익을 피하는 return timing인가 미래 변동성을 피하는 volatility timing인가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 변동성 관리 연구는 총위험의 지속성에 초점을 두었고, 하방위험의 별도 정보와 실시간 결합·거래비용을 같은 설계 안에서 충분히 분해하지 못했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 결과에서는 하방관리가 총변동성 관리보다 더 넓은 포트폴리오에서 양의 spanning alpha와 높은 Sharpe를 보이고, 추가 성과는 주로 하방위험이 높은 뒤 다음 달 수익이 낮아지는 return-timing 항과 연결된다. 다만 이 분해는 인과식별이 아니라 표본 공분산의 회계적 분해이고, 하방전략의 잦은 비중변경 때문에 비용이 높아지면 우위가 약해진다. 따라서 한국 WML에서는 ‘하방위험이 원인’이라고 먼저 결론낼 것이 아니라 RW126과 DSV126을 동일 BS15 규칙에 넣고 예측손실과 비용 후 경제성과를 각각 확인해야 한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a><a class="evidence-chip" href="#locator-p21_cross_section">p21_cross_section · PDF 6쪽 · Tables 2–3</a><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>동일한 원수익에 두 위험척도를 적용한다.</h3>
+          <p>직전 월 전체 일별수익의 제곱합 제곱근과 음의 일별수익만의 제곱합 제곱근을 각각 분모로 써 다음 달 노출을 정한다. 포트폴리오 구성은 그대로 두므로 차이는 위험신호에서 나온다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>성과 폭과 비용 경계를 함께 확인한다.</h3>
+          <p>요인과 이상현상에서 spanning·Sharpe를 비교한 뒤, 비중 변화에 비용을 부과해 하방관리의 총성과가 높은 회전율을 보상하고도 남는지 묻는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_cross_section">p21_cross_section · PDF 6쪽 · Tables 2–3</a><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>alpha를 두 timing 채널로 분해한다.</h3>
+          <p>비중과 다음 달 수익의 공분산을 return timing, 비중과 다음 달 제곱수익의 공분산을 volatility timing으로 읽어 하방관리의 증분성과가 어디에 몰리는지 진단한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>사후 최적화를 실시간 설계로 낮춰 시험한다.</h3>
+          <p>초기 120개월 이후 매월 과거자료만으로 결합비중을 갱신하고, 추정오차를 줄인 고정 상대비중도 비교해 full-sample 결과의 구현 가능성을 점검한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_realtime_method">p21_realtime_method · PDF 9쪽 · Equations 16-17 and 120-month expanding real-time setup</a><a class="evidence-chip" href="#locator-p21_realtime">p21_realtime · PDF 10쪽 · Table 7 and Equation 18</a><a class="evidence-chip" href="#locator-p21_fixed_weight">p21_fixed_weight · PDF 12쪽 · Tables 9–10</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>하방 실현변동성</h3>
+          <p><strong>쉽게 말하면</strong><br>손실이 난 날의 움직임만 제곱해 합친 위험크기다.</p>
+          <p><strong>논문 안의 역할</strong><br>총변동성과 같은 단위의 역수 노출신호이며, 음의 날이 드문 달의 별도 보정규칙이 있다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>다음 달 분산의 최적 예측치나 옵션의 하방 내재분산으로 읽으면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a></div>
+        </article><article class="section-card concept-card">
+          <h3>return timing</h3>
+          <p><strong>쉽게 말하면</strong><br>수익이 나빠질 가능성이 큰 때 미리 비중을 줄여 얻는 효과다.</p>
+          <p><strong>논문 안의 역할</strong><br>관리비중과 다음 달 원수익 사이의 공분산으로 alpha를 분해한 항이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>투자자의 손실회피가 원인이라고 식별한 구조적 효과가 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a></div>
+        </article><article class="section-card concept-card">
+          <h3>volatility timing</h3>
+          <p><strong>쉽게 말하면</strong><br>다음 달 변동이 클 때 노출이 작아져 위험을 덜 받는 효과다.</p>
+          <p><strong>논문 안의 역할</strong><br>관리비중과 다음 달 제곱수익의 공분산으로 나타나는 alpha 성분이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>이 항이 양수라는 사실만으로 QLIKE가 더 낮다는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a></div>
+        </article><article class="section-card concept-card">
+          <h3>실시간 결합</h3>
+          <p><strong>쉽게 말하면</strong><br>그 달까지 알려진 수익만으로 원전략과 관리전략의 배분을 다시 정하는 방식이다.</p>
+          <p><strong>논문 안의 역할</strong><br>전체표본 최적비중의 사후편의를 줄이는 expanding-window 구현 점검이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>연구자가 여러 창과 비용을 전체표본에서 비교한 선택까지 완전한 외부검증이 된 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_realtime_method">p21_realtime_method · PDF 9쪽 · Equations 16-17 and 120-month expanding real-time setup</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 2–3 · 같은 달의 일별 원수익을 모두 합치거나 음수인 날만 합친 뒤 제곱근을 취한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>σ_total,t = √Σ_j f_j²,  σ_down,t = √Σ_j f_j²·1(f_j&lt;0)</code></pre>
+                <dl class="symbol-grid"><dt><code>f_j</code></dt><dd>월 안의 j번째 일별 요인 또는 포트폴리오 수익</dd><dt><code>1(f_j&lt;0)</code></dt><dd>음의 수익일에만 1인 지시함수</dd></dl>
+                <p><strong>직관:</strong> 상승과 하락을 한 위험으로 취급할지, 손실방향의 움직임을 별도 상태신호로 볼지 분리한다.</p>
+                <p><strong>구현할 때:</strong> 표본표준편차나 분산 역수로 바꾸면 원식이 아니다. 한국 적응에서는 RV126과 DSV126의 관측일·연율화·제곱근 순서를 같게 고정한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 1·4–5 · 직전 위험이 두 배면 다음 달 노출을 절반으로 낮춘다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>f_managed,t = (c / σ_{t-1}) · f_t</code></pre>
+                <dl class="symbol-grid"><dt><code>c</code></dt><dd>비교척도를 맞추는 정규화 상수</dd><dt><code>σ_{t-1}</code></dt><dd>직전 월 총 또는 하방 실현변동성</dd><dt><code>f_t</code></dt><dd>다음 달 원 포트폴리오 수익</dd></dl>
+                <p><strong>직관:</strong> 수익 신호를 바꾸지 않고 위험이 큰 상태에서만 자본배분을 축소한다.</p>
+                <p><strong>구현할 때:</strong> 전체표본 c와 시점별 과거자료로 계산한 c를 섞지 말고, 본 프로젝트 주실험에서는 고정 12% 목표와 동일 cap을 쓴다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a><a class="evidence-chip" href="#locator-p21_realtime_method">p21_realtime_method · PDF 9쪽 · Equations 16-17 and 120-month expanding real-time setup</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 미국의 여러 요인과 장단기 이상현상 수익을 사용해 특정 한 전략에만 생긴 현상인지 점검한다(근거: p21_cross_section).</li><li>한국 실험은 이미 고정된 6개 WML의 동일 일별수익과 동일 월말 원장을 사용해 구성변경 효과를 차단한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>직전 월 위험으로 다음 한 달 관리수익을 만든다. 같은 달 수익을 분모에 넣지 않는다(근거: p21_method).</li><li>한국에서는 월말 t까지의 126일 위험으로 t+1월 비중을 고정하고, t+1 일별수익 합을 forecast target으로 따로 둔다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>실시간 저자 사양은 초기 120개월 뒤 매월 expanding 추정을 한다(근거: p21_realtime_method).</li><li>한국에서는 RW126과 DSV126에 같은 첫 평가월·fallback·cap을 적용하고, 결과를 본 뒤 음수일 최소개수 규칙을 바꾸지 않는다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>spanning, Sharpe·Sortino, timing 분해와 비용은 서로 다른 질문으로 읽는다(근거: p21_cost, p21_decomposition, p21_direct_metrics).</li><li>채택 조건은 forecast gate와 economic gate를 모두 통과하는 것이며, 어느 하나의 개선만으로 전체 우월성을 선언하지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a><a class="evidence-chip" href="#locator-p21_realtime_method">p21_realtime_method · PDF 9쪽 · Equations 16-17 and 120-month expanding real-time setup</a><a class="evidence-chip" href="#locator-p21_direct_metrics">p21_direct_metrics · PDF 13쪽 · Table 11</a><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 1–3</p><h3>하방관리의 우위가 소수 요인에만 있는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>개별 alpha의 크기만 보지 말고 양의 방향이 요인과 이상현상 전반에 얼마나 퍼졌는지, 하방 대 총관리 회귀의 부호까지 순서대로 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>하방관리 alpha는 9개 요인 모두와 94개 이상현상 중 89개에서 양수였고, 하방 대 총관리에서는 94개 중 84개가 하방 쪽 양수였다.</dd>
+            <dt>검토자 해석</dt><dd>저자 표본에서는 하방신호의 증분효과가 한두 전략에만 의존하지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>포트폴리오들이 공통 종목과 시장충격을 공유하므로 이 개수를 독립실험의 성공확률처럼 읽으면 안 된다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a><a class="evidence-chip" href="#locator-p21_cross_section">p21_cross_section · PDF 6쪽 · Tables 2–3</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 5–6</p><h3>왜 하방관리가 총관리보다 나았는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>total alpha만 보지 말고 return-timing과 volatility-timing 열의 부호와 폭을 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>하방관리의 양의 return-timing은 9개 중 8개, 94개 중 71개로 총관리보다 넓었다.</dd>
+            <dt>검토자 해석</dt><dd>추가성과는 단순히 미래 변동성 지속성을 피한 것보다 하방상태 뒤 낮은 수익을 피한 관계와 더 밀접하다.</dd>
+            <dt>검토자 경계</dt><dd>공분산 분해는 메커니즘 진단이지 하방위험이 수익을 인과적으로 낮춘다는 증명이 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 4·Tables 7, 9–10</p><h3>실시간과 비용을 넣어도 결과가 남는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>먼저 expanding 결합의 Sharpe를 보고, 추정오차를 줄인 고정비중 결과와 비용률이 높아질 때의 alpha를 함께 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>실시간 하방결합은 다수 요인에서 원전략보다 높은 Sharpe를 보이고 고정비중도 폭넓게 개선됐지만, 비용이 커지면 총관리 대비 우위가 약해졌다.</dd>
+            <dt>검토자 해석</dt><dd>신호의 경제가치는 추정 안정성과 회전율을 동시에 관리할 때만 실현된다.</dd>
+            <dt>검토자 경계</dt><dd>비용은 overlay 비중변화에 대한 단순 bp 모형이지 종목 재구성·대차·시장충격을 포함한 총비용이 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a><a class="evidence-chip" href="#locator-p21_realtime">p21_realtime · PDF 10쪽 · Table 7 and Equation 18</a><a class="evidence-chip" href="#locator-p21_fixed_weight">p21_fixed_weight · PDF 12쪽 · Tables 9–10</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>저자 해석은 하방위험이 큰 뒤 다음 달 수익이 낮을 때 노출축소가 return timing 이익을 만든다는 것이다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>하방관리에서 양의 return-timing 항이 총관리보다 훨씬 넓게 관찰된다(근거: p21_decomposition).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>하방척도가 시장상태·유동성·극단수익을 대리하거나, full-sample 정규화와 선택된 위험창이 결과 일부를 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>동일 창·cap·비용 아래 DSV126이 RW126보다 return-timing도 비용 후 성과도 개선하지 못하면 한국 WML에 대한 증분채널은 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>저자 결과는 여러 요인·이상현상, 실시간 expanding 결합, 고정 상대비중과 여러 비용률에서 방향을 점검한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>하방관리의 더 잦은 비중변경 때문에 높은 비용에서는 총관리 대비 우위가 약해진다(근거: p21_cost).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 시장, 한국 공매도·세금, 고정 RW126·12% 목표규칙과 QLIKE/MSE 예측대회는 원문이 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>폭넓은 경제성과와 달리 이 논문은 하방위험이 미래분산을 더 정확히 예측한다고 직접 보여주지 않으며, 일부 표의 부호 표시는 본문과 함께 읽어야 한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a><a class="evidence-chip" href="#locator-p21_realtime">p21_realtime · PDF 10쪽 · Table 7 and Equation 18</a><a class="evidence-chip" href="#locator-p21_fixed_weight">p21_fixed_weight · PDF 12쪽 · Tables 9–10</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">직전 1개월 총실현변동성</th><td>RW126-BS15</td><td>주 baseline의 창·목표·cap을 고정한 채 비교축을 유지한다.</td></tr><tr><th scope="row">직전 1개월 하방실현변동성</th><td>DSV126-BS15</td><td>같은 126일 관측에서 음의 일별 WML 제곱만 남겨 위험입력 하나만 바꾼다.</td></tr><tr><th scope="row">미국 요인·이상현상</th><td>6개 한국 WML</td><td>동일 종목을 공유하는 상관된 여섯 설계변형으로 보고 독립 승리수 해석을 금지한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>6개 WML별 월말 126거래일 공통 인덱스를 동결한다.</li><li>같은 mask로 RV126과 DSV126을 계산하고 일변동성·연율화 단위를 맞춘다.</li><li>두 forecast를 동일 12% target과 동일 leverage cap에 넣어 다음 달 비중을 만든다.</li><li>공통 평가월에서 QLIKE·MSE·calibration을 먼저 계산한다.</li><li>gross/net Sharpe·최악월·drawdown·turnover·cap hit을 계산하고 return/volatility timing을 보조 분해한다.</li><li>월 block bootstrap으로 평균차 불확실성과 여섯 구성별 이질성을 함께 보고한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>DSV126이 사전 지정 primary loss에서 RW126보다 개선되고 공통평가월이 유지된다.</li><li>동일 비용·cap에서 비용 후 Sharpe 또는 최악월이 개선되며 한 구성의 극단값에만 의존하지 않는다.</li><li>결과가 variance/volatility 단위, 음수일 규칙과 floor 민감도에서 방향을 유지한다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>DSV가 0 또는 매우 작아 과도한 weight가 생기면 음수일 수·floor·cap 원장을 먼저 점검한다.</li><li>forecast는 좋아지고 Sharpe가 나빠지면 평균수익 timing과 turnover 비용을 분리한다.</li><li>EW에서만 개선되면 소형주·극단수익 집중과 winner/loser leg 기여를 재분해한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>월별 RV126·DSV126·raw/capped weight audit CSV</li><li>공통평가월 forecast-loss 표와 여섯 구성별 차이 그림</li><li>gross/net 경제성과·timing·turnover 분해표</li><li>사전규칙과 실패월을 담은 재현 설정파일</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a><a class="evidence-chip" href="#locator-p21_direct_metrics">p21_direct_metrics · PDF 13쪽 · Table 11</a><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>이 논문은 새 분산예측기가 아니라 총위험과 하방위험 scaling의 경제성 비교다.</li><li>하방관리의 추가성과는 저자 분해상 volatility timing보다 return timing과 더 밀접하다.</li><li>넓은 횡단 승리수는 상관된 포트폴리오의 결과이며 독립 성공확률이 아니다.</li><li>비용이 높아지면 우위가 약해지므로 한국 적용은 예측·성과·회전율을 별도 gate로 본다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>총변동성과 하방변동성의 수식 차이를 설명할 수 있다.</li><li>return timing과 volatility timing을 인과효과가 아닌 공분산 분해로 읽을 수 있다.</li><li>full-sample 정규화와 120개월 expanding 결합을 구별할 수 있다.</li><li>Table 4 비용이 포함하지 않는 항목을 말할 수 있다.</li><li>RW126 대 DSV126의 한 변수만 바꾼 한국 실험을 설계할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 이 논문을 ‘하방분산 forecast가 QLIKE 최저’라고 요약하면 틀리는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 주평가는 관리수익의 spanning, Sharpe·Sortino, timing 분해와 비용이며 미래분산 loss horse race가 아니기 때문이다.</p>
+          <p><strong>왜:</strong> 경제성과와 예측정확도를 같은 결과로 합치지 않는 범위 이해를 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a><a class="evidence-chip" href="#locator-p21_direct_metrics">p21_direct_metrics · PDF 13쪽 · Table 11</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. return timing 항이 양수라는 말은 무엇을 뜻하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 관리비중이 다음 달 원수익과 유리한 방향으로 공변해 낮은 수익상태에서 노출을 줄였다는 표본관계다.</p>
+          <p><strong>왜:</strong> 공분산 분해와 인과 메커니즘을 구분해야 한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국 주실험에서 원문의 1개월 규칙을 그대로 쓰지 않는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 프로젝트의 고정 기준이 RW126·12% target이므로 위험입력만 DSV126으로 바꿔 증분효과를 식별하기 위해서다.</p>
+          <p><strong>왜:</strong> 원형 재현과 프로젝트 적응의 경계를 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_method">p21_method · PDF 4쪽 · Equations 1–7 and Table 1</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 미국 요인·이상현상 표본에서 하방위험 관리는 총위험 관리보다 더 넓은 경제성과를 보였고, 저자 분해에서는 추가성과가 주로 return timing과 연결됐으나 비용이 높을 때 우위가 약해졌다.</p><p><strong>이렇게 말하면 안 됨:</strong> 하방 준분산이 미래 WML 분산의 보편적 최적 예측치이며 실제 종목 거래비용 후에도 모든 전략을 지배한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p21_cross_section">p21_cross_section · PDF 6쪽 · Tables 2–3</a><a class="evidence-chip" href="#locator-p21_decomposition">p21_decomposition · PDF 8쪽 · Tables 5–6</a><a class="evidence-chip" href="#locator-p21_cost">p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>MKT, SMB, HML, MOM, RMW, CMA, ROE, IA, BAB의 9개 미국 주식요인과 94개 가치가중 long–short 이상현상; 요인별 시작일은 1926–1967로 다르고 공통 종료는 2018-12 [원문 보고]</dd><dt>target</dt><dd>직전 달 총위험 또는 하방위험을 이용해 다음 달 원 포트폴리오 노출을 조절한 관리수익 [원문 보고]</dd><dt>information set</dt><dd>직전 달의 일별 요인수익; 하방위험은 음의 일별수익만 사용하며 음의 날이 3개 미만이면 이전 달을 함께 사용 [원문 보고]</dd><dt>lookback</dt><dd>기본 1개월, 2·3개월은 강건성 사양 [원문 보고]</dd><dt>horizon</dt><dd>월말 위험측정 뒤 다음 한 달 관리수익 [원문 보고]</dd><dt>model family</dt><dd>총실현변동성 및 하방 실현변동성의 역수(σ⁻¹) scaling, spanning alpha 분해, 원·관리전략의 최적 또는 고정비중 결합</dd><dt>training window</dt><dd>기초표의 정규화 상수는 전체표본이고, 실시간 결합은 최초 120개월 뒤 expanding 추정창을 사용한다.</dd><dt>retune</dt><dd>실시간 사양은 정규화 상수와 평균–분산 결합비중을 매월 과거자료로 다시 추정하고 절대비중을 5로 제한한다.</dd><dt>benchmarks</dt><dd>원 포트폴리오 · 총변동성 관리 · 하방변동성 관리 · 원·관리전략 고정비중 결합</dd><dt>loss / test</dt><dd>분산예측 QLIKE·MSE는 핵심 평가가 아니다. · spanning residual과 평균–분산 효용 · spanning regression alpha · HAC 지연 5의 Sharpe 차이 검정 · 요인별 결과와 94개 이상현상의 부호·유의 개수</dd><dt>economic metrics</dt><dd>Sharpe·Sortino · alpha·CER · return-timing·volatility-timing 분해 · 비용 후 성과와 break-even 비용</dd><dt>trading costs</dt><dd>overlay weight 변화에 1·10·14·25·50bp를 적용</dd><dt>turnover</dt><dd>관리비중 변화와 break-even 비용; 종목 수준 주문·대차비용은 포함하지 않음</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +209,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>모든 위험입력이 비중 적용월 시작 전에 끝나는 prefix-invariance test</li><li>RV126과 DSV126이 같은 관측 mask·연율단위를 쓰는 test</li><li>레버리지 cap과 비용차감 산식 test</li><li>6개 전략의 공통 평가월 row-hash test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p21_downside_breadth</span> 하방관리 alpha는 9개 요인 모두 양수였고 94개 이상현상 중 89개가 양수였으며, 하방 대 총관리 spanning에서는 94개 중 84개가 하방 쪽 양수였다.<p class="meta">sample: 미국 9개 요인과 94개 이상현상 · target: 하방 또는 총변동성 관리수익 · horizon: 월별 전체 가용표본 · metric: spanning alpha의 부호와 유의성 · unit: 요인·포트폴리오 개수 · comparator: 원 포트폴리오 및 총변동성 관리 · loss_or_test: spanning regressions</p><p><strong>근거:</strong> p21_method · p21_cross_section</p><p><strong>전이 경고:</strong> 횡단 개수는 공통 종목·시장충격을 공유하며 한국 6개 WML의 독립 반복실험으로 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p21_timing_channel</span> 성과분해에서 총관리의 양의 return-timing은 9개 중 2개·94개 중 42개였지만 하방관리는 9개 중 8개·94개 중 71개로, 하방 우위가 주로 return timing에 연결됐다.<p class="meta">sample: 미국 9개 요인과 94개 이상현상 · target: 관리전략 alpha 분해 · horizon: 다음 달 관리수익 · metric: return-timing 성분의 양의 부호 개수 · unit: 요인·포트폴리오 개수 · comparator: 총변동성 관리 · loss_or_test: Equations 8–15의 alpha decomposition</p><p><strong>근거:</strong> p21_decomposition</p><p><strong>전이 경고:</strong> return timing은 하방분산의 미래분산 forecast loss 우위를 뜻하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p21_realtime_cost_boundary</span> 120개월 초기창의 실시간 결합에서 하방관리 결합은 9개 중 8개 요인에서 원 전략보다 Sharpe가 높았고, 고정비중 결합도 103개 포트폴리오 중 약 80–81개에서 개선됐지만 높은 비용에서는 상대우위가 약해졌다.<p class="meta">sample: 9개 요인과 94개 이상현상의 실시간·고정비중 분석 · target: 원 전략과 하방관리의 결합수익 · horizon: 다음 1개월(최초 120개월 뒤 월별 expanding OOS) · metric: Sharpe와 비용 후 alpha · unit: ratio, 승리 개수, basis points · comparator: 원 전략 및 총관리 결합 · loss_or_test: Sharpe 차이와 1–50bp 비용 시나리오</p><p><strong>근거:</strong> p21_cost · p21_fixed_weight · p21_realtime · p21_realtime_method</p><p><strong>전이 경고:</strong> 비용은 overlay 비중변화에 대한 단순 bp 모형이며 한국 종목 재구성·대차·세금 전체를 반영하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Downside risk and the performance of volatility-managed portfolios — published article</strong><p>최종 게재본 · 2021-06-06 · 18쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 18쪽 최종 게재본 기준이다. 원문 파일은 사이트에 복제하지 않고 DOI·저자 공개 링크만 제공하며, 별도 Internet Appendix는 이 근거 묶음에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p21_method</strong> · artifact p21_vor · PDF 4쪽 · Equations 1–7 and Table 1 · 검증됨</li><li><strong>p21_cross_section</strong> · artifact p21_vor · PDF 6쪽 · Tables 2–3 · 검증됨</li><li><strong>p21_cost</strong> · artifact p21_vor · PDF 7쪽 · Table 4 and Equations 8–15 · 검증됨</li><li><strong>p21_decomposition</strong> · artifact p21_vor · PDF 8쪽 · Tables 5–6 · 검증됨</li><li><strong>p21_realtime</strong> · artifact p21_vor · PDF 10쪽 · Table 7 and Equation 18 · 검증됨</li><li><strong>p21_fixed_weight</strong> · artifact p21_vor · PDF 12쪽 · Tables 9–10 · 검증됨</li><li><strong>p21_direct_metrics</strong> · artifact p21_vor · PDF 13쪽 · Table 11 · 검증됨</li><li><strong>p21_realtime_method</strong> · artifact p21_vor · PDF 9쪽 · Equations 16-17 and 120-month expanding real-time setup · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Downside risk and the performance of volatility-managed portfolios — published article</strong><p>최종 게재본 · 2021-06-06 · 18쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 18쪽 최종 게재본 기준이다. 원문 파일은 사이트에 복제하지 않고 DOI·저자 공개 링크만 제공하며, 별도 Internet Appendix는 이 근거 묶음에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p21_method"><strong>p21_method</strong> · artifact p21_vor · PDF 4쪽 · Equations 1–7 and Table 1 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p21_cross_section"><strong>p21_cross_section</strong> · artifact p21_vor · PDF 6쪽 · Tables 2–3 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p21_cost"><strong>p21_cost</strong> · artifact p21_vor · PDF 7쪽 · Table 4 and Equations 8–15 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p21_decomposition"><strong>p21_decomposition</strong> · artifact p21_vor · PDF 8쪽 · Tables 5–6 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p21_realtime"><strong>p21_realtime</strong> · artifact p21_vor · PDF 10쪽 · Table 7 and Equation 18 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p21_fixed_weight"><strong>p21_fixed_weight</strong> · artifact p21_vor · PDF 12쪽 · Tables 9–10 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p21_direct_metrics"><strong>p21_direct_metrics</strong> · artifact p21_vor · PDF 13쪽 · Table 11 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p21_realtime_method"><strong>p21_realtime_method</strong> · artifact p21_vor · PDF 9쪽 · Equations 16-17 and 120-month expanding real-time setup · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>미국 요인·이상현상 표본에서 하방위험 관리는 총위험 관리보다 더 넓은 경제성과를 보였고 return timing의 역할이 컸다.</strong><p>이유: Tables 1–6의 spanning·분해 결과가 같은 방향을 보인다. · 교정: 항상 미국 표본, 경제성과 결과, 비용·실시간 조건을 함께 적는다. · 근거: p21_method · p21_cross_section · p21_decomposition</p></li><li><strong>한국에서는 하방위험을 고정 BS15 scaling 안의 적응 challenger로 시험할 수 있다.</strong><p>이유: 현재 일별 WML로 같은 시점의 총제곱수익과 음수일 제곱수익을 계산할 수 있다. · 교정: 원문의 직전 1개월 역실현변동성 원형과 RW126 적응을 이름으로 분리한다. · 근거: p21_method</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>하방 준분산은 미래 WML 분산을 가장 정확하게 예측한다.</strong><p>이유: 논문의 주평가는 spanning alpha·Sharpe·효용이지 QLIKE·MSE horse race가 아니다. · 교정: 한국에서 별도 forecast loss를 계산한 뒤 경제성과와 분리 보고한다. · 근거: p21_method · p21_direct_metrics</p></li><li><strong>하방관리의 비용 후 우위는 실제 종목 거래비용을 완전히 통과했다.</strong><p>이유: Table 4는 overlay 비중변화에 단순 bp를 적용하며 종목 재구성·대차·시장충격을 포함하지 않는다. · 교정: weight-change cost proxy로 표기하고 종목자료가 있을 때 별도 비용 gate를 둔다. · 근거: p21_cost</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>Internet Appendix Tables IA.1–IA.10의 개별 셀과 저자 코드·원자료 재계산은 이 레코드의 근거 범위 밖이다.</li><li>Table 5·7의 일부 음수 글리프가 게재 PDF 표에서 보이지 않아 해당 부호는 본문 서술과 행 간 산술로 판정했다.</li></ul>

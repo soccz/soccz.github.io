@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/03/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>A Machine Learning Approach to Volatility Forecasting · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,181 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>HAR·regularization·tree·NN을 같은 예측 origin에서 단계적으로 비교하되 feature 확장과 모형 비선형성의 증분을 분리할 때 쓰는 본선 forecast 설계 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>한국 WML의 RW126 다음에 HAR·LogHAR·ridge/lasso·RF·NN 비교사다리를 설계할 때</li><li>동일 feature 비교와 추가 feature 비교를 분리해 ML의 증분가치를 측정할 때</li><li>1일·5일·22일 horizon별 모형순위와 VaR 반례를 함께 이해할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>ML이 모든 데이터·horizon에서 HAR보다 우월하다고 주장할 때</li><li>29개 미국 대형주의 5분 RV 결과를 한국 월별 WML 위험에 직접 이전할 때</li><li>MSE 개선만으로 WML scaling의 Sharpe·CER 개선을 선언할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>머신러닝이 변동성 예측에 도움이 되는지를 보려면 알고리즘만 바꿀 것이 아니라 입력정보와 horizon, 튜닝 절차를 분리해야 한다. 이 논문은 그 비교사다리를 가장 체계적으로 보여 준다.</p></article>
+            <article><h3>중심 질문</h3><p>같은 HAR 정보에서 비선형 알고리즘이 주는 증분과 더 풍부한 예측변수가 주는 증분은 각각 얼마이며, 그 순위는 예측기간과 위험평가 방식에 따라 달라지는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>HAR와 몇 개 ML을 한 표에 놓는 것만으로는 feature 효과와 함수형태 효과를 구분할 수 없고, MSE 승리가 VaR나 투자성과로 이어지는지도 알 수 없었다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 증거는 제한된 HAR 입력의 하루 예측에서 신경망 이득이 비교적 작지만, 추가변수와 긴 horizon에서는 tree·신경망의 상대 MSE 개선이 커진다는 것이다. 그러나 단순 LogHAR가 강하고 VaR에서는 MSE 순위 격차가 줄어든다. 연구자 해석은 &#x27;ML이 이긴다&#x27;가 아니라 동일 feature·동일 forecast origin·시간순 validation으로 증분을 쪼개야 한다는 것이다. 한국에서는 RW126→HAR/LogHAR→regularization→tree→NN 순서를 지키고, 월별 작은 표본에서 예측과 경제성과를 모두 통과한 모델만 채택한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_har">p03_har · PDF 5쪽 · Equations 1–5</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>강한 HAR 계열 기준선을 만든다</h3>
+          <p>수준·로그·leverage·signed variation·quarticity 확장을 두어 ML이 약한 선형 기준선만 이기는 상황을 막는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_har">p03_har · PDF 5쪽 · Equations 1–5</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>feature 증분과 알고리즘 증분을 분리한다</h3>
+          <p>HAR 중심 입력과 추가 시장·기업·거시 입력을 나누고, 선형 HAR-X와 regularization·tree·NN을 같은 축에서 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>horizon에 따른 순위 변화를 검정한다</h3>
+          <p>하루·주간·월근사 target에서 동일 모형군을 반복해 비선형 interaction의 가치가 예측기간에 의존하는지 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>다른 위험목표로 반증한다</h3>
+          <p>평균제곱오차 순위가 tail-risk 평가에서도 유지되는지 VaR loss와 coverage로 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>MHAR와 MALL</h3>
+          <p><strong>쉽게 말하면</strong><br>MHAR는 과거 변동성 중심의 좁은 입력, MALL은 옵션·시장·기업·거시 정보를 더한 넓은 입력이다.</p>
+          <p><strong>논문 안의 역할</strong><br>알고리즘의 비선형 효과와 정보집합 확대 효과를 분리한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>MALL의 개선을 모두 머신러닝 함수형태의 공으로 돌리면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a></div>
+        </article><article class="section-card concept-card">
+          <h3>relative MSE</h3>
+          <p><strong>쉽게 말하면</strong><br>각 모형의 제곱오차를 기준 HAR의 제곱오차로 나눈 비율이다.</p>
+          <p><strong>논문 안의 역할</strong><br>종목과 모형의 예측오차를 공통 기준으로 비교한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>비율 감소를 모든 관측치의 절대오차가 같은 퍼센트로 줄었다고 읽으면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a></div>
+        </article><article class="section-card concept-card">
+          <h3>rolling validation</h3>
+          <p><strong>쉽게 말하면</strong><br>예측시점보다 앞선 학습·검증구간만 움직여 매 시점의 튜닝값을 고르는 절차다.</p>
+          <p><strong>논문 안의 역할</strong><br>시간누수를 막으면서 penalty와 boosting 설정을 선택한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>모든 모형이 동일한 재추정 방식과 계산예산을 쓴 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_data_split">p03_data_split · PDF 14쪽 · Data and 70/10/20 sample split</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a></div>
+        </article><article class="section-card concept-card">
+          <h3>MSE와 VaR loss</h3>
+          <p><strong>쉽게 말하면</strong><br>하나는 평균 변동성 오차를, 다른 하나는 tail threshold 판단의 손실을 본다.</p>
+          <p><strong>논문 안의 역할</strong><br>한 예측목표의 승자가 다른 위험목표에도 유효한지 검사한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>MSE가 가장 낮으면 VaR coverage도 자동으로 가장 좋다고 가정하면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>HAR 기준식 · 내일 변동성을 오늘·최근 주·최근 월의 변동성 수준으로 설명한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RV_{t+1} = beta_0 + beta_d RV_t + beta_w average(RV_{t-4:t}) + beta_m average(RV_{t-21:t}) + error</code></pre>
+                <dl class="symbol-grid"><dt><code>RV</code></dt><dd>고빈도 수익으로 계산한 실현분산</dd><dt><code>beta_d</code></dt><dd>오늘 관측한 단기 위험이 다음 위험에 기여하는 계수</dd><dt><code>beta_w, beta_m</code></dt><dd>주간·월간 지속성의 기여</dd></dl>
+                <p><strong>직관:</strong> 시장 참여자들의 반응기간이 다르면 세 시간척도의 위험이 다음 위험에 함께 남는다.</p>
+                <p><strong>구현할 때:</strong> 한국에서는 target과 feature 단위를 월별 WML 위험에 맞추고, 모든 평균은 formation cutoff 이전만 사용한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_har">p03_har · PDF 5쪽 · Equations 1–5</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>HAR 대비 relative MSE · 각 후보의 평균제곱예측오차를 같은 표의 HAR 오차로 나누고 1보다 작은지를 본다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>relative_MSE(model) = MSE(model) / MSE(HAR); relative_MSE &lt; 1 means lower average squared forecast error than HAR</code></pre>
+                <dl class="symbol-grid"><dt><code>MSE(model)</code></dt><dd>후보모형의 공통 시험구간 평균제곱오차</dd><dt><code>MSE(HAR)</code></dt><dd>같은 정보조건과 horizon에서 기준 HAR의 평균제곱오차</dd><dt><code>1</code></dt><dd>HAR와 평균제곱오차가 같은 비교경계</dd></dl>
+                <p><strong>직관:</strong> 비율은 종목과 horizon마다 오차규모가 달라도 동일 HAR 기준으로 후보의 증분을 읽게 한다.</p>
+                <p><strong>구현할 때:</strong> 평균비율과 종목별 DM 유의빈도를 같은 수치로 취급하지 않고 MHAR·MALL 및 horizon별로 분리한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>미국 대형주 패널의 일중 실현분산과 좁은·넓은 feature 세트를 사용한다.</li><li>종목별 target은 다음 단기 또는 집계된 미래 실현분산이다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>설명변수는 forecast origin까지, target은 그 다음 구간에서 계산한다.</li><li>긴 horizon target은 겹치므로 오차의 직렬의존을 고려한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>학습·검증·시험을 시간순으로 분할하고 일부 모형은 rolling 재추정한다.</li><li>모형군마다 refit·tuning 방식이 달라 그 차이를 결과조건으로 기록한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE·DM·MCS로 평균 예측을 비교한다.</li><li>VaR loss·coverage는 별도 tail gate이며 한국에서는 투자성과 gate를 추가한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_data_split">p03_data_split · PDF 14쪽 · Data and 70/10/20 sample split</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_har">p03_har · PDF 5쪽 · Equations 1–5</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 2–3</p><h3>하루 예측에서 개선은 feature 때문인가 알고리즘 때문인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>MHAR와 MALL을 먼저 나누고 각 표에서 HAR 대비 relative MSE가 1보다 작은지 본다. DM 표시는 종목별 유의 빈도이며 평균비율과 같은 단위가 아니다.</dd>
+            <dt>저자 보고 결과</dt><dd>제한 입력에서는 NN 이득이 작고, 넓은 입력에서는 regularization·RF·NN의 이득이 커진다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서도 feature set을 고정한 알고리즘 비교와 추가정보 실험을 다른 표로 둬야 한다.</dd>
+            <dt>검토자 경계</dt><dd>추가변수 중 일부는 한국에서 같은 발표시차로 구할 수 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 5·7</p><h3>긴 horizon에서 어떤 구조가 유용한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>각 표의 denominator가 HAR임을 확인하고 같은 MALL 조건의 5일과 22일 relative MSE를 비교한다. 큰 비율개선은 기준모형 악화 가능성도 함께 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>넓은 feature의 긴 horizon에서 bagging·RF의 상대성과가 특히 강하다.</dd>
+            <dt>검토자 해석</dt><dd>비선형 interaction 가치는 horizon과 정보집합의 결합효과다.</dd>
+            <dt>검토자 경계</dt><dd>월 WML의 표본크기와 target 측정은 원 패널보다 훨씬 제한적이다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 8–9</p><h3>MSE winner가 tail-risk에서도 우월한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>VaR relative loss와 coverage count를 MSE 표와 별도로 읽는다. 낮은 loss와 올바른 coverage는 서로 다른 조건이다.</dd>
+            <dt>저자 보고 결과</dt><dd>모형 간 VaR 격차는 MSE보다 작고 basic HAR가 견고하다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서도 예측·tail·경제성과를 독립 게이트로 둬야 한다.</dd>
+            <dt>검토자 경계</dt><dd>VaR 결과는 직접적인 WML 목표변동성 투자성과가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Data split·fit scheme</p><h3>모든 예측모형의 비교가 완전히 동일한 재추정·튜닝 계산조건에서 이뤄졌는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>시간순 train·validation·test의 날짜역할과 모형별 rolling/fixed refit을 따로 읽는다. test 관측수와 계산예산도 비교조건이다.</dd>
+            <dt>저자 보고 결과</dt><dd>시간누수는 줄였지만 NN과 다른 모형의 갱신규칙은 동일하지 않다.</dd>
+            <dt>검토자 해석</dt><dd>한국 main horse race는 equal-refit을 우선하고 operational 차이는 별도 둔다.</dd>
+            <dt>검토자 경계</dt><dd>같은 test에서 많은 구조·feature·horizon을 비교한 연구자 선택이 남는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_data_split">p03_data_split · PDF 14쪽 · Data and 70/10/20 sample split</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>풍부한 predictor의 비선형 interaction과 threshold가 긴 horizon의 지속성 구조를 선형 HAR보다 잘 포착할 수 있다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>좁은 입력보다 넓은 입력에서, 짧은 horizon보다 긴 horizon에서 tree 계열 개선이 더 커진다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>HAR 기준선 악화, 모형별 다른 refit 방식, test 내 다수 탐색과 특정 추가변수가 큰 개선을 만들었을 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>동일 feature·동일 refit의 nested OOS에서 ML이 HAR/LogHAR를 못 이기거나 경제성과가 나빠지면 한국에서 복잡성 가치는 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_data_split">p03_data_split · PDF 14쪽 · Data and 70/10/20 sample split</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>다른 학습기간, 종목별 분포, MCS, 변동성 상태, feature 해석과 VaR로 결과를 흔든다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>제한 feature의 하루 예측과 VaR에서는 단순 HAR 계열이 강하다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 WML의 월별 작은 표본과 동일 target-vol·비용 후 성과는 직접 시험하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>ML의 평균 MSE 이득은 크지만 모형별 갱신조건이 다르고 tail-risk 순위는 같은 크기로 따라오지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_data_split">p03_data_split · PDF 14쪽 · Data and 70/10/20 sample split</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_har">p03_har · PDF 5쪽 · Equations 1–5</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">MHAR</th><td>WML 과거위험 공통 feature</td><td>알고리즘 증분을 보기 위한 좁고 재현 가능한 입력을 만든다.</td></tr><tr><th scope="row">MALL</th><td>발표시차 검증된 한국 추가정보</td><td>feature 확대 효과를 ML 효과와 분리한다.</td></tr><tr><th scope="row">HAR→ML 사다리</th><td>RW126→HAR/LogHAR→lasso/RF→NN</td><td>복잡성을 한 단계씩 추가해 실패원인을 식별한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>다음 보유월 WML 일별 제곱합 target을 하나로 고정한다.</li><li>RW126·HAR·LogHAR를 여섯 구성의 공통 origin에 생성한다.</li><li>같은 좁은 feature로 ridge·lasso·RF를 비교한다.</li><li>발표시차가 검증된 추가 feature는 별도 확장표에서만 더한다.</li><li>scaler·tuning을 각 outer origin의 과거 validation에서만 fit한다.</li><li>모든 forecast를 동일 BS15 mapping에 넣어 비용 후 경제성과를 계산한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>모든 모형의 target row·origin·refit 주기가 동일하다.</li><li>복잡모형이 공통 OOS의 MSE·QLIKE에서 강한 HAR 기준선을 이긴다.</li><li>예측 우위가 비용 후 Sharpe·CER와 tail gate 중 사전 기준에도 이어진다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>MALL만 좋으면 알고리즘보다 정보집합 효과로 분류한다.</li><li>loss만 좋으면 위험→비중 매핑 또는 거래비용 실패로 분류한다.</li><li>특정 seed·architecture만 좋으면 불안정성으로 기각한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 feature·scaler·hyperparameter 감사표</li><li>MHAR/MALL과 horizon을 분리한 예측성과 행렬</li><li>동일 mapping의 gross·net WML 경제성과표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_data_split">p03_data_split · PDF 14쪽 · Data and 70/10/20 sample split</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_har">p03_har · PDF 5쪽 · Equations 1–5</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>ML 효과와 추가 feature 효과를 분리해야 한다.</li><li>LogHAR는 반드시 포함할 강한 단순 기준선이다.</li><li>긴 horizon에서 tree의 이점이 커질 수 있다.</li><li>모형별 refit 방식이 완전히 같지는 않다.</li><li>MSE 우위가 VaR나 WML Sharpe를 보장하지 않는다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>MHAR와 MALL의 목적을 구분한다.</li><li>relative MSE의 분자·분모를 설명한다.</li><li>모형별 refit 차이를 찾을 수 있다.</li><li>horizon별 순위변화를 요약한다.</li><li>예측·tail·경제성과의 세 게이트를 설계한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. MALL에서 RF가 좋아졌다고 RF의 순수 비선형 효과라고 말할 수 없는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 추가 정보 자체의 예측력과 알고리즘의 함수형태 효과가 함께 바뀌기 때문이다.</p>
+          <p><strong>왜:</strong> MHAR·MALL 및 HAR-X 비교축을 함께 읽어야 두 효과를 분리할 수 있다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 한국에서는 NN보다 RW126·HAR·LogHAR를 먼저 구현해야 하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 작은 월 표본에서 복잡성이 단순 지속성 기준선보다 실제 증분을 주는지 확인해야 하기 때문이다.</p>
+          <p><strong>왜:</strong> 제한 입력과 VaR에서는 단순 HAR가 경쟁력을 유지한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. Table 7의 큰 상대개선을 읽을 때 필요한 경고는 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 분모인 HAR의 악화가 비율을 키울 수 있어 절대 loss와 조건을 함께 봐야 한다.</p>
+          <p><strong>왜:</strong> 저자도 긴 horizon의 일부 큰 개선을 benchmark deterioration과 함께 해석한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 확인된 accepted-manuscript 증거에서 제한 HAR 입력의 단기 ML 이득은 작았고, 추가변수와 긴 horizon에서는 tree·신경망의 상대 MSE 이득이 커졌지만 VaR에서는 기본 HAR가 견고했다.</p><p><strong>이렇게 말하면 안 됨:</strong> 머신러닝이 모든 horizon과 위험목표에서 HAR보다 우월하거나 MSE 개선이 한국 WML Sharpe 개선을 보장한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p03_data_split">p03_data_split · PDF 14쪽 · Data and 70/10/20 sample split</a><a class="evidence-chip" href="#locator-p03_fit_scheme">p03_fit_scheme · PDF 15쪽 · Model-specific fitting schemes and MALL predictors</a><a class="evidence-chip" href="#locator-p03_har">p03_har · PDF 5쪽 · Equations 1–5</a><a class="evidence-chip" href="#locator-p03_table2">p03_table2 · PDF 18쪽 · Table 2</a><a class="evidence-chip" href="#locator-p03_table3">p03_table3 · PDF 20쪽 · Table 3</a><a class="evidence-chip" href="#locator-p03_table5">p03_table5 · PDF 30쪽 · Table 5</a><a class="evidence-chip" href="#locator-p03_table7">p03_table7 · PDF 32쪽 · Table 7</a><a class="evidence-chip" href="#locator-p03_table8">p03_table8 · PDF 35쪽 · Table 8</a><a class="evidence-chip" href="#locator-p03_table9">p03_table9 · PDF 36쪽 · Table 9</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>DJIA 개편 전 30종목 중 Visa를 제외한 29종목, NYSE TAQ 5분 수익 78개로 만든 일별 realized variance, 2001-01-29–2017-12-31의 4,257거래일 [원문 보고]</dd><dt>target</dt><dd>다음 1일 RV, 다음 5거래일 평균 RV, 다음 22거래일 평균 RV [원문 보고]</dd><dt>information set</dt><dd>MHAR는 일·주·월 RV lag를 중심으로 하고, MALL은 옵션 IV·earnings indicator·1주 momentum·dollar volume·VIX·Hang Seng 제곱수익·ADS·3개월 T-bill 변화·EPU를 추가 [원문 보고]</dd><dt>lookback</dt><dd>HAR 핵심 입력은 최근 1일·5일·22일 RV 평균; 확장모형은 semivariance·quarticity·return과 MALL 변수를 추가 [원문 보고]</dd><dt>horizon</dt><dd>1일, 5거래일 평균, 22거래일 평균 [원문 보고]</dd><dt>model family</dt><dd>HAR·LogHAR·LevHAR·SHAR·HARQ·HAR-X, ridge·lasso·elastic net, bagging·random forest·gradient boosting, feed-forward neural networks</dd><dt>training window</dt><dd>주 분석은 2,964일 training, 424일 validation, 847일 test의 시간순 70/10/20 분할이며 1,000·2,000일 training과 200일 validation을 강건성에서 비교한다.</dd><dt>retune</dt><dd>HAR와 여러 regularized·tree 모형은 rolling 방식으로 갱신되지만 세부 창과 tuning이 모형별로 다르고, NN은 초기 training·validation에서 학습한 가중치를 847일 test 동안 고정한다.</dd><dt>benchmarks</dt><dd>basic HAR · LogHAR · LevHAR · SHAR · HARQ · HAR-X</dd><dt>loss / test</dt><dd>OOS MSE · pairwise relative MSE · 95% one-day VaR quantile loss · 종목별 one-sided Diebold–Mariano equal-predictive-accuracy test · 90% Model Confidence Set · Kupiec unconditional coverage test · Christoffersen independence and conditional coverage tests</dd><dt>economic metrics</dt><dd>95% one-day VaR quantile loss와 exceedance·coverage · WML Sharpe·CER·turnover는 이 논문에서 보고되지 않는다.</dd><dt>trading costs</dt><dd>거래전략 수익을 구성하지 않으므로 거래비용은 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 비중과 회전율은 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +218,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>forecast origin 뒤의 값을 바꿔도 과거 feature·scaler·forecast가 변하지 않는 prefix-invariance test</li><li>outer train·inner validation·test 날짜가 겹치지 않는 분할 test</li><li>전체표본 표준화와 random cross-validation을 차단하는 preprocessing test</li><li>모든 모형을 같은 target-vol·floor·cap 함수에 넣는 공통 mapping test</li><li>RF·NN seed 반복의 중앙값과 분산을 저장하는 randomness test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p03_mall_one_day</span> MALL 1일 예측에서 basic HAR 대비 상대 MSE는 HAR-X 0.966, ridge 0.919, random forest 0.901, 일부 NN은 최저 0.885로 보고됐다.<p class="meta">sample: 29개 DJIA 종목의 847거래일 test 구간 · target: 다음 1일 realized variance · horizon: 1거래일 · metric: 29개 종목 평균 pairwise relative MSE · unit: basic HAR MSE=1인 상대비율 · comparator: basic HAR · loss_or_test: MSE와 종목별 one-sided Diebold–Mariano test</p><p><strong>근거:</strong> p03_table3</p><p><strong>전이 경고:</strong> 이 결과는 MALL 추가변수와 모형효과가 결합된 미국 대형주 5분 RV 결과이며 한국 WML의 월별 예측으로 직접 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p03_mall_long_horizon</span> MALL 5거래일 예측에서 random forest의 HAR 대비 상대 MSE는 0.796이었고, MALL 22거래일 예측에서는 bagging 0.621, random forest 0.604로 보고됐다.<p class="meta">sample: 29개 DJIA 종목의 847거래일 test 구간 · target: 다음 5일 또는 22일의 평균 realized variance · horizon: 5거래일과 22거래일 · metric: 29개 종목 평균 pairwise relative MSE · unit: basic HAR MSE=1인 상대비율 · comparator: basic HAR · loss_or_test: MSE와 겹치는 다기간 target의 one-sided Diebold–Mariano test</p><p><strong>근거:</strong> p03_table5 · p03_table7</p><p><strong>전이 경고:</strong> 큰 상대개선의 일부는 비교 HAR 확장형의 악화와 richer MALL 정보에 의존하므로 복잡모형의 보편적 40% 절대오차 감소로 표현하지 않는다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p03_var_nontransfer</span> VaR 평가에서는 MSE 표보다 모형 간 격차가 작아졌고 basic HAR가 견고해, realized-variance MSE 순위가 tail-risk 평가로 자동 이전되지 않았다.<p class="meta">sample: 29개 DJIA 종목의 847거래일 test 구간 · target: filtered historical simulation의 95% one-day VaR · horizon: 1거래일 · metric: relative VaR quantile loss와 coverage rejection count · unit: 상대비율, exceedance rate, 종목 개수 · comparator: basic HAR와 HAR-X · loss_or_test: quantile loss, Diebold–Mariano, Kupiec, Christoffersen tests</p><p><strong>근거:</strong> p03_table8 · p03_table9</p><p><strong>전이 경고:</strong> VaR는 WML scaling의 Sharpe·CER와도 다른 결과층이므로 한국에서는 forecast loss와 경제성과를 다시 분리한다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>A Machine Learning Approach to Volatility Forecasting — author accepted manuscript</strong><p>게재 승인 원고 · 2022-05-27 · 58쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>수치와 locator는 2022-05-27자 author accepted manuscript 기준이다. 최종 JFEC 게재본은 DOI로 구분하며 조판 페이지를 이 locator에 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p03_har</strong> · artifact p03_aam · PDF 5쪽 · Equations 1–5 · 검증됨</li><li><strong>p03_data_split</strong> · artifact p03_aam · PDF 14쪽 · Data and 70/10/20 sample split · 검증됨</li><li><strong>p03_fit_scheme</strong> · artifact p03_aam · PDF 15쪽 · Model-specific fitting schemes and MALL predictors · 검증됨</li><li><strong>p03_table2</strong> · artifact p03_aam · PDF 18쪽 · Table 2 · 검증됨</li><li><strong>p03_table3</strong> · artifact p03_aam · PDF 20쪽 · Table 3 · 검증됨</li><li><strong>p03_table5</strong> · artifact p03_aam · PDF 30쪽 · Table 5 · 검증됨</li><li><strong>p03_table7</strong> · artifact p03_aam · PDF 32쪽 · Table 7 · 검증됨</li><li><strong>p03_table8</strong> · artifact p03_aam · PDF 35쪽 · Table 8 · 검증됨</li><li><strong>p03_table9</strong> · artifact p03_aam · PDF 36쪽 · Table 9 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>A Machine Learning Approach to Volatility Forecasting — author accepted manuscript</strong><p>게재 승인 원고 · 2022-05-27 · 58쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>수치와 locator는 2022-05-27자 author accepted manuscript 기준이다. 최종 JFEC 게재본은 DOI로 구분하며 조판 페이지를 이 locator에 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p03_har"><strong>p03_har</strong> · artifact p03_aam · PDF 5쪽 · Equations 1–5 · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_data_split"><strong>p03_data_split</strong> · artifact p03_aam · PDF 14쪽 · Data and 70/10/20 sample split · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_fit_scheme"><strong>p03_fit_scheme</strong> · artifact p03_aam · PDF 15쪽 · Model-specific fitting schemes and MALL predictors · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_table2"><strong>p03_table2</strong> · artifact p03_aam · PDF 18쪽 · Table 2 · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_table3"><strong>p03_table3</strong> · artifact p03_aam · PDF 20쪽 · Table 3 · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_table5"><strong>p03_table5</strong> · artifact p03_aam · PDF 30쪽 · Table 5 · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_table7"><strong>p03_table7</strong> · artifact p03_aam · PDF 32쪽 · Table 7 · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_table8"><strong>p03_table8</strong> · artifact p03_aam · PDF 35쪽 · Table 8 · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p03_table9"><strong>p03_table9</strong> · artifact p03_aam · PDF 36쪽 · Table 9 · 검증됨 · <a href="https://pure.au.dk/ws/files/208284743/rp21_03.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>29개 DJIA 종목의 accepted manuscript에서는 제한 HAR 입력의 1일 ML 이득은 혼합됐고, MALL 추가변수와 긴 horizon에서 tree·NN의 MSE 이득이 커졌다.</strong><p>이유: MHAR Table 2와 MALL Tables 3·5·7을 함께 읽을 때 feature와 horizon의 조건부 패턴이 드러난다. · 교정: 항상 29개 미국 대형주, 5분 RV, MALL 여부, horizon, accepted-manuscript 판본을 함께 적는다. · 근거: p03_table2 · p03_table3 · p03_table5 · p03_table7</p></li><li><strong>한국 WML에서 HAR·LogHAR는 ML의 필수 benchmark이고 forecast loss와 경제성과는 분리해야 한다.</strong><p>이유: 논문은 basic HAR의 강건성과 MSE 순위가 VaR로 완전히 이전되지 않는 반례를 함께 제공한다. · 교정: 한국 적응에서는 RW126→HAR·LogHAR→regularization·tree→NN 순서를 고정하고 같은 OOS 월을 사용한다. · 근거: p03_har · p03_table8 · p03_table9</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>이 논문은 ML이 언제나 HAR보다 우월함을 증명했다.</strong><p>이유: MHAR 1일에서는 여러 regularization·tree 모형이 HAR와 비슷하거나 더 나쁘고, 결과는 feature set과 horizon에 따라 바뀐다. · 교정: 같은 feature와 horizon에서 모형별 상대 MSE와 검정을 조건부로 보고한다. · 근거: p03_table2 · p03_table3 · p03_table5 · p03_table7</p></li><li><strong>MALL 월 horizon의 약 40% 상대 MSE 개선은 모든 주식·모형의 절대오차가 40% 줄었다는 뜻이다.</strong><p>이유: 표 값은 29종목 평균 pairwise relative MSE이고 추가변수와 일부 benchmark 악화가 함께 작용한다. · 교정: 선택한 benchmark, 절대 MSE, 종목별 분포, DM/MCS를 함께 제시한다. · 근거: p03_table7</p></li><li><strong>모든 모형은 동일한 재추정 빈도와 계산예산의 untouched OOS에서 비교됐다.</strong><p>이유: rolling 갱신과 validation 방식이 모형군별로 다르고 NN은 test 동안 가중치를 고정한다. · 교정: 각 모형의 fitting window·retune frequency·tuning budget을 공정성 표에 공개한다. · 근거: p03_fit_scheme</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>최종 JFEC 조판본과 이 accepted manuscript의 모든 표·식·부록 수치에 대한 판본 간 대조는 이 레코드의 근거 범위에 포함되지 않는다.</li><li>별도 온라인 Supplement·저자 코드·TAQ 원자료를 이용한 독립 재현은 이 공개 레코드에 포함되지 않는다.</li></ul>

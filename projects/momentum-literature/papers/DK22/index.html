@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/DK22/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Isolating momentum crashes · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,186 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>약세장 반등·음의 모멘텀 베타·높은 모멘텀 위험이 겹치는 크래시 메커니즘과 별도 CI 전략의 benchmark이며, 새로운 미래 WML 분산예측식으로 분류하면 안 된다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>약세장 반등에서 모멘텀 크래시가 집중되는 상태 메커니즘을 진단할 때</li><li>원 WML, BS15 WML*, Dierkes CI를 서로 다른 전략으로 분리해 Sharpe·극단손실·회전율을 비교할 때</li><li>직전 24개월 시장수익률, 직전 1개월 시장수익률, 126일 WML 시장베타와 분산을 한국 crash-state feature 후보로 검토할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>CI를 BS15 식에 투입할 미래 분산예측치만 바꾼 모형으로 설명하려는 경우</li><li>미국과 네 국제시장의 결과를 한국 6개 WML의 성과로 직접 전이하려는 경우</li><li>전체표본 19% 사후 위험정규화 결과를 고정 12% 목표 WML*의 명목수익률과 바로 비교하려는 경우</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>모멘텀의 평균성과보다 더 위험한 문제는 약세장 반등에서 발생하는 급격한 crash다. 이 논문은 시장상태·모멘텀 beta·모멘텀 고유위험을 결합해 crash를 사전에 격리하고 별도의 방어전략을 만든다.</p></article>
+            <article><h3>중심 질문</h3><p>직전 2년 약세장 뒤 시장이 반등하고 WML의 시장 beta가 음수인 상태가 다음 달 momentum crash를 예고하는가, 이 상태에서 방향까지 뒤집는 CI 전략이 기존 CVOL·DYN보다 crash를 더 잘 방어하는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 BS15형 scaling은 WML 자체 변동성만 보고, 조건부 기대수익 전략은 추정불안정이 크다. crash가 특정 시장상태와 beta 노출에 집중된다는 구조를 단순 위험축소와 명시적으로 결합한 비교가 부족했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 결과에서 최악 모멘텀 월은 약세장 반등과 음의 WML beta 상태에 집중되고, 사전 crash indicator는 다음 달 WML 수익을 유의하게 구분한다. CI는 126일 inverse-variance scaling에 crash 상태의 WML 방향반전을 더한 별도 전략이며, 같은 사후 위험정규화에서 CVOL·DYN보다 높은 Sharpe를 보인다. 그러나 전체표본 평균차는 항상 유의하지 않고 CI의 최악월은 DYN보다 낫지 않으며 회전율도 가장 높다. 한국에서는 CI를 새 분산 forecast나 ML로 부르지 말고 원 WML·12% BS15·CI의 상태별 crash 방어 benchmark로 분리한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_worst_months">dk22_worst_months · PDF 4쪽 · Table 1</a><a class="evidence-chip" href="#locator-dk22_crash_states">dk22_crash_states · PDF 7쪽 · Table 2</a><a class="evidence-chip" href="#locator-dk22_predictive_interaction">dk22_predictive_interaction · PDF 8쪽 · Tables 3 and 4; Eq. (4)</a><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>역사적 crash의 공통상태를 찾는다.</h3>
+          <p>최악 모멘텀 월의 당월 시장반등, 직전 장기 약세와 WML beta 부호를 교차해 crash가 무작위가 아니라 특정 상태에 몰리는지 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_worst_months">dk22_worst_months · PDF 4쪽 · Table 1</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>정보시점이 닫힌 crash indicator를 만든다.</h3>
+          <p>직전 24개월 시장누적수익, 직전 1개월 시장수익과 직전 126일 WML beta를 순서대로 결합해 다음 달 시작 전 상태를 확정한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_crash_states">dk22_crash_states · PDF 7쪽 · Table 2</a><a class="evidence-chip" href="#locator-dk22_predictive_interaction">dk22_predictive_interaction · PDF 8쪽 · Tables 3 and 4; Eq. (4)</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>상태와 WML 위험의 상호작용을 검정한다.</h3>
+          <p>crash indicator 단독보다 높은 WML 변동성과 결합했을 때 다음 달 손실·변동을 더 잘 구분하는지 회귀로 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_predictive_interaction">dk22_predictive_interaction · PDF 8쪽 · Tables 3 and 4; Eq. (4)</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>indicator를 별도 CI 전략으로 변환한다.</h3>
+          <p>평상시 inverse-variance exposure를 쓰고 crash 상태에서는 WML의 long-short 방향까지 반전한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_ci_equation">dk22_ci_equation · PDF 9쪽 · Eq. (6)</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>평균·crash·회전율·국제표본을 함께 평가한다.</h3>
+          <p>MOM·CVOL·DYN·CI의 Sharpe와 extreme loss를 비교하고, CI 상대성과가 crash 상태에 집중되는지와 비용·국제 결과를 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-dk22_international">dk22_international · PDF 16쪽 · Tables 9 and 10</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>bear rebound</h3>
+          <p><strong>쉽게 말하면</strong><br>장기간 시장이 약했던 뒤 직전 한 달 시장이 반등한 상태다.</p>
+          <p><strong>논문 안의 역할</strong><br>loser stocks의 높은 market beta가 갑자기 유리해지며 WML가 크게 손실볼 후보상태를 만든다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>단순히 현재 시장수익이 양수인 모든 달이나 NBER recession과 같은 정의가 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_worst_months">dk22_worst_months · PDF 4쪽 · Table 1</a><a class="evidence-chip" href="#locator-dk22_crash_states">dk22_crash_states · PDF 7쪽 · Table 2</a></div>
+        </article><article class="section-card concept-card">
+          <h3>negative WML beta</h3>
+          <p><strong>쉽게 말하면</strong><br>최근 일별 WML가 시장과 반대방향으로 움직였다는 회귀노출이다.</p>
+          <p><strong>논문 안의 역할</strong><br>시장반등 때 WML short-market 성격이 손실을 증폭할 crash indicator 조건이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>beta가 음수라는 사실만으로 다음 달 crash가 확정되는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_predictive_interaction">dk22_predictive_interaction · PDF 8쪽 · Tables 3 and 4; Eq. (4)</a></div>
+        </article><article class="section-card concept-card">
+          <h3>CI strategy</h3>
+          <p><strong>쉽게 말하면</strong><br>crash 조건이면 단순히 비중을 줄이는 데서 멈추지 않고 winner와 loser 방향을 뒤집는다.</p>
+          <p><strong>논문 안의 역할</strong><br>inverse-variance weight에 (−1)^{I_C}를 곱한 상태의존 전략이다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>BS15에 넣는 새 미래분산 예측치나 neural/ML 모형이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_ci_equation">dk22_ci_equation · PDF 9쪽 · Eq. (6)</a></div>
+        </article><article class="section-card concept-card">
+          <h3>사후 위험정규화</h3>
+          <p><strong>쉽게 말하면</strong><br>비교전략들의 전체표본 실현변동성을 같은 수준으로 다시 맞춘다.</p>
+          <p><strong>논문 안의 역할</strong><br>Sharpe·분포 비교의 scale을 통일하지만 미래정보를 포함한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>당시 투자자가 미리 알고 적용한 고정 목표변동성이나 현재 프로젝트의 12% target과 같지 않다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>WML beta rule · 직전 126거래일 WML 초과수익을 시장 초과수익에 회귀해 최근 market beta를 추정한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>r_{MOM,d}−r_{f,d}=α+β_{MOM}(r_{MKT,d}−r_{f,d})+ε_d</code></pre>
+                <dl class="symbol-grid"><dt><code>β_{MOM}</code></dt><dd>WML의 최근 시장노출</dd><dt><code>ε_d</code></dt><dd>시장으로 설명되지 않는 일별 WML 움직임</dd></dl>
+                <p><strong>직관:</strong> 약세장 동안 winner·loser 구성 때문에 WML가 반등에 취약한 short-market 노출을 가질 수 있다.</p>
+                <p><strong>구현할 때:</strong> 한국 WML와 시장수익의 날짜·무위험수익·최소관측을 동일하게 고정하고 각 6개 구성별 beta를 별도 계산한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_beta_equation">dk22_beta_equation · PDF 21쪽 · Appendix A.1, Equation 7</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 6 · 직전 126일 분산의 역수로 노출을 정하고 crash indicator가 1이면 다음 달 WML 방향을 반전한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>r^{CI}_{t}=(σ²_target/σ̂²_{MOM,t−1})·(−1)^{I_{C,t−1}}·r_{MOM,t}</code></pre>
+                <dl class="symbol-grid"><dt><code>σ̂²_{MOM,t−1}</code></dt><dd>직전 126일 WML 제곱수익 기반 위험</dd><dt><code>I_C</code></dt><dd>bear·rebound·negative-beta를 모두 만족한 indicator</dd><dt><code>(−1)^{I_C}</code></dt><dd>crash 상태에서만 부호를 뒤집는 항</dd></dl>
+                <p><strong>직관:</strong> crash 상태에서 기대 WML 수익이 음수라면 exposure 축소보다 반대 포지션이 더 직접적인 방어가 될 수 있다.</p>
+                <p><strong>구현할 때:</strong> CVOL의 inverse-volatility와 CI의 inverse-variance·sign reversal을 같은 함수나 결과열로 덮어쓰지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_ci_equation">dk22_ci_equation · PDF 9쪽 · Eq. (6)</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 장기 미국 완성 모멘텀 포트폴리오와 여러 국제 포트폴리오·시장요인을 쓴다(근거: dk22_abstract, dk22_international).</li><li>한국 적응은 고정 6개 WML와 한국 시장 초과수익을 사용하고 종목구성 차이를 수치 target으로 맞추지 않는다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>월 시작 전 상태로 다음 한 달 WML 수익과 CI 경제성과를 평가한다(근거: dk22_crash_states, dk22_ci_equation).</li><li>한국에서도 t월말까지의 24개월·1개월·126일 입력으로 t+1 전략수익만 만든다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>상태변수는 매월 과거자료로 갱신되지만 주연구는 strict fixed holdout의 forecast contest가 아니다(근거: dk22_predictive_interaction).</li><li>한국은 indicator 정의·cap·target을 validation 전에 고정하고 final 기간의 희귀 crash 월을 따로 보존한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>평균 Sharpe·최악월뿐 아니라 crash-state 평균차·turnover·break-even 비용과 국제표본을 함께 본다(근거: dk22_performance, dk22_state_tests_costs, dk22_international).</li><li>CI 채택은 crash 방어와 net 성과가 모두 개선될 때만 허용하며 variance forecast gate와 분리한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_beta_equation">dk22_beta_equation · PDF 21쪽 · Appendix A.1, Equation 7</a><a class="evidence-chip" href="#locator-dk22_ci_equation">dk22_ci_equation · PDF 9쪽 · Eq. (6)</a><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 1</p><h3>모멘텀 최악월은 어떤 상태에 몰리는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>각 최악월의 당월 시장방향, 직전 장기 시장수익과 WML beta 부호를 사건별로 확인한다.</dd>
+            <dt>저자 보고 결과</dt><dd>최악 15개월은 모두 당월 시장상승이고 대부분 직전 2년 시장수익과 WML beta가 음수다.</dd>
+            <dt>검토자 해석</dt><dd>bear rebound와 negative beta가 crash-state 규칙의 경험적 출발점이 된다.</dd>
+            <dt>검토자 경계</dt><dd>최악사건을 본 뒤 만든 규칙이라 독립 사전검증이 아니며 모든 반등이 crash로 이어지는 것도 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_worst_months">dk22_worst_months · PDF 4쪽 · Table 1</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 2–4</p><h3>사전 indicator가 다음 달 손실과 위험을 구분하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>indicator 0/1 평균차와 indicator×volatility 회귀계수, beta의 다음 달 변동성 관계를 순서대로 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>crash 상태의 다음 달 WML 평균은 평상시보다 낮고, indicator와 WML 위험의 상호작용은 손실 예측과 강하게 연결된다.</dd>
+            <dt>검토자 해석</dt><dd>시장상태만 또는 WML 변동성만 보는 것보다 두 정보를 결합할 근거가 있다.</dd>
+            <dt>검토자 경계</dt><dd>낮은 설명력과 관측적 예측관계이므로 구조적 crash 원인을 완전히 식별하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_crash_states">dk22_crash_states · PDF 7쪽 · Table 2</a><a class="evidence-chip" href="#locator-dk22_predictive_interaction">dk22_predictive_interaction · PDF 8쪽 · Tables 3 and 4; Eq. (4)</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 5</p><h3>CI가 기존 관리전략보다 전반적으로 좋은가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>동일 사후 위험정규화의 Sharpe와 최저월을 함께 비교하고 한 지표의 winner를 전체 winner로 바꾸지 않는다.</dd>
+            <dt>저자 보고 결과</dt><dd>Sharpe는 MOM·CVOL·DYN·CI 순으로 0.51·0.94·1.03·1.12지만 CI 최저월은 DYN보다 조금 더 나쁘다.</dd>
+            <dt>검토자 해석</dt><dd>CI는 평균 risk-adjusted 성과가 강하지만 모든 tail 지표를 지배하지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>전략 변동성을 전체표본에서 맞춘 결과라 현재 12% target의 명목수익과 직접 비교할 수 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 6–7·9–10</p><h3>CI의 상대가치는 어디서 나오고 비용은 어떤가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>전체표본 평균차와 crash-state 평균차의 p값을 구분하고 turnover·국제 Sharpe를 함께 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>CI 상대우위는 전체 평균보다 crash 상태에 집중되고 국제표본 방향도 강하지만, CI 회전율은 비교전략 중 가장 높다.</dd>
+            <dt>검토자 해석</dt><dd>희귀 상태 방어전략으로 해석해야 하며 평상시 universal alpha 전략은 아니다.</dd>
+            <dt>검토자 경계</dt><dd>비용은 실제 차감 net return이 아니라 break-even 성격이고 국제표본에 한국은 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-dk22_international">dk22_international · PDF 16쪽 · Tables 9 and 10</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>약세장 동안 loser의 시장 beta가 커져 WML가 음의 market beta를 갖고, 급반등 때 loser short가 크게 손실해 momentum crash가 난다는 설명이다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>최악월의 bear-rebound-negative-beta 집중과 indicator×WML volatility의 다음 달 손실관계가 같은 방향이다(근거: dk22_worst_months, dk22_predictive_interaction).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>시장유동성·short squeeze·상태정의의 사후선택, French/AQR 완성 portfolio의 구성효과가 crash indicator와 함께 움직일 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>한국에서 충분한 crash-state 월이 있는데도 indicator가 다음 달 손실을 구분하지 못하고 CI가 cap·비용 후 tail을 개선하지 못하면 해당 상태채널은 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_crash_states">dk22_crash_states · PDF 7쪽 · Table 2</a><a class="evidence-chip" href="#locator-dk22_predictive_interaction">dk22_predictive_interaction · PDF 8쪽 · Tables 3 and 4; Eq. (4)</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>상태평균·예측회귀·FF3 통제·전략비교·하위기간·국제표본과 turnover를 폭넓게 점검한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>전체표본 CI 대 CVOL·DYN 평균차는 항상 유의하지 않고 CI의 최저월·turnover가 모두 최선은 아니다(근거: dk22_performance, dk22_state_tests_costs).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국, strict untouched holdout, 고정 12% normalization과 실제 short·funding·시변 비용은 원문이 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>사후 동일위험 scale과 일부 appendix·turnover 표기 세칙은 live implementation과 분리해야 한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-dk22_international">dk22_international · PDF 16쪽 · Tables 9 and 10</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">French/AQR MOM</th><td>고정 6개 한국 WML</td><td>portfolio definition을 바꾸지 않고 상태방어의 구성의존성을 본다.</td></tr><tr><th scope="row">미국·국제 market state</th><td>한국 24개월 시장누적·1개월 반등·126일 WML beta</td><td>월 시작 전 계산 가능한 세 상태조건을 직접 대응한다.</td></tr><tr><th scope="row">19% 사후 정규화 CI</th><td>12% BS15와 별도 CI·충실재현 패널</td><td>현재 baseline과 원문 scale을 섞지 않는다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>6개 WML별 월말 24개월 시장누적·1개월 시장수익·126일 beta와 variance를 만든다.</li><li>세 조건을 순서대로 결합해 I_C를 만들고 발생월 수를 먼저 보고한다.</li><li>원 WML·12% CVOL/BS15·CI를 별도 전략열로 계산한다.</li><li>CI의 uncapped·사전 cap weight와 음수 exposure를 origin별 저장한다.</li><li>전체·I_C=0·I_C=1의 평균·Sharpe·최악월·drawdown을 분해한다.</li><li>turnover와 실제 가능한 비용·funding sensitivity를 적용하고 final holdout을 별도 평가한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>I_C가 월 시작 전 정보만 쓰며 충분한 사건수가 있고 다음 달 손실을 out-of-sample로 구분한다.</li><li>CI가 BS15보다 crash-state tail과 전체 비용 후 성과를 개선하고 extreme leverage에만 의존하지 않는다.</li><li>방향이 6개 WML 중 한 구성 또는 한 crash 월에만 의존하지 않는다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>I_C가 거의 없으면 상태정의를 사후 완화하지 말고 희귀성 자체를 결과로 보고한다.</li><li>uncapped만 좋으면 leverage·sign reversal 기여를 분리하고 실행가능 실패로 판정한다.</li><li>CI 평균은 좋고 tail이 나쁘면 Table 5와 같은 metric trade-off로 보고 universal winner 주장을 금지한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>월별 bear/rebound/beta/I_C 상태원장</li><li>원 WML·BS15·CI weight/return/turnover CSV</li><li>상태별 성과·tail·event study 표</li><li>cap·cost·funding sensitivity와 claim boundary</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_beta_equation">dk22_beta_equation · PDF 21쪽 · Appendix A.1, Equation 7</a><a class="evidence-chip" href="#locator-dk22_ci_equation">dk22_ci_equation · PDF 9쪽 · Eq. (6)</a><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>모멘텀 crash는 약세장 반등·음의 WML beta·높은 WML 위험의 결합상태와 연결된다.</li><li>CI는 새 분산 forecast가 아니라 inverse-variance와 sign reversal을 합친 별도 전략이다.</li><li>CI의 강점은 전체 평균보다 crash 상태에 집중된다.</li><li>높은 Sharpe에도 최저월·turnover가 모두 최선은 아니며 한국에서는 희귀사건 수가 핵심이다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>bear·rebound·negative-beta indicator를 순서대로 설명할 수 있다.</li><li>CI와 CVOL·DYN의 전략차이를 말할 수 있다.</li><li>Table 5의 Sharpe와 최저월을 함께 읽을 수 있다.</li><li>사후 위험정규화와 고정 12% target을 구분할 수 있다.</li><li>한국에서 상태희귀성·cap·비용 gate를 설계할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_worst_months">dk22_worst_months · PDF 4쪽 · Table 1</a><a class="evidence-chip" href="#locator-dk22_crash_states">dk22_crash_states · PDF 7쪽 · Table 2</a><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. CI와 BS15 CVOL의 가장 중요한 수식 차이 두 가지는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> CI는 inverse variance를 쓰고 I_C=1에서 WML 방향을 반전하지만 CVOL은 inverse volatility로 크기만 조절한다.</p>
+          <p><strong>왜:</strong> 두 전략을 하나의 forecast 변형으로 오인하지 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_ci_equation">dk22_ci_equation · PDF 9쪽 · Eq. (6)</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 CI가 모든 성과지표를 지배한다고 할 수 없는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> Sharpe는 높지만 최저월은 DYN보다 나쁘고 전체표본 평균차는 항상 유의하지 않으며 turnover도 가장 높기 때문이다.</p>
+          <p><strong>왜:</strong> 조건부 성과와 반증을 함께 읽는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국에서 I_C 월이 매우 적으면 무엇을 해야 하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> threshold를 결과에 맞춰 완화하지 말고 발생빈도·노출·event 결과를 보고하며 통계적 검정력을 제한으로 기록한다.</p>
+          <p><strong>왜:</strong> 희귀사건 사후튜닝을 방지한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_crash_states">dk22_crash_states · PDF 7쪽 · Table 2</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 미국·국제 모멘텀 VOR에서 약세장 반등·음의 WML beta의 사전 상태가 crash와 연결됐고, inverse-variance·sign reversal CI는 동일 사후 위험척도에서 높은 Sharpe를 보였으나 우위는 주로 crash 상태에 집중됐다.</p><p><strong>이렇게 말하면 안 됨:</strong> CI가 더 정확한 미래분산 ML 모형이고 모든 상태·지표에서 CVOL·DYN을 유의하게 지배하며 한국에서 같은 결과가 보장된다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-dk22_performance">dk22_performance · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-dk22_state_tests_costs">dk22_state_tests_costs · PDF 14쪽 · Tables 6 and 7</a><a class="evidence-chip" href="#locator-dk22_international">dk22_international · PDF 16쪽 · Tables 9 and 10</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>Kenneth French의 미국 prior-return decile momentum 및 Fama–French 요인; 월별 자료 1927-01–2020-05, 일별 자료 1926-10–2020-05, 주 분석 1928-09–2020-05 [원문 보고] · AQR의 France, Germany, Japan, United Kingdom 및 지역 momentum portfolios; 국제 전략 결과 1989-03–2020-05 [원문 보고]</dd><dt>target</dt><dd>사전 crash indicator가 구분하는 다음달 MOM 수익률과 CI 전략의 경제성과 [원문 보고] · 별도 미래분산 예측오차가 아니라 월별 MOM 수익, 크래시 상태, 전략 수익 [원문 보고]</dd><dt>information set</dt><dd>월 t 시작 전 관측된 직전 24개월 누적 시장수익률, 직전 1개월 시장수익률, 직전 126거래일 MOM 시장베타와 MOM 제곱수익 위험 [원문 보고]</dd><dt>lookback</dt><dd>bear state 24개월, rebound state 1개월, MOM beta와 MOM volatility 126거래일 [원문 보고]</dd><dt>horizon</dt><dd>월 t-1 말의 상태로 월 t의 MOM 및 CI 수익을 평가하는 1개월 horizon [원문 보고]</dd><dt>model family</dt><dd>규칙 기반 bear–rebound–negative-beta crash indicator, 월별 예측 OLS, inverse-variance scaling과 crash-state sign reversal을 결합한 CI 전략</dd><dt>training window</dt><dd>주 결과는 1928-09–2020-05 전체표본 및 하위표본 분석이며 strict fixed-holdout 예측대회가 아니다; 비교 DYN의 ex-ante 기대수익 회귀는 expanding window를 사용한다.</dd><dt>retune</dt><dd>월별로 직전 정보만 사용해 시장상태, 126일 beta와 126일 MOM 위험을 갱신하며 ML hyperparameter tuning은 없다.</dd><dt>benchmarks</dt><dd>Unscaled raw momentum (MOMraw) · Barroso–Santa-Clara constant-volatility strategy (CVOL) · Daniel–Moskowitz dynamic strategy (DYN)</dd><dt>loss / test</dt><dd>MSE·QLIKE 같은 미래분산 forecast loss를 평가하지 않고, 상태별 MOM 수익과 전략성과를 평가한다. · 상태별 평균차 t-test · 예측 OLS의 계수·t-statistic·adjusted R-squared · FF3 및 경쟁 전략에 대한 spanning alpha · 10년 하위표본과 5년 rolling-window 강건성</dd><dt>economic metrics</dt><dd>연율 평균수익률·변동성·Sharpe ratio · 월별 최저·최고수익률, skewness와 kurtosis · 월 회전율과 break-even round-trip cost · crash-indicator 상태별 평균수익 차이</dd><dt>trading costs</dt><dd>실제 비용 차감 순수익이 아니라 수익의 유의성이 사라지는 break-even round-trip cost를 계산한다.</dd><dt>turnover</dt><dd>월별 winner leg와 loser leg의 구성변화 및 전략 scaling-weight 변화를 반영한 portfolio turnover</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +223,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>월 t weight의 모든 입력 날짜가 t-1 월말 이하여야 한다.</li><li>I_C=1일 때만 WML 방향이 반전되어야 한다.</li><li>CI weight는 inverse volatility가 아니라 inverse variance여야 한다.</li><li>BS15 WML*와 CI 수익열 및 위험 target을 같은 열에 덮어쓰지 않는다.</li><li>각 WML별 I_C=1 발생월과 weight extreme을 독립 보고한다.</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">dk22_exante_state_separation</span> 사전 crash indicator I_C,t−1가 0인 달의 MOM 평균은 1.49%, 1인 달은 −3.63%이며 차이는 −5.12%(t=−2.83)다.<p class="meta">sample: 미국 MOM, 1928-09–2020-05 · target: 월 t의 MOM 수익률을 월 t-1 crash state로 구분 · horizon: 다음 1개월 · metric: 상태별 월평균수익률, 평균차와 t-statistic · unit: 월 %, t-statistic · comparator: I_C,t−1=0 대 I_C,t−1=1 · loss_or_test: 평균차 t-test</p><p><strong>근거:</strong> dk22_crash_states</p><p><strong>전이 경고:</strong> 미국 French MOM의 상태분리 결과이며 한국 WML에 같은 발생빈도나 평균차를 보장하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">dk22_interaction_predictability</span> I_C,t−1×MOM volatility 계수는 −0.144(t=−6.30, adjusted R²=0.034)이고 FF3 통제 후 −0.125(t=−5.23, adjusted R²=0.046)다.<p class="meta">sample: 미국 MOM, 1928-09–2020-05 · target: 월별 MOM 수익률 · horizon: 다음 1개월 · metric: interaction coefficient, t-statistic, adjusted R-squared · unit: 회귀계수, t-statistic, 비율 · comparator: crash indicator·volatility 단독 모형 및 FF3 통제 모형 · loss_or_test: 월별 predictive OLS</p><p><strong>근거:</strong> dk22_predictive_interaction</p><p><strong>전이 경고:</strong> 전체표본 회귀의 설명력이며 strict fixed-holdout OOS 분산예측 성과가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">dk22_risk_managed_performance</span> Table 5의 MOMraw/CVOL/DYN/CI Sharpe는 0.51/0.94/1.03/1.12이고 최저 월수익률은 −77.02/−28.26/−24.62/−25.39%다.<p class="meta">sample: 미국 MOM, 1928-09–2020-05 · target: MOMraw 및 세 risk-managed strategy의 월수익률 · horizon: 전체표본 월별 전략성과 · metric: 연율 Sharpe ratio와 최저 월수익률 · unit: Sharpe ratio, 월 % · comparator: MOMraw, CVOL, DYN, CI · loss_or_test: 기술통계; risk-managed 세 전략은 전체표본 연 19% 실현변동성으로 사후 정규화</p><p><strong>근거:</strong> dk22_performance</p><p><strong>전이 경고:</strong> CI의 Sharpe가 가장 높지만 최저 월손실은 DYN보다 작지 않다. 19% 사후 위험정규화 수익을 고정 12% 목표 WML*와 직접 비교하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">dk22_state_conditional_advantage</span> CI와 CVOL/DYN의 평균차 p-value는 전체표본에서 0.2150/0.5423이지만 I_C=1 상태에서는 0.0051/0.0390이다.<p class="meta">sample: 미국 MOM, 1928-09–2020-05 · target: CI와 경쟁 risk-managed strategy의 평균수익 차이 · horizon: 전체표본 및 월별 crash-state 조건부 · metric: 평균차 p-value · unit: p-value · comparator: CI 대 CVOL 및 CI 대 DYN · loss_or_test: 평균차 t-test</p><p><strong>근거:</strong> dk22_state_tests_costs</p><p><strong>전이 경고:</strong> 상대 우위는 전체 평균보다 드문 crash state에 집중되므로 한국 적용 전 I_C=1 월 수를 먼저 공개해야 한다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Isolating momentum crashes — Journal of Empirical Finance version of record</strong><p>최종 게재본 · 2021-12-28 · 22쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>출판사 VOR 레코드에 연결한다. PDF 파일은 호스팅하지 않으며 client_match_sha256가 null이므로 링크 대상 파일과 검증 아티팩트의 바이트 동일성은 주장하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>dk22_abstract</strong> · artifact dk22_vor_20211228 · PDF 1쪽 · Abstract and publication history · 검증됨</li><li><strong>dk22_worst_months</strong> · artifact dk22_vor_20211228 · PDF 4쪽 · Table 1 · 검증됨</li><li><strong>dk22_crash_states</strong> · artifact dk22_vor_20211228 · PDF 7쪽 · Table 2 · 검증됨</li><li><strong>dk22_predictive_interaction</strong> · artifact dk22_vor_20211228 · PDF 8쪽 · Tables 3 and 4; Eq. (4) · 검증됨</li><li><strong>dk22_ci_equation</strong> · artifact dk22_vor_20211228 · PDF 9쪽 · Eq. (6) · 검증됨</li><li><strong>dk22_performance</strong> · artifact dk22_vor_20211228 · PDF 12쪽 · Table 5 · 검증됨</li><li><strong>dk22_state_tests_costs</strong> · artifact dk22_vor_20211228 · PDF 14쪽 · Tables 6 and 7 · 검증됨</li><li><strong>dk22_international</strong> · artifact dk22_vor_20211228 · PDF 16쪽 · Tables 9 and 10 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Isolating momentum crashes — Journal of Empirical Finance version of record</strong><p>최종 게재본 · 2021-12-28 · 22쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>출판사 VOR 레코드에 연결한다. PDF 파일은 호스팅하지 않으며 client_match_sha256가 null이므로 링크 대상 파일과 검증 아티팩트의 바이트 동일성은 주장하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-dk22_abstract"><strong>dk22_abstract</strong> · artifact dk22_vor_20211228 · PDF 1쪽 · Abstract and publication history · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_worst_months"><strong>dk22_worst_months</strong> · artifact dk22_vor_20211228 · PDF 4쪽 · Table 1 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_crash_states"><strong>dk22_crash_states</strong> · artifact dk22_vor_20211228 · PDF 7쪽 · Table 2 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_predictive_interaction"><strong>dk22_predictive_interaction</strong> · artifact dk22_vor_20211228 · PDF 8쪽 · Tables 3 and 4; Eq. (4) · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_ci_equation"><strong>dk22_ci_equation</strong> · artifact dk22_vor_20211228 · PDF 9쪽 · Eq. (6) · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_performance"><strong>dk22_performance</strong> · artifact dk22_vor_20211228 · PDF 12쪽 · Table 5 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_state_tests_costs"><strong>dk22_state_tests_costs</strong> · artifact dk22_vor_20211228 · PDF 14쪽 · Tables 6 and 7 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_international"><strong>dk22_international</strong> · artifact dk22_vor_20211228 · PDF 16쪽 · Tables 9 and 10 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-dk22_beta_equation"><strong>dk22_beta_equation</strong> · artifact dk22_vor_20211228 · PDF 21쪽 · Appendix A.1, Equation 7 · 검증됨 · <a href="https://www.sciencedirect.com/science/article/pii/S0927539821000979" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>논문의 사전 crash indicator는 미국 MOM의 다음달 손실 상태를 구분한다.</strong><p>이유: Table 2가 I_C,t−1=0과 1의 월평균 및 평균차 t-test를 보고한다. · 교정: 표본 1928-09–2020-05와 1개월 horizon, 1.49% 대 −3.63%를 함께 쓴다. · 근거: dk22_crash_states</p></li><li><strong>동일한 19% 사후 위험정규화 조건에서 CI의 Table 5 Sharpe가 CVOL과 DYN보다 높다.</strong><p>이유: Table 5의 Sharpe가 CVOL 0.94, DYN 1.03, CI 1.12다. · 교정: CI가 DYN보다 최저 월손실도 작다고 확대하지 말고 −25.39% 대 −24.62%를 구분한다. · 근거: dk22_performance</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>Dierkes CI는 BS15보다 정확한 새 미래분산 예측식 또는 ML 모형이다.</strong><p>이유: Eq. (6)은 126일 realized variance의 inverse scaling에 crash indicator sign reversal을 결합한 전략이다. · 교정: CI를 별도 crash-state benchmark로 부르고, 상태변수를 미래분산 feature로 쓰는 일은 후속 한국 확장이라고 밝힌다. · 근거: dk22_ci_equation</p></li><li><strong>CI는 모든 지표와 모든 상태에서 CVOL과 DYN을 유의하게 지배한다.</strong><p>이유: 전체표본 평균차는 CVOL과 DYN 대비 유의하지 않고, CI 회전율은 네 전략 중 가장 높다. · 교정: 상대적 평균 우위가 I_C=1 상태에 집중되고 Table 7 회전율이 CI 84.44%임을 함께 쓴다. · 근거: dk22_state_tests_costs</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>국제 portfolio에는 South Korea가 포함되지 않는다.</li><li>완성된 French/AQR portfolio를 사용하므로 종목단위 신호와 모든 내부 가중 세칙을 이 논문만으로 재구성할 수 없다.</li><li>한국의 실제 short-sale, leverage와 시변 거래비용 아래 CI 실행가능성은 별도 검증 대상이다.</li></ul>

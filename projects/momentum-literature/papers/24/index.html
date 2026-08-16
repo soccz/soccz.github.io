@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/24/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>A Multifactor Perspective on Volatility-Managed Portfolios · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,186 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>예측손실 논문이 아니라 모든 forecast challenger가 동일 scaling·종목 수준 비용·거래상계 후에도 가치가 있는지 보는 최종 경제성 gate이며, 원형 구현에는 추가 holdings·가격자료가 필요하다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>forecast loss 개선이 비용 후 Sharpe·효용으로 이어지는지 검증할 때</li><li>요인별 gross timing과 한 투자자의 multifactor netting을 구별할 때</li><li>비용을 사후 차감하는 방식과 목적함수에 포함하는 방식을 비교할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>조건부 multifactor를 BS15 RW126의 직접 variance forecast로 부를 때</li><li>6개 WML 월수익만으로 stock-level netting을 재현했다고 말할 때</li><li>여섯 설계변형을 9개 독립 위험요인처럼 공동 최적화할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>개별 요인의 변동성 관리가 좋아 보여도 여러 요인을 실제로 함께 운용하면 추정오차와 거래비용, 서로 상쇄되는 종목 주문이 성과를 바꾼다. 이 논문은 예측신호가 아니라 ‘공동 투자자의 순경제가치’를 제대로 계산하는 방법을 보여 준다.</p></article>
+            <article><h3>중심 질문</h3><p>시장 변동성에 따라 여러 요인의 상대비중을 함께 바꾸고 종목 수준 주문상계와 비용을 최적화에 넣으면, 단순한 무조건부 다요인 포트폴리오보다 표본외 순성과가 좋아지는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 연구는 요인별 gross 성과를 따로 평가하거나 사후 비용을 차감해, 공동 운용에서 생기는 위험분산·거래상계·cost-aware allocation을 동시에 반영하지 못했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>개별 요인 관리는 in-sample gross에서 좋아 보여도 OOS와 비용을 넣으면 상당 부분 약해진다. 반면 공통 시장변동성에 조건부인 다요인 포트폴리오는 factor별 상대노출, stock-level 주문상계, 비용을 목적함수에 넣는 최적화를 함께 사용할 때 UMV보다 높은 순 Sharpe를 보인다. Table IV가 보여주듯 cross-factor netting을 제거하면 성과가 크게 낮아져, 신호 자체보다 실행구조가 핵심이다. 한국 6개 WML은 서로 대체 설계일 수 있으므로 곧바로 공동투자 포트폴리오로 합치지 말고, 우선 모든 forecast에 동일 OOS·cap·비용 gate를 적용하는 평가규약을 가져와야 한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_scaling">p24_scaling · PDF 6쪽 · Equation 1 individual-factor inverse-variance scaling</a><a class="evidence-chip" href="#locator-p24_main">p24_main · PDF 18쪽 · Table II</a><a class="evidence-chip" href="#locator-p24_state">p24_state · PDF 4쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>개별 volatility timing의 현실적 기준선을 다시 세운다.</h3>
+          <p>요인별 관리전략을 in-sample/OOS와 gross/net으로 분해해 추정오차와 거래비용이 어디서 성과를 지우는지 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_scaling">p24_scaling · PDF 6쪽 · Equation 1 individual-factor inverse-variance scaling</a><a class="evidence-chip" href="#locator-p24_individual">p24_individual · PDF 13쪽 · Table I</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>공통 상태에 조건부인 상대 요인배분을 만든다.</h3>
+          <p>각 요인 비중을 상수항과 역 시장변동성 항의 합으로 두어 같은 상태신호에 대한 요인별 민감도를 다르게 허용한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_conditional_holdings">p24_conditional_holdings · PDF 7쪽 · Equation 2</a><a class="evidence-chip" href="#locator-p24_conditional_weights">p24_conditional_weights · PDF 8쪽 · Equations 3-6</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>factor sleeve를 종목 주문으로 내려가 비용을 안에서 계산한다.</h3>
+          <p>이전 holdings의 수익률 drift를 반영한 실제 주문을 만들고, 요인 간 반대 주문을 먼저 상계한 뒤 stock-specific spread를 적용한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_trade_definition">p24_trade_definition · PDF 9쪽 · Equations 7-9: drift-adjusted stock trades and holdings</a><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>성과 driver를 하나씩 제거해 식별한다.</h3>
+          <p>UMV·고정비중·CMV, cost-aware 여부, full/within/no netting을 교차해 조건부 신호·최적화·거래분산 중 무엇이 순성과를 만드는지 분해한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_main">p24_main · PDF 18쪽 · Table II</a><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>상태의 경제적 해석을 별도 회귀로 점검한다.</h3>
+          <p>시장변동성이 높을 때 factor risk-return trade-off가 약해지는지 조건부 가격위험 회귀로 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_state">p24_state · PDF 4쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p24_risk_price">p24_risk_price · PDF 29쪽 · Table V</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>UMV와 CMV</h3>
+          <p><strong>쉽게 말하면</strong><br>UMV는 과거 전체에 맞춘 고정적 다요인 배분이고, CMV는 시장 변동성 상태에 따라 요인별 배분을 바꾼다.</p>
+          <p><strong>논문 안의 역할</strong><br>조건부 상대비중이 무조건부 평균–분산 포트폴리오에 증분가치를 주는지 비교한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>CMV는 미래분산을 더 정확히 예측하는 모형이 아니라 순효용을 최적화하는 포트폴리오다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_conditional_weights">p24_conditional_weights · PDF 8쪽 · Equations 3-6</a><a class="evidence-chip" href="#locator-p24_main">p24_main · PDF 18쪽 · Table II</a></div>
+        </article><article class="section-card concept-card">
+          <h3>trading diversification</h3>
+          <p><strong>쉽게 말하면</strong><br>여러 전략이 같은 종목을 반대로 거래하면 실제로는 서로 상쇄되어 거래량이 줄어드는 효과다.</p>
+          <p><strong>논문 안의 역할</strong><br>요인별 절대주문을 더하기 전에 stock별 순주문을 계산해 비용을 낮춘다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>각 요인을 별도 계좌에서 운용하거나 여섯 WML이 단지 대안 설계라면 자동으로 누릴 수 있는 이득이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a></div>
+        </article><article class="section-card concept-card">
+          <h3>drift-adjusted trade</h3>
+          <p><strong>쉽게 말하면</strong><br>지난달 목표비중은 종목수익 때문에 이번 리밸런싱 직전에 이미 달라져 있다.</p>
+          <p><strong>논문 안의 역할</strong><br>새 목표 holdings에서 수익률로 drift한 이전 holdings를 빼 실제 주문을 계산한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>두 달의 목표비중 차이만 turnover로 쓰면 원문 비용을 재현하지 못한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_trade_definition">p24_trade_definition · PDF 9쪽 · Equations 7-9: drift-adjusted stock trades and holdings</a></div>
+        </article><article class="section-card concept-card">
+          <h3>cost-aware optimization</h3>
+          <p><strong>쉽게 말하면</strong><br>좋은 gross 포트폴리오를 만든 뒤 비용을 빼는 것이 아니라, 처음부터 예상비용을 고려해 비중을 고른다.</p>
+          <p><strong>논문 안의 역할</strong><br>평균–분산 목적함수에 sample transaction cost를 직접 넣는다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>하나의 고정 bp를 사후 차감한 결과와 동일하지 않다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_conditional_weights">p24_conditional_weights · PDF 8쪽 · Equations 3-6</a><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 3 · 요인 k의 비중은 고정 부분과 역 시장변동성에 반응하는 부분의 합이다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>θ_{k,t} = a_k + b_k / σ_{MKT,t}</code></pre>
+                <dl class="symbol-grid"><dt><code>a_k</code></dt><dd>요인 k의 상태불변 기준비중</dd><dt><code>b_k</code></dt><dd>시장변동성 상태에 대한 요인별 민감도</dd><dt><code>σ_{MKT,t}</code></dt><dd>직전 달 일별 시장수익으로 측정한 변동성</dd></dl>
+                <p><strong>직관:</strong> 공통 신호를 쓰더라도 b가 다르면 요인의 상대비중이 상태에 따라 달라진다.</p>
+                <p><strong>구현할 때:</strong> 짧고 상관 높은 한국 6-WML에서는 자유도를 줄이고 1/N·고정비중·ridge를 먼저 둔다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_conditional_weights">p24_conditional_weights · PDF 8쪽 · Equations 3-6</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 10–11 · full netting은 요인 주문을 종목별로 먼저 합치고, no-netting은 요인별 절대주문을 따로 비용화한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>Cost_full = Σ_i c_{i,t}|Σ_k Δh_{i,k,t}|,  Cost_no-net = Σ_iΣ_k c_{i,t}|Δh_{i,k,t}|</code></pre>
+                <dl class="symbol-grid"><dt><code>Δh_{i,k,t}</code></dt><dd>요인 k가 종목 i에 내는 drift-adjusted 주문</dd><dt><code>c_{i,t}</code></dt><dd>종목별 거래비용 추정치</dd></dl>
+                <p><strong>직관:</strong> 절대값을 취하는 순서 하나가 실제 거래량과 순성과를 크게 바꾼다.</p>
+                <p><strong>구현할 때:</strong> 공동 펀드가 실제로 주문을 합치는 시나리오에서만 full-netting을 허용하고, 대안 백테스트끼리는 상계하지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 여러 미국 주식요인의 수익과 종목별 target/drifted holdings 및 spread 입력을 결합한다(근거: p24_individual, p24_cost_method).</li><li>한국 주평가는 현재 6개 WML 수익과 overlay weight-change cost proxy를 쓰며, stock-level 비용을 썼다고 표기하지 않는다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>월말까지의 market volatility·과거 moments·cost로 다음 달 요인비중과 순수익을 평가한다(근거: p24_conditional_weights).</li><li>한국 forecast horse race의 target은 다음 달 WML 분산으로 유지하고 CMV는 별도 경제성 extension으로 분리한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>초기 과거창 뒤 매월 expanding moments와 비용을 사용해 다음 달 포트폴리오를 만든다(근거: p24_main).</li><li>한국 joint extension은 train-only mean·covariance·cost와 nested validation으로 shrinkage를 고정한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>개별 gross→개별 net→공동 net의 순서와 UMV/CMV·netting counterfactual을 함께 본다(근거: p24_individual, p24_main, p24_netting).</li><li>주논문에서는 모든 variance forecast를 동일 cap·비용·공통월에 평가하고 forecast loss와 순경제성과를 따로 통과시킨다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_scaling">p24_scaling · PDF 6쪽 · Equation 1 individual-factor inverse-variance scaling</a><a class="evidence-chip" href="#locator-p24_conditional_weights">p24_conditional_weights · PDF 8쪽 · Equations 3-6</a><a class="evidence-chip" href="#locator-p24_trade_definition">p24_trade_definition · PDF 9쪽 · Equations 7-9: drift-adjusted stock trades and holdings</a><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table I</p><h3>개별 factor timing은 현실적 조건에서도 남는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>in-sample gross에서 시작해 OOS gross, no-netting net, trading-diversification net 패널로 이동하며 어느 단계에서 Sharpe가 사라지는지 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>gross in-sample 개선은 넓지만 OOS와 비용을 넣으면 여러 개별 관리요인의 성과가 약해지거나 음수가 된다.</dd>
+            <dt>검토자 해석</dt><dd>백테스트의 forecast 신호만 좋아서는 투자 가능성을 입증할 수 없다.</dd>
+            <dt>검토자 경계</dt><dd>full netting 뒤 일부 회복은 여러 요인을 실제 한 투자자가 함께 운용하는 조건에 의존한다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_individual">p24_individual · PDF 13쪽 · Table I</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table II</p><h3>공동 조건부 포트폴리오는 UMV를 이기는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>평균과 변동성뿐 아니라 순 Sharpe 차이, alpha와 비용을 한 행에서 함께 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>저자 OOS net 결과에서 CMV Sharpe는 1.062, UMV는 0.940이며 차이 검정과 alpha가 양의 방향이다.</dd>
+            <dt>검토자 해석</dt><dd>조건부 상대배분은 비용을 제대로 처리할 때 무조건부 다요인 포트폴리오에 증분가치를 줄 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>긴 미국 표본·9개 요인·stock-level 비용 구조에 조건부이며 한국 6-WML에 수치가 이전되지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_main">p24_main · PDF 18쪽 · Table II</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table IV</p><h3>CMV 성과를 무엇이 지탱하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>full cross-factor netting, factor 내부만 netting, netting 없음의 Sharpe·alpha·cost를 나란히 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>full netting Sharpe 1.062가 within-factor 0.783, no-netting 0.739로 낮아진다.</dd>
+            <dt>검토자 해석</dt><dd>주문상계가 부차적 세부가 아니라 결과의 핵심 driver다.</dd>
+            <dt>검토자 경계</dt><dd>서로 다른 연구설계인 WML 변형을 마치 동시에 거래할 전략처럼 상계하면 인위적인 이익이 된다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Figure 1·Table V</p><h3>왜 시장 변동성으로 요인비중을 바꾸는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>상태별 risk-return trade-off의 방향을 그림에서 보고, inverse volatility 회귀계수의 부호와 유의성을 표에서 확인한다.</dd>
+            <dt>저자 보고 결과</dt><dd>저자 표본에서는 시장변동성이 높을 때 여러 요인의 risk-return trade-off가 약해지는 방향이 관찰된다.</dd>
+            <dt>검토자 해석</dt><dd>공통 market state가 상대 factor timing의 경제적 후보채널이 된다.</dd>
+            <dt>검토자 경계</dt><dd>예측적 연관이며 factor correlation을 단순화한 회귀로 구조적 원인을 식별하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_state">p24_state · PDF 4쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p24_risk_price">p24_risk_price · PDF 29쪽 · Table V</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>시장변동성이 높을 때 factor price of risk가 약해져 일부 요인노출을 줄이고, 여러 sleeve의 반대 주문을 상계하면 그 조정의 순비용이 낮아진다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>조건부 risk-price 회귀의 방향과 full-netting 대 counterfactual 성과차가 각각 상태신호와 실행채널을 지지한다(근거: p24_risk_price, p24_netting).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>긴 표본의 추정기회, nonnegative 제약, 특정 spread 추정과 요인 구성 또는 공통 시장 beta가 성과 일부를 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>동일 train-only moments에서 CMV가 fixed/UMV를 이기지 못하거나 full-netting 이득이 실제 동시주문 원장에 나타나지 않으면 한국 joint-extension 채널은 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_state">p24_state · PDF 4쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p24_risk_price">p24_risk_price · PDF 29쪽 · Table V</a><a class="evidence-chip" href="#locator-p24_conditional_holdings">p24_conditional_holdings · PDF 7쪽 · Equation 2</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>개별·공동 portfolio, gross/net, 비용최적화, full/partial/no netting을 분해해 결과의 구성요소를 교차점검한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>개별 factor timing은 OOS와 비용에서 크게 약해지고, 공동성과도 netting을 제거하면 낮아진다(근거: p24_individual, p24_netting).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 거래세·대차비, 여섯 WML의 실제 공동수요, 미래분산 QLIKE·MSE와 짧은 한국표본의 18개 유사 자유도는 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>공통 상태신호의 경제적 설명은 강하지만 그 구조적 원인은 미해결이며, 온라인 부록·재현코드의 세부 강건성은 이 공개 레코드 범위 밖이다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_individual">p24_individual · PDF 13쪽 · Table I</a><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">개별 factor OOS net gate</th><td>모든 WML forecast의 동일 gross/net 평가</td><td>이 논문의 가장 직접적인 기여를 주분석 평가규약으로 사용한다.</td></tr><tr><th scope="row">stock-level full netting</th><td>holdings 확보 후의 별도 joint-investor extension</td><td>현재 overlay turnover와 원형 거래비용을 구분한다.</td></tr><tr><th scope="row">시장변동성 조건부 9-factor CMV</th><td>1/N·fixed·ridge를 앞세운 6-WML 공동배분</td><td>여섯 WML이 실제 동시 투자대상이라는 시나리오에서만 제한적으로 시험한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>모든 forecast model의 공통 OOS 월·target·cap·gross return을 동결한다.</li><li>overlay 절대비중 변화에 사전 bp grid를 적용해 net return을 별도 저장한다.</li><li>stock holdings가 확보되면 이전 holdings를 수익으로 drift한 뒤 새 주문을 계산한다.</li><li>실제 공동투자 시나리오에서만 full/within/no-netting 비용을 모두 산출한다.</li><li>1/N·fixed relative·UMV·ridge CMV를 동일 train-only 정보에서 비교한다.</li><li>forecast loss·순 Sharpe·최악월·turnover와 optimizer 실패를 분리 보고한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>모든 challenger가 동일 공통월·cap·비용가정에서 평가된다.</li><li>CMV extension은 1/N·fixed·UMV보다 untouched test 순성과를 개선하고 solver 안정성을 유지한다.</li><li>full-netting 이득은 실제 동시주문 원장에서 재현되며 대안 설계 간 인위 상계가 아니다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>gross만 좋고 net이 나쁘면 signal 문제가 아니라 turnover·cost allocation을 먼저 분해한다.</li><li>CMV만 불안정하면 mean·covariance 추정, ridge·제약과 boundary weights를 점검한다.</li><li>netting 이득이 과도하면 sleeve 자금배분과 종목 주문 부호·drift 계산을 재감사한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>forecast별 gross/net OOS 경제성과 표</li><li>origin별 weights·drifted holdings·trade·cost audit CSV</li><li>UMV/1N/fixed/CMV 중첩 비교표</li><li>full/within/no-netting waterfall과 solver log</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_scaling">p24_scaling · PDF 6쪽 · Equation 1 individual-factor inverse-variance scaling</a><a class="evidence-chip" href="#locator-p24_trade_definition">p24_trade_definition · PDF 9쪽 · Equations 7-9: drift-adjusted stock trades and holdings</a><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a><a class="evidence-chip" href="#locator-p24_conditional_holdings">p24_conditional_holdings · PDF 7쪽 · Equation 2</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>개별 factor의 in-sample gross 성공은 OOS net 성공이 아니다.</li><li>CMV는 미래분산 예측기가 아니라 공동투자자의 조건부 순효용 포트폴리오다.</li><li>stock-level 주문상계가 핵심 성과 driver다.</li><li>한국에서는 우선 동일 경제성 gate를 적용하고 공동배분은 별도 extension으로 둔다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>UMV·fixed-weight·CMV의 질문 차이를 설명할 수 있다.</li><li>drift-adjusted trade를 계산할 수 있다.</li><li>full netting과 no-netting의 절대값 순서를 설명할 수 있다.</li><li>개별 gross와 공동 net 결과를 섞지 않을 수 있다.</li><li>한국 6-WML에서 joint-investor 가정이 필요한 이유를 말할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_main">p24_main · PDF 18쪽 · Table II</a><a class="evidence-chip" href="#locator-p24_state">p24_state · PDF 4쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 목표비중의 월간 차이만으로 원문 거래비용을 계산할 수 없는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 이전 holdings가 종목수익으로 drift하므로 실제 리밸런싱 주문은 새 목표에서 drifted holdings를 빼야 하기 때문이다.</p>
+          <p><strong>왜:</strong> 거래비용의 실제 자료구조를 이해한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_trade_definition">p24_trade_definition · PDF 9쪽 · Equations 7-9: drift-adjusted stock trades and holdings</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. Table IV가 보여주는 핵심 반증은?</summary>
+          <div class="details-body"><p><strong>정답:</strong> cross-factor netting을 제거하면 CMV Sharpe와 alpha가 크게 낮아져 신호만으로 성과가 유지되지 않는다는 점이다.</p>
+          <p><strong>왜:</strong> 실행구조의 기여를 결과에서 분리한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. CMV의 높은 Sharpe가 더 정확한 분산 forecast를 증명하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 아니다. CMV는 조건부 mean-variance와 비용의 공동 최적화이고 forecast loss를 직접 평가하지 않는다.</p>
+          <p><strong>왜:</strong> 경제적 포트폴리오 문제와 예측 문제를 구분한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_main">p24_main · PDF 18쪽 · Table II</a><a class="evidence-chip" href="#locator-p24_conditional_weights">p24_conditional_weights · PDF 8쪽 · Equations 3-6</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 미국 9요인 표본에서 개별 volatility timing은 OOS·비용에 취약했지만, 조건부 다요인 포트폴리오는 stock-level 주문상계와 cost-aware optimization을 함께 사용할 때 UMV보다 높은 순성과를 보였다.</p><p><strong>이렇게 말하면 안 됨:</strong> CMV가 더 정확한 WML 분산예측기이며 여섯 한국 WML을 임의로 상계하면 같은 순성과가 보장된다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p24_main">p24_main · PDF 18쪽 · Table II</a><a class="evidence-chip" href="#locator-p24_netting">p24_netting · PDF 24쪽 · Table IV</a><a class="evidence-chip" href="#locator-p24_cost_method">p24_cost_method · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>1967-01–2020-12 미국 MKT, SMB, HML, RMW, CMA, UMD, ROE, IA, BAB 9요인과 CRSP·Compustat 종목 재구성, high·low·close 기반 spread [원문 보고]</dd><dt>target</dt><dd>직전 시장변동성에 조건부인 다음 달 multifactor 순수익과 평균–분산 효용 [원문 보고]</dd><dt>information set</dt><dd>직전 달 일별 요인수익·시장분산, 과거 평균·공분산, drift-adjusted 종목보유와 spread 비용 [원문 보고]</dd><dt>lookback</dt><dd>개별 risk signal은 직전 1개월; OOS 모수추정은 최초 120개월 뒤 expanding history [원문 보고]</dd><dt>horizon</dt><dd>월말 추정 뒤 다음 한 달 [원문 보고]</dd><dt>model family</dt><dd>개별 inverse-variance factors, unconditional multifactor, 공통 시장분산에 조건부인 nonnegative cost-aware multifactor</dd><dt>training window</dt><dd>1967–1976 120개월 초기창, 1977–2020 expanding OOS</dd><dt>retune</dt><dd>모수·portfolio weights·비용 인식 최적화를 매월 과거자료로 갱신한다.</dd><dt>benchmarks</dt><dd>unmanaged factors · individually volatility-managed factors · unconditional multifactor portfolio · 1/N 성격의 단순결합</dd><dt>loss / test</dt><dd>net mean–variance utility objective · variance forecast QLIKE·MSE는 보고하지 않는다. · OOS Sharpe difference · spanning alpha regression · 비용·netting 구성요소 분해</dd><dt>economic metrics</dt><dd>gross/net return · Sharpe · alpha · turnover · transaction cost · mean–variance utility</dd><dt>trading costs</dt><dd>Abdi–Ranaldo high·low·close spread를 drift-adjusted 종목 순주문에 적용하고 최적화 목적함수에 포함</dd><dt>turnover</dt><dd>factor sleeve 사이 동일종목 주문을 full netting한 뒤 계산; within-factor와 no-netting을 별도 비교</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +223,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>모든 후보의 target vol·cap·평가월 동일성 test</li><li>gross-to-net 비용 단위와 부호 test</li><li>drifted holdings 합계·self-financing test</li><li>full/within/no-netting 순주문 보존 test</li><li>OOS 결과로 비용률을 재조정하지 않는 config-lock test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p24_individual_limit</span> 개별 factor volatility management는 gross에서 일부 개선됐지만 OOS net-of-cost에서 9개 중 3개 요인만 유의한 개선을 보여 개별 timing의 일반성이 제한됐다.<p class="meta">sample: 미국 9요인 1977–2020 OOS · target: 개별 managed factor 순수익 · horizon: 월별 · metric: 비용 후 Sharpe 개선의 유의성 · unit: 요인 개수 · comparator: 각 unmanaged factor · loss_or_test: OOS Sharpe difference</p><p><strong>근거:</strong> p24_individual</p><p><strong>전이 경고:</strong> 미국 9요인의 종목 재구성·비용 결과이며 한국 6개 WML의 forecast loss 순위를 뜻하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p24_cmv_main</span> full netting과 비용 인식 최적화를 적용한 조건부 multifactor의 OOS net Sharpe는 1.062로 무조건부 0.940보다 높았고 p=0.006, 연 alpha 6.6%·t=3.637로 보고됐다.<p class="meta">sample: 미국 9요인 1977–2020 OOS · target: 조건부 multifactor net return · horizon: 다음 달 · metric: net Sharpe와 spanning alpha · unit: ratio, 연율 %, t-statistic · comparator: unconditional multifactor portfolio · loss_or_test: Sharpe difference and spanning regression</p><p><strong>근거:</strong> p24_main</p><p><strong>전이 경고:</strong> 공통 시장변동성 조건부 portfolio 결과이지 더 정확한 개별 미래분산 forecast의 증거가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p24_netting_dependency</span> 조건부 전략 Sharpe는 full netting 1.062, within-factor netting 0.783, no netting 0.739로, 거래상계 방식이 경제성과를 크게 바꿨다.<p class="meta">sample: 미국 9요인 OOS · target: 조건부 multifactor 비용 후 수익 · horizon: 월별 · metric: net Sharpe · unit: ratio · comparator: 세 거래상계 규칙 · loss_or_test: Table IV implementation decomposition</p><p><strong>근거:</strong> p24_cost_method · p24_netting</p><p><strong>전이 경고:</strong> 월별 factor return이나 overlay weight 변화만으로 이 stock-level netting을 역산할 수 없다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>A Multifactor Perspective on Volatility-Managed Portfolios — Journal of Finance version of record</strong><p>최종 게재본 · 2024-10-27 · 34쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 DOI·저널 조판·open-access 표시를 갖춘 34쪽 version of record 기준이다. 프로젝트의 무자산 정책에 따라 VOR도 복제하지 않고 링크만 제공하며 Internet Appendix·복제코드는 별도 근거가 아니다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p24_state</strong> · artifact p24_vor · PDF 4쪽 · Figure 1 · 검증됨</li><li><strong>p24_scaling</strong> · artifact p24_vor · PDF 6쪽 · Equation 1 individual-factor inverse-variance scaling · 검증됨</li><li><strong>p24_cost_method</strong> · artifact p24_vor · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost · 검증됨</li><li><strong>p24_individual</strong> · artifact p24_vor · PDF 13쪽 · Table I · 검증됨</li><li><strong>p24_main</strong> · artifact p24_vor · PDF 18쪽 · Table II · 검증됨</li><li><strong>p24_netting</strong> · artifact p24_vor · PDF 24쪽 · Table IV · 검증됨</li><li><strong>p24_risk_price</strong> · artifact p24_vor · PDF 29쪽 · Table V · 검증됨</li><li><strong>p24_conditional_holdings</strong> · artifact p24_vor · PDF 7쪽 · Equation 2 · 검증됨</li><li><strong>p24_conditional_weights</strong> · artifact p24_vor · PDF 8쪽 · Equations 3-6 · 검증됨</li><li><strong>p24_trade_definition</strong> · artifact p24_vor · PDF 9쪽 · Equations 7-9: drift-adjusted stock trades and holdings · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>A Multifactor Perspective on Volatility-Managed Portfolios — Journal of Finance version of record</strong><p>최종 게재본 · 2024-10-27 · 34쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 DOI·저널 조판·open-access 표시를 갖춘 34쪽 version of record 기준이다. 프로젝트의 무자산 정책에 따라 VOR도 복제하지 않고 링크만 제공하며 Internet Appendix·복제코드는 별도 근거가 아니다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p24_state"><strong>p24_state</strong> · artifact p24_vor · PDF 4쪽 · Figure 1 · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_scaling"><strong>p24_scaling</strong> · artifact p24_vor · PDF 6쪽 · Equation 1 individual-factor inverse-variance scaling · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_cost_method"><strong>p24_cost_method</strong> · artifact p24_vor · PDF 10쪽 · Equations 10-12: full netting, no-netting counterfactual, and spread cost · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_individual"><strong>p24_individual</strong> · artifact p24_vor · PDF 13쪽 · Table I · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_main"><strong>p24_main</strong> · artifact p24_vor · PDF 18쪽 · Table II · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_netting"><strong>p24_netting</strong> · artifact p24_vor · PDF 24쪽 · Table IV · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_risk_price"><strong>p24_risk_price</strong> · artifact p24_vor · PDF 29쪽 · Table V · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_conditional_holdings"><strong>p24_conditional_holdings</strong> · artifact p24_vor · PDF 7쪽 · Equation 2 · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_conditional_weights"><strong>p24_conditional_weights</strong> · artifact p24_vor · PDF 8쪽 · Equations 3-6 · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p24_trade_definition"><strong>p24_trade_definition</strong> · artifact p24_vor · PDF 9쪽 · Equations 7-9: drift-adjusted stock trades and holdings · 검증됨 · <a href="https://lbsresearch.london.edu/id/eprint/3716/1/The%20Journal%20of%20Finance%20-%202024%20-%20DeMIGUEL%20-%20A%20Multifactor%20Perspective%20on%20Volatility%E2%80%90Managed%20Portfolios.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>Journal of Finance VOR의 미국 9요인 결과에서 비용 인식 최적화와 종목 수준 netting이 조건부 multifactor의 순성과에 핵심이었다.</strong><p>이유: Tables II–IV가 조건부 신호와 비용구현을 단계별 분해한다. · 교정: 항상 VOR, 미국 9요인, 1977–2020 OOS, stock-level 조건을 붙인다. · 근거: p24_main · p24_netting</p></li><li><strong>한국 WML forecast는 같은 BS15 mapping과 비용 gate에서 경제성과를 별도 검증해야 한다.</strong><p>이유: 개별 gross 개선과 한 투자자의 net 성과가 달랐다. · 교정: 현재 비용 proxy의 범위를 명시하고 종목자료 없는 원형재현을 주장하지 않는다. · 근거: p24_individual · p24_cost_method</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>조건부 multifactor는 BS15 RW126을 직접 대체하는 분산예측모형이다.</strong><p>이유: 목표는 공통 시장상태를 이용한 비용 후 portfolio utility이며 forecast loss를 평가하지 않는다. · 교정: forecast selection 뒤의 economic gate로 분류한다. · 근거: p24_state · p24_scaling</p></li><li><strong>한국 월별 WML 수익만으로 원문의 stock-level netting을 재현했다.</strong><p>이유: drifted holdings·종목 순주문·spread가 필수다. · 교정: 추가자료 전에는 weight-change cost proxy로 제한한다. · 근거: p24_cost_method · p24_netting</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>별도 Internet Appendix와 Replication Code를 이용한 대체제약·비용결과의 계산 재현은 이 근거 범위 밖이다.</li><li>한국의 실제 spread·대차·세금·공매도 제약을 미국 Abdi–Ranaldo proxy로 대체할 수 없다.</li></ul>

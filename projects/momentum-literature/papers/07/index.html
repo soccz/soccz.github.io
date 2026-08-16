@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/07/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>From zero to hero: Realized partial (co)variances · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,181 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>downside·upside 위험을 zero threshold로 먼저 나누고, 엄격한 과거전용 검증에서만 두 threshold의 tail/middle 분해를 추가하는 방법론적 확장으로 쓴다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>total realized variation을 음·양·tail 구간으로 회계적으로 분해할 때</li><li>zero semivariance와 data-driven thresholds를 공정하게 비교할 때</li><li>다변량 공분산에서 극단 음수 움직임의 증분예측력을 시험할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>PV(3)를 threshold 세 개로 설명할 때</li><li>80% MCS 포함을 95% 단독승리로 표현할 때</li><li>일별 WML bucket을 5·15분 partial covariance 원형이라 부를 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>총변동성은 같은 크기의 상승·하락·극단 움직임을 한 바구니에 넣는다. 이 논문은 zero sign split이 얼마나 강한 기준선인지, 추가 꼬리 threshold가 언제 진짜 정보를 주는지를 묻는다.</p></article>
+            <article><h3>중심 질문</h3><p>실현 (공)분산을 부호와 데이터기반 구간으로 분해하면 다음날 위험예측이 좋아지며, 구간을 늘릴수록 계속 좋아지는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>음·양 semivariance의 zero threshold는 경제적으로 직관적이지만 고정 경계이고, 임의 threshold는 유연하지만 회계정합성과 과적합 통제가 필요했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 증거는 한 threshold에서는 zero가 매우 강하고, 두 threshold로 음의 꼬리·중앙·양의 꼬리를 나눈 구조가 추가 예측이득을 주지만 더 세분한 구조는 악화한다는 것이다. 다변량 고차원에서는 zero와 낮은 음의 threshold 조합이 자주 선택되고, jump 제거 후 단순 zero split이 더 자주 남아 추가 경계가 극단 음수 움직임을 격리했을 가능성을 시사한다. 연구자 해석은 &#x27;threshold가 많을수록 좋다&#x27;가 아니라 회계항등식과 past-only 선택을 지키라는 것이다. 한국 일별 WML 적용은 원형이 아닌 daily-sign/tail adaptation으로 명시한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>분해의 회계항등식을 만든다</h3>
+          <p>임의 return 구간의 partial variance·covariance와 mixed terms를 모두 합치면 원 총 (공)분산이 되도록 정의한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>zero를 강한 단일경계 기준선으로 둔다</h3>
+          <p>SPY와 개별주식에서 zero semivariance와 data-driven one-threshold 후보를 OOS loss로 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>두 경계의 꼬리분해와 과적합을 함께 본다</h3>
+          <p>세 구간 모델과 더 세분한 모델을 비교해 유연성의 이득과 잡음증가를 동시에 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>다변량 차원과 jump 채널로 확장한다</h3>
+          <p>포트폴리오 차원을 늘리며 선택빈도·loss를 보고, jump 제거 뒤 선택이 단순해지는지 검사한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>partial variance</h3>
+          <p><strong>쉽게 말하면</strong><br>수익이 미리 정한 구간에 들어온 때의 제곱 움직임만 따로 더한 위험성분이다.</p>
+          <p><strong>논문 안의 역할</strong><br>하락·상승·꼬리 움직임의 다음 위험 예측기여를 분리한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>구간 일부만 더하고 원 총위험과 같다고 주장하면 회계항등식이 깨진다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a></div>
+        </article><article class="section-card concept-card">
+          <h3>PV(3)</h3>
+          <p><strong>쉽게 말하면</strong><br>두 개의 threshold가 만드는 세 개 수익구간의 partial variance 모형이다.</p>
+          <p><strong>논문 안의 역할</strong><br>음의 꼬리·중앙·양의 꼬리를 HAR의 일별 입력에서 구분한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>PV(3)를 threshold 세 개라고 부르면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a></div>
+        </article><article class="section-card concept-card">
+          <h3>zero threshold</h3>
+          <p><strong>쉽게 말하면</strong><br>수익의 부호가 바뀌는 0을 기준으로 downside와 upside를 나누는 경계다.</p>
+          <p><strong>논문 안의 역할</strong><br>경제적 의미가 있고 표본에서 강한 single-threshold benchmark다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>data-driven 경계가 zero를 항상 이긴다고 가정하면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div>
+        </article><article class="section-card concept-card">
+          <h3>partial covariance mixed terms</h3>
+          <p><strong>쉽게 말하면</strong><br>두 자산이 서로 다른 수익구간에 있을 때 생기는 교차곱 성분이다.</p>
+          <p><strong>논문 안의 역할</strong><br>모든 partial components가 원 공분산행렬로 정확히 합쳐지게 한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>각 구간의 대각 variance만 합치면 다변량 원형이 복원되지 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>realized partial covariance (Equation 5) · 날짜 t의 각 일중 수익벡터를 구간 g와 g&#x27;에 남긴 뒤 두 벡터의 외적을 하루 동안 합산한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>PCOV_t^(g,g&#x27;) = sum_{k=1..m} f_g(r_{t,k}) × f_{g&#x27;}(r_{t,k})&#x27;</code></pre>
+                <dl class="symbol-grid"><dt><code>f_g(r_{t,k})</code></dt><dd>일중 수익벡터에서 구간 g에 속하는 원소만 남기는 partition function</dd><dt><code>m</code></dt><dd>날짜 t에 관측된 일중 수익구간 수</dd><dt><code>PCOV_t^(g,g&#x27;)</code></dt><dd>구간 g와 g&#x27; 사이의 일별 partial covariance matrix</dd></dl>
+                <p><strong>직관:</strong> 같은 구간의 위험뿐 아니라 서로 다른 부호·꼬리구간 사이의 mixed 공동움직임도 별도 행렬로 보존한다.</p>
+                <p><strong>구현할 때:</strong> 구간은 상호배타적으로 만들고 각 outer product의 차원·전치·대칭 합산을 단위시험한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>PV-HAR · 다음날 총위험을 오늘의 구간별 위험과 과거 주·월 총위험으로 예측한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RV_{t+1} = alpha + sum_g beta_g PV_{g,t} + beta_w RV_week,t + beta_m RV_month,t + error</code></pre>
+                <dl class="symbol-grid"><dt><code>beta_g</code></dt><dd>각 부호·꼬리구간의 단기 예측기여</dd><dt><code>RV_week,t</code></dt><dd>최근 주간 관측을 평균해 만든 분해 전 총위험 성분</dd><dt><code>RV_month,t</code></dt><dd>최근 월간 관측을 평균해 만든 분해 전 총위험 성분</dd></dl>
+                <p><strong>직관:</strong> 같은 총위험이라도 음의 꼬리에서 왔는지 평온한 중앙에서 왔는지가 내일 위험에 다르게 남을 수 있다.</p>
+                <p><strong>구현할 때:</strong> threshold는 outer test를 보지 않는 blocked validation에서만 정하며 weekly·monthly component 정의를 모형 간 고정한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>미국 ETF·개별주식의 일중수익과 대규모 종목 풀의 동기화 공분산을 사용한다.</li><li>threshold는 변동성 표준화 수익의 분위수 후보에서 선택한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>오늘까지의 partial components로 다음 거래일 총분산·공분산을 예측한다.</li><li>일별 component만 분해하고 주·월 component는 총위험으로 유지한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>단변량은 rolling 창 안에서 threshold를 반복 선택한다.</li><li>다변량은 초기구간에서 threshold를 고정하고 계수만 rolling 갱신한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE·QLIKE와 낮은 confidence의 MCS를 함께 본다.</li><li>jump 제거와 차원별 선택빈도로 메커니즘·과적합을 반증한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Equations 1–8</p><h3>partial-variance와 mixed-covariance 분해가 원래의 총 위험을 정확히 보존하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>각 구간의 own component뿐 아니라 서로 다른 구간 사이 mixed covariance가 모두 포함되는지 확인한다. 행렬 단위에서는 대칭성과 합산항등식이 핵심이다.</dd>
+            <dt>저자 보고 결과</dt><dd>partial components를 모두 더하면 conventional variance·covariance가 복원된다.</dd>
+            <dt>검토자 해석</dt><dd>한국 adaptation도 bucket 합과 total의 exact accounting test가 먼저다.</dd>
+            <dt>검토자 경계</dt><dd>일별 WML bucket에는 intraday 동기 공분산 정보가 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 1–2</p><h3>zero와 유연한 threshold 중 무엇이 강한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>MSE·QLIKE는 낮을수록, MCS 포함은 높을수록 좋다. PV(2/3/4)의 괄호 숫자는 구간 수이며 경계 수가 아니다.</dd>
+            <dt>저자 보고 결과</dt><dd>single threshold에서는 zero가 강하고 PV(3)가 추가 개선하지만 PV(4)는 악화한다.</dd>
+            <dt>검토자 해석</dt><dd>단순 zero split 뒤에 제한된 tail split만 추가해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>선택 threshold의 수치가 다른 시장의 universal cutoff는 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 3–4</p><h3>차원이 커지면 어떤 partial covariance가 선택되는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>행은 포트폴리오 차원, 열은 선택모형 빈도·loss·MCS fraction이다. 무작위 포트폴리오 반복은 독립 시장 복제가 아니다.</dd>
+            <dt>저자 보고 결과</dt><dd>차원이 커질수록 zero와 낮은 음의 threshold를 결합한 구조가 자주 선택되고 total covariance 기준선이 약해진다.</dd>
+            <dt>검토자 해석</dt><dd>극단 음수 공동움직임이 고차원 예측에 증분을 줄 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>threshold는 초기표본에서 한 번 고정돼 단변량과 adaptiveness가 다르다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 5–6</p><h3>추가 음의 threshold는 무엇을 격리하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>jump-removed continuous measures에서 선택빈도와 loss가 어떻게 바뀌는지 원 결과와 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>jump를 제거하면 단순 zero split 선택이 늘어난다.</dd>
+            <dt>검토자 해석</dt><dd>추가 낮은 경계가 극단 음의 jump 정보를 포착했을 가능성이 있다.</dd>
+            <dt>검토자 경계</dt><dd>선택변화는 메커니즘과 부합하지만 인과식별은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>음의 극단 움직임은 중앙·양의 움직임과 다른 지속성과 공동위험을 남기며 제한된 추가 threshold가 이를 격리한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>PV(3)의 단변량 이득, 고차원의 low-negative threshold 선택, jump 제거 후 zero split 회귀가 같은 해석에 부합한다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>CV 방식, sampling frequency, threshold grid와 많은 후보 탐색이 선택패턴을 만들었을 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>strict past-only 한국 WML에서 tail split이 zero split의 loss와 비용 후 성과를 못 이기면 추가경계 가설을 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>단변량·다변량, 차원, 두 loss, jump 제거를 통해 zero와 추가 threshold의 역할을 반복한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>경계를 더 늘린 모델은 악화하며 one-threshold data-driven 경계도 zero를 일관되게 이기지 못한다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 일별 WML tail bucket의 월별 예측과 동일 BS15 비용 후 경제성과는 직접 시험하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>단변량은 threshold를 계속 retune하지만 다변량은 초기표본에 고정해 적응성 조건이 다르다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">intraday zero semivariance</th><td>일별 WML 음·양 제곱합</td><td>현재 자료로 가능한 저빈도 sign adaptation임을 명시한다.</td></tr><tr><th scope="row">PV(3) tail/middle split</th><td>past-only WML 두 threshold</td><td>zero 기준선 통과 뒤 제한된 꼬리정보를 시험한다.</td></tr><tr><th scope="row">partial covariance</th><td>추후 leg·구성 공분산 branch</td><td>동기화 일중자료 없이는 원형 명칭을 사용하지 않는다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>total WML 제곱합과 음·양 bucket 합의 항등식을 검사한다.</li><li>zero-split HAR를 total HAR 뒤 첫 challenger로 만든다.</li><li>blocked inner validation에서 두 threshold 후보만 선택한다.</li><li>PV(4)는 사전 고정한 과적합 반증으로만 실행한다.</li><li>모든 모델을 같은 next-month target·origin·BS15 mapping에 적용한다.</li><li>MSE·QLIKE·threshold path·비용 후 경제성과를 공동 보고한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>모든 관측이 정확히 한 bucket에 속하고 합이 total과 일치한다.</li><li>threshold·표준화가 formation cutoff 이후 자료를 사용하지 않는다.</li><li>tail model이 zero 기준선의 OOS loss와 비용 후 경제성과를 함께 개선한다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>PV(4)만 좋으면 탐색·과적합 신호로 기각한다.</li><li>threshold가 급변하면 작은 표본 불안정성으로 분류한다.</li><li>loss만 좋고 turnover가 급증하면 경제적 전이 실패로 분류한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>bucket 회계항등식·threshold 감사 CSV</li><li>total·zero·PV(3)·PV(4) loss 비교표</li><li>동일 BS15 mapping의 꼬리·비용 후 성과표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>zero는 폐기할 경계가 아니라 강한 기준선이다.</li><li>PV(3)는 두 threshold와 세 구간이다.</li><li>더 많은 구간은 과적합으로 악화할 수 있다.</li><li>다변량에서는 mixed terms가 총공분산을 보존한다.</li><li>한국 일별 적용은 원형이 아니라 sign/tail adaptation이다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>G와 threshold 수를 구분한다.</li><li>partial 합산항등식을 설명한다.</li><li>zero 기준선의 역할을 안다.</li><li>jump robustness의 해석을 제한한다.</li><li>daily adaptation과 intraday 원형을 구분한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. PV(3)에 threshold가 몇 개인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 두 개이며 그 두 경계가 세 개 수익구간을 만든다.</p>
+          <p><strong>왜:</strong> G는 구간 수이고 threshold 수는 G보다 하나 작다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 PV(4)의 부진이 중요한가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 유연성을 계속 늘리면 신호보다 estimation noise가 커질 수 있다는 직접 반증이기 때문이다.</p>
+          <p><strong>왜:</strong> 같은 표에서 PV(3)의 이득과 PV(4)의 악화가 함께 나타난다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. Figure 2의 평활 threshold를 실시간 신호로 쓰면 안 되는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 표시용 중심 이동평균이 미래 쪽 관측을 포함하기 때문이다.</p>
+          <p><strong>왜:</strong> 예측에 쓰인 원 threshold path와 사후 시각화는 다른 객체다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 확인된 VOR에서 zero는 강한 단일 threshold였고 두 threshold의 tail/middle 분해가 추가 이득을 줬지만 더 세분한 구조는 악화했으며, 고차원 공분산에서는 zero와 낮은 음의 경계 조합이 자주 선택됐다.</p><p><strong>이렇게 말하면 안 됨:</strong> data-driven threshold가 항상 zero를 이긴다거나 PV(3)에 경계가 세 개이며 일별 WML bucket이 일중 partial-covariance 원형이라고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p07_definition">p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</a><a class="evidence-chip" href="#locator-p07_jump">p07_jump · PDF 11쪽 · Tables 5 and 6</a><a class="evidence-chip" href="#locator-p07_multivariate_loss">p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</a><a class="evidence-chip" href="#locator-p07_multivariate_select">p07_multivariate_select · PDF 9쪽 · Table 3</a><a class="evidence-chip" href="#locator-p07_thresholds">p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</a><a class="evidence-chip" href="#locator-p07_univariate">p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>SPY와 DJIA 28종목의 5분 수익 1997-04-21–2013-12-31, 그리고 749종목에서 뽑은 N=1·2·5·10·20·50 random portfolios의 15분 수익 [원문 보고]</dd><dt>target</dt><dd>다음날 realized variance 또는 realized covariance matrix [원문 보고]</dd><dt>information set</dt><dd>전일 partial variance/covariance components와 total 5일·22일 HAR components [원문 보고]</dd><dt>lookback</dt><dd>1,000거래일 rolling coefficients; univariate threshold는 각 창에서 5-fold CV, multivariate threshold는 최초 2,000일에서 고정 [원문 보고]</dd><dt>horizon</dt><dd>다음 1거래일 [원문 보고]</dd><dt>model family</dt><dd>RV-HAR, semivariance HAR, data-driven partial-variance HAR and multivariate partial-covariance HAR</dd><dt>training window</dt><dd>univariate는 1,000일 rolling, multivariate는 first 2,000-day threshold selection 뒤 1,000일 rolling coefficient estimation이다.</dd><dt>retune</dt><dd>univariate threshold는 rolling window마다 선택하고 multivariate threshold는 초기구간 뒤 고정한다.</dd><dt>benchmarks</dt><dd>total RV/RCOV HAR · zero-threshold SV/SCOV HAR · PV(3) and PV(4)</dd><dt>loss / test</dt><dd>MSE · QLIKE · one-sided Diebold–Mariano tests · 80% Model Confidence Set · jump-removed continuous-measure robustness</dd><dt>economic metrics</dt><dd>포트폴리오 경제성과는 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래비용은 보고하지 않는다.</dd><dt>turnover</dt><dd>회전율은 보고하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +218,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>total squares와 bucket sums accounting identity test</li><li>각 관측이 정확히 한 region에 들어가는 partition test</li><li>threshold standardization의 formation-cutoff prefix test</li><li>모델별 target row-hash 동일성 test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p07_spy_pv3</span> SPY에서 two-threshold·three-region PV(3)의 MSE 2.3923과 QLIKE 0.1347은 total RV와 zero semivariance benchmark보다 낮았다.<p class="meta">sample: SPY 5분수익, 1997-04-21–2013-12-31 · target: 다음날 realized variance · horizon: 1일 · metric: MSE and QLIKE · unit: loss level · comparator: RV-HAR and zero-threshold SV-HAR · loss_or_test: rolling OOS loss and one-sided DM</p><p><strong>근거:</strong> p07_univariate · p07_definition</p><p><strong>전이 경고:</strong> PV(3)는 threshold 두 개·region 세 개이며 한국의 일별 WML adaptation은 intraday 원형과 다르다.</p></li><li><span class="badge">author_result</span> <span class="badge">p07_threshold_pattern</span> univariate data-driven 선택은 거의 항상 PV(3)이었고 lower threshold quantile은 대략 0.09–0.14, upper threshold는 0.70–0.75에 모였으며 PV(4)는 성능이 크게 악화됐다.<p class="meta">sample: SPY와 DJIA 28종목 · target: 다음날 realized variance · horizon: 1일 · metric: 선택 모형과 threshold quantiles · unit: quantile and model count · comparator: PV(2), PV(3), PV(4) · loss_or_test: 1,000-day rolling five-fold CV and OOS loss</p><p><strong>근거:</strong> p07_thresholds · p07_univariate</p><p><strong>전이 경고:</strong> 5-fold가 엄격한 forward fold라는 사양은 PDF에서 닫히지 않으며 centered Figure 2는 사후 시각화다.</p></li><li><span class="badge">author_result</span> <span class="badge">p07_high_dimension</span> N=20·50 random portfolios에서 total RCOV의 80% MCS fraction은 각각 0, PCOV는 각각 1.00이었고 zero+low threshold인 SCOV+는 N=20에서 95/100, N=50에서 100/100 portfolios에 선택됐다.<p class="meta">sample: 749종목에서 뽑은 N=20·50 random portfolios 각 100개 · target: 다음날 realized covariance · horizon: 1일 · metric: 80% MCS fraction and selection frequency · unit: fraction and portfolio count · comparator: RCOV, SCOV and alternative PCOV · loss_or_test: MSE/QLIKE 80% Model Confidence Set</p><p><strong>근거:</strong> p07_multivariate_select · p07_multivariate_loss · p07_jump</p><p><strong>전이 경고:</strong> 80% MCS는 95% unique-winner 검정이 아니며 random portfolios는 한국 WML legs와 다르다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>From zero to hero: Realized partial (co)variances — Journal of Econometrics version of record</strong><p>최종 게재본 · 2021-11-09 · 13쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 2021-11-09 온라인 공개된 JOE VOR의 물리 PDF 페이지다. 본문이 인용하는 별도 Supplemental Appendix S2–S6는 이 artifact와 locator 범위에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p07_definition</strong> · artifact p07_vor · PDF 3쪽 · Equations 1–8, partial covariance and variance identities · 검증됨</li><li><strong>p07_univariate</strong> · artifact p07_vor · PDF 6쪽 · Table 1, univariate OOS results · 검증됨</li><li><strong>p07_thresholds</strong> · artifact p07_vor · PDF 7쪽 · Table 2 and Figure 2 · 검증됨</li><li><strong>p07_multivariate_select</strong> · artifact p07_vor · PDF 9쪽 · Table 3 · 검증됨</li><li><strong>p07_multivariate_loss</strong> · artifact p07_vor · PDF 10쪽 · Figure 3 and Table 4 · 검증됨</li><li><strong>p07_jump</strong> · artifact p07_vor · PDF 11쪽 · Tables 5 and 6 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>From zero to hero: Realized partial (co)variances — Journal of Econometrics version of record</strong><p>최종 게재본 · 2021-11-09 · 13쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 2021-11-09 온라인 공개된 JOE VOR의 물리 PDF 페이지다. 본문이 인용하는 별도 Supplemental Appendix S2–S6는 이 artifact와 locator 범위에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p07_definition"><strong>p07_definition</strong> · artifact p07_vor · PDF 3쪽 · Equations 1–8, partial covariance and variance identities · 검증됨 · <a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p07_univariate"><strong>p07_univariate</strong> · artifact p07_vor · PDF 6쪽 · Table 1, univariate OOS results · 검증됨 · <a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p07_thresholds"><strong>p07_thresholds</strong> · artifact p07_vor · PDF 7쪽 · Table 2 and Figure 2 · 검증됨 · <a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p07_multivariate_select"><strong>p07_multivariate_select</strong> · artifact p07_vor · PDF 9쪽 · Table 3 · 검증됨 · <a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p07_multivariate_loss"><strong>p07_multivariate_loss</strong> · artifact p07_vor · PDF 10쪽 · Figure 3 and Table 4 · 검증됨 · <a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p07_jump"><strong>p07_jump</strong> · artifact p07_vor · PDF 11쪽 · Tables 5 and 6 · 검증됨 · <a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>VOR에서 zero threshold는 단일 threshold benchmark로 강했고 two thresholds가 tails와 middle을 나눌 때 추가 gain이 나타났다.</strong><p>이유: Tables 1–2가 PV(3)의 선택과 loss를 보여 준다. · 교정: PV(3)의 threshold 수와 region 수를 구분한다. · 근거: p07_univariate · p07_thresholds</p></li><li><strong>고차원 realized covariance에서는 zero+low negative threshold가 자주 선택됐다.</strong><p>이유: Tables 3–4에서 N=20·50의 SCOV+ 선택과 PCOV MCS 결과가 강하다. · 교정: 80% MCS와 미국 random-portfolio 조건을 붙인다. · 근거: p07_multivariate_select · p07_multivariate_loss</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>PV(3)는 threshold가 세 개이고 zero threshold는 항상 열위다.</strong><p>이유: PV(3)는 두 thresholds·세 regions이며 single-threshold zero는 robust하다. · 교정: thresholds=G−1 정의를 따른다. · 근거: p07_definition · p07_thresholds</p></li><li><strong>일별 WML bucket으로 intraday partial covariance 원형을 구현했다.</strong><p>이유: 원형은 동기화 5·15분 returns와 covariance cross terms를 쓴다. · 교정: daily-return adaptation이라고 표시한다. · 근거: p07_definition · p07_multivariate_loss</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>5-fold CV의 시간순 fold와 embargo 세칙은 VOR 본문에서 완전히 특정되지 않는다.</li><li>Supplemental Appendix S2–S6의 QLIKE selection·CSPA·industry 결과와 code는 이 artifact 범위 밖이다.</li></ul>

@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/01/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>On the Performance of Volatility-Managed Portfolios · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,181 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>변동성관리의 사후 alpha와 실시간 투자성과를 분리하고, 한국 WML*의 성공을 동일표본 Sharpe·CER·안정성으로 판정할 때 쓰는 핵심 경제성과 감사 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>예측손실 개선이 실제 Sharpe·CER 개선으로 이어졌는지 별도 경제 게이트를 설계할 때</li><li>변동성관리의 보편적 우월성을 주장하기 전에 넓은 반례 표본을 대조할 때</li><li>모멘텀이 다른 전략보다 강한 긍정 예외인지 실시간 규칙으로 검토할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>모든 모멘텀 변동성관리 전략의 성공을 보장하는 증거로 사용할 때</li><li>양의 in-sample spanning alpha를 그대로 실시간 Sharpe 또는 CER 개선으로 바꿔 말할 때</li><li>직전 한 달 inverse-variance 규칙을 BS15 RW126 목표변동성 규칙과 같은 전략으로 부를 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>변동성관리 논문을 읽을 때 가장 위험한 오독은 낮은 변동성, 양의 회귀 alpha, 실시간 투자자의 효용을 모두 같은 성공으로 취급하는 것이다. 이 논문은 그 세 층을 일부러 분리한다.</p></article>
+            <article><h3>중심 질문</h3><p>변동성관리의 사후 통계적 이점이 다양한 주식전략과 실제 과거정보 기반 포트폴리오 선택에서도 반복되는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>대표 팩터 몇 개의 유리한 결과만으로 일반화를 하기보다, 넓은 전략군에서 직접 Sharpe·spanning·실시간 조합을 차례로 비교하는 반증 설계가 필요했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 증거는 변동성관리의 직접 Sharpe 우위가 광범위한 전략에서 보편적이지 않고, 사후 spanning alpha도 실시간 CER 개선으로 잘 이어지지 않는다는 것이다. 다만 모멘텀 계열은 상대적으로 강한 예외다. 연구자 해석은 &#x27;모멘텀이니 성공한다&#x27;가 아니라, 한국 여섯 WML에서 원 전략·BS15·직전월 역분산 전략을 같은 월과 비용 조건으로 비교해야 한다는 것이다. 한국 적응은 논문의 전체표본 스케일 상수를 그대로 쓰지 않고 과거전용 목표변동성 규칙으로 다시 설계한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>직접 성과를 넓은 전략군에서 센다</h3>
+          <p>원 전략과 관리전략의 무조건부 위험을 맞춘 뒤 Sharpe 차이를 보아, 변동성관리가 단독 투자로 얼마나 자주 이기는지 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>spanning의 다른 질문을 분리한다</h3>
+          <p>관리수익을 원수익에 회귀해 양의 alpha가 사후 평균–분산 경계를 넓히는지 보되, 이를 단독 Sharpe와 동일시하지 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>사후 경계를 실시간 투자문제로 바꾼다</h3>
+          <p>과거 평균과 공분산만으로 원·관리 전략 비중을 매월 다시 계산해, 투자자가 실제로 경계 확장을 포착할 수 있었는지 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>실시간 실패의 원인을 안정성에서 찾는다</h3>
+          <p>spanning 관계의 구조변화를 검정해, 추정오차뿐 아니라 관계 자체의 이동이 사후·실시간 간극을 만들었는지 살핀다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>직접 Sharpe 비교</h3>
+          <p><strong>쉽게 말하면</strong><br>관리전략 하나를 원 전략 하나와 바로 비교하는 질문이다.</p>
+          <p><strong>논문 안의 역할</strong><br>관리전략 자체가 더 나은 위험조정수익을 내는지 측정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>원·관리 둘을 섞은 최적 포트폴리오 성과와 같은 값이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a></div>
+        </article><article class="section-card concept-card">
+          <h3>spanning alpha</h3>
+          <p><strong>쉽게 말하면</strong><br>원 전략만으로 설명되지 않는 관리전략의 평균수익 성분이다.</p>
+          <p><strong>논문 안의 역할</strong><br>두 자산을 사후에 결합했을 때 평균–분산 경계가 넓어질 가능성을 나타낸다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>양의 alpha가 실시간 투자자가 높은 Sharpe나 CER를 얻었다는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a></div>
+        </article><article class="section-card concept-card">
+          <h3>CER</h3>
+          <p><strong>쉽게 말하면</strong><br>위험을 감안했을 때 투자자가 확실한 수익으로 바꿔도 괜찮다고 느끼는 성과척도다.</p>
+          <p><strong>논문 안의 역할</strong><br>평균과 분산을 위험회피도 아래 하나의 경제가치로 합친다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>거래비용이나 실제 제약이 빠지면 현실 순효용과 같지 않다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a></div>
+        </article><article class="section-card concept-card">
+          <h3>구조변화</h3>
+          <p><strong>쉽게 말하면</strong><br>원 전략과 관리전략의 관계가 시간 내내 같은 계수로 유지되지 않는 현상이다.</p>
+          <p><strong>논문 안의 역할</strong><br>과거로 추정한 최적비중이 미래에 실패할 수 있는 이유를 진단한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>변화가 있다는 검정만으로 변화의 경제적 원인이 식별되지는 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>관리수익 규칙 · 직전월 실현분산이 높을수록 다음 달 원 전략 수익에 더 작은 노출을 곱한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>f_sigma,t = (c_star / sigma_hat_{t-1}^2) × f_t</code></pre>
+                <dl class="symbol-grid"><dt><code>f_t</code></dt><dd>월 t의 원 전략 수익</dd><dt><code>sigma_hat_{t-1}^2</code></dt><dd>직전월 일별수익으로 계산한 분산</dd><dt><code>c_star</code></dt><dd>비교를 위한 스케일 상수</dd></dl>
+                <p><strong>직관:</strong> 위험이 지속된다면 위험이 큰 달 직후의 베팅을 줄여 손실 집중을 완화할 수 있다.</p>
+                <p><strong>구현할 때:</strong> 분모는 표준편차가 아니라 분산이다. 전체표본에서 고른 c_star는 사후 비교용이므로 실시간 한국 본선에는 넣지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_method">p01_method · PDF 4쪽 · Equations 3 and 4</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>실시간 경제성과 판정 · 과거자료로 만든 원·관리 조합이 원 전략보다 Sharpe와 확실성등가수익을 모두 높이는지를 별도 조건으로 판정한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>real_time_success = (Sharpe_RT &gt; Sharpe_original) AND (CER_RT &gt; CER_original)</code></pre>
+                <dl class="symbol-grid"><dt><code>Sharpe_RT</code></dt><dd>실시간 원·관리 조합의 표본외 Sharpe</dd><dt><code>CER_RT</code></dt><dd>실시간 원·관리 조합의 확실성등가수익</dd><dt><code>original</code></dt><dd>동일 표본의 원 전략 비교값</dd></dl>
+                <p><strong>직관:</strong> 사후 alpha가 좋아 보여도 당시 과거자료로 정한 비중이 Sharpe와 투자자 효용을 실제로 함께 높이지 못하면 운용 성공으로 인정하지 않는다.</p>
+                <p><strong>구현할 때:</strong> Table 5의 대표 팩터와 Table 6의 전체 전략 빈도를 분리해 읽고, 한국에서도 두 지표를 같은 공통월·비용 조건에서 계산한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>대표 팩터와 다수의 미국 이상현상 장단기 전략을 함께 사용한다.</li><li>관리신호는 각 전략의 직전월 일별수익에서 계산한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>직전월 위험으로 다음 한 달 관리수익을 만든다.</li><li>실시간 조합은 그 시점까지 관측된 원·관리 수익 이력만 사용한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>직접비교와 spanning은 사후 전체표본 분석이다.</li><li>실시간 조합은 초기 학습 뒤 과거표본을 갱신하고 대체 창 규칙도 점검한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>단독 Sharpe, spanning alpha, 실시간 Sharpe·CER를 분리한다.</li><li>관계의 시간안정성과 경제적 제약을 마지막 반증 게이트로 둔다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_figure1">p01_figure1 · PDF 8쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p01_method">p01_method · PDF 4쪽 · Equations 3 and 4</a><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 1–2</p><h3>변동성관리는 직접 Sharpe를 보편적으로 높이는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>Table 1에서는 동일 위험으로 맞춘 대표 팩터의 Sharpe를, Table 2에서는 전체 전략에서 차이의 양·음과 유의 개수를 읽는다. 개수는 독립 시행 횟수가 아니다.</dd>
+            <dt>저자 보고 결과</dt><dd>모멘텀은 강한 긍정 예외지만 넓은 표본의 승패는 거의 갈린다.</dd>
+            <dt>검토자 해석</dt><dd>&#x27;변동성관리 일반&#x27;과 &#x27;모멘텀 예외&#x27;를 함께 말해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>전체표본 스케일과 비용 미차감을 실시간 순성과로 읽지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Figure 1·Table 4</p><h3>직접 승률과 spanning 결과가 왜 다른가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>Figure 1의 의존성 보존 귀무분포와 관측 개수를 비교하고, Table 4의 alpha 부호·유의 빈도는 별도 회귀 질문으로 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>직접 Sharpe 우위는 일반적이지 않아도 양의 spanning alpha는 더 흔하다.</dd>
+            <dt>검토자 해석</dt><dd>상관이 낮아 생기는 사후 조합가치를 단독 운용 우위로 바꾸어 말하면 안 된다.</dd>
+            <dt>검토자 경계</dt><dd>alpha는 전체표본 평균·공분산을 아는 가상의 사후 투자자를 전제로 한다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_figure1">p01_figure1 · PDF 8쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 5–6</p><h3>사후 조합가치를 과거정보로 실현할 수 있는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>Table 5는 대표 팩터의 원·실시간·사후 조합을, Table 6은 전체 전략에서 실시간 Sharpe와 CER 차이의 방향을 센다. CER 조건과 Sharpe 조건을 섞지 않는다.</dd>
+            <dt>저자 보고 결과</dt><dd>모멘텀은 양호하지만 전체적으로 실시간 조합은 사후 경계를 따라가지 못한다.</dd>
+            <dt>검토자 해석</dt><dd>한국에서는 예측손실이나 alpha 뒤에 반드시 과거전용 경제성과 표가 필요하다.</dd>
+            <dt>검토자 경계</dt><dd>이 표는 원·관리 전략의 추정 조합이며 관리전략 단독 성과와 다르다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 9</p><h3>실시간 조합의 부진이 단순히 학습표본이 짧아서 나타난 현상인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>전략별 회귀관계에서 검출된 break 횟수와 안정 회귀의 빈도를 본다. 횟수는 원인이나 경제적 크기가 아니다.</dd>
+            <dt>저자 보고 결과</dt><dd>원 전략과 관리전략 사이 회귀관계의 구조변화가 광범위하게 관측된다.</dd>
+            <dt>검토자 해석</dt><dd>전체기간 평균만으로 미래 적용성을 판단하면 안 된다.</dd>
+            <dt>검토자 경계</dt><dd>break 검정은 위험프리미엄·제도·미시구조 중 무엇이 원인인지 말해 주지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>관리수익이 원수익과 완전 상관되지 않으면 사후 분산효과가 생기지만, 그 관계가 불안정하면 실시간 추정비중은 이를 포착하지 못한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>직접 비교·spanning·실시간 비교의 결과 차이와 광범위한 구조변화가 같은 방향을 지지한다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>평균·공분산 추정오차, 레버리지 제약, 표본길이와 미차감 비용도 실시간 부진에 기여할 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>안정적인 관계를 가진 한국 WML에서 과거전용 조합이 비용 후에도 반복적으로 개선되면 broad-sample 부정 결론의 한국 적용은 약해진다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_figure1">p01_figure1 · PDF 8쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>초기학습 길이, rolling·expanding, 위험회피도와 제약을 바꿔 broad conclusion을 점검한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>모멘텀·일부 팩터는 전체 전략군과 달리 강한 긍정 예외다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 장단기 포트폴리오의 실제 대차료·시장충격과 여섯 구성 공동의존성은 직접 시험하지 않는다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>양의 사후 alpha가 흔한데 실시간 CER는 자주 나빠지는 것이 논문의 핵심 긴장이다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_figure1">p01_figure1 · PDF 8쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">미국 다수 전략</th><td>서로 연관된 한국 여섯 WML</td><td>여섯 결과를 독립 복제로 세지 않고 구성 민감도로 읽는다.</td></tr><tr><th scope="row">직전월 역분산 관리</th><td>BS15와 구분한 별도 challenger</td><td>한 달 위험과 RW126 목표변동성은 다른 규칙이다.</td></tr><tr><th scope="row">사후 c_star</th><td>사전 고정 목표·floor·cap</td><td>실시간 본선에서 전체표본 calibration을 차단한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>원 WML·BS15 RW126·직전월 역분산 전략을 같은 월에 생성한다.</li><li>각 신호의 정보 cutoff와 분모 단위를 별도 열로 저장한다.</li><li>모든 전략에 같은 목표·floor·cap·비용을 적용한다.</li><li>예측표, 단독 경제성과표, 원+관리 조합표를 분리한다.</li><li>위기·비위기 및 VW·EW 하위기간의 계수와 성과 안정성을 본다.</li><li>여섯 구성의 공동 block bootstrap으로 방향을 요약한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>전체표본 c_star가 실시간 열에 한 건도 들어가지 않는다.</li><li>원·관리 전략의 평가월과 결측 mask가 완전히 같다.</li><li>비용 후 Sharpe·CER·꼬리 개선이 구조적 하위기간 변화에도 유지된다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>alpha만 좋고 실시간 성과가 나쁘면 추정·안정성 실패로 분류한다.</li><li>cap이 결과를 지배하면 위험모형 효과와 제약 효과를 분해한다.</li><li>모멘텀 구성 일부만 좋으면 보편효과가 아니라 구성 의존성으로 기록한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>세 전략의 월별 위험·비중·수익 원장</li><li>직접·spanning·실시간 경제성과를 분리한 표</li><li>구조안정성·비용·하위기간 반증 대시보드</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_figure1">p01_figure1 · PDF 8쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>낮은 변동성, 양의 alpha, 높은 실시간 효용은 서로 다른 주장이다.</li><li>넓은 전략군에서 관리전략의 직접 우위는 보편적이지 않다.</li><li>모멘텀은 상대적으로 강한 예외지만 성공 보증은 아니다.</li><li>전체표본 스케일 상수는 실시간 투자규칙이 아니다.</li><li>관계의 구조변화가 사후·실시간 간극의 핵심 설명이다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>직접 비교·spanning·실시간 조합을 구분한다.</li><li>inverse variance와 inverse volatility를 구분한다.</li><li>c_star의 사후성을 설명한다.</li><li>모멘텀 예외와 broad-sample 반례를 함께 요약한다.</li><li>한국 여섯 WML의 실패 조건을 사전에 적을 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_method">p01_method · PDF 4쪽 · Equations 3 and 4</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 양의 spanning alpha와 높은 관리전략 Sharpe는 왜 같지 않은가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> alpha는 원·관리 두 자산을 결합할 사후 가능성을, Sharpe는 관리전략 단독 성과를 묻기 때문이다.</p>
+          <p><strong>왜:</strong> Table 2와 Table 4의 빈도가 크게 다른 것이 그 차이를 드러낸다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 c_star를 한국 실시간 본선에 그대로 넣으면 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 전체표본 위험을 맞추며 미래 관측을 사용하므로 당시 투자자가 알 수 없는 calibration이기 때문이다.</p>
+          <p><strong>왜:</strong> 원 식의 스케일과 실시간 조합은 서로 다른 정보 조건을 가진다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_method">p01_method · PDF 4쪽 · Equations 3 and 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. Table 6가 한국 연구에 주는 가장 직접적인 규칙은 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 예측이나 사후 alpha 뒤에 과거정보 기반 Sharpe·CER를 별도 평가하라는 것이다.</p>
+          <p><strong>왜:</strong> 실시간 결과가 사후 조합결과보다 크게 약해지기 때문이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 저자들은 미국의 광범위한 주식전략에서 변동성관리의 직접 Sharpe 우위와 실시간 효용 개선이 보편적이지 않지만 모멘텀 계열은 상대적으로 강한 예외라고 보고한다.</p><p><strong>이렇게 말하면 안 됨:</strong> 양의 spanning alpha가 실시간 수익을 보장한다거나 직전월 역분산 규칙이 BS15 RW126과 동일하다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p01_figure1">p01_figure1 · PDF 8쪽 · Figure 1</a><a class="evidence-chip" href="#locator-p01_method">p01_method · PDF 4쪽 · Equations 3 and 4</a><a class="evidence-chip" href="#locator-p01_table1">p01_table1 · PDF 5쪽 · Table 1</a><a class="evidence-chip" href="#locator-p01_table2">p01_table2 · PDF 6쪽 · Table 2</a><a class="evidence-chip" href="#locator-p01_table4">p01_table4 · PDF 11쪽 · Table 4</a><a class="evidence-chip" href="#locator-p01_table5">p01_table5 · PDF 12쪽 · Table 5</a><a class="evidence-chip" href="#locator-p01_table6">p01_table6 · PDF 15쪽 · Table 6</a><a class="evidence-chip" href="#locator-p01_table9">p01_table9 · PDF 18쪽 · Table 9</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>MKT·SMB·HML·MOM·RMW·CMA·ROE·IA·BAB 9개 주식팩터와 94개 가치가중 anomaly long–short 전략, 총 103개; 전략별 시작일 상이, 공통 종료 2016-12 [원문 보고]</dd><dt>target</dt><dd>원 전략의 다음 달 수익에 직전월 일별수익 기반 inverse-variance 비중을 적용한 관리수익과 원·관리 전략의 실시간 최적조합 [원문 보고]</dd><dt>information set</dt><dd>관리비중은 직전월 일별 전략수익을 사용하고, 실시간 조합비중은 각 시점까지의 평균·공분산만 사용 [원문 보고]</dd><dt>lookback</dt><dd>위험신호는 직전 1개월; 실시간 조합은 최초 120개월 뒤 expanding history [원문 보고]</dd><dt>horizon</dt><dd>다음 1개월 수익과 월별 재조정 [원문 보고]</dd><dt>model family</dt><dd>직전월 실현분산의 역수로 조정한 포트폴리오, spanning 회귀, 원·관리 수익의 실시간 평균–분산 조합</dd><dt>training window</dt><dd>직접 비교와 spanning은 전체표본이고, 실시간 조합은 최초 120개월을 학습한 뒤 expanding window를 사용한다; 240·360개월과 rolling window를 강건성으로 비교한다.</dd><dt>retune</dt><dd>실시간 조합의 평균·공분산과 scaling parameter를 매월 과거자료로 다시 추정한다.</dd><dt>benchmarks</dt><dd>각 원 전략 · 각 변동성관리 전략 · 원 전략만 보유하는 실시간 투자자 · 사후 최적 원·관리 조합 · FF3가 포함된 투자기회집합</dd><dt>loss / test</dt><dd>분산예측 MSE·QLIKE는 연구질문의 대상이 아니며 포트폴리오 성과와 효용을 직접 평가한다. · Jobson–Korkie Sharpe 차이 검정과 Memmel 보정 · 103개 전략의 의존성을 보존한 bootstrap · DeMiguel 계열의 실시간 CER 차이 검정 · Bai–Perron 다중 구조변화 검정</dd><dt>economic metrics</dt><dd>연환산 평균 · 연환산 표준편차 · Sharpe ratio · spanning alpha와 appraisal ratio · certainty-equivalent return</dd><dt>trading costs</dt><dd>주요 직접비교와 실시간 조합 표는 거래비용·대차료·시장충격을 직접 차감하지 않는다.</dd><dt>turnover</dt><dd>종목수준 포트폴리오 회전율은 주요 결과표의 경제성과 지표로 보고되지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +218,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>월 t−1까지의 일별수익만으로 t월 관리비중을 만드는 prefix-invariance test</li><li>원 WML과 모든 관리전략의 평가월 집합이 완전히 같은지 검사하는 row-hash test</li><li>full-sample c*가 실시간 결과열에 들어가지 못하게 하는 calibration test</li><li>레버리지 cap 위반 0회와 비용차감 산식의 단위 test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p01_momentum_exception</span> 9개 대표 팩터에서 MOM의 연환산 Sharpe는 원 전략 0.48에서 변동성관리 전략 0.99로 높아졌고, Sharpe 차이 0.50의 p-value는 0.00으로 보고됐다.<p class="meta">sample: 미국 MOM 월수익 1927-01–2016-12 · target: 직전월 일별수익 기반 변동성관리 MOM · horizon: 다음 1개월 · metric: 연환산 Sharpe와 Sharpe 차이 · unit: 비율과 p-value · comparator: 원 MOM · loss_or_test: Jobson–Korkie equal-Sharpe test with Memmel correction</p><p><strong>근거:</strong> p01_table1</p><p><strong>전이 경고:</strong> 미국 MOM의 직접 비교 결과이며 한국 6개 WML 또는 비용 후 성과를 보장하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p01_broad_direct_result</span> 103개 전략의 직접 비교에서 변동성관리 Sharpe 차이가 양수인 전략은 53개, 음수인 전략은 50개였고, 5% 수준의 유의한 양수는 8개, 유의한 음수는 4개였다.<p class="meta">sample: 미국 9개 팩터와 94개 anomaly 전략, 전략별 시작일 상이, 종료 2016-12 · target: 직전월 inverse-variance 관리수익 · horizon: 월별 전략의 전체 가용표본 · metric: Sharpe 차이의 부호와 5% 유의 전략 수 · unit: 전략 개수 · comparator: 대응 원 전략 · loss_or_test: Jobson–Korkie equal-Sharpe test with Memmel correction</p><p><strong>근거:</strong> p01_table2</p><p><strong>전이 경고:</strong> 103개 전략은 공통 데이터와 시장기간을 공유하므로 독립적인 103회 시행으로 해석하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p01_realtime_result</span> 기준 실시간 설계에서 원 전략보다 조합전략 Sharpe가 높은 경우는 45개, 낮은 경우는 58개였고, CER은 31개가 높고 72개가 낮았다.<p class="meta">sample: 미국 103개 전략; 최초 120개월 이후 expanding-window 실시간 평가 · target: 원 전략·관리전략·무위험자산의 실시간 조합 · horizon: 다음 1개월의 반복 OOS 운용 · metric: Sharpe와 CER 차이의 부호 · unit: 전략 개수 · comparator: 원 전략과 무위험자산의 실시간 조합 · loss_or_test: 10년 초기학습, expanding window, 위험회피계수 5, 위험자산 절대비중 합 5 이하</p><p><strong>근거:</strong> p01_table6</p><p><strong>전이 경고:</strong> 이 결과는 변동성관리 시계열 단독의 실패와 동의어가 아니라 평균·공분산을 추정하는 조합정책의 실시간 성과다.</p></li><li><span class="badge">author_result</span> <span class="badge">p01_structural_breaks</span> 103개 단변량 spanning 회귀 모두 최소 한 번의 구조변화를 보였고 평균 구조변화 횟수는 2.37회였다.<p class="meta">sample: 미국 103개 변동성관리 전략의 spanning 회귀 · target: 관리수익의 원수익에 대한 회귀관계 안정성 · horizon: 각 전략 전체 가용 월표본 · metric: 식별된 구조변화 횟수 · unit: 회수 · comparator: 구조변화 0회인 안정 회귀 · loss_or_test: Bai–Perron multiple structural break tests</p><p><strong>근거:</strong> p01_table9</p><p><strong>전이 경고:</strong> 구조변화 검정은 불안정성을 보여 주지만 그 경제적 원인을 식별하지는 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>On the Performance of Volatility-Managed Portfolios — Journal of Financial Economics version of record</strong><p>최종 게재본 · 2020-05-01 · 23쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 JFE 최종 게재본의 물리 PDF 페이지다. 별도 Internet Appendix는 이 artifact와 locator 범위에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p01_method</strong> · artifact p01_vor · PDF 4쪽 · Equations 3 and 4 · 검증됨</li><li><strong>p01_table1</strong> · artifact p01_vor · PDF 5쪽 · Table 1 · 검증됨</li><li><strong>p01_table2</strong> · artifact p01_vor · PDF 6쪽 · Table 2 · 검증됨</li><li><strong>p01_figure1</strong> · artifact p01_vor · PDF 8쪽 · Figure 1 · 검증됨</li><li><strong>p01_table4</strong> · artifact p01_vor · PDF 11쪽 · Table 4 · 검증됨</li><li><strong>p01_table5</strong> · artifact p01_vor · PDF 12쪽 · Table 5 · 검증됨</li><li><strong>p01_table6</strong> · artifact p01_vor · PDF 15쪽 · Table 6 · 검증됨</li><li><strong>p01_table9</strong> · artifact p01_vor · PDF 18쪽 · Table 9 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>On the Performance of Volatility-Managed Portfolios — Journal of Financial Economics version of record</strong><p>최종 게재본 · 2020-05-01 · 23쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 JFE 최종 게재본의 물리 PDF 페이지다. 별도 Internet Appendix는 이 artifact와 locator 범위에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p01_method"><strong>p01_method</strong> · artifact p01_vor · PDF 4쪽 · Equations 3 and 4 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p01_table1"><strong>p01_table1</strong> · artifact p01_vor · PDF 5쪽 · Table 1 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p01_table2"><strong>p01_table2</strong> · artifact p01_vor · PDF 6쪽 · Table 2 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p01_figure1"><strong>p01_figure1</strong> · artifact p01_vor · PDF 8쪽 · Figure 1 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p01_table4"><strong>p01_table4</strong> · artifact p01_vor · PDF 11쪽 · Table 4 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p01_table5"><strong>p01_table5</strong> · artifact p01_vor · PDF 12쪽 · Table 5 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p01_table6"><strong>p01_table6</strong> · artifact p01_vor · PDF 15쪽 · Table 6 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p01_table9"><strong>p01_table9</strong> · artifact p01_vor · PDF 18쪽 · Table 9 · 검증됨 · <a href="https://www.lehigh.edu/~xuy219/research/COWY.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>광범위한 미국 주식전략에서 변동성관리는 직접 Sharpe를 체계적으로 높이지 않았지만 모멘텀 계열은 상대적으로 강한 긍정 예외였다.</strong><p>이유: Table 1의 MOM 개선과 Table 2의 broad-sample 53 대 50이 함께 이 조건부 결론을 지지한다. · 교정: MOM의 긍정 결과와 전체 103개 전략의 반례를 항상 함께 제시한다. · 근거: p01_table1 · p01_table2</p></li><li><strong>사후 spanning alpha와 과거정보 기반 실시간 Sharpe·CER는 다른 평가층이다.</strong><p>이유: Table 4의 긍정적 in-sample 빈도와 Table 6의 부정적 실시간 빈도가 크게 다르다. · 교정: 한국에서도 spanning 결과와 실시간 투자결과를 별도 표로 보고한다. · 근거: p01_table4 · p01_table6</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>양의 spanning alpha가 있으면 실시간 투자자의 Sharpe와 CER도 개선된다.</strong><p>이유: 실시간 조합은 103개 중 Sharpe 45개, CER 31개에서만 원 전략보다 높았고 구조변화가 광범위했다. · 교정: 초기학습·expanding 추정·제약을 포함한 실시간 성과를 별도로 제시한다. · 근거: p01_table6 · p01_table9</p></li><li><strong>이 논문은 BS15 RW126 전략이 모든 모멘텀 구성에서 실패한다고 보였다.</strong><p>이유: 논문의 기본 위험신호는 직전 1개월 inverse variance이고, MOM은 오히려 긍정 예외다. · 교정: 직전월 원형, BS15 RW126, 한국 적응전략을 이름과 결과열로 분리한다. · 근거: p01_method · p01_table1</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>별도 Internet Appendix의 bootstrap 생성 세칙과 추가 강건성 표는 이 artifact의 근거 범위에 포함되지 않는다.</li><li>저자 원자료와 코드로 Table 2·6·9를 독립 재계산한 증거는 이 공개 레코드에 포함되지 않는다.</li></ul>

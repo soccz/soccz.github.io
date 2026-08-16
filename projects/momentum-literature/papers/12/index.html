@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/12/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Loss-Based Bayesian Sequential Prediction of Value-at-Risk with a Long-Memory and Non-Linear Realized Volatility Model · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,177 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>RNN-HAR와 sequential generalized Bayes를 익힐 수 있지만 직접 target은 다음날 VaR이므로 다음달 분산 본선과 분리해 쓰는 보조 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>HAR 계층에 nonlinear recurrent memory를 추가할 때</li><li>1%·2.5%·5% VaR calibration robustness를 별도 설계할 때</li><li>새 관측마다 posterior를 순차 갱신하는 방법을 검토할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>quantile-score 개선을 다음달 분산 MSE·QLIKE 개선으로 바꿔 말할 때</li><li>KS11 시장지수 결과를 한국 6개 WML 결과로 취급할 때</li><li>VaR calibration만으로 WML* Sharpe나 거래비용 성과를 선언할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>평균적인 변동성 예측이 좋아도 실제 위험관리에서 중요한 1% 꼬리를 잘못 맞힐 수 있다. 이 논문은 모형을 full-density 적합이 아니라 VaR 의사결정 손실에 직접 맞추고 새 자료가 올 때마다 순차 갱신하는 방법을 보여 준다.</p></article>
+            <article><h3>중심 질문</h3><p>HAR의 daily·weekly·monthly 기억구조에 비선형 recurrent state를 넣고 quantile loss로 Bayesian update하면 다음날 극단 VaR의 정확도와 calibration이 개선되는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>선형 HAR는 장기기억을 간결하게 표현하지만 비선형성과 수익률 정보를 충분히 반영하지 못할 수 있다. 반면 전통 likelihood 기반 VaR는 return density 전체를 맞춰야 하므로 실제 관심인 특정 꼬리손실과 추정목표가 어긋날 수 있다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자들은 daily·weekly·monthly realized measure를 각각 recurrent state로 갱신해 다음날 VaR를 직접 출력하는 RNN-HAR를 만든다. 실제 return은 hidden-state regressor가 아니라 예측 VaR와 비교되어 quantile score와 asymmetric-Laplace kernel을 만드는 관측값이다. 초기에는 likelihood annealing, 이후에는 data annealing SMC로 posterior를 순차 갱신한다. 31개 지수에서 특히 1%·2.5% quantile score와 위반률 calibration이 비교 HAR류보다 강한 시장 비율이 높지만, 5%와 tail-loss 결과는 약해지고 DQ 기각도 0이 아니다. 한국 WML에는 VaR 확장으로 시험할 수 있으며 다음달 분산 본선에 쓰려면 output과 loss를 바꾼 별도 adaptation이다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>HAR의 시간척도 구조는 유지하되 선형성을 푼다.</h3>
+          <p>daily·weekly·monthly realized measure를 각각 recurrent hidden state에 넣어 과거 효과가 상태에 따라 달라지게 한다. return은 hidden-state 입력이 아니라 VaR loss를 계산하는 관측값이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>분산을 거쳐 VaR로 바꾸지 않고 quantile을 직접 예측한다.</h3>
+          <p>모형 output을 다음날 하위 quantile로 두어 관심 의사결정과 학습목표를 맞춘다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>선택한 손실로 generalized Bayesian posterior를 만든다.</h3>
+          <p>asymmetric-Laplace kernel은 return density가 정말 Laplace라는 주장보다 check loss를 posterior update에 연결하는 계산장치다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>시간순으로 posterior를 갱신한다.</h3>
+          <p>SMC particles를 새 관측마다 재가중·resample·move해 expanding sequential forecast를 만든다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>loss·calibration·동태검정을 분리해 판단한다.</h3>
+          <p>quantile score, violation ratio, 네 DQ instrument와 tail-loss를 함께 보며 하나의 지표만으로 승리를 선언하지 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>direct VaR</h3>
+          <p><strong>쉽게 말하면</strong><br>먼저 변동성을 예측해 정규분포로 변환하지 않고 원하는 꼬리수익 경계 자체를 바로 예측한다.</p>
+          <p><strong>논문 안의 역할</strong><br>output과 quantile score를 같은 target에 맞춘다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>비교군보다 좋으면 RNN 구조 덕분이라고만 볼 수 없다. direct target과 benchmark의 Gaussian 변환 차이도 섞인다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a></div>
+        </article><article class="section-card concept-card">
+          <h3>loss-based Bayes</h3>
+          <p><strong>쉽게 말하면</strong><br>자료가 얼마나 그럴듯한지를 나타내는 완전한 확률모형 대신, 틀린 VaR에 부과할 손실로 parameter weight를 갱신한다.</p>
+          <p><strong>논문 안의 역할</strong><br>quantile check loss를 generalized posterior의 핵심으로 사용한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>아무 가정도 없는 정통 posterior와 같다고 보면 안 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a></div>
+        </article><article class="section-card concept-card">
+          <h3>data-annealing SMC</h3>
+          <p><strong>쉽게 말하면</strong><br>어제 posterior 입자들을 오늘 새 관측에 맞춰 다시 가중하고 부족하면 복제·이동시키는 순차 계산법이다.</p>
+          <p><strong>논문 안의 역할</strong><br>매일 전 자료로 MCMC를 처음부터 돌리지 않고 expanding update를 수행한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>시간순 update가 hyperparameter까지 nested OOS로 골랐다는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a></div>
+        </article><article class="section-card concept-card">
+          <h3>DQ test</h3>
+          <p><strong>쉽게 말하면</strong><br>VaR 위반이 목표빈도에 맞을 뿐 아니라 과거정보로 예측되지 않는지 검사한다.</p>
+          <p><strong>논문 안의 역할</strong><br>서로 다른 instrument set으로 dynamic calibration을 평가한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>DQ1–DQ4는 네 제안모형이 아니라 한 VaR 예측에 적용한 네 회귀사양이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>quantile check loss와 generalized posterior · 실제수익과 예측 quantile의 오차에 비대칭 check loss를 주고, 그 벌점을 scale sigma로 나눈 AL kernel을 누적해 prior를 갱신한다. 논문은 sigma에 inverse-Gamma prior를 두어 theta posterior 계산에서 적분한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>rho_alpha(u)=u(alpha-I[u&lt;0]); f(y_t|q_t,sigma)=alpha(1-alpha)/sigma × exp(-rho_alpha(y_t-q_t)/sigma); posterior is prior times the product of these AL kernels</code></pre>
+                <dl class="symbol-grid"><dt><code>alpha</code></dt><dd>1%·2.5%·5% 같은 VaR tail level</dd><dt><code>u</code></dt><dd>실제수익과 예측 quantile의 차이</dd><dt><code>q_t</code></dt><dd>RNN-HAR가 낸 시점 t의 VaR quantile</dd><dt><code>sigma</code></dt><dd>AL kernel의 양의 scale parameter</dd></dl>
+                <p><strong>직관:</strong> 관심이 1% 꼬리라면 전체 수익분포 평균 적합보다 그 경계를 놓친 오류에 학습을 집중한다.</p>
+                <p><strong>구현할 때:</strong> alpha별 모형을 분리하고 learning scale·prior·seed를 저장한다. variance adaptation에서는 이 식을 그대로 쓰지 말고 QLIKE/MSE target으로 새로 정의한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>RNN-HAR decision rule · daily·weekly·monthly realized measure의 세 recurrent state를 결합해 다음날 alpha-quantile을 직접 낸다. 실제 return은 이 출력식의 regressor가 아니다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>q_(t+1,alpha)=beta0+beta1 h_daily,t+1+beta2 h_weekly,t+1+beta3 h_monthly,t+1; each h is updated from its realized-measure input and prior state</code></pre>
+                <dl class="symbol-grid"><dt><code>h_daily</code></dt><dd>일별 realized measure의 recurrent 상태</dd><dt><code>h_weekly</code></dt><dd>주별 집계의 recurrent 상태</dd><dt><code>h_monthly</code></dt><dd>월별 집계의 recurrent 상태</dd><dt><code>q</code></dt><dd>모형이 직접 출력하는 다음 거래일 VaR 경계값</dd></dl>
+                <p><strong>직관:</strong> HAR의 세 시간척도 뼈대는 보존하되 각 horizon이 과거를 기억하는 방식은 데이터가 비선형적으로 학습하게 한다.</p>
+                <p><strong>구현할 때:</strong> hidden state에 origin 이후 수익이나 realized measure가 들어가지 않는지 available-through 검사를 한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>Oxford-Man realized library의 31개 시장지수와 daily return·5분 realized measure를 사용한다.</li><li>대부분 최근 3,000관측을 맞추지만 한 짧은 series는 공통 split 문구와 관측수가 양립하지 않는다.</li><li>KS11은 한국 시장지수일 뿐 종목소트 WML이 아니다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>target은 다음날 1%·2.5%·5% 조건부 return quantile이다.</li><li>origin까지의 realized daily·weekly·monthly measures만 세 hidden state에 들어가고, origin까지의 actual returns는 quantile loss를 통해 posterior를 갱신하는 response로 사용된다.</li><li>비교 HAR류는 realized volatility를 예측한 뒤 Gaussian VaR로 바꾸는 간접경로다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>초기 posterior는 likelihood-annealing SMC, 이후 OOS는 data-annealing SMC로 순차 갱신한다.</li><li>particle 수·ESS threshold·rejuvenation 설정은 고정하지만 hidden dimension·prior 선택의 별도 untouched holdout은 없다.</li><li>한국 실험은 hyperparameter를 outer walk-forward 내부의 과거 validation에서만 고른다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>quantile score로 point forecast loss를, violation ratio로 빈도를, DQ로 동태 calibration을 본다.</li><li>tail-loss ratio는 별도 경제적 꼬리크기 지표로 분리한다.</li><li>variance forecast QLIKE와 BS15 경제성과는 VaR 결과와 같은 표에서 합성하지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 3</p><h3>직접 RNN-HAR가 quantile loss를 줄였는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>각 alpha에서 31개 시장 중 어느 모형이 최저 QS인지 세고, tail level이 얕아질수록 우위비율이 어떻게 변하는지 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>제안모형의 최저비율은 1%와 2.5%에서 높고 5%에서는 약 절반 수준으로 낮아진다.</dd>
+            <dt>검토자 해석</dt><dd>강점은 평균적 변동성보다 깊은 꼬리 의사결정에 집중될 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>direct VaR와 Gaussian-converted benchmark의 target alignment 차이가 함께 들어 있다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 4–5</p><h3>낮은 QS가 올바른 위반빈도와 동태 calibration으로 이어지는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>Table 4에서 명목 위반률 1에 가까운지 보고, Table 5에서 DQ1–DQ4의 기각 수가 0인지와 비교군보다 적은지를 따로 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>위반률 근접도는 강하지만 DQ 기각은 남아 완전 calibration은 아니다.</dd>
+            <dt>검토자 해석</dt><dd>평균 QS와 위험한 clustering은 별도 gate로 관리해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>네 DQ 열을 네 모형으로 세면 잘못된 해석이다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 6</p><h3>VaR 위반 때 손실크기까지 제안모형이 지배하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>alpha별 tail-loss best가 어떤 모형에 분산되는지 보고 QS·VRate winner와 같은지 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>제안모형 우위비율은 깊은 tail에서 더 높고 5%로 갈수록 약해지며 다른 모형의 best도 남는다.</dd>
+            <dt>검토자 해석</dt><dd>calibration과 tail severity를 하나의 안전성 주장으로 합치면 안 된다.</dd>
+            <dt>검토자 경계</dt><dd>ratio의 분모와 return 부호 때문에 직관적 크기 해석은 원자료 재계산이 필요하다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>recurrent state가 HAR의 고정 선형계수로 놓치는 비선형 long dependence를 포착한다.</li><li>loss-based update가 전체 density보다 관심 tail의 예측오류에 parameter mass를 집중한다.</li><li>quantile score가 realized-measure states로 생성한 VaR를 실제 return의 tail outcome에 직접 맞춰 전체 density 적합과 목표를 분리한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>Table 3의 개선이 1%·2.5% deep tail에서 더 강한 패턴은 loss alignment 채널과 일치한다.</li><li>Table 4·5의 calibration 비교는 단순 QS 개선 이상의 정보를 제공한다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>제안군은 direct quantile, 비교군은 volatility 뒤 Gaussian 변환이라 구조보다 target 경로 차이가 성과를 만들 수 있다.</li><li>시장별 realized-measure 품질과 single split가 우위비율을 좌우할 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>동일 direct-quantile baseline과 비교해 QS·DQ가 개선되지 않으면 RNN 구조의 증분가치를 기각한다.</li><li>seed·particle 수에 따라 시장별 winner가 크게 뒤집히면 순차 Bayes의 안정성 주장을 약화한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>31개 시장, 세 tail level, QS·violation·DQ·tail loss를 함께 본다.</li><li>순차 posterior update로 시간순 forecast를 구성한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>우위비율은 1%에서 5%로 갈수록 낮아지고 DQ 기각이 남는다.</li><li>tail-loss best는 QS winner와 완전히 일치하지 않는다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>위기 subperiod, 비용·turnover·BS15 scaling 성과와 여러 particle seed 반복을 충분히 보고하지 않는다.</li><li>한국 WML과 다음달 variance target은 직접 시험하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>짧은 지수의 총관측수와 공통 IS/OOS split 설명이 충돌한다.</li><li>distribution-free라는 직관과 asymmetric-Laplace kernel·learning scale 의존성을 구분해야 한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">시장지수 one-day VaR</th><td>각 WML의 one-day 및 one-month VaR 보조트랙</td><td>원형 tail 질문을 유지하되 본선 variance와 분리한다.</td></tr><tr><th scope="row">5분 realized daily/weekly/monthly 입력</th><td>일별 WML의 causal daily/weekly/monthly proxy</td><td>현재 자료로 가능한 저빈도 적응임을 명시한다.</td></tr><tr><th scope="row">RNN-HAR direct quantile</th><td>historical quantile·CAViaR·HAR-VaR 뒤 challenger</td><td>direct target을 공유하는 강한 baseline과 비교해 구조효과를 식별한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>여섯 WML별 alpha와 horizon을 고정한 VaR target을 만든다.</li><li>historical quantile·CAViaR·HAR-VaR를 동일 direct/indirect 라벨로 구현한다.</li><li>RNN hidden dimension·regularization·prior를 inner walk-forward에서 선택한다.</li><li>각 origin의 particle ESS·resampling·acceptance·실패를 저장한다.</li><li>QS·VRate·DQ1–DQ4·tail loss를 alpha별 같은 OOS mask에서 계산한다.</li><li>variance adaptation을 할 경우 output을 22일 제곱합, loss를 QLIKE로 바꾼 별도 실험으로 등록한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>hidden state와 particle update가 origin 이후 자료를 한 행도 읽지 않는다.</li><li>direct baseline 대비 QS 개선과 DQ 기각 감소가 최소 두 tail level에서 함께 나타난다.</li><li>seed 반복에서 성과순위와 위반률이 사전 허용범위 안에 머문다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>QS만 좋아지고 DQ가 악화되면 tail clustering 미포착을 의심한다.</li><li>indirect benchmark만 이기면 Gaussian conversion 불공정성을 분리한다.</li><li>particle degeneracy가 위기일에 집중되면 prior·resampling·move kernel을 진단한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 hidden-state available date와 SMC diagnostics</li><li>alpha별 QS·VRate·DQ·tail-loss 표</li><li>direct와 indirect benchmark를 구분한 model map</li><li>VaR 트랙과 variance/경제성과 트랙의 주장 경계표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>이 논문의 target은 variance가 아니라 다음날 VaR다.</li><li>RNN은 HAR의 세 시간척도를 비선형 상태로 확장한다.</li><li>asymmetric-Laplace는 quantile loss를 posterior에 연결하는 장치다.</li><li>Table 3·4·5·6은 loss·빈도·동태·꼬리크기를 서로 다르게 묻는다.</li><li>한국 분산 본선에 쓰면 원형이 아니라 명시적 adaptation이다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>direct와 indirect VaR를 구분한다.</li><li>check loss의 비대칭을 설명한다.</li><li>generalized posterior를 full likelihood posterior와 구분한다.</li><li>SMC diagnostics를 나열할 수 있다.</li><li>QS·VRate·DQ·tail loss의 질문 차이를 말할 수 있다.</li><li>VaR 원형과 variance adaptation을 분리 설계한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 제안모형과 비교 HAR의 성과차이를 전부 RNN 덕분이라 할 수 없는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 제안모형은 VaR를 직접 예측하지만 다수 비교군은 volatility를 Gaussian VaR로 변환해 target 경로도 다르기 때문이다.</p>
+          <p><strong>왜:</strong> 신경망 구조효과와 direct target의 목표정렬 효과가 같은 성과차이에 함께 섞여 있기 때문이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. DQ1–DQ4는 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 한 VaR forecast의 동태 calibration을 검사하는 네 instrument 사양이다.</p>
+          <p><strong>왜:</strong> 네 제안모형으로 오독하면 기각 수를 잘못 설명한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. Table 3의 우위가 5% tail에서 약해지는 이유가 왜 중요한가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 제안법의 이점이 모든 quantile에 보편적이 아니라 더 깊은 tail에 집중될 가능성을 보여 주기 때문이다.</p>
+          <p><strong>왜:</strong> 적용 alpha를 사후 선택하지 않고 미리 고정해야 한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 31개 시장지수의 순차 OOS에서 loss-based RNN-HAR는 특히 깊은 tail의 quantile score와 violation calibration에서 비교 HAR류보다 강한 시장 비율이 높았지만 모든 alpha·지표를 지배하지는 않았다.</p><p><strong>이렇게 말하면 안 됨:</strong> KS11 결과를 한국 WML 결과로 부르거나 DQ1–DQ4를 네 제안모형이라 하지 않으며, 이 VaR 성과가 다음달 variance나 Sharpe 개선을 증명했다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p12_model">p12_model · PDF 7쪽 · RNN-HAR VaR model</a><a class="evidence-chip" href="#locator-p12_loss">p12_loss · PDF 8쪽 · Quantile score and loss-based Bayesian update</a><a class="evidence-chip" href="#locator-p12_split">p12_split · PDF 11쪽 · Data, SMC settings and sequential split</a><a class="evidence-chip" href="#locator-p12_table3">p12_table3 · PDF 15쪽 · Table 3</a><a class="evidence-chip" href="#locator-p12_table4">p12_table4 · PDF 17쪽 · Table 4</a><a class="evidence-chip" href="#locator-p12_table5">p12_table5 · PDF 18쪽 · Table 5</a><a class="evidence-chip" href="#locator-p12_table6">p12_table6 · PDF 19쪽 · Table 6</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>Oxford-Man realized library의 31개 주가지수, 대체로 2000–2022의 daily close return과 realized measures [원문 보고]</dd><dt>target</dt><dd>다음 거래일 수익률의 1%·2.5%·5% 하위 조건부 분위수, 즉 1일 VaR [원문 보고]</dd><dt>information set</dt><dd>시점 t까지의 daily return과 realized volatility의 daily·weekly·monthly 계층 및 재귀 hidden state [원문 보고]</dd><dt>lookback</dt><dd>HAR의 일·주·월 계층과 RNN hidden-state recursion; 고정 126일의 명시적 lookback은 아니다 [원문 보고]</dd><dt>horizon</dt><dd>1거래일 VaR [원문 보고]</dd><dt>model family</dt><dd>RNN-HAR direct quantile model과 loss-based generalized Bayesian sequential Monte Carlo</dd><dt>training window</dt><dd>대부분 지수에서 앞 2,000관측으로 초기 posterior를 만들고 뒤 1,000관측을 순차 OOS로 평가한다.</dd><dt>retune</dt><dd>초기 likelihood-annealing SMC 뒤 새 관측마다 data-annealing SMC로 posterior를 갱신한다.</dd><dt>benchmarks</dt><dd>linear HAR-VaR · square-root HAR · leverage HAR · Realized-HAR-GARCH</dd><dt>loss / test</dt><dd>quantile score · tail-loss ratio · violation ratio · Dynamic Quantile backtests</dd><dt>economic metrics</dt><dd>VaR violation과 tail calibration · Sharpe·drawdown·turnover는 보고되지 않는다.</dd><dt>trading costs</dt><dd>VaR 기반 투자전략을 구성하지 않아 거래비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 비중과 회전율을 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +214,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>미래 target 변경이 과거 hidden state와 forecast를 바꾸지 않는 prefix-invariance test</li><li>분산 target과 VaR target의 loss·output을 서로 바꿔 끼우지 못하게 하는 target-contract test</li><li>outer train과 sequential OOS index의 비중첩 test</li><li>KS11과 6개 WML 식별자를 분리하는 series-identity test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p12_qs</span> RNN-HAR는 31개 지수 중 quantile score 최저 비율이 1% VaR에서 77% 이상, 2.5%에서 71% 이상, 5%에서 51% 이상으로 보고됐다.<p class="meta">sample: 31개 주가지수의 순차 OOS 구간 · target: 다음날 1%·2.5%·5% VaR · horizon: 1거래일 · metric: quantile score 최우수 지수 비율 · unit: 퍼센트 · comparator: HAR-VaR와 realized-HAR 계열 · loss_or_test: 평균 quantile score</p><p><strong>근거:</strong> p12_table3</p><p><strong>전이 경고:</strong> 직접 분위수 예측의 결과이며 분산예측 정확도나 투자성과 결과가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p12_calibration</span> 명목 위반률에 가장 가까운 지수 비율은 제안모형이 1%와 2.5%에서 90% 이상, 5%에서 약 77%로 보고됐다.<p class="meta">sample: 31개 주가지수의 순차 OOS 구간 · target: 1%·2.5%·5% VaR · horizon: 1거래일 · metric: 명목수준에 가장 가까운 violation ratio의 지수 비율 · unit: 퍼센트 · comparator: 네 비교 VaR 모형 · loss_or_test: violation ratio 비교</p><p><strong>근거:</strong> p12_table4</p><p><strong>전이 경고:</strong> KS11을 포함해도 이는 시장지수 결과이며 종목으로 구성한 WML 결과가 아니다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p12_dq</span> 1% VaR에서 한 RNN-HAR 예측을 네 DQ 회귀 사양으로 검정한 기각 수는 8·8·14·14개 지수로, 비교군보다 대체로 적지만 무기각은 아니었다.<p class="meta">sample: 31개 지수의 1% VaR OOS · target: 다음날 1% VaR · horizon: 1거래일 · metric: DQ 사양별 기각 지수 수 · unit: 지수 개수 · comparator: 비교 VaR 모형 · loss_or_test: 네 Dynamic Quantile 회귀 사양</p><p><strong>근거:</strong> p12_table5</p><p><strong>전이 경고:</strong> 네 숫자는 네 제안모형이 아니라 한 예측에 적용한 네 검정사양이다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Loss-Based Bayesian Sequential Prediction of Value-at-Risk with a Long-Memory and Non-Linear Realized Volatility Model — arXiv v1 author preprint</strong><p>프리프린트 · 2024-08-27 · 21쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> d3ea6e63bd5d05afeef6514ec40358d406351069046bb6265309cc92097e5606</p><p>근거 위치와 수치는 2024년 arXiv 저자 선행판 기준이다. 2025년 최종 JFEC 게재본의 표 번호와 페이지로 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p12_model</strong> · artifact p12_preprint · PDF 7쪽 · RNN-HAR VaR model · 검증됨</li><li><strong>p12_loss</strong> · artifact p12_preprint · PDF 8쪽 · Quantile score and loss-based Bayesian update · 검증됨</li><li><strong>p12_split</strong> · artifact p12_preprint · PDF 11쪽 · Data, SMC settings and sequential split · 검증됨</li><li><strong>p12_table3</strong> · artifact p12_preprint · PDF 15쪽 · Table 3 · 검증됨</li><li><strong>p12_table4</strong> · artifact p12_preprint · PDF 17쪽 · Table 4 · 검증됨</li><li><strong>p12_table5</strong> · artifact p12_preprint · PDF 18쪽 · Table 5 · 검증됨</li><li><strong>p12_table6</strong> · artifact p12_preprint · PDF 19쪽 · Table 6 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Loss-Based Bayesian Sequential Prediction of Value-at-Risk with a Long-Memory and Non-Linear Realized Volatility Model — arXiv v1 author preprint</strong><p>프리프린트 · 2024-08-27 · 21쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> d3ea6e63bd5d05afeef6514ec40358d406351069046bb6265309cc92097e5606</p><p>근거 위치와 수치는 2024년 arXiv 저자 선행판 기준이다. 2025년 최종 JFEC 게재본의 표 번호와 페이지로 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p12_model"><strong>p12_model</strong> · artifact p12_preprint · PDF 7쪽 · RNN-HAR VaR model · 검증됨 · <a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p12_loss"><strong>p12_loss</strong> · artifact p12_preprint · PDF 8쪽 · Quantile score and loss-based Bayesian update · 검증됨 · <a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p12_split"><strong>p12_split</strong> · artifact p12_preprint · PDF 11쪽 · Data, SMC settings and sequential split · 검증됨 · <a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p12_table3"><strong>p12_table3</strong> · artifact p12_preprint · PDF 15쪽 · Table 3 · 검증됨 · <a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p12_table4"><strong>p12_table4</strong> · artifact p12_preprint · PDF 17쪽 · Table 4 · 검증됨 · <a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p12_table5"><strong>p12_table5</strong> · artifact p12_preprint · PDF 18쪽 · Table 5 · 검증됨 · <a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p12_table6"><strong>p12_table6</strong> · artifact p12_preprint · PDF 19쪽 · Table 6 · 검증됨 · <a href="https://arxiv.org/pdf/2408.13588v1" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>검증한 2024년 선행판에서 RNN-HAR direct-quantile 모형은 여러 주가지수의 VaR score와 calibration에서 비교군보다 우수한 빈도가 높았다.</strong><p>이유: Tables 3–6이 tail level별 score·violation·DQ·tail loss를 분리해 제시한다. · 교정: 31개 지수, 1일 VaR, tail level과 선행판을 함께 표시한다. · 근거: p12_table3 · p12_table4 · p12_table5 · p12_table6</p></li><li><strong>한국 WML에서는 RNN-HAR를 분산형 challenger 또는 별도 VaR robustness로 적응할 수 있다.</strong><p>이유: HAR 계층과 sequential update 구조는 옮길 수 있지만 target과 loss는 명시적으로 달라진다. · 교정: 두 실험의 target·loss·평가지표를 하나의 성과표로 합치지 않는다. · 근거: p12_model · p12_loss</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>이 논문은 RNN-HAR가 다음달 분산을 더 정확히 예측한다고 보였다.</strong><p>이유: 직접 target은 다음날 VaR다. · 교정: 분산 적응형은 새로운 OOS 실험으로 표현한다. · 근거: p12_model · p12_loss</p></li><li><strong>KS11 결과는 한국 6개 WML에 대한 검증이다.</strong><p>이유: KS11은 KOSPI 시장지수이며 long–short momentum portfolio가 아니다. · 교정: 각 WML 시계열에 별도 예측을 실행한다. · 근거: p12_split</p></li><li><strong>QS·DQ 개선은 Sharpe와 거래비용 성과 개선을 뜻한다.</strong><p>이유: 논문은 투자전략과 경제성과를 평가하지 않는다. · 교정: VaR calibration과 BS15 economic gate를 분리한다. · 근거: p12_table3 · p12_table5</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>BVLG의 총 2,398관측과 본문 2,000/1,000 split 서술이 어떻게 조정됐는지는 검증한 선행판만으로 특정되지 않는다.</li><li>최종 JFEC 게재본과 선행판의 전 표·수식 판본대조 및 원자료 기반 독립 재현은 이 레코드 범위에 포함되지 않는다.</li></ul>

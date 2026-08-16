@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/18/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Conditional Volatility Targeting · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,177 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>더 정확한 variance forecast가 아니라 extreme volatility state에서만 scaling하는 전략의 비용·꼬리·회전율 가치를 평가할 때 쓰는 우선 economic-gate 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>BS15 continuous scaling 옆에 extreme-state-only 전략을 비교할 때</li><li>과거 expanding distribution으로 state threshold를 실시간 구성할 때</li><li>Sharpe뿐 아니라 drawdown·ES·turnover·leverage·cost를 함께 볼 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>conditional strategy를 더 정확한 variance-forecast model이라고 부를 때</li><li>BS15 inverse-variance 식과 동일한 전략이라고 할 때</li><li>Table 1·3의 음수 drawdown/ES 변화를 악화로 해석할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>더 정확한 volatility forecast만 찾는 대신 언제 노출을 조절해야 비용과 꼬리위험 대비 효율적인지를 묻는다. 모멘텀처럼 위험상태와 미래수익 관계가 강한 전략에는 매월 기계적 scaling보다 상태선별이 더 중요할 수 있다.</p></article>
+            <article><h3>중심 질문</h3><p>매월 항상 inverse-volatility scaling하는 conventional rule보다 과거분포의 극단 고·저변동 상태에서만 조절하는 conditional targeting이 Sharpe·drawdown·expected shortfall·turnover를 더 일관되게 개선하는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 volatility-managed portfolio는 full-sample ex-post rescaling이나 모든 시점의 연속 조절에 의존해 실시간 구현가능성, target overshoot와 거래비용을 과소평가할 수 있었다. 위험관리의 효용이 어떤 state에 집중되는지도 충분히 구분되지 않았다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자들은 t월 전에 이용 가능한 expanding long-term volatility target과 직전월 realized volatility만으로 conventional scaling을 다시 정의한다. 이어 직전월 volatility가 과거 expanding distribution의 top 또는 bottom quintile일 때만 target/forecast 배율을 적용하고 middle state에는 노출 1을 유지하며 leverage를 2로 제한한다. 10개 글로벌 시장에서는 conventional rule의 꼬리위험 개선이 불안정하지만, momentum에서는 high-vol state의 clustering·negative future-return 관계와 함께 conditional strategy가 비용 후 Sharpe·drawdown·ES·turnover를 개선한다. 한국 여섯 WML에 현재 일별자료로 직접 구현 가능한 경제평가 확장이나, 더 정확한 variance model을 제시한 논문은 아니다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>ex-post normalization을 제거한 implementable baseline을 만든다.</h3>
+          <p>full-sample realized volatility로 사후 배율을 맞추지 않고 t월 전에 알려진 expanding target과 직전월 risk만 쓴다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>conventional targeting의 실패범위를 먼저 보여 준다.</h3>
+          <p>글로벌 시장과 비모멘텀 요인에서 Sharpe 개선과 drawdown·ES 악화가 함께 나타나는지 비용 후 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>상태별 미래수익·위험 관계로 선택적 조절을 동기화한다.</h3>
+          <p>직전 volatility state별 future-return correlation과 volatility autocorrelation을 비교해 momentum의 high state가 특별한지 본다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>극단 state에서만 capped scaling한다.</h3>
+          <p>top·bottom quintile에는 target/forecast와 cap2를 적용하고 middle three quintiles에는 exposure 1을 유지한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>밴드·무레버리지 variant로 leverage necessity를 반증한다.</h3>
+          <p>fixed target-ratio bands와 high-state-only unlevered rule을 비교해 성과가 low-state leverage에만 의존하는지 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>conditional targeting</h3>
+          <p><strong>쉽게 말하면</strong><br>항상 노출을 바꾸지 않고 위험이 과거분포의 극단에 있을 때만 조절하는 규칙이다.</p>
+          <p><strong>논문 안의 역할</strong><br>거래를 위험관리의 marginal value가 큰 state에 집중한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>BS15의 매월 continuous inverse-volatility scaling과 같은 전략이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a></div>
+        </article><article class="section-card concept-card">
+          <h3>expanding state threshold</h3>
+          <p><strong>쉽게 말하면</strong><br>현재까지 관측한 과거 월변동성만으로 top·bottom quintile 경계를 매월 다시 계산한다.</p>
+          <p><strong>논문 안의 역할</strong><br>future distribution을 보지 않는 implementable state classifier다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>전체표본 quintile을 처음부터 고정하면 look-ahead가 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a></div>
+        </article><article class="section-card concept-card">
+          <h3>target overshoot</h3>
+          <p><strong>쉽게 말하면</strong><br>목표한 장기 위험보다 실제 관리전략의 변동성이 훨씬 높거나 낮아지는 현상이다.</p>
+          <p><strong>논문 안의 역할</strong><br>항상 scaling하는 rule의 calibration과 leverage 문제를 진단한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>Sharpe가 올랐으면 target을 정확히 달성했다고 볼 수 없다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a></div>
+        </article><article class="section-card concept-card">
+          <h3>Reduction column sign</h3>
+          <p><strong>쉽게 말하면</strong><br>관리전략의 손실 절대크기에서 원전략의 손실 절대크기를 뺀 변화이므로 음수가 개선이다.</p>
+          <p><strong>논문 안의 역할</strong><br>drawdown·ES 결과의 방향을 정확히 읽게 한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>음수 reduction을 위험 악화로 읽으면 결론이 정반대가 된다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>conditional exposure rule · 직전 위험이 과거분포 top 또는 bottom state이면 target/forecast 비율로 노출을 조절하되 2배에서 막고, middle state이면 원수익을 그대로 보유한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>r_cond,t = I_t r_t min(target_t / forecast_(t-1), 2) + (1-I_t) r_t</code></pre>
+                <dl class="symbol-grid"><dt><code>I_t</code></dt><dd>extreme high 또는 low state이면 1인 indicator</dd><dt><code>target_t</code></dt><dd>t월 전에 이용 가능한 expanding long-term volatility</dd><dt><code>forecast_(t-1)</code></dt><dd>마지막 거래일을 제외한 직전월 realized volatility</dd><dt><code>2</code></dt><dd>기본 maximum leverage cap</dd></dl>
+                <p><strong>직관:</strong> 평온한 중간상태의 불필요한 turnover를 줄이고 crisis 감축과 unusually quiet state의 위험예산 사용에만 거래를 집중한다.</p>
+                <p><strong>구현할 때:</strong> state boundary와 target을 매 origin past-only로 계산하고 high-state-only unlevered variant를 별도 series로 보존한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>conventional rule · 모든 월에 다음 보유수익을 장기 target과 직전월 forecast의 비율로 연속 조절한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>r_scaled,t = r_t × target_t / forecast_(t-1)</code></pre>
+                <dl class="symbol-grid"><dt><code>r_t</code></dt><dd>노출 조절 규칙을 적용하기 전의 원 포트폴리오 월수익</dd><dt><code>target_t</code></dt><dd>expanding long-term risk target</dd><dt><code>forecast_(t-1)</code></dt><dd>직전월 risk forecast</dd></dl>
+                <p><strong>직관:</strong> conditional의 비교대상이며, 낮은 forecast에서는 계속 leverage해 turnover와 overshoot가 커질 수 있다.</p>
+                <p><strong>구현할 때:</strong> full-sample normalization factor를 쓰지 않고 rebalance 전 available date를 감사한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>10개 글로벌 주식시장과 미국·지역별 요인포트폴리오를 장기간 사용한다.</li><li>시장에는 index futures와 선물 이전 cash-minus-risk-free 연결자료를, 요인에는 investable large-cap 재구성을 쓴다.</li><li>한국에서는 여섯 WML 일별수익만으로 필요한 volatility·state·exposure를 계산할 수 있다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>직전월 daily volatility로 다음달 위험을 예측하며 마지막 거래일을 제외해 실행 하루 전 이용 가능하게 한다.</li><li>장기 target과 quintile threshold는 최소 10년 또는 일부 국제표본 5년의 past-only expanding history다.</li><li>성과 target은 다음달 managed return이며 direct MSE·QLIKE target은 없다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>매월 state·target을 순차 갱신하는 historical backtest다.</li><li>quintile·cap2를 main, quartile·fixed bands를 robustness로 둔다.</li><li>독립 hyperparameter holdout은 없으므로 한국에서는 main rule을 사전 고정한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>비용 후 mean·vol·Sharpe·MDD·ES·target ratio·turnover·maximum leverage를 본다.</li><li>state별 future-return correlation과 volatility autocorrelation은 mechanism evidence로 분리한다.</li><li>forecast accuracy와 economic utility를 한 지표로 합치지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 1</p><h3>항상 scaling하면 글로벌 시장 위험이 일관되게 줄어드는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>Sharpe 변화만 보지 말고 MDD·ES Reduction의 부호, target ratio와 turnover를 시장별로 같이 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>시장 평균 Sharpe는 소폭 높지만 여러 시장의 drawdown·ES가 악화돼 universal tail protection은 아니다.</dd>
+            <dt>검토자 해석</dt><dd>continuous targeting을 default로 두기 전에 state 선택의 필요를 점검해야 한다.</dd>
+            <dt>검토자 경계</dt><dd>음수 Reduction이 개선이고 양수가 악화라는 표 부호를 지켜야 한다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 2</p><h3>왜 momentum에 conditional rule이 특히 맞을 수 있는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>high·middle·low state의 volatility–future-return correlation과 volatility autocorrelation을 같은 factor에서 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>momentum high state에는 더 음의 future-return 관계와 높은 risk persistence가 함께 나타난다.</dd>
+            <dt>검토자 해석</dt><dd>high state에서 exposure를 줄일 경제적 채널이 다른 factors보다 강하다.</dd>
+            <dt>검토자 경계</dt><dd>상관은 causal effect도 한국 WML의 사전 state forecast 성공도 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 3 and A2</p><h3>conditional 성과가 low-state leverage에만 의존하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>conditional의 Sharpe·MDD·ES·turnover·max leverage를 conventional과 비교하고 high-only unlevered 결과가 남는지 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>momentum conditional은 낮은 turnover·cap2로 하방개선이 크고, high-only unlevered도 개선 방향을 유지한다.</dd>
+            <dt>검토자 해석</dt><dd>핵심가치는 quiet-state leverage보다 high-risk 감축일 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>일부 factor·market은 악화되고 Appendix note의 전략명칭 불일치가 있다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>high-vol momentum state에서는 risk persistence와 future-return deterioration이 함께 강해 exposure 감축의 가치가 크다.</li><li>middle state의 거래를 생략해 turnover·비용·target overshoot를 줄인다.</li><li>high-only variant가 작동하면 low-state leverage보다 crash de-risking이 주 채널이다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>Table 2의 state-conditioned correlations가 high-state channel을 지지한다.</li><li>Table 3과 A2의 lower turnover·leverage 및 downside improvement가 선택적 거래채널과 일치한다.</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>quintile·cap·기간을 같은 backtest에서 비교한 data snooping이 성과를 키웠을 수 있다.</li><li>large-cap 요인 재구성과 가정된 비용이 momentum 전략에 상대적으로 유리할 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>한국 여섯 WML의 high state에서 future-return 관계와 risk persistence가 나타나지 않으면 state mechanism을 약화한다.</li><li>conditional이 continuous BS15보다 비용 후 downside·turnover를 개선하지 못하면 한국 채택을 기각한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>글로벌 시장·미국요인·지역 momentum과 fixed bands·unlevered variant를 본다.</li><li>모든 결과에 명시적 transaction cost를 반영한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>비모멘텀 factors와 일부 markets에서는 Sharpe·tail risk가 악화된다.</li><li>quartile·band·cap variants는 독립 validation이 아니다.</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 EW/VW WML, 한국 비용·financing·세금과 MSE·QLIKE forecast accuracy는 시험하지 않았다.</li><li>온라인 Supplement의 일부 robustness를 현재 근거에서 직접 확인하지 못했다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>Table A2 note의 conventional 표기와 제목·본문의 conditional 설명이 충돌한다.</li><li>Reduction 열의 일상어 의미와 실제 음수-improvement 계산방향이 반대라 오독 위험이 크다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">previous-month volatility</th><td>각 WML의 실행가능한 직전월 daily volatility</td><td>모든 전략이 같은 available-through date를 사용하게 한다.</td></tr><tr><th scope="row">expanding quintile state·cap2</th><td>여섯 WML별 past-only state rule</td><td>cross-series threshold가 아니라 각 구성의 고유 위험분포를 보존한다.</td></tr><tr><th scope="row">conventional·conditional·unlevered</th><td>Original·BS15 RW126·세 전략 병렬</td><td>forecast model과 exposure timing의 기여를 분리한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>각 WML에서 last-day-excluded previous-month vol과 expanding target·quintile을 계산한다.</li><li>Original, BS15 continuous, conventional previous-month, conditional cap2, high-only unlevered를 생성한다.</li><li>모든 exposure의 forecast date·state boundary·applied month를 저장한다.</li><li>one-way turnover·max leverage·financing·한국 transaction cost를 차감한다.</li><li>Sharpe·worst month·MDD·99% ES·target ratio를 전체·state별로 계산한다.</li><li>quartile·fixed bands·EWMA는 사전 표시된 robustness에만 둔다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>미래월 수익을 교란해도 과거 state·target·exposure가 변하지 않는다.</li><li>conditional이 BS15 대비 비용 후 downside 지표와 turnover를 함께 개선한다.</li><li>결과가 한 WML 또는 한 위기기간에만 의존하지 않고 다수 구성·기간에서 방향이 남는다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>gross만 개선되면 turnover·financing·세금 분해를 우선한다.</li><li>high-only는 좋고 two-sided는 나쁘면 low-state leverage를 실패원인으로 본다.</li><li>state별 관계가 약하면 threshold quantile보다 risk forecast 자체의 한국 차이를 진단한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>월별 state·target·forecast·exposure 감사표</li><li>다섯 전략의 비용 후 성과·turnover·leverage 표</li><li>state별 return·risk 관계와 위기경로 그림</li><li>Reduction 부호와 실험정의를 고정한 결과 카드</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>이 논문은 forecast winner보다 exposure timing을 연구한다.</li><li>conventional targeting은 시장 tail risk를 항상 줄이지 않는다.</li><li>momentum high-vol state가 conditional rule의 핵심 채널이다.</li><li>middle state를 건너뛰어 turnover와 leverage를 줄인다.</li><li>음수 Reduction은 위험개선이라는 표 부호를 기억해야 한다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>implementable target timing을 설명한다.</li><li>conventional과 conditional 식을 구분한다.</li><li>Table 1·2·3의 질문 차이를 말한다.</li><li>Reduction 부호를 정확히 읽는다.</li><li>high-only variant의 메커니즘 의미를 설명한다.</li><li>한국에서 forecast와 exposure-rule 실험을 분리한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. conditional과 BS15 continuous scaling의 차이는 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> conditional은 극단 top·bottom state에서만 배율을 적용하고 middle state에는 노출 1을 유지한다.</p>
+          <p><strong>왜:</strong> 매월 조절하는 전략과 거래시점 자체가 다르다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 Table 1의 Sharpe 상승만으로 conventional을 성공이라 할 수 없는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 여러 시장에서 MDD와 ES가 악화되고 target overshoot·turnover 문제도 남기 때문이다.</p>
+          <p><strong>왜:</strong> 위험관리의 목적은 평균 Sharpe 하나가 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. high-only unlevered 결과가 왜 중요한가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 개선이 low-vol state의 leverage가 아니라 high-vol state의 de-risking에서도 남는지 반증하기 때문이다.</p>
+          <p><strong>왜:</strong> 저변동 leverage와 고위험 감축 중 어느 전략 메커니즘이 작동하는지와 실제 실행가능성을 분리할 수 있기 때문이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> published VOR에서 conventional targeting은 글로벌 시장의 tail risk를 일관되게 줄이지 못했지만, past-only extreme-state conditional rule은 momentum에서 비용 후 Sharpe·downside·turnover·leverage를 개선하는 방향을 보였다.</p><p><strong>이렇게 말하면 안 됨:</strong> 이 논문이 더 정확한 variance forecast를 제시했거나 conditional과 BS15가 같은 전략이며 모든 factor·한국 WML에서 Sharpe가 상승한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p18_rules">p18_rules · PDF 4쪽 · Equations 2 and 3, implementable timing</a><a class="evidence-chip" href="#locator-p18_costs">p18_costs · PDF 5쪽 · Transaction-cost assumptions</a><a class="evidence-chip" href="#locator-p18_table1">p18_table1 · PDF 6쪽 · Table 1</a><a class="evidence-chip" href="#locator-p18_table2">p18_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p18_table3">p18_table3 · PDF 10쪽 · Table 3</a><a class="evidence-chip" href="#locator-p18_table4">p18_table4 · PDF 13쪽 · Table 4</a><a class="evidence-chip" href="#locator-p18_tablea2">p18_tablea2 · PDF 16쪽 · Appendix Table A2</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>10개 글로벌 주식시장 1972–2019, 미국 factor 1963–2019, 글로벌·지역 factor 대체로 1990–2019; 각 전략은 초기 10년 뒤 시작 [원문 보고] · investability를 위해 factor는 대체로 NYSE median보다 큰 주식의 Big portfolios로 구성 [원문 보고]</dd><dt>target</dt><dd>다음달 exposure를 위한 직전월 volatility와 expanding history의 장기 volatility target·state [원문 보고]</dd><dt>information set</dt><dd>월 t-1까지의 daily returns, 직전월 volatility, expanding monthly-volatility quintiles; 위험추정에서 월말 마지막 거래일 제외 [원문 보고]</dd><dt>lookback</dt><dd>forecast는 직전월 daily volatility, target과 state boundary는 최소 10년 뒤 expanding history [원문 보고]</dd><dt>horizon</dt><dd>다음 한 달 exposure와 수익 [원문 보고]</dd><dt>model family</dt><dd>implementable conventional volatility targeting, top/bottom-quintile conditional targeting, high-state-only unlevered strategy</dd><dt>training window</dt><dd>최초 10년을 long-run target과 state initialization에 사용한 뒤 expanding history로 sequential backtest한다.</dd><dt>retune</dt><dd>매월 과거자료만으로 target·quintile boundary·직전월 forecast를 갱신한다.</dd><dt>benchmarks</dt><dd>original unscaled portfolio · implementable conventional monthly targeting · conditional top/bottom quintile · high-volatility-state-only unlevered</dd><dt>loss / test</dt><dd>forecast MSE·QLIKE는 보고하지 않는다. · Lo(2002) Sharpe difference significance · quintile·quartile·target-ratio robustness · EWMA·GARCH risk-forecast robustness</dd><dt>economic metrics</dt><dd>비용 후 return · Sharpe increase · maximum drawdown change · 99% expected-shortfall change · realized volatility/target · one-way annual turnover · maximum leverage</dd><dt>trading costs</dt><dd>futures는 최근 20년 3bp, 이전 5bp per notional · factor targeting turnover는 25bp · momentum factor 자체 rebalance는 연 400% 가정으로 100bp/년</dd><dt>turnover</dt><dd>전략 exposure 변화의 one-way annual turnover와 factor 자체 rebalance 비용을 분리한다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +214,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>future volatility를 바꿔도 과거 expanding quintile이 변하지 않는 prefix test</li><li>월말 마지막 거래일 제외와 실제 execution date를 검증하는 timing test</li><li>drawdown·ES change가 managed loss magnitude−raw loss magnitude인지 확인하는 sign test</li><li>cap·threshold가 6개 WML에서 동일한 parity test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p18_conventional</span> conventional targeting은 10개 시장 평균 Sharpe를 0.04 높였지만 4개 시장 drawdown과 8개 시장 expected shortfall을 악화시켰다.<p class="meta">sample: 10개 글로벌 주식시장 strategy sample 1982–2019 · target: 매월 conventional volatility targeting · horizon: 월별 전략 전체기간 · metric: 평균 Sharpe 변화와 위험지표 악화 시장 수 · unit: Sharpe 차이와 시장 개수 · comparator: original unscaled market · loss_or_test: Table 1 비용 후 성과</p><p><strong>근거:</strong> p18_table1</p><p><strong>전이 경고:</strong> 전면 targeting이 꼬리위험을 항상 줄인다는 주장을 반박하지만 한국 WML 결과는 새로 계산해야 한다.</p></li><li><span class="badge">author_result</span> <span class="badge">p18_state</span> 미국 momentum의 high-vol state에서 realized-volatility–future-return correlation은 −0.21, volatility autocorrelation은 0.71로 medium·low state보다 컸다.<p class="meta">sample: 미국 momentum factor strategy sample · target: volatility state별 다음달 return과 volatility · horizon: 1개월 · metric: 상관계수와 자기상관 · unit: 상관계수 · comparator: high·medium·low volatility states · loss_or_test: Table 2 conditional correlations</p><p><strong>근거:</strong> p18_table2</p><p><strong>전이 경고:</strong> large-cap investable 미국 factor의 상태조건부 관계이며 한국 EW/VW에 자동 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p18_global_mom</span> 글로벌 momentum 1995–2019에서 conditional strategy는 평균 Sharpe +0.23, maximum-drawdown 변화 −20.1%p, ES 변화 −9.4%p, turnover 1.2를 보고했다.<p class="meta">sample: 글로벌 momentum 1995–2019 · target: top/bottom quintile conditional targeting · horizon: 월별 전략 전체기간 · metric: Sharpe·drawdown change·ES change·turnover · unit: 비율, 퍼센트포인트, 연간 one-way turnover · comparator: original unscaled momentum · loss_or_test: Table 3 비용 후 성과</p><p><strong>근거:</strong> p18_table3</p><p><strong>전이 경고:</strong> drawdown·ES 변화는 관리전략 손실 절대크기−원전략 손실 절대크기이므로 음수는 개선이다.</p></li><li><span class="badge">author_result</span> <span class="badge">p18_cost_leverage</span> momentum에서 conditional turnover는 conventional의 약 절반인 1.2 대 2.4였고 최대 leverage도 2.0 대 5.5로 낮았다.<p class="meta">sample: global momentum strategy sample · target: conditional versus conventional targeting · horizon: 전체 backtest · metric: one-way turnover와 maximum leverage · unit: 배수 · comparator: conventional monthly targeting · loss_or_test: Table 3과 본문 비용·레버리지 비교</p><p><strong>근거:</strong> p18_table3 · p18_costs</p><p><strong>전이 경고:</strong> 한국에서는 거래세·대차료·시장충격과 EW 실행가능성을 별도로 반영해야 한다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Conditional Volatility Targeting — Financial Analysts Journal version of record</strong><p>최종 게재본 · 2020-09-04 · 19쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 2020-09-04 공개 version of record의 물리 PDF 페이지다. 이 사이트는 파일을 재배포하지 않고 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p18_rules</strong> · artifact p18_vor · PDF 4쪽 · Equations 2 and 3, implementable timing · 검증됨</li><li><strong>p18_costs</strong> · artifact p18_vor · PDF 5쪽 · Transaction-cost assumptions · 검증됨</li><li><strong>p18_table1</strong> · artifact p18_vor · PDF 6쪽 · Table 1 · 검증됨</li><li><strong>p18_table2</strong> · artifact p18_vor · PDF 8쪽 · Table 2 · 검증됨</li><li><strong>p18_table3</strong> · artifact p18_vor · PDF 10쪽 · Table 3 · 검증됨</li><li><strong>p18_table4</strong> · artifact p18_vor · PDF 13쪽 · Table 4 · 검증됨</li><li><strong>p18_tablea2</strong> · artifact p18_vor · PDF 16쪽 · Appendix Table A2 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Conditional Volatility Targeting — Financial Analysts Journal version of record</strong><p>최종 게재본 · 2020-09-04 · 19쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 2020-09-04 공개 version of record의 물리 PDF 페이지다. 이 사이트는 파일을 재배포하지 않고 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p18_rules"><strong>p18_rules</strong> · artifact p18_vor · PDF 4쪽 · Equations 2 and 3, implementable timing · 검증됨 · <a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p18_costs"><strong>p18_costs</strong> · artifact p18_vor · PDF 5쪽 · Transaction-cost assumptions · 검증됨 · <a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p18_table1"><strong>p18_table1</strong> · artifact p18_vor · PDF 6쪽 · Table 1 · 검증됨 · <a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p18_table2"><strong>p18_table2</strong> · artifact p18_vor · PDF 8쪽 · Table 2 · 검증됨 · <a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p18_table3"><strong>p18_table3</strong> · artifact p18_vor · PDF 10쪽 · Table 3 · 검증됨 · <a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p18_table4"><strong>p18_table4</strong> · artifact p18_vor · PDF 13쪽 · Table 4 · 검증됨 · <a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p18_tablea2"><strong>p18_tablea2</strong> · artifact p18_vor · PDF 16쪽 · Appendix Table A2 · 검증됨 · <a href="https://repub.eur.nl/pub/130215/Bongaerts-Kang-van-Dijk-Conditional-volatility-targeting-2020-FAJ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>published VOR에서 conventional targeting은 시장 전반에 일관되게 성공하지 않았고 conditional targeting은 momentum에서 더 낮은 turnover·leverage와 강한 비용 후 성과를 보였다.</strong><p>이유: implementable timing과 Tables 1–4가 실패·조건부 성과·강건성을 함께 제시한다. · 교정: 글로벌 large-cap factor, state rule, 비용가정과 변화분 부호를 함께 적는다. · 근거: p18_rules · p18_costs · p18_table1 · p18_table3 · p18_table4</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>Conditional Volatility Targeting은 더 정확한 다음달 variance forecast 모형이다.</strong><p>이유: forecast MSE·QLIKE를 비교하는 논문이 아니라 exposure rule의 경제성과를 평가한다. · 교정: economic_evaluation 역할로 분류한다. · 근거: p18_rules</p></li><li><strong>conditional strategy와 BS15 continuous scaling은 같은 식이다.</strong><p>이유: 중간 state에서 exposure 1을 유지하고 target 정의·cap도 다르다. · 교정: 별도 전략 열로 비교한다. · 근거: p18_rules</p></li><li><strong>Table 1·3의 음수 drawdown/ES 변화는 위험 악화다.</strong><p>이유: 열은 managed loss magnitude−original loss magnitude여서 음수는 감소·개선이다. · 교정: 열 정의를 코드·표에 쓰고 raw return에서 재계산한다. · 근거: p18_table1 · p18_table3</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>한국 WML의 거래비용·대차료·시장충격을 원 논문과 동일한 방식으로 장기 측정하는 문제는 별도 데이터 설계가 필요하다.</li><li>state band와 cap 선택의 data-snooping 가능성은 원 표본의 robustness만으로 완전히 제거되지 않는다.</li></ul>

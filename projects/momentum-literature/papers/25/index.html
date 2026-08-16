@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/25/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Network Log-ARCH Models for Forecasting Stock Market Volatility · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,177 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>기업 네트워크 원형은 추가자료가 필요하며, 현재는 6개 WML의 과거 교차정보가 univariate HAR를 넘는지만 보는 training-only lagged network challenger로 제한한다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>6개 WML을 개별 예측할지 교차정보를 쓸지 시험할 때</li><li>graph 정의와 ensemble 선택의 data-snooping 위험을 설계할 때</li><li>기업 node와 파생 portfolio node의 경제적 의미를 구분할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>같은 달 다른 WML 실현값을 미래 target 예측에 넣을 때</li><li>상관 graph가 원문 최선이라고 주장할 때</li><li>6개 WML node를 기업 간 인과적 spillover로 해석할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>여러 자산의 위험은 서로 움직이지만, 완전한 다변량 GARCH는 파라미터가 너무 많다. 이 논문은 사전에 만든 희소 금융 network를 통해 이웃정보만 공유하는 log-ARCH를 제안하고 graph 선택 자체가 결과를 얼마나 바꾸는지 보여 준다.</p></article>
+            <article><h3>중심 질문</h3><p>개별 종목의 own volatility history에 수익·상관·동학 유사성 network의 spillover를 추가하면 독립 log-ARCH보다 표본외 예측이 좋아지는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>고차원 volatility 모델은 계산량이 크고, 기존 spatial 모델의 지리적 이웃은 금융자산의 관계를 잘 표현하지 못한다. 동시에 graph와 ensemble을 어떻게 시간순으로 선택해야 하는지도 불명확했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 선행판에서 12개 network 후보의 평균 RMSFE·MAFE는 독립 log-ARCH보다 낮고, dense graph보다 sparse KNN이 대체로 낫다. 그러나 correlation graph는 superior set에서 탈락하고, best network조차 일부 종목·loss에서 유의한 개선이 아니며 worst network는 한 반례에서 유의하게 나쁘다. 학습형 ensemble은 weight 추정구간이 충분히 명시되지 않아 strict OOS로 확정하기 어렵다. 한국 6개 WML에는 기업 간 전염이라는 해석이 아니라, 과거 cross-configuration 위험정보의 증분가치를 lagged·축소형 모델로 시험하는 설계만 이식한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a><a class="evidence-chip" href="#locator-p25_loss">p25_loss · PDF 17쪽 · Table 2</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>독립 log-ARCH를 명확한 기준선으로 둔다.</h3>
+          <p>각 종목의 log squared return이 자기 lag에만 의존하는 모델과 log-to-level bias를 다루는 smearing을 정의한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_logarch">p25_logarch · PDF 4쪽 · Equations 2.1-2.2</a><a class="evidence-chip" href="#locator-p25_logarch_forecast">p25_logarch_forecast · PDF 5쪽 · Equations 2.3-2.5</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>동시 network 상호작용을 구조식에 넣는다.</h3>
+          <p>같은 시점 이웃의 log-square와 own lag를 결합하고, 내생성 때문에 higher-order network-lag instrument를 사용하는 GMM으로 추정한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>graph 정의를 실험축으로 만든다.</h3>
+          <p>수익거리·상관거리·log-ARCH 동학거리와 dense inverse·sparse KNN을 교차해 network가 주어진 사실이 아니라 선택되는 모델요소임을 드러낸다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_loss">p25_loss · PDF 17쪽 · Table 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>평균성과를 종목별 반증과 MCS로 제한한다.</h3>
+          <p>평균 loss 개선 뒤 각 종목 DM과 superior set을 확인해 모든 node에서의 보편적 우월성 주장을 차단한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_best_dm">p25_best_dm · PDF 26쪽 · Table 3</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>forecast combination을 추가하되 누수경계를 남긴다.</h3>
+          <p>simple average·minimum variance·COLS를 비교하지만 학습형 weight의 별도 validation 여부가 불명확해 탐색결과로 제한한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_combination">p25_combination · PDF 28쪽 · Table 6</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>network log-ARCH</h3>
+          <p><strong>쉽게 말하면</strong><br>내 과거 위험뿐 아니라 연결된 자산들의 위험정보를 제한적으로 빌리는 모델이다.</p>
+          <p><strong>논문 안의 역할</strong><br>고차원 full covariance 대신 사전 정의된 W로 cross-sectional 상호작용을 축소한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>edge가 충격의 인과 전파경로나 실제 거래관계를 뜻하는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a></div>
+        </article><article class="section-card concept-card">
+          <h3>simultaneous spillover</h3>
+          <p><strong>쉽게 말하면</strong><br>같은 날 연결된 자산들의 위험이 함께 결정된다는 구조다.</p>
+          <p><strong>논문 안의 역할</strong><br>양변에 동시 node 값이 있어 단순 OLS가 아니라 도구변수 GMM과 행렬역이 필요하다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>미래 이웃값을 예측입력으로 직접 넣어도 된다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a></div>
+        </article><article class="section-card concept-card">
+          <h3>sparse KNN graph</h3>
+          <p><strong>쉽게 말하면</strong><br>각 node를 가장 비슷한 몇 개 node에만 연결한다.</p>
+          <p><strong>논문 안의 역할</strong><br>dense inverse-distance보다 잡음과 parameter propagation을 줄이는 축소장치다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>k가 작을수록 항상 좋거나 특정 k가 다른 표본에도 고정된다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_loss">p25_loss · PDF 17쪽 · Table 2</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a></div>
+        </article><article class="section-card concept-card">
+          <h3>smearing correction</h3>
+          <p><strong>쉽게 말하면</strong><br>로그로 예측한 값을 원래 분산척도로 되돌릴 때 오차평균 때문에 생기는 편의를 보정한다.</p>
+          <p><strong>논문 안의 역할</strong><br>log-square error의 비영평균을 forecast constant에 반영한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>zero log 문제나 measurement error를 모두 해결하는 보정은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_logarch_forecast">p25_logarch_forecast · PDF 5쪽 · Equations 2.3-2.5</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 2.7 and 2.10 · 동시 network 식을 역행렬로 풀어 다음 날 조건부 로그분산을 예측한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>Y*_t=φ₀+ρWY*_t+ΓY*_{t−1}+u_t; ĥ*_{t+1|t}=(I−ρW)⁻¹(φ₀+ΓY*_t)</code></pre>
+                <dl class="symbol-grid"><dt><code>Y*_t</code></dt><dd>node별 log squared return vector</dd><dt><code>ĥ*_{t+1|t}</code></dt><dd>다음 날 조건부 로그분산 forecast vector</dd><dt><code>W</code></dt><dd>행 표준화된 금융 network</dd><dt><code>ρ</code></dt><dd>동시 network 상호작용 강도</dd><dt><code>Γ</code></dt><dd>node별 own-lag 계수</dd></dl>
+                <p><strong>직관:</strong> full pairwise model 대신 W가 허용한 이웃만 한 번에 전달한다.</p>
+                <p><strong>구현할 때:</strong> I−ρW의 spectral radius·condition number를 검사하고, 한국 주사양에서는 same-month simultaneous 구조보다 lagged reduced form을 먼저 쓴다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 3.1–3.2 · 로그 분산예측과 실현 제곱수익의 거리에서 큰 오차를 제곱하거나 절대값으로 평가한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RMSFE = √mean[(log σ̂²−log y²)²],  MAFE = mean|log σ̂²−log y²|</code></pre>
+                <dl class="symbol-grid"><dt><code>σ̂²</code></dt><dd>조건부 분산 forecast</dd><dt><code>y²</code></dt><dd>실현 제곱수익 proxy</dd></dl>
+                <p><strong>직관:</strong> 제곱손실과 절대손실은 극단오차를 다르게 벌점화해 graph 순위를 바꿀 수 있다.</p>
+                <p><strong>구현할 때:</strong> zero 또는 작은 제곱수익의 epsilon floor를 training-only 규칙으로 고정하고 QLIKE도 별도 추가한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_loss_equations">p25_loss_equations · PDF 14쪽 · Equations 3.1 and 3.2</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 여러 미국 대형주 daily log return의 균형패널을 쓰고 graph도 training data에서 만든다(근거: p25_data).</li><li>한국 적응은 6개 WML 월별 위험 panel이며 node가 기업이 아니라 같은 신호의 설계변형임을 명시한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>원문은 다음 거래일 log conditional variance를 다음 날 log squared return proxy로 평가한다(근거: p25_loss).</li><li>한국은 t월 이하의 lagged peer 정보로 t+1월 분산을 예측하며 same-month peer target을 feature로 금지한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>고정길이 rolling window에서 parameters를 매일 재추정하고 graph는 초기 training에서 고정된 것으로 보수적으로 읽는다(근거: p25_loss).</li><li>한국 graph·k·floor·ensemble은 nested chronological validation에서 고정하고 final test에서 바꾸지 않는다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>평균 loss 뒤에 종목별 DM과 MCS 반례를 반드시 확인한다(근거: p25_best_dm, p25_counterexample).</li><li>한국은 월별 평균 loss와 panel block bootstrap을 쓰고 6개 node를 독립표본으로 세지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_data">p25_data · PDF 11쪽 · Table 1</a><a class="evidence-chip" href="#locator-p25_logarch">p25_logarch · PDF 4쪽 · Equations 2.1-2.2</a><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a><a class="evidence-chip" href="#locator-p25_loss_equations">p25_loss_equations · PDF 14쪽 · Equations 3.1 and 3.2</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 2</p><h3>network 정보가 평균적으로 도움이 되는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>독립 benchmark와 12 graph의 평균 RMSFE·MAFE를 비교하고 dense 대 KNN, 거리별 순위를 분리한다.</dd>
+            <dt>저자 보고 결과</dt><dd>모든 network 후보의 평균 loss가 benchmark보다 낮고 sparse KNN이 대체로 더 낮다.</dd>
+            <dt>검토자 해석</dt><dd>축소된 cross-series 정보가 own-history에 증분가치를 줄 가능성이 있다.</dd>
+            <dt>검토자 경계</dt><dd>평균은 node별 손실과 유의성 반례를 숨기므로 보편적 우월성으로 읽으면 안 된다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_loss">p25_loss · PDF 17쪽 · Table 2</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 3–5</p><h3>모든 node에서 개선되고 어떤 graph가 살아남는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>best와 worst network의 종목별 DM 부호·p값을 확인한 뒤 MCS의 모델코드와 label을 대조한다.</dd>
+            <dt>저자 보고 결과</dt><dd>best network도 VZ squared loss에서 유의개선이 아니고 worst network는 같은 종목에서 유의하게 나쁜 반례가 있으며, superior set은 sparse KNN으로 제한된다.</dd>
+            <dt>검토자 해석</dt><dd>graph 선택은 핵심이고 all-node superiority는 성립하지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>한 MCS 행의 k label과 model code가 충돌해 최종판 확인 전 코드 기준 판독이 필요하다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_best_dm">p25_best_dm · PDF 26쪽 · Table 3</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 6</p><h3>여러 graph를 결합하면 더 좋아지는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>학습이 없는 simple average와 realized outcome이 필요한 minimum-variance·COLS를 분리해 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>COLS와 minimum-variance의 평균 loss가 낮지만 weight 학습구간이 명확히 분리돼 있지 않다.</dd>
+            <dt>검토자 해석</dt><dd>ensemble 가능성은 있으나 simple average가 더 감사 가능한 기준선이다.</dd>
+            <dt>검토자 경계</dt><dd>test actual로 weight를 학습했다면 strict OOS가 아니므로 확정적 추가개선으로 인용할 수 없다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_combination">p25_combination · PDF 28쪽 · Table 6</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>비슷한 기업의 위험이 함께 움직여 own lag만으로 놓치는 정보를 희소 network 이웃이 보완한다는 해석이다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>여러 거리에서 KNN graph의 평균 loss가 독립 log-ARCH보다 낮고 일부 KNN만 superior set에 남는다(근거: p25_loss, p25_counterexample).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>공통 시장요인, survivor-balanced panel, scale/outlier에 민감한 거리와 graph 선택편의가 같은 개선을 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>common-factor와 own-HAR를 통제한 뒤 lagged cross-WML 모델이 untouched test에서 개선하지 못하면 한국 cross-information 채널은 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>세 거리, dense/KNN graph, 두 loss, 종목별 DM, MCS와 ensemble을 비교한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>종목별 반례가 있고 correlation graph는 superior set에 남지 않으며 학습형 ensemble의 strict OOS가 불명확하다(근거: p25_counterexample, p25_combination).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>동적 point-in-time universe, intraday RV·QLIKE, common-factor 제거, 한국 6-WML와 월 horizon은 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>본문의 all-stock 표현과 VZ 표가 충돌하고, rho·k·MCS label에도 선행판 내부 불일치가 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_loss">p25_loss · PDF 17쪽 · Table 2</a><a class="evidence-chip" href="#locator-p25_best_dm">p25_best_dm · PDF 26쪽 · Table 3</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a><a class="evidence-chip" href="#locator-p25_combination">p25_combination · PDF 28쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">29개 기업 node</th><td>6개 WML 구성 node</td><td>경제적 전염이 아니라 cross-configuration 정보의 증분가치로 해석을 낮춘다.</td></tr><tr><th scope="row">동시 network log-ARCH</th><td>lagged pooled/network HAR</td><td>월말 정보시점을 보장하고 작은 표본의 GMM 불안정을 줄인다.</td></tr><tr><th scope="row">여러 거리·KNN</th><td>none·shrinkage-correlation·사전 고정 KNN</td><td>graph search 공간을 제한하고 final-test 선택편의를 차단한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>RW126·RW252·own-HAR·pooled-lag baseline을 먼저 동결한다.</li><li>각 origin의 training 데이터만으로 shrinkage graph를 만들고 edge snapshot을 저장한다.</li><li>same-month 값 없이 lagged peer block을 추가한 reduced-form 모델을 적합한다.</li><li>none·cross-mean·한 KNN graph를 inner validation에서 비교해 하나를 고정한다.</li><li>QLIKE·MSE·MAE를 공통 월에서 계산하고 month-level bootstrap을 적용한다.</li><li>simple-average ensemble까지만 기본으로 허용하고 학습형 weight는 별도 nested validation에서만 쓴다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>network 후보가 own/pooled baseline보다 untouched-test primary loss를 개선한다.</li><li>개선이 특정 한 WML에 집중되지 않고 graph 변경에 완전히 뒤집히지 않는다.</li><li>동일 BS15 mapping의 비용 후 성과가 악화되지 않으며 모든 edge·tuning이 training-only다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>평균만 좋아지면 구성별 loss와 특정 node의 악화를 먼저 확인한다.</li><li>graph가 불안정하면 shrinkage·k·distance scale과 adjacency turnover를 감사한다.</li><li>로그 loss가 폭발하면 zero floor·단위·nonfinite forecast를 점검한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 graph edge list·hash·parameter CSV</li><li>own/pooled/network 중첩 loss 표</li><li>구성별 DM·월 block-bootstrap 결과</li><li>ensemble weight provenance와 동일 BS15 경제성과표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a><a class="evidence-chip" href="#locator-p25_loss_equations">p25_loss_equations · PDF 14쪽 · Equations 3.1 and 3.2</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>network는 cross-series 정보를 축소해 쓰는 장치이지 인과 전염지도는 아니다.</li><li>평균적으로 network가 좋아도 모든 node에서 좋아지는 것은 아니다.</li><li>sparse KNN이 dense·correlation graph보다 강했지만 graph 선택은 핵심 tuning이다.</li><li>한국 6-WML에는 lagged reduced form과 strict chronological selection만 적응한다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>독립 log-ARCH와 network 구조식의 차이를 설명할 수 있다.</li><li>I−ρW 안정성 검사가 필요한 이유를 말할 수 있다.</li><li>dense와 KNN graph의 bias-variance 차이를 설명할 수 있다.</li><li>평균 loss·DM·MCS를 순서대로 읽을 수 있다.</li><li>학습형 ensemble의 validation provenance를 감사할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a><a class="evidence-chip" href="#locator-p25_loss">p25_loss · PDF 17쪽 · Table 2</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a><a class="evidence-chip" href="#locator-p25_combination">p25_combination · PDF 28쪽 · Table 6</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 same-time 이웃 log-square를 OLS로 바로 넣으면 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 구조식 양변에 같은 시점 node 값이 있어 내생성이 생기므로 원문은 network-lag instruments와 GMM을 사용한다.</p>
+          <p><strong>왜:</strong> 동시모형의 식별문제를 이해한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_network">p25_network · PDF 6쪽 · Equations 2.6-2.8</a><a class="evidence-chip" href="#locator-p25_network_forecast">p25_network_forecast · PDF 7쪽 · Equations 2.9-2.10</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. Table 2 평균개선만으로 all-stock superiority를 말할 수 없는 이유는?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 종목별 DM 표에 best network 비유의와 worst network 유의악화 반례가 있기 때문이다.</p>
+          <p><strong>왜:</strong> 평균과 개별 실패를 함께 읽는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_best_dm">p25_best_dm · PDF 26쪽 · Table 3</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 한국 6-WML node의 edge를 causal spillover로 부르면 왜 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 여섯 시계열은 같은 종목·신호에서 파생된 설계변형이라 공통 측정·구성 효과가 강하기 때문이다.</p>
+          <p><strong>왜:</strong> 경제적 node 의미의 외삽경계를 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_data">p25_data · PDF 11쪽 · Table 1</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 미국 대형주 선행판에서 network log-ARCH는 평균 loss를 낮췄고 sparse KNN이 강했지만, 종목별 반례와 graph·ensemble 선택 불확실성이 남았다.</p><p><strong>이렇게 말하면 안 됨:</strong> 모든 종목에서 network가 유의하게 우월했고 6개 WML edge가 인과적 위험전염을 증명하며 COLS가 엄격한 OOS에서 확정적으로 최선이라고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p25_loss">p25_loss · PDF 17쪽 · Table 2</a><a class="evidence-chip" href="#locator-p25_counterexample">p25_counterexample · PDF 27쪽 · Tables 4–5</a><a class="evidence-chip" href="#locator-p25_combination">p25_combination · PDF 28쪽 · Table 6</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>2010-10-01–2022-10-31 DJIA 29개 종목의 3,040일 균형 일별 로그수익 패널 [원문 보고]</dd><dt>target</dt><dd>각 종목의 다음 날 log conditional variance, 다음 날 squared log return으로 평가 [원문 보고]</dd><dt>information set</dt><dd>각 종목 전일 log squared return, training 자료로 만든 거리 graph, 동시적 network 구조와 smearing correction [원문 보고]</dd><dt>lookback</dt><dd>log-ARCH order 1, 모수 rolling window 2,540거래일 [원문 보고]</dd><dt>horizon</dt><dd>1거래일 [원문 보고]</dd><dt>model family</dt><dd>independent log-ARCH(1), 동시적 network log-ARCH GMM, 세 거리×inverse/KNN graph, forecast combinations</dd><dt>training window</dt><dd>최초 2,540일 뒤 마지막 500일 OOS; 매 forecast마다 2,540일 고정창으로 모수를 재추정한다.</dd><dt>retune</dt><dd>모수는 매일 rolling 재추정하며 graph의 갱신주기는 preprint 본문만으로 하나의 절차로 고정되지 않는다.</dd><dt>benchmarks</dt><dd>29 independent log-ARCH models · 12 network graph definitions · simple-average ensemble</dd><dt>loss / test</dt><dd>RMSFE of log-variance error · MAFE of log-variance error · 종목별 Diebold–Mariano test · Model Confidence Set · graph-distance·sparsity 비교</dd><dt>economic metrics</dt><dd>Sharpe·BS15 scaling·turnover는 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래전략과 비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 turnover를 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +214,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>target month 이전 timestamp assertion</li><li>training-only graph snapshot hash test</li><li>same-month peer feature 차단 test</li><li>graph spectral radius·condition number test</li><li>ensemble weight의 nested validation separation test</li><li>월 단위 panel bootstrap cluster test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p25_average_gain</span> 평균 RMSFE는 independent 2.8202에서 Euclidean k=3 network 2.4457로, 평균 MAFE는 2.0018에서 volatility-distance k=10 network 1.8559로 낮아졌다.<p class="meta">sample: 29개 DJIA 종목의 마지막 500거래일 · target: 다음 날 log variance · horizon: 1거래일 · metric: 29종목 평균 RMSFE·MAFE · unit: log forecast-error loss · comparator: independent log-ARCH · loss_or_test: RMSFE and MAFE</p><p><strong>근거:</strong> p25_loss</p><p><strong>전이 경고:</strong> 기업 29-node·일별 결과이며 6개 파생 WML의 월예측으로 직접 이전되지 않는다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p25_vz_counterexample</span> 모든 종목에서 network가 유의하게 좋다는 본문 서술과 달리 VZ의 best-network squared-error DM은 p=0.27이었고 worst network는 DM −3.52·p=0.00으로 benchmark보다 나쁜 방향이었다.<p class="meta">sample: VZ의 500일 OOS · target: 다음 날 log variance · horizon: 1거래일 · metric: squared-error DM statistic과 p-value · unit: statistic and probability · comparator: best 또는 worst network 대 independent log-ARCH · loss_or_test: Diebold–Mariano</p><p><strong>근거:</strong> p25_best_dm · p25_counterexample</p><p><strong>전이 경고:</strong> preprint 내부 반증이며 최종 VOR에서 수정됐는지 별도 대조 전까지 판본 조건을 붙인다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p25_graph_selection</span> MCS에는 sparse KNN 세 사양만 남고 correlation·dense inverse graph는 빠졌으며, Table 5의 squared-loss 두 번째 row는 k label과 model code가 서로 맞지 않는다.<p class="meta">sample: 29개 DJIA 종목 OOS · target: 다음 날 log variance · horizon: 1거래일 · metric: MCS survivor와 표 label 정합성 · unit: model set · comparator: 12 graph candidates · loss_or_test: Model Confidence Set</p><p><strong>근거:</strong> p25_counterexample</p><p><strong>전이 경고:</strong> graph 정의를 test 성과로 사후 선택하면 안 되며 불일치 row의 정확한 k는 저자 코드·VOR 대조 전 확정하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Network log-ARCH models for forecasting stock market volatility — arXiv v1</strong><p>프리프린트 · 2023-03-20 · 28쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 28쪽 arXiv v1 author preprint 기준이다. 2024년 IJF VOR에서 식·표 오기가 수정됐는지 판본 간 대조하지 않았고 PDF는 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p25_logarch</strong> · artifact p25_preprint · PDF 4쪽 · Equations 2.1-2.2 · 검증됨</li><li><strong>p25_network</strong> · artifact p25_preprint · PDF 6쪽 · Equations 2.6-2.8 · 검증됨</li><li><strong>p25_data</strong> · artifact p25_preprint · PDF 11쪽 · Table 1 · 검증됨</li><li><strong>p25_loss</strong> · artifact p25_preprint · PDF 17쪽 · Table 2 · 검증됨</li><li><strong>p25_best_dm</strong> · artifact p25_preprint · PDF 26쪽 · Table 3 · 검증됨</li><li><strong>p25_counterexample</strong> · artifact p25_preprint · PDF 27쪽 · Tables 4–5 · 검증됨</li><li><strong>p25_combination</strong> · artifact p25_preprint · PDF 28쪽 · Table 6 · 검증됨</li><li><strong>p25_logarch_forecast</strong> · artifact p25_preprint · PDF 5쪽 · Equations 2.3-2.5 · 검증됨</li><li><strong>p25_network_forecast</strong> · artifact p25_preprint · PDF 7쪽 · Equations 2.9-2.10 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Network log-ARCH models for forecasting stock market volatility — arXiv v1</strong><p>프리프린트 · 2023-03-20 · 28쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 28쪽 arXiv v1 author preprint 기준이다. 2024년 IJF VOR에서 식·표 오기가 수정됐는지 판본 간 대조하지 않았고 PDF는 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p25_logarch"><strong>p25_logarch</strong> · artifact p25_preprint · PDF 4쪽 · Equations 2.1-2.2 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_network"><strong>p25_network</strong> · artifact p25_preprint · PDF 6쪽 · Equations 2.6-2.8 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_data"><strong>p25_data</strong> · artifact p25_preprint · PDF 11쪽 · Table 1 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_loss"><strong>p25_loss</strong> · artifact p25_preprint · PDF 17쪽 · Table 2 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_best_dm"><strong>p25_best_dm</strong> · artifact p25_preprint · PDF 26쪽 · Table 3 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_counterexample"><strong>p25_counterexample</strong> · artifact p25_preprint · PDF 27쪽 · Tables 4–5 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_combination"><strong>p25_combination</strong> · artifact p25_preprint · PDF 28쪽 · Table 6 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_logarch_forecast"><strong>p25_logarch_forecast</strong> · artifact p25_preprint · PDF 5쪽 · Equations 2.3-2.5 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_network_forecast"><strong>p25_network_forecast</strong> · artifact p25_preprint · PDF 7쪽 · Equations 2.9-2.10 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p25_loss_equations"><strong>p25_loss_equations</strong> · artifact p25_preprint · PDF 14쪽 · Equations 3.1 and 3.2 · 검증됨 · <a href="https://arxiv.org/pdf/2303.11064" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>preprint의 29개 DJIA 종목에서 network 후보들은 평균 RMSFE·MAFE가 independent log-ARCH보다 낮았고 graph 정의가 순위에 중요했다.</strong><p>이유: Table 2와 MCS가 평균 개선과 sparse graph 선택을 보여준다. · 교정: 평균 결과와 VZ 종목별 반례를 함께 쓴다. · 근거: p25_loss · p25_best_dm · p25_counterexample</p></li><li><strong>한국 6개 WML에는 과거 cross-series 정보만 쓰는 축소형 challenger를 만들 수 있다.</strong><p>이유: node 의미와 horizon을 바꾼 적응은 가능하나 원형 동시 firm network와 다르다. · 교정: lagged reduced-form adaptation으로 명명한다. · 근거: p25_network</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>best와 worst network가 모든 종목·loss에서 benchmark보다 유의하게 좋았다.</strong><p>이유: VZ의 best squared loss는 비유의이고 worst는 유의하게 나쁜 방향이다. · 교정: 평균 개선과 종목별 예외를 분리한다. · 근거: p25_best_dm · p25_counterexample</p></li><li><strong>correlation graph가 원문 최선이며 6개 WML도 causal spillover node다.</strong><p>이유: correlation graph는 MCS에서 빠졌고 6개 WML은 같은 종목·신호의 설계변형이다. · 교정: training-only graph의 incremental forecast value만 평가한다. · 근거: p25_counterexample</p></li><li><strong>COLS ensemble의 Table 6 수치는 strict nested OOS 개선이다.</strong><p>이유: 조합 weight의 별도 training split이 preprint에 명료하지 않다. · 교정: simple average를 보수적 기준으로 두고 learned weight는 nested validation에서만 fit한다. · 근거: p25_combination</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>최종 IJF 판본에서 rho 식·k 후보·Table 5 label·VZ DM가 수정됐는지 이 레코드에서 판본 간 대조하지 않았다.</li><li>저자 코드의 graph 갱신, zero 처리, GMM instrument, MCS와 ensemble-weight 학습표본은 근거 범위 밖이다.</li></ul>

@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/27/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>VIX-managed portfolios · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,186 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>과거 WML 가격정보의 대체가 아니라 VKOSPI라는 옵션시장 외부상태가 비용 후 scaling에 증분가치를 주는지 보는 경제성 challenger이며, 해당 시계열을 확보하기 전에는 구현 대상이 아니다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>과거 realized risk와 forward-looking implied-risk signal을 비교할 때</li><li>weight 안정성과 거래비용이 alpha·Sharpe에 미치는 경로를 볼 때</li><li>한국 확장에 필요한 VKOSPI 자료요건을 명시할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>현재 WML 일별수익만으로 VIX 전략을 구현할 때</li><li>VIX를 개별 WML의 정확한 미래분산으로 부를 때</li><li>working-paper Table 9의 충돌을 숨기고 anomaly count를 인용할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>과거 수익으로 만든 RV는 뒤를 보지만 VIX는 옵션가격이 반영한 미래 시장위험 정보를 담는다. 이 논문은 VIX가 forecast loss보다 실제 관리비중의 안정성과 비용 후 성과에서 어떤 차이를 만드는지 묻는다.</p></article>
+            <article><h3>중심 질문</h3><p>공통 option-implied risk signal로 다음 달 노출을 조절하면 자산별 realized variance 관리보다 비중이 안정되고 거래비용 후 alpha가 더 오래 남는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>기존 관리포트폴리오 연구는 backward-looking RV와 거래비용의 약점을 지적했지만, 공통 VIX 신호·downside 변형·다양한 test assets를 같은 recursive normalization 아래 폭넓게 비교한 증거는 제한적이었다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>저자 선행판의 핵심은 VIX가 모든 factor의 Sharpe를 높였다는 것이 아니다. VIX 비중은 RV 비중보다 덜 움직여 단순 overlay 비용을 적용한 뒤 spanning alpha가 더 잘 유지되지만, 176 anomalies의 Sharpe 차이는 양·음이 거의 균형이다. 낮은 kurtosis와 tail-state 그림은 weight-stability 설명과 정합적이지만 인과 메커니즘을 증명하지 않는다. 한국에서는 VKOSPI를 확보·판본·단위·공개시점까지 감사한 뒤에만 공통 외부정보 challenger로 시험하고, RW126 가격자료-only baseline을 대체하지 않는다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_scaling">p27_scaling · PDF 7쪽 · Equations 1–3</a><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>네 위험신호를 같은 recursive scaling에 넣는다.</h3>
+          <p>VIX·downside VIX와 자산별 RV·downside RV를 직전 월에 계산하고, 최초 과거창 이후 매월 과거자료만으로 정규화 상수를 갱신한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_scaling">p27_scaling · PDF 7쪽 · Equations 1–3</a><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>factor·MVE·anomaly에서 alpha와 Sharpe를 분리한다.</h3>
+          <p>spanning alpha가 양인지와 관리전략 Sharpe가 원전략보다 높은지는 다른 통계이므로 횡단 부호까지 따로 센다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>비용 후 차이를 비중안정성으로 추적한다.</h3>
+          <p>여러 bp 비용에서 alpha가 얼마나 남는지 보고 위험신호별 평균 절대 비중변화를 비교한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a><a class="evidence-chip" href="#locator-p27_turnover">p27_turnover · PDF 31쪽 · Table 8</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>tail-moment 채널을 보조증거로 점검한다.</h3>
+          <p>VIX 관리수익의 왜도·첨도가 RV 관리보다 안정적인지 factor와 anomalies에서 비교해 옵션신호가 tail state를 대리한다는 해석을 검토한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_factor_moments">p27_factor_moments · PDF 35쪽 · Table 10</a><a class="evidence-chip" href="#locator-p27_anomaly_moments">p27_anomaly_moments · PDF 37쪽 · Table 12</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>선행판 내부 수치충돌을 결과경계로 남긴다.</h3>
+          <p>비용표의 한 zero-cost anomaly count가 앞 표와 불일치하고 합계도 맞지 않아 해당 행을 확정 근거에서 제외한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p27_table9_conflict">p27_table9_conflict · PDF 32쪽 · Table 9</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>공통 implied-risk signal</h3>
+          <p><strong>쉽게 말하면</strong><br>각 factor 자체가 아니라 시장 옵션가격에서 나온 하나의 위험신호를 모든 전략에 적용한다.</p>
+          <p><strong>논문 안의 역할</strong><br>시장 전체의 forward-looking 변동·tail state를 자산별 exposure에 전달한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>각 WML의 조건부분산에 대한 unbiased forecast나 자산별 옵션분산은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a></div>
+        </article><article class="section-card concept-card">
+          <h3>recursive normalization</h3>
+          <p><strong>쉽게 말하면</strong><br>그 달까지의 관리·원수익 변동성을 맞추도록 scale을 매월 다시 계산한다.</p>
+          <p><strong>논문 안의 역할</strong><br>전체표본 상수의 미래정보를 줄이고 서로 다른 risk proxy의 scale을 비교가능하게 만든다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>모든 연구자 선택까지 untouched OOS가 되거나 고정 12% 목표와 같아지는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_scaling">p27_scaling · PDF 7쪽 · Equations 1–3</a></div>
+        </article><article class="section-card concept-card">
+          <h3>weight stability</h3>
+          <p><strong>쉽게 말하면</strong><br>월별 위험노출이 얼마나 덜 출렁이는지를 뜻한다.</p>
+          <p><strong>논문 안의 역할</strong><br>절대 비중변화가 작으면 선형 overlay cost가 작아져 gross alpha가 net에 더 남는다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>종목 수준 turnover·대차·세금까지 낮다는 직접 증거는 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a><a class="evidence-chip" href="#locator-p27_turnover">p27_turnover · PDF 31쪽 · Table 8</a></div>
+        </article><article class="section-card concept-card">
+          <h3>downside VIX</h3>
+          <p><strong>쉽게 말하면</strong><br>시장수익이 음수인 날의 VIX 제곱만 월별로 모은 신호다.</p>
+          <p><strong>논문 안의 역할</strong><br>시장 하락일에 나타난 option-implied risk를 강조한 공통 proxy다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>옵션가격에서 직접 분해한 risk-neutral downside variance와 동일하지 않다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 1–3 · 매 시점까지 관리수익과 원수익의 누적 표본분산이 같도록 c_t를 과거자료로 재설정한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>f^σ_{t+1}=w_t f_{t+1},  w_t=c_t/σ̂_t²; Σ_{s=1}^{t}(f_s^σ−f̄_t^σ)²=Σ_{s=1}^{t}(f_s−f̄_t)².</code></pre>
+                <dl class="symbol-grid"><dt><code>σ̂_t²</code></dt><dd>t월에 관측한 조건부분산 proxy</dd><dt><code>c_t</code></dt><dd>t월까지의 표본분산을 맞추는 recursive scale</dd><dt><code>w_t</code></dt><dd>t+1월 관리수익에 적용할 노출</dd><dt><code>f̄_t^σ,f̄_t</code></dt><dd>t월까지 관리수익과 원수익의 각 표본평균</dd></dl>
+                <p><strong>직관:</strong> 신호의 단위 차이를 제거하고 risk timing 자체를 비교한다.</p>
+                <p><strong>구현할 때:</strong> 한국 주분석의 고정 12% BS15와 논문식 recursive variance matching을 서로 다른 결과열로 유지한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_scaling">p27_scaling · PDF 7쪽 · Equations 1–3</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 4–6 · 한 달의 daily VIX 제곱을 모은 공통 신호와 해당 test asset의 일별수익 제곱합을 비교한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>VIXRisk_t=(1/12)Σ_d VIX_d²;  RV_t=Σ_d(r_d−r̄_t)²</code></pre>
+                <dl class="symbol-grid"><dt><code>VIX_d</code></dt><dd>annualized VIX daily level</dd><dt><code>r_d</code></dt><dd>test asset의 일별수익</dd><dt><code>1/12</code></dt><dd>논문이 쓰는 연율 VIX의 월 단위 변환</dd></dl>
+                <p><strong>직관:</strong> forward-looking 공통 market information과 backward-looking asset-specific information의 실전 차이를 비교한다.</p>
+                <p><strong>구현할 때:</strong> VKOSPI percent/decimal과 연율·월분산 변환을 수작업 검산하고, 단일 month-end level로 임의 대체하지 않는다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 설계는 장기간 VIX·시장수익과 여러 factors·anomalies의 일별·월별수익을 결합한다(근거: p27_anomalies).</li><li>한국 원형 challenger에는 VKOSPI daily close·방법론 개편·공개시점과 KOSPI 일별 초과수익이 추가로 필요하다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>직전 월의 risk proxy로 다음 한 달 관리수익을 만들며 별도 variance-loss target은 없다(근거: p27_scaling, p27_risk_proxies).</li><li>한국에서는 t월말까지 공개된 VKOSPI만 t+1 weight에 쓰고, 동일 forecast target을 별도 계산한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>초기 과거창 뒤 c와 다요인 moments를 recursive하게 갱신하지만 여러 proxy·비용 선택에 독립 final holdout은 없다(근거: p27_scaling).</li><li>한국은 VKOSPI 가용기간 안에서 validation/final test를 사전 분리하고 결측기간을 합성 backfill하지 않는다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>alpha·Sharpe·weight change·비용·moments를 따로 보고 anomaly count 표의 충돌을 제외한다(근거: p27_anomalies, p27_table9_conflict).</li><li>VKOSPI는 forecast calibration과 동일 BS15 경제성과·비용을 모두 통과해야 채택한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_scaling">p27_scaling · PDF 7쪽 · Equations 1–3</a><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a><a class="evidence-chip" href="#locator-p27_turnover">p27_turnover · PDF 31쪽 · Table 8</a><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 5</p><h3>anomalies 전반에서 VIX가 우월한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>alpha 부호·유의 개수와 Sharpe 차이 부호·유의 개수를 서로 다른 열로 읽는다.</dd>
+            <dt>저자 보고 결과</dt><dd>VIX alpha는 176개 중 114개가 양수지만 Sharpe 차이는 양 91개·음 85개이고 유의한 음의 개수도 적지 않다.</dd>
+            <dt>검토자 해석</dt><dd>spanning 개선은 넓지만 Sharpe의 보편적 개선은 아니다.</dd>
+            <dt>검토자 경계</dt><dd>anomalies가 공통 종목·시장충격을 공유하고 다중검정 보정도 없어 개수를 독립 성공률로 읽으면 안 된다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 6·8</p><h3>비용 후 VIX 우위는 어디서 오는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>비용률별 alpha 감소와 risk proxy별 평균 절대 비중변화를 함께 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>VIX 비중변화는 RV보다 작고, stylized 비용이 커질수록 VIX alpha가 상대적으로 더 잘 남는다.</dd>
+            <dt>검토자 해석</dt><dd>forward-looking 정보의 경제가치는 forecast 수준뿐 아니라 smoother exposure path를 통해 나타날 수 있다.</dd>
+            <dt>검토자 경계</dt><dd>비용은 scalar overlay weight 변화에 대한 선형 bp이며 underlying WML 종목거래 전체가 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a><a class="evidence-chip" href="#locator-p27_turnover">p27_turnover · PDF 31쪽 · Table 8</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 10·12</p><h3>VIX가 tail risk를 더 잘 관리한다는 증거가 있는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>원·VIX·RV 전략의 skewness와 kurtosis를 factor와 anomaly 평균에서 함께 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>VIX 관리수익은 여러 비교에서 RV 관리보다 낮은 kurtosis를 보인다.</dd>
+            <dt>검토자 해석</dt><dd>비중안정성이 극단상태를 덜 증폭한다는 메커니즘과 정합적이다.</dd>
+            <dt>검토자 경계</dt><dd>moment 차이의 표준오차나 formal mediation test가 없어 causal tail-hedge 증명은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_factor_moments">p27_factor_moments · PDF 35쪽 · Table 10</a><a class="evidence-chip" href="#locator-p27_anomaly_moments">p27_anomaly_moments · PDF 37쪽 · Table 12</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 9</p><h3>비용 anomaly count를 그대로 재사용할 수 있는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>zero-cost 행을 Table 5와 대조하고 양·음 합계가 전체 포트폴리오 수와 맞는지 확인한다.</dd>
+            <dt>저자 보고 결과</dt><dd>downside-VIX 한 행은 앞 표와 다르고 합계도 맞지 않는다.</dd>
+            <dt>검토자 해석</dt><dd>해당 행은 검증된 수치근거에서 제외하고 최종판 대조 전 방향요약만 제한적으로 사용한다.</dd>
+            <dt>검토자 경계</dt><dd>선행판의 다른 비용 행까지 모두 틀렸다는 뜻은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_table9_conflict">p27_table9_conflict · PDF 32쪽 · Table 9</a><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>옵션가격의 forward-looking·tail 정보가 미래 위험상태를 더 부드럽게 반영해 RV보다 급격한 노출변화를 줄이고 비용 후 alpha를 보존한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>VIX의 작은 평균 비중변화, 비용 후 alpha의 상대적 유지와 낮은 kurtosis가 같은 방향이다(근거: p27_cost, p27_turnover, p27_anomaly_moments).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>공통신호 pooling, VIX의 scale·지속성, 특정 normalization과 crisis sample이 smoother weights를 기계적으로 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>VKOSPI가 RW126보다 weight stability나 비용 후 성과를 개선하지 못하고 forecast calibration도 나쁘면 한국 공통 implied-risk 채널은 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_anomaly_moments">p27_anomaly_moments · PDF 37쪽 · Table 12</a><a class="evidence-chip" href="#locator-p27_factor_moments">p27_factor_moments · PDF 35쪽 · Table 10</a><a class="evidence-chip" href="#locator-p27_turnover">p27_turnover · PDF 31쪽 · Table 8</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>factors·다요인 포트폴리오·176 anomalies, downside 변형, 여러 비용과 tail moments에서 방향을 확인한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>Sharpe 차이는 anomalies에서 거의 반반이고 일부 factors·MVE에서도 제한적이다(근거: p27_anomalies).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>VKOSPI, 한국 WML, 실제 종목거래·대차·funding, QLIKE·MSE 예측대회와 point-in-time 지수개편은 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>선행판의 표본종료 표기와 Table 9 count에 내부불일치가 있어 최종판 대조 전 해당 세부수치를 확정할 수 없다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a><a class="evidence-chip" href="#locator-p27_table9_conflict">p27_table9_conflict · PDF 32쪽 · Table 9</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">CBOE VIX</th><td>VKOSPI</td><td>한국 옵션시장의 공통 forward-looking 위험신호로 역할을 대응한다.</td></tr><tr><th scope="row">test-asset RV</th><td>6개 WML RW126/월별 RV</td><td>현재 가격자료-only baseline과 외부 옵션신호를 같은 운용규칙에서 비교한다.</td></tr><tr><th scope="row">downside VIX의 S&amp;P 음수일</th><td>KOSPI 음수일의 VKOSPI</td><td>WML 음수일이 아니라 시장 음수일을 써 원문의 공통상태 정의를 보존한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>VKOSPI 원자료의 최초 공개일·단위·개편·revision과 거래일을 감사한다.</li><li>KOSPI·VKOSPI를 as-of 정렬하고 월중 daily squared aggregation을 수작업 검산한다.</li><li>RW126·WML-RV·VKOSPI·downside VKOSPI risk inputs를 사전 고정한다.</li><li>논문식 recursive normalization과 고정 12% BS15를 별도 패널로 계산한다.</li><li>공통월에서 forecast loss·calibration과 weight change를 비교한다.</li><li>동일 cap·overlay cost·한국 비용 시나리오에서 Sharpe·최악월·drawdown·kurtosis를 평가한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>VKOSPI가 RW126보다 primary forecast loss 또는 calibration을 개선하고 시점감사를 통과한다.</li><li>비중변화와 비용 후 경제성과가 개선되며 Sharpe·tail 결과가 한 지표에서만 성공하지 않는다.</li><li>결과가 단위변환·cap·recursive 대 fixed-target 구분에서 방향을 유지한다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>노출이 비정상적이면 percent/decimal·연율/월분산·월중 합계 단위를 먼저 감사한다.</li><li>forecast는 좋아도 비용 후 성과가 나쁘면 공통신호의 WML별 miscalibration과 weight path를 분해한다.</li><li>초기기간 결측이 크면 backfill하지 말고 공통가용기간 결과와 가격자료-only 장기 baseline을 분리한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>VKOSPI as-of calendar·단위·방법론 감사표</li><li>월별 proxy·recursive/fixed weight·turnover CSV</li><li>forecast loss·calibration 비교표</li><li>gross/net 성과·tail moments와 비용 waterfall</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_scaling">p27_scaling · PDF 7쪽 · Equations 1–3</a><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>VIX는 자산별 분산 forecast라기보다 공통 option-implied risk signal이다.</li><li>핵심 우위는 보편적 Sharpe보다 smoother weight와 비용 후 alpha다.</li><li>alpha와 Sharpe evidence는 분리해 읽어야 한다.</li><li>한국 구현에는 VKOSPI 자료감사가 먼저이며 현재 WML 수익만으로는 원형을 만들 수 없다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>공통 VIX와 자산별 RV 신호의 차이를 설명할 수 있다.</li><li>recursive normalization과 고정 target을 구분할 수 있다.</li><li>alpha·Sharpe·weight stability를 별도 evidence로 읽을 수 있다.</li><li>Table 9 충돌 행을 왜 제외해야 하는지 설명할 수 있다.</li><li>VKOSPI adaptation의 단위·시점 test를 설계할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_scaling">p27_scaling · PDF 7쪽 · Equations 1–3</a><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a><a class="evidence-chip" href="#locator-p27_table9_conflict">p27_table9_conflict · PDF 32쪽 · Table 9</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. 왜 Table 5를 ‘176개 대부분에서 Sharpe 개선’으로 요약하면 틀리는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> VIX alpha는 넓게 양수지만 Sharpe 차이는 양 91개와 음 85개로 거의 균형이기 때문이다.</p>
+          <p><strong>왜:</strong> spanning과 Sharpe를 구분한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. VIX 비용 후 우위의 직접 경로는 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> RV보다 작은 월별 절대 비중변화가 선형 overlay 비용을 줄여 alpha를 더 보존하는 경로다.</p>
+          <p><strong>왜:</strong> signal과 execution을 연결하되 비용범위를 제한한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a><a class="evidence-chip" href="#locator-p27_turnover">p27_turnover · PDF 31쪽 · Table 8</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 왜 현재 일별 WML만으로 VIX-managed strategy를 만들 수 없는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 원 신호는 옵션시장의 daily VIX이므로 한국에서는 별도의 VKOSPI 원자료와 공개시점·단위 감사가 필요하다.</p>
+          <p><strong>왜:</strong> 필요 입력과 범위를 정확히 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_risk_proxies">p27_risk_proxies · PDF 8쪽 · Equations 4–6</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 미국 선행판에서 VIX 관리비중은 RV 관리보다 안정적이어서 단순 overlay 비용 후 alpha가 더 잘 남았지만, anomalies의 Sharpe 차이는 양·음이 거의 균형이었다.</p><p><strong>이렇게 말하면 안 됨:</strong> VIX가 모든 factor·anomaly의 Sharpe를 높이고 원문의 비용이 실제 종목·대차·funding 전체를 반영하며 Table 9 count가 내부일관적이라고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p27_anomalies">p27_anomalies · PDF 22쪽 · Table 5</a><a class="evidence-chip" href="#locator-p27_cost">p27_cost · PDF 25쪽 · Table 6</a><a class="evidence-chip" href="#locator-p27_table9_conflict">p27_table9_conflict · PDF 32쪽 · Table 9</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>1990-01-02–2023-04-30 CBOE VIX·S&amp;P 500 일별자료, 10개 미국 주식요인, 176개 surviving anomalies와 여러 MVE universe [원문 보고]</dd><dt>target</dt><dd>월 VIX 또는 realized-risk proxy로 조절한 다음 달 관리수익 [원문 보고]</dd><dt>information set</dt><dd>월중 VIX 제곱, S&amp;P 음수일 VIX 제곱, test-asset 월중 일별 realized variance·downside variance와 과거 성과 [원문 보고]</dd><dt>lookback</dt><dd>risk proxy는 직전 1개월, recursive normalization은 최초 36개월 뒤 expanding history [원문 보고]</dd><dt>horizon</dt><dd>월말 risk signal 뒤 다음 한 달 [원문 보고]</dd><dt>model family</dt><dd>VIX·downside VIX·realized variance·downside RV inverse-risk scaling과 recursive variance matching</dd><dt>training window</dt><dd>36개월 burn-in 이후 1993경부터 2023-04까지 과거자료로 recursive normalization·MVE weights를 만든다.</dd><dt>retune</dt><dd>risk proxy, normalization constant와 MVE weights를 매월 갱신한다.</dd><dt>benchmarks</dt><dd>unmanaged · VIX-managed · downside-VIX-managed · RV-managed · downside-RV-managed</dd><dt>loss / test</dt><dd>variance forecast QLIKE·MSE는 핵심평가가 아니다. · spanning regression residual · Huber–White spanning alpha · Wright multi-Sharpe test · risk-quintile moment comparison</dd><dt>economic metrics</dt><dd>alpha · Sharpe difference · weight stability · break-even cost · skewness·kurtosis</dd><dt>trading costs</dt><dd>absolute overlay weight change에 1·10·14·25·50bp 적용</dd><dt>turnover</dt><dd>평균 absolute weight change; 종목 재구성·대차·funding은 포함하지 않음</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +223,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>VKOSPI 월말 이후 수정·look-ahead 차단 test</li><li>annualized-to-monthly 단위 test</li><li>현물·옵션 거래일 정렬 test</li><li>downside day definition lock test</li><li>동일 BS15 target·cap test</li><li>Table-like sign counts 합계 test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p27_alpha_sharpe_split</span> 176개 anomaly에서 VIX alpha는 114개 양·47개 유의였지만 Sharpe 차이는 양 91개·유의 16개, 음 85개·유의 18개로 거의 반반이었다.<p class="meta">sample: 176개 미국 anomaly portfolios · target: VIX-managed monthly return · horizon: 월별 · metric: alpha와 Sharpe difference의 부호·유의 개수 · unit: 포트폴리오 개수 · comparator: unmanaged anomaly · loss_or_test: spanning alpha and Wright Sharpe tests</p><p><strong>근거:</strong> p27_anomalies</p><p><strong>전이 경고:</strong> alpha 우위가 Sharpe 우위와 같지 않고 surviving anomaly 집합은 독립 176회 검정이 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p27_weight_cost</span> anomaly 평균 absolute weight change는 VIX 0.25, downside VIX 0.49, RV 0.66, downside RV 0.65였고, 25bp에서 VIX-managed MKT·MOM alpha는 약 2.23%·2.30%로 RV 기반보다 잘 유지됐다.<p class="meta">sample: 10 factors와 176 anomalies의 working-paper 분석 · target: 비용 후 managed return · horizon: 월별 · metric: absolute weight change와 alpha · unit: weight units, 연율 % · comparator: RV·downside-RV management · loss_or_test: 25bp overlay cost scenario</p><p><strong>근거:</strong> p27_cost · p27_turnover</p><p><strong>전이 경고:</strong> 단순 overlay 비용이며 한국 WML 종목 재구성·대차·세금 전체를 포함하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p27_tail_moments</span> 176개 anomaly 평균 kurtosis는 원 전략 9.09, VIX 6.10, RV 9.75, downside RV 10.77로 보고돼 VIX weight 안정성과 꼬리분포 개선이 함께 나타났다.<p class="meta">sample: 176개 미국 anomalies · target: managed monthly returns · horizon: 전체 평가표본 · metric: 평균 kurtosis · unit: kurtosis · comparator: unmanaged·RV-managed · loss_or_test: sample higher moments</p><p><strong>근거:</strong> p27_anomaly_moments</p><p><strong>전이 경고:</strong> 표본 고차적률의 관찰결과이며 VIX가 tail risk를 인과적으로 제거했다는 증거가 아니다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p27_table_conflict</span> Table 9의 downside-VIX 0bp row는 Table 5와 값이 충돌하고 양·음 합계가 186으로 176개 표본 수와 맞지 않아 working-paper 내부 오류로 판정된다.<p class="meta">sample: 176개 anomaly 명목표본 · target: downside-VIX anomaly results · horizon: 0bp 월별 결과 · metric: sign-count internal consistency · unit: portfolio count · comparator: Table 5와 Table 9 · loss_or_test: cross-table arithmetic audit</p><p><strong>근거:</strong> p27_anomalies · p27_table9_conflict</p><p><strong>전이 경고:</strong> 최종 VOR에서 고쳐졌는지 판본 대조 전에는 Table 9 0bp count를 인용하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>VIX-managed portfolios — conference working paper</strong><p>워킹페이퍼 · 2023-10-13 · 44쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 53a151c318710f4acc61d6d8876611b0a23c41517e1fe61e4a21a2ac70db3f3d</p><p>근거와 locator는 44쪽 학회 working paper 기준이다. 2024년 IRFA VOR의 오류 수정·표 수치와 같다고 단정하지 않고 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p27_scaling</strong> · artifact p27_wp · PDF 7쪽 · Equations 1–3 · 검증됨</li><li><strong>p27_risk_proxies</strong> · artifact p27_wp · PDF 8쪽 · Equations 4–6 · 검증됨</li><li><strong>p27_anomalies</strong> · artifact p27_wp · PDF 22쪽 · Table 5 · 검증됨</li><li><strong>p27_cost</strong> · artifact p27_wp · PDF 25쪽 · Table 6 · 검증됨</li><li><strong>p27_turnover</strong> · artifact p27_wp · PDF 31쪽 · Table 8 · 검증됨</li><li><strong>p27_table9_conflict</strong> · artifact p27_wp · PDF 32쪽 · Table 9 · 검증됨</li><li><strong>p27_factor_moments</strong> · artifact p27_wp · PDF 35쪽 · Table 10 · 검증됨</li><li><strong>p27_anomaly_moments</strong> · artifact p27_wp · PDF 37쪽 · Table 12 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>VIX-managed portfolios — conference working paper</strong><p>워킹페이퍼 · 2023-10-13 · 44쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 53a151c318710f4acc61d6d8876611b0a23c41517e1fe61e4a21a2ac70db3f3d</p><p>근거와 locator는 44쪽 학회 working paper 기준이다. 2024년 IRFA VOR의 오류 수정·표 수치와 같다고 단정하지 않고 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p27_scaling"><strong>p27_scaling</strong> · artifact p27_wp · PDF 7쪽 · Equations 1–3 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p27_risk_proxies"><strong>p27_risk_proxies</strong> · artifact p27_wp · PDF 8쪽 · Equations 4–6 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p27_anomalies"><strong>p27_anomalies</strong> · artifact p27_wp · PDF 22쪽 · Table 5 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p27_cost"><strong>p27_cost</strong> · artifact p27_wp · PDF 25쪽 · Table 6 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p27_turnover"><strong>p27_turnover</strong> · artifact p27_wp · PDF 31쪽 · Table 8 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p27_table9_conflict"><strong>p27_table9_conflict</strong> · artifact p27_wp · PDF 32쪽 · Table 9 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p27_factor_moments"><strong>p27_factor_moments</strong> · artifact p27_wp · PDF 35쪽 · Table 10 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p27_anomaly_moments"><strong>p27_anomaly_moments</strong> · artifact p27_wp · PDF 37쪽 · Table 12 · 검증됨 · <a href="https://www.efmaefm.org/0EFMAMEETINGS/EFMA%20ANNUAL%20MEETINGS/2024-Lisbon/papers/EFMA%202024_stage-6443_question-Full%20Paper_id-25.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>working paper의 미국 표본에서 VIX scaling은 RV scaling보다 weight가 안정적이고 비용 후 alpha가 잘 유지됐지만 Sharpe 우위는 제한적이었다.</strong><p>이유: Tables 5·6·8이 alpha, Sharpe와 weight-change 경로를 분리한다. · 교정: working-paper 판본과 stylized overlay cost를 함께 적는다. · 근거: p27_anomalies · p27_cost · p27_turnover</p></li><li><strong>한국에서는 VKOSPI를 확보한 뒤 외부상태 economic challenger로 검정할 수 있다.</strong><p>이유: VIX는 test asset 자체의 과거수익이 아닌 옵션시장 공통신호다. · 교정: VKOSPI 자료감사 전에는 구현 가능하다고 쓰지 않는다. · 근거: p27_risk_proxies</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>현재 WML 일별수익만으로 VIX-managed 전략을 구현할 수 있다.</strong><p>이유: forward-looking 옵션지수 시계열이 별도 입력으로 필요하다. · 교정: VKOSPI를 추가자료로 명시한다. · 근거: p27_risk_proxies</p></li><li><strong>VIX는 모든 factor의 정확한 미래분산이고 양의 alpha는 곧 Sharpe 개선이다.</strong><p>이유: VIX는 공통 시장·tail proxy이며 anomaly Sharpe 부호는 거의 반반이다. · 교정: alpha·Sharpe·calibration을 분리한다. · 근거: p27_anomalies</p></li><li><strong>Table 9의 0bp anomaly counts는 오류 없이 176개와 일치한다.</strong><p>이유: downside-VIX row가 Table 5와 충돌하고 합계가 186이다. · 교정: Table 5를 기준으로 하고 Table 9 충돌을 명시한다. · 근거: p27_anomalies · p27_table9_conflict</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>2024년 IRFA VOR에서 Table 9·Figure 1 기간충돌이 수정됐는지 이 레코드에서 판본 간 대조하지 않았다.</li><li>VKOSPI 자료·최종 저자코드와 anomaly 원자료 재계산은 근거 범위 밖이다.</li></ul>

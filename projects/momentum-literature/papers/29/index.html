@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/29/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Two Are Better Than One: Volatility Forecasting Using Multiplicative Component GARCH-MIDAS Models · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,186 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>빠른 일별 변동성과 느린 장기상태를 곱으로 분리하는 핵심 forecast 문헌이지만, 보고된 장기-horizon 우위에는 intraday RV와 실시간 VIX·거시 vintage가 필요하므로 현재 6개 WML에는 price-only 축소형 challenger로만 옮긴다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>126일보다 긴 정보가 다음 달 WML 분산에 증분가치를 주는지 시험할 때</li><li>단기 clustering과 느린 상태를 한 창의 평균이 아니라 두 component로 분리할 때</li><li>거시변수의 발표지연·수정 vintage를 forecast 설계에 반영할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>현재 price-only 자료로 housing-starts 원형의 재현을 주장할 때</li><li>긴 정보가 모든 horizon에서 HAR보다 우월하다고 말할 때</li><li>Mincer–Zarnowitz R-squared를 forecast loss의 대용으로 쓸 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>최근 126일만 보는 위험추정은 빠른 volatility clustering과 수년짜리 느린 상태를 한 숫자에 섞는다. 이 논문은 두 성분을 곱으로 분리하고, 거시·금융 변수의 실시간 vintage까지 지키며 horizon별로 평가한다.</p></article>
+            <article><h3>중심 질문</h3><p>daily short component와 MIDAS long component를 곱한 조건부분산이 단일 GARCH·HAR·realized-GARCH보다 언제 더 정확하며, 느린 설명변수의 최선 선택은 horizon과 시장상태에 따라 바뀌는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>GARCH-MIDAS는 널리 쓰였지만 long component가 분포·ACF·MZ R²에 미치는 이론, misspecification simulation, real-time macro vintage를 사용한 다중-horizon OOS 비교를 한 흐름으로 연결한 연구는 드물었다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>두 성분의 이론적 장점이 모든 horizon의 실증 우월성을 뜻하지 않는다. 저자 VOR의 OOS QLIKE에서는 1일은 leverage HAR, 중간 horizon은 realized GARCH, 2·3개월은 housing-starts GARCH-MIDAS가 최저다. MZ R²와 QLIKE 순위도 특히 고변동 상태에서 다를 수 있다. 한국 WML에는 fast GJR와 126일보다 긴 price-only MIDAS를 곱하는 challenger가 직접 유용하지만, next-month에서는 RW·HAR를 먼저 이겨야 한다. 거시 확장은 당시 공개된 vintage와 release lag가 없으면 confirmation에서 제외한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a><a class="evidence-chip" href="#locator-p29_midas_weights">p29_midas_weights · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme</a><a class="evidence-chip" href="#locator-p29_full_oos">p29_full_oos · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>조건부분산을 fast×slow로 분해한다.</h3>
+          <p>unit-mean GJR short recursion과 양의 MIDAS long component를 곱해 일별 군집성과 수년짜리 상태를 동시에 표현한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a><a class="evidence-chip" href="#locator-p29_midas_weights">p29_midas_weights · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>두 성분이 분포·지속성에 미치는 효과를 이론화한다.</h3>
+          <p>변하는 long component가 단일 GARCH보다 kurtosis와 squared-return ACF persistence를 높이고, forecast R²와 absolute loss가 다른 행동을 할 수 있음을 보인다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a><a class="evidence-chip" href="#locator-p29_mz">p29_mz · PDF 24쪽 · Table 8</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>misspecification 아래 추정·선택을 simulation한다.</h3>
+          <p>lag 길이, noisy covariate, omitted slow component와 alternative model을 바꿔 QML bias와 MCS inclusion을 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_midas_weights">p29_midas_weights · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme</a><a class="evidence-chip" href="#locator-p29_horizon_design">p29_horizon_design · PDF 15쪽 · Equation 23 and forecast-horizon definition</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>실시간 vintage의 여러 slow variables를 rolling 비교한다.</h3>
+          <p>가격·옵션·금융상태·거시변수를 각 forecast date 당시 공개값으로 갱신해 final-revised data의 look-ahead를 피한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 5</p>
+          <h3>horizon·regime·metric별 winner를 분리한다.</h3>
+          <p>QLIKE와 MCS, 시장상태, MZ R²를 교차해 단기 단순모형과 장기 slow-component 모형의 조건부 순위를 보인다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_full_oos">p29_full_oos · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p29_regimes">p29_regimes · PDF 23쪽 · Table 7</a><a class="evidence-chip" href="#locator-p29_mz">p29_mz · PDF 24쪽 · Table 8</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>multiplicative components</h3>
+          <p><strong>쉽게 말하면</strong><br>오늘의 빠른 변동성 반응과 수개월·수년의 느린 위험수준을 더하지 않고 곱한다.</p>
+          <p><strong>논문 안의 역할</strong><br>총분산을 unit-mean short g와 positive long τ로 분해해 각 동학을 별도 추정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>두 성분이라는 이유만으로 모든 horizon에서 더 정확한 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a></div>
+        </article><article class="section-card concept-card">
+          <h3>Beta-MIDAS weight</h3>
+          <p><strong>쉽게 말하면</strong><br>긴 과거의 설명변수를 몇 개의 shape 모수로 부드럽게 가중한다.</p>
+          <p><strong>논문 안의 역할</strong><br>수백 lag의 자유계수 대신 합이 1인 장기 가중곡선을 만든다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>K=264가 독립 raw daily 관측 264개를 unrestricted하게 추정한다는 뜻이 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_midas_weights">p29_midas_weights · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme</a></div>
+        </article><article class="section-card concept-card">
+          <h3>real-time vintage</h3>
+          <p><strong>쉽게 말하면</strong><br>지금 알고 있는 최종수치가 아니라 과거 그 날짜에 실제 공개돼 있던 자료판본이다.</p>
+          <p><strong>논문 안의 역할</strong><br>수정되는 거시·금융자료의 look-ahead를 막는다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>final revised series에 단순 발표지연만 붙이면 동일한 실시간 자료가 되는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+        </article><article class="section-card concept-card">
+          <h3>MZ R² 대 QLIKE</h3>
+          <p><strong>쉽게 말하면</strong><br>R²는 변동의 상대적 설명률, QLIKE는 분산예측 오차를 직접 평가한다.</p>
+          <p><strong>논문 안의 역할</strong><br>고변동 상태에서 target variation이 커지면 loss가 나빠도 R²가 높아질 수 있음을 분리한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>높은 R² 모형이 반드시 낮은 QLIKE나 높은 Sharpe를 갖는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_mz">p29_mz · PDF 24쪽 · Table 8</a><a class="evidence-chip" href="#locator-p29_regimes">p29_regimes · PDF 23쪽 · Table 7</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 1–3 · demeaned return ε를 장기수준 τ로 조정하면 단기 GJR 성분 g와 평균 0·분산 1인 innovation Z로 분해되고, 음의 전일 ε에는 추가 short-run 반응을 허용한다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>ε_{i,t}/√τ_t=√g_{i,t} Z_{i,t}; σ²_{i,t}=g_{i,t}τ_t; g_{i,t}=(1−α−γ/2−β)+[α+γ·1(ε_{i,t−1}&lt;0)]ε²_{i,t−1}/τ_t+βg_{i,t−1}.</code></pre>
+                <dl class="symbol-grid"><dt><code>τ_t</code></dt><dd>장기 위험수준</dd><dt><code>g_{i,t}</code></dt><dd>평균 1인 단기 변동성 성분</dd><dt><code>γ</code></dt><dd>음의 demeaned return에 대한 leverage 반응</dd><dt><code>ε_{i,t}</code></dt><dd>평균을 제거한 일별수익(demeaned return)</dd><dt><code>Z_{i,t}</code></dt><dd>평균 0·분산 1인 표준화 innovation</dd></dl>
+                <p><strong>직관:</strong> 같은 일별 shock도 장기 위험상태가 높을 때 총분산에 더 크게 반영된다.</p>
+                <p><strong>구현할 때:</strong> τ·g positivity와 GJR stationarity를 origin마다 검사하고 short/long component를 별도 저장한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 7·9 · K개의 과거 설명변수를 Beta shape로 가중한 합이 장기 log variance를 움직인다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>τ_t=exp(m+θΣ_{k=1}^{K} φ_k(w₁,w₂)X_{t−k}),  Σφ_k=1</code></pre>
+                <dl class="symbol-grid"><dt><code>X</code></dt><dd>RVol·VIX·금융상태·거시 설명변수</dd><dt><code>θ</code></dt><dd>long component에 미치는 방향과 크기</dd><dt><code>w₁,w₂</code></dt><dd>MIDAS 가중곡선 모양</dd><dt><code>K</code></dt><dd>포함하는 장기 lag 범위</dd></dl>
+                <p><strong>직관:</strong> 126일 밖 정보의 영향이 갑자기 끊기지 않고 부드럽게 감쇠하거나 hump를 가질 수 있다.</p>
+                <p><strong>구현할 때:</strong> K와 shape 후보는 test 전 고정하고 중첩 RVol 입력의 실제 earliest raw date를 별도 감사한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_midas_weights">p29_midas_weights · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 22 · 실현분산과 양의 forecast의 비율이 1에서 벗어날수록 손실이 커진다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>QLIKE_t = RV_t/σ̂²_t − log(RV_t/σ̂²_t) − 1</code></pre>
+                <dl class="symbol-grid"><dt><code>RV_t</code></dt><dd>고빈도 실현분산 proxy</dd><dt><code>σ̂²_t</code></dt><dd>예측된 조건부분산</dd></dl>
+                <p><strong>직관:</strong> 잡음 있는 분산 proxy에서도 분산forecast 비교에 적합하고 scale 차이를 다룬다.</p>
+                <p><strong>구현할 때:</strong> 한국 monthly proxy와 forecast 모두 같은 분산단위인지 검사하고 zero floor는 training-only로 정한다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_qlike_equation">p29_qlike_equation · PDF 14쪽 · Equation 22</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 실증은 일별 지수수익, 고빈도 RV와 가격·옵션·금융·거시 slow variables를 쓴다(근거: p29_realtime).</li><li>한국 1단계는 WML 일별수익으로 만든 RVol 계열만 쓰는 price-only adaptation이다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>여러 미래 cumulative RV horizon을 평가하며 future τ는 현재 수준에 고정한다(근거: p29_horizon_design).</li><li>한국 주target은 next-month 분산이고 2·3개월은 τ 고정가정 sensitivity와 함께 보조분석으로 둔다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>각 변수의 가용시작부터 과거창을 고정길이로 rolling하고 macro는 실제 vintage를 사용한다(근거: p29_realtime).</li><li>한국은 QMLE bounds·start grid·restart·fallback과 candidate K를 사전 등록한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>QLIKE·90% MCS를 주평가로 하고 regime와 MZ R²를 별도 진단한다(근거: p29_full_oos, p29_regimes, p29_mz).</li><li>통계 gate 뒤 동일 BS15 mapping으로 경제성과를 따로 평가한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a><a class="evidence-chip" href="#locator-p29_horizon_design">p29_horizon_design · PDF 15쪽 · Equation 23 and forecast-horizon definition</a><a class="evidence-chip" href="#locator-p29_qlike_equation">p29_qlike_equation · PDF 14쪽 · Equation 22</a><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 6</p><h3>두 성분 모형이 모든 horizon에서 최선인가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>각 horizon의 최저 QLIKE와 MCS 포함모형을 따라 단순 HAR·realized GARCH·GARCH-MIDAS가 언제 바뀌는지 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>1일 최저는 leverage HAR, 표의 중간 horizon은 realized GARCH, 2·3개월 최저는 housing-starts GARCH-MIDAS다.</dd>
+            <dt>검토자 해석</dt><dd>slow component의 증분가치는 긴 horizon에서 커지며 universal winner는 없다.</dd>
+            <dt>검토자 경계</dt><dd>중간 horizon 표기는 본문 한 곳의 5일 설명과 표의 2주 표기가 충돌해 정확한 거래일 수는 코드 확인 전 확정하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_full_oos">p29_full_oos · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p29_horizon_design">p29_horizon_design · PDF 15쪽 · Equation 23 and forecast-horizon definition</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Figure 6</p><h3>최종 수정 자료를 과거에 사용하면 얼마나 달라지는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>final-data long component와 각 날짜 당시 vintage로 rolling 추정한 경로를 비교한다.</dd>
+            <dt>저자 보고 결과</dt><dd>거시·금융 long component는 final series와 real-time estimate 사이에 눈에 띄는 차이가 있다.</dd>
+            <dt>검토자 해석</dt><dd>macro-MIDAS backtest에는 release date와 vintage snapshot이 필수다.</dd>
+            <dt>검토자 경계</dt><dd>실시간 자료를 썼다는 사실이 variable·K 선택까지 외부 holdout으로 만드는 것은 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Tables 7–8</p><h3>고변동 상태에서 좋은 모형은 어떤 metric으로 정하는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>regime별 QLIKE winner와 같은 상태의 MZ R²를 나란히 보고 높은 R²를 낮은 loss로 치환하지 않는다.</dd>
+            <dt>저자 보고 결과</dt><dd>고변동 상태에서 MZ R²가 커져도 QLIKE 순위와 일치하지 않으며 horizon별 survivor도 달라진다.</dd>
+            <dt>검토자 해석</dt><dd>변동성이 큰 상태의 높은 설명률은 정확한 절대 risk forecast를 보장하지 않는다.</dd>
+            <dt>검토자 경계</dt><dd>regime threshold는 전체 OOS quantile이라 실시간 상태전략이 아니라 사후 진단이다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_regimes">p29_regimes · PDF 23쪽 · Table 7</a><a class="evidence-chip" href="#locator-p29_mz">p29_mz · PDF 24쪽 · Table 8</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>daily GJR가 빠른 shock clustering을, MIDAS τ가 수개월·수년의 금융·거시 상태를 포착해 horizon별로 다른 위험정보를 결합한다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>장기 horizon에서 housing slow component가 낮은 QLIKE를 보이고 real-time τ 경로가 final data와 달라지는 결과가 정보시점의 중요성을 지지한다(근거: p29_full_oos, p29_realtime).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>covariate별 표본길이, full-sample K 진단, 2010년 이후 OOS와 future τ 고정가정이 long-horizon 순위를 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>price-only MIDAS가 RW252·HAR를 untouched next-month test에서 이기지 못하거나 수렴불안정이 크면 한국 장기성분의 증분가치는 지지되지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a><a class="evidence-chip" href="#locator-p29_regimes">p29_regimes · PDF 23쪽 · Table 7</a><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>이론, 여러 DGP simulation, 다양한 slow variables, horizon·regime, QLIKE·MCS와 real-time vintage를 교차한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>단기에는 HAR·realized GARCH가 더 강하고 long-component winner는 horizon·state에 따라 바뀐다(근거: p29_full_oos, p29_regimes).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 WML, next-month 경제성과, 현재 자료의 intraday RV·VKOSPI·macro vintage와 짧은 월표본은 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>본문의 중간 horizon 표기가 내부적으로 충돌하고 K 선택·온라인 부록·최적화 세칙 일부는 공개 본문만으로 완전히 닫히지 않는다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_full_oos">p29_full_oos · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p29_mz">p29_mz · PDF 24쪽 · Table 8</a><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p29_regimes">p29_regimes · PDF 23쪽 · Table 7</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">daily GJR short g</th><td>WML 일별수익 GJR/EWMA short component</td><td>빠른 risk clustering을 현재 자료만으로 추정한다.</td></tr><tr><th scope="row">RVol Beta-MIDAS τ</th><td>126일보다 긴 price-only WML long component</td><td>연구질문인 장기정보의 증분가치를 외부자료 없이 먼저 시험한다.</td></tr><tr><th scope="row">VIX·NFCI·macro vintage</th><td>VKOSPI·한국 금융/거시 vintage 후속</td><td>공개시점·revision 자료가 확보된 경우에만 별도 확장한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>RW126·RW252·HAR/log-HAR baseline과 공통 OOS 월을 동결한다.</li><li>WML 일별수익으로 short GJR와 중첩 RVol long-input을 만든다.</li><li>candidate K·Beta shape·QMLE bounds·restart를 사전 설정한다.</li><li>origin별 g·τ·총분산을 저장하고 positivity·stationarity·수렴을 검사한다.</li><li>QLIKE·MSE·MAE와 block-bootstrap/MCS를 공통월에서 비교한다.</li><li>통과 시 동일 BS15 scaling에 연결하고 macro extension은 vintage as-of join이 준비된 뒤 별도 실행한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>price-only MIDAS가 RW252·HAR의 untouched next-month QLIKE를 개선한다.</li><li>모수경계·수렴실패·fallback이 사전 한도 안이고 개선이 한 WML에만 의존하지 않는다.</li><li>동일 cap·비용에서 경제성과가 악화되지 않으며 long component가 미래자료 없이 재현된다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>비수렴이면 start grid·bounds·Hessian·g/τ scale을 먼저 감사한다.</li><li>τ가 거의 상수면 K·input variation과 긴 정보의 실질적 증분을 확인하고 복잡모형을 유지하지 않는다.</li><li>macro model만 좋으면 vintage·release timestamp와 final-data 혼입을 우선 점검한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 g·τ·forecast·convergence audit CSV</li><li>baseline-to-MIDAS QLIKE/MSE/MAE·MCS 표</li><li>K·shape·window sensitivity와 earliest-input-date 원장</li><li>동일 BS15 mapping의 gross/net 경제성과표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a><a class="evidence-chip" href="#locator-p29_horizon_design">p29_horizon_design · PDF 15쪽 · Equation 23 and forecast-horizon definition</a><a class="evidence-chip" href="#locator-p29_qlike_equation">p29_qlike_equation · PDF 14쪽 · Equation 22</a><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>조건부분산을 fast GJR와 slow MIDAS의 곱으로 나눈다.</li><li>두 성분이 모든 horizon에서 좋은 것은 아니며 긴 horizon에 장점이 집중된다.</li><li>MZ R²와 QLIKE는 고변동 상태에서 다른 순위를 줄 수 있다.</li><li>거시 확장에는 당시 공개된 vintage와 release lag가 필수다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>g·τ 곱셈분해와 각 성분의 역할을 설명할 수 있다.</li><li>Beta-MIDAS weight와 K의 의미를 말할 수 있다.</li><li>horizon별 winner를 정확히 구분할 수 있다.</li><li>MZ R²와 QLIKE의 상태별 차이를 설명할 수 있다.</li><li>macro vintage as-of join의 필요조건을 정의할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_components">p29_components · PDF 3쪽 · Equations 1–4</a><a class="evidence-chip" href="#locator-p29_full_oos">p29_full_oos · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p29_mz">p29_mz · PDF 24쪽 · Table 8</a><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. K=264는 264개 자유 lag 계수를 뜻하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 아니다. Beta-MIDAS의 적은 shape 모수가 264개 입력의 합이 1인 가중곡선을 만든다.</p>
+          <p><strong>왜:</strong> 모형차원과 lookback을 구분한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_midas_weights">p29_midas_weights · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. Table 6이 제목 ‘Two Are Better Than One’을 어떻게 제한하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 단기 최저는 HAR와 realized GARCH이고 GARCH-MIDAS는 2·3개월에서 강해 두 성분의 우위가 horizon 조건부이기 때문이다.</p>
+          <p><strong>왜:</strong> 제목을 보편적 승리로 과장하지 않는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_full_oos">p29_full_oos · PDF 22쪽 · Table 6</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. 왜 final revised macro를 과거 origin에 넣으면 안 되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 그 값은 당시 투자자가 알 수 없었던 후속 수정정보를 포함해 look-ahead가 생기기 때문이다.</p>
+          <p><strong>왜:</strong> 실시간 vintage의 핵심을 확인한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> S&amp;P 500 VOR에서 short horizon은 HAR·realized GARCH, 2·3개월은 housing-starts GARCH-MIDAS가 QLIKE에서 강해 multiplicative long component의 가치는 horizon에 조건부였다.</p><p><strong>이렇게 말하면 안 됨:</strong> GARCH-MIDAS가 모든 horizon에서 최선이고 final macro series backtest가 실시간 OOS이며 정확한 2주 거래일 수가 본문에서 내부일관되게 확정됐다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p29_full_oos">p29_full_oos · PDF 22쪽 · Table 6</a><a class="evidence-chip" href="#locator-p29_mz">p29_mz · PDF 24쪽 · Table 8</a><a class="evidence-chip" href="#locator-p29_realtime">p29_realtime · PDF 21쪽 · Figure 6</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>1971년 1월–2018년 4월 S&amp;P 500 일별 로그수익과, Oxford–Man intraday realized measure에 overnight 제곱수익을 더한 평가용 realized variance [원문 보고] · RVol(22), VIX·variance-risk-premium proxy, 주간 NFCI와 월간 활동·산업생산·housing starts; OOS 거시자료는 당시 이용 가능 ALFRED vintage [원문 보고]</dd><dt>target</dt><dd>S&amp;P 500의 horizon별 미래 누적 realized variance [원문 보고]</dd><dt>information set</dt><dd>forecast 직전까지의 일별수익·realized measure와 당시 공개된 금융·거시 설명변수 [원문 보고]</dd><dt>lookback</dt><dd>RVol(22) 일별 MIDAS는 K=264 lag, VIX·VRP는 3 lag, NFCI는 52주, 월 거시는 변수별 수년 lag [원문 보고]</dd><dt>horizon</dt><dd>1일, 표에 2주로 표시된 중간 horizon, 1·2·3개월; 방법식은 그 중간 horizon을 5일·1주로도 적어 본문 내부 표기가 일치하지 않는다. [원문 보고]</dd><dt>model family</dt><dd>multiplicative GARCH-MIDAS: unit-mean GJR-GARCH short component × explanatory-variable Beta-MIDAS long component</dd><dt>training window</dt><dd>변수별 최초 추정구간을 2009년 12월에 끝내고 그 길이를 고정한 일별 rolling window</dd><dt>retune</dt><dd>2010년 1월–2018년 4월의 각 forecast origin에서 모든 모형을 재추정하고 장기 component는 forecast horizon 동안 현재값으로 고정한다.</dd><dt>benchmarks</dt><dd>GARCH · two MS-GARCH variants · realized GARCH · HEAVY · HAR · leverage HAR · no-change</dd><dt>loss / test</dt><dd>QLIKE · horizon별 90% Model Confidence Set · volatility-regime별 Model Confidence Set · Mincer–Zarnowitz R-squared diagnostic</dd><dt>economic metrics</dt><dd>Sharpe·BS15 scaling·투자자 utility는 평가하지 않는다.</dd><dt>trading costs</dt><dd>거래전략과 거래비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>portfolio turnover를 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +223,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>월말 이후 수익 유입 차단 test</li><li>K=264 중첩 feature 최초일·timestamp test</li><li>forecast horizon 비중첩 test</li><li>rolling QMLE train-only test</li><li>optimizer convergence·fallback audit test</li><li>공통 OOS mask와 동일 BS15 mapping test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p29_horizon_winners</span> 2010년 1월–2018년 4월 OOS에서 최저 QLIKE는 1일 leverage HAR 0.238, 표기상 2주와 1개월 realized GARCH 0.206·0.233, 2·3개월 housing-starts GARCH-MIDAS 0.347·0.380으로 horizon별 승자가 달랐다.<p class="meta">sample: S&amp;P 500 2010년 1월–2018년 4월 rolling OOS · target: 미래 누적 realized variance · horizon: 1일·표기상 2주·1·2·3개월 · metric: 평균 QLIKE와 90% MCS · unit: loss · comparator: GARCH-MIDAS 11개 사양과 8개 비교모형 · loss_or_test: QLIKE and 90% MCS</p><p><strong>근거:</strong> p29_horizon_design · p29_full_oos</p><p><strong>전이 경고:</strong> 중간 horizon은 방법식의 5일·1주와 Table 6의 2주 표기가 충돌한다. 한국 next-month 결과를 이 표의 1개월과 동일 실험으로 부르지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p29_realtime_gap</span> housing starts 장기 component의 final-data 추정과 실시간 rolling 추정 사이 평균 절대차이는 9.35%였고, 산업생산·NAI·NFCI도 각각 6.80%·4.78%·2.68%였다.<p class="meta">sample: 2010년 1월–2018년 1월의 월평균 장기 component · target: GARCH-MIDAS long-term volatility component · horizon: real-time rolling 대 full-sample 비교 · metric: 평균 절대차이 · unit: percent · comparator: final revised data 대 real-time vintage · loss_or_test: descriptive absolute difference</p><p><strong>근거:</strong> p29_realtime</p><p><strong>전이 경고:</strong> 한국 거시 확장에서는 당시 공개 vintage와 발표지연을 재구성하지 않으면 real-time OOS라고 부를 수 없다.</p></li><li><span class="badge">author_result</span> <span class="badge">p29_regime_metric_warning</span> 고변동 regime에서 1개월 MZ R-squared가 대체로 가장 높았지만 QLIKE는 악화됐고, 저·정상 regime에는 VIX 계열, 고변동 장기 horizon에는 NFCI·housing starts 계열이 경쟁력 있어 적합 변수와 평가지표가 상태별로 달랐다.<p class="meta">sample: S&amp;P 500 2010–2018 OOS의 realized-variance 사분위 regime · target: 미래 누적 realized variance · horizon: 1일–3개월; MZ regime 표는 1개월 · metric: QLIKE·90% MCS·MZ R-squared · unit: loss and goodness-of-fit · comparator: low·normal·high volatility regimes · loss_or_test: regime QLIKE/MCS and MZ regression</p><p><strong>근거:</strong> p29_regimes · p29_mz</p><p><strong>전이 경고:</strong> 한국 모형 선택은 R-squared가 아니라 사전 고정 QLIKE·MSE와 공통 경제성과 gate를 사용한다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Two are better than one: Volatility forecasting using multiplicative component GARCH-MIDAS models — publisher VOR</strong><p>최종 게재본 · 2020-01-14 · 27쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 27쪽 Wiley VOR 기준이다. 첫 면에는 Creative Commons Attribution-NonCommercial 조건이 인쇄되어 있지만, 정확한 재사용 범위는 원 라이선스와 제공처 조건을 따라야 하므로 이 사이트는 PDF를 복제하지 않고 DOI·저장소 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p29_license</strong> · artifact p29_vor · PDF 1쪽 · First-page license notice · 검증됨</li><li><strong>p29_components</strong> · artifact p29_vor · PDF 3쪽 · Equations 1–4 · 검증됨</li><li><strong>p29_midas_weights</strong> · artifact p29_vor · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme · 검증됨</li><li><strong>p29_horizon_design</strong> · artifact p29_vor · PDF 15쪽 · Equation 23 and forecast-horizon definition · 검증됨</li><li><strong>p29_realtime</strong> · artifact p29_vor · PDF 21쪽 · Figure 6 · 검증됨</li><li><strong>p29_full_oos</strong> · artifact p29_vor · PDF 22쪽 · Table 6 · 검증됨</li><li><strong>p29_regimes</strong> · artifact p29_vor · PDF 23쪽 · Table 7 · 검증됨</li><li><strong>p29_mz</strong> · artifact p29_vor · PDF 24쪽 · Table 8 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Two are better than one: Volatility forecasting using multiplicative component GARCH-MIDAS models — publisher VOR</strong><p>최종 게재본 · 2020-01-14 · 27쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 27쪽 Wiley VOR 기준이다. 첫 면에는 Creative Commons Attribution-NonCommercial 조건이 인쇄되어 있지만, 정확한 재사용 범위는 원 라이선스와 제공처 조건을 따라야 하므로 이 사이트는 PDF를 복제하지 않고 DOI·저장소 링크만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p29_license"><strong>p29_license</strong> · artifact p29_vor · PDF 1쪽 · First-page license notice · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_components"><strong>p29_components</strong> · artifact p29_vor · PDF 3쪽 · Equations 1–4 · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_midas_weights"><strong>p29_midas_weights</strong> · artifact p29_vor · PDF 5쪽 · Equation 9 and Beta-MIDAS weighting scheme · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_horizon_design"><strong>p29_horizon_design</strong> · artifact p29_vor · PDF 15쪽 · Equation 23 and forecast-horizon definition · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_realtime"><strong>p29_realtime</strong> · artifact p29_vor · PDF 21쪽 · Figure 6 · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_full_oos"><strong>p29_full_oos</strong> · artifact p29_vor · PDF 22쪽 · Table 6 · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_regimes"><strong>p29_regimes</strong> · artifact p29_vor · PDF 23쪽 · Table 7 · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_mz"><strong>p29_mz</strong> · artifact p29_vor · PDF 24쪽 · Table 8 · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p29_qlike_equation"><strong>p29_qlike_equation</strong> · artifact p29_vor · PDF 14쪽 · Equation 22 · 검증됨 · <a href="https://repub.eur.nl/pub/130089/Repub_130089_O-A.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>S&amp;P 500 VOR에서 multiplicative GARCH-MIDAS의 상대성과는 horizon별로 달랐고 housing starts 사양은 2·3개월 QLIKE에서 가장 강했다.</strong><p>이유: Table 6이 horizon별 최저 QLIKE와 MCS를 함께 보고한다. · 교정: 짧은 horizon의 HAR·realized-GARCH 우위와 필요한 intraday·실시간 외부자료 조건을 함께 쓴다. · 근거: p29_full_oos</p></li><li><strong>한국 6개 WML에는 126일을 넘는 price-only slow component를 사전등록 challenger로 시험할 수 있다.</strong><p>이유: 원문의 Beta-MIDAS 구조는 긴 lag를 저차원 weight로 축약한다. · 교정: 원형 재현이 아니라 price-only adapted multiplicative component라고 명명한다. · 근거: p29_components · p29_midas_weights</p></li><li><strong>거시 MIDAS OOS에는 당시 vintage와 발표지연이 필요하다.</strong><p>이유: Figure 6에서 final data와 real-time component 차이가 수치로 확인된다. · 교정: vintage가 없으면 거시사양을 주결과에서 제외한다. · 근거: p29_realtime</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>긴 정보는 모든 horizon에서 HAR보다 우월하다.</strong><p>이유: 1일 최저 QLIKE와 유일한 MCS 생존자는 leverage HAR이고 중간 horizon은 realized GARCH가 강하다. · 교정: horizon별 승자와 loss를 분리한다. · 근거: p29_full_oos</p></li><li><strong>최종 수정 한국 거시자료로 만든 과거 forecast는 실시간 OOS다.</strong><p>이유: revision과 release lag가 당시 정보집합을 바꾼다. · 교정: vintage·발표 캘린더를 복원하거나 price-only 분석으로 제한한다. · 근거: p29_realtime</p></li><li><strong>MZ R-squared가 크면 forecast accuracy도 높다.</strong><p>이유: 고변동 regime에서 R-squared와 forecast loss가 동시에 커질 수 있다. · 교정: QLIKE·MSE와 MCS 또는 block-bootstrap loss 차이를 사용한다. · 근거: p29_mz</p></li><li><strong>QLIKE 개선은 BS15 Sharpe 개선을 보장한다.</strong><p>이유: VOR은 trading return·cost·Sharpe를 평가하지 않는다. · 교정: 동일 BS15 mapping의 경제성과를 별도 gate로 둔다. · 근거: p29_full_oos</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>본문 방법식의 5일·1주와 Table 6의 2주 horizon 표기는 일치하지 않아 Supporting Information·재현 코드를 대조하기 전 중간 horizon의 정확한 거래일 수를 고정하지 않는다.</li><li>별도 Supporting Information의 초기값·optimizer·publication-lag 세부와 저자 패키지 결과는 이 근거 범위에서 재실행하지 않았다.</li><li>VOR의 첫 면에 CC Attribution-NonCommercial 고지가 있으나 이 프로젝트의 공개정책은 원문 파일을 호스팅하지 않는 link-only다.</li></ul>

@@ -7,7 +7,7 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/22/">
-  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.04b5c80c7db7.css">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.0fe34dc73b08.css">
   <title>Realized Volatility Forecasting - Robustness to Measurement Errors · 모멘텀 위험관리 문헌 내비게이터</title>
 </head>
 <body>
@@ -17,6 +17,7 @@
       <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
       <ul>
         <li><a class="global-home-link" href="https://soccz.github.io/">전체 홈</a></li>
+        <li><a href="/projects/momentum-literature/learn/">학습 시작</a></li>
         <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
         <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
         <li><a href="/projects/momentum-literature/compare/">비교</a></li>
@@ -33,9 +34,172 @@
     </header>
     <div class="detail-layout">
       <div>
+        <nav class="page-toc" aria-label="논문 페이지 목차"><strong>이 페이지에서</strong><a href="#verdict-heading">30초 판정</a><a href="#deep-orientation">문제와 답</a><a href="#deep-argument">논증</a><a href="#deep-equations">수식</a><a href="#deep-evidence">표 읽기</a><a href="#deep-korea-lab">한국 실험</a><a href="#deep-study">자가점검</a><a href="#evidence-heading">원문 위치</a></nav>
         <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
           <div class="status-panel"><strong>잡음 있는 realized-variance target에서 보정 feature의 유의성을 곧 예측이득으로 읽지 말고 이분산·regime·loss를 함께 비교하라는 핵심 forecast 설계 문헌이다.</strong></div>
           <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>일별 WML 제곱합을 오차 없는 잠재분산이 아닌 관측 proxy로 정의할 때</li><li>HAR·HAR2·HAR-GARCH·상태모형을 복잡도 순으로 비교할 때</li><li>MSE와 QLIKE의 순위 역전을 설명할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>일별 WML로 realized quarticity를 계산했다고 주장할 때</li><li>3상태 MS-AMEM을 약 364개월 한국 표본의 기본모형으로 둘 때</li><li>working-paper 표를 2021년 최종 IJF 수치로 인용할 때</li></ul></article></div>
+        </section>
+
+        <section class="deep-section" aria-labelledby="deep-orientation">
+          <p class="section-kicker">DEEP DIVE · 검토자 종합</p><h2 id="deep-orientation">왜 이 논문이 필요한가</h2>
+          <p class="deep-review"><strong>딥다이브 독립검수 완료</strong> · 2026-08-16 · 전체 서술과 동일 논문 근거 위치를 재대조했습니다.</p>
+          <p class="provenance-note"><strong>출처 구분:</strong> 수식·연구설계·“저자 보고” 결과는 원문 내용이고, 해석·한계·자가점검은 검토자 종합, 한국 실험실은 프로젝트 적용안입니다.</p>
+          <div class="orientation-grid">
+            <article><h3>문제</h3><p>관측된 realized variance는 참분산 그 자체가 아니라 잡음이 섞인 proxy다. 이 논문은 보정변수의 유의성을 곧바로 ‘측정오차를 해결했다’고 읽는 관행을, 오차 이분산성과 국면이라는 경쟁설명으로 시험한다.</p></article>
+            <article><h3>중심 질문</h3><p>HARQ·HAR2의 보정항이 정말 realized-variance 측정오차를 교정하는가, 아니면 누락된 조건부 이분산성과 국면전환을 대신 흡수하는가?</p></article>
+            <article><h3>기존 문헌의 빈틈</h3><p>측정오차 proxy를 평균식에 추가한 연구는 많지만, 동일 target에서 error process를 풍부하게 만든 benchmark와 loss별 순위 역전을 함께 검정한 비교는 부족했다.</p></article>
+          </div>
+          <div class="answer-panel"><strong>논문의 답</strong><p>보정 HAR는 MSE를 낮출 수 있지만 QL에서는 순위가 뒤집히며, GARCH·multiplicative error·3상태 국면을 허용하면 보정항의 유의성과 증분성과가 약해진다. 모의실험도 이분산성이나 국면을 누락한 HAR2가 보정효과를 허위로 찾을 수 있음을 보인다. 저자 표본에서는 MS-AMEM 계열이 표본외 MSE·QL에서 비교적 안정적이지만 모든 자산의 단독 승자는 아니다. 한국 WML에서는 quarticity 원형을 흉내 내기보다 관측분산 proxy, HAR, 곡률, GARCH를 같은 OOS와 두 loss에서 단계적으로 비교해야 한다.</p></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_measurement">p22_measurement · PDF 4쪽 · Equation 1 measurement-error decomposition</a><a class="evidence-chip" href="#locator-p22_proxy">p22_proxy · PDF 5쪽 · Figure 1 and Table 1</a><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a><a class="evidence-chip" href="#locator-p22_simulation">p22_simulation · PDF 14쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-argument"><h2 id="deep-argument">논증 지도</h2>
+          <p class="section-note">결론만 외우지 않고, 저자가 어떤 순서로 주장을 세웠는지 따라갑니다.</p>
+          <ol class="argument-map"><li><article class="argument-step">
+          <p class="eyebrow">논증 1</p>
+          <h3>RV를 잠재분산과 측정오차로 분리한다.</h3>
+          <p>측정오차의 분산이 quarticity와 함께 변할 수 있으므로 일정분산 OLS의 계수와 표준오차가 왜곡될 출발점을 세운다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_measurement">p22_measurement · PDF 4쪽 · Equation 1 measurement-error decomposition</a><a class="evidence-chip" href="#locator-p22_proxy">p22_proxy · PDF 5쪽 · Figure 1 and Table 1</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 2</p>
+          <h3>보정 HAR의 성과를 loss별로 대조한다.</h3>
+          <p>HARQ·HAR2가 단순 HAR보다 MSE를 낮춰도 QL을 악화시킬 수 있음을 보여 ‘유의한 보정항=전반적 우월성’이라는 해석을 깨뜨린다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_har">p22_har · PDF 6쪽 · Equations 2–4</a><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 3</p>
+          <h3>경쟁 error process를 도입한다.</h3>
+          <p>HAR-GARCH, AMEM, 3상태 MS-AMEM으로 조건부 이분산·양의 target·비대칭·국면을 모델링해 보정항의 독립기여를 다시 묻는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a></div>
+        </article></li><li><article class="argument-step">
+          <p class="eyebrow">논증 4</p>
+          <h3>표본외 MCS와 모의실험으로 과잉해석을 제한한다.</h3>
+          <p>여러 자산의 MSE·QL superior set과 misspecified DGP의 허위유의를 함께 보여 계수서사보다 benchmark family와 OOS loss가 중요하다고 결론낸다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_oos_mse">p22_oos_mse · PDF 19쪽 · Figure 5</a><a class="evidence-chip" href="#locator-p22_oos_ql">p22_oos_ql · PDF 21쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p22_oos_mcs_text">p22_oos_mcs_text · PDF 17쪽 · OOS MCS prose, exact 20-of-29 count</a><a class="evidence-chip" href="#locator-p22_simulation">p22_simulation · PDF 14쪽 · Table 6</a></div>
+        </article></li></ol>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-concepts"><h2 id="deep-concepts">핵심 개념을 내 말로 바꾸기</h2>
+          <div class="card-grid"><article class="section-card concept-card">
+          <h3>측정오차</h3>
+          <p><strong>쉽게 말하면</strong><br>우리가 계산한 RV와 실제 잠재분산 사이의 차이다.</p>
+          <p><strong>논문 안의 역할</strong><br>오차크기가 일정하지 않으면 평균식 보정항의 유의성과 forecast ranking을 왜곡할 수 있다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>RV가 쓸모없다는 뜻이 아니라 proxy의 잡음구조까지 모델링해야 한다는 뜻이다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_measurement">p22_measurement · PDF 4쪽 · Equation 1 measurement-error decomposition</a></div>
+        </article><article class="section-card concept-card">
+          <h3>quarticity와 curvature</h3>
+          <p><strong>쉽게 말하면</strong><br>변동성 자체가 얼마나 요동치는지를 나타내는 고빈도 척도와 그 근사치다.</p>
+          <p><strong>논문 안의 역할</strong><br>HARQ는 quarticity, HAR2는 RV의 제곱을 이용해 lagged RV의 신뢰도를 상태별로 조정한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>일별 WML 제곱수익 하나를 realized quarticity라고 부를 수 없다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_proxy">p22_proxy · PDF 5쪽 · Figure 1 and Table 1</a><a class="evidence-chip" href="#locator-p22_har">p22_har · PDF 6쪽 · Equations 2–4</a></div>
+        </article><article class="section-card concept-card">
+          <h3>QL loss</h3>
+          <p><strong>쉽게 말하면</strong><br>예측값의 규모에 비례해 오차를 평가하고 작은 분산예측의 과소예측을 강하게 벌점화하는 손실이다.</p>
+          <p><strong>논문 안의 역할</strong><br>MSE와 다른 위험예측 품질을 보므로 모형순위 역전을 드러낸다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>QL이 낮다고 목표변동성 Sharpe도 반드시 높아지는 것은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p22_oos_ql">p22_oos_ql · PDF 21쪽 · Figure 6</a></div>
+        </article><article class="section-card concept-card">
+          <h3>Model Confidence Set</h3>
+          <p><strong>쉽게 말하면</strong><br>표본에서 통계적으로 탈락시키기 어려운 모형들의 집합이다.</p>
+          <p><strong>논문 안의 역할</strong><br>한 개의 최소 loss만 고르는 대신 모형 불확실성을 보존한다.</p>
+          <p class="misread"><strong>흔한 오독</strong><br>집합에 포함된 모형이 우승할 확률이나 서로 완전히 동일하다는 뜻은 아니다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_oos_mse">p22_oos_mse · PDF 19쪽 · Figure 5</a><a class="evidence-chip" href="#locator-p22_oos_ql">p22_oos_ql · PDF 21쪽 · Figure 6</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-equations"><h2 id="deep-equations">수식과 의사결정 규칙 해부 <span class="provenance-tag">저자 방법 · 검토자 해설</span></h2>
+          <p class="section-note">수식은 암기 대상이 아니라 입력·출력·시점·실패 조건을 고정하는 계약입니다.</p>
+          <div class="deep-stack"><details class="deep-details" open>
+              <summary>Eq. 1 · 관측 RV는 잠재 integrated variance와 잡음의 합이고, 시장이 거칠수록 잡음분산도 커질 수 있다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RV_t = IV_t + η_t,  E(η_t | IQ_t)=0,  Var(η_t | IQ_t)=2·Δ·IQ_t</code></pre>
+                <dl class="symbol-grid"><dt><code>RV_t</code></dt><dd>고빈도 수익으로 계산한 관측 realized variance</dd><dt><code>IV_t</code></dt><dd>직접 관측되지 않는 integrated variance</dd><dt><code>IQ_t</code></dt><dd>integrated quarticity</dd><dt><code>η_t</code></dt><dd>측정오차</dd></dl>
+                <p><strong>직관:</strong> 변동성이 큰 날의 RV는 값만 큰 것이 아니라 측정불확실성도 다를 수 있다.</p>
+                <p><strong>구현할 때:</strong> 한국 월별 WML 제곱합에는 이 고빈도 점근식을 그대로 붙이지 말고 ‘관측분산 proxy’로 명명한 뒤 별도 곡률 proxy를 둔다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_measurement">p22_measurement · PDF 4쪽 · Equation 1 measurement-error decomposition</a></div>
+              </div>
+            </details><details class="deep-details">
+              <summary>Eq. 3–4 · 전일 RV의 지속성 계수를 quarticity 또는 RV curvature 상태에 따라 바꾼다.</summary>
+              <div class="details-body">
+                <pre class="equation" aria-label="수식 또는 의사결정 규칙"><code>RV_t = HAR_lags + (보정변수_{t-1} × RV_{t-1}) + 오차</code></pre>
+                <dl class="symbol-grid"><dt><code>HAR_lags</code></dt><dd>비중첩 daily·weekly·monthly RV blocks</dd><dt><code>보정변수</code></dt><dd>quarticity 또는 RV 제곱 기반 측정오차 proxy</dd></dl>
+                <p><strong>직관:</strong> 잡음이 큰 날의 RV는 덜 신뢰해 다음 날로 전달되는 정도를 낮추려는 구조다.</p>
+                <p><strong>구현할 때:</strong> 보정항을 추가한 뒤에도 residual의 자기상관·이분산성을 검사하고 HAR-GARCH와 같은 경쟁 benchmark를 반드시 둔다.</p>
+                <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_har">p22_har · PDF 6쪽 · Equations 2–4</a></div>
+              </div>
+            </details></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-design"><h2 id="deep-design">연구설계 따라가기 <span class="provenance-tag">저자 보고</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>표본과 입력</h3><ul class="plain-list"><li>저자 표본은 여러 미국 주식계열의 고빈도 RV·quarticity와 일별수익 부호를 사용한다(근거: p22_assets, p22_proxy).</li><li>한국 적응은 6개 WML의 일별수익으로 만든 월별 관측분산 proxy만 사용하며 intraday quarticity가 없음을 명시한다.</li></ul></article><article class="section-card"><h3>예측대상과 시점</h3><ul class="plain-list"><li>원문의 target은 다음 거래일 RV이고 모든 설명변수는 전일까지 lag된다(근거: p22_har).</li><li>한국 target은 월말 이후 다음 달 일별 WML 제곱합이며, 월말까지 완성된 feature만 사용한다.</li></ul></article><article class="section-card"><h3>추정과 표본외 검증</h3><ul class="plain-list"><li>저자 설계는 긴 고정창을 연 단위로 이동해 일별 forecast를 만들고 MCS를 적용한다(근거: p22_oos_mse, p22_oos_ql).</li><li>한국에서는 월별 expanding 또는 rolling을 하나로 사전 고정하고 동일 origin·유효월을 모든 후보에 강제한다.</li></ul></article><article class="section-card"><h3>평가와 통과 기준</h3><ul class="plain-list"><li>MSE와 QL을 함께 보고 residual diagnostics·모의실험까지 읽는다(근거: p22_table2, p22_state_model, p22_simulation).</li><li>forecast gate를 통과한 모형만 동일 BS15 mapping에 넣어 Sharpe·최악월·turnover를 별도 평가한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_proxy">p22_proxy · PDF 5쪽 · Figure 1 and Table 1</a><a class="evidence-chip" href="#locator-p22_har">p22_har · PDF 6쪽 · Equations 2–4</a><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a><a class="evidence-chip" href="#locator-p22_simulation">p22_simulation · PDF 14쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-evidence"><h2 id="deep-evidence">핵심 표·그림을 읽는 법</h2>
+          <p class="section-note">숫자만 떼지 않고 비교대상, 단위, 표본, 조건, 유보를 한 묶음으로 읽습니다.</p>
+          <div class="deep-stack"><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 2</p><h3>보정 HAR가 정말 더 정확한가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>같은 행에서 MSE와 QL을 나란히 보고 한 loss의 최저값을 전체 우월성으로 바꾸지 않는다.</dd>
+            <dt>저자 보고 결과</dt><dd>SPY 5분 예에서 보정형은 HAR보다 MSE가 낮지만 QL은 더 높아진다.</dd>
+            <dt>검토자 해석</dt><dd>측정오차 보정의 평가결론은 loss 함수에 조건부다.</dd>
+            <dt>검토자 경계</dt><dd>한 자산·sampling interval의 표이므로 전체 자산 결론은 OOS 패널과 함께 봐야 한다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Table 5</p><h3>오차 이분산과 국면을 명시하면 보정항의 기여가 남는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>AMEM과 3상태 MS-AMEM의 기본형·quarticity형·curvature형을 비교해 state structure의 개선과 보정항의 증분을 분리한다.</dd>
+            <dt>저자 보고 결과</dt><dd>국면모형 자체의 loss 개선은 크지만 그 안에서 추가 보정항의 증분은 작다.</dd>
+            <dt>검토자 해석</dt><dd>보정항이 누락된 error dynamics를 대신 흡수했을 가능성이 있다.</dd>
+            <dt>검토자 경계</dt><dd>3상태 수와 optimizer 불확실성을 벌점화한 선택결과는 아니며 모든 자산의 단독 승리도 아니다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a></div>
+        </article><article class="evidence-walkthrough">
+          <div><p class="eyebrow">Figures 5–6</p><h3>표본외에서도 한 모형이 일관되게 남는가?</h3></div>
+          <dl>
+            <dt>어떻게 읽나</dt><dd>각 자산의 최소막대만 찾지 말고 MCS enclosure와 MSE·QL 두 패널에서 살아남는 모형군을 본다.</dd>
+            <dt>저자 보고 결과</dt><dd>MS-AMEM 계열은 두 loss에서 비교적 자주 superior set에 남지만 자산별 집합은 넓고 단독 승자는 아니다.</dd>
+            <dt>검토자 해석</dt><dd>복잡한 국면모형은 유망한 benchmark이지 자동 채택 대상이 아니다.</dd>
+            <dt>검토자 경계</dt><dd>통계 forecast 결과만 있으며 Sharpe·비용·포트폴리오 효용은 검정하지 않는다.</dd>
+          </dl>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_oos_mse">p22_oos_mse · PDF 19쪽 · Figure 5</a><a class="evidence-chip" href="#locator-p22_oos_ql">p22_oos_ql · PDF 21쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p22_oos_mcs_text">p22_oos_mcs_text · PDF 17쪽 · OOS MCS prose, exact 20-of-29 count</a></div>
+        </article></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-mechanism"><h2 id="deep-mechanism">왜 작동하는가: 메커니즘과 반증 <span class="provenance-tag">저자 제안 · 검토자 진단</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>저자가 제안한 작동 경로</h3><ul class="plain-list"><li>유의한 curvature 상호작용은 측정오차 보정일 수도 있지만 조건부 이분산이나 잠재 국면을 누락한 대리항일 수 있다.</li></ul></article><article class="section-card"><h3>그 경로를 지지하는 관찰</h3><ul class="plain-list"><li>GARCH·MS-AMEM을 도입하면 보정항의 유의성과 증분 loss 개선이 약해지고, 모의실험에서도 misspecification이 허위유의를 만든다(근거: p22_state_model, p22_simulation).</li></ul></article><article class="section-card"><h3>경쟁 설명</h3><ul class="plain-list"><li>sampling interval, microstructure noise, 상태 수 선택과 최적화 실패가 모형순위 일부를 만들 수 있다.</li></ul></article><article class="section-card"><h3>반증되려면 무엇이 보여야 하나</h3><ul class="plain-list"><li>동일 origin에서 residual 이분산을 제거한 뒤에도 곡률항이 두 loss와 독립 test에서 안정적으로 개선되면 ‘단순 대리항’ 설명은 약해진다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_measurement">p22_measurement · PDF 4쪽 · Equation 1 measurement-error decomposition</a><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a><a class="evidence-chip" href="#locator-p22_simulation">p22_simulation · PDF 14쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section" aria-labelledby="deep-limits"><h2 id="deep-limits">강건성·한계·빈칸 <span class="provenance-tag">검토자 종합</span></h2>
+          <div class="card-grid"><article class="section-card"><h3>버틴 결과</h3><ul class="plain-list"><li>여러 sampling interval, 자산, MSE·QL, 표본내·표본외, residual 진단과 모의실험을 함께 비교한다.</li></ul></article><article class="section-card"><h3>약해지는 조건</h3><ul class="plain-list"><li>보정 HAR의 성과는 loss를 QL로 바꾸거나 error process를 풍부하게 하면 약해진다(근거: p22_table2, p22_state_model).</li></ul></article><article class="section-card"><h3>검증하지 않은 것</h3><ul class="plain-list"><li>한국 WML, 다음 달 target, 거래비용·목표변동성 성과, 다른 상태 수와 충분한 optimizer 민감도는 검정하지 않았다.</li></ul></article><article class="section-card"><h3>내부 긴장과 해석 주의</h3><ul class="plain-list"><li>검토한 선행판에는 그림 번호 오기와 ticker 표기 불일치가 있어, 게재본과의 판본 차이를 해석에 반영해야 한다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p22_oos_mse">p22_oos_mse · PDF 19쪽 · Figure 5</a><a class="evidence-chip" href="#locator-p22_oos_ql">p22_oos_ql · PDF 21쪽 · Figure 6</a><a class="evidence-chip" href="#locator-p22_oos_mcs_text">p22_oos_mcs_text · PDF 17쪽 · OOS MCS prose, exact 20-of-29 count</a><a class="evidence-chip" href="#locator-p22_simulation">p22_simulation · PDF 14쪽 · Table 6</a></div>
+        </section>
+        <section class="deep-section lab-section" aria-labelledby="deep-korea-lab"><h2 id="deep-korea-lab">한국 6-WML 적용 실험실 <span class="provenance-tag">프로젝트 적용안</span></h2>
+          <p class="section-note">원 논문을 복제하는 것이 아니라, 고정된 WML·RW126 기준선 안에서 검증 가능한 조각만 옮깁니다.</p>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="한국 6-WML 대응표, 가로로 스크롤 가능"><table><caption class="visually-hidden">원 논문 요소를 한국 6-WML 실험에 옮기는 대응 관계</caption><thead><tr><th scope="col">원 논문의 요소</th><th scope="col">이 프로젝트의 대응물</th><th scope="col">왜 이렇게 옮기나</th></tr></thead><tbody><tr><th scope="row">5분 realized variance</th><td>다음 달 WML 일별 제곱수익 합</td><td>직접 관측 잠재분산이 아니라 잡음 있는 월별 proxy로 역할만 옮긴다.</td></tr><tr><th scope="row">HARQ·HAR2</th><td>월별 HAR/log-HAR+곡률 proxy</td><td>quarticity 원형은 배제하고 관측분산 제곱의 증분가치만 별도 이름으로 시험한다.</td></tr><tr><th scope="row">HAR-GARCH·MS-AMEM</th><td>HAR residual-GARCH·단순 threshold/state challenger</td><td>짧은 월표본에서 상태 수와 파라미터를 줄여 경쟁설명만 검정한다.</td></tr></tbody></table></div>
+          <div class="lab-grid">
+            <article class="section-card"><h3>실험 순서</h3><ul class="plain-list"><li>6개 WML의 월별 관측분산 target과 월말 feature calendar를 동결한다.</li><li>RW126과 비중첩 월별 HAR/log-HAR를 동일 origin에서 적합한다.</li><li>곡률항을 하나 추가하고 residual·absolute residual·squared residual 진단을 산출한다.</li><li>HAR residual-GARCH 또는 사전 고정 threshold 모형을 추가해 곡률항의 독립기여를 다시 측정한다.</li><li>QLIKE를 primary, MSE를 secondary로 공통 유효월에서 비교한다.</li><li>통계 gate를 통과한 forecast만 동일 BS15 scaling에 연결해 경제성과를 평가한다.</li></ul></article>
+            <article class="section-card"><h3>채택 기준</h3><ul class="plain-list"><li>추가모형이 untouched test의 QLIKE를 줄이고 MSE에서 치명적 악화를 만들지 않는다.</li><li>residual 진단이 개선되고 optimizer 실패·fallback이 사전 한도 안에 있다.</li><li>동일 cap·비용에서 BS15 경제성과가 악화되지 않으며 forecast 개선과 경제성과를 별도로 보고할 수 있다.</li></ul></article>
+            <article class="section-card"><h3>실패 진단</h3><ul class="plain-list"><li>곡률항만 유의하면 GARCH·threshold를 넣은 뒤 유의성과 OOS loss가 유지되는지 먼저 확인한다.</li><li>QLIKE만 폭발하면 zero/floor·양수 forecast·단위변환을 감사한다.</li><li>상태모형이 불안정하면 경계·label·초기값·유효표본을 기록하고 HAR로 deterministic fallback한다.</li></ul></article>
+            <article class="section-card"><h3>남길 산출물</h3><ul class="plain-list"><li>origin별 target·feature·forecast·양수/floor 감사 CSV</li><li>모형별 QLIKE·MSE·residual 진단표</li><li>수렴·상태확률·fallback 로그</li><li>동일 BS15 mapping의 forecast/economic 이중 gate 표</li></ul></article>
+          </div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_measurement">p22_measurement · PDF 4쪽 · Equation 1 measurement-error decomposition</a><a class="evidence-chip" href="#locator-p22_proxy">p22_proxy · PDF 5쪽 · Figure 1 and Table 1</a><a class="evidence-chip" href="#locator-p22_har">p22_har · PDF 6쪽 · Equations 2–4</a><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a></div>
+        </section>
+        <section class="deep-section study-section" aria-labelledby="deep-study"><h2 id="deep-study">읽은 뒤 남아야 할 것</h2>
+          <div class="card-grid"><article class="section-card"><h3>5분 복습</h3><ul class="plain-list"><li>RV는 잠재분산이 아니라 상태에 따라 잡음이 달라지는 관측 proxy다.</li><li>보정 HAR는 MSE를 낮춰도 QL을 악화시킬 수 있다.</li><li>이분산·국면 benchmark를 넣으면 보정항의 서사가 약해질 수 있다.</li><li>한국에서는 quarticity를 가장하지 말고 단순모형→경쟁 error process→경제성과 순으로 간다.</li></ul></article><article class="section-card"><h3>숙달 체크</h3><ul class="plain-list"><li>RV=IV+오차의 측정식을 말할 수 있다.</li><li>quarticity와 RV curvature의 차이를 설명할 수 있다.</li><li>MSE·QL 순위 역전이 왜 가능한지 설명할 수 있다.</li><li>HAR 보정항과 error-process benchmark를 중첩 비교할 수 있다.</li><li>한국 daily-WML adaptation을 원형 HARQ 재현과 구분할 수 있다.</li></ul></article></div>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_measurement">p22_measurement · PDF 4쪽 · Equation 1 measurement-error decomposition</a><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a><a class="evidence-chip" href="#locator-p22_simulation">p22_simulation · PDF 14쪽 · Table 6</a></div>
+          <h3 class="quiz-heading">원문 근거로 답하는 자가점검</h3><p class="section-note">먼저 답해 본 뒤 펼치세요. 답에는 다시 확인할 물리 PDF 위치가 붙습니다.</p>
+          <div class="deep-stack"><details class="quiz-card">
+          <summary>Q1. HAR2 계수가 유의하면 측정오차 보정 메커니즘이 증명되는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 아니다. 누락된 조건부 이분산이나 국면을 대신 흡수할 수 있어 richer error-process benchmark와 OOS loss가 필요하다.</p>
+          <p><strong>왜:</strong> 계수 유의성과 메커니즘 식별을 구분한다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_har">p22_har · PDF 6쪽 · Equations 2–4</a><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q2. 왜 Table 2는 MSE와 QL을 모두 읽어야 하는가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 보정형이 MSE에서는 좋아져도 QL에서는 나빠져 모형순위가 loss에 따라 바뀌기 때문이다.</p>
+          <p><strong>왜:</strong> 단일 loss에 의한 과도한 결론을 막는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a></div></div>
+        </details><details class="quiz-card">
+          <summary>Q3. MCS enclosure 안에 있다는 뜻은 무엇인가?</summary>
+          <div class="details-body"><p><strong>정답:</strong> 주어진 loss와 검정에서 열등하다고 제거되지 않았다는 뜻이지 승리확률이나 단독우승을 뜻하지 않는다.</p>
+          <p><strong>왜:</strong> 표본외 모형 불확실성을 정확히 읽는다.</p>
+          <div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_oos_mse">p22_oos_mse · PDF 19쪽 · Figure 5</a><a class="evidence-chip" href="#locator-p22_oos_ql">p22_oos_ql · PDF 21쪽 · Figure 6</a></div></div>
+        </details></div>
+          <div class="citation-boundary"><h3>인용 경계 <span class="provenance-tag">검토자 판정</span></h3><p><strong>안전한 요약:</strong> 미국 고빈도 RV 선행판에서 측정오차 보정 HAR의 이득은 loss와 error-process 사양에 민감했고, 이분산·국면을 허용한 모형이 표본외 MSE·QL에서 비교적 안정적이었다.</p><p><strong>이렇게 말하면 안 됨:</strong> quarticity가 무의미하거나 MS-AMEM이 모든 자산의 단독 승자이며 그 통계적 우위가 한국 WML Sharpe 개선을 보장한다고 말하지 않는다.</p><div class="evidence-links" role="group" aria-label="이 설명의 원문 근거"><a class="evidence-chip" href="#locator-p22_table2">p22_table2 · PDF 8쪽 · Table 2</a><a class="evidence-chip" href="#locator-p22_state_model">p22_state_model · PDF 13쪽 · Table 5</a><a class="evidence-chip" href="#locator-p22_oos_mcs_text">p22_oos_mcs_text · PDF 17쪽 · OOS MCS prose, exact 20-of-29 count</a><a class="evidence-chip" href="#locator-p22_simulation">p22_simulation · PDF 14쪽 · Table 6</a></div></div>
         </section>
         <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>SPY와 28개 DJIA 종목의 2003-01-03–2015-12-31 5분 realized variance·realized quarticity, 총 29개 자산 [원문 보고]</dd><dt>target</dt><dd>다음 거래일 realized variance [원문 보고]</dd><dt>information set</dt><dd>전일 RV·quarticity 또는 RV 곡률항, 비중첩 일·주·월 HAR blocks, 음의 전일수익, 조건부 오차분산 또는 3상태 확률 [원문 보고]</dd><dt>lookback</dt><dd>HAR daily t−1, weekly t−2:t−5, monthly t−6:t−22 blocks; OOS 추정은 8년 고정창 [원문 보고]</dd><dt>horizon</dt><dd>1거래일 ahead [원문 보고]</dd><dt>model family</dt><dd>HAR·HARQ·HAR2, HAR-GARCH 변형, AMEM·AMEMQ·AMEM2, 3상태 MS-AMEM 변형</dd><dt>training window</dt><dd>2003–2010을 시작으로 8년 고정창을 한 해씩 이동해 2011–2015를 예측한다.</dd><dt>retune</dt><dd>창을 연 단위로 이동해 그해의 일별 1-step 예측을 만들며 상태모형의 전체 후보 선택에는 별도 최종 holdout이 없다.</dd><dt>benchmarks</dt><dd>HAR · HARQ · HAR2 · HAR-GARCH · AMEM</dd><dt>loss / test</dt><dd>MSE · quasi-likelihood loss · 29개 자산별 5% Model Confidence Set · semiquadratic loss-difference statistic과 10,000회 bootstrap · Ljung–Box residual diagnostics · 1,000회 measurement-error simulation</dd><dt>economic metrics</dt><dd>Sharpe·turnover·목표변동성 수익은 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래전략을 구성하지 않아 거래비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 비중과 turnover를 평가하지 않는다.</dd></dl></section>
         <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
@@ -45,7 +209,7 @@
           <h3>구현 단위검사</h3><ul class="plain-list"><li>target 월 수익이 feature에 들어가지 않는 prefix-invariance test</li><li>HAR daily·weekly·monthly blocks의 중복·경계 test</li><li>모든 모형의 공통 OOS month mask test</li><li>상태확률 합·양의 forecast·optimizer 실패 원장 test</li><li>forecast winner와 BS15 economic winner를 별도 열로 유지하는 test</li></ul>
         </section>
         <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p22_loss_reversal</span> SPY 5분 RV에서 HAR·HARQ·HAR2의 MSE는 42.1·36.8·37.8이지만 QL은 0.171·0.190·0.219로, 보정모형의 MSE 개선이 QL 우위로 이어지지 않았다.<p class="meta">sample: SPY 5분 RV, 2003-01-03–2010-12-31 in-sample · target: 다음 날 realized variance · horizon: 1거래일 · metric: in-sample MSE와 QL · unit: loss 값 · comparator: 기본 HAR · loss_or_test: MSE 및 quasi-likelihood</p><p><strong>근거:</strong> p22_table2</p><p><strong>전이 경고:</strong> SPY 단일자산의 working-paper 표이며 한국 월별 WML proxy에서 같은 숫자나 순위를 기대하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p22_state_increment</span> SPY에서 기본 MS-AMEM의 MSE 39.0·QL 0.103은 기본 AMEM의 45.1·0.155보다 낮아, 평균식 보정항보다 오차의 상태전환을 모형화하는 이득이 나타났다.<p class="meta">sample: SPY 5분 RV, 2003-01-03–2010-12-31 in-sample · target: 다음 날 realized variance · horizon: 1거래일 · metric: MSE와 QL · unit: loss 값 · comparator: AMEM · loss_or_test: Table 5 model comparison</p><p><strong>근거:</strong> p22_state_model</p><p><strong>전이 경고:</strong> 3상태 likelihood 모형은 한국 월표본에서 자유도·지역해·상태표본 부족을 새로 검증해야 한다.</p></li><li><span class="badge">author_result</span> <span class="badge">p22_oos_regime</span> 2011–2015 OOS에서 MS 계열은 MSE MCS에 넓게 포함됐고, QL에서는 29개 중 20개 자산에서 세 MS 모형 모두가 MCS에 포함된 반면 HAR 보정항의 우위는 보편적이지 않았다.<p class="meta">sample: SPY와 28개 DJIA 종목의 2011–2015 OOS · target: 다음 날 realized variance · horizon: 1거래일 · metric: 자산별 MCS 포함 · unit: 자산 개수 · comparator: HAR·HAR-GARCH·AMEM 계열 · loss_or_test: 5% MCS under MSE and QL</p><p><strong>근거:</strong> p22_oos_mse · p22_oos_mcs_text · p22_oos_ql</p><p><strong>전이 경고:</strong> chronological OOS이지만 후보집합 선택 뒤의 untouched holdout은 아니며 경제성과도 평가하지 않는다.</p></li></ul></section>
-        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Realized Volatility Forecasting: Robustness to Measurement Errors — DiSIA Working Paper 2019/04</strong><p>워킹페이퍼 · 2019-07-05 · 27쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 27쪽 DiSIA Working Paper 2019/04 기준이다. 2021년 IJF 최종 조판본의 표·그림·쪽수와 같다고 간주하지 않으며 원문 파일은 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p22_measurement</strong> · artifact p22_wp · PDF 4쪽 · Equation 1 measurement-error decomposition · 검증됨</li><li><strong>p22_proxy</strong> · artifact p22_wp · PDF 5쪽 · Figure 1 and Table 1 · 검증됨</li><li><strong>p22_har</strong> · artifact p22_wp · PDF 6쪽 · Equations 2–4 · 검증됨</li><li><strong>p22_table2</strong> · artifact p22_wp · PDF 8쪽 · Table 2 · 검증됨</li><li><strong>p22_state_model</strong> · artifact p22_wp · PDF 13쪽 · Table 5 · 검증됨</li><li><strong>p22_oos_mse</strong> · artifact p22_wp · PDF 19쪽 · Figure 5 · 검증됨</li><li><strong>p22_oos_ql</strong> · artifact p22_wp · PDF 21쪽 · Figure 6 · 검증됨</li><li><strong>p22_assets</strong> · artifact p22_wp · PDF 26쪽 · Appendix Table 8 · 검증됨</li><li><strong>p22_figure27_typo</strong> · artifact p22_wp · PDF 7쪽 · 본문의 Figure 27 오기 문장; 실제 Figure 2는 physical p.9 · 검증됨</li><li><strong>p22_oos_mcs_text</strong> · artifact p22_wp · PDF 17쪽 · OOS MCS prose, exact 20-of-29 count · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Realized Volatility Forecasting: Robustness to Measurement Errors — DiSIA Working Paper 2019/04</strong><p>워킹페이퍼 · 2019-07-05 · 27쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 27쪽 DiSIA Working Paper 2019/04 기준이다. 2021년 IJF 최종 조판본의 표·그림·쪽수와 같다고 간주하지 않으며 원문 파일은 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li id="locator-p22_measurement"><strong>p22_measurement</strong> · artifact p22_wp · PDF 4쪽 · Equation 1 measurement-error decomposition · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_proxy"><strong>p22_proxy</strong> · artifact p22_wp · PDF 5쪽 · Figure 1 and Table 1 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_har"><strong>p22_har</strong> · artifact p22_wp · PDF 6쪽 · Equations 2–4 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_table2"><strong>p22_table2</strong> · artifact p22_wp · PDF 8쪽 · Table 2 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_state_model"><strong>p22_state_model</strong> · artifact p22_wp · PDF 13쪽 · Table 5 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_oos_mse"><strong>p22_oos_mse</strong> · artifact p22_wp · PDF 19쪽 · Figure 5 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_oos_ql"><strong>p22_oos_ql</strong> · artifact p22_wp · PDF 21쪽 · Figure 6 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_assets"><strong>p22_assets</strong> · artifact p22_wp · PDF 26쪽 · Appendix Table 8 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_figure27_typo"><strong>p22_figure27_typo</strong> · artifact p22_wp · PDF 7쪽 · 본문의 Figure 27 오기 문장; 실제 Figure 2는 physical p.9 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_oos_mcs_text"><strong>p22_oos_mcs_text</strong> · artifact p22_wp · PDF 17쪽 · OOS MCS prose, exact 20-of-29 count · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li><li id="locator-p22_simulation"><strong>p22_simulation</strong> · artifact p22_wp · PDF 14쪽 · Table 6 · 검증됨 · <a href="https://labdisia.disia.unifi.it/wp_disia/2019/wp_disia_2019_04.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 열기</a></li></ul></article></div></section>
         <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
           <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>realized-variance 보정항의 유의성과 MSE 개선은 오차 이분산·regime·loss를 바꾸면 약해질 수 있다.</strong><p>이유: HAR 보정, HAR-GARCH, AMEM, MS-AMEM의 단계 비교와 MSE·QL 역전이 이를 보인다. · 교정: 항상 29개 미국 자산·5분 RV·working-paper 판본 조건을 붙인다. · 근거: p22_table2 · p22_state_model · p22_oos_ql</p></li><li><strong>한국 WML 제곱수익 합은 잡음 있는 관측분산 proxy로 다루고 QLIKE·MSE를 함께 써야 한다.</strong><p>이유: 원문은 proxy noise와 loss 선택이 모형순위를 바꿀 수 있음을 직접 보여준다. · 교정: quarticity 원형 재현이 아니라 월 target 적응임을 표시한다. · 근거: p22_measurement · p22_table2</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>일별 WML 수익만으로 realized quarticity와 HARQ를 원형 그대로 만들 수 있다.</strong><p>이유: quarticity는 일중 고빈도수익의 4차 변동 측정치이며 일별 제곱수익과 다르다. · 교정: 곡률항을 별도 proxy challenger로 명명하거나 intraday 자료를 추가한다. · 근거: p22_measurement · p22_proxy · p22_har</p></li><li><strong>MS-AMEM의 낮은 QL은 한국 WML의 Sharpe 개선을 보장한다.</strong><p>이유: 논문은 목표변동성 수익·비용·Sharpe를 평가하지 않는다. · 교정: 예측치를 동일 BS15 mapping에 넣어 경제성과를 별도 검정한다. · 근거: p22_state_model · p22_oos_ql</p></li><li><strong>본문의 Figure 27은 별도 실증그림이다.</strong><p>이유: 물리 p.7의 Figure 27 표기는 p.9 Figure 2를 잘못 가리키는 working-paper 번호 오류다. · 교정: 근거는 Figure 2로 표기하고 판본 경고를 유지한다. · 근거: p22_figure27_typo</p></li></ul></article></div>
           <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>2021년 최종 IJF 조판본과 working paper의 표·그림·내부 Figure 번호 차이는 이 레코드에서 판본 간 대조하지 않았다.</li><li>원시 5분가격·저자 코드·난수 및 상태모형 초기값을 이용한 계산 재현은 근거 범위 밖이다.</li></ul>
