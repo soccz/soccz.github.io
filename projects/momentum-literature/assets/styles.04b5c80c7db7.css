@@ -104,6 +104,20 @@ select:focus-visible {
   text-decoration-thickness: 0.15em;
 }
 
+.global-home-link {
+  display: inline-flex;
+  padding: 0.1rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  text-decoration: none;
+}
+
+.global-home-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
 .page {
   padding-block: 3rem 5rem;
 }
