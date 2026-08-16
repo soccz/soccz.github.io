@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="forecast_gain_sharpe_failure 상황별 독서와 판단 경로">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/routes/forecast_gain_sharpe_failure/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>예측 개선·Sharpe 실패 · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/" aria-current="page">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/routes/">경로</a> / forecast_gain_sharpe_failure</nav>
+    <header class="detail-header"><p class="eyebrow">경로 검수 완료</p><h1>예측 개선·Sharpe 실패</h1><p class="lede">통계적 예측 개선이 경제성과로 이어지지 않은 원인을 어떤 순서로 진단할 것인가?</p></header>
+    <section aria-labelledby="entry-heading"><h2 id="entry-heading">이 경로를 시작할 때</h2><ul class="plain-list"><li>RW126보다 OOS forecast loss는 낮지만 Sharpe·CER·tail 지표가 개선되지 않았다.</li><li>예측 실패와 scaling·비용·상태의 전이 실패를 분리한다.</li></ul></section>
+    <section aria-labelledby="steps-heading"><h2 id="steps-heading">읽기와 판단 순서</h2><ol class="step-list"><li><article class="step-card">
+          <p class="eyebrow">출발</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/01/">01 · On the Performance of Volatility-Managed Portfolios</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>사후 spanning alpha와 과거정보 기반 실시간 Sharpe·CER의 차이</li><li>구조변화와 평균·공분산 추정오차가 경제적 전이를 깨는 메커니즘</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>forecast loss와 월별 관리수익을 동일 origin ID로 연결한 원장</li><li>원·관리 전략의 exposure·상관·평균·분산 시계열</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>forecast와 수익 시계열의 월 정렬·target·scaling 상수가 서로 달라 원인분해가 불가능하다.</div>
+          <p><strong>다음으로:</strong> 정렬이 맞으면 노출·비용·시장마찰 gate로 이동한다.</p>
+        </article></li><li><article class="step-card">
+          <p class="eyebrow">경제성과 gate</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/24/">24 · A Multifactor Perspective on Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/30/">30 · Do Limits to Arbitrage Explain the Benefits of Volatility-Managed Portfolios?</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>volatility management의 OOS·비용·factor exposure 평가</li><li>limits-to-arbitrage와 모멘텀 위험관리 성과의 이질성</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>gross·net performance, turnover, leverage와 cap binding 빈도</li><li>VW·EW, 위기·비위기, 유동성 하위패널</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>Sharpe 차이가 비용·평균노출·특정 하위기간 하나로 설명되고 일반적인 경제가치가 남지 않는다.</div>
+          <p><strong>다음으로:</strong> 실패 원인이 total-risk scaling이면 조건부·downside 대안을 별도 benchmark로 비교한다.</p>
+        </article></li><li><article class="step-card">
+          <p class="eyebrow">확장</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/18/">18 · Conditional Volatility Targeting</a><a class="button" href="/projects/momentum-literature/papers/21/">21 · Downside Risk and the Performance of Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/HW23/">HW23 · Enhanced momentum strategies</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>극단 상태에서만 노출을 줄이는 conditional targeting</li><li>downside risk를 이용한 관리와 비용 평가</li><li>cMOM·sMOM·dMOM의 단순·복잡 대안과 한국 행 반례</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>같은 WML·target·cap 아래 별도 전략열</li><li>downside proxy와 조건부 state를 예측시점에 생성하는 규칙</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>대안 전략의 다른 기대수익 신호나 사후 scalar를 기존 forecast의 개선으로 잘못 합친다.</div>
+          <p><strong>다음으로:</strong> 대안은 원 forecast 교체와 분리된 robustness 표에서 tail·cost trade-off로 판정한다.</p>
+        </article></li></ol></section>
+    <section aria-labelledby="output-heading"><h2 id="output-heading">경로를 마친 뒤 남길 것</h2>
+      <div class="card-grid"><article class="section-card"><h3>선택 스택</h3><div class="actions"><a class="button" href="/projects/momentum-literature/papers/01/">01 · On the Performance of Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/24/">24 · A Multifactor Perspective on Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/30/">30 · Do Limits to Arbitrage Explain the Benefits of Volatility-Managed Portfolios?</a><a class="button" href="/projects/momentum-literature/papers/18/">18 · Conditional Volatility Targeting</a><a class="button" href="/projects/momentum-literature/papers/21/">21 · Downside Risk and the Performance of Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/HW23/">HW23 · Enhanced momentum strategies</a></div></article><article class="section-card"><h3>구현 체크리스트</h3><ul class="plain-list"><li>월별 forecast error와 다음 달 strategy return을 같은 키로 결합한다.</li><li>평균노출·cap binding·turnover·gross/net 차이를 순서대로 분해한다.</li><li>전체표본과 위기월 기여도를 별도 계산한다.</li><li>downside·conditional 전략은 forecast replacement와 다른 열로 유지한다.</li></ul></article><article class="section-card"><h3>금지할 추론</h3><ul class="plain-list"><li>낮은 QLIKE가 높은 Sharpe를 보장한다고 해석하지 않는다.</li><li>사후 risk equalization 결과를 실시간 투자성과로 부르지 않는다.</li><li>HW23 cMOM·sMOM의 전체표본 동일위험 scalar를 고정 12% 실시간 target으로 바꾸지 않는다.</li><li>별도 downside 전략의 성과를 원 예측모형의 성과로 귀속하지 않는다.</li></ul></article><article class="section-card"><h3>근거 대조 지점</h3><ul class="plain-list"><li>01의 직접·spanning·실시간 결과 차이</li><li>24의 비용·다요인 OOS 조건</li><li>30의 실행가능성 이질성</li><li>18·21의 scaling rule과 target 차이, HW23의 사후 동일위험 scalar와 한국 Table 6 월평균 단위</li></ul></article></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>

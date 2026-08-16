@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="vkospi_external_state 상황별 독서와 판단 경로">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/routes/vkospi_external_state/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>VKOSPI·외부 상태변수 · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/" aria-current="page">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/routes/">경로</a> / vkospi_external_state</nav>
+    <header class="detail-header"><p class="eyebrow">경로 검수 완료</p><h1>VKOSPI·외부 상태변수</h1><p class="lede">VKOSPI 기반 외부 signal이 내부 WML history만 쓴 전략보다 실시간 순경제가치를 주는가, 그리고 이를 별도 미래분산 forecast로 시험할 경우 forecast gate도 통과하는가?</p></header>
+    <section aria-labelledby="entry-heading"><h2 id="entry-heading">이 경로를 시작할 때</h2><ul class="plain-list"><li>WML 자체 history 밖의 forward-looking 또는 시장상태 변수를 추가한다.</li><li>VKOSPI 등 외부자료의 PIT 가용성과 비용을 감사할 수 있다.</li></ul></section>
+    <section aria-labelledby="steps-heading"><h2 id="steps-heading">읽기와 판단 순서</h2><ol class="step-list"><li><article class="step-card">
+          <p class="eyebrow">출발</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/27/">27 · VIX-managed portfolios</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>월중 daily VIX 제곱을 집계하고 과거 36개월 recursive normalization으로 다음달 비중을 만드는 위험관리 규칙</li><li>옵션 내재변동성 자료를 사용할 때의 시점·비용·시장차이</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>월말까지 실제 공개된 daily VKOSPI와 거래일·단위·산출방법 변경 이력</li><li>27식 월중 VKOSPI 제곱 집계 사양과 level·change·term 확장 사양의 분리</li><li>revision·휴장·missing 값 처리 원장</li><li>WML-only RW126·HAR 기준</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>VKOSPI의 역사적 가용시점·정의변경·결측을 복원할 수 없거나 VIX 결과를 한국에 그대로 외삽한다.</div>
+          <p><strong>다음으로:</strong> PIT 외부변수가 준비되면 27의 scaling strategy를 내부 downside·conditional 전략과 비교하고, 미래분산 forecast로 쓸 때는 별도 forecast-loss gate를 추가한다.</p>
+        </article></li><li><article class="step-card">
+          <p class="eyebrow">비교</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/18/">18 · Conditional Volatility Targeting</a><a class="button" href="/projects/momentum-literature/papers/21/">21 · Downside Risk and the Performance of Volatility-Managed Portfolios</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>외부 옵션자료 없이 극단·downside 상태에서만 노출을 바꾸는 대안</li><li>추가 데이터와 내부 signal의 cost-benefit 비교</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>WML-only conditional/downside benchmark</li><li>동일 target·cap·월별 적용 시점</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>외부변수 후보만 다른 scaling·target 또는 사후 threshold를 사용한다.</div>
+          <p><strong>다음으로:</strong> 동일 조건에서 WML-only 대안을 넘는 증분만 경제성과로 이동한다.</p>
+        </article></li><li><article class="step-card">
+          <p class="eyebrow">경제성과 gate</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/01/">01 · On the Performance of Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/24/">24 · A Multifactor Perspective on Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/30/">30 · Do Limits to Arbitrage Explain the Benefits of Volatility-Managed Portfolios?</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>실시간 성과·비용·factor exposure·시장마찰 검증</li><li>추가 데이터가 투자자에게 주는 실제 순가치</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>데이터 구입·지연 비용과 turnover</li><li>공통 gross/net performance와 tail 지표</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>외부 signal의 순성과가 데이터비용·거래비용 후 사라지거나 위기 한 구간에만 집중된다.</div>
+          <p><strong>다음으로:</strong> PIT·순가치·안정성을 통과할 때만 확장모형으로 채택한다.</p>
+        </article></li></ol></section>
+    <section aria-labelledby="output-heading"><h2 id="output-heading">경로를 마친 뒤 남길 것</h2>
+      <div class="card-grid"><article class="section-card"><h3>선택 스택</h3><div class="actions"><a class="button" href="/projects/momentum-literature/papers/27/">27 · VIX-managed portfolios</a><a class="button" href="/projects/momentum-literature/papers/18/">18 · Conditional Volatility Targeting</a><a class="button" href="/projects/momentum-literature/papers/21/">21 · Downside Risk and the Performance of Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/01/">01 · On the Performance of Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/24/">24 · A Multifactor Perspective on Volatility-Managed Portfolios</a><a class="button" href="/projects/momentum-literature/papers/30/">30 · Do Limits to Arbitrage Explain the Benefits of Volatility-Managed Portfolios?</a></div></article><article class="section-card"><h3>구현 체크리스트</h3><ul class="plain-list"><li>VKOSPI 원자료·정의·공개시점·revision을 별도 manifest로 만든다.</li><li>27의 월중 daily VKOSPI 제곱 집계와 recursive 36개월 normalization을 먼저 별도 전략으로 재현한다.</li><li>WML-only 기준과 동일 origin·cap·비용으로 비교하되, 27의 strategy signal을 자산별 variance forecast와 혼동하지 않는다.</li><li>level·change·term·state threshold 확장은 train-only로 선택하고 원형 사양과 분리한다.</li><li>데이터비용 포함 net value와 crisis concentration을 보고한다.</li></ul></article><article class="section-card"><h3>금지할 추론</h3><ul class="plain-list"><li>미국 VIX 결과를 한국 VKOSPI 성과로 간주하지 않는다.</li><li>27이 자산별 미래분산의 QLIKE·MSE 우위를 입증한 forecast 논문이라고 부르지 않는다.</li><li>옵션시장의 forward-looking 성격만으로 증분가치를 가정하지 않는다.</li><li>사후 crisis threshold를 실시간 규칙으로 바꾸지 않는다.</li></ul></article><article class="section-card"><h3>근거 대조 지점</h3><ul class="plain-list"><li>27의 월중 daily VIX 제곱 집계, recursive 36개월 normalization, signal timing과 overlay-cost 조건</li><li>18·21의 WML-only conditional/downside 대안</li><li>01·24·30의 실시간·비용·마찰 gate</li><li>VKOSPI 공급원의 point-in-time 가용성</li></ul></article></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>

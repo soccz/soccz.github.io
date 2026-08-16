@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="21 논문의 사용 조건, 방법, 한국 WML 적용과 검수 상태">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/21/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>Downside Risk and the Performance of Volatility-Managed Portfolios · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/papers/">논문</a> / 21</nav>
+    <header class="detail-header">
+      <p class="eyebrow">21</p><h1>Downside Risk and the Performance of Volatility-Managed Portfolios</h1>
+      <p class="lede">Feifei Wang · Xuemin Sterling Yan · 2021 · Journal of Banking &amp; Finance</p>
+      <div class="badges"><span class="badge">경제성 평가</span><span class="badge">우선</span><span class="badge">적응 필요</span><span class="badge">검수 완료</span><span class="badge">독립검수 완료</span></div>
+    </header>
+    <div class="detail-layout">
+      <div>
+        <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
+          <div class="status-panel"><strong>미래분산 forecast 모형이 아니라 총위험과 하방위험 scaling의 경제성과·메커니즘·실시간 구현을 비교하는 문헌으로, RW126 뒤의 하방위험 적응과 비용 gate에 사용한다.</strong></div>
+          <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>한국 WML 일별수익만으로 총실현분산과 하방 준분산 challenger를 만들 때</li><li>성과를 return timing과 volatility timing으로 분해할 때</li><li>full-sample 정규화와 120개월 expanding 실시간 결합을 구별할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>하방 준분산이 미래 WML 분산을 가장 정확히 예측한다고 주장할 때</li><li>원문의 직전 1개월 역실현변동성 규칙과 한국 RW126·12% 목표변동성 적응을 같은 전략으로 부를 때</li><li>낮은 overlay 비용 결과를 실제 종목·대차비용 전체로 확대할 때</li></ul></article></div>
+        </section>
+        <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>MKT, SMB, HML, MOM, RMW, CMA, ROE, IA, BAB의 9개 미국 주식요인과 94개 가치가중 long–short 이상현상; 요인별 시작일은 1926–1967로 다르고 공통 종료는 2018-12 [원문 보고]</dd><dt>target</dt><dd>직전 달 총위험 또는 하방위험을 이용해 다음 달 원 포트폴리오 노출을 조절한 관리수익 [원문 보고]</dd><dt>information set</dt><dd>직전 달의 일별 요인수익; 하방위험은 음의 일별수익만 사용하며 음의 날이 3개 미만이면 이전 달을 함께 사용 [원문 보고]</dd><dt>lookback</dt><dd>기본 1개월, 2·3개월은 강건성 사양 [원문 보고]</dd><dt>horizon</dt><dd>월말 위험측정 뒤 다음 한 달 관리수익 [원문 보고]</dd><dt>model family</dt><dd>총실현변동성 및 하방 실현변동성의 역수(σ⁻¹) scaling, spanning alpha 분해, 원·관리전략의 최적 또는 고정비중 결합</dd><dt>training window</dt><dd>기초표의 정규화 상수는 전체표본이고, 실시간 결합은 최초 120개월 뒤 expanding 추정창을 사용한다.</dd><dt>retune</dt><dd>실시간 사양은 정규화 상수와 평균–분산 결합비중을 매월 과거자료로 다시 추정하고 절대비중을 5로 제한한다.</dd><dt>benchmarks</dt><dd>원 포트폴리오 · 총변동성 관리 · 하방변동성 관리 · 원·관리전략 고정비중 결합</dd><dt>loss / test</dt><dd>분산예측 QLIKE·MSE는 핵심 평가가 아니다. · spanning residual과 평균–분산 효용 · spanning regression alpha · HAC 지연 5의 Sharpe 차이 검정 · 요인별 결과와 94개 이상현상의 부호·유의 개수</dd><dt>economic metrics</dt><dd>Sharpe·Sortino · alpha·CER · return-timing·volatility-timing 분해 · 비용 후 성과와 break-even 비용</dd><dt>trading costs</dt><dd>overlay weight 변화에 1·10·14·25·50bp를 적용</dd><dt>turnover</dt><dd>관리비중 변화와 break-even 비용; 종목 수준 주문·대차비용은 포함하지 않음</dd></dl></section>
+        <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
+          <div class="card-grid"><article class="section-card"><h3>고정</h3><ul class="plain-list"><li>PIT KOSPI·12–2·월별 형성과 다음 달 보유의 6개 WML 및 BS15 RW126 경제성과 기준을 고정한다.</li><li>모든 challenger에 같은 target vol·cap·평가월·비용 시나리오를 적용한다.</li><li>forecast loss와 return/volatility timing 및 경제성과를 별도 결과층으로 둔다.</li></ul></article><article class="section-card"><h3>교체</h3><ul class="plain-list"><li>원문의 직전 1개월 총·하방 실현변동성 역수 비중을 126일 총·하방 제곱수익합의 제곱근을 위험입력으로 쓰는 고정 BS15 scaling으로 적응한다.</li><li>미국 103개 포트폴리오를 상관된 한국 6개 WML 공통표본으로 교체한다.</li></ul></article><article class="section-card"><h3>현재 입력</h3><ul class="plain-list"><li>6개 구성의 일별·월별 WML</li><li>월말 PIT 형성원장</li><li>RW126·12% scaling과 공통 경제성과 함수</li></ul></article><article class="section-card"><h3>부족한 입력</h3><ul class="plain-list"><li>원문의 Internet Appendix 개별 표</li><li>종목 수준 drifted holdings·spread·대차비용</li><li>한국에서 검증된 하방위험 최소관측일 규칙</li></ul></article></div>
+          <h3>최소 구현 순서</h3><ul class="plain-list"><li>각 월말 같은 126일 창에서 RV126과 음수일 DSV126을 계산한다.</li><li>RW126-BS15와 DSV126-BS15만 먼저 비교하고 창·cap·target을 결과 뒤에 바꾸지 않는다.</li><li>QLIKE·MSE 예측표와 Sharpe·최악월·turnover·비용 후 표를 분리한다.</li><li>6개별 방향과 월 단위 block bootstrap의 평균 차이를 함께 보고한다.</li></ul>
+          <h3>실패의 의미</h3><p>DSV126이 RW126보다 forecast loss 또는 비용 후 Sharpe를 개선하지 못하면 한국 6-WML의 고정 BS15 구조에서 하방위험 적응의 증분가치가 없다고 기록하며, 미국 원형 전체를 반박하지 않는다.</p>
+          <h3>구현 단위검사</h3><ul class="plain-list"><li>모든 위험입력이 비중 적용월 시작 전에 끝나는 prefix-invariance test</li><li>RV126과 DSV126이 같은 관측 mask·연율단위를 쓰는 test</li><li>레버리지 cap과 비용차감 산식 test</li><li>6개 전략의 공통 평가월 row-hash test</li></ul>
+        </section>
+        <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p21_downside_breadth</span> 하방관리 alpha는 9개 요인 모두 양수였고 94개 이상현상 중 89개가 양수였으며, 하방 대 총관리 spanning에서는 94개 중 84개가 하방 쪽 양수였다.<p class="meta">sample: 미국 9개 요인과 94개 이상현상 · target: 하방 또는 총변동성 관리수익 · horizon: 월별 전체 가용표본 · metric: spanning alpha의 부호와 유의성 · unit: 요인·포트폴리오 개수 · comparator: 원 포트폴리오 및 총변동성 관리 · loss_or_test: spanning regressions</p><p><strong>근거:</strong> p21_method · p21_cross_section</p><p><strong>전이 경고:</strong> 횡단 개수는 공통 종목·시장충격을 공유하며 한국 6개 WML의 독립 반복실험으로 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p21_timing_channel</span> 성과분해에서 총관리의 양의 return-timing은 9개 중 2개·94개 중 42개였지만 하방관리는 9개 중 8개·94개 중 71개로, 하방 우위가 주로 return timing에 연결됐다.<p class="meta">sample: 미국 9개 요인과 94개 이상현상 · target: 관리전략 alpha 분해 · horizon: 다음 달 관리수익 · metric: return-timing 성분의 양의 부호 개수 · unit: 요인·포트폴리오 개수 · comparator: 총변동성 관리 · loss_or_test: Equations 8–15의 alpha decomposition</p><p><strong>근거:</strong> p21_decomposition</p><p><strong>전이 경고:</strong> return timing은 하방분산의 미래분산 forecast loss 우위를 뜻하지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p21_realtime_cost_boundary</span> 120개월 초기창의 실시간 결합에서 하방관리 결합은 9개 중 8개 요인에서 원 전략보다 Sharpe가 높았고, 고정비중 결합도 103개 포트폴리오 중 약 80–81개에서 개선됐지만 높은 비용에서는 상대우위가 약해졌다.<p class="meta">sample: 9개 요인과 94개 이상현상의 실시간·고정비중 분석 · target: 원 전략과 하방관리의 결합수익 · horizon: 다음 1개월(최초 120개월 뒤 월별 expanding OOS) · metric: Sharpe와 비용 후 alpha · unit: ratio, 승리 개수, basis points · comparator: 원 전략 및 총관리 결합 · loss_or_test: Sharpe 차이와 1–50bp 비용 시나리오</p><p><strong>근거:</strong> p21_cost · p21_fixed_weight · p21_realtime · p21_realtime_method</p><p><strong>전이 경고:</strong> 비용은 overlay 비중변화에 대한 단순 bp 모형이며 한국 종목 재구성·대차·세금 전체를 반영하지 않는다.</p></li></ul></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Downside risk and the performance of volatility-managed portfolios — published article</strong><p>최종 게재본 · 2021-06-06 · 18쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 18쪽 최종 게재본 기준이다. 원문 파일은 사이트에 복제하지 않고 DOI·저자 공개 링크만 제공하며, 별도 Internet Appendix는 이 근거 묶음에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p21_method</strong> · artifact p21_vor · PDF 4쪽 · Equations 1–7 and Table 1 · 검증됨</li><li><strong>p21_cross_section</strong> · artifact p21_vor · PDF 6쪽 · Tables 2–3 · 검증됨</li><li><strong>p21_cost</strong> · artifact p21_vor · PDF 7쪽 · Table 4 and Equations 8–15 · 검증됨</li><li><strong>p21_decomposition</strong> · artifact p21_vor · PDF 8쪽 · Tables 5–6 · 검증됨</li><li><strong>p21_realtime</strong> · artifact p21_vor · PDF 10쪽 · Table 7 and Equation 18 · 검증됨</li><li><strong>p21_fixed_weight</strong> · artifact p21_vor · PDF 12쪽 · Tables 9–10 · 검증됨</li><li><strong>p21_direct_metrics</strong> · artifact p21_vor · PDF 13쪽 · Table 11 · 검증됨</li><li><strong>p21_realtime_method</strong> · artifact p21_vor · PDF 9쪽 · Equations 16-17 and 120-month expanding real-time setup · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
+          <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>미국 요인·이상현상 표본에서 하방위험 관리는 총위험 관리보다 더 넓은 경제성과를 보였고 return timing의 역할이 컸다.</strong><p>이유: Tables 1–6의 spanning·분해 결과가 같은 방향을 보인다. · 교정: 항상 미국 표본, 경제성과 결과, 비용·실시간 조건을 함께 적는다. · 근거: p21_method · p21_cross_section · p21_decomposition</p></li><li><strong>한국에서는 하방위험을 고정 BS15 scaling 안의 적응 challenger로 시험할 수 있다.</strong><p>이유: 현재 일별 WML로 같은 시점의 총제곱수익과 음수일 제곱수익을 계산할 수 있다. · 교정: 원문의 직전 1개월 역실현변동성 원형과 RW126 적응을 이름으로 분리한다. · 근거: p21_method</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>하방 준분산은 미래 WML 분산을 가장 정확하게 예측한다.</strong><p>이유: 논문의 주평가는 spanning alpha·Sharpe·효용이지 QLIKE·MSE horse race가 아니다. · 교정: 한국에서 별도 forecast loss를 계산한 뒤 경제성과와 분리 보고한다. · 근거: p21_method · p21_direct_metrics</p></li><li><strong>하방관리의 비용 후 우위는 실제 종목 거래비용을 완전히 통과했다.</strong><p>이유: Table 4는 overlay 비중변화에 단순 bp를 적용하며 종목 재구성·대차·시장충격을 포함하지 않는다. · 교정: weight-change cost proxy로 표기하고 종목자료가 있을 때 별도 비용 gate를 둔다. · 근거: p21_cost</p></li></ul></article></div>
+          <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>Internet Appendix Tables IA.1–IA.10의 개별 셀과 저자 코드·원자료 재계산은 이 레코드의 근거 범위 밖이다.</li><li>Table 5·7의 일부 음수 글리프가 게재 PDF 표에서 보이지 않아 해당 부호는 본문 서술과 행 간 산술로 판정했다.</li></ul>
+        </section>
+        <section aria-labelledby="reading-heading"><h2 id="reading-heading">원문에서 이것만 읽기</h2>
+          <div class="card-grid"><article class="section-card"><h3>1분</h3><ul class="plain-list"><li>p21_method · PDF 4쪽 · Equations 1–7 and Table 1</li><li>p21_decomposition · PDF 8쪽 · Tables 5–6</li><li>p21_realtime · PDF 10쪽 · Table 7 and Equation 18</li></ul></article><article class="section-card"><h3>10분</h3><ul class="plain-list"><li>p21_method · PDF 4쪽 · Equations 1–7 and Table 1</li><li>p21_cross_section · PDF 6쪽 · Tables 2–3</li><li>p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</li><li>p21_decomposition · PDF 8쪽 · Tables 5–6</li><li>p21_realtime · PDF 10쪽 · Table 7 and Equation 18</li><li>p21_direct_metrics · PDF 13쪽 · Table 11</li></ul></article><article class="section-card"><h3>구현 전</h3><ul class="plain-list"><li>p21_method · PDF 4쪽 · Equations 1–7 and Table 1</li><li>p21_cost · PDF 7쪽 · Table 4 and Equations 8–15</li><li>p21_decomposition · PDF 8쪽 · Tables 5–6</li><li>p21_realtime · PDF 10쪽 · Table 7 and Equation 18</li><li>p21_fixed_weight · PDF 12쪽 · Tables 9–10</li></ul></article></div>
+        </section>
+        <section aria-labelledby="related-heading"><h2 id="related-heading">관련 논문</h2><dl class="definition-grid"><dt>prerequisite</dt><dd><a href="/projects/momentum-literature/papers/BS15/">BS15</a></dd><dt>compare_with</dt><dd><a href="/projects/momentum-literature/papers/01/">01</a>, <a href="/projects/momentum-literature/papers/24/">24</a>, <a href="/projects/momentum-literature/papers/30/">30</a></dd><dt>counterexample</dt><dd><a href="/projects/momentum-literature/papers/01/">01</a></dd><dt>economic_gate</dt><dd><a href="/projects/momentum-literature/papers/24/">24</a>, <a href="/projects/momentum-literature/papers/30/">30</a></dd></dl></section>
+      </div>
+      <aside class="detail-aside stack" aria-label="서지와 접근">
+        <section class="section-card"><h2>서지</h2><dl class="definition-grid"><dt>ID</dt><dd>21</dd><dt>연도</dt><dd>2021</dd><dt>저널</dt><dd>Journal of Banking &amp; Finance</dd><dt>DOI</dt><dd>10.1016/j.jbankfin.2021.106198</dd><dt>정정 상태</dt><dd>확인 범위 내 정정 없음</dd><dt>내용 검수</dt><dd>검수 완료</dd><dt>독립검수</dt><dd>독립검수 완료</dd><dt>독립검수일</dt><dd>2026-08-16</dd><dt>artifact 상태</dt><dd>검수 완료</dd><dt>evidence 상태</dt><dd>근거 연결 완료</dd><dt>권리 상태</dt><dd>외부 링크만</dd></dl></section>
+        <section class="section-card"><h2>원문 접근</h2><ul class="plain-list"><li><a href="https://doi.org/10.1016/j.jbankfin.2021.106198" rel="noopener noreferrer" referrerpolicy="no-referrer">DOI</a></li><li><a href="https://www.lehigh.edu/~xuy219/research/Downside.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 공개 판본</a></li></ul><p>외부 페이지의 접근 가능성과 재배포 허용은 별개입니다.</p></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>

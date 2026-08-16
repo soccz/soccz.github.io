@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BS15 논문의 사용 조건, 방법, 한국 WML 적용과 검수 상태">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/BS15/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>Momentum has its moments · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/papers/">논문</a> / BS15</nav>
+    <header class="detail-header">
+      <p class="eyebrow">BS15</p><h1>Momentum has its moments</h1>
+      <p class="lede">Pedro Barroso · Pedro Santa-Clara · 2015 · Journal of Financial Economics</p>
+      <span class="badge">기초 전제</span>
+    </header>
+    <div class="detail-layout">
+      <div>
+        <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
+          <div class="status-panel"><strong>직전 126거래일 WML 위험으로 다음 달 노출을 조절하는 고정 기준선과 그 경제적 동기를 정의할 때 가장 먼저 읽는 원전이다.</strong></div>
+          <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>한국 6개 WML에 공통으로 적용할 RW126 위험추정과 연 12% 목표변동성 스케일링을 정의할 때</li><li>모멘텀의 높은 평균수익과 왼쪽 꼬리 위험을 같은 표에서 설명할 때</li><li>새 위험예측치를 평가할 경제적 기준선을 고정할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>한국 WML에서 동일한 Sharpe 개선이 자동으로 재현된다고 주장할 때</li><li>예측손실이 개선된 새 모형의 통계적 우위를 이 논문만으로 판단할 때</li><li>연 12% 목표를 적용하면 실현 변동성도 정확히 12%가 된다고 말할 때</li></ul></article></div>
+        </section>
+        <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>미국 WML의 일별·월별 수익과 RMRF·SMB·HML 월수익, 주 표본 1927:03–2011:12 [원문 보고]</dd><dt>target</dt><dd>직전 126거래일 일별 WML 제곱수익으로 추정한 다음 달 월분산과 그에 대응하는 WML 노출 [원문 보고]</dd><dt>information set</dt><dd>각 월의 마지막 거래시점 이전 126개 일별 WML 수익만 사용하며 다음 달 WML 수익에는 한 시점 지연된 비중을 적용 [원문 보고]</dd><dt>lookback</dt><dd>126거래일; 21일과 63일 대안도 강건성에서 다룸 [원문 보고]</dd><dt>horizon</dt><dd>다음 한 달의 WML 노출과 수익 [원문 보고]</dd><dt>model family</dt><dd>126거래일 실현분산 기반의 역변동성 목표조정과 월별 자기회귀 위험예측</dd><dt>training window</dt><dd>Eq. 5의 RW126에는 추정계수 학습창이 없고, AR(1) 위험예측 검정은 최초 240개월 뒤 expanding window를 사용한다.</dd><dt>retune</dt><dd>RW126 위험과 스케일 비중은 매월 다시 계산하고, AR(1) 계수는 표본외 검정에서 매월 expanding history로 갱신한다.</dd><dt>benchmarks</dt><dd>무관리 WML · RMRF · SMB · HML · 위험예측의 historical-mean benchmark</dd><dt>loss / test</dt><dd>월 실현분산 AR(1)의 historical-mean 대비 OOS R-squared · 전체표본 분포모멘트와 Sharpe 비교 · 최초 240개월 이후 expanding-window OOS 위험예측 · 미국 하위기간과 프랑스·독일·일본·영국 국제표본 강건성</dd><dt>economic metrics</dt><dd>연환산 평균 · 연환산 표준편차 · Sharpe ratio · information ratio · 왜도 · 초과첨도 · 최악 월수익 · maximum drawdown</dd><dt>trading costs</dt><dd>직접 비용차감 순수익 대신 각 전략의 유의성을 없애는 손익분기 round-trip 비용을 비교한다.</dd><dt>turnover</dt><dd>1951:03–2010:12 주식수준 월회전율은 무관리 WML 74%, 위험관리 WML 75%로 보고된다.</dd></dl></section>
+        <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
+          <div class="card-grid"><article class="section-card"><h3>고정</h3><ul class="plain-list"><li>PIT KOSPI, 12–2 모멘텀 신호, 월별 형성과 다음 달 보유, D10·Q5·P30과 VW·EW의 6개 WML 구성을 고정한다.</li><li>각 WML의 직전 126거래일 일별 제곱수익, 월분산 환산계수 21, 연 12% 목표변동성의 BS15 기준선을 고정한다.</li><li>새 모형은 포트폴리오 구성과 스케일링 함수를 바꾸지 않고 미래 위험예측치만 교체한다.</li></ul></article><article class="section-card"><h3>교체</h3><ul class="plain-list"><li>미국 WML을 동일한 월에 관측되는 한국 6개 WML로 교체한다.</li><li>미국 국제표본 결론을 외삽하지 않고 한국 공통표본에서 구성별 성과를 다시 계산한다.</li></ul></article><article class="section-card"><h3>현재 입력</h3><ul class="plain-list"><li>6개 구성의 일별 WML</li><li>6개 구성의 월별 WML</li><li>월말 formation 원장과 PIT KOSPI 스크린 감사자료</li></ul></article><article class="section-card"><h3>부족한 입력</h3><ul class="plain-list"><li>공매도 대차료와 시장충격비용의 장기 일관 시계열</li><li>모든 기간에 동일 정의로 계산된 종목수준 실행가능 회전율</li></ul></article></div>
+          <h3>최소 구현 순서</h3><ul class="plain-list"><li>월말마다 각 WML의 직전 126거래일 제곱수익 평균에 21을 곱해 다음 달 월분산을 만든다.</li><li>분산의 제곱근으로 연 12% 목표변동성 비중을 계산하고 다음 달 월 WML에 한 시점 지연해 적용한다.</li><li>6개 구성의 원 WML과 WML*을 동일 공통월에서 평균·변동성·Sharpe·최악월·왜도·첨도·회전율로 비교한다.</li><li>위기·비위기와 VW·EW 하위패널을 함께 제시해 특정 구성에만 나타난 개선을 분리한다.</li></ul>
+          <h3>실패의 의미</h3><p>한국 공통표본에서 WML*이 원 WML보다 위험조정성과나 꼬리위험을 안정적으로 개선하지 못하면 BS15가 틀렸다는 뜻이 아니라, 그 효과가 시장·표본·구성 의존적이라는 증거로 해석한다.</p>
+          <h3>구현 단위검사</h3><ul class="plain-list"><li>미래 일별수익을 바꿔도 과거 월말 비중이 변하지 않는 prefix-invariance test</li><li>각 월 비중이 정확히 이전 126거래일만 참조하는 경계일 test</li><li>동일 위험예측을 6개 WML에 같은 스케일링 함수로 적용하는 공통코드 test</li><li>일별 WML의 월내 복리와 공식 월별 WML 정의 차이를 명시적으로 분리하는 정합성 test</li></ul>
+        </section>
+        <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">bs15_raw_tail</span> 미국 WML은 연환산 평균 14.46%, Sharpe 0.53이지만 최악 월 −78.96%, 왜도 −2.47, 초과첨도 18.24의 두꺼운 왼쪽 꼬리를 보였다.<p class="meta">sample: 미국 월별 팩터수익 1927:03–2011:12 · target: 무관리 WML 월수익 · horizon: 월별 수익의 전체표본 분포 · metric: 연환산 평균·Sharpe·최악 월·왜도·초과첨도 · unit: 퍼센트, 비율, 표준화 모멘트 · comparator: RMRF·SMB·HML과의 기술통계 비교 · loss_or_test: Table 1 기술통계; 형식적 인과검정 아님</p><p><strong>근거:</strong> bs15_table1</p><p><strong>전이 경고:</strong> 미국 장기표본의 WML 분포이며 한국의 종목 유니버스·가중법·시장구조에 그대로 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">bs15_risk_predictability</span> 월 실현분산 AR(1)은 historical-mean 예측 대비 모멘텀 위험의 OOS R-squared 57.82%를 보고했다.<p class="meta">sample: 미국 WML 월 실현분산; 최초 240개월 뒤 expanding-window 예측 · target: 다음 달 WML 실현분산 · horizon: 1개월 · metric: OOS R-squared · unit: 퍼센트 · comparator: 과거 실현분산의 historical mean · loss_or_test: 제곱오차 기반 OOS R-squared</p><p><strong>근거:</strong> bs15_risk_oos</p><p><strong>전이 경고:</strong> 위험의 예측가능성은 수익 또는 효용의 개선과 같은 명제가 아니며 한국 WML에서 별도 검증해야 한다.</p></li><li><span class="badge">author_result</span> <span class="badge">bs15_scaled_performance</span> 직전 6개월 위험으로 조정한 WML*은 WML 대비 Sharpe가 0.53에서 0.97로 높아지고, 최악 월은 −78.96%에서 −28.40%, 왜도는 −2.47에서 −0.42, 초과첨도는 18.24에서 2.68로 완화됐다.<p class="meta">sample: 미국 WML 1927:03–2011:12 · target: 직전 126거래일 위험으로 연 12% 목표를 적용한 WML* 월수익 · horizon: 월별 재조정의 전체표본 성과 · metric: Sharpe·최악 월·왜도·초과첨도 · unit: 비율, 퍼센트, 표준화 모멘트 · comparator: 무관리 WML · loss_or_test: Table 3 동일표본 기술통계와 information ratio</p><p><strong>근거:</strong> bs15_eq56 · bs15_table3</p><p><strong>전이 경고:</strong> 12%는 레버리지 수준을 정하는 목표값이며 월수익으로 측정한 WML*의 실현 연변동성이 정확히 12%라는 뜻은 아니다.</p></li></ul></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Momentum has its moments — Journal of Financial Economics version of record</strong><p>최종 게재본 · 2014-11-29 · 10쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://doi.org/10.1016/j.jfineco.2014.11.010" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 최종 게재본의 물리 PDF 페이지를 가리킨다. 이 사이트는 논문 파일을 재배포하지 않고 DOI만 제공한다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>bs15_table1</strong> · artifact bs15_vor · PDF 3쪽 · Table 1 and Figure 1 · 검증됨</li><li><strong>bs15_risk_oos</strong> · artifact bs15_vor · PDF 5쪽 · Equation 4 and text reporting the 57.82% OOS R-squared · 검증됨</li><li><strong>bs15_eq56</strong> · artifact bs15_vor · PDF 5쪽 · Equations 5 and 6 · 검증됨</li><li><strong>bs15_table3</strong> · artifact bs15_vor · PDF 6쪽 · Table 3 and turnover discussion · 검증됨</li><li><strong>bs15_table5</strong> · artifact bs15_vor · PDF 8쪽 · Table 5 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
+          <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>BS15은 미국 WML 장기표본에서 직전 126거래일 위험을 이용한 WML*의 Sharpe와 왼쪽 꼬리 지표가 무관리 WML보다 개선됐다고 보고한다.</strong><p>이유: Eq. 5–6의 과거정보 규칙과 Table 3의 수치가 최종 게재본에서 함께 제시된다. · 교정: 항상 미국 표본, WML 정의, 126거래일 lookback, 전체표본 성과라는 조건을 붙인다. · 근거: bs15_eq56 · bs15_table3</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>BS15 스케일링은 어느 시장과 어느 모멘텀 구성에서도 Sharpe를 두 배로 만든다.</strong><p>이유: 보고된 0.53에서 0.97은 특정 미국 WML 장기표본의 결과이고 국제표본도 같은 크기의 효과를 보장하지 않는다. · 교정: 한국 6개 WML에서는 동일 규칙을 별도로 계산하고 구성별·하위기간별 결과를 조건부로 보고한다. · 근거: bs15_table3 · bs15_table5</p></li><li><strong>연 12% 목표변동성을 쓰면 WML*의 실현 연변동성도 정확히 12%다.</strong><p>이유: 논문은 일별 자기상관과 빈도변환 때문에 월수익 기준 실현 표준편차가 목표와 정확히 일치하지 않는다고 밝힌다. · 교정: 12%를 레버리지 상수로 설명하고 실제 표본 표준편차는 별도 보고한다. · 근거: bs15_eq56 · bs15_table3</p></li></ul></article></div>
+          <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>저자 원자료와 원코드로 Table 3을 독립 재계산한 증거는 이 공개 레코드의 범위에 포함되지 않는다.</li><li>손익분기 비용 분석은 실제 한국 대차료·세금·시장충격을 차감한 순성과와 같지 않다.</li></ul>
+        </section>
+        <section aria-labelledby="reading-heading"><h2 id="reading-heading">원문에서 이것만 읽기</h2>
+          <div class="card-grid"><article class="section-card"><h3>1분</h3><ul class="plain-list"><li>bs15_eq56 · PDF 5쪽 · Equations 5 and 6</li><li>bs15_table3 · PDF 6쪽 · Table 3 and turnover discussion</li></ul></article><article class="section-card"><h3>10분</h3><ul class="plain-list"><li>bs15_table1 · PDF 3쪽 · Table 1 and Figure 1</li><li>bs15_risk_oos · PDF 5쪽 · Equation 4 and text reporting the 57.82% OOS R-squared</li><li>bs15_eq56 · PDF 5쪽 · Equations 5 and 6</li><li>bs15_table3 · PDF 6쪽 · Table 3 and turnover discussion</li></ul></article><article class="section-card"><h3>구현 전</h3><ul class="plain-list"><li>bs15_eq56 · PDF 5쪽 · Equations 5 and 6</li><li>bs15_table3 · PDF 6쪽 · Table 3 and turnover discussion</li><li>bs15_table5 · PDF 8쪽 · Table 5</li></ul></article></div>
+        </section>
+
+      </div>
+      <aside class="detail-aside stack" aria-label="서지와 접근">
+        <section class="section-card"><h2>서지</h2><dl class="definition-grid"><dt>ID</dt><dd>BS15</dd><dt>연도</dt><dd>2015</dd><dt>저널</dt><dd>Journal of Financial Economics</dd><dt>DOI</dt><dd>10.1016/j.jfineco.2014.11.010</dd><dt>정정 상태</dt><dd>확인 범위 내 정정 없음</dd><dt>내용 검수</dt><dd>검수 완료</dd><dt>독립검수</dt><dd>독립검수 완료</dd><dt>독립검수일</dt><dd>2026-08-16</dd><dt>artifact 상태</dt><dd>검수 완료</dd><dt>evidence 상태</dt><dd>근거 연결 완료</dd><dt>권리 상태</dt><dd>외부 링크만</dd></dl></section>
+        <section class="section-card"><h2>원문 접근</h2><ul class="plain-list"><li><a href="https://doi.org/10.1016/j.jfineco.2014.11.010" rel="noopener noreferrer" referrerpolicy="no-referrer">DOI</a></li></ul><p>외부 페이지의 접근 가능성과 재배포 허용은 별개입니다.</p></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>

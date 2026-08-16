@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="11 논문의 사용 조건, 방법, 한국 WML 적용과 검수 상태">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/11/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>Decoupling the Short- and Long-Term Behavior of Stochastic Volatility · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/papers/">논문</a> / 11</nav>
+    <header class="detail-header">
+      <p class="eyebrow">11</p><h1>Decoupling the Short- and Long-Term Behavior of Stochastic Volatility</h1>
+      <p class="lede">Mikkel Bennedsen · Asger Lunde · Mikko S. Pakkanen · 2022 · Journal of Financial Econometrics</p>
+      <div class="badges"><span class="badge">핵심 예측</span><span class="badge">필독</span><span class="badge">적응 필요</span><span class="badge">검수 완료</span><span class="badge">독립검수 완료</span></div>
+    </header>
+    <div class="detail-layout">
+      <div>
+        <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
+          <div class="status-panel"><strong>단기 roughness와 장기 persistence를 한 계수로 뭉개지 않고 분리하는 장기의존 challenger를 설계할 때 읽는 필수 문헌이다.</strong></div>
+          <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>RW126보다 긴 정보가 다음달 WML 위험예측에 추가 가치를 주는지 검정할 때</li><li>로그분산 예측의 수준 재변환에서 Jensen 편향을 처리할 때</li><li>horizon별 모형순위와 복수 benchmark를 사전 고정할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>일중 pre-averaged variation과 일별 WML 제곱수익 합을 같은 측정치로 취급할 때</li><li>200관측 rolling 추정창을 126일 feature lookback과 동일시할 때</li><li>한국 WML의 Sharpe 개선을 이 논문의 예측표만으로 선언할 때</li></ul></article></div>
+        </section>
+        <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>CME E-mini S&amp;P 500 tick 자료 2011-01-02–2014-12-31의 996거래일과 약 2천 개 미국주식의 보조 횡단면 [원문 보고] · 점프와 미시구조 잡음에 강건한 pre-averaged bipower variation 및 일중 계절조정 [원문 보고]</dd><dt>target</dt><dd>15·30·65분 또는 1일 간격에서 앞으로 1·2·5·10·20개 구간의 integrated variance 합 [원문 보고]</dd><dt>information set</dt><dd>각 origin까지 관측된 로그 realized measure와 그 시점에 추정 가능한 계절요인 [원문 보고]</dd><dt>lookback</dt><dd>모수추정은 최근 200관측 rolling window; 모형의 장기 kernel history와는 별개 [원문 보고]</dd><dt>horizon</dt><dd>1·2·5·10·20 step; 1일 간격 20-step이 약 한 달에 가장 가깝다 [원문 보고]</dd><dt>model family</dt><dd>Cauchy, Power-BSS, Gamma-BSS의 short/long-dependence 분리 모형과 RW·AR·ARMA·log-HAR·ARFIMA·RFSV</dd><dt>training window</dt><dd>각 forecast origin에서 최근 200개 관측을 고정 길이로 사용한다.</dd><dt>retune</dt><dd>모형은 rolling origin마다 다시 추정하며 window와 후보군을 위한 별도 nested validation은 보고하지 않는다.</dd><dt>benchmarks</dt><dd>random walk · AR(5) · AR(10) · ARMA(1,1) · log-HAR · ARFIMA · RFSV</dd><dt>loss / test</dt><dd>MSE · QLIKE · 75%·90% Model Confidence Set · block bootstrap 25,000회와 block length 6</dd><dt>economic metrics</dt><dd>포트폴리오 Sharpe·CER·turnover는 보고되지 않는다.</dd><dt>trading costs</dt><dd>거래전략을 구성하지 않아 거래비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>포트폴리오 비중과 회전율을 평가하지 않는다.</dd></dl></section>
+        <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
+          <div class="card-grid"><article class="section-card"><h3>고정</h3><ul class="plain-list"><li>PIT KOSPI, 12–2 신호, 월별 형성과 다음 달 보유, D10·Q5·P30 × VW·EW의 6개 WML을 고정한다.</li><li>BS15 RW126과 연 12% 목표 스케일링을 기준선으로 보존하고 위험예측치만 교체한다.</li><li>forecast loss와 BS15 경제성과를 서로 다른 gate로 보고한다.</li></ul></article><article class="section-card"><h3>교체</h3><ul class="plain-list"><li>일중 integrated variance를 다음 보유월의 WML 일별 제곱수익 합으로 교체한다.</li><li>연속시간 BSS 원형 대신 월말 정보만 쓰는 discrete short/long-kernel challenger를 사용한다.</li></ul></article><article class="section-card"><h3>현재 입력</h3><ul class="plain-list"><li>6개 구성의 일별 WML</li><li>6개 구성의 월별 WML</li><li>월말 formation 원장</li><li>RW126 기준예측과 공통 경제성과 함수</li></ul></article><article class="section-card"><h3>부족한 입력</h3><ul class="plain-list"><li>E-mini형 tick 자료와 pre-averaged bipower variation</li><li>일중 계절성과 미시구조 잡음을 같은 방식으로 보정한 WML measure</li></ul></article></div>
+          <h3>최소 구현 순서</h3><ul class="plain-list"><li>월말마다 다음 약 21–22거래일 WML 제곱수익 합을 target으로 정의하고 log floor를 사전 고정한다.</li><li>RW126·log-AR·HAR·MLOG 뒤에 short/long kernel 또는 fractional challenger를 둔다.</li><li>window·kernel·재변환 방식은 각 outer origin의 과거 validation에서만 선택한다.</li><li>MSE·QLIKE·DM/MCS 표와 동일 BS15 mapping의 Sharpe·최악월·drawdown·turnover 표를 분리한다.</li></ul>
+          <h3>실패의 의미</h3><p>장·단기 분리 모형이 한국 6개 WML의 공통 OOS에서 단순 HAR/MLOG를 이기지 못하면, 해당 표본에서는 추가 long-dependence 복잡성의 증분가치가 없다고 해석한다.</p>
+          <h3>구현 단위검사</h3><ul class="plain-list"><li>미래 수익을 바꿔도 과거 origin의 feature·forecast가 변하지 않는 prefix-invariance test</li><li>200관측 estimation window와 feature lag를 별도 열로 검증하는 window-semantics test</li><li>로그예측의 단순 지수변환과 Jensen 보정을 구분하는 level-transform test</li><li>6개 모형 출력에 동일한 BS15 scaling 함수만 적용하는 common-mapping test</li></ul>
+        </section>
+        <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p11_intraday</span> 15분 간격에서는 Cauchy와 BSS 모형이 다수 horizon의 MSE·QLIKE 최저권에 있었지만 MCS가 여러 모형을 함께 남겼다.<p class="meta">sample: E-mini S&amp;P 500의 2013-01-02–2014-12-31 OOS · target: 15분 integrated variance 합 · horizon: 1·2·5·10·20 step · metric: MSE·QLIKE와 MCS 포함 · unit: 분산손실 및 모형집합 · comparator: RW·AR·ARMA·log-HAR·ARFIMA·RFSV · loss_or_test: MSE, QLIKE, 75%·90% MCS</p><p><strong>근거:</strong> p11_table4</p><p><strong>전이 경고:</strong> 일중 선물 RV 결과이며 한국 월별 WML 위험예측의 직접 성과가 아니다.</p></li><li><span class="badge">author_result</span> <span class="badge">p11_daily_horizon</span> 일별 20-step 예측에서는 Gamma-BSS가 MSE 0.010×10^-5와 QLIKE −6.412로 표의 최저값을 보였고, 짧은 horizon에서는 RFSV가 강했다.<p class="meta">sample: E-mini S&amp;P 500의 2013-01-02–2014-12-31 OOS · target: 일별 integrated variance 합 · horizon: 1·2·5·10·20 거래일 · metric: MSE와 QLIKE · unit: 표 기재 손실단위 · comparator: Cauchy·BSS와 전통·fractional benchmarks · loss_or_test: Table 5 MSE·QLIKE 및 MCS</p><p><strong>근거:</strong> p11_table5</p><p><strong>전이 경고:</strong> horizon별 winner가 달라 단일 장기의존 모형의 보편적 우위로 표현하지 않는다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p11_measurement_caveat</span> 저자들은 observed realized measure에서 잠재 spot volatility의 roughness를 역추론하는 문제가 측정오차 때문에 ill-posed일 수 있다고 경고한다.<p class="meta">sample: 논문의 이론·실증 전체 · target: 잠재 변동성 roughness 해석 · horizon: 해당 없음 · metric: 식별 한계 · unit: 정성적 경고 · comparator: observed realized measure와 latent spot volatility · loss_or_test: 결론의 측정오차 논의</p><p><strong>근거:</strong> p11_limit</p><p><strong>전이 경고:</strong> 일별 WML 제곱수익 proxy는 원 논문의 noise-robust 일중 측정보다 더 거친 대용치다.</p></li></ul></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Decoupling the Short- and Long-Term Behavior of Stochastic Volatility — arXiv v3 author preprint</strong><p>프리프린트 · 2021-01-06 · 48쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치와 수치는 2021년 저자 선행판 기준이다. 최종 JFEC 게재본의 조판 페이지에 이 locator를 재사용하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p11_model</strong> · artifact p11_preprint · PDF 5쪽 · Section 2 roughness and persistence definitions · 검증됨</li><li><strong>p11_target</strong> · artifact p11_preprint · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction · 검증됨</li><li><strong>p11_table4</strong> · artifact p11_preprint · PDF 37쪽 · Table 4 · 검증됨</li><li><strong>p11_table5</strong> · artifact p11_preprint · PDF 38쪽 · Table 5 · 검증됨</li><li><strong>p11_limit</strong> · artifact p11_preprint · PDF 39쪽 · Conclusion and measurement warning · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
+          <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>검증한 저자 선행판에서는 단기 roughness와 장기 persistence를 분리한 모형이 여러 RV horizon에서 경쟁력 있는 예측을 보였다.</strong><p>이유: 모형 정의와 Tables 4–5가 horizon·loss별 결과를 제시한다. · 교정: 판본, E-mini 일중자료, horizon과 loss를 함께 적고 MCS의 공동 생존을 밝힌다. · 근거: p11_model · p11_table4 · p11_table5</p></li><li><strong>한국 WML에서는 short/long 정보분리를 복잡모형의 사전 정당화가 아니라 검정 가능한 challenger로 사용할 수 있다.</strong><p>이유: 논문 자체가 horizon별 winner 변화와 측정오차 한계를 함께 보인다. · 교정: RW126·HAR·MLOG를 같은 origin에서 비교하고 경제성과를 별도 평가한다. · 근거: p11_table5 · p11_limit</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>이 논문은 한국 WML의 다음달 분산과 Sharpe 개선을 입증했다.</strong><p>이유: 표본·측정치·투자전략이 모두 다르며 경제성과를 평가하지 않는다. · 교정: 한국 6개 WML에서 forecast와 economic gate를 새로 실행한다. · 근거: p11_target · p11_limit</p></li><li><strong>200관측 rolling window는 BS15의 126거래일 위험 lookback과 같은 뜻이다.</strong><p>이유: 전자는 모수 추정창이고 후자는 위험 feature 정의다. · 교정: training window와 feature lookback을 별도 항목으로 기록한다. · 근거: p11_target</p></li><li><strong>Table 4–5의 선행판 locator를 최종 JFEC 조판 페이지로 사용할 수 있다.</strong><p>이유: 실제로 읽은 artifact는 최종 게재 전 판본이다. · 교정: 결과에는 선행판임을 붙이고 최종본 locator는 별도 판본감사 뒤에만 추가한다. · 근거: p11_table4 · p11_table5</p></li></ul></article></div>
+          <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>최종 JFEC 조판본과 2021년 선행판의 모든 표·부록을 문장 단위로 대조한 증거는 이 레코드 범위에 포함되지 않는다.</li><li>저자 코드와 원 tick 자료를 이용한 독립 수치 재현은 이 레코드 범위에 포함되지 않는다.</li></ul>
+        </section>
+        <section aria-labelledby="reading-heading"><h2 id="reading-heading">원문에서 이것만 읽기</h2>
+          <div class="card-grid"><article class="section-card"><h3>1분</h3><ul class="plain-list"><li>p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</li><li>p11_table5 · PDF 38쪽 · Table 5</li><li>p11_limit · PDF 39쪽 · Conclusion and measurement warning</li></ul></article><article class="section-card"><h3>10분</h3><ul class="plain-list"><li>p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</li><li>p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</li><li>p11_table4 · PDF 37쪽 · Table 4</li><li>p11_table5 · PDF 38쪽 · Table 5</li></ul></article><article class="section-card"><h3>구현 전</h3><ul class="plain-list"><li>p11_model · PDF 5쪽 · Section 2 roughness and persistence definitions</li><li>p11_target · PDF 33쪽 · Equations 6.1–6.3 and Jensen correction</li><li>p11_table4 · PDF 37쪽 · Table 4</li><li>p11_table5 · PDF 38쪽 · Table 5</li><li>p11_limit · PDF 39쪽 · Conclusion and measurement warning</li></ul></article></div>
+        </section>
+        <section aria-labelledby="related-heading"><h2 id="related-heading">관련 논문</h2><dl class="definition-grid"><dt>prerequisite</dt><dd><a href="/projects/momentum-literature/papers/BS15/">BS15</a></dd><dt>compare_with</dt><dd><a href="/projects/momentum-literature/papers/03/">03</a>, <a href="/projects/momentum-literature/papers/16/">16</a>, <a href="/projects/momentum-literature/papers/17/">17</a></dd><dt>counterexample</dt><dd><a href="/projects/momentum-literature/papers/04/">04</a></dd><dt>economic_gate</dt><dd><a href="/projects/momentum-literature/papers/01/">01</a>, <a href="/projects/momentum-literature/papers/18/">18</a>, <a href="/projects/momentum-literature/papers/24/">24</a></dd></dl></section>
+      </div>
+      <aside class="detail-aside stack" aria-label="서지와 접근">
+        <section class="section-card"><h2>서지</h2><dl class="definition-grid"><dt>ID</dt><dd>11</dd><dt>연도</dt><dd>2022</dd><dt>저널</dt><dd>Journal of Financial Econometrics</dd><dt>DOI</dt><dd>10.1093/jjfinec/nbaa049</dd><dt>정정 상태</dt><dd>확인 범위 내 정정 없음</dd><dt>내용 검수</dt><dd>검수 완료</dd><dt>독립검수</dt><dd>독립검수 완료</dd><dt>독립검수일</dt><dd>2026-08-16</dd><dt>artifact 상태</dt><dd>검수 완료</dd><dt>evidence 상태</dt><dd>근거 연결 완료</dd><dt>권리 상태</dt><dd>외부 링크만</dd></dl></section>
+        <section class="section-card"><h2>원문 접근</h2><ul class="plain-list"><li><a href="https://doi.org/10.1093/jjfinec/nbaa049" rel="noopener noreferrer" referrerpolicy="no-referrer">DOI</a></li><li><a href="https://arxiv.org/pdf/1610.00332" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 공개 판본</a></li></ul><p>외부 페이지의 접근 가능성과 재배포 허용은 별개입니다.</p></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>

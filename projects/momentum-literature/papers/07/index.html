@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="07 논문의 사용 조건, 방법, 한국 WML 적용과 검수 상태">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/07/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>From zero to hero: Realized partial (co)variances · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/papers/">논문</a> / 07</nav>
+    <header class="detail-header">
+      <p class="eyebrow">07</p><h1>From zero to hero: Realized partial (co)variances</h1>
+      <p class="lede">Tim Bollerslev · Marcelo C. Medeiros · Andrew J. Patton · Rogier Quaedvlieg · 2022 · Journal of Econometrics</p>
+      <div class="badges"><span class="badge">방법 확장</span><span class="badge">후속 확장</span><span class="badge badge--warning">추가자료 필요</span><span class="badge">검수 완료</span><span class="badge">독립검수 완료</span></div>
+    </header>
+    <div class="detail-layout">
+      <div>
+        <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
+          <div class="status-panel"><strong>downside·upside 위험을 zero threshold로 먼저 나누고, 엄격한 과거전용 검증에서만 두 threshold의 tail/middle 분해를 추가하는 방법론적 확장으로 쓴다.</strong></div>
+          <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>total realized variation을 음·양·tail 구간으로 회계적으로 분해할 때</li><li>zero semivariance와 data-driven thresholds를 공정하게 비교할 때</li><li>다변량 공분산에서 극단 음수 움직임의 증분예측력을 시험할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>PV(3)를 threshold 세 개로 설명할 때</li><li>80% MCS 포함을 95% 단독승리로 표현할 때</li><li>일별 WML bucket을 5·15분 partial covariance 원형이라 부를 때</li></ul></article></div>
+        </section>
+        <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>SPY와 DJIA 28종목의 5분 수익 1997-04-21–2013-12-31, 그리고 749종목에서 뽑은 N=1·2·5·10·20·50 random portfolios의 15분 수익 [원문 보고]</dd><dt>target</dt><dd>다음날 realized variance 또는 realized covariance matrix [원문 보고]</dd><dt>information set</dt><dd>전일 partial variance/covariance components와 total 5일·22일 HAR components [원문 보고]</dd><dt>lookback</dt><dd>1,000거래일 rolling coefficients; univariate threshold는 각 창에서 5-fold CV, multivariate threshold는 최초 2,000일에서 고정 [원문 보고]</dd><dt>horizon</dt><dd>다음 1거래일 [원문 보고]</dd><dt>model family</dt><dd>RV-HAR, semivariance HAR, data-driven partial-variance HAR and multivariate partial-covariance HAR</dd><dt>training window</dt><dd>univariate는 1,000일 rolling, multivariate는 first 2,000-day threshold selection 뒤 1,000일 rolling coefficient estimation이다.</dd><dt>retune</dt><dd>univariate threshold는 rolling window마다 선택하고 multivariate threshold는 초기구간 뒤 고정한다.</dd><dt>benchmarks</dt><dd>total RV/RCOV HAR · zero-threshold SV/SCOV HAR · PV(3) and PV(4)</dd><dt>loss / test</dt><dd>MSE · QLIKE · one-sided Diebold–Mariano tests · 80% Model Confidence Set · jump-removed continuous-measure robustness</dd><dt>economic metrics</dt><dd>포트폴리오 경제성과는 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래비용은 보고하지 않는다.</dd><dt>turnover</dt><dd>회전율은 보고하지 않는다.</dd></dl></section>
+        <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
+          <div class="card-grid"><article class="section-card"><h3>고정</h3><ul class="plain-list"><li>PIT KOSPI·12–2·6개 WML·월말 형성·다음달 보유와 BS15 mapping을 고정한다.</li><li>total squares가 모든 sign/tail buckets의 합과 정확히 일치하게 한다.</li><li>zero split을 flexible thresholds보다 앞선 benchmark로 둔다.</li></ul></article><article class="section-card"><h3>교체</h3><ul class="plain-list"><li>5·15분 standardized returns를 과거 126일의 일별 WML standardized returns로 교체한다.</li><li>random 5-fold를 금지하고 train-before-validation blocked folds와 embargo를 쓴다.</li><li>intraday partial variance라는 명칭을 daily-return tail adaptation으로 교체한다.</li></ul></article><article class="section-card"><h3>현재 입력</h3><ul class="plain-list"><li>6개 WML 일별수익</li><li>월별 realized WML variance</li><li>RW126·HAR 기준선</li></ul></article><article class="section-card"><h3>부족한 입력</h3><ul class="plain-list"><li>동기화 5·15분 constituent and WML returns</li><li>intraday jumps와 PSD covariance construction</li><li>Supplemental Appendix의 CV 세칙</li></ul></article></div>
+          <h3>최소 구현 순서</h3><ul class="plain-list"><li>total·negative·positive daily squared sums로 zero-SV HAR를 만든다.</li><li>그 뒤 lower/upper quantile 두 개의 three-region challenger를 blocked inner CV로 고른다.</li><li>PV(4)는 사전 overfit diagnostic로만 둔다.</li><li>common OOS loss와 동일 BS15 비용 후 성과를 함께 평가한다.</li></ul>
+          <h3>실패의 의미</h3><p>two-threshold model이 zero split을 common OOS loss와 경제성과에서 못 이기면 단순 downside model을 유지한다.</p>
+          <h3>구현 단위검사</h3><ul class="plain-list"><li>total squares와 bucket sums accounting identity test</li><li>각 관측이 정확히 한 region에 들어가는 partition test</li><li>threshold standardization의 formation-cutoff prefix test</li><li>모델별 target row-hash 동일성 test</li></ul>
+        </section>
+        <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p07_spy_pv3</span> SPY에서 two-threshold·three-region PV(3)의 MSE 2.3923과 QLIKE 0.1347은 total RV와 zero semivariance benchmark보다 낮았다.<p class="meta">sample: SPY 5분수익, 1997-04-21–2013-12-31 · target: 다음날 realized variance · horizon: 1일 · metric: MSE and QLIKE · unit: loss level · comparator: RV-HAR and zero-threshold SV-HAR · loss_or_test: rolling OOS loss and one-sided DM</p><p><strong>근거:</strong> p07_univariate · p07_definition</p><p><strong>전이 경고:</strong> PV(3)는 threshold 두 개·region 세 개이며 한국의 일별 WML adaptation은 intraday 원형과 다르다.</p></li><li><span class="badge">author_result</span> <span class="badge">p07_threshold_pattern</span> univariate data-driven 선택은 거의 항상 PV(3)이었고 lower threshold quantile은 대략 0.09–0.14, upper threshold는 0.70–0.75에 모였으며 PV(4)는 성능이 크게 악화됐다.<p class="meta">sample: SPY와 DJIA 28종목 · target: 다음날 realized variance · horizon: 1일 · metric: 선택 모형과 threshold quantiles · unit: quantile and model count · comparator: PV(2), PV(3), PV(4) · loss_or_test: 1,000-day rolling five-fold CV and OOS loss</p><p><strong>근거:</strong> p07_thresholds · p07_univariate</p><p><strong>전이 경고:</strong> 5-fold가 엄격한 forward fold라는 사양은 PDF에서 닫히지 않으며 centered Figure 2는 사후 시각화다.</p></li><li><span class="badge">author_result</span> <span class="badge">p07_high_dimension</span> N=20·50 random portfolios에서 total RCOV의 80% MCS fraction은 각각 0, PCOV는 각각 1.00이었고 zero+low threshold인 SCOV+는 N=20에서 95/100, N=50에서 100/100 portfolios에 선택됐다.<p class="meta">sample: 749종목에서 뽑은 N=20·50 random portfolios 각 100개 · target: 다음날 realized covariance · horizon: 1일 · metric: 80% MCS fraction and selection frequency · unit: fraction and portfolio count · comparator: RCOV, SCOV and alternative PCOV · loss_or_test: MSE/QLIKE 80% Model Confidence Set</p><p><strong>근거:</strong> p07_multivariate_select · p07_multivariate_loss · p07_jump</p><p><strong>전이 경고:</strong> 80% MCS는 95% unique-winner 검정이 아니며 random portfolios는 한국 WML legs와 다르다.</p></li></ul></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>From zero to hero: Realized partial (co)variances — Journal of Econometrics version of record</strong><p>최종 게재본 · 2021-11-09 · 13쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거 위치는 2021-11-09 온라인 공개된 JOE VOR의 물리 PDF 페이지다. 본문이 인용하는 별도 Supplemental Appendix S2–S6는 이 artifact와 locator 범위에 포함되지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p07_definition</strong> · artifact p07_vor · PDF 3쪽 · Equations 1–8, partial covariance and variance identities · 검증됨</li><li><strong>p07_univariate</strong> · artifact p07_vor · PDF 6쪽 · Table 1, univariate OOS results · 검증됨</li><li><strong>p07_thresholds</strong> · artifact p07_vor · PDF 7쪽 · Table 2 and Figure 2 · 검증됨</li><li><strong>p07_multivariate_select</strong> · artifact p07_vor · PDF 9쪽 · Table 3 · 검증됨</li><li><strong>p07_multivariate_loss</strong> · artifact p07_vor · PDF 10쪽 · Figure 3 and Table 4 · 검증됨</li><li><strong>p07_jump</strong> · artifact p07_vor · PDF 11쪽 · Tables 5 and 6 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
+          <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>VOR에서 zero threshold는 단일 threshold benchmark로 강했고 two thresholds가 tails와 middle을 나눌 때 추가 gain이 나타났다.</strong><p>이유: Tables 1–2가 PV(3)의 선택과 loss를 보여 준다. · 교정: PV(3)의 threshold 수와 region 수를 구분한다. · 근거: p07_univariate · p07_thresholds</p></li><li><strong>고차원 realized covariance에서는 zero+low negative threshold가 자주 선택됐다.</strong><p>이유: Tables 3–4에서 N=20·50의 SCOV+ 선택과 PCOV MCS 결과가 강하다. · 교정: 80% MCS와 미국 random-portfolio 조건을 붙인다. · 근거: p07_multivariate_select · p07_multivariate_loss</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>PV(3)는 threshold가 세 개이고 zero threshold는 항상 열위다.</strong><p>이유: PV(3)는 두 thresholds·세 regions이며 single-threshold zero는 robust하다. · 교정: thresholds=G−1 정의를 따른다. · 근거: p07_definition · p07_thresholds</p></li><li><strong>일별 WML bucket으로 intraday partial covariance 원형을 구현했다.</strong><p>이유: 원형은 동기화 5·15분 returns와 covariance cross terms를 쓴다. · 교정: daily-return adaptation이라고 표시한다. · 근거: p07_definition · p07_multivariate_loss</p></li></ul></article></div>
+          <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>5-fold CV의 시간순 fold와 embargo 세칙은 VOR 본문에서 완전히 특정되지 않는다.</li><li>Supplemental Appendix S2–S6의 QLIKE selection·CSPA·industry 결과와 code는 이 artifact 범위 밖이다.</li></ul>
+        </section>
+        <section aria-labelledby="reading-heading"><h2 id="reading-heading">원문에서 이것만 읽기</h2>
+          <div class="card-grid"><article class="section-card"><h3>1분</h3><ul class="plain-list"><li>p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</li><li>p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</li></ul></article><article class="section-card"><h3>10분</h3><ul class="plain-list"><li>p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</li><li>p07_univariate · PDF 6쪽 · Table 1, univariate OOS results</li><li>p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</li><li>p07_multivariate_select · PDF 9쪽 · Table 3</li><li>p07_multivariate_loss · PDF 10쪽 · Figure 3 and Table 4</li></ul></article><article class="section-card"><h3>구현 전</h3><ul class="plain-list"><li>p07_definition · PDF 3쪽 · Equations 1–8, partial covariance and variance identities</li><li>p07_thresholds · PDF 7쪽 · Table 2 and Figure 2</li><li>p07_multivariate_select · PDF 9쪽 · Table 3</li><li>p07_jump · PDF 11쪽 · Tables 5 and 6</li></ul></article></div>
+        </section>
+        <section aria-labelledby="related-heading"><h2 id="related-heading">관련 논문</h2><dl class="definition-grid"><dt>prerequisite</dt><dd><a href="/projects/momentum-literature/papers/BS15/">BS15</a></dd><dt>compare_with</dt><dd><a href="/projects/momentum-literature/papers/15/">15</a>, <a href="/projects/momentum-literature/papers/19/">19</a>, <a href="/projects/momentum-literature/papers/20/">20</a></dd><dt>economic_gate</dt><dd><a href="/projects/momentum-literature/papers/21/">21</a>, <a href="/projects/momentum-literature/papers/24/">24</a></dd></dl></section>
+      </div>
+      <aside class="detail-aside stack" aria-label="서지와 접근">
+        <section class="section-card"><h2>서지</h2><dl class="definition-grid"><dt>ID</dt><dd>07</dd><dt>연도</dt><dd>2022</dd><dt>저널</dt><dd>Journal of Econometrics</dd><dt>DOI</dt><dd>10.1016/j.jeconom.2021.04.013</dd><dt>정정 상태</dt><dd>확인 범위 내 정정 없음</dd><dt>내용 검수</dt><dd>검수 완료</dd><dt>독립검수</dt><dd>독립검수 완료</dd><dt>독립검수일</dt><dd>2026-08-16</dd><dt>artifact 상태</dt><dd>검수 완료</dd><dt>evidence 상태</dt><dd>근거 연결 완료</dd><dt>권리 상태</dt><dd>외부 링크만</dd></dl></section>
+        <section class="section-card"><h2>원문 접근</h2><ul class="plain-list"><li><a href="https://doi.org/10.1016/j.jeconom.2021.04.013" rel="noopener noreferrer" referrerpolicy="no-referrer">DOI</a></li><li><a href="https://public.econ.duke.edu/~boller/Papers/BMPQ.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 공개 판본</a></li></ul><p>외부 페이지의 접근 가능성과 재배포 허용은 별개입니다.</p></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>

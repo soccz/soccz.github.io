@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="26 논문의 사용 조건, 방법, 한국 WML 적용과 검수 상태">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/papers/26/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>Forecasting Realized Volatility with Spillover Effects - Perspectives from Graph Neural Networks · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/" aria-current="page">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/papers/">논문</a> / 26</nav>
+    <header class="detail-header">
+      <p class="eyebrow">26</p><h1>Forecasting Realized Volatility with Spillover Effects - Perspectives from Graph Neural Networks</h1>
+      <p class="lede">Chao Zhang · Xingyue Pu · Mihai Cucuringu · Xiaowen Dong · 2025 · International Journal of Forecasting</p>
+      <div class="badges"><span class="badge">방법 확장</span><span class="badge">후속 확장</span><span class="badge badge--warning">추가자료 필요</span><span class="badge">검수 완료</span><span class="badge">독립검수 완료</span></div>
+    </header>
+    <div class="detail-layout">
+      <div>
+        <section aria-labelledby="verdict-heading"><h2 id="verdict-heading">30초 판정</h2>
+          <div class="status-panel"><strong>GNN 채택 근거가 아니라 graph·QL 이득이 짧은 horizon에 집중되고 깊은 layer가 실패할 수 있음을 보여주는 후속 forecast 확장 문헌이다.</strong></div>
+          <div class="card-grid"><article class="section-card"><h3>사용할 때</h3><ul class="plain-list"><li>선형 HAR→GHAR→얕은 GNN의 증분을 분리할 때</li><li>MSE와 QLIKE 학습이 turbulent 구간에서 다르게 작동하는지 볼 때</li><li>graph depth와 multi-hop 정보의 실패 가능성을 사전등록할 때</li></ul></article><article class="section-card"><h3>사용하지 말아야 할 때</h3><ul class="plain-list"><li>6개 WML·짧은 월표본으로 깊은 GNN을 기본모형으로 둘 때</li><li>월간 horizon에서도 graph가 항상 개선된다고 주장할 때</li><li>preprint 수치를 최종 IJF 수치로 인용할 때</li></ul></article></div>
+        </section>
+        <section aria-labelledby="passport-heading"><h2 id="passport-heading">방법 여권</h2><dl class="definition-grid"><dt>data</dt><dd>2007-07-01–2021-06-30 LOBSTER DJIA 27개 종목의 5분 realized variance와 일별 종목수익; S&amp;P 100 강건성 표본 [원문 보고]</dd><dt>target</dt><dd>미래 1일·5일합·22일합 realized variance [원문 보고]</dd><dt>information set</dt><dd>각 node의 비중첩 daily·weekly·monthly RV blocks와 training 수익으로 graphical lasso한 adjacency [원문 보고]</dd><dt>lookback</dt><dd>직전 1,000거래일 rolling raw window; HAR 1·5·22일 blocks [원문 보고]</dd><dt>horizon</dt><dd>1, 5, 22거래일 [원문 보고]</dd><dt>model family</dt><dd>HAR, 1-hop GHAR, 1·2·3-layer GNNHAR trained by MSE or QL</dd><dt>training window</dt><dd>각 월 직전 1,000거래일 안의 앞 36개월 training·최근 12개월 validation 뒤 다음 한 달 test</dd><dt>retune</dt><dd>graph sparsity와 GNN hyperparameters를 시간순 validation으로 고르고 매월 rolling 재학습하며 여러 무작위 초기값 forecast를 평균한다.</dd><dt>benchmarks</dt><dd>HAR · GHAR · 1-layer GNNHAR · 2·3-layer GNNHAR</dd><dt>loss / test</dt><dd>MSE · quasi-likelihood loss · Model Confidence Set · modified Diebold–Mariano · calm/turbulent regime loss · S&amp;P 100 및 validation-length robustness</dd><dt>economic metrics</dt><dd>Sharpe·turnover·BS15 scaling은 보고하지 않는다.</dd><dt>trading costs</dt><dd>거래전략을 구성하지 않아 비용을 평가하지 않는다.</dd><dt>turnover</dt><dd>portfolio turnover를 평가하지 않는다.</dd></dl></section>
+        <section aria-labelledby="adapter-heading"><h2 id="adapter-heading">한국 WML 변환기</h2>
+          <div class="card-grid"><article class="section-card"><h3>고정</h3><ul class="plain-list"><li>PIT KOSPI·12–2·6개 WML·월말 정보·동일 BS15 mapping을 고정한다.</li><li>RW126·RW252·HAR/log-HAR·선형 joint HAR를 GNN보다 먼저 평가한다.</li><li>training·validation·final test를 달력상 분리한다.</li></ul></article><article class="section-card"><h3>교체</h3><ul class="plain-list"><li>27개 종목 5분 RV graph를 6개 WML의 과거 월분산 graph로 바꾼다.</li><li>daily-origin 중첩 22일 target을 월말 비중첩 다음 달 target으로 바꾼다.</li><li>깊은 GNN grid를 1-layer·작은 hidden dimension 한 사양으로 제한한다.</li></ul></article><article class="section-card"><h3>현재 입력</h3><ul class="plain-list"><li>6개 WML 일별·월별수익</li><li>월말 next-month variance target</li><li>선형 HAR·joint HAR benchmark</li></ul></article><article class="section-card"><h3>부족한 입력</h3><ul class="plain-list"><li>한국 다종목 intraday realized-volatility panel</li><li>원문 규모의 node 수와 1,000일 rolling origin</li><li>GNN 튜닝에 충분한 독립 validation·test 월</li></ul></article></div>
+          <h3>최소 구현 순서</h3><ul class="plain-list"><li>MSE·QLIKE로 학습한 HAR를 먼저 비교한다.</li><li>graph 확장은 training-only shrinkage adjacency의 1-hop GHAR로 시작한다.</li><li>GNN은 1 layer 한 사양만 final test 전에 잠그고 2·3 layer는 제외한다.</li><li>forecast loss·calibration·regime 결과와 BS15 비용 후 성과를 별도 gate로 둔다.</li></ul>
+          <h3>실패의 의미</h3><p>얕은 GHAR/GNN이 선형 HAR·joint HAR를 이기지 못하면 6개 파생 WML의 nonlinear graph는 현재 월표본에서 추가가치가 없다고 기록한다. intraday stock GNN 일반을 반박하지 않는다.</p>
+          <h3>구현 단위검사</h3><ul class="plain-list"><li>graph·scaler가 training data만 쓰는 prefix test</li><li>train/validation/final-test 날짜 비중복 test</li><li>GNN seed 반복과 forecast 분산 저장 test</li><li>positive forecast·QLIKE finite test</li><li>daily-origin 중첩 target 유입 차단 test</li><li>모든 모형의 BS15 mapping 동일성 test</li></ul>
+        </section>
+        <section aria-labelledby="results-heading"><h2 id="results-heading">핵심 결과</h2><ul class="plain-list"><li><span class="badge">author_result</span> <span class="badge">p26_short_gain</span> 1일 horizon에서 QL-trained 1-layer GNNHAR의 HAR 대비 MSE ratio는 0.867, QL ratio는 0.961로 짧은 horizon의 개선이 나타났다.<p class="meta">sample: DJIA 27개 종목 2011-07–2021-06 OOS · target: 다음 날 realized variance · horizon: 1거래일 · metric: HAR 대비 평균 loss ratio · unit: ratio · comparator: HAR · loss_or_test: MSE and QL</p><p><strong>근거:</strong> p26_table1</p><p><strong>전이 경고:</strong> LOBSTER intraday 종목패널 결과이며 한국 6개 WML 월표본으로 직접 이전되지 않는다.</p></li><li><span class="badge">author_result</span> <span class="badge">p26_horizon_boundary</span> graph 이득은 주로 1일·1주에 나타났고 월간에는 약해졌으며, QL-trained 2-layer 사양의 월간 MSE ratio는 1.736으로 HAR보다 악화됐다.<p class="meta">sample: DJIA 27개 종목 OOS · target: 미래 realized variance 합 · horizon: 1·5·22거래일 · metric: HAR 대비 MSE·QL ratio · unit: ratio · comparator: HAR · loss_or_test: horizon-specific out-of-sample loss</p><p><strong>근거:</strong> p26_table1</p><p><strong>전이 경고:</strong> 다음 달 한국 WML은 원문의 가장 약한 장기 구간에 가까우므로 단기 성공만으로 채택하지 않는다.</p></li><li><span class="badge">reviewer_assessment</span> <span class="badge">p26_depth_failure</span> 2·3 layer는 1 layer보다 일관되게 낫지 않았고 2-layer 대 1-layer cross-sectional DM p-value는 MSE-trained 0.75, QL-trained 0.40으로 깊이 증가의 우위가 지지되지 않았다.<p class="meta">sample: DJIA 27개 종목 OOS · target: realized variance · horizon: 원문 본문·Figure 6 caption에 명시되지 않음 · metric: layer-depth loss difference · unit: cross-sectional p-value · comparator: 2-layer 대 1-layer GNNHAR · loss_or_test: modified Diebold–Mariano</p><p><strong>근거:</strong> p26_depth</p><p><strong>전이 경고:</strong> 깊은 graph 일반을 반증하지 않지만 6-node 월표본에서 multi-hop 복잡성을 정당화하지 않는다.</p></li></ul></section>
+        <section aria-labelledby="evidence-heading"><h2 id="evidence-heading">판본과 근거</h2><div class="card-grid"><article class="section-card"><h3>읽은 판본</h3><ul class="plain-list"><li><strong>Forecasting Realized Volatility with Spillover Effects: Perspectives from Graph Neural Networks — April 2024 preprint</strong><p>프리프린트 · 2024-04 · 41쪽 · 서지 일치 · 외부 링크만</p><p><a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처</a></p><p><strong>PDF 자동일치 SHA-256:</strong> 미등록</p><p>근거와 locator는 41쪽 April 2024 author preprint 기준이다. 2025년 IJF VOR의 편집·표 수치와 같다고 단정하지 않고 PDF는 호스팅하지 않는다.</p></li></ul></article><article class="section-card"><h3>원문 locator</h3><ul class="plain-list"><li><strong>p26_graph</strong> · artifact p26_preprint · PDF 7쪽 · Equation 1 graph convolution · 검증됨</li><li><strong>p26_architecture</strong> · artifact p26_preprint · PDF 10쪽 · Figure 3 and Equation 6 · 검증됨</li><li><strong>p26_ql</strong> · artifact p26_preprint · PDF 12쪽 · Equations 9-10: MSE and QL losses · 검증됨</li><li><strong>p26_design</strong> · artifact p26_preprint · PDF 15쪽 · Rolling training-validation-test design · 검증됨</li><li><strong>p26_table1</strong> · artifact p26_preprint · PDF 17쪽 · Table 1 · 검증됨</li><li><strong>p26_regime</strong> · artifact p26_preprint · PDF 19쪽 · Table 2 · 검증됨</li><li><strong>p26_depth</strong> · artifact p26_preprint · PDF 24쪽 · Figure 6 · 검증됨</li><li><strong>p26_snp100</strong> · artifact p26_preprint · PDF 27쪽 · Table 5 · 검증됨</li><li><strong>p26_ql_figure</strong> · artifact p26_preprint · PDF 13쪽 · Figure 4 · 검증됨</li></ul></article></div></section>
+        <section aria-labelledby="firewall-heading"><h2 id="firewall-heading">주장 방화벽</h2>
+          <div class="card-grid"><article class="section-card"><h3>허용 주장</h3><ul class="plain-list"><li><strong>preprint의 다종목 intraday RV에서 graph·QL 개선은 주로 짧은 horizon에 나타났고 깊은 layer는 일관된 추가이득을 보이지 않았다.</strong><p>이유: Table 1과 Figure 6 및 S&amp;P 100 강건성이 같은 경계를 보인다. · 교정: 판본·데이터·horizon·layer를 함께 적는다. · 근거: p26_table1 · p26_depth · p26_snp100</p></li><li><strong>한국에서는 QLIKE·시간순 validation·단순 GHAR 우선을 채택할 수 있다.</strong><p>이유: 원문 설계는 loss와 복잡성의 증분을 분리한다. · 교정: GNN 자체는 추가자료 후속확장으로 둔다. · 근거: p26_ql · p26_design</p></li></ul></article><article class="section-card"><h3>금지 주장</h3><ul class="plain-list"><li><strong>GNN은 HAR보다 항상 우월하고 layer가 깊을수록 좋다.</strong><p>이유: 월간 악화와 2·3 layer의 비유의·over-smoothing 결과가 있다. · 교정: horizon·loss·depth별 실패를 함께 보고한다. · 근거: p26_table1 · p26_depth</p></li><li><strong>6개 WML만으로 원문의 intraday stock graph를 재현했다.</strong><p>이유: node 의미·target 빈도·표본규모가 모두 다르다. · 교정: lagged 6-WML adaptation으로 명명한다. · 근거: p26_graph · p26_design</p></li><li><strong>QLIKE 개선은 Sharpe·최악월 개선을 보장한다.</strong><p>이유: 원문은 투자수익과 거래비용을 평가하지 않는다. · 교정: 동일 BS15 mapping의 경제성과를 별도 검정한다. · 근거: p26_ql · p26_table1</p></li></ul></article></div>
+          <h3>문헌에서 해결되지 않은 항목</h3><ul class="plain-list"><li>2025년 IJF 최종판과 April 2024 preprint의 표·수치 변경은 이 레코드에서 판본 간 대조하지 않았다.</li><li>LOBSTER 원자료·저자 코드·optimizer와 정확한 1,000일 대 36+12개월 정렬의 계산 재현은 근거 범위 밖이다.</li></ul>
+        </section>
+        <section aria-labelledby="reading-heading"><h2 id="reading-heading">원문에서 이것만 읽기</h2>
+          <div class="card-grid"><article class="section-card"><h3>1분</h3><ul class="plain-list"><li>p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</li><li>p26_table1 · PDF 17쪽 · Table 1</li><li>p26_depth · PDF 24쪽 · Figure 6</li></ul></article><article class="section-card"><h3>10분</h3><ul class="plain-list"><li>p26_graph · PDF 7쪽 · Equation 1 graph convolution</li><li>p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</li><li>p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</li><li>p26_design · PDF 15쪽 · Rolling training-validation-test design</li><li>p26_table1 · PDF 17쪽 · Table 1</li><li>p26_regime · PDF 19쪽 · Table 2</li></ul></article><article class="section-card"><h3>구현 전</h3><ul class="plain-list"><li>p26_graph · PDF 7쪽 · Equation 1 graph convolution</li><li>p26_architecture · PDF 10쪽 · Figure 3 and Equation 6</li><li>p26_ql · PDF 12쪽 · Equations 9-10: MSE and QL losses</li><li>p26_design · PDF 15쪽 · Rolling training-validation-test design</li><li>p26_table1 · PDF 17쪽 · Table 1</li><li>p26_depth · PDF 24쪽 · Figure 6</li><li>p26_snp100 · PDF 27쪽 · Table 5</li></ul></article></div>
+        </section>
+        <section aria-labelledby="related-heading"><h2 id="related-heading">관련 논문</h2><dl class="definition-grid"><dt>prerequisite</dt><dd><a href="/projects/momentum-literature/papers/28/">28</a>, <a href="/projects/momentum-literature/papers/25/">25</a></dd><dt>compare_with</dt><dd><a href="/projects/momentum-literature/papers/25/">25</a>, <a href="/projects/momentum-literature/papers/28/">28</a></dd><dt>counterexample</dt><dd><a href="/projects/momentum-literature/papers/25/">25</a></dd><dt>economic_gate</dt><dd><a href="/projects/momentum-literature/papers/24/">24</a></dd></dl></section>
+      </div>
+      <aside class="detail-aside stack" aria-label="서지와 접근">
+        <section class="section-card"><h2>서지</h2><dl class="definition-grid"><dt>ID</dt><dd>26</dd><dt>연도</dt><dd>2025</dd><dt>저널</dt><dd>International Journal of Forecasting</dd><dt>DOI</dt><dd>10.1016/j.ijforecast.2024.09.002</dd><dt>정정 상태</dt><dd>확인 범위 내 정정 없음</dd><dt>내용 검수</dt><dd>검수 완료</dd><dt>독립검수</dt><dd>독립검수 완료</dd><dt>독립검수일</dt><dd>2026-08-16</dd><dt>artifact 상태</dt><dd>검수 완료</dd><dt>evidence 상태</dt><dd>근거 연결 완료</dd><dt>권리 상태</dt><dd>외부 링크만</dd></dl></section>
+        <section class="section-card"><h2>원문 접근</h2><ul class="plain-list"><li><a href="https://doi.org/10.1016/j.ijforecast.2024.09.002" rel="noopener noreferrer" referrerpolicy="no-referrer">DOI</a></li><li><a href="https://arxiv.org/pdf/2404.12581" rel="noopener noreferrer" referrerpolicy="no-referrer">원출처 공개 판본</a></li></ul><p>외부 페이지의 접근 가능성과 재배포 허용은 별개입니다.</p></section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>

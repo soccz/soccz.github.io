@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="intraday_commonality_reconciliation 상황별 독서와 판단 경로">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'none'; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'self'">
+  <link rel="canonical" href="https://soccz.github.io/projects/momentum-literature/routes/intraday_commonality_reconciliation/">
+  <link rel="stylesheet" href="/projects/momentum-literature/assets/styles.9f3bce55cf4a.css">
+  <title>일중 commonality·reconciliation · 모멘텀 위험관리 문헌 내비게이터</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="주요 탐색">
+      <a class="brand" href="/projects/momentum-literature/">모멘텀 문헌 내비게이터</a>
+      <ul>
+        <li><a href="/projects/momentum-literature/routes/" aria-current="page">상황별 경로</a></li>
+        <li><a href="/projects/momentum-literature/papers/">논문</a></li>
+        <li><a href="/projects/momentum-literature/compare/">비교</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page" id="main">
+
+    <nav class="breadcrumbs" aria-label="현재 위치"><a href="/projects/momentum-literature/routes/">경로</a> / intraday_commonality_reconciliation</nav>
+    <header class="detail-header"><p class="eyebrow">경로 검수 완료</p><h1>일중 commonality·reconciliation</h1><p class="lede">commonality·forecast reconciliation의 추가 복잡성이 단순 일별·개별 예측보다 유효한가?</p></header>
+    <section aria-labelledby="entry-heading"><h2 id="entry-heading">이 경로를 시작할 때</h2><ul class="plain-list"><li>종목별 일중 변동성의 공통성 또는 분해예측의 합계 일관성을 활용한다.</li><li>패널·일중 입력과 추가 계산비용을 감당할 수 있다.</li></ul></section>
+    <section aria-labelledby="steps-heading"><h2 id="steps-heading">읽기와 판단 순서</h2><ol class="step-list"><li><article class="step-card">
+          <p class="eyebrow">출발</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/08/">08 · Volatility Forecasting with Machine Learning and Intraday Commonality</a><a class="button" href="/projects/momentum-literature/papers/14/">14 · Exploiting Intraday Decompositions in Realized Volatility Forecasting - A Forecast Reconciliation Approach</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>종목패널의 intraday commonality를 ML feature로 쓰는 구조</li><li>일중 분해별 base forecast를 일별 합계와 일관되게 조정하는 reconciliation</li><li>원형에 필요한 패널·일중자료와 적응 가능한 검증 원리</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>08 branch에는 동일 시각 grid의 종목별 intraday returns와 train-only common factor</li><li>14 branch에는 분해 component와 aggregate RV의 정확한 회계적 합계 제약과 train-only reconciliation weight</li><li>두 branch가 공유하는 target·origin·단순 HAR benchmark</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>공통성·조정 weight가 test 기간을 이용하거나 aggregate/component 정의가 일치하지 않는다.</div>
+          <p><strong>다음으로:</strong> 단순 base forecasts보다 안정적인 증분이 있으면 nonlinear spillover 확장과 비교한다.</p>
+        </article></li><li><article class="step-card">
+          <p class="eyebrow">확장</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/26/">26 · Forecasting Realized Volatility with Spillover Effects - Perspectives from Graph Neural Networks</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>graph neural network로 nonlinear spillover를 반영하는 방법</li><li>월 horizon에서 이득이 약해질 수 있는 반례</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>train-only graph와 node feature</li><li>동일 HAR·linear reconciliation benchmark</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>GNN 이득이 graph의 미래정보·더 많은 feature·짧은 horizon에만 의존한다.</div>
+          <p><strong>다음으로:</strong> linear/commonality 기준을 넘는 증분만 refit·loss 공정성 gate로 이동한다.</p>
+        </article></li><li><article class="step-card">
+          <p class="eyebrow">예측 gate</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/04/">04 · HARd to beat: The overlooked impact of rolling windows in the era of machine learning</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>rolling window·refit stride를 별도 treatment로 보고 강한 단순 benchmark와 공정하게 비교하는 규약</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>동일 fitting window·forecast origin·refit 빈도·retune budget</li><li>월 horizon의 QLIKE·MSE와 overlap·다중비교 처리</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>복잡한 후보의 이득이 더 잦은 refit·더 많은 feature·다른 평가월에서만 생긴다.</div>
+          <p><strong>다음으로:</strong> 공정한 forecast gate를 통과한 최소 후보만 비용 포함 경제성과로 이동한다.</p>
+        </article></li><li><article class="step-card">
+          <p class="eyebrow">경제성과 gate</p>
+          <div class="actions"><a class="button" href="/projects/momentum-literature/papers/02/">02 · The contribution of realized variance–covariance models to the economic value of volatility timing</a><a class="button" href="/projects/momentum-literature/papers/24/">24 · A Multifactor Perspective on Volatility-Managed Portfolios</a></div>
+          <h3>여기서 가져올 것</h3><ul class="plain-list"><li>공분산 forecast를 실제 portfolio weight·turnover·비용 후 utility로 연결하는 방식</li><li>volatility management의 비용·factor exposure를 포함한 OOS 경제평가</li></ul>
+          <h3>필요한 입력</h3><ul class="plain-list"><li>forecast gate를 통과한 공통 월의 전략수익</li><li>데이터·계산·거래비용과 portfolio exposure; covariance branch에는 사전 정의한 실제 배분 목적</li></ul>
+          <div class="notice"><strong>멈춤 조건</strong>통계적 증분이 비용 후 평가에서 사라지거나 covariance forecast를 사용할 실제 배분 목적이 없다.</div>
+          <p><strong>다음으로:</strong> 순경제가치가 있는 최소 commonality/reconciliation 구조만 확장으로 남긴다.</p>
+        </article></li></ol></section>
+    <section aria-labelledby="output-heading"><h2 id="output-heading">경로를 마친 뒤 남길 것</h2>
+      <div class="card-grid"><article class="section-card"><h3>선택 스택</h3><div class="actions"><a class="button" href="/projects/momentum-literature/papers/08/">08 · Volatility Forecasting with Machine Learning and Intraday Commonality</a><a class="button" href="/projects/momentum-literature/papers/14/">14 · Exploiting Intraday Decompositions in Realized Volatility Forecasting - A Forecast Reconciliation Approach</a><a class="button" href="/projects/momentum-literature/papers/26/">26 · Forecasting Realized Volatility with Spillover Effects - Perspectives from Graph Neural Networks</a><a class="button" href="/projects/momentum-literature/papers/04/">04 · HARd to beat: The overlooked impact of rolling windows in the era of machine learning</a><a class="button" href="/projects/momentum-literature/papers/02/">02 · The contribution of realized variance–covariance models to the economic value of volatility timing</a><a class="button" href="/projects/momentum-literature/papers/24/">24 · A Multifactor Perspective on Volatility-Managed Portfolios</a></div></article><article class="section-card"><h3>구현 체크리스트</h3><ul class="plain-list"><li>패널·component·aggregate의 시점과 단위를 맞춘다.</li><li>base forecast 뒤 08 commonality/pooling과 14 exact-sum reconciliation을 별도 branch로 검증하고, 각 선형 기준을 이긴 뒤에만 ML/GNN을 추가한다.</li><li>common factor·graph·weight는 train-only로 추정한다.</li><li>월 horizon과 비용 후 결과를 핵심 판정으로 둔다.</li></ul></article><article class="section-card"><h3>금지할 추론</h3><ul class="plain-list"><li>일중 commonality를 현재 일별 WML 본선의 필수 입력으로 전제하지 않는다.</li><li>합계 제약이 없는 6개 WML 자체를 14의 MinT reconciliation hierarchy로 묶지 않는다.</li><li>reconciliation의 회계적 일관성을 예측 우월성과 동일시하지 않는다.</li><li>짧은 horizon의 GNN 우위를 월 horizon으로 자동 이전하지 않는다.</li></ul></article><article class="section-card"><h3>근거 대조 지점</h3><ul class="plain-list"><li>08의 commonality feature와 OOS 설계</li><li>14의 summing constraints와 reconciliation benchmark</li><li>26의 graph·horizon별 결과</li><li>04의 rolling/refit 공정성 조건과 02·24의 경제가치·비용 조건</li></ul></article></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p>논문 원문을 대신하지 않는 의사결정용 학습 도구입니다.</p>
+    <p>제3자 PDF·캡처·표지·저널 로고를 호스팅하지 않으며, 외부 링크는 사용자가 클릭할 때만 열립니다.</p>
+  </footer>
+  <script src="/projects/momentum-literature/assets/app.aee87feeb60d.js" defer></script>
+</body>
+</html>
