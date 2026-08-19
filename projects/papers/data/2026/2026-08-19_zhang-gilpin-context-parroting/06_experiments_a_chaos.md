@@ -24,13 +24,13 @@
 
 **질문 1: 6개 TSFM 이 동등하게 튜닝됐는가?**
 
-제로샷 평가이므로 "튜닝"의 의미가 학습된 모델과 다르다. 문제는 **호출 조건**이다. Figure 2 는 모든 모델에 문맥 512 를 준다. 그런데 Figure 4 캡션 verbatim: *"The performance of Chronos saturates once the context length exceeds its designed upper limit of 512 data points."* 즉 **512 는 Chronos 의 설계 상한에 맞춰진 값**이다. TimesFM-2.0 이나 Moirai 처럼 더 긴 문맥을 지원하는 모델이 있다면 이 통일 조건은 **그들에게 불리**하다. 반대로 parroting 은 문맥이 길수록 계속 좋아지므로(Figure 4), **512 라는 선택은 오히려 parroting 의 승리 폭을 축소하는 방향**이다. 저자들에게 유리하게 조작된 조건이라고 보기는 어렵고, 오히려 보수적이다.
+제로샷 평가이므로 문제는 튜닝이 아니라 **호출 조건**이다. Figure 2 는 모든 모델에 문맥 512 를 주는데, Figure 4 캡션 verbatim *"The performance of Chronos saturates once the context length exceeds its designed upper limit of 512 data points"* 가 말하듯 **512 는 Chronos 의 설계 상한에 맞춰진 값**이다. 더 긴 문맥을 지원하는 모델에게는 불리한 통일 조건이다. 다만 parroting 은 문맥이 길수록 계속 좋아지므로(Figure 4) **512 는 오히려 parroting 의 승리 폭을 축소하는 보수적 선택**이며, 저자들에게 유리하게 조작된 조건으로 보기는 어렵다.
 
 **질문 2: 고전 방법은 왜 부록으로 밀렸는가?**
 
-Figure 7 이 simplex projection 과 AutoARIMA 를 포함하지만, 본문 Figure 2 에는 없다. 논문의 서사(파운데이션 모델 vs 무학습 베이스라인)에는 맞지만, **지적으로는 이 배치가 아쉽다.** simplex projection 은 parroting 과 거의 같은 계열이므로, 그 둘의 차이(1-NN 복사 vs 이웃 가중 외삽)를 본문에서 정면으로 다뤘다면 "무엇이 성능을 만드는가"가 훨씬 선명해졌을 것이다.
+Figure 7 이 simplex projection 과 AutoARIMA 를 포함하지만 본문 Figure 2 에는 없다. 논문 서사(파운데이션 모델 vs 무학습 베이스라인)에는 맞아도 **지적으로는 아쉬운 배치다.** simplex projection 은 parroting 과 거의 같은 계열이므로, 둘의 차이(1-NN 복사 vs 이웃 가중 외삽)를 본문에서 정면으로 다뤘다면 "무엇이 성능을 만드는가"가 훨씬 선명해졌을 것이다.
 
-**질문 3: DynaMix 의 위치.** DynaMix 는 동역학계 전용으로 설계된 모델이며, Table 3(어트랙터 KL)의 난류 행에서 **0.005±0.008** 로 Parrot 의 **0.028±0.044** 보다 낮다. 즉 **동역학 전용 설계는 실제로 효과가 있다**는 반대 증거가 표 안에 이미 들어 있다.
+**질문 3: DynaMix 의 위치.** 동역학계 전용 설계 모델인 DynaMix 는 여러 항목에서 Parrot 을 앞선다 — **동역학 전용 설계는 실제로 효과가 있다**는 반대 증거가 표 안에 이미 들어 있다(수치는 [06_experiments_b](06_experiments_b_beyond_chaos.md) §5b.4·§5b.5).
 
 ## 5a.3 지표 선택 — 왜 이 조합인가
 
@@ -48,19 +48,17 @@ $$\mathrm{sMAPE}(\mathbf{x},\hat{\mathbf{x}}) \equiv \frac{2 \cdot 100}{T}\sum \
 
 - **분포 지표(CRPS 등)로 갔다면**: 확률 예측을 내놓는 Chronos·MOIRAI 계열이 유리해졌을 가능성이 크다. parroting 은 **점 예측만** 내놓으므로 불확실성 정량화 축에서는 경쟁 자체가 안 된다. 원문 지표 목록에서 CRPS 는 확인되지 않는다.
 - **평균 대신 중앙값을 봤다면**: Figure 2 캡션이 둘 다 그린다고 명시하므로 저자들이 이 축을 숨기지 않았다. 다만 본문 서술은 평균 기준이다.
-- **"평균 수렴"을 벌하지 않는 지표였다면**: [04_claims_a](04_claims_a_parrot_beats_tsfm.md) 에서 지적했듯, MSE 최소화 관점에서 평균 수렴은 합리적 행동이다. 만약 지표가 **"진폭 재현"** 이 아니라 **"조건부 기댓값 정확도"** 였다면 TSFM 이 유리했을 것이다. 저자들이 고른 지표 조합(점별 MAE/MSE + 어트랙터 KL + 파워 스펙트럼)은 명백히 **"동역학적 실감(realism)"** 쪽에 무게를 둔 선택이며, 이건 논문의 주장(물리를 배웠는가?)과 정합적이지만 **중립적이지는 않다.**
+- **"평균 수렴"을 벌하지 않는 지표였다면**: MSE 최소화 관점에서 평균 수렴은 합리적 행동이므로, 지표가 **"진폭 재현"** 이 아니라 **"조건부 기댓값 정확도"** 였다면 TSFM 이 유리했을 것이다. 저자들의 지표 조합(점별 MAE/MSE + 어트랙터 KL + 파워 스펙트럼)은 명백히 **"동역학적 실감(realism)"** 쪽에 무게를 둔 선택이며, 논문의 주장(물리를 배웠는가?)과 정합적이지만 **중립적이지는 않다.**
 
 ## 5a.4 주요 그림 해석
 
 **Figure 2 (본문의 심장).** 좌측 패널은 예측 지평이 길어질수록 모든 모델의 오차가 커지는 곡선을, 우측은 어트랙터 KL 을 보여준다. 캡션이 결론을 못박는다: *"Context parroting outperforms foundation models in zero-shot forecasting for both short-term point-wise accuracy and long-term attractor reconstruction."* **두 축 모두에서 이겼다는 것이 이 그림의 전부이자 논문의 근거 무게중심**이다. 다만 원문 §5.1 본문에서 "몇 %p 차이"라는 구체적 수치는 **확인되지 않았다** — 이 그림의 우위는 곡선의 분리로 제시되며, 수치는 §5.3 의 Table 1~3 에서만 표 형태로 나온다.
 
-**Figure 3 (가장 흥미로운 그림).** 캡션 verbatim: *"Context parroting best reconstructs the power spectra of chaotic systems despite its predictions being periodic."* 이 문장은 **자기모순처럼 보이는데 사실 논문의 이론과 정확히 맞는다.** Appendix F.4 의 불변량 보존 명제가 말하는 바가 "개별 시점은 틀려도 통계는 맞는다"이기 때문이다. 주기적 신호라도 그 주기가 어트랙터의 특징적 시간 스케일을 담고 있으면 파워 스펙트럼은 잘 맞는다. **동시에 이건 지표의 한계 폭로이기도 하다** — 파워 스펙트럼과 어트랙터 KL 은 "이 예측이 주기적인가 카오스적인가"를 구분하지 못한다.
+**Figure 3 (가장 흥미로운 그림).** 캡션 verbatim: *"Context parroting best reconstructs the power spectra of chaotic systems despite its predictions being periodic."* 자기모순처럼 보이지만 **논문의 이론과 정확히 맞는다** — Appendix F.4 의 불변량 보존 명제가 "개별 시점은 틀려도 통계는 맞는다"이기 때문이다. **동시에 지표의 한계 폭로이기도 하다**: 파워 스펙트럼과 어트랙터 KL 은 "이 예측이 주기적인가 카오스적인가"를 구분하지 못한다.
 
 **Figure 4 (실무자용 그림).** 캡션 verbatim: *"Parroting can better utilize longer context data while Chronos does better for shorter contexts."* 두 방법의 교차점이 존재한다는 뜻이다. 짧은 문맥에서는 사전학습된 귀납 편향이 이기고, 긴 문맥에서는 순수 검색이 이긴다. **이건 "파운데이션 모델 무용론"이 아니라 "데이터가 적을 때 사전학습이 값어치를 한다"는 정직한 진술**이며, 이 논문에서 가장 균형 잡힌 한 줄이다.
 
-**Figure 6 (실패 모드 카탈로그).** 캡션 verbatim: *"Chronos does extremely well with a parroting strategy. The other models perform comparatively poorly and all exhibit a tendency to underestimate the oscillations (e.g., by quickly converging towards the mean)."* Chronos 만 parroting 을 하고 나머지는 평균으로 뭉갠다는 대비가 그림 하나에 정리돼 있다. **아키텍처와 전략의 대응**(양자화+교차엔트로피 → 복사, 연속 회귀 → 평균)을 시각적으로 지지하는 가장 강한 증거다.
-
-**Figure 7 (부록의 보강).** MSE/MAE 두 지표로 재확인 + 고전 방법 추가. 주 결론이 지표 선택의 산물이 아님을 방어한다.
+**Figure 6 (실패 모드 카탈로그).** 캡션 verbatim: *"Chronos does extremely well with a parroting strategy. The other models perform comparatively poorly and all exhibit a tendency to underestimate the oscillations (e.g., by quickly converging towards the mean)."* Chronos 만 parroting 하고 나머지는 평균으로 뭉갠다는 대비가 그림 하나에 정리돼 있다 — **아키텍처와 전략의 대응**(양자화+교차엔트로피 → 복사, 연속 회귀 → 평균)을 시각적으로 지지하는 가장 강한 증거다. **Figure 7** 은 MSE/MAE 두 지표 + 고전 방법으로 재확인해, 주 결론이 지표 선택의 산물이 아님을 방어한다.
 
 ## 5a.5 Ablation — 저자가 넣은 것과 넣지 않은 것
 
@@ -78,4 +76,4 @@ $$\mathrm{sMAPE}(\mathbf{x},\hat{\mathbf{x}}) \equiv \frac{2 \cdot 100}{T}\sum \
 
 ## 5a.6 부록에 숨은 신호
 
-Appendix E 의 문장 하나가 본문보다 정직하다: **"parroting is consistently the best or the second best in all experiments"** — 즉 **항상 1등은 아니다.** 본문 서사는 "outperforms"로 단정적이지만 부록의 실제 표현은 "1등 또는 2등"이다. 이 온도차는 Table 1 난류 행(Parrot 0.403 > Moirai 0.382)에서 확인되는 사실과 일치한다. **논문을 인용할 때는 부록의 온도를 따르는 것이 안전하다.**
+Appendix E 의 문장 하나가 본문보다 정직하다: **"parroting is consistently the best or the second best in all experiments"** — 본문 서사는 "outperforms"로 단정적이지만 부록의 실제 표현은 "1등 또는 2등"이며, 이 온도차는 Table 1 난류 행(Parrot 0.403 > Moirai 0.382)의 사실과 일치한다. **인용할 때는 부록의 온도를 따르는 것이 안전하다.**

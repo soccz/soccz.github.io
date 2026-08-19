@@ -8,7 +8,7 @@
 
 ## 8.1 연결 강도 사전 판정
 
-이 논문은 프로필 **§D(TS Transformers / TSFM Interp)** 에 직격하고, **§B(Mechanistic Interpretability / Circuit Analysis)** 와 induction head 를 통해 교차하며, **§F(원거리 — information theory in TS)** 와 스케일링 법칙으로 접한다. **§E(금융 응용)** 와의 연결은 **약하다** — 전이 가능성만 있고 논문에 금융 데이터는 없다. 아래에서 강한 연결부터 순서대로 쓰고, 약한 연결은 약하다고 명시한다.
+이 논문은 프로필 **§D(TS Transformers / TSFM Interp)** 에 직격하고, **§B(Mechanistic Interpretability / Circuit Analysis)** 와 induction head 로 교차하며, **§F(원거리 — information theory in TS)** 와 스케일링 법칙으로 접한다. **§E(금융 응용)** 와의 연결은 **약하다** — 전이 가능성만 있고 논문에 금융 데이터는 없다. 강한 연결부터 쓰고, 약한 연결은 약하다고 명시한다.
 
 ---
 
@@ -71,9 +71,7 @@
 
 프로필의 Paused 항목 **P1 ProTran-TFA (`paper_test/PAPER_DRAFT_V1.md` + `protran_tfa/`, finance venue IJF/QF 가능)** 와의 연결은 **약하다.** 논문에 금융 데이터가 없고, 저자들의 관심은 물리계다. 다만 **한 가지 구체적 전이**는 성립한다:
 
-parroting 은 **점 예측만** 내놓고 예측 구간을 만들지 못한다([07_limits.md](07_limits.md) 암묵적 가정 ③). 프로필 기준 P1 이 probabilistic 계열이라면, **"parroting 이 이기지 못하는 영역이 확률 예측"** 이라는 사실이 그 라인의 존재 이유를 보강한다. 인용 형태는 방어적이어야 한다 — "점 예측 지표에서는 무학습 복사 베이스라인이 강력하므로(Zhang & Gilpin 2026), 본 연구는 분포 예측 품질(CRPS·커버리지)을 주 지표로 삼는다" 정도.
-
-**주의**: P1 의 내부 구조·수식·절 번호는 **프로필 기준 미상**이므로 여기서 더 구체화하지 않는다.
+parroting 은 **점 예측만** 내놓고 예측 구간을 만들지 못한다([07_limits.md](07_limits.md) 암묵적 가정 ③). 프로필 기준 P1 이 probabilistic 계열이라면 **"parroting 이 이기지 못하는 영역이 확률 예측"** 이라는 사실이 그 라인의 존재 이유를 보강한다. 인용은 방어적으로 — "점 예측 지표에서는 무학습 복사 베이스라인이 강력하므로(Zhang & Gilpin 2026), 본 연구는 분포 예측 품질(CRPS·커버리지)을 주 지표로 삼는다" 정도. P1 의 내부 구조·수식·절 번호는 **프로필 기준 미상**이라 더 구체화하지 않는다.
 
 ---
 

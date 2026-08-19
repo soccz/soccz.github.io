@@ -8,31 +8,31 @@
 
 논문의 §6 문장 *"If a foundation model cannot beat context parroting, it arguably has failed to learn the underlying physics of the system"* 은 **필요조건**을 말한다. 그런데 충분조건은 무엇인가? Table 4 가 힌트를 준다 — parroting 은 프랙탈 차원 상관 0.723 으로 어트랙터의 **모양**은 잘 재현하지만, 최대 Lyapunov 지수 상관 0.343 으로 **발산율**은 DynaMix(0.466)에 밀린다.
 
-**왜 중요한가.** parroting 자신이 자기 시험을 통과하면서도 물리를 모른다는 사실은, 이 시험이 **필터이지 판정기가 아님**을 뜻한다. "이해"의 조작적 정의를 예측 정확도에서 **불변량 재현 정확도**로 옮기는 것이 다음 단계이며, 그 순간 평가 지표 설계 자체가 연구 주제가 된다. 내 두 트랙 모두 "모델이 무엇을 배웠는가"를 묻는 연구이므로, 이 정의 문제를 회피할 수 없다.
+**왜 중요한가.** parroting 자신이 자기 시험을 통과하면서도 물리를 모른다는 사실은 이 시험이 **필터이지 판정기가 아님**을 뜻한다. "이해"의 조작적 정의를 예측 정확도에서 **불변량 재현 정확도**로 옮기는 것이 다음 단계이며, 내 두 트랙 모두 "모델이 무엇을 배웠는가"를 묻는 연구이므로 이 정의 문제를 회피할 수 없다.
 
 ---
 
 ## Q2. 문맥 복사가 실패하는 임계 조건을 정량화할 수 있는가 — 차원인가, 비정상성인가, 노이즈인가?
 
-논문은 세 후보를 서로 다른 깊이로 다룬다. **차원**은 $\alpha = 1/d_{\mathrm{cor}}$ 로 정량화됐고, **노이즈**는 Appendix E 에서 "여러 자릿수 노이즈에서도 1등 또는 2등"으로 방어됐지만, **비정상성**은 아예 다뤄지지 않았다. 그런데 실제 응용에서 복사를 죽이는 건 셋 중 세 번째일 가능성이 가장 높다.
+논문은 세 후보를 서로 다른 깊이로 다룬다. **차원**은 $\alpha = 1/d_{\mathrm{cor}}$ 로 정량화됐고 **노이즈**는 Appendix E 에서 "여러 자릿수 노이즈에서도 1등 또는 2등"으로 방어됐지만, **비정상성**은 아예 다뤄지지 않았다. 실제 응용에서 복사를 죽이는 건 셋 중 세 번째일 가능성이 가장 높은데도 그렇다.
 
-**왜 중요한가.** 세 축의 상대적 파괴력을 알면 **"어떤 응용에서 파운데이션 모델이 실제로 값어치를 하는가"** 를 사전에 판정할 수 있다. 만약 비정상성이 지배적 요인이라면, 파운데이션 모델의 진짜 가치는 "물리 이해"가 아니라 **"레짐이 바뀌었을 때 과거 사전지식으로 버티는 능력"** 이 되고, 벤치마크 설계가 통째로 바뀌어야 한다.
+**왜 중요한가.** 세 축의 상대적 파괴력을 알면 **"어떤 응용에서 파운데이션 모델이 실제로 값어치를 하는가"** 를 사전에 판정할 수 있다. 비정상성이 지배적 요인이라면 파운데이션 모델의 진짜 가치는 "물리 이해"가 아니라 **"레짐이 바뀌었을 때 사전지식으로 버티는 능력"** 이 되고, 벤치마크 설계가 통째로 바뀌어야 한다.
 
 ---
 
 ## Q3. 파운데이션 모델의 "평균 수렴"은 버그인가, 손실함수에 대한 최적 응답인가?
 
-Figure 6 캡션은 *"a tendency to underestimate the oscillations (e.g., by quickly converging towards the mean)"* 를 실패로 규정한다. 그러나 MSE 최소화 관점에서 불확실할 때 조건부 평균을 내놓는 것은 **정답**이다. 카오스계에서 Lyapunov 시간을 넘긴 뒤의 조건부 평균은 실제로 어트랙터 평균에 수렴한다.
+Figure 6 캡션은 *"a tendency to underestimate the oscillations (e.g., by quickly converging towards the mean)"* 를 실패로 규정한다. 그러나 MSE 최소화 관점에서 불확실할 때 조건부 평균을 내놓는 것은 **정답**이며, 카오스계에서 Lyapunov 시간을 넘긴 뒤의 조건부 평균은 실제로 어트랙터 평균에 수렴한다.
 
-**왜 중요한가.** 만약 이것이 최적 응답이라면, 문제는 모델이 아니라 **훈련 목적함수와 평가 지표의 불일치**다. 그러면 처방이 "더 나은 아키텍처"가 아니라 "샘플링 기반 예측 + 분포 지표 평가"가 된다. 이건 내 §E 라인(확률 예측)에 직접 유리한 결론이며, 동시에 Appendix F 의 커널 폭 $\sigma$ 축이 이미 이 답을 품고 있다 — $\sigma \to 0$ 은 실감을, $\sigma$ 큼은 평균 최적성을 준다. **두 목표는 하나의 파라미터 위에서 상충한다.**
+**왜 중요한가.** 최적 응답이라면 문제는 모델이 아니라 **훈련 목적함수와 평가 지표의 불일치**이고, 처방은 "샘플링 기반 예측 + 분포 지표 평가"가 된다. Appendix F 의 커널 폭 $\sigma$ 축이 이미 답을 품고 있다 — $\sigma \to 0$ 은 실감을, $\sigma$ 큼은 평균 최적성을 준다.
 
 ---
 
 ## Q4. Chronos 만 parroting 하고 나머지는 평균으로 뭉갠다면, 그 차이를 만든 설계 결정은 정확히 무엇인가?
 
-Figure 6 이 보여주는 대비는 아키텍처 가설을 낳는다 — 원문 verbatim: *"Chronos's tendency to context parrot arises from its distinct architecture as a language model operating on quantized time series"* 와 *"Chronos is trained using cross-entropy loss, which incentivizes preservation of k-gram frequencies."* 즉 **(a) 값의 양자화**와 **(b) 교차엔트로피 손실** 두 결정이 지목된다. 그런데 이 둘은 분리 가능한 변수다.
+원문은 두 결정을 지목한다 — verbatim: *"Chronos's tendency to context parrot arises from its distinct architecture as a language model operating on quantized time series"* 와 *"Chronos is trained using cross-entropy loss, which incentivizes preservation of k-gram frequencies."* 즉 **(a) 값의 양자화**와 **(b) 교차엔트로피 손실**이며, 이 둘은 분리 가능한 변수다.
 
-**왜 중요한가.** 두 요인을 분리할 수 있으면 **"복사 능력을 원할 때 켜고 원치 않을 때 끄는 설계 손잡이"** 가 생긴다. 양자화만 도입하고 회귀 손실을 쓰면? 연속값에 교차엔트로피 형태의 분포 손실을 쓰면? 이건 2×2 ablation 으로 답할 수 있는 질문이고, **[10_extensions_c_ideas.md](10_extensions_c_ideas.md) 아이디어 2** 로 발전시킨다.
+**왜 중요한가.** 두 요인을 분리하면 **"복사 능력을 켜고 끄는 설계 손잡이"** 가 생긴다. 양자화만 도입하고 회귀 손실을 쓰면? 연속값에 분포 손실을 쓰면? 2×2 ablation 으로 답할 수 있는 질문이다.
 
 ---
 

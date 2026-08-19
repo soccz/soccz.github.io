@@ -50,7 +50,7 @@
 
 1. **대상이 바뀌었다.** 1990년의 비교 대상은 ARIMA 였다. 2026년의 비교 대상은 5억 파라미터 파운데이션 모델이고, 이들은 "제로샷 일반화"라는 훨씬 강한 인식론적 주장을 한다. **같은 알고리즘이라도 그것이 반박하는 명제가 달라지면 새로운 논문**이다.
 2. **역할이 바뀌었다.** simplex projection 은 예측기로 제안됐지만, context parroting 은 **진단 도구**로 제안된다. §6 verbatim: *"the value of parroting is as a simple baseline that can reveal the gaps in current foundation models and guide the design of new ones."*
-3. **설명 범위가 넓어졌다.** 저자들은 이걸 예측 성능 얘기로 끝내지 않고 **induction head → LLM 의 시계열 전용 → in-context 스케일링 법칙**까지 연결한다. 1990년에는 존재하지 않던 현상들에 대한 통일 설명이 이 알고리즘에서 나온다는 것이 진짜 기여다.
+3. **설명 범위가 넓어졌다.** 저자들은 **induction head → LLM 의 시계열 전용 → in-context 스케일링 법칙**까지 연결한다. 1990년에는 없던 현상들에 대한 통일 설명이 이 알고리즘에서 나온다는 것이 진짜 기여다.
 
 ## 4a.5 이 파일의 핵심 한 문장
 

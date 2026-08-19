@@ -8,7 +8,7 @@
 
 ### ① Sugihara & May 1990 — Simplex projection (원문 §Appendix F.3, Figure 7 에서 직접 인용)
 
-비선형 동역학의 예측 문제를 **"상태공간에서 이웃을 찾아 그들의 미래를 가중평균한다"** 로 정의한 원조다. 본 논문과의 연결선은 원문 스스로 긋는다 — Appendix F.3 은 context parroting 을 *"an in-context nearest neighbor algorithm"* 으로 규정하고 simplex projection·S-map 과의 관계를 논한다. **차이는 딱 하나: simplex 는 여러 이웃을 가중평균하고, parroting 은 최근접 하나를 그대로 베낀다.** Appendix F 의 커널 폭 $\sigma$ 가 정확히 이 축이며, $\sigma \to 0$ 이 parroting 이다. 즉 본 논문의 이론적 기여는 **새 알고리즘이 아니라 기존 알고리즘 족을 하나의 축으로 정렬한 것**이고, 그 축의 반대편 끝에 "평균으로 뭉개기"(=TSFM 실패 모드)를 배치한 것이 통찰이다.
+비선형 동역학의 예측을 **"상태공간에서 이웃을 찾아 그들의 미래를 가중평균한다"** 로 정의한 원조다. 연결선은 원문 스스로 긋는다 — Appendix F.3 은 context parroting 을 *"an in-context nearest neighbor algorithm"* 으로 규정하고 simplex projection·S-map 과의 관계를 논한다. **차이는 딱 하나: simplex 는 여러 이웃을 가중평균하고, parroting 은 최근접 하나를 그대로 베낀다.** Appendix F 의 커널 폭 $\sigma$ 가 정확히 이 축이며, $\sigma \to 0$ 이 parroting 이다. 즉 본 논문의 이론적 기여는 **새 알고리즘이 아니라 기존 알고리즘 족을 하나의 축으로 정렬한 것**이고, 그 축의 반대편 끝에 "평균으로 뭉개기"(=TSFM 실패 모드)를 배치한 것이 통찰이다.
 
 ### ② Olsson et al. 2022 — In-context Learning and Induction Heads (§2 에서 개념 인용)
 
@@ -22,7 +22,7 @@
 
 **이 레포가 2026-08-12 에 커버한 바로 그 논문**이며, 본 논문 §1 이 명시적으로 출발점으로 삼는다: *"It was recently observed that one such foundation model, Chronos (Ansari et al. 2024), often employs an extremely simple strategy when forecasting chaotic systems (Zhang & Gilpin 2024)."*
 
-계보상 이 관계가 특이한 이유는 **후속작이 전작의 헤드라인을 약화시킨다**는 점이다. 전작은 "TSFM 이 카오스를 zero-shot 으로 예측한다"를 보고했고, 본작은 "그 능력의 상당 부분이 문맥 복사였다"고 되짚는다. 저자가 같으므로 이것은 논쟁이 아니라 **자기 교정**이다. 연구 윤리 관점에서 모범적이며, 인용 관점에서는 **전작만 인용하는 것이 곧 오인용**이 되는 구조를 만든다.
+이 관계가 특이한 이유는 **후속작이 전작의 헤드라인을 약화시킨다**는 점이다. 전작은 "TSFM 이 카오스를 zero-shot 으로 예측한다"를 보고했고, 본작은 "그 능력의 상당 부분이 문맥 복사였다"고 되짚는다. 저자가 같으므로 논쟁이 아니라 **자기 교정**이며, 인용 관점에서는 **전작만 인용하는 것이 곧 오인용**이 되는 구조를 만든다.
 
 ## 7.2 평행 연구
 
