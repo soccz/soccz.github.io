@@ -1,7 +1,35 @@
 {
-  "generated_at": "2026-08-21T00:48:58",
-  "count": 55,
+  "generated_at": "2026-08-24T00:25:06",
+  "count": 56,
   "papers": [
+    {
+      "slug": "2026-08-24_grokking-edge-numerical-stability",
+      "date": "2026-08-24",
+      "weekday": "월",
+      "bucket": "코어",
+      "title": "",
+      "title_ko": "수치 안정성의 벼랑 끝에서 일어나는 그로킹",
+      "authors": "Lucas Prieto, Melih Barsbey, Pedro A. M. Mediano, Tolga Birdal",
+      "venue": "**ICLR 2025 (Poster)**",
+      "identifier": "arXiv:2501.04697",
+      "code": "",
+      "data": "",
+      "tags": [
+        "grokking-delayed-gen",
+        "training-dynamics"
+      ],
+      "verdict": "그로킹 문헌의 \"정규화가 있어야 일반화가 온다\"는 경험칙은 상당 부분 부동소수점 오차(Softmax Collapse)가 학습을 죽여서 생긴 착시였다 — 그로킹 실험을 설계하는 사람이라면 결과 해석 전에 반드시 통과해야 할 위생 검사(hygiene check) 논문.",
+      "private": false,
+      "sections": [
+        {
+          "file": "00_README.md",
+          "num": "00",
+          "suffix": null,
+          "title": "Grokking at the Edge of Numerical Stability"
+        }
+      ],
+      "data_path": "data/2026/2026-08-24_grokking-edge-numerical-stability"
+    },
     {
       "slug": "2026-08-21_shchur-intensity-free-tpp",
       "date": "2026-08-21",
