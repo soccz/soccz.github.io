@@ -183,6 +183,14 @@
     table.data .muted { color: var(--text-muted); }
 
     .scroll-x { overflow-x: auto; }
+    .two-col > *, .mega-grid > *, .viz-split > *, .mh-side { min-width: 0; max-width: 100%; }
+    .mega-value { flex-wrap: wrap; }
+    .card-meta { overflow-wrap: anywhere; }
+    #operatorReportMeta { font-size: 0.8rem; margin-bottom: 1rem; }
+    #operatorReportTable { min-width: 760px; }
+    #decisionCohortTable { min-width: 520px; }
+    #operatorReportTable th, #operatorReportTable td,
+    #decisionCohortTable th, #decisionCohortTable td { white-space: nowrap; }
     .scroll-y { max-height: 520px; overflow-y: auto; overflow-x: auto; }
     .scroll-y table.data thead th { position: sticky; top: 0; background: var(--bg-secondary); z-index: 1; box-shadow: 0 1px 0 var(--border); }
 
@@ -560,9 +568,10 @@
     <div class="section-label">realized — net of fees</div>
     <h2 class="section-title">실현 손익이 0과 구분되는가</h2>
     <p class="section-desc">
-      30일 paper/proxy ledger의 entry→exit 차이를 <strong>행별 가정 비용 차감 후</strong> 평균/Sharpe/t-stat으로 요약. 실제 거래소 fill·펀딩 성과가 아니다. 과거 WATCH_LONG은 현재 조건부 WATCH와 분리된 legacy 표본이다.
+      SHORT 주 성과는 추천 당시 actionable=true인 기록만 집계한다. 관찰·판정 불명 기록은 아래에서 분리한다. <strong>가정 비용을 차감한 paper/proxy</strong>이며 실제 거래소 fill·펀딩 성과가 아니다.
     </p>
     <div class="two-col" id="realizedHeroGrid"></div>
+    <div class="scroll-x" style="margin-top:1.2rem"><table class="data" id="decisionCohortTable"></table></div>
   </div>
 </section>
 
@@ -580,6 +589,17 @@
       <div class="scroll-x"><table class="data" id="holdoutTable"></table></div>
       <div class="card-meta" id="holdoutMeta" style="margin-top:0.7rem"></div>
     </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="operator-report">
+  <div class="container">
+    <div class="section-label">operator report</div>
+    <h2 class="section-title">이번 회차 코인 제안</h2>
+    <div class="card-meta" id="operatorReportMeta"></div>
+    <div class="scroll-x"><table class="data" id="operatorReportTable"></table></div>
   </div>
 </section>
 
@@ -1392,9 +1412,9 @@ function renderMegaStats(summary, accuracy) {
   const rs = (summary.realized_summary || {}).SHORT?.d30 || {};
   const rl = (summary.realized_summary || {}).WATCH_LONG?.d30 || {};
 
-  _megaSetVal('megaShortVal', rs.avg_net != null ? rs.avg_net : null, '% / trade');
+  _megaSetVal('megaShortVal', rs.avg_net_per_window ?? null, '% / basket');
   document.getElementById('megaShortTrades').textContent =
-    rs.n ? `n=${rs.n} · ${rs.win_pct?.toFixed(0) ?? '—'}% win` : '—';
+    rs.n ? `추천 ${rs.n_windows ?? 0}묶음 · ${rs.n}건 · ${rs.win_pct?.toFixed(0) ?? '—'}% net win` : '—';
   document.getElementById('megaShortFoot').innerHTML = _megaFootRow([
     { l: 'gross', v: rs.avg != null ? `${rs.avg > 0 ? '+' : ''}${rs.avg.toFixed(2)}%` : '—',
       cls: rs.avg > 0 ? 'pos' : (rs.avg < 0 ? 'neg' : '') },
@@ -1525,7 +1545,7 @@ function renderRealizedHero(summary) {
   const r = summary.realized_summary || {};
   const cost = summary.cost_assumptions || {};
   const sides = [
-    { key: 'SHORT', label: 'SHORT paper/proxy (h=6)' },
+    { key: 'SHORT', label: 'SHORT 추천만 · paper/proxy (h=6)' },
     { key: 'WATCH_LONG', label: 'LEGACY WATCH_LONG paper/proxy (h=12)' },
   ];
 
@@ -1561,7 +1581,7 @@ function renderRealizedHero(summary) {
         <div class="realized-grid">
           <div class="rg-cell"><div class="rg-label">avg / trade (gross)</div><div class="rg-val ${sgnClass(d.avg)}">${fmtPct(d.avg)}</div></div>
           <div class="rg-cell"><div class="rg-label">round-trip cost</div><div class="rg-val muted">−${fmt(c, 2)}%</div></div>
-          <div class="rg-cell"><div class="rg-label">avg / trade (NET)</div><div class="rg-val ${sgnClass(d.avg_net)} rg-net">${fmtPct(d.avg_net)}</div></div>
+          <div class="rg-cell"><div class="rg-label">avg / basket (NET)</div><div class="rg-val ${sgnClass(d.avg_net_per_window)} rg-net">${fmtPct(d.avg_net_per_window)}</div></div>
           <div class="rg-cell"><div class="rg-label">t (clustered)</div><div class="rg-val ${sigClass(d.tstat_clustered)}">${d.tstat_clustered == null ? '—' : d.tstat_clustered.toFixed(2)}</div></div>
           <div class="rg-cell"><div class="rg-label">t (naive, ref)</div><div class="rg-val muted">${d.tstat == null ? '—' : d.tstat.toFixed(2)}</div></div>
           <div class="rg-cell"><div class="rg-label">Sharpe / trade</div><div class="rg-val ${sgnClass(d.sharpe)}">${d.sharpe == null ? '—' : d.sharpe.toFixed(3)}</div></div>
@@ -1574,6 +1594,13 @@ function renderRealizedHero(summary) {
   }).join('');
 
   document.getElementById('realizedHeroGrid').innerHTML = cards;
+  const cohorts = summary.realized_cohorts || {};
+  document.getElementById('decisionCohortTable').innerHTML =
+    '<thead><tr><th>30d SHORT 집계</th><th>기록 수</th><th>묶음 수</th><th>평균 net / 묶음</th><th>t (묶음)</th></tr></thead><tbody>' +
+    [['actionable', '추천'], ['watch', '관찰'], ['unknown', '판정 불명']].map(([key, label]) => {
+      const d = cohorts[key]?.SHORT?.d30 || {};
+      return `<tr><td>${label}</td><td>${d.n ?? 0}</td><td>${d.n_windows ?? 0}</td><td>${fmtPct(d.avg_net_per_window)}</td><td>${fmt(d.tstat_clustered, 2)}</td></tr>`;
+    }).join('') + '</tbody>';
 }
 
 /* ───────── Holdout vs Live IC reconciliation ─────────
@@ -1650,6 +1677,30 @@ function renderPicksTable(picks, tableId, metaId, isShort) {
     </tr>`;
   }).join('');
   document.getElementById(tableId).innerHTML = head + '<tbody>' + body + '</tbody>';
+}
+
+function renderOperatorReport(summary) {
+  const report = summary.operator_report;
+  const meta = document.getElementById('operatorReportMeta');
+  if (!report) {
+    meta.textContent = '운영 제안 기록 대기 중';
+    document.getElementById('operatorReportTable').innerHTML = '';
+    return;
+  }
+  const delivery = {sent: 'Telegram API 수신 확인', pending: 'Telegram 재전송 대기', disabled: '테스트: 전송 안 함'};
+  meta.textContent = `${report.generated_at || '—'} · ${delivery[report.telegram?.state] || '전송 상태 미확인'} · 시도 ${report.telegram?.attempts || 0}회 · ${report.reason || report.status}`;
+  const signals = (report.signals || []).map(row => ({...row,
+    label: row.actionable ? '매매 검토 추천' : '관찰 전용',
+    source: '현재 추천 판정', asof: row.entry_time,
+  }));
+  const ideas = (report.ideas || []).map(row => ({...row,
+    label: row.reference_only ? '참고용 · 신규 추천 아님' : '관찰 전용',
+    source: row.source === 'market_reference' ? '시장 기준 종목 · 모델 선정 아님' :
+      (row.reference_only ? '이전 분석 자료' : '현재 상대순위'),
+  }));
+  document.getElementById('operatorReportTable').innerHTML =
+    '<thead><tr><th>코인</th><th>판정</th><th>자료 시각</th><th>출처</th><th>보류 사유</th></tr></thead><tbody>' +
+    [...signals, ...ideas].map(row => `<tr><td>${escapeHtml(shortMarket(row.market))}</td><td>${escapeHtml(row.label)}</td><td>${escapeHtml(row.asof || '미확인')}</td><td>${escapeHtml(row.source)}</td><td>${escapeHtml(row.reason || row.suppression || '—')}</td></tr>`).join('') + '</tbody>';
 }
 
 function renderPicks(summary) {
@@ -2355,6 +2406,7 @@ async function boot() {
   renderMegaStats(summary, accuracy);
   renderKpi(summary);
   renderPicks(summary);
+  renderOperatorReport(summary);
   renderIcChart(history);
   renderRealized(summary, accuracy);
   renderDrift(summary);
