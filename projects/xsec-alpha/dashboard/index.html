@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>xsec_alpha live dashboard — 운영 상태 · 증거 · LONG 정책</title>
-  <meta name="description" content="xsec_alpha의 SHORT 수동 판단 신호, LONG KILL·조건부 WATCH, paper/proxy 성과, 측정 계약과 전체 Integrity Turn 타임라인을 함께 보는 대시보드.">
+  <meta name="description" content="xsec_alpha 개발일지의 질문을 현재 근거로 확인합니다. 코인 보고, 비용 후 관찰 성과, LONG 정책, 고정 SHORT 실험과 누락·무결성·최종 판정을 분리합니다.">
   <meta name="robots" content="noindex,nofollow">
   <link rel="canonical" href="https://soccz.github.io/projects/xsec-alpha/dashboard/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -360,6 +360,34 @@
 
     footer { padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.78rem; line-height: 1.7; }
     footer code { font-family: 'JetBrains Mono', monospace; background: var(--bg-secondary); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.78rem; overflow-wrap: anywhere; word-break: break-word; }
+    :root { --bg-primary: #fafbfc; --bg-secondary: #f1f3f5; --text-primary: #20242a; --text-secondary: #4b5563; --text-muted: #697380; --accent: #0f766e; --border: #e1e5e9; --border-light: #cbd2d9; }
+    *, *::before, *::after { letter-spacing: 0 !important; }
+    section[id] { scroll-margin-top: 72px; }
+    .hero::before { display: none; }
+    .hero h1 { font-size: 1.8rem; }
+    .section-title { font-size: 1.6rem; }
+    .hero-label { border: 0; padding: 0; margin-bottom: 0.7rem; }
+    .hero-sub { margin-bottom: 0.7rem; }
+    .evidence-links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; font-size: 0.82rem; margin: 1rem 0; }
+    .hero .evidence-links { justify-content: center; }
+    .evidence-links a, .story-ref a, #journey a { color: var(--accent); text-underline-offset: 4px; }
+    .story-ref { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    #journey table { min-width: 660px; }
+    #journey th, #journey td { white-space: normal; vertical-align: top; line-height: 1.8; text-align: left; }
+    .section-title, #journey th, #journey td { word-break: keep-all; overflow-wrap: anywhere; }
+    @media (max-width: 680px) {
+      .hero h1 { font-size: 1.5rem; }
+      .section-title { font-size: 1.3rem; }
+      #journey table, #journey tbody { display: block; min-width: 0; width: 100%; }
+      #journey thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+      #journey tbody tr { display: block; padding: 1rem 0; border-top: 1px solid var(--border); }
+      #journey tbody th, #journey tbody td { display: block; border: 0; padding: 0.25rem 0; }
+      #journey tbody th { font-size: 0.87rem; color: var(--text-primary); }
+      #journey td::before { display: block; font-size: 0.7rem; color: var(--text-muted); }
+      #journey td:nth-child(2)::before { content: '현재 근거'; }
+      #journey td:nth-child(3)::before { content: '해석의 경계'; }
+      #journey td:nth-child(4)::before { content: '당시 판단'; }
+    }
   </style>
 </head>
 <body>
@@ -370,15 +398,17 @@
       <span class="bars"><span></span><span></span><span></span></span>
       <span class="label">sections</span>
     </button>
-    <a class="nav-logo" href="../">xsec_alpha</a>
+    <a class="nav-logo" href="/projects/xsec-alpha/">xsec_alpha · 개발일지</a>
   </div>
 </nav>
 
 <aside class="nav-drawer" id="navDrawer" aria-label="dashboard sections">
   <div class="drawer-header">sections</div>
   <ul class="nav-links">
-    <li><a href="#contract">current contract</a></li>
-    <li><a href="#journey">integrity turn</a></li>
+    <li><a href="#operator-report">이번 회차 보고</a></li>
+    <li><a href="#prospective-experiment">고정 SHORT 실험</a></li>
+    <li><a href="#journey">질문과 근거</a></li>
+    <li><a href="#contract">현재 운영 계약</a></li>
     <li><a href="#kpi">kpi</a></li>
     <li><a href="#realized-hero">realized</a></li>
     <li><a href="#holdout-vs-live">reconcile</a></li>
@@ -398,7 +428,7 @@
     <li><a href="#automation">automation</a></li>
     <li><a href="#history">history</a></li>
     <li><a href="#limits">limits</a></li>
-    <li><a href="../">← project</a></li>
+    <li><a href="/projects/xsec-alpha/#development-journey">개발일지 · 전체 흐름</a></li>
   </ul>
 </aside>
 
@@ -406,20 +436,20 @@
 
 <header class="hero">
   <div class="hero-content">
-    <div class="hero-label">private dashboard · pin gated · audited 2026-08-03</div>
-    <h1>Cross-sectional signals — evidence before execution</h1>
+    <div class="hero-label">운영·실험 근거 · 2026-09-07 계약</div>
+    <h1>xsec_alpha 대시보드</h1>
     <p class="hero-sub">
-      Upbit KRW 200+ 마켓에서 6h / 12h 호라이즌 랭킹.
-      <strong>지금 계약:</strong> SHORT는 수동 판단용 actionable 신호 최대 5개,
-      LONG은 실행 0개. 엄격 게이트를 모두 통과할 때만 <strong>WATCH ONLY 최대 1개</strong>를 알린다.
-      “확실”은 문턱 통과라는 뜻이지 수익 보장이 아니다.
+      <strong>운영 추천과 아이디어 검증은 별도다.</strong>
+      정상 회차 코인 보고는 계속 전달하고, 고정 SHORT 실험은 단순 기준선과 미래 60회를 비교한다.
+      LONG 실행은 0이며 조건부 WATCH만 최대 1개다. 아래 손익은 실제 체결이 아닌 paper/proxy다.
     </p>
     <p class="hero-tail">
       <span class="hero-pill">paper / proxy · actual fills 아님</span>
       <span class="hero-pill">매 6h 자동 갱신</span>
       <span class="hero-pill">cost-aware (net 표시)</span>
-      <span class="hero-pill">112 pytest passed</span>
+      <span class="hero-pill">SHORT 고정 실험 · 6h × 60회</span>
     </p>
+    <div class="evidence-links"><a href="#operator-report">이번 회차 보고</a><a href="#prospective-experiment">실험 진행·판정</a><a href="#journey">질문별 근거</a><a href="/projects/xsec-alpha/#development-journey">실패와 판단의 개발일지</a></div>
     <p class="hero-meta" id="heroMeta">데이터 로드 중…</p>
   </div>
 </header>
@@ -494,12 +524,13 @@
 <!-- Current runtime contract: static so stale encrypted data cannot misstate policy -->
 <section id="contract" class="compact">
   <div class="container">
-    <div class="section-label">current runtime contract · 2026-08-03</div>
+    <div class="section-label">current runtime contract · 2026-09-07</div>
     <h2 class="section-title">알림과 실행을 분리한다</h2>
     <p class="section-desc">
       이 저장소에는 Bitget 주문 API나 브로커 연결이 없다. SHORT “actionable”도 자동 주문이 아니라 수동 판단용 신호다.
       모든 손익은 paper/proxy 가격과 가정 비용이며 실제 체결 성과가 아니다.
     </p>
+    <p class="story-ref">정상 코인 보고: KST 02·08·14·20시 분석 완료 후. 조건 미달은 비실행 참고 후보로 구분한다. <a href="/projects/xsec-alpha/#september-delivery">보고와 추천을 분리한 이유</a></p>
     <div class="contract-grid">
       <div class="contract-card short"><div class="contract-k">SHORT surface</div><div class="contract-v">≤5</div><div class="contract-d">6h 수동 판단용 actionable 신호. Bitget tradable 필터 적용.</div></div>
       <div class="contract-card block"><div class="contract-k">LONG actionable</div><div class="contract-v">0</div><div class="contract-d">KILL 정책으로 추천 원장과 실행 가능 신호를 하드 차단.</div></div>
@@ -522,22 +553,20 @@
 
 <hr class="divider">
 
-<!-- Integrity timeline: failure and policy changes remain visible like Prelude -->
+<!-- The dated narrative lives on the project page; this table routes to evidence. -->
 <section id="journey" class="compact">
   <div class="container">
-    <div class="section-label">integrity turn · full storyline</div>
-    <h2 class="section-title">좋은 IC에서 “실행할 수 있는가”로 질문이 바뀐 과정</h2>
-    <p class="section-desc">성공한 모델 버전만 나열하지 않는다. 가설이 깨진 시점, 정책과 코드가 어긋난 시점, 그 결과 바뀐 측정 계약을 함께 보존한다.</p>
-    <div class="storyline">
-      <div class="story-event fail"><div class="story-date">2025 → 2026 Q1 · RESET</div><div class="story-title">gan_t 실패 → 크로스섹션 상대 랭킹으로 재정의</div><div class="story-copy">절대수익 예측의 BTC beta·누수 문제를 버리고, 같은 timestamp의 코인을 순위화하는 SHORT 6h / LONG 12h 구조로 전환.</div></div>
-      <div class="story-event pivot"><div class="story-date">2026-04 · MODEL PIVOT</div><div class="story-title">LONG momentum 실패 → compression v3 → unified F1</div><div class="story-copy">모멘텀이 전 horizon에서 음수라 range contraction과 reversal로 교체. 이후 두 모델을 공통 10-feature·absolute target 파이프라인으로 통합.</div></div>
-      <div class="story-event fail"><div class="story-date">2026-04 → 05 · OPS REALITY</div><div class="story-title">부호 버그, overlap, survivorship가 과도한 적중률을 무너뜨림</div><div class="story-copy">라이브 ledger가 연구 수치를 반박했다. 비용·clustered 통계·원장↔텔레그램 검증·promotion gate·백업을 운영 계약에 편입.</div></div>
-      <div class="story-event fail"><div class="story-date">2026-07-11 → 07-31 · GOVERNANCE GAP</div><div class="story-title">N=0 KILL 선언 뒤에도 WATCH_LONG 4~5개가 계속 나감</div><div class="story-copy">commit b6f073a의 정책이 fetch 선택 경로에 연결되지 않았다. KILL 이후에도 7월 31일 11 UTC까지 원장 205행이 생겼다. 문서상 통제와 런타임 집행은 같은 것이 아니었다.</div></div>
-      <div class="story-event fail"><div class="story-date">2026-08-03 10:26–10:29 KST · TRIPLE FAILURE</div><div class="story-title">동시성 + partial snapshot + 구 promotion 계약이 동시에 드러남</div><div class="story-copy">retrain/update/fetch overlap으로 20회 이상 DB lock, valid coin 0, LONG bull timestamp 0, 3개 피처 NaN 100% 상태가 발생했지만 구 경로는 SHORT 5 + WATCH_LONG 1을 표면화했고 IC-only retrain은 두 모델을 승격.</div></div>
-      <div class="story-event"><div class="story-date">2026-08-03 · CONTRACT REPAIR</div><div class="story-title">lock/order/stable-read, KILL wiring, exact-anchor economics, OOS calibration 복구</div><div class="story-copy">next-open lag 1·non-overlap·BTC regime·Bitget tradable·비용 후 net으로 재측정. 현행 LONG net &minus;1.1796%, 새 Ensemble &minus;1.5345%, Ridge &minus;1.3601%로 모두 실행 근거를 만들지 못해 KILL 유지.</div></div>
-      <div class="story-event pivot"><div class="story-date">NEXT · PROSPECTIVE ONLY</div><div class="story-title">WATCH≤1로 관찰하고 독립 12h basket 60개로 다시 판정</div><div class="story-copy">평균 net&gt;0, block-bootstrap 95% 하한&gt;0, 시간순 3개 fold와 허용 레짐 모두 net&gt;0을 만족해야 별도 코드 변경으로 재활성화를 검토한다.</div></div>
-    </div>
-    <p class="card-meta">상세 서사와 감사 수치의 provenance는 <a href="../#august-audit">프로젝트 보고서 Part V</a>에 보존.</p>
+    <div class="section-label">개발일지의 질문 → 현재 근거</div>
+    <h2 class="section-title">무엇이 나아졌고, 무엇은 아직 모르는가</h2>
+    <div class="scroll-x"><table class="data"><thead><tr><th scope="col">실패에서 나온 질문</th><th scope="col">현재 근거</th><th scope="col">해석의 경계</th><th scope="col">당시 판단</th></tr></thead><tbody>
+      <tr><th scope="row">좋은 적중률을 믿어도 되는가</th><td><a href="#holdout-vs-live">측정 계약</a> · <a href="#calibration">OOS 보정</a></td><td>과거 82.7%는 철회된 해석. 서로 다른 평가 계약을 섞지 않음.</td><td><a href="/projects/xsec-alpha/#ops-reality">운영의 반증</a></td></tr>
+      <tr><th scope="row">비용 후에도 효과가 남는가</th><td><a href="#realized-hero">추천·관찰별 net</a> · <a href="#cumulative">누적 기록</a></td><td>현재 원장 집계는 고정 모델 실험도 실제 체결 수익도 아님.</td><td><a href="/projects/xsec-alpha/#cost-reality">비용 후 손실</a></td></tr>
+      <tr><th scope="row">KILL이 실제로 집행되는가</th><td><a href="#contract">정책</a> · <a href="#picks">추천 원장</a> · <a href="#shadow">LONG 관찰</a></td><td>LONG 실행 0. 별도 12h 관찰과 SHORT 6h 실험을 합산하지 않음.</td><td><a href="/projects/xsec-alpha/#august-audit">205행과 집행 복구</a></td></tr>
+      <tr><th scope="row">침묵은 조건 미달인가, 장애인가</th><td><a href="#operator-report">이번 보고·전달 상태</a></td><td>비실행 참고 후보는 새 actionable 추천이 아님. 전송 장애 중 수신 보장 없음.</td><td><a href="/projects/xsec-alpha/#september-delivery">전달 계약 변경</a></td></tr>
+      <tr><th scope="row">모델이 단순 기준선보다 나은가</th><td><a href="#prospective-experiment">고정 SHORT 60회 비교</a></td><td>유효 회차와 종료 조건을 충족한 최종 판정만 해석. 중간 평균으로 승격하지 않음.</td><td><a href="/projects/xsec-alpha/#september-protocol">가설과 사전등록</a></td></tr>
+      <tr><th scope="row">결과를 믿을 기록이 남았는가</th><td><a href="#prospective-experiment">누락·무결성·복원 상태</a></td><td>실험 근거 부족도 종료 결과. 점검 성공이 모델 성공은 아님.</td><td><a href="/projects/xsec-alpha/#september-supervision">독립 점검과 한계</a></td></tr>
+    </tbody></table></div>
+    <p class="story-ref"><a href="/projects/xsec-alpha/#development-journey">전체 개발 흐름</a> · <a href="/projects/xsec-alpha/#september-decisions">성공·실패·보류별 다음 판단</a></p>
   </div>
 </section>
 
@@ -577,6 +606,7 @@
   <div class="container">
     <div class="section-label">realized — net of fees</div>
     <h2 class="section-title">실현 손익이 0과 구분되는가</h2>
+    <p class="story-ref"><a href="/projects/xsec-alpha/#cost-reality">개발일지: gross 양수가 비용 후 손실로 바뀐 이유</a></p>
     <p class="section-desc">
       SHORT 주 성과는 추천 당시 actionable=true인 기록만 집계한다. 관찰·판정 불명 기록은 아래에서 분리한다. <strong>가정 비용을 차감한 paper/proxy</strong>이며 실제 거래소 fill·펀딩 성과가 아니다.
     </p>
@@ -608,6 +638,7 @@
   <div class="container">
     <div class="section-label">operator report</div>
     <h2 class="section-title">이번 회차 코인 제안</h2>
+    <p class="story-ref"><a href="/projects/xsec-alpha/#september-delivery">개발일지: 보고는 유지하고, 약한 후보는 참고로 구분</a></p>
     <div class="card-meta" id="operatorReportMeta"></div>
     <div class="scroll-x"><table class="data" id="operatorReportTable"></table></div>
   </div>
@@ -619,7 +650,8 @@
 <section id="prospective-experiment">
   <div class="container">
     <div class="section-label">prospective experiment</div>
-    <h2 class="section-title">고정 모델 전향 검증</h2>
+    <h2 class="section-title">고정 SHORT 실험 · 6시간 회차 60개</h2>
+    <p class="story-ref"><a href="/projects/xsec-alpha/#september-protocol">가설·비교군·변경하지 않을 규칙</a> · <a href="/projects/xsec-alpha/#september-decisions">종료 결과별 다음 판단</a><br>현재 운영 추천 및 LONG 12h 관찰과 별도인 순위 실험. 실제 Bitget 체결 수익성은 검증하지 않는다.</p>
     <div class="card-meta" id="prospectiveMeta"></div>
     <div class="card-meta" id="supervisorMeta"></div>
     <div class="scroll-x"><table class="data" id="supervisorTable"></table></div>
@@ -1290,6 +1322,7 @@ function showPinModal() {
           <button id="pinSubmit">열기</button>
         </div>
         <div class="lock-error" id="pinError"></div>
+        <div class="evidence-links"><a id="pinStoryLink" href="/projects/xsec-alpha/#development-journey">개발일지로 돌아가기</a></div>
       </div>`;
     document.body.appendChild(overlay);
     const input = overlay.querySelector('#pinInput');

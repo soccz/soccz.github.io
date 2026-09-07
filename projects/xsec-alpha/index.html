@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xsec_alpha — Cross-Sectional Crypto Ranking · 연구에서 운영 감사까지</title>
-  <meta name="description" content="크로스섹션 크립토 랭킹 시스템의 전체 여정. SHORT 운영, LONG KILL 이후 측정 계약 복구, 조건부 WATCH 알림과 재활성화 기준까지 증거와 함께 기록합니다.">
+  <title>xsec_alpha · 실패와 판단의 변화, 그리고 전향 검증</title>
+  <meta name="description" content="gan_t 실패, LONG 설계 기각, 과장된 적중률 철회, 비용과 운영 감사, 9월 고정 모델 실험까지. 무엇을 기대했고 왜 판단을 바꿨는지 남기는 xsec_alpha 개발일지.">
   <meta property="og:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
-  <meta property="og:description" content="gan_t 실패 → 크로스섹션 전환 → 운영 버그와 비용 감사 → LONG KILL → prospective shadow 검증. 결과뿐 아니라 판단이 바뀐 이유를 기록한 운영 보고서.">
+  <meta property="og:description" content="실패한 가설과 기각한 모델을 지우지 않는다. 연구의 부분 성공, 운영의 반증, 측정 계약 복구와 2026-09-07 고정 모델 실험을 잇는 개발일지.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/xsec-alpha/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
-  <meta name="twitter:description" content="연구(v1-v3), 운영 재설계, 비용 감사, LONG KILL과 복구 조건까지 이어지는 xsec_alpha의 전체 기록.">
+  <meta name="twitter:description" content="무엇을 기대했고, 무엇이 깨졌으며, 왜 다음 선택을 했는가. 성공과 실패, 아직 답하지 못한 질문을 함께 남긴 xsec_alpha 개발일지.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/xsec-alpha/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -323,6 +323,55 @@
 
     @media (max-width: 900px) { .two-col, .three-col { grid-template-columns: 1fr; } .nav-links { display: none; } section { padding: 4rem 1.5rem; } .dual-wrap { grid-template-columns: 1fr; gap: 1rem; } .dual-vs { display: none; } }
     @media (max-width: 680px) { .hero { width: 100vw; min-height: auto; align-items: flex-start; padding-top: 7rem; padding-bottom: 4rem; } .hero-content { width: 100%; min-width: 0; } .hero-label { display: block; width: max-content; max-width: 100%; margin-left: auto; margin-right: auto; font-size: 0.62rem; letter-spacing: 0.1em; line-height: 1.5; overflow-wrap: anywhere; } .hero-sub, .callout p, code, .c { overflow-wrap: anywhere; word-break: break-word; } .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem 0.8rem; width: 100%; } .hero-stat { min-width: 0; } .hero-stat-num { font-size: 1.65rem; } .scroll-ind { display: none; } .chart-wrap, .tg-mockup { max-width: 100%; overflow-x: auto; } .bar-row { grid-template-columns: minmax(0, 76px) minmax(0, 1fr) minmax(0, 58px); gap: 0.4rem; } .bar-val { min-width: 0; } .flow { flex-direction: column; } .flow-step { border-radius: 8px !important; } .flow-step::after { display: none; } .ic-label { min-width: 60px; font-size: 0.65rem; word-break: break-all; } .lesson-item { flex-direction: column; gap: 0.4rem; } .funnel-step { flex-wrap: wrap; } .funnel-step .funnel-ic { margin-left: 0; margin-top: 0.3rem; font-size: 0.68rem; } .cadence-slot { font-size: 0.55rem; } .pipe-wrap { padding: 1rem; overflow: hidden; } .pipe-branches { grid-template-columns: 1fr !important; } }
+    :root { --bg-primary: #fafbfc; --bg-secondary: #f1f3f5; --text-primary: #20242a; --text-secondary: #4b5563; --text-muted: #697380; --accent: #0f766e; --border: #e1e5e9; --border-light: #cbd2d9; }
+    *, *::before, *::after { letter-spacing: 0 !important; }
+    section[id], article[id], .part-divider[id] { scroll-margin-top: 82px; }
+    a:focus-visible, summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+    .hero { min-height: 0; padding: 7rem 1.5rem 3rem; }
+    .hero::before, .scroll-ind { display: none; }
+    .hero h1 { font-size: 2.8rem; }
+    .section-title { font-size: 1.8rem; }
+    .part-divider h2 { font-size: 1.9rem; }
+    .hero-label { border: 0; padding: 0; margin-bottom: 1rem; }
+    .hero-sub { font-size: 0.96rem; margin-bottom: 1rem; }
+    .hero-links { margin-top: 1.5rem; }
+    .nav-inner { gap: 1.5rem; }
+    .nav-links { gap: 1.1rem; min-width: 0; }
+    .nav-links a { white-space: nowrap; }
+    .journal-lead { font-size: 1rem; color: var(--text-secondary); max-width: 820px; margin: 0 0 2rem; }
+    #development-journey { padding-top: 2rem; }
+    .journal-path { list-style: none; counter-reset: chapter; }
+    .journal-path > li { counter-increment: chapter; display: grid; grid-template-columns: 38px 150px minmax(0, 1fr); gap: 1rem; padding: 1.25rem 0; border-top: 1px solid var(--border); }
+    .journal-path > li::before { content: counter(chapter, decimal-leading-zero); color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; padding-top: 0.2rem; }
+    .journal-date { font-size: 0.78rem; color: var(--text-secondary); }
+    .journal-state { display: block; margin-top: 0.3rem; font-size: 0.76rem; font-weight: 700; }
+    .journal-state.fail { color: var(--red); }
+    .journal-state.partial { color: var(--green); }
+    .journal-state.open { color: var(--blue); }
+    .journal-path h3, .journal-entry h3 { font-size: 1.03rem; line-height: 1.6; margin-bottom: 0.45rem; }
+    .journal-path p { color: var(--text-secondary); font-size: 0.87rem; line-height: 1.85; }
+    .journal-path a, .journal-links a, .evidence-links a { color: var(--accent); text-underline-offset: 4px; }
+    .journal-path a { display: inline-block; margin-top: 0.45rem; font-size: 0.8rem; }
+    .journal-note { border-left: 3px solid var(--blue); padding: 0.6rem 0 0.6rem 1rem; margin: 1.5rem 0; color: var(--text-secondary); font-size: 0.87rem; line-height: 1.9; }
+    .journal-entry { padding: 1.8rem 0; border-top: 1px solid var(--border); }
+    .journal-entry .t-date { display: block; margin-bottom: 0.5rem; }
+    .journal-entry p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.9; max-width: 900px; margin-bottom: 0.75rem; }
+    .journal-entry strong { color: var(--text-primary); }
+    .hero-sub, .section-title, .journal-lead, .journal-path p, .journal-path h3, .journal-entry p, .journal-entry h3 { word-break: keep-all; overflow-wrap: anywhere; }
+    .journal-links, .evidence-links { display: flex; flex-wrap: wrap; gap: 0.65rem 1.4rem; font-size: 0.82rem; margin-top: 1rem; }
+    .journal-table { overflow-x: auto; margin: 1.3rem 0; }
+    .journal-table .tbl { min-width: 600px; }
+    .journal-table caption { text-align: left; font-weight: 700; padding: 0 0 0.7rem; }
+    .journal-table th, .journal-table td { vertical-align: top; }
+    .journal-toc { margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .journal-toc summary { cursor: pointer; font-size: 0.9rem; }
+    .status-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2rem; margin: 1.5rem 0; }
+    .status-facts div { border-top: 1px solid var(--border); padding: 1rem 0; }
+    .status-facts dt { font-size: 0.83rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .status-facts dd { font-size: 0.86rem; color: var(--text-secondary); overflow-wrap: anywhere; }
+    @media (max-width: 900px) { .nav-links { display: flex; overflow-x: auto; gap: 1rem; padding: 0.7rem 0; } .nav-inner { padding: 0 1rem; gap: 1rem; } .nav-logo { flex-shrink: 0; } }
+    @media (max-width: 680px) { .hero { padding: 6rem 1.5rem 2rem; } .hero h1 { font-size: 2.2rem; } .hero-links { gap: 0.4rem 1rem; margin-top: 1rem; } .hero-link { border: 0; padding: 0.35rem 0; text-decoration: underline; text-underline-offset: 4px; } .section-title, .part-divider h2 { font-size: 1.5rem; } .journal-path > li { grid-template-columns: 28px minmax(0, 1fr); gap: 0.6rem; } .journal-path > li > div:last-child { grid-column: 2; } .journal-state { display: inline; margin-left: 0.7rem; } .status-facts { grid-template-columns: 1fr; } .journal-links a { overflow-wrap: anywhere; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .fade-in { opacity: 1; transform: none; transition: none; } }
   </style>
 </head>
 <body>
@@ -331,20 +380,12 @@
   <div class="nav-inner">
     <a href="/" class="nav-logo">soccz.</a>
     <ul class="nav-links">
-      <li><a href="#summary">Summary</a></li>
-      <li><a href="#thesis">Thesis</a></li>
-      <li><a href="#architecture">Architecture</a></li>
-      <li><a href="#short-model">Short Model</a></li>
-      <li><a href="#long-journey">Long Journey</a></li>
-      <li><a href="#lessons">Lessons</a></li>
-      <li><a href="#ops-reality">Ops Reality</a></li>
-      <li><a href="#f1-unified">F1 Unified</a></li>
-      <li><a href="#automation">Automation</a></li>
-      <li><a href="#cost-reality">Cost Reality</a></li>
-      <li><a href="#audit-summary">Audit</a></li>
-      <li><a href="#hygiene">Hygiene</a></li>
-      <li><a href="#august-audit">Aug Audit</a></li>
-      <li><a href="#status">Status</a></li>
+      <li><a href="#development-journey">판단의 흐름</a></li>
+      <li><a href="#thesis">초기 연구</a></li>
+      <li><a href="#ops-reality">운영의 반증</a></li>
+      <li><a href="#august-audit">8월 감사</a></li>
+      <li><a href="#september-validation">9월 검증 설계</a></li>
+      <li><a href="/projects/xsec-alpha/dashboard/">대시보드</a></li>
     </ul>
   </div>
 </nav>
@@ -352,49 +393,55 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">Cross-Sectional Ranking &middot; Crypto &middot; 2026</span>
+    <span class="hero-label">개발일지 &middot; Cross-Sectional Crypto Ranking &middot; 2026-09-07</span>
     <h1>xsec_alpha</h1>
     <p class="hero-sub">
-      <strong>크립토 200+개 마켓을 매 6시간 비교해서 어떤 게 떨어지고/오를지 줄세우는 시스템.</strong><br>
-      gan_t의 실패에서 출발해 크로스섹션 상대 랭킹으로 전환 — Short 6h + Long 12h 듀얼 모델, F1 통합 아키텍처.<br>
-      <strong>현재 단계:</strong> SHORT는 수동 판단용 신호를 운영 중. LONG은 2026-07-11 KILL 이후 <strong>actionable 0건</strong>을 유지한다.
-      다만 BTC 레짐·현재 계약 IC·신호 강도·유동성 게이트를 모두 통과한 경우에만
-      <strong>WATCH ONLY 알림을 최대 1개</strong> 보낸다. 알림은 관찰 후보이며 주문도, 수익 보장도 아니다.
+      <strong>코인을 상대 순위로 고르는 아이디어는 어디까지 유효한가.</strong><br>
+      절대수익 예측의 실패에서 시작했고, 좋은 IC를 발견했다.
+      그러나 운영 원장은 과장된 적중률과 비용 후 손실, 집행되지 않은 정책을 드러냈다.<br>
+      지금은 추천을 계속 전달하면서, 고정한 모델이 단순 기준선보다 나은지 미래 60회로 검증한다.
+      <strong>운영 보강은 확인했다. 투자 성과의 개선은 아직 결론 내리지 않았다.</strong>
     </p>
-    <p class="hero-phases">
-      <span class="phase-chip">① 연구 — gan_t→F1</span>
-      <span class="phase-chip">② 운영 — 원장이 드러낸 실패 3</span>
-      <span class="phase-chip">③ 비용 결산 — gross vs net</span>
-      <span class="phase-chip">④ 엔지니어링 — 테스트·백업·shadow</span>
-      <span class="phase-chip">⑤ 8월 감사 — 측정 계약 복구·LONG KILL 유지</span>
-    </p>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">ACTIVE</span><span class="hero-stat-label">SHORT · 최대 5</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">0 / ≤1</span><span class="hero-stat-label">LONG actionable / 조건부 WATCH</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="200" data-suffix="+" data-decimals="0">0</span><span class="hero-stat-label">KRW Markets</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">6h/12h</span><span class="hero-stat-label">Dual Cadence</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">Unified F1 Features</span></div>
-    </div>
     <div class="hero-links">
       <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        Source Code
+        소스 코드
       </a>
-      <a href="dashboard/" class="hero-link" aria-label="Live dashboard">
+      <a href="/projects/xsec-alpha/dashboard/" class="hero-link" aria-label="Live dashboard">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="9" width="2.5" height="5" rx="0.5"/><rect x="6.75" y="6" width="2.5" height="8" rx="0.5"/><rect x="11.5" y="2.5" width="2.5" height="11.5" rx="0.5"/></svg>
-        Live Dashboard
+        대시보드 근거
       </a>
+      <a href="#development-journey" class="hero-link">개발 흐름</a>
     </div>
   </div>
   <div class="scroll-ind">SCROLL<br><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
 <hr class="divider">
 
-<!-- Executive Summary -->
+<section id="development-journey" class="compact"><div class="container">
+  <div class="section-label">개발 과정 · 실패 / 부분 성공 / 보류</div>
+  <h2 class="section-title">좋은 숫자보다, 판단이 바뀐 이유</h2>
+  <p class="journal-lead">출발점은 예측 모델을 잘 만드는 것이었다. 반복된 실패 이후에는 질문이 달라졌다. 모델이 정말 더 잘 고르는가, 그 결과를 믿을 수 있는 방식으로 기록하고 있는가. 아래의 선택들은 완성된 정답이 아니라 그때 확보한 근거에 대한 판단이다.</p>
+  <ol class="journal-path">
+    <li><div class="journal-date">2025 ~ 2026 Q1<span class="journal-state fail">출발점의 실패</span></div><div><h3>복잡한 모델이 단순한 기준선을 이기지 못했다</h3><p>gan_t의 CVAE/GAN에 기대했지만 Sharpe 0.17과 데이터 누수가 남았다. 모델을 더 복잡하게 만드는 대신, 가격 자체를 맞히는 문제를 같은 시각 코인들의 상대 순위를 고르는 문제로 바꿨다.</p><a href="#thesis">문제 재정의와 초기 설계</a></div></li>
+    <li><div class="journal-date">초기 연구<span class="journal-state partial">부분 성공 · 기각</span></div><div><h3>순위 신호는 발견했지만 LONG은 다른 문제였다</h3><p>단순 팩터에서 IC를 확인했다. 하지만 SHORT의 논리를 LONG에 옮기거나 momentum을 쓰는 시도는 기대대로 작동하지 않았다. v1의 좋은 전체 IC만으로 배포하지 않고, v2를 기각하고 compression·reversal 중심 v3를 검토했다. 설계의 개선이 미래 수익의 입증은 아니었다.</p><a href="#long-journey">v1 → v2 기각 → v3와 남은 한계</a></div></li>
+    <li><div class="journal-date">2026-04-25<span class="journal-state fail">성과 해석 철회</span></div><div><h3>82.7% 적중률을 성공으로 남길 수 없었다</h3><p>학습 데이터와 평가의 겹침, 생존 편향, 텔레그램 부호 오류가 드러났다. 높은 숫자를 유지하는 대신 그 숫자를 근거에서 내려놓고, 피처·타깃·호라이즌과 알림의 정의를 다시 맞췄다.</p><a href="#ops-reality">원장이 반박한 세 가지와 F1 재설계</a></div></li>
+    <li><div class="journal-date">2026-05-25<span class="journal-state fail">비용 후 손실</span></div><div><h3>양수 gross가 비용 후에도 양수라는 보장은 없었다</h3><p>당시 SHORT 평균 gross +0.02%는 가정 비용 후 net −0.28%가 됐다. 승률·IC로 경제성을 대신 설명하지 않기로 했다. 비용 원장과 묶음 단위 평가를 추가했지만, 비용 추정도 실제 체결 기록은 아니라는 한계를 남겼다.</p><a href="#cost-reality">당시 비용 결산</a></div></li>
+    <li><div class="journal-date">2026-05 ~ 08<span class="journal-state fail">운영 통제의 실패</span></div><div><h3>테스트와 KILL 선언만으로 런타임을 통제하지 못했다</h3><p>테스트·백업을 도입했어도 7월 KILL 선언 뒤 WATCH_LONG 205행이 추가됐다. 8월에는 동시 실행과 불완전한 데이터, 구 승격 규칙의 문제가 겹쳤다. 문서의 의도가 아니라 실제 선택 경로와 저장 기록에서 정책을 확인해야 했다.</p><a href="#hygiene">5월 보강</a> · <a href="#august-audit">이후에도 발생한 장애와 복구</a></div></li>
+    <li><div class="journal-date">2026-08-03<span class="journal-state partial">복구 · 모델 기각</span></div><div><h3>측정 계약은 복구했지만 LONG의 경제성은 복구되지 않았다</h3><p>시점·비용·레짐을 맞춰 다시 계산하니 기존 모델과 새 Ensemble, Ridge 모두 실행 근거가 부족했다. 코드를 고쳤다는 이유로 모델을 교체하거나 LONG을 다시 열지 않았다. 실행 0과 별도 관찰을 유지했다.</p><a href="#august-audit">기각한 후보와 재활성화 조건</a></div></li>
+    <li><div class="journal-date">2026-09-07<span class="journal-state partial">전달·기록 보강</span></div><div><h3>신중한 추천과 끊기지 않는 보고를 분리했다</h3><p>조건이 약하다는 이유로 보고까지 사라지면 운영 여부를 알기 어렵다. 정상 회차에는 코인 목록을 보내되 추천과 참고 후보를 구분하고, 비용·근거는 원장에 남겼다. 재전송·모델 묶음 배포·복원 검증은 소프트웨어 안정성의 확인이지 정확도 향상의 증거가 아니다.</p><a href="#september-delivery">전달과 배포에서 바꾼 것</a></div></li>
+    <li><div class="journal-date">2026-09-07 등록<span class="journal-state open">검증 예정 · 판정 전</span></div><div><h3>설명을 늘리는 데서 멈추지 않고, 반증 가능한 비교를 고정했다</h3><p>현재 모델이 단순 4h 반전 팩터보다 나은지, 같은 종목군과 미래 60회에서 비교한다. 결과를 보며 규칙을 고치지 않고, 실패·차이 없음·자료 부족도 종료 결과로 인정한다. 9월 22~24일 최종 판정 전까지 성능 개선은 주장하지 않는다.</p><a href="#september-validation">실험 설계와 포기하지 않은 질문</a> · <a href="/projects/xsec-alpha/dashboard/#prospective-experiment">현재 실험 근거</a></div></li>
+  </ol>
+  <p class="journal-note"><strong>현재의 결론:</strong> 아이디어를 검증할 운영 구조는 갖췄다. 고정 모델의 상대적 우위와 실제 거래소에서의 비용 후 수익성은 아직 별개의 미해결 질문이다. 과거 실패를 최신 숫자로 덮어쓰거나, 테스트 통과를 투자 성공으로 표현하지 않는다.</p>
+  <details class="journal-toc"><summary>개발 단계별 상세 기록</summary><div class="journal-links"><a href="#thesis">I. 초기 가설</a><a href="#short-model">팩터 발견</a><a href="#long-journey">LONG v1~v3</a><a href="#lessons">당시 교훈</a><a href="#ops-reality">II. 운영의 반증</a><a href="#per-coin-output">출력 재설계</a><a href="#f1-unified">F1 선택</a><a href="#automation">자동화</a><a href="#cost-reality">III. 비용 결산</a><a href="#telegram-rebuild">알림 재설계</a><a href="#audit-summary">운영 감사</a><a href="#hygiene">IV. 테스트·백업</a><a href="#august-audit">V. 정책 집행 복구</a><a href="#september-validation">VI. 고정 실험</a><a href="#status">현재와 다음 판단</a></div></details>
+</div></section>
+<hr class="divider">
+
+<!-- Live aggregates remain distinct from the dated development record. -->
 <section id="summary" class="compact"><div class="container fade-in">
-  <div class="section-label">Executive Summary</div>
-  <h2 class="section-title">핵심 결과</h2>
-  <p class="section-desc">gan_t(CVAE/GAN, Sharpe 0.17)의 실패에서 출발해 크로스섹션 랭킹으로 전환했고, 운영 원장과 비용 감사가 다시 결론을 바꿨다. 실현 원장 aggregate는 매 6h 자동 갱신하며(<span data-live-asof>2026-08-03 기준</span>), LONG 감사 수치는 2026-08-03에 고정한 next-open·non-overlap 계약의 내부 재현 결과다.</p>
+  <div class="section-label">근거의 구분 · 현재 집계와 당시 감사</div>
+  <h2 class="section-title">숫자가 답하는 질문은 서로 다르다</h2>
+  <p class="section-desc">앞의 두 수치는 운영 원장 집계(<span data-live-asof>갱신 확인 전</span>), 뒤의 두 수치는 2026-08-03 내부 감사다. 어느 것도 9월 고정 SHORT 실험의 결과가 아니다. 이하 개발 단계의 수치·판정은 당시 기록으로 보존하며, 현재 운영 근거는 <a href="/projects/xsec-alpha/dashboard/#realized-hero">대시보드</a>에서 별도로 확인한다.</p>
   <div class="four-col" style="margin-bottom:2rem;">
     <div class="metric-card"><span class="metric-val" data-live-key="realized_30d.SHORT.net_per_basket_pct" data-live-fmt="signed-pct-2">—</span><div class="metric-label">SHORT 추천 30d net / 묶음</div><div class="metric-sub">추천만 집계 · 묶음=<span data-live-key="realized_30d.SHORT.n_baskets" data-live-fmt="int">—</span><br>paper/proxy · 가정 비용 차감</div></div>
     <div class="metric-card"><span class="metric-val neg" data-live-key="realized_30d.WATCH_LONG.net_pct" data-live-fmt="signed-pct-2">&minus;0.31%</span><div class="metric-label">과거 WATCH_LONG 30d net</div><div class="metric-sub">legacy ledger · n=<span data-live-key="realized_30d.WATCH_LONG.n" data-live-fmt="int">270</span><br>현재 알림 성과 아님</div></div>
@@ -773,7 +820,7 @@
   <p>
     위의 연구는 "IC는 좋다"에서 멈췄다. 2~4주 라이브가 돌고 원장이 쌓이자,
     숫자가 덮어주지 못한 구조적 문제 세 가지가 드러났다.
-    아래는 그 문제를 발견하고, 20명 트레이더 토론을 3라운드 돌려서,
+    아래는 그 문제를 발견하고, 당시 내부 설계 검토를 거쳐,
     F1 통합 아키텍처로 재설계한 기록이다.
   </p>
 </div>
@@ -1018,8 +1065,8 @@
 
   <!-- 20 trader debate votes -->
   <div style="margin: 2.5rem 0;">
-    <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">20명 트레이더 · 3라운드 토론</h3>
-    <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">각 라운드마다 4 배치 × 5명 = 20명 스페셜리스트가 실제 코드·원장 접근 권한으로 토론.</p>
+    <h3 style="font-family: 'Noto Serif KR', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">당시 설계 검토 · 3라운드의 선택 기록</h3>
+    <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">당시 문서의 “20명 트레이더” 투표 수치를 내부 설계 논의 기록으로 보존한다. 외부 전문 투자자 20인의 참여나 독립 실증 검증을 입증하는 자료는 이 페이지에 없다. 의견의 합의는 모델 성능의 증거가 아니다.</p>
 
     <div class="vote-wrap">
       <div class="vote-title">라운드 1 · "가장 강력한 형태는?"</div>
@@ -1172,6 +1219,7 @@
   <span class="part-label">Part III · Cost-Aware Reality · 2026-05-25</span>
   <h2>비용 차감하면 진짜 양수인가</h2>
   <div class="part-ornament"></div>
+  <p>F1으로 구조를 정리했지만, 운영은 새로운 질문을 남겼다. 맞힌 비율보다 비용을 차감한 결과가 중요했다. 이 장의 손실은 당시 결산으로 보존한다.</p>
 </div>
 
 <section id="cost-reality"><div class="container fade-in">
@@ -1345,6 +1393,7 @@
   <span class="part-label">Part IV · Engineering Hygiene · 2026-05-25</span>
   <h2>면접관이 찌를 만한 5가지 — 메우기</h2>
   <div class="part-ornament"></div>
+  <p>손익을 설명하려면 먼저 기록 자체를 믿을 수 있어야 했다. 테스트와 백업을 추가한 것은 진전이었다. 다만 뒤의 7~8월 장애가 보여주듯, 이 보강이 모든 운영 실패를 막지는 못했다.</p>
 </div>
 
 <section id="hygiene"><div class="container fade-in">
@@ -1435,11 +1484,12 @@
   <span class="part-label">Part V · Measurement Contract &amp; LONG Policy · 2026-08-03</span>
   <h2>신호가 보여도, 돈이 되지 않으면 실행하지 않는다</h2>
   <div class="part-ornament"></div>
+  <p>비용 때문에 중단한 정책이 실제 코드에는 집행되지 않았다. 이번에는 모델의 점수보다 정책과 런타임의 불일치를 먼저 고쳤다. 복구 뒤 재측정에서도 LONG 실행 근거는 나오지 않았다.</p>
 </div>
 
 <section id="august-audit"><div class="container fade-in">
-  <div class="section-label">The Entire Journey · Evidence Ledger</div>
-  <h2 class="section-title">실패에서 KILL까지 — 한 줄로 잇는 전체 타임라인</h2>
+  <div class="section-label">2026-08-03 감사 시점의 기록</div>
+  <h2 class="section-title">실패에서 KILL 집행 복구까지</h2>
   <p class="section-desc">
     Prelude처럼 성공한 숫자만 남기지 않고, 가설·반증·정책 변경을 시간순으로 보존한다.
     아래 8월 수치는 로컬 운영 DB와 당시 모델을 같은 next-open 계약으로 다시 계산한 <strong>내부 감사 결과</strong>이며,
@@ -1488,7 +1538,7 @@
       <div class="t-find">현행 모델 IC +0.1227에도 strict regime top5 net은 &minus;1.1796%. 새 Ensemble net &minus;1.5345%, Ridge net &minus;1.3601%라 모두 자동 기각했다. 모델 교체도, KILL 해제도 하지 않았다.</div>
     </div>
     <div class="timeline-item"><div class="timeline-dot next"></div>
-      <div class="t-meta"><span class="t-date">NEXT · PROSPECTIVE</span><span class="badge badge-blue">OBSERVE</span></div>
+      <div class="t-meta"><span class="t-date">8월에 정한 LONG 후속 조건</span><span class="badge badge-blue">OBSERVE</span></div>
       <div class="t-title">조건부 WATCH ≤1 + 독립 12h shadow 60개</div>
       <div class="t-find">실행은 계속 0. 레짐·현재 계약 IC·신호 강도·유동성 검사를 모두 통과한 한 종목만 WATCH ONLY로 알릴 수 있다. 별도 shadow basket 60개가 쌓인 뒤 평균 net, block-bootstrap 하한, 3개 시간순 fold를 모두 통과해야 별도 코드 변경으로 재활성화를 검토한다.</div>
     </div>
@@ -1519,20 +1569,90 @@
 </div></section>
 <hr class="divider">
 
+<div class="part-divider fade-in">
+  <span class="part-label">Part VI · Prospective Validation · 2026-09-07</span>
+  <h2>더 고치기 전에, 무엇을 검증할지 고정하다</h2>
+  <div class="part-ornament"></div>
+  <p>모델을 바꾸고 설명을 보강해도 같은 자료를 다시 보면 개선 여부를 구분하기 어렵다. 이번에는 운영상의 불편을 고치는 일과, 아이디어의 효과를 검증하는 일을 분리했다.</p>
+</div>
+
+<section id="september-validation"><div class="container fade-in">
+  <div class="section-label">2026-09-07 개발일지 · 등록과 운영 확인</div>
+  <h2 class="section-title">정확도보다 설명만 높이면 되는가? 그것도 충분하지 않았다</h2>
+  <p class="journal-lead">설명 가능성은 잘못된 추천을 이해하는 데 필요하지만, 그 자체가 예측력을 만들지는 않는다. 이 프로젝트의 우선순위는 완성된 투자 상품처럼 보이는 것이 아니라 내 아이디어가 단순한 대안보다 나은지 검증하는 것이다. 그래서 현재 모델을 고정하고, 결과가 나쁘더라도 끝낼 수 있는 비교를 먼저 만들었다.</p>
+
+  <article id="september-delivery" class="journal-entry">
+    <span class="t-date">01 · 사용자에게 전달되는 것</span>
+    <h3>조용한 시스템이 안전한 시스템인 것은 아니었다</h3>
+    <p><strong>문제와 고민:</strong> “의미 있는 추천만 발송”하면 조건 미달과 분석 장애, 전송 실패가 모두 침묵처럼 보일 수 있었다. 반대로 무조건 추천이라고 부르면 약한 후보까지 실행 신호로 오해하게 된다.</p>
+    <p><strong>선택:</strong> 정상 회차에는 코인 목록을 전달하되 actionable 추천과 비실행 참고 후보를 구분했다. SHORT 최대 5개와 LONG 실행 0은 완화하지 않았다. 보고서를 먼저 보존하고 API 수신 확인, 최신 미전송 보고의 재시도, 오래된 후보의 참고 전환을 붙였다. 비용·성과·선정 근거는 원장과 대시보드에 남겼다.</p>
+    <p><strong>확인과 한계:</strong> 9월 7일 14:05 KST 정상 보고의 Telegram API 수신 확인과 재시도 타이머 동작을 확인했다. 이 기록은 전달 경로의 확인이다. 장애 중 수신이나 중복 없는 정확히 한 번 전달을 보장하지 않으며, 분석 실패 시 과거 참고 목록을 새 예측처럼 바꾸지 않는다.</p>
+    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#operator-report">최근 보고와 전달 상태</a><a href="/projects/xsec-alpha/dashboard/#realized-hero">추천·관찰 성과의 분리</a></div>
+  </article>
+
+  <article id="september-release" class="journal-entry">
+    <span class="t-date">02 · 개선 과정 자체의 위험</span>
+    <h3>재학습 성공만으로 새 모델을 운영에 내보낼 수 없었다</h3>
+    <p><strong>문제와 고민:</strong> 모델은 새 버전인데 보정값이나 평가 보고서는 이전 버전인 상태가 생기면, 추천의 근거를 재현할 수 없다. 학습을 자주 돌리는 것보다 배포 단위를 맞추는 일이 먼저였다.</p>
+    <p><strong>선택:</strong> 두 모델·보정값·holdout 보고서를 임시 영역에서 완성한 뒤 묶음으로 배포하고, 중간 실패 시 복구하는 경로를 추가했다. 추천 당시 모델 해시와 보정 시각도 남겼다.</p>
+    <p><strong>확인과 한계:</strong> 보정·보고서 생성 실패, 부분 배포, 중단 후 복구를 테스트했다. 이번 보강에서 기존 모델 파일을 교체하거나 정확도를 높였다고 주장하지 않는다. 배포 안전성과 모델의 유용성은 별개다.</p>
+    <div class="evidence-links"><a href="https://github.com/soccz/xsec_alpha/blob/main/tests/test_model_release.py">배포 실패·복구 테스트</a><a href="/projects/xsec-alpha/dashboard/#calibration">현재 보정 근거</a></div>
+  </article>
+
+  <article id="september-protocol" class="journal-entry">
+    <span class="t-date">03 · 14:45 KST 실험 등록 / 첫 예정 회차 20:00 KST</span>
+    <h3>모델을 고치며 얻은 좋은 숫자와, 모델 자체의 효과를 구분하기</h3>
+    <p><strong>문제와 고민:</strong> 기존 원장에는 모델 버전, 운영 게이트, 후보 유지 규칙의 효과가 함께 들어 있다. 그 평균만으로 “현재 모델이 더 잘 고른다”고 말할 수 없었다. 여러 설정을 바꿔가며 좋은 결과를 고르는 것도 새 근거가 되지 않는다.</p>
+    <p><strong>선택:</strong> 같은 시점의 Bitget 거래 가능 종목군에서 고정 모델 하위 5개, 단순 4h 반전 팩터 하위 5개, 종목군 전체 SHORT를 비교한다. 세 비교군은 동일 비중·동일 미래 가격·동일 비용 가정을 쓴다. 모델·코드 해시와 입력·선정 이유를 저장하고 6시간 회차 60개를 미리 고정했다.</p>
+    <p><strong>대신 포기한 것:</strong> 결과를 본 뒤 모델이나 임계값을 수정하기, 빠진 종목을 다른 종목으로 대체하기, 좋은 결과가 나올 때까지 같은 실험을 늘리기를 허용하지 않았다. 단일 입력을 중앙값으로 바꿔 보는 민감도는 설명 보조이며 원인이나 SHAP 기여도로 해석하지 않는다.</p>
+    <div class="journal-table"><table class="tbl"><caption>혼동하지 않을 세 가지 평가</caption><thead><tr><th scope="col">구분</th><th scope="col">답하려는 질문</th><th scope="col">조건과 한계</th></tr></thead><tbody>
+      <tr><th scope="row">현재 SHORT 운영</th><td>지금 어떤 후보를 전달하는가</td><td>운영 모델·게이트·후보 유지 규칙 적용. 수동 판단용이며 자동 주문 없음.</td></tr>
+      <tr><th scope="row">9월 SHORT 고정 실험</th><td>모델이 단순 기준선보다 더 잘 고르는가</td><td>6h 예정 회차 60개. 게이트·버퍼 없는 별도 순위 비교. Upbit 대리 가격이며 Bitget 체결 성과 아님.</td></tr>
+      <tr><th scope="row">기존 LONG 관찰</th><td>차단 정책을 재검토할 근거가 있는가</td><td>별도 12h shadow basket 60개와 엄격 비용 조건. SHORT 실험 결과로 LONG을 해제하지 않음.</td></tr>
+    </tbody></table></div>
+    <p><strong>등록 시점의 상태:</strong> 실제 새 실험 관측은 0회였다. 과거 원장 수익률이나 테스트용 가상 60회 결과를 새 실험 성과로 넣지 않았다. 최신 진행률은 별도 대시보드에서 갱신한다.</p>
+    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#prospective-experiment">고정 실험의 회차별 근거</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/prospective_experiment.md">사전등록 규약</a></div>
+  </article>
+
+  <article id="september-supervision" class="journal-entry">
+    <span class="t-date">04 · 15:15 KST 검토 규약 등록 / 독립 점검 가동</span>
+    <h3>기다리는 동안 기록이 누락되면, 실험도 완성되지 않는다</h3>
+    <p><strong>문제와 고민:</strong> 정상 분석 서비스에만 의존하면 그 서비스가 멈췄을 때 누락 점검과 만기 평가도 함께 멈춘다. 백업 파일이 있다는 사실만으로 실제 복원이 된다고 볼 수도 없었다.</p>
+    <p><strong>선택:</strong> 독립 타이머가 10분마다 회차 누락, 가격 만기, 원장과 모델 무결성을 검사한다. 다른 디스크에 실험 묶음을 보관하고 임시 경로로 복원해 해시와 원장을 다시 확인한다. 기존 실험 원장은 바꾸지 않고 종료 규칙만 별도 등록했다.</p>
+    <p><strong>확인과 한계:</strong> 실제 정기 실행과 별도 디스크 백업·임시 복원을 확인했다. 전체 테스트 205개가 통과했지만 이는 소프트웨어 검증이다. 첫 백업에는 관측 0회가 들어 있었고, 다른 호스트의 재해 복구나 제3자 시각 인증까지 구현한 것은 아니다. 대화 종료 후 동작하는 것은 정해진 점검 프로그램이지, 자율 연구 AI가 아니다.</p>
+    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#prospective-experiment">점검·백업·판정 상태</a><a href="https://github.com/soccz/xsec_alpha/blob/main/tests/test_experiment_supervisor.py">누락·무결성·종료 테스트</a></div>
+  </article>
+
+  <article id="september-decisions" class="journal-entry">
+    <span class="t-date">다음 판단 · 2026년 한국시간 기준</span>
+    <h3>실험의 끝을 성공으로 미리 써두지 않는다</h3>
+    <p>마지막 예정 신호는 <strong>9월 22일 14시</strong>, 마지막 평가가 가능한 가장 이른 시점은 <strong>22일 22시 이후</strong>다. 수집 지연을 포함한 최종 자료 마감은 <strong>24일 21시</strong>다. 사용자는 그동안에도 02·08·14·20시 분석이 끝난 뒤 정상 코인 보고를 받는다.</p>
+    <div class="journal-table"><table class="tbl"><caption>결과를 보기 전에 고정한 결론과 다음 선택</caption><thead><tr><th scope="col">확인된 결과</th><th scope="col">남길 결론</th><th scope="col">다음 선택</th></tr></thead><tbody>
+      <tr><th scope="row">유효 60회, 모델−반전 차이의 95% 구간 하한 &gt; 0</th><td>이 실험에서 상대적 개선 근거</td><td>Bitget 가격과 실제 운영 정책의 차이를 별도 실험으로 설계. 즉시 실전 승격 아님.</td></tr>
+      <tr><th scope="row">유효 60회, 구간 상한 &lt; 0</th><td>단순 기준선 우세</td><td>복잡한 모델이 가치를 더하지 못한 이유를 감사. 기준선과의 후속 비교.</td></tr>
+      <tr><th scope="row">유효 60회, 구간에 0 포함</th><td>효과 판단 보류</td><td>효과 크기와 표본 설계를 다시 검토. 같은 원장을 유의할 때까지 연장하지 않음.</td></tr>
+      <tr><th scope="row">회차·가격 누락 / 무결성 실패</th><td>자료 부족 / 성과 해석 불가</td><td>모델 개선보다 수집·기록 문제를 먼저 복구. 기존 증거 보존.</td></tr>
+    </tbody></table></div>
+    <p class="journal-note"><strong>아직 답하지 못한 것:</strong> 상대 순위의 우위가 있어도 비용 후 평균은 음수일 수 있다. 짧은 한 실험으로 다른 시장 국면의 지속성이나 실제 체결 수익성을 입증할 수 없다. Bitget 가격·게이트 비교는 후속 설계일 뿐 아직 실행 중인 두 번째 실험이 아니다. 결과가 나오면 성공·실패·보류 그대로 날짜와 근거를 붙여 다음 개발일지로 남긴다.</p>
+    <div class="evidence-links"><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/validation_direction.md">종료 기준과 후속 방향</a><a href="/projects/xsec-alpha/dashboard/#prospective-experiment">현재 판정</a><a href="#development-journey">전체 판단 흐름</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · Audited 2026-08-03</div>
-  <h2 class="section-title">운영은 정상, LONG actionable 신호는 의도적으로 0</h2>
-  <p class="section-desc">SHORT 신호 생성과 측정·재학습·백업 자동화는 정상이다. SHORT는 수동 판단용 actionable 텔레그램 신호를 최대 5개 만들 뿐 자동 주문하지 않는다. LONG은 스코어를 shadow로 남기되 실행 추천 원장에는 넣지 않고, 엄격 게이트 통과 시 WATCH ONLY 최대 1개만 허용한다. <strong>실시간 aggregate는 <a href="dashboard/" style="color:var(--accent);">live dashboard</a></strong>에서 확인한다.</p>
+  <div class="section-label">2026-09-07 개발 확인 · 투자 성과 판정 전</div>
+  <h2 class="section-title">완성한 것은 검증 구조, 남은 것은 아이디어의 검증</h2>
+  <p class="section-desc">정상 회차 코인 보고, 실패 재시도, 추천·관찰 성과 분리, 고정 실험과 독립 점검을 가동했다. 이는 성능 개선 결론이 아니다. 9월 7일 점검 당시 데이터 신선도는 정상, SHORT IC는 WARN이었다. 변하는 운영 상태는 <a href="/projects/xsec-alpha/dashboard/" style="color:var(--accent);">대시보드</a>의 시각과 함께 확인한다.</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--green);">
-      <div class="layer-num">Operational · 2026-08-03 audit</div>
+      <div class="layer-num">SHORT 운영 · 2026-09-07 계약</div>
       <div class="layer-title">xsec_6h · SHORT active</div>
       <div class="card-text">
         <strong>피처:</strong> 10개 통합 (reversal, vol_inv, order_flow, range_contraction, binance_lead, kimchi, kimchi_z, calendar)<br>
         <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute next-open target<br>
-        <strong>출력:</strong> Bitget USDT-perp tradable universe에서 수동 판단용 신호 최대 5개<br>
+        <strong>출력:</strong> 수동 판단용 신호 최대 5개. 조건 미달도 비실행 참고 후보로 정상 보고<br>
         <strong>리밸런스:</strong> 05/11/17/23 UTC · preflight와 IC gate 적용
       </div>
     </div>
@@ -1548,12 +1668,12 @@
     </div>
   </div>
 
-  <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val pos">OK</span><div class="metric-label">operational health</div><div class="metric-sub">alpha · measure · retrain<br>backup timers active</div></div>
-    <div class="metric-card"><span class="metric-val pos">112</span><div class="metric-label">pytest passed</div><div class="metric-sub">2026-08-03 verification<br>4 known sklearn warnings</div></div>
-    <div class="metric-card"><span class="metric-val neutral">0</span><div class="metric-label">LONG actionable signals</div><div class="metric-sub">policy invariant<br>LIVE_WATCH_LONG_N=0</div></div>
-    <div class="metric-card"><span class="metric-val amber">≤1</span><div class="metric-label">conditional WATCH alert</div><div class="metric-sub">all gates must pass<br>non-actionable</div></div>
-  </div>
+  <dl class="status-facts">
+    <div><dt>확인한 것</dt><dd>pytest 205개 통과, Telegram 최근 50행 일관성, 실제 정기 실행, 별도 디스크 백업·임시 복원. 2026-09-07 확인이며 수익성 검증이 아니다.</dd></div>
+    <div><dt>고정한 것</dt><dd>SHORT 실험의 모델·피처·예정 60회·비교·누락·종료 규칙. LONG 실행 0 유지. 자동 주문·자동 정책 해제 없음.</dd></div>
+    <div><dt>진행 중인 것</dt><dd>9월 7일 20시부터 시작하는 미래 관측. 중간 수치는 탐색용이며 성능 승격 근거로 사용하지 않는다.</dd></div>
+    <div><dt>아직 미검증인 것</dt><dd>현재 고정 모델의 기준선 대비 우위, 실제 Bitget 체결 수익성, 다른 시장 국면에서의 지속성.</dd></div>
+  </dl>
 
   <div class="callout">
     <p>
@@ -1561,10 +1681,13 @@
       <span class="c">xsec-alpha.timer</span> (예측, 매 6h) ·
       <span class="c">xsec-measure.timer</span> (IC + drift, 매일 00:00 UTC) ·
       <span class="c">xsec-retrain.timer</span> (재학습 + promotion gate, 주 1회 일 20:00 UTC) ·
-      <span class="c">xsec-backup.timer</span> (SQLite hot backup, 매일 03:02 KST).
+      <span class="c">xsec-backup.timer</span> (SQLite hot backup, 매일 03:02 KST) ·
+      <span class="c">xsec-telegram-retry.timer</span> (최신 미전송 보고 재시도, 매분) ·
+      <span class="c">xsec-experiment-supervisor.timer</span> (독립 점검·실험 백업·최종 보고, 10분).
       LONG 후보는 IC뿐 아니라 비용 후 net과 독립 기간 수를 통과해야 shadow model 승격 대상이 되며, 그 승격도 KILL을 자동 해제하지 않는다.
     </p>
   </div>
+  <div class="journal-links"><a href="/projects/xsec-alpha/dashboard/#operator-report">이번 회차 보고</a><a href="/projects/xsec-alpha/dashboard/#prospective-experiment">실험 진행과 결과</a><a href="https://github.com/soccz/xsec_alpha/commit/a7e1b40bb9631fe3499ce33ba7a430e9639a0432">9월 7일 구현 · a7e1b40</a><a href="https://github.com/soccz/xsec_alpha/commits/main/">구현 변경 이력</a><a href="#development-journey">개발 과정 처음으로</a></div>
 </div></section>
 
 <footer>
