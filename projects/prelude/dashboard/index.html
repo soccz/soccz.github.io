@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>prelude live dashboard — 누적 회고</title>
-  <meta name="description" content="prelude R1 코인 레이더의 실제 알림 회고 (radar-not-strategy) + 가격 결과 누적. 가상 누적 PnL · rolling hit rate · 알림 히스토리. 매일 cron 자동 갱신.">
+  <meta name="description" content="prelude R1 장전·장후 알림의 운영 상태와 가상 평가. 신규 체결 정보 연구는 기록 전용이며 자동 매매·자동 승격은 없습니다. 과거 연구 원장과 현재 운영을 분리해 표시합니다.">
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/dashboard/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,6 +78,19 @@
     /* grids */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
     .four-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    #currentSystemSection { scroll-margin-top: 80px; }
+    .current-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    @media (max-width: 768px) { .current-grid { grid-template-columns: 1fr; } }
+    .current-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; overflow-wrap: anywhere; }
+    .current-card h3 { font-size: 1rem; margin: 0 0 0.7rem; }
+    .current-card.attention { border-color: var(--amber); }
+    .current-state { display: inline-block; padding: 0.25rem 0.55rem; margin-bottom: 0.8rem; border-radius: 4px; font-size: 0.78rem; background: var(--bg-secondary); }
+    .current-card.attention .current-state { color: var(--amber); background: var(--amber-dim); }
+    .current-card dl { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.45rem 0.7rem; font-size: 0.76rem; }
+    .current-card dt { color: var(--text-secondary); }
+    .current-card dd { margin: 0; text-align: right; }
+    .current-note { margin: 0.9rem 0 0; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.8; }
+    .current-fallback { padding: 1.3rem; border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); }
 
     /* cards (prelude 메인의 metric-card 톤) */
     .channel-card {
@@ -574,24 +587,24 @@
     <span class="hero-label">PRELUDE LIVE DASHBOARD · 회고 · 누적</span>
     <h1>어제 샀으면 어땠나.</h1>
     <p class="hero-sub">
-      라이브 발송은 <strong>R1 레이더 (08:50 예고 / 09:05 확정) + 🎯 PUMP v2 조건부 radar</strong> 뿐.<br>
-      구 distribution·pre-open 은 record-only 회고로 보존. R1 룰 −3%SL / +5%TP / EOD · 왕복 0.15% 차감 net 누적. <em>자동 매매 없음 — 사용자 직접 판단.</em>
+      현재 실알림은 <strong>R1 장전·장후 레이더</strong>입니다. 예약 시작은 KST 08:50 / 09:05이며 실제 발송은 처리 후 이뤄집니다.<br>
+      하락 위험이 낮고 상승 가능성이 높은 후보를 찾는 개인 매매 보조 시스템입니다.
+      <em>자동 매매·자동 승격 없음 — 매매는 사용자가 직접 판단합니다.</em>
     </p>
     <div class="idea-expansion-banner" role="note" aria-label="아이디어 확장 안내">
-      <span class="banner-tag">판정 · 2026-08-05 종결</span>
+      <span class="banner-tag">현재 운영과 과거 연구 분리</span>
       <span class="banner-text">
-        <strong>radar-not-strategy 확정</strong> — 상방 head 주장 철회(AUC 0.477), 살아있는 것은
-        진입 농축(base 대비 ~6배)과 하방 head(AUC 0.721). ⛔ v2 급등 레이더는 동결 조기사망
-        조항(누적 mean net &lt; 0)이 <strong>2026-08-05 자동 발동해 KILL 로 종결</strong>
-        (n=9 · mean −0.097% · 판정문 해시 박제 · 불변 터미널). R1 레이더는 계속 발사 중.
-        전체 기록은 <a href="../#integrity-turn">보고서 §Integrity Turn</a>.
+        <strong>PUMP v2는 2026-08-05 terminal KILL로 은퇴</strong>했습니다.
+        구 distribution·pre-open 원장과 아래 연구 차트는 과거 증거이며 현재 발송 채널이 아닙니다.
+        과거 선택집단 AUC·농축 배수는 현재 전체 후보의 성능과 직접 비교할 수 없습니다.
+        새 연구의 기록 성공도 추천 품질 개선의 증명은 아닙니다.
       </span>
     </div>
     <div class="hero-stats" id="heroStats">
-      <div class="hero-stat"><span class="hero-stat-num" id="statTotal">—</span><span class="hero-stat-label">총 알림</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statTotal">—</span><span class="hero-stat-label">기록 합계 · 과거 채널 포함</span></div>
       <div class="hero-stat"><span class="hero-stat-num" id="statClosed">—</span><span class="hero-stat-label">closed</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statR1Pnl">—</span><span class="hero-stat-label">R1 누적 net (live)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statR1Sharpe">—</span><span class="hero-stat-label">R1 Sharpe (ann)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statR1Pnl">—</span><span class="hero-stat-label">장후 R1 가상 누적 · 실수익 아님</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statR1Sharpe">—</span><span class="hero-stat-label">장후 R1 원장 Sharpe · 진단값</span></div>
       <div class="hero-stat"><span class="hero-stat-num" id="statDistPnl">—</span><span class="hero-stat-label">dist 누적 (record-only)</span></div>
       <div class="hero-stat"><span class="hero-stat-num" id="statPrePnl">—</span><span class="hero-stat-label">pre 누적 (record-only)</span></div>
     </div>
@@ -608,21 +621,42 @@
 
 <hr class="divider">
 
+<section id="currentSystemSection" class="compact" aria-labelledby="currentSystemTitle">
+  <div class="container">
+    <div class="section-label">CURRENT SYSTEM · 기록된 운영 상태</div>
+    <h2 class="section-title" id="currentSystemTitle">실알림과 기록 전용 연구를 구분합니다</h2>
+    <p class="section-desc" style="margin-bottom:1.2rem">
+      현재 R1 알림과 별도 연구의 실행 여부입니다. <strong>상태 확인은 효과 검증이 아닙니다.</strong>
+      후보 수·정상 실행만으로 추천 품질이 좋아졌다고 판단하지 않습니다. 모든 시각은 KST입니다.
+    </p>
+    <p class="current-note" id="currentSystemAsOf">데이터 잠금 — PIN 입력 후 확인 시각 표시</p>
+    <div id="currentSystem" aria-live="polite" style="margin-top:1rem">
+      <div class="current-fallback">현재 운영 상태는 잠금 해제 후 표시합니다. 잠긴 상태를 정상 실행이나 미발송으로 해석하지 마세요.</div>
+    </div>
+    <p class="current-note">
+      알림 전달 확인은 사용자의 열람 확인이 아닙니다. 종목별 실제 입력 신선도도 별도 증거 없이는 알 수 없습니다.<br>
+      신규 연구는 기록 전용입니다. 연구 결과가 실알림 모델을 자동 재학습·교체하지 않으며, 매매는 사용자가 직접 합니다.
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- R1 레이더 — 유일한 라이브 채널 (2026-07-28 추가) -->
 <section id="recSection">
   <div class="container">
-    <div class="section-label">R1 RADAR · LIVE</div>
-    <h2 class="section-title">R1 레이더 — 오늘의 Top3 와 라이브 성적</h2>
+    <div class="section-label">R1 RADAR · OPEN SLOT LEDGER</div>
+    <h2 class="section-title">장후 R1 — 최근 추천과 가상 원장</h2>
     <p class="section-desc">
-      매일 08:50 예고 · 09:05 확정으로 실제 발사되는 유일한 채널. 아래 성적은
-      <b>발송 영수증 이후 실측</b>의 비용 차감 net — 좋게 포장하지 않는다
-      (radar-not-strategy: 수익은 사용자의 진입·청산 판단이 결정).
+      현재 R1은 장전·장후 두 번 별도로 추론·발송합니다. 아래 집계는 <b>장후(open) R1 원장만</b> 사용하며 장전 성과를 합친 값이 아닙니다.
+      <b>가상 평가이며 실거래 수익이 아닙니다</b>. 과거·현행 측정 기준이 섞일 수 있으므로
+      최신 운영 상태와 사전 기록 적격성은 위 상태 패널을 구분해 읽어 주세요.
     </p>
     <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 추천</h3>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 장후 R1 추천</h3>
     <div class="table-wrap">
       <table class="tbl" id="recRadarTable" style="min-width:640px;">
-        <thead><tr><th>#</th><th>코인</th><th class="num">score</th><th class="num">pump prob</th><th>하방⚠️</th><th class="num">진입가</th><th>regime</th></tr></thead>
+        <thead><tr><th>#</th><th>코인</th><th class="num">score</th><th class="num">pump prob</th><th>하방⚠️</th><th class="num">09:00 참고 시초가</th><th>regime</th></tr></thead>
         <tbody><tr><td colspan="7"><div class="loading-state">loading…</div></td></tr></tbody>
       </table>
     </div>
@@ -634,12 +668,12 @@
 <!-- 이번 세션 새 발견 — 레이더 정직성 차트 (수익기 아님) -->
 <section>
   <div class="container">
-    <div class="section-label" id="findingsLabel">SESSION FINDINGS</div>
-    <h2 class="section-title">새 발견 — 분포·하방·정직성 레이더</h2>
+    <div class="section-label" id="findingsLabel">RESEARCH ARCHIVE</div>
+    <h2 class="section-title">과거 연구 차트 — 당시 표본과 기준으로 읽기</h2>
     <p class="section-desc" id="findingsCaption">
-      레이더 정직성 차트. 큰 펌프 <b>포착</b> 능력 + 하방 관리 + 정직한 확률을 보인다.
-      <b>수익기 아님</b> — 일중 최고가는 포착 크기지 실현수익이 아니다 (사람이 +5% TP 청산).
-      자동 net 전략이 아니라 base 대비 ~6배 농축 추천 레이더 · SHADOW · leak 4/4 PASS.
+      아래 분포·보정·리더보드는 저장된 과거 연구 결과입니다. 날짜·모집단·평가창이 다른
+      결과를 현재 추천 성능으로 해석하지 마세요. 일중 최고가는 실현수익이 아니며,
+      좋은 보정 지표나 과거 gate PASS만으로 실알림 모델이 자동 교체되지 않습니다.
     </p>
 
     <!-- ①② magnitude curve + risk-reward -->
@@ -688,7 +722,7 @@
     <div class="chart-wrap" style="margin-top:2rem">
       <div class="chart-title">⑦ champion / challenger 리더보드</div>
       <div class="chart-subtitle" id="leaderboardNote">
-        하방-우선 자동선정(unattended) — forward CLOSED 거래일로 평가. ★현 champion 표시.
+        과거 후보 비교·판정 기록입니다. ★표시는 저장 시점 기준이며 새 연구의 자동 승격을 뜻하지 않습니다.
       </div>
       <div id="championGateProgress" class="gate-progress" aria-label="champion gate 검증 진행률"></div>
       <div id="championLeaderboard" style="overflow-x:auto">
@@ -729,10 +763,10 @@
       <div class="chart-wrap" style="margin:0">
         <canvas id="chartPumpDaily" style="max-height:240px"></canvas>
       </div>
-      <h4 class="pump-h">🎯 v2 — Binance volsurge 융합 radar (2026-06-11 텔레그램 채택)</h4>
+      <h4 class="pump-h">v2 과거 원장 — 2026-08-05 terminal KILL · 발송 중단</h4>
       <div class="chart-subtitle">
-        rule: roc_7d_rank &gt; 0.85 + Binance D-1 거래량 surge &gt; 1.5× — 최근 7개월 OOS hit 8.1%
-        (base 1.4% 의 6배). 자동 룰 net 은 음수 — radar 용도, exit 은 수동. 후보 있는 날만 텔레그램.
+        아래 수치는 은퇴한 v2의 당시 규칙·표본에 대한 회고입니다.
+        과거 후보·적중 기록을 보존하지만 현재 알림이나 재활성화 계획은 아닙니다.
       </div>
       <div class="pump-stats" id="pumpV2Stats">
         <div class="ps-cell"><span class="ps-label">latest</span><span class="ps-val" id="pumpV2LatestDate">—</span></div>
@@ -779,7 +813,7 @@
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">Information Ratio · Beta · Tracking Error</h3>
     <p class="section-desc" style="margin-bottom:1rem;font-size:0.85rem">
-      institutional active management 표준 — IR = α / TE × √252, Beta = cov(strat, BTC)/var(BTC).<br>
+      원장 진단값 — IR = α / TE × √365, Beta = cov(strat, BTC)/var(BTC).<br>
       <em>※ sparse intermittent strategy 라 alert 없는 날의 strat PnL = 0 (cash) 가정으로
       BTC daily 모든 날과 align. <code>n_aligned / n_alert</code> 로 표본 깊이 표시.</em>
     </p>
@@ -861,10 +895,10 @@
 <!-- 채널별 누적 KPI -->
 <section>
   <div class="container">
-    <div class="section-label">CHANNEL KPIS</div>
-    <h2 class="section-title">채널별 누적 — 어떤 톤으로 가고 있나</h2>
+    <div class="section-label">LEGACY CHANNEL KPIS</div>
+    <h2 class="section-title">과거 distribution·pre-open 채널 원장</h2>
     <p class="section-desc">
-      두 채널 (08:55 pre-open / 09:05 distribution) 각각 동일 가상 진입 룰로 시뮬한 누적.
+      구 pre-open·distribution 채널의 당시 규칙으로 계산한 가상 누적입니다. 현재 R1 장전·장후 알림과 다른 원장입니다.
       평균 max / min 는 알림 코인의 다음 일봉 기준 양극단 변동 — "얼마나 올랐고 얼마나 빠졌나" 한쪽씩.
     </p>
     <div class="two-col" id="channelGrid">
@@ -881,13 +915,14 @@
     <div class="section-label">CUMULATIVE</div>
     <h2 class="section-title">가상 누적 PnL — 채널 분리</h2>
     <p class="section-desc">
-      알림 1건 = 1단위 자본 등가중. +5% 도달 시 익절, 아니면 horizon close (dist 24h / pre 1h).
-      비용 0.15% 왕복 차감. compounding 없는 단순 합. 표본 작은 구간은 추세보다 *분포* 로 읽는다.
+      과거 채널별 가상 수익을 날짜 안에서 동일비중으로 묶은 일별 복리 누적입니다.
+      +5% 익절 또는 당시 horizon close (dist 24h / pre 1h), 왕복 비용 0.15% 가정입니다.
+      사용자 실거래나 실제 운용 포트폴리오의 수익이 아닙니다.
     </p>
     <div class="chart-split">
       <div class="chart-wrap">
         <div class="chart-title"><span class="ch-tag dist">dist</span>distribution (09:05) — 24h horizon</div>
-        <div class="chart-subtitle">알림 시점 09:00 시초가 진입 가정</div>
+        <div class="chart-subtitle">과거 distribution의 09:00 시초가 가정 · 실제 발송·체결 시각 아님</div>
         <canvas id="chartCumPnlDist"></canvas>
       </div>
       <div class="chart-wrap">
@@ -925,7 +960,7 @@
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">Rolling Sharpe — annualized</h3>
     <p class="section-desc" style="margin-bottom:1rem;font-size:0.85rem">
-      30일 rolling daily-PnL Sharpe × √252. pyfolio 표준 — hit rate 보다 PnL ergonomics 가 보임.
+      일별 동일비중 가상 수익의 30일 rolling Sharpe × √365. 원장 진단값이며 실제 운용 성과가 아닙니다.
       표본 < 5일은 표시 X.
     </p>
     <div class="chart-split">
@@ -1245,7 +1280,7 @@
     <p class="section-desc">
       *어떤 idea 가 돈을 벌고 못 벌었는가* 의 정량. idea_id 별 (channel × setup_quality × regime)
       그룹 누적. policy replay 는 현재 룰을 *과거에 적용했을 때* 의 결과 — 정책 변경의 retrospective
-      효과. policy gate 는 *이번 정책 변경을 자동 promotion 해도 되는가* 의 판단 (현재 보수적 — 사용자 명시 컨펌 필요).
+      효과를 당시 조건에서 비교합니다. policy gate 기록은 검토 자료이며 실제 정책 변경에는 별도 판단과 사용자 승인이 필요합니다.
     </p>
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.4rem 0 0.6rem">idea attribution — best / worst 누적 PnL</h3>
@@ -1268,7 +1303,7 @@
       <div id="policyReplay"><div class="loading-state">loading…</div></div>
     </details>
 
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy gate (자동 promotion 판단)</h3>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy gate 기록 (자동 승격 아님)</h3>
     <div id="policyGate"><div class="loading-state">loading…</div></div>
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">policy recommendations (다음 정책 후보)</h3>
@@ -1284,17 +1319,18 @@
     <div class="section-label">ALERT HISTORY</div>
     <h2 class="section-title">알림 히스토리</h2>
     <p class="section-desc">
-      텔레그램으로 외친 모든 알림 + 알림 시점 진입가 + 다음 일봉의 실제 max / min / close.
-      가상 PnL 은 위 룰 적용 결과. 컬럼 클릭으로 정렬, 채널·날짜·코인 필터.<br>
-      <em>※ 진입가 — R1 recommend 는 09:00 시초가(라이브 원장), distribution 은 다음 일봉 09:00 시초가 (시뮬), preopen 은 알림 시점 close. R1 행의 setup 칸은 exit 사유(TP/SL/EOD).</em>
+      R1과 과거 채널의 저장 원장을 함께 보는 기록표입니다. 기록 행만으로 실제 전달 성공을 보장하지는 않습니다.
+      가상 PnL은 각 원장의 당시 규칙이며 실제 매매 수익이 아닙니다.<br>
+      <em>※ 참고가격과 가상 평가 진입가는 구분합니다. R1의 entry_open은 09:00 참고 시초가이며 실거래 진입가가 아닙니다.
+      현행 정본 경로 평가는 성공 영수증 시각 다음 15분 경계부터 24시간입니다. 과거 원장은 기준이 다를 수 있습니다.</em>
     </p>
     <div class="controls">
       <label>채널
         <select id="filterChannel">
           <option value="all">전체</option>
           <option value="recommend">R1 recommend (live)</option>
-          <option value="distribution">distribution</option>
-          <option value="preopen">preopen</option>
+          <option value="distribution">distribution (과거)</option>
+          <option value="preopen">preopen (구 채널)</option>
         </select>
       </label>
       <label>최근
@@ -1323,7 +1359,7 @@
             <th data-sort="channel">채널</th>
             <th data-sort="coin">코인</th>
             <th data-sort="setups">setup</th>
-            <th data-sort="entry_price" class="num">진입가</th>
+            <th data-sort="entry_price" class="num">원장 가정 가격</th>
             <th data-sort="composite" class="num">composite</th>
             <th data-sort="next_max_pct" class="num">max %</th>
             <th data-sort="next_min_pct" class="num">min %</th>
@@ -1370,10 +1406,10 @@
         <div class="ac-label">EXECUTION RULE</div>
         <div class="ac-title">가상 진입·청산·비용 (이 dashboard 한정)</div>
         <div class="ac-body">
-          <strong>entry</strong> KST 09:00 시초가 시뮬 진입 (텔레그램 알림 표시 가격).
-          사용자 실 매매는 09:00~09:10 시장가 — 본 회고 대상 아님.<br>
-          <strong>exit</strong> +5% 도달 즉시 익절, 아니면 horizon close (dist 24h / pre 1h).
-          자동 SL 없음 (사용자 수동 판단).<br>
+          <strong>현행 R1 정본</strong> 성공 전달 영수증 시각 다음 15분 경계에서 가상 평가를 시작하고 24시간 경로를 봅니다.
+          09:00 시초가(entry_open)는 참고가격이지 실제 매매 진입가가 아닙니다.<br>
+          <strong>가상 청산</strong> TP +5% / SL −3% / 24h 종료 수익과 별도의 24h 종료 수익을 구분합니다.
+          과거 dist 24h / pre 1h 집계는 당시 규칙을 보존합니다. 사용자 실제 진입·청산은 추적하지 않습니다.<br>
           <strong>cost</strong> 왕복 0.15% (수수료 0.1% + 슬리피지 0.05%). thin-orderbook
           underestimate 가능 — 한계 ③.
         </div>
@@ -1382,7 +1418,7 @@
         <div class="ac-label">METRIC SOURCES</div>
         <div class="ac-title">paper / library 출처 1:1 명시</div>
         <div class="ac-body" style="font-size:0.8rem;line-height:1.85">
-          <strong>Sharpe (1966)</strong> — risk-free=0, daily × √252.<br>
+          <strong>Sharpe (1966)</strong> — risk-free=0, 일별 동일비중 가상 수익 × √365.<br>
           <strong>Sortino (1991)</strong> — downside std (r&lt;0).<br>
           <strong>Calmar (Young 1991)</strong> — annualized / |MDD|.<br>
           <strong>VaR / CVaR (Rockafellar &amp; Uryasev 2000)</strong> — 5% quantile + tail mean.<br>
@@ -1390,7 +1426,7 @@
           <strong>PSR / DSR / MinTRL (Bailey &amp; Lopez de Prado 2014)</strong> —
           Φ-based selection-bias 보정 Sharpe.<br>
           <strong>Information Ratio (Treynor &amp; Black 1973)</strong> — α / TE.<br>
-          <strong>Bootstrap CI (Efron 1979)</strong> — 1000 iter trade-resample.<br>
+          <strong>Bootstrap CI (Efron 1979)</strong> — 날짜 단위 재표집. 같은 날 여러 코인은 독립 날짜 표본이 아닙니다.<br>
           <strong>pyfolio / quantstats</strong> — Top-N DD / Underwater / Monthly heatmap /
           Tail Ratio / Recovery / Common Sense / Profit Factor 등 표준 형식.
         </div>
@@ -1400,28 +1436,28 @@
     <h3 style="font-family:'Noto Serif KR',serif; font-size:1.05rem; font-weight:700; margin: 2.2rem 0 0.5rem">라이브 dashboard 의 통계적 한계 — 솔직 명시</h3>
     <p class="section-desc" style="margin-bottom: 0.6rem">
       메인 보고서의 <a href="../#failures">Failures Wall</a> 은 backtest 단계에서 버린 가설들이고,
-      여기는 <em>지금 라이브 paper trade dashboard 가 절대 평가에 못 쓰이는 이유</em>다.
+      여기는 <em>가상 원장을 실제 추천 개선의 확정 증거로 해석할 수 없는 이유</em>입니다.
     </p>
     <div class="limit-list">
       <div class="limit-item">
         <span class="li-num">01.</span>
-        <span class="li-body"><strong>표본 너무 작음</strong> — closed n ≈ 28 / 24, 일자별 aggregation 시 unique day n 가 한 자리 수. Sharpe / Sortino 의 standard error 가 매우 큼. bootstrap 95% CI 가 0 을 가로질러 통계적 유의 X. 30+ 거래가 쌓일 때까지 결과는 *지표 모양만* 으로 본다.</span>
+        <span class="li-body"><strong>독립 날짜 표본과 반복 관찰</strong> — 후보 행 수나 거래 건수는 독립 날짜 수가 아닙니다. 반복해서 분석한 과거 기간은 새로운 미래 검증 표본이 아니며, 구간별 표본 수와 날짜 단위 불확실성을 함께 봐야 합니다.</span>
       </div>
       <div class="limit-item">
         <span class="li-num">02.</span>
-        <span class="li-body"><strong>survivorship bias 미처리</strong> — pyupbit 의 현재 listing 만 가져옴. 과거 상폐 코인이 panel 에서 빠져 historical EV 가 부풀 수 있음. Upbit 공시 archive 로 historical universe 재구성 필요.</span>
+        <span class="li-body"><strong>시간·유니버스 정합성</strong> — 당시 후보 집합, 입력과 수신 시각, 결과의 가용 시각이 함께 맞아야 합니다. 사후 재구성 데이터가 저장 피처와 같더라도 당시 수집 시각까지 증명하는 것은 아닙니다.</span>
       </div>
       <div class="limit-item">
         <span class="li-num">03.</span>
-        <span class="li-body"><strong>거래비용 0.15% 가정의 낙관성</strong> — ≥20% tail pump 코인은 호가 sparse → 실제 진입 시 시장 충격 + 슬리피지 0.5~1.5% 가 일반. cost 모델을 ATR / volume 기반으로 강화할 필요.</span>
+        <span class="li-body"><strong>거래비용 0.15%는 가정</strong> — 얇은 호가와 급변 구간에서는 실제 슬리피지·시장 충격이 더 클 수 있습니다. 이 페이지는 사용자 주문의 실제 체결 비용을 관측하지 않습니다.</span>
       </div>
       <div class="limit-item">
         <span class="li-num">04.</span>
-        <span class="li-body"><strong>regime-dependent</strong> — BTC bull regime 에서만 동작 설계. bear 구간은 침묵. 전체 시장 cycle 을 cover 하지 못하므로 누적 결과는 시기 의존성 큼.</span>
+        <span class="li-body"><strong>장세·유동성 의존</strong> — 일부 기간이나 종목에 성과가 편중될 수 있습니다. Top10 후보라는 이유만으로 하방 위험이나 유동성이 통제됐다고 볼 수 없습니다.</span>
       </div>
       <div class="limit-item">
         <span class="li-num">05.</span>
-        <span class="li-body"><strong>5% TP 룰의 단순성</strong> — sweep 결과 대신 사용자 의사결정에 맞춘 룰. avg_max +6.82% 가 5% TP 에서 잘려 +20% tail 을 놓침. 룰 민감도 분석 (3% / 7% / no TP) 추후 추가.</span>
+        <span class="li-body"><strong>평가창과 실제 매매는 다름</strong> — 24h 최고·최저, TP/SL 가상 청산, 24h 종료 수익은 서로 다른 지표입니다. 사용자의 실제 진입·청산 수익으로 대체해서 읽으면 안 됩니다.</span>
       </div>
     </div>
 
@@ -1445,7 +1481,7 @@
 <hr class="divider">
 
 <footer>
-  자동 갱신: 매일 KST 10:10 close cron 직후 (마지막 빌드 <span id="footerBuildAt">—</span>) ·
+  예약 갱신: 매일 KST 10:10 systemd 작업 (성공 여부·실제 마지막 빌드 <span id="footerBuildAt">—</span>) ·
   소스 <code>scripts/build_dashboard.py</code> · 데이터 <code>output/paper_ledger*.csv</code> ·
   암호화 <code>PBKDF2-HMAC-SHA256 + AES-256-CBC + HMAC(salt‖iv‖ct)</code>
 </footer>
@@ -1546,6 +1582,77 @@ function escapeHtml(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
+/* ───────── Current operational state (not performance or automatic promotion) ───────── */
+function currentTime(value) {
+  if (typeof value !== 'string' || !/(Z|[+-]\d{2}:\d{2})$/.test(value)) return '미제공';
+  const parsed = new Date(value);
+  if (!Number.isFinite(parsed.getTime())) return '미제공';
+  return parsed.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'short', timeStyle: 'medium' });
+}
+function currentState(value) {
+  const labels = {
+    waiting: '예약·처리 대기', pending: '발송 처리 대기', delivered_candidates: '서버 전달 확인 · 후보 있음',
+    delivered_empty: '서버 전달 확인 · 후보 없음', not_delivered: '전달되지 않음',
+    delivery_uncertain: '전달 여부 불확실', invalid_evidence: '알림 증거 불일치',
+    missing_decision: '추천 결정 기록 없음', probe_unavailable: '상태 조회 불가',
+    not_started: '시작 예정 · 아직 시작 전', complete_noop: '기록 완료 · 선정 변경 없음',
+    complete_changed: '기록 완료 · 선정 변경 있음', complete_unavailable: '처리 완료 · 비교 자료 부족',
+    capture_missing: '수집 기록 없음', capture_unfinished: '수집 종료 미확인',
+    capture_incomplete: '불완전 수집', evidence_invalid: '연구 증거 불일치',
+    missing: '연구 점수 기록 없음', uncertain: '저장 완료 확인 불가',
+    recorded_evaluation_missing: '점수 저장 · 평가 기록 없음',
+    feature_invalid: '피처 증거 부적격', snapshot_missing: '원 추천 스냅샷 없음',
+    historical_not_observed: '과거 날짜 · 운영 상태 미관측',
+  };
+  return typeof value === 'string'
+    ? (Object.prototype.hasOwnProperty.call(labels, value) ? labels[value] : `알 수 없는 상태 (${value})`)
+    : '현재 상태 미제공';
+}
+function currentSystemHtml(system) {
+  if (!system || system.schema !== 'prelude_dashboard_current.v1'
+      || system.automatic_orders !== false || system.automatic_promotion !== false) {
+    return '<div class="current-fallback">현재 상태 미제공 — 과거 데이터이거나 지원하는 운영 상태 필드가 없습니다. 아래 원장만으로 오늘의 발송·수집 성공을 추정하지 마세요.</div>';
+  }
+  const row = (label, value) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`;
+  const card = (title, item, body, note) => {
+    const known = item && typeof item.state === 'string' && typeof item.attention_required === 'boolean';
+    const attention = !known || item.attention_required;
+    return `<article class="current-card${attention ? ' attention' : ''}"><h3>${escapeHtml(title)}</h3>`
+      + `<div class="current-state">${escapeHtml(known ? currentState(item.state) : '현재 상태 미제공')}${attention ? ' · 확인 필요' : ''}</div>`
+      + `<dl>${body}</dl><p class="current-note">${escapeHtml(note)}</p></article>`;
+  };
+  const live = ['preopen', 'open'].map(slot => {
+    const item = system.live?.[slot] || {};
+    const count = Number.isInteger(item.candidate_count) && item.candidate_count >= 0 ? item.candidate_count : '미제공';
+    return card(slot === 'preopen' ? 'R1 장전 실알림' : 'R1 장후 실알림', item,
+      row('예약 시작', slot === 'preopen' ? '08:50' : '09:05') + row('기록 후보 수', count)
+      + row('결정 완료', currentTime(item.decision_completed_at)) + row('전달 영수증 시각', currentTime(item.sent_at))
+      + row('사용자 열람', '확인 불가') + row('실제 입력 신선도', '확인 불가'),
+      '예약 시작과 실제 발송 시각은 다릅니다. 전달 여부가 불확실하거나 기록이 없으면 후보 없음으로 바꾸지 않습니다.');
+  });
+  const research = [['microstructure', '체결 정보 · 동점 해소 시험'], ['trade_shortlist', '체결 정보 · Top10 선정 시험']].map(([name, title]) => {
+    const item = system.research?.[name] || {};
+    let body = row('확인 대상일', item.asof || '미제공') + row('시험 시작일', item.start_asof || '미제공')
+      + row('운영 확인 시각', currentTime(item.checked_at)) + row('효과', '미검증 · 운영 상태만 확인');
+    if (item.previous_due) {
+      body += row('이전 예정일', item.previous_due.asof || '미제공')
+        + row('이전 예정일 상태', currentState(item.previous_due.state)
+          + (item.previous_due.attention_required ? ' · 확인 필요' : ''));
+    }
+    return card(title, item, body, '기록 완료·선정 변경은 수익성 향상의 증거가 아닙니다. 이 상태 패널은 비교 표본 수나 수익을 추정하지 않습니다.');
+  });
+  return '<div class="current-grid">' + [...live, ...research].join('') + '</div>';
+}
+function renderCurrentSystem(system) {
+  const root = document.getElementById('currentSystem');
+  const asof = document.getElementById('currentSystemAsOf');
+  if (!root) return;
+  root.innerHTML = currentSystemHtml(system);
+  if (asof) asof.textContent = system?.schema === 'prelude_dashboard_current.v1'
+    ? `확인 대상 ${system.asof || '미제공'} · 확인 시각 ${currentTime(system.observed_at)} (KST) · 게시된 확인본이며 실시간 조회가 아닙니다.`
+    : '현재 운영 확인 시각 미제공 — 과거 원장과 구분해 주세요.';
+}
+
 /* ───────── PIN gate ───────── */
 function showPinModal() {
   return new Promise(resolve => {
@@ -1597,7 +1704,7 @@ function renderRecommend(summary) {
   kpiRoot.innerHTML = [
     stat('알림', rec.n_alerts_total ?? '—'),
     stat('closed', rec.n_closed ?? '—'),
-    stat('누적 net (복리)', fmtPct(rec.cum_net_pnl_pct, 1), sgn(rec.cum_net_pnl_pct)),
+    stat('가상 원장 누적 · 실수익 X', fmtPct(rec.cum_net_pnl_pct, 1), sgn(rec.cum_net_pnl_pct)),
     stat('평균/픽', fmtPct(rec.avg_net_realized_pct, 2), sgn(rec.avg_net_realized_pct)),
     stat('win rate', fmtPct(rec.win_rate_pct, 0)),
     stat('MDD', fmtPct(rec.max_drawdown_pct, 1), 'neg'),
@@ -1605,7 +1712,7 @@ function renderRecommend(summary) {
     stat('평균 CI95', Array.isArray(ci) ? `${fmt(ci[0],2)}~${fmt(ci[1],2)}%` : '—'),
   ].join('');
   const title = document.getElementById('recRadarTitle');
-  if (title && rec.latest_radar_date) title.textContent = `최신 추천 · ${rec.latest_radar_date}`;
+  if (title && rec.latest_radar_date) title.textContent = `최신 장후 R1 추천 · ${rec.latest_radar_date}`;
   const rows = rec.latest_radar || [];
   const body = tbl.querySelector('tbody');
   if (!rows.length) { body.innerHTML = '<tr><td colspan="7">—</td></tr>'; return; }
@@ -1649,7 +1756,7 @@ function renderHero(summary) {
   const asofKst = asof.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', dateStyle: 'medium', timeStyle: 'short' });
   const liveStart = rec.first_alert_date || dist.first_alert_date || pre.first_alert_date || '—';
   document.getElementById('heroMeta').textContent =
-    `데이터 기준 ${asofKst} (KST) · R1 라이브 시작 ${liveStart} · R1 룰 −3%SL/+5%TP/EOD · 비용 0.15% 차감`;
+    `데이터 기준 ${asofKst} (KST) · 장후 R1 원장 시작 ${liveStart} · 가상 TP5/SL3/24h · 비용 0.15% 차감 · 실거래 수익 아님`;
 
   // footer build 시각
   const footerEl = document.getElementById('footerBuildAt');
@@ -1721,7 +1828,7 @@ function channelKpiHtml(s, kind) {
         <div class="mc-value ${cls}">${val}</div>
         ${sub ? `<div class="mc-sub">${escapeHtml(sub)}</div>` : ''}
       </div>`;
-    html += chip('Sharpe (ann)', fmt(q.sharpe_ann), sgnClass(q.sharpe_ann), '√252 daily · Sharpe 1966');
+    html += chip('Sharpe (ann)', fmt(q.sharpe_ann), sgnClass(q.sharpe_ann), '√365 daily · 가상 원장 진단');
     html += chip('Sortino (ann)', fmt(q.sortino_ann), sgnClass(q.sortino_ann), 'downside std · Sortino 1991');
     html += chip('Calmar', fmt(q.calmar), sgnClass(q.calmar), 'ann/|MDD| · Young 1991');
     html += chip('Profit Factor', fmt(q.profit_factor), q.profit_factor > 1 ? 'pos' : (q.profit_factor < 1 ? 'neg' : ''), 'Σwin/|Σloss| · TradeStation');
@@ -1757,7 +1864,7 @@ function channelKpiHtml(s, kind) {
         <div class="mc-value ${cls}">${val}</div>
         ${sub ? `<div class="mc-sub">${escapeHtml(sub)}</div>` : ''}
       </div>`;
-    html += chip('Volatility (ann)', stat.volatility_ann_pct == null ? '—' : fmtPct(stat.volatility_ann_pct, 1), '', 'daily std × √252');
+    html += chip('Volatility (ann)', stat.volatility_ann_pct == null ? '—' : fmtPct(stat.volatility_ann_pct, 1), '', 'daily std × √365');
     html += chip('Skewness', fmt(stat.skewness, 2), stat.skewness < 0 ? 'neg' : 'pos', 'Pearson · scipy bias=False');
     html += chip('Kurt (excess)', fmt(stat.kurtosis_excess, 2), '', 'Fisher · scipy bias=False');
     html += chip('VaR 95%', fmtPct(stat.var_95_pct), 'neg', 'q5 per-trade · RiskMetrics');
@@ -2313,6 +2420,13 @@ function renderFactorPbo(summary) {
 }
 
 /* ───────── Calibration scatter ───────── */
+function calibrationPoints(points) {
+  if (!Array.isArray(points)) return [];
+  return points.filter(p => p && typeof p.predicted_mean === 'number'
+    && Number.isFinite(p.predicted_mean) && typeof p.actual_hit_rate === 'number'
+    && Number.isFinite(p.actual_hit_rate))
+    .map(p => ({ x: p.predicted_mean * 100, y: p.actual_hit_rate * 100, n: p.n }));
+}
 function _renderCalibration(canvasId, calMap, color) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
@@ -2320,8 +2434,8 @@ function _renderCalibration(canvasId, calMap, color) {
   const datasets = [];
   let i = 0;
   for (const [name, points] of Object.entries(calMap || {})) {
-    if (!points || !points.length) continue;
-    const data = points.map(p => ({ x: (p.predicted_mean || 0) * 100, y: (p.actual_hit_rate || 0) * 100, n: p.n }));
+    const data = calibrationPoints(points);
+    if (!data.length) continue;  // 미관측/null을 0% 적중으로 바꾸지 않는다.
     datasets.push({
       label: name.replace('p_', '').replace('_vs_hit', '').replace('_', '/'),
       data,
@@ -3004,10 +3118,10 @@ const MONO = "'JetBrains Mono', monospace";
 function renderFindings(findings) {
   if (!findings) return;
   const label = document.getElementById('findingsLabel');
-  if (label && findings.asof) label.textContent = `SESSION FINDINGS · asof ${findings.asof}`;
+  if (label && findings.asof) label.textContent = `RESEARCH ARCHIVE · 저장 자료 asof ${findings.asof}`;
   if (findings.honest_caption) {
     const cap = document.getElementById('findingsCaption');
-    if (cap) cap.textContent = findings.honest_caption;
+    if (cap) cap.textContent = '보관된 연구 설명 — 현재 추천 성능의 증명 아님. ' + findings.honest_caption;
   }
   renderMagnitudeCurve(findings.magnitude_curve);
   renderRiskRewardFindings(findings.risk_reward);
@@ -3028,7 +3142,7 @@ function renderChampionLeaderboard(lb) {
     return;
   }
   const noteEl = document.getElementById('leaderboardNote');
-  if (noteEl && lb.note) noteEl.textContent = lb.note;
+  if (noteEl && lb.note) noteEl.textContent = '과거 후보 비교 · 자동 승격 아님. ' + lb.note;
   const fmt = (v, suf) => (v === null || v === undefined) ? '—' : (v + (suf || ''));
   const champOpen = (lb.current_champion && lb.current_champion.open) || null;
   const champPre = (lb.current_champion && lb.current_champion.preopen) || null;
@@ -3055,9 +3169,9 @@ function renderChampionLeaderboard(lb) {
           + '<td style="padding:6px 8px">' + (r.gate_pass ? 'PASS' : '—') + '</td></tr>';
   });
   html += '</tbody></table>';
-  html += '<div class="chart-subtitle" style="margin-top:8px">현 champion — open: <b>'
+  html += '<div class="chart-subtitle" style="margin-top:8px">저장 시점 champion — open: <b>'
         + (champOpen || '—') + '</b> · preopen: <b>' + (champPre || '—')
-        + '</b> · 게이트 미달 시 R1 SHADOW fallback</div>';
+        + '</b> · 현재 운영은 상단 상태 패널 확인 · 연구 후보 자동 배포 없음</div>';
   el.innerHTML = html;
 }
 
@@ -3199,14 +3313,14 @@ function renderPumpHunter(ph) {
 function renderPumpHunterV2(ph) {
   const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
   const noteEl = document.getElementById('pumpV2Note');
-  if (noteEl && ph && ph.note) noteEl.textContent = ph.note;
+  if (noteEl) noteEl.textContent = '2026-08-05 terminal KILL · 아래는 은퇴 전 원장 보존입니다.';
   const wlEl = document.getElementById('pumpV2Watchlist');
   if (!ph || ph.status === 'pending_first_cron' || ph.status === 'empty') {
     setText('pumpV2LatestDate', '—');
     setText('pumpV2RowsTotal', '0');
     setText('pumpV2RowsClosed', '0');
     setText('pumpV2CapturePct', '—');
-    if (wlEl) wlEl.innerHTML = '<div class="loading-state">v2 ledger 누적 전 — 첫 후보일에 표시</div>';
+    if (wlEl) wlEl.innerHTML = '<div class="loading-state">v2 은퇴 · 표시할 과거 원장 없음</div>';
     return;
   }
   setText('pumpV2LatestDate', ph.latest_date || '—');
@@ -3241,8 +3355,8 @@ function renderChampionGate(cg) {
   const rows = cg.slots.map(s => {
     const pct = s.progress_pct ?? 0;
     const label = s.is_fallback
-      ? `${s.n_days}/${s.min_closed}일 · D-${s.days_remaining} (fallback)`
-      : `gate 통과 · champion=${escapeHtml(s.champion_id || '—')}`;
+      ? `저장 당시 기준 ${escapeHtml(s.n_days)}/${escapeHtml(s.min_closed)}일 · 미달 기록`
+      : `당시 gate 통과 기록 · 저장 champion=${escapeHtml(s.champion_id || '—')}`;
     return `
       <div class="gate-row">
         <span class="g-slot">${escapeHtml(s.slot)}</span>
@@ -3251,7 +3365,7 @@ function renderChampionGate(cg) {
       </div>`;
   }).join('');
   el.innerHTML = rows + `<div class="chart-subtitle" style="margin:0.2rem 0 0">
-    forward CLOSED ${cg.min_closed}거래일 차야 첫 실전 champion 판정 — 그 전까지 백테스트-최선 (R1) fallback · SHADOW 표기.</div>`;
+    과거 gate 진행 기록입니다. 현재 실발송 자격은 R1에만 있으며, 거래일 수 충족이나 gate PASS로 모델이 자동 교체되지 않습니다.</div>`;
 }
 
 /* ───────── Exit lab — 청산 변형 비교 (2026-06-11) ───────── */
@@ -3355,13 +3469,17 @@ function renderCalibFindings(c) {
   const ctx = document.getElementById('chartCalibFindings');
   if (!ctx || !c) return;
   Chart.getChart(ctx)?.destroy();
+  const point = item => item && Number.isFinite(item.pred_pct) && Number.isFinite(item.actual_pct)
+    ? [{ x: item.pred_pct, y: item.actual_pct }] : [];
+  const ideal = Array.isArray(c.ideal_line) ? c.ideal_line.filter(p => Array.isArray(p)
+    && Number.isFinite(p[0]) && Number.isFinite(p[1])).map(p => ({ x: p[0], y: p[1] })) : [];
   new Chart(ctx, {
     type: 'scatter',
     data: {
       datasets: [
-        { label: '완벽 보정 (y=x)', type: 'line', data: c.ideal_line.map(p => ({ x: p[0], y: p[1] })), borderColor: COLORS.text, borderDash: [5, 5], borderWidth: 1.3, pointRadius: 0, fill: false },
-        { label: c.old_engine.label + ' — 과신', data: [{ x: c.old_engine.pred_pct, y: c.old_engine.actual_pct }], backgroundColor: COLORS.red, pointRadius: 8, pointStyle: 'triangle' },
-        { label: c.new_scanner.label + ' — 정직', data: [{ x: c.new_scanner.pred_pct, y: c.new_scanner.actual_pct }], backgroundColor: COLORS.green, pointRadius: 8 },
+        { label: '보정 참조선 (y=x)', type: 'line', data: ideal, borderColor: COLORS.text, borderDash: [5, 5], borderWidth: 1.3, pointRadius: 0, fill: false },
+        { label: (c.old_engine?.label || '구 엔진') + ' — 당시 표본', data: point(c.old_engine), backgroundColor: COLORS.red, pointRadius: 8, pointStyle: 'triangle' },
+        { label: (c.new_scanner?.label || '스캐너') + ' — 당시 표본', data: point(c.new_scanner), backgroundColor: COLORS.green, pointRadius: 8 },
       ],
     },
     options: {
@@ -3688,6 +3806,7 @@ window.addEventListener('scroll', () => {
     } catch (_) { /* optional payload */ }
 
     HISTORY_ROWS = history.rows || [];
+    renderCurrentSystem(summary.current_system);
     renderHero(summary);
     renderRecommend(summary);
     renderFindings(findings);  // 이번 세션 새 발견 차트 (2026-05-31)

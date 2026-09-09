@@ -5,14 +5,14 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>prelude — 업비트 KRW 상승확률·하방리스크 레이더 · 정직 보고서</title>
-  <meta name="description" content="업비트 KRW 일봉 추천 레이더. 코인별 상승 확률분포 + 하락 리스크로 후보를 base 대비 ~6배 농축해 좁혀준다. 자동 net 전략이 아니라 사람이 청산하는 레이더 — 판정 radar-not-strategy 확정(07-28), v2 급등 레이더는 동결 조기사망 조항으로 08-05 KILL 종결, 발송은 R1 08:50/09:05 단일, 구 모델 record-only. 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 전 과정 공개.">
+  <meta name="description" content="저하방·고상방 후보를 찾는 업비트 KRW 수동매매 보조 레이더의 개발일지. R1 08:50/09:05 알림, v2 종료. 모델 비교의 실패에서 측정·전달 수리, 새 체결정보 관측으로 이어진 기록. Top10은 09-10 시작 예정인 비발송 기록시험이며 추천 우위는 미검증.">
   <meta property="og:title" content="prelude — 상승확률·하방리스크 레이더">
-  <meta property="og:description" content="맞히는 모델이 아니라 좁혀주는 레이더. 상승 확률분포 + 하락 리스크로 후보를 base 대비 ~6배 농축. 자동 net 전략 아님 · 사람이 청산 · 구 모델 record-only · 최신 판정과 전체 기록은 §Integrity Turn.">
+  <meta property="og:description" content="덜 하락하고 더 상승할 후보를 찾기까지 — 모델 비교의 실패, 측정·전달 수리, 새 체결정보 가설을 공개한 개발일지. R1 실알림 유지 · v2 종료 · Top10 비발송 기록시험 · 성능 개선 미검증.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="prelude — 상승확률·하방리스크 레이더">
-  <meta name="twitter:description" content="좁혀주는 레이더 · 상승 확률분포 + 하방 리스크 · base 대비 ~6배 농축 · 자동매매 아님 · radar-not-strategy 확정 · 실패까지의 기록 §Integrity Turn.">
+  <meta name="twitter:description" content="R1 수동매매 보조 레이더의 개발일지. 실패를 보존하고 측정부터 수리한 뒤 새 체결정보를 관측한다. v2 종료 · Top10 비발송 기록시험 · 추천 우위 미검증 · 자동매매 아님.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,6 +70,7 @@
     @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
     section { padding: 5.5rem 2rem; }
+    #new-information { scroll-margin-top: 80px; }
     section.compact { padding: 3.5rem 2rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
@@ -334,6 +335,7 @@
       <li><a href="#journey">I·Journey</a></li>
       <li><a href="#validation-chain">Chain</a></li>
       <li><a href="#integrity-turn">Integrity</a></li>
+      <li><a href="#new-information">September</a></li>
       <li><a href="#architecture">II·System</a></li>
       <li><a href="#ops">Ops</a></li>
       <li><a href="#distribution">III·Archive</a></li>
@@ -351,17 +353,17 @@
     <h1>prelude</h1>
     <p class="hero-sub">
       "맞히는 모델이 아니라, 좁혀주는 레이더."<br>
-      코인별 <strong>다음날 상승 확률분포 + 하락 리스크</strong>로 후보를 base 대비 ~6배 농축. 텔레그램은 <strong>R1 risk-reward 레이더</strong>가 매일 08:50 예고 + 09:05 확정 2통 발송(champion만), 구 모델은 record-only.<br>
-      자동 net 전략이 아니라 추천 레이더 — 청산은 사람이 한다. 진단→발굴→regime 라이브러리→청산검증→추천기→하방→스캐너 과정을 그대로 공개.
+      목표는 <strong>하락 가능성은 낮고 상승 가능성은 높은 후보</strong>를 찾는 것. 현재는 <strong>R1 레이더</strong>가 KST 08:50 장전 + 09:05 개장 후 알림을 담당하고, 실제 매매는 사람이 판단한다.<br>
+      모델을 바꾸는 것만으로 목표에 도달하지 못했다. 측정·전달을 수리하고, 이제 새 체결 정보를 관측한다. <strong>운영 수리의 성공과 추천 성능의 미검증을 나눠 기록한 개발일지</strong>다.
     </p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="7" data-decimals="0">0</span><span class="hero-stat-label">Phases / Pivots</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">~6×</span><span class="hero-stat-label">precision@3 농축 (OOS)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="9.56" data-decimals="2">0</span><span class="hero-stat-label">Optimistic Tiered Sharpe †</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="92.9" data-suffix="%" data-decimals="1">0</span><span class="hero-stat-label">Bootstrap Edge &gt;0 †</span></div>
-      <div class="hero-stat"><span class="hero-stat-num countup" data-target="1362" data-decimals="0">0</span><span class="hero-stat-label">Tests Passed</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">R1</span><span class="hero-stat-label">현재 실알림 모델</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">2 slots</span><span class="hero-stat-label">08:50 / 09:05 KST</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">KILL</span><span class="hero-stat-label">v2 종료 · 08-05</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">09/10</span><span class="hero-stat-label">Top10 첫 기록 예정일</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">미검증</span><span class="hero-stat-label">새 시험의 추천 우위</span></div>
     </div>
-    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">† optimistic upper-bound (단일전략 가정 · TP-tiered exit). 실제 운영 net 결과는 <a href="#vnext" style="color:var(--text-secondary); border-bottom:1px solid var(--border);">§v-next</a> 참조.</p>
+    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">2026-09-09 기준. Top10은 학습·실알림 변경 없는 별도 기록시험이며 아직 적격 효과 표본은 0일이다. 알림 시각은 예약 시각이며 실제 발송·평가 시각과 구분한다.</p>
     <div class="hero-links">
       <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer" class="hero-link">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -379,18 +381,17 @@
 <!-- Honest-conclusion banner -->
 <div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
   <div class="callout warn" style="margin:1.5rem 0;">
-    <p><strong>첫 정직한 결론 (2026-05-31):</strong> 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 OOS·leak 4/4 PASS 로 진짜지만, 기계적 청산 net 은 breakeven~음수 — 수익은 사용자의 진입/청산 판단이 결정한다. 아래 상단 지표 중 일부(†)는 단일전략 가정의 optimistic upper-bound 이며, 실제 운영 net 과 정직한 프레이밍은 <a href="#vnext" style="color:var(--amber); border-bottom:1px solid var(--amber);">§v-next 로 이동</a>.
-    <strong>최신 판정 (2026-08-05):</strong> v2 급등 레이더 조기 KILL 자동 집행(동결 조기사망 조항). 연구 전멸·측정 재건·장애와 복구·실전 9일(핵심 5주는 06-25→07-28)까지 전체 기록은
-    <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a> 참조.</p>
+    <p><strong>처음 남긴 결론 (2026-05-31):</strong> 과거 OOS에서 후보 농축을 관찰했지만 기계적 청산의 순수익은 breakeven~음수였다. 당시의 ~6배 농축과 낙관적 백테스트 수치는 아래에 보존하되 <strong>현재 R1의 수익성·안전성 인증으로 사용하지 않는다</strong>.
+    <strong>현재 결론 (2026-09-09):</strong> v2는 08-05 KILL로 종료. 추가 모델 비교에서도 교체할 근거를 얻지 못해 R1을 유지한다. 다음 질문은 <strong>새 체결 정보가 실제 Top3를 개선하는가</strong>다. 측정 수리와 첫 정규 수집 실패까지의 후속 기록은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>에서 이어진다.</p>
   </div>
 </div>
 <hr class="divider">
 
 <!-- Executive Summary -->
 <section id="summary" class="compact"><div class="container fade-in">
-  <div class="section-label">Executive Summary</div>
-  <h2 class="section-title">핵심 결과 — 한 눈에</h2>
-  <p class="section-desc">단일 점수 모델이 던진 모호함을 multi-head 조건부 분포로 재정의. backtest 가 좋다는 이유로 넘어가지 않고 <strong>6 종류 audit 으로 edge 가 통계적으로 살아있는지 검증</strong>. 단, 아래 †지표는 단일전략 가정의 optimistic upper-bound — 실제 운영 net 과 정직한 결론은 <a href="#vnext" style="color:var(--blue);">§v-next</a>.</p>
+  <div class="section-label">Historical Summary · 2026-05 → 08</div>
+  <h2 class="section-title">초기 결과 — 숫자가 좋았지만, 답은 아니었다</h2>
+  <p class="section-desc">아래는 초기 설계와 당시 운영 규모를 남긴 <strong>역사 요약</strong>이다. 서로 다른 모델·시기·모의 청산의 수치를 합쳐 현재 성능으로 해석하지 않는다. †는 단일전략 가정의 낙관 상한이며 실제 사용자 수익이 아니다. 현재 상태와 다음 검증은 <a href="#new-information" style="color:var(--blue);">§September</a>, 원래 실험은 <a href="#vnext" style="color:var(--blue);">§v-next</a>에 있다.</p>
   <div class="four-col" style="margin-bottom:1.4rem;">
     <div class="metric-card"><span class="metric-val neutral">9.56 †</span><div class="metric-label">Optimistic TP-tiered Sharpe</div><div class="metric-sub">upper-bound, 단일전략 가정<br>실제 운영 net 은 §v-next</div></div>
     <div class="metric-card"><span class="metric-val amber">+9.26&times; †</span><div class="metric-label">Pre-open Top1% Lift (DEMOTED)</div><div class="metric-sub">first15_5pct head, backtest<br>forward 음수로 강등</div></div>
@@ -399,19 +400,18 @@
   </div>
   <div class="four-col">
     <div class="metric-card"><span class="metric-val neutral">92.9% †</span><div class="metric-label">Bootstrap edge &gt; 0</div><div class="metric-sub">optimistic upper-bound<br>5000 boot, 95% CI 0 걸침</div></div>
-    <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>운영은 fractional</div></div>
+    <div class="metric-card"><span class="metric-val warn" style="color:var(--amber);">-16.5%</span><div class="metric-label">과거 모의 MDD (1/4 sizing)</div><div class="metric-sub">full -55%, 1/8 -8.5%<br>실제 사용자 계좌 성과 아님</div></div>
     <div class="metric-card"><span class="metric-val neutral">2 alerts</span><div class="metric-label">Daily Cadence</div><div class="metric-sub">R1 08:50 예고 + 09:05 확정<br>🎯 v2 는 08-05 KILL 로 종료</div></div>
-    <div class="metric-card"><span class="metric-val neutral">17 units</span><div class="metric-label">systemd 무인 운영</div><div class="metric-sub">8 timer + 8 service + alert 유닛<br>(07:30 전수 selftest 포함)</div></div>
+    <div class="metric-card"><span class="metric-val neutral">17 units</span><div class="metric-label">08-05 당시 운영 구성</div><div class="metric-sub">8 timer + 8 service + alert 유닛<br>9월 체결 수집 경로 추가 전</div></div>
   </div>
 </div></section>
 <hr class="divider">
 
 <div class="part-divider fade-in">
   <div class="pd-label">Part I · 이야기</div>
-  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 08-05</div>
-  <div class="pd-bridge">출발 질문은 하나였다 — <strong>"어떻게 맞히나."</strong> 이 질문이 두 번 부서지며 다른 질문으로 진화하는 것이 이 부의 플롯이다. 아래 네 챕터는 시간 순서다. 첫 모델의 실패(Journey)에서 시작해, 12실험의 천장(v-next),
-  가짜 양수를 죽이는 검증 사슬, 그리고 연구 전멸과 측정 재건(Integrity Turn)으로 끝난다.
-  결론부터 알고 싶으면 마지막 챕터로 건너뛰어도 된다 — 다만 결론의 무게는 그 앞의 실패들이 만든다.</div>
+  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 09-09</div>
+  <div class="pd-bridge">처음에는 <strong>"어떻게 맞히나"</strong>를 물었다. 첫 모델의 실패(Journey), 12실험의 한계(v-next), 검증 사슬과 측정 재건(Integrity Turn)을 지나도 더 좋은 추천이라는 답은 남지 않았다.
+  그래서 9월에는 같은 정보를 다시 학습하는 실험부터 비교하고, 새 체결 정보를 직접 관측하는 단계(September)로 이어졌다. 실패 이력을 지우지 않고 다음 질문의 근거로 남긴다.</div>
 </div>
 
 <!-- Project Journey -->
@@ -580,7 +580,7 @@
 <section id="vnext"><div class="container fade-in">
   <div class="section-label">v-next · 2026-05-31</div>
   <h2 class="section-title">v-next 재정의 — "맞히는 모델"에서 "좁혀주는 레이더"로</h2>
-  <p class="section-desc">단일 ✓/✗ 예측을 내려놓고, 코인별 <strong>다음날 상승 확률분포</strong>와 <strong>하락 리스크</strong>를 표기해 후보를 좁혀주는 레이더로 재정의. 검증은 전부 OOS(purged walk-forward), leak 4/4 PASS(독립 재검증). 모든 수치는 거래비용 0.15% 왕복 차감 후. 아래는 요약이 아니라 <strong>진단 → 발굴 → regime 라이브러리 → 청산 검증 → 추천기 → 하방 → 스캐너</strong> 로 이어진 개선 과정 단계다.</p>
+  <p class="section-desc"><strong>2026-05-31 당시 연구 기록.</strong> 단일 ✓/✗ 예측을 내려놓고 상승 확률분포와 하락 리스크로 후보를 좁히려 했다. 아래 OOS(purged walk-forward)·leak 감사 결과는 해당 시기 설정의 결과이며, 순수익에는 왕복비용 0.15%를 차감했다. 확률·고가 도달률은 순수익과 다른 지표다. <strong>진단 → 발굴 → regime 라이브러리 → 청산 검증 → 추천기 → 하방 → 스캐너</strong>의 순서와 수치를 보존한다.</p>
 
   <!-- Stage 1: 진단 (출발 문제) -->
   <div class="callout fail">
@@ -644,10 +644,10 @@
 
   <!-- Stage 6: 하방 (risk-reward 랭킹) -->
   <div class="callout win">
-    <p><strong>⑥ 하방 — 상승확률은 유지하고 리스크만 절반으로</strong></p>
+    <p><strong>⑥ 하방 — 당시의 가설: 상승을 남기면서 하방을 줄일 수 있을까</strong></p>
     <p style="margin-top:0.6rem;">
-      upside-only 랭킹의 함정(상승확률만 보면 P(≤−5%) 44~67% 짜리 폭탄을 top 에 올림)을 risk-reward 랭킹으로 교정. P(≤−5%) <strong>0.53 → R1_ratio 0.33 → R2(λ=1) 0.16</strong> 으로 단계적 축소, deep-dump(≤−10%)는 <strong>0.15 → 0.02~0.07</strong>. 상승 확률은 유지하면서 하방만 깎는다(λ = 하방확률 페널티 강도). 위험 정책은 <strong>−3% 손절 + 5% 익절</strong>(하방 위험 최소화 우선).
-      <strong>이 risk-reward 랭킹이 곧 R1 — 지금 매일 아침 발송되는 바로 그 레이더다</strong>(입력 8피처 rank + 독립 상방/하방 head, 정렬 p_up10/p_dn5).
+      당시 비교에서 P(≤−5%)는 <strong>0.53 → R1_ratio 0.33 → R2(λ=1) 0.16</strong>, deep-dump(≤−10%)는 <strong>0.15 → 0.02~0.07</strong>로 보고됐다(λ = 하방확률 페널티 강도). 이로부터 “상방을 유지하며 하방만 줄이자”는 가설을 세웠다. <strong>R2의 수치를 현재 R1의 실현 성능으로 옮길 수는 없다.</strong> 이후 비교에서 두 목표의 동시 개선은 채택 근거를 얻지 못했다.
+      현재 R1은 24개 저장 피처와 상·하방 head를 사용하고 p_up10/p_dn5 비율로 순위를 정한다. <strong>−3% SL / +5% TP는 가상평가 설정이며 실제 손실의 상한 보장이 아니다.</strong>
     </p>
     <span class="badge badge-blue">P(≤−5%) 0.53→0.16</span>
     <span class="badge badge-blue">deep-dump 0.15→0.02~0.07</span>
@@ -656,9 +656,9 @@
 
   <div class="four-col" style="margin:2rem 0;">
     <div class="metric-card"><span class="metric-val pos">~6×</span><div class="metric-label">precision@3 농축 (≥20%)</div><div class="metric-sub">전체 OOS ~10%/~6배<br>5월 11.8%/7배 · base 1.7%</div></div>
-    <div class="metric-card"><span class="metric-val blue">0.53 → 0.16</span><div class="metric-label">P(≤-5%) 하방 절감</div><div class="metric-sub">R1 0.33 → R2(λ=1) 0.16<br>상승확률은 유지</div></div>
+    <div class="metric-card"><span class="metric-val blue">0.53 → 0.16</span><div class="metric-label">당시 하방 비교 기록</div><div class="metric-sub">R1 0.33 → R2(λ=1) 0.16<br>현재 R1 우위의 증거 아님</div></div>
     <div class="metric-card"><span class="metric-val pos">+48.7pp → 정직</span><div class="metric-label">과신 교정</div><div class="metric-sub">pred 60.3%→5.7%<br>실제 11.6% / 6.0%</div></div>
-    <div class="metric-card"><span class="metric-val amber">-3% SL / +5% TP</span><div class="metric-label">위험 정책</div><div class="metric-sub">하방 위험 최소화<br>worst -3.15%/거래</div></div>
+    <div class="metric-card"><span class="metric-val amber">-3% SL / +5% TP</span><div class="metric-label">가상 청산 가정</div><div class="metric-sub">당시 모의 worst -3.15%/거래<br>실제 손실 상한 보장 아님</div></div>
   </div>
 
   <!-- Stage 7: 스캐너 (오늘 출력) + 5월 포착 -->
@@ -686,7 +686,7 @@
   <div class="callout warn">
     <p><strong>정직한 결론</strong></p>
     <p style="margin-top:0.6rem;">
-      • 이건 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>다. 기계적 청산 net 은 breakeven~음수. 예측력(base 대비 ~6배 농축 + 큰 펌프 포착 + 하방 관리)은 진짜지만, 수익은 사용자의 진입/청산 판단이 결정 → <strong>SHADOW 로 forward 표본 축적 중</strong>. leak 4/4 PASS.<br>
+      • 당시 결론은 자동 net-positive 전략이 아니라 <strong>추천 레이더</strong>였다. 기계적 청산 net은 breakeven~음수. ~6배 농축과 leak 4/4 PASS는 해당 과거 실험의 기록이지 현재 추천의 안전성·수익성 보장이 아니다. 그래서 <strong>당시 SHADOW로 forward 표본을 쌓기로 했다</strong>.<br>
       • 재정의 직후(06-01) <strong>12개 가설 exhaustive</strong> — 후처리 5축(랭킹·청산·필터·regime·멀티데이) + 새 신호 2 + R1 엔진 sweep — 를 전부 OOS·비용차감·bootstrap 으로 돌려 <strong>자동 net 흑자 0개</strong>를 확정했다 (상세 표는 <a href="#status" style="color:var(--amber);">§Status 연구 결론</a>).<br>
       • 당시(05-31) 정책: <strong>distribution = PROMOTE_PAPER</strong>, <strong>preopen = DEMOTED (observed −40.8%)</strong> — 현행(08-05 이후)은 구 모델 전부 record-only, 발송은 R1 단일 — 🎯 v2 는 08-05 동결 KILL 로 종결 (<a href="#integrity-turn" style="color:var(--amber);">§Integrity Turn</a>).<br>
       • 단일 ✓/✗ 대신 확률 분포로 표기하고, 위험 정책은 −3% 손절 + 5% 익절(하방 위험 최소화 우선).
@@ -950,16 +950,77 @@
     산출물은 해시로 봉인되고, 실패는 시끄럽고, 판정은 사전등록 그대로 집행된다.
     누적 <strong>negative result 22건+</strong>이 전부 재현 가능한 형태로 박제되어 있다는 것 —
     그것이 이 프로젝트가 "좋아 보이는 백테스트"와 다른 점이다.
-    그 기계의 실물이 바로 다음 장이다.
+    다만 측정이 정직해졌다고 추천이 좋아지는 것은 아니었다. 그 차이를 다시 확인한 9월의 실험이 다음 장이다.
   </p>
+</div></section>
+<hr class="divider">
+
+<!-- September: measured repairs are not evidence of better recommendations -->
+<section id="new-information"><div class="container fade-in">
+  <div class="section-label">The Next Question · 2026-09-07 → 09-09</div>
+  <h2 class="section-title">같은 정보를 다시 배울까, 새로운 정보를 관측할까</h2>
+  <p class="section-desc">목표는 더 많은 종목을 부르는 것이 아니라 <strong>덜 하락하면서 더 상승할 후보를 찾는 것</strong>이다. 7월의 측정 재건은 그 목표를 시험할 도구를 남겼다. 9월에는 그 도구로 모델 변경을 비교했고, 추천 우위가 부족하다는 결과를 받아들인 뒤 새 정보 수집으로 넘어갔다.</p>
+
+  <div class="callout win">
+    <p><strong>첫 단계 · 무엇을 추천했고, 언제부터 평가했는지를 먼저 고정했다</strong></p>
+    <p style="margin-top:0.6rem;">같은 불변 snapshot을 발송·원장·평가가 공유하고, 발송 시도 기록과 서버 수락 영수증을 구분했다. 전송 결과가 불확실하면 성공으로 추정하거나 자동 재발송하지 않는다. <strong>09:00 참고가격은 현재 체결가격이 아니다.</strong> 가상평가는 서버 수락 이후의 15분 경계부터 24시간을 재며, 실제 사용자 매매와도 구분한다.</p>
+    <p style="margin-top:0.6rem;">평가에서는 먼저 원 후보·Top3·비교군을 고정하고 그 뒤 결과의 관측 가능성을 확인한다. 결과가 없는 종목을 빼고 다음 순위로 채우지 않는다. 확인된 무거래 봉의 flat 경로와 수집 장애·거래 중단을 나누고, 제외된 날짜·종목도 남긴다. 비용은 왕복 0.15%를 한 번만 차감하며, 날짜별 동일 가중과 같은 날짜의 비교를 사용한다.</p>
+    <span class="badge badge-ok">측정·전달 위생 수리</span>
+    <span class="badge badge-blue">실제 매매 수익과 가상평가 분리</span>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>09-07 · 세 번의 질문 — 논리적으로 그럴듯한 변경이 더 좋은 Top3는 아니었다</strong></p>
+    <p style="margin-top:0.6rem;">상방 head를 다시 학습하면 어떨까. 장전 입력과 예측 대상 날짜를 맞추면 어떨까. 학습에 사용한 행의 점수 대신 과거에 따로 예측한 점수로 확률을 보정하면 어떨까. 각 비교는 설정을 고정하고 시간 누수·공통 표본을 확인한 뒤 실행했으며, 다른 검토자가 원 자료와 수식에서 다시 계산했다.</p>
+    <div class="chart-wrap" style="margin:1rem 0;">
+      <table class="tbl">
+        <thead><tr><th>고정 비교</th><th>실행·검증 범위</th><th>남은 결론</th></tr></thead>
+        <tbody>
+          <tr><td>상방 재학습 / 저장 확률 재보정</td><td>4개 outer fold · 비교는 슬롯별 19일</td><td>새 head는 하락과 함께 상승 기회도 줄였다. 운영 대체안 미채택.</td></tr>
+          <tr><td>장전 타깃 날짜 정합화</td><td>35일 · 350회 적합 · 주 비교 32일</td><td>고정 후보의 TP/SL 가상 순수익과 MAE가 악화했다. 날짜 정합화 일반의 반증은 아니다.</td></tr>
+          <tr><td>보정용 점수의 시간순 분리</td><td>35일 · 335회 적합 · 주 비교 33일</td><td>일부 확률 오차 개선이 저하방·고상방 Top3의 동시 개선으로 이어지지 않았다.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>이 비교들은 <strong>이미 관찰한 이력의 오프라인 재평가</strong>다. 새 미래 표본이나 세 개의 독립 시장 구간이 아니다. 구현·검산 PASS는 성능 PASS가 아니며, 해당 후보를 채택하지 않았다고 모든 재학습 방식이 불가능한 것도 아니다. 운영 R1을 유지한 것은 <strong>교체 근거가 부족했기 때문</strong>이지 R1의 안전성을 인증했기 때문이 아니다.</p>
+    <p style="margin-top:0.6rem;">기존 진단도 적용 범위를 고쳤다. 7월의 “상방 AUC 0.477”은 당시 선택집단의 기록이다. 9월 전체 후보와 Top3의 결과는 다르므로 “상방 head가 언제나 죽어 있다”는 현재 설명으로 재사용하지 않는다. 작은 선택집단의 AUC 차이만으로 선정 손실의 원인을 확정하지도 않았다.</p>
+    <span class="badge badge-fail">이번 모델 변경안 운영 미채택</span>
+    <span class="badge badge-blue">R1 유지 ≠ 우수성 인증</span>
+  </div>
+
+  <div class="callout">
+    <p><strong>09-07~08 · 다음 가설은 점수식이 아니라, 그때 실제로 들어온 체결 정보였다</strong></p>
+    <p style="margin-top:0.6rem;">이미 시험한 하방 veto·utility·군중쏠림을 이름만 바꿔 반복하지 않고, 공개 체결의 <strong>매수측·매도측 체결대금 불균형</strong> 하나를 기록하기로 했다. 추천 결정 시작 전 300초 동안 <code class="c">(BID 대금 − ASK 대금) / (BID 대금 + ASK 대금)</code>을 계산한다. 거래소 사건 시각과 로컬 수신 시각이 <strong>둘 다 결정 시점 이전</strong>이어야 한다. 나중에 받은 과거 거래를 그때 알았던 정보처럼 넣지 않는다.</p>
+    <p style="margin-top:0.6rem;">무거래는 중립값 0이 아니라 피처 없음(null)이다. 호가·시계·연결 상태는 품질 진단으로만 쓴다. 작은 한 방향 거래 한 건도 값이 +1 또는 −1로 포화될 수 있으므로, 이것을 곧 강한 매수세나 하방 안전의 증거라고 부르지 않는다. 체결 건수·대금·유동성·변동성 차이를 함께 드러내되 결과를 보고 임계값을 조정하지 않는다.</p>
+    <span class="badge badge-pivot">새 정보 가설 1개</span>
+    <span class="badge badge-blue">과거 원시자료를 소급 생성하지 않음</span>
+  </div>
+
+  <div class="callout fail">
+    <p><strong>09-09 · 첫 정규 수집은 끝났지만, 피처 생성은 실패했다 — 96ns의 차이</strong></p>
+    <p style="margin-top:0.6rem;">짧은 모의·canary 검증 뒤 첫 정규 수집이 실행됐다. 원시 수집은 complete였지만, 추천 snapshot의 완료 시각과 manifest에 기록된 수집 cutoff를 맞추는 검사에서 멈췄다. 실제 수집 종료 시각이 같아야 한다는 검사는 아니다. 원인은 datetime을 나노초로 바꿀 때 사용한 부동소수점 곱셈이었다. 같은 시각이 <strong>96ns 작게 저장되는 현상</strong>을 실제 기록에서 재현했다.</p>
+    <p style="margin-top:0.6rem;">변환을 UTC 정수 시간 산술로 고치고 경계 테스트를 추가했다. 별도 감사는 원시 <strong>335,706행</strong>의 체크섬·순서·행수와 원 100종목의 300초 체결 관측을 확인했다. 그러나 오늘의 원시자료·manifest·추천 snapshot은 고치지 않았고, 실패한 날을 뒤늦은 성공 점수로 채우지도 않았다. <strong>수정 검증 성공과 오늘의 실제 실패는 함께 남는다.</strong></p>
+    <span class="badge badge-fail">09-09 원본 실패 보존</span>
+    <span class="badge badge-ok">정수 시각 수리·독립 검산</span>
+  </div>
+
+  <div class="callout">
+    <p><strong>09-09 설계 고정 → 09-10 첫 기대일 · Top10 안에서 다시 고르되, 알림은 바꾸지 않는다</strong></p>
+    <p style="margin-top:0.6rem;">기존 R1 순위 1~10위를 먼저 고정하고, 그 열 종목을 300초 체결 불균형 내림차순으로 정렬해 세 개를 고른다. 동점이면 원래 R1 순위를 따른다. <strong>10은 100종목의 상위 10%라는 초기값</strong>이며 과거 성과로 최적화한 값이 아니다. Top10 전원의 피처와 전체 수집 품질이 유효해야 하고, 나머지 90종목의 무거래 null은 이 조건을 막지 않는다. 결과가 없는 선택 종목을 사후 대체하지 않는다.</p>
+    <p style="margin-top:0.6rem;">이 시험은 기존의 “3·4위 경계 완전동점만 변경” 시험과 별도 기록한다. 두 시험 모두 <strong>비발송·학습 없음·자동 승격 없음</strong>이며, 기존 R1 Top3와 알림은 유지된다. 정본의 가상평가 진입보다 앞선 <strong>점수의 내구 저장 확인 시각</strong>과 그 점수에 묶인 유효한 commit을 요구한다. commit 파일 자체의 저장 완료 시각까지 진입 전이라고 증명하는 것은 아니다. 점수 저장이 늦거나 완료 증거가 불확실하면 실패·제외 사유를 남긴다.</p>
+    <p style="margin-top:0.6rem;"><strong>2026-09-09 현재 새 Top10 시험의 적격 효과 표본은 0일, 성과는 미계산이다.</strong> 0일을 0% 수익으로 표시하지 않는다. 같은 날짜의 기존 Top3와 비교하고, 정상적으로 순위가 바뀌지 않은 날도 분모에 남긴다. Top10으로 제한했다고 하방이나 유동성·변동성이 같아지는 것은 아니다.</p>
+    <span class="badge badge-pivot">첫 기대일 09-10 · 기록시험</span>
+    <span class="badge badge-blue">실제 추천·모델·라벨 변경 없음</span>
+  </div>
+
+  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">여기까지 완성된 것은 <strong>새 가설을 거짓 성공 없이 관측하고 비교하는 경로</strong>다. 더 좋은 추천이 완성된 것은 아니다. 다음 정규 실행에서는 정확한 cutoff, 진입 전 저장, 이후 관측 가능한 24시간 결과를 차례로 확인한다. 상세 설계·실행·반증 기록은 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES.md</a>, 현재 상태는 <a href="/projects/prelude/dashboard/" style="color:var(--blue);">대시보드</a>로 연결한다.</p>
 </div></section>
 <hr class="divider">
 
 <div class="part-divider fade-in">
   <div class="pd-label">Part II · 지금의 시스템</div>
-  <div class="pd-title">이야기가 남긴 기계 — 오늘 아침에도 이렇게 돌았다</div>
-  <div class="pd-bridge">여기서부터는 현재형이다. 무엇을 믿고 설계했는지(Thesis), 데이터가 어떻게 알림이 되는지(Architecture),
-  매일 받는 메시지의 실물(Ops), 그리고 사람 없이 도는 스케줄(Automation).</div>
+  <div class="pd-title">이야기가 남긴 기계 — 실알림과 연구 기록의 분리</div>
+  <div class="pd-bridge">현재 운영 설명과 표시된 과거 설계·메시지 예시를 구분한다. R1은 수동매매 판단을 돕고, 새 체결정보 시험은 별도 기록만 한다. 위생 검증이나 설치 완료가 추천 우위까지 뜻하지는 않는다.</div>
 </div>
 
 <!-- Thesis -->
@@ -1002,13 +1063,13 @@
 <section id="architecture"><div class="container fade-in">
   <div class="section-label">Architecture</div>
   <h2 class="section-title">시스템 구조</h2>
-  <p class="section-desc">두 모델이 KST 09:00 boundary 를 사이에 두고 다른 입력 (15m precursor / daily) 위에서 다른 horizon 을 예측. systemd 7 timer 가 모든 일정 무인 운영. 텔레그램은 <strong>R1 risk-reward 레이더가 08:50/09:05 발송(champion만 — forward 성과로 매일 자동 선정되는 발송 모델, 메커니즘은 §Status)</strong> — 이 두 모델(distribution/preopen)은 평가·대시보드용 <strong>record-only</strong>.</p>
+  <p class="section-desc">현재 실알림 모델은 <strong>R1</strong>이며 예약 슬롯은 KST 08:50/09:05다. 슬롯당 동일 snapshot을 발송·원장·평가가 공유한다. 다른 모델은 발송 후보 자격이 잠겨 있어 성과가 쌓였다는 이유만으로 자동 교체되지 않는다. 새 체결정보 시험은 별도 기록 경로다. 아래 distribution/preopen 카드에는 <strong>현재 R1 장전 슬롯과 다른 legacy 모델</strong>의 설계를 보존했다.</p>
 
   <div class="flow">
-    <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">데이터 수집</div><div class="flow-desc">Upbit KRW d1 / 15m / 1h<br>Binance d1 (BTC reference)</div></div>
-    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">팩터 계산</div><div class="flow-desc">Daily 47 features<br>15m precursor 19 features</div></div>
+    <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">데이터 수집</div><div class="flow-desc">시점이 맞는 봉·유니버스<br>새 체결 수집은 별도 연구</div></div>
+    <div class="flow-step"><div class="flow-num">2</div><div class="flow-title">피처·정본</div><div class="flow-desc">R1 저장 피처 24개<br>슬롯별 단일 snapshot</div></div>
     <div class="flow-step"><div class="flow-num">3</div><div class="flow-title">스코어링</div><div class="flow-desc">R1 risk-reward (상방/하방 head)<br>record-only: preopen 6h · dist 3h</div></div>
-    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">알림</div><div class="flow-desc">R1 08:50 예고 / 09:05 확정<br>🎯 v2 는 08-05 KILL 로 종료</div></div>
+    <div class="flow-step"><div class="flow-num">4</div><div class="flow-title">알림</div><div class="flow-desc">R1 08:50 장전 / 09:05 개장 후<br>🎯 v2 는 08-05 KILL 로 종료</div></div>
     <div class="flow-step"><div class="flow-num">5</div><div class="flow-title">관측·증거</div><div class="flow-desc">snapshot→영수증→96봉 라벨<br>09:30 청산 · 10:05 평가</div></div>
   </div>
 
@@ -1050,12 +1111,12 @@
 
   <div class="cadence-wrap">
     <div class="cadence-title">하루 운영 타이밍 (KST)</div>
-    <div class="cadence-sub">systemd 8 timer (07:30 전수 selftest 포함). R1 레이더 텔레그램 2통 (08:50 예고 + 09:05 확정, champion만) + close-out 2 + publish/backup/heartbeat. 🎯 v2 는 08-05 KILL 로 발송 종료(record 박제). 구 distribution/preopen 모델은 record-only(텔레그램 X). 장애 시 failure-alert 즉시 경보(07-28 가동).</div>
+    <div class="cadence-sub">systemd 9 timer: 07:30 전수 selftest·08:45 별도 체결 수집 포함. R1 예약 슬롯은 08:50 장전 / 09:05 개장 후이며 실제 서버 수락은 영수증으로 확인한다. v2는 08-05 KILL로 종료, 구 distribution/preopen과 체결정보 시험은 비발송 기록 경로다. 실패 경보와 누락 감시를 함께 둔다.</div>
     <div class="cadence-row">
       <div class="cadence-label a">08:50</div>
       <div class="cadence-bar">
         <div class="cadence-slot inactive">~08:30</div>
-        <div class="cadence-slot fire-a">08:50 R1 예고</div>
+        <div class="cadence-slot fire-a">08:50 R1 장전</div>
         <div class="cadence-slot inactive">09:00</div>
         <div class="cadence-slot inactive">09:30</div>
         <div class="cadence-slot inactive">10:05</div>
@@ -1066,7 +1127,7 @@
       <div class="cadence-bar">
         <div class="cadence-slot inactive">~08:30</div>
         <div class="cadence-slot inactive">08:50</div>
-        <div class="cadence-slot fire-b">09:05 R1 확정</div>
+        <div class="cadence-slot fire-b">09:05 R1 개장 후</div>
         <div class="cadence-slot inactive">09:30</div>
         <div class="cadence-slot inactive">10:05</div>
       </div>
@@ -1082,8 +1143,8 @@
       </div>
     </div>
     <div class="cadence-legend">
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.35)"></div>R1 레이더 08:50 예고 (텔레그램 · champion)</div>
-      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>R1 레이더 09:05 확정 (텔레그램 · champion)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(180,83,9,0.35)"></div>R1 레이더 08:50 장전 (텔레그램)</div>
+      <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(59,130,246,0.35)"></div>R1 레이더 09:05 개장 후 (텔레그램)</div>
       <div class="cadence-legend-item"><div class="cadence-legend-dot" style="background:rgba(22,163,74,0.3)"></div>Paper ledger close-out (자동)</div>
     </div>
   </div>
@@ -1094,15 +1155,16 @@
 <section id="ops"><div class="container fade-in">
   <div class="section-label">Operational Reality</div>
   <h2 class="section-title">메시지의 진화 — 현재 구성과 초기 형식(보존)</h2>
-  <p class="section-desc">진입가는 paper ledger entry_price 와 매칭되어 close-out 시 실제 15m 경로와 비교 — slippage / signal-quality 자동 추적 인프라.</p>
+  <p class="section-desc">현재 알림의 09:00 가격은 <strong>참고가격이며 현재 체결가격이 아니다</strong>. 서버 수락 시각·가상평가 진입 시각·실제 사용자의 매매 시각을 구분한다. −3% SL / +5% TP는 15분 봉 경로의 가상평가 설정이며 자동 주문이나 손실 보장이 아니다.</p>
 
   <!-- 현재 구성 (2026-06-11) -->
   <div class="callout" style="margin-bottom:2rem;">
-    <p><strong>현재 구성 (2026-07-28) — 정상일 기준 하루 2~3통</strong></p>
+    <p><strong>현재 구성 (2026-09-09) — R1 두 예약 슬롯</strong></p>
     <p style="margin-top:0.6rem;">
-      <strong>08:50</strong> 🛰️ R1 레이더 <strong>예고</strong> (진입가는 09:00 확정)<br>
-      <strong>09:05</strong> 🛰️ R1 레이더 <strong>확정</strong> — Top3 + 진입가 + SL −3% / TP +5% + 하방 플래그<br>
-      <strong>09:05~</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(Binance volsurge 융합 — 08-05 동결 조기사망 조항으로 KILL, 발송 종료·record 박제)</span><br>
+      <strong>08:50</strong> 🛰️ R1 레이더 <strong>장전</strong> — 개장 후 슬롯과 입력 기준일 구분<br>
+      <strong>09:05</strong> 🛰️ R1 레이더 <strong>개장 후</strong> — Top3 + 09:00 참고가격 + 가상 SL −3% / TP +5% + 하방 플래그<br>
+      <strong>발송 없음</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(08-05 KILL, 판정·기록 보존)</span><br>
+      <strong>별도 기록</strong> Top10 체결정보 시험 — 09-10 첫 기대일, 실제 알림·학습·모델 교체 없음<br>
       <span style="color:var(--text-muted);">구 pre-open/distribution 모델은 텔레그램 완전 무발송(record-only 채점만). + 이상 시에만: heartbeat 경고 · <strong>failure-alert</strong>(어느 유닛이든 죽으면 즉시 — 07-28 가동). 아래 mockup 들은 초기 (Phase X+1) 형식 — 디자인 진화의 기록으로 보존.</span>
     </p>
   </div>
@@ -1163,8 +1225,8 @@
   </div>
 
   <div class="chart-wrap" style="margin-top:2rem;">
-    <div class="chart-title">Before / After — 운영 단계의 실제 변경 5종</div>
-    <div class="chart-subtitle">모두 incident 또는 audit 결과로 추가됨. 모델 재학습 X — 운영 코드 변경만으로 ledger 무결성과 latency 가 바뀜.</div>
+    <div class="chart-title">Before / After — 초기 운영에서 바꾼 5종 (역사 기록)</div>
+    <div class="chart-subtitle">아래 가격·지연·legacy close 정의는 당시 모델의 변경 기록이다. 현재 R1의 가격·24시간 평가 계약은 위 설명을 따른다.</div>
     <table class="tbl">
       <thead><tr><th>운영 spec</th><th>Before</th><th>After</th><th>이유</th></tr></thead>
       <tbody>
@@ -1182,44 +1244,54 @@
 <!-- Automation -->
 <section id="automation"><div class="container fade-in">
   <div class="section-label">Automation</div>
-  <h2 class="section-title">systemd 7 timer + failure-alert — 무인 운영</h2>
-  <p class="section-desc">cron 대신 systemd timer (xsec_alpha 패턴 차용). install <code class="c">sudo bash deploy/install_systemd.sh</code> 한 줄. 모든 unit 은 <code class="c">deploy/</code> 에서 버전 관리. 텔레그램 발송은 <strong>R1 레이더(08:50/09:05)가 담당</strong> — 아래 predict timer 들은 구 모델을 record-only 로 돌리고 그 끝에서 R1 을 발송한다.</p>
+  <h2 class="section-title">systemd 9 timer + 실패 감시 — 추천과 연구를 분리한다</h2>
+  <p class="section-desc">9 timer + 9 service + failure-alert, 총 19개 설치 파일의 저장소 동등성을 09-09 확인했다. selftest의 추천 선행 의존성을 제거하고 자원을 제한해 검사와 추천을 분리했다. 설치·검증 완료와 다음 정규 실행의 성공은 다른 증거다. 텔레그램은 <strong>R1(08:50/09:05)</strong>만, 체결정보 시험은 별도 비발송 경로다.</p>
 
   <div style="margin: 2rem 0;">
     <div class="auto-timer blue-acc">
       <div class="auto-name">prelude-preopen.timer<span class="mono-small">scripts/daily_run_preopen.sh</span></div>
-      <div class="auto-role">15m DB update + health_check(<strong>stale 면 중단 → 발송 X</strong>) + 구 pre-open predict 는 record-only(observed −40.8%) → 그 끝에서 <strong>R1 레이더가 08:50 예고 텔레그램 발송(champion)</strong>. decision-window 가드 유지.</div>
-      <div class="auto-when"><strong>매일</strong>08:50 KST<br><span style="color:var(--blue);">R1 예고</span></div>
+      <div class="auto-role">15m DB update + health_check(<strong>stale 면 중단 → 발송 X</strong>) + 구 pre-open predict 는 record-only(observed −40.8%) → 그 끝에서 <strong>R1 레이더 장전 텔레그램</strong>을 발송한다. 08:50은 예약 시작이며 decision-window 가드를 유지한다.</div>
+      <div class="auto-when"><strong>매일</strong>08:50 KST<br><span style="color:var(--blue);">R1 장전</span></div>
     </div>
     <div class="auto-timer blue-acc">
       <div class="auto-name">prelude-distribution.timer<span class="mono-small">scripts/daily_run_distribution.sh</span></div>
-      <div class="auto-role">d1 update + health_check(stale 면 중단) + 구 distribution score 는 record-only → <strong>R1 레이더가 09:05 확정 텔레그램 발송(champion)</strong> + shadow ledger 기록. decision-window 09:00-09:20 가드.</div>
-      <div class="auto-when"><strong>매일</strong>09:05 KST<br><span style="color:var(--blue);">R1 확정</span></div>
+      <div class="auto-role">d1 update + health_check(stale 면 중단) + 구 distribution score 는 record-only → <strong>R1 레이더 개장 후 텔레그램</strong> + shadow ledger 기록. 09:05은 예약 시작이며 decision-window 09:00-09:20을 지킨다.</div>
+      <div class="auto-when"><strong>매일</strong>09:05 KST<br><span style="color:var(--blue);">R1 개장 후</span></div>
     </div>
     <div class="auto-timer green-acc">
       <div class="auto-name">prelude-close.timer<span class="mono-small">scripts/daily_close_distribution.sh</span></div>
-      <div class="auto-role">paper ledger close-out + <strong>R1 SHADOW ledger 실현</strong>(−3%SL/+5%TP 15m 경로) + <strong>champion_selector 재선정</strong>(forward 갱신 후 → 다음날 08:50/09:05 챔피언 결정). 텔레그램 X.</div>
-      <div class="auto-when"><strong>매일</strong>09:30 KST<br><span style="color:var(--green);">champion 재선정</span></div>
+      <div class="auto-role">paper ledger close-out + <strong>R1 가상 경로 실현</strong>(−3%SL/+5%TP) + 상태 집계. challenger 잠금을 자동으로 풀지 않으며 현재 발송 모델은 R1을 유지한다. 텔레그램 X.</div>
+      <div class="auto-when"><strong>매일</strong>09:30 KST<br><span style="color:var(--green);">평가·상태 갱신</span></div>
     </div>
     <div class="auto-timer muted-acc">
       <div class="auto-name">prelude-preopen-close.timer<span class="mono-small">scripts/daily_close_preopen.sh</span></div>
-      <div class="auto-role">15m DB update wrapper + pre-open ledger close-out. first1h 4 bars 모두 closed 일 때만 status=closed, 부족하면 pending 으로 retry.</div>
+      <div class="auto-role">R1 장전 24시간 라벨·원장과 별도 legacy pre-open 원장을 갱신한다. legacy 첫1시간과 R1 24시간을 같은 지표로 합치지 않는다. 미성숙·관측 결손은 상태로 남긴다.</div>
       <div class="auto-when"><strong>매일</strong>10:05 KST</div>
     </div>
     <div class="auto-timer green-acc">
       <div class="auto-name">prelude-publish-dashboard.timer<span class="mono-small">scripts/publish_dashboard.sh</span></div>
-      <div class="auto-role">findings.json(암호화) 빌드 + <strong>champion/challenger 리더보드</strong> + 6 차트 → soccz.github.io 대시보드 push. close 2개 끝난 후.</div>
+      <div class="auto-role">검증된 암호화 데이터로 현재 R1 전달·평가와 연구 상태를 게시한다. 대기·실패·미계산을 0% 성과로 바꾸지 않으며 개인 원본은 공개 소개에 싣지 않는다.</div>
       <div class="auto-when"><strong>매일</strong>10:10 KST</div>
     </div>
     <div class="auto-timer muted-acc">
       <div class="auto-name">prelude-backup.timer<span class="mono-small">DB 백업</span></div>
-      <div class="auto-role">upbit_d1.db 스냅샷 백업 — 데이터 유실 방어(방치 운영 안전 레일).</div>
+      <div class="auto-role">DB와 추천·연구 증거를 버전 보존한다. 같은 장비의 백업을 외부 독립 재해 복구로 과장하지 않는다.</div>
       <div class="auto-when"><strong>매일</strong>04:00 KST</div>
     </div>
     <div class="auto-timer muted-acc">
       <div class="auto-name">prelude-heartbeat.timer<span class="mono-small">freshness · 발송 감시</span></div>
-      <div class="auto-role">데이터 freshness + 당일 발송 여부 heartbeat 점검 — 조용한 실패(stale·미발송)를 운영자가 알 수 있게. v2 시한부 판정 일일 자동 채점 포함.</div>
+      <div class="auto-role">데이터 freshness·서버 수락·수집/시험 기록 누락을 점검한다. 종료된 v2를 다시 시작하지 않고, 새 시험의 not_started와 실패·불확실 상태를 구분한다.</div>
       <div class="auto-when"><strong>매일</strong>10:30 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-selftest.timer<span class="mono-small">전수 회귀 검사</span></div>
+      <div class="auto-role">테스트의 운영 DB·실제 발송 접근을 막고 낮은 CPU/I/O 우선순위·자원 상한으로 검사한다. 추천을 시작하려면 selftest가 먼저 끝나야 하는 연결은 제거했다.</div>
+      <div class="auto-when"><strong>매일</strong>07:30 KST</div>
+    </div>
+    <div class="auto-timer muted-acc">
+      <div class="auto-name">prelude-microstructure.timer<span class="mono-small">별도 체결 관측·기록시험</span></div>
+      <div class="auto-role">원시 수집 후 인과 시점 검증 → 기존 동점 시험 기록 → 새 Top10 시험 기록 → 각각 누적평가. 오류는 드러내되 R1 모델·실알림을 변경하지 않는다. 다음 정규 실행의 성공은 아직 미확인.</div>
+      <div class="auto-when"><strong>매일</strong>08:45 KST</div>
     </div>
     <div class="auto-timer muted-acc">
       <div class="auto-name">prelude-failure-alert@.service<span class="mono-small">OnFailure · 경보</span></div>
@@ -1861,36 +1933,27 @@
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-08-05</div>
+  <div class="section-label">Current Status · 2026-09-09</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
 
   <div class="callout" style="margin-bottom:2rem;">
-    <p><strong>상태 갱신 (2026-07-28):</strong> 판정은 <strong>radar-not-strategy 로 확정</strong>됐다 —
-    신형 forward 측정에서 R1 상방 head AUC 0.477(하방 head 0.721 은 생존), 우수 추천기 주장 불가.
-    발송은 R1(08:50/09:05) 단일 — 🎯 v2 는 아래대로 08-05 KILL 로 발송이 끝났다. 자동 주문 없음.
-    historical 백테스트 탐색은 <strong>공식 종료</strong> — 이후 모든 판단은 새 측정 계약(불변 snapshot → 발송 영수증 →
-    발송시각 기준 96봉 라벨)의 forward 표본에서만 한다. v2 는 동결 조기사망 조항으로 <strong>2026-08-05 KILL 이 자동 집행</strong>돼 종결됐다(불변 터미널).
-    이 전환의 전체 기록(실패 포함)은 <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a>.
-    아래 박스들은 06-11 시점 기록으로 보존한다.</p>
+    <p><strong>상태 갱신 (2026-09-09):</strong> 실알림은 <strong>R1 두 슬롯(08:50/09:05)</strong>을 유지한다. 새 상방 모델·타깃 날짜·확률 보정 비교는 이번 고정 설정에서 운영 교체 근거를 얻지 못했다. v2는 <strong>08-05 terminal KILL</strong>이며 재개하지 않는다. Top10 체결정보 시험은 09-10부터 별도 사전 기록을 기대하는 단계로, <strong>적격 효과 표본 0일·성과 미계산·학습/자동 승격 없음</strong>이다.
+    오늘 체결 수집의 96ns 정밀도 실패는 원본에 남겼고 다음 실행 코드를 수리했다. 전체 과정은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>, 과거의 판정과 장애는 <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a>에 있다.</p>
   </div>
-  <p class="section-desc"><strong>발송 = R1 레이더 (08:50 예고 / 09:05 확정) 단일 — 🎯 PUMP v2 는 08-05 KILL 로 종료</strong>.
-  구 distribution · pre-open 은 record-only. 챔피언은 forward 성과로 자동 선정(하방 우선) — selector 가 아직 아무 모델도 승격시키지 못해 <strong>R1 이 기본(default) 챔피언</strong>으로 발송 중이다(절대 게이트: 비용차감 forward net&gt;0 + 완결 하방 표본 n≥30).
-  <strong>12실험 exhaustive + 챌린저 7후보</strong>까지 자동 net 흑자는 전무 — 시스템 정체성은
-  <strong>하방-규율 추천 레이더</strong>로 확정. 새로 추가된 두 축: <strong>exit lab</strong> (청산 잣대 7개 매일 병렬 기록 —
-  채택은 데이터가 결정) + <strong>검증 사슬</strong> (researcher → evaluator → 15m 재계산 — 가짜 양수 1건 실제 적발).
-  자동 주문 없음 — 사람이 청산한다.</p>
+  <p class="section-desc"><strong>발송 = R1 레이더 (08:50 장전 / 09:05 개장 후) 단일 — 🎯 PUMP v2 는 08-05 KILL 로 종료</strong>.
+  구 distribution · pre-open은 record-only이며 현재 R1 장전 슬롯과 다른 모델이다. 현재 등록 설정에서 <strong>발송 후보 자격은 R1만</strong> 열려 있다. challenger 기본 잠금은 새 모델의 무단 진입을 막지만 완전한 자동 연구·승격 시스템을 뜻하지 않는다. 자동 주문은 없고 진입·청산은 사람이 판단한다. 저하방·고상방은 목표이며 안전 보장 문구가 아니다.</p>
 
   <!-- ▼ v-next 운영 그림: champion/challenger + 매일 시간표 (2026-06-01) -->
   <div class="two-col" style="margin-bottom:2rem; align-items:stretch;">
     <!-- 박스 ① champion/challenger 운영 방식 -->
     <div class="layer-card" style="border-top-color: var(--amber);">
-      <div class="layer-num">UNATTENDED · 자동 선정</div>
-      <div class="layer-title">champion / challenger — 어떻게 굴러가나</div>
+      <div class="layer-num">CURRENT · 발송 자격 분리</div>
+      <div class="layer-title">R1 유지 / 다른 후보는 자동 교체하지 않는다</div>
       <div class="card-text">
-        <strong>챔피언 R1</strong> + <strong>챌린저 3</strong>(R2 하방패널티 · A1 sustainability · 구 distribution)가 매일 <strong>shadow 로 동시 실행</strong> → 다음날 −3%SL/+5%TP 로 청산해 <strong>forward 성과를 적립</strong>한다.<br>
-        <code class="c">ops/champion_selector.py</code> 가 <strong>하방 우선</strong>으로 자동 채점 — 1순위 P(≤−5%)↓, 2순위 net(0.15% 차감)↑, 3순위 hit↑.<br>
-        교체 게이트 = forward 30거래일 + leak-free + 히스테리시스(연속 5거래일 마진 우위 → flip-flop 방지).<br>
-        <strong>챔피언만 발송</strong>한다. 현재 챌린저는 전부 <code class="c">challenger_only</code>(발송 절대 X, forward 비교·리더보드용) — 승급은 사람이 명시할 때만. 그래서 <strong>발송은 항상 R1 단일</strong> 보장.
+        <strong>R1만 실알림</strong>에 연결한다. R2·A1 등 challenger의 기록·평가와 발송 자격은 별개다.<br>
+        <code class="c">challenger_only</code>의 기본값은 잠금이며, 현재 등록 모델의 명시 설정을 유지했다. 상태 집계가 실행되더라도 다른 후보를 자동으로 발송 모델로 바꾸지 않는다.<br>
+        <strong>Top10 시험은 모델 학습이 아니라 선정 가설의 사전 기록</strong>이다. 09-10 이전 과거 점수를 만들어 표본으로 채우지 않으며, 기존 동점 시험과 ID·저장소·달력을 분리했다.<br>
+        추천 품질이 좋아졌다는 결론이나 운영 승격은 아직 없다.
       </div>
     </div>
     <!-- 박스 ② 매일 시간표 -->
@@ -1898,20 +1961,20 @@
       <div class="layer-num">매일 · KST · 무인</div>
       <div class="layer-title">하루 시간표 (08:50 → 10:10)</div>
       <div class="card-text">
-        <strong>08:50</strong>&nbsp; R1 <strong>예고</strong> 발송 (진입가 09:00 확정)<br>
-        <strong>09:05</strong>&nbsp; R1 <strong>확정</strong> 발송 + shadow ledger 기록<br>
-        <strong>09:30</strong>&nbsp; 전일 청산(−3%SL/+5%TP) + <strong>champion 재선정</strong><br>
-        <strong>10:05</strong>&nbsp; pre-open ledger 청산<br>
+        <strong>08:50</strong>&nbsp; R1 <strong>장전</strong> 슬롯 (실제 발송 시각은 영수증)<br>
+        <strong>09:05</strong>&nbsp; R1 <strong>개장 후</strong> 슬롯 + snapshot·원장 연결<br>
+        <strong>09:30</strong>&nbsp; 전일 가상평가(−3%SL/+5%TP) + 상태 갱신<br>
+        <strong>10:05</strong>&nbsp; R1 장전·legacy 원장 평가<br>
         <strong>10:10</strong>&nbsp; 대시보드 + 챔피언 리더보드 publish<br>
-        <span style="color:var(--text-muted);">+ 04:00 DB 백업 · 10:30 heartbeat — 총 <strong>systemd 7 timer + failure-alert 경보</strong>. stale DB 면 freshness 게이트가 발송을 막는다.</span>
+        <span style="color:var(--text-muted);">+ 04:00 백업 · 07:30 selftest · 08:45 별도 체결 수집 · 10:30 heartbeat — 총 <strong>systemd 9 timer + failure-alert</strong>. 예약·실행·내구 저장·평가 시각은 각각 확인한다.</span>
       </div>
     </div>
   </div>
 
   <!-- 연구 결론: 12실험 exhaustive (2026-06-01) -->
   <div class="callout warn" style="margin-bottom:2rem;">
-    <p><strong>연구 결론 (2026-06-01 · 12실험 exhaustive):</strong> 챔피언/챌린저로 <em>net 흑자</em> 모델을 찾으려 <strong>후처리 5축</strong>(랭킹 R2 · 청산 6룰 · 진입필터 A1 · regime · 발사 · 멀티데이 홀딩) + <strong>새 신호</strong>(sustained 라벨 · dip-buy) + <strong>R1 엔진 sweep</strong>까지 12개 가설을 OOS·net(0.15% 차감)·거래일블록 bootstrap 으로 검증했다. <strong>net-positive 는 단 하나도 없었다</strong> — 전부 leak 4/4 PASS, R1 byte-재현 negative control. 이 데이터(업비트 KRW 일봉 · 1일 청산)에서 net 흑자는 <strong>구조적으로 도달불가</strong>가 통계적으로 확정됐다(어느 lever 든 하방을 줄이면 변동성=상방이 같이 깎임). 멀티데이로 천장을 풀자 손실꼬리가 오히려 더 깊어졌다(deep-loss 33%·worst −63%).</p>
-    <p style="margin-top:0.7rem;"><strong>재현되는 유일한 lever = 하방규율.</strong> A1(sustainability)이 deep-loss 를 <strong>13.5% → 6.0%</strong>(bootstrap 유의)로 절반 낮춰 사용자 1순위(하락위험 최소화)에 부합 — SHADOW 로 forward 검증 중. 결론: 이 시스템은 <strong>자동 수익기가 아니라 하방-규율 추천 레이더</strong>다. 진입엣지(base 대비 ~6배 농축 · 큰 펌프 포착)는 진짜지만 <strong>수익은 사용자의 진입/청산 판단이 결정</strong>한다. net 흑자를 노리려면 데이터/타임프레임 자체(인트라데이 · 선물 · 더 긴 보유)를 바꾸는 별도 연구가 필요.</p>
+    <p><strong>연구 기록 (2026-06-01 · 12실험):</strong> 챔피언/챌린저로 <em>net 흑자</em> 모델을 찾으려 <strong>후처리 5축</strong>(랭킹 R2 · 청산 6룰 · 진입필터 A1 · regime · 발사 · 멀티데이 홀딩) + <strong>새 신호</strong>(sustained 라벨 · dip-buy) + <strong>R1 엔진 sweep</strong>까지 12개 가설을 OOS·net(0.15% 차감)·거래일블록 bootstrap으로 검증했다. <strong>해당 설정에서 net-positive는 단 하나도 없었다</strong> — leak 4/4 PASS, R1 byte-재현 negative control. 멀티데이 비교는 손실꼬리가 더 깊었다(deep-loss 33%·worst −63%). 당시 이를 “구조적 천장”이라 해석했지만, 유한한 비교는 가능한 모든 방법의 불가능성을 증명하지 않는다.</p>
+    <p style="margin-top:0.7rem;">당시 A1(sustainability)은 deep-loss를 <strong>13.5% → 6.0%</strong>로 낮춰 SHADOW 후속 관측 대상으로 남겼다. 그러나 하방 감소만으로 상승 기회까지 보존됐다고 할 수 없으며 R1 대체안으로 자동 승격하지 않았다. ~6배 농축과 큰 펌프 포착은 해당 과거 실험의 기록이다. <strong>현재 추천의 우위나 사용자의 실현 수익으로 읽지 않는다.</strong></p>
   </div>
 
   <div class="two-col" style="margin-bottom:2rem;">
@@ -1940,20 +2003,20 @@
   </div>
 
   <div class="four-col" style="margin-bottom:2rem;">
-    <div class="metric-card"><span class="metric-val blue">R1 레이더</span><div class="metric-label">텔레그램 발송</div><div class="metric-sub">08:50 예고 + 09:05 확정<br>챔피언만 발송</div></div>
+    <div class="metric-card"><span class="metric-val blue">R1 레이더</span><div class="metric-label">텔레그램 예약 슬롯</div><div class="metric-sub">08:50 장전 + 09:05 개장 후<br>현재 발송 자격 R1만</div></div>
     <div class="metric-card"><span class="metric-val neutral">DEMOTED</span><div class="metric-label">구 preopen 모델</div><div class="metric-sub">WATCH_ONLY / record-only<br>observed -40.8%</div></div>
     <div class="metric-card"><span class="metric-val amber">SHADOW</span><div class="metric-label">분포+하방 스캐너</div><div class="metric-sub">signals/recommend.py<br>R1 레이더로 발송중</div></div>
-    <div class="metric-card"><span class="metric-val pos">-3% / +5%</span><div class="metric-label">위험 정책</div><div class="metric-sub">SL / TP<br>하방 위험 최소화</div></div>
+    <div class="metric-card"><span class="metric-val neutral">-3% / +5%</span><div class="metric-label">가상평가 설정</div><div class="metric-sub">SL / TP · 비용 0.15% 한 번<br>실제 손실 상한 보장 아님</div></div>
   </div>
 
   <div class="callout">
     <p>
       <strong>R1 레이더 채널 (06-11 기록 → 07-28 판정 확정):</strong>
-      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 매일 유니버스 top100 에서 top-3 + 코인별 상승/하락 확률 분포를 발사한다. <strong>R1 레이더로 08:50/09:05 텔레그램에 연결되어 있다.</strong> 당시엔 SHADOW 검증 중이었고, 최종 판정은 상단 상태 갱신과 같다. 이후 판단은 forward 증거사슬만 한다 — v2 동결 판정은 08-05 조기 KILL 로 이미 집행됐다.
+      분포+하방 risk-reward 스캐너(<code class="c">signals/recommend.py</code>)가 시점에 맞춘 유니버스 top100에서 top-3와 상·하방 추정치를 만든다. <strong>현재도 R1이 08:50/09:05 슬롯에 연결돼 있다.</strong> v2 동결 판정은 08-05 KILL로 집행됐다. 9월의 승인된 오프라인 비교와 새 체결정보 기록시험은 위에 별도로 구분했으며, 과거 이력 재사용을 새로운 미래 검증으로 부르지 않는다.
     </p>
     <p style="margin-top:0.7rem;">
       <strong>운영 원칙 유지:</strong>
-      매수 추천 X · 자동매매 X · 텔레그램 알림 + paper/shadow ledger 만 · BTC regime 표시 · raw probability 표기 금지 · threshold 고정값 사용(라이브 재계산 X) · 거래비용 0.15% 왕복 차감 · 모든 코드 self-contained (gan_t / xsec_alpha import X).
+      자동매매 X · 텔레그램 알림 + 가상 원장 · BTC regime 표시 · 상·하방 값은 검증 중 추정치 · 09:00 참고가격과 실제 체결가격 구분 · 가상 순수익은 왕복비용 0.15% 한 번 차감 · 코드 self-contained.
     </p>
   </div>
 
@@ -1962,7 +2025,7 @@
     그 문장은 예정보다 27일 일찍 쓰였다. <strong>2026-08-05, v2 조기 KILL</strong> — 동결 조항의 사망 규칙(누적 mean net &lt; 0)이
     verified closed 9건, −0.097% 에서 사람 손 없이 발동했고 판정문은 해시로 박제됐다. 기준은 끝까지 뒤집히지 않았다.
     급등 레이더는 죽었고, R1 레이더(상승확률·하방위험)는 계속 아침을 연다.
-    다음 문장도 사람이 아니라 forward 표본이 쓸 것이다.
+    9월에 이어 쓴 문장은 <strong>“수리는 검증됐지만, 추천 개선은 아직 검증되지 않았다”</strong>다. 09-10부터 새 Top10 가설이 제시간에 기록되고 공통 날짜에서 비교되는지 확인한다. 그 결과가 다음 판단의 근거가 될 것이다.
   </p>
 </div></section>
 
