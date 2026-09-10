@@ -5,14 +5,14 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>prelude — 업비트 KRW 상승확률·하방리스크 레이더 · 정직 보고서</title>
-  <meta name="description" content="저하방·고상방 후보를 찾는 업비트 KRW 수동매매 보조 레이더의 개발일지. R1 08:50/09:05 알림, v2 종료. 모델 비교의 실패에서 측정·전달 수리, 새 체결정보 관측으로 이어진 기록. Top10은 09-10 시작 예정인 비발송 기록시험이며 추천 우위는 미검증.">
+  <meta name="description" content="저하방·고상방 후보를 찾는 업비트 KRW 수동매매 보조 레이더의 개발일지. R1 08:50/09:05 알림, v2 종료. 09-10 체결정보 첫 정상 기록 뒤 테스트 시간 초과·확률 표시·감시 누락을 수리하고 실제 서버에서 검증했다. 운영 수리와 추천 우위 미검증을 구분한다.">
   <meta property="og:title" content="prelude — 상승확률·하방리스크 레이더">
-  <meta property="og:description" content="덜 하락하고 더 상승할 후보를 찾기까지 — 모델 비교의 실패, 측정·전달 수리, 새 체결정보 가설을 공개한 개발일지. R1 실알림 유지 · v2 종료 · Top10 비발송 기록시험 · 성능 개선 미검증.">
+  <meta property="og:description" content="덜 하락하고 더 상승할 후보를 찾기까지 — 모델 비교의 실패에서 체결정보 첫 정상 기록, 실제 서버의 점검 실패와 수리 검증까지. R1 실알림 유지 · Top10 비발송 기록시험 · 운영 수리 ≠ 추천 우위.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="prelude — 상승확률·하방리스크 레이더">
-  <meta name="twitter:description" content="R1 수동매매 보조 레이더의 개발일지. 실패를 보존하고 측정부터 수리한 뒤 새 체결정보를 관측한다. v2 종료 · Top10 비발송 기록시험 · 추천 우위 미검증 · 자동매매 아님.">
+  <meta name="twitter:description" content="R1 수동매매 보조 레이더의 개발일지. 09-10 체결정보 첫 정상 기록과 실제 서버의 점검 실패·수리 검증을 이어 썼다. v2 종료 · Top10 비발송 기록시험 · 추천 우위 미검증 · 자동매매 아님.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +70,7 @@
     @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
     section { padding: 5.5rem 2rem; }
-    #new-information { scroll-margin-top: 80px; }
+    #new-information, #runtime-verification { scroll-margin-top: 80px; }
     section.compact { padding: 3.5rem 2rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
@@ -360,10 +360,10 @@
       <div class="hero-stat"><span class="hero-stat-num">R1</span><span class="hero-stat-label">현재 실알림 모델</span></div>
       <div class="hero-stat"><span class="hero-stat-num">2 slots</span><span class="hero-stat-label">08:50 / 09:05 KST</span></div>
       <div class="hero-stat"><span class="hero-stat-num">KILL</span><span class="hero-stat-label">v2 종료 · 08-05</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">09/10</span><span class="hero-stat-label">Top10 첫 기록 예정일</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">09/10</span><span class="hero-stat-label">Top10 첫 정상 기록</span></div>
       <div class="hero-stat"><span class="hero-stat-num">미검증</span><span class="hero-stat-label">새 시험의 추천 우위</span></div>
     </div>
-    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">2026-09-09 기준. Top10은 학습·실알림 변경 없는 별도 기록시험이며 아직 적격 효과 표본은 0일이다. 알림 시각은 예약 시각이며 실제 발송·평가 시각과 구분한다.</p>
+    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">2026-09-10 기준. Top10은 학습·실알림 변경 없는 별도 기록시험이다. 첫 정상 기록을 확인했지만 24시간 결과는 아직 미성숙하며 추천 우위는 미판정이다. 알림 시각은 예약 시각이며 실제 발송·평가 시각과 구분한다.</p>
     <div class="hero-links">
       <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer" class="hero-link">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -382,7 +382,7 @@
 <div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
   <div class="callout warn" style="margin:1.5rem 0;">
     <p><strong>처음 남긴 결론 (2026-05-31):</strong> 과거 OOS에서 후보 농축을 관찰했지만 기계적 청산의 순수익은 breakeven~음수였다. 당시의 ~6배 농축과 낙관적 백테스트 수치는 아래에 보존하되 <strong>현재 R1의 수익성·안전성 인증으로 사용하지 않는다</strong>.
-    <strong>현재 결론 (2026-09-09):</strong> v2는 08-05 KILL로 종료. 추가 모델 비교에서도 교체할 근거를 얻지 못해 R1을 유지한다. 다음 질문은 <strong>새 체결 정보가 실제 Top3를 개선하는가</strong>다. 측정 수리와 첫 정규 수집 실패까지의 후속 기록은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>에서 이어진다.</p>
+    <strong>현재 결론 (2026-09-10):</strong> v2는 08-05 KILL로 종료. 추가 모델 비교에서도 교체할 근거를 얻지 못해 R1을 유지한다. 새 체결정보는 첫 정상 기록까지 왔고, 실제 서버에서 드러난 점검·표시·감시 문제도 수리했다. 그러나 <strong>새 정보가 실제 Top3를 개선하는가</strong>는 아직 미판정이다. 새 가설은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>, 오늘의 실패와 수리 검증은 <a href="#runtime-verification" style="color:var(--amber); border-bottom:1px solid var(--amber);">§09-10 실사용 검증</a>에서 이어진다.</p>
   </div>
 </div>
 <hr class="divider">
@@ -409,9 +409,9 @@
 
 <div class="part-divider fade-in">
   <div class="pd-label">Part I · 이야기</div>
-  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 09-09</div>
+  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 09-10</div>
   <div class="pd-bridge">처음에는 <strong>"어떻게 맞히나"</strong>를 물었다. 첫 모델의 실패(Journey), 12실험의 한계(v-next), 검증 사슬과 측정 재건(Integrity Turn)을 지나도 더 좋은 추천이라는 답은 남지 않았다.
-  그래서 9월에는 같은 정보를 다시 학습하는 실험부터 비교하고, 새 체결 정보를 직접 관측하는 단계(September)로 이어졌다. 실패 이력을 지우지 않고 다음 질문의 근거로 남긴다.</div>
+  그래서 9월에는 같은 정보를 다시 학습하는 실험부터 비교하고, 새 체결 정보를 직접 관측하는 단계(September)로 이어졌다. 첫 정상 기록 뒤에도 실제 서버의 점검 실패를 따로 수리했다. 실패 이력을 지우지 않고 다음 질문의 근거로 남긴다.</div>
 </div>
 
 <!-- Project Journey -->
@@ -999,7 +999,7 @@
   <div class="callout fail">
     <p><strong>09-09 · 첫 정규 수집은 끝났지만, 피처 생성은 실패했다 — 96ns의 차이</strong></p>
     <p style="margin-top:0.6rem;">짧은 모의·canary 검증 뒤 첫 정규 수집이 실행됐다. 원시 수집은 complete였지만, 추천 snapshot의 완료 시각과 manifest에 기록된 수집 cutoff를 맞추는 검사에서 멈췄다. 실제 수집 종료 시각이 같아야 한다는 검사는 아니다. 원인은 datetime을 나노초로 바꿀 때 사용한 부동소수점 곱셈이었다. 같은 시각이 <strong>96ns 작게 저장되는 현상</strong>을 실제 기록에서 재현했다.</p>
-    <p style="margin-top:0.6rem;">변환을 UTC 정수 시간 산술로 고치고 경계 테스트를 추가했다. 별도 감사는 원시 <strong>335,706행</strong>의 체크섬·순서·행수와 원 100종목의 300초 체결 관측을 확인했다. 그러나 오늘의 원시자료·manifest·추천 snapshot은 고치지 않았고, 실패한 날을 뒤늦은 성공 점수로 채우지도 않았다. <strong>수정 검증 성공과 오늘의 실제 실패는 함께 남는다.</strong></p>
+    <p style="margin-top:0.6rem;">변환을 UTC 정수 시간 산술로 고치고 경계 테스트를 추가했다. 별도 감사는 원시 <strong>335,706행</strong>의 체크섬·순서·행수와 원 100종목의 300초 체결 관측을 확인했다. 그러나 09-09 당일의 원시자료·manifest·추천 snapshot은 고치지 않았고, 실패한 날을 뒤늦은 성공 점수로 채우지도 않았다. <strong>수정 검증 성공과 09-09의 실제 실패는 함께 남는다.</strong></p>
     <span class="badge badge-fail">09-09 원본 실패 보존</span>
     <span class="badge badge-ok">정수 시각 수리·독립 검산</span>
   </div>
@@ -1013,7 +1013,42 @@
     <span class="badge badge-blue">실제 추천·모델·라벨 변경 없음</span>
   </div>
 
-  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">여기까지 완성된 것은 <strong>새 가설을 거짓 성공 없이 관측하고 비교하는 경로</strong>다. 더 좋은 추천이 완성된 것은 아니다. 다음 정규 실행에서는 정확한 cutoff, 진입 전 저장, 이후 관측 가능한 24시간 결과를 차례로 확인한다. 상세 설계·실행·반증 기록은 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES.md</a>, 현재 상태는 <a href="/projects/prelude/dashboard/" style="color:var(--blue);">대시보드</a>로 연결한다.</p>
+  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">09-09까지 완성된 것은 <strong>새 가설을 거짓 성공 없이 관측하고 비교하는 경로</strong>다. 더 좋은 추천이 완성된 것은 아니다. 다음 정규 실행에서 확인한 기록과 새로운 운영 문제는 <a href="#runtime-verification" style="color:var(--blue);">09-10 후속 일지</a>로 이어진다. 상세 설계·실행·반증 기록은 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES.md</a>, 현재 상태는 <a href="/projects/prelude/dashboard/" style="color:var(--blue);">대시보드</a>로 연결한다.</p>
+</div></section>
+<hr class="divider">
+
+<!-- The first real operating-day audit: success and failure are separate evidence. -->
+<section id="runtime-verification"><div class="container fade-in">
+  <div class="section-label">The Next Morning · 2026-09-10</div>
+  <h2 class="section-title">추천은 도착했다. 그렇다고 모든 것이 정상이었을까</h2>
+  <p class="section-desc">다음 질문은 새 모델이 아니라 <strong>“오늘 온 텔레그램을 믿을 수 있는 경로로 만들었나”</strong>였다. 실제 발송·원장·서버 로그를 대조하자 정상인 부분과 수리할 부분이 동시에 드러났다. 둘을 하나의 성공 배지로 합치지 않았다.</p>
+
+  <div class="callout">
+    <p><strong>첫 정상 기록 · 수집 성공과 추천 개선을 구분한다</strong></p>
+    <p style="margin-top:0.6rem;">09-09의 96ns 실패 원본은 그대로 두고 다음날 정규 실행을 확인했다. 09-10에는 체결정보 수집과 두 비발송 비교시험의 사전 기록 경로가 정상 동작했다. 정본 가상진입 전에 점수의 내구 저장이 확인되고 유효한 commit에 연결됐다. <strong>운영 R1 알림을 새 순위로 바꾼 것은 아니다.</strong></p>
+    <p style="margin-top:0.6rem;">장전·개장 후 추천 두 번은 서버 수락 증거와 원장 여섯 행이 일치했다. 그러나 새 시험의 첫 24시간 결과는 아직 다 모이지 않았다. 제시간에 기록했다는 증거는 생겼지만, 하락을 줄이고 상승 기회를 늘렸다는 효과 판정은 아직 없다.</p>
+    <span class="badge badge-ok">첫 정상 사전 기록</span>
+    <span class="badge badge-blue">추천 우위는 미판정</span>
+  </div>
+
+  <div class="callout fail">
+    <p><strong>같은 아침의 실패 · 추천이 와도 점검까지 통과한 것은 아니었다</strong></p>
+    <p style="margin-top:0.6rem;">07:30 자동 selftest는 <strong>2,913개 통과·2개 실패</strong>로 끝났다. 추천 전달과 원장 기록은 정상이어도 “전체 정상”이라고 보고할 수 없었다. 실패한 두 검사는 자식 프로세스를 새로 시작하고 모듈을 불러오는 준비 시간까지 기존 10초·30초 작업 제한 안에 넣고 있었다. 실제 서비스에는 <strong>CPU 50% 제한</strong>이 걸려 있었다.</p>
+    <p style="margin-top:0.6rem;">메시지에서도 작은 하락 추정값 0.37%가 정수 반올림으로 <strong>0%</strong>처럼 보였다. 위험이 없다는 뜻으로 읽힐 수 있는 표시였다. 또 종합 heartbeat는 selftest의 당일 실패를 확인 항목에 포함하지 않았다. 즉시 실패 경보와 종합 점검이 같은 상태를 바라보지 못한 것이다.</p>
+    <span class="badge badge-fail">아침의 2개 실패 보존</span>
+    <span class="badge badge-pivot">전달·표시·감시를 따로 점검</span>
+  </div>
+
+  <div class="callout">
+    <p><strong>수리와 반증 · 제한을 풀지 않고, 실제 서버에서 다시 확인한다</strong></p>
+    <p style="margin-top:0.6rem;">준비 예산을 <strong>90초</strong>로 분리하고, 모든 자식이 준비된 뒤 함께 출발하도록 했다. 실제 동시쓰기에는 기존 <strong>10초·30초 제한</strong>을 유지했다. 준비 실패·작업 정체·부분 시작 실패에도 자식이 남지 않는지 검사했다. 90초는 부하 관측으로 다시 평가할 초기값이며, CPU 50% 제한·검사 수·결과 단언을 완화하거나 실패를 건너뛰지 않았다.</p>
+    <p style="margin-top:0.6rem;">양수인 1% 미만 확률은 앞으로 <strong>&lt;1%</strong>로 표시한다. 실제 0과 기존 1% 이상 표시는 유지하며 잘못된 값은 <strong>—</strong>로 드러낸다. 기존 메시지·확률값·영수증은 덮어쓰거나 재발송하지 않는다. heartbeat는 이제 <strong>KST 오늘 시작하고 종료한 최신 selftest의 exit 0</strong>만 정상으로 본다. 실패·전일 성공·미실행·진행 중·조회 오류는 구분해 경고한다.</p>
+    <p style="margin-top:0.6rem;">새 회귀 85개를 포함한 로컬 전수 검사는 <strong>3,000개 통과 / 421.80초</strong>였다. 이것만으로 제한 환경 통과를 주장하지 않았다. 사용자가 실제 systemd 서비스를 다시 실행한 결과도 <strong>3,000개 통과 / 878.74초</strong>였고, 독립 읽기 검사에서 종료 코드 0·CPU 50% 유지·상태 <code class="c">passed</code>를 확인했다. 아침 실패를 삭제한 것이 아니라 <strong>그날의 정상 재실행으로 현재 상태가 회복</strong>됐다.</p>
+    <span class="badge badge-ok">실제 서비스 전수 3,000 PASS</span>
+    <span class="badge badge-blue">모델·순위·라벨 변경 없음</span>
+  </div>
+
+  <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">이번에 강화한 것은 <strong>무엇이 실제로 정상이고 무엇이 아직 미검증인지 드러내는 운영 경로</strong>다. 한 번의 전수통과가 미래 무장애를 보장하지 않고, 체결 기록의 성공도 추천 우위를 보장하지 않는다. 다음 판단은 새 시험의 공통 날짜별 24시간 결과로 한다. 상세 설계·실패 주입·실제 서비스 증거는 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md#실사용-강화-13차--일일-점검-실패확률-표시종합-감시-보완-2026-09-10" style="color:var(--blue);">PHASES.md · 실사용 강화 13차</a>에 남겼다.</p>
 </div></section>
 <hr class="divider">
 
@@ -1159,12 +1194,13 @@
 
   <!-- 현재 구성 (2026-06-11) -->
   <div class="callout" style="margin-bottom:2rem;">
-    <p><strong>현재 구성 (2026-09-09) — R1 두 예약 슬롯</strong></p>
+    <p><strong>현재 구성 (2026-09-10) — R1 두 예약 슬롯</strong></p>
     <p style="margin-top:0.6rem;">
       <strong>08:50</strong> 🛰️ R1 레이더 <strong>장전</strong> — 개장 후 슬롯과 입력 기준일 구분<br>
       <strong>09:05</strong> 🛰️ R1 레이더 <strong>개장 후</strong> — Top3 + 09:00 참고가격 + 가상 SL −3% / TP +5% + 하방 플래그<br>
       <strong>발송 없음</strong> 🎯 <strong>PUMP 레이더 v2</strong> <span style="color:var(--text-muted);">(08-05 KILL, 판정·기록 보존)</span><br>
-      <strong>별도 기록</strong> Top10 체결정보 시험 — 09-10 첫 기대일, 실제 알림·학습·모델 교체 없음<br>
+      <strong>별도 기록</strong> Top10 체결정보 시험 — 09-10 첫 정상 기록, 24시간 효과 미판정·실제 알림·학습·모델 교체 없음<br>
+      <strong>표시·감시 수리</strong> 작은 양수 확률은 &lt;1%로 표시, heartbeat가 당일 selftest 결과도 확인<br>
       <span style="color:var(--text-muted);">구 pre-open/distribution 모델은 텔레그램 완전 무발송(record-only 채점만). + 이상 시에만: heartbeat 경고 · <strong>failure-alert</strong>(어느 유닛이든 죽으면 즉시 — 07-28 가동). 아래 mockup 들은 초기 (Phase X+1) 형식 — 디자인 진화의 기록으로 보존.</span>
     </p>
   </div>
@@ -1245,7 +1281,7 @@
 <section id="automation"><div class="container fade-in">
   <div class="section-label">Automation</div>
   <h2 class="section-title">systemd 9 timer + 실패 감시 — 추천과 연구를 분리한다</h2>
-  <p class="section-desc">9 timer + 9 service + failure-alert, 총 19개 설치 파일의 저장소 동등성을 09-09 확인했다. selftest의 추천 선행 의존성을 제거하고 자원을 제한해 검사와 추천을 분리했다. 설치·검증 완료와 다음 정규 실행의 성공은 다른 증거다. 텔레그램은 <strong>R1(08:50/09:05)</strong>만, 체결정보 시험은 별도 비발송 경로다.</p>
+  <p class="section-desc">9 timer + 9 service + failure-alert, 총 19개 설치 파일의 저장소 동등성을 09-09 확인했다. selftest의 추천 선행 의존성을 제거하고 자원을 제한해 검사와 추천을 분리했다. 09-10에는 준비 시간과 작업 제한을 분리한 뒤 <strong>실제 CPU 50% 서비스에서 전수 3,000개 통과</strong>를 확인했고, heartbeat에도 당일 selftest 확인을 추가했다. 설치·실행·추천 효과는 각각 다른 증거다. 텔레그램 추천은 <strong>R1(08:50/09:05)</strong>만, 체결정보 시험은 별도 비발송 경로다.</p>
 
   <div style="margin: 2rem 0;">
     <div class="auto-timer blue-acc">
@@ -1933,12 +1969,12 @@
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-09-09</div>
+  <div class="section-label">Current Status · 2026-09-10</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
 
   <div class="callout" style="margin-bottom:2rem;">
-    <p><strong>상태 갱신 (2026-09-09):</strong> 실알림은 <strong>R1 두 슬롯(08:50/09:05)</strong>을 유지한다. 새 상방 모델·타깃 날짜·확률 보정 비교는 이번 고정 설정에서 운영 교체 근거를 얻지 못했다. v2는 <strong>08-05 terminal KILL</strong>이며 재개하지 않는다. Top10 체결정보 시험은 09-10부터 별도 사전 기록을 기대하는 단계로, <strong>적격 효과 표본 0일·성과 미계산·학습/자동 승격 없음</strong>이다.
-    오늘 체결 수집의 96ns 정밀도 실패는 원본에 남겼고 다음 실행 코드를 수리했다. 전체 과정은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>, 과거의 판정과 장애는 <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a>에 있다.</p>
+    <p><strong>상태 갱신 (2026-09-10):</strong> 실알림은 <strong>R1 두 슬롯(08:50/09:05)</strong>을 유지한다. 새 상방 모델·타깃 날짜·확률 보정 비교는 이번 고정 설정에서 운영 교체 근거를 얻지 못했다. v2는 <strong>08-05 terminal KILL</strong>이며 재개하지 않는다. Top10 체결정보 시험은 첫 정상 사전 기록을 확인했지만 <strong>첫 24시간 결과 미성숙·추천 우위 미판정·학습/자동 승격 없음</strong>이다.
+    09-09의 96ns 실패 원본과 09-10 아침의 selftest 실패를 보존했다. 이후 표시·시간 제한·종합 감시를 수리하고 실제 CPU 50% 서비스에서 전수통과를 확인했다. 오늘의 과정은 <a href="#runtime-verification" style="color:var(--amber); border-bottom:1px solid var(--amber);">§09-10 실사용 검증</a>, 새 가설은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>, 과거의 판정과 장애는 <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a>에 있다.</p>
   </div>
   <p class="section-desc"><strong>발송 = R1 레이더 (08:50 장전 / 09:05 개장 후) 단일 — 🎯 PUMP v2 는 08-05 KILL 로 종료</strong>.
   구 distribution · pre-open은 record-only이며 현재 R1 장전 슬롯과 다른 모델이다. 현재 등록 설정에서 <strong>발송 후보 자격은 R1만</strong> 열려 있다. challenger 기본 잠금은 새 모델의 무단 진입을 막지만 완전한 자동 연구·승격 시스템을 뜻하지 않는다. 자동 주문은 없고 진입·청산은 사람이 판단한다. 저하방·고상방은 목표이며 안전 보장 문구가 아니다.</p>
@@ -2025,7 +2061,7 @@
     그 문장은 예정보다 27일 일찍 쓰였다. <strong>2026-08-05, v2 조기 KILL</strong> — 동결 조항의 사망 규칙(누적 mean net &lt; 0)이
     verified closed 9건, −0.097% 에서 사람 손 없이 발동했고 판정문은 해시로 박제됐다. 기준은 끝까지 뒤집히지 않았다.
     급등 레이더는 죽었고, R1 레이더(상승확률·하방위험)는 계속 아침을 연다.
-    9월에 이어 쓴 문장은 <strong>“수리는 검증됐지만, 추천 개선은 아직 검증되지 않았다”</strong>다. 09-10부터 새 Top10 가설이 제시간에 기록되고 공통 날짜에서 비교되는지 확인한다. 그 결과가 다음 판단의 근거가 될 것이다.
+    9월에 이어 쓴 문장은 <strong>“수리는 검증됐지만, 추천 개선은 아직 검증되지 않았다”</strong>다. 09-10에는 새 Top10 가설의 첫 정상 기록을 확인했고, 실제 서버의 점검 실패도 수리해 다시 검증했다. 다음 문장은 공통 날짜의 24시간 결과가 뒷받침해야 한다. 그 결과가 다음 판단의 근거가 될 것이다.
   </p>
 </div></section>
 
