@@ -1,0 +1,1486 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>대원강업 · 공시 리서치</title><style>:root{--ink:#183d42;--muted:#617576;--teal:#087f78;--line:#dbe4df;--paper:#f3f2ec;--amber:#ad7431}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 'Noto Sans CJK KR',sans-serif;word-break:keep-all;overflow-wrap:anywhere}
+a{color:var(--teal);text-underline-offset:4px}p{margin:0 0 1em}h1,h2,h3,h4{line-height:1.45;word-break:keep-all}
+.topbar{border-bottom:1px solid var(--line);padding:14px max(24px,calc((100vw - 1120px)/2));display:flex;justify-content:space-between;gap:20px;background:#fafaf6;font-size:12px;letter-spacing:.12em}
+.brand{font-weight:800}.tools{display:flex;gap:20px;letter-spacing:0}.tools a{text-decoration:none}
+main{max-width:1120px;margin:auto;padding:52px 32px 70px}.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.hero{display:grid;grid-template-columns:1fr 220px;gap:50px;padding-bottom:34px;border-bottom:2px solid var(--ink)}
+h1{font-size:52px;margin:12px 0 7px;letter-spacing:-.05em}.company-meta{color:var(--muted);font-size:13px}.hero-side{border-left:1px solid var(--line);padding-left:24px;align-self:end;font-size:13px}.hero-side strong{display:block;margin-bottom:12px;font-size:18px}
+.lead{padding:34px 0 28px;max-width:920px}.lead h2{font-size:28px;letter-spacing:-.035em;margin:8px 0 18px}.lead p{font-size:17px}
+.pill{display:inline-block;border:1px solid #bed6cc;background:#e7eee7;padding:3px 10px;font-size:11px;letter-spacing:.02em}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:8px 0 36px}.kpi{padding:22px 18px;background:#fff}.kpi .label{font-size:12px;color:var(--muted)}.kpi strong{display:block;font-size:30px;letter-spacing:-.04em;line-height:1.8}.kpi small{font-size:11px;color:var(--muted);display:block}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:30px 0}.map a{padding:18px;background:#e8ede7;border-top:2px solid #8daaa0;text-decoration:none;font-size:13px}.map b{display:block;font-size:16px;margin-bottom:7px}.map span{color:var(--muted)}
+nav{display:flex;gap:10px 20px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:15px 0 22px;margin-bottom:30px}nav a{font-size:12px;text-decoration:none}
+.chapter{padding:36px 0 20px;border-bottom:1px solid var(--line)}.chapter-heading{display:flex;gap:22px;align-items:baseline;margin-bottom:22px}.chapter-heading .number{color:#8fa9a3;font-size:32px;font-weight:300}.chapter h2{font-size:24px;margin:0;letter-spacing:-.03em}.chapter h3{font-size:21px;margin:10px 0 24px;max-width:830px}.chapter-body{display:grid;grid-template-columns:1fr 270px;gap:38px}.prose p{white-space:pre-line}.aside{font-size:13px;border-left:1px solid var(--line);padding-left:22px}.aside h4{font-size:11px;letter-spacing:.07em;color:var(--teal);margin:4px 0 8px}.aside p{margin-bottom:24px}
+.analogy{border-left:3px solid #c6aa79;background:#edece3;padding:15px 20px;margin-top:22px;font-size:13px}.analogy b{display:block;color:var(--amber);font-size:11px;margin-bottom:5px}
+figure{background:#fff;margin:26px 0;padding:24px 28px 18px;border:1px solid var(--line);break-inside:avoid}figure h3{font-size:18px!important;margin:0 0 12px!important}figure svg{display:block;width:100%;height:auto}figcaption{font-size:11px;color:var(--muted);line-height:1.7}.refs{font-size:11px;margin-top:10px}.cite{font-size:10px;margin-left:3px;text-decoration:none;white-space:nowrap}
+.conditions{margin:26px 0;background:#e6eee7;padding:22px}.conditions h3{font-size:17px;margin-top:0}.condition{display:grid;grid-template-columns:135px 1fr;gap:20px;padding:12px 0;border-top:1px solid #cddacf;font-size:13px}.condition strong{font-weight:600}
+.appendix{margin-top:42px}.appendix h2{font-size:23px}details{background:#fafbf7;border-bottom:1px solid var(--line);padding:12px 16px;font-size:12px}summary{cursor:pointer;color:var(--teal)}details pre{white-space:pre-wrap;font:12px/1.75 'Noto Sans CJK KR',sans-serif;overflow-wrap:anywhere}.source-note{color:var(--muted);font-size:11px}.glossary{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:12px}.glossary div{border-top:1px solid var(--line);padding-top:12px}.glossary b{display:block;margin-bottom:5px}.footer{margin-top:36px;border-top:2px solid var(--ink);padding-top:18px;color:var(--muted);font-size:11px}
+@media(max-width:760px){main{padding:28px 20px}.hero{grid-template-columns:1fr;gap:20px}h1{font-size:40px}.hero-side{border-left:0;border-top:1px solid var(--line);padding:15px 0 0}.hero-side strong{margin-bottom:3px}.lead h2{font-size:24px}.kpis{grid-template-columns:repeat(2,1fr)}.kpi strong{font-size:27px}.map{grid-template-columns:1fr}.chapter-body{grid-template-columns:1fr;gap:20px}.aside{display:grid;grid-template-columns:1fr 1fr;gap:15px;padding:15px 0 0;border-left:0;border-top:1px solid var(--line)}.aside p{margin:0}.chapter h2{font-size:21px}.chapter-heading{gap:14px}figure{padding:18px 8px}.condition{grid-template-columns:1fr;gap:5px}.topbar{padding:12px 20px}.glossary{grid-template-columns:1fr}}
+@page{size:A4;margin:17mm 17mm 18mm;@bottom-left{content:'K E R  /  LOCAL RESEARCH';font-size:8px;color:#617576}@bottom-right{content:counter(page);font-size:9px;color:#617576}}
+@media print{body{background:white;font-size:10px;line-height:1.85}main{padding:0;max-width:none}.topbar,.tools,nav{display:none}.hero{padding:8px 0 20px;grid-template-columns:1fr 150px;gap:20px}h1{font-size:38px}.hero-side{font-size:10px}.hero-side strong{font-size:13px}.lead{padding:20px 0 5px}.lead h2{font-size:22px}.lead p{font-size:11px}.kpis{margin-bottom:18px}.kpi{padding:12px}.kpi strong{font-size:21px}.kpi .label,.kpi small{font-size:8px}.map{gap:10px;margin:15px 0}.map a{font-size:9px;padding:12px}.map b{font-size:12px}.chapter{break-before:page;padding:0;border:0}.chapter h2{font-size:20px}.chapter h3{font-size:17px}.chapter-heading{margin:0 0 14px}.chapter-heading .number{font-size:26px}.chapter-body{grid-template-columns:1fr 175px;gap:22px}.aside{font-size:9px;padding-left:15px}.aside h4{font-size:8px}.analogy{font-size:9px;padding:12px;margin-top:15px}figure{padding:15px;margin:20px 0}figure h3{font-size:13px!important}figcaption,.refs{font-size:8px}.conditions{padding:15px;break-before:page}.condition{font-size:10px;grid-template-columns:120px 1fr;gap:15px}.appendix{break-before:page;margin-top:0}details{font-size:9px;break-inside:avoid}details pre{font-size:8px}.source-note,.footer{font-size:8px}.glossary{font-size:9px}.cite{font-size:7px}h2,h3,h4{break-after:avoid}p{orphans:3;widows:3}a{color:inherit;text-decoration:none}}
+
+.observations{background:#f1f5f3;border-left:3px solid #087f78;padding:16px 20px;margin:20px 0;font-size:13px}
+.observations ul{margin:8px 0;padding-left:20px}.observations li{margin:6px 0}.research-tag{font-size:11px;letter-spacing:.1em;color:#617578}
+.analysis-copy p{margin:0 0 18px}.scope{background:#f8f2e6;padding:18px 24px;margin:20px 0;font-size:13px}
+.ref-link{font-size:11px;overflow-wrap:anywhere}.source-quote{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9}
+.source-record[open] summary{margin-bottom:12px}.source-record summary{font-weight:600}.source-record .source-note{word-break:break-all}
+details:target{outline:2px solid #087f78;outline-offset:4px}.source-record{scroll-margin-top:80px}
+.method{border-top:1px solid #d6dfdb;margin-top:24px;padding-top:18px}.source-record p{font-size:12px}
+@media print{.map{display:none}.hero{grid-template-columns:1fr 170px}.scope,.observations{font-size:9px;padding:10px 14px}.research-tag{font-size:8px}.source-record{break-inside:auto}.source-quote{font-size:8px}.ref-link{font-size:8px}.analysis-copy p{margin-bottom:12px}.method{font-size:9px}}
+
+.finding-section{margin:24px 0}.finding-section>h3{margin:0 0 12px}
+.finding-scope{padding:12px 16px;background:#f8f2e6;border-left:3px solid #ad7b37;margin:12px 0}
+.finding-scope p{margin:4px 0;font-size:12px;line-height:1.8}
+.finding-list{display:grid;gap:12px}.finding-card{padding:16px 18px;border:1px solid #d6e1df;background:white}
+.finding-card h4{margin:4px 0 8px;font-size:16px}.finding-card p{margin:0 0 10px;line-height:1.9}
+.finding-status{font-size:11px;color:#617578}.finding-refs{font-size:11px;overflow-wrap:anywhere}
+.finding-source-list{margin-top:16px;border-top:1px solid #d6e1df;padding-top:12px}
+.finding-source-row{padding:9px 0}.finding-source-row p{margin:4px 0;font-size:13px;line-height:1.8}
+.finding-source-row strong{font-size:13px}.finding-note{font-size:12px;color:#617578;line-height:1.8}
+@media print{.finding-card{padding:9px 12px;break-inside:avoid}.finding-card h4{font-size:11px}
+.finding-card p{font-size:10px;line-height:1.65}.finding-scope p,.finding-status,.finding-refs,.finding-note{font-size:8px}
+.finding-source-row p,.finding-source-row strong{font-size:9px}.finding-list{gap:7px}}
+
+.chapter-heading h2{word-break:keep-all;overflow-wrap:normal}.author-priority{border-left:3px solid #087f78;background:#eef5f2;padding:12px 16px;margin:14px 0;font-size:13px}.author-priority ol{padding-left:20px}.author-priority li{margin:6px 0}
+.focus-inquiries{display:grid;gap:16px;margin:18px 0}.focus-inquiry{border:1px solid #d6e1df;padding:20px 24px;background:#fff}
+.focus-inquiry:first-child{border-top:3px solid #087f78}.focus-inquiry h3{font-size:20px;margin:5px 0 14px}
+.focus-trigger{font-size:16px;line-height:1.85;margin:0 0 16px}.focus-target{background:#f1f5f3;padding:14px 16px;margin:14px 0}
+.focus-target p{margin:5px 0}.focus-inquiry ul{padding-left:20px}.focus-inquiry li{margin:8px 0}
+.focus-outcomes{font-size:13px;line-height:1.8}.focus-outcomes dt{font-weight:650;margin-top:9px}.focus-outcomes dd{margin:2px 0 10px}
+.finding-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;table-layout:fixed}
+.finding-table th,.finding-table td{padding:11px 12px;text-align:left;vertical-align:top;border-bottom:1px solid #d6e1df;overflow-wrap:anywhere}
+.finding-table th:first-child{width:23%}.finding-table .finding-refs{margin-top:5px}.focus-provenance{font-size:11px;color:#617578}
+@media(max-width:650px){.focus-inquiry{padding:16px}.focus-inquiry h3{font-size:18px}.finding-table th:first-child{width:29%}.finding-table th,.finding-table td{padding:9px 5px;font-size:12px}}
+@media print{.focus-inquiry{padding:10px 14px;break-inside:auto}.focus-inquiry h3{font-size:12px;break-after:avoid}.focus-trigger{font-size:10px;line-height:1.7}
+.focus-target{padding:8px 10px;font-size:9px}.focus-outcomes{font-size:9px}.focus-provenance{font-size:8px}.finding-table{font-size:8px}
+.finding-table th,.finding-table td{padding:6px 8px}.finding-table tr{break-inside:avoid}.focus-inquiries{gap:9px}}
+
+.criteria-note{border-top:1px solid #d8dfd6;margin:22px 0 0;padding:12px 0;color:#657570;font-size:11px;overflow-wrap:anywhere}
+.criteria-print{display:none}
+.followup-strip{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-block:1px solid #d8dfd6;padding:7px 0;margin:10px 0;font-size:11px;color:#176b5e}
+.followup-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.followup-cards article{padding:17px;border:1px solid #d8dfd6;background:#fffefa}.followup-cards h3{font-size:15px}.followup-cards p{font-size:12px}.followup-cards .meta{font-size:11px}.followup-timeline{display:flex;gap:12px;align-items:stretch;margin:20px 0}.followup-timeline>div{flex:1;border-top:3px solid #176b5e;padding:10px 0}.followup-timeline strong{display:block;font-size:20px}.followup-timeline small{display:block}.followup-full summary{cursor:pointer;font-weight:700}.followup-full p,.followup-full li{font-size:12px}
+@media(max-width:760px){.followup-cards{grid-template-columns:1fr}.followup-timeline{gap:8px}.followup-timeline strong{font-size:16px}.followup-strip{font-size:10px;margin:7px 0;padding:5px 0}.criteria-note{font-size:10px}}
+@media print{.criteria-note{font-size:7pt;margin:10px 0 0;padding:7px 0}.followup-strip{font-size:7pt;margin:6px 0;padding:4px 0}.followup-cards{gap:9px}.followup-cards article{padding:10px;break-inside:avoid}.followup-cards p{font-size:8pt}.followup-cards h3{font-size:10pt}.followup-timeline{margin:12px 0}.followup-timeline strong{font-size:14pt}.followup-full{display:none}}
+@media print{.criteria-note{display:none}.criteria-print{display:block;position:running(ker-criteria);width:160mm;font-size:6.5pt;line-height:1.3;color:#657570}}
+@page{@bottom-left{content:element(ker-criteria)}}
+.body-evidence{margin:20px 0}.body-evidence h2{font-size:23px}.body-evidence .body-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px}.body-fact{padding:13px 16px;border:1px solid #d8dfd6;background:#fffefa;font-size:12px;overflow-wrap:anywhere}.body-fact strong{display:block;font-size:13px}.body-fact p{margin:5px 0}.body-evidence details{font-size:11px}.body-source{font-size:11px;white-space:pre-wrap}.body-investigation{margin:12px 0;padding:14px 18px;border-left:3px solid #176b5e;background:#eaf0e9;font-size:12px}.body-investigation h3{font-size:15px;margin-bottom:8px}.body-investigation p{margin:5px 0}.body-investigation ul{padding-left:18px}.body-limit{border-left:3px solid #a55438;padding:10px 14px;font-size:12px;background:#f7eee5}
+@media(max-width:760px){.body-evidence .body-facts{grid-template-columns:1fr}.body-evidence h2{font-size:20px}}
+@media print{.body-evidence{margin:12px 0}.body-evidence h2{font-size:15pt}.body-fact{padding:8px 10px;font-size:8pt;break-inside:avoid}.body-fact strong{font-size:9pt}.body-investigation{padding:9px 12px;font-size:8pt;break-inside:avoid}.body-investigation h3{font-size:10pt}.body-limit{font-size:8pt;break-inside:avoid}.body-evidence details{display:none}}
+</style><style data-reader-evidence="1">
+.reader-source{margin:12px 0;padding:14px 18px;border:1px solid #dbe4df;border-radius:8px}
+.reader-source>summary{cursor:pointer;line-height:1.8}.reader-source p{word-break:keep-all}
+.reader-amount{font-size:20px;font-weight:700;color:#087f78}
+.reader-inputs{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px}
+.reader-inputs th,.reader-inputs td{text-align:left;vertical-align:top;padding:8px;border-bottom:1px solid #dbe4df}
+.reader-inputs caption{text-align:left;font-weight:600}.reader-exact,.reader-advanced{margin-top:12px}
+.reader-advanced{font-size:12px;color:#617576}.reader-advanced summary,.reader-exact summary{cursor:pointer}
+.reader-advanced .source-note,.reader-advanced pre{overflow-wrap:anywhere;word-break:break-all}
+.reader-qualification{color:#617576}.reader-source pre{max-width:100%;white-space:pre-wrap}
+.reader-company-intro{background:#f3f6ef;border-left:3px solid #27634f;padding:14px 18px;margin:16px 0;break-inside:avoid}.reader-company-intro h3{font-size:15px;margin:0 0 8px}.reader-company-intro p{font-size:13px;line-height:1.7}.reader-original{margin-top:10px;border-top:1px solid #dbe4df;padding-top:10px}
+.reader-original>summary{cursor:pointer;font-weight:600;color:#176b5e}
+.reader-original pre{font-size:12px;line-height:1.7}
+.reader-audit-link{font-size:12px}.reader-audit-link a{color:#176b5e}
+.reader-compare{margin:12px 0;padding:12px 14px;background:#f3f6ef;border-left:3px solid #27634f}.reader-compare p{margin:4px 0}.reader-compare small{color:#617576}
+.reader-pdf-original{display:inline-block;margin-left:12px}.reader-pdf-original summary{cursor:pointer}
+@media(max-width:600px){.reader-source{padding:12px}.reader-inputs th,.reader-inputs td{padding:5px;font-size:11px}}
+@media screen and (max-width:600px){.reader-inputs td:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}}
+@media screen{.reader-source>.reader-amount{font-size:20px;font-weight:700}}
+@media screen{.reader-quote-link{display:none}}
+@media print{.appendix>.reader-source:last-of-type{break-inside:avoid;break-after:avoid}.method{margin-top:8px;padding-top:8px;break-inside:avoid;break-after:avoid}.method+.footer{margin-top:8px;padding-top:8px;break-before:avoid;break-inside:avoid}.reader-advanced{display:none!important}.reader-original{display:none!important}.reader-source{break-inside:auto;padding:10px 12px}
+.reader-audit-link{display:none!important}
+figure>img{display:block;width:100%;max-width:100%;height:auto}
+.condition{break-inside:avoid}
+.reader-inputs tr{break-inside:avoid}.reader-amount{font-size:13px}.reader-source>summary{font-size:11px}}
+</style><style>
+.ra-review{margin:20px 0;padding:18px;border:1px solid #cddbd1;background:#f1f6ef;color:#253e3b;line-height:1.65}
+.ra-review h2{font-size:20px;margin:0 0 12px}.ra-review h3{font-size:15px;margin:12px 0 6px}.ra-review p{margin:6px 0;font-size:13px}
+.ra-review .rr-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.rr-cell{min-width:0;padding:12px;background:#fffefa;border:1px solid #dce4d9}
+.rr-cell strong{display:block;font-size:16px}.ra-review small{display:block;font-size:11px;color:#596e63}.ra-review a{text-underline-offset:3px}
+.rr-value{font-variant-numeric:tabular-nums;white-space:nowrap}.rr-plot{margin:14px 0}.rr-bar-row{display:grid;grid-template-columns:135px 1fr 125px;gap:10px;align-items:center;font-size:12px;margin:8px 0}.rr-track{position:relative;height:20px;background:#e6ede3;border-left:1px solid #728776}.rr-bar{height:100%;background:#397563}.rr-bar.negative{background:#ac6647}.rr-bar-row .rr-value{text-align:right}
+.rr-check{border-top:1px solid #d5dfd0;padding:12px 0;break-inside:avoid}.ra-review ul{padding-left:20px;margin:7px 0;font-size:12px}.ra-review summary{cursor:pointer;font-size:13px}.rr-note{border-top:1px solid #cddbd1;padding-top:9px}
+.rr-inputs li{margin:9px 0;overflow-wrap:anywhere}.rr-inputs .rr-value{display:block;font-weight:650}.rr-inputs p{overflow-wrap:anywhere}
+@media(max-width:700px){.ra-review{padding:13px}.ra-review .rr-grid{grid-template-columns:1fr}.rr-bar-row{grid-template-columns:1fr 110px;gap:5px}.rr-track{grid-column:1;grid-row:auto}.rr-bar-row .rr-value{grid-column:2;grid-row:auto}.rr-bar-row>span:first-child{grid-column:1/-1}}
+@media print{.ra-review{font-size:9px;padding:12px;margin:12px 0}.ra-review .rr-grid{display:flex;gap:8px}.rr-cell{flex:1;padding:8px}.rr-cell strong{font-size:12px}.ra-review h2{font-size:16px}.ra-review h3{font-size:12px}.ra-review p{font-size:10px}.ra-review small,.ra-review li{font-size:9px}.rr-grid,.rr-plot,.rr-check{break-inside:avoid}.rr-bar-row{font-size:10px;grid-template-columns:125px 1fr 105px}.ra-review details:not([open])>*:not(summary){display:none}}
+
+@media print{.ra-review{padding:8px;margin:8px 0;line-height:1.4}.ra-review h2{font-size:14px;margin:0 0 8px}.ra-review p{margin:4px 0}.rr-cell{padding:6px}}
+</style><!-- ker-navigation-style-start --><style>
+.ker-shell{position:sticky;top:0;z-index:100;background:#f6f3eb;color:#253e3b;border-bottom:1px solid #c7d7cf;font:13px/1.5 'Noto Sans CJK KR',system-ui,sans-serif;letter-spacing:0;box-shadow:0 2px 8px #253e3b08}
+.ker-shell *{box-sizing:border-box}.ker-shell a{color:#253e3b;text-decoration:none;letter-spacing:0}.ker-shell a:hover{color:#176b5e;text-decoration:underline}.ker-shell a:focus-visible,.ker-history a:focus-visible{outline:3px solid #b87927;outline-offset:3px}
+.ker-shell .ker-bar{max-width:1200px;margin:0 auto;padding:12px 32px;display:flex;align-items:center;justify-content:space-between;gap:18px}.ker-shell .ker-brand{font-weight:800;letter-spacing:.12em;white-space:nowrap;color:#176b5e}.ker-brand small{font-size:10px;letter-spacing:0;font-weight:500;margin-left:8px;color:#657570}
+.ker-shell .ker-nav,.ker-shell .ker-tabs{display:flex;flex-wrap:wrap;gap:4px;margin:0;padding:0;border:0;line-height:1.5}.ker-shell .ker-nav a{font-size:12px;padding:7px 11px;white-space:nowrap;border-radius:3px}.ker-shell a[aria-current]{background:#176b5e;color:#fffefa;text-decoration:none}.ker-shell .ker-context{max-width:1200px;margin:auto;padding:0 32px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.ker-context-label{font-size:11px;color:#657570}.ker-context-label strong{color:#253e3b}.ker-shell .ker-tabs a{font-size:11px;padding:4px 7px;white-space:nowrap}.ker-shell .ker-tabs a[aria-current]{background:#e1ebe3;color:#176b5e;font-weight:700}
+.ker-skip{position:absolute;top:-100px;left:10px;background:#fffefa;padding:10px}.ker-skip:focus{top:6px;z-index:101}
+body>.site-header,body>.topbar,body>nav.top{display:none!important}
+.ker-history{max-width:1200px;margin:24px auto 12px;padding:0 32px;color:#253e3b;font:13px/1.7 'Noto Sans CJK KR',system-ui,sans-serif}.ker-history-box{padding:18px 22px;border-left:4px solid #176b5e;background:#eaf0e9}.ker-history h2{font-size:22px;margin:0 0 7px;color:#253e3b}.ker-history p{margin:6px 0}.ker-history a{color:#176b5e}.ker-history-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}.ker-company-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.ker-company{border:1px solid #c7d7cf;padding:12px;background:#fffefa}.ker-company strong{display:block}.ker-company a{display:inline-block;font-size:12px;margin:4px 10px 0 0}
+#reports,#events,#ker-content{scroll-margin-top:110px}
+@media(max-width:760px){.ker-shell .ker-bar{padding:8px 16px;gap:7px}.ker-brand small{display:none}.ker-shell .ker-nav{gap:0}.ker-shell .ker-nav a{font-size:11px;padding:8px 7px}.ker-shell .ker-context{padding:0 16px 7px;gap:4px}.ker-shell .ker-tabs{gap:0}.ker-shell .ker-tabs a{font-size:10px;padding:4px 6px}.ker-context-label{font-size:10px}.ker-history{margin:16px auto 8px;padding:0 18px}.ker-history-box{padding:14px 16px}.ker-history h2{font-size:19px}.ker-company-grid{grid-template-columns:repeat(2,1fr)}.ker-company{padding:10px}}
+@media(max-width:350px){.ker-shell .ker-bar{padding:7px 10px}.ker-shell .ker-nav a{padding:8px 5px;font-size:10px}}
+@media screen and (max-width:980px){.ker-shell~.container .report-layout{grid-template-columns:minmax(0,1fr)}.ker-shell~.container article.report{min-width:0;overflow-wrap:anywhere}.ker-shell~.container article.report table{display:block;max-width:100%;overflow-x:auto}.ker-shell~.container article.report pre{max-width:100%}}
+@media print{.ker-shell,.ker-skip,.ker-history{display:none!important}}
+</style><!-- ker-navigation-style-end --></head><body><!-- ker-navigation-shell-start --><div class="ker-shell"><a class="ker-skip" href="#ker-content">본문으로</a><div class="ker-bar"><a class="ker-brand" href="/projects/k-e-r/" aria-label="K E R 메인으로">K E R<small>기업 리서치</small></a><nav class="ker-nav" aria-label="주 메뉴" data-page="reports"><a href="/projects/k-e-r/" data-section="home">메인</a><a href="/projects/k-e-r/#reports" data-section="reports" aria-current="page">기업 보고서</a><a href="/projects/k-e-r/#events" data-section="events">변화 알림</a><a href="/projects/k-e-r/archive.html" data-section="archive">이전 분석</a></nav></div><div class="ker-context"><div class="ker-context-label"><strong>대원강업</strong> · 2026년 상반기 누적</div><nav class="ker-tabs" aria-label="이 보고서 탐색"><a href="/projects/k-e-r/research/c244765c14ebf13a7058532e/">요약</a><a href="/projects/k-e-r/research/c244765c14ebf13a7058532e/detail.html" aria-current="page">공시 근거집</a><a href="/projects/k-e-r/research/c244765c14ebf13a7058532e/followup.html">후속 확인</a><a href="/projects/k-e-r/?company=000430#events">관련 알림</a></nav></div></div><span id="ker-content" tabindex="-1"></span><!-- ker-navigation-shell-end --><aside class="criteria-print">공통 기준 · 현금·생존 → 미국 고객 → 기술·정책 → 주주 몫 → 시장·가격.<br>자료 부족은 악화가 아니며 외국인 매도만으로 제외하지 않습니다. 현재 c40bcb0b035f · 작성 당시 c40bcb0b035f.<br>당시 기준과 판단을 변경하지 않고 보존합니다. 기준 기록이 모든 문장의 새 관점 반영을 뜻하지 않습니다.</aside>
+<div class="topbar"><span class="brand">K E R / LOCAL RESEARCH</span><div class="tools"><a href="/projects/k-e-r/">보고서함</a><a href="reader.pdf">읽기용 PDF 저장</a><details class="reader-advanced reader-pdf-original"><summary>원문 검증 정보(고급)</summary><a href="detail.pdf">작성 당시 전체 PDF</a></details></div></div><main>
+<header class="hero"><div><div class="eyebrow">내 관점으로 읽는 공시</div><h1>대원강업</h1><div class="company-meta">000430 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 재무 표·차트는 연결 기준</div></div><div class="hero-side"><span class="eyebrow">Research lens</span><strong>회사가 버는 힘에서<br>주주에게 남는 가치까지</strong>현금 · 미국 · 기술 · 자본배분</div></header><div class="followup-strip"><span>첫 조사 기록 · 확인 과제 11건 · 관련 관측 0건</span><a href="followup.html">지난 판단과 후속 확인 →</a></div>
+<section class="lead"><span class="pill">로컬 AI RA · 근거와 다음 판단</span><h2>사업을 소유하는 관점에서</h2><p>2025년 반기 누적 (2025-01-01~2025-06-30)과 2026년 반기 누적 (2026-01-01~2026-06-30)의 전체 구성 합계가 각각 영업현금흐름과 일치한다. 증감의 양수 기여 합계 약 596.26억원와 음수 기여 합계 약 -494.33억원를 합하면 전체 변화 약 101.93억원이다. 가장 큰 양수 기여는 당기순이익 약 421.29억원이다. 가장 큰 음수 기여는 영업 관련 자산·부채 변동 약 -350.15억원이다.</p><p>매출·이익·현금흐름의 구조화 비교는 같은 누적기간의 전년 동기 대비다. 반기·3분기 누적을 단독 분기 실적이나 연간 환산값으로 해석하지 않는다.</p><p>만기·유동성 원문의 주체, 연결·별도 범위, 기준일, 만기 구간과 사용 가능한 현금의 제약을 먼저 대조합니다. 원문 인용만으로 해당 금액의 범위를 확정하거나 연결 영업현금과 합산하지 않습니다. 자료가 부족하다는 이유로 채무나 유동성 위험이 없다고 판단하지 않습니다.</p><p>이 관계는 회계 금액의 비교이며 사업 인과·경쟁력·반복성·지급 능력을 입증하지 않습니다.</p><p>다음 조사: 확인된 회계 증감의 해당 항목을 거래·계정별로 연결하고 실제 회수·지급 내역과 발생·결제 시점을 대조한다.</p><p>현금흐름과 기술 경쟁력이 근거로 확인된다면 외국인 매도만으로 검토 대상에서 제외하지 않는다.</p><div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a> · <a class="ref-link" href="#source-C05ccf02bd06f72b95a0c2c26">근거 6</a> · <a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a> · <a class="ref-link" href="#source-C5b600a5fb31a9421d4f10a7d">근거 23</a> · <a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a> · <a class="ref-link" href="#source-Cfdd1f91e0f50f4b550a18710">근거 37</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a> · <a class="ref-link" href="#source-C1b8872328495e160f760720e">근거 14</a> · <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a> · <a class="ref-link" href="#source-C72046f12b5a78972245b89e1">근거 25</a> · <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a> · <a class="ref-link" href="#source-Ce41dc5e59a8e56a84f3ba350">근거 32</a> · <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a> · <a class="ref-link" href="#source-Cc5d05081738e1fffe1f81266">근거 29</a></div></section>
+<div class="kpis"><div class="kpi"><span class="label">연결 매출</span><strong>0.90조원</strong><small>전년 동기 0.80조원</small><small><a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a></small></div><div class="kpi"><span class="label">영업이익률</span><strong>6.83%</strong><small>전년 동기 4.35%</small><small><a class="ref-link" href="#source-D1M">근거 39</a> · <a class="ref-link" href="#source-D2M">근거 41</a></small></div><div class="kpi"><span class="label">영업현금흐름</span><strong>0.06조원</strong><small>전년 동기 0.05조원</small><small><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></small></div><div class="kpi"><span class="label">유형자산 투자 후 현금 차이</span><strong>0.03조원</strong><small>전년 동기 -0.00조원</small><small><a class="ref-link" href="#source-D1C">근거 38</a> · <a class="ref-link" href="#source-D2C">근거 40</a></small></div></div>
+<div class="source-note">매출·손익·현금은 2026년 반기 누적 (2026-01-01~2026-06-30); 자산·부채는 실제 표시된 시점의 잔액입니다. 투자 후 현금 차이는 영업현금흐름 − 유형자산 취득 현금유출입니다. 전체 자유현금흐름과 다릅니다.</div>
+<div class="scope"><strong>이 보고서가 보는 범위</strong><br>표시된 기간의 보관 공시를 분석합니다. 현재 시세·수급·경쟁사 현황까지 확인한 보고서는 아닙니다. 자료 미확보는 회사의 약점이나 미공시를 뜻하지 않습니다.</div>
+<figure aria-label="매출의 성장, 이익의 밀도"><h3>매출의 성장, 이익의 밀도</h3><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="623.899688pt" height="236.006pt" viewBox="0 0 623.899688 236.006" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="growth-figure_1">
+  <g id="growth-patch_1">
+   <path d="M 0 236.006 
+L 623.899688 236.006 
+L 623.899688 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="growth-axes_1">
+   <g id="growth-patch_2">
+    <path d="M 55.329687 209.556 
+L 579.849688 209.556 
+L 579.849688 7.2 
+L 55.329687 7.2 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="growth-matplotlib.axis_1">
+    <g id="growth-xtick_1">
+     <g id="growth-line2d_1"/>
+     <g id="growth-text_1">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="154.289563" y="226.515375" transform="rotate(-0 154.289563 226.515375)">2025년 반기 누적</text>
+     </g>
+    </g>
+    <g id="growth-xtick_2">
+     <g id="growth-line2d_2"/>
+     <g id="growth-text_2">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="480.889812" y="226.515375" transform="rotate(-0 480.889812 226.515375)">2026년 반기 누적</text>
+     </g>
+    </g>
+   </g>
+   <g id="growth-matplotlib.axis_2">
+    <g id="growth-ytick_1">
+     <g id="growth-line2d_3">
+      <path d="M 55.329687 209.556 
+L 579.849688 209.556 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="growth-line2d_4"/>
+     <g id="growth-text_3">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="46.329687" y="213.535687" transform="rotate(-0 46.329687 213.535687)">0.0</text>
+     </g>
+    </g>
+    <g id="growth-ytick_2">
+     <g id="growth-line2d_5">
+      <path d="M 55.329687 173.484781 
+L 579.849688 173.484781 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="growth-line2d_6"/>
+     <g id="growth-text_4">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="46.329687" y="177.464469" transform="rotate(-0 46.329687 177.464469)">0.2</text>
+     </g>
+    </g>
+    <g id="growth-ytick_3">
+     <g id="growth-line2d_7">
+      <path d="M 55.329687 137.413562 
+L 579.849688 137.413562 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="growth-line2d_8"/>
+     <g id="growth-text_5">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="46.329687" y="141.39325" transform="rotate(-0 46.329687 141.39325)">0.4</text>
+     </g>
+    </g>
+    <g id="growth-ytick_4">
+     <g id="growth-line2d_9">
+      <path d="M 55.329687 101.342343 
+L 579.849688 101.342343 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="growth-line2d_10"/>
+     <g id="growth-text_6">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="46.329687" y="105.322031" transform="rotate(-0 46.329687 105.322031)">0.6</text>
+     </g>
+    </g>
+    <g id="growth-ytick_5">
+     <g id="growth-line2d_11">
+      <path d="M 55.329687 65.271124 
+L 579.849688 65.271124 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="growth-line2d_12"/>
+     <g id="growth-text_7">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="46.329687" y="69.250812" transform="rotate(-0 46.329687 69.250812)">0.8</text>
+     </g>
+    </g>
+    <g id="growth-ytick_6">
+     <g id="growth-line2d_13">
+      <path d="M 55.329687 29.199905 
+L 579.849688 29.199905 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="growth-line2d_14"/>
+     <g id="growth-text_8">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="46.329687" y="33.179593" transform="rotate(-0 46.329687 33.179593)">1.0</text>
+     </g>
+    </g>
+    <g id="growth-text_9">
+     <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="15.159375" y="108.378" transform="rotate(-90 15.159375 108.378)">매출 · 조원</text>
+    </g>
+   </g>
+   <g id="growth-line2d_15">
+    <path d="M 55.329687 209.556 
+L 579.849688 209.556 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #afbfbd; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="growth-patch_3">
+    <path d="M 55.329688 209.556 
+L 579.849688 209.556 
+" style="fill: none; stroke: #e4eae8; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="growth-growth_0"><title>2025년 반기 누적 매출 0.80조원 / 영업이익률 4.35%</title>
+    <path d="M 79.171506 209.556 
+L 229.40762 209.556 
+L 229.40762 64.606431 
+L 79.171506 64.606431 
+z
+" clip-path="url(#growth-p90b46c0fad)" style="fill: #087f78"/>
+   </g>
+   <g id="growth-growth_1"><title>2026년 반기 누적 매출 0.90조원 / 영업이익률 6.83%</title>
+    <path d="M 405.771755 209.556 
+L 556.007869 209.556 
+L 556.007869 46.365677 
+L 405.771755 46.365677 
+z
+" clip-path="url(#growth-p90b46c0fad)" style="fill: #087f78"/>
+   </g>
+   <g id="growth-text_10">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="154.289563" y="58.894769" transform="rotate(-0 154.289563 58.894769)">0.8</text>
+   </g>
+   <g id="growth-text_11">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="480.889812" y="40.654016" transform="rotate(-0 480.889812 40.654016)">0.9</text>
+   </g>
+  </g>
+  <g id="growth-axes_2">
+   <g id="growth-matplotlib.axis_3">
+    <g id="growth-ytick_7">
+     <g id="growth-line2d_16"/>
+     <g id="growth-text_12">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #947035" x="583.349688" y="213.535687" transform="rotate(-0 583.349688 213.535687)">0</text>
+     </g>
+    </g>
+    <g id="growth-ytick_8">
+     <g id="growth-line2d_17"/>
+     <g id="growth-text_13">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #947035" x="583.349688" y="175.283547" transform="rotate(-0 583.349688 175.283547)">2</text>
+     </g>
+    </g>
+    <g id="growth-ytick_9">
+     <g id="growth-line2d_18"/>
+     <g id="growth-text_14">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #947035" x="583.349688" y="137.031407" transform="rotate(-0 583.349688 137.031407)">4</text>
+     </g>
+    </g>
+    <g id="growth-ytick_10">
+     <g id="growth-line2d_19"/>
+     <g id="growth-text_15">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #947035" x="583.349688" y="98.779267" transform="rotate(-0 583.349688 98.779267)">6</text>
+     </g>
+    </g>
+    <g id="growth-ytick_11">
+     <g id="growth-line2d_20"/>
+     <g id="growth-text_16">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #947035" x="583.349688" y="60.527127" transform="rotate(-0 583.349688 60.527127)">8</text>
+     </g>
+    </g>
+    <g id="growth-ytick_12">
+     <g id="growth-line2d_21"/>
+     <g id="growth-text_17">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #947035" x="583.349688" y="22.274987" transform="rotate(-0 583.349688 22.274987)">10</text>
+     </g>
+    </g>
+    <g id="growth-text_18">
+     <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #947035" x="614.409063" y="108.378" transform="rotate(-90 614.409063 108.378)">영업이익률 · %</text>
+    </g>
+   </g>
+   <g id="growth-patch_4">
+    <path d="M 55.329688 209.556 
+L 579.849688 209.556 
+" style="fill: none; stroke: #e4eae8; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="growth-text_19">
+    <g id="growth-patch_5">
+     <path d="M 139.949719 118.473248 
+L 168.629407 118.473248 
+L 168.629407 104.34356 
+L 139.949719 104.34356 
+z
+" style="fill: #ffffff; opacity: 0.92"/>
+    </g>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #947035" x="154.289563" y="114.323248" transform="rotate(-0 154.289563 114.323248)">4.4%</text>
+   </g>
+   <g id="growth-text_20">
+    <g id="growth-patch_6">
+     <path d="M 466.549968 71.153742 
+L 495.229656 71.153742 
+L 495.229656 57.024054 
+L 466.549968 57.024054 
+z
+" style="fill: #ffffff; opacity: 0.92"/>
+    </g>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #947035" x="480.889812" y="67.003742" transform="rotate(-0 480.889812 67.003742)">6.8%</text>
+   </g>
+   <g id="growth-line2d_22">
+    <path d="M 154.289563 126.323248 
+L 480.889812 79.003742 
+" clip-path="url(#growth-p90b46c0fad)" style="fill: none; stroke: #d59c48; stroke-width: 2.5; stroke-linecap: square"/>
+    <defs>
+     <path id="growth-m371f7c4171" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #d59c48"/>
+    </defs>
+    <g clip-path="url(#growth-p90b46c0fad)">
+     <use xlink:href="#growth-m371f7c4171" x="154.289563" y="126.323248" style="fill: #d59c48; stroke: #d59c48"/>
+     <use xlink:href="#growth-m371f7c4171" x="480.889812" y="79.003742" style="fill: #d59c48; stroke: #d59c48"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="growth-p90b46c0fad">
+   <rect x="55.329687" y="7.2" width="524.52" height="202.356"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>막대는 연결 매출, 선은 영업이익 ÷ 매출입니다. 같은 누적기간끼리 비교합니다. <a class="ref-link" href="#source-C4495e58366cddafceacf7ede">근거 21</a> · <a class="ref-link" href="#source-C0daf9b6e16707ed2c820c4a6">근거 9</a> · <a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a></figcaption></figure>
+<nav class="map"><a href="#chapter-overview"><b>01 · 어떤 사업으로 돈을 버는 회사인가</b></a><a href="#chapter-cash"><b>02 · 현금이 들어오는 이유와 버틸 힘이 있는가</b></a><a href="#chapter-us"><b>03 · 내수를 넘어 미국 시장에서 검증됐는가</b></a><a href="#chapter-technology"><b>04 · 세 해 뒤에도 기술의 매력이 유지되는가</b></a><a href="#chapter-policy"><b>05 · 정책 지원 없이도 버틸 수 있는가</b></a><a href="#chapter-ip"><b>06 · 회사의 성과가 주주에게 남는가</b></a><a href="#chapter-macro"><b>07 · 환율·금리·지정학 변화에 버틸 수 있는가</b></a><a href="#chapter-foreign"><b>08 · 외국인 매도의 원인이 사업 악화인가</b></a><a href="#chapter-owner"><b>09 · 이 사업체를 통째로 소유한다면</b></a></nav>
+<section class="chapter" id="chapter-overview"><div class="chapter-heading"><span class="number">01</span><h2>어떤 사업으로 돈을 버는 회사인가</h2></div><section class="reader-company-intro"><h3>회사는 무엇을 하는가</h3><p>당사는 자동차용 스프링 및 시트 제품을 전문으로 생산ㆍ공급하는 자동차부품사업을 영위하고 있으며, 국내를 비롯하여 미국, 인도, 폴란드, 러시아, 멕시코 등 6개국 9개 거점에 사업장을 운영함으로써 Global Network를 구축하여 사업 경쟁력을 강화하고 있습니다. 생산거점으로는 국내는 천안(성거, 성환), 창원, 함안 해외는 미국, 인도, 폴란드, 러시아, 멕시코에 공장을 운영하고 있습니다. 뿐만 아니라, 연구개발활동을 위해 서울에 연구소를 두고 있습니다.</p><p class="reader-qualification">회사 공시에서 발췌한 사업 소개입니다. 원문의 숫자·주장은 아래 검증된 재무 수치와 구분해 읽습니다. <a href="#source-C12463d1d545440b40e17f26b">전체 설명과 표 확인 →</a></p></section><section class="ra-review" id="research-review" aria-label="사업 변화와 후속 확인"><h2>이번 자료로 더 확인한 것</h2><div class="rr-grid"><div class="rr-cell"><small>01 사업 변화</small><strong>업종별 원자료 확인</strong><p>일반 제조업식 현금·이익률 판단 적용을 보류합니다.</p></div><div class="rr-cell"><small>02 지난 질문</small><strong>후속 실적 관측 0건</strong><p>첫 정기 자료 기록 · 이후 자료와 비교할 조건을 남깁니다.</p></div><div class="rr-cell"><small>03 가격과 주주의 몫</small><strong><a href="followup.html#research-review">최신 시세·관측 확인 →</a></strong><p>정기공시 분석과 이후 시장 관측을 구분합니다.</p></div></div><p><a href="followup.html#research-review">산술 구성·조사할 자료·지난 질문·가격 입력 보기 →</a></p><small class="rr-note">정기공시 수치 점검 · 최근 시세와 관측 자료는 후속 확인에서 갱신합니다. 정기보고서 작성일 2026-09-16. 회계 변화는 사업 원인의 입증과 다르며, 자료 미확보와 외국인 매도만으로 회사를 제외하지 않습니다.</small></section>
+<div class="focus-original"><p class="source-note"><strong>사업을 이해하기 위한 회사 공시 원문</strong> · 회사의 기술 내용입니다. 주체·기간·표의 대응이나 사업 우위까지 검증된 사실로 읽지 않습니다. 회사 설명·표 원문은 웹 보고서 또는 DART에서 확인할 수 있습니다.</p><details open class="source-record reader-source" id="source-C12463d1d545440b40e17f26b"><summary>근거 1 · 회사 공시 설명</summary><p class="reader-qualification">회사가 공시한 내용입니다. 숫자는 표의 기간·단위와 함께 읽고, 성장 원인과 지속성은 추가 자료로 확인합니다.</p><details class="reader-original"><summary>회사 설명·표 원문 펼쳐보기</summary><pre class="source-quote">1. 사업의 개요
+| 당사는 자동차사의 제조공정에 부품을 공급하는 자동차 부품사업을 영위하고 있습니다.
+당사는 자동차용 스프링 및 시트 제품을 전문으로 생산ㆍ공급하는 자동차부품사업을 영위하고 있으며, 국내를 비롯하여 미국, 인도, 폴란드, 러시아, 멕시코 등 6개국 9개 거점에 사업장을 운영함으로써 Global Network를 구축하여 사업 경쟁력을 강화하고 있습니다. 생산거점으로는 국내는 천안(성거, 성환), 창원, 함안 해외는 미국, 인도, 폴란드, 러시아, 멕시코에 공장을 운영하고 있습니다. 뿐만 아니라, 연구개발활동을 위해 서울에 연구소를 두고 있습니다.
+종합 스프링 메이커로서 코일스프링, 판스프링, 스테빌라이저바 등 서스펜션 스프링 전 제품과 자동차용 시트를 일괄생산체제를 갖추어 생산하고 있으며, 현대자동차ㆍ기아를 주요 납품처로 하여 국내외 완성차 업체에 공급하고 있습니다. 또한 GM, 크라이슬러, 폭스바겐, BMW, 테슬라 등 글로벌 완성차 업체에도 코일스프링 및 스테빌라이저바를 공급 중에 있습니다.
+2026년 2분기 매출액 대비 매출 비중은 스프링 부문이 55.73%, 시트 부문이 41.92%, 기타 2.35%의 비중을 차지하고 있습니다. 2026년 2분기 매출은 9,048억원, 영업이익은 618억원으로 전년동기 대비 매출액은 12.6% 증가하였고, 영억이익은 76.6% 증가하였습니다.
+전기차 전환 등 미래 모빌리티 환경 변화에 대응하여 당사는 전동화연구소를 설립하고 전기차용 모터코어 관련 기술 개발 및 신제품 개발에 적극 투자하고 있으며, 스프링ㆍ시트 부문의 경량화ㆍ고기능화 연구를 지속하여 글로벌 경쟁력을 강화해 나가고 있습니다.
+대외경영환경의 불확실성이 가중되는 가운데에도 당사는 글로벌 일류수준의 서스펜션 스프링 및 시트 전문업체로 발전하기 위한 기술 경쟁력 확보에 지속 노력하고 있습니다. 당사는 공정개선ㆍ생산성 향상을 위한 연구개발 투자를 확대하고, 급변하는 미래차 모빌리티 시장에 선제적으로 대응함으로써 중장기 성장 기반을 강화해 나갈 것입니다.
+2. 주요 제품 및 서비스
+가. 주요제품 현황 연결회사는 차량용 스프링과 시트제품 등을 생산ㆍ판매하고 있으며, 2026년2분기 각 제품별 매출액과 매출비중은 다음과 같습니다.
+| (단위: 백만원)
+| 제품구분
+| 매출액
+| 매출비중
+| 스 프 링
+| 504,214
+| 55.73%
+| 시 트
+| 379,306
+| 41.92%
+| 기 타
+| 21,303
+| 2.35%
+| 계
+| 904,823
+| 100.00%
+나. 주요제품의 가격변동 추이
+| 제품구분
+| 제80기(1~6월)
+| 제79기
+| 제78기
+| 스 프 링
+| 5,442,801원/톤
+| 5,211,426원/톤
+| 4,942,918원/톤
+| 시 트
+| 1,205,322원/대
+| 1,164,234원/대
+| 883,828원/대
+2026년 2분기 제품가격은 해당 생산액을 중량 및 대분으로 나눈 값입니다. 제품별 사양 및 사양별 생산량 차이에 따라 평균가격이 증감하게 됩니다. 2026년 2분기 스프링 제품의 가격은 전기 대비 4.4% 증가하였으며, 시트 제품은 차량용 시트 기준으로 전기 대비 3.5% 증가하였습니다. 시트 제품은 제품을 구성하는 사양과 차종에 따라 평균가격이 큰 폭으로 달라질 수 있으며, 또한 해외 매출은 환율의 영향을 받을 수 있습니다.
+3. 원재료 및 생산설비
+가. 주요 원재료에 관한 사항 당사의 스프링제품은 POSCO, 삼원강재, 세아베스틸, 고려제강, 일본업체 등으로부터 원재료를 수급하고 있으며, 해외 현지 업체로부터도 일부 수급이 이뤄지고 있습니다. 시트 제품은 POSCO, 코오롱, 대원정밀 등으로부터 원재료를 수급하고 있습니다. 이들 중 삼원강재와 대원정밀은 당사가 출자하여 설립한 계열회사에 해당됩니다. 주요 원재료 가격 동향은 다음과 같습니다.</pre></details><p class="reader-quote-link">회사 설명·표 전문: <a href="evidence.html#source-C12463d1d545440b40e17f26b">웹 원문 확인</a></p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C12463d1d545440b40e17f26b">원문 대조·계산 검증 →</a></p></details></div>
+<aside class="finding-scope" aria-label="해석 범위"><p>매출·이익·현금흐름의 구조화 비교는 같은 누적기간의 전년 동기 대비다. 반기·3분기 누적을 단독 분기 실적이나 연간 환산값으로 해석하지 않는다.</p><p>이 관계는 회계 금액의 비교이며 사업 인과·경쟁력·반복성·지급 능력을 입증하지 않습니다.</p><p>회사 원문의 서술·평가·계획을 그대로 인용합니다. 실현·인과·우위를 독립적으로 확인하지 않았으며 표의 수치·기간·주체·행·열·단위는 구조화하지 않습니다.</p></aside><div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>가격·수량·제품 및 사업부문 구성의 실제 기여</h3><p class="focus-trigger">대원강업의 연결 매출은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 8,036.85억원에서 2026년 반기 누적 (2026-01-01~2026-06-30) 약 9,048.23억원으로 변했다. 당기 − 전년 동기는 약 1,011.37억원이다.</p><div class="finding-refs"><a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>동일 사업·기간의 판매 수량, 실현 가격, 제품·사업부문 구성과 비용을 확보해 확인된 매출·이익률 변화에 각각 대조한다.</p></div><ul><li>판매 수량 변화의 기여</li><li>실현 가격 변화의 기여</li><li>제품·사업부문 구성 변화의 기여</li></ul><p class="finding-note">이 설명들은 함께 작용할 수 있으며 기여를 구분한다.</p><dl class="focus-outcomes"><dt>판매 수량 변화의 기여가 같은 범위의 직접 자료로 확인되는 경우</dt><dd>확인한 범위에서 이 설명의 기여를 지지한다. 다른 설명의 동시 기여와 남은 차이는 별도로 확인한다.</dd><dt>실현 가격 변화의 기여가 같은 범위의 직접 자료로 확인되는 경우</dt><dd>확인한 범위에서 이 설명의 기여를 지지한다. 다른 설명의 동시 기여와 남은 차이는 별도로 확인한다.</dd><dt>제품·사업부문 구성 변화의 기여가 같은 범위의 직접 자료로 확인되는 경우</dt><dd>확인한 범위에서 이 설명의 기여를 지지한다. 다른 설명의 동시 기여와 남은 차이는 별도로 확인한다.</dd><dt>같은 범위의 충분한 자료가 해당 설명과 반대되는 경우</dt><dd>그 설명의 기여 판단을 낮추거나 재검토한다. 반대 자료 없이 미확보만으로 기각하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div><h3>함께 확인한 수치와 자료 범위</h3><p class="finding-note">‘약’으로 표시한 금액은 읽기 쉽게 반올림했습니다. 계산은 원 단위의 원자료로 수행하며 정확한 입력은 근거 링크에서 확인할 수 있습니다.</p><table class="finding-table"><thead><tr><th>관측</th><th>확인한 관계</th></tr></thead><tbody><tr><th scope="row">매출의 기간 비교<br><span class="finding-status">계산·관측으로 확인</span></th><td>대원강업의 연결 매출은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 8,036.85억원에서 2026년 반기 누적 (2026-01-01~2026-06-30) 약 9,048.23억원으로 변했다. 당기 − 전년 동기는 약 1,011.37억원이다.<div class="finding-refs"><a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a></div></td></tr><tr><th scope="row">영업이익의 기간 비교<br><span class="finding-status">계산·관측으로 확인</span></th><td>대원강업의 연결 영업이익은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 349.75억원에서 2026년 반기 누적 (2026-01-01~2026-06-30) 약 617.62억원으로 변했다. 당기 − 전년 동기는 약 267.87억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C4495e58366cddafceacf7ede">근거 21</a> · <a class="ref-link" href="#source-C0daf9b6e16707ed2c820c4a6">근거 9</a></div></td></tr><tr><th scope="row">연결 영업이익률의 변화<br><span class="finding-status">계산·관측으로 확인</span></th><td>연결 영업이익 ÷ 매출은 2025년 반기 누적 (2025-01-01~2025-06-30) 4.35%에서 2026년 반기 누적 (2026-01-01~2026-06-30) 6.83%로 변했다. 차이는 2.47%p이다.<div class="finding-refs"><a class="ref-link" href="#source-C4495e58366cddafceacf7ede">근거 21</a> · <a class="ref-link" href="#source-C0daf9b6e16707ed2c820c4a6">근거 9</a> · <a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a></div></td></tr><tr><th scope="row">매출·영업이익·이익률의 동행과 차이<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30)과 2026년 반기 누적 (2026-01-01~2026-06-30)의 같은 연결 범위에서 매출은 증가, 영업이익은 증가, 영업이익률은 증가했다.<div class="finding-refs"><a class="ref-link" href="#source-C4495e58366cddafceacf7ede">근거 21</a> · <a class="ref-link" href="#source-C0daf9b6e16707ed2c820c4a6">근거 9</a> · <a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a></div></td></tr></tbody></table>
+<div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-C4495e58366cddafceacf7ede">근거 21</a> · <a class="ref-link" href="#source-C0daf9b6e16707ed2c820c4a6">근거 9</a> · <a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a> · <a class="ref-link" href="#source-C12463d1d545440b40e17f26b">근거 1</a></div>
+</section>
+<section class="chapter" id="chapter-cash"><div class="chapter-heading"><span class="number">02</span><h2>현금이 들어오는 이유와 버틸 힘이 있는가</h2></div>
+<aside class="finding-scope" aria-label="해석 범위"><p>매출·이익·현금흐름의 구조화 비교는 같은 누적기간의 전년 동기 대비다. 반기·3분기 누적을 단독 분기 실적이나 연간 환산값으로 해석하지 않는다.</p><p>만기·유동성 원문의 주체, 연결·별도 범위, 기준일, 만기 구간과 사용 가능한 현금의 제약을 먼저 대조합니다. 원문 인용만으로 해당 금액의 범위를 확정하거나 연결 영업현금과 합산하지 않습니다. 자료가 부족하다는 이유로 채무나 유동성 위험이 없다고 판단하지 않습니다.</p><p>이 관계는 회계 금액의 비교이며 사업 인과·경쟁력·반복성·지급 능력을 입증하지 않습니다.</p><p>영업현금흐름에서 유형자산 취득 현금유출만 차감한 값입니다. 전체 FCF·가용현금·채무상환 능력과 다르며 투자 현금유출이 영업현금흐름 증감의 원인이 되지 않습니다.</p><p>회사 원문의 서술·평가·계획을 그대로 인용합니다. 실현·인과·우위를 독립적으로 확인하지 않았으며 표의 수치·기간·주체·행·열·단위는 구조화하지 않습니다.</p></aside><div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>현금 변동의 실제 회수·지급 및 거래 원인</h3><p class="focus-trigger">2025년 반기 누적 (2025-01-01~2025-06-30)과 2026년 반기 누적 (2026-01-01~2026-06-30)의 전체 구성 합계가 각각 영업현금흐름과 일치한다. 증감의 양수 기여 합계 약 596.26억원와 음수 기여 합계 약 -494.33억원를 합하면 전체 변화 약 101.93억원이다. 가장 큰 양수 기여는 당기순이익 약 421.29억원이다. 가장 큰 음수 기여는 영업 관련 자산·부채 변동 약 -350.15억원이다.</p><div class="finding-refs"><a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a> · <a class="ref-link" href="#source-C05ccf02bd06f72b95a0c2c26">근거 6</a> · <a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a> · <a class="ref-link" href="#source-C5b600a5fb31a9421d4f10a7d">근거 23</a> · <a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a> · <a class="ref-link" href="#source-Cfdd1f91e0f50f4b550a18710">근거 37</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a> · <a class="ref-link" href="#source-C1b8872328495e160f760720e">근거 14</a> · <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a> · <a class="ref-link" href="#source-C72046f12b5a78972245b89e1">근거 25</a> · <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a> · <a class="ref-link" href="#source-Ce41dc5e59a8e56a84f3ba350">근거 32</a> · <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a> · <a class="ref-link" href="#source-Cc5d05081738e1fffe1f81266">근거 29</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>확인된 회계 증감의 해당 항목을 거래·계정별로 연결하고 실제 회수·지급 내역과 발생·결제 시점을 대조한다.</p></div><ul><li>관련 거래 규모 변화의 기여</li><li>발생과 회수·지급 시점 차이의 기여</li><li>비현금 조정·회계 분류 변화의 기여</li></ul><p class="finding-note">이 설명들은 함께 작용할 수 있으며 기여를 구분한다.</p><dl class="focus-outcomes"><dt>관련 거래 규모 변화의 기여가 같은 범위의 직접 자료로 확인되는 경우</dt><dd>확인한 범위에서 이 설명의 기여를 지지한다. 다른 설명의 동시 기여와 남은 차이는 별도로 확인한다.</dd><dt>발생과 회수·지급 시점 차이의 기여가 같은 범위의 직접 자료로 확인되는 경우</dt><dd>확인한 범위에서 이 설명의 기여를 지지한다. 다른 설명의 동시 기여와 남은 차이는 별도로 확인한다.</dd><dt>비현금 조정·회계 분류 변화의 기여가 같은 범위의 직접 자료로 확인되는 경우</dt><dd>확인한 범위에서 이 설명의 기여를 지지한다. 다른 설명의 동시 기여와 남은 차이는 별도로 확인한다.</dd><dt>같은 범위의 충분한 자료가 해당 설명과 반대되는 경우</dt><dd>그 설명의 기여 판단을 낮추거나 재검토한다. 반대 자료 없이 미확보만으로 기각하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article><article class="focus-inquiry"><span class="focus-provenance">자료 범위에 따른 필수 확인</span><h3>동일 범위의 실제 만기 의무와 사용 제한을 반영한 유동성</h3><p class="focus-trigger">연결 영업현금흐름 − 유형자산 취득 현금유출은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 -16.31억원, 2026년 반기 누적 (2026-01-01~2026-06-30) 약 284.81억원이며 차이는 약 301.12억원이다.</p><div class="finding-refs"><a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-C3d55002beea8f8ddddf7a20d">근거 20</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>먼저 만기 원문의 발행주체·연결/별도·기준일·통화와 표 범위를 확인한다. 같은 범위의 실제 만기 의무, 사용 제한 현금, 차입 약정과 필요한 지급을 확보해 시점별로 대조한다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div><h3>함께 확인한 수치와 자료 범위</h3><p class="finding-note">‘약’으로 표시한 금액은 읽기 쉽게 반올림했습니다. 계산은 원 단위의 원자료로 수행하며 정확한 입력은 근거 링크에서 확인할 수 있습니다.</p><table class="finding-table"><thead><tr><th>관측</th><th>확인한 관계</th></tr></thead><tbody><tr><th scope="row">영업현금흐름의 기간 비교<br><span class="finding-status">계산·관측으로 확인</span></th><td>대원강업의 연결 영업현금흐름은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 526.09억원에서 2026년 반기 누적 (2026-01-01~2026-06-30) 약 628.03억원으로 변했다. 당기 − 전년 동기는 약 101.93억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div></td></tr><tr><th scope="row">유형자산 취득 현금유출의 기간 비교<br><span class="finding-status">계산·관측으로 확인</span></th><td>대원강업의 연결 유형자산 취득 현금유출은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 542.40억원에서 2026년 반기 누적 (2026-01-01~2026-06-30) 약 343.21억원으로 변했다. 당기 − 전년 동기는 약 -199.19억원이다.<div class="finding-refs"><a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a></div></td></tr><tr><th scope="row">영업현금에서 유형자산 취득만 차감한 값<br><span class="finding-status">계산·관측으로 확인</span></th><td>연결 영업현금흐름 − 유형자산 취득 현금유출은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 -16.31억원, 2026년 반기 누적 (2026-01-01~2026-06-30) 약 284.81억원이며 차이는 약 301.12억원이다.<div class="finding-refs"><a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div></td></tr><tr><th scope="row">당기순이익의 회계 기여<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30) 대비 2026년 반기 누적 (2026-01-01~2026-06-30) 현금흐름표상 당기순이익의 자체 증감은 약 421.29억원이고, 부호 계수를 적용한 영업현금흐름 증감 기여는 약 421.29억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a> · <a class="ref-link" href="#source-C5b600a5fb31a9421d4f10a7d">근거 23</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div></td></tr><tr><th scope="row">현금흐름표 손익 조정의 회계 기여<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30) 대비 2026년 반기 누적 (2026-01-01~2026-06-30) 현금흐름표상 현금흐름표 손익 조정의 자체 증감은 약 -94.32억원이고, 부호 계수를 적용한 영업현금흐름 증감 기여는 약 -94.32억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a> · <a class="ref-link" href="#source-C05ccf02bd06f72b95a0c2c26">근거 6</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div></td></tr><tr><th scope="row">영업 관련 자산·부채 변동의 회계 기여<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30) 대비 2026년 반기 누적 (2026-01-01~2026-06-30) 현금흐름표상 영업 관련 자산·부채 변동의 자체 증감은 약 -350.15억원이고, 부호 계수를 적용한 영업현금흐름 증감 기여는 약 -350.15억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a> · <a class="ref-link" href="#source-Cfdd1f91e0f50f4b550a18710">근거 37</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div></td></tr><tr><th scope="row">영업활동 이자 수취의 회계 기여<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30) 대비 2026년 반기 누적 (2026-01-01~2026-06-30) 현금흐름표상 영업활동 이자 수취의 자체 증감은 약 -9.12억원이고, 부호 계수를 적용한 영업현금흐름 증감 기여는 약 -9.12억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a> · <a class="ref-link" href="#source-Cc5d05081738e1fffe1f81266">근거 29</a></div></td></tr><tr><th scope="row">영업활동 이자 지급의 회계 기여<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30) 대비 2026년 반기 누적 (2026-01-01~2026-06-30) 현금흐름표상 영업활동 이자 지급의 자체 증감은 -79,422,000원이고, 부호 계수를 적용한 영업현금흐름 증감 기여는 79,422,000원이다.<div class="finding-refs"><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a> · <a class="ref-link" href="#source-Ce41dc5e59a8e56a84f3ba350">근거 32</a></div></td></tr><tr><th scope="row">영업활동 배당금 수취의 회계 기여<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30) 대비 2026년 반기 누적 (2026-01-01~2026-06-30) 현금흐름표상 영업활동 배당금 수취의 자체 증감은 약 -40.74억원이고, 부호 계수를 적용한 영업현금흐름 증감 기여는 약 -40.74억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a> · <a class="ref-link" href="#source-C1b8872328495e160f760720e">근거 14</a></div></td></tr><tr><th scope="row">영업활동 법인세 납부(환급)의 회계 기여<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30) 대비 2026년 반기 누적 (2026-01-01~2026-06-30) 현금흐름표상 영업활동 법인세 납부(환급)의 자체 증감은 약 -174.18억원이고, 부호 계수를 적용한 영업현금흐름 증감 기여는 약 174.18억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a> · <a class="ref-link" href="#source-C72046f12b5a78972245b89e1">근거 25</a></div></td></tr><tr><th scope="row">전체 현금흐름의 양·음 기여 대사<br><span class="finding-status">계산·관측으로 확인</span></th><td>2025년 반기 누적 (2025-01-01~2025-06-30)과 2026년 반기 누적 (2026-01-01~2026-06-30)의 전체 구성 합계가 각각 영업현금흐름과 일치한다. 증감의 양수 기여 합계 약 596.26억원와 음수 기여 합계 약 -494.33억원를 합하면 전체 변화 약 101.93억원이다. 가장 큰 양수 기여는 당기순이익 약 421.29억원이다. 가장 큰 음수 기여는 영업 관련 자산·부채 변동 약 -350.15억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a> · <a class="ref-link" href="#source-C05ccf02bd06f72b95a0c2c26">근거 6</a> · <a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a> · <a class="ref-link" href="#source-C5b600a5fb31a9421d4f10a7d">근거 23</a> · <a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a> · <a class="ref-link" href="#source-Cfdd1f91e0f50f4b550a18710">근거 37</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a> · <a class="ref-link" href="#source-C1b8872328495e160f760720e">근거 14</a> · <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a> · <a class="ref-link" href="#source-C72046f12b5a78972245b89e1">근거 25</a> · <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a> · <a class="ref-link" href="#source-Ce41dc5e59a8e56a84f3ba350">근거 32</a> · <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a> · <a class="ref-link" href="#source-Cc5d05081738e1fffe1f81266">근거 29</a></div></td></tr></tbody></table>
+<div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a> · <a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a> · <a class="ref-link" href="#source-C05ccf02bd06f72b95a0c2c26">근거 6</a> · <a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a> · <a class="ref-link" href="#source-C5b600a5fb31a9421d4f10a7d">근거 23</a> · <a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a> · <a class="ref-link" href="#source-Cfdd1f91e0f50f4b550a18710">근거 37</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a> · <a class="ref-link" href="#source-C1b8872328495e160f760720e">근거 14</a> · <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a> · <a class="ref-link" href="#source-C72046f12b5a78972245b89e1">근거 25</a> · <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a> · <a class="ref-link" href="#source-Ce41dc5e59a8e56a84f3ba350">근거 32</a> · <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a> · <a class="ref-link" href="#source-Cc5d05081738e1fffe1f81266">근거 29</a> · <a class="ref-link" href="#source-C5b76f44f1507a6473b6c2069">근거 24</a> · <a class="ref-link" href="#source-C3affc550ce93c687cda8d5e0">근거 19</a> · <a class="ref-link" href="#source-C179d632179096ba406510292">근거 12</a> · <a class="ref-link" href="#source-C52c6f283e7152131530fb284">근거 22</a> · <a class="ref-link" href="#source-Cb034c85558128fed698237f4">근거 28</a> · <a class="ref-link" href="#source-C3093adad062f8ae4b866cbff">근거 16</a> · <a class="ref-link" href="#source-Cc87c868cf82ddefa3d12a218">근거 30</a> · <a class="ref-link" href="#source-C3d55002beea8f8ddddf7a20d">근거 20</a></div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>반복 가능한 현금 유입과 투자·만기 대응이 확인되면 검토를 이어간다. 일시적 요인을 제외한 현금 창출력이 약해지면 생존력 판단을 재검토한다.</span></div>
+<figure aria-label="버는 현금과 다시 투자하는 현금"><h3>버는 현금과 다시 투자하는 현금</h3><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="589.599688pt" height="268.235pt" viewBox="0 0 589.599688 268.235" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="cash-figure_1">
+  <g id="cash-patch_1">
+   <path d="M 0 268.235 
+L 589.599688 268.235 
+L 589.599688 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="cash-axes_1">
+   <g id="cash-patch_2">
+    <path d="M 57.879688 241.785 
+L 582.399688 241.785 
+L 582.399688 33.885 
+L 57.879688 33.885 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="cash-matplotlib.axis_1">
+    <g id="cash-xtick_1">
+     <g id="cash-line2d_1"/>
+     <g id="cash-text_1">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="174.762747" y="258.744375" transform="rotate(-0 174.762747 258.744375)">2025년 반기 누적</text>
+     </g>
+    </g>
+    <g id="cash-xtick_2">
+     <g id="cash-line2d_2"/>
+     <g id="cash-text_2">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="465.516628" y="258.744375" transform="rotate(-0 465.516628 258.744375)">2026년 반기 누적</text>
+     </g>
+    </g>
+   </g>
+   <g id="cash-matplotlib.axis_2">
+    <g id="cash-ytick_1">
+     <g id="cash-line2d_3">
+      <path d="M 57.879688 204.516333 
+L 582.399688 204.516333 
+" clip-path="url(#cash-p82b6ac63af)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="cash-line2d_4"/>
+     <g id="cash-text_3">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="208.49602" transform="rotate(-0 48.879688 208.49602)">0.00</text>
+     </g>
+    </g>
+    <g id="cash-ytick_2">
+     <g id="cash-line2d_5">
+      <path d="M 57.879688 160.913702 
+L 582.399688 160.913702 
+" clip-path="url(#cash-p82b6ac63af)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="cash-line2d_6"/>
+     <g id="cash-text_4">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="164.89339" transform="rotate(-0 48.879688 164.89339)">0.02</text>
+     </g>
+    </g>
+    <g id="cash-ytick_3">
+     <g id="cash-line2d_7">
+      <path d="M 57.879688 117.311072 
+L 582.399688 117.311072 
+" clip-path="url(#cash-p82b6ac63af)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="cash-line2d_8"/>
+     <g id="cash-text_5">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="121.290759" transform="rotate(-0 48.879688 121.290759)">0.04</text>
+     </g>
+    </g>
+    <g id="cash-ytick_4">
+     <g id="cash-line2d_9">
+      <path d="M 57.879688 73.708441 
+L 582.399688 73.708441 
+" clip-path="url(#cash-p82b6ac63af)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="cash-line2d_10"/>
+     <g id="cash-text_6">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="77.688129" transform="rotate(-0 48.879688 77.688129)">0.06</text>
+     </g>
+    </g>
+    <g id="cash-text_7">
+     <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="15.159375" y="137.835" transform="rotate(-90 15.159375 137.835)">조원</text>
+    </g>
+   </g>
+   <g id="cash-line2d_11">
+    <path d="M 57.879688 204.516333 
+L 582.399688 204.516333 
+" clip-path="url(#cash-p82b6ac63af)" style="fill: none; stroke: #afbfbd; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="cash-patch_3">
+    <path d="M 57.879687 241.785 
+L 582.399688 241.785 
+" style="fill: none; stroke: #e4eae8; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="cash-cash_operating_cash_flow_0"><title>2025년 반기 누적 영업현금흐름 0.05조원</title>
+    <path d="M 81.721506 204.516333 
+L 168.94767 204.516333 
+L 168.94767 89.82103 
+L 81.721506 89.82103 
+z
+" clip-path="url(#cash-p82b6ac63af)" style="fill: #087f78"/>
+   </g>
+   <g id="cash-cash_operating_cash_flow_1"><title>2026년 반기 누적 영업현금흐름 0.06조원</title>
+    <path d="M 372.475386 204.516333 
+L 459.70155 204.516333 
+L 459.70155 67.598514 
+L 372.475386 67.598514 
+z
+" clip-path="url(#cash-p82b6ac63af)" style="fill: #087f78"/>
+   </g>
+   <g id="cash-cash_capex_0"><title>2025년 반기 누적 유형자산 취득 0.05조원</title>
+    <path d="M 180.577825 204.516333 
+L 267.803989 204.516333 
+L 267.803989 86.265877 
+L 180.577825 86.265877 
+z
+" clip-path="url(#cash-p82b6ac63af)" style="fill: #729ba5"/>
+   </g>
+   <g id="cash-cash_capex_1"><title>2026년 반기 누적 유형자산 취득 0.03조원</title>
+    <path d="M 471.331705 204.516333 
+L 558.557869 204.516333 
+L 558.557869 129.691675 
+L 471.331705 129.691675 
+z
+" clip-path="url(#cash-p82b6ac63af)" style="fill: #729ba5"/>
+   </g>
+   <g id="cash-text_8">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="125.334588" y="83.82103" transform="rotate(-0 125.334588 83.82103)">0.1</text>
+   </g>
+   <g id="cash-text_9">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="224.190907" y="80.265877" transform="rotate(-0 224.190907 80.265877)">0.1</text>
+   </g>
+   <g id="cash-text_10">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="416.088468" y="61.598514" transform="rotate(-0 416.088468 61.598514)">0.1</text>
+   </g>
+   <g id="cash-text_11">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="514.944787" y="123.691675" transform="rotate(-0 514.944787 123.691675)">0.0</text>
+   </g>
+   <g id="cash-PathCollection_1">
+    <defs>
+     <path id="cash-mfffa9a9f03" d="M -0 4.472136 
+L 4.472136 0 
+L 0 -4.472136 
+L -4.472136 -0 
+z
+" style="stroke: #d59c48"/>
+    </defs>
+    <g clip-path="url(#cash-p82b6ac63af)">
+     <use xlink:href="#cash-mfffa9a9f03" x="174.762747" y="208.071486" style="fill: #d59c48; stroke: #d59c48"/>
+    </g>
+   </g>
+   <g id="cash-PathCollection_2">
+    <g clip-path="url(#cash-p82b6ac63af)">
+     <use xlink:href="#cash-mfffa9a9f03" x="465.516628" y="142.423172" style="fill: #d59c48; stroke: #d59c48"/>
+    </g>
+   </g>
+   <g id="cash-legend_1">
+    <g id="cash-PathCollection_3">
+     <g>
+      <use xlink:href="#cash-mfffa9a9f03" x="74.979687" y="15.600937" style="fill: #d59c48; stroke: #d59c48"/>
+     </g>
+    </g>
+    <g id="cash-text_12">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #163c42" x="91.179688" y="17.963437" transform="rotate(-0 91.179688 17.963437)">두 현금흐름의 차이</text>
+    </g>
+    <g id="cash-patch_4">
+     <path d="M 179.452812 17.963437 
+L 197.452812 17.963437 
+L 197.452812 11.663437 
+L 179.452812 11.663437 
+z
+" style="fill: #087f78"/>
+    </g>
+    <g id="cash-text_13">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #163c42" x="204.652812" y="17.963437" transform="rotate(-0 204.652812 17.963437)">영업현금흐름</text>
+    </g>
+    <g id="cash-patch_5">
+     <path d="M 272.332812 17.963437 
+L 290.332812 17.963437 
+L 290.332812 11.663437 
+L 272.332812 11.663437 
+z
+" style="fill: #729ba5"/>
+    </g>
+    <g id="cash-text_14">
+     <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: start; fill: #163c42" x="297.532812" y="17.963437" transform="rotate(-0 297.532812 17.963437)">유형자산 취득 현금유출</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="cash-p82b6ac63af">
+   <rect x="57.879688" y="33.885" width="524.52" height="207.9"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>황색 마름모는 영업현금흐름 − 유형자산 취득 현금유출입니다. 무형자산 투자 등을 포함한 회사의 FCF 정의와 다를 수 있습니다. <a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></figcaption></figure>
+<figure aria-label="현금흐름은 어떤 항목 때문에 달라졌나"><h3>현금흐름은 어떤 항목 때문에 달라졌나</h3><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="734.679687pt" height="265.042687pt" viewBox="0 0 734.679687 265.042687" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="bridge-figure_1">
+  <g id="bridge-patch_1">
+   <path d="M 0 265.042687 
+L 734.679687 265.042687 
+L 734.679687 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="bridge-axes_1">
+   <g id="bridge-patch_2">
+    <path d="M 57.879688 228.96 
+L 727.479688 228.96 
+L 727.479688 7.2 
+L 57.879688 7.2 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="bridge-matplotlib.axis_1">
+    <g id="bridge-xtick_1">
+     <g id="bridge-line2d_1"/>
+     <g id="bridge-text_1">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; fill: #163c42" transform="translate(91.982442 245.123437)">전년 동기</text>
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; fill: #163c42" transform="translate(84.710723 255.781125)">영업현금흐름</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_2">
+     <g id="bridge-line2d_2"/>
+     <g id="bridge-text_2">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="180.332964" y="245.123437" transform="rotate(-0 180.332964 245.123437)">당기순이익</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_3">
+     <g id="bridge-line2d_3"/>
+     <g id="bridge-text_3">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="251.115205" y="245.123437" transform="rotate(-0 251.115205 245.123437)">손익 조정</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_4">
+     <g id="bridge-line2d_4"/>
+     <g id="bridge-text_4">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; fill: #163c42" transform="translate(293.524946 245.123437)">영업 자산·부채</text>
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; fill: #163c42" transform="translate(313.617446 255.781125)">변동</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_5">
+     <g id="bridge-line2d_5"/>
+     <g id="bridge-text_5">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="392.679688" y="245.123437" transform="rotate(-0 392.679688 245.123437)">이자 수취</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_6">
+     <g id="bridge-line2d_6"/>
+     <g id="bridge-text_6">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="463.461929" y="245.123437" transform="rotate(-0 463.461929 245.123437)">이자 지급</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_7">
+     <g id="bridge-line2d_7"/>
+     <g id="bridge-text_7">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="534.24417" y="245.123437" transform="rotate(-0 534.24417 245.123437)">배당 수취</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_8">
+     <g id="bridge-line2d_8"/>
+     <g id="bridge-text_8">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="605.026411" y="245.123437" transform="rotate(-0 605.026411 245.123437)">법인세 납부</text>
+     </g>
+    </g>
+    <g id="bridge-xtick_9">
+     <g id="bridge-line2d_9"/>
+     <g id="bridge-text_9">
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; fill: #163c42" transform="translate(658.24037 245.123437)">당기 누적</text>
+      <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; fill: #163c42" transform="translate(650.968652 255.781125)">영업현금흐름</text>
+     </g>
+    </g>
+   </g>
+   <g id="bridge-matplotlib.axis_2">
+    <g id="bridge-ytick_1">
+     <g id="bridge-line2d_10">
+      <path d="M 57.879688 215.52 
+L 727.479688 215.52 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="bridge-line2d_11"/>
+     <g id="bridge-text_10">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="219.499687" transform="rotate(-0 48.879688 219.499687)">0.00</text>
+     </g>
+    </g>
+    <g id="bridge-ytick_2">
+     <g id="bridge-line2d_12">
+      <path d="M 57.879688 180.053806 
+L 727.479688 180.053806 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="bridge-line2d_13"/>
+     <g id="bridge-text_11">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="184.033493" transform="rotate(-0 48.879688 184.033493)">0.02</text>
+     </g>
+    </g>
+    <g id="bridge-ytick_3">
+     <g id="bridge-line2d_14">
+      <path d="M 57.879688 144.587611 
+L 727.479688 144.587611 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="bridge-line2d_15"/>
+     <g id="bridge-text_12">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="148.567299" transform="rotate(-0 48.879688 148.567299)">0.04</text>
+     </g>
+    </g>
+    <g id="bridge-ytick_4">
+     <g id="bridge-line2d_16">
+      <path d="M 57.879688 109.121417 
+L 727.479688 109.121417 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="bridge-line2d_17"/>
+     <g id="bridge-text_13">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="113.101105" transform="rotate(-0 48.879688 113.101105)">0.06</text>
+     </g>
+    </g>
+    <g id="bridge-ytick_5">
+     <g id="bridge-line2d_18">
+      <path d="M 57.879688 73.655223 
+L 727.479688 73.655223 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="bridge-line2d_19"/>
+     <g id="bridge-text_14">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="77.63491" transform="rotate(-0 48.879688 77.63491)">0.08</text>
+     </g>
+    </g>
+    <g id="bridge-ytick_6">
+     <g id="bridge-line2d_20">
+      <path d="M 57.879688 38.189029 
+L 727.479688 38.189029 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke: #e4eae8; stroke-width: 0.7; stroke-linecap: square"/>
+     </g>
+     <g id="bridge-line2d_21"/>
+     <g id="bridge-text_15">
+      <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: end; fill: #617578" x="48.879688" y="42.168716" transform="rotate(-0 48.879688 42.168716)">0.10</text>
+     </g>
+    </g>
+    <g id="bridge-text_16">
+     <text style="font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="15.159375" y="118.08" transform="rotate(-90 15.159375 118.08)">조원</text>
+    </g>
+   </g>
+   <g id="bridge-patch_3">
+    <path d="M 88.316051 215.52 
+L 130.785396 215.52 
+L 130.785396 122.227329 
+L 88.316051 122.227329 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #163c42"/>
+   </g>
+   <g id="bridge-bridge_1"><title>당기순이익의 전년 동기 대비 기여 0.04조원</title>
+    <path d="M 159.098292 122.227329 
+L 201.567637 122.227329 
+L 201.567637 47.52 
+L 159.098292 47.52 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #087f78"/>
+   </g>
+   <g id="bridge-bridge_2"><title>현금흐름표 손익 조정의 전년 동기 대비 기여 -0.01조원</title>
+    <path d="M 229.880533 64.244992 
+L 272.349878 64.244992 
+L 272.349878 47.52 
+L 229.880533 47.52 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #b76343"/>
+   </g>
+   <g id="bridge-bridge_3"><title>영업 관련 자산·부채 변동의 전년 동기 대비 기여 -0.04조원</title>
+    <path d="M 300.662774 126.338267 
+L 343.132119 126.338267 
+L 343.132119 64.244992 
+L 300.662774 64.244992 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #b76343"/>
+   </g>
+   <g id="bridge-bridge_4"><title>영업활동 이자 수취의 전년 동기 대비 기여 -0.00조원</title>
+    <path d="M 371.445015 127.955864 
+L 413.91436 127.955864 
+L 413.91436 126.338267 
+L 371.445015 126.338267 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #b76343"/>
+   </g>
+   <g id="bridge-bridge_5"><title>영업활동 이자 지급의 전년 동기 대비 기여 0.00조원</title>
+    <path d="M 442.227256 127.955864 
+L 484.696601 127.955864 
+L 484.696601 127.815024 
+L 442.227256 127.815024 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #087f78"/>
+   </g>
+   <g id="bridge-bridge_6"><title>영업활동 배당금 수취의 전년 동기 대비 기여 -0.00조원</title>
+    <path d="M 513.009497 135.038688 
+L 555.478842 135.038688 
+L 555.478842 127.815024 
+L 513.009497 127.815024 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #b76343"/>
+   </g>
+   <g id="bridge-bridge_7"><title>영업활동 법인세 납부(환급)의 전년 동기 대비 기여 0.02조원</title>
+    <path d="M 583.791738 135.038688 
+L 626.261083 135.038688 
+L 626.261083 104.151628 
+L 583.791738 104.151628 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #087f78"/>
+   </g>
+   <g id="bridge-patch_4">
+    <path d="M 654.573979 215.52 
+L 697.043324 215.52 
+L 697.043324 104.151628 
+L 654.573979 104.151628 
+z
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: #163c42"/>
+   </g>
+   <g id="bridge-line2d_22">
+    <path d="M 130.785396 122.227329 
+L 159.098292 122.227329 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_23">
+    <path d="M 201.567637 47.52 
+L 229.880533 47.52 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_24">
+    <path d="M 272.349878 64.244992 
+L 300.662774 64.244992 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_25">
+    <path d="M 343.132119 126.338267 
+L 371.445015 126.338267 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_26">
+    <path d="M 413.91436 127.955864 
+L 442.227256 127.955864 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_27">
+    <path d="M 484.696601 127.815024 
+L 513.009497 127.815024 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_28">
+    <path d="M 555.478842 135.038688 
+L 583.791738 135.038688 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_29">
+    <path d="M 626.261083 104.151628 
+L 654.573979 104.151628 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #acbcb9; stroke-width: 0.8"/>
+   </g>
+   <g id="bridge-line2d_30">
+    <path d="M 57.879688 215.52 
+L 727.479688 215.52 
+" clip-path="url(#bridge-pee7dfde26a)" style="fill: none; stroke: #afbfbd; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="bridge-patch_5">
+    <path d="M 57.879687 228.96 
+L 727.479688 228.96 
+" style="fill: none; stroke: #e4eae8; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="bridge-text_17">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #087f78" x="180.332964" y="39.52" transform="rotate(-0 180.332964 39.52)">+0.04</text>
+   </g>
+   <g id="bridge-text_18">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #b76343" x="251.115205" y="39.52" transform="rotate(-0 251.115205 39.52)">-0.01</text>
+   </g>
+   <g id="bridge-text_19">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #b76343" x="321.897446" y="56.244992" transform="rotate(-0 321.897446 56.244992)">-0.04</text>
+   </g>
+   <g id="bridge-text_20">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #b76343" x="392.679688" y="118.338267" transform="rotate(-0 392.679688 118.338267)">-0.00</text>
+   </g>
+   <g id="bridge-text_21">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #087f78" x="463.461929" y="119.815024" transform="rotate(-0 463.461929 119.815024)">+0.00</text>
+   </g>
+   <g id="bridge-text_22">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #b76343" x="534.24417" y="119.815024" transform="rotate(-0 534.24417 119.815024)">-0.00</text>
+   </g>
+   <g id="bridge-text_23">
+    <text style="font-size: 9px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #087f78" x="605.026411" y="96.151628" transform="rotate(-0 605.026411 96.151628)">+0.02</text>
+   </g>
+   <g id="bridge-text_24">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="109.550723" y="114.227329" transform="rotate(-0 109.550723 114.227329)">0.05</text>
+   </g>
+   <g id="bridge-text_25">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Noto Sans CJK JP'; text-anchor: middle; fill: #163c42" x="675.808652" y="96.151628" transform="rotate(-0 675.808652 96.151628)">0.06</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="bridge-pee7dfde26a">
+   <rect x="57.879688" y="7.2" width="669.6" height="221.76"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>2026년 반기 누적 (2026-01-01~2026-06-30) 및 전년 동기의 구성 합계가 원 단위까지 일치한 경우만 표시합니다. 회계 항목별 기여이며 반복 가능한 사업 원인의 입증은 아닙니다. <a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a> · <a class="ref-link" href="#source-C05ccf02bd06f72b95a0c2c26">근거 6</a> · <a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a> · <a class="ref-link" href="#source-C5b600a5fb31a9421d4f10a7d">근거 23</a> · <a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a> · <a class="ref-link" href="#source-Cfdd1f91e0f50f4b550a18710">근거 37</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a> · <a class="ref-link" href="#source-C1b8872328495e160f760720e">근거 14</a> · <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a> · <a class="ref-link" href="#source-C72046f12b5a78972245b89e1">근거 25</a> · <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a> · <a class="ref-link" href="#source-Ce41dc5e59a8e56a84f3ba350">근거 32</a> · <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a> · <a class="ref-link" href="#source-Cc5d05081738e1fffe1f81266">근거 29</a></figcaption></figure>
+</section>
+<section class="chapter" id="chapter-us"><div class="chapter-heading"><span class="number">03</span><h2>내수를 넘어 미국 시장에서 검증됐는가</h2></div>
+<aside class="finding-scope" aria-label="해석 범위"><p>회사 원문의 서술·평가·계획을 그대로 인용합니다. 실현·인과·우위를 독립적으로 확인하지 않았으며 표의 수치·기간·주체·행·열·단위는 구조화하지 않습니다.</p></aside><div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>지역 합계와 구분된 미국 고객의 실제 매출</h3><p class="focus-trigger">회사 공시 원문을 인용하되, 인용의 지역 합계·고객·법인 범위와 보고기업의 미국 국가별 고객 매출 사이의 대응은 구조화해 검증하지 않았다. 이 범위를 먼저 확인해야 한다.</p><div class="finding-refs"><a class="ref-link" href="#source-C4eed47a59102ad316f143595">근거 2</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>이 인용의 사실·계획·조건과 표의 주체·기간·단위를 먼저 분리해 확인한다. 원문상의 지역 합계·해외법인·자회사·고객 목록을 구분하고, 보고기업에 귀속되는 미국 국가별 실제 고객 매출의 기간·분모를 확인한다. 미주 합계를 미국으로 바꾸지 않는다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div>
+<div class="focus-original"><p class="source-note"><strong>선택한 회사 공시 원문</strong> · 회사의 기술 내용입니다. 주체·기간·표의 대응이나 사업 우위까지 검증된 사실로 읽지 않습니다. 회사 설명·표 원문은 웹 보고서 또는 DART에서 확인할 수 있습니다.</p><details class="source-record reader-source" id="source-C4eed47a59102ad316f143595"><summary>근거 2 · 회사 공시 설명</summary><p class="reader-qualification">회사가 공시한 내용입니다. 숫자는 표의 기간·단위와 함께 읽고, 성장 원인과 지속성은 추가 자료로 확인합니다.</p><details class="reader-original"><summary>회사 설명·표 원문 펼쳐보기</summary><pre class="source-quote">국내 매출의 상당부분은 현대자동차 및 기아(주) 등 자동차 완성업체에 대한 매출이며, 수출은 중국, 인도, 미국 등을 포함하고 있습니다.
+주요 고객에 대한 공시
+당반기 (단위 : 천원)
+|
+|
+| 주요 고객에 대한 정보
+| 수익
+| 기업전체 수익에 대한 비율
+주요 고객 고객 A 연결회사 매출의 10% 이상을 차지하는 주요 매출처 162,032,115 0.1791
+|
+전반기 (단위 : 천원)
+|
+|
+| 주요 고객에 대한 정보
+| 수익
+| 기업전체 수익에 대한 비율
+주요 고객 고객 A 연결회사 매출의 10% 이상을 차지하는 주요 매출처 141,562,159 0.1761
+|
+계약부채에 대한 공시
+당반기말 (단위 : 천원)
+|
+| 공시금액
+계약부채 45,539,745</pre></details><p class="reader-quote-link">회사 설명·표 전문: <a href="evidence.html#source-C4eed47a59102ad316f143595">웹 원문 확인</a></p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C4eed47a59102ad316f143595">원문 대조·계산 검증 →</a></p></details></div>
+<div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-C4eed47a59102ad316f143595">근거 2</a></div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>미국 고객의 실제 매출과 반복 구매가 확인되면 경쟁력의 근거로 삼는다. 주요 고객 이탈이나 대체 제품 전환이 확인되면 재검토한다.</span></div>
+</section>
+<section class="chapter" id="chapter-technology"><div class="chapter-heading"><span class="number">04</span><h2>세 해 뒤에도 기술의 매력이 유지되는가</h2></div>
+<aside class="finding-scope" aria-label="해석 범위"><p>회사 원문의 서술·평가·계획을 그대로 인용합니다. 실현·인과·우위를 독립적으로 확인하지 않았으며 표의 수치·기간·주체·행·열·단위는 구조화하지 않습니다.</p></aside><div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>사업에 적용되는 제품·서비스·운영기술의 단계와 실제 고객 채택</h3><p class="focus-trigger">회사 공시 원문을 인용하되, 해당 사업에 적용되는 제품·서비스·운영기술의 계획·적용 단계와 실제 고객 채택·지속적 성과 사이의 대응은 구조화해 검증하지 않았다. 이 범위를 먼저 확인해야 한다.</p><div class="finding-refs"><a class="ref-link" href="#source-C021537bab6aaf436a6d4c43d">근거 3</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>이 인용의 사실·계획·조건과 표의 주체·기간·단위를 먼저 분리해 확인한다. 먼저 해당 사업에서 기술 경쟁력을 평가할 제품·서비스·운영기술과 적용 가능한 지표를 확인한다. 원문상의 계획과 실제 적용·고객 채택·유상 거래를 날짜와 범위별로 구분한다. 인증·양산 단계는 그 사업에 해당하는 경우에만 확인한다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div>
+<div class="focus-original"><p class="source-note"><strong>선택한 회사 공시 원문</strong> · 회사의 기술 내용입니다. 주체·기간·표의 대응이나 사업 우위까지 검증된 사실로 읽지 않습니다. 회사 설명·표 원문은 웹 보고서 또는 DART에서 확인할 수 있습니다.</p><details class="source-record reader-source" id="source-C021537bab6aaf436a6d4c43d"><summary>근거 3 · 회사 공시 설명</summary><p class="reader-qualification">회사가 공시한 내용입니다. 숫자는 표의 기간·단위와 함께 읽고, 성장 원인과 지속성은 추가 자료로 확인합니다.</p><details class="reader-original"><summary>회사 설명·표 원문 펼쳐보기</summary><pre class="source-quote">3) 연구개발비용
+| (단위: 백만원)
+| 과 목
+| 제80기(1~6월)
+| 제79기
+| 제78기
+| 비 고
+| 원 재 료 비
+| 921
+| 1,898
+| 1,808
+| -
+| 인 건 비
+| 4,081
+| 8,891
+| 8,639
+| -
+| 감 가 상 각 비
+| 1,317
+| 1,498
+| 1,480
+| -
+| 위 탁 용 역 비
+| 936
+| 3,189
+| 266
+| -
+| 기 타
+| 6,230
+| 11,554
+| 15,020
+| -
+| 연구개발비용 계
+| 13,485
+| 27,029
+| 27,213
+| -
+| 회계처리
+| 판매비와 관리비
+| -
+| -
+| -
+| -
+| 제조경비
+| 13,485
+| 27,029
+| 27,213
+| -
+| 개발비(무형자산)
+| -
+| -
+| -
+| -
+| 연구개발비 / 매출액 비율[연구개발비용계÷당기매출액×100]
+| 3.45%
+| 3.46%
+| 3.58%
+| -
+4) 연구개발 실적
+| 연구과제명
+| 연구기관
+| 연구내용 및결과(기대효과)
+| 비고
+| 승차감, 조종 안정성 향상을 위한능동 현가 모듈 개발
+| 기술연구소
+| □연구결과: 자동차용 능동 현가 모듈 개발□기대효과: 매출 증대
+| -
+| 프리미엄 시트 개발(철도, 버스)
+| 시트연구실
+| □연구결과: 고속전철(일등석)시트 및 프리미엄 버스 시트 개발□기대효과: 신규 아이템 개발 및 매출 증대
+| -
+| 지능형 첨단 기능의 자동차 시트구현
+| □연구결과: 3H(Health, Healing, Helpful) 지능형 시트 개발□기대효과: 자율주행 차량용 시트 개발
+| -
+| 하이브리드용 모터코어양산시스템 개발
+| 전동화연구소
+| □연구결과: 제조공정 및 제품품질 고객 승인 완료□기대효과: 신규 전동화 아이템 매출발생
+| -
+| 전기차용 모터코어 고성능화신기술 개발
+| 전동화연구소
+| □연구결과: 모터코어 EMC 슬롯몰딩 기술 개발□기대효과: 매출신장 및 부가가치 창출 증대
+| -
+7. 기타 참고사항
+가. 업계의 현황
+(산업의 특성) 자동차 부품산업은 자동차 산업의 일부분으로서, 자동차 산업은 자동차의 제조, 유통, 운행에 연관된 산업까지도 포괄하는 국가의 핵심산업입니다.
+자동차 제조에는 철강, 화학, 비철금속, 전기, 전자, 고무, 유리, 플라스틱 등의 산업과 2만여 개의 부품을 만드는 부품업체들이 연계되어 있으며, 따라서 자동차 부품업체의 경영성과는 국내 자동차 산업과 밀접한 관계를 가지고 있습니다.
+(산업의 성장성) 2026년 2분기 자동차 생산 실적은 2,110천대를 기록하며, 연간 환산 시 당초 전망치인 4,130천대에 부합하는 안정적인 생산 궤도에 진입했습니다. 특히 수출은 2분기 동안 1,441천대(수출액 32,147백만불)를 달성하며 생산량의 약 68%를 차지, 여전히 한국 자동차 산업의 성장을 견인하고 있습니다. 미국의 관세 정책 변동과 현지 생산 비중 확대라는 도전 과제에도 불구하고, 하이브리드(HEV) 및 차세대 전기차(EV) 라인업의 경쟁력을 바탕으로 북미 및 유럽 시장에서 견고한 수요를 확인하였습니다. 또한, 국내 시장에서는 고금리 기조 완화에 따른 소비 심리 개선과 신차 효과가 맞물리며 부품 수요 또한 동반 상승하는 추세입니다.
+&lt; 연도별 자동차 생산 및 판매 대수 추이&gt;
+| 구 분
+| 2026년(1~6월)
+| 2025
+| 2024
+| 2023
+| 2022
+| 자동차생산(천대)
+| 2,111
+| 4,102
+| 4,128
+| 4,244
+| 3,757
+| 자동차수출(천대)
+| 1,441
+| 2,736</pre></details><p class="reader-quote-link">회사 설명·표 전문: <a href="evidence.html#source-C021537bab6aaf436a6d4c43d">웹 원문 확인</a></p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C021537bab6aaf436a6d4c43d">원문 대조·계산 검증 →</a></p></details></div>
+<div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-C021537bab6aaf436a6d4c43d">근거 3</a></div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>핵심 기술의 차별성과 일관된 개발 방향이 유지되면 검토를 이어간다. 대체 기술에 밀리거나 개발 방향이 지속적으로 흔들리면 재검토한다.</span></div>
+</section>
+<section class="chapter" id="chapter-policy"><div class="chapter-heading"><span class="number">05</span><h2>정책 지원 없이도 버틸 수 있는가</h2></div>
+<div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>정부 지원의 적용 조건과 지원 제외 시 경제성</h3><p class="focus-trigger">이번 선택 자료에서 질문의 직접 관측을 확보하지 못했다. 회사 전체 공시의 부재나 사업의 약점을 뜻하지 않는다.</p><div class="finding-refs"></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>지원의 실제 적용 대상·조건·기간·환수 의무와 수령 여부를 원문에서 확인하고, 같은 사업에서 지원을 제외한 비용·현금 자료를 구분해 확보한다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div><h3>함께 확인한 수치와 자료 범위</h3><p class="finding-note">‘약’으로 표시한 금액은 읽기 쉽게 반올림했습니다. 계산은 원 단위의 원자료로 수행하며 정확한 입력은 근거 링크에서 확인할 수 있습니다.</p><table class="finding-table"><thead><tr><th>관측</th><th>확인한 관계</th></tr></thead><tbody><tr><th scope="row">이번 질문의 직접 원자료 미확보<br><span class="finding-status">자료 확인 필요</span></th><td>이번 선택 자료에서 질문의 직접 관측을 확보하지 못했다. 회사 전체 공시의 부재나 사업의 약점을 뜻하지 않는다.<div class="finding-refs"></div></td></tr></tbody></table>
+<div class="refs">이번 검색 범위에서 직접 근거를 확보하지 못했습니다. 사용자 기준에 따른 조건부 검토입니다.</div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>정책 지원을 제외해도 사업이 유지되면 자생력을 인정한다. 지원 축소로 사업 지속이 어려워진다는 근거가 나오면 재검토한다.</span></div>
+</section>
+<section class="chapter" id="chapter-ip"><div class="chapter-heading"><span class="number">06</span><h2>회사의 성과가 주주에게 남는가</h2></div>
+<aside class="finding-scope" aria-label="해석 범위"><p>회사 원문의 서술·평가·계획을 그대로 인용합니다. 실현·인과·우위를 독립적으로 확인하지 않았으며 표의 수치·기간·주체·행·열·단위는 구조화하지 않습니다.</p></aside><div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>자본배분의 성과가 회사와 일반 주주에게 남는 조건</h3><p class="focus-trigger">회사 공시 원문을 인용하되, 인용의 정책·예정·실행 시점 및 주식 종류와 실제 일반 주주 귀속 사이의 대응은 구조화해 검증하지 않았다. 이 범위를 먼저 확인해야 한다.</p><div class="finding-refs"><a class="ref-link" href="#source-C7c834eadc8d8d68d58c4275d">근거 4</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>이 인용의 사실·계획·조건과 표의 주체·기간·단위를 먼저 분리해 확인한다. 원문상 자본배분의 실행 조건과 대상 주식 종류를 확인하고 지분 희석·특수관계자 거래·권리 귀속 및 실제 일반 주주 몫을 같은 범위에서 확보한다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div>
+<div class="focus-original"><p class="source-note"><strong>선택한 회사 공시 원문</strong> · 회사의 기술 내용입니다. 주체·기간·표의 대응이나 사업 우위까지 검증된 사실로 읽지 않습니다. 회사 설명·표 원문은 웹 보고서 또는 DART에서 확인할 수 있습니다.</p><details class="source-record reader-source" id="source-C7c834eadc8d8d68d58c4275d"><summary>근거 4 · 회사 공시 설명</summary><p class="reader-qualification">회사가 공시한 내용입니다. 숫자는 표의 기간·단위와 함께 읽고, 성장 원인과 지속성은 추가 자료로 확인합니다.</p><details class="reader-original"><summary>회사 설명·표 원문 펼쳐보기</summary><pre class="source-quote">6. 배당에 관한 사항
+가. 회사의 배당정책에 관한 사항
+당사는 제품 및 사업 경쟁력 강화와 함께 주주환원을 통하여 주주가치를 제고할 수 있도록 지속적으로 노력하고 있습니다. 당사는 배당가능이익 한도내에서 주주총회 결의를 통해 매년 배당을 실시하고 있습니다. 별도재무제표 기준으로 배당성향을 2023년(제77기) 23.96%, 2024년(제78기) 73.55%, 2025년(제79기) 21.35%로 이어 오고 있으며, 배당을 제한하는 정책은 없습니다.
+당사는 2024년 2월 7일 주주가치 제고를 위한 배당정책을 수립하여 공정공시를 통하여 공표하였고, 2026년 8월 6일에는 기업가치 제고 계획 공시를 통해 배당정책의 확대 시행을 발표하였습니다.■배당정책 (2026~2028년, 3개년) ① 배당 기준 - 별도재무제표 기준 영업이익의 22% 이상 배당 지향 ② 최저 배당 - 주당 110원 ③ 배당변동 범위 - 직전연도 배당액의 +10% 이상 변동 (2026년 주당 130원, 2027년 주당 150원, 2028년 주당 170원 목표) ④ 정책 적용 기간 - 3년 (2026년~2028년 사업연도 기준)
+나. 배당관련 예측가능성 제공에 관한 사항
+1) 정관상 배당절차 개선방안 이행 가부
+| 구분
+| 결산배당
+| 분기ㆍ중간배당
+| 정관상 배당액 결정 기관
+| 주주총회
+| 이사회
+| 정관상 배당기준일을 배당액 결정 이후로 정할 수 있는지 여부
+| O
+| O
+| 배당절차 개선방안 이행 관련 향후 계획
+배당절차 개선방안지속 준수 예정 배당절차 개선방안지속 준수 예정
+2) 배당액 확정일 및 배당기준일 지정 현황
+| 구분
+| 결산월
+| 배당여부
+| 배당액확정일
+| 배당기준일
+| 배당 예측가능성제공여부
+| 비고
+| 결산배당
+| 2025.12
+| O
+| 2026.03.26
+| 2026.04.03
+| O
+-
+| 결산배당
+| 2024.12
+| O
+| 2025.03.26
+| 2025.04.03
+| O
+-
+| 결산배당
+| 2023.12
+| O
+| 2024.03.25
+| 2023.12.31
+| X
+-
+다. 주요배당지표
+| 구 분
+| 주식의 종류
+| 당기
+| 전기
+| 전전기
+| 제80기 반기
+| 제79기
+| 제78기
+| 주당액면가액(원)
+500 500 500
+| (연결)당기순이익(백만원)
+54,122 36,423 28,661
+| (별도)당기순이익(백만원)
+36,549 31,942 9,272
+| (연결)주당순이익(원)
+873 587 462
+| 현금배당금총액(백만원)
+- 6,820 6,820
+| 주식배당금총액(백만원)
+- - -
+| (연결)현금배당성향(%)
+- 18.72 23.79
+| 현금배당수익률(%)
+보통주 - 2.73 2.89
+- - - -
+| 주식배당수익률(%)
+- - - -
+- - - -
+| 주당 현금배당금(원)
+보통주 - 110 110
+- - - -
+| 주당 주식배당(주)
+- - - -
+- - - -
+※ 지배기업 소유주지분 기준 당기순이익 입니다.
+라. 과거 배당 이력
+|
+| (단위: 회, %)
+| 연속 배당횟수
+| 평균 배당수익률
+| 분기(중간)배당
+| 결산배당
+| 최근 3년간
+| 최근 5년간
+0 26 2.54 2.60
+※ 배당수익률 : 제79기 2.73% 제78기 2.89%, 제 77기 2.01%, 제76기 2.69%, 제75기 2.67%
+마. 기타 참고사항 (배당 관련 정관의 내용 등)
+|
+제43조(주주배당금) ① 이익의 배당금은 금전과 주식으로 할 수 있다.
+② 이익의 배당을 주식으로 하는 경우 회사가 수종의 주식을 발행한 때에는 주주총회의 결의로 그와 다른 종류의 주식으로도 할 수 있다.</pre></details><p class="reader-quote-link">회사 설명·표 전문: <a href="evidence.html#source-C7c834eadc8d8d68d58c4275d">웹 원문 확인</a></p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C7c834eadc8d8d68d58c4275d">원문 대조·계산 검증 →</a></p></details></div>
+<div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-C7c834eadc8d8d68d58c4275d">근거 4</a></div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>성과가 회사와 주주에게 남는 자본배분이 확인되면 검토를 이어간다. 핵심 가치가 외부나 지배주주에게 편중되는 사실이 확인되면 재검토한다.</span></div>
+</section>
+<section class="chapter" id="chapter-macro"><div class="chapter-heading"><span class="number">07</span><h2>환율·금리·지정학 변화에 버틸 수 있는가</h2></div>
+<aside class="finding-scope" aria-label="해석 범위"><p>회사 원문의 서술·평가·계획을 그대로 인용합니다. 실현·인과·우위를 독립적으로 확인하지 않았으며 표의 수치·기간·주체·행·열·단위는 구조화하지 않습니다.</p></aside><div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>거시 변수와 해당 사업의 실제 매출·비용 노출</h3><p class="focus-trigger">회사 공시 원문을 인용하되, 인용의 거시 변수와 해당 기업·사업의 실제 노출 사이의 대응은 구조화해 검증하지 않았다. 이 범위를 먼저 확인해야 한다.</p><div class="finding-refs"><a class="ref-link" href="#source-Cec256d47fb1eb812a4e3067a">근거 5</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>이 인용의 사실·계획·조건과 표의 주체·기간·단위를 먼저 분리해 확인한다. 거시 변수의 변동과 구분해 해당 기업·사업의 매출·비용·차입·헤지 노출 및 적용 기간을 원자료로 확보한다. 시장 방향만으로 기업 영향을 정하지 않는다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div>
+<div class="focus-original"><p class="source-note"><strong>선택한 회사 공시 원문</strong> · 회사의 기술 내용입니다. 주체·기간·표의 대응이나 사업 우위까지 검증된 사실로 읽지 않습니다. 회사 설명·표 원문은 웹 보고서 또는 DART에서 확인할 수 있습니다.</p><details class="source-record reader-source" id="source-Cec256d47fb1eb812a4e3067a"><summary>근거 5 · 회사 공시 설명</summary><p class="reader-qualification">회사가 공시한 내용입니다. 숫자는 표의 기간·단위와 함께 읽고, 성장 원인과 지속성은 추가 자료로 확인합니다.</p><details class="reader-original"><summary>회사 설명·표 원문 펼쳐보기</summary><pre class="source-quote">상기 민감도 분석은 보고기간말 현재 각 연결대상 회사의 기능통화 이외의 외화로 표시된 화폐성 자산ㆍ부채를 대상으로 하였습니다.
+2) 가격위험 연결회사는 기타포괄손익-공정가치측정 금융자산으로 분류되는 연결회사 보유 지분증권의 가격위험에 노출되어 있습니다. 연결회사의 경영진은 시장가격의 변동으로 인하여 상장지분상품의 공정가치 또는 미래현금흐름이 변동할 위험을 정기적으로 측정하고 있습니다. 연결회사는 지분증권에 대한 투자로 인한 가격위험을 관리하기 위해 포트폴리오를 분산투자하고 있으며 포트폴리오의 분산투자는 연결회사가 정한 한도에 따라 이루어집니다. 연결회사가 보유하고 있는 상장주식은 KOSPI 주가지수에 속해 있습니다.
+보고기간말 현재 다른 모든 변수가 일정하고, 주가가 10% 변동시 연결회사의 세후포괄이익 및 자본에 미치는 영향은 다음과 같습니다.
+| (단위: 천원)
+| 지 수
+| 세후 포괄이익에 대한 영향
+| 2026년 반기
+| 2025년
+| KOSPI
+| 상승시
+| 105,653
+| 132,539
+| 하락시
+| (105,653)
+| (132,539)
+3) 이자율위험 이자율위험은 미래의 시장이자율 변동에 따라 예금 또는 차입금 등에서 발생하는 이자수익 및 이자비용이 변동될 위험으로서 이는 주로 변동금리부 조건의 예금과 차입금에서 발생하고 있습니다. 연결회사의 이자율위험관리의 목표는 이자율변동으로 인한 불확실성과 순이자비용의 최소화를 추구함으로써 기업의 가치를 극대화 하는데 있습니다. 연결회사는 보고기간말 현재 변동금리부 차입금 대비 변동금리부 예금이 적어 이자율 상승시 순이자비용이 증가합니다. 한편, 연결회사는 고금리 차입금 감축, 장/단기 차입구조 개선, 고정 대 변동이자 차입조건의 적정비율 유지, 일간/주간/ 월간 단위의 국내외 금리동향 모니터링 실시, 대응방안 수립 및 변동금리부 조건의 단기차입금과 예금을 적절히 운영함으로써 이자율변동에 따른 위험을 최소화하고 있습니다. 보고기간말 현재 다른 모든 변수가 일정하고 이자율의 100bp 변동시 연결회사의 세전이익에 미치는 영향은 아래 표와 같습니다.
+| (단위: 천원)
+| 지수
+| 세전 이익에 대한 영향
+| 2026년 반기
+| 2025년
+| 상승시
+| (2,615,307)
+| (2,233,023)
+| 하락시
+| 2,615,307
+| 2,233,023
+시뮬레이션은 최대 잠재적 손실가능액이 경영진에 의해 정해진 한도보다 작다는 것을 확인하기 위하여 매 분기마다 실시하고 있습니다.
+나. 신용위험 신용위험은 연결회사의 통상적인 거래 및 투자활동에서 발생하며 고객 또는 거래 상대방이 계약조건상 의무사항을 지키지 못하였을 때 발생합니다. 이러한 신용위험을 관리하기 위하여 연결회사는 주기적으로 고객과 거래 상대방의 재무 상태와 과거경험 및 기타요소들을 고려하여 재무 신용도를 평가하고 있으며 고객과 거래상대방 각각에 대한 신용한도를 설정하고 있습니다.
+기업 고객의 경우 외부 신용등급을 확인할 수 있는 경우 동 정보를 사용하고 그 외의 경우에는 내부적으로 고객의 재무상태와 과거 경험 등을 근거로 신용등급을 평가합니다.
+연결회사의 신용위험은 개별 고객, 산업, 지역 등에 대한 유의적인 집중은 없습니다.
+연결회사가 보유하는 채무상품은 모두 낮은 신용위험의 상품에 해당합니다. 이러한 채무상품들에 대해서는 신용등급을 모니터링하여 신용위험의 하락을 평가하고 있습니다.
+신용위험은 연결회사의 신용정책에 의하여 효율적 신용위험 관리, 신속한 의사결정 지원 및 채권 안전장치 마련을 통한 손실 최소화를 목적으로 관리하고 있습니다. 연결회사는 당기 중 손상의 징후나 회수기일이 초과된 채권 등에 대하여 당기말 현재 채무불이행이 예상되는 경우, 그 위험을 적절히 평가하여 재무상태표에 반영하고 있습니다.</pre></details><p class="reader-quote-link">회사 설명·표 전문: <a href="evidence.html#source-Cec256d47fb1eb812a4e3067a">웹 원문 확인</a></p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cec256d47fb1eb812a4e3067a">원문 대조·계산 검증 →</a></p></details></div>
+<div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-Cec256d47fb1eb812a4e3067a">근거 5</a></div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>확인된 외부 충격을 감당할 자금·사업 대응이 있으면 검토를 이어간다. 대응 범위를 넘는 손실이나 자금 부담이 확인되면 재검토한다.</span></div>
+</section>
+<section class="chapter" id="chapter-foreign"><div class="chapter-heading"><span class="number">08</span><h2>외국인 매도의 원인이 사업 악화인가</h2></div>
+<div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>외국인 거래와 독립적으로 확인한 사업 변화의 연결</h3><p class="focus-trigger">이번 선택 자료에서 질문의 직접 관측을 확보하지 못했다. 회사 전체 공시의 부재나 사업의 약점을 뜻하지 않는다.</p><div class="finding-refs"></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>실제 외국인 거래를 먼저 확인하고 그와 독립적인 현금·기술·고객의 사업 변화 근거를 확보한다. 매도만으로 제외하지 않으며 사업 악화 판단은 그 사업 근거에 한정한다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div><h3>함께 확인한 수치와 자료 범위</h3><p class="finding-note">‘약’으로 표시한 금액은 읽기 쉽게 반올림했습니다. 계산은 원 단위의 원자료로 수행하며 정확한 입력은 근거 링크에서 확인할 수 있습니다.</p><table class="finding-table"><thead><tr><th>관측</th><th>확인한 관계</th></tr></thead><tbody><tr><th scope="row">이번 질문의 직접 원자료 미확보<br><span class="finding-status">자료 확인 필요</span></th><td>이번 선택 자료에서 질문의 직접 관측을 확보하지 못했다. 회사 전체 공시의 부재나 사업의 약점을 뜻하지 않는다.<div class="finding-refs"></div></td></tr></tbody></table>
+<div class="refs">이번 검색 범위에서 직접 근거를 확보하지 못했습니다. 사용자 기준에 따른 조건부 검토입니다.</div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>외국인 매도만으로 제외하지 않는다. 현금흐름과 기술 경쟁력이 유지되면 검토를 계속하고, 실제 사업 악화가 확인될 때 그 근거로 재검토한다.</span></div>
+</section>
+<section class="chapter" id="chapter-owner"><div class="chapter-heading"><span class="number">09</span><h2>이 사업체를 통째로 소유한다면</h2></div>
+<aside class="finding-scope" aria-label="해석 범위"><p>매출·이익·현금흐름의 구조화 비교는 같은 누적기간의 전년 동기 대비다. 반기·3분기 누적을 단독 분기 실적이나 연간 환산값으로 해석하지 않는다.</p><p>이 관계는 회계 금액의 비교이며 사업 인과·경쟁력·반복성·지급 능력을 입증하지 않습니다.</p><p>영업현금흐름에서 유형자산 취득 현금유출만 차감한 값입니다. 전체 FCF·가용현금·채무상환 능력과 다르며 투자 현금유출이 영업현금흐름 증감의 원인이 되지 않습니다.</p><p>회사 원문의 서술·평가·계획을 그대로 인용합니다. 실현·인과·우위를 독립적으로 확인하지 않았으며 표의 수치·기간·주체·행·열·단위는 구조화하지 않습니다.</p></aside><div class="focus-inquiries"><article class="focus-inquiry"><span class="focus-provenance">AI가 선택한 후속 조사</span><h3>사업부문별 현금과 연결 조정의 귀속</h3><p class="focus-trigger">대원강업의 연결 영업현금흐름은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 526.09억원에서 2026년 반기 누적 (2026-01-01~2026-06-30) 약 628.03억원으로 변했다. 당기 − 전년 동기는 약 101.93억원이다.</p><div class="finding-refs"><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>공시에서 실제 사업부문 구성을 먼저 확인한다. 동일 연결 범위에서 해당되는 금융·비금융 사업부문별 현금흐름과 내부거래·연결 조정을 확보해 귀속을 대조한다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article><article class="focus-inquiry"><span class="focus-provenance">자료 범위에 따른 필수 확인</span><h3>같은 시점의 가격·시가총액과 소유 범위</h3><p class="focus-trigger">이번 구조화 공시 입력에는 같은 시점의 가격·시가총액이 없어 가격의 합리성을 판단하지 않는다.</p><div class="finding-refs"></div><div class="focus-target"><strong>다음에 확인할 근거</strong><p>정확한 평가 시점의 가격·시가총액, 주식 종류·발행 및 자기주식 수, 인수·소유 범위를 함께 확보한다. 과거 공시 금액만으로 현재 가격을 평가하지 않는다.</p></div><dl class="focus-outcomes"><dt>요청한 주체·기간·측정 범위와 조건이 직접 자료로 확인되는 경우</dt><dd>확보한 측정 대상에 한정해 비교를 진행한다. 원인·반복성·사업 우위나 가치까지 확정하지 않는다.</dd><dt>자료가 없거나 범위·조건을 연결하지 못한 경우</dt><dd>이 조사 차원의 판단을 보류하고 부족한 원자료를 확보한다. 부재·악화·영향 없음으로 바꾸지 않는다.</dd></dl></article></div><h3>함께 확인한 수치와 자료 범위</h3><p class="finding-note">‘약’으로 표시한 금액은 읽기 쉽게 반올림했습니다. 계산은 원 단위의 원자료로 수행하며 정확한 입력은 근거 링크에서 확인할 수 있습니다.</p><table class="finding-table"><thead><tr><th>관측</th><th>확인한 관계</th></tr></thead><tbody><tr><th scope="row">영업현금흐름의 기간 비교<br><span class="finding-status">계산·관측으로 확인</span></th><td>대원강업의 연결 영업현금흐름은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 526.09억원에서 2026년 반기 누적 (2026-01-01~2026-06-30) 약 628.03억원으로 변했다. 당기 − 전년 동기는 약 101.93억원이다.<div class="finding-refs"><a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div></td></tr><tr><th scope="row">영업현금에서 유형자산 취득만 차감한 값<br><span class="finding-status">계산·관측으로 확인</span></th><td>연결 영업현금흐름 − 유형자산 취득 현금유출은 2025년 반기 누적 (2025-01-01~2025-06-30) 약 -16.31억원, 2026년 반기 누적 (2026-01-01~2026-06-30) 약 284.81억원이며 차이는 약 301.12억원이다.<div class="finding-refs"><a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></div></td></tr><tr><th scope="row">가격 판단의 입력 미확보<br><span class="finding-status">자료 확인 필요</span></th><td>이번 구조화 공시 입력에는 같은 시점의 가격·시가총액이 없어 가격의 합리성을 판단하지 않는다.<div class="finding-refs"></div></td></tr></tbody></table>
+<div class="refs">분석에 제공한 원자료 <a class="ref-link" href="#source-C17f81b0dd54c7f0187561412">근거 13</a> · <a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a> · <a class="ref-link" href="#source-C0c84716e75e9cd381294356d">근거 8</a> · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a> · <a class="ref-link" href="#source-C12463d1d545440b40e17f26b">근거 1</a></div>
+<div class="condition"><strong>내 판단을 바꿀 조건</strong><span>생존력·경쟁력·주주 몫과 확인된 가격을 함께 검토한다. 핵심 사업 가정이 깨지면 판단을 바꾸고, 가격 자료가 없으면 가격 판단을 보류한다.</span></div>
+</section>
+<section class="appendix"><div class="eyebrow">Evidence</div><h2>근거 원문과 계산</h2><p class="source-note">인용을 펼쳐 문맥과 원문 이력을 확인할 수 있습니다. 원문 표의 숫자는 주체·행·열·단위가 연결되지 않으면 수치 판단에 쓰지 않습니다.</p>
+<p class="source-note">본문에 실은 회사 공시 원문 <a class="ref-link" href="#source-C021537bab6aaf436a6d4c43d">근거 3</a></p>
+<details class="source-record reader-source" id="source-C05ccf02bd06f72b95a0c2c26"><summary>근거 6 · 현금흐름표 손익 조정 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 502.74억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">502.74억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 현금흐름표 손익 조정<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>50,273,897,000원</p></details><div class="reader-compare"><p>전년 동기 597.05억원 → 당기 502.74억원</p><p>증감액 −94.32억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C05ccf02bd06f72b95a0c2c26">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C0a932b8c6187bd8f05d565a2"><summary>근거 7 · 영업현금흐름 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 526.09억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">526.09억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업현금흐름<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>52,609,350,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C0a932b8c6187bd8f05d565a2">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C0c84716e75e9cd381294356d"><summary>근거 8 · 부채 · 2026-06-30 시점 · 연결 · 7,502.98억원</summary><p>대원강업 · 연결 · 2026-06-30 시점</p><p class="reader-amount">7,502.98억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 부채<br>대원강업 · 연결 · 2026-06-30 시점<br>750,298,286,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C0c84716e75e9cd381294356d">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C0daf9b6e16707ed2c820c4a6"><summary>근거 9 · 영업이익 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 617.62억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">617.62억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업이익<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>61,762,124,000원</p></details><div class="reader-compare"><p>전년 동기 349.75억원 → 당기 617.62억원</p><p>증감액 267.87억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-C4495e58366cddafceacf7ede">근거 21</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C0daf9b6e16707ed2c820c4a6">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C107bcb0b9369c65b4017cc67"><summary>근거 10 · 영업현금흐름 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 628.03억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">628.03억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업현금흐름<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>62,802,550,000원</p></details><div class="reader-compare"><p>전년 동기 526.09억원 → 당기 628.03억원</p><p>증감액 101.93억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C107bcb0b9369c65b4017cc67">원문 대조·계산 검증 →</a></p></details>
+<p class="source-note">본문에 실은 회사 공시 원문 <a class="ref-link" href="#source-C12463d1d545440b40e17f26b">근거 1</a></p>
+<details class="source-record reader-source" id="source-C133d378b1f8cc17cc0245d3e"><summary>근거 11 · 현금흐름표 손익 조정 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 597.05억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">597.05억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 현금흐름표 손익 조정<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>59,705,409,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C133d378b1f8cc17cc0245d3e">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C179d632179096ba406510292"><summary>근거 12 · 영업 관련 자산·부채 변동 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −350.15억원</summary><p>계산식: 당기 − 전년 동기</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>당기<br>영업 관련 자산·부채 변동</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-Cfdd1f91e0f50f4b550a18710">근거 37</a></td><td>−517.92억원</td></tr><tr><th>전년 동기<br>영업 관련 자산·부채 변동</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a></td><td>−167.77억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>당기 · 영업 관련 자산·부채 변동<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>−51,792,280,000원</p><p>전년 동기 · 영업 관련 자산·부채 변동<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>−16,776,809,000원</p></details><p class="reader-amount">증감액 −350.15억원</p><details class="reader-exact"><summary>정확한 증감액(원 단위)</summary><p>−35,015,471,000원</p></details><p class="reader-qualification">증감의 원인과 반복 가능성은 이 계산만으로 확인되지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C179d632179096ba406510292">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C17f81b0dd54c7f0187561412"><summary>근거 13 · 자산 · 2026-06-30 시점 · 연결 · 1.54조원</summary><p>대원강업 · 연결 · 2026-06-30 시점</p><p class="reader-amount">1.54조원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 자산<br>대원강업 · 연결 · 2026-06-30 시점<br>1,541,060,889,000원</p></details><p class="reader-qualification">결산일 현재 보유한 자산의 장부금액입니다. 기간 중 매출이나 현금 유입액을 뜻하지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C17f81b0dd54c7f0187561412">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C1b8872328495e160f760720e"><summary>근거 14 · 영업활동 배당금 수취 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 82,323,000원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">82,323,000원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 배당금 수취<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>82,323,000원</p></details><div class="reader-compare"><p>전년 동기 41.56억원 → 당기 82,323,000원</p><p>증감액 −40.74억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C1b8872328495e160f760720e">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C24f7cd311dbb02a985b28023"><summary>근거 15 · 당기순이익 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 237.19억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">237.19억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 당기순이익<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>23,718,750,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C24f7cd311dbb02a985b28023">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C3093adad062f8ae4b866cbff"><summary>근거 16 · 영업활동 이자 지급 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −79,422,000원</summary><p>계산식: 당기 − 전년 동기</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>당기<br>영업활동 이자 지급</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-Ce41dc5e59a8e56a84f3ba350">근거 32</a></td><td>63.00억원</td></tr><tr><th>전년 동기<br>영업활동 이자 지급</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a></td><td>63.80억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>당기 · 영업활동 이자 지급<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>6,300,158,000원</p><p>전년 동기 · 영업활동 이자 지급<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>6,379,580,000원</p></details><p class="reader-amount">증감액 −79,422,000원</p><details class="reader-exact"><summary>정확한 증감액(원 단위)</summary><p>−79,422,000원</p></details><p class="reader-qualification">증감의 원인과 반복 가능성은 이 계산만으로 확인되지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C3093adad062f8ae4b866cbff">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C37c8760994876093777237cb"><summary>근거 17 · 영업 관련 자산·부채 변동 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · −167.77억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">−167.77억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업 관련 자산·부채 변동<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>−16,776,809,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C37c8760994876093777237cb">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C3afa779981fa6d439f7a1793"><summary>근거 18 · 유형자산 취득 현금유출 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 343.21억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">343.21억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 유형자산 취득 현금유출<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>34,321,167,000원</p></details><div class="reader-compare"><p>전년 동기 542.40억원 → 당기 343.21억원</p><p>증감액 −199.19억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C3afa779981fa6d439f7a1793">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C3affc550ce93c687cda8d5e0"><summary>근거 19 · 당기순이익 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 421.29억원</summary><p>계산식: 당기 − 전년 동기</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>당기<br>당기순이익</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-C5b600a5fb31a9421d4f10a7d">근거 23</a></td><td>658.48억원</td></tr><tr><th>전년 동기<br>당기순이익</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a></td><td>237.19억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>당기 · 당기순이익<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>65,847,504,000원</p><p>전년 동기 · 당기순이익<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>23,718,750,000원</p></details><p class="reader-amount">증감액 421.29억원</p><details class="reader-exact"><summary>정확한 증감액(원 단위)</summary><p>42,128,754,000원</p></details><p class="reader-qualification">증감의 원인과 반복 가능성은 이 계산만으로 확인되지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C3affc550ce93c687cda8d5e0">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C3d55002beea8f8ddddf7a20d"><summary>근거 20 · 회사 공시 설명</summary><p class="reader-qualification">회사가 공시한 내용입니다. 숫자는 표의 기간·단위와 함께 읽고, 성장 원인과 지속성은 추가 자료로 확인합니다.</p><details class="reader-original"><summary>회사 설명·표 원문 펼쳐보기</summary><pre class="source-quote">연결회사는 여러 활동으로 인하여 시장위험(환위험, 이자율 위험 및 가격위험), 신용위험 및 유동성 위험과 같은 다양한 금융 위험에 노출되어 있습니다. 연결회사의 전반적인 위험관리정책은 금융시장의 예측불가능성에 초점을 맞추고 있으며 재무 성과에 잠재적으로 불리할 수 있는 효과를 최소화하는데 중점을 두고 있습니다.
+위험관리는 주로 연결회사 재경팀에 의해 이루어지고 있습니다. 연결회사 재경팀은 연결회사의 현업부서들과 긴밀히 협력하여 재무위험을 식별, 평가 및 회피하고 있습니다.
+가. 시장위험 1) 외환위험
+연결회사는 국제적으로 영업활동을 영위하고 있어 환율변동위험에 노출되어있습니다. 외환위험은 미래예상거래, 인식된 자산과 부채, 해외영업순투자와 관련하여 발생하고 있습니다. 연결회사는 환위험 노출에 대한 최대 환손실 규모가 위험허용범위 이내가 되도록 관리하고 있으며, 환위험 관리를 위해 전담 인원을 운용하고 있습니다. 보고기간말 현재 연결회사의 환율변동 위험에 노출된 주요 외화 자산 및 부채는 다음과 같습니다.1) 당기
+| (단위: 천USD, 천EUR, 천JPY, 천CNY, 천MXN, 천PLN, 천INR, 천RUB)
+| 2026년 6월 30일
+| USD
+| EUR
+| JPY
+| CNY
+| MXN
+| PLN
+| INR
+| RUB
+| 현금및현금성자산
+| 2,515
+| 226
+| 140,574
+| 6,764
+| -
+| -
+| -
+| -
+| 금융기관예치금
+| 10
+| -
+| -
+| -
+| -
+| -
+| -
+| -
+| 매출채권
+| 33,789
+| 5,423
+| 266,150
+| 786
+| 65,550
+| 14,238
+| -
+| -
+| 기타수취채권
+| 6,205
+| -
+| 4,137
+| 8,240
+| 77,050
+| 27,482
+| 22,327
+| 28,245
+| 외화자산 합계
+| 42,519
+| 5,649
+| 410,861
+| 15,790
+| 142,600
+| 41,720
+| 22,327
+| 28,245
+| 매입채무
+| 13,897
+| 3,300
+| 16,041
+| -
+| -
+| -
+| -
+| -
+| 기타지급채무
+| 101,764
+| -
+| -
+| -
+| -
+| -
+| -
+| -
+| 외화부채 합계
+| 115,661
+| 3,300
+| 16,041
+| -
+| -
+| -
+| -
+| -
+2) 전기
+| (단위: 천USD, 천EUR, 천JPY, 천CNY, 천MXN, 천PLN, 천INR, 천RUB)
+| 2025년 12월 31일
+| USD
+| EUR
+| JPY
+| CNY
+| MXN
+| PLN
+| INR
+| RUB
+| 현금및현금성자산
+| 3,541
+| 758
+| 139,746
+| -
+| -
+| -
+| -
+| 2,528
+| 금융기관예치금
+| 10
+| -
+| -
+| -
+| -
+| -
+| -
+| -
+| 매출채권
+| 31,368
+| 1,613
+| 242,410
+| -
+| 65,550
+| 19,760
+| -
+| -
+| 기타수취채권
+| 9,280
+| -
+| 1,665
+| 28,482
+| 84,482
+| 25,365
+| 28,482
+| 36,064
+| 외화자산 합계
+| 44,199
+| 2,371
+| 383,821
+| 28,482
+| 150,032
+| 45,125
+| 28,482
+| 38,592
+| 매입채무
+| 16,394
+| 2,277
+| 10,753
+| -
+| -
+| -
+| -
+| -
+| 기타지급채무
+| 1,344
+| -
+| 333
+| -
+| 100,000
+| -
+| -
+| -
+| 외화부채 합계
+| 17,738
+| 2,277
+| 11,086
+| -
+| 100,000
+| -
+| -
+| -
+보고기간말 현재 연결회사가 보유한 외화 금융자산(부채)의 원화 기준 10% 절상 (하)시 당기 세전손익에 미치는 영향은 다음과 같습니다.</pre></details><p class="reader-quote-link">회사 설명·표 전문: <a href="evidence.html#source-C3d55002beea8f8ddddf7a20d">웹 원문 확인</a></p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C3d55002beea8f8ddddf7a20d">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C4495e58366cddafceacf7ede"><summary>근거 21 · 영업이익 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 349.75억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">349.75억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업이익<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>34,974,750,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C4495e58366cddafceacf7ede">원문 대조·계산 검증 →</a></p></details>
+<p class="source-note">본문에 실은 회사 공시 원문 <a class="ref-link" href="#source-C4eed47a59102ad316f143595">근거 2</a></p>
+<details class="source-record reader-source" id="source-C52c6f283e7152131530fb284"><summary>근거 22 · 영업활동 배당금 수취 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −40.74억원</summary><p>계산식: 당기 − 전년 동기</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>당기<br>영업활동 배당금 수취</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-C1b8872328495e160f760720e">근거 14</a></td><td>82,323,000원</td></tr><tr><th>전년 동기<br>영업활동 배당금 수취</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-Cd15b73af9b663d492fad1a98">근거 31</a></td><td>41.56억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>당기 · 영업활동 배당금 수취<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>82,323,000원</p><p>전년 동기 · 영업활동 배당금 수취<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>4,155,872,000원</p></details><p class="reader-amount">증감액 −40.74억원</p><details class="reader-exact"><summary>정확한 증감액(원 단위)</summary><p>−4,073,549,000원</p></details><p class="reader-qualification">증감의 원인과 반복 가능성은 이 계산만으로 확인되지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C52c6f283e7152131530fb284">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C5b600a5fb31a9421d4f10a7d"><summary>근거 23 · 당기순이익 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 658.48억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">658.48억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 당기순이익<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>65,847,504,000원</p></details><div class="reader-compare"><p>전년 동기 237.19억원 → 당기 658.48억원</p><p>증감액 421.29억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-C24f7cd311dbb02a985b28023">근거 15</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C5b600a5fb31a9421d4f10a7d">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C5b76f44f1507a6473b6c2069"><summary>근거 24 · 현금흐름표 손익 조정 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −94.32억원</summary><p>계산식: 당기 − 전년 동기</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>당기<br>현금흐름표 손익 조정</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-C05ccf02bd06f72b95a0c2c26">근거 6</a></td><td>502.74억원</td></tr><tr><th>전년 동기<br>현금흐름표 손익 조정</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-C133d378b1f8cc17cc0245d3e">근거 11</a></td><td>597.05억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>당기 · 현금흐름표 손익 조정<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>50,273,897,000원</p><p>전년 동기 · 현금흐름표 손익 조정<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>59,705,409,000원</p></details><p class="reader-amount">증감액 −94.32억원</p><details class="reader-exact"><summary>정확한 증감액(원 단위)</summary><p>−9,431,512,000원</p></details><p class="reader-qualification">증감의 원인과 반복 가능성은 이 계산만으로 확인되지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C5b76f44f1507a6473b6c2069">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C72046f12b5a78972245b89e1"><summary>근거 25 · 영업활동 법인세 납부(환급) · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −37.08억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">−37.08억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 법인세 납부(환급)<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>−3,708,138,000원</p></details><div class="reader-compare"><p>전년 동기 137.10억원 → 당기 −37.08억원</p><p>증감액 −174.18억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C72046f12b5a78972245b89e1">원문 대조·계산 검증 →</a></p></details>
+<p class="source-note">본문에 실은 회사 공시 원문 <a class="ref-link" href="#source-C7c834eadc8d8d68d58c4275d">근거 4</a></p>
+<details class="source-record reader-source" id="source-C857836eea1f36549e7980195"><summary>근거 26 · 영업활동 이자 수취 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 18.95억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">18.95억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 이자 수취<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>1,895,317,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C857836eea1f36549e7980195">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-C97de80082f360910fbee43e3"><summary>근거 27 · 영업활동 이자 지급 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 63.80억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">63.80억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 이자 지급<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>6,379,580,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-C97de80082f360910fbee43e3">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Cb034c85558128fed698237f4"><summary>근거 28 · 영업활동 법인세 납부(환급) 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −174.18억원</summary><p>계산식: 당기 − 전년 동기</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>당기<br>영업활동 법인세 납부(환급)</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-C72046f12b5a78972245b89e1">근거 25</a></td><td>−37.08억원</td></tr><tr><th>전년 동기<br>영업활동 법인세 납부(환급)</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-Cf5896cac846f0319c5642a6a">근거 35</a></td><td>137.10억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>당기 · 영업활동 법인세 납부(환급)<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>−3,708,138,000원</p><p>전년 동기 · 영업활동 법인세 납부(환급)<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>13,709,609,000원</p></details><p class="reader-amount">증감액 −174.18억원</p><details class="reader-exact"><summary>정확한 증감액(원 단위)</summary><p>−17,417,747,000원</p></details><p class="reader-qualification">증감의 원인과 반복 가능성은 이 계산만으로 확인되지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cb034c85558128fed698237f4">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Cc5d05081738e1fffe1f81266"><summary>근거 29 · 영업활동 이자 수취 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 9.83억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">9.83억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 이자 수취<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>983,126,000원</p></details><div class="reader-compare"><p>전년 동기 18.95억원 → 당기 9.83억원</p><p>증감액 −9.12억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cc5d05081738e1fffe1f81266">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Cc87c868cf82ddefa3d12a218"><summary>근거 30 · 영업활동 이자 수취 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −9.12억원</summary><p>계산식: 당기 − 전년 동기</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>당기<br>영업활동 이자 수취</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-Cc5d05081738e1fffe1f81266">근거 29</a></td><td>9.83억원</td></tr><tr><th>전년 동기<br>영업활동 이자 수취</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-C857836eea1f36549e7980195">근거 26</a></td><td>18.95억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>당기 · 영업활동 이자 수취<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>983,126,000원</p><p>전년 동기 · 영업활동 이자 수취<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>1,895,317,000원</p></details><p class="reader-amount">증감액 −9.12억원</p><details class="reader-exact"><summary>정확한 증감액(원 단위)</summary><p>−912,191,000원</p></details><p class="reader-qualification">증감의 원인과 반복 가능성은 이 계산만으로 확인되지 않습니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cc87c868cf82ddefa3d12a218">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Cd15b73af9b663d492fad1a98"><summary>근거 31 · 영업활동 배당금 수취 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 41.56억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">41.56억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 배당금 수취<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>4,155,872,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cd15b73af9b663d492fad1a98">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Ce41dc5e59a8e56a84f3ba350"><summary>근거 32 · 영업활동 이자 지급 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 63.00억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">63.00억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 이자 지급<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>6,300,158,000원</p></details><div class="reader-compare"><p>전년 동기 63.80억원 → 당기 63.00억원</p><p>증감액 −79,422,000원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-C97de80082f360910fbee43e3">근거 27</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Ce41dc5e59a8e56a84f3ba350">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Ce480b2386f8c13a54aaf4b9c"><summary>근거 33 · 매출 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 9,048.23억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">9,048.23억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 매출<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>904,822,889,000원</p></details><div class="reader-compare"><p>전년 동기 8,036.85억원 → 당기 9,048.23억원</p><p>증감액 1,011.37억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Ce480b2386f8c13a54aaf4b9c">원문 대조·계산 검증 →</a></p></details>
+<p class="source-note">본문에 실은 회사 공시 원문 <a class="ref-link" href="#source-Cec256d47fb1eb812a4e3067a">근거 5</a></p>
+<details class="source-record reader-source" id="source-Cf0633f2ca7194f0584aae8de"><summary>근거 34 · 유형자산 취득 현금유출 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 542.40억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">542.40억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 유형자산 취득 현금유출<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>54,240,056,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cf0633f2ca7194f0584aae8de">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Cf5896cac846f0319c5642a6a"><summary>근거 35 · 영업활동 법인세 납부(환급) · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 137.10억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">137.10억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업활동 법인세 납부(환급)<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>13,709,609,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cf5896cac846f0319c5642a6a">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Cf9f08173eaec53d40172f90a"><summary>근거 36 · 매출 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 8,036.85억원</summary><p>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)</p><p class="reader-amount">8,036.85억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 매출<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>803,685,451,000원</p></details><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cf9f08173eaec53d40172f90a">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-Cfdd1f91e0f50f4b550a18710"><summary>근거 37 · 영업 관련 자산·부채 변동 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −517.92억원</summary><p>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)</p><p class="reader-amount">−517.92억원</p><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>공시 금액 · 영업 관련 자산·부채 변동<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>−51,792,280,000원</p></details><div class="reader-compare"><p>전년 동기 −167.77억원 → 당기 −517.92억원</p><p>증감액 −350.15억원</p><small>2025년 반기 누적 (2025-01-01~2025-06-30) · <a class="ref-link" href="#source-C37c8760994876093777237cb">근거 17</a> · 같은 회사·회계 범위의 원 단위 금액으로 계산</small></div><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-Cfdd1f91e0f50f4b550a18710">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-D1C"><summary>근거 38 · 유형자산 투자 후 현금 차이 · −16.31억원</summary><p>계산식: 영업현금흐름 − 유형자산 취득 현금유출</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>영업현금흐름<br>영업현금흐름</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-C0a932b8c6187bd8f05d565a2">근거 7</a></td><td>526.09억원</td></tr><tr><th>차감 · 유형자산 취득 현금유출<br>유형자산 취득 현금유출</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-Cf0633f2ca7194f0584aae8de">근거 34</a></td><td>542.40억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>영업현금흐름 · 영업현금흐름<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>52,609,350,000원</p><p>차감 · 유형자산 취득 현금유출 · 유형자산 취득 현금유출<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>54,240,056,000원</p></details><p class="reader-amount">계산 결과 −16.31억원</p><details class="reader-exact"><summary>정확한 계산 결과(원 단위)</summary><p>−1,630,706,000원</p></details><p class="reader-qualification">전체 자유현금흐름과 다릅니다. 계산 관계만 표시하며 원인·반복성은 추가 근거가 필요합니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-D1C">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-D1M"><summary>근거 39 · 영업이익률 · 4.35%</summary><p>계산식: 영업이익 ÷ 매출 × 100</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>분자 · 영업이익<br>영업이익</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-C4495e58366cddafceacf7ede">근거 21</a></td><td>349.75억원</td></tr><tr><th>분모 · 매출<br>매출</th><td>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30) <a class="ref-link" href="#source-Cf9f08173eaec53d40172f90a">근거 36</a></td><td>8,036.85억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>분자 · 영업이익 · 영업이익<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>34,974,750,000원</p><p>분모 · 매출 · 매출<br>대원강업 · 연결 · 2025년 반기 누적 (2025-01-01~2025-06-30)<br>803,685,451,000원</p></details><p class="reader-amount">계산 결과 4.35%</p><p class="source-note">비율은 소수 둘째 자리로 반올림합니다. 0.01% 미만은 0으로 표시하지 않고 계산값을 표시합니다.</p><p class="reader-qualification">계산 관계만 표시하며 원인·반복성은 추가 근거가 필요합니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-D1M">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-D2C"><summary>근거 40 · 유형자산 투자 후 현금 차이 · 284.81억원</summary><p>계산식: 영업현금흐름 − 유형자산 취득 현금유출</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>영업현금흐름<br>영업현금흐름</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-C107bcb0b9369c65b4017cc67">근거 10</a></td><td>628.03억원</td></tr><tr><th>차감 · 유형자산 취득 현금유출<br>유형자산 취득 현금유출</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-C3afa779981fa6d439f7a1793">근거 18</a></td><td>343.21억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>영업현금흐름 · 영업현금흐름<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>62,802,550,000원</p><p>차감 · 유형자산 취득 현금유출 · 유형자산 취득 현금유출<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>34,321,167,000원</p></details><p class="reader-amount">계산 결과 284.81억원</p><details class="reader-exact"><summary>정확한 계산 결과(원 단위)</summary><p>28,481,383,000원</p></details><p class="reader-qualification">전체 자유현금흐름과 다릅니다. 계산 관계만 표시하며 원인·반복성은 추가 근거가 필요합니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-D2C">원문 대조·계산 검증 →</a></p></details>
+<details class="source-record reader-source" id="source-D2M"><summary>근거 41 · 영업이익률 · 6.83%</summary><p>계산식: 영업이익 ÷ 매출 × 100</p><table class="reader-inputs"><caption>계산 입력 · 아래 순서로 계산</caption><thead><tr><th>입력</th><th>회사·범위·실제 기간</th><th>금액</th></tr></thead><tbody><tr><th>분자 · 영업이익<br>영업이익</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-C0daf9b6e16707ed2c820c4a6">근거 9</a></td><td>617.62억원</td></tr><tr><th>분모 · 매출<br>매출</th><td>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30) <a class="ref-link" href="#source-Ce480b2386f8c13a54aaf4b9c">근거 33</a></td><td>9,048.23억원</td></tr></tbody></table><details class="reader-exact"><summary>정확한 금액(원 단위)</summary><p>분자 · 영업이익 · 영업이익<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>61,762,124,000원</p><p>분모 · 매출 · 매출<br>대원강업 · 연결 · 2026년 반기 누적 (2026-01-01~2026-06-30)<br>904,822,889,000원</p></details><p class="reader-amount">계산 결과 6.83%</p><p class="source-note">비율은 소수 둘째 자리로 반올림합니다. 0.01% 미만은 0으로 표시하지 않고 계산값을 표시합니다.</p><p class="reader-qualification">계산 관계만 표시하며 원인·반복성은 추가 근거가 필요합니다.</p><p class="source-note">조원·억원 표시는 소수 둘째 자리로 반올림하며, 정확한 원 단위 금액은 위에서 확인할 수 있습니다.</p><p class="source-note"><a href="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260814001532">반기보고서 원문(DART)</a></p><p class="reader-audit-link"><a href="evidence.html#source-D2M">원문 대조·계산 검증 →</a></p></details>
+<div class="method"><strong>생성 방식</strong><p>공시 원본의 기간·연결 범위·단위를 확인해 수치 관계를 계산합니다. 로컬 모델은 사용자 기준에 따라 관측에 연결된 후속 조사를 선택합니다. 확인된 사실과 자료의 한계는 유지되며, 원인·반복성은 추가 근거로 검토합니다. 자동 검사는 미래 보고서의 무오류를 보증하지 않습니다.</p></div>
+<footer class="footer">생성 2026-09-15T22:10:01.647180+00:00 · 보고서 c244765c14ebf13a7058532e<br>로컬 모델 qwen3:8b · 원자료·프롬프트·검증 결과를 버전별로 보관합니다.<br><span title="296f374479f3c8ba3427f4d4a56912fb31fb5f32150ae223a5b2df99d7869dd2">분석 기준 버전 296f374479f3</span></footer></section><aside class="criteria-note" aria-label="분석 기준과 적용 범위"><strong>공통 읽기 기준</strong> · 현금과 생존력 → 미국 고객 경쟁력 → 기술과 정책 자립 → 주주에게 남는 가치 → 시장과 가격<br>자료 부족은 사업 악화가 아니며, 외국인 매도만으로 검토에서 제외하지 않습니다. 업종·기간·자료 범위를 지키고 사실과 판단을 구분합니다.<br>현재 기준 c40bcb0b035f · 작성 당시 기준 c40bcb0b035f. 당시 기준과 판단을 변경하지 않고 보존합니다. 기준 기록만으로 모든 문장이 새 관점을 반영했다고 보지는 않습니다.</aside></main><script data-reader-evidence="1">
+(() => {
+  function revealSource(hash) {
+    let id;
+    try { id = decodeURIComponent(hash.slice(1)); } catch (_) { return; }
+    const source = document.getElementById(id);
+    if (source && source.matches('details.source-record') && !source.classList.contains('reader-advanced')) {
+      source.open = true;
+    }
+  }
+  addEventListener('hashchange', () => revealSource(location.hash));
+  document.addEventListener('click', event => {
+    const link = event.target.closest && event.target.closest('a.ref-link[href^="#source-"]');
+    if (link) revealSource(link.getAttribute('href'));
+  });
+  revealSource(location.hash);
+})();
+</script><!-- ker-navigation-script-start --><script>(()=>{const n=document.querySelector('.ker-nav');if(!n||n.dataset.page!=='home')return;function update(){const k=location.hash==='#events'?'events':location.hash==='#reports'?'reports':'home';for(const a of n.querySelectorAll('a')){if(a.dataset.section===k)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');}}addEventListener('hashchange',update);update();})();</script><!-- ker-navigation-script-end --></body></html>

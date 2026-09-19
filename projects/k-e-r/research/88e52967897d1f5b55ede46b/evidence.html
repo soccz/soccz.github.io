@@ -1,0 +1,932 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SK하이닉스 · 원문 검증</title><style>body{font-family:system-ui,sans-serif;max-width:1000px;margin:32px auto;padding:0 20px;line-height:1.7;color:#1d3931;background:#f6f7f2}a{color:#176b5e}details{margin:16px 0;padding:18px;background:white;border:1px solid #dbe4df;border-radius:8px;scroll-margin-top:90px}summary{cursor:pointer;font-weight:700}pre{font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}code,.source-note{overflow-wrap:anywhere;font-size:12px}</style><!-- ker-navigation-style-start --><style>
+.ker-shell{position:sticky;top:0;z-index:100;background:#f6f3eb;color:#253e3b;border-bottom:1px solid #c7d7cf;font:13px/1.5 'Noto Sans CJK KR',system-ui,sans-serif;letter-spacing:0;box-shadow:0 2px 8px #253e3b08}
+.ker-shell *{box-sizing:border-box}.ker-shell a{color:#253e3b;text-decoration:none;letter-spacing:0}.ker-shell a:hover{color:#176b5e;text-decoration:underline}.ker-shell a:focus-visible,.ker-history a:focus-visible{outline:3px solid #b87927;outline-offset:3px}
+.ker-shell .ker-bar{max-width:1200px;margin:0 auto;padding:12px 32px;display:flex;align-items:center;justify-content:space-between;gap:18px}.ker-shell .ker-brand{font-weight:800;letter-spacing:.12em;white-space:nowrap;color:#176b5e}.ker-brand small{font-size:10px;letter-spacing:0;font-weight:500;margin-left:8px;color:#657570}
+.ker-shell .ker-nav,.ker-shell .ker-tabs{display:flex;flex-wrap:wrap;gap:4px;margin:0;padding:0;border:0;line-height:1.5}.ker-shell .ker-nav a{font-size:12px;padding:7px 11px;white-space:nowrap;border-radius:3px}.ker-shell a[aria-current]{background:#176b5e;color:#fffefa;text-decoration:none}.ker-shell .ker-context{max-width:1200px;margin:auto;padding:0 32px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.ker-context-label{font-size:11px;color:#657570}.ker-context-label strong{color:#253e3b}.ker-shell .ker-tabs a{font-size:11px;padding:4px 7px;white-space:nowrap}.ker-shell .ker-tabs a[aria-current]{background:#e1ebe3;color:#176b5e;font-weight:700}
+.ker-skip{position:absolute;top:-100px;left:10px;background:#fffefa;padding:10px}.ker-skip:focus{top:6px;z-index:101}
+body>.site-header,body>.topbar,body>nav.top{display:none!important}
+.ker-history{max-width:1200px;margin:24px auto 12px;padding:0 32px;color:#253e3b;font:13px/1.7 'Noto Sans CJK KR',system-ui,sans-serif}.ker-history-box{padding:18px 22px;border-left:4px solid #176b5e;background:#eaf0e9}.ker-history h2{font-size:22px;margin:0 0 7px;color:#253e3b}.ker-history p{margin:6px 0}.ker-history a{color:#176b5e}.ker-history-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}.ker-company-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.ker-company{border:1px solid #c7d7cf;padding:12px;background:#fffefa}.ker-company strong{display:block}.ker-company a{display:inline-block;font-size:12px;margin:4px 10px 0 0}
+#reports,#events,#ker-content{scroll-margin-top:110px}
+@media(max-width:760px){.ker-shell .ker-bar{padding:8px 16px;gap:7px}.ker-brand small{display:none}.ker-shell .ker-nav{gap:0}.ker-shell .ker-nav a{font-size:11px;padding:8px 7px}.ker-shell .ker-context{padding:0 16px 7px;gap:4px}.ker-shell .ker-tabs{gap:0}.ker-shell .ker-tabs a{font-size:10px;padding:4px 6px}.ker-context-label{font-size:10px}.ker-history{margin:16px auto 8px;padding:0 18px}.ker-history-box{padding:14px 16px}.ker-history h2{font-size:19px}.ker-company-grid{grid-template-columns:repeat(2,1fr)}.ker-company{padding:10px}}
+@media(max-width:350px){.ker-shell .ker-bar{padding:7px 10px}.ker-shell .ker-nav a{padding:8px 5px;font-size:10px}}
+@media screen and (max-width:980px){.ker-shell~.container .report-layout{grid-template-columns:minmax(0,1fr)}.ker-shell~.container article.report{min-width:0;overflow-wrap:anywhere}.ker-shell~.container article.report table{display:block;max-width:100%;overflow-x:auto}.ker-shell~.container article.report pre{max-width:100%}}
+@media print{.ker-shell,.ker-skip,.ker-history{display:none!important}}
+</style><!-- ker-navigation-style-end --></head><body><!-- ker-navigation-shell-start --><div class="ker-shell"><a class="ker-skip" href="#ker-content">본문으로</a><div class="ker-bar"><a class="ker-brand" href="/projects/k-e-r/" aria-label="K E R 메인으로">K E R<small>기업 리서치</small></a><nav class="ker-nav" aria-label="주 메뉴" data-page="reports"><a href="/projects/k-e-r/" data-section="home">메인</a><a href="/projects/k-e-r/#reports" data-section="reports" aria-current="page">기업 보고서</a><a href="/projects/k-e-r/#events" data-section="events">변화 알림</a><a href="/projects/k-e-r/archive.html" data-section="archive">이전 분석</a></nav></div><div class="ker-context"><div class="ker-context-label"><strong>SK하이닉스</strong> · 2026년 상반기 누적</div><nav class="ker-tabs" aria-label="이 보고서 탐색"><a href="/projects/k-e-r/research/88e52967897d1f5b55ede46b/">요약</a><a href="/projects/k-e-r/research/88e52967897d1f5b55ede46b/detail.html" aria-current="page">공시 근거집</a><a href="/projects/k-e-r/research/88e52967897d1f5b55ede46b/followup.html">후속 확인</a><a href="/projects/k-e-r/?company=000660#events">관련 알림</a><a href="/projects/k-e-r/SK%ED%95%98%EC%9D%B4%EB%8B%89%EC%8A%A4/">이전 분석</a></nav></div></div><span id="ker-content" tabindex="-1"></span><!-- ker-navigation-shell-end --><header><p><a href="detail.html">← 보고서 읽기로 돌아가기</a></p><h1>SK하이닉스 · 원문 검증</h1><p>공시 원문의 수치와 맥락, 계산 입력을 직접 대조하는 화면입니다. 회사에 대한 해석은 보고서에서 읽을 수 있습니다.</p><p><a href="detail.pdf">작성 당시 원본 PDF</a></p></header><main><details class="source-record" id="source-Cece96baf1b5e0a3589681f5f"><summary>근거 1 · 회사 공시 설명</summary><p><a href="detail.html#source-Cece96baf1b5e0a3589681f5f">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cece96baf1b5e0a3589681f5f</code></p><p class="source-note">20260814003509.xml · 원본 SHA-256 2a599027a5742e5dd2d592b512c41705c273a65b0c70929291c2added32b223d · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 21968, &#x27;end&#x27;: 23673}</p><pre class="source-quote">1. 사업의 개요
+당사는 경기도 이천시에 위치한 본사를 거점으로 4개의 생산기지와 3개의 연구개발법인 및 미국, 중국, 싱가포르, 대만, 일본, 유럽 등 판매법인과 사무소를 운영하고 있는 글로벌 반도체 기업입니다.
+당사 및 당사의 종속기업의 주력 제품은 DRAM 및 NAND를 중심으로 하는 메모리 반도체이며, Foundry 사업도 병행하고 있습니다. 반도체는 메모리 반도체와 시스템 반도체로 구분되고, 메모리 반도체는 정보를 저장하고 기억하는 기능을 하며, 일반적으로 &#x27;휘발성(Volatile)&#x27;과 &#x27;비휘발성(Non-volatile)&#x27;으로 분류됩니다. 휘발성 메모리 제품은 전원이 끊어지면 정보가 지워지는 반면, 비휘발성 제품은 전원이 끊겨도 저장된 정보가 계속 남아 있습니다. 당사는 휘발성 메모리인 DRAM과 비휘발성 메모리인 NAND Flash를 주력 생산하고 있습니다.
+당사의 연결 기준 매출액은 2026년 반기(누계) 131조 8,950억원을 기록하였습니다.
+2. 주요 제품 및 서비스
+가. 주요 제품 등의 현황
+| [제79기 반기 누계]
+| (단위: 백만원)
+| 사업부문
+| 매출유형
+| 품목
+| 구체적용도
+| 주요상표 등
+| 매출액(비율)
+| 반도체 부문
+| 제품 외
+| DRAM, NAND Flash 등
+| 산업용 전자기기
+| SK하이닉스
+|
+131,895,033(100%)
+| 합계
+| 131,895,033(100%)
+나. 주요 제품 등의 가격변동추이 DRAM은 HBM3E와 AI향 서버 DRAM 제품 중심으로 판매를 확대하여 출하량이 소폭 증가하였으며, ASP는 일반 DRAM 가격 강세 지속으로 30% 중반 상승하였습니다. NAND 출하량은 1분기 출하량 감소에 따른 기저 효과와 엔터프라이즈 SSD 판매 확대 영향으로 전분기 대비 10% 중반 증가하였으며, ASP는 전 제품 가격 상승 효과로 전분기 대비 50% 중반 상승하였습니다.
+3. 원재료 및 생산설비
+당사의 메모리 반도체 부문 생산공정에 투입되는 원재료는 크게 웨이퍼(Wafer), Substrate, PCB(Printed Circuit Board) 그리고 기타 재료 등으로 구성됩니다.웨이퍼는 집적회로(Integrated Circuit, IC)를 제작하기 위해 반도체 물질의 단결정을 성장시킨 기둥 모양의 규소(Ingot)를 얇게 절단하여 원판 모양으로 만든 것으로서 반도체 소자를 만드는 데 사용되는 핵심 재료입니다.Substrate는 Package를 만들기 위한 원재료 중 하나로 전기 신호를 연결하면서 외부의 습기, 충격 등으로부터 칩을 보호하고 지지해주는 골격 역할을 하는 부품입니다.PCB는 그 위에 저항, 콘덴서, 코일, 트랜지스터, 집적회로, 대규모 집적회로(Large-Scale Integration), 스위치 등의 부품을 고정 및 연결하여 회로 기능을 완성시키는 인쇄회로기판입니다.그 외 가스 및 화학약품, 소자류 등이 반도체 제조 공정에 투입되는 원재료로 사용됩니다.
+가. 주요 원재료 등의 현황
+| [제79기 반기 누계]
+| (단위: 백만원)
+| 사업부문
+| 매입유형
+| 품목
+| 구체적용도
+| 투입액
+| 비율
+| 비고
+| 반도체 부문
+| 원재료
+| Wafer
+| Fab
+| 999,418
+| 9%
+| -
+| Substrate
+| Package
+| 287,585
+| 3%
+| -
+| PCB
+| Module
+| 156,983
+| 1%
+| -
+| 기타
+| -
+| 5,588,736
+| 51%
+| -
+| 소계
+| 7,032,723
+| 64%
+| -</pre></details><details class="source-record" id="source-Ce5b18282a5dd3569483f76e7"><summary>근거 2 · 회사 공시 설명</summary><p><a href="detail.html#source-Ce5b18282a5dd3569483f76e7">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Ce5b18282a5dd3569483f76e7</code></p><p class="source-note">20260814003509.xml · 원본 SHA-256 2a599027a5742e5dd2d592b512c41705c273a65b0c70929291c2added32b223d · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 27442, &#x27;end&#x27;: 29147}</p><pre class="source-quote">4. 매출 및 수주상황
+가. 매출에 관한 사항 1. 매출실적
+| (단위: 백만원)
+| 사업부문
+| 매출유형
+| 품목
+| 제79기 반기
+| 제78기
+| 제77기
+| 반도체 부문
+| 제품 외
+| DRAM, NAND Flash 등
+| 131,895,033
+| 97,146,675
+| 66,192,960
+| 합계
+| 131,895,033
+| 97,146,675
+| 66,192,960
+※ 한국채택국제회계기준에 따라 연결 기준으로 작성되었습니다.
+2. 판매경로 및 판매방법 등(1) 판매 조직
+국내에서는 AI Infra 내 영업 관할 하에 대리점을 운영하고 있습니다. 해외 판매법인은 미국, 중국, 싱가포르, 대만, 일본, 유럽 등의 국가에 소재하고 있으며, 산하에 대리점을 두고 있습니다.
+(2) 판매 경로당사의 판매 경로는 크게 직판 거래와 대리점 거래로 나눌 수 있습니다. 직판 거래는 당사에서 일반 기업체 등 실 수요자에게 직접 판매를 하는 것이고, 대리점 거래는 당사가 대리점을 통해서 일반 기업체 등의 실 수요자에게 판매하는 것입니다.
+(3) 판매 방법 및 조건
+내수 판매는 국내 대리점 등의 수주 현황에 의거하여 현금 또는 어음 결제조건으로 납품하고 있으며, 수출은 MASTER L/C 및 LOCAL L/C에 의거하여 신용장 또는 D/A, D/P 거래 등으로 납품하고 있습니다.
+(4) 판매 전략
+당사 판매 전략은 &#x27;비즈니스 포트폴리오 최적화&#x27;, &#x27;수익 구조 개선&#x27;, &#x27;고객 관계 유지&#x27;, &#x27;지역별 포지셔닝&#x27; 등 4가지를 근간으로 하고 있습니다.비즈니스 안정성을 위해 포트폴리오의 최적화를 추진하고 있으며 매출 확대를 위해 제품 구성을 다양화 하고 있습니다. 수익 구조 개선을 위해 고부가가치 제품 판매를 확대하고 시장 통찰 능력을 강화하여 미래 시장 발굴을 추진하고 있습니다. 고객 관계 유지를 위해 고객 가치 제안 활동을 강화하고 특화된 제품을 제공하여 고객 만족 제고를 추진하고 있습니다. 또한, 지역별 특성을 고려하여 차별화된 제품 전략으로 지역별 전략 고객 매출 확대를 추진하고 있습니다.
+(5) 주요 매출처
+DRAM의 경우 세계 유수의 모바일 및 컴퓨팅 관련 전자 업체에 제품을 공급하고 있습니다. NAND Flash는 IT 컨슈머 제품 전체에 걸쳐 그 수요처가 다양하기 때문에 세계적인 모바일 디바이스 및 IT 제품 제조업체, 그리고 SSD와 같은 대용량 저장 장치와 메모리 카드 생산 업체 등을 고객으로 확보하고 있습니다.
+나. 수주상황 당사는 주요 고객사들과 월별/분기별 상호 합의에 따른 공급 물량 및 가격을 결정하고 있으며, 장기공급 계약에 따른 수주 현황은 없습니다.
+5. 위험관리 및 파생거래
+가. 시장위험
+(1) 환율변동위험
+연결회사는 국제적으로 영업활동을 영위하고 있어 외환위험, 특히 주로 달러화, 유로화, 위안화 및 엔화와 관련된 환율변동위험에 노출되어 있습니다. 외환위험은 미래예상거래, 인식된 자산과 부채 및 해외사업장에 대한 순투자가 기능통화 외의 통화로 표시될 때 발생합니다.당반기말 현재 연결회사의 화폐성 외화자산 및 외화부채의 내역은 다음과 같습니다.
+| (원화단위 : 백만원, 외화단위 : 외화 백만단위)
+| 구 분
+| 자 산
+| 부 채
+| 현지통화
+| 원화환산
+| 현지통화
+| 원화환산
+| USD
+| 47,876
+| 73,800,740
+| 17,128
+| 26,402,128
+| JPY
+| 1,361
+| 12,956
+| 125,727
+| 1,196,892
+| CNY
+| 1,932
+| 438,442</pre></details><details class="source-record" id="source-C1359607b91ba860bb9eb5658"><summary>근거 3 · 회사 공시 설명</summary><p><a href="detail.html#source-C1359607b91ba860bb9eb5658">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C1359607b91ba860bb9eb5658</code></p><p class="source-note">20260814003509.xml · 원본 SHA-256 2a599027a5742e5dd2d592b512c41705c273a65b0c70929291c2added32b223d · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 33115, &#x27;end&#x27;: 35059}</p><pre class="source-quote">1. 연구개발 담당조직당사는 보고서 제출일 현재 선행기술연구소 및 기반기술연구소, Solution개발연구소 등에서 연구개발 활동에 주력하고 있습니다.
+연구개발 조직도.jpg 연구개발 조직도
+2. 연구개발비용
+| (단위: 백만원)
+| 과 목
+| 제79기 반기
+| 제78기
+| 제77기
+| 비고
+| 연구개발비용
+| 원 재 료 비
+| 60,340
+| 114,739
+| 104,687
+| -
+| 인 건 비
+| 3,503,982
+| 2,718,918
+| 1,612,207
+| -
+| 감 가 상 각 비
+| 317,145
+| 503,697
+| 531,223
+| -
+| 위 탁 용 역 비
+| 335,612
+| 533,136
+| 426,303
+| -
+| 기 타
+| 1,825,792
+| 2,862,038
+| 2,280,027
+| -
+| 연구개발비용 합계
+| 6,042,871
+| 6,732,527
+| 4,954,447
+| -
+| 회계처리
+| 연구개발비(비용)
+| 5,816,284
+| 6,465,637
+| 4,536,723
+| -
+| 개발비(무형자산)
+| 226,587
+| 266,890
+| 417,724
+| -
+| 연구개발비 / 매출액 비율[연구개발비용계÷당기매출액×100]
+| 4.6%
+| 6.9%
+| 7.5%
+| -
+| 매 출 액
+| 131,895,033
+| 97,146,675
+| 66,192,960
+| -
+| ※ 한국채택국제회계기준에 따라 연결 기준으로 작성되었습니다.
+다. 연구개발 실적 2026년 중 당사의 주요 연구개발 실적은 다음과 같습니다.
+| 연구과제명
+| 기대효과
+| SSD
+|
+[PCIe Gen5 SSD] ㆍ미주 CSP향 DLC* 적용한 데이터센터용 PCIe** Gen5 SSD 제품 개발 완료 [PCIe Gen5 client SSD] ㆍ321단 NAND를 적용한 Client향 PCIe Gen5 SSD 제품 개발 완료 (*) DLC(Direct Liquid Cooling): 고성능 컴퓨팅 환경에서 발생하는 열을 공기가 아닌 액체를 이용해 냉각하는 기술(**) PCIe(Peripheral Component Interconnect Express): 디지털 기기의 메인보드에서 사용하는 직렬 구조의 고속 입출력 인터페이스
+| 모바일용 DRAM
+|
+[1cnm LPDDR6] ㆍ&#x27;27년 Mobile Flagship향 고대역폭 시장 지원을 위한 1cnm 16Gb LPDDR6 제품 개발- 10나노급 6세대 기반 LPDDR6 세계 첫 제품으로 최대 10.7Gbps 동작속도 구현 가능- 기존 LPDDR5X 대비 대역폭 확장을 통해 단위 시간당 전송 데이터량을 33% 향상시키고 전력은 20% 절감시킴
+| 서버용 DRAM
+| [1cnm 16Gb DDR5 2nd] ㆍ16Gb DDR5 시장 지속 대응을 위한 Speed 8800Mbps 이상 지원 가능한 1cnm 16Gb DDR5 2nd 제품 개발- 16Gb DDR5 속도 8000Mbps → 9200Mbps까지 속도 범위를 증대하여 16Gb DDR5 지속 대응 기반 확보- Server향 RDIMM, MRDIMM 및 Client향 SDIMM/UDIMM Computing 제품 9200Mbps까지 비즈니스 진입
+7. 기타 참고사항
+가. 업계의 현황
+(1) 산업의 특성
+반도체는 모든 IT 제품의 필수불가결한 핵심 부품으로서, 컴퓨터를 비롯해 통신장비 및 통신 시스템, 자동차, 디지털 가전제품, 산업기계 그리고 컨트롤 시스템 등 그 적용 분야가 매우 광범위 합니다. 시장 조사기관인 가트너(출처: Gartner, 2026.06)에 따르면, 지난 2025년도 세계 반도체 시장규모는 US$8,090억에 달하며 이 중 메모리 제품은 전체 반도체 시장의 약 27% 수준에 달하는 US$2,201억을 기록하였습니다. 메모리 제품 중 DRAM은 전체 메모리 반도체 시장의 67%를 차지하는 US$1,469억을 기록하였으며, 그 뒤를 이어 낸드플래시가 US$681억으로 31%, 기타 메모리가 US$50억으로 2%의 비중을 차지하였습니다.</pre></details><details class="source-record" id="source-C933678fad4c13f6d2a53cfc8"><summary>근거 4 · 회사 공시 설명</summary><p><a href="detail.html#source-C933678fad4c13f6d2a53cfc8">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C933678fad4c13f6d2a53cfc8</code></p><p class="source-note">20260814003509.xml · 원본 SHA-256 2a599027a5742e5dd2d592b512c41705c273a65b0c70929291c2added32b223d · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 63517, &#x27;end&#x27;: 65226}</p><pre class="source-quote">정부보조금의 수령 9,730 0
+재무활동 현금흐름 (7,617,773) (1,270,896)
+차입금의 차입 2,774,316 3,175,749
+차입금의 상환 (8,560,167) (3,014,365)
+리스부채의 상환 (287,185) (301,734)
+배당금의 지급 (1,594,365) (1,159,114)
+종속회사 유상증자 및 소유지분변동 28,306 0
+자기주식의 처분 21,322 28,560
+기타 0 8
+현금및현금성자산의 환율변동효과 811,121 (332,862)
+매각예정분류 0 (45,946)
+현금및현금성자산의 순증감 11,912,220 (2,129,806)
+기초 현금및현금성자산 14,923,766 11,205,117
+반기말 현금및현금성자산 26,835,986 9,075,311
+3. 연결재무제표 주석
+1. 회사의 개요 (연결)
+|
+|
+(1) 지배기업의 개요
+에스케이하이닉스 주식회사(이하 &quot;지배기업&quot;)는 1996년에 주식을 한국거래소에 상장한 공개법인으로, 1949년 10월 15일에 설립되어 메모리반도체의 제조 및 판매업을 주업으로 하고 있습니다. 지배기업은 경기도 이천시 부발읍 경충대로 2091에 본사와경기도 성남시 등에 사무소를 두고 있습니다. 지배기업과 그 종속기업(이하 &quot;연결회사&quot;)은 경기도 이천시와 충청북도 청주시, 중국 우시(Wuxi), 충칭(Chongqing) 및 다롄(Dalian)에 생산공장을 설치ㆍ가동하고 있습니다.당반기말과 전기말 현재 지배기업의 주주현황은 다음과 같습니다.
+| 구 분
+| 소유주식수(주)
+| 지분율(%)
+| 당반기말
+| 전기말
+| 당반기말
+| 전기말
+| SK스퀘어
+| 146,100,000
+| 146,100,000
+| 20.50
+| 20.07
+| 기타주주
+| 564,975,500
+| 555,591,520
+| 79.27
+| 76.32
+| 자기주식
+| 1,626,865
+| 26,310,845
+| 0.23
+| 3.61
+| 합 계
+| 712,702,365
+| 728,002,365
+| 100.00
+| 100.00
+당반기말 현재 지배기업의 주식은 한국거래소가 개설하는 유가증권시장에, 주식예탁증서는 룩셈부르크 증권거래소에 상장되어 있습니다.(2) 당반기말과 전기말 현재 연결대상 종속기업의 현황은 다음과 같습니다.
+| 종속기업명
+| 지배기업
+| 소재지
+| 주요 영업활동
+| 결산월
+| 소유지분율(%)
+| 당반기말
+| 전기말
+| 에스케이하이이엔지㈜
+| 에스케이하이닉스 주식회사
+| 국 내
+| 건설공사 및 서비스
+| 12월
+| 100.00
+| 100.00
+| 에스케이하이스텍㈜
+| 에스케이하이닉스 주식회사
+| 국 내
+| 사업지원 및 서비스
+| 12월
+| 100.00
+| 100.00
+| 행복모아㈜
+| 에스케이하이닉스 주식회사
+| 국 내
+| 반도체 의류 제조, 제빵 및 서비스
+| 12월
+| 100.00
+| 100.00
+| 에스케이하이닉스시스템아이씨㈜
+| 에스케이하이닉스 주식회사
+| 국 내
+| 반도체 연구개발 및 서비스
+| 12월
+| 100.00
+| 100.00
+| 행복나래㈜
+| 에스케이하이닉스 주식회사
+| 국 내
+| 산업자재 유통
+| 12월
+| 100.00
+| 100.00
+| 에스케이키파운드리㈜
+| 에스케이하이닉스 주식회사
+| 국 내
+| 반도체 판매 및 생산 등
+| 12월
+| 100.00
+| 100.00
+| SK hynix America Inc.
+| 에스케이하이닉스 주식회사
+| 미 국
+| 반도체 판매
+| 12월
+| 100.00
+| 100.00
+| SK hynix Deutschland GmbH</pre></details><details class="source-record" id="source-C78a140a1089a052658ef7d45"><summary>근거 5 · 회사 공시 설명</summary><p><a href="detail.html#source-C78a140a1089a052658ef7d45">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C78a140a1089a052658ef7d45</code></p><p class="source-note">20260814003509.xml · 원본 SHA-256 2a599027a5742e5dd2d592b512c41705c273a65b0c70929291c2added32b223d · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 342545, &#x27;end&#x27;: 344430}</p><pre class="source-quote">| 주) 당사는 2026년 2월 주주가치 제고를 위한 주주환원 정책의 일환으로 자기주식 소각을 완료하였고, 이에 주식매수선택권의 행사가격 및 수량이 조정되었습니다.
+2. 주식매수선택권을 제외한 주식기준보상제도 운영 현황 [주식기준보상제도의 명칭, 부여근거 및 절차, 주요내용 등]1. 스톡그랜트(Stock Grant)(1) 임직원 대상당사는 임직원 대상으로 이사회 결의를 거쳐 성과보상의 일부를 스톡그랜트로 부여하였으며, 공시대상기간 중 아래와 같이 지급하였습니다. 지급주식 종류 및 총수는 보통주 2,324,318주이며, 모두 당사 자기주식으로 지급하였습니다.
+| (기준일: 2026년 06월 30일)
+|
+부여일
+|
+부여주식
+|
+부여주식수
+|
+부여대상/인원수
+|
+지급시기
+| 2024.02.29
+|
+보통주
+| 476,265주
+| 직원 31,751명
+| 부여일
+| 2024.04.26
+| 804주
+| 임원 1명
+| 부여일
+| 2025.01.24
+| 325,279주
+| 임직원 6,891명
+| 부여일
+| 2025.02.27~2025.02.28
+| 980,520주
+| 직원 32,684명
+| 부여일
+| 2025.04.24
+| 66,025주
+| 임직원 3,331명
+| 부여일
+| 2025.07.24
+| 43,145주
+| 임직원 3,330명
+| 부여일
+| 2025.10.30
+| 21,473주
+| 임직원 3,330명
+| 부여일
+| 2026.02.05
+| 410,807주
+| 임직원 12,064명
+| 부여일
+| ※ 최근 3사업연도 기준
+| ※ 당사는 2025년, 2026년 자발적 신청을 기반으로 성과급의 일부를 자사주로 부여 받는 &#x27;주주참여 프로그램&#x27;을 운영했습니다.
+(2) 사외이사 대상당사는 이사회 결의를 거쳐 독립이사 보수의 일부를 주식으로 부여하였으며, 공시대상기간 중 아래와 같이 지급하였습니다. 지급주식 종류 및 총수는 보통주 3,760주이며, 모두 당사 자기주식으로 지급하였습니다.
+| (기준일: 2026년 06월 30일)
+|
+부여일
+|
+부여주식
+|
+부여주식수
+|
+부여대상/인원수
+|
+지급시기
+|
+2024.04.26
+|
+보통주
+| 1,927주
+| 사외이사 6명
+|
+부여일
+| 2025.04.25
+| 1,568주
+| 사외이사 5명
+| 부여일
+| 2026.05.04
+| 265주
+| 독립이사 6명
+| 부여일
+※ 최근 3사업연도 기준 2. SARs(Stock Appreciation Rights)
+당사는 임직원 대상으로 2023년 이후 일정 금액에 해당하는 주식수(가상)를 부여하고 부여일로부터 1년 후 주가와 연계하여 상승분을 현금으로 지급하는 SARs을 부여하였습니다. 해당 SARs는 지급시기에 재임하고 있을 시 가득조건이 충족되며, 총 2회에 걸쳐 분할 지급될 예정입니다.
+| (기준일: 2026년 06월 30일)
+|
+부여일
+|
+부여주식
+|
+부여주식수
+|
+부여대상/인원수
+| 가득 조건
+| 지급시기
+|
+2023.07.01
+|
+보통주(가상)
+| 22,633주
+| 임직원 252명
+| 지급 시점에재임 시 지급
+| 2024년 7월 이후 및2025년 7월 이후
+|
+2024.07.01
+| 11,785주
+| 임직원 257명
+| 지급 시점에재임 시 지급
+| 2025년 7월 이후 및2026년 7월 이후
+| 2025.07.01
+| 9,779주
+| 임직원 252명
+| 지급 시점에재임 시 지급
+| 2026년 7월 이후 및2027년 7월 이후
+| ※ 최근 3사업연도 기준
+등기임원 대상으로는 2022년에 TSR(Total Shareholder Return)을 기반으로 한 SARs를 부여하였습니다.
+부여 대상자 연봉의 일정비율에 해당하는 주식(가상)을 부여하고, 행사 기간 중 행사 통보일 기준 주가(가중평균)와 배당금이 부여 당시 기준 주가보다 상승할 경우 Peer 기업과의 상대적 성과를 반영한 TSR 상승분과 부여 주식수를 곱한 금액에 해당하는 당사 보통주를 지급합니다.</pre></details><details class="source-record" id="source-Cf24b77cdc9b2a72033c4d793"><summary>근거 6 · 회사 공시 설명</summary><p><a href="detail.html#source-Cf24b77cdc9b2a72033c4d793">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cf24b77cdc9b2a72033c4d793</code></p><p class="source-note">20260814003509.xml · 원본 SHA-256 2a599027a5742e5dd2d592b512c41705c273a65b0c70929291c2added32b223d · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 83435, &#x27;end&#x27;: 85187}</p><pre class="source-quote">위험에 대한 노출정도에 대한 기술 연결회사는 국제적으로 영업활동을 영위하고 있어 외환위험, 특히 주로 달러화, 유로화, 위안화 및 엔화와 관련된 환율변동위험에 노출되어 있습니다. 외환위험은 미래예상거래, 인식된 자산과 부채 및 해외사업장에 대한 순투자가 기능통화 외의 통화로 표시될 때 발생합니다.
+|
+금융상품에서 발생하는 위험의 성격과 정도에 대한 공시, 환위험
+(단위 : 백만원)
+|
+| 위험 유형
+|
+| 시장위험
+|
+| 환위험
+|
+| 기능통화 또는 표시통화
+|
+| USD
+| JPY
+| CNY
+| EUR
+시장위험의 각 유형별 민감도분석 기술 외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향 외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향 외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향 외화에 대한 기능통화의 환율이 10% 변동시, 동 환율변동이 법인세비용차감전순이익에 미치는 영향
+시장변수 상승 시 당기손익 증가 4,751,654
+시장변수 상승 시 당기손익 감소 (118,394) (24,550) (65,110)
+시장변수 하락 시 당기손익 증가 118,394 24,550 65,110
+시장변수 하락 시 당기손익 감소 (4,751,654)
+|
+금융상품의 이자율 유형별 공시
+(단위 : 백만원)
+|
+| 위험 유형
+|
+| 시장위험
+|
+| 이자율위험
+|
+| 이자율 유형
+|
+| 변동이자율
+|
+| 금융상품의 종류
+|
+| 차입금
+|
+| 위험회피수단
+| 위험회피수단 합계
+|
+| 통화이자율스왑계약
+| 이자율스왑 계약
+금융부채 117,925 286,000
+위험관리의 목적, 정책 및 절차에 대한 기술 연결회사는 현금흐름 이자율위험을 변동이자수취/고정이자지급 스왑을 이용하여 관리하고 있습니다. 이러한 이자율 스왑은 변동이자부 차입금을 고정이자부 차입금으로 바꾸는 경제적 효과가 있습니다. 일반적으로, 연결회사는 변동이자율로 차입금을 발생시킨 후 고정이자율로 스왑을 하게 됩니다. 스왑계약에 따라 연결회사는 거래상대방과 특정기간(주로 분기)마다, 합의된 원금에 따라 계산된 고정이자와 변동이자의차이를 결제하게 됩니다.연결회사는 변동금리부 외화차입금 117,925백만원에 대해 통화이자율스왑 계약을 체결하고 있으며, 변동금리부 원화차입금 286,000백만원에 대해 이자율스왑계약을 체결하고 있습니다. 따라서, 이자율 변동에 따른 해당 차입금에 대한이자비용 변동으로 인한 당반기 법인세비용차감전순이익은 변동하지 않습니다.
+위험에 대한 노출정도에 대한 기술 연결회사의 이자율위험은 미래의 시장이자율 변동에 따라 차입금에서 발생하는 이자비용이 변동될 위험으로서 이는 주로 변동금리부 조건의 차입금에서 발생하고 있습니다. 변동이자율로 발행된 차입금으로 인하여 연결회사는 이자율위험에 노출되어 있으며 동 이자율위험의 일부는 변동이자부 금융자산 등으로부터의 이자율위험과 상쇄됩니다.연결회사는 당반기말 현재 이자율 변동에 따라 순이자비용이 변동할 위험에 일부 노출되어 있습니다.한편, 다른 변동금리부 차입금 및 변동금리부 금융자산에 대하여 당반기말 현재 다른모든 변수가 일정하고 이자율이 100bp 하락 또는 상승시, 향후 1년간 연결회사의 변동금리부 차입금 및 금융자산으로부터의 순이자비용으로 인한 법인세비용차감전순이익은 19,855백만원(전반기: 24,348백만원) 만큼 증가 또는 감소할 것으로 예상됩니다.
+|
+금융상품에서 발생하는 위험의 성격과 정도에 대한 공시, 이자율위험
+당반기 (단위 : 백만원)</pre></details><details class="source-record" id="source-C0185cbc559b55563630202e7"><summary>근거 7 · 유형자산 취득 현금유출 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 10.62조원</summary><p><a href="detail.html#source-C0185cbc559b55563630202e7">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C0185cbc559b55563630202e7</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3391965, &#x27;end&#x27;: 3392275}</p><pre class="source-quote">&lt;ifrs-full:PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;10615739000000&lt;/ifrs-full:PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C0a4c3ed546ee282c5e6ebfe4"><summary>근거 8 · 영업활동 이자 지급 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · −16.10억원</summary><p><a href="detail.html#source-C0a4c3ed546ee282c5e6ebfe4">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C0a4c3ed546ee282c5e6ebfe4</code></p><p>계산식: 당기 − 전기. 계산 입력 <a class="ref-link" href="#source-Cc2017e12df9a01b30c0132ec">근거 Cc2017e12</a> · <a class="ref-link" href="#source-C4c673b6dd668ceca02fd5bf4">근거 C4c673b6d</a></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3187868, &#x27;end&#x27;: 3188130}</p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3187340, &#x27;end&#x27;: 3187602}</p><pre class="source-quote">&lt;ifrs-full:InterestPaidClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;494127000000&lt;/ifrs-full:InterestPaidClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;
+
+&lt;ifrs-full:InterestPaidClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;492517000000&lt;/ifrs-full:InterestPaidClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C1af83ffba1a8ce6368eb992c"><summary>근거 9 · 영업이익 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 16.65조원</summary><p><a href="detail.html#source-C1af83ffba1a8ce6368eb992c">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C1af83ffba1a8ce6368eb992c</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 1785353, &#x27;end&#x27;: 1785559}</p><pre class="source-quote">&lt;dart:OperatingIncomeLoss contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;16653355000000&lt;/dart:OperatingIncomeLoss&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C2240a15014bd305849906173"><summary>근거 10 · 영업활동 배당금 수취 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 13.98조원</summary><p><a href="detail.html#source-C2240a15014bd305849906173">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C2240a15014bd305849906173</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 2740326, &#x27;end&#x27;: 2740600}</p><pre class="source-quote">&lt;ifrs-full:DividendsReceivedClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;13983648000000&lt;/ifrs-full:DividendsReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C26171bab78992d39ccd8fc96"><summary>근거 11 · 당기순이익 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 15.10조원</summary><p><a href="detail.html#source-C26171bab78992d39ccd8fc96">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C26171bab78992d39ccd8fc96</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3365639, &#x27;end&#x27;: 3365837}</p><pre class="source-quote">&lt;ifrs-full:ProfitLoss contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;15104411000000&lt;/ifrs-full:ProfitLoss&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C3815e6c6962563588e6d0acf"><summary>근거 12 · 당기순이익 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 119.16조원</summary><p><a href="detail.html#source-C3815e6c6962563588e6d0acf">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C3815e6c6962563588e6d0acf</code></p><p>계산식: 당기 − 전기. 계산 입력 <a class="ref-link" href="#source-C26171bab78992d39ccd8fc96">근거 C26171bab</a> · <a class="ref-link" href="#source-C7e094ee0181884a3cc04af8c">근거 C7e094ee0</a></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3365639, &#x27;end&#x27;: 3365837}</p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3360484, &#x27;end&#x27;: 3360683}</p><pre class="source-quote">&lt;ifrs-full:ProfitLoss contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;15104411000000&lt;/ifrs-full:ProfitLoss&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;
+
+&lt;ifrs-full:ProfitLoss contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;134268502000000&lt;/ifrs-full:ProfitLoss&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C3be835d7e580c189b78fa7d6"><summary>근거 13 · 매출 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 131.90조원</summary><p><a href="detail.html#source-C3be835d7e580c189b78fa7d6">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C3be835d7e580c189b78fa7d6</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3525892, &#x27;end&#x27;: 3526085}</p><pre class="source-quote">&lt;ifrs-full:Revenue contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;131895033000000&lt;/ifrs-full:Revenue&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C437dd7d4148c56fd7f48971d"><summary>근거 14 · 영업활동 법인세 납부(환급) · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 3.25조원</summary><p><a href="detail.html#source-C437dd7d4148c56fd7f48971d">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C437dd7d4148c56fd7f48971d</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3131884, &#x27;end&#x27;: 3132165}</p><pre class="source-quote">&lt;ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;3250301000000&lt;/ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C4c673b6dd668ceca02fd5bf4"><summary>근거 15 · 영업활동 이자 지급 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 4,925.17억원</summary><p><a href="detail.html#source-C4c673b6dd668ceca02fd5bf4">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C4c673b6dd668ceca02fd5bf4</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3187340, &#x27;end&#x27;: 3187602}</p><pre class="source-quote">&lt;ifrs-full:InterestPaidClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;492517000000&lt;/ifrs-full:InterestPaidClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C4eb751bd039d71f209fa54c3"><summary>근거 16 · 영업현금흐름 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 18.19조원</summary><p><a href="detail.html#source-C4eb751bd039d71f209fa54c3">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C4eb751bd039d71f209fa54c3</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 2545955, &#x27;end&#x27;: 2546209}</p><pre class="source-quote">&lt;ifrs-full:CashFlowsFromUsedInOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;18189841000000&lt;/ifrs-full:CashFlowsFromUsedInOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C54daa8100bb4528ab42c01ab"><summary>근거 17 · 부채 · 2026-06-30 시점 · 연결 · 86.17조원</summary><p><a href="detail.html#source-C54daa8100bb4528ab42c01ab">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C54daa8100bb4528ab42c01ab</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3215256, &#x27;end&#x27;: 3215456}</p><pre class="source-quote">&lt;ifrs-full:Liabilities contextRef=&quot;CFY2026eHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;86168986000000&lt;/ifrs-full:Liabilities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026eHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:instant&gt;2026-06-30&lt;/xbrli:instant&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C5b0250a311b58cde7252443b"><summary>근거 18 · 영업활동 이자 수취 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 3,569.33억원</summary><p><a href="detail.html#source-C5b0250a311b58cde7252443b">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C5b0250a311b58cde7252443b</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3188396, &#x27;end&#x27;: 3188666}</p><pre class="source-quote">&lt;ifrs-full:InterestReceivedClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;356933000000&lt;/ifrs-full:InterestReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C5b99b17cacc9565465549276"><summary>근거 19 · 영업활동 법인세 납부(환급) · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 7.70조원</summary><p><a href="detail.html#source-C5b99b17cacc9565465549276">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C5b99b17cacc9565465549276</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3131318, &#x27;end&#x27;: 3131599}</p><pre class="source-quote">&lt;ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;7704636000000&lt;/ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C61aa36b82227d904ad197db7"><summary>근거 20 · 영업활동 이자 수취 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 1,767.33억원</summary><p><a href="detail.html#source-C61aa36b82227d904ad197db7">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C61aa36b82227d904ad197db7</code></p><p>계산식: 당기 − 전기. 계산 입력 <a class="ref-link" href="#source-Cec2b1bbfdcb70ce53d1414a8">근거 Cec2b1bbf</a> · <a class="ref-link" href="#source-C5b0250a311b58cde7252443b">근거 C5b0250a3</a></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3188940, &#x27;end&#x27;: 3189210}</p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3188396, &#x27;end&#x27;: 3188666}</p><pre class="source-quote">&lt;ifrs-full:InterestReceivedClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;180200000000&lt;/ifrs-full:InterestReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;
+
+&lt;ifrs-full:InterestReceivedClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;356933000000&lt;/ifrs-full:InterestReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C7780fb42e503666310a50aee"><summary>근거 21 · 영업활동 배당금 수취 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 259.32억원</summary><p><a href="detail.html#source-C7780fb42e503666310a50aee">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C7780fb42e503666310a50aee</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 2740878, &#x27;end&#x27;: 2741149}</p><pre class="source-quote">&lt;ifrs-full:DividendsReceivedClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;25932000000&lt;/ifrs-full:DividendsReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C7e094ee0181884a3cc04af8c"><summary>근거 22 · 당기순이익 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 134.27조원</summary><p><a href="detail.html#source-C7e094ee0181884a3cc04af8c">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C7e094ee0181884a3cc04af8c</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3360484, &#x27;end&#x27;: 3360683}</p><pre class="source-quote">&lt;ifrs-full:ProfitLoss contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;134268502000000&lt;/ifrs-full:ProfitLoss&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C922e7497b0472fc3fe48d008"><summary>근거 23 · 유형자산 취득 현금유출 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 18.33조원</summary><p><a href="detail.html#source-C922e7497b0472fc3fe48d008">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C922e7497b0472fc3fe48d008</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3391341, &#x27;end&#x27;: 3391651}</p><pre class="source-quote">&lt;ifrs-full:PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;18328836000000&lt;/ifrs-full:PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-C97561f624ceb637a12789a38"><summary>근거 24 · 영업활동 법인세 납부(환급) 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 4.45조원</summary><p><a href="detail.html#source-C97561f624ceb637a12789a38">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C97561f624ceb637a12789a38</code></p><p>계산식: 당기 − 전기. 계산 입력 <a class="ref-link" href="#source-C437dd7d4148c56fd7f48971d">근거 C437dd7d4</a> · <a class="ref-link" href="#source-C5b99b17cacc9565465549276">근거 C5b99b17c</a></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3131884, &#x27;end&#x27;: 3132165}</p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3131318, &#x27;end&#x27;: 3131599}</p><pre class="source-quote">&lt;ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;3250301000000&lt;/ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;
+
+&lt;ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;7704636000000&lt;/ifrs-full:IncomeTaxesPaidRefundClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Cb1a0df61332c4cd7a2d4ca56"><summary>근거 25 · 자산 · 2026-06-30 시점 · 연결 · 348.86조원</summary><p><a href="detail.html#source-Cb1a0df61332c4cd7a2d4ca56">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cb1a0df61332c4cd7a2d4ca56</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 2523992, &#x27;end&#x27;: 2524183}</p><pre class="source-quote">&lt;ifrs-full:Assets contextRef=&quot;CFY2026eHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;348862214000000&lt;/ifrs-full:Assets&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026eHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:instant&gt;2026-06-30&lt;/xbrli:instant&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Cb6d70473f222937e6474fb32"><summary>근거 26 · 매출 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 39.87조원</summary><p><a href="detail.html#source-Cb6d70473f222937e6474fb32">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cb6d70473f222937e6474fb32</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3537626, &#x27;end&#x27;: 3537818}</p><pre class="source-quote">&lt;ifrs-full:Revenue contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;39871093000000&lt;/ifrs-full:Revenue&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Cbadbd3a46e38d28f64eec6c2"><summary>근거 27 · 영업활동 배당금 수취 증감액 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 13.96조원</summary><p><a href="detail.html#source-Cbadbd3a46e38d28f64eec6c2">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cbadbd3a46e38d28f64eec6c2</code></p><p>계산식: 당기 − 전기. 계산 입력 <a class="ref-link" href="#source-C7780fb42e503666310a50aee">근거 C7780fb42</a> · <a class="ref-link" href="#source-C2240a15014bd305849906173">근거 C2240a150</a></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 2740878, &#x27;end&#x27;: 2741149}</p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 2740326, &#x27;end&#x27;: 2740600}</p><pre class="source-quote">&lt;ifrs-full:DividendsReceivedClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;25932000000&lt;/ifrs-full:DividendsReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;
+
+&lt;ifrs-full:DividendsReceivedClassifiedAsOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;13983648000000&lt;/ifrs-full:DividendsReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Cc2017e12df9a01b30c0132ec"><summary>근거 28 · 영업활동 이자 지급 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 4,941.27억원</summary><p><a href="detail.html#source-Cc2017e12df9a01b30c0132ec">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cc2017e12df9a01b30c0132ec</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3187868, &#x27;end&#x27;: 3188130}</p><pre class="source-quote">&lt;ifrs-full:InterestPaidClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;494127000000&lt;/ifrs-full:InterestPaidClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Cccb632921e55b086aa1d0363"><summary>근거 29 · 영업이익 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 98.15조원</summary><p><a href="detail.html#source-Cccb632921e55b086aa1d0363">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cccb632921e55b086aa1d0363</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 1784521, &#x27;end&#x27;: 1784727}</p><pre class="source-quote">&lt;dart:OperatingIncomeLoss contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;98152891000000&lt;/dart:OperatingIncomeLoss&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Ce095c670d8eb0ade4ad072ab"><summary>근거 30 · 영업현금흐름 · 2026년 반기 누적 (2026-01-01~2026-06-30) · 연결 · 91.74조원</summary><p><a href="detail.html#source-Ce095c670d8eb0ade4ad072ab">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Ce095c670d8eb0ade4ad072ab</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 2545443, &#x27;end&#x27;: 2545697}</p><pre class="source-quote">&lt;ifrs-full:CashFlowsFromUsedInOperatingActivities contextRef=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;91742501000000&lt;/ifrs-full:CashFlowsFromUsedInOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;CFY2026dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2026-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2026-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Cec2b1bbfdcb70ce53d1414a8"><summary>근거 31 · 영업활동 이자 수취 · 2025년 반기 누적 (2025-01-01~2025-06-30) · 연결 · 1,802.00억원</summary><p><a href="detail.html#source-Cec2b1bbfdcb70ce53d1414a8">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cec2b1bbfdcb70ce53d1414a8</code></p><p class="source-note">entity00164779_2026-06-30.xbrl · 원본 SHA-256 9f76c636bc699d6c90b3fbd3e2f8d6c611a9b4427e305c426c80dba3c4a94563 · 위치 {&#x27;kind&#x27;: &#x27;xml_characters&#x27;, &#x27;start&#x27;: 3188940, &#x27;end&#x27;: 3189210}</p><pre class="source-quote">&lt;ifrs-full:InterestReceivedClassifiedAsOperatingActivities contextRef=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot; unitRef=&quot;KRW&quot; decimals=&quot;-6&quot;&gt;180200000000&lt;/ifrs-full:InterestReceivedClassifiedAsOperatingActivities&gt;
+
+주체·기간·연결 범위의 원문 맥락
+&lt;xbrli:context id=&quot;PFY2025dHYA_ifrs-full_ConsolidatedAndSeparateFinancialStatementsAxis_ifrs-full_ConsolidatedMember&quot;&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme=&quot;http://dart.fss.or.kr/ifrs/CIK&quot;&gt;00164779&lt;/xbrli:identifier&gt;
+      &lt;xbrli:segment&gt;
+        &lt;xbrldi:explicitMember dimension=&quot;ifrs-full:ConsolidatedAndSeparateFinancialStatementsAxis&quot;&gt;ifrs-full:ConsolidatedMember&lt;/xbrldi:explicitMember&gt;
+      &lt;/xbrli:segment&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2025-01-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2025-06-30&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;</pre></details><details class="source-record" id="source-Cfbbfdfffbcbc1f6227998872"><summary>근거 32 · 회사 공시 설명</summary><p><a href="detail.html#source-Cfbbfdfffbcbc1f6227998872">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cfbbfdfffbcbc1f6227998872</code></p><p class="source-note">20260814003509.xml · 원본 SHA-256 2a599027a5742e5dd2d592b512c41705c273a65b0c70929291c2added32b223d · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 85600, &#x27;end&#x27;: 87485}</p><pre class="source-quote">| 유동성 위험
+|
+| 기타 가격위험
+위험관리의 목적, 정책 및 절차에 대한 기술 연결회사는 유동성관리 및 영업상의 필요 등으로 지분증권 및 채무증권에 투자하고 있습니다. 신용위험은 연결회사의 통상적인 거래 및 투자활동에서 발생하며 고객 또는 거래상대방이 계약조건상 의무사항을 지키지 못하였을 때 발생합니다. 이러한 신용위험을 관리하기 위하여 연결회사는 주기적으로 고객과 거래상대방의 재무상태와 과거 경험및 기타 요소들을 고려하여 재무신용도를 평가하고 있으며 고객과 거래상대방 각각에 대한 신용한도를 설정하고 있습니다.연결회사는 신용거래를 희망하는 모든 거래상대방에 대하여 신용검증절차의 수행을 원칙으로 하여 신용상태가 건전한 거래상대방과의 거래만을 수행하고 있습니다. 또한, 대손위험에 대한 연결회사의 노출정도가 중요하지 않은 수준으로 유지될 수 있도록 지속적으로 신용도를 재평가하고 담보물을 확보하는 등 매출채권 및 기타수취채권 잔액에 대한 지속적인 관리업무를 수행하고 있습니다. 연결회사는 매출채권 및 기타수취채권에 대해 매 보고기간말에 개별적으로 손상여부를 검토하고 있으며, 해외 거래처에 대한 신용위험과 관련하여 신용보험계약을 체결하고 있습니다.현금및현금성자산, 단기금융상품, 단기투자자산 및 장ㆍ단기대여금 등으로 구성되는 연결회사의 기타의 자산으로부터 발생하는 신용위험은 거래상대방의 부도 등으로 발생합니다. 한편, 연결회사는 다수의 금융기관에 현금및현금성자산과 단기금융상품 등을 예치하고 있으며, 신용등급이 우수한 금융기관과 거래하고 있으므로 금융기관으로부터의 신용위험은 제한적입니다. 유동성위험은 만기까지 모든 금융계약상의 약정사항들을 이행하기 위한 필요자금을 연결회사가 조달하지 못할 위험입니다. 연결회사는 유동성 전략 및 계획을 통하여 자금부족에 따른 위험을 관리하고 있습니다.연결회사는 상기에서 언급한 예측을 통해 결정된 대로 여유있는 유동성이 확보될 수 있도록 적절한 만기나 충분한 유동성을 제공해주는 이자부 당좌예금, 정기예금, 수시입출금식 예금 등의 금융상품을 선택하여 잉여자금을 투자하고 있습니다. 중간연결재무제표는 연차연결재무제표에서 요구되는 모든 재무위험관리와 공시사항을 포함하지 않으므로 2025년 12월 31일의 연차연결재무제표를 참고하시기 바랍니다. 연결회사의 위험관리부서 및 기타 위험관리정책에는 전기말 이후 중요한 변동사항이 없습니다.
+위험에 대한 노출정도에 대한 기술 당반기말 현재 해당 지분증권 및 채무증권은 가격위험에 노출되어 있습니다. 연결회사의신용위험 노출정도는 거래상대방별 매출채권 등의 장부금액과 동일한 금액입니다.연결회사의 신용위험 노출정도는 최대 해당 금융상품 장부금액과 동일한 금액이 될 것입니다. 연결회사는 여러 활동으로 인하여 시장위험(환율변동위험, 이자율위험 및 가격위험),신용위험 및 유동성위험과 같은 다양한 금융위험에 노출되어 있습니다.
+|
+자본관리를 위한 기업의 목적, 정책 및 절차에 대한 공시
+당반기말 (단위 : 백만원)
+|
+| 공시금액
+부 채 (A) 86,168,986
+자 본 (B) 262,693,228
+현금및현금성자산 등 (C) 87,957,923
+차입금 (D) 18,586,634
+부채비율 (A/B) 0.3280
+순차입금비율 (D-C)/B 0.00
+자본관리를 위한 기업의 목적, 정책 및 절차에 대한 비계량적 정보 연결회사의 자본관리 목적은 계속기업으로서 주주 및 이해당사자들에게 이익을 지속적으로 제공할 수 있는 능력을 보호하고 자본비용을 절감하기 위해 최적 자본구조를 유지하는 것입니다.자본구조를 유지 또는 조정하기 위하여 연결회사는 주주에게 지급되는 배당을 조정하고, 차입금 조달 및 상환, 신주 발행 및 자산 매각 등을 실시하고 있습니다. 주요 차입금 계약상 연결회사는 일정 수준의 부채비율, 담보채무비율 등을 준수해야 하며, 연결회사는 당반기말 현재 이러한 조건을 준수하였습니다.</pre></details><details class="source-record" id="source-D1C"><summary>근거 33 · 유형자산 투자 후 현금 차이 · 7.57조원</summary><p><a href="detail.html#source-D1C">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>D1C</code></p><p>계산식: 영업현금흐름 − 유형자산 취득 현금유출. 계산 입력 <a class="ref-link" href="#source-C4eb751bd039d71f209fa54c3">근거 C4eb751bd</a> · <a class="ref-link" href="#source-C0185cbc559b55563630202e7">근거 C0185cbc5</a></p></details><details class="source-record" id="source-D1M"><summary>근거 34 · 영업이익률 · 41.77%</summary><p><a href="detail.html#source-D1M">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>D1M</code></p><p>계산식: 영업이익 ÷ 매출 × 100. 계산 입력 <a class="ref-link" href="#source-Cb6d70473f222937e6474fb32">근거 Cb6d70473</a> · <a class="ref-link" href="#source-C1af83ffba1a8ce6368eb992c">근거 C1af83ffb</a></p></details><details class="source-record" id="source-D2C"><summary>근거 35 · 유형자산 투자 후 현금 차이 · 73.41조원</summary><p><a href="detail.html#source-D2C">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>D2C</code></p><p>계산식: 영업현금흐름 − 유형자산 취득 현금유출. 계산 입력 <a class="ref-link" href="#source-Ce095c670d8eb0ade4ad072ab">근거 Ce095c670</a> · <a class="ref-link" href="#source-C922e7497b0472fc3fe48d008">근거 C922e7497</a></p></details><details class="source-record" id="source-D2M"><summary>근거 36 · 영업이익률 · 74.42%</summary><p><a href="detail.html#source-D2M">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>D2M</code></p><p>계산식: 영업이익 ÷ 매출 × 100. 계산 입력 <a class="ref-link" href="#source-C3be835d7e580c189b78fa7d6">근거 C3be835d7</a> · <a class="ref-link" href="#source-Cccb632921e55b086aa1d0363">근거 Cccb63292</a></p></details></main><script>
+(() => {
+  function revealSource(hash) {
+    let id;
+    try { id = decodeURIComponent(hash.slice(1)); } catch (_) { return; }
+    const source = document.getElementById(id);
+    if (source && source.matches('details.source-record') && !source.classList.contains('reader-advanced')) {
+      source.open = true;
+    }
+  }
+  addEventListener('hashchange', () => revealSource(location.hash));
+  document.addEventListener('click', event => {
+    const link = event.target.closest && event.target.closest('a.ref-link[href^="#source-"]');
+    if (link) revealSource(link.getAttribute('href'));
+  });
+  revealSource(location.hash);
+})();
+</script><!-- ker-navigation-script-start --><script>(()=>{const n=document.querySelector('.ker-nav');if(!n||n.dataset.page!=='home')return;function update(){const k=location.hash==='#events'?'events':location.hash==='#reports'?'reports':'home';for(const a of n.querySelectorAll('a')){if(a.dataset.section===k)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');}}addEventListener('hashchange',update);update();})();</script><!-- ker-navigation-script-end --></body></html>

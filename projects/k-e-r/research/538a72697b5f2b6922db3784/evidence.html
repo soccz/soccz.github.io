@@ -1,0 +1,614 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>조비 · 원문 검증</title><style>body{font-family:system-ui,sans-serif;max-width:1000px;margin:32px auto;padding:0 20px;line-height:1.7;color:#1d3931;background:#f6f7f2}a{color:#176b5e}details{margin:16px 0;padding:18px;background:white;border:1px solid #dbe4df;border-radius:8px;scroll-margin-top:90px}summary{cursor:pointer;font-weight:700}pre{font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}code,.source-note{overflow-wrap:anywhere;font-size:12px}</style><!-- ker-navigation-style-start --><style>
+.ker-shell{position:sticky;top:0;z-index:100;background:#f6f3eb;color:#253e3b;border-bottom:1px solid #c7d7cf;font:13px/1.5 'Noto Sans CJK KR',system-ui,sans-serif;letter-spacing:0;box-shadow:0 2px 8px #253e3b08}
+.ker-shell *{box-sizing:border-box}.ker-shell a{color:#253e3b;text-decoration:none;letter-spacing:0}.ker-shell a:hover{color:#176b5e;text-decoration:underline}.ker-shell a:focus-visible,.ker-history a:focus-visible{outline:3px solid #b87927;outline-offset:3px}
+.ker-shell .ker-bar{max-width:1200px;margin:0 auto;padding:12px 32px;display:flex;align-items:center;justify-content:space-between;gap:18px}.ker-shell .ker-brand{font-weight:800;letter-spacing:.12em;white-space:nowrap;color:#176b5e}.ker-brand small{font-size:10px;letter-spacing:0;font-weight:500;margin-left:8px;color:#657570}
+.ker-shell .ker-nav,.ker-shell .ker-tabs{display:flex;flex-wrap:wrap;gap:4px;margin:0;padding:0;border:0;line-height:1.5}.ker-shell .ker-nav a{font-size:12px;padding:7px 11px;white-space:nowrap;border-radius:3px}.ker-shell a[aria-current]{background:#176b5e;color:#fffefa;text-decoration:none}.ker-shell .ker-context{max-width:1200px;margin:auto;padding:0 32px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.ker-context-label{font-size:11px;color:#657570}.ker-context-label strong{color:#253e3b}.ker-shell .ker-tabs a{font-size:11px;padding:4px 7px;white-space:nowrap}.ker-shell .ker-tabs a[aria-current]{background:#e1ebe3;color:#176b5e;font-weight:700}
+.ker-skip{position:absolute;top:-100px;left:10px;background:#fffefa;padding:10px}.ker-skip:focus{top:6px;z-index:101}
+body>.site-header,body>.topbar,body>nav.top{display:none!important}
+.ker-history{max-width:1200px;margin:24px auto 12px;padding:0 32px;color:#253e3b;font:13px/1.7 'Noto Sans CJK KR',system-ui,sans-serif}.ker-history-box{padding:18px 22px;border-left:4px solid #176b5e;background:#eaf0e9}.ker-history h2{font-size:22px;margin:0 0 7px;color:#253e3b}.ker-history p{margin:6px 0}.ker-history a{color:#176b5e}.ker-history-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}.ker-company-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.ker-company{border:1px solid #c7d7cf;padding:12px;background:#fffefa}.ker-company strong{display:block}.ker-company a{display:inline-block;font-size:12px;margin:4px 10px 0 0}
+#reports,#events,#ker-content{scroll-margin-top:110px}
+@media(max-width:760px){.ker-shell .ker-bar{padding:8px 16px;gap:7px}.ker-brand small{display:none}.ker-shell .ker-nav{gap:0}.ker-shell .ker-nav a{font-size:11px;padding:8px 7px}.ker-shell .ker-context{padding:0 16px 7px;gap:4px}.ker-shell .ker-tabs{gap:0}.ker-shell .ker-tabs a{font-size:10px;padding:4px 6px}.ker-context-label{font-size:10px}.ker-history{margin:16px auto 8px;padding:0 18px}.ker-history-box{padding:14px 16px}.ker-history h2{font-size:19px}.ker-company-grid{grid-template-columns:repeat(2,1fr)}.ker-company{padding:10px}}
+@media(max-width:350px){.ker-shell .ker-bar{padding:7px 10px}.ker-shell .ker-nav a{padding:8px 5px;font-size:10px}}
+@media screen and (max-width:980px){.ker-shell~.container .report-layout{grid-template-columns:minmax(0,1fr)}.ker-shell~.container article.report{min-width:0;overflow-wrap:anywhere}.ker-shell~.container article.report table{display:block;max-width:100%;overflow-x:auto}.ker-shell~.container article.report pre{max-width:100%}}
+@media print{.ker-shell,.ker-skip,.ker-history{display:none!important}}
+</style><!-- ker-navigation-style-end --></head><body><!-- ker-navigation-shell-start --><div class="ker-shell"><a class="ker-skip" href="#ker-content">본문으로</a><div class="ker-bar"><a class="ker-brand" href="/projects/k-e-r/" aria-label="K E R 메인으로">K E R<small>기업 리서치</small></a><nav class="ker-nav" aria-label="주 메뉴" data-page="reports"><a href="/projects/k-e-r/" data-section="home">메인</a><a href="/projects/k-e-r/#reports" data-section="reports" aria-current="page">기업 보고서</a><a href="/projects/k-e-r/#events" data-section="events">변화 알림</a><a href="/projects/k-e-r/archive.html" data-section="archive">이전 분석</a></nav></div><div class="ker-context"><div class="ker-context-label"><strong>조비</strong> · 2026년 상반기 누적</div><nav class="ker-tabs" aria-label="이 보고서 탐색"><a href="/projects/k-e-r/research/538a72697b5f2b6922db3784/">요약</a><a href="/projects/k-e-r/research/538a72697b5f2b6922db3784/detail.html" aria-current="page">공시 근거집</a><a href="/projects/k-e-r/research/538a72697b5f2b6922db3784/followup.html">후속 확인</a><a href="/projects/k-e-r/?company=001550#events">관련 알림</a></nav></div></div><span id="ker-content" tabindex="-1"></span><!-- ker-navigation-shell-end --><header><p><a href="detail.html">← 보고서 읽기로 돌아가기</a></p><h1>조비 · 원문 검증</h1><p>공시 원문의 수치와 맥락, 계산 입력을 직접 대조하는 화면입니다. 회사에 대한 해석은 보고서에서 읽을 수 있습니다.</p><p><a href="detail.pdf">작성 당시 원본 PDF</a></p></header><main><details class="source-record" id="source-C2f0c1a2dc05da233d047abd2"><summary>근거 1 · 회사 공시 설명</summary><p><a href="detail.html#source-C2f0c1a2dc05da233d047abd2">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C2f0c1a2dc05da233d047abd2</code></p><p class="source-note">20260814001004.xml · 원본 SHA-256 5d40f309198ce27bcc0e1c642b4fb250d42098908cdedd2d78cf36a9db34da1a · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 711, &#x27;end&#x27;: 2102}</p><pre class="source-quote">| 1. 사업의 개요
+| -------------------
+| 11
+| 2. 주요 제품 및 서비스
+| -------------------
+| 13
+| 3. 원재료 및 생산설비
+| -------------------
+| 14
+| 4. 매출 및 수주상황
+| -------------------
+| 17
+| 5. 위험관리 및 파생거래
+| -------------------
+| 19
+| 6. 주요계약 및 연구개발활동
+| -------------------
+| 20
+| 7. 기타 참고사항
+| -------------------
+| 22
+| III. 재무에 관한 사항
+| -------------------
+| 25
+| 1. 요약재무정보
+| -------------------
+| 25
+| 2. 연결재무제표
+| -------------------
+| 26
+| 3. 연결재무제표 주석
+| -------------------
+| 26
+| 4. 재무제표
+| -------------------
+| 27
+| 5. 재무제표 주석
+| -------------------
+| 33
+| 6. 배당에 관한 사항
+| -------------------
+| 65
+| 7. 증권의 발행을 통한 자금조달에 관한 사항
+| -------------------
+| 65
+| 7-1. 증권의 발행을 통한 자금조달 실적
+| -------------------
+| 65
+| 7-2. 증권의 발행을 통해 조달된 자금의 사용실적
+| -------------------
+| 66
+| 8. 기타 재무에 관한 사항
+| -------------------
+| 67
+| IV. 이사의 경영진단 및 분석의견
+| -------------------
+| 74
+| V. 회계감사인의 감사의견 등
+| -------------------
+| 75
+| 1. 외부감사에 관한 사항
+| -------------------
+| 75
+| 2. 내부통제에 관한 사항
+| -------------------
+| 77
+| VI. 이사회 등 회사의 기관에 관한 사항
+| -------------------
+| 79
+| 1. 이사회에 관한 사항
+| -------------------
+| 79
+| 2. 감사제도에 관한 사항
+| -------------------
+| 82
+| 3. 주주총회 등에 관한 사항
+| -------------------
+| 84
+| VII. 주주에 관한 사항
+| -------------------
+| 88
+| VIII. 임원 및 직원 등에 관한 사항
+| -------------------
+| 93
+| 1. 임원 및 직원 등의 현황
+| -------------------
+| 93
+| 2. 임원의 보수 등
+| -------------------
+| 95
+| IX. 계열회사 등에 관한 사항
+| -------------------
+| 102</pre></details><details class="source-record" id="source-C86be6c7339d964b7b4c17bca"><summary>근거 2 · 회사 공시 설명</summary><p><a href="detail.html#source-C86be6c7339d964b7b4c17bca">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C86be6c7339d964b7b4c17bca</code></p><p class="source-note">20260814001004.xml · 원본 SHA-256 5d40f309198ce27bcc0e1c642b4fb250d42098908cdedd2d78cf36a9db34da1a · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 14412, &#x27;end&#x27;: 16183}</p><pre class="source-quote">4. 매출 및 수주상황
+(1) 사업부문별 매출실적
+|
+| (단위 : 백만원)
+| 사업부문
+| 매출유형
+| 품 목
+| 제72(당반)기
+| 제71(전)기
+| 제70(전전)기
+| 비료
+| 제품
+| 복합비료
+| 내수
+| 74,838
+| 77,349
+| 72,911
+| 수출
+| 1,734
+| 1,821
+| 1,565
+| 상품 등
+| 유기질 외
+| 내수
+| 13,431
+| 20,567
+| 27,972
+| 합 계
+| 90,003
+| 99,737
+| 102,448
+※ 당반기 중 매출의 유의미한 증가는 중동 지역의 지정학적 불확실성 확대와 이에 따른 원자재 가격 및 환율 상승 우려로 시장 내 선구매 및 재고확보 수요가 증가한 데 주로 기인합니다. 이에 따라 통상 하반기에 발생할 수요의 일부가 상반기에 선반영되면서 전년 동기 대비 매출 실현 시점이 앞당겨진 효과가 포함되어 있습니다. 이러한 상반기 매출 증가는 반복적인 성장 요인으로 보기에는 제한이 있으며, 하반기에는 상반기 선구매에 따른 수요 선반영 효과가 소진되면서 전년 동기 대비 매출 증가세가 둔화되거나 역기저 효과가 나타날 가능성이 있습니다. 따라서 당반기 실적의 증가 추세가 연간 실적의 선형적인 증가로 직결되지는 않을 수 있습니다.
+(2) 판매경로 및 방법 당사에서 생산되는 비료 중 단한번, 이편한, 단번에올코팅 등은 주요판매처인 농협경제지주와의 공급계약에 의거 납품하고있으며, 유기질, 원예용비료, 기타비료는 단위조합, 시판판매상, 관계회사를 통하여 판매하고있습니다.(2)-1. 판매경로
+| 사업구분
+| 구 분
+| 판매경로
+| 비 고
+| 비료
+| 농협납품/원예/유기질/ 계통비료
+| 회사 - 농협경제지주 - 지역농협
+| -
+| 원예/유기질/상품/4종/ 자체비료
+| 회사 - 시판 판매상 및 지역농협
+| 기타
+| 회사 - 거래처
+(2)-2. 당기 판매경로별 매출액 비중
+| 사업구분
+| 판매경로
+| 비율
+| 최종소비
+| 비료
+| 농협판매
+| 69.47%
+| 소 비 자
+| 대리점외
+| 29.63%
+| 지배회사 : (주)경농
+| 0.90%
+| 합 계
+| 100.00%
+※ 농협판매는 농협경제지주 입찰 비종 매출분입니다.
+(2)-3. 판매방법 및 조건 가. 판매방법- 농협납품판매 : 농협경제지주의 연간 수주량을 통한 월별 발주량에 의하여 납품 판매- 원예용/유기질/ 계통판매 : 지역농협의 사용시기에 따라 발주신청 한 후 이를 납품- 원예용/유기질/상토/상품/4종 자체판매 : 시판 판매상을 통한 판매 및 지역농협과 자체 계약 판매 나. 판매조건- 농협납품판매비료 : 청구월로부터 세번째 되는 월의 15일에 결제- 원예용 계통판매 : 1월~3월: 6월30일 결제, 4월~6월: 9월30일 결제, 7월~9월: 12월 31일 결제, 10월~12월: 익년 3월31일 결제- 유기질 계통판매 : 1월~3월: 6월30일 결제, 4월~6월: 9월30일 결제, 7월~9월: 12월 31일 결제, 10월~12월: 익년 3월31일 결제- 원예용/유기질/상토/상품/4종 자체판매 : 월마감후 현금 및 외상판매 6개월 결제
+(2)-4. 판매전략
+농협에 대한 적극적인 수주 및 단위농협과 당사대리점의 관리요건을 강화하는 한편 원가절감 및 부가가치가 높은 신비종개발에 전념하여 가격경쟁력 우위를 확보하고, 적극적인 판촉활동으로 시장점유율을 확대할 계획입니다. (3) 수주상황
+당사는 농협경제지주와 2026년 2월 6일자로 화학비료 계약을 체결하여 연중 공급하고 있습니다. 계약 내용은 아래와 같으며, 비료수요는 연중 시기별로 수요 변동이 크고 특히 성수기(봄, 여름)에 집중되어 있으며, 휴경시기일 경우는 수요가 감소하고 있습니다.</pre></details><details class="source-record" id="source-C9f65165a764d39129c388928"><summary>근거 3 · 회사 공시 설명</summary><p><a href="detail.html#source-C9f65165a764d39129c388928">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C9f65165a764d39129c388928</code></p><p class="source-note">20260814001004.xml · 원본 SHA-256 5d40f309198ce27bcc0e1c642b4fb250d42098908cdedd2d78cf36a9db34da1a · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 18163, &#x27;end&#x27;: 19882}</p><pre class="source-quote">| 연구개발비 / 매출액 비율[연구개발비용계÷당기매출액×100]
+| 0.05
+| 0.10
+| 0.15
+| -
+(2)-3. 연구개발에 따른 비료등록 현황
+| (단위 : 건)
+| 구분
+| 제72(당반)기
+| 제71(전)기
+| 제70(전전)기
+| 2종 복합비료
+| -
+| 7
+| 2
+| 3종 복합비료
+| -
+| 1
+| 1
+| 4종 복합비료
+| -
+| -
+| -
+| 피복요소복합
+| -
+| 3
+| -
+| 피복복합
+| -
+| 1
+| -
+| 혼합유기질
+| -
+| -
+| 1
+| 바이오차
+| -
+| -
+| 1
+| 계
+| -
+| 12
+| 5
+7. 기타 참고사항
+(1) 관계법령 또는 정부의 규제 등 당사는 비료관리법에 의하여 생산·등록·판매를 하고 있으며, 농림축산식품부장관 또는 시장, 군수, 구청장의 주도하에 필요시 품질관리를 받고 있습니다. 품질 및 기타사항에 대하여 문제 발생시 등록취소 및 영업정지, 혹은 과태료 등의 행정처분을 받게 됩니다.
+(2) 시장여건 및 영업의 개황
+(2)-1. 산업의 특성비료는 식물의 성장을 촉진하고 수확량을 증가시키기 위해 필요한 영양소를 공급하는 중요한 역할을 합니다. 비료 산업은 내수 중심으로 운영되며, 천연가스, 인광석, 염화칼리 같은 주요 원료의 대부분을 수입에 의존합니다. 주요 원료는 주로 천연가스가 풍부한 국가나 인광석, 염화칼리를 생산하거나 보유하고 있는 나라들로부터 공급받게 되는데, 이는 비료 산업이 글로벌 원료 시장의 변동성에 크게 영향을 받으며 국내 수급의 안정성을 유지하기 어렵다는 산업적 특성을 가지고 있음을 의미합니다.이러한 특성은 비료 산업의 국제 경쟁력을 약화시키며, 원료 가격의 글로벌 변동성은 국내 비료 생산 비용에 직접적인 영향을 미쳐 최종 제품 가격에도 반영됩니다. 결과적으로, 국내 비료 산업은 국제 시장에서의 경쟁력 확보와 동시에 내수 시장의 안정적인 공급을 유지하기 위해 다양한 전략과 정책 지원이 필요한 상황입니다. 이는 비료 산업이 당면한 주요 도전 중 하나로, 국제 원료 시장의 변동성에 대응하고 국내 농업의 지속 가능성을 지원하기 위한 방안 마련이 중요한 과제로 부각되고 있습니다.(2)-2. 성장성국내 비료산업은 경지면적 감소와 정부의 친환경 정책 및 지속가능농업의 추세에 따라 무기질 비료의 시장은 정체되어 있는 상황 입니다. 그러나, 농촌인구의 감소와 고령화로 인한 노동력 절감을 위해 완효성 비료의 수요가 늘어나고 있으며, 이는 농작물 품질 향상에도 기여합니다. 또한, 농기계의 발달과 스마트팜 등 새로운 농업환경 변화에 따라 생력화 및 기능성 비료 시장이 더욱 확대될 것으로 예상됩니다.
+| (단위 : 톤)
+| 구 분
+| 2025년
+| 2024년
+| 2023년
+| 2022년
+| 2021년
+| 농업용
+| 929,252
+| 938,651
+| 976,521
+| 1,083,791
+| 1,045,582
+| 그 외
+| 1,339,496
+| 1,351,236
+| 1,417,093
+| 1,486,195
+| 2,025,650
+| 계
+| 2,268,748
+| 2,289,887
+| 2,393,614
+| 2,569,986
+| 3,071,232
+* 출처 : 비료협회 출하실적
+(2)-3. 시장의 안정성 및 계절성, 경기변동의 특성비료 산업은 다른 원료 가공 제조업 및 유통업과는 달리 국내 주요 작물의 재배 시기에 맞추어 생산과 판매가 이루어집니다. 이로 인해 수요가 작물의 재배 시기에 집중되는 경향을 보이며, 환율 및 원재료 가격 등 국제 경기 변동 상황에 매우 민감하게 반응하는 특징이 있습니다.</pre></details><details class="source-record" id="source-Cbf9c4461518249b579d65234"><summary>근거 4 · 회사 공시 설명</summary><p><a href="detail.html#source-Cbf9c4461518249b579d65234">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Cbf9c4461518249b579d65234</code></p><p class="source-note">20260814001004.xml · 원본 SHA-256 5d40f309198ce27bcc0e1c642b4fb250d42098908cdedd2d78cf36a9db34da1a · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 18017, &#x27;end&#x27;: 19882}</p><pre class="source-quote">| 정부보조금 차감
+| (2,301)
+| (4,601)
+| (4,601)
+| -
+| 회계처리
+| 판매비와 관리비
+| 45,117
+| 94,264
+| 151,083
+| -
+| 제조경비
+| -
+| -
+| -
+| -
+| 개발비(무형자산)
+| -
+| -
+| -
+| -
+| 연구개발비 / 매출액 비율[연구개발비용계÷당기매출액×100]
+| 0.05
+| 0.10
+| 0.15
+| -
+(2)-3. 연구개발에 따른 비료등록 현황
+| (단위 : 건)
+| 구분
+| 제72(당반)기
+| 제71(전)기
+| 제70(전전)기
+| 2종 복합비료
+| -
+| 7
+| 2
+| 3종 복합비료
+| -
+| 1
+| 1
+| 4종 복합비료
+| -
+| -
+| -
+| 피복요소복합
+| -
+| 3
+| -
+| 피복복합
+| -
+| 1
+| -
+| 혼합유기질
+| -
+| -
+| 1
+| 바이오차
+| -
+| -
+| 1
+| 계
+| -
+| 12
+| 5
+7. 기타 참고사항
+(1) 관계법령 또는 정부의 규제 등 당사는 비료관리법에 의하여 생산·등록·판매를 하고 있으며, 농림축산식품부장관 또는 시장, 군수, 구청장의 주도하에 필요시 품질관리를 받고 있습니다. 품질 및 기타사항에 대하여 문제 발생시 등록취소 및 영업정지, 혹은 과태료 등의 행정처분을 받게 됩니다.
+(2) 시장여건 및 영업의 개황
+(2)-1. 산업의 특성비료는 식물의 성장을 촉진하고 수확량을 증가시키기 위해 필요한 영양소를 공급하는 중요한 역할을 합니다. 비료 산업은 내수 중심으로 운영되며, 천연가스, 인광석, 염화칼리 같은 주요 원료의 대부분을 수입에 의존합니다. 주요 원료는 주로 천연가스가 풍부한 국가나 인광석, 염화칼리를 생산하거나 보유하고 있는 나라들로부터 공급받게 되는데, 이는 비료 산업이 글로벌 원료 시장의 변동성에 크게 영향을 받으며 국내 수급의 안정성을 유지하기 어렵다는 산업적 특성을 가지고 있음을 의미합니다.이러한 특성은 비료 산업의 국제 경쟁력을 약화시키며, 원료 가격의 글로벌 변동성은 국내 비료 생산 비용에 직접적인 영향을 미쳐 최종 제품 가격에도 반영됩니다. 결과적으로, 국내 비료 산업은 국제 시장에서의 경쟁력 확보와 동시에 내수 시장의 안정적인 공급을 유지하기 위해 다양한 전략과 정책 지원이 필요한 상황입니다. 이는 비료 산업이 당면한 주요 도전 중 하나로, 국제 원료 시장의 변동성에 대응하고 국내 농업의 지속 가능성을 지원하기 위한 방안 마련이 중요한 과제로 부각되고 있습니다.(2)-2. 성장성국내 비료산업은 경지면적 감소와 정부의 친환경 정책 및 지속가능농업의 추세에 따라 무기질 비료의 시장은 정체되어 있는 상황 입니다. 그러나, 농촌인구의 감소와 고령화로 인한 노동력 절감을 위해 완효성 비료의 수요가 늘어나고 있으며, 이는 농작물 품질 향상에도 기여합니다. 또한, 농기계의 발달과 스마트팜 등 새로운 농업환경 변화에 따라 생력화 및 기능성 비료 시장이 더욱 확대될 것으로 예상됩니다.
+| (단위 : 톤)
+| 구 분
+| 2025년
+| 2024년
+| 2023년
+| 2022년
+| 2021년
+| 농업용
+| 929,252
+| 938,651
+| 976,521
+| 1,083,791
+| 1,045,582
+| 그 외
+| 1,339,496
+| 1,351,236
+| 1,417,093
+| 1,486,195
+| 2,025,650
+| 계
+| 2,268,748
+| 2,289,887
+| 2,393,614
+| 2,569,986
+| 3,071,232
+* 출처 : 비료협회 출하실적
+(2)-3. 시장의 안정성 및 계절성, 경기변동의 특성비료 산업은 다른 원료 가공 제조업 및 유통업과는 달리 국내 주요 작물의 재배 시기에 맞추어 생산과 판매가 이루어집니다. 이로 인해 수요가 작물의 재배 시기에 집중되는 경향을 보이며, 환율 및 원재료 가격 등 국제 경기 변동 상황에 매우 민감하게 반응하는 특징이 있습니다.</pre></details><details class="source-record" id="source-C58c8771523cf0e4a39e3a2c2"><summary>근거 5 · 회사 공시 설명</summary><p><a href="detail.html#source-C58c8771523cf0e4a39e3a2c2">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>C58c8771523cf0e4a39e3a2c2</code></p><p class="source-note">20260814001004.xml · 원본 SHA-256 5d40f309198ce27bcc0e1c642b4fb250d42098908cdedd2d78cf36a9db34da1a · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 6475, &#x27;end&#x27;: 8179}</p><pre class="source-quote">(2) 자기주식 취득 및 처분 현황
+| (기준일 :
+| 2026년 06월 30일
+| )
+| (단위 : 주)
+| 취득방법
+| 주식의 종류
+| 기초수량
+| 변동 수량
+| 기말수량
+| 비고
+| 취득(+)
+| 처분(-)
+| 소각(-)
+| 배당가능이익범위이내취득
+| 직접취득
+| 장내 직접 취득
+보통주 411 - - - 411 -
+우선주 - - - - - -
+| 장외직접 취득
+보통주 - - - - - -
+우선주 - - - - - -
+| 공개매수
+보통주 - - - - - -
+우선주 - - - - - -
+| 소계(a)
+보통주 411 - - - 411 -
+우선주 - - - - - -
+| 신탁계약에 의한취득
+| 수탁자 보유물량
+보통주 - - - - - -
+우선주 - - - - - -
+| 현물보유물량
+보통주 - - - - - -
+우선주 - - - - - -
+| 소계(b)
+보통주 - - - - - -
+우선주 - - - - - -
+| 기타 취득(c)
+보통주 - - - - - -
+우선주 - - - - - -
+| 총 계(a+b+c)
+보통주 411 - - - 411 -
+우선주 - - - - - -
+1. 자기주식 보유현황 :
+| (기준일 :
+| 2026년 06월 30일
+| )
+| (단위 : 주, %)
+| 구분
+| 주식종류
+| 보유수량
+| 발행주식총수대비비중
+| 취득목적
+| 취득연도
+| 소각기한
+| 보유처분계획승인내용
+| 비고
+| 주총승인일
+| 보유처분기한
+| 보유처분목적
+| 배당가능이익범위이내취득
+| 직접보유
+보통주 411 0.008 감자 후 단수주처리 | 2007년
+| 2027
+| -
+- - 2026.03.06 상법개정 시행 전 보유분으로 시행일로부터 1년 6개월 이내에 소각하거나, 자기주식보유처분계획을 작성하여 주주총회의 승인을 얻은 때에는 그 승인된 계획에 따라 자기주식을 보유 또는 처분
+- - - - | -
+| -
+| -
+- - -
+| 수탁자보유
+- - - - | -
+| -
+| -
+- - -
+- - - - | -
+| -
+| -
+- - -
+| 기타 취득
+- - - - | -
+| -
+| -
+- - -
+- - - - | -
+| -
+| -
+- - -
+| 총계
+보통주 411 0.008 |
+- - -
+2. 자기주식 취득ㆍ처분ㆍ소각 관련 단기 계획 :
+| (대상기간 :
+| 2026년 01월 01일
+| ~
+| 2026년 12월 31일
+| )
+| (단위 : 주, %)
+| 구분
+| 보유형태
+| 주식종류
+| 당초취득목적
+| 거래방법
+| 수량
+| 발행주식총수대비 비중
+| 결정사유
+| 취득
+| -
+| -
+- - - - -
+| -
+| -
+- - - - -
+| 처분
+| -
+| -
+- - - - -
+| -
+| -
+- - - - -
+| 소각
+| -
+| -
+- - - - -
+| -
+| -
+- - - - -
+| 계속보유
+| -
+| -
+- - - - -
+| -
+| -
+- - - - -
+단기적으로 자기주식을 취득ㆍ처분ㆍ소각할 계획은 없음.
+3. 자기주식 취득ㆍ처분ㆍ소각 단기 계획 이행 현황 :
+| (대상기간 :
+| 2026년 01월 01일
+| ~
+| 2026년 06월 30일
+| )
+| (단위 : 주, %)
+| 구분
+| 보유형태
+| 주식종류
+| 전기 계획수량(A)
+| 당기 이행수량(B)
+| 이행률(B/A)
+| 차이발생사유
+| 취득
+| -
+| -
+- - - -
+| -
+| -
+- - - -
+| 처분
+| -
+| -
+- - - -
+| -
+| -
+- - - -
+| 소각
+| -
+| -
+- - - -
+| -
+| -
+- - - -
+| 계속보유
+| -
+| -
+- - - -</pre></details><details class="source-record" id="source-Ce0309cf70010ac5acc43c50e"><summary>근거 6 · 회사 공시 설명</summary><p><a href="detail.html#source-Ce0309cf70010ac5acc43c50e">보고서의 이 근거로 돌아가기</a></p><p>근거 식별자 <code>Ce0309cf70010ac5acc43c50e</code></p><p class="source-note">20260814001004.xml · 원본 SHA-256 5d40f309198ce27bcc0e1c642b4fb250d42098908cdedd2d78cf36a9db34da1a · 위치 {&#x27;kind&#x27;: &#x27;extracted_text_characters&#x27;, &#x27;start&#x27;: 51115, &#x27;end&#x27;: 52828}</p><pre class="source-quote">회사는 신용위험, 유동성 위험과 시장위험(환율변동위험, 이자율변동위험)에 노출되어 있으며, 회사의 전반적인 위험관리는 회사의 재무성과에 잠재적으로 불리할 수 있는 효과를 최소화하는 데 중점을 두고 있습니다. 재무위험관리는 회사의 재무부문에 의해 이루어지고 있으며, 각 업무 부서들과 긴밀히 협력하여 금융위험을 식별, 평가 및 회피하고 있습니다.
+재무위험관리의 대상이 되는 회사의 금융자산은 현금및현금성자산, 매출채권및기타채권, 당기손익-공정가치측정금융자산, 기타포괄손익-공정가치측정금융자산 등으로 구성되어 있으며, 금융부채는 매입채무및기타채무, 단기차입금, 장기차입금 등으로 구성되어 있습니다.
+(2) 공정가치 추정
+1) 반복적으로 공정가치로 측정하는 금융자산 및 금융부채의 공정가치
+일부 금융자산과 금융부채는 보고기간말 공정가치로 측정합니다. 이러한 금융자산과금융부채의 공정가치가 산정되는 방법은 다음과 같습니다.
+① 유동자산ㆍ부채
+유동자산ㆍ부채는 만기가 단기이므로 그 공정가치가 장부가액에 근사합니다.
+② 매출채권및기타채권
+매출채권및기타채권의 공정가치는 미래의 현금흐름을 보고기간종료일 현재의 시장이자율로 할인한 현재가치로 평가합니다. 다만, 상기 현재가치와 명목금액과의 차이가 중요하지 않은 경우 명목금액으로 평가하였습니다. 보고기간종료일 현재 매출채권및기타채권은 그 공정가치가 장부가액에 근사합니다.
+③ 지분증권과 채무증권에 대한 투자
+시장에서 거래되는 기타포괄손익-공정가치측정금융자산의 공정가치는 보고기간종료일 현재 공시되는 마감 매수호가에 의해 결정되었으며, 시장성 없는 지분증권은 동피투자회사의 소유에서 파생될 것으로 예상되는 미래 경제적효익의 현재가치를 추정하기 위해 할인된 현금흐름기법이 이용됩니다.
+④ 비파생금융부채
+비파생금융부채의 공정가치는 원금 및 이자로부터의 현금흐름을 보고기간 종료일의시장이자율로 할인한 현재가치에 근거하여 산정되고 있습니다. 다만, 상기 현재가치와 명목금액과의 차이가 중요하지 않은 경우 명목금액으로 평가하였습니다.
+2) 공정가치 측정
+회사는 공정가치 측정에 사용된 투입변수의 유의성을 반영하는 공정가치 서열체계에따라 공정가치측정치를 분류하고 있으며, 공정가치 서열체계의 수준은 다음과 같습니다.
+| 구 분
+| 투입변수의 유의성
+| 수준 1
+| 동일한 자산이나 부채에 대한 활성시장의 공시가격
+| 수준 2
+| 직접적으로 또는 간접적으로 관측가능한 자산이나 부채에 대한 투입변수
+| 수준 3
+| 관측가능한 시장자료에 기초하지 않은 자산이나 부채에 대한 투입변수
+3) 금융상품의 수준별 공정가치
+① 공정가치로 측정되는 금융상품의 수준별 금액은 다음과 같습니다.
+| &lt; 당반기말&gt;
+| (단위: 천원)
+| 구 분
+| 수준 1
+| 수준 2
+| 수준 3
+| 합 계
+| 당기손익-공정가치측정금융자산
+| 파생상품자산
+| -
+| -
+| -
+| -
+| 출자금 등
+| -
+| -
+| -
+| -
+| 기타포괄손익-공정가치측정금융자산
+| 상장주식
+| -
+| -
+| -
+| -
+| 비상장주식
+| -
+| -
+| 2,979,819
+| 2,979,819
+| 당기손익-공정가치측정금융부채
+| 파생상품부채
+| -
+| -
+| -
+| -
+| &lt; 전기말&gt;
+| (단위: 천원)
+| 구 분
+| 수준 1
+| 수준 2
+| 수준 3
+| 합 계
+| 당기손익-공정가치측정금융자산
+| 파생상품자산
+| -
+| -
+| -
+| -
+| 출자금 등
+| -
+| -
+| -
+| -
+| 기타포괄손익-공정가치측정금융자산
+| 상장주식
+| -
+| -
+| -
+| -
+| 비상장주식
+| -
+| -</pre></details></main><script>
+(() => {
+  function revealSource(hash) {
+    let id;
+    try { id = decodeURIComponent(hash.slice(1)); } catch (_) { return; }
+    const source = document.getElementById(id);
+    if (source && source.matches('details.source-record') && !source.classList.contains('reader-advanced')) {
+      source.open = true;
+    }
+  }
+  addEventListener('hashchange', () => revealSource(location.hash));
+  document.addEventListener('click', event => {
+    const link = event.target.closest && event.target.closest('a.ref-link[href^="#source-"]');
+    if (link) revealSource(link.getAttribute('href'));
+  });
+  revealSource(location.hash);
+})();
+</script><!-- ker-navigation-script-start --><script>(()=>{const n=document.querySelector('.ker-nav');if(!n||n.dataset.page!=='home')return;function update(){const k=location.hash==='#events'?'events':location.hash==='#reports'?'reports':'home';for(const a of n.querySelectorAll('a')){if(a.dataset.section===k)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');}}addEventListener('hashchange',update);update();})();</script><!-- ker-navigation-script-end --></body></html>
