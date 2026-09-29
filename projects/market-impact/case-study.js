@@ -81,3 +81,18 @@ function schedulePositionUpdate() {
 window.addEventListener('scroll', schedulePositionUpdate, {passive:true});
 window.addEventListener('resize', schedulePositionUpdate);
 updateReadingPosition();
+
+// Diagram links lead into native disclosures; opening them also works with
+// direct URLs and browser history. Native summaries remain usable without JS.
+function revealLinkedWorkstream() {
+  const target = document.getElementById(location.hash.slice(1));
+  if (!target?.matches('details.workstream')) return;
+  target.open = true;
+  target.querySelector('summary').focus({preventScroll: true});
+}
+window.addEventListener('hashchange', revealLinkedWorkstream);
+document.querySelector('.development-atlas')?.addEventListener('click', event => {
+  const link = event.target.closest('a');
+  if (link?.hash === location.hash) revealLinkedWorkstream();
+});
+revealLinkedWorkstream();
