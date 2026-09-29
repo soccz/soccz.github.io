@@ -13,6 +13,31 @@
 .research-origins h3 { font-size: 15px; color: var(--ink); margin: 9px 0; line-height: 1.8; }
 .research-origins p { font-size: 12px; line-height: 1.95; color: var(--muted); }
 .research-demo { border-color: #b8cbbb; scroll-margin-top: 125px; }
+.replay-overview { display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; padding: 0; margin: 28px 0 0; border-block: 1px solid var(--line); }
+.replay-overview li { padding: 20px 14px; border-right: 1px solid var(--line); }
+.replay-overview li:first-child { padding-left: 0; }
+.replay-overview li:last-child { border-right: 0; }
+.replay-overview time { font: 12px var(--mono); color: var(--orange); }
+.replay-overview strong { display: block; font-size: 14px; color: var(--ink); margin-top: 9px; }
+.replay-overview p { font-size: 11px; color: var(--muted); margin-top: 7px; }
+.overview-caption { font-size: 11px; color: var(--muted); margin-top: 12px; }
+.scenario-overview { border-collapse: collapse; width: 100%; margin-top: 28px; font-size: 12px; text-align: center; }
+.scenario-overview caption { text-align: left; font-size: 12px; color: var(--green); padding-bottom: 12px; }
+.scenario-overview th, .scenario-overview td { border-block: 1px solid var(--line); padding: 13px 9px; }
+.scenario-overview th { font-weight: 500; }
+.scenario-overview th:first-child { text-align: left; width: 48%; }
+.scenario-overview td { color: var(--green); }
+.scenario-overview .needs-review { background: #f4e8dc; color: #85532a; }
+.scenario-overview .on-hold { background: #eeede6; color: #575b51; }
+@media(max-width:600px) {
+  .replay-overview { grid-template-columns: 1fr 1fr; }
+  .replay-overview li { padding: 17px 12px; }
+  .replay-overview li:first-child { padding-left: 12px; }
+  .replay-overview li:nth-child(2n) { border-right: 0; }
+  .replay-overview li:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .scenario-overview { font-size: 11px; }
+  .scenario-overview th, .scenario-overview td { padding-inline: 6px; }
+}
 .research-demo .interactive-header { background: var(--ink); }
 .research-demo .interactive-header span { color: #eff3e8; }
 .research-demo .interactive-header small { color: #d0ddcd; }

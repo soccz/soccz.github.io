@@ -50,6 +50,16 @@ document.querySelectorAll('[data-tabs]').forEach(group => {
 const progress = document.querySelector('.read-progress');
 const sections = [...document.querySelectorAll('.chapter[id]')];
 const links = [...document.querySelectorAll('.contents a')];
+const readingMenu = document.querySelector('.reading-menu');
+const compactReading = window.matchMedia('(max-width: 780px)');
+function setReadingMenuLayout() {
+  if (readingMenu) readingMenu.open = !compactReading.matches;
+}
+setReadingMenuLayout();
+compactReading.addEventListener('change', setReadingMenuLayout);
+links.forEach(link => link.addEventListener('click', () => {
+  if (readingMenu && compactReading.matches) readingMenu.open = false;
+}));
 let scheduled = false;
 let lastActive;
 function updateReadingPosition() {
@@ -59,16 +69,15 @@ function updateReadingPosition() {
   for (const section of sections) {
     if (section.getBoundingClientRect().top <= 170) active = section;
   }
+  const group = active?.dataset.readingGroup || active?.id;
   links.forEach(link => {
-    if (active && link.getAttribute('href') === `#${active.id}`) link.setAttribute('aria-current', 'true');
+    if (group && link.getAttribute('href') === `#${group}`) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
   });
   if (active !== lastActive) {
-    const selected = links.find(link => link.getAttribute('aria-current') === 'true');
-    const list = selected?.closest('ol');
-    if (list && list.scrollWidth > list.clientWidth) {
-      list.scrollLeft = selected.offsetLeft + selected.offsetWidth / 2 - list.clientWidth / 2;
-    }
+    const selected = links.find(link => link.hasAttribute('aria-current'));
+    const current = document.querySelector('.reading-current');
+    if (current && selected) current.textContent = selected.textContent.replace(/^(\d{2})/, '$1 · ');
     lastActive = active;
   }
   scheduled = false;
@@ -82,17 +91,29 @@ window.addEventListener('scroll', schedulePositionUpdate, {passive:true});
 window.addEventListener('resize', schedulePositionUpdate);
 updateReadingPosition();
 
-// Diagram links lead into native disclosures; opening them also works with
-// direct URLs and browser history. Native summaries remain usable without JS.
-function revealLinkedWorkstream() {
-  const target = document.getElementById(location.hash.slice(1));
-  if (!target?.matches('details.workstream')) return;
-  target.open = true;
-  target.querySelector('summary').focus({preventScroll: true});
+// Preserve existing deep links even when supplementary material is folded.
+function revealLinkedContent() {
+  let id;
+  try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+  const target = document.getElementById(id);
+  if (!target) return;
+  for (let parent = target.parentElement; parent; parent = parent.parentElement) {
+    if (parent.matches('details')) parent.open = true;
+  }
+  const focus = target.querySelector('h2, h3, h4') || target;
+  focus.setAttribute('tabindex', '-1');
+  requestAnimationFrame(() => {
+    // Run after the native anchor action, including clicks on the same hash.
+    focus.focus({preventScroll: true});
+    target.scrollIntoView({block: 'start', behavior: 'instant'});
+    schedulePositionUpdate();
+  });
 }
-window.addEventListener('hashchange', revealLinkedWorkstream);
-document.querySelector('.development-atlas')?.addEventListener('click', event => {
-  const link = event.target.closest('a');
-  if (link?.hash === location.hash) revealLinkedWorkstream();
+window.addEventListener('hashchange', revealLinkedContent);
+links.forEach(link => link.addEventListener('click', () => {
+  if (link.hash === location.hash) revealLinkedContent();
+}));
+document.querySelectorAll('details').forEach(detail => {
+  detail.addEventListener('toggle', schedulePositionUpdate);
 });
-revealLinkedWorkstream();
+revealLinkedContent();
