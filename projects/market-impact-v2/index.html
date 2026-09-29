@@ -5,20 +5,20 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>정책 뉴스 분석의 기반을 만들다 — soccz 개발 기록</title>
-<meta content="정책·기사·시장 데이터를 잇는 분석 기반을 직접 구현하고, 교수님 피드백과 서울경제의 활용 요구에 맞춰 발전시킨 과정. 공개 코드로 따라가는 사례와 개인 후속 연구." name="description"/>
+<meta content="2026년 3–8월, 정책·기사·시장 분석을 개발하며 바꾼 질문과 구현. sanity 실패, 라벨·학습·재수집, 교수님 피드백, 서울경제 활용과 추가 검수 준비까지 이어진 과정." name="description"/>
 <meta content="article" property="og:type"/>
 <meta content="정책 뉴스 분석의 기반을 만들다 — soccz 개발 기록" property="og:title"/>
-<meta content="정책·기사·시장 데이터를 잇는 분석 기반을 직접 구현하고, 교수님 피드백과 서울경제의 활용 요구에 맞춰 발전시킨 과정. 공개 코드로 따라가는 사례와 개인 후속 연구." property="og:description"/>
+<meta content="2026년 3–8월, 정책·기사·시장 분석을 개발하며 바꾼 질문과 구현. sanity 실패, 라벨·학습·재수집, 교수님 피드백, 서울경제 활용과 추가 검수 준비까지 이어진 과정." property="og:description"/>
 <meta content="https://soccz.github.io/projects/market-impact-v2/" property="og:url"/>
 <link href="https://soccz.github.io/projects/market-impact-v2/" rel="canonical"/>
 <link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="/projects/market-impact/case-study.css" rel="stylesheet"/>
 <script defer="" src="/projects/market-impact/case-study.js"></script>
 <meta content="soccz" name="author"/><meta content="#193a36" name="theme-color"/><meta content="ko_KR" property="og:locale"/></head>
-<body class="editorial-v3">
+<body class="editorial-v3 journey-edition">
 <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 <header class="site-nav" id="navbar">
-<div class="wrap nav-row"><a aria-label="soccz 홈" class="brand" href="/">soccz.</a><nav aria-label="주요 메뉴"><a class="nav-secondary" href="/projects/market-impact/">프로젝트 개요</a><a href="#decisions">설계 노트</a><a class="nav-code" href="https://github.com/soccz/market-impact-analysis">GitHub ↗</a></nav></div>
+<div class="wrap nav-row"><a aria-label="soccz 홈" class="brand" href="/">soccz.</a><nav aria-label="주요 메뉴"><a class="nav-secondary" href="/projects/market-impact/">프로젝트 개요</a><a href="#journey">개발 과정</a><a class="nav-code" href="https://github.com/soccz/market-impact-analysis">GitHub ↗</a></nav></div>
 <div aria-hidden="true" class="read-progress"></div>
 </header>
 <main id="main">
@@ -28,26 +28,110 @@
 <div class="hero-grid">
 <div>
 <h1>정책 뉴스 분석의<br/><em>기반을 만들다.</em></h1>
-<p class="hero-deck">정책·기사·시장 데이터를 잇는 분석 파이프라인을 직접 구현했습니다. <strong>교수님 피드백으로 다듬은 기반을 서울경제의 정책별 분석과 시각화 데이터 생성에 맞춰 확장한 과정</strong>을 기록합니다.</p>
-<div class="hero-actions"><a class="button-link" href="#question">실행 사례로 시작하기 <span aria-hidden="true">↓</span></a><a class="text-link" href="#contribution">내가 구현한 범위 <span aria-hidden="true">↗</span></a></div>
+<p class="hero-deck">3월의 이벤트 검증에서 8월의 추가 검수 준비까지, 입력과 질문을 여러 번 다시 정의했습니다. <strong>실험이 막힐 때 바꾼 구현, 교수님 피드백으로 다듬은 비교 구조, 서울경제 활용으로 이어진 확장</strong>을 작업 순서대로 기록합니다.</p>
+<div class="hero-actions"><a class="button-link" href="#journey">개발 과정부터 읽기 <span aria-hidden="true">↓</span></a><a class="text-link" href="#contribution">내가 구현한 범위 <span aria-hidden="true">↗</span></a></div>
 </div>
-<figure aria-label="정책, 뉴스, 시장 데이터를 공통 분석 기반에서 처리하고 연구용 비교와 서울경제 활용으로 확장하는 구조" class="system-figure foundation-figure">
-<div class="figure-top"><span>THE SYSTEM I BUILT</span><span>FIG. 01</span></div>
-<div class="inputs"><span class="input-tag">정책 맥락</span><span class="input-tag">뉴스 텍스트</span><span class="input-tag">시장 데이터</span></div>
-<div aria-hidden="true" class="flow-line"></div>
-<div class="engine"><small>COMMON FOUNDATION</small><strong>연결하고 · 해석하고 · 집계한다</strong><p>기준을 코드로 옮기는 공통 분석 기반</p></div>
-<div aria-hidden="true" class="branch-connector"></div>
-<div class="branches"><div class="branch"><span>RESEARCH</span><strong>조건을 비교하는 표</strong><div aria-hidden="true" class="mini-matrix"><b>모델</b><b>기간</b><b>그룹</b><i></i><i></i><i></i><i></i><i></i><i></i></div><p>교수님 피드백 반영<br/>모델·표본·기간별 검토</p></div><div class="branch"><span>NEWSROOM</span><strong>정책별 흐름을 담는 데이터</strong><div aria-hidden="true" class="mini-series"><svg focusable="false" viewbox="0 0 160 49"><path class="series-axis" d="M0 40H160 M2 3V44"></path><path class="series-a" d="M4 31H29V26H51V29H77V14H104V19H130V9H157"></path><path class="series-b" d="M4 37L29 28 51 34 77 20 104 24 130 17 157 12"></path></svg></div><p>서울경제 활용에 맞춘<br/>시계열·그래프·보고서</p></div></div>
-<figcaption>공통 기반에서 목적별 분석으로 이어지는 구조. 표와 선은 산출물 형식을 나타낸 개념도입니다.</figcaption></figure>
-</div>
-<dl class="hero-meta"><div><dt>MY ROLE</dt><dd>데이터 처리 · NLP 연결 · 집계 · 결과 생성</dd></div><div><dt>COLLABORATION</dt><dd>교수님·연구실의 연구 지도 / 서울경제 기획취재 협업</dd></div><div><dt>RECORD</dt><dd>공개 커밋 2026.03–05 / 회고 2026.09</dd></div></dl>
+<figure aria-label="3월 이벤트 검증에서 8월 설명과 검수 준비까지의 개발 흐름" class="journey-map">
+<div class="figure-top"><span>A PROJECT IN PROGRESS</span><span>2026</span></div>
+<ol><li><a href="#journey"><span class="map-date">03—05</span><div><strong>질문을 다시 정하다</strong><p>사건·가격 확인 → 정책 맥락의 NLP</p></div><span aria-hidden="true">↗</span></a></li>
+<li><a href="#iterations"><span class="map-date">05</span><div><strong>실험하고, 돌아가서 고치다</strong><p>sanity · 규칙 · 라벨 · 재추론 · 수집</p></div><span aria-hidden="true">↗</span></a></li>
+<li><a href="#delivery"><span class="map-date">06—08</span><div><strong>비교에서 활용으로 이어가다</strong><p>교수님 피드백 · 뉴스룸 적용 · 추가 검수</p></div><span aria-hidden="true">↗</span></a></li></ol>
+<figcaption>공개 커밋은 초기 구현을 남깁니다.<br/>후속 작업의 흐름은 자료를 대조한 회고로 이어 씁니다.</figcaption></figure></div>
+<dl class="hero-meta"><div><dt>MY ROLE</dt><dd>데이터 처리 · NLP 연결 · 집계 · 결과 생성</dd></div><div><dt>COLLABORATION</dt><dd>교수님·연구실의 연구 지도 / 서울경제 기획취재 협업</dd></div><div><dt>WORK &amp; RECORD</dt><dd>2026.03–08 작업 기록 / 2026.09 회고</dd></div></dl>
 </div>
 </header>
 <div class="wrap reading-layout">
-<aside aria-label="이 글의 목차" class="contents"><p class="contents-title">IN THIS NOTE</p><ol><li><a href="#question"><span>01</span>작동하는 사례</a></li><li><a href="#decisions"><span>02</span>설계에서의 선택</a></li><li><a href="#extension"><span>03</span>연구에서 활용으로</a></li><li><a href="#contribution"><span>04</span>구현과 근거</a></li><li><a href="#limits"><span>05</span>결과를 읽는 기준</a></li><li><a href="#next"><span>06</span>다음 연구</a></li><li><a href="#record"><span>07</span>개발 이력</a></li></ol><p class="contents-note">방법론을 선택한 이유는 이 글에,<br/>공개 구현과 변경 이력은<br/>GitHub에 정리했습니다.</p></aside>
-<article class="story">
-<section class="chapter" id="question"><span class="anchor-alias" id="intro"></span><span class="anchor-alias" id="p1"></span><div class="section-kicker"><span class="num">01</span>A SMALL, REPRODUCIBLE EXAMPLE</div><h2>관련 있는 기사와<br/>좋은 뉴스는 같은 말일까?</h2>
-<div class="prose"><p class="intro-lead">정책을 발표했다는 기사와 철회했다는 기사는 서로 반대 내용을 담고 있습니다. 그래도 둘 다 그 정책에 관한 기사입니다.</p><p>이 차이에서 설계가 시작됐습니다. <strong>무엇에 관한 문장인지 고르는 단계와, 어떤 방향의 근거인지 읽는 단계를 나눴습니다.</strong> 공개한 관련성 규칙에 직접 입력을 넣어보면 그 이유와 한계가 함께 드러납니다.</p></div>
+<aside aria-label="이 글의 목차" class="contents"><p class="contents-title">IN THIS NOTE</p><ol><li><a href="#journey"><span>01</span>시작과 질문의 변화</a></li><li><a href="#iterations"><span>02</span>실패와 반복 구현</a></li><li><a href="#delivery"><span>03</span>피드백에서 활용까지</a></li><li><a href="#question"><span>04</span>직접 살펴보는 사례</a></li><li><a href="#decisions"><span>05</span>설계에서의 선택</a></li><li><a href="#extension"><span>06</span>두 분석의 구조</a></li><li><a href="#contribution"><span>07</span>구현과 근거</a></li><li><a href="#limits"><span>08</span>결과를 읽는 기준</a></li><li><a href="#next"><span>09</span>다음 연구</a></li><li><a href="#record"><span>10</span>기록과 공개 활용</a></li></ol><p class="contents-note">앞부분은 작업이 이어진 순서, 뒷부분은 그 과정에서 만든 구현과 판단을 자세히 읽는 기록입니다.</p></aside>
+<article class="story"><section class="chapter journey-chapter" id="journey"><div class="section-kicker"><span class="num">01</span>THE BEGINNING · 03—05</div><h2>사건을 확인하던 코드에서,<br/>정책의 맥락을 읽는 구조로.</h2><div class="prose"><p class="intro-lead">처음의 질문이 바뀌면서 필요한 코드도 달라졌습니다. 최종 구조만 보면 보이지 않는 출발점과 첫 전환부터 기록합니다.</p>
+</div><p class="journey-scope">2026년 3–8월의 공개 커밋·실험 일지·후속 작업 자료를 대조해 9월에 작성한 회고입니다. 초기 단계는 공개 구현으로, 이후 단계는 원자료를 제외한 작업 설명으로 기록합니다. 각 단계의 날짜는 기록이 확인되는 구간이며 모든 실험의 착수·완료일을 뜻하지 않습니다.</p>
+
+<div class="journey-entry" data-journey-step="1" id="events-first"><div class="entry-marker"><span>01</span></div><div class="entry-body"><p class="entry-date">2026.03 · 초기 공개 구현</p>
+<h3>출발점은 정책 사건과 가격을 같은 기준으로 확인하는 일이었다.</h3>
+<p>처음부터 완성된 뉴스 분석 모델을 만든 것은 아닙니다. 정책 사건의 날짜, 관련 종목, 기준 가격과 이후 가격을 확인하는 작업에서 출발했습니다. 정책 이름 하나에도 발표일과 시장 반응일이 다를 수 있고, 같은 수익률 표기라도 어느 날을 기준으로 삼았는지에 따라 비교 대상이 달라졌습니다.</p>
+<p>이벤트별 시장 데이터를 확인하는 코드와 사례별 수집·패키징 코드를 만들었습니다. 이때의 사건 목록과 시장 자료가 후속 NLP 작업의 출발점이 됐습니다. 이후 정책 목록을 다시 구성하면서 초기 목록과 후속 목록의 연결도 다시 확인해야 했습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>사건을 나열한 목록에서, 날짜·종목·가격을 확인할 수 있는 분석 입력으로.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>시장의 움직임은 계산할 수 있었지만, 그 사이 뉴스가 무엇을 설명했는지는 별도로 읽어야 했습니다.</p>
+<div class="entry-source"><a href="https://github.com/soccz/market-impact-analysis/blob/15c1775/verify_50_events.py">초기 시장 데이터 확인 코드 ↗</a><a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#events-first">상세 구현 기록 ↗</a></div></div></div>
+<div class="journey-entry" data-journey-step="2" id="from-tone-to-context"><div class="entry-marker"><span>02</span></div><div class="entry-body"><p class="entry-date">5월 공개 일지에 남은 초기 설계</p>
+<h3>짧은 기사와 정책 맥락이 분석 질문을 바꾸었다.</h3>
+<p>초기에는 감성, 토픽, 변화점, 시계열 관계를 함께 보는 구상을 검토했습니다. 실제 입력을 살펴보니 본문이 짧게 잘린 기사가 많았고, 정책 키워드로 모은 결과에도 일반 산업 기사와 다른 정책 이야기가 섞여 있었습니다. 긴 맥락을 전제로 한 설명과 실제로 모델에 넣을 수 있는 정보 사이에 차이가 있었습니다.</p>
+<p>금지·규제 같은 표현의 어감만으로 시장 방향을 정하기도 어려웠습니다. 같은 조치가 어떤 기업에는 비용이고 다른 기업에는 기회가 될 수 있기 때문입니다. 그래서 질문을 정책 관련성, 정책 맥락의 근거, 전달경로로 나누었습니다. 짧은 입력에서 관측할 수 있는 범위를 먼저 정하고, 부족한 맥락은 한계로 남겼습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>기사 전체의 어감에서, 특정 정책과 가설에 관한 근거를 읽는 구조로.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>이제 모델에 물을 질문 자체를 일관되게 만드는 일이 필요했습니다.</p>
+<div class="entry-source"><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/docs/REPORT.md">당시 문제 발견과 전환 기록 ↗</a><a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#from-tone-to-context">상세 구현 기록 ↗</a></div></div></div>
+<div class="journey-entry" data-journey-step="3" id="define-the-question"><div class="entry-marker"><span>03</span></div><div class="entry-body"><p class="entry-date">2026.05 · 정책 카드와 가설</p>
+<h3>정책의 맥락을 사람이 아는 설명에서 코드가 읽는 입력으로 옮겼다.</h3>
+<p>정책마다 유형·방향·대상·키워드를 카드로 정리하고, 카드에서 비교 가설을 만드는 코드를 구현했습니다. 비용, 수요, 공급, 규제, 유동성, 심리 등 전달경로를 구분한 것도 기사가 어느 경로의 근거를 담는지 살펴보기 위해서였습니다.</p>
+<p>이 과정에서 지지라는 라벨의 기준점이 중요해졌습니다. 부정적인 시장 방향을 가정한 정책에서는 그 피해를 설명하는 기사가 해당 가설을 지지할 수 있습니다. 따라서 가설에 대한 지지, 정책에 대한 찬성, 주가 상승을 같은 뜻으로 쓰면 안 됩니다. 이 구분은 후속 판독 기준을 설명할 때 다시 중요한 문제가 됐습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>정책 카드 → 유형별 가설 생성 → 관련성과 지지·반박을 구분한 출력.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>입력과 질문을 정의한 다음에는, 모델이 실제로 그 구분을 수행하는지 확인해야 했습니다.</p>
+<div class="entry-source"><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/build/build_hypotheses.py">가설 생성 구현 ↗</a> · <a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/ptei_utils.py">점수 처리 구현 ↗</a><a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#define-the-question">상세 구현 기록 ↗</a></div></div></div>
+</section>
+<section class="chapter journey-chapter" id="iterations"><div class="section-kicker"><span class="num">02</span>THE ITERATIONS · 05</div><h2>실패를 확인하고,<br/>모델 앞뒤를 다시 만들었다.</h2><div class="prose"><p class="intro-lead">가설을 넣고 모델을 실행하는 것만으로는 충분하지 않았습니다. 작은 실패는 규칙·라벨·수집 기준을 다시 살피는 다음 작업으로 이어졌습니다.</p>
+</div>
+<div class="journey-entry" data-journey-step="4" id="failed-channel-test"><div class="entry-marker"><span>04</span></div><div class="entry-body"><p class="entry-date">2026.05 · sanity 실험의 반복</p>
+<h3>모델에 두 가지를 한꺼번에 맡겼다가, 역할을 다시 나눴다.</h3>
+<p>관련성 규칙을 점검한 뒤, NLI 모델이 전달경로까지 구분하는지 작은 사례 묶음으로 확인했습니다. C-1 실험의 우세 채널은 기대한 경로와 어긋났습니다. 정책 맥락을 가설에 넣었다는 이유만으로 세부 채널 분리가 해결되지는 않았습니다.</p>
+<p>다음 D-2 실험에서는 키워드와 의미 유사도를 함께 보는 gate로 채널 후보를 고르고, 모델에는 지지·반박 판단을 맡기는 구조를 시험했습니다. 이어 일반 행정어가 규제 채널을 과하게 켜는 문제를 보고 시드를 정제했습니다. 일부 사례는 달라졌지만 남은 오활성도 있어, 이 회고에서는 작은 점검의 개선을 전체 성능으로 확대해 해석하지 않습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>관련성 점검 → 채널 분리 실패 확인 → 혼합 gate 시험 → 일반어 시드 정제.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>한 사례를 고칠 때마다 규칙을 추가하면, 그 사례에만 잘 맞는 시스템이 될 수 있었습니다.</p>
+<div class="entry-source"><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/sanity/sanity_check_C_channels.py">C-1 채널 실험 ↗</a> · <a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/sanity/sanity_check_D_channel_match_v1_1.py">D-2 후속 실험 ↗</a><a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#failed-channel-test">상세 구현 기록 ↗</a><a class="journal-detail" href="#decisions">이후 설계 판단을 자세히 읽기 ↓</a></div></div></div>
+<div class="journey-entry" data-journey-step="5" id="rules-and-weights"><div class="entry-marker"><span>05</span></div><div class="entry-body"><p class="entry-date">2026.05 · 계산식과 규칙 재검토</p>
+<h3>점수를 더 복잡하게 만들기 전에, 같은 정보를 두 번 세는지 확인했다.</h3>
+<p>채널 정보가 가설과 가중치 양쪽에 들어가고, 신규성이 기사 점수와 일별 집계에 반복 반영될 수 있다는 문제를 검토했습니다. 어떤 항은 관련 여부를 고르는 역할을, 어떤 항은 강도를 나타내는 역할을 맡도록 설계를 정리했습니다. 계산식을 설명하려면 각 항이 무엇을 더하는지부터 분명해야 했습니다.</p>
+<p>사례마다 가설 문장을 손보는 방식도 공통 템플릿으로 옮겼습니다. 관련성에서는 정확 일치·단어 조합·별칭 등을 구분하고, 종목명만 등장한 기사는 별도로 처리했습니다. sanity, 개발 평가, 마지막 평가의 역할도 나눴습니다. 남겨 둔 점검 사례와 중간 점수는 이후 결과를 다시 읽는 데 필요했습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>가중치의 역할, 가설 생성 규칙, 디버깅과 평가의 용도를 따로 정의.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>규칙만으로 표현과 맥락의 문제를 모두 해결하기 어려워 라벨 기준과 학습으로 넘어갔습니다.</p>
+<div class="entry-source"><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/ptei_utils.py">관련성·입장·채널 처리 함수 ↗</a> · <a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/build_daily_ptei_panel.py">일별 집계 구현 ↗</a><a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#rules-and-weights">상세 구현 기록 ↗</a></div></div></div>
+<div class="journey-entry" data-journey-step="6" id="labels-training-inference"><div class="entry-marker"><span>06</span></div><div class="entry-body"><p class="entry-date">2026.05.20 · 공개 학습 확장</p>
+<h3>라벨 기준을 만들고, 학습한 출력을 다시 분석 입력으로 연결했다.</h3>
+<p>규칙이 관련 기사를 골라도 모델의 입장 판단은 별도로 평가해야 했습니다. 파일럿과 개발 라벨을 비교하면서 사실 전달, 일정 안내, 배경 설명처럼 경계에 있는 기사를 어떻게 처리할지 가이드를 보완했습니다. 예측값과 라벨을 연결해 정확도·macro F1·일치도를 계산하는 평가 코드도 구성했습니다.</p>
+<p>이후 학습 표본을 구성하고 KLUE-RoBERTa의 관련성·입장 분류 학습과 후속 추론으로 이어갔습니다. 기사별 출력은 정책·날짜별 패널로 집계하고, 첫 추론과 후속 추론의 분포를 비교했습니다. 학습이 실행됐다는 사실과 독립된 사람 정답으로 일반화 성능을 확인했다는 주장은 별도입니다. 초기 라벨의 생성·보조 출처와 후속 사람 확인 상태도 구분해서 읽어야 합니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>판독 기준 → 라벨 비교 → 학습·평가 → 재추론 → 정책·일별 패널.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>추론 규모가 커질수록, 모델 이전의 수집 기준과 정책 목록을 다시 점검해야 했습니다.</p>
+<div class="entry-source"><a href="https://github.com/soccz/market-impact-analysis/commit/5193cbb">학습·후속 분석 추가 커밋 ↗</a> · <a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/finetune/finetune_klue_roberta.py">학습 루프 ↗</a> · <a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/eval/evaluate_dev100_zero_shot.py">개발셋 평가 코드 ↗</a><a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#labels-training-inference">상세 구현 기록 ↗</a></div></div></div>
+<div class="journey-entry" data-journey-step="7" id="rebuild-the-input"><div class="entry-marker"><span>07</span></div><div class="entry-body"><p class="entry-date">5월 후반 이후 · 후속 작업 회고</p>
+<h3>한 번 모은 데이터를 계속 쓰는 대신, 수집의 기준부터 다시 돌아갔다.</h3>
+<p>정책을 키워드로 수집한 기사 수와 그 정책을 실제로 다룬 기사 수는 달랐습니다. 후속 작업에서는 정책별 재수집·보강, 관련성 확인, 사건 기준일과 수집 구간 점검을 반복했습니다. 기사 수가 충분해도 특정 며칠에 몰려 있으면 일별 흐름을 비교하기 어려웠습니다.</p>
+<p>정책 목록이 바뀌면 기사와 시장 자료도 함께 연결을 다시 확인해야 했습니다. 입력을 동결해 두고 실험 결과를 별도 공간에 쌓는 작업 구조도 만들었습니다. PTEI와 후속 시장영향 점수는 서로 다른 질문에 답하므로 입력·정의·출력을 나눠 관리했습니다. 탐색에서 좋아 보이는 설정이 검증에서도 유지되는지를 따로 확인하는 과정도 이어졌습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>수집량 중심 확인에서, 정책·날짜·기사·점수의 연결과 버전을 추적하는 작업으로.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>이제 비교할 시장 쪽의 단위와 평균의 분모까지 명확히 해야 했습니다.</p>
+<div class="entry-source">후속 작업 회고 · 확인에 사용한 원자료와 내부 문서는 비공개<a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#rebuild-the-input">상세 구현 기록 ↗</a></div></div></div>
+</section>
+<section class="chapter journey-chapter" id="delivery"><div class="section-kicker"><span class="num">03</span>THE CONTINUATION · 06—08</div><h2>비교의 기준을 고치고,<br/>서로 다른 활용으로 이어갔다.</h2><div class="prose"><p class="intro-lead">교수님 피드백을 반영한 연구 기반을 발전시키면서 서울경제의 활용 요구에 맞춘 흐름 분석과 전달 자료도 구성했습니다. 작업은 설명과 검수 준비까지 이어졌습니다.</p>
+</div>
+<div class="journey-entry" data-journey-step="8" id="professor-feedback"><div class="entry-marker"><span>08</span></div><div class="entry-body"><p class="entry-date">2026.06 · 연구용 비교의 수정</p>
+<h3>교수님 피드백을 계산 단위와 표의 구조로 옮기는 과정이 반복됐다.</h3>
+<p>교수님과의 검토에서는 어느 날의 뉴스와 어느 시점의 가격을 짝지을지, 시장과 기업 규모를 어떻게 나눌지, 일치율의 분모가 무엇인지가 반복해서 다뤄졌습니다. 뉴스 발생일과 거래일을 연결하고, 기간별 포트폴리오 수익률과 뉴스 방향을 비교하는 코드를 구성·수정했습니다.</p>
+<p>특히 전체 관측치를 한꺼번에 합한 비율과 정책별 비율의 평균은 다른 답이었습니다. 기사나 관측치가 많은 정책이 전체 값을 좌우하지 않도록 정책별 값을 먼저 계산하고 같은 비중으로 집계하는 구조를 반영했습니다. 발표 자료도 이 계산 단위를 따라 다시 구성했습니다. 회의 메모의 요구와 실제 코드가 일치하는지, 버전마다 날짜 정렬이 어떻게 달라지는지도 확인할 부분이었습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>비교 시점·포트폴리오·기간·분모를 명시한 연구용 표와 발표 자료로.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>비교 구조가 생긴 다음에는, NLP 입력을 바꿨을 때 무엇이 함께 바뀌는지 살펴봤습니다.</p>
+<div class="entry-source">후속 작업 회고 · 확인에 사용한 원자료와 내부 문서는 비공개<a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#professor-feedback">상세 구현 기록 ↗</a><a class="journal-detail" href="#aggregation-demo">분모에 따라 결과가 달라지는 예제 ↓</a></div></div></div>
+<div class="journey-entry" data-journey-step="9" id="compare-model-inputs"><div class="entry-marker"><span>09</span></div><div class="entry-body"><p class="entry-date">6월 이후 · 모델 비교의 확장</p>
+<h3>모델을 바꾸는 일은 점수 열 하나를 교체하는 일보다 컸다.</h3>
+<p>EXAONE·Gemma 계열의 시장영향 점수와 FinBERT 계열 결과를 연구용 비교 구조에 연결했습니다. 모델이 답하는 질문, 기사별·일별 입력 단위, 사용 가능한 정책과 날짜가 달라 같은 모양의 점수라도 바로 비교할 수 없었습니다.</p>
+<p>입력별 점수를 날짜와 정책에 맞춰 정리하고, 같은 시장·규모·기간 축에서 비교표와 곡선을 생성했습니다. 동시에 필터 이후 남은 표본과 모델별 커버리지를 살폈습니다. 어떤 모델의 숫자가 높다는 사실만으로 전체 정책에서 더 좋은 모델이라고 판단하지 않도록, 비교 가능한 범위와 빠진 부분을 함께 읽는 일이 필요했습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>서로 다른 NLP 출력 → 정책·날짜 단위 정리 → 조건별 비교와 커버리지 확인.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>연구용 비교의 기반은 갖췄지만, 뉴스룸이 살펴볼 산출물은 다른 질문과 형식을 요구했습니다.</p>
+<div class="entry-source">후속 작업 회고 · 확인에 사용한 원자료와 내부 문서는 비공개<a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#compare-model-inputs">상세 구현 기록 ↗</a></div></div></div>
+<div class="journey-entry" data-journey-step="10" id="newsroom-extension"><div class="entry-marker"><span>10</span></div><div class="entry-body"><p class="entry-date">후속 적용 · 여름 작업 기록</p>
+<h3>연구 기반을 서울경제가 살펴볼 정책별 흐름으로 확장했다.</h3>
+<p>연구용에서는 조건별 방향 비교를 표와 곡선으로 검토했다면, 서울경제 활용에서는 정책 전후의 뉴스 흐름과 시장 흐름을 함께 읽을 시계열이 필요했습니다. 기존 정책·기사 연결과 시장 비교 기반을 활용해, 기사별 점수를 일별로 모으고 누적 뉴스 흐름을 구성하는 처리로 확장했습니다.</p>
+<p>시장 기준 대비 수익률 흐름과 날짜를 맞추고 정책별 그래프, 시각화 입력, 보고서를 생성했습니다. 뉴스가 없는 날의 처리와 축·기준일·점수 이름도 전달 형식의 일부였습니다. 질문과 집계가 바뀐 만큼 초기 PTEI나 교수님용 방향 일치율과 같은 성능 지표로 묶어 읽을 수 없습니다. 탐색으로 고른 설정의 동행 결과를 미래 예측 성능으로 설명할 수도 없습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>연구용 조건별 비교에서, 정책별 일별·누적 흐름과 시각화용 데이터 생성으로.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>계산 결과를 넘긴 뒤에도, 받아 보는 사람이 같은 뜻으로 읽게 만드는 작업이 남았습니다.</p>
+<div class="entry-source">후속 작업 회고 · 확인에 사용한 원자료와 내부 문서는 비공개<a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#newsroom-extension">상세 구현 기록 ↗</a><a class="journal-detail" href="#extension">두 분석의 구조를 비교하기 ↓</a></div></div></div>
+<div class="journey-entry" data-journey-step="11" id="handoff-and-review"><div class="entry-marker"><span>11</span></div><div class="entry-body"><p class="entry-date">2026.08 · 설명·패키징·추가 검수 준비</p>
+<h3>마지막까지 남은 일은 숫자의 출처와 용어의 뜻을 맞추는 것이었다.</h3>
+<p>후속 작업은 결과 표를 만드는 데서 끝나지 않았습니다. 기사 키와 점수의 연결, 가격 원천, 데이터 설명, 파일 구성과 검수 근거를 대조하고, 분석 결과를 다시 찾을 수 있는 패키지와 설명 자료를 정리했습니다. 파일이 열리거나 해시가 같다는 확인과 계산의 원천이 맞다는 확인은 별도로 필요했습니다.</p>
+<p>또 같은 지지·반박이라는 이름 아래 정책 가설에 대한 근거, 언론의 정책 평가, 관련 기업의 시장영향이 섞일 수 있어 판독 질문을 설명하는 자료를 보완했습니다. 서로 다른 질문으로 만든 판독값의 불일치 전체를 모델 오류율이라고 부를 수는 없습니다. 8월 검토 기록에는 추가 재계산과 사람 확인이 필요한 항목도 남아 있어, 이 회고는 모든 검수나 공식 인수가 완료됐다고 선언하지 않습니다.</p>
+<div class="entry-change"><span>구현의 변화</span><p>계산 코드와 그래프에서, 데이터 계보·판독 기준·검수 상태를 함께 설명하는 개발 기록으로.</p>
+</div><p class="entry-carry"><span>다음으로 이어진 질문</span>이 경험에서 남은 개인 연구 질문은 점수의 크기보다 어떤 정보가 언제 바뀌었는지를 추적하는 것입니다.</p>
+<div class="entry-source">후속 작업 회고 · 확인에 사용한 원자료와 내부 문서는 비공개<a class="journal-detail" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT_JOURNEY.md#handoff-and-review">상세 구현 기록 ↗</a></div></div></div>
+</section>
+
+<section class="chapter" id="question"><span class="anchor-alias" id="intro"></span><span class="anchor-alias" id="p1"></span><div class="section-kicker"><span class="num">04</span>A SMALL, REPRODUCIBLE EXAMPLE</div><h2>관련 있는 기사와<br/>좋은 뉴스는 같은 말일까?</h2>
+<div class="prose"><p class="intro-lead">정책을 발표했다는 기사와 철회했다는 기사는 서로 반대 내용을 담고 있습니다. 그래도 둘 다 그 정책에 관한 기사입니다.</p><p>앞의 실험 과정에서 나눠 둔 관련성과 입장의 차이를 작은 입력으로 확인해 봅니다. <strong>무엇에 관한 문장인지 고르는 단계와, 어떤 방향의 근거인지 읽는 단계는 역할이 다릅니다.</strong> 공개한 관련성 규칙에 직접 입력을 넣어보면 그 이유와 한계가 함께 드러납니다.</p></div>
 <div class="interactive walkthrough" data-tabs="" id="walkthrough">
 <div class="interactive-header"><span>READ THE DECISION</span><small>가상 입력 · 공개 코드의 실제 실행 결과</small></div>
 <div class="policy-context"><span>공통 질문</span><p>이 기사는 <strong>‘제조지원안’이라는 가상 정책</strong>에 관한 근거인가?</p></div>
@@ -67,7 +151,7 @@
 <div class="walkthrough-source"><p>관련성 함수의 실행 결과입니다. 지지·반박 모델과 시장 분석은 이 예제에서 실행하지 않았습니다.</p><a href="https://github.com/soccz/market-impact-analysis/blob/main/docs/REPRODUCIBLE_EXAMPLES.md">입력과 재실행 방법 ↗</a></div>
 </div>
 <div class="reading-takeaway"><span>설계의 출발점</span><p>관련성 → 정책 방향에 대한 지지·반박 → 날짜별 집계 → 시장과의 비교.<br/><strong>각 단계의 출력이 다음 단계에서 무엇을 뜻하는지 지키는 일</strong>이 제 구현의 중심이었습니다.</p></div></section>
-<section class="chapter" id="decisions"><span class="anchor-alias" id="p2"></span><span class="anchor-alias" id="p3"></span><span class="anchor-alias" id="p4"></span><div class="section-kicker"><span class="num">02</span>DESIGN CHOICES &amp; TRADE-OFFS</div><h2>모델 앞뒤의 기준을<br/>설계하는 일이었다.</h2>
+<section class="chapter" id="decisions"><span class="anchor-alias" id="p2"></span><span class="anchor-alias" id="p3"></span><span class="anchor-alias" id="p4"></span><div class="section-kicker"><span class="num">05</span>DESIGN CHOICES &amp; TRADE-OFFS</div><h2>모델 앞뒤의 기준을<br/>설계하는 일이었다.</h2>
 <div class="prose"><p>점수 하나를 얻는 것과 그 점수를 설명하는 것은 다른 일입니다. 저는 입력 맥락, 계산 요소, 집계 단위와 비교 조건을 코드로 옮기면서 다음 선택을 했습니다.</p></div>
 <div class="decision"><span class="decision-number">01</span><div><h3>정책 맥락을 모델의 질문에 넣었다.</h3><p>기사 전체의 감성만으로는 대상 산업과 정책 방향을 읽기 어렵습니다. 정책 유형·산업·대상 기업·사전 방향을 받아 <strong>지지·반박·중립 가설을 생성하는 템플릿</strong>을 구현했습니다. 여기서 지지는 입력한 정책 방향에 대한 지지입니다.</p><div class="tradeoff"><span>얻은 것</span><p>가설의 작성 기준을 통일하고 입력 카드까지 추적할 수 있습니다.</p><span>남은 과제</span><p>잘못된 정책 카드가 같은 규칙으로 재생산될 수 있습니다. 초기 코드에 남은 개별 재분류와 검토 표시도 함께 읽어야 합니다.</p></div><details class="decision-detail"><summary>구현과 원래의 설계 기록</summary><div class="detail-body"><p><code>build_hypothesis</code>가 카드 정보를 받아 세 가설을 만듭니다. <code>relevance_v3_1</code>의 관련성 결과와 <code>score_stance</code>의 입장 점수는 따로 처리합니다.</p><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/build/build_hypotheses.py">가설 생성의 공개 구현 ↗</a></div></details></div></div>
 <div class="decision"><span class="decision-number">02</span><div><h3>같은 근거가 두 번 세어지는지 확인했다.</h3><p>초기 PTEI는 정책 관련 근거를 여러 요소로 나누어 읽는 실험적 지표였습니다. 경로 일치와 지지 강도를 모두 연속 가중치로 곱하면 비슷한 판단을 중복 반영할 수 있어, <strong>경로의 포함 여부와 포함된 근거의 강도</strong>를 구별했습니다.</p><div class="formula-note"><span class="panel-label">초기 PTEI의 개념 구성</span><p class="formula">관련성 × 경로 포함 여부 × 지지 점수 × 구체성 × 신규성</p><p>반박 근거는 별도로 보존했습니다. 후속 분석의 모든 점수가 이 식을 사용했다는 뜻은 아닙니다.</p></div><div class="tradeoff"><span>선택한 기준</span><p>신규성을 기사와 일별 집계에 다시 곱하는지도 점검합니다. 각 요소는 하나의 명확한 역할을 갖도록 구분합니다.</p><span>남은 과제</span><p>이 구분의 효과는 해당 요소를 뺀 실험과 비교해야 합니다. 계산 구조의 개선을 분류 성능 향상으로 바로 바꾸어 말할 수는 없습니다.</p></div></div></div>
@@ -85,9 +169,16 @@
 </section>
 <section class="chapter" id="extension">
 <span class="anchor-alias" id="p7"></span><span class="anchor-alias" id="p8"></span>
-<div class="section-kicker"><span class="num">03</span>FROM FOUNDATION TO APPLICATION</div>
+<div class="section-kicker"><span class="num">06</span>FROM FOUNDATION TO APPLICATION</div>
 <h2>교수님과 다듬은 기반을,<br/>서울경제의 질문에 맞게 확장했다.</h2>
-<div class="prose"><p>교수님과의 논의를 반영해 만든 공통 기반에는 정책·기사·시장 데이터의 연결, NLP 처리, 비교와 집계가 들어 있습니다. 서울경제 작업에서는 이 기반을 정책별 흐름과 전달 가능한 시각화 데이터로 확장했습니다. <strong>목적이 달라지면서 계산 단위와 결과의 형식도 함께 달라졌습니다.</strong></p></div>
+<div class="prose"><p>교수님과의 논의를 반영해 만든 공통 기반에는 정책·기사·시장 데이터의 연결, NLP 처리, 비교와 집계가 들어 있습니다. 서울경제 작업에서는 이 기반을 정책별 흐름과 전달 가능한 시각화 데이터로 확장했습니다. <strong>목적이 달라지면서 계산 단위와 결과의 형식도 함께 달라졌습니다.</strong></p></div><figure aria-label="정책, 뉴스, 시장 데이터를 공통 분석 기반에서 처리하고 연구용 비교와 서울경제 활용으로 확장하는 구조" class="system-figure foundation-figure">
+<div class="figure-top"><span>THE SYSTEM I BUILT</span><span>FIG. 02</span></div>
+<div class="inputs"><span class="input-tag">정책 맥락</span><span class="input-tag">뉴스 텍스트</span><span class="input-tag">시장 데이터</span></div>
+<div aria-hidden="true" class="flow-line"></div>
+<div class="engine"><small>COMMON FOUNDATION</small><strong>연결하고 · 해석하고 · 집계한다</strong><p>기준을 코드로 옮기는 공통 분석 기반</p></div>
+<div aria-hidden="true" class="branch-connector"></div>
+<div class="branches"><div class="branch"><span>RESEARCH</span><strong>조건을 비교하는 표</strong><div aria-hidden="true" class="mini-matrix"><b>모델</b><b>기간</b><b>그룹</b><i></i><i></i><i></i><i></i><i></i><i></i></div><p>교수님 피드백 반영<br/>모델·표본·기간별 검토</p></div><div class="branch"><span>NEWSROOM</span><strong>정책별 흐름을 담는 데이터</strong><div aria-hidden="true" class="mini-series"><svg focusable="false" viewbox="0 0 160 49"><path class="series-axis" d="M0 40H160 M2 3V44"></path><path class="series-a" d="M4 31H29V26H51V29H77V14H104V19H130V9H157"></path><path class="series-b" d="M4 37L29 28 51 34 77 20 104 24 130 17 157 12"></path></svg></div><p>서울경제 활용에 맞춘<br/>시계열·그래프·보고서</p></div></div>
+<figcaption>공통 기반에서 목적별 분석으로 이어지는 구조. 표와 선은 산출물 형식을 나타낸 개념도입니다.</figcaption></figure>
 <ol aria-label="공통 처리 단계" class="pipeline"><li><span>01 / ALIGN</span><strong>분석 단위 정렬</strong><small>정책·기사·날짜·시장 데이터를 연결</small></li><li><span>02 / SCORE</span><strong>텍스트 점수화</strong><small>정책 맥락에 따른 NLP 처리</small></li><li><span>03 / COMPARE</span><strong>질문에 맞춘 비교</strong><small>표본·기간·집계 기준 확인</small></li><li><span>04 / DELIVER</span><strong>결과 생성</strong><small>비교표·흐름·시각화용 데이터</small></li></ol>
 <div class="interactive" data-tabs="">
 <div class="interactive-header"><span>SAME FOUNDATION / DIFFERENT ANALYSIS</span><small>목적별 설계 비교</small></div>
@@ -104,7 +195,7 @@
 </tbody></table>
 <div class="prose"><p>따라서 맞춤화에는 표본 포함 규칙, 수익률의 기준, 시간 정렬, 집계와 전달 형식이 함께 들어갔습니다. <strong>제가 맡은 일은 이 차이를 실행 가능한 처리 과정으로 연결하는 것</strong>이었습니다. 지표가 달라진 두 결과를 하나의 정확도가 개선된 전후 실험처럼 비교하지 않습니다.</p></div>
 </section>
-<section class="chapter" id="contribution"><div class="section-kicker"><span class="num">04</span>IMPLEMENTATION &amp; EVIDENCE</div><h2>내가 구현한 것은<br/>입력에서 산출물까지의 연결이다.</h2>
+<section class="chapter" id="contribution"><div class="section-kicker"><span class="num">07</span>IMPLEMENTATION &amp; EVIDENCE</div><h2>내가 구현한 것은<br/>입력에서 산출물까지의 연결이다.</h2>
 <div class="prose"><p>사전학습 언어모델과 기존 통계 도구를 활용해, 정책 분석에 필요한 전후 처리와 결과 생성 과정을 구현했습니다. 공개 코드에서 확인할 수 있는 초기 구현을 기준으로 기여를 연결했습니다.</p></div>
 <div class="evidence-rows">
 <div class="evidence-row"><span class="evidence-index">01</span><div><h3>정책의 맥락을 입력 구조로 만들기</h3><p>정책 카드와 기사 → 비교 가설·관련성 근거·입장 점수</p><small>가설 생성과 점수 처리의 기준을 코드로 연결했습니다.</small></div><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/build/build_hypotheses.py">가설 생성 코드 <span aria-hidden="true">↗</span></a></div>
@@ -115,7 +206,7 @@
 <p class="margin-note">현재 공개 저장소는 초기 구현 중심입니다. 이후 교수님용 최종 분석과 서울경제 납품 구현 전체를 재현하는 저장소는 아닙니다.</p>
 <div class="collaboration"><h3>공동 작업에서의 역할</h3><div class="roles"><div><strong>나의 개발 기여</strong><p>데이터 처리, NLP 연결, 비교·집계 및 결과 생성 구현.</p></div><div><strong>교수님·연구실</strong><p>연구 요구, 방법론 논의, 분석·발표 자료의 검토.</p></div><div><strong>서울경제</strong><p>기획취재 요구, 보도·편집·공개 콘텐츠와 별도 분석.</p></div><div><strong>기존 모델·도구</strong><p>사전학습 모델과 공개 라이브러리를 활용.</p></div></div></div>
 </section>
-<section class="chapter" id="limits"><span class="anchor-alias" id="p5"></span><span class="anchor-alias" id="p6"></span><span class="anchor-alias" id="p9"></span><div class="section-kicker"><span class="num">05</span>HOW TO READ THE RESULTS</div><h2>결과의 의미는<br/>비교한 대상에 달려 있다.</h2>
+<section class="chapter" id="limits"><span class="anchor-alias" id="p5"></span><span class="anchor-alias" id="p6"></span><span class="anchor-alias" id="p9"></span><div class="section-kicker"><span class="num">08</span>HOW TO READ THE RESULTS</div><h2>결과의 의미는<br/>비교한 대상에 달려 있다.</h2>
 <div class="prose"><p>동작하는 코드, 잘 맞는 그래프, 높은 평균은 각각 확인해야 할 조건이 있습니다. 이 글에서 개발 기여와 통계적 결론을 구별하는 기준입니다.</p></div>
 <table class="scope-table interpretation-table"><caption>분석 결과와 추가로 필요한 검증</caption><thead><tr><th scope="col">확인한 결과</th><th scope="col">그다음 확인할 것</th></tr></thead><tbody>
 <tr><td><strong>기사의 정책 관련성</strong><small>대상 정책의 근거가 있는가</small></td><td>그 근거가 지지·반박 중 어느 방향인지, 실제 효과와 연결되는지 별도로 판단합니다.</td></tr>
@@ -124,8 +215,8 @@
 <tr><td><strong>개발셋의 평가 지표</strong><small>지정한 라벨과 얼마나 일치하는가</small></td><td>사람의 독립 판독·합의 라벨·AI 보조 라벨을 구별하고, 잠근 표본으로 검증합니다.</td></tr>
 </tbody></table>
 </section>
-<section class="chapter" id="next"><div class="section-kicker"><span class="num">06</span>A PERSONAL RESEARCH DIRECTION</div><h2>다음에는 점수보다<br/>정보의 변화를 추적하고 싶다.</h2>
-<div class="prose"><p class="intro-lead">같은 사실이 열 번 보도된 것과, 한 문장의 수치가 바뀐 것은 다릅니다. 다음 연구의 중심은 그 차이를 기록하는 일입니다.</p><p>기존 개발에서 남은 세 문제를 하나의 질문으로 연결했습니다. <strong>“그때까지 알려진 내용에서 무엇이 달라졌고, 어떤 기업의 영향 가설을 바꿔야 하는가?”</strong> 이번 회고에서 구체화한 개인 후속 연구입니다.</p></div>
+<section class="chapter" id="next"><div class="section-kicker"><span class="num">09</span>A PERSONAL RESEARCH DIRECTION</div><h2>다음에는 점수보다<br/>정보의 변화를 추적하고 싶다.</h2>
+<div class="prose"><p>짧은 기사에서 빠지는 맥락, 서로 다른 뜻으로 쓰이는 점수, 반복 보도와 날짜 정렬을 다루다 보니 남은 질문이 있습니다. <strong>판단을 바꾼 정보가 무엇이며, 그 시점에 무엇까지 알 수 있었는가?</strong> 기존 작업에서 만난 문제를 개인 후속 연구의 출발점으로 삼았습니다.</p><p class="intro-lead">같은 사실이 열 번 보도된 것과, 한 문장의 수치가 바뀐 것은 다릅니다. 다음 연구의 중심은 그 차이를 기록하는 일입니다.</p><p>기존 개발에서 남은 세 문제를 하나의 질문으로 연결했습니다. <strong>“그때까지 알려진 내용에서 무엇이 달라졌고, 어떤 기업의 영향 가설을 바꿔야 하는가?”</strong> 이번 회고에서 구체화한 개인 후속 연구입니다.</p></div>
 <figure class="research-map"><div class="figure-top"><span>FROM SCORES TO CHANGES</span><span>RESEARCH CONCEPT</span></div><ol><li><span>01 / BEFORE</span><strong>이전에 알려진 내용</strong><p>사전 예상과 그 근거</p></li><li><span>02 / UPDATE</span><strong>새롭게 바뀐 내용</strong><p>발표 · 정정 · 상충된 주장</p></li><li><span>03 / EXPOSURE</span><strong>기업별 관련 경로</strong><p>사전에 확인된 비용·수요·공급 관계</p></li></ol><figcaption>목표 산출물: 판단 시점을 선택하면, 당시의 근거와 이후 바뀐 내용을 되짚을 수 있는 분석 기록.</figcaption></figure>
 <div class="research-questions"><div><span>A</span><h3>긍정적인 발표가 예상보다 약할 수도 있다.</h3><p>보도에서 관측한 사전 예상과 발표의 대상·규모·시점을 비교합니다. 시장 전체의 기대를 관측했다고 간주하지 않습니다.</p></div><div><span>B</span><h3>같은 정책도 기업마다 다른 경로로 전달된다.</h3><p>사건 전에 확인한 사업 구조와 비용·수요 관계를 바탕으로 영향 가설을 세웁니다. 이후 수익률을 보고 관계를 채우지 않습니다.</p></div><div><span>C</span><h3>보도량과 새로 알려진 사실은 따로 셀 수 있다.</h3><p>반복 보도, 새로운 사실, 정정과 충돌을 구별합니다. 어떤 근거가 판단을 바꾸었는지 설명하는 것이 목표입니다.</p></div></div>
 <div class="research-status"><div><span class="status-label">현재 · 합성 입력으로 확인</span><h3>변경 기록의 최소 프로토타입</h3><p>별도 로컬 구현에서 시점별 기록, 반복·정정·충돌 처리의 기본 동작을 점검했습니다. 실제 기사 추출과 시장 성과 검증은 남아 있습니다.</p></div><div><span class="status-label">다음 · 독립 평가로 확인</span><h3>단순한 집계보다 무엇이 나아지는가</h3><p>사람이 판독한 변경 이력과 비교하고, 실제 변경을 놓치지 않으면서 반복에는 안정적인지 평가할 계획입니다. 그다음 시장 반응과의 관계를 검토합니다.</p></div></div>
@@ -133,12 +224,12 @@
 </section>
 <section class="chapter" id="record">
 <span class="anchor-alias" id="closing"></span>
-<div class="section-kicker"><span class="num">07</span>TRACEABLE WORK</div>
+<div class="section-kicker"><span class="num">10</span>TRACEABLE WORK</div>
 <h2>구현의 기록에서,<br/>실제 활용까지.</h2>
-<div class="prose"><p>개발 과정은 공개 저장소의 변경 이력으로, 활용 사례는 서울경제의 공개 기획으로 확인할 수 있습니다. 아래 이력은 저장소에 남은 기록이며 프로젝트 전체의 작업 시점을 모두 나타내지는 않습니다.</p></div>
+<div class="prose"><p>아래 커밋은 초기 공개 구현의 기준점입니다. 6–8월의 비교·적용·검수 준비는 앞의 후속 작업 회고로 이어지며, 공개 커밋 수만으로 전체 작업 기간을 설명하지 않습니다.</p></div>
 <ol class="source-list"><li><span>01</span><div><a href="https://github.com/soccz/market-impact-analysis/commit/15c1775">이벤트 분석의 초기 구현 ↗</a><time datetime="2026-03-26">2026.03.26 · 15c1775</time><p>정책 이벤트와 시장 반응을 다루는 분석 코드의 첫 공개 커밋.</p></div></li><li><span>02</span><div><a href="https://github.com/soccz/market-impact-analysis/commit/bb6fc2c">정책 맥락을 읽는 NLP 트랙 추가 ↗</a><time datetime="2026-05-17">2026.05.17 · bb6fc2c</time><p>PPT-NLP / PTEI 초기 구현과 방법론 기록을 추가한 커밋.</p></div></li><li><span>03</span><div><a href="https://github.com/soccz/market-impact-analysis/commit/5193cbb">라벨링·학습·추론 분석의 확장 ↗</a><time datetime="2026-05-20">2026.05.20 · 5193cbb</time><p>학습과 후속 분석 자료가 추가된 개발 이력. 당시 실험 결과는 초기 탐색 기록으로 읽어야 합니다.</p></div></li><li><span>04</span><div><a href="https://en.sedaily.com/atlas/news-power#e1">서울경제 「뉴스의 힘」 ↗</a><p>분석 데이터가 활용된 공개 기획. 기사·웹 콘텐츠 제작과 뉴스룸의 추가 분석은 해당 수행 주체의 기여입니다.</p></div></li></ol>
 <div class="hero-actions"><a class="button-link" href="https://github.com/soccz/market-impact-analysis">공개 구현 살펴보기 <span aria-hidden="true">↗</span></a><a class="text-link" href="/projects/market-impact/">프로젝트 개요<span aria-hidden="true" class="arrow">→</span></a></div>
-<p class="article-footer">soccz · 2026.09 회고. 2026.03–05 공개 커밋과 기존 실험 기록을 바탕으로 정리했습니다. 이 글의 설명용 예제는 이번 회고에서 추가했으며, 합성 입력과 과거 개발 이력을 구별합니다.</p>
+<p class="article-footer">soccz · 2026.09 회고. 2026.03–08의 공개 커밋·초기 실험 기록·후속 작업 자료를 대조했습니다. 후속 원자료는 공개하지 않으며, 날짜는 자료가 확인되는 구간을 나타냅니다. 설명용 합성 예제와 9월의 개인 연구는 과거 작업과 구분합니다.</p>
 </section>
 </article>
 </div>

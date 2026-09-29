@@ -154,3 +154,68 @@
   .evidence-link { background: white; color: black; border: 1px solid #bbb; }
   .evidence-link span { color: black; }
 }
+
+/* The chronology is the main reading path; every stage stays visible. */
+.journey-map { margin: 0; padding: 29px 30px 25px; background: #edf0e7; border-top: 3px solid var(--green); }
+.journey-map .figure-top { margin-bottom: 16px; }
+.journey-map ol { margin: 0; padding: 0; list-style: none; }
+.journey-map li { border-top: 1px solid #cdd8c8; }
+.journey-map li:first-child { border-top: 0; }
+.journey-map a { display: grid; grid-template-columns: 58px 1fr 14px; gap: 14px; padding: 24px 0; text-decoration: none; align-items: baseline; }
+.journey-map a:hover strong { text-decoration: underline; text-underline-offset: 5px; }
+.journey-map .map-date { font: 11px var(--mono); color: var(--orange); }
+.journey-map strong { font: 600 18px/1.65 var(--serif); color: var(--ink); letter-spacing: -.035em; }
+.journey-map p { font-size: 11px; color: var(--muted); margin-top: 7px; line-height: 1.8; }
+.journey-map a>span:last-child { font-size: 13px; color: var(--green); }
+.journey-map figcaption { padding-top: 18px; border-top: 1px solid #cdd8c8; font-size: 11px; color: var(--muted); line-height: 1.85; }
+.journey-scope { margin-top: 28px; padding-left: 18px; border-left: 2px solid var(--orange); font-size: 12px; line-height: 1.95; color: var(--muted); max-width: 690px; }
+.journey-entry { display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 22px; margin-top: 43px; scroll-margin-top: 120px; }
+.entry-marker { position: relative; }
+.entry-marker::after { content: ''; position: absolute; top: 41px; bottom: -35px; width: 1px; background: var(--line); left: 17px; }
+.journey-entry:last-child .entry-marker::after { bottom: 0; }
+.entry-marker>span { display: grid; place-items: center; width: 35px; height: 35px; background: var(--ink); color: #f4f5eb; border-radius: 50%; font: 11px var(--mono); }
+.entry-body { min-width: 0; }
+.entry-body .entry-date { margin: 4px 0 12px; font-size: 11px; color: var(--green); letter-spacing: .025em; }
+.entry-body h3 { font: 600 clamp(20px,1.7vw,24px)/1.65 var(--serif); color: var(--ink); letter-spacing: -.04em; max-width: 680px; margin: 0 0 19px; }
+.entry-body>p { font-size: 14px; line-height: 2.05; margin: 17px 0 0; max-width: 720px; }
+.entry-change { border-block: 1px solid var(--line); padding: 16px 0; margin-top: 23px; display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 16px; }
+.entry-change>span { font-size: 11px; color: var(--green); padding-top: 2px; }
+.entry-change p { font-size: 13px; line-height: 1.85; color: var(--ink); margin: 0; }
+.entry-body .entry-carry { font-size: 13px; color: var(--muted); line-height: 1.9; margin-top: 18px; }
+.entry-carry>span { display: block; font-size: 10px; color: var(--orange); margin-bottom: 5px; }
+.entry-source { font-size: 10px; line-height: 1.9; color: var(--muted); margin-top: 17px; }
+.entry-source a { text-underline-offset: 3px; }
+.entry-source .journal-detail { display: block; width: fit-content; margin-top: 5px; }
+.journey-edition #extension .foundation-figure { max-width: 600px; margin: 30px 0; }
+.journey-edition .contents li { margin-bottom: 3px; }
+@media(max-width:780px) {
+  .journey-map { padding: 23px 25px; }
+  .journey-map a { grid-template-columns: 53px 1fr 12px; padding-block: 21px; gap: 11px; }
+  .journey-map strong { font-size: 17px; }
+  .journey-entry { grid-template-columns: 27px minmax(0,1fr); gap: 16px; margin-top: 35px; scroll-margin-top: 155px; }
+  .entry-marker>span { width: 27px; height: 27px; font-size: 9px; }
+  .entry-marker::after { left: 13px; top: 35px; bottom: -27px; }
+  .entry-body .entry-date { margin-top: 0; font-size: 10px; }
+  .entry-body h3 { font-size: 21px; }
+  .entry-body>p { font-size: 14px; line-height: 2; }
+  .entry-change { grid-template-columns: 1fr; gap: 6px; padding-block: 14px; }
+  .journey-scope { font-size: 11px; }
+  .journey-edition .contents li { margin-bottom: 0; }
+}
+@media(max-width:420px) {
+  .journey-map { padding: 23px 18px; }
+  .journey-map a { grid-template-columns: 44px 1fr 10px; gap: 8px; }
+  .journey-map .map-date { font-size: 9px; }
+  .journey-map strong { font-size: 16px; }
+  .journey-map p { font-size: 10px; }
+  .journey-entry { column-gap: 12px; }
+  .entry-body h3 { font-size: 20px; }
+}
+@media print {
+  .journey-map { max-width: 500px; margin-top: 22px; background: white; }
+  .journey-entry { margin-top: 25px; }
+  .entry-marker::after { display: none; }
+  .entry-marker>span { color: black; background: white; border: 1px solid #999; }
+  .entry-body h3, .entry-date { break-after: avoid; }
+  .entry-body>p, .entry-change { break-inside: avoid; }
+}
