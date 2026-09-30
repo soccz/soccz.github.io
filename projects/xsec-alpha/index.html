@@ -1670,6 +1670,29 @@
 </div></section>
 <hr class="divider">
 
+<section id="post-trial-diagnostics"><div class="container fade-in">
+  <div class="section-label">2026-09-30 · 결과를 기다리는 동안 할 수 있는 일</div>
+  <h2 class="section-title">양수 평균을 분해하니, 다른 질문이 남았다</h2>
+  <article class="journal-entry">
+    <h3>+0.21% 평균과 30/60 수익 회차는 같은 이야기가 아니었다</h3>
+    <p>종료된 60회의 예측·선정 종목·가격·비용을 봉인 사본에서 읽었다. 모델의 회차 평균은 +0.2104%였지만 중앙값은 −0.0318%, 수익 회차는 30/60이었다. 가장 좋았던 3회가 양수 회차 이익의 35.62%를 차지했고, 그 3회를 뺀 평균은 −0.4048%였다. 이는 이익을 삭제하자는 판단이 아니라, 일부 큰 결과에 얼마나 의존했는지 보는 사후 영향도 점검이다.</p>
+    <p>마지막 20회에서 모델은 평균 +0.2359%, 반전 기준선은 +0.8034%였다. 모델 자체가 손실로 전환한 것이 아니라 기준선이 더 잘했다. 절대 손익과 상대적 순위 가치를 분리해야 한다는 점이 다시 드러났다. 원래 신뢰구간과 <strong>효과 판단 보류</strong> 결론은 그대로 보존했다.</p>
+  </article>
+  <article class="journal-entry">
+    <h3>시즌 차이는 보였지만, 같은 양의 증거는 아니었다</h3>
+    <p>과거 원시 BTC 봉으로 사후 재구성한 하락·저변동 국면은 37회에서 모델−반전 +1.2210%p, 상승·저변동은 13회에서 −1.6039%p였다. 그러나 하락·고변동은 단 1회, 상승·고변동은 9회뿐이다. 당시 저장한 국면 라벨도 아니므로 새 관찰 원장의 미래 증거로 합치지 않는다. 유리한 부분만 골라 성공으로 바꾸거나 즉시 전환할 근거는 아니다.</p>
+  </article>
+  <article class="journal-entry">
+    <h3>60회를 한 번 더 기다리자는 계획을 버렸다</h3>
+    <p>과거 변동성을 사용한 양측 5%·목표 검정력 80% 정규 근사에서, 0.50%p 차이는 약 304회(매일 유효 4회면 76일), 0.25%p는 1,204회(301일)가 필요했다. 미래 변동성과 국면 분포가 같다는 보장은 없고, 적응형 전환은 다른 비교 지표다. 이 숫자를 기다리면 성공하는 날짜로 제시하지 않는다.</p>
+    <p><strong>다음 후보를 구체화했다:</strong> 국면별로 2회 연속 주간 확인, 14일 냉각, 모델 75%·반전 25%까지의 제한적 혼합과 비중 변경 비용을 구현·테스트했다. 84일·336회는 정책이 실제로 작동하는 빈도와 새로운 차이값의 분산을 측정하는 파일럿 설계다. 우위 확정용 기간이 아니다.</p>
+    <p><strong>현재 경계:</strong> 분석과 후보 함수는 완료했지만 별도 파일럿을 등록하거나 실제 추천에 연결하지 않았다. 실행 전 비중 저장·독립 원장·정산·종료 처리가 필요하다. 기존 국면 관찰은 계속되며 텔레그램의 실제 추천 정책은 바뀌지 않는다.</p>
+    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#trial-diagnostics">사후 진단 수치와 표본 설계</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/completed_trial_analysis.md">분석 전체와 재현</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/rotation_followup.md">후속 규칙·미구현 경계</a></div>
+    <p>방법 참고: <a href="https://www.itl.nist.gov/div898/handbook/prc/section2/prc222.htm">NIST 표본 크기 계산</a>. 코드 테스트 통과는 전략 수익성 검증이 아니다.</p>
+  </article>
+</div></section>
+<hr class="divider">
+
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
   <div class="section-label">2026-09-30 · 고정 실험 종료 / 국면별 관찰</div>
