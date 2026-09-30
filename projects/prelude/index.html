@@ -5,14 +5,14 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>prelude — 업비트 KRW 상승확률·하방리스크 레이더 · 정직 보고서</title>
-  <meta name="description" content="저하방·고상방 후보를 찾는 업비트 KRW 수동매매 보조 레이더의 개발일지. R1 08:50/09:05 알림, v2 종료. 09-10 체결정보 첫 정상 기록 뒤 테스트 시간 초과·확률 표시·감시 누락을 수리하고 실제 서버에서 검증했다. 운영 수리와 추천 우위 미검증을 구분한다.">
+  <meta name="description" content="저하방·고상방 후보를 찾는 업비트 KRW 수동매매 보조 레이더의 개발일지. 운영 수리에서 체결정보 20일 비교, 시즌별 선택, 상방 점수·전체후보 조합의 실패까지. 09-30 검증: 새 선별안 미채택, R1 유지. 자동매매 없음.">
   <meta property="og:title" content="prelude — 상승확률·하방리스크 레이더">
-  <meta property="og:description" content="덜 하락하고 더 상승할 후보를 찾기까지 — 모델 비교의 실패에서 체결정보 첫 정상 기록, 실제 서버의 점검 실패와 수리 검증까지. R1 실알림 유지 · Top10 비발송 기록시험 · 운영 수리 ≠ 추천 우위.">
+  <meta property="og:description" content="기록이 쌓인 뒤에도 추천은 좋아졌을까. 체결정보 20일 비교와 시즌별 가설, 점수 척도·1,342만 조합 검증에서 배운 한계. R1 유지 · 새 선별안 미채택 · 운영 정상 ≠ 추천 우위.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="prelude — 상승확률·하방리스크 레이더">
-  <meta name="twitter:description" content="R1 수동매매 보조 레이더의 개발일지. 09-10 체결정보 첫 정상 기록과 실제 서버의 점검 실패·수리 검증을 이어 썼다. v2 종료 · Top10 비발송 기록시험 · 추천 우위 미검증 · 자동매매 아님.">
+  <meta name="twitter:description" content="R1 개발일지 · 09-30: 체결정보 20일 비교, 시즌별 선택 가설, 상방 점수와 전체후보 조합을 검증했다. 새 선별안 미채택 · 실제 추천 유지 · 자동매매 없음.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +70,7 @@
     @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
 
     section { padding: 5.5rem 2rem; }
-    #new-information, #runtime-verification { scroll-margin-top: 80px; }
+    #new-information, #runtime-verification, #selection-evidence { scroll-margin-top: 80px; }
     section.compact { padding: 3.5rem 2rem; }
     .container { max-width: 1100px; margin: 0 auto; }
     .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; }
@@ -336,6 +336,7 @@
       <li><a href="#validation-chain">Chain</a></li>
       <li><a href="#integrity-turn">Integrity</a></li>
       <li><a href="#new-information">September</a></li>
+      <li><a href="#selection-evidence">09·30</a></li>
       <li><a href="#architecture">II·System</a></li>
       <li><a href="#ops">Ops</a></li>
       <li><a href="#distribution">III·Archive</a></li>
@@ -354,16 +355,16 @@
     <p class="hero-sub">
       "맞히는 모델이 아니라, 좁혀주는 레이더."<br>
       목표는 <strong>하락 가능성은 낮고 상승 가능성은 높은 후보</strong>를 찾는 것. 현재는 <strong>R1 레이더</strong>가 KST 08:50 장전 + 09:05 개장 후 알림을 담당하고, 실제 매매는 사람이 판단한다.<br>
-      모델을 바꾸는 것만으로 목표에 도달하지 못했다. 측정·전달을 수리하고, 이제 새 체결 정보를 관측한다. <strong>운영 수리의 성공과 추천 성능의 미검증을 나눠 기록한 개발일지</strong>다.
+      측정·전달을 수리한 뒤 체결정보의 20일 결과와 새 선별안을 비교했다. 점수상 좋아 보이는 조합도 실제 하락을 줄이지 못했다. <strong>운영 수리의 성공과 추천 개선의 실패를 함께 기록한 개발일지</strong>다.
     </p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">R1</span><span class="hero-stat-label">현재 실알림 모델</span></div>
       <div class="hero-stat"><span class="hero-stat-num">2 slots</span><span class="hero-stat-label">08:50 / 09:05 KST</span></div>
       <div class="hero-stat"><span class="hero-stat-num">KILL</span><span class="hero-stat-label">v2 종료 · 08-05</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">09/10</span><span class="hero-stat-label">Top10 첫 정상 기록</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">미검증</span><span class="hero-stat-label">새 시험의 추천 우위</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">20 days</span><span class="hero-stat-label">체결Top10 공통 비교</span></div>
+      <div class="hero-stat"><span class="hero-stat-num">미채택</span><span class="hero-stat-label">새 선별안 D / E</span></div>
     </div>
-    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">2026-09-10 기준. Top10은 학습·실알림 변경 없는 별도 기록시험이다. 첫 정상 기록을 확인했지만 24시간 결과는 아직 미성숙하며 추천 우위는 미판정이다. 알림 시각은 예약 시각이며 실제 발송·평가 시각과 구분한다.</p>
+    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">2026-09-30 개발 기록. Top10은09-10~29 공통20일, D/E는 이미 관찰한 이력의 별도 오프라인 비교다. 시즌별 사전 선택 시험은10-01 기대일이며 현재 새 정책 실측0건이다. 알림 예약 시각과 실제 발송·평가 시각은 다르다.</p>
     <div class="hero-links">
       <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer" class="hero-link">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
@@ -382,7 +383,7 @@
 <div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
   <div class="callout warn" style="margin:1.5rem 0;">
     <p><strong>처음 남긴 결론 (2026-05-31):</strong> 과거 OOS에서 후보 농축을 관찰했지만 기계적 청산의 순수익은 breakeven~음수였다. 당시의 ~6배 농축과 낙관적 백테스트 수치는 아래에 보존하되 <strong>현재 R1의 수익성·안전성 인증으로 사용하지 않는다</strong>.
-    <strong>현재 결론 (2026-09-10):</strong> v2는 08-05 KILL로 종료. 추가 모델 비교에서도 교체할 근거를 얻지 못해 R1을 유지한다. 새 체결정보는 첫 정상 기록까지 왔고, 실제 서버에서 드러난 점검·표시·감시 문제도 수리했다. 그러나 <strong>새 정보가 실제 Top3를 개선하는가</strong>는 아직 미판정이다. 새 가설은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>, 오늘의 실패와 수리 검증은 <a href="#runtime-verification" style="color:var(--amber); border-bottom:1px solid var(--amber);">§09-10 실사용 검증</a>에서 이어진다.</p>
+    <strong>현재 결론 (2026-09-30):</strong> v2는08-05 KILL로 종료. 체결Top10의20일 비교와 상방 모델·새 선별안에서도 교체 근거를 얻지 못했다. R1 유지는 우수성 인증이 아니라 검증된 대안이 없다는 뜻이다. <strong>정상적으로 기록하는 시스템과 더 좋은 추천은 아직 다른 문제</strong>다. 시작은 <a href="#new-information" style="color:var(--amber);">§September</a>, 실제 비교와 다음 질문은 <a href="#selection-evidence" style="color:var(--amber);">§09-30 선택 검증</a>에서 이어진다.</p>
   </div>
 </div>
 <hr class="divider">
@@ -409,9 +410,9 @@
 
 <div class="part-divider fade-in">
   <div class="pd-label">Part I · 이야기</div>
-  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 09-10</div>
+  <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 09-30</div>
   <div class="pd-bridge">처음에는 <strong>"어떻게 맞히나"</strong>를 물었다. 첫 모델의 실패(Journey), 12실험의 한계(v-next), 검증 사슬과 측정 재건(Integrity Turn)을 지나도 더 좋은 추천이라는 답은 남지 않았다.
-  그래서 9월에는 같은 정보를 다시 학습하는 실험부터 비교하고, 새 체결 정보를 직접 관측하는 단계(September)로 이어졌다. 첫 정상 기록 뒤에도 실제 서버의 점검 실패를 따로 수리했다. 실패 이력을 지우지 않고 다음 질문의 근거로 남긴다.</div>
+  그래서 9월에는 재학습 비교와 새 체결정보 관측으로 이어졌다. 운영 장애를 고친 뒤에는 쌓인 결과로 시즌별 선택과 새 선별안을 시험했다. 실패 이력을 지우지 않고 다음 질문의 근거로 남긴다.</div>
 </div>
 
 <!-- Project Journey -->
@@ -1049,6 +1050,59 @@
   </div>
 
   <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.9; max-width:760px; margin-top:2.4rem; border-left:2px solid var(--amber); padding-left:1.2rem;">이번에 강화한 것은 <strong>무엇이 실제로 정상이고 무엇이 아직 미검증인지 드러내는 운영 경로</strong>다. 한 번의 전수통과가 미래 무장애를 보장하지 않고, 체결 기록의 성공도 추천 우위를 보장하지 않는다. 다음 판단은 새 시험의 공통 날짜별 24시간 결과로 한다. 상세 설계·실패 주입·실제 서비스 증거는 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md#실사용-강화-13차--일일-점검-실패확률-표시종합-감시-보완-2026-09-10" style="color:var(--blue);">PHASES.md · 실사용 강화 13차</a>에 남겼다.</p>
+</div></section>
+<hr class="divider">
+
+<!-- Measured recommendation quality, separated from operational success. -->
+<section id="selection-evidence"><div class="container fade-in">
+  <div class="section-label">After the Records · 2026-09-30</div>
+  <h2 class="section-title">기록은 쌓였다. 그래서 추천은 더 좋아졌을까</h2>
+  <p class="section-desc">09-10에 확인한 것은 기록의 성공이었다. 다음에는 <strong>“잘 돌고 있다”가 아니라 “기존 추천보다 나은가”</strong>를 물었다. 체결정보의 공통20일, 시즌별 선택, 상방 모델과 최종 선별의 결합까지 검증했지만 이번에도 바로 바꿀 대안은 남지 않았다.</p>
+
+  <div class="callout fail">
+    <p><strong>① 새 체결정보 · 첫 정상 기록 다음에는 실제 효과를 채점했다</strong></p>
+    <p style="margin-top:0.6rem;">09-10~29의 같은20일에서 원래 R1 Top3와 체결정보로 다시 고른 Top3를 비교했다. 가상24시간 말 net 평균은 <strong>+1.586% → +0.675%</strong>, −5% 경험률은 <strong>28.33% → 40.00%</strong>였다. 수집 성공을 추천 개선이라고 부를 수 없었다. 작은 표본의 영구 열등 판정도 아니므로 원 추천을 유지하고 결과를 계속 분리해 기록한다.</p>
+    <p style="margin-top:0.6rem;">“한 건짜리 체결이 점수를 과장했을까”도 확인했다. 이20일의 Top10 200행에서 단일체결은 <strong>0행</strong>이었다. ±1 포화 점수를 제외해도 체결Top3의 하방 경험률은40%였다. 그럴듯한 원인이라고 바로 새 필터를 붙이지 않았다.</p>
+    <span class="badge badge-fail">기록 성공 ≠ 추천 개선</span>
+    <span class="badge badge-blue">원본·실패 결과 보존</span>
+  </div>
+
+  <div class="callout">
+    <p><strong>② “잘 맞는 시즌마다 바꾸면?” · 상태를 나누고, 그때 알 수 있었던 결과만 쓴다</strong></p>
+    <p style="margin-top:0.6rem;">당시 유니버스의 상승종목 비율과 거래대금 흐름으로 시장 상태를 나누고, R1 고정·최근 성과 선택·같은 상태의 성과 선택을 재생했다. 선택 시점에 이미 마감되고 기록된 과거 결과만 사용했다. 두 전환 규칙은20일 모두 대안 우위 조건을 충족하지 못해 <strong>새 방식 선택0회</strong>였다. 수익 차이0은 안전성이나 동등성 입증이 아니다.</p>
+    <p style="margin-top:0.6rem;">과거 재생 다음에는 <strong>결과가 나오기 전에 선택을 남기는 별도 시험</strong>을 준비했다.10-01 open부터 기존 예약 경로가 세 정책의 선택과 저장 시각을 기록하고 다음날 그대로 채점한다. 늦은 기록·누락·부분 저장은 정상 표본으로 세지 않는다. <strong>09-30 현재 전향 정책 표본0건</strong>이며 실제 추천의 자동 전환·재학습은 없다.</p>
+    <span class="badge badge-pivot">시즌별 선택은 검증 가설</span>
+    <span class="badge badge-blue">과거 재생과 전향 기록 분리</span>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>③ 상방 모델을 고치면 Top3도 좋아질까 · 판별력과 최종 선택은 달랐다</strong></p>
+    <p style="margin-top:0.6rem;">09-07에 시험한 상방 모델의 설정을 바꾸지 않고09-08~29까지 비교를 연장했다. 공통 open21일에서 −5% 경험은33.33%→11.11%로 줄었지만 +10% 경험도20.63%→3.17%로 줄었다. 전체후보의 상방 판별력은 비슷해도 최종 선택은 저변동 종목에 쏠렸다. 작은 확률 보정의 EOD 개선도 특정 하루를 빼면 음수로 뒤집혔다.</p>
+    <p style="margin-top:0.6rem;">그래서 두 질문을 추가로 고정했다. <strong>D:</strong> 새 모델의 상승 순서는 유지하되 기존 점수 수준에 맞추면 어떨까. <strong>E:</strong> 전체100개 중 기존 Top3보다 상승 점수 합은 낮지 않고 하락 점수 합은 높지 않은 조합에서 새 모델이 가장 높게 평가한3개를 고르면 어떨까. 두 안 모두 저장된 점수만 썼고 모델을 다시 학습하지 않았다.</p>
+    <div class="chart-wrap" style="margin:1rem 0;">
+      <table class="tbl">
+        <caption style="text-align:left; color:var(--text-secondary); padding-bottom:0.8rem;">09-08~29 · open 슬롯 · 비용0.15%가 한 번 반영된 가상 픽 평균. 좁은 화면에서는 표를 좌우로 스크롤할 수 있습니다.</caption>
+        <thead><tr><th>고정 비교 / 공통 날짜</th><th>+10% 경험</th><th>−5% 경험</th><th>24h 말 net</th></tr></thead>
+        <tbody>
+          <tr><td>D 대조군 R1 /21일·63픽</td><td>20.63%</td><td>33.33%</td><td>+0.912%</td></tr>
+          <tr><td>D 점수 척도 대응 /같은21일</td><td>7.94%</td><td>22.22%</td><td>−0.730%</td></tr>
+          <tr><td>E 대조군 R1 /22일·66픽</td><td>22.73%</td><td>31.82%</td><td>+1.320%</td></tr>
+          <tr><td>E 원 점수 조건 조합 /같은22일</td><td>21.21%</td><td>37.88%</td><td>+0.726%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>D는 상승 기회를 충분히 회복하지 못했다. E는 두 구간83개 snapshot에서 <strong>13,421,100개 조합</strong>을 전부 검사했지만, 점수 조건을 지켜도 실제 하방이 늘었다. 이는 하나의 고정 규칙 안의 조합 탐색이지1,342만 개 전략의 성과 최적화가 아니다. 전체100개를 탐색했어도 선택은 원순위9위 이내에 머물렀다.</p>
+    <p style="margin-top:0.6rem;">매칭 셀 지원 여부로 D/E의 공통 날짜가 달라 기준 R1 평균도 다르다. 앞 구간·preopen은 따로 평가했으며 유리한 일부만 골라 채택하지 않았다. E의 나중 open EOD 차이−0.594%p는 날짜 block 신뢰구간[−1.627,+0.015]%p로0을 포함한다. 다만 날짜를 하나씩 빼도 차이는 계속 음수였다. <strong>두 안 미채택</strong>은 이번 설정의 결론이며 모든 모델·위험 제약의 불가능성을 뜻하지 않는다.</p>
+    <span class="badge badge-fail">D / E 운영 미채택</span>
+    <span class="badge badge-blue">이미 본 개발 자료 · 새 미래 실증 아님</span>
+  </div>
+
+  <div class="callout">
+    <p><strong>④ 남은 질문 · 점수 재배열이 아니라, 놓친 기회를 구분할 정보가 있는가</strong></p>
+    <p style="margin-top:0.6rem;">전체100개에 사후 safe-up 후보가 있어도 Top10 안에는 없는 날이 있었다(open22일 중6일). 좁은 후보군의 한계는 확인했지만 미래를 알고 고른 종목을 모델의 적중률로 쓰지는 않는다. 예상 점수상 안전함과 실제 안전함을 구분하고, 같은 자료의 기준을 계속 풀어 승자를 만들지도 않는다.</p>
+    <p style="margin-top:0.6rem;">구현과 독립 산술 검산, 로컬 전수 <strong>3,273개 테스트</strong>는 통과했다. 이는 오류 방어의 증거이지 추천 성능의 인증이 아니다. 기존 R1·알림·라벨은 유지하고, 시즌별 사전 기록의 새 표본과 새로운 예측 정보의 기여를 구분해 검증해야 한다. 자동 주문은 없으며 최종 매매는 사용자가 판단한다.</p>
+    <p style="margin-top:0.6rem;">설계·각 구간의 분모·제외·비용·민감도·실패 결론은 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES.md · 14~19차</a>에 남겼다. 일일 발송·기록 상태는 <a href="/projects/prelude/dashboard/#currentSystemSection" style="color:var(--blue);">대시보드</a>에서 별도로 확인한다.</p>
+  </div>
 </div></section>
 <hr class="divider">
 
@@ -1969,12 +2023,12 @@
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-09-10</div>
+  <div class="section-label">Current Status · 2026-09-30</div>
   <h2 class="section-title">지금 어디까지 왔나</h2>
 
   <div class="callout" style="margin-bottom:2rem;">
-    <p><strong>상태 갱신 (2026-09-10):</strong> 실알림은 <strong>R1 두 슬롯(08:50/09:05)</strong>을 유지한다. 새 상방 모델·타깃 날짜·확률 보정 비교는 이번 고정 설정에서 운영 교체 근거를 얻지 못했다. v2는 <strong>08-05 terminal KILL</strong>이며 재개하지 않는다. Top10 체결정보 시험은 첫 정상 사전 기록을 확인했지만 <strong>첫 24시간 결과 미성숙·추천 우위 미판정·학습/자동 승격 없음</strong>이다.
-    09-09의 96ns 실패 원본과 09-10 아침의 selftest 실패를 보존했다. 이후 표시·시간 제한·종합 감시를 수리하고 실제 CPU 50% 서비스에서 전수통과를 확인했다. 오늘의 과정은 <a href="#runtime-verification" style="color:var(--amber); border-bottom:1px solid var(--amber);">§09-10 실사용 검증</a>, 새 가설은 <a href="#new-information" style="color:var(--amber); border-bottom:1px solid var(--amber);">§September</a>, 과거의 판정과 장애는 <a href="#integrity-turn" style="color:var(--amber); border-bottom:1px solid var(--amber);">§Integrity Turn</a>에 있다.</p>
+    <p><strong>상태 갱신 (2026-09-30):</strong> 실알림은 <strong>R1 두 슬롯(08:50/09:05)</strong>을 유지한다. 체결Top10의20일 비교, 고정 상방 모델의 추가 날짜 비교, 점수 척도D·전체후보 조합E에서도 교체 근거를 얻지 못했다. v2는 <strong>08-05 terminal KILL</strong>이며 재개하지 않는다. 시즌별 사전 선택 시험은10-01 기대일, 현재 새 정책 실측0건이다. <strong>실제 추천의 자동 전환·새 학습·자동 승격은 없다.</strong>
+    과거 실패 원본은 보존했다. 최신 과정은 <a href="#selection-evidence" style="color:var(--amber);">§09-30 선택 검증</a>, 실제 서비스 수리는 <a href="#runtime-verification" style="color:var(--amber);">§09-10 실사용 검증</a>, 출발 가설은 <a href="#new-information" style="color:var(--amber);">§September</a>에서 이어진다.</p>
   </div>
   <p class="section-desc"><strong>발송 = R1 레이더 (08:50 장전 / 09:05 개장 후) 단일 — 🎯 PUMP v2 는 08-05 KILL 로 종료</strong>.
   구 distribution · pre-open은 record-only이며 현재 R1 장전 슬롯과 다른 모델이다. 현재 등록 설정에서 <strong>발송 후보 자격은 R1만</strong> 열려 있다. challenger 기본 잠금은 새 모델의 무단 진입을 막지만 완전한 자동 연구·승격 시스템을 뜻하지 않는다. 자동 주문은 없고 진입·청산은 사람이 판단한다. 저하방·고상방은 목표이며 안전 보장 문구가 아니다.</p>
@@ -2061,7 +2115,7 @@
     그 문장은 예정보다 27일 일찍 쓰였다. <strong>2026-08-05, v2 조기 KILL</strong> — 동결 조항의 사망 규칙(누적 mean net &lt; 0)이
     verified closed 9건, −0.097% 에서 사람 손 없이 발동했고 판정문은 해시로 박제됐다. 기준은 끝까지 뒤집히지 않았다.
     급등 레이더는 죽었고, R1 레이더(상승확률·하방위험)는 계속 아침을 연다.
-    9월에 이어 쓴 문장은 <strong>“수리는 검증됐지만, 추천 개선은 아직 검증되지 않았다”</strong>다. 09-10에는 새 Top10 가설의 첫 정상 기록을 확인했고, 실제 서버의 점검 실패도 수리해 다시 검증했다. 다음 문장은 공통 날짜의 24시간 결과가 뒷받침해야 한다. 그 결과가 다음 판단의 근거가 될 것이다.
+    9월에 이어 쓴 문장은 <strong>“수리는 검증됐지만, 추천 개선은 아직 입증되지 않았다”</strong>다.09-10의 첫 정상 기록에서 멈추지 않고09-30에는20일의 결과, 시즌별 선택, 새로운 점수·조합 가설까지 시험했다. 예상 점수상 안전한 조합도 실제로는 더 많이 하락했다. 그 실패를 공개하고 원 추천을 유지했다. 다음 문장은 유리한 과거를 다시 고르는 일이 아니라, 새로운 정보와 사전 기록된 결과가 뒷받침해야 한다.
   </p>
 </div></section>
 
