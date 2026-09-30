@@ -89,6 +89,8 @@
     .current-card dl { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.45rem 0.7rem; font-size: 0.76rem; }
     .current-card dt { color: var(--text-secondary); }
     #researchProgressSection { scroll-margin-top: 80px; }
+    #bookValidationSection { scroll-margin-top: 80px; }
+    #bookValidation .current-card dt { word-break: keep-all; overflow-wrap: normal; }
     #researchProgress .current-card dt { word-break: keep-all; overflow-wrap: normal; }
     #researchProgress .current-card { scroll-margin-top: 80px; }
     .current-card dd { margin: 0; text-align: right; }
@@ -655,6 +657,19 @@
       <div class="current-fallback">연구 진행 상황은 잠금 해제 후 표시합니다. 아래 고정 개발 기록과 별도로 갱신됩니다.</div>
     </div>
     <p class="current-note">가상 픽의 날짜 동일가중 결과이며 실계좌·포트폴리오 수익이 아닙니다. 기존 왕복 비용0.15% 가정을 한 번 반영합니다. +10%·−5%는24시간 중 경험 여부이며 선도달 순서가 아닙니다. 신뢰구간은 관측 날짜 block3 기준입니다. 원본 재검증은 서버 평가기가 수행하며 이 패널은 검증된 보고서의 요약만 읽습니다. 새 정책의 자동 학습·승격·주문은 없습니다.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="bookValidationSection" class="compact" aria-labelledby="bookValidationTitle">
+  <div class="container">
+    <div class="section-label">FIXED RULE · 새 날짜 검증</div>
+    <h2 class="section-title" id="bookValidationTitle">고정한 L1 선택이 새 날짜에서도 나은가</h2>
+    <p class="section-desc">10-01~30의 새 날짜를 따로 비교합니다. 첫30일은 관찰 창이며 자동 채택 기준이 아닙니다. 이미 본 개발20일과 합치지 않습니다.</p>
+    <p class="current-note" id="bookValidationAsOf">데이터 잠금 — PIN 입력 후 검증 기준일 표시</p>
+    <div id="bookValidation" aria-live="polite" style="margin-top:1rem"><div class="current-fallback">새 날짜 검증 상태는 잠금 해제 후 표시합니다.</div></div>
+    <p class="current-note">고정 규칙의 새 날짜 사후 재생입니다. 진입 전 새 선택을 저장한 실시간 시험이 아니며, 위 국면 전환의 사전 기록과 분리합니다. +10%·−5%는24시간 중 경험 여부이고 선도달이 아닙니다. 비용0.15%를 한 번 반영한 가상 픽 결과이며 실거래 수익이 아닙니다. 원100개 결측은 재선택 없이 날짜 제외로 남깁니다. <a href="/projects/prelude/#book-validation-evidence">고정 규칙을 다음 날짜로 이어간 이유</a>.</p>
   </div>
 </section>
 
@@ -1777,6 +1792,53 @@ function renderResearchProgress(progress) {
   root.innerHTML = (progress.status === 'incomplete'
     ? '<p class="current-fallback">최신 마감일 자료가 불완전합니다. 아래 수치는 확보된 비교 표본만의 요약이며 전체 정상 완료가 아닙니다.</p>' : '')
     + '<div class="current-grid">' + cards.join('') + '</div>';
+}
+
+function renderBookValidation(progress) {
+  const root = document.getElementById('bookValidation');
+  const asof = document.getElementById('bookValidationAsOf');
+  if (!root || !asof) return;
+  const valid = progress?.schema === 'prelude_dashboard_book_validation.v1'
+    && progress.automatic_promotion === false && progress.prospective_pick_records === 0
+    && progress.scope === 'fixed_rule_out_of_time_replay_not_pre_entry_record'
+    && ['waiting_for_first_outcome', 'evaluated', 'incomplete'].includes(progress.status)
+    && progress.counts;
+  if (!valid) {
+    root.innerHTML = '<div class="current-fallback">새 날짜 검증 확인 불가 — 자료 미제공·기한 경과·점검 실패일 수 있습니다. 0건이나 개선 실패로 해석하지 마세요.</div>';
+    asof.textContent = '유효한 새 날짜 평가 기준일 미제공';
+    return;
+  }
+  asof.textContent = `구간 ${progress.start_date}~${progress.end_date} · 보고서 ${currentTime(progress.report_generated_at)} · 확인 ${currentTime(progress.observed_at)} (KST). 실시간 조회가 아닌 게시본입니다.`;
+  const count = value => Number.isInteger(value) && value >= 0 ? String(value) : '미제공';
+  const pct = value => typeof value === 'number' && Number.isFinite(value) ? (value * 100).toFixed(3) : '미제공';
+  const row = (label, value) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`;
+  const c = progress.counts;
+  let body = row('마감 대상 / 완결 비교', `${count(c.expected_dates)}일 / ${count(c.paired_dates)}일`)
+    + row('비교 픽 · 각 방식', `${count(c.picks_per_arm)}개`)
+    + row('제외 / 결과 대기 / 계산 이연', `${count(c.excluded_dates)}일 / ${count(c.pending_dates)}일 / ${count(c.deferred_dates)}일`)
+    + row('선택 변경일 / 동일일', `${count(c.changed_dates)}일 / ${count(c.no_op_dates)}일`)
+    + row('R1 대비 교체 / 원Top10 밖', `${count(c.changed_picks)}개 / ${count(c.outside_top10)}개`);
+  let cards = `<article class="current-card"><h3>새 구간의 비교 표본</h3><dl>${body}</dl><p class="current-note">개발20일과 섞지 않습니다. 제외·대기·이연일을0성과로 채우지 않습니다.</p></article>`;
+  const m = progress.metrics;
+  if (c.paired_dates > 0 && m) {
+    body = '';
+    for (const [key, label] of [['eod_return_net', '24h 말 net'], ['dn5', '−5% 경험'], ['up10', '+10% 경험']]) {
+      const ci = progress.difference_ci95?.[key];
+      body += row(`${label} · R1 → L1`, `${pct(m.control?.[key])}% → ${pct(m.challenger?.[key])}%`)
+        + row(`${label} · L1−R1`, `${pct(m.challenger_minus_control?.[key])}%p`)
+        + row(`${label} 차이 95% 구간`, Array.isArray(ci) && ci.length === 2 ? `[${pct(ci[0])}, ${pct(ci[1])}]%p` : '비교 날짜 부족');
+    }
+    cards += `<article class="current-card"><h3>기존 추천과 같은 날짜 비교</h3><dl>${body}</dl><p class="current-note">날짜 동일가중·관측 날짜 block3 구간입니다. 하방 차이는 낮을수록, net·상방 차이는 높을수록 유리합니다. 자동 채택하지 않습니다.</p></article>`;
+    body = row('같은 구간 무작위 · net 기대값', `${pct(m.matched_random_expectation?.eod_return_net)}%`)
+      + row('L1−무작위 · net 차이', `${pct(m.challenger_minus_matched_random_expectation?.eod_return_net)}%p`)
+      + row('원100 전체 · net 평균', `${pct(m.full_universe?.eod_return_net)}%`);
+    cards += `<article class="current-card"><h3>비교 기준도 함께 확인</h3><dl>${body}</dl><p class="current-note">무작위는 R1과 같은 거래대금·ATR 구간별 선택 개수의 정확한 기대 평균이며 추첨한 포트폴리오가 아닙니다.</p></article>`;
+  } else {
+    cards += '<article class="current-card"><h3>성과 표본 없음</h3><p class="current-note">완결된 비교가 없어 수익률·상승/하락 비율을 표시하지 않습니다. 첫 대상은10-01, 첫24시간 결과는10-02 마감 이후입니다.</p></article>';
+  }
+  const notice = progress.status === 'incomplete' ? '최신 마감 대상에 누락·대기·계산 이연이 있습니다. 확보된 표본만의 요약이며 전체 정상 완료가 아닙니다.'
+    : progress.status === 'waiting_for_first_outcome' ? '첫 결과 대기 — 아직 새 구간의 완결 표본은 없습니다.' : '';
+  root.innerHTML = (notice ? `<p class="current-fallback">${notice}</p>` : '') + '<div class="current-grid">' + cards + '</div>';
 }
 
 /* ───────── PIN gate ───────── */
@@ -3934,6 +3996,7 @@ window.addEventListener('scroll', () => {
     HISTORY_ROWS = history.rows || [];
     renderCurrentSystem(summary.current_system);
     renderResearchProgress(summary.research_progress);
+    renderBookValidation(summary.book_validation);
     renderHero(summary);
     renderRecommend(summary);
     renderFindings(findings);  // 이번 세션 새 발견 차트 (2026-05-31)

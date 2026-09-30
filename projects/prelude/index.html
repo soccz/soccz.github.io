@@ -1133,6 +1133,14 @@
     <p style="margin-top:0.6rem;">선택 종목·무작위 기대값·통계·가상 바스켓을 별도 계산으로 검산했고217파일의 계보도 확인했다. 이것은 앞 관찰에 쓴 <strong>동일한 개발 자료</strong>다. 새 미래 검증·실거래 수익이 아니며, 좋은 결과가 나올 때까지 cutoff를 바꾸지 않았다. <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES24차</a>에 구간별 수치와 약점을 남기고, 검증 후보는 유지하되 실알림 교체는 보류했다.</p>
     <span class="badge badge-pivot">직접 Top3 비교 완료 · 후속 검증 후보 · 실알림 유지</span>
   </div>
+  <div class="callout" id="book-validation-evidence" style="scroll-margin-top:80px;">
+    <p><strong>⑨ 같은 자료를 더 맞추는 대신, 규칙을 고정하고 새 날짜에서 확인한다</strong></p>
+    <p style="margin-top:0.6rem;">앞 비교에는 하방 감소라는 단서와 상방 손실·구간별 역전이라는 약점이 함께 있었다. 여기서 같은20일의 조건을 다시 손보면 좋아 보이는 결과를 만들 수 있다. 다음 단계는 조건 추가가 아니라 <strong>그 규칙 그대로10-01~30의 새 날짜를 평가하는 연결</strong>이다. 첫 구간이 시작되기 전에 규칙·소스·R1 버전을 봉인하고, 기존 다음날 마감 작업이 완성된24시간 결과를 붙인다.30일은 첫 관찰 창일 뿐 자동 채택 기준이 아니다.</p>
+    <p style="margin-top:0.6rem;">이는 <strong>고정 규칙의 새 날짜 사후 재생</strong>이다. 새 선택을 진입 전에 저장한 실시간 forward라고 부르지 않는다. 원 R1·L1 선택·같은 거래대금/변동성 구간의 무작위 기대값을 같은 날짜에서 비교한다. 빠진 종목을 삭제하고 다시 고르거나, 누락된 날을0수익으로 채우지 않는다.</p>
+    <p style="margin-top:0.6rem;">완료 날짜는 불변 기록으로 남기고 다음 실행에서는 입력 해시·선택·산술을 확인한다. 신규 원호가 계산은 실행당 최대2일·300초로 제한했고, 이 연구가 실패해도 기존 추천 경로는 계속된다. 누락·지연·검사 실패는 상태 점검과 <a href="/projects/prelude/dashboard/#bookValidationSection" style="color:var(--blue);">별도 새 날짜 검증 패널</a>에서 드러난다. 백업에도 같은 증거 묶음을 포함했다.</p>
+    <p style="margin-top:0.6rem;">09-30 기준 새 구간의 완결 표본은<strong>0일</strong>이다. 첫24시간 결과는10-02 마감 이후 확인할 수 있다. 지금 완료한 것은 검증을 이어가는 기능이며 추천 우위의 입증이 아니다. 규칙의 자동 학습·실알림 전환·주문은 하지 않는다. 설계와 검증 기록은 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES25차</a>에 남긴다.</p>
+    <span class="badge badge-pivot">새 날짜 자동 평가 연결 · 표본 대기 · 우위 미입증</span>
+  </div>
 </div></section>
 <hr class="divider">
 
