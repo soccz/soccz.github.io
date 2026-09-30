@@ -1,19 +1,19 @@
 {
-  "asof": "2026-09-30T17:00:13+00:00",
+  "asof": "2026-09-30T17:06:50+00:00",
   "ic": {
     "short_6h": {
-      "live_30d_mean": 0.081907,
+      "live_30d_mean": 0.08137,
       "holdout": 0.0907,
       "holdout_tstat": 5.95,
       "holdout_n": 47,
       "gate": "WARN"
     },
     "long_12h": {
-      "live_30d_mean": 0.121793,
+      "live_30d_mean": 0.123394,
       "holdout": 0.1312,
       "holdout_tstat": 4.57,
       "holdout_n": 23,
-      "gate": "FREEZE"
+      "gate": "WARN"
     }
   },
   "realized_30d": {
@@ -48,8 +48,8 @@
   },
   "realized_basis": "SHORT actionable only; WATCH_LONG observation only; paper/proxy returns",
   "model_age_days": {
-    "xsec_6h.pkl": 2.87,
-    "xsec_12h.pkl": 2.87
+    "xsec_6h.pkl": 2.88,
+    "xsec_12h.pkl": 2.88
   },
   "cost_assumptions": {
     "SHORT": 0.3,
