@@ -1927,7 +1927,7 @@ function renderRotationPilot(summary) {
   if (!state || state.status === 'not_started') { meta.textContent = '파일럿 미등록 · 관찰 원장과 별도'; return; }
   const statuses = {observing: '등록·자동 관찰 중', insufficient_evidence: '종료 · 자료 부족', policy_not_exercised: '종료 · 정책 작동 자료 부족', pilot_complete_not_confirmatory: '파일럿 완료 · 우위 확정 아님', integrity_failure: '무결성 실패 · 실험 중단', attention: '운영 확인 필요'};
   const localTime = value => value ? new Date(value).toLocaleString('ko-KR', {timeZone: 'Asia/Seoul', hour12: false}) + ' KST' : '없음';
-  const stale = Date.now() - Date.parse(state.checked_at) > 30 * 60 * 1000;
+  const stale = Date.now() - Date.parse(state.checked_at) > 90 * 60 * 1000;
   meta.textContent = `${statuses[state.status] || state.status} · ${stale ? '게시된 점검 기록 지연 · ' : ''}${localTime(state.checked_at)}`;
   if (!state.protocol) { document.getElementById('rotationDecision').textContent = '성과 해석 보류 · 운영 추천은 별도 유지'; return; }
   const p = state.protocol, decision = state.decision || {}, counts = decision.counts || {}, stats = decision.statistics || {};
