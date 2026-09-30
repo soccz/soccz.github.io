@@ -1686,18 +1686,34 @@
     <h3>60회를 한 번 더 기다리자는 계획을 버렸다</h3>
     <p>과거 변동성을 사용한 양측 5%·목표 검정력 80% 정규 근사에서, 0.50%p 차이는 약 304회(매일 유효 4회면 76일), 0.25%p는 1,204회(301일)가 필요했다. 미래 변동성과 국면 분포가 같다는 보장은 없고, 적응형 전환은 다른 비교 지표다. 이 숫자를 기다리면 성공하는 날짜로 제시하지 않는다.</p>
     <p><strong>다음 후보를 구체화했다:</strong> 국면별로 2회 연속 주간 확인, 14일 냉각, 모델 75%·반전 25%까지의 제한적 혼합과 비중 변경 비용을 구현·테스트했다. 84일·336회는 정책이 실제로 작동하는 빈도와 새로운 차이값의 분산을 측정하는 파일럿 설계다. 우위 확정용 기간이 아니다.</p>
-    <p><strong>현재 경계:</strong> 분석과 후보 함수는 완료했지만 별도 파일럿을 등록하거나 실제 추천에 연결하지 않았다. 실행 전 비중 저장·독립 원장·정산·종료 처리가 필요하다. 기존 국면 관찰은 계속되며 텔레그램의 실제 추천 정책은 바뀌지 않는다.</p>
-    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#trial-diagnostics">사후 진단 수치와 표본 설계</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/completed_trial_analysis.md">분석 전체와 재현</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/rotation_followup.md">후속 규칙·미구현 경계</a></div>
+    <p><strong>13:41 당시의 경계:</strong> 분석과 후보 함수는 완료했지만 별도 파일럿을 등록하거나 실제 추천에 연결하지 않았다. 실행 전 비중 저장·독립 원장·정산·종료 처리가 남아 있었다. 이후 구현은 아래 별도 기록으로 남긴다.</p>
+    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#trial-diagnostics">사후 진단 수치와 표본 설계</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/completed_trial_analysis.md">분석 전체와 재현</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/rotation_followup.md">후속 규칙·이후 구현</a></div>
     <p>방법 참고: <a href="https://www.itl.nist.gov/div898/handbook/prc/section2/prc222.htm">NIST 표본 크기 계산</a>. 코드 테스트 통과는 전략 수익성 검증이 아니다.</p>
+  </article>
+</div></section>
+<hr class="divider">
+
+<section id="rotation-pilot-activation"><div class="container fade-in">
+  <div class="section-label">2026-09-30 · 후속 구현</div>
+  <h2 class="section-title">설계에서 멈추지 않고, 진입 전 결정부터 기록한다</h2>
+  <article class="journal-entry">
+    <h3>후보 함수를 만드는 것과 실험을 가동하는 것은 달랐다</h3>
+    <p>앞 단계에는 분석과 규칙 테스트만 있었고, 실제 비중을 미리 저장하는 경로가 없었다. 이에 별도 336회 파일럿 원장을 만들고 기존 10분 점검 서비스에서 캡처·정산·복원·종료까지 처리하도록 연결했다. 등록 시 첫 회차와 마지막 회차, 가격 유예를 포함한 처리 기한을 고정한다. 실제 가동 시각과 표본 수는 아래 대시보드에 남긴다.</p>
+    <p><strong>14:08 KST 실제 등록.</strong> 첫 회차는 9월 30일 20시, 마지막은 12월 23일 14시다. 최종 자료 처리 기한은 12월 25일 21시로 고정했다. 등록 직후 성과는 0건이며, 동일 디스크 사본의 복원 검증은 통과했다. 앞서 14시에 저장한 관찰을 이 파일럿의 성과로 소급 편입하지 않았다.</p>
+    <p><strong>나중에 맞춘 선택은 기록하지 않는다.</strong> 원래 국면 관찰에서 저장한 점수와 종목을 읽고, 신호 +45분 이내에 연구 비중을 저장한다. 다음 정시 진입 이후에야 결정된 비중은 소급 편입하지 않고 누락으로 남긴다. 주간 결정도 당시 평가가 끝난 자료만 사용하고, 원본 예측·결과를 함께 보존한다.</p>
+    <p><strong>실패도 끝나는 결과다.</strong> 자료 누락, 가격 오류, 원본·코드 변조, 전환 비중이 충분히 작동하지 않은 경우를 나눠 기록한다. 336회가 끝나도 수익 우위를 자동 선언하지 않으며, 좋은 숫자가 나올 때까지 연장하지 않는다. 코드와 원장은 20TB 작업 디스크에서 사본·임시 복원을 검증하되 물리 디스크 고장은 보호하지 않는다.</p>
+    <p><strong>실제 추천과의 경계:</strong> 텔레그램 코인 보고, SHORT 최대 5개, LONG 실행 0은 유지한다. 연구 원장에서만 기존 모델과 제한적 반전 혼합을 비교한다. 가동 확인과 수익성 입증은 서로 다른 단계다.</p>
+    <p><strong>같은 날 확인한 성능 경고.</strong> 14시 정기 실행에서 SHORT IC가 최근 두 번 −0.1040, −0.0762로 동결 기준을 충족했다. 게이트를 완화하지 않았고, 5개 코인은 비실행 참고 상태로 14:05 KST에 전송 확인됐다. 데이터·파일럿·백업 점검 성공과 신호 성능 악화는 함께 존재한다. 이 사실을 새 실험의 성공으로 덮지 않는다.</p>
+    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#rotation-pilot">파일럿 등록·비중·성과·복원 상태</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/rotation_followup.md">자동 실행 계약과 종료 조건</a></div>
   </article>
 </div></section>
 <hr class="divider">
 
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">2026-09-30 · 고정 실험 종료 / 국면별 관찰</div>
+  <div class="section-label">2026-09-30 · 고정 실험 종료 / 별도 전환 파일럿 등록</div>
   <h2 class="section-title">우위는 미확정, 다음 질문은 국면별 지속성</h2>
-  <p class="section-desc">60회 고정 비교는 효과 판단 보류로 종료했다. 정상 회차 코인 보고는 계속하며, 국면별 성과는 별도 원장에 관찰한다. SHORT IC는 감사 당시 WARN이었다. 백업은 운영자 선택에 따라 동일 디스크 복구용 사본으로 유지하며, 디스크 고장 보호는 제공하지 않는다. 변하는 상태는 <a href="/projects/xsec-alpha/dashboard/" style="color:var(--accent);">대시보드</a>의 시각과 함께 확인한다.</p>
+  <p class="section-desc">60회 고정 비교는 효과 판단 보류로 종료했다. 정상 회차 코인 보고는 계속하며, 국면별 관찰과 별도 336회 전환 파일럿을 자동 점검한다. 실제 추천 비중은 바꾸지 않았다. 9월 30일 14시 실행 이후 SHORT는 FREEZE로, 비실행 참고 후보만 전송했다. 백업은 운영자 선택에 따라 동일 디스크 복구용 사본으로 유지하며, 디스크 고장 보호는 제공하지 않는다. 변하는 상태는 <a href="/projects/xsec-alpha/dashboard/" style="color:var(--accent);">대시보드</a>의 시각과 함께 확인한다.</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--green);">
