@@ -215,6 +215,9 @@
     #ic-incident table { width: 100%; min-width: 0; table-layout: fixed; }
     #ic-incident th, #ic-incident td { white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
     #ic-incident h3 { margin: 1.4rem 0 0.7rem; font-size: 1rem; }
+    #forecast-audit table { width: 100%; min-width: 0; table-layout: fixed; }
+    #forecast-audit th, #forecast-audit td { white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+    #forecast-audit h3 { margin: 1.4rem 0 0.7rem; font-size: 1rem; }
     .scroll-y { max-height: 520px; overflow-y: auto; overflow-x: auto; }
     .scroll-y table.data thead th { position: sticky; top: 0; background: var(--bg-secondary); z-index: 1; box-shadow: 0 1px 0 var(--border); }
 
@@ -424,6 +427,7 @@
     <li><a href="#regime-observation">국면별 관찰</a></li>
     <li><a href="#rotation-pilot">전환 파일럿</a></li>
     <li><a href="#ic-incident">동결 원인 진단</a></li>
+    <li><a href="#forecast-audit">원본 예측 성적표</a></li>
     <li><a href="#journey">질문과 근거</a></li>
     <li><a href="#contract">현재 운영 계약</a></li>
     <li><a href="#kpi">kpi</a></li>
@@ -704,6 +708,24 @@
     <p class="card-meta">양측 5%, 목표 검정력 80%, 과거 분산 유지·하루 유효 4회 가정. 국면별 도착 속도와 미래 분산은 다를 수 있다. 고정 모델−반전 비교의 계산이며 적응형 전환의 검정력이 아니다.</p>
     <p class="card-meta" id="diagnosticPlan"></p>
     <p class="story-ref"><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/rotation_followup.md">전환 후보의 결정·비용·종료 규칙</a> · <a href="https://www.itl.nist.gov/div898/handbook/prc/section2/prc222.htm">표본 계산 출처: NIST</a></p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="forecast-audit">
+  <div class="container">
+    <div class="section-label">saved forecast audit · 운영 측정</div>
+    <h2 class="section-title">당시 예측을 그대로 채점한다</h2>
+    <p class="story-ref"><a href="/projects/xsec-alpha/#automatic-scorecard">개발일지: 기록에서 자동 검증까지</a> · <a href="https://github.com/soccz/xsec_alpha/blob/main/docs/forecast_audit.md">평가·누락·호가 관찰 규칙</a></p>
+    <p class="card-meta" id="forecastAuditMeta"></p>
+    <table class="data" id="forecastAuditTable"></table>
+    <p class="card-meta" id="forecastAuditAlerts"></p>
+    <table class="data" id="forecastAuditHistory"></table>
+    <h3>같은 추천의 Bitget 호가 관찰</h3>
+    <table class="data" id="venueAuditTable"></table>
+    <table class="data" id="venueAuditHistory"></table>
+    <p class="card-meta">Bitget 관찰은 진입·종료 기준 정시부터 5분 이내에 받은 호가만 사용한다. SHORT는 진입 bid·종료 ask 기준이며 시장가 체결 보장이 아니다. 거래소·통화·시각 차이가 섞여 있고 실제 펀딩 현금흐름과 시장 충격은 미측정이다. 비실행 후보의 비교 성적을 계좌 수익으로 취급하지 않는다. 기존 게이트·추천·등록 실험은 변경하지 않는다.</p>
   </div>
 </section>
 
@@ -1894,6 +1916,7 @@ function renderProspective(summary) {
   renderTrialDiagnostics(summary);
   renderRotationPilot(summary);
   renderIcIncident(summary);
+  renderForecastAudit(summary);
   const trial = summary.prospective_experiment || {status: 'not_started'};
   const statuses = {not_started: '미등록', error: '실험 원장 확인 필요', collecting: '수집 중', ready_for_review: '60회 수집 완료 · 별도 검토 필요', incomplete_evidence: '종료 · 누락으로 근거 불충분'};
   const p = trial.protocol;
@@ -1946,6 +1969,46 @@ function renderTrialDiagnostics(summary) {
   const plan = state.followup_plan;
   const registered = summary.rotation_pilot?.protocol;
   document.getElementById('diagnosticPlan').textContent = plan ? `${registered ? '후속 파일럿 별도 등록 · 현재 기록은 전환 파일럿 절에 표시.' : '전환 후보: 설계 완료, 별도 파일럿 등록 기록 없음.'} ${plan.calendar_days}일 / ${plan.scheduled_windows}회는 실행 가능성 평가이며 우위 확정 실험이 아님. 2회 연속 주간 확인·14일 냉각·최대 반전 25% 혼합. 실제 추천 변경 없음.` : '전환 후보 설계 기록 없음';
+}
+
+function renderForecastAudit(summary) {
+  const state = summary.forecast_audit;
+  const meta = document.getElementById('forecastAuditMeta');
+  for (const id of ['forecastAuditTable','forecastAuditHistory','forecastAuditAlerts','venueAuditTable','venueAuditHistory']) document.getElementById(id).textContent = '';
+  if (!state) { meta.textContent = '자동 성적표 등록 기록 없음'; return; }
+  const stamp = value => value ? new Date(value).toLocaleString('ko-KR', {timeZone:'Asia/Seoul',hour12:false}) + ' KST' : '없음';
+  const dec = value => value == null ? '자료 대기' : Number(value).toFixed(4);
+  const status = {monitoring:'자동 점검 중',attention:'누락·전송·가격 확인 필요',error:'자동 처리 실패'};
+  const stale = Date.now() - Date.parse(state.checked_at) > 90*60000;
+  meta.textContent = `${status[state.status] || state.status} · ${stamp(state.checked_at)}${stale ? ' · 게시된 점검 기록 지연' : ''}`;
+  const alerts = document.getElementById('forecastAuditAlerts');
+  if (!state.policy) { alerts.textContent = (state.errors || ['평가 상태 미확인']).join(' · '); return; }
+  const c = state.counts || {}, first = state.first_cycle;
+  const statuses = {recorded:'만기·가격 대기',evaluated:'평가 완료',invalid:'평가 불가',missed:'신호 누락',awaiting_signal:'생성 대기'};
+  const reasons = {waiting_maturity:'평가 시간 전',missing_prices:'원시 가격 부족',duplicate_prices:'원시 가격 중복',invalid_prices:'원시 가격 오류',constant_ranks:'순위 변화 없음',evaluation_deadline:'평가 기한 초과'};
+  const two = rows => '<thead><tr><th>항목</th><th>현재 기록</th></tr></thead><tbody>'+rows.map(([a,b])=>`<tr><td>${escapeHtml(a)}</td><td>${escapeHtml(b)}</td></tr>`).join('')+'</tbody>';
+  const backup = summary.experiment_supervision?.forecast_backup;
+  document.getElementById('forecastAuditTable').innerHTML = two([
+    ['설치 / 첫 정기 신호', `${stamp(state.policy.registered_at)} / ${stamp(state.policy.first_signal_at)}`],
+    ['원본 / 평가 / 도래 회차', `${c.recorded ?? 0} / ${c.evaluated ?? 0} / ${c.scheduled ?? 0}`],
+    ['대기 / 신호 누락 / 평가 불가', `${c.pending ?? 0} / ${c.missed ?? 0} / ${c.invalid ?? 0}`],
+    ['저장 예측 평균 IC', `${dec(state.mean_saved_ic)} · 완결 표본 기술 통계, 모델 버전 혼합 가능`],
+    ['기존 IC 대조 / 차이 경고', `${c.compared ?? 0} / ${c.differences ?? 0} · 절대 차이 0.03 이상, 유의성 검정 아님`],
+    ['첫 회차 연결 확인', !first ? '첫 정기 실행 대기' : first.delivery === 'verified' ? '원본 해시 일치 · Telegram API 수신 확인' : first.delivery === 'waiting' ? '원본·전송 확인 대기' : '원본 또는 전송 연결 미확인'],
+    ['진단 원장 복원', backup?.restore_verified ? '동일 디스크 사본·복원 검증 완료 · 디스크 고장 보호 없음' : '검증 기록 대기'],
+  ]);
+  const issues = {latest_signal_missing:'최근 회차 원본 누락',latest_delivery_unverified:'최근 회차 Telegram 연결 미확인',latest_outcome_invalid:'최근 평가 원시 가격·기한 확인 필요'};
+  alerts.textContent = [...(state.operational_issues || []).map(x=>issues[x] || x), ...(state.errors || [])].join(' · ') || '원본 전체 종목을 고정 평가한다. 누락 가격을 채우거나 좋은 회차만 골라 집계하지 않으며 기존 IC 이력은 별도로 보존한다.';
+  document.getElementById('forecastAuditHistory').innerHTML = '<thead><tr><th>신호 / 상태</th><th>원본 IC / 기존 IC</th><th>차이 / 대조 근거</th></tr></thead><tbody>'+((state.recent_windows || []).map(r=>`<tr><td>${escapeHtml(stamp(r.signal_at))}<br>${escapeHtml(statuses[r.status] || r.status)}${r.reason ? '<br>'+escapeHtml(reasons[r.reason] || r.reason) : ''}</td><td>${dec(r.saved_ic)} / ${dec(r.legacy_ic)}</td><td>${dec(r.difference)}${r.comparison_warning ? ' · 차이 경고' : ''}<br>${r.same_model == null ? '재계산 원본 대기' : r.same_model ? '같은 모델' : '다른 모델'} · ${r.same_pool == null ? '종목군 미확인' : r.same_pool ? '같은 종목군' : '다른 종목군'}<br>${r.measurement_matches_history ? '평가 원본과 이력 수치 일치' : '이력·평가 원본 일치 미확인'}</td></tr>`).join('') || '<tr><td colspan="3">첫 미래 회차 대기 · 과거 예측 소급 편입 없음</td></tr>')+'</tbody>';
+  const v = state.venue || {};
+  document.getElementById('venueAuditTable').innerHTML = two([
+    ['선택 고정 / 비교 평가 / 평가 불가', `${v.recorded ?? 0} / ${v.evaluated ?? 0} / ${v.invalid ?? 0}`],
+    ['진입·종료 관찰 기록', `${v.quotes ?? 0}건 · 놓친 시각은 현재 호가로 복원하지 않음`],
+    ['관찰 상태', v.status === 'attention' ? '관찰 누락·오류 확인 필요' : '미래 호가 관찰 중'],
+    ['비용 가정', `${state.policy.venue?.fee_and_extra_bps ?? '미확인'}bp · 호가 스프레드 포함 계산, 실제 펀딩 정산 아님`],
+  ]);
+  const quoteStatus = {waiting:'대기',observed:'관찰',invalid:'오류',failed:'수집 실패',missed:'놓침'};
+  document.getElementById('venueAuditHistory').innerHTML = '<thead><tr><th>회차 / 진입·종료</th><th>같은 종목군 IC<br>Bitget / Upbit</th><th>가정비용 후 비교<br>모델 5 / 선택 5</th></tr></thead><tbody>'+((v.recent_windows || []).map(r=>`<tr><td>${escapeHtml(stamp(r.signal_at))}<br>${escapeHtml(quoteStatus[r.entry_status] || r.entry_status)} / ${escapeHtml(quoteStatus[r.exit_status] || r.exit_status)}${r.reason ? '<br>'+escapeHtml(r.reason) : ''}</td><td>${dec(r.venue_ic)} / ${dec(r.upbit_same_pool_ic)}</td><td>${r.model_short_cost_proxy_pct == null ? '자료 대기' : fmtPct(r.model_short_cost_proxy_pct)} / ${r.selected_short_cost_proxy_pct == null ? '자료 대기' : fmtPct(r.selected_short_cost_proxy_pct)}</td></tr>`).join('') || '<tr><td colspan="3">미래 진입·종료 호가 대기 · API 연결 점검을 성과로 넣지 않음</td></tr>')+'</tbody>';
 }
 
 function renderIcIncident(summary) {
