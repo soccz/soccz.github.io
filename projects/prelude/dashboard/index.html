@@ -90,6 +90,7 @@
     .current-card dt { color: var(--text-secondary); }
     #researchProgressSection { scroll-margin-top: 80px; }
     #researchProgress .current-card dt { word-break: keep-all; overflow-wrap: normal; }
+    #researchProgress .current-card { scroll-margin-top: 80px; }
     .current-card dd { margin: 0; text-align: right; }
     .current-note { margin: 0.9rem 0 0; font-size: 0.78rem; color: var(--text-secondary); line-height: 1.8; }
     .current-fallback { padding: 1.3rem; border: 1px solid var(--border); border-radius: 8px; color: var(--text-secondary); }
@@ -683,6 +684,7 @@
       </article>
     </div>
     <p class="current-note"><strong>09-30 추가 호가 검증:</strong> 전체100후보·20일에서 거래대금/변동성 구간을 맞춘927쌍을 비교했습니다. 좁은 스프레드의 EOD net 차이는+0.037%p였지만 날짜 block 신뢰구간[−0.863,+0.564]%p, 앞/뒤10일의 부호 반전과 safe-up 감소가 있어 새 필터를 적용하지 않았습니다. R1 대비 전략 성과가 아닌 관찰 진단입니다. <a href="/projects/prelude/#spread-evidence">호가 자료를 확인한 후속 일지</a>.</p>
+    <p class="current-note"><strong>09-30 L1 잔량 후속:</strong> 같은20일·927쌍에서 높은 매수호가대금 비중 쪽은 up10+1.527%p·dn5−1.857%p·EOD net+0.180%p의 차이를 보였습니다. 다만 앞/뒤 net−0.320/+0.681%p, block CI[−0.485,+0.984]%p로 안정적 우위는 미입증입니다. 취소 가능한 대기 잔량의 관찰 단서이며 R1 Top3 비교가 아닙니다. 실알림은 그대로입니다. <a href="/projects/prelude/#book-pressure-evidence">새 단서와 보류 이유</a>.</p>
     <p class="current-note"><a href="/projects/prelude/#selection-evidence">가설 → 비교 → 실패 → 다음 질문의 개발일지</a> · <a href="https://github.com/soccz/prelude/blob/main/PHASES.md">구간별 분모·제외·독립 검산 기록</a>. 일일 운영 카드는 실행 상태만 제공하며 누적 연구 효과를 계산하는 패널은 아닙니다.</p>
   </div>
 </section>
@@ -1709,7 +1711,7 @@ function renderResearchProgress(progress) {
   const root = document.getElementById('researchProgress');
   const asof = document.getElementById('researchProgressAsOf');
   if (!root || !asof) return;
-  const valid = progress?.schema === 'prelude_dashboard_research.v1'
+  const valid = ['prelude_dashboard_research.v1', 'prelude_dashboard_research.v2'].includes(progress?.schema)
     && progress.automatic_promotion === false
     && ['evaluated', 'incomplete'].includes(progress.status)
     && progress.trials?.boundary && progress.trials?.shortlist && progress.forward;
@@ -1747,7 +1749,30 @@ function renderResearchProgress(progress) {
     + row('과거 제외일', `${count(forward.excluded_dates)}일`)
     + row('최근 성과 선택 · 교체 픽', `${count(forward.changed_picks?.recent)}개`)
     + row('같은 시장 상태 선택 · 교체 픽', `${count(forward.changed_picks?.same_context)}개`);
-  cards.push(`<article class="current-card"><h3>시즌별 선택 · 별도 사전 기록</h3><dl>${forwardBody}</dl><p class="current-note">기록일과 결과 완결일은 다릅니다. 교체 픽은 완결 비교일의 원 R1 대비 차이입니다. 교체0개면 다른 선택의 효과를 아직 관측하지 못한 것입니다. 이 패널은 정책 성과·채택 판정이 아닌 누적 진행 상황을 표시합니다.</p></article>`);
+  cards.push(`<article class="current-card"><h3>시즌별 선택 · 별도 사전 기록</h3><dl>${forwardBody}</dl><p class="current-note">기록일과 결과 완결일은 다릅니다. 교체 픽은 완결 비교일의 원 R1 대비 차이입니다. 교체0개면 다른 선택의 효과를 아직 관측하지 못한 것입니다. 자동 승격·실알림 전환은 하지 않습니다.</p></article>`);
+  if (progress.schema === 'prelude_dashboard_research.v2' && forward.policies) {
+    for (const [name, title] of [['fixed_r1', '기존 R1 고정'], ['recent', '최근 성과로 선택'], ['same_context', '같은 시장 상태로 선택']]) {
+      const policy = forward.policies[name];
+      if (!policy) continue;
+      let body = row('동일 날짜 / 픽(각 방식)', `${count(policy.n_dates)}일 / ${count(policy.picks_per_arm)}개`)
+        + row('변경일 / 동일일', `${count(policy.changed_dates)}일 / ${count(policy.no_op_dates)}일`)
+        + row('R1 대비 교체 픽', `${count(policy.changed_picks)}개`);
+      if (policy.n_dates > 0 && policy.metrics && policy.minus_fixed_r1) {
+        for (const [key, label] of [['eod_return_net', '24h 말 net'], ['dn5', '−5% 경험'], ['up10', '+10% 경험']]) {
+          const ci = policy.difference_block_ci95?.[key];
+          body += row(label, `${pct(policy.metrics[key])}%`)
+            + row(`${label} · R1 대비 차이`, `${pct(policy.minus_fixed_r1[key])}%p`)
+            + row(`${label} 차이 95% 구간`, Array.isArray(ci) && ci.length === 2 ? `[${pct(ci[0])}, ${pct(ci[1])}]%p` : '비교 날짜 부족');
+        }
+      }
+      const note = policy.n_dates === 0 ? '완결 비교가 없어 성과 수치를 표시하지 않습니다.'
+        : policy.changed_picks === 0 ? 'R1과 같은 선택뿐입니다. 0차이는 정책 개선의 증거가 아닙니다.'
+        : '같은 날짜의 R1과 비교한 관측치입니다. net·상방 차이는 높을수록, 하방 경험 차이는 낮을수록 유리하며 채택 판정은 별도입니다.';
+      cards.push(`<article class="current-card"><h3>${escapeHtml(title)}</h3><dl>${body}</dl><p class="current-note">${note}</p></article>`);
+    }
+  } else {
+    cards.push('<article class="current-card"><h3>국면별 성과</h3><p class="current-note">이전 게시본에는 정책별 성과가 없습니다. 미제공을 0수익으로 해석하지 마세요.</p></article>');
+  }
   root.innerHTML = (progress.status === 'incomplete'
     ? '<p class="current-fallback">최신 마감일 자료가 불완전합니다. 아래 수치는 확보된 비교 표본만의 요약이며 전체 정상 완료가 아닙니다.</p>' : '')
     + '<div class="current-grid">' + cards.join('') + '</div>';
