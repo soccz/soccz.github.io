@@ -1743,6 +1743,21 @@
 </div></section>
 <hr class="divider">
 
+<section id="audit-failure-isolation"><div class="container fade-in">
+  <div class="section-label">2026-09-30 · 장애 전파와 복구 검증</div>
+  <h2 class="section-title">오류 하나가 정상 기록까지 지우지 않도록</h2>
+  <article class="journal-entry">
+  <h3>자동 실행을 연결한 뒤에도 남아 있던 결함</h3>
+  <p>저장 점수 채점, 기존 IC 비교, 보고서 읽기를 한 번에 처리하던 구조에서는 비교 파일 하나가 깨져도 같은 실행의 정상 기록까지 취소될 수 있었다. 장애 입력을 넣은 회귀 테스트로 이를 재현했다. 실제 운영 자료가 손상됐다는 주장이 아니라, 운영 전에 확인한 실패 경로다.</p>
+  <p>입력 단계와 회차별로 실패를 분리했다. 손상된 신호 원본은 평가하지 않지만 다른 회차는 계속 처리한다. 가격 DB를 읽지 못해도 새 신호와 전송 확인은 보존한다. 비교 자료나 거래소 매핑이 잘못돼도 정상적인 원본 채점은 취소하지 않는다. 원장 자체의 무결성이 깨진 경우에는 여전히 중단한다.</p>
+  <h3>복구됐다는 이유로 실패를 지우지 않는다</h3>
+  <p>오류 발생과 복구 확인을 추가 전용 원장에 순서대로 남긴다. 같은 장애가 계속되는 동안 중복 기록을 쌓지 않으며, 복구 후에도 앞선 기록은 유지한다. 대시보드에서 자료 대기, 입력 오류, 기한 초과 누락을 구별한다. 기존 백업은 계속 읽을 수 있고 등록 규약과 평가 기준은 바꾸지 않는다.</p>
+  <p>기존 IC 측정기가 5종목부터 허용하는 평가를 새 비교기가 10종목 미만이라는 이유로 거부하던 문제도 고쳤다. 5종목 재계산 이력은 비교 근거로만 받아들이며, 원본 전체 종목 채점의 최소 10종목 기준과 불완전 종목군 평가 금지는 유지한다. 이는 정확도가 올라갔다는 결과가 아니라 측정 과정의 신뢰성을 보강한 작업이다.</p>
+  <div class="evidence-links"><a href="dashboard/#forecast-audit">현재 상태·장애·복구 이력</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/forecast_audit.md#입력-장애-격리와-복구-이력">실패 처리 규칙</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
   <div class="section-label">2026-09-30 · 고정 실험 종료 / 별도 전환 파일럿 등록</div>
