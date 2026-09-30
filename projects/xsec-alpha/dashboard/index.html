@@ -725,6 +725,12 @@
     <p class="card-meta" id="forecastAuditMeta"></p>
     <table class="data" id="forecastAuditTable"></table>
     <p class="card-meta" id="forecastAuditAlerts"></p>
+    <h3>첫 실제 회차의 운영 검증</h3>
+    <p class="card-meta" id="operatingAcceptanceMeta"></p>
+    <table class="data" id="operatingAcceptanceTable"></table>
+    <h3>같은 회차의 게이트 판단 비교</h3>
+    <table class="data" id="gateShadowTable"></table>
+    <p class="card-meta">비교 판단은 운영 게이트가 아니다. 현재 운영 기준은 기존 재계산 IC이며 자동 전환하지 않는다. 세 회차 비교는 처리 경로 점검이지 수익 우위 검정이 아니다. <a href="https://github.com/soccz/xsec_alpha/blob/main/docs/operating_acceptance.md">전환·복구 조건</a></p>
     <table class="data" id="forecastAuditHistory"></table>
     <h3>입력 장애와 복구 이력</h3>
     <table class="data" id="forecastIngestionHistory"></table>
@@ -1991,7 +1997,7 @@ function renderForecastAudit(summary) {
   const meta = document.getElementById('forecastAuditMeta');
   document.getElementById('selectionTraceFilter').onchange = null;
   document.getElementById('selectionTraceFilter').disabled = true;
-  for (const id of ['forecastAuditTable','forecastAuditHistory','forecastAuditAlerts','forecastIngestionHistory','selectionTraceMeta','selectionTraceTable','venueAuditTable','venueAuditHistory','executionAuditTable','executionAuditHistory','executionAuditFailures']) document.getElementById(id).textContent = '';
+  for (const id of ['forecastAuditTable','forecastAuditHistory','forecastAuditAlerts','forecastIngestionHistory','selectionTraceMeta','selectionTraceTable','venueAuditTable','venueAuditHistory','executionAuditTable','executionAuditHistory','executionAuditFailures','operatingAcceptanceMeta','operatingAcceptanceTable','gateShadowTable']) document.getElementById(id).textContent = '';
   if (!state) { meta.textContent = '자동 성적표 등록 기록 없음'; return; }
   const stamp = value => value ? new Date(value).toLocaleString('ko-KR', {timeZone:'Asia/Seoul',hour12:false}) + ' KST' : '없음';
   const dec = value => value == null ? '자료 대기' : Number(value).toFixed(4);
@@ -2007,6 +2013,28 @@ function renderForecastAudit(summary) {
   const stages = {signal:'신호 원본',prices:'가격 DB',outcome:'가격 채점',history:'기존 IC 파일',history_row:'기존 IC 회차',measurement:'재계산 원본',comparison:'IC 비교',report:'Telegram 보고서'};
   const two = rows => '<thead><tr><th>항목</th><th>현재 기록</th></tr></thead><tbody>'+rows.map(([a,b])=>`<tr><td>${escapeHtml(a)}</td><td>${escapeHtml(b)}</td></tr>`).join('')+'</tbody>';
   const backup = summary.experiment_supervision?.forecast_backup;
+  const acceptance = summary.experiment_supervision?.operating_acceptance;
+  const cycle = acceptance?.cycle || state.lifecycle;
+  const cycleStates = {awaiting_future:'첫 미래 회차 대기',observing:'실제 회차 진행 중',complete:'운영 경로 확인 완료',closed_with_gaps:'공백을 남긴 종료',awaiting_backup:'종결 자료 복원 확인 대기',awaiting_publication:'공개 페이지 반영 확인 대기'};
+  const cycleStages = {signal:'당시 원본 점수',telegram:'Telegram 수신·원본 연결',selection:'선정 과정 재현',venue_intent:'진입 전 후보 고정',entry_quote:'진입 호가',exit_quote:'종료 호가',saved_score:'원시 가격 채점',depth_sizes:'금액별 잔량 계산',funding_history:'확정 정산율 이력'};
+  const stageStates = {passed:'확인',failed:'누락·실패·불확실',waiting:'대기'};
+  const acceptanceStatus = acceptance?.status || (cycle?.terminal ? 'awaiting_backup' : cycle?.status);
+  document.getElementById('operatingAcceptanceMeta').textContent = cycle ? `${cycleStates[acceptanceStatus] || acceptanceStatus} · ${stamp(cycle.signal_at)} · 수익성 검증과 별개` : '운영 검증 기록 대기';
+  document.getElementById('operatingAcceptanceTable').innerHTML = two([
+    ...(cycle?.stages || []).map(r=>[cycleStages[r.name] || r.name, stageStates[r.status] || r.status]),
+    ['같은 증거의 복원', acceptance?.backup_verified ? '원본 해시와 복원 사본 일치' : '확인 대기'],
+    ['공개 데이터 수신', acceptance?.publication?.status === 'verified' ? '종결 기록·암호화 데이터 해시 확인' : '서버의 push 성공과 별도 확인'],
+    ['원장 행 수 / 수집 단계', `${state.timings?.ledger_rows ?? '미확인'} / ${state.timings?.capture_seconds ?? '미확인'}초`],
+    ['평가 단계 / 감사 전체', `${state.timings?.settlement_seconds ?? '미확인'}초 / ${state.timings?.total_seconds ?? '미확인'}초`],
+  ]);
+  const shadow = state.gate_shadow || {};
+  const gateReasons = {fewer_than_three_matured_slots:'만기 도래 세 회차 미충족',incomplete_consecutive_scores:'연속 회차 원본 성적 누락',model_cohort_not_constant:'모델 버전 혼합 또는 미확인'};
+  document.getElementById('gateShadowTable').innerHTML = two([
+    ['현재 운영 판단 출처', '기존 재계산 IC · 변경 없음'],
+    ['원본 IC의 참고 판단', shadow.saved_status || '판단 불가'],
+    ['같은 회차 기존 IC 판단', shadow.matched_legacy_status || '판단 불가'],
+    ['비교 회차 수 / 제한', `${shadow.slots?.length ?? 0} / ${(shadow.reasons || []).map(r=>gateReasons[r] || r).join(' · ') || '자동 승격·전환 없음'}`],
+  ]);
   const selection = state.selection || {}, selectionMeta = document.getElementById('selectionTraceMeta');
   document.getElementById('selectionTraceFilter').disabled = selection.status !== 'recorded';
   const selectionReasons = {not_tradable:'거래 대상 제외',gate_blocked:'안전 게이트 차단',buffer_retained:'이전 추천 유지',selected_rank:'순위 선정',selected_tie:'동점 순서',outside_selection:'선정 범위 밖'};
