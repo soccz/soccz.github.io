@@ -89,7 +89,7 @@
     .current-card dl { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.45rem 0.7rem; font-size: 0.76rem; }
     .current-card dt { color: var(--text-secondary); }
     #researchProgressSection { scroll-margin-top: 80px; }
-    #bookValidationSection { scroll-margin-top: 80px; }
+    #bookValidationSection, #bookForwardSection { scroll-margin-top: 80px; }
     #bookValidation .current-card dt { word-break: keep-all; overflow-wrap: normal; }
     #researchProgress .current-card dt { word-break: keep-all; overflow-wrap: normal; }
     #researchProgress .current-card { scroll-margin-top: 80px; }
@@ -670,6 +670,19 @@
     <p class="current-note" id="bookValidationAsOf">데이터 잠금 — PIN 입력 후 검증 기준일 표시</p>
     <div id="bookValidation" aria-live="polite" style="margin-top:1rem"><div class="current-fallback">새 날짜 검증 상태는 잠금 해제 후 표시합니다.</div></div>
     <p class="current-note">고정 규칙의 새 날짜 사후 재생입니다. 진입 전 새 선택을 저장한 실시간 시험이 아니며, 위 국면 전환의 사전 기록과 분리합니다. +10%·−5%는24시간 중 경험 여부이고 선도달이 아닙니다. 비용0.15%를 한 번 반영한 가상 픽 결과이며 실거래 수익이 아닙니다. 원100개 결측은 재선택 없이 날짜 제외로 남깁니다. <a href="/projects/prelude/#book-validation-evidence">고정 규칙을 다음 날짜로 이어간 이유</a>.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="bookForwardSection" class="compact" aria-labelledby="bookForwardTitle">
+  <div class="container">
+    <div class="section-label">PRE-ENTRY PAPER · 실사용 검증 준비</div>
+    <h2 class="section-title" id="bookForwardTitle">결과 전에 저장한 선택으로 판정하기</h2>
+    <p class="section-desc">위 사후 재생과 별도로10-01부터 진입 전 L1 선택을 기록합니다. 늦음·누락·중단은 정상 표본으로 복구하지 않습니다. 기존 R1 알림은 유지합니다.</p>
+    <p class="current-note" id="bookForwardAsOf">데이터 잠금 — PIN 입력 후 사전 기록 및 판정 상태 표시</p>
+    <div id="bookForward" aria-live="polite" style="margin-top:1rem"><div class="current-fallback">실사용 검증 준비 상태는 잠금 해제 후 표시합니다.</div></div>
+    <p class="current-note">진입 전 가상 선택이며 실제 주문·체결이 아닙니다. 0/15/30분 진입부터 각각24h를 보며 원 비용0.15%와 후보 추가15bp 민감도를 구분합니다. 최초30일·변경10일·국면당5일 이상2국면·관측일80%는 검토용 초기값이지 검정력 보장이 아닙니다. 조건을 만족해도 자동 교체하지 않습니다. <a href="/projects/prelude/#book-forward-evidence">사전 기록과 판정표를 마무리한 이유</a>.</p>
   </div>
 </section>
 
@@ -1839,6 +1852,46 @@ function renderBookValidation(progress) {
   const notice = progress.status === 'incomplete' ? '최신 마감 대상에 누락·대기·계산 이연이 있습니다. 확보된 표본만의 요약이며 전체 정상 완료가 아닙니다.'
     : progress.status === 'waiting_for_first_outcome' ? '첫 결과 대기 — 아직 새 구간의 완결 표본은 없습니다.' : '';
   root.innerHTML = (notice ? `<p class="current-fallback">${notice}</p>` : '') + '<div class="current-grid">' + cards + '</div>';
+}
+
+function renderBookForward(progress) {
+  const root = document.getElementById('bookForward');
+  const asof = document.getElementById('bookForwardAsOf');
+  if (!root || !asof) return;
+  const verdicts = {waiting: '실사용 결과 대기', continue_observing: '관찰 연장', review_candidate: '채택 검토 대상 · 자동 교체 아님', do_not_adopt: '현재 후보 비채택', blocked: '증거 확인 필요'};
+  const records = {not_due: '오늘 기록 시각 전', ready: '진입 전 저장 확인', missing: '기록 누락', late: '진입 이후 저장 · 제외', uncertain: '저장 완료 확인 불가 · 제외'};
+  if (progress?.schema !== 'prelude_dashboard_book_forward.v1' || progress.status !== 'observed'
+      || progress.automatic_promotion !== false || progress.scope !== 'pre_entry_paper_not_actual_trades'
+      || !Object.hasOwn(verdicts, progress.verdict) || !Object.hasOwn(records, progress.today_record)) {
+    root.innerHTML = '<div class="current-fallback">사전 기록 검증 확인 불가 — 미제공·기한 경과·점검 실패를 0성과로 해석하지 마세요.</div>';
+    asof.textContent = '유효한 실사용 검증 기준일 미제공';
+    return;
+  }
+  asof.textContent = `보고서 ${currentTime(progress.generated_at)} · 확인 ${currentTime(progress.observed_at)} (KST). 실시간 조회가 아닌 게시본입니다.`;
+  const count = x => Number.isInteger(x) && x >= 0 ? String(x) : '미제공';
+  const row = (k, v) => `<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd>`;
+  const pct = x => typeof x === 'number' && Number.isFinite(x) ? `${(x * 100).toFixed(3)}%p` : '미제공';
+  let cards = `<article class="current-card"><h3>${escapeHtml(verdicts[progress.verdict])}</h3><dl>`
+    + row('오늘 후보 기록', records[progress.today_record])
+    + row('대상 / 완결 비교', `${count(progress.expected_dates)}일 / ${count(progress.paired_dates)}일`)
+    + row('선택 변경 / 지연 진입 검증', `${count(progress.changed_dates)}일 / ${count(progress.execution_dates)}일`)
+    + '</dl><p class="current-note">30일 경과만으로 통과하지 않습니다. 데이터가 없으면 성과도 표시하지 않습니다.</p></article>';
+  const labels = {review_sample: '비교 날짜', changed_dates: '실제 교체 날짜', joint_down_up_safe_net: '하방·상방·안전상승·net 동시 방향', positive_challenger_net: '후보 net 양수', beats_matched_net: '매칭 무작위 대비 net', chronological_consistency: '전후 기간 일관성', leave_one_date_out_net: '하루 제거 후 net', context_coverage: '시장 상태 표본', context_consistency: '시장 상태별 방향', execution_coverage: '같은 날짜 지연 경로 완결', delayed_and_extra_cost: '지연 진입·추가비용 민감도', observed_date_coverage: '관측 날짜 커버리지'};
+  let checks = '';
+  for (const [key, label] of Object.entries(labels)) {
+    const value = progress.checks?.[key];
+    checks += row(label, value === true ? '충족' : value === false ? '아직 미충족' : '자료 대기');
+  }
+  cards += `<article class="current-card"><h3>실사용 검토 조건</h3><dl>${checks}</dl><p class="current-note">초기 기준의 진단표이며 영구 폐기나 자동 승격 명령이 아닙니다. 신뢰구간은 원 보고서에 별도 진단으로 남깁니다.</p></article>`;
+  if (progress.paired_dates > 0 && progress.difference) {
+    cards += '<article class="current-card"><h3>사전 기록 L1 − 기존 R1</h3><dl>'
+      + row('24h 말 net 차이', pct(progress.difference.eod_return_net))
+      + row('−5% 경험 차이', pct(progress.difference.dn5))
+      + row('+10% 경험 차이', pct(progress.difference.up10))
+      + '</dl><p class="current-note">날짜 동일가중 가상 결과입니다. 하방은 낮게, 상방과 net은 높게가 목표입니다.</p></article>';
+  }
+  root.innerHTML = (progress.attention_required ? '<p class="current-fallback">누락·지연·미완결이 있어 점검이 필요합니다. 확보된 표본만의 요약입니다.</p>' : '')
+    + '<div class="current-grid">' + cards + '</div>';
 }
 
 /* ───────── PIN gate ───────── */
@@ -3997,6 +4050,7 @@ window.addEventListener('scroll', () => {
     renderCurrentSystem(summary.current_system);
     renderResearchProgress(summary.research_progress);
     renderBookValidation(summary.book_validation);
+    renderBookForward(summary.book_forward);
     renderHero(summary);
     renderRecommend(summary);
     renderFindings(findings);  // 이번 세션 새 발견 차트 (2026-05-31)
