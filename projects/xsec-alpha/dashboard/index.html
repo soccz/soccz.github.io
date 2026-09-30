@@ -192,6 +192,9 @@
     #operatorReportTable th, #operatorReportTable td,
     #decisionCohortTable th, #decisionCohortTable td { white-space: nowrap; }
     #prospective-experiment table { min-width: 620px; }
+    #regimeTable { min-width: 720px; }
+    #regimeTable th, #regimeTable td { white-space: nowrap; letter-spacing: 0; }
+    #regimeMeta, #regimeCurrent { margin-bottom: 0.8rem; overflow-wrap: anywhere; }
     #prospective-experiment th, #prospective-experiment td { white-space: nowrap; letter-spacing: 0; }
     #prospective-experiment h3 { font-size: 1rem; margin: 1.3rem 0 0.7rem; }
     #prospectiveMeta, #prospectiveComparison, #prospectiveEvidenceMeta { margin-bottom: 0.8rem; }
@@ -407,6 +410,7 @@
   <ul class="nav-links">
     <li><a href="#operator-report">이번 회차 보고</a></li>
     <li><a href="#prospective-experiment">고정 SHORT 실험</a></li>
+    <li><a href="#regime-observation">국면별 관찰</a></li>
     <li><a href="#journey">질문과 근거</a></li>
     <li><a href="#contract">현재 운영 계약</a></li>
     <li><a href="#kpi">kpi</a></li>
@@ -671,6 +675,19 @@
   </div>
 </section>
 
+<hr class="divider">
+
+<section id="regime-observation">
+  <div class="container">
+    <div class="section-label">market regimes · shadow observation</div>
+    <h2 class="section-title">어떤 장에서 잘 맞았는가</h2>
+    <p class="story-ref"><a href="/projects/xsec-alpha/#post-trial-regimes">개발일지: 시즌 가설과 바로 교체하지 않은 이유</a><br>현재 추천은 유지한다. 모델 점수 하위 5개와 반전 하위 5개의 별도 비교이며, 버퍼·실행 게이트를 적용하지 않는다. 자동 전략 교체·성과 승격은 없다.</p>
+    <div class="card-meta" id="regimeMeta"></div>
+    <div class="card-meta" id="regimeCurrent"></div>
+    <div class="scroll-x"><table class="data" id="regimeTable"></table></div>
+    <p class="card-meta">주간 검토: 월요일 09:00 KST 이전에 평가된 최근 90일. 국면당 30회·8일은 최소 관찰 기준이며 통계적 유의성 기준이 아니다. 모델 버전이 섞인 수치는 운영 랭킹 시스템의 기술 통계다. Upbit 시가 proxy이며 Bitget 체결 수익이 아니다.</p>
+  </div>
+</section>
 <hr class="divider">
 
 <section id="picks">
@@ -1798,6 +1815,7 @@ function renderSupervisor(summary) {
 
 function renderProspective(summary) {
   renderSupervisor(summary);
+  renderRegimeObservation(summary);
   const trial = summary.prospective_experiment || {status: 'not_started'};
   const statuses = {not_started: '미등록', error: '실험 원장 확인 필요', collecting: '수집 중', ready_for_review: '60회 수집 완료 · 별도 검토 필요', incomplete_evidence: '종료 · 누락으로 근거 불충분'};
   const p = trial.protocol;
@@ -1808,7 +1826,7 @@ function renderProspective(summary) {
   }
   document.getElementById('prospectiveProgress').value = trial.n_matured || 0;
   if (!p) return;
-  const integrity = trial.runtime_matches && trial.frozen_model_matches ? '버전 일치' : '버전 불일치 · 신규 기록 차단';
+  const integrity = trial.runtime_matches && trial.frozen_model_matches ? (trial.integrity_basis === 'sealed_completed_archive' ? '종료 원본 검증 완료 · 현재 운영 코드와 분리' : '버전 일치') : '버전 불일치 · 신규 기록 차단';
   meta.textContent += ` · 평가 ${trial.n_matured}/${trial.n_scheduled}회 · 대기 ${trial.n_pending} · 놓친 회차 ${trial.n_missed} · 가격 누락 ${trial.n_invalid} · ${integrity}`;
   const labels = {model_short5: '고정 모델 SHORT 5', reversal_short5: '4h 반전 팩터 SHORT 5', universe_short: '동일 종목군 전체 SHORT'};
   document.getElementById('prospectiveTable').innerHTML = '<thead><tr><th>비교 대상</th><th>동일 평가 회차</th><th>평균 net / 회차</th></tr></thead><tbody>' +
@@ -1825,6 +1843,22 @@ function renderProspective(summary) {
   document.getElementById('prospectiveHistory').innerHTML = '<thead><tr><th>회차 / UTC</th><th>상태</th><th>모델 net</th><th>기준선 net</th><th>당시 민감도 / 종목별 net</th></tr></thead><tbody>' +
     ((trial.recent_windows || []).map(row => `<tr><td>${escapeHtml(row.signal_at)}</td><td>${escapeHtml(resultStatus[row.status] || row.status)}</td><td>${fmtPct(row.model_net_pct)}</td><td>${fmtPct(row.baseline_net_pct)}</td><td>${(row.evidence || []).map(e => `${escapeHtml(shortMarket(e.market))} ${fmtPct(e.net_pct)} [${escapeHtml(e.sensitivity?.[0]?.feature || '없음')} ${fmt(e.sensitivity?.[0]?.score_delta, 5)}]`).join('<br>')}</td></tr>`).join('') || '<tr><td colspan="5">기록 대기</td></tr>') + '</tbody>';
   document.getElementById('prospectiveRules').textContent = `등록 ${p.registered_at} · 모델 SHA-256 ${p.model_sha256} · 60개 예정 회차 고정, 소급 편입·자동 승격 없음. 현재 Bitget 거래 가능 종목군, 동률은 종목명 순. 각 하위 5개 동일 비중, 버퍼·실행 게이트 없는 별도 순위 실험. 기록 이후 다음 정시 Upbit 원시 시가부터 6시간, Bitget 체결 수익 아님. 가격 누락 시 48시간 대기 후 해당 회차 제외 판정, 종목 대체 없음. 편도 수수료 ${p.cost_bps.one_way_fee}bp + 슬리피지 ${p.cost_bps.one_way_slippage}bp, 회차 SHORT 추가비용 ${p.cost_bps.short_extra}bp 가정. 최종 60회 완결 시에만 4회차 시간 블록 bootstrap 95% 구간. 민감도는 해당 입력을 같은 시점 중앙값으로 바꿨을 때의 점수 차이이며 음수는 SHORT 점수를 지지.`;
+}
+
+function renderRegimeObservation(summary) {
+  const state = summary.regime_observation;
+  const meta = document.getElementById('regimeMeta');
+  const current = document.getElementById('regimeCurrent');
+  const table = document.getElementById('regimeTable');
+  current.textContent = ''; table.textContent = '';
+  if (!state || state.status === 'not_started') { meta.textContent = '관찰 등록 대기 · 소급 자료 없음'; return; }
+  const labels = {bull_highvol: '상승 · 고변동', bull_lowvol: '상승 · 저변동', bear_highvol: '하락 · 고변동', bear_lowvol: '하락 · 저변동', unknown: '국면 미상'};
+  const localTime = value => value ? new Date(value).toLocaleString('ko-KR', {timeZone: 'Asia/Seoul', hour12: false}) + ' KST' : '미확인';
+  const stale = Date.now() - Date.parse(state.checked_at) > 90 * 60 * 1000;
+  meta.textContent = `${stale ? '게시된 관찰 기록 지연 · ' : ''}기록 ${state.n_recorded} · 평가 ${state.n_matured} · 대기 ${state.n_pending} · 누락 ${state.n_missed} · 가격 오류 ${state.n_invalid} · 점검 ${localTime(state.checked_at)}`;
+  current.textContent = state.latest ? `최근 기록 국면: ${labels[state.latest.regime] || '미상'} · 원시 BTC 완성 봉 ${localTime(state.latest.data_asof)} · 주간 기준 ${localTime(state.weekly_review_at)}` : `첫 관찰 예정 ${localTime(state.first_signal_at)} · 현재 비교 결과 없음`;
+  table.innerHTML = '<thead><tr><th>국면</th><th>회차 / 일수</th><th>모델 버전 수</th><th>모델 net</th><th>반전 net</th><th>차이</th><th>판정</th></tr></thead><tbody>' +
+    ((state.regimes || []).map(row => `<tr><td>${escapeHtml(labels[row.regime] || '미상')}</td><td>${row.n_windows} / ${row.n_days}</td><td>${row.model_versions}</td><td>${fmtPct(row.model_net_pct)}</td><td>${fmtPct(row.baseline_net_pct)}</td><td>${fmtPct(row.paired_excess_pct)}p</td><td>${row.review_status === 'insufficient_data' ? '자료 부족' : '탐색 검토만 가능 · 우위 미검증'}</td></tr>`).join('') || '<tr><td colspan="7">주간 검토에 포함할 미래 관찰 자료 대기</td></tr>') + '</tbody>';
 }
 
 function renderPicks(summary) {
