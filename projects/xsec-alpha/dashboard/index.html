@@ -203,7 +203,9 @@
     #prospectiveContract summary { cursor: pointer; }
     #supervisorMeta, #supervisorDecision, #supervisorErrors { margin: 0.7rem 0; overflow-wrap: anywhere; }
     #supervisorErrors { color: var(--red); }
-    #prospective-experiment #supervisorTable { min-width: 0; }
+    #prospective-experiment #supervisorTable { min-width: 0; table-layout: fixed; width: 100%; }
+    #prospective-experiment #supervisorTable th, #prospective-experiment #supervisorTable td { white-space: normal; overflow-wrap: anywhere; }
+    #supervisorTable th:first-child, #supervisorTable td:first-child { width: 35%; }
     .scroll-y { max-height: 520px; overflow-y: auto; overflow-x: auto; }
     .scroll-y table.data thead th { position: sticky; top: 0; background: var(--bg-secondary); z-index: 1; box-shadow: 0 1px 0 var(--border); }
 
@@ -1802,8 +1804,10 @@ function renderSupervisor(summary) {
   document.getElementById('supervisorTable').innerHTML = '<thead><tr><th>검증 항목</th><th>상태</th></tr></thead><tbody>' + [
     ['첫 예측 저장', labels[m.first_snapshot] || '미확인'],
     ['첫 성과 연결', labels[m.first_outcome] || '미확인'],
-    ['다른 디스크 백업', backup.status === 'verified' && backup.separate_filesystem ? '검증 완료' : '미확인'],
+    ['복구 사본 방식', backup.mode === 'same_disk' ? '동일 디스크 사본 · 디스크 고장 보호 없음' : backup.separate_filesystem ? '별도 디스크 사본' : '미확인'],
+    ['다른 디스크 백업', backup.mode === 'same_disk' ? '사용하지 않음 · 운영자 선택' : backup.status === 'verified' && backup.separate_filesystem ? '검증 완료' : '미확인'],
     ['전체 묶음 임시 복원', backup.restore_verified ? '검증 완료' : '미확인'],
+    ['국면 관찰 원장 사본', state.regime_backup?.restore_verified ? '동일 디스크 사본·복원 검증 완료' : '미확인 / 미등록'],
     ['원장 / 성과 행 수', backup.row_counts ? backup.row_counts.join(' / ') : '미확인']
   ].map(([label, value]) => `<tr><td>${escapeHtml(label)}</td><td>${escapeHtml(value)}</td></tr>`).join('') + '</tbody>';
   const decisions = {collecting: '수집 중 · 최종 판정 전', integrity_blocked: '버전 불일치 · 성과 해석 보류', integrity_failure: '무결성 실패 · 성과 해석 불가', insufficient_evidence: '자료 부족 · 이 실험은 종료', relative_edge: '해당 실험에서 상대적 개선 근거 확인', baseline_better: '해당 실험에서 단순 기준선이 우세', inconclusive: '신뢰구간이 0 포함 · 효과 판단 보류'};
