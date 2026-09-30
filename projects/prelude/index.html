@@ -1097,11 +1097,19 @@
     <span class="badge badge-blue">이미 본 개발 자료 · 새 미래 실증 아님</span>
   </div>
 
+  <div class="callout" id="spread-evidence" style="scroll-margin-top:80px;">
+    <p><strong>④ 이제 호가 자료가 생겼다 · 가격 간격이 좁으면 더 안전하고 잘 오를까</strong></p>
+    <p style="margin-top:0.6rem;">이전에는 자료가 없어 못 했던 호가 스프레드(매수·매도 가격 차이)를 확인했다.09-10~29의20일·2,000후보에서 거래대금과 변동성 구간이 비슷한 종목끼리 <strong>927쌍</strong>을 만들었다. 결과를 보기 전에 비교 대상을 고정했으며 새로운 추천 순위나 cutoff를 학습하지 않았다.</p>
+    <p style="margin-top:0.6rem;">좁은 쪽은 −5% 경험이1.791%p 적었지만, +10%를 경험하면서 −5%는 겪지 않은 safe-up도1.117%p 적었다. 가상24h 말 net 차이는 전체 <strong>+0.037%p</strong>, 날짜 block 신뢰구간은<strong>[−0.863,+0.564]%p</strong>였다. 앞10일에는+0.203%p, 뒤10일에는−0.129%p로 방향이 바뀌었다. <strong>추가 선별 근거가 부족해 호가 필터를 붙이지 않았다.</strong></p>
+    <p style="margin-top:0.6rem;">이것은 원 R1 Top3와의 전략 비교가 아니라 한 입력의 관찰 진단이다. 같은 거래대금·변동성 구간에도 잔차가 남고,927쌍의 실질 시간 표본은20일이다. 이미 본 자료이지 새로운 미래 검증도 아니다. 추천 직전 호가를 실제 진입·청산 비용으로 간주하지 않았으며 기존0.15% 비용을 이중 차감하지 않았다.</p>
+    <span class="badge badge-pivot">호가 필터 미채택 · 기존 추천 유지</span>
+  </div>
+
   <div class="callout">
-    <p><strong>④ 남은 질문 · 점수 재배열이 아니라, 놓친 기회를 구분할 정보가 있는가</strong></p>
+    <p><strong>⑤ 남은 질문 · 점수 재배열이 아니라, 놓친 기회를 구분할 정보가 있는가</strong></p>
     <p style="margin-top:0.6rem;">전체100개에 사후 safe-up 후보가 있어도 Top10 안에는 없는 날이 있었다(open22일 중6일). 좁은 후보군의 한계는 확인했지만 미래를 알고 고른 종목을 모델의 적중률로 쓰지는 않는다. 예상 점수상 안전함과 실제 안전함을 구분하고, 같은 자료의 기준을 계속 풀어 승자를 만들지도 않는다.</p>
     <p style="margin-top:0.6rem;">구현과 독립 산술 검산, 로컬 전수 <strong>3,273개 테스트</strong>는 통과했다. 이는 오류 방어의 증거이지 추천 성능의 인증이 아니다. 기존 R1·알림·라벨은 유지하고, 시즌별 사전 기록의 새 표본과 새로운 예측 정보의 기여를 구분해 검증해야 한다. 자동 주문은 없으며 최종 매매는 사용자가 판단한다.</p>
-    <p style="margin-top:0.6rem;">설계·각 구간의 분모·제외·비용·민감도·실패 결론은 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES.md · 14~19차</a>에 남겼다. 일일 발송·기록 상태는 <a href="/projects/prelude/dashboard/#currentSystemSection" style="color:var(--blue);">대시보드</a>에서 별도로 확인한다.</p>
+    <p style="margin-top:0.6rem;">설계·각 구간의 분모·제외·비용·민감도·실패 결론은 <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES.md · 14~21차</a>에 남겼다. 일일 발송·기록 상태는 <a href="/projects/prelude/dashboard/#currentSystemSection" style="color:var(--blue);">대시보드</a>에서 별도로 확인한다.</p>
   </div>
 </div></section>
 <hr class="divider">
