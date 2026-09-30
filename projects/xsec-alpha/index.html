@@ -1758,6 +1758,22 @@
 </div></section>
 <hr class="divider">
 
+<section id="execution-evidence"><div class="container fade-in">
+  <div class="section-label">2026-09-30 · 선정 과정과 실사용 비용</div>
+  <h2 class="section-title">왜 골랐는지, 그 가격에 얼마나 가능한지</h2>
+  <article class="journal-entry">
+  <h3>점수가 낮다는 설명만으로는 부족했다</h3>
+  <p>기존 성적표는 모델 후보와 최종 추천의 결과를 비교했지만, 어느 단계에서 목록이 달라졌는지는 충분히 남기지 않았다. 전체 순위와 거래 대상 목록, 이전 추천, 유지 버퍼와 품질 정보를 기록하고 기존 선정 함수를 다시 실행해 실제 추천과 대조하도록 연결했다. 추천 유지와 실제 포지션 보유는 구분한다. 동점 순서도 버퍼 효과로 단정하지 않는다.</p>
+  <h3>최우선 호가는 원하는 금액의 체결 보장이 아니다</h3>
+  <p>호가 하나에 고정 비용만 차감하던 관찰에 금액별 잔량 검사를 추가했다. 미리 고정한 코인별 100·500·1,000 USDT 가정으로 진입 매도와 같은 수량의 종료 매수를 계산한다. 첫 호가 50단계가 부족하면 수익률을 만들지 않는다. 기존 고정 비용 성적표는 그대로 남기고 별도 미래 규약에서 관찰한다. 주문을 실행하는 기능은 없다.</p>
+  <h3>예상 펀딩과 실제 정산율도 다르다</h3>
+  <p>공개 과거 펀딩 이력에서 보유 구간의 확정 정산율을 읽는다. 양 끝 시각을 둘러싼 이력, 중복과 공백을 확인하고 정산 경계에 걸린 관찰은 불확실로 남긴다. 자료가 없다고 비용 0으로 처리하지 않는다. 실제 계좌 수량과 정산 당시 마크 가격이 없으므로 이 합계를 계좌 손익에 더하지 않는 판단도 함께 기록한다.</p>
+  <p>수집 실패와 기한 초과, 잔량 부족, 선정 재현 불일치를 자동 점검·추가 전용 원장·동일 디스크 복원·대시보드까지 연결했다. 실제 공개 API의 호가와 펀딩 응답은 검증했지만 연결 점검 자료를 실험 성과로 넣지 않았다. 첫 미래 관찰 전에는 결과 0건을 그대로 보여준다. 이번 작업은 모델 정확도 상승이나 거래 수익을 입증한 것이 아니다.</p>
+  <div class="evidence-links"><a href="dashboard/#forecast-audit">선정 경로·금액별 관찰·실패 이력</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/execution_diagnostics.md">규약·산식·검증 범위</a><a href="https://www.bitget.com/docs/catalog/classic-contract-market/classic-contract-market">거래소 공식 API</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
 <!-- Current Status -->
 <section id="status"><div class="container fade-in">
   <div class="section-label">2026-09-30 · 고정 실험 종료 / 별도 전환 파일럿 등록</div>

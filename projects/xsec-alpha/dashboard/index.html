@@ -38,6 +38,10 @@
     html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-light) var(--bg-primary); }
     body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+    .audit-filter { display: flex; align-items: center; flex-wrap: wrap; gap: 0.7rem; margin: 0.8rem 0; color: var(--text-secondary); font-size: 0.85rem; }
+    .audit-filter select { min-width: 180px; max-width: 100%; min-height: 36px; padding: 0.35rem 0.7rem; border: 1px solid var(--border-light); border-radius: 5px; background: var(--bg-card); color: var(--text-primary); font: inherit; letter-spacing: 0; }
+    .audit-filter select:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+    .audit-filter select:disabled { color: var(--text-muted); background: var(--bg-secondary); }
 
     /* Top bar — minimal, just logo + hamburger */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,250,249,0.88); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
@@ -724,10 +728,19 @@
     <table class="data" id="forecastAuditHistory"></table>
     <h3>입력 장애와 복구 이력</h3>
     <table class="data" id="forecastIngestionHistory"></table>
+    <h3>이번 코인이 선정된 경로</h3>
+    <p class="card-meta" id="selectionTraceMeta"></p>
+    <label class="audit-filter">종목 범위 <select id="selectionTraceFilter"><option value="candidates">선정·비교 후보</option><option value="all">전체 종목</option><option value="excluded">거래 대상 제외</option><option value="retained">이전 추천 유지</option></select></label>
+    <table class="data" id="selectionTraceTable"></table>
     <h3>같은 추천의 Bitget 호가 관찰</h3>
     <table class="data" id="venueAuditTable"></table>
     <table class="data" id="venueAuditHistory"></table>
     <p class="card-meta">Bitget 관찰은 진입·종료 기준 정시부터 5분 이내에 받은 호가만 사용한다. SHORT는 진입 bid·종료 ask 기준이며 시장가 체결 보장이 아니다. 거래소·통화·시각 차이가 섞여 있고 실제 펀딩 현금흐름과 시장 충격은 미측정이다. 비실행 후보의 비교 성적을 계좌 수익으로 취급하지 않는다. 기존 게이트·추천·등록 실험은 변경하지 않는다.</p>
+    <h3>금액별 호가 잔량과 확정 펀딩 이력</h3>
+    <table class="data" id="executionAuditTable"></table>
+    <table class="data" id="executionAuditHistory"></table>
+    <table class="data" id="executionAuditFailures"></table>
+    <p class="card-meta">금액은 코인별 명목 USDT 가정이며 주문이 아니다. 진입 때 정한 수량을 종료 때 그대로 매수하는 호가 비교다. 잔량 부족은 계산 불가이며 없는 물량을 가정하지 않는다. 펀딩은 공개 확정 정산율의 합으로, SHORT 기준 양수는 수취 방향이다. 실제 마크 가격·계좌 수량의 현금흐름이 아니므로 호가 비교 수익에 더하지 않는다. 정산 경계 ±60초는 적용 여부 미확인으로 남긴다.</p>
   </div>
 </section>
 
@@ -1976,7 +1989,9 @@ function renderTrialDiagnostics(summary) {
 function renderForecastAudit(summary) {
   const state = summary.forecast_audit;
   const meta = document.getElementById('forecastAuditMeta');
-  for (const id of ['forecastAuditTable','forecastAuditHistory','forecastAuditAlerts','forecastIngestionHistory','venueAuditTable','venueAuditHistory']) document.getElementById(id).textContent = '';
+  document.getElementById('selectionTraceFilter').onchange = null;
+  document.getElementById('selectionTraceFilter').disabled = true;
+  for (const id of ['forecastAuditTable','forecastAuditHistory','forecastAuditAlerts','forecastIngestionHistory','selectionTraceMeta','selectionTraceTable','venueAuditTable','venueAuditHistory','executionAuditTable','executionAuditHistory','executionAuditFailures']) document.getElementById(id).textContent = '';
   if (!state) { meta.textContent = '자동 성적표 등록 기록 없음'; return; }
   const stamp = value => value ? new Date(value).toLocaleString('ko-KR', {timeZone:'Asia/Seoul',hour12:false}) + ' KST' : '없음';
   const dec = value => value == null ? '자료 대기' : Number(value).toFixed(4);
@@ -1992,6 +2007,17 @@ function renderForecastAudit(summary) {
   const stages = {signal:'신호 원본',prices:'가격 DB',outcome:'가격 채점',history:'기존 IC 파일',history_row:'기존 IC 회차',measurement:'재계산 원본',comparison:'IC 비교',report:'Telegram 보고서'};
   const two = rows => '<thead><tr><th>항목</th><th>현재 기록</th></tr></thead><tbody>'+rows.map(([a,b])=>`<tr><td>${escapeHtml(a)}</td><td>${escapeHtml(b)}</td></tr>`).join('')+'</tbody>';
   const backup = summary.experiment_supervision?.forecast_backup;
+  const selection = state.selection || {}, selectionMeta = document.getElementById('selectionTraceMeta');
+  document.getElementById('selectionTraceFilter').disabled = selection.status !== 'recorded';
+  const selectionReasons = {not_tradable:'거래 대상 제외',gate_blocked:'안전 게이트 차단',buffer_retained:'이전 추천 유지',selected_rank:'순위 선정',selected_tie:'동점 순서',outside_selection:'선정 범위 밖'};
+  selectionMeta.textContent = selection.status === 'recorded' ? `${stamp(selection.signal_at)} · 전체 ${selection.counts.scored} → 거래 대상 ${selection.counts.eligible} → 선정 ${selection.counts.selected} → 실행 가능 ${selection.counts.actionable} · 선정 재현 ${selection.replay_matches && selection.report_matches ? '일치' : '불일치 확인 필요'}` : selection.status === 'error' ? '선정 경로 기록 오류 · '+(selection.reason || '') : '첫 정기 추천의 선정 경로 대기';
+  const renderSelectionRows = () => {
+    const filter = document.getElementById('selectionTraceFilter').value;
+    const rows = (selection.rows || []).filter(r => filter === 'all' || (filter === 'excluded' ? !r.tradable : filter === 'retained' ? r.reason === 'buffer_retained' : r.selected || r.model_five || r.buffer_reference));
+    document.getElementById('selectionTraceTable').innerHTML = '<thead><tr><th>코인 / 순위<br>전체 · 거래 대상</th><th>선정 근거</th><th>최종 상태 / 제한</th></tr></thead><tbody>'+(rows.map(r=>`<tr><td>${escapeHtml(r.market)}<br>${r.rank} · ${r.eligible_rank ?? '제외'}</td><td>${escapeHtml(selectionReasons[r.reason] || r.reason)}${r.quality?.sigma != null ? '<br>σ '+Number(r.quality.sigma).toFixed(2) : ''}</td><td>${r.reported ? r.actionable ? '실행 가능' : 'WATCH' : r.model_five || r.buffer_reference ? '비교 후보' : '미선정'}${r.suppression ? '<br>'+escapeHtml(r.suppression) : ''}</td></tr>`).join('') || '<tr><td colspan="3">해당 기록 없음</td></tr>')+'</tbody>';
+  };
+  document.getElementById('selectionTraceFilter').onchange = renderSelectionRows;
+  renderSelectionRows();
   document.getElementById('forecastAuditTable').innerHTML = two([
     ['설치 / 첫 정기 신호', `${stamp(state.policy.registered_at)} / ${stamp(state.policy.first_signal_at)}`],
     ['원본 / 평가 / 도래 회차', `${c.recorded ?? 0} / ${c.evaluated ?? 0} / ${c.scheduled ?? 0}`],
@@ -2016,6 +2042,17 @@ function renderForecastAudit(summary) {
   ]);
   const quoteStatus = {waiting:'대기',observed:'관찰',invalid:'오류',failed:'수집 실패',missed:'놓침'};
   document.getElementById('venueAuditHistory').innerHTML = '<thead><tr><th>회차 / 진입·종료</th><th>같은 종목군 IC<br>Bitget / Upbit</th><th>가정비용 후 비교<br>모델 5 / 선택 5</th></tr></thead><tbody>'+((v.recent_windows || []).map(r=>`<tr><td>${escapeHtml(stamp(r.signal_at))}<br>${escapeHtml(quoteStatus[r.entry_status] || r.entry_status)} / ${escapeHtml(quoteStatus[r.exit_status] || r.exit_status)}${r.reason ? '<br>'+escapeHtml(r.reason) : ''}</td><td>${dec(r.venue_ic)} / ${dec(r.upbit_same_pool_ic)}</td><td>${r.model_short_cost_proxy_pct == null ? '자료 대기' : fmtPct(r.model_short_cost_proxy_pct)} / ${r.selected_short_cost_proxy_pct == null ? '자료 대기' : fmtPct(r.selected_short_cost_proxy_pct)}</td></tr>`).join('') || '<tr><td colspan="3">미래 진입·종료 호가 대기 · API 연결 점검을 성과로 넣지 않음</td></tr>')+'</tbody>';
+  const execution = state.execution;
+  document.getElementById('executionAuditTable').innerHTML = two(execution ? [
+    ['독립 관찰 등록 / 첫 신호', `${stamp(execution.policy.registered_at)} / ${stamp(execution.policy.first_signal_at)}`],
+    ['호가 잔량 / 확정 펀딩 관찰', `${execution.depth_observations} / ${execution.funding_observations}`],
+    ['누락·실패·경계 불확실', `${execution.failures} · ${execution.status === 'attention' ? '최근 관찰 확인 필요' : '자동 관찰 중'}`],
+    ['고정 금액 / 비용', `${execution.policy.notionals_usdt_per_coin.join(' · ')} USDT / ${execution.policy.fee_and_extra_bps}bp · 기존 성적표 별도 보존`],
+  ] : [['등록 상태','관찰 등록 대기']]);
+  const bps = value => value == null ? '미확인' : Number(value).toFixed(2)+'bp';
+  const execStates = {waiting:'관찰 대기',unavailable:'관찰 불가',incomplete:'잔량·관찰 불충분',evaluated:'호가 비교 완료'};
+  document.getElementById('executionAuditHistory').innerHTML = '<thead><tr><th>회차 / 코인별 금액</th><th>호가 잔량 후 비교<br>모델 / 선정</th><th>정산율 합<br>모델 / 선정</th></tr></thead><tbody>'+((execution?.recent_windows || []).flatMap(r=>(r.sizes.length ? r.sizes : [{}]).map(s=>`<tr><td>${escapeHtml(stamp(r.signal_at))}<br>${s.notional_usdt ?? '미확인'} USDT<br>${escapeHtml(execStates[r.status] || r.status)}</td><td>${s.model_net_proxy_pct == null ? '계산 대기·불가' : fmtPct(s.model_net_proxy_pct)} / ${s.selected_net_proxy_pct == null ? '계산 대기·불가' : fmtPct(s.selected_net_proxy_pct)}</td><td>${bps(r.model_funding_bps)} / ${bps(r.selected_funding_bps)}<br>불확실 ${r.funding_uncertain}</td></tr>`)).join('') || '<tr><td colspan="3">실제 미래 호가·정산 이력 대기</td></tr>')+'</tbody>';
+  document.getElementById('executionAuditFailures').innerHTML = '<thead><tr><th>관찰 대상</th><th>누락·실패 사유</th></tr></thead><tbody>'+((execution?.recent_failures || []).map(r=>`<tr><td>${escapeHtml(r.symbol)} · ${escapeHtml(r.kind)}<br>${escapeHtml(stamp(r.signal_at))}</td><td>${escapeHtml(r.status)}<br>${escapeHtml(r.reason || '정산 경계 적용 여부 미확인')}</td></tr>`).join('') || '<tr><td colspan="2">누락·실패 기록 없음</td></tr>')+'</tbody>';
 }
 
 function renderIcIncident(summary) {
