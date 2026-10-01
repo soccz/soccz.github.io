@@ -914,7 +914,7 @@ const CATEGORIES = {
     desc: '논문을 코드로, 가설을 검증으로 — 재현하고 확장하는 연구 기록',
     color: 'research',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8M8 12h6M8 16h4"/></svg>`,
-    match: ['momentum-tail-insurance','momentum-literature','FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper','papers']
+    match: ['policy-reading-research','momentum-tail-insurance','momentum-literature','FF3','tactical-factor-allocation','worldquant-alpha','economic-time-transformer','VME_paper','papers']
   },
   project: {
     label: 'Project',
@@ -991,6 +991,7 @@ const DESCS = {
   'MAE': 'Masked Autoencoder 사전학습 모델 구현',
   'RCNN_test': 'R-CNN 객체탐지 모델 테스트',
   'kaggle_test': 'Kaggle 대회 데이터 분석 실습',
+  'policy-reading-research': '한국어 정책 문장의 사실·정정·조건 변화를 읽는 개인 NLP 연구. 문장과 근거에서 판단 갱신까지, 실행한 실험·실패·검증 범위를 함께 기록했습니다.',
   'market-impact-analysis': '3–8월의 직접 개발과 기여. 교수님 피드백을 반영한 연구 기반에서 서울경제 활용 구조로 확장한 과정, 그리고 개인 한국어 NLP 후속 연구로의 연결.',
   'boundarybench': '500문항 메타인지 벤치마크 — 4개 frontier 모델에서 false certainty 96%→6% gradient 발견 (Kaggle AGI Hackathon)',
   'fin-momentum': '모멘텀 투자 연구 스터디 가이드 — 9챕터 + 부록',
@@ -1023,6 +1024,14 @@ const STATIC_PROJECTS = [{
   language: 'Python',
   pushed_at: '2026-09-30T07:00:00Z',
   github_url: 'https://github.com/soccz/equity-research',
+  __static: true
+},{
+  name: 'policy-reading-research',
+  title: '한국어 정책 문장 · 개인 NLP 연구',
+  description: DESCS['policy-reading-research'],
+  language: 'Python',
+  pushed_at: '2026-10-01T16:00:00Z',
+  github_url: 'https://github.com/soccz/market-impact-analysis/blob/main/docs/RESEARCH_CLOSURE.md',
   __static: true
 },{
   name: 'market-impact-analysis',
@@ -1228,6 +1237,7 @@ function renderPosts(catKey) {
       'gaehwa-aac': '/projects/gaehwa/',
       'momentum-tail-insurance': '/projects/momentum-journey/',
       'market-impact-analysis': '/projects/market-impact-v2/',
+      'policy-reading-research': '/projects/market-impact-research/',
       'boundarybench': '/projects/boundarybench/',
       'asset-management-guide': '/projects/asset-management/',
       'fin-momentum': '/projects/fin-momentum/',
