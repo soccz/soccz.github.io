@@ -180,6 +180,13 @@
     table.data th { font-family: 'Noto Sans KR', sans-serif; font-weight: 500; color: var(--text-muted); font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.05em; cursor: default; user-select: none; }
     table.data th.sortable { cursor: pointer; }
     table.data th.sortable:hover { color: var(--accent); }
+    table.data th.sortable button { font: inherit; color: inherit; background: none; border: 0; padding: 4px 0; cursor: pointer; text-align: left; }
+    button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .audit-part { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 12px; }
+    .audit-part > summary { cursor: pointer; font-size: 15px; font-weight: 600; padding: 8px 0; }
+    .audit-part > summary small { display: block; font-size: 12px; font-weight: 400; color: var(--text-secondary); margin: 4px 0 10px; }
+    #refreshStatus { font-size: 13px; color: var(--text-secondary); margin: 0 0 14px; overflow-wrap: anywhere; }
+    #refreshStatus[data-state="error"] { color: var(--red); }
     table.data th:first-child, table.data td:first-child { text-align: left; }
     table.data tbody tr:hover { background: var(--bg-secondary); }
     table.data .pos { color: var(--green); }
@@ -265,7 +272,7 @@
     .cum-svg .axis { stroke: var(--border-light); stroke-width: 1; }
     .cum-svg .line { fill: none; stroke-width: 1.6; }
     .cum-svg .area { opacity: 0.12; }
-    .cum-svg text { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-muted); }
+    .cum-svg text { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: var(--text-secondary); }
 
     /* Best/worst trade narrative cards */
     .bw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
@@ -297,7 +304,7 @@
     .roll-svg .grid { stroke: var(--border); stroke-width: 1; }
     .roll-svg .axis { stroke: var(--border-light); stroke-width: 1; }
     .roll-svg .line { fill: none; stroke-width: 1.6; }
-    .roll-svg text { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-muted); }
+    .roll-svg text { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: var(--text-secondary); }
 
     /* Reliability diagram (calibration) */
     .reli-svg { width: 100%; height: 240px; display: block; }
@@ -305,7 +312,7 @@
     .reli-svg .axis { stroke: var(--border-light); stroke-width: 1; }
     .reli-svg .diag { stroke: var(--text-muted); stroke-width: 1; stroke-dasharray: 3,3; }
     .reli-svg .pt { stroke-width: 1.4; }
-    .reli-svg text { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--text-muted); }
+    .reli-svg text { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: var(--text-secondary); }
 
     /* ops footer strip */
     .ops-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem 1.4rem; padding: 1rem 1.4rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; }
@@ -530,6 +537,7 @@
       .overview-grid { grid-template-columns: 1fr; gap: 24px; }
       .overview-grid > div + div { border-left: 0; border-top: 1px solid var(--border); padding: 20px 0 0; }
       .evidence-group > summary { margin: 0 20px; }
+      .viz-card { border: 0; border-radius: 0; padding: 12px 0; background: transparent; }
       section { padding: 24px 20px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
@@ -636,7 +644,7 @@
   <div class="mega-inner">
     <div class="mega-live">
       <span class="dot" id="megaPulseDot"></span>
-      <span><strong id="megaPulseLabel">LIVE</strong></span>
+      <span><strong id="megaPulseLabel">자료 확인 전</strong></span>
       <span>·</span>
       <span id="megaAsof">—</span>
       <span>·</span>
@@ -708,6 +716,13 @@
       모든 손익은 paper/proxy 가격과 가정 비용이며 실제 체결 성과가 아니다.
     </p>
     <p class="story-ref">정상 코인 보고: KST 02·08·14·20시 분석 완료 후. 조건 미달은 비실행 참고 후보로 구분한다. <a href="/projects/xsec-alpha/#september-delivery">보고와 추천을 분리한 이유</a></p>
+    <details class="audit-part"><summary>측정 용어와 단위</summary><dl>
+      <dt>IC</dt><dd>예측 순위와 이후 수익 순위의 상관. 적중률이나 비용 후 수익이 아니다.</dd>
+      <dt>σ · 신호 강도</dt><dd>해당 종목군에서 점수가 평균으로부터 떨어진 정도. 2σ가 특정 승률을 보장하지 않는다.</dd>
+      <dt>묶음 · basket</dt><dd>같은 진입 시각의 추천 집합. 묶음 안 코인을 먼저 평균하고, 회차별 평균에 같은 가중치를 준다. 코인별 평균과 다를 수 있다.</dd>
+      <dt>gross / net · paper/proxy</dt><dd>비용 차감 전 / 가정 비용 차감 후 수익. 원장 가격을 이용한 관찰이며 계좌 체결 손익은 아니다.</dd>
+      <dt>기준선 · baseline</dt><dd>모델이 추가 가치를 만드는지 비교하는 단순 규칙. 이 실험의 주 비교 대상은 4시간 반전 팩터다.</dd>
+    </dl></details>
     <div class="contract-grid">
       <div class="contract-card short"><div class="contract-k">SHORT surface</div><div class="contract-v">≤5</div><div class="contract-d">6h 수동 판단용 actionable 신호. Bitget tradable 필터 적용.</div></div>
       <div class="contract-card block"><div class="contract-k">LONG actionable</div><div class="contract-v">0</div><div class="contract-d">KILL 정책으로 추천 원장과 실행 가능 신호를 하드 차단.</div></div>
@@ -882,28 +897,34 @@
     <p class="card-meta" id="forecastAuditMeta"></p>
     <table class="data" id="forecastAuditTable"></table>
     <p class="card-meta" id="forecastAuditAlerts"></p>
-    <h3>첫 실제 회차의 운영 검증</h3>
+    <details class="audit-part" id="audit-acceptance"><summary>첫 실제 회차의 운영 검증<small>종료 판정·누락·불확실성</small></summary>
     <p class="card-meta" id="operatingAcceptanceMeta"></p>
     <table class="data" id="operatingAcceptanceTable"></table>
-    <h3>같은 회차의 게이트 판단 비교</h3>
+    </details>
+    <details class="audit-part" id="audit-gates"><summary>같은 회차의 게이트 판단 비교<small>운영 기준과 비교 기준의 차이</small></summary>
     <table class="data" id="gateShadowTable"></table>
     <p class="card-meta">비교 판단은 운영 게이트가 아니다. 현재 운영 기준은 기존 재계산 IC이며 자동 전환하지 않는다. 세 회차 비교는 처리 경로 점검이지 수익 우위 검정이 아니다. <a href="https://github.com/soccz/xsec_alpha/blob/main/docs/operating_acceptance.md">전환·복구 조건</a></p>
     <table class="data" id="forecastAuditHistory"></table>
-    <h3>입력 장애와 복구 이력</h3>
+    </details>
+    <details class="audit-part" id="audit-ingestion"><summary>입력 장애와 복구 이력<small>수집 실패도 원본 기록으로 보존</small></summary>
     <table class="data" id="forecastIngestionHistory"></table>
-    <h3>이번 코인이 선정된 경로</h3>
+    </details>
+    <details class="audit-part" id="audit-selection"><summary>이번 코인이 선정된 경로<small>순위·제외·유지 사유</small></summary>
     <p class="card-meta" id="selectionTraceMeta"></p>
     <label class="audit-filter">종목 범위 <select id="selectionTraceFilter"><option value="candidates">선정·비교 후보</option><option value="all">전체 종목</option><option value="excluded">거래 대상 제외</option><option value="retained">이전 추천 유지</option></select></label>
     <table class="data" id="selectionTraceTable"></table>
-    <h3>같은 추천의 Bitget 호가 관찰</h3>
+    </details>
+    <details class="audit-part" id="audit-venue"><summary>같은 추천의 Bitget 호가 관찰<small>Upbit 가격과 거래소 호가 비교 · 실제 체결 아님</small></summary>
     <table class="data" id="venueAuditTable"></table>
     <table class="data" id="venueAuditHistory"></table>
     <p class="card-meta">Bitget 관찰은 진입·종료 기준 정시부터 5분 이내에 받은 호가만 사용한다. SHORT는 진입 bid·종료 ask 기준이며 시장가 체결 보장이 아니다. 거래소·통화·시각 차이가 섞여 있고 실제 펀딩 현금흐름과 시장 충격은 미측정이다. 비실행 후보의 비교 성적을 계좌 수익으로 취급하지 않는다. 기존 게이트·추천·등록 실험은 변경하지 않는다.</p>
-    <h3>금액별 호가 잔량과 확정 펀딩 이력</h3>
+    </details>
+    <details class="audit-part" id="audit-execution"><summary>금액별 호가 잔량과 확정 펀딩 이력<small>공개 정산율 관찰 · 적용 경계 불확실 기록 포함</small></summary>
     <table class="data" id="executionAuditTable"></table>
     <table class="data" id="executionAuditHistory"></table>
     <table class="data" id="executionAuditFailures"></table>
     <p class="card-meta">금액은 코인별 명목 USDT 가정이며 주문이 아니다. 진입 때 정한 수량을 종료 때 그대로 매수하는 호가 비교다. 잔량 부족은 계산 불가이며 없는 물량을 가정하지 않는다. 펀딩은 공개 확정 정산율의 합으로, SHORT 기준 양수는 수취 방향이다. 실제 마크 가격·계좌 수량의 현금흐름이 아니므로 호가 비교 수익에 더하지 않는다. 정산 경계 ±60초는 적용 여부 미확인으로 남긴다.</p>
+    </details>
   </div>
 </section>
 
@@ -1033,7 +1054,7 @@
     <div class="section-label">factor diagnostics</div>
     <h2 class="section-title">팩터 drift — 24h vs 7d IC</h2>
     <p class="section-desc">
-      7d 평균 IC 대비 24h 낙폭. <strong>drop&gt;50% 또는 부호 반전</strong> 시 WARN — 다음 retrain에서 가중치 자동 재조정.
+      7d 평균 IC 대비 24h 낙폭. <strong>drop&gt;50% 또는 부호 반전</strong> 시 WARN을 기록한다. drift 경고만으로 모델 가중치가 자동 재조정되지는 않는다.
     </p>
     <div class="card">
       <div class="card-meta" id="driftMeta"></div>
@@ -1264,10 +1285,10 @@
 <!-- Reliability diagram — predicted σ-bucket vs actual hit -->
 <section id="reliability" class="compact">
   <div class="container">
-    <div class="section-label">reliability</div>
-    <h2 class="section-title">σ-bucket reliability diagram — 예측 강도 vs 실제 적중률</h2>
+    <div class="section-label">sigma buckets · OOS historical</div>
+    <h2 class="section-title">신호 강도 구간별 과거 적중률</h2>
     <p class="section-desc">
-      x=predicted σ · y=empirical hit rate. <strong>대각선 위로 올라갈수록 well-calibrated</strong>. 점 크기 = 표본 수.
+      x=신호 강도 σ 구간의 중간값 · y=OOS 표본의 방향 적중률. 점 크기 = 표본 수. σ는 예측 확률이 아니므로 이 그래프는 확률 보정의 정확성을 검증하지 않는다. 50% 선은 참고선이며 미래 수익·적중 보장이 아니다. <a href="#calibration">구간별 n·기대값 원표</a>.
     </p>
     <div class="viz-split">
       <div class="viz-card">
@@ -1292,7 +1313,7 @@
     <div class="section-label">architecture</div>
     <h2 class="section-title">F1 통합 파이프라인 — 이 dashboard가 보는 것</h2>
     <p class="section-desc">
-      대시보드의 모든 수치는 <strong>같은 10-feature 파이프라인</strong>에서 두 개의 호라이즌 모델 (xsec_6h, xsec_12h)이 산출한 결과를 σ-bucket calibration으로 후처리한 것. 위쪽 "현재 신호 상태"의 IC + gate는 매 6h <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">track_ic.py</code>가 로깅하고, 아래 holdout / calibration은 매주 일 <code style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;background:var(--bg-secondary);padding:0.1rem 0.4rem;border-radius:3px">retrain_pipeline.py</code>가 promotion gate 통과 시 자동 갱신.
+      모델 신호는 <strong>같은 10-feature 파이프라인</strong>의 두 호라이즌 모델 (xsec_6h, xsec_12h)에서 나온다. σ 구간의 과거 적중률·기대값은 별도 OOS 표본으로 보정한다. 기준선 비교, 실현 원장, 호가·펀딩 관찰, 운영 점검은 각각 다른 원본에서 집계한다. IC 기록은 <code>track_ic.py</code>, 모델 후보·승격 검사는 <code>retrain_pipeline.py</code>가 담당하며 각 표의 계약과 자료 시각을 구분한다.
     </p>
     <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem 1.4rem; margin-top: 1rem; overflow: hidden;">
       <div style="display:flex; flex-direction:column; align-items:center; gap: 0.4rem; max-width: 100%;">
@@ -1386,7 +1407,7 @@
         <div style="border-left: 3px solid var(--blue); padding-left: 0.8rem;"><strong>promotion gate</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">LONG: aligned IC + n≥10 + 비용 후 net&gt;0 미달 시 기각</span></div>
         <div style="border-left: 3px solid var(--red); padding-left: 0.8rem;"><strong>LONG policy block</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">actionable 0을 최우선 강제 · 조건부 WATCH surface와 분리</span></div>
         <div style="border-left: 3px solid var(--accent); padding-left: 0.8rem;"><strong>verify_telegram</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">원장 vs 텔레그램 부호/크기 자동 일관성 검증 (regression test)</span></div>
-        <div style="border-left: 3px solid #57534e; padding-left: 0.8rem;"><strong>retrain failure backoff</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">3회 연속 실패 시 systemd 타이머 자동 mask</span></div>
+        <div style="border-left: 3px solid #57534e; padding-left: 0.8rem;"><strong>retrain failure retry</strong><br><span style="color: var(--text-secondary); font-size: 0.76rem;">서비스 실패 시 60초 후 재시작 요청. 연속 3회 실패에 따른 타이머 자동 mask는 구현되지 않음.</span></div>
       </div>
     </div>
   </div>
@@ -1439,7 +1460,7 @@
         <strong>현재 상장 종목 기준 survivorship bias.</strong> 과거 시점의 Upbit·Bitget 상장/거래가능 universe를 완전히 복원하지 못했다. historical WF는 현재 거래가능 필터의 survivor bias를 포함할 수 있다.
       </span></div>
       <div class="limit-item"><span class="li-num">07.</span><span class="li-body">
-        <strong>OOS calibration도 유한 표본이다.</strong> temporal holdout으로 다시 만들었지만 SHORT 4,600 / LONG 700 rows뿐이다. σ bucket의 historical hit rate를 확률 보장처럼 사용할 수 없다.
+        <strong>OOS calibration도 유한 표본이다.</strong> 표본 수는 <a href="#calibration">현재 보정 표</a>의 각 구간 n을 따른다. 동일 시점 코인 간 의존성이 있으며 행 수가 독립 표본 수는 아니다. σ 구간의 과거 적중률을 미래 확률 보장처럼 사용할 수 없다.
       </span></div>
       <div class="limit-item"><span class="li-num">08.</span><span class="li-body">
         <strong>재활성화는 자동이 아니다.</strong> 60 baskets, 평균 net&gt;0, block-bootstrap 95% 하한&gt;0, 3개 시간순 fold와 모든 허용 레짐 net&gt;0을 통과해도 별도 reviewed code change가 필요하다.
@@ -1634,9 +1655,13 @@ function shortTime(s) {
 
 /* ───────── fetch helper with HTTP guard ───────── */
 async function fetchJson(url) {
-  const r = await fetch(url + (url.includes('?') ? '&' : '?') + '_=' + Date.now());
-  if (!r.ok) throw new Error(`HTTP ${r.status} for ${url}`);
-  return r.json();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const r = await fetch(url + (url.includes('?') ? '&' : '?') + '_=' + Date.now(), {cache:'no-store', signal:controller.signal});
+    if (!r.ok) throw new Error(`HTTP ${r.status} for ${url}`);
+    return await r.json();
+  } finally { clearTimeout(timeout); }
 }
 
 /* ───────── PIN gate ─────────
@@ -1741,6 +1766,7 @@ function renderOverview(summary) {
   const audit = summary.forecast_audit, supervision = summary.experiment_supervision;
   const ageMinutes = value => Number.isFinite(Date.parse(value)) ? (Date.now() - Date.parse(value)) / 60000 : Infinity;
   const notices = [];
+  if (dashboardState.error) notices.push(`게시 자료 갱신 확인 필요 · ${dashboardState.error}. 마지막 검증 자료를 표시합니다.`);
   const dataRows = ['db', 'recs', 'model'].map(key => summary.ops?.[key]?.status);
   const dataState = dataRows.every(s => s === 'OK') ? '최근 점검 정상' : dataRows.some(s => s === 'FAIL') ? '점검 실패' : '확인 필요';
   const gateLabel = {OK:'정상', WARN:'주의', FREEZE:'신규 추천 동결', LIQUIDATE:'신규 신호 차단'};
@@ -1769,7 +1795,7 @@ function renderOverview(summary) {
   document.getElementById('opsAlerts').innerHTML = notices.map(text => `<li>${escapeHtml(text)}</li>`).join('');
   document.getElementById('opsWarningDetail').hidden = notices.length === 0;
   const headline = ageMinutes(summary.asof) > 90 ? '게시 자료 지연·시각 미확인' : ageMinutes(report.generated_at) > 480 ? '최신 코인 보고 지연·시각 미확인' : execution?.status === 'attention' ? `호가·펀딩 관찰 ${execution.failures ?? '미확인'}건 확인 필요` : gate.status !== 'OK' ? `SHORT ${gateLabel[gate.status] || '미확인'}` : '상세 기록 확인 필요';
-  document.getElementById('opsAlertSummary').textContent = `주의 ${notices.length}건 · ${headline}`;
+  document.getElementById('opsAlertSummary').textContent = `주의 ${notices.length}건 · ${dashboardState.error ? '게시 자료 갱신 확인 필요' : headline}`;
 
   const pilot = summary.rotation_pilot, counts = pilot?.decision?.counts, protocol = pilot?.protocol;
   const states = {observing:'관찰 중', insufficient_evidence:'종료 · 자료 부족', policy_not_exercised:'종료 · 전환 자료 부족', pilot_complete_not_confirmatory:'종료 · 우위 확정 아님', integrity_failure:'무결성 실패', attention:'점검 필요'};
@@ -1902,23 +1928,26 @@ function _relativeTime(iso) {
   } catch (e) { return '—'; }
 }
 
-function renderMegaStats(summary, accuracy) {
-  // Live pulse
-  const asof = summary.asof || accuracy.asof;
+function renderPublicationAge(summary) {
+  const asof = summary.asof;
   document.getElementById('megaAsof').textContent = asof ? shortTime(asof) : '—';
   const rel = asof ? _relativeTime(asof) : '—';
   document.getElementById('megaAsofRel').textContent = rel;
   const dot = document.getElementById('megaPulseDot');
   const lab = document.getElementById('megaPulseLabel');
-  if (asof) {
+  if (Number.isFinite(Date.parse(asof))) {
     const ageH = (Date.now() - new Date(asof).getTime()) / 3600000;
     dot.classList.remove('stale','dead');
-    if (ageH > 12)      { dot.classList.add('dead');  lab.textContent = 'STALE'; }
-    else if (ageH > 8)  { dot.classList.add('stale'); lab.textContent = 'AGING'; }
-    else                { lab.textContent = 'LIVE'; }
+    if (ageH > 8)       { dot.classList.add('dead');  lab.textContent = '자료 지연'; }
+    else if (ageH > 1.5) { dot.classList.add('stale'); lab.textContent = '갱신 확인 필요'; }
+    else                { lab.textContent = '최근 게시'; }
   } else {
-    dot.classList.add('dead'); lab.textContent = 'OFFLINE';
+    dot.classList.add('dead'); lab.textContent = '시각 미확인';
   }
+}
+
+function renderMegaStats(summary, accuracy) {
+  renderPublicationAge(summary);
 
   // SHORT card
   const rs = (summary.realized_summary || {}).SHORT?.d30 || {};
@@ -1928,25 +1957,21 @@ function renderMegaStats(summary, accuracy) {
   document.getElementById('megaShortTrades').textContent =
     rs.n ? `추천 ${rs.n_windows ?? 0}묶음 · ${rs.n}건 · ${rs.win_pct?.toFixed(0) ?? '—'}% net win` : '—';
   document.getElementById('megaShortFoot').innerHTML = _megaFootRow([
-    { l: 'gross', v: rs.avg != null ? `${rs.avg > 0 ? '+' : ''}${rs.avg.toFixed(2)}%` : '—',
-      cls: rs.avg > 0 ? 'pos' : (rs.avg < 0 ? 'neg' : '') },
-    { l: 't_ac', v: rs.tstat_clustered != null ? rs.tstat_clustered.toFixed(2) : '—' },
-    { l: 'sharpe', v: rs.sharpe != null ? rs.sharpe.toFixed(2) : '—' },
-    { l: 'cost', v: rs.cost_pct != null ? `${rs.cost_pct.toFixed(2)}%` : '—' },
-    { l: 'spark', v: 'gross' },
+    { l: 'gross / 묶음', v: fmtPct(rs.avg_gross_per_window), cls: sgnClass(rs.avg_gross_per_window) },
+    { l: 'cost / 묶음', v: fmtPct(rs.avg_cost_per_window) },
+    { l: 't / 묶음', v: rs.tstat_clustered != null ? rs.tstat_clustered.toFixed(2) : '—' },
+    { l: 'spark', v: 'gross 누적 · 별도 집계' },
   ]);
   _megaSparkline('megaShortSpark', (accuracy.daily_series||{}).SHORT, 'short');
 
   // LONG card
-  _megaSetVal('megaLongVal', rl.avg_net != null ? rl.avg_net : null, '% / trade');
+  _megaSetVal('megaLongVal', rl.avg_net_per_window ?? null, '% / basket');
   document.getElementById('megaLongTrades').textContent =
     rl.n ? `n=${rl.n} · ${rl.win_pct?.toFixed(0) ?? '—'}% win` : '—';
   document.getElementById('megaLongFoot').innerHTML = _megaFootRow([
-    { l: 'gross', v: rl.avg != null ? `${rl.avg > 0 ? '+' : ''}${rl.avg.toFixed(2)}%` : '—',
-      cls: rl.avg > 0 ? 'pos' : (rl.avg < 0 ? 'neg' : '') },
-    { l: 't_ac', v: rl.tstat_clustered != null ? rl.tstat_clustered.toFixed(2) : '—' },
-    { l: 'sharpe', v: rl.sharpe != null ? rl.sharpe.toFixed(2) : '—' },
-    { l: 'cost', v: rl.cost_pct != null ? `${rl.cost_pct.toFixed(2)}%` : '—' },
+    { l: 'gross / 묶음', v: fmtPct(rl.avg_gross_per_window), cls: sgnClass(rl.avg_gross_per_window) },
+    { l: 'cost / 묶음', v: fmtPct(rl.avg_cost_per_window) },
+    { l: 't / 묶음', v: rl.tstat_clustered != null ? rl.tstat_clustered.toFixed(2) : '—' },
     { l: 'spark', v: 'gross legacy' },
   ]);
   _megaSparkline('megaLongSpark', (accuracy.daily_series||{}).WATCH_LONG, 'long');
@@ -2055,7 +2080,6 @@ function renderKpi(summary) {
  */
 function renderRealizedHero(summary) {
   const r = summary.realized_summary || {};
-  const cost = summary.cost_assumptions || {};
   const sides = [
     { key: 'SHORT', label: 'SHORT 추천만 · paper/proxy (h=6)' },
     { key: 'WATCH_LONG', label: 'LEGACY WATCH_LONG paper/proxy (h=12)' },
@@ -2064,16 +2088,16 @@ function renderRealizedHero(summary) {
   const sigClass = (tstat) => {
     if (tstat == null || isNaN(tstat)) return 'muted';
     const a = Math.abs(tstat);
-    if (a >= 2.0) return 'pos';
+    if (a >= 2.0) return tstat > 0 ? 'pos' : 'neg';
     if (a >= 1.0) return '';
-    return 'neg';  // |t|<1 is ~indistinguishable from zero — flagged red, on purpose
+    return 'muted';
   };
   const sigLabel = (tstat) => {
     if (tstat == null || isNaN(tstat)) return 'no data';
     const a = Math.abs(tstat);
-    if (a >= 2.0) return 'significant (|t|≥2)';
-    if (a >= 1.0) return 'directional (1≤|t|<2)';
-    return 'indistinguishable from zero (|t|<1)';
+    if (a >= 2.0) return (tstat > 0 ? '양수' : '음수') + ' 평균 · |t|≥2 (기술 통계, 미래 우위 판정 아님)';
+    if (a >= 1.0) return '1≤|t|<2 · 0과 구별할 근거 부족';
+    return '|t|<1 · 0과 구별할 근거 부족';
   };
 
   // Use the clustered t-stat for the verdict — naive t over-counts because
@@ -2081,8 +2105,7 @@ function renderRealizedHero(summary) {
   // version groups by entry_time first.
   const cards = sides.map(({ key, label }) => {
     const d = (r[key] && r[key].d30) || {};
-    const c = cost[key];
-    const tForVerdict = d.tstat_clustered ?? d.tstat;
+    const tForVerdict = d.tstat_clustered;
     const winCi = (d.win_ci_lo != null && d.win_ci_hi != null)
       ? `[${d.win_ci_lo.toFixed(1)}%, ${d.win_ci_hi.toFixed(1)}%]`
       : '';
@@ -2091,14 +2114,14 @@ function renderRealizedHero(summary) {
       <div class="card realized-card">
         <h3>${escapeHtml(label)} — 30d realized</h3>
         <div class="realized-grid">
-          <div class="rg-cell"><div class="rg-label">avg / trade (gross)</div><div class="rg-val ${sgnClass(d.avg)}">${fmtPct(d.avg)}</div></div>
-          <div class="rg-cell"><div class="rg-label">round-trip cost</div><div class="rg-val muted">−${fmt(c, 2)}%</div></div>
+          <div class="rg-cell"><div class="rg-label">avg / basket (gross)</div><div class="rg-val ${sgnClass(d.avg_gross_per_window)}">${fmtPct(d.avg_gross_per_window)}</div></div>
+          <div class="rg-cell"><div class="rg-label">cost / basket (차감액)</div><div class="rg-val muted">${fmtPct(d.avg_cost_per_window)}</div></div>
           <div class="rg-cell"><div class="rg-label">avg / basket (NET)</div><div class="rg-val ${sgnClass(d.avg_net_per_window)} rg-net">${fmtPct(d.avg_net_per_window)}</div></div>
           <div class="rg-cell"><div class="rg-label">t (clustered)</div><div class="rg-val ${sigClass(d.tstat_clustered)}">${d.tstat_clustered == null ? '—' : d.tstat_clustered.toFixed(2)}</div></div>
           <div class="rg-cell"><div class="rg-label">t (naive, ref)</div><div class="rg-val muted">${d.tstat == null ? '—' : d.tstat.toFixed(2)}</div></div>
           <div class="rg-cell"><div class="rg-label">Sharpe / trade</div><div class="rg-val ${sgnClass(d.sharpe)}">${d.sharpe == null ? '—' : d.sharpe.toFixed(3)}</div></div>
           <div class="rg-cell"><div class="rg-label">NET win rate <span class="muted" style="font-weight:400;font-size:0.78em">${winSig ? '✓ ≠50%' : ''}</span></div><div class="rg-val">${d.win_pct == null ? '—' : d.win_pct.toFixed(1) + '%'}</div><div class="rg-sub">${escapeHtml(winCi)}</div></div>
-          <div class="rg-cell"><div class="rg-label">σ / trade</div><div class="rg-val muted">${fmt(d.std, 2)}%</div></div>
+          <div class="rg-cell"><div class="rg-label">σ / trade</div><div class="rg-val muted">${d.std == null ? '—' : fmt(d.std, 2) + '%'}</div></div>
           <div class="rg-cell"><div class="rg-label">n picks · n windows</div><div class="rg-val">${d.n ?? 0} · ${d.n_windows ?? 0}</div></div>
         </div>
         <div class="rg-verdict ${sigClass(tForVerdict)}">${escapeHtml(sigLabel(tForVerdict))}</div>
@@ -2231,6 +2254,8 @@ function renderOperatorReport(summary) {
   const tiles = document.getElementById('operatorCoinTiles');
   const detail = document.getElementById('selectionDetail');
   const select = document.getElementById('selectionMarket');
+  const previousMarket = select.selectedOptions[0]?.dataset.market;
+  const previousOpen = detail.open;
   detail.hidden = true; detail.open = false; select.replaceChildren();
   for (const id of ['selectionMatch','selectionFlow','selectionFacts','selectionReason','selectionSource']) document.getElementById(id).textContent = '';
   tiles.replaceChildren();
@@ -2258,7 +2283,13 @@ function renderOperatorReport(summary) {
   if (!rows.length) tiles.textContent = '이번 보고에 코인 후보 없음 · 상세 보고 상태 확인 필요';
   if (rows.length) {
     detail.hidden = false;
-    rows.forEach((row,index) => select.add(new Option(`${shortMarket(row.market)} · ${row.label}`, String(index))));
+    rows.forEach((row,index) => {
+      const option = new Option(`${shortMarket(row.market)} · ${row.label}`, String(index));
+      option.dataset.market = row.market; select.add(option);
+    });
+    const previousIndex = rows.findIndex(row => row.market === previousMarket);
+    if (previousIndex >= 0) select.value = String(previousIndex);
+    detail.open = previousOpen;
     select.onchange = () => renderSelectionEvidence(summary, rows, Number(select.value));
     select.onchange();
     tiles.querySelectorAll('.coin-evidence-button').forEach(button => button.addEventListener('click', () => {
@@ -2267,8 +2298,8 @@ function renderOperatorReport(summary) {
     }));
   }
   document.getElementById('operatorReportTable').innerHTML =
-    '<thead><tr><th>코인</th><th>판정</th><th>자료 시각</th><th>출처</th><th>보류 사유</th></tr></thead><tbody>' +
-    [...signals, ...ideas].map(row => `<tr><td>${escapeHtml(shortMarket(row.market))}</td><td>${escapeHtml(row.label)}</td><td>${escapeHtml(row.asof || '미확인')}</td><td>${escapeHtml(row.source)}</td><td>${escapeHtml(row.reason || row.suppression || '—')}</td></tr>`).join('') + '</tbody>';
+    '<thead><tr><th>코인</th><th>판정</th><th>자료 시각 (KST)</th><th>출처</th><th>보류 사유</th></tr></thead><tbody>' +
+    [...signals, ...ideas].map(row => `<tr><td>${escapeHtml(shortMarket(row.market))}</td><td>${escapeHtml(row.label)}</td><td>${escapeHtml(kstTime(row.asof))}</td><td>${escapeHtml(row.source)}</td><td>${escapeHtml(row.reason || row.suppression || '—')}</td></tr>`).join('') + '</tbody>';
 }
 
 function renderSupervisor(summary) {
@@ -2310,6 +2341,11 @@ function renderProspective(summary) {
   const p = trial.protocol;
   const meta = document.getElementById('prospectiveMeta');
   meta.textContent = statuses[trial.status] || trial.status;
+  const terminal = summary.experiment_supervision?.decision?.code;
+  if (trial.status === 'ready_for_review' && terminal && terminal !== 'collecting') {
+    const verdicts = {inconclusive:'효과 판단 보류', relative_edge:'해당 실험의 상대 개선 근거', baseline_better:'단순 기준선 우세', insufficient_evidence:'자료 부족', integrity_failure:'무결성 실패', integrity_blocked:'성과 해석 보류'};
+    meta.textContent = `종료 · ${verdicts[terminal] || '판정 확인 필요'} (원장 수집 상태: ready_for_review)`;
+  }
   for (const id of ['prospectiveTable', 'prospectiveEvidence', 'prospectiveContexts', 'prospectiveHistory', 'prospectiveComparison', 'prospectiveEvidenceMeta', 'prospectiveRules']) {
     document.getElementById(id).textContent = '';
   }
@@ -2624,7 +2660,7 @@ function renderIcChart(history) {
 
 function renderRealizedTable(stats, tableId) {
   const head = `<thead><tr>
-    <th>window</th><th>n</th><th>gross %</th><th>net %</th><th>net t</th><th>net sharpe</th><th>net win %</th><th>net σ %</th>
+    <th>기간</th><th>건수</th><th>gross / 건</th><th>net / 건</th><th>net t (naive)</th><th>Sharpe / 건</th><th>net win %</th><th>net σ / 건</th>
   </tr></thead>`;
   const labels = { d7: '7d', d14: '14d', d30: '30d' };
   const body = ['d7','d14','d30'].map(k => {
@@ -2634,7 +2670,7 @@ function renderRealizedTable(stats, tableId) {
       <td>${r.n ?? '—'}</td>
       <td class="${sgnClass(r.avg)}">${fmtPct(r.avg)}</td>
       <td class="${sgnClass(r.avg_net)}">${fmtPct(r.avg_net)}</td>
-      <td class="${r.tstat != null && Math.abs(r.tstat) >= 2 ? 'pos' : 'muted'}">${r.tstat == null ? '—' : r.tstat.toFixed(2)}</td>
+      <td class="${r.tstat != null && Math.abs(r.tstat) >= 2 ? sgnClass(r.tstat) : 'muted'}">${r.tstat == null ? '—' : r.tstat.toFixed(2)}</td>
       <td class="muted">${r.sharpe == null ? '—' : r.sharpe.toFixed(3)}</td>
       <td>${r.win_pct == null ? '—' : r.win_pct.toFixed(1) + '%'}</td>
       <td class="muted">${fmt(r.std, 2)}</td>
@@ -2706,7 +2742,7 @@ function sortKey(row, key) {
 }
 function renderHistoryTable() {
   const cols = [
-    { k: 'entry_time', label: 'entry', fmt: r => `<span class="muted">${shortTime(r.entry_time)}</span>` },
+    { k: 'entry_time', label: 'entry (UTC)', fmt: r => `<span class="muted">${shortTime(r.entry_time)}</span>` },
     { k: 'market', label: 'market', fmt: r => escapeHtml(shortMarket(r.market)) },
     { k: 'side', label: 'side', fmt: r => `<span class="${r.side === 'SHORT' ? 'neg' : ''}">${escapeHtml(r.side)}</span>` },
     { k: 'horizon_h', label: 'h', fmt: r => r.horizon_h ?? '—' },
@@ -2724,7 +2760,7 @@ function renderHistoryTable() {
   });
 
   const head = `<thead><tr>${cols.map(c =>
-    `<th class="sortable" data-key="${c.k}">${c.label}${HIST_SORT_KEY === c.k ? (HIST_SORT_DIR === 'asc' ? ' ↑' : ' ↓') : ''}</th>`
+    `<th scope="col" class="sortable" data-key="${c.k}" aria-sort="${HIST_SORT_KEY === c.k ? (HIST_SORT_DIR === 'asc' ? 'ascending' : 'descending') : 'none'}"><button type="button">${c.label}${HIST_SORT_KEY === c.k ? (HIST_SORT_DIR === 'asc' ? ' ↑' : ' ↓') : ''}</button></th>`
   ).join('')}</tr></thead>`;
   const body = sorted.map(r => `<tr>${cols.map(c => `<td>${c.fmt(r)}</td>`).join('')}</tr>`).join('');
   const tbl = document.getElementById('historyTable');
@@ -2735,20 +2771,21 @@ function renderHistoryTable() {
       if (HIST_SORT_KEY === key) HIST_SORT_DIR = HIST_SORT_DIR === 'asc' ? 'desc' : 'asc';
       else { HIST_SORT_KEY = key; HIST_SORT_DIR = 'desc'; }
       renderHistoryTable();
+      tbl.querySelector(`th[data-key="${key}"] button`).focus({preventScroll:true});
     });
   });
 }
 function renderHistory(history) {
   HISTORY_ROWS = history.pick_history || [];
   document.getElementById('historyMeta').textContent =
-    `${HISTORY_ROWS.length}건 (최근 60일) · 컬럼 클릭으로 정렬`;
+    `${HISTORY_ROWS.length}건 (최근 60일) · UTC · 코인별 paper/proxy 기록`;
   renderHistoryTable();
 }
 
 /* ───────── SVG sizing helper — measure container so text isn't distorted ───────── */
 function _svgDims(svg, fallbackW, fallbackH) {
   const rect = svg.getBoundingClientRect();
-  const W = Math.max(320, Math.round(rect.width || fallbackW));
+  const W = Math.round(rect.width || fallbackW);
   const H = Math.round(rect.height || fallbackH);
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   svg.removeAttribute('preserveAspectRatio');  // default xMidYMid meet — but viewBox now matches actual size, so no scaling
@@ -2766,11 +2803,11 @@ function _renderCumPnL(svgId, metaId, series, color) {
     return;
   }
   const { W, H } = _svgDims(svg, 800, 200);
-  const PL = 44, PR = 16, PT = 10, PB = 22;
+  const PL = 58, PR = 16, PT = 10, PB = 22;
   const cum = series.map(r => r.cum_pct);
   const dd = series.map(r => r.drawdown_pct);
-  const minY = Math.min(0, ...dd);
-  const maxY = Math.max(0, ...cum);
+  const minY = Math.min(0, ...dd, ...cum);
+  const maxY = Math.max(0, ...dd, ...cum);
   const yPad = Math.max(0.5, (maxY - minY) * 0.08);
   const yMin = minY - yPad, yMax = maxY + yPad;
   const x = i => PL + (W - PL - PR) * (series.length === 1 ? 0.5 : i / (series.length - 1));
@@ -2981,7 +3018,7 @@ function _renderRolling(svgId, metaId, series) {
     return;
   }
   const { W, H } = _svgDims(svg, 800, 180);
-  const PL = 46, PR = 46, PT = 12, PB = 22;
+  const PL = 58, PR = 46, PT = 12, PB = 22;
   const means = series.map(r => r.rolling_mean_pct);
   const hits = series.map(r => r.rolling_hit_rate * 100);
   const minM = Math.min(0, ...means), maxM = Math.max(0, ...means);
@@ -3010,7 +3047,7 @@ function _renderRolling(svgId, metaId, series) {
   const hitTicks = [];
   const hitStep = (yHx - yHm) / 3;
   for (let i = 0; i <= 3; i++) hitTicks.push(yHm + hitStep * i);
-  if (yHm < 50 && yHx > 50 && !hitTicks.some(t => Math.abs(t - 50) < 1)) hitTicks.push(50);
+  if (yHm < 50 && yHx > 50 && !hitTicks.some(t => Math.abs(yH(t) - yH(50)) < 18)) hitTicks.push(50);
   for (const v of hitTicks) {
     const yy = yH(v);
     grid += `<text x="${W - PR + 4}" y="${(yy + 3).toFixed(1)}" text-anchor="start">${v.toFixed(0)}%</text>`;
@@ -3145,7 +3182,7 @@ function _renderReliability(svgId, metaId, points) {
     <line class="axis" x1="${PL}" x2="${W - PR}" y1="${y50.toFixed(1)}" y2="${y50.toFixed(1)}" stroke-dasharray="3,3" stroke="var(--blue)" opacity="0.5" />
     <path class="line" d="${path}" stroke="var(--accent)" stroke-width="1.4" fill="none" />
     ${dots}
-    <text x="${W - PR}" y="${y50 - 4}" text-anchor="end" fill="var(--blue)">50% (random)</text>
+    <text x="${W - PR}" y="${y50 - 4}" text-anchor="end" fill="var(--blue)">50% 참고선</text>
     <text x="${PL}" y="${PT - 2}" text-anchor="start">y: empirical hit %</text>
     <text x="${W - PR}" y="${H - 4}" text-anchor="end">x: σ-bucket midpoint</text>
   `;
@@ -3172,8 +3209,8 @@ function renderShadowCompare(accuracy) {
   }
 
   const { W, H } = _svgDims(svg, 1000, 200);
-  const PL = 44, PR = 18, PT = 12, PB = 26;
-  const dates = sha.map(r => r.date);
+  const PL = 58, PR = 18, PT = 12, PB = 26;
+  const dates = [...new Set([...cur, ...sha].map(r => r.date))].sort();
   const allCum = [...cur.map(r => r.cum_net), ...sha.map(r => r.cum_net), 0];
   const yMin = Math.min(...allCum);
   const yMax = Math.max(...allCum);
@@ -3203,8 +3240,8 @@ function renderShadowCompare(accuracy) {
     ${zeroLine}
     <path d="${path(cur)}" class="line" stroke="${COLORS.short}" fill="none" stroke-width="1.8"/>
     <path d="${path(sha)}" class="line" stroke="${COLORS.long}"  fill="none" stroke-width="1.8"/>
-    <text x="${W - PR}" y="${PT + 12}" text-anchor="end" style="font-size:9px; fill: ${COLORS.short}">— SHORT-only (운영)</text>
-    <text x="${W - PR}" y="${PT + 24}" text-anchor="end" style="font-size:9px; fill: ${COLORS.long}">— long_short5 (shadow)</text>
+    <text x="${W - PR}" y="${PT + 12}" text-anchor="end" style="fill: ${COLORS.short}">— SHORT-only (운영)</text>
+    <text x="${W - PR}" y="${PT + 30}" text-anchor="end" style="fill: ${COLORS.long}">— long_short5 (shadow)</text>
   `;
 
   const fmtSummary = (s, color) => {
@@ -3219,9 +3256,9 @@ function renderShadowCompare(accuracy) {
   if (curEl) curEl.innerHTML = fmtSummary(summary.current_short_only, COLORS.short);
   if (shaEl) shaEl.innerHTML = fmtSummary(summary.shadow_long_short5, COLORS.long);
   if (metaEl) {
-    const diff = (summary.shadow_long_short5?.final_cum_net ?? 0) - (summary.current_short_only?.final_cum_net ?? 0);
-    const sign = diff >= 0 ? '+' : '';
-    metaEl.innerHTML = `<span style="font-family:'JetBrains Mono', monospace;font-size:0.78rem;color:var(--text-muted)">spread: ${sign}${diff.toFixed(2)}%p (shadow − current). ${dates.length}d window.</span>`;
+    const a = summary.shadow_long_short5?.final_cum_net, b = summary.current_short_only?.final_cum_net;
+    const spread = Number.isFinite(a) && Number.isFinite(b) ? fmtIc(a-b,2) + '%p' : '비교 자료 없음';
+    metaEl.textContent = `spread: ${spread} (shadow − current). ${dates.length}d window.`;
   }
 }
 
@@ -3232,52 +3269,136 @@ function renderReliability(accuracy) {
 }
 
 /* ───────── Boot ───────── */
+const dashboardState = {summary:null, history:null, accuracy:null, checkedAt:null, error:null, busy:false};
+let refreshDashboard = async () => {};
+let updateDashboardAge = () => {};
+
+function describeCharts() {
+  for (const [id, title, meta] of [
+    ['megaShortSpark','SHORT 일별 gross 누적 추이','megaShortFoot'],
+    ['megaLongSpark','과거 LONG 일별 gross 누적 추이','megaLongFoot'],
+    ['cumShortSvg','SHORT 누적 손익과 낙폭','cumShortMeta'],
+    ['cumLongSvg','과거 LONG 누적 손익과 낙폭','cumLongMeta'],
+    ['rollShortSvg','SHORT 최근 7일 평균 수익과 적중률','rollShortMeta'],
+    ['rollLongSvg','과거 LONG 최근 7일 평균 수익과 적중률','rollLongMeta'],
+    ['reliShortSvg','SHORT 신호 강도별 과거 적중률, 확률 검증 아님','reliShortMeta'],
+    ['reliLongSvg','LONG 신호 강도별 과거 적중률, 확률 검증 아님','reliLongMeta'],
+    ['shadowSvg','SHORT 운영과 LONG SHORT shadow의 가정 순수익 비교','shadowMeta'],
+    ['icChart','시간순 SHORT 6h와 LONG 12h 순위 상관 IC','icMeta'],
+  ]) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    el.setAttribute('role','img');
+    el.setAttribute('aria-label', title + '. ' + (document.getElementById(meta)?.textContent || '자료 대기'));
+  }
+}
+
+function preserveReadingPosition(render) {
+  const x = scrollX, y = scrollY, active = document.activeElement;
+  const tiles = document.getElementById('operatorCoinTiles'), tileScroll = tiles.scrollLeft;
+  const sortKey = active?.closest('th.sortable')?.dataset.key;
+  const coinIndex = active?.matches('.coin-evidence-button') ? active.dataset.index : null;
+  const coinName = coinIndex != null ? active.closest('.coin-tile').querySelector('h3').textContent : null;
+  render();
+  tiles.scrollLeft = tileScroll;
+  if (active?.id) document.getElementById(active.id)?.focus({preventScroll:true});
+  else if (sortKey) document.querySelector(`#historyTable th[data-key="${CSS.escape(sortKey)}"] button`)?.focus({preventScroll:true});
+  else if (coinName) {
+    const tile = [...document.querySelectorAll('.coin-tile')].find(el => el.querySelector('h3').textContent === coinName);
+    (tile?.querySelector('button') || document.getElementById('selectionMarket')).focus({preventScroll:true});
+  }
+  window.scrollTo({left:x,top:y,behavior:'instant'});
+}
+
+function renderCurrentSummary(summary) {
+  renderHero(summary); renderOverview(summary); renderOperatorReport(summary);
+  renderKpi(summary); renderPicks(summary); renderProspective(summary);
+  renderRealizedHero(summary); renderHoldoutVsLive(summary);
+  renderDrift(summary); renderCalibration(summary);
+  // A failed history refresh must not leave old headline values under a new as-of.
+  renderMegaStats(summary, {});
+}
+
 async function boot() {
   const { pin, summary } = await showPinModal();
-  // The current report remains available even if a historical payload fails.
-  renderHero(summary);
-  renderOverview(summary);
-  renderOperatorReport(summary);
-  renderKpi(summary);
-  renderPicks(summary);
-  renderProspective(summary);
+  const status = document.createElement('p'); status.id = 'refreshStatus'; status.setAttribute('role','status');
+  document.getElementById('operatorCoinTiles').after(status);
+  dashboardState.summary = summary;
+  renderCurrentSummary(summary);
   openEvidenceHash();
-  // summary already decrypted by the PIN gate. Fetch the remaining two only.
-  const [historyEnc, accuracyEnc] = await Promise.all([
-    fetchJson(`${DATA_DIR}/history.json`),
-    fetchJson(`${DATA_DIR}/accuracy.json`),
-  ]);
-  const [history, accuracy] = await Promise.all([
-    decryptPayload(historyEnc, pin),
-    decryptPayload(accuracyEnc, pin),
-  ]);
 
-  renderMegaStats(summary, accuracy);
-  renderIcChart(history);
-  renderRealized(summary, accuracy);
-  renderDrift(summary);
-  renderCalibration(summary);
-  renderCumulative(accuracy);
-  renderHeatmaps(accuracy);
-  renderDistributions(accuracy);
-  renderMonthlyHeatmaps(accuracy);
-  renderRolling(accuracy);
-  renderShadowCompare(accuracy);
-  renderBestWorst(accuracy);
-  renderReliability(accuracy);
-  renderHistory(history);
-  renderHoldoutVsLive(summary);
-  redrawEvidence = () => {
-    if (document.getElementById('signal-details').open) renderIcChart(history);
-    if (document.getElementById('performance-details').open) {
-      renderMegaStats(summary, accuracy); renderCumulative(accuracy); renderHeatmaps(accuracy);
-      renderDistributions(accuracy); renderMonthlyHeatmaps(accuracy); renderRolling(accuracy);
-      renderShadowCompare(accuracy); renderReliability(accuracy);
+  const read = async name => decryptPayload(await fetchJson(`${DATA_DIR}/${name}.json`), pin);
+  const sameBundle = (s,h,a) => Boolean(s.export_id && s.export_id === h?.export_id && s.export_id === a?.export_id);
+  function renderHistoryBundle() {
+    const {summary:s, history:h, accuracy:a} = dashboardState;
+    renderMegaStats(s,a); renderIcChart(h); renderRealized(s,a);
+    renderCumulative(a); renderHeatmaps(a); renderDistributions(a);
+    renderMonthlyHeatmaps(a); renderRolling(a); renderShadowCompare(a);
+    renderBestWorst(a); renderReliability(a); renderHistory(h); describeCharts();
+  }
+  function showRefreshStatus() {
+    const {summary:s, accuracy:a, error, checkedAt} = dashboardState;
+    const stale = !Number.isFinite(Date.parse(s.asof)) || Date.now() - Date.parse(s.asof) > 90 * 60000;
+    status.dataset.state = error || stale ? 'error' : 'ok';
+    status.textContent = error ? `갱신 확인 필요 · ${error}. 현재 보고는 마지막 검증 자료 (${kstTime(s.asof)}).` :
+      `${stale ? '게시 자료 지연' : '게시 확인'} · ${kstTime(s.asof)}`;
+    status.title = checkedAt ? `최근 수신 확인 ${kstTime(checkedAt)}` : '수신 확인 대기';
+    if (!sameBundle(s,dashboardState.history,a)) status.textContent += a ? ` 과거 성과는 이전 게시 자료 (${kstTime(a.asof)}).` : ' 과거 성과 자료 미수신.';
+    document.body.dataset.loadError = error ? 'true' : '';
+    const historicalStatus = document.getElementById('historicalStatus');
+    historicalStatus.textContent = a ? `과거 성과 원본: ${kstTime(a.asof)} · ${sameBundle(s,dashboardState.history,a) ? '현재 보고와 같은 게시 묶음' : '이전 게시 묶음 · 현재 보고와 분리'}` : '과거 성과 원본 미수신 · 값 없음';
+  }
+  const historicalStatus = document.createElement('p'); historicalStatus.id = 'historicalStatus'; historicalStatus.className = 'card-meta';
+  document.querySelector('#performance-details > summary').after(historicalStatus);
+  updateDashboardAge = () => {
+    preserveReadingPosition(() => renderOverview(dashboardState.summary));
+    renderPublicationAge(dashboardState.summary); showRefreshStatus();
+  };
+  refreshDashboard = async (initial = false) => {
+    if (dashboardState.busy || document.hidden) return;
+    dashboardState.busy = true;
+    try {
+      const s = initial ? dashboardState.summary : await read('summary');
+      if (!Number.isFinite(Date.parse(s?.asof))) throw new Error('게시 시각 미확인');
+      if (Date.parse(s.asof) < Date.parse(dashboardState.summary.asof)) throw new Error('이전 게시 자료 수신');
+      if (s.export_id !== dashboardState.summary.export_id || s.asof !== dashboardState.summary.asof) {
+        dashboardState.summary = s;
+        preserveReadingPosition(() => renderCurrentSummary(s));
+      }
+      if (!sameBundle(s,dashboardState.history,dashboardState.accuracy)) {
+        // Settle both requests before allowing the next refresh, even on failure.
+        const results = await Promise.allSettled([read('history'),read('accuracy')]);
+        if (results.some(r => r.status === 'rejected')) throw new Error('과거 데이터 수신 실패');
+        const [h,a] = results.map(r => r.value);
+        if (!sameBundle(s,h,a)) throw new Error('게시 묶음 불일치 · 재수신 대기');
+        dashboardState.history = h; dashboardState.accuracy = a;
+        preserveReadingPosition(renderHistoryBundle);
+      }
+      dashboardState.checkedAt = new Date().toISOString(); dashboardState.error = null;
+    } catch (err) {
+      dashboardState.error = err.name === 'AbortError' ? '수신 시간 초과' : err.message || '수신 실패';
+    } finally {
+      dashboardState.busy = false; document.body.dataset.loaded = 'true'; updateDashboardAge(); describeCharts();
     }
   };
-  redrawEvidence();
+  redrawEvidence = () => {
+    const {summary:s, history:h, accuracy:a} = dashboardState;
+    if (h && document.getElementById('signal-details').open) renderIcChart(h);
+    if (!a) return;
+    if (document.getElementById('performance-details').open) {
+      renderMegaStats(s,sameBundle(s,h,a) ? a : {}); renderCumulative(a); renderHeatmaps(a);
+      renderDistributions(a); renderMonthlyHeatmaps(a); renderRolling(a);
+      renderShadowCompare(a); renderReliability(a);
+    }
+    describeCharts();
+  };
   window.addEventListener('resize', redrawEvidence);
-  document.body.dataset.loaded = 'true';
+  setInterval(() => refreshDashboard(), 60000);
+  setInterval(updateDashboardAge, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { updateDashboardAge(); refreshDashboard(); } });
+  window.addEventListener('online', () => refreshDashboard());
+  await refreshDashboard(true);
+  redrawEvidence();
 }
 
 boot().catch(err => {
