@@ -1,0 +1,574 @@
+{
+  "cases": [
+    {
+      "id": "auth-exception-any-3",
+      "title": "01 · 장애 또는 돌봄",
+      "scope": "새길 교육비 지원의 기본 조건과 소득 제외 및 보호 대상 예외를 함께 판정한다. 다른 사업의 교통비·부모 상담·지급 일정은 범위 밖이다.",
+      "facts": "나이: 19세 · 거주기간: 6개월 · 연소득: 2001만원 · 신청자 재학생: 해당 없음 · 신청자 장애인: 해당 · 신청자 돌봄 담당자: 해당 없음",
+      "note": "장애만 해당",
+      "origin": "작성 문서 · 의미 변화 대조",
+      "reference": "범위 내 충족",
+      "retrieval": "본문 8개 문단 → 검색·참조 확장 5개 · 지정 근거 3개 모두 회수",
+      "states": {
+        "qwen": {
+          "literal_rules": "범위 내 충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-exception-any-3\",\n    \"document\": \"auth-exception-any\",\n    \"facts\": {\n      \"age\": 19,\n      \"residence\": 6,\n      \"income\": 2001,\n      \"student\": false,\n      \"disabled\": true,\n      \"carer\": false\n    },\n    \"label\": \"eligible\",\n    \"note\": \"장애만 해당\",\n    \"model\": \"qwen\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"eligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    },\n    \"retrieved\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    }\n  }\n}"
+        },
+        "kanana-public": {
+          "literal_rules": "범위 내 충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-exception-any-3\",\n    \"document\": \"auth-exception-any\",\n    \"facts\": {\n      \"age\": 19,\n      \"residence\": 6,\n      \"income\": 2001,\n      \"student\": false,\n      \"disabled\": true,\n      \"carer\": false\n    },\n    \"label\": \"eligible\",\n    \"note\": \"장애만 해당\",\n    \"model\": \"kanana-public\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"eligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": null,\n    \"retrieved\": null\n  }\n}"
+        }
+      }
+    },
+    {
+      "id": "auth-exception-all-3",
+      "title": "02 · 장애 그리고 돌봄",
+      "scope": "새길 교육비 지원의 기본 조건과 소득 제외 및 보호 대상 예외를 함께 판정한다. 다른 사업의 교통비·부모 상담·지급 일정은 범위 밖이다.",
+      "facts": "나이: 19세 · 거주기간: 6개월 · 연소득: 2001만원 · 신청자 재학생: 해당 없음 · 신청자 장애인: 해당 · 신청자 돌봄 담당자: 해당 없음",
+      "note": "장애만 해당",
+      "origin": "작성 문서 · 의미 변화 대조",
+      "reference": "범위 내 미충족",
+      "retrieval": "본문 8개 문단 → 검색·참조 확장 5개 · 지정 근거 3개 모두 회수",
+      "states": {
+        "qwen": {
+          "literal_rules": "범위 내 충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 미충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-exception-all-3\",\n    \"document\": \"auth-exception-all\",\n    \"facts\": {\n      \"age\": 19,\n      \"residence\": 6,\n      \"income\": 2001,\n      \"student\": false,\n      \"disabled\": true,\n      \"carer\": false\n    },\n    \"label\": \"ineligible\",\n    \"note\": \"장애만 해당\",\n    \"model\": \"qwen\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"eligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"ineligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    },\n    \"retrieved\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    }\n  }\n}"
+        },
+        "kanana-public": {
+          "literal_rules": "범위 내 충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-exception-all-3\",\n    \"document\": \"auth-exception-all\",\n    \"facts\": {\n      \"age\": 19,\n      \"residence\": 6,\n      \"income\": 2001,\n      \"student\": false,\n      \"disabled\": true,\n      \"carer\": false\n    },\n    \"label\": \"ineligible\",\n    \"note\": \"장애만 해당\",\n    \"model\": \"kanana-public\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"eligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": null,\n    \"retrieved\": null\n  }\n}"
+        }
+      }
+    },
+    {
+      "id": "auth-subject-self-2",
+      "title": "03 · 본인에게 걸린 소득 조건",
+      "scope": "잇다 학습비 지원의 기본 조건, 지정된 주체의 소득 제외, 장애 예외와 지원제한에 따른 예외 취소를 함께 판정한다. 다른 교재비·부모 상담·접수 시간은 범위 밖이다.",
+      "facts": "나이: 19세 · 본인 연소득: 3000만원 · 배우자 연소득: 1000만원 · 신청자 재학생: 해당 · 신청자 근로자: 해당 없음 · 신청자 장애인: 해당 없음 · 신청자 지원제한 중: 해당 없음",
+      "note": "본인만 기준 소득",
+      "origin": "작성 문서 · 의미 변화 대조",
+      "reference": "범위 내 미충족",
+      "retrieval": "본문 8개 문단 → 검색·참조 확장 4개 · 지정 근거 3개 모두 회수",
+      "states": {
+        "qwen": {
+          "literal_rules": "범위 내 미충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-subject-self-2\",\n    \"document\": \"auth-subject-self\",\n    \"facts\": {\n      \"age\": 19,\n      \"own_income\": 3000,\n      \"spouse_income\": 1000,\n      \"student\": true,\n      \"worker\": false,\n      \"disabled\": false,\n      \"sanction\": false\n    },\n    \"label\": \"ineligible\",\n    \"note\": \"본인만 기준 소득\",\n    \"model\": \"qwen\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"ineligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    },\n    \"retrieved\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    }\n  }\n}"
+        },
+        "kanana-public": {
+          "literal_rules": "범위 내 미충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-subject-self-2\",\n    \"document\": \"auth-subject-self\",\n    \"facts\": {\n      \"age\": 19,\n      \"own_income\": 3000,\n      \"spouse_income\": 1000,\n      \"student\": true,\n      \"worker\": false,\n      \"disabled\": false,\n      \"sanction\": false\n    },\n    \"label\": \"ineligible\",\n    \"note\": \"본인만 기준 소득\",\n    \"model\": \"kanana-public\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"ineligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"nodes\": [\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p01\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n1\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p01\"\n          ],\n          \"field\": \"student\",\n          \"id\": \"n2\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p01\"\n          ],\n          \"field\": \"worker\",\n          \"id\": \"n3\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p02\"\n          ],\n          \"field\": \"own_income\",\n          \"id\": \"n4\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p02\"\n          ],\n          \"field\": \"spouse_income\",\n          \"id\": \"n5\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p02\"\n          ],\n          \"field\": \"disabled\",\n          \"id\": \"n6\",\n          \"op\": \"any\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p04\"\n          ],\n          \"field\": \"sanction\",\n          \"id\": \"n7\",\n          \"op\": \"not\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p05\"\n          ],\n          \"field\": \"own_income\",\n          \"id\": \"n8\",\n          \"op\": \"all\",\n          \"value\": 1000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p06\"\n          ],\n          \"field\": \"\",\n          \"id\": \"n9\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n10\",\n          \"op\": \"all\",\n          \"value\": 70\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"worker\",\n          \"id\": \"n11\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"spouse_income\",\n          \"id\": \"n12\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p08\"\n          ],\n          \"field\": \"\",\n          \"id\": \"n13\",\n          \"op\": \"all\",\n          \"value\": 0\n        }\n      ],\n      \"root\": \"n14\",\n      \"status\": \"insufficient\"\n    },\n    \"retrieved\": {\n      \"nodes\": [\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"age\",\n          \"id\": \"n1\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"student\",\n          \"id\": \"n2\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"worker\",\n          \"id\": \"n3\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"ge\",\n          \"evidence\": [],\n          \"field\": \"own_income\",\n          \"id\": \"n4\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"disabled\",\n          \"id\": \"n5\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"sanction\",\n          \"id\": \"n6\",\n          \"op\": \"all\",\n          \"value\": false\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p01\"\n          ],\n          \"field\": \"\",\n          \"id\": \"n7\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p02\"\n          ],\n          \"field\": \"\",\n          \"id\": \"n8\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p04\"\n          ],\n          \"field\": \"\",\n          \"id\": \"n9\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p05\"\n          ],\n          \"field\": \"\",\n          \"id\": \"n10\",\n          \"op\": \"all\",\n          \"value\": 0\n        }\n      ],\n      \"root\": \"n7\",\n      \"status\": \"insufficient\"\n    }\n  }\n}"
+        }
+      }
+    },
+    {
+      "id": "auth-subject-spouse-2",
+      "title": "04 · 배우자에게 걸린 소득 조건",
+      "scope": "잇다 학습비 지원의 기본 조건, 지정된 주체의 소득 제외, 장애 예외와 지원제한에 따른 예외 취소를 함께 판정한다. 다른 교재비·부모 상담·접수 시간은 범위 밖이다.",
+      "facts": "나이: 19세 · 본인 연소득: 3000만원 · 배우자 연소득: 1000만원 · 신청자 재학생: 해당 · 신청자 근로자: 해당 없음 · 신청자 장애인: 해당 없음 · 신청자 지원제한 중: 해당 없음",
+      "note": "본인만 기준 소득",
+      "origin": "작성 문서 · 의미 변화 대조",
+      "reference": "범위 내 충족",
+      "retrieval": "본문 8개 문단 → 검색·참조 확장 4개 · 지정 근거 3개 모두 회수",
+      "states": {
+        "qwen": {
+          "literal_rules": "범위 내 미충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-subject-spouse-2\",\n    \"document\": \"auth-subject-spouse\",\n    \"facts\": {\n      \"age\": 19,\n      \"own_income\": 3000,\n      \"spouse_income\": 1000,\n      \"student\": true,\n      \"worker\": false,\n      \"disabled\": false,\n      \"sanction\": false\n    },\n    \"label\": \"eligible\",\n    \"note\": \"본인만 기준 소득\",\n    \"model\": \"qwen\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"ineligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    },\n    \"retrieved\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    }\n  }\n}"
+        },
+        "kanana-public": {
+          "literal_rules": "범위 내 미충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"auth-subject-spouse-2\",\n    \"document\": \"auth-subject-spouse\",\n    \"facts\": {\n      \"age\": 19,\n      \"own_income\": 3000,\n      \"spouse_income\": 1000,\n      \"student\": true,\n      \"worker\": false,\n      \"disabled\": false,\n      \"sanction\": false\n    },\n    \"label\": \"eligible\",\n    \"note\": \"본인만 기준 소득\",\n    \"model\": \"kanana-public\",\n    \"group\": \"authored\",\n    \"literal_rules\": \"ineligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"nodes\": [\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"age\",\n          \"id\": \"n1\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"age\",\n          \"id\": \"n2\",\n          \"op\": \"all\",\n          \"value\": 70\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"student\",\n          \"id\": \"n3\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"worker\",\n          \"id\": \"n4\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"own_income\",\n          \"id\": \"n5\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"spouse_income\",\n          \"id\": \"n6\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"disabled\",\n          \"id\": \"n7\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"sanction\",\n          \"id\": \"n8\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p01\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n9\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p01\"\n          ],\n          \"field\": \"student\",\n          \"id\": \"n10\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p01\"\n          ],\n          \"field\": \"worker\",\n          \"id\": \"n11\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p02\"\n          ],\n          \"field\": \"spouse_income\",\n          \"id\": \"n12\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p03\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n13\",\n          \"op\": \"all\",\n          \"value\": 70\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p03\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n14\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p04\"\n          ],\n          \"field\": \"disabled\",\n          \"id\": \"n15\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p04\"\n          ],\n          \"field\": \"sanction\",\n          \"id\": \"n16\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p05\"\n          ],\n          \"field\": \"own_income\",\n          \"id\": \"n17\",\n          \"op\": \"all\",\n          \"value\": 1000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p06\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n18\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p06\"\n          ],\n          \"field\": \"student\",\n          \"id\": \"n19\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p06\"\n          ],\n          \"field\": \"worker\",\n          \"id\": \"n20\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p06\"\n          ],\n          \"field\": \"spouse_income\",\n          \"id\": \"n21\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p06\"\n          ],\n          \"field\": \"own_income\",\n          \"id\": \"n22\",\n          \"op\": \"all\",\n          \"value\": 1000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n23\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"student\",\n          \"id\": \"n24\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"worker\",\n          \"id\": \"n25\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"spouse_income\",\n          \"id\": \"n26\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p07\"\n          ],\n          \"field\": \"own_income\",\n          \"id\": \"n27\",\n          \"op\": \"all\",\n          \"value\": 1000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p08\"\n          ],\n          \"field\": \"age\",\n          \"id\": \"n28\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p08\"\n          ],\n          \"field\": \"student\",\n          \"id\": \"n29\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p08\"\n          ],\n          \"field\": \"worker\",\n          \"id\": \"n30\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p08\"\n          ],\n          \"field\": \"spouse_income\",\n          \"id\": \"n31\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p08\"\n          ],\n          \"field\": \"own_income\",\n          \"id\": \"n32\",\n          \"op\": \"all\",\n          \"value\": 1000\n        }\n      ],\n      \"root\": \"n1\",\n      \"status\": \"insufficient\"\n    },\n    \"retrieved\": {\n      \"nodes\": [\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"age\",\n          \"id\": \"n1\",\n          \"op\": \"all\",\n          \"value\": 19\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"student\",\n          \"id\": \"n2\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"worker\",\n          \"id\": \"n3\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"ge\",\n          \"evidence\": [],\n          \"field\": \"spouse_income\",\n          \"id\": \"n4\",\n          \"op\": \"all\",\n          \"value\": 3000\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"disabled\",\n          \"id\": \"n5\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"sanction\",\n          \"id\": \"n6\",\n          \"op\": \"all\",\n          \"value\": false\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p02\"\n          ],\n          \"field\": \"spouse_income\",\n          \"id\": \"n7\",\n          \"op\": \"any\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p04\"\n          ],\n          \"field\": \"disabled\",\n          \"id\": \"n8\",\n          \"op\": \"any\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p04\"\n          ],\n          \"field\": \"sanction\",\n          \"id\": \"n9\",\n          \"op\": \"any\",\n          \"value\": false\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [\n            \"p05\"\n          ],\n          \"field\": \"student\",\n          \"id\": \"n10\",\n          \"op\": \"all\",\n          \"value\": false\n        }\n      ],\n      \"root\": \"root\",\n      \"status\": \"insufficient\"\n    }\n  }\n}"
+        }
+      }
+    },
+    {
+      "id": "work24-8",
+      "title": "05 · 나이를 모를 때 단정하지 않기",
+      "scope": "국민내일배움카드 지원 제외 대상 중 대규모 기업 근로자의 월 임금·나이 조건과 생계급여 수급자의 조건부 수급자·조건부과 유예자 예외를 함께 판정한다. 이 두 제외에 걸리지 않으면 이 범위에서는 eligible이다. 나머지 제외·발급 절차·훈련비·훈련장려금 조건은 평가하지 않는다.",
+      "facts": "대규모 기업 근로자: 해당 · 월 임금: 300만원 · 만 나이: 미확인 · 생계급여 수급: 해당 없음 · 조건부 수급자: 해당 없음 · 조건부과 유예자: 해당 없음",
+      "note": "나이 미확인",
+      "origin": "방법 고정 후 수집한 공식 안내 · 제한한 제외 조건",
+      "reference": "사실 미확인",
+      "retrieval": "본문 17개 문단 → 검색·참조 확장 4개 · 지정 근거 2개 모두 회수",
+      "states": {
+        "qwen": {
+          "literal_rules": "범위 내 충족",
+          "guarded_rules": "판독 보류",
+          "direct": "사실 미확인",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"work24-8\",\n    \"document\": \"work24\",\n    \"facts\": {\n      \"large\": true,\n      \"wage\": 300,\n      \"age\": null,\n      \"livelihood\": false,\n      \"conditional\": false,\n      \"deferred\": false\n    },\n    \"label\": \"undetermined\",\n    \"note\": \"나이 미확인\",\n    \"model\": \"qwen\",\n    \"group\": \"official\",\n    \"literal_rules\": \"eligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"undetermined\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    },\n    \"retrieved\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    }\n  }\n}"
+        },
+        "kanana-public": {
+          "literal_rules": "범위 내 충족",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 미충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"work24-8\",\n    \"document\": \"work24\",\n    \"facts\": {\n      \"large\": true,\n      \"wage\": 300,\n      \"age\": null,\n      \"livelihood\": false,\n      \"conditional\": false,\n      \"deferred\": false\n    },\n    \"label\": \"undetermined\",\n    \"note\": \"나이 미확인\",\n    \"model\": \"kanana-public\",\n    \"group\": \"official\",\n    \"literal_rules\": \"eligible\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"ineligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"nodes\": [\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"large\",\n          \"id\": \"n1\",\n          \"op\": \"not\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"wage\",\n          \"id\": \"n2\",\n          \"op\": \"not\",\n          \"value\": 300\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"age\",\n          \"id\": \"n3\",\n          \"op\": \"not\",\n          \"value\": 45\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"livelihood\",\n          \"id\": \"n4\",\n          \"op\": \"not\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"conditional\",\n          \"id\": \"n5\",\n          \"op\": \"not\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"deferred\",\n          \"id\": \"n6\",\n          \"op\": \"not\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"\",\n          \"id\": \"n7\",\n          \"op\": \"all\",\n          \"value\": 0\n        }\n      ],\n      \"root\": \"n7\",\n      \"status\": \"insufficient\"\n    },\n    \"retrieved\": null\n  }\n}"
+        }
+      }
+    },
+    {
+      "id": "nts-7",
+      "title": "06 · 국적 예외와 배우자 전문직",
+      "scope": "근로·자녀장려금 신청자격 안내에서 국적 미보유자 제외와 한국 국적 배우자·부양자녀 예외, 다른 거주자의 부양자녀 제외, 본인 또는 배우자의 전문직 사업 제외를 함께 판정한다. 이 세 제외에 걸리지 않으면 이 범위에서는 eligible이다. 소득·재산·상용근로소득·가구분류 요건은 평가하지 않는다.",
+      "facts": "신청자 대한민국 국적: 해당 없음 · 대한민국 국적 보유 배우자 존재: 해당 · 대한민국 국적 부양자녀 존재: 해당 없음 · 다른 거주자의 부양자녀: 해당 없음 · 본인의 전문직 사업 영위: 해당 없음 · 배우자의 전문직 사업 영위: 해당",
+      "note": "배우자 전문직도 제외",
+      "origin": "방법 고정 후 수집한 공식 안내 · 제한한 제외 조건",
+      "reference": "범위 내 미충족",
+      "retrieval": "본문 6개 문단 → 검색·참조 확장 4개 · 지정 근거 1개 모두 회수",
+      "states": {
+        "qwen": {
+          "literal_rules": "판독 보류",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"nts-7\",\n    \"document\": \"nts\",\n    \"facts\": {\n      \"korean_self\": false,\n      \"korean_spouse\": true,\n      \"korean_child\": false,\n      \"dependent_other\": false,\n      \"professional_self\": false,\n      \"professional_spouse\": true\n    },\n    \"label\": \"ineligible\",\n    \"note\": \"배우자 전문직도 제외\",\n    \"model\": \"qwen\",\n    \"group\": \"official\",\n    \"literal_rules\": \"abstain\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"eligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    },\n    \"retrieved\": {\n      \"status\": \"insufficient\",\n      \"root\": \"\",\n      \"nodes\": []\n    }\n  }\n}"
+        },
+        "kanana-public": {
+          "literal_rules": "판독 보류",
+          "guarded_rules": "판독 보류",
+          "direct": "범위 내 미충족",
+          "full": "판독 보류",
+          "retrieved": "판독 보류",
+          "explanation": "전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.",
+          "raw_json": "{\n  \"case\": {\n    \"id\": \"nts-7\",\n    \"document\": \"nts\",\n    \"facts\": {\n      \"korean_self\": false,\n      \"korean_spouse\": true,\n      \"korean_child\": false,\n      \"dependent_other\": false,\n      \"professional_self\": false,\n      \"professional_spouse\": true\n    },\n    \"label\": \"ineligible\",\n    \"note\": \"배우자 전문직도 제외\",\n    \"model\": \"kanana-public\",\n    \"group\": \"official\",\n    \"literal_rules\": \"abstain\",\n    \"guarded_rules\": \"abstain\",\n    \"direct\": \"ineligible\",\n    \"reasons\": {\n      \"full\": \"insufficient_program\",\n      \"retrieved\": \"insufficient_program\"\n    },\n    \"full\": \"abstain\",\n    \"retrieved\": \"abstain\"\n  },\n  \"extracted\": {\n    \"full\": {\n      \"nodes\": [\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"korean_self\",\n          \"id\": \"n0\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"korean_spouse\",\n          \"id\": \"n1\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"korean_child\",\n          \"id\": \"n2\",\n          \"op\": \"all\",\n          \"value\": true\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"dependent_other\",\n          \"id\": \"n3\",\n          \"op\": \"all\",\n          \"value\": false\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"professional_self\",\n          \"id\": \"n4\",\n          \"op\": \"all\",\n          \"value\": false\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"professional_spouse\",\n          \"id\": \"n5\",\n          \"op\": \"all\",\n          \"value\": false\n        }\n      ],\n      \"root\": \"n6\",\n      \"status\": \"insufficient\"\n    },\n    \"retrieved\": {\n      \"nodes\": [\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"korean_self\",\n          \"id\": \"n0\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"korean_spouse\",\n          \"id\": \"n1\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"korean_child\",\n          \"id\": \"n2\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"dependent_other\",\n          \"id\": \"n3\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"professional_self\",\n          \"id\": \"n4\",\n          \"op\": \"all\",\n          \"value\": 0\n        },\n        {\n          \"children\": [],\n          \"cmp\": \"eq\",\n          \"evidence\": [],\n          \"field\": \"professional_spouse\",\n          \"id\": \"n5\",\n          \"op\": \"all\",\n          \"value\": 0\n        }\n      ],\n      \"root\": \"n6\",\n      \"status\": \"insufficient\"\n    }\n  }\n}"
+        }
+      }
+    }
+  ],
+  "matrix": {
+    "qwen": [
+      {
+        "id": "auth-exception-any",
+        "title": "새길 교육비 · 보호 대상 또는",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 6,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 7,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "auth-exception-all",
+        "title": "새길 교육비 · 보호 대상 그리고",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 7,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "auth-subject-self",
+        "title": "잇다 학습비 · 본인 소득",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 6,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "auth-subject-spouse",
+        "title": "잇다 학습비 · 배우자 소득",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "work24",
+        "title": "고용24 · 기업근로자와 생계급여 제외",
+        "group": "새 공식 자료",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 4,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "nts",
+        "title": "국세청 · 국적 예외와 가족·전문직 제외",
+        "group": "새 공식 자료",
+        "cells": [
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 6,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      }
+    ],
+    "kanana-public": [
+      {
+        "id": "auth-exception-any",
+        "title": "새길 교육비 · 보호 대상 또는",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 6,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 5,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "auth-exception-all",
+        "title": "새길 교육비 · 보호 대상 그리고",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 4,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "auth-subject-self",
+        "title": "잇다 학습비 · 본인 소득",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 6,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "auth-subject-spouse",
+        "title": "잇다 학습비 · 배우자 소득",
+        "group": "작성 대조",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 5,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "work24",
+        "title": "고용24 · 기업근로자와 생계급여 제외",
+        "group": "새 공식 자료",
+        "cells": [
+          {
+            "correct": 3,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 2,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      },
+      {
+        "id": "nts",
+        "title": "국세청 · 국적 예외와 가족·전문직 제외",
+        "group": "새 공식 자료",
+        "cells": [
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 5,
+            "n": 8,
+            "abstain": 0
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          },
+          {
+            "correct": 0,
+            "n": 8,
+            "abstain": 8
+          }
+        ]
+      }
+    ]
+  }
+}
