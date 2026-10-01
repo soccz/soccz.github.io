@@ -106,6 +106,19 @@
     return {context, items};
   }
 
+  function predictionModel(value) {
+    const empty = {up:null, down:null, deep:null, ratio:null};
+    if (!value || value.schema !== 'prelude_recommend_prediction.v1'
+        || value.source !== 'stored_recommend_ledger'
+        || value.basis !== 'day_D_0900_KST_open_high_low') return empty;
+    const probability = v => finite(v) && v >= 0 && v <= 1 ? v : null;
+    const result = {up:probability(value.p_up10), down:probability(value.p_dn5),
+      deep:probability(value.p_dn10), ratio:finite(value.rr_ratio) && value.rr_ratio >= 0 ? value.rr_ratio : null};
+    if (result.down !== null && result.deep !== null && result.deep > result.down)
+      return {...result, down:null, deep:null, ratio:null};
+    return result;
+  }
+
   function recommendationModel(summary) {
     const rec = summary?.channels?.recommend;
     const unknown = {state:'unknown', date:null, dateMismatch:false, rows:[]};
@@ -119,6 +132,7 @@
       dateMismatch:day(summary?.current_system?.asof) && summary.current_system.asof !== rec.latest_radar_date,
       rows:rows.map(row => ({
       coin:row.coin, rank:row.rank, score:finite(row.score) ? row.score.toFixed(3) : '미제공',
+      prediction:predictionModel(row.prediction_evidence),
       risk:row.dump_risk_flag === true ? 'flagged' : row.dump_risk_flag === false ? 'not_flagged' : 'unknown',
       price:finite(row.entry_open) && row.entry_open > 0 ? row.entry_open.toLocaleString('ko-KR', {maximumFractionDigits:8}) : '미제공',
       regime:own(REGIMES, row.btc_regime) ? REGIMES[row.btc_regime]
@@ -232,14 +246,29 @@
       const header = node('header', '');
       header.append(node('h3', '', row.coin), node('span', 'recommend-rank', `#${row.rank}`));
       card.append(header, node('span', 'recommend-risk', row.risk === 'flagged' ? '하방 경고 있음' : row.risk === 'not_flagged' ? '하방 경고 미표시 · 안전 인증 아님' : '하방 경고 자료 미제공'));
+      const estimates = node('div', 'prediction-estimates');
+      [['+10% 상승 추정', row.prediction.up, 'up'], ['−5% 하락 추정', row.prediction.down, 'down']].forEach(([label, value, tone]) => {
+        const item = node('div', 'prediction-axis'); item.dataset.axis = tone;
+        const caption = node('div', 'prediction-label');
+        caption.append(node('span', '', label), node('strong', '', value === null ? '미제공' : (value * 100).toFixed(1) + '%'));
+        const track = node('div', 'prediction-track'); track.setAttribute('aria-hidden', 'true');
+        const fill = node('span', ''); fill.style.width = value === null ? '0%' : (value * 100) + '%';
+        track.append(fill); item.append(caption, track); estimates.append(item);
+      });
+      const ratio = row.prediction.ratio === null ? '미제공' : row.prediction.ratio.toFixed(4);
+      card.append(estimates, node('p', 'prediction-ratio', `저장된 RR 비율 ${ratio}`),
+        node('p', 'prediction-basis', '09:00 일봉 기준 · 모델 추정, 적중 보장 아님'));
       const values = node('dl', '');
       [['09:00 참고가격', row.price === '미제공' ? row.price : row.price + '원'], ['BTC 국면', row.regime]].forEach(([key, value]) => values.append(node('dt', '', key), node('dd', '', value)));
       const detail = node('details', 'score-detail');
-      detail.append(node('summary', '', '보조 점수 확인'), node('p', 'score-help', `보조 점수 ${row.score} · R1 최종 순위의 정렬키가 아닙니다. 상승 확률·안전 등급도 아닙니다.`));
+      const deep = row.prediction.deep === null ? '미제공' : (row.prediction.deep * 100).toFixed(2) + '%';
+      detail.append(node('summary', '', '동률 판단·보조 점수'),
+        node('p', 'score-help', `−10% 하락 추정 ${deep} · RR 동률 시 낮은 값이 우선인 보조 기준입니다. 표시값은 반올림되어 같아 보일 수 있습니다.`),
+        node('p', 'score-help', `보조 점수 ${row.score} · 정상 RR 경로에서는 최종 순위의 정렬키가 아닙니다. RR 모델 실패 시에만 점수 정렬로 대체됩니다. 상승 확률·안전 등급도 아닙니다.`));
       card.append(values, detail);
       root.append(card);
     });
-    note.textContent = '장후(open) 발송 원순위를 보존합니다. 장전 추천은 합치지 않으며 09:00 가격은 현재가·체결가가 아닙니다. 개별 상승·하락 추정치는 이 게시 자료에 없어 표시하지 않습니다.';
+    note.textContent = '장후(open) 원장에 저장된 추정치와 발송 원순위입니다. 두 막대는 각각 0~100% 척도이며 합이 100%가 아닙니다. 같은 일봉에서 상승·하락이 모두 발생할 수 있습니다. 기준은 해당일 09:00 시가부터 다음 날 09:00 직전 고가·저가이며, 알림 수신 이후의 수익 확률·선도달 확률이나 실사용 보정 검증 완료를 뜻하지 않습니다. 09:00 가격은 현재가·체결가가 아니며, 미제공 값과 RR 비율은 역산하지 않습니다.';
   }
   function render(summary) {
     const model = derive(summary);
@@ -447,5 +476,16 @@
     table.append(head, body); wrap.append(table); detail.append(wrap);
   }
   document.querySelectorAll('canvas').forEach(canvas => renderChartTable(canvas, {}));
-  global.PreludePages = Object.freeze({derive, render, compoundedReturn, recordLabel, renderChartTable});
+  function prepareTableNavigation() {
+    document.querySelectorAll('.table-wrap, .strat-table-wrap, .policy-timeline-wrap').forEach((wrap, index) => {
+      const table = wrap.querySelector('table');
+      if (!table) return;
+      wrap.tabIndex = 0;
+      wrap.setAttribute('role', 'region');
+      const title = table.caption?.textContent || wrap.closest('section')?.querySelector('h2, h3')?.textContent || '자료';
+      wrap.setAttribute('aria-label', `${title} · 표 ${index + 1} · 방향키로 좌우 스크롤`);
+    });
+  }
+  prepareTableNavigation();
+  global.PreludePages = Object.freeze({derive, render, compoundedReturn, recordLabel, renderChartTable, prepareTableNavigation});
 })(typeof window === 'undefined' ? globalThis : window);

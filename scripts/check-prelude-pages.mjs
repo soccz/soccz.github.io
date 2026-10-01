@@ -206,6 +206,50 @@ test('malformed candidate rows fail closed without reselecting', () => {
   assert.equal(result.rows[0].price, '미제공');
   assert.equal(result.rows[0].risk, 'unknown');
 });
+test('stored prediction evidence preserves ratios, zeros and the original horizon', () => {
+  const evidence={schema:'prelude_recommend_prediction.v1',source:'stored_recommend_ledger',
+    basis:'day_D_0900_KST_open_high_low',p_up10:.2764,p_dn5:.2686,p_dn10:.0344,rr_ratio:1.0291};
+  const project=value=>recommendationModel(recommendation([{...candidate,prediction_evidence:value}])).rows[0].prediction;
+  assert.deepEqual(project(evidence),{up:.2764,down:.2686,deep:.0344,ratio:1.0291});
+  assert.deepEqual(project({...evidence,p_up10:0,p_dn5:1,p_dn10:0,rr_ratio:0}),{up:0,down:1,deep:0,ratio:0});
+  const empty={up:null,down:null,deep:null,ratio:null};
+  for(const value of [undefined,null,{}, {...evidence,basis:'post_send_24h'},{...evidence,schema:'future'},{...evidence,source:'refitted'}]) assert.deepEqual(project(value),empty);
+  for(const value of [null,undefined,NaN,Infinity,-Infinity,true,false,'0.2',-.01,1.01]) {
+    const r=project({...evidence,p_up10:value,p_dn5:value,p_dn10:value});
+    assert.equal(r.up,null);assert.equal(r.down,null);assert.equal(r.deep,null);
+  }
+  assert.deepEqual(project({...evidence,p_dn10:.9}),{up:.2764,down:null,deep:null,ratio:null});
+  assert.equal(project({...evidence,rr_ratio:null}).ratio,null); // never infer from rounded heads
+  const js=read('projects/prelude/page-concepts.js');
+  assert.match(js,/합이 100%가 아닙니다/);assert.match(js,/실사용 보정 검증 완료를 뜻하지 않습니다/);
+  assert.match(js,/알림 수신 이후의 수익 확률·선도달 확률/);
+});
+test('keyboard and assistive navigation stay available after rendering', () => {
+  const html=read('projects/prelude/dashboard/index.html'),js=read('projects/prelude/page-concepts.js');
+  assert.match(html,/background.forEach\(\(\[el\]\) => \{ el.inert = true/);
+  assert.match(html,/el.inert = wasInert/);
+  assert.match(html,/main.focus\(\{preventScroll:true\}\)/);
+  assert.match(html,/aria-describedby="pinDescription pinError"/);
+  assert.match(html,/window.PreludePages\?\.prepareTableNavigation\?\.\(\)/);
+  assert.match(js,/wrap.tabIndex = 0/);
+  assert.match(html,/button.className = 'table-sort'/);
+  assert.match(html,/th.setAttribute\('aria-sort'/);
+  assert.doesNotMatch(html,/<h4 class="pump-h">/);
+  assert.match(read('projects/prelude/index.html'),/id="selectionUncertainty" role="group"/);
+});
+test('every universe heatmap shade keeps readable text without changing counts', () => {
+  const html=read('projects/prelude/dashboard/index.html');
+  const source=html.slice(html.indexOf('function renderCoinUniverse('),html.indexOf('function renderTimeOfDay('));
+  const start=source.indexOf('const cell ='),end=source.indexOf('const trs =');
+  const cell=vm.runInNewContext(source.slice(start,end)+';cell');
+  const lum=x=>{const s=x/255;return s<=.04045?s/12.92:((s+.055)/1.055)**2.4;};
+  for(let value=1;value<=1000;value++){
+    const text=cell(value,1000),match=text.match(/rgb\((\d+),\d+,\d+\);color:(#[0-9a-f]+)/);
+    assert.ok(text.endsWith('>'+value+'</td>'));
+    const l=lum(+match[1]),ink=match[2]==='#ffffff'?1:0;
+    assert.ok((Math.max(l,ink)+.05)/(Math.min(l,ink)+.05)>=4.5);
+  }
+});
 test('reader controls keep all evidence accessible', () => {
   const story = read('projects/prelude/index.html');
   for (const id of ['earlyNumbers', 'earlyExperiments', 'technicalAppendix'])
@@ -265,7 +309,7 @@ test('a failed optional renderer does not clear current recommendations or stop 
   const archive=fn('function renderDashboardArchive(', '\n(async function main');
   const calls=[];
   const element=()=>({hidden:true,append(){},replaceChildren(){}});
-  const context={console:{error(){}},document:{createElement:element,getElementById:element},window:{PreludePages:{render:s=>calls.push(s?'current':'cleared')}},HISTORY_ROWS:[]};
+  const context={console:{error(){}},document:{createElement:element,getElementById:element},window:{PreludePages:{render:s=>calls.push(s?'current':'cleared'),prepareTableNavigation:()=>calls.push('tables')}},HISTORY_ROWS:[]};
   for(const name of [...new Set((current+archive).match(/\b(?:render\w+|attachSort|attachFilters|downloadCsv)(?=\()/g))]) if(!['renderPanel','renderDashboardCurrent','renderDashboardArchive'].includes(name)) context[name]=()=>calls.push(name);
   context.renderFindings=()=>{throw new Error('injected optional failure');};
   vm.createContext(context);vm.runInContext(panel+'\n'+current+'\n'+archive,context);

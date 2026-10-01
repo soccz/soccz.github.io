@@ -622,14 +622,14 @@
     <div class="section-label">R1 RADAR · OPEN SLOT LEDGER</div>
     <h2 class="section-title">최근 장후 추천 — 무엇을 먼저 볼까</h2>
     <p class="section-desc">
-      상승 추정치를 하락 추정치로 나눈 비율을 우선 비교한 장후 R1 발송 순서입니다. <strong>추천은 매수 지시나 안전 인증이 아닙니다.</strong>
+      장후 R1 원 발송 순서와 당시 저장된 상승·하락 추정치입니다. <strong>추천은 매수 지시나 안전 인증이 아닙니다.</strong>
     </p>
     <p id="recommendCardsAsOf" class="recommend-asof">추천 기준일 잠금 — 운영 확인 시각과 별도로 표시합니다.</p>
     <div id="recommendCards" class="recommend-cards"><p class="concept-note">데이터 잠금 — PIN 입력 후 게시된 장후 추천을 표시합니다.</p></div>
     <p id="recommendCardsNote" class="concept-note"></p>
     <details class="recommend-detail" id="rankingExplanation"><summary>왜 이 순서인가? <small>표시 점수와 추천 순위는 다릅니다</small></summary>
-      <p class="concept-note">R1은 +10% 상승 추정치를 −5% 하락 추정치(하한 적용)로 나눈 위험·보상 비율을 우선 비교하고, 동률은 보조 기준으로 정렬합니다. 여기서는 원 발송 순서를 그대로 보여주며 다시 계산하거나 재선별하지 않습니다.</p>
-      <p class="concept-note">카드의 ‘보조 점수’는 이 최종 정렬키가 아니므로 더 높은 점수가 뒤 순위에 있을 수 있습니다. 개별 상·하방 추정치가 없는 게시 자료에서는 확률을 역산하지 않습니다. 하방 경고가 없다는 사실도 하락 가능성이 낮다는 보장은 아닙니다.</p>
+      <p class="concept-note">정상 RR 경로의 R1은 +10% 상승 추정치를 −5% 하락 추정치(하한 적용)로 나눈 위험·보상 비율을 우선 비교합니다. 동률이면 −10% 하락 추정치가 낮은 순, +10% 상승 추정치가 높은 순, 예상 하방이 덜 깊은 순으로 정렬합니다. RR 모델 실패 시에는 보조 점수 정렬로 대체됩니다. 여기서는 저장된 원순위를 그대로 보여주며 다시 계산하거나 재선별하지 않습니다.</p>
+      <p class="concept-note">카드의 ‘보조 점수’는 정상 RR 경로의 최종 정렬키가 아니므로 더 높은 점수가 뒤 순위에 있을 수 있습니다. 개별 상·하방 추정치가 없는 게시 자료에서는 확률을 역산하지 않습니다. 저장된 RR은 반올림 전 값에서 계산되므로 화면의 두 확률을 나눈 값과 조금 다를 수 있습니다. 하방 경고가 없다는 사실도 하락 가능성이 낮다는 보장은 아닙니다.</p>
     </details>
     <details class="recommend-detail"><summary>원본 추천표와 전체 장후 원장 집계 보기 <small>누적 집계와 최신 종목은 평가 기간이 다릅니다.</small></summary>
     <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
@@ -821,7 +821,7 @@
       <div class="chart-subtitle" id="leaderboardNote">
         과거 후보 비교·판정 기록입니다. ★표시는 저장 시점 기준이며 새 연구의 자동 승격을 뜻하지 않습니다.
       </div>
-      <div id="championGateProgress" class="gate-progress" aria-label="champion gate 검증 진행률"></div>
+      <div id="championGateProgress" class="gate-progress" role="group" aria-label="champion gate 검증 진행률"></div>
       <div id="championLeaderboard" style="overflow-x:auto">
         <div class="loading-state">loading…</div>
       </div>
@@ -852,15 +852,15 @@
         <div class="ps-cell"><span class="ps-label">closed</span><span class="ps-val" id="pumpRowsClosed">—</span></div>
         <div class="ps-cell"><span class="ps-label">+20% capture</span><span class="ps-val" id="pumpCapturePct">—</span></div>
       </div>
-      <h4 class="pump-h">오늘의 watchlist (Telegram 발송 X)</h4>
+      <h3 class="pump-h">오늘의 watchlist (Telegram 발송 X)</h3>
       <div id="pumpWatchlist" style="overflow-x:auto">
         <div class="loading-state">loading…</div>
       </div>
-      <h4 class="pump-h">일별 capture — pump_hunter 의 매일 +20% 적중 비율</h4>
+      <h3 class="pump-h">일별 capture — pump_hunter 의 매일 +20% 적중 비율</h3>
       <div class="chart-wrap" style="margin:0">
         <canvas id="chartPumpDaily" style="max-height:240px"></canvas>
       </div>
-      <h4 class="pump-h">v2 과거 원장 — 2026-08-05 terminal KILL · 발송 중단</h4>
+      <h3 class="pump-h">v2 과거 원장 — 2026-08-05 terminal KILL · 발송 중단</h3>
       <div class="chart-subtitle">
         아래 수치는 은퇴한 v2의 당시 규칙·표본에 대한 회고입니다.
         과거 후보·적중 기록을 보존하지만 현재 알림이나 재활성화 계획은 아닙니다.
@@ -876,7 +876,7 @@
       </div>
       <p id="pumpV2Note" style="font-size:0.78rem;color:var(--text-muted);margin-top:0.5rem"></p>
 
-      <h4 class="pump-h">exit lab — 같은 경로, 청산 잣대 4 개 병렬 가상 평가</h4>
+      <h3 class="pump-h">exit lab — 같은 경로, 청산 잣대 4 개 병렬 가상 평가</h3>
       <div class="chart-subtitle">
         bear_quiet 연구는 TP+10%/SL없음이 최적이라 했지만, 라이브 forward 에서는 어느 잣대가 맞는지
         데이터가 결정한다 — 운영 기본 (TP5/SL3) 과 변형들을 같은 15m 경로로 나란히 기록 (record-only).
@@ -1315,8 +1315,8 @@
       <div class="ac-row"><div class="ac-label">timeline</div><div class="ac-num" id="policyTimeline" style="font-size:0.95rem">—</div><div class="ac-sub">진단 → fix → layer 추가 사이클</div></div>
     </div>
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">timeline — 진단 → fix → layer 추가</h3>
-    <div id="policyTimelineSvg" class="policy-timeline-wrap" aria-label="정책 진화 타임라인"><div class="loading-state">timeline — PIN 입력 후 표시</div></div>
-    <div id="policyEventList" class="policy-event-list" aria-label="정책 진화 이벤트 상세"></div>
+    <div id="policyTimelineSvg" class="policy-timeline-wrap" role="group" aria-label="정책 진화 타임라인"><div class="loading-state">timeline — PIN 입력 후 표시</div></div>
+    <div id="policyEventList" class="policy-event-list" role="group" aria-label="정책 진화 이벤트 상세"></div>
 
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">rule set + decision 분포</h3>
     <div class="chart-split">
@@ -1955,13 +1955,16 @@ function showPinModal() {
         <h3 id="pinTitle">운영 현황·검증</h3>
         <p id="pinDescription">개인용 대시보드입니다. PIN을 입력하면 최근 추천과 검증 결과를 볼 수 있습니다. 정기 갱신 게시본이며 실시간 화면은 아닙니다.</p>
         <div class="lock-row">
-          <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" aria-label="대시보드 PIN" autofocus>
+          <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" aria-label="대시보드 PIN" aria-describedby="pinDescription pinError" autofocus>
           <button id="pinSubmit">열기</button>
         </div>
         <div class="lock-error" id="pinError" role="status" aria-live="polite"></div>
         <a class="pin-journal-link" href="/projects/prelude/">아이디어와 개발 과정은 공개 개발일지에서 →</a>
       </div>`;
     document.body.appendChild(overlay);
+    const background = [...document.body.children].filter(el => el !== overlay && !['SCRIPT','STYLE'].includes(el.tagName))
+      .map(el => [el, el.inert]);
+    background.forEach(([el]) => { el.inert = true; });
     const input = overlay.querySelector('#pinInput');
     const errEl = overlay.querySelector('#pinError');
     input.focus();
@@ -1973,7 +1976,10 @@ function showPinModal() {
         const probe = await fetch(`${DATA_DIR}/summary.json?_=` + Date.now());
         if (!probe.ok) throw new Error(`HTTP ${probe.status}`);
         await decryptPayload(await probe.json(), pin);
+        background.forEach(([el, wasInert]) => { el.inert = wasInert; });
         overlay.remove();
+        const main = document.getElementById('monitorMain');
+        main.tabIndex = -1; main.focus({preventScroll:true});
         resolve(pin);
       } catch (e) {
         errEl.textContent = e.message || 'PIN 이 맞지 않습니다.';
@@ -2902,8 +2908,10 @@ function renderCoinUniverse(summary) {
   const cell = (v, m) => {
     if (v === 0) return '<td class="muted">·</td>';
     const intensity = m > 0 ? Math.min(1, v / m) : 0;
-    const alpha = (0.2 + 0.5 * intensity).toFixed(2);
-    return `<td style="background:rgba(68,64,60,${alpha});color:#fff;font-weight:700">${v}</td>`;
+    // Explicit opaque shades avoid low contrast at small heatmap values.
+    const level = Math.round(245 - 180 * intensity);
+    const color = level > 117 ? '#000000' : '#ffffff';
+    return `<td style="background:rgb(${level},${level},${level});color:${color};font-weight:700">${v}</td>`;
   };
   const trs = rows.map(r => `
     <tr>
@@ -4021,6 +4029,7 @@ function renderHistory() {
 
   document.querySelectorAll('th[data-sort]').forEach(th => {
     th.classList.remove('sorted-asc', 'sorted-desc');
+    th.setAttribute('aria-sort', th.dataset.sort === SORT_KEY ? (SORT_DIR === 'asc' ? 'ascending' : 'descending') : 'none');
     if (th.dataset.sort === SORT_KEY) {
       th.classList.add(SORT_DIR === 'asc' ? 'sorted-asc' : 'sorted-desc');
     }
@@ -4029,6 +4038,12 @@ function renderHistory() {
 
 function attachSort() {
   document.querySelectorAll('th[data-sort]').forEach(th => {
+    if (th.querySelector('button')) return;
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'table-sort';
+    button.textContent = th.textContent;
+    button.setAttribute('aria-label', th.textContent.trim() + ' 정렬');
+    th.replaceChildren(button);
     const key = th.dataset.sort;
     th.addEventListener('click', () => {
       if (SORT_KEY === key) {
@@ -4108,6 +4123,7 @@ function renderDashboardArchive(summary, history, accuracy, findings) {
     renderScatter(); attachSort(); attachFilters(); renderHistory();
     document.getElementById('downloadCsv')?.addEventListener('click', downloadCsv);
   });
+  window.PreludePages?.prepareTableNavigation?.();
 }
 (async function main() {
   if (BOOTED) return;
