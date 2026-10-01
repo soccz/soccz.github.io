@@ -48,8 +48,9 @@ document.querySelectorAll('[data-tabs]').forEach(group => {
 });
 
 const progress = document.querySelector('.read-progress');
-const sections = [...document.querySelectorAll('.chapter[id], .reading-overview[id]')];
+const sections = [...document.querySelectorAll('.chapter[id], .reading-overview[id], .research-part[id]')];
 const links = [...document.querySelectorAll('.contents a')];
+const partLinks = [...document.querySelectorAll('[data-page-part]')];
 const readingMenu = document.querySelector('.reading-menu');
 const compactReading = window.matchMedia('(max-width: 780px)');
 function setReadingMenuLayout() {
@@ -57,7 +58,7 @@ function setReadingMenuLayout() {
 }
 setReadingMenuLayout();
 compactReading.addEventListener('change', setReadingMenuLayout);
-links.forEach(link => link.addEventListener('click', () => {
+[...links, ...partLinks].forEach(link => link.addEventListener('click', () => {
   if (readingMenu && compactReading.matches) readingMenu.open = false;
 }));
 let scheduled = false;
@@ -76,6 +77,11 @@ function updateReadingPosition() {
   const group = active?.dataset.readingGroup || active?.id;
   links.forEach(link => {
     if (group && link.getAttribute('href') === `#${group}`) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  const part = active?.closest('.research-part') ? 'research' : 'development';
+  partLinks.forEach(link => {
+    if (link.dataset.pagePart === part) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');
   });
   if (active !== lastActive) {

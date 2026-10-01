@@ -1,0 +1,29 @@
+/* One project document: keep the existing design and distinguish its two parts. */
+.project-switch a[aria-current="location"] {
+  color: var(--ink);
+  background: var(--soft);
+  border-bottom-color: var(--green);
+  font-weight: 600;
+}
+.contents-part { font: 11px var(--mono); color: var(--green); margin: 18px 0 10px; }
+.contents-part:first-child { margin-top: 0; }
+.research-part { color: var(--text); border-top: 3px solid var(--green); padding-top: 16px; scroll-margin-top: 110px; }
+.research-part .hero { padding-top: 28px; margin-bottom: 42px; }
+.research-part .hero-grid { gap: 25px; }
+.research-part .research-title { font: 600 clamp(28px, 2.5vw, 36px)/1.6 var(--serif); letter-spacing: -.055em; margin-bottom: 0; }
+.research-part .research-title em { color: var(--green); font-style: normal; }
+.research-part .hero-top { flex-wrap: wrap; gap: 10px; }
+.research-part .hero-meta { grid-template-columns: 1fr; gap: 18px; }
+.research-part .hero-meta div:last-child { grid-column: auto; }
+@media (max-width: 1050px) {
+  .research-part .hero-grid { grid-template-columns: 1fr; }
+  .research-part .concept-figure { max-width: 600px; }
+}
+@media (max-width: 780px) {
+  .contents-part { margin: 14px 20px 8px; }
+  .contents-part:first-child { margin: 8px 20px; }
+  .research-part { scroll-margin-top: 180px; }
+}
+@media print {
+  .research-part { break-before: page; }
+}
