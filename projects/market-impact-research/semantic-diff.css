@@ -1,0 +1,91 @@
+.semantic-scope { padding:20px 24px; border-left:3px solid var(--green); background:#eeeee4; font-size:12px; line-height:1.95; margin:26px 0; }
+.semantic-process { list-style:none; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; margin:34px 0; }
+.semantic-process li { border-top:1px solid var(--line); padding:18px 0; }
+.semantic-process b,.semantic-process strong,.semantic-process span { display:block; }
+.semantic-process b { font:10px var(--mono); color:var(--orange); }
+.semantic-process strong { font-size:16px; margin:12px 0; }
+.semantic-process span { font-size:11px; line-height:1.8; color:var(--muted); }
+.semantic-versions,.semantic-directions,.semantic-traces { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; margin:30px 0; }
+.semantic-versions article { border-top:2px solid var(--green); background:#eeeee6; padding:25px; min-width:0; }
+.semantic-versions small,.semantic-directions small,.semantic-traces small { font-size:10px; line-height:1.8; display:block; }
+.semantic-versions h3 { font:500 23px/1.65 var(--serif); margin:20px 0; }
+.semantic-versions dl { font-size:12px; line-height:1.9; }
+.semantic-versions dt { margin-top:15px; font-weight:650; }
+.semantic-versions dd { margin:4px 0 0; }
+.semantic-versions a { font-size:10px; line-height:1.9; display:block; margin-top:20px; overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:4px; }
+.semantic-directions article { padding:25px; background:#213e32; color:#f3f1e7; }
+.semantic-directions .semantic-exclusion { background:#643d2d; }
+.semantic-directions h3 { font-size:17px; margin:20px 0; }
+.semantic-directions p { font-size:11px; line-height:1.9; border-top:1px solid #ffffff45; padding-top:18px; }
+.semantic-arrow { display:flex; justify-content:space-between; align-items:center; margin:26px 0; gap:12px; }
+.semantic-arrow span { font:11px var(--mono); }
+.semantic-arrow em { font:500 25px/1.9 var(--serif); display:block; white-space:nowrap; }
+.semantic-arrow b { font-size:25px; font-weight:400; }
+.semantic-explorer { border:1px solid var(--line); padding:28px; margin:40px 0 20px; background:#f0efe7; }
+.semantic-explorer[hidden] { display:none; }
+.semantic-explorer-head small { font:10px var(--mono); letter-spacing:.12em; color:var(--green); }
+.semantic-explorer-head h3 { font-size:20px; line-height:1.7; margin:14px 0 24px; }
+.semantic-controls { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.semantic-controls label { display:block; font-size:11px; line-height:1.8; min-width:0; }
+.semantic-controls select { display:block; width:100%; max-width:100%; margin-top:8px; padding:12px 28px 12px 10px; font:inherit; font-size:12px; line-height:1.6; color:var(--ink); background:#fffef8; border:1px solid #8d9689; border-radius:0; min-height:45px; }
+.semantic-controls select:focus-visible { outline:3px solid #ad642b; outline-offset:3px; }
+.semantic-profile { font-size:12px; line-height:1.9; margin:22px 0; font-weight:600; }
+.semantic-traces { gap:16px; }
+.semantic-traces article { border-top:1px solid #8d9689; padding-top:18px; }
+.semantic-traces h4 { font-size:19px; line-height:1.8; margin:9px 0 13px; }
+.semantic-traces [data-state="pass"] { color:#23583a; }
+.semantic-traces [data-state="fail"] { color:#8b4126; }
+.semantic-traces [data-state="unknown"] { color:#695124; }
+.semantic-traces p { font-size:11px; line-height:1.9; margin:8px 0; }
+.semantic-verdict { padding:18px 0; border-block:1px solid var(--line); font-size:14px; line-height:1.8; font-weight:600; }
+#semantic-explanation,#semantic-next { font-size:12px; line-height:1.95; }
+#semantic-next { color:var(--green); font-weight:600; }
+.semantic-fallback { font-size:11px; line-height:1.9; color:var(--muted); }
+.semantic-case-table { border-block:1px solid var(--line); padding:18px 0; margin:20px 0 35px; }
+.semantic-case-table summary { cursor:pointer; font-size:12px; font-weight:600; }
+.semantic-case-table table { width:100%; table-layout:fixed; border-collapse:collapse; margin-top:25px; }
+.semantic-case-table caption { text-align:left; font-size:10px; line-height:1.8; margin-bottom:12px; }
+.semantic-case-table th,.semantic-case-table td { text-align:left; padding:12px 6px; border-bottom:1px solid var(--line); font-size:11px; line-height:1.8; overflow-wrap:anywhere; font-weight:400; }
+.semantic-case-table th:first-child { width:46%; }
+.semantic-ambiguity { border-left:3px solid #977642; padding:16px 24px; margin:40px 0; }
+.semantic-ambiguity small { font:10px var(--mono); letter-spacing:.08em; color:#775b33; }
+.semantic-ambiguity h3 { font:500 22px/1.7 var(--serif); margin:17px 0; }
+.semantic-ambiguity p { font-size:12px; line-height:1.95; }
+.semantic-grid { margin:40px 0; padding-block:26px; border-block:1px solid var(--line); }
+.semantic-grid figcaption strong,.semantic-grid figcaption span { display:block; }
+.semantic-grid figcaption strong { font-size:16px; line-height:1.8; }
+.semantic-grid figcaption span { margin-top:10px; font-size:11px; color:var(--muted); }
+.semantic-stack { display:flex; height:28px; gap:2px; margin:26px 0; }
+.semantic-included { background:#47735a; }
+.semantic-excluded { background:#a65f40; }
+.semantic-retained { background:#9cae99; }
+.semantic-outside { background:#c7c6b9; }
+.semantic-unresolved { background:repeating-linear-gradient(45deg,#a98b50 0,#a98b50 3px,#eadfbd 3px,#eadfbd 6px); }
+.semantic-grid ul { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px 24px; padding:0; list-style:none; }
+.semantic-grid li { display:flex; align-items:center; gap:7px; font-size:11px; }
+.semantic-grid li i { width:10px; height:10px; flex-shrink:0; }
+.semantic-grid li strong { font:16px var(--mono); margin-left:auto; }
+.semantic-grid p { font-size:11px; line-height:1.9; color:var(--muted); margin:24px 0 0; }
+.semantic-controls-result,.semantic-next-research { margin:35px 0; }
+.semantic-controls-result h3,.semantic-next-research h3 { font-size:18px; line-height:1.8; }
+.semantic-controls-result p,.semantic-next-research p { font-size:12px; line-height:2; }
+.semantic-controls-result small { font-size:10px; line-height:1.9; display:block; color:var(--muted); }
+.semantic-next-research { background:#e9ecdf; padding:26px; }
+@media (max-width:700px) {
+  .semantic-versions,.semantic-directions,.semantic-controls { grid-template-columns:1fr; }
+  .semantic-process { gap:12px; }
+  .semantic-process strong { font-size:14px; }
+  .semantic-versions article,.semantic-directions article,.semantic-explorer,.semantic-next-research { padding:20px; }
+  .semantic-arrow { justify-content:flex-start; gap:35px; }
+  .semantic-grid ul { grid-template-columns:1fr 1fr; }
+  .semantic-traces { gap:12px; }
+  .semantic-traces h4 { font-size:16px; }
+  .semantic-scope { padding:16px; }
+  .semantic-case-table th,.semantic-case-table td { font-size:10px; padding:10px 3px; }
+}
+@media (max-width:360px) {
+  .semantic-process { grid-template-columns:1fr; gap:0; }
+  .semantic-process strong { margin:6px 0; }
+  .semantic-traces { grid-template-columns:1fr; }
+  .semantic-grid ul { grid-template-columns:1fr; }
+}
