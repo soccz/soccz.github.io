@@ -1,0 +1,4791 @@
+[
+  {
+    "id": "cap-rent-4",
+    "title": "01 · 환산액 1원 차이",
+    "claim": "내 보증금은 2400만 240원, 월세는 70만원이다. 이 금액 요건을 충족한다.",
+    "scope": "공고 거주요건의 보증금·월세 상한 및 월세 초과 시 환산액 예외만. 다른 자격·증빙·건물유형·공동임차 분담은 범위 밖이며 질문 금액은 이미 본인 부담액이다.",
+    "reference": "contradicted",
+    "note": "금액을 찾는 것에서, 정책이 정한 식과 경계까지 읽는 문제로 옮겼습니다. Qwen은 환산식을 맞혔지만 이 사례의 보증금을 24,000,240원이 아닌 24,002,400원으로 읽었습니다. 환산액은 참조 800,001원과 모델 800,010원 모두 상한 초과여서 최종 답만 맞습니다.",
+    "stages": [
+      {
+        "id": "capability_base",
+        "label": "확장 전"
+      },
+      {
+        "id": "capability_extended",
+        "label": "환산·학적 표현 확장"
+      },
+      {
+        "id": "capability_repair",
+        "label": "확장 + 검증 피드백"
+      }
+    ],
+    "states": {
+      "capability_base": {
+        "qwen": {
+          "row": {
+            "id": "cap-rent-4",
+            "bundle": "cap-rent",
+            "model": "qwen",
+            "label": "contradicted",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_policy": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "both_reference": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "deposit_krw",
+                  "op": "le",
+                  "value": 100000000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "monthly_rent_krw",
+                  "op": "le",
+                  "value": 600000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                }
+              ],
+              [
+                {
+                  "field": "monthly_rent_krw",
+                  "op": "gt",
+                  "value": 600000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "monthly_rent_krw",
+                  "op": "le",
+                  "value": 800000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "deposit_krw",
+                  "op": "gt",
+                  "value": 0,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "deposit_krw",
+                  "op": "le",
+                  "value": 100000000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                }
+              ]
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "deposit_krw",
+                "value": 24002400
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": 700000
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>보증금 ≤ 100,000,000원</span><em>충족</em></li><li data-truth=\"false\"><span>월세 ≤ 600,000원</span><em>불충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>월세 &gt; 600,000원</span><em>충족</em></li><li data-truth=\"true\"><span>월세 ≤ 800,000원</span><em>충족</em></li><li data-truth=\"true\"><span>보증금 &gt; 0원</span><em>충족</em></li><li data-truth=\"true\"><span>보증금 ≤ 100,000,000원</span><em>충족</em></li></ul></div>",
+          "facts_text": "보증금: 24,002,400원 / 월세: 700,000원",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 보증금: 모델 24,002,400원 · 참조 24,000,240원"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "cap-rent-4",
+            "bundle": "cap-rent",
+            "model": "kanana-public",
+            "label": "contradicted",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true
+                  ]
+                },
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_policy": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "both_reference": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "deposit_krw",
+                  "op": "le",
+                  "value": 10000000
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "monthly_rent_krw",
+                  "op": "le",
+                  "value": 600000
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "monthly_rent_krw",
+                  "op": "gt",
+                  "value": 600000
+                },
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "deposit_krw",
+                  "op": "le",
+                  "value": 10000000
+                },
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "monthly_rent_krw",
+                  "op": "le",
+                  "value": 800000
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "deposit_krw",
+                "value": 2400240
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": 7000000
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>보증금 ≤ 10,000,000원</span><em>충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"false\"><span>월세 ≤ 600,000원</span><em>불충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 3 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>월세 &gt; 600,000원</span><em>충족</em></li><li data-truth=\"true\"><span>보증금 ≤ 10,000,000원</span><em>충족</em></li><li data-truth=\"false\"><span>월세 ≤ 800,000원</span><em>불충족</em></li></ul></div>",
+          "facts_text": "보증금: 2,400,240원 / 월세: 7,000,000원",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 보증금: 모델 2,400,240원 · 참조 24,000,240원 / 월세: 모델 7,000,000원 · 참조 700,000원"
+        }
+      },
+      "capability_extended": {
+        "qwen": {
+          "row": {
+            "id": "cap-rent-4",
+            "bundle": "cap-rent",
+            "model": "qwen",
+            "label": "contradicted",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "reference_policy": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "both_reference": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": true
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "deposit_krw",
+                  "op": "le",
+                  "value": 100000000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "monthly_rent_krw",
+                  "op": "le",
+                  "value": 600000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                }
+              ],
+              [
+                {
+                  "field": "monthly_rent_krw",
+                  "op": "gt",
+                  "value": 600000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "derived_0",
+                  "op": "le",
+                  "value": 800000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                }
+              ]
+            ],
+            "derived": [
+              {
+                "field": "derived_0",
+                "constant": 0,
+                "terms": [
+                  {
+                    "field": "monthly_rent_krw",
+                    "numerator": 1,
+                    "denominator": 1
+                  },
+                  {
+                    "field": "deposit_krw",
+                    "numerator": 0.05,
+                    "denominator": 12
+                  }
+                ],
+                "evidence": [
+                  "D-RENT"
+                ]
+              }
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "deposit_krw",
+                "value": 24002400
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": 700000
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>보증금 ≤ 100,000,000원</span><em>충족</em></li><li data-truth=\"false\"><span>월세 ≤ 600,000원</span><em>불충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>월세 &gt; 600,000원</span><em>충족</em></li><li data-truth=\"false\"><span>계산값 1 ≤ 800,000원</span><em>불충족</em></li></ul></div><p class=\"composition-formula\">계산값 1 = 월세 × 1 ÷ 1 + 보증금 × 0.05 ÷ 12</p>",
+          "facts_text": "보증금: 24,002,400원 / 월세: 700,000원",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 보증금: 모델 24,002,400원 · 참조 24,000,240원"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "cap-rent-4",
+            "bundle": "cap-rent",
+            "model": "kanana-public",
+            "label": "contradicted",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "abstain",
+              "policy_status": "undefined_derived",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "abstain",
+              "policy_status": "undefined_derived",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "both_reference": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "deposit_krw",
+                  "op": "le",
+                  "value": 10000000
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "monthly_rent_krw",
+                  "op": "le",
+                  "value": 600000
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "monthly_rent_krw",
+                  "op": "gt",
+                  "value": 600000
+                },
+                {
+                  "evidence": [
+                    "D-RENT"
+                  ],
+                  "field": "derived_0",
+                  "op": "le",
+                  "value": 800000
+                }
+              ]
+            ],
+            "derived": [],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "deposit_krw",
+                "value": 2400240
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": 700000
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>보증금 ≤ 10,000,000원</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>월세 ≤ 600,000원</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 3 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>월세 &gt; 600,000원</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>계산값 1 ≤ 800,000원</span><em>미확인·미계산</em></li></ul></div>",
+          "facts_text": "보증금: 2,400,240원 / 월세: 700,000원",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 정의되지 않은 계산 변수 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 보증금: 모델 2,400,240원 · 참조 24,000,240원"
+        }
+      },
+      "capability_repair": {
+        "qwen": {
+          "row": {
+            "id": "cap-rent-4",
+            "bundle": "cap-rent",
+            "model": "qwen",
+            "label": "contradicted",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "reference_policy": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "both_reference": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": true
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "deposit_krw",
+                  "op": "le",
+                  "value": 100000000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "monthly_rent_krw",
+                  "op": "le",
+                  "value": 600000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                }
+              ],
+              [
+                {
+                  "field": "monthly_rent_krw",
+                  "op": "gt",
+                  "value": 600000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                },
+                {
+                  "field": "derived_0",
+                  "op": "le",
+                  "value": 800000,
+                  "evidence": [
+                    "D-RENT"
+                  ]
+                }
+              ]
+            ],
+            "derived": [
+              {
+                "field": "derived_0",
+                "constant": 0,
+                "terms": [
+                  {
+                    "field": "monthly_rent_krw",
+                    "numerator": 1,
+                    "denominator": 1
+                  },
+                  {
+                    "field": "deposit_krw",
+                    "numerator": 0.05,
+                    "denominator": 12
+                  }
+                ],
+                "evidence": [
+                  "D-RENT"
+                ]
+              }
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "deposit_krw",
+                "value": 24002400
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": 700000
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>보증금 ≤ 100,000,000원</span><em>충족</em></li><li data-truth=\"false\"><span>월세 ≤ 600,000원</span><em>불충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>월세 &gt; 600,000원</span><em>충족</em></li><li data-truth=\"false\"><span>계산값 1 ≤ 800,000원</span><em>불충족</em></li></ul></div><p class=\"composition-formula\">계산값 1 = 월세 × 1 ÷ 1 + 보증금 × 0.05 ÷ 12</p>",
+          "facts_text": "보증금: 24,002,400원 / 월세: 700,000원",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 보증금: 모델 24,002,400원 · 참조 24,000,240원"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "cap-rent-4",
+            "bundle": "cap-rent",
+            "model": "kanana-public",
+            "label": "contradicted",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "not_established",
+              "policy_status": "policy_insufficient",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "not_established",
+              "policy_status": "policy_insufficient",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "both_reference": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "clauses": [],
+            "derived": [],
+            "status": "insufficient"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "deposit_krw",
+                "value": 2400240
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": 700000
+              }
+            ]
+          },
+          "rules_html": "<p class=\"composition-empty\">계산 가능한 규칙을 확보하지 못했습니다.</p>",
+          "facts_text": "보증금: 2,400,240원 / 월세: 700,000원",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 규칙 확보 불가 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 보증금: 모델 2,400,240원 · 참조 24,000,240원"
+        }
+      }
+    },
+    "source": "대전 2025-1493 · 공식 운영 도메인 PDF / TLS 인증 미검증"
+  },
+  {
+    "id": "cap-education-1",
+    "title": "02 · 예외를 한꺼번에 묶은 실패",
+    "claim": "나는 현재 사이버대학에 재학 중이고 이전에 고등학교를 졸업했다. 이 학력 요건을 충족한다.",
+    "scope": "국내 학교의 학력 요건과 원격대학·학점은행제 재학 및 2025년 2월 졸업예정자 예외만. 이전 학교 졸업과 현재 과정 학적을 구분한다. 해외 번역·다른 자격은 범위 밖이며 필요한 졸업증명서 제출 여부는 별도 요건으로 평가하지 않는다.",
+    "reference": "supported",
+    "note": "사이버대 재학과 이전 학교 졸업을 구분해야 합니다. Qwen의 확장 규칙은 양립할 수 없는 학교 유형과 졸업 여부를 AND로 합쳤습니다. 피드백도 의미를 충분히 복구하지 못했습니다.",
+    "stages": [
+      {
+        "id": "capability_base",
+        "label": "확장 전"
+      },
+      {
+        "id": "capability_extended",
+        "label": "환산·학적 표현 확장"
+      },
+      {
+        "id": "capability_repair",
+        "label": "확장 + 검증 피드백"
+      }
+    ],
+    "states": {
+      "capability_base": {
+        "qwen": {
+          "row": {
+            "id": "cap-education-1",
+            "bundle": "cap-education",
+            "model": "qwen",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "abstain",
+              "policy_status": "invalid_policy_schema",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    null,
+                    null
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "sat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "abstain",
+              "policy_status": "invalid_policy_schema",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": null,
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "education_status",
+                "value": "enrolled"
+              },
+              {
+                "field": "age_years",
+                "value": null
+              },
+              {
+                "field": "income_pct",
+                "value": null
+              },
+              {
+                "field": "income_krw",
+                "value": null
+              },
+              {
+                "field": "household_income_krw",
+                "value": null
+              },
+              {
+                "field": "residence_months",
+                "value": null
+              },
+              {
+                "field": "parent_residence_months",
+                "value": null
+              },
+              {
+                "field": "pledge",
+                "value": null
+              },
+              {
+                "field": "homeowner",
+                "value": null
+              },
+              {
+                "field": "housing_benefit",
+                "value": null
+              },
+              {
+                "field": "livelihood_benefit",
+                "value": null
+              },
+              {
+                "field": "medical_benefit",
+                "value": null
+              },
+              {
+                "field": "education_benefit",
+                "value": null
+              },
+              {
+                "field": "foreign_national",
+                "value": null
+              },
+              {
+                "field": "permanent_resident",
+                "value": null
+              },
+              {
+                "field": "deposit_krw",
+                "value": null
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": null
+              },
+              {
+                "field": "weekly_work_hours",
+                "value": null
+              },
+              {
+                "field": "employment_status",
+                "value": null
+              },
+              {
+                "field": "residence_city",
+                "value": null
+              },
+              {
+                "field": "joined_on",
+                "value": null
+              },
+              {
+                "field": "applied_on",
+                "value": null
+              },
+              {
+                "field": "marriage_years",
+                "value": null
+              }
+            ]
+          },
+          "rules_html": "<p class=\"composition-empty\">계산 가능한 규칙을 확보하지 못했습니다.</p>",
+          "facts_text": "현재·최종 학적: 재학 / 본인 만 나이: 미확인 / 가구 중위소득 비율: 미확인 / 본인 연소득: 미확인 / 가구 연소득: 미확인 / 본인 거주 개월: 미확인 / 부모 거주 개월: 미확인 / 향후 거주 확약: 미확인 / 주택 소유: 미확인 / 주거급여 수급: 미확인 / 생계급여 수급: 미확인 / 의료급여 수급: 미확인 / 교육급여 수급: 미확인 / 외국 국적: 미확인 / 영주권: 미확인 / 보증금: 미확인 / 월세: 미확인 / 주당 근로 시간: 미확인 / 취업 상태: 미확인 / 본인 주민등록 도시: 미확인 / 가입일: 미확인 / 신청일: 미확인 / 혼인 기간: 미확인",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 규칙 형식 오류 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 이전 학교 졸업: 모델 미확인 · 참조 예 / 학교 유형: 모델 미확인 · 참조 원격대학"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "cap-education-1",
+            "bundle": "cap-education",
+            "model": "kanana-public",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "abstain",
+              "policy_status": "invalid_value",
+              "profile_status": "invalid_profile_field",
+              "trace": [],
+              "satisfiability": []
+            },
+            "reference_policy": {
+              "decision": "abstain",
+              "policy_status": "valid",
+              "profile_status": "invalid_profile_field",
+              "trace": [],
+              "satisfiability": []
+            },
+            "reference_profile": {
+              "decision": "abstain",
+              "policy_status": "invalid_value",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION"
+                  ],
+                  "field": "education_status",
+                  "op": "in",
+                  "value": [
+                    "enrolled",
+                    "leave",
+                    "graduated",
+                    "completed",
+                    "dropout"
+                  ]
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "leave"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "graduated"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "completed"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "dropout"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "graduated"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "applied_on",
+                  "op": "eq",
+                  "value": "2025-02"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "leave"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "graduated"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "completed"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "dropout"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "leave"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "graduated"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "completed"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "dropout"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "dropout"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "leave"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "graduated"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "completed"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "dropout"
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "education_status",
+                "value": "enrolled"
+              },
+              {
+                "field": "education_status",
+                "value": "graduated"
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 다음 중 하나 재학 · 휴학 · 졸업 · 수료 · 중퇴</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 휴학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 졸업</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 수료</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 중퇴</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 3 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 졸업</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>신청일 = 2025-02</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 4 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 휴학</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 5 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 졸업</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 6 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 수료</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 7 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 중퇴</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 8 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 휴학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 졸업</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 9 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 수료</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 중퇴</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 10 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 중퇴</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 11 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 휴학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 졸업</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 12 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>현재·최종 학적 = 재학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 수료</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>현재·최종 학적 = 중퇴</span><em>미확인·미계산</em></li></ul></div>",
+          "facts_text": "현재·최종 학적: 졸업",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 조건 값 오류 / 사실: 사실 항목 오류",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 현재·최종 학적: 모델 졸업 · 참조 재학 / 이전 학교 졸업: 모델 미확인 · 참조 예 / 학교 유형: 모델 미확인 · 참조 원격대학"
+        }
+      },
+      "capability_extended": {
+        "qwen": {
+          "row": {
+            "id": "cap-education-1",
+            "bundle": "cap-education",
+            "model": "qwen",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false,
+                    false,
+                    false,
+                    true,
+                    false,
+                    false,
+                    null,
+                    null,
+                    true,
+                    true,
+                    false,
+                    false,
+                    null,
+                    null
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "contradicted",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false,
+                    false,
+                    false,
+                    true,
+                    false,
+                    false,
+                    null,
+                    null,
+                    true,
+                    true,
+                    false,
+                    false,
+                    null,
+                    null
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "unsat",
+                "sat"
+              ]
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "profile_exact": true,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "education_status",
+                  "op": "in",
+                  "value": [
+                    "graduated",
+                    "completed",
+                    "dropout",
+                    "expelled"
+                  ],
+                  "evidence": [
+                    "G-EDUCATION"
+                  ]
+                },
+                {
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "general",
+                  "evidence": [
+                    "G-EDUCATION"
+                  ]
+                },
+                {
+                  "field": "prior_graduation",
+                  "op": "eq",
+                  "value": false,
+                  "evidence": [
+                    "G-EDUCATION"
+                  ]
+                },
+                {
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "remote",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "credit_bank",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "graduation_expected",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "expected_graduation_month",
+                  "op": "eq",
+                  "value": "2025-02",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "completion_certificate",
+                  "op": "eq",
+                  "value": true,
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "prior_graduation",
+                  "op": "eq",
+                  "value": true,
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "enrolled",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "leave",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "education_status",
+                  "op": "eq",
+                  "value": "graduation_expected",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "expected_graduation_month",
+                  "op": "eq",
+                  "value": "2025-02",
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                },
+                {
+                  "field": "completion_certificate",
+                  "op": "eq",
+                  "value": true,
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ]
+                }
+              ]
+            ],
+            "derived": []
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "education_status",
+                "value": "enrolled"
+              },
+              {
+                "field": "school_kind",
+                "value": "remote"
+              },
+              {
+                "field": "prior_graduation",
+                "value": true
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"false\"><span>현재·최종 학적 다음 중 하나 졸업 · 수료 · 중퇴 · 제적</span><em>불충족</em></li><li data-truth=\"false\"><span>학교 유형 = 일반 학교</span><em>불충족</em></li><li data-truth=\"false\"><span>이전 학교 졸업 = 아니오</span><em>불충족</em></li><li data-truth=\"true\"><span>학교 유형 = 원격대학</span><em>충족</em></li><li data-truth=\"false\"><span>학교 유형 = 학점은행제</span><em>불충족</em></li><li data-truth=\"false\"><span>현재·최종 학적 = 졸업예정</span><em>불충족</em></li><li data-truth=\"none\"><span>졸업예정 연월 = 2025-02</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>수료증명서 발급 가능 = 예</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>이전 학교 졸업 = 예</span><em>충족</em></li><li data-truth=\"true\"><span>현재·최종 학적 = 재학</span><em>충족</em></li><li data-truth=\"false\"><span>현재·최종 학적 = 휴학</span><em>불충족</em></li><li data-truth=\"false\"><span>현재·최종 학적 = 졸업예정</span><em>불충족</em></li><li data-truth=\"none\"><span>졸업예정 연월 = 2025-02</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>수료증명서 발급 가능 = 예</span><em>미확인·미계산</em></li></ul></div>",
+          "facts_text": "현재·최종 학적: 재학 / 학교 유형: 원격대학 / 이전 학교 졸업: 예",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "cap-education-1",
+            "bundle": "cap-education",
+            "model": "kanana-public",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true
+                  ]
+                },
+                {
+                  "atoms": [
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    null,
+                    true,
+                    null
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    null,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "sat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    true,
+                    null
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION"
+                  ],
+                  "field": "education_status",
+                  "op": "in",
+                  "value": [
+                    "enrolled",
+                    "leave",
+                    "dropout",
+                    "expelled",
+                    "completed"
+                  ]
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "remote"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "credit_bank"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "general"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "prior_graduation",
+                  "op": "eq",
+                  "value": true
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "completion_certificate",
+                  "op": "eq",
+                  "value": true
+                }
+              ]
+            ],
+            "derived": [],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "education_status",
+                "value": "enrolled"
+              },
+              {
+                "field": "prior_graduation",
+                "value": true
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>현재·최종 학적 다음 중 하나 재학 · 휴학 · 중퇴 · 제적 · 수료</span><em>충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>학교 유형 = 원격대학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>학교 유형 = 학점은행제</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 3 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>학교 유형 = 일반 학교</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>이전 학교 졸업 = 예</span><em>충족</em></li><li data-truth=\"none\"><span>수료증명서 발급 가능 = 예</span><em>미확인·미계산</em></li></ul></div>",
+          "facts_text": "현재·최종 학적: 재학 / 이전 학교 졸업: 예",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 학교 유형: 모델 미확인 · 참조 원격대학"
+        }
+      },
+      "capability_repair": {
+        "qwen": {
+          "row": {
+            "id": "cap-education-1",
+            "bundle": "cap-education",
+            "model": "qwen",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "not_established",
+              "policy_status": "policy_insufficient",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "not_established",
+              "policy_status": "policy_insufficient",
+              "profile_status": "valid",
+              "trace": [],
+              "satisfiability": []
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "profile_exact": true,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "status": "insufficient",
+            "clauses": [],
+            "derived": []
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "education_status",
+                "value": "enrolled"
+              },
+              {
+                "field": "school_kind",
+                "value": "remote"
+              },
+              {
+                "field": "prior_graduation",
+                "value": true
+              }
+            ]
+          },
+          "rules_html": "<p class=\"composition-empty\">계산 가능한 규칙을 확보하지 못했습니다.</p>",
+          "facts_text": "현재·최종 학적: 재학 / 학교 유형: 원격대학 / 이전 학교 졸업: 예",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 규칙 확보 불가 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "cap-education-1",
+            "bundle": "cap-education",
+            "model": "kanana-public",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true
+                  ]
+                },
+                {
+                  "atoms": [
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    null,
+                    true,
+                    null
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    null,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "sat"
+              ]
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    true
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    true,
+                    null
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    false
+                  ]
+                },
+                {
+                  "atoms": [
+                    false,
+                    null,
+                    null
+                  ]
+                },
+                {
+                  "atoms": [
+                    true,
+                    true,
+                    true
+                  ]
+                }
+              ],
+              "satisfiability": [
+                "sat",
+                "unsat"
+              ]
+            },
+            "profile_exact": false,
+            "policy_equivalent": false
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION"
+                  ],
+                  "field": "education_status",
+                  "op": "in",
+                  "value": [
+                    "enrolled",
+                    "leave",
+                    "dropout",
+                    "expelled",
+                    "completed"
+                  ]
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "remote"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "credit_bank"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "school_kind",
+                  "op": "eq",
+                  "value": "general"
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "prior_graduation",
+                  "op": "eq",
+                  "value": true
+                },
+                {
+                  "evidence": [
+                    "G-EDUCATION-EXCEPTIONS"
+                  ],
+                  "field": "completion_certificate",
+                  "op": "eq",
+                  "value": true
+                }
+              ]
+            ],
+            "derived": [],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "education_status",
+                "value": "enrolled"
+              },
+              {
+                "field": "prior_graduation",
+                "value": true
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>현재·최종 학적 다음 중 하나 재학 · 휴학 · 중퇴 · 제적 · 수료</span><em>충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>학교 유형 = 원격대학</span><em>미확인·미계산</em></li><li data-truth=\"none\"><span>학교 유형 = 학점은행제</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 3 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>학교 유형 = 일반 학교</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>이전 학교 졸업 = 예</span><em>충족</em></li><li data-truth=\"none\"><span>수료증명서 발급 가능 = 예</span><em>미확인·미계산</em></li></ul></div>",
+          "facts_text": "현재·최종 학적: 재학 / 이전 학교 졸업: 예",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "reference_explanation": "이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 불일치 — 학교 유형: 모델 미확인 · 참조 원격대학"
+        }
+      }
+    },
+    "source": "광주 2025-194 명의 공고 사본 · 공식 파일 동일성 미확인"
+  },
+  {
+    "id": "dj-city-income-3",
+    "title": "03 · 부모 주소는 본인 주소인가",
+    "claim": "부모의 주민등록은 대전광역시이다. 내 주민등록 도시는 밝히지 않았고 내 가구 중위소득 비율은 140%이다. 나는 이 두 요건을 충족한다.",
+    "scope": "신청일의 주민등록 도시와 공고의 건강보험 기준으로 이미 산정된 가구 중위소득 비율 요건만. 주택·나이·증빙·선정순위는 범위 밖이다.",
+    "reference": "not_established",
+    "note": "부모의 도시를 본인 주민등록으로 옮겨 쓰면, 빠진 사실을 아는 것처럼 판단합니다. 잠정 참조 사실과 교체하는 진단으로 이 오류를 분리합니다.",
+    "stages": [
+      {
+        "id": "official",
+        "label": "새 자료 첫 적용"
+      },
+      {
+        "id": "official_examples",
+        "label": "논리 예시 추가"
+      },
+      {
+        "id": "official_repair",
+        "label": "첫 적용 + 검증 피드백"
+      }
+    ],
+    "states": {
+      "official": {
+        "qwen": {
+          "row": {
+            "id": "dj-city-income-3",
+            "bundle": "dj-city-income",
+            "model": "qwen",
+            "label": "not_established",
+            "direct": {
+              "decision": "not_established"
+            },
+            "pipeline": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "kleene": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "reference_profile": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "both_reference": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": true,
+              "worlds": 6,
+              "mismatches": 0,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "residence_city",
+                  "op": "eq",
+                  "value": "대전광역시",
+                  "evidence": [
+                    "D-CITY"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 150,
+                  "evidence": [
+                    "D-INCOME"
+                  ]
+                }
+              ]
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "parent_residence_months",
+                "value": null
+              },
+              {
+                "field": "income_pct",
+                "value": 140
+              },
+              {
+                "field": "residence_city",
+                "value": null
+              },
+              {
+                "field": "pledge",
+                "value": null
+              },
+              {
+                "field": "homeowner",
+                "value": null
+              },
+              {
+                "field": "housing_benefit",
+                "value": null
+              },
+              {
+                "field": "livelihood_benefit",
+                "value": null
+              },
+              {
+                "field": "medical_benefit",
+                "value": null
+              },
+              {
+                "field": "education_benefit",
+                "value": null
+              },
+              {
+                "field": "foreign_national",
+                "value": null
+              },
+              {
+                "field": "permanent_resident",
+                "value": null
+              },
+              {
+                "field": "deposit_krw",
+                "value": null
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": null
+              },
+              {
+                "field": "weekly_work_hours",
+                "value": null
+              },
+              {
+                "field": "employment_status",
+                "value": null
+              },
+              {
+                "field": "education_status",
+                "value": null
+              },
+              {
+                "field": "joined_on",
+                "value": null
+              },
+              {
+                "field": "applied_on",
+                "value": null
+              },
+              {
+                "field": "marriage_years",
+                "value": null
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 주민등록 도시 = 대전광역시</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 150%</span><em>충족</em></li></ul></div>",
+          "facts_text": "부모 거주 개월: 미확인 / 가구 중위소득 비율: 140% / 본인 주민등록 도시: 미확인 / 향후 거주 확약: 미확인 / 주택 소유: 미확인 / 주거급여 수급: 미확인 / 생계급여 수급: 미확인 / 의료급여 수급: 미확인 / 교육급여 수급: 미확인 / 외국 국적: 미확인 / 영주권: 미확인 / 보증금: 미확인 / 월세: 미확인 / 주당 근로 시간: 미확인 / 취업 상태: 미확인 / 현재·최종 학적: 미확인 / 가입일: 미확인 / 신청일: 미확인 / 혼인 기간: 미확인",
+          "assertion": "요건을 충족한다",
+          "explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "reference_explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "dj-city-income-3",
+            "bundle": "dj-city-income",
+            "model": "kanana-public",
+            "label": "not_established",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "kleene": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "both_reference": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": false,
+              "worlds": 6,
+              "mismatches": 3,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "D-CITY"
+                  ],
+                  "field": "residence_city",
+                  "op": "eq",
+                  "value": "대전광역시"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "D-INCOME"
+                  ],
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 150
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "parent_residence_months",
+                "value": null
+              },
+              {
+                "field": "residence_city",
+                "value": null
+              },
+              {
+                "field": "income_pct",
+                "value": 140
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 주민등록 도시 = 대전광역시</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 150%</span><em>충족</em></li></ul></div>",
+          "facts_text": "부모 거주 개월: 미확인 / 본인 주민등록 도시: 미확인 / 가구 중위소득 비율: 140%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 140%.",
+          "reference_explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        }
+      },
+      "official_examples": {
+        "qwen": {
+          "row": {
+            "id": "dj-city-income-3",
+            "bundle": "dj-city-income",
+            "model": "qwen",
+            "label": "not_established",
+            "direct": {
+              "decision": "not_established"
+            },
+            "pipeline": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "kleene": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "reference_profile": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "both_reference": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": true,
+              "worlds": 6,
+              "mismatches": 0,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "residence_city",
+                  "op": "eq",
+                  "value": "대전광역시",
+                  "evidence": [
+                    "D-CITY"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 150,
+                  "evidence": [
+                    "D-INCOME"
+                  ]
+                }
+              ]
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "parent_residence_months",
+                "value": null
+              },
+              {
+                "field": "income_pct",
+                "value": 140
+              },
+              {
+                "field": "residence_city",
+                "value": null
+              },
+              {
+                "field": "pledge",
+                "value": null
+              },
+              {
+                "field": "homeowner",
+                "value": null
+              },
+              {
+                "field": "housing_benefit",
+                "value": null
+              },
+              {
+                "field": "livelihood_benefit",
+                "value": null
+              },
+              {
+                "field": "medical_benefit",
+                "value": null
+              },
+              {
+                "field": "education_benefit",
+                "value": null
+              },
+              {
+                "field": "foreign_national",
+                "value": null
+              },
+              {
+                "field": "permanent_resident",
+                "value": null
+              },
+              {
+                "field": "deposit_krw",
+                "value": null
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": null
+              },
+              {
+                "field": "weekly_work_hours",
+                "value": null
+              },
+              {
+                "field": "employment_status",
+                "value": null
+              },
+              {
+                "field": "education_status",
+                "value": null
+              },
+              {
+                "field": "joined_on",
+                "value": null
+              },
+              {
+                "field": "applied_on",
+                "value": null
+              },
+              {
+                "field": "marriage_years",
+                "value": null
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 주민등록 도시 = 대전광역시</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 150%</span><em>충족</em></li></ul></div>",
+          "facts_text": "부모 거주 개월: 미확인 / 가구 중위소득 비율: 140% / 본인 주민등록 도시: 미확인 / 향후 거주 확약: 미확인 / 주택 소유: 미확인 / 주거급여 수급: 미확인 / 생계급여 수급: 미확인 / 의료급여 수급: 미확인 / 교육급여 수급: 미확인 / 외국 국적: 미확인 / 영주권: 미확인 / 보증금: 미확인 / 월세: 미확인 / 주당 근로 시간: 미확인 / 취업 상태: 미확인 / 현재·최종 학적: 미확인 / 가입일: 미확인 / 신청일: 미확인 / 혼인 기간: 미확인",
+          "assertion": "요건을 충족한다",
+          "explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "reference_explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "dj-city-income-3",
+            "bundle": "dj-city-income",
+            "model": "kanana-public",
+            "label": "not_established",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "kleene": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "both_reference": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": false,
+              "worlds": 6,
+              "mismatches": 3,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "D-CITY"
+                  ],
+                  "field": "residence_city",
+                  "op": "eq",
+                  "value": "대전광역시"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "D-INCOME"
+                  ],
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 150
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "parent_residence_months",
+                "value": null
+              },
+              {
+                "field": "residence_city",
+                "value": null
+              },
+              {
+                "field": "income_pct",
+                "value": 140
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 주민등록 도시 = 대전광역시</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 150%</span><em>충족</em></li></ul></div>",
+          "facts_text": "부모 거주 개월: 미확인 / 본인 주민등록 도시: 미확인 / 가구 중위소득 비율: 140%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 140%.",
+          "reference_explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        }
+      },
+      "official_repair": {
+        "qwen": {
+          "row": {
+            "id": "dj-city-income-3",
+            "bundle": "dj-city-income",
+            "model": "qwen",
+            "label": "not_established",
+            "direct": {
+              "decision": "not_established"
+            },
+            "pipeline": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "kleene": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "reference_profile": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "both_reference": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": true,
+              "worlds": 6,
+              "mismatches": 0,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "residence_city",
+                  "op": "eq",
+                  "value": "대전광역시",
+                  "evidence": [
+                    "D-CITY"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 150,
+                  "evidence": [
+                    "D-INCOME"
+                  ]
+                }
+              ]
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "parent_residence_months",
+                "value": null
+              },
+              {
+                "field": "income_pct",
+                "value": 140
+              },
+              {
+                "field": "residence_city",
+                "value": null
+              },
+              {
+                "field": "pledge",
+                "value": null
+              },
+              {
+                "field": "homeowner",
+                "value": null
+              },
+              {
+                "field": "housing_benefit",
+                "value": null
+              },
+              {
+                "field": "livelihood_benefit",
+                "value": null
+              },
+              {
+                "field": "medical_benefit",
+                "value": null
+              },
+              {
+                "field": "education_benefit",
+                "value": null
+              },
+              {
+                "field": "foreign_national",
+                "value": null
+              },
+              {
+                "field": "permanent_resident",
+                "value": null
+              },
+              {
+                "field": "deposit_krw",
+                "value": null
+              },
+              {
+                "field": "monthly_rent_krw",
+                "value": null
+              },
+              {
+                "field": "weekly_work_hours",
+                "value": null
+              },
+              {
+                "field": "employment_status",
+                "value": null
+              },
+              {
+                "field": "education_status",
+                "value": null
+              },
+              {
+                "field": "joined_on",
+                "value": null
+              },
+              {
+                "field": "applied_on",
+                "value": null
+              },
+              {
+                "field": "marriage_years",
+                "value": null
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 주민등록 도시 = 대전광역시</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 150%</span><em>충족</em></li></ul></div>",
+          "facts_text": "부모 거주 개월: 미확인 / 가구 중위소득 비율: 140% / 본인 주민등록 도시: 미확인 / 향후 거주 확약: 미확인 / 주택 소유: 미확인 / 주거급여 수급: 미확인 / 생계급여 수급: 미확인 / 의료급여 수급: 미확인 / 교육급여 수급: 미확인 / 외국 국적: 미확인 / 영주권: 미확인 / 보증금: 미확인 / 월세: 미확인 / 주당 근로 시간: 미확인 / 취업 상태: 미확인 / 현재·최종 학적: 미확인 / 가입일: 미확인 / 신청일: 미확인 / 혼인 기간: 미확인",
+          "assertion": "요건을 충족한다",
+          "explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "reference_explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "dj-city-income-3",
+            "bundle": "dj-city-income",
+            "model": "kanana-public",
+            "label": "not_established",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "kleene": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "both_reference": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "residence_city"
+              ],
+              "execution": "finite_partition",
+              "partition_worlds": 2
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": false,
+              "worlds": 6,
+              "mismatches": 3,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "D-CITY"
+                  ],
+                  "field": "residence_city",
+                  "op": "eq",
+                  "value": "대전광역시"
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "D-INCOME"
+                  ],
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 150
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "parent_residence_months",
+                "value": null
+              },
+              {
+                "field": "residence_city",
+                "value": null
+              },
+              {
+                "field": "income_pct",
+                "value": 140
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 주민등록 도시 = 대전광역시</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 150%</span><em>충족</em></li></ul></div>",
+          "facts_text": "부모 거주 개월: 미확인 / 본인 주민등록 도시: 미확인 / 가구 중위소득 비율: 140%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 140%.",
+          "reference_explanation": "결론을 바꿀 수 있는 미확인 항목: 본인 주민등록 도시. 가상 통과 보완: 본인 주민등록 도시: 대전광역시. 가상 미통과 보완: 본인 주민등록 도시: 규칙에 명시된 도시 외의 도시.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        }
+      }
+    },
+    "source": "대전 2025-1493 · 공식 운영 도메인 PDF / TLS 인증 미검증"
+  },
+  {
+    "id": "mix-age-partition-1",
+    "title": "04 · 나이를 몰라도 가능한 판단",
+    "claim": "내 나이는 밝히지 않았고 가구 중위소득은 125%이다. 이 요건을 충족한다.",
+    "scope": "가상 문안의 나이 분기와 소득 조건만. 논리 진단용으로 의도적으로 겹치는 결론을 썼다.",
+    "reference": "supported",
+    "note": "작성한 진단 규정은 나이의 두 구간을 모두 포함합니다. 나이가 미확인이어도 같은 소득 조건을 만족하면 통과합니다. 실제 공고가 아닌 논리 진단 사례입니다.",
+    "stages": [
+      {
+        "id": "composition",
+        "label": "작성 조합 기본"
+      },
+      {
+        "id": "composition_examples",
+        "label": "논리 예시 추가"
+      },
+      {
+        "id": "composition_repair",
+        "label": "기본 + 검증 피드백"
+      }
+    ],
+    "states": {
+      "composition": {
+        "qwen": {
+          "row": {
+            "id": "mix-age-partition-1",
+            "bundle": "mix-age-partition",
+            "model": "qwen",
+            "label": "supported",
+            "direct": {
+              "decision": "not_established"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "kleene": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "age_years"
+              ],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": true,
+              "worlds": 9,
+              "mismatches": 0,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "age_years",
+                  "op": "lt",
+                  "value": 27,
+                  "evidence": [
+                    "E"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125,
+                  "evidence": [
+                    "E"
+                  ]
+                }
+              ],
+              [
+                {
+                  "field": "age_years",
+                  "op": "ge",
+                  "value": 27,
+                  "evidence": [
+                    "E"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125,
+                  "evidence": [
+                    "E"
+                  ]
+                }
+              ]
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "income_pct",
+                "value": 125
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 &lt; 27</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 ≥ 27</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div>",
+          "facts_text": "가구 중위소득 비율: 125%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "reference_explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "mix-age-partition-1",
+            "bundle": "mix-age-partition",
+            "model": "kanana-public",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "kleene": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": false,
+              "worlds": 9,
+              "mismatches": 1,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "E"
+                  ],
+                  "field": "age_years",
+                  "op": "lt",
+                  "value": 27
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "E"
+                  ],
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "income_pct",
+                "value": 125
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 &lt; 27</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div>",
+          "facts_text": "가구 중위소득 비율: 125%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "reference_explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        }
+      },
+      "composition_examples": {
+        "qwen": {
+          "row": {
+            "id": "mix-age-partition-1",
+            "bundle": "mix-age-partition",
+            "model": "qwen",
+            "label": "supported",
+            "direct": {
+              "decision": "not_established"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "kleene": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "age_years"
+              ],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": true,
+              "worlds": 9,
+              "mismatches": 0,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "age_years",
+                  "op": "lt",
+                  "value": 27,
+                  "evidence": [
+                    "E"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125,
+                  "evidence": [
+                    "E"
+                  ]
+                }
+              ],
+              [
+                {
+                  "field": "age_years",
+                  "op": "ge",
+                  "value": 27,
+                  "evidence": [
+                    "E"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125,
+                  "evidence": [
+                    "E"
+                  ]
+                }
+              ]
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "income_pct",
+                "value": 125
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 &lt; 27</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 ≥ 27</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div>",
+          "facts_text": "가구 중위소득 비율: 125%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "reference_explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "mix-age-partition-1",
+            "bundle": "mix-age-partition",
+            "model": "kanana-public",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "kleene": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": false,
+              "worlds": 9,
+              "mismatches": 1,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "E"
+                  ],
+                  "field": "age_years",
+                  "op": "lt",
+                  "value": 27
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "E"
+                  ],
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "income_pct",
+                "value": 125
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 &lt; 27</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div>",
+          "facts_text": "가구 중위소득 비율: 125%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "reference_explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        }
+      },
+      "composition_repair": {
+        "qwen": {
+          "row": {
+            "id": "mix-age-partition-1",
+            "bundle": "mix-age-partition",
+            "model": "qwen",
+            "label": "supported",
+            "direct": {
+              "decision": "not_established"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "kleene": {
+              "decision": "not_established",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [
+                "age_years"
+              ],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": true,
+              "worlds": 9,
+              "mismatches": 0,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "status": "ready",
+            "clauses": [
+              [
+                {
+                  "field": "age_years",
+                  "op": "lt",
+                  "value": 27,
+                  "evidence": [
+                    "E"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125,
+                  "evidence": [
+                    "E"
+                  ]
+                }
+              ],
+              [
+                {
+                  "field": "age_years",
+                  "op": "ge",
+                  "value": 27,
+                  "evidence": [
+                    "E"
+                  ]
+                },
+                {
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125,
+                  "evidence": [
+                    "E"
+                  ]
+                }
+              ]
+            ]
+          },
+          "profile": {
+            "status": "ready",
+            "assertion": true,
+            "values": [
+              {
+                "field": "income_pct",
+                "value": 125
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 &lt; 27</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 ≥ 27</span><em>미확인·미계산</em></li><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div>",
+          "facts_text": "가구 중위소득 비율: 125%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "reference_explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        },
+        "kanana-public": {
+          "row": {
+            "id": "mix-age-partition-1",
+            "bundle": "mix-age-partition",
+            "model": "kanana-public",
+            "label": "supported",
+            "direct": {
+              "decision": "supported"
+            },
+            "pipeline": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "kleene": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene",
+              "partition_worlds": 0
+            },
+            "reference_policy": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "reference_profile": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    true
+                  ],
+                  "value": true
+                }
+              ],
+              "missing_fields": [],
+              "execution": "kleene_decided",
+              "partition_worlds": 0
+            },
+            "both_reference": {
+              "decision": "supported",
+              "policy_status": "valid",
+              "profile_status": "valid",
+              "trace": [
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                },
+                {
+                  "atoms": [
+                    null,
+                    true
+                  ],
+                  "value": null
+                }
+              ],
+              "missing_fields": [],
+              "execution": "finite_partition",
+              "partition_worlds": 3
+            },
+            "profile_exact": true,
+            "policy_equivalence": {
+              "equivalent": false,
+              "worlds": 9,
+              "mismatches": 1,
+              "status": "checked"
+            }
+          },
+          "policy": {
+            "clauses": [
+              [
+                {
+                  "evidence": [
+                    "E"
+                  ],
+                  "field": "age_years",
+                  "op": "lt",
+                  "value": 27
+                }
+              ],
+              [
+                {
+                  "evidence": [
+                    "E"
+                  ],
+                  "field": "income_pct",
+                  "op": "le",
+                  "value": 125
+                }
+              ]
+            ],
+            "status": "ready"
+          },
+          "profile": {
+            "assertion": true,
+            "status": "ready",
+            "values": [
+              {
+                "field": "income_pct",
+                "value": 125
+              }
+            ]
+          },
+          "rules_html": "<div class=\"composition-branch\"><strong>경로 1 · 아래 조건 모두 충족</strong><ul><li data-truth=\"none\"><span>본인 만 나이 &lt; 27</span><em>미확인·미계산</em></li></ul></div><div class=\"composition-or\">또는 · OR</div><div class=\"composition-branch\"><strong>경로 2 · 아래 조건 모두 충족</strong><ul><li data-truth=\"true\"><span>가구 중위소득 비율 ≤ 125%</span><em>충족</em></li></ul></div>",
+          "facts_text": "가구 중위소득 비율: 125%",
+          "assertion": "요건을 충족한다",
+          "explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "reference_explanation": "이 규칙 안에서 결론에 충분한 최소 개수의 사실: 가구 중위소득 비율: 125%.",
+          "status": "규칙: 형식 유효 / 사실: 형식 유효",
+          "fact_audit": "사실·주장 방향: 잠정 참조와 일치"
+        }
+      }
+    },
+    "source": "직접 작성한 조건 조합 · 실제 공고 아님"
+  }
+]
