@@ -48,7 +48,7 @@ document.querySelectorAll('[data-tabs]').forEach(group => {
 });
 
 const progress = document.querySelector('.read-progress');
-const sections = [...document.querySelectorAll('.chapter[id]')];
+const sections = [...document.querySelectorAll('.chapter[id], .reading-overview[id]')];
 const links = [...document.querySelectorAll('.contents a')];
 const readingMenu = document.querySelector('.reading-menu');
 const compactReading = window.matchMedia('(max-width: 780px)');
@@ -71,7 +71,7 @@ function updateReadingPosition() {
       + (readingMenu?.querySelector('summary')?.offsetHeight || 48) + 32)
     : 170;
   for (const section of sections) {
-    if (section.getBoundingClientRect().top <= readingEdge) active = section;
+    if (section.checkVisibility() && section.getBoundingClientRect().top <= readingEdge) active = section;
   }
   const group = active?.dataset.readingGroup || active?.id;
   links.forEach(link => {
@@ -114,7 +114,7 @@ function revealLinkedContent() {
   });
 }
 window.addEventListener('hashchange', revealLinkedContent);
-links.forEach(link => link.addEventListener('click', () => {
+document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', () => {
   if (link.hash === location.hash) revealLinkedContent();
 }));
 document.querySelectorAll('details').forEach(detail => {
