@@ -594,7 +594,7 @@
     <div class="monitor-hero-top">
       <div><div class="concept-kicker">OPERATIONS & EVIDENCE · 개인용</div>
         <h1 id="monitorTitle" class="concept-title">운영 현황·검증</h1>
-        <p class="concept-lead">추천이 전달됐는지, 검증 자료가 얼마나 쌓였는지, 기존 R1보다 무엇이 달라졌는지 확인합니다.<br>개발 과정은 <a href="/projects/prelude/">개발일지</a>에서, 게시된 운영 기록과 결과는 이곳에서 봅니다.</p>
+        <p class="concept-lead">최신 추천 → 전달 이상 → 새 후보의 검증 결과 순서로 확인합니다. 매매는 직접 판단하며, 추천 모델은 자동 교체하지 않습니다.</p>
       </div>
       <span class="monitor-mode">정기 갱신 · 실시간 아님</span>
     </div>
@@ -607,13 +607,48 @@
     <p id="monitorSnapshot" class="monitor-snapshot">PIN 입력 후 게시 기준 시각을 표시합니다. 잠긴 상태는 정상·실패·0건 중 어느 것도 뜻하지 않습니다.</p>
     <div id="snapshotContext" class="snapshot-context" hidden></div>
     <div id="monitorAttention" class="monitor-attention" hidden></div>
-    <div class="monitor-intro-strip"><span>실알림: R1 장전·장후</span><span>새 후보: 기록 전용 검증</span><span>매매: 사용자 직접 판단</span></div>
+    <div id="panelErrors" class="monitor-attention" role="status" hidden></div>
   </div>
 </section>
 <div class="section-jumps" role="navigation" aria-label="운영 현황 목차">
-  <div class="jump-inner"><a href="#currentSystemSection">운영 기록</a><a href="#recSection">최근 추천</a><a href="#bookForwardSection">새 후보 검증</a><a href="#researchProgressSection">다른 시험</a><a href="#legacyArchive">전체 원장·과거 자료</a></div>
+  <div class="jump-inner"><a href="#recSection">최근 추천</a><a href="#currentSystemSection">운영 기록</a><a href="#bookForwardSection">새 후보 검증</a><a href="#researchProgressSection">다른 시험</a><a href="#legacyArchive">전체 원장·과거 자료</a></div>
 </div>
 
+
+<hr class="divider">
+
+<section id="recSection">
+  <div class="container">
+    <div class="section-label">R1 RADAR · OPEN SLOT LEDGER</div>
+    <h2 class="section-title">최근 장후 추천 — 무엇을 먼저 볼까</h2>
+    <p class="section-desc">
+      상승 추정치를 하락 추정치로 나눈 비율을 우선 비교한 장후 R1 발송 순서입니다. <strong>추천은 매수 지시나 안전 인증이 아닙니다.</strong>
+    </p>
+    <p id="recommendCardsAsOf" class="recommend-asof">추천 기준일 잠금 — 운영 확인 시각과 별도로 표시합니다.</p>
+    <div id="recommendCards" class="recommend-cards"><p class="concept-note">데이터 잠금 — PIN 입력 후 게시된 장후 추천을 표시합니다.</p></div>
+    <p id="recommendCardsNote" class="concept-note"></p>
+    <details class="recommend-detail" id="rankingExplanation"><summary>왜 이 순서인가? <small>표시 점수와 추천 순위는 다릅니다</small></summary>
+      <p class="concept-note">R1은 +10% 상승 추정치를 −5% 하락 추정치(하한 적용)로 나눈 위험·보상 비율을 우선 비교하고, 동률은 보조 기준으로 정렬합니다. 여기서는 원 발송 순서를 그대로 보여주며 다시 계산하거나 재선별하지 않습니다.</p>
+      <p class="concept-note">카드의 ‘보조 점수’는 이 최종 정렬키가 아니므로 더 높은 점수가 뒤 순위에 있을 수 있습니다. 개별 상·하방 추정치가 없는 게시 자료에서는 확률을 역산하지 않습니다. 하방 경고가 없다는 사실도 하락 가능성이 낮다는 보장은 아닙니다.</p>
+    </details>
+    <details class="recommend-detail"><summary>원본 추천표와 전체 장후 원장 집계 보기 <small>누적 집계와 최신 종목은 평가 기간이 다릅니다.</small></summary>
+    <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 장후 R1 추천</h3>
+    <div class="table-wrap">
+      <table class="tbl" id="recRadarTable" style="min-width:640px;">
+        <caption>보조 점수는 최종 정렬키가 아닙니다. +20% 추정치는 미래 일봉 고가 상승 사건의 모델 추정이며 적중 보장이 아닙니다. 좁은 화면에서는 좌우로 스크롤하세요.</caption>
+        <thead><tr><th>#</th><th>코인</th><th class="num">보조 점수</th><th class="num">+20% 추정</th><th>하방⚠️</th><th class="num">09:00 참고 시초가</th><th>BTC 국면</th></tr></thead>
+        <tbody><tr><td colspan="7"><div class="loading-state">loading…</div></td></tr></tbody>
+      </table>
+    </div>
+    </details>
+  </div>
+</section>
+
+<hr class="divider">
+
+<details class="archive-panel" id="operationsDetail">
+  <summary>발송·수집의 상세 운영 기록 <small>두 슬롯 전달 상태와 연구 실행 상태 · 이상 항목은 상단에도 표시됩니다</small></summary>
 <section id="currentSystemSection" class="compact" aria-labelledby="currentSystemTitle">
   <div class="container">
     <div class="section-label">CURRENT SYSTEM · 기록된 운영 상태</div>
@@ -632,35 +667,7 @@
     </p>
   </div>
 </section>
-
-<hr class="divider">
-
-<section id="recSection">
-  <div class="container">
-    <div class="section-label">R1 RADAR · OPEN SLOT LEDGER</div>
-    <h2 class="section-title">장후 R1 — 최근 추천과 가상 원장</h2>
-    <p class="section-desc">
-      현재 R1은 장전·장후 두 번 별도로 추론·발송합니다. 아래 집계는 <b>장후(open) R1 원장만</b> 사용하며 장전 성과를 합친 값이 아닙니다.
-      <b>가상 평가이며 실거래 수익이 아닙니다</b>. 과거·현행 측정 기준이 섞일 수 있으므로
-      최신 운영 상태와 사전 기록 적격성은 위 상태 패널을 구분해 읽어 주세요.
-    </p>
-    <p id="recommendCardsAsOf" class="recommend-asof">추천 기준일 잠금 — 운영 확인 시각과 별도로 표시합니다.</p>
-    <div id="recommendCards" class="recommend-cards"><p class="concept-note">데이터 잠금 — PIN 입력 후 게시된 장후 추천을 표시합니다.</p></div>
-    <p id="recommendCardsNote" class="concept-note"></p>
-    <details class="recommend-detail"><summary>원본 추천표와 전체 장후 원장 집계 보기 <small>누적 집계와 최신 종목은 평가 기간이 다릅니다.</small></summary>
-    <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 장후 R1 추천</h3>
-    <div class="table-wrap">
-      <table class="tbl" id="recRadarTable" style="min-width:640px;">
-        <thead><tr><th>#</th><th>코인</th><th class="num">score</th><th class="num">pump prob</th><th>하방⚠️</th><th class="num">09:00 참고 시초가</th><th>regime</th></tr></thead>
-        <tbody><tr><td colspan="7"><div class="loading-state">loading…</div></td></tr></tbody>
-      </table>
-    </div>
-    </details>
-  </div>
-</section>
-
-<hr class="divider">
+</details>
 
 <section id="bookForwardSection" class="compact" aria-labelledby="bookForwardTitle">
   <div class="container">
@@ -670,14 +677,17 @@
     <p class="current-note" id="bookForwardAsOf">데이터 잠금 — PIN 입력 후 사전 기록 및 판정 상태 표시</p>
     <div id="forwardVisual"></div>
     <div id="forwardDifference"></div>
-    <div id="forwardChecks"></div>
+    <details class="recommend-detail" id="forwardCheckDetail"><summary>판정 조건 12개 확인 <small>충족·미충족·미평가를 구분합니다</small></summary><div id="forwardChecks"></div></details>
+    <details class="recommend-detail"><summary>원 수치와 평가 조건 보기</summary>
     <div id="bookForward" aria-live="polite" style="margin-top:1rem"><div class="current-fallback">실사용 검증 준비 상태는 잠금 해제 후 표시합니다.</div></div>
     <p class="current-note">진입 전 가상 선택이며 실제 주문·체결이 아닙니다. 0/15/30분 진입부터 각각24h를 보며 원 비용0.15%와 후보 추가15bp 민감도를 구분합니다. 최초30일·변경10일·국면당5일 이상2국면·관측일80%는 검토용 초기값이지 검정력 보장이 아닙니다. 조건을 만족해도 자동 교체하지 않습니다. <a href="/projects/prelude/#book-forward-evidence">사전 기록과 판정표를 마무리한 이유</a>.</p>
+    </details>
   </div>
 </section>
 
 <hr class="divider">
 
+<details class="archive-panel" id="replayDetail"><summary>새 날짜의 사후 재생 비교 <small>진입 전에 저장한 위 시험과 별개의 자료입니다</small></summary>
 <section id="bookValidationSection" class="compact" aria-labelledby="bookValidationTitle">
   <div class="container">
     <div class="section-label">FIXED RULE · 새 날짜 검증</div>
@@ -691,6 +701,8 @@
 
 <hr class="divider">
 
+</details>
+<details class="archive-panel" id="otherResearchDetail"><summary>시즌별 선택과 다른 시험 <small>기록 수·실제 선택 변경·성과를 분리해서 확인합니다</small></summary>
 <section id="researchProgressSection" class="compact" aria-labelledby="researchProgressTitle">
   <div class="container">
     <div class="section-label">RESEARCH PROGRESS · 게시할 때 자동 갱신</div>
@@ -703,6 +715,7 @@
     <p class="current-note">가상 픽의 날짜 동일가중 결과이며 실계좌·포트폴리오 수익이 아닙니다. 기존 왕복 비용0.15% 가정을 한 번 반영합니다. +10%·−5%는24시간 중 경험 여부이며 선도달 순서가 아닙니다. 신뢰구간은 관측 날짜 block3 기준입니다. 원본 재검증은 서버 평가기가 수행하며 이 패널은 검증된 보고서의 요약만 읽습니다. 새 정책의 자동 학습·승격·주문은 없습니다.</p>
   </div>
 </section>
+</details>
 <details class="archive-panel" id="researchArchive">
   <summary>개발 당시의 비교와 결론 <small>2026-09-30 고정 기록 · 자동 갱신 성과와 분리해 읽기</small></summary>
 <section id="researchCheckpoint" class="compact" aria-labelledby="researchCheckpointTitle">
@@ -1068,7 +1081,7 @@
     <div class="section-label">MONTHLY RETURNS</div>
     <h2 class="section-title">월별 수익 — heatmap (year × month)</h2>
     <p class="section-desc">
-      institutional factsheet 표준. 각 셀 = 그 달의 가상 net return 합 (%).
+      각 셀은 그 달의 일별 가상 net 수익을 복리로 연결한 값입니다. YTD도 제공된 월별 수익을 복리로 연결합니다. 빈 달은 자료 미제공이며 0수익으로 채우지 않습니다.
       녹색 = 양수 / 적색 = 음수, 절대값 클수록 진하다. 표본 짧은 셀은 작아 보임.
     </p>
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:1.6rem 0 0.6rem">distribution</h3>
@@ -1468,6 +1481,7 @@
 </details>
 
 <!-- About / Methodology — dashboard 만의 가치: 출처 + 라이브 paper 한계 -->
+<details class="archive-panel" id="methodologyDetail"><summary>숫자를 읽는 방법·출처·평가 한계</summary>
 <section>
   <div class="container">
     <div class="section-label">ABOUT &middot; METHODOLOGY</div>
@@ -1566,6 +1580,7 @@
 
 <hr class="divider">
 
+</details>
 </main>
 <footer>
   예약 갱신: 매일 KST 10:10 systemd 작업 (성공 여부·실제 마지막 빌드 <span id="footerBuildAt">—</span>) ·
@@ -1593,11 +1608,35 @@ let BOOTED = false;
 
 /* PIN 재시도 시 같은 canvas 재사용 — chart.js 4 의 'Canvas is already in use' 회피 */
 function safeChart(canvasId, config) {
-  const existing = Chart.getChart(canvasId);
-  if (existing) existing.destroy();
-  const el = document.getElementById(canvasId);
+  const el = typeof canvasId === 'string' ? document.getElementById(canvasId) : canvasId;
   if (!el) return null;
-  return new Chart(el, config);
+  window.PreludePages?.renderChartTable(el, config);
+  try {
+    if (typeof Chart === 'undefined') throw new Error('chart library unavailable');
+    Chart.getChart(el)?.destroy();
+    const chart = new Chart(el, config);
+    document.getElementById(el.id + '-error')?.remove();
+    el.hidden = false;
+    return chart;
+  } catch (error) {
+    el.hidden = true;
+    let note = document.getElementById(el.id + '-error');
+    if (!note) { note = document.createElement('p'); note.id = el.id + '-error'; note.className = 'current-fallback'; el.after(note); }
+    note.textContent = '차트를 표시하지 못했습니다. 같은 입력값은 아래 데이터 표에서 확인할 수 있습니다. 추천 기록에는 영향을 주지 않습니다.';
+    return null;
+  }
+}
+
+// A secondary panel must never clear an authenticated recommendation snapshot.
+function renderPanel(label, render, targetId) {
+  try { render(); }
+  catch (error) {
+    console.error(label, error);
+    const target = document.getElementById(targetId);
+    if (target) { const note = document.createElement('p'); note.className = 'current-fallback'; note.textContent = label + ' 표시 실패 · 이 구역의 자료를 확인할 수 없습니다.'; target.replaceChildren(note); }
+    const list = document.getElementById('panelErrors');
+    if (list) { list.hidden = false; const p = document.createElement('p'); p.textContent = label + ' 표시 실패 · 다른 정상 자료는 유지합니다.'; list.append(p); }
+  }
 }
 
 /* ───────── Crypto (papers 와 동일 패턴) ───────── */
@@ -1869,7 +1908,7 @@ function renderBookForward(progress) {
   const asof = document.getElementById('bookForwardAsOf');
   if (!root || !asof) return;
   const verdicts = {waiting: '실사용 결과 대기', continue_observing: '관찰 연장', review_candidate: '채택 검토 대상 · 자동 교체 아님', do_not_adopt: '현재 후보 비채택', blocked: '증거 확인 필요'};
-  const records = {not_due: '오늘 기록 시각 전', ready: '진입 전 저장 확인', missing: '기록 누락', late: '진입 이후 저장 · 제외', uncertain: '저장 완료 확인 불가 · 제외'};
+  const records = {not_due: '기록 예정 · 아직 대상 아님', ready: '진입 전 저장 확인', missing: '기록 누락', late: '진입 이후 저장 · 제외', uncertain: '저장 완료 확인 불가 · 제외'};
   if (progress?.schema !== 'prelude_dashboard_book_forward.v1' || progress.status !== 'observed'
       || progress.automatic_promotion !== false || progress.scope !== 'pre_entry_paper_not_actual_trades'
       || !Object.hasOwn(verdicts, progress.verdict) || !Object.hasOwn(records, progress.today_record)) {
@@ -1882,7 +1921,7 @@ function renderBookForward(progress) {
   const row = (k, v) => `<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd>`;
   const pct = x => typeof x === 'number' && Number.isFinite(x) ? `${(x * 100).toFixed(3)}%p` : '미제공';
   let cards = `<article class="current-card"><h3>${escapeHtml(verdicts[progress.verdict])}</h3><dl>`
-    + row('오늘 후보 기록', records[progress.today_record])
+    + row('기준일 후보 기록', window.PreludePages?.recordLabel(progress) || records[progress.today_record])
     + row('대상 / 완결 비교', `${count(progress.expected_dates)}일 / ${count(progress.paired_dates)}일`)
     + row('선택 변경 / 지연 진입 검증', `${count(progress.changed_dates)}일 / ${count(progress.execution_dates)}일`)
     + '</dl><p class="current-note">30일 경과만으로 통과하지 않습니다. 데이터가 없으면 성과도 표시하지 않습니다.</p></article>';
@@ -1892,7 +1931,9 @@ function renderBookForward(progress) {
     const value = progress.checks?.[key];
     checks += row(label, value === true ? '충족' : value === false ? '아직 미충족' : '자료 대기');
   }
-  cards += `<article class="current-card"><h3>실사용 검토 조건</h3><dl>${checks}</dl><p class="current-note">초기 기준의 진단표이며 영구 폐기나 자동 승격 명령이 아닙니다. 신뢰구간은 원 보고서에 별도 진단으로 남깁니다.</p></article>`;
+  // The grouped matrix above is the single visual checklist. Keep this only
+  // as a fallback if the enhancement script could not load.
+  if (!window.PreludePages) cards += `<article class="current-card"><h3>실사용 검토 조건</h3><dl>${checks}</dl><p class="current-note">초기 검토 조건이며 자동 승격 명령이 아닙니다.</p></article>`;
   if (progress.paired_dates > 0 && progress.difference) {
     cards += '<article class="current-card"><h3>사전 기록 L1 − 기존 R1</h3><dl>'
       + row('24h 말 net 차이', pct(progress.difference.eod_return_net))
@@ -2232,8 +2273,7 @@ function _renderCumChannel(canvasId, series, color, label, btcSeries) {
       pointRadius: 0,
     });
   }
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'line',
     data: { labels: dates, datasets },
     options: _baseLineOpts(),
@@ -2365,8 +2405,7 @@ function renderScatter() {
     if (r.channel === 'distribution') distPts.push(pt);
     else if (r.channel === 'preopen') prePts.push(pt);
   }
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'scatter',
     data: {
       datasets: [
@@ -2474,8 +2513,7 @@ function _renderUnderwater(canvasId, series, color) {
   if (!ctx) return;
   const dates = series.map(r => r.date);
   const uw = series.map(r => r.underwater_pct);
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'line',
     data: {
       labels: dates,
@@ -2501,8 +2539,7 @@ function _renderHist(canvasId, bins, color) {
   const labels = bins.map(b => `${fmt(b.bin_low, 0)}~${fmt(b.bin_high, 0)}%`);
   const counts = bins.map(b => b.count);
   const colors = bins.map(b => (b.bin_low + b.bin_high) / 2 >= 0 ? COLORS.green + 'cc' : COLORS.red + 'cc');
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -2537,8 +2574,7 @@ function _renderRollingSharpe(canvasId, series, color) {
   }
   const dates = series.map(r => r.date);
   const rs = series.map(r => r.rolling_sharpe);
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'line',
     data: {
       labels: dates,
@@ -2569,7 +2605,7 @@ function _renderHeatmap(rootId, monthly) {
   const root = document.getElementById(rootId);
   if (!root) return;
   if (!monthly || !monthly.length) {
-    root.innerHTML = '<div class="loading-state">표본 없음 — 월별 합계 없음</div>';
+    root.innerHTML = '<div class="loading-state">표본 없음 — 월별 수익 미제공</div>';
     return;
   }
   const yearSet = new Set(monthly.map(m => m.year));
@@ -2590,15 +2626,15 @@ function _renderHeatmap(rootId, monthly) {
   };
   let html = `<table class="heatmap"><thead><tr><th>year</th>${monthName.map(m => `<th>${m}</th>`).join('')}<th>YTD</th></tr></thead><tbody>`;
   for (const y of years) {
-    let ytd = 0;
-    let ytdValid = false;
+    const yearReturns = [];
     html += `<tr><td>${y}</td>`;
     for (const m of months) {
       const v = cellMap.get(`${y}-${m}`);
-      if (v != null) { ytd += v; ytdValid = true; }
+      if (v != null) yearReturns.push(v);
       html += `<td style="background:${cellColor(v)}">${v == null ? '—' : fmtPct(v, 1)}</td>`;
     }
-    html += `<td style="background:${cellColor(ytdValid ? ytd : null)}"><strong>${ytdValid ? fmtPct(ytd, 1) : '—'}</strong></td></tr>`;
+    const ytd = window.PreludePages.compoundedReturn(yearReturns);
+    html += `<td style="background:${cellColor(ytd)}"><strong>${ytd == null ? '—' : fmtPct(ytd, 1)}</strong></td></tr>`;
   }
   html += `</tbody></table>`;
   root.innerHTML = html;
@@ -2689,7 +2725,6 @@ function calibrationPoints(points) {
 function _renderCalibration(canvasId, calMap, color) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
-  Chart.getChart(ctx)?.destroy();
   const datasets = [];
   let i = 0;
   for (const [name, points] of Object.entries(calMap || {})) {
@@ -2716,7 +2751,7 @@ function _renderCalibration(canvasId, calMap, color) {
     pointRadius: 0,
     fill: false,
   });
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'scatter',
     data: { datasets },
     options: {
@@ -2741,11 +2776,10 @@ function renderCalibration(summary) {
 function _renderDecay(canvasId, points, color) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
-  Chart.getChart(ctx)?.destroy();
   if (!points || !points.length) return;
   const labels = points.map(p => p.t_label);
   const data = points.map(p => p.avg_return_pct);
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -2884,12 +2918,11 @@ function renderCoinUniverse(summary) {
 function renderTimeOfDay(summary) {
   const ctx = document.getElementById('chartTimeOfDay');
   if (!ctx) return;
-  Chart.getChart(ctx)?.destroy();
   const tod = summary.channels.preopen?.time_of_day || {};
   const labels = ['+3% / 15m', '+5% / 15m', '+3% / 30m', '+5% / 30m', '+3% / 1h', '+5% / 1h'];
   const keys = ['hit_first15_3pct', 'hit_first15_5pct', 'hit_first30_3pct', 'hit_first30_5pct', 'hit_first1h_3pct', 'hit_first1h_5pct'];
   const data = keys.map(k => tod[k]);
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -3238,7 +3271,6 @@ function _renderPolicyRecommendationCards(rows) {
 function renderDecisionDonut(summary) {
   const ctx = document.getElementById('chartDecisionDonut');
   if (!ctx) return;
-  Chart.getChart(ctx)?.destroy();
   const rows = summary.idea_validation?.tables?.summary || [];
   // group by decision (sum n_closed)
   const agg = {};
@@ -3252,7 +3284,7 @@ function renderDecisionDonut(summary) {
   const data = labels.map(k => agg[k]);
   const colorMap = { ACTIVE: '#16a34a', WATCH_ONLY: '#b45309', SILENCE: '#a8a29e' };
   const colors = labels.map(k => colorMap[k] || '#57534e');
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'doughnut',
     data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 1, borderColor: '#fff' }] },
     options: {
@@ -3270,7 +3302,6 @@ function renderDecisionDonut(summary) {
 function renderMetaCoefficients(summary) {
   const ctx = document.getElementById('chartMetaCoefficients');
   if (!ctx) return;
-  Chart.getChart(ctx)?.destroy();
   const m = summary.meta_model || {};
   const coefs = m.top_coefficients || [];
   if (!coefs.length) { ctx.parentElement.innerHTML = '<div class="loading-state">top_coefficients 산출 부족</div>'; return; }
@@ -3279,7 +3310,7 @@ function renderMetaCoefficients(summary) {
   const labels = sorted.map(r => r.feature || r.name || '—');
   const data = sorted.map(r => r.coef ?? r.coefficient ?? 0);
   const colors = data.map(v => v >= 0 ? COLORS.green + 'cc' : COLORS.red + 'cc');
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
     options: {
@@ -3301,7 +3332,6 @@ function renderMetaCoefficients(summary) {
 function renderIdeaPnl(summary) {
   const ctx = document.getElementById('chartIdeaPnl');
   if (!ctx) return;
-  Chart.getChart(ctx)?.destroy();
   // tables.summary 의 dimension = 'idea' (idea_id 별 group). 자동 검증 시 발견.
   const rows = (summary.idea_validation?.tables?.summary || []).filter(r => r.dimension === 'idea' || r.dimension === 'idea_id');
   if (!rows.length) { ctx.parentElement.innerHTML = '<div class="loading-state">idea_id 분류 표본 부족</div>'; return; }
@@ -3316,7 +3346,7 @@ function renderIdeaPnl(summary) {
   const labels = filtered.map(r => `${r.idea_id} (n=${r.n_closed})`);
   const data = filtered.map(r => r.net_pnl_sum_pct);
   const colors = data.map(v => v >= 0 ? COLORS.green + 'cc' : COLORS.red + 'cc');
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
     options: {
@@ -3338,7 +3368,6 @@ function renderIdeaPnl(summary) {
 function renderPolicyReplayBar(summary) {
   const ctx = document.getElementById('chartPolicyReplay');
   if (!ctx) return;
-  Chart.getChart(ctx)?.destroy();
   const rows = summary.idea_validation?.policy_replay?.rows || [];
   if (!rows.length) { ctx.parentElement.innerHTML = '<div class="loading-state">replay 표본 부족</div>'; return; }
   const labels = rows.map(r => r.channel || '—');
@@ -3346,7 +3375,7 @@ function renderPolicyReplayBar(summary) {
   const replay = rows.map(r => r.replay_net_pnl_sum_pct ?? null);
   // delta_net_pnl_sum_pct 도 있음
   const delta = rows.map(r => r.delta_net_pnl_sum_pct ?? null);
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -3495,7 +3524,7 @@ function renderPumpHunter(ph) {
     setText('pumpCapturePct', '—');
     if (wlEl) wlEl.innerHTML = '<div class="loading-state">pump_hunter ledger 아직 생성 전 — 내일 09:05 cron 후 첫 row 표시</div>';
     if (noteEl && ph?.note) noteEl.textContent = noteEl.textContent + ' · ' + ph.note;
-    Chart.getChart(document.getElementById('chartPumpDaily'))?.destroy();
+    window.Chart?.getChart(document.getElementById('chartPumpDaily'))?.destroy();
     return;
   }
   if (ph.status === 'empty') {
@@ -3539,10 +3568,9 @@ function renderPumpHunter(ph) {
 
   // 일별 capture 시계열
   const ctx = document.getElementById('chartPumpDaily');
-  Chart.getChart(ctx)?.destroy();
   const daily = ph.daily_capture || [];
   if (ctx && daily.length) {
-    new Chart(ctx, {
+    safeChart(ctx, {
       type: 'bar',
       data: {
         labels: daily.map(d => d.date),
@@ -3671,8 +3699,7 @@ function renderExitLab(pc) {
 function renderMagnitudeCurve(m) {
   const ctx = document.getElementById('chartMagnitudeCurve');
   if (!ctx || !m) return;
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'line',
     data: {
       labels: m.thresholds_pct.map(t => `≥+${t}%`),
@@ -3699,8 +3726,7 @@ function renderMagnitudeCurve(m) {
 function renderRiskRewardFindings(r) {
   const ctx = document.getElementById('chartRiskReward');
   if (!ctx || !r) return;
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels: r.labels,
@@ -3727,12 +3753,11 @@ function renderRiskRewardFindings(r) {
 function renderCalibFindings(c) {
   const ctx = document.getElementById('chartCalibFindings');
   if (!ctx || !c) return;
-  Chart.getChart(ctx)?.destroy();
   const point = item => item && Number.isFinite(item.pred_pct) && Number.isFinite(item.actual_pct)
     ? [{ x: item.pred_pct, y: item.actual_pct }] : [];
   const ideal = Array.isArray(c.ideal_line) ? c.ideal_line.filter(p => Array.isArray(p)
     && Number.isFinite(p[0]) && Number.isFinite(p[1])).map(p => ({ x: p[0], y: p[1] })) : [];
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'scatter',
     data: {
       datasets: [
@@ -3759,10 +3784,9 @@ function renderCalibFindings(c) {
 function renderBacktestPumps(b) {
   const ctx = document.getElementById('chartBacktestPumps');
   if (!ctx || !b) return;
-  Chart.getChart(ctx)?.destroy();
   const pumps = b.pumps || [];
   if (!pumps.length) { ctx.parentElement.innerHTML = '<div class="loading-state">backtest 표본 없음</div>'; return; }
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels: pumps.map(p => `${p.coin} ${p.date.slice(5)}`),
@@ -3789,10 +3813,9 @@ function renderBacktestPumps(b) {
 function renderPrecursorLift(p) {
   const ctx = document.getElementById('chartPrecursorLift');
   if (!ctx || !p) return;
-  Chart.getChart(ctx)?.destroy();
   const feats = p.features || [];
   const base = p.base_line ?? 1.0;
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels: feats.map(f => f.name),
@@ -3819,8 +3842,7 @@ function renderPrecursorLift(p) {
 function renderRegimeBaserate(g) {
   const ctx = document.getElementById('chartRegimeBaserate');
   if (!ctx || !g) return;
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'bar',
     data: {
       labels: g.regimes,
@@ -3894,8 +3916,7 @@ function _renderRollingChannel(canvasId, series, color, lines) {
   const ctx = document.getElementById(canvasId);
   if (!ctx) return;
   const dates = series.map(r => r.date);
-  Chart.getChart(ctx)?.destroy();
-  new Chart(ctx, {
+  safeChart(ctx, {
     type: 'line',
     data: {
       labels: dates,
@@ -4035,6 +4056,59 @@ window.addEventListener('scroll', () => {
 });
 
 /* ───────── Boot ───────── */
+function renderDashboardCurrent(summary) {
+  renderPanel('최근 추천·요약', () => window.PreludePages?.render(summary), 'recommendCards');
+  renderPanel('운영 기록', () => renderCurrentSystem(summary.current_system), 'currentSystem');
+  renderPanel('다른 시험', () => renderResearchProgress(summary.research_progress), 'researchProgress');
+  renderPanel('새 날짜 재생', () => renderBookValidation(summary.book_validation), 'bookValidation');
+  renderPanel('사전 기록 검증', () => renderBookForward(summary.book_forward), 'bookForward');
+  renderPanel('원본 추천 집계', () => renderRecommend(summary), 'recKpi');
+}
+function renderDashboardArchive(summary, history, accuracy, findings) {
+  HISTORY_ROWS = history?.rows || [];
+  const jobs = [
+    ['과거 원장 요약', () => renderHero(summary)],
+    ['과거 연구', () => renderFindings(findings)],
+    ['시장 대비', () => renderAlphaCard(summary, accuracy)],
+    ['기준 비교', () => renderBenchmark(summary)],
+    ['신뢰도', () => renderConfidence(summary)],
+    ['과적합 진단', () => renderFactorPbo(summary)],
+    ['과거 채널', () => renderChannels(summary)],
+    ['누적 수익', () => renderCumPnl(accuracy)],
+    ['이동 성과', () => renderRolling(accuracy)],
+    ['이동 Sharpe', () => renderRollingSharpe(accuracy)],
+    ['낙폭 표', () => renderDrawdownTables(summary)],
+    ['낙폭 경로', () => renderUnderwater(accuracy)],
+    ['수익 분포', () => renderReturnDist(summary)],
+    ['확률 보정', () => renderCalibration(summary)],
+    ['시간별 변화', () => renderDecay(summary)],
+    ['청산 조건 비교', () => renderTpSweep(summary)],
+    ['비용 민감도', () => renderCostSweep(summary)],
+    ['월별·연간 수익', () => renderMonthlyHeatmap(accuracy)],
+    ['종목별 집계', () => renderPerCoin(summary)],
+    ['대상 종목', () => renderCoinUniverse(summary)],
+    ['시간대별 집계', () => renderTimeOfDay(summary)],
+    ['사용자 기록 비교', () => renderNotesVsSystem(summary)],
+    ['최대·최소 결과', () => renderBestWorst(summary)],
+    ['조건별 집계', () => renderStratification(summary)],
+    ['정책 이력', () => renderPolicyEvolution(summary)],
+    ['메타 모델', () => renderMetaModel(summary)],
+    ['추천 품질', () => renderRecommendationQuality(summary)],
+    ['과거 결정 분포', () => renderDecisionDonut(summary)],
+    ['모델 계수', () => renderMetaCoefficients(summary)],
+    ['아이디어 결과', () => renderIdeaPnl(summary)],
+    ['정책 재생', () => renderPolicyReplayBar(summary)],
+    ['과거 펌프 연구', () => renderPumpHunter(summary.pump_hunter)],
+    ['종료된 v2', () => renderPumpHunterV2(summary.pump_hunter_v2)],
+    ['청산 연구', () => renderExitLab(summary.policy_competition)],
+    ['과거 승격 조건', () => renderChampionGate(summary.champion_gate)],
+  ];
+  jobs.forEach(([label, render]) => renderPanel(label, render));
+  if (history) renderPanel('전체 원장', () => {
+    renderScatter(); attachSort(); attachFilters(); renderHistory();
+    document.getElementById('downloadCsv')?.addEventListener('click', downloadCsv);
+  });
+}
 (async function main() {
   if (BOOTED) return;
   let pin;
@@ -4048,73 +4122,22 @@ window.addEventListener('scroll', () => {
       if (!r.ok) throw new Error(`${name} HTTP ${r.status}`);
       return r.json();
     });
-    const [summaryEnc, historyEnc, accuracyEnc] = await Promise.all([
-      fetchJson('summary.json'),
-      fetchJson('history.json'),
-      fetchJson('accuracy.json'),
-    ]);
-    const [summary, history, accuracy] = await Promise.all([
-      decryptPayload(summaryEnc, pin),
-      decryptPayload(historyEnc, pin),
-      decryptPayload(accuracyEnc, pin),
-    ]);
-    // findings.json — 이번 세션 새 발견 차트 (없거나 실패해도 나머지 대시보드는 표시)
-    let findings = null;
-    try {
-      findings = await decryptPayload(await fetchJson('findings.json'), pin);
-    } catch (_) { /* optional payload */ }
-
-    HISTORY_ROWS = history.rows || [];
-    renderCurrentSystem(summary.current_system);
-    renderResearchProgress(summary.research_progress);
-    renderBookValidation(summary.book_validation);
-    renderBookForward(summary.book_forward);
-    window.PreludePages?.render(summary);
-    renderHero(summary);
-    renderRecommend(summary);
-    renderFindings(findings);  // 이번 세션 새 발견 차트 (2026-05-31)
-    renderAlphaCard(summary, accuracy);
-    renderBenchmark(summary);
-    renderConfidence(summary);
-    renderFactorPbo(summary);
-    renderChannels(summary);
-    renderCumPnl(accuracy);
-    renderRolling(accuracy);
-    renderRollingSharpe(accuracy);
-    renderDrawdownTables(summary);
-    renderUnderwater(accuracy);
-    renderReturnDist(summary);
-    renderCalibration(summary);
-    renderDecay(summary);
-    renderTpSweep(summary);
-    renderCostSweep(summary);
-    renderMonthlyHeatmap(accuracy);
-    renderPerCoin(summary);
-    renderCoinUniverse(summary);
-    renderTimeOfDay(summary);
-    renderNotesVsSystem(summary);
-    renderBestWorst(summary);
-    renderStratification(summary);
-    renderScatter();
-    // 2026-05-25 정책 layer 추가 (narrative 톤, 기존 다 유지)
-    renderPolicyEvolution(summary);
-    renderMetaModel(summary);
-    renderRecommendationQuality(summary);
-    // 시각화 강화 (2026-05-26)
-    renderDecisionDonut(summary);
-    renderMetaCoefficients(summary);
-    renderIdeaPnl(summary);
-    renderPolicyReplayBar(summary);
-    // PUMP hunter SHADOW (2026-06-04)
-    renderPumpHunter(summary.pump_hunter);
-    renderPumpHunterV2(summary.pump_hunter_v2);
-    // exit lab + champion gate 진행률 (2026-06-11)
-    renderExitLab(summary.policy_competition);
-    renderChampionGate(summary.champion_gate);
-    attachSort();
-    attachFilters();
-    renderHistory();
-    document.getElementById('downloadCsv')?.addEventListener('click', downloadCsv);
+    // Current recommendations need only the authenticated summary, not the
+    // availability of old history, accuracy, findings or the chart CDN.
+    const summary = await decryptPayload(await fetchJson('summary.json'), pin);
+    renderDashboardCurrent(summary);
+    const optional = async name => {
+      try {
+        const value = await decryptPayload(await fetchJson(name), pin);
+        if (typeof summary.dashboard_generation_id !== 'string' || !summary.dashboard_generation_id
+            || value?.dashboard_generation_id !== summary.dashboard_generation_id)
+          throw new Error('게시 세대 불일치 · 새로고침으로 같은 게시본을 확인하세요.');
+        return value;
+      }
+      catch (error) { renderPanel('과거 자료 ' + name, () => { throw error; }); return null; }
+    };
+    const [history, accuracy, findings] = await Promise.all(['history.json','accuracy.json','findings.json'].map(optional));
+    renderDashboardArchive(summary, history, accuracy, findings);
   } catch (e) {
     console.error(e);
     window.PreludePages?.render(undefined);

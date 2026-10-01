@@ -357,39 +357,103 @@
       <p class="concept-note" style="margin-top:18px;">기록 갱신 2026.10.01 · 이 페이지의 연구 수치는 각 실험 당시의 기록입니다.<br>자동 갱신되는 현재 상태와 비교 결과는 ‘운영 현황·검증’에서 확인합니다.</p>
     </div>
     <figure class="journey-map" aria-labelledby="journeyMapTitle">
-      <figcaption id="journeyMapTitle"><strong>이야기를 따라가는 네 번의 전환</strong><span>IDEA → EVIDENCE</span></figcaption>
+      <figcaption id="journeyMapTitle"><strong>지금 만드는 것은 매매 보조 도구</strong><span>사람이 최종 판단</span></figcaption>
       <ol>
-        <li><span class="step-index" aria-hidden="true">01</span><div><a href="#journey">급등을 찾는 것에서 시작했다</a><p>좋아 보이는 백테스트와 실제 성과 사이의 간격.</p></div></li>
-        <li><span class="step-index" aria-hidden="true">02</span><div><a href="#integrity-turn">먼저 측정을 다시 세웠다</a><p>발송 시각·비용·경로·기록을 맞추는 작업.</p></div></li>
-        <li><span class="step-index" aria-hidden="true">03</span><div><a href="#selection-evidence">새 선택을 같은 조건에서 비교했다</a><p>하방을 줄여도 상승 기회를 잃으면 충분하지 않다.</p></div></li>
-        <li><span class="step-index current" aria-hidden="true">04</span><div><a href="#book-forward-evidence">다음 답은 새 데이터에서 찾는다</a><p>결과 전에 선택을 저장하고, 다음날 그대로 평가한다.</p></div></li>
+        <li><span class="step-index" aria-hidden="true">01</span><div><a href="#architecture">서버가 후보를 찾고 알린다</a><p>가격·거래 자료 → R1 후보 → 장전·장후 알림.</p></div></li>
+        <li><span class="step-index" aria-hidden="true">02</span><div><a href="/projects/prelude/dashboard/#recSection">사용자가 직접 거래를 판단한다</a><p>자동 주문 없음. 추천은 안전이나 상승의 보장이 아니다.</p></div></li>
+        <li><span class="step-index current" aria-hidden="true">03</span><div><a href="#nextQuestion">새 아이디어는 별도로 검증한다</a><p>기존 추천과 같은 조건에서 비교한 뒤 개선 여부를 판단한다.</p></div></li>
       </ol>
     </figure>
   </div>
 </section>
 <div class="section-jumps" role="navigation" aria-label="개발일지 목차">
-  <div class="jump-inner"><a href="#journalGuide">읽는 순서</a><a href="#journey">출발과 전환</a><a href="#selection-evidence">비교와 실패</a><a href="#book-forward-evidence">다음 검증</a><a href="#architecture">시스템 구조</a><a href="#failures">실패 기록</a><a href="#lessons">배운 점</a></div>
+  <div class="jump-inner"><a href="#journalGuide">여섯 번의 전환</a><a href="#selectionTradeoff">득실 비교</a><a href="#nextQuestion">지금 남은 질문</a><a href="#evidenceArchive">상세 기록</a><a href="#architecture">시스템 구조</a></div>
   <div class="reading-position" id="readingPosition" role="progressbar" aria-label="문서 스크롤 위치 · 내용 이해도나 검증 진척도가 아님" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span></span></div>
 </div>
 <section class="journal-reading" id="journalGuide" aria-labelledby="journalGuideTitle">
-  <div class="journal-reading-heading"><h2 id="journalGuideTitle">무엇을 만들었는지보다,<br>왜 바꾸었는지를 읽는 페이지.</h2><p class="concept-note">가설 → 관찰 → 판단 → 다음 질문<br>성과가 없던 시도도 지우지 않습니다.</p></div>
-  <div class="chapter-grid">
-    <a class="chapter-card" href="#journey"><span>CHAPTER 01</span><h3>처음의 아이디어</h3><p>급등 탐지에서 저하방·고상방 후보 선별로 목표가 바뀐 이유.</p></a>
-    <a class="chapter-card" href="#validation-chain"><span>CHAPTER 02</span><h3>믿을 수 있는 기록</h3><p>추천·전달·평가의 시점을 연결하고 유령 성과를 걷어낸 과정.</p></a>
-    <a class="chapter-card" href="#selection-evidence"><span>CHAPTER 03</span><h3>실험과 반증</h3><p>체결 정보·시즌·점수·호가 가설이 실제 비교에서 남긴 득실.</p></a>
-    <a class="chapter-card" href="#book-forward-evidence"><span>CHAPTER 04</span><h3>지금의 검증</h3><p>첫 기록 누락을 고치고, 새 날짜의 결과를 기다리는 현재 설계.</p></a>
-  </div>
+  <div class="journal-reading-heading"><h2 id="journalGuideTitle">더 많이 맞히는 모델에서,<br>믿고 비교할 수 있는 추천으로.</h2><p class="concept-note">핵심 전환을 먼저 읽고<br>각 실험의 원문은 필요한 곳에서 펼칩니다.</p></div>
+  <ol class="story-turns">
+    <li><span class="turn-date">01 · 출발</span><h3>급등을 예측하면 도움이 될 줄 알았다</h3><p>좋아 보이는 학습 점수와 달리 가상 매매는 손실이었다. 예측 구간을 맞혀도 매매 판단으로 연결되지 않았다.</p><p class="turn-decision">바꾼 질문: ‘얼마나 오를까’보다 ‘어떤 후보를 먼저 볼까’.</p><a href="#journey">초기 모델과 전환의 근거 →</a></li>
+    <li><span class="turn-date">02 · 목표 수정</span><h3>하방을 줄이되 상승 기회를 놓치지 않기</h3><p>상승만 보는 점수에서 위험·보상을 함께 비교하는 R1로 옮겼다. 후처리·필터를 더해도 비용 차감 결과를 일관되게 개선하지 못했다.</p><p class="turn-decision">남긴 판단: R1 유지가 우수성 인증은 아니다. 대안도 직접 비교해야 한다.</p><a href="#vnext">성공하지 못한 비교들 →</a></li>
+    <li><span class="turn-date">03 · 측정 재건</span><h3>추천을 받기 전의 수익을 내 성과로 셀 수는 없다</h3><p>알림 도착 시각, 원본 예측, 가격 경로와 비용을 연결했다. 누락과 늦은 기록은 지우지 않고 드러냈다.</p><p class="turn-decision">확인한 진전: 결과를 믿고 비교할 기반. 아직 예측력의 개선은 아니다.</p><a href="#integrity-turn">측정 문제와 수리 기록 →</a></li>
+    <li><span class="turn-date">04 · 새로운 입력</span><h3>체결·호가 정보라면 다른 답을 줄까</h3><p>실제 자료를 모았지만 체결정보로 고른 후보는 공통20일에서 하락 경험이 더 많았다. 시즌별 전환도 이 구간에서는 다른 선택의 효과를 보여주지 못했다.</p><p class="turn-decision">남긴 판단: 수집 성공과 추천 개선을 구분하고, 원 추천을 유지한다.</p><a href="#selection-evidence">체결·시즌·상방 모델 비교 →</a></li>
+    <li><span class="turn-date">05 · 남은 단서</span><h3>호가 잔량으로 고르니 하방은 줄었다. 그런데.</h3><p>새 선택 L1은 같은20일에서 하락 경험을 줄였지만 상승 기회도 줄였다. 평균 수익의 차이도 앞·뒤 구간에서 방향이 바뀌었다.</p><p class="turn-decision">남긴 판단: 단서는 유지하되 교체는 보류. 바로 아래에서 득실을 함께 본다.</p><a href="#selectionTradeoff">세 지표와 불확실성 비교 →</a></li>
+    <li><span class="turn-date">06 · 2026-10-01</span><h3>결과 전에 기록하고, 새 날짜에서 답을 구한다</h3><p>첫 L1 기록은 수집 대기가 짧아 누락됐다. 실패를 보존하고 대기를 보완한10-02 시작 구간을 따로 만들었다. 과거 후보를 사후에 채우지 않는다.</p><p class="turn-decision">다음 질문: 실제 사용 조건에서도 하방·상방·비용 차감 결과가 함께 나아지는가.</p><a href="#nextQuestion">현재 판단과 다음 확인 →</a></li>
+  </ol>
 </section>
 
 <section class="evidence-digest" id="evidenceDigest" aria-labelledby="digestTitle">
-  <div class="digest-heading"><div><p class="concept-kicker">THE SHORT VERSION · 2026-10-01 기록</p><h2 id="digestTitle">여기까지 확인한 것, 아직 모르는 것</h2></div><button type="button" id="readerToggle" class="reader-toggle" aria-controls="earlyNumbers earlyExperiments technicalAppendix" hidden>상세 자료 모두 펼치기</button></div>
-  <div class="digest-grid">
-    <article><span class="digest-state">구현·연결 확인</span><h3>결과를 남기고 검증하는 경로</h3><p>발송 영수증, 가상 평가, 사전 기록과 판정표를 연결했다. 첫 운영 누락은 따로 보존하고 대기시간을 보완했다.</p><a href="#book-forward-evidence">첫 실행에서 배운 점 →</a></article>
-    <article><span class="digest-state caution">성능은 아직 미입증</span><h3>하방 감소만으로는 부족했다</h3><p>같은20일의 새 선택은 하락 경험을 줄였지만 상승 기회도 줄였다. 비용 차감 평균의 개선도 구간을 바꾸면 흔들렸다.</p><a href="#selectionTradeoff">득실을 함께 보는 비교 →</a></article>
-    <article><span class="digest-state neutral">다음에 증명할 것</span><h3>새 날짜에서도 더 나은 추천인가</h3><p>수정된10-02 시작 구간에서 결과 전 선택을 기록한다. 실제 추천은 R1을 유지하며 새 후보를 자동 채택하지 않는다.</p><a href="/projects/prelude/dashboard/#bookForwardSection">게시된 검증 상태 보기 · PIN →</a></article>
-  </div>
-  <p class="concept-note">아래는 당시 판단의 근거를 보존한 개발 기록입니다. 접힌 자료는 삭제된 것이 아니며, 기존 바로가기로도 열 수 있습니다.</p>
+  <div class="digest-heading"><h2 id="digestTitle">좋아진 지표와 나빠진 지표를 함께 보기</h2></div>
+  <figure class="journal-tradeoff" id="selectionTradeoff" data-concept-anchor aria-labelledby="tradeoffTitle">
+    <p class="concept-kicker">ONE EXPERIMENT · 2026-09-30 개발 기록</p>
+    <h3 id="tradeoffTitle">하방은 줄었지만, 상승 기회도 줄었다</h3>
+    <p class="concept-note">09-10~29 · 같은20일·60픽 · 기존 R1과 매수 호가대금 비중을 이용한 새 선택(L1). 회색은 R1, 황토색은 L1입니다.</p>
+    <div class="tradeoff-grid">
+      <div class="tradeoff-item">
+        <h4>−5% 하락 경험 · 낮을수록 유리</h4>
+        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>28.33%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>21.67%</b></span></div>
+        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:61.914%;width:19.029%"></i><i class="pair-dot control" style="left:80.943%" data-value="28.33" data-scale="35"></i><i class="pair-dot candidate" style="left:61.914%" data-value="21.67" data-scale="35"></i></div>
+        <div class="plot-ticks"><span>0</span><span>17.5</span><span>35%</span></div>
+        <p class="tradeoff-outcome favorable">유리한 변화 · 하락 경험 감소</p>
+      </div>
+      <div class="tradeoff-item">
+        <h4>+10% 상승 경험 · 높을수록 유리</h4>
+        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>23.33%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>21.67%</b></span></div>
+        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:61.914%;width:4.743%"></i><i class="pair-dot control" style="left:66.657%" data-value="23.33" data-scale="35"></i><i class="pair-dot candidate" style="left:61.914%" data-value="21.67" data-scale="35"></i></div>
+        <div class="plot-ticks"><span>0</span><span>17.5</span><span>35%</span></div>
+        <p class="tradeoff-outcome">불리한 변화 · 상승 기회 감소</p>
+      </div>
+      <div class="tradeoff-item">
+        <h4>24h 말 평균 net · 비용 차감 후</h4>
+        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>+1.586%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>+1.959%</b></span></div>
+        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:63.440%;width:14.920%"></i><i class="pair-dot control" style="left:63.440%" data-value="1.586" data-scale="2.5"></i><i class="pair-dot candidate" style="left:78.360%" data-value="1.959" data-scale="2.5"></i></div>
+        <div class="plot-ticks"><span>0</span><span>1.25</span><span>2.5%</span></div>
+        <p class="tradeoff-outcome">평균은 증가 · 뒤10일은 R1보다 저조</p>
+      </div>
+    </div>
+    <p class="concept-note">빈 원은 기존 R1, 채운 마름모는 새 선택 L1입니다. 경험 비율 축은0~35%, net 축은0~2.5%로 서로 다릅니다. 점의 위치는 각 지표 안에서만 비교하세요.</p>
+    <div class="uncertainty-story" id="selectionUncertainty" aria-labelledby="uncertaintyTitle">
+      <div class="chart-editorial-head"><span class="concept-kicker">WHY NOT ADOPT?</span><h4 id="uncertaintyTitle">좋아 보인 평균, 아직 넓은 불확실성</h4><p class="concept-note">아래는 L1 − R1의24h 말 net 차이입니다. 오른쪽은 L1 우세, 왼쪽은 R1 우세. 세 줄 모두 같은 축입니다.</p></div>
+      <div class="interval-row">
+        <div class="interval-label">전체20일<small>점: 평균 · 선: 95% 신뢰구간</small></div>
+        <div class="interval-plot" aria-hidden="true"><i class="interval-whisker" style="left:11.68%;width:84.62%" data-low="-1.916" data-high="2.315"></i><i class="interval-dot" style="left:57.44%" data-estimate="0.372"></i></div>
+        <div class="interval-value">+0.372%p<small>[−1.916, +2.315]</small></div>
+      </div>
+      <div class="interval-row">
+        <div class="interval-label">앞10일<small>같은 개발 구간을 나눠 보면</small></div>
+        <div class="interval-plot" aria-hidden="true"><i class="interval-dot" style="left:68.84%" data-estimate="0.942"></i></div>
+        <div class="interval-value">+0.942%p<small>L1 평균이 더 높음</small></div>
+      </div>
+      <div class="interval-row">
+        <div class="interval-label">뒤10일<small>평균 차이의 방향이 바뀜</small></div>
+        <div class="interval-plot" aria-hidden="true"><i class="interval-dot hollow" style="left:46.06%" data-estimate="-0.197"></i></div>
+        <div class="interval-value">−0.197%p<small>R1 평균이 더 높음</small></div>
+      </div>
+      <div class="interval-axis"><div class="plot-ticks"><span>−2.5%p</span><span>0 · 차이 없음</span><span>+2.5%p</span></div></div>
+      <p class="chart-reading-note">전체 신뢰구간은0을 가로지르고, 뒤10일에는 방향도 바뀌었습니다. <strong>평균의 개선만으로는 채택하지 않은 이유</strong>입니다.</p>
+      <p class="concept-note">앞·뒤10일은 평균만 표시합니다. 선이 없다고 불확실성이 없는 것은 아닙니다. 차이+0.372%p는 원 보고값으로, 반올림된 두 평균을 다시 빼서 계산하지 않았습니다.</p>
+    </div>
+    <figcaption class="concept-note">이미 본 자료의 가상 결과이며 미래 검증·실계좌 수익이 아닙니다. net 차이의 신뢰구간은[−1.916,+2.315]%p로0을 포함합니다. <strong>결론: 단서는 남기고, 실제 추천은 유지.</strong><br>시각화 구성 참고: <a href="https://github.com/Financial-Times/chart-doctor/tree/main/visual-vocabulary">FT Visual Vocabulary</a> · <a href="https://www.datawrapper.de/academy/how-to-create-a-dot-plot">Datawrapper의 점 비교</a> · <a href="https://www.datawrapper.de/academy/complex-charts">불확실성 표시</a>. 데이터 출처는 위 개발 기록입니다.</figcaption>
+  </figure>
 </section>
+
+<section class="journal-reading next-question" id="nextQuestion" aria-labelledby="nextQuestionTitle">
+  <p class="concept-kicker">CURRENT POSITION · 2026-10-01에 남긴 판단</p>
+  <h2 id="nextQuestionTitle">완성한 것은 검증 경로.<br>더 좋은 추천이라는 답은 아직.</h2>
+  <p>실알림은 기존 R1을 유지합니다. 새 선택 L1은10-02부터 수정 구간에 진입 전 기록을 쌓고, 첫 완결 결과는10-03 마감 이후 확인합니다. 날짜가 지났다는 이유만으로 성공·채택으로 바뀌지 않습니다.</p>
+  <p>다음에는 하락 경험, 상승 기회, 비용 차감 결과를 같은 날짜에서 함께 봅니다. 표본 누락, 시장 상태, 진입 지연과 추가 비용도 확인합니다. 매매는 직접 판단하며 자동 주문·모델 교체는 없습니다.</p>
+  <div class="concept-actions"><a class="concept-button primary" href="/projects/prelude/dashboard/#bookForwardSection">게시된 검증 상태 보기 · PIN →</a><a class="concept-button" href="#book-forward-evidence">첫 누락과 수정의 근거 →</a></div>
+  <details class="journal-glossary"><summary>처음 보는 용어 간단히</summary><dl>
+    <dt>R1</dt><dd>현재 실제 알림에 사용하는 후보 선별 방식. 안전 인증 이름이 아닙니다.</dd>
+    <dt>L1</dt><dd>저장된 호가 잔량을 이용하는 새 선택 가설. 아직 실제 알림을 대체하지 않습니다.</dd>
+    <dt>net</dt><dd>가정한 거래비용을 차감한 가상 평가값. 실제 계좌 수익이 아닙니다.</dd>
+    <dt>사전 기록 / 사후 재생</dt><dd>결과 전에 선택을 저장한 시험 / 나중에 저장 자료로 규칙을 재현한 비교. 서로 다른 증거입니다.</dd>
+  </dl></details>
+</section>
+
+<div class="journal-archive-heading"><h2>판단의 근거를 더 깊게 읽기</h2><p class="concept-note">아래 원문은 각 날짜의 관찰과 판단을 보존합니다. 현재 상태와 혼합하지 않습니다.</p><button type="button" id="readerToggle" class="reader-toggle" aria-controls="evidenceArchive earlyNumbers earlyExperiments technicalAppendix" hidden>상세 자료 모두 펼치기</button></div>
+<details class="archive-panel reader-detail" id="evidenceArchive" data-reader-detail>
+  <summary>전체 개발 기록 · 2026-04~10-01 <small>초기 가설, 측정 수리, 실험별 숫자, 실패와 설계 원문 · 기존 바로가기도 열립니다</small></summary>
 
 <!-- Honest-conclusion banner -->
 <div style="max-width:1100px; margin:0 auto; padding:0 2rem;">
@@ -1152,57 +1216,6 @@
     <p style="margin-top:0.6rem;">선택 종목·무작위 기대값·통계·가상 바스켓을 별도 계산으로 검산했고217파일의 계보도 확인했다. 이것은 앞 관찰에 쓴 <strong>동일한 개발 자료</strong>다. 새 미래 검증·실거래 수익이 아니며, 좋은 결과가 나올 때까지 cutoff를 바꾸지 않았다. <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES24차</a>에 구간별 수치와 약점을 남기고, 검증 후보는 유지하되 실알림 교체는 보류했다.</p>
     <span class="badge badge-pivot">직접 Top3 비교 완료 · 후속 검증 후보 · 실알림 유지</span>
   </div>
-  <figure class="journal-tradeoff" id="selectionTradeoff" data-concept-anchor aria-labelledby="tradeoffTitle">
-    <p class="concept-kicker">ONE EXPERIMENT · 2026-09-30 개발 기록</p>
-    <h3 id="tradeoffTitle">하방은 줄었지만, 상승 기회도 줄었다</h3>
-    <p class="concept-note">09-10~29 · 같은20일·60픽 · 기존 R1과 매수 호가대금 비중을 이용한 새 선택(L1). 회색은 R1, 황토색은 L1입니다.</p>
-    <div class="tradeoff-grid">
-      <div class="tradeoff-item">
-        <h4>−5% 하락 경험 · 낮을수록 유리</h4>
-        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>28.33%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>21.67%</b></span></div>
-        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:61.914%;width:19.029%"></i><i class="pair-dot control" style="left:80.943%" data-value="28.33" data-scale="35"></i><i class="pair-dot candidate" style="left:61.914%" data-value="21.67" data-scale="35"></i></div>
-        <div class="plot-ticks"><span>0</span><span>17.5</span><span>35%</span></div>
-        <p class="tradeoff-outcome favorable">유리한 변화 · 하락 경험 감소</p>
-      </div>
-      <div class="tradeoff-item">
-        <h4>+10% 상승 경험 · 높을수록 유리</h4>
-        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>23.33%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>21.67%</b></span></div>
-        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:61.914%;width:4.743%"></i><i class="pair-dot control" style="left:66.657%" data-value="23.33" data-scale="35"></i><i class="pair-dot candidate" style="left:61.914%" data-value="21.67" data-scale="35"></i></div>
-        <div class="plot-ticks"><span>0</span><span>17.5</span><span>35%</span></div>
-        <p class="tradeoff-outcome">불리한 변화 · 상승 기회 감소</p>
-      </div>
-      <div class="tradeoff-item">
-        <h4>24h 말 평균 net · 비용 차감 후</h4>
-        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>+1.586%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>+1.959%</b></span></div>
-        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:63.440%;width:14.920%"></i><i class="pair-dot control" style="left:63.440%" data-value="1.586" data-scale="2.5"></i><i class="pair-dot candidate" style="left:78.360%" data-value="1.959" data-scale="2.5"></i></div>
-        <div class="plot-ticks"><span>0</span><span>1.25</span><span>2.5%</span></div>
-        <p class="tradeoff-outcome">평균은 증가 · 뒤10일은 R1보다 저조</p>
-      </div>
-    </div>
-    <p class="concept-note">빈 원은 기존 R1, 채운 마름모는 새 선택 L1입니다. 경험 비율 축은0~35%, net 축은0~2.5%로 서로 다릅니다. 점의 위치는 각 지표 안에서만 비교하세요.</p>
-    <div class="uncertainty-story" id="selectionUncertainty" aria-labelledby="uncertaintyTitle">
-      <div class="chart-editorial-head"><span class="concept-kicker">WHY NOT ADOPT?</span><h4 id="uncertaintyTitle">좋아 보인 평균, 아직 넓은 불확실성</h4><p class="concept-note">아래는 L1 − R1의24h 말 net 차이입니다. 오른쪽은 L1 우세, 왼쪽은 R1 우세. 세 줄 모두 같은 축입니다.</p></div>
-      <div class="interval-row">
-        <div class="interval-label">전체20일<small>점: 평균 · 선: 95% 신뢰구간</small></div>
-        <div class="interval-plot" aria-hidden="true"><i class="interval-whisker" style="left:11.68%;width:84.62%" data-low="-1.916" data-high="2.315"></i><i class="interval-dot" style="left:57.44%" data-estimate="0.372"></i></div>
-        <div class="interval-value">+0.372%p<small>[−1.916, +2.315]</small></div>
-      </div>
-      <div class="interval-row">
-        <div class="interval-label">앞10일<small>같은 개발 구간을 나눠 보면</small></div>
-        <div class="interval-plot" aria-hidden="true"><i class="interval-dot" style="left:68.84%" data-estimate="0.942"></i></div>
-        <div class="interval-value">+0.942%p<small>L1 평균이 더 높음</small></div>
-      </div>
-      <div class="interval-row">
-        <div class="interval-label">뒤10일<small>평균 차이의 방향이 바뀜</small></div>
-        <div class="interval-plot" aria-hidden="true"><i class="interval-dot hollow" style="left:46.06%" data-estimate="-0.197"></i></div>
-        <div class="interval-value">−0.197%p<small>R1 평균이 더 높음</small></div>
-      </div>
-      <div class="interval-axis"><div class="plot-ticks"><span>−2.5%p</span><span>0 · 차이 없음</span><span>+2.5%p</span></div></div>
-      <p class="chart-reading-note">전체 신뢰구간은0을 가로지르고, 뒤10일에는 방향도 바뀌었습니다. <strong>평균의 개선만으로는 채택하지 않은 이유</strong>입니다.</p>
-      <p class="concept-note">앞·뒤10일은 평균만 표시합니다. 선이 없다고 불확실성이 없는 것은 아닙니다. 차이+0.372%p는 원 보고값으로, 반올림된 두 평균을 다시 빼서 계산하지 않았습니다.</p>
-    </div>
-    <figcaption class="concept-note">이미 본 자료의 가상 결과이며 미래 검증·실계좌 수익이 아닙니다. net 차이의 신뢰구간은[−1.916,+2.315]%p로0을 포함합니다. <strong>결론: 단서는 남기고, 실제 추천은 유지.</strong><br>시각화 구성 참고: <a href="https://github.com/Financial-Times/chart-doctor/tree/main/visual-vocabulary">FT Visual Vocabulary</a> · <a href="https://www.datawrapper.de/academy/how-to-create-a-dot-plot">Datawrapper의 점 비교</a> · <a href="https://www.datawrapper.de/academy/complex-charts">불확실성 표시</a>. 데이터 출처는 위 개발 기록입니다.</figcaption>
-  </figure>
   <div class="callout" id="book-validation-evidence" style="scroll-margin-top:80px;">
     <p><strong>⑨ 같은 자료를 더 맞추는 대신, 규칙을 고정하고 새 날짜에서 확인한다</strong></p>
     <p style="margin-top:0.6rem;">앞 비교에는 하방 감소라는 단서와 상방 손실·구간별 역전이라는 약점이 함께 있었다. 여기서 같은20일의 조건을 다시 손보면 좋아 보이는 결과를 만들 수 있다. 다음 단계는 조건 추가가 아니라 <strong>그 규칙 그대로10-01~30의 새 날짜를 평가하는 연결</strong>이다. 첫 구간이 시작되기 전에 규칙·소스·R1 버전을 봉인하고, 기존 다음날 마감 작업이 완성된24시간 결과를 붙인다.30일은 첫 관찰 창일 뿐 자동 채택 기준이 아니다.</p>
@@ -1499,7 +1512,7 @@
     </div>
     <div class="auto-timer muted-acc">
       <div class="auto-name">prelude-microstructure.timer<span class="mono-small">별도 체결 관측·기록시험</span></div>
-      <div class="auto-role">원시 수집 후 인과 시점 검증 → 기존 동점 시험 기록 → 새 Top10 시험 기록 → 각각 누적평가. 오류는 드러내되 R1 모델·실알림을 변경하지 않는다. 다음 정규 실행의 성공은 아직 미확인.</div>
+      <div class="auto-role">원시 수집 후 인과 시점 검증 → 기존 동점 시험 기록 → 새 Top10 시험 기록 → 각각 누적평가. 오류는 드러내되 R1 모델·실알림을 변경하지 않는다. 09-09 설계 당시에는 정규 실행이 미확인이었으며, 09-10 첫 실행 확인은 위 후속 일지에 기록했다. 이후 실행 상태는 대시보드의 게시 시각과 함께 확인한다.</div>
       <div class="auto-when"><strong>매일</strong>08:45 KST</div>
     </div>
     <div class="auto-timer muted-acc">
@@ -2144,8 +2157,9 @@
 
 <!-- Status -->
 <section id="status"><div class="container fade-in">
-  <div class="section-label">Current Status · 2026-09-30</div>
-  <h2 class="section-title">지금 어디까지 왔나</h2>
+  <div class="section-label">Historical Snapshot · 2026-09-30</div>
+  <h2 class="section-title">09-30 당시 어디까지 왔었나</h2>
+  <p class="concept-note">아래는 당시 상태를 보존한 기록입니다. 10-01의 첫 누락과 수정은 <a href="#nextQuestion">현재 판단 요약</a>, 이후 실행은 <a href="/projects/prelude/dashboard/">운영 현황</a>에서 구분해 확인합니다.</p>
 
   <div class="callout" style="margin-bottom:2rem;">
     <p><strong>상태 갱신 (2026-09-30):</strong> 실알림은 <strong>R1 두 슬롯(08:50/09:05)</strong>을 유지한다. 체결Top10의20일 비교, 고정 상방 모델의 추가 날짜 비교, 점수 척도D·전체후보 조합E에서도 교체 근거를 얻지 못했다. v2는 <strong>08-05 terminal KILL</strong>이며 재개하지 않는다. 시즌별 사전 선택 시험은10-01 기대일, 현재 새 정책 실측0건이다. <strong>실제 추천의 자동 전환·새 학습·자동 승격은 없다.</strong>
@@ -2240,6 +2254,7 @@
   </p>
 </div></section>
 
+</details>
 </main>
 <footer>
   <p class="footer-text">

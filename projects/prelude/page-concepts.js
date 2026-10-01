@@ -5,6 +5,7 @@
     not_due: '기록 예정', ready: '진입 전 저장 확인', missing: '기록 누락',
     late: '진입 시각 이후 저장', uncertain: '저장 완료 불확실',
   };
+  const REGIMES = {bull_volatile:'상승 · 고변동', bull_quiet:'상승 · 저변동', bear_volatile:'하락 · 고변동', bear_quiet:'하락 · 저변동'};
   const VERDICTS = {
     waiting: '자료 대기', continue_observing: '관찰 연장',
     review_candidate: '채택 검토 대상', do_not_adopt: '현재 후보 비채택', blocked: '증거 확인 필요',
@@ -37,6 +38,33 @@
       timeZone: 'Asia/Seoul', dateStyle: 'short', timeStyle: 'short',
     }) : '미제공';
   };
+
+  // Presentation arithmetic only: missing months are not zero-return months.
+  function compoundedReturn(values) {
+    if (!Array.isArray(values) || !values.length || values.some(v => !finite(v) || v < -100)) return null;
+    const result = (values.reduce((equity, value) => equity * (1 + value / 100), 1) - 1) * 100;
+    return finite(result) ? result : null;
+  }
+  function recordLabel(value) {
+    if (!value || !own(RECORDS, value.today_record)) return '확인 불가';
+    if (value.today_record === 'not_due' && day(value.asof) && day(value.start_date) && value.asof < value.start_date)
+      return `시험 시작 전 · ${value.start_date}부터`;
+    return value.today_record === 'not_due' ? '기록 예정 · 아직 대상 아님' : RECORDS[value.today_record];
+  }
+  function chartTableModel(config) {
+    const labels = config?.data?.labels || [];
+    const sets = config?.data?.datasets || [];
+    const cell = value => {
+      if (value == null || typeof value === 'number' && !finite(value)) return '미제공';
+      if (typeof value === 'number' || typeof value === 'string') return String(value);
+      if (Array.isArray(value)) return value.map(cell).join(' ~ ');
+      if (typeof value === 'object') return Object.entries(value).filter(([key]) => ['x','y','r'].includes(key)).map(([key,v]) => `${key}: ${cell(v)}`).join(' · ') || '미제공';
+      return '미제공';
+    };
+    const n = Math.max(0, labels.length, ...sets.map(s => Array.isArray(s.data) ? s.data.length : 0));
+    return {headers:['항목 / 관측 순서', ...sets.map((s,i) => typeof s.label === 'string' ? s.label : `계열 ${i+1}`)],
+      rows:Array.from({length:n}, (_,i) => [cell(labels[i] ?? i+1), ...sets.map(s => cell(s.data?.[i]))])};
+  }
 
   function snapshotModel(system, now = Date.now()) {
     const time = timestamp(system?.observed_at);
@@ -93,7 +121,8 @@
       coin:row.coin, rank:row.rank, score:finite(row.score) ? row.score.toFixed(3) : '미제공',
       risk:row.dump_risk_flag === true ? 'flagged' : row.dump_risk_flag === false ? 'not_flagged' : 'unknown',
       price:finite(row.entry_open) && row.entry_open > 0 ? row.entry_open.toLocaleString('ko-KR', {maximumFractionDigits:8}) : '미제공',
-      regime:typeof row.btc_regime === 'string' && row.btc_regime.length <= 80 ? row.btc_regime : '미제공',
+      regime:own(REGIMES, row.btc_regime) ? REGIMES[row.btc_regime]
+        : typeof row.btc_regime === 'string' && row.btc_regime.length <= 80 ? row.btc_regime : '미제공',
     }))};
   }
 
@@ -111,7 +140,7 @@
     if (n && (value.verdict === 'waiting' || !METRICS.every(([key]) => finite(value.difference?.[key]) && finite(value.difference[key] * 100)
         && (key === 'eod_return_net' || Math.abs(value.difference[key]) <= 1)))) return null;
     return {
-      record: RECORDS[value.today_record], recordKey: value.today_record,
+      record: recordLabel(value), recordKey: value.today_record,
       recordTone: value.today_record === 'ready' ? 'good' : value.today_record === 'not_due' ? 'neutral' : 'warning',
       verdict: VERDICTS[value.verdict], verdictKey: value.verdict,
       tone: value.attention_required || ['blocked', 'do_not_adopt'].includes(value.verdict) ? 'warning' : 'neutral',
@@ -157,7 +186,7 @@
       state:!own(checks, key) ? 'unknown' : checks[key] ? 'met' : 'unmet',
     }))}));
   }
-  if (typeof module !== 'undefined' && module.exports) module.exports = {derive, forwardModel, snapshotModel, attentionModel, recommendationModel, checksModel};
+  if (typeof module !== 'undefined' && module.exports) module.exports = {derive, forwardModel, snapshotModel, attentionModel, recommendationModel, checksModel, compoundedReturn, recordLabel, chartTableModel};
   if (!global.document) return;
   const document = global.document;
   function node(tag, className, text) {
@@ -204,11 +233,13 @@
       header.append(node('h3', '', row.coin), node('span', 'recommend-rank', `#${row.rank}`));
       card.append(header, node('span', 'recommend-risk', row.risk === 'flagged' ? '하방 경고 있음' : row.risk === 'not_flagged' ? '하방 경고 미표시 · 안전 인증 아님' : '하방 경고 자료 미제공'));
       const values = node('dl', '');
-      [['원래 점수', row.score], ['09:00 참고가격', row.price === '미제공' ? row.price : row.price + '원'], ['BTC 국면', row.regime]].forEach(([key, value]) => values.append(node('dt', '', key), node('dd', '', value)));
-      card.append(values, node('p', 'score-help', '점수는 원래 추천값을 그대로 표시하며, 상승 확률이나 안전 등급으로 바꾸지 않습니다.'));
+      [['09:00 참고가격', row.price === '미제공' ? row.price : row.price + '원'], ['BTC 국면', row.regime]].forEach(([key, value]) => values.append(node('dt', '', key), node('dd', '', value)));
+      const detail = node('details', 'score-detail');
+      detail.append(node('summary', '', '보조 점수 확인'), node('p', 'score-help', `보조 점수 ${row.score} · R1 최종 순위의 정렬키가 아닙니다. 상승 확률·안전 등급도 아닙니다.`));
+      card.append(values, detail);
       root.append(card);
     });
-    note.textContent = `${model.date ? '추천 기준일 ' + model.date + ' · ' : ''}장후(open) R1 게시 기록입니다. 장전 추천은 합치지 않습니다. 09:00 가격은 현재가·실제 체결가가 아닙니다. 원본 확률 추정치와 누적 집계는 아래 상세표에 보존합니다.`;
+    note.textContent = '장후(open) 발송 원순위를 보존합니다. 장전 추천은 합치지 않으며 09:00 가격은 현재가·체결가가 아닙니다. 개별 상승·하락 추정치는 이 게시 자료에 없어 표시하지 않습니다.';
   }
   function render(summary) {
     const model = derive(summary);
@@ -218,7 +249,8 @@
     renderContext(summary);
     renderRecommendations(summary);
     renderChecks(summary?.book_forward);
-    root.replaceChildren(...model.tiles.map(item => {
+    // Keep daily overview short; sample/record details appear once below.
+    root.replaceChildren(...[model.tiles[0], model.tiles[3]].map(item => {
       const tile = node('article', 'monitor-tile');
       tile.dataset.tone = item.tone;
       tile.append(node('span', 'tile-label', item.title), node('strong', '', item.value), node('p', '', item.note));
@@ -307,7 +339,7 @@
       });
       column.append(list); grid.append(column);
     });
-    panel.append(grid, node('p', 'concept-note', '미충족에는 표본 부족도 포함됩니다. 미평가·미제공은 실패나 통과로 채우지 않습니다. 원 판정과 조건 상세는 아래 기록에서 확인하세요.'));
+    panel.append(grid, node('p', 'concept-note', '미충족에는 표본 부족도 포함됩니다. 미평가·미제공은 실패나 통과로 채우지 않습니다. 원 수치와 평가 조건은 상세 기록에서 확인하세요.'));
     root.append(panel);
   }
 
@@ -393,5 +425,27 @@
   document.querySelectorAll('details').forEach(item => item.addEventListener('toggle', () => { syncReader(); scheduleNavigation(); }));
   if (typeof global.ResizeObserver === 'function') new global.ResizeObserver(scheduleNavigation).observe(document.body);
   scheduleNavigation();
-  global.PreludePages = Object.freeze({derive, render});
+  function renderChartTable(canvas, config) {
+    const id = canvas.id + '-data';
+    let detail = document.getElementById(id);
+    if (!detail) { detail = node('details', 'chart-data'); detail.id = id; canvas.after(detail); }
+    const title = canvas.closest('.chart-wrap')?.querySelector('.chart-title')?.textContent || canvas.id;
+    canvas.setAttribute('role', 'img'); canvas.setAttribute('aria-label', title + ' · 수치는 다음 데이터 표에서도 확인할 수 있습니다.');
+    canvas.setAttribute('aria-describedby', id);
+    canvas.textContent = title + ' — 바로 뒤의 차트 데이터 표를 이용하세요.';
+    const model = chartTableModel(config);
+    detail.replaceChildren(node('summary', '', '차트 데이터 표 보기'));
+    if (!model.rows.length) { detail.append(node('p', 'concept-note', '자료를 아직 불러오지 않았거나 표시할 관측값이 없습니다. 0성과를 뜻하지 않습니다.')); return; }
+    const wrap = node('div', 'chart-data-scroll'); wrap.tabIndex = 0;
+    wrap.setAttribute('role', 'region'); wrap.setAttribute('aria-label', title + ' 데이터 표');
+    const table = node('table', 'tbl');
+    table.append(node('caption', '', title + ' · 차트 입력값 그대로. 단위·대상 기간은 위 차트 설명을 참고하세요. 미제공은 0이 아닙니다.'));
+    const head = node('thead', ''); const tr = node('tr', '');
+    model.headers.forEach(value => { const th = node('th', '', value); th.scope = 'col'; tr.append(th); }); head.append(tr);
+    const body = node('tbody', '');
+    model.rows.forEach(values => { const row = node('tr', ''); values.forEach((value,i) => { const cell = node(i ? 'td' : 'th', '', value); if (!i) cell.scope = 'row'; row.append(cell); }); body.append(row); });
+    table.append(head, body); wrap.append(table); detail.append(wrap);
+  }
+  document.querySelectorAll('canvas').forEach(canvas => renderChartTable(canvas, {}));
+  global.PreludePages = Object.freeze({derive, render, compoundedReturn, recordLabel, renderChartTable});
 })(typeof window === 'undefined' ? globalThis : window);

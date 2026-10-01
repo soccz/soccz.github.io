@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
+import vm from 'node:vm';
 const root = new URL('../', import.meta.url);
 const read = name => readFileSync(new URL(name, root), 'utf8');
-const {derive, forwardModel, snapshotModel, attentionModel, recommendationModel, checksModel} = createRequire(import.meta.url)(fileURLToPath(new URL('projects/prelude/page-concepts.js', root)));
+const {derive, forwardModel, snapshotModel, attentionModel, recommendationModel, checksModel, compoundedReturn, recordLabel, chartTableModel} = createRequire(import.meta.url)(fileURLToPath(new URL('projects/prelude/page-concepts.js', root)));
 const waiting = {schema:'prelude_dashboard_book_forward.v1', status:'observed',
   automatic_promotion:false, scope:'pre_entry_paper_not_actual_trades', attention_required:false,
   today_record:'not_due', verdict:'waiting', paired_dates:0, expected_dates:0, changed_dates:0,
@@ -213,5 +214,70 @@ test('reader controls keep all evidence accessible', () => {
   assert.match(story, /문서 스크롤 위치 · 내용 이해도나 검증 진척도가 아님/);
   const dash = read('projects/prelude/dashboard/index.html');
   for (const id of ['recommendCards', 'snapshotContext', 'monitorAttention']) assert.ok(dash.includes(`id="${id}"`));
+});
+test('YTD compounds monthly returns without inventing missing months', () => {
+  assert.ok(Math.abs(compoundedReturn([10,-10]) + 1) < 1e-10);
+  assert.ok(Math.abs(compoundedReturn([10,10]) - 21) < 1e-10);
+  assert.equal(compoundedReturn([0]), 0);
+  assert.equal(compoundedReturn([-100,30]), -100);
+  for (const values of [[],null,[null],[undefined],[NaN],[Infinity],[-101],['10']]) assert.equal(compoundedReturn(values),null);
+  const html=read('projects/prelude/dashboard/index.html');
+  assert.match(html,/compoundedReturn\(yearReturns\)/);
+  assert.doesNotMatch(html,/ytd \+= v/);
+});
+test('not due does not falsely claim the current clock is before record time', () => {
+  assert.match(recordLabel({...waiting,asof:'2026-10-01',start_date:'2026-10-02'}),/시험 시작 전/);
+  assert.match(recordLabel(waiting),/기록 예정/);
+  assert.equal(recordLabel({...waiting,today_record:'ready'}),'진입 전 저장 확인');
+  assert.equal(recordLabel({today_record:'constructor'}),'확인 불가');
+  assert.doesNotMatch(read('projects/prelude/dashboard/index.html'),/오늘 기록 시각 전/);
+});
+test('chart tables preserve zero, missing, negative and scatter inputs', () => {
+  const config={data:{labels:['A','B','C'],datasets:[{label:'수익 %',data:[0,null,-2]},{label:'좌표',data:[{x:1,y:2},{x:2,y:NaN}]}]}};
+  const model=chartTableModel(config);
+  assert.deepEqual(model.rows,[['A','0','x: 1 · y: 2'],['B','미제공','x: 2 · y: 미제공'],['C','-2','미제공']]);
+  assert.deepEqual(chartTableModel({}).rows,[]);
+  assert.deepEqual(chartTableModel({data:{datasets:[{data:[[1,3]]}]}}).rows,[['1','1 ~ 3']]);
+});
+test('ranking explanation does not promote auxiliary scores to probabilities', () => {
+  const html=read('projects/prelude/dashboard/index.html');
+  assert.match(html,/id="rankingExplanation"/);
+  assert.match(html,/개별 상·하방 추정치가 없는 게시 자료에서는 확률을 역산하지 않습니다/);
+  assert.match(read('projects/prelude/page-concepts.js'),/최종 순위의 정렬키가 아닙니다/);
+  assert.equal(recommendationModel(recommendation([candidate])).rows[0].regime,'상승 · 고변동');
+  assert.equal(recommendationModel(recommendation([{...candidate,btc_regime:'constructor'}])).rows[0].regime,'constructor');
+});
+test('main reading path is short and original anchors remain in dated evidence', () => {
+  const journal=read('projects/prelude/index.html'),dash=read('projects/prelude/dashboard/index.html');
+  assert.match(journal,/<ol class="story-turns">/);
+  assert.equal((journal.match(/class="turn-date"/g)||[]).length,6);
+  assert.ok(journal.indexOf('id="selectionTradeoff"')<journal.indexOf('id="evidenceArchive"'));
+  assert.ok(journal.indexOf('id="nextQuestion"')<journal.indexOf('id="evidenceArchive"'));
+  assert.ok(dash.indexOf('id="recSection"')<dash.indexOf('id="currentSystemSection"'));
+  for(const id of ['operationsDetail','replayDetail','otherResearchDetail','methodologyDetail']) assert.match(dash,new RegExp(`<details[^>]*id="${id}"`));
+  assert.match(dash,/if \(!window.PreludePages\) cards \+=/);
+});
+test('a failed optional renderer does not clear current recommendations or stop later panels', () => {
+  const html=read('projects/prelude/dashboard/index.html');
+  const fn=(start,end)=>html.slice(html.indexOf(start),html.indexOf(end,html.indexOf(start)));
+  const panel=fn('function renderPanel(', '\n/* ───────── Crypto');
+  const current=fn('function renderDashboardCurrent(', '\nfunction renderDashboardArchive');
+  const archive=fn('function renderDashboardArchive(', '\n(async function main');
+  const calls=[];
+  const element=()=>({hidden:true,append(){},replaceChildren(){}});
+  const context={console:{error(){}},document:{createElement:element,getElementById:element},window:{PreludePages:{render:s=>calls.push(s?'current':'cleared')}},HISTORY_ROWS:[]};
+  for(const name of [...new Set((current+archive).match(/\b(?:render\w+|attachSort|attachFilters|downloadCsv)(?=\()/g))]) if(!['renderPanel','renderDashboardCurrent','renderDashboardArchive'].includes(name)) context[name]=()=>calls.push(name);
+  context.renderFindings=()=>{throw new Error('injected optional failure');};
+  vm.createContext(context);vm.runInContext(panel+'\n'+current+'\n'+archive,context);
+  context.renderDashboardCurrent({});context.renderDashboardArchive({},null,null,{});
+  assert.ok(calls.includes('current'));assert.ok(calls.includes('renderChampionGate'));assert.ok(!calls.includes('cleared'));
+  assert.ok(html.indexOf('renderDashboardCurrent(summary);')<html.indexOf("['history.json','accuracy.json','findings.json'].map(optional)"));
+});
+test('every chart construction passes through the accessible isolated wrapper', () => {
+  const html=read('projects/prelude/dashboard/index.html');
+  assert.equal((html.match(/new Chart\(/g)||[]).length,1);
+  assert.match(html,/renderChartTable\(el, config\)/);
+  assert.match(html,/typeof Chart === 'undefined'/);
+  assert.match(read('projects/prelude/page-concepts.js'),/canvas.setAttribute\('aria-describedby', id\)/);
 });
 console.log(JSON.stringify({status:'PASS', contract_groups:checks}));
