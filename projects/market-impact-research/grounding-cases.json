@@ -1,0 +1,150 @@
+[
+  {
+    "id": "mixed-money-base",
+    "title": "01 · 답은 맞았는데 금액은 틀렸다",
+    "note": "같은 상한 초과 결론이라 Qwen의 답은 바뀌지 않습니다. 사실을 바로잡은 효과와 답을 바로잡은 효과를 따로 봅니다.",
+    "claim": "내 보증금은 2400만 240원이다. 이 요건을 충족한다.",
+    "scope": "신청자 본인의 현재 임대차보증금 상한만.",
+    "label": "반박",
+    "source": "작성한 통제 규정·가상 주장",
+    "states": {
+      "qwen": {
+        "source": "보증금: 2400만 240원",
+        "before": "보증금: 24,002,400원",
+        "after": "보증금: 24,000,240원",
+        "changes": "보증금: 24,002,400원 → 24,000,240원",
+        "raw": "반박",
+        "corrected": "반박",
+        "reject": "출력 실패·보류",
+        "facts": "불일치 → 일치",
+        "joint": "불일치 → 일치",
+        "raw_json": "{\n  \"policy\": {\n    \"status\": \"ready\",\n    \"clauses\": [\n      [\n        {\n          \"field\": \"deposit_krw\",\n          \"op\": \"le\",\n          \"value\": 24000000,\n          \"evidence\": [\n            \"E\"\n          ]\n        }\n      ]\n    ],\n    \"derived\": []\n  },\n  \"profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 24002400\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 2,\n        \"cue_end\": 5,\n        \"status\": \"amount\",\n        \"value\": 24000240,\n        \"start\": 7,\n        \"end\": 17,\n        \"text\": \"2400만 240원\"\n      }\n    ],\n    \"issues\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"predicted\": 24002400,\n        \"grounded\": 24000240,\n        \"reason\": \"amount_mismatch\",\n        \"span\": {\n          \"field\": \"deposit_krw\",\n          \"owner\": \"applicant\",\n          \"cue_start\": 2,\n          \"cue_end\": 5,\n          \"status\": \"amount\",\n          \"value\": 24000240,\n          \"start\": 7,\n          \"end\": 17,\n          \"text\": \"2400만 240원\"\n        }\n      }\n    ],\n    \"patches\": {\n      \"deposit_krw\": 24000240\n    },\n    \"checked\": [\n      \"deposit_krw\"\n    ],\n    \"status\": \"checked\"\n  },\n  \"corrected_profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 24000240\n      }\n    ]\n  }\n}",
+        "pair": ""
+      },
+      "kanana-public": {
+        "source": "보증금: 2400만 240원",
+        "before": "보증금: 2,400,240원",
+        "after": "보증금: 24,000,240원",
+        "changes": "보증금: 2,400,240원 → 24,000,240원",
+        "raw": "지지",
+        "corrected": "반박",
+        "reject": "출력 실패·보류",
+        "facts": "불일치 → 일치",
+        "joint": "불일치 → 일치",
+        "raw_json": "{\n  \"policy\": {\n    \"clauses\": [\n      [\n        {\n          \"evidence\": [\n            \"E\"\n          ],\n          \"field\": \"deposit_krw\",\n          \"op\": \"le\",\n          \"value\": 24000000\n        }\n      ]\n    ],\n    \"derived\": [],\n    \"status\": \"ready\"\n  },\n  \"profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 2400240\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 2,\n        \"cue_end\": 5,\n        \"status\": \"amount\",\n        \"value\": 24000240,\n        \"start\": 7,\n        \"end\": 17,\n        \"text\": \"2400만 240원\"\n      }\n    ],\n    \"issues\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"predicted\": 2400240,\n        \"grounded\": 24000240,\n        \"reason\": \"amount_mismatch\",\n        \"span\": {\n          \"field\": \"deposit_krw\",\n          \"owner\": \"applicant\",\n          \"cue_start\": 2,\n          \"cue_end\": 5,\n          \"status\": \"amount\",\n          \"value\": 24000240,\n          \"start\": 7,\n          \"end\": 17,\n          \"text\": \"2400만 240원\"\n        }\n      }\n    ],\n    \"patches\": {\n      \"deposit_krw\": 24000240\n    },\n    \"checked\": [\n      \"deposit_krw\"\n    ],\n    \"status\": \"checked\"\n  },\n  \"corrected_profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 24000240\n      }\n    ]\n  }\n}",
+        "pair": ""
+      }
+    }
+  },
+  {
+    "id": "mixed-money-unknown",
+    "title": "02 · 부모 금액이 내 금액이 되는 오류",
+    "note": "본인 보증금 미공개가 명시되어 있습니다. 부모의 값을 가져온 출력은 미확인으로 되돌립니다. 일반적인 주체 판독 전체를 해결한 것은 아닙니다.",
+    "claim": "부모의 보증금은 2400만 240원이고 내 보증금은 밝히지 않았다. 이 요건을 충족한다.",
+    "scope": "신청자 본인의 현재 임대차보증금 상한만.",
+    "label": "확정 불가",
+    "source": "작성한 통제 규정·가상 주장",
+    "states": {
+      "qwen": {
+        "source": "보증금: 은 밝히지",
+        "before": "보증금: 24,002,400원",
+        "after": "확인된 사실 없음",
+        "changes": "보증금: 24,002,400원 → 미확인",
+        "raw": "반박",
+        "corrected": "확정 불가",
+        "reject": "출력 실패·보류",
+        "facts": "불일치 → 일치",
+        "joint": "불일치 → 일치",
+        "raw_json": "{\n  \"policy\": {\n    \"status\": \"ready\",\n    \"clauses\": [\n      [\n        {\n          \"field\": \"deposit_krw\",\n          \"op\": \"le\",\n          \"value\": 24000000,\n          \"evidence\": [\n            \"E\"\n          ]\n        }\n      ]\n    ],\n    \"derived\": []\n  },\n  \"profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"parent_residence_months\",\n        \"value\": null\n      },\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 24002400\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"external\",\n        \"cue_start\": 4,\n        \"cue_end\": 7,\n        \"status\": \"amount\",\n        \"value\": 24000240,\n        \"start\": 9,\n        \"end\": 19,\n        \"text\": \"2400만 240원\"\n      },\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 24,\n        \"cue_end\": 27,\n        \"status\": \"explicit_unknown\",\n        \"start\": 27,\n        \"end\": 32,\n        \"text\": \"은 밝히지\"\n      }\n    ],\n    \"issues\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"predicted\": 24002400,\n        \"grounded\": null,\n        \"reason\": \"invented_missing_amount\",\n        \"span\": {\n          \"field\": \"deposit_krw\",\n          \"owner\": \"applicant\",\n          \"cue_start\": 24,\n          \"cue_end\": 27,\n          \"status\": \"explicit_unknown\",\n          \"start\": 27,\n          \"end\": 32,\n          \"text\": \"은 밝히지\"\n        }\n      }\n    ],\n    \"patches\": {\n      \"deposit_krw\": null\n    },\n    \"checked\": [\n      \"deposit_krw\"\n    ],\n    \"status\": \"checked\"\n  },\n  \"corrected_profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"parent_residence_months\",\n        \"value\": null\n      },\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": null\n      }\n    ]\n  }\n}",
+        "pair": ""
+      },
+      "kanana-public": {
+        "source": "보증금: 은 밝히지",
+        "before": "부모 거주 개월: 2,400.24",
+        "after": "부모 거주 개월: 2,400.24",
+        "changes": "대조한 금액에 불일치 없음",
+        "raw": "확정 불가",
+        "corrected": "확정 불가",
+        "reject": "확정 불가",
+        "facts": "불일치 → 불일치",
+        "joint": "불일치 → 불일치",
+        "raw_json": "{\n  \"policy\": {\n    \"clauses\": [\n      [\n        {\n          \"evidence\": [\n            \"E\"\n          ],\n          \"field\": \"deposit_krw\",\n          \"op\": \"le\",\n          \"value\": 24000000\n        }\n      ]\n    ],\n    \"derived\": [],\n    \"status\": \"ready\"\n  },\n  \"profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"parent_residence_months\",\n        \"value\": 2400.24\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"external\",\n        \"cue_start\": 4,\n        \"cue_end\": 7,\n        \"status\": \"amount\",\n        \"value\": 24000240,\n        \"start\": 9,\n        \"end\": 19,\n        \"text\": \"2400만 240원\"\n      },\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 24,\n        \"cue_end\": 27,\n        \"status\": \"explicit_unknown\",\n        \"start\": 27,\n        \"end\": 32,\n        \"text\": \"은 밝히지\"\n      }\n    ],\n    \"issues\": [],\n    \"patches\": {},\n    \"checked\": [\n      \"deposit_krw\"\n    ],\n    \"status\": \"checked\"\n  },\n  \"corrected_profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"parent_residence_months\",\n        \"value\": 2400.24\n      }\n    ]\n  }\n}",
+        "pair": ""
+      }
+    }
+  },
+  {
+    "id": "yongin-conversion-2",
+    "title": "03 · 새 공고의 환산 경계 1원",
+    "note": "용인 선택 조항: 보증금 + 월세 × 187.5 ≤ 3억원. 작성 사실의 환산액은 300,000,001원입니다. 전용면적과 다른 자격은 평가 밖입니다.",
+    "claim": "내 보증금은 1억 1250만 1원, 월세는 100만원이다. 이 범위의 요건을 충족한다.",
+    "scope": "월세·반전세의 환산보증금 3억원 상한만. 전용면적과 다른 자격은 범위 밖. 신청자 사실의 보증금과 월세를 공고의 환산식에 대입한다.",
+    "label": "반박",
+    "source": "용인시 2025-458 · 공식 HWP 선택 조항 / 작성 가상 주장",
+    "states": {
+      "qwen": {
+        "source": "보증금: 1억 1250만 1원 / 월세: 100만원",
+        "before": "보증금: 112,500,000원 / 월세: 1,000,000원",
+        "after": "보증금: 112,500,001원 / 월세: 1,000,000원",
+        "changes": "보증금: 112,500,000원 → 112,500,001원",
+        "raw": "반박",
+        "corrected": "반박",
+        "reject": "출력 실패·보류",
+        "facts": "불일치 → 일치",
+        "joint": "불일치 → 일치",
+        "raw_json": "{\n  \"policy\": {\n    \"status\": \"ready\",\n    \"clauses\": [\n      [\n        {\n          \"field\": \"deposit_krw\",\n          \"op\": \"le\",\n          \"value\": 300000000,\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ]\n        },\n        {\n          \"field\": \"deposit_krw\",\n          \"op\": \"eq\",\n          \"value\": 0,\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ]\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"op\": \"eq\",\n          \"value\": 0,\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ]\n        },\n        {\n          \"field\": \"deposit_krw\",\n          \"op\": \"eq\",\n          \"value\": 0,\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ]\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"op\": \"eq\",\n          \"value\": 0,\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ]\n        },\n        {\n          \"field\": \"derived_0\",\n          \"op\": \"le\",\n          \"value\": 300000000,\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ]\n        }\n      ]\n    ],\n    \"derived\": [\n      {\n        \"field\": \"derived_0\",\n        \"constant\": 0,\n        \"terms\": [\n          {\n            \"field\": \"deposit_krw\",\n            \"numerator\": 1,\n            \"denominator\": 1\n          },\n          {\n            \"field\": \"monthly_rent_krw\",\n            \"numerator\": 12,\n            \"denominator\": 6.4\n          }\n        ],\n        \"evidence\": [\n          \"yongin-yongin-conversion\"\n        ]\n      }\n    ]\n  },\n  \"profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 112500000\n      },\n      {\n        \"field\": \"monthly_rent_krw\",\n        \"value\": 1000000\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 2,\n        \"cue_end\": 5,\n        \"status\": \"amount\",\n        \"value\": 112500001,\n        \"start\": 7,\n        \"end\": 18,\n        \"text\": \"1억 1250만 1원\"\n      },\n      {\n        \"field\": \"monthly_rent_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 20,\n        \"cue_end\": 22,\n        \"status\": \"amount\",\n        \"value\": 1000000,\n        \"start\": 24,\n        \"end\": 29,\n        \"text\": \"100만원\"\n      }\n    ],\n    \"issues\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"predicted\": 112500000,\n        \"grounded\": 112500001,\n        \"reason\": \"amount_mismatch\",\n        \"span\": {\n          \"field\": \"deposit_krw\",\n          \"owner\": \"applicant\",\n          \"cue_start\": 2,\n          \"cue_end\": 5,\n          \"status\": \"amount\",\n          \"value\": 112500001,\n          \"start\": 7,\n          \"end\": 18,\n          \"text\": \"1억 1250만 1원\"\n        }\n      }\n    ],\n    \"patches\": {\n      \"deposit_krw\": 112500001\n    },\n    \"checked\": [\n      \"deposit_krw\",\n      \"monthly_rent_krw\"\n    ],\n    \"status\": \"checked\"\n  },\n  \"corrected_profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 112500001\n      },\n      {\n        \"field\": \"monthly_rent_krw\",\n        \"value\": 1000000\n      }\n    ]\n  }\n}",
+        "pair": ""
+      },
+      "kanana-public": {
+        "source": "보증금: 1억 1250만 1원 / 월세: 100만원",
+        "before": "보증금: 112,501,000원 / 월세: 1,000,000원",
+        "after": "보증금: 112,500,001원 / 월세: 1,000,000원",
+        "changes": "보증금: 112,501,000원 → 112,500,001원",
+        "raw": "출력 실패·보류",
+        "corrected": "출력 실패·보류",
+        "reject": "출력 실패·보류",
+        "facts": "불일치 → 일치",
+        "joint": "불일치 → 불일치",
+        "raw_json": "{\n  \"policy\": {\n    \"clauses\": [\n      [\n        {\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ],\n          \"field\": \"deposit_krw\",\n          \"op\": \"le\",\n          \"value\": 300000000\n        }\n      ],\n      [\n        {\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ],\n          \"field\": \"monthly_rent_krw\",\n          \"op\": \"le\",\n          \"value\": 300000000\n        }\n      ],\n      [\n        {\n          \"evidence\": [\n            \"yongin-yongin-conversion\"\n          ],\n          \"field\": \"derived_0\",\n          \"op\": \"eq\",\n          \"value\": 0\n        }\n      ]\n    ],\n    \"derived\": [],\n    \"status\": \"ready\"\n  },\n  \"profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 112501000\n      },\n      {\n        \"field\": \"monthly_rent_krw\",\n        \"value\": 1000000\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 2,\n        \"cue_end\": 5,\n        \"status\": \"amount\",\n        \"value\": 112500001,\n        \"start\": 7,\n        \"end\": 18,\n        \"text\": \"1억 1250만 1원\"\n      },\n      {\n        \"field\": \"monthly_rent_krw\",\n        \"owner\": \"applicant\",\n        \"cue_start\": 20,\n        \"cue_end\": 22,\n        \"status\": \"amount\",\n        \"value\": 1000000,\n        \"start\": 24,\n        \"end\": 29,\n        \"text\": \"100만원\"\n      }\n    ],\n    \"issues\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"predicted\": 112501000,\n        \"grounded\": 112500001,\n        \"reason\": \"amount_mismatch\",\n        \"span\": {\n          \"field\": \"deposit_krw\",\n          \"owner\": \"applicant\",\n          \"cue_start\": 2,\n          \"cue_end\": 5,\n          \"status\": \"amount\",\n          \"value\": 112500001,\n          \"start\": 7,\n          \"end\": 18,\n          \"text\": \"1억 1250만 1원\"\n        }\n      }\n    ],\n    \"patches\": {\n      \"deposit_krw\": 112500001\n    },\n    \"checked\": [\n      \"deposit_krw\",\n      \"monthly_rent_krw\"\n    ],\n    \"status\": \"checked\"\n  },\n  \"corrected_profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"deposit_krw\",\n        \"value\": 112500001\n      },\n      {\n        \"field\": \"monthly_rent_krw\",\n        \"value\": 1000000\n      }\n    ]\n  }\n}",
+        "pair": ""
+      }
+    }
+  },
+  {
+    "id": "and-both-base",
+    "title": "04 · 모두와 하나라도는 다르다",
+    "note": "같은 신청자 사실에 규정의 연결만 바꾼 대조입니다. 금액 검증기는 이 정책 연결 오류를 고치지 못합니다.",
+    "claim": "나는 24개월 거주했고 가구 중위소득 비율은 121%이다. 이 요건을 충족한다.",
+    "scope": "본인 거주기간과 가구 중위소득 비율의 연결만.",
+    "label": "반박",
+    "source": "작성한 통제 규정·가상 주장",
+    "states": {
+      "qwen": {
+        "source": "검증 가능한 단일 금액 근거 없음",
+        "before": "본인 거주 개월: 24 / 가구 중위소득 비율: 121%",
+        "after": "본인 거주 개월: 24 / 가구 중위소득 비율: 121%",
+        "changes": "금액 검사 범위 밖 · 정확 판독으로 세지 않음",
+        "raw": "반박",
+        "corrected": "반박",
+        "reject": "반박",
+        "facts": "일치 → 일치",
+        "joint": "일치 → 일치",
+        "raw_json": "{\n  \"policy\": {\n    \"status\": \"ready\",\n    \"clauses\": [\n      [\n        {\n          \"field\": \"residence_months\",\n          \"op\": \"ge\",\n          \"value\": 24,\n          \"evidence\": [\n            \"E\"\n          ]\n        },\n        {\n          \"field\": \"income_pct\",\n          \"op\": \"le\",\n          \"value\": 120,\n          \"evidence\": [\n            \"E\"\n          ]\n        }\n      ]\n    ],\n    \"derived\": []\n  },\n  \"profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"residence_months\",\n        \"value\": 24\n      },\n      {\n        \"field\": \"income_pct\",\n        \"value\": 121\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [],\n    \"issues\": [],\n    \"patches\": {},\n    \"checked\": [],\n    \"status\": \"not_covered\"\n  },\n  \"corrected_profile\": {\n    \"status\": \"ready\",\n    \"assertion\": true,\n    \"values\": [\n      {\n        \"field\": \"residence_months\",\n        \"value\": 24\n      },\n      {\n        \"field\": \"income_pct\",\n        \"value\": 121\n      }\n    ]\n  }\n}",
+        "pair": "같은 사실: 거주 24개월 · 소득 121%. 모두(AND): 반박 / 하나라도(OR): 반박 — 잠정 참조는 각각 반박 / 지지."
+      },
+      "kanana-public": {
+        "source": "검증 가능한 단일 금액 근거 없음",
+        "before": "본인 거주 개월: 24 / 가구 중위소득 비율: 121%",
+        "after": "본인 거주 개월: 24 / 가구 중위소득 비율: 121%",
+        "changes": "금액 검사 범위 밖 · 정확 판독으로 세지 않음",
+        "raw": "지지",
+        "corrected": "지지",
+        "reject": "지지",
+        "facts": "일치 → 일치",
+        "joint": "불일치 → 불일치",
+        "raw_json": "{\n  \"policy\": {\n    \"clauses\": [\n      [\n        {\n          \"evidence\": [\n            \"E\"\n          ],\n          \"field\": \"residence_months\",\n          \"op\": \"ge\",\n          \"value\": 24\n        }\n      ],\n      [\n        {\n          \"evidence\": [\n            \"E\"\n          ],\n          \"field\": \"income_pct\",\n          \"op\": \"le\",\n          \"value\": 120\n        }\n      ]\n    ],\n    \"derived\": [],\n    \"status\": \"ready\"\n  },\n  \"profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"residence_months\",\n        \"value\": 24\n      },\n      {\n        \"field\": \"income_pct\",\n        \"value\": 121\n      }\n    ]\n  },\n  \"grounding\": {\n    \"evidence\": [],\n    \"issues\": [],\n    \"patches\": {},\n    \"checked\": [],\n    \"status\": \"not_covered\"\n  },\n  \"corrected_profile\": {\n    \"assertion\": true,\n    \"status\": \"ready\",\n    \"values\": [\n      {\n        \"field\": \"residence_months\",\n        \"value\": 24\n      },\n      {\n        \"field\": \"income_pct\",\n        \"value\": 121\n      }\n    ]\n  }\n}",
+        "pair": "같은 사실: 거주 24개월 · 소득 121%. 모두(AND): 지지 / 하나라도(OR): 지지 — 잠정 참조는 각각 반박 / 지지."
+      }
+    }
+  }
+]
