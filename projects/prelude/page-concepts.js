@@ -14,6 +14,12 @@
     ['up10', '상방 기회', '높을수록 유리', 1],
     ['eod_return_net', '24h 말 net', '높을수록 유리', 1],
   ];
+  // Labels group existing server checks; this is not another decision engine.
+  const CHECK_GROUPS = [
+    ['자료가 충분한가', [['review_sample', '비교 날짜 수'], ['changed_dates', '선택이 달라진 날짜'], ['observed_date_coverage', '대상 날짜 기록 비율'], ['context_coverage', '시장 국면별 표본']]],
+    ['득실이 함께 나아졌나', [['joint_down_up_safe_net', '하방·상방·safe-up·net'], ['positive_challenger_net', '후보 net 양수'], ['beats_matched_net', '매칭 무작위 대비 net'], ['chronological_consistency', '앞·뒤 구간 일관성']]],
+    ['실사용 조건에도 견디나', [['leave_one_date_out_net', '하루 제외 시 net'], ['context_consistency', '시장 국면별 일관성'], ['execution_coverage', '지연 진입 검증 표본'], ['delayed_and_extra_cost', '진입 지연·추가 비용']]],
+  ];
   const LIVE_STATES = ['waiting', 'pending', 'delivered_candidates', 'delivered_empty',
     'not_delivered', 'delivery_uncertain', 'invalid_evidence', 'missing_decision', 'probe_unavailable'];
   const own = (object, key) => typeof key === 'string' && Object.hasOwn(object, key);
@@ -141,7 +147,17 @@
       ],
     };
   }
-  if (typeof module !== 'undefined' && module.exports) module.exports = {derive, forwardModel, snapshotModel, attentionModel, recommendationModel};
+  function checksModel(value) {
+    if (!forwardModel(value)) return null;
+    const checks = value.checks;
+    const keys = CHECK_GROUPS.flatMap(([, rows]) => rows.map(([key]) => key));
+    if (!checks || Array.isArray(checks) || typeof checks !== 'object'
+        || Object.keys(checks).some(key => !keys.includes(key) || typeof checks[key] !== 'boolean')) return null;
+    return CHECK_GROUPS.map(([title, rows]) => ({title, rows:rows.map(([key, label]) => ({key, label,
+      state:!own(checks, key) ? 'unknown' : checks[key] ? 'met' : 'unmet',
+    }))}));
+  }
+  if (typeof module !== 'undefined' && module.exports) module.exports = {derive, forwardModel, snapshotModel, attentionModel, recommendationModel, checksModel};
   if (!global.document) return;
   const document = global.document;
   function node(tag, className, text) {
@@ -201,6 +217,7 @@
     latestSummary = summary;
     renderContext(summary);
     renderRecommendations(summary);
+    renderChecks(summary?.book_forward);
     root.replaceChildren(...model.tiles.map(item => {
       const tile = node('article', 'monitor-tile');
       tile.dataset.tone = item.tone;
@@ -256,8 +273,42 @@
       value.append(node('small', '', metric.tone === 'good' ? '유리한 방향' : metric.tone === 'warning' ? '불리한 방향' : '변화 없음'));
       row.append(label, axis, value); figure.append(row);
     });
-    figure.append(node('figcaption', 'concept-note', '후보 − R1의 차이입니다. 청록은 유리한 방향, 황토색은 불리한 방향입니다. 평균 차이만으로 우위를 확정하지 않으며 아래 판정 조건을 함께 봅니다. 가상 픽 결과이지 실계좌 수익은 아닙니다.'));
+    const axisRow = node('div', 'difference-scale');
+    const ticks = node('div', 'plot-ticks');
+    ticks.append(node('span', '', `−${max.toFixed(3)}`), node('span', '', '0'), node('span', '', `+${max.toFixed(3)}`));
+    axisRow.append(ticks); figure.append(axisRow);
+    figure.append(node('p', 'chart-reading-note', '가운데0선은 R1과 차이 없음입니다. 하방은 왼쪽, 상방·net은 오른쪽이 유리합니다.'));
+    figure.append(node('figcaption', 'concept-note', '후보 − R1의 차이입니다. 청록은 유리한 방향, 황토색은 불리한 방향입니다. 이 사전 기록 자료에는 신뢰구간이 제공되지 않아 평균만 표시합니다. 평균 차이만으로 우위를 확정하지 않으며 아래 판정 조건을 함께 봅니다. 가상 픽 결과이지 실계좌 수익은 아닙니다.'));
     chart.append(figure);
+  }
+
+  function renderChecks(value) {
+    const root = document.getElementById('forwardChecks');
+    if (!root) return;
+    root.replaceChildren();
+    const groups = checksModel(value);
+    if (!groups) return;
+    const panel = node('section', 'checks-panel');
+    const title = node('h3', '', '무엇이 확인됐고, 무엇이 남았나'); title.id = 'forwardChecksTitle';
+    panel.setAttribute('aria-labelledby', title.id);
+    panel.append(title, node('p', 'concept-note', '서버가 기록한 판정 조건을 세 질문으로 묶었습니다. 충족 개수를 성공률로 환산하지 않으며 실제 추천을 자동 변경하지 않습니다.'));
+    const grid = node('div', 'checks-grid');
+    const labels = {met:['✓', '충족'], unmet:['×', '미충족'], unknown:['—', '미평가·미제공']};
+    groups.forEach((group, index) => {
+      const column = node('div', 'check-group');
+      column.append(node('span', 'evidence-index', `0${index + 1}`), node('h4', '', group.title));
+      const list = node('ul', '');
+      group.rows.forEach(row => {
+        const item = node('li', 'check-cell'); item.dataset.state = row.state;
+        const mark = node('span', 'check-symbol', labels[row.state][0]); mark.setAttribute('aria-hidden', 'true');
+        const label = node('span', 'check-label', row.label);
+        label.append(node('small', '', labels[row.state][1]));
+        item.append(mark, label); list.append(item);
+      });
+      column.append(list); grid.append(column);
+    });
+    panel.append(grid, node('p', 'concept-note', '미충족에는 표본 부족도 포함됩니다. 미평가·미제공은 실패나 통과로 채우지 않습니다. 원 판정과 조건 상세는 아래 기록에서 확인하세요.'));
+    root.append(panel);
   }
 
   function revealHash(hash) {

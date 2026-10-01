@@ -1159,24 +1159,49 @@
     <div class="tradeoff-grid">
       <div class="tradeoff-item">
         <h4>−5% 하락 경험 · 낮을수록 유리</h4>
-        <div class="tradeoff-bar"><span>R1</span><span class="tradeoff-track" aria-hidden="true"><i style="width:80.943%" data-value="28.33" data-scale="35"></i></span><b>28.33%</b></div>
-        <div class="tradeoff-bar"><span>L1</span><span class="tradeoff-track" aria-hidden="true"><i class="candidate" style="width:61.914%" data-value="21.67" data-scale="35"></i></span><b>21.67%</b></div>
+        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>28.33%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>21.67%</b></span></div>
+        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:61.914%;width:19.029%"></i><i class="pair-dot control" style="left:80.943%" data-value="28.33" data-scale="35"></i><i class="pair-dot candidate" style="left:61.914%" data-value="21.67" data-scale="35"></i></div>
+        <div class="plot-ticks"><span>0</span><span>17.5</span><span>35%</span></div>
         <p class="tradeoff-outcome favorable">유리한 변화 · 하락 경험 감소</p>
       </div>
       <div class="tradeoff-item">
         <h4>+10% 상승 경험 · 높을수록 유리</h4>
-        <div class="tradeoff-bar"><span>R1</span><span class="tradeoff-track" aria-hidden="true"><i style="width:66.657%" data-value="23.33" data-scale="35"></i></span><b>23.33%</b></div>
-        <div class="tradeoff-bar"><span>L1</span><span class="tradeoff-track" aria-hidden="true"><i class="candidate" style="width:61.914%" data-value="21.67" data-scale="35"></i></span><b>21.67%</b></div>
+        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>23.33%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>21.67%</b></span></div>
+        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:61.914%;width:4.743%"></i><i class="pair-dot control" style="left:66.657%" data-value="23.33" data-scale="35"></i><i class="pair-dot candidate" style="left:61.914%" data-value="21.67" data-scale="35"></i></div>
+        <div class="plot-ticks"><span>0</span><span>17.5</span><span>35%</span></div>
         <p class="tradeoff-outcome">불리한 변화 · 상승 기회 감소</p>
       </div>
       <div class="tradeoff-item">
         <h4>24h 말 평균 net · 비용 차감 후</h4>
-        <div class="tradeoff-bar"><span>R1</span><span class="tradeoff-track" aria-hidden="true"><i style="width:63.440%" data-value="1.586" data-scale="2.5"></i></span><b>+1.586%</b></div>
-        <div class="tradeoff-bar"><span>L1</span><span class="tradeoff-track" aria-hidden="true"><i class="candidate" style="width:78.360%" data-value="1.959" data-scale="2.5"></i></span><b>+1.959%</b></div>
+        <div class="pair-values"><span><i class="dot-key control" aria-hidden="true"></i>R1 <b>+1.586%</b></span><span><i class="dot-key candidate" aria-hidden="true"></i>L1 <b>+1.959%</b></span></div>
+        <div class="pair-plot" aria-hidden="true"><i class="pair-link" style="left:63.440%;width:14.920%"></i><i class="pair-dot control" style="left:63.440%" data-value="1.586" data-scale="2.5"></i><i class="pair-dot candidate" style="left:78.360%" data-value="1.959" data-scale="2.5"></i></div>
+        <div class="plot-ticks"><span>0</span><span>1.25</span><span>2.5%</span></div>
         <p class="tradeoff-outcome">평균은 증가 · 뒤10일은 R1보다 저조</p>
       </div>
     </div>
-    <figcaption class="concept-note">경험 비율 축은0~35%, net 축은0~2.5%로 서로 다릅니다. 막대는 각 지표 안에서만 비교하세요. 이미 본 자료의 가상 결과이며 미래 검증·실계좌 수익이 아닙니다. net 차이의 신뢰구간은[−1.916,+2.315]%p로0을 포함합니다. <strong>결론: 단서는 남기고, 실제 추천은 유지.</strong></figcaption>
+    <p class="concept-note">빈 원은 기존 R1, 채운 마름모는 새 선택 L1입니다. 경험 비율 축은0~35%, net 축은0~2.5%로 서로 다릅니다. 점의 위치는 각 지표 안에서만 비교하세요.</p>
+    <div class="uncertainty-story" id="selectionUncertainty" aria-labelledby="uncertaintyTitle">
+      <div class="chart-editorial-head"><span class="concept-kicker">WHY NOT ADOPT?</span><h4 id="uncertaintyTitle">좋아 보인 평균, 아직 넓은 불확실성</h4><p class="concept-note">아래는 L1 − R1의24h 말 net 차이입니다. 오른쪽은 L1 우세, 왼쪽은 R1 우세. 세 줄 모두 같은 축입니다.</p></div>
+      <div class="interval-row">
+        <div class="interval-label">전체20일<small>점: 평균 · 선: 95% 신뢰구간</small></div>
+        <div class="interval-plot" aria-hidden="true"><i class="interval-whisker" style="left:11.68%;width:84.62%" data-low="-1.916" data-high="2.315"></i><i class="interval-dot" style="left:57.44%" data-estimate="0.372"></i></div>
+        <div class="interval-value">+0.372%p<small>[−1.916, +2.315]</small></div>
+      </div>
+      <div class="interval-row">
+        <div class="interval-label">앞10일<small>같은 개발 구간을 나눠 보면</small></div>
+        <div class="interval-plot" aria-hidden="true"><i class="interval-dot" style="left:68.84%" data-estimate="0.942"></i></div>
+        <div class="interval-value">+0.942%p<small>L1 평균이 더 높음</small></div>
+      </div>
+      <div class="interval-row">
+        <div class="interval-label">뒤10일<small>평균 차이의 방향이 바뀜</small></div>
+        <div class="interval-plot" aria-hidden="true"><i class="interval-dot hollow" style="left:46.06%" data-estimate="-0.197"></i></div>
+        <div class="interval-value">−0.197%p<small>R1 평균이 더 높음</small></div>
+      </div>
+      <div class="interval-axis"><div class="plot-ticks"><span>−2.5%p</span><span>0 · 차이 없음</span><span>+2.5%p</span></div></div>
+      <p class="chart-reading-note">전체 신뢰구간은0을 가로지르고, 뒤10일에는 방향도 바뀌었습니다. <strong>평균의 개선만으로는 채택하지 않은 이유</strong>입니다.</p>
+      <p class="concept-note">앞·뒤10일은 평균만 표시합니다. 선이 없다고 불확실성이 없는 것은 아닙니다. 차이+0.372%p는 원 보고값으로, 반올림된 두 평균을 다시 빼서 계산하지 않았습니다.</p>
+    </div>
+    <figcaption class="concept-note">이미 본 자료의 가상 결과이며 미래 검증·실계좌 수익이 아닙니다. net 차이의 신뢰구간은[−1.916,+2.315]%p로0을 포함합니다. <strong>결론: 단서는 남기고, 실제 추천은 유지.</strong><br>시각화 구성 참고: <a href="https://github.com/Financial-Times/chart-doctor/tree/main/visual-vocabulary">FT Visual Vocabulary</a> · <a href="https://www.datawrapper.de/academy/how-to-create-a-dot-plot">Datawrapper의 점 비교</a> · <a href="https://www.datawrapper.de/academy/complex-charts">불확실성 표시</a>. 데이터 출처는 위 개발 기록입니다.</figcaption>
   </figure>
   <div class="callout" id="book-validation-evidence" style="scroll-margin-top:80px;">
     <p><strong>⑨ 같은 자료를 더 맞추는 대신, 규칙을 고정하고 새 날짜에서 확인한다</strong></p>

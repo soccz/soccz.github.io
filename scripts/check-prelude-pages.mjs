@@ -5,7 +5,7 @@ import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 const root = new URL('../', import.meta.url);
 const read = name => readFileSync(new URL(name, root), 'utf8');
-const {derive, forwardModel, snapshotModel, attentionModel, recommendationModel} = createRequire(import.meta.url)(fileURLToPath(new URL('projects/prelude/page-concepts.js', root)));
+const {derive, forwardModel, snapshotModel, attentionModel, recommendationModel, checksModel} = createRequire(import.meta.url)(fileURLToPath(new URL('projects/prelude/page-concepts.js', root)));
 const waiting = {schema:'prelude_dashboard_book_forward.v1', status:'observed',
   automatic_promotion:false, scope:'pre_entry_paper_not_actual_trades', attention_required:false,
   today_record:'not_due', verdict:'waiting', paired_dates:0, expected_dates:0, changed_dates:0,
@@ -101,10 +101,46 @@ test('page roles, links, loading order and preserved locking', () => {
 });
 test('historical graphic uses its stated scale and data', () => {
   const html = read('projects/prelude/index.html');
-  const bars = [...html.matchAll(/width:([\d.]+)%" data-value="([\d.]+)" data-scale="([\d.]+)"/g)];
-  assert.equal(bars.length, 6);
-  assert.deepEqual(bars.map(m => +m[2]), [28.33, 21.67, 23.33, 21.67, 1.586, 1.959]);
-  for (const [, width, value, scale] of bars) assert.ok(Math.abs(+width - value / scale * 100) < .001);
+  const dots = [...html.matchAll(/left:([\d.]+)%" data-value="([\d.]+)" data-scale="([\d.]+)"/g)];
+  assert.equal(dots.length, 6);
+  assert.deepEqual(dots.map(m => +m[2]), [28.33, 21.67, 23.33, 21.67, 1.586, 1.959]);
+  for (const [, left, value, scale] of dots) assert.ok(Math.abs(+left - value / scale * 100) < .001);
+  const links = [...html.matchAll(/class="pair-link" style="left:([\d.]+)%;width:([\d.]+)%"/g)];
+  assert.equal(links.length, 3);
+  links.forEach(([,left,width], index) => {
+    const pair = dots.slice(index * 2, index * 2 + 2).map(d => +d[1]);
+    assert.ok(Math.abs(+left - Math.min(...pair)) < .001);
+    assert.ok(Math.abs(+width - Math.abs(pair[0] - pair[1])) < .001);
+  });
+});
+test('historical uncertainty has a shared zero axis and original values', () => {
+  const html = read('projects/prelude/index.html');
+  const estimates = [...html.matchAll(/left:([\d.]+)%" data-estimate="(-?[\d.]+)"/g)];
+  assert.deepEqual(estimates.map(m => +m[2]), [.372, .942, -.197]);
+  for (const [,left,value] of estimates) assert.ok(Math.abs(+left - (+value + 2.5) / 5 * 100) < .001);
+  const [,left,width,low,high] = html.match(/left:([\d.]+)%;width:([\d.]+)%" data-low="(-?[\d.]+)" data-high="([\d.]+)"/);
+  assert.equal(+low, -1.916); assert.equal(+high, 2.315);
+  assert.ok(Math.abs(+left - (+low + 2.5) / 5 * 100) < .001);
+  assert.ok(Math.abs(+width - (+high - +low) / 5 * 100) < .001);
+  assert.ok(+left < 50 && +left + +width > 50);
+  assert.match(html, /앞·뒤10일은 평균만 표시/);
+});
+test('gate matrix preserves true, false and absent without scoring', () => {
+  const source = {...waiting, checks:{review_sample:false, changed_dates:true}};
+  const before = JSON.stringify(source);
+  const groups = checksModel(source), rows = groups.flatMap(g => g.rows);
+  assert.equal(groups.length, 3); assert.equal(rows.length, 12);
+  assert.equal(new Set(rows.map(r => r.key)).size, 12);
+  assert.equal(rows.find(r => r.key === 'review_sample').state, 'unmet');
+  assert.equal(rows.find(r => r.key === 'changed_dates').state, 'met');
+  assert.equal(rows.filter(r => r.state === 'unknown').length, 10);
+  assert.equal(JSON.stringify(source), before);
+  assert.equal(checksModel({...waiting, checks:{}}).flatMap(g => g.rows).filter(r => r.state === 'unknown').length, 12);
+  for (const checks of [undefined,null,[],true, {review_sample:null}, {review_sample:'false'}, {extra:true}, JSON.parse('{"__proto__":true}')])
+    assert.equal(checksModel({...waiting, checks}), null);
+  const inherited = Object.create({review_sample:true});
+  assert.equal(checksModel({...waiting, checks:inherited})[0].rows[0].state, 'unknown');
+  assert.equal(checksModel({...source, automatic_promotion:true}), null);
 });
 const clockNow = Date.parse('2026-10-01T14:00:00+09:00');
 const snapshot = {schema:'prelude_dashboard_current.v1', asof:'2026-10-01', observed_at:'2026-10-01T13:00:00+09:00'};
