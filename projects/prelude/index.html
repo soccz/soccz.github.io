@@ -369,6 +369,7 @@
 </section>
 <div class="section-jumps" role="navigation" aria-label="개발일지 목차">
   <div class="jump-inner"><a href="#journalGuide">읽는 순서</a><a href="#journey">출발과 전환</a><a href="#selection-evidence">비교와 실패</a><a href="#book-forward-evidence">다음 검증</a><a href="#architecture">시스템 구조</a><a href="#failures">실패 기록</a><a href="#lessons">배운 점</a></div>
+  <div class="reading-position" id="readingPosition" role="progressbar" aria-label="문서 스크롤 위치 · 내용 이해도나 검증 진척도가 아님" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span></span></div>
 </div>
 <section class="journal-reading" id="journalGuide" aria-labelledby="journalGuideTitle">
   <div class="journal-reading-heading"><h2 id="journalGuideTitle">무엇을 만들었는지보다,<br>왜 바꾸었는지를 읽는 페이지.</h2><p class="concept-note">가설 → 관찰 → 판단 → 다음 질문<br>성과가 없던 시도도 지우지 않습니다.</p></div>
@@ -378,6 +379,16 @@
     <a class="chapter-card" href="#selection-evidence"><span>CHAPTER 03</span><h3>실험과 반증</h3><p>체결 정보·시즌·점수·호가 가설이 실제 비교에서 남긴 득실.</p></a>
     <a class="chapter-card" href="#book-forward-evidence"><span>CHAPTER 04</span><h3>지금의 검증</h3><p>첫 기록 누락을 고치고, 새 날짜의 결과를 기다리는 현재 설계.</p></a>
   </div>
+</section>
+
+<section class="evidence-digest" id="evidenceDigest" aria-labelledby="digestTitle">
+  <div class="digest-heading"><div><p class="concept-kicker">THE SHORT VERSION · 2026-10-01 기록</p><h2 id="digestTitle">여기까지 확인한 것, 아직 모르는 것</h2></div><button type="button" id="readerToggle" class="reader-toggle" aria-controls="earlyNumbers earlyExperiments technicalAppendix" hidden>상세 자료 모두 펼치기</button></div>
+  <div class="digest-grid">
+    <article><span class="digest-state">구현·연결 확인</span><h3>결과를 남기고 검증하는 경로</h3><p>발송 영수증, 가상 평가, 사전 기록과 판정표를 연결했다. 첫 운영 누락은 따로 보존하고 대기시간을 보완했다.</p><a href="#book-forward-evidence">첫 실행에서 배운 점 →</a></article>
+    <article><span class="digest-state caution">성능은 아직 미입증</span><h3>하방 감소만으로는 부족했다</h3><p>같은20일의 새 선택은 하락 경험을 줄였지만 상승 기회도 줄였다. 비용 차감 평균의 개선도 구간을 바꾸면 흔들렸다.</p><a href="#selectionTradeoff">득실을 함께 보는 비교 →</a></article>
+    <article><span class="digest-state neutral">다음에 증명할 것</span><h3>새 날짜에서도 더 나은 추천인가</h3><p>수정된10-02 시작 구간에서 결과 전 선택을 기록한다. 실제 추천은 R1을 유지하며 새 후보를 자동 채택하지 않는다.</p><a href="/projects/prelude/dashboard/#bookForwardSection">게시된 검증 상태 보기 · PIN →</a></article>
+  </div>
+  <p class="concept-note">아래는 당시 판단의 근거를 보존한 개발 기록입니다. 접힌 자료는 삭제된 것이 아니며, 기존 바로가기로도 열 수 있습니다.</p>
 </section>
 
 <!-- Honest-conclusion banner -->
@@ -390,6 +401,8 @@
 <hr class="divider">
 
 <!-- Executive Summary -->
+<details class="archive-panel reader-detail" id="earlyNumbers" data-reader-detail>
+  <summary>초기의 낙관적 수치와 운영 규모 <small>2026-05~08 역사 요약 · 현재 추천의 성능 인증이 아닙니다</small></summary>
 <section id="summary" class="compact"><div class="container fade-in">
   <div class="section-label">Historical Summary · 2026-05 → 08</div>
   <h2 class="section-title">초기 결과 — 숫자가 좋았지만, 답은 아니었다</h2>
@@ -409,6 +422,7 @@
 </div></section>
 <hr class="divider">
 
+</details>
 <div class="part-divider fade-in">
   <div class="pd-label">Part I · 이야기</div>
   <div class="pd-title">무엇을 부수고, 무엇이 남았나 — 2026-04 → 09-30</div>
@@ -579,6 +593,8 @@
 <hr class="divider">
 
 <!-- v-next redefinition -->
+<details class="archive-panel reader-detail" id="earlyExperiments" data-reader-detail>
+  <summary>초기 모델 재정의와12개 실험의 상세 <small>당시 가설·수치·결론 보존 · 이어지는 본문에서는 측정 신뢰도를 다룹니다</small></summary>
 <section id="vnext"><div class="container fade-in">
   <div class="section-label">v-next · 2026-05-31</div>
   <h2 class="section-title">v-next 재정의 — "맞히는 모델"에서 "좁혀주는 레이더"로</h2>
@@ -702,6 +718,8 @@
   </p>
 </div></section>
 <hr class="divider">
+
+</details>
 
 <!-- ═══════════ 검증 사슬 · 2026-06-04 → 06-11 ═══════════ -->
 <section id="validation-chain"><div class="container fade-in">
@@ -1186,6 +1204,8 @@
   <div class="pd-bridge">현재 운영 설명과 표시된 과거 설계·메시지 예시를 구분한다. R1은 수동매매 판단을 돕고, 새 체결정보 시험은 별도 기록만 한다. 위생 검증이나 설치 완료가 추천 우위까지 뜻하지는 않는다.</div>
 </div>
 
+<details class="archive-panel reader-detail" id="technicalAppendix" data-reader-detail>
+  <summary>설계·자동 운영·과거 모델의 기술 상세 <small>구조와 기존 연구를 깊게 볼 때 펼치기 · 이후 본문은 실패에서 배운 점으로 이어집니다</small></summary>
 <!-- Thesis -->
 <section id="thesis"><div class="container fade-in">
   <div class="section-label">Thesis</div>
@@ -1841,6 +1861,8 @@
   </div>
 </div></section>
 <hr class="divider">
+
+</details>
 
 <!-- Failures Wall -->
 <section id="failures"><div class="container fade-in">

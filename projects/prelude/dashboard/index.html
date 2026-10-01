@@ -605,6 +605,8 @@
       <article class="monitor-tile"><span class="tile-label">새 후보 · 검토 결론</span><strong>데이터 잠금</strong><p>정상 실행과 성능 개선은 별개입니다.</p></article>
     </div>
     <p id="monitorSnapshot" class="monitor-snapshot">PIN 입력 후 게시 기준 시각을 표시합니다. 잠긴 상태는 정상·실패·0건 중 어느 것도 뜻하지 않습니다.</p>
+    <div id="snapshotContext" class="snapshot-context" hidden></div>
+    <div id="monitorAttention" class="monitor-attention" hidden></div>
     <div class="monitor-intro-strip"><span>실알림: R1 장전·장후</span><span>새 후보: 기록 전용 검증</span><span>매매: 사용자 직접 판단</span></div>
   </div>
 </section>
@@ -642,6 +644,10 @@
       <b>가상 평가이며 실거래 수익이 아닙니다</b>. 과거·현행 측정 기준이 섞일 수 있으므로
       최신 운영 상태와 사전 기록 적격성은 위 상태 패널을 구분해 읽어 주세요.
     </p>
+    <p id="recommendCardsAsOf" class="recommend-asof">추천 기준일 잠금 — 운영 확인 시각과 별도로 표시합니다.</p>
+    <div id="recommendCards" class="recommend-cards"><p class="concept-note">데이터 잠금 — PIN 입력 후 게시된 장후 추천을 표시합니다.</p></div>
+    <p id="recommendCardsNote" class="concept-note"></p>
+    <details class="recommend-detail"><summary>원본 추천표와 전체 장후 원장 집계 보기 <small>누적 집계와 최신 종목은 평가 기간이 다릅니다.</small></summary>
     <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
     <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 장후 R1 추천</h3>
     <div class="table-wrap">
@@ -650,6 +656,7 @@
         <tbody><tr><td colspan="7"><div class="loading-state">loading…</div></td></tr></tbody>
       </table>
     </div>
+    </details>
   </div>
 </section>
 

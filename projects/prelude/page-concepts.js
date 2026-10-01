@@ -19,6 +19,11 @@
   const own = (object, key) => typeof key === 'string' && Object.hasOwn(object, key);
   const count = value => Number.isSafeInteger(value) && value >= 0;
   const finite = value => typeof value === 'number' && Number.isFinite(value);
+  const day = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
+    && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+  const timestamp = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)
+    && /(Z|[+-]\d{2}:\d{2})$/.test(value) && day(value.slice(0, 10)) ? Date.parse(value) : NaN;
+  const kstDay = value => new Date(value + 9 * 3600000).toISOString().slice(0, 10);
   const stamp = value => {
     if (typeof value !== 'string' || !/(Z|[+-]\d{2}:\d{2})$/.test(value)) return '미제공';
     const date = new Date(value);
@@ -26,6 +31,65 @@
       timeZone: 'Asia/Seoul', dateStyle: 'short', timeStyle: 'short',
     }) : '미제공';
   };
+
+  function snapshotModel(system, now = Date.now()) {
+    const time = timestamp(system?.observed_at);
+    const unknown = {key:'unknown', tone:'warning', title:'게시 시각 확인 불가', detail:'자료의 기준일과 확인 시각을 검증할 수 없습니다. 이를 현재 상태로 해석하지 마세요.'};
+    if (system?.schema !== 'prelude_dashboard_current.v1' || !day(system.asof)
+        || !finite(time) || !finite(now) || Math.abs(now) > 8e15 || system.asof !== kstDay(time)) return unknown;
+    if (time > now) return {key:'clock', tone:'warning', title:'게시 시각과 기기 시각 확인 필요', detail:'게시된 확인 시각이 기기 시각보다 앞섭니다. 날짜와 시계를 확인하세요. 실시간 상태를 판정하지 않습니다.'};
+    const minutes = Math.floor((now - time) / 60000);
+    const age = minutes < 1 ? '1분 미만' : minutes < 60 ? `${minutes}분` : minutes < 1440 ? `${Math.floor(minutes / 60)}시간 ${minutes % 60}분` : `${Math.floor(minutes / 1440)}일 ${Math.floor(minutes % 1440 / 60)}시간`;
+    const old = system.asof !== kstDay(now);
+    return {key:old ? 'old' : 'same_day', tone:old ? 'warning' : 'neutral',
+      title:old ? `${system.asof} 과거 게시본 · 오늘 상태가 아닙니다` : `${system.asof} 확인본 · 실시간 조회 아님`,
+      detail:`마지막 운영 확인 ${age} 전 · 기기 시각 기준 KST 날짜 비교입니다. 서버를 다시 조회한 결과가 아니며 새로고침해도 새 게시본이 없으면 바뀌지 않습니다.`};
+  }
+
+  function attentionModel(summary, now = Date.now()) {
+    const items = [];
+    const context = snapshotModel(summary?.current_system, now);
+    if (context.key !== 'same_day') items.push({text:context.title, href:'#currentSystemSection'});
+    const labels = {preopen:'장전 R1', open:'장후 R1'};
+    const stateLabels = {waiting:'아직 실행 시각 전', pending:'처리 중', delivered_candidates:'후보 전달 확인',
+      delivered_empty:'후보 없음 전달 확인', not_delivered:'전달 안 됨', delivery_uncertain:'전달 확인 불확실',
+      invalid_evidence:'증거 불일치', missing_decision:'추천 결정 기록 없음', probe_unavailable:'점검 자료 미제공'};
+    for (const slot of ['preopen', 'open']) {
+      const row = summary?.current_system?.live?.[slot];
+      if (!row || !own(stateLabels, row.state) || typeof row.attention_required !== 'boolean')
+        items.push({text:`${labels[slot]}: 상태 확인 불가`, href:'#currentSystemSection'});
+      else if (row.attention_required) items.push({text:`${labels[slot]}: ${stateLabels[row.state]}`, href:'#currentSystemSection'});
+    }
+    const research = summary?.current_system?.research;
+    for (const [key, label] of [['microstructure','체결 정보 수집'], ['trade_shortlist','체결 재선별']])
+      if (research?.[key]?.attention_required === true) items.push({text:`${label}: 게시본에 점검 필요 표시`, href:'#currentSystemSection'});
+    const forward = forwardModel(summary?.book_forward);
+    if (!forward) items.push({text:'L1 사전 기록 검증: 자료 확인 불가', href:'#bookForwardSection'});
+    else if (summary.book_forward.attention_required || !['ready','not_due'].includes(forward.recordKey))
+      items.push({text:`L1 사전 기록: ${forward.record} · 점검 필요`, href:'#bookForwardSection'});
+    if (summary?.book_validation?.status === 'incomplete') items.push({text:'새 날짜 사후 재생: 불완전 자료 확인', href:'#bookValidationSection'});
+    if (summary?.research_progress?.status === 'incomplete') items.push({text:'다른 시험: 불완전 자료 확인', href:'#researchProgressSection'});
+    return {context, items};
+  }
+
+  function recommendationModel(summary) {
+    const rec = summary?.channels?.recommend;
+    const unknown = {state:'unknown', date:null, dateMismatch:false, rows:[]};
+    if (!rec || !day(rec.latest_radar_date) || !Array.isArray(rec.latest_radar)) return unknown;
+    const rows = rec.latest_radar;
+    if (rows.some(row => !row || typeof row.coin !== 'string' || !/^(?:KRW-)?[A-Z0-9]{1,24}$/.test(row.coin)
+        || !Number.isSafeInteger(row.rank) || row.rank < 1)
+        || new Set(rows.map(row => row.coin.replace(/^KRW-/, ''))).size !== rows.length
+        || new Set(rows.map(row => row.rank)).size !== rows.length) return unknown;
+    return {state:rows.length ? 'observed' : 'empty', date:rec.latest_radar_date,
+      dateMismatch:day(summary?.current_system?.asof) && summary.current_system.asof !== rec.latest_radar_date,
+      rows:rows.map(row => ({
+      coin:row.coin, rank:row.rank, score:finite(row.score) ? row.score.toFixed(3) : '미제공',
+      risk:row.dump_risk_flag === true ? 'flagged' : row.dump_risk_flag === false ? 'not_flagged' : 'unknown',
+      price:finite(row.entry_open) && row.entry_open > 0 ? row.entry_open.toLocaleString('ko-KR', {maximumFractionDigits:8}) : '미제공',
+      regime:typeof row.btc_regime === 'string' && row.btc_regime.length <= 80 ? row.btc_regime : '미제공',
+    }))};
+  }
 
   function forwardModel(value) {
     if (!value || value.schema !== 'prelude_dashboard_book_forward.v1'
@@ -77,7 +141,7 @@
       ],
     };
   }
-  if (typeof module !== 'undefined' && module.exports) module.exports = {derive, forwardModel};
+  if (typeof module !== 'undefined' && module.exports) module.exports = {derive, forwardModel, snapshotModel, attentionModel, recommendationModel};
   if (!global.document) return;
   const document = global.document;
   function node(tag, className, text) {
@@ -86,10 +150,57 @@
     if (text !== undefined) element.textContent = text;
     return element;
   }
+  let latestSummary;
+  function renderContext(summary) {
+    const contextRoot = document.getElementById('snapshotContext');
+    const attentionRoot = document.getElementById('monitorAttention');
+    if (!contextRoot || !attentionRoot) return;
+    const {context, items} = attentionModel(summary);
+    contextRoot.hidden = false; contextRoot.dataset.tone = context.tone;
+    contextRoot.replaceChildren(node('strong', '', context.title), node('p', '', context.detail));
+    const signature = JSON.stringify(items);
+    if (attentionRoot.dataset.signature === signature) return;
+    attentionRoot.hidden = false; attentionRoot.dataset.signature = signature;
+    attentionRoot.replaceChildren(node('h2', '', items.length ? '먼저 확인할 항목' : '게시본의 주의 표시'));
+    if (!items.length) attentionRoot.append(node('p', 'attention-empty', '표시된 주의 항목은 없습니다. 실시간 정상 확인이나 추천 성능 인증은 아닙니다.'));
+    else {
+      const list = node('ul', '');
+      items.forEach(item => { const li = node('li', ''); const a = node('a', '', item.text + ' →'); a.href = item.href; li.append(a); list.append(li); });
+      attentionRoot.append(list);
+    }
+  }
+  function renderRecommendations(summary) {
+    const root = document.getElementById('recommendCards');
+    const note = document.getElementById('recommendCardsNote');
+    if (!root || !note) return;
+    const model = recommendationModel(summary);
+    const asof = document.getElementById('recommendCardsAsOf');
+    if (asof) {
+      asof.dataset.tone = model.dateMismatch || !model.date ? 'warning' : 'neutral';
+      asof.textContent = model.date ? `추천 기준 ${model.date} · 장후 R1${model.dateMismatch ? ' · 운영 확인 기준일과 다릅니다. 새 날짜의 추천으로 해석하지 마세요.' : ' · 실시간 추천 화면이 아닙니다.'}` : '추천 기준일 확인 불가';
+    }
+    root.replaceChildren();
+    if (model.state !== 'observed') {
+      root.append(node('p', 'concept-note', model.state === 'empty' ? '게시된 종목 목록이 비어 있습니다. 전달 여부와 무추천 사유는 운영 기록에서 확인하세요.' : '추천 목록 확인 불가 · 미제공을 무추천으로 해석하지 마세요.'));
+    } else model.rows.forEach(row => {
+      const card = node('article', 'recommend-card'); card.dataset.risk = row.risk;
+      const header = node('header', '');
+      header.append(node('h3', '', row.coin), node('span', 'recommend-rank', `#${row.rank}`));
+      card.append(header, node('span', 'recommend-risk', row.risk === 'flagged' ? '하방 경고 있음' : row.risk === 'not_flagged' ? '하방 경고 미표시 · 안전 인증 아님' : '하방 경고 자료 미제공'));
+      const values = node('dl', '');
+      [['원래 점수', row.score], ['09:00 참고가격', row.price === '미제공' ? row.price : row.price + '원'], ['BTC 국면', row.regime]].forEach(([key, value]) => values.append(node('dt', '', key), node('dd', '', value)));
+      card.append(values, node('p', 'score-help', '점수는 원래 추천값을 그대로 표시하며, 상승 확률이나 안전 등급으로 바꾸지 않습니다.'));
+      root.append(card);
+    });
+    note.textContent = `${model.date ? '추천 기준일 ' + model.date + ' · ' : ''}장후(open) R1 게시 기록입니다. 장전 추천은 합치지 않습니다. 09:00 가격은 현재가·실제 체결가가 아닙니다. 원본 확률 추정치와 누적 집계는 아래 상세표에 보존합니다.`;
+  }
   function render(summary) {
     const model = derive(summary);
     const root = document.getElementById('monitorOverview');
     if (!root) return;
+    latestSummary = summary;
+    renderContext(summary);
+    renderRecommendations(summary);
     root.replaceChildren(...model.tiles.map(item => {
       const tile = node('article', 'monitor-tile');
       tile.dataset.tone = item.tone;
@@ -149,9 +260,9 @@
     chart.append(figure);
   }
 
-  function revealHash() {
+  function revealHash(hash) {
     let id;
-    try { id = decodeURIComponent(global.location.hash.slice(1)); } catch (_) { return; }
+    try { id = decodeURIComponent((typeof hash === 'string' ? hash : global.location.hash).slice(1)); } catch (_) { return; }
     const target = id && document.getElementById(id);
     if (!target) return;
     let details = target.closest('details');
@@ -168,6 +279,68 @@
     });
   }));
   global.addEventListener('hashchange', revealHash);
+  document.addEventListener('click', event => {
+    const href = event.target.closest?.('a[href]')?.getAttribute('href');
+    if (href?.startsWith('#')) revealHash(href);
+  });
   revealHash();
+  // No refresh/fetch: only reconsider the age of the already-unlocked snapshot.
+  if (document.getElementById('monitorOverview')) {
+    const updateContext = () => { if (latestSummary !== undefined && !document.hidden) renderContext(latestSummary); };
+    global.setInterval(updateContext, 60000);
+    document.addEventListener('visibilitychange', updateContext);
+  }
+
+  const readerDetails = [...document.querySelectorAll('[data-reader-detail]')];
+  const readerToggle = document.getElementById('readerToggle');
+  const syncReader = () => {
+    if (!readerToggle) return;
+    const allOpen = readerDetails.every(item => item.open);
+    readerToggle.textContent = allOpen ? '핵심 흐름으로 접기' : '상세 자료 모두 펼치기';
+    readerToggle.setAttribute('aria-expanded', String(allOpen));
+  };
+  if (readerToggle) {
+    readerToggle.hidden = false; syncReader();
+    readerToggle.addEventListener('click', () => { const open = !readerDetails.every(item => item.open); readerDetails.forEach(item => { item.open = open; }); syncReader(); });
+  }
+  const navigation = document.querySelector('.section-jumps');
+  const chapterLinks = [...(navigation?.querySelectorAll('.jump-inner a[href^="#"]') || [])];
+  const readingPosition = document.getElementById('readingPosition');
+  if (readingPosition) readingPosition.hidden = false;
+  let navigationPending = false;
+  function updateNavigation() {
+    navigationPending = false;
+    const firstTarget = chapterLinks.length && document.getElementById(chapterLinks[0].hash.slice(1));
+    const margin = firstTarget ? parseFloat(global.getComputedStyle(firstTarget).scrollMarginTop) || 0 : 0;
+    const offset = Math.max(margin, (navigation?.getBoundingClientRect().height || 0) + parseFloat(global.getComputedStyle(document.body).getPropertyValue('--header-height'))) + 2;
+    let active = null;
+    chapterLinks.forEach(link => {
+      const target = document.getElementById(link.hash.slice(1));
+      let visible = !!target;
+      for (let parent = target?.closest('details'); parent; parent = parent.parentElement?.closest('details')) if (!parent.open) visible = false;
+      if (visible && target.getBoundingClientRect().top <= offset) active = link;
+    });
+    chapterLinks.forEach(link => {
+      const changed = link === active && link.getAttribute('aria-current') !== 'location';
+      if (link === active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+      if (changed) {
+        const viewport = link.parentElement;
+        const box = link.getBoundingClientRect(), bounds = viewport.getBoundingClientRect();
+        if (box.left < bounds.left || box.right > bounds.right) viewport.scrollLeft += box.left - bounds.left - 20;
+      }
+    });
+    if (readingPosition) {
+      const max = document.documentElement.scrollHeight - global.innerHeight;
+      const percent = max > 0 ? Math.round(Math.max(0, Math.min(1, global.scrollY / max)) * 100) : 0;
+      readingPosition.setAttribute('aria-valuenow', String(percent));
+      readingPosition.firstElementChild.style.width = `${percent}%`;
+    }
+  }
+  function scheduleNavigation() { if (!navigationPending) { navigationPending = true; global.requestAnimationFrame(updateNavigation); } }
+  global.addEventListener('scroll', scheduleNavigation, {passive:true});
+  global.addEventListener('resize', scheduleNavigation);
+  document.querySelectorAll('details').forEach(item => item.addEventListener('toggle', () => { syncReader(); scheduleNavigation(); }));
+  if (typeof global.ResizeObserver === 'function') new global.ResizeObserver(scheduleNavigation).observe(document.body);
+  scheduleNavigation();
   global.PreludePages = Object.freeze({derive, render});
 })(typeof window === 'undefined' ? globalThis : window);

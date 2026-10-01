@@ -5,7 +5,7 @@ import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
 const root = new URL('../', import.meta.url);
 const read = name => readFileSync(new URL(name, root), 'utf8');
-const {derive, forwardModel} = createRequire(import.meta.url)(fileURLToPath(new URL('projects/prelude/page-concepts.js', root)));
+const {derive, forwardModel, snapshotModel, attentionModel, recommendationModel} = createRequire(import.meta.url)(fileURLToPath(new URL('projects/prelude/page-concepts.js', root)));
 const waiting = {schema:'prelude_dashboard_book_forward.v1', status:'observed',
   automatic_promotion:false, scope:'pre_entry_paper_not_actual_trades', attention_required:false,
   today_record:'not_due', verdict:'waiting', paired_dates:0, expected_dates:0, changed_dates:0,
@@ -105,5 +105,77 @@ test('historical graphic uses its stated scale and data', () => {
   assert.equal(bars.length, 6);
   assert.deepEqual(bars.map(m => +m[2]), [28.33, 21.67, 23.33, 21.67, 1.586, 1.959]);
   for (const [, width, value, scale] of bars) assert.ok(Math.abs(+width - value / scale * 100) < .001);
+});
+const clockNow = Date.parse('2026-10-01T14:00:00+09:00');
+const snapshot = {schema:'prelude_dashboard_current.v1', asof:'2026-10-01', observed_at:'2026-10-01T13:00:00+09:00'};
+test('snapshot age is explicit and never live health', () => {
+  const context = snapshotModel(snapshot, clockNow);
+  assert.equal(context.key, 'same_day');
+  assert.match(context.title, /실시간 조회 아님/);
+  assert.match(context.detail, /1시간 0분/);
+  assert.equal(snapshotModel(snapshot, Date.parse('2026-10-02T00:00:00+09:00')).key, 'old');
+  assert.equal(snapshotModel({...snapshot, observed_at:'2026-10-01T04:00:00Z'}, clockNow).key, 'same_day');
+  assert.equal(snapshotModel(snapshot, clockNow - 2 * 3600000).key, 'clock');
+  assert.equal(snapshotModel(snapshot, Date.parse('2026-10-01T23:59:59+09:00')).key, 'same_day');
+});
+test('invalid dates and device clocks do not report freshness', () => {
+  for (const row of [null, {}, {...snapshot, asof:'2026-02-30'}, {...snapshot, asof:'2026-09-30'},
+    {...snapshot, observed_at:'2026-10-01T13:00:00'}, {...snapshot, observed_at:'2026-02-30T13:00:00Z'},
+    {...snapshot, observed_at:'<img src=x>'}, {...snapshot, schema:'future'}])
+    assert.equal(snapshotModel(row, clockNow).key, 'unknown');
+  for (const time of [NaN, Infinity, null, 'today', Number.MAX_VALUE]) assert.equal(snapshotModel(snapshot, time).key, 'unknown');
+});
+test('attention comes from recorded state, not a new trading rule', () => {
+  const system = {...snapshot, live:{preopen:{state:'delivered_empty',attention_required:false}, open:{state:'delivered_candidates',attention_required:false}}};
+  const value = {current_system:system, book_forward:waiting};
+  assert.equal(attentionModel(value, clockNow).items.length, 0);
+  const troubled = structuredClone(value);
+  troubled.current_system.live.open = {state:'delivery_uncertain', attention_required:true};
+  troubled.current_system.research = {microstructure:{attention_required:true}};
+  troubled.book_forward = {...waiting, today_record:'late', attention_required:true};
+  assert.equal(attentionModel(troubled, clockNow).items.length, 3);
+  assert.ok(attentionModel(troubled, clockNow).items.every(item => item.href.startsWith('#')));
+  assert.ok(attentionModel(undefined, clockNow).items.some(item => item.text.includes('확인 불가')));
+  assert.ok(attentionModel(value, clockNow + 86400000).items.some(item => item.text.includes('오늘 상태가 아닙니다')));
+});
+const candidate = {coin:'KRW-EXAMPLE', rank:1, score:.756, dump_risk_flag:false, entry_open:25.6, btc_regime:'bull_volatile'};
+const recommendation = (rows, date = '2026-10-01') => ({channels:{recommend:{latest_radar_date:date, latest_radar:rows}}});
+test('recommendation cards preserve order and distinguish unknown risk', () => {
+  const rows = [candidate, {...candidate, coin:'KRW-SECOND', rank:2, dump_risk_flag:true}, {...candidate, coin:'KRW-THIRD', rank:3, dump_risk_flag:null}];
+  const before = JSON.stringify(rows);
+  const result = recommendationModel(recommendation(rows));
+  assert.deepEqual(result.rows.map(row => row.coin), rows.map(row => row.coin));
+  assert.deepEqual(result.rows.map(row => row.risk), ['not_flagged', 'flagged', 'unknown']);
+  assert.equal(result.rows[0].score, '0.756');
+  assert.equal(JSON.stringify(rows), before);
+  assert.equal(recommendationModel(recommendation([])).state, 'empty');
+  assert.equal(recommendationModel({}).state, 'unknown');
+  // Native dashboard publisher strips KRW-; both representations stay intact.
+  const native = recommendationModel(recommendation([{...candidate, coin:'EXAMPLE'}]));
+  assert.equal(native.state, 'observed');
+  assert.equal(native.rows[0].coin, 'EXAMPLE');
+  const older = {...recommendation([candidate], '2026-09-30'), current_system:snapshot};
+  assert.equal(recommendationModel(older).dateMismatch, true);
+  assert.equal(recommendationModel({...recommendation([candidate]), current_system:snapshot}).dateMismatch, false);
+});
+test('malformed candidate rows fail closed without reselecting', () => {
+  for (const row of [null, {...candidate, coin:'<img src=x>'}, {...candidate, coin:{toString:'bad'}}, {...candidate, rank:1.5}])
+    assert.equal(recommendationModel(recommendation([candidate, row])).state, 'unknown');
+  assert.equal(recommendationModel(recommendation([candidate, candidate])).state, 'unknown');
+  assert.equal(recommendationModel(recommendation([candidate, {...candidate, coin:'EXAMPLE', rank:2}])).state, 'unknown');
+  assert.equal(recommendationModel(recommendation([candidate], '2026-02-30')).state, 'unknown');
+  const result = recommendationModel(recommendation([{...candidate, score:NaN, entry_open:Infinity, dump_risk_flag:'false'}]));
+  assert.equal(result.rows[0].score, '미제공');
+  assert.equal(result.rows[0].price, '미제공');
+  assert.equal(result.rows[0].risk, 'unknown');
+});
+test('reader controls keep all evidence accessible', () => {
+  const story = read('projects/prelude/index.html');
+  for (const id of ['earlyNumbers', 'earlyExperiments', 'technicalAppendix'])
+    assert.match(story, new RegExp(`<details[^>]*id="${id}"[^>]*data-reader-detail`));
+  assert.match(story, /id="readerToggle"[^>]*hidden/);
+  assert.match(story, /문서 스크롤 위치 · 내용 이해도나 검증 진척도가 아님/);
+  const dash = read('projects/prelude/dashboard/index.html');
+  for (const id of ['recommendCards', 'snapshotContext', 'monitorAttention']) assert.ok(dash.includes(`id="${id}"`));
 });
 console.log(JSON.stringify({status:'PASS', contract_groups:checks}));
