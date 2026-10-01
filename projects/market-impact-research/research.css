@@ -1,4 +1,72 @@
 /* Research diagrams are native HTML and remain readable without JavaScript. */
+/* v5: compare two target questions in place, with both outputs always visible. */
+.binding-flow { list-style:none; padding:0; margin:30px 0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.binding-flow li { border-top:2px solid var(--green); padding-top:16px; }
+.binding-flow span,.binding-intervention>span,.binding-headlines span,.binding-next>span { display:block; color:var(--green); font-size:10px; line-height:1.8; letter-spacing:.035em; }
+.binding-flow strong { display:block; font-size:15px; line-height:1.7; margin:12px 0; }
+.binding-flow p,.binding-headlines p { color:var(--muted); font-size:12px; line-height:1.9; }
+.binding-intervention { margin:30px 0; padding:25px; background:#edf0e6; border-left:3px solid var(--green); }
+.binding-intervention>p { font:500 19px/1.9 var(--serif); margin:12px 0; }
+.binding-intervention small { display:block; color:var(--muted); font-size:11px; line-height:1.9; }
+.binding-headlines { display:grid; grid-template-columns:1fr 1fr; gap:25px; margin:35px 0; }
+.binding-headlines>div { padding:22px 0; border-block:1px solid var(--line); }
+.binding-headlines strong { display:block; font:22px/1.6 var(--mono); color:var(--green); margin:18px 0; overflow-wrap:anywhere; }
+.binding-results [data-binding-condition="marked"] { background:#e8eee2; }
+.binding-results th:first-child { width:36%; }
+.binding-routing { margin:38px 0; padding:26px 0; border-block:2px solid #b39475; }
+.binding-route-flow { display:flex; align-items:center; gap:12px; margin:23px 0; font-size:11px; line-height:1.8; }
+.binding-route-flow span { flex:1; padding:12px; background:#f0e9df; }
+.binding-route-flow b { color:#927052; }
+.binding-routing-table th:first-child { width:28%; }
+.binding-case { margin:28px 0; }
+.binding-case>blockquote { margin:18px 0 24px; padding:22px; background:#f0eee5; font-size:14px; line-height:2.05; border-left:2px solid #859a89; overflow-wrap:anywhere; }
+.binding-name { padding:1px 3px; font-weight:600; color:#25382d; background:#d8e6d0; }
+.binding-name-1 { background:#e2dced; color:#4b395e; }
+.binding-query-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; align-items:start; }
+.binding-query-card { padding:22px; border:1px solid #abbca6; border-top:4px solid #63805c; min-width:0; }
+.binding-query-card[data-binding-query="1"] { border-color:#b9acc7; border-top-color:#86709c; }
+.binding-query-label { font:10px var(--mono); color:var(--muted); }
+.binding-query-card h4 { margin:10px 0; font:600 20px/1.7 var(--serif); overflow-wrap:anywhere; }
+.binding-gold { font-size:11px; line-height:2; color:var(--green); margin-bottom:22px; }
+.binding-model { padding:18px 0; border-top:1px solid var(--line); }
+.binding-model>div { display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; align-items:baseline; }
+.binding-model>div>strong { font-size:12px; }
+.binding-verdict { font-size:9px; padding:3px 5px; }
+.binding-correct { color:#214c33; background:#e1ecd9; }
+.binding-incorrect { color:#793e29; background:#f2e4d7; }
+.binding-axes { font-size:13px; line-height:1.8; margin:12px 0; }
+.binding-model dl { display:grid; grid-template-columns:32px minmax(0,1fr); gap:6px; font-size:12px; line-height:1.8; margin:10px 0; }
+.binding-model dt { color:var(--muted); }
+.binding-model dd { margin:0; overflow-wrap:anywhere; }
+.binding-model small,.binding-evidence small { display:block; color:var(--muted); font-size:10px; line-height:1.8; }
+.binding-evidence { padding-top:20px; border-top:1px dashed var(--line); }
+.binding-evidence>strong { font-size:11px; }
+.binding-evidence>span { display:block; margin:10px 0; font-size:11px; line-height:1.9; overflow-wrap:anywhere; }
+.binding-evidence b { font-size:9px; padding:2px 4px; background:#e9ede1; color:var(--green); }
+.binding-leaks { display:grid; grid-template-columns:1fr 1fr; gap:26px; margin:28px 0; }
+.binding-leak>span { display:block; font-size:12px; }
+.binding-leak>strong { display:block; font:26px var(--mono); margin:16px 0; }
+.binding-leak>div { background:#e5e8dc; height:12px; margin:14px 0 10px; }
+.binding-leak i { display:block; height:100%; background:#8b684a; }
+.binding-leak small { color:var(--muted); font-size:10px; }
+.binding-next { padding:26px; margin:30px 0; background:#e8eee3; }
+.binding-next h3 { font:500 24px/1.7 var(--serif); margin:12px 0; }
+.binding-next p { font-size:12px; color:var(--muted); line-height:2; }
+@media (max-width:700px) {
+  .binding-flow,.binding-headlines,.binding-query-grid,.binding-leaks { grid-template-columns:minmax(0,1fr); gap:18px; }
+  .binding-flow li { padding-top:12px; }
+  .binding-flow strong { margin:8px 0; }
+  .binding-headlines { gap:0; }
+  .binding-headlines>div+div { border-top:0; }
+  .binding-query-card { padding:18px; }
+  .binding-intervention,.binding-next { padding:20px; }
+  .binding-case>blockquote { padding:18px; font-size:13px; }
+  .binding-results th,.binding-results td,.binding-gates th,.binding-gates td { padding:12px 4px; font-size:10px; }
+  .binding-routing-table th,.binding-routing-table td { padding:12px 4px; font-size:10px; }
+  .binding-route-flow { flex-direction:column; align-items:stretch; gap:6px; }
+  .binding-route-flow b { align-self:center; transform:rotate(90deg); }
+  .binding-headlines strong { font-size:21px; }
+}
 .reader-principle { margin: 32px 0; padding: 28px; background: #233e31; color: #f6f4e9; }
 .reader-principle>span,.reader-principle small { display:block; font-size:11px; color:#d1ddcd; line-height:1.9; }
 .reader-principle>p { font:500 23px/1.8 var(--serif); margin:16px 0; }
