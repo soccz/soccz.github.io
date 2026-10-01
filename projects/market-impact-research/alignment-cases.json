@@ -1,0 +1,170 @@
+[
+  {
+    "id": "yangsan-housing-2",
+    "title": "01 · 모두 충족해야 하는 조건",
+    "claim": "내 보증금은 1억 1원, 월세는 60만원이다. 이 범위의 요건을 충족한다.",
+    "scope": "보증금 1억원 이하 · 월세 60만원 이하 · 월세가 없는 계약 제외",
+    "origin": "개발에 재사용한 공식 조항 · 작성 가상 주장",
+    "note": "반례 피드백 뒤에도 남았던 연결 오류입니다. ALL/ANY 표현으로 정책 조건을 다시 구성한 관측 자료의 보완입니다.",
+    "states": {
+      "qwen": {
+        "read": "(보증금 상한 AND 월세 상한) OR 월세 > 0",
+        "repair": "보증금 상한 AND 월세 상한 AND 월세 > 0",
+        "before": "지지",
+        "after": "반박",
+        "reference": "반박",
+        "trigger": "월세가 있다는 사실이 보증금 초과를 무시하게 만들었습니다.",
+        "raw_json": "{\n  \"before\": {\n    \"id\": \"yangsan-housing-2\",\n    \"bundle\": \"yangsan-housing\",\n    \"model\": \"qwen\",\n    \"dataset\": \"official\",\n    \"label\": \"contradicted\",\n    \"profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"deposit_krw\",\n          \"value\": 100000001\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"value\": 600000\n        }\n      ]\n    },\n    \"profile_exact\": true,\n    \"direct\": \"contradicted\",\n    \"previous\": \"contradicted\",\n    \"candidate_rules\": \"contradicted\",\n    \"candidate_model\": \"supported\"\n  },\n  \"after\": {\n    \"id\": \"yangsan-housing-2\",\n    \"bundle\": \"yangsan-housing\",\n    \"model\": \"qwen\",\n    \"dataset\": \"official\",\n    \"label\": \"contradicted\",\n    \"profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"deposit_krw\",\n          \"value\": 100000001\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"value\": 600000\n        }\n      ]\n    },\n    \"profile_exact\": true,\n    \"direct\": \"contradicted\",\n    \"previous\": \"contradicted\",\n    \"candidate_rules\": \"contradicted\",\n    \"candidate_model\": \"contradicted\",\n    \"aligned_profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"deposit_krw\",\n          \"value\": 100000001\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"value\": 600000\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [\n          {\n            \"field\": \"deposit_krw\",\n            \"owner\": \"applicant\",\n            \"cue_start\": 2,\n            \"cue_end\": 5,\n            \"status\": \"amount\",\n            \"value\": 100000001,\n            \"start\": 7,\n            \"end\": 12,\n            \"text\": \"1억 1원\"\n          },\n          {\n            \"field\": \"monthly_rent_krw\",\n            \"owner\": \"applicant\",\n            \"cue_start\": 14,\n            \"cue_end\": 16,\n            \"status\": \"amount\",\n            \"value\": 600000,\n            \"start\": 18,\n            \"end\": 22,\n            \"text\": \"60만원\"\n          }\n        ],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [\n          \"deposit_krw\",\n          \"monthly_rent_krw\"\n        ],\n        \"status\": \"checked\"\n      },\n      \"patches\": [],\n      \"removals\": []\n    },\n    \"aligned\": \"contradicted\",\n    \"aligned_profile_exact\": true\n  }\n}"
+      },
+      "kanana-public": {
+        "read": "보증금 상한 OR 월세 상한 OR 월세 > 0",
+        "repair": "보증금 상한 AND 월세 상한 AND 월세 > 0",
+        "before": "지지",
+        "after": "반박",
+        "reference": "반박",
+        "trigger": "월세가 있다는 사실이 보증금 초과를 무시하게 만들었습니다.",
+        "raw_json": "{\n  \"before\": {\n    \"id\": \"yangsan-housing-2\",\n    \"bundle\": \"yangsan-housing\",\n    \"model\": \"kanana-public\",\n    \"dataset\": \"official\",\n    \"label\": \"contradicted\",\n    \"profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"deposit_krw\",\n          \"value\": 100000001\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"value\": 600000\n        }\n      ]\n    },\n    \"profile_exact\": true,\n    \"direct\": \"supported\",\n    \"previous\": \"supported\",\n    \"candidate_rules\": \"contradicted\",\n    \"candidate_model\": \"supported\"\n  },\n  \"after\": {\n    \"id\": \"yangsan-housing-2\",\n    \"bundle\": \"yangsan-housing\",\n    \"model\": \"kanana-public\",\n    \"dataset\": \"official\",\n    \"label\": \"contradicted\",\n    \"profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"deposit_krw\",\n          \"value\": 100000001\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"value\": 600000\n        }\n      ]\n    },\n    \"profile_exact\": true,\n    \"direct\": \"supported\",\n    \"previous\": \"supported\",\n    \"candidate_rules\": \"contradicted\",\n    \"candidate_model\": \"contradicted\",\n    \"aligned_profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"deposit_krw\",\n          \"value\": 100000001\n        },\n        {\n          \"field\": \"monthly_rent_krw\",\n          \"value\": 600000\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [\n          {\n            \"field\": \"deposit_krw\",\n            \"owner\": \"applicant\",\n            \"cue_start\": 2,\n            \"cue_end\": 5,\n            \"status\": \"amount\",\n            \"value\": 100000001,\n            \"start\": 7,\n            \"end\": 12,\n            \"text\": \"1억 1원\"\n          },\n          {\n            \"field\": \"monthly_rent_krw\",\n            \"owner\": \"applicant\",\n            \"cue_start\": 14,\n            \"cue_end\": 16,\n            \"status\": \"amount\",\n            \"value\": 600000,\n            \"start\": 18,\n            \"end\": 22,\n            \"text\": \"60만원\"\n          }\n        ],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [\n          \"deposit_krw\",\n          \"monthly_rent_krw\"\n        ],\n        \"status\": \"checked\"\n      },\n      \"patches\": [],\n      \"removals\": []\n    },\n    \"aligned\": \"contradicted\",\n    \"aligned_profile_exact\": true\n  }\n}"
+      }
+    }
+  },
+  {
+    "id": "yongin-income-benefits-1",
+    "title": "02 · 받지 않는 급여 네 가지",
+    "claim": "내 가구 기준중위소득 비율은 180%이며, 나는 생계·의료·주거·교육급여를 모두 받지 않는다. 이 범위의 요건을 충족한다.",
+    "scope": "중위소득 180% 이하 · 생계·의료·주거·교육급여 수급자 제외",
+    "origin": "개발에 재사용한 공식 조항 · 작성 가상 주장",
+    "note": "정책의 제외 조건만 맞아도 충분하지 않습니다. 주장에 명시한 병렬 부정에서 빠진 사실을 채운 사후 보정입니다.",
+    "states": {
+      "qwen": {
+        "read": "가구 중위소득 비율: 180%",
+        "repair": "가구 중위소득 비율: 180% / 생계급여 수급: 아니오 / 의료급여 수급: 아니오 / 주거급여 수급: 아니오 / 교육급여 수급: 아니오",
+        "before": "확정 불가",
+        "after": "지지",
+        "reference": "지지",
+        "trigger": "문장에 명시된 네 급여의 비수급 사실을 추가했습니다.",
+        "raw_json": "{\n  \"before\": {\n    \"id\": \"yongin-income-benefits-1\",\n    \"bundle\": \"yongin-income-benefits\",\n    \"model\": \"qwen\",\n    \"dataset\": \"official\",\n    \"label\": \"supported\",\n    \"profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"income_pct\",\n          \"value\": 180\n        }\n      ]\n    },\n    \"profile_exact\": false,\n    \"direct\": \"supported\",\n    \"previous\": \"supported\",\n    \"candidate_rules\": \"not_established\",\n    \"candidate_model\": \"not_established\"\n  },\n  \"after\": {\n    \"id\": \"yongin-income-benefits-1\",\n    \"bundle\": \"yongin-income-benefits\",\n    \"model\": \"qwen\",\n    \"dataset\": \"official\",\n    \"label\": \"supported\",\n    \"profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"income_pct\",\n          \"value\": 180\n        }\n      ]\n    },\n    \"profile_exact\": false,\n    \"direct\": \"supported\",\n    \"previous\": \"supported\",\n    \"candidate_rules\": \"not_established\",\n    \"candidate_model\": \"not_established\",\n    \"aligned_profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"income_pct\",\n          \"value\": 180\n        },\n        {\n          \"field\": \"livelihood_benefit\",\n          \"value\": false\n        },\n        {\n          \"field\": \"medical_benefit\",\n          \"value\": false\n        },\n        {\n          \"field\": \"housing_benefit\",\n          \"value\": false\n        },\n        {\n          \"field\": \"education_benefit\",\n          \"value\": false\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [],\n        \"status\": \"not_covered\"\n      },\n      \"patches\": [\n        {\n          \"field\": \"livelihood_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        },\n        {\n          \"field\": \"medical_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        },\n        {\n          \"field\": \"housing_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        },\n        {\n          \"field\": \"education_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        }\n      ],\n      \"removals\": []\n    },\n    \"aligned\": \"supported\",\n    \"aligned_profile_exact\": true\n  }\n}"
+      },
+      "kanana-public": {
+        "read": "가구 중위소득 비율: 180%",
+        "repair": "가구 중위소득 비율: 180% / 생계급여 수급: 아니오 / 의료급여 수급: 아니오 / 주거급여 수급: 아니오 / 교육급여 수급: 아니오",
+        "before": "확정 불가",
+        "after": "지지",
+        "reference": "지지",
+        "trigger": "문장에 명시된 네 급여의 비수급 사실을 추가했습니다.",
+        "raw_json": "{\n  \"before\": {\n    \"id\": \"yongin-income-benefits-1\",\n    \"bundle\": \"yongin-income-benefits\",\n    \"model\": \"kanana-public\",\n    \"dataset\": \"official\",\n    \"label\": \"supported\",\n    \"profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"income_pct\",\n          \"value\": 180\n        }\n      ]\n    },\n    \"profile_exact\": false,\n    \"direct\": \"supported\",\n    \"previous\": \"supported\",\n    \"candidate_rules\": \"not_established\",\n    \"candidate_model\": \"not_established\"\n  },\n  \"after\": {\n    \"id\": \"yongin-income-benefits-1\",\n    \"bundle\": \"yongin-income-benefits\",\n    \"model\": \"kanana-public\",\n    \"dataset\": \"official\",\n    \"label\": \"supported\",\n    \"profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"income_pct\",\n          \"value\": 180\n        }\n      ]\n    },\n    \"profile_exact\": false,\n    \"direct\": \"supported\",\n    \"previous\": \"supported\",\n    \"candidate_rules\": \"not_established\",\n    \"candidate_model\": \"not_established\",\n    \"aligned_profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"income_pct\",\n          \"value\": 180\n        },\n        {\n          \"field\": \"livelihood_benefit\",\n          \"value\": false\n        },\n        {\n          \"field\": \"medical_benefit\",\n          \"value\": false\n        },\n        {\n          \"field\": \"housing_benefit\",\n          \"value\": false\n        },\n        {\n          \"field\": \"education_benefit\",\n          \"value\": false\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [],\n        \"status\": \"not_covered\"\n      },\n      \"patches\": [\n        {\n          \"field\": \"livelihood_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        },\n        {\n          \"field\": \"medical_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        },\n        {\n          \"field\": \"housing_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        },\n        {\n          \"field\": \"education_benefit\",\n          \"before\": null,\n          \"after\": false,\n          \"start\": 27,\n          \"end\": 51\n        }\n      ],\n      \"removals\": []\n    },\n    \"aligned\": \"supported\",\n    \"aligned_profile_exact\": true\n  }\n}"
+      }
+    }
+  },
+  {
+    "id": "changwon-age-1",
+    "title": "03 · 새 문서에서 놓친 연령",
+    "claim": "내 만 나이는 18세다. 이 범위의 요건을 충족한다.",
+    "scope": "청년의 연령만: 19세 이상 39세 이하",
+    "origin": "방법 고정 후 창원 첫 적용 → 같은 문서 사후 보완",
+    "note": "최초 20개 중 연령 주장 10개를 보류한 실패를 보존했습니다. 연령 문법을 확장한 뒤 같은 자료에서 재검사한 결과입니다.",
+    "states": {
+      "qwen": {
+        "read": "연령 조건 후보를 만들지 못함",
+        "repair": "19 ≤ 본인 나이 ≤ 39",
+        "before": "판독 보류",
+        "after": "반박",
+        "reference": "반박",
+        "trigger": "18세는 하한 19세보다 작습니다. 표현하지 못한 규칙을 미확인 사실과 구분했습니다.",
+        "raw_json": "{\n  \"first\": {\n    \"model_id\": \"qwen\",\n    \"id\": \"changwon-age-1\",\n    \"bundle\": \"changwon-age\",\n    \"label\": \"contradicted\",\n    \"claim\": \"내 만 나이는 18세다. 이 범위의 요건을 충족한다.\",\n    \"raw_profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [],\n        \"status\": \"not_covered\"\n      },\n      \"patches\": [],\n      \"removals\": []\n    },\n    \"raw_profile_exact\": true,\n    \"profile_exact\": true,\n    \"direct\": \"contradicted\",\n    \"rules_raw_facts\": \"abstain\",\n    \"rules\": \"abstain\",\n    \"model_raw_facts\": \"abstain\",\n    \"model\": \"abstain\"\n  },\n  \"repaired\": {\n    \"model_id\": \"qwen\",\n    \"id\": \"changwon-age-1\",\n    \"bundle\": \"changwon-age\",\n    \"label\": \"contradicted\",\n    \"claim\": \"내 만 나이는 18세다. 이 범위의 요건을 충족한다.\",\n    \"raw_profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"profile\": {\n      \"status\": \"ready\",\n      \"assertion\": true,\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [],\n        \"status\": \"not_covered\"\n      },\n      \"patches\": [],\n      \"removals\": []\n    },\n    \"raw_profile_exact\": true,\n    \"profile_exact\": true,\n    \"direct\": \"contradicted\",\n    \"rules_raw_facts\": \"contradicted\",\n    \"rules\": \"contradicted\",\n    \"model_raw_facts\": \"contradicted\",\n    \"model\": \"contradicted\",\n    \"freeform\": \"supported\"\n  }\n}"
+      },
+      "kanana-public": {
+        "read": "연령 조건 후보를 만들지 못함",
+        "repair": "19 ≤ 본인 나이 ≤ 39",
+        "before": "판독 보류",
+        "after": "반박",
+        "reference": "반박",
+        "trigger": "18세는 하한 19세보다 작습니다. 표현하지 못한 규칙을 미확인 사실과 구분했습니다.",
+        "raw_json": "{\n  \"first\": {\n    \"model_id\": \"kanana-public\",\n    \"id\": \"changwon-age-1\",\n    \"bundle\": \"changwon-age\",\n    \"label\": \"contradicted\",\n    \"claim\": \"내 만 나이는 18세다. 이 범위의 요건을 충족한다.\",\n    \"raw_profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [],\n        \"status\": \"not_covered\"\n      },\n      \"patches\": [],\n      \"removals\": []\n    },\n    \"raw_profile_exact\": true,\n    \"profile_exact\": true,\n    \"direct\": \"not_established\",\n    \"rules_raw_facts\": \"abstain\",\n    \"rules\": \"abstain\",\n    \"model_raw_facts\": \"abstain\",\n    \"model\": \"abstain\"\n  },\n  \"repaired\": {\n    \"model_id\": \"kanana-public\",\n    \"id\": \"changwon-age-1\",\n    \"bundle\": \"changwon-age\",\n    \"label\": \"contradicted\",\n    \"claim\": \"내 만 나이는 18세다. 이 범위의 요건을 충족한다.\",\n    \"raw_profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"profile\": {\n      \"assertion\": true,\n      \"status\": \"ready\",\n      \"values\": [\n        {\n          \"field\": \"age_years\",\n          \"value\": 18\n        }\n      ]\n    },\n    \"alignment\": {\n      \"money\": {\n        \"evidence\": [],\n        \"issues\": [],\n        \"patches\": {},\n        \"checked\": [],\n        \"status\": \"not_covered\"\n      },\n      \"patches\": [],\n      \"removals\": []\n    },\n    \"raw_profile_exact\": true,\n    \"profile_exact\": true,\n    \"direct\": \"not_established\",\n    \"rules_raw_facts\": \"contradicted\",\n    \"rules\": \"contradicted\",\n    \"model_raw_facts\": \"contradicted\",\n    \"model\": \"contradicted\",\n    \"freeform\": \"contradicted\"\n  }\n}"
+      }
+    }
+  },
+  {
+    "id": "boundary-6",
+    "title": "04 · 정책 변경이 답을 바꾼다",
+    "claim": "내 보증 가입일은 2025년 3월 31일이다. 이 보증료 지원 상한은 40만원이다.",
+    "scope": "가입일 3월 31일부터 상한 30만 → 40만원",
+    "origin": "기존 서울 전후 공고 재사용 · 새 자연어 주장",
+    "note": "가입일 경계 당일을 포함합니다. 기존 답이 맞았더라도 새 규정에 따라 다시 계산해야 합니다.",
+    "states": {
+      "qwen": {
+        "read": "가입일 2025-03-31 · 상한 400,000원",
+        "repair": "가입일 2025-03-31 · 상한 400,000원",
+        "before": "반박",
+        "after": "지지",
+        "reference": "지지",
+        "trigger": "정책에 따른 결론 변화: 있음 · 이전 답 오류: 없음 · 실제 재검토: 실행",
+        "raw_json": "{\n  \"id\": \"boundary-6\",\n  \"model\": \"qwen\",\n  \"condition\": \"saved\",\n  \"claim\": \"내 보증 가입일은 2025년 3월 31일이다. 이 보증료 지원 상한은 40만원이다.\",\n  \"before_label\": \"contradicted\",\n  \"label\": \"supported\",\n  \"reference_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-31\",\n    \"asserted_cap\": 400000\n  },\n  \"model_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-31\",\n    \"asserted_cap\": 400000\n  },\n  \"grounded_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-31\",\n    \"asserted_cap\": 400000\n  },\n  \"slots_exact\": true,\n  \"grounded_exact\": true,\n  \"direct_before\": \"contradicted\",\n  \"direct_after\": \"supported\",\n  \"raw_contract_model_slots\": \"supported\",\n  \"grounded_contract_model_slots\": \"supported\",\n  \"before\": \"contradicted\",\n  \"after\": \"supported\",\n  \"revision_changes_decision\": true,\n  \"prior_answer_disagrees\": false,\n  \"review\": true,\n  \"stored\": \"contradicted\",\n  \"updated\": \"supported\"\n}"
+      },
+      "kanana-public": {
+        "read": "가입일 2025-03-31 · 상한 4,000,000원",
+        "repair": "가입일 2025-03-31 · 상한 400,000원",
+        "before": "확정 불가",
+        "after": "지지",
+        "reference": "지지",
+        "trigger": "정책에 따른 결론 변화: 있음 · 이전 답 오류: 있음 · 실제 재검토: 실행",
+        "raw_json": "{\n  \"id\": \"boundary-6\",\n  \"model\": \"kanana-public\",\n  \"condition\": \"saved\",\n  \"claim\": \"내 보증 가입일은 2025년 3월 31일이다. 이 보증료 지원 상한은 40만원이다.\",\n  \"before_label\": \"contradicted\",\n  \"label\": \"supported\",\n  \"reference_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-31\",\n    \"asserted_cap\": 400000\n  },\n  \"model_slots\": {\n    \"asserted_cap\": 4000000,\n    \"joined_on\": \"2025-03-31\",\n    \"status\": \"ready\"\n  },\n  \"grounded_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-31\",\n    \"asserted_cap\": 400000\n  },\n  \"slots_exact\": false,\n  \"grounded_exact\": true,\n  \"direct_before\": \"not_established\",\n  \"direct_after\": \"supported\",\n  \"raw_contract_model_slots\": \"contradicted\",\n  \"grounded_contract_model_slots\": \"contradicted\",\n  \"before\": \"contradicted\",\n  \"after\": \"supported\",\n  \"revision_changes_decision\": true,\n  \"prior_answer_disagrees\": true,\n  \"review\": true,\n  \"stored\": \"not_established\",\n  \"updated\": \"supported\"\n}"
+      }
+    }
+  },
+  {
+    "id": "boundary-1",
+    "title": "05 · 바뀌지 않은 조건의 기존 오답",
+    "claim": "내 보증 가입일은 2025년 3월 30일이다. 이 보증료 지원 상한은 20만원이다.",
+    "scope": "3월 30일 가입자는 전후 모두 상한 30만원",
+    "origin": "기존 서울 전후 공고 재사용 · 새 자연어 주장",
+    "note": "정책 변경에 따른 결론은 같습니다. 그런데 저장된 답부터 잘못되어 있어 기존 답 감사가 필요합니다.",
+    "states": {
+      "qwen": {
+        "read": "가입일 2025-03-30 · 상한 200,000원",
+        "repair": "가입일 2025-03-30 · 상한 200,000원",
+        "before": "확정 불가",
+        "after": "반박",
+        "reference": "반박",
+        "trigger": "정책에 따른 결론 변화: 없음 · 이전 답 오류: 있음 · 실제 재검토: 실행",
+        "raw_json": "{\n  \"id\": \"boundary-1\",\n  \"model\": \"qwen\",\n  \"condition\": \"saved\",\n  \"claim\": \"내 보증 가입일은 2025년 3월 30일이다. 이 보증료 지원 상한은 20만원이다.\",\n  \"before_label\": \"contradicted\",\n  \"label\": \"contradicted\",\n  \"reference_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-30\",\n    \"asserted_cap\": 200000\n  },\n  \"model_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-30\",\n    \"asserted_cap\": 200000\n  },\n  \"grounded_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-30\",\n    \"asserted_cap\": 200000\n  },\n  \"slots_exact\": true,\n  \"grounded_exact\": true,\n  \"direct_before\": \"not_established\",\n  \"direct_after\": \"supported\",\n  \"raw_contract_model_slots\": \"contradicted\",\n  \"grounded_contract_model_slots\": \"contradicted\",\n  \"before\": \"contradicted\",\n  \"after\": \"contradicted\",\n  \"revision_changes_decision\": false,\n  \"prior_answer_disagrees\": true,\n  \"review\": true,\n  \"stored\": \"not_established\",\n  \"updated\": \"contradicted\"\n}"
+      },
+      "kanana-public": {
+        "read": "가입일 2025-03-30 · 상한 2,000,000원",
+        "repair": "가입일 2025-03-30 · 상한 200,000원",
+        "before": "확정 불가",
+        "after": "반박",
+        "reference": "반박",
+        "trigger": "정책에 따른 결론 변화: 없음 · 이전 답 오류: 있음 · 실제 재검토: 실행",
+        "raw_json": "{\n  \"id\": \"boundary-1\",\n  \"model\": \"kanana-public\",\n  \"condition\": \"saved\",\n  \"claim\": \"내 보증 가입일은 2025년 3월 30일이다. 이 보증료 지원 상한은 20만원이다.\",\n  \"before_label\": \"contradicted\",\n  \"label\": \"contradicted\",\n  \"reference_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-30\",\n    \"asserted_cap\": 200000\n  },\n  \"model_slots\": {\n    \"asserted_cap\": 2000000,\n    \"joined_on\": \"2025-03-30\",\n    \"status\": \"ready\"\n  },\n  \"grounded_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": \"2025-03-30\",\n    \"asserted_cap\": 200000\n  },\n  \"slots_exact\": false,\n  \"grounded_exact\": true,\n  \"direct_before\": \"not_established\",\n  \"direct_after\": \"not_established\",\n  \"raw_contract_model_slots\": \"contradicted\",\n  \"grounded_contract_model_slots\": \"contradicted\",\n  \"before\": \"contradicted\",\n  \"after\": \"contradicted\",\n  \"revision_changes_decision\": false,\n  \"prior_answer_disagrees\": true,\n  \"review\": true,\n  \"stored\": \"not_established\",\n  \"updated\": \"contradicted\"\n}"
+      }
+    }
+  },
+  {
+    "id": "unknown-with-application",
+    "title": "06 · 신청일로 가입일을 추측하지 않기",
+    "claim": "내 신청일은 2025년 4월 1일이다. 내 보증 가입일은 밝히지 않았다. 이 보증료 지원 상한은 40만원이다.",
+    "scope": "신청일은 알려졌지만 본인 보증 가입일은 미공개",
+    "origin": "기존 서울 전후 공고 재사용 · 새 자연어 주장",
+    "note": "새 규정에서는 가입일에 따라 상한이 달라집니다. 신청일을 대신 쓰지 않고 확정 불가로 갱신합니다.",
+    "states": {
+      "qwen": {
+        "read": "가입일 미상 · 상한 400,000원",
+        "repair": "가입일 미상 · 상한 400,000원",
+        "before": "반박",
+        "after": "확정 불가",
+        "reference": "확정 불가",
+        "trigger": "정책에 따른 결론 변화: 있음 · 이전 답 오류: 없음 · 실제 재검토: 실행",
+        "raw_json": "{\n  \"id\": \"unknown-with-application\",\n  \"model\": \"qwen\",\n  \"condition\": \"saved\",\n  \"claim\": \"내 신청일은 2025년 4월 1일이다. 내 보증 가입일은 밝히지 않았다. 이 보증료 지원 상한은 40만원이다.\",\n  \"before_label\": \"contradicted\",\n  \"label\": \"not_established\",\n  \"reference_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": null,\n    \"asserted_cap\": 400000\n  },\n  \"model_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": null,\n    \"asserted_cap\": 400000\n  },\n  \"grounded_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": null,\n    \"asserted_cap\": 400000\n  },\n  \"slots_exact\": true,\n  \"grounded_exact\": true,\n  \"direct_before\": \"contradicted\",\n  \"direct_after\": \"not_established\",\n  \"raw_contract_model_slots\": \"not_established\",\n  \"grounded_contract_model_slots\": \"not_established\",\n  \"before\": \"contradicted\",\n  \"after\": \"not_established\",\n  \"revision_changes_decision\": true,\n  \"prior_answer_disagrees\": false,\n  \"review\": true,\n  \"stored\": \"contradicted\",\n  \"updated\": \"not_established\"\n}"
+      },
+      "kanana-public": {
+        "read": "가입일 미상 · 상한 4,000,000원",
+        "repair": "가입일 미상 · 상한 400,000원",
+        "before": "확정 불가",
+        "after": "확정 불가",
+        "reference": "확정 불가",
+        "trigger": "정책에 따른 결론 변화: 있음 · 이전 답 오류: 있음 · 실제 재검토: 실행",
+        "raw_json": "{\n  \"id\": \"unknown-with-application\",\n  \"model\": \"kanana-public\",\n  \"condition\": \"saved\",\n  \"claim\": \"내 신청일은 2025년 4월 1일이다. 내 보증 가입일은 밝히지 않았다. 이 보증료 지원 상한은 40만원이다.\",\n  \"before_label\": \"contradicted\",\n  \"label\": \"not_established\",\n  \"reference_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": null,\n    \"asserted_cap\": 400000\n  },\n  \"model_slots\": {\n    \"asserted_cap\": 4000000,\n    \"joined_on\": null,\n    \"status\": \"unsupported\"\n  },\n  \"grounded_slots\": {\n    \"status\": \"ready\",\n    \"joined_on\": null,\n    \"asserted_cap\": 400000\n  },\n  \"slots_exact\": false,\n  \"grounded_exact\": true,\n  \"direct_before\": \"not_established\",\n  \"direct_after\": \"supported\",\n  \"raw_contract_model_slots\": \"abstain\",\n  \"grounded_contract_model_slots\": \"abstain\",\n  \"before\": \"contradicted\",\n  \"after\": \"not_established\",\n  \"revision_changes_decision\": true,\n  \"prior_answer_disagrees\": true,\n  \"review\": true,\n  \"stored\": \"not_established\",\n  \"updated\": \"not_established\"\n}"
+      }
+    }
+  }
+]

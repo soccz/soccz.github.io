@@ -4,9 +4,9 @@
 <title>한국어 정책 문장의 사실·정정·변화 판독 — soccz 연구 노트</title>
 <meta content="한국어 정책의 사실·정정·내용 변화 연구. 규칙과 신청자 사실을 분리 추출하고, 복합 조건·누락 정보·환산식·예외·검증 피드백을 실제 실패와 함께 기록합니다." name="description"/>
 <meta content="article" property="og:type"/><meta content="한국어 정책 문장의 사실·정정·변화 판독 — soccz 연구 노트" property="og:title"/><meta content="정책 뉴스 개발에서 한국어 NLP 연구로. 실제 정정·수정 공고에서 원본 버전, 대상별 금액표와 가능성 표현을 확인하고, 새 공고 검증과 모델 실험의 실패를 함께 기록합니다." property="og:description"/><meta content="https://soccz.github.io/projects/market-impact-research/" property="og:url"/><meta content="soccz" name="author"/><meta content="#193a36" name="theme-color"/><meta content="ko_KR" property="og:locale"/>
-<link href="https://soccz.github.io/projects/market-impact-research/" rel="canonical"/><link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="/projects/market-impact/case-study.css" rel="stylesheet"/><link href="/projects/market-impact-research/research.css" rel="stylesheet"/><script defer="" src="/projects/market-impact/case-study.js"></script><script defer="" src="/projects/market-impact-research/policy-reader.js"></script><script defer="" src="/projects/market-impact-research/semantic-diff.js"></script><link href="/projects/market-impact-research/semantic-diff.css" rel="stylesheet"/><link href="/projects/market-impact-research/condition-reader.css" rel="stylesheet"/><script defer="" src="/projects/market-impact-research/condition-reader.js"></script><link href="/projects/market-impact-research/condition-transfer.css" rel="stylesheet"/><link href="/projects/market-impact-research/revision-audit.css" rel="stylesheet"/><link href="/projects/market-impact-research/scope-reading.css" rel="stylesheet"/><script defer="" src="/projects/market-impact-research/scope-reading.js"></script><link href="/projects/market-impact-research/selective-update.css" rel="stylesheet"/><link href="/projects/market-impact-research/compositional-reasoning.css" rel="stylesheet"/><link href="/projects/market-impact-research/fact-grounding.css" rel="stylesheet"/></head>
+<link href="https://soccz.github.io/projects/market-impact-research/" rel="canonical"/><link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="/projects/market-impact/case-study.css" rel="stylesheet"/><link href="/projects/market-impact-research/research.css" rel="stylesheet"/><script defer="" src="/projects/market-impact/case-study.js"></script><script defer="" src="/projects/market-impact-research/policy-reader.js"></script><script defer="" src="/projects/market-impact-research/semantic-diff.js"></script><link href="/projects/market-impact-research/semantic-diff.css" rel="stylesheet"/><link href="/projects/market-impact-research/condition-reader.css" rel="stylesheet"/><script defer="" src="/projects/market-impact-research/condition-reader.js"></script><link href="/projects/market-impact-research/condition-transfer.css" rel="stylesheet"/><link href="/projects/market-impact-research/revision-audit.css" rel="stylesheet"/><link href="/projects/market-impact-research/scope-reading.css" rel="stylesheet"/><script defer="" src="/projects/market-impact-research/scope-reading.js"></script><link href="/projects/market-impact-research/selective-update.css" rel="stylesheet"/><link href="/projects/market-impact-research/compositional-reasoning.css" rel="stylesheet"/><link href="/projects/market-impact-research/fact-grounding.css" rel="stylesheet"/><link href="/projects/market-impact-research/source-alignment.css" rel="stylesheet"/></head>
 <body class="editorial-v3 research-note"><a class="skip-link" href="#main">본문으로 건너뛰기</a><header class="site-nav" id="navbar"><div class="wrap nav-row"><a aria-label="soccz 홈" class="brand" href="/">soccz.</a><nav aria-label="주요 메뉴"><a href="/projects/market-impact-v2/#next">개발 기록</a><a class="nav-code" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/RESEARCH_AGENDA.md">GitHub ↗</a></nav></div><div aria-hidden="true" class="read-progress"></div></header>
-<main id="main"><header class="hero"><div class="wrap"><div class="hero-top"><p class="eyebrow"><span class="dot"></span>Personal research / An evolving question</p><span class="folio">TIME · EVIDENCE · REVISION</span></div><div class="hero-grid"><div><h1>같은 정책 변경도,<br/><em>누구의 판단을 바꾸는가.</em></h1><p class="hero-deck">정책·기사·시장을 연결한 개발에서 출발한 <strong>한국어 정책 문장의 사실·정정·내용 변화 연구</strong>입니다. 문장 변화 → 조건별 판단 → 정정 후 갱신을 거쳐, 이제 <strong>맞는 답 속에 가려진 사실 오류와 규칙이 틀리는 조건</strong>을 검증합니다.</p><p class="reading-cue">↓ 개발에서 생긴 질문 → 복합 조건 실험 → <a href="#fact-grounding">최근 후속: 사실 근거와 의미 변화 검증</a></p></div><figure class="research-compass"><div class="figure-top"><span>MY RESEARCH QUESTION</span><span>2026.10</span></div><ol><li><span>01</span><div><strong>무슨 사실을 읽었나</strong><p>문장 · 근거 · 사실과 주장 상태</p></div></li><li><span>02</span><div><strong>어떤 조건이 달라졌나</strong><p>대상 · 예외 · 시점 · 참조 문서</p></div></li><li><span>03</span><div><strong>누구의 판단이 바뀌나</strong><p>같은 사례 · 두 버전 · 최소 변경 원인</p></div></li></ol><figcaption>실제 실행한 실험과 남은 질문을 함께 표시합니다. 합성 정답·공식 사례의 임시 판독·독립 사람 평가를 구분합니다.</figcaption></figure></div><dl class="hero-meta"><div><dt>FROM MY WORK</dt><dd>정책·기사·시장 연결과 판독 문제</dd></div><div><dt>UPDATED / 2026.10.01</dt><dd>문장 변화 → 판단 갱신 → 복합 조건·미확인 사실</dd></div><div><dt>RESEARCH STATUS</dt><dd>실험 실행 / 독립 사람 평가 전</dd></div></dl></div></header>
+<main id="main"><header class="hero"><div class="wrap"><div class="hero-top"><p class="eyebrow"><span class="dot"></span>Personal research / An evolving question</p><span class="folio">TIME · EVIDENCE · REVISION</span></div><div class="hero-grid"><div><h1>같은 정책 변경도,<br/><em>누구의 판단을 바꾸는가.</em></h1><p class="hero-deck">정책·기사·시장을 연결한 개발에서 출발한 <strong>한국어 정책 문장의 사실·정정·내용 변화 연구</strong>입니다. 원문 조건을 읽고 → 오류를 고치고 → 새로운 자료에서 다시 확인하고 → <strong>정책 변경과 기존 오답까지 반영해 판단을 갱신합니다.</strong></p><p class="reading-cue">↓ 개발의 질문 → 복합 조건과 사실 검증 → <a href="#source-alignment">최근 실행: 원문 정합성부터 실제 판단 갱신까지</a></p></div><figure class="research-compass"><div class="figure-top"><span>MY RESEARCH QUESTION</span><span>2026.10</span></div><ol><li><span>01</span><div><strong>무슨 사실을 읽었나</strong><p>문장 · 근거 · 사실과 주장 상태</p></div></li><li><span>02</span><div><strong>어떤 조건이 달라졌나</strong><p>대상 · 예외 · 시점 · 참조 문서</p></div></li><li><span>03</span><div><strong>누구의 판단이 바뀌나</strong><p>같은 사례 · 두 버전 · 최소 변경 원인</p></div></li></ol><figcaption>실제 실행한 실험과 남은 질문을 함께 표시합니다. 합성 정답·공식 사례의 임시 판독·독립 사람 평가를 구분합니다.</figcaption></figure></div><dl class="hero-meta"><div><dt>FROM MY WORK</dt><dd>정책·기사·시장 연결과 판독 문제</dd></div><div><dt>UPDATED / 2026.10.01</dt><dd>문장 변화 → 판단 갱신 → 복합 조건·미확인 사실</dd></div><div><dt>RESEARCH STATUS</dt><dd>실험 실행 / 독립 사람 평가 전</dd></div></dl></div></header>
 <div class="wrap reading-layout"><aside aria-label="연구 노트 목차" class="contents"><details class="reading-menu" open=""><summary><span>이 글의 흐름</span><strong class="reading-current"></strong></summary><nav aria-label="본문 목차"><ol><li><a href="#direction"><span>01</span>연구 질문과 실제 공고</a></li><li><a href="#nlp-study"><span>02</span>NLP 실험과 실패 분석</a></li><li><a href="#replay"><span>03</span>두 가지 시각 예제</a></li><li><a href="#proposals"><span>04</span>질문과 검증 계획</a></li><li><a href="#references"><span>05</span>근거와 현재 상태</a></li></ol></nav></details><p class="contents-note">현재 연구와 실제 실패를 먼저, 그 질문을 만든 정정·조건 판독과 초기 NLP 실험을 이어서 읽습니다.</p></aside><article class="story">
 <section class="chapter" data-reading-group="direction" id="direction"><div class="section-kicker"><span class="num">01</span>FROM MY DEVELOPMENT</div><h2>개발에서 남은 문제를,<br/>검증할 수 있는 질문으로.</h2><div class="prose"><p class="intro-lead">날짜와 반복 보도를 다루던 질문이 “무슨 문장이 달라졌나”를 거쳐 “그 변화는 누구의 판단을 바꾸나”로 이어졌습니다.</p><p>처음에는 정책과 기사, 시장의 날짜를 맞추는 일이 필요했습니다. 이후 반복되는 기사를 어떻게 셀지, 서로 다른 점수를 같은 뜻으로 읽어도 되는지, 판독이 갈릴 때 무엇을 확인할지 고민했습니다. 이 경험이 다음 연구의 측정 대상과 평가 기준이 됩니다.</p></div><div class="research-origins"><div><span>점수의 뜻</span><h3>톤 → 구체적인 내용 변화</h3><p>긍정적인 표현과 예상보다 좋아진 발표를 구분합니다. 보도에 나타난 예상은 시장 전체의 기대와 다릅니다.</p></div><div><span>정보의 단위</span><h3>기사 수 → 보도량과 사실 변화</h3><p>같은 내용을 여러 번 전달한 것과 대상·수치·시점이 바뀐 것을 함께 보존합니다.</p></div><div><span>판단의 범위</span><h3>산업 평균 → 근거가 있는 경로</h3><p>사건 전에 확인한 기업의 사업 구조로 영향 가설을 만들고, 근거가 바뀐 부분을 추적합니다.</p></div></div><a class="case-source" href="/projects/market-impact-v2/#journey">이 질문이 생긴 3–8월의 개발 과정 ↗</a></section><section class="chapter" data-reading-group="direction" id="compositional-reasoning">
 <div class="section-kicker"><span class="num">NEXT</span>COMPOSITIONAL POLICY READING</div>
@@ -209,7 +209,133 @@
 <div class="fg-counterexample"><span>자동 생성한 반례 · Qwen / 이전 급여 제외 규칙</span><p><strong>생계·의료·주거·교육급여를 모두 받지 않는 경우</strong></p><div><span>모델이 추출한 규칙 <b>반박</b></span><span>잠정 참조 규칙 <b>지지</b></span></div><p class="fg-note">실제 사람 정보가 아닌 가상 조건입니다. 두 프로그램이 달라지는 위치를 보여주며 원문 해석의 정답을 스스로 증명하지 않습니다.</p></div>
 <details class="fg-limits"><summary>검증 범위·출처·보류 비용까지 읽기</summary><p>Qwen 답 5→5/16, 사실 11→15/16 · Kanana 답 4→4/16, 사실 8→11/16. 새 결과를 본 뒤 방법이나 참조를 고치지 않았습니다. 금액 검사는 작성 대조 12/32, 새 공고 8/16을 포함했습니다. 검사 밖 항목을 검증 완료로 세지 않습니다.</p><p>금액을 대조할 수 있는 명시적 본인·가구 문장만 다룹니다. 일반적인 주체 판독·정정 서술·여러 금액·근사 범위는 해결하지 않습니다. 새 자료는 공식 HWP를 TLS 검증으로 확보했으며 표를 포함한 XML 문단으로 읽었습니다. 인쇄 지면의 시각적 대조는 수행하지 못했습니다.</p><p>양산 공고의 자격 조건과 제외 조건에는 연결 표현의 차이가 있어 선택한 자격 조항만 평가했습니다. 용인도 금액·소득·급여 범위만 평가합니다. 전체 수급 자격 판정이 아닙니다. 독립 사람 주석·실제 검토 시간의 개선은 아직 검증하지 않았습니다.</p></details>
 <p class="fg-next">다음 질문은 더 많은 정답을 세는 데서 멈추지 않습니다. <strong>어떤 근거를 잘못 읽었고, 어느 사례의 결론을 바꾸며, 사람이 무엇을 확인해야 하는가.</strong> 금액 근거 대조와 자동 반례 생성까지 이번에 구현·실행했습니다.</p>
-<p class="composition-links"><a href="https://github.com/soccz/market-impact-analysis/tree/main/research/policy_fact_grounding">실행 코드·동결 기록·결과 ↗</a> <a href="https://github.com/soccz/market-impact-analysis/tree/main/research/policy_fact_grounding/RESULTS.md">모든 비교·수정 효과·실패 ↗</a></p></section></section>
+<p class="composition-links"><a href="https://github.com/soccz/market-impact-analysis/tree/main/research/policy_fact_grounding">실행 코드·동결 기록·결과 ↗</a> <a href="https://github.com/soccz/market-impact-analysis/tree/main/research/policy_fact_grounding/RESULTS.md">모든 비교·수정 효과·실패 ↗</a></p></section><section aria-labelledby="sa-title" class="sa-section" id="source-alignment">
+<p class="sa-kicker">LATEST EXPERIMENT · SOURCE → LOGIC → UPDATE</p><h3 id="sa-title">틀린 이유를 찾은 뒤,<br/>실제로 고치고 다시 확인했습니다.</h3>
+<p class="sa-lead">금액 사실을 바로잡아도 <strong>‘모두’를 ‘하나라도’로 읽은 규칙</strong>은 남았습니다. 그래서 원문 조건을 다시 구성하고, 첫 수정의 실패를 남기고, 다른 기관 자료에 적용한 뒤 <strong>저장된 판단을 실제로 갱신하는 과정</strong>까지 이어갔습니다.</p>
+<ol class="sa-path"><li><span>01 · 원문</span><strong>없는 조건을 만들지 않기</strong><p>숫자·단위·출처에서 조건 후보 구성</p></li><li><span>02 · 실패</span><strong>반례만으론 안 고쳐졌다</strong><p>7개 재시도 · 정답 수 개선 0</p></li><li><span>03 · 표현</span><strong>모두 / 하나라도 명시</strong><p>논리 연결과 누락 사실을 따로 보정</p></li><li><span>04 · 첫 적용</span><strong>새 문서에서 다시 실패</strong><p>창원·수원 연령 10개 판독 보류</p></li><li><span>05 · 재검증</span><strong>확장 후 다른 기관 확인</strong><p>국민연금공단의 새 연령 경계 적용</p></li><li><span>06 · 갱신</span><strong>변경된 답과 기존 오답</strong><p>원인별로 재검토하고 저장 답 수정</p></li></ol>
+<div class="sa-stat"><div><strong>335</strong><span>고유 저장 응답 · 학습 0회</span></div><div><strong>96</strong><span>가상 주장 · 기존 48 + 신규 48</span></div><div><strong>0명</strong><span>독립 사람 판독 · AI 보조 잠정 참조</span></div></div>
+<h4>맞힌 수만으로는 과정을 설명할 수 없습니다.</h4><div class="sa-results">
+<div><h5>관측한 자료로 개선</h5><p class="sa-result-big">33 · 32 <span>→</span> 48 · 48<small>Qwen · Kanana / 개발 주장 48개</small></p><p>원문 후보·연결 표현·주장 사실을 함께 보완했습니다. 관측 자료에 맞춘 결과입니다.</p></div>
+<div><h5>처음 읽는 자료에 적용</h5><p class="sa-result-big">10/20 <span>→</span> 20/20<small>창원·수원 / 두 모델 동일</small></p><p>첫 고정 방법은 연령 10개를 보류했습니다. 오른쪽은 실패를 본 뒤 같은 문서를 재검사한 값입니다.</p></div>
+<div><h5>확장 고정 후 다른 기관</h5><p class="sa-result-big">10/10<small>국민연금공단 / 두 모델 동일</small></p><p>새 기관의 연령 조항 2개를 확인했습니다. 전체 사업이나 모든 문장에 대한 검증은 아닙니다.</p></div></div>
+<p class="sa-caveat"><strong>규칙만으로 조합한 비교군도 같은 최종 점수를 냈습니다.</strong> 이 개선을 전부 언어모델의 이해력 향상으로 설명하지 않습니다. Qwen 직접 판독도 새 선택 조항 20개·10개를 모두 맞혔습니다. 무엇을 모델이 읽었고 무엇을 코드가 보정했는지 함께 공개합니다.</p>
+<div class="sa-explorer"><h4>한 사례에서 어디가 바뀌었는지</h4><p class="sa-note">실제로 저장한 결과 6개입니다. 사례와 모델을 바꾸면 이 자리에서 읽은 조건·보정·최종 답이 함께 바뀝니다.</p>
+<div class="sa-controls"><label for="sa-case">사례<select disabled="" id="sa-case"><option value="yangsan-housing-2">01 · 모두 충족해야 하는 조건</option><option value="yongin-income-benefits-1">02 · 받지 않는 급여 네 가지</option><option value="changwon-age-1">03 · 새 문서에서 놓친 연령</option><option value="boundary-6">04 · 정책 변경이 답을 바꾼다</option><option value="boundary-1">05 · 바뀌지 않은 조건의 기존 오답</option><option value="unknown-with-application">06 · 신청일로 가입일을 추측하지 않기</option></select></label><label for="sa-model">모델<select disabled="" id="sa-model"><option value="qwen">Qwen</option><option value="kanana-public">공개 Kanana</option></select></label></div>
+<p class="sa-note" id="sa-load" role="status">기본 사례는 바로 읽을 수 있습니다. 비교 자료를 불러오는 중입니다.</p><p class="sa-note" id="sa-origin">개발에 재사용한 공식 조항 · 작성 가상 주장</p><blockquote id="sa-claim">내 보증금은 1억 1원, 월세는 60만원이다. 이 범위의 요건을 충족한다.</blockquote><p class="sa-scope" id="sa-scope">보증금 1억원 이하 · 월세 60만원 이하 · 월세가 없는 계약 제외</p>
+<div class="sa-flow"><div><span>읽었던 조건·사실</span><p id="sa-read">(보증금 상한 AND 월세 상한) OR 월세 &gt; 0</p></div><div><span>근거를 대조한 뒤</span><p id="sa-repair">보증금 상한 AND 월세 상한 AND 월세 &gt; 0</p></div></div><p class="sa-trigger" id="sa-trigger">월세가 있다는 사실이 보증금 초과를 무시하게 만들었습니다.</p>
+<div aria-atomic="true" aria-live="polite" class="sa-verdict"><div><span>수정 전 / 저장 답</span><strong id="sa-before">지지</strong></div><div><span>수정·갱신 후</span><strong id="sa-after">반박</strong></div><div><span>잠정 참조</span><strong id="sa-reference">반박</strong></div></div>
+<p id="sa-note">반례 피드백 뒤에도 남았던 연결 오류입니다. ALL/ANY 표현으로 정책 조건을 다시 구성한 관측 자료의 보완입니다.</p><details><summary>저장한 구조와 판정 근거 확인</summary><pre id="sa-json">{
+  "before": {
+    "id": "yangsan-housing-2",
+    "bundle": "yangsan-housing",
+    "model": "qwen",
+    "dataset": "official",
+    "label": "contradicted",
+    "profile": {
+      "status": "ready",
+      "assertion": true,
+      "values": [
+        {
+          "field": "deposit_krw",
+          "value": 100000001
+        },
+        {
+          "field": "monthly_rent_krw",
+          "value": 600000
+        }
+      ]
+    },
+    "profile_exact": true,
+    "direct": "contradicted",
+    "previous": "contradicted",
+    "candidate_rules": "contradicted",
+    "candidate_model": "supported"
+  },
+  "after": {
+    "id": "yangsan-housing-2",
+    "bundle": "yangsan-housing",
+    "model": "qwen",
+    "dataset": "official",
+    "label": "contradicted",
+    "profile": {
+      "status": "ready",
+      "assertion": true,
+      "values": [
+        {
+          "field": "deposit_krw",
+          "value": 100000001
+        },
+        {
+          "field": "monthly_rent_krw",
+          "value": 600000
+        }
+      ]
+    },
+    "profile_exact": true,
+    "direct": "contradicted",
+    "previous": "contradicted",
+    "candidate_rules": "contradicted",
+    "candidate_model": "contradicted",
+    "aligned_profile": {
+      "status": "ready",
+      "assertion": true,
+      "values": [
+        {
+          "field": "deposit_krw",
+          "value": 100000001
+        },
+        {
+          "field": "monthly_rent_krw",
+          "value": 600000
+        }
+      ]
+    },
+    "alignment": {
+      "money": {
+        "evidence": [
+          {
+            "field": "deposit_krw",
+            "owner": "applicant",
+            "cue_start": 2,
+            "cue_end": 5,
+            "status": "amount",
+            "value": 100000001,
+            "start": 7,
+            "end": 12,
+            "text": "1억 1원"
+          },
+          {
+            "field": "monthly_rent_krw",
+            "owner": "applicant",
+            "cue_start": 14,
+            "cue_end": 16,
+            "status": "amount",
+            "value": 600000,
+            "start": 18,
+            "end": 22,
+            "text": "60만원"
+          }
+        ],
+        "issues": [],
+        "patches": {},
+        "checked": [
+          "deposit_krw",
+          "monthly_rent_krw"
+        ],
+        "status": "checked"
+      },
+      "patches": [],
+      "removals": []
+    },
+    "aligned": "contradicted",
+    "aligned_profile_exact": true
+  }
+}</pre></details></div>
+<div class="sa-update"><h4>바뀐 정책만 보면, 원래 틀린 답을 놓칩니다.</h4><div class="sa-update-flow"><div><span>전후 규칙</span><strong>가입일에 따라<br/>30만 / 40만원</strong></div><div><span>판단 변화</span><strong>18개 중 8개</strong><small>정책 변경이 결론에 영향</small></div><div><span>기존 답 감사</span><strong>Qwen 4 · Kanana 11</strong><small>이전 정책 기준부터 오답</small></div><div><span>실제 저장 답 갱신</span><strong>두 조건 모두 18/18</strong><small>주장·원문 근거 보정 포함</small></div></div>
+<p>그대로 보관하면 변경 후 정답은 Qwen 6/18·Kanana 4/18이었습니다. 기존 오답까지 함께 확인해 모두 갱신했습니다. 다만 Kanana의 원래 자연어 슬롯을 실행하면 3/18이며, 최종 결과에는 <strong>명시적 가입일·금액을 읽는 제한 문법의 보정</strong>이 들어갑니다.</p></div>
+<details class="sa-details"><summary>비교군·출처·재현 범위를 더 확인하기</summary><p>기존에 읽은 개발 주장 48개, 첫 새 기관 20개, 그 뒤 새 기관 10개, 기존 전후 문서에 새로 쓴 자연어 주장 18개입니다. 같은 조항의 변형을 독립 정책 사건으로 세지 않습니다. 335개 응답은 313개 서로 다른 요청 조합을 포함합니다.</p><p>공식 HTML의 선택 위치와 해시를 보존하고 47개 테스트·448개 연령 경계 조합·7개 반례의 별도 산술을 확인했습니다. 기존 산출물 2,354개도 그대로 유지했습니다. 전체 원문이나 고객 비공개 자료는 재배포하지 않습니다.</p><p>호출자가 범위·필드·원문 버전을 명시해야 하며, 전체 사업 판정과 바뀐 원문은 보류합니다. 혼합 중첩·예외의 일반적인 이해, 독립 사람 검수, 실제 검토 시간 절감은 입증하지 않았습니다. 사람 검수 96행은 준비만 했고 완료 0건입니다.</p></details>
+<p class="sa-direction"><strong>내 연구의 단위는 이제 ‘문장 하나의 정답’에서 ‘근거가 연결된 판단의 생애’로 이어집니다.</strong> 무엇을 읽었고, 왜 틀렸고, 변경이 누구의 결론에 영향을 주며, 이미 저장된 오답까지 어떻게 고칠지 실제 실행 결과로 남겼습니다.</p>
+<p class="composition-links"><a href="https://github.com/soccz/market-impact-analysis/tree/main/research/policy_source_alignment">코드·출처·동결·전체 결과 ↗</a> <a href="https://github.com/soccz/market-impact-analysis/tree/main/research/policy_source_alignment/RESULTS.md">실패와 비교군까지 읽기 ↗</a></p></section></section>
 <section class="chapter" data-reading-group="direction" id="selective-update">
 <div class="section-kicker"><span class="num">NEXT</span>REVISION-AWARE POLICY NLP</div>
 <h2>정정이 왔을 때,<br/>어떤 판단을 다시 읽어야 할까.</h2>
@@ -452,4 +578,4 @@
 <div class="review-question"><span>NEXT EVIDENCE / 제안 화면</span><h3>“무엇을 확인하면 이 보류를 풀 수 있나?”</h3><p>보류 사유: 사업군 B의 적용 대상이 두 문서에서 다름</p><ol><li>정정 원문의 적용 대상을 확인한다.</li><li>기업 B가 해당 대상에 속하는지 사건 이전 자료를 확인한다.</li><li>근거가 확보된 가설만 다시 검토하고 나머지는 보류한다.</li></ol><small>예시 질문을 직접 작성한 화면입니다. 자동 질문 생성이나 검토 시간 단축을 검증한 결과가 아닙니다.</small></div>
 <ol class="research-phases"><li><span>01</span><div><strong>변경·시간의 정확성</strong><p>독립 판독과 사건 분리로 반복·정정·시점 오류 평가</p></div></li><li><span>02</span><div><strong>갱신 범위와 근거의 정확성</strong><p>필요한 수정 누락·불필요한 변경·잘못 연결한 원문 평가</p></div></li><li><span>03</span><div><strong>보류와 검토의 유용성</strong><p>답한 비율·오류·누락된 사건 유형·사람의 검토 시간 함께 평가</p></div></li><li><span>04</span><div><strong>시장 자료와의 관계</strong><p>앞 단계 확인 후 사전에 정한 조건과 새 사건에서 평가</p></div></li></ol><p class="research-caption">모델이 이미 과거 사건을 알고 있을 가능성은 문서 날짜 필터만으로 제거되지 않습니다. 이후 새 사건을 순차적으로 평가하는 설계도 필요합니다.</p></section>
 <section class="chapter" data-reading-group="references" id="references"><div class="section-kicker"><span class="num">07</span>POSITION &amp; STATUS</div><h2>개인 연구 방향을,<br/>검증 가능한 기록으로 남기기.</h2><div class="research-status"><div><span class="status-label">현재 · 실험과 실패 기록</span><h3>NLP를 실제로 실행해 남긴 근거</h3><p>사실·정정·조건 판독에서 저장 판단 갱신으로, 이어 규칙·신청자 사실의 분리 추출과 복합 조건 실행으로 확장했습니다. 환산식, 학적 예외, 검증 피드백과 필요한 사실 분석을 실제로 실행하고 실패를 보존했습니다.</p></div><div><span class="status-label">다음 · 독립 사건과 사람 판독</span><h3>일반화를 확인할 단계</h3><p>독립 사람 판독, 다양한 기관·참조 별표의 일반화, 실제 검토 시간 절감은 아직 입증하지 않았습니다. 출처 사본의 원본 동일성과 전송 인증의 한계를 기록했으며 같은 자료의 후속 실행을 독립 검증으로 세지 않습니다.</p></div></div><div class="prose"><p>입력 변화에 대한 동작 평가는 <a href="https://aclanthology.org/2020.acl-main.442/">CheckList</a>, 시간 추론의 능력별 평가는 <a href="https://aclanthology.org/2024.acl-long.66/">TimeBench</a>, 답하는 범위와 오류의 관계는 <a href="https://papers.nips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html">Selective Classification</a>에서 참고했습니다. 이 관점을 정책의 정정·근거·검토 문제에 연결한 것이 이번 제안입니다. 학술적 신규성과 유용성은 비교 실험으로 확인해야 합니다.</p></div><a class="evidence-link" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/RESEARCH_AGENDA.md"><span>연구 설계와 실행</span><strong>질문 · 기준선 · 실패 조건 · 합성 예제 코드</strong><span aria-hidden="true">↗</span></a><div class="hero-actions"><a class="text-link" href="/projects/market-impact-v2/#next">개발 기록으로 돌아가기 ↗</a><a class="text-link" href="https://github.com/soccz/market-impact-analysis/blob/main/examples/research_demo.py">설명용 코드 ↗</a></div><p class="article-footer">soccz · 2026.10.01 갱신 · 개인 후속 연구. 공개 모델·벤치마크·새 합성 자료와 짧은 공식 문서 사례를 사용했습니다. AI 지원 작성, 독립 사람 판독 전. 기존 개발·납품 성과와 구분합니다.</p></section>
-</article></div></main><footer class="site-footer"><div class="wrap"><a href="/">soccz.</a><span>Research notes · Questions in progress</span></div></footer><script defer="" src="/projects/market-impact-research/selective-update.js"></script><script defer="" src="/projects/market-impact-research/compositional-reasoning.js"></script><script defer="" src="/projects/market-impact-research/fact-grounding.js"></script></body></html>
+</article></div></main><footer class="site-footer"><div class="wrap"><a href="/">soccz.</a><span>Research notes · Questions in progress</span></div></footer><script defer="" src="/projects/market-impact-research/selective-update.js"></script><script defer="" src="/projects/market-impact-research/compositional-reasoning.js"></script><script defer="" src="/projects/market-impact-research/fact-grounding.js"></script><script defer="" src="/projects/market-impact-research/source-alignment.js"></script></body></html>
