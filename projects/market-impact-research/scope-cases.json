@@ -1,0 +1,335 @@
+[
+  {
+    "id": "jeju-new-sales",
+    "title": "01 · 매출 조건의 OR",
+    "claim": "수정 공고의 매출 기준만 묻는다. 2년간 운영했고 전년도 매출 900만원, 최근 3개월 평균 월 매출 110만원인 가상 신청자는 그 매출 기준을 충족한다.",
+    "source_url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000114972",
+    "source_label": "제주 수정 공고",
+    "variants": {
+      "base": {
+        "context": "제주 수정 공고의 매출 조건에는 전년도 매출과 최근 월평균 매출 사이에 OR가 있습니다. 전체 신청 자격은 묻지 않습니다. 관련 원문 조항을 제공했습니다.",
+        "reference": "supported",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "supported",
+            "correct": true,
+            "joint": true
+          },
+          {
+            "label": "Qwen · 설명 구조화",
+            "method": "qwen-scoped",
+            "decision": "supported",
+            "correct": true,
+            "joint": true
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "supported",
+            "correct": true,
+            "joint": true
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "supported",
+            "correct": true,
+            "joint": true
+          }
+        ]
+      },
+      "distractor": {
+        "context": "제주 수정 공고의 매출 조건에는 전년도 매출과 최근 월평균 매출 사이에 OR가 있습니다. 전체 신청 자격은 묻지 않습니다. 별도 가상 사업의 매출·금액·접수 또는 거주 조건을 함께 넣었습니다. 실제 사업의 근거는 유지했습니다.",
+        "reference": "supported",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "abstain",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 설명 구조화",
+            "method": "qwen-scoped",
+            "decision": "contradicted",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "supported",
+            "correct": true,
+            "joint": true
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "supported",
+            "correct": true,
+            "joint": true
+          }
+        ]
+      },
+      "removed": {
+        "context": "제주 수정 공고의 매출 조건에는 전년도 매출과 최근 월평균 매출 사이에 OR가 있습니다. 전체 신청 자격은 묻지 않습니다. 해당 사업의 관련 조항을 모두 가리고, 가림을 알리는 문구와 다른 가상 사업 정보만 남겼습니다.",
+        "reference": "not_established",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "not_established",
+            "correct": true,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 설명 구조화",
+            "method": "qwen-scoped",
+            "decision": "contradicted",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "not_established",
+            "correct": true,
+            "joint": false
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "not_established",
+            "correct": true,
+            "joint": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "jeju-grandfather-old",
+    "title": "02 · 이전 신청 건의 규정",
+    "claim": "9월 10일에 최초 공고에 따라 이미 신청했다. 사업 운영 2년, 전년도 매출 900만원, 최근 3개월 평균 월 110만원인 가상 신청자는 적용되는 매출 기준을 충족한다.",
+    "source_url": "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000114972",
+    "source_label": "제주 수정 공고",
+    "variants": {
+      "base": {
+        "context": "수정 공고는 이전 신청 건에 이전 규정을 적용하도록 구분합니다. 신청일을 먼저 연결해야 비교할 매출 조건이 정해집니다. 관련 원문 조항을 제공했습니다.",
+        "reference": "contradicted",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "not_established",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 설명 구조화",
+            "method": "qwen-scoped",
+            "decision": "supported",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "not_established",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "not_established",
+            "correct": false,
+            "joint": false
+          }
+        ]
+      },
+      "distractor": {
+        "context": "수정 공고는 이전 신청 건에 이전 규정을 적용하도록 구분합니다. 신청일을 먼저 연결해야 비교할 매출 조건이 정해집니다. 별도 가상 사업의 매출·금액·접수 또는 거주 조건을 함께 넣었습니다. 실제 사업의 근거는 유지했습니다.",
+        "reference": "contradicted",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "abstain",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 설명 구조화",
+            "method": "qwen-scoped",
+            "decision": "supported",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "not_established",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "not_established",
+            "correct": false,
+            "joint": false
+          }
+        ]
+      },
+      "removed": {
+        "context": "수정 공고는 이전 신청 건에 이전 규정을 적용하도록 구분합니다. 신청일을 먼저 연결해야 비교할 매출 조건이 정해집니다. 해당 사업의 관련 조항을 모두 가리고, 가림을 알리는 문구와 다른 가상 사업 정보만 남겼습니다.",
+        "reference": "not_established",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "not_established",
+            "correct": true,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 설명 구조화",
+            "method": "qwen-scoped",
+            "decision": "contradicted",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "not_established",
+            "correct": true,
+            "joint": false
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "not_established",
+            "correct": true,
+            "joint": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "incheon-exception",
+    "title": "03 · 거주 요건의 예외",
+    "claim": "인천 공공간호사 장학생의 거주 요건만 묻는다. 본인과 부모 모두 인천 거주 1년을 채우지 못했다. 전입 및 2년 이상 거주 확약서를 제출해도 이 거주 요건 때문에 반드시 제외된다.",
+    "source_url": "https://nursing.ewha.ac.kr/nursing/intro/nursing-undergraduate-news.do?articleNo=746725&attachNo=476663&mode=download",
+    "source_label": "인천 공고 · 대학 공개 PDF",
+    "variants": {
+      "base": {
+        "context": "인천 공고는 거주 기간 미충족자가 확약서를 제출하는 예외 경로를 둡니다. 예외가 있다는 것과 최종 선발 확정은 구분합니다. 관련 원문 조항을 제공했습니다.",
+        "reference": "contradicted",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "contradicted",
+            "correct": true,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "not_established",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "공개 Kanana · 기본",
+            "method": "kanana-public-baseline",
+            "decision": "contradicted",
+            "correct": true,
+            "joint": false
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "contradicted",
+            "correct": true,
+            "joint": false
+          }
+        ]
+      },
+      "distractor": {
+        "context": "인천 공고는 거주 기간 미충족자가 확약서를 제출하는 예외 경로를 둡니다. 예외가 있다는 것과 최종 선발 확정은 구분합니다. 별도 가상 사업의 매출·금액·접수 또는 거주 조건을 함께 넣었습니다. 실제 사업의 근거는 유지했습니다.",
+        "reference": "contradicted",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "abstain",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "not_established",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "공개 Kanana · 기본",
+            "method": "kanana-public-baseline",
+            "decision": "contradicted",
+            "correct": true,
+            "joint": true
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "contradicted",
+            "correct": true,
+            "joint": false
+          }
+        ]
+      },
+      "removed": {
+        "context": "인천 공고는 거주 기간 미충족자가 확약서를 제출하는 예외 경로를 둡니다. 예외가 있다는 것과 최종 선발 확정은 구분합니다. 해당 사업의 관련 조항을 모두 가리고, 가림을 알리는 문구와 다른 가상 사업 정보만 남겼습니다.",
+        "reference": "not_established",
+        "methods": [
+          {
+            "label": "Qwen · 기본",
+            "method": "qwen-baseline",
+            "decision": "not_established",
+            "correct": true,
+            "joint": true
+          },
+          {
+            "label": "Qwen · 근거 충분성",
+            "method": "qwen-evidence",
+            "decision": "not_established",
+            "correct": true,
+            "joint": true
+          },
+          {
+            "label": "공개 Kanana · 기본",
+            "method": "kanana-public-baseline",
+            "decision": "contradicted",
+            "correct": false,
+            "joint": false
+          },
+          {
+            "label": "Qwen · ID만 제한 · 사후",
+            "method": "qwen-citation-only",
+            "decision": "not_established",
+            "correct": true,
+            "joint": true
+          }
+        ]
+      }
+    }
+  }
+]
