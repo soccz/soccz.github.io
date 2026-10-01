@@ -1,0 +1,59 @@
+/* Scoped, static reading of actual revision evidence. */
+.revision-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:28px 0 14px}
+.revision-stats>div{padding:18px 0;border-top:2px solid #285f53}
+.revision-stats strong{display:block;font-size:2.1rem;line-height:1.2;color:#193a36}
+.revision-stats span{display:block;margin-top:8px;font-size:.83rem;color:#56635e}
+.revision-label{display:block;color:#476b5e;font-size:.76rem;font-weight:700;letter-spacing:.05em;margin-bottom:12px}
+.revision-provenance,.revision-modality,.revision-question{padding:28px;background:#f0f3ed;border:1px solid #d6ded3;border-radius:12px;margin:32px 0}
+.revision-provenance h3,.revision-matrix h3,.revision-modality h3,.revision-diagnostic h3,.revision-question h3{font-size:1.25rem;line-height:1.5;margin:0 0 16px}
+.revision-path{display:grid;grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr);gap:12px;align-items:center;margin:22px 0}
+.revision-path>div{padding:16px;background:#fff;border-radius:8px;border:1px solid #d6ded3}
+.revision-path span,.revision-path strong,.revision-path small{display:block}
+.revision-path span,.revision-path small{font-size:.78rem;color:#53625a}
+.revision-path strong{font-size:.95rem;margin:6px 0}
+.revision-path>b{text-align:center;font-size:1.5rem}
+.revision-matrix{margin:40px 0}
+.revision-matrix figcaption p{font-size:.85rem;color:#56635e}
+.revision-matrix table{width:100%;border-collapse:separate;border-spacing:4px;table-layout:fixed;margin:16px 0}
+.revision-matrix th{font-size:.87rem;text-align:left;padding:10px 4px;font-weight:600}
+.revision-matrix th:first-child{width:25%}
+.revision-matrix th>span{display:block;font-size:.77rem;font-weight:400;color:#52645b;margin-top:5px}
+.revision-matrix td{text-align:center;padding:10px 4px;border-radius:6px;vertical-align:middle;color:#193a36;font-variant-numeric:tabular-nums}
+.revision-matrix td>span,.revision-matrix td>strong,.revision-matrix td>small{display:block}
+.revision-matrix td>span{font-size:.8rem}
+.revision-matrix td>strong{font-size:1.12rem;margin-top:2px}
+.revision-matrix td>small{font-size:.68rem;margin-top:4px}
+.revision-changed{background:#dcece3}
+.revision-same{background:#efeee8}
+.revision-diagnostic{padding:24px 0;border-top:1px solid #d6ded3;border-bottom:1px solid #d6ded3}
+.revision-method{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:6px 20px;margin:18px 0;font-size:.88rem}
+.revision-method>span:last-child{grid-column:2;color:#647168;font-size:.78rem}
+.revision-clause-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+.revision-clause-grid>div{padding:18px;background:#fff;border:1px solid #d6ded3;border-radius:8px}
+.revision-clause-grid span{display:block;font-size:.78rem;color:#647168;margin-bottom:8px}
+.revision-clause-grid strong{font-size:.97rem}
+.revision-clause-grid p{font-size:.86rem;margin-bottom:0}
+.revision-verdict{border-left:3px solid #3e6c55;padding-left:16px}
+.revision-verdict strong,.revision-verdict span{display:block}
+.revision-verdict span{font-size:.88rem;margin-top:6px}
+.revision-question{background:#193a36;color:#fff}
+.revision-question ol{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;list-style:none;padding:0;margin:24px 0}
+.revision-question li{border-top:1px solid #63887c;padding-top:12px}
+.revision-question li strong,.revision-question li span{display:block}
+.revision-question li span{font-size:.77rem;color:#cddfd6;margin-top:8px;line-height:1.6}
+.revision-question p{color:#e0e9e3;font-size:.92rem}
+.revision-audit-details{margin:24px 0;padding:18px 22px;border:1px solid #d6ded3;border-radius:8px}
+.revision-audit-details summary{cursor:pointer;font-weight:650}
+.revision-audit-details summary:focus-visible{outline:3px solid #aa6a26;outline-offset:5px}
+.revision-audit-details p,.revision-audit-details li{font-size:.86rem}
+.revision-audit-details ul{padding-left:20px}
+@media(max-width:600px){
+ .revision-stats{gap:10px}.revision-stats strong{font-size:1.7rem}.revision-stats span{font-size:.72rem}
+ .revision-provenance,.revision-modality,.revision-question{padding:20px 16px}
+ .revision-path{grid-template-columns:1fr;gap:8px}.revision-path>div{padding:14px}.revision-path>b{line-height:1}
+ .revision-clause-grid{grid-template-columns:1fr}
+ .revision-question ol{grid-template-columns:1fr 1fr}
+ .revision-method{grid-template-columns:1fr;gap:5px}.revision-method>span:last-child{grid-column:1}
+ .revision-matrix table{border-spacing:2px}.revision-matrix th{font-size:.74rem;padding:8px 2px}.revision-matrix th>span{font-size:.68rem}
+ .revision-matrix td{padding:10px 2px}.revision-matrix td>strong{font-size:.95rem}.revision-matrix td>span{font-size:.71rem}
+}
