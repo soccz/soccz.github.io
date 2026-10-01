@@ -66,8 +66,12 @@ function updateReadingPosition() {
   const available = document.documentElement.scrollHeight - window.innerHeight;
   if (progress) progress.style.width = `${available > 0 ? Math.min(100, Math.max(0, window.scrollY / available * 100)) : 0}%`;
   let active = sections[0];
+  const readingEdge = compactReading.matches
+    ? Math.max(170, (document.getElementById('navbar')?.offsetHeight || 60)
+      + (readingMenu?.querySelector('summary')?.offsetHeight || 48) + 32)
+    : 170;
   for (const section of sections) {
-    if (section.getBoundingClientRect().top <= 170) active = section;
+    if (section.getBoundingClientRect().top <= readingEdge) active = section;
   }
   const group = active?.dataset.readingGroup || active?.id;
   links.forEach(link => {
