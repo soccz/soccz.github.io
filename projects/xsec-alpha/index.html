@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xsec_alpha · 실패와 판단의 변화, 그리고 전향 검증</title>
+  <title>xsec_alpha 개발일지 · 가설, 실패, 그리고 다음 실험</title>
   <meta name="description" content="gan_t 실패, LONG 설계 기각, 과장된 적중률 철회, 비용과 운영 감사, 9월 고정 모델 실험까지. 무엇을 기대했고 왜 판단을 바꿨는지 남기는 xsec_alpha 개발일지.">
   <meta property="og:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
   <meta property="og:description" content="실패한 가설과 기각한 모델을 지우지 않는다. 연구의 부분 성공, 운영의 반증, 측정 계약 복구와 2026-09-07 고정 모델 실험을 잇는 개발일지.">
@@ -373,35 +373,73 @@
     @media (max-width: 680px) { .hero { padding: 6rem 1.5rem 2rem; } .hero h1 { font-size: 2.2rem; } .hero-links { gap: 0.4rem 1rem; margin-top: 1rem; } .hero-link { border: 0; padding: 0.35rem 0; text-decoration: underline; text-underline-offset: 4px; } .section-title, .part-divider h2 { font-size: 1.5rem; } .journal-path > li { grid-template-columns: 28px minmax(0, 1fr); gap: 0.6rem; } .journal-path > li > div:last-child { grid-column: 2; } .journal-state { display: inline; margin-left: 0.7rem; } .status-facts { grid-template-columns: 1fr; } .journal-links a { overflow-wrap: anywhere; } }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .fade-in { opacity: 1; transform: none; transition: none; } }
   </style>
+  <style>
+    .project-nav .nav-inner { height: 64px; max-width: 1180px; padding: 0 24px; gap: 20px; }
+    .project-brand { color: var(--text-primary); font: 600 16px 'JetBrains Mono', monospace; text-decoration: none; white-space: nowrap; }
+    .page-switch { display: flex; align-self: stretch; gap: 24px; align-items: stretch; }
+    .page-switch a { display: flex; align-items: center; font-size: 14px; text-decoration: none; color: var(--text-secondary); border-bottom: 3px solid transparent; white-space: nowrap; }
+    .page-switch a[aria-current="page"] { color: var(--accent); border-color: var(--accent); font-weight: 700; }
+    .hero { display: block; padding: 112px 24px 32px; text-align: left; }
+    .hero-content { max-width: 1100px; margin: auto; }
+    .hero h1 { font-size: 38px; line-height: 1.4; }
+    .hero-label { margin: 0 0 12px; font-size: 12px; color: var(--accent); }
+    .hero-sub { max-width: 760px; font-size: 16px; font-weight: 400; }
+    .hero-links { justify-content: flex-start; margin-top: 20px; }
+    .hero-link { border: 0; padding: 0; text-decoration: underline; text-underline-offset: 5px; }
+    .reading-nav { display: flex; flex-wrap: wrap; gap: 12px 24px; border-top: 1px solid var(--border); padding-top: 20px; margin-top: 28px; font-size: 13px; }
+    .reading-nav a, .verdict-band a { color: var(--accent); text-underline-offset: 4px; }
+    .verdict-band { padding: 28px 24px; background: #f1f4f7; border-block: 1px solid var(--border); }
+    .verdict-grid { display: grid; grid-template-columns: 1.2fr 1fr; max-width: 1100px; margin: auto; gap: 40px; }
+    .verdict-grid h2 { font-size: 20px; font-family: 'Noto Serif KR', serif; margin: 8px 0; }
+    .verdict-grid p, .verdict-grid figcaption { font-size: 13px; line-height: 1.8; color: var(--text-secondary); }
+    .verdict-grid .verdict-label { font: 12px 'JetBrains Mono', monospace; color: #9b403e; }
+    .verdict-grid .next-label { color: #1d609c; }
+    .interval-chart { display: block; width: 100%; height: 104px; }
+    .mix-bar { display: flex; height: 32px; margin: 20px 0 10px; font: 12px 'JetBrains Mono', monospace; color: white; }
+    .mix-bar span { display: grid; place-items: center; }
+    .mix-bar span:first-child { width: 75%; background: #266f82; }
+    .mix-bar span:last-child { width: 25%; background: #9e7040; }
+    .journal-path > li { border-left: 2px solid var(--border-light); padding-left: 16px; }
+    .journal-path > li:has(.journal-state.fail) { border-left-color: #be5552; }
+    .journal-path > li:has(.journal-state.partial) { border-left-color: #327b72; }
+    .journal-path > li:has(.journal-state.open) { border-left-color: #4078a6; }
+    .journal-state.fail { color: #a53936; } .journal-state.partial { color: #237568; } .journal-state.open { color: #246293; }
+    .chapter-group { border-block: 1px solid var(--border); }
+    .chapter-group > summary { max-width: 1100px; margin: auto; padding: 24px 0; font-size: 17px; font-weight: 700; cursor: pointer; }
+    .chapter-group[open] > summary { color: var(--accent); }
+    .chapter-group section { padding-top: 40px; padding-bottom: 40px; }
+    .chapter-group .fade-in { opacity: 1; transform: none; }
+    .chapter-group + .chapter-group { border-top: 0; }
+    @media (max-width: 680px) {
+      .project-nav .nav-inner { height: 60px; padding: 0 16px; gap: 10px; }
+      .project-brand { font-size: 13px; } .page-switch { gap: 16px; } .page-switch a { font-size: 12px; }
+      .hero { padding: 88px 20px 24px; } .hero h1 { font-size: 28px; } .hero-sub { font-size: 14px; }
+      .hero-label { width: auto; margin-left: 0; }
+      .verdict-band { padding: 24px 20px; } .verdict-grid { grid-template-columns: 1fr; gap: 24px; }
+      .verdict-grid > div { border-top: 1px solid var(--border-light); padding-top: 20px; }
+      .chapter-group > summary { margin: 0 20px; font-size: 15px; padding: 20px 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
 </head>
 <body>
 
-<nav id="navbar">
+<nav id="navbar" class="project-nav" aria-label="프로젝트 페이지">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">soccz.</a>
-    <ul class="nav-links">
-      <li><a href="#development-journey">판단의 흐름</a></li>
-      <li><a href="#thesis">초기 연구</a></li>
-      <li><a href="#ops-reality">운영의 반증</a></li>
-      <li><a href="#august-audit">8월 감사</a></li>
-      <li><a href="#september-validation">9월 검증 설계</a></li>
-      <li><a href="#post-trial">종료 결과와 새 질문</a></li>
-      <li><a href="/projects/xsec-alpha/dashboard/">대시보드</a></li>
-    </ul>
+    <a href="/" class="project-brand">xsec_alpha</a>
+    <div class="page-switch"><a href="/projects/xsec-alpha/" aria-current="page">개발일지</a><a href="/projects/xsec-alpha/dashboard/">운영 대시보드</a></div>
   </div>
 </nav>
 
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">개발일지 &middot; Cross-Sectional Crypto Ranking &middot; 2026-09-30</span>
-    <h1>xsec_alpha</h1>
+    <span class="hero-label">RESEARCH JOURNAL · 2026-10-01</span>
+    <h1>xsec_alpha 개발일지</h1>
     <p class="hero-sub">
-      <strong>코인을 상대 순위로 고르는 아이디어는 어디까지 유효한가.</strong><br>
-      절대수익 예측의 실패에서 시작했고, 좋은 IC를 발견했다.
-      그러나 운영 원장은 과장된 적중률과 비용 후 손실, 집행되지 않은 정책을 드러냈다.<br>
-      지금은 추천을 계속 전달하면서, 고정한 모델이 단순 기준선보다 나은지 미래 60회로 검증한다.
-      <strong>운영 보강은 확인했다. 투자 성과의 개선은 아직 결론 내리지 않았다.</strong>
+      <strong>코인의 상대 순위를 고르는 아이디어는 어디까지 유효한가.</strong><br>
+      모델의 복잡함보다 단순한 기준선, 좋은 숫자보다 반증 가능한 기록을 택했다.
+      60회 비교는 우위 미확정으로 끝났다. 다음 질문은 <strong>잘 맞는 장세를 미리 구별할 수 있는가</strong>다.
     </p>
     <div class="hero-links">
       <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
@@ -410,14 +448,33 @@
       </a>
       <a href="/projects/xsec-alpha/dashboard/" class="hero-link" aria-label="Live dashboard">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="9" width="2.5" height="5" rx="0.5"/><rect x="6.75" y="6" width="2.5" height="8" rx="0.5"/><rect x="11.5" y="2.5" width="2.5" height="11.5" rx="0.5"/></svg>
-        대시보드 근거
+        현재 후보·검증 상태
       </a>
-      <a href="#development-journey" class="hero-link">개발 흐름</a>
+      <a href="#development-journey" class="hero-link">실패와 판단의 흐름</a>
     </div>
+    <div class="reading-nav"><a href="#research-verdict">지금까지의 결론</a><a href="#development-journey">판단의 전환점</a><a href="#thesis">초기 가설과 실패</a><a href="#post-trial">종료 결과와 후속 기록</a></div>
   </div>
   <div class="scroll-ind">SCROLL<br><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
 <hr class="divider">
+
+<section id="research-verdict" class="verdict-band" aria-label="종료 실험과 다음 가설">
+  <div class="verdict-grid">
+    <figure>
+      <div class="verdict-label">종료 · 고정 모델 60회</div>
+      <h2>평균은 양수, 우위는 미확정</h2>
+      <canvas id="trialInterval" class="interval-chart" role="img" aria-label="모델과 반전 기준선의 평균 차이 +0.500%p. 95% 구간 -0.235에서 +1.318%p로 0을 포함한다."></canvas>
+      <figcaption>2026-09-23 종료 · 모델−반전 기준선 · 회차당 비용 가정 후 차이.<br>95% 구간 −0.235 ~ +1.318%p. 0을 포함하며 실제 체결 성과는 아니다. <a href="#post-trial-result">결과와 당시 선택</a></figcaption>
+    </figure>
+    <div>
+      <div class="verdict-label next-label">후속 · 장세 적응 336회</div>
+      <h2>장세에 따라 조금 섞으면 달라질까</h2>
+      <div class="mix-bar" role="img" aria-label="조건 충족 시에만 모델 75%, 반전 규칙 25%의 연구용 혼합"><span>모델 75%</span><span>반전 25%</span></div>
+      <p>조건을 충족한 장세에서만 적용하는 연구 가정. 기본은 모델 100%. 9월 30일 시작, 12월 25일 최종 처리. 운영 추천의 자동 전환은 없다.</p>
+      <p><a href="/projects/xsec-alpha/dashboard/#experiment-overview">현재 회차·자료 부족·실패 기록</a></p>
+    </div>
+  </div>
+</section>
 
 <section id="development-journey" class="compact"><div class="container">
   <div class="section-label">개발 과정 · 실패 / 부분 성공 / 보류</div>
@@ -1849,6 +1906,63 @@
 </footer>
 
 <script>
+// Preserve dated chapters and deep links while keeping the reading path short.
+for (const [first, last, title] of [
+  ['summary', 'september-validation', '01 · 초기 가설부터 60회 실험까지의 상세 기록'],
+  ['post-trial', 'operating-closeout', '02 · 종료 결과, 새 가설, 운영 복구의 상세 기록'],
+]) {
+  const start = document.getElementById(first), end = document.getElementById(last);
+  const group = document.createElement('details');
+  group.className = 'chapter-group';
+  const label = document.createElement('summary');
+  label.textContent = title;
+  group.append(label);
+  start.before(group);
+  let node = start;
+  while (node) {
+    const next = node.nextSibling;
+    group.append(node);
+    if (node === end) break;
+    node = next;
+  }
+}
+function openChapterHash() {
+  let id;
+  try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+  const target = document.getElementById(id);
+  if (!target) return;
+  for (let parent = target.parentElement; parent; parent = parent.parentElement) {
+    if (parent.tagName === 'DETAILS') parent.open = true;
+  }
+  requestAnimationFrame(() => target.scrollIntoView({block: 'start'}));
+}
+window.addEventListener('hashchange', openChapterHash);
+document.addEventListener('click', e => {
+  if (e.target.closest('a')?.hash === location.hash && location.hash) setTimeout(openChapterHash, 0);
+});
+openChapterHash();
+
+function drawTrialInterval() {
+  const canvas = document.getElementById('trialInterval');
+  const w = canvas.clientWidth, h = 104, dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.round(w * dpr); canvas.height = h * dpr;
+  const ctx = canvas.getContext('2d'); ctx.scale(dpr, dpr);
+  const x = n => 28 + (n + 0.5) / 2 * (w - 56);
+  ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
+  ctx.strokeStyle = '#b6c0cb'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(28, 68); ctx.lineTo(w - 28, 68); ctx.stroke();
+  for (const n of [-0.5, 0, 0.5, 1, 1.5]) {
+    ctx.fillStyle = '#526272'; ctx.fillText((n > 0 ? '+' : '') + n, x(n), 90);
+  }
+  ctx.setLineDash([3, 3]); ctx.strokeStyle = '#526272';
+  ctx.beginPath(); ctx.moveTo(x(0), 10); ctx.lineTo(x(0), 74); ctx.stroke(); ctx.setLineDash([]);
+  ctx.strokeStyle = '#2b7084'; ctx.lineWidth = 5;
+  ctx.beginPath(); ctx.moveTo(x(-0.2351), 43); ctx.lineTo(x(1.3183), 43); ctx.stroke();
+  ctx.fillStyle = '#2b7084'; ctx.beginPath(); ctx.arc(x(0.5004), 43, 6, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#254b58'; ctx.fillText('+0.500%p', x(0.5004), 22);
+}
+drawTrialInterval(); window.addEventListener('resize', drawTrialInterval);
+
 // Nav scroll effect
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
