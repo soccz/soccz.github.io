@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>prelude — 업비트 KRW 상승확률·하방리스크 레이더 · 정직 보고서</title>
+  <title>prelude 개발일지 — 더 좋은 추천을 증명하는 과정</title>
   <meta name="description" content="저하방·고상방 후보를 찾는 업비트 KRW 수동매매 보조 레이더의 개발일지. 운영 수리에서 체결정보 20일 비교, 시즌별 선택, 상방 점수·전체후보 조합의 실패까지. 09-30 검증: 새 선별안 미채택, R1 유지. 자동매매 없음.">
-  <meta property="og:title" content="prelude — 상승확률·하방리스크 레이더">
+  <meta property="og:title" content="prelude 개발일지 — 더 좋은 추천을 증명하는 과정">
   <meta property="og:description" content="기록이 쌓인 뒤에도 추천은 좋아졌을까. 체결정보 20일 비교와 시즌별 가설, 점수 척도·1,342만 조합 검증에서 배운 한계. R1 유지 · 새 선별안 미채택 · 운영 정상 ≠ 추천 우위.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="prelude — 상승확률·하방리스크 레이더">
+  <meta name="twitter:title" content="prelude 개발일지 — 더 좋은 추천을 증명하는 과정">
   <meta name="twitter:description" content="R1 개발일지 · 09-30: 체결정보 20일 비교, 시즌별 선택 가설, 상방 점수와 전체후보 조합을 검증했다. 새 선별안 미채택 · 실제 추천 유지 · 자동매매 없음.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/">
@@ -324,59 +324,60 @@
     @media (max-width: 520px) { .nav-inner { height: 56px; padding: 0 1rem; } .hero { min-height: auto; padding: 6.5rem 1rem 4rem; } .hero-label { margin-bottom: 1.5rem; letter-spacing: 0.12em; } .hero h1 { font-size: 2.1rem; } .hero-sub { font-size: 0.9rem; line-height: 1.8; } .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } .hero-stat-num { font-size: 1.65rem; } .hero-stat-label, .metric-sub, .dual-key, .dual-val { overflow-wrap: anywhere; } section { padding: 3.5rem 1rem; } section.compact { padding: 2.8rem 1rem; } .chart-wrap { padding: 1.1rem; margin-left: -0.25rem; margin-right: -0.25rem; } .metric-val { font-size: 1.55rem; } .bar-row { grid-template-columns: 1fr; gap: 0.25rem; } .bar-label { text-align: left; } .bar-val { justify-self: end; } .cadence-row { align-items: stretch; flex-direction: column; } .cadence-label { min-width: 0; } .cadence-slot { min-width: 58px; } .cadence-bar { overflow-x: auto; padding-bottom: 0.25rem; } .auto-timer, .lesson-item, .card, .layer-card, .dual-card { padding: 1rem; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; } .fade-in { opacity: 1; transform: none; } }
   </style>
+  <link rel="stylesheet" href="/projects/prelude/page-concepts.css">
 </head>
-<body>
+<body class="page-journal">
+<a class="skip-link" href="#journalMain">개발일지 본문으로</a>
 
-<nav id="navbar">
+<nav id="navbar" class="concept-nav" aria-label="prelude 페이지 선택">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">soccz.</a>
-    <ul class="nav-links">
-      <li><a href="#summary">Summary</a></li>
-      <li><a href="#journey">I·Journey</a></li>
-      <li><a href="#validation-chain">Chain</a></li>
-      <li><a href="#integrity-turn">Integrity</a></li>
-      <li><a href="#new-information">September</a></li>
-      <li><a href="#selection-evidence">09·30</a></li>
-      <li><a href="#architecture">II·System</a></li>
-      <li><a href="#ops">Ops</a></li>
-      <li><a href="#distribution">III·Archive</a></li>
-      <li><a href="#failures">Failures</a></li>
-      <li><a href="#lessons">IV·Lessons</a></li>
-      <li><a href="#status">Status</a></li>
+    <div class="project-brand"><a href="/" class="portfolio-home">soccz.</a><span aria-hidden="true">/</span><a href="/projects/prelude/"><strong>prelude</strong></a></div>
+    <ul class="page-switch">
+      <li><a href="/projects/prelude/" aria-current="page"><span aria-hidden="true">01</span> 개발일지</a></li>
+      <li><a href="/projects/prelude/dashboard/"><span aria-hidden="true">02</span> 운영 현황·검증</a></li>
     </ul>
+    <a class="nav-source" href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer">소스 코드 ↗</a>
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-content">
-    <span class="hero-label">Upside-prob &middot; Downside-risk Radar &middot; Upbit KRW &middot; 2026 &middot; radar-not-strategy 확정</span>
-    <h1>prelude</h1>
-    <p class="hero-sub">
-      "맞히는 모델이 아니라, 좁혀주는 레이더."<br>
-      목표는 <strong>하락 가능성은 낮고 상승 가능성은 높은 후보</strong>를 찾는 것. 현재는 <strong>R1 레이더</strong>가 KST 08:50 장전 + 09:05 개장 후 알림을 담당하고, 실제 매매는 사람이 판단한다.<br>
-      측정·전달을 수리한 뒤 체결정보의 20일 결과와 새 선별안을 비교했다. 점수상 좋아 보이는 조합도 실제 하락을 줄이지 못했다. <strong>운영 수리의 성공과 추천 개선의 실패를 함께 기록한 개발일지</strong>다.
-    </p>
-    <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">R1</span><span class="hero-stat-label">현재 실알림 모델</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">2 slots</span><span class="hero-stat-label">08:50 / 09:05 KST</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">KILL</span><span class="hero-stat-label">v2 종료 · 08-05</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">20 days</span><span class="hero-stat-label">체결Top10 공통 비교</span></div>
-      <div class="hero-stat"><span class="hero-stat-num">미채택</span><span class="hero-stat-label">새 선별안 D / E</span></div>
+<main id="journalMain">
+<section class="journal-hero" aria-labelledby="journalTitle">
+  <div class="journal-hero-grid">
+    <div>
+      <div class="concept-kicker">DEVELOPMENT JOURNAL · 개발일지</div>
+      <h1 id="journalTitle" class="concept-title">더 좋은 추천은<br>어떻게 증명할까.</h1>
+      <p class="concept-lead">업비트 KRW 코인에서, 덜 떨어지고 오를 기회는 놓치지 않는 후보를 찾고 싶었다.<br>
+        하지만 좋은 점수와 좋은 추천은 달랐다. 아이디어를 세우고, 실제 자료와 비교하고,
+        실패한 이유를 다음 설계에 반영해 온 기록이다.</p>
+      <div class="concept-actions">
+        <a class="concept-button primary" href="#journalGuide">개발 흐름 읽기 <span aria-hidden="true">↓</span></a>
+        <a class="concept-button" href="/projects/prelude/dashboard/">운영 현황·검증 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="journal-stamp"><span>공개 개발 기록</span><span>추천 우위 미입증</span><span>자동매매 없음</span></div>
+      <p class="concept-note" style="margin-top:18px;">기록 갱신 2026.10.01 · 이 페이지의 연구 수치는 각 실험 당시의 기록입니다.<br>자동 갱신되는 현재 상태와 비교 결과는 ‘운영 현황·검증’에서 확인합니다.</p>
     </div>
-    <p style="font-size:0.68rem; color:var(--text-muted); margin-top:0.6rem; line-height:1.6;">2026-09-30 개발 기록. Top10은09-10~29 공통20일, D/E는 이미 관찰한 이력의 별도 오프라인 비교다. 시즌별 사전 선택 시험은10-01 기대일이며 현재 새 정책 실측0건이다. 알림 예약 시각과 실제 발송·평가 시각은 다르다.</p>
-    <div class="hero-links">
-      <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer" class="hero-link">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        Source Code
-      </a>
-      <a href="dashboard/" class="hero-link" aria-label="Live dashboard">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="9" width="2.5" height="5" rx="0.5"/><rect x="6.75" y="6" width="2.5" height="8" rx="0.5"/><rect x="11.5" y="2.5" width="2.5" height="11.5" rx="0.5"/></svg>
-        Live Dashboard
-      </a>
-    </div>
+    <figure class="journey-map" aria-labelledby="journeyMapTitle">
+      <figcaption id="journeyMapTitle"><strong>이야기를 따라가는 네 번의 전환</strong><span>IDEA → EVIDENCE</span></figcaption>
+      <ol>
+        <li><span class="step-index" aria-hidden="true">01</span><div><a href="#journey">급등을 찾는 것에서 시작했다</a><p>좋아 보이는 백테스트와 실제 성과 사이의 간격.</p></div></li>
+        <li><span class="step-index" aria-hidden="true">02</span><div><a href="#integrity-turn">먼저 측정을 다시 세웠다</a><p>발송 시각·비용·경로·기록을 맞추는 작업.</p></div></li>
+        <li><span class="step-index" aria-hidden="true">03</span><div><a href="#selection-evidence">새 선택을 같은 조건에서 비교했다</a><p>하방을 줄여도 상승 기회를 잃으면 충분하지 않다.</p></div></li>
+        <li><span class="step-index current" aria-hidden="true">04</span><div><a href="#book-forward-evidence">다음 답은 새 데이터에서 찾는다</a><p>결과 전에 선택을 저장하고, 다음날 그대로 평가한다.</p></div></li>
+      </ol>
+    </figure>
   </div>
-  <div class="scroll-ind">SCROLL<br><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+</section>
+<div class="section-jumps" role="navigation" aria-label="개발일지 목차">
+  <div class="jump-inner"><a href="#journalGuide">읽는 순서</a><a href="#journey">출발과 전환</a><a href="#selection-evidence">비교와 실패</a><a href="#book-forward-evidence">다음 검증</a><a href="#architecture">시스템 구조</a><a href="#failures">실패 기록</a><a href="#lessons">배운 점</a></div>
+</div>
+<section class="journal-reading" id="journalGuide" aria-labelledby="journalGuideTitle">
+  <div class="journal-reading-heading"><h2 id="journalGuideTitle">무엇을 만들었는지보다,<br>왜 바꾸었는지를 읽는 페이지.</h2><p class="concept-note">가설 → 관찰 → 판단 → 다음 질문<br>성과가 없던 시도도 지우지 않습니다.</p></div>
+  <div class="chapter-grid">
+    <a class="chapter-card" href="#journey"><span>CHAPTER 01</span><h3>처음의 아이디어</h3><p>급등 탐지에서 저하방·고상방 후보 선별로 목표가 바뀐 이유.</p></a>
+    <a class="chapter-card" href="#validation-chain"><span>CHAPTER 02</span><h3>믿을 수 있는 기록</h3><p>추천·전달·평가의 시점을 연결하고 유령 성과를 걷어낸 과정.</p></a>
+    <a class="chapter-card" href="#selection-evidence"><span>CHAPTER 03</span><h3>실험과 반증</h3><p>체결 정보·시즌·점수·호가 가설이 실제 비교에서 남긴 득실.</p></a>
+    <a class="chapter-card" href="#book-forward-evidence"><span>CHAPTER 04</span><h3>지금의 검증</h3><p>첫 기록 누락을 고치고, 새 날짜의 결과를 기다리는 현재 설계.</p></a>
+  </div>
 </section>
 
 <!-- Honest-conclusion banner -->
@@ -1133,6 +1134,32 @@
     <p style="margin-top:0.6rem;">선택 종목·무작위 기대값·통계·가상 바스켓을 별도 계산으로 검산했고217파일의 계보도 확인했다. 이것은 앞 관찰에 쓴 <strong>동일한 개발 자료</strong>다. 새 미래 검증·실거래 수익이 아니며, 좋은 결과가 나올 때까지 cutoff를 바꾸지 않았다. <a href="https://github.com/soccz/prelude/blob/main/PHASES.md" style="color:var(--blue);">PHASES24차</a>에 구간별 수치와 약점을 남기고, 검증 후보는 유지하되 실알림 교체는 보류했다.</p>
     <span class="badge badge-pivot">직접 Top3 비교 완료 · 후속 검증 후보 · 실알림 유지</span>
   </div>
+  <figure class="journal-tradeoff" id="selectionTradeoff" data-concept-anchor aria-labelledby="tradeoffTitle">
+    <p class="concept-kicker">ONE EXPERIMENT · 2026-09-30 개발 기록</p>
+    <h3 id="tradeoffTitle">하방은 줄었지만, 상승 기회도 줄었다</h3>
+    <p class="concept-note">09-10~29 · 같은20일·60픽 · 기존 R1과 매수 호가대금 비중을 이용한 새 선택(L1). 회색은 R1, 황토색은 L1입니다.</p>
+    <div class="tradeoff-grid">
+      <div class="tradeoff-item">
+        <h4>−5% 하락 경험 · 낮을수록 유리</h4>
+        <div class="tradeoff-bar"><span>R1</span><span class="tradeoff-track" aria-hidden="true"><i style="width:80.943%" data-value="28.33" data-scale="35"></i></span><b>28.33%</b></div>
+        <div class="tradeoff-bar"><span>L1</span><span class="tradeoff-track" aria-hidden="true"><i class="candidate" style="width:61.914%" data-value="21.67" data-scale="35"></i></span><b>21.67%</b></div>
+        <p class="tradeoff-outcome favorable">유리한 변화 · 하락 경험 감소</p>
+      </div>
+      <div class="tradeoff-item">
+        <h4>+10% 상승 경험 · 높을수록 유리</h4>
+        <div class="tradeoff-bar"><span>R1</span><span class="tradeoff-track" aria-hidden="true"><i style="width:66.657%" data-value="23.33" data-scale="35"></i></span><b>23.33%</b></div>
+        <div class="tradeoff-bar"><span>L1</span><span class="tradeoff-track" aria-hidden="true"><i class="candidate" style="width:61.914%" data-value="21.67" data-scale="35"></i></span><b>21.67%</b></div>
+        <p class="tradeoff-outcome">불리한 변화 · 상승 기회 감소</p>
+      </div>
+      <div class="tradeoff-item">
+        <h4>24h 말 평균 net · 비용 차감 후</h4>
+        <div class="tradeoff-bar"><span>R1</span><span class="tradeoff-track" aria-hidden="true"><i style="width:63.440%" data-value="1.586" data-scale="2.5"></i></span><b>+1.586%</b></div>
+        <div class="tradeoff-bar"><span>L1</span><span class="tradeoff-track" aria-hidden="true"><i class="candidate" style="width:78.360%" data-value="1.959" data-scale="2.5"></i></span><b>+1.959%</b></div>
+        <p class="tradeoff-outcome">평균은 증가 · 뒤10일은 R1보다 저조</p>
+      </div>
+    </div>
+    <figcaption class="concept-note">경험 비율 축은0~35%, net 축은0~2.5%로 서로 다릅니다. 막대는 각 지표 안에서만 비교하세요. 이미 본 자료의 가상 결과이며 미래 검증·실계좌 수익이 아닙니다. net 차이의 신뢰구간은[−1.916,+2.315]%p로0을 포함합니다. <strong>결론: 단서는 남기고, 실제 추천은 유지.</strong></figcaption>
+  </figure>
   <div class="callout" id="book-validation-evidence" style="scroll-margin-top:80px;">
     <p><strong>⑨ 같은 자료를 더 맞추는 대신, 규칙을 고정하고 새 날짜에서 확인한다</strong></p>
     <p style="margin-top:0.6rem;">앞 비교에는 하방 감소라는 단서와 상방 손실·구간별 역전이라는 약점이 함께 있었다. 여기서 같은20일의 조건을 다시 손보면 좋아 보이는 결과를 만들 수 있다. 다음 단계는 조건 추가가 아니라 <strong>그 규칙 그대로10-01~30의 새 날짜를 평가하는 연결</strong>이다. 첫 구간이 시작되기 전에 규칙·소스·R1 버전을 봉인하고, 기존 다음날 마감 작업이 완성된24시간 결과를 붙인다.30일은 첫 관찰 창일 뿐 자동 채택 기준이 아니다.</p>
@@ -2166,6 +2193,7 @@
   </p>
 </div></section>
 
+</main>
 <footer>
   <p class="footer-text">
     prelude &middot; Upside-prob &middot; Downside-risk Radar · Upbit KRW &middot; 2026<br>
@@ -2173,6 +2201,7 @@
   </p>
 </footer>
 
+<script src="/projects/prelude/page-concepts.js"></script>
 <script>
 const nav = document.getElementById('navbar');
 if (nav) {

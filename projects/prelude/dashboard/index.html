@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>prelude live dashboard — 누적 회고</title>
+  <title>prelude 운영 현황·검증 — 개인용 대시보드</title>
   <meta name="description" content="prelude R1 장전·장후 알림의 운영 상태와 가상 평가. 신규 체결 정보 연구는 기록 전용이며 자동 매매·자동 승격은 없습니다. 과거 연구 원장과 현재 운영을 분리해 표시합니다.">
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/dashboard/">
 
@@ -572,59 +572,45 @@
       .section-title { font-size: 1.25rem; }
     }
   </style>
+  <link rel="stylesheet" href="/projects/prelude/page-concepts.css">
 </head>
-<body>
+<body class="page-monitor">
+<a class="skip-link" href="#monitorMain">운영 현황 본문으로</a>
 
-<!-- nav (메인과 동일 톤) -->
-<nav id="navbar">
+<nav id="navbar" class="concept-nav" aria-label="prelude 페이지 선택">
   <div class="nav-inner">
-    <a href="/" class="nav-logo">soccz.</a>
-    <ul class="nav-links">
-      <li><a href="../">Research Report</a></li>
-      <li><a href="https://github.com/soccz/prelude" target="_blank" rel="noopener">Source</a></li>
+    <div class="project-brand"><a href="/" class="portfolio-home">soccz.</a><span aria-hidden="true">/</span><a href="/projects/prelude/"><strong>prelude</strong></a></div>
+    <ul class="page-switch">
+      <li><a href="/projects/prelude/"><span aria-hidden="true">01</span> 개발일지</a></li>
+      <li><a href="/projects/prelude/dashboard/" aria-current="page"><span aria-hidden="true">02</span> 운영 현황·검증</a></li>
     </ul>
+    <a class="nav-source" href="https://github.com/soccz/prelude" target="_blank" rel="noopener noreferrer">소스 코드 ↗</a>
   </div>
 </nav>
 
-<!-- hero -->
-<section class="hero">
-  <div class="hero-content">
-    <span class="hero-label">PRELUDE LIVE DASHBOARD · 회고 · 누적</span>
-    <h1>어제 샀으면 어땠나.</h1>
-    <p class="hero-sub">
-      현재 실알림은 <strong>R1 장전·장후 레이더</strong>입니다. 예약 시작은 KST 08:50 / 09:05이며 실제 발송은 처리 후 이뤄집니다.<br>
-      하락 위험이 낮고 상승 가능성이 높은 후보를 찾는 개인 매매 보조 시스템입니다.
-      <em>자동 매매·자동 승격 없음 — 매매는 사용자가 직접 판단합니다.</em>
-    </p>
-    <div class="idea-expansion-banner" role="note" aria-label="아이디어 확장 안내">
-      <span class="banner-tag">현재 운영과 과거 연구 분리</span>
-      <span class="banner-text">
-        <strong>PUMP v2는 2026-08-05 terminal KILL로 은퇴</strong>했습니다.
-        구 distribution·pre-open 원장과 아래 연구 차트는 과거 증거이며 현재 발송 채널이 아닙니다.
-        과거 선택집단 AUC·농축 배수는 현재 전체 후보의 성능과 직접 비교할 수 없습니다.
-        새 연구의 기록 성공도 추천 품질 개선의 증명은 아닙니다.
-      </span>
+<main id="monitorMain">
+<section class="monitor-hero" aria-labelledby="monitorTitle">
+  <div class="monitor-hero-inner">
+    <div class="monitor-hero-top">
+      <div><div class="concept-kicker">OPERATIONS & EVIDENCE · 개인용</div>
+        <h1 id="monitorTitle" class="concept-title">운영 현황·검증</h1>
+        <p class="concept-lead">추천이 전달됐는지, 검증 자료가 얼마나 쌓였는지, 기존 R1보다 무엇이 달라졌는지 확인합니다.<br>개발 과정은 <a href="/projects/prelude/">개발일지</a>에서, 게시된 운영 기록과 결과는 이곳에서 봅니다.</p>
+      </div>
+      <span class="monitor-mode">정기 갱신 · 실시간 아님</span>
     </div>
-    <div class="hero-stats" id="heroStats">
-      <div class="hero-stat"><span class="hero-stat-num" id="statTotal">—</span><span class="hero-stat-label">기록 합계 · 과거 채널 포함</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statClosed">—</span><span class="hero-stat-label">closed</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statR1Pnl">—</span><span class="hero-stat-label">장후 R1 가상 누적 · 실수익 아님</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statR1Sharpe">—</span><span class="hero-stat-label">장후 R1 원장 Sharpe · 진단값</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statDistPnl">—</span><span class="hero-stat-label">dist 누적 (record-only)</span></div>
-      <div class="hero-stat"><span class="hero-stat-num" id="statPrePnl">—</span><span class="hero-stat-label">pre 누적 (record-only)</span></div>
+    <div id="monitorOverview" class="monitor-overview" aria-live="polite">
+      <article class="monitor-tile"><span class="tile-label">게시 기준 · R1 전달</span><strong>데이터 잠금</strong><p>PIN 입력 후 전달 기록을 확인합니다.</p></article>
+      <article class="monitor-tile"><span class="tile-label">기준일 · L1 사전 기록</span><strong>데이터 잠금</strong><p>저장 완료와 늦음·누락을 구분합니다.</p></article>
+      <article class="monitor-tile"><span class="tile-label">새 구간 · 완결 비교</span><strong>데이터 잠금</strong><p>완결된 같은 날짜의 표본만 셉니다.</p></article>
+      <article class="monitor-tile"><span class="tile-label">새 후보 · 검토 결론</span><strong>데이터 잠금</strong><p>정상 실행과 성능 개선은 별개입니다.</p></article>
     </div>
-    <div class="hero-meta" id="heroMeta">데이터 잠금 — PIN 입력 후 표시</div>
-    <div class="hero-links">
-      <a href="../" class="hero-link">← 연구 보고서</a>
-      <a href="https://github.com/soccz/prelude" target="_blank" rel="noopener" class="hero-link">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        Source Code
-      </a>
-    </div>
+    <p id="monitorSnapshot" class="monitor-snapshot">PIN 입력 후 게시 기준 시각을 표시합니다. 잠긴 상태는 정상·실패·0건 중 어느 것도 뜻하지 않습니다.</p>
+    <div class="monitor-intro-strip"><span>실알림: R1 장전·장후</span><span>새 후보: 기록 전용 검증</span><span>매매: 사용자 직접 판단</span></div>
   </div>
 </section>
-
-<hr class="divider">
+<div class="section-jumps" role="navigation" aria-label="운영 현황 목차">
+  <div class="jump-inner"><a href="#currentSystemSection">운영 기록</a><a href="#recSection">최근 추천</a><a href="#bookForwardSection">새 후보 검증</a><a href="#researchProgressSection">다른 시험</a><a href="#legacyArchive">전체 원장·과거 자료</a></div>
+</div>
 
 <section id="currentSystemSection" class="compact" aria-labelledby="currentSystemTitle">
   <div class="container">
@@ -647,16 +633,38 @@
 
 <hr class="divider">
 
-<section id="researchProgressSection" class="compact" aria-labelledby="researchProgressTitle">
+<section id="recSection">
   <div class="container">
-    <div class="section-label">RESEARCH PROGRESS · 게시할 때 자동 갱신</div>
-    <h2 class="section-title" id="researchProgressTitle">얼마나 비교했고, 실제로 무엇이 달라졌나</h2>
-    <p class="section-desc">마감된 같은 날짜의 R1과 시험 후보를 비교합니다. 정상 기록과 추천 개선은 별개입니다. 누락·미완결을0수익으로 채우지 않습니다.</p>
-    <p class="current-note" id="researchProgressAsOf">데이터 잠금 — PIN 입력 후 평가 기준일 표시</p>
-    <div id="researchProgress" aria-live="polite" style="margin-top:1rem">
-      <div class="current-fallback">연구 진행 상황은 잠금 해제 후 표시합니다. 아래 고정 개발 기록과 별도로 갱신됩니다.</div>
+    <div class="section-label">R1 RADAR · OPEN SLOT LEDGER</div>
+    <h2 class="section-title">장후 R1 — 최근 추천과 가상 원장</h2>
+    <p class="section-desc">
+      현재 R1은 장전·장후 두 번 별도로 추론·발송합니다. 아래 집계는 <b>장후(open) R1 원장만</b> 사용하며 장전 성과를 합친 값이 아닙니다.
+      <b>가상 평가이며 실거래 수익이 아닙니다</b>. 과거·현행 측정 기준이 섞일 수 있으므로
+      최신 운영 상태와 사전 기록 적격성은 위 상태 패널을 구분해 읽어 주세요.
+    </p>
+    <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 장후 R1 추천</h3>
+    <div class="table-wrap">
+      <table class="tbl" id="recRadarTable" style="min-width:640px;">
+        <thead><tr><th>#</th><th>코인</th><th class="num">score</th><th class="num">pump prob</th><th>하방⚠️</th><th class="num">09:00 참고 시초가</th><th>regime</th></tr></thead>
+        <tbody><tr><td colspan="7"><div class="loading-state">loading…</div></td></tr></tbody>
+      </table>
     </div>
-    <p class="current-note">가상 픽의 날짜 동일가중 결과이며 실계좌·포트폴리오 수익이 아닙니다. 기존 왕복 비용0.15% 가정을 한 번 반영합니다. +10%·−5%는24시간 중 경험 여부이며 선도달 순서가 아닙니다. 신뢰구간은 관측 날짜 block3 기준입니다. 원본 재검증은 서버 평가기가 수행하며 이 패널은 검증된 보고서의 요약만 읽습니다. 새 정책의 자동 학습·승격·주문은 없습니다.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="bookForwardSection" class="compact" aria-labelledby="bookForwardTitle">
+  <div class="container">
+    <div class="section-label">PRE-ENTRY PAPER · 실사용 검증 준비</div>
+    <h2 class="section-title" id="bookForwardTitle">결과 전에 저장한 선택으로 판정하기</h2>
+    <p class="section-desc">아래 사후 재생과 별도로10-02부터 수정 구간의 진입 전 L1 선택을 기록합니다. 10-01은 수집 준비 대기가 짧아 누락됐고, 실패를 보존한 채 대기시간을 늘렸습니다. 늦음·누락·중단은 정상 표본으로 복구하지 않습니다. 기존 R1 알림은 유지합니다.</p>
+    <p class="current-note" id="bookForwardAsOf">데이터 잠금 — PIN 입력 후 사전 기록 및 판정 상태 표시</p>
+    <div id="forwardVisual"></div>
+    <div id="forwardDifference"></div>
+    <div id="bookForward" aria-live="polite" style="margin-top:1rem"><div class="current-fallback">실사용 검증 준비 상태는 잠금 해제 후 표시합니다.</div></div>
+    <p class="current-note">진입 전 가상 선택이며 실제 주문·체결이 아닙니다. 0/15/30분 진입부터 각각24h를 보며 원 비용0.15%와 후보 추가15bp 민감도를 구분합니다. 최초30일·변경10일·국면당5일 이상2국면·관측일80%는 검토용 초기값이지 검정력 보장이 아닙니다. 조건을 만족해도 자동 교체하지 않습니다. <a href="/projects/prelude/#book-forward-evidence">사전 기록과 판정표를 마무리한 이유</a>.</p>
   </div>
 </section>
 
@@ -669,25 +677,26 @@
     <p class="section-desc">10-01~30의 새 날짜를 따로 비교합니다. 첫30일은 관찰 창이며 자동 채택 기준이 아닙니다. 이미 본 개발20일과 합치지 않습니다.</p>
     <p class="current-note" id="bookValidationAsOf">데이터 잠금 — PIN 입력 후 검증 기준일 표시</p>
     <div id="bookValidation" aria-live="polite" style="margin-top:1rem"><div class="current-fallback">새 날짜 검증 상태는 잠금 해제 후 표시합니다.</div></div>
-    <p class="current-note">고정 규칙의 새 날짜 사후 재생입니다. 진입 전 새 선택을 저장한 실시간 시험이 아니며, 위 국면 전환의 사전 기록과 분리합니다. +10%·−5%는24시간 중 경험 여부이고 선도달이 아닙니다. 비용0.15%를 한 번 반영한 가상 픽 결과이며 실거래 수익이 아닙니다. 원100개 결측은 재선택 없이 날짜 제외로 남깁니다. <a href="/projects/prelude/#book-validation-evidence">고정 규칙을 다음 날짜로 이어간 이유</a>.</p>
+    <p class="current-note">고정 규칙의 새 날짜 사후 재생입니다. 위 L1 진입 전 기록 및 아래 국면 전환 시험과 분리합니다. +10%·−5%는24시간 중 경험 여부이고 선도달이 아닙니다. 비용0.15%를 한 번 반영한 가상 픽 결과이며 실거래 수익이 아닙니다. 원100개 결측은 재선택 없이 날짜 제외로 남깁니다. <a href="/projects/prelude/#book-validation-evidence">고정 규칙을 다음 날짜로 이어간 이유</a>.</p>
   </div>
 </section>
 
 <hr class="divider">
 
-<section id="bookForwardSection" class="compact" aria-labelledby="bookForwardTitle">
+<section id="researchProgressSection" class="compact" aria-labelledby="researchProgressTitle">
   <div class="container">
-    <div class="section-label">PRE-ENTRY PAPER · 실사용 검증 준비</div>
-    <h2 class="section-title" id="bookForwardTitle">결과 전에 저장한 선택으로 판정하기</h2>
-    <p class="section-desc">위 사후 재생과 별도로10-02부터 수정 구간의 진입 전 L1 선택을 기록합니다. 10-01은 수집 준비 대기가 짧아 누락됐고, 실패를 보존한 채 대기시간을 늘렸습니다. 늦음·누락·중단은 정상 표본으로 복구하지 않습니다. 기존 R1 알림은 유지합니다.</p>
-    <p class="current-note" id="bookForwardAsOf">데이터 잠금 — PIN 입력 후 사전 기록 및 판정 상태 표시</p>
-    <div id="bookForward" aria-live="polite" style="margin-top:1rem"><div class="current-fallback">실사용 검증 준비 상태는 잠금 해제 후 표시합니다.</div></div>
-    <p class="current-note">진입 전 가상 선택이며 실제 주문·체결이 아닙니다. 0/15/30분 진입부터 각각24h를 보며 원 비용0.15%와 후보 추가15bp 민감도를 구분합니다. 최초30일·변경10일·국면당5일 이상2국면·관측일80%는 검토용 초기값이지 검정력 보장이 아닙니다. 조건을 만족해도 자동 교체하지 않습니다. <a href="/projects/prelude/#book-forward-evidence">사전 기록과 판정표를 마무리한 이유</a>.</p>
+    <div class="section-label">RESEARCH PROGRESS · 게시할 때 자동 갱신</div>
+    <h2 class="section-title" id="researchProgressTitle">얼마나 비교했고, 실제로 무엇이 달라졌나</h2>
+    <p class="section-desc">마감된 같은 날짜의 R1과 시험 후보를 비교합니다. 정상 기록과 추천 개선은 별개입니다. 누락·미완결을0수익으로 채우지 않습니다.</p>
+    <p class="current-note" id="researchProgressAsOf">데이터 잠금 — PIN 입력 후 평가 기준일 표시</p>
+    <div id="researchProgress" aria-live="polite" style="margin-top:1rem">
+      <div class="current-fallback">연구 진행 상황은 잠금 해제 후 표시합니다. 아래 고정 개발 기록과 별도로 갱신됩니다.</div>
+    </div>
+    <p class="current-note">가상 픽의 날짜 동일가중 결과이며 실계좌·포트폴리오 수익이 아닙니다. 기존 왕복 비용0.15% 가정을 한 번 반영합니다. +10%·−5%는24시간 중 경험 여부이며 선도달 순서가 아닙니다. 신뢰구간은 관측 날짜 block3 기준입니다. 원본 재검증은 서버 평가기가 수행하며 이 패널은 검증된 보고서의 요약만 읽습니다. 새 정책의 자동 학습·승격·주문은 없습니다.</p>
   </div>
 </section>
-
-<hr class="divider">
-
+<details class="archive-panel" id="researchArchive">
+  <summary>개발 당시의 비교와 결론 <small>2026-09-30 고정 기록 · 자동 갱신 성과와 분리해 읽기</small></summary>
 <section id="researchCheckpoint" class="compact" aria-labelledby="researchCheckpointTitle">
   <div class="container">
     <div class="section-label">RESEARCH CHECKPOINT · 2026-09-30 고정 개발 기록</div>
@@ -717,31 +726,20 @@
     <p class="current-note"><a href="/projects/prelude/#selection-evidence">가설 → 비교 → 실패 → 다음 질문의 개발일지</a> · <a href="https://github.com/soccz/prelude/blob/main/PHASES.md">구간별 분모·제외·독립 검산 기록</a>. 일일 운영 카드는 실행 상태만 제공하며 누적 연구 효과를 계산하는 패널은 아닙니다.</p>
   </div>
 </section>
+</details>
 
-<hr class="divider">
-
-<!-- R1 레이더 — 유일한 라이브 채널 (2026-07-28 추가) -->
-<section id="recSection">
-  <div class="container">
-    <div class="section-label">R1 RADAR · OPEN SLOT LEDGER</div>
-    <h2 class="section-title">장후 R1 — 최근 추천과 가상 원장</h2>
-    <p class="section-desc">
-      현재 R1은 장전·장후 두 번 별도로 추론·발송합니다. 아래 집계는 <b>장후(open) R1 원장만</b> 사용하며 장전 성과를 합친 값이 아닙니다.
-      <b>가상 평가이며 실거래 수익이 아닙니다</b>. 과거·현행 측정 기준이 섞일 수 있으므로
-      최신 운영 상태와 사전 기록 적격성은 위 상태 패널을 구분해 읽어 주세요.
-    </p>
-    <div class="hero-stats" id="recKpi" style="justify-content:flex-start; margin-bottom:1.4rem;"></div>
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1rem;font-weight:700;margin:0.4rem 0 0.6rem" id="recRadarTitle">최신 장후 R1 추천</h3>
-    <div class="table-wrap">
-      <table class="tbl" id="recRadarTable" style="min-width:640px;">
-        <thead><tr><th>#</th><th>코인</th><th class="num">score</th><th class="num">pump prob</th><th>하방⚠️</th><th class="num">09:00 참고 시초가</th><th>regime</th></tr></thead>
-        <tbody><tr><td colspan="7"><div class="loading-state">loading…</div></td></tr></tbody>
-      </table>
+<details class="archive-panel" id="legacyArchive">
+  <summary>전체 가상 원장과 과거 연구 자료 <small>이전 채널·차트·정책 이력 보관 · 실추천의 현재 우위 증명이 아닙니다</small></summary>
+  <p class="concept-note" style="padding:0 24px 12px;">PUMP v2는2026-08-05 종료됐습니다. 구 distribution·pre-open은 현재 발송 채널이 아닙니다. 아래에는 다른 시기·평가 기준의 가상 원장과 연구 진단이 함께 보관돼 있습니다.</p>
+    <div class="hero-stats" id="heroStats">
+      <div class="hero-stat"><span class="hero-stat-num" id="statTotal">—</span><span class="hero-stat-label">기록 합계 · 과거 채널 포함</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statClosed">—</span><span class="hero-stat-label">closed</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statR1Pnl">—</span><span class="hero-stat-label">장후 R1 가상 누적 · 실수익 아님</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statR1Sharpe">—</span><span class="hero-stat-label">장후 R1 원장 Sharpe · 진단값</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statDistPnl">—</span><span class="hero-stat-label">dist 누적 (record-only)</span></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="statPrePnl">—</span><span class="hero-stat-label">pre 누적 (record-only)</span></div>
     </div>
-  </div>
-</section>
-
-<hr class="divider">
+    <div class="hero-meta" id="heroMeta">데이터 잠금 — PIN 입력 후 표시</div>
 
 <!-- 이번 세션 새 발견 — 레이더 정직성 차트 (수익기 아님) -->
 <section>
@@ -1459,18 +1457,20 @@
 
 <hr class="divider">
 
+</details>
+
 <!-- About / Methodology — dashboard 만의 가치: 출처 + 라이브 paper 한계 -->
 <section>
   <div class="container">
     <div class="section-label">ABOUT &middot; METHODOLOGY</div>
-    <h2 class="section-title">대시보드 메서드 + 출처</h2>
+    <h2 class="section-title">숫자를 읽는 방법과 출처</h2>
     <p class="section-desc">
-      이 dashboard 는 <strong>라이브 paper trade 결과의 회고</strong>다. 시스템 architecture /
-      signal 정의 / 6 experiments / 버린 가설은 메인 연구 보고서에 있고 — 여기는
-      <em>매일 결과를 어떻게 측정하는가</em> 만 다룬다. 메서드 출처를 1:1 로 명시.
+      이 페이지는 <strong>게시 기준의 운영 상태와 가상 평가</strong>를 확인하는 개인용 화면입니다.
+      아이디어·실패·설계 변경의 이야기는 <a href="/projects/prelude/">공개 개발일지</a>에서,
+      여기서는 <em>기록이 정상인지, 새 후보가 정말 나아졌는지</em>를 확인합니다. 실시간 시세나 실계좌 수익 화면은 아닙니다.
     </p>
 
-    <h3 style="font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;margin:1.4rem 0 0.6rem">시스템 / 신호 정의는 메인 보고서 →</h3>
+    <h3 style="font-family:'Noto Serif KR',serif;font-size:1.05rem;font-weight:700;margin:1.4rem 0 0.6rem">설계 배경과 신호 정의는 개발일지 →</h3>
     <div class="hero-links" style="justify-content:flex-start;margin-top:0.6rem;margin-bottom:1.6rem">
       <a class="hero-link" href="../#architecture">Architecture</a>
       <a class="hero-link" href="../#distribution">Distribution Engine v1</a>
@@ -1558,6 +1558,7 @@
 
 <hr class="divider">
 
+</main>
 <footer>
   예약 갱신: 매일 KST 10:10 systemd 작업 (성공 여부·실제 마지막 빌드 <span id="footerBuildAt">—</span>) ·
   소스 <code>scripts/build_dashboard.py</code> · 데이터 <code>output/paper_ledger*.csv</code> ·
@@ -1565,6 +1566,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="/projects/prelude/page-concepts.js"></script>
 <script>
 const DATA_DIR = 'data';
 const COLORS = {
@@ -1900,14 +1902,15 @@ function showPinModal() {
     const overlay = document.createElement('div');
     overlay.className = 'lock-overlay';
     overlay.innerHTML = `
-      <div class="lock-modal" onclick="event.stopPropagation()">
-        <h3>비공개 dashboard</h3>
-        <p>이 페이지는 trade 회고용입니다. PIN 입력 후 데이터 표시.</p>
+      <div class="lock-modal" role="dialog" aria-modal="true" aria-labelledby="pinTitle" aria-describedby="pinDescription" onclick="event.stopPropagation()">
+        <h3 id="pinTitle">운영 현황·검증</h3>
+        <p id="pinDescription">개인용 대시보드입니다. PIN을 입력하면 최근 추천과 검증 결과를 볼 수 있습니다. 정기 갱신 게시본이며 실시간 화면은 아닙니다.</p>
         <div class="lock-row">
-          <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" autofocus>
+          <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" aria-label="대시보드 PIN" autofocus>
           <button id="pinSubmit">열기</button>
         </div>
-        <div class="lock-error" id="pinError"></div>
+        <div class="lock-error" id="pinError" role="status" aria-live="polite"></div>
+        <a class="pin-journal-link" href="/projects/prelude/">아이디어와 개발 과정은 공개 개발일지에서 →</a>
       </div>`;
     document.body.appendChild(overlay);
     const input = overlay.querySelector('#pinInput');
@@ -1929,6 +1932,13 @@ function showPinModal() {
     };
     overlay.querySelector('#pinSubmit').addEventListener('click', submit);
     input.addEventListener('keydown', ev => { if (ev.key === 'Enter') submit(); });
+    overlay.addEventListener('keydown', ev => {
+      if (ev.key !== 'Tab') return;
+      const first = input;
+      const last = overlay.querySelector('.pin-journal-link');
+      if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+      else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+    });
   });
 }
 
@@ -4051,6 +4061,7 @@ window.addEventListener('scroll', () => {
     renderResearchProgress(summary.research_progress);
     renderBookValidation(summary.book_validation);
     renderBookForward(summary.book_forward);
+    window.PreludePages?.render(summary);
     renderHero(summary);
     renderRecommend(summary);
     renderFindings(findings);  // 이번 세션 새 발견 차트 (2026-05-31)
@@ -4098,6 +4109,8 @@ window.addEventListener('scroll', () => {
     document.getElementById('downloadCsv')?.addEventListener('click', downloadCsv);
   } catch (e) {
     console.error(e);
+    window.PreludePages?.render(undefined);
+    document.getElementById('monitorSnapshot').textContent = '데이터 로드 실패: ' + e.message + ' · 최신 상태를 확인할 수 없습니다. 새로고침 후 다시 시도하세요.';
     document.getElementById('heroMeta').textContent = '데이터 로드 실패: ' + e.message;
   }
 })();
