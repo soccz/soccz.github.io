@@ -747,6 +747,17 @@
     .case-destination.review { margin-top: 8px; border-color: #b46032; background: var(--gold-soft); }
     .case-destination strong, .case-destination span { display: block; font-size: 0.84rem; }
     .case-destination span { margin-top: 3px; color: var(--text); }
+    .trace-desktop { display: none; width: 100%; height: auto; }
+    .trace-desktop text { font-family: var(--sans); fill: var(--text); font-size: 17px; }
+    .trace-desktop .trace-value { fill: var(--green-dark); font-size: 24px; font-weight: 700; }
+    .trace-desktop .trace-small { font-size: 14px; }
+    .trace-desktop .trace-note { fill: #8a4b1c; }
+    .trace-desktop .trace-line { fill: none; stroke: #008e71; stroke-width: 2.5; }
+    .trace-desktop .trace-dashed { stroke: #9f6029; stroke-dasharray: 7 5; }
+    @media (min-width: 1024px) {
+      .trace-desktop { display: block; }
+      .case-route { display: none; }
+    }
 
     .feature-layout {
       display: grid;
@@ -831,6 +842,25 @@
 
     .reconcile-board { margin-top: 18px; padding: 18px; color: #f2faf7; background: var(--green-deep); border-radius: 14px; }
     .reconcile-board h3 { font-size: 0.78rem; }
+    .cbam-audit { margin-top: 40px; padding: 28px; color: #f2faf7; background: var(--green-deep); border-radius: 16px; }
+    .cbam-audit h3 { font-size: 1.2rem; }
+    .cbam-audit > p { margin: 8px 0 22px; color: #c5ded4; font-size: 0.88rem; }
+    .cbam-audit-grid { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 36px; align-items: center; }
+    .audit-row + .audit-row { margin-top: 25px; }
+    .audit-labels { display: flex; justify-content: space-between; gap: 18px; margin-bottom: 8px; font-size: 0.85rem; }
+    .audit-labels span:last-child { text-align: right; }
+    .audit-labels strong { display: block; color: #fff; font-family: var(--mono); font-size: 1rem; }
+    .audit-track { height: 26px; display: flex; overflow: hidden; border-radius: 4px; border: 1px solid #92bbae; }
+    .audit-track span { flex-basis: var(--portion); background: #5cd5af; }
+    .audit-track span + span { background: repeating-linear-gradient(135deg, #badbcf 0 6px, #99bdae 6px 8px); border-left: 2px solid var(--green-deep); }
+    .audit-row-label { margin: 8px 0 0; color: #c5ded4; font-size: 0.8rem; }
+    .audit-total { padding: 23px 0 23px 28px; border-left: 1px solid #739588; }
+    .audit-total span, .audit-total small { display: block; color: #c5ded4; font-size: 0.85rem; }
+    .audit-total strong { display: block; margin: 7px 0 2px; color: #fff; font-family: var(--mono); font-size: 2.25rem; line-height: 1.25; }
+    .audit-total p { margin: 13px 0 0; color: #fff; font-size: 0.88rem; }
+    .cbam-audit .audit-source { margin: 24px 0 0; padding-top: 15px; border-top: 1px solid #597e70; font-size: 0.82rem; }
+    .audit-source a { color: #e6fff5; display: inline-flex; min-height: 44px; align-items: center; }
+    .cbam-audit :focus-visible { outline-color: #fff; }
     .axis-row { margin-top: 14px; display: grid; grid-template-columns: 92px 1fr 74px; gap: 10px; align-items: center; }
     .axis-label { color: #bfe8dc; font-size: 0.63rem; }
     .axis-total { color: #fff; font-family: var(--mono); font-size: 0.62rem; text-align: right; }
@@ -897,6 +927,28 @@
     .cnn-grid figcaption { margin-top: 10px; color: var(--text); font-size: 0.83rem; }
     .cnn-grid figcaption strong { display: block; margin-bottom: 4px; color: var(--green-dark); font-size: 0.92rem; }
     .cnn-grid figcaption span { display: block; }
+    .cnn-workbench { display: grid; gap: 26px; align-items: start; }
+    .cnn-compare[hidden] { display: none; }
+    .cnn-compare { padding: 16px; background: var(--paper); border: 1px solid var(--line-strong); border-radius: 12px; }
+    .cnn-compare h4 { margin: 0 0 12px; color: var(--green-dark); font-size: 1rem; }
+    .compare-stage { --split: 50%; position: relative; overflow: hidden; aspect-ratio: 1; background: #10251e; border-radius: 6px; cursor: col-resize; touch-action: pan-y; user-select: none; }
+    .compare-stage img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+    .compare-stage .compare-reference { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--split)) 0 0); }
+    .compare-divider { position: absolute; left: var(--split); inset-block: 0; width: 2px; background: #5cd5af; transform: translateX(-50%); pointer-events: none; }
+    .compare-divider::after { content: '↔'; position: absolute; top: 50%; left: 50%; width: 34px; height: 34px; display: grid; place-items: center; transform: translate(-50%, -50%); background: var(--green-dark); color: #fff; border: 2px solid #fff; border-radius: 50%; }
+    .compare-label { position: absolute; top: 9px; padding: 4px 8px; color: #fff; background: #003f35; font-size: 0.78rem; pointer-events: none; }
+    .compare-label.left { left: 8px; }
+    .compare-label.right { right: 8px; }
+    .viz-range { margin-top: 16px; }
+    .viz-range label { display: flex; justify-content: space-between; gap: 12px; color: var(--green-dark); font-size: 0.85rem; font-weight: 600; }
+    .viz-range input { display: block; width: 100%; min-height: 44px; margin: 0; accent-color: var(--green-dark); cursor: ew-resize; }
+    .compare-help { margin: 7px 0 0; color: var(--text); font-size: 0.83rem; }
+    @media (min-width: 901px) {
+      .is-interactive .cnn-workbench { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+      .is-interactive .cnn-grid figure { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 12px; align-items: start; }
+      .is-interactive .cnn-grid figcaption { margin-top: 0; }
+      .is-interactive .cnn-grid { grid-template-columns: 1fr; }
+    }
     .cnn-reading { margin: 18px 0 0; padding-left: 14px; border-left: 3px solid var(--green); color: var(--text); font-size: 0.86rem; }
     .cnn-metrics { margin: 22px 0 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 10px; background: var(--paper); overflow: hidden; }
     .cnn-metrics div { min-width: 0; padding: 16px; border-right: 1px solid var(--line); }
@@ -939,6 +991,26 @@
     }
     .forest-artifact-stage img.latent-preview { aspect-ratio: 1048 / 520; }
     .forest-artifact-stage img.terrain-preview { aspect-ratio: 3 / 2; }
+    .latent-contact { position: relative; width: 100%; }
+    .latent-marker { position: absolute; width: 24.427481%; height: 49.230769%; left: 0; top: 0; border: 3px solid #fff; box-shadow: inset 0 0 0 2px #005b4b; pointer-events: none; }
+    .latent-marker[hidden], .latent-controls[hidden] { display: none; }
+    .latent-chart { display: block; width: 100%; height: auto; margin-top: 16px; overflow: visible; }
+    .latent-chart text { font-family: var(--sans); font-size: 18px; fill: var(--text); }
+    .latent-chart .chart-axis { stroke: #bdccc4; stroke-width: 1; }
+    .latent-chart .chart-line { stroke: var(--green-dark); stroke-width: 3; fill: none; }
+    .latent-chart .chart-point { fill: var(--paper); stroke: var(--green-dark); stroke-width: 2; }
+    .latent-chart .chart-label { font-weight: 700; fill: var(--green-dark); }
+    .latent-chart .latent-guide { stroke: #8a4b1c; stroke-width: 1.5; stroke-dasharray: 4 4; }
+    .latent-chart .latent-dot { fill: #005b4b; stroke: #fffefa; stroke-width: 2; }
+    .latent-readout { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--green-dark); font-size: 0.85rem; }
+    .latent-readout strong { font-family: var(--mono); font-size: 1.2rem; }
+    .latent-note { margin: 10px 0 0; color: var(--text); font-size: 0.83rem; }
+    .latent-note a { display: inline-flex; align-items: center; min-height: 44px; color: var(--green-dark); }
+    .terrain-layers { margin: 18px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .terrain-layers li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .terrain-layers b { color: var(--green-dark); font-family: var(--mono); }
+    .terrain-layers strong { display: block; color: var(--green-dark); font-size: 0.9rem; }
+    .terrain-layers span { display: block; margin-top: 3px; color: var(--text); font-size: 0.83rem; }
     .js .forest-artifact-stage .image-button {
       width: 100%;
       padding: 0;
@@ -1295,6 +1367,13 @@
       .cnn-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .cnn-metrics div:nth-child(2) { border-right: 0; }
       .cnn-metrics div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .cbam-audit { padding: 20px; }
+      .cbam-audit-grid { grid-template-columns: 1fr; gap: 24px; }
+      .audit-total { padding: 20px 0 0; border-left: 0; border-top: 1px solid #739588; }
+      .audit-labels { font-size: 0.85rem; }
+      .audit-labels strong { font-size: 0.88rem; }
+      .cnn-compare { padding: 12px; }
+      .compare-help, .latent-note, .terrain-layers span { font-size: 0.9rem; }
       .forest-actions { margin-top: -14px; }
       .forest-artifact-stage { min-height: 250px; padding: 12px; }
       .forest-artifact-stage img { aspect-ratio: 4 / 3; }
@@ -1430,6 +1509,32 @@
             <a href="#ocr">처리 규칙 자세히 보기 <span aria-hidden="true">&nbsp;↓</span></a>
           </div>
           <p>공개 코드의 합성 문서 예제입니다. 같은 출하량에 대해 계산에 쓸 값과 사람이 확인할 기록을 따로 남깁니다.</p>
+          <svg class="trace-desktop" viewBox="0 0 1040 330" role="img" aria-labelledby="trace-title trace-desc">
+            <title id="trace-title">세 문서가 계산 입력과 검토 기록으로 갈라지는 출처 연결도</title>
+            <desc id="trace-desc">인보이스 190,000kg와 패킹리스트 190MT를 190톤으로 정규화하고 인보이스를 우선 선택한다. 선택값은 출처와 함께 계산 입력이 된다. 메모의 191톤은 아래 점선 경로로 검토 기록에 보존한다. 선의 굵기는 수량이 아니라 연결 관계를 나타낸다.</desc>
+            <defs><marker id="trace-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#008e71" stroke-width="1.5"/></marker></defs>
+            <path class="trace-line" d="M260 72 C335 72 337 146 412 146" marker-end="url(#trace-arrow)"/>
+            <path class="trace-line" d="M260 160 C335 160 337 146 412 146" marker-end="url(#trace-arrow)"/>
+            <path class="trace-line" d="M650 146 H792" marker-end="url(#trace-arrow)"/>
+            <path class="trace-line trace-dashed" d="M260 260 H792"/>
+            <circle cx="792" cy="260" r="4" fill="#9f6029"/>
+            <rect x="12" y="38" width="248" height="68" rx="8" fill="#f3f5f0" stroke="#aec1b8"/>
+            <text x="28" y="64" class="trace-small">인보이스 · p1 / l4</text><text x="28" y="92" class="trace-value">190,000 kg</text>
+            <rect x="12" y="126" width="248" height="68" rx="8" fill="#f3f5f0" stroke="#aec1b8"/>
+            <text x="28" y="152" class="trace-small">패킹리스트 · p1 / l2</text><text x="28" y="180" class="trace-value">190 MT</text>
+            <rect x="12" y="226" width="248" height="68" rx="8" fill="#f5ecd8" stroke="#c3a06d"/>
+            <text x="28" y="252" class="trace-small trace-note">담당자 메모 · p1 / l2</text><text x="28" y="280" class="trace-value trace-note">약 191톤?</text>
+            <text x="425" y="71">단위 통일 · 출처 우선순위</text>
+            <rect x="418" y="94" width="232" height="107" rx="12" fill="#dff1eb" stroke="#008e71"/>
+            <text x="438" y="124" class="trace-small">인보이스 값 선택</text><text x="438" y="168" style="font-size:38px; font-weight:700; fill:#005b4b">190 t</text>
+            <text x="690" y="125" class="trace-small">출처 연결</text>
+            <rect x="802" y="109" width="226" height="78" rx="8" fill="#003f35"/>
+            <text x="819" y="139" style="fill:#fff; font-weight:700">계산 입력 · 190 t</text><text x="819" y="167" class="trace-small" style="fill:#dff1eb">원문 위치 + 변환 규칙</text>
+            <text x="435" y="244" class="trace-small trace-note">계산값으로 덮어쓰지 않음</text>
+            <rect x="802" y="226" width="226" height="68" rx="8" fill="#f5ecd8" stroke="#c3a06d"/>
+            <text x="819" y="253" class="trace-note" style="font-weight:700">검토 기록 · 191 t</text><text x="819" y="279" class="trace-small">충돌한 후보와 출처 보존</text>
+            <text x="12" y="322" class="trace-small">실선: 선택·대조 경로</text><text x="230" y="322" class="trace-small trace-note">점선: 재확인할 충돌</text><text x="650" y="322" class="trace-small">다른 필수값·출처 검증도 통과해야 계산 진행</text>
+          </svg>
           <ol class="case-route" aria-label="출하량 원문에서 선택값과 검토 기록까지">
             <li>
               <h3>01 · 문서별 기록</h3>
@@ -1793,21 +1898,6 @@
                   <code><em>구성요소 배출량</em> = 품목 중량 × 구성요소별 내재배출량<br><em>총 내재배출량</em> = sum(공정/전구물질 × 직접/간접 배출)<br><em>유효 가격</em> = max(인증서 가격 − 제3국 지불 탄소가격, 0)<br><em>분석 시나리오 노출액</em> = 내재배출량 × 분석자 정의 노출계수 × 유효 가격</code>
                 </div>
                 <p>문서에서 확인한 값과 가격·노출계수 같은 분석 가정은 별도 assumption ID로 구분합니다.</p>
-                <div class="reconcile-board" role="group" aria-label="CBAM 구성요소의 두 축 대사">
-                  <h3>두 축 검산 · 총 1,111.36 tCO2e</h3>
-                  <div class="axis-row">
-                    <span class="axis-label">배출 유형</span>
-                    <div class="stacked-bar" aria-hidden="true"><span class="direct"></span><span class="indirect"></span></div>
-                    <span class="axis-total">970.50 + 140.86</span>
-                  </div>
-                  <div class="axis-legend"><span><i style="background:#39c8a2"></i>직접</span><span><i style="background:#bfe8dc"></i>간접</span></div>
-                  <div class="axis-row">
-                    <span class="axis-label">발생 원천</span>
-                    <div class="stacked-bar" aria-hidden="true"><span class="process"></span><span class="precursor"></span></div>
-                    <span class="axis-total">731.36 + 380.00</span>
-                  </div>
-                  <div class="axis-legend"><span><i style="background:#39c8a2"></i>공정</span><span><i style="background:#74a99a"></i>전구물질</span></div>
-                </div>
                 <p>M5 502.56과 M12 608.80을 합치면 1,111.36 tCO2e입니다. 2026-08-12 확인 기준, EUR-Lex 원문과 대조한 요구사항 15개 중 현재 대응은 부분 8·미구현 7·완전 구현 0입니다.</p>
               </div>
             </details>
@@ -1820,6 +1910,26 @@
             </div>
             <figcaption>Figure 04. 정규화된 입력에서 탄소비용 시나리오까지 이어지는 발표 화면. 수치와 기업 정보는 합성 예시이며, 화면의 온체인 표시는 적용 아이디어입니다. 현재 공개 코드는 블록체인 연동이 아니라 파일 해시 검증까지만 재현합니다.</figcaption>
           </figure>
+        </div>
+        <div class="cbam-audit" role="group" aria-labelledby="cbam-audit-title">
+          <h3 id="cbam-audit-title">나누는 기준을 바꿔도 합계는 같습니다</h3>
+          <p>같은 배출량을 위에서는 직접·간접으로, 아래에서는 공정·전구물질로 나눴습니다. 막대 길이는 각 구성요소의 배출량에 비례합니다.</p>
+          <div class="cbam-audit-grid">
+            <div>
+              <div class="audit-row">
+                <div class="audit-labels"><span>직접 배출<strong>970.50 tCO2e</strong></span><span>간접 배출<strong>140.86 tCO2e</strong></span></div>
+                <div class="audit-track" aria-hidden="true"><span style="--portion:87.325%;"></span><span style="--portion:12.675%;"></span></div>
+                <p class="audit-row-label">배출 유형으로 합산 · 970.50 + 140.86</p>
+              </div>
+              <div class="audit-row">
+                <div class="audit-labels"><span>공정 배출<strong>731.36 tCO2e</strong></span><span>전구물질 배출<strong>380.00 tCO2e</strong></span></div>
+                <div class="audit-track" aria-hidden="true"><span style="--portion:65.808%;"></span><span style="--portion:34.192%;"></span></div>
+                <p class="audit-row-label">발생 원천으로 합산 · 731.36 + 380.00</p>
+              </div>
+            </div>
+            <div class="audit-total"><span>두 경로의 총량</span><strong>1,111.36</strong><small>tCO2e</small><p>합계 차이 <b>0.00 tCO2e</b></p></div>
+          </div>
+          <p class="audit-source">공개 합성 예제의 기술 검산입니다. 법정 신고액 계산이나 규정 적합성 인증은 아닙니다. <a href="https://github.com/soccz/EcoGuard/blob/v0.6.0/artifacts/examples/cbam_exposure.json" target="_blank" rel="noopener noreferrer">11단계 계산 원본 JSON <span aria-hidden="true">&nbsp;↗</span></a></p>
         </div>
       </div>
     </section>
@@ -1839,7 +1949,19 @@
           <span class="scope-tag built">수상 후 연구 · 공개 위성 데이터</span>
           <h3 id="cnn-evidence-title">입력·정답·예측을 같은 위치에서 비교합니다</h3>
           <p class="cnn-context">평가 표본 S2-EV-003 · 각 64×64 픽셀. GitHub v0.6.0에 공개한 이미지 원본을 그대로 확대했습니다. 모델은 RGB와 근적외선 4개 밴드를 입력받습니다.</p>
-          <div class="cnn-grid">
+          <div class="cnn-workbench">
+            <div class="cnn-compare" hidden>
+              <h4>경계가 어긋나는 곳을 직접 대조해 보세요</h4>
+              <div class="compare-stage">
+                <img src="/projects/ecoguard/assets/forest-cnn-forest_probability.png" width="64" height="64" loading="lazy" draggable="false" alt="비교 배경: CNN 산림 확률, 밝을수록 높음.">
+                <img class="compare-reference" src="/projects/ecoguard/assets/forest-cnn-reference_mask.png" width="64" height="64" loading="lazy" draggable="false" alt="분할선 왼쪽: 같은 장면의 정답 마스크, 흰색이 산림.">
+                <span class="compare-divider" aria-hidden="true"></span>
+                <span class="compare-label left" aria-hidden="true">정답</span><span class="compare-label right" aria-hidden="true">CNN 확률</span>
+              </div>
+              <div class="viz-range"><label for="forest-split">분할선 이동 <output id="forest-split-value" for="forest-split">50%</output></label><input id="forest-split" type="range" min="0" max="100" value="50" aria-describedby="forest-compare-help"></div>
+              <p class="compare-help" id="forest-compare-help">이미지 위를 좌우로 드래그하거나 아래 슬라이더를 움직여 보세요. 정답은 이진 레이블, 모델 출력은 0–1 확률입니다. 과거·현재 영상의 비교가 아닙니다.</p>
+            </div>
+            <div class="cnn-grid">
             <figure>
               <img data-lightbox src="/projects/ecoguard/assets/forest-cnn-sentinel2_rgb.png" width="64" height="64" loading="lazy" alt="S2-EV-003 평가 장면의 Sentinel-2 파생 RGB 영상. 아래 정답·확률·Grad-CAM과 동일한 64×64 위치이다.">
               <figcaption><strong>01 · 입력 영상</strong><span>사람이 볼 수 있도록 RGB로 표시한 공개 위성 장면입니다.</span></figcaption>
@@ -1857,6 +1979,7 @@
               <figcaption><strong>04 · Grad-CAM</strong><span>정답 산림 영역을 대상으로 계산한 모델 반응입니다. 흰색이 강하며 확률을 뜻하지는 않습니다.</span></figcaption>
             </figure>
           </div>
+            </div>
           <p class="cnn-reading">정답과 확률 지도의 흰 영역이 어디서 겹치고 어긋나는지 비교해 보세요. Grad-CAM은 모델의 반응을 살펴보는 별도 출력이지, 분류 성능이 개선됐다는 증거는 아닙니다.</p>
           <dl class="cnn-metrics" aria-label="공개 평가셋 전체의 산림피복 분류 결과">
             <div><dt>F1 · 정밀도와 재현율</dt><dd>0.948</dd></div>
@@ -1906,15 +2029,47 @@
         <div class="forest-figures">
           <figure class="screen-card forest-artifact-card">
             <div class="forest-artifact-stage">
-              <img data-lightbox class="latent-preview" src="/projects/ecoguard/assets/forest-latent-interpolation.png" width="1048" height="520" loading="lazy" alt="공개 Sentinel-2 파생 chip으로 수상 후 학습한 작은 GAN이 고정된 두 잠재벡터 사이를 여덟 단계로 보간해 만든 4열 2행의 합성 장면. 녹색과 어두운 영역의 모양이 단계마다 이어져 변한다.">
+              <div class="latent-contact">
+                <img data-lightbox class="latent-preview" src="/projects/ecoguard/assets/forest-latent-interpolation.png" width="1048" height="520" loading="lazy" alt="공개 Sentinel-2 파생 chip으로 수상 후 학습한 작은 GAN이 고정된 두 잠재벡터 사이를 여덟 단계로 보간해 만든 4열 2행의 합성 장면. 왼쪽 위부터 1–4, 아래는 5–8번이다.">
+                <span class="latent-marker" hidden aria-hidden="true"></span>
+              </div>
             </div>
-            <figcaption><span class="figure-label">Figure 05 · 잠재공간 보간</span>작은 위성 영상 조각으로 학습한 GAN이 z0→z1을 8단계로 잇습니다. 왼쪽 위부터 행 순서로 읽습니다. 각 프레임의 CNN 반응과 중간점의 국소 변화율(JVP)을 함께 기록했습니다.</figcaption>
+            <figcaption>
+              <span class="figure-label">Figure 05 · 잠재공간 보간</span>
+              작은 GAN이 z0→z1을 8단계로 잇습니다. 왼쪽 위부터 행 순서로 읽습니다. 아래 곡선은 각 생성 장면을 산림피복 CNN에 넣었을 때의 평균 확률입니다.
+              <svg class="latent-chart" viewBox="0 0 420 232" role="img" aria-labelledby="latent-chart-title latent-chart-desc">
+                <title id="latent-chart-title">8개 보간 장면에 대한 CNN 평균 산림 확률</title>
+                <desc id="latent-chart-desc">1번부터 8번까지 3.8374%, 1.1082%, 0.3523%, 0.4839%, 1.2862%, 4.8763%, 15.3827%, 29.7246%. 생성 장면에 대한 모델 반응이며 실제 산림 면적 변화나 생성 품질 점수가 아니다.</desc>
+                <text x="44" y="24">CNN 평균 산림 확률</text>
+                <path class="chart-axis" d="M44 61.429 H380 M44 104.286 H380 M44 147.143 H380 M44 190 H380"/>
+                <text x="34" y="67" text-anchor="end">30%</text><text x="34" y="110" text-anchor="end">20%</text><text x="34" y="153" text-anchor="end">10%</text><text x="34" y="196" text-anchor="end">0%</text>
+                <polyline class="chart-line" points="44,173.554 92,185.251 140,188.49 188,187.926 236,184.488 284,169.102 332,124.074 380,62.609"/>
+                <circle class="chart-point" cx="44" cy="173.554" r="4"/><circle class="chart-point" cx="92" cy="185.251" r="4"/><circle class="chart-point" cx="140" cy="188.49" r="4"/><circle class="chart-point" cx="188" cy="187.926" r="4"/><circle class="chart-point" cx="236" cy="184.488" r="4"/><circle class="chart-point" cx="284" cy="169.102" r="4"/><circle class="chart-point" cx="332" cy="124.074" r="4"/><circle class="chart-point" cx="380" cy="62.609" r="4"/>
+                <line class="latent-guide" x1="44" x2="44" y1="42" y2="190" visibility="hidden"/>
+                <circle class="latent-dot" cx="44" cy="173.554" r="6" visibility="hidden"/>
+                <text class="chart-label" x="380" y="45" text-anchor="end">8번 · 29.7%</text>
+                <text x="44" y="222" text-anchor="middle">1</text><text x="188" y="222" text-anchor="middle">4</text><text x="380" y="222" text-anchor="middle">8</text>
+                <text x="265" y="222" text-anchor="middle">보간 단계 →</text>
+              </svg>
+              <div class="latent-controls" hidden>
+                <div class="viz-range"><label for="latent-step">보간 단계 선택 <output id="latent-step-value" for="latent-step">1 / 8</output></label><input id="latent-step" type="range" min="0" max="7" step="1" value="0" aria-describedby="latent-help"></div>
+                <output class="latent-readout" id="latent-readout" for="latent-step"><span>α = 0.000 · 첫 장면</span><strong>3.84%</strong></output>
+              </div>
+              <p class="latent-note" id="latent-help">움직이면 선택한 장면의 테두리와 그래프 위치가 함께 바뀝니다. 선은 기록된 8개 측정점을 이은 것이며, 실제 산림 변화나 실사 품질 점수가 아닙니다. <a href="https://github.com/soccz/EcoGuard/blob/v0.6.0/research/forest_xai/artifacts/public_demo/reconstruction/latent_interpolation.json" target="_blank" rel="noopener noreferrer">8개 값·JVP 원본 <span aria-hidden="true">&nbsp;↗</span></a></p>
+            </figcaption>
           </figure>
           <figure class="screen-card forest-artifact-card">
             <div class="forest-artifact-stage">
               <img data-lightbox class="terrain-preview" src="/projects/ecoguard/assets/forest-2_5d-drape.png" width="960" height="640" loading="lazy" alt="공개 Sentinel-2 파생 RGB와 산림 확률을 합성 높이장 위에 얹어 투시해 본 수상 후 2.5D 시각화. 실제 지형 고도를 나타내지 않는다.">
             </div>
-            <figcaption><span class="figure-label">Figure 06 · 높이 축 시각화</span>위 CNN 비교와 같은 S2-EV-003의 RGB와 모델 확률을 합성 높이장 위에 얹었습니다. 실제 지형 고도나 위성 기반 3D 복원은 아닙니다.</figcaption>
+            <figcaption>
+              <span class="figure-label">Figure 06 · 높이 축 시각화</span>같은 S2-EV-003을 입체 표면 위에 얹었습니다. 그림의 색과 높이는 서로 다른 입력에서 왔습니다.
+              <ol class="terrain-layers">
+                <li><b>01</b><div><strong>색과 무늬 · 공개 RGB + CNN 확률</strong><span>위에서 비교한 평가 장면과 모델 출력을 표면에 입힙니다.</span></div></li>
+                <li><b>02</b><div><strong>높이 · 별도로 만든 합성 높이장</strong><span>거친 높이 격자를 보간했습니다. 위성이 측정한 표고가 아닙니다.</span></div></li>
+                <li><b>03</b><div><strong>표면 · 1,089개 정점 / 1,024개 면</strong><span>33×33 격자로 구성한 2.5D 표현입니다. 실제 지형의 3D 복원을 뜻하지 않습니다.</span></div></li>
+              </ol>
+            </figcaption>
           </figure>
         </div>
 
@@ -2084,6 +2239,73 @@
         dialogImage.removeAttribute('src');
         if (trigger) trigger.focus();
       });
+    })();
+  </script>
+  <script>
+    (() => {
+      const split = document.querySelector('#forest-split');
+      if (split) {
+        const stage = document.querySelector('.compare-stage');
+        const output = document.querySelector('#forest-split-value');
+        const update = () => {
+          stage.style.setProperty('--split', split.value + '%');
+          output.value = split.value + '%';
+          split.setAttribute('aria-valuetext', '정답 지도 ' + split.value + '%, 나머지는 CNN 확률');
+        };
+        split.addEventListener('input', update);
+        const scrub = (event) => {
+          const bounds = stage.getBoundingClientRect();
+          split.value = Math.round(Math.max(0, Math.min(100, (event.clientX - bounds.left) / bounds.width * 100)));
+          update();
+        };
+        stage.addEventListener('pointerdown', (event) => {
+          if (event.button !== 0) return;
+          stage.setPointerCapture(event.pointerId);
+          scrub(event);
+        });
+        stage.addEventListener('pointermove', (event) => {
+          if (stage.hasPointerCapture(event.pointerId)) scrub(event);
+        });
+        stage.addEventListener('pointerup', (event) => {
+          if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
+        });
+        update();
+        document.querySelector('.cnn-compare').hidden = false;
+        document.querySelector('.cnn-evidence').classList.add('is-interactive');
+      }
+
+      const step = document.querySelector('#latent-step');
+      if (step) {
+        // Pinned v0.6.0 latent_interpolation.json; these are recorded outputs.
+        const scores = [0.038374, 0.011082, 0.003523, 0.004839, 0.012862, 0.048763, 0.153827, 0.297246];
+        const marker = document.querySelector('.latent-marker');
+        const guide = document.querySelector('.latent-guide');
+        const dot = document.querySelector('.latent-dot');
+        const output = document.querySelector('#latent-step-value');
+        const readout = document.querySelector('#latent-readout');
+        const update = () => {
+          const index = Number(step.value);
+          const score = (scores[index] * 100).toFixed(2) + '%';
+          const x = 44 + index * 48;
+          const y = 190 - scores[index] * 150 / 0.35;
+          marker.style.left = ((index % 4) * 264 / 1048 * 100) + '%';
+          marker.style.top = (Math.floor(index / 4) * 264 / 520 * 100) + '%';
+          guide.setAttribute('x1', x);
+          guide.setAttribute('x2', x);
+          dot.setAttribute('cx', x);
+          dot.setAttribute('cy', y);
+          output.value = (index + 1) + ' / 8';
+          readout.querySelector('span').textContent = 'α = ' + (index / 7).toFixed(3) + ' · ' + (index + 1) + '번 장면';
+          readout.querySelector('strong').textContent = score;
+          step.setAttribute('aria-valuetext', (index + 1) + '번 장면, CNN 평균 산림 확률 ' + score);
+        };
+        step.addEventListener('input', update);
+        update();
+        marker.hidden = false;
+        guide.setAttribute('visibility', 'visible');
+        dot.setAttribute('visibility', 'visible');
+        document.querySelector('.latent-controls').hidden = false;
+      }
     })();
   </script>
 </body>
