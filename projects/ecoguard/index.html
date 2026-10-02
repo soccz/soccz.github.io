@@ -183,6 +183,9 @@
       white-space: nowrap;
     }
     .nav-links a:hover { color: var(--green-dark); }
+    .nav-links a[aria-current="location"] { color: var(--green-dark); font-weight: 700; box-shadow: inset 0 -3px var(--green); }
+    .hero-shortcuts { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; margin-top: 12px; font-size: 0.85rem; }
+    .hero-shortcuts a { display: inline-flex; align-items: center; min-height: 44px; color: var(--green-dark); text-underline-offset: 4px; }
 
     main { overflow: hidden; }
     .hero {
@@ -769,6 +772,38 @@
     .feature-layout.reverse .feature-copy { order: 2; }
     .feature-layout + .feature-layout { margin-top: 86px; }
     .feature-copy .section-head { margin-bottom: 22px; }
+    .legal-layout { align-items: start; row-gap: 22px; }
+    .legal-evidence { padding: 26px; background: var(--paper); border: 1px solid var(--line-strong); border-radius: 16px; }
+    .legal-evidence h3 { margin: 12px 0 4px; font-size: 1.2rem; color: var(--green-dark); }
+    .legal-case-id { margin: 0 0 22px; color: var(--muted); font-family: var(--mono); font-size: 0.8rem; }
+    .legal-trace { margin: 0; padding: 0; list-style: none; }
+    .legal-trace li { position: relative; padding: 0 0 24px 34px; border-left: 2px solid var(--line-strong); margin-left: 10px; }
+    .legal-trace li:last-child { padding-bottom: 0; border-color: transparent; }
+    .legal-trace li::before { content: ''; position: absolute; top: 6px; left: -7px; width: 12px; height: 12px; border-radius: 50%; background: var(--green); border: 2px solid var(--paper); }
+    .legal-trace h4 { margin: 0 0 6px; color: var(--green-dark); font-size: 0.88rem; }
+    .legal-trace p { margin: 0; font-size: 0.9rem; }
+    .legal-trace .legal-conflict { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .legal-conflict strong { font-family: var(--mono); color: var(--green-dark); font-size: 1.45rem; }
+    .legal-conflict .conflict-value { color: #8a4b1c; }
+    .legal-match { padding: 14px; background: var(--green-soft); border: 1px solid #beddd2; border-radius: 8px; }
+    .legal-match strong { display: block; font-family: var(--mono); color: var(--green-dark); font-size: 1.15rem; }
+    .legal-match span { display: block; margin-top: 4px; font-size: 0.83rem; }
+    .legal-source { margin: 20px 0 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--text); font-size: 0.82rem; }
+    .legal-source a { display: inline-flex; min-height: 44px; align-items: center; color: var(--green-dark); }
+    .legal-archive { grid-column: 1 / -1; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; align-items: center; margin: 0; padding-top: 20px; border-top: 1px solid var(--line); }
+    .legal-archive img { border-radius: 7px; }
+    .legal-archive figcaption { color: var(--text); font-size: 0.8rem; }
+    .legal-archive .figure-label { font-size: 0.8rem; }
+    .retrieval-score { margin: 24px 0; padding: 20px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
+    .retrieval-score h3 { color: var(--green-dark); font-size: 1rem; }
+    .retrieval-score > p { margin: 8px 0 14px; color: var(--text); font-size: 0.85rem; }
+    .score-rows { margin: 0; }
+    .score-row { margin-top: 13px; }
+    .score-row dt { display: flex; justify-content: space-between; gap: 12px; color: var(--text); font-size: 0.85rem; }
+    .score-row strong { color: var(--green-dark); font-family: var(--mono); }
+    .score-row dd { margin: 6px 0 0; height: 8px; background: var(--bg-soft); border-radius: 2px; }
+    .score-row dd span { display: block; width: var(--portion); height: 100%; background: var(--green); border-radius: 2px; }
+    .retrieval-score .score-note { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 0.8rem; }
     .feature-list { margin: 0; padding: 0; display: grid; gap: 11px; list-style: none; }
     .feature-list li {
       padding: 15px 17px;
@@ -840,8 +875,6 @@
     .case-mix .distractor { flex: 8; background: #4d7f70; }
     .case-mix .negative { flex: 10; background: var(--green-deep); }
 
-    .reconcile-board { margin-top: 18px; padding: 18px; color: #f2faf7; background: var(--green-deep); border-radius: 14px; }
-    .reconcile-board h3 { font-size: 0.78rem; }
     .cbam-audit { margin-top: 40px; padding: 28px; color: #f2faf7; background: var(--green-deep); border-radius: 16px; }
     .cbam-audit h3 { font-size: 1.2rem; }
     .cbam-audit > p { margin: 8px 0 22px; color: #c5ded4; font-size: 0.88rem; }
@@ -861,17 +894,6 @@
     .cbam-audit .audit-source { margin: 24px 0 0; padding-top: 15px; border-top: 1px solid #597e70; font-size: 0.82rem; }
     .audit-source a { color: #e6fff5; display: inline-flex; min-height: 44px; align-items: center; }
     .cbam-audit :focus-visible { outline-color: #fff; }
-    .axis-row { margin-top: 14px; display: grid; grid-template-columns: 92px 1fr 74px; gap: 10px; align-items: center; }
-    .axis-label { color: #bfe8dc; font-size: 0.63rem; }
-    .axis-total { color: #fff; font-family: var(--mono); font-size: 0.62rem; text-align: right; }
-    .stacked-bar { height: 22px; display: flex; overflow: hidden; background: rgba(255,255,255,0.1); border-radius: 6px; }
-    .stacked-bar span { min-width: 8px; display: block; }
-    .stacked-bar .direct { flex: 970.5; background: #39c8a2; }
-    .stacked-bar .indirect { flex: 140.86; background: #bfe8dc; }
-    .stacked-bar .process { flex: 731.36; background: #39c8a2; }
-    .stacked-bar .precursor { flex: 380; background: #74a99a; }
-    .axis-legend { margin: 10px 0 0 102px; display: flex; flex-wrap: wrap; gap: 12px; color: #c7ddd6; font-size: 0.58rem; }
-    .axis-legend i { width: 8px; height: 8px; margin-right: 4px; display: inline-block; border-radius: 2px; }
 
     .retrieval-path {
       margin: 22px 0 0;
@@ -950,6 +972,17 @@
       .is-interactive .cnn-grid { grid-template-columns: 1fr; }
     }
     .cnn-reading { margin: 18px 0 0; padding-left: 14px; border-left: 3px solid var(--green); color: var(--text); font-size: 0.86rem; }
+    .chart-finding { margin: 16px 0; padding: 14px 16px; border-left: 3px solid var(--green); background: var(--green-soft); color: var(--green-dark); font-size: 0.9rem; }
+    .chart-finding strong { display: block; margin-bottom: 5px; }
+    .forest-chapters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: -8px 0 30px; border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+    .forest-chapters a { display: block; padding: 16px 20px; min-height: 44px; color: var(--green-dark); background: var(--paper); text-decoration: none; border-right: 1px solid var(--line); }
+    .forest-chapters a:last-child { border: 0; }
+    .forest-chapters a:hover { background: var(--green-soft); }
+    .forest-chapters strong { display: block; font-size: 0.9rem; }
+    .forest-chapters span { display: block; margin-top: 3px; color: var(--text); font-size: 0.82rem; }
+    .forest-chapter { margin-top: 42px; padding-top: 28px; border-top: 1px solid var(--line-strong); scroll-margin-top: 90px; }
+    #forest-classification, #case-map-title { scroll-margin-top: 90px; }
+    .forest-chapter .subsection-head { margin-top: 0; }
     .cnn-metrics { margin: 22px 0 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 10px; background: var(--paper); overflow: hidden; }
     .cnn-metrics div { min-width: 0; padding: 16px; border-right: 1px solid var(--line); }
     .cnn-metrics div:last-child { border-right: 0; }
@@ -1292,9 +1325,6 @@
       .image-dialog figcaption,
       .metric-cell span,
       .case-mix span,
-      .axis-label,
-      .axis-total,
-      .axis-legend,
       .retrieval-path li,
       .metric-board-title { font-size: 0.75rem; }
 
@@ -1374,6 +1404,13 @@
       .audit-labels strong { font-size: 0.88rem; }
       .cnn-compare { padding: 12px; }
       .compare-help, .latent-note, .terrain-layers span { font-size: 0.9rem; }
+      .legal-evidence { padding: 20px 16px; }
+      .legal-trace li { padding-left: 24px; }
+      .legal-archive { grid-template-columns: 116px minmax(0, 1fr); }
+      .legal-archive figcaption, .legal-source { font-size: 0.875rem; }
+      .forest-chapters { grid-template-columns: 1fr; }
+      .forest-chapters a { padding: 12px 16px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .forest-chapters span { font-size: 0.875rem; }
       .forest-actions { margin-top: -14px; }
       .forest-artifact-stage { min-height: 250px; padding: 12px; }
       .forest-artifact-stage img { aspect-ratio: 4 / 3; }
@@ -1397,9 +1434,6 @@
       .metric-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
       .case-mix { height: auto; flex-direction: column; }
       .case-mix span { min-height: 28px; }
-      .axis-row { grid-template-columns: 76px 1fr; }
-      .axis-total { grid-column: 2; text-align: left; }
-      .axis-legend { margin-left: 86px; }
       .retrieval-path { flex-direction: column; gap: 7px; }
       .retrieval-path li, .retrieval-path li:first-child, .retrieval-path li:last-child { border: 1px solid var(--line); border-radius: 8px; }
       .retrieval-path li:not(:last-child)::after { content: '↓'; right: 12px; top: auto; bottom: -17px; transform: none; }
@@ -1413,7 +1447,7 @@
       .field-quote cite, .feedback-scope, .raw-list span, .screen-card figcaption,
       .figure-label, .stage-title span, .stage-copy, .review-chip,
       .feature-list p, .single-screen figcaption,
-      .metric-board-title, .metric-cell span, .axis-label, .axis-total, .axis-legend,
+      .metric-board-title, .metric-cell span,
       .retrieval-path li, .formula-card span, .formula-card code, .proof-card p,
       .proof-check, .legal-review p, .scope-tag, .scope-card p,
       .lesson-card p, .details-body > p, .module-limit, .forest-demo-note,
@@ -1427,7 +1461,7 @@
       .thesis-label, .evidence-flow span, .case-mix span,
       .stage-num, .feature-index, .proof-id, .raw-list strong, .button,
       .award-badge strong, .thesis-card p, .turning-note strong,
-      .feature-list h3, .reconcile-board h3,
+      .feature-list h3,
       .image-dialog-label, .image-dialog figcaption {
         font-size: 0.875rem !important;
       }
@@ -1477,6 +1511,7 @@
               <a class="button primary" href="https://github.com/soccz/EcoGuard" target="_blank" rel="noopener noreferrer">재현 코드 보기 <span aria-hidden="true">↗</span></a>
               <a class="button" href="/projects/ecoguard/assets/EcoGuard_Selected_Excerpt.pdf">공개 case study · 4쪽 <span aria-hidden="true">↓</span></a>
             </div>
+            <div class="hero-shortcuts" role="group" aria-label="페이지 안의 실제 예시"><span>먼저 살펴보기</span><a href="#case-map-title">한 건의 문서 처리 ↓</a><a href="#forest-classification">산림 정답·예측 비교 ↓</a></div>
             <p class="hero-disclaimer">
               교육·경진 목적의 독립적인 3인 팀 PoC이며, 하나금융그룹·하나은행의 공식 제품은 아닙니다.
             </p>
@@ -1598,7 +1633,7 @@
             <p class="section-kicker">02 · 문제 정의</p>
             <h2 id="story-title">은행 심사대에 올라가는<br>자료부터 생각했습니다</h2>
             <p class="section-desc">
-              CBAM과 EUDR 검토에는 생산·에너지·원산지 자료가 필요하지만, 기업 자료는 규제 양식대로 정리돼 있지 않습니다.
+              탄소국경조정제도(CBAM)와 산림전용방지규정(EUDR) 검토에는 생산·에너지·원산지 자료가 필요하지만, 기업 자료는 규제 양식대로 정리돼 있지 않습니다.
               팀은 은행이 수출 거래를 심사할 때 먼저 “이 자료를 믿고 다음 판단을 내려도 되는가”를 확인해야 한다고 가정했습니다.
               기업 대신 규제 서류를 작성하기보다, 은행이 이미 받은 자료를 검토 가능한 근거 묶음으로 바꾸는 층에 초점을 맞췄습니다.
             </p>
@@ -1825,21 +1860,28 @@
 
     <section id="technology" class="alt" aria-label="EcoGuard 기술 증명 모듈">
       <div class="container">
-        <div class="feature-layout">
+        <div class="feature-layout legal-layout">
           <div class="feature-copy">
             <div class="section-head">
               <p class="section-kicker">07 · EU 조문 검색</p>
               <h2>답변을 만들기 전에<br>관련 조문부터 찾았습니다</h2>
               <p class="section-desc">
-                앞 단계에서 찾은 “원산지 좌표 누락”을 검색 질문으로 바꿉니다. 공개 코드는 법률 답변을 생성하지 않습니다.
-                키워드로 후보 조문을 좁힌 뒤 Article·paragraph와 공식 출처를 보여주고, 추가로 받아야 할 자료를 따로 적습니다.
-                관련 근거가 없는 질문에는 결과를 내지 않습니다.
+                앞에서 남긴 “출하량 190t과 메모 191t의 충돌”은 계산값을 고르는 것만으로 끝나지 않습니다.
+                공개 코드는 이 이슈를 질문으로 바꿔 관련 조문 후보와 원문 위치를 찾습니다.
+                심사자는 그 근거를 보고 원자료를 다시 확인합니다. 관련 근거가 없는 질문에는 기권합니다.
+                법률 답변을 생성하거나 적법 여부를 판정하는 단계는 아닙니다.
               </p>
             </div>
-            <ol class="feature-list">
-              <li><span class="feature-index">01</span><div><h3>누락·충돌을 검색 질문으로 변환</h3><p>현재 문제를 “어느 의무에서 어떤 자료가 비었는가”라는 검색어로 바꿉니다.</p></div></li>
-              <li><span class="feature-index">02</span><div><h3>조문과 보완 자료를 함께 표시</h3><p>Article·paragraph 범위, 출처, 빠진 자료와 다음 행동을 나눠 보여줍니다.</p></div></li>
-            </ol>
+            <div class="retrieval-score" role="group" aria-labelledby="retrieval-score-title">
+              <h3 id="retrieval-score-title">어떤 단서가 검색 점수에 기여했나</h3>
+              <p>이 질문에서는 ‘CBAM 신고’와 ‘신고 수량’이 개념 단서로 잡혔습니다. 1순위 조문의 점수는 아래 세 항목에서 나왔습니다.</p>
+              <dl class="score-rows">
+                <div class="score-row"><dt>단어 일치 · BM25 <strong>8.14</strong></dt><dd aria-hidden="true"><span style="--portion:42.150945%;"></span></dd></div>
+                <div class="score-row"><dt>글자 조각 일치 · BM25 <strong>3.17</strong></dt><dd aria-hidden="true"><span style="--portion:16.424199%;"></span></dd></div>
+                <div class="score-row"><dt>개념 구문 일치 <strong>8.00</strong></dt><dd aria-hidden="true"><span style="--portion:41.424856%;"></span></dd></div>
+              </dl>
+              <p class="score-note">막대는 총점 19.312077에 대한 각 항목의 비중입니다. 표시값은 소수 둘째 자리로 반올림했으며 법률 판단의 신뢰 확률이 아닙니다.</p>
+            </div>
             <details class="tech-details">
               <summary>평가 구성과 검색 수치 보기</summary>
               <div class="details-body">
@@ -1865,12 +1907,21 @@
               </div>
             </details>
           </div>
-          <figure class="single-screen">
-            <div class="browser-frame">
-              <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-              <img data-lightbox src="/projects/ecoguard/assets/screen-legal-rag.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 규제 질의 화면. 거래 리스크 질문 입력창과 탄소 감축 방안, 조건부 검토 결과가 표시되어 있다.">
-            </div>
-            <figcaption>Figure 03. 발표용 합성 화면입니다. 화면의 생성형 답변은 적용 아이디어이며, 현재 코드는 키워드 기반 조문 검색과 출처 표시까지만 재현합니다.</figcaption>
+          <div class="legal-evidence" role="group" aria-labelledby="legal-evidence-title">
+            <span class="scope-tag built">현재 공개 코드 · 합성 예제</span>
+            <h3 id="legal-evidence-title">수량 충돌에서 조문 후보까지</h3>
+            <p class="legal-case-id">ECO-SYN-2026-001 · v0.6.0</p>
+            <ol class="legal-trace">
+              <li><h4>01 · 앞 단계에서 남긴 이슈</h4><p class="legal-conflict"><strong>190 t</strong><span>↔</span><strong class="conflict-value">191 t</strong></p><p>출하량의 문서 간 충돌<br><code>cross_document_conflict</code></p></li>
+              <li><h4>02 · 코드가 구성한 검색 질문</h4><p class="legal-query">CBAM 신고 수량이 문서마다 다르면 신고 내용과 수량 근거는 어떤 조항을 확인해야 하나</p></li>
+              <li><h4>03 · 검색 결과 1순위</h4><div class="legal-match"><strong>Article 6 · paragraph 2</strong><span>CBAM-ART6 · CBAM declaration content</span><span>검색 점수 <b>19.312077</b> · 확률이나 정확도 아님</span></div></li>
+            </ol>
+            <p class="chart-finding"><strong>190t이 맞다는 법률 판정을 내린 것이 아닙니다.</strong>충돌한 수량을 검토할 때 살펴볼 조문 위치가 연결된 것입니다. 어떤 문서를 다시 확인할지는 사람이 판단합니다.</p>
+            <p class="legal-source">공개 JSON의 질문과 1순위 결과를 옮겼습니다. 팀이 정리한 검색용 조문 레코드이며 원문 확인 기준일은 2026-08-11입니다.<br><a href="https://github.com/soccz/EcoGuard/blob/v0.6.0/artifacts/examples/legal_issue_citations.json" target="_blank" rel="noopener noreferrer">검색 기록 원본 ↗</a> · <a href="https://eur-lex.europa.eu/eli/reg/2023/956/2025-10-20/eng" target="_blank" rel="noopener noreferrer">기록에 연결된 공식 원문 ↗</a></p>
+          </div>
+          <figure class="legal-archive">
+            <img data-lightbox src="/projects/ecoguard/assets/screen-legal-rag.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 규제 질의 화면. 거래 리스크 질문 입력창과 탄소 감축 방안, 조건부 검토 결과가 표시되어 있다.">
+            <figcaption><span class="figure-label">Figure 03 · 발표 당시의 구상</span>생성형 답변을 보여준 합성 화면입니다. 현재 검색 결과와는 구분해서 남겼습니다. 누르면 원본을 볼 수 있습니다.</figcaption>
           </figure>
         </div>
 
@@ -1941,11 +1992,16 @@
           <h2 id="forest-title">산림을 분류하고,<br>모델의 반응을 확인했습니다</h2>
           <p class="section-desc">
             산림 파트의 출발점은 “위성에서 본 상태를 심사자가 어떻게 확인할까”였습니다. 수상 후에는 공개 위성 데이터의 산림 영역을 CNN으로 분류하고 정답과 비교하는 경로부터 만들었습니다.
-            발표에서 시도했던 GAN 잠재공간 보간과 높이 축 시각화는 별도 실험으로 이어갔습니다. 아래에서는 실제 분류 결과, 발표 화면, 후속 재구성 실험을 차례로 볼 수 있습니다.
+            발표에서 시도했던 GAN 잠재공간 보간과 높이 축 시각화는 별도 실험으로 이어갔습니다. 분류를 검증한 결과, 아이디어를 재구성한 실험, 발표에서 보여준 사용 흐름을 나눠 읽을 수 있습니다.
           </p>
         </div>
 
-        <div class="cnn-evidence" role="group" aria-labelledby="cnn-evidence-title">
+        <nav class="forest-chapters" aria-label="산림 파트 안에서 이동">
+          <a href="#forest-classification"><strong>01 · 분류와 검산</strong><span>CNN 정답 비교 · 합성 NDVI 기준선</span></a>
+          <a href="#forest-reconstruction"><strong>02 · 재구성 실험</strong><span>GAN 잠재공간 · 2.5D 높이 표현</span></a>
+          <a href="#forest-presentation"><strong>03 · 발표의 사용 흐름</strong><span>현장 데모 · 위험 요약 · 통합 보고서</span></a>
+        </nav>
+        <div class="cnn-evidence" id="forest-classification" role="group" aria-labelledby="cnn-evidence-title">
           <span class="scope-tag built">수상 후 연구 · 공개 위성 데이터</span>
           <h3 id="cnn-evidence-title">입력·정답·예측을 같은 위치에서 비교합니다</h3>
           <p class="cnn-context">평가 표본 S2-EV-003 · 각 64×64 픽셀. GitHub v0.6.0에 공개한 이미지 원본을 그대로 확대했습니다. 모델은 RGB와 근적외선 4개 밴드를 입력받습니다.</p>
@@ -1987,6 +2043,7 @@
             <div><dt>비산림을 산림으로 · FP</dt><dd>488 <small>픽셀</small></dd></div>
             <div><dt>놓친 산림 · FN</dt><dd>2,090 <small>픽셀</small></dd></div>
           </dl>
+          <p class="chart-finding"><strong>이 평가에서는 잘못 잡은 산림보다 놓친 산림이 많았습니다.</strong>오탐 488픽셀과 누락 2,090픽셀을 따로 남긴 이유입니다. F1 하나뿐 아니라 어떤 종류의 오류가 남았는지도 함께 봅니다.</p>
           <p class="cnn-scope">수치는 위 한 장이 아닌 <strong>소규모 공개 평가셋 전체</strong>의 결과입니다. F1·IoU는 소수 셋째 자리로 반올림했습니다. 한 시점의 산림피복을 분류한 실험이며, 실제 훼손·전후 변화 탐지 성능이나 외부 기관의 독립 평가를 뜻하지 않습니다.</p>
           <div class="cnn-links">
             <a href="https://github.com/soccz/EcoGuard/blob/v0.6.0/research/forest_xai/artifacts/public_demo/evaluation.json" target="_blank" rel="noopener noreferrer">평가 원본 JSON <span aria-hidden="true">&nbsp;↗</span></a>
@@ -1995,32 +2052,18 @@
           </div>
         </div>
 
-        <div class="forest-actions">
-          <a class="button primary" href="/projects/ecoguard/demo/" target="_blank" rel="noopener noreferrer">발표용 pseudo-360 직접 보기 <span aria-hidden="true">↗</span></a>
-          <a class="button" href="https://github.com/soccz/EcoGuard/tree/v0.6.0/research/forest_xai" target="_blank" rel="noopener noreferrer">재현 코드와 산출물 보기 <span aria-hidden="true">↗</span></a>
-          <p class="forest-demo-note">현장 데모의 파노라마·수치·훼손 표시는 발표용 합성 예시이며 실제 모델 출력이나 디지털트윈이 아닙니다.</p>
-        </div>
-
-        <div class="presentation-snapshot" role="group" aria-labelledby="satellite-demo-title">
-          <div class="subsection-head">
-            <div>
-              <span class="scope-tag sim">수상 당시 화면</span>
-              <h3 id="satellite-demo-title">판독 결과를 심사자가 읽을 위험 요약으로 바꿨습니다</h3>
-            </div>
-            <p>발표에서는 토지 비율, 연도별 NDVI, 임계값 이탈 시점과 다음 행동을 한 화면에 묶었습니다. 분석 결과가 검토 화면에서 어떻게 읽혀야 하는지를 보여주려는 시뮬레이션입니다.</p>
-          </div>
-          <figure class="single-screen">
-            <div class="browser-frame">
-              <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
-              <img data-lightbox src="/projects/ecoguard/assets/screen-report.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 발표 데모의 위성 환경검증 화면. 토지 비율, 2019년부터 2024년까지의 NDVI 하락 그래프, High Risk 판정과 심사 참고 문구가 표시되어 있다.">
-            </div>
-            <figcaption><span class="figure-label">발표 화면 · Satellite review</span>2019–2024 NDVI, 산림 31%p 감소, High Risk와 과징금 문구는 실제 기업·지역·위성 모델 출력이 아닌 합성 시나리오입니다.</figcaption>
-          </figure>
-        </div>
-
-        <div class="subsection-head">
+        <div class="forest-baseline-proof" role="group" aria-label="별도 합성 NDVI 검증 기준선">
+          <img data-lightbox src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 나누어 표시한다.">
           <div>
-            <span class="scope-tag built">수상 후 재구성</span>
+            <span class="forest-baseline-label">별도 합성 예제 · NDVI 변화 마스크</span>
+            <h3>작은 격자에서는 오류를 셀마다 확인합니다</h3>
+            <p>36개 셀의 TP 11 · FP 1 · FN 1 · TN 23을 직접 대조하는 기본 예제입니다. 위 CNN과 합쳐 평가하지 않습니다. 공개 위성 분류와 별도로, 합성 입력에서 변화 마스크의 검산 절차를 확인하는 경로입니다.</p>
+          </div>
+        </div>
+
+        <div class="subsection-head forest-chapter" id="forest-reconstruction">
+          <div>
+            <span class="scope-tag built">02 · 수상 후 재구성</span>
             <h3>잠재공간과 높이 축도 따로 실험했습니다</h3>
           </div>
           <p>장면을 잇는 GAN의 잠재벡터 z와 지형을 표현하는 높이 z는 서로 다른 축입니다. 당시 코드·가중치가 남아 있지 않아, 수상 후 작은 GAN과 합성 높이장으로 각각의 메커니즘을 새로 구현했습니다.</p>
@@ -2030,13 +2073,14 @@
           <figure class="screen-card forest-artifact-card">
             <div class="forest-artifact-stage">
               <div class="latent-contact">
-                <img data-lightbox class="latent-preview" src="/projects/ecoguard/assets/forest-latent-interpolation.png" width="1048" height="520" loading="lazy" alt="공개 Sentinel-2 파생 chip으로 수상 후 학습한 작은 GAN이 고정된 두 잠재벡터 사이를 여덟 단계로 보간해 만든 4열 2행의 합성 장면. 왼쪽 위부터 1–4, 아래는 5–8번이다.">
+                <img data-lightbox data-lightbox-caption="Figure 05 · 수상 후 학습한 작은 GAN의 잠재공간 보간. 왼쪽 위부터 1–4번, 아래는 5–8번 장면입니다. 공개 위성 파생 데이터로 학습한 합성 출력이며 특정 HiGAN 재현이나 실사화 품질의 증거는 아닙니다." class="latent-preview" src="/projects/ecoguard/assets/forest-latent-interpolation.png" width="1048" height="520" loading="lazy" alt="공개 Sentinel-2 파생 chip으로 수상 후 학습한 작은 GAN이 고정된 두 잠재벡터 사이를 여덟 단계로 보간해 만든 4열 2행의 합성 장면. 왼쪽 위부터 1–4, 아래는 5–8번이다.">
                 <span class="latent-marker" hidden aria-hidden="true"></span>
               </div>
             </div>
             <figcaption>
               <span class="figure-label">Figure 05 · 잠재공간 보간</span>
               작은 GAN이 z0→z1을 8단계로 잇습니다. 왼쪽 위부터 행 순서로 읽습니다. 아래 곡선은 각 생성 장면을 산림피복 CNN에 넣었을 때의 평균 확률입니다.
+              <p class="chart-finding"><strong>장면을 순서대로 이어도 CNN 반응이 계속 커지지는 않았습니다.</strong>기록된 값은 1번 3.84%에서 3번 0.35%로 낮아진 뒤 8번 29.72%까지 높아집니다. 이 경로의 보간 순서와 모델 반응은 단순한 증가 관계가 아니었습니다.</p>
               <svg class="latent-chart" viewBox="0 0 420 232" role="img" aria-labelledby="latent-chart-title latent-chart-desc">
                 <title id="latent-chart-title">8개 보간 장면에 대한 CNN 평균 산림 확률</title>
                 <desc id="latent-chart-desc">1번부터 8번까지 3.8374%, 1.1082%, 0.3523%, 0.4839%, 1.2862%, 4.8763%, 15.3827%, 29.7246%. 생성 장면에 대한 모델 반응이며 실제 산림 면적 변화나 생성 품질 점수가 아니다.</desc>
@@ -2048,6 +2092,7 @@
                 <line class="latent-guide" x1="44" x2="44" y1="42" y2="190" visibility="hidden"/>
                 <circle class="latent-dot" cx="44" cy="173.554" r="6" visibility="hidden"/>
                 <text class="chart-label" x="380" y="45" text-anchor="end">8번 · 29.7%</text>
+                <path class="chart-axis" d="M140 164 V180"/><text class="chart-label" x="140" y="157" text-anchor="middle" style="font-size:14px">3번 · 0.35%</text>
                 <text x="44" y="222" text-anchor="middle">1</text><text x="188" y="222" text-anchor="middle">4</text><text x="380" y="222" text-anchor="middle">8</text>
                 <text x="265" y="222" text-anchor="middle">보간 단계 →</text>
               </svg>
@@ -2055,12 +2100,12 @@
                 <div class="viz-range"><label for="latent-step">보간 단계 선택 <output id="latent-step-value" for="latent-step">1 / 8</output></label><input id="latent-step" type="range" min="0" max="7" step="1" value="0" aria-describedby="latent-help"></div>
                 <output class="latent-readout" id="latent-readout" for="latent-step"><span>α = 0.000 · 첫 장면</span><strong>3.84%</strong></output>
               </div>
-              <p class="latent-note" id="latent-help">움직이면 선택한 장면의 테두리와 그래프 위치가 함께 바뀝니다. 선은 기록된 8개 측정점을 이은 것이며, 실제 산림 변화나 실사 품질 점수가 아닙니다. <a href="https://github.com/soccz/EcoGuard/blob/v0.6.0/research/forest_xai/artifacts/public_demo/reconstruction/latent_interpolation.json" target="_blank" rel="noopener noreferrer">8개 값·JVP 원본 <span aria-hidden="true">&nbsp;↗</span></a></p>
+              <p class="latent-note" id="latent-help"><span class="latent-instruction" hidden>단계를 바꾸면 선택한 장면과 그래프 위치가 함께 움직입니다. </span>선은 8개 기록값을 이은 것이며 실제 산림 변화나 생성 품질 점수가 아닙니다. <a href="https://github.com/soccz/EcoGuard/blob/v0.6.0/research/forest_xai/artifacts/public_demo/reconstruction/latent_interpolation.json" target="_blank" rel="noopener noreferrer">8개 값·JVP 원본 <span aria-hidden="true">&nbsp;↗</span></a></p>
             </figcaption>
           </figure>
           <figure class="screen-card forest-artifact-card">
             <div class="forest-artifact-stage">
-              <img data-lightbox class="terrain-preview" src="/projects/ecoguard/assets/forest-2_5d-drape.png" width="960" height="640" loading="lazy" alt="공개 Sentinel-2 파생 RGB와 산림 확률을 합성 높이장 위에 얹어 투시해 본 수상 후 2.5D 시각화. 실제 지형 고도를 나타내지 않는다.">
+              <img data-lightbox data-lightbox-caption="Figure 06 · 공개 Sentinel-2 파생 RGB와 CNN 확률을 별도로 만든 합성 높이장 위에 얹은 2.5D 시각화입니다. 색과 높이의 출처가 다르며 위성에서 실제 고도를 복원한 결과가 아닙니다." class="terrain-preview" src="/projects/ecoguard/assets/forest-2_5d-drape.png" width="960" height="640" loading="lazy" alt="공개 Sentinel-2 파생 RGB와 산림 확률을 합성 높이장 위에 얹어 투시해 본 수상 후 2.5D 시각화. 실제 지형 고도를 나타내지 않는다.">
             </div>
             <figcaption>
               <span class="figure-label">Figure 06 · 높이 축 시각화</span>같은 S2-EV-003을 입체 표면 위에 얹었습니다. 그림의 색과 높이는 서로 다른 입력에서 왔습니다.
@@ -2080,15 +2125,6 @@
           EcoGuard는 공개 mirror에서 선택한 영상 조각을 64×64로 축소·정규화했습니다. 위 CNN 비교는 그 데이터의 RGB·정답과 모델 출력입니다. Figure 05는 학습 데이터로 만든 GAN의 합성 출력이며, Figure 06은 평가 영상·모델 확률을 합성 높이에 얹은 시각화입니다.
         </p>
 
-        <div class="forest-baseline-proof" role="group" aria-label="현재 공개 검증 기준선">
-          <img data-lightbox src="/projects/ecoguard/assets/forest-baseline.svg" width="448" height="573" loading="lazy" alt="EcoGuard 공개 코드가 생성한 6×6 합성 NDVI 기준 마스크 평가 격자. 36개 셀을 TP 11, FP 1, FN 1, TN 23으로 나누어 표시한다.">
-          <div>
-            <span class="forest-baseline-label">별도 합성 예제 · NDVI 변화 마스크</span>
-            <h3>36개 셀의 예측과 정답도 직접 대조합니다</h3>
-            <p>추가 라이브러리 없이 실행하는 기본 예제입니다. TP 11 · FP 1 · FN 1 · TN 23을 셀별로 확인할 수 있습니다. 위 CNN의 공개 위성 평가와는 입력·모델·검증 목적이 다른 경로입니다.</p>
-          </div>
-        </div>
-
         <details class="tech-details">
           <summary>검증 수치와 GAN·JVP·2.5D의 정확한 범위 보기</summary>
           <div class="details-body">
@@ -2100,6 +2136,29 @@
           </div>
         </details>
 
+        <div class="forest-chapter" id="forest-presentation" role="group" aria-labelledby="forest-presentation-title">
+          <div class="subsection-head">
+            <div><span class="scope-tag sim">03 · 발표의 사용 흐름</span><h3 id="forest-presentation-title">검토 결과를 사람이 읽는 화면으로</h3></div>
+            <p>여기부터는 수상 당시의 합성 시나리오입니다. 앞의 연구 결과를 그대로 서비스에 연결한 화면이 아니라, 현장 확인에서 위험 요약과 통합 보고서로 이어지는 사용 흐름을 보여줍니다.</p>
+          </div>
+          <div class="forest-actions">
+            <a class="button primary" href="/projects/ecoguard/demo/" target="_blank" rel="noopener noreferrer">발표용 pseudo-360 직접 보기 <span aria-hidden="true">↗</span></a>
+            <a class="button" href="https://github.com/soccz/EcoGuard/tree/v0.6.0/research/forest_xai" target="_blank" rel="noopener noreferrer">연구 코드와 산출물 보기 <span aria-hidden="true">↗</span></a>
+            <p class="forest-demo-note">파노라마·수치·훼손 표시는 발표용 합성 예시이며 실제 모델 출력이나 디지털트윈이 아닙니다.</p>
+          </div>
+          <div class="presentation-snapshot" role="group" aria-labelledby="satellite-demo-title">
+            <div class="subsection-head">
+              <div><span class="scope-tag sim">수상 당시 화면</span><h3 id="satellite-demo-title">위험 신호와 다음 행동을 함께 읽도록</h3></div>
+              <p>토지 비율과 연도별 NDVI를 나열하는 데서 끝내지 않고, 임계값 이탈 시점과 후속 검토 문구를 같은 화면에 배치했습니다.</p>
+            </div>
+            <figure class="single-screen">
+              <div class="browser-frame">
+                <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                <img data-lightbox src="/projects/ecoguard/assets/screen-report.webp" width="1280" height="720" loading="lazy" alt="EcoGuard 발표 데모의 위성 환경검증 화면. 토지 비율, 2019년부터 2024년까지의 NDVI 하락 그래프, High Risk 판정과 심사 참고 문구가 표시되어 있다.">
+              </div>
+              <figcaption><span class="figure-label">발표 화면 · Satellite review</span>2019–2024 NDVI, 산림 31%p 감소, High Risk와 과징금 문구는 실제 기업·지역·위성 모델 출력이 아닌 합성 시나리오입니다.</figcaption>
+            </figure>
+          </div>
         <div class="presentation-snapshot presentation-gallery" role="group" aria-labelledby="trust-report-title">
           <div class="subsection-head">
             <div>
@@ -2116,6 +2175,7 @@
             <figcaption><span class="figure-label">발표 화면 · Trust report</span>31%p·4%·7.3억원·127가구·8개 표준·HIGH·P0는 발표용 합성 시나리오 값입니다. 실제 법률 판정, 은행 심사 결과, 자동 승인·거절이나 절감액을 뜻하지 않습니다.</figcaption>
           </figure>
         </div>
+        </div>
       </div>
     </section>
 
@@ -2123,10 +2183,10 @@
       <div class="container">
         <div class="section-head">
           <p class="section-kicker">10 · 재현 검증</p>
-          <h2 id="proof-title">공개본은 정리된 JSON이 아니라<br>원문에서 시작합니다</h2>
+          <h2 id="proof-title">같은 결과가 다시 나오는지<br>파일 단위로 확인합니다</h2>
           <p class="section-desc">
-            첫 공개본은 이미 정리된 JSON에서 시작했습니다. v0.6.0은 7개 문서와 37개 원문 줄에서 시작하고,
-            선택하지 않은 값과 빈칸까지 남깁니다. 그래서 결과에서 원문으로 다시 돌아갈 수 있습니다.
+            앞에서는 한 값이 어떻게 처리되는지 봤습니다. 마지막으로 확인할 것은 그 과정을 다른 환경에서도 반복할 수 있느냐입니다.
+            v0.6.0은 결과의 출처를 되짚는 검사, 계산 중간값 검산, 재생성 파일의 바이트 비교를 함께 실행합니다.
           </p>
         </div>
 
@@ -2224,7 +2284,7 @@
           const figure = button.closest('figure');
           dialogImage.src = image.currentSrc || image.src;
           dialogImage.alt = image.alt;
-          dialogCaption.textContent = figure?.querySelector('figcaption')?.textContent.trim() || image.alt;
+          dialogCaption.textContent = image.dataset.lightboxCaption || figure?.querySelector('figcaption')?.textContent.trim() || image.alt;
           dialog.showModal();
           closeButton.focus();
         });
@@ -2244,6 +2304,36 @@
   <script>
     (() => {
       const split = document.querySelector('#forest-split');
+      const navLinks = [...document.querySelectorAll('.nav-links a')];
+      const navTargets = navLinks.map(link => document.querySelector(link.getAttribute('href')));
+      let navFrame = 0;
+      let previousLocation = -1;
+      const updateLocation = () => {
+        navFrame = 0;
+        const threshold = document.querySelector('.site-nav').getBoundingClientRect().bottom + 32;
+        let current = -1;
+        navTargets.forEach((target, index) => {
+          if (target.getBoundingClientRect().top <= threshold) current = index;
+        });
+        navLinks.forEach((link, index) => {
+          if (index === current) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+        if (current !== previousLocation && current >= 0) {
+          const rail = document.querySelector('.nav-inner');
+          const bounds = rail.getBoundingClientRect();
+          const link = navLinks[current].getBoundingClientRect();
+          rail.scrollLeft += Math.min(0, link.left - bounds.left - 12) + Math.max(0, link.right - bounds.right + 12);
+        }
+        previousLocation = current;
+      };
+      const scheduleLocation = () => {
+        if (!navFrame) navFrame = requestAnimationFrame(updateLocation);
+      };
+      addEventListener('scroll', scheduleLocation, { passive: true });
+      addEventListener('resize', scheduleLocation);
+      addEventListener('load', scheduleLocation);
+      updateLocation();
       if (split) {
         const stage = document.querySelector('.compare-stage');
         const output = document.querySelector('#forest-split-value');
@@ -2305,6 +2395,7 @@
         guide.setAttribute('visibility', 'visible');
         dot.setAttribute('visibility', 'visible');
         document.querySelector('.latent-controls').hidden = false;
+        document.querySelector('.latent-instruction').hidden = false;
       }
     })();
   </script>
