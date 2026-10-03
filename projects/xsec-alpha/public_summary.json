@@ -1,15 +1,15 @@
 {
-  "asof": "2026-10-03T22:20:19+00:00",
+  "asof": "2026-10-03T23:00:22+00:00",
   "ic": {
     "short_6h": {
-      "live_30d_mean": 0.079353,
+      "live_30d_mean": 0.07893,
       "holdout": 0.0907,
       "holdout_tstat": 5.95,
       "holdout_n": 47,
       "gate": "OK"
     },
     "long_12h": {
-      "live_30d_mean": 0.115715,
+      "live_30d_mean": 0.116876,
       "holdout": 0.1312,
       "holdout_tstat": 4.57,
       "holdout_n": 23,
@@ -18,18 +18,18 @@
   },
   "realized_30d": {
     "SHORT": {
-      "n": 448,
-      "win_pct": 61.2,
-      "gross_win_pct": 62.7,
-      "net_win_pct": 61.2,
+      "n": 443,
+      "win_pct": 60.7,
+      "gross_win_pct": 62.3,
+      "net_win_pct": 60.7,
       "win_pct_basis": "net_return",
-      "gross_pct": 0.8497,
-      "net_pct": 0.5497,
-      "net_per_basket_pct": 0.7008,
-      "n_baskets": 105,
+      "gross_pct": 0.825,
+      "net_pct": 0.525,
+      "net_per_basket_pct": 0.6813,
+      "n_baskets": 104,
       "cost_pct": 0.3,
-      "tstat_clustered": 2.156,
-      "sharpe": 0.082
+      "tstat_clustered": 2.079,
+      "sharpe": 0.078
     },
     "WATCH_LONG": {
       "n": 0,
@@ -48,8 +48,8 @@
   },
   "realized_basis": "SHORT actionable only; WATCH_LONG observation only; paper/proxy returns",
   "model_age_days": {
-    "xsec_6h.pkl": 6.09,
-    "xsec_12h.pkl": 6.09
+    "xsec_6h.pkl": 6.12,
+    "xsec_12h.pkl": 6.12
   },
   "cost_assumptions": {
     "SHORT": 0.3,
@@ -97,6 +97,6 @@
   "_note": "public sibling of encrypted dashboard data. Aggregates only — no individual picks.",
   "operating_receipt": {
     "closed_sha256": "9d9c8453e0ba9263dafe3de459ab75fe2db638db5c615f13bb7a266f0f194338",
-    "summary_sha256": "d946b7b8bac34229449f2c7b23720daecc603db832aed3303c15f7e2bb73c42d"
+    "summary_sha256": "cc235077d1ad2ac557f3d614a47ae6e2a0d85cbf685812c1c3fc7b97be622385"
   }
 }
