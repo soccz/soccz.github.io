@@ -5,9 +5,9 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>xsec_alpha 개발일지 · 가설, 실패, 그리고 다음 실험</title>
-  <meta name="description" content="gan_t 실패, LONG 설계 기각, 과장된 적중률 철회, 비용과 운영 감사, 9월 고정 모델 실험까지. 무엇을 기대했고 왜 판단을 바꿨는지 남기는 xsec_alpha 개발일지.">
+  <meta name="description" content="gan_t 실패, LONG 설계 기각, 과장된 적중률 철회, 비용과 운영 감사, 9월 고정 모델 실험, 33일 늦게 기록한 10월 KILL 판정까지. 무엇을 기대했고 왜 판단을 바꿨는지 남기는 xsec_alpha 개발일지.">
   <meta property="og:title" content="xsec_alpha — Cross-Sectional Crypto Ranking">
-  <meta property="og:description" content="실패한 가설과 기각한 모델을 지우지 않는다. 연구의 부분 성공, 운영의 반증, 측정 계약 복구와 2026-09-07 고정 모델 실험을 잇는 개발일지.">
+  <meta property="og:description" content="실패한 가설과 기각한 모델을 지우지 않는다. 연구의 부분 성공, 운영의 반증, 측정 계약 복구, 2026-09-07 고정 모델 실험과 33일 늦게 기록한 10월 KILL 판정(부분 집행)을 잇는 개발일지.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/xsec-alpha/">
   <meta name="twitter:card" content="summary">
@@ -453,12 +453,12 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
-    <span class="hero-label">RESEARCH JOURNAL · 2026-10-01</span>
+    <span class="hero-label">RESEARCH JOURNAL · 2026-10-04</span>
     <h1>xsec_alpha 개발일지</h1>
     <p class="hero-sub">
       <strong>코인의 상대 순위를 고르는 아이디어는 어디까지 유효한가.</strong><br>
       모델의 복잡함보다 단순한 기준선, 좋은 숫자보다 반증 가능한 기록을 택했다.
-      60회 비교는 우위 미확정으로 끝났다. 다음 질문은 <strong>잘 맞는 장세를 미리 구별할 수 있는가</strong>다.
+      60회 비교는 우위 미확정으로 끝났고, 7월에 약속한 SHORT 판정은 33일 늦게 KILL로 기록했다. 다음 질문은 <strong>장세가 여러 모델 중 누구의 후보를 보낼지 미리 정할 수 있는가</strong>다.
     </p>
     <div class="hero-links">
       <a href="https://github.com/soccz/xsec_alpha" target="_blank" rel="noopener noreferrer" class="hero-link">
@@ -471,7 +471,7 @@
       </a>
       <a href="#development-journey" class="hero-link">실패와 판단의 흐름</a>
     </div>
-    <div class="reading-nav"><a href="#research-verdict">지금까지의 결론</a><a href="#development-journey">판단의 전환점</a><a href="#thesis">초기 가설과 실패</a><a href="#post-trial">종료 결과와 후속 기록</a></div>
+    <div class="reading-nav"><a href="#research-verdict">지금까지의 결론</a><a href="#development-journey">판단의 전환점</a><a href="#thesis">초기 가설과 실패</a><a href="#post-trial">종료 결과와 후속 기록</a><a href="#october-verdict">10월 판정과 다음 질문</a></div>
   </div>
   <div class="scroll-ind">SCROLL<br><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
 </section>
@@ -491,6 +491,11 @@
       <div class="mix-bar" role="img" aria-label="조건 충족 시에만 모델 75%, 반전 규칙 25%의 연구용 혼합"><span>모델 75%</span><span>반전 25%</span></div>
       <p>조건을 충족한 장세에서만 적용하는 연구 가정. 기본은 모델 100%. 9월 30일 시작, 12월 25일 최종 처리. 운영 추천의 자동 전환은 없다.</p>
       <p><a href="/projects/xsec-alpha/dashboard/#experiment-overview">현재 회차·자료 부족·실패 기록</a></p>
+    </div>
+    <div style="grid-column:1/-1;border-top:1px solid var(--border-light);padding-top:20px;">
+      <div class="verdict-label">판정 · 2026-10-04 기록</div>
+      <h2>약속한 SHORT 판정은 KILL, 33일 늦게</h2>
+      <p>7월에 미리 정한 9월 1일 판정을 10월 4일에야 기록했다. 세 기준 중 게이트 안정성 기준을 넘지 못했고, 자동 판정 장치는 문서에만 있었다. 주간 재학습은 10월 5일 회차부터 배포 없이 돌려 모델을 고정하고, 신호 실행과 텔레그램 SHORT는 KILL 조항과 다른 공개 편차로, 우위 미입증 연구 프로브로만 남긴다. 다음 질문은 장세가 여러 모델 중 누구의 후보를 보낼지다. <a href="#october-verdict">판정과 다음 질문</a></p>
     </div>
   </div>
 </section>
@@ -530,9 +535,10 @@
     <li><div class="journal-date">2026-09-07 등록<span class="journal-state open">09-23 종료 · 효과 판단 보류</span></div><div><h3>반증 가능한 비교를 고정하고, 불확실한 결론도 받아들였다</h3><p>같은 종목군의 미래 60회를 모두 기록하고 평가했다. 모델과 반전 기준선의 평균 차이는 +0.500%p였지만 95% 구간은 0을 포함했다. 유리한 결과가 나올 때까지 실험을 연장하지 않고, 우위 미확정으로 종료했다.</p><a href="#september-validation">당시 사전등록 설계</a> · <a href="#post-trial">최종 결과와 남은 한계</a></div></li>
     <li><div class="journal-date">2026-09-30<span class="journal-state open">운영 복구 · 새 가설</span></div><div><h3>잘 맞는 시기를 구별할 수 있을까</h3><p>기간별 성과가 달랐다는 관찰을 시즌 효과의 증명으로 바꾸지 않았다. 미래 국면을 먼저 기록하고, 같은 회차에서 모델과 단순 기준선을 비교한다. 자동 전략 교체는 하지 않는다. 동시에 멈춘 게시와 부족한 백업 공간도 성과와 별개인 운영 실패로 남긴다.</p><a href="#post-trial-regimes">국면 관찰을 택한 이유</a> · <a href="/projects/xsec-alpha/dashboard/#regime-observation">관찰 기록</a></div></li>
     <li><div class="journal-date">2026-10-01<span class="journal-state partial">표현의 오류 수정</span></div><div><h3>원장이 맞아도 화면의 설명은 틀릴 수 있었다</h3><p>표본 0에 과거 수익률이 남고, 다른 집계 단위가 나란히 놓여 있었다. 데이터 갱신·결측 표시·단위를 고치고, 탐색 단계의 확신과 현재의 반증을 구분했다. 이는 표현의 신뢰성 개선이지 모델 성과 개선은 아니다.</p><a href="#presentation-audit">표시 오류와 재발 방지</a></div></li>
+    <li><div class="journal-date">2026-10-04<span class="journal-state fail">판정 지연 · KILL</span></div><div><h3>7월에 약속한 판정을 33일 늦게, 약속대로 KILL로 기록했다</h3><p>9월 1일에 SHORT를 계속할지 정하기로 한 세 기준 중 게이트 안정성 기준을 넘지 못했다. 자동 판정 장치는 문서에만 있었고 실행할 코드가 없었다. 재학습의 배포를 멈춰 모델을 고정했지만, 등록 실험의 입력인 신호 실행은 이유를 밝힌 편차로 남겼다. 다음 질문은 장세가 여러 모델 중 누구의 후보를 보낼지다.</p><a href="#october-verdict">판정과 늦어진 이유</a> · <a href="#october-next">다음 질문의 설계</a></div></li>
   </ol>
-  <p class="journal-note"><strong>현재의 결론:</strong> 아이디어를 검증할 운영 구조는 갖췄다. 고정 모델의 상대적 우위와 실제 거래소에서의 비용 후 수익성은 아직 별개의 미해결 질문이다. 과거 실패를 최신 숫자로 덮어쓰거나, 테스트 통과를 투자 성공으로 표현하지 않는다.</p>
-  <details class="journal-toc"><summary>개발 단계별 상세 기록</summary><div class="journal-links"><a href="#thesis">I. 초기 가설</a><a href="#short-model">팩터 발견</a><a href="#long-journey">LONG v1~v3</a><a href="#lessons">당시 교훈</a><a href="#ops-reality">II. 운영의 반증</a><a href="#per-coin-output">출력 재설계</a><a href="#f1-unified">F1 선택</a><a href="#automation">자동화</a><a href="#cost-reality">III. 비용 결산</a><a href="#telegram-rebuild">알림 재설계</a><a href="#audit-summary">운영 감사</a><a href="#hygiene">IV. 테스트·백업</a><a href="#august-audit">V. 정책 집행 복구</a><a href="#september-validation">VI. 고정 실험</a><a href="#status">현재와 다음 판단</a></div></details>
+  <p class="journal-note"><strong>현재의 결론:</strong> 정기 보고는 끊기지 않았지만(9월 7일~10월 2일 예정 101회 모두 전달), 검증 구조에는 구멍이 있었다. 백업은 경보 없이 실패했고, 일부 가격 봉은 완성 전 상태로 저장돼 왔으며, 판정 기한을 지키게 할 장치는 문서에만 있었다. 고정 모델의 상대적 우위와 실제 거래소에서의 비용 후 수익성은 여전히 입증되지 않았다. 과거 실패를 최신 숫자로 덮어쓰거나, 테스트 통과를 투자 성공으로 표현하지 않는다.</p>
+  <details class="journal-toc"><summary>개발 단계별 상세 기록</summary><div class="journal-links"><a href="#thesis">I. 초기 가설</a><a href="#short-model">팩터 발견</a><a href="#long-journey">LONG v1~v3</a><a href="#lessons">당시 교훈</a><a href="#ops-reality">II. 운영의 반증</a><a href="#per-coin-output">출력 재설계</a><a href="#f1-unified">F1 선택</a><a href="#automation">자동화</a><a href="#cost-reality">III. 비용 결산</a><a href="#telegram-rebuild">알림 재설계</a><a href="#audit-summary">운영 감사</a><a href="#hygiene">IV. 테스트·백업</a><a href="#august-audit">V. 정책 집행 복구</a><a href="#september-validation">VI. 고정 실험</a><a href="#october-census">VII. 10월 판정</a><a href="#status">현재와 다음 판단</a></div></details>
 </div></section>
 <hr class="divider">
 
@@ -583,7 +589,7 @@
 <section id="architecture"><div class="container fade-in">
   <div class="section-label">Architecture</div>
   <h2 class="section-title">시스템 구조</h2>
-  <p class="section-desc">SHORT 6h / LONG 12h 듀얼 모델. systemd가 6h마다 신호·측정을 갱신한다. LONG은 11/23 UTC 슬롯에서 shadow 평가하며 actionable 경로는 KILL, 조건부 WATCH surface만 별도로 심사한다.</p>
+  <p class="section-desc">SHORT 6h / LONG 12h 듀얼 모델. systemd가 6h마다 신호를, 매일 측정을 갱신한다. LONG은 11/23 UTC 슬롯에서 shadow 평가하며 actionable 경로는 KILL, 조건부 WATCH surface만 별도로 심사한다.</p>
 
   <div class="flow">
     <div class="flow-step"><div class="flow-num">1</div><div class="flow-title">수집</div><div class="flow-desc">Upbit 200+ KRW<br>Binance USDT</div></div>
@@ -1039,7 +1045,7 @@
   <!-- Telegram mockup -->
   <div class="chart-wrap" style="background: var(--bg-secondary);">
     <div class="chart-title">2026-04 텔레그램 출력 예시 (historical)</div>
-    <div class="chart-subtitle">당시 포맷 기록. 현재는 SHORT 수동 판단용 신호와 조건부 LONG WATCH를 분리한다.</div>
+    <div class="chart-subtitle">당시 포맷 기록. 현재는 SHORT 연구 프로브 신호(우위 미입증)와 조건부 LONG WATCH를 분리한다.</div>
     <div class="tg-mockup">
       <div class="tg-sender">📊 xsec_alpha</div>
       <div class="tg-header">
@@ -1224,8 +1230,8 @@
 
   <!-- Retrain pipeline -->
   <div class="pipe-wrap">
-    <div class="chart-title">Retrain Pipeline (scripts/retrain_pipeline.py)</div>
-    <div class="chart-subtitle">주 1회 일요일 UTC 20:00 발사. Promotion gate 실패 시 기존 모델 자동 유지.</div>
+    <div class="chart-title">2026-04 당시 Retrain Pipeline (scripts/retrain_pipeline.py · historical)</div>
+    <div class="chart-subtitle">당시 설계: 주 1회 일요일 UTC 20:00 발사. Promotion gate 실패 시 기존 모델 자동 유지. 2026-10-05 회차부터는 판정 후속으로 학습·측정만 하는 dry-run이며 배포하지 않는다(9월 28일 학습 모델 고정).</div>
     <div class="pipe-stage">
       <div class="pipe-num">01</div>
       <div class="pipe-body"><div class="pipe-title">Pre-flight</div><div class="pipe-desc">DB 신선도 ≤3h · 디스크 ≥500MB · lock file 확인</div></div>
@@ -1304,7 +1310,7 @@
   <div class="callout">
     <p>
       <strong>한 번의 <code class="c">sudo bash deploy/install_f1.sh</code></strong> 로 3개 유닛 설치.
-      이후 재학습·측정·예측이 systemd로 자동 운영된다. 실패 시 unit의 <code class="c">Restart=on-failure</code> 정책으로 재시도하며, promotion gate가 기각하면 이전 모델을 유지한다. 자동 mask는 구현되어 있지 않다.
+      당시에는 이후 재학습·측정·예측이 systemd로 자동 운영됐다. 실패 시 unit의 <code class="c">Restart=on-failure</code> 정책으로 재시도하며, promotion gate가 기각하면 이전 모델을 유지한다. 자동 mask는 구현되어 있지 않다. <strong>2026-10-05 회차부터</strong> 주간 재학습은 학습·측정만 하는 dry-run이라 배포하지 않으며, 운영 모델은 9월 28일 학습본으로 고정된다(<a href="#october-execution" style="color:var(--accent);">10월 판정 후속</a>).
     </p>
   </div>
 </div></section>
@@ -1519,7 +1525,7 @@
       <div class="card-text">
         850MB DB. <code class="c">sqlite3 .backup</code> (atomic, writers 안 막음) + post-write
         <code class="c">PRAGMA integrity_check</code> → 깨지면 즉시 폐기. 30일 retention.
-        <code class="c">xsec-backup.timer</code> 매일 KST 03:00 (fetch off-peak).
+        <code class="c">xsec-backup.timer</code> 매일 KST 03:00 (fetch off-peak).<br><strong>10월 후기:</strong> 9월 10일~29일 이 백업은 20번 실패했지만 경보는 한 번도 울리지 않았다. smoke 통과는 설치 시점의 확인일 뿐이었다.
       </div>
       <span class="badge badge-ok">smoke 통과</span>
     </div>
@@ -1565,7 +1571,7 @@
       <strong>설계 원칙:</strong> ① 운영을 막지 않는 안전망 (테스트는 standalone, backup은 hot),
       ② 통계 미달인 신호로는 운영 변경 안 함 (shadow 거쳐서 결정),
       ③ 보안 trade-off 명확히 (개별 픽은 PIN 뒤, aggregate는 공개),
-      ④ 모든 자동화는 fail-soft (export 실패해도 fetch_and_rank END 도달).
+      ④ 모든 자동화는 fail-soft (export 실패해도 fetch_and_rank END 도달). <strong>10월 후기:</strong> 실패해도 운영을 멈추지 않게 만든 백업이, 실패해도 아무도 모르는(fail-silent) 상태가 됐다. 9월 10일~29일 20회 무경보 실패.
     </p>
   </div>
 
@@ -1755,13 +1761,14 @@
     <p><strong>변경:</strong> 게시 대상 파일만 최신 원격 트리에 반영하는 전용 경로로 분리했다. 개인 작업 파일은 건드리지 않고 강제 푸시도 하지 않는다. 디스크 여유·백업 복원·게시 시각을 별도 점검하고 장애와 복구 알림을 중복 억제한다.</p>
     <p><strong>당시 한계:</strong> 9월 30일 감사 당시 별도 백업 경로가 놓인 시스템 디스크 여유는 약 0.7GB로, 5GiB 안전 여유 기준에 미달했다. 다른 작업 파일을 임의 삭제하거나 안전 기준을 낮추지 않았다. 과거 최종 보고에 남은 백업 오류도 지우지 않는다.</p>
     <p><strong>이후 운영자 결정:</strong> 별도 디스크를 필수 조건에서 제외하고, 여유가 충분한 20TB 작업 디스크 안에 복구용 사본을 유지하기로 했다. 일일 가격 DB, 종료 실험 원본 묶음, 별도 국면 관찰 원장을 보존하고 무결성과 복원을 확인한다. 별도 디스크 사용 중단은 오류를 숨기는 것이 아니라 보호 수준을 낮추기로 한 명시적 선택이다. <strong>파일 손상·실수에 대비한 사본이며, 디스크 자체 고장이나 호스트 전체 손실에는 대비되지 않는다.</strong></p>
+    <p><strong>10월 4일 후기:</strong> 이 감사는 실험 백업의 용량 문제만 다뤘다. 같은 기간 일일 DB 백업은 9월 10일~29일 20번 실패했고 경보는 한 번도 없었다. 10월 2~3일 전수조사에서야 드러났다. 점검을 붙였다는 기록과 실패가 실제로 보고됐다는 증거는 다르다. <a href="#october-census" style="color:var(--accent);">전수조사 결과</a></p>
   </article>
   <article class="journal-entry" id="post-trial-regimes">
     <h3>시즌에 맞춰 바꾸려면, 먼저 시즌을 결과보다 앞서 정의해야 한다</h3>
     <p><strong>가설:</strong> 같은 추천 방식도 잘 맞는 시장 국면이 다를 수 있다. 이번 60회를 시간순 20회씩 나눴을 때 모델−반전 평균 차이는 +0.603, +1.465, −0.568%p였다. 이는 결과를 본 뒤 나눈 탐색 통계이며, 국면 효과의 검증 결과가 아니다.</p>
     <p><strong>새 관찰:</strong> BTC 7일 방향과 7일 변동성으로 상승·하락 × 고변동·저변동을 구분한다. 변동성 기준은 과거 30일의 중앙값이며, 그 시점 이후 자료를 쓰지 않는다. 미완성 봉은 제외하고 결측·준비 기간 부족은 미상으로 남긴다. 현재 모델과 반전 기준선의 후보를 먼저 저장한 뒤 다음 시가부터 6시간을 동일 조건으로 비교한다.</p>
     <p><strong>전환하지 않은 이유:</strong> 직전 승자를 바로 따라가면 뒤늦게 전략을 바꿀 수 있다. 주간 검토는 이미 평가가 끝난 최근 90일만 사용하며, 국면당 30회·8일 미만은 자료 부족으로 표시한다. 이 숫자는 통계적 검정력 계산이 아니라 최소 관찰 기준이다. 모델 버전 수·누락·실패도 함께 남기며 자동 교체와 자동 승격은 하지 않는다.</p>
-    <p><strong>다음 결정:</strong> 전환 규칙을 별도로 사전등록한 뒤, 항상 같은 방식을 쓰는 비교군과 미래 자료에서 검증한다. 두 차례 연속 주간 확인과 최소 유지 기간 같은 전환 완충 장치는 후속 설계이지, 이미 입증된 규칙이 아니다. 정기 텔레그램 코인 제안은 기존 정책을 유지한다.</p>
+    <p><strong>다음 결정:</strong> 전환 규칙을 별도로 사전등록한 뒤, 항상 같은 방식을 쓰는 비교군과 미래 자료에서 검증한다. 두 차례 연속 주간 확인과 최소 유지 기간 같은 전환 완충 장치는 후속 설계이지, 이미 입증된 규칙이 아니다. 정기 텔레그램 코인 제안은 기존 정책을 유지한다. → <a href="#october-next" style="color:var(--accent);">10월 4일, 장세가 여러 모델 중 하나를 고르는 설계로 구체화</a></p>
     <p>개념적 참고: <a href="https://www.nber.org/papers/w17182">Ang·Timmermann, Regime Changes and Financial Markets</a>. 시장 국면 모형의 근거이지, 이 코인 전략의 수익성을 입증하는 출처는 아니다.</p>
     <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#regime-observation">현재 국면 관찰과 표본 수</a><a href="#development-journey">전체 개발 흐름</a></div>
   </article>
@@ -1866,6 +1873,7 @@
   <p>호가 하나에 고정 비용만 차감하던 관찰에 금액별 잔량 검사를 추가했다. 미리 고정한 코인별 100·500·1,000 USDT 가정으로 진입 매도와 같은 수량의 종료 매수를 계산한다. 첫 호가 50단계가 부족하면 수익률을 만들지 않는다. 기존 고정 비용 성적표는 그대로 남기고 별도 미래 규약에서 관찰한다. 주문을 실행하는 기능은 없다.</p>
   <h3>예상 펀딩과 실제 정산율도 다르다</h3>
   <p>공개 과거 펀딩 이력에서 보유 구간의 확정 정산율을 읽는다. 양 끝 시각을 둘러싼 이력, 중복과 공백을 확인하고 정산 경계에 걸린 관찰은 불확실로 남긴다. 자료가 없다고 비용 0으로 처리하지 않는다. 실제 계좌 수량과 정산 당시 마크 가격이 없으므로 이 합계를 계좌 손익에 더하지 않는 판단도 함께 기록한다.</p>
+  <p><strong>10월 4일 후기:</strong> 이 신중함이 그대로 건강 점검의 FAIL이 됐다. 감독 작업이 Bitget 정산 시각 ±60초 안에 펀딩을 관찰하면 그 관찰은 '경계 불확실'로 남고, 이것이 현재 전체 FAIL의 유일한 원인이다. 데이터 결함이 아니라 실행 시각의 구조 문제이며, 처방은 감독 타이머 시각을 옮기는 것이다(아직 적용 전). <a href="#october-census" style="color:var(--accent);">전수조사 결과</a></p>
   <p>수집 실패와 기한 초과, 잔량 부족, 선정 재현 불일치를 자동 점검·추가 전용 원장·동일 디스크 복원·대시보드까지 연결했다. 실제 공개 API의 호가와 펀딩 응답은 검증했지만 연결 점검 자료를 실험 성과로 넣지 않았다. 첫 미래 관찰 전에는 결과 0건을 그대로 보여준다. 이번 작업은 모델 정확도 상승이나 거래 수익을 입증한 것이 아니다.</p>
   <div class="evidence-links"><a href="dashboard/#forecast-audit">선정 경로·금액별 관찰·실패 이력</a><a href="https://github.com/soccz/xsec_alpha/blob/main/docs/execution_diagnostics.md">규약·산식·검증 범위</a><a href="https://www.bitget.com/docs/catalog/classic-contract-market/classic-contract-market">거래소 공식 API</a></div>
   </article>
@@ -1905,19 +1913,171 @@
 </div></section>
 <hr class="divider">
 
+<!-- ============================================== -->
+<!-- PART 7 (2026-10-04): census, late §14-bis verdict, next question -->
+<!-- ============================================== -->
+
+<div class="part-divider fade-in">
+  <span class="part-label">Part VII · Verdict &amp; Next Question · 2026-10-04</span>
+  <h2>약속한 판정은 늦었고, 다음 질문은 결과보다 먼저 묶는다</h2>
+  <div class="part-ornament"></div>
+  <p>7월에 SHORT 신호를 계속 운영할지 정할 기준을 미리 적어 두었다. 그 기준대로 KILL을 기록한 것은 판정일을 33일 넘긴 10월 4일이었다. 판정 결과뿐 아니라, 약속을 지키게 할 장치가 없었다는 실패와 그 뒤의 선택을 함께 남긴다.</p>
+</div>
+
+<section id="october-census"><div class="container fade-in">
+  <div class="section-label">2026-10-02~03 개발일지 · 전수조사</div>
+  <h2 class="section-title">보고는 끊기지 않았지만, 신호는 약했고 감시에는 구멍이 있었다</h2>
+  <p class="journal-lead">판정 전에 지금의 상태를 처음부터 다시 셌다. 추적 파일 134개 전부, 실제 운영 중인 서비스, GitHub와 공개 페이지, 다른 코딩 에이전트(Codex)와 진행한 작업 스레드 2개를 대조했고, 영역마다 다른 검토자가 반박을 시도해 확인했다. 이 이야기에 중요한 것만 남긴다.</p>
+  <article class="journal-entry">
+    <h3>운영 루프는 버텼다</h3>
+    <p>9월 7일부터 10월 2일까지 예정된 정기 보고 101회가 모두 전달됐다. 소프트웨어가 제때 돈다는 증거이지, 추천이 맞는다는 증거는 아니다.</p>
+    <h3>신호는 여전히 약했다</h3>
+    <p>10월 2일 기준, 8월 측정 계약 복구 이후 240회 판독한 SHORT 실시간 IC의 평균은 0.0814로, 배포를 검토할 기준으로 정한 0.10에 못 미쳤다. IC는 모델이 매긴 순위와 실제 수익 순위가 같은 방향인지 보는 상관값으로, 0이면 무관하고 1이면 완전히 일치한다. 대시보드의 IC는 최근 30일 창이라 값이 조금 다르다. 사전등록한 60회 비교도 이미 효과 판단 보류로 끝났다. 전수조사 중 읽은 10월 3일 공개 집계에서 최근 30일 실제 추천의 건당 평균 순수익(가정 비용을 뺀 장부값, 실제 체결 아님)은 +0.4975%, 회차 단위로 묶어 잰 t값은 1.976이었다. t값은 평균이 잡음에 비해 0에서 얼마나 떨어져 있는지 보는 값으로, 2 안팎은 우연과 겨우 구분되는 경계다. 30일 창이 회차마다 움직이므로 이 숫자도 계속 바뀌며, 현재 값은 대시보드에 둔다.</p>
+    <h3>가격 기록 일부가 덜 찬 채로 저장돼 왔다</h3>
+    <p>2026년 2월 중순부터, 분석이 도는 정각(UTC 05·11·17·23시)의 업비트 1시간 봉이 완성되기 전 상태로 운영 DB에 남아 있다. 9월 15일 05시(UTC) BTC 봉의 거래량은 운영 DB에 1.6이지만 완성된 봉은 35.6이다. 이 봉을 쓰는 피처(모델 입력 지표)와 과거 평가가 얼마나 흔들렸는지는 아직 재지 않았다. 새 연구 수집기는 완성된 시간대만 저장한다.</p>
+    <h3>건강 점검의 FAIL은 장애가 아니라 시계의 문제였다</h3>
+    <p>운영 건강 점검의 전체 FAIL에는 원인이 하나뿐이었다. 펀딩비는 무기한 선물에서 롱과 숏이 정해진 시각마다 주고받는 비용이다. 감독 작업이 Bitget 정산 시각 ±60초 안에 펀딩을 관찰하면 정산 전후 어느 쪽인지 알 수 없어 '경계 불확실'로 남고, 이것이 FAIL로 집계됐다. 데이터 결함이 아니라 실행 시각이 겹치는 구조의 문제다. 처방은 감독 타이머 시각을 옮기는 것이며 아직 적용 전이다.</p>
+    <h3>백업은 조용히 실패했다</h3>
+    <p>9월 10일부터 29일까지 일일 DB 백업이 20번 실패했지만 경보는 한 번도 울리지 않았다. 5월에 '실패해도 운영을 막지 않는다(fail-soft)'로 만든 안전망이, 실패해도 아무도 모르는 상태가 된 것이다. 9월 30일 기록은 실험 백업의 용량 문제만 다뤘다. 4월에 적은 '감시가 운영에 없었다'는 교훈을 10월에 다시 배웠다. 백업 실패 경보는 아직 없다.</p>
+    <h3>첫 LONG 관찰 알림, 그리고 게이트의 결함</h3>
+    <p>LONG 실행은 계속 0이다. 엄격한 조건을 모두 통과한 한 종목만 비실행 '관찰' 알림으로 보낼 수 있는데, 그 첫 알림이 10월 2일 23:04(UTC)에 나갔다. 점검해 보니 알림을 허락한 근거 IC 3회 중 2회는 LONG을 평가하기로 한 BTC 장세 조건을 충족하지 않은 시점의 판독이었다. 게이트가 세지 말아야 할 값을 센 것이다. 고치기 전까지 이 게이트의 통과는 근거가 약하다. 이 일지에는 종목을 적지 않는다.</p>
+    <p class="journal-note"><strong>정리:</strong> 소프트웨어가 제때 도는 것, 실패가 제때 보고되는 것, 신호가 비용 뒤에도 남는 것은 서로 다른 질문이었다. 이번에 확인된 것은 첫 번째뿐이다.</p>
+    <div class="evidence-links"><a href="/projects/xsec-alpha/dashboard/#forecast-audit">점검·실패 기록</a><a href="/projects/xsec-alpha/dashboard/#contract">LONG 관찰 게이트</a><a href="/projects/xsec-alpha/dashboard/#realized-hero">현재 30일 집계</a><a href="#execution-evidence">정산 경계를 불확실로 남긴 9월 30일 설계</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
+<section id="october-verdict"><div class="container fade-in">
+  <div class="section-label">2026-10-04 개발일지 · 7월의 약속과 늦은 판정</div>
+  <h2 class="section-title">장부상 수익은 양수였지만, 약속한 기준으로는 KILL이었다</h2>
+  <p class="journal-lead">결과를 본 뒤에는 유리한 해석을 고르기 쉽다. 그래서 7월에 판정 규칙을 먼저 고정해 공개했다(사전등록). 이 기록은 그 규칙이 무엇을 요구했고, 우리가 무엇을 지키지 못했는지에 관한 것이다.</p>
+
+  <article id="october-promise" class="journal-entry">
+    <span class="t-date">01 · 2026-07-11 · 미리 적어 둔 약속</span>
+    <h3>9월 1일에 계속할지 멈출지 정하고, 보류는 허용하지 않는다</h3>
+    <p><strong>약속:</strong> SHORT 신호의 운영을 9월 1일에 판정한다. 아래 세 기준을 모두 넘으면 유지(GO), 하나라도 못 넘으면 중단(KILL)이다. KILL이면 신호·측정·재학습 타이머 세 개를 멈추고 기록을 보관하며, 측정 기반 시설을 남길지는 판정 자리에서 정한다. 자본을 늘리거나 자동 실행으로 올리는 승격은 GO와 별개이고, 실제 체결 기록이 쌓이기 전에는 다루지 않는다.</p>
+    <p><strong>안전장치:</strong> 9월 1일에 사람이 판정하지 않아도 원장을 기계 채점해 자동으로 판정한다는 데드맨스위치를 같은 블록에 적었다. 데드맨스위치는 사람이 아무것도 하지 않을 때 미리 정한 결과가 실행되게 하는 장치다. 이 블록은 판정 전에는 고치지 않기로 했다.</p>
+    <p>세 번째 기준에 나오는 <strong>IC 게이트</strong>는 최근 IC(모델 순위와 실제 수익 순위의 상관값)가 연속으로 낮으면 SHORT를 비실행 참고 상태로 돌리고(FREEZE), 더 나쁘면 새 후보 자체를 막는다(LIQUIDATE).</p>
+  </article>
+
+  <article id="october-kill" class="journal-entry">
+    <span class="t-date">02 · 2026-10-03 채점 · 10-04 기록</span>
+    <h3>수익 기준은 넘거나 갈렸고, 게이트 안정성 기준에서 멈췄다</h3>
+    <div class="journal-table"><table class="tbl"><caption>7월에 고정한 세 기준과 10월 3일 채점(10월 4일 기록)</caption><thead><tr><th scope="col">기준</th><th scope="col">요구한 것</th><th scope="col">결과</th><th scope="col">판정</th></tr></thead><tbody>
+      <tr><th scope="row">1 · 재계약 기간 수익</th><td>7월 11일~9월 1일에 마감된 SHORT 거래의 평균 순수익 &gt; 0</td><td>실제 추천만 +0.401%<br>참고 후보를 포함한 전체 SHORT +0.584%</td><td>통과</td></tr>
+      <tr><th scope="row">2 · 누적 수익의 확실성</th><td>4월 14일 이후 누적 평균 순수익 &gt; 0, 그리고 회차 단위로 묶은 95% 신뢰구간이 0을 포함하지 않음</td><td>실제 추천만 +0.199%, 구간 −0.039%~+0.436%<br>전체 SHORT +0.282%, 구간 +0.013%~+0.551%</td><td>세는 행에 따라 갈림<br>(추천만 실패, 전체 통과)</td></tr>
+      <tr><th scope="row">3 · 게이트 안정성</th><td>같은 기간 IC 게이트의 FREEZE·LIQUIDATE 무발동 (발동했다면 원인 해소 증빙)</td><td>8월 7일~9월 1일 FREEZE 9회, LIQUIDATE 3회. 해소 증빙 없음</td><td>실패 · 확정 사유</td></tr>
+    </tbody></table></div>
+    <p><strong>결과:</strong> KILL이다. 결정적 이유는 기준 3이다. 기준 2는 어떤 기록을 한 건으로 세느냐에 따라 갈렸다. 실제 추천만 세면 95% 신뢰구간이 0을 포함해 실패하고(평균이 양수여도 우연과 구분되지 않는다는 뜻), 참고 후보까지 세면 통과한다. 7월에 그 정의를 정하지 않았기 때문이다. 유리한 쪽 하나를 고르지 않고 두 값을 함께 남겼다. 수익 수치는 모두 가정 비용을 뺀 장부상 관찰이며 실제 체결이 아니다.</p>
+    <p><strong>불편한 발견:</strong> IC 판독 하나하나의 잡음을 감안하면, 기준 3을 통과할 확률은 처음부터 약 4×10⁻⁶(25만 분의 1 수준, 추정)이었다. 기준 자체가 판독 잡음에 비해 지나치게 엄격했다는 뜻이다. 그래도 판정을 GO로 바꾸지 않았다. 결과를 본 뒤 기준을 고쳐 읽으면 미리 약속한 의미가 사라진다. 기준을 잘못 만든 것은 설계 실패로 기록하고 다음 계약에서 고친다. 기준 3을 빼고 보더라도, 실제 추천만 센 기준 2는 95% 신뢰구간이 0을 포함해 실패했다. 따라서 이 설계 결함은 SHORT 우위의 근거가 아니다.</p>
+  </article>
+
+  <article id="october-delay" class="journal-entry">
+    <span class="t-date">03 · 우리의 실패</span>
+    <h3>자동 판정 장치는 문장으로만 존재했다</h3>
+    <p><strong>실패:</strong> 데드맨스위치는 README의 한 문장이었고, 그 문장을 실행할 코드는 없었다. 9월 1일에는 아무 일도 일어나지 않았고 신호·측정·재학습은 평소대로 돌았다. 누락은 9월 30일 감사에서 처음 드러났지만, 그날과 다음 날 이 개발일지에 쓴 여러 장 어디에도 적지 않았다. 10월 2~3일 전수조사에서 세 기준을 다시 채점했고, 10월 4일 사용자 승인을 거쳐 판정일보다 33일 늦게 기록했다.</p>
+    <p><strong>또 하나의 위반:</strong> 판정 전 수정 금지라고 적은 7월 블록은 8월 3일에 한 번 고쳐졌다. 사용자 요청으로 LONG 관찰 알림(WATCH_LONG) 부분의 집행 방식과 집행 결함을 설명하는 문구를 고치고 보탠 것이다. SHORT 기준과 데드맨 문구는 그대로였지만, 금지를 어긴 사실은 판정 기록에 함께 남겼다.</p>
+    <p><strong>같은 교훈의 반복:</strong> 7월의 LONG KILL도 문서와 설정에는 있었지만 실제 선택 경로에는 없어서, 원장에 LONG 관찰 기록 205건이 더 쌓였다. 이번에는 판정 장치가 같은 방식으로 실패했다. 문서에 적은 규칙은 코드나 일정표로 옮기기 전까지는 희망일 뿐이다.</p>
+    <p><strong>바꾼 것:</strong> 다음 계약에도 기한과 기본값을 둔다. 10월 31일까지 사전등록을 하지 못하면 단일 모델 연구 프로브를 그대로 두고, 새 모델은 기록만 한다. 이 기본값은 라이브를 바꾸지 않는 쪽이라, 아무도 움직이지 않아도 텔레그램은 지금 상태로 남는다. 누군가 판정을 계산하고 타이머를 멈춰야 실현되던 7월의 데드맨과 다른 점이다. 다만 새 모델의 기록은 누군가 만들어야 생긴다. 그래서 10월 31일 기한은 같은 날 코드로 옮겼다. 기한 목록을 매일 점검해 7일·1일 전에 알리고, 기한을 넘기면 기본값을 기록하고 텔레그램으로 알린다. 점검기는 알리고 기록할 뿐, 설정을 바꾸거나 서비스를 멈추지는 않는다.</p>
+    <div class="evidence-links"><a href="https://github.com/soccz/xsec_alpha/blob/main/README.md#14-bis--사전등록-시한부-재계약-2026-07-11-비준--판정-전-수정-금지">7월 약속 원문 (README §14-bis)</a><a href="https://github.com/soccz/xsec_alpha/blob/main/README.md#14-bis-판정-기록-2026-10-04--판정일-09-01에서-33일-지연">판정 기록</a><a href="https://github.com/soccz/xsec_alpha/commit/4ee6bee1d24708646b221d1d31079ad1d3a66acf">판정 기록 커밋 · 4ee6bee</a><a href="https://github.com/soccz/xsec_alpha/commit/753b17689d9bc99906b8bc3a5b620e35abedee75">판정 전 블록 편집 · 753b176</a><a href="https://github.com/soccz/xsec_alpha/commit/50e1a33445299bd7bb9954b928d751cc61759cfa">기한 점검기 · 50e1a33</a><a href="#august-audit">7월 KILL의 집행 실패</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
+<section id="october-execution"><div class="container fade-in">
+  <div class="section-label">2026-10-04 · 부분 집행과 공개 편차</div>
+  <h2 class="section-title">약속대로 멈춘 것과, 이유를 밝히고 남긴 것</h2>
+  <article class="journal-entry">
+    <h3>KILL을 글자 그대로 집행하면 다른 약속이 끊겼다</h3>
+    <p><strong>문제와 고민:</strong> 7월 약속대로라면 신호·측정·재학습 타이머를 모두 멈추고 기록을 보관해야 한다. 그런데 9월 30일에 등록한 세 실험(336회 국면 전환 파일럿, 국면 관찰, 원본 예측 감사)은 모두 신호 실행이 남기는 기록을 유일한 입력으로 쓴다. 신호를 멈추면 이미 시작한 다른 사전등록 실험이 중간에 끊긴다. 사용자도 9월 7일부터 매 회차 코인 제안을 요구해 왔다.</p>
+    <div class="journal-table"><table class="tbl"><caption>7월의 KILL 조항과 실제 집행</caption><thead><tr><th scope="col">대상</th><th scope="col">7월 약속</th><th scope="col">실제 집행</th><th scope="col">근거</th></tr></thead><tbody>
+      <tr><th scope="row">주간 재학습</th><td>정지</td><td>10월 5일(월) 회차부터 학습·측정만 하고 배포하지 않는 dry-run. 9월 28일 학습한 6h·12h 모델로 고정</td><td>실질 이행: 타이머는 dry-run으로 계속 돌지만 운영 모델 교체(배포)는 중단</td></tr>
+      <tr><th scope="row">측정</th><td>정지. 기반 시설 존치는 판정 자리에서 결정</td><td>측정 기반 시설로 유지</td><td>약속이 판정 자리에 맡긴 재량</td></tr>
+      <tr><th scope="row">신호 실행</th><td>정지</td><td>유지 · 공개 편차</td><td>등록 실험 세 개의 유일한 입력, 매 회차 코인 제안 요구</td></tr>
+      <tr><th scope="row">텔레그램 SHORT</th><td>신호와 함께 멈춤</td><td>'우위 미입증 연구 프로브'라는 지위로 계속 발송. 자본 투입·자동 실행으로의 승격은 검토하지 않음</td><td>편차의 범위를 판정 기록과 이 일지에 밝힘</td></tr>
+      <tr><th scope="row">기록 보관</th><td>아카이브</td><td>판정 기록에 별도 아카이브 조치는 없음. 신호를 유지하므로 원장이 계속 쌓임</td><td>신호 유지 편차에 따름</td></tr>
+    </tbody></table></div>
+    <p><strong>선택:</strong> 재학습은 타이머를 끄는 대신 배포를 멈춰 약속의 목적(운영 모델 교체 중단)을 이행했고, 신호는 이유를 밝힌 편차로 남겼다. 연구 프로브는 효과를 재기 위해 보내는 시험 신호라는 뜻이며, 추천의 우위를 주장하지 않는다.</p>
+    <p><strong>대신 포기한 것:</strong> 약속을 글자 그대로 지켰다는 깔끔함이다. 신호를 계속 보내는 한, 이 편차는 "결국 계속하고 싶어서 기준을 비켜 간 것"으로 읽힐 수 있다. 그래서 편차를 판정 기록과 이 일지에 먼저 적고, 승격은 상정하지 않는다.</p>
+    <p><strong>함께 바꾼 것:</strong> 336회 파일럿의 원본 소스 6개를 읽기 전용으로 바꿨다. Codex와 Claude가 같은 저장소를 고칠 때 지킬 공통 규칙(모델 동결, 사전등록 존중, 부하와 비밀 관리)을 AGENTS.md 한 곳에 모았다.</p>
+    <p><strong>확인과 한계:</strong> 재학습 설정 변경은 적용을 확인했지만, 첫 dry-run 회차는 10월 5일 05시(한국시간)로 이 기록보다 뒤다. 동결 기간에는 모델 나이가 계속 늘어나 운영 점검에 오래된 모델 경고가 뜬다. 의도된 경고다.</p>
+    <div class="evidence-links"><a href="https://github.com/soccz/xsec_alpha/blob/main/README.md#14-bis-판정-기록-2026-10-04--판정일-09-01에서-33일-지연">집행 범위와 편차 원문</a><a href="https://github.com/soccz/xsec_alpha/blob/main/AGENTS.md">공통 운영 규칙</a><a href="/projects/xsec-alpha/dashboard/#experiment-overview">진행 중인 등록 실험</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
+<section id="october-next"><div class="container fade-in">
+  <div class="section-label">2026-10-04 · 다음 질문 · '시즌' 아이디어의 사전등록</div>
+  <h2 class="section-title">한 모델을 고치는 대신, 장세가 모델을 고르게 할 수 있을까</h2>
+  <p class="journal-lead">9월 30일 사용자가 '시즌'이라는 말로 질문을 던졌다. 같은 방식도 잘 맞는 계절이 따로 있다면, 계절마다 다른 추천 모델을 쓰면 되지 않을까. 60회를 20회씩 나눠 봤더니 시기마다 앞선 쪽이 달랐다. 결과를 본 뒤 나눈 탐색 통계라 국면 효과의 근거는 아니고, 질문의 출발점일 뿐이다. 이번에는 이 아이디어를 결과보다 먼저 규칙으로 묶는다.</p>
+  <article class="journal-entry">
+    <h3>여러 후보를 함께 기록하고, 그 회차의 장세가 보낼 후보를 정한다</h3>
+    <p><strong>가설:</strong> 추천 모델 여러 개가 같은 시각에 각자 후보를 낸다. 장세(앞 장들에서 '국면'이라 부른 시장 상태)는 결과를 보기 전에 정의한다. BTC의 7일 방향(상승·하락)과 변동성(낮음·높음)을 곱한 네 가지다. 그 회차의 장세에 배정된 모델이 텔레그램으로 갈 후보 일부를 맡는다.</p>
+    <p><strong>가장 큰 위험:</strong> 데이터를 보고 "이 장세엔 이 모델"을 고르면 지난번 승자를 뒤늦게 따라가는 과적합이 된다. 그래서 규칙을 하나 정했다. <strong>어떤 장세에 어떤 모델을 쓸지는 문헌이 미리 정하고, 데이터는 그 배정을 켜거나 끄는 스위치만 쥔다.</strong> 데이터가 배정을 바꾸지는 못한다.</p>
+    <div class="journal-table"><table class="tbl"><caption>후보 모델과 문헌이 예상한 장세 (v1 배정)</caption><thead><tr><th scope="col">후보</th><th scope="col">한 줄 설명</th><th scope="col">문헌상 가장 유리한 장세</th><th scope="col">v1 배정</th></tr></thead><tbody>
+      <tr><th scope="row">M0 현행 모델</th><td>지금 운영 중인 모델. 두 종류의 학습기(Ridge·LightGBM)를 합친 앙상블이 단기 지표 10개로 6시간 뒤의 상대 순위를 매긴다.</td><td>하락·고변동</td><td>하락·고변동 담당. 장세를 모를 때의 기본값</td></tr>
+      <tr><th scope="row">M1 4시간 반전 규칙</th><td>최근 4시간에 가장 많이 오른 코인이 되돌아온다고 보고 SHORT 후보로 고른다.</td><td>하락·고변동</td><td>비교 기준. 336회 파일럿이 이미 M0와 비교 중이라 배정하지 않음</td></tr>
+      <tr><th scope="row">M2 대형 유동 코인 추세</th><td>거래가 많은 큰 코인 사이에서 추세를 따른다. 약하던 코인이 계속 약하다고 본다.</td><td>상승·저변동</td><td>상승·저변동</td></tr>
+      <tr><th scope="row">M3 과열 고평가 SHORT</th><td>현물 시장은 공매도가 어려워 비관론이 가격에 덜 반영된다. 과열된 코인이 고평가되기 쉽다고 보고 SHORT 후보로 고른다.</td><td>상승·고변동</td><td>상승·고변동</td></tr>
+      <tr><th scope="row">M4 하방 베타 SHORT</th><td>시장이 내릴 때 더 크게 내리는 코인을 SHORT 후보로 고른다. 사실상 하락이 이어진다는 데 거는 방식이다.</td><td>하락·저변동</td><td>하락·저변동</td></tr>
+      <tr><th scope="row">M5 펀딩 과밀 SHORT</th><td>무기한 선물에서 롱이 몰려 펀딩비가 높은 코인을 SHORT 후보로 고른다.</td><td>상승·고변동</td><td>연구 트랙. v1 선택에서 제외</td></tr>
+    </tbody></table></div>
+    <p><strong>근거의 등급:</strong> 인용한 문헌 약 30편을 웹에서 하나씩 확인했다. 하지만 코인 시장에서 이런 장세 구분을 직접 검정한 연구는 찾지 못했다. 대부분 주식의 일·월 단위 결과를 옮겨 온 것이라 배정의 신뢰 등급은 B(방향을 옮겨 쓸 근거가 있음)나 C(작동 원리에서 추론)다. 그래서 효과의 크기는 약속하지 않고 방향만 적는다.</p>
+    <h3>데이터가 할 수 있는 일은 켜고 끄는 것뿐이다</h3>
+    <p>배정이 켜진 장세에서도 처음에는 다섯 후보 중 <strong>2개만</strong> 담당 모델의 후보로 바꾸고, 3개는 현행 모델을 유지한다. 잡음 속에서 우연한 1등을 고르는 착각을 줄이고, 직접 판단하는 사용자가 각 후보가 왜 나왔는지 알 수 있게 하기 위해서다.</p>
+    <p>장세 선택이 가치가 있으려면 두 기준선을 모두 이겨야 한다. 하나는 <strong>항상 현행 모델만 쓰는 것</strong>, 다른 하나는 <strong>모든 후보의 순위를 같은 비중으로 섞는 것</strong>이다. 여러 예측을 단순 평균한 것이 정교한 선택보다 나은 경우가 많다는 오래된 관찰 때문에, 섞기만 한 기준선도 만만한 상대가 아니다. 장세를 알 수 없거나 자료가 모자란 회차는 현행 모델로 돌아가며, 기존 IC 게이트와 LONG 차단은 언제나 먼저 적용된다.</p>
+    <p>개념적 참고: <a href="https://doi.org/10.1016/j.jfineco.2015.12.002" style="color:var(--accent);">Daniel·Moskowitz, Momentum Crashes</a> · <a href="https://doi.org/10.1093/rfs/hhs066" style="color:var(--accent);">Nagel, Evaporating Liquidity</a> · <a href="https://doi.org/10.1093/rfs/hhm075" style="color:var(--accent);">DeMiguel·Garlappi·Uppal, 1/N 분산투자</a>. 모두 주식 연구이며, 이 코인 전략의 수익성을 입증하는 출처가 아니다.</p>
+    <div class="evidence-links"><a href="#post-trial-regimes">9월 30일의 '시즌' 질문</a><a href="#period-evidence">같은 모델, 다른 시기의 결과</a><a href="/projects/xsec-alpha/dashboard/#regime-observation">현재 장세 관찰</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
+<section id="october-plan"><div class="container fade-in">
+  <div class="section-label">2026-10-04 · 자료 · 일정 · 실패의 정의</div>
+  <h2 class="section-title">무엇을 언제 보고, 무엇이 나오면 실패라고 부를 것인가</h2>
+  <article class="journal-entry">
+    <h3>사라지기 전에 모으는 자료</h3>
+    <p>10월 4일 연구 전용 수집을 마쳤다. 업비트 1시간 봉을 2021년까지 거슬러 291개 마켓에서 약 647만 개 모았고, 운영 DB와 섞지 않은 별도 연구 DB에 완성된 시간대만 저장했다. 운영 DB와 겹치는 구간을 대조하니 정각이 아닌 시간대는 거의 같고 분석 정각의 봉만 달랐다. 앞서 말한 덜 찬 봉의 흔적이다. Bitget 펀딩 이력은 거래소 API가 90일만 보관해 2026년 7월 6일 이전 기록은 이미 사라졌다. 남은 813개 종목의 약 30만 건을 보존했고, 더 잃지 않도록 주 1회 보존 타이머를 붙였다.</p>
+    <p>찾는 자료와 확인하는 자료를 나눈다. 장세별 패턴은 바이낸스의 2021년 이후 자료에서 찾고, 업비트 자료로 확인한다. 같은 자료로 찾고 확인하면 우연을 발견으로 착각하기 쉽다.</p>
+    <div class="journal-table"><table class="tbl"><caption>일정 · 날짜는 목표이며 텔레그램에 미치는 영향과 함께 적는다</caption><thead><tr><th scope="col">시점</th><th scope="col">할 일</th><th scope="col">텔레그램</th></tr></thead><tbody>
+      <tr><th scope="row">이번 주</th><td>사전등록 문서: 후보 정의, 장세 배정, 지표, 판정 규칙을 결과보다 먼저 고정</td><td>변화 없음</td></tr>
+      <tr><th scope="row">10월 중순부터</th><td>모든 후보의 목록과 결과를 섀도로 기록. 섀도는 실제 보고에 영향을 주지 않고 같은 시각의 후보와 결과만 남기는 방식이다</td><td>변화 없음</td></tr>
+      <tr><th scope="row">11월 초까지</th><td>과거 장세×모델 지도: 바이낸스 2021년 이후 자료로 찾고 업비트 자료로 확인</td><td>변화 없음</td></tr>
+      <tr><th scope="row">11월 중순</th><td>보고에 '현재 장세 + 담당 후보 모델' 정보 줄 추가</td><td>참고용 표시만</td></tr>
+      <tr><th scope="row">빨라야 2027년 초</th><td>336회 파일럿이 끝난 뒤(12월 24일 무렵 종료, 25일 최종 처리), 검증을 통과한 장세에서만 실제 전환</td><td>통과한 장세에서만 5개 중 2개 교체</td></tr>
+    </tbody></table></div>
+    <h3>이렇게 되면 실패로 기록한다</h3>
+    <dl class="status-facts">
+      <div><dt>10월 31일까지 사전등록을 못 하면</dt><dd>계획 단계의 실패다. 기본값을 확정한다: 단일 모델 연구 프로브 유지, 새 모델은 섀도 기록만.</dd></div>
+      <div><dt>어떤 장세도 두 기준선을 이기지 못하면</dt><dd>장세 선택은 이 형태로는 가치를 보이지 못한 것이다. 현행 모델이 계속 후보를 보내고, 전환 없음을 결과로 공개한다.</dd></div>
+      <div><dt>섞기만 한 기준선이 가장 낫다면</dt><dd>장세를 구분할 필요가 없었다는 뜻이다. 이 아이디어에는 실패지만 정상적인 발견으로 남긴다.</dd></div>
+      <div><dt>결과를 본 뒤 배정·기준을 바꾸면</dt><dd>그 자체로 실패다. 좋은 결과가 나올 때까지 기간을 늘리는 것도 같다.</dd></div>
+    </dl>
+    <h3>정직한 위험</h3>
+    <p><strong>자료가 짧다.</strong> 업비트에서 많은 종목이 함께 기록된 것은 2025년 9월 이후뿐이다. 과거 자료를 거슬러 채우는 수집(백필)이 도움이 되지만, 상장 폐지된 종목이 빠지는 편향은 남는다.</p>
+    <p><strong>장세가 자주 바뀐다.</strong> 장세 라벨이 거의 하루 단위로 뒤집힌다. 같은 장세에서 잘한 모델이 다음에도 잘한다는 가정이 약할 수 있다.</p>
+    <p><strong>문헌이 다른 시장의 이야기다.</strong> 대부분 주식의 일·월 단위 연구라, 6시간 단위 코인 시장에 그대로 옮겨진다는 보장이 없다.</p>
+    <p><strong>비용이 크다.</strong> 회차당 30bp(0.30%)의 가정 비용은 그럴듯한 우위에 비해 크다. 순위를 잘 매겨도 비용 뒤에는 손실일 수 있다.</p>
+    <p><strong>기한 점검은 코드로 옮겼지만, 실행은 여전히 사람의 몫이다.</strong> 10월 4일부터 기한 점검기가 매일 돌며 7일·1일 전 알림과 기한 경과 알림을 보낸다. 다만 점검기는 알리고 기록할 뿐, 새 모델 기록을 대신 만들거나 운영을 바꾸지는 않는다.</p>
+    <p><strong>가장 가능성 높은 초기 결과는 전환 없음이다.</strong> 그것도 정당한 결과로 기록한다. 사전등록 문서가 올라오면 이 일지에 연결한다.</p>
+    <div class="evidence-links"><a href="https://github.com/soccz/xsec_alpha/commit/4eeef5eec9153e312724ce44dda10b7af9958de2">연구 수집기 · 4eeef5e</a><a href="/projects/xsec-alpha/dashboard/#rotation-pilot">336회 파일럿 진행</a><a href="/projects/xsec-alpha/dashboard/#regime-observation">장세 관찰과 표본 수</a><a href="#status">현재 상태</a></div>
+  </article>
+</div></section>
+<hr class="divider">
+
 <section id="status"><div class="container fade-in">
-  <div class="section-label">2026-09-30 · 고정 실험 종료 / 별도 전환 파일럿 등록</div>
-  <h2 class="section-title">우위는 미확정, 다음 질문은 국면별 지속성</h2>
-  <p class="section-desc">60회 고정 비교는 효과 판단 보류로 종료했다. 정상 회차 코인 보고는 계속하며, 국면별 관찰과 별도 336회 전환 파일럿을 자동 점검한다. 실제 추천 비중은 바꾸지 않았다. 9월 30일 14시 실행 이후 SHORT는 FREEZE로, 비실행 참고 후보만 전송했다. 백업은 운영자 선택에 따라 동일 디스크 복구용 사본으로 유지하며, 디스크 고장 보호는 제공하지 않는다. 변하는 상태는 <a href="/projects/xsec-alpha/dashboard/" style="color:var(--accent);">대시보드</a>의 시각과 함께 확인한다.</p>
+  <div class="section-label">2026-10-04 · 사전 약속한 판정 KILL / 연구 프로브 유지</div>
+  <h2 class="section-title">우위는 입증되지 않았고, 다음 질문은 장세별 모델 선택</h2>
+  <p class="section-desc">60회 고정 비교는 효과 판단 보류로 종료했고, 7월에 사전등록한 SHORT 판정은 10월 4일 KILL로 기록했다(판정일 9월 1일보다 33일 지연). 집행은 부분적이다. 주간 재학습은 10월 5일 회차부터 dry-run으로 바꿔 9월 28일 학습 모델을 고정하고, 측정은 기반 시설로 남긴다. 신호 실행은 9월 30일 등록한 세 실험의 유일한 입력이자 매 회차 코인 제안 요구 때문에 공개 편차로 유지한다. 정상 회차 코인 보고는 계속하지만 텔레그램 SHORT는 우위 미입증 연구 프로브이며, 자본 투입이나 자동 실행으로의 승격은 검토하지 않는다. 백업은 동일 디스크 복구용 사본이며 디스크 고장 보호는 제공하지 않는다. 게이트 상태처럼 변하는 값은 <a href="/projects/xsec-alpha/dashboard/" style="color:var(--accent);">대시보드</a>의 시각과 함께 확인한다.</p>
 
   <div class="two-col" style="margin-bottom:2rem;">
     <div class="layer-card" style="border-top-color: var(--green);">
-      <div class="layer-num">SHORT 운영 · 2026-09-07 계약</div>
-      <div class="layer-title">xsec_6h · SHORT active</div>
+      <div class="layer-num">SHORT 연구 프로브 · 2026-10-04 KILL 이후</div>
+      <div class="layer-title">xsec_6h · SHORT 연구 프로브 (우위 미입증)</div>
       <div class="card-text">
         <strong>피처:</strong> 10개 통합 (reversal, vol_inv, order_flow, range_contraction, binance_lead, kimchi, kimchi_z, calendar)<br>
-        <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute next-open target<br>
-        <strong>출력:</strong> 수동 판단용 신호 최대 5개. 조건 미달도 비실행 참고 후보로 정상 보고<br>
+        <strong>모델:</strong> Ensemble (Ridge + LightGBM), absolute next-open target · 9월 28일 학습본 고정<br>
+        <strong>출력:</strong> 연구 프로브 신호 최대 5개. 우위가 입증되지 않았으며 자본 투입·자동 실행으로 승격하지 않는다. 조건 미달도 비실행 참고 후보로 보고<br>
         <strong>리밸런스:</strong> 05/11/17/23 UTC · preflight와 IC gate 적용
       </div>
     </div>
@@ -1928,31 +2088,32 @@
         <strong>피처:</strong> xsec_6h와 동일 (10개) — 호라이즌 타겟만 다름<br>
         <strong>스코어링:</strong> exact 11/23 UTC · next-open lag 1 · strict BTC regime<br>
         <strong>실행:</strong> 0건으로 하드 고정 · 자동 재활성화 없음<br>
-        <strong>관찰:</strong> 조건부 WATCH ONLY ≤1 · prospective shadow 별도 누적
+        <strong>관찰:</strong> 조건부 WATCH ONLY ≤1 · 첫 발송 10월 2일 23:04 UTC. 근거 IC 3회 중 2회가 장세 조건 밖 판독이었던 게이트 결함 발견 · prospective shadow 별도 누적
       </div>
     </div>
   </div>
 
   <dl class="status-facts">
-    <div><dt>확인한 것</dt><dd>pytest 205개 통과, Telegram 최근 50행 일관성, 실제 정기 실행, 별도 디스크 백업·임시 복원. 2026-09-07 확인이며 수익성 검증이 아니다.</dd></div>
-    <div><dt>고정한 것</dt><dd>SHORT 실험의 모델·피처·예정 60회·비교·누락·종료 규칙. LONG 실행 0 유지. 자동 주문·자동 정책 해제 없음.</dd></div>
-    <div><dt>종료와 후속 관찰</dt><dd>기존 60회는 종료·보존. 국면별 관찰은 별도 등록 이후 자료만 쌓는다. 과거 결과 소급 편입과 자동 전략 교체는 없다.</dd></div>
-    <div><dt>아직 미검증인 것</dt><dd>현재 고정 모델의 기준선 대비 우위, 실제 Bitget 체결 수익성, 다른 시장 국면에서의 지속성.</dd></div>
+    <div><dt>확인한 것</dt><dd>10월 2~3일 전수조사: 추적 파일 134개, 실제 운영, GitHub·공개 페이지, 작업 스레드 2개를 대조하고 영역마다 반박 검증을 거쳤다. 9월 7일~10월 2일 예정 보고 101회 모두 전달. 수익성 검증이 아니다.</dd></div>
+    <div><dt>고정한 것</dt><dd>SHORT 실험의 모델·피처·예정 60회·비교·누락·종료 규칙. LONG 실행 0 유지. 자동 주문·자동 정책 해제 없음. 9월 28일 학습한 6h·12h 운영 모델(10월 5일부터 재학습은 dry-run), 336회 파일럿 원본 소스 6개 읽기 전용.</dd></div>
+    <div><dt>종료와 후속 관찰</dt><dd>기존 60회는 종료·보존. 국면별 관찰은 별도 등록 이후 자료만 쌓는다. 과거 결과 소급 편입과 자동 전략 교체는 없다. 다음 계약(장세별 모델 선택)은 10월 31일까지 사전등록하며, 못 하면 단일 모델 연구 프로브 유지·새 모델은 섀도 기록만이 기본값이다.</dd></div>
+    <div><dt>아직 미검증인 것</dt><dd>모델의 기준선 대비 우위(10월 2일 기준, 8월 측정 계약 복구 이후 240회 판독의 SHORT 실시간 IC 평균 0.0814, 배포 검토 기준 0.10 미달), 실제 Bitget 체결 수익성, 장세별 지속성, 완성 전 가격 봉이 과거 피처·평가에 준 영향.</dd></div>
   </dl>
 
   <div class="callout">
     <p>
       <strong>자동 운영 상태:</strong>
       <span class="c">xsec-alpha.timer</span> (예측, 매 6h) ·
-      <span class="c">xsec-measure.timer</span> (IC + drift, 매일 00:00 UTC) ·
-      <span class="c">xsec-retrain.timer</span> (재학습 + promotion gate, 주 1회 일 20:00 UTC) ·
-      <span class="c">xsec-backup.timer</span> (SQLite hot backup, 매일 03:02 KST) ·
+      <span class="c">xsec-measure.timer</span> (IC + drift, 매일 00:00 UTC · 측정 기반 시설로 유지) ·
+      <span class="c">xsec-retrain.timer</span> (주 1회 일 20:00 UTC · 10월 5일 회차부터 dry-run: 학습·측정만, 배포 없음) ·
+      <span class="c">xsec-backup.timer</span> (SQLite hot backup, 매일 03:02 KST · 9월 10일~29일 20회 무경보 실패, 실패 경보 미구현) ·
       <span class="c">xsec-telegram-retry.timer</span> (최신 미전송 보고 재시도, 매분) ·
-      <span class="c">xsec-experiment-supervisor.timer</span> (독립 점검·실험 백업·최종 보고, 10분).
-      LONG 후보는 IC뿐 아니라 비용 후 net과 독립 기간 수를 통과해야 shadow model 승격 대상이 되며, 그 승격도 KILL을 자동 해제하지 않는다.
+      <span class="c">xsec-experiment-supervisor.timer</span> (독립 점검·실험 백업·최종 보고, 10분 · Bitget 정산 ±60초와 겹친 펀딩 관찰이 건강 점검 FAIL의 유일한 원인, 시각 이동 예정) ·
+      <span class="c">xsec-research-funding.timer</span> (Bitget 펀딩 이력 보존, 주 1회 · API가 90일만 보관해 7월 6일 이전 기록은 이미 소실).
+      주간 재학습이 dry-run이라 지금은 어떤 후보 모델도 승격되지 않는다. 승격되더라도 KILL을 자동 해제하지 않는다는 원칙은 그대로다.
     </p>
   </div>
-  <div class="journal-links"><a href="/projects/xsec-alpha/dashboard/#operator-report">이번 회차 보고</a><a href="/projects/xsec-alpha/dashboard/#prospective-experiment">실험 진행과 결과</a><a href="https://github.com/soccz/xsec_alpha/commit/a7e1b40bb9631fe3499ce33ba7a430e9639a0432">9월 7일 구현 · a7e1b40</a><a href="https://github.com/soccz/xsec_alpha/commits/main/">구현 변경 이력</a><a href="#development-journey">개발 과정 처음으로</a></div>
+  <div class="journal-links"><a href="/projects/xsec-alpha/dashboard/#operator-report">이번 회차 보고</a><a href="/projects/xsec-alpha/dashboard/#prospective-experiment">실험 진행과 결과</a><a href="https://github.com/soccz/xsec_alpha/commit/a7e1b40bb9631fe3499ce33ba7a430e9639a0432">9월 7일 구현 · a7e1b40</a><a href="https://github.com/soccz/xsec_alpha/commit/4ee6bee1d24708646b221d1d31079ad1d3a66acf">10월 4일 판정 기록 · 4ee6bee</a><a href="#october-verdict">10월 판정과 다음 질문</a><a href="https://github.com/soccz/xsec_alpha/commits/main/">구현 변경 이력</a><a href="#development-journey">개발 과정 처음으로</a></div>
 </div></section>
 
 <footer>
