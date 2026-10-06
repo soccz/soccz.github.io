@@ -982,7 +982,7 @@ const DESCS = {
   'bit_sector': '비트코인 섹터별 상관관계 분석',
   'bit_test': '비트코인 시계열 분석 실험',
   'finance_semiconductor': '반도체 산업 금융 데이터 분석',
-  'K_E_R': 'Korea Equity Reports — DART 기반 코스피 24종목 자동 종합진단. 출처 검증 + 추론 명시 + XBRL ground truth, 분기 단위 누적',
+  'K_E_R': 'Korea Equity Reports — 코스피 시가총액 상위 30개 기업 리서치. DART 공시·XBRL로 수치를 검증하고 판단과 근거를 구분, 공시·가격 변화 알림과 분기별 누적 기록',
   'HIGAN': '개입 설명을 언제 믿을 수 있을까 — 가까운 관측과 설명 보류를 새 기준점 64개에서 검증. 채택 56.50%·채택 중 오판 2.43%, 효과와 한계를 코드·데이터로 공개한 방법론 연구',
   'finance-note': '금융 학습 노트 모음',
   'CFA-notes': 'CFA Level 1 Complete Study Guide \u2014 93 Readings 한국어 Deep Dive (아무것도 모르는 사람부터 전공자까지)',
@@ -1051,6 +1051,12 @@ const STATIC_PROJECTS = [{
   name: 'papers',
   description: DESCS['papers'],
   language: 'Markdown',
+  pushed_at: new Date().toISOString(),
+  __static: true
+},{
+  name: 'K_E_R',
+  description: DESCS['K_E_R'],
+  language: 'Python',
   pushed_at: new Date().toISOString(),
   __static: true
 },{
