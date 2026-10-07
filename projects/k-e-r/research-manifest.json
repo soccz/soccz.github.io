@@ -2233,6 +2233,61 @@
       }
     },
     {
+      "run_id": "3274b50087fa0e4354dac3da",
+      "ticker": "055550",
+      "period": "2026-h1",
+      "inquiry": null,
+      "summary_basis": "consolidated",
+      "receipt": "3682e237efa46ac159f0af8defd869e6396571dc76404fc715df9fa8756975ec",
+      "origin": {
+        "kind": "current_engine",
+        "engine_hash": "84f21460235f471c9cbb9bb840d8812e2d602c6a07905d3119f4ab8fce234680"
+      },
+      "criteria": {
+        "schema_version": 1,
+        "revision": "c40bcb0b035f",
+        "selection_mode": "structured_priority",
+        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
+        "scope": "periodic_report",
+        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "principles": [
+          "자료 부족을 사업 악화로 바꾸지 않습니다.",
+          "외국인 매도만으로 검토에서 제외하지 않습니다.",
+          "사용자 기준과 사실 검증을 구분합니다.",
+          "업종과 자료의 범위에 맞는 지표를 사용합니다.",
+          "보고서는 자동 작성하며 사용자는 기준과 프롬프트를 조정합니다.",
+          "이전 판단에는 당시 기준을 보존합니다."
+        ],
+        "semantic_compliance_proven": false,
+        "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
+      },
+      "base_criteria_revision": "c40bcb0b035f",
+      "original_pdf_scope": "frozen_history",
+      "followup_sha256": "f9d5c27699d2d89c521e1cbf16520d5574f3ffb2303a55b9fab3a9bccd4e5449",
+      "body_followup_sha256": "4335e9d14aa0afcb0230016b30db99faf67e12c37adf35ed0fd15dbe1084c952",
+      "research_review_sha256": "efc091d2e4488604604696f937f06528f431bbc5bdc90df6a118b5471c645224",
+      "periodic_review_sha256": "48b1f51a4b8fc647b73fcafeb94a6bfc4bd150a78a87a8aaf83e4405e189520a",
+      "business_visual_sha256": "cf517a61f870b1024e418278fa032b2c3fb9db7fc8178238305916d39494f16e",
+      "business_visual_status": "unavailable",
+      "research_review_scope": {
+        "sector": "bank",
+        "profit_decomposition": "not_applicable",
+        "forward_observations": 0,
+        "valuation": "inputs_incomplete"
+      },
+      "previous_run_id": "3bfff3c27ecd8cf701d5ddb6",
+      "files": {
+        "index.html": "fb68356d3ddbc2de3f4548a7abab8be8978422cbb75898aa049a9933622afe04",
+        "summary.pdf": "6fa3ad417b5faa8d746972b8ab23df30b79a6913710d46292c756b98ff462aa9",
+        "detail.html": "fba0128370a236b29156e35bc79abd1eee7345bfb5cdd1ebf8bfe144f0576904",
+        "evidence.html": "1ccfc0bebb926714cefb1f6cb642b9337ae89cd3d5f8ccb6870da325af4fb7e2",
+        "detail.pdf": "48330282617d1586a03db8d966886cbda65454870be04b8ca4f646c10cb9ae38",
+        "reader.pdf": "67d0e4794507bcbc314503c3c482eff3a57c0486815df2840d381939a3a817f3",
+        "followup.html": "cca3d1fa5a652c4ea8406745a83e59af60beeadc0eaeded565180d7ec2b1fc10",
+        "followup.pdf": "d183334fcb5efad6ce1f3009b5f047051c0e121333e455e1e6103104f948420a"
+      }
+    },
+    {
       "run_id": "33b01e233b7cbb8fd11029fb",
       "ticker": "105560",
       "period": "2026-h1",
@@ -2954,7 +3009,7 @@
       "base_criteria_revision": "c40bcb0b035f",
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "604185adfac49f019db436441e348ff6ead6bbd1ac64a7d870b2e458e2dca71c",
-      "body_followup_sha256": "f762f4b22e38b33838b0afc1063c5b838d20734ef424383cd18178ca29afe91d",
+      "body_followup_sha256": "fd3a285c4a2e5790dc5584871372688b6f87d2ca6763c1eabe306f9f97edde2e",
       "research_review_sha256": "a61650b417d069c65e1988a6530d52a9a2ea12bdea2bbc1d18f6d2812be6ffa0",
       "periodic_review_sha256": "5b96dfd40aa5bde90e6c446466b1369f339a52f3ed3976912fc2f95c4fcefc4e",
       "business_visual_sha256": "559ee0f859da76ede2a0094b74c2b830989e181a9c4dc8054f91a89975694f87",
@@ -2973,8 +3028,8 @@
         "evidence.html": "cff2c7cfed96600b3042bf51ce606c12afde712e75ed36d75fc8fe6b2f06c8d4",
         "detail.pdf": "2790c88f4d280f90d5e25b12d10c503bf3eb0487024e4808b2afd833dd77dd68",
         "reader.pdf": "d14630990a9d443c9febc884507a84c9b1b5da6e63364b8d698a0822c95ee41a",
-        "followup.html": "5cef38d7e68234741728f4d1e18a603bf35e8521956356912d63fc8807c06128",
-        "followup.pdf": "8b7151bf312847f26caabd7a4570f07b9ac9b0f7dc5738b3acd7d09a1473c42c",
+        "followup.html": "14395f5b3a0f55e6c2e764cdb557d72d0aaab938f4760eb6d2af0fe85737cf4e",
+        "followup.pdf": "1b250f2f7b86da9d4ed5ebf83c78488b8a7a5c5335a70405d8c086b714b868b6",
         "analysis.html": "b51fb2415f38ba98056a7f64b7e1f4252eef7e072980131bfc3fe8d0231650e9",
         "analysis.pdf": "0f0e98548817ba6cafcafd1d69d33a91ed5cef94c4dfc202fc710d1ce8f64fa5"
       }
@@ -4398,16 +4453,16 @@
       },
       "previous_run_id": "d765a26d8bbe0473f7f208ab",
       "files": {
-        "index.html": "64facadb022d3d521b8fe26f8565aa1bf3fbf04c8384255c5037c078043e7a37",
-        "summary.pdf": "54fb3bc522ce8cffd21366bd7f8f7f045f2bb6fd8538ee37cac56c80b16a97ef",
+        "index.html": "7e1f17287da88211ea7b45a95f77329c695c1196ed2c26db99f764b2515a2df2",
+        "summary.pdf": "8107326accd2a82dc149e9394e8517a97cd3e2dc22a35108673354a7fdf63dc3",
         "detail.html": "f6f4f6e8a01ef913edd60cc788f1b952ec89ce680b04d2b81538dbc0879d857e",
         "evidence.html": "e2fd63ac0fef8f0d93eb91b2ae5f5df86d5395c68cf095daf8a8beab8743033d",
         "detail.pdf": "c670c84b8943d53baf928545d5560938aed65a7d54571fc9a65f17bd7cc3f511",
         "reader.pdf": "001aaab819370ac95ea99e57d0a65c32d1ff3d44d77c4875d6a4c932b7a765da",
         "followup.html": "83fa4b5f133c4bb57e36b9cfbeb13cfc2e5681d2168eb74624cc6842ab2a0161",
         "followup.pdf": "2e5da6216278acf6717b1a9b39ccf211dc6ed67524dd60a62572f0af713dbd2a",
-        "analysis.html": "816b00d72b311090ea97b89299ca0aeec3e40866cc43572ab2e4f753f7dd74c0",
-        "analysis.pdf": "eed7544aa1ddcc05b81b7492cbca98e0e3543eadbfade44ef7468fe08eaea280"
+        "analysis.html": "d7e74f29a7129a2f07b34b44fd3029478b7f59e7b3d7b28fca6eaf832cd33ff9",
+        "analysis.pdf": "542fea60375680eb23dc697a502b99ba85125ce1188f16263ff40406ebc92d50"
       }
     },
     {
@@ -10641,13 +10696,13 @@
       "followup_sha256": "23d4ee2b490796771d3ad8e1fb011344cbcd8ac63fd6ada043498d1a7cfed081",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "3bfff3c27ecd8cf701d5ddb6",
+      "latest_period_run_id": "3274b50087fa0e4354dac3da",
       "body_status": "available",
-      "body_binding_sha256": "fc488b35e650498c68c2b605b59652983a4d4b9ae10aa1435e62dd75f2de2733",
+      "body_binding_sha256": "8ca2b1208164d0496a43e8ee9a7b16c7eec72e978bf7e96caf35905f00ea2ca4",
       "research_review_sha256": "ed5faae8adfe0557852e70e2b034dc58e0673757a9524483db4ec638cccf7125",
       "files": {
-        "index.html": "3b958e0afa9d246e7e1cabd349f6e278cdfee56031dea9ac9bbf5e22059c5999",
-        "brief.pdf": "4f319130dd03426217b361db0ff827587a3ba132dac51fb5a024ef257b350b89"
+        "index.html": "9c2a70df31edc50a5d3e3e206b7b9669882c90f28acc5cac57dc678ec6acdc60",
+        "brief.pdf": "1d2e64dd413949706351db8e37ecca5dc9ffda80162829dcef19b7906650e704"
       }
     },
     {
@@ -38833,13 +38888,13 @@
       "followup_sha256": "cc5933e3e51619c56bacd9fbc4b1d1031b16ddfaebd0a168a167d10728e9aa86",
       "relation": "after_report",
       "report_run_id": "3bfff3c27ecd8cf701d5ddb6",
-      "latest_period_run_id": "3bfff3c27ecd8cf701d5ddb6",
+      "latest_period_run_id": "3274b50087fa0e4354dac3da",
       "body_status": "failed",
-      "body_binding_sha256": "f52072cbde9c79b8c1d4a1b660d090aa6d84904dd4684cbc782feff5f7a96f07",
+      "body_binding_sha256": "7c4a3c69084e2becaecc2ea55ebcd8980c3092cdb9ba9c7d8db93044f2c196c8",
       "research_review_sha256": "7e4aa7801782eaff142d5ddc626347e9617964dce19b02f7704fd1c39d6863f3",
       "files": {
-        "index.html": "dc1305996b5cd6ab8b5ccf40366348a9b67ed0e55f71a0939ab934dd1d42686e",
-        "brief.pdf": "1cd17ae262fb817c97a33d4489dcf673bc625f3aefdc6d3e81ac285222b7add4"
+        "index.html": "bfb95154a5eccc7b8dc7af4f71d10f7360fd86cde9f27d852f399de1dfad0862",
+        "brief.pdf": "f3a391df71c6cd3f70c356446b1753a924496c521fe9011d6caf24898484eb96"
       }
     },
     {
@@ -38865,13 +38920,13 @@
       "followup_sha256": "268cebc4b2afb0dc490a87b7414d04509da82cb29c505e9f8dd07a46be21e30a",
       "relation": "after_report",
       "report_run_id": "3bfff3c27ecd8cf701d5ddb6",
-      "latest_period_run_id": "3bfff3c27ecd8cf701d5ddb6",
+      "latest_period_run_id": "3274b50087fa0e4354dac3da",
       "body_status": "failed",
-      "body_binding_sha256": "06f6dced951e8acc66267eeb79736feb0d99e03d3c7992d8078a5bd118d79288",
+      "body_binding_sha256": "90a57e3f187f517b5c38e03a2de5ce2acbd89cbc993b8cc5da3360a3bcbf569b",
       "research_review_sha256": "7e4aa7801782eaff142d5ddc626347e9617964dce19b02f7704fd1c39d6863f3",
       "files": {
-        "index.html": "ef36b0c88cfe10612bb4e126223a81fe931f09aca7b5814377642f70e4c848ad",
-        "brief.pdf": "086c5467c04505cfd928ad45654fa1a7d63c23be9723233f03f903f10855fc3c"
+        "index.html": "7abd2678cf50af3855c06d4993164f97f20104124804f8b9b4a68bf538bf4468",
+        "brief.pdf": "11353df46a680dd8d7b6ed6fcc5ddbb68c16261233bdd6bdaaf6ca05fa2453ae"
       }
     },
     {
@@ -39165,10 +39220,10 @@
   ],
   "deferred_reports": [],
   "delivery": {
-    "generated_at": "2026-10-07T18:49:45.667639+09:00",
+    "generated_at": "2026-10-08T07:56:38.502745+09:00",
     "observed_at": "2026-10-07T18:30:48+09:00",
-    "accepted_reports": 183,
-    "prepared_reports": 183,
+    "accepted_reports": 184,
+    "prepared_reports": 184,
     "deferred_reports": 0
   },
   "criteria": {
@@ -39190,7 +39245,7 @@
     "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
   },
   "followup_coverage": {
-    "reports": 183,
+    "reports": 184,
     "companies": 172,
     "events": 897,
     "condition_fulfillments": 0,
@@ -39279,7 +39334,7 @@
         "event_id": "27d418ef1dee1743b5a062dd",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260908000275",
         "source_event_sha256": "cf0d47253b7603db20cd82cad8040b52889120911f9af4570b67c37071504d77",
-        "assessment_sha256": "b353325735e81a131987e394743ef0cb25a5f85ce7b8cf8d7add592f0ab188cf",
+        "assessment_sha256": "b598007637719551b35080bfe6d21692ccdc6a3a962f428426b055e5947a6793",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -52098,7 +52153,7 @@
         "event_id": "31379318aecae4b057e72c4c",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261007000223",
         "source_event_sha256": "e934485cf3959ed573134d737d4cdc5725b7a9acedc677ddfb666fd8fae2407f",
-        "assessment_sha256": "469e21d84a5373f04c2eaada76df20bb92090b4d8c43edaf187ed13ce19c50b5",
+        "assessment_sha256": "46632b48862acf1afd84ace2f8abcc4c11115e4b6f02e0b000d865bf1ea47297",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -52113,7 +52168,7 @@
         "event_id": "56b5621e6281af2b9093a69b",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261007000218",
         "source_event_sha256": "0350aba7436ef898f961e39edcecd52402c04e0ce913ee98daf9f02f50ab82b1",
-        "assessment_sha256": "1981d7383ea0914d2691df1179e42867742a36b1509d723e6b3a3ae8a43a6397",
+        "assessment_sha256": "4bda3c696ea3dacf357f66838795760599fbdc093b8ff3c5d33863ae43875409",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -54290,6 +54345,20 @@
         "condition_fulfilled": false,
         "change_flags": [],
         "relationship": "이전 분석은 별도 보관하며, 정기보고서 비교는 여기서 시작합니다."
+      },
+      "3274b50087fa0e4354dac3da": {
+        "version": "research-attention-v1",
+        "code": "correction",
+        "label": "정정 자료 확인",
+        "reason": "이전과 같은 보고기간의 원문이 달라져 비교합니다. 새로운 분기의 성과로 세지 않습니다.",
+        "previous_run_id": "3bfff3c27ecd8cf701d5ddb6",
+        "judgment": "not_determined",
+        "condition_fulfilled": false,
+        "change_flags": [
+          "new_base_run",
+          "source_correction"
+        ],
+        "relationship": "이전 판단의 유지·강화·약화는 추가 근거 확인 전 보류합니다."
       }
     },
     "market_caps": {
@@ -57834,7 +57903,7 @@
       "original_content_sha256": "0aefb0cec0b6e8451269e438b2fe1e11c85dc4a569e4ff07897b700e3ab732db"
     },
     "archive.html": {
-      "sha256": "a6d56fb2df07d6bf9a509c2c55e4aad9e8094f28caf6b3c405a7e6efcb165258",
+      "sha256": "c1738978d0a598eb33dafda1cb8d7b62cb023de8440736d5a9ac983b0c68ecd5",
       "original_content_sha256": "1641da94f552f4f45a5c5b730fc9a5427d16e228422b2b8bb49de0675cf767cc"
     },
     "daily/2026-05-12.html": {
@@ -58182,19 +58251,19 @@
       "original_content_sha256": "6f4d530286d1debb86bf6c367ecf55e3d3f68bf7a6e3ceb223154f9382255d82"
     },
     "신한지주/2025-annual/index.html": {
-      "sha256": "9681acce67d06750d7a9065809cb70d621a410fce1d2b6b8ade4488d71328589",
+      "sha256": "c41020ce2b408a196a3767d52e04e441b7f08e2e7a504b090e301c9c38662ea0",
       "original_content_sha256": "e50959f259c1da2100701e239aafea1357c25d63049a57f958ea168a4428c5fa"
     },
     "신한지주/2026-h1/index.html": {
-      "sha256": "1ba2d907ca6de887f32fde76eaee88f4a0ff75a21fdb632114d6f79aced78ef3",
+      "sha256": "f885020212c0242cc7cd9d87d14b5535d015820079f81a1b2b662130fa46d766",
       "original_content_sha256": "c1f2f10d19a3997237fd3d88ec10fab99c614b80b0d4d492fca5ede7b04d96c1"
     },
     "신한지주/2026-q1/index.html": {
-      "sha256": "88d3bd329d18cfbcf224b23fcb0b0182fc2dcd2c9dd7390172ae291a29402e12",
+      "sha256": "3dcafd8383844adadb52ea2f319f0e4eb3cb7b289a311995f3b39d876044d853",
       "original_content_sha256": "8326eae5139a3fedd573cd30dafc3be1e928bb3af97becf43928118377a98f17"
     },
     "신한지주/index.html": {
-      "sha256": "5224c19c3c32bb2cc6b53a02d325860322a637413662c4b94d48e61f1c0e5db6",
+      "sha256": "094cd2e1d6cb650af2c28463995b8d4ac480b05fc72d0ae605cd61f32d8f4f67",
       "original_content_sha256": "0ad0124cc5cd0f8b3f5103e60d43d9d56789494d9c452d8a843eb4f740c5518b"
     },
     "이마트/2025-annual/index.html": {
@@ -58270,7 +58339,7 @@
       "original_content_sha256": "00e69b7ea44d53ed5d9914601587ce74038afc4c939384f179d1d86c71e813d1"
     },
     "browse/companies.html": {
-      "sha256": "7f3e2ebcc0124dd1d698910b31d6c5497839bf5f275fd06fc9221a2e72dd88af",
+      "sha256": "5347c0d6be35376faa305ac1849786d4054172d1d5a7c4ff9efba1e3f55ba67e",
       "kind": "current_scope"
     },
     "browse/events.html": {
@@ -58278,7 +58347,7 @@
       "kind": "current_scope"
     },
     "browse/operation.html": {
-      "sha256": "acd61e876f4ec94743d9f87eef51fe27377041bcf4f0a7b1c29bfe890318e40f",
+      "sha256": "3da378272f2ee0074dce3bf83f834ec5dd40e9f183df063a7c1d392f44fb2c45",
       "kind": "current_scope"
     },
     "browse/event-archive.html": {
@@ -58780,7 +58849,7 @@
     ]
   },
   "automatic_depth": {
-    "checked_at": "2026-10-06T22:02:10.081561+00:00",
+    "checked_at": "2026-10-07T22:02:09.817352+00:00",
     "jobs": [
       {
         "ticker": "005930",
@@ -58839,7 +58908,7 @@
         "base_run_id": "5990f23d9a52ccb6e9a5b374",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-06T22:02:56.286836+00:00",
+        "next_attempt": "2026-10-14T22:04:33.265206+00:00",
         "reason": null
       },
       {
@@ -58905,12 +58974,12 @@
       {
         "ticker": "055550",
         "company": "신한지주",
-        "period": "2026-h1",
-        "base_run_id": "3bfff3c27ecd8cf701d5ddb6",
-        "status": "ready",
-        "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-09T22:02:29.856106+00:00",
-        "reason": null
+        "period": null,
+        "base_run_id": null,
+        "status": "awaiting_base",
+        "label": "정기 보고서 대기",
+        "next_attempt": null,
+        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
       },
       {
         "ticker": "329180",
@@ -58929,7 +58998,7 @@
         "base_run_id": "87b6f96adb7383c8dd7d3c2e",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-07T22:02:02.013833+00:00",
+        "next_attempt": "2026-10-14T22:03:01.064644+00:00",
         "reason": null
       },
       {
@@ -58939,7 +59008,7 @@
         "base_run_id": "33efcf986cff7e36f6c68ffa",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-06T22:03:05.618936+00:00",
+        "next_attempt": "2026-10-14T22:02:30.955523+00:00",
         "reason": null
       },
       {
@@ -58979,7 +59048,7 @@
         "base_run_id": "7933256e4d6b67f0dafc8955",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-06T22:03:25.813838+00:00",
+        "next_attempt": "2026-10-14T22:02:50.419697+00:00",
         "reason": null
       },
       {
@@ -58999,7 +59068,7 @@
         "base_run_id": "da0028602e27285602f3a002",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-06T22:03:16.936056+00:00",
+        "next_attempt": "2026-10-14T22:02:41.685638+00:00",
         "reason": null
       },
       {
@@ -59382,34 +59451,10 @@
     {
       "ticker": "055550",
       "company": "신한지주",
-      "status": "partial_research",
-      "run_id": "3bfff3c27ecd8cf701d5ddb6",
+      "status": "awaiting_depth",
+      "run_id": "3274b50087fa0e4354dac3da",
       "period": "2026-h1",
-      "quality": {
-        "status": "partial_research",
-        "verified_questions": [],
-        "management_questions": [],
-        "unresolved_questions": [
-          "cash_repeatability",
-          "owner_value",
-          "competitive_persistence"
-        ],
-        "inapplicable_questions": [
-          "cash_investment"
-        ],
-        "official_source_status": "not_collected",
-        "cash_bridge_status": "not_applicable",
-        "profit_bridge_status": "not_applicable",
-        "business_topics": {
-          "cash": true,
-          "profit": true,
-          "us": true,
-          "technology": true,
-          "owner": true
-        },
-        "independent_peer_comparison": false,
-        "causal_persistence_proven": false
-      }
+      "quality": null
     },
     {
       "ticker": "329180",
@@ -59923,5 +59968,5 @@
       }
     }
   ],
-  "homepage_sha256": "18476232de73a76acade5b752d2d83b5894410f0fa7f8e372d1e4887f91c4819"
+  "homepage_sha256": "37dd4d0e260948a2c17da6306fff3fb2c216684dfa84a0d363c8bf67dae02291"
 }
