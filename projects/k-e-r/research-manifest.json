@@ -39668,7 +39668,7 @@
   ],
   "deferred_reports": [],
   "delivery": {
-    "generated_at": "2026-10-08T18:52:17.523178+09:00",
+    "generated_at": "2026-10-09T07:43:43.911674+09:00",
     "observed_at": "2026-10-08T18:30:50+09:00",
     "accepted_reports": 184,
     "prepared_reports": 184,
@@ -58996,7 +58996,7 @@
       "kind": "current_scope"
     },
     "browse/operation.html": {
-      "sha256": "5bf29321b69b8c42bc8b94cbc54bb94af65f784e3abbeb537be718f08a15e4d1",
+      "sha256": "49d4f6586230259a77659c7997fe0d3390579815c960a53ed019e35d8c16f90a",
       "kind": "current_scope"
     },
     "browse/event-archive.html": {
@@ -59498,7 +59498,7 @@
     ]
   },
   "automatic_depth": {
-    "checked_at": "2026-10-07T22:02:09.817352+00:00",
+    "checked_at": "2026-10-08T22:01:45.985853+00:00",
     "jobs": [
       {
         "ticker": "005930",
@@ -59517,7 +59517,7 @@
         "base_run_id": "88e52967897d1f5b55ede46b",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-07T22:02:11.724535+00:00",
+        "next_attempt": "2026-10-15T22:02:44.659531+00:00",
         "reason": null
       },
       {
@@ -59535,10 +59535,10 @@
         "company": "삼성전기",
         "period": "2026-h1",
         "base_run_id": "96f368dbb8ea4b73f7fbe040",
-        "status": "ready",
-        "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-07T22:03:43.668543+00:00",
-        "reason": null
+        "status": "retry",
+        "label": "자료·검증 재시도",
+        "next_attempt": "2026-10-09T22:03:43.236611+00:00",
+        "reason": "자료 또는 검증 조건을 다시 확인합니다. 기존 보고서는 보존합니다."
       },
       {
         "ticker": "373220",
@@ -59623,12 +59623,12 @@
       {
         "ticker": "055550",
         "company": "신한지주",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-h1",
+        "base_run_id": "3274b50087fa0e4354dac3da",
+        "status": "retry",
+        "label": "자료·검증 재시도",
+        "next_attempt": "2026-10-09T22:02:33.639559+00:00",
+        "reason": "자료 또는 검증 조건을 다시 확인합니다. 기존 보고서는 보존합니다."
       },
       {
         "ticker": "329180",
@@ -59737,7 +59737,7 @@
         "base_run_id": "4b3cd5d9f1886762761fa825",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-07T22:02:26.545081+00:00",
+        "next_attempt": "2026-10-15T22:03:00.430367+00:00",
         "reason": null
       },
       {
@@ -59797,7 +59797,7 @@
         "base_run_id": "b6c2b25c34d4d346f73b1751",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-10-08T22:01:41.619298+00:00",
+        "next_attempt": "2026-10-15T22:03:11.597803+00:00",
         "reason": null
       }
     ]
