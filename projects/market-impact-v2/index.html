@@ -5,10 +5,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>정책 뉴스 분석 · 개발에서 NLP 연구로 — soccz</title>
-<meta content="정책·기사·시장 분석의 개발 과정과, 여기서 출발한 한국어 정책 문장의 사실·정정·내용 변화 연구. 교수님 피드백을 반영한 기반, 서울경제 활용, 개인 후속 실험의 결과와 한계를 한 문서에 기록했습니다." name="description"/>
+<meta content="soccz가 직접 설계·개발한 정책·기사·시장 분석 기반과 서울경제 아틀라스 활용 기록. 서울경제·서강대학교 금융기계학습 연구실의 협업을 소개한 보도, 개발 과정, 개인 NLP 후속 연구를 함께 정리했습니다." name="description"/>
 <meta content="article" property="og:type"/>
 <meta content="정책 뉴스 분석 · 개발에서 NLP 연구로 — soccz" property="og:title"/>
-<meta content="정책·기사·시장 분석의 개발 과정과, 여기서 출발한 한국어 정책 문장의 사실·정정·내용 변화 연구. 교수님 피드백을 반영한 기반, 서울경제 활용, 개인 후속 실험의 결과와 한계를 한 문서에 기록했습니다." property="og:description"/>
+<meta content="soccz가 직접 설계·개발한 정책·기사·시장 분석 기반과 서울경제 아틀라스 활용 기록. 서울경제·서강대학교 금융기계학습 연구실의 협업을 소개한 보도, 개발 과정, 개인 NLP 후속 연구를 함께 정리했습니다." property="og:description"/>
 <meta content="https://soccz.github.io/projects/market-impact-v2/" property="og:url"/>
 <link href="https://soccz.github.io/projects/market-impact-v2/" rel="canonical"/>
 <link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -28,8 +28,19 @@
 <span class="folio">POLICY · LANGUAGE · MARKET</span></div>
 <div class="hero-grid">
 <div>
+<p class="developer-credit">분석 기반 설계·개발 <strong>soccz</strong></p>
 <h1>정책 뉴스 분석<br/><em>개발에서 NLP 연구로</em></h1><p class="concept-subtitle">분석 도구를 만들고, 문장을 읽는 문제로 돌아오다.</p>
-<p class="hero-deck">사건·기사·시장 데이터를 연결하고, 수집·판독·모델 실행·비교·보고·검수 도구를 개발했습니다. <strong>3월의 초기 검증부터 8월의 추가 검수 준비까지, 교수님 피드백을 반영해 만든 연구 기반을 서울경제의 활용 구조로 확장한 과정</strong>을 기록합니다.</p>
+<p class="hero-deck"><strong>서울경제 「아틀라스」에 활용된 정책·기사·시장 분석 기반은 제가 직접 설계·개발했습니다.</strong> 2026년 3–8월, 수집·정제부터 NLP 판독·모델 실행·집계·시장 비교·보고·검수 도구까지 연결했습니다. 교수님 피드백을 반영한 연구 기반을 서울경제의 활용 요구에 맞게 확장한 과정입니다.</p>
+<aside class="press-coverage" aria-labelledby="press-coverage-title" id="press-coverage">
+<p class="press-date"><time datetime="2026-10-13">2026.10.13</time> · 관련 보도</p>
+<h2 id="press-coverage-title">서울경제 「아틀라스」<br/>올해의 기획보도상 선정</h2>
+<p>두 기사는 <strong>서울경제와 서강대학교 산학협력단 금융기계학습 연구실의 정책·뉴스·주가 분석 협업</strong>을 소개합니다. 이 분석을 담은 아틀라스는 ‘2026 광고주가 뽑은 올해의 기획보도상’ 온라인 부문 수상작으로 선정됐습니다.</p>
+<ul class="press-links">
+<li><a href="https://www.sedaily.com/article/20100770"><span>서울경제</span><strong>본지 ‘아틀라스’, 광고주 선정 올해의 기획보도상</strong><i aria-hidden="true">↗</i></a></li>
+<li><a href="https://n.news.naver.com/article/029/0003052762?sid=103"><span>디지털타임스 · 네이버</span><strong>광고주협회, 부문별 수상작 선정…시상식은 22일 개최</strong><i aria-hidden="true">↗</i></a></li>
+</ul>
+<p class="press-record"><a href="#contribution">제가 맡은 구현·기여 범위 ↓</a><a href="#record">초기 공개 커밋과 개발 기록 ↓</a></p>
+</aside>
 <div class="personal-followup" id="personal-followup"><span>개발 이후 · 개인 후속 연구</span><p>이 개발에서 남은 판독 문제를 바탕으로, <strong>한국어 정책 문장의 사실·정정·내용 변화</strong>를 별도로 실험했습니다. 아래에는 개발의 과정과, AI 지원으로 진행한 개인 연구의 결과·실패·한계가 이어집니다.</p><a href="#research">후속 연구의 질문과 결과로 ↓</a></div>
 <p class="reading-cue"><span aria-hidden="true">↓</span>개발한 범위 → 판단이 바뀐 과정 → 개인 NLP 연구</p>
 </div>
@@ -42,7 +53,7 @@
 <div class="build-transfer"><span aria-hidden="true">↓</span> 기반을 활용해 목적에 맞게 확장</div>
 <div class="build-purpose newsroom-purpose"><span class="purpose-index">02</span><div><span class="concept-label">서울경제 활용 구조</span><strong>흐름을 읽고 전달하다</strong><p>일별·누적 시계열 · 시각화 입력 · 보고</p></div><svg aria-hidden="true" viewBox="0 0 70 42"><path d="M2 38H68M2 8V38" class="purpose-axis"/><path d="M4 31L18 28L32 32L48 14L66 6"/></svg></div>
 <figcaption>공개 코드와 후속 자료를 대조한 개발 회고입니다. 도형은 작업 관계를 설명하며 실제 성과 수치가 아닙니다.</figcaption></figure></div>
-<dl class="hero-meta"><div><dt>직접 담당한 개발</dt><dd>수집 · 판독 도구 · NLP · 시장 비교 · 보고·검수 도구</dd></div><div><dt>COLLABORATION</dt><dd>교수님·연구실의 연구 지도 / 서울경제 기획취재 협업</dd></div><div><dt>WORK &amp; RECORD</dt><dd>2026.03–08 작업 기록 / 2026.09 회고</dd></div></dl>
+<dl class="hero-meta"><div><dt>분석 기반 설계·개발 · soccz</dt><dd>수집 · 판독 도구 · NLP · 시장 비교 · 보고·검수 도구</dd></div><div><dt>COLLABORATION</dt><dd>서강대학교 금융기계학습 연구실의 연구 지도·검토 / 서울경제 기획취재 협업</dd></div><div><dt>WORK &amp; RECORD</dt><dd>2026.03–08 작업 기록 / 2026.09 회고 / 2026.10 관련 보도</dd></div></dl>
 </div>
 </header>
 <div class="wrap reading-layout">
