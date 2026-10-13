@@ -4,11 +4,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>정책 뉴스 분석 · 개발에서 NLP 연구로 — soccz</title>
-<meta content="soccz가 직접 설계·개발한 정책·기사·시장 분석 기반과 서울경제 아틀라스 활용 기록. 서울경제·서강대학교 금융기계학습 연구실의 협업을 소개한 보도, 개발 과정, 개인 NLP 후속 연구를 함께 정리했습니다." name="description"/>
+<title>정책 뉴스 분석 · 주 개발자 soccz의 구현과 NLP 연구</title>
+<meta content="정책·기사·시장 분석의 핵심 로직을 직접 설계·구현한 주 개발자 soccz. 서울경제 아틀라스에 활용된 분석의 설계·구현, 2026년 3–8월 개발 과정, 공개 커밋과 관련 보도, 후속 개인 NLP 연구를 함께 기록했습니다." name="description"/>
 <meta content="article" property="og:type"/>
-<meta content="정책 뉴스 분석 · 개발에서 NLP 연구로 — soccz" property="og:title"/>
-<meta content="soccz가 직접 설계·개발한 정책·기사·시장 분석 기반과 서울경제 아틀라스 활용 기록. 서울경제·서강대학교 금융기계학습 연구실의 협업을 소개한 보도, 개발 과정, 개인 NLP 후속 연구를 함께 정리했습니다." property="og:description"/>
+<meta content="정책 뉴스 분석 · 주 개발자 soccz의 구현과 NLP 연구" property="og:title"/>
+<meta content="정책·기사·시장 분석의 핵심 로직을 직접 설계·구현한 주 개발자 soccz. 서울경제 아틀라스에 활용된 분석의 설계·구현, 2026년 3–8월 개발 과정, 공개 커밋과 관련 보도, 후속 개인 NLP 연구를 함께 기록했습니다." property="og:description"/>
 <meta content="https://soccz.github.io/projects/market-impact-v2/" property="og:url"/>
 <link href="https://soccz.github.io/projects/market-impact-v2/" rel="canonical"/>
 <link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -27,22 +27,14 @@
 <div class="hero-top"><p class="eyebrow"><span class="dot"></span>DEVELOPMENT → RESEARCH / 개발과 후속 연구</p>
 <span class="folio">POLICY · LANGUAGE · MARKET</span></div>
 <div class="hero-grid">
-<div>
-<p class="developer-credit">분석 기반 설계·개발 <strong>soccz</strong></p>
-<h1>정책 뉴스 분석<br/><em>개발에서 NLP 연구로</em></h1><p class="concept-subtitle">분석 도구를 만들고, 문장을 읽는 문제로 돌아오다.</p>
-<p class="hero-deck"><strong>서울경제 「아틀라스」에 활용된 정책·기사·시장 분석 기반은 제가 직접 설계·개발했습니다.</strong> 2026년 3–8월, 수집·정제부터 NLP 판독·모델 실행·집계·시장 비교·보고·검수 도구까지 연결했습니다. 교수님 피드백을 반영한 연구 기반을 서울경제의 활용 요구에 맞게 확장한 과정입니다.</p>
-<aside class="press-coverage" aria-labelledby="press-coverage-title" id="press-coverage">
-<p class="press-date"><time datetime="2026-10-13">2026.10.13</time> · 관련 보도</p>
-<h2 id="press-coverage-title">서울경제 「아틀라스」<br/>올해의 기획보도상 선정</h2>
-<p>두 기사는 <strong>서울경제와 서강대학교 산학협력단 금융기계학습 연구실의 정책·뉴스·주가 분석 협업</strong>을 소개합니다. 이 분석을 담은 아틀라스는 ‘2026 광고주가 뽑은 올해의 기획보도상’ 온라인 부문 수상작으로 선정됐습니다.</p>
-<ul class="press-links">
-<li><a href="https://www.sedaily.com/article/20100770"><span>서울경제</span><strong>본지 ‘아틀라스’, 광고주 선정 올해의 기획보도상</strong><i aria-hidden="true">↗</i></a></li>
-<li><a href="https://n.news.naver.com/article/029/0003052762?sid=103"><span>디지털타임스 · 네이버</span><strong>광고주협회, 부문별 수상작 선정…시상식은 22일 개최</strong><i aria-hidden="true">↗</i></a></li>
-</ul>
-<p class="press-record"><a href="#contribution">제가 맡은 구현·기여 범위 ↓</a><a href="#record">초기 공개 커밋과 개발 기록 ↓</a></p>
-</aside>
-<div class="personal-followup" id="personal-followup"><span>개발 이후 · 개인 후속 연구</span><p>이 개발에서 남은 판독 문제를 바탕으로, <strong>한국어 정책 문장의 사실·정정·내용 변화</strong>를 별도로 실험했습니다. 아래에는 개발의 과정과, AI 지원으로 진행한 개인 연구의 결과·실패·한계가 이어집니다.</p><a href="#research">후속 연구의 질문과 결과로 ↓</a></div>
-<p class="reading-cue"><span aria-hidden="true">↓</span>개발한 범위 → 판단이 바뀐 과정 → 개인 NLP 연구</p>
+<div class="developer-intro">
+<p class="developer-credit"><span>핵심 분석 로직 · 주 개발자</span><strong>soccz</strong></p>
+<h1>정책 뉴스 분석의 핵심 로직,<br/><em>제가 설계하고 구현했습니다.</em></h1>
+<p class="concept-subtitle">연구용 기반을 만들고, 서울경제의 활용 구조로 확장하다.</p>
+<p class="hero-deck"><strong>서울경제 「아틀라스」에 활용된 정책·기사·시장 분석의 핵심 로직을 직접 설계·구현한 주 개발자입니다.</strong> 2026년 3–8월, 데이터 수집·정제부터 NLP 판독, 모델 실행, 집계·시장 비교, 보고·검수 도구까지 직접 연결했습니다.</p>
+<p class="developer-context">교수님 피드백을 반영해 비교 시점·분모·표본의 기준을 구현하고, 이 기반을 서울경제의 정책별 뉴스·시장 흐름 분석과 시각화 입력에 맞게 확장했습니다.</p>
+<p class="developer-sources"><span>협업·활용 관련 보도</span><a href="https://www.sedaily.com/article/20100770">서울경제 <span aria-hidden="true">↗</span></a><a href="https://n.news.naver.com/article/029/0003052762?sid=103">디지털타임스 <span aria-hidden="true">↗</span></a></p>
+<p class="developer-route"><a href="#contribution">제가 맡은 구현과 근거 <span aria-hidden="true">↓</span></a></p>
 </div>
 <figure class="concept-figure build-map" aria-labelledby="build-map-title">
 <div class="figure-top"><span>DEVELOPMENT / 2026.03–08</span><span>개발의 구조</span></div>
@@ -53,7 +45,33 @@
 <div class="build-transfer"><span aria-hidden="true">↓</span> 기반을 활용해 목적에 맞게 확장</div>
 <div class="build-purpose newsroom-purpose"><span class="purpose-index">02</span><div><span class="concept-label">서울경제 활용 구조</span><strong>흐름을 읽고 전달하다</strong><p>일별·누적 시계열 · 시각화 입력 · 보고</p></div><svg aria-hidden="true" viewBox="0 0 70 42"><path d="M2 38H68M2 8V38" class="purpose-axis"/><path d="M4 31L18 28L32 32L48 14L66 6"/></svg></div>
 <figcaption>공개 코드와 후속 자료를 대조한 개발 회고입니다. 도형은 작업 관계를 설명하며 실제 성과 수치가 아닙니다.</figcaption></figure></div>
-<dl class="hero-meta"><div><dt>분석 기반 설계·개발 · soccz</dt><dd>수집 · 판독 도구 · NLP · 시장 비교 · 보고·검수 도구</dd></div><div><dt>COLLABORATION</dt><dd>서강대학교 금융기계학습 연구실의 연구 지도·검토 / 서울경제 기획취재 협업</dd></div><div><dt>WORK &amp; RECORD</dt><dd>2026.03–08 작업 기록 / 2026.09 회고 / 2026.10 관련 보도</dd></div></dl>
+<dl class="hero-meta developer-roles">
+<div><dt>주 개발 · soccz</dt><dd>핵심 분석 로직의 설계·구현<br/>데이터 → NLP → 비교·집계 → 결과 생성</dd></div>
+<div><dt>연구 지도·검토 · 교수님·연구실</dt><dd>서강대학교 금융기계학습 연구실<br/>연구 요구·방법론 논의·분석 검토</dd></div>
+<div><dt>기획취재·보도 · 서울경제</dt><dd>활용 요구·보도·편집·공개 콘텐츠<br/>뉴스룸의 추가 분석과 서비스 구성</dd></div>
+</dl>
+<section class="development-proof" aria-labelledby="development-proof-title" id="development-proof">
+<div class="proof-heading"><h2 id="development-proof-title">코드와 작업 기록으로 남긴 개발 과정</h2><p>2026.03–08 · 초기 공개 커밋 작성자 <strong>soccz</strong></p></div>
+<ol class="commit-timeline">
+<li><time datetime="2026-03-26">03.26</time><h3>이벤트·시장 분석의 출발</h3><p>정책 이벤트와 시장 반응을 확인하는 초기 분석 코드를 공개했습니다.</p><a href="https://github.com/soccz/market-impact-analysis/commit/15c1775">초기 구현 <code>15c1775</code> <span aria-hidden="true">↗</span></a></li>
+<li><time datetime="2026-05-17">05.17</time><h3>정책 맥락을 읽는 NLP</h3><p>정책별 가설·관련성·입장 판독과 기사별 점수의 일별 집계를 연결했습니다.</p><a href="https://github.com/soccz/market-impact-analysis/commit/bb6fc2c">NLP 트랙 <code>bb6fc2c</code> <span aria-hidden="true">↗</span></a></li>
+<li><time datetime="2026-05-20">05.20</time><h3>학습·추론·검토의 확장</h3><p>라벨 합의, 학습과 2차 추론, 가설 검증·후속 분석 자료를 추가했습니다.</p><a href="https://github.com/soccz/market-impact-analysis/commit/5193cbb">확장 구현 <code>5193cbb</code> <span aria-hidden="true">↗</span></a></li>
+<li class="commit-retrospective"><span class="period">06–08월</span><h3>연구 기준에서 활용 구조로</h3><p>교수님용 비교 기준을 정리하고 서울경제용 흐름 분석·전달·검수 도구로 이어갔습니다.</p><a href="#delivery">후속 작업 회고 <span aria-hidden="true">↓</span></a></li>
+</ol>
+<p class="proof-note">3–5월은 초기 공개 구현의 커밋, 6–8월은 후속 작업 자료를 대조한 회고입니다. 이후 최종 분석·납품 구현 전체가 공개 저장소에 포함된 것은 아닙니다.</p>
+</section>
+<aside class="press-coverage" aria-labelledby="press-coverage-title" id="press-coverage">
+<div class="press-summary"><p class="press-date"><time datetime="2026-10-13">2026.10.13</time> · 관련 보도</p>
+<h2 id="press-coverage-title">이 분석이 활용된 「아틀라스」,<br/>올해의 기획보도상 선정</h2>
+<p>두 기사는 <strong>서울경제와 서강대학교 산학협력단 금융기계학습 연구실의 정책·뉴스·주가 분석 협업</strong>과 ‘2026 광고주가 뽑은 올해의 기획보도상’ 온라인 부문 선정을 소개합니다.</p></div>
+<div class="press-sources"><ul class="press-links">
+<li><a href="https://www.sedaily.com/article/20100770"><span>서울경제</span><strong>본지 ‘아틀라스’, 광고주 선정 올해의 기획보도상</strong><i aria-hidden="true">↗</i></a></li>
+<li><a href="https://n.news.naver.com/article/029/0003052762?sid=103"><span>디지털타임스 · 네이버</span><strong>광고주협회, ‘올해의 신문기획상’ 등 부문별 수상작 선정…시상식은 22일 개최</strong><i aria-hidden="true">↗</i></a></li>
+</ul></div>
+<p class="press-evidence-note">보도에는 개인 개발자 이름이 기재되어 있지 않습니다. 제 개발 기여는 이 페이지의 구현 범위·공개 코드·커밋·작업 회고에 연결해 기록했습니다.</p>
+</aside>
+<div class="personal-followup" id="personal-followup"><span>개발 이후 · 개인 후속 연구</span><p>이 개발에서 남은 판독 문제를 바탕으로, <strong>한국어 정책 문장의 사실·정정·내용 변화</strong>를 별도로 실험했습니다. 아래에는 개발의 과정과, AI 지원으로 진행한 개인 연구의 결과·실패·한계가 이어집니다.</p><a href="#research">후속 연구의 질문과 결과로 ↓</a></div>
+<p class="reading-cue"><span aria-hidden="true">↓</span>개발한 범위 → 판단이 바뀐 과정 → 개인 NLP 연구</p>
 </div>
 </header>
 <div class="wrap reading-layout">
@@ -386,25 +404,25 @@
 <div class="prose"><p>따라서 맞춤화에는 표본 포함 규칙, 수익률의 기준, 시간 정렬, 집계와 전달 형식이 함께 들어갔습니다. <strong>제가 맡은 일은 이 차이를 실행 가능한 처리 과정으로 연결하는 것</strong>이었습니다. 지표가 달라진 두 결과를 하나의 정확도가 개선된 전후 실험처럼 비교하지 않습니다.</p>
 </div>
 </section>
-<section class="chapter" data-reading-group="engineering" id="contribution"><div class="section-kicker"><span class="num">09</span>IMPLEMENTATION &amp; EVIDENCE</div><h2>내가 구현한 것은<br/>입력에서 산출물까지의 연결이다.</h2>
-<div class="prose"><p>사전학습 언어모델과 기존 통계 도구를 활용해, 정책 분석에 필요한 전후 처리와 결과 생성 과정을 구현했습니다. 공개 코드에서 확인할 수 있는 초기 구현을 기준으로 기여를 연결했습니다.</p>
+<section class="chapter" data-reading-group="engineering" id="contribution"><div class="section-kicker"><span class="num">09</span>IMPLEMENTATION &amp; EVIDENCE</div><h2>주 개발자로 맡은 범위와,<br/>구현으로 남긴 근거.</h2>
+<div class="prose"><p><strong>저는 이 분석의 핵심 로직을 직접 설계·구현한 주 개발자입니다.</strong> 정책 맥락을 모델 입력으로 구성하는 방식, 판독 결과를 집계하는 단위, 시장 데이터의 비교 조건과 결과 생성 규칙을 코드로 구현했습니다. 사전학습 모델·공개 라이브러리를 활용했으며, 아래는 초기 공개 코드에서 직접 확인할 수 있는 기여입니다.</p>
 <p>초기 일지에는 가중치 중복, 사례별 가설 수정의 위험, 디버깅과 평가 구분을 제가 문제 제기한 판단으로 기록했습니다. 교수님 피드백은 비교 시점·분모·정책별 평균의 구현으로, 서울경제 요구는 정책별 흐름과 전달 자료로 구체화했습니다. <a href="https://github.com/soccz/market-impact-analysis/blob/main/docs/WORKSTREAMS.md">판단·요구·구현의 근거를 구분한 표</a>를 함께 남겼습니다.</p>
 </div>
 <div class="evidence-rows">
-<div class="evidence-row"><span class="evidence-index">01</span><div><h3>정책의 맥락을 입력 구조로 만들기</h3>
+<div class="evidence-row"><span class="evidence-index">01</span><div><h3>정책 맥락의 입력·판독 로직 설계·구현</h3>
 <p>정책 카드와 기사 → 비교 가설·관련성 근거·입장 점수</p>
 <small>가설 생성과 점수 처리의 기준을 코드로 연결했습니다.</small></div><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/build/build_hypotheses.py">가설 생성 코드 <span aria-hidden="true">↗</span></a></div>
-<div class="evidence-row"><span class="evidence-index">02</span><div><h3>기사별 출력을 비교 가능한 패널로 만들기</h3>
+<div class="evidence-row"><span class="evidence-index">02</span><div><h3>기사별 결과의 집계 로직 설계·구현</h3>
 <p>기사별 CSV → 정책·날짜별 집계 → 후속 분석의 입력</p>
 <small>합계와 평균, 지지와 반박, 기사 수와 매체 분포를 분리했습니다.</small></div><a href="https://github.com/soccz/market-impact-analysis/blob/5193cbb/v2/code/build_daily_ptei_panel.py">집계 코드 <span aria-hidden="true">↗</span></a></div>
-<div class="evidence-row"><span class="evidence-index">03</span><div><h3>평가·학습·추론을 실행하고 결과를 읽기</h3>
+<div class="evidence-row"><span class="evidence-index">03</span><div><h3>평가·학습·추론의 실행 로직 구현</h3>
 <p>예측과 라벨 → 평가 지표 → 오류 검토와 후속 분석</p>
 <small>정확도·macro F1·κ 계산, 관련성·입장 분류의 학습·평가 루프를 구성했습니다.</small></div><a href="https://github.com/soccz/market-impact-analysis/tree/5193cbb/v2/code/finetune">학습·추론 코드 <span aria-hidden="true">↗</span></a></div>
 </div>
 <a class="evidence-link" href="https://github.com/soccz/market-impact-analysis/blob/main/docs/DEVELOPMENT.md"><span>전체 개발 기록</span><strong>입력 · 함수 · 출력 · 커밋을 함께 확인하기</strong><span aria-hidden="true">↗</span></a>
 <p class="margin-note">현재 공개 저장소는 초기 구현 중심입니다. 이후 교수님용 최종 분석과 서울경제 납품 구현 전체를 재현하는 저장소는 아닙니다.</p>
 <div class="collaboration"><h3>공동 작업에서의 역할</h3>
-<div class="roles"><div><strong>나의 개발 기여</strong><p>데이터 처리, NLP 연결, 비교·집계 및 결과 생성 구현.</p>
+<div class="roles"><div><strong>주 개발자 · soccz</strong><p>핵심 분석 로직을 직접 설계·구현. 정책 맥락 판독, 추론·집계·시장 비교와 결과 생성 과정을 연결.</p>
 </div><div><strong>교수님·연구실</strong><p>연구 요구, 방법론 논의, 분석·발표 자료의 검토.</p>
 </div><div><strong>서울경제</strong><p>기획취재 요구, 보도·편집·공개 콘텐츠와 별도 분석.</p>
 </div><div><strong>기존 모델·도구</strong><p>사전학습 모델과 공개 라이브러리를 활용.</p>
@@ -449,7 +467,7 @@
 <div class="figure-top"><span>LANGUAGE → CONDITION → DECISION</span><span>조작해 보는 가상 예시</span></div>
 <h2 id="language-map-title">문장의 변화가,<br/>누구의 판단을 바꾸는가.</h2>
 <div class="language-source"><span class="concept-label">정정된 조건 하나</span><p>“연령 상한을 <del>34세</del> → <ins>39세</ins>로 변경”</p></div>
-<div aria-label="이전 상한 34세, 이후 상한 39세. 35세부터 39세까지의 판단만 바뀝니다." class="boundary-plot" style="--age-position:56.666667%">
+<div aria-label="이전 상한 34세, 이후 상한 39세. 35세부터 39세까지의 판단만 바뀝니다." class="boundary-plot" style="--age-position:56.666667%" role="group">
 <div aria-hidden="true" class="boundary-scale"><span>20세</span><span>30</span><span>40</span><span>50세</span></div>
 <div class="boundary-row"><span>이전</span><div class="boundary-track"><i style="width:46.666667%"></i><b aria-hidden="true" class="boundary-marker"></b><em>상한 34세</em></div></div>
 <div class="boundary-row boundary-after"><span>이후</span><div class="boundary-track"><i style="width:63.333333%"></i><b aria-hidden="true" class="boundary-marker"></b><em>상한 39세</em></div></div>
@@ -492,7 +510,7 @@
 <div class="nlp-finding"><span>사후 원인 진단</span><p>같은 미관측 값 범위에서 표현만 바꾸자 <strong>83.90% → 61.27%</strong>. 조건마다 735쌍을 비교한 별도 탐색입니다. 단위 정규화로 합성 점수가 올라도 공식 18사례 평균은 그대로였습니다.</p></div>
 <details class="decision-detail"><summary>학습 조건과 이 숫자를 읽는 범위</summary><div class="detail-body"><p>KLUE-NLI 학습 22,423 / 내부 검증 2,575 / 공식 dev 3,000. KLUE-RoBERTa-base를 2 epoch 학습하고 seed 17·42·2026마다 240 step의 동일 예산 추가 학습을 비교했습니다. 정책 합성 자료는 학습 1,728 / 검증 432 / 평가 864쌍이며, 같은 주장에 지지·불충분·모순을 하나씩 구성했습니다.</p><p>KLUE 공식 dev 평균은 84.57 → 84.83%였습니다. 공식 dev는 숨겨진 test가 아닙니다. 합성 정답은 AI 작성 규칙이며 학술적 신규성·실제 정책 일반화를 입증하지 않습니다. 전체 가중치·원시 결과는 로컬에 보존하고 GitHub에는 v1 집계와 기록을 공개했습니다.</p></div></details>
 <div class="nlp-block-heading"><span>EXPERIMENT 02 / RELATION + EVIDENCE</span><h3>이전값·현재값을,<br/>문장 안의 근거에 연결하기.</h3></div>
-<div aria-label="현재 구현한 처리 과정" class="nlp-pipeline"><div><small>INPUT</small><strong>짧은 정책 구절</strong><p>가정·부인·미확정도 포함</p></div><span aria-hidden="true">→</span><div><small>LEARNED</small><strong>관계 + 금액 역할</strong><p>정정 / 변경 / 동일 / 불명</p></div><span aria-hidden="true">→</span><div><small>OUTPUT</small><strong>원문 위치 + 보류</strong><p>단위·역할 일관성과 확신 점검</p></div></div>
+<div aria-label="현재 구현한 처리 과정" class="nlp-pipeline" role="group"><div><small>INPUT</small><strong>짧은 정책 구절</strong><p>가정·부인·미확정도 포함</p></div><span aria-hidden="true">→</span><div><small>LEARNED</small><strong>관계 + 금액 역할</strong><p>정정 / 변경 / 동일 / 불명</p></div><span aria-hidden="true">→</span><div><small>OUTPUT</small><strong>원문 위치 + 보류</strong><p>단위·역할 일관성과 확신 점검</p></div></div>
 <p class="research-caption">자동으로 찾는 것은 원화 구절과 그 역할입니다. 모든 대상·날짜·시행 상태·정정 사유를 추출한 시스템은 아닙니다. NLI 모순만으로 ‘정정’이라고 판단하지 않습니다.</p>
 <div class="nlp-evidence-example"><div class="nlp-example-label">실제 실행 결과 · 합성 평가 사례 · 보류 전 원예측</div><p class="nlp-quote">2051년 E024가상사업의 지원 예산 총액의 최종 표기부터 확인하면 <mark class="nlp-current">6570000만 원</mark>이다. 최초 표기에는 <mark class="nlp-previous">644억원</mark>이라고 적혀 있다. 담당 부서는 최초 표기가 오기였다고 확인했다. 이에 정정한 수치다. 참고로 별도 시설의 운영비는 73500000000원이다.</p><div class="nlp-evidence-values"><div class="nlp-previous"><span>이전 안내</span><strong>644억원</strong></div><span aria-hidden="true">→</span><div class="nlp-current"><span>수정 안내</span><strong>657억원</strong></div><div><span>관계 예측</span><strong>오기 정정</strong></div></div><p>문장에는 현재값이 먼저 등장합니다. 모델이 연결한 두 구절의 원문 위치와 환산값을 정답 구성과 대조했습니다. 별도 운영비는 제외했습니다. 이 사례도 0.95 선택 기준에서는 보류됩니다.</p></div>
 <table class="nlp-results"><caption>관계 + 금액 역할·위치·값이 모두 맞은 비율 · v2 합성 768개</caption><thead><tr><th scope="col">비교 방법</th><th scope="col">공동 일치</th></tr></thead><tbody><tr><th scope="row">문자 기반 관계·근거 모델</th><td>28.13%</td></tr><tr><th scope="row">고정 한국어 문맥 표현 + 등장 순서</th><td>31.25%</td></tr><tr class="nlp-result-focus"><th scope="row">같은 관계 예측 + 금액 토큰 문맥</th><td>50.00%</td></tr></tbody></table>
@@ -545,7 +563,7 @@
 <p class="research-caption">기존 원문 모델 6개를 다시 불러 비교하고 표기 통일 조건을 6회 새로 학습했습니다. 같은 모델·대상 960행·초기값·300회 갱신 시도입니다. v3와 v4의 학습은 합계 33회입니다. 기존 평가의 사후 비교이며 복합 반례도 같은 작성 문법을 변형한 자료입니다.</p>
 <div class="nlp-block-heading"><span>ERROR LOCALIZATION / NOT JUST A SCORE</span><h3>대상 값을 놓치기보다,<br/>다른 사업의 값을 끌어왔습니다.</h3></div>
 <p class="reader-intro">표기 통일 + 문맥 보강은 다른 사업 반례에서 대상의 기준·후속 역할 각각 <strong>1,728 / 1,728개</strong>는 맞혔습니다. 하지만 기타 금액을 대상 역할로 연결한 오류가 늘었습니다. 아래 비율은 세 초기값의 <strong>금액 단위 관측</strong>을 합친 것으로, 위 표의 문장 전체 공동 일치와 분모가 다릅니다.</p>
-<div aria-label="기타 금액을 기준 또는 후속 금액으로 잘못 연결한 비율" class="amount-error-chart"><div class="amount-error-row" data-amount-error="raw_scope"><div><span>원문 + 문맥</span><strong>0.31%</strong></div><div aria-hidden="true" class="amount-error-track"><i style="width:0.308642%"></i></div><small>12 / 3,888개 금액 관측</small></div><div class="amount-error-row" data-amount-error="normalized_scope"><div><span>표기 통일 + 문맥</span><strong>39.09%</strong></div><div aria-hidden="true" class="amount-error-track"><i style="width:39.094650%"></i></div><small>1,520 / 3,888개 금액 관측</small></div></div>
+<div aria-label="기타 금액을 기준 또는 후속 금액으로 잘못 연결한 비율" class="amount-error-chart" role="group"><div class="amount-error-row" data-amount-error="raw_scope"><div><span>원문 + 문맥</span><strong>0.31%</strong></div><div aria-hidden="true" class="amount-error-track"><i style="width:0.308642%"></i></div><small>12 / 3,888개 금액 관측</small></div><div class="amount-error-row" data-amount-error="normalized_scope"><div><span>표기 통일 + 문맥</span><strong>39.09%</strong></div><div aria-hidden="true" class="amount-error-track"><i style="width:39.094650%"></i></div><small>1,520 / 3,888개 금액 관측</small></div></div>
 <div class="amount-case"><p class="proposal-status">결과를 보기 전에 고정한 첫 합성 평가 사례 · seed 42 · 두 조건 모두 문맥 보강</p><h3>930만 원은 별빛수당의 금액입니다.</h3><blockquote>가람정착금에 관한 설명이다. 기준 문서에는 111만 원, 후속안에는 128만 원이라고 적혀 있다. 가람정착금의 잘못 산출된 공고 금액을 바로잡는 조치 사안은 결정을 끝내고 이행한 사항이라고 알렸다. 한편 별빛수당은 710만 원에서 930만 원으로 오류 정정을 했다는 보도를 부인했다.</blockquote><table class="reader-table amount-case-table"><caption>원문 모델과 표기 통일 모델의 저장된 원예측</caption><thead><tr><th scope="col">원문 금액</th><th scope="col">설계 역할</th><th scope="col">원문 모델</th><th scope="col">표기 통일</th></tr></thead><tbody><tr data-amount-example="0"><th scope="row">111만 원</th><td>기준</td><td class="">기준</td><td class="">기준</td></tr><tr data-amount-example="1"><th scope="row">128만 원</th><td>후속·예정</td><td class="">후속·예정</td><td class="">후속·예정</td></tr><tr data-amount-example="2"><th scope="row">710만 원</th><td>기타</td><td class="">기타</td><td class="">기타</td></tr><tr data-amount-example="3"><th scope="row">930만 원</th><td>기타</td><td class="">기타</td><td class="amount-wrong">후속·예정 · 오연결</td></tr></tbody></table><p>두 모델 모두 이 사례의 정정·확정 서술은 맞혔습니다. 그러나 표기 통일 모델은 별빛수당의 930만 원도 가람정착금의 후속 값으로 연결했습니다. 문장 분류가 맞아도 사건에 연결한 값은 틀릴 수 있습니다.</p></div>
 <div class="nlp-block-heading"><span>WHAT THE REPRESENTATION LOSES</span><h3>표기를 지울 때,<br/>숫자의 차이도 함께 가려집니다.</h3></div>
 <div class="amount-value-cases"><div><span>같은 값</span><p>가람지원금의 기준 안내는 50만 원, 후속 안내는 500,000원이다.</p><small>별도 보관 값: 500,000원 / 500,000원</small></div><div><span>다른 값</span><p>가람지원금의 기준 안내는 50만 원, 후속 안내는 600,000원이다.</p><small>별도 보관 값: 500,000원 / 600,000원</small></div></div><div class="amount-shared-input"><span>두 경우의 문맥 모델 입력은 같습니다</span><p>가람지원금의 기준 안내는 0원, 후속 안내는 0원이다.</p></div>
@@ -627,7 +645,7 @@
 <p class="condition-fallback">아래 전체 표에서도 첫 방법·보완판·잠정 기준을 함께 읽을 수 있습니다.</p>
 <details class="condition-static"><summary>다섯 사례의 전체 결과</summary><table><caption>앞의 세 행은 실제 공고, 마지막 두 행은 직접 만든 합성 반례</caption><thead><tr><th scope="col">사례</th><th scope="col">첫 방법</th><th scope="col">보완판</th><th scope="col">잠정 기준</th></tr></thead><tbody><tr data-condition-static="rent2023-income"><th scope="row">다른 사업의 60%를 가져온 경우</th><td>일반 ≤ 60%</td><td>일반 ≤ 150%</td><td>일반 ≤ 150%</td></tr><tr data-condition-static="allowance2024-income"><th scope="row">우선선정 85%를 자격으로 읽은 경우</th><td>일반 ≤ 85%</td><td>일반 ≤ 150%</td><td>일반 ≤ 150%</td></tr><tr data-condition-static="moving2023-birth"><th scope="row">출생일 근거를 찾지 못한 경우</th><td>확인 필요</td><td>1983-01-01 ~ 2004-12-31</td><td>1983-01-01 ~ 2004-12-31</td></tr><tr data-condition-static="inside_scope"><th scope="row">아직 실패 · 같은 구역 안의 다른 사업</th><td>일반 ≤ 60%</td><td>일반 ≤ 60%</td><td>일반 ≤ 150%</td></tr><tr data-condition-static="priority_not_eligibility"><th scope="row">아직 실패 · 같은 구역 안의 우선순위</th><td>일반 ≤ 85%</td><td>일반 ≤ 85%</td><td>일반 ≤ 150%</td></tr></tbody></table></details>
 <div class="condition-iterations"><h3>수정하면서 좋아진 것과, 여전히 틀리는 것</h3><ol><li><strong>구역 구분</strong><span>같은 공고 <b>26/30</b> · 합성 반례 <b>3/8</b></span><p>다른 사업의 기준을 걸러냈지만, 제목 표현이 달라지면 문서를 놓쳤습니다.</p></li><li><strong>제목·수혜자 범위·허용 문장 보완</strong><span>같은 공고 <b>30/30</b> · 같은 반례 <b>6/8</b></span><p>구역 안에 다른 사업이나 우선순위가 들어가면 아직 틀립니다.</p></li></ol><p><strong>이미 본 자료에 맞춘 사후 개선입니다.</strong> 30/30을 새 문서 정확도로 내세우지 않습니다. 첫 결과와 두 번의 개선을 각각 남겼습니다.</p></div>
-<div class="condition-question"><small>MY NEXT UNIT OF REASONING</small><h3>조건은 값 하나가 아니라,<br/>적용 범위와 근거를 가진 묶음입니다.</h3><div aria-label="조건의 여섯 구성 요소" class="condition-tuple"><span>사업</span><span>자격 / 우선순위</span><span>적용 대상</span><span>비교 연산</span><span>값</span><span>원문 근거</span></div><p>원문 → 근거 검색 → 조건 추출 → 조건 실행 → 버전 비교를 연결했습니다. 자동으로 읽은 급여 제외 목록은 앞서 만든 주거 실행기에도 연결했습니다. <strong>주거 규칙은 여전히 수동</strong>이며, 사업과 역할의 범위를 일반 문서에서 안정적으로 읽는 문제는 남아 있습니다.</p><p>이제 확인할 대상은 숫자의 일치만이 아닙니다. <strong>같은 나이·다른 출생 범위, 다른 사업의 조건, 우선순위, 미언급</strong>이 사례의 결론을 바꾸는지까지 함께 평가합니다.</p></div>
+<div class="condition-question"><small>MY NEXT UNIT OF REASONING</small><h3>조건은 값 하나가 아니라,<br/>적용 범위와 근거를 가진 묶음입니다.</h3><div aria-label="조건의 여섯 구성 요소" class="condition-tuple" role="group"><span>사업</span><span>자격 / 우선순위</span><span>적용 대상</span><span>비교 연산</span><span>값</span><span>원문 근거</span></div><p>원문 → 근거 검색 → 조건 추출 → 조건 실행 → 버전 비교를 연결했습니다. 자동으로 읽은 급여 제외 목록은 앞서 만든 주거 실행기에도 연결했습니다. <strong>주거 규칙은 여전히 수동</strong>이며, 사업과 역할의 범위를 일반 문서에서 안정적으로 읽는 문제는 남아 있습니다.</p><p>이제 확인할 대상은 숫자의 일치만이 아닙니다. <strong>같은 나이·다른 출생 범위, 다른 사업의 조건, 우선순위, 미언급</strong>이 사례의 결론을 바꾸는지까지 함께 평가합니다.</p></div>
 <details class="condition-sources"><summary>사용한 8개 전체 공고와 연구 범위</summary><ul><li><a href="https://www.gangnam.go.kr/file/1/get/ea599d5c-8fec-46af-b19d-08b70c2cb2f8/download.do">청년 이사비 · 2022-2542</a><span>2022-09-06</span></li><li><a href="https://youth.seoul.go.kr/resource/file/conts015_1.pdf">청년 이사비·중개보수 · 2023-1362</a><span>2023-05-08</span></li><li><a href="https://soco.seoul.go.kr/bos/cmmn/file/fileDown.do?atchFileId=fba10a7affd347f189b4232d78f807fa&amp;fileSn=1&amp;menuNo=400018">청년월세지원 · 2023-1269</a><span>2023-04-27</span></li><li><a href="https://housing.seoul.go.kr/site/main/file/download/uu/ab92c90664d843e896627a9e5dd33b89">청년월세지원 · 2024-805</a><span>2024-03-18</span></li><li><a href="https://youth.seoul.go.kr/atch/fileDown.do?cnncSn=37263&amp;cnncTy=sprtInfoFile&amp;ordr=1">청년수당 2차 · 2023-1649</a><span>2023-06-05</span></li><li><a href="https://news.seoul.go.kr/gov/files/2024/03/65e965c25b2205.51974236.pdf">청년수당 · 2024-721</a><span>2024-03-06</span></li><li><a href="https://youth.seoul.go.kr/atch/fileDown.do?cnncSn=41117&amp;cnncTy=sprtInfoFile&amp;ordr=1">청년문화패스 2차 · 2023-2290</a><span>2023-08-10</span></li><li><a href="https://culture.seoul.go.kr/culture/cmmn/file/fileDown.do?menuNo=200050&amp;atchFileId=bfcace8758b743e7993172f59f18e333&amp;fileSn=1&amp;bbsId=">청년문화패스 · 2024-840</a><span>2024-03-18</span></li></ul><p>선택한 공고의 날짜입니다. 2023년 청년수당·문화패스는 2차 모집입니다. 소득 외의 이전 수혜 제한 등은 이번 조건 실행에 포함하지 않습니다. 원본 전체와 고객 자료는 재배포하지 않고, GitHub에 원본 해시·잠정 기준·추출 위치·예측·재현 코드를 남겼습니다.</p></details>
 <a class="evidence-link" href="https://github.com/soccz/market-impact-analysis/tree/main/research/policy_condition_reading"><span>전체 실행·실패·수정 기록</span><strong>4개 사업 / 기준선 비교 / 근거와 조건 실행 / 8개 반례 / 재현</strong><span aria-hidden="true">↗</span></a>
 <p class="research-caption">이 자동 판독의 출발점은 <a href="#semantic-diff">앞의 첫 공고 쌍 비교</a>와 <a href="#nlp-study">문장·근거 판독 실험</a>입니다. 이어지는 새 공고 적용에서는 익숙한 자료를 벗어났을 때의 실패를 확인합니다.</p>
@@ -652,11 +670,11 @@
 <div class="revision-stats"><div><strong>1 + 1</strong><span>오기 정정 쌍 + 수정 공고 쌍</span></div><div><strong>14 / 18</strong><span>표의 대상·순위별 금액 변화</span></div><div><strong>0명</strong><span>독립 사람 판독 · 아직 미실시</span></div></div>
 <p class="research-caption">한 기관의 두 공고 계열을 보고 설계한 탐색입니다. 18개는 한 금액표의 질문 조합이며, 독립 정책 사건 수나 새 문서 정확도가 아닙니다. 신규 모델 학습 0회.</p>
 <div class="revision-provenance"><span class="revision-label">01 · 먼저, 정말 이전 파일인가</span><h3>최초 게시물의 현재 첨부도 이미 정정된 값이었습니다.</h3>
-<div class="revision-path"><div><span>2024-09-09 최초 게시물</span><strong>현재 내려받은 첨부</strong><small>정정된 금액표</small></div><b aria-label="같은 파일">=</b><div><span>2024-09-20 정정 게시물</span><strong>현재 내려받은 첨부</strong><small>바이트·해시까지 같음</small></div></div>
+<div class="revision-path"><div><span>2024-09-09 최초 게시물</span><strong>현재 내려받은 첨부</strong><small>정정된 금액표</small></div><b aria-label="같은 파일" role="img">=</b><div><span>2024-09-20 정정 게시물</span><strong>현재 내려받은 첨부</strong><small>바이트·해시까지 같음</small></div></div>
 <p>이 두 파일을 과거·현재로 비교하면 <strong>변화 14개를 모두 놓칩니다.</strong> 대학이 별도로 보관한 이전 내용의 공고를 찾아, 발행기관이 직접 제시한 ‘기존’ 표와 18개 값을 모두 대조했습니다.</p>
 <p class="research-caption">이번 수집에서 확인한 사실입니다. 서버가 언제 파일을 교체했는지는 확인하지 않았습니다. 게시일과 문서 버전은 같은 정보가 아닙니다.</p></div>
 <figure class="revision-matrix"><figcaption><span class="revision-label">02 · 다음, 누구의 값인가</span><h3>정정된 14개와 그대로인 4개를 함께 읽기</h3><p>옥천군장학회 2024 하반기 특기장학생 공고 · 표 금액, 단위: 천원</p></figcaption>
-<table><thead><tr><th scope="col">대회 · 대상</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th></tr></thead><tbody><tr><th scope="row">전국대회<span>개인</span></th><td class="revision-changed" data-after="700" data-before="500" data-revision-cell="전국대회/개인/1"><span>500 <span aria-label="에서">→</span></span><strong>700</strong><small>정정</small></td><td class="revision-changed" data-after="500" data-before="300" data-revision-cell="전국대회/개인/2"><span>300 <span aria-label="에서">→</span></span><strong>500</strong><small>정정</small></td><td class="revision-changed" data-after="300" data-before="200" data-revision-cell="전국대회/개인/3"><span>200 <span aria-label="에서">→</span></span><strong>300</strong><small>정정</small></td></tr><tr><th scope="row">전국대회<span>단체 2–4명</span></th><td class="revision-same" data-after="1000" data-before="1000" data-revision-cell="전국대회/단체2~4명/1"><span>1,000 <span aria-label="에서">→</span></span><strong>1,000</strong><small>동일</small></td><td class="revision-changed" data-after="700" data-before="600" data-revision-cell="전국대회/단체2~4명/2"><span>600 <span aria-label="에서">→</span></span><strong>700</strong><small>정정</small></td><td class="revision-changed" data-after="500" data-before="400" data-revision-cell="전국대회/단체2~4명/3"><span>400 <span aria-label="에서">→</span></span><strong>500</strong><small>정정</small></td></tr><tr><th scope="row">전국대회<span>단체 5명이상</span></th><td class="revision-same" data-after="1500" data-before="1500" data-revision-cell="전국대회/단체5명이상/1"><span>1,500 <span aria-label="에서">→</span></span><strong>1,500</strong><small>동일</small></td><td class="revision-changed" data-after="1200" data-before="1000" data-revision-cell="전국대회/단체5명이상/2"><span>1,000 <span aria-label="에서">→</span></span><strong>1,200</strong><small>정정</small></td><td class="revision-changed" data-after="1000" data-before="700" data-revision-cell="전국대회/단체5명이상/3"><span>700 <span aria-label="에서">→</span></span><strong>1,000</strong><small>정정</small></td></tr><tr><th scope="row">국제대회<span>개인</span></th><td class="revision-changed" data-after="1200" data-before="1000" data-revision-cell="국제대회/개인/1"><span>1,000 <span aria-label="에서">→</span></span><strong>1,200</strong><small>정정</small></td><td class="revision-changed" data-after="1000" data-before="700" data-revision-cell="국제대회/개인/2"><span>700 <span aria-label="에서">→</span></span><strong>1,000</strong><small>정정</small></td><td class="revision-changed" data-after="700" data-before="500" data-revision-cell="국제대회/개인/3"><span>500 <span aria-label="에서">→</span></span><strong>700</strong><small>정정</small></td></tr><tr><th scope="row">국제대회<span>단체 2–4명</span></th><td class="revision-same" data-after="1500" data-before="1500" data-revision-cell="국제대회/단체2~4명/1"><span>1,500 <span aria-label="에서">→</span></span><strong>1,500</strong><small>동일</small></td><td class="revision-changed" data-after="1200" data-before="1000" data-revision-cell="국제대회/단체2~4명/2"><span>1,000 <span aria-label="에서">→</span></span><strong>1,200</strong><small>정정</small></td><td class="revision-changed" data-after="1000" data-before="700" data-revision-cell="국제대회/단체2~4명/3"><span>700 <span aria-label="에서">→</span></span><strong>1,000</strong><small>정정</small></td></tr><tr><th scope="row">국제대회<span>단체 5명이상</span></th><td class="revision-same" data-after="2000" data-before="2000" data-revision-cell="국제대회/단체5명이상/1"><span>2,000 <span aria-label="에서">→</span></span><strong>2,000</strong><small>동일</small></td><td class="revision-changed" data-after="1700" data-before="1500" data-revision-cell="국제대회/단체5명이상/2"><span>1,500 <span aria-label="에서">→</span></span><strong>1,700</strong><small>정정</small></td><td class="revision-changed" data-after="1500" data-before="1000" data-revision-cell="국제대회/단체5명이상/3"><span>1,000 <span aria-label="에서">→</span></span><strong>1,500</strong><small>정정</small></td></tr></tbody></table>
+<table><thead><tr><th scope="col">대회 · 대상</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th></tr></thead><tbody><tr><th scope="row">전국대회<span>개인</span></th><td class="revision-changed" data-after="700" data-before="500" data-revision-cell="전국대회/개인/1"><span>500 <span aria-label="에서" role="img">→</span></span><strong>700</strong><small>정정</small></td><td class="revision-changed" data-after="500" data-before="300" data-revision-cell="전국대회/개인/2"><span>300 <span aria-label="에서" role="img">→</span></span><strong>500</strong><small>정정</small></td><td class="revision-changed" data-after="300" data-before="200" data-revision-cell="전국대회/개인/3"><span>200 <span aria-label="에서" role="img">→</span></span><strong>300</strong><small>정정</small></td></tr><tr><th scope="row">전국대회<span>단체 2–4명</span></th><td class="revision-same" data-after="1000" data-before="1000" data-revision-cell="전국대회/단체2~4명/1"><span>1,000 <span aria-label="에서" role="img">→</span></span><strong>1,000</strong><small>동일</small></td><td class="revision-changed" data-after="700" data-before="600" data-revision-cell="전국대회/단체2~4명/2"><span>600 <span aria-label="에서" role="img">→</span></span><strong>700</strong><small>정정</small></td><td class="revision-changed" data-after="500" data-before="400" data-revision-cell="전국대회/단체2~4명/3"><span>400 <span aria-label="에서" role="img">→</span></span><strong>500</strong><small>정정</small></td></tr><tr><th scope="row">전국대회<span>단체 5명이상</span></th><td class="revision-same" data-after="1500" data-before="1500" data-revision-cell="전국대회/단체5명이상/1"><span>1,500 <span aria-label="에서" role="img">→</span></span><strong>1,500</strong><small>동일</small></td><td class="revision-changed" data-after="1200" data-before="1000" data-revision-cell="전국대회/단체5명이상/2"><span>1,000 <span aria-label="에서" role="img">→</span></span><strong>1,200</strong><small>정정</small></td><td class="revision-changed" data-after="1000" data-before="700" data-revision-cell="전국대회/단체5명이상/3"><span>700 <span aria-label="에서" role="img">→</span></span><strong>1,000</strong><small>정정</small></td></tr><tr><th scope="row">국제대회<span>개인</span></th><td class="revision-changed" data-after="1200" data-before="1000" data-revision-cell="국제대회/개인/1"><span>1,000 <span aria-label="에서" role="img">→</span></span><strong>1,200</strong><small>정정</small></td><td class="revision-changed" data-after="1000" data-before="700" data-revision-cell="국제대회/개인/2"><span>700 <span aria-label="에서" role="img">→</span></span><strong>1,000</strong><small>정정</small></td><td class="revision-changed" data-after="700" data-before="500" data-revision-cell="국제대회/개인/3"><span>500 <span aria-label="에서" role="img">→</span></span><strong>700</strong><small>정정</small></td></tr><tr><th scope="row">국제대회<span>단체 2–4명</span></th><td class="revision-same" data-after="1500" data-before="1500" data-revision-cell="국제대회/단체2~4명/1"><span>1,500 <span aria-label="에서" role="img">→</span></span><strong>1,500</strong><small>동일</small></td><td class="revision-changed" data-after="1200" data-before="1000" data-revision-cell="국제대회/단체2~4명/2"><span>1,000 <span aria-label="에서" role="img">→</span></span><strong>1,200</strong><small>정정</small></td><td class="revision-changed" data-after="1000" data-before="700" data-revision-cell="국제대회/단체2~4명/3"><span>700 <span aria-label="에서" role="img">→</span></span><strong>1,000</strong><small>정정</small></td></tr><tr><th scope="row">국제대회<span>단체 5명이상</span></th><td class="revision-same" data-after="2000" data-before="2000" data-revision-cell="국제대회/단체5명이상/1"><span>2,000 <span aria-label="에서" role="img">→</span></span><strong>2,000</strong><small>동일</small></td><td class="revision-changed" data-after="1700" data-before="1500" data-revision-cell="국제대회/단체5명이상/2"><span>1,500 <span aria-label="에서" role="img">→</span></span><strong>1,700</strong><small>정정</small></td><td class="revision-changed" data-after="1500" data-before="1000" data-revision-cell="국제대회/단체5명이상/3"><span>1,000 <span aria-label="에서" role="img">→</span></span><strong>1,500</strong><small>정정</small></td></tr></tbody></table>
 <p class="research-caption">이전 → 정정 표의 금액입니다. 오기 정정을 새로운 정책 증액으로 해석하거나, 실제 지급액·단체원별 배분을 계산하지 않습니다.</p></figure>
 <div class="revision-diagnostic"><h3>변화 여부만 맞히면, 엉뚱한 금액도 놓칠 수 있습니다.</h3><div class="revision-method"><span>첫 숫자만 선택</span><strong>전후 금액 2/18</strong><span>변화 여부는 14/18 일치</span></div><div class="revision-method"><span>대회 → 대상 → 순위 → 단위 연결</span><strong>전후 금액 18/18</strong><span>같은 관측 표의 구조 복원</span></div><p class="research-caption">병합 머리글과 셀 근거를 연결했습니다. 머리글·대상·단위가 없으면 답을 보류합니다. 이 결과는 학습 모델의 일반화 성능이 아닙니다.</p></div>
 <div class="revision-modality"><span class="revision-label">03 · 마지막, 어디까지 확정하는가</span><h3>예시가 추가됐지만, ‘될 수 있음’은 그대로였습니다.</h3><p>2025년 다자녀 장학생 수정 공고는 다른 기관 장학금 신청 예정자의 유의 문구에 구체적인 예시를 추가했습니다.</p><div class="revision-clause-grid"><div><span>수정 전</span><strong>제외 가능성 + 신청 전 확인</strong><p>다른 기관 장학금 신청 예정자</p></div><div><span>수정 후</span><strong>제외 가능성 + 신청 전 확인</strong><p>댐 주변 지역 학생 장학금 예시 추가</p></div></div><p class="revision-verdict"><strong>판독: 확인 필요 → 확인 필요</strong><span>텍스트 변화는 확인. 새로운 확정적 제외는 이 구절만으로 성립하지 않음.</span></p><p class="research-caption">선택한 구절의 어휘 규칙으로 가능성 표현을 보존했습니다. 전체 지원 자격이나 임의 문장의 부정·중첩 예외까지 판독한 결과는 아닙니다.</p></div>
@@ -703,8 +721,8 @@
 <div class="figure-top"><span>ONE SAVED CASE / QWEN · 환산식 확장 후</span><span>작성 사례 · 실제 저장 출력</span></div>
 <h3 id="answer-vs-facts-title">최종 답이 같아도, 읽어 낸 사실은 달랐습니다.</h3>
 <blockquote>“내 보증금은 <mark>2400만 240원</mark>, 월세는 70만원이다. 이 금액 요건을 충족한다.”</blockquote>
-<div class="fact-audit-lanes"><div class="fact-audit-lane"><span class="audit-lane-title">잠정 참조로 읽으면</span><dl><div><dt>보증금</dt><dd data-audit-value="reference-deposit">24,000,240<span>원</span></dd></div><div><dt>환산액</dt><dd data-audit-value="reference-converted">800,001<span>원</span></dd><small>상한보다 1원 높음</small></div></dl><p class="audit-outcome">판단 <strong>반박</strong><span>상한 초과</span></p></div>
-<div class="fact-audit-lane fact-audit-model"><span class="audit-lane-title">Qwen의 추출 + 실행</span><dl><div><dt>보증금 <b>입력 오독</b></dt><dd data-audit-value="model-deposit">24,002,400<span>원</span></dd></div><div><dt>환산액</dt><dd data-audit-value="model-converted">800,010<span>원</span></dd><small>상한보다 10원 높음</small></div></dl><p class="audit-outcome">판단 <strong>반박</strong><span>상한 초과</span></p></div></div>
+<div class="fact-audit-lanes"><div class="fact-audit-lane"><span class="audit-lane-title">잠정 참조로 읽으면</span><dl><div><dt>보증금</dt><dd data-audit-value="reference-deposit">24,000,240<span>원</span></dd></div><div><dt>환산액</dt><dd data-audit-value="reference-converted">800,001<span>원</span></dd><dd class="audit-value-note"><small>상한보다 1원 높음</small></dd></div></dl><p class="audit-outcome">판단 <strong>반박</strong><span>상한 초과</span></p></div>
+<div class="fact-audit-lane fact-audit-model"><span class="audit-lane-title">Qwen의 추출 + 실행</span><dl><div><dt>보증금 <b>입력 오독</b></dt><dd data-audit-value="model-deposit">24,002,400<span>원</span></dd></div><div><dt>환산액</dt><dd data-audit-value="model-converted">800,010<span>원</span></dd><dd class="audit-value-note"><small>상한보다 10원 높음</small></dd></div></dl><p class="audit-outcome">판단 <strong>반박</strong><span>상한 초과</span></p></div></div>
 <p class="audit-formula">동일한 식: 월세 + 보증금 × 0.05 ÷ 12   /   상한 800,000원</p>
 <p class="chart-annotation"><span aria-hidden="true" class="annotation-rule"></span><strong>답의 일치와 사실의 일치를 따로 평가한 이유입니다.</strong> 이 사례에서는 잘못 읽은 값도 상한을 넘어, 최종 답만 보면 오류가 드러나지 않습니다.</p>
 <figcaption>저장 사례 <code>cap-rent-4</code>의 Qwen 환산·학적 표현 확장 단계입니다. 공고의 일부 금액 조건을 바탕으로 작성한 가상 주장과 AI 지원 잠정 참조를 비교했습니다. 원문 PDF의 전송 인증은 미검증입니다. <a href="#composition-explorer">단계·모델별 저장 출력 비교 ↓</a></figcaption></figure></section><details class="record-bundle" data-record-bundle="" id="composition-records" open=""><summary><strong>복합 조건부터 마지막 실험까지</strong><small>분리 추출·실행 → 사실 오류 보정 → 원문 정합성 → 문서·예외 최종 실험</small></summary><div class="record-content"><nav aria-label="이 실험 묶음의 세부 기록" class="section-index"><a href="#compositional-reasoning">규칙·사실 분리</a><a href="#fact-grounding">사실 오류 보정</a><a href="#source-alignment">원문 정합성</a><a href="#research-closure">마지막 실험·결산</a></nav><section class="chapter" data-reading-group="composition-overview" id="compositional-reasoning">
@@ -726,7 +744,7 @@
 <div aria-atomic="true" aria-live="polite" class="composition-answers"><div><span>직접 판독</span><strong id="composition-direct">지지</strong></div><div><span>추출 + 실행</span><strong id="composition-pipeline">반박</strong></div><div><span>잠정 참조</span><strong id="composition-reference">반박</strong></div></div>
 <p class="composition-match" id="composition-match">잠정 기준과 일치</p>
 <details class="composition-details"><summary>3. 오류 위치와 필요한 사실 확인</summary><p>규칙만 참조로 교체: <strong id="composition-ref-policy">반박</strong> · 사실만 참조로 교체: <strong id="composition-ref-profile">반박</strong></p><h4>모델이 추출한 규칙 안에서</h4><p id="composition-explanation">이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.</p><h4>잠정 참조 규칙·사실로 분석하면</h4><p id="composition-reference-explanation">이 선형식 확장에는 최소 사실·가상 보완 분석을 적용하지 않았습니다.</p><p class="composition-note">가상 보완 값은 관측된 개인정보가 아닙니다. 미확인 항목은 판단을 바꿀 수 있는 후보이며 최적 질문 순서를 뜻하지 않습니다.</p></details>
-<details class="composition-details"><summary>정제된 규칙·사실 구조 확인</summary><pre id="composition-raw">{
+<details class="composition-details"><summary>정제된 규칙·사실 구조 확인</summary><pre id="composition-raw" tabindex="0" role="region" aria-label="복합 조건 실험의 원시 입력 JSON">{
   "policy": {
     "status": "ready",
     "clauses": [
@@ -824,7 +842,7 @@
 <p class="fg-change" id="fg-changes">보증금: 24,002,400원 → 24,000,240원</p>
 <div aria-atomic="true" aria-live="polite" class="fg-verdict"><div><span>추출 + 실행</span><strong id="fg-raw">반박</strong></div><div><span>금액 보정 후</span><strong id="fg-corrected">반박</strong></div><div><span>잠정 참조</span><strong id="fg-reference">반박</strong></div></div>
 <p class="fg-audit">사실 전체: <strong id="fg-facts">불일치 → 일치</strong> · 답+사실: <strong id="fg-joint">불일치 → 일치</strong></p><p id="fg-note">같은 상한 초과 결론이라 Qwen의 답은 바뀌지 않습니다. 사실을 바로잡은 효과와 답을 바로잡은 효과를 따로 봅니다.</p><p class="fg-pair" hidden="" id="fg-pair"></p>
-<details><summary>보류 대안과 실제 구조 확인</summary><p>불일치면 답을 보류하는 대안: <strong id="fg-reject">출력 실패·보류</strong>. 맞는 답도 보류할 수 있어 보정 경로와 따로 평가했습니다.</p><pre id="fg-json">{
+<details><summary>보류 대안과 실제 구조 확인</summary><p>불일치면 답을 보류하는 대안: <strong id="fg-reject">출력 실패·보류</strong>. 맞는 답도 보류할 수 있어 보정 경로와 따로 평가했습니다.</p><pre id="fg-json" tabindex="0" role="region" aria-label="사실 근거 실험의 원시 응답 JSON">{
   "policy": {
     "status": "ready",
     "clauses": [
@@ -923,7 +941,7 @@
 <p class="sa-note" id="sa-load" role="status">기본 사례는 바로 읽을 수 있습니다. 비교 자료를 불러오는 중입니다.</p><p class="sa-note" id="sa-origin">개발에 재사용한 공식 조항 · 작성 가상 주장</p><blockquote id="sa-claim">내 보증금은 1억 1원, 월세는 60만원이다. 이 범위의 요건을 충족한다.</blockquote><p class="sa-scope" id="sa-scope">보증금 1억원 이하 · 월세 60만원 이하 · 월세가 없는 계약 제외</p>
 <div class="sa-flow"><div><span>읽었던 조건·사실</span><p id="sa-read">(보증금 상한 AND 월세 상한) OR 월세 &gt; 0</p></div><div><span>근거를 대조한 뒤</span><p id="sa-repair">보증금 상한 AND 월세 상한 AND 월세 &gt; 0</p></div></div><p class="sa-trigger" id="sa-trigger">월세가 있다는 사실이 보증금 초과를 무시하게 만들었습니다.</p>
 <div aria-atomic="true" aria-live="polite" class="sa-verdict"><div><span>수정 전 / 저장 답</span><strong id="sa-before">지지</strong></div><div><span>수정·갱신 후</span><strong id="sa-after">반박</strong></div><div><span>잠정 참조</span><strong id="sa-reference">반박</strong></div></div>
-<p id="sa-note">반례 피드백 뒤에도 남았던 연결 오류입니다. ALL/ANY 표현으로 정책 조건을 다시 구성한 관측 자료의 보완입니다.</p><details><summary>저장한 구조와 판정 근거 확인</summary><pre id="sa-json">{
+<p id="sa-note">반례 피드백 뒤에도 남았던 연결 오류입니다. ALL/ANY 표현으로 정책 조건을 다시 구성한 관측 자료의 보완입니다.</p><details><summary>저장한 구조와 판정 근거 확인</summary><pre id="sa-json" tabindex="0" role="region" aria-label="출처 정렬 실험의 원시 응답 JSON">{
   "before": {
     "id": "yangsan-housing-2",
     "bundle": "yangsan-housing",
@@ -1052,7 +1070,7 @@
 <p class="dc-note" id="dc-origin">작성 문서 · 의미 변화 대조</p><p class="dc-scope" id="dc-scope">새길 교육비 지원의 기본 조건과 소득 제외 및 보호 대상 예외를 함께 판정한다. 다른 사업의 교통비·부모 상담·지급 일정은 범위 밖이다.</p><p class="dc-facts" id="dc-facts">나이: 19세 · 거주기간: 6개월 · 연소득: 2001만원 · 신청자 재학생: 해당 없음 · 신청자 장애인: 해당 · 신청자 돌봄 담당자: 해당 없음</p><p class="dc-retrieval" id="dc-retrieval">본문 8개 문단 → 검색·참조 확장 5개 · 지정 근거 3개 모두 회수</p>
 <div aria-atomic="true" aria-live="polite" class="dc-verdicts"><div><span>직접 판독</span><strong id="dc-direct">범위 내 충족</strong></div><div><span>본문 → 그래프</span><strong id="dc-full">판독 보류</strong></div><div><span>검색 → 그래프</span><strong id="dc-retrieved">판독 보류</strong></div><div><span>잠정 참조</span><strong id="dc-reference">범위 내 충족</strong></div></div>
 <p id="dc-note">장애만 해당</p><p class="dc-note" id="dc-explanation">전체 본문: 실행 가능한 조건 그래프를 얻지 못했습니다. 검색 문단: 실행 가능한 조건 그래프를 얻지 못했습니다.</p>
-<details><summary>실제 저장한 판정과 추출 구조</summary><pre id="dc-json">{
+<details><summary>실제 저장한 판정과 추출 구조</summary><pre id="dc-json" tabindex="0" role="region" aria-label="문서 조건 실험의 원시 응답 JSON">{
   "case": {
     "id": "auth-exception-any-3",
     "document": "auth-exception-any",
