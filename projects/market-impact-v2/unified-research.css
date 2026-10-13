@@ -25,30 +25,18 @@ main > .hero .hero-grid { align-items: start; }
 .developer-sources a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
 .developer-route { margin-top: 6px; }
 .developer-route a { display: inline-flex; align-items: center; gap: 24px; min-height: 44px; font-size: 13px; font-weight: 600; }
-.concept-edition .developer-roles { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding-block: 22px; border-bottom: 1px solid var(--line); }
-.concept-edition .developer-roles dt { font: 600 13px var(--sans); letter-spacing: 0; color: var(--ink); }
-.concept-edition .developer-roles dd { font-size: 13px; color: var(--text); line-height: 1.9; }
-.developer-roles > div:last-child { grid-column: auto; }
 .development-proof { margin-top: 30px; }
 .proof-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; }
 .proof-heading h2 { font: 600 20px/1.7 var(--serif); color: var(--ink); }
 .proof-heading p { font-size: 12px; color: var(--muted); }
-.logic-example h2 { font-size: 26px; margin-bottom: 16px; }
-.logic-score { font-family: var(--mono); color: var(--green); }
-.logic-policy { font-size: 12px; line-height: 1.8; color: var(--muted); padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-.logic-inputs { list-style: none; padding: 0; margin: 0; }
-.logic-inputs li { display: grid; grid-template-columns: minmax(0, 1fr) 74px; gap: 14px; align-items: center; padding-block: 19px; border-bottom: 1px solid var(--line); }
-.logic-quote > span { font-size: 11px; color: var(--muted); }
-.logic-quote p { font-size: 15px; line-height: 1.9; margin-top: 5px; color: var(--ink); }
-.logic-quote mark { background: var(--soft); color: var(--ink); }
-.logic-result { text-align: right; }
-.logic-result strong { display: block; color: var(--green); font: 500 30px/1.3 var(--mono); }
-.logic-result span { font-size: 11px; color: var(--muted); }
-.logic-reading { background: var(--soft); padding: 16px 18px; margin-top: 18px; }
-.logic-reading > span { font-size: 11px; color: var(--green); }
-.logic-reading p { font-size: 13px; line-height: 1.9; margin-top: 7px; }
-.logic-example figcaption { line-height: 1.9; }
-.logic-example figcaption a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.implementation-map h2 { font-size: 26px; margin-bottom: 16px; }
+.implementation-steps { list-style: none; margin: 0; padding: 0; }
+.implementation-steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; padding: 17px 0; border-top: 1px solid var(--line); }
+.implementation-number { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: var(--soft); color: var(--green); border: 1px solid var(--line); border-radius: 50%; font: 500 12px var(--mono); }
+.implementation-steps h3 { font: 600 15px/1.7 var(--sans); color: var(--ink); margin: 3px 0 6px; }
+.implementation-steps p { font-size: 13px; line-height: 1.85; color: var(--text); }
+.implementation-map figcaption { line-height: 1.9; }
+.implementation-map figcaption a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
 .decision-cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 25px; }
 .decision-case { display: flex; flex-direction: column; min-width: 0; border-top: 2px solid var(--green); padding-top: 16px; }
 .decision-index { font-size: 11px; color: var(--muted); }
@@ -59,9 +47,6 @@ main > .hero .hero-grid { align-items: start; }
 .decision-artifact > strong { font-size: 14px; color: var(--ink); }
 .decision-artifact p { font-size: 12px; line-height: 1.9; margin-top: 10px; }
 .decision-case > a { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; min-height: 44px; margin-top: 8px; }
-.batch-trace { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding: 0; margin: 0; list-style: none; counter-reset: step; }
-.batch-trace li { counter-increment: step; font-size: 12px; color: var(--ink); }
-.batch-trace li::before { content: counter(step, decimal-leading-zero) ' '; font: 10px var(--mono); color: var(--green); }
 .date-artifact dl { margin: 0; }
 .date-artifact dl > div { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
 .date-artifact dl > div + div { border-top: 1px solid var(--line); padding-top: 9px; margin-top: 9px; }
@@ -142,16 +127,12 @@ main > .hero .personal-followup a { grid-column: 2; grid-row: 1 / 3; align-self:
   .concept-edition main > .hero .hero-deck { font-size: 15px; }
   .developer-credit { margin-bottom: 18px; }
   .developer-context { font-size: 14px; }
-  .logic-example h2 { font-size: 24px; }
-  .logic-inputs li { grid-template-columns: minmax(0, 1fr) 64px; gap: 10px; }
-  .logic-quote p { font-size: 14px; }
-  .logic-result strong { font-size: 27px; }
+  .implementation-map h2 { font-size: 24px; }
+  .implementation-steps li { gap: 12px; }
   .decision-cases { grid-template-columns: 1fr; gap: 26px; }
   .decision-case h3 { font-size: 22px; }
   .decision-artifact { min-height: 0; padding: 17px; }
   .date-artifact dl > div { grid-template-columns: 1fr auto; }
-  .concept-edition .developer-roles { grid-template-columns: 1fr; gap: 18px; }
-  .developer-roles > div + div { border-top: 1px solid var(--line); padding-top: 16px; }
   .commit-timeline { grid-template-columns: 1fr; gap: 0; margin-top: 20px; }
   .commit-timeline li { border-top: 0; border-left: 2px solid var(--green); padding: 0 0 22px 20px; }
   .commit-timeline .commit-retrospective { border-left-style: dashed; padding-bottom: 0; }
