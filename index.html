@@ -921,7 +921,7 @@ const CATEGORIES = {
     desc: '직접 설계하고 만드는 진행형 프로젝트',
     color: 'finance',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 4 5-8"/></svg>`,
-    match: ['equity-research','EcoGuard','CBAM','boundarybench','market-impact-analysis','Chrono-Trader-v2','HIGAN','xsec_alpha','prelude']
+    match: ['anchor-bridge','equity-research','EcoGuard','CBAM','boundarybench','market-impact-analysis','Chrono-Trader-v2','HIGAN','xsec_alpha','prelude']
   },
   data: {
     label: 'Data & ML',
@@ -960,6 +960,7 @@ const LANG_COLORS = {
 };
 
 const DESCS = {
+  'anchor-bridge': '앵커 브릿지 — BC 소비데이터로 상권의 연결 후보를 고르고, 선정·제외 근거를 검토서로 남기는 서비스 제안. 공개용 PDF·합성 데이터 시연·계산 코드',
   'equity-research': '미국·한국 주식 연구실 — 실제 공시와 가격으로 기업을 선별하고, 가설·기준선·판단 이력을 연결하는 독립 연구 시스템. 현재 8개 기업의 탐색 연구',
   'EcoGuard': '2026 하나 청년 금융인재 양성 프로젝트 대상 · EcoGuard — 비정형 수출 데이터를 추적 가능한 증빙으로 정규화하고 EU 조문 검색·CBAM 기술 인벤토리·가격 민감도·산림 변화 근거를 연결한 3인 팀의 ESG 무역금융 PoC',
   'gaehwa-aac': '개화 · Gaehwa AAC — 모델 선택·캘리브레이션부터 화행 정책, 실시간 후보 스트리밍과 평가까지 직접 만든 AI 사이드 프로젝트 케이스 스터디',
@@ -1017,6 +1018,14 @@ const DESCS = {
 
 // Synthetic entry for the (private) papers repo \u2014 surfaced as a research project card
 const STATIC_PROJECTS = [{
+  name: 'anchor-bridge',
+  title: '앵커 브릿지 · 빵집 다음엔 어디로?',
+  description: DESCS['anchor-bridge'],
+  language: 'Python',
+  pushed_at: '2026-10-19T09:00:00Z',
+  github_url: 'https://github.com/soccz/anchor-bridge',
+  __static: true
+},{
   name: 'equity-research',
   title: '미국·한국 주식 연구실',
   description: DESCS['equity-research'],
@@ -1228,6 +1237,7 @@ function renderPosts(catKey) {
     const lang = r.language || r.primaryLanguage?.name;
     const lc = LANG_COLORS[lang] || '#ccc';
     const PROJECT_PAGES = {
+      'anchor-bridge': '/projects/anchor-bridge/',
       'equity-research': '/equity-research/',
       'momentum-literature': '/projects/momentum-literature/',
       'EcoGuard': '/projects/ecoguard/',
@@ -1279,7 +1289,7 @@ function renderPosts(catKey) {
     const desc = r.description || DESCS[r.name] || '';
     const openInNewTab = !page;
     const githubUrl = projectGithubUrl(r);
-    const title = projectTitle(r);
+    const title = r.name === 'anchor-bridge' ? '앵커 브릿지 · 빵집 다음엔 어디로?' : projectTitle(r);
     return `<div class="post-card ${cat}-post fade-in" role="link" tabindex="0" data-url="${escapeAttr(url)}" data-new-tab="${openInNewTab}" onclick="openPost(this.dataset.url, this.dataset.newTab === 'true')" onkeydown="handlePostKey(event, this.dataset.url, this.dataset.newTab === 'true')" style="animation-delay:${i * 0.04}s">
       <div class="post-top">
         <span class="post-badge ${cat}">${CATEGORIES[cat]?.label || ''}</span>
