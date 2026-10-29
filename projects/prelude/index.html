@@ -354,7 +354,7 @@
         <a class="concept-button" href="/projects/prelude/dashboard/">운영 현황·검증 <span aria-hidden="true">↗</span></a>
       </div>
       <div class="journal-stamp"><span>공개 개발 기록</span><span>추천 우위 미입증</span><span>자동매매 없음</span></div>
-      <p class="concept-note" style="margin-top:18px;">기록 갱신 2026.10.04 · 최근 기록: <a href="#alert-honesty">알림을 더 정직하게, 기록만 하는 두 가지</a><br>이 페이지의 연구 수치는 각 실험 당시의 기록입니다. 자동 갱신되는 현재 상태와 비교 결과는 ‘운영 현황·검증’에서 확인합니다.</p>
+      <p class="concept-note" style="margin-top:18px;">기록 갱신 2026.10.29 · 최근 기록: <a href="#operational-recovery">추천을 막은 검증 충돌과 반복 경고를 고치다</a><br>이 페이지의 연구 수치는 각 실험 당시의 기록입니다. 자동 갱신되는 현재 상태와 비교 결과는 ‘운영 현황·검증’에서 확인합니다.</p>
     </div>
     <figure class="journey-map" aria-labelledby="journeyMapTitle">
       <figcaption id="journeyMapTitle"><strong>지금 만드는 것은 매매 보조 도구</strong><span>사람이 최종 판단</span></figcaption>
@@ -1237,6 +1237,18 @@
 <hr class="divider">
 
 <!-- Alert wording made honest; two record-only collectors added. Ranking unchanged. -->
+<section id="operational-recovery"><div class="container fade-in">
+  <div class="section-label">Operational Recovery · 2026-10-29</div>
+  <h2 class="section-title">데이터를 기다리는 동안,<br>반복 경고와 추천 중단이 드러났다</h2>
+  <p class="section-desc">독립적으로 계산한 상승 폭별 추정치가 서로 모순되는 날, 장후 추천 전체가 검증에서 막혔다. 연구 자료의 일부 미완결도 마감 실패로 처리되어 대시보드 게시를 막고 있었다.</p>
+  <div class="callout">
+    <p><strong>숫자를 만들어 맞추지 않는다.</strong> 종목·순위·원본 추정치는 보존하고, 서로 모순된 확률 묶음은 사용자 화면에서 확인불가로 표시한다. 범위·출처·시각·전달 증거 검사는 계속 적용한다.</p>
+    <p><strong>같은 경고는 상태가 달라질 때 보낸다.</strong> 새 운영 장애와 복구를 알리고, 반복되는 동일 문제와 연구 점검 상세는 기록·대시보드에 남긴다. 연구의 미완결을 성공이나 0성과로 바꾸지 않는다.</p>
+    <p>기존 연구 코드 35개는 보존한다. 엄격한 연구 검증이 받아들이지 못한 날짜는 자동으로 검증 표본에 편입하지 않는다. 실제 데이터의 격리 재현은 통과했으며, 다음 정규 발송의 성공은 별도로 관찰해야 한다.</p>
+  </div>
+  <p class="concept-note">이 변경은 운영 복구다. 새로운 모델의 우위나 추천 성능 향상을 입증한 결과는 아니다. <a href="/projects/prelude/dashboard/">최근 발송·검증 상태 확인 →</a></p>
+</div></section>
+
 <section id="alert-honesty"><div class="container fade-in">
   <div class="section-label">Honest Alerts · 2026-10-04</div>
   <h2 class="section-title">알림을 더 정직하게, 그리고 기록만 하는 두 가지</h2>

@@ -106,7 +106,7 @@
     return {context, items};
   }
 
-  function predictionModel(value) {
+  function predictionModel(value, unavailable = []) {
     const empty = {up:null, down:null, deep:null, ratio:null};
     if (!value || value.schema !== 'prelude_recommend_prediction.v1'
         || value.source !== 'stored_recommend_ledger'
@@ -114,6 +114,12 @@
     const probability = v => finite(v) && v >= 0 && v <= 1 ? v : null;
     const result = {up:probability(value.p_up10), down:probability(value.p_dn5),
       deep:probability(value.p_dn10), ratio:finite(value.rr_ratio) && value.rr_ratio >= 0 ? value.rr_ratio : null};
+    if (Array.isArray(unavailable) && unavailable.includes('upside')) {
+      result.up = null; result.ratio = null;
+    }
+    if (Array.isArray(unavailable) && unavailable.includes('downside')) {
+      result.down = null; result.deep = null; result.ratio = null;
+    }
     if (result.down !== null && result.deep !== null && result.deep > result.down)
       return {...result, down:null, deep:null, ratio:null};
     return result;
@@ -132,7 +138,9 @@
       dateMismatch:day(summary?.current_system?.asof) && summary.current_system.asof !== rec.latest_radar_date,
       rows:rows.map(row => ({
       coin:row.coin, rank:row.rank, score:finite(row.score) ? row.score.toFixed(3) : '미제공',
-      prediction:predictionModel(row.prediction_evidence),
+      prediction:predictionModel(row.prediction_evidence, row.unavailable_probability_families),
+      probabilityIssue:Array.isArray(row.unavailable_probability_families)
+        && row.unavailable_probability_families.some(value => value === 'upside' || value === 'downside'),
       risk:row.dump_risk_flag === true ? 'flagged' : row.dump_risk_flag === false ? 'not_flagged' : 'unknown',
       price:finite(row.entry_open) && row.entry_open > 0 ? row.entry_open.toLocaleString('ko-KR', {maximumFractionDigits:8}) : '미제공',
       regime:own(REGIMES, row.btc_regime) ? REGIMES[row.btc_regime]
@@ -258,6 +266,7 @@
       const ratio = row.prediction.ratio === null ? '미제공' : row.prediction.ratio.toFixed(4);
       card.append(estimates, node('p', 'prediction-ratio', `저장된 RR 비율 ${ratio}`),
         node('p', 'prediction-basis', '09:00 일봉 기준 · 모델 추정, 적중 보장 아님'));
+      if (row.probabilityIssue) card.append(node('p', 'prediction-basis', '추정치 간 불일치로 일부 확률을 숨겼습니다. 원래 종목·순위와 원본 기록은 보존합니다.'));
       const values = node('dl', '');
       [['09:00 참고가격', row.price === '미제공' ? row.price : row.price + '원'], ['BTC 국면', row.regime]].forEach(([key, value]) => values.append(node('dt', '', key), node('dd', '', value)));
       const detail = node('details', 'score-detail');

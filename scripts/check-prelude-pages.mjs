@@ -223,6 +223,14 @@ test('stored prediction evidence preserves ratios, zeros and the original horizo
   const js=read('projects/prelude/page-concepts.js');
   assert.match(js,/합이 100%가 아닙니다/);assert.match(js,/실사용 보정 검증 완료를 뜻하지 않습니다/);
   assert.match(js,/알림 수신 이후의 수익 확률·선도달 확률/);
+  const marked = recommendationModel(recommendation([{...candidate,
+    unavailable_probability_families:['upside']}])).rows[0];
+  assert.equal(marked.probabilityIssue,true);
+  const masked = recommendationModel(recommendation([{...candidate,
+    prediction_evidence:evidence,unavailable_probability_families:['upside']}])).rows[0];
+  assert.equal(masked.prediction.up,null); assert.equal(masked.prediction.ratio,null);
+  assert.equal(masked.prediction.down,.2686);
+  assert.equal(recommendationModel(recommendation([candidate])).rows[0].probabilityIssue,false);
 });
 test('keyboard and assistive navigation stay available after rendering', () => {
   const html=read('projects/prelude/dashboard/index.html'),js=read('projects/prelude/page-concepts.js');
