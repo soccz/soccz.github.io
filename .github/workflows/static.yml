@@ -24,15 +24,27 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
+    timeout-minutes: 30
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment_retry.outputs.page_url || steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Setup Pages
         uses: actions/configure-pages@v6
+      - name: Report published site size
+        shell: bash
+        run: |
+          # Match upload-pages-artifact's default exclusion of hidden paths.
+          site_bytes=$(find . -name '.*' ! -name . -prune -o -type f -printf '%s\n' | awk '{total += $1} END {printf "%.0f", total}')
+          limit_bytes=1073741824
+          percent=$((site_bytes * 100 / limit_bytes))
+          printf '### Published site size\n\n%s bytes (%s%% of 1 GiB).\n' "$site_bytes" "$percent" >> "$GITHUB_STEP_SUMMARY"
+          if (( site_bytes >= limit_bytes * 9 / 10 )); then
+            echo "::warning::Site uses ${percent}% of the 1 GiB Pages limit. Move growing document archives to separate storage before capacity is exhausted."
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
@@ -40,4 +52,17 @@ jobs:
           path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
+        # Recover from transient artifact lookup failures and Pages timeouts.
+        # The retry remains fatal so persistent failures are still reported.
+        continue-on-error: true
         uses: actions/deploy-pages@v5
+      - name: Wait before retrying deployment
+        if: ${{ !cancelled() && steps.deployment.outcome == 'failure' }}
+        run: sleep 30
+      - name: Retry GitHub Pages deployment
+        id: deployment_retry
+        if: ${{ !cancelled() && steps.deployment.outcome == 'failure' }}
+        uses: actions/deploy-pages@v5
+      - name: Report recovered deployment
+        if: ${{ steps.deployment_retry.outcome == 'success' }}
+        run: echo 'Pages deployment succeeded on the second attempt after an initial failure.' >> "$GITHUB_STEP_SUMMARY"
