@@ -33,7 +33,7 @@
       "base_criteria_revision": "c40bcb0b035f",
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "f3f8ad5fdc4e64451f5c1ba58db11ee112130e501615e229f064de5753340876",
-      "body_followup_sha256": "fde360030602d56c1b1bc9c8be4f66d3c85c5b0f6d553e477a7d1847fe0ea4bc",
+      "body_followup_sha256": "939f6a4db629daf1e098df3980947146da09a20e203806f7b7289bfa1d8766a5",
       "research_review_sha256": "7d492358f1d4fc1e6b9f937b0761aefd238192457e5c4998733878203f0df2de",
       "periodic_review_sha256": "d4a3273fc5cc0e8817adff9bb0d6bb595d0ade6525ab6d40ad473f719151ee1f",
       "business_visual_sha256": "0eb04d883372ecdfaf9ff0df6077c9cf9e3edbe4b9e346c695fca19b9e9db232",
@@ -495,7 +495,7 @@
       "base_criteria_revision": "c40bcb0b035f",
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "d240453f9d043d52e23a8d0a5c7b96ed7f5a68cc5e03b4d41bc20e9854d447b8",
-      "body_followup_sha256": "1ec6f90cac9dd40049bee72b048dc49f319b81fd7afb0861e32799cd87cf74c6",
+      "body_followup_sha256": "6ea37d736e988a8d7ae669990f5c61152244b93c3869f70f71b2c17627672813",
       "research_review_sha256": "f21df39c8ec17379fd5868cda5f4b668ac9b893751504ec8749450baf8b85808",
       "periodic_review_sha256": "444ee7be5bf2d99698bed482f5ba51c1b60876cd6e976fef8484bfdfed18f0cd",
       "business_visual_sha256": "e62198eb88d74cb3ea7d3594bb4ef6472b3ba52f31366646fd6f3e95806ed75c",
@@ -1409,7 +1409,7 @@
       "base_criteria_revision": "c40bcb0b035f",
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "a95fd9a5540f2f327976f5f9c75392257e733ffea37537aa8911f8e855b138ed",
-      "body_followup_sha256": "b2fb70f6ea2d423e51dbf41267bed9ffb1b9d051210ac14dff61a229da77927a",
+      "body_followup_sha256": "36901cf7053fe02aab2c459298a612baa18d005070a4ba9041eab3785e071b29",
       "research_review_sha256": "a2e09d820fa745e75877d2eec391950e168a19ecb07d4530d7487816b89f1e23",
       "periodic_review_sha256": "ec153498013cecce62e5af51c27e313708d25f724a57ad9bed549f4a2545522f",
       "business_visual_sha256": "a5c23b3752c1e99efb78779c4ce2ab3840ac6375b5de1c34c14ceae18261d183",
@@ -1719,6 +1719,61 @@
         "followup.pdf": "dcbdd25ae17a65966234c96e6cb51a5cde5f926efdeb11d300b114aad606f17c",
         "analysis.html": "edcee06017bddd7892c8ac102e331d5afba151df80bfbeb19f4dc2b66fa11438",
         "analysis.pdf": "e1dddc9b1bac8803846ec896c3c8062adea3861594992c2ef1ccd3ed34782981"
+      }
+    },
+    {
+      "run_id": "217184b3c98fc72e4a3a2d76",
+      "ticker": "034020",
+      "period": "2026-q3",
+      "inquiry": null,
+      "summary_basis": "consolidated",
+      "receipt": "759fe8a50f08264bddea67fec8bc1bf8c8da2c279648d7bdb1e7d5c3ce86b5a8",
+      "origin": {
+        "kind": "current_engine",
+        "engine_hash": "84f21460235f471c9cbb9bb840d8812e2d602c6a07905d3119f4ab8fce234680"
+      },
+      "criteria": {
+        "schema_version": 1,
+        "revision": "c40bcb0b035f",
+        "selection_mode": "structured_priority",
+        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
+        "scope": "periodic_report",
+        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "principles": [
+          "자료 부족을 사업 악화로 바꾸지 않습니다.",
+          "외국인 매도만으로 검토에서 제외하지 않습니다.",
+          "사용자 기준과 사실 검증을 구분합니다.",
+          "업종과 자료의 범위에 맞는 지표를 사용합니다.",
+          "보고서는 자동 작성하며 사용자는 기준과 프롬프트를 조정합니다.",
+          "이전 판단에는 당시 기준을 보존합니다."
+        ],
+        "semantic_compliance_proven": false,
+        "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
+      },
+      "base_criteria_revision": "c40bcb0b035f",
+      "original_pdf_scope": "frozen_history",
+      "followup_sha256": "47a183bd5300653af424ffb34c8032b5a42eb3d36e54c14ed1f121e0dc3ace40",
+      "body_followup_sha256": "939f6a4db629daf1e098df3980947146da09a20e203806f7b7289bfa1d8766a5",
+      "research_review_sha256": "44126d7ff156bf4f056ad4bb859896cd4d46ffba8a0f14762afc2805f75ffa8a",
+      "periodic_review_sha256": "982697e285ae687315fac5ad708c26a2433e1a3bce27921aa1e7e6a2a57ca1bc",
+      "business_visual_sha256": "e74fc75db51fad87cec3d1e57e959dd2a049a2ea2ad74e450a33dc4c55f1b306",
+      "business_visual_status": "unavailable",
+      "research_review_scope": {
+        "sector": "nonfinancial",
+        "profit_decomposition": "reconciled",
+        "forward_observations": 0,
+        "valuation": "inputs_incomplete"
+      },
+      "previous_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "files": {
+        "index.html": "168c12875c93854fc633bad36ab7458c45ed7139b1a96936f035d8686304d9e3",
+        "summary.pdf": "0df78db97c1c6b4cbe9b2e14faeb8f1be7181b2fd9c041d91378da85fc33e877",
+        "detail.html": "d4babdd894ff8711b124575e2c16f643c0d48df0ddcdcd3e75f8d9426e6df21d",
+        "evidence.html": "facc0fa88ddeabf676ae9a2dbcafe80def0d272f1c9c00ba8804048a21406a30",
+        "detail.pdf": "1f11354d1f3d27ab170d599bfe8e92a1a6e757678d201200e4907744b3f4760f",
+        "reader.pdf": "130549c8023e6b6f79acc924c59e6154215c4c4741349a36b870eb5fb050fb06",
+        "followup.html": "6443449742f2ca6bfd51a311c9a0e987e6cba3dd4b6f018c5fc9b80cdf0aa0ad",
+        "followup.pdf": "2ca12ebf735d0533d41933e8168f46eb02b4e74970dec8b45dc8a1a3b1081a40"
       }
     },
     {
@@ -3504,10 +3559,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -3523,8 +3578,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "ee5bc0c679bc04c5bb3a6623269e5d275fb13ae5c543bf5052a843fd298022db",
       "body_followup_sha256": "3c1128d88ae02ef989af2828b793a62d5909fa98d012391c1ae55beaa4ff2a44",
-      "research_review_sha256": "dde9f29b5028c0ecc3709c820ed6fb2381fc12d2cc36a4f788fbb6aca97162ca",
-      "periodic_review_sha256": "1cb113445f2eb985ca0523b26d880b973ef30f68983e3653cfc03aeea15ccac8",
+      "research_review_sha256": "66ee94ac19851e3164181e028150ee646769fdd2cf2712d1c731c04221de7d7e",
+      "periodic_review_sha256": "87c827c6d0058cdf6dab7eeeafad46e9d1a1d1f40c60c5401d4c77f4ee185c67",
       "business_visual_sha256": "e6172124d59b94d36b39a659d826f6519ec8b35c51183240f899950cb7243cb7",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -3535,14 +3590,16 @@
       },
       "previous_run_id": "64f309e07c7a4f86d33fd499",
       "files": {
-        "index.html": "e184d2dca7821f6544901f68180bf62a56b153e8c40bb2f34dd56797e477d57c",
-        "summary.pdf": "486e7e1ff6097f2659c470a68a892c158d3c085a182fdf9ee39cca61adfe0828",
-        "detail.html": "61f5a35d6372dca09caa9c708183081e3df65908fa62751369b97b6c62d713c4",
-        "evidence.html": "026cfeb9971d67ef98467dab76f26be8310eb659c14714b3b899d715ba8d2cf7",
+        "index.html": "b2a41b52bb9e99b03e34ff1084058521aa4b786f8a0083f1cae371ef1e416a5a",
+        "summary.pdf": "c4cb5c0dcd3a26439bb1a8a835038c6edcb98e3447f83e33bc0ef2788cb257a7",
+        "detail.html": "bf9418eb2e32437d85ccdbd38ed888118387491d880899f1909f66c23a04e648",
+        "evidence.html": "1e9d79425a8ee219a7620305fe0fb65aeaed001a1b2cb130f31db2c508507d0f",
         "detail.pdf": "c48ccab8195ba9ac358dbc1e2bd896873e377dec6c795e60948f6a59451b56ec",
-        "reader.pdf": "0944451176e7ac95aba267e6e38177708f0b21a2d31c3fdbd35032b2d82669bd",
-        "followup.html": "527e978b6339dc5b0cfac82cc80d5c24e0ea89bef21a17abf2f044d1b7911c55",
-        "followup.pdf": "87be6aeff16f73744f2e1e8aa87cf79fbaab787c12461dcc223bf2d2196d9c86"
+        "reader.pdf": "6054140d14033b2e1ef108719bd3ef305458b2f5e2c76d4527acfdd25175784a",
+        "followup.html": "fc833e1b1bbc9cede1180203a8351adea11cc00170acaf8219c9bb5e7b7873a3",
+        "followup.pdf": "b82a6196b3ed571a788ab88e16fb86fad214dcf89bff97497686adf60e58160f",
+        "analysis.html": "61ee26c6b72ee12943f58b2484e18c6bc58414a920897f24faf7158dd3875657",
+        "analysis.pdf": "fbdd7609f0feb821688a7bee350c45919d05c6c7dbc5863af67452f90498e8e9"
       }
     },
     {
@@ -7607,6 +7664,61 @@
       }
     },
     {
+      "run_id": "a969d5f906a7e3e2c1af2fa2",
+      "ticker": "005490",
+      "period": "2026-q3",
+      "inquiry": null,
+      "summary_basis": "consolidated",
+      "receipt": "759fe8a50f08264bddea67fec8bc1bf8c8da2c279648d7bdb1e7d5c3ce86b5a8",
+      "origin": {
+        "kind": "current_engine",
+        "engine_hash": "84f21460235f471c9cbb9bb840d8812e2d602c6a07905d3119f4ab8fce234680"
+      },
+      "criteria": {
+        "schema_version": 1,
+        "revision": "c40bcb0b035f",
+        "selection_mode": "structured_priority",
+        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
+        "scope": "periodic_report",
+        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "principles": [
+          "자료 부족을 사업 악화로 바꾸지 않습니다.",
+          "외국인 매도만으로 검토에서 제외하지 않습니다.",
+          "사용자 기준과 사실 검증을 구분합니다.",
+          "업종과 자료의 범위에 맞는 지표를 사용합니다.",
+          "보고서는 자동 작성하며 사용자는 기준과 프롬프트를 조정합니다.",
+          "이전 판단에는 당시 기준을 보존합니다."
+        ],
+        "semantic_compliance_proven": false,
+        "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
+      },
+      "base_criteria_revision": "c40bcb0b035f",
+      "original_pdf_scope": "frozen_history",
+      "followup_sha256": "2b44e94bc22b4d6676e821d040f8868cfca9e9332a53483742fb0c0fac5bf29a",
+      "body_followup_sha256": "6ea37d736e988a8d7ae669990f5c61152244b93c3869f70f71b2c17627672813",
+      "research_review_sha256": "a8fa742663325b522e75ee407bf1a0e4a7a110153460f1aa41738c1cdaecff48",
+      "periodic_review_sha256": "513cf2d74147cd6a2994c54d2058bfac5e420811c7012c2f5edea208478c355f",
+      "business_visual_sha256": "91a29145dbab243baf0138462c12f662fd196f64b83b38578f5856f35367bb49",
+      "business_visual_status": "unavailable",
+      "research_review_scope": {
+        "sector": "nonfinancial",
+        "profit_decomposition": "reconciled",
+        "forward_observations": 0,
+        "valuation": "inputs_incomplete"
+      },
+      "previous_run_id": "0c530589394cf17c100e2797",
+      "files": {
+        "index.html": "537f156409e09f30b670402415aebad21a9fdc58a1b464097be79bb49cd3c5f6",
+        "summary.pdf": "c56cc0c6c52e2beb2e1bfaa9d7c68a789ddac12f3d506c167fb189c2abb04d12",
+        "detail.html": "9e522f3884ffd8762066ebe183d817f6f10eb7f0bd3f0d3cd6f90c59611e379e",
+        "evidence.html": "55e96322184051019620013bf8edc9895e4e9288d1aec37bd57162e389953278",
+        "detail.pdf": "9a98ceecf0a1be7c3937327bc9254a6ac18f5fc268e0852cbf592a7176ecc172",
+        "reader.pdf": "17f98db2d85e07d3aad7aeafca5bca61cf4348d77b93e413a8c7a15ad814f4b4",
+        "followup.html": "6ec0f56cd253960f9b52e38c5be72396ac9b5243219c3502427059254f0ef657",
+        "followup.pdf": "d191134e0ca93cd647652426c1dc3373afd09e3db5f2c96fd273ba70cb388026"
+      }
+    },
+    {
       "run_id": "aadedb6ccfa0aa724249588d",
       "ticker": "000680",
       "period": "2026-h1",
@@ -7775,6 +7887,61 @@
         "reader.pdf": "9b7856ca0c4359dad99e9a30ccefa7382f48280733c351b693901eed3069ffc2",
         "followup.html": "6a0d21102546f7d9c07745c0ff7b947a971c33a812dbd661a4b1f89aff6bfdc2",
         "followup.pdf": "d00cb40a723cf6579c493940817eec99dd29399652b832019b687ed02c2758eb"
+      }
+    },
+    {
+      "run_id": "ac1fecff7588fe67cb4ba8e9",
+      "ticker": "035420",
+      "period": "2026-q3",
+      "inquiry": null,
+      "summary_basis": "consolidated",
+      "receipt": "759fe8a50f08264bddea67fec8bc1bf8c8da2c279648d7bdb1e7d5c3ce86b5a8",
+      "origin": {
+        "kind": "current_engine",
+        "engine_hash": "84f21460235f471c9cbb9bb840d8812e2d602c6a07905d3119f4ab8fce234680"
+      },
+      "criteria": {
+        "schema_version": 1,
+        "revision": "c40bcb0b035f",
+        "selection_mode": "structured_priority",
+        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
+        "scope": "periodic_report",
+        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "principles": [
+          "자료 부족을 사업 악화로 바꾸지 않습니다.",
+          "외국인 매도만으로 검토에서 제외하지 않습니다.",
+          "사용자 기준과 사실 검증을 구분합니다.",
+          "업종과 자료의 범위에 맞는 지표를 사용합니다.",
+          "보고서는 자동 작성하며 사용자는 기준과 프롬프트를 조정합니다.",
+          "이전 판단에는 당시 기준을 보존합니다."
+        ],
+        "semantic_compliance_proven": false,
+        "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
+      },
+      "base_criteria_revision": "c40bcb0b035f",
+      "original_pdf_scope": "frozen_history",
+      "followup_sha256": "05bf8f4a8bed031f26067f19d111db19019de2580d95d2acef0b088678707e8b",
+      "body_followup_sha256": "36901cf7053fe02aab2c459298a612baa18d005070a4ba9041eab3785e071b29",
+      "research_review_sha256": "cb82bf10020acc01efa6ff0adedc52de2b767f108ae30dd539cdb6c13fd4a19d",
+      "periodic_review_sha256": "5ac8333a7440aa366e4c8c035f4571fe87ab2fa8f87e0f5ddc30c48ed44ec811",
+      "business_visual_sha256": "f2327c93da7f8550ba38f555e071854b8a880b5ba71613620ac92da0061c8f20",
+      "business_visual_status": "unavailable",
+      "research_review_scope": {
+        "sector": "nonfinancial",
+        "profit_decomposition": "reconciled",
+        "forward_observations": 0,
+        "valuation": "inputs_incomplete"
+      },
+      "previous_run_id": "1e6be6f2812c55a185b4a934",
+      "files": {
+        "index.html": "f25dbe11500c33206f66bb10386a3f395ceebc8eb73728fb09d94dde67df3795",
+        "summary.pdf": "6d0e60d8a418afddd9b7678ddc5d38d7e0acde348e94e536e1c74545e102538d",
+        "detail.html": "296800e5e4b37b1ddbf205fa8a23a068c25a74e5b820c7b387b1c639b53ff392",
+        "evidence.html": "9b672d7c33f95be9c480866f7070dd50f8532c42b94b94420dfd9a9509d30cd6",
+        "detail.pdf": "d3cab849dba013050ac2fcefa1cdbb2b82eca49e99830abeb84d1c25abbc130e",
+        "reader.pdf": "594b121e9c00ca919f8d60fc7dcb3d4e6139f79cf17879b9a804d7a21a8e4146",
+        "followup.html": "035821c5e04eb4c2968b27eb9046ee42cc954970c2d4a634e8500420fbde7c01",
+        "followup.pdf": "c563126dd6fd760fbcb942d3a614e7db2f67250fbca833935cd3720c334d1852"
       }
     },
     {
@@ -8267,7 +8434,7 @@
       "base_criteria_revision": "c40bcb0b035f",
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "387c91300db125e3b2bad676d2ad7506f6ffae7b739bbbb8fc18256cfc4e92ea",
-      "body_followup_sha256": "7536d1e98ca1aeff750e45235f1931930f7bf0e8fce2b784a4716a80a127d0bb",
+      "body_followup_sha256": "af511f5b3dd2adf02dd06b326b4807d6e088aa27c6fefb3c603fd063dea3e28e",
       "research_review_sha256": "053cec93023db30a8248210228042d350c23183dfa7b2c6a65135f72a6447ad6",
       "periodic_review_sha256": "612c6a691ec48b2ea8a8cb1013da6e956b394234be21c8707c908785c19f16c8",
       "business_visual_sha256": "e5ce422912ad82c570101927122ad96f2ea125aa080da8f733b79f5e8dc6b94b",
@@ -8858,6 +9025,61 @@
         "reader.pdf": "00e33ddaca666e5e61c6eee458b6910e1c864c0c7526c72050ae6ff87306814d",
         "followup.html": "82f42a0d07d36fa93d13066b42d5a3bf727d0e92911c7510ba86ec4d694d199d",
         "followup.pdf": "299dbfa89afc8c1339bcc88690af0b8801865f79e34792855331a9b0563ea36a"
+      }
+    },
+    {
+      "run_id": "c5c62211cae563ad018b1079",
+      "ticker": "373220",
+      "period": "2026-q3",
+      "inquiry": null,
+      "summary_basis": "consolidated",
+      "receipt": "759fe8a50f08264bddea67fec8bc1bf8c8da2c279648d7bdb1e7d5c3ce86b5a8",
+      "origin": {
+        "kind": "current_engine",
+        "engine_hash": "84f21460235f471c9cbb9bb840d8812e2d602c6a07905d3119f4ab8fce234680"
+      },
+      "criteria": {
+        "schema_version": 1,
+        "revision": "c40bcb0b035f",
+        "selection_mode": "structured_priority",
+        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
+        "scope": "periodic_report",
+        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "principles": [
+          "자료 부족을 사업 악화로 바꾸지 않습니다.",
+          "외국인 매도만으로 검토에서 제외하지 않습니다.",
+          "사용자 기준과 사실 검증을 구분합니다.",
+          "업종과 자료의 범위에 맞는 지표를 사용합니다.",
+          "보고서는 자동 작성하며 사용자는 기준과 프롬프트를 조정합니다.",
+          "이전 판단에는 당시 기준을 보존합니다."
+        ],
+        "semantic_compliance_proven": false,
+        "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
+      },
+      "base_criteria_revision": "c40bcb0b035f",
+      "original_pdf_scope": "frozen_history",
+      "followup_sha256": "48ebdb381fa2c3b9e48d53a6bea7285fc1eacfe8b1c93ce7f34f81c4326ddc63",
+      "body_followup_sha256": "af511f5b3dd2adf02dd06b326b4807d6e088aa27c6fefb3c603fd063dea3e28e",
+      "research_review_sha256": "388757fbc93d88de97349c70881aca5fa5f8f97a8d4687f906457dbfe863d2c5",
+      "periodic_review_sha256": "ba43941648cd89d6c506598ac769e26cce95d10e8ad41daa0443b11730d2c364",
+      "business_visual_sha256": "f2895e63bab0eaae529d4820bff062e5655b02a86bafeab1a8f9ce197c3aeec6",
+      "business_visual_status": "unavailable",
+      "research_review_scope": {
+        "sector": "nonfinancial",
+        "profit_decomposition": "reconciled",
+        "forward_observations": 0,
+        "valuation": "inputs_incomplete"
+      },
+      "previous_run_id": "b8da66727df08872f6188df9",
+      "files": {
+        "index.html": "82bb709460bba876aec3b24e314733a4bc1f5d7b8bec8939454c8d1df96c4a2d",
+        "summary.pdf": "0f9763addf663e02ada599f22b2e144082a9928f8debbed1bd40a6024fefb2ce",
+        "detail.html": "0c8f5c131fc705ae9da1e1644571980bf95063e3fd2ead2ece2d7c8153331b95",
+        "evidence.html": "86e2263ff6bf133bae34c661f2b4e3ac3bed599a45d7fa9eef93132c75e6268a",
+        "detail.pdf": "e8c548cf0ca02264293a2f5c273e287231b6f16a553667bb1306f40704d0844c",
+        "reader.pdf": "9ba3389b32f0328efaea58ccb43473622ec859d040d03870c9b1e310c2e9df0d",
+        "followup.html": "5a429da2a90f6da6a8b87b1bbb0aa40a8103df77a5a265f930b2aed77bcb2193",
+        "followup.pdf": "10b36363b4fda03236764ff8d8ad829d9c7bfd6816a1309b91d016f1652d62a0"
       }
     },
     {
@@ -10914,13 +11136,13 @@
       "followup_sha256": "ac56d244cf29abc220f9cf98bb67d2919dfe3a7aded4fd3b03c53bba54c4c755",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "86ea9892fa81aac66000a7aaa538d60c7e57bcf882f152230eebdb7744944304",
       "files": {
-        "index.html": "a9f1130257a5c506cc086c0000af4764cdc7f295108ac383cd5a99a5db798cff",
-        "brief.pdf": "04398c9425133931b4d3e2187627a3d639f98f0170b36e9a2a77d9eeac8ffc57"
+        "index.html": "67843b9f61aa1a30f5cb9478a307c7ca53e0d058c00aaadf59c3183958c47e0f",
+        "brief.pdf": "b11c158144062d7eebc65caf5efdb4b8d935a3eaab03d28cb72580713c137cfc"
       }
     },
     {
@@ -15938,13 +16160,13 @@
       "followup_sha256": "446fda53c9e794629c2f1ec95cb5f1a35090df3c45cf27fc67745500328ed524",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "86ea9892fa81aac66000a7aaa538d60c7e57bcf882f152230eebdb7744944304",
       "files": {
-        "index.html": "e66d892ba158b58241f19bbee937954427f3d33280f29582ee6867197b024158",
-        "brief.pdf": "b1564fe6cdc7c2682b563b23e7c6e64f1ab1078888dc15a06006ff54208d42b2"
+        "index.html": "c7346661cf607ebf927d03d7755017dd6a357e4d998f617b1aaa2cc25c123e44",
+        "brief.pdf": "d2faa8e77e28b2ae8ed311b11376c5a1c8d9ef1255b412a7db414cd76c66bdce"
       }
     },
     {
@@ -21090,13 +21312,13 @@
       "followup_sha256": "3606ad2349607bcc6689b17e82dcc4f1f1e2cc37667259c51517f14a94b34092",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "86ea9892fa81aac66000a7aaa538d60c7e57bcf882f152230eebdb7744944304",
       "files": {
-        "index.html": "d713387c8a3532ccd46f97de7c1b8559c7cb9c022b45324ccc6b9549a9ceec03",
-        "brief.pdf": "5e322f510cbee8ccfc1cd1fb08f67f4bda31828d5b41645492983b25e163cfa8"
+        "index.html": "c16b3c2fdc1461b87d5d3277f76938539c95d2b38522b951e917b6f714a5e472",
+        "brief.pdf": "b96288a8b37a161343e8b687019b10ed53a3be3280ed9741764c2ef994b713fd"
       }
     },
     {
@@ -38594,13 +38816,13 @@
       "followup_sha256": "f2108065b78eed957cafeb252bc886b930aa1d6d117c6e80053bbc6210d00968",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "failed",
-      "body_binding_sha256": "3b0de9ecbfa9a13d876ca89c925f48587e219ca9a534184a6698c58aaf3b5a01",
+      "body_binding_sha256": "12c9e0b189f5c50abd0e0e7bbe483eab59ba9c9c03dd040bf44f46c329183d2d",
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "4d80dfaa948e73c484a35786f0ec46f98c7ed041ba3cab11760d8c4acb9b89f5",
-        "brief.pdf": "4914cd9c6949b2e9d877167b11abdbf4d578f826428596dae959f5a89994d1f1"
+        "index.html": "940a3c3aa51a0dfc18f934f1555f1813cb8bef8a791c4e5ded0d597dc1662727",
+        "brief.pdf": "98ba934b2437fcdb32e81947e0f5db14e5f4fd01dcf3f48eb8d2d41247286d49"
       }
     },
     {
@@ -38754,13 +38976,13 @@
       "followup_sha256": "dc7c904200c44cc57b1d1a2f56f5e016327b5c742e9bfcc0e9bdfd36210a4361",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "available",
-      "body_binding_sha256": "3aceccee92b8ad64e8b22c3c72a9b02f5a7a64548223f809181e3f0fe16edf57",
+      "body_binding_sha256": "668455782d751dcc290adc4c578585e62ea55f4c1dfd5feac88d9b7f26db48e9",
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "2682569624394501a4ee2ba43fc6b9c8467034ffc2aab01b8b10fecf15f36d4b",
-        "brief.pdf": "9be6ab9a6da836325f3da65acca5a54f8f5fc87a1373368d0a62a9e28d48e295"
+        "index.html": "360f2e842e73a17829c432b79f427cb80c5f9e5f8129aa58a1a3a5fcb6b8bd14",
+        "brief.pdf": "1f8ab1435f08be5e179ae7e99390866fb9295c40a8e3553b6828de22aa19e484"
       }
     },
     {
@@ -39042,13 +39264,13 @@
       "followup_sha256": "f70f3c5ca6cf4115faf9bb283f5f6f3793cec9a98c41ba2bdf3b351b27fc41af",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "9ad8df15c4173731da822d7f0debc930fab09ff53cf2447abdb7336c78ba7d74",
-        "brief.pdf": "673095ec81417cdebf705302aaa2d3a820cfd1e8b2b550788937140e49f8e134"
+        "index.html": "0f45e0fa8067418f38e4f90edd181d043f5af75e46e513817f8b5eb9da432c47",
+        "brief.pdf": "05cdb39abab76a73094fd9f1b2f7f1eaff60f992852557dc6efc96c7fa051e15"
       }
     },
     {
@@ -39074,13 +39296,13 @@
       "followup_sha256": "ca247ec9750dd83bdb363b44d605a5d995b944a65253633494d886a3072f1588",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "available",
-      "body_binding_sha256": "c8e4aa5c641c29e78371d0e625ecbc7f64b07fd5d1be5234ddb876cd5d8954fa",
+      "body_binding_sha256": "f56dca36ff684edc953966b40f2b8a2922886a8e4ac1efa8cb49a289e742c121",
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "59d9dfdb62a9abc7ff5444db73669e09d0afc031a4f39a8d2d77397ae294ccf2",
-        "brief.pdf": "c21c788c0b02b9e3af6bae7810d29bd5db2dd94d3e23fad79cba5b294cb8d4d7"
+        "index.html": "b08cc95009c504d7c8b91722f0309ce5f315faad5a9a3b81612d80c0c9d4c034",
+        "brief.pdf": "735a1c10205d837644e9be0866c7f92dc0d790f6f0d9bb32a70538633a6e3404"
       }
     },
     {
@@ -39650,13 +39872,13 @@
       "followup_sha256": "546e9ce59ddab8591ff91c052a769d5a8115b6e454fdf177fd27964e49183973",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "available",
-      "body_binding_sha256": "465eaf9fb680ca6d141bae3c90d331fa8fcac1373e3b62e0ddc5f31c1b3050ed",
+      "body_binding_sha256": "5991d74448553a0482698b2c99d9cb333149bee6ec33cc203d69b06fecdf4836",
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "e5a5ffe8201a2fb3deb92157095c1d0b94eed64e65e6c0b22b7014b9f9bf5146",
-        "brief.pdf": "27078386956c7a7e885d5c53dd9d3cea7d4ac57040667ae716670936d6934f97"
+        "index.html": "129033d9a80af51b6d9fcfc045faed7b90fcc68ae7217b88415eabd7028eebd3",
+        "brief.pdf": "f6d968322f17462c885c2d7082f6d7e223e8ab4cf12ba6dadf4d7020d9dc456d"
       }
     },
     {
@@ -39682,13 +39904,13 @@
       "followup_sha256": "92712c8b13318c47190653c6d43e2b91ad89c794d1fb6d7a3dc912363f5ffcee",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "4a178ae01f425d0bb84556533a1f5d94a799b7af14b72f0827a58bc591cb73a4",
-        "brief.pdf": "c8ac4f15fa57bac373f7faa5d455d6597edc421f0a101814f68385650776fadf"
+        "index.html": "18b4457e477d875ca12de9f411c2ef7d492327eeb37ed8f90ecf758d6f3dfc41",
+        "brief.pdf": "a1dff5ad5673c38d29eac12d5876f0bf2c80fdf9c9d475d2baa4986195ade448"
       }
     },
     {
@@ -40290,13 +40512,13 @@
       "followup_sha256": "88d1b6fcf95f35a7502d0a4f5c9af31ee6a06318db43c256f996d79de88e57f2",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "48e386089e2ad2fbf4b9825c9fa7f34dc7babe3ff3fa2a73825d8eb835de7fb1",
-        "brief.pdf": "1f97ceea45d4ac922769bc5e0dc94c535f8a60126a312049b3a73ea276fb9f7f"
+        "index.html": "f1b93d28000a1394c5ac2bd4fa8be19a04fcbabb87d4a76c6f83bbeeae19f94d",
+        "brief.pdf": "51c8ffe49f93d33d4ad11adb5eea7a1c1fd831ad9ac372caafd6223626420ccc"
       }
     },
     {
@@ -40322,13 +40544,13 @@
       "followup_sha256": "0b6053171d2328c65ea65702a5d6e61a6ee2ea960b7bf19a581c42dc24f345b3",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "74fca1b1696760254f9c2b93a9b4080e0cbd10e454a14782f2abfe0e585d8d0e",
-        "brief.pdf": "9c46832e54c350a3bdfcecbb8e01684d3a7b9ffcd364e54f429f0e507bca7bfc"
+        "index.html": "2b1ee9193a77b3f881c09c6c8e052c6b697c68bc4fa2f12f04c97c05475916e2",
+        "brief.pdf": "54a3cff0035c8b9b0bdf066c82d1aad09a948e68fc9c52f7d512a0f6ea08555d"
       }
     },
     {
@@ -41090,13 +41312,13 @@
       "followup_sha256": "c53aa8399f854260e1b5cbce1a19f4224114791819d41900d6f90d6d4ec82e39",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "f60c6b5321c6448127f12ea339a91424447fcf89c58a273e1454324ccee88686",
-        "brief.pdf": "2b6894b94321d57977156b69731d9a8e8b9d6974998feba4dfe1c6f81337f84f"
+        "index.html": "3b7fd2666ec27f0eeebba216e524fd2037d2e4a75b31a264ddbbff35fc68509d",
+        "brief.pdf": "68154560ae0af866a7e1187b716346f964d2db9e896d93d199b55ba7b51ebe9f"
       }
     },
     {
@@ -41282,13 +41504,13 @@
       "followup_sha256": "8653953e6488c96d1732b48ef47a21fdfeea915a8cf49f6fb75061f62addda23",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "7ffeeacbea46ac48855f3eb9ffc0c88ae385680541e85ba10c875ac0beed04e3",
-        "brief.pdf": "26154c98cb9d870baba964066858731c8c9fc73779a90b9add78b3fc1fae9be5"
+        "index.html": "6738c820d7aa4830f6eaf0e78c9a95106d4a4b03140f7e5b6d6098671ee01760",
+        "brief.pdf": "c92018a98d3e48c003f1845f62d0a801f882bc7fae2716827f9270f30fbc7171"
       }
     },
     {
@@ -41890,13 +42112,13 @@
       "followup_sha256": "01314b05bfbd802b4b7063ed6bcd91fb5d28f0a572e01375027851dc571c60c4",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "unsupported_format",
-      "body_binding_sha256": "79359825b7b10671704163b68f989c34d72c86f85bbd2a1ff17f6acffc85d601",
+      "body_binding_sha256": "31012ab7c03aeee6e9fb53549bf5abdf4b2b9f5bde52b6e4e8890a03b1709d82",
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "87349bd8c3e0c34932a1896605f6a5b8ded8808d7c1e2ab3723297f9750ed1cc",
-        "brief.pdf": "452bbeed7017fdb8111fdbe8d9ea61504cb77e141d2d8149ec3965dff9dc087a"
+        "index.html": "c1f30f713e16b4064e3490d67cd0e9eae2bc205fd71f16935a9848f5c3fea443",
+        "brief.pdf": "f60f8a22f260ea24585b9d1a543cb9d2d3ffe197904b0b42dc2a469536ddc7d4"
       }
     },
     {
@@ -42082,13 +42304,13 @@
       "followup_sha256": "2607a3d2909594e19890b4da12e50507c960f2ffe5774a572724a9bf19783391",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "1f2331e79845c76971d0b0e8cc2e878094d0f63ac9fd1d8af22f3609ef3d388e",
-        "brief.pdf": "61d5e6ff3388ce33c62360a861cad6eceba15945a3caae837015ab2641f2b4e6"
+        "index.html": "eb82c0731544f656b00921907feb531f80538a4d5c34d82715260edf15783896",
+        "brief.pdf": "376b483401a06fed6d318bededac2d61c7e5e050d368148d4b068c3fcd3f1783"
       }
     },
     {
@@ -42658,13 +42880,13 @@
       "followup_sha256": "be7af494dc656f14fed4bdc91b77f0bb04973c174c7fc3f11cedf1765279d1e5",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "7babf47819c202411fe3e8093990a2121e355598c3588a77013d4a3c92b32a3d",
-        "brief.pdf": "e84aeda671c5780aef232a490c1c619654336f53a4ce3f2036c190fdd5452b34"
+        "index.html": "ca0be1f81eabae67f473a3eaa062473670a138a743b5afd786ef237c5650b765",
+        "brief.pdf": "ef530abebc0472ec2b0c2f5e59a296760cc552edaeb9e13a732b996252fe8671"
       }
     },
     {
@@ -42914,13 +43136,13 @@
       "followup_sha256": "f6d0900134e8a2b4ae64f496934ab7b41d598f8253605784b030361e4029c526",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "6b04e482113ca0b006c1fed63c918867920cda5d1547014c8e4e1fc41bf1f0ca",
-        "brief.pdf": "d8427461ad2f9de9ad7d9589890c71cd05b5748d7e38f0d0c41c1e48ed0215f7"
+        "index.html": "f4e23056beb2e3adb3864b19d707e5ecf99fe1ba0a7609f0c3dc55c37de55fbc",
+        "brief.pdf": "b2479c19c9ffd95a571bbde1cd3b1197fc674a87d90007cc5655c84afb9b16fd"
       }
     },
     {
@@ -42946,13 +43168,13 @@
       "followup_sha256": "9b8cacb2722d62ec4d0dad0b3bc92a070f93bc13e49300e18896325e345ab126",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "a54b0b78e6b5a3f4af21628ff5cf5bf302e1c3e50ed3ccba312ed7ada99ec73a",
-        "brief.pdf": "b2d489f079554172b91108e69c2e70b6190bca5ba61e908c194a2d78dc28665b"
+        "index.html": "18fd7e72d2f78e3c382ce3fa3d6b3c15913bcc9e94def24b9000837c4e2bc18f",
+        "brief.pdf": "61e9c35ee58e540fa44f053ccdc19d5789d14919db1f43b5e028d6b955bd7456"
       }
     },
     {
@@ -43490,13 +43712,13 @@
       "followup_sha256": "4bb6bc89ef896c53b3bc3c1abe0dc2ffd50ce3cf714fa69d129aedb99e0a9cff",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "7d263b86a256365c820219dbb709e34bbca3c87f1b1230fa2fc0f781e3ee7312",
-        "brief.pdf": "11f971af8979e3c4a08040d8b38d75d40e7acb6423e5a84922bd9927f9aa8686"
+        "index.html": "658b59953eb018187c47f6693da48751bcfe3dec1ae3cc6e4087fb3b6d495a80",
+        "brief.pdf": "af25f5c74a2f3fa2c1906d41a1a0d1767eee2b4e407e52ccd2ad4b13afdc3d57"
       }
     },
     {
@@ -44130,13 +44352,13 @@
       "followup_sha256": "4ce10b117e97224204807d3cde37f4a7044d1c2c6ccd9523c5db5cb1d6aadbda",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "0db04d286812e6241950baf0a78d3dc51a27bacfe8e3439058ed38fdac11489b",
-        "brief.pdf": "69515800b5fb069ccf3c82d696dab58f6e1e47e5d980359d230cb0097cf55097"
+        "index.html": "75446e6e8592b1d0dc97381bfdef8bfce49cfc883a192eeca8b67a26d4a7ab9d",
+        "brief.pdf": "7ded64ba2b0a2af3c69c46c7eac583b2fb0e4bd1983d96e14b29fb0a5c607446"
       }
     },
     {
@@ -44322,13 +44544,13 @@
       "followup_sha256": "892d6fcf14426bfe70a49559d8aab0856eeb975d803c295ea4d62a0edd597e2c",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "dc694b45fca1141fcfe912b1d8044ef549eb74dac41eb3b86e7ec6931e3f5004",
-        "brief.pdf": "4ac624b5b6a4ee8b4070b949a5fb1ee94ba283136e4958917a81d6c7373796d8"
+        "index.html": "d5a0c2934c939a7799197f58afcd4d807a03a533deeb2af22524e1af50f07109",
+        "brief.pdf": "1e75c8e8d61c9c376b0b0df40da926554647157176dd5dc2a45c61eabb6e758b"
       }
     },
     {
@@ -44770,13 +44992,13 @@
       "followup_sha256": "664c871f853630017ca51cd94c1533ae5f5172099eb2009a29fdcf654d78e48c",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "be221051479a2d0a20529071691fc3bd2ac81c9ed60f0aa0f196b59833487e9d",
-        "brief.pdf": "e718b8dae6a30ea1801055f6edd25ef47787c9affe4ffc6cdb238ee17bdfe9d4"
+        "index.html": "44d8b65b4efefb20bdf42881e7f2ad838d53ac2e6b7a7c95db706077d2e8410f",
+        "brief.pdf": "74762fa9279d6d2e8d6368e7a274662833553e82ac228732df8343656cecfce3"
       }
     },
     {
@@ -45602,13 +45824,13 @@
       "followup_sha256": "c2da15957a5bc4ef474727a94156871b2ec16c7a59db6701ed39234870674b16",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "e2d387d54b069d4c5596b49d6c6cf4e10fc92b2a0be79a084c31f92694716959",
-        "brief.pdf": "33b62d87e2e197be210d1c7f37835d97edb87d664cccd6e7adcbe2353277a1de"
+        "index.html": "d9cf5728c57bf4138972a00ed8dc4da617b3d66acf5711bf5d414aafe61088c2",
+        "brief.pdf": "f6b50f1b64e9f235accc645bd1450e43a3dabe588bb748eabd561ecd7df1d93a"
       }
     },
     {
@@ -45634,13 +45856,13 @@
       "followup_sha256": "1fa9f5d3420b7af32357e8cfd3d2b8d1806bd318571348de1b1292489f279103",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "f352357b8d0b2af076ea01cfe521ace4942cb2bc1a4b8e869d95a62e47a11840",
-        "brief.pdf": "8ae7f64bbc2b3474298be7cb5e65552973a240f8b9cad91bf3e03b1fae98ed24"
+        "index.html": "b2b3dca5d788428a7597a811c77ba31c322b20128ba09c4eff14781c0eec87f6",
+        "brief.pdf": "900aac348bc6d2c7bd14eaf1ec01312556919a2d332bfb879caf0e0bffc54f95"
       }
     },
     {
@@ -46914,13 +47136,13 @@
       "followup_sha256": "974277502bd538bfca235b0e5c08a740a5274db4e73b53c2cd26286395bbb096",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "3897f5bb008c6717da8774e10ef8638fd6ed113e4805362d9b78dc21c4684b68",
-        "brief.pdf": "bfca96f33d64e7b73d3a331d79e961a0f1a2aff7dee46904e98adac8a0f1711f"
+        "index.html": "f1580d477814967d0e60d18a1cc6515ed506c7e717f88d4ead9c4b7ea876abe4",
+        "brief.pdf": "02df2fd8b0048235ba2940fbebe4fd57417e6bfba1141b4cb8c1f6a9cb552e0f"
       }
     },
     {
@@ -47074,13 +47296,13 @@
       "followup_sha256": "668673ef5dea032ad63bb92a61ee4771d24e69c9fe225968587b900822f47275",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "ed7be22105d6e83683828eefc45bdd1bf21b31599b530056a2ff747bc096456d",
-        "brief.pdf": "712cb247ee0fbd0ca4db1f75aec872804760d1ffefad6e98941961f2a2f6d589"
+        "index.html": "2cb528c56c11943d949dd9ad4e299c7d1e2d7750e0a4b038350db243f75cd7bd",
+        "brief.pdf": "26a9a86eb43116f6d96047eaca9cffe7246a817f7ebccfa4cace412bc29cacc8"
       }
     },
     {
@@ -47810,13 +48032,13 @@
       "followup_sha256": "8f63581a9987754455f172cadfb3282521a135d8a404c2215be6cedbd7084a2f",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "50c3530766869c12bdc56200e353048243d6edf23aca38b1cc516f4d252c925e",
-        "brief.pdf": "cb13cd355db90ef940e49327d1d346480591aeacc237033dbc332744432ecff4"
+        "index.html": "59d01b6c48f299f37446296757e5b906f8dcce13bdfb16ae546c05a4ecdddf8f",
+        "brief.pdf": "aa7bd854ea5c3ea152178283c59efc9db10551ba96925aaaa970bf6615bb501a"
       }
     },
     {
@@ -47906,13 +48128,13 @@
       "followup_sha256": "69f1d9e72612749060c5b8b324764c35daaed6dd6cf8c2bfa7ef782f87a46533",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "available",
-      "body_binding_sha256": "aae7131a1475d26ed4d4a3abfa41022456fa56cbd33349b43d86c161eab9ace3",
+      "body_binding_sha256": "8a000ce4789ac5e37771ee6ca1df9588abdbfea00cac5c9117683d968a43463b",
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "bf3ba76d7242fcc5219f7e8121660d5e0b494fe23593c547952f07bbbc85fec1",
-        "brief.pdf": "439abd9d3d9267782ce9325fb80c708d718304f2f65e67a034b7d6db568ecb60"
+        "index.html": "5010a169005b1b2d776fa8880b112464cd8fc00a29786cbeccb70429d077c3b6",
+        "brief.pdf": "4e2e60cd41cedb8cd6a6987d8f5206d4b78e2940e35a44a40eec3dd9a33414f4"
       }
     },
     {
@@ -47938,13 +48160,13 @@
       "followup_sha256": "bf6ddc149957a98040c06efb3b81e562b51de90b1dc621cae18175750df2b589",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "4f2c2e52e8f6d08eb60a610a131a9d33fb3a343e3bdc9d1ca72714cca5848ba8",
-        "brief.pdf": "4c0886f2942c786d37d280a765364b2636a9c3dc2c6018b9f84b1e319f7d2d9c"
+        "index.html": "a7e3bb8a68a4364b8ce293d74adc5831e3ad38d4e6cb58755b496b5d677057c4",
+        "brief.pdf": "9d2c81be0a9a19388d34c9a41142bd313e53c8a37d031393391dabe831a59b06"
       }
     },
     {
@@ -48098,13 +48320,13 @@
       "followup_sha256": "28d0f6c4ba59f8913dbcf83cfaae2b535d003402b80737152fb34360075a10ff",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "a258c34166c17be8fe40d9fdbc865a68085bf8309c8adcdcd09c740ccb325e2e",
-        "brief.pdf": "00c6d67a009d38b323fc7d75a4491a8cafb691130965b308986a6eb042c089f8"
+        "index.html": "ea0bc4e90102abc2951b441615afa054c114c1c2e7840932838972f78a689133",
+        "brief.pdf": "6047153ba0e989ae23a59496345f4257952821aeb4027e72a8984dd87c7e1368"
       }
     },
     {
@@ -50850,13 +51072,13 @@
       "followup_sha256": "860104214fd3777db8c1a1ab5a1c187171c8862e65c4a11f05478a4905f211a1",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "available",
-      "body_binding_sha256": "638b12f31f5ec234e799c0c506d48eb946e3517abcd603a6af1ab0e19a815225",
+      "body_binding_sha256": "d81d281f218eb3e1ec36f79fdeff967916582fb85ef16cba459948b5650f75d9",
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "dabbad6348014dd5ed1c4e8f769c48a02c3e7c5dad94b42b062222110951a4bd",
-        "brief.pdf": "a22d422d6f1ce9ca80221eb1211dba6e8c6ae7a319450acc85b2d93d94b0488e"
+        "index.html": "d25b6b9863edaff9abd8c7d689a3637533ff8ed8a9f718b302f31248347c9ed1",
+        "brief.pdf": "1e0e88910b95e0a88441096cbf2db5b6125dcdec98db0f0d6ce7a8c5faf527da"
       }
     },
     {
@@ -50882,13 +51104,13 @@
       "followup_sha256": "3fbbfa69a6782cfa03c7da07c2b0c2bf98b20dea9e0aebc85c9da02c32cde74a",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "cb730ee1871a3afd5ee7ef0bc3bc3793c38cc9514bcf8e3398f16e9e0db06b4a",
-        "brief.pdf": "cacd9ea12febdd4a557befb3e6b400fe935e4f2e9f9b18a185f44d27cdcc14d8"
+        "index.html": "7056fd705d5f0ba4d0d1de10b28b0a8287aa9b8f5afe7aab655886b95ac6ecfe",
+        "brief.pdf": "6dcbe9b9b295ea9285534e675617c31cd117b1be074050593364fdfc99c147a6"
       }
     },
     {
@@ -52034,13 +52256,13 @@
       "followup_sha256": "383c5b3ec30b97606a1e70423868a65e7fe1a4b54111e820138c853f9f1f91ee",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "unsupported_format",
-      "body_binding_sha256": "da21bf7356f23e4f6ca16ad8855824be22e10de5a6c47845b14d372c989b5fd9",
+      "body_binding_sha256": "e1f3719030c0f1cc46a1ed081a3e6b0612a5bf92e92f46c955e7979336ed9676",
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "db29dd9ed1f61e21a08a41bf1fd59e30c90794856b88d0d3f6516786a36b17cc",
-        "brief.pdf": "30bce1b48964d37478cb308d9b2a14ab501995d2c7001515aed18fa53b6f9619"
+        "index.html": "5692283e8fd43a43865b778c7e65d50ae140cdaaea4f9f46628a8ba8826bb511",
+        "brief.pdf": "f51ecd82ce84e3b3b6302d8c67178270994f42a22a4621adc7e6e9b794032d04"
       }
     },
     {
@@ -52162,13 +52384,13 @@
       "followup_sha256": "83c3def1e40e1596895cd54ca206883ab0876c598e5ca619e32fdaab85ab7e9c",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "041ade6f26f9f4fec967cbccfa124ef29caccc4ed0eab2f99fc1f4aa0d24b546",
-        "brief.pdf": "f7a999188bcc3e10722a49154525b889ec7c17576b09b33ceb53205e26a7c829"
+        "index.html": "c523f3137acef3b55a694f98808b66db08dd26d3ef745f8f703e91ba32318ce7",
+        "brief.pdf": "00bd4b39a9dc85fd6588161de59cdd67244d1cc28740496d5d2ef8eb66ee8712"
       }
     },
     {
@@ -52866,13 +53088,13 @@
       "followup_sha256": "a2afa314e14a120e30dce60028920fcc1c3343ad0b82b4854fcee85eb1054015",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "failed",
-      "body_binding_sha256": "efea37cd4e69196e38ee9e6438a9b3533ef5c6e2bd5a480caf5f8b4829cc6437",
+      "body_binding_sha256": "cd4768f87f6ef57e4622fbff87ee02a941843110227827e4c55823a9573e1c1f",
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "34f3d88b0174f5370632c5e634d94c9db71cdf3a4ea07b52382d4687dbd90e6b",
-        "brief.pdf": "7bccb724544d097a05363721df23cd52bb166f36913c7b3b43563aa6ae893994"
+        "index.html": "c3be761a47d0a907af2d99e2a15f08116ed07dfc6814e8e8035c217716863971",
+        "brief.pdf": "72fbf97387debe175fffe5fc15d999efd250373fab3e9cfa69af8761e484fbcd"
       }
     },
     {
@@ -52898,13 +53120,13 @@
       "followup_sha256": "da0d17d8a6c16e6080428bd81e185a55ebf95cc2f3ef15a5a015d6bc7472d7a3",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "available",
-      "body_binding_sha256": "56af52cb971d5eef1861fcdea438b5db339de5586c8998bf5280bf5d0342187d",
+      "body_binding_sha256": "bec3ac591112bbf7e30de9ce91eeff6468d9ffbb357cf82a0ec5bd587f56da40",
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "9aeffdef09e9e46f6a0576584b01efb45c8225d22ea5d80b9f8468ee387e8971",
-        "brief.pdf": "022c86a8aa7a5caf5d44e5a1eeaecc9e6f5edab55f7cde5eb7670840e5632dc5"
+        "index.html": "7a3fff7daabb7f2d596664f4a7c938f0c0072edd784f3b25d91b275c8bea76d0",
+        "brief.pdf": "b946e3126204461120f4d1f47e1d3da0a6039443e24d480096163f942ae29c74"
       }
     },
     {
@@ -52994,13 +53216,13 @@
       "followup_sha256": "0229cbf1c0faca583ff6698e53208c6c69518c66ae4b2020d2a50f307d58de00",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "available",
-      "body_binding_sha256": "c966d841a1d50618b59f0faecc1c112ab15ad8ab80c54a71518c1cbabe6fa99c",
+      "body_binding_sha256": "5abe18be164051662c0fc64f23a703d8543e965f9e7912f8d7986a555c8296e7",
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "76ca94314fe443ef5461851be289f007a8ca783f3bbbe30e73f64eddb661b71f",
-        "brief.pdf": "8a698840639376b5a41330204c51b5ed4f628f5cfc5cbc1bc1799875e6d5ba30"
+        "index.html": "5b809aaefa87bddc2eec78ed34d6fd187a07c7918f3faf1f4efe1b7d04d957e7",
+        "brief.pdf": "85153a8833cfac315b58fab957e101baee1aa2a9f84c4a6899f9d04dcee20e83"
       }
     },
     {
@@ -53026,13 +53248,13 @@
       "followup_sha256": "03a0105172fd3fbfbc6209671b5846d6048ca906d65f79cb230aae96d87bb048",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "cf1a6241a0b85f575718abe090285a992d93e4fb162bdaf5f494f603b39efc0f",
-        "brief.pdf": "59e64b0784e42a6038c1a48a8da1928bad32144744ff02ca245cc0a567eef8a0"
+        "index.html": "37d77c6b1e55a47d42d853c4a3a733d405aaa7ef36c95c86741c0351a98c73a3",
+        "brief.pdf": "efd5e5bed1e666165e6f7e38573db60b2544a68fae59501dfa6e506cd9eb0214"
       }
     },
     {
@@ -53122,13 +53344,13 @@
       "followup_sha256": "3aa90bf1777d6ca74e3f6f25cc5a2896e1c3499259f1c407b6e096c64390183a",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "366c4058285ae0b05248f285996fb5dff69a1bda7dcc087edef43d11a53ff53d",
-        "brief.pdf": "2f9812f8e43aa28a0995dc8f5961eeb72c94c2159aebe4c3876a2b89152ee141"
+        "index.html": "ec034f1314a018e3ae12eb45ccefe254b30f38126a52e413d0029860e772014a",
+        "brief.pdf": "85abd6081fad3719d952e4dbe83e11a5b6efad70de989332a339be90000b59c4"
       }
     },
     {
@@ -53154,13 +53376,13 @@
       "followup_sha256": "af69e2eed359dc58643b58ae50162ff60f78590e0ee833b95acd309ae2495a20",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "09849e408ce314780ad8381c8b78cea8283c0177570554f9176f26b72fb46621",
-        "brief.pdf": "4c907166d3ee3b7d0799f535d467b1d46b2fa5b1970fa2746493b94b8c4be7cd"
+        "index.html": "31d8f11d71eb79efdec5e6752944fa81a48e613c7dbe45d7a87c90f4bc5bbf3c",
+        "brief.pdf": "9d948ef949fd79ee67960bbf38d80f7e587dd39566b709e5c6b8dd28b1e68a99"
       }
     },
     {
@@ -53186,13 +53408,13 @@
       "followup_sha256": "85420226df995f31dfc83b94f39566c7a542d3b4fc6ba64e5512f661b94ef51b",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "unsupported_format",
-      "body_binding_sha256": "c003ab14e7fb3f12d72007d04ca290df3eb0cf42c70a1ae4120a82ee38c61339",
+      "body_binding_sha256": "041d144fe7d0e4dc1af946b4bc6a1d84220d8f8759a13d32f965feb48174875c",
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "c66a79b872fb622129bdf8408464208971fc45ba1ac94b9d3b258b66dc7393c4",
-        "brief.pdf": "5a6c082281651fe7a9e63eb7be8938209a2da1749c073e01daec841b3bda664b"
+        "index.html": "451acfaff17c09bf06e88aca20e2ac8398d7554364a2757ca43235d83789f480",
+        "brief.pdf": "e4c54ffd15760075978f72e8588eb7537dc41c97613107887afa4e47e76b8bc9"
       }
     },
     {
@@ -53346,13 +53568,13 @@
       "followup_sha256": "a6c9c5342be87c2cab0b630ffbdd5da85acb4d8d05a286d3e4fb8db84c57ef18",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "28022101cd31b651d1b0468115737c0c93e8dd1cabbd010c3c2edcc506f96b98",
-        "brief.pdf": "abebbdb2916b63d7148ac395efc9c124313217048ceac63cd97b0f8d73cddff3"
+        "index.html": "0d1c5f00f3d5f42302df6539eff9e16426df661bfc363f57440f255b9caf98d7",
+        "brief.pdf": "194a5bf2364b38c0932e7a6346501ae57e558489cbe9f0e56238a134aa10009a"
       }
     },
     {
@@ -53570,13 +53792,13 @@
       "followup_sha256": "af12c3ecbb70ea7077c62ac400a8e386b73dcae4e5a740ef48b3eb4040195b5d",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "e058406872eca02499e94a02212e59a618ba4e5187129f482a8fc46221e35cb8",
-        "brief.pdf": "75d396594ebc7644a54e70eb593953e30781b24ae6993504f7f6c5fa36db4f29"
+        "index.html": "a9569f368852c828772673ece7cca079802c34677a56304e93f65a7f9e4bef9c",
+        "brief.pdf": "059f197e10f96c50901dbc0684994b3200e8e56109a60fa3cec89b06cc4023fb"
       }
     },
     {
@@ -54370,13 +54592,13 @@
       "followup_sha256": "46cddd307e02fbc94ddd5fbc8ac43b674fe68438f683d3eebe0fa31203e511bb",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "c81922f66e312b345ecb125d853dc0eec95fc44e930663d5c78914363e0def1d",
-        "brief.pdf": "e9d129039d0362a15a21fa7961a3b88565e0945c79318b264032d1dc9a91b305"
+        "index.html": "75aa2887e557d527b276f5ac4bf2e2bb2ef78f51c364d7abca71ea9833db4a77",
+        "brief.pdf": "5372e64da10dffe1bfe8278d991515f07380601efb6025ab851e05980930c478"
       }
     },
     {
@@ -54402,13 +54624,13 @@
       "followup_sha256": "d029a278d754ff5e2e62f9c4397cab7958c2718e2215ae15b076be2120b54e1f",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "a0f3d39bc64871c40d318cda156eab993c7c5849bd58da226774b509750c929a",
-        "brief.pdf": "4c299aa7d24df5661f839899184e69e4b54bae4a5d6022793e3cc960c2f30b06"
+        "index.html": "76740a25a0ec25a1295d6771755c93456257ac37ea75a56a902fa07ec6b6d209",
+        "brief.pdf": "4be688134077961935021633e73e5a7811ae0648cb7a5cce804e067d3162a6da"
       }
     },
     {
@@ -54466,13 +54688,13 @@
       "followup_sha256": "ef7a75d9fac9e935c9f0f53790d9d28b05f988ca8b65404ae4368e8a6b16b41d",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "435c4c7b3a58b052fc3df561f06da434e2942dd18ad79e6534479f56de4a71c6",
-        "brief.pdf": "211e747e8c921d8e2ffeaffed58aae6f7a8558ddeb518b2277ab30a66a846065"
+        "index.html": "6ef3f63601e39c83c5e382fbecdd6e133ea60b848d99c2f56b27424fcaa36b48",
+        "brief.pdf": "a1ba0500aefb4a79ed3922f0884af4d7f5e647e9e5090a09922a7793c98cb536"
       }
     },
     {
@@ -55234,13 +55456,13 @@
       "followup_sha256": "65a69e5d05e95102fe2c2c2a5ee29d388eeaf05171973b339cf19e21d76f0572",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "42792f78643027b496fd5f5512e8c226f42e63dccdd8b83fb6638b842114725a",
-        "brief.pdf": "f003c337a52a4d33d0bb356be18b1344ca7915fda003f8ad7472fa9bad40f31f"
+        "index.html": "67afee8a93bb690e82a803ce8be9b136a275e012a6f6b23c6a03d480b354ef0c",
+        "brief.pdf": "7fb8047fa32bfd531ae3bea2f6982a68af5e3a92f853d49048a1914675b13a67"
       }
     },
     {
@@ -55266,13 +55488,13 @@
       "followup_sha256": "36071c4746b6745654f7c22fefc55264d2acf39dc4110f3d6b020daabc63c67d",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "7be39c991363211ea4e2beb78a86564dd2531d2951a4d3563d926ec9a0e91056",
-        "brief.pdf": "d0cc323b63f0085c7ef37f14ce6486c25ef9eeaa047a75a486ef9ba9ae3a73ce"
+        "index.html": "2b37184560a75b064193322c67a25be0b01c5fdd741e82abfa8a2e7b6cad585d",
+        "brief.pdf": "7e205566b79087222465baf5cb3a728956d1eeba4bb4a7fb3def884565e1d656"
       }
     },
     {
@@ -55362,13 +55584,13 @@
       "followup_sha256": "0291acc81e656724f702e4171ce138686187280c65f4f6dbe793d8bd7a0e0980",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "unsupported_format",
-      "body_binding_sha256": "af1df30b1f2cd3eaed4935853fe919bbf3888bd59d10fa1bfbfb0320b9a63209",
+      "body_binding_sha256": "f6ec070762336cd97fdb3c4019f3d5c7976baa205f09a718f248a8f455444277",
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "be2d0ab29024def6894030b2051816e4b2a9e4bfbe7551570842e7d8f501e4f9",
-        "brief.pdf": "e56794b73f133d89cc4581b382eb0c7569b1528000c3878f055356e93d3f4e1b"
+        "index.html": "39d568c2521e2780e8a175a8ee7bb355e3abd6164ad656e2b21a8e42b6b70401",
+        "brief.pdf": "55091f6ccb34cee9820934e419b5cdff40e9552a2ede44cff18804ccb060a7b3"
       }
     },
     {
@@ -55394,13 +55616,13 @@
       "followup_sha256": "c439b2c9a18555b1a401eccdd96c2224df5d9d864d56a8582c0dd58afe663875",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "2aa01ea33a82299b33c6d708f602b7504b3b28e97de75f59f644beeb738885df",
-        "brief.pdf": "c78233ffd2146cf96489610e96f1a6f955d0c85d61283d7ebf8533db1a4eecc8"
+        "index.html": "8d1f8df6829bfc5ffb3f994e4704ce885320b0828586e12a40f626ae71a75aee",
+        "brief.pdf": "26de3f1e5b0aa7ab6a441e88c955d681d11436c90b503912a13d93d8164469f4"
       }
     },
     {
@@ -55810,13 +56032,13 @@
       "followup_sha256": "9715134801373936c854b396ae757ef2f7cc7d80b9be5921e3522a9250d79b90",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "c03de12b1bd44df407c6b86836dfaadc00a4cacc645ded83af1ca4a841c2937b",
-        "brief.pdf": "4052d889aac8464221e64b66df4667e1c2d4f49b5ea85b2d26453a86ce15e644"
+        "index.html": "0fa4e6ee59771ff98aa09a7b8ede392c0b46676fa3c2d4eb2a9ba49cda69c8d7",
+        "brief.pdf": "42dc5451a9e5144f40d05c0d406ece914b2339064ffe6f08fa91f12378cf55c9"
       }
     },
     {
@@ -55842,13 +56064,13 @@
       "followup_sha256": "bc3669b7d648a08522f3f2b2ebe34121f8bd3a47b12ae559f494dc975c304096",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "cf7902b953e50a1dc527d92673399622825dd67bc99e6fc44b758926557e5039",
-        "brief.pdf": "0e11b7eb13412a5bcf85bfba7b00b42c52b4bd370f7ddf7a9b27371a3c996f4a"
+        "index.html": "c52455fe2596c1ea05c9e2e651521228d0bee8b8b00bf59f7804cf4be46e9128",
+        "brief.pdf": "d30f8b0edc363d190e2f36c4c999228f373a27d00aba54649e7ba9ec6b610b6e"
       }
     },
     {
@@ -56098,13 +56320,13 @@
       "followup_sha256": "fb8297a63112a3ae859efd37f144b0d67287dc73c4c8f8dd2ceea8355d5db067",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "80fd9b293428f5fc0e38dfc55fd1143fce269f647d73f6dba55ef4fa67491bc5",
-        "brief.pdf": "4786fcc87f92a49067c273b101977037d5385995aeaaf0399a4e28ecb68de4c9"
+        "index.html": "9b451522d69c2c5fc7dcdcb5902d23e4933e16b8be011d60ead80a2a45305330",
+        "brief.pdf": "a5ab31122ade04ebe4563dc6ebad0fe97d37ede403b00efa1fa8e5a9c4c1fd73"
       }
     },
     {
@@ -56130,13 +56352,13 @@
       "followup_sha256": "260d0fc892a74b44da3ba01cef6e7b1e20b09bf1256bc3952993e20bcf3c5e5f",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "7d33c5bb49aeb5ab0852c7490784114675f1f332a3cbd071533a7ab7dcb6930e",
-        "brief.pdf": "c0518fc179f181acc4ec890587bd1184ab56cc7621d98e610e4452a9a9b084b2"
+        "index.html": "3a53b8bb5ea8aedd6a665b791c96b2981b1e3ff55e44588b5ccec19ec689d31d",
+        "brief.pdf": "99d5f368f720b2bbc804703953d3b8e5844a902908ffd998f9e13de96e3620cd"
       }
     },
     {
@@ -56866,13 +57088,13 @@
       "followup_sha256": "9690697e53d7ec55c946b22cc61e2b4f257aa08ecbc93b081b95ae0902a06df4",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "fe7f4f54afbb780de84d2a97927f02e3ec51920d8cfe1426a6106ec9f4b7deab",
-        "brief.pdf": "ce19ae835ef8908f1005ced4f16e3eb4b52d136e433bea7f7eb4236124a1d1bd"
+        "index.html": "949141175d4dc2c54b67a45a2a87f782f1f37928efdb260fa6201c0d3dbea2bd",
+        "brief.pdf": "5eb6dc31c798dc2feae4234c7b932796e477420752eb235a3add943ed446879c"
       }
     },
     {
@@ -56898,13 +57120,13 @@
       "followup_sha256": "5087ef79b942e3023201273560baf816e44d194437a760d4d990b9e07144e799",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "e6897dc12eed2972e79dfb30b4a1c9b5cb5d30f0e2c508a0ce20ea426bc98732",
-        "brief.pdf": "cfc19d4aa43f20cc2391af882190ec3ee302282b137e6017efdfb087eb1ca97a"
+        "index.html": "663964c043d238c21d28d4b9a593bf7519db9e8ff70d57ae0e8f4a9f9e875c58",
+        "brief.pdf": "abfe875a66e83c9c3cebb5b200796e85a16e4c42d483139ef45e1c2ebbb64bb4"
       }
     },
     {
@@ -57026,13 +57248,13 @@
       "followup_sha256": "89efb09c19d745827b39fb6b58d436bb0412a16735962d04c9f38c94739cf715",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "9c80f0d91841586c92569ecce9bbf985c4c688637f4dcc67607367559a66dbe1",
-        "brief.pdf": "70d5a8910d798f3b63fa877d4fcea44eb4ef5e978a28d895a2d0ee82f94d2379"
+        "index.html": "767847a96e362298841c2459689403c640169cad705a2f419a0c823e192bb6ac",
+        "brief.pdf": "29a6514676144c09f729d3561f943f957d905f93fdd7d80d3793cfbcac9736c0"
       }
     },
     {
@@ -57570,13 +57792,13 @@
       "followup_sha256": "df0d44108a0b03b8b0b6c32d7af106c7dde2723e60239b9e0c9007a3ed4f50d6",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "5de4b0a3a0d4389ec3eab889f240296b4dd73e412a25616e7900d89479c05a99",
-        "brief.pdf": "cbabf2decb2f5a8ebdf260ed8e178490ce2f21967ad685ad5a943c8ccb787dc1"
+        "index.html": "5742ef7f77553f9f57476657d49f5740d3ba0aa2ae91ff9e3c00b1ff9788dc81",
+        "brief.pdf": "03218bf2973d0c9a42b5ee2d137448567af3bf684ecdfaa605249e6bfb6b57f2"
       }
     },
     {
@@ -57666,13 +57888,13 @@
       "followup_sha256": "01ec3167c8047731ee17e6ec98ed0f6b8762c65ebf9f01d4b04854e2ecbea35f",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "a4e2ed1cdc1dd52a190ffb84a9a57d1518bbee4eb34536c82df8530526443651",
-        "brief.pdf": "eb95c76270f78b638a96f5e1370158c65908ab87637e679e269a4c68f5053eb9"
+        "index.html": "7ed962065fbf94257b41bb2703cf6d69a9cf16ee046c2bdbb4768dc1d8305513",
+        "brief.pdf": "713e8b5546cac300e74e9f5e7feafee177494da144622c3b322d1074a98dc6f5"
       }
     },
     {
@@ -58114,13 +58336,13 @@
       "followup_sha256": "f8254ff89b9147454c8017067cfa577ae186ba6731e017666013b27d0b1a9a71",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "available",
-      "body_binding_sha256": "397e572406a0497e5aa9aeb4610e73d06bfdf7ef7fe861ae53ee3c36d88bda8d",
+      "body_binding_sha256": "bcf4d867ceb86cd31f62b48056a17429579f68da09022acf56a794a761135aec",
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "25a2be4dc9e47b1a019e0b6aad6893e76f7d8b380500226eeab9d779f7a7e35b",
-        "brief.pdf": "58e1a112eb82b4f3199fb2932217214824ee4cef5ba4c421e7bea357ac1c63c4"
+        "index.html": "ba315aafa95061fc1179d75acda824110104e4da09fd2a210625ed4255f941ef",
+        "brief.pdf": "e0c469c91b6395e09b1ecc3ce1c52e186c421edad55237b64e064f8280b70cac"
       }
     },
     {
@@ -58146,13 +58368,13 @@
       "followup_sha256": "35201b0ca4b2ee0929544b4d9cac7fb20a718fdfa23555d913816aad3e95c02c",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "available",
-      "body_binding_sha256": "190ae69cf8cea5ed1f7d1738c040d95ea7ef827ca251e85b96acf3780bc64fbe",
+      "body_binding_sha256": "9e04b0ea15b8bacf28d06935e3b31427d9ad43829abdcd6bd9437baeedd342da",
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "20582210c7f820135773f8063d0629f16d8879b89f8f33ce872bb4c7a4c9a5b8",
-        "brief.pdf": "fcc68079e06323b5d1f319359fbe27a54c8ff31561d2513794d020b1c7932c48"
+        "index.html": "7408f91a38dd494dc2cfcf7de5056bb468e8bbd644a7bad809f7e6bed634acba",
+        "brief.pdf": "1d8a9cdb2653c72c41b65cbfc0a6b704e39e4dbb65cdd93f6f89e4296b0a8e69"
       }
     },
     {
@@ -58178,13 +58400,13 @@
       "followup_sha256": "461056bf06044e5850671edec9020423da51ba69ff33a235661aaf8411736610",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "097709b24c2b71f83014a9b9961a9f1f18659d84cdc19019edbbe16049e4c923",
-        "brief.pdf": "4609f2c1359efcdb8f0e474944e5a34a55e1407cc7c5022b5a2310eefb8e0c76"
+        "index.html": "e7fed3f9926631f7a3f6fb786541378595273c8c75354ea637bc056536744928",
+        "brief.pdf": "74a07e0ec57ad8491814c9cd7ac7e653cc8ab82bec6b46523828f1bc965edd17"
       }
     },
     {
@@ -58338,13 +58560,13 @@
       "followup_sha256": "6769b07099f7b1938212c9500aa26bd31ca8aa8f42ed19a6496b69cb9db9f286",
       "relation": "after_report",
       "report_run_id": "b8da66727df08872f6188df9",
-      "latest_period_run_id": "b8da66727df08872f6188df9",
+      "latest_period_run_id": "c5c62211cae563ad018b1079",
       "body_status": "failed",
-      "body_binding_sha256": "4888b954267110b8d4b28c1789d6f01eaf578732eaf733423b6ff2220558d02b",
+      "body_binding_sha256": "148f56ae41ac4c91175d0bc385642536638b024d0b85dfab23d9a42f56a2ebf5",
       "research_review_sha256": "0463fe3f4d3e538223b5730bd33816b421dafc1b2525623569951dea233ee2aa",
       "files": {
-        "index.html": "0ba6341832fedec1a439ab643001791aa1b6de971fbb9c47242448959937e369",
-        "brief.pdf": "59f45771a93ecea3d3d98a948036f9c99421c6c3d61ab7dec77a1f3ec4316a0e"
+        "index.html": "0dd74bcdaaf1dda6e88466efdc5de2703768b6061db4c0cc0ee730ded4496c30",
+        "brief.pdf": "772c80627c46f931f164b16011bea6020911e8f931da63c3563bd82493c938b4"
       }
     },
     {
@@ -58434,13 +58656,13 @@
       "followup_sha256": "1b00841c01e7c9475ce02b0ac5524f35d5bdef15a898c0ea5b9e6598e4407717",
       "relation": "after_report",
       "report_run_id": "0258dfa5792a7f5ea2e5e35d",
-      "latest_period_run_id": "0258dfa5792a7f5ea2e5e35d",
+      "latest_period_run_id": "217184b3c98fc72e4a3a2d76",
       "body_status": "failed",
-      "body_binding_sha256": "19a037f951a11f3206aa7ead76733925b86181bd4e21a35e562627098a560b4d",
+      "body_binding_sha256": "fd0dd59c9f633c996bcfe36c215478c773f8b528e41f6f626137bd9270ab1997",
       "research_review_sha256": "62498108770e8303136308bf4010cdc56e47e47474e2e64754505f24f7d7c374",
       "files": {
-        "index.html": "4d3649f641407234a331833a58c328e298b5c11dc2be2f4909886979da52b8b1",
-        "brief.pdf": "8eb1535c48069554fdfc826bb6ca4c8b0eede08c1358c7f21d56ebc0ca06f1b8"
+        "index.html": "3280871dfb0def75e6edd78bfa02e4ce84d07cc51a52618a52fc82891e9cd572",
+        "brief.pdf": "06070bbb387ebc743c4748c7d65784037998da4c093893b2c31c24d7211e77e0"
       }
     },
     {
@@ -58498,13 +58720,13 @@
       "followup_sha256": "20cf7d4eb4df7806126d0bee40ca4728439eee1b77f8059c8c5c7b0abf78b517",
       "relation": "after_report",
       "report_run_id": "1e6be6f2812c55a185b4a934",
-      "latest_period_run_id": "1e6be6f2812c55a185b4a934",
+      "latest_period_run_id": "ac1fecff7588fe67cb4ba8e9",
       "body_status": "failed",
-      "body_binding_sha256": "a9bae9e5278b48d38903dc7e164c3860c6076f599fd336e7a61ffe9838a9d800",
+      "body_binding_sha256": "9cdd900a3e225e9a873757f58c8f96777f46026b7528247b5bcd450248a9f1b9",
       "research_review_sha256": "da90d2482ec2ba0af7b37905984155f05cbe3de576ec46ef2350a1290cc7d453",
       "files": {
-        "index.html": "e5b0f6b1b12700bdada6c9bd553474871b704dcee787e127a800e6d4ec2c1789",
-        "brief.pdf": "81c50180ba9a9298e0985f7414c3bc4edaa87471ea253df0e98c08c7bc6f21f3"
+        "index.html": "f94fc59fec7e357ee2fa38b2bbc09029160c5c8c1e227fd44ce652efa998aaa8",
+        "brief.pdf": "eef1c5e2bdb6a3e572448bac909646e36cb39755bc43cc75cbdda5f0b1130e09"
       }
     },
     {
@@ -58594,13 +58816,13 @@
       "followup_sha256": "d790ef2c025738f77080ea50f6e013ebb442129068982a2d083eb45d97cc85d9",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "failed",
-      "body_binding_sha256": "c6fc9f5a4a5f1b0b2991d1f5117fd8bde464ef40304a052ec53c5a74acbcab5d",
+      "body_binding_sha256": "e4dd2bda5b8f0928bc89a3a7783b4be5294b2a2b35434b5424e5ae4f952d4ff2",
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "df4ddfeaeabc272ffd91b610d58f09524a84fc8bb3da5de02c517dba06521ecd",
-        "brief.pdf": "70814916cd9c9dc0a4d039af33851b3a451d600ff5026f31e790b08a1a533213"
+        "index.html": "eada6ab9fb3c41f80dc46d8e1fa7b464d6c832905627ff19db67de657f4b59ef",
+        "brief.pdf": "c7d87ac7ac2e3751545f72aca0dd44d36969cb41a37efe337fcc5fff2f2c7951"
       }
     },
     {
@@ -58626,13 +58848,13 @@
       "followup_sha256": "e5594be21c6238390c5c519acba28b0414300fa57ca4f2240e91f4e0f570a3aa",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "unsupported_format",
-      "body_binding_sha256": "ae72b70e3f8f05802da3013b621d9a80cd87fc020ab86ba84ed02fd2995f2040",
+      "body_binding_sha256": "6bf784dabefc74e4d1d04c452e8b4d306d0de185044c91c365f440ebedf844c3",
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "7fc47422df247bb91ad1eb5b53c18f3bf584eb50e0ed2740550ead8c27ad3571",
-        "brief.pdf": "696293a7f1dbeac3bbc3f10234e41fc03c327341bc710fd36df4be78f994a063"
+        "index.html": "cb15a22bbc645966c2c4ed511a30c35e88f834c7e7d0bfeae8270d62a1fb7566",
+        "brief.pdf": "9bd8564deff0f7bee38121265c700a544bc627f7d98ce0de083b3328e308c1cb"
       }
     },
     {
@@ -58658,22 +58880,22 @@
       "followup_sha256": "9184f92f8b6b02caa7f57ea03ba01bcdb25f1aefac47241e7a2c2df2fabe74fc",
       "relation": "after_report",
       "report_run_id": "0c530589394cf17c100e2797",
-      "latest_period_run_id": "0c530589394cf17c100e2797",
+      "latest_period_run_id": "a969d5f906a7e3e2c1af2fa2",
       "body_status": "unsupported_format",
-      "body_binding_sha256": "d3b3af042b9fb7921ee4b167cf9fb8b36048c05287f54fd1503a51828ef00679",
+      "body_binding_sha256": "6ff7dfc5bc59c69debc3964045081d7268d40673ab7890a0842ccf660b2e1c17",
       "research_review_sha256": "719655181ed8a52229e030562ec4ef75b6ebbcc786b881a3620c1837f0aff05c",
       "files": {
-        "index.html": "6b9fca0621673ff683cfc0c92e2f2357c3eb42b6d0671a44cc23fbc84faa99be",
-        "brief.pdf": "ff5cd6b4f5a58302c691d9e0cd3e7132c87527047903d4e0b6887405177088a8"
+        "index.html": "6bc37646f87f511a76c4f9d2e5f4b716bc518375750d4546c918863d8bf6c1b9",
+        "brief.pdf": "a3fb8991f4dccf5f9dcbbf84a757a0ae5c082e93cd085401c6791db4613bc84f"
       }
     }
   ],
   "deferred_reports": [],
   "delivery": {
-    "generated_at": "2026-11-13T18:48:24.693653+09:00",
+    "generated_at": "2026-11-14T08:43:35.530054+09:00",
     "observed_at": "2026-11-13T18:30:09+09:00",
-    "accepted_reports": 190,
-    "prepared_reports": 190,
+    "accepted_reports": 194,
+    "prepared_reports": 194,
     "deferred_reports": 0
   },
   "criteria": {
@@ -58695,7 +58917,7 @@
     "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
   },
   "followup_coverage": {
-    "reports": 190,
+    "reports": 194,
     "companies": 176,
     "events": 1494,
     "condition_fulfillments": 0,
@@ -71238,7 +71460,7 @@
         "event_id": "b0fd53ae50a5e835d2d797b8",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261001800119",
         "source_event_sha256": "87a4dbe57de181073a87282828d7f214d2de45e353952bf90cf0a3fc7f2c5bda",
-        "assessment_sha256": "d3f052b84872233c1c3f2099858186961dfdc9a957d2ec4effb15bc5a4a99f4a",
+        "assessment_sha256": "8c0e9900b0bf3a6cc6e1a518d4676a130de42bd7e53186b9a2896c915abc020a",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -71313,7 +71535,7 @@
         "event_id": "d29a6e1622fecb2bcee2892b",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261001800034",
         "source_event_sha256": "0520bdc17b2e77612592a4bce0c2e1ecb00f5b092a53d9fdbfbf3f21adcf1917",
-        "assessment_sha256": "4d070b5f47c29be3fb2c48ebd70759e60c9beec4dfac965b104f0830e2bd0782",
+        "assessment_sha256": "67d12e756200a2e074970b24ccd4bc574cd2216dba44bb0444b9fd01a4380c4f",
         "evidence_fact_ids": [
           "advance_payment_terms",
           "contract_end",
@@ -71515,7 +71737,7 @@
         "event_id": "444e26381e9ad45ef5fe10c4",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261006800697",
         "source_event_sha256": "251bb920570b9e13b0229ef15d778a76a30fbe4956351f3013dc1b60378a5523",
-        "assessment_sha256": "9ee22f8cf57d0174e0ea57001161c8e8f5638c5dc428f8ee7f443cdcd6d3d73b",
+        "assessment_sha256": "d5d99f67b5ef29a08dd0652bc75b206aef6d8a69f86b57eb980c351f9402465c",
         "evidence_fact_ids": [
           "advance_payment_terms",
           "contract_end",
@@ -71791,7 +72013,7 @@
         "event_id": "602ba55040f59e88a2bca50f",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261008800055",
         "source_event_sha256": "c7c78d25f0e5bb2a4aeecdd0e327e8c26f4396937be47518935d56c5708d933c",
-        "assessment_sha256": "ed13693a93895e67b24b1c72861910783766907e7d3e3e1384a6b45fd2ce296a",
+        "assessment_sha256": "df6d0bee3fe66bc695109dee55a997e260fea95ceb8c4cc5f5603f240d6526a6",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -72811,7 +73033,7 @@
         "event_id": "a47b755205ac3ed3dff939d5",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261014800616",
         "source_event_sha256": "a04d28f7b1c0a5e88b35d91e457012c55d43529c5d3f0f4e7ba98247f303f5fb",
-        "assessment_sha256": "50de69171f87340b9016d9f9eeb642b0b9ba9cf6d4b92ff08e808d9111f37d03",
+        "assessment_sha256": "7ce2d3ea6b5435b63166ecc01d42bb6fbb8dbd09545413ad284101ed6f5deb45",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -75585,7 +75807,7 @@
         "event_id": "2b60c267e1d12d7b0c08f205",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261026800529",
         "source_event_sha256": "b3da023d75a62ac1b149f8cc32f5ddbf95c23d7fecbc453f530c2c0fd7fd01c1",
-        "assessment_sha256": "2e1aded32b2f0d2588a609488ba08bef53e67a2133dc85dfcde2e92dfef47ae9",
+        "assessment_sha256": "783b73fa685d49d566e4932f3989492f346f8a8dcdc0e53c1f7ef32363f78154",
         "evidence_fact_ids": [
           "advance_payment_terms",
           "contract_end",
@@ -76964,7 +77186,7 @@
         "event_id": "ed806997bdb51c245281b4d8",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261029800381",
         "source_event_sha256": "b5d4ea3a9ca96b8c331432090a20fd9f42991f178ac42e7556cd576e534de015",
-        "assessment_sha256": "a6855b384cad8ddaec92ad2da2e4f7d3215e0f437f2fb2f82dc31a61d638c782",
+        "assessment_sha256": "048146d7a58b33cfc8a5f8a080c800ee9574647bce1d3e53125267390da20ea3",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -77508,7 +77730,7 @@
         "event_id": "425f7a63c88536843de2cd4d",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261030000001",
         "source_event_sha256": "64c1c7195b90ab9a7ad871f8c2293a9e45cda7c42890aae8a83ed131cd6cc21e",
-        "assessment_sha256": "1941eeac095b5d4ca11cab537a0990fee90e5a4c1abd5b1c9e213842e53f6d5b",
+        "assessment_sha256": "2e2c0e76d6769cf63f8f44f085736fa4806fcad429ebe8ddea935c644f554106",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -77909,7 +78131,7 @@
         "event_id": "00fac8f471003aad3a635353",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261102800419",
         "source_event_sha256": "398a44f3b674405ce0d9b9439e076033819f7a79b8d85529075716822acc5860",
-        "assessment_sha256": "578c5940dd8ee1b64a8a9a32fd5c3c7c852d322d53226096ca8f20998d87c7a3",
+        "assessment_sha256": "35a050f61d63c8717b36df7b7116ea60c7b7043ab32aad69fd664b746662b68c",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -77924,7 +78146,7 @@
         "event_id": "f0cff10420fd09dbe9182ebe",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261102800417",
         "source_event_sha256": "e9f18c791bd1640e650eba32387e48ac42e3db03ed93ef233e95644d64695a81",
-        "assessment_sha256": "6695412f0c9963b06118394ee2bfd52583d3d8745397d2312ef4fdd4bc996980",
+        "assessment_sha256": "f369fd4e9c8cc2a073889c791a90d5db86bac2b9701af8dfbf982bdfbda30d51",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -77967,7 +78189,7 @@
         "event_id": "bc0ee4699e2fe0621e152a19",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103800087",
         "source_event_sha256": "deb2f44eb7f2d5eb098b6957a6874854cce565502c50a5c07517fbe56b8a9bf6",
-        "assessment_sha256": "77cd7633df6534a464327859d177356346e8aab73cb7499dc1cf55144bd2d8f7",
+        "assessment_sha256": "e5bb7fcc77b836caac0f73d0539739e1c76bf5928711666d4511d1531051ad08",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -78065,7 +78287,7 @@
         "event_id": "baa00dfc0583dde541da4602",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261103000311",
         "source_event_sha256": "f4f129cafcd7b9e7eed4c8e34984b2fd029baedc0bd4216c8b6a1b93382ee8d2",
-        "assessment_sha256": "ee06c0e92067e56ce708fc8a74e5d9441438f8b0bd126172d1eedf2ef2d1b4e1",
+        "assessment_sha256": "510b0b1545b20bf8d8894a0586b966d29444076314cb0f8486090266212fc84b",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -79045,7 +79267,7 @@
         "event_id": "4e15539142a09491aaec6aaa",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800553",
         "source_event_sha256": "486a5fa52f399bee05c48416bd3129e16005cc26f4a109c952d5b9b1908b75c9",
-        "assessment_sha256": "862c807aabfe8bab1941e4822eb33fefe5786587660d72c95bde0e7902f4bbae",
+        "assessment_sha256": "0f5a42f1792d6a8565890184f7d83f23e3b6d03f28f73a220dd6936f4dc92b90",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80295,7 +80517,7 @@
         "event_id": "f2d3ef1a4248e2769303b79e",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800028",
         "source_event_sha256": "153d2f4d4e6e129319956a4c7f1819d357f5939cbb20b5c5f0b1987d05966c10",
-        "assessment_sha256": "350c7e1a0a5dce8c0e58ce0cb9e9251c7e6ada1feb8c8d42dd203c7b9eadb9ef",
+        "assessment_sha256": "c9e58569aa897341e58e9c75eda54373cba1e49d6cd245f3c88379b03f466bfb",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80310,7 +80532,7 @@
         "event_id": "5018a00f9d7441e1659d1b06",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800027",
         "source_event_sha256": "233676f6b77dc58a7b0a755830cb5fec3fb8d6a6cc59c83c8d48aeca76ff1485",
-        "assessment_sha256": "160c3c8bea2b09f2cfd1905cccb6ab67a097b2629986d9b47887c2ba2162502a",
+        "assessment_sha256": "d83dd1323a6c9398a017884f0aae17c230794b7d600c843bfd615955661d38f4",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80396,7 +80618,7 @@
         "event_id": "ac0cc8533923b052197f4c71",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113000421",
         "source_event_sha256": "bfacfd7073a5ccc46e5e727a79909453d761d16d541ddb7dde39f693f521e5a7",
-        "assessment_sha256": "2e9a471e436b9743c31e51ae77a60e7ec9c94d57256a25cf8df9a80e5382899f",
+        "assessment_sha256": "d801640cfcfb03d48db65f9136f2ef3a8052c8dc5ce255243974d3aaca376250",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80440,7 +80662,7 @@
         "event_id": "d816a02f9874acb59fa82a95",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113000856",
         "source_event_sha256": "d2834b8d2531f6cb4a2be847394c7d37ac29b936b2bc3d3bf152c0442bdfd65f",
-        "assessment_sha256": "f198698cd9ad285c9e2b76d0c8a0242066427cfbd0701de9fa9e9cae03237db1",
+        "assessment_sha256": "cd688daa6f4ecf8a23c38c6e3da6a0a1fa04972fa75c3a45a46747f89fd33632",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80469,7 +80691,7 @@
         "event_id": "735355d84214fd9f78768d32",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113001140",
         "source_event_sha256": "182f1c1dea7306f10cfbb66433e76d7c21a4254feb153ef9d1c7d38412b3bf8d",
-        "assessment_sha256": "56f86de5d330cb431478832b179baa64d7f4fb3cefa66d81b5d8a96c0be432a7",
+        "assessment_sha256": "4c3677624390e9e63b6e1279159a2c5ae9c8bb53923a88b24c03a4edf5a5a874",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80512,7 +80734,7 @@
         "event_id": "8ce2a891bf3fa80ea0fd6b12",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113001097",
         "source_event_sha256": "4e3490ef361eee0e3a5d55ecc36378fece6a31ffb8bc93050b76a0c50be18b19",
-        "assessment_sha256": "d7220b287b171687bb8f4502a2fe67a5c0601a40b4da7075992ff2cf6d32ea15",
+        "assessment_sha256": "30f3311cfdfd54ebe4fd123b119d5d098628e02e0d0e8fd3edbd2bb6c8dc46d5",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80527,7 +80749,7 @@
         "event_id": "f9eb93111bd57403e9f86f46",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113801151",
         "source_event_sha256": "2703e18d768ba59e9121745d6720e5c1d50bd7607e9474486e2bcdc5c0b2b3d8",
-        "assessment_sha256": "cf72703adfea101795e1d0b90f0b062cf060729e54c419bb5947d703589df167",
+        "assessment_sha256": "f607fdf098176aee517489b973a5f3cb7d7b1a41dac6bc7492af70b318d39004",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80542,7 +80764,7 @@
         "event_id": "c7a50a34b03bd25f10c1c2a6",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113801052",
         "source_event_sha256": "026b9e03175822c10a4d33c338755463d8e31ad4ac5d72e5c1f709af0a3bd6f7",
-        "assessment_sha256": "b04476cb9be419d041a29fb7ec11032e0fa2a2aea11839ba84beccc07f274d47",
+        "assessment_sha256": "2ac088780e8ea918bab6e6271cf7887b39a61e7c6a24cf501f20b458e7db9327",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -82666,6 +82888,62 @@
         "label": "정기 갱신",
         "reason": "다음 보고기간 자료로 기존 질문과 비교 가능한 수치를 다시 확인합니다.",
         "previous_run_id": "64f309e07c7a4f86d33fd499",
+        "judgment": "not_determined",
+        "condition_fulfilled": false,
+        "change_flags": [
+          "new_base_run",
+          "new_period"
+        ],
+        "relationship": "이전 판단의 유지·강화·약화는 추가 근거 확인 전 보류합니다."
+      },
+      "a969d5f906a7e3e2c1af2fa2": {
+        "version": "research-attention-v1",
+        "code": "periodic",
+        "label": "정기 갱신",
+        "reason": "다음 보고기간 자료로 기존 질문과 비교 가능한 수치를 다시 확인합니다.",
+        "previous_run_id": "0c530589394cf17c100e2797",
+        "judgment": "not_determined",
+        "condition_fulfilled": false,
+        "change_flags": [
+          "new_base_run",
+          "new_period"
+        ],
+        "relationship": "이전 판단의 유지·강화·약화는 추가 근거 확인 전 보류합니다."
+      },
+      "217184b3c98fc72e4a3a2d76": {
+        "version": "research-attention-v1",
+        "code": "periodic",
+        "label": "정기 갱신",
+        "reason": "다음 보고기간 자료로 기존 질문과 비교 가능한 수치를 다시 확인합니다.",
+        "previous_run_id": "0258dfa5792a7f5ea2e5e35d",
+        "judgment": "not_determined",
+        "condition_fulfilled": false,
+        "change_flags": [
+          "new_base_run",
+          "new_period"
+        ],
+        "relationship": "이전 판단의 유지·강화·약화는 추가 근거 확인 전 보류합니다."
+      },
+      "ac1fecff7588fe67cb4ba8e9": {
+        "version": "research-attention-v1",
+        "code": "periodic",
+        "label": "정기 갱신",
+        "reason": "다음 보고기간 자료로 기존 질문과 비교 가능한 수치를 다시 확인합니다.",
+        "previous_run_id": "1e6be6f2812c55a185b4a934",
+        "judgment": "not_determined",
+        "condition_fulfilled": false,
+        "change_flags": [
+          "new_base_run",
+          "new_period"
+        ],
+        "relationship": "이전 판단의 유지·강화·약화는 추가 근거 확인 전 보류합니다."
+      },
+      "c5c62211cae563ad018b1079": {
+        "version": "research-attention-v1",
+        "code": "periodic",
+        "label": "정기 갱신",
+        "reason": "다음 보고기간 자료로 기존 질문과 비교 가능한 수치를 다시 확인합니다.",
+        "previous_run_id": "b8da66727df08872f6188df9",
         "judgment": "not_determined",
         "condition_fulfilled": false,
         "change_flags": [
@@ -86117,19 +86395,19 @@
       "original_content_sha256": "222294008c02facc3ee4a867f2a5b55ca360d2e51b8db94c11cc88eb5e94ae48"
     },
     "LG에너지솔루션/2025-annual/index.html": {
-      "sha256": "296529acbd07e282ea2c41b0ecdcc6c610384a2b23f6ca18e8fa4e4e8b2cf334",
+      "sha256": "54984186af9e44f5a16a3971790c6c4c47720bb9184d4c969874efe0d36fa573",
       "original_content_sha256": "e477104e7dd4991408b18807da55de5561140b9ba3d9b1f06d9ea94bf4787486"
     },
     "LG에너지솔루션/2026-h1/index.html": {
-      "sha256": "94b3ad528520148c14b8fb8d72f2fea9b13e89c2c2ffedb2f14e2f8fce6b1dfe",
+      "sha256": "00ead68d5e225ca1272cf0a18583bf3c9104feee12a0d17a010a20941efe2c12",
       "original_content_sha256": "f32ec5e8811c920f3c94b4b53fb7d7c434125ccd1ede6b7878b28d58c637bc19"
     },
     "LG에너지솔루션/2026-q1/index.html": {
-      "sha256": "576b09f9f2364ea05de9541a01da3732bcf388017b8ad0ac17fb936f1d111b11",
+      "sha256": "3dd1a402e2f672c6f245d6c91d42ee24f5f2fad7743916b55a804bc66e6b6915",
       "original_content_sha256": "5e5f968b34c411f8b1d4bf3db8ae70d8a4f5c6680c216f7eaaa947bf7f5dd420"
     },
     "LG에너지솔루션/index.html": {
-      "sha256": "1098824ae8bfbfef2c805f719cdf3c489a5194db3d6d94116c266b46522baeb7",
+      "sha256": "fc4d934bf2f7f247faaf4867a8b45e8aab00b7aac3c64d6c1aab79eaaab5d728",
       "original_content_sha256": "dd3881875a5fb092c4cd303d8a513e84ad5a162429dc2b15ce07ac1e5d40b175"
     },
     "LG화학/2025-annual/index.html": {
@@ -86149,35 +86427,35 @@
       "original_content_sha256": "3a55e0df2d1c0b81d1d2f7d1c1e6a1cb09aac288c0ba1be46ee41f1b5ad2e67d"
     },
     "NAVER/2025-annual/index.html": {
-      "sha256": "e1e4678a86871bc5d543f212614cd0e1b366b8f3473a5888753af87a5f5af8e4",
+      "sha256": "6eb22fa32c07b95ac1d770e0dd6703242553406b5416ec71d7ced3e87241b098",
       "original_content_sha256": "a5177cc335859e0eddeb7452421f1fd682be9d883305f034cd5324a61ff2a084"
     },
     "NAVER/2026-h1/index.html": {
-      "sha256": "c249c12e6351c7c50587652719ffe85f3fa2296c6d4aec123e914df842c5dc02",
+      "sha256": "d5ad018ba76d208c12bc5bb258ce8c4017a64704cfcce7a38e447c282b197ae7",
       "original_content_sha256": "8d0ccea6f326996a1c3b24f37b90d75dd0e9c1b771dd1c2cebcf4c2c4ec283d2"
     },
     "NAVER/2026-q1/index.html": {
-      "sha256": "4a5a7aeca07ac7e6f06fcecfa9a62fccd4c407a53334cf538f16149708a75af7",
+      "sha256": "661b4f27919135077d80ebab10268cb71d17b081b62e9159e0d5dc11ddd679d6",
       "original_content_sha256": "788919fec906f75c4084738055b1256fefab11375b7a5f537d87ea0ec96e7433"
     },
     "NAVER/index.html": {
-      "sha256": "f810ae48ad4d8e4076bb89295267b06bc3810632321887bd80c75602bb5314d9",
+      "sha256": "de52906a10cd33e5b3542fad31fc3e3d0868aab7f7207f644e0be7b7e02549f4",
       "original_content_sha256": "91afed0c02337384dfcf2541172c503e4acd117b01b2c58c19fc130cbde25157"
     },
     "POSCO홀딩스/2025-annual/index.html": {
-      "sha256": "69d17fdbd0deca1e7d8da1101c9eefa0167fb103e7c77e04d4b94c4aeb27f6c1",
+      "sha256": "862854e913fc6f7ca79e94363ef2eb9a3afc28a8645c8bcd6bf66d38470e781d",
       "original_content_sha256": "06013a9cc4a3571c1f882fcc50376075feddde0a10b8ade29f0f033ea625c83b"
     },
     "POSCO홀딩스/2026-h1/index.html": {
-      "sha256": "885cb7086a98ce7adca0f1b73a4e969bbb5fbcb77e7bf26d24c467921a53128d",
+      "sha256": "40669b08b1679198403574f94ef075cf15f31b7b2f76e0fbcf7098b041ba7bb2",
       "original_content_sha256": "4b118483b42617677e222c1dfeb7240f978101e9bcf30723479a9fb8bd794cc2"
     },
     "POSCO홀딩스/2026-q1/index.html": {
-      "sha256": "81c016fdc8a92a461ace66bef552ccc0614f70072a974b89bdb5d5eb2cefcbfc",
+      "sha256": "7c1f04df83de4ecafd05e0b145839f592b3faadde83ce0c6c684b576c37479d5",
       "original_content_sha256": "711467db60429cf5e1d9e9ad2fabd98b363896ae492fb8455474eb789f1e9164"
     },
     "POSCO홀딩스/index.html": {
-      "sha256": "a6af3ff19a3878e534c0674d2fd3382bc9721021ce1fdf43d1f9892e21aafadf",
+      "sha256": "c6e3cd67e8eacc51ac7afe41db7f00afe8596dcf2ccdcd65a6f6c158dddd1f88",
       "original_content_sha256": "f66582c7e5ea7ffae4c0a854a142576c1191e1694290e14195dbd1cb7af93001"
     },
     "SK텔레콤/2025-annual/index.html": {
@@ -86209,7 +86487,7 @@
       "original_content_sha256": "0aefb0cec0b6e8451269e438b2fe1e11c85dc4a569e4ff07897b700e3ab732db"
     },
     "archive.html": {
-      "sha256": "5df94a74a2a544195d2f6ba1ae1c4e27562706d4e162f2daaa4b9535a8a1f7a0",
+      "sha256": "2622a61a4dd49d5da76353abd7533aeebb408e8dbd377e0147c90f842de8a3d6",
       "original_content_sha256": "1641da94f552f4f45a5c5b730fc9a5427d16e228422b2b8bb49de0675cf767cc"
     },
     "daily/2026-05-12.html": {
@@ -86645,7 +86923,7 @@
       "original_content_sha256": "00e69b7ea44d53ed5d9914601587ce74038afc4c939384f179d1d86c71e813d1"
     },
     "browse/companies.html": {
-      "sha256": "07066708cd8450d20aa73ac48f48b6e29bbe90cb1ea9502e2fefde57b7dc0c8b",
+      "sha256": "91fe094d94911cda40cf1ea0ff143a2ffd99ae052cad2140f84f183569f4d65d",
       "kind": "current_scope"
     },
     "browse/events.html": {
@@ -86653,7 +86931,7 @@
       "kind": "current_scope"
     },
     "browse/operation.html": {
-      "sha256": "6d0509872fac63d1c7a1dc113e81f4243853ae351902385b7d547b6002e54ccb",
+      "sha256": "2b78b3d6400486df385a8abd9231b150bd560d73b685c5e59016c75c32d3cf75",
       "kind": "current_scope"
     },
     "browse/event-archive.html": {
@@ -87155,7 +87433,7 @@
     ]
   },
   "automatic_depth": {
-    "checked_at": "2026-11-12T22:01:38.954719+00:00",
+    "checked_at": "2026-11-13T22:01:40.944010+00:00",
     "jobs": [
       {
         "ticker": "005930",
@@ -87184,7 +87462,7 @@
         "base_run_id": "d6211191a6ef32774b486761",
         "status": "ready",
         "label": "심층 보고서 준비",
-        "next_attempt": "2026-11-12T22:02:51.519394+00:00",
+        "next_attempt": "2026-11-20T22:02:54.375295+00:00",
         "reason": null
       },
       {
@@ -87200,12 +87478,12 @@
       {
         "ticker": "373220",
         "company": "LG에너지솔루션",
-        "period": "2026-h1",
-        "base_run_id": "b8da66727df08872f6188df9",
-        "status": "ready",
-        "label": "심층 보고서 준비",
-        "next_attempt": "2026-11-12T22:02:39.539254+00:00",
-        "reason": null
+        "period": null,
+        "base_run_id": null,
+        "status": "awaiting_base",
+        "label": "정기 보고서 대기",
+        "next_attempt": null,
+        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
       },
       {
         "ticker": "207940",
@@ -87320,12 +87598,12 @@
       {
         "ticker": "034020",
         "company": "두산에너빌리티",
-        "period": "2026-h1",
-        "base_run_id": "0258dfa5792a7f5ea2e5e35d",
-        "status": "ready",
-        "label": "심층 보고서 준비",
-        "next_attempt": "2026-11-17T22:04:49.449507+00:00",
-        "reason": null
+        "period": null,
+        "base_run_id": null,
+        "status": "awaiting_base",
+        "label": "정기 보고서 대기",
+        "next_attempt": null,
+        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
       },
       {
         "ticker": "086790",
@@ -87370,12 +87648,12 @@
       {
         "ticker": "035420",
         "company": "NAVER",
-        "period": "2026-h1",
-        "base_run_id": "1e6be6f2812c55a185b4a934",
-        "status": "ready",
-        "label": "심층 보고서 준비",
-        "next_attempt": "2026-11-17T22:03:31.748959+00:00",
-        "reason": null
+        "period": null,
+        "base_run_id": null,
+        "status": "awaiting_base",
+        "label": "정기 보고서 대기",
+        "next_attempt": null,
+        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
       },
       {
         "ticker": "066570",
@@ -87420,12 +87698,12 @@
       {
         "ticker": "011200",
         "company": "HMM",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "411ca5f814e55101fea51585",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-20T22:02:45.630269+00:00",
+        "reason": null
       },
       {
         "ticker": "096770",
@@ -87440,12 +87718,12 @@
       {
         "ticker": "005490",
         "company": "POSCO홀딩스",
-        "period": "2026-h1",
-        "base_run_id": "0c530589394cf17c100e2797",
-        "status": "ready",
-        "label": "심층 보고서 준비",
-        "next_attempt": "2026-11-13T22:02:35.773654+00:00",
-        "reason": null
+        "period": null,
+        "base_run_id": null,
+        "status": "awaiting_base",
+        "label": "정기 보고서 대기",
+        "next_attempt": null,
+        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
       },
       {
         "ticker": "033780",
@@ -87571,33 +87849,10 @@
     {
       "ticker": "373220",
       "company": "LG에너지솔루션",
-      "status": "partial_research",
-      "run_id": "b8da66727df08872f6188df9",
-      "period": "2026-h1",
-      "quality": {
-        "status": "partial_research",
-        "verified_questions": [],
-        "management_questions": [],
-        "unresolved_questions": [
-          "cash_investment",
-          "cash_repeatability",
-          "owner_value",
-          "competitive_persistence"
-        ],
-        "inapplicable_questions": [],
-        "official_source_status": "not_collected",
-        "cash_bridge_status": "withheld",
-        "profit_bridge_status": "reconciled",
-        "business_topics": {
-          "cash": true,
-          "profit": true,
-          "us": true,
-          "technology": true,
-          "owner": true
-        },
-        "independent_peer_comparison": false,
-        "causal_persistence_proven": false
-      }
+      "status": "awaiting_depth",
+      "run_id": "c5c62211cae563ad018b1079",
+      "period": "2026-q3",
+      "quality": null
     },
     {
       "ticker": "207940",
@@ -87892,35 +88147,10 @@
     {
       "ticker": "034020",
       "company": "두산에너빌리티",
-      "status": "partial_research",
-      "run_id": "0258dfa5792a7f5ea2e5e35d",
-      "period": "2026-h1",
-      "quality": {
-        "status": "partial_research",
-        "verified_questions": [
-          "cash_investment",
-          "tax_timing"
-        ],
-        "management_questions": [],
-        "unresolved_questions": [
-          "cash_repeatability",
-          "owner_value",
-          "competitive_persistence"
-        ],
-        "inapplicable_questions": [],
-        "official_source_status": "not_collected",
-        "cash_bridge_status": "reconciled",
-        "profit_bridge_status": "reconciled",
-        "business_topics": {
-          "cash": true,
-          "profit": true,
-          "us": true,
-          "technology": true,
-          "owner": true
-        },
-        "independent_peer_comparison": false,
-        "causal_persistence_proven": false
-      }
+      "status": "awaiting_depth",
+      "run_id": "217184b3c98fc72e4a3a2d76",
+      "period": "2026-q3",
+      "quality": null
     },
     {
       "ticker": "086790",
@@ -88055,9 +88285,9 @@
     {
       "ticker": "035420",
       "company": "NAVER",
-      "status": "not_assessed",
-      "run_id": "1e6be6f2812c55a185b4a934",
-      "period": "2026-h1",
+      "status": "awaiting_depth",
+      "run_id": "ac1fecff7588fe67cb4ba8e9",
+      "period": "2026-q3",
       "quality": null
     },
     {
@@ -88193,10 +88423,35 @@
     {
       "ticker": "011200",
       "company": "HMM",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "411ca5f814e55101fea51585",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "withheld",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "096770",
@@ -88234,9 +88489,9 @@
     {
       "ticker": "005490",
       "company": "POSCO홀딩스",
-      "status": "not_assessed",
-      "run_id": "0c530589394cf17c100e2797",
-      "period": "2026-h1",
+      "status": "awaiting_depth",
+      "run_id": "a969d5f906a7e3e2c1af2fa2",
+      "period": "2026-q3",
       "quality": null
     },
     {
@@ -88272,5 +88527,5 @@
       }
     }
   ],
-  "homepage_sha256": "dac0c68ad607334caf0e54511b92e0450de4e28ccd1b594144ab2a9fb39d9325"
+  "homepage_sha256": "d6e245833b56a0b7757100368bbd0712e4b575e0a56dee743c0ce5bed51ad2d2"
 }
