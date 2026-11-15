@@ -1735,10 +1735,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -1754,8 +1754,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "47a183bd5300653af424ffb34c8032b5a42eb3d36e54c14ed1f121e0dc3ace40",
       "body_followup_sha256": "939f6a4db629daf1e098df3980947146da09a20e203806f7b7289bfa1d8766a5",
-      "research_review_sha256": "39b36620747496f25a461e75d3e53ff0bc33f8da50e8934cf2030d351e0e7519",
-      "periodic_review_sha256": "982697e285ae687315fac5ad708c26a2433e1a3bce27921aa1e7e6a2a57ca1bc",
+      "research_review_sha256": "cd820a22c24d5244398cb3f88cdf0171c9125a313a863109c6762d6ab014fae7",
+      "periodic_review_sha256": "0ea2b9f177749aae765a13fba07914c16c404febf66291fcc22c66faeac1d3a5",
       "business_visual_sha256": "e74fc75db51fad87cec3d1e57e959dd2a049a2ea2ad74e450a33dc4c55f1b306",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -1766,14 +1766,16 @@
       },
       "previous_run_id": "0258dfa5792a7f5ea2e5e35d",
       "files": {
-        "index.html": "168c12875c93854fc633bad36ab7458c45ed7139b1a96936f035d8686304d9e3",
-        "summary.pdf": "0df78db97c1c6b4cbe9b2e14faeb8f1be7181b2fd9c041d91378da85fc33e877",
-        "detail.html": "d4babdd894ff8711b124575e2c16f643c0d48df0ddcdcd3e75f8d9426e6df21d",
-        "evidence.html": "facc0fa88ddeabf676ae9a2dbcafe80def0d272f1c9c00ba8804048a21406a30",
+        "index.html": "88237b6c02210f42c242ac4b3688cc17c2cf16abdccf16570cbf9adfb86ea624",
+        "summary.pdf": "a001a6bf1a77e3fe311c3b853e828751b1c3e51d795448690ffa922a8d61c43a",
+        "detail.html": "bf6f0479c18e0af568c834fc805f1fd9a6cb4b934c9f7ce17208488fa2e0c868",
+        "evidence.html": "290af61f2e97a42a3c1e99b24f53aefa41b92006863449b004a27a9b85df68ed",
         "detail.pdf": "1f11354d1f3d27ab170d599bfe8e92a1a6e757678d201200e4907744b3f4760f",
-        "reader.pdf": "130549c8023e6b6f79acc924c59e6154215c4c4741349a36b870eb5fb050fb06",
-        "followup.html": "01cf532238618fbc30668a1113c5ccba2f94424276d1174940d25cd6396eda2a",
-        "followup.pdf": "d81abf866f2ce2418ee321165a40d62bde466d857ea9752b5bc9d7eaebcad8bc"
+        "reader.pdf": "58ec410ed16d5c81798580631a4accf3c3161c17d859748df4e2dba84dba30c7",
+        "followup.html": "8f3d0791dd7d3225f2157e7dfac77e68d7ee68d2df7291611bf9cf9037683879",
+        "followup.pdf": "39bdc535929cc2003b4fcd47ff6222d9df347f18ead2f1de4c834b3e840ed5ac",
+        "analysis.html": "7e35e032702531925eb7bc7b94a1e9c566f8a54afec00cdbaa00295995752f29",
+        "analysis.pdf": "fa625eb6da35211c9b49166d7daeac3ede5fbcbce49dcf0ec94ec20c2548626f"
       }
     },
     {
@@ -7677,10 +7679,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -7696,8 +7698,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "2b44e94bc22b4d6676e821d040f8868cfca9e9332a53483742fb0c0fac5bf29a",
       "body_followup_sha256": "e128093149e2d30ce5061b816fbfaf7752be385d9a75b01434483dc68309a0ad",
-      "research_review_sha256": "2d34b5c26510dbe7feec820498f80074109c92412220827f812f1952d5372ddf",
-      "periodic_review_sha256": "513cf2d74147cd6a2994c54d2058bfac5e420811c7012c2f5edea208478c355f",
+      "research_review_sha256": "e6116c4033ec9028182ee801368fcbbe554cc5fc2e4fa452b5945170144bd364",
+      "periodic_review_sha256": "5cdcca021a0f57d927b6588294cd98e9c83fda6581d2c6767e7ff20b6ff8367e",
       "business_visual_sha256": "91a29145dbab243baf0138462c12f662fd196f64b83b38578f5856f35367bb49",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -7708,14 +7710,16 @@
       },
       "previous_run_id": "0c530589394cf17c100e2797",
       "files": {
-        "index.html": "537f156409e09f30b670402415aebad21a9fdc58a1b464097be79bb49cd3c5f6",
-        "summary.pdf": "c56cc0c6c52e2beb2e1bfaa9d7c68a789ddac12f3d506c167fb189c2abb04d12",
-        "detail.html": "9e522f3884ffd8762066ebe183d817f6f10eb7f0bd3f0d3cd6f90c59611e379e",
-        "evidence.html": "55e96322184051019620013bf8edc9895e4e9288d1aec37bd57162e389953278",
+        "index.html": "3b9a1d53b1356c855f94424189ca7da4c77467829c0189fb474dc4d0991b593f",
+        "summary.pdf": "fd8997d4dbcd570da7dc3a359723609ed688e44646ed2dc04c2a6c7e5f0810f2",
+        "detail.html": "5e600f401c8d3c98394885ac5da38d35945ca3dfe59bfc39842189a93c51b7a4",
+        "evidence.html": "64e37baefdf73094ee5d996299956ac67f1c630772be8debdf74a539aca30ec6",
         "detail.pdf": "9a98ceecf0a1be7c3937327bc9254a6ac18f5fc268e0852cbf592a7176ecc172",
-        "reader.pdf": "17f98db2d85e07d3aad7aeafca5bca61cf4348d77b93e413a8c7a15ad814f4b4",
-        "followup.html": "55db2fe8a87c00765cfa4d10117ee1b8cc90504fb66f132f651ec931e9f99df4",
-        "followup.pdf": "3f14b0e6efa09dd798b53cf4fe8d5831622b30ff0d35b9d9bd5dbffd7f033387"
+        "reader.pdf": "cf9498bc5dd17e0afa70d10bdbf4595c91c73619d489bcd9fafed4a878b393a7",
+        "followup.html": "b2c94edc6e175c2971404ac5944eadfe5cac3780bae67ef1a110bd264855182d",
+        "followup.pdf": "b0686ed70f33206484f402a5eb352019465a1bdcad2714cf2e190c118f0fabd4",
+        "analysis.html": "71494f3a4c35663ca9077bf45b5580393f01655fd82e1c73f9ba419bf1212a66",
+        "analysis.pdf": "334dff030ea0ab6b1da9740612f73ab512ccafb78b7b8ccef49e93ab1ebdca17"
       }
     },
     {
@@ -7903,10 +7907,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -7922,8 +7926,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "05bf8f4a8bed031f26067f19d111db19019de2580d95d2acef0b088678707e8b",
       "body_followup_sha256": "36901cf7053fe02aab2c459298a612baa18d005070a4ba9041eab3785e071b29",
-      "research_review_sha256": "f62e9c9a62c1c95522862a7082c487d483bff15f1052697fad48029d416c9928",
-      "periodic_review_sha256": "5ac8333a7440aa366e4c8c035f4571fe87ab2fa8f87e0f5ddc30c48ed44ec811",
+      "research_review_sha256": "032c8eed8fddc1cdbe0255fa27fd2a25cac0ec84fbb1d2c316e57e0b1dd4df5c",
+      "periodic_review_sha256": "e022d1409537b79915ea139cb33aa9d3d3cc3512a9d7dac05aa7b9a07dd1b8b0",
       "business_visual_sha256": "f2327c93da7f8550ba38f555e071854b8a880b5ba71613620ac92da0061c8f20",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -7934,14 +7938,16 @@
       },
       "previous_run_id": "1e6be6f2812c55a185b4a934",
       "files": {
-        "index.html": "f25dbe11500c33206f66bb10386a3f395ceebc8eb73728fb09d94dde67df3795",
-        "summary.pdf": "6d0e60d8a418afddd9b7678ddc5d38d7e0acde348e94e536e1c74545e102538d",
-        "detail.html": "296800e5e4b37b1ddbf205fa8a23a068c25a74e5b820c7b387b1c639b53ff392",
-        "evidence.html": "9b672d7c33f95be9c480866f7070dd50f8532c42b94b94420dfd9a9509d30cd6",
+        "index.html": "f24666f1f4137a9aa60bc999584761ea9bf36603d08974135df21514ee6d999f",
+        "summary.pdf": "fbff9c1becfcb95645950ae57131b53c9f57ab55f448004352178ebfca5ed870",
+        "detail.html": "e39dd639466217a0dc4d68f0d56d6ebc90f0d43a2d03b0e27f4401d1992b1857",
+        "evidence.html": "a2e69f0bb04d243e67a5405eb2e0f271262a43b69a852e88e33c2fa522460af4",
         "detail.pdf": "d3cab849dba013050ac2fcefa1cdbb2b82eca49e99830abeb84d1c25abbc130e",
-        "reader.pdf": "594b121e9c00ca919f8d60fc7dcb3d4e6139f79cf17879b9a804d7a21a8e4146",
-        "followup.html": "989090a43e670c9573f46e13414fdb41a8a3b39b98a84641ca7e2111ee979aad",
-        "followup.pdf": "29526428f968cbb984c3891f51b4dd4adc7d49340885763a3454502563f6c086"
+        "reader.pdf": "cd459dca99e65e11a612a427b39518c8eec3545f6328345aefebf16496de8249",
+        "followup.html": "27a170761dbba26bb9d12942f32f8d864bfba031d5cf08ecec9b3460bbe63595",
+        "followup.pdf": "a5f0e48d64ca569e58758484f37d0d527501a4491a4161b660a162df37edada7",
+        "analysis.html": "a6d5f4ace480b0577cbf52fce3f0931bcf9e81819c36460abe0d68912a2522d8",
+        "analysis.pdf": "18ff08fdc1a5b61792fc44129230fd3ccebaecf01fee78a509e10480ee668b48"
       }
     },
     {
@@ -9041,10 +9047,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -9060,8 +9066,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "48ebdb381fa2c3b9e48d53a6bea7285fc1eacfe8b1c93ce7f34f81c4326ddc63",
       "body_followup_sha256": "af511f5b3dd2adf02dd06b326b4807d6e088aa27c6fefb3c603fd063dea3e28e",
-      "research_review_sha256": "f7b950ea42afd195548df2634078efc4dab59b40c94bfdf77c6b8ea6604c399f",
-      "periodic_review_sha256": "ba43941648cd89d6c506598ac769e26cce95d10e8ad41daa0443b11730d2c364",
+      "research_review_sha256": "cfc5fffa3003b8299e6dbe83f9c4259c9e3b5d33717a8b2a0d74dad85e87bb8f",
+      "periodic_review_sha256": "9db3bc33b30f7287718ee58124d2aff66049735e0b008ec57057a8a0b49a81a1",
       "business_visual_sha256": "f2895e63bab0eaae529d4820bff062e5655b02a86bafeab1a8f9ce197c3aeec6",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -9072,14 +9078,16 @@
       },
       "previous_run_id": "b8da66727df08872f6188df9",
       "files": {
-        "index.html": "82bb709460bba876aec3b24e314733a4bc1f5d7b8bec8939454c8d1df96c4a2d",
-        "summary.pdf": "0f9763addf663e02ada599f22b2e144082a9928f8debbed1bd40a6024fefb2ce",
-        "detail.html": "0c8f5c131fc705ae9da1e1644571980bf95063e3fd2ead2ece2d7c8153331b95",
-        "evidence.html": "86e2263ff6bf133bae34c661f2b4e3ac3bed599a45d7fa9eef93132c75e6268a",
+        "index.html": "eb554294fb0b7bc45aba4e2ebb8f5645d761105223319951f1030ed31adadc56",
+        "summary.pdf": "c3bac3f4dd912ca71b5cb6435856d77759094db0ca41bc069ff743483c9d88ff",
+        "detail.html": "585ff3a2959bdea5714ad6f668dfe25a298a47405e3c9e46e4cc2f73e98b58f0",
+        "evidence.html": "2b419fd02b4e90e4e9f1178ab82506c1139d4c45961a31977b717b57b8fee3fb",
         "detail.pdf": "e8c548cf0ca02264293a2f5c273e287231b6f16a553667bb1306f40704d0844c",
-        "reader.pdf": "9ba3389b32f0328efaea58ccb43473622ec859d040d03870c9b1e310c2e9df0d",
-        "followup.html": "d2efd8359c8415e6d45f87853adef93df3c4a52fe4cc365da8b74d31395fa103",
-        "followup.pdf": "2f8e8858651c982ec7d6c9fb1fe70ad3656ac1ab8cfb66e4ad62b3725d58f898"
+        "reader.pdf": "72e2bfff189c8e78165a2da68e2f4f4c48324a8e2fdd277c4a6b7b568e55ef14",
+        "followup.html": "542aee4fc1b756aa997cebe84fdddd1c8bdcb3ba57e027d472893e9d0a126802",
+        "followup.pdf": "4ba5a65260f74a0dfacda8b3cf73d3611787aeb0993e67338e3df253282b9717",
+        "analysis.html": "6e51b7b5dda5363b523cf02fff77b7b6d49c031b32e209d1f19336a3c1a75801",
+        "analysis.pdf": "2b7002af13f27d02348af931008660caaee127af38c0090372107162026dd2ed"
       }
     },
     {
@@ -58892,7 +58900,7 @@
   ],
   "deferred_reports": [],
   "delivery": {
-    "generated_at": "2026-11-14T18:49:03.011490+09:00",
+    "generated_at": "2026-11-15T10:11:29.333725+09:00",
     "observed_at": "2026-11-14T18:30:09+09:00",
     "accepted_reports": 194,
     "prepared_reports": 194,
@@ -95213,7 +95221,7 @@
       "original_content_sha256": "00e69b7ea44d53ed5d9914601587ce74038afc4c939384f179d1d86c71e813d1"
     },
     "browse/companies.html": {
-      "sha256": "91fe094d94911cda40cf1ea0ff143a2ffd99ae052cad2140f84f183569f4d65d",
+      "sha256": "dc230e21a666011455406d7b9c462525a23e928b79499cf261f480adf2b64959",
       "kind": "current_scope"
     },
     "browse/events.html": {
@@ -95221,7 +95229,7 @@
       "kind": "current_scope"
     },
     "browse/operation.html": {
-      "sha256": "fc82205291740a6d27f2fdca3d2ff896ae31c7a5511306c91abdf4d716c304d8",
+      "sha256": "d086523125648f37ac0647c707aea9f15155fa372d7cdb0086e5369979a07bb9",
       "kind": "current_scope"
     },
     "browse/event-archive.html": {
@@ -95723,7 +95731,7 @@
     ]
   },
   "automatic_depth": {
-    "checked_at": "2026-11-13T22:01:40.944010+00:00",
+    "checked_at": "2026-11-15T00:23:33.814283+00:00",
     "jobs": [
       {
         "ticker": "005930",
@@ -95768,12 +95776,12 @@
       {
         "ticker": "373220",
         "company": "LG에너지솔루션",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "c5c62211cae563ad018b1079",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-22T00:26:51.682668+00:00",
+        "reason": null
       },
       {
         "ticker": "207940",
@@ -95888,12 +95896,12 @@
       {
         "ticker": "034020",
         "company": "두산에너빌리티",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "217184b3c98fc72e4a3a2d76",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-22T00:25:31.312650+00:00",
+        "reason": null
       },
       {
         "ticker": "086790",
@@ -95938,12 +95946,12 @@
       {
         "ticker": "035420",
         "company": "NAVER",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "ac1fecff7588fe67cb4ba8e9",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-22T00:26:08.473138+00:00",
+        "reason": null
       },
       {
         "ticker": "066570",
@@ -96008,12 +96016,12 @@
       {
         "ticker": "005490",
         "company": "POSCO홀딩스",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "a969d5f906a7e3e2c1af2fa2",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-22T00:24:42.775988+00:00",
+        "reason": null
       },
       {
         "ticker": "033780",
@@ -96139,10 +96147,33 @@
     {
       "ticker": "373220",
       "company": "LG에너지솔루션",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "c5c62211cae563ad018b1079",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_investment",
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "withheld",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "207940",
@@ -96437,10 +96468,35 @@
     {
       "ticker": "034020",
       "company": "두산에너빌리티",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "217184b3c98fc72e4a3a2d76",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "reconciled",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "086790",
@@ -96575,10 +96631,35 @@
     {
       "ticker": "035420",
       "company": "NAVER",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "ac1fecff7588fe67cb4ba8e9",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "withheld",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "066570",
@@ -96779,10 +96860,35 @@
     {
       "ticker": "005490",
       "company": "POSCO홀딩스",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "a969d5f906a7e3e2c1af2fa2",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "reconciled",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "033780",
@@ -96817,5 +96923,5 @@
       }
     }
   ],
-  "homepage_sha256": "d6e245833b56a0b7757100368bbd0712e4b575e0a56dee743c0ce5bed51ad2d2"
+  "homepage_sha256": "1c0f0338b9c89e1ee4a28dede3e01d3eb764e17abc70947031739dbbd0c10e98"
 }
