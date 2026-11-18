@@ -1,15 +1,15 @@
 {
-  "asof": "2026-11-18T05:04:01+00:00",
+  "asof": "2026-11-18T05:06:36+00:00",
   "ic": {
     "short_6h": {
-      "live_30d_mean": 0.037634,
+      "live_30d_mean": 0.037973,
       "holdout": 0.0907,
       "holdout_tstat": 5.95,
       "holdout_n": 47,
-      "gate": "FREEZE"
+      "gate": "WARN"
     },
     "long_12h": {
-      "live_30d_mean": 0.058334,
+      "live_30d_mean": 0.058365,
       "holdout": 0.1312,
       "holdout_tstat": 4.57,
       "holdout_n": 23,
@@ -18,18 +18,18 @@
   },
   "realized_30d": {
     "SHORT": {
-      "n": 443,
+      "n": 447,
       "win_pct": 60.9,
-      "gross_win_pct": 61.9,
+      "gross_win_pct": 61.7,
       "net_win_pct": 60.9,
       "win_pct_basis": "net_return",
-      "gross_pct": 0.8716,
-      "net_pct": 0.5716,
-      "net_per_basket_pct": 0.9452,
-      "n_baskets": 102,
+      "gross_pct": 0.8592,
+      "net_pct": 0.5592,
+      "net_per_basket_pct": 0.9281,
+      "n_baskets": 103,
       "cost_pct": 0.3,
-      "tstat_clustered": 1.484,
-      "sharpe": 0.044
+      "tstat_clustered": 1.471,
+      "sharpe": 0.043
     },
     "WATCH_LONG": {
       "n": 0,
@@ -97,6 +97,6 @@
   "_note": "public sibling of encrypted dashboard data. Aggregates only — no individual picks.",
   "operating_receipt": {
     "closed_sha256": "9d9c8453e0ba9263dafe3de459ab75fe2db638db5c615f13bb7a266f0f194338",
-    "summary_sha256": "8405f807391ff623b5d192048ec9c84e8d1ca3ae27503c97903b7194759b59f7"
+    "summary_sha256": "aee3eead7b1d4a6aca8547576be658ef77ee7d35f0cb8f4a90fcda34a10e1feb"
   }
 }
