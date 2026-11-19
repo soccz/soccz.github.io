@@ -1,12 +1,12 @@
 {
-  "asof": "2026-11-19T11:03:49+00:00",
+  "asof": "2026-11-19T11:05:14+00:00",
   "ic": {
     "short_6h": {
-      "live_30d_mean": 0.030829,
+      "live_30d_mean": 0.032209,
       "holdout": 0.0907,
       "holdout_tstat": 5.95,
       "holdout_n": 47,
-      "gate": "LIQUIDATE"
+      "gate": "WARN"
     },
     "long_12h": {
       "live_30d_mean": 0.05217,
@@ -49,7 +49,7 @@
   "realized_basis": "SHORT actionable only; WATCH_LONG observation only; paper/proxy returns",
   "model_age_days": {
     "xsec_6h.pkl": 52.63,
-    "xsec_12h.pkl": 52.62
+    "xsec_12h.pkl": 52.63
   },
   "cost_assumptions": {
     "SHORT": 0.3,
@@ -97,6 +97,6 @@
   "_note": "public sibling of encrypted dashboard data. Aggregates only — no individual picks.",
   "operating_receipt": {
     "closed_sha256": "9d9c8453e0ba9263dafe3de459ab75fe2db638db5c615f13bb7a266f0f194338",
-    "summary_sha256": "1dd2275f38dd82fdac3c2b188a604740b75d47544b8095e004c377c1a8457f60"
+    "summary_sha256": "1f3750149ea68f83184cbf205432c84b0df6fa26135b93e2a0e0361442ee960c"
   }
 }
