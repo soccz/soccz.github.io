@@ -1260,6 +1260,61 @@
       }
     },
     {
+      "run_id": "18ba8b73d4ea710562394391",
+      "ticker": "316140",
+      "period": "2026-h1",
+      "inquiry": null,
+      "summary_basis": "consolidated",
+      "receipt": "759fe8a50f08264bddea67fec8bc1bf8c8da2c279648d7bdb1e7d5c3ce86b5a8",
+      "origin": {
+        "kind": "current_engine",
+        "engine_hash": "84f21460235f471c9cbb9bb840d8812e2d602c6a07905d3119f4ab8fce234680"
+      },
+      "criteria": {
+        "schema_version": 1,
+        "revision": "c40bcb0b035f",
+        "selection_mode": "structured_priority",
+        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
+        "scope": "periodic_report",
+        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "principles": [
+          "자료 부족을 사업 악화로 바꾸지 않습니다.",
+          "외국인 매도만으로 검토에서 제외하지 않습니다.",
+          "사용자 기준과 사실 검증을 구분합니다.",
+          "업종과 자료의 범위에 맞는 지표를 사용합니다.",
+          "보고서는 자동 작성하며 사용자는 기준과 프롬프트를 조정합니다.",
+          "이전 판단에는 당시 기준을 보존합니다."
+        ],
+        "semantic_compliance_proven": false,
+        "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
+      },
+      "base_criteria_revision": "c40bcb0b035f",
+      "original_pdf_scope": "frozen_history",
+      "followup_sha256": "72463e4ef5200b0dba020743a14a49f68c4c6972b317c523f3a74a99f3e63b10",
+      "body_followup_sha256": "7ba5c52c249dc28c4917d6cb8c68f4298b621f3458fdd2aed92f217677e3c385",
+      "research_review_sha256": "81a7bf9f54ebadf304e8275352e879858034caf8e785680674dceb807aa6f41f",
+      "periodic_review_sha256": "238e276391ebf579670dc77a3739c7b7133babd91c48c24391e4ff84c42631a6",
+      "business_visual_sha256": "7b8a480e2d35cc3af6ab2059bdd467a280da9d7ec14e6b3a73efb3f5dcd4b586",
+      "business_visual_status": "unavailable",
+      "research_review_scope": {
+        "sector": "mixed",
+        "profit_decomposition": "not_applicable",
+        "forward_observations": 0,
+        "valuation": "inputs_incomplete"
+      },
+      "previous_run_id": "f53d196c99ca7887d9595c2c",
+      "files": {
+        "index.html": "be5e2064e9a4b49b0e1fd4cdf59ba2639bd14b98613834ae03d9e43a4a6b674c",
+        "summary.pdf": "a7d9bc13b89e3de91ce180fbf3d3ad8e147e4ea560502b4fa910a5a879be8dd4",
+        "detail.html": "874d82f5b39a5f6d528b7871a73b4803d2ccfa804b757be5d169a0227c6fc9fe",
+        "evidence.html": "dd761575c6e2aec17833d41db03d037f483202d87f86c3a15e438310ca8c29fb",
+        "detail.pdf": "67e320642e8a649e8cdd832918ae949160793516fcb11629a81f38ddb3793506",
+        "reader.pdf": "835e22824178186e64c2c0ad4e50cd80c3cc38a5ed30e4b9abdb0708175ad735",
+        "followup.html": "55be38161e49f16fad7eddd9dfbde53c16abb4ec27bad7df555b156c278696a9",
+        "followup.pdf": "514d85cf98477e8fdce62cd6d915f6096481d621a99df52847d1ac03dd68fad4"
+      }
+    },
+    {
       "run_id": "190f21284c6c40c9fdd35f40",
       "ticker": "000660",
       "period": "2026-q3",
@@ -3956,10 +4011,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -3975,8 +4030,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "449c415e7a387e6f2ead574aa388a7740b3e929d739bcd170af2ad95d5e68077",
       "body_followup_sha256": "956f231610a9c61d0eabb5d0a842937e7cfd75a9bdaae5f197f3f088248c16d4",
-      "research_review_sha256": "ab4d2df1f1dec99e796fa7eca68feafebee1d46b9fa1aff7d4cb7639f27f43ef",
-      "periodic_review_sha256": "43f606b66c45d5d1871ba10bbe2bd39183048c45a2cee45c4b1a356ad7120867",
+      "research_review_sha256": "b511697ee1bfc8b84e7b404094f1519baeaf8e8f65baf141066433b6d79b42f0",
+      "periodic_review_sha256": "34a3a40e2b0af2d55655aa5abaa452a955dd84761b71a0cc8d25dc6b78d8e606",
       "business_visual_sha256": "b37f2fd78ee9f560c6c9ea37cd8bac133d541d8c2931808bb5bb9d1b18f6bf3b",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -3987,14 +4042,16 @@
       },
       "previous_run_id": "f0ae75137f355c2de6584601",
       "files": {
-        "index.html": "738c0f31b4873cdc836734c7c01374c2801992c1ee7b66ed1073e5f678f10896",
-        "summary.pdf": "52b5a8bebeeac8c84f2d68eae9994abb4941c7b06e3d1b391f4dbccac28fdf91",
-        "detail.html": "8e5f490db43c8adad44f1c8c33a43b3bf7bcf2628ca7a071cc156ef53045240c",
-        "evidence.html": "df37d6692a30fda91677f5e1d02384c7a1766f20e99230db5b88974b50c6e6bb",
+        "index.html": "c4d2077a3cd07ca063f119764fdf78a6fe6cd851ee8837dde915e32bf0f2a12c",
+        "summary.pdf": "22e83113351c214e10a76f571f64db82d8d7255544b18f5e07d07ceed07c88a6",
+        "detail.html": "f78f36346fd36ee909682ffe6b176a4782165b6accb4560c097c1f0d554f15c9",
+        "evidence.html": "630c184bc534a044a7be329dc83a152b5b4b168f29153ba83222ac07fb2011b0",
         "detail.pdf": "11370a91b3172871a060d855f73fd4ce76d739d1d966cf67c65f805125eb5e7c",
-        "reader.pdf": "03429b447b442b791d1066965c6b7f086ed1713b89eee3115ea9e35f0440ed22",
-        "followup.html": "4cbacd3d8be3291fac0f73c837b9560f96e3eca88ea0eefa15f453072332838b",
-        "followup.pdf": "c81803be783cd26930211b13b3ac4d585a4df68b7c588544272c8a25cf447f55"
+        "reader.pdf": "72ab2e98617b9293b4ebbc81288cb67f59670554fd30403409acec538d5b1981",
+        "followup.html": "974df6fc52589a1db0e6212588f11471c3fb00a836f766329fdee377a5c4a062",
+        "followup.pdf": "003986067d237441a33bf1c3847be07a6527c0e5f57d0ec852a9742a2b62ad9c",
+        "analysis.html": "70810716349cdd7a4e3662eb65c775597f3b925c394fa5c417ee6f8cb4a4cffc",
+        "analysis.pdf": "f8e26c0e625cfe36cee00e8f220c3bf7ca72e1ef0e430961c82afa702f6621d9"
       }
     },
     {
@@ -6004,10 +6061,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -6023,8 +6080,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "2e24adbd4edbf4cc034315fbe31e8c4b84f4ae3aab7b9f1d5b0fd3f505e8ae4d",
       "body_followup_sha256": "5c823f9b6d6e3565d9125a8f00f796e6421675e0522fbb83c87f55a46c2f99de",
-      "research_review_sha256": "fb67727ed4da17d4499a4e40f967a6483be610857a053996cfe2cc34462c8c87",
-      "periodic_review_sha256": "ae87efb9c6b34316a56100f1f81d867101cd37e6cb56667b1e314f844a1d2567",
+      "research_review_sha256": "15ca2ebcd9c363aacd5f92ffa55b1b353cd8752f3f7179cc2614bde028eea64c",
+      "periodic_review_sha256": "9ca0c582c1fd68cf4d61c306ebe6958573a47d754b1e8507b1d48d5cc2c5197e",
       "business_visual_sha256": "0d7c54939ae80e4a790ce50ae2a8acebcb9bc1c8bffb795d4ca0b1f2d9ab9f1c",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -6035,14 +6092,16 @@
       },
       "previous_run_id": "7933256e4d6b67f0dafc8955",
       "files": {
-        "index.html": "d6a66a5abbf91f62b2757f8bc4d5fd0f078e304293d51c4a58a53c46d572a824",
-        "summary.pdf": "ec7a29c0a1a17899235c138b885cf45cfc5f99404c64b8ea101acd3a5f1e233c",
-        "detail.html": "ecbd6d85918f7df17abfad6ac6528f8771dff07ae588672fa4d4d1ab92bc87b3",
-        "evidence.html": "7c8ee3686166717f22aed7ae2a971353e356a9a9d7ebecf57e1c8e38744f532b",
+        "index.html": "c3ea547a61955fb94ef3c5df89aa7ea78d6ffa09045d23efa260b2edc28be674",
+        "summary.pdf": "a7e5ba0eca86ff1877f1738e428186fee56b6ccbe6ff1ec0194fe949df8a4ad3",
+        "detail.html": "eaee5c6ead449e344edec9910fbad2742ae13fc2ffecf31ecf20df0b3c2fa44e",
+        "evidence.html": "2c5d3eaad803eba09899876297920c219c015faffa0b188b700b5e436d4c6af6",
         "detail.pdf": "772809c6085da8a33477f05bcb8639801255c259a358acd54d972509ef06e8ba",
-        "reader.pdf": "6758a9638ca42d571ea9c441fcb5595178cea1264af4fe08090c31b2c7ba593c",
-        "followup.html": "3204622526218325bffab65806a4464e741c60c14c3e992caae21faf8fbb37fd",
-        "followup.pdf": "c50e20dbcd7ed5c1b38fe69a4fd21733bfaef62afc697e5999498e9f564877fd"
+        "reader.pdf": "80d6f6e8216f3683551641c01409c9555c267fe9eeb743db932cc33fabf6d0b0",
+        "followup.html": "81595d208a4efe341c56f0af486045782c90cce6a3a2a46bb5239cde82b52ddd",
+        "followup.pdf": "56825b23fda12b01901c48e797bab4737c2cfe74d597637786a7fb25e33fc2e3",
+        "analysis.html": "19b1fb2ca48d5bbfd2578221092aa431e473f9a9ecaa03a07c4fab35ed00ce41",
+        "analysis.pdf": "da4b5b2ea93c0c7780b84e6cbf3b3e713b9882e56441aa35bc469c1185b6985f"
       }
     },
     {
@@ -10527,7 +10586,7 @@
       "base_criteria_revision": "c40bcb0b035f",
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "3894db3fd84bec71de7b4a3c507b084672834f6268f2b0fcf65b7757c55c96be",
-      "body_followup_sha256": "6cd09da40ec9373e36ff9d7961792d0b3cde0072c4aa860ef1092a8acc71ebb9",
+      "body_followup_sha256": "fe8e4e600ec5e2971af766b1e8a50e1e57ca93c74c51f501a93cfdf8a8b76fd3",
       "research_review_sha256": "4799ccd1ebd3805fb396495f1110da26669d80002d8508931ec9c67bef88efad",
       "periodic_review_sha256": "3f34568b1415fd44f3e92022da019bd3353ced62caa89871cc10ee53fc8bae09",
       "business_visual_sha256": "ee762be05217b2b86e983a3375d8bcfccde5252956c4c3a8c7df6d9b804e2c92",
@@ -11007,6 +11066,61 @@
       }
     },
     {
+      "run_id": "dce74fff84b973d565d08026",
+      "ticker": "402340",
+      "period": "2026-q3",
+      "inquiry": null,
+      "summary_basis": "consolidated",
+      "receipt": "759fe8a50f08264bddea67fec8bc1bf8c8da2c279648d7bdb1e7d5c3ce86b5a8",
+      "origin": {
+        "kind": "current_engine",
+        "engine_hash": "84f21460235f471c9cbb9bb840d8812e2d602c6a07905d3119f4ab8fce234680"
+      },
+      "criteria": {
+        "schema_version": 1,
+        "revision": "c40bcb0b035f",
+        "selection_mode": "structured_priority",
+        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
+        "scope": "periodic_report",
+        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "principles": [
+          "자료 부족을 사업 악화로 바꾸지 않습니다.",
+          "외국인 매도만으로 검토에서 제외하지 않습니다.",
+          "사용자 기준과 사실 검증을 구분합니다.",
+          "업종과 자료의 범위에 맞는 지표를 사용합니다.",
+          "보고서는 자동 작성하며 사용자는 기준과 프롬프트를 조정합니다.",
+          "이전 판단에는 당시 기준을 보존합니다."
+        ],
+        "semantic_compliance_proven": false,
+        "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
+      },
+      "base_criteria_revision": "c40bcb0b035f",
+      "original_pdf_scope": "frozen_history",
+      "followup_sha256": "7d1a8d99e81d9c5d473e72bb5be4b4f4272185499da6dcf331111daf0051e2db",
+      "body_followup_sha256": "fe8e4e600ec5e2971af766b1e8a50e1e57ca93c74c51f501a93cfdf8a8b76fd3",
+      "research_review_sha256": "e6003401ab05ae697ed955096859809699130c0b243a9213d7e31b1b6a6f73bc",
+      "periodic_review_sha256": "4716db9b777ef8bd3e80a228d0ae3ce37797c8f6488c8b44b90787629bff16c5",
+      "business_visual_sha256": "e6428ac0d047772539435248a59515088e4f6557984358e971fb52ec5f5f120f",
+      "business_visual_status": "unavailable",
+      "research_review_scope": {
+        "sector": "mixed",
+        "profit_decomposition": "not_applicable",
+        "forward_observations": 0,
+        "valuation": "inputs_incomplete"
+      },
+      "previous_run_id": "d6211191a6ef32774b486761",
+      "files": {
+        "index.html": "b8abdeda95cbc2fe012a8c54a579527e9622cf0e7846807925b21ed83095954e",
+        "summary.pdf": "c964dfc1f60153efd7c74ff73a856a480199fd9cd459c58a1a23707a2b0d2d84",
+        "detail.html": "43f1a1224bee215eb0d79f4a9e5c6e78c6c53231f087f6f3f973abee9c13fdbf",
+        "evidence.html": "4e3208cc7ceb8c57b7733efbcf6aad12c0255a5f63e9a8df763d8122f144ce7a",
+        "detail.pdf": "ae878a3180dc53413523b8e78ef3a80bf56e818fed1a9b3a6a02b6fd00f58bd3",
+        "reader.pdf": "5eab8dc1d3fd2b7bc134e4233419348ad78b029103a7d992f65ff5bc3f5d6fa8",
+        "followup.html": "5f86af5f75ff2e4017f11c1ffdc7d05863890293565dcdf61281281972940cae",
+        "followup.pdf": "7b548f04ff4b22aac7c4f96131a4be19c54b211df2493c1cf7a406264ecf9ac3"
+      }
+    },
+    {
       "run_id": "de194d3afe4fe9d79c82010f",
       "ticker": "000660",
       "period": "2026-h1",
@@ -11250,10 +11364,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -11269,8 +11383,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "e115e8c76c525f8df54d491c3f16833ce80a4ebd3e1cfbeca53dd5022e9b3b47",
       "body_followup_sha256": "b637e18c58ba8dbbada7d24c13aff014d7b791f4a69a725b4d09da06a5338e76",
-      "research_review_sha256": "7bcb73716eb527b0e956de840a3fa3c2d7a126222dfe6b37c0b8bae062b60e71",
-      "periodic_review_sha256": "67b6731e5674093cb65d9b3bba182b6ce255325aacfcad9877c50a1215b44ea6",
+      "research_review_sha256": "4e3fd35e448a5422a0310e5bbdce1ba8aab147d4221390d229c0b83732fc8988",
+      "periodic_review_sha256": "ec2bff6783e91ab602b326ac0fcd74c899e372de08ec2c770f175ca58fbe3807",
       "business_visual_sha256": "bcaa40a1d224869e171eb18c0d67832f829330f2a429c81bbe6aec03e32b8647",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -11281,14 +11395,16 @@
       },
       "previous_run_id": "570e147ea8f504fe56c15b42",
       "files": {
-        "index.html": "6322a6ce020bbe3b0c5abf067d14e0fe91736944171366940041fc0b98cc6ed7",
-        "summary.pdf": "55e83e8a4101d0f20c15bec6ceda69927716d1f65672d56ba1a006fcfcf75681",
-        "detail.html": "c512fe488a07bb679f1dfd990d8ee9ae73c510446844249fd507bcff6db27a26",
-        "evidence.html": "225f799281f9532db61e613fad13350a2b68040fb17051237c72d376dbb3dac7",
+        "index.html": "fef24eda45f05d6d48b3eb002048540339b7a611606c014131195535df2668cc",
+        "summary.pdf": "42594ebd45b5851ef7c3beba3b04568fd9a5a507dcbadb3bc46c2e0b22b5c829",
+        "detail.html": "dec6db35ab9cfde71ef41d408b5084e8be4841849a32eb1d72ba17e25aecd337",
+        "evidence.html": "f27beda74f2ae6abd68f32bc8c73bb665b306aee96022888635c6901d73c0754",
         "detail.pdf": "9fe127fbce0f5184121adeec18508fb1abbcf430ce6e530c03f1f6f7c2fd8879",
-        "reader.pdf": "58e0b1160b97de763143720bccc285f2a0e37a385faf4439459e9ae439dc85fa",
-        "followup.html": "b2f14b39c698d61c234b1f82bb170adb513321fabf3989c791caf8044324c736",
-        "followup.pdf": "bb7cc16abc9911dda6d9879e1e7ac49ac905734815e9f80fd75e72c62bfce4f6"
+        "reader.pdf": "65a8d78adc5f43488bea2abdf9b7d56b52f9a3a3ad46d17e21f3972fe11326b9",
+        "followup.html": "eaa2a1c2c4694df60806e807780fb9c117993ddde3067063723b7881ca27a0e7",
+        "followup.pdf": "cb9a4165fc58c4e8e99005cd31b252429d8cbe6333e9e03519a3df9f42707ab5",
+        "analysis.html": "9fe0788d184a4844bf92d48cc3dabb11d489c1173885651d0db7fa15d123e286",
+        "analysis.pdf": "b911f4da93207677afc2d7ca477e044c48adfca6107676740bfe9e0c587a0eb1"
       }
     },
     {
@@ -11305,10 +11421,10 @@
       "criteria": {
         "schema_version": 1,
         "revision": "c40bcb0b035f",
-        "selection_mode": "structured_priority",
-        "selection_label": "지원하는 구조화 우선순위 안에서 조사 선택을 적용합니다.",
-        "scope": "periodic_report",
-        "scope_label": "정기 보고서의 조사 순서와 확인 조건",
+        "selection_mode": "model_selection",
+        "selection_label": "허용된 선택지 안에서 로컬 모델의 실제 조사 선택을 기록합니다.",
+        "scope": "depth_report",
+        "scope_label": "검증된 기업·기간의 심층 조사",
         "principles": [
           "자료 부족을 사업 악화로 바꾸지 않습니다.",
           "외국인 매도만으로 검토에서 제외하지 않습니다.",
@@ -11324,8 +11440,8 @@
       "original_pdf_scope": "frozen_history",
       "followup_sha256": "c3056d7b52e548a0054c247e81ddab7fb003ab0ba9bc1400a1fa198aca999893",
       "body_followup_sha256": "759ef41232c9c769a005ccecf46ff317a0ac8919c8649ba57cc25622f65b66e9",
-      "research_review_sha256": "0b3f9c2672c7207fd0ab4023d935e706f9ee64e3cca8790e1ca2d0b98e209dd0",
-      "periodic_review_sha256": "9e50818e3e2ee201a1ce5f8418ab9f163e6f36bb91866ce75b723877eea24f5f",
+      "research_review_sha256": "00a03a87f0701c7869f1fc61e057cc602c440c950c2058719dcb0bc39203cb2d",
+      "periodic_review_sha256": "205349397901aa64a969d361c566b619aa767ec7608eb15e891ece9af05f4cef",
       "business_visual_sha256": "62bbff8e4cd4a091bd7ee68e0cb5bd55a7b518ef57a2d646da47bfa6496f7b7c",
       "business_visual_status": "unavailable",
       "research_review_scope": {
@@ -11336,14 +11452,16 @@
       },
       "previous_run_id": "33efcf986cff7e36f6c68ffa",
       "files": {
-        "index.html": "55088e0d6903a34806ac069d51328db62a89701dca68a3b39bc73248cae417d2",
-        "summary.pdf": "eb6ede3c74c90aac8b454e24cee876ebca244aa26d0978048fce802561e7d07a",
-        "detail.html": "bc1ab81b37a4a6a0741f558e6c8bbc6a86ca4d5fc64aa80c43e1d7ba45d7d0a6",
-        "evidence.html": "fd2a4cdfd33f069496620d03512de76da09af44bd728a02093a89d182617e60f",
+        "index.html": "ea18f901efeb2b98908339653c1f92f44085874ffdeeb8e57b30d785abc2bb52",
+        "summary.pdf": "699c6b1dc9d992cc15f62636e94655bd0aa197172a57d250f9a691b5ba3c84f3",
+        "detail.html": "b8b34737bd1fb31e6671d277c1f7e3115e566a4364fd1b8789526eb8ccfee0e7",
+        "evidence.html": "8c00cb5af15ea6a3b053de08d39510caae43cf48898ceffa2cf33d93d07c1ba5",
         "detail.pdf": "ade4eafee359ba8755aeb7923f5954486ddbf249371d9f82d80a0820396cae87",
-        "reader.pdf": "989fcb6cc89ac32507c241ae2f738aff88f49fa9d94aa84c5ec91a2d16c132ff",
-        "followup.html": "752e54325058f174e2a4812334548fbb76599e27086c2c52615d46f5c46a2c92",
-        "followup.pdf": "8c37fb0ccaa4c78d5be58f72c7687b2bedc646c4e3361d8d88d072f7dd937f3b"
+        "reader.pdf": "4a46b9ba1276e1bae9d4e5a68f46a7a155ff581f258a7b7088a41d85acbd2504",
+        "followup.html": "e1ba0a53d0934a2aeb44c2077dfb5ca41c745fd63978e2fe6f86d4d70f43649f",
+        "followup.pdf": "22ef53581560c5220705edbba2e682af9465572a57c354f94dc59450a6068316",
+        "analysis.html": "8ec08f1b702adbbd2c1a96871e9dfd8c6edb57ed21340ed333cfc2df474289ba",
+        "analysis.pdf": "fc65c6d612a2a5fe57e79b7dd409228652db2a98439dc21ee1f85a77b1f351f2"
       }
     },
     {
@@ -23762,13 +23880,13 @@
       "followup_sha256": "61c5605ae73cd86e3957d73f130d29ee815b4b9d4b71312fea806fea4b125022",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "dcb3ad75b3d7d857e7a0931cc98181020a9bfd17ffdff3946e0e506f4bd6269a",
       "files": {
-        "index.html": "bc6b7d6e9ba01ce62f17264251fa6fa951b22ab8178cd2ff0760eec2d7f3b9ed",
-        "brief.pdf": "9ea33ef3d9af355d66d5d0c92f108aec995439e8926444cc35cf0d6016a067bf"
+        "index.html": "79dc79a9f24edbb8722ffb9ec468cb110a180ca1a7503b939ff06e80eb7e69b7",
+        "brief.pdf": "6638729f21ddf2bb4beda375b1430d852f16fca5dfb90cde205d806c4b58c27e"
       }
     },
     {
@@ -23794,13 +23912,13 @@
       "followup_sha256": "bf9ac3e57617b7e429595b3474234241adb973a2f97bc834fd85a9ebb7f39fbc",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "dcb3ad75b3d7d857e7a0931cc98181020a9bfd17ffdff3946e0e506f4bd6269a",
       "files": {
-        "index.html": "36cbb4401ec198967295669b9ceed97e4c651f3f5f8b0baa4ef13a0cef50af8c",
-        "brief.pdf": "58d1b345c6ecfecb01d27bd7acbf78c248dd22c39c9e4608a426acb9fd4a422a"
+        "index.html": "2abda9f8e0e11db0125c1b6efb824393ff5329caea6e3adce1fd8bf496bee57b",
+        "brief.pdf": "e6f8da91089707b93b1e976f977e604beef30fe19924bc13eac338bd21b3a3ea"
       }
     },
     {
@@ -27730,13 +27848,13 @@
       "followup_sha256": "e4fade7f32195e92514b79e4da8acb8e197211174d87ab86e69e91771442dd08",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "dcb3ad75b3d7d857e7a0931cc98181020a9bfd17ffdff3946e0e506f4bd6269a",
       "files": {
-        "index.html": "30050c6560fe2d14ab2fd28432eae4192be7bfd5887be9984ecc76e5d836fec2",
-        "brief.pdf": "2fc7feecb13fefa5d0e925c05e417953876f9c52f46e234338bf3169ce828a75"
+        "index.html": "2349958f0684c73b1d1b5631ff374aa883251bbbbaf2c158ba40de54f3c8fc74",
+        "brief.pdf": "902ad9b095dc484ee6bb1bbbadb35f04dd8d2e3757f729beb48fc020ab4f7c01"
       }
     },
     {
@@ -31026,13 +31144,13 @@
       "followup_sha256": "17ddfa6834185bf7f7038b1a9bc19f572a317a433745296bf29d8ef6bb5730b3",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "dcb3ad75b3d7d857e7a0931cc98181020a9bfd17ffdff3946e0e506f4bd6269a",
       "files": {
-        "index.html": "526566d67e1c9da393d34fc63bc9cacbd8daa9dde86432a87007db6fcd9cbcfd",
-        "brief.pdf": "1ccfd05d8b4019de18c5f7e46ce5d11f5a435cda471390a991bec6dbbcbbdc32"
+        "index.html": "b72e111ab69f2472ba910cc3b177fc212c528760f6943d3313f5ac1b7e7058b4",
+        "brief.pdf": "f46e6afe84f1ac0c41682050c9712ea46d4341252f8f92d71f6323965e294088"
       }
     },
     {
@@ -34482,13 +34600,13 @@
       "followup_sha256": "ef7820e87471eaad0d4af76568e796b37b37f1df5df7c847d6196f551be60728",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "dcb3ad75b3d7d857e7a0931cc98181020a9bfd17ffdff3946e0e506f4bd6269a",
       "files": {
-        "index.html": "ed15cdfd11e8f6c24a61dad9ba0c7374dfcada48904386120fc053ac59b65c2f",
-        "brief.pdf": "93e30956fe9e7453e378d9dc22c6c192a0fc6e76c2b93d2503fc859300ca7ac4"
+        "index.html": "4600b5281cb32cbd0bf60204d4ce42eb3ef4604c2247b81b154cdf08f4c94f20",
+        "brief.pdf": "36b1b8a7f1bd40e37fb825ba6cb3a1fdea57027575075d42247790199a8830dd"
       }
     },
     {
@@ -38706,13 +38824,13 @@
       "followup_sha256": "5b20fb8d4a1a5ba56436fcfc4861988bfb60a4b85f230bf3ef9b99949cc318d1",
       "relation": "no_prior_report",
       "report_run_id": null,
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "dcb3ad75b3d7d857e7a0931cc98181020a9bfd17ffdff3946e0e506f4bd6269a",
       "files": {
-        "index.html": "a8b0b2b0f7055c7d01947fdf95f296033535aa377b5b7067aed1fb5b29989f89",
-        "brief.pdf": "26b07f08d4e29bd38555d89446116bf05ecedef8881dddd73d5e20a28903ac49"
+        "index.html": "2f5761b521452ac64734bf3dac6074825facff0033c22e5849b3161acf82d076",
+        "brief.pdf": "905520829baee13b08ce652b6f08e9547403f65cb448e5c2f77c7c3c116769f6"
       }
     },
     {
@@ -39154,13 +39272,13 @@
       "followup_sha256": "1065cc69411df1c0d717dc477e7924700d4f06a64b684903ddcd8eba1a5cf3e2",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "48c7dc277f871a2c9e955731ee811a1b06805bc420b4afaab3aa3bd9e2d7910f",
-        "brief.pdf": "75d23db323d24f8b5d339970fdcd09a2c77b3f8f4d035e91856555c521f656ab"
+        "index.html": "9f17e31201347a6c7251e589aba275fb2e73a2bdefdd1da72a5d1692149d47c6",
+        "brief.pdf": "ee0d4cbdee0f8b38f09e8752ef15dcc37a8ff328905c61832e48687373029bd6"
       }
     },
     {
@@ -39442,13 +39560,13 @@
       "followup_sha256": "73bef8f0a41fefc819a3d0d30fb3b9ad5b4ede05b22faaef8dccdfad1afb8897",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "b2747e894147f827b39886e5d8918db58e25b8e1324887033912795fde363a9a",
-        "brief.pdf": "5ccf97a8391a0890bfd3e9de202429d1a97ea9778dd9c27553aa88e605441578"
+        "index.html": "2f4983a07dd170ee696fa6a1eb936acd7bec56df16b0429184c0b1912ba9603b",
+        "brief.pdf": "ec9cbb59c0e9ea49a218b7a4d27c891131315e995a523f3818aff86930842bd0"
       }
     },
     {
@@ -39570,13 +39688,13 @@
       "followup_sha256": "9b45b34652e16dbe256aea01b37de7a12748cf7228990ce96f6a3d01404ca847",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "2ce1b0c31c9e2f85beae39d7130ab1c7d0a865136e4de8e10fdd6926640f538d",
-        "brief.pdf": "1b5d23ec8a7b53edf06473ffd5e9a1f532db75a99ac5af2b6e61cf8c6cd48bdd"
+        "index.html": "6b396bc227bbb49c146e63e84c7c82b0b02b2f420d96766708006cc0ef672518",
+        "brief.pdf": "b64b8ece1ca100fb7e16550b6bd257f3548b09f4bc17d1773001e7ed62e1f3ef"
       }
     },
     {
@@ -41074,13 +41192,13 @@
       "followup_sha256": "b7714d77949521f031ae6d83008ca6a2a325fea04873cdb1e975ed28f2e01f42",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "402eabff79edc3dc3c81a87697e41381a278b375a46bc1e3a51fa0b147382ef7",
-        "brief.pdf": "061b4d1f0e5580ac8be792bb630e3fd00e801827720082a7011c8cd3be678551"
+        "index.html": "e7a6485bdbf42e6dd3980360414bf4107b46e3669b5989d1401d17d957c0fdb6",
+        "brief.pdf": "4280c5d50792e438d9e36def2286080803ffab0d249a4ed3ec8e436a5e28e29d"
       }
     },
     {
@@ -41554,13 +41672,13 @@
       "followup_sha256": "81ef113c6e71090a0f2bec54cc2a034d27be59ed0a9412f1911037fff9b08dba",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "fbc207b1c0269b91e374513ff43c143abd908d65f9cbfc1021654a195ae3967a",
-        "brief.pdf": "e316b1777f737dca5358745446ccaa4442404a17ae2f5cdb6740855a0117f656"
+        "index.html": "7974bf192acd7786665bbce879a543ff33f00b74b6aed7c22af83b04139b7425",
+        "brief.pdf": "24713b5ab09b8d506f36455a9d67dab00bbd2d7f99449ea105c8af948a50eba1"
       }
     },
     {
@@ -41586,13 +41704,13 @@
       "followup_sha256": "f5cc7b389bc53eeb0ddb081f865ccea96a135bdfc92a099aa597acbeb2737fd8",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "7b30c05ae283a4eb1c0d0f7ee67ec38fcd25659246be2b3e09fd37f4ca60c9ef",
-        "brief.pdf": "a3dce642aeb1b76b85f5ef0f79d4c2cc9cfc78747a560f4fa751742b575eabdc"
+        "index.html": "5dab9a60df174eda7954de8104a755e709e89dc6b29cb935f69c7035e15e4a82",
+        "brief.pdf": "faae84b3eba512bfd54e1023e90080dfd932240612c5ef7b8f9ff118365233b9"
       }
     },
     {
@@ -42418,13 +42536,13 @@
       "followup_sha256": "c584f8db472e6388cbffb83845b93dde0d0509d375be91cf9f43fe0019aed11b",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "994f4c58459b2d4842a1905ecedc0e887728b37a85119dfe2686cc0bd013c43e",
-        "brief.pdf": "786198c78d71457adf9c7a345ad0c1b5bc42893bdb37a687aa0b01d346bc3696"
+        "index.html": "87250e960aa2c92032447f3b0d01035f2145a397d76e8a7c44931930685ac307",
+        "brief.pdf": "257dd1d2508b6e0b5ad3eb558ab78fb1f1aa9af69155cb60261d1f8f1d2c7e6d"
       }
     },
     {
@@ -42450,13 +42568,13 @@
       "followup_sha256": "df7134ac18d01b0d8117225ad8115aac67f85169b1e2cb4201814013cb5c4482",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "48d424be47f8e9810448b630f612aa818d231ee50f7cffc1297035511744a002",
-        "brief.pdf": "8947e488650a8912a3311d3e80873746499ecc0ff4faaadfd8f6f44d821a2a4b"
+        "index.html": "4a164193d09136adf9358bc6255a1309bbdcf794595b0f2e66a14eebca20da71",
+        "brief.pdf": "e5bfeedeb030e3b5cd26a0fcfd50c18ff50a43c9608505d2d469528747212657"
       }
     },
     {
@@ -43282,13 +43400,13 @@
       "followup_sha256": "cb2641c42153a4502b7fb7155870f4b2266f92a2feefe8e6fadb331c0f2b9bff",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "9c14f9629e8165695dfb6638e1c445eb9059864fdfb0a38a986bdca740ddad38",
-        "brief.pdf": "b073f20d0f093badc3ca94554cd239b3471155a341f188bb3d5f0639feb671d1"
+        "index.html": "a4f3c73e6ae04242293bc442be55652e4b016f0db3fefb22a78397c24a698ede",
+        "brief.pdf": "4ac08ff16ac19c7cb343257e117ab2ff8c415e7d8dd40b153714502fdf373f5e"
       }
     },
     {
@@ -43986,13 +44104,13 @@
       "followup_sha256": "4c35beb03a258797571501311fa23789065da30bfd3ad7b43a60fd57dc833263",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "cd5f26ba35b081634228a1d2946322f2c65919b281dcaf61e07baadfda12ca78",
-        "brief.pdf": "d667e46f95c526e29e30ba6549f08583a2d41e27a831449cd4d9310259942d33"
+        "index.html": "40d01a2e9369b47b5beef50c6e51732b3421a6b147e4ec37c8907b2ff14b62cc",
+        "brief.pdf": "4759d7772966a94317b70f8e5c0e6171da3fe21448582a13d5716f128a5d471b"
       }
     },
     {
@@ -44018,13 +44136,13 @@
       "followup_sha256": "d431222111736ed4c6ee182d1e110f69127cab1ae65318a25454c72d98a29a9d",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "160a459621dd2250573788abbdb87aee82facf4b93565ad03df5b6e450eac8ff",
-        "brief.pdf": "3bbc872277f0fc4243d9c727b67da95859618802544f7ac0f698391ed781305c"
+        "index.html": "b563565764ddd610d716253828e23b1608dff0a99619683d28fa81cf8ca997ba",
+        "brief.pdf": "520c5b6f9b741c44f565039dc25a7e5e62e7ec604840b1b693e138268776d73b"
       }
     },
     {
@@ -45202,13 +45320,13 @@
       "followup_sha256": "6e3b8d67e76f98a6ecd8864e7d327e1adecce6aa8c1877f18141669680a625d3",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "fe5996b0b1494afa9f519b47f30abeb18502a7c20e4ea787388d905bccb71893",
-        "brief.pdf": "fe98496b90936da069fb143630deff7701823fced904a4f93b6019ed428622c8"
+        "index.html": "1d58f3ced16995ddee7cb7e61f42ac192115951c83944884cd00709d0eb81569",
+        "brief.pdf": "4347dea345b98261fad4414e58fcc9230d2ddaba40d5e78a1b9c36c68dea46be"
       }
     },
     {
@@ -46130,13 +46248,13 @@
       "followup_sha256": "656c6ca9c05817823614334ffeae6d704bc48bbf879d6df2c77aace369e4026a",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "134ac752b45f9747fc27ecce9ebb5fb177d9ca50be632d66df8ee0ebd4c5b78d",
-        "brief.pdf": "b6095a818d709962d06d48e26c7a3d81f1b185c79700c5563d27a7c7778fbb41"
+        "index.html": "4c57ebddcc46f3d33a75752ce89d41989211dc0e17c91ddca25650a259b32ba2",
+        "brief.pdf": "11d582e974c6dfda7496f74df52973bc8283efa77abdf99bf2bdf783db030f30"
       }
     },
     {
@@ -46770,13 +46888,13 @@
       "followup_sha256": "276211af1fe5a6f55a8fe48e41d59880292e07c0437706a96704e692708d9b70",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "a334049b24246065e5d1d9397d88cae3fcf998f1a622888c5e7f5d3bb7a6ece8",
-        "brief.pdf": "1fb3e13cd0d766bd3d2301b6146f7ee9a0e60beae81a8998f3ac11404efd48b4"
+        "index.html": "d23f2df4e9cbae2e34edf8a202ff1c56151206d63f28bbf29ad3c12994419a71",
+        "brief.pdf": "a2d9009fb611143db21074ab9f485d14c033dbc1dca69da787a3534d02dbb9d1"
       }
     },
     {
@@ -46802,13 +46920,13 @@
       "followup_sha256": "38c322a37dd32ed1b58c3013635924fe7c6d3e68f4198e5f59c9259fc0860239",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "61168366a6dd82e6a5c4f46941890e9470d4561fb6e74a634e11e1c54bc12e3d",
-        "brief.pdf": "69ab9bea56a36a1d006ef35c9f8e2381287322475d1bc5b2634b3bcf89cf1dca"
+        "index.html": "ffb5ad1ea416354defddaf447e3a8aec326f4bb4e71814196612b10fd6aea1e9",
+        "brief.pdf": "b8773f3fc81c40cdea14ccab130e514939b5d175c9d2474ae8b84ccb683905c8"
       }
     },
     {
@@ -47890,13 +48008,13 @@
       "followup_sha256": "3c3d72f1da85cd7dbb678c4c25ae1cb41d22d99eb99492840ca434cd42709e2d",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "1ebe2c0fea3b651d7fd0355e3358152f118a5e8e61c18b989128e0159b1106c7",
-        "brief.pdf": "a377d29e26452023fb001e9dc00032715c7b2ef88b56a1ffc2f1961bdbda4900"
+        "index.html": "92d45944b6b3f386cc702751b96cb4066741a206ad96d0e65054dd6a699054fa",
+        "brief.pdf": "2b5d65a1d6d22cda889e67a5991f06e9217d83262b0e59b4f1e62e17be33d214"
       }
     },
     {
@@ -49234,13 +49352,13 @@
       "followup_sha256": "bb6bfdf532e80b882d0f9eb04a736848a3959135fc110b6d0eaffaa251009585",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "failed",
-      "body_binding_sha256": "ff0c9b926b2127de4e14b6fdac6fd7c4bfa57c9c07da8f21f88548a6baa19d9e",
+      "body_binding_sha256": "d3f72d8c30f68836c78d2570d29f961f10968d8e1aa05b72308c846389122212",
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "ebef636d5e889500dad35f0bf75a27d8d172ffcd34c299a9d7e74c101fa88e96",
-        "brief.pdf": "442453eb73fee48366ec45a41dd52588f15a14444a2fd662d1dd61866449b4cf"
+        "index.html": "8fcb7f10c6330927c957ee97a9f323b63291527cf91f984d0d05825961def6ca",
+        "brief.pdf": "3ae4bad5be191c2539dfa9396c5acb542a14b35140139a426082de2c56ff7932"
       }
     },
     {
@@ -49714,13 +49832,13 @@
       "followup_sha256": "e3cfbbc8ef894b98876c497a5d6984ff32e0fc3733825744f5c2796e5cf3e66a",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "6293f8896a89a96cf7355907f66775010e243bde66da1363ad4d3064fa4394fe",
-        "brief.pdf": "07979b99f292dd5f79b02e629f11c71aceccafe8806edc32c5241ae8fecd6e1b"
+        "index.html": "ca7664928d1bc8c8e68f316aefb2d37e8b030e68990548d07bc808f4144e6ca3",
+        "brief.pdf": "bd237da47c2373899252eac7db59725efda4317b6375ce4c7bf288a7719caa9f"
       }
     },
     {
@@ -49746,13 +49864,13 @@
       "followup_sha256": "94f71c952f5a5a41e68190ff204e9980cd735bfed63655695a341b88f2893e28",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "c3a1b360ad933e399ccfdd42f8cfcd2f973c0db42e4d6487af10ddf128a4fa06",
-        "brief.pdf": "e88ef9c023504711b1fb2306ee843cbe42f4cace7dd17a9419dd57311e1d9f34"
+        "index.html": "9a61b6c07ab2dca412b2073b408f9033685ccec861c7dd624a297de3f91af330",
+        "brief.pdf": "0fdc181c2cea58e6de3d5099de44d6376e93331efe10a7b8f1d0b42d08f52ece"
       }
     },
     {
@@ -50674,13 +50792,13 @@
       "followup_sha256": "1385869adefcbc97f015f054e015611290ee51ad5907846e922ccb844e490266",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "failed",
-      "body_binding_sha256": "aea8b9a9d466b18fbdecd72cc0e75ee09bbe29cb9da2b18432058e5af898f2f5",
+      "body_binding_sha256": "a2a4619802005722f304223c19d8ee1dca2dd95e4b3ae3211d9334fb2e7dae7f",
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "02ef584cef564c7aace284030760cbb89b2d9aa89b61adce219536634708dc82",
-        "brief.pdf": "3e074fae98309010bffcdc3cfce8700f75dfdae8eabb7637df99ea4ebdb3ba64"
+        "index.html": "c94e4d78b81d2bfead5ee96cf4a0967af3f69bc8cc527332a3daaa5b74c2bef4",
+        "brief.pdf": "b65089985a887f154190fcd2540e604b91669a3778d3d92fb8257063a3f84c25"
       }
     },
     {
@@ -50706,13 +50824,13 @@
       "followup_sha256": "63c4c6323ba8eff18945a6782f48f080765818a5eceb56046e46f189a28b22f2",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "failed",
-      "body_binding_sha256": "5ddca53b1f1d5831c087f4e8db706f0af5457cbc3e0678811f7bd4b19785e661",
+      "body_binding_sha256": "f46f1a1c2cf24f147524544968aceaed60d594b8fb10b619d99c029e2ac5b3f4",
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "1294834e1b701f9326026e434a062ccc1f9827d3aec36946c0f489e29bf18354",
-        "brief.pdf": "cf1aa61ac1212fcd7912f50dcca4f24980bf7edbbaeac8594db49c19c8c675e3"
+        "index.html": "76b921d0eb9022724f90d8182045df87f2f6ec077f3c3aa656cf05ba01e26e65",
+        "brief.pdf": "061ddb4586b21b0a0594c781160ce159d48585d7e17e7f724e54f299e4d808ac"
       }
     },
     {
@@ -50738,13 +50856,13 @@
       "followup_sha256": "0b774ffce4ba34a2b2ae75e184e144a3ad3892743e3bffd7665711e3a3eb3406",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "failed",
-      "body_binding_sha256": "e42070277bf16eb89fbca4f99e978d580dd83705e543068c13d890e4ddfaba4e",
+      "body_binding_sha256": "28802cb4ad3a49fb73abbdcafb6f22be46df2fa8bd73d57bb085f807503f195a",
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "8242768d84f52d070591fa5756cdeeb2833b97285507857b275ca3c51e17f92e",
-        "brief.pdf": "d56878f038c3c38ae674cbc5105342e61a487f21a589dbe7bfecd4de9bb67980"
+        "index.html": "9e209da360daeb878086f5655c5125f021139dd563e80d6f91bffbce24825c80",
+        "brief.pdf": "54f1d07e266a78a0b56195b87b82fe6a5f4f261f28ff26f595de5db363f5d811"
       }
     },
     {
@@ -50770,13 +50888,13 @@
       "followup_sha256": "70a514e15912b23f3633f0febebbbb63eff984912e2bf41293c170e4391a1a0b",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "e7f09da8da8b05facba31efcea80f918d5aaed12a71d8bcd4e6d32f79fb26706",
-        "brief.pdf": "746db06af39d941989eb239f921d92f48957aaa5e6e75ce33ca02a421a0a8eb3"
+        "index.html": "0b586b8707d3696d4dec6304c98e52c27b66da109448d4a269a5b72e091cea48",
+        "brief.pdf": "86cd6b1cd024afb5c0b41fa73eece108ee6a3f8faf7816f4d4d4ff1144bb25e7"
       }
     },
     {
@@ -50802,13 +50920,13 @@
       "followup_sha256": "fc610ee75928b65f3a2b1bb75ab0f5f1ef61c46d49c08959bdcf57bcfed83f7d",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "045d4999f822010ccb68882fe514b656df4b9709710e5381846cf807bf174e3a",
-        "brief.pdf": "3890ce71652d9e94259770eb94b3f753631dfb23284d127ff63836e4db532297"
+        "index.html": "66def1c7899498f2dfae5d0b8d879bc18fb27fd717b2311b6813918920d31920",
+        "brief.pdf": "5b68847055b48f2d4d59cd2ca01407894cd3cd98ec5468f1c5be88165380a728"
       }
     },
     {
@@ -51762,13 +51880,13 @@
       "followup_sha256": "2d8d5e668bb2b04046daf742eb066f24f382f57ceb6a02a8f0312937d6c0bafd",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "c4e691d2af898636f68a8529c67625eeab0df14f52b6de2e4cc1856a1de2c2c6",
-        "brief.pdf": "3e194d099aa304b491e99a7d38e2f54ab9b2e60356ec09b0240a6d727e02454e"
+        "index.html": "e7e560fec1aa9525a3ab27c019a97283183cad7262868ac4f79cda06412c2b4b",
+        "brief.pdf": "6b8d28c44bdac79ffa136c07409730166871f6e68dc2e63bbff87736b8c44a01"
       }
     },
     {
@@ -52754,13 +52872,13 @@
       "followup_sha256": "d2d5b01e8a5f4cd1f4df61b3cb173156439f5671f6874e5519cd85542f81ab01",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "5d0b926e52438cfc475223d9047ba2521ebcec40253d342b74401e8ff65d2e8b",
-        "brief.pdf": "46fed06f36573bc9a9f4341a23e8f92addc2d2c98cdc9b16510d717fc712ce93"
+        "index.html": "f67696446f43abd2d94431253037fcb13d599cad9f59b42d9e1c0fb8e8299191",
+        "brief.pdf": "6eb5f4c4fa1ce2b495c0482673f8882a7b51f1192a66e9290c6b3369a10c1943"
       }
     },
     {
@@ -52786,13 +52904,13 @@
       "followup_sha256": "952ebdb2b13d21b2d55d8bb3e0f20840eb1e66084df386ae25934bb107ce0ecd",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "71973c9593d0ce124bd3e5559d86a1932d52a0e7843bdf02315e2be224849db5",
-        "brief.pdf": "282d647a74a29a8ad6075485d6e178e7e568283be0d683c11c082e202d9669ca"
+        "index.html": "fb9b26cb62556a5b94db7f37320921f2b7537e5ac699a37c11af6255a7bb0a59",
+        "brief.pdf": "cc732f9987003aba45c289a0a51e8703d5bb25cfdd9047a49b42dfaf59cd52d3"
       }
     },
     {
@@ -53874,13 +53992,13 @@
       "followup_sha256": "2c3281fc3028310df56d76bf21fa6a689cc16eac87bd23f4d306826e3715565c",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "a241a8a0b45c1178bac0776fc0ba837623fd2116acbbc1fa187b420781879114",
-        "brief.pdf": "2d77d52f2caa0c61974803f870c69e5185aebbdde4cf060ce4e3ecb6e03097ed"
+        "index.html": "4bfc5eb25d53f42360309093e44791c930140b4f674c5d2701c6c9925d243316",
+        "brief.pdf": "c918f78fb89f91bc66a10c77fc8fdcc8af3bc8f9116b7e58c8a578e774ebf03b"
       }
     },
     {
@@ -53906,13 +54024,13 @@
       "followup_sha256": "9b74b3a76c61abf7c36105bf678618dce515f673c17de42d8566b6a44d33cf72",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "e04cf95fe7950b75bc096cc3bada8c4236033a076999e55c8f4a056d699b4412",
-        "brief.pdf": "5149f7316ac7a5919cf90e58f022546160c8c33f9298fdb6ebcfc42ce6c90b45"
+        "index.html": "abd716e2b76ca90545368d3006df0740ea10022cc53ae34150b07731dca0f488",
+        "brief.pdf": "ca42b006ae5720d541477ff2ad8305f284e7195320543e9405db655d404ad886"
       }
     },
     {
@@ -54386,13 +54504,13 @@
       "followup_sha256": "777534732000011e9f20b8eadaa807735d84435f2bd29b3844c9a98767b2fc93",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "b70d600c870f293345d3abf0ae21cb380b00852e18ad5fe35d03fdb891eb5ad3",
-        "brief.pdf": "9cfb3d1fa0feb57bcc954ef42d91a28573ab468380ea6d5df9c3537648bfebf1"
+        "index.html": "8c8dc79b7505dbaa6e667dfce69464f360fcbd2725345c1b35b06e818dbd1c5a",
+        "brief.pdf": "294ec26f6c2c9e080a5e684ce5af325eb6a276dd17075886cfd195633ec5fcb9"
       }
     },
     {
@@ -55250,13 +55368,13 @@
       "followup_sha256": "73967b6d8f14d3ec71005c87ac98b28442e60394325ae1a07e181fa0793043b5",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "5b588b7d67561b1485beb70ab7408c4be5c43600df1b7d0661152a51ad39fc6c",
-        "brief.pdf": "1818393f13211dea64da760f8d2b74ef95a468daae59a339b16b474ab0834cf0"
+        "index.html": "89ce8b33b9c823a166dc6ee084a1a8ef3c1d835738d55ca4c70ab778747957b3",
+        "brief.pdf": "4913a2b479ce79e92cb333c40e8a807595faaba79c3dd3aa2828a2116c0b217e"
       }
     },
     {
@@ -55282,13 +55400,13 @@
       "followup_sha256": "b95a0bb9dc35ff17b47fd4a5311cec37652dfb7210dda7b21ef92c572953fcfe",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "965b8ccd2edf7fc21cc7b0135ee2cbb86eaa0867da03d840a81730f14a5a4753",
-        "brief.pdf": "7e27351d0018716016e4d6fc5d09b7958a3a55623b5af602379bbf19bb4e20de"
+        "index.html": "7e0995c82214fcbf117dae74b877321e9e7c621760d4e54a9e0d7f59f9508a99",
+        "brief.pdf": "4d5e94e3cc8f94f7b7b037d42b32472377bb80ac0022481976120d262b8bb37b"
       }
     },
     {
@@ -56210,13 +56328,13 @@
       "followup_sha256": "e600bedb781e3da8a10baf3c8a7c16536c11bf8e689846238a4d8ac0616c776c",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "6576e29f1a1afd5dcb8db76dddd16e83402e7f8a21c6636977611aa0a8ee103d",
-        "brief.pdf": "72c1ab37b1f796e1479b36cf590496c9b36331adbd9d6f4c07ca91790318dc9c"
+        "index.html": "304ecbc2efd235df4bc382c283a3b9dfcbd51e0c4a92ff9775bf2cee524224e3",
+        "brief.pdf": "d44bcb31d887763d49ecb7ecb6fbe21a7f9e88ff6cc7258f3e8bc6b54863841a"
       }
     },
     {
@@ -56242,13 +56360,13 @@
       "followup_sha256": "618435730ad2d686490594595c8872e3ed8b19b4f5850e0c35a508ce74f4954c",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "22b20585dcf5678ac0a80ce47e3b2f75f96a3ff7e2e8df4a3c6885ec0b1a798e",
-        "brief.pdf": "2d8b85fa16c9367d865896539659811776bec1fc634734692ccef526ee691eb0"
+        "index.html": "1a7ece3d9503ef8677c5b87db81da4eb7a228b2c5e95a97df69d8055d5b6f6ff",
+        "brief.pdf": "77a8ed245dedb569a2449866d104f5a84b2f80145a0ce3c45cc91271d6176e4e"
       }
     },
     {
@@ -57138,13 +57256,13 @@
       "followup_sha256": "7c12089dd899938283d1c82e08d14da7813bd372fec3c1df2ff34f769f8c33de",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "3ea5e1c167e75146234fd1eac334adb0fa02188e9264ca5d26324fecf8dac6da",
-        "brief.pdf": "7a2bff5cb39e92ad8545d1616fa970a11a6a0f476407ad6906d0ac4873da05dc"
+        "index.html": "16418112f47c89f40bdd9b1113ef60b3754c1b7039e899e9303944b5be1ba4ed",
+        "brief.pdf": "fd73ae4e4af242e01ff59bb68f88daa359b76ccc17855cbb4b53cd718330580d"
       }
     },
     {
@@ -57170,13 +57288,13 @@
       "followup_sha256": "9e8f848cfa905d8d098ab27e471cdaf0f5a4da702b550d707c843d62b2ead242",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "6779488c0c56169eba12699606c1c6a392ac703b2952965c7bc9f34f43a17bab",
-        "brief.pdf": "f5b2bd37c2dafa921f901ff19a4292a581b409a94ea890fe9954a01be5819aff"
+        "index.html": "9ad078b8751be4522bb0ac142e1d00812d8f17b9e027841bf4ef3c8ae4acc83b",
+        "brief.pdf": "6328ab4b95885cbea7b966b03ef074ac55c335aad2cc67effc16c361627d5be2"
       }
     },
     {
@@ -58034,13 +58152,13 @@
       "followup_sha256": "862c59bda3aa48227e2b14e891a3f8da2979090840bd266cb84132541541370c",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "0b46bd1f47d2182e0968330cafcdb42dff0ce3b68c8f0c12ddcbfff549472068",
-        "brief.pdf": "088726ee22e7533fbbc4345016887ab7b8e696708b48ebac2a6fb490a5c16b09"
+        "index.html": "8f62dedb4c6fe91b95c183ec69a3d9d277794217023165be34a287d37897fd03",
+        "brief.pdf": "782939dcf9a915f73bc1928f1c344ac352b333c336730e06df82c0f5e72cd859"
       }
     },
     {
@@ -58066,13 +58184,13 @@
       "followup_sha256": "0dfd936e641d4c0eca3d251c7394152f34fc70bf33e5a15f8fcdc57791fb03ca",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "4764d55e95a363497fc3fd33c6053b1ce1be21b2a066bd8637f3da0404fad88c",
-        "brief.pdf": "ddc2aad6ea055fb2806e26eac2fc24b8b17feb1efadb29bedf4073c57101d954"
+        "index.html": "216b2eb18b8a026390dfe13af6730d4c4bd761843c1f0a18bdc160ecc4ff1db7",
+        "brief.pdf": "583c2149611b3f90b5af3fa53cccd9cf0aa1812bd45e538f375cff3c761e2f72"
       }
     },
     {
@@ -58642,13 +58760,13 @@
       "followup_sha256": "f393e22d76fa6047bacacf53ab70331f0df591e55b94242886c20fb96f38ff40",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "6d2e87ef03538b35ccde6d2667f652cfce42285ab9eacc39d61fed4e9afa4ce4",
-        "brief.pdf": "21e7e74bf488c92c682909e4bf6f3f2a315f1ed1063312125ea14d4a4abb9de3"
+        "index.html": "5b74abd92e2cbcbfd98ab44478b7051a008fd71ccbe9cfc8fab8fb662b0f688a",
+        "brief.pdf": "60d8754b4d8374bea7b3bc5acddfd2737a27d9e856cd1c03e32b694ca78b56cc"
       }
     },
     {
@@ -58674,13 +58792,13 @@
       "followup_sha256": "68875a630c91fa08c0c58234347a37b54c6682a83356194d6a69d2204dba47b7",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "f65e7f4107395cab9716485facf9c399480b8fefe303167f8f5c02c37d439124",
-        "brief.pdf": "92538f413800928291407ee555ed3e85f58effa189d4dafe1bc3fd8114d1d57e"
+        "index.html": "bacd405d5ef87b760ad007dd32916d1bf00aaf671a4e0b51e9b123411f316519",
+        "brief.pdf": "eb06768158e3ad5e71e644135968392299884c37686ad2dd188835b05f3525cd"
       }
     },
     {
@@ -60274,13 +60392,13 @@
       "followup_sha256": "0d86384d98ebf1def7fca3f8d6159cc3a6d0cad890c762dffe545ec5f5c7fdad",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "failed",
-      "body_binding_sha256": "49752c2abb5c61f4af4007335741ce5718007b5c0f6908b2cc896ae886b9db14",
+      "body_binding_sha256": "e1c1987ca4052b2cdb23cdd776612927aa60c64b9e76fd24c7fabf0b3c6020b8",
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "a7e4f9ae6c1f0d6c60d24b18272615abffe767355147932f846682df2f27a32e",
-        "brief.pdf": "df8bb19c9d359084c417cf0c553ce406322fe592cc5ad4cd7ee709964fe4640a"
+        "index.html": "965552e6822aef1ce78355e80000e6cb345eeaa100259bbb9cda0eef168dd13a",
+        "brief.pdf": "4e8affea56122b6f95bd8ee08206e17fb1a27f0e827cc524ddee719c6dd6f52c"
       }
     },
     {
@@ -60306,13 +60424,13 @@
       "followup_sha256": "614bf4e52a6e8da9c412d7d91c0bba7124d065555bf7389a7a279749dc9b9d0d",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "af91542cf85498893cff39c18a77d1dc3ef1d66bc049c7423261de75b65383de",
-        "brief.pdf": "685007d522d4ccf26aa43cad8f0d8a72f358665db6d1899dd3d8653960fd3159"
+        "index.html": "39f406ccc5a17dd710bb75538bb7c67ffe34a5024abfa91e5b11b046bd6cb7b5",
+        "brief.pdf": "37cfa400c7791d21c7f7b4905ed99725189755d8cd293a75da6ed3f0a9331f40"
       }
     },
     {
@@ -61362,13 +61480,13 @@
       "followup_sha256": "5f3cc02663153ae1bd7f5323f63edc2775585542f7aa166e46797ac077755b45",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "9c779fdf3818a23495e52f83623d6b8f16ae66a6e680ff4039c92c493c20d1a3",
-        "brief.pdf": "77560fb2507d490290a30ff8ab85f58116b0a3f7d23ad5757a3dadcf8e46e13c"
+        "index.html": "657a80c7e1ece2b34d21a51f50220a03354e216191733ba5da38d32fadf44e08",
+        "brief.pdf": "6bd0d7678912df208f6a7392c5020a4e7c8e00ac9d36fcf42e831f76f6fce0c3"
       }
     },
     {
@@ -61746,13 +61864,13 @@
       "followup_sha256": "7c8c2f84ce39a70f9594eeb45f62f3b1bb54134e7d8859090b4bb726e9e0ccdf",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "2cab96430e1ad15e6d3c8c728ccac0d9a9a4f202021a14ba26ea64035f795847",
-        "brief.pdf": "384df261557768bcd161999f31737819b9503558da86964c9c77287f8db33437"
+        "index.html": "d2dffe3fd29f9dc06d69adcb4eb0662edb0a386a993faac44b6ec26f97cd9daf",
+        "brief.pdf": "542d257fd9fe3d7f7a66d68501c729e33167ff77825d2b1714c8aa91278193a1"
       }
     },
     {
@@ -61778,13 +61896,13 @@
       "followup_sha256": "311aa5d9962b27d5486060cd211fc0c67e73646470e0b770a6590673fc3a5340",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "76aeaf3a291eb0e373cb09168d053279ec8b5159be2a0584f65e64011766bd5a",
-        "brief.pdf": "d5055f14c6716dd6742eb3a76b398f6d86b62311ba502a0d44cb6e47c79db3ac"
+        "index.html": "86ae99c2240cd2be136d5c776ea6aae8b0dbfce3be96b51f30220fdd3861e3a5",
+        "brief.pdf": "69f6607b8116ce3538ad73ebc645994f511d1767b1038786c3c12165d30c018d"
       }
     },
     {
@@ -62354,13 +62472,13 @@
       "followup_sha256": "319a321b92b0d77b4072003053ca705657998a5d8fabc9f0231b0b36d44b1263",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "35e30344963c07b1de4ee8fdd0d2fd9cb0929eacd5da820aaab85db453dda6fb",
-        "brief.pdf": "32da7d9a52ac68e99b189594b83357e3dfc4d2e13fb35504cb141f6a907fd837"
+        "index.html": "52121f794716002236af68bf4ee408668ca16b2e21311e91ad1906d350e8ec16",
+        "brief.pdf": "1867b37c5cc053be807b8b8d0e0e0073e0948b274d9f40b9596890201a20f284"
       }
     },
     {
@@ -62386,13 +62504,13 @@
       "followup_sha256": "a30904f09550589d351a5aeb2748d506ae351cd35c01ef0e7b86264280802741",
       "relation": "after_report",
       "report_run_id": "d6211191a6ef32774b486761",
-      "latest_period_run_id": "d6211191a6ef32774b486761",
+      "latest_period_run_id": "dce74fff84b973d565d08026",
       "body_status": "not_applicable",
       "body_binding_sha256": null,
       "research_review_sha256": "cbbde2aeb857aae86e30336996f0a824cdd61c82630c55e159c6e175b18bcead",
       "files": {
-        "index.html": "429eff1727312df6987ed7093dd5512e72ad5f9d6f684f7c94ebeec7ab63862f",
-        "brief.pdf": "8f99d47aa2a40aa42534bb64773eb95d5a4d362709dc0c2874d5494bbe5c80ce"
+        "index.html": "20c1898ab1222a5d1459f232075d31144e893ea5882ed1e7c1eb21ec0b1ceb91",
+        "brief.pdf": "fc1b3716f3f98d23749a2461560db8962b0771a82756fdb9cec25bbbbfb4d70a"
       }
     },
     {
@@ -63006,10 +63124,10 @@
   ],
   "deferred_reports": [],
   "delivery": {
-    "generated_at": "2026-11-21T18:58:09.337855+09:00",
+    "generated_at": "2026-11-22T08:41:30.390891+09:00",
     "observed_at": "2026-11-21T18:30:37+09:00",
-    "accepted_reports": 216,
-    "prepared_reports": 216,
+    "accepted_reports": 218,
+    "prepared_reports": 218,
     "deferred_reports": 0
   },
   "criteria": {
@@ -63031,7 +63149,7 @@
     "limitation": "기준 버전과 선택 기록은 임의의 프롬프트 준수나 기업 판단의 정확성을 입증하지 않습니다."
   },
   "followup_coverage": {
-    "reports": 216,
+    "reports": 218,
     "companies": 176,
     "events": 1584,
     "condition_fulfillments": 0,
@@ -79864,7 +79982,7 @@
         "event_id": "d6899f4313fe663ae188906b",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261026800530",
         "source_event_sha256": "68becf2d42d606f2643edc54f8e44488a36794423024a5e4d96d35d0c698dc12",
-        "assessment_sha256": "349ee6e1042f8b47cc981a0f95f35f0a231c3ae83c849df9882245a76a88605e",
+        "assessment_sha256": "b28f86e75051d92cfef45b85e2079259416ebc95a7e9f765e5791127dff8ba8d",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80556,7 +80674,7 @@
         "event_id": "9749dc740548c570d6d56593",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028800051",
         "source_event_sha256": "857100891f4db488756fb092f2776e3f218a09bc2c092ebe9c21702ac03b472c",
-        "assessment_sha256": "259d49efa75ad5f0d07491c51c0050352eed244d4333b74212747816fc4d84a2",
+        "assessment_sha256": "a99f3358a3f17c0ac1400acfe30c86d50b60d44cc1e59923d93225e2b3d55f6a",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80571,7 +80689,7 @@
         "event_id": "ae9e24f176a25f8e179b22bc",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028800046",
         "source_event_sha256": "4cda955a86d25299950f624f120704086cd52db8a395fb4d615993ed3cdbebea",
-        "assessment_sha256": "e55c9e1f95b96dca876c5cc8f8f7327331de58dc877fe72e6d34e2222c2df286",
+        "assessment_sha256": "3e1a2242ffb3f9fe701c3d69a69cdc50569c01a08dc2086528665a8e023fdde0",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -80586,7 +80704,7 @@
         "event_id": "abf682eee617b9fef29cf6e2",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028800049",
         "source_event_sha256": "92772d036e6beb69f2b0ca13ccc06e534d35b88dad7dc5edda10ba568065cfb4",
-        "assessment_sha256": "53f2b6150d63df59bbd06a6b8d62083e6fec7659116113d4769f06a59dafff05",
+        "assessment_sha256": "e7dff9a8b93072c2cbb5db32f0bd7787aa02bc9f40c53e940dac50dbc7112bc5",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -84951,7 +85069,7 @@
         "event_id": "cc97abe09d8e59cc2dce162a",
         "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116001068",
         "source_event_sha256": "a11c75ad49b693386c3879c2af39a1f4cd3f1866c2142679babc1d8a630e1f76",
-        "assessment_sha256": "a07b27bccf2d21588b1e7a04ae897efa1cef926ae412dff626785b3ffb99e8c1",
+        "assessment_sha256": "498f62517dc92f4bc9aa4c192c9d0b5d71448393817da31c955ab23a8fd97c78",
         "evidence_fact_ids": [],
         "inquiry_ids": [],
         "judgment": "not_determined",
@@ -88675,6 +88793,34 @@
         "label": "정기 갱신",
         "reason": "다음 보고기간 자료로 기존 질문과 비교 가능한 수치를 다시 확인합니다.",
         "previous_run_id": "f53d196c99ca7887d9595c2c",
+        "judgment": "not_determined",
+        "condition_fulfilled": false,
+        "change_flags": [
+          "new_base_run",
+          "new_period"
+        ],
+        "relationship": "이전 판단의 유지·강화·약화는 추가 근거 확인 전 보류합니다."
+      },
+      "18ba8b73d4ea710562394391": {
+        "version": "research-attention-v1",
+        "code": "correction",
+        "label": "정정 자료 확인",
+        "reason": "이전과 같은 보고기간의 원문이 달라져 비교합니다. 새로운 분기의 성과로 세지 않습니다.",
+        "previous_run_id": "f53d196c99ca7887d9595c2c",
+        "judgment": "not_determined",
+        "condition_fulfilled": false,
+        "change_flags": [
+          "new_base_run",
+          "source_correction"
+        ],
+        "relationship": "이전 판단의 유지·강화·약화는 추가 근거 확인 전 보류합니다."
+      },
+      "dce74fff84b973d565d08026": {
+        "version": "research-attention-v1",
+        "code": "periodic",
+        "label": "정기 갱신",
+        "reason": "다음 보고기간 자료로 기존 질문과 비교 가능한 수치를 다시 확인합니다.",
+        "previous_run_id": "d6211191a6ef32774b486761",
         "judgment": "not_determined",
         "condition_fulfilled": false,
         "change_flags": [
@@ -100494,7 +100640,7 @@
       "original_content_sha256": "0aefb0cec0b6e8451269e438b2fe1e11c85dc4a569e4ff07897b700e3ab732db"
     },
     "archive.html": {
-      "sha256": "cea6dab44fa57ad117a62563bfbb7fa7ab9b4d40effa6798b47716b8ea9d4409",
+      "sha256": "9719fc84f2a292c13376bb987cc56609068e36924c220524c4bab15d2804c8c5",
       "original_content_sha256": "1641da94f552f4f45a5c5b730fc9a5427d16e228422b2b8bb49de0675cf767cc"
     },
     "daily/2026-05-12.html": {
@@ -100930,7 +101076,7 @@
       "original_content_sha256": "00e69b7ea44d53ed5d9914601587ce74038afc4c939384f179d1d86c71e813d1"
     },
     "browse/companies.html": {
-      "sha256": "8750472589d2c14f5376f96064debc6954b3704576277a5bd9560a3538088cfb",
+      "sha256": "520b80ee750d1f06d0baef7fd462c9bcbd660f26b7ee87bb6da593c0a9860d81",
       "kind": "current_scope"
     },
     "browse/events.html": {
@@ -100938,7 +101084,7 @@
       "kind": "current_scope"
     },
     "browse/operation.html": {
-      "sha256": "0c9efebfce8b5af42c241b4885275f45ffa27673228405dce982ed997cd8599e",
+      "sha256": "b10b644f3e07b97116d552e8cccc4590512595ed102db97a474f96f18d9165b6",
       "kind": "current_scope"
     },
     "browse/event-archive.html": {
@@ -101440,16 +101586,16 @@
     ]
   },
   "automatic_depth": {
-    "checked_at": "2026-11-20T22:02:39.566159+00:00",
+    "checked_at": "2026-11-21T22:02:49.751571+00:00",
     "jobs": [
       {
         "ticker": "005930",
         "company": "삼성전자",
         "period": "2026-q3",
         "base_run_id": "e14cbc9b43a463f616a0d9a4",
-        "status": "pending",
-        "label": "심층 조사 대기",
-        "next_attempt": "2026-11-20T22:02:39.566159+00:00",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-28T22:06:07.937251+00:00",
         "reason": null
       },
       {
@@ -101515,12 +101661,12 @@
       {
         "ticker": "105560",
         "company": "KB금융",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "873967d9b850fc65f78d0c31",
+        "status": "pending",
+        "label": "심층 조사 대기",
+        "next_attempt": "2026-11-21T22:02:49.751571+00:00",
+        "reason": null
       },
       {
         "ticker": "032830",
@@ -101537,9 +101683,9 @@
         "company": "삼성물산",
         "period": "2026-q3",
         "base_run_id": "41c15a802dce3874cfb8be2f",
-        "status": "pending",
-        "label": "심층 조사 대기",
-        "next_attempt": "2026-11-19T22:02:28.122131+00:00",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-28T22:05:15.597162+00:00",
         "reason": null
       },
       {
@@ -101557,20 +101703,20 @@
         "company": "삼성SDI",
         "period": "2026-q3",
         "base_run_id": "e26683a626ea10110c012a9a",
-        "status": "pending",
-        "label": "심층 조사 대기",
-        "next_attempt": "2026-11-20T22:02:39.566159+00:00",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-28T22:06:55.560516+00:00",
         "reason": null
       },
       {
         "ticker": "055550",
         "company": "신한지주",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "65080f34968d04d7852012f3",
+        "status": "pending",
+        "label": "심층 조사 대기",
+        "next_attempt": "2026-11-21T22:02:49.751571+00:00",
+        "reason": null
       },
       {
         "ticker": "000270",
@@ -101615,21 +101761,21 @@
       {
         "ticker": "086790",
         "company": "하나금융지주",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "3b872ef869b35f23ccc36329",
+        "status": "pending",
+        "label": "심층 조사 대기",
+        "next_attempt": "2026-11-21T22:02:49.751571+00:00",
+        "reason": null
       },
       {
         "ticker": "012330",
         "company": "현대모비스",
         "period": "2026-q3",
         "base_run_id": "663408ecde8ac4b67223d6cb",
-        "status": "pending",
-        "label": "심층 조사 대기",
-        "next_attempt": "2026-11-19T22:02:28.122131+00:00",
+        "status": "ready",
+        "label": "심층 보고서 준비",
+        "next_attempt": "2026-11-28T22:04:18.042525+00:00",
         "reason": null
       },
       {
@@ -101675,22 +101821,22 @@
       {
         "ticker": "316140",
         "company": "우리금융지주",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "aa5e28f46485ee1832c4a70f",
+        "status": "pending",
+        "label": "심층 조사 대기",
+        "next_attempt": "2026-11-21T22:02:49.751571+00:00",
+        "reason": null
       },
       {
         "ticker": "138040",
         "company": "메리츠금융지주",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "5177e94e0afcee16e6dbe43b",
+        "status": "pending",
+        "label": "심층 조사 대기",
+        "next_attempt": "2026-11-21T22:02:49.751571+00:00",
+        "reason": null
       },
       {
         "ticker": "010120",
@@ -101715,12 +101861,12 @@
       {
         "ticker": "096770",
         "company": "SK이노베이션",
-        "period": null,
-        "base_run_id": null,
-        "status": "awaiting_base",
-        "label": "정기 보고서 대기",
-        "next_attempt": null,
-        "reason": "기초 정기 보고서 생성·검증을 기다립니다."
+        "period": "2026-q3",
+        "base_run_id": "503e4d6448747068252fbafd",
+        "status": "pending",
+        "label": "심층 조사 대기",
+        "next_attempt": "2026-11-21T22:02:49.751571+00:00",
+        "reason": null
       },
       {
         "ticker": "005490",
@@ -101748,10 +101894,35 @@
     {
       "ticker": "005930",
       "company": "삼성전자",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "e14cbc9b43a463f616a0d9a4",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "reconciled",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "000660",
@@ -101789,34 +101960,10 @@
     {
       "ticker": "402340",
       "company": "SK스퀘어",
-      "status": "partial_research",
-      "run_id": "d6211191a6ef32774b486761",
-      "period": "2026-h1",
-      "quality": {
-        "status": "partial_research",
-        "verified_questions": [],
-        "management_questions": [],
-        "unresolved_questions": [
-          "cash_repeatability",
-          "owner_value",
-          "competitive_persistence"
-        ],
-        "inapplicable_questions": [
-          "cash_investment"
-        ],
-        "official_source_status": "not_collected",
-        "cash_bridge_status": "not_applicable",
-        "profit_bridge_status": "not_applicable",
-        "business_topics": {
-          "cash": true,
-          "profit": true,
-          "us": true,
-          "technology": true,
-          "owner": true
-        },
-        "independent_peer_comparison": false,
-        "causal_persistence_proven": false
-      }
+      "status": "awaiting_depth",
+      "run_id": "dce74fff84b973d565d08026",
+      "period": "2026-q3",
+      "quality": null
     },
     {
       "ticker": "009150",
@@ -101942,10 +102089,35 @@
     {
       "ticker": "028260",
       "company": "삼성물산",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "41c15a802dce3874cfb8be2f",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "not_applicable",
+        "profit_bridge_status": "not_applicable",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "068270",
@@ -101983,10 +102155,35 @@
     {
       "ticker": "006400",
       "company": "삼성SDI",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "e26683a626ea10110c012a9a",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "reconciled",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "055550",
@@ -102114,10 +102311,35 @@
     {
       "ticker": "012330",
       "company": "현대모비스",
-      "status": "awaiting_depth",
+      "status": "partial_research",
       "run_id": "663408ecde8ac4b67223d6cb",
       "period": "2026-q3",
-      "quality": null
+      "quality": {
+        "status": "partial_research",
+        "verified_questions": [
+          "cash_investment",
+          "tax_timing"
+        ],
+        "management_questions": [],
+        "unresolved_questions": [
+          "cash_repeatability",
+          "owner_value",
+          "competitive_persistence"
+        ],
+        "inapplicable_questions": [],
+        "official_source_status": "not_collected",
+        "cash_bridge_status": "reconciled",
+        "profit_bridge_status": "reconciled",
+        "business_topics": {
+          "cash": true,
+          "profit": true,
+          "us": true,
+          "technology": true,
+          "owner": true
+        },
+        "independent_peer_comparison": false,
+        "causal_persistence_proven": false
+      }
     },
     {
       "ticker": "000810",
@@ -102381,5 +102603,5 @@
       }
     }
   ],
-  "homepage_sha256": "e1923f70259988fb0f9cd1226574d5424606171fec90e4b0d8a90e01ee37bab4"
+  "homepage_sha256": "34adda90417a412b780d5bb3ec352cbe9eff3e0376c773aff3bb970b9194d254"
 }
