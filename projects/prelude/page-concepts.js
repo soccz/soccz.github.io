@@ -236,16 +236,20 @@
       attentionRoot.append(list);
     }
   }
+  function renderRadarDate(model) {
+    const asof = document.getElementById('recommendCardsAsOf');
+    if (asof) {
+      const notToday = model.date && model.date !== kstDay(Date.now());
+      asof.dataset.tone = notToday || model.dateMismatch || !model.date ? 'warning' : 'neutral';
+      asof.textContent = model.date ? `추천 기준 ${model.date} · 장후 R1${notToday ? ' · 오늘(KST)의 추천이 아닙니다. 해당 날짜의 텔레그램과만 대조하세요.' : model.dateMismatch ? ' · 운영 확인 기준일과 다릅니다. 새 날짜의 추천으로 해석하지 마세요.' : ' · 실시간 추천 화면이 아닙니다.'}` : '추천 기준일 확인 불가';
+    }
+  }
   function renderRecommendations(summary) {
     const root = document.getElementById('recommendCards');
     const note = document.getElementById('recommendCardsNote');
     if (!root || !note) return;
     const model = recommendationModel(summary);
-    const asof = document.getElementById('recommendCardsAsOf');
-    if (asof) {
-      asof.dataset.tone = model.dateMismatch || !model.date ? 'warning' : 'neutral';
-      asof.textContent = model.date ? `추천 기준 ${model.date} · 장후 R1${model.dateMismatch ? ' · 운영 확인 기준일과 다릅니다. 새 날짜의 추천으로 해석하지 마세요.' : ' · 실시간 추천 화면이 아닙니다.'}` : '추천 기준일 확인 불가';
-    }
+    renderRadarDate(model);
     root.replaceChildren();
     if (model.state !== 'observed') {
       root.append(node('p', 'concept-note', model.state === 'empty' ? '게시된 종목 목록이 비어 있습니다. 전달 여부와 무추천 사유는 운영 기록에서 확인하세요.' : '추천 목록 확인 불가 · 미제공을 무추천으로 해석하지 마세요.'));
@@ -407,7 +411,12 @@
   revealHash();
   // No refresh/fetch: only reconsider the age of the already-unlocked snapshot.
   if (document.getElementById('monitorOverview')) {
-    const updateContext = () => { if (latestSummary !== undefined && !document.hidden) renderContext(latestSummary); };
+    const updateContext = () => {
+      if (latestSummary !== undefined && !document.hidden) {
+        renderContext(latestSummary);
+        renderRadarDate(recommendationModel(latestSummary));
+      }
+    };
     global.setInterval(updateContext, 60000);
     document.addEventListener('visibilitychange', updateContext);
   }

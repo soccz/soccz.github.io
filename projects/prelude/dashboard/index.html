@@ -703,6 +703,13 @@
 
 </details>
 <details class="archive-panel" id="otherResearchDetail"><summary>시즌별 선택과 다른 시험 <small>기록 수·실제 선택 변경·성과를 분리해서 확인합니다</small></summary>
+<section id="dayAheadSection" class="compact" aria-labelledby="dayAheadTitle"><div class="container">
+  <div class="section-label">전날 조건표 · 11월 25일 대상부터</div>
+  <h2 class="section-title" id="dayAheadTitle">다른 종목을 실제 알림 전에 고를 수 있었나?</h2>
+  <p class="section-desc">기존 R1을 그대로 보낸 뒤 비교하는 별도 실험입니다. 현행 순서에서는 대안이 발송 뒤에 기록될 수 있어, 가상 진입 전 비교일이 늘어도 발송 전 표본은 0일일 수 있습니다. 발송 전이라도 실제로 보낸 대안은 아닙니다.</p>
+  <div id="dayAheadStatus" class="current-card" aria-live="polite">데이터 잠금 — PIN 입력 후 마지막 유효일과 실제 교체일을 표시합니다.</div>
+  <p class="current-note">안전상승은 24시간 동안 −5%에 닿지 않으면서 +10%에 닿은 경우입니다. 차이는 발송 전 준비와 실제 교체가 모두 확인된 날의 기존 R1 대비 평균 퍼센트포인트입니다. 표본이 없으면 0%가 아니라 미평가입니다.</p>
+</div></section>
 <section id="researchProgressSection" class="compact" aria-labelledby="researchProgressTitle">
   <div class="container">
     <div class="section-label">RESEARCH PROGRESS · 게시할 때 자동 갱신</div>
@@ -1783,6 +1790,29 @@ function renderCurrentSystem(system) {
   if (asof) asof.textContent = system?.schema === 'prelude_dashboard_current.v1'
     ? `확인 대상 ${system.asof || '미제공'} · 확인 시각 ${currentTime(system.observed_at)} (KST) · 게시된 확인본이며 실시간 조회가 아닙니다.`
     : '현재 운영 확인 시각 미제공 — 과거 원장과 구분해 주세요.';
+}
+
+function renderDayAhead(report) {
+  const root = document.getElementById('dayAheadStatus');
+  const data = report?.data;
+  root.textContent = '전날 조건표 확인 불가 — 자료가 없거나 검증되지 않았습니다. 0일이나 성과 없음이라는 뜻이 아닙니다.';
+  if (report?.schema !== 'prelude_dashboard_day_ahead.v1' || report.status !== 'observed' || !data) return;
+  const list = document.createElement('dl');
+  function row(label, value) {
+    const dt = document.createElement('dt'), dd = document.createElement('dd');
+    dt.textContent = label; dd.textContent = value; list.append(dt, dd);
+  }
+  row('자료 기준 / 다음 조건표', [report.asof, data.next_plan].join(' / '));
+  row('가상 진입 전 유효일 / 마지막 유효일', data.paired + '일 / ' + (data.last_paired || '아직 없음'));
+  row('실제 발송 시작 기준', '사전 준비 ' + data.before_send + '일 · 사전 준비 안 됨 ' + data.not_before_send + '일 · 시각 미확인 ' + data.clock_unknown + '일');
+  const reasons = {uncertain:'저장 미확정', missing_plan:'전날 계획 누락', late:'가상 진입에 늦음', invalid_evidence:'증거 불일치', unavailable:'비교 자료 미확보'};
+  row('제외된 날', Object.entries(data.excluded).map(([k,n]) => reasons[k] + ' ' + n + '일').join(' · ') || '없음');
+  for (const [key, title] of [['recent','최근 성과 기준'], ['same_context','같은 시장 상태 기준']]) {
+    const p = data.policies[key];
+    row(title + ' · 비교일 중', '교체 ' + p.changed + '일 · 종목 동일 ' + (data.paired - p.changed) + '일');
+    row(title + ' · 발송 전 교체', p.send_ready_changed + '일 · 안전상승 차이 ' + (p.safe_up_delta_pp == null ? '미평가' : p.safe_up_delta_pp.toFixed(1) + '%p'));
+  }
+  root.replaceChildren(list);
 }
 
 function renderResearchProgress(progress) {
@@ -4074,6 +4104,7 @@ window.addEventListener('scroll', () => {
 function renderDashboardCurrent(summary) {
   renderPanel('최근 추천·요약', () => window.PreludePages?.render(summary), 'recommendCards');
   renderPanel('운영 기록', () => renderCurrentSystem(summary.current_system), 'currentSystem');
+  renderPanel('전날 조건표', () => renderDayAhead(summary.day_ahead_season), 'dayAheadStatus');
   renderPanel('다른 시험', () => renderResearchProgress(summary.research_progress), 'researchProgress');
   renderPanel('새 날짜 재생', () => renderBookValidation(summary.book_validation), 'bookValidation');
   renderPanel('사전 기록 검증', () => renderBookForward(summary.book_forward), 'bookForward');

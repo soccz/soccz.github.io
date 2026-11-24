@@ -5,14 +5,14 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>prelude 개발일지 — 더 좋은 추천을 증명하는 과정</title>
-  <meta name="description" content="저하방·고상방 후보를 찾는 업비트 KRW 수동매매 보조 레이더의 개발일지. 운영 수리에서 체결정보 20일 비교, 시즌별 선택, 상방 점수·전체후보 조합의 실패까지. 09-30 검증: 새 선별안 미채택, R1 유지. 10-04: 알림 문구 정정·거래지원 종료 표시, 기록 전용 수집 2종. 자동매매 없음.">
+  <meta name="description" content="저하방·고상방 후보를 찾는 수동매매 보조 레이더의 개발일지. 11월 24일: 시즌별 선택을 왜 전날 고정하기로 했는지, 어떤 증거가 있어야 실제 추천 개선으로 인정할지 기록했다. R1 유지 · 자동매매 없음.">
   <meta property="og:title" content="prelude 개발일지 — 더 좋은 추천을 증명하는 과정">
   <meta property="og:description" content="기록이 쌓인 뒤에도 추천은 좋아졌을까. 체결정보 20일 비교와 시즌별 가설, 점수 척도·1,342만 조합 검증에서 배운 한계. R1 유지 · 새 선별안 미채택 · 운영 정상 ≠ 추천 우위.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://soccz.github.io/projects/prelude/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="prelude 개발일지 — 더 좋은 추천을 증명하는 과정">
-  <meta name="twitter:description" content="R1 개발일지 · 09-30: 체결정보 20일 비교, 시즌별 선택 가설, 상방 점수와 전체후보 조합을 검증했다. 새 선별안 미채택 · 실제 추천 유지 · 자동매매 없음.">
+  <meta name="twitter:description" content="R1 개발일지 · 11-24: 시장 상태에 따라 추천을 바꿀 수 있을까? 적격 비교 0일부터 전날 조건표 실험까지. 기존 추천 유지 · 자동매매 없음.">
 
   <link rel="canonical" href="https://soccz.github.io/projects/prelude/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -354,7 +354,7 @@
         <a class="concept-button" href="/projects/prelude/dashboard/">운영 현황·검증 <span aria-hidden="true">↗</span></a>
       </div>
       <div class="journal-stamp"><span>공개 개발 기록</span><span>추천 우위 미입증</span><span>자동매매 없음</span></div>
-      <p class="concept-note" style="margin-top:18px;">기록 갱신 2026.10.29 · 최근 기록: <a href="#operational-recovery">추천을 막은 검증 충돌과 반복 경고를 고치다</a><br>이 페이지의 연구 수치는 각 실험 당시의 기록입니다. 자동 갱신되는 현재 상태와 비교 결과는 ‘운영 현황·검증’에서 확인합니다.</p>
+      <p class="concept-note" style="margin-top:18px;">기록 갱신 2026.11.24 · 최근 기록: <a href="#season-day-ahead">‘잘 맞는 장’을 찾으려면, 언제 선택했는지부터 증명해야 한다</a><br>이 페이지의 수치는 실험 당시의 기록입니다. 마지막 게시 기준일과 이후 비교 결과는 ‘운영 현황·검증’에서 확인합니다.</p>
     </div>
     <figure class="journey-map" aria-labelledby="journeyMapTitle">
       <figcaption id="journeyMapTitle"><strong>지금 만드는 것은 매매 보조 도구</strong><span>사람이 최종 판단</span></figcaption>
@@ -1237,6 +1237,18 @@
 <hr class="divider">
 
 <!-- Alert wording made honest; two record-only collectors added. Ranking unchanged. -->
+<section id="season-day-ahead"><div class="container fade-in">
+  <div class="section-label">개발일지 · 2026-11-24</div>
+  <h2 class="section-title">‘잘 맞는 장’을 찾으려면, 언제 선택했는지부터 증명해야 한다</h2>
+  <p class="section-desc">시작은 단순한 질문이었다. 어떤 장에서는 기존 추천이, 다른 장에서는 체결 정보를 더 본 후보가 낫다면 그때그때 골라 쓸 수 없을까?</p>
+  <div class="callout">
+    <p><strong>첫 실험에서 배운 것.</strong> 11월 1~24일, 기존 방식으로 공정하게 비교할 수 있었던 날은 0일이었다. 늦었던 20일에는 대안 종목이 가상 진입 전에 저장됐지만, 정작 어느 방식을 쓸지 결정한 기록은 늦었다. 이를 20번의 성공이나 실패로 세지 않았다.</p>
+    <p><strong>그래서 기준을 전날에 고정한다.</strong> 11월 25일분부터는 전날까지 알 수 있었던 자료로 시장 상태별 선택 기준을 먼저 봉인한다. 아침의 실제 추천은 그대로 보낸다. 양쪽 종목과 24시간 가격 경로가 확인돼야 한 날의 비교가 끝난다.</p>
+    <p><strong>추천이 좋아졌다고 말할 조건.</strong> 가상 진입 직전에만 가능했던 대안과 실제 알림 발송 전에 준비된 대안을 나눈다. 후자에서 종목이 정말 바뀐 날에, 24시간 동안 −5%에 닿지 않고 +10%에 닿은 비율이 기존보다 나았는지 본다.</p>
+  </div>
+  <p class="concept-note">11월 24일 현재 새 실험의 완료 비교는 0일이다. 실험 결과로 추천을 자동 교체하지 않는다. 이후 표본과 제외 사유는 <a href="/projects/prelude/dashboard/#dayAheadSection">PIN 대시보드의 전날 조건표</a>에서 확인한다.</p>
+</div></section>
+
 <section id="operational-recovery"><div class="container fade-in">
   <div class="section-label">Operational Recovery · 2026-10-29</div>
   <h2 class="section-title">데이터를 기다리는 동안,<br>반복 경고와 추천 중단이 드러났다</h2>

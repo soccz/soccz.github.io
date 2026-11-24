@@ -332,4 +332,20 @@ test('every chart construction passes through the accessible isolated wrapper', 
   assert.match(html,/typeof Chart === 'undefined'/);
   assert.match(read('projects/prelude/page-concepts.js'),/canvas.setAttribute\('aria-describedby', id\)/);
 });
+test('day-ahead panel distinguishes missing, no swaps and a genuine effect', () => {
+  const html = read('projects/prelude/dashboard/index.html');
+  const journal = read('projects/prelude/index.html');
+  assert.match(journal, /href="\/projects\/prelude\/dashboard\/#dayAheadSection"/);
+  assert.match(html, /id="dayAheadSection"/);
+  const code = html.slice(html.indexOf('function renderDayAhead('), html.indexOf('function renderResearchProgress('));
+  const root = {replaceChildren(list) { this.textContent = list.nodes.map(n => n.textContent).join(' '); }};
+  const document = {getElementById:() => root, createElement:() => ({nodes:[],append(...nodes){ this.nodes.push(...nodes); }})};
+  const render = vm.runInNewContext(code + ';renderDayAhead', {document});
+  render(undefined); assert.match(root.textContent, /확인 불가/);
+  const policy = {changed:0,send_ready_changed:0,safe_up_delta_pp:null};
+  const data = {next_plan:'2026-12-01',paired:2,last_paired:'2026-11-29', before_send:1,not_before_send:1,clock_unknown:0,
+    excluded:{invalid_evidence:3},policies:{recent:{changed:1,send_ready_changed:1,safe_up_delta_pp:-33.33},same_context:policy}};
+  render({schema:'prelude_dashboard_day_ahead.v1',status:'observed',asof:'2026-11-30',data});
+  for (const value of ['사전 준비 1일','증거 불일치 3일','-33.3%p','안전상승 차이 미평가']) assert.ok(root.textContent.includes(value));
+});
 console.log(JSON.stringify({status:'PASS', contract_groups:checks}));
