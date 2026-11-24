@@ -540,6 +540,10 @@
       .viz-card { border: 0; border-radius: 0; padding: 12px 0; background: transparent; }
       section { padding: 24px 20px; }
     }
+    @media (max-width: 399px) {
+      #operator-report { padding-top: 14px; }
+      .ops-overview { padding-block: 11px; }
+    }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
   </style>
 </head>
@@ -759,7 +763,7 @@
       <tr><th scope="row">모델이 단순 기준선보다 나은가</th><td><a href="#prospective-experiment">고정 SHORT 60회 비교</a></td><td>유효 회차와 종료 조건을 충족한 최종 판정만 해석. 중간 평균으로 승격하지 않음.</td><td><a href="/projects/xsec-alpha/#september-protocol">가설과 사전등록</a></td></tr>
       <tr><th scope="row">결과를 믿을 기록이 남았는가</th><td><a href="#prospective-experiment">누락·무결성·복원 상태</a></td><td>실험 근거 부족도 종료 결과. 점검 성공이 모델 성공은 아님.</td><td><a href="/projects/xsec-alpha/#september-supervision">독립 점검과 한계</a></td></tr>
       <tr><th scope="row">사전에 약속한 판정을 지켰는가</th><td><a href="https://github.com/soccz/xsec_alpha/blob/main/README.md#14-bis-판정-기록-2026-10-04--판정일-09-01에서-33일-지연">README §14-bis 판정 기록</a> · <a href="#contract">현재 계약</a></td><td>기준1 통과, 기준2는 세는 행에 따라 갈림(실제 추천 행만 세면 실패), 기준3 실패로 KILL. 판정일보다 33일 늦음. 기준3의 사전 통과 확률이 약 4×10⁻⁶(추정)이었던 설계 결함은 기록하되 GO로 재해석하지 않음.</td><td><a href="/projects/xsec-alpha/#october-verdict">늦은 판정과 부분 집행</a></td></tr>
-      <tr><th scope="row">장세가 모델을 고를 수 있는가</th><td><a href="#regime-observation">국면별 관찰</a> · <a href="#rotation-pilot">전환 파일럿</a></td><td>사전등록 전(기한 10-31). 텔레그램은 현행 단일 모델 유지. 후보 모델은 섀도 기록부터 시작하며 우위 근거가 아님.</td><td><a href="/projects/xsec-alpha/#october-next">다음 질문의 설계</a></td></tr>
+      <tr><th scope="row">장세가 모델을 고를 수 있는가</th><td><a href="#regime-observation">국면별 관찰</a> · <a href="#rotation-pilot">전환 파일럿</a></td><td>11월 24일 확인: 다중 모델 계약은 10월 31일 미등록 기본값 적용. 단일 모델 연구 추천을 유지하고 후보는 관찰만 한다. 상시 가격 감사는 새 전략의 승격 근거가 아니다.</td><td><a href="/projects/xsec-alpha/#october-next">다음 질문의 설계</a></td></tr>
     </tbody></table></div>
     <p class="story-ref"><a href="/projects/xsec-alpha/#development-journey">전체 개발 흐름</a> · <a href="/projects/xsec-alpha/#september-decisions">성공·실패·보류별 다음 판단</a></p>
   </div>
@@ -968,6 +972,16 @@
     <p class="card-meta" id="rotationDecision"></p>
     <h3>최근 회차 · 진입 전 결정과 이후 성과</h3>
     <table class="data" id="rotationHistory"></table>
+    <h3>상시 가격 감사 · 공식 판정과 별도</h3>
+    <p class="card-meta" id="basketCoverageMeta">감사 자료 대기</p>
+    <table class="data" id="basketCoverageTable"></table>
+    <details id="basketCoverageDetail" hidden>
+      <summary>국면별 가격 범위 · 거래소 재조회 · 큰 결측과 누락</summary>
+      <table class="data" id="basketCoverageRegimes"></table>
+      <p class="card-meta" id="basketCoverageProbes"></p>
+      <ul id="basketGapTimes"></ul>
+    </details>
+    <p class="card-meta" id="dashboardDeliveryMeta">웹 반영 확인 대기</p>
     <p class="card-meta">모델 순위 바스켓과 모델 75%·반전 25% 이내 혼합의 연구 비교. 실제 텔레그램의 게이트·버퍼 포트폴리오와 다르다. Upbit 원시 가격과 가정 비용이며 실제 Bitget 체결 수익이 아니다. 자동 승격·운영 추천 변경 없음.</p>
   </div>
 </section>
@@ -2543,6 +2557,7 @@ function renderIcIncident(summary) {
 }
 
 function renderRotationPilot(summary) {
+  renderBasketCoverage(summary);
   const state = summary.rotation_pilot;
   const meta = document.getElementById('rotationMeta');
   for (const id of ['rotationTable', 'rotationHistory', 'rotationDecision']) document.getElementById(id).textContent = '';
@@ -2573,6 +2588,57 @@ function renderRotationPilot(summary) {
   document.getElementById('rotationDecision').textContent = `${decision.terminal ? '종료 판정 고정' : '종료 판정 전'} · 336회 고정, 유의성이 나올 때까지 연장하지 않음. 전환 작동 최소 30회·8일은 수익 검증 기준이 아님. 추가 비중 변경 비용 10bp 가정.`;
   const names = {recorded: '만기 대기', matured: '평가 완료', missed: '저장 누락', invalid_prices: '가격 오류', missing_source_outcome: '정산 자료 누락'};
   document.getElementById('rotationHistory').innerHTML = '<thead><tr><th>신호 / UTC</th><th>상태</th><th>반전 비중</th><th>혼합−모델</th></tr></thead><tbody>' + ((state.recent_windows || []).map(r => `<tr><td>${escapeHtml(r.signal_at.slice(5,16).replace('T',' '))}</td><td>${escapeHtml(names[r.status] || r.status)}</td><td>${r.reversal_weight == null ? '없음' : (r.reversal_weight*100).toFixed(0)+'%'}</td><td>${r.paired_pp == null ? '대기' : fmtPct(r.paired_pp)+'p'}</td></tr>`).join('') || '<tr><td colspan="4">등록 이후 첫 회차 대기 · 과거 회차 소급 편입 없음</td></tr>') + '</tbody>';
+}
+
+function renderBasketCoverage(summary) {
+  const audit = summary.basket_coverage, proof = summary.dashboard_delivery;
+  const stamp = v => v ? new Date(v).toLocaleString('ko-KR', {timeZone:'Asia/Seoul',hour12:false}) + ' KST' : '기록 없음';
+  const cell = document.getElementById('basketCoverageTable');
+  cell.replaceChildren();
+  const details = document.getElementById('basketCoverageDetail');
+  const regimes = document.getElementById('basketCoverageRegimes'), gaps = document.getElementById('basketGapTimes');
+  regimes.replaceChildren(); gaps.replaceChildren(); details.hidden = !audit;
+  const meta = document.getElementById('basketCoverageMeta');
+  meta.textContent = audit ? `업비트 가격 백업 기준 · ${stamp(audit.checked_at)}${Date.now() - Date.parse(audit.checked_at) > 36*3600000 ? ' · 감사 갱신 지연' : ''}${audit.capture_stale ? ' · 최근 관찰 저장 지연' : ''}` : '감사 자료 없음 · 표본 0을 뜻하지 않음';
+  if (audit) {
+    const c = audit.observer, i = audit.pilot_invalid, p = audit.pilot_backup_comparison;
+    const rows = [
+      ['상시 관찰 · 전체 완전 / 선택 바스켓만 완전 / 선택도 불완전', [c.full, c.basket_only, c.basket_incomplete].map(v => v ?? 0).join(' / ') + '회'],
+      ['관찰 시한 누락 / 정산 또는 백업 대기', `${c.missed ?? 0} / ${audit.pending}회`],
+      ['대조한 공식 가격 무효 중 · 바스켓만 완전 / 선택도 불완전 / 전체 완전', i ? `${i.basket_only ?? 0} / ${i.basket_incomplete ?? 0} / ${i.full ?? 0}회` : '파일럿 원장 확인 불가'],
+      ['파일럿 비중과 백업 가격을 짝지은 회차 / 그중 전환', p ? `${p.paired} / ${p.exercised}회` : '자료 없음'],
+      ['가정 비용 후 혼합−고정 차이 · 공식 성과 아님', !p?.paired ? '자료 없음' : p.exercised === 0 ? '전환 적용 0회 · 시즌 효과 판정 불가' : fmtPct(p.mean_difference_pp) + 'p'],
+    ];
+    for (const [name, value] of rows) {
+      const r = cell.insertRow(), th = document.createElement('th');
+      th.scope = 'row'; th.textContent = name; r.append(th); r.insertCell().textContent = value;
+    }
+    const labels = {bear_highvol:'하락 · 고변동',bear_lowvol:'하락 · 저변동',bull_highvol:'상승 · 고변동',bull_lowvol:'상승 · 저변동',unknown:'국면 미상'};
+    const byRegime = new Map();
+    for (const {regime, state, n} of audit.by_regime || []) {
+      if (!byRegime.has(regime)) byRegime.set(regime, {});
+      byRegime.get(regime)[state] = n;
+    }
+    const header = regimes.createTHead().insertRow();
+    for (const label of ['국면','전체 완전','선택만 완전','선택 불완전']) {
+      const h = document.createElement('th'); h.scope = 'col'; h.textContent = label; header.append(h);
+    }
+    const body = regimes.createTBody();
+    for (const [regime, counts] of byRegime) {
+      const r = body.insertRow(); r.insertCell().textContent = labels[regime] || '기타';
+      for (const name of ['full','basket_only','basket_incomplete']) r.insertCell().textContent = String(counts[name] ?? 0);
+    }
+    const checks = audit.probes || {};
+    document.getElementById('basketCoverageProbes').textContent = `거래소 재조회한 종목·시각: 현재 봉 있음 ${checks.available_now ?? 0} · 미반환 ${checks.not_returned_now ?? 0} · 오류로 미확인 ${checks.unknown ?? 0}. 당시 원장에 소급 적용하지 않는다.`;
+    const add = text => { const li = document.createElement('li'); li.textContent = text; gaps.append(li); };
+    for (const g of audit.large_gap_timelines || []) add(`${stamp(g.slot)} 신호 · 부족 ${g.official_missing}행 · 판정 ${stamp(g.evaluated_at)}`);
+    for (const g of (audit.pilot_misses || []).slice(-4)) add(`${stamp(g.slot)} 파일럿 기록 누락 · 마감 ${stamp(g.deadline)} / 확인 ${stamp(g.detected_at)}`);
+  }
+  const last = proof?.last_verified;
+  const status = {verified:'공개 파일 일치',served_other_generation:'다른 버전 응답',no_confirmed_push:'푸시 미확인',local_generation_changed:'대조 중 새 버전 생성',local_generation_unconfirmed:'내보낸 버전 미확인',unverified:'접속 또는 검증 실패'};
+  document.getElementById('dashboardDeliveryMeta').textContent = proof
+    ? `게시 시점의 웹 점검: ${status[proof.status] || '미확인'} (${stamp(proof.checked_at)}) · 마지막 일치 자료: ${stamp(last?.asof)}`
+    : '웹 반영 확인 기록 없음';
 }
 
 function renderRegimeObservation(summary) {
