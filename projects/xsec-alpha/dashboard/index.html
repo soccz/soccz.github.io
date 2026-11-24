@@ -840,6 +840,10 @@
     <p class="story-ref"><a href="/projects/xsec-alpha/#september-delivery">개발일지: 보고는 유지하고, 약한 후보는 참고로 구분</a></p>
     <div class="card-meta" id="operatorReportMeta"></div>
     <div class="coin-tiles" id="operatorCoinTiles" aria-label="이번 회차 코인 후보"></div>
+    <p class="card-meta" id="reportChain"></p>
+    <details class="report-detail"><summary>전달 확인과 미확인 이력</summary>
+      <p class="card-meta" id="reportChainTimes"></p><ul id="reportGapHistory"></ul>
+    </details>
     <details class="report-detail" id="selectionDetail" hidden>
       <summary>후보별 선정 근거</summary>
       <div class="selection-body"><div class="selection-heading"><label for="selectionMarket">코인</label><select id="selectionMarket"></select><span id="selectionMatch" role="status"></span></div><ol id="selectionFlow" class="selection-flow" aria-label="이번 회차 후보 선정 단계"></ol><dl id="selectionFacts" class="selection-facts"></dl><p id="selectionReason"></p><p id="selectionSource"></p><p>순위·σ는 수익 확률이나 통계적 유의성이 아니다. 선정 경로는 가격 움직임의 인과 설명이 아니며 자동 주문도 없다. <a href="#forecast-audit">원본 예측·전체 선정 기록</a></p></div>
@@ -2274,6 +2278,7 @@ function renderSelectionEvidence(summary, rows, selectedIndex) {
 
 function renderOperatorReport(summary) {
   const report = summary.operator_report;
+  renderReportChain(summary);
   const meta = document.getElementById('operatorReportMeta');
   const tiles = document.getElementById('operatorCoinTiles');
   const detail = document.getElementById('selectionDetail');
@@ -2590,6 +2595,28 @@ function renderRotationPilot(summary) {
   document.getElementById('rotationHistory').innerHTML = '<thead><tr><th>신호 / UTC</th><th>상태</th><th>반전 비중</th><th>혼합−모델</th></tr></thead><tbody>' + ((state.recent_windows || []).map(r => `<tr><td>${escapeHtml(r.signal_at.slice(5,16).replace('T',' '))}</td><td>${escapeHtml(names[r.status] || r.status)}</td><td>${r.reversal_weight == null ? '없음' : (r.reversal_weight*100).toFixed(0)+'%'}</td><td>${r.paired_pp == null ? '대기' : fmtPct(r.paired_pp)+'p'}</td></tr>`).join('') || '<tr><td colspan="4">등록 이후 첫 회차 대기 · 과거 회차 소급 편입 없음</td></tr>') + '</tbody>';
 }
 
+function renderReportChain(summary) {
+  const target = document.getElementById('reportChain'), dates = document.getElementById('reportChainTimes');
+  const gaps = document.getElementById('reportGapHistory'); gaps.replaceChildren();
+  const report = summary?.operator_report, proof = summary?.dashboard_delivery, check = proof?.round;
+  if (!report?.run_id) { target.textContent = '추천 회차 미확인'; dates.textContent = ''; return; }
+  const stamp = v => v ? new Date(v).toLocaleString('ko-KR',{timeZone:'Asia/Seoul',hour12:false})+' KST' : '미확인';
+  const now = Date.now(), step = 6*3600000, offset = 5*3600000;
+  const due = Math.floor((now-45*60000-offset)/step)*step+offset;
+  const marketTime = Date.parse(report.data_asof);
+  const freshness = !Number.isFinite(marketTime) ? '자료 시각 미확인' : marketTime > now ? '미래 시각 오류' : marketTime < due ? '추천 자료 지연' : '정규 자료 시각 정상';
+  const same = proof?.status === 'verified' && check?.match === 'same' && check.served_run_id === report.run_id && check.data_asof === report.data_asof;
+  const web = same ? (check.same_picks ? '동일 회차·후보 확인' : '동일 회차 · 후보 불일치') : proof?.status === 'verified' && check?.served_run_id ? '다른 회차 확인' : '동일 회차 확인 대기';
+  const tg = {sent:'API 확인',pending:'대기',disabled:'비활성'}[report.telegram?.state] || '미확인';
+  target.textContent = `${freshness} · Telegram ${tg} · 웹 ${web}`;
+  dates.textContent = `자료 ${stamp(report.data_asof)} · Telegram 응답 ${stamp(report.telegram?.acknowledged_at)} · 웹 점검 ${stamp(proof?.checked_at)} · 점검 시 Telegram 응답 대조 ${same && check.same_ack ? '일치' : '미확인'} · 회차 ${report.run_id}`;
+  const add = text => { const li = document.createElement('li'); li.textContent = text; gaps.append(li); };
+  const history = report.delivery_gaps;
+  if (!history) { add('전달 누락 집계 도입 전 보고서'); return; }
+  add(`집계 도입 이후 전달 미확인 ${history.total}건 · 최근 최대 8건 표시`);
+  for (const g of [...history.recent].reverse()) add(`${stamp(g.data_asof || g.generated_at)} · ${g.reason === 'expired' ? '유효기간 만료' : '새 보고로 대체'} · ${g.run_id}`);
+}
+
 function renderBasketCoverage(summary) {
   const audit = summary.basket_coverage, proof = summary.dashboard_delivery;
   const stamp = v => v ? new Date(v).toLocaleString('ko-KR', {timeZone:'Asia/Seoul',hour12:false}) + ' KST' : '기록 없음';
@@ -2631,6 +2658,8 @@ function renderBasketCoverage(summary) {
     const checks = audit.probes || {};
     document.getElementById('basketCoverageProbes').textContent = `거래소 재조회한 종목·시각: 현재 봉 있음 ${checks.available_now ?? 0} · 미반환 ${checks.not_returned_now ?? 0} · 오류로 미확인 ${checks.unknown ?? 0}. 당시 원장에 소급 적용하지 않는다.`;
     const add = text => { const li = document.createElement('li'); li.textContent = text; gaps.append(li); };
+    add(audit.quarantine_recent ? `공식 성과와 분리된 감사 오류 ${c.quarantined ?? 0}회` : '감사 오류 격리 집계 도입 전');
+    for (const q of audit.quarantine_recent || []) add(`${stamp(q.slot)} 오류 격리 · ${q.reason}`);
     for (const g of audit.large_gap_timelines || []) add(`${stamp(g.slot)} 신호 · 부족 ${g.official_missing}행 · 판정 ${stamp(g.evaluated_at)}`);
     for (const g of (audit.pilot_misses || []).slice(-4)) add(`${stamp(g.slot)} 파일럿 기록 누락 · 마감 ${stamp(g.deadline)} / 확인 ${stamp(g.detected_at)}`);
   }
@@ -3428,7 +3457,7 @@ async function boot() {
   document.querySelector('#performance-details > summary').after(historicalStatus);
   updateDashboardAge = () => {
     preserveReadingPosition(() => renderOverview(dashboardState.summary));
-    renderPublicationAge(dashboardState.summary); showRefreshStatus();
+    renderPublicationAge(dashboardState.summary); renderReportChain(dashboardState.summary); showRefreshStatus();
   };
   refreshDashboard = async (initial = false) => {
     if (dashboardState.busy || document.hidden) return;
